@@ -120,7 +120,19 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_UnknownServerCmd:     return "用意されていないコマンドNo[%d]！\n";
   case DBGSTR_CLIENT_RecPlayerBlackOut:    return "録画再生コントローラ：ブラックアウト\n";
   case DBGSTR_CLIENT_RecPlay_ChapterSkipped: return "client(%d), 指定チャプタ[%d]に到達した..\n";
-
+  case DBGSTR_CLIENT_CHGAI_UkeTokStart:    return "受けとくせい所持による交換チェック ... wazaType=%d\n";
+  case DBGSTR_CLIENT_CHGAI_UkeTokFind:     return " %d 番目がtype=%dを受けられるポケモンだ\n";
+  case DBGSTR_CLIENT_CHGAI_UkeTokDecide:   return "受けるための交替確定\n";
+  case DBGSTR_CLIENT_CHGAI_PreSortList:    return " 入れ替え対象ソート前 ";
+  case DBGSTR_CLIENT_CHGAI_AfterSortList:  return " 入れ替え対象ソート後 ";
+  case DBGSTR_CLIENT_CHGAI_SortListVal:    return "Idx(%d)=Pow(%d), ";
+  case DBGSTR_CLIENT_CHGAI_HOROBI:         return "入れ替えたい：ほろびのうた\n";
+  case DBGSTR_CLIENT_CHGAI_FusigiNaMamori: return "入れ替えたい：ふしぎなまもり\n";
+  case DBGSTR_CLIENT_CHGAI_NoEffWaza:      return "入れ替えたい：相性無効\n";
+  case DBGSTR_CLIENT_CHGAI_Kodawari:       return "入れ替えたい：こだわり系\n";
+  case DBGSTR_CLIENT_CHGAI_UkeTok:         return "入れ替えたい：受けとくせい\n";
+  case DBGSTR_CLIENT_CHGAI_SizenKaifuku:   return "入れ替えたい：しぜんかいふく\n";
+  case DBGSTR_CLIENT_CHGAI_WazaEff:        return "入れ替えたい：ワザ相性による\n";
 
   case DBGSTR_BPP_NemuriWakeCheck:        return "ポケ[%d]のねむりターン最大値=%d, 経過ターン=%d\n";
 

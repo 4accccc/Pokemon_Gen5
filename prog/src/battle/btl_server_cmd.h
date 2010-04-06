@@ -68,6 +68,7 @@ typedef enum {
   SC_OP_SET_FAKESRC,        ///< イリュージョン用参照ポケモン変更
   SC_OP_CLEAR_CONSUMED_ITEM,///< アイテム消費情報のクリア
   SC_OP_WAZADMG_REC,        ///< ワザダメージ記録
+  SC_OP_TURN_CHECK,         ///< ターンチェック
   SC_ACT_WAZA_EFFECT,
   SC_ACT_WAZA_EFFECT_EX,    ///< 【アクション】ワザエフェクト拡張（溜めターンエフェクトなどに使用）
   SC_ACT_TAMEWAZA_HIDE,     ///< 【アクション】そらをとぶなどで画面から消える・現れる設定
@@ -344,6 +345,11 @@ static inline void SCQUE_OP_AddWazaDmgRec( BTL_SERVER_CMD_QUE* que, u8 defPokeID
 {
   SCQUE_PUT_Common( que, SC_OP_WAZADMG_REC, defPokeID, atkPokeID, pokePos, wazaType, wazaID, damage );
 }
+static inline void SCQUE_PUT_OP_TurnCheck( BTL_SERVER_CMD_QUE* que, u8 pokeID )
+{
+  SCQUE_PUT_Common( que, SC_OP_TURN_CHECK, pokeID );
+}
+
 
 
 

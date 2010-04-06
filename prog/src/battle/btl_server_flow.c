@@ -8155,6 +8155,7 @@ static void scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
     while( (bpp = BTL_POKESET_SeekNext(pokeSet)) != NULL ){
       BPP_TurnCheck( bpp );
       BPP_CombiWaza_ClearParam( bpp );
+      SCQUE_PUT_OP_TurnCheck( wk->que, BPP_GetID(bpp) );
     }
   }
 

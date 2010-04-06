@@ -243,15 +243,16 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
 static BOOL checkForbitEscapeEffective_Kagefumi( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke );
 static BOOL checkForbitEscapeEffective_Arijigoku( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke );
 static BOOL checkForbitEscapeEffective_Jiryoku( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke );
-static void AI_ChangeProc_Init( BTL_CLIENT* wk );
-static BOOL AI_ChangeProc_CheckReserve( BTL_CLIENT* wk, u8 index );
+static void ChangeAI_InitWork( BTL_CLIENT* wk );
+static BOOL ChangeAI_CheckReserve( BTL_CLIENT* wk, u8 index );
+static void ChangeAI_SetReserve( BTL_CLIENT* wk, u8 outPokeIdx, u8 inPokeIdx );
 static BOOL ChangeAI_Root( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8 procPokeIndex, u8* targetIndex );
-static BTL_POKEPARAM* AI_ChangeProcSub_DecideTargetPoke( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke );
-static BOOL AIChangeProcSub_CheckHorobi( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke );
-static BOOL AI_ChangeProcSub_FusigiNaMamori( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, const BTL_POKEPARAM* targetPoke );
-static BOOL AI_ChangeProcSub_NoEffect( BTL_CLIENT* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );
-static BOOL AI_ChangeProcSub_Kodawari( BTL_CLIENT* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );
-static BOOL AI_ChangeProcSub_UkeTokusei( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, const BTL_POKEPARAM* targetPoke, u8* changeIndex );
+static BTL_POKEPARAM* ChangeAI_DecideTarget( BTL_CLIENT* wk, BtlPokePos basePos );
+static BOOL ChangeAI_CheckHorobi( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke );
+static BOOL ChangeAI_CheckFusigiNaMamori( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, const BTL_POKEPARAM* targetPoke );
+static BOOL ChangeAI_CheckNoEffectWaza( BTL_CLIENT* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );
+static BOOL ChangeAI_CheckKodawari( BTL_CLIENT* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );
+static BOOL ChangeAI_CheckUkeTokusei( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, const BTL_POKEPARAM* targetPoke, u8* changeIndex );
 static BOOL AI_ChangeProcSub_SizenKaifuku( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8* changeIndex );
 static BOOL AI_ChangeProcSub_WazaAff( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, const BTL_POKEPARAM* targetPoke, u8* changeIndex );
 static BOOL AI_ChangeProcSub_CheckTokHikae( BTL_CLIENT* wk, u16 tokusei, u8* index );
@@ -260,6 +261,7 @@ static BOOL AI_ChangeProcSub_HikaePokeAff( BTL_CLIENT* wk, PokeType wazaType, Bt
 static BOOL AI_ChangeProcSub_CheckWazaAff( BTL_CLIENT* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BtlTypeAff affMin );
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
 static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list );
+static void sortPuttablePokemonList( BTL_CLIENT* wk, u8* list, u8 numPoke, const BTL_POKEPARAM* target );
 static void setupPokeSelParam( BTL_CLIENT* wk, u8 mode, u8 numSelect, BTL_POKESELECT_PARAM* param, BTL_POKESELECT_RESULT* result );
 static void storePokeSelResult( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res );
 static void storePokeSelResult_ForceQuit( BTL_CLIENT* wk );
@@ -356,6 +358,7 @@ static BOOL scProc_OP_ShooterCharge( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_OP_SetFakeSrc( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ClearConsumedItem( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_AddWazaDamage( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_TurnCheck( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetStatus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetWeight( BTL_CLIENT* wk, int* seq, const int* args );
 static u8 countFrontPokeTokusei( BTL_CLIENT* wk, PokeTokusei tokusei );
@@ -2493,20 +2496,32 @@ static BOOL checkForbitEscapeEffective_Jiryoku( BTL_CLIENT* wk, const BTL_POKEPA
  * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-static void AI_ChangeProc_Init( BTL_CLIENT* wk )
+static void ChangeAI_InitWork( BTL_CLIENT* wk )
 {
   u32 i;
   for(i=0; i<NELEMS(wk->AIChangeIndex); ++i){
     wk->AIChangeIndex[ i ] = -1;
   }
 }
-static BOOL AI_ChangeProc_CheckReserve( BTL_CLIENT* wk, u8 index )
+static BOOL ChangeAI_CheckReserve( BTL_CLIENT* wk, u8 index )
 {
-  if( index < NELEMS(wk->AIChangeIndex) )
+  u32 i;
+
+  for(i=0; i<NELEMS(wk->AIChangeIndex); ++i)
   {
-    return (wk->AIChangeIndex[ index ] != -1 );
+    if( wk->AIChangeIndex[i] == index ){
+      return TRUE;
+    }
   }
+
   return FALSE;
+}
+static void ChangeAI_SetReserve( BTL_CLIENT* wk, u8 outPokeIdx, u8 inPokeIdx )
+{
+  if( outPokeIdx < NELEMS(wk->AIChangeIndex) )
+  {
+    wk->AIChangeIndex[ outPokeIdx ] = inPokeIdx;
+  }
 }
 
 //----------------------------------------------------------------------------------
@@ -2525,6 +2540,7 @@ static BOOL ChangeAI_Root( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8 pro
 {
   BOOL fChange = FALSE;
   u8   changeIndex = BTL_PARTY_MEMBER_MAX;
+  BTL_POKEPARAM* targetPoke;
 
   // 逃げ・交換禁止状態のチェック
   {
@@ -2542,63 +2558,95 @@ static BOOL ChangeAI_Root( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8 pro
   }
 
   do {
-    BTL_POKEPARAM* targetPoke;
 
-    if( AIChangeProcSub_CheckHorobi(wk, procPoke) ){  // ほろびのうたチェック
+    if( ChangeAI_CheckHorobi(wk, procPoke) ){  // ほろびのうたチェック
+      BTL_N_Printf( DBGSTR_CLIENT_CHGAI_HOROBI );
       fChange = TRUE;
       break;
     }
 
-    targetPoke = AI_ChangeProcSub_DecideTargetPoke( wk, procPoke );
-    if( targetPoke == NULL ){
-      break;
+    {
+      BtlPokePos  basePos = BTL_MAIN_PokeIDtoPokePos(wk->mainModule, wk->pokeCon, BPP_GetID(procPoke) );
+      targetPoke = ChangeAI_DecideTarget( wk, basePos );
+      if( targetPoke == NULL ){
+        break;
+      }
     }
 
-    if( AI_ChangeProcSub_FusigiNaMamori(wk, procPoke, targetPoke) ){  // ふしぎなまもりチェック
+    if( ChangeAI_CheckFusigiNaMamori(wk, procPoke, targetPoke) ){  // ふしぎなまもりチェック
+      BTL_N_Printf( DBGSTR_CLIENT_CHGAI_FusigiNaMamori );
       fChange = TRUE;
       break;
     }
 
-    if( AI_ChangeProcSub_NoEffect(wk, procPoke, targetPoke) ){  // 相性無効ワザチェック
+    if( ChangeAI_CheckNoEffectWaza(wk, procPoke, targetPoke) ){  // 相性無効ワザチェック
+      BTL_N_Printf( DBGSTR_CLIENT_CHGAI_NoEffWaza );
       fChange = TRUE;
       break;
     }
 
-    if( AI_ChangeProcSub_Kodawari(wk, procPoke, targetPoke) ){  // こだわりワザチェック
+    if( ChangeAI_CheckKodawari(wk, procPoke, targetPoke) ){  // こだわりワザチェック
+      BTL_N_Printf( DBGSTR_CLIENT_CHGAI_Kodawari );
       fChange = TRUE;
       break;
     }
 
-    if( AI_ChangeProcSub_UkeTokusei(wk, procPoke, targetPoke, &changeIndex) ){ // 受けとくせいチェック
+    if( ChangeAI_CheckUkeTokusei(wk, procPoke, targetPoke, &changeIndex) ){ // 受けとくせいチェック
+      BTL_N_Printf( DBGSTR_CLIENT_CHGAI_UkeTok );
       fChange = TRUE;
       break;
     }
 
     if( AI_ChangeProcSub_SizenKaifuku(wk, procPoke, &changeIndex) ){ // しぜんかいふくチェック
+      BTL_N_Printf( DBGSTR_CLIENT_CHGAI_SizenKaifuku );
       fChange = TRUE;
       break;
     }
 
     if( AI_ChangeProcSub_WazaAff(wk, procPoke, targetPoke, &changeIndex) ){ // ワザ相性チェック
+      BTL_N_Printf( DBGSTR_CLIENT_CHGAI_WazaEff );
       fChange = TRUE;
       break;
     }
 
+    return FALSE;
+
   }while(0);
 
-  if( fChange )
-  {
+  if( !fChange ){ return FALSE; }
 
+  if( changeIndex == BTL_PARTY_MEMBER_MAX )
+  {
+    u8 puttableList[ BTL_PARTY_MEMBER_MAX ];
+    u32 cnt, i;
+
+    cnt = calcPuttablePokemons( wk, puttableList );
+
+    sortPuttablePokemonList( wk, puttableList, cnt, targetPoke );
+    for(i=0; i<cnt; ++i)
+    {
+      if( !ChangeAI_CheckReserve(wk, puttableList[i]) )
+      {
+        changeIndex = puttableList[ i ];
+        break;
+      }
+    }
   }
 
-  return fChange;
+  if( changeIndex == BTL_PARTY_MEMBER_MAX ){
+    return FALSE;
+  }
+
+  ChangeAI_SetReserve( wk, procPokeIndex, changeIndex );
+  *targetIndex = changeIndex;
+  return TRUE;
 }
+
 /**
  *  交換チェック時に考慮する「相手」ポケモンの決定
  */
-static BTL_POKEPARAM* AI_ChangeProcSub_DecideTargetPoke( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke )
+static BTL_POKEPARAM* ChangeAI_DecideTarget( BTL_CLIENT* wk, BtlPokePos basePos )
 {
-  BtlPokePos  basePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(procPoke) );
   BtlExPos    exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, basePos );
   u8 aryPokeID[ BTL_POSIDX_MAX ];
   u8 cnt, i;
@@ -2615,7 +2663,7 @@ static BTL_POKEPARAM* AI_ChangeProcSub_DecideTargetPoke( BTL_CLIENT* wk, const B
 /**
  *  交換チェック：ほろびのうた
  */
-static BOOL AIChangeProcSub_CheckHorobi( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke )
+static BOOL ChangeAI_CheckHorobi( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke )
 {
   if( BPP_CheckSick(procPoke, WAZASICK_HOROBINOUTA) )
   {
@@ -2631,7 +2679,7 @@ static BOOL AIChangeProcSub_CheckHorobi( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
 /**
  *  交換チェック：ふしぎなまもり
  */
-static BOOL AI_ChangeProcSub_FusigiNaMamori( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, const BTL_POKEPARAM* targetPoke )
+static BOOL ChangeAI_CheckFusigiNaMamori( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, const BTL_POKEPARAM* targetPoke )
 {
   if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_SINGLE )
   {
@@ -2655,9 +2703,9 @@ static BOOL AI_ChangeProcSub_FusigiNaMamori( BTL_CLIENT* wk, const BTL_POKEPARAM
   return FALSE;
 }
 /**
- *  交換チェック：効果なしワザ
+ *  交換チェック：効果なしワザしか持ってない
  */
-static BOOL AI_ChangeProcSub_NoEffect( BTL_CLIENT* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender )
+static BOOL ChangeAI_CheckNoEffectWaza( BTL_CLIENT* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender )
 {
   u32 i;
   WazaID waza;
@@ -2703,33 +2751,36 @@ static BOOL AI_ChangeProcSub_NoEffect( BTL_CLIENT* wk, const BTL_POKEPARAM* atta
   return FALSE;
 }
 /**
- *  交換チェック：こだわり効果
+ *  交換チェック：こだわり効果発動して効果なし
  */
-static BOOL AI_ChangeProcSub_Kodawari( BTL_CLIENT* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender )
+static BOOL ChangeAI_CheckKodawari( BTL_CLIENT* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender )
 {
   if( BPP_CheckSick(attacker, WAZASICK_KODAWARI) )
   {
     BPP_SICK_CONT cont = BPP_GetSickCont( attacker, WAZASICK_KODAWARI );
     WazaID  kodawariWaza = BPP_SICKCONT_GetParam( cont );
-    PokeType  wazaType = WAZADATA_GetType( kodawariWaza );
-    PokeTypePair targetType = BPP_GetPokeType( defender );
-    BOOL fDamageWaza = WAZADATA_IsDamage( wazaType );
+    if( kodawariWaza != WAZANO_NULL )
+    {
+      BOOL fDamageWaza = WAZADATA_IsDamage( kodawariWaza );
+      PokeType  wazaType = WAZADATA_GetType( kodawariWaza );
+      PokeTypePair targetType = BPP_GetPokeType( defender );
 
-    if( (BTL_CALC_TypeAffPair(wazaType, targetType)  == BTL_TYPEAFF_0)
-    &&  (fDamageWaza)
-    ){
-      if( AI_ChangeProcSub_HikaeWazaAff(wk, defender, BTL_TYPEAFF_200) )
-      {
-        return ( GFL_STD_Rand(&wk->AIRandContext, 3) < 2 );
+      if( (BTL_CALC_TypeAffPair(wazaType, targetType)  == BTL_TYPEAFF_0)
+      &&  (fDamageWaza)
+      ){
+        if( AI_ChangeProcSub_HikaeWazaAff(wk, defender, BTL_TYPEAFF_200) )
+        {
+          return ( GFL_STD_Rand(&wk->AIRandContext, 3) < 2 );
+        }
+        if( AI_ChangeProcSub_HikaeWazaAff(wk, defender, BTL_TYPEAFF_100) )
+        {
+          return ( GFL_STD_Rand(&wk->AIRandContext, 2) < 1 );
+        }
       }
-      if( AI_ChangeProcSub_HikaeWazaAff(wk, defender, BTL_TYPEAFF_100) )
+      if( !fDamageWaza )
       {
         return ( GFL_STD_Rand(&wk->AIRandContext, 2) < 1 );
       }
-    }
-    if( !fDamageWaza )
-    {
-      return ( GFL_STD_Rand(&wk->AIRandContext, 2) < 1 );
     }
   }
   return FALSE;
@@ -2737,7 +2788,7 @@ static BOOL AI_ChangeProcSub_Kodawari( BTL_CLIENT* wk, const BTL_POKEPARAM* atta
 /**
  *  交換チェック：前ターンに受けたワザの受け特性を持っている控えポケチェック
  */
-static BOOL AI_ChangeProcSub_UkeTokusei( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, const BTL_POKEPARAM* targetPoke, u8* changeIndex )
+static BOOL ChangeAI_CheckUkeTokusei( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, const BTL_POKEPARAM* targetPoke, u8* changeIndex )
 {
   enum {
     CHECK_TOK_MAX = 4,  // チェックするとくせい最大数
@@ -2765,8 +2816,11 @@ static BOOL AI_ChangeProcSub_UkeTokusei( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
     }
   }
 
+
   while( BPP_WAZADMGREC_Get(procPoke, 1, idx++, &rec) )
   {
+    BTL_N_Printf( DBGSTR_CLIENT_CHGAI_UkeTokStart, rec.wazaType );
+
     for(i=0; i<NELEMS(CheckTable); ++i)
     {
       if( CheckTable[i].wazaType == rec.wazaType )
@@ -2778,9 +2832,15 @@ static BOOL AI_ChangeProcSub_UkeTokusei( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
           if( CheckTable[i].tokusei[t] == POKETOKUSEI_NULL ){ break; }
           if( AI_ChangeProcSub_CheckTokHikae(wk, CheckTable[i].tokusei[t], &hikae_idx) )
           {
-            TAYA_Printf(" %d 番目がtype=%dを受けられるポケモンだ\n", hikae_idx, rec.wazaType );
-            *changeIndex = hikae_idx;
-            return (GFL_STD_Rand(&wk->AIRandContext, 2) == 0);
+            BTL_N_Printf( DBGSTR_CLIENT_CHGAI_UkeTokFind, hikae_idx, rec.wazaType );
+
+            if( GFL_STD_Rand(&wk->AIRandContext, 2) == 0 )
+            {
+              BTL_N_Printf( DBGSTR_CLIENT_CHGAI_UkeTokDecide );
+
+              *changeIndex = hikae_idx;
+              return TRUE;
+            }
           }
         }
       }
@@ -2850,7 +2910,7 @@ static BOOL AI_ChangeProcSub_WazaAff( BTL_CLIENT* wk, const BTL_POKEPARAM* procP
 
       for(i=hikaeStart; i<memberCnt; ++i)
       {
-        if( !AI_ChangeProc_CheckReserve(wk, i) )
+        if( !ChangeAI_CheckReserve(wk, i) )
         {
           const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
           if( AI_ChangeProcSub_CheckWazaAff(wk, bpp, targetPoke, BTL_TYPEAFF_200) )
@@ -2889,11 +2949,11 @@ static BOOL AI_ChangeProcSub_CheckTokHikae( BTL_CLIENT* wk, u16 tokusei, u8* ind
   u32 i, hikaeStart, memberCnt;
 
   memberCnt = BTL_PARTY_GetMemberCount( wk->myParty );
-  hikaeStart = BTL_RULE_GetNumFrontPos( BTL_MAIN_GetRule(wk->mainModule) );
+  hikaeStart = BTL_RULE_HandPokeIndex( BTL_MAIN_GetRule(wk->mainModule), wk->numCoverPos );
 
   for(i=hikaeStart; i<memberCnt; ++i)
   {
-    if( !AI_ChangeProc_CheckReserve(wk, i) )
+    if( !ChangeAI_CheckReserve(wk, i) )
     {
       const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
       if( !BPP_IsDead(bpp) && (BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == tokusei) )
@@ -2918,7 +2978,7 @@ static BOOL AI_ChangeProcSub_HikaeWazaAff( BTL_CLIENT* wk, const BTL_POKEPARAM* 
 
   for(i=hikaeStart; i<memberCnt; ++i)
   {
-    if( !AI_ChangeProc_CheckReserve(wk, i) )
+    if( !ChangeAI_CheckReserve(wk, i) )
     {
       const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
       if( AI_ChangeProcSub_CheckWazaAff(wk, bpp, target, affMin) ){
@@ -2941,7 +3001,7 @@ static BOOL AI_ChangeProcSub_HikaePokeAff( BTL_CLIENT* wk, PokeType wazaType, Bt
 
   for(i=hikaeStart; i<memberCnt; ++i)
   {
-    if( !AI_ChangeProc_CheckReserve(wk, i) )
+    if( !ChangeAI_CheckReserve(wk, i) )
     {
       const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
       PokeTypePair  pokeType = BPP_GetPokeType( bpp );
@@ -2992,7 +3052,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 
   GF_ASSERT(wk->AIHandle);
 
-  AI_ChangeProc_Init( wk );
+  ChangeAI_InitWork( wk );
 
   for(i=0; i<wk->numCoverPos; ++i)
   {
@@ -3022,14 +3082,12 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
       // 入れ替えチェック
       if( BTL_MAIN_GetCompetitor(wk->mainModule) != BTL_COMPETITOR_WILD )
       {
-        /*
         u8 targetIndex;
         if( ChangeAI_Root(wk, pp,  i, &targetIndex) )
         {
           BTL_ACTION_SetChangeParam( wk->procAction, i, targetIndex );
           continue;
         }
-        */
       }
 
       if( BPP_CheckSick(pp, WAZASICK_ENCORE)
@@ -3086,6 +3144,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 //--------------------------------------------------------------------------
 static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list )
 {
+  const BTL_POKEPARAM* bpp;
   u8 cnt, numMembers, numFront, i, j;
 
   numMembers = BTL_PARTY_GetMemberCount( wk->myParty );
@@ -3093,19 +3152,105 @@ static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list )
 
   for(i=numFront, cnt=0; i<numMembers; i++)
   {
+    bpp = BTL_PARTY_GetMemberDataConst(wk->myParty, i);
+    if( BPP_IsFightEnable(bpp) )
     {
-      const BTL_POKEPARAM* pp = BTL_PARTY_GetMemberDataConst(wk->myParty, i);
-      if( !BPP_IsDead(pp) )
-      {
-        if( list ){
-          list[cnt] = i;
-        }
-        ++cnt;
+      if( list ){
+        list[cnt] = i;
       }
+      ++cnt;
     }
   }
   return cnt;
 }
+//----------------------------------------------------------------------------------
+/**
+ * calcPuttablePokemonsで生成した list を出すべき順に並べ替え（相手との相性による）
+ *
+ * @param   wk
+ * @param   list
+ * @param   numList
+ *
+ * @retval  u8
+ */
+//----------------------------------------------------------------------------------
+static void sortPuttablePokemonList( BTL_CLIENT* wk, u8* list, u8 numPoke, const BTL_POKEPARAM* target )
+{
+  u16 affVal[ BTL_PARTY_MEMBER_MAX ];
+  const BTL_POKEPARAM* bpp;
+  PokeTypePair targetType;
+  u8  i, j;
+
+  targetType = BPP_GetPokeType( target );
+
+  for(i=0; i<numPoke; ++i)
+  {
+    affVal[i] = 0;
+    bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, list[i] );
+    if( !BPP_IsDead(bpp) )
+    {
+      u8 wazaCnt = BPP_WAZA_GetCount( bpp );
+      for(j=0; j<wazaCnt; ++j)
+      {
+        if( BPP_WAZA_GetPP(bpp, j) )
+        {
+          WazaID waza = BPP_WAZA_GetID( bpp, j );
+          if( WAZADATA_IsDamage(waza) )
+          {
+            PokeType wazaType = WAZADATA_GetType( waza );
+            u16 pow = WAZADATA_GetPower( waza );
+            if( pow < 10 ){ // 10未満は特殊設定として大体60くらいに…
+              pow = 60;
+            }
+            switch( BTL_CALC_TypeAffPair(wazaType, targetType) ){
+            case BTL_TYPEAFF_400:  pow *= 4; break;
+            case BTL_TYPEAFF_200:  pow *= 2; break;
+            case BTL_TYPEAFF_50:   pow /= 2; break;
+            case BTL_TYPEAFF_25:   pow /= 4; break;
+            case BTL_TYPEAFF_0:    pow = 0; break;
+            }
+
+            if( affVal[i] < pow ){
+              affVal[ i ] = pow;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  BTL_N_Printf( DBGSTR_CLIENT_CHGAI_PreSortList );
+  for(i=0; i<numPoke; ++i){
+    BTL_N_PrintfSimple( DBGSTR_CLIENT_CHGAI_SortListVal, list[i], affVal[i]);
+  }
+  BTL_N_PrintfSimple( DBGSTR_LF );
+
+  for(i=0; i<numPoke; ++i)
+  {
+    for(j=i+1; j<numPoke; ++j)
+    {
+      if( affVal[i] < affVal[j] )
+      {
+        u16 tmp = affVal[i];
+        affVal[i] = affVal[j];
+        affVal[j] = tmp;
+
+        tmp = list[i];
+        list[i] = list[j];
+        list[j] = tmp;
+      }
+    }
+  }
+
+
+  BTL_N_Printf( DBGSTR_CLIENT_CHGAI_AfterSortList );
+  for(i=0; i<numPoke; ++i){
+    BTL_N_PrintfSimple( DBGSTR_CLIENT_CHGAI_SortListVal, list[i], affVal[i]);
+  }
+  BTL_N_PrintfSimple( DBGSTR_LF );
+
+}
+
 //--------------------------------------------------------------------------
 /**
  * ポケモン選択画面用パラメータセット
@@ -3302,6 +3447,13 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
       u8 numSelect = wk->myChangePokeCnt;
       u8 posIdx, clientID, i;
 
+      {
+        const BTL_POKEPARAM* target = ChangeAI_DecideTarget( wk, wk->myChangePokePos[0] );
+        if( target ){
+          sortPuttablePokemonList( wk, puttableList, numPuttable, target );
+        }
+      }
+
       // 生きてるポケが出さなければいけない数に足りない場合、そこを諦める
       if( numSelect > numPuttable )
       {
@@ -3327,7 +3479,7 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
   }
   else
   {
-     BTL_Printf("myID=%d 誰も死んでない\n", wk->myID);
+     BTL_N_Printf( DBGSTR_CLIENT_NotDeadMember, wk->myID);
      BTL_ACTION_SetNULL( &wk->actionParam[0] );
      wk->returnDataPtr = &(wk->actionParam[0]);
      wk->returnDataSize = sizeof(wk->actionParam[0]);
@@ -3876,6 +4028,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_SET_FAKESRC,        scProc_OP_SetFakeSrc      },
     { SC_OP_CLEAR_CONSUMED_ITEM,scProc_OP_ClearConsumedItem },
     { SC_OP_WAZADMG_REC,        scProc_OP_AddWazaDamage   },
+    { SC_OP_TURN_CHECK,         scProc_OP_TurnCheck       },
     { SC_ACT_KILL,              scProc_ACT_Kill           },
     { SC_ACT_MOVE,              scProc_ACT_Move           },
     { SC_ACT_EXP,               scProc_ACT_Exp            },
@@ -5793,6 +5946,7 @@ static BOOL scProc_OP_SickSet( BTL_CLIENT* wk, int* seq, const int* args )
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
   BPP_SICK_CONT cont;
   cont.raw = args[2];
+
   BPP_SetWazaSick( pp, args[1], cont );
   return TRUE;
 }
@@ -5983,12 +6137,29 @@ static BOOL scProc_OP_ClearConsumedItem( BTL_CLIENT* wk, int* seq, const int* ar
 }
 /**
  *  ワザダメージ記録追加
- *  args [0]:pokeID [1]:pokePos [2]:wazaType [3]:wazaID [4]:damage
+ *  args [0]:defPokeID [1]:atkPokeID [2]:pokePos [3]:wazaType [4]:wazaID [5]:damage
  */
 static BOOL scProc_OP_AddWazaDamage( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  BPP_ClearConsumedItem( bpp );
+  BPP_WAZADMG_REC rec;
+
+  BPP_WAZADMG_REC_Setup( &rec, args[1], args[2], args[4], args[3], args[5] );
+  BPP_WAZADMGREC_Add( bpp, &rec );
+
+  return TRUE;
+}
+/**
+ *  ターンチェック処理
+ *  args [0]:pokeID
+ */
+static BOOL scProc_OP_TurnCheck( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+
+  BPP_TurnCheck( bpp );
+  BPP_CombiWaza_ClearParam( bpp );
+
   return TRUE;
 }
 
