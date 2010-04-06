@@ -21,7 +21,211 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_zone_c04r0303
+_EVENT_DATA    ev_c04r0303_footballm_01
+_EVENT_DATA    ev_c04r0303_footballm_02
+_EVENT_DATA    ev_c04r0303_footballm_03
+_EVENT_DATA    ev_c04r0303_footballm_04
+_EVENT_DATA    ev_c04r0303_footballm_05
+_EVENT_DATA    ev_c04r0303_footballm_06
+_EVENT_DATA    ev_c04r0303_footballm_07
+_EVENT_DATA    ev_c04r0303_footballm_08
+_EVENT_DATA    ev_c04r0303_footballm_09
+_EVENT_DATA    ev_c04r0303_footballm_10
+_EVENT_DATA    ev_c04r0303_footballm_11
+_EVENT_DATA    ev_c04r0303_footballm_12
+_EVENT_DATA    ev_c04r0303_footballm_13
+_EVENT_DATA    ev_c04r0303_footballm_14
+_EVENT_DATA    ev_c04r0303_footballm_15
+_EVENT_DATA    ev_c04r0303_gentleman_01
 _EVENT_DATA_END
+
+
+/************************************************************/
+/*						アメフト選手１						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_01
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm1_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手２						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_02
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm2_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手３						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_03
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm3_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手４						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_04
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm4_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手５						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_05
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm5_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手６						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_06
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm6_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手７						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_07
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm7_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手８						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_08
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm8_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手９						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_09
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm9_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手１０					*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_10
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm10_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手１１					*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_11
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm11_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手１２					*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_12
+	_TALK_START_TURN_NOT()
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm12_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手１３					*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_13
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm13_01 )
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手１４					*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_14
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm14_01 )
+EVENT_END
+
+
+/************************************************************/
+/*						アメフト選手１５					*/
+/************************************************************/
+EVENT_START	ev_c04r0303_footballm_15
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_fottoballm15_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							オーナー						*/
+/************************************************************/
+EVENT_START	ev_c04r0303_gentleman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_gentleman_01 )
+EVENT_END
 
 
 /************************************************************/
