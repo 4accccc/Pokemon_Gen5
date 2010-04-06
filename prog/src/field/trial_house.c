@@ -110,9 +110,12 @@ static void SetDLDataType( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
   exa = SaveControl_Extra_DataPtrGet( sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION, 0);
   //データの有効性をチェック
   rc = BATTLE_EXAMINATION_SAVE_IsInData(exa);
-  if (!rc) type = TH_DL_DATA_TYPE_NONE;
-  else
+  if (!rc) type = TH_DL_DATA_TYPE_NONE;       //データないよ
+  else                                        //データあるよ
   {
+    if ( BATTLE_EXAMINATION_SAVE_IsSingleBattle(exa) ) type = TH_DL_DATA_TYPE_SINGLE;
+    else type = TH_DL_DATA_TYPE_DOUBLE;
+#if 0    
     //一人目のトレーナーの手持ちポケモンの４番目を取得
     data = BATTLE_EXAMINATION_SAVE_GetData(exa, 0);
     //3匹目取得
@@ -127,7 +130,7 @@ static void SetDLDataType( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
       else type = TH_DL_DATA_TYPE_SINGLE;
     }  
     else type = TH_DL_DATA_TYPE_NONE;
-    
+#endif    
   }
 
   NOZOMU_Printf("DL_data_type = %d\n",type);
