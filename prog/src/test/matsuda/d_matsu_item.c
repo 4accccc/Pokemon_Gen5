@@ -7,6 +7,7 @@
  */
 //==============================================================================
 #include <gflib.h>
+#if PM_DEBUG
 #include <procsys.h>
 #include <tcbl.h>
 #include "system\main.h"
@@ -564,4 +565,5 @@ const GFL_PROC_DATA DebugMatsudaItemProcData = {
 	DebugMatsudaMainProcEnd,
 };
 
+#endif //PM_DEBUG
 

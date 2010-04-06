@@ -7,6 +7,7 @@
  */
 //==============================================================================
 #include <gflib.h>
+#if PM_DEBUG
 #include <procsys.h>
 #include "system\main.h"
 #include "arc_def.h"
@@ -938,3 +939,4 @@ static void _BoxNaisekiCheck(TITLE_WORK *tw, WRITE_BOX_STATUS *wbs)
 #endif
 }
 
+#endif //PM_DEBUG

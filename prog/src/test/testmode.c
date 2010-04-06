@@ -5,7 +5,7 @@
 //===================================================================
 #include <wchar.h>
 #include <gflib.h>
-
+#if PM_DEBUG
 #include "arc_def.h"
 #include "message.naix"
 #include "font/font.naix"
@@ -1197,6 +1197,7 @@ static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int 
 }
 
 
+#endif// PM_DEBUG
 
 
 

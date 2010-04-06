@@ -7,6 +7,7 @@
  */
 //==============================================================================
 #include <gflib.h>
+#if PM_DEBUG
 #include <procsys.h>
 #include "system\main.h"
 #include "arc_def.h"
@@ -613,3 +614,4 @@ static VecFx32 _BlockPosGet(TITLE_WORK *tw, int block_no)
 	pos.z = ((block_no / base_size) % base_size) * ONE_GRID;
 	return pos;
 }
+#endif //PM_DEBUG

@@ -7,6 +7,7 @@
  */
 //==============================================================================
 #include <gflib.h>
+#if PM_DEBUG
 #include <procsys.h>
 #include <tcbl.h>
 #include "system\main.h"
@@ -541,4 +542,5 @@ const GFL_PROC_DATA DebugSaveProcData = {
 	DebugSaveProcEnd,
 };
 
+#endif //PM_DEBUG
 
