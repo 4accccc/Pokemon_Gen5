@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T14:28:28"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T14:33:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -301,10 +301,8 @@
 　主人公GRIDX=5、GRIDZ=50まで誘導
 ・続けてleader5_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『あっ　[1:00:トレーナー名:0]！
-こっちに　きてよ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『あっ　[1:00:トレーナー名:0]！
-こっちに　来てよ▼</language>
+		<language name="JPN" width="256">チェレン『あっ　[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『あっ　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
 	<row id="msg_d07r0201_leader5_01">
@@ -338,7 +336,7 @@
 		<language name="JPN" width="256">ヤーコン『ところで　おまえたち……
 さいきん　プラズマだんを　みたか？▼
 あれから　ジムリーダーたちで
-はなしあったが▼
+あつまって　はなしあったが▼
 まるで　ちに　もぐっているのか
 あいつらの　アジトが　わからなくてな▼
 コチラとしても
@@ -350,7 +348,7 @@
 		<language name="JPN_KANJI" width="256">ヤーコン『ところで　おまえたち……
 最近　プラズマ団を　みたか？▼
 あれから　ジムリーダーたちで
-話し合ったが▼
+集まって　話し合ったが▼
 まるで　地に　潜っているのか
 あいつらの　アジトが　わからなくてな▼
 コチラとしても

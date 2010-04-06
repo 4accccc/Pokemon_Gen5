@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T18:42:42"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T14:17:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -341,7 +341,7 @@
 これは　調べないと　いけないね▼</language>
 	</row>
 
-	<row id="msg_d05_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05_black_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・d05r0101内でプラズマ団に勝利後
 　画面暗転でここに復帰するとメッセージ表示
@@ -351,11 +351,19 @@
 		<language name="JPN" width="256">チェレン『ポケモンドロボウ　ね……▼
 プラズマだんの　いう
 ポケモンの　かいほうは▽
-ちっとも　りかい　できないね▼</language>
+ちっとも　りかい　できないね▼
+だけど　ぼくたちが　ポケモンと
+はなればなれに　なるのは……▼
+そうぞう　できない　というか
+そんなの　あっちゃ　いけない！</language>
 		<language name="JPN_KANJI" width="256">チェレン『ポケモンドロボウ　ね……▼
 プラズマ団の　いう
 ポケモンの　解放は▽
-ちっとも　理解できないね▼</language>
+ちっとも　理解できないね▼
+だけど　ぼくたちが　ポケモンと
+離れ離れに　なるのは……▼
+想像できない　というか
+そんなの　あっちゃ　いけない！</language>
 	</row>
 
 	<row id="msg_d05_workman2_01">
