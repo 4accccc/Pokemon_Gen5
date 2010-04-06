@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/05 19:06:31
+#save date:2010/04/06 14:17:56
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c11r0201.wms
 #SECTION START:OBJ_EVENT
@@ -200,7 +200,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-DUMMY_OBJ
+UN_ROOM_INFORMATIONW
 #OBJ CODE Number
 INFORMATIONW
 #MOVE CODE Number
