@@ -179,8 +179,8 @@ FLDEFF_TASK* FLDEFF_FISHING_LURE_Set( FLDEFF_CTRL *fectrl, VecFx32* tpos, u8 dir
   FLDEFF_FISHING_LURE *wk;
   TASKHEADER_FISHING_LURE head;
   const u8 ofs_tbl[][4] = {
-   { 8, 0, 8, 8 },  //ä› up,down,left,right
-   { 0, 8, 16, 16 },  //êÛê£
+   { 0, 0, 0, 0 },  //ä› up,down,left,right
+   { 0, 0, 3, 3 },  //êÛê£
   };
 
   if( FLDEFF_CTRL_CheckRegistEffect( fectrl, FLDEFF_PROCID_FISHING_LURE ) == FALSE )
