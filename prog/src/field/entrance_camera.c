@@ -40,10 +40,12 @@
 #define U_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 // 左ドアへの出入り
 #define L_DOOR_FRAME  (0)
+#define L_DOOR_PITCH  (0x1fa1)
 #define L_DOOR_YAW    (0x4000)
 #define L_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 // 右ドアへの出入り
 #define R_DOOR_FRAME  (0)
+#define R_DOOR_PITCH  (0x1fa1)
 #define R_DOOR_YAW    (0xc051)
 #define R_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 //-------------------------------------
@@ -55,10 +57,12 @@
 #define U_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 // 左ドアへの出入り
 #define L_DOOR_FRAME  (20)
+#define L_DOOR_PITCH  (0x1fa1)
 #define L_DOOR_YAW    (0x0e0f)
 #define L_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 // 右ドアへの出入り
 #define R_DOOR_FRAME  (20)
+#define R_DOOR_PITCH  (0x1fa1)
 #define R_DOOR_YAW    (0xf2cc)
 #define R_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 #endif
@@ -411,10 +415,12 @@ static void ECamSetup_IN( ECAM_WORK* work )
       endParam->length = U_DOOR_LENGTH; 
       break;
     case DIR_LEFT:  
+      endParam->pitch = L_DOOR_PITCH;
       endParam->yaw = L_DOOR_YAW;    
       endParam->length = L_DOOR_LENGTH; 
       break;
     case DIR_RIGHT: 
+      endParam->pitch = R_DOOR_PITCH;
       endParam->yaw = R_DOOR_YAW;    
       endParam->length = R_DOOR_LENGTH; 
       break;
@@ -507,10 +513,12 @@ static void ECamSetup_OUT( ECAM_WORK* work )
       startParam->length = U_DOOR_LENGTH; 
       break;
     case DIR_LEFT:  
+      endParam->pitch = R_DOOR_PITCH;
       startParam->yaw = R_DOOR_YAW;    
       startParam->length = R_DOOR_LENGTH; 
       break;
     case DIR_RIGHT: 
+      endParam->pitch = L_DOOR_PITCH;
       startParam->yaw = L_DOOR_YAW;    
       startParam->length = L_DOOR_LENGTH; 
       break;
