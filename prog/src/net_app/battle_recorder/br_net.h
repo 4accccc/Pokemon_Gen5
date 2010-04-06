@@ -112,9 +112,11 @@ extern BOOL BR_NET_GetDownloadNewRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_
 extern BOOL BR_NET_GetDownloadFavoriteRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV *p_data_tbl, int tbl_max, int *p_recv_num );
 extern BOOL BR_NET_GetDownloadSubwayRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV *p_data_tbl, int tbl_max, int *p_recv_num );
 
-
-//--- error ---
-//エラー関係 @todo
-//・エラーがおこったか
-//・戻り先はどこか
-//・どんなメッセージをだすか
+//----エラー
+typedef enum
+{ 
+  BR_NET_ERR_RETURN_NONE,     //エラーが起きていない
+  BR_NET_ERR_RETURN_ONCE,     //１つ前に戻る
+  BR_NET_ERR_RETURN_TOPMENU,  //トップメニューへ戻る
+}BR_NET_ERR_RETURN;
+extern BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no );

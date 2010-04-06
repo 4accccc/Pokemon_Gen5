@@ -293,6 +293,8 @@ static void Br_BvSave_Seq_VideoDownloadSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
     SEQ_FADEOUT_WAIT,
     SEQ_FADEOUT_END,
 
+    SEQ_MSG_WAIT,
+
     SEQ_FADEOUT_START_RET,
     SEQ_FADEOUT_WAIT_RET,
     SEQ_FADEOUT_END_RET,
@@ -342,20 +344,42 @@ static void Br_BvSave_Seq_VideoDownloadSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
     break;
   case SEQ_DOWNLOAD_END:
     { 
+      BR_NET_ERR_RETURN err;
+      int msg;
+
       int video_number;
       BATTLE_REC_RECV       *p_btl_rec;
-      if( BR_NET_GetDownloadBattleVideo( p_wk->p_param->p_net, &p_btl_rec, &video_number ) )
-      {   
-        //受信したので、battle_recを設定
-        BattleRec_DataSet( &p_btl_rec->profile, &p_btl_rec->head,
-            &p_btl_rec->rec, GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata ) );
-        *p_seq  = SEQ_FADEOUT_START;
+
+      err = BR_NET_GetError( p_wk->p_param->p_net, &msg );
+
+      if( err == BR_NET_ERR_RETURN_NONE )
+      { 
+        if( BR_NET_GetDownloadBattleVideo( p_wk->p_param->p_net, &p_btl_rec, &video_number ) )
+        {   
+          //受信したので、battle_recを設定
+          BattleRec_DataSet( &p_btl_rec->profile, &p_btl_rec->head,
+              &p_btl_rec->rec, GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata ) );
+          *p_seq  = SEQ_FADEOUT_START;
+        }
+        else
+        { 
+          //受信に失敗したので、戻る
+          BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_031 );
+          *p_seq  = SEQ_MSG_WAIT;
+        }
       }
       else
       { 
-        //受信に失敗したので、戻る
-        *p_seq  = SEQ_FADEOUT_START_RET;
+        BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg );
+        *p_seq  = SEQ_MSG_WAIT;
       }
+    }
+    break;
+
+  case SEQ_MSG_WAIT:
+    if( GFL_UI_TP_GetTrg() )
+    { 
+      *p_seq  = SEQ_FADEOUT_START_RET;
     }
     break;
 

@@ -70,7 +70,7 @@ typedef struct
   PRINT_QUE           *p_que;
 	HEAPID              heapID;
   BR_MUSICALLOOK_PROC_PARAM *p_param;
-  BR_BALLEFF_WORK     *p_balleff;
+  BR_BALLEFF_WORK     *p_balleff[ CLSYS_DRAW_MAX ];
 
   //受信したデータ
   MUSICAL_SHOT_RECV   *p_musical_shot_tbl[BR_MUSICALLOOK_RECV_MAX];
@@ -124,9 +124,9 @@ static void Br_MusicalLook_Search_DeleteDisplay( BR_MUSICALLOOK_WORK *p_wk, BR_M
 static void Br_MusicalLook_Download_CreateDisplay( BR_MUSICALLOOK_WORK *p_wk, BR_MUSICALLOOK_PROC_PARAM *p_param );
 static void Br_MusicalLook_Download_DeleteDisplay( BR_MUSICALLOOK_WORK *p_wk, BR_MUSICALLOOK_PROC_PARAM *p_param );
 
-static BOOL Br_MusicalLook_GetTrgProfile( u32 x, u32 y );
-static BOOL Br_MusicalLook_GetTrgLeft( u32 x, u32 y );
-static BOOL Br_MusicalLook_GetTrgRight( u32 x, u32 y );
+static BOOL Br_MusicalLook_GetTrgProfile( BR_MUSICALLOOK_WORK *p_wk, u32 x, u32 y );
+static BOOL Br_MusicalLook_GetTrgLeft( BR_MUSICALLOOK_WORK *p_wk, u32 x, u32 y );
+static BOOL Br_MusicalLook_GetTrgRight( BR_MUSICALLOOK_WORK *p_wk, u32 x, u32 y );
 
 //=============================================================================
 /**
@@ -175,10 +175,15 @@ static GFL_PROC_RESULT BR_MUSICALLOOK_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 	p_wk->heapID	= BR_PROC_SYS_GetHeapID( p_param->p_procsys );
   p_wk->p_que   = PRINTSYS_QUE_Create( p_wk->heapID );
   { 
+    int i;
     GFL_CLUNIT *p_unit;
     p_unit  = BR_GRAPHIC_GetClunit( p_param->p_graphic );
     p_wk->p_bmpoam	= BmpOam_Init( p_wk->heapID, p_unit );
-    p_wk->p_balleff = BR_BALLEFF_Init( p_unit, p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
+
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      p_wk->p_balleff[i] = BR_BALLEFF_Init( p_unit, p_param->p_res, i, p_wk->heapID );
+    }
   }
 
   BR_RES_LoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, p_wk->heapID );
@@ -216,7 +221,13 @@ static GFL_PROC_RESULT BR_MUSICALLOOK_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 
   BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S );
 
-  BR_BALLEFF_Exit( p_wk->p_balleff );
+  { 
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      BR_BALLEFF_Exit( p_wk->p_balleff[i] );
+    }
+  }
   BmpOam_Exit( p_wk->p_bmpoam );
   PRINTSYS_QUE_Delete( p_wk->p_que );
 	//プロセスワーク破棄
@@ -249,7 +260,13 @@ static GFL_PROC_RESULT BR_MUSICALLOOK_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
   }
 
   //ボール処理
-  BR_BALLEFF_Main( p_wk->p_balleff );
+  { 
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      BR_BALLEFF_Main( p_wk->p_balleff[i] );
+    }
+  }
  
   //各プリント表示
   PRINTSYS_QUE_Main( p_wk->p_que );
@@ -407,12 +424,12 @@ static void Br_MusicalLook_Seq_PhotoMain( BR_SEQ_WORK *p_seqwk, int *p_seq, void
       BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_ReturnPhoto );
     }
 
-    if( Br_MusicalLook_GetTrgProfile( x, y ) )
+    if( Br_MusicalLook_GetTrgProfile( p_wk, x, y ) )
     { 
       BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_ChengeProfile );
     }
 
-    if( Br_MusicalLook_GetTrgLeft( x, y ) )
+    if( Br_MusicalLook_GetTrgLeft( p_wk, x, y ) )
     { 
       if( p_wk->photo_idx - 1 < 0 )
       { 
@@ -425,7 +442,7 @@ static void Br_MusicalLook_Seq_PhotoMain( BR_SEQ_WORK *p_seqwk, int *p_seq, void
       BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_ChengePhoto );
     }
 
-    if( Br_MusicalLook_GetTrgRight( x, y ) )
+    if( Br_MusicalLook_GetTrgRight( p_wk, x, y ) )
     { 
       p_wk->photo_idx++;
       p_wk->photo_idx %= p_wk->musical_shot_recv_num;
@@ -449,6 +466,8 @@ static void Br_MusicalLook_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
     SEQ_DOWNLOAD_START,
     SEQ_DOWNLOAD_WAIT,
     SEQ_DOWNLOAD_END,
+
+    SEQ_MSG_WAIT,
   };
 
   BR_MUSICALLOOK_WORK	*p_wk = p_wk_adrs;
@@ -471,24 +490,46 @@ static void Br_MusicalLook_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
     { 
 
       PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
-      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
       *p_seq  = SEQ_DOWNLOAD_END;
     } 
     break;
   case SEQ_DOWNLOAD_END:
     //受信バッファ受け取り
     { 
+      BR_NET_ERR_RETURN err;
+      int msg;
       BOOL is_recv;
-      is_recv = BR_NET_GetDownloadMusicalShot( p_wk->p_param->p_net, p_wk->p_musical_shot_tbl, BR_MUSICALLOOK_RECV_MAX, &p_wk->musical_shot_recv_num );
 
-      if( is_recv && p_wk->musical_shot_recv_num )
+      err = BR_NET_GetError( p_wk->p_param->p_net, &msg );
+
+      if( err == BR_NET_ERR_RETURN_NONE )
       { 
-        BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_NextPhoto );
+
+        is_recv = BR_NET_GetDownloadMusicalShot( p_wk->p_param->p_net, p_wk->p_musical_shot_tbl, BR_MUSICALLOOK_RECV_MAX, &p_wk->musical_shot_recv_num );
+
+        if( is_recv && p_wk->musical_shot_recv_num )
+        { 
+          BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_NextPhoto );
+        }
+        else
+        { 
+          *p_seq  = SEQ_MSG_WAIT;
+          BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_025 );
+        }
       }
       else
       { 
-        BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_ReturnSearch );
+        *p_seq  = SEQ_MSG_WAIT;
+        BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg );
       }
+    }
+    break;
+    
+  case SEQ_MSG_WAIT:
+    if( GFL_UI_TP_GetTrg() )
+    { 
+      BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_ReturnSearch );
     }
     break;
   }
@@ -711,7 +752,7 @@ static void Br_MusicalLook_Seq_NextDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, v
       GFL_POINT pos;
       pos.x = 256/2;
       pos.y = 192/2;
-      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
     }
 
     *p_seq  = SEQ_CHANGE_FADEIN_START;
@@ -1075,7 +1116,10 @@ static void Br_MusicalLook_Search_CreateDisplay( BR_MUSICALLOOK_WORK	*p_wk, BR_M
       p_wk->p_text    = BR_TEXT_Init( p_param->p_res, p_wk->p_que, p_wk->heapID );
     }
     BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_303 );
-    p_wk->p_search  = BR_POKESEARCH_Init( NULL, p_param->p_res, p_unit, p_wk->p_bmpoam, p_param->p_fade, p_wk->p_balleff, p_wk->heapID ); 
+    { 
+      ZUKAN_SAVEDATA *p_zkn = GAMEDATA_GetZukanSave( p_param->p_gamedata );
+      p_wk->p_search  = BR_POKESEARCH_Init( p_zkn, p_param->p_res, p_unit, p_wk->p_bmpoam, p_param->p_fade, p_wk->p_balleff[ CLSYS_DRAW_MAIN ], p_wk->p_balleff[ CLSYS_DRAW_SUB ], p_wk->heapID ); 
+    }
     BR_POKESEARCH_StartUp( p_wk->p_search );
   }
 }
@@ -1145,17 +1189,29 @@ static void Br_MusicalLook_Download_DeleteDisplay( BR_MUSICALLOOK_WORK *p_wk, BR
  *	@return TRUEで押した  FALSEで押していない
  */
 //-----------------------------------------------------------------------------
-static BOOL Br_MusicalLook_GetTrgProfile( u32 x, u32 y )
+static BOOL Br_MusicalLook_GetTrgProfile( BR_MUSICALLOOK_WORK *p_wk, u32 x, u32 y )
 { 
 	GFL_RECT rect;
+  BOOL ret;
 
 	rect.left		= (8)*8;
 	rect.right	= (8 + 15)*8;
 	rect.top		= (2)*8;
 	rect.bottom	= (2 + 4)*8;
 
-  return ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
+  ret = ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
             & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
+
+  if( ret )
+  { 
+    GFL_POINT pos;
+    pos.x = x;
+    pos.y = y;
+    BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+    PMSND_PlaySE( BR_SND_SE_OK );
+  }
+
+  return ret;
 }
 
 //----------------------------------------------------------------------------
@@ -1168,17 +1224,29 @@ static BOOL Br_MusicalLook_GetTrgProfile( u32 x, u32 y )
  *	@return TRUEで押した  FALSEで押していない
  */
 //-----------------------------------------------------------------------------
-static BOOL Br_MusicalLook_GetTrgLeft( u32 x, u32 y )
+static BOOL Br_MusicalLook_GetTrgLeft( BR_MUSICALLOOK_WORK *p_wk, u32 x, u32 y )
 { 
 	GFL_RECT rect;
+  BOOL ret;
 
 	rect.left		= (3)*8;
 	rect.right	= (8)*8;
 	rect.top		= (8)*8;
 	rect.bottom	= (13)*8;
 
-  return ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
+  ret = ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
             & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
+
+  if( ret )
+  { 
+    GFL_POINT pos;
+    pos.x = x;
+    pos.y = y;
+    BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+    PMSND_PlaySE( BR_SND_SE_OK );
+  }
+
+  return ret;
 }
 
 //----------------------------------------------------------------------------
@@ -1191,15 +1259,28 @@ static BOOL Br_MusicalLook_GetTrgLeft( u32 x, u32 y )
  *	@return TRUEで押した  FALSEで押していない
  */
 //-----------------------------------------------------------------------------
-static BOOL Br_MusicalLook_GetTrgRight( u32 x, u32 y )
+static BOOL Br_MusicalLook_GetTrgRight( BR_MUSICALLOOK_WORK *p_wk, u32 x, u32 y )
 { 
 	GFL_RECT rect;
+  BOOL ret;
 
 	rect.left		= (23)*8;
 	rect.right	= (28)*8;
 	rect.top		= (8)*8;
 	rect.bottom	= (13)*8;
 
-  return ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
+  ret = ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
             & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
+
+  if( ret )
+  { 
+    GFL_POINT pos;
+    pos.x = x;
+    pos.y = y;
+    BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+
+    PMSND_PlaySE( BR_SND_SE_OK );
+  }
+
+  return ret;
 }

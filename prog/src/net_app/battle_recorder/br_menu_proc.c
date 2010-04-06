@@ -115,9 +115,18 @@ static GFL_PROC_RESULT BR_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
   BR_RES_LoadCommon( p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
   BR_RES_LoadCommon( p_param->p_res, CLSYS_DRAW_SUB, p_wk->heapID );
 
+  if( p_param->menuID < BR_BTLVIDEO_MENUID_TOP )
+  { 
+    BR_RES_LoadBG( p_param->p_res, BR_RES_BG_BROWSE_LOGO_M, p_wk->heapID );
+  }
+  else
+  { 
+    BR_RES_LoadBG( p_param->p_res, BR_RES_BG_GDS_LOGO_M, p_wk->heapID );
+  }
+
 	//モジュール初期化
   { 
-    p_wk->p_btn	= BR_BTN_SYS_Init( p_param->menuID, p_param->p_unit, p_param->p_res, p_param->cp_saveinfo, p_wk->heapID );
+    p_wk->p_btn	= BR_BTN_SYS_Init( p_param->menuID, p_param->p_unit, p_param->p_res, p_param->cp_saveinfo, p_param->p_btn_recovery, p_wk->heapID );
   }
 
   BR_FADE_ALPHA_SetAlpha( p_param->p_fade, BR_FADE_DISPLAY_BOTH, 0 );
@@ -142,6 +151,15 @@ static GFL_PROC_RESULT BR_MENU_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 {	
 	BR_MENU_WORK				*p_wk	= p_wk_adrs;
 	BR_MENU_PROC_PARAM	*p_param	= p_param_adrs;
+
+  if( p_param->menuID < BR_BTLVIDEO_MENUID_TOP )
+  { 
+    BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_BROWSE_LOGO_M );
+  }
+  else
+  { 
+    BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_GDS_LOGO_M );
+  }
 
 	//モジュール破棄
 	BR_BTN_SYS_Exit( p_wk->p_btn );

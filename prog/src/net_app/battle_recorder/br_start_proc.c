@@ -262,6 +262,8 @@ static void Br_Start_Seq_Open( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_TOUCH,
     SEQ_FADESTART,
     SEQ_FADEWAIT,
+    SEQ_FADEOUT_INIT,
+    SEQ_FADEOUT_WAIT,
     SEQ_END,
   };
 
@@ -360,8 +362,20 @@ static void Br_Start_Seq_Open( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
       if( is_end )
       { 
-        (*p_seq)  = SEQ_END;
+        (*p_seq)  = SEQ_FADEOUT_INIT;
       }
+    }
+    break;
+    
+  case SEQ_FADEOUT_INIT:
+    BR_FADE_StartFadeEx( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT, 1 );
+    *p_seq  = SEQ_FADEOUT_WAIT;
+    break;
+
+  case SEQ_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_END;
     }
     break;
 
@@ -448,14 +462,38 @@ static void Br_Start_Seq_Close( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
  */
 //-----------------------------------------------------------------------------
 static void Br_Start_Seq_None( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
-{ 
+{
+  enum
+  { 
+    SEQ_FADEOUT_INIT,
+    SEQ_FADEOUT_WAIT,
+    SEQ_FADEOUT_EXIT,
+  };
+
   BR_START_WORK  *p_wk     = p_wk_adrs;
 
-  BR_SIDEBAR_SetShakePos( p_wk->p_param->p_sidebar );
-  BR_SIDEBAR_StartShake( p_wk->p_param->p_sidebar );
+  switch( *p_seq )
+  { 
+  case SEQ_FADEOUT_INIT:
+    BR_FADE_StartFadeEx( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT, 1 );
+    *p_seq  = SEQ_FADEOUT_WAIT;
+    break;
 
-  BR_PROC_SYS_Push( p_wk->p_param->p_procsys, BR_PROCID_MENU );
-  BR_SEQ_SetNext( p_seqwk, Br_Start_Seq_End );
+  case SEQ_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_FADEOUT_EXIT;
+    }
+    break;
+
+  case SEQ_FADEOUT_EXIT:
+    BR_SIDEBAR_SetShakePos( p_wk->p_param->p_sidebar );
+    BR_SIDEBAR_StartShake( p_wk->p_param->p_sidebar );
+
+    BR_PROC_SYS_Push( p_wk->p_param->p_procsys, BR_PROCID_MENU );
+    BR_SEQ_SetNext( p_seqwk, Br_Start_Seq_End );
+    break;
+  }
 }
 //----------------------------------------------------------------------------
 /**

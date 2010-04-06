@@ -302,6 +302,8 @@ static void Br_BvSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     SEQ_UPLOAD_START,
     SEQ_UPLOAD_WAIT,
     SEQ_UPLOAD_END,
+
+    SEQ_MSG_WAIT,
   };
 
   BR_BVSEND_WORK  *p_wk = p_wk_adrs;
@@ -337,40 +339,59 @@ static void Br_BvSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
       u64 number  = 0;
+      BR_NET_ERR_RETURN err;
+      int msg;
+
       PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
-      if( BR_NET_GetUploadBattleVideoNumber( p_wk->p_param->p_net, &number ) )
+      err = BR_NET_GetError( p_wk->p_param->p_net, &msg );
+
+
+      if( err == BR_NET_ERR_RETURN_NONE )
       { 
-        OS_TPrintf( "送信したビデオナンバー%d\n", number );
-        //@todo すでに　とうろくされいます
+        if( BR_NET_GetUploadBattleVideoNumber( p_wk->p_param->p_net, &number ) )
+        { 
+          OS_TPrintf( "送信したビデオナンバー%d\n", number );
 
-        //おくりました
-        {
-          GFL_MSGDATA *p_msg  = BR_RES_GetMsgData( p_wk->p_param->p_res );
-          WORDSET     *p_word = BR_RES_GetWordSet( p_wk->p_param->p_res );
-          STRBUF  *p_src    = GFL_MSG_CreateString( p_msg, msg_info_026 );
-          STRBUF  *p_strbuf = GFL_STR_CreateBuffer( 128, GFL_HEAP_LOWID(HEAPID_BATTLE_RECORDER_SYS) );
+          //おくりました
+          {
+            GFL_MSGDATA *p_msg  = BR_RES_GetMsgData( p_wk->p_param->p_res );
+            WORDSET     *p_word = BR_RES_GetWordSet( p_wk->p_param->p_res );
+            STRBUF  *p_src    = GFL_MSG_CreateString( p_msg, msg_info_026 );
+            STRBUF  *p_strbuf = GFL_STR_CreateBuffer( 128, GFL_HEAP_LOWID(HEAPID_BATTLE_RECORDER_SYS) );
 
-          u32 block[3];
+            u32 block[3];
 
-          BR_TOOL_GetVideoNumberToBlock( number, block, 3 );
+            BR_TOOL_GetVideoNumberToBlock( number, block, 3 );
 
-          WORDSET_RegisterNumber( p_word, 2, block[0], 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-          WORDSET_RegisterNumber( p_word, 1, block[1], 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-          WORDSET_RegisterNumber( p_word, 0, block[2], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
-          BR_TEXT_PrintBuff( p_wk->p_text, p_wk->p_param->p_res, p_strbuf );
+            WORDSET_RegisterNumber( p_word, 2, block[0], 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+            WORDSET_RegisterNumber( p_word, 1, block[1], 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+            WORDSET_RegisterNumber( p_word, 0, block[2], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+            WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+            BR_TEXT_PrintBuff( p_wk->p_text, p_wk->p_param->p_res, p_strbuf );
 
-          GFL_STR_DeleteBuffer( p_strbuf );
-          GFL_STR_DeleteBuffer( p_src );
+            GFL_STR_DeleteBuffer( p_strbuf );
+            GFL_STR_DeleteBuffer( p_src );
+          }
         }
       }
+      else
+      { 
+        BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg );
+      }
       BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
-      *p_seq  = SEQ_UPLOAD_END;
+      *p_seq  = SEQ_MSG_WAIT;
     }
     break;
 
   case SEQ_UPLOAD_END:
     BR_SEQ_SetNext( p_seqwk, Br_BvSend_Seq_FadeOut );
+    break;
+    
+  case SEQ_MSG_WAIT:
+    if( GFL_UI_TP_GetTrg() )
+    { 
+      *p_seq  = SEQ_UPLOAD_END;
+    }
     break;
   }
 }

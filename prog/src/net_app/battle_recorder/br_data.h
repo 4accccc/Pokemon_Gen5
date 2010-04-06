@@ -45,4 +45,5 @@ typedef struct
   BR_PROC_SYS_RECOVERY_DATA proc_recovery;  //プロセスの繋がり復帰データ
   u32                       record_mode;    //レコード復帰時のモード
   BR_SAVE_INFO              rec_saveinfo;   //自分の録画保存状況
+  BR_BTN_SYS_RECOVERY_DATA  btn_recovery;   //ボタンの繋がり復帰データ
 } BR_DATA;

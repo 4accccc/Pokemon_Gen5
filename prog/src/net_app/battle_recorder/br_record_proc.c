@@ -81,7 +81,8 @@ typedef struct
   BMPOAM_SYS_PTR		p_bmpoam;	//BMPOAMシステム
   PRINT_QUE         *p_que;   //プリントキュー
   BR_SEQ_WORK       *p_seq;
-  BR_BALLEFF_WORK   *p_balleff;
+  BR_BALLEFF_WORK   *p_balleff[ CLSYS_DRAW_MAX ];
+  BR_BALLEFF_WORK   *p_balleff_sub;
   BR_TEXT_WORK      *p_text;
 
 	BR_BTN_WORK	      *p_btn[ BR_RECORD_BTNID_MAX ];
@@ -95,8 +96,8 @@ typedef struct
   u32               res_icon_chr[HEADER_MONSNO_MAX];
   GFL_CLWK          *p_icon[HEADER_MONSNO_MAX];
 
-  BOOL              is_profile;
-	HEAPID            heapID;
+  BOOL                  is_profile;
+	HEAPID                heapID;
 
   GDS_PROFILE_PTR       p_profile;
   BATTLE_REC_HEADER_PTR p_header;
@@ -154,9 +155,7 @@ static void Br_Record_Download_DeleteDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_P
 //=====================================
 static BOOL Br_Record_Check2vs2( BATTLE_REC_HEADER_PTR p_head );
 static BOOL Br_Record_GetTrgProfile( BR_RECORD_WORK * p_wk, u32 x, u32 y );
-static BOOL Br_Record_GetTrgStart( u32 x, u32 y );
-static BOOL Br_Record_GetTrgYes( u32 x, u32 y );
-static BOOL Br_Record_GetTrgNo( u32 x, u32 y );
+static BOOL Br_Record_GetTrgStart( BR_RECORD_WORK * p_wk, u32 x, u32 y );
 
 //=============================================================================
 /**
@@ -206,7 +205,14 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
   p_wk->p_bmpoam		= BmpOam_Init( p_wk->heapID, p_param->p_unit);
   p_wk->p_que       = PRINTSYS_QUE_Create( p_wk->heapID );
   p_wk->p_seq       = BR_SEQ_Init( p_wk, NULL, p_wk->heapID );
-  p_wk->p_balleff   = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
+
+  {
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      p_wk->p_balleff[i]   = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, i, p_wk->heapID );
+    }
+  }
 
   //読み込むデータを選別
   switch( p_wk->p_param->mode )
@@ -290,7 +296,13 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
   GFL_BG_LoadScreenReq( BG_FRAME_M_FONT );
 
 	//モジュール破棄
-  BR_BALLEFF_Exit( p_wk->p_balleff );
+  { 
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      BR_BALLEFF_Exit( p_wk->p_balleff[i] );
+    }
+  }
   BR_SEQ_Exit( p_wk->p_seq );
   PRINTSYS_QUE_Delete( p_wk->p_que );
   BmpOam_Exit( p_wk->p_bmpoam );
@@ -343,7 +355,13 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
   }
 
   //ボール処理
-  BR_BALLEFF_Main( p_wk->p_balleff );
+  { 
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      BR_BALLEFF_Main( p_wk->p_balleff[i] );
+    }
+  }
 
   //文字表示
   PRINTSYS_QUE_Main( p_wk->p_que );
@@ -551,7 +569,7 @@ static void Br_Record_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     }
 
     //再生ボタン
-    if( Br_Record_GetTrgStart( x, y ) )
+    if( Br_Record_GetTrgStart( p_wk, x, y ) )
     { 
       if( p_wk->p_param->mode == BR_RECODE_PROC_DOWNLOAD_RANK
           || p_wk->p_param->mode == BR_RECODE_PROC_DOWNLOAD_NUMBER )
@@ -658,7 +676,11 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
 
     SEQ_FADEOUT_START,
     SEQ_FADEOUT_WAIT,
+    SEQ_FADECHANGE_START,
+    SEQ_FADECHANGE_WAIT,
     SEQ_END,
+
+    SEQ_MSG_WAIT,
 
     SEQ_FADEOUT_START_EXIT,
     SEQ_FADEOUT_WAIT_EXIT,
@@ -700,28 +722,52 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
       PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
-      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
       *p_seq  = SEQ_DOWNLOAD_END;
     }
     break;
   case SEQ_DOWNLOAD_END:
     { 
+      BR_NET_ERR_RETURN err;
+      int msg;
       BATTLE_REC_RECV *p_recv;
       int video_number;
-      if( BR_NET_GetDownloadBattleVideo( p_wk->p_param->p_net, &p_recv, &video_number ) )
-      { 
-        p_wk->p_profile = &p_recv->profile;
-        p_wk->p_header  = &p_recv->head;
 
-        *p_seq  = SEQ_FADEOUT_START;
+      err = BR_NET_GetError( p_wk->p_param->p_net, &msg );
+
+
+      if( err == BR_NET_ERR_RETURN_NONE )
+      { 
+        if( BR_NET_GetDownloadBattleVideo( p_wk->p_param->p_net, &p_recv, &video_number ) )
+        { 
+          p_wk->p_profile = &p_recv->profile;
+          p_wk->p_header  = &p_recv->head;
+
+          *p_seq  = SEQ_FADEOUT_START;
+        }
+        else
+        { 
+          BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_err_042 );
+          *p_seq  = SEQ_MSG_WAIT;
+        }
       }
       else
-      { 
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        *p_seq  = SEQ_FADEOUT_START_EXIT;
+      {
+        BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg );
+        *p_seq  = SEQ_MSG_WAIT;
       }
     }
     break;
+
+
+  case SEQ_MSG_WAIT:
+    if( GFL_UI_TP_GetTrg() )
+    { 
+      BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+      *p_seq  = SEQ_FADEOUT_START_EXIT;
+    }
+    break;
+
   case SEQ_FADEOUT_START:
     BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
     *p_seq  = SEQ_FADEOUT_WAIT;
@@ -729,11 +775,23 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
   case SEQ_FADEOUT_WAIT:
     if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
     { 
+      Br_Record_Download_DeleteDisplay( p_wk, p_wk->p_param );
+      Br_Record_CreateSubDisplay( p_wk, p_wk->p_param );
+      Br_Record_CreateMainDisplaySingle( p_wk, p_wk->p_param );
+      *p_seq  = SEQ_FADECHANGE_START;
+    }
+    break;
+  case SEQ_FADECHANGE_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    *p_seq  = SEQ_FADECHANGE_WAIT;
+    break;
+  case SEQ_FADECHANGE_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
       *p_seq  = SEQ_END;
     }
     break;
   case SEQ_END:
-    Br_Record_Download_DeleteDisplay( p_wk, p_wk->p_param );
     BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_Main );
     break;
 
@@ -780,6 +838,8 @@ static void Br_Record_Seq_VideoDownloadRecPlay( BR_SEQ_WORK *p_seqwk, int *p_seq
     SEQ_FADEOUT_START,
     SEQ_FADEOUT_WAIT,
     SEQ_FADEOUT_END,
+
+    SEQ_MSG_WAIT,
 
     SEQ_FADEOUT_START_RET,
     SEQ_FADEOUT_WAIT_RET,
@@ -846,31 +906,53 @@ static void Br_Record_Seq_VideoDownloadRecPlay( BR_SEQ_WORK *p_seqwk, int *p_seq
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
       PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
-      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
       *p_seq  = SEQ_DOWNLOAD_END;
     }
     break;
   case SEQ_DOWNLOAD_END:
     { 
+      BR_NET_ERR_RETURN err;
+      int msg;
       int video_number;
       BATTLE_REC_RECV       *p_btl_rec;
-      if( BR_NET_GetDownloadBattleVideo( p_wk->p_param->p_net, &p_btl_rec, &video_number ) )
-      {   
-        //受信したので、レコードを設定
-        BattleRec_DataSet( &p_btl_rec->profile, &p_btl_rec->head,
-            &p_btl_rec->rec, GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata ) );
-        
-        p_wk->p_param->p_record->video_number = video_number;
 
-        p_wk->p_param->ret  = BR_RECORD_RETURN_BTLREC;
-        BR_PROC_SYS_Interruput( p_wk->p_param->p_procsys );
-        *p_seq  = SEQ_FADEOUT_START;
+      err = BR_NET_GetError( p_wk->p_param->p_net, &msg );
+
+      if( err == BR_NET_ERR_RETURN_NONE )
+      { 
+        if( BR_NET_GetDownloadBattleVideo( p_wk->p_param->p_net, &p_btl_rec, &video_number ) )
+        {   
+          //受信したので、レコードを設定
+          BattleRec_DataSet( &p_btl_rec->profile, &p_btl_rec->head,
+              &p_btl_rec->rec, GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata ) );
+
+          p_wk->p_param->p_record->video_number = video_number;
+
+          p_wk->p_param->ret  = BR_RECORD_RETURN_BTLREC;
+          BR_PROC_SYS_Interruput( p_wk->p_param->p_procsys );
+          *p_seq  = SEQ_FADEOUT_START;
+        }
+        else
+        { 
+          //受信に失敗したので、戻る
+          BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_err_042 );
+          *p_seq  = SEQ_MSG_WAIT;
+        }
       }
       else
       { 
-        //受信に失敗したので、画面
-        *p_seq  = SEQ_FADEOUT_START_RET;
+          //受信に失敗したので、戻る
+        BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg );
+          *p_seq  = SEQ_MSG_WAIT;
       }
+    }
+    break;
+
+  case SEQ_MSG_WAIT:
+    if( GFL_UI_TP_GetTrg() )
+    { 
+      *p_seq  = SEQ_FADEOUT_START_RET;
     }
     break;
 
@@ -1401,7 +1483,7 @@ static void Br_Record_Download_CreateDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_P
     GFL_POINT pos;
     pos.x = 256/2;
     pos.y = 192/2;
-    BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
+    BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
   }
 }
 //----------------------------------------------------------------------------
@@ -1414,7 +1496,7 @@ static void Br_Record_Download_CreateDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_P
 //-----------------------------------------------------------------------------
 static void Br_Record_Download_DeleteDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param )
 { 
-  BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
+  BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
   if( p_wk->p_text )
   { 
     BR_TEXT_Exit( p_wk->p_text, p_wk->p_param->p_res );
@@ -1477,6 +1559,10 @@ static BOOL Br_Record_GetTrgProfile( BR_RECORD_WORK * p_wk, u32 x, u32 y )
 
   if( ret )
   { 
+    GFL_POINT pos;
+    pos.x = x;
+    pos.y = y;
+    BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
     PMSND_PlaySE( BR_SND_SE_OK );
   }
 
@@ -1492,7 +1578,7 @@ static BOOL Br_Record_GetTrgProfile( BR_RECORD_WORK * p_wk, u32 x, u32 y )
  *	@return TRUEで押した  FALSEで押していない
  */
 //-----------------------------------------------------------------------------
-static BOOL Br_Record_GetTrgStart( u32 x, u32 y )
+static BOOL Br_Record_GetTrgStart( BR_RECORD_WORK * p_wk, u32 x, u32 y )
 { 
 	GFL_RECT rect;
   BOOL ret;
@@ -1506,69 +1592,12 @@ static BOOL Br_Record_GetTrgStart( u32 x, u32 y )
             & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
   if( ret )
   { 
+    GFL_POINT pos;
+    pos.x = x;
+    pos.y = y;
+    BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
     PMSND_PlaySE( BR_SND_SE_OK );
   }
 
-  return ret;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  はいを選択
- *
- *	@param	x     X座標
- *	@param	y     Y座標
- *
- *	@return TRUE入力  FALSE何もしない
- */
-//-----------------------------------------------------------------------------
-static BOOL Br_Record_GetTrgYes( u32 x, u32 y )
-{ 
-	GFL_RECT rect;
-  BOOL ret;
-
-	rect.left		= (4)*8;
-	rect.right	= (4 + 9)*8;
-	rect.top		= (6)*8;
-	rect.bottom	= (6 + 2)*8;
-
-  ret = ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
-            & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
-
-  
-  if( ret )
-  { 
-    PMSND_PlaySE( BR_SND_SE_OK );
-  }
-
-  return  ret;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  いいえを選択
- *
- *	@param	x     X座標
- *	@param	y     Y座標
- *
- *	@return TRUE入力  FALSE何もしない
- */
-//-----------------------------------------------------------------------------
-static BOOL Br_Record_GetTrgNo( u32 x, u32 y )
-{ 
-	GFL_RECT rect;
-  BOOL  ret;
-
-	rect.left		= (18)*8;
-	rect.right	= (18 + 9)*8;
-	rect.top		= (6)*8;
-	rect.bottom	= (6 + 2)*8;
-
-  ret = ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
-            & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
-
-  
-  if( ret )
-  { 
-    PMSND_PlaySE( BR_SND_SE_OK );
-  }
   return ret;
 }

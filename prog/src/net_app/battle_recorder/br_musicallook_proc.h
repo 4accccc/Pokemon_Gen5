@@ -37,6 +37,7 @@ typedef struct
 	BR_RES_WORK			*p_res;				//[in ]リソース管理
 	BR_PROC_SYS			*p_procsys;		//[in ]プロセス管理
   BR_NET_WORK     *p_net;       //[in ]通信管理
+  GAMEDATA        *p_gamedata;  //[in ]ゲームデータ
 } BR_MUSICALLOOK_PROC_PARAM;
 
 

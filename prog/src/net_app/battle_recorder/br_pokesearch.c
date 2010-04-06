@@ -39,7 +39,7 @@
 ///	デバッグ
 //=====================================
 #ifdef PM_DEBUG
-#define BR_POKESEARCH_ZUKAN_NULL
+//#define BR_POKESEARCH_ZUKAN_NULL
 #endif //PM_DEBUG
 
 
@@ -105,7 +105,7 @@ struct _BR_POKESEARCH_WORK
   BR_LIST_WORK          *p_list;
   BOOL                  is_start;
   BR_POKESEARCH_SEQ     now_seq;
-  BR_BALLEFF_WORK       *p_balleff;
+  BR_BALLEFF_WORK       *p_balleff[ CLSYS_DRAW_MAX ];
 
   const ZUKAN_SAVEDATA  *cp_zkn;
   //ソートされたポケモン番号データ
@@ -133,7 +133,7 @@ static void BR_POKESEARCH_DISPLAY_DeleteList( BR_POKESEARCH_WORK *p_wk );
 //-------------------------------------
 ///	選択
 //=====================================
-static BR_POKESEARCH_ORDER BR_POKESEARCH_HEAD_GetSelect( const BR_POKESEARCH_WORK *cp_wk );
+static BR_POKESEARCH_ORDER BR_POKESEARCH_HEAD_GetSelect( BR_POKESEARCH_WORK *p_wk );
 
 //-------------------------------------
 /// 図鑑から取得
@@ -176,7 +176,7 @@ static const u16 sc_zukansort_data_idx[]=
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-extern BR_POKESEARCH_WORK *BR_POKESEARCH_Init( const ZUKAN_SAVEDATA *cp_zkn, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit,  BMPOAM_SYS_PTR p_bmpoam, BR_FADE_WORK *p_fade, BR_BALLEFF_WORK *p_balleff, HEAPID heapID )
+extern BR_POKESEARCH_WORK *BR_POKESEARCH_Init( const ZUKAN_SAVEDATA *cp_zkn, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit,  BMPOAM_SYS_PTR p_bmpoam, BR_FADE_WORK *p_fade, BR_BALLEFF_WORK *p_balleff_main, BR_BALLEFF_WORK *p_balleff_sub, HEAPID heapID )
 { 
   BR_POKESEARCH_WORK *p_wk;
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(BR_POKESEARCH_WORK) );
@@ -189,7 +189,8 @@ extern BR_POKESEARCH_WORK *BR_POKESEARCH_Init( const ZUKAN_SAVEDATA *cp_zkn, BR_
   p_wk->p_bmpoam  = p_bmpoam;
   p_wk->p_que     = PRINTSYS_QUE_Create( p_wk->heapID );
   p_wk->p_sort_data  = ZUKANDATA_AllocSort50onData( GFL_HEAP_LOWID(heapID), &p_wk->sort_len );
-  p_wk->p_balleff    = p_balleff;
+  p_wk->p_balleff[ CLSYS_DRAW_MAIN ]  = p_balleff_main;
+  p_wk->p_balleff[ CLSYS_DRAW_SUB ]   = p_balleff_sub;
 
   //図鑑データから見たことのあるポケモンを検索
   { 
@@ -627,6 +628,8 @@ static void BR_POKESEARCH_DISPLAY_CreateList( BR_POKESEARCH_WORK *p_wk )
       list_param.list_max = p_wk->monsno_len;
       list_param.p_res    = p_wk->p_res;
       list_param.p_unit   = p_wk->p_unit;
+      list_param.p_balleff_main= p_wk->p_balleff[ CLSYS_DRAW_MAIN ];
+      list_param.p_balleff_sub= p_wk->p_balleff[ CLSYS_DRAW_SUB ];
 
       p_wk->p_list  = BR_LIST_Init( &list_param, p_wk->heapID );
     }
@@ -669,7 +672,7 @@ static void BR_POKESEARCH_DISPLAY_DeleteList( BR_POKESEARCH_WORK *p_wk )
  *	@return 選択したもの
  */
 //-----------------------------------------------------------------------------
-static BR_POKESEARCH_ORDER BR_POKESEARCH_HEAD_GetSelect( const BR_POKESEARCH_WORK *cp_wk )
+static BR_POKESEARCH_ORDER BR_POKESEARCH_HEAD_GetSelect( BR_POKESEARCH_WORK *p_wk )
 { 
   static const GFL_UI_TP_HITTBL sc_hit_tbl[BR_POKESEARCH_ORDER_MAX+1]  =
   { 
@@ -715,8 +718,16 @@ static BR_POKESEARCH_ORDER BR_POKESEARCH_HEAD_GetSelect( const BR_POKESEARCH_WOR
 
   if( ret != GFL_UI_TP_HIT_NONE )
   { 
-    if( cp_wk->head_order[ ret ] )
+    if( p_wk->head_order[ ret ] )
     { 
+      u32 x, y;
+      GFL_POINT pos;
+
+      GFL_UI_TP_GetPointTrg( &x, &y );
+      pos.x = x;
+      pos.y = y;
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+
       PMSND_PlaySE( BR_SND_SE_OK );
       return ret;
     }

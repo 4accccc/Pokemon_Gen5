@@ -599,6 +599,7 @@ static void BR_MENU_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const 
 
   p_param->fade_type = BR_FADE_TYPE_ALPHA_BG012OBJ;
   p_param->p_result   = &p_wk->p_param->p_param->result;
+  p_param->p_btn_recovery = &p_wk->p_param->p_data->btn_recovery;
 
   //ƒoƒgƒ‹‚©‚ç–ß‚Á‚Ä‚«‚½‚Æ‚«
   if( p_wk->p_param->mode == BR_CORE_MODE_RETURN )
@@ -1197,6 +1198,7 @@ static void BR_MUSICALLOOK_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs,
 	p_param->p_graphic	= p_wk->p_graphic;
   p_param->p_net      = p_wk->p_net;
   p_param->p_sidebar  = p_wk->p_sidebar;
+  p_param->p_gamedata = p_wk->p_param->p_param->p_gamedata;
 }
 //----------------------------------------------------------------------------
 /**

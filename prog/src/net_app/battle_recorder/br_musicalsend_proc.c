@@ -395,6 +395,8 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
     SEQ_UPLOAD_WAIT,
     SEQ_UPLOAD_END,
 
+    SEQ_MSG_WAIT,
+
     SEQ_FADEOUT_START,
     SEQ_FADEOUT_MAIN,
 
@@ -467,7 +469,29 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
 
   case SEQ_UPLOAD_END:
-    *p_seq  = SEQ_FADEOUT_START;
+    { 
+      BR_NET_ERR_RETURN err;
+      int msg;
+      
+      err = BR_NET_GetError( p_wk->p_param->p_net, &msg );
+
+      if( err == BR_NET_ERR_RETURN_NONE )
+      { 
+        *p_seq  = SEQ_FADEOUT_START;
+      }
+      else
+      { 
+        BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg );
+        *p_seq  = SEQ_MSG_WAIT;
+      }
+    }
+    break;
+
+  case SEQ_MSG_WAIT:
+    if( GFL_UI_TP_GetTrg() )
+    { 
+      *p_seq  = SEQ_FADEOUT_START;
+    }
     break;
 
     //-------------------------------------

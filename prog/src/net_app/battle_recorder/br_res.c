@@ -166,7 +166,7 @@ void BR_RES_LoadBG( BR_RES_WORK *p_wk, BR_RES_BGID bgID, HEAPID heapID )
     GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_battle_recorder_gra_batt_rec_browse_bg_NCGR,
         BG_FRAME_M_BACK, 0, 0, FALSE, heapID );
 
-    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_battle_recorder_gra_batt_rec_browse_bg0u_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_battle_recorder_gra_batt_rec_browse_bg0d_NSCR,
 				BG_FRAME_M_BACK, 0, 0, FALSE, heapID );
     break;
 
@@ -184,6 +184,22 @@ void BR_RES_LoadBG( BR_RES_WORK *p_wk, BR_RES_BGID bgID, HEAPID heapID )
 
     GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_battle_recorder_gra_batt_rec_win2_NSCR,
 				BG_FRAME_M_TEXT, 0, 0, FALSE, heapID );
+    break;
+
+  case BR_RES_BG_BROWSE_LOGO_M:
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_battle_recorder_gra_batt_rec_browse_bg_NCGR,
+        BG_FRAME_M_WIN, 0, 0, FALSE, heapID );
+
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_battle_recorder_gra_batt_rec_browse_bg0u_NSCR,
+				BG_FRAME_M_WIN, 0, 0, FALSE, heapID );
+    break;
+
+  case BR_RES_BG_GDS_LOGO_M:
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_battle_recorder_gra_batt_rec_browse_bg_NCGR,
+        BG_FRAME_M_WIN, 0, 0, FALSE, heapID );
+
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_battle_recorder_gra_batt_rec_gds_bg0u_NSCR,
+				BG_FRAME_M_WIN, 0, 0, FALSE, heapID );
     break;
 
 	case BR_RES_BG_RECORD_S:
@@ -456,6 +472,10 @@ void BR_RES_UnLoadBG( BR_RES_WORK *p_wk, BR_RES_BGID bgID )
 		break;
 
     //上画面ウィンドウだけ消すもの
+  case BR_RES_BG_BROWSE_LOGO_M:
+    /* fallthrough */
+  case BR_RES_BG_GDS_LOGO_M:
+    /* fallthrough */
   case BR_RES_BG_BVSEARCH_M:
     /* fallthrough */
   case BR_RES_BG_RNDMATCH_M_RND:

@@ -25,6 +25,7 @@
 #include "br_util.h"
 #include "br_btn.h"
 #include "br_net.h"
+#include "br_snd.h"
 
 //外部公開
 #include "br_bvsearch_proc.h"
@@ -97,7 +98,7 @@ typedef struct
   //common
   BR_MSGWIN_WORK      *p_msgwin_m[ BR_BVSEARCH_MSGWINID_M_MAX ];
   BR_TEXT_WORK        *p_text;
-  BR_BALLEFF_WORK     *p_balleff;
+  BR_BALLEFF_WORK     *p_balleff[ CLSYS_DRAW_MAX ];
   BMPOAM_SYS_PTR	  	p_bmpoam;	//BMPOAMシステム
   PRINT_QUE           *p_que;
   u32                 sub_seq;
@@ -161,7 +162,7 @@ typedef enum
   BRSEARCH_MENU_SELECT_MAX,
   BRSEARCH_MENU_SELECT_NULL = BRSEARCH_MENU_SELECT_MAX,
 }BRSEARCH_MENU_SELECT;
-static BRSEARCH_MENU_SELECT Br_BvSearch_GetTrgMenu( void );
+static BRSEARCH_MENU_SELECT Br_BvSearch_GetTrgMenu( BR_BVSEARCH_WORK *p_wk );
 
 //=============================================================================
 /**
@@ -249,7 +250,14 @@ static GFL_PROC_RESULT BR_BVSEARCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
   p_wk->p_bmpoam	= BmpOam_Init( p_wk->heapID, p_param->p_unit );
   p_wk->p_text  = BR_TEXT_Init( p_param->p_res, p_wk->p_que, p_wk->heapID );
   BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_712 );
-  p_wk->p_balleff = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
+
+  {
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      p_wk->p_balleff[i] = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, i, p_wk->heapID );
+    }
+  }
 
   //検索結果を初期化
   p_param->search_data.monsno       = BATTLE_REC_SEARCH_MONSNO_NONE;
@@ -289,7 +297,14 @@ static GFL_PROC_RESULT BR_BVSEARCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void
   BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S ); 
 
 	//モジュール破棄
-  BR_BALLEFF_Exit( p_wk->p_balleff );
+  { 
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      BR_BALLEFF_Exit( p_wk->p_balleff[i] );
+    }
+  }
+
   BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
   BmpOam_Exit( p_wk->p_bmpoam );
   PRINTSYS_QUE_Delete( p_wk->p_que );
@@ -427,7 +442,13 @@ static GFL_PROC_RESULT BR_BVSEARCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, void
 
   PRINTSYS_QUE_Main( p_wk->p_que );
   //ボール処理
-  BR_BALLEFF_Main( p_wk->p_balleff );
+  { 
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      BR_BALLEFF_Main( p_wk->p_balleff[i] );
+    }
+  }
 
   return GFL_PROC_RES_CONTINUE;
 }
@@ -610,7 +631,7 @@ static BOOL Br_BvSearch_Seq_Menu_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
   //メニュー選択
   { 
     BRSEARCH_MENU_SELECT select;
-    select  = Br_BvSearch_GetTrgMenu();
+    select  = Br_BvSearch_GetTrgMenu( p_wk );
     if( select != BRSEARCH_MENU_SELECT_NULL )
     { 
       switch( select )
@@ -882,7 +903,8 @@ static BOOL Br_BvSearch_Seq_Place_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC
 //-----------------------------------------------------------------------------
 static BOOL Br_BvSearch_Seq_Poke_Init( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_PARAM *p_param )
 { 
-  p_wk->p_search  = BR_POKESEARCH_Init( NULL, p_param->p_res, p_param->p_unit, p_wk->p_bmpoam, p_param->p_fade, p_wk->p_balleff, p_wk->heapID ); 
+  ZUKAN_SAVEDATA *p_zkn = GAMEDATA_GetZukanSave( p_param->p_gamedata );
+  p_wk->p_search  = BR_POKESEARCH_Init( p_zkn, p_param->p_res, p_param->p_unit, p_wk->p_bmpoam, p_param->p_fade, p_wk->p_balleff[CLSYS_DRAW_MAIN], p_wk->p_balleff[CLSYS_DRAW_SUB],p_wk->heapID ); 
   BR_POKESEARCH_StartUp( p_wk->p_search );
   return TRUE;
 }
@@ -1126,7 +1148,7 @@ static void Br_BvSearch_PrintMainDisplay( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PR
  *	@return -1で押していない  他は次のシーケンス
  */
 //-----------------------------------------------------------------------------
-static BRSEARCH_MENU_SELECT Br_BvSearch_GetTrgMenu( void )
+static BRSEARCH_MENU_SELECT Br_BvSearch_GetTrgMenu( BR_BVSEARCH_WORK *p_wk )
 {
   static const GFL_RECT sc_rect[ BRSEARCH_MENU_SELECT_MAX ] =
   {
@@ -1160,6 +1182,15 @@ static BRSEARCH_MENU_SELECT Br_BvSearch_GetTrgMenu( void )
       if( ( ((u32)( x - sc_rect[i].left) <= (u32)(sc_rect[i].right - sc_rect[i].left))
             & ((u32)( y - sc_rect[i].top) <= (u32)(sc_rect[i].bottom - sc_rect[i].top))) )
       { 
+        
+        u32 x, y;
+        GFL_POINT pos;
+
+        GFL_UI_TP_GetPointTrg( &x, &y );
+        pos.x = x;
+        pos.y = y;
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+        PMSND_PlaySE( BR_SND_SE_OK );
         return i;
       }
     }

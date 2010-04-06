@@ -341,9 +341,9 @@ BR_LIST_WORK * BR_LIST_Init( const BR_LIST_PARAM *cp_param, HEAPID heapID )
   else if( p_wk->param.type == BR_LIST_TYPE_CURSOR )
   { 
     p_wk->move_callback = Br_CursorList_MoveCallback;
-    if( p_wk->param.p_balleff )
+    if( p_wk->param.p_balleff_main )
     { 
-      BR_BALLEFF_StartMove( p_wk->param.p_balleff, BR_BALLEFF_MOVE_CIRCLE, &sc_cursor_pos[ p_wk->cursor ] );
+      BR_BALLEFF_StartMove( p_wk->param.p_balleff_main, BR_BALLEFF_MOVE_CIRCLE, &sc_cursor_pos[ p_wk->cursor ] );
     }
   }
 
@@ -488,9 +488,9 @@ void BR_LIST_Exit( BR_LIST_WORK* p_wk )
 { 
   int i;
 
-  if( p_wk->param.p_balleff )
+  if( p_wk->param.p_balleff_main )
   { 
-    BR_BALLEFF_StartMove( p_wk->param.p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
+    BR_BALLEFF_StartMove( p_wk->param.p_balleff_main, BR_BALLEFF_MOVE_NOP, NULL );
   }
 
   for( i = 0; i < BR_LIST_CLWK_MAX; i++ )
@@ -574,6 +574,17 @@ void BR_LIST_Main( BR_LIST_WORK* p_wk )
       ret = GFL_UI_TP_HitTrg( p_wk->hittbl );
       if( ret != GFL_UI_TP_HIT_NONE )
       {
+        u32 x, y;
+        GFL_POINT pos;
+
+        GFL_UI_TP_GetPointTrg( &x, &y );
+        pos.x = x;
+        pos.y = y;
+        if(  p_wk->param.p_balleff_sub )
+        { 
+          BR_BALLEFF_StartMove( p_wk->param.p_balleff_sub, BR_BALLEFF_MOVE_EMIT, &pos );
+        }
+
         PMSND_PlaySE( BR_SND_SE_OK );
         p_wk->select_param  = p_wk->param.cp_list[ ret + p_wk->list ].param;
       }
@@ -898,9 +909,9 @@ static BOOL Br_CursorList_MoveCallback( BR_LIST_WORK *p_wk, s8 value )
   //動くときカーソルが移動する
   if( ret )
   { 
-    if( p_wk->param.p_balleff )
+    if( p_wk->param.p_balleff_main )
     { 
-      BR_BALLEFF_StartMove( p_wk->param.p_balleff, BR_BALLEFF_MOVE_CIRCLE, &sc_cursor_pos[ p_wk->cursor ] );
+      BR_BALLEFF_StartMove( p_wk->param.p_balleff_main, BR_BALLEFF_MOVE_CIRCLE, &sc_cursor_pos[ p_wk->cursor ] );
     }
   }
 
@@ -1553,6 +1564,17 @@ typedef struct
   GFL_POINT center_pos;
   GFL_POINT now_pos;
   u16 r;
+  u16 max_r;
+  u16 init_angle;
+  u16 end_angle;
+  int cnt_max;
+} MOVE_EMIT;
+
+typedef struct 
+{
+  GFL_POINT center_pos;
+  GFL_POINT now_pos;
+  u16 r;
   u16 init_angle;
   int cnt_max;
 } MOVE_CIRCLE;
@@ -1589,6 +1611,7 @@ struct _BR_BALLEFF_WORK
     MOVE_LINE   line;
     MOVE_CIRCLE circle;
     MOVE_HOMING homing;
+    MOVE_EMIT   emit;
   }move[BR_BALLEFF_CLWK_MAX];
   GFL_POINT   now_pos[ BR_BALLEFF_CLWK_MAX ];
   GFL_CLWK    *p_clwk[ BR_BALLEFF_CLWK_MAX ];
@@ -1611,6 +1634,8 @@ static void Br_BallEff_Seq_BigCircle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 static void Br_BallEff_Seq_Circle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_BallEff_Seq_CircleCont( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 //動き
+static void MOVE_EMIT_Init( MOVE_EMIT *p_wk, const GFL_POINT *cp_center_pos, u16 r, u16 max_r, u16 init_angle, u16 end_angle, int cnt_max );
+static BOOL MOVE_EMIT_Main( MOVE_EMIT *p_wk, GFL_POINT *p_now_pos, int cnt );
 static void MOVE_CIRCLE_Init( MOVE_CIRCLE *p_wk, const GFL_POINT *cp_center_pos, u16 r, u16 init_angle, int cnt_max );
 static BOOL MOVE_CIRCLE_Main( MOVE_CIRCLE *p_wk, GFL_POINT *p_now_pos, int cnt );
 static void MOVE_LINE_Init( MOVE_LINE *p_wk, const GFL_POINT *cp_start_pos, const GFL_POINT *cp_end_pos, int wait_cnt, int cnt_max );
@@ -1870,7 +1895,63 @@ static void Br_BallEff_Seq_Nop( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 //-----------------------------------------------------------------------------
 static void Br_BallEff_Seq_Emit( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_MAIN,
+    SEQ_EXIT,
+  };
+
   BR_BALLEFF_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_INIT:
+    { 
+      int i;
+      u16 angle;
+      u16 angle_max;
+
+
+      p_wk->cnt = 0;
+      for( i = 0; i < BR_BALLEFF_CIRCLE_USE_MAX; i++ )
+      { 
+        angle = 0xFFFF*i/BR_BALLEFF_CIRCLE_USE_MAX;
+        angle_max = angle + 0xFFFF/BR_BALLEFF_CIRCLE_USE_MAX;
+
+        MOVE_EMIT_Init( &p_wk->move[i].emit, &p_wk->init_pos, 
+            15, 20, angle, angle_max, 20 );
+
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+      }
+    }
+    *p_seq  = SEQ_MAIN;
+    /* fallthr  */
+
+  case SEQ_MAIN:
+    { 
+      int i;
+      GFL_POINT pos;
+      GFL_CLACTPOS  clpos;
+      for( i = 0; i < BR_BALLEFF_CIRCLE_USE_MAX; i++ )
+      { 
+        MOVE_EMIT_Main( &p_wk->move[i].emit, &pos, p_wk->cnt );
+        clpos.x = pos.x;
+        clpos.y = pos.y;
+        GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, p_wk->draw );
+      }
+
+      if( p_wk->cnt++ > 20 )
+      { 
+        *p_seq  = SEQ_EXIT;
+      }
+    }
+    break;
+
+  case SEQ_EXIT:
+    BR_SEQ_SetNext( p_wk->p_seq, Br_BallEff_Seq_Nop );
+    break;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -2144,7 +2225,6 @@ static void Br_BallEff_Seq_BigCircle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     }
     break;
   }
-
 }
 //----------------------------------------------------------------------------
 /**
@@ -2213,6 +2293,71 @@ static void Br_BallEff_Seq_CircleCont( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
   BR_BALLEFF_WORK *p_wk = p_wk_adrs;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  放射の動き  初期化
+ *
+ *	@param	MOVE_EMIT *p_wk           ワーク
+ *	@param	GFL_POINT *cp_center_pos  中心座標
+ *	@param	r                         半径
+ *	@param  max_r                     動き終了時の半径
+ *	@param	init_angle                最初の角度
+ *	@param  end_angle                 動き終了時の角度;
+ *	@param	cnt_max                   動き
+ */
+//-----------------------------------------------------------------------------
+static void MOVE_EMIT_Init( MOVE_EMIT *p_wk, const GFL_POINT *cp_center_pos, u16 r, u16 max_r, u16 init_angle, u16 end_angle, int cnt_max )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(MOVE_EMIT) );
+  p_wk->r           = r;
+  p_wk->max_r       = max_r;
+  p_wk->init_angle  = init_angle;
+  p_wk->end_angle   = end_angle;
+  p_wk->cnt_max     = cnt_max;
+  p_wk->center_pos  = *cp_center_pos;
+
+  MOVE_EMIT_Main( p_wk, &p_wk->now_pos, 0 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  放射の動き  メイン処理
+ *
+ *	@param	MOVE_CIRCLE *p_wk ワーク
+ *	@param	*p_now_pos        座標
+ *	@param	cnt               シンク
+ *
+ *	@return TREUで動き終了  FALSEで動作中
+ */
+//-----------------------------------------------------------------------------
+static BOOL MOVE_EMIT_Main( MOVE_EMIT *p_wk, GFL_POINT *p_now_pos, int cnt )
+{ 
+
+  const u16 diff_angle  = p_wk->end_angle - p_wk->init_angle;
+  const u16 diff_r      = p_wk->max_r - p_wk->r;
+
+  u16 angle;
+  u16 r;
+
+  //現在のアングルを取得
+  angle = p_wk->init_angle + (diff_angle * cnt / p_wk->cnt_max);
+  r     = p_wk->r + ( diff_r * cnt / p_wk->cnt_max );
+
+  ///角度から座標を求める
+  p_wk->now_pos.x = (FX_CosIdx( angle ) * r) >> FX32_SHIFT;
+  p_wk->now_pos.y = (FX_SinIdx( angle ) * r) >> FX32_SHIFT;
+
+  //中心座標を足す
+  p_wk->now_pos.x += p_wk->center_pos.x;
+  p_wk->now_pos.y += p_wk->center_pos.y;
+
+  //受け取りバッファに格納
+  if( p_now_pos )
+  { 
+    *p_now_pos  = p_wk->now_pos;
+  }
+
+  return cnt == p_wk->cnt_max;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  円運動  初期化

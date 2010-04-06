@@ -55,7 +55,7 @@ typedef struct
   BR_TEXT_WORK          *p_text;  //テキスト
   BR_SEQ_WORK           *p_seq;
   BR_MSGWIN_WORK        *p_msgwin_s[ BR_BVDELETE_MSGWINID_S_MAX ];
-  BR_BALLEFF_WORK       *p_balleff;
+  BR_BALLEFF_WORK       *p_balleff[ CLSYS_DRAW_MAX ];
 	HEAPID                heapID;
   BR_BVDELETE_PROC_PARAM	*p_param;
 } BR_BVDELETE_WORK;
@@ -91,8 +91,8 @@ static void Br_BvDelete_DeleteDisplay( BR_BVDELETE_WORK *p_wk, BR_BVDELETE_PROC_
 //-------------------------------------
 ///	その他
 //=====================================
-static BOOL Br_BvDelete_GetTrgYes( u32 x, u32 y );
-static BOOL Br_BvDelete_GetTrgNo( u32 x, u32 y );
+static BOOL Br_BvDelete_GetTrgYes( BR_BVDELETE_WORK *p_wk, u32 x, u32 y );
+static BOOL Br_BvDelete_GetTrgNo( BR_BVDELETE_WORK *p_wk, u32 x, u32 y );
 
 //=============================================================================
 /**
@@ -151,7 +151,13 @@ static GFL_PROC_RESULT BR_BVDELETE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
 
 	//グラフィック初期化
   Br_BvDelete_CreateDisplay( p_wk, p_param );
-  p_wk->p_balleff = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
+  {
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      p_wk->p_balleff[i] = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, i, p_wk->heapID );
+    }
+  }
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -173,7 +179,13 @@ static GFL_PROC_RESULT BR_BVDELETE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void
 	BR_BVDELETE_PROC_PARAM	*p_param	= p_param_adrs;
 
   //グラフィック破棄
-  BR_BALLEFF_Exit( p_wk->p_balleff );
+  {
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      BR_BALLEFF_Exit( p_wk->p_balleff[i] );
+    }
+  }
   Br_BvDelete_DeleteDisplay( p_wk, p_param );
 
 	//モジュール破棄
@@ -210,7 +222,13 @@ static GFL_PROC_RESULT BR_BVDELETE_PROC_Main( GFL_PROC *p_proc, int *p_seq, void
   }
 
   //ボール処理
-  BR_BALLEFF_Main( p_wk->p_balleff );
+  {
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      BR_BALLEFF_Main( p_wk->p_balleff[i] );
+    }
+  }
 
   //表示
   PRINTSYS_QUE_Main( p_wk->p_que );
@@ -363,14 +381,14 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       u32 x, y;
       if( GFL_UI_TP_GetPointTrg( &x, &y ) )
       { 
-        if( Br_BvDelete_GetTrgYes( x, y ) )
+        if( Br_BvDelete_GetTrgYes( p_wk, x, y ) )
         { 
           BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_014 );
           *p_seq  = SEQ_CONFIRM;
           break;
         }
 
-        if( Br_BvDelete_GetTrgNo( x, y ) )
+        if( Br_BvDelete_GetTrgNo( p_wk, x, y ) )
         { 
           *p_seq  = SEQ_RETURN;
           break;
@@ -384,13 +402,13 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       u32 x, y;
       if( GFL_UI_TP_GetPointTrg( &x, &y ) )
       { 
-        if( Br_BvDelete_GetTrgYes( x, y ) )
+        if( Br_BvDelete_GetTrgYes( p_wk, x, y ) )
         { 
           *p_seq  = SEQ_FADEOUT_SUB_INIT;
           break;
         }
 
-        if( Br_BvDelete_GetTrgNo( x, y ) )
+        if( Br_BvDelete_GetTrgNo( p_wk, x, y ) )
         { 
           *p_seq  = SEQ_RETURN;
           break;
@@ -415,7 +433,7 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         GFL_POINT pos;
         pos.x = 256/2;
         pos.y = 192/2;
-        BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
       }
 
       (*p_seq)++;
@@ -445,7 +463,7 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_DELETE_MSG:
-    BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
+    BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
     BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_016 );
     *p_seq  = SEQ_DELETE_MSG_WAIT;
     break;
@@ -582,7 +600,7 @@ static void Br_BvDelete_DeleteDisplay( BR_BVDELETE_WORK *p_wk, BR_BVDELETE_PROC_
  *	@return TRUE入力  FALSE何もしない
  */
 //-----------------------------------------------------------------------------
-static BOOL Br_BvDelete_GetTrgYes( u32 x, u32 y )
+static BOOL Br_BvDelete_GetTrgYes( BR_BVDELETE_WORK *p_wk, u32 x, u32 y )
 { 
 	GFL_RECT rect;
   BOOL ret;
@@ -597,6 +615,11 @@ static BOOL Br_BvDelete_GetTrgYes( u32 x, u32 y )
 
   if( ret )
   { 
+    GFL_POINT pos;
+    pos.x = x;
+    pos.y = y;
+    BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+
     PMSND_PlaySE( BR_SND_SE_OK );
   }
 
@@ -612,7 +635,7 @@ static BOOL Br_BvDelete_GetTrgYes( u32 x, u32 y )
  *	@return TRUE入力  FALSE何もしない
  */
 //-----------------------------------------------------------------------------
-static BOOL Br_BvDelete_GetTrgNo( u32 x, u32 y )
+static BOOL Br_BvDelete_GetTrgNo( BR_BVDELETE_WORK *p_wk, u32 x, u32 y )
 { 
 	GFL_RECT rect;
   BOOL ret;
@@ -628,6 +651,11 @@ static BOOL Br_BvDelete_GetTrgNo( u32 x, u32 y )
 
   if( ret )
   { 
+    GFL_POINT pos;
+    pos.x = x;
+    pos.y = y;
+    BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+
     PMSND_PlaySE( BR_SND_SE_OK );
   }
   return ret;

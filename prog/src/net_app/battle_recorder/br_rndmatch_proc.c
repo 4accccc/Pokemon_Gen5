@@ -130,6 +130,7 @@ typedef struct
 	BR_BTN_WORK	        *p_btn[ BR_RNDMATCH_BTNID_MAX ];
   BR_MSGWIN_WORK      *p_msgwin_s[ BR_RNDMATCH_MSGWINID_S_MAX ];
   BR_MSGWIN_WORK      *p_msgwin_m[ BR_RNDMATCH_MSGWINID_M_MAX ];
+  BR_BALLEFF_WORK     *p_balleff;
 
   BR_RNDMATCH_SELECT select;
 	HEAPID heapID;
@@ -216,6 +217,7 @@ static GFL_PROC_RESULT BR_RNDMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
   //モジュール作成
   p_wk->p_bmpoam		= BmpOam_Init( p_wk->heapID, p_param->p_unit);
   p_wk->p_que       = PRINTSYS_QUE_Create( p_wk->heapID );
+  p_wk->p_balleff   = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, CLSYS_DRAW_SUB, p_wk->heapID );
 
 	//グラフィック初期化
   Br_RndMatch_CreateMainDisplayNone( p_wk, p_param );
@@ -247,6 +249,7 @@ static GFL_PROC_RESULT BR_RNDMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void
   GFL_BG_LoadScreenReq( BG_FRAME_M_FONT ); 
 
 	//モジュール破棄
+  BR_BALLEFF_Exit( p_wk->p_balleff );
   PRINTSYS_QUE_Delete( p_wk->p_que );
   BmpOam_Exit( p_wk->p_bmpoam );
 
@@ -395,6 +398,8 @@ static GFL_PROC_RESULT BR_RNDMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, void
   }
 
   PRINTSYS_QUE_Main( p_wk->p_que );
+
+  BR_BALLEFF_Main( p_wk->p_balleff );
 
 	return GFL_PROC_RES_CONTINUE;
 }
@@ -1236,6 +1241,10 @@ static BR_RNDMATCH_SELECT Br_RndMatch_GetSelect( BR_RNDMATCH_WORK *p_wk, u32 x, 
       if( ((u32)( x - sc_select_rect[i].left) <= (u32)(sc_select_rect[i].right - sc_select_rect[i].left))
           & ((u32)( y - sc_select_rect[i].top) <= (u32)(sc_select_rect[i].bottom - sc_select_rect[i].top)))
       { 
+        GFL_POINT pos;
+        pos.x = x;
+        pos.y = y;
+        BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_EMIT, &pos );
         PMSND_PlaySE( BR_SND_SE_OK );
         return i;
       }

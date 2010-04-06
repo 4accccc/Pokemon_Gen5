@@ -110,6 +110,19 @@ typedef struct
   u64                       video_number;   //録画番号
 } BR_RECORD_DATA;
 
+//-------------------------------------
+///	バトルレコーダー  ボタン管理復帰データ
+//=====================================
+#define BR_BTN_RECORVER_STACK_MAX 4
+typedef struct 
+{
+  struct
+  { 
+    u16	  menuID;
+    u16   btnID;
+  } stack[BR_BTN_RECORVER_STACK_MAX];
+  u32 stack_num;
+} BR_BTN_SYS_RECOVERY_DATA;
 
 //-------------------------------------
 ///	汎用

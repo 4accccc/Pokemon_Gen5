@@ -14,6 +14,9 @@
 //システム
 #include "system/main.h"
 
+//アーカイブ(エラーメッセージ用)
+#include "msg/msg_battle_rec.h"
+
 //外部公開
 #include "br_net.h"
 
@@ -45,8 +48,9 @@ struct _BR_NET_WORK
   GDS_PROFILE_PTR     p_gds_profile;  ///<GDSのプロフィール
   BR_NET_SEQ_WORK     *p_seq;         ///<状態管理
 
-  BR_NET_REQUEST_PARAM reqest_param;    ///<リクエストされた引数
-  BOOL                response_flag[BR_NET_REQUEST_MAX];  ///<レスポンスを受けたかどうかのフラグ
+  BR_NET_REQUEST_PARAM  reqest_param;    ///<リクエストされた引数
+  u32                   response_flag[BR_NET_REQUEST_MAX];  ///<レスポンスを受けたかどうかのフラグ
+  GDS_RAP_ERROR_INFO    error_info;
 };
 
 //=============================================================================
@@ -384,6 +388,141 @@ BOOL BR_NET_GetDownloadSubwayRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV
   return *p_recv_num != 0;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エラーを取得
+ *
+ *	@param	BR_NET_WORK *p_wk   ワーク
+ *	@param	*p_msg_no           エラーを表示するメッセージ番号
+ *
+ *	@return エラーの戻り先（列挙型参照）
+ */
+//-----------------------------------------------------------------------------
+BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
+{ 
+
+  if( p_wk->error_info.occ )
+  { 
+    int ret = BR_NET_ERR_RETURN_NONE;
+	  if( p_wk->error_info.type == GDS_ERROR_TYPE_LIB )
+    { 
+      //ライブラリのエラー
+      if( p_wk->error_info.result == POKE_NET_GDS_LASTERROR_NONE )
+      { 
+        ret = BR_NET_ERR_RETURN_NONE;
+      }
+      else
+      { 
+        if( p_msg_no )
+        { 
+          *p_msg_no = msg_lib_err_000 + p_wk->error_info.result;
+        }
+
+        ret = BR_NET_ERR_RETURN_ONCE;
+      }
+    }
+    else if( p_wk->error_info.type == GDS_ERROR_TYPE_STATUS )
+    { 
+      //ライブラリの状態エラー
+      if( p_wk->error_info.result == POKE_NET_GDS_STATUS_ABORTED )
+      { 
+        if( p_msg_no )
+        { 
+          *p_msg_no = msg_st_err_000 + p_wk->error_info.result;
+        }
+        ret = BR_NET_ERR_RETURN_ONCE;
+      }
+      else
+      { 
+        ret = BR_NET_ERR_RETURN_NONE;
+      }
+    }
+    else if( p_wk->error_info.type == GDS_ERROR_TYPE_APP )
+    { 
+      //アプリごとのエラー
+      //
+      switch( p_wk->error_info.req_code )
+      { 
+      case POKE_NET_GDS_REQCODE_MUSICALSHOT_REGIST:
+        //ミュージカル送信時
+        if( p_wk->error_info.result != POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_REGIST_SUCCESS )
+        { 
+          if( p_msg_no )
+          { 
+            *p_msg_no = msg_err_000 + p_wk->error_info.result;
+          }
+          ret = BR_NET_ERR_RETURN_TOPMENU;
+        }
+        break;
+
+      case POKE_NET_GDS_REQCODE_MUSICALSHOT_GET:
+        //ミュージカル取得時
+        if( p_wk->error_info.result != POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_GET_SUCCESS )
+        { 
+          if( p_msg_no )
+          { 
+            *p_msg_no = msg_err_007 + p_wk->error_info.result;
+          }
+          ret = BR_NET_ERR_RETURN_TOPMENU;
+        }
+        break;
+
+      case POKE_NET_GDS_REQCODE_BATTLEDATA_REGIST:
+        //バトルビデオ送信時
+        if( p_wk->error_info.result != POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_SUCCESS )
+        { 
+          if( p_msg_no )
+          { 
+            *p_msg_no = msg_err_030 + p_wk->error_info.result;
+          }
+          ret = BR_NET_ERR_RETURN_TOPMENU;
+        }
+        break;
+
+      case POKE_NET_GDS_REQCODE_BATTLEDATA_SEARCH:
+        //バトルビデオ検索時
+        if( p_wk->error_info.result != POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_SEARCH_SUCCESS )
+        { 
+          if( p_msg_no )
+          { 
+            *p_msg_no = msg_err_036 + p_wk->error_info.result;
+          }
+          ret = BR_NET_ERR_RETURN_TOPMENU;
+        }
+        break;
+
+      case POKE_NET_GDS_REQCODE_BATTLEDATA_GET:
+        //バトルビデオ取得時
+        if( p_wk->error_info.result != POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_GET_SUCCESS )
+        { 
+          if( p_msg_no )
+          { 
+            *p_msg_no = msg_err_040 + p_wk->error_info.result;
+          }
+          ret = BR_NET_ERR_RETURN_ONCE;
+        }
+        break;
+
+      case POKE_NET_GDS_REQCODE_BATTLEDATA_FAVORITE:
+        //バトルビデオお気に入り送信時
+        //ユーザーのローカルに影響がないのでエラー通知しない
+        ret = BR_NET_ERR_RETURN_NONE;
+        break;
+      }
+    }
+
+    //エラー消去
+    GDSRAP_ErrorInfoClear( &p_wk->gdsrap );
+    GFL_STD_MemClear( &p_wk->error_info, sizeof(GDS_RAP_ERROR_INFO) );
+
+    return ret;
+  }
+  else
+  { 
+    return BR_NET_ERR_RETURN_NONE;
+  }
+}
+
 //=============================================================================
 /**
  *  状態関数
@@ -617,16 +756,9 @@ static void Br_Net_Response_MusicalRegist(void *p_wk_adrs, const GDS_RAP_ERROR_I
 { 
   BR_NET_WORK *p_wk = p_wk_adrs;
   OS_TPrintf("ミュージカルショットのアップロードレスポンス取得\n");
-  if(p_error_info->occ == TRUE)
-  {
-    //TRUEならばエラー発生しているので、ここでメニューを戻すとかアプリ終了モードへ移行とかする
-  }
-  else
-  {
-    p_wk->response_flag[ BR_NET_REQUEST_MUSICAL_SHOT_UPLOAD ] = TRUE;
-    //正常時ならば受信バッファからデータ取得などを行う
-    //アップロードの場合は特に必要なし
-  }
+
+  p_wk->response_flag[ BR_NET_REQUEST_MUSICAL_SHOT_UPLOAD ] = TRUE;
+  p_wk->error_info  = *p_error_info;
 
 }
 //----------------------------------------------------------------------------
@@ -642,18 +774,8 @@ static void Br_Net_Response_MusicalGet(void *p_wk_adrs, const GDS_RAP_ERROR_INFO
   BR_NET_WORK *p_wk = p_wk_adrs;
 
   OS_TPrintf("ミュージカルショットのダウンロードレスポンス取得\n");
-  if(p_error_info->occ == TRUE)
-  {
-    //TRUEならばエラー発生しているので、ここでメニューを戻すとかアプリ終了モードへ移行とかする
-  }
-  else
-  {
-    p_wk->response_flag[ BR_NET_REQUEST_MUSICAL_SHOT_DOWNLOAD ] = TRUE;
-    //正常時ならば受信バッファからデータ取得などを行う
-    //アップロードの場合は特に必要なし
-
-  //  GDS_RAP_RESPONSE_MusicalShot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, GDS_MUSICAL_RECV **dress_array, int array_max);
-  }
+  p_wk->response_flag[ BR_NET_REQUEST_MUSICAL_SHOT_DOWNLOAD ] = TRUE;
+  p_wk->error_info  = *p_error_info;
 }
 //----------------------------------------------------------------------------
 /**
@@ -684,17 +806,9 @@ static void Br_Net_Response_BattleVideoRegist(void *p_wk_adrs, const GDS_RAP_ERR
       break;
     }
   }
-  else
-  {
-    p_wk->response_flag[ BR_NET_REQUEST_BATTLE_VIDEO_UPLOAD ] = TRUE;
-    //正常時ならば受信バッファからデータ取得などを行う
-    //アップロードの場合は特に必要なし
-/*    u64 data_number;
 
-    data_number = GDS_RAP_RESPONSE_BattleVideo_Upload_DataGet(&testsys->gdsrap);
-    testsys->data_number = data_number;
-    OS_TPrintf("登録コード＝%d\n", data_number);
-*/  }
+  p_wk->response_flag[ BR_NET_REQUEST_BATTLE_VIDEO_UPLOAD ] = TRUE;
+  p_wk->error_info  = *p_error_info;
 }
 //----------------------------------------------------------------------------
 /**
@@ -709,18 +823,8 @@ static void Br_Net_Response_BattleVideoSearch(void *p_wk_adrs, const GDS_RAP_ERR
   BR_NET_WORK *p_wk = p_wk_adrs;
 
   OS_TPrintf("バトルビデオ検索のダウンロードレスポンス取得\n");
-  if(p_error_info->occ == TRUE)
-  {
-    //TRUEならばエラー発生しているので、ここでメニューを戻すとかアプリ終了モードへ移行とかする
-  }
-  else
-  {
-    p_wk->response_flag[ BR_NET_REQUEST_VIDEO_SEARCH_DOWNLOAD ] = TRUE;
-    //正常時ならば受信バッファからデータ取得などを行う
-    //アップロードの場合は特に必要なし
-
-  //  int GDS_RAP_RESPONSE_Boxshot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, BOX_SHOT_RECV **box_array, int array_max);
-  }
+  p_wk->response_flag[ BR_NET_REQUEST_VIDEO_SEARCH_DOWNLOAD ] = TRUE;
+  p_wk->error_info  = *p_error_info;
 }
 //----------------------------------------------------------------------------
 /**
@@ -735,19 +839,9 @@ static void Br_Net_Response_BattleVideoDataGet(void *p_wk_adrs, const GDS_RAP_ER
   BR_NET_WORK *p_wk = p_wk_adrs;
 
   OS_TPrintf("バトルビデオデータ取得のダウンロードレスポンス取得\n");
-  if(p_error_info->occ == TRUE)
-  {
-    //TRUEならばエラー発生しているので、ここでメニューを戻すとかアプリ終了モードへ移行とかする
-  }
-  else
-  {
 
-    p_wk->response_flag[ BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD ] = TRUE;
-    //正常時ならば受信バッファからデータ取得などを行う
-    //アップロードの場合は特に必要なし
-
-  //  int GDS_RAP_RESPONSE_Boxshot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, BOX_SHOT_RECV **box_array, int array_max);
-  }
+  p_wk->response_flag[ BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD ] = TRUE;
+  p_wk->error_info  = *p_error_info;
 }
 //----------------------------------------------------------------------------
 /**
@@ -762,19 +856,8 @@ static void Br_Net_Response_BattleVideoFavorite(void *p_wk_adrs, const GDS_RAP_E
   BR_NET_WORK *p_wk = p_wk_adrs;
 
   OS_TPrintf("バトルビデオお気に入り登録のダウンロードレスポンス取得\n");
-  if( p_error_info->occ == TRUE )
-  {
-    //TRUEならばエラー発生しているので、ここでメニューを戻すとかアプリ終了モードへ移行とかする
-  }
-  else
-  {
-    p_wk->response_flag[ BR_NET_REQUEST_FAVORITE_VIDEO_UPLOAD ] = TRUE;
-
-    //正常時ならば受信バッファからデータ取得などを行う
-    //アップロードの場合は特に必要なし
-
-  //  int GDS_RAP_RESPONSE_Boxshot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, BOX_SHOT_RECV **box_array, int array_max);
-  }
+  p_wk->response_flag[ BR_NET_REQUEST_FAVORITE_VIDEO_UPLOAD ] =  TRUE;
+  p_wk->error_info  = *p_error_info;
 }
 
 //=============================================================================

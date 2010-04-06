@@ -110,7 +110,8 @@ typedef struct
   BR_LIST_TYPE    type;
   BR_RES_WORK     *p_res;
   GFL_CLUNIT      *p_unit;
-  BR_BALLEFF_WORK *p_balleff;
+  BR_BALLEFF_WORK *p_balleff_main;  //リストカーソル用
+  BR_BALLEFF_WORK *p_balleff_sub;   //タッチ演出用
 } BR_LIST_PARAM;
 
 //-------------------------------------
