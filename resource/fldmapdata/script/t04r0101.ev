@@ -793,7 +793,7 @@ _ANIME_LABEL	anm_boy4_return
 /**************************************************************/
 ev_t04r0101_btl_vs_boy3:
 {
-	_TRAINER_BTL_SET( TRID_SCHOOLB_09, 0 )
+	_TRAINER_BTL_SET( TRID_SCHOOLB_1_09, 0 )
 	
 	//結果チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
@@ -826,7 +826,7 @@ _RET
 /**************************************************************/
 ev_t04r0101_btl_vs_girl4:
 {
-	_TRAINER_BTL_SET( TRID_ELITEW_20, 0 )
+	_TRAINER_BTL_SET( TRID_PRINCESS_1_08, 0 )
 	//結果チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -845,7 +845,7 @@ _RET
 /**************************************************************/
 ev_t04r0101_btl_vs_lady:
 {
-	_TRAINER_BTL_SET( TRID_MADAM_05, 0 )
+	_TRAINER_BTL_SET( TRID_MADAM_1_05, 0 )
 	//結果チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -864,7 +864,7 @@ _RET
 /**************************************************************/
 ev_t04r0101_btl_vs_gentleman:
 {
-	_TRAINER_BTL_SET( TRID_GENTLE_05, 0 )
+	_TRAINER_BTL_SET( TRID_GENTLE_1_05, 0 )
 	//結果チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -883,7 +883,7 @@ _RET
 /**************************************************************/
 ev_t04r0101_btl_vs_veteranw:
 {
-	_TRAINER_BTL_SET( TRID_VETERANW_07, 0 )
+	_TRAINER_BTL_SET( TRID_VETERANW_1_07, 0 )
 	//結果チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -902,7 +902,7 @@ _RET
 /**************************************************************/
 ev_t04r0101_btl_vs_boy4:
 {
-	_TRAINER_BTL_SET( TRID_ELITEM_20, 0 )
+	_TRAINER_BTL_SET( TRID_PRINCE_1_08, 0 )
 	//結果チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
