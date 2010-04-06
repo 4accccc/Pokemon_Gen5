@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-05T22:44:34"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T11:18:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1602,20 +1602,8 @@
 	<row id="msg_n01r0502_boss_17" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・カットイン
-・0＝主人公名前
-・続けてboss_last_01~08表示
-・WHITEverで、はいと答えた回数
-　0回→last_01
-　1回→last_02
-　2回→last_03
-　3回→last_04
-　4回→last_05
-・BLACKverで、はいと答えた回数
-　0回→last_06
-　1回→last_07
-　2回→last_08
-　3回→last_09
-　4回→last_10</comment>
+・続けてboss_last_01~04表示
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]！！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！！▼</language>
@@ -1623,45 +1611,75 @@
 
 	<row id="msg_n01r0502_boss_last_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
-・カットイン終了し
-　城の外に飛びだす
-・続けてエンディングに</comment>
+・WHITEver
+・msg_d06r0101_boss_01で
+　はい選択
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">しんじつを　みつけだせ！</language>
-		<language name="JPN_KANJI" width="256">真実を　みつけだせ！</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]キミは　ゆめがある　といった……
+その　ゆめ……　かなえろ！▼
+すばらしい　ゆめや　りそうは
+せかいを　かえる　ちからを　くれる！▽
+[1:00:トレーナー名:0]！　キミなら　できる！！[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]キミは　夢がある　といった……
+その　夢……　かなえろ！▼
+すばらしい　夢や　理想は
+世界を　変える　力をくれる！▽
+[1:00:トレーナー名:0]！　キミなら　できる！！[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_last_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
-・カットイン終了し
-　城の外に飛びだす
-・続けてエンディングに</comment>
+・WHITEver
+・msg_d06r0101_boss_01で
+　いいえ選択</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">しんじつを　たいせつにするんだ！</language>
-		<language name="JPN_KANJI" width="256">真実を　大切にするんだ！</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]キミよ……　ゆめを　もて！▼
+そのために　りそうを　おいもとめろ！
+そして　いつか　かならず▽
+ゆめを　じつげん　するんだ！！[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]キミよ……　夢を　もて！▼
+そのために　理想を　追い求めろ！
+そして　いつか　必ず▽
+夢を　実現するんだ！！[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_last_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
-・カットイン終了し
-　城の外に飛びだす
-・続けてエンディングに</comment>
+・BLACKver
+・msg_d06r0101_boss_01で
+　はい選択
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">しんじつの　ゆめを　かなえろ！</language>
-		<language name="JPN_KANJI" width="256">真実の　夢を　かなえろ！</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]キミは　ゆめがある　といった……
+その　ゆめ……　かなえろ！▼
+すばらしい　ゆめを　じつげんし
+キミの　しんじつと　するんだ！▽
+[1:00:トレーナー名:0]！　キミなら　できる！！[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]キミは　夢がある　といった……
+その　夢……　かなえろ！▼
+すばらしい　夢を　実現し
+キミの　真実と　するんだ！▽
+[1:00:トレーナー名:0]！　キミなら　できる！！[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_last_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
-・カットイン終了し
-　城の外に飛びだす
-・続けてエンディングに</comment>
+・BLACKver
+・msg_d06r0101_boss_01で
+　いいえ選択</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">キミの　しんじた　みちを　ゆけ！</language>
-		<language name="JPN_KANJI" width="256">キミの　信じた道を　ゆけ！</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]キミよ……　ゆめを　もて！▼
+そのために　しんじる　みちを　いけ！
+そして　いつか　かならず▽
+ゆめを　じつげん　するんだ！！[BE:09:速度コントロール:0]</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]キミよ……　夢を　もて！▼
+そのために　信じる　道を　行け！
+そして　いつか　必ず▽
+夢を　実現するんだ！！[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・カットイン終了し
 　城の外に飛びだす
@@ -1673,7 +1691,7 @@
 世界に　知らせろ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・カットイン終了し
 　城の外に飛びだす
@@ -1683,7 +1701,7 @@
 		<language name="JPN_KANJI" width="256">理想を　みつけだせ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・カットイン終了し
 　城の外に飛びだす
@@ -1693,7 +1711,7 @@
 		<language name="JPN_KANJI" width="256">理想を　大切にするんだ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・カットイン終了し
 　城の外に飛びだす
@@ -1703,7 +1721,7 @@
 		<language name="JPN_KANJI" width="256">理想の　夢を　かなえろ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・カットイン終了し
 　城の外に飛びだす
@@ -1713,7 +1731,7 @@
 		<language name="JPN_KANJI" width="256">キミの　理想を　追い求めろ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_10" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_10" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・カットイン終了し
 　城の外に飛びだす
