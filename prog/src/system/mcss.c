@@ -1688,21 +1688,11 @@ static	void	MCSS_CalcPaletteFade( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss )
     }
     else
     { 
-		  if( mcss->pal_fade_value > 0 )
-		  {	
-			  mcss->pal_fade_start_evy += mcss->pal_fade_value;
-		    if( mcss->pal_fade_start_evy >= mcss->pal_fade_end_evy )
-        { 
-		      mcss->pal_fade_start_evy = mcss->pal_fade_end_evy;
-        }
-		  }
-		  else
-		  {	
-			  mcss->pal_fade_start_evy += mcss->pal_fade_value;
-		    if( mcss->pal_fade_start_evy <= mcss->pal_fade_end_evy )
-        { 
-		      mcss->pal_fade_start_evy = mcss->pal_fade_end_evy;
-        }
+		  mcss->pal_fade_start_evy += mcss->pal_fade_value;
+		  if( ( ( mcss->pal_fade_value >= 0 ) && ( mcss->pal_fade_start_evy >= mcss->pal_fade_end_evy ) ) ||
+		      ( ( mcss->pal_fade_value < 0 ) && ( mcss->pal_fade_start_evy <= mcss->pal_fade_end_evy ) ) )
+      { 
+		    mcss->pal_fade_start_evy = mcss->pal_fade_end_evy;
 		  }
     }
 		mcss->pal_fade_wait = mcss->pal_fade_wait_tmp;
