@@ -1376,7 +1376,9 @@ u16 EVENTDATA_CheckPosEvent(
 {
   const POS_EVENT_DATA* data = EVENTDATA_GetPosEvent( evdata,evwork,pos,dir );
   
+#ifdef  PM_DEBUG
   if ( DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) ) return EVENTDATA_ID_NONE;
+#endif
   if( data != NULL ){
     return data->id;
   }
@@ -1397,7 +1399,9 @@ u16 EVENTDATA_CheckDummyPosEvent(
 {
   const POS_EVENT_DATA* data = EVENTDATA_GetDummyPosEvent( evdata,evwork,pos );
   
+#ifdef  PM_DEBUG
   if ( DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) ) return EVENTDATA_ID_NONE;
+#endif
   if( data != NULL ){
     return data->id;
   }
@@ -1419,7 +1423,9 @@ u16 EVENTDATA_CheckPosEventRailLocation(
 {
   const POS_EVENT_DATA* data = EVENTDATA_GetPosEventRailLocation( evdata,evwork,pos );
   
+#ifdef  PM_DEBUG
   if ( DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) ) return EVENTDATA_ID_NONE;
+#endif
   if( data != NULL ){
     return data->id;
   }

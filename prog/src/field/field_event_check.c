@@ -292,7 +292,10 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 #endif //PM_DEBUG
 	
 //☆☆☆特殊スクリプト起動チェックがここに入る
-  if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) == FALSE) {
+#ifdef  PM_DEBUG
+  if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) == FALSE)
+#endif
+  {
     event = checkSpecialEvent( &req );
     if ( event )
     {
@@ -315,7 +318,10 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 
 
 //☆☆☆トレーナー視線チェックがここに入る
-  if( !(req.debugRequest) && DEBUG_FLG_GetFlg(DEBUG_FLG_DisableTrainerEye) == FALSE ){
+#ifdef  PM_DEBUG
+  if( !(req.debugRequest) && DEBUG_FLG_GetFlg(DEBUG_FLG_DisableTrainerEye) == FALSE )
+#endif
+  {
     u32 count = FIELD_EVENT_CountBattleMember( gsys );
     event = EVENT_CheckTrainerEye( fieldWork, count );
     if( event != NULL ){
@@ -406,7 +412,10 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   */
   
 //☆☆☆自機状態イベントチェック
-  if( !(req.debugRequest) ){
+#ifdef  PM_DEBUG
+  if( !(req.debugRequest) )
+#endif
+  {
     PLAYER_EVENTBIT evbit = PLAYER_EVENTBIT_NON;
      EVENTWORK *ev = GAMEDATA_GetEventWork( req.gamedata );
     
@@ -944,7 +953,10 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
 #endif //debug
 
 //☆☆☆特殊スクリプト起動チェックがここに入る
-  if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) == FALSE) {
+#ifdef  PM_DEBUG
+  if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) == FALSE)
+#endif
+  {
     event = checkSpecialEvent( &req );
     if ( event )
     {
@@ -1312,6 +1324,7 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
   }
 
 
+#ifdef  PM_DEBUG
   req->debugRequest = ( (req->key_cont & PAD_BUTTON_R) != 0);
   if (req->debugRequest)
   {
@@ -1323,10 +1336,11 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
     req->convRequest = FALSE;
   }
     
-  if (req->key_cont & PAD_BUTTON_L) {
+  /*if (req->key_cont & PAD_BUTTON_L) {
     TAMADA_Printf("KEY:%04x PSTATE:%d PVALUE:%d DIR:%d\n",
         req->key_cont & 0xff, req->player_state, req->player_value, req->player_dir );
-  }
+  }*/
+#endif
 }
 
 
@@ -1471,7 +1485,9 @@ static GMEVENT * checkPosEvent_prefetchDirection( EV_REQUEST * req )
   //if ( req->player_state == PLAYER_MOVE_STATE_END ) return NULL;
   //if ( req->player_value == PLAYER_MOVE_VALUE_WALK ) return NULL;
 
+#ifdef  PM_DEBUG
   if ( req->debugRequest ) return NULL;
+#endif
 
   if ( req->key_cont & PAD_KEY_UP    ) {
     key_dir = DIR_UP;
