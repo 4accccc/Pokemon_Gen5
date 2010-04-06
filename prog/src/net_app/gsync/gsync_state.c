@@ -414,6 +414,7 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
   GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_005,0, pWork->pp);
   GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork);
 
+  GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed);
   GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_rug_ani3,NANR_gsync_obj_rug_ani4);
 
   GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_bed,NANR_gsync_obj_bed_ani);
@@ -1559,6 +1560,7 @@ static void _upeffectLoop6(G_SYNC_WORK* pWork)
   
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_zzz_ani);
   GSYNC_DISP_BlendSmokeStart(pWork->pDispWork,FALSE);
+  GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed);
   GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_rug_ani1,NANR_gsync_obj_rug_ani3);
   PMSND_PlaySE(SEQ_SE_SYS_25);
 

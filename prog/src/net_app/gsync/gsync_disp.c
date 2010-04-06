@@ -187,15 +187,16 @@ typedef struct {
 
 
 static _GSYNCOBJPOS_STRUCT gsyncObjPosTable[]={
-  {124,150,_BED_CELL_PRI},   //NANR_gsync_obj_bed    0 // 
-  {124,150,_BED_CELL_PRI},   //NANR_gsync_obj_bed_ani    1 // 
+  {128,150,_BED_CELL_PRI},   //NANR_gsync_obj_bed    0 // 
+  {128,150,_BED_CELL_PRI},   //NANR_gsync_obj_bed_ani    1 // 
   {132,155,_SMOKE_CELL_PRI},   //NANR_gsync_obj_kemuri_r    2 //
   {122,155,_SMOKE_CELL_PRI},   //NANR_gsync_obj_kemuri_l    3 //
-  {124,145,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani1    4 //
-  {124,145,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani2    5 //
-  {124,145,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani3    5 //
-  {124,145,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani4    5 //
-  {100,125,_ZZZ_CELL_PRI},   //NANR_gsync_obj_zzz_ani    6 // 
+  {128,145,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani1    4 //
+  {128,145,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani2    5 //
+  {128,145,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani3    5 //
+  {128,145,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani4    5 //
+  {100,125,_ZZZ_CELL_PRI},   //NANR_gsync_obj_zzz_ani    6 //
+  {100,125,_ZZZ_CELL_PRI},   //NANR_gsync_obj_yume_1    6 //
   {128,160,_SMOKE_CELL_PRI},   //NANR_gsync_obj_musha    7 // 
   {128,160,_SHADOW_CELL_PRI},   //NANR_gsync_obj_musha_shadow    7 // 
   {128,160,_SHADOW_CELL_PRI},   //NANR_gsync_obj_bed_shadow    7 // 
@@ -582,12 +583,10 @@ static void _SetHand(GSYNC_DISP_WORK* pWork,int x,int y)
 static void _SetBed(GSYNC_DISP_WORK* pWork,int no)
 {
   if(pWork->curIcon[no]){
-    GFL_CLACT_WK_SetAnmFrame(pWork->curIcon[no],0);
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[no] , TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[no], TRUE );
+    GFL_CLACT_WK_Remove(pWork->curIcon[no]);
     
   }
-  else{
+  {
     GFL_CLWK_DATA cellInitData;
 
     cellInitData.pos_x = gsyncObjPosTable[no].x;
@@ -600,6 +599,7 @@ static void _SetBed(GSYNC_DISP_WORK* pWork,int no)
                                                         pWork->cellRes[PLT_GSYNC],
                                                         pWork->cellRes[ANM_GSYNC],
                                                         &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
+    GFL_CLACT_WK_SetAnmFrame(pWork->curIcon[no],0);
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[no] , TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[no], TRUE );
     GFL_CLACT_WK_SetAffineParam( pWork->curIcon[no], CLSYS_AFFINETYPE_DOUBLE );

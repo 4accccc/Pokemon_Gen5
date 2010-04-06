@@ -537,7 +537,7 @@ void WIFILOGIN_MESSAGE_SystemMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid
   if(pWork->systemDispWin==NULL){
     pWork->systemDispWin = GFL_BMPWIN_Create(
       WifiLogin_Message_GetSysFrame( pWork->display )
-      , 1 , 2, 30 , 16 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+      , 1 , 1, 30 , 16 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->systemDispWin;
 
@@ -624,7 +624,7 @@ static u8 WifiLogin_Message_GetSysFrame( WIFILOGIN_DISPLAY display )
     return GFL_BG_FRAME2_M;
 
   case WIFILOGIN_DISPLAY_DOWN:
-    return GFL_BG_FRAME2_S;
+    return GFL_BG_FRAME1_S;
 
   default:
     GF_ASSERT( 0);
