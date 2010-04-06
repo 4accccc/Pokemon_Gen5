@@ -7,6 +7,8 @@
  * @date  2009.11.29
  */
 //======================================================================
+#if PM_DEBUG
+
 #include <gflib.h>
 #include "system/main.h"
 #include "arc_def.h"
@@ -479,3 +481,4 @@ static u16 DEBUG_GetZoneIDNameMax( GAMESYS_WORK* gsys, void* cb_work )
   return ZONEDATA_GetZoneIDMax();
 }
 
+#endif //PM_DEBUG
