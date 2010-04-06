@@ -1074,13 +1074,15 @@ static void EggDemoInit( KAWADA_MAIN_WORK* wk )
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )  monsno = MONSNO_MANAFI;
   wk->pp = PP_Create( monsno, 1, 0, wk->heapID );
   PP_Put( wk->pp, ID_PARA_tamago_flag, 1 );
-  wk->egg_demo_param = EGG_DEMO_AllocParam( wk->heapID, wk->gamedata, wk->pp );
-      
-  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &EGG_DEMO_ProcData, wk->egg_demo_param );
+     
+  wk->egg_demo_param = GFL_HEAP_AllocMemory( wk->heapID, sizeof(EGG_DEMO_PARAM) );
+  wk->egg_demo_param->gamedata  = wk->gamedata;
+  wk->egg_demo_param->pp        = wk->pp;
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, FS_OVERLAY_ID(egg_demo), &EGG_DEMO_ProcData, wk->egg_demo_param );
 }
 static void EggDemoExit( KAWADA_MAIN_WORK* wk )
 {
-  EGG_DEMO_FreeParam( wk->egg_demo_param );
+  GFL_HEAP_FreeMemory( wk->egg_demo_param );
   GFL_HEAP_FreeMemory( wk->pp );
 
   ZONEDATA_Close();

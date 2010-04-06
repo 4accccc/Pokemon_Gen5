@@ -72,9 +72,11 @@ static GMEVENT_RESULT EggBirthEvent( GMEVENT* event, int* seq, void* wk )
 
   // ƒfƒ‚€”õ
   case SEQ_INIT_DEMO_PARAM:
-    GFL_OVERLAY_Load( FS_OVERLAY_ID(egg_demo) );
-    EGG_DEMO_InitParam( &(work->demoParam), gameData, work->egg );
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(egg_demo) );
+    //GFL_OVERLAY_Load( FS_OVERLAY_ID(egg_demo) );
+    //EGG_DEMO_InitParam( &(work->demoParam), gameData, work->egg );
+    //GFL_OVERLAY_Unload( FS_OVERLAY_ID(egg_demo) );
+    work->demoParam.gamedata = gameData;
+    work->demoParam.pp       = work->egg;
     *seq = SEQ_FADE_OUT;
     break;
 
