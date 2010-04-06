@@ -801,7 +801,7 @@
 #define FV_H03_BADRIDER                    777 /* 0x0309 シリンダーブリッジ：暴走族リーダーと子分 */
 #define FV_H03_GENERALPERSON               778 /* 0x030a シリンダーブリッジ：おばさんと格闘家（女） */
 #define FV_D12R0102_POKE14_01              779 /* 0x030b リバティ島：ビクティ */
-		/* not used   780(0x030c) */
+#define FV_R07R0105_CHAMPION_01            780 /* 0x030c タワーオブヘブン5F：クリア後チャンピオン */
 		/* not used   781(0x030d) */
 		/* not used   782(0x030e) */
 		/* not used   783(0x030f) */
