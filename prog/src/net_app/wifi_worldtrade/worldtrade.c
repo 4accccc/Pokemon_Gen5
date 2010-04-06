@@ -137,9 +137,9 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
   //以下デモで使うので呼ぶ
   GFL_OVERLAY_Load( FS_OVERLAY_ID( ui_common ));
   GFL_OVERLAY_Load( FS_OVERLAY_ID( app_mail ));
-
+#if PM_DEBUG
   GFL_NET_DebugPrintOn();
-
+#endif
 
     // ヒープ作成
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WORLDTRADE, 0x30000 );  //old 0x70000
