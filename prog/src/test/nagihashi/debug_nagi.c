@@ -9,6 +9,8 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
+#if PM_DEBUG
+
 //lib
 #include <gflib.h>
 #include <wchar.h>	//wcslen
@@ -2118,3 +2120,5 @@ static void Circle_DrawLine( VecFx16 *p_start, VecFx16 *p_end )
 	G3_Vtx( p_end->x, p_end->y, p_end->z);
 	G3_Vtx( p_start->x, p_start->y, p_start->z);
 }
+
+#endif //PM_DEBUG

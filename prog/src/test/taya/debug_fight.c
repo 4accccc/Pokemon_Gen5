@@ -6,7 +6,7 @@
  * @date  2009.10.20
  */
 //============================================================================================
-
+#if PM_DEBUG
 // lib includes -----------------------
 #include <gflib.h>
 #include <assert_default.h>
@@ -2635,3 +2635,4 @@ static void btlExitConnectCallback( void* pWork )
   DEBUG_BTL_WORK* wk = pWork;
   wk->fNetConnect = FALSE;
 }
+#endif //PM_DEBUG
