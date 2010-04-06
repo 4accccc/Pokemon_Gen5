@@ -631,6 +631,7 @@ extern u32   POKETOOL_GetPPPWorkSize( void );  ///< POKEMON_PASO_PARAM‚ÌƒTƒCƒY
 
 
 extern  POKEMON_PARAM*  PP_Create( u16 mons_no, u16 level, u64 id, HEAPID heapID ); ///<
+extern  POKEMON_PARAM*  PP_CreateEx( u16 mons_no, u16 level, u64 id, PtlSetupPow pow, u64 rnd, HEAPID heapID );
 extern  POKEMON_PARAM*  PP_CreateByPPP( const POKEMON_PASO_PARAM* ppp, HEAPID heapID );
 
 // “®ì‚‘¬‰»
