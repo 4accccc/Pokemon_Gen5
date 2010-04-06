@@ -887,9 +887,11 @@ static u32 eps_EncPokeCalcPersonalRand(
     const ENCPOKE_FLD_PARAM* efp, const POKEMON_PERSONAL_DATA*  personal,const ENC_POKE_PARAM* poke )
 {
   u32 p_rnd;
-  u8 sex_vec,sex;
+  u8 sex_vec;
+  PtlSexSpec sex_spec;
+  PtlRareSpec rare_spec;
 
-  sex = PTL_SEX_UNKNOWN;
+  sex_spec = PTL_SEX_SPEC_UNKNOWN;
   sex_vec = POKE_PERSONAL_GetParam( (POKEMON_PERSONAL_DATA*)personal, POKEPER_ID_sex );
 
   if( PokePersonal_SexVecTypeGet( sex_vec ) != POKEPER_SEXTYPE_FIX )
@@ -898,18 +900,19 @@ static u32 eps_EncPokeCalcPersonalRand(
     {
       //異性を抽選するための処理
       if(efp->mons_sex == PTL_SEX_MALE){
-        sex = PTL_SEX_FEMALE;
+        sex_spec = PTL_SEX_SPEC_FEMALE;
       }else if(efp->mons_sex == PTL_SEX_FEMALE){
-        sex = PTL_SEX_MALE;
+        sex_spec = PTL_SEX_SPEC_MALE;
       }
     }
 
     //性別を外部指定した場合の処理（異性を出す処理よりも優先するため、異性処理より後で処理して上書きする）
-    if ( poke->fixsex == PTL_SEX_MALE ) sex = PTL_SEX_MALE;
-    else if ( poke->fixsex == PTL_SEX_FEMALE ) sex = PTL_SEX_FEMALE;
+    if ( poke->fixsex == PTL_SEX_MALE ) sex_spec = PTL_SEX_SPEC_MALE;
+    else if ( poke->fixsex == PTL_SEX_FEMALE ) sex_spec = PTL_SEX_SPEC_FEMALE;
   }
 
   //@todo無限ループをし用意しないように処理を変更する予定
+#if 0
   do{
     p_rnd = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
     IWASAWA_Printf("PP_Rnd = %08x\n",p_rnd);
@@ -931,8 +934,15 @@ static u32 eps_EncPokeCalcPersonalRand(
     {
       break;  //指定無し
     }
-  }while(1);
-  
+  }while(1);  
+#else
+  //レア指定（レア指定はＢＷではありません）
+  if ( poke->rare == POKE_RARE_SEL_NOT ) rare_spec = PTL_RARE_SPEC_FALSE; //レア禁止
+  else  rare_spec = PTL_RARE_SPEC_BOTH; //どちらでも可
+
+  p_rnd = POKETOOL_CalcPersonalRandSpec( efp->myID, poke->monsNo, poke->form,
+                                         sex_spec, PTL_TOKUSEI_SPEC_BOTH, rare_spec );
+#endif
   //レア禁止してる場合の処理
   if ( poke->rare == POKE_RARE_SEL_NOT ){
     return p_rnd;
