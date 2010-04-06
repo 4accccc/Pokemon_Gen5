@@ -580,7 +580,9 @@ static void loadEventDataTableNormal(EVENTDATA_SYSTEM * evdata, u16 zone_id)
   u32 arcID;
   u32 size;
 
+#ifdef  PM_DEBUG
   if ( SCRDEBUGGER_ReadEventFile( zone_id, evdata->load_buffer, EVDATA_SIZE ) == FALSE)
+#endif
   {
     arcID = ZONEDATA_GetEventDataArcID(zone_id);
     size = GFL_ARC_GetDataSizeByHandle( evdata->eventHandle, arcID );
