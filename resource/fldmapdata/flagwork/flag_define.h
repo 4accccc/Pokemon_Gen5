@@ -346,10 +346,10 @@
 #define FE_H03_BADRIDER_WIN                330 /* 0x014a シリンダーブリッジ：暴走族に勝利したフラグ */
 #define FE_WALLPAPER_OPEN_MSG_01           331 /* 0x014b ボックス壁紙、１段階目追加メッセージを表示した */
 #define FE_WALLPAPER_OPEN_MSG_02           332 /* 0x014c ボックス壁紙、２段階目追加メッセージを表示した */
-		/* not used   333(0x014d) */
-		/* not used   334(0x014e) */
-		/* not used   335(0x014f) */
-		/* not used   336(0x0150) */
+#define FE_BC10R0401_BTL_01                333 /* 0x014d ブラックシティ：ローテーションバトル終了フラグ */
+#define FE_BC10R0401_BTL_02                334 /* 0x014e ブラックシティ：ローテーションバトル終了フラグ */
+#define FE_WC10R0101_BTL_01                335 /* 0x014f ホワイトフォレスト：トリプルバトル終了フラグ */
+#define FE_WC10R0101_BTL_02                336 /* 0x0150 ホワイトフォレスト：トリプルバトル終了フラグ */
 		/* not used   337(0x0151) */
 		/* not used   338(0x0152) */
 		/* not used   339(0x0153) */
