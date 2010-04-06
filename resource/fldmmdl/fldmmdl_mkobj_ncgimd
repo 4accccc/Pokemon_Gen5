@@ -614,9 +614,9 @@
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke13.ncg ./mmdl_res ./mmdl_dmy/ncg4x4flip.imd 4 4 7
 
 #poke14.imd
-./mmdl_res/poke14.imd: ./mmdl_nchara/poke14.ncg ./mmdl_nchara/poke14.ncl ./mmdl_dmy/ncg4x4flip.imd fldmmdl_list.csv
+./mmdl_res/poke14.imd: ./mmdl_nchara/poke14.ncg ./mmdl_nchara/poke14.ncl ./mmdl_dmy/ncg4x4nflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd poke14
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke14.ncg ./mmdl_res ./mmdl_dmy/ncg4x4flip.imd 4 4 7
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/poke14.ncg ./mmdl_res ./mmdl_dmy/ncg4x4nflip.imd 4 4 12
 
 #poke15.imd
 ./mmdl_res/poke15.imd: ./mmdl_nchara/poke15.ncg ./mmdl_nchara/poke15.ncl ./mmdl_dmy/ncg4x4nflip.imd fldmmdl_list.csv
