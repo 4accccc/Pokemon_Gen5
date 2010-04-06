@@ -5537,14 +5537,14 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
       case DEBUG_BSWAY_SET_REGU_OFF: //レギュオフ
         {
           u8 flag = BSUBWAY_SCRWORK_DebugGetFlag( work->gmSys );
-          flag |= BSW_DEBUG_FLAG_REGU_OFF;
+          flag ^= BSW_DEBUG_FLAG_REGU_OFF;
           BSUBWAY_SCRWORK_DebugSetFlag( work->gmSys, flag );
         }
         break;
       case DEBUG_BSWAY_SET_BTL_SKIP: //バトルスキップ
         {
           u8 flag = BSUBWAY_SCRWORK_DebugGetFlag( work->gmSys );
-          flag |= BSW_DEBUG_FLAG_BTL_SKIP;
+          flag ^= BSW_DEBUG_FLAG_BTL_SKIP;
           BSUBWAY_SCRWORK_DebugSetFlag( work->gmSys, flag );
         }
         break;

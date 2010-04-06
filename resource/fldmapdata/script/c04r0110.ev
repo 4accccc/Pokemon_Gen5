@@ -381,7 +381,7 @@ sub_train_battle:
   
   $win_lose = $SCWK_ANSWER
   
-  //戦闘復帰　マップフェードイン
+  //戦闘復帰　マップフェードイン <-バトル処理で行う
 //_MAP_FADE_BLACK_IN()
 //_MAP_FADE_END_CHECK()
   

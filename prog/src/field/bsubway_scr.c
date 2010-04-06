@@ -216,10 +216,12 @@ void BSUBWAY_SCRWORK_ReleaseWork(
     
     if( bsw_scr->btl_box_party != NULL ){
       GFL_HEAP_FreeMemory( bsw_scr->btl_box_party );
+      bsw_scr->btl_box_party = NULL;
     }
     
     if( bsw_scr->btl_setup_param != NULL ){
       BATTLE_PARAM_Delete( bsw_scr->btl_setup_param );
+      bsw_scr->btl_setup_param = NULL;
     }
     
     MI_CpuClear8( bsw_scr, sizeof(BSUBWAY_SCRWORK) );

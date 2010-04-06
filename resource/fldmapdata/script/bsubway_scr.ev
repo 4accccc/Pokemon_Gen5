@@ -328,12 +328,13 @@ sub_receipt_menu_challenge:
     _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 2 ) //Ç‚ÇﬂÇÈ
     _BMPMENU_START()
     
-    _MSGWIN_CLOSE()
-    
     IF $SCWK_ANSWER == 1 THEN //ê‡ñæï∂
       _CALL sub_receipt_msg_account
+      $SCWK_ANSWER = 1
     ENDIF
   ENDWHILE
+
+  _MSGWIN_CLOSE()
 }
 _RET
 
@@ -372,6 +373,7 @@ sub_receipt_menu_challenge_wifi:
     
     IF $SCWK_ANSWER == 3 THEN //ê‡ñæï∂
       _CALL sub_receipt_msg_account
+      $SCWK_ANSWER = 3
     ELSE
       $loop = FALSE
     ENDIF
@@ -1104,7 +1106,7 @@ sub_receipt_msg_greet:
   CASE BSWAY_MODE_WIFI THEN
     $SCWK_TEMP0 = msg_bsw_scr_03
   CASE BSWAY_MODE_S_SINGLE THEN
-    _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, ret )
+    _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, BSWAY_MODE_SINGLE, BSW_NULL, ret )
     
     IF $ret == TRUE THEN
       $SCWK_TEMP0 = msg_bsw_scr_04
@@ -1113,7 +1115,7 @@ sub_receipt_msg_greet:
       $flag = FALSE
     ENDIF
   CASE BSWAY_MODE_S_DOUBLE THEN
-    _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, ret )
+    _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, BSWAY_MODE_DOUBLE, BSW_NULL, ret )
     
     IF $ret == TRUE THEN
       $SCWK_TEMP0 = msg_bsw_scr_05
@@ -1122,7 +1124,7 @@ sub_receipt_msg_greet:
       $flag = FALSE
     ENDIF
   CASE BSWAY_MODE_S_MULTI THEN
-    _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, ret )
+    _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, BSWAY_MODE_MULTI, BSW_NULL, ret )
     
     IF $ret == TRUE THEN
       $SCWK_TEMP0 = msg_bsw_scr_06
@@ -1164,7 +1166,7 @@ sub_receipt_msg_ask_geton:
   CASE BSWAY_MODE_S_MULTI THEN
     $SCWK_TEMP0 = msg_bsw_scr_19
   ENDSWITCH
-
+  
   _CALL sub_bsw_common_bwin_receipt
 }
 _RET
@@ -2424,10 +2426,10 @@ _RET
 //--------------------------------------------------------------
 //  ìdé‘ì‡Ç…à⁄ìÆ
 //--------------------------------------------------------------
-EVENT_START ev_bsw_debug_map_chg_train
+ev_bsw_debug_map_chg_train:
 {
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
   _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 7, 0, 4, DIR_UP )
 }
-EVENT_END
+_END

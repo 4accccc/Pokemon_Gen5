@@ -1086,7 +1086,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     {
       GMEVENT *event;
       
-      MI_CpuClear8( &bsw_scr->btl_rec_sel_param, sizeof(IRC_MATCH_WORK) );
+      MI_CpuClear8( &bsw_scr->btl_rec_sel_param, sizeof(BTL_REC_SEL_PARAM) );
       bsw_scr->btl_rec_sel_param.gamedata = gdata;
       bsw_scr->btl_rec_sel_param.b_rec = TRUE;
       bsw_scr->btl_rec_sel_param.b_sync = FALSE;
