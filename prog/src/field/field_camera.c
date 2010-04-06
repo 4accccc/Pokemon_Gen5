@@ -2181,6 +2181,7 @@ BOOL FIELD_CAMERA_DEBUG_Control( FIELD_CAMERA* camera, int trg, int cont, int re
     }
   }
   // Near Far操作
+  // カメラエリア　ＯＮ・ＯＦＦ
   else if( cont & PAD_BUTTON_DEBUG )
   {
     fx32 near, far;
@@ -2224,6 +2225,15 @@ BOOL FIELD_CAMERA_DEBUG_Control( FIELD_CAMERA* camera, int trg, int cont, int re
       GFL_G3D_CAMERA_SetNear(camera->g3Dcamera, &near);
       GFL_G3D_CAMERA_SetFar(camera->g3Dcamera, &far);
     }
+
+    if( trg & PAD_BUTTON_X ){
+      if( camera->camera_area_active ){
+        camera->camera_area_active = FALSE;
+      }else{
+        camera->camera_area_active = TRUE;
+      }
+      ret = TRUE;
+    }
   }
   // 平行移動
   else 
@@ -2260,21 +2270,22 @@ BOOL FIELD_CAMERA_DEBUG_Control( FIELD_CAMERA* camera, int trg, int cont, int re
       ret = TRUE;
     }
 
+    //  ターゲットのバインドOn・Off
+    if( trg & PAD_BUTTON_X )
+    {
+      if( camera->watch_target )
+      {
+        FIELD_CAMERA_FreeTarget( camera );
+      }
+      else
+      {
+        FIELD_CAMERA_BindDefaultTarget( camera );
+      }
+      ret = TRUE;
+    }
+
   }
    
-  //  ターゲットのバインドOn・Off
-  if( trg & PAD_BUTTON_X )
-  {
-    if( camera->watch_target )
-    {
-      FIELD_CAMERA_FreeTarget( camera );
-    }
-    else
-    {
-      FIELD_CAMERA_BindDefaultTarget( camera );
-    }
-    ret = TRUE;
-  }
 
   // バッファリングモード変更
   if( trg & PAD_BUTTON_START )
@@ -2411,6 +2422,21 @@ void FIELD_CAMERA_DEBUG_DrawInfo( FIELD_CAMERA* camera, GFL_BMPWIN* p_win, fx32 
 
     WORDSET_ExpandStr( camera->p_debug_wordset, camera->p_debug_strbuff, camera->p_debug_strbuff_tmp );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), 0, 128, camera->p_debug_strbuff, camera->p_debug_font );
+  }
+
+  // カメラエリアのＯＮ・ＯＦＦ
+  {
+    if( camera->camera_area_active )
+    {
+      GFL_MSG_GetString( camera->p_debug_msgdata, CAMERA_DELICATE_BIND0003, camera->p_debug_strbuff_tmp );
+    }
+    else
+    {
+      GFL_MSG_GetString( camera->p_debug_msgdata, CAMERA_DELICATE_BIND0004, camera->p_debug_strbuff_tmp );
+    }
+
+    WORDSET_ExpandStr( camera->p_debug_wordset, camera->p_debug_strbuff, camera->p_debug_strbuff_tmp );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), 128, 128, camera->p_debug_strbuff, camera->p_debug_font );
   }
 
   // Maya Camera Anime Trans

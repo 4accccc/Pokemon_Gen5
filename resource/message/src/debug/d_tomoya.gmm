@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tomoya_takahashi" host="W00148" date="2010-02-11T21:39:39"/>
+	<create user="tomoya_takahashi" host="W00148" date="2010-04-06T18:30:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -515,6 +515,16 @@ OffsetY：[2:04:５桁:1] OffsetZ：[2:04:５桁:2]</language>
 		<language name="JPN_KANJI" width="256">主人公追尾：ＯＦＦ</language>
 	</row>
 
+	<row id="CAMERA_DELICATE_BIND0003">
+		<language name="JPN" width="256">カメラエリア：ＯＮ</language>
+		<language name="JPN_KANJI" width="256">カメラエリア：ＯＮ</language>
+	</row>
+
+	<row id="CAMERA_DELICATE_BIND0004">
+		<language name="JPN" width="256">カメラエリア：ＯＦＦ</language>
+		<language name="JPN_KANJI" width="256">カメラエリア：ＯＦＦ</language>
+	</row>
+
 	<row id="CAMERA_MAYA_TRANS">
 		<language name="JPN" font=" 1:small" width="256">Maya Trans ｘ：[2:03:４桁:0].[2:01:２桁:3] ｙ：[2:03:４桁:1].[2:01:２桁:4] ｚ：[2:04:５桁:2].[2:01:２桁:5]</language>
 		<language name="JPN_KANJI" width="256">Maya Trans ｘ：[2:03:４桁:0].[2:01:２桁:3] ｙ：[2:03:４桁:1].[2:01:２桁:4] ｚ：[2:04:５桁:2].[2:01:２桁:5]</language>
@@ -532,22 +542,22 @@ OffsetY：[2:04:５桁:1] OffsetZ：[2:04:５桁:2]</language>
 カメラ自転（カメラを動かす）：Y+UDLR
 パース操作（奥行き）：A+UD
 パース操作（補正あり）：A+LR
-ターゲット追尾ＯＮ・ＯＦＦ:X
+ターゲット追尾ＯＮ・ＯＦＦ:X 
 バッファリングモード操作：START
 二ア：DEBUG+UP
 ファー：DEBUG+LR
-カメラ情報表示とヘルプの切り替え：タッチ</language>
+カメラエリアＯＮ・ＯＦＦ:DEBUG:X</language>
 		<language name="JPN_KANJI" width="256">操作方法 UDLR = up down left right
 平行移動：UDR L R
 カメラ公転（ターゲットを動かす）：B+UDLR L R
 カメラ自転（カメラを動かす）：Y+UDLR
 パース操作（奥行き）：A+UD
 パース操作（補正あり）：A+LR
-ターゲット追尾ＯＮ・ＯＦＦ:X
+ターゲット追尾ＯＮ・ＯＦＦ:X 
 バッファリングモード操作：START
 二ア：DEBUG+UP
 ファー：DEBUG+LR
-カメラ情報表示とヘルプの切り替え：タッチ</language>
+カメラエリアＯＮ・ＯＦＦ:DEBUG:X</language>
 	</row>
 
 	<row id="BBD_COLOR_00">
