@@ -83,6 +83,7 @@ static void UpdateAnime_BLINK_LONG( PALETTE_ANIME* work ); // アニメーションを更
 static void StartAnime( PALETTE_ANIME* work, ANIME_TYPE type, u16 color ); // アニメーションを開始する
 static void StopAnime( PALETTE_ANIME* work ); // アニメーションを停止する
 static void ResetPalette( PALETTE_ANIME* work ); // パレットをリセットする
+static BOOL CheckAnime( const PALETTE_ANIME* work ); // アニメーション中かどうかをチェックする
 //-----------------------------------------------------------------------------
 // ◆LAYER 0 生成・破棄
 //-----------------------------------------------------------------------------
@@ -197,6 +198,21 @@ void PALETTE_ANIME_Stop( PALETTE_ANIME* work )
 void PALETTE_ANIME_Reset( PALETTE_ANIME* work )
 {
   ResetPalette( work );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief アニメーション中かどうかをチェックする
+ *
+ * @param work
+ *
+ * @return アニメーション中なら TRUE
+ *         そうでなければ FALSE
+ */
+//-----------------------------------------------------------------------------
+BOOL PALETTE_ANIME_CheckAnime( const PALETTE_ANIME* anime )
+{
+  return CheckAnime( anime );
 }
 
 
@@ -475,6 +491,21 @@ static void ResetPalette( PALETTE_ANIME* work )
   GF_ASSERT( work->setupFlag ); // セットアップされていない
 
   MI_CpuCopy8( work->originalColor, work->transDest, sizeof(u16) * work->colorNum );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief アニメーション中かどうかをチェックする
+ *
+ * @param work
+ *
+ * @return アニメーション中なら TRUE
+ *         そうでなければ FALSE
+ */
+//-----------------------------------------------------------------------------
+static BOOL CheckAnime( const PALETTE_ANIME* work )
+{
+  return work->animeFlag;
 }
 
 

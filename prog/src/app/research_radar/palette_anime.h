@@ -51,3 +51,5 @@ extern void PALETTE_ANIME_Start( PALETTE_ANIME* anime, ANIME_TYPE type, u16 colo
 extern void PALETTE_ANIME_Stop( PALETTE_ANIME* anime );
 // 操作したパレットをアニメーション開始時点の状態にリセットする
 extern void PALETTE_ANIME_Reset( PALETTE_ANIME* anime );
+// アニメーション中かどうかをチェックする
+extern BOOL PALETTE_ANIME_CheckAnime( const PALETTE_ANIME* anime );
