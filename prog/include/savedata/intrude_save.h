@@ -132,3 +132,9 @@ extern void ISC_SAVE_SetGPowerID(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower_id
 extern GPOWER_ID ISC_SAVE_GetGPowerID(INTRUDE_SAVE_WORK *intsave);
 extern void ISC_SAVE_SetDistributionGPower(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower_id);
 extern BOOL ISC_SAVE_GetDistributionGPower(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower_id);
+
+//--------------------------------------------------------------
+//  ƒpƒŒƒX
+//--------------------------------------------------------------
+extern u32 ISC_SAVE_GetMissionClearCount(INTRUDE_SAVE_WORK *intsave);
+extern s64 ISC_SAVE_GetPalaceSojournTime(INTRUDE_SAVE_WORK *intsave);

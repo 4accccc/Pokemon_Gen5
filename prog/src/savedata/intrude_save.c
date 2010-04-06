@@ -301,4 +301,31 @@ BOOL ISC_SAVE_GetDistributionGPower(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower
   return FALSE;
 }
 
+//==================================================================
+/**
+ * ミッションをクリアした回数を取得
+ *
+ * @param   intsave		
+ *
+ * @retval  u32		    クリアした回数
+ */
+//==================================================================
+u32 ISC_SAVE_GetMissionClearCount(INTRUDE_SAVE_WORK *intsave)
+{
+  return intsave->clear_mission_count;
+}
+
+//==================================================================
+/**
+ * パレス滞在時間を取得
+ *
+ * @param   intsave		
+ *
+ * @retval  s64		    滞在時間(秒) ※RTC_ConvertDateTimeToSecondと同様の秒です
+ */
+//==================================================================
+s64 ISC_SAVE_GetPalaceSojournTime(INTRUDE_SAVE_WORK *intsave)
+{
+  return intsave->palace_sojourn_time;
+}
 
