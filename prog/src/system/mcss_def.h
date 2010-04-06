@@ -86,10 +86,11 @@ struct _MCSS_WORK
 	VecFx32												shadow_scale;					//影のスケール
 	VecFx32												ofs_pos;							//ポジションオフセット
 	VecFx32												ofs_scale;						//スケールオフセット
-	u8														pal_fade_start_evy;		//パレットフェード　START_EVY値
-	u8														pal_fade_end_evy;			//パレットフェード　END_EVY値
-	u8														pal_fade_wait;				//パレットフェード　wait値
-	u8														pal_fade_wait_tmp;		//パレットフェード　wait_tmp値
+	s8														pal_fade_start_evy;		//パレットフェード　START_EVY値
+	s8														pal_fade_end_evy;			//パレットフェード　END_EVY値
+	s8														pal_fade_wait;				//パレットフェード　wait値
+	s8														pal_fade_wait_tmp;		//パレットフェード　wait_tmp値
+	int														pal_fade_value;			  //パレットフェード　フェード値
 	u32														pal_fade_rgb;					//パレットフェード　end_evy時のrgb値
 	u32														alpha					    :8; //alpha値
 	u32														mepachi_flag	    :1;	//メパチフラグ

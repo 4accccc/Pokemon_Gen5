@@ -1209,20 +1209,35 @@ void	MCSS_SetTraverseMCNodesCallBack( MCSS_WORK *mcss, u32 param, NNSG2dMCTraver
  * @param[in] mcss      MCSSワーク構造体のポインタ
  * @param[in]	start_evy	セットするパラメータ（フェードさせる色に対する開始割合16段階）
  * @param[in]	end_evy		セットするパラメータ（フェードさせる色に対する終了割合16段階）
- * @param[in]	wait			セットするパラメータ（ウェイト）
+ * @param[in]	wait			セットするパラメータ（ウェイト）（－値を入れるとevyの増減値を増やしてさらに早くなります）
  * @param[in]	rgb				セットするパラメータ（フェードさせる色）
  */
 //--------------------------------------------------------------------------
-void	MCSS_SetPaletteFade( MCSS_WORK *mcss, u8 start_evy, u8 end_evy, u8 wait, u32 rgb )
+void	MCSS_SetPaletteFade( MCSS_WORK *mcss, u8 start_evy, u8 end_evy, s8 wait, u32 rgb )
 {	
 	GF_ASSERT( mcss );
 
 	mcss->pal_fade_flag				= 1;
 	mcss->pal_fade_start_evy	= start_evy;
 	mcss->pal_fade_end_evy		= end_evy;
-	mcss->pal_fade_wait				= 0;
-	mcss->pal_fade_wait_tmp		= wait;
 	mcss->pal_fade_rgb				= rgb;
+  mcss->pal_fade_wait				= 0;
+
+  if( wait < 0 )
+  { 
+	  mcss->pal_fade_wait_tmp		= 0;
+    mcss->pal_fade_value			= ( wait - 1 ) * -1;
+  }
+  else
+  { 
+	  mcss->pal_fade_wait_tmp		= wait;
+    mcss->pal_fade_value			= 1;
+  }
+
+  if( start_evy > end_evy )
+  { 
+    mcss->pal_fade_value			*= -1;
+  }
 }
 
 //--------------------------------------------------------------------------
@@ -1667,18 +1682,29 @@ static	void	MCSS_CalcPaletteFade( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss )
 
 		GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 1 );
 
-		if( mcss->pal_fade_start_evy == mcss->pal_fade_end_evy )
-		{	
-			mcss->pal_fade_flag = 0;
-		}
-		else if( mcss->pal_fade_start_evy > mcss->pal_fade_end_evy )
-		{	
-			mcss->pal_fade_start_evy--;
-		}
-		else
-		{	
-			mcss->pal_fade_start_evy++;
-		}
+	  if( mcss->pal_fade_start_evy == mcss->pal_fade_end_evy )
+    { 
+      mcss->pal_fade_flag = 0;
+    }
+    else
+    { 
+		  if( mcss->pal_fade_value > 0 )
+		  {	
+			  mcss->pal_fade_start_evy += mcss->pal_fade_value;
+		    if( mcss->pal_fade_start_evy >= mcss->pal_fade_end_evy )
+        { 
+		      mcss->pal_fade_start_evy = mcss->pal_fade_end_evy;
+        }
+		  }
+		  else
+		  {	
+			  mcss->pal_fade_start_evy -= mcss->pal_fade_value;
+		    if( mcss->pal_fade_start_evy <= mcss->pal_fade_end_evy )
+        { 
+		      mcss->pal_fade_start_evy = mcss->pal_fade_end_evy;
+        }
+		  }
+    }
 		mcss->pal_fade_wait = mcss->pal_fade_wait_tmp;
 	}
 	else

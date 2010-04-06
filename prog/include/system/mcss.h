@@ -131,7 +131,7 @@ extern  u16             MCSS_GetSizeY( MCSS_WORK *mcss );
 extern  u8              MCSS_GetFlyFlag( MCSS_WORK *mcss );
 extern	void						MCSS_SetAnimCtrlCallBack( MCSS_WORK *mcss, u32 param, NNSG2dAnmCallBackPtr pFunc, u16 frameIdx );
 extern  void	          MCSS_SetTraverseMCNodesCallBack( MCSS_WORK *mcss, u32 param, NNSG2dMCTraverseNodeCallBack pFunc );
-extern	void						MCSS_SetPaletteFade( MCSS_WORK *mcss, u8 start_evy, u8 end_evy, u8 wait, u32 rgb );
+extern	void						MCSS_SetPaletteFade( MCSS_WORK *mcss, u8 start_evy, u8 end_evy, s8 wait, u32 rgb );
 extern  u8              MCSS_GetAlpha( MCSS_WORK *mcss );
 extern  void	          MCSS_SetAlpha( MCSS_WORK *mcss, u8 alpha );
 extern  u8              MCSS_GetShadowAlpha( MCSS_WORK *mcss );
