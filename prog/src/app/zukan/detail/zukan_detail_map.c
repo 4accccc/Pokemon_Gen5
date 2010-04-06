@@ -84,7 +84,7 @@ enum
 // 本数
 enum
 {
-  OBJ_PAL_NUM_M_TM           = 4,
+  OBJ_PAL_NUM_M_TM           = 5,
   OBJ_PAL_NUM_M_ZUKAN        = 2,
   OBJ_PAL_NUM_M_EXIST        = 1,
 };
@@ -92,8 +92,8 @@ enum
 enum
 {
   OBJ_PAL_POS_M_TM           = 0,
-  OBJ_PAL_POS_M_ZUKAN        = 4,
-  OBJ_PAL_POS_M_EXIST        = 6,
+  OBJ_PAL_POS_M_ZUKAN        = 5,
+  OBJ_PAL_POS_M_EXIST        = 7,
 };
 
 // サブBGフレーム
@@ -456,6 +456,24 @@ typedef struct
 }
 AREA_DATA;
 
+//-------------------------------------
+/// 隠しスポット
+//=====================================
+typedef enum
+{
+  HIDE_STATE_NO,          // 隠しスポットではない
+  HIDE_STATE_HIDE_TRUE,   // 隠しスポットで隠し中
+  HIDE_STATE_HIDE_FALSE,  // 隠しスポットで表示中
+}
+HIDE_STATE;
+
+typedef struct
+{
+  HIDE_STATE    state;
+  GFL_CLWK*     obj_clwk;  // stateがHIDE_STATE_NOまたはHIDE_STATE_HIDE_TRUEのときはNULL
+}
+HIDE_SPOT;
+
 
 //-------------------------------------
 /// PROC ワーク
@@ -501,6 +519,9 @@ typedef struct
   GFL_CLSYS_REND*             usual_rend;    // レンダラー全体に対して半透明設定が反映されると思っていてつくったもの。
   int                         obj_exist_ev1;
   u16                         obj_exist_alpha_anime_count;
+
+  // 隠しスポット
+  HIDE_SPOT                   hide_spot[TOWNMAP_DATA_MAX];
 
   // タウンマップデータ
   TOWNMAP_DATA*               townmap_data;
@@ -548,6 +569,10 @@ static void Zukan_Detail_Map_ObjExistAlphaInit( ZUKAN_DETAIL_MAP_PARAM* param, Z
 static void Zukan_Detail_Map_ObjExistAlphaExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Map_ObjExistAlphaMain( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Map_ObjExistAlphaReset( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
+// 隠しスポット
+static void Zukan_Detail_Map_HideSpotInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_HideSpotExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 // メッセージとテキスト
 static void Zukan_Detail_Map_MsgTextInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -768,6 +793,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcExit( ZKNDTL_PROC* proc, int* seq
   ZKNDTL_COMMON_RearExit( work->rear_wk_s );
 
   // OBJ
+  Zukan_Detail_Map_HideSpotExit( param, work, cmn );
   Zukan_Detail_Map_ObjExistExit( param, work, cmn );
   Zukan_Detail_Map_ObjExit( param, work, cmn );
 
@@ -872,6 +898,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
       // OBJ
       Zukan_Detail_Map_ObjInit( param, work, cmn );
       Zukan_Detail_Map_ObjExistInit( param, work, cmn );
+      Zukan_Detail_Map_HideSpotInit( param, work, cmn );
       
       // 最背面
       work->rear_wk_s = ZKNDTL_COMMON_RearInit( param->heap_id, ZKNDTL_COMMON_REAR_TYPE_MAP,
@@ -1510,7 +1537,7 @@ static void Zukan_Detail_Map_ObjExistInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
 {
   // CLWK作成
   {
-    u8 softpri = 4;  // obj_clwkのsoftpriよりプライオリティを低くしておく
+    u8 softpri = 4;  // obj_clwkのsoftpriよりプライオリティを低くしておく、HIDE_SPOTのobj_clwkのsoftpriよりプライオリティを高くしておく
 
     u8 i;
     GFL_CLWK_DATA cldata;
@@ -1543,6 +1570,67 @@ static void Zukan_Detail_Map_ObjExistExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
     for( i=0; i<TOWNMAP_DATA_MAX; i++ )
     {
       GFL_CLACT_WK_Remove( work->obj_exist_clwk[i] );
+    }
+  }
+}
+
+//-------------------------------------
+/// 隠しスポット
+//-------------------------------------
+static void Zukan_Detail_Map_HideSpotInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // Zukan_Detail_Map_ObjInitが済んでから呼ぶこと
+
+  GAMEDATA*  gamedata  = ZKNDTL_COMMON_GetGamedata(cmn);
+  EVENTWORK* eventwork = GAMEDATA_GetEventWork( gamedata );
+  u8 i;
+  
+  for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+  {
+    u16 hide_flag	= TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_HIDE_FLAG );
+    if( hide_flag != TOWNMAP_DATA_ERROR )
+    {
+      BOOL is_hide = !EVENTWORK_CheckEventFlag( eventwork, hide_flag );
+      if( is_hide )
+      {
+        work->hide_spot[i].state    = HIDE_STATE_HIDE_TRUE;
+        work->hide_spot[i].obj_clwk = NULL;
+      }
+      else
+      {
+        GFL_CLWK_DATA cldata;
+        cldata.pos_x    = (s16)TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_POS_X );
+        cldata.pos_y    = (s16)TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_POS_Y );
+        cldata.anmseq   = 14;
+        cldata.softpri  = 5;
+        cldata.bgpri    = BG_FRAME_PRI_M_ROOT;
+
+        work->hide_spot[i].state    = HIDE_STATE_HIDE_FALSE;
+        
+        work->hide_spot[i].obj_clwk = GFL_CLACT_WK_Create(
+            work->usual_clunit,
+            work->obj_res[OBJ_RES_TM_NCG], work->obj_res[OBJ_RES_TM_NCL], work->obj_res[OBJ_RES_TM_NCE],
+            &cldata, CLSYS_DEFREND_MAIN, param->heap_id );
+        GFL_CLACT_WK_SetAutoAnmFlag( work->hide_spot[i].obj_clwk, TRUE );
+        GFL_CLACT_WK_SetDrawEnable( work->hide_spot[i].obj_clwk, TRUE );
+        GFL_CLACT_WK_SetObjMode( work->hide_spot[i].obj_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+      }
+    }
+    else
+    {
+      work->hide_spot[i].state    = HIDE_STATE_NO;
+      work->hide_spot[i].obj_clwk = NULL;
+    }
+  }
+}
+static void Zukan_Detail_Map_HideSpotExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u8 i;
+  for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+  {
+    if( work->hide_spot[i].state == HIDE_STATE_HIDE_FALSE )
+    {
+      GFL_CLACT_WK_Remove( work->hide_spot[i].obj_clwk );
     }
   }
 }
@@ -1965,6 +2053,10 @@ static u8 Zukan_Detail_Map_Hit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_
 	  fx32 w;
     GFL_COLLISION3D_CYLXCIR_RESULT  result;
 
+    if( work->hide_spot[i].state == HIDE_STATE_HIDE_TRUE )  // 隠しマップなら絶対にあたらない
+    {
+      continue;
+    }
   	v1.x	= FX32_CONST( TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_HIT_START_X ) );
   	v1.y	= FX32_CONST( TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_HIT_START_Y ) );
   	v1.z	= 0;
@@ -2004,6 +2096,11 @@ static BOOL Zukan_Detail_Map_IsPullHit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DET
 {
   u32 data_x, data_y;
   u32 d2;
+
+  if( work->hide_spot[data_idx].state == HIDE_STATE_HIDE_TRUE )  // 隠しマップなら絶対にあたらない
+  {
+    return FALSE;
+  }
 
   data_x = TOWNMAP_DATA_GetParam( work->townmap_data, data_idx, TOWNMAP_DATA_PARAM_CURSOR_X );
   data_y = TOWNMAP_DATA_GetParam( work->townmap_data, data_idx, TOWNMAP_DATA_PARAM_CURSOR_Y );
@@ -2725,10 +2822,12 @@ static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
 //=====================================
 static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id, ARCHANDLE* handle )
 {
+#if 0
   u32 size;
   AREA_DATA* area_data = GFL_ARCHDL_UTIL_LoadEx( handle, NARC_zukan_area_zkn_area_monsno_001_dat + monsno -1, FALSE, heap_id, &size );
   GF_ASSERT_MSG( sizeof(AREA_DATA) == size, "ZUKAN_DETAIL_MAP : AREA_DATAのサイズが異なります。\n" );
   return area_data;
+#endif
 
 #if 0
   // 仮データ
@@ -2775,7 +2874,7 @@ static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id, ARC
     break;
   }
   return area_data;
-#elif 0
+#elif 1 
   // 生息する場所に置くOBJのアニメ指定、位置指定用のデータ
   AREA_DATA* area_data = GFL_HEAP_AllocClearMemory( heap_id, sizeof(AREA_DATA) );
   u8 i;
@@ -2865,7 +2964,10 @@ static void Zukan_Detail_Map_UtilDrawSeasonArea( ZUKAN_DETAIL_MAP_PARAM* param, 
       u8 zkn_area_idx = work->townmap_data_idx_to_zkn_area_idx[i];
       if( work->area_data->season_data[season_id].place_bitflag[zkn_area_idx] != PLACE_BITFLAG_NONE )
       {
-        GFL_CLACT_WK_SetDrawEnable( work->obj_exist_clwk[i], TRUE );
+        if( work->hide_spot[i].state != HIDE_STATE_HIDE_TRUE )  // 隠しマップなら絶対にあたらない
+        {
+          GFL_CLACT_WK_SetDrawEnable( work->obj_exist_clwk[i], TRUE );
+        }
       }
     }
   }
@@ -2928,6 +3030,13 @@ static void Zukan_Detail_Map_ObjExistAlphaInit( ZUKAN_DETAIL_MAP_PARAM* param, Z
   {
     GFL_CLACT_WK_SetObjMode( work->obj_clwk[i], GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
   }
+  for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+  {
+    if( work->hide_spot[i].state == HIDE_STATE_HIDE_FALSE )
+    {
+      GFL_CLACT_WK_SetObjMode( work->hide_spot[i].obj_clwk, GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
+    }
+  }
 
   // wnd
   GX_SetVisibleWnd( GX_WNDMASK_W0 | GX_WNDMASK_W1 );
@@ -2957,6 +3066,13 @@ static void Zukan_Detail_Map_ObjExistAlphaExit( ZUKAN_DETAIL_MAP_PARAM* param, Z
   for( i=0; i<OBJ_MAX; i++ )
   {
     GFL_CLACT_WK_SetObjMode( work->obj_clwk[i], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+  }
+  for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+  {
+    if( work->hide_spot[i].state == HIDE_STATE_HIDE_FALSE )
+    {
+      GFL_CLACT_WK_SetObjMode( work->hide_spot[i].obj_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+    }
   }
 
   // 一部分フェードの設定を元に戻す

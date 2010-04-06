@@ -69,6 +69,8 @@
 
 // }ŠÓÚ×
 #include "../../app/zukan/detail/zukan_detail.h"
+#include "../../../../resource/fldmapdata/flagwork/flag_define.h"
+
 
 // ƒeƒXƒg
 #include "d_test.h"
@@ -1135,6 +1137,8 @@ static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
   ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( wk->gamedata );
   u16 i;
   u16 lc;
+  EVENTWORK* eventwork = GAMEDATA_GetEventWork( wk->gamedata );
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) EVENTWORK_SetEventFlag( eventwork, SYS_FLAG_ARRIVE_T01 );
 
   ZONEDATA_Open( wk->heapID );
   
