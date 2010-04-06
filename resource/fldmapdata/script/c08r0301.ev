@@ -12,6 +12,7 @@
   .include  "../../message/dst/script/msg_c08r0301.h"
   .include  "c08r0301.h"
   .include  "musical_scr_local.h"
+  .include "musical_scr_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -29,119 +30,128 @@ _EVENT_DATA_END
 /* ミュージカルだいすきおじさん                                */
 /**************************************************************/
 EVENT_START   ev_c08r0301_gentleman_01
-
+{
 	_TALK_OBJ_START()
 	
 	//プレイヤーネームを格納
 	_PLAYER_NAME(1)
+	
+	//グッズを全て収集している
+	IF $WK_SCENE_C08R0301 == 4 THEN
+		
+		_BALLOONWIN_OBJMSG( msg_c08r0301_goods_05 , C08R0301_GENTLEMAN_01 )
+		_BALLOONWIN_CLOSE()
 
 	//今日既にイベントを終えたかチェック
-	IF FLAG_ON( TMFLG_C08R0301_GOODS ) THEN
+	ELSIF FLAG_ON( TMFLG_C08R0301_GOODS ) THEN
 	
 		_BALLOONWIN_OBJMSG( msg_c08r0301_goods_04 , C08R0301_GENTLEMAN_01 )
 		_BALLOONWIN_CLOSE()
 	
 	//まだイベントを終えていない
 	ELSE
-	
-		//グッズを全て収集している
-		IF $WK_SCENE_C08R0301 == 4 THEN
+			
+		//アイテムが欲しいか質問
+		_BALLOONWIN_OBJMSG( msg_c08r0301_goods_01 , C08R0301_GENTLEMAN_01 )
+		DEFINE_LOCAL SCWK_ANSWER01
+		_YES_NO_WIN( SCWK_ANSWER01 )
 		
-			_BALLOONWIN_OBJMSG( msg_c08r0301_goods_05 , C08R0301_GENTLEMAN_01 )
+		//はい
+		IF $SCWK_ANSWER01 == 0 THEN
+		
+			_BALLOONWIN_OBJMSG( msg_c08r0301_goods_02 , C08R0301_GENTLEMAN_01 )
 			_BALLOONWIN_CLOSE()
 			
-		//まだ貰っていないアイテムがある
-		ELSE
+			//アイテム名を格納するワークを定義
+			DEFINE_LOCAL LCW_GOODS_NAME
 			
-			//アイテムが欲しいか質問
-			_BALLOONWIN_OBJMSG( msg_c08r0301_goods_01 , C08R0301_GENTLEMAN_01 )
-			DEFINE_LOCAL SCWK_ANSWER01
-			_YES_NO_WIN( SCWK_ANSWER01 )
-			_BALLOONWIN_CLOSE()
+			//アイテム入手処理
 			
-			//はい
-			IF $SCWK_ANSWER01 == 0 THEN
-			
-				_BALLOONWIN_OBJMSG( msg_c08r0301_goods_02 , C08R0301_GENTLEMAN_01 )
+			IF $WK_SCENE_C08R0301 == 0 THEN
+				$SCWK_TEMP0 = MUSICAL_GOODS_PUREZENTOBAKO
+				$SCWK_TEMP1 = TRUE
+				_CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
+					
+				_BALLOONWIN_OBJMSG( msg_c08r0301_goods_04 , C08R0301_GENTLEMAN_01 )
+				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 				
-				//アイテム名を格納するワークを定義
-				DEFINE_LOCAL LCW_GOODS_NAME
+				//==================================//
+			
+				//2個目のアイテムを受け取れるよう設定
+				$WK_SCENE_C08R0301 = 1
 				
-				//アイテム入手処理
+				//==================================//
+					
+			ELSIF $WK_SCENE_C08R0301 == 1 THEN
+				$SCWK_TEMP0 = MUSICAL_GOODS_FUSAFUSANOHIGE
+				$SCWK_TEMP1 = TRUE
+				_CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
 				
-				IF $WK_SCENE_C08R0301 == 0 THEN
-					_ADD_MUSICAL_GOODS( MUSICAL_GOODS_PUREZENTOBAKO  )
-					_MUSICAL_WORD_GOODS_NAME(  0 , MUSICAL_GOODS_PUREZENTOBAKO  )
-					
-					//==================================//
-			
-					//2個目のアイテムを受け取れるよう設定
-					$WK_SCENE_C08R0301 = 1
-					
-					//==================================//
-					
-				ELSIF $WK_SCENE_C08R0301 == 1 THEN
-					_ADD_MUSICAL_GOODS( MUSICAL_GOODS_FUSAFUSANOHIGE  )
-					_MUSICAL_WORD_GOODS_NAME(  0 , MUSICAL_GOODS_FUSAFUSANOHIGE  )
-					
-					//==================================//
-			
-					//3個目のアイテムを受け取れるよう設定
-					$WK_SCENE_C08R0301 = 2
-					
-					//==================================//
-					
-				ELSIF $WK_SCENE_C08R0301 == 2 THEN
-					_ADD_MUSICAL_GOODS( MUSICAL_GOODS_AKAIBOUSI  )
-					_MUSICAL_WORD_GOODS_NAME(  0 , MUSICAL_GOODS_AKAIBOUSI  )
-					
-					//==================================//
-			
-					//4個目のアイテムを受け取れるよう設定
-					$WK_SCENE_C08R0301 = 3
-					
-					//==================================//
-					
-				ELSIF $WK_SCENE_C08R0301 == 3 THEN
-					_ADD_MUSICAL_GOODS( MUSICAL_GOODS_OOKINAFUKURO  )
-					_MUSICAL_WORD_GOODS_NAME(  0 , MUSICAL_GOODS_OOKINAFUKURO  )
-					
-					//==================================//
-			
-					//アイテムの受け取りを完了
-					$WK_SCENE_C08R0301 = 4
-					
-					//==================================//
-					
-				ENDIF
-				
-				//アイテム入手メッセージ
-				_ME_PLAY( SEQ_ME_ITEM )
-				_SYSWIN_MSG(msg_c08r0301_add_goods_01, POS_DOWN )
-				_ME_WAIT()
+				_BALLOONWIN_OBJMSG( msg_c08r0301_goods_04 , C08R0301_GENTLEMAN_01 )
 				_LAST_KEYWAIT()
-				_SYSWIN_CLOSE()
-				
-				//==================================//
-			
-				//今日のイベントを終える
-				_FLAG_SET ( TMFLG_C08R0301_GOODS )
+				_BALLOONWIN_CLOSE()
 					
 				//==================================//
 			
-			//いいえ
-			ELSE
+				//3個目のアイテムを受け取れるよう設定
+				$WK_SCENE_C08R0301 = 2
+				
+				//==================================//
+					
+			ELSIF $WK_SCENE_C08R0301 == 2 THEN
+				$SCWK_TEMP0 = MUSICAL_GOODS_AKAIBOUSI
+				$SCWK_TEMP1 = TRUE
+				_CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
+				
+				_BALLOONWIN_OBJMSG( msg_c08r0301_goods_04 , C08R0301_GENTLEMAN_01 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+				
+				//==================================//
 			
+				//4個目のアイテムを受け取れるよう設定
+				$WK_SCENE_C08R0301 = 3
+				
+				//==================================//
+					
+			ELSIF $WK_SCENE_C08R0301 == 3 THEN
+				$SCWK_TEMP0 = MUSICAL_GOODS_OOKINAFUKURO
+				$SCWK_TEMP1 = TRUE
+				_CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
+				
+				_BALLOONWIN_OBJMSG( msg_c08r0301_goods_05 , C08R0301_GENTLEMAN_01 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+				
+				//==================================//
+			
+				//アイテムの受け取りを完了
+				$WK_SCENE_C08R0301 = 4
+				
+				//==================================//
+					
+			ENDIF
+				
+				
+			//==================================//
+			
+			//今日のイベントを終える
+			_FLAG_SET ( TMFLG_C08R0301_GOODS )
+			
+			//==================================//
+			
+		//いいえ
+		ELSE
+		
 				_BALLOONWIN_OBJMSG( msg_c08r0301_goods_03 , C08R0301_GENTLEMAN_01 )
 				_BALLOONWIN_CLOSE()
 			
-			ENDIF
-		
 		ENDIF
-	
+		
 	ENDIF
-
+	
+}
 EVENT_END
 
 /**************************************************************/
