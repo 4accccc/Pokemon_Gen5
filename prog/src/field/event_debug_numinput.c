@@ -7,6 +7,8 @@
  */
 //======================================================================
 
+#ifdef PM_DEBUG
+
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
@@ -378,10 +380,8 @@ static const DEBUG_MENU_INITIALIZER DATA_DNumInput_ListMenuInitializer = {
   NULL,
 };
 
-#ifdef PM_DEBUG
 //デバッグ用クイズ番号　実体はmisc.c
 extern int DebugQuizNo = 0;
-#endif
 
 
 //======================================================================
@@ -1146,3 +1146,6 @@ static void DebugSetMusSumPoint(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 pa
   MUSICAL_SAVE_ResetSumPoint( GAMEDATA_GetMusicalSavePtr( gamedata ) );
   MUSICAL_SAVE_AddSumPoint( GAMEDATA_GetMusicalSavePtr( gamedata ) , value );
 }
+
+#endif  //PM_DEBUG
+
