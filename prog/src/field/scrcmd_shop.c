@@ -28,6 +28,7 @@
 #include "gamesystem/msgspeed.h"
 #include "savedata/bsubway_savedata.h"
 #include "savedata/save_tbl.h"
+#include "savedata/record.h"
 #include "item/itemsym.h"
 #include "script_local.h"
 //#include "script.h"     // SCRIPT_SetSubProcWorkPointerAdrs
@@ -123,6 +124,7 @@ typedef struct{
   
   MISC      *misc;    // 所持金にアクセスするため
   MYITEM    *myitem;  // 手持ちの道具アクセス
+  RECORD    *record;  // レコードデータ
   BSUBWAY_SCOREDATA *BpData; // バトルポイントにアクセスするため
   FIELD_WFBC_CORE   *wfbc;    // WFBCワークへのポインタ
   
@@ -254,7 +256,8 @@ VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
   sbw->wk.myitem    = GAMEDATA_GetMyItem( gamedata );
   sbw->wk.BpData    = SaveControl_DataPtrGet(GAMEDATA_GetSaveControlWork(gamedata),
                                                      GMDATA_ID_BSUBWAY_SCOREDATA);
-  sbw->wk.wfbc         = wfbc;
+  sbw->wk.record    = GAMEDATA_GetRecordPtr( gamedata );
+  sbw->wk.wfbc      = wfbc;
 
   // スクリプトからのパラメータで分岐
   switch(shop_id){
@@ -722,11 +725,17 @@ static void _sub_payment( SHOP_BUY_APP_WORK *wk, int pay )
   if(wk->payment==SHOP_PAYMENT_MONEY){
     // お金
     MISC_SubGold( wk->misc , pay);
+    // レコード：買い物した合計金額
+    RECORD_Add( wk->record, RECID_SHOPPING_MONEY, pay);
   }else{
     // BP
     BSUBWAY_SCOREDATA_SubBattlePoint( wk->BpData, pay );
+    // レコード：使った合計BP
+    RECORD_Add( wk->record, RECID_USE_BP, pay);
   }
 
+  // レコード：買った回数
+  RECORD_Inc( wk->record, RECID_SHOPPING_CNT );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -805,6 +814,9 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     if( wk->selectitem==ITEM_MONSUTAABOORU && wk->item_multi>=10){
       ShopPrintMsg( wk, mes_shop_02_08, wk->selectitem );
       MYITEM_AddItem( wk->myitem, ITEM_PUREMIABOORU, 1, wk->heapId);
+
+      // レコード：プレミアムボールを貰った回数
+      RECORD_Inc( wk->record, RECID_SHOPPING_CNT );
       wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
       wk->next = SHOPBUY_SEQ_BACK;
     }else{
