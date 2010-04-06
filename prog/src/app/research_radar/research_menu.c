@@ -559,11 +559,11 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
     return;
   }
 
-  //------------------
-  // L ƒ{ƒ^ƒ“ (DEBUG)
+#ifdef PM_DEBUG
   if( trg & PAD_BUTTON_L ) {
     DEBUG_GAMEBEACON_Set_NewEntry();
   }
+#endif
 }
 
 //------------------------------------------------------------------------------------
@@ -662,10 +662,11 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
     return;
   }
 
-  // TEST:
+#ifdef PM_DEBUG
   if( trg & PAD_BUTTON_L ) {
     DEBUG_GAMEBEACON_Set_NewEntry();
   }
+#endif
 }
 
 //------------------------------------------------------------------------------------
