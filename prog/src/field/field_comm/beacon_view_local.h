@@ -17,7 +17,6 @@
 #include "savedata/intrude_save.h"
 #include "savedata/misc.h"
 #include "savedata/myitem_savedata.h"
-#include "savedata/record.h"
 #include "app/app_taskmenu.h"
 #include "app/app_keycursor.h"
 #include "item/itemsym.h"
@@ -134,7 +133,6 @@ typedef struct _BEACON_VIEW{
   FIELD_SUBSCREEN_WORK *subscreen;
   MISC* misc_sv;
   MYITEM_PTR item_sv;
-  RECORD* record_sv;
   POWER_CONV_DATA* gpower_data;
 
   ////////////////////////////////////////
@@ -145,7 +143,7 @@ typedef struct _BEACON_VIEW{
   u16                   tmpTime;
   MY_DATA               my_data;
 
-  BOOL      active;
+  int       active;
   BOOL      my_power_f;
   int       seq;
   int       sub_seq;

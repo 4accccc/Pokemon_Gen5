@@ -227,7 +227,6 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
   }
   //新規
   wk->log_count = MISC_CrossComm_IncSuretigaiCount( wk->misc_sv );    
-  RECORD_Inc( wk->record_sv, RECID_SURECHIGAI_NUM );
 
   draw_LogNumWindow( wk );
   draw_MenuWindow( wk, msg_sys_now_record );
@@ -251,8 +250,8 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
 void BeaconView_SetViewPassive( BEACON_VIEW_PTR wk, BOOL passive_f )
 {
   if(passive_f){
-    SoftFadePfd( wk->pfd, FADE_SUB_BG, 0, 16*BG_PALANM_AREA, 5, 0x0000);
-    SoftFadePfd( wk->pfd, FADE_SUB_OBJ, 0, 16*ACT_PAL_WMI, 5, 0x0000);
+    SoftFadePfd( wk->pfd, FADE_SUB_BG, 0, 16*BG_PALANM_AREA, 6, 0x0000);
+    SoftFadePfd( wk->pfd, FADE_SUB_OBJ, 0, 16*ACT_PAL_WMI, 6, 0x0000);
     G2S_SetBlendAlpha( ALPHA_1ST_PASSIVE, ALPHA_2ND, ALPHA_EV1_PASSIVE, ALPHA_EV2_PASSIVE);
 
     if( wk->printStream != NULL ){
@@ -778,6 +777,11 @@ static int tmenu_YnUpdate( BEACON_VIEW_PTR wk )
 static BOOL tmenu_YnEndWait( BEACON_VIEW_PTR wk, u8 idx )
 {
   int i;
+
+  //すれ違い画面は30fでまわしているので、60fでまわるアプリと比べると
+  //点滅アニメのスピードが想定の半分になってしまう。
+  //それは嫌なので、強引だが2回呼び出してしまう！
+  APP_TASKMENU_WIN_Update( wk->tmenu[idx].work );
   APP_TASKMENU_WIN_Update( wk->tmenu[idx].work );
   if( APP_TASKMENU_WIN_IsFinish( wk->tmenu[idx].work )){
     for( i = 0;i < TMENU_MAX;i++){
@@ -1423,7 +1427,6 @@ static void effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new
   case GAMEBEACON_ACTION_THANKYOU:
     //御礼を受けた回数インクリメント
     GAMEBEACON_Set_ThankyouOver( MISC_CrossComm_IncThanksRecvCount( wk->misc_sv ) );
-    RECORD_Inc( wk->record_sv, RECID_SURECHIGAI_THANKS );
 
     //ブレイクスルー
   default:
@@ -1898,7 +1901,7 @@ static void tcb_PanelFlash( GFL_TCBL *tcb , void* tcb_wk)
 {
   TASKWK_PANEL_FLASH* twk = (TASKWK_PANEL_FLASH*)tcb_wk;
 
-  if( twk->ct < 4 ){
+  if( twk->ct < 2 ){
     if( twk->wait++ < twk->interval ){
       return;
     }

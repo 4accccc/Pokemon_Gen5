@@ -130,7 +130,8 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
   wk->tmpHeapID = GFL_HEAP_LOWID( HEAPID_FIELD_SUBSCREEN );
 
   wk->arc_handle = GFL_ARC_OpenDataHandle(ARCID_BEACON_STATUS, wk->heap_sID);
-  
+  wk->active = 0xFF;  //–³Œø’l‚Å‰Šú‰»
+
   _sub_DataSetup(wk);
   _sub_SystemSetup(wk);
   _sub_BGLoad(wk, wk->arc_handle);
