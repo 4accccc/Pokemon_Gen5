@@ -158,6 +158,60 @@ typedef enum{
 } _SELECTANIM_ENUM;
 
 
+//-------------------------------------
+///	パネルのカラーアニメ
+//=====================================
+enum{
+
+  // アニメタイプ
+  PANEL_ANIME_TYPE_ON_OFF = 0,
+  PANEL_ANIME_TYPE_ON,
+  PANEL_ANIME_TYPE_OFF,
+  PANEL_ANIME_TYPE_MAX,
+
+  // カラータイプ
+  PANEL_COLOR_TYPE_NONE = 0,
+  PANEL_COLOR_TYPE_RED,
+  PANEL_COLOR_TYPE_YELLOW,
+  PANEL_COLOR_TYPE_BLUE,
+  PANEL_COLOR_TYPE_BASE,
+  PANEL_COLOR_TYPE_MAX,
+
+  // アニメーション段階
+  PANEL_COLOR_PATTERN_NUM = 5,
+
+  // アニメーションフレーム
+  PANEL_ANIME_DEF_FRAME = 2,
+  PANEL_ANIME_MIDDLE_FRAME = 3,
+  PANEL_ANIME_SLOW_FRAME = 4,
+  
+
+};
+static const u8 sc_PANEL_COLOR_ANIME_END_INDEX[] = { 0, 1, 2, 3, 4, 3, 2, 1, 0 };
+// カラーPATTERN情報
+static const u8 sc_PANEL_COLOR_ANIME_TBL[ PANEL_COLOR_TYPE_MAX ][ PANEL_COLOR_PATTERN_NUM ] = 
+{
+  // NONE
+  { 0x9, 0x9, 0x9, 0x9, 0x9 },
+  // RED
+  { 0x1, 0x1, 0x1, 0x1, 0x1 },
+  // YELLOW
+  { 0x2, 0x2, 0x2, 0x2, 0x2 },
+  // BLUE
+  { 0x3, 0x3, 0x3, 0x3, 0x3 },
+  // BASE
+  { 0x7, 0x6, 0x5, 0x4, 0xb },
+};
+// カラータイプのパネルタイプ
+static const u16 sc_PANEL_TYPE_TO_COLOR[] = {
+  PANEL_COLOR_TYPE_NONE,
+  PANEL_COLOR_TYPE_RED,
+  PANEL_COLOR_TYPE_YELLOW,
+  PANEL_COLOR_TYPE_BLUE,
+  PANEL_COLOR_TYPE_BASE,
+  PANEL_COLOR_TYPE_BASE,
+};
+
 
 //--------------------------
 
@@ -172,7 +226,7 @@ typedef struct {
   u8 time;
   u8 x;
   u8 y;
-  u8 downtime;
+  u8 frame;
 } _ANIM_DATA;
 
 
@@ -208,79 +262,92 @@ enum{
 
 // スリープ復帰
 const static _ANIM_DATA screenTable[]={
-  { 0, 0, 0, 11},
-  { 0, 0, 1, 11},
-  { 0, 0, 2, 11},
-  { 0, 8, 0, 11},
-  { 0, 8, 1, 11},
-  { 0, 8, 2, 11},
+  { 0, 0, 0, PANEL_ANIME_DEF_FRAME},
+  { 0, 0, 1, PANEL_ANIME_DEF_FRAME},
+  { 0, 0, 2, PANEL_ANIME_DEF_FRAME},
+  { 0, 8, 0, PANEL_ANIME_DEF_FRAME},
+  { 0, 8, 1, PANEL_ANIME_DEF_FRAME},
+  { 0, 8, 2, PANEL_ANIME_DEF_FRAME},
 
-  { 1, 1, 0, 10},
-  { 1, 1, 1, 10},
-  { 1, 1, 2, 10},
-  { 1, 1, 3, 10},
-  { 1, 7, 0, 10},
-  { 1, 7, 1, 10},
-  { 1, 7, 2, 10},
-  { 1, 7, 3, 10},
+  { 1, 1, 0, PANEL_ANIME_DEF_FRAME},
+  { 1, 1, 1, PANEL_ANIME_DEF_FRAME},
+  { 1, 1, 2, PANEL_ANIME_DEF_FRAME},
+  { 1, 1, 3, PANEL_ANIME_DEF_FRAME},
+  { 1, 7, 0, PANEL_ANIME_DEF_FRAME},
+  { 1, 7, 1, PANEL_ANIME_DEF_FRAME},
+  { 1, 7, 2, PANEL_ANIME_DEF_FRAME},
+  { 1, 7, 3, PANEL_ANIME_DEF_FRAME},
 
-  { 2, 2, 0, 9},
-  { 2, 2, 1, 9},
-  { 2, 2, 2, 9},
-  { 2, 6, 0, 9},
-  { 2, 6, 1, 9},
-  { 2, 6, 2, 9},
+  { 2, 2, 0, PANEL_ANIME_DEF_FRAME},
+  { 2, 2, 1, PANEL_ANIME_DEF_FRAME},
+  { 2, 2, 2, PANEL_ANIME_DEF_FRAME},
+  { 2, 6, 0, PANEL_ANIME_DEF_FRAME},
+  { 2, 6, 1, PANEL_ANIME_DEF_FRAME},
+  { 2, 6, 2, PANEL_ANIME_DEF_FRAME},
 
-  { 3, 3, 0, 8},
-  { 3, 3, 1, 8},
-  { 3, 3, 2, 8},
-  { 3, 3, 3, 8},
-  { 3, 5, 0, 8},
-  { 3, 5, 1, 8},
-  { 3, 5, 2, 8},
-  { 3, 5, 3, 8},
+  { 3, 3, 0, PANEL_ANIME_DEF_FRAME},
+  { 3, 3, 1, PANEL_ANIME_DEF_FRAME},
+  { 3, 3, 2, PANEL_ANIME_DEF_FRAME},
+  { 3, 3, 3, PANEL_ANIME_DEF_FRAME},
+  { 3, 5, 0, PANEL_ANIME_DEF_FRAME},
+  { 3, 5, 1, PANEL_ANIME_DEF_FRAME},
+  { 3, 5, 2, PANEL_ANIME_DEF_FRAME},
+  { 3, 5, 3, PANEL_ANIME_DEF_FRAME},
 
-  { 4, 4, 0, 7},
-  { 4, 4, 2, 7},
-
-  { 5, 4, 1, 6},
+  { 4, 4, 0, PANEL_ANIME_DEF_FRAME},
+  { 4, 4, 2, PANEL_ANIME_DEF_FRAME},
+  { 4, 4, 1, PANEL_ANIME_DEF_FRAME},
 };
 
 // 起動アニメ
-#define START_UP_SCREEN_ANIME_FRAME_MAX ( 24 )
+#define START_UP_SCREEN_ANIME_FRAME_MAX ( 126 )
+#define START_UP_SCREEN_ANIME_FRAME_START (0)
+#define START_UP_SCREEN_ANIME_FRAME_NEXT (56)
+#define START_UP_SCREEN_ANIME_FRAME_LAST (96)
 const static _ANIM_DATA StartUpScreenTable[]={
-  { 0, 2, 0, START_UP_SCREEN_ANIME_FRAME_MAX},
-  { 3, 6, 2, START_UP_SCREEN_ANIME_FRAME_MAX},
-  { 5, 3, 1, START_UP_SCREEN_ANIME_FRAME_MAX},
-  { 7, 5, 2, START_UP_SCREEN_ANIME_FRAME_MAX},
-  { 8, 1, 2, START_UP_SCREEN_ANIME_FRAME_MAX},
-  { 8, 7, 1, START_UP_SCREEN_ANIME_FRAME_MAX},
-  { 9, 1, 1, START_UP_SCREEN_ANIME_FRAME_MAX},
-  { 9, 7, 2, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {10, 3, 2, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {10, 5, 1, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {11, 2, 2, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {11, 6, 0, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {12, 2, 1, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {12, 6, 1, START_UP_SCREEN_ANIME_FRAME_MAX},
+  // 最初のいっこ
+  { START_UP_SCREEN_ANIME_FRAME_START, 4, 1, PANEL_ANIME_SLOW_FRAME},
 
-  {13, 3, 0, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {13, 5, 3, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {14, 1, 0, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {14, 0, 0, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {15, 7, 3, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {15, 8, 2, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {16, 0, 1, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {16, 0, 2, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {17, 8, 2, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {17, 8, 1, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {17, 4, 0, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {18, 1, 3, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {18, 3, 3, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {18, 4, 2, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {19, 7, 0, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {19, 5, 0, START_UP_SCREEN_ANIME_FRAME_MAX},
-  {19, 4, 1, START_UP_SCREEN_ANIME_FRAME_MAX},
+  // まわりの４こ
+  { START_UP_SCREEN_ANIME_FRAME_NEXT+0, 2, 1, PANEL_ANIME_MIDDLE_FRAME},
+  { START_UP_SCREEN_ANIME_FRAME_NEXT+2, 6, 1, PANEL_ANIME_MIDDLE_FRAME},
+  { START_UP_SCREEN_ANIME_FRAME_NEXT+4, 4, 0, PANEL_ANIME_MIDDLE_FRAME},
+  { START_UP_SCREEN_ANIME_FRAME_NEXT+6, 4, 2, PANEL_ANIME_MIDDLE_FRAME},
+
+
+  // 最後のいっぱい出るところ 斜め対象的に点滅する。　こまおくりでみてみてください。
+  { 0+START_UP_SCREEN_ANIME_FRAME_LAST, 2, 0, PANEL_ANIME_DEF_FRAME},
+  { 3+START_UP_SCREEN_ANIME_FRAME_LAST, 6, 2, PANEL_ANIME_DEF_FRAME},
+  { 5+START_UP_SCREEN_ANIME_FRAME_LAST, 3, 1, PANEL_ANIME_DEF_FRAME},
+  { 7+START_UP_SCREEN_ANIME_FRAME_LAST, 5, 2, PANEL_ANIME_DEF_FRAME},
+  { 8+START_UP_SCREEN_ANIME_FRAME_LAST, 1, 2, PANEL_ANIME_DEF_FRAME},
+  { 8+START_UP_SCREEN_ANIME_FRAME_LAST, 7, 1, PANEL_ANIME_DEF_FRAME},
+  { 9+START_UP_SCREEN_ANIME_FRAME_LAST, 1, 1, PANEL_ANIME_DEF_FRAME},
+  { 9+START_UP_SCREEN_ANIME_FRAME_LAST, 7, 2, PANEL_ANIME_DEF_FRAME},
+  {10+START_UP_SCREEN_ANIME_FRAME_LAST, 3, 2, PANEL_ANIME_DEF_FRAME},
+  {10+START_UP_SCREEN_ANIME_FRAME_LAST, 5, 1, PANEL_ANIME_DEF_FRAME},
+  {11+START_UP_SCREEN_ANIME_FRAME_LAST, 2, 2, PANEL_ANIME_DEF_FRAME},
+  {11+START_UP_SCREEN_ANIME_FRAME_LAST, 6, 0, PANEL_ANIME_DEF_FRAME},
+  {12+START_UP_SCREEN_ANIME_FRAME_LAST, 2, 1, PANEL_ANIME_DEF_FRAME},
+  {12+START_UP_SCREEN_ANIME_FRAME_LAST, 6, 1, PANEL_ANIME_DEF_FRAME},
+
+  {13+START_UP_SCREEN_ANIME_FRAME_LAST, 3, 0, PANEL_ANIME_DEF_FRAME},
+  {13+START_UP_SCREEN_ANIME_FRAME_LAST, 5, 3, PANEL_ANIME_DEF_FRAME},
+  {14+START_UP_SCREEN_ANIME_FRAME_LAST, 1, 0, PANEL_ANIME_DEF_FRAME},
+  {14+START_UP_SCREEN_ANIME_FRAME_LAST, 0, 0, PANEL_ANIME_DEF_FRAME},
+  {15+START_UP_SCREEN_ANIME_FRAME_LAST, 7, 3, PANEL_ANIME_DEF_FRAME},
+  {15+START_UP_SCREEN_ANIME_FRAME_LAST, 8, 2, PANEL_ANIME_DEF_FRAME},
+  {16+START_UP_SCREEN_ANIME_FRAME_LAST, 0, 1, PANEL_ANIME_DEF_FRAME},
+  {16+START_UP_SCREEN_ANIME_FRAME_LAST, 0, 2, PANEL_ANIME_DEF_FRAME},
+  {17+START_UP_SCREEN_ANIME_FRAME_LAST, 8, 2, PANEL_ANIME_DEF_FRAME},
+  {17+START_UP_SCREEN_ANIME_FRAME_LAST, 8, 1, PANEL_ANIME_DEF_FRAME},
+  {17+START_UP_SCREEN_ANIME_FRAME_LAST, 4, 0, PANEL_ANIME_DEF_FRAME},
+  {18+START_UP_SCREEN_ANIME_FRAME_LAST, 1, 3, PANEL_ANIME_DEF_FRAME},
+  {18+START_UP_SCREEN_ANIME_FRAME_LAST, 3, 3, PANEL_ANIME_DEF_FRAME},
+  {18+START_UP_SCREEN_ANIME_FRAME_LAST, 4, 2, PANEL_ANIME_DEF_FRAME},
+  {19+START_UP_SCREEN_ANIME_FRAME_LAST, 7, 0, PANEL_ANIME_DEF_FRAME},
+  {19+START_UP_SCREEN_ANIME_FRAME_LAST, 5, 0, PANEL_ANIME_DEF_FRAME},
+  {19+START_UP_SCREEN_ANIME_FRAME_LAST, 4, 1, PANEL_ANIME_DEF_FRAME},
 };
 
 
@@ -320,57 +387,6 @@ enum
 };
 
 
-//-------------------------------------
-///	パネルのカラーアニメ
-//=====================================
-enum{
-
-  // アニメタイプ
-  PANEL_ANIME_TYPE_ON_OFF = 0,
-  PANEL_ANIME_TYPE_ON,
-  PANEL_ANIME_TYPE_OFF,
-  PANEL_ANIME_TYPE_MAX,
-
-  // カラータイプ
-  PANEL_COLOR_TYPE_NONE = 0,
-  PANEL_COLOR_TYPE_RED,
-  PANEL_COLOR_TYPE_YELLOW,
-  PANEL_COLOR_TYPE_BLUE,
-  PANEL_COLOR_TYPE_BASE,
-  PANEL_COLOR_TYPE_MAX,
-
-  // アニメーション段階
-  PANEL_COLOR_PATTERN_NUM = 5,
-
-  // アニメーションフレーム
-  PANEL_ANIME_DEF_FRAME = 2,
-  
-
-};
-static const u8 sc_PANEL_COLOR_ANIME_END_INDEX[] = { 0, 1, 2, 3, 4, 3, 2, 1, 0 };
-// カラーPATTERN情報
-static const u8 sc_PANEL_COLOR_ANIME_TBL[ PANEL_COLOR_TYPE_MAX ][ PANEL_COLOR_PATTERN_NUM ] = 
-{
-  // NONE
-  { 0x9, 0x9, 0x9, 0x9, 0x9 },
-  // RED
-  { 0x1, 0x1, 0x1, 0x1, 0x1 },
-  // YELLOW
-  { 0x2, 0x2, 0x2, 0x2, 0x2 },
-  // BLUE
-  { 0x3, 0x3, 0x3, 0x3, 0x3 },
-  // BASE
-  { 0x7, 0x6, 0x5, 0x4, 0xb },
-};
-// カラータイプのパネルタイプ
-static const u16 sc_PANEL_TYPE_TO_COLOR[] = {
-  PANEL_COLOR_TYPE_NONE,
-  PANEL_COLOR_TYPE_RED,
-  PANEL_COLOR_TYPE_YELLOW,
-  PANEL_COLOR_TYPE_BLUE,
-  PANEL_COLOR_TYPE_BASE,
-  PANEL_COLOR_TYPE_BASE,
-};
 
 //-------------------------------------------------------------------------
 ///	文字表示色定義(default)	-> gflib/fntsys.hへ移動
@@ -1270,7 +1286,7 @@ static BOOL _gearBootMain(C_GEAR_WORK* pWork)
         if(screenTable[i].time == pWork->startCounter){
           panel_type = CGEAR_SV_GetPanelType( pWork->pCGSV, screenTable[i].x, screenTable[i].y );
           _PanelMarkAnimeStart( &pWork->panel_mark[ screenTable[i].x ][ screenTable[i].y ], 
-              pWork, sc_PANEL_TYPE_TO_COLOR[ panel_type ], PANEL_ANIME_TYPE_OFF, panel_type, PANEL_ANIME_DEF_FRAME );
+              pWork, sc_PANEL_TYPE_TO_COLOR[ panel_type ], PANEL_ANIME_TYPE_OFF, panel_type, screenTable[i].frame );
         }
       }
 
@@ -1312,7 +1328,7 @@ static BOOL _gearStartUpMain(C_GEAR_WORK* pWork)
   int i;
 
 
-  if( StartUpScreenTable[0].downtime <= pWork->startCounter ){
+  if( START_UP_SCREEN_ANIME_FRAME_MAX <= pWork->startCounter ){
     if( _PanelMarkAnimeSysIsAnime( pWork ) == FALSE ){
       return TRUE;
     }
@@ -1323,7 +1339,7 @@ static BOOL _gearStartUpMain(C_GEAR_WORK* pWork)
   // 徐々に枠が増えていく
   for(i=0;i < elementof(StartUpScreenTable);i++){
     if(StartUpScreenTable[i].time == pWork->startCounter) {
-      _PanelMarkAnimeStart( &pWork->panel_mark[ StartUpScreenTable[i].x ][ StartUpScreenTable[i].y ], pWork, PANEL_COLOR_TYPE_BASE, PANEL_ANIME_TYPE_ON_OFF, CGEAR_PANELTYPE_BASE, PANEL_ANIME_DEF_FRAME );
+      _PanelMarkAnimeStart( &pWork->panel_mark[ StartUpScreenTable[i].x ][ StartUpScreenTable[i].y ], pWork, PANEL_COLOR_TYPE_BASE, PANEL_ANIME_TYPE_ON_OFF, CGEAR_PANELTYPE_BASE, StartUpScreenTable[i].frame );
       
       //_gearPanelBgScreenMake(pWork, StartUpScreenTable[i].x, StartUpScreenTable[i].y, 
       //    CGEAR_PANELTYPE_BOOT, FALSE);

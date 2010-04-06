@@ -1143,7 +1143,7 @@ static debugMenuCallProc_SubscreenSelect( DEBUG_MENU_EVENT_WORK *wk )
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static const FLDMENUFUNC_LIST DATA_SubcreenMenuList[FIELD_SUBSCREEN_MODE_MAX] =
+static const FLDMENUFUNC_LIST DATA_SubcreenMenuList[] =
 {
   { DEBUG_FIELD_STR_SUBSCRN01, (void*)setupTouchCameraSubscreen },
   { DEBUG_FIELD_STR_SUBSCRN02, (void*)setupSoundViewerSubscreen },
