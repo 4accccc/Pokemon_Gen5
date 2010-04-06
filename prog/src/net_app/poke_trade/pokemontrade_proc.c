@@ -527,7 +527,7 @@ static void _userNetCommandClear(POKEMON_TRADE_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-static void IRC_POKMEONTRADE_changeState(POKEMON_TRADE_WORK* pWork,StateFunc state)
+void IRC_POKMEONTRADE_changeState(POKEMON_TRADE_WORK* pWork,StateFunc state)
 {
   pWork->state = state;
 }
