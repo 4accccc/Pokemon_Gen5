@@ -324,9 +324,11 @@ static	void	GameMain(void)
 	WIPE_SYS_Main();
 
 	NetErr_Main();
+#if PM_DEBUG
 	if((GFL_UI_KEY_GetCont() & PAD_BUTTON_L) && (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG)){
 		NetErr_DEBUG_ErrorSet();
 	}
+#endif
 	PMSND_Main();
 	PMVOICE_Main();
 	

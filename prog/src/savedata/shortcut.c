@@ -297,8 +297,9 @@ u8 SHORTCUT_Insert( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, u8 insert_idx )
 	SHORTCUT_SetRegister( p_wk, shortcutID, FALSE );
 	
 	NAGI_Printf( "消した後\n" );
+#if PM_DEBUG
 	DEBUG_PrintData( p_wk );
-	
+#endif	
 	//消した分つまるので
 	//インデックス－1
 	if( erase_idx < insert_idx )
@@ -318,8 +319,9 @@ u8 SHORTCUT_Insert( SHORTCUT *p_wk, SHORTCUT_ID shortcutID, u8 insert_idx )
 
 
 	NAGI_Printf( "挿入完了\n" );
+#if PM_DEBUG
 	DEBUG_PrintData( p_wk );
-
+#endif
 	return insert_idx;
 }
 //=============================================================================

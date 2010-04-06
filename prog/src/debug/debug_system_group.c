@@ -7,6 +7,7 @@
  */
 //======================================================================
 #include <gflib.h>
+#if PM_DEBUG
 
 #include "debug/debugwin_sys.h"
 #include "debug/debug_system_group.h"
@@ -409,3 +410,4 @@ static const BOOL DEBWIN_UTIL_UpdateBOOL( BOOL *value )
   }
   return FALSE;
 }
+#endif

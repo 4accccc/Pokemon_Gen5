@@ -257,6 +257,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     exit_normal_subscreen,
     actioncallback_normal_subscreen,
   },
+#if PM_DEBUG
   { // デバッグライト制御パネル
     FIELD_SUBSCREEN_DEBUG_LIGHT,  
     init_light_subscreen,
@@ -284,6 +285,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     exit_soundviewer_subscreen,
     NULL ,
   },
+#endif //PM_DEBUG
 };
 
 //----------------------------------------------------------------------------
