@@ -335,9 +335,6 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	_OBJ_ANIME_WAIT()
 	
 	_TIME_WAIT(8)
-	//サポートのイベント曲を鳴らす
-	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )	
-	
 	//主人公が移動する
 	//座標による分岐
 	SWITCH $LWK_POSX
@@ -400,8 +397,6 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_03, D06R0101_HAKASE2_01,POS_DR)
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
-	
-	_END_EVENT_BGM()
 	
 //===============フラグ操作===============//
 	//POSイベントを無効に
