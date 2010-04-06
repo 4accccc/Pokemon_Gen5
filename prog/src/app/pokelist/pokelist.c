@@ -75,7 +75,6 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
     plWork = GFL_PROC_AllocWork( proc, sizeof(PLIST_WORK), HEAPID_POKELIST );
     plWork->heapId = HEAPID_POKELIST;
 
-    DEBUG_PerformanceSetActive( FALSE );
     //ƒfƒoƒO
     if( pwk == NULL )
     {
