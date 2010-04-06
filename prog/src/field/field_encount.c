@@ -270,6 +270,8 @@ void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv,
   
   if( flags & SCR_WILD_BTL_FLAG_LEGEND ){
     BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_LEGEND );
+  }else if( flags & SCR_WILD_BTL_FLAG_WILD_TALK ){
+    BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_WILD_TALK );
   }
 
   //エンカウントイベント生成
@@ -659,7 +661,7 @@ static void enc_CreateBattleParamMovePoke( FIELD_ENCOUNT *enc, const ENCPOKE_FLD
   BTL_SETUP_Wild( bsp, enc->gdata, partyEnemy, &sit, BTL_RULE_SINGLE, heapID );
 
   //移動ポケモンバトルフラグセット
-  BATTLE_PARAM_SetBtlStatusFlag( bsp, BTL_STATUS_FLAG_MOVE_POKE|BTL_STATUS_FLAG_LEGEND );
+  BATTLE_PARAM_SetBtlStatusFlag( bsp, BTL_STATUS_FLAG_MOVE_POKE );
 
   GFL_HEAP_FreeMemory( pp );
   GFL_HEAP_FreeMemory( partyEnemy );

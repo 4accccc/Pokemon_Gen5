@@ -152,11 +152,12 @@ typedef enum {
   //フラグ数が8をこえるときはBATTLE_SETUP_PARAM->btl_status_flagの型をu8から拡張してください
   BTL_STATUS_FLAG_FISHING = 0x01,     ///<釣り戦闘ならTRUE
   BTL_STATUS_FLAG_PCNAME_OPEN = 0x02, ///<パソコンの名前がオープンされているか？
-  BTL_STATUS_FLAG_LEGEND = 0x04,      ///<伝説級ポケモンとのエンカウントならTRUE
+  BTL_STATUS_FLAG_LEGEND = 0x04,      ///<伝説級ポケモンとのエンカウントならTRUE(Btlエンカウントメッセージ変化)
   BTL_STATUS_FLAG_MOVE_POKE = 0x08,   ///<移動ポケモンとのエンカウントならTRUE
   BTL_STATUS_FLAG_SYMBOL = 0x10,      ///<PDW連動のシンボルエンカウントならTRUE
   BTL_STATUS_FLAG_HIGH_LV_ENC = 0x20, ///<野生ハイレベルエンカウントならTRUE
   BTL_STATUS_FLAG_BOXFULL = 0x40,     ///<手持ち・ボックスが満杯でもう捕獲できない時にTRUE
+  BTL_STATUS_FLAG_WILD_TALK = 0x80,   ///<話しかけでの野生戦の時にTRUE(Btlエンカウントメッセージ変化)
 }BTL_STATUS_FLAG;
 
 //-----------------------------------------------------------------------------------
