@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-25T11:38:23"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T12:31:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -429,15 +429,15 @@
 自分の　実力を　試せ！</language>
 	</row>
 
-	<row id="msg_c01_stop_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c01_stop_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・r03側ストッパー
 ・C01ジムバッジ入手後で
 　PDWイベントクリア前
 ※メッセージ調整予定</comment>
-		<language name="JPN" width="256">さっき　はつめいか　とやらが
+		<language name="JPN" width="256">さっき　けんきゅうかの　マコモが
 おまえさんを　さがしていたぞ！</language>
-		<language name="JPN_KANJI" width="256">さっき　発明家が
+		<language name="JPN_KANJI" width="256">さっき　研究家の　マコモが
 おまえさんを　探していたぞ！</language>
 	</row>
 
@@ -492,7 +492,7 @@
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">OLDMAN</attribute>
-		<language name="JPN" width="256">はいきょ　にはね
+		<language name="JPN" width="256">ゆめのあとち　という　はいきょには
 やせいの　ポケモンが　すみついておる[BE:01:ページ切り替え（クリア）]
 なかでも　めずらしいのは
 ゆめをみせる　という　ポケモンじゃな</language>
@@ -605,10 +605,10 @@
 		<comment>♂
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">FISING</attribute>
-		<language name="JPN" width="256">ここで　つりを　しながら
-しずかに　くらしたいのだ</language>
-		<language name="JPN_KANJI" width="256">ここで　釣りを　しながら
-静かに　暮らしたいのだ</language>
+		<language name="JPN" width="256">つりをしながら　しずかに　くらす……
+それが　おれの　りそうなのだ</language>
+		<language name="JPN_KANJI" width="256">釣りをしながら　静かに　暮らす……
+それが　おれの　理想なのだ</language>
 	</row>
 
 	<row id="msg_c01_badman1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

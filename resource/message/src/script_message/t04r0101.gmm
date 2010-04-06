@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-04T14:04:04"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T12:27:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -360,7 +360,7 @@
 		<attribute name="キャラ指定">息子
 じゅくがえり</attribute>
 		<language name="JPN" width="256">いざ　じんじょうに　しょうぶっ！▼</language>
-		<language name="JPN_KANJI" width="256">いざ　じんじょうに　しょうぶっ！▼</language>
+		<language name="JPN_KANJI" width="256">いざ　じんじょうに　勝負っ！▼</language>
 	</row>
 
 	<row id="msg_t04r0101_boy3_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -371,7 +371,7 @@
 		<language name="JPN" width="256">オマエ　すごいじゃないか！
 すこしだけ　みとめてやっても　いいぞ！</language>
 		<language name="JPN_KANJI" width="256">オマエ　すごいじゃないか！
-すこしだけ　みとめてやっても　いいぞ！</language>
+すこしだけ　認めてやっても　いいぞ！</language>
 	</row>
 
 	<row id="msg_t04r0101_girl4_01">

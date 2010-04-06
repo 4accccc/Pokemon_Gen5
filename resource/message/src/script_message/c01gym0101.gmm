@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-01T13:48:30"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T12:33:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -427,7 +427,7 @@
 オレ　ポッドが　相手をするぜ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_05b" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+	<row id="msg_c01gym0101_leader1_05b" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
 		<comment>♂
 ・プレイヤーが最初に選んだポケモンが「ほのおタイプ」
 ・表示後、主人公、移動可能</comment>
@@ -436,7 +436,7 @@
 		<language name="JPN" width="256">そう！みずタイプを　あいする
 この　コーンが　あいて　なのさ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">そう！みずタイプを　愛する
-この　コーンが　相手　なのさ[BE:01:ページ切り替え（クリア）]</language>
+この　コーンが　相手なのさ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_05c" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,,">
@@ -493,7 +493,7 @@
 お相手させて　いただきます[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_21a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c01gym0101_leader1_21a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・leader1_05c表示後に会話
 ・戦闘しない場合用</comment>
@@ -502,7 +502,7 @@
 		<language name="JPN" width="256">なんだよーッ！
 オレ　あばれたかったのになー！！</language>
 		<language name="JPN_KANJI" width="256">なんだよーッ！
-オレ　あばれたかったのになー！！</language>
+オレ　暴れたかったのになー！！</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_21b" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
@@ -646,7 +646,7 @@
 あと　これも　もらってください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ジムバッジは
 トレーナーの　強さの　証です[BE:01:ページ切り替え（クリア）]
-バッジを　ひとつ　持っていれば
+バッジを　１つ　持っていれば
 人と　交換した▽
 ポケモンでも　レベル２０までなら▽
 命令を　きいてくれます▼
@@ -674,7 +674,7 @@
 何度でも　使えるんですよ</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_10" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,,">
+	<row id="msg_c01gym0101_leader1_10" text-color="#008000,,,#008000,,#008000,,,,,,,,,,,,,">
 		<comment>♂
 ・leader1_09表示後に再度会話</comment>
 		<attribute name="キャラ指定">LEADER1
@@ -685,7 +685,7 @@
 もっと　つよいって　ことですよね[BE:00:ページ切り替え（行送り）]
 ふう　がんばらないと……　ですね</language>
 		<language name="JPN_KANJI" width="256">ぼくたち　イッシュ地方　では
-まだ　かけだしの　ジムリーダーです[BE:01:ページ切り替え（クリア）]
+まだ　駆けだしの　ジムリーダーです[BE:01:ページ切り替え（クリア）]
 ということは　他の　ジムリーダーは
 もっと　強いって　ことですよね[BE:00:ページ切り替え（行送り）]
 ふう　がんばらないと……　ですね</language>
@@ -736,7 +736,7 @@
 ぼくたち　３にん　きそいあって▽
 つよくなって　いきますよ</language>
 		<language name="JPN_KANJI" width="256">デント『ぼくたち　イッシュ地方　では
-まだ　かけだしの　ジムリーダーです▼
+まだ　駆けだしの　ジムリーダーです▼
 ということは　他の　ジムリーダーは
 もっと　強いって　ことですよね▼
 ゆっくりと　のんびりとで　いいから
