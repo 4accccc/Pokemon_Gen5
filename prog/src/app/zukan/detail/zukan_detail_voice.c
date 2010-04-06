@@ -984,6 +984,7 @@ static void Zukan_Detail_Voice_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* p
         u16 monsno_curr;
         monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
         ZUKANSAVE_SetShortcutMons( zukan_savedata, monsno_curr );
+        GAMEDATA_SetShortCut( gamedata, SHORTCUT_ID_ZUKAN_VOICE, TRUE );
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;

@@ -40,7 +40,7 @@
 // スクロール
 #define SCROLL_Y_DISAPPEAR   (24)
 #define SCROLL_Y_APPEAR      (0)
-#define SCROLL_VALUE         (1)  // 移動量
+#define SCROLL_VALUE         (3)  // 移動量
 #define SCROLL_WAIT          (0)  // 0=毎フレーム移動; 1=移動した後に1フレーム待つ; 2=移動した後に2フレーム待つ;
 
 

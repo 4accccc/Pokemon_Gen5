@@ -97,6 +97,10 @@ FS_EXTERN_OVERLAY(ui_common);
 *  定数定義
 */
 //=============================================================================
+// MCSSポケモンのフェード
+#define POKE_MCSS_FADE_WAIT  (-1)  // 0のとき毎フレーム1進む; 1のときoxoxというふうに1フレームおきに1進む;
+                                   // -1のとき毎フレーム2進む; -2のとき毎フレーム3進む;
+
 // メインBGフレーム
 #define BG_FRAME_M_POKE          (GFL_BG_FRAME0_M)
 #define BG_FRAME_M_TEXT          (GFL_BG_FRAME2_M)
@@ -985,11 +989,11 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
         // MCSSポケモン
         // ポケモンを表示しフェードイン(黒→カラー)
         MCSS_ResetVanishFlag( work->poke_mcss_wk[POKE_CURR_F].poke_wk );
-        MCSS_SetPaletteFade( work->poke_mcss_wk[POKE_CURR_F].poke_wk, 16, 0, ZKNDTL_COMMON_FADE_BRIGHT_WAIT, 0x0000 );
+        MCSS_SetPaletteFade( work->poke_mcss_wk[POKE_CURR_F].poke_wk, 16, 0, POKE_MCSS_FADE_WAIT, 0x0000 );
         if( work->poke_mcss_wk[POKE_COMP_F].poke_wk )
         {
           MCSS_ResetVanishFlag( work->poke_mcss_wk[POKE_COMP_F].poke_wk );
-          MCSS_SetPaletteFade( work->poke_mcss_wk[POKE_COMP_F].poke_wk, 16, 0, ZKNDTL_COMMON_FADE_BRIGHT_WAIT, 0x0000 );
+          MCSS_SetPaletteFade( work->poke_mcss_wk[POKE_COMP_F].poke_wk, 16, 0, POKE_MCSS_FADE_WAIT, 0x0000 );
         }
       }
     }
@@ -1095,7 +1099,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
           {
             if( work->poke_mcss_wk[i].poke_wk )
             {
-              MCSS_SetPaletteFade( work->poke_mcss_wk[i].poke_wk, 0, 16, ZKNDTL_COMMON_FADE_BRIGHT_WAIT, 0x0000 );
+              MCSS_SetPaletteFade( work->poke_mcss_wk[i].poke_wk, 0, 16, POKE_MCSS_FADE_WAIT, 0x0000 );
             }
           }
         }

@@ -83,8 +83,8 @@ typedef enum
 }
 ZKNDTL_COMMON_FADE_DISP;
 
-#define ZKNDTL_COMMON_FADE_BRIGHT_DELTA (1)
-#define ZKNDTL_COMMON_FADE_BRIGHT_WAIT  (1)
+#define ZKNDTL_COMMON_FADE_BRIGHT_DELTA (2)
+#define ZKNDTL_COMMON_FADE_BRIGHT_WAIT  (0)
 
 //=============================================================================
 /**

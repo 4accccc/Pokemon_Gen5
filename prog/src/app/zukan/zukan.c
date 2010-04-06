@@ -34,7 +34,7 @@ enum {
 	SEQ_LIST_CALL,				// リスト呼び出し
 	SEQ_LIST_END,					// リスト終了後
 
-	SEQ_INFO_CALL,				// 情報呼び出し
+	SEQ_INFO_CALL,				// 情報呼び出し(INFO,MAP,VOICE,FORMのどれかを呼び出す)
 	SEQ_INFO_END,					// 情報終了後
 
 
@@ -58,6 +58,8 @@ typedef struct {
 
 	int	mainSeq;			// メインシーケンス
 	int nextSeq;			// 次のシーケンス
+
+  ZUKAN_DETAIL_TYPE  detail_type;  // SEQ_INFO_CALLのときのみ使用
 
 	void * work;			// 各処理のワーク
 }ZUKAN_MAIN_WORK;
@@ -155,12 +157,16 @@ static GFL_PROC_RESULT ZukanProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
 		wk->mainSeq = SEQ_LIST_CALL;
 	}else if( wk->prm->callMode == ZUKAN_MODE_INFO ){
 		wk->mainSeq = SEQ_INFO_CALL;
+    wk->detail_type = ZUKAN_DETAIL_TYPE_INFO;
 	}else if( wk->prm->callMode == ZUKAN_MODE_MAP ){
 		wk->mainSeq = SEQ_INFO_CALL;
+    wk->detail_type = ZUKAN_DETAIL_TYPE_MAP;
 	}else if( wk->prm->callMode == ZUKAN_MODE_VOICE ){
 		wk->mainSeq = SEQ_INFO_CALL;
+    wk->detail_type = ZUKAN_DETAIL_TYPE_VOICE;
 	}else if( wk->prm->callMode == ZUKAN_MODE_FORM ){
 		wk->mainSeq = SEQ_INFO_CALL;
+    wk->detail_type = ZUKAN_DETAIL_TYPE_FORM;
 	}else{
 		wk->mainSeq = SEQ_SEARCH_CALL;
 	}
@@ -349,6 +355,7 @@ static int MainSeq_EndList( ZUKAN_MAIN_WORK * wk )
 
 	case ZKNLIST_RET_INFO:		// 詳細画面へ
 		ret = SEQ_INFO_CALL;
+    wk->detail_type = ZUKAN_DETAIL_TYPE_INFO;
 		break;
 
 	case ZKNLIST_RET_SEARCH:	// 検索画面へ
@@ -443,7 +450,7 @@ static int MainSeq_CallDetail( ZUKAN_MAIN_WORK * wk )
 	detail = GFL_HEAP_AllocMemory( HEAPID_ZUKAN_SYS, sizeof(ZUKAN_DETAIL_PARAM) );
   
   detail->gamedata = wk->prm->gamedata;
-  detail->type     = ZUKAN_DETAIL_TYPE_INFO;
+  detail->type     = wk->detail_type;
   detail->list     = wk->list;
   detail->num      = wk->listMax;
   detail->no       = 0;

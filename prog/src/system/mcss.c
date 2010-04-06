@@ -1698,7 +1698,7 @@ static	void	MCSS_CalcPaletteFade( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss )
 		  }
 		  else
 		  {	
-			  mcss->pal_fade_start_evy -= mcss->pal_fade_value;
+			  mcss->pal_fade_start_evy += mcss->pal_fade_value;
 		    if( mcss->pal_fade_start_evy <= mcss->pal_fade_end_evy )
         { 
 		      mcss->pal_fade_start_evy = mcss->pal_fade_end_evy;

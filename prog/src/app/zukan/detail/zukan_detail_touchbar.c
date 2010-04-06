@@ -58,8 +58,8 @@ enum
 // スクロール
 #define SCROLL_Y_DISAPPEAR     (-24)
 #define SCROLL_Y_APPEAR        (0)
-#define SCROLL_VALUE_OUTSIDE   (1)  // 移動量
-#define SCROLL_VALUE_INSIDE    (2)
+#define SCROLL_VALUE_OUTSIDE   (3)  // 移動量
+#define SCROLL_VALUE_INSIDE    (3)
 #define SCROLL_WAIT_OUTSIDE    (0)  // 0=毎フレーム移動; 1=移動した後に1フレーム待つ; 2=移動した後に2フレーム待つ;
 #define SCROLL_WAIT_INSIDE     (0)
 static const int scroll_value[ZUKAN_DETAIL_TOUCHBAR_SPEED_MAX] =
