@@ -286,10 +286,12 @@ add_zoroa:
         _ME_PLAY( SEQ_ME_POKEGET )
 
         IF $temoti != 0 THEN        //手持ち
-          _ADD_POKEMON_TO_PARTY_EX( SCWK_ANSWER, MONSNO_ZOROA, 0, 10, TOKUSYU_NULL, 0, 0, 0, ret_item )  //@todo レベル指定
+          //ゾロア　Ｌｖ10　特性不問　オス　レア禁止　アイテムなし
+          _ADD_POKEMON_TO_PARTY_EX( SCWK_ANSWER, MONSNO_ZOROA, 0, 10, SCR_TOKUSEI_SPEC_BOTH, SCR_SEX_SPEC_MALE, SCR_RARE_SPEC_FALSE, 0, ret_item )
           $get_msg = msg_c03r0401_narrator_02
         ELSE                        //ボックス
-          _ADD_POKEMON_TO_BOX_EX( SCWK_ANSWER, MONSNO_ZOROA, 0, 10, TOKUSYU_NULL, 0, 0, 0, ret_item )//@todo レベル指定
+          //ゾロア　Ｌｖ10　特性不問　オス　レア禁止　アイテムなし
+          _ADD_POKEMON_TO_BOX_EX( SCWK_ANSWER, MONSNO_ZOROA, 0, 10, SCR_TOKUSEI_SPEC_BOTH, SCR_SEX_SPEC_MALE, SCR_RARE_SPEC_FALSE, 0, ret_item )
           $get_msg = msg_c03r0401_narrator_03
         ENDIF
 
