@@ -177,6 +177,7 @@ void ENCEFFNO_GetTrEncEffNoBgmNo( const int inTrID, FIELDMAP_WORK *fieldmap,
   if( type_grp < TRTYPE_GRP_BCHAMP ){
     *outBgmNo = DATA_VsBgmTbl[type_grp];
     *outEffNo = DATA_EncEffTbl[grp_idx];
+    return;
   }
 
   //‚»‚êˆÈŠO
