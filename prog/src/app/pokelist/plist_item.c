@@ -23,6 +23,7 @@
 #include "plist_plate.h"
 #include "plist_message.h"
 #include "plist_item.h"
+#include "plist_snd_def.h"
 #include "poke_tool/status_rcv.h"
 
 //======================================================================
@@ -590,6 +591,7 @@ void PLIST_MSGCB_RecoverAllDeath_NextPoke( PLIST_WORK *work )
   PLIST_ITEM_MSG_UseItemFunc( work );
   STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->zone_id , work->heapId );
   PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
+  PMSND_PlaySystemSE( PLIST_SND_RECOVER );
 }
 
 

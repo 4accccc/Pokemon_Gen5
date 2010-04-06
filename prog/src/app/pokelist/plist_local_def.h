@@ -241,6 +241,7 @@ struct _PLIST_WORK
   BOOL isSetWazaMode;     //技用のMODE_SELECTか？
   BOOL isSetMusicalMode;  //ミュージカル用のMODE_SELECTか？
   BOOL isFinishSync;      //終了時に通信同期をとる(WifiBattle
+  BOOL reqPlaySe;         //フェード後にSEを鳴らすため(全体復活アイテム
   
   PL_SELECT_POS pokeCursor;
   PL_SELECT_POS changeTarget;

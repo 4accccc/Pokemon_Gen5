@@ -251,6 +251,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   work->demoType = PDT_NONE;
   work->isCallForceExit = FALSE;
   work->isComm = FALSE;
+  work->reqPlaySe = FALSE;
 
   for( i=0;i<PCR_MAX;i++ )
   {
@@ -471,6 +472,11 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
 
   case PSMS_INIT_HPANIME:
     PLIST_PALTE_InitHpAnime( work , work->plateWork[work->pokeCursor] );
+    if( work->reqPlaySe == TRUE )
+    {
+      work->reqPlaySe = FALSE;
+      PMSND_PlaySystemSE( PLIST_SND_RECOVER );
+    }
     //break;    BreakThrough
   case PSMS_HPANIME:
     if( PLIST_PALTE_UpdateHpAnime( work , work->plateWork[work->pokeCursor] ) == TRUE )
@@ -607,13 +613,26 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
 #if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
   {
-    u8 i;
-    const u8 partyMax = PokeParty_GetPokeCount( work->plData->pp );
-    for( i=0;i<partyMax;i++ )
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
     {
-      POKEMON_PARAM *pp = PokeParty_GetMemberPointer(work->plData->pp, i);
-      PP_Put( pp , ID_PARA_hp , 1 );
-      PP_SetSick( pp , POKESICK_DOKU );
+      u8 i;
+      const u8 partyMax = PokeParty_GetPokeCount( work->plData->pp );
+      for( i=0;i<partyMax;i++ )
+      {
+        POKEMON_PARAM *pp = PokeParty_GetMemberPointer(work->plData->pp, i);
+        PP_Put( pp , ID_PARA_hp , 1 );
+        PP_SetSick( pp , POKESICK_DOKU );
+      }
+    }
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+    {
+      u8 i;
+      const u8 partyMax = PokeParty_GetPokeCount( work->plData->pp );
+      for( i=0;i<partyMax;i++ )
+      {
+        POKEMON_PARAM *pp = PokeParty_GetMemberPointer(work->plData->pp, i);
+        PP_Put( pp , ID_PARA_hp , 0 );
+      }
     }
   }
 #endif
@@ -1322,7 +1341,9 @@ static void PLIST_InitMode( PLIST_WORK *work )
         PLIST_ITEM_MSG_UseItemFunc( work );
         STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->zone_id , work->heapId );
         PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
-
+        work->reqPlaySe = TRUE; //↓はフェード後に鳴らす
+        //PMSND_PlaySystemSE( PLIST_SND_RECOVER );
+        
         work->nextMainSeq = work->mainSeq;
         work->mainSeq = PSMS_FADEIN;
 
@@ -1332,6 +1353,8 @@ static void PLIST_InitMode( PLIST_WORK *work )
       {
         //全体回復アイテムは戻る！
         PLIST_ITEM_MSG_CanNotUseItem( work );
+        work->nextMainSeq = work->mainSeq;
+        work->mainSeq = PSMS_FADEIN;
       }
     }
     else
