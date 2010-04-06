@@ -2034,7 +2034,7 @@ static const BOOL PSTATUS_UTIL_CanUseExitButton( PSTATUS_WORK *work )
 static const BOOL PSTATUS_UTIL_CheckHaveAnyRibbon( PSTATUS_WORK *work , const POKEMON_PASO_PARAM *ppp )
 {
   u8 i;
-#if PM_DEBUG
+#if USE_STATUS_DEBUG
   if( work->isDevRibbon == TRUE )
   {
     return TRUE;

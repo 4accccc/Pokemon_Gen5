@@ -1387,8 +1387,11 @@ static void PSTATUS_SUB_PokeCreateMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *s
   VecFx32 shadowOffset= {PSTATUS_SUB_SHADOW_OFFSET_X , PSTATUS_SUB_SHADOW_OFFSET_Y , PSTATUS_SUB_SHADOW_OFFSET_Z};
   POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
   
+
+#if USE_STATUS_DEBUG
   work->shadowRotate = 302*65536/360;
-  
+#endif
+
   GF_ASSERT( subWork->pokeMcss == NULL );
   {
     subWork->pokeMcss = MCSS_TOOL_AddPokeMcss(work->mcssSys , pp , MCSS_DIR_FRONT , PSTATUS_MCSS_POS_X , PSTATUS_MCSS_POS_Y ,0 );
@@ -1454,6 +1457,7 @@ static void PSTATUS_SUB_SetShadowOffset( PSTATUS_WORK *work , PSTATUS_SUB_WORK *
 }
 
 //デバグ用
+#if USE_STATUS_DEBUG
 void PSTATUS_SUB_SetShadowScale( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
 {
   MCSS_SetShadowScale( subWork->pokeMcss , &work->shadowScale );
@@ -1462,3 +1466,4 @@ void PSTATUS_SUB_SetShadowScale( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
   MCSS_SetShadowRotate( subWork->pokeMcssBack , work->shadowRotate );
   PSTATUS_SUB_SetShadowOffset( work , subWork , &work->shadowOfs );
 }
+#endif
