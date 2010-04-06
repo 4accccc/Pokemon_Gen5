@@ -26,5 +26,6 @@
 #define SCRID_R03_FUTAGO_03 (19)
 #define SCRID_POS_R03_SUPPORT_04 (20)
 #define SCRID_ZONE_R03 (21)
+#define SCRID_R03_BABYBOY1_01 (22)
 
 #endif //_R03_DEF_H_
