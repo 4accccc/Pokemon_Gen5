@@ -778,6 +778,9 @@ sub_receipt_challenge_multi_comm:
   //トレーナーセット開始
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_BTL_TRAINER_SET, BSW_NULL, BSW_NULL )
   
+  //通信相手をユニオン知り合いグループとして登録
+  _BSUBWAY_TOOL( BSWSUB_COMM_SET_UNION_ACQ, BSW_NULL, BSW_NULL, BSW_NULL )
+  
   //親機なら対戦トレーナー抽選
   _BSUBWAY_TOOL( BSWSUB_COMM_GET_CURRENT_ID, BSW_NULL, BSW_NULL, ret )
   

@@ -1214,6 +1214,14 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       *ret_wk = BSWAY_COMM_IRC_RESULT_EXIT;
     }
     break;
+  //通信相手をユニオン知り合いグループとして登録。
+  //BSWAY_COMM_MYSTATUS_DATA実行済みが条件
+  case BSWSUB_COMM_SET_UNION_ACQ:
+    {
+      ETC_SAVE_WORK *etc = SaveData_GetEtc( save );
+      EtcSave_SetAcquaintance( etc, bsw_scr->mystatus_fr.id ) ;
+    }
+    break;
   //----デバッグ
   //DEBUG 選択ポケモン強制セット
   case BSWSUB_DEBUG_SET_SELECT_POKE:
