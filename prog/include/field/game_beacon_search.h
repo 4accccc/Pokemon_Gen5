@@ -49,6 +49,8 @@ typedef struct
   
   u8 padding;
   
+  u32 trainer_id;
+  
   union
   {
     GAMEBEACON_INFO info;
