@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-04-02T21:19:17"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-04-07T19:04:41"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -550,9 +550,9 @@
 	>
 		<bitmap size="32">
 			2020 2020 2020 2020 2020 2020 2020 2020
-			4040 4040 4040 4040 4040 4040 4040 4040
-			4040 4040 4040 4040 4040 4040 4040 4040
-			4040 4040 4040 4040 4040 4040 4040 4040
+			6060 6060 6060 6060 6060 6060 6060 6060
+			6060 6060 6060 6060 6060 6060 6060 6060
+			6060 6060 6060 6060 6060 6060 6060 6060
 		</bitmap>
 	</tex_image>
 	<tex_image index="29" name="h_mado"
@@ -560,7 +560,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="h_mado_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/common_tex/h_mado.tga"
+		path="C:/home/wb_data3d/field/in03/chip/tex/h_mado.tga"
 	>
 		<bitmap size="32">
 			0000 aaa4 0000 6aa9 4000 1aaa 9000 06aa
@@ -954,17 +954,17 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="idr_tv01_pl"
-		path="C:/home/wb_data3d/build_model/indoor/tv01/tex/idr_tv01.tga"
+		path="C:/home/wb_data3d/field/in03/chip/tex/idr_tv01.tga"
 	>
 		<bitmap size="64">
-			6666 6666 1111 5551 6666 6666 1111 5551
-			3422 1102 1111 5551 3411 1102 1111 5551
-			3411 1102 1111 5551 3411 1102 1111 5551
-			3411 1102 1111 5551 3411 1102 1111 5551
-			3411 1602 1111 5551 3411 1602 1111 5551
-			3411 1102 1111 5551 3411 1102 1111 5551
-			3411 1102 1111 5551 3411 1102 1111 5551
-			3411 1102 1111 5551 3444 1102 1111 5551
+			0000 0000 5555 8888 0000 0000 6666 7777
+			4922 3312 5555 8888 4933 3312 6666 7777
+			4933 3312 5555 8888 4933 3312 6666 7777
+			4933 3312 5555 8888 4933 3312 6666 7777
+			4933 3012 5555 8888 4933 3012 6666 7777
+			4933 3312 5555 8888 4933 3312 6666 7777
+			4933 3312 5555 8888 4933 3312 6666 7777
+			4933 3312 5555 8888 4999 3312 6666 7777
 		</bitmap>
 	</tex_image>
 	<tex_image index="50" name="idr_win01"
@@ -972,7 +972,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="idr_win01_pl"
-		path="C:/home/wb_data3d/build_model/indoor/win01/tex/idr_win01.tga"
+		path="C:/home/wb_data3d/field/in03/chip/tex/idr_win01.tga"
 	>
 		<bitmap size="32">
 			aaaa aaaa 5555 5555 0000 0000 0000 0000
@@ -1768,7 +1768,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="m_lab01_09_pl"
-		path="C:/home/wb_data3d/field/in04/chip/tex/m_lab01_09.tga"
+		path="C:/home/wb_data3d/field/in03/chip/tex/m_lab01_09.tga"
 	>
 		<bitmap size="64">
 			feee eee9 ccbb dede ddde eddd 8866 dede
@@ -1786,7 +1786,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="m_lab01_11_pl"
-		path="C:/home/wb_data3d/field/in04/chip/tex/m_lab01_11.tga"
+		path="C:/home/wb_data3d/field/in03/chip/tex/m_lab01_11.tga"
 	>
 		<bitmap size="128">
 			6666 6666 6666 6666 7777 7777 7777 7777
@@ -1986,7 +1986,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="wii01_pl"
-		path="C:/home/wb_data3d/build_model/indoor/wii01/tex/wii01.tga"
+		path="C:/home/wb_data3d/field/in03/chip/tex/wii01.tga"
 	>
 		<bitmap size="128">
 			7700 0777 0000 0000 3370 7333 0000 0000
@@ -2262,8 +2262,9 @@
 		7fff 0dc6 0965 1628 168d 4b5c 26de 0cec
 		154f 0cc9 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="53" name="idr_tv01_pl" color_size="8">
-		252a 35af 2d6c 5294 7fff 5ef7 1084 7fff
+	<tex_palette index="53" name="idr_tv01_pl" color_size="16">
+		1084 252a 2d6c 35af 5294 7b09 7b2c 7f6b
+		7f6e 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="54" name="idr_win01_pl" color_size="4">
 		1d2b 258f 2df3 7fff
