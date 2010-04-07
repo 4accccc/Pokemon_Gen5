@@ -17,6 +17,7 @@
 #include "gamesystem/game_comm.h"
 #include "field/intrude_comm.h"
 #include "net/net_whpipe.h"
+#include "savedata/mystatus.h"
 
 
 //==============================================================================
@@ -43,6 +44,7 @@ typedef struct{
 ///通信ゲームビーコンサーチシステムワーク構造体
 typedef struct _GAME_BEACON_SYS
 {
+  GAMEDATA *gamedata;
   GBS_STATUS status;        ///<TRUE:初期化済み
   BOOL fatal_err;   ///<TRUE:エラー発生
   GBS_BEACON beacon_send_data;    ///<送信ビーコンデータ
@@ -65,7 +67,7 @@ static BOOL GameBeacon_CheckConnectService(GameServiceID GameServiceID1 , GameSe
 static void GameBeacon_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 static void GameBeacon_DisconnectCallBack(void* pWork);
 static const GBS_BEACON * GameBeacon_CompareBeacon( const GBS_BEACON *beacon_a , const GBS_BEACON *beacon_b );
-static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon);
+static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon, GAMEDATA *gamedata);
 
 
 //==============================================================================
@@ -132,6 +134,7 @@ void * GameBeacon_Init(int *seq, void *pwk)
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
 	
 	gbs = GFL_HEAP_AllocClearMemory(GFL_HEAP_LOWID(HEAPID_PROC), sizeof(GAME_BEACON_SYS));
+	gbs->gamedata = gamedata;
 	return gbs;
 }
 
@@ -411,7 +414,7 @@ static void* GameBeacon_GetBeaconData(void* pWork)
 {
   GAME_BEACON_SYS_PTR gbs = pWork;
   
-  GameBeacon_SetBeaconParam(&gbs->beacon_send_data);
+  GameBeacon_SetBeaconParam(&gbs->beacon_send_data, gbs->gamedata);
   GAMEBEACON_SendDataCopy(&gbs->beacon_send_data.info);
   gbs->beacon_send_data.beacon_type = GBS_BEACONN_TYPE_INFO;
   return &gbs->beacon_send_data;
@@ -424,7 +427,7 @@ static void* GameBeacon_GetBeaconData(void* pWork)
  * @param   beacon		ビーコンパラメータ代入先
  */
 //==================================================================
-static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon)
+static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon, GAMEDATA *gamedata)
 {
   GFL_STD_MemClear(beacon, sizeof(GBS_BEACON));
   beacon->gsid = aGFLNetInit.gsid;
@@ -432,6 +435,7 @@ static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon)
   beacon->member_max = 3;
   beacon->error = GFL_NET_SystemGetErrorCode();
   beacon->beacon_type = GBS_BEACONN_TYPE_NONE;
+  beacon->trainer_id = MyStatus_GetID( GAMEDATA_GetMyStatus(gamedata) );
   beacon->isTwl = OS_IsRunOnTwl();
   beacon->restrictPhoto = FALSE;
   if(beacon->isTwl == TRUE){
