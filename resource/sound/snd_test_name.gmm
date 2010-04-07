@@ -8261,13 +8261,13 @@
 		<language name="JPN" width="256">EDEMO-05</language>
 		<language name="JPN_KANJI" width="256">EDEMO-05</language>
 	</row>
-	<row id="msg_seq_se_dmy_300">
-		<language name="JPN" width="256">DMY-300</language>
-		<language name="JPN_KANJI" width="256">DMY-300</language>
+	<row id="msg_seq_se_hdemo_01">
+		<language name="JPN" width="256">HDEMO-01</language>
+		<language name="JPN_KANJI" width="256">HDEMO-01</language>
 	</row>
-	<row id="msg_seq_se_dmy_301">
-		<language name="JPN" width="256">DMY-301</language>
-		<language name="JPN_KANJI" width="256">DMY-301</language>
+	<row id="msg_seq_se_sys_91">
+		<language name="JPN" width="256">SYS-91</language>
+		<language name="JPN_KANJI" width="256">SYS-91</language>
 	</row>
 	<row id="msg_seq_se_dmy_302">
 		<language name="JPN" width="256">DMY-302</language>
