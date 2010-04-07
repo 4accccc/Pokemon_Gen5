@@ -233,6 +233,7 @@ enum{
   EARTHDEMO_SEQ_EARTH_DISPON,           //３Ｄ地球儀モードＯＮ
   EARTHDEMO_SEQ_MOVE_EARTH,           //メイン動作
   EARTHDEMO_SEQ_MOVE_CAMERA,            //カメラ遠近移動
+  EARTHDEMO_SEQ_BUTTON_ANIME,       // ボタンアニメ待ち
   EARTHDEMO_SEQ_END,                //終了処理開始
   EARTHDEMO_SEQ_EXIT,               //終了
 };
@@ -789,9 +790,7 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
   GFL_TCBL_Main(wk->tcbl);
 
   // メニューのアニメ実行が行われていなかったらサブシーケンス実行可能
-  if(_menu_anime_check(wk)){
-    sys_result = SubSeq_Main( wk, seq );
-  }
+  sys_result = SubSeq_Main( wk, seq );
   Earth3D_Draw(wk);   //３Ｄ描画エンジン
   _menu_main(wk);     // タスクメニュー描画
   PRINTSYS_QUE_Main( wk->printQue );
@@ -799,35 +798,6 @@ static GFL_PROC_RESULT Earth_Demo_Main(GFL_PROC * proc, int * seq, void * pwk, v
 }
 
 
-//----------------------------------------------------------------------------------
-/**
- * @brief タスクメニューのアニメ確認
- *
- * @param   wk    
- *
- * @retval  BOOL TRUE:アニメしていない  FALSE:している
- */
-//----------------------------------------------------------------------------------
-static BOOL _menu_anime_check( EARTH_DEMO_WORK *wk )
-{
-
-  int i;
-  // ボタンが存在しているならアニメチェック
-  for(i=0;i<2;i++){
-    if(wk->TaskMenuWork[i]!=NULL){
-      if( APP_TASKMENU_WIN_IsDecide( wk->TaskMenuWork[i] ) )
-      { 
-        if( APP_TASKMENU_WIN_IsFinish( wk->TaskMenuWork[i] )==FALSE){
-//          APP_TASKMENU_WIN_SetActive( wk->TaskMenuWork[i], FALSE );
-//          APP_TASKMENU_WIN_SetDecide( wk->TaskMenuWork[i], FALSE );
-            APP_TASKMENU_WIN_ResetDecide( wk->TaskMenuWork[i] );
-          return FALSE;
-        }
-      }
-    }
-  }
-  return TRUE;
-}
 
 
 //----------------------------------------------------------------------------------
@@ -842,7 +812,11 @@ static void _menu_anime_on( EARTH_DEMO_WORK *wk, int id )
 {
   // ボタンが存在しているならボタン決定アニメ発動
   if(wk->TaskMenuWork[id]!=NULL){
-    APP_TASKMENU_WIN_SetDecide( wk->TaskMenuWork[id], TRUE );
+    if(id==TASKMENU_MIRU){
+      APP_TASKMENU_WIN_SetActive( wk->TaskMenuWork[TASKMENU_MIRU], TRUE );
+    }else if(id==TASKMENU_YAMERU){
+      APP_TASKMENU_WIN_SetDecide( wk->TaskMenuWork[TASKMENU_YAMERU], TRUE );
+    }
   }
 }
 
@@ -901,7 +875,7 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
     wk->tptrg = GFL_UI_TP_GetPointTrg(&wk->tpx, &wk->tpy); 
   }
 
-  // 金銀で追加したタッチはAボタン処理はなくしました。
+  // 金銀で追加したタッチ=Aボタン処理はなくしました。
 //  // 地球儀モード以外ならタッチ=Aボタン
 //  if( (*seq) != EARTHDEMO_SEQ_EARTH_DISPON &&
 //    (*seq) != EARTHDEMO_SEQ_MOVE_EARTH && 
@@ -1205,12 +1179,9 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
       if( Earth_SearchPosInfo(wk, &minindex ) ){
         // 「みる」アイコンＯＮ
         TaskMenuPut( wk, 0 );
-//        GFL_BMPWIN_MakeScreen(wk->lookwin);
-//        BmpWinFrame_Write(wk->lookwin, WINDOW_TRANS_ON, EARTH_MENUWINCHR_NUM,EARTH_MENUWIN_PAL);
       }else{
         //「みる」アイコンＯＦＦ
         TaskMenuOff( wk, 0 );
-//        BmpWinFrame_Clear( wk->lookwin, WINDOW_TRANS_ON );
       }
 
       //終了判定
@@ -1218,22 +1189,12 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
         //「やめる」アイコンＯＦＦ
         TaskMenuOff( wk, TASKMENU_MIRU );
         _menu_anime_on( wk, TASKMENU_YAMERU );
-//        TaskMenu( wk, 1 );
         PMSND_PlaySE( WIFIEARTH_SND_YAMERU );
 
         //メッセージ画面クリア
         GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->msgwin), FBMP_COL_WHITE );
         GFL_BMPWIN_TransVramCharacter(wk->msgwin);
-
-        //住んでいる場所入力済？
-        if(wk->my_nation == 0){
-          //メニュー画面へ
-          wk->Draw3Dsw = DRAW3D_BANISH;//３Ｄ画面消去→スイッチ設定ＯＦＦ
-          *seq = EARTHDEMO_SEQ_MAINMENU;
-        }else{
-          Earth_MyPlaceInfoWinRelease( wk );
-          *seq = EARTHDEMO_SEQ_END;//終了
-        }
+        *seq = EARTHDEMO_SEQ_BUTTON_ANIME;
       }else{
         // 「みる」機能
         if( ((wk->trg & PAD_BUTTON_X)||(wk->tp_result & PAD_BUTTON_X))&&(wk->info_mode == 0) ){
@@ -1281,6 +1242,21 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
 #ifdef WIFI_ERATH_DEBUG
     EarthDebugWinRotateInfoWrite(wk);//デバッグ情報表示
 #endif
+    break;
+
+  case EARTHDEMO_SEQ_BUTTON_ANIME:
+    if(APP_TASKMENU_WIN_IsFinish( wk->TaskMenuWork[1]) ){
+      //住んでいる場所入力済？
+      if(wk->my_nation == 0){
+        //メニュー画面へ
+        wk->Draw3Dsw = DRAW3D_BANISH;//３Ｄ画面消去→スイッチ設定ＯＦＦ
+        *seq = EARTHDEMO_SEQ_MAINMENU;
+      }else{
+        Earth_MyPlaceInfoWinRelease( wk );
+        *seq = EARTHDEMO_SEQ_END;//終了
+      }
+      TaskMenuOff( wk, TASKMENU_YAMERU );
+    }
     break;
 
   case EARTHDEMO_SEQ_MOVE_CAMERA: //カメラ距離移動
@@ -1596,7 +1572,6 @@ static void Earth_TouchPanel( EARTH_DEMO_WORK * wk )
   if(ret==0){
     button_area = PAD_BUTTON_X;
   }else if(ret==1){
-    _menu_anime_on( wk, TASKMENU_YAMERU );
     button_area = PAD_BUTTON_B;
   }
 /*
