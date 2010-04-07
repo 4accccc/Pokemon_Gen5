@@ -2637,7 +2637,6 @@ static RET Guru2Subproc_SaveBeforeTimingInit( GURU2MAIN_WORK *g2m )
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
   RECORD_Inc( g2m->g2p->param->record, RECID_GURUGURU_COUNT );
-//  RECORD_Score_Add( g2m->g2p->param->record,SCORE_ID_GURUGURU );
   
   Guru2TalkWin_Write( g2m, MSG_SAVE );
   GFL_NET_HANDLE_TimeSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU );
