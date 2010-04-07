@@ -840,7 +840,8 @@ static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
     {
       u8 colL, colS, colB;
 
-      PRINTSYS_LSB_GetLSB( wk->defColor, &colL, &colS, &colB );
+      GFL_FONTSYS_GetColor( &colL, &colS, &colB );
+      OS_TPrintf("Backup DefaultColor= %d %d %d\n", colL, colS, colB );
       wk->defColor = PRINTSYS_LSB_Make( colL, colS, colB );
 
       colL = STR_TOOL_GetTagParam(sp, 0);
