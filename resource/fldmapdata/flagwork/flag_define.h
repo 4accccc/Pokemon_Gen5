@@ -802,15 +802,15 @@
 #define FV_H03_GENERALPERSON               778 /* 0x030a シリンダーブリッジ：おばさんと格闘家（女） */
 #define FV_D12R0102_POKE14_01              779 /* 0x030b リバティ島：ビクティ */
 #define FV_R07R0105_CHAMPION_01            780 /* 0x030c タワーオブヘブン5F：クリア後チャンピオン */
-		/* not used   781(0x030d) */
-		/* not used   782(0x030e) */
-		/* not used   783(0x030f) */
-		/* not used   784(0x0310) */
-		/* not used   785(0x0311) */
-		/* not used   786(0x0312) */
-		/* not used   787(0x0313) */
-		/* not used   788(0x0314) */
-		/* not used   789(0x0315) */
+#define FV_T04_DAYTIME                     781 /* 0x030d カゴメタウン：日中表示OBJ用フラグ */
+#define FV_T04_NIGHT                       782 /* 0x030e カゴメタウン：夜表示OBJ用フラグ */
+#define FV_T04_MON                         783 /* 0x030f カゴメタウン：月曜非表示OBJ用フラグ */
+#define FV_T04_TUE                         784 /* 0x0310 カゴメタウン：火曜非表示OBJ用フラグ */
+#define FV_T04_WED                         785 /* 0x0311 カゴメタウン：水曜非表示OBJ用フラグ */
+#define FV_T04_THU                         786 /* 0x0312 カゴメタウン：木曜非表示OBJ用フラグ */
+#define FV_T04_FRI                         787 /* 0x0313 カゴメタウン：金曜非表示OBJ用フラグ */
+#define FV_T04_SAT                         788 /* 0x0314 カゴメタウン：土曜非表示OBJ用フラグ */
+#define FV_T04_SUN                         789 /* 0x0315 カゴメタウン：日曜非表示OBJ用フラグ */
 		/* not used   790(0x0316) */
 		/* not used   791(0x0317) */
 		/* not used   792(0x0318) */
