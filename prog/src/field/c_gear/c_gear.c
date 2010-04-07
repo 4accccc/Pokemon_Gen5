@@ -159,6 +159,22 @@ typedef enum{
 
 
 //-------------------------------------
+///	パネルパレット情報
+//=====================================
+enum {
+
+  PANEL_PLTT_NONE = 0x6,
+  PANEL_PLTT_0 = 0x5,
+  PANEL_PLTT_1 = 0x4,
+  PANEL_PLTT_2 = 0x3,
+  PANEL_PLTT_3 = 0x2,
+  PANEL_PLTT_HIGH = 0x1,
+} ;
+
+
+
+
+//-------------------------------------
 ///	パネルのカラーアニメ
 //=====================================
 enum{
@@ -188,19 +204,20 @@ enum{
 
 };
 static const u8 sc_PANEL_COLOR_ANIME_END_INDEX[] = { 0, 1, 2, 3, 4, 3, 2, 1, 0 };
+static const u8 sc_PANEL_COLOR_ANIME_END_INDEX_NONE[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 // カラーPATTERN情報
 static const u8 sc_PANEL_COLOR_ANIME_TBL[ PANEL_COLOR_TYPE_MAX ][ PANEL_COLOR_PATTERN_NUM ] = 
 {
   // NONE
-  { 0x9, 0x9, 0x9, 0x9, 0x9 },
+  { PANEL_PLTT_NONE, PANEL_PLTT_0, PANEL_PLTT_1, PANEL_PLTT_2, PANEL_PLTT_3 },
   // RED
-  { 0x1, 0x1, 0x1, 0x1, 0x1 },
+  { PANEL_PLTT_0, PANEL_PLTT_1, PANEL_PLTT_2, PANEL_PLTT_3, PANEL_PLTT_HIGH },
   // YELLOW
-  { 0x2, 0x2, 0x2, 0x2, 0x2 },
+  { PANEL_PLTT_0, PANEL_PLTT_1, PANEL_PLTT_2, PANEL_PLTT_3, PANEL_PLTT_HIGH },
   // BLUE
-  { 0x3, 0x3, 0x3, 0x3, 0x3 },
+  { PANEL_PLTT_0, PANEL_PLTT_1, PANEL_PLTT_2, PANEL_PLTT_3, PANEL_PLTT_HIGH },
   // BASE
-  { 0x7, 0x6, 0x5, 0x4, 0xb },
+  { PANEL_PLTT_0, PANEL_PLTT_1, PANEL_PLTT_2, PANEL_PLTT_3, PANEL_PLTT_HIGH },
 };
 // カラータイプのパネルタイプ
 static const u16 sc_PANEL_TYPE_TO_COLOR[] = {
@@ -510,7 +527,7 @@ static void _createSubBg(C_GEAR_WORK* pWork);
 static void _setUpSubAlpha( C_GEAR_WORK* pWork );
 
 // スクリーン操作
-static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANELTYPE_ENUM type,BOOL bNoneWrite);
+static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANELTYPE_ENUM type);
 static void _gearBootInitScreen(C_GEAR_WORK* pWork);
 static BOOL _gearBootMain(C_GEAR_WORK* pWork);
 static BOOL _gearStartUpMain(C_GEAR_WORK* pWork);
@@ -1065,6 +1082,8 @@ static void _PanelMarkAnimeInit( PANEL_MARK_ANIME* p_mark, int x, int y )
 //-----------------------------------------------------------------------------
 static void _PanelMarkAnimeStart( PANEL_MARK_ANIME* p_mark, C_GEAR_WORK* pWork, u8 color_type, u8 anime_type, CGEAR_PANELTYPE_ENUM panel_type, u16 frame )
 {
+  u32 set_index = 0;
+  
   GF_ASSERT( color_type < PANEL_COLOR_TYPE_MAX );
   GF_ASSERT( anime_type < PANEL_ANIME_TYPE_MAX );
   
@@ -1080,12 +1099,13 @@ static void _PanelMarkAnimeStart( PANEL_MARK_ANIME* p_mark, C_GEAR_WORK* pWork, 
   }else if( anime_type == PANEL_ANIME_TYPE_OFF ){
     // 0, 1, 2, 3, 4, 3, 2, 1, 0
     p_mark->end_anime_index  = sc_PANEL_COLOR_ANIME_END_INDEX[ p_mark->x ];  // アニメーションインデックスの終了値
-    p_mark->count       = frame * PANEL_COLOR_PATTERN_NUM;
+    set_index                = PANEL_COLOR_PATTERN_NUM-1;
+    p_mark->count       = (frame * PANEL_COLOR_PATTERN_NUM);
   }
 
   // color用のパネルを書き込み。
-  _gearPanelBgScreenMake(pWork, p_mark->x, p_mark->y, panel_type, FALSE);
-  _PanelMarkAnimeWriteScreen( p_mark, p_mark->count/frame );
+  _gearPanelBgScreenMake(pWork, p_mark->x, p_mark->y, panel_type);
+  _PanelMarkAnimeWriteScreen( p_mark, set_index );
 }
 
 //----------------------------------------------------------------------------
@@ -1141,14 +1161,23 @@ static void _PanelMarkAnimeMain( PANEL_MARK_ANIME* p_mark, const C_GEAR_WORK* cp
 static void _PanelMarkAnimeWriteScreen( const PANEL_MARK_ANIME* cp_mark, u32 anime_index )
 {
   int scrn_x, scrn_y;
+  int scrn_size_x;
   u32 pal_index;
 
   pal_index    = sc_PANEL_COLOR_ANIME_TBL[ cp_mark->color ][ anime_index ];
 
   _gearXY2PanelScreen(cp_mark->x, cp_mark->y, &scrn_x, &scrn_y );
+
+  scrn_size_x = PANEL_SIZEXY;
+  if( scrn_x < 0 ){
+    scrn_size_x = PANEL_SIZEXY + scrn_x;
+    scrn_x = 0;
+  }else if( (scrn_x + PANEL_SIZEXY) > 32 ){
+    scrn_size_x = 32 - scrn_x;
+  }
   
   GFL_BG_ChangeScreenPalette( GEAR_BUTTON_FRAME, 
-      scrn_x, scrn_y, PANEL_SIZEXY, PANEL_SIZEXY, pal_index );
+      scrn_x, scrn_y, scrn_size_x, PANEL_SIZEXY, pal_index );
 
   GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
 }
@@ -1240,7 +1269,7 @@ static void _gearBootInitScreen(C_GEAR_WORK* pWork)
 
   for(x = 0; x < PANEL_WIDTH; x++){   // XはPANEL_WIDTH回
     for(y = 0; y < yloop[ x % 2]; y++){ //Yは xの％２でyloopの繰り返し
-      _gearPanelBgScreenMake(pWork, x, y, CGEAR_PANELTYPE_NONE, FALSE);
+      _gearPanelBgScreenMake(pWork, x, y, CGEAR_PANELTYPE_NONE);
     }
   }
   GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
@@ -1358,39 +1387,36 @@ static BOOL _gearStartUpMain(C_GEAR_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANELTYPE_ENUM type,BOOL bNoneWrite)
+static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANELTYPE_ENUM type)
 {
   int ypos[2] = {PANEL_Y1,PANEL_Y2};
   int x,y,i,j;
-  int typepos[] = {0,  0x0c,0x10,0x14,0x18,0x1c};
-  int palpos[] =  {0,0x1000,0x2000,0x3000};
-  int palpos2[] =  {0x7000,0x6000,0x5000,0x4000,0x4000,0x4000,0x5000,0x6000,0x7000};
-  int palpos3[] =  {0x7000,0x6000,0x5000,0x4000,0xB000,0x4000,0x5000,0x6000,0x7000};
+  int typepos[] = {0x18, 0x0c,0x10,0x14,0x18,0x1c};
   u16* pScrAddr = GFL_BG_GetScreenBufferAdrs(GEAR_BUTTON_FRAME );
   int xscr;
   int yscr;
+  int col_index;
+  int col_type;
 
   _gearXY2PanelScreen(xs,ys,&xscr,&yscr);
+
+
+  // パネルタイプとxインデックスからパレットナンバーを取得
+  col_type = sc_PANEL_TYPE_TO_COLOR[ type ];
+  if( type != CGEAR_PANELTYPE_NONE ){
+    col_index = sc_PANEL_COLOR_ANIME_END_INDEX[ xs ];
+  }else{
+    col_index = sc_PANEL_COLOR_ANIME_END_INDEX_NONE[ xs ];
+  }
+
   for(y = yscr, i = 0; i < PANEL_SIZEXY; y++, i++){
     for(x = xscr, j = 0; j < PANEL_SIZEXY; x++, j++){
       if((x >= 0) && (x < 32)){
         int charpos = typepos[type] + i * 0x20 + j;
         int scr = x + (y * 32);
-        if(type == CGEAR_PANELTYPE_NONE){
-          charpos = 0;
-          if(bNoneWrite){
-            pScrAddr[scr]=0;
-          }
-        }
-        if(type==CGEAR_PANELTYPE_BOOT){
-          pScrAddr[scr] = palpos3[xs] + charpos;
-        }
-        else if(type==CGEAR_PANELTYPE_BASE){
-          pScrAddr[scr] = palpos2[xs] + charpos;
-        }
-        else{
-          pScrAddr[scr] = palpos[type] + charpos;
-        }
+
+        
+        pScrAddr[scr] = (sc_PANEL_COLOR_ANIME_TBL[col_type][ col_index ]<<12) | charpos;
         //		NET_PRINT("x%d y%d  %d \n",x,y,palpos[type] + charpos);
       }
     }
@@ -1456,7 +1482,7 @@ static void _gearPanelBgCreate(C_GEAR_WORK* pWork)
 
   for(x = 0; x < PANEL_WIDTH; x++){   // XはPANEL_WIDTH回
     for(y = 0; y < yloop[ x % 2]; y++){ //Yは xの％２でyloopの繰り返し
-      _gearPanelBgScreenMake(pWork, x, y, CGEAR_SV_GetPanelType(pWork->pCGSV,x,y),FALSE);
+      _gearPanelBgScreenMake(pWork, x, y, CGEAR_SV_GetPanelType(pWork->pCGSV,x,y));
     }
   }
   GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
@@ -1818,7 +1844,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       {
         type = pWork->cellMoveType;
         _modeSetSavePanelType(pWork, pWork->pCGSV,xp,yp,type);
-        _gearPanelBgScreenMake(pWork, xp, yp,type, FALSE);
+        _gearPanelBgScreenMake(pWork, xp, yp,type);
         GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
       }
       return;
@@ -1831,7 +1857,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       {
         type = (type+1) % CGEAR_PANELTYPE_MAX;
         _modeSetSavePanelType(pWork, pWork->pCGSV,xp,yp,type);
-        _gearPanelBgScreenMake(pWork, xp, yp,type, FALSE);
+        _gearPanelBgScreenMake(pWork, xp, yp,type);
         GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
         PMSND_PlaySE( SEQ_SE_MSCL_07 );
       }
