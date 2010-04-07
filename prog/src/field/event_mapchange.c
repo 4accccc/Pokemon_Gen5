@@ -1434,7 +1434,7 @@ GMEVENT* EVENT_ChangeMapPos( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT* DEBUG_EVENT_ChangeMapRailLocation( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+GMEVENT* EVENT_ChangeMapRailLocation( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
                                             u16 zoneID, const RAIL_LOCATION* rail_loc, u16 dir )
 {
   MAPCHANGE_WORK* work;

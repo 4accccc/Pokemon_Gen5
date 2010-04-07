@@ -87,7 +87,7 @@ extern GMEVENT* EVENT_ChangeMapSorawotobu( GAMESYS_WORK* gameSystem, FIELDMAP_WO
  * @return 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
-extern GMEVENT* DEBUG_EVENT_ChangeMapRailLocation( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+extern GMEVENT* EVENT_ChangeMapRailLocation( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
                                                    u16 zoneID, const RAIL_LOCATION* rail_loc, u16 dir );
 
 //------------------------------------------------------------------
