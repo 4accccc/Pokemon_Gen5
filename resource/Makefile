@@ -49,7 +49,6 @@ SUBDIRS	=	wmi \
 			rebattle_trainer \
 			fld3d_ci \
 			battle\
-			batt_bg_tbl\
 			fldmapdata\
 			pokegra\
 			net_err\
