@@ -27,5 +27,7 @@ typedef enum
 }FIELD_SKILL_CHECK_RET;
 
 extern const u16 FIELD_SKILL_CHECK_GetUseSkillBit( GAMEDATA *gameData );
+//技マシンの所持と使用状況でチェック
 extern const FIELD_SKILL_CHECK_RET FIELD_SKILL_CHECK_CheckForgetSkill( GAMEDATA *gameData , const u16 wazaNo , HEAPID heapId );
-extern const FIELD_SKILL_CHECK_RET FIELD_SKILL_CHECK_CanTradePoke( POKEMON_PASO_PARAM *ppp , GAMEDATA *gameData , HEAPID heapId );
+//技を持ってるかだけチェック
+extern const BOOL FIELD_SKILL_CHECK_CanTradePoke( POKEMON_PASO_PARAM *ppp , HEAPID heapId );

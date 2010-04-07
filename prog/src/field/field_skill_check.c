@@ -141,7 +141,7 @@ const FIELD_SKILL_CHECK_RET FIELD_SKILL_CHECK_CheckForgetSkill( GAMEDATA *gameDa
     }
     break;
   case WAZANO_HURASSYU:
-    if( useSkillBit & FSCB_DIVING )
+    if( useSkillBit & FSCB_FLASH )
     {
       return FSCR_USE_SKILL;
     }
@@ -152,19 +152,25 @@ const FIELD_SKILL_CHECK_RET FIELD_SKILL_CHECK_CheckForgetSkill( GAMEDATA *gameDa
 }
 
 //--------------------------------------------------------------
-//	éwíËãZÇ™ñYÇÍÇÁÇÍÇÈÇ©ÅH
+//	åä∑Ç≈Ç´ÇÈÇ©ÅH
 //--------------------------------------------------------------
-const FIELD_SKILL_CHECK_RET FIELD_SKILL_CHECK_CanTradePoke( POKEMON_PASO_PARAM *ppp , GAMEDATA *gameData , HEAPID heapId )
+const BOOL FIELD_SKILL_CHECK_CanTradePoke( POKEMON_PASO_PARAM *ppp , HEAPID heapId )
 {
   u8 i;
   for( i=0;i<4;i++ )
   {
     const u32 wazaNo = PPP_Get( ppp , ID_PARA_waza1+i , NULL );
-    const FIELD_SKILL_CHECK_RET ret = FIELD_SKILL_CHECK_CheckForgetSkill( gameData , wazaNo , heapId );
-    if( ret != FSCR_OK )
+    if( wazaNo == WAZANO_IAIGIRI ||
+        wazaNo == WAZANO_KAIRIKI ||
+        wazaNo == WAZANO_NAMINORI ||
+        wazaNo == WAZANO_SORAWOTOBU ||
+        wazaNo == WAZANO_DAIBINGU ||
+        wazaNo == WAZANO_TAKINOBORI ||
+        wazaNo == WAZANO_IWAKUDAKI ||
+        wazaNo == WAZANO_HURASSYU )
     {
-      return ret;
+      return FALSE;
     }
   }
-  return FSCR_OK;
+  return TRUE;
 }
