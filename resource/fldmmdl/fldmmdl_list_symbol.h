@@ -27,6 +27,7 @@
 #define PROC_SHIN_MU 16 //ポケモン シン・ム
 #define PROC_SPIDER 17 //くもの巣
 #define PROC_MELODYER 18 //ポケモン メロディア
+#define PROC_RIVEL 19 //ライバル
 
 //FOOTMARK 足跡種類で指定するシンボルです。
 #define FOOTMARK_NON 0 //足跡無し
@@ -128,6 +129,12 @@
 #define ANMID_ACT0 20 //人物汎用 反転未使用+演技
 #define ANMID_MELODYER 21 //ポケモン メロディア
 #define ANMID_SHIN_MU_B 22 //ポケモン　シン・ム　その２
+#define ANMID_RIVEL 23 //ライバル
+#define ANMID_SUPPORT 24 //サポート
+#define ANMID_BOSS_N 25 ///N
+#define ANMID_SAGE1 26 //SAGE1
+#define ANMID_NINJA 27 //NINJA
+#define ANMID_CHAMPION 28 //CHAMPION
 
 //SEX 性別で指定するシンボルです。
 #define SEX_MALE 0

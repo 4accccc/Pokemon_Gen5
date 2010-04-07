@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
 
 <head>
-	<create date='2009-08-31T19:17:18' host='W00154A' user='lee_hyunjung' source='t4x4nflip.mb'/>
+	<create date='2010-03-17T16:18:20' host='W00154A' user='lee_hyunjung' source='ncg4x4x20.mb'/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 </head>
 
 <body>
 
-<original_create date='2009-08-31T19:17:18' host='W00154A' user='lee_hyunjung' source='t4x4nflip.mb'/>
+<original_create date='2010-03-17T16:18:20' host='W00154A' user='lee_hyunjung' source='ncg4x4x20.mb'/>
 <original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 
-<model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='none' material_size='1 1' vertex_style='direct' compress_material='off' output_texture='used' node_size='1 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
+<model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='merge' material_size='1 1' vertex_style='direct' compress_material='on' output_texture='used' node_size='2 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
 
 <box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='3'/>
 
-<tex_image_array size='12'>
-	<tex_image name='t4x4nflip.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='t4x4nflip.1.tga' palette_name='t4x4nflip' width='32' color0_mode='transparency'>
+<tex_image_array size='20'>
+	<tex_image name='t4x4x20.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='t4x4x20.1.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -52,7 +52,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4nflip.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='t4x4nflip.2.tga' palette_name='t4x4nflip' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x20.10' format='palette16' original_width='32' original_height='32' index='1' height='32' path='t4x4x20.10.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 2000 0002 0000 0000 0000 
@@ -88,7 +88,7 @@
 			0000 0000 ff00 00ff 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4nflip.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='t4x4nflip.3.tga' palette_name='t4x4nflip' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x20.11' format='palette16' original_width='32' original_height='32' index='2' height='32' path='t4x4x20.11.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 2000 0002 0000 0000 0000 
@@ -124,7 +124,7 @@
 			0000 0000 0000 0000 ff00 00ff 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4nflip.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='t4x4nflip.4.tga' palette_name='t4x4nflip' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x20.12' format='palette16' original_width='32' original_height='32' index='3' height='32' path='t4x4x20.12.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -160,7 +160,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4nflip.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='t4x4nflip.5.tga' palette_name='t4x4nflip' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x20.13' format='palette16' original_width='32' original_height='32' index='4' height='32' path='t4x4x20.13.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 2220 0222 0000 0000 0000 
@@ -196,7 +196,7 @@
 			0000 0000 f000 00ff 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4nflip.6' format='palette16' original_width='32' original_height='32' index='5' height='32' path='t4x4nflip.6.tga' palette_name='t4x4nflip' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x20.14' format='palette16' original_width='32' original_height='32' index='5' height='32' path='t4x4x20.14.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 2220 0222 0000 0000 0000 
@@ -232,7 +232,7 @@
 			0000 0000 0000 0000 ff00 000f 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4nflip.7' format='palette16' original_width='32' original_height='32' index='6' height='32' path='t4x4nflip.7.tga' palette_name='t4x4nflip' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x20.15' format='palette16' original_width='32' original_height='32' index='6' height='32' path='t4x4x20.15.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -268,7 +268,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4nflip.8' format='palette16' original_width='32' original_height='32' index='7' height='32' path='t4x4nflip.8.tga' palette_name='t4x4nflip' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x20.16' format='palette16' original_width='32' original_height='32' index='7' height='32' path='t4x4x20.16.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 2220 0022 0000 0000 0000 
@@ -304,7 +304,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4nflip.9' format='palette16' original_width='32' original_height='32' index='8' height='32' path='t4x4nflip.9.tga' palette_name='t4x4nflip' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x20.17' format='palette16' original_width='32' original_height='32' index='8' height='32' path='t4x4x20.17.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 2220 0022 0000 0000 0000 
@@ -340,7 +340,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4nflip.10' format='palette16' original_width='32' original_height='32' index='9' height='32' path='t4x4nflip.10.tga' palette_name='t4x4nflip' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x20.18' format='palette16' original_width='32' original_height='32' index='9' height='32' path='t4x4x20.18.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -376,7 +376,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4nflip.11' format='palette16' original_width='32' original_height='32' index='10' height='32' path='t4x4nflip.11.tga' palette_name='t4x4nflip' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x20.19' format='palette16' original_width='32' original_height='32' index='10' height='32' path='t4x4x20.19.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 2200 0222 0000 0000 0000 
@@ -412,7 +412,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4nflip.12' format='palette16' original_width='32' original_height='32' index='11' height='32' path='t4x4nflip.12.tga' palette_name='t4x4nflip' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4x20.2' format='palette16' original_width='32' original_height='32' index='11' height='32' path='t4x4x20.2.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 2200 0222 0000 0000 0000 
@@ -448,17 +448,305 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
+	<tex_image name='t4x4x20.20' format='palette16' original_width='32' original_height='32' index='12' height='32' path='t4x4x20.20.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 2220 0222 0000 0000 0000 
+			0000 0000 2000 4442 2444 0002 0000 0000 
+			0000 0000 3200 2444 4442 0023 0000 0000 
+			0000 2000 4320 4244 4442 0234 0002 0000 
+			0000 4220 4322 4424 4442 2234 0224 0000 
+			0000 4420 4323 4424 4442 3234 0244 0000 
+			0000 4200 3424 4244 4434 4243 0244 0000 
+			0000 4200 4244 2dcc ccd2 4424 0024 0000 
+			0000 2000 3444 dddc cddd 4443 0002 0000 
+			0000 0000 c32f ddd4 4ddd f23c 0000 0000 
+			0000 ff20 4323 deea c44d 323e 02ff 0000 
+			0000 f7f0 4c23 ceaa efdd 32cd 0f7f 0000 
+			0000 f7f0 db32 c444 dddd 23bd 0f7f 0000 
+			0000 76f0 cbfb dddd dcdd bfbc 0f67 0000 
+			0000 16f0 fb77 ecdf fdce 77bf 0f61 0000 
+			0000 6f00 7f16 ddf7 7fdd 61f7 00f6 0000 
+			0000 f000 166f bbf6 6fbb f661 000f 0000 
+			0000 f000 6ff9 b6b6 6b6b 6ff6 000f 0000 
+			0000 6f00 f669 226f f622 699f 00f9 0000 
+			0000 6f00 9696 126f f621 9699 00f9 0000 
+			0000 6f00 6699 126f f621 6699 00f9 0000 
+			0000 96f0 6aa9 26f9 6f62 6aa9 0f56 0000 
+			0000 66f0 9aa9 6f96 99f6 6aa6 0f99 0000 
+			0000 96f0 9966 6f96 99f6 9966 0f96 0000 
+			0000 6f00 6666 28f5 5f82 9966 00f9 0000 
+			0000 ff00 5968 228f f822 8959 00ff 0000 
+			0000 f000 bbff fffb bfff ffbb 000f 0000 
+			0000 0000 fff0 000f f000 0fff 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='t4x4x20.3' format='palette16' original_width='32' original_height='32' index='13' height='32' path='t4x4x20.3.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 2220 0222 0000 0000 0000 
+			0000 0000 2000 4442 2444 0002 0000 0000 
+			0000 0000 3200 2444 4442 0023 0000 0000 
+			0000 2000 4320 4244 4442 0234 0002 0000 
+			0000 4220 4322 4424 4442 2234 0224 0000 
+			0000 4420 4323 4424 4442 3234 0244 0000 
+			0000 4200 3424 4244 4434 4243 0244 0000 
+			0000 4200 4244 2dcc ccd2 4424 0024 0000 
+			0000 2000 3444 dddc cddd 4443 0002 0000 
+			0000 0000 c32f ddd4 4ddd f23c 0000 0000 
+			0000 ff20 4323 deea c44d 323e 02ff 0000 
+			0000 f7f0 4c23 ceaa efdd 32cd 0f7f 0000 
+			0000 f7f0 db32 c444 dddd 23bd 0f7f 0000 
+			0000 76f0 cbfb dddd dcdd bfbc 0f67 0000 
+			0000 16f0 fb77 ecdf fdce 77bf 0f61 0000 
+			0000 6f00 7f16 ddf7 7fdd 61f7 00f6 0000 
+			0000 f000 166f bbf6 6fbb f661 0f9f 0000 
+			0000 f000 6ff9 b6b6 6b6b 6ff6 f999 0000 
+			0000 6f00 f669 226f f622 699f 9999 000f 
+			0000 6f00 9696 126f f621 9699 d999 00fd 
+			0000 6f00 6699 126f f621 6699 c959 00fc 
+			0000 96f0 6aa9 26f9 6f62 6aa9 9996 000f 
+			0000 66f0 9aa9 6f96 99f6 6aa6 9999 000f 
+			0000 96f0 9966 6f96 99f6 9966 f996 0000 
+			0000 99f0 6666 28f6 9f82 9999 f955 0000 
+			0000 6f00 9966 22f5 5f22 9966 0f99 0000 
+			0000 ff00 5968 228f f822 8959 00ff 0000 
+			0000 f000 bbff fffb bfff ffbb 0000 0000 
+			0000 0000 fff0 000f f000 0fff 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='t4x4x20.4' format='palette16' original_width='32' original_height='32' index='14' height='32' path='t4x4x20.4.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 2220 0222 0000 0000 0000 
+			0000 0000 2000 4442 2444 0002 0000 0000 
+			0000 0000 3200 2444 4442 0023 0000 0000 
+			0000 2000 4320 4244 4442 0234 0002 0000 
+			0000 4220 4322 4424 4442 2234 0224 0000 
+			0000 4420 4323 4424 4442 3234 0244 0000 
+			0000 4200 3424 4244 4434 4243 0244 0000 
+			0000 4200 4244 2dcc ccd2 4424 0024 0000 
+			0000 2000 3444 dddc cddd 4443 0002 0000 
+			0000 0000 c32f ddd4 4ddd f23c 0000 0000 
+			0000 ff20 4323 deea c44d 323e 02ff 0000 
+			0000 f7f0 4c23 ceaa efdd 32cd 0f7f 0000 
+			0000 f7f0 db32 c444 dddd 23bd 0f7f 0000 
+			0000 76f0 cbfb dddd dcdd bfbc 0f67 0000 
+			0000 16f0 fb77 ecdf fdce 77bf 0f61 0000 
+			0000 6f00 7f16 ddf7 7fdd 61f7 00f6 0000 
+			0000 f000 166f bbf6 6fbb f661 f89f 000f 
+			0000 f000 6ff9 b6b6 6b6b 6ff6 9999 00fd 
+			0000 6f00 f669 226f f622 699f 9999 0fdc 
+			0000 6f00 9696 126f f621 9699 9999 0fdc 
+			0000 6f00 6699 126f f621 6699 5599 00f8 
+			0000 96f0 6aa9 96f9 6f62 6aa9 9955 00f8 
+			0000 66f0 9aa9 6f96 99f6 6aa6 8899 000f 
+			0000 96f0 9966 6f96 99f6 9966 8885 000f 
+			0000 99f0 6666 28f6 9f82 9999 f559 0000 
+			0000 6f00 9966 22f5 f222 8665 0ff8 0000 
+			0000 ff00 5968 228f 8222 f59f 000f 0000 
+			0000 f000 bbff fffb ffff fbbb 0000 0000 
+			0000 0000 fff0 000f 0000 ffff 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='t4x4x20.5' format='palette16' original_width='32' original_height='32' index='15' height='32' path='t4x4x20.5.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 2220 0222 0000 0000 0000 
+			0000 0000 2000 4442 2444 0002 0000 0000 
+			0000 0000 3200 2444 4442 0023 0000 0000 
+			0000 2000 4320 4244 4442 0234 0002 0000 
+			0000 4220 4322 4424 4442 2234 0224 0000 
+			0000 4420 4323 4424 4442 3234 0244 0000 
+			0000 4200 3424 4244 4434 4243 0244 0000 
+			0000 4200 4244 2dcc ccd2 4424 0024 0000 
+			0000 2000 3444 dddc cddd 4443 0002 0000 
+			0000 0000 c32f ddd4 4ddd f23c 0000 0000 
+			0000 ff20 4323 deea c44d 323e 02ff 0000 
+			0000 f7f0 4c23 ceaa efdd 32cd 0f7f 0000 
+			0000 f7f0 db32 c444 dddd 23bd 0f7f 0000 
+			0000 76f0 cbfb dddd dcdd bfbc 0f67 0000 
+			0000 16f0 fb77 ecdf fdce 77bf 0f61 0000 
+			0000 6f00 7f16 ddf7 7fdd 61f7 00f6 0000 
+			0000 f000 166f bbf6 6fbb f661 ff9f 000f 
+			0000 f000 6ff9 b6b6 6b6b 6ff6 9999 00fd 
+			0000 6f00 f669 226f f622 699f 9999 0fdc 
+			0000 6f00 9696 126f f621 9699 5599 0fdc 
+			0000 6f00 6699 126f f621 6699 9955 0ff9 
+			0000 96f0 6aa9 96f9 6f62 6aa9 9999 0f99 
+			0000 66f0 9aa9 6f96 99f6 9aa6 9996 0f99 
+			0000 96f0 9966 6f96 99f6 9966 9559 00f9 
+			0000 99f0 6666 2f96 9f82 9999 5588 00f9 
+			0000 6f00 6666 28f9 9f22 9999 8888 000f 
+			0000 ff00 9966 22f5 f222 8665 fff8 0000 
+			0000 f000 5968 228f 8222 859f 00ff 0000 
+			0000 0000 bbff fffb ffff fbbb 0000 0000 
+			0000 0000 fff0 000f 0000 ffff 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='t4x4x20.6' format='palette16' original_width='32' original_height='32' index='16' height='32' path='t4x4x20.6.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='t4x4x20.7' format='palette16' original_width='32' original_height='32' index='17' height='32' path='t4x4x20.7.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='t4x4x20.8' format='palette16' original_width='32' original_height='32' index='18' height='32' path='t4x4x20.8.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='t4x4x20.9' format='palette16' original_width='32' original_height='32' index='19' height='32' path='t4x4x20.9.tga' palette_name='t4x4x20' width='32' color0_mode='color'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size='1'>
-	<tex_palette name='t4x4nflip' color_size='16' index='0'>
+	<tex_palette name='t4x4x20' color_size='16' index='0'>
 		4617 5646 218c 22f2 4f78 0db2 0a59 0b5c 
 		2ce8 352a 2538 192f 3a7a 5f5f 7fff 0000 
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size='1'>
-	<material name='obj' tex_translate='0.000000 0.000000' tex_image_idx='0' tex_gen_mode='none' polygon_id='0' tex_palette_idx='0' light0='on' fog_flag='off' render_1_pixel='off' diffuse='0 0 0' shininess_table_flag='off' light1='off' specular='0 0 0' tex_tiling='clamp clamp' light2='off' ambient='31 31 31' index='0' light3='off' emission='0 0 0' polygon_mode='modulate' depth_test_decal='off' tex_rotate='0.000000' face='front' wire_mode='off' tex_scale='1.000000 1.000000' alpha='31' translucent_update_depth='off' far_clipping='off'/>
+	<material name='obj' tex_translate='0.000000 0.000000' tex_image_idx='0' tex_gen_mode='none' polygon_id='0' tex_palette_idx='0' light0='on' fog_flag='on' render_1_pixel='off' diffuse='25 25 25' shininess_table_flag='off' light1='off' specular='0 0 0' tex_tiling='repeat repeat' light2='off' ambient='31 31 31' index='0' light3='off' emission='0 0 0' polygon_mode='modulate' depth_test_decal='off' tex_rotate='0.000000' face='front' wire_mode='off' tex_scale='1.000000 1.000000' alpha='31' translucent_update_depth='off' far_clipping='off'/>
 </material_array>
 
 <matrix_array size='1'>
