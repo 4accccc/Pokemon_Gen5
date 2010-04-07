@@ -21,23 +21,19 @@
 #define TR_WORKER2_03                      6
 #define TR_BACKPACKERM_03                  7
 #define TR_BACKPACKERW_01                  8
-#define R04_FLD_ITEM_08                    9
-#define R04_STOP_01                       10
-#define R04_WOMAN2_01                     11
-#define R04_MAN2_01                       12
-#define R04_RIVAL_01                      13
-#define R04_FLD_ITEM_01                   14
-#define R04_FLD_ITEM_02                   15
-#define R04_FLD_ITEM_03                   16
-#define R04_FLD_ITEM_04                   17
-#define R04_FLD_ITEM_06                   18
-#define TR_WORKER2_01                     19
-#define TR_PARASOL_07                     20
-#define R04_FLD_ITEM_05                   21
-#define R04_FLD_ITEM_11                   22
-#define R04_FLD_ITEM_09                   23
-#define R04_FLD_ITEM_10                   24
-#define R04_MOUNTAIN_01                   25
+#define R04_STOP_01                        9
+#define R04_WOMAN2_01                     10
+#define R04_MAN2_01                       11
+#define R04_RIVAL_01                      12
+#define R04_FLD_ITEM_01                   13
+#define R04_FLD_ITEM_04                   14
+#define R04_FLD_ITEM_06                   15
+#define TR_WORKER2_01                     16
+#define TR_PARASOL_07                     17
+#define R04_FLD_ITEM_05                   18
+#define R04_FLD_ITEM_11                   19
+#define R04_FLD_ITEM_09                   20
+#define R04_MOUNTAIN_01                   21
 
 #endif //ZONE_R04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

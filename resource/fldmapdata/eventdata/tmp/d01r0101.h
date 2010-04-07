@@ -34,6 +34,7 @@
 #define D01R0101_SAGE1_03                 19
 #define D01R0101_POKE_02                  20
 #define D01R0101_SAGE5_01                 21
+#define D01_FLD_ITEM_08                   22
 
 #endif //ZONE_D01R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d01r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
