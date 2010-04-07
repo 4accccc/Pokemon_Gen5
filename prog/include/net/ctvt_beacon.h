@@ -9,6 +9,7 @@
  */
 //======================================================================
 #include "buflen.h"
+#include "savedata/wifilist.h"
 
 //======================================================================
 //	define
@@ -35,7 +36,7 @@ typedef struct _CTVT_COMM_BEACON CTVT_COMM_BEACON;
 #pragma mark [> proto
 
 //自身が呼ばれているかチェック
-const BOOL CTVT_BCON_CheckCallSelf( CTVT_COMM_BEACON *beacon , u8* selfMacAdr );
+const BOOL CTVT_BCON_CheckCallSelf( CTVT_COMM_BEACON *beacon , WIFI_LIST *wifiList , u8* selfMacAdr );
 
 //ビーコンから情報取得(MyStatusのラッパー
 const STRCODE* CTVT_BCON_GetName( CTVT_COMM_BEACON *beacon );

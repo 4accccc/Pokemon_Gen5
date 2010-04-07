@@ -1018,7 +1018,7 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
             CTVT_COMM_BEACON *becData = beaconData;
             const STRCODE *name = MyStatus_GetMyName( &becData->myStatus );
             const u32 sex = MyStatus_GetMySex( &becData->myStatus );
-            const u32 id  = (MyStatus_GetID( &becData->myStatus )&0x0000FFFF);
+            const u32 id  = MyStatus_GetID( &becData->myStatus );
             isFriend = CTVT_CALL_CheckRegistFriendData( work , callWork , name , id , sex );
           }
           else
@@ -1026,7 +1026,7 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
             GBS_BEACON *becData = beaconData;
             const STRCODE *name = becData->info.name;
             const u32 sex = becData->info.sex;
-            const u32 id  = becData->info.trainer_id;
+            const u32 id  = becData->trainer_id;
             isFriend = CTVT_CALL_CheckRegistFriendData( work , callWork , name , id , sex );
           }
           if( isFriend == FALSE )
@@ -1564,34 +1564,7 @@ static const BOOL CTVT_CALL_CheckRegistFriendData( COMM_TVT_WORK *work , CTVT_CA
   }
 #endif
   
-  for( i=0;i<WIFILIST_FRIEND_MAX;i++ )
-  {
-    if( WifiList_IsFriendData( wifiList , i ) == TRUE )
-    {
-      const u32 friendId = WifiList_GetFriendInfo( wifiList , i , WIFILIST_FRIEND_ID );
-      if( id == (friendId&0x0000FFFF) )
-      {
-        if( sex == WifiList_GetFriendInfo( wifiList , i , WIFILIST_FRIEND_SEX ) )
-        {
-          const HEAPID heapId = COMM_TVT_GetHeapId( work );
-          STRBUF *str1 = GFL_STR_CreateBuffer( 32 , heapId );
-          STRBUF *str2 = GFL_STR_CreateBuffer( 32 , heapId );
-          GFL_STR_SetStringCode( str1 , name );
-          GFL_STR_SetStringCode( str2 , WifiList_GetFriendNamePtr(wifiList,i) );
-          if( GFL_STR_CompareBuffer(str1,str2) == TRUE )
-          {
-            GFL_STR_DeleteBuffer( str1 );
-            GFL_STR_DeleteBuffer( str2 );
-            return TRUE;
-          }
-          GFL_STR_DeleteBuffer( str1 );
-          GFL_STR_DeleteBuffer( str2 );
-        }
-      }
-    }
-  }
-  
-  return FALSE;
+  return WifiList_CheckFriendData( wifiList , name , id , sex );
 }
 
 

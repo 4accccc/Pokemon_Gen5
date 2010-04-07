@@ -612,3 +612,44 @@ WIFI_LIST* SaveData_GetWifiListData(SAVE_CONTROL_WORK * sv)
   return pData;
 }
 
+//---------------------------------------------------------------------------
+/**
+ * @brief	MYSTATUSÇ™ìoò^Ç≥ÇÍÇƒÇ¢ÇÈÇ©í≤Ç◊ÇÈ
+ * @param	WIFI_LIST	WIFIÉäÉXÉg
+ * @param	MYSTATUS	í≤Ç◊ÇÈëŒè€
+ * @return	BOOL TRUE ãèÇΩ
+ */
+//---------------------------------------------------------------------------
+BOOL WifiList_CheckFriendMystatus( WIFI_LIST* pWifiList , const MYSTATUS *myStatus )
+{
+  const u32 id = MyStatus_GetID( myStatus );
+  const u32 sex = MyStatus_GetMySex( myStatus );
+  const STRCODE *name = MyStatus_GetMyName( myStatus );
+  
+  return WifiList_CheckFriendData( pWifiList , name , id , sex );
+}
+
+BOOL WifiList_CheckFriendData( WIFI_LIST* pWifiList , const STRCODE *name , const u32 trainerId , const u32 sex )
+{
+  u8 i;
+  for( i=0;i<WIFILIST_FRIEND_MAX;i++ )
+  {
+    if( WifiList_IsFriendData( pWifiList , i ) == TRUE )
+    {
+      const u32 friendId = WifiList_GetFriendInfo( pWifiList , i , WIFILIST_FRIEND_ID );
+      if( friendId == trainerId )
+      {
+        const u32 friendSex = WifiList_GetFriendInfo( pWifiList , i , WIFILIST_FRIEND_SEX );
+        if( friendSex == sex )
+        {
+          STRCODE *friendName = WifiList_GetFriendNamePtr( pWifiList, i );
+          if( STRTOOL_Comp(name,friendName) == TRUE )
+          {
+            return TRUE;
+          }
+        }
+      }
+    }
+  }
+  return FALSE;
+}

@@ -14,6 +14,7 @@
 
 #include "net/ctvt_beacon.h"
 
+#include "print/str_tool.h"
 #include "ctvt_beacon_local.h"
 
 //======================================================================
@@ -37,9 +38,13 @@
 //======================================================================
 #pragma mark [> proto
 
-const BOOL CTVT_BCON_CheckCallSelf( CTVT_COMM_BEACON *beacon , u8* selfMacAdr )
+const BOOL CTVT_BCON_CheckCallSelf( CTVT_COMM_BEACON *beacon , WIFI_LIST *wifiList , u8* selfMacAdr )
 {
   u8 i,j;
+  if( wifiList == NULL )
+  {
+    return FALSE;
+  }
   for( i=0;i<3;i++ )
   {
     BOOL isSame = TRUE;
@@ -53,7 +58,8 @@ const BOOL CTVT_BCON_CheckCallSelf( CTVT_COMM_BEACON *beacon , u8* selfMacAdr )
     }
     if( isSame == TRUE )
     {
-      return TRUE;
+      //Wifiリストから名前・性別・IDのチェック
+      return  WifiList_CheckFriendMystatus( wifiList , &beacon->myStatus );
     }
   }
   return FALSE;

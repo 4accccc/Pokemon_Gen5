@@ -10,6 +10,7 @@
 
 #include <dwc.h>
 #include "savedata/save_control.h"	//SAVE_CONTROL_WORK参照のため
+#include "savedata/mystatus.h"	//MYSTATUS参照のため
 
 
 #define WIFILIST_FRIEND_MAX	( 32 )	// WIFIリストが持つフレンドの数
@@ -73,6 +74,8 @@ extern void WifiList_GetMyFriendData( WIFI_LIST* pWifiList, DWCFriendData *pFrie
 extern int  WifiList_GetMyGSID( WIFI_LIST* pWifiList );
 extern BOOL WifiList_CheckMyGSID( WIFI_LIST* pWifiList );
 
+extern BOOL WifiList_CheckFriendMystatus( WIFI_LIST* pWifiList , const MYSTATUS *myStatus );
+extern BOOL WifiList_CheckFriendData( WIFI_LIST* pWifiList , const STRCODE *name , const u32 trainerId , const u32 sex );
 
 #ifdef PM_DEBUG
 extern void WifiList_CopyData( WIFI_LIST *list, int no, int copyNo);
