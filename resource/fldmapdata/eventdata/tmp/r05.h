@@ -27,6 +27,7 @@
 #define R05_GIRL2_01                      13
 #define R05_LEADER4_01                    14
 #define R05_MAN2_01                       15
+#define R05_FLD_ITEM_04                   16
 
 #endif //ZONE_R05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

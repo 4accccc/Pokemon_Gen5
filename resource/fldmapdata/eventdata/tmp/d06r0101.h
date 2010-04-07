@@ -28,6 +28,8 @@
 #define TR_SCIENTISTW_03                  12
 #define TR_ELITEM_02                      13
 #define TR_MOUNT_02                       14
+#define D05R0101_FLD_ITEM_05              15
+#define D05R0101_FLD_ITEM_06              16
 
 #endif //ZONE_D06R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d06r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

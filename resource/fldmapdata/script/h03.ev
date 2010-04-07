@@ -24,6 +24,11 @@ _EVENT_DATA		ev_h03_middlewoman1_01
 _EVENT_DATA		ev_init_h03
 _EVENT_DATA		ev_recover_h03
 _EVENT_DATA		ev_zone_h03
+_EVENT_DATA		ev_h03_badrider1_01
+_EVENT_DATA		ev_h03_badrider1_02
+_EVENT_DATA		ev_h03_badrider1_03
+_EVENT_DATA		ev_h03_badrider1_04
+_EVENT_DATA		ev_h03_badrider1_05
 _EVENT_DATA_END
 
 /************************************************************/
@@ -40,12 +45,24 @@ INIT_EVENT_START	ev_zone_h03
 	//時間帯の取得
 	_GET_TIMEZONE( LOCALWORK1 )
 	
-	IF $LOCALWORK1 >= TIMEZONE_NIGHT && $LOCALWORK0 == RTC_WEEK_FRIDAY THEN
+	IF $LOCALWORK1 == TIMEZONE_NIGHT && $LOCALWORK0 == RTC_WEEK_FRIDAY THEN
 		_FLAG_RESET(FH_01)
 		_FLAG_SET(FH_02)
 	ELSE
 		_FLAG_RESET(FH_02)
 		_FLAG_SET(FH_01)
+	ENDIF
+	
+	//タイムフラグがOFFだったら（対戦してから一日経過していたら）
+	IF FLAG_OFF(FH_03) THEN
+	
+		//トレーナーフラグセット
+		_TRAINER_FLAG_RESET(TRID_BADRIDER_05)
+		_TRAINER_FLAG_RESET(TRID_BADRIDER_06)
+		
+		//タグにエンペルトを挿入
+		$LOCALWORK0 = MONSNO_395
+		
 	ENDIF
 	
 INIT_EVENT_END
@@ -64,11 +81,10 @@ INIT_EVENT_START	ev_init_h03
 	_GET_TIMEZONE( LOCALWORK1 )
 	
 	IF $LOCALWORK1 >= TIMEZONE_NIGHT 	THEN
-	_DEBUG_PRINT_WK( LOCALWORK0)
-	_DEBUG_PRINT_WK( RTC_WEEK_FRIDAY)
 		IF $LOCALWORK0 == RTC_WEEK_FRIDAY THEN
 			//群集の起動
 			_CROWD_PEOPLE_START()
+			
 		ENDIF
 	ENDIF
 
@@ -84,7 +100,7 @@ INIT_EVENT_START	ev_recover_h03
 	//時間帯の取得
 	_GET_TIMEZONE( LOCALWORK1 )
 	
-	IF $LOCALWORK1 >= TIMEZONE_NIGHT  THEN
+	IF $LOCALWORK1 == TIMEZONE_NIGHT  THEN
 		IF $LOCALWORK0 == RTC_WEEK_FRIDAY THEN
 			//群集の起動
 			_CROWD_PEOPLE_START()
@@ -121,9 +137,133 @@ EVENT_END
 
 /**************************************************************/
 /*    MIDDLEWOMAN1の話しかけイベント           */                                                           
-/**************************************************************/
+/**************************************************************/ 
 EVENT_START    ev_h03_middlewoman1_01
 	
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h03_middlewoman_01)
+	
+EVENT_END
+
+/**************************************************************/
+/*    BADRIDER_1（子分１）の話しかけイベント           */                                                           
+/**************************************************************/
+EVENT_START    ev_h03_badrider1_01
+	
+	//タグにリーダーに勝った際、使用していたポケモンか、エンペルトの種族名をセット
+	_MONS_NAME( 0, LOCALWORK0 )
+	
+	_TALK_OBJ_START()
+  	_TRAINER_FLAG_CHECK( TRID_BADRIDER_05, SCWK_ANSWER )
+  	
+  	IF$SCWK_ANSWER == TRUE THEN
+		//対戦後メッセージ
+		_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider1_04)
+	ELSE
+		_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider1_01)
+		_YES_NO_WIN(SCWK_ANSWER)
+		_MSGWIN_CLOSE()
+		
+		IF$SCWK_ANSWER == SCR_YES THEN
+			_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider1_03)
+			
+		ELSE
+			_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider1_02)
+			_MSGWIN_CLOSE()
+			
+			_TRAINER_BTL_SET( TRID_BADRIDER_05, 0 )
+			
+			//敗戦チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+				_TRAINER_FLAG_SET( TRID_BADRIDER_05 )
+				
+			ELSE
+				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			ENDIF
+					
+			//対戦後メッセージ
+			_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider1_04)		
+			    	
+		ENDIF
+	ENDIF
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+/**************************************************************/
+/*    BADRIDER_2（リーダー）の話しかけイベント           */                                                           
+/**************************************************************/ 
+EVENT_START    ev_h03_badrider1_02
+	
+	//タグにリーダーに勝った際、使用していたポケモンか、エンペルトの種族名をセット
+	_MONS_NAME( 0, LOCALWORK0 )
+	
+	_TALK_OBJ_START()
+  	_TRAINER_FLAG_CHECK( TRID_BADRIDER_06, SCWK_ANSWER )
+  	
+  	IF$SCWK_ANSWER == TRUE THEN
+		//対戦後メッセージ
+		_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider2_04)
+	ELSE
+		_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider2_01)
+		_YES_NO_WIN(SCWK_ANSWER)
+		_MSGWIN_CLOSE()
+		
+		IF$SCWK_ANSWER == SCR_YES THEN
+			_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider2_03)
+			
+		ELSE
+			_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider2_02)
+			_MSGWIN_CLOSE()
+			
+			_TRAINER_BTL_SET( TRID_BADRIDER_06, 0 )
+			
+			//敗戦チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+				_TRAINER_FLAG_SET( TRID_BADRIDER_06 )
+				
+				//タイムフラグを操作する
+				_FLAG_SET(FH_03)
+				
+				//【仮】手持ちポケモンの種族名を取得する処理
+				
+			ELSE
+				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			ENDIF
+					
+			//対戦後メッセージ
+			_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider2_04)		
+			    	
+		ENDIF
+	ENDIF
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+/**************************************************************/
+/*    BADRIDER_3(子分２）の話しかけイベント           */                                                           
+/**************************************************************/ 
+EVENT_START    ev_h03_badrider1_03
+	
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider3_01)
+	
+EVENT_END
+/**************************************************************/
+/*    BADRIDER_4(子分３）の話しかけイベント           */                                                           
+/**************************************************************/ 
+EVENT_START    ev_h03_badrider1_04
+	
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider4_01)
+	
+EVENT_END
+/**************************************************************/
+/*    BADRIDER_4(子分４）の話しかけイベント           */                                                           
+/**************************************************************/ 
+EVENT_START    ev_h03_badrider1_05
+	
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider5_01)
 	
 EVENT_END

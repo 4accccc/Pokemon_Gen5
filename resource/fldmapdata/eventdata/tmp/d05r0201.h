@@ -24,6 +24,7 @@
 #define D05R0201_WORKMAN_03               12
 #define D05R0201_WORKMAN_04               13
 #define D05R0201_LEADER5_01               14
+#define D05R0201_FLD_ITEM_01              15
 
 #endif //ZONE_D05R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d05r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

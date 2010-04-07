@@ -18,6 +18,7 @@
 #define C04P01_HAKAIM_01                   5
 #define C04P01_HAKAIM_02                   6
 #define C04P01_AMUSEMENT_TRAINER           7
+#define C04P01_FLD_ITEM_01                 8
 
 #endif //ZONE_C04P01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04p01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
