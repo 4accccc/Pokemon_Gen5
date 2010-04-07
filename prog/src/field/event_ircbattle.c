@@ -249,7 +249,8 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 //    _PartySet( dbw->bBattelBox, dbw );
 
     dbw->para =BATTLE_PARAM_Create(HEAPID_PROC);
-    
+
+    dbw->demo_prm.record = GAMEDATA_GetRecordPtr(dbw->gamedata);
     dbw->demo_prm.fight_count=0;
     switch(dbw->selectType){
     case EVENTIRCBTL_ENTRYMODE_SINGLE:
