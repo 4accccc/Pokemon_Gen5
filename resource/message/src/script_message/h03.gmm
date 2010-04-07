@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-06T19:19:14"/>
+	<create user="murakami_naoto" host="W00228" date="2010-04-07T21:04:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -265,7 +265,7 @@
 
 	<dialog left="131" top="27" right="985" bottom="893" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1127" top="558" right="1600" bottom="956" visible="yes"/>
+		<tag-palette left="807" top="558" right="1280" bottom="956" visible="yes"/>
 		<band id="0" index="1" style="0000" width="460"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="217"/>
@@ -358,7 +358,7 @@
 		<language name="JPN" width="256">アアン？　なんだあ？　テメーは！▼
 はなの　きんようびの　よるだけは
 ここは　オイラたら　ばくそうチーム▽
-ブラック[1:01:ポケモン種族名:0]の
+ブラック[1:01:ポケモン種族名:0]の▽
 シマ　なんだぜ！▼
 テメーみたいに そだちが　よさげで
 うらやましい　かんじの▽
@@ -367,7 +367,7 @@
 		<language name="JPN_KANJI" width="256">アアン？　なんだあ？　テメー！▼
 花の　金曜日の　夜だけは
 ここは　オイラたち　爆走チーム▽
-ブラック[1:01:ポケモン種族名:0]の
+ブラック[1:01:ポケモン種族名:0]の▽
 シマ　なんだよお！▼
 テメーみたいに　そだちが　よさげで
 うらやましい　かんじの▽
@@ -444,7 +444,7 @@
 
 ※再戦可能。次回登場は再戦できます。</comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
-		<language name="JPN" width="256">なんだ　オマエは……？
+		<language name="JPN" width="256">なんだ　オマエは……？▼
 ここは……
 ブラック[1:01:ポケモン種族名:0]の▽
 さいごの　らくえん……▼
@@ -454,7 +454,7 @@
 ブラック[1:01:ポケモン種族名:0]の▽
 ヘッドである　このオレと▽
 ケンカでもする　つもりか……？▼</language>
-		<language name="JPN_KANJI" width="256">なんだ　オマエは……？
+		<language name="JPN_KANJI" width="256">なんだ　オマエは……？▼
 ここは……
 ブラック[1:01:ポケモン種族名:0]の▽
 最期の　楽園……▼

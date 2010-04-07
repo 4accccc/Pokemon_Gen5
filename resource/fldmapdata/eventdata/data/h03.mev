@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/06 19:07:29
+#save date:2010/04/07 20:41:37
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h03.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h03.wms
 #hold event type:
 1
 #hold event number:
-2
+7
 #event number: 0
 #type
 1
@@ -22,7 +22,7 @@ MV_RTDL
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_H03_GENERALPERSON
 #Event Script Name
 SCRID_H03_FIGHTERW_01
 #Direction Type Number
@@ -53,7 +53,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_H03_GENERALPERSON
 #Event Script Name
 SCRID_H03_MIDDLEWOMAN1_01
 #Direction Type Number
@@ -72,6 +72,161 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 -120 0 -1928
+#event number: 2
+#type
+1
+#ID name
+H03_BADRIDER_04
+#OBJ CODE Number
+BADRIDER
+#MOVE CODE Number
+MV_RTRU         
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_H03_BADRIDER
+#Event Script Name
+SCRID_H03_BADRIDER1_04
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+4
+#Move Limit Z Number
+31
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 -1768
+#event number: 3
+#type
+1
+#ID name
+H03_BADRIDER1_05
+#OBJ CODE Number
+BADRIDER
+#MOVE CODE Number
+MV_RTLD         
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_H03_BADRIDER
+#Event Script Name
+SCRID_H03_BADRIDER1_05
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+4
+#Move Limit Z Number
+34
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 0 -1720
+#event number: 4
+#type
+1
+#ID name
+H03_BADRIDER1_03
+#OBJ CODE Number
+BADRIDER
+#MOVE CODE Number
+MV_RTRU         
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_H03_BADRIDER
+#Event Script Name
+SCRID_H03_BADRIDER1_03
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+4
+#Move Limit Z Number
+32
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 -872
+#event number: 5
+#type
+1
+#ID name
+H03_BADRIDER1_01
+#OBJ CODE Number
+BADRIDER
+#MOVE CODE Number
+MV_RTLD         
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_H03_BADRIDER
+#Event Script Name
+SCRID_H03_BADRIDER1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+4
+#Move Limit Z Number
+28
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+104 0 -728
+#event number: 6
+#type
+1
+#ID name
+H03_BADRIDER1_02
+#OBJ CODE Number
+BADRIDER
+#MOVE CODE Number
+MV_RTLD         
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_H03_BADRIDER
+#Event Script Name
+SCRID_H03_BADRIDER1_02
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+8
+#Move Limit Z Number
+33
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 0 -1080
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

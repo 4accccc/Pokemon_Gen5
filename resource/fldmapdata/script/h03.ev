@@ -45,23 +45,25 @@ INIT_EVENT_START	ev_zone_h03
 	//時間帯の取得
 	_GET_TIMEZONE( LOCALWORK1 )
 	
-	IF $LOCALWORK1 == TIMEZONE_NIGHT && $LOCALWORK0 == RTC_WEEK_FRIDAY THEN
-		_FLAG_RESET(FH_01)
-		_FLAG_SET(FH_02)
+	IF $LOCALWORK1 == TIMEZONE_NIGHT  || $LOCALWORK1 == TIMEZONE_EVENING THEN
+		IF $LOCALWORK0 == RTC_WEEK_FRIDAY THEN
+			_FLAG_RESET(FV_H03_BADRIDER)
+			_FLAG_SET(FV_H03_GENERALPERSON)
+		ENDIF
 	ELSE
-		_FLAG_RESET(FH_02)
-		_FLAG_SET(FH_01)
+		_FLAG_RESET(FV_H03_GENERALPERSON)
+		_FLAG_SET(FV_H03_BADRIDER)
 	ENDIF
 	
 	//タイムフラグがOFFだったら（対戦してから一日経過していたら）
-	IF FLAG_OFF(FH_03) THEN
+	IF FLAG_OFF(TMFLG_H03_EMPEROR_BTL) THEN
 	
 		//トレーナーフラグセット
 		_TRAINER_FLAG_RESET(TRID_BADRIDER_05)
 		_TRAINER_FLAG_RESET(TRID_BADRIDER_06)
 		
 		//タグにエンペルトを挿入
-		$LOCALWORK0 = MONSNO_395
+		$WK_OTHER_EMPEROR_MONSNUM = MONSNO_395
 		
 	ENDIF
 	
@@ -80,7 +82,7 @@ INIT_EVENT_START	ev_init_h03
 	//時間帯の取得
 	_GET_TIMEZONE( LOCALWORK1 )
 	
-	IF $LOCALWORK1 >= TIMEZONE_NIGHT 	THEN
+	IF $LOCALWORK1 == TIMEZONE_NIGHT  || $LOCALWORK1 == TIMEZONE_EVENING THEN
 		IF $LOCALWORK0 == RTC_WEEK_FRIDAY THEN
 			//群集の起動
 			_CROWD_PEOPLE_START()
@@ -100,7 +102,7 @@ INIT_EVENT_START	ev_recover_h03
 	//時間帯の取得
 	_GET_TIMEZONE( LOCALWORK1 )
 	
-	IF $LOCALWORK1 == TIMEZONE_NIGHT  THEN
+	IF $LOCALWORK1 == TIMEZONE_NIGHT  || $LOCALWORK1 == TIMEZONE_EVENING THEN
 		IF $LOCALWORK0 == RTC_WEEK_FRIDAY THEN
 			//群集の起動
 			_CROWD_PEOPLE_START()
@@ -150,7 +152,7 @@ EVENT_END
 EVENT_START    ev_h03_badrider1_01
 	
 	//タグにリーダーに勝った際、使用していたポケモンか、エンペルトの種族名をセット
-	_MONS_NAME( 0, LOCALWORK0 )
+	_MONS_NAME( 0, WK_OTHER_EMPEROR_MONSNUM )
 	
 	_TALK_OBJ_START()
   	_TRAINER_FLAG_CHECK( TRID_BADRIDER_05, SCWK_ANSWER )
@@ -195,9 +197,11 @@ EVENT_END
 /*    BADRIDER_2（リーダー）の話しかけイベント           */                                                           
 /**************************************************************/ 
 EVENT_START    ev_h03_badrider1_02
-	
+
+	DEFINE_LOCAL	LWK_POKE_POS
+				
 	//タグにリーダーに勝った際、使用していたポケモンか、エンペルトの種族名をセット
-	_MONS_NAME( 0, LOCALWORK0 )
+	_MONS_NAME( 0, WK_OTHER_EMPEROR_MONSNUM )
 	
 	_TALK_OBJ_START()
   	_TRAINER_FLAG_CHECK( TRID_BADRIDER_06, SCWK_ANSWER )
@@ -210,7 +214,7 @@ EVENT_START    ev_h03_badrider1_02
 		_YES_NO_WIN(SCWK_ANSWER)
 		_MSGWIN_CLOSE()
 		
-		IF$SCWK_ANSWER == SCR_YES THEN
+		IF$SCWK_ANSWER == SCR_NO THEN
 			_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider2_03)
 			
 		ELSE
@@ -226,14 +230,18 @@ EVENT_START    ev_h03_badrider1_02
 				_TRAINER_FLAG_SET( TRID_BADRIDER_06 )
 				
 				//タイムフラグを操作する
-				_FLAG_SET(FH_03)
+				_FLAG_SET(TMFLG_H03_EMPEROR_BTL)
 				
-				//【仮】手持ちポケモンの種族名を取得する処理
+				//【仮】手持ちポケモンの種族名を取得する処理				
+				_GET_PARTY_FRONT_POKEMON( LWK_POKE_POS, POKECOUNT_MODE_BATTLE_ENABLE )
+				_GET_PARTY_POKE_MONSNO( WK_OTHER_EMPEROR_MONSNUM, LWK_POKE_POS )
 				
 			ELSE
 				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 			ENDIF
-					
+
+			//タグにリーダーに勝った際、使用していたポケモンか、エンペルトの種族名をセット
+			_MONS_NAME( 0, WK_OTHER_EMPEROR_MONSNUM )
 			//対戦後メッセージ
 			_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider2_04)		
 			    	
@@ -247,6 +255,9 @@ EVENT_END
 /*    BADRIDER_3(子分２）の話しかけイベント           */                                                           
 /**************************************************************/ 
 EVENT_START    ev_h03_badrider1_03
+
+	//タグにリーダーに勝った際、使用していたポケモンか、エンペルトの種族名をセット
+	_MONS_NAME( 0, WK_OTHER_EMPEROR_MONSNUM )
 	
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider3_01)
 	
@@ -255,6 +266,9 @@ EVENT_END
 /*    BADRIDER_4(子分３）の話しかけイベント           */                                                           
 /**************************************************************/ 
 EVENT_START    ev_h03_badrider1_04
+
+	//タグにリーダーに勝った際、使用していたポケモンか、エンペルトの種族名をセット
+	_MONS_NAME( 0, WK_OTHER_EMPEROR_MONSNUM )
 	
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider4_01)
 	
@@ -263,6 +277,9 @@ EVENT_END
 /*    BADRIDER_4(子分４）の話しかけイベント           */                                                           
 /**************************************************************/ 
 EVENT_START    ev_h03_badrider1_05
+
+	//タグにリーダーに勝った際、使用していたポケモンか、エンペルトの種族名をセット
+	_MONS_NAME( 0, WK_OTHER_EMPEROR_MONSNUM )
 	
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider5_01)
 	

@@ -35,12 +35,12 @@ _EVENT_DATA_END
 /************************************************************/
 INIT_EVENT_START	ev_init_c03p07
 	//群集の起動
-	_CROWD_PEOPLE_START()
+//	_CROWD_PEOPLE_START()
 	
 INIT_EVENT_END
 INIT_EVENT_START	ev_recover_c03p07
 	//群集の起動
-  _CROWD_PEOPLE_START()
+//  _CROWD_PEOPLE_START()
 
 INIT_EVENT_END
 
