@@ -267,7 +267,7 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 		FIELD_SUBSCREEN_SetReportStart( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
 		SetReportBgAnime( wk );
 		GAMEDATA_SaveAsyncStart( GAMESYSTEM_GetGameData(wk->gsys) );
-		PMSND_PlaySE( SEQ_SE_SYS_78 );
+//		PMSND_PlaySE( SEQ_SE_SYS_78 );
 		*seq = REPORT_SEQ_SAVE_MAIN;
 		break;
 
