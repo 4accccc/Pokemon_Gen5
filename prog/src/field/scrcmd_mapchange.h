@@ -17,5 +17,6 @@ extern VMCMD_RESULT EvCmdMapChangeBySandStream(VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdMapChangeByWarp( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdMapChangeToUnion( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdMapChangeNoFade( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdRailMapChange( VMHANDLE *core, void *wk );
 
 
