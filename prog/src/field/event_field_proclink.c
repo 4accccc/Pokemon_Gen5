@@ -744,6 +744,7 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
   plistData->waza = 0;
   plistData->wazaLearnBit = 0xFF;
   plistData->zone_id    = GAMEDATA_GetMyPlayerWork(gmData)->zoneID; 
+  plistData->season     = GAMEDATA_GetSeasonID(gmData); 
 
   if( param == PL_MODE_ITEMUSE )
   { 

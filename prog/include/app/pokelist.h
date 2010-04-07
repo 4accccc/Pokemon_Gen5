@@ -204,6 +204,7 @@ typedef struct
   //WBより追加
   u8  wazaLearnBit; //イベントなど特殊な技覚えで外から覚えられるやつのbitをもらう
                     // PL_MODE_SELECT_WAZAの時のみ有効
+  u8  season;       //シェイミ時間変化対応
   //通信処理用
   u16 time_limit;   //制限時間(秒)
   u8  comm_state;   //通信状態
