@@ -699,14 +699,8 @@ void  BTLV_EFFECT_DelTrainer( int position )
 //============================================================================================
 void  BTLV_EFFECT_SetGauge( const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp, int position )
 {
-  if( bew->besp.rule == BTL_RULE_TRIPLE )
-  {
-    BTLV_GAUGE_Add( bew->bgw, wk, bpp, BTLV_GAUGE_TYPE_3vs3, position );
-  }
-  else
-  {
-    BTLV_GAUGE_Add( bew->bgw, wk, bpp, BTLV_GAUGE_TYPE_1vs1, position );
-  }
+  BTLV_GAUGE_TYPE  gaugeType = (bew->besp.rule == BTL_RULE_TRIPLE)? BTLV_GAUGE_TYPE_3vs3 : BTLV_GAUGE_TYPE_1vs1;
+  BTLV_GAUGE_AddPP( bew->bgw, BTL_MAIN_GetZukanSaveData(wk), BPP_GetViewSrcData(bpp), gaugeType, position );
 }
 
 //============================================================================================

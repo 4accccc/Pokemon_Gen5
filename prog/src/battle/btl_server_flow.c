@@ -12512,9 +12512,8 @@ BOOL BTL_SVFTOOL_GetDebugFlag( BTL_SVFLOW_WORK* wk, BtlDebugFlag flag )
  * @retval  BOOL
  */
 //--------------------------------------------------------------------------------------
-BOOL BTL_SVFTOOL_IsExistSideEffect( BTL_SVFLOW_WORK* wk, BtlPokePos pos, BtlSideEffect sideEffect )
+BOOL BTL_SVFTOOL_IsExistSideEffect( BTL_SVFLOW_WORK* wk, BtlSide side, BtlSideEffect sideEffect )
 {
-  BtlSide side = BTL_MAINUTIL_PosToSide( pos );
   return BTL_HANDER_SIDE_IsExist( side, sideEffect );
 }
 //--------------------------------------------------------------------------------------

@@ -2112,6 +2112,19 @@ u32 BTL_MAIN_GetZukanCapturedCount( const BTL_MAIN_MODULE* wk )
 }
 //=============================================================================================
 /**
+ * 図鑑セーブデータを返す
+ *
+ * @param   wk
+ *
+ * @retval  ZUKAN_SAVEDATA*
+ */
+//=============================================================================================
+ZUKAN_SAVEDATA* BTL_MAIN_GetZukanSaveData( const BTL_MAIN_MODULE* wk )
+{
+  return wk->setupParam->zukanData;
+}
+//=============================================================================================
+/**
  * GameData取得
  *
  * @param   wk

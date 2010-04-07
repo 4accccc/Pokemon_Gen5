@@ -424,6 +424,7 @@ static void handler_Haradaiko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Feint( u32* numElems );
 static void handler_Feint_MamoruBreak( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Feint_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Feint_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Feint_Start( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Feint_End( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BOOL handler_Feint_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
@@ -1499,7 +1500,7 @@ static void handler_Tobigeri_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static void  common_TobigeriReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-  u32 damage = BTL_CALC_QuotMaxHP( bpp, 3 );
+  u32 damage = BTL_CALC_QuotMaxHP( bpp, 2 );
 
   BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
   param->pokeID = pokeID;
@@ -5577,8 +5578,9 @@ static const BtlEventHandlerTable*  ADD_Feint( u32* numElems )
     { BTL_EVENT_CHECK_MAMORU_BREAK,  handler_Feint_MamoruBreak },  // まもる無効化チェック
     { BTL_EVENT_DAMAGEPROC_END_INFO, handler_Feint_AfterDamage },  // ダメージ処理後
 
-    { BTL_EVENT_WAZASEQ_START,       handler_Feint_Start },  // ワザ処理開始
-    { BTL_EVENT_WAZASEQ_END,         handler_Feint_End   },  // ワザ処理終了
+    { BTL_EVENT_WAZA_EXE_DECIDE,     handler_Feint_Decide },  // ワザ出し確定
+//    { BTL_EVENT_WAZASEQ_START,       handler_Feint_Start },  // ワザ処理開始
+//    { BTL_EVENT_WAZASEQ_END,         handler_Feint_End   },  // ワザ処理終了
 
   };
   *numElems = NELEMS( HandlerTable );
@@ -5601,8 +5603,9 @@ static void handler_Feint_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
       u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
 
-      if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_MAMORU) )
-      {
+      if( (BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_MAMORU))
+      ||  (work[0])
+      ) {
         BTL_HANDEX_PARAM_TURNFLAG* flg_param;
         BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
@@ -5614,6 +5617,28 @@ static void handler_Feint_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
         HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Feint );
         HANDEX_STR_AddArg( &msg_param->str, target_pokeID );
       }
+    }
+  }
+}
+// ワザ出し確定
+static void handler_Feint_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // 自分が攻撃側なら相手のワイドガード・ファストガードを破壊
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
+    side = BTL_MAINUTIL_GetOpponentSide( side );
+
+    if( BTL_SVFTOOL_IsExistSideEffect(flowWk, side, BTL_SIDEEFF_WIDEGUARD)
+    ||  BTL_SVFTOOL_IsExistSideEffect(flowWk, side, BTL_SIDEEFF_FASTGUARD)
+    ){
+      BTL_HANDEX_PARAM_SIDEEFF_REMOVE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
+
+      param->side = side;
+      BTL_CALC_BITFLG_Construction( param->flags, sizeof(param->flags) );
+      BTL_CALC_BITFLG_Set( param->flags, BTL_SIDEEFF_WIDEGUARD );
+      BTL_CALC_BITFLG_Set( param->flags, BTL_SIDEEFF_FASTGUARD );
+      work[0] = 1;  // work[0] = ガード破壊フラグとして
     }
   }
 }
