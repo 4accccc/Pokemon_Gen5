@@ -306,10 +306,15 @@
 #define DRAW_STA_DIR4_MAX (DRAW_STA_MAX*DIR_MAX4)
 
 //--------------------------------------------------------------
-//  基本+演技専用ステータス　その0
+//  基本+演技専用ステータス
 //--------------------------------------------------------------
+//１種類
 #define DRAW_STA_ACT0 (DRAW_STA_MAX)
-#define DRAW_STA_ACT0_DIR4_MAX (DRAW_STA_DIR4_MAX+1)
+#define DRAW_STA_ACT0_ANMNO_MAX ((DRAW_STA_MAX*DIR_MAX4)+1)
+
+//２種類
+#define DRAW_STA_ACT1 (DRAW_STA_ACT0+1)
+#define DRAW_STA_ACT1_ANMNO_MAX (DRAW_STA_ACT0_ANMNO_MAX+1)
 
 //--------------------------------------------------------------
 ///  PC受付専用ステータス
@@ -541,7 +546,7 @@
 #define AC_WALK_D_7F 0x61 ///<下方向に移動 7フレーム
 #define AC_WALK_L_7F 0x62 ///<左方向に移動 7フレーム
 #define AC_WALK_R_7F 0x63 ///<右方向に移動 7フレーム
-#define AC_ACT0 0x64 ///<演技(特定OBJ専用
+#define AC_ACT0_STOP 0x64 ///<演技(特定OBJ専用
 #define AC_HIDE_PULLOFF 0x65 ///<隠れ蓑脱ぐ(MV_HIDE専用
 #define AC_HERO_BANZAI 0x66 ///<PC両手差出(自機専用
 #define AC_MARK_SAISEN 0x67 ///<再戦マーク表示
@@ -622,14 +627,23 @@
 #define AC_MELODYER_SPIN_POSE 0xb2 ///<メロディア 回転+ポーズ
 #define AC_MELODYER_SHAKE 0xb3 ///<メロディア 上下揺れ
 #define AC_SHIN_MU_OFFS_CLEAR 0xb4 ///<シンム 描画オフセットをクリア
-#define ACMD_MAX 0xb5 ///<アニメーションコマンド最大数
+#define AC_ACT0_LOOP 0xb5 ///<演技(特定OBJ専用
+#define AC_ACT1_STOP 0xb6 ///<演技(特定OBJ専用
+#define AC_ACT1_LOOP 0xb7 ///<演技(特定OBJ専用
+#define ACMD_MAX 0xb8 ///<アニメーションコマンド最大数
 
 #define ACMD_END 0xfe ///<アニメーションコマンド終了
 #define ACMD_NOT 0xff ///<非アニメーションコマンド
 
-///PCお辞儀　以前は専用だったが、似たようなアニメを行うOBJが増えたので
-///AC_ACT0と名前を変えて置き換える。が、AC_PC_BOWを使用している箇所を考慮し
-///定義だけは残す。
-#define AC_PC_BOW (AC_ACT0)
+//芝居系　判り易い名前で置き換え
+#define AC_PC_BOW (AC_ACT0_STOP) ///<PCお辞儀
+#define AC_RIVEL_ACT0 (AC_ACT0_STOP) ///<ライバル専用 つま先アニメ
+#define AC_SUPPORT_ACT0 (AC_ACT0_STOP) ///<サポート専用 帽子アニメ
+#define AC_N_ACT0 (AC_ACT0_STOP) ///<N専用 両手アニメ
+#define AC_N_ACT1 (AC_ACT0_STOP) ///<N専用 首アニメ
+#define AC_SAGE1_ACT0 (AC_ACT0_STOP) ///<SAGE1専用 両手アニメ
+#define AC_NINJA_ACT0 (AC_ACT0_STOP) ///<NINJA専用 出現アニメ
+#define AC_NINJA_ACT1 (AC_ACT0_STOP) ///<NINJA専用 消去アニメ
+#define AC_CHAMPION_ACT0 (AC_ACT0_STOP) ///<CHAMPION専用 加味揺れアニメ
 
 #endif //MMDL_CODE_H_FILE

@@ -41,6 +41,7 @@ const MMDL_DRAW_PROC_LIST * const
   &DATA_MMDL_DRAWPROCLIST_BlActShinMu, //ポケモン シン・ム
   &DATA_MMDL_DRAWPROCLIST_BlActSpider, //くもの巣
   &DATA_MMDL_DRAWPROCLIST_BlActMelodyer, //<ポケモン メロディア
+  &DATA_MMDL_DRAWPROCLIST_BlActAct, //ライバル
 };
 
 //======================================================================
@@ -916,9 +917,15 @@ enum
   TEXIDX_NFLIP_R_WALK1,
   
   TEXIDX_NFLIP_MAX,
+  
   TEXIDX_NFLIP_ACT0 = TEXIDX_NFLIP_MAX, //演技用
   TEXIDX_NFLIP_ACT1,
   TEXIDX_NFLIP_ACT2,
+  TEXIDX_NFLIP_ACT3,
+  TEXIDX_NFLIP_ACT4,
+  TEXIDX_NFLIP_ACT5,
+  TEXIDX_NFLIP_ACT6,
+  TEXIDX_NFLIP_ACT7,
 };
 static const GFL_BBDACT_ANM DATA_BlActAnmNonFlip_StopU[] =
 {
@@ -1239,7 +1246,7 @@ static const GFL_BBDACT_ANM DATA_BlActAnmNonFlip_Act0[] = {
   {GFL_BBDACT_ANMCOM_END,0,0,0},
 };
 
-static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipAct0Tbl[DRAW_STA_ACT0_DIR4_MAX] =
+static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipAct0Tbl[DRAW_STA_ACT0_ANMNO_MAX] =
 {
   DATA_BlActAnmNonFlip_StopU,//DRWA_STA_STOP
   DATA_BlActAnmNonFlip_StopD,
@@ -1280,6 +1287,314 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipAct0Tbl[DRAW_STA_ACT0_DI
   
   DATA_BlActAnmNonFlip_Act0, //DRAW_STA_ACT0
 };
+
+//--------------------------------------------------------------
+/// MMDL_BLACT_ANMTBLNO_RIVEL用　フリップなし+演技
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM DATA_BlActAnmNonFlip_Rivel0[] = {
+  {TEXIDX_NFLIP_ACT0,ANMFLIP_OFF,ANMFLIP_OFF,16},
+  {TEXIDX_NFLIP_ACT1,ANMFLIP_OFF,ANMFLIP_OFF,8},
+  {GFL_BBDACT_ANMCOM_JMP,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipRivelTbl[DRAW_STA_ACT0_ANMNO_MAX] =
+{
+  DATA_BlActAnmNonFlip_StopU,//DRWA_STA_STOP
+  DATA_BlActAnmNonFlip_StopD,
+  DATA_BlActAnmNonFlip_StopL,
+  DATA_BlActAnmNonFlip_StopR,
+  DATA_BlActAnmNonFlip_WalkU32F,//DRWA_STA_WALK_32F
+  DATA_BlActAnmNonFlip_WalkD32F,
+  DATA_BlActAnmNonFlip_WalkL32F,
+  DATA_BlActAnmNonFlip_WalkR32F,
+  DATA_BlActAnmNonFlip_WalkU16F,//DRWA_STA_WALK_16F
+  DATA_BlActAnmNonFlip_WalkD16F,
+  DATA_BlActAnmNonFlip_WalkL16F,
+  DATA_BlActAnmNonFlip_WalkR16F,
+  DATA_BlActAnmNonFlip_WalkU8F,//DRWA_STA_WALK_8F
+  DATA_BlActAnmNonFlip_WalkD8F,
+  DATA_BlActAnmNonFlip_WalkL8F,
+  DATA_BlActAnmNonFlip_WalkR8F,
+  DATA_BlActAnmNonFlip_WalkU4F,//DRWA_STA_WALK_4F
+  DATA_BlActAnmNonFlip_WalkD4F,
+  DATA_BlActAnmNonFlip_WalkL4F,
+  DATA_BlActAnmNonFlip_WalkR4F,
+  DATA_BlActAnmNonFlip_WalkU2F,//DRWA_STA_WALK_2F
+  DATA_BlActAnmNonFlip_WalkD2F,
+  DATA_BlActAnmNonFlip_WalkL2F,
+  DATA_BlActAnmNonFlip_WalkR2F,
+  DATA_BlActAnmNonFlip_WalkU6F,//DRWA_STA_WALK_6F
+  DATA_BlActAnmNonFlip_WalkD6F,
+  DATA_BlActAnmNonFlip_WalkL6F,
+  DATA_BlActAnmNonFlip_WalkR6F,
+  DATA_BlActAnmNonFlip_WalkU3F,//DRWA_STA_WALK_3F
+  DATA_BlActAnmNonFlip_WalkD3F,
+  DATA_BlActAnmNonFlip_WalkL3F,
+  DATA_BlActAnmNonFlip_WalkR3F,
+  DATA_BlActAnmNonFlip_WalkU12F,//DRWA_STA_WALK_12F
+  DATA_BlActAnmNonFlip_WalkD12F,
+  DATA_BlActAnmNonFlip_WalkL12F,
+  DATA_BlActAnmNonFlip_WalkR12F,
+  
+  DATA_BlActAnmNonFlip_Rivel0, //DRAW_STA_ACT0
+};
+
+//--------------------------------------------------------------
+/// MMDL_BLACT_ANMTBLNO_SUPPORT用　フリップなし+演技
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM DATA_BlActAnmNonFlip_Support0[] = {
+  {TEXIDX_NFLIP_D_STOP,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {TEXIDX_NFLIP_ACT0,ANMFLIP_OFF,ANMFLIP_OFF,8},
+  {TEXIDX_NFLIP_ACT1,ANMFLIP_OFF,ANMFLIP_OFF,25},
+  {TEXIDX_NFLIP_ACT2,ANMFLIP_OFF,ANMFLIP_OFF,3},
+  {TEXIDX_NFLIP_D_STOP,ANMFLIP_OFF,ANMFLIP_OFF,10},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipSupportTbl[DRAW_STA_ACT0_ANMNO_MAX] =
+{
+  DATA_BlActAnmNonFlip_StopU,//DRWA_STA_STOP
+  DATA_BlActAnmNonFlip_StopD,
+  DATA_BlActAnmNonFlip_StopL,
+  DATA_BlActAnmNonFlip_StopR,
+  DATA_BlActAnmNonFlip_WalkU32F,//DRWA_STA_WALK_32F
+  DATA_BlActAnmNonFlip_WalkD32F,
+  DATA_BlActAnmNonFlip_WalkL32F,
+  DATA_BlActAnmNonFlip_WalkR32F,
+  DATA_BlActAnmNonFlip_WalkU16F,//DRWA_STA_WALK_16F
+  DATA_BlActAnmNonFlip_WalkD16F,
+  DATA_BlActAnmNonFlip_WalkL16F,
+  DATA_BlActAnmNonFlip_WalkR16F,
+  DATA_BlActAnmNonFlip_WalkU8F,//DRWA_STA_WALK_8F
+  DATA_BlActAnmNonFlip_WalkD8F,
+  DATA_BlActAnmNonFlip_WalkL8F,
+  DATA_BlActAnmNonFlip_WalkR8F,
+  DATA_BlActAnmNonFlip_WalkU4F,//DRWA_STA_WALK_4F
+  DATA_BlActAnmNonFlip_WalkD4F,
+  DATA_BlActAnmNonFlip_WalkL4F,
+  DATA_BlActAnmNonFlip_WalkR4F,
+  DATA_BlActAnmNonFlip_WalkU2F,//DRWA_STA_WALK_2F
+  DATA_BlActAnmNonFlip_WalkD2F,
+  DATA_BlActAnmNonFlip_WalkL2F,
+  DATA_BlActAnmNonFlip_WalkR2F,
+  DATA_BlActAnmNonFlip_WalkU6F,//DRWA_STA_WALK_6F
+  DATA_BlActAnmNonFlip_WalkD6F,
+  DATA_BlActAnmNonFlip_WalkL6F,
+  DATA_BlActAnmNonFlip_WalkR6F,
+  DATA_BlActAnmNonFlip_WalkU3F,//DRWA_STA_WALK_3F
+  DATA_BlActAnmNonFlip_WalkD3F,
+  DATA_BlActAnmNonFlip_WalkL3F,
+  DATA_BlActAnmNonFlip_WalkR3F,
+  DATA_BlActAnmNonFlip_WalkU12F,//DRWA_STA_WALK_12F
+  DATA_BlActAnmNonFlip_WalkD12F,
+  DATA_BlActAnmNonFlip_WalkL12F,
+  DATA_BlActAnmNonFlip_WalkR12F,
+  
+  DATA_BlActAnmNonFlip_Support0, //DRAW_STA_ACT0
+};
+
+//--------------------------------------------------------------
+/// MMDL_BLACT_ANMTBLNO_BOSS_N用　フリップなし+演技
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM DATA_BlActAnmNonFlip_BossN0[] = {
+  {TEXIDX_NFLIP_ACT0,ANMFLIP_OFF,ANMFLIP_OFF,25},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipBossN[DRAW_STA_ACT1_ANMNO_MAX] =
+{
+  DATA_BlActAnmNonFlip_StopU,//DRWA_STA_STOP
+  DATA_BlActAnmNonFlip_StopD,
+  DATA_BlActAnmNonFlip_StopL,
+  DATA_BlActAnmNonFlip_StopR,
+  DATA_BlActAnmNonFlip_WalkU32F,//DRWA_STA_WALK_32F
+  DATA_BlActAnmNonFlip_WalkD32F,
+  DATA_BlActAnmNonFlip_WalkL32F,
+  DATA_BlActAnmNonFlip_WalkR32F,
+  DATA_BlActAnmNonFlip_WalkU16F,//DRWA_STA_WALK_16F
+  DATA_BlActAnmNonFlip_WalkD16F,
+  DATA_BlActAnmNonFlip_WalkL16F,
+  DATA_BlActAnmNonFlip_WalkR16F,
+  DATA_BlActAnmNonFlip_WalkU8F,//DRWA_STA_WALK_8F
+  DATA_BlActAnmNonFlip_WalkD8F,
+  DATA_BlActAnmNonFlip_WalkL8F,
+  DATA_BlActAnmNonFlip_WalkR8F,
+  DATA_BlActAnmNonFlip_WalkU4F,//DRWA_STA_WALK_4F
+  DATA_BlActAnmNonFlip_WalkD4F,
+  DATA_BlActAnmNonFlip_WalkL4F,
+  DATA_BlActAnmNonFlip_WalkR4F,
+  DATA_BlActAnmNonFlip_WalkU2F,//DRWA_STA_WALK_2F
+  DATA_BlActAnmNonFlip_WalkD2F,
+  DATA_BlActAnmNonFlip_WalkL2F,
+  DATA_BlActAnmNonFlip_WalkR2F,
+  DATA_BlActAnmNonFlip_WalkU6F,//DRWA_STA_WALK_6F
+  DATA_BlActAnmNonFlip_WalkD6F,
+  DATA_BlActAnmNonFlip_WalkL6F,
+  DATA_BlActAnmNonFlip_WalkR6F,
+  DATA_BlActAnmNonFlip_WalkU3F,//DRWA_STA_WALK_3F
+  DATA_BlActAnmNonFlip_WalkD3F,
+  DATA_BlActAnmNonFlip_WalkL3F,
+  DATA_BlActAnmNonFlip_WalkR3F,
+  DATA_BlActAnmNonFlip_WalkU12F,//DRWA_STA_WALK_12F
+  DATA_BlActAnmNonFlip_WalkD12F,
+  DATA_BlActAnmNonFlip_WalkL12F,
+  DATA_BlActAnmNonFlip_WalkR12F,
+  
+  DATA_BlActAnmNonFlip_BossN0, //DRAW_STA_ACT0
+  DATA_BlActAnmNonFlip_BossN0, //DRAW_STA_ACT1
+};
+
+//--------------------------------------------------------------
+/// MMDL_BLACT_ANMTBLNO_SAGE1用　フリップなし+演技
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM DATA_BlActAnmNonFlip_Sage1_0[] = {
+  {TEXIDX_NFLIP_ACT0,ANMFLIP_OFF,ANMFLIP_OFF,25},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipSage1[DRAW_STA_ACT0_ANMNO_MAX] =
+{
+  DATA_BlActAnmNonFlip_StopU,//DRWA_STA_STOP
+  DATA_BlActAnmNonFlip_StopD,
+  DATA_BlActAnmNonFlip_StopL,
+  DATA_BlActAnmNonFlip_StopR,
+  DATA_BlActAnmNonFlip_WalkU32F,//DRWA_STA_WALK_32F
+  DATA_BlActAnmNonFlip_WalkD32F,
+  DATA_BlActAnmNonFlip_WalkL32F,
+  DATA_BlActAnmNonFlip_WalkR32F,
+  DATA_BlActAnmNonFlip_WalkU16F,//DRWA_STA_WALK_16F
+  DATA_BlActAnmNonFlip_WalkD16F,
+  DATA_BlActAnmNonFlip_WalkL16F,
+  DATA_BlActAnmNonFlip_WalkR16F,
+  DATA_BlActAnmNonFlip_WalkU8F,//DRWA_STA_WALK_8F
+  DATA_BlActAnmNonFlip_WalkD8F,
+  DATA_BlActAnmNonFlip_WalkL8F,
+  DATA_BlActAnmNonFlip_WalkR8F,
+  DATA_BlActAnmNonFlip_WalkU4F,//DRWA_STA_WALK_4F
+  DATA_BlActAnmNonFlip_WalkD4F,
+  DATA_BlActAnmNonFlip_WalkL4F,
+  DATA_BlActAnmNonFlip_WalkR4F,
+  DATA_BlActAnmNonFlip_WalkU2F,//DRWA_STA_WALK_2F
+  DATA_BlActAnmNonFlip_WalkD2F,
+  DATA_BlActAnmNonFlip_WalkL2F,
+  DATA_BlActAnmNonFlip_WalkR2F,
+  DATA_BlActAnmNonFlip_WalkU6F,//DRWA_STA_WALK_6F
+  DATA_BlActAnmNonFlip_WalkD6F,
+  DATA_BlActAnmNonFlip_WalkL6F,
+  DATA_BlActAnmNonFlip_WalkR6F,
+  DATA_BlActAnmNonFlip_WalkU3F,//DRWA_STA_WALK_3F
+  DATA_BlActAnmNonFlip_WalkD3F,
+  DATA_BlActAnmNonFlip_WalkL3F,
+  DATA_BlActAnmNonFlip_WalkR3F,
+  DATA_BlActAnmNonFlip_WalkU12F,//DRWA_STA_WALK_12F
+  DATA_BlActAnmNonFlip_WalkD12F,
+  DATA_BlActAnmNonFlip_WalkL12F,
+  DATA_BlActAnmNonFlip_WalkR12F,
+  
+  DATA_BlActAnmNonFlip_Sage1_0, //DRAW_STA_ACT0
+};
+
+//--------------------------------------------------------------
+/// MMDL_BLACT_ANMTBLNO_NINJA用　フリップなし+演技
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM DATA_BlActAnmNonFlip_Ninja0[] = {
+  {TEXIDX_NFLIP_ACT0,ANMFLIP_OFF,ANMFLIP_OFF,25},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipNinja[DRAW_STA_ACT1_ANMNO_MAX] =
+{
+  DATA_BlActAnmNonFlip_StopU,//DRWA_STA_STOP
+  DATA_BlActAnmNonFlip_StopD,
+  DATA_BlActAnmNonFlip_StopL,
+  DATA_BlActAnmNonFlip_StopR,
+  DATA_BlActAnmNonFlip_WalkU32F,//DRWA_STA_WALK_32F
+  DATA_BlActAnmNonFlip_WalkD32F,
+  DATA_BlActAnmNonFlip_WalkL32F,
+  DATA_BlActAnmNonFlip_WalkR32F,
+  DATA_BlActAnmNonFlip_WalkU16F,//DRWA_STA_WALK_16F
+  DATA_BlActAnmNonFlip_WalkD16F,
+  DATA_BlActAnmNonFlip_WalkL16F,
+  DATA_BlActAnmNonFlip_WalkR16F,
+  DATA_BlActAnmNonFlip_WalkU8F,//DRWA_STA_WALK_8F
+  DATA_BlActAnmNonFlip_WalkD8F,
+  DATA_BlActAnmNonFlip_WalkL8F,
+  DATA_BlActAnmNonFlip_WalkR8F,
+  DATA_BlActAnmNonFlip_WalkU4F,//DRWA_STA_WALK_4F
+  DATA_BlActAnmNonFlip_WalkD4F,
+  DATA_BlActAnmNonFlip_WalkL4F,
+  DATA_BlActAnmNonFlip_WalkR4F,
+  DATA_BlActAnmNonFlip_WalkU2F,//DRWA_STA_WALK_2F
+  DATA_BlActAnmNonFlip_WalkD2F,
+  DATA_BlActAnmNonFlip_WalkL2F,
+  DATA_BlActAnmNonFlip_WalkR2F,
+  DATA_BlActAnmNonFlip_WalkU6F,//DRWA_STA_WALK_6F
+  DATA_BlActAnmNonFlip_WalkD6F,
+  DATA_BlActAnmNonFlip_WalkL6F,
+  DATA_BlActAnmNonFlip_WalkR6F,
+  DATA_BlActAnmNonFlip_WalkU3F,//DRWA_STA_WALK_3F
+  DATA_BlActAnmNonFlip_WalkD3F,
+  DATA_BlActAnmNonFlip_WalkL3F,
+  DATA_BlActAnmNonFlip_WalkR3F,
+  DATA_BlActAnmNonFlip_WalkU12F,//DRWA_STA_WALK_12F
+  DATA_BlActAnmNonFlip_WalkD12F,
+  DATA_BlActAnmNonFlip_WalkL12F,
+  DATA_BlActAnmNonFlip_WalkR12F,
+  
+  DATA_BlActAnmNonFlip_Ninja0, //DRAW_STA_ACT0
+  DATA_BlActAnmNonFlip_Ninja0, //DRAW_STA_ACT1
+};
+
+//--------------------------------------------------------------
+/// MMDL_BLACT_ANMTBLNO_CHAMPION用　フリップなし+演技
+//--------------------------------------------------------------
+static const GFL_BBDACT_ANM DATA_BlActAnmNonFlip_Champion0[] = {
+  {TEXIDX_NFLIP_ACT0,ANMFLIP_OFF,ANMFLIP_OFF,25},
+  {GFL_BBDACT_ANMCOM_END,0,0,0},
+};
+
+static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipChampion[DRAW_STA_ACT0_ANMNO_MAX] =
+{
+  DATA_BlActAnmNonFlip_StopU,//DRWA_STA_STOP
+  DATA_BlActAnmNonFlip_StopD,
+  DATA_BlActAnmNonFlip_StopL,
+  DATA_BlActAnmNonFlip_StopR,
+  DATA_BlActAnmNonFlip_WalkU32F,//DRWA_STA_WALK_32F
+  DATA_BlActAnmNonFlip_WalkD32F,
+  DATA_BlActAnmNonFlip_WalkL32F,
+  DATA_BlActAnmNonFlip_WalkR32F,
+  DATA_BlActAnmNonFlip_WalkU16F,//DRWA_STA_WALK_16F
+  DATA_BlActAnmNonFlip_WalkD16F,
+  DATA_BlActAnmNonFlip_WalkL16F,
+  DATA_BlActAnmNonFlip_WalkR16F,
+  DATA_BlActAnmNonFlip_WalkU8F,//DRWA_STA_WALK_8F
+  DATA_BlActAnmNonFlip_WalkD8F,
+  DATA_BlActAnmNonFlip_WalkL8F,
+  DATA_BlActAnmNonFlip_WalkR8F,
+  DATA_BlActAnmNonFlip_WalkU4F,//DRWA_STA_WALK_4F
+  DATA_BlActAnmNonFlip_WalkD4F,
+  DATA_BlActAnmNonFlip_WalkL4F,
+  DATA_BlActAnmNonFlip_WalkR4F,
+  DATA_BlActAnmNonFlip_WalkU2F,//DRWA_STA_WALK_2F
+  DATA_BlActAnmNonFlip_WalkD2F,
+  DATA_BlActAnmNonFlip_WalkL2F,
+  DATA_BlActAnmNonFlip_WalkR2F,
+  DATA_BlActAnmNonFlip_WalkU6F,//DRWA_STA_WALK_6F
+  DATA_BlActAnmNonFlip_WalkD6F,
+  DATA_BlActAnmNonFlip_WalkL6F,
+  DATA_BlActAnmNonFlip_WalkR6F,
+  DATA_BlActAnmNonFlip_WalkU3F,//DRWA_STA_WALK_3F
+  DATA_BlActAnmNonFlip_WalkD3F,
+  DATA_BlActAnmNonFlip_WalkL3F,
+  DATA_BlActAnmNonFlip_WalkR3F,
+  DATA_BlActAnmNonFlip_WalkU12F,//DRWA_STA_WALK_12F
+  DATA_BlActAnmNonFlip_WalkD12F,
+  DATA_BlActAnmNonFlip_WalkL12F,
+  DATA_BlActAnmNonFlip_WalkR12F,
+  
+  DATA_BlActAnmNonFlip_Champion0, //DRAW_STA_ACT0
+};
+
 
 //======================================================================
 //  自機自転車 フリップ無し＆特殊停止パターン
@@ -2432,11 +2747,23 @@ const MMDL_BBDACT_ANMTBL
   //MMDL_BLACT_ANMTBLNO_SPIDER
   {DATA_BlActSpiderTbl,DRAW_STA_SPIDER_MAX},
   //MMDL_BLACT_ANMTBLNO_NFLIP_ACT0
-  {DATA_BlActAnmNonFlipAct0Tbl,DRAW_STA_ACT0_DIR4_MAX},
+  {DATA_BlActAnmNonFlipAct0Tbl,DRAW_STA_ACT0_ANMNO_MAX},
   //MMDL_BLACT_ANMTBLNO_MELODYER
   {DATA_BlActMerodyerTbl,DRAW_STA_MELODYER_ANMNO_MAX},
   //MMDL_BLACT_ANMTBLNO_SHIN_MU_B
   {DATA_BlActShinMuBTbl,DRAW_STA_SHINMU_B_ANMNO_MAX},
+  //MMDL_BLACT_ANMTBLNO_RIVEL
+  {DATA_BlActAnmNonFlipRivelTbl,DRAW_STA_ACT0_ANMNO_MAX},
+  //MMDL_BLACT_ANMTBLNO_SUPPORT
+  {DATA_BlActAnmNonFlipSupportTbl,DRAW_STA_ACT0_ANMNO_MAX},
+  //MMDL_BLACT_ANMTBLNO_BOSS_N
+  {DATA_BlActAnmNonFlipBossN,DRAW_STA_ACT1_ANMNO_MAX},
+  //MMDL_BLACT_ANMTBLNO_SAGE1
+  {DATA_BlActAnmNonFlipSage1,DRAW_STA_ACT0_ANMNO_MAX},
+  //MMDL_BLACT_ANMTBLNO_NINJA
+  {DATA_BlActAnmNonFlipNinja,DRAW_STA_ACT1_ANMNO_MAX},
+  //MMDL_BLACT_ANMTBLNO_CHAMPION
+  {DATA_BlActAnmNonFlipChampion,DRAW_STA_ACT0_ANMNO_MAX},
 };
 
 //======================================================================

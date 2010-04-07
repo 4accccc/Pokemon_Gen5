@@ -4708,7 +4708,7 @@ static void setBGResource( FLDMSGBG *fmb, const BOOL trans )
     int plane1 = GX_BLEND_PLANEMASK_BG2; 
     int plane2 = GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 |
       GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ;
-    G2_SetBlendAlpha( plane1, plane2, 31, 8 );
+    G2_SetBlendAlpha( plane1, plane2, 16, 4 );
   }
   
 #if 0
@@ -4818,7 +4818,7 @@ static void resetBG2Control( BOOL cont_set )
     int plane1 = GX_BLEND_PLANEMASK_BG2; 
     int plane2 = GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 |
       GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ;
-    G2_SetBlendAlpha( plane1, plane2, 31, 8 );
+    G2_SetBlendAlpha( plane1, plane2, 16, 4 );
   }
   
   GFL_BG_SetPriority( frame, FLDBG_MFRM_EFF1_PRI );
@@ -4920,7 +4920,7 @@ static void setBlendAlpha( BOOL on )
     int plane1 = GX_BLEND_PLANEMASK_BG2; 
     int plane2 = GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
       GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ;
-    G2_SetBlendAlpha( plane1, plane2, 31, 8 );
+    G2_SetBlendAlpha( plane1, plane2, 16, 4 );
   }
 }
 
