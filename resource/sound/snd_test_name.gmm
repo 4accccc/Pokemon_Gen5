@@ -8253,9 +8253,9 @@
 		<language name="JPN" width="256">W411-HAAA</language>
 		<language name="JPN_KANJI" width="256">W411-HAAA</language>
 	</row>
-	<row id="msg_seq_se_dmy_298">
-		<language name="JPN" width="256">DMY-298</language>
-		<language name="JPN_KANJI" width="256">DMY-298</language>
+	<row id="msg_seq_se_edemo_04">
+		<language name="JPN" width="256">EDEMO-04</language>
+		<language name="JPN_KANJI" width="256">EDEMO-04</language>
 	</row>
 	<row id="msg_seq_se_dmy_299">
 		<language name="JPN" width="256">DMY-299</language>
