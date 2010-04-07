@@ -1783,6 +1783,7 @@ DEP_TEXSET_IMD_INDOOR038 = \
 	$(SRCDIR)/box02.imd \
 	$(SRCDIR)/chushion01.imd \
 	$(SRCDIR)/chushion02.imd \
+	$(SRCDIR)/mball01.imd \
 	$(SRCDIR)/warp01.imd \
 	$(SRCDIR)/warp02.imd \
 	$(SRCDIR)/warp03.imd \
