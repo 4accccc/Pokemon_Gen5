@@ -394,7 +394,7 @@ void Colosseum_Clear_ReceivePokeParty(COLOSSEUM_SYSTEM_PTR clsys, BOOL except_fo
  * @param   heap_id		
  */
 //==================================================================
-void Colosseum_SetupBattleDemoParent(COLOSSEUM_SYSTEM_PTR clsys, COMM_BTL_DEMO_PARAM *cbdp, HEAPID heap_id)
+void Colosseum_SetupBattleDemoParent(COLOSSEUM_SYSTEM_PTR clsys, GAMESYS_WORK *gsys, COMM_BTL_DEMO_PARAM *cbdp, HEAPID heap_id)
 {
   int net_id, member_max, set_id, stand_pos;
   
@@ -426,6 +426,8 @@ void Colosseum_SetupBattleDemoParent(COLOSSEUM_SYSTEM_PTR clsys, COMM_BTL_DEMO_P
     _BattleDemoParent_SetTrainerData(
       clsys, &cbdp->trainer_data[set_id + (stand_pos >> 1)], net_id, heap_id);
   }
+  
+  cbdp->record = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData(gsys) );
 }
 
 //==================================================================
