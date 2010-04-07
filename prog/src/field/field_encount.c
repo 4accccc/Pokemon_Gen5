@@ -19,6 +19,7 @@
 #include "battle/battle.h"
 #include "gamesystem/btl_setup.h"
 #include "gamesystem/g_power.h"
+#include "savedata/record.h"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/tokusyu_def.h"
 #include "poke_tool/poketype.h"
@@ -183,7 +184,11 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
     }
   }
 
-  if( enc_type != ENC_TYPE_EFFECT ){ //移動ポケモンチェック
+  if( enc_type == ENC_TYPE_EFFECT ){
+    //エフェクトエンカウントレコードインクリメント
+    RECORD_Inc(GAMEDATA_GetRecordPtr( enc->gdata), RECID_EFFECT_ENCOUNT_NUM );
+  }else{
+    //移動ポケモンチェック
     mpd = ENCPOKE_GetMovePokeEncountData( enc->encdata,
               &fld_spa, FIELDMAP_GetZoneID( enc->fwork ) );
   }
