@@ -322,6 +322,7 @@ GMEVENT * EVENT_TrainerBattle(
   bew->is_sub_event = TRUE;   //スクリプトから呼ばれる＝トップレベルのイベントでない
   if ( (flags & SCR_BATTLE_MODE_NOLOSE) != 0 )
   {
+    BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_NO_LOSE );
     bew->is_no_lose = TRUE;
   }
   //エンカウントエフェクトとＢＧＭをセット
