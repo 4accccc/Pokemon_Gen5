@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/30 17:08:58
+#save date:2010/04/07 22:51:06
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c09p01.wms
 #SECTION START:OBJ_EVENT
@@ -90,38 +90,42 @@ EVENTDATA_POSTYPE_GRID
 3 1
 #event number: 1
 #Door Event Label
-DOOR_ID_C09P01_C09R0201_EXIT01
-#Next Zone ID Name
-ZONE_ID_C09R0201
-#Next Door ID Name
-DOOR_ID_C09R0201_C09P01_EXIT01
-#Door Direction
-EXIT_DIR_RIGHT
-#Door Type
-EXIT_TYPE_SP33
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-56 0 -296
-#size
-1 3
-#event number: 2
-#Door Event Label
 DOOR_ID_C09P01_C09R0101_EXIT01
 #Next Zone ID Name
 ZONE_ID_C09R0101
 #Next Door ID Name
 DOOR_ID_C09R0101_C09P01_EXIT01
 #Door Direction
-EXIT_DIR_RIGHT
+EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_SP32
 #Pos Type
-EVENTDATA_POSTYPE_GRID
+EVENTDATA_POSTYPE_RAIL
 #position
-88 0 -504
+1 4 0
 #size
-1 3
+1 1
+#rail way
+DIR_UP
+#event number: 2
+#Door Event Label
+DOOR_ID_C09P01_C09R0301_EXIT01
+#Next Zone ID Name
+ZONE_ID_C09R0301
+#Next Door ID Name
+DOOR_ID_C09R0301_C09P01_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_SP32
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+8 4 0
+#size
+1 1
+#rail way
+DIR_UP
 #event number: 3
 #Door Event Label
 DOOR_ID_C09P01_C09R0401_EXIT01
@@ -130,31 +134,35 @@ ZONE_ID_C09R0401
 #Next Door ID Name
 DOOR_ID_C09R0401_C09P01_EXIT01
 #Door Direction
-EXIT_DIR_LEFT
+EXIT_DIR_DOWN
 #Door Type
 EXIT_TYPE_SP33
 #Pos Type
-EVENTDATA_POSTYPE_GRID
+EVENTDATA_POSTYPE_RAIL
 #position
-440 0 -296
+6 4 0
 #size
-1 3
+1 1
+#rail way
+DIR_UP
 #event number: 4
 #Door Event Label
-DOOR_ID_C09P01_C09R0301_EXIT01
+DOOR_ID_C09P01_C09R0201_EXIT01
 #Next Zone ID Name
-ZONE_ID_C09R0301
+ZONE_ID_C09R0201
 #Next Door ID Name
-DOOR_ID_C09R0301_C09P01_EXIT01
+DOOR_ID_C09R0201_C09P01_EXIT01
 #Door Direction
-EXIT_DIR_LEFT
+EXIT_DIR_DOWN
 #Door Type
-EXIT_TYPE_SP32
+EXIT_TYPE_SP33
 #Pos Type
-EVENTDATA_POSTYPE_GRID
+EVENTDATA_POSTYPE_RAIL
 #position
-408 0 -504
+3 3 0
 #size
-1 3
+1 1
+#rail way
+DIR_UP
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
