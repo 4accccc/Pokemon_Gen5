@@ -35,6 +35,7 @@
 #include "savedata/my_pms_data.h"
 #include "savedata/battlematch_savedata.h"
 #include "savedata/livematch_savedata.h"
+#include "savedata/etc_save.h"
 
 //ƒlƒbƒg
 #include "net/network_define.h"
@@ -1541,6 +1542,7 @@ static void SEQFUNC_BtlAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 { 
   enum
   { 
+    SEQ_INIT,
     SEQ_START_DISCONNECT,
     SEQ_WAIT_DISCONNECT,
     SEQ_START_MSG_SAVE,
@@ -1562,6 +1564,16 @@ static void SEQFUNC_BtlAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   switch( *p_seq )
   {
+  case SEQ_INIT:
+    {           
+      SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
+      ETC_SAVE_WORK *p_etc  = SaveData_GetEtc( p_sv_ctrl );
+      WIFIBATTLEMATCH_ENEMYDATA *p_enemy_data = p_wk->param.p_enemy_data;
+      EtcSave_SetAcquaintance( p_etc, MyStatus_GetID( (MYSTATUS*)p_enemy_data->mystatus ) );
+    }
+    *p_seq  = SEQ_START_DISCONNECT;
+    break;
+
   case SEQ_START_DISCONNECT:
     if( LIVEBATTLEMATCH_IRC_StartDisConnect(p_wk->p_irc))
     { 

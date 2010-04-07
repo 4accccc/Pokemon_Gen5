@@ -36,6 +36,7 @@
 //  セーブデータ
 #include "savedata/dreamworld_data.h"
 #include "savedata/my_pms_data.h"
+#include "savedata/etc_save.h"
 
 //WIFIバトルマッチのモジュール
 #include "wifibattlematch_graphic.h"
@@ -1488,6 +1489,14 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     /// 切断処理
     //=====================================
   case SEQ_START_DISCONNECT:
+    
+    //ここまで切断等がない場合は相手を知り合いに登録
+    {           
+      SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
+      ETC_SAVE_WORK *p_etc  = SaveData_GetEtc( p_sv_ctrl );
+      WIFIBATTLEMATCH_ENEMYDATA *p_enemy_data = p_param->p_enemy_data;
+      EtcSave_SetAcquaintance( p_etc, MyStatus_GetID( (MYSTATUS*)p_enemy_data->mystatus ) );
+    }
     *p_seq = SEQ_WAIT_DISCONNECT;
     break;
 
@@ -2279,6 +2288,12 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     /// 切断処理
     //=====================================
   case SEQ_START_DISCONNECT:
+    {           
+      SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
+      ETC_SAVE_WORK *p_etc  = SaveData_GetEtc( p_sv_ctrl );
+      WIFIBATTLEMATCH_ENEMYDATA *p_enemy_data = p_param->p_enemy_data;
+      EtcSave_SetAcquaintance( p_etc, MyStatus_GetID( (MYSTATUS*)p_enemy_data->mystatus ) );
+    }
     *p_seq = SEQ_WAIT_DISCONNECT;
     break;
 

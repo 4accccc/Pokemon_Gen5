@@ -1125,6 +1125,26 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
     GF_ASSERT(0);
   }
 
+  //バトルタイプ設定
+  if( p_wk->type == WIFIBATTLEMATCH_TYPE_RNDFREE )
+  { 
+    //ランダムマッチ：フリー
+    p_param->p_demo_param->battle_mode = 
+      BATTLE_MODE_RANDOM_FREE_SINGLE + p_wk->param.btl_rule;
+  }
+  else if( p_wk->type == WIFIBATTLEMATCH_TYPE_RNDRATE )
+  { 
+    //ランダムマッチ：レーティング
+    p_param->p_demo_param->battle_mode = 
+      BATTLE_MODE_RANDOM_RATING_SINGLE + p_wk->param.btl_rule;
+  }
+  else
+  { 
+    BOOL  is_shooter  = Regulation_GetParam( p_reg, REGULATION_SHOOTER );
+    REGULATION_BATTLE_TYPE  battle_type = Regulation_GetParam( p_reg, REGULATION_BATTLETYPE );
+
+    p_param->p_demo_param->battle_mode = battle_type * 2 + is_shooter;
+  }
 
   p_param->p_btl_setup_param->musicDefault  = WBM_SND_SEQ_BATTLE;
   p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
@@ -1454,53 +1474,9 @@ static void *WBM_BTLREC_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapI
       REGULATION_CARDDATA *p_reg_card = RegulationSaveData_GetRegulationCard( p_reg_sv, type );
       REGULATION          *p_reg      = RegulationData_GetRegulation( p_reg_card );
       BOOL                is_shooter  = Regulation_GetParam( p_reg, REGULATION_SHOOTER );
+      REGULATION_BATTLE_TYPE  battle_type  = Regulation_GetParam( p_reg, REGULATION_BATTLETYPE );
 
-      switch( Regulation_GetParam( p_reg, REGULATION_BATTLETYPE ) )
-      {
-      case REGULATION_BATTLE_SINGLE:    ///< シングル
-        if( is_shooter )
-        { 
-          battle_mode = BATTLE_MODE_COMPETITION_SINGLE_SHOOTER;     //大会バトル　シングル　シューターあり
-        }
-        else
-        { 
-          battle_mode = BATTLE_MODE_COMPETITION_SINGLE;             //大会バトル　シングル　シューター無し
-        }
-        break;
-
-      case REGULATION_BATTLE_DOUBLE:    ///< ダブル
-        if( is_shooter )
-        { 
-          battle_mode = BATTLE_MODE_COMPETITION_DOUBLE_SHOOTER;     //大会バトル　ダブル　シューターあり
-        }
-        else
-        { 
-          battle_mode = BATTLE_MODE_COMPETITION_DOUBLE;             //大会バトル　ダブル　シューター無し
-        }
-        break;
-
-      case REGULATION_BATTLE_TRIPLE:    ///< トリプル
-        if( is_shooter )
-        { 
-          battle_mode = BATTLE_MODE_COMPETITION_TRIPLE_SHOOTER;     //大会バトル　トリプル　シューターあり
-        }
-        else
-        { 
-          battle_mode = BATTLE_MODE_COMPETITION_TRIPLE;             //大会バトル　トリプル　シューター無し
-        }
-        break;
-
-      case REGULATION_BATTLE_ROTATION:  ///< ローテーション
-        if( is_shooter )
-        { 
-          battle_mode = BATTLE_MODE_COMPETITION_ROTATION_SHOOTER;   //大会バトル　ローテーション　シューターあり
-        }
-        else
-        { 
-          battle_mode = BATTLE_MODE_COMPETITION_ROTATION;           //大会バトル　ローテーション　シューター無し
-        }
-        break;
-      }
+      battle_mode = battle_type * 2 + is_shooter;
     }
   }
 

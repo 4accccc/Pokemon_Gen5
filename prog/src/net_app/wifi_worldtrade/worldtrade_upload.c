@@ -44,6 +44,7 @@
 #include "msg/msg_wifi_system.h"
 
 #include "savedata/undata_update.h"
+#include "savedata/etc_save.h"
 
 #include "worldtrade.naix"			// グラフィックアーカイブ定義
 
@@ -118,7 +119,7 @@ static int Subseq_ServerTradeCheckEnd( WORLDTRADE_WORK *wk );
 static int SubSeq_TimeoutSave( WORLDTRADE_WORK *wk );
 static int SubSeq_TimeoutSaveWait( WORLDTRADE_WORK *wk );
 static int Subseq_DownloadExFinish( WORLDTRADE_WORK *wk );
-static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp );
+static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, Dpw_Tr_Data *tr );
 
 
 #if GTS_DUPLICATE_BUG_FIX
@@ -1210,7 +1211,7 @@ static int Subseq_ExchangeResult( WORLDTRADE_WORK *wk )
 			// 地球儀情報登録
 			WifiHistoryDataSet( wk->param->wifihistory, &wk->ExchangePokemonData );
 
-			MakeTradeExchangeInfomation( wk, (POKEMON_PARAM*)wk->ExchangePokemonData.postData.data );
+			MakeTradeExchangeInfomation( wk, (POKEMON_PARAM*)wk->ExchangePokemonData.postData.data, &wk->ExchangePokemonData );
 
 			break;
 
@@ -1700,7 +1701,7 @@ static void AfterTradeCheck_ProcessControl( WORLDTRADE_WORK *wk )
  * @retval  none		
  */
 //------------------------------------------------------------------
-static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp )
+static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, Dpw_Tr_Data *tr )
 {
 	// スコア加算->なくなりました
 	//RECORD_Score_Add( wk->param->record, SCORE_ID_WORLD_TRADE );
@@ -1709,6 +1710,12 @@ static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp 
 
 	// レコード用処理
 	RECORD_Inc( wk->param->record, RECID_WIFI_TRADE );
+
+  //  知り合いに登録
+  { 
+    ETC_SAVE_WORK *p_etc  = SaveData_GetEtc( wk->param->savedata );
+    EtcSave_SetAcquaintance( p_etc, tr->trainerID );
+  }
 
 #if 0	//TV_OFF
 	// TVデータ
@@ -1752,7 +1759,7 @@ static int Subseq_DownloadExStart( WORLDTRADE_WORK *wk)
 	WifiHistoryDataSet( wk->param->wifihistory, &wk->UploadPokemonData );
 
 	// 交換成立時の追加情報作成処理
-	MakeTradeExchangeInfomation( wk, (POKEMON_PARAM*)wk->UploadPokemonData.postData.data );
+	MakeTradeExchangeInfomation( wk, (POKEMON_PARAM*)wk->UploadPokemonData.postData.data, &wk->UploadPokemonData );
 
 	// 引き取った事にする
 	WorldTradeData_SetFlag( wk->param->worldtrade_data, 0 );
@@ -2712,6 +2719,10 @@ static void ExchangePokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, POKE
     un_data.countryCount= tr->countryCount;
     UNDATAUP_Update( wk->param->wifihistory, &un_data );
 
+    {
+      WIFI_NEGOTIATION_SAVEDATA *p_nego   = WIFI_NEGOTIATION_SV_GetSaveData(wk->param->savedata);;
+      WIFI_NEGOTIATION_SV_SetFriend( p_nego, p_status );
+    }
     GFL_HEAP_FreeMemory( p_status );
   }
   

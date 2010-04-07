@@ -2116,7 +2116,7 @@ void WorldTrade_PostPokemonBaseDataMake( Dpw_Tr_Data *dtd, WORLDTRADE_WORK *wk )
 	STRTOOL_Copy( MyStatus_GetMyName(wk->param->mystatus), dtd->name, DPW_TR_NAME_SIZE );
 
 	// ID
-	dtd->trainerID   = MyStatus_GetID_Low( wk->param->mystatus );
+	dtd->trainerID   = MyStatus_GetID( wk->param->mystatus );
 
 	// ‘E’nˆæ
 	dtd->countryCode = MyStatus_GetMyNation( wk->param->mystatus );

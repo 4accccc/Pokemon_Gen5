@@ -38,6 +38,7 @@
 #include "savedata/regulation.h"
 #include "savedata/battle_box_save.h"
 #include "savedata/my_pms_data.h"
+#include "savedata/etc_save.h"
 
 //WIFIバトルマッチのモジュール
 #include "wifibattlematch_graphic.h"
@@ -71,7 +72,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 #define SAKE_REPORT_NONE          //レポートをしない
 #endif //PM_DEBUG
 
-#define DISCONNECT_REC_AFTER      //相手との切断を録画後にする
+//#define DISCONNECT_REC_AFTER      //相手との切断を録画後にする
 
 
 //=============================================================================
@@ -2610,6 +2611,7 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     SEQ_START_NET_MSG,
     SEQ_START_REPORT_ATLAS,
     SEQ_WAIT_REPORT_ATLAS,
+    SEQ_INIT_DISCONNECT,
     SEQ_WAIT_DISCONNECT,
 
     SEQ_END,
@@ -2644,7 +2646,7 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       if( WIFIBATTLEMATCH_SC_Process( p_wk->p_net ) )
 #endif
       { 
-        *p_seq = SEQ_WAIT_DISCONNECT;
+        *p_seq = SEQ_INIT_DISCONNECT;
       }
 
       //エラー
@@ -2659,6 +2661,16 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         break;
       }
     }
+    break;
+
+  case SEQ_INIT_DISCONNECT:
+    {           
+      SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
+      ETC_SAVE_WORK *p_etc  = SaveData_GetEtc( p_sv_ctrl );
+      WIFIBATTLEMATCH_ENEMYDATA *p_enemy_data = p_param->p_enemy_data;
+      EtcSave_SetAcquaintance( p_etc, MyStatus_GetID( (MYSTATUS*)p_enemy_data->mystatus ) );
+    }
+    *p_seq = SEQ_WAIT_DISCONNECT;
     break;
 
   case SEQ_WAIT_DISCONNECT:

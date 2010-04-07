@@ -30,6 +30,7 @@
 
 // save
 #include "savedata/wifi_negotiation.h"
+#include "savedata/etc_save.h"
 
 //sound
 #include "../irc_compatible/irc_compatible_snd.h"
@@ -1841,6 +1842,13 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 //          SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_data );
 //          WIFI_NEGOTIATION_SAVEDATA* pSV  = WIFI_NEGOTIATION_SV_GetSaveData(p_sv_ctrl);;
 //          WIFI_NEGOTIATION_SV_SetFriend(pSV, (MYSTATUS*)p_wk->p_param->p_you_status->my_status );
+            
+          //’m‚è‡‚¢‚É“o˜^
+          GAMEDATA  *p_data  = GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
+          SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_data );
+          ETC_SAVE_WORK *p_etc  = SaveData_GetEtc( p_sv_ctrl );
+          EtcSave_SetAcquaintance( p_etc, MyStatus_GetID( (MYSTATUS*)p_wk->p_param->p_you_status->my_status ) );
+
         }
       }
       *p_seq	= SEQ_TIMING_START;
