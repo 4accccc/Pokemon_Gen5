@@ -39,6 +39,7 @@ FS_EXTERN_OVERLAY(battle_b_app);
 FS_EXTERN_OVERLAY(battle_bag);
 FS_EXTERN_OVERLAY(battle_plist);
 FS_EXTERN_OVERLAY(vram_h);
+FS_EXTERN_OVERLAY(tr_ai);
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -140,6 +141,7 @@ void BTLV_InitSystem( HEAPID heapID )
 
   GX_SetBankForLCDC( GX_VRAM_LCDC_H );
   GFL_OVERLAY_Load( FS_OVERLAY_ID( vram_h ) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( tr_ai ) );
 }
 //=============================================================================================
 /**
@@ -153,6 +155,7 @@ void BTLV_QuitSystem( void )
   //描画系オーバーレイアンロード
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle_view ) );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( vram_h ) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( tr_ai ) );
 }
 //=============================================================================================
 /**
