@@ -762,9 +762,6 @@ static void FIELD_CROWD_PEOPLE_WK_ClearMove( FIELD_CROWD_PEOPLE_WK* p_wk )
 
   // •\Ž¦OFF
   MMDL_SetStatusBitVanish( p_wk->p_mmdl, TRUE );
-
-  // Not Save
-  MMDL_SetMoveBitNotSave( p_wk->p_mmdl, TRUE );
 }
 
 

@@ -23,7 +23,10 @@ typedef struct _CGEAR_SAVEDATA CGEAR_SAVEDATA;
 #define C_GEAR_PANEL_HEIGHT  (4)
 
 /// ぱねるタイプ
-//上位1ビットがTRUEなら文字の出るところ。
+//0x80 ビットがTRUEなら文字の出るところ。
+//0x40ビットがTRUEならIRの１つまえ
+//0x20ビットがTRUEならWIFIの１つまえ
+//0x10ビットがTRUEならWIRELESSの１つまえ
 typedef enum {
   CGEAR_PANELTYPE_NONE,
   CGEAR_PANELTYPE_IR,
@@ -38,7 +41,6 @@ typedef enum {
   CGEAR_PANELTYPE_WIFI_ICON = CGEAR_PANELTYPE_WIFI | 0x80,
 } CGEAR_PANELTYPE_ENUM;
 
-#define CGEAR_PANELTYPE_GET_ICON_TYPE(type) ((type) | 0x80)
 
 
 //----------------------------------------------------------
@@ -62,7 +64,8 @@ extern u16 CGEAR_SV_GetCGearPictureCRC(CGEAR_SAVEDATA* pSV);
 
 extern CGEAR_PANELTYPE_ENUM CGEAR_SV_GetPanelType(const CGEAR_SAVEDATA* pSV,int x, int y);
 extern BOOL CGEAR_SV_IsPanelTypeIcon(const CGEAR_SAVEDATA* pSV,int x, int y);
-extern void CGEAR_SV_SetPanelType(CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENUM type);
+extern BOOL CGEAR_SV_IsPanelTypeLast(const CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENUM type );
+extern void CGEAR_SV_SetPanelType(CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENUM type, BOOL icon, BOOL last);
 extern u8* CGEAR_SV_GetPanelTypeBuff( CGEAR_SAVEDATA* pSV );
 
 //----------------------------------------------------------
