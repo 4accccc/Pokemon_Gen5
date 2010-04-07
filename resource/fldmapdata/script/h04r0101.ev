@@ -19,9 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_h04r0101
 _EVENT_DATA    ev_h04r0101_oldman1_01
 _EVENT_DATA    ev_h04r0101_babygirl1_01
+_EVENT_DATA    ev_h04r0101_woman3_01
 _EVENT_DATA_END
 
 
@@ -29,7 +29,7 @@ _EVENT_DATA_END
 /*							おじいさん						*/
 /************************************************************/
 EVENT_START	ev_h04r0101_oldman1_01
-//	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0101_oldman1_01 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0101_oldman1_01 )
 EVENT_END
 
 
@@ -37,7 +37,15 @@ EVENT_END
 /*							幼児							*/
 /************************************************************/
 EVENT_START	ev_h04r0101_babygirl1_01
-//	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0101_babygirl1_01 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0101_babygirl1_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							女性							*/
+/************************************************************/
+EVENT_START	ev_h04r0101_woman3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0101_woman3_01 )
 EVENT_END
 
 

@@ -11,6 +11,7 @@
 
 #define H04R0101_OLDMAN1_01                0
 #define H04R0101_BABYGIRL1_01              1
+#define H04R0101_WOMAN3_01                 2
 
 #endif //ZONE_H04R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h04r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
