@@ -9,6 +9,7 @@
 #ifndef ZONE_T03R0301_EVC_H
 #define ZONE_T03R0301_EVC_H
 
+#define T03R0301_FISHING_01                0
 
 #endif //ZONE_T03R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t03r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

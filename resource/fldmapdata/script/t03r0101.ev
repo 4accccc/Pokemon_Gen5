@@ -20,8 +20,63 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_bg_t03r0101_board_01
+_EVENT_DATA    ev_zone_t03r0101
+_EVENT_DATA    ev_t03r0101_middleman2_01
+_EVENT_DATA    ev_t03r0101_poke_01
+_EVENT_DATA    ev_t03r0101_middlewoman1_01
+_EVENT_DATA    ev_t03r0101_babyboy2_01
 _EVENT_DATA_END
 
+/************************************************************/
+/*					ZONE_CHANGE_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_t03r0101
+
+{
+	//初期状態：全てのOBJを非表示に
+	_FLAG_SET( FV_T03_NIGHT )
+	_FLAG_SET( FV_T03_MON )
+	_FLAG_SET( FV_T03_FRI )
+	_FLAG_SET( FV_T03_SAT )
+
+	//現在の時間帯を取得して夜なら室内のOBJを表示する
+	DEFINE_LOCAL LWK_NOWTIME
+	_GET_TIMEZONE( LWK_NOWTIME )
+	//現在の曜日を取得して条件によってOBJを非表示にする
+	DEFINE_LOCAL LWK_NOWWEEK
+	_GET_WEEK( LWK_NOWWEEK )
+	
+	IF $LWK_NOWTIME == TIMEZONE_NIGHT  || $LWK_NOWTIME == TIMEZONE_MIDNIGHT THEN
+	
+		//夜のOBJを表示
+		_FLAG_RESET( FV_T03_NIGHT )
+		
+		IF $LWK_NOWWEEK != RTC_WEEK_MONDAY THEN
+			
+			//月曜のOBJを表示
+			_FLAG_RESET( FV_T03_MON )
+		
+		ENDIF
+			
+		IF $LWK_NOWWEEK != RTC_WEEK_FRIDAY THEN
+			
+			//金曜のOBJを表示
+			_FLAG_RESET( FV_T03_FRI )
+			
+		ENDIF
+			
+		IF $LWK_NOWWEEK != RTC_WEEK_SATURDAY THEN
+			
+			//土曜のOBJを表示
+			_FLAG_RESET( FV_T03_SAT )
+		
+		ENDIF
+			
+	ENDIF
+
+}
+	
+INIT_EVENT_END
 
 /************************************************************/
 /*							張り紙							*/
@@ -36,3 +91,30 @@ EVENT_START	ev_bg_t03r0101_board_01
 
 EVENT_END
 
+/**************************************************************/
+/* middleman2_01                                               */
+/**************************************************************/
+EVENT_START  ev_t03r0101_middleman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03r0101_middleman2_01)
+EVENT_END
+
+/**************************************************************/
+/* 	poke19							  */
+/**************************************************************/
+EVENT_START		ev_t03r0101_poke_01
+	_EASY_TALK_POKEVOICE( MONSNO_533, msg_t03r0101_poke_01 )
+EVENT_END
+
+/**************************************************************/
+/* middlewoman2_01                                               */
+/**************************************************************/
+EVENT_START  ev_t03r0101_middlewoman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03r0101_middlewoman1_01)
+EVENT_END
+
+/**************************************************************/
+/* babyboy2_01                                               */
+/**************************************************************/
+EVENT_START  ev_t03r0101_babyboy2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03r0101_babyboy2_01)
+EVENT_END

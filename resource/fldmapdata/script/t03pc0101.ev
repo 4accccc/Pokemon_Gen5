@@ -22,8 +22,40 @@
 _EVENT_DATA    ev_t03pc0101_shop
 _EVENT_DATA    ev_t03pc0101_fix_shop
 _EVENT_DATA    ev_t03pc0101_girl2_01
+_EVENT_DATA    ev_zone_t03pc0101
+_EVENT_DATA    ev_t03pc0101_policeman_01
 _EVENT_DATA_END
 
+/************************************************************/
+/*					ZONE_CHANGE_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_t03pc0101
+
+{
+	//初期状態：全てのOBJを非表示に
+	_FLAG_SET( FV_T03_THU )
+
+	//現在の時間帯を取得して夜なら室内のOBJを表示する
+	DEFINE_LOCAL LWK_NOWTIME
+	_GET_TIMEZONE( LWK_NOWTIME )
+	//現在の曜日を取得して条件によってOBJを非表示にする
+	DEFINE_LOCAL LWK_NOWWEEK
+	_GET_WEEK( LWK_NOWWEEK )
+	
+	IF $LWK_NOWTIME == TIMEZONE_EVENING THEN
+		
+		IF $LWK_NOWWEEK != RTC_WEEK_THURSDAY THEN
+			
+			//木曜のOBJを表示
+			_FLAG_RESET( FV_T03_THU )
+			
+		ENDIF
+			
+	ENDIF
+
+}
+	
+INIT_EVENT_END
 
 //=============================================================
 //ショップカウンター 変動ショップ
@@ -86,4 +118,11 @@ EVENT_START ev_t03pc0101_girl2_01
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t03pc0101_woman2_03 )
 	ENDIF
 }
+EVENT_END
+
+/**************************************************************/
+/* policeman_01                                                      */
+/**************************************************************/
+EVENT_START  ev_t03pc0101_policeman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03pc0101_policeman_01)
 EVENT_END

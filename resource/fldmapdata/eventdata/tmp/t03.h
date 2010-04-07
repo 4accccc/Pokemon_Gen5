@@ -13,6 +13,13 @@
 #ifndef ZONE_T03_EVC_H
 #define ZONE_T03_EVC_H
 
+#define T03_MIDDLEWOMAN1_01                0
+#define T03_OLDWOMAN1_01                   1
+#define T03_BABYBOY2_01                    2
+#define T03_FISHING_01                     3
+#define T03_BADMAN_01                      4
+#define T03_WAITRESS_01                    5
+#define T03_POLICEMAN_01                   6
 
 #endif //ZONE_T03_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

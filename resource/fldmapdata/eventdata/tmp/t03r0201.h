@@ -9,6 +9,8 @@
 #ifndef ZONE_T03R0201_EVC_H
 #define ZONE_T03R0201_EVC_H
 
+#define T03R0201_BADMAN_01                 0
+#define T03R0201_OLDWOMAN1_01              1
 
 #endif //ZONE_T03R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t03r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

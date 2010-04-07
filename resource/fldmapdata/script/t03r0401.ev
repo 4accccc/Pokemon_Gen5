@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_t03r0401.h"
-  //.include  "t03r0401.h"
+  .include  "t03r0401.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,8 +20,93 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_badgeparty
+_EVENT_DATA    ev_zone_t03r0401
+_EVENT_DATA    ev_t03r0401_waitress_01
+_EVENT_DATA    ev_t03r0401_babyboy2_01
+_EVENT_DATA    ev_t03r0401_fishing_01
+_EVENT_DATA    ev_t03r0401_badman_01
+_EVENT_DATA    ev_t03r0401_policeman_01
+_EVENT_DATA    ev_t03r0401_middleman2_01
+_EVENT_DATA    ev_t03r0401_poke_01
+_EVENT_DATA    ev_t03r0401_businessman_01
 _EVENT_DATA_END
 
+//------------------------------注意--------------------------------//
+//																	//
+//	LOCALWORK15を使用しました。同マップ内の使用を禁止します。		//
+//				LOCALWORK15⇒ランダムに選ばれる木の実結果格納箇所	//
+//																	//
+//------------------------------------------------------------------//
+
+/************************************************************/
+/*					ZONE_CHANGE_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_t03r0401
+{
+	//初期状態：全てのOBJを非表示に
+	_FLAG_SET( FV_T03_NIGHT )
+	_FLAG_SET( FV_T03_MON )
+	_FLAG_SET( FV_T03_TUE )
+	_FLAG_SET( FV_T03_WED )
+	_FLAG_SET( FV_T03_THU )
+	_FLAG_SET( FV_T03_FRI )
+	_FLAG_SET( FV_T03_SAT )
+	_FLAG_SET( FV_T03_SUN )
+
+	//現在の時間帯を取得して夜なら室内のOBJを表示する
+	DEFINE_LOCAL LWK_NOWTIME
+	_GET_TIMEZONE( LWK_NOWTIME )
+	//現在の曜日を取得して条件によってOBJを非表示にする
+	DEFINE_LOCAL LWK_NOWWEEK
+	_GET_WEEK( LWK_NOWWEEK )
+	
+	IF $LWK_NOWTIME == TIMEZONE_NIGHT  || $LWK_NOWTIME == TIMEZONE_MIDNIGHT THEN
+	
+		//夜のOBJを表示
+		_FLAG_RESET( FV_T03_NIGHT )
+		
+		//曜日によって表示するOBJを変更
+		IF $LWK_NOWWEEK == RTC_WEEK_MONDAY THEN
+			
+			//月曜のOBJを表示
+			_FLAG_RESET( FV_T03_MON )
+		
+		ELSIF $LWK_NOWWEEK == RTC_WEEK_TUESDAY THEN
+			
+			//火曜のOBJを表示
+			_FLAG_RESET( FV_T03_TUE )
+		
+		ELSIF $LWK_NOWWEEK == RTC_WEEK_WEDNESDAY THEN
+			
+			//水曜のOBJを表示
+			_FLAG_RESET( FV_T03_WED )
+		
+		ELSIF $LWK_NOWWEEK == RTC_WEEK_THURSDAY THEN
+			
+			//木曜のOBJを表示
+			_FLAG_RESET( FV_T03_THU )
+		
+		ELSIF $LWK_NOWWEEK == RTC_WEEK_FRIDAY THEN
+			
+			//金曜のOBJを表示
+			_FLAG_RESET( FV_T03_FRI )
+		
+		ELSIF $LWK_NOWWEEK == RTC_WEEK_SATURDAY THEN
+			
+			//土曜のOBJを表示
+			_FLAG_RESET( FV_T03_SAT )
+		
+		ELSE
+			
+			//日曜のOBJを表示
+			_FLAG_RESET( FV_T03_SUN )
+			
+		ENDIF
+			
+	ENDIF
+}
+	
+INIT_EVENT_END
 
 DEFINE_LOCAL  select_result
 /**************************************************************/
@@ -172,3 +257,97 @@ sub_badgeparty:
     $select_result = TRUE
     _RET
 
+/**************************************************************/
+/* waitress_01                                                      */
+/**************************************************************/
+EVENT_START  ev_t03r0401_waitress_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03r0401_waitress_01)
+EVENT_END
+
+/**************************************************************/
+/* babyboy2_01                                                      */
+/**************************************************************/
+EVENT_START  ev_t03r0401_babyboy2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03r0401_babyboy2_01)
+EVENT_END
+
+/**************************************************************/
+/* fishing_01                                                      */
+/**************************************************************/
+EVENT_START  ev_t03r0401_fishing_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03r0401_fishing_01)
+EVENT_END
+
+/**************************************************************/
+/* badman_01                                                      */
+/**************************************************************/
+EVENT_START  ev_t03r0401_badman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03r0401_badman_01)
+EVENT_END
+
+/**************************************************************/
+/* policeman_01                                                      */
+/**************************************************************/
+EVENT_START  ev_t03r0401_policeman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03r0401_policeman_01)
+EVENT_END
+
+/**************************************************************/
+/* middleman2_01                                               */
+/**************************************************************/
+EVENT_START  ev_t03r0401_middleman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03r0401_middleman2_01)
+EVENT_END
+
+/**************************************************************/
+/* 	poke19							  */
+/**************************************************************/
+EVENT_START		ev_t03r0401_poke_01
+	_EASY_TALK_POKEVOICE( MONSNO_533, msg_t03_poke_01 )
+EVENT_END
+
+/**************************************************************/
+/* businessman_01			  */
+/**************************************************************/
+EVENT_START		ev_t03r0401_businessman_01
+
+	//今日のイベントは終えたか？
+	IF FLAG_OFF( TMFLG_T03R0401_ITEMGET_01 ) THEN
+		
+		_TALK_OBJ_START()
+		_BALLOONWIN_OBJMSG( msg_t03r0401_businessman_01 , T03R0401_BUSINESSMAN_01 )
+    	_BALLOONWIN_CLOSE()
+	
+		//乱数で0～3のうちのひとつを選んで格納する
+		_GET_RND( LOCALWORK15,3 )
+		
+		//乱数の結果によって入手するアイテムを変更
+		IF $LOCALWORK15 == 0 THEN
+			_ITEM_EVENT_KEYWAIT ( ITEM_MOMONNOMI , 1)
+		ELSIF $LOCALWORK15 == 1 THEN
+			_ITEM_EVENT_KEYWAIT ( ITEM_BURIINOMI , 1)
+		ELSIF $LOCALWORK15 == 2 THEN
+			_ITEM_EVENT_KEYWAIT ( ITEM_RAMUNOMI , 1)
+		ELSIF $LOCALWORK15 == 3 THEN
+			_ITEM_EVENT_KEYWAIT ( ITEM_KAGONOMI , 1)
+		ELSE
+			_ITEM_EVENT_KEYWAIT ( ITEM_HIMERINOMI , 1)
+		ENDIF
+		
+		_BALLOONWIN_OBJMSG( msg_t03r0401_businessman_02 , T03R0401_BUSINESSMAN_01 )
+		_LAST_KEYWAIT()
+    	_BALLOONWIN_CLOSE()
+    	
+		//==================================//
+			
+		//今日のイベントは終了
+		_FLAG_SET ( TMFLG_T03R0401_ITEMGET_01 )
+		
+		//==================================//
+	
+	//今日のイベントは既に終えた
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03r0401_businessman_02)
+	ENDIF
+
+EVENT_END

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_t03r0201.h"
-  //.include  "t03r0201.h"
+  .include  "t03r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,78 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t03r0201
+_EVENT_DATA    ev_zone_t03r0201
+_EVENT_DATA    ev_t03r0201_oldwoman1_01
+_EVENT_DATA    ev_t03r0201_badman_01
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_t03r0201_flag_change:
-//  _END
+/************************************************************/
+/*					ZONE_CHANGE_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_t03r0201
+{
+	
+	//初期状態：全てのOBJを非表示に
+	_FLAG_SET( FV_T03_NIGHT )
+	_FLAG_SET( FV_T03_WED )
+
+	//現在の時間帯を取得して夜なら室内のOBJを表示する
+	DEFINE_LOCAL LWK_NOWTIME
+	_GET_TIMEZONE( LWK_NOWTIME )
+	//現在の曜日を取得して条件によってOBJを非表示にする
+	DEFINE_LOCAL LWK_NOWWEEK
+	_GET_WEEK( LWK_NOWWEEK )
+	
+	IF $LWK_NOWTIME == TIMEZONE_NIGHT  || $LWK_NOWTIME == TIMEZONE_MIDNIGHT THEN
+	
+		//夜のOBJを表示
+		_FLAG_RESET( FV_T03_NIGHT )
+		
+		IF $LWK_NOWWEEK != RTC_WEEK_WEDNESDAY THEN
+			
+			//水曜のOBJを表示
+			_FLAG_RESET( FV_T03_WED )
+		
+		ENDIF
+			
+	ENDIF
+
+}
+	
+INIT_EVENT_END
 
 /**************************************************************/
-/*                                                            */
+/* oldwoman1_01                                                      */
 /**************************************************************/
-ev_t03r0201:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START  ev_t03r0201_oldwoman1_01
+{
 
+	//おばあちゃんの昔話
+	_TALK_OBJ_START()
+	
+	_BALLOONWIN_OBJMSG( msg_t03r0201_oldwoman1_01 , T03R0201_OLDWOMAN1_01 )
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はい
+	IF $SCWK_ANSWER == 0 THEN
+		_BALLOONWIN_OBJMSG( msg_t03r0201_oldwoman1_02 , T03R0201_OLDWOMAN1_01 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		
+	//いいえ
+	ELSE
+		_BALLOONWIN_OBJMSG( msg_t03r0201_oldwoman1_03 , T03R0201_OLDWOMAN1_01 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+	ENDIF
+
+}
+EVENT_END
+
+/**************************************************************/
+/* badman_01                                                      */
+/**************************************************************/
+EVENT_START  ev_t03r0201_badman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03r0201_badman_01)
+EVENT_END

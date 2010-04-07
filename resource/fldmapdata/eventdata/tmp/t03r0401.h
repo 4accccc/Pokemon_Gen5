@@ -10,6 +10,14 @@
 #define ZONE_T03R0401_EVC_H
 
 #define T03R0401_ESPW_01                   0
+#define T03R0401_WAITRESS_01               1
+#define T03R0401_BABYBOY2_01               2
+#define T03R0401_FISHING_01                3
+#define T03R0401_BADMAN_01                 4
+#define T03R0401_MIDDLEMAN2_01             5
+#define T03R0401_POKE_01                   6
+#define T03R0401_BUSINESSMAN_01            7
+#define T03R0401_POLICEMAN_01              8
 
 #endif //ZONE_T03R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t03r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

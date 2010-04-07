@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_t03.h"
-  //.include  "t03.h"
+  .include  "t03.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,12 +20,112 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_bg_t03_board_01
+_EVENT_DATA    ev_zone_t03
+_EVENT_DATA    ev_t03_middlewoman1_01
+_EVENT_DATA    ev_t03_oldwoman1_01
+_EVENT_DATA    ev_t03_babyboy2_01
+_EVENT_DATA    ev_t03_fishing_01
+_EVENT_DATA    ev_t03_badman_01
+_EVENT_DATA    ev_t03_waitress_01
+_EVENT_DATA    ev_t03_policeman_01
 _EVENT_DATA_END
 
+/************************************************************/
+/*					ZONE_CHANGE_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_t03
+	
+{
+	_FLAG_RESET( FV_T03_DAYTIME )
+	
+	//現在の時間帯を取得して夜なら街のOBJを非表示にする
+	DEFINE_LOCAL LWK_NOWTIME
+	_GET_TIMEZONE( LWK_NOWTIME )
+	
+	IF $LWK_NOWTIME == TIMEZONE_NIGHT  || $LWK_NOWTIME == TIMEZONE_MIDNIGHT THEN
+	
+		//テスト用
+		$LOCALWORK15 = 99
+		_DEBUG_PRINT_WK( LOCALWORK15 )
+		
+		_FLAG_SET( FV_T03_DAYTIME )
+	ENDIF
+}
+INIT_EVENT_END
 
 /**************************************************************/
 /*看板01                                                      */
 /**************************************************************/
 EVENT_START  ev_bg_t03_board_01
 	_EASY_BGWIN_MSG(msg_t03_sign1_01 , TYPE_TOWN)
+EVENT_END
+
+/**************************************************************/
+/* middlewoman_01                                                      */
+/**************************************************************/
+EVENT_START  ev_t03_middlewoman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03_middlewoman1_01)
+EVENT_END
+
+/**************************************************************/
+/* oldwoman1_01                                                      */
+/**************************************************************/
+EVENT_START  ev_t03_oldwoman1_01
+{
+
+	//おばあちゃんの昔話
+	_TALK_OBJ_START()
+	
+	_BALLOONWIN_OBJMSG( sg_t03_oldwoman1_01 , T03_OLDWOMAN1_01 )
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はい
+	IF $SCWK_ANSWER == 0 THEN
+		_BALLOONWIN_OBJMSG( sg_t03_oldwoman1_02 , T03_OLDWOMAN1_01 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		
+	//いいえ
+	ELSE
+		_BALLOONWIN_OBJMSG( sg_t03_oldwoman1_03 , T03_OLDWOMAN1_01 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+	ENDIF
+
+}
+EVENT_END
+
+/**************************************************************/
+/* babyboy2_01                                                      */
+/**************************************************************/
+EVENT_START  ev_t03_babyboy2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03_babyboy2_01)
+EVENT_END
+
+/**************************************************************/
+/* fishing_01                                                      */
+/**************************************************************/
+EVENT_START  ev_t03_fishing_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03_fishing_01)
+EVENT_END
+
+/**************************************************************/
+/* badman_01                                                      */
+/**************************************************************/
+EVENT_START  ev_t03_badman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03_badman_01)
+EVENT_END
+
+/**************************************************************/
+/* waitress_01                                                      */
+/**************************************************************/
+EVENT_START  ev_t03_waitress_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03_waitress_01)
+EVENT_END
+
+/**************************************************************/
+/* policeman_01                                                      */
+/**************************************************************/
+EVENT_START  ev_t03_policeman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t03_policeman_01)
 EVENT_END

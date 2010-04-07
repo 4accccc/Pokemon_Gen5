@@ -17,6 +17,7 @@
 #define T03PC0101_SHOPM1_01                5
 #define T03PC0101_SHOPM1_02                6
 #define T03PC0101_GIRL2_01                 7
+#define T03PC0101_POLICEMAN_01             8
 
 #endif //ZONE_T03PC0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t03pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
