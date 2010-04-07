@@ -59,8 +59,8 @@ EVENT_START		ev_c03r1201_assistantm1_01
 
 	//ƒ|ƒPƒ‚ƒ“‚ğŒ©‚½”‚ª‚Q‚OˆÈã‚Ìê‡
 	IF $LWK_ZUKAN >= 20 THEN
-		//y‰¼zƒAƒCƒeƒ€æ“¾ƒtƒ‰ƒO‚È‚µ
-		_EASY_TALK_ITEM_EVENT( ITEM_SINKANOKISEKI, 1, FH_01, msg_c03r1201_assistantm1_02, msg_c03r1201_assistantm1_03, msg_c03r1201_assistantm1_03 )
+
+		_EASY_TALK_ITEM_EVENT( ITEM_SINKANOKISEKI, 1, FE_C03R1201_ITEM_01, msg_c03r1201_assistantm1_02, msg_c03r1201_assistantm1_03, msg_c03r1201_assistantm1_03 )
 	
 	//‚Ü‚¾‚Q‚O•CˆÈ‰º‚Ìê‡
 	ELSE

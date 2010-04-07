@@ -3,7 +3,7 @@
 #define ZONE_C03_EVD_H
 
 #define DOOR_ID_C03_C03P10_EXIT01         0
-#define DOOR_ID_C03_C03P17_EXIT02         1
+#define DOOR_ID_C03_C03P17_EXIT01         1
 #define DOOR_ID_C03_C03P09_EXIT01         2
 #define DOOR_ID_C03_C03P16_EXIT01         3
 #define DOOR_ID_C03_C03P15_EXIT01         4
@@ -16,7 +16,7 @@
 #define DOOR_ID_C03_C03R0301_EXIT01      11
 #define DOOR_ID_C03_C03R0101_EXIT01      12
 #define DOOR_ID_C03_C03P10_EXIT02        13
-#define DOOR_ID_C03_C03P17_EXIT01        14
+#define DOOR_ID_C03_C03P17_EXIT02        14
 #define DOOR_ID_C03_C03P09_EXIT02        15
 #define DOOR_ID_C03_C03P16_EXIT02        16
 #define DOOR_ID_C03_C03P15_EXIT02        17
