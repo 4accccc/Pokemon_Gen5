@@ -17,6 +17,7 @@
 #include "gamesystem/game_data.h"
 #include "gamesystem/btl_setup.h"
 
+#include "savedata/etc_save.h"
 
 #include "field/fieldmap.h"
 #include "field/field_sound.h"
@@ -48,6 +49,9 @@
 // バトル用定義
 extern const NetRecvFuncTable BtlRecvFuncTable[];
 //----------------------------------------------------------------
+
+static void _setUnionAccount(EVENT_IRCBATTLE_WORK * dbw);
+
 
 
 FS_EXTERN_OVERLAY(irc_compatible);
@@ -213,8 +217,11 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       // マッチング内容によりゲーム分岐
       dbw->selectType = dbw->irc_match.selectType;
       switch(dbw->selectType){
-      case EVENTIRCBTL_ENTRYMODE_EXIT:
       case EVENTIRCBTL_ENTRYMODE_FRIEND:
+        _setUnionAccount(dbw);  // コード交換終了時
+        *seq = _WAIT_NET_END;
+        break;
+      case EVENTIRCBTL_ENTRYMODE_EXIT:
         *seq = _WAIT_NET_END;
         break;
       case EVENTIRCBTL_ENTRYMODE_RETRY:
@@ -314,6 +321,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     BATTLE_PARAM_Delete(dbw->para);
     dbw->para = NULL;
+    _setUnionAccount(dbw);  // バトル終了時
     NET_PRINT("バトル完了 event_ircbattle\n");
     GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_FAST, FSND_FADE_NONE));
     (*seq) = _CALL_NET_END;
@@ -334,6 +342,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
         (*seq) = _CALL_MAIL;
       }
       else{
+        _setUnionAccount(dbw);  // 交換終了時
         (*seq) = _CALL_NET_END;
       }
     }
@@ -538,6 +547,23 @@ GAMESYS_WORK* IrcBattle_GetGAMESYS_WORK(EVENT_IRCBATTLE_WORK* pWork)
 SAVE_CONTROL_WORK* IrcBattle_GetSAVE_CONTROL_WORK(EVENT_IRCBATTLE_WORK* pWork)
 {
   return pWork->ctrl;
+}
+
+
+
+
+static void _setUnionAccount(EVENT_IRCBATTLE_WORK * dbw)
+{
+  ETC_SAVE_WORK * pETC = SaveData_GetEtc( dbw->ctrl );
+  int i;
+
+  //@todo Mystatus入っていない検査が無い
+  for(i = 0;i < GFL_NET_GetConnectNum() ;i++){
+    MYSTATUS* pMyStatus = GAMEDATA_GetMyStatusPlayer( dbw->gamedata, i );
+    if(pMyStatus){
+      EtcSave_SetAcquaintance(pETC, MyStatus_GetID(pMyStatus));
+    }
+  }
 }
 
 

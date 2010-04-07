@@ -189,31 +189,17 @@ void GFL_NET_DWC_FriendDataWrite(GAMEDATA* pGameData, MYSTATUS* pMyStatus,DWCFri
   u8 tr;
 
   if(overWrite != 2){
-    //        pFriend = CommInfoGetDWCFriendCode(netID);
     MI_CpuCopy8(pFriend, keyList, sizeof(DWCFriendData));
   }
-  if(overWrite == 0){  // 上書き時には名前を書き換えない
+  if((overWrite == 0) || (overWrite == 1)){  //仕様変更 全部上書き
     pBuf = MyStatus_CreateNameString(pMyStatus, heapID);
     WifiList_SetFriendName(pList, addListIndex, pBuf);
     GFL_STR_DeleteBuffer(pBuf);
     WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_SEX, MyStatus_GetMySex(pMyStatus));
     WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_ID, MyStatus_GetID(pMyStatus));
   }
-  else if(overWrite == 1){
-    // 上書きだけど性別がまだ無い状態の場合書く
-    if(WifiList_GetFriendInfo(pList,addListIndex,WIFILIST_FRIEND_SEX) == PM_NEUTRAL){
-      WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_SEX, MyStatus_GetMySex(pMyStatus));
-      WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_ID, MyStatus_GetID(pMyStatus));
-    }
-  }
-  pBuf =  GFL_STR_CreateBuffer(120, heapID );
-  GFL_STR_DeleteBuffer(pBuf);
-
   tr = MyStatus_GetTrainerView(pMyStatus);
-  NET_PRINT("%d TRVIEW \n",tr);
-  GF_ASSERT(63!=tr);
   WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_UNION_GRA, tr);
-
 }
 
 //------------------------------------------------------------------
@@ -223,34 +209,35 @@ void GFL_NET_DWC_FriendDataWrite(GAMEDATA* pGameData, MYSTATUS* pMyStatus,DWCFri
  * @param   MYSTATUS
  * @param   DWCFriendData
  * @param   heapID
- * @retval  int
+ * @retval  新規登録の場合TRUE
  */
 //------------------------------------------------------------------
 
-void GFL_NET_DWC_FriendDataAdd(GAMEDATA* pGameData, MYSTATUS* pMyStatus,DWCFriendData* pFriend, int heapID)
+BOOL GFL_NET_DWC_FriendDataAdd(GAMEDATA* pGameData, MYSTATUS* pMyStatus,DWCFriendData* pFriend, int heapID)
 {
   WIFI_LIST* pList = GAMEDATA_GetWiFiList(pGameData);
   int i,ret;
 
   if( !DWC_IsValidFriendData( pFriend ) ){
-    return;
+    return FALSE;
   }
 
   for(i = 0; i < WIFILIST_FRIEND_MAX;i++){
     DWCFriendData* pFL = WifiList_GetDwcDataPtr( pList, i );
-    if( !WifiList_IsFriendData( pList, i ) ){
+    if( !WifiList_IsFriendData( pList, i ) ){  //新規
       GFL_NET_DWC_FriendDataWrite(pGameData, pMyStatus, pFriend, i, heapID, 0);
-      break;
+      return TRUE;
     }
     ret = _dwcfriend_CheckFriendByToken(pFriend,WifiList_GetMyUserInfo(pList),pFL);
     if(ret == DWCFRIEND_INLIST){ //同一
-      break;
+      return FALSE;
     }
     else if(ret == DWCFRIEND_OVERWRITE){ //上書き
       GFL_NET_DWC_FriendDataWrite(pGameData, pMyStatus, pFriend, i, heapID, 1);
-      break;
+      return FALSE;
     }
   }
+  return FALSE;
 }
 
 

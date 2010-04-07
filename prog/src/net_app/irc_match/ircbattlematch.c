@@ -324,7 +324,7 @@ struct _IRC_BATTLE_MATCH {
   int ircmatchanimCount;
 
   BOOL irccenterflg;
-
+  BOOL bFriendAdd;
   BOOL ircCenterAnim;
   int ircCenterAnimCount;
   int yoffset;
@@ -702,9 +702,9 @@ static void _recvFriendCode(const int netID, const int size, const void* pData, 
 
   pTargetSt = GAMEDATA_GetMyStatusPlayer(pGameData, netID);  //netID‚Å‘ã“ü
 
-  GFL_NET_DWC_FriendDataAdd(pGameData, pTargetSt, (DWCFriendData*)pData, pWork->heapID);
+  pWork->bFriendAdd = GFL_NET_DWC_FriendDataAdd(pGameData, pTargetSt, (DWCFriendData*)pData, pWork->heapID);
 
-  WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pGameData), pTargetSt);
+  //WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pGameData), pTargetSt);
 }
 
 
@@ -724,9 +724,15 @@ static void _modeSuccessMessageKeyWait(IRC_BATTLE_MATCH* pWork)
 
 static void _modeSuccessMessage(IRC_BATTLE_MATCH* pWork)
 {
-  int aMsgBuff[]={IRCBTL_STR_43};
-  
-  _msgWindowCreate(aMsgBuff, pWork);
+
+  if(pWork->bFriendAdd){
+    int aMsgBuff[]={IRCBTL_STR_43};
+    _msgWindowCreate(aMsgBuff, pWork);
+  }
+  else{
+    int aMsgBuff[]={IRCBTL_STR_44};
+    _msgWindowCreate(aMsgBuff, pWork);
+  }
   PMSND_PlaySystemSE(SEQ_SE_FLD_124);
   _friendNumWindowCreate(IRCBTL_STR_35, pWork);
   _CHANGE_STATE(pWork,_modeSuccessMessageKeyWait);
@@ -809,15 +815,25 @@ static void _modeCheckStart33(IRC_BATTLE_MATCH* pWork)
 {
 
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_DSF, WB_NET_IRCBATTLE)){
-    DWCFriendData friendData;
+    switch(pWork->selectType){
+    case EVENTIRCBTL_ENTRYMODE_FRIEND:
+      {
+        DWCFriendData friendData;
 
-    GFL_NET_DWC_GetMySendedFriendCode(
-      GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ,&friendData);
-
-    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_FRIENDCODE,
-                        sizeof(DWCFriendData),&friendData)){
+        GFL_NET_DWC_GetMySendedFriendCode(
+          GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ,&friendData);
+        
+        if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_FRIENDCODE,
+                            sizeof(DWCFriendData),&friendData)){
+          GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_DS,WB_NET_IRCBATTLE);
+          _CHANGE_STATE(pWork,_modeCheckStart4);
+        }
+      }
+      break;
+    default:
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_DS,WB_NET_IRCBATTLE);
       _CHANGE_STATE(pWork,_modeCheckStart4);
+      break;
     }
   }
 }

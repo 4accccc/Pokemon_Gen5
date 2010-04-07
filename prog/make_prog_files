@@ -1172,8 +1172,7 @@ SRCS_OVERLAY_WIFICLUB =   net_app/wificlub/wifi_p2pmatchroom.c \
 
 # IRCマッチングアプリケーション ともだちコード交換
 #===> SRCS_OVERLAY_UI_COMMON
-SRCS_OVERLAY_IRCBATTLEMATCH = net_app/irc_match/ircbattlematch.c \
-                net_app/friend_trade/ircbattlefriend.c
+SRCS_OVERLAY_IRCBATTLEMATCH = net_app/irc_match/ircbattlematch.c
 
 
 #赤外線相性チェック用ネットシステム
