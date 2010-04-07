@@ -1669,8 +1669,6 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
         u16 code = MMDL_GetOBJCode( mmdl );
         u16 ac = ACMD_NOT;
         
-//        MMDL_UpdateMoveProc( work->fmmdl );
-        
         if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ){
           if( (key_cont & PAD_BUTTON_B) ){
             MMDL_Delete( work->fmmdl );
@@ -1704,14 +1702,64 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
               ac = AC_SHIN_MU_TURN;
             }
           }else{
+            u16 ac_act_u = ACMD_NOT;
+            u16 ac_act_d = ACMD_NOT;
+            u16 ac_act_l = ACMD_NOT;
+            u16 ac_act_r = ACMD_NOT;
+            
+            const OBJCODE_PARAM *param =
+                MMDL_GetOBJCodeParam( mmdl, code );
+            
+            switch( param->anm_id ){
+            case MMDL_BLACT_ANMTBLNO_PCWOMAN:
+              ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_PC_BOW;
+              break;
+            case MMDL_BLACT_ANMTBLNO_RIVEL:
+              ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_RIVEL_ACT0;
+              break;
+            case MMDL_BLACT_ANMTBLNO_SUPPORT:
+              ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SUPPORT_ACT0;
+              break;
+            case MMDL_BLACT_ANMTBLNO_BOSS_N:
+              ac_act_u = ac_act_d = AC_N_ACT0;
+              ac_act_l = ac_act_r = AC_N_ACT1;
+              break;
+            case MMDL_BLACT_ANMTBLNO_SAGE1:
+              ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SAGE1_ACT0;
+              break;
+            case MMDL_BLACT_ANMTBLNO_NINJA:
+              ac_act_u = ac_act_d = AC_NINJA_ACT0;
+              ac_act_l = ac_act_r = AC_NINJA_ACT1;
+              break;
+            case MMDL_BLACT_ANMTBLNO_CHAMPION:
+              ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_CHAMPION_ACT0;
+              break;
+            }
+            
             if( key_cont & PAD_KEY_UP ){
-              ac = AC_STAY_WALK_U_32F;
+              if( ac_act_u != ACMD_NOT ){
+                ac = ac_act_u;
+              }else{
+                ac = AC_STAY_WALK_U_32F;
+              }
             }else if( key_cont & PAD_KEY_DOWN ){
-              ac = AC_STAY_WALK_D_32F;
+              if( ac_act_d != ACMD_NOT ){
+                ac = ac_act_d;
+              }else{
+                ac = AC_STAY_WALK_D_32F;
+              }
             }else if( key_cont & PAD_KEY_LEFT ){
-              ac = AC_STAY_WALK_L_32F;
+              if( ac_act_l != ACMD_NOT ){
+                ac = ac_act_l;
+              }else{
+                ac = AC_STAY_WALK_L_32F;
+              }
             }else if( key_cont & PAD_KEY_RIGHT ){
-              ac = AC_STAY_WALK_R_32F;
+              if( ac_act_r != ACMD_NOT ){
+                ac = ac_act_r;
+              }else{
+                ac = AC_STAY_WALK_R_32F;
+              }
             }
           }
           

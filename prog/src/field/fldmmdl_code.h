@@ -637,13 +637,13 @@
 
 //芝居系　判り易い名前で置き換え
 #define AC_PC_BOW (AC_ACT0_STOP) ///<PCお辞儀
-#define AC_RIVEL_ACT0 (AC_ACT0_STOP) ///<ライバル専用 つま先アニメ
+#define AC_RIVEL_ACT0 (AC_ACT0_LOOP) ///<ライバル専用 つま先アニメ
 #define AC_SUPPORT_ACT0 (AC_ACT0_STOP) ///<サポート専用 帽子アニメ
 #define AC_N_ACT0 (AC_ACT0_STOP) ///<N専用 両手アニメ
 #define AC_N_ACT1 (AC_ACT0_STOP) ///<N専用 首アニメ
 #define AC_SAGE1_ACT0 (AC_ACT0_STOP) ///<SAGE1専用 両手アニメ
 #define AC_NINJA_ACT0 (AC_ACT0_STOP) ///<NINJA専用 出現アニメ
-#define AC_NINJA_ACT1 (AC_ACT0_STOP) ///<NINJA専用 消去アニメ
+#define AC_NINJA_ACT1 (AC_ACT0_LOOP) ///<NINJA専用 消去アニメ
 #define AC_CHAMPION_ACT0 (AC_ACT0_STOP) ///<CHAMPION専用 加味揺れアニメ
 
 #endif //MMDL_CODE_H_FILE

@@ -17,7 +17,7 @@
 #define PROC_HERO_ITEMGET 6 //自機アイテムゲット
 #define PROC_HERO_PCAZUKE 7 //自機PC預け
 #define PROC_BLACT_ONELOOP 8 //一パターンループアニメ
-#define PROC_ACT0 9 //PC姉
+#define PROC_ACT0 9 //汎用ビルボード+演技
 #define PROC_POKE 10 //連れ歩きポケモン
 #define PROC_POKE_FLY 11 //連れ歩きポケモン 浮遊演出
 #define PROC_MODEL 12 //ポリゴンモデル
@@ -27,7 +27,7 @@
 #define PROC_SHIN_MU 16 //ポケモン シン・ム
 #define PROC_SPIDER 17 //くもの巣
 #define PROC_MELODYER 18 //ポケモン メロディア
-#define PROC_RIVEL 19 //ライバル
+#define PROC_ACT0_NON_PAUSE 19 //汎用ビルボード+演技 演技終了時停止しない
 
 //FOOTMARK 足跡種類で指定するシンボルです。
 #define FOOTMARK_NON 0 //足跡無し
