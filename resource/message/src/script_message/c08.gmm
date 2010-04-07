@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-07T20:02:44"/>
+	<create user="matsumiya" host="W00224" date="2010-04-07T22:09:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1381" top="213" right="2086" bottom="841" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -578,7 +578,8 @@ WOMAN2</attribute>
 
 	<row id="msg_c08_champion_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・続けてleader8b_02</comment>
+・続けてleader8b_02か
+　leader8b_02a</comment>
 		<attribute name="キャラクター">チャンピオン
 アデク</attribute>
 		<language name="JPN" width="256">アデク『ひさしいな
@@ -589,13 +590,30 @@ WOMAN2</attribute>
 
 	<row id="msg_c08_leader8b_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
+・主人公性別：♂
 ・続けてleader8a_02</comment>
 		<attribute name="キャラクター">ジムリーダー
 アイリス</attribute>
 		<language name="JPN" width="256">アイリス『あっ！
-アデクの　おじーちゃん！！[BE:01:ページ切り替え（クリア）]</language>
+アデクの　おじーちゃんに▽
+あのときの　おにーちゃん！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アイリス『あっ！
-アデクの　おじーちゃん！！[BE:01:ページ切り替え（クリア）]</language>
+アデクの　おじーちゃんに▽
+あのときの　おにーちゃん！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c08_leader8b_02a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・主人公性別：♀
+・続けてleader8a_02</comment>
+		<attribute name="キャラクター">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『あっ！
+アデクの　おじーちゃんに▽
+あのときの　おねーちゃん！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アイリス『あっ！
+アデクの　おじーちゃんに▽
+あのときの　おねーちゃん！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c08_leader8a_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -877,9 +895,11 @@ WOMAN2</attribute>
 アイリス</attribute>
 		<language name="JPN" width="256">アイリス『シンと　ムの　はなし！
 あたしたちが　おしえたげる！▼
+ソウリュウなら　あんない　できるし！
 こっち　だよ！▼</language>
 		<language name="JPN_KANJI" width="256">アイリス『シンと　ムの　はなし！
 あたしたちが　おしえたげる！▼
+ソウリュウなら　あんない　できるし！
 こっち　だよ！▼</language>
 	</row>
 
@@ -893,9 +913,11 @@ WOMAN2</attribute>
 アイリス</attribute>
 		<language name="JPN" width="256">アイリス『ムと　シンの　はなし！
 あたしたちが　おしえたげる！▼
+ソウリュウなら　あんない　できるし！
 こっち　だよ！▼</language>
 		<language name="JPN_KANJI" width="256">アイリス『ムと　シンの　はなし！
 あたしたちが　おしえたげる！▼
+ソウリュウなら　あんない　できるし！
 こっち　だよ！▼</language>
 	</row>
 
@@ -949,6 +971,22 @@ WOMAN2</attribute>
 家に　いらっしゃるよ</language>
 	</row>
 
+	<row id="msg_c08_gentleman_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・クリア前</comment>
+		<attribute name="キャラクター">GENTLEMAN</attribute>
+		<language name="JPN" width="256">すべての　ポケモンを　はなつと……
+トレーナーも　ジムリーダーも▽
+そんざい　しなくなる……▼
+せかいは　かわるな
+よくも　わるくも……</language>
+		<language name="JPN_KANJI" width="256">すべての　ポケモンを　放つと……
+トレーナーも　ジムリーダーも▽
+存在しなくなる……▼
+世界は　変わるな
+良くも　悪くも……</language>
+	</row>
+
 	<row id="msg_c08_gentleman_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・WHITEver</comment>
@@ -977,6 +1015,22 @@ WOMAN2</attribute>
 刻みこめば　いいんだよ</language>
 	</row>
 
+	<row id="msg_c08_fighterm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・クリア前</comment>
+		<attribute name="キャラクター">FIGHTERM</attribute>
+		<language name="JPN" width="256">……ポケモンと　きたえ
+つよくなった　あのひ▼
+しかし　いとしの　ポケモンを
+かんぜんな　そんざいに　するためなら▽
+ときはなつのも　やむをえまい</language>
+		<language name="JPN_KANJI" width="256">……ポケモンと　鍛え
+強くなった　あの日▼
+しかし　愛しの　ポケモンを
+完全な　存在に　するためなら▽
+解き放つのも　やむをえまい</language>
+	</row>
+
 	<row id="msg_c08_fighterm_01w">
 		<comment>♂
 ・WHITEver</comment>
@@ -1001,6 +1055,20 @@ WOMAN2</attribute>
 あると　思うんだよね</language>
 	</row>
 
+	<row id="msg_c08_boy2_01w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・クリア前</comment>
+		<attribute name="キャラクター">BOY2</attribute>
+		<language name="JPN" width="256">ねーねー！　Ｎって　ひと
+でんせつの　ポケモンを▽
+つれていたから　えいゆう　だよね！▽
+せかいを　かえちゃうんだよね！</language>
+		<language name="JPN_KANJI" width="256">ねーねー！　Ｎって　ひと
+伝説の　ポケモンを▽
+連れていたから　英雄　だよね！▽
+世界を　変えちゃうんだよね！</language>
+	</row>
+
 	<row id="msg_c08_boy2_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・WHITEver</comment>
@@ -1019,6 +1087,22 @@ WOMAN2</attribute>
 だって　かっこいいもん！</language>
 		<language name="JPN_KANJI" width="256">古いより　新しいものが　好き
 だって　かっこいいもん！</language>
+	</row>
+
+	<row id="msg_c08_woman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・クリア前</comment>
+		<attribute name="キャラクター">WOMAN1</attribute>
+		<language name="JPN" width="256">……そんなぁ▼
+ポケモンが　いないと　あたし
+さみしくて　ダメになっちゃう！▼
+だけど　それは　ポケモンを
+りよう　している　だけ……？</language>
+		<language name="JPN_KANJI" width="256">……そんなぁ▼
+ポケモンが　いないと　あたし
+さみしくて　ダメになっちゃう！▼
+だけど　それは　ポケモンを
+利用している　だけ……？</language>
 	</row>
 
 	<row id="msg_c08_woman1_01w">
@@ -1047,6 +1131,96 @@ WOMAN2</attribute>
 まだ　子供だけれど　
 市長である　シャガさまが[BE:00:ページ切り替え（行送り）]
 認めた　実力者なの！</language>
+	</row>
+
+	<row id="msg_c08_oldman_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・クリア前</comment>
+		<attribute name="キャラクター">OLDMAN</attribute>
+		<language name="JPN" width="256">そうか　わしらは……▼
+ポケモンを
+くるしめていた　のか……▼</language>
+		<language name="JPN_KANJI" width="256">そうか　わしらは……▼
+ポケモンを
+苦しめていた　のか……▼</language>
+	</row>
+
+	<row id="msg_c08_oldman_01w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・WHITEver</comment>
+		<attribute name="キャラクター">OLDMAN</attribute>
+		<language name="JPN" width="256">やはり　わしは
+ポケモンと　ともに　あゆむよ▼
+ポケモンと　わかれるにしても
+それは　だれかに　いわれてでなく▽
+わしと　ポケモンとで　きめるさ　</language>
+		<language name="JPN_KANJI" width="256">やはり　わしは
+ポケモンと　共に　歩むよ▼
+ポケモンと　別れるにしても
+それは　だれかに　いわれてでなく▽
+わしと　ポケモンとで　決めるさ　</language>
+	</row>
+
+	<row id="msg_c08_oldman_01b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・BLACKver</comment>
+		<attribute name="キャラクター">OLDMAN</attribute>
+		<language name="JPN" width="256">やはり　わしは
+ポケモンと　ともに　あゆむよ▼
+ただ　ポケモンと　いることが
+あたりまえ　ではなく▽
+すごいことだと　よく　かみしてね</language>
+		<language name="JPN_KANJI" width="256">やはり　わしは
+ポケモンと　共に　歩むよ▼
+ただ　ポケモンと　いることは
+当たり前　ではなく▽
+すごいことだと　よく　かみしめてね</language>
+	</row>
+
+	<row id="msg_c08_man3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・クリア前</comment>
+		<attribute name="キャラクター">MAN３</attribute>
+		<language name="JPN" width="256">でんせつの　ポケモンは
+イッシュの　シンボル……▼
+ということは　プラズマだんは
+ただしいのか……？　わからん</language>
+		<language name="JPN_KANJI" width="256">伝説の　ポケモンは
+イッシュの　シンボル……▼
+ということは　プラズマ団は
+正しいのか……？　わからん</language>
+	</row>
+
+	<row id="msg_c08_man3_01w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・WHITEver</comment>
+		<attribute name="キャラクター">MAN３</attribute>
+		<language name="JPN" width="256">りそうを　おいもとめる
+それは　ひと　それぞれ……▽
+ポケモン　それぞれ　だよ▼
+この　まちが　れきしを　だいじにして
+りそうを　もとめているように……</language>
+		<language name="JPN_KANJI" width="256">理想を　追い求める
+それは　人　それぞれ……▽
+ポケモン　それぞれ　だよ▼
+この街が　歴史を　大事にして
+理想を　求めているように……</language>
+	</row>
+
+	<row id="msg_c08_man3_01b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・BLACKver</comment>
+		<attribute name="キャラクター">MAN３</attribute>
+		<language name="JPN" width="256">しんじつを　おいもとめる
+それは　ひと　それぞれ……▽
+ポケモン　それぞれ　だよ▼
+この　まちが　へんかを　だいじにして
+しんじつを　もとめているように……</language>
+		<language name="JPN_KANJI" width="256">真実を　追い求める
+それは　人　それぞれ……▽
+ポケモン　それぞれ　だよ▼
+この街が　変化を　大事にして
+真実を　求めているように……</language>
 	</row>
 
 	<row id="msg_c08_iss_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
