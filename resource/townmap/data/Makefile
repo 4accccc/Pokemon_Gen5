@@ -27,23 +27,6 @@ SUBDIRS	=
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
-# 自動でリソースを集める
-xsources:=$(wildcard *.xls)
-
-# リソースが吐き出すファイルを自動でつくる
-aobjects = $(subst .xls,.dat,$(xsources))
-hobjects = $(subst .xls,.h,$(xsources))
-
-
-ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-# サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .xls .dat
-
-.xls.dat:
-	perl townmap_data_conv.pl $<
-
-endif
-
 .PHONY:	do-build clean subdir
 
 #------------------------------------------------------------------------------
@@ -66,9 +49,13 @@ $(TARGETDIR_H)/$(targetname).h: $(targetname).h
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(aobjects)
+$(targetname).narc: townmap_data.dat
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
+
+townmap_data.dat: townmap_data.xls
+	perl townmap_data_conv.pl townmap_data.xls
+
 endif
 
 #------------------------------------------------------------------------------

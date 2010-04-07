@@ -1,6 +1,4 @@
 #[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
-#
-#
 #	@file		townmap_data_conv.pl
 #	@brief	タウンマップのエクセルデータコンバータ
 #	@author	Toru=Nagihashi
@@ -18,6 +16,8 @@ $EXCEL_CONV_EXE			=	$ENV{"PROJECT_ROOT"}."/tools/exceltool/ExcelSeetConv.exe";
 @TOWNMAP_XLS_HEADER	= ();		#タウンマップエクセルデータヘッダ
 @TOWNMAP_XLS_DATA		= ();		#タウンマップエクセルデータのデータ本体
 
+@ZONETABLE_XLS_DATA	= ();		#ゾーンテーブルのデータ
+
 #生成するデータ名
 $OUTPUTNAME_DATA		= "townmap_data.dat";
 $OUTPUTNAME_HEADER	= "townmap_data.h";
@@ -28,6 +28,10 @@ $GMM_DIR						= "../../message/dst/";	#コンバート後のmsg_xxx.hのdefineを参照する
 $GUIDGMM_FILENAME		=	"";
 $PLACEGMM_FILENAME	= "";
 $SYSFLAG_FILENAME		= "../../fldmapdata/flagwork/flag_define.h";
+$ZONE_TABLE_FILENAME= "zonetable.xls";
+$ZONE_TABLE_FILEPATH= "../../fldmapdata/zonetable/";
+
+$ZONE_ID_PREFIX     = "ZONE_ID_";
 
 #定義名取得のためのバッファ
 @ZONEID_BUFF				= ();		#ゾーンID用バッファ
@@ -36,6 +40,8 @@ $SYSFLAG_FILENAME		= "../../fldmapdata/flagwork/flag_define.h";
 @TYPE_BUFF					= ();		#タイプ名	これだけheaderから取り出す
 @ZONE_SEARCH				= ();		#自分の場所を調べる方法
 @SYSFLAG_BUFF				= ();		#システムフラグ
+@USERFLAG_BUFF			= ();	  #headerで指定したユーザー指定フラグ
+%ZONEGROUP_HASH			= ();	  #ゾーングループ用ハッシュ
 
 #取得したデータ
 @DATA_ZONEID				=	();		#ゾーンID
@@ -72,6 +78,9 @@ $DATA_LENGTH				= 0;
 #エラーデータ
 $DATA_ERROR_VALUE		= 0xFFFF;
 
+#ユーザー指定フラグの開始数値
+$USER_DEFINED_FLAG_START_NUM  = 0xF000;
+
 #=============================================================================
 #
 #					main
@@ -91,7 +100,6 @@ if( @ARGV < 1 )
 #=====================================
 &EXCEL_GetData( $ARGV[0], "header", \@TOWNMAP_XLS_HEADER );
 &EXCEL_GetData( $ARGV[0], "data", \@TOWNMAP_XLS_DATA );
-
 #-------------------------------------
 #	ヘッダ情報を取得
 #=====================================
@@ -99,6 +107,7 @@ $line_cnt	= 0;
 $is_file_name_start	= 0;
 $is_type_start	= 0;
 $zone_search_start	= 0;
+$user_defined_flag_start	= 0;
 foreach $line ( @TOWNMAP_XLS_HEADER )
 {
 
@@ -132,6 +141,15 @@ foreach $line ( @TOWNMAP_XLS_HEADER )
 	elsif( $word[0] eq "#zone_search_end" )
 	{
 		$zone_search_start	= 0;
+	}
+	elsif( $word[0] eq "#user_defined_flag" )
+	{
+		$line_cnt	= 0;
+		$user_defined_flag_start	= 1;
+	}
+	elsif( $word[0] eq "#user_defined_flag" )
+	{
+		$user_defined_flag_start	= 0;
 	}
 
 	#ファイル名データ取得
@@ -176,6 +194,15 @@ foreach $line ( @TOWNMAP_XLS_HEADER )
 			push( @ZONE_SEARCH, $word[1] );
 		}
 	}
+  #ユーザー指定フラグ取得
+  elsif( $user_defined_flag_start == 1 )
+  {
+    if( $line_cnt >= 1 ) 
+		{
+			#print "$word[1]"."\n";
+			push( @USERFLAG_BUFF, $word[1] );
+		}
+  }
 
 	#行数カウント
 	$line_cnt++;
@@ -188,6 +215,50 @@ foreach $line ( @TOWNMAP_XLS_HEADER )
 &FILE_GetData( $GUIDGMM_FILENAME, \@GUIDGMM_BUFF );
 &FILE_GetData( $PLACEGMM_FILENAME, \@PLACEGMM_BUFF );
 &FILE_GetData( $SYSFLAG_FILENAME, \@SYSFLAG_BUFF );
+
+#-------------------------------------
+#	ゾーングループが欲しいので
+#	zonetable.xlsをコンバート
+#=====================================
+system( 'cp '.$ZONE_TABLE_FILEPATH.$ZONE_TABLE_FILENAME.' .' );
+&EXCEL_GetData( $ZONE_TABLE_FILENAME, "Sheet1", \@ZONETABLE_XLS_DATA );
+$zonetable_start  = 0;
+foreach $line ( @ZONETABLE_XLS_DATA )
+{
+	$line	=~ s/\r\n//g;
+	@word	= split( /,/, $line );
+  
+  if( $word[0] eq "ID" )
+  {
+    @TAG_WORD = @word;
+    $zonetable_start  = 1;
+    next;
+  }
+  elsif( $word[0] eq "END" )
+  {
+    $zonetable_start  = 0;
+  }
+
+  if( $zonetable_start == 1 )
+  {
+    for( my $i = 0; $i < @TAG_WORD; $i++ )
+    {
+      my $tag = $TAG_WORD[$i];
+      my $w   = $word[$i];
+
+
+      if( $tag eq "ZONE_GROUP" )
+      {
+        $w    = $ZONE_ID_PREFIX . $w;
+        $num  = &GetTypeNumber( $w, \@ZONEID_BUFF );
+
+        $ZONEGROUP_HASH{ $w }  = $num;
+        print "$w, $num\n";
+      }
+    }
+  }
+}
+system( 'rm '.$ZONE_TABLE_FILENAME );
 
 #-------------------------------------
 #	データを取得
@@ -223,7 +294,14 @@ foreach $line ( @TOWNMAP_XLS_DATA )
 			if( $tag eq "#zone" )
 			{
 				&UndefAssert( $w );
-				push( @DATA_ZONEID, &GetTypeNumber( $w, \@ZONEID_BUFF ) );
+
+        unless( exists( $ZONEGROUP_HASH{ $w } ) )
+        {
+          print ( "ゾーングループではない値が設定されています $w\n" );
+          exit(1);
+        } 
+
+				push( @DATA_ZONEID, $ZONEGROUP_HASH{ $w } );
 			}
 			#自分の位置探索
 			if( $tag eq "#zone_search" )
@@ -542,6 +620,17 @@ foreach $search ( @ZONE_SEARCH )
 	$cnt++;
 }
 print( FILEOUT "#define TOWNMAP_PLACETYPE_MAX\t($cnt)\n\n" );
+
+print( FILEOUT "//ユーザー指定フラグ\n" );
+print( FILEOUT "//到着フラグや隠しマップフラグが以下の値ならばプログラムで個別制御を行わなければならない\n" );
+$cnt	= $USER_DEFINED_FLAG_START_NUM;
+foreach $search ( @USERFLAG_BUFF )
+{
+	print( FILEOUT "#define TOWNMAP_$search\t($cnt)\n" );
+	$cnt++;
+}
+
+
 close( FILEOUT ); 
 
 #-------------------------------------
@@ -670,6 +759,17 @@ sub GetFlagNumber
 			return $1;
 		}
 	}
+
+  #USERフラグのサーチ
+  for( my $i = 0; $i < @USERFLAG_BUFF; $i++ ) 
+  {
+		if( $USERFLAG_BUFF[i] eq $name )
+		{
+			print( " $name == $data \n" );
+			print "ok $USER_DEFINED_FLAG_START_NUM + $i \n";
+			return $USER_DEFINED_FLAG_START_NUM + $i;
+		}
+  }
 
 	print( "$name not find\n" );
 	exit(1);

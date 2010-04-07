@@ -17,3 +17,6 @@
 #define TOWNMAP_ZONESEARCH_NOW_AND_ESCAPE	(1)
 #define TOWNMAP_PLACETYPE_MAX	(2)
 
+//ユーザー指定フラグ
+//到着フラグや隠しマップフラグが以下の値ならばプログラムで個別制御を行わなければならない
+#define TOWNMAP_USER_FLAG_LIBERTY_GARDEN_TICKET	(61440)

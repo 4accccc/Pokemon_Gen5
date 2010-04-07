@@ -32,3 +32,4 @@
 */
 //=============================================================================
 extern u16 TOWNMAP_UTIL_GetRootZoneID( const GAMEDATA* cp_gamedata, u16 now_zoneID );
+extern BOOL TOWNMAP_UTIL_CheckFlag( GAMEDATA* p_gamedata, u16 flag );
