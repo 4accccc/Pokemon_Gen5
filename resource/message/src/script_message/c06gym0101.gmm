@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-01T14:15:34"/>
+	<create user="matsumiya" host="W00224" date="2010-04-07T23:02:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1534" top="145" right="2239" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -371,31 +371,45 @@
 ちょっと　テクニカルな　わざなのね▼
 つかえば　なくなる
 どうぐと　くみあわせてみれば▽
-おもしろく　なりそうでしょ？</language>
+おもしろく　なりそうでしょ？▼
+……そういえばね
+ネジやまを　こえて▽
+セッカシティを　とんだとき▼
+プラズマだん　でしたっけ？
+まちに　むかっていたんです……▽
+どういう　ひと　たちなのかな？</language>
 		<language name="JPN_KANJI" width="256">プレゼントした　「アクロバット」は
 道具を　もっていなければ▽
 威力が　２倍に　なるという▽
 ちょっと　テクニカルな　技なのね▼
 使えば　なくなる
 道具と　組み合わせてみれば▽
-おもしろく　なりそうでしょ？</language>
+おもしろく　なりそうでしょ？▼
+……そういえばね
+ネジ山を　越えて▽
+セッカシティを　飛んだとき……▼
+プラズマ団　でしたっけ？
+あの人たちが▽
+街に　向かってたんです……▽
+どういう　人たちなのかな？</language>
 	</row>
 
 	<row id="msg_c06gym0101_leader_06">
 		<comment>♀
-・クリアまで</comment>
+・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
-		<language name="JPN" width="256">……そういえばなんだけど
-セッカシティを　とんだとき[BE:00:ページ切り替え（行送り）]
-プラズマだん　だっけ？[BE:01:ページ切り替え（クリア）]
-まちに　むかってたんだよね……
-どういう　ひと　たちなの？</language>
-		<language name="JPN_KANJI" width="256">……そういえばなんだけど
-セッカシティを　飛んだとき[BE:00:ページ切り替え（行送り）]
-プラズマ団　だっけ？[BE:01:ページ切り替え（クリア）]
-あの人たちが
-街に　向かってたんだよね……▽
-どういう　人たちなの？</language>
+		<language name="JPN" width="256">つぎの　ジムがある　セッカシティは
+７ばんどうろの　さき▽
+ネジやまを　こえたところよ▼
+ひこうきなら　ひとっとびだけど
+あるいていくのは　たいへんだよね▽
+ちゃんと　じゅんびを　してね！</language>
+		<language name="JPN_KANJI" width="256">次の　ジムがある　セッカシティは
+７番道路の　先▽
+ネジ山を　越えたところよ▼
+飛行機なら　ひとっとびだけど
+歩いていくのは　大変だよね▽
+ちゃんと　準備を　してね！</language>
 	</row>
 
 	<row id="msg_c06gym0101_leader_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
