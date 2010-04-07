@@ -2437,7 +2437,6 @@ static int AC_VanishOFF_0( MMDL * mmdl )
 }
 
 //======================================================================
-//
 //	アニメーションコマンド　AC_DIR_PAUSE_ON OFF
 //======================================================================
 //--------------------------------------------------------------
@@ -3018,29 +3017,29 @@ static int AC_Walk12F_1( MMDL * mmdl )
 }
 
 //======================================================================
-//	AC_PC_BOW PCWOMANお辞儀
+//	AC_ACT系
 //======================================================================
 //--------------------------------------------------------------
-///	AC_PC_BOW_WORK
+///	AC_ACT_WORK
 //--------------------------------------------------------------
 typedef struct
 {
 	int frame;
-}AC_PC_BOW_WORK;
+}AC_ACT_WORK;
 
-#define AC_PC_BOW_WORK_SIZE (sizeof(AC_PC_BOW_WORK))
+#define AC_ACT_WORK_SIZE (sizeof(AC_ACT_WORK))
 
 //--------------------------------------------------------------
 /**
- * AC_PC_BOW	0
+ * AC_ACT0 0 DRAW_STA_ACT0を設定
  * @param	mmdl	MMDL *
  * @retval	int		TRUE=再起
  */
 //--------------------------------------------------------------
-static int AC_PcBow_0( MMDL * mmdl )
+static int AC_Act0_0( MMDL * mmdl )
 {
-	AC_PC_BOW_WORK *work = MMDL_InitMoveCmdWork( mmdl, AC_PC_BOW_WORK_SIZE );
-	MMDL_SetDrawStatus( mmdl, DRAW_STA_PC_BOW );
+	AC_ACT_WORK *work = MMDL_InitMoveCmdWork( mmdl, AC_ACT_WORK_SIZE );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_ACT0 );
 	MMDL_IncAcmdSeq( mmdl );
 	
 	return( FALSE );
@@ -3048,16 +3047,81 @@ static int AC_PcBow_0( MMDL * mmdl )
 
 //--------------------------------------------------------------
 /**
- * AC_PC_BOW	1
+ * AC_ACT1 0 DRAW_STA_ACT1を設定
  * @param	mmdl	MMDL *
  * @retval	int		TRUE=再起
  */
 //--------------------------------------------------------------
-static int AC_PcBow_1( MMDL * mmdl )
+static int AC_Act1_0( MMDL * mmdl )
 {
-	AC_PC_BOW_WORK *work = MMDL_GetMoveCmdWork( mmdl );
+	AC_ACT_WORK *work = MMDL_InitMoveCmdWork( mmdl, AC_ACT_WORK_SIZE );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_ACT1 );
+	MMDL_IncAcmdSeq( mmdl );
 	
-	work->frame++;
+	return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_ACT系共通 1 停止 アニメ一周を待ち停止ステータスにする
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_Act_1_Stop( MMDL * mmdl )
+{
+	AC_ACT_WORK *work = MMDL_GetMoveCmdWork( mmdl );
+  u32 actID = MMDL_CallDrawGetProc( mmdl, 0 );
+  
+  if( actID != MMDL_BLACTID_NULL ){
+    u16 cmd;
+    MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+    MMDL_BLACTCONT *bbdcont = MMDLSYS_GetBlActCont( mmdlsys );
+    GFL_BBDACT_SYS *bbdact = MMDL_BLACTCONT_GetBbdActSys( bbdcont );
+    
+    if( GFL_BBDACT_GetAnimeLastCommand(bbdact,actID,&cmd) == TRUE ){
+		  MMDL_SetDrawStatus( mmdl, DRAW_STA_STOP );
+		  MMDL_IncAcmdSeq( mmdl );
+      return( TRUE );
+    }
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_ACT系共通 1 ループ　アニメ一周を待ち、そのまま終了
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_Act_1_Loop( MMDL * mmdl )
+{
+	AC_ACT_WORK *work = MMDL_GetMoveCmdWork( mmdl );
+  u32 actID = MMDL_CallDrawGetProc( mmdl, 0 );
+  
+  if( actID != MMDL_BLACTID_NULL ){
+    u16 cmd;
+    MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+    MMDL_BLACTCONT *bbdcont = MMDLSYS_GetBlActCont( mmdlsys );
+    GFL_BBDACT_SYS *bbdact = MMDL_BLACTCONT_GetBbdActSys( bbdcont );
+    
+    if( GFL_BBDACT_GetAnimeLastCommand(bbdact,actID,&cmd) == TRUE ){
+		  MMDL_IncAcmdSeq( mmdl );
+      return( TRUE );
+    }
+  }
+  
+  return( FALSE );
+}
+
+#if 0 //old
+static int AC_Act_Stop( MMDL * mmdl )
+{
+	AC_ACT_WORK *work = MMDL_GetMoveCmdWork( mmdl );
+	
+  work->frame++;
 	
 	if( work->frame >= 18 ){
 		MMDL_SetDirDisp( mmdl, DIR_DOWN );
@@ -3067,6 +3131,7 @@ static int AC_PcBow_1( MMDL * mmdl )
 	
 	return( FALSE );
 }
+#endif
 
 //======================================================================
 //	AC_HIDE_PULLOFF 隠れ蓑脱ぎ
@@ -5646,12 +5711,42 @@ int (* const DATA_AC_WalkR12F_Tbl[])( MMDL * ) =
 };
 
 //--------------------------------------------------------------
-///	AC_PC_BOW
+///	AC_ACT0_STOP
 //--------------------------------------------------------------
-int (* const DATA_AC_PcBow_Tbl[])( MMDL * ) =
+int (* const DATA_AC_Act0Stop_Tbl[])( MMDL * ) =
 {
-	AC_PcBow_0,
-	AC_PcBow_1,
+	AC_Act0_0,
+	AC_Act_1_Stop,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_ACT0_LOOP
+//--------------------------------------------------------------
+int (* const DATA_AC_Act0Loop_Tbl[])( MMDL * ) =
+{
+	AC_Act0_0,
+	AC_Act_1_Loop,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_ACT1_STOP
+//--------------------------------------------------------------
+int (* const DATA_AC_Act1Stop_Tbl[])( MMDL * ) =
+{
+	AC_Act1_0,
+	AC_Act_1_Stop,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_ACT1_LOOP
+//--------------------------------------------------------------
+int (* const DATA_AC_Act1Loop_Tbl[])( MMDL * ) =
+{
+	AC_Act1_0,
+	AC_Act_1_Loop,
 	AC_End,
 };
 

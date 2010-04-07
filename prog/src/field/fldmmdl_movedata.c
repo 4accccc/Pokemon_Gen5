@@ -1258,7 +1258,7 @@ int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_WalkD7F_Tbl,                  //AC_WALK_D_7F
   DATA_AC_WalkL7F_Tbl,                  //AC_WALK_L_7F
   DATA_AC_WalkR7F_Tbl,                  //AC_WALK_R_7F
-  DATA_AC_PcBow_Tbl,                    //AC_PC_BOW
+  DATA_AC_Act0Stop_Tbl,                  //AC_ACT0_STOP
   DATA_AC_HidePullOFF_Tbl,                //AC_HIDE_PULLOFF
   DATA_AC_HeroBanzai_Tbl,                  //AC_HERO_BANZAI
   DATA_AC_MarkSaisen_Tbl,                  //AC_MARK_SAISEN
@@ -1360,6 +1360,10 @@ int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_MelodyerShake_Tbl,        //AC_MELODYER_SHAKE
   
   DATA_AC_ShinMuOffsetClear_Tbl,  //AC_SHIN_MU_OFFS_CLEAR
+
+  DATA_AC_Act0Loop_Tbl,  //AC_ACT0_LOOP
+  DATA_AC_Act1Stop_Tbl,  //AC_ACT1_STOP
+  DATA_AC_Act1Loop_Tbl,  //AC_ACT1_LOOP
 };
 
 //--------------------------------------------------------------
@@ -1555,6 +1559,10 @@ int (* const * const DATA_RailAcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_RailDummy,        //AC_MELODYER_SHAKE
   
   DATA_AC_RailDummy,        //AC_SHIN_MU_OFFS_CLEAR
+
+  DATA_AC_RailDummy,  //AC_ACT0_LOOP
+  DATA_AC_RailDummy,  //AC_ACT1_STOP
+  DATA_AC_RailDummy,  //AC_ACT1_LOOP
 };
 
 //==============================================================================

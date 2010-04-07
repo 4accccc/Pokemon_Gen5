@@ -556,7 +556,7 @@ static void DrawBlAct_DrawAct( MMDL *mmdl )
   {
     u16 status = MMDL_GetDrawStatus( mmdl );
     
-    if( status == DRAW_STA_ACT0 ){
+    if( status >= DRAW_STA_ACT0 ){
       u16 init_flag = FALSE;
       u16 dir = blact_GetDrawDir( mmdl );
       u16 anm_idx = (status * DIR_MAX4);
@@ -570,6 +570,56 @@ static void DrawBlAct_DrawAct( MMDL *mmdl )
         GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
       }
       
+      blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
+    }else{
+      comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );
+    }
+  }
+  
+  MMDL_GetDrawVectorPos( mmdl, &pos );
+  blact_SetCommonOffsPos( &pos );
+  GFL_BBD_SetObjectTrans(
+    GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+}
+
+//--------------------------------------------------------------
+/**
+ * 描画処理　ビルボード　基本パターン+演技専用、演技中はポーズ無視
+ * @param  mmdl  MMDL
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DrawBlAct_DrawActNonePause( MMDL *mmdl )
+{
+  VecFx32 pos;
+  DRAW_BLACT_WORK *work;
+  GFL_BBDACT_SYS *actSys;
+  
+  work = MMDL_GetDrawProcWork( mmdl );
+  
+  if( work->actID == MMDL_BLACTID_NULL ){ //未登録
+    return;
+  }
+  
+  actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+  
+  {
+    u16 status = MMDL_GetDrawStatus( mmdl );
+    
+    if( status >= DRAW_STA_ACT0 ){
+      u16 init_flag = FALSE;
+      u16 dir = blact_GetDrawDir( mmdl );
+      u16 anm_idx = (status * DIR_MAX4);
+      COMMAN_ANMCTRL_WORK *anmcnt = &work->anmcnt;
+      
+      if( status != anmcnt->set_anm_status ){
+        anmcnt->set_anm_dir = dir;
+        anmcnt->set_anm_status = status;
+        anmcnt->next_walk_frmidx = 0;
+        GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
+      }
+      
+      init_flag = TRUE;
       blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
     }else{
       comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );
@@ -631,6 +681,19 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActAct =
 {
   DrawBlAct_Init,
   DrawBlAct_DrawAct,
+  DrawBlAct_Delete,
+  DrawBlAct_Delete,  //本当は退避
+  DrawBlAct_Init,    //本当は復帰
+  DrawBlAct_GetBlActID,
+};
+
+//--------------------------------------------------------------
+//  描画処理　ビルボード　汎用+演技　まとめ
+//--------------------------------------------------------------
+const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_BlActActNonePause =
+{
+  DrawBlAct_Init,
+  DrawBlAct_DrawActNonePause,
   DrawBlAct_Delete,
   DrawBlAct_Delete,  //本当は退避
   DrawBlAct_Init,    //本当は復帰

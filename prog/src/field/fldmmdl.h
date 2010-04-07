@@ -351,7 +351,7 @@ typedef enum
   MMDL_DRAWPROCNO_ITEMGET, ///<自機アイテムゲット
   MMDL_DRAWPROCNO_PCAZUKE, ///<自機PC預け
   MMDL_DRAWPROCNO_ONEANMLOOP, ///<１パターンアニメループ
-  MMDL_DRAWPROCNO_PCWOMAN, ///<PC姉
+  MMDL_DRAWPROCNO_BLACT_ACT, ///<ビルボード汎用+演技
   MMDL_DRAWPROCNO_TPOKE, ///<連れ歩きポケモン
   MMDL_DRAWPROCNO_TPOKE_FLY, ///<連れ歩きポケモン(アニメ再生スピード1/2) 
   MMDL_DRAWPROCNO_MODEL, ///<ポリゴンモデル
@@ -361,7 +361,7 @@ typedef enum
   MMDL_DRAWPROCNO_SHIN_MU, ///<ポケモン シン・ム
   MMDL_DRAWPROCNO_SPIDER, ///<くもの巣
   MMDL_DRAWPROCNO_MELODYER, ///<ポケモン メロディア
-  MMDL_DRAWPROCNO_RIVEL, ///<ライバル
+  MMDL_DRAWPROCNO_BLACT_ACT_NONE_PAUSE, ///<ビルボード汎用+演技 ポーズ無視
 	MMDL_DRAWPROCNO_MAX,		///<最大
 }MMDL_DRAWPROCNO;
 

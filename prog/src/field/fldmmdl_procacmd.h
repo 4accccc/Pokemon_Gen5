@@ -184,9 +184,12 @@ extern int (* const DATA_AC_DashL6F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_DashR6F_Tbl[])( MMDL * );
 
 //--------------------------------------------------------------
-///	AC_PC_BOW
+///	AC_PC_BOW -> AC_ACT0_STOPŒn
 //--------------------------------------------------------------
-extern int (* const DATA_AC_PcBow_Tbl[])( MMDL * );
+extern int (* const DATA_AC_Act0Stop_Tbl[])( MMDL * );
+extern int (* const DATA_AC_Act0Loop_Tbl[])( MMDL * );
+extern int (* const DATA_AC_Act1Stop_Tbl[])( MMDL * );
+extern int (* const DATA_AC_Act1Loop_Tbl[])( MMDL * );
 
 //--------------------------------------------------------------
 ///	AC_HIDE_PULLOFF
