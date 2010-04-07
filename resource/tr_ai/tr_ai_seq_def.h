@@ -1143,7 +1143,7 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //------------------------------------------------------------
 
 	.macro	IF_HAVE_ITEM		side, item, adrs
-	.long		AI_IF_HAVE_ITEM
+	.short	AI_IF_HAVE_ITEM
 	.long		\side
 	.long		\item
 	.long		(\adrs-.)-4
