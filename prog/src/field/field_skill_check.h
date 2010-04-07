@@ -28,3 +28,4 @@ typedef enum
 
 extern const u16 FIELD_SKILL_CHECK_GetUseSkillBit( GAMEDATA *gameData );
 extern const FIELD_SKILL_CHECK_RET FIELD_SKILL_CHECK_CheckForgetSkill( GAMEDATA *gameData , const u16 wazaNo , HEAPID heapId );
+extern const FIELD_SKILL_CHECK_RET FIELD_SKILL_CHECK_CanTradePoke( POKEMON_PASO_PARAM *ppp , GAMEDATA *gameData , HEAPID heapId );

@@ -150,3 +150,21 @@ const FIELD_SKILL_CHECK_RET FIELD_SKILL_CHECK_CheckForgetSkill( GAMEDATA *gameDa
   
   return FSCR_OK;
 }
+
+//--------------------------------------------------------------
+//	éwíËãZÇ™ñYÇÍÇÁÇÍÇÈÇ©ÅH
+//--------------------------------------------------------------
+const FIELD_SKILL_CHECK_RET FIELD_SKILL_CHECK_CanTradePoke( POKEMON_PASO_PARAM *ppp , GAMEDATA *gameData , HEAPID heapId )
+{
+  u8 i;
+  for( i=0;i<4;i++ )
+  {
+    const u32 wazaNo = PPP_Get( ppp , ID_PARA_waza1+i , NULL );
+    const FIELD_SKILL_CHECK_RET ret = FIELD_SKILL_CHECK_CheckForgetSkill( gameData , wazaNo , heapId );
+    if( ret != FSCR_OK )
+    {
+      return ret;
+    }
+  }
+  return FSCR_OK;
+}
