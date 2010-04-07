@@ -172,6 +172,9 @@ init_flags:
 	
 	//ライモンシティのサポートパパ（ミュージカル誘導イベントまで非表示）
 	_FLAG_SET( FV_C04_SUPPORTPAPA_01 )
+	
+	//R07R0105タワーオブヘブン5F：クリア後チャンピオン
+	_FLAG_SET( FV_R07R0105_CHAMPION_01 )
 
 	//C06R101のGIRL1に話しかけるまで、C06のモンスターボールを非表示
 	_FLAG_SET( FV_C06_MONSTERBALL )	
@@ -360,7 +363,9 @@ ev_first_gameclear:
   //ボックス壁紙追加
   _GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER1 )
 
-
+	//R07R0105タワーオブヘブン5F：クリア後チャンピオン
+	_FLAG_RESET( FV_R07R0105_CHAMPION_01 )
+	$WK_SCENE_R07R0105_CHAMPION = 1
 
   //クリア後イベント：自宅１階のハンサムイベント有効
   $WK_SCENE_T01R0101 = 2

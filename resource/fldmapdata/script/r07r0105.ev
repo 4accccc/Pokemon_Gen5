@@ -22,13 +22,13 @@
 _EVENT_DATA    ev_pos_r07r0105_leader6_01
 _EVENT_DATA    ev_r07r0105_leader6_02
 _EVENT_DATA    ev_bg_r07r0105_bell
+_EVENT_DATA    ev_pos_r07r0105_champion_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/* POS：【仮】フウロとタワーオブヘブンの鐘                     */
+/* POS：フウロとタワーオブヘブンの鐘                     */
 /**************************************************************/
-//POS位置などマップ調整中のため仮
 EVENT_START   ev_pos_r07r0105_leader6_01
 
 	_CAMERA_START()		//カメラ操作開始
@@ -119,7 +119,7 @@ EVENT_END
 /* タワーオブヘブン鐘                                         */
 /**************************************************************/
 EVENT_START   ev_bg_r07r0105_bell
-	
+{
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 
@@ -132,7 +132,7 @@ EVENT_START   ev_bg_r07r0105_bell
 	
 	IF $SCWK_ANSWER01 == 0 THEN
 	
-		//【仮】鐘ME再生
+		//【仮】鐘ME再生（本来はSE）
 		_ME_PLAY( SEQ_ME_POKEGET )
 		
 		//トレーナーは鐘を鳴らした
@@ -165,7 +165,7 @@ EVENT_START   ev_bg_r07r0105_bell
 		_LAST_KEYWAIT()
 		_PLAINWIN_CLOSE() 
 	ENDIF
-	
+}
 EVENT_END
 
 /************************************************************/
@@ -255,4 +255,185 @@ _ANIME_LABEL	anm_bell_leader6_goodbye_01
 	_ANIME_DATA	AC_WALK_R_8F,3
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/* POS：クリア後イベント：チャンピオンとタワーオブヘブンの鐘   */
+/**************************************************************/
+EVENT_START   ev_pos_r07r0105_champion_01
+{
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	
+	//カメラ操作　チャンピオン中心に
+	_CAMERA_MOVE( 9688,0,970752,1081344,458863,753664,60 )
+	
+	//自機位置の座標を格納する変数を定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+	SWITCH $POSX
+	CASE 15 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_endaf_player_up_x15 )
+		_OBJ_ANIME_WAIT()
+	CASE 17 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_endaf_player_up_x17 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //真ん中にいる時と同じ処理を行う
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_endaf_player_up_x16 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
+	//【仮】鐘ME再生（本来はSE）
+	_ME_PLAY( SEQ_ME_POKEGET )
+		
+	//鐘のアニメを作成
+	DEFINE_LOCAL	BM_ANIME_ID1
+	_BMODEL_ANIME_CREATE( BM_ANIME_ID1, SCR_BMID_EVENT, 16, 7 )
+	_BMODEL_ANIME_SET( BM_ANIME_ID1, 0 )
+	_BMODEL_ANIME_WAIT ( BM_ANIME_ID1 )
+	
+	//鐘ME待ち
+	_ME_WAIT()
+	
+	//鐘アニメ破棄
+	_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
+	
+	//チャンピオン：…
+	_BALLOONWIN_OBJMSG( msg_r07r0105_champion_end_01 , R07R0105_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//チャンピオン右を向く
+	_OBJ_ANIME( R07R0105_CHAMPION_01 ,  anm_endaf_champion_look_r )
+	_OBJ_ANIME_WAIT()
+	
+	//チャンピオン：このタワーオブヘブンに
+	_BALLOONWIN_OBJMSG( msg_r07r0105_champion_end_02 , R07R0105_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//【仮】チャンピオン芝居
+	_OBJ_ANIME( R07R0105_CHAMPION_01 ,  anm_endaf_champion_look_d )
+	_OBJ_ANIME_WAIT()
+	
+	//チャンピオン：つよい ポケモンだったぞ！
+	_BALLOONWIN_OBJMSG( msg_r07r0105_champion_end_03 , R07R0105_CHAMPION_01 )
+	
+	//チャンピオン：だが すべての ものがたりには
+	_BALLOONWIN_OBJMSG( msg_r07r0105_champion_end_04 , R07R0105_CHAMPION_01 )
+	
+	//チャンピオン：だが ポケモンと いっしょに すごせる
+	_BALLOONWIN_OBJMSG( msg_r07r0105_champion_end_05 , R07R0105_CHAMPION_01 )
+	
+	//殿堂入り前
+	IF FLAG_OFF( SYS_FLAG_CHAMPION_WIN ) THEN
+		_BALLOONWIN_OBJMSG( msg_r07r0105_champion_end_07 , R07R0105_CHAMPION_01 )
+	
+	//殿堂入り後
+	ELSE
+		_BALLOONWIN_OBJMSG( msg_r07r0105_champion_end_06 , R07R0105_CHAMPION_01 )
+	
+	ENDIF
+	
+	//ウィンドウ閉じる
+	_BALLOONWIN_CLOSE()
+	
+	//自機にカメラを戻す
+	_CAMERA_DEF_MOVE (20) 
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()
+	_CAMERA_END()
+	
+	//チャンピオン退場
+	_OBJ_ANIME( R07R0105_CHAMPION_01 ,  anm_endaf_champion_goodbye_01 )
+	//主人公見送る
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_endaf_player_look_champion_01 )
+	//アニメ待ち
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_DEL( R07R0105_CHAMPION_01 )
+	_SE_PLAY(SEQ_SE_KAIDAN)		//階段ＳＥ
+	_SE_WAIT()
+	
+	//======================================//
+	
+	//R070105のチャンピオンイベントPOSを無効に
+	$WK_SCENE_R07R0105_CHAMPION = 2
+	
+	//R07R0105のチャンピオンを非表示に
+	_FLAG_SET( FV_R07R0105_CHAMPION_01 )
+	
+	//======================================//
+}
+EVENT_END
+
+//--------------------------------------------------------------
+//	クリア後チャンピオン：主人公チャンピオンの後ろにx15
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_endaf_player_up_x15
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	クリア後チャンピオン：主人公チャンピオンの後ろにx16
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_endaf_player_up_x16
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	クリア後チャンピオン：主人公チャンピオンの後ろにx17
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_endaf_player_up_x17
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	クリア後チャンピオン：チャンピオン右を向く
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_endaf_champion_look_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	クリア後チャンピオン：チャンピオン下を向く
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_endaf_champion_look_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	クリア後チャンピオン：チャンピオン退場
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_endaf_champion_goodbye_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	クリア後チャンピオン：主人公見送る
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_endaf_player_look_champion_01
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
 	_ANIME_DATA	ACMD_END,0
