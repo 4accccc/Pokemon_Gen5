@@ -175,6 +175,14 @@ typedef struct {
 
 }HANDLER_EXHIBISION_MANAGER;
 
+/**
+ * ダメージワザ相性記録
+ */
+typedef struct {
+
+  BtlTypeAff   aff[ BTL_POKEID_MAX ];
+
+} BTL_DMGAFF_REC;
 
 /**
  *  メッセージ表示処理コールバック関数型
@@ -286,6 +294,7 @@ struct _BTL_SVFLOW_WORK {
   WazaID                      prevExeWaza;
   SabotageType                currentSabotageType;
   WAZA_AFF_COUNTER            affCounter;
+  BTL_DMGAFF_REC              dmgAffRec;
 
   u8          flowFlags[ FLOWFLG_BYTE_MAX ];
   u8          handlerTmpWork[ EVENT_HANDLER_TMP_WORK_SIZE ];
@@ -418,12 +427,18 @@ static BTL_POKEPARAM* get_opponent_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos po
 static BTL_POKEPARAM* get_next_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos pos );
 static BOOL correctTargetDead( BTL_SVFLOW_WORK* wk, BtlRule rule, const BTL_POKEPARAM* attacker,
   const SVFL_WAZAPARAM* wazaParam, BtlPokePos targetPos, BTL_POKESET* rec );
+static void scproc_WazaExeRecordUpdate( BTL_SVFLOW_WORK* wk, WazaID waza );
 static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BTL_POKESET* targetRec );
 static void scproc_WazaExe_Effective( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza );
 static void scproc_WazaExe_NotEffective( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza );
 static void scproc_WazaExe_Done( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza );
 static void scEvent_WazaExeEnd_Common( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza, BtlEventType eventID );
 static BOOL IsMustHit( const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
+static void flowsub_checkWazaAffineNoEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+  BTL_POKEPARAM* attacker, BTL_POKESET* targets, BTL_DMGAFF_REC* affRec );
+static void DMGAFF_REC_Init( BTL_DMGAFF_REC* rec );
+static void DMGAFF_REC_Add( BTL_DMGAFF_REC* rec, u8 pokeID, BtlTypeAff aff );
+static BtlTypeAff DMGAFF_REC_Get( const BTL_DMGAFF_REC* rec, u8 pokeID );
 static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static BOOL IsTripleFarPos( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaID waza );
@@ -4576,6 +4591,7 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   WazaCategory  category = WAZADATA_GetCategory( waza );
   u8 pokeID = BPP_GetID( attacker );
   u8 fEnable = TRUE;
+  u8 fDamage = FALSE;
 
   u16  que_reserve_pos;
 
@@ -4618,6 +4634,19 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 
   if( fEnable )
   {
+    switch( category ){
+    case WAZADATA_CATEGORY_SIMPLE_DAMAGE:
+    case WAZADATA_CATEGORY_DAMAGE_EFFECT_USER:
+    case WAZADATA_CATEGORY_DAMAGE_EFFECT:
+    case WAZADATA_CATEGORY_DAMAGE_SICK:
+    case WAZADATA_CATEGORY_DRAIN:
+      fDamage = TRUE;
+    }
+
+    if( fDamage || (category == WAZADATA_CATEGORY_ICHIGEKI) ){
+      flowsub_checkWazaAffineNoEffect( wk, &wk->wazaParam, attacker, targetRec, &wk->dmgAffRec );
+    }
+
     // 対象ごとの無効チェック＆回避チェック->原因表示はその先に任せる
     flowsub_checkNotEffect( wk, &wk->wazaParam, attacker, targetRec );
     if( category != WAZADATA_CATEGORY_ICHIGEKI ){
@@ -4634,45 +4663,45 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   {
     wazaEffCtrl_Init( &wk->wazaEffCtrl, wk, attacker, targetRec );
     BTL_Printf("ワザ=%d, カテゴリ=%d\n", wk->wazaParam.wazaID, category );
-    switch( category ){
-    case WAZADATA_CATEGORY_SIMPLE_DAMAGE:
-    case WAZADATA_CATEGORY_DAMAGE_EFFECT_USER:
-    case WAZADATA_CATEGORY_DAMAGE_EFFECT:
-    case WAZADATA_CATEGORY_DAMAGE_SICK:
-    case WAZADATA_CATEGORY_DRAIN:
+
+    if( fDamage ){
       scproc_Fight_Damage_Root( wk, &wk->wazaParam, attacker, targetRec );
-      break;
-    case WAZADATA_CATEGORY_SIMPLE_EFFECT:
-      scproc_Migawari_CheckNoEffect( wk, &wk->wazaParam, attacker, targetRec );
-      scproc_Fight_SimpleEffect( wk, &wk->wazaParam, attacker, targetRec );
-      break;
-    case WAZADATA_CATEGORY_SIMPLE_SICK:
-      scproc_Migawari_CheckNoEffect( wk, &wk->wazaParam, attacker, targetRec );
-      scproc_Fight_SimpleSick( wk, waza, attacker, targetRec );
-      break;
-    case WAZADATA_CATEGORY_EFFECT_SICK:
-      scproc_Migawari_CheckNoEffect( wk, &wk->wazaParam, attacker, targetRec );
-      scproc_Fight_EffectSick( wk, &wk->wazaParam, attacker, targetRec );
-      break;
-    case WAZADATA_CATEGORY_ICHIGEKI:
-      scproc_Fight_Ichigeki( wk, &wk->wazaParam, attacker, targetRec );
-      break;
-    case WAZADATA_CATEGORY_PUSHOUT:
-      scproc_Fight_PushOut( wk, waza, attacker, targetRec );
-      break;
-    case WAZADATA_CATEGORY_SIMPLE_RECOVER:
-      scproc_Fight_SimpleRecover( wk, waza, attacker, targetRec );
-      break;
-    case WAZADATA_CATEGORY_FIELD_EFFECT:
-      scput_Fight_FieldEffect( wk, &wk->wazaParam, attacker );
-      break;
-    case WAZADATA_CATEGORY_SIDE_EFFECT:
-    case WAZADATA_CATEGORY_OTHERS:
-      scput_Fight_Uncategory( wk, &wk->wazaParam, attacker, targetRec );
-      break;
-    default:
-      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
-      break;
+    }
+    else{
+
+      switch( category ){
+      case WAZADATA_CATEGORY_SIMPLE_EFFECT:
+        scproc_Migawari_CheckNoEffect( wk, &wk->wazaParam, attacker, targetRec );
+        scproc_Fight_SimpleEffect( wk, &wk->wazaParam, attacker, targetRec );
+        break;
+      case WAZADATA_CATEGORY_SIMPLE_SICK:
+        scproc_Migawari_CheckNoEffect( wk, &wk->wazaParam, attacker, targetRec );
+        scproc_Fight_SimpleSick( wk, waza, attacker, targetRec );
+        break;
+      case WAZADATA_CATEGORY_EFFECT_SICK:
+        scproc_Migawari_CheckNoEffect( wk, &wk->wazaParam, attacker, targetRec );
+        scproc_Fight_EffectSick( wk, &wk->wazaParam, attacker, targetRec );
+        break;
+      case WAZADATA_CATEGORY_ICHIGEKI:
+        scproc_Fight_Ichigeki( wk, &wk->wazaParam, attacker, targetRec );
+        break;
+      case WAZADATA_CATEGORY_PUSHOUT:
+        scproc_Fight_PushOut( wk, waza, attacker, targetRec );
+        break;
+      case WAZADATA_CATEGORY_SIMPLE_RECOVER:
+        scproc_Fight_SimpleRecover( wk, waza, attacker, targetRec );
+        break;
+      case WAZADATA_CATEGORY_FIELD_EFFECT:
+        scput_Fight_FieldEffect( wk, &wk->wazaParam, attacker );
+        break;
+      case WAZADATA_CATEGORY_SIDE_EFFECT:
+      case WAZADATA_CATEGORY_OTHERS:
+        scput_Fight_Uncategory( wk, &wk->wazaParam, attacker, targetRec );
+        break;
+      default:
+        SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
+        break;
+      }
     }
 
     // ワザ効果あり→エフェクトコマンド生成などへ
@@ -4799,6 +4828,80 @@ static BOOL IsMustHit( const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* targe
   }
 
   return FALSE;
+}
+//--------------------------------------------------------------------------
+/**
+ * ワザ発動前の、相性による無効化チェック（ダメージワザのみ）
+ *
+ * @param   wk
+ * @param   attacker  [in] ワザを出すポケモン
+ * @param   targets   [io] ワザ対象ポケモンコンテナ／無効になったポケモンはコンテナから削除される
+ *
+ */
+//--------------------------------------------------------------------------
+static void flowsub_checkWazaAffineNoEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+  BTL_POKEPARAM* attacker, BTL_POKESET* targets, BTL_DMGAFF_REC* affRec )
+{
+  BTL_POKEPARAM* bpp;
+  BtlTypeAff aff;
+
+  DMGAFF_REC_Init( affRec );
+
+  BTL_POKESET_SeekStart( targets );
+  while( (bpp = BTL_POKESET_SeekNext(targets) ) != NULL )
+  {
+    aff = scProc_checkWazaDamageAffinity( wk, attacker, bpp, wazaParam, TRUE );
+    DMGAFF_REC_Add( affRec, BPP_GetID(bpp), aff );
+    if( aff == BTL_TYPEAFF_0 )
+    {
+      BTL_POKESET_Remove( targets, bpp );
+      AffCounter_CountUp( &wk->affCounter, wk, attacker, bpp, BTL_TYPEAFF_0 );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * 相性記録ワーク：初期化
+ *
+ * @param   rec
+ */
+//----------------------------------------------------------------------------------
+static void DMGAFF_REC_Init( BTL_DMGAFF_REC* rec )
+{
+  u32 i;
+  for(i=0; i<NELEMS(rec->aff); ++i){
+    rec->aff[i] = BTL_TYPEAFF_MAX;
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * 相性記録ワーク：１体分追加
+ *
+ * @param   rec
+ * @param   pokeID
+ * @param   aff
+ */
+//----------------------------------------------------------------------------------
+static void DMGAFF_REC_Add( BTL_DMGAFF_REC* rec, u8 pokeID, BtlTypeAff aff )
+{
+  GF_ASSERT(pokeID < BTL_POKEID_MAX);
+  rec->aff[ pokeID ] = aff;
+}
+//----------------------------------------------------------------------------------
+/**
+ * 相性記録ワーク：１体分取得
+ *
+ * @param   rec
+ * @param   pokeID
+ */
+//----------------------------------------------------------------------------------
+static BtlTypeAff DMGAFF_REC_Get( const BTL_DMGAFF_REC* rec, u8 pokeID )
+{
+  GF_ASSERT(pokeID < BTL_POKEID_MAX);
+  GF_ASSERT(rec->aff[pokeID] != BTL_TYPEAFF_MAX);
+
+  return rec->aff[ pokeID ];
 }
 
 //--------------------------------------------------------------------------
@@ -5689,14 +5792,10 @@ static u32 scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
   BTL_POKESET_SeekStart( targets );
   while( (bpp = BTL_POKESET_SeekNext(targets) ) != NULL )
   {
-    affAry[damaged_poke_cnt] = scProc_checkWazaDamageAffinity( wk, attacker, bpp, wazaParam, TRUE );
-    if( affAry[ damaged_poke_cnt ] == BTL_TYPEAFF_0 )
+//    affAry[damaged_poke_cnt] = scProc_checkWazaDamageAffinity( wk, attacker, bpp, wazaParam, TRUE );
+    affAry[damaged_poke_cnt] = DMGAFF_REC_Get( &wk->dmgAffRec, BPP_GetID(bpp) );
+    if( affAry[ damaged_poke_cnt ] != BTL_TYPEAFF_0 )
     {
-//      scput_WazaNoEffect( wk, bpp );
-      BTL_POKESET_Remove( targets, bpp );
-      AffCounter_CountUp( &wk->affCounter, wk, attacker, bpp, BTL_TYPEAFF_0 );
-    }
-    else{
       ++damaged_poke_cnt;
     }
   }
@@ -7567,10 +7666,7 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
       else if( atkLevel < defLevel ){
         scput_WazaNoEffectIchigeki( wk, target );
       }
-      else if( scProc_checkWazaDamageAffinity(wk, attacker, target, wazaParam, TRUE) == BTL_TYPEAFF_0 ){
-//        scput_WazaNoEffect( wk, target );
-      }
-      else
+      else if( DMGAFF_REC_Get(&wk->dmgAffRec, BPP_GetID(target)) != BTL_TYPEAFF_0 )
       {
         u32 hem_state = Hem_PushState( &wk->HEManager );
 

@@ -1618,7 +1618,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     break;
   case 6:
     if( PMSND_CheckFadeOnBGM() == FALSE )
-    { 
+    {
       PMSND_PlayBGM( SEQ_BGM_BATTLESUPERIOR );
       wk->fAITrainerBGMChanged = TRUE;
       (*seq)++;
@@ -3047,90 +3047,123 @@ static BOOL AI_ChangeProcSub_CheckWazaAff( BTL_CLIENT* wk, const BTL_POKEPARAM* 
 
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
-  const BTL_POKEPARAM* pp;
-  u32 i = 0;
+  enum {
+    SEQ_INIT = 0,
+    SEQ_ROOT,
+    SEQ_WAZA_AI,
+    SEQ_INC,
+  };
 
   GF_ASSERT(wk->AIHandle);
 
-  ChangeAI_InitWork( wk );
-
-  for(i=0; i<wk->numCoverPos; ++i)
-  {
-    pp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
-    wk->procPoke = pp;
-    wk->procAction = &wk->actionParam[i];
-
-    if( !BPP_IsDead(pp) )
+  switch( *seq ){
+  case SEQ_INIT:
+    ChangeAI_InitWork( wk );
+    wk->procPokeIdx = 0;
+    (*seq) = SEQ_ROOT;
+    /* fallthru */
+  case SEQ_ROOT:
+    if( wk->procPokeIdx < wk->numCoverPos )
     {
-      u8 wazaCount, wazaIdx, targetPos;
+      wk->procPoke = BTL_PARTY_GetMemberDataConst( wk->myParty, wk->procPokeIdx );
+      wk->procAction = &wk->actionParam[wk->procPokeIdx];
 
-      // 行動選択できないチェック
-      if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
-        continue;
-      }
-
-      // アイテム使用チェック
+      if( BPP_IsDead(wk->procPoke) )
       {
-        u16 itemID = AIItem_CheckUse( wk, wk->procPoke, wk->myParty );
-        if( itemID != ITEM_DUMMY_DATA )
-        {
-          BTL_ACTION_SetItemParam( wk->procAction, itemID, i, 0 );
-          continue;
+        BTL_ACTION_SetNULL( wk->procAction );
+        (*seq) = SEQ_INC;
+        break;
+      }
+      else
+      {
+        // 行動選択できないチェック
+        if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
+          (*seq) = SEQ_INC;
+          break;
         }
-      }
 
-      // 入れ替えチェック
-      if( BTL_MAIN_GetCompetitor(wk->mainModule) != BTL_COMPETITOR_WILD )
-      {
-        u8 targetIndex;
-        if( ChangeAI_Root(wk, pp,  i, &targetIndex) )
+        // アイテム使用チェック
         {
-          BTL_ACTION_SetChangeParam( wk->procAction, i, targetIndex );
-          continue;
+          u16 itemID = AIItem_CheckUse( wk, wk->procPoke, wk->myParty );
+          if( itemID != ITEM_DUMMY_DATA ){
+            BTL_ACTION_SetItemParam( wk->procAction, itemID, wk->procPokeIdx, 0 );
+            (*seq) = SEQ_INC;
+            break;
+          }
         }
-      }
 
-      if( BPP_CheckSick(pp, WAZASICK_ENCORE)
-      ||  BPP_CheckSick(pp, WAZASICK_WAZALOCK)
-      ){
-        WazaID waza = BPP_GetPrevWazaID( pp );
-        BtlPokePos pos = BPP_GetPrevTargetPos( pp );
-        BTL_ACTION_SetFightParam( wk->procAction, waza, pos );
-        continue;
-      }
-
-      wazaCount = BPP_WAZA_GetCount( pp );
-      {
-        u8 usableWazaFlag[ PTL_WAZA_MAX ];
-
-        if( StoreSelectableWazaFlag(wk, pp, usableWazaFlag) != PTL_WAZA_MAX )
+        // 入れ替えチェック
+        if( BTL_MAIN_GetCompetitor(wk->mainModule) != BTL_COMPETITOR_WILD )
         {
-          WazaID waza;
-          u8  mypos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->myID, i );
+          u8 targetIndex;
+          if( ChangeAI_Root(wk, wk->procPoke, wk->procPokeIdx, &targetIndex) ){
+            BTL_ACTION_SetChangeParam( wk->procAction, wk->procPokeIdx, targetIndex );
+            (*seq) = SEQ_INC;
+            break;
+          }
+        }
 
-          TR_AI_Start( wk->AIHandle, usableWazaFlag, mypos );
-          TR_AI_Main( wk->AIHandle );
-          wazaIdx = TR_AI_GetSelectWazaPos( wk->AIHandle );
-          targetPos = TR_AI_GetSelectWazaDir( wk->AIHandle );
+        // アンコール状態
+        if( BPP_CheckSick(wk->procPoke, WAZASICK_ENCORE)
+        ||  BPP_CheckSick(wk->procPoke, WAZASICK_WAZALOCK)
+        ){
+          WazaID waza = BPP_GetPrevWazaID( wk->procPoke );
+          BtlPokePos pos = BPP_GetPrevTargetPos( wk->procPoke );
+          BTL_ACTION_SetFightParam( wk->procAction, waza, pos );
+          (*seq) = SEQ_INC;
+          break;
+        }
 
-          waza = BPP_WAZA_GetID( pp, wazaIdx );
-          BTL_ACTION_SetFightParam( &wk->actionParam[i], waza, targetPos );
+        // ワザ選択AI
+        {
+          u8 wazaCount, wazaIdx, targetPos;
+          u8 usableWazaFlag[ PTL_WAZA_MAX ];
 
-        }else{
-          setWaruagakiAction( &wk->actionParam[i], wk, pp );
-          continue;
+          wazaCount = BPP_WAZA_GetCount( wk->procPoke );
+
+          if( StoreSelectableWazaFlag(wk, wk->procPoke, usableWazaFlag) != PTL_WAZA_MAX )
+          {
+            u8  mypos = BTL_MAIN_GetClientPokePos( wk->mainModule, wk->myID, wk->procPokeIdx );
+
+            TR_AI_Start( wk->AIHandle, usableWazaFlag, mypos );
+            (*seq) = SEQ_WAZA_AI;
+            break;
+          }
+          else
+          {
+            setWaruagakiAction( wk->procAction, wk, wk->procPoke );
+            (*seq) = SEQ_INC;
+            break;
+          }
         }
       }
     }
-    else
+    break;
+
+  case SEQ_WAZA_AI:
+    if( !TR_AI_Main(wk->AIHandle) )
     {
-      BTL_ACTION_SetNULL( &wk->actionParam[i] );
+      u8 wazaIdx = TR_AI_GetSelectWazaPos( wk->AIHandle );
+      u8 targetPos = TR_AI_GetSelectWazaDir( wk->AIHandle );
+
+      WazaID  waza = BPP_WAZA_GetID( wk->procPoke, wazaIdx );
+      BTL_ACTION_SetFightParam( wk->procAction, waza, targetPos );
+      (*seq) = SEQ_INC;
     }
+    break;
+
+  case SEQ_INC:
+    wk->procPokeIdx++;
+    if( wk->procPokeIdx >= wk->numCoverPos )
+    {
+      wk->returnDataPtr = &(wk->actionParam[0]);
+      wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
+      return TRUE;
+    }
+    break;
+
   }
-
-  wk->returnDataPtr = &(wk->actionParam[0]);
-  wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
-  return TRUE;
+  return FALSE;
 }
 //--------------------------------------------------------------------------
 /**
