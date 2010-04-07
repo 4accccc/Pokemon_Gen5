@@ -3842,7 +3842,7 @@ static const ZONEDATA ZoneData[] = {
 		enc_dummy,
 		NARC_eventdata_c06r0201_bin,
     ZONE_ID_C06,
-		MAPNAME_NOTHING,
+		MAPNAME_C6FUKIYOSE,
 		0,
 		WEATHER_NO_SUNNY,
 		0,
@@ -7086,7 +7086,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
 		FALSE,
 		FALSE,
-    TRUE,
+    FALSE,
     TRUE,
 		MATRIX_ID_DUN0808, // camera_area
 		0, // padding
