@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-04-03T22:30:52"/>
+	<create user="morimoto" host="W00220" date="2010-04-07T16:17:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1330" top="130" right="2035" bottom="750" maximized="no" rayout="Vertical2">
+	<dialog left="1655" top="220" right="2360" bottom="848" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -491,35 +491,65 @@
 	</row>
 
 	<row id="msg_c04r0111_23">
-		<comment>AIマルチOBJ 男</comment>
-		<language name="JPN" width="256">パートナーはなしかけ　おとこ</language>
-		<language name="JPN_KANJI" width="256">パートナーはなしかけ　おとこ</language>
+		<comment>AIマルチOBJ 男
+７連勝～１４連勝</comment>
+		<language name="JPN" width="256">まだまだ　さきは　ながいけど
+がんばろう！</language>
+		<language name="JPN_KANJI" width="256">まだまだ　先は　長いけど
+頑張ろう！</language>
 	</row>
 
 	<row id="msg_c04r0111_24">
-		<comment>AIマルチOBJ 女</comment>
-		<language name="JPN" width="256">パートナーはなしかけ　おんな</language>
-		<language name="JPN_KANJI" width="256">パートナーはなしかけ　おんな</language>
+		<comment>AIマルチOBJ 女
+７連勝～１４連勝</comment>
+		<language name="JPN" width="256">まだまだ　さきは　ながいけど
+がんばろうね！</language>
+		<language name="JPN_KANJI" width="256">まだまだ　先は　長いけど
+頑張ろうね！</language>
 	</row>
 
 	<row id="msg_c04r0111_25">
-		<language name="JPN" width="256">テスト</language>
-		<language name="JPN_KANJI" width="256">テスト</language>
+		<comment>AIマルチOBJ 男
+２１連勝～４２連勝</comment>
+		<language name="JPN" width="256">やっと　ここまで　これたね▼
+どんどん　あいてが　つよくなるけど
+まけずに　がんばろう！</language>
+		<language name="JPN_KANJI" width="256">やっと　ここまで　これたね▼
+どんどん　相手が　強くなるけど
+負けずに　頑張ろう！</language>
 	</row>
 
 	<row id="msg_c04r0111_26">
-		<language name="JPN" width="256">テスト</language>
-		<language name="JPN_KANJI" width="256">テスト</language>
+		<comment>AIマルチOBJ 女
+２１連勝～４２連勝</comment>
+		<language name="JPN" width="256">やっと　ここまで　これたね▼
+どんどん　あいてが　つよくなるけど
+まけずに　がんばろう！</language>
+		<language name="JPN_KANJI" width="256">やっと　ここまで　これたね▼
+どんどん　相手が　強くなるけど
+負けずに　頑張ろう！</language>
 	</row>
 
 	<row id="msg_c04r0111_27">
-		<language name="JPN" width="256">テスト</language>
-		<language name="JPN_KANJI" width="256">テスト</language>
+		<comment>AIマルチOBJ 男
+４９連勝～</comment>
+		<language name="JPN" width="256">ついに　ここまで　きてしまったね▼
+……もしかして　ぼくたち
+ベスト　パートナー！？</language>
+		<language name="JPN_KANJI" width="256">ついに　ここまで　きてしまったね▼
+……もしかして　僕たち
+ベスト　パートナー！？</language>
 	</row>
 
 	<row id="msg_c04r0111_28">
-		<language name="JPN" width="256">テスト</language>
-		<language name="JPN_KANJI" width="256">テスト</language>
+		<comment>AIマルチOBJ 女
+４９連勝～</comment>
+		<language name="JPN" width="256">ついに　ここまで　きてしまったね▼
+……もしかして　わたしたち
+ベスト　パートナー！？</language>
+		<language name="JPN_KANJI" width="256">ついに　ここまで　きてしまったね▼
+……もしかして　私たち
+ベスト　パートナー！？</language>
 	</row>
 
 	<row id="msg_c04r0111_29">
