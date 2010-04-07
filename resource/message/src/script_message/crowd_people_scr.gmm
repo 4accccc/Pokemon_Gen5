@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T15:11:27"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-06T21:56:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,7 +296,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="142"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -327,13 +327,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="592" top="482" right="1092" bottom="1110" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="325"/>
+		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -549,6 +549,36 @@
 人の数を　カウントしてたのに！！</language>
 	</row>
 
+	<row id="CROWD_MSG25">
+		<comment>Ｈ０３群集用</comment>
+		<language name="JPN" width="256">おいおい　チビ！
+あぶねーだろうがっ！</language>
+		<language name="JPN_KANJI" width="256">おいおい　チビ！
+危ねーだろうがっ！</language>
+	</row>
+
+	<row id="CROWD_MSG26">
+		<comment>Ｈ０３群集用</comment>
+		<language name="JPN" width="256">オメーも　おおきくなったら
+バイクのりに　ならねえか？</language>
+		<language name="JPN_KANJI" width="256">オメーも　大きくなったら
+バイク乗りに　ならねえか？</language>
+	</row>
+
+	<row id="CROWD_MSG27">
+		<comment>Ｈ０３群集用</comment>
+		<language name="JPN" width="256">よかぜが　やけに　みに　しみる……
+オレのバイクも　こごえてるぜ……</language>
+		<language name="JPN_KANJI" width="256">夜風が　やけに　身に　染みる……
+オレのバイクも　こごえてるぜ……</language>
+	</row>
+
+	<row id="CROWD_MSG28">
+		<comment>Ｈ０３群集用</comment>
+		<language name="JPN" width="256">バリバリ　だべー！！</language>
+		<language name="JPN_KANJI" width="256">バリバリ　だべー！！</language>
+	</row>
+
 	<row id="CROWD_NOISE_01">
 		<language name="JPN" width="256">うおー</language>
 		<language name="JPN_KANJI" width="256">うおー</language>
@@ -647,6 +677,66 @@
 	<row id="CROWD_NOISE_20">
 		<language name="JPN" width="256">いまの？</language>
 		<language name="JPN_KANJI" width="256">今の？</language>
+	</row>
+
+	<row id="H03_CROWD_NOISE_01">
+		<comment>Ｈ０３群集用</comment>
+		<language name="JPN" width="256">４６４９！</language>
+		<language name="JPN_KANJI" width="256">４６４９！</language>
+	</row>
+
+	<row id="H03_CROWD_NOISE_02">
+		<comment>Ｈ０３群集用</comment>
+		<language name="JPN" width="256">パラリラー</language>
+		<language name="JPN_KANJI" width="256">パラリラー</language>
+	</row>
+
+	<row id="H03_CROWD_NOISE_03">
+		<comment>Ｈ０３群集用</comment>
+		<language name="JPN" width="256">ヒャッホー！</language>
+		<language name="JPN_KANJI" width="256">ヒャッホー！</language>
+	</row>
+
+	<row id="H03_CROWD_NOISE_04">
+		<comment>Ｈ０３群集用</comment>
+		<language name="JPN" width="256">ぶーん</language>
+		<language name="JPN_KANJI" width="256">ぶーん</language>
+	</row>
+
+	<row id="H03_CROWD_NOISE_05">
+		<comment>Ｈ０３群集用</comment>
+		<language name="JPN" width="256">どけどけ！</language>
+		<language name="JPN_KANJI" width="256">どけどけ！</language>
+	</row>
+
+	<row id="H03_CROWD_NOISE_06">
+		<comment>Ｈ０３群集用</comment>
+		<language name="JPN" width="256">グログロー</language>
+		<language name="JPN_KANJI" width="256">グログロー</language>
+	</row>
+
+	<row id="H03_CROWD_NOISE_07">
+		<comment>Ｈ０３群集用</comment>
+		<language name="JPN" width="256">まってー！</language>
+		<language name="JPN_KANJI" width="256">待ってー！</language>
+	</row>
+
+	<row id="H03_CROWD_NOISE_08">
+		<comment>Ｈ０３群集用</comment>
+		<language name="JPN" width="256">ヒュー！</language>
+		<language name="JPN_KANJI" width="256">ヒュー！</language>
+	</row>
+
+	<row id="H03_CROWD_NOISE_09">
+		<comment>Ｈ０３群集用</comment>
+		<language name="JPN" width="256">とばせー！</language>
+		<language name="JPN_KANJI" width="256">飛ばせー！</language>
+	</row>
+
+	<row id="H03_CROWD_NOISE_10">
+		<comment>Ｈ０３群集用</comment>
+		<language name="JPN" width="256">ガハハッ！</language>
+		<language name="JPN_KANJI" width="256">ガハハッ！</language>
 	</row>
 
 	<flowchart-group-list>
