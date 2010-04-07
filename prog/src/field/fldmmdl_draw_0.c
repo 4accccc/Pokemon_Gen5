@@ -564,6 +564,7 @@ static void DrawBlAct_DrawAct( MMDL *mmdl )
       
       if( status != anmcnt->set_anm_status ){
         init_flag = TRUE;
+        anm_idx += status - DRAW_STA_ACT0;
         anmcnt->set_anm_dir = dir;
         anmcnt->set_anm_status = status;
         anmcnt->next_walk_frmidx = 0;
@@ -613,13 +614,14 @@ static void DrawBlAct_DrawActNonePause( MMDL *mmdl )
       COMMAN_ANMCTRL_WORK *anmcnt = &work->anmcnt;
       
       if( status != anmcnt->set_anm_status ){
+        anm_idx += status - DRAW_STA_ACT0;
         anmcnt->set_anm_dir = dir;
         anmcnt->set_anm_status = status;
         anmcnt->next_walk_frmidx = 0;
         GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
       }
       
-      init_flag = TRUE;
+      init_flag = TRUE; //‰‰‹Z’†‚Íƒ|[ƒY–³Ž‹
       blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
     }else{
       comManAnmCtrl_Update( &work->anmcnt, mmdl, actSys, work->actID );

@@ -1710,30 +1710,32 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
             const OBJCODE_PARAM *param =
                 MMDL_GetOBJCodeParam( mmdl, code );
             
-            switch( param->anm_id ){
-            case MMDL_BLACT_ANMTBLNO_PCWOMAN:
-              ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_PC_BOW;
-              break;
-            case MMDL_BLACT_ANMTBLNO_RIVEL:
-              ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_RIVEL_ACT0;
-              break;
-            case MMDL_BLACT_ANMTBLNO_SUPPORT:
-              ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SUPPORT_ACT0;
-              break;
-            case MMDL_BLACT_ANMTBLNO_BOSS_N:
-              ac_act_u = ac_act_d = AC_N_ACT0;
-              ac_act_l = ac_act_r = AC_N_ACT1;
-              break;
-            case MMDL_BLACT_ANMTBLNO_SAGE1:
-              ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SAGE1_ACT0;
-              break;
-            case MMDL_BLACT_ANMTBLNO_NINJA:
-              ac_act_u = ac_act_d = AC_NINJA_ACT0;
-              ac_act_l = ac_act_r = AC_NINJA_ACT1;
-              break;
-            case MMDL_BLACT_ANMTBLNO_CHAMPION:
-              ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_CHAMPION_ACT0;
-              break;
+            if( key_cont & PAD_BUTTON_A ){
+              switch( param->anm_id ){
+              case MMDL_BLACT_ANMTBLNO_PCWOMAN:
+                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_PC_BOW;
+                break;
+              case MMDL_BLACT_ANMTBLNO_RIVEL:
+                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_RIVEL_ACT0;
+                break;
+              case MMDL_BLACT_ANMTBLNO_SUPPORT:
+                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SUPPORT_ACT0;
+                break;
+              case MMDL_BLACT_ANMTBLNO_BOSS_N:
+                ac_act_u = ac_act_d = AC_N_ACT0;
+                ac_act_l = ac_act_r = AC_N_ACT1;
+                break;
+              case MMDL_BLACT_ANMTBLNO_SAGE1:
+                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_SAGE1_ACT0;
+                break;
+              case MMDL_BLACT_ANMTBLNO_NINJA:
+                ac_act_u = ac_act_d = AC_NINJA_ACT0;
+                ac_act_l = ac_act_r = AC_NINJA_ACT1;
+                break;
+              case MMDL_BLACT_ANMTBLNO_CHAMPION:
+                ac_act_u = ac_act_d = ac_act_l = ac_act_r = AC_CHAMPION_ACT0;
+                break;
+              }
             }
             
             if( key_cont & PAD_KEY_UP ){
