@@ -12,13 +12,13 @@
 
 #include "evt_lock.h"
 
-#define EVT_MASIC_NUM_ROCKCAPSULE    (20100325)    //ロックカプセル
+#define EVT_MASIC_NUM_LOCKCAPSULE    (20100325)    //ロックカプセル
 #define EVT_MASIC_NUM_VICTYTICKET    (20100406)    //ビクティのチケット
 
 //マジックナンバーテーブル
 const u32 EvtMasicNumTbl[EVT_MAX] = 
 {
-  EVT_MASIC_NUM_ROCKCAPSULE,
+  EVT_MASIC_NUM_LOCKCAPSULE,
   EVT_MASIC_NUM_VICTYTICKET,
   0,
   0,
@@ -38,7 +38,7 @@ const u32 EvtMasicNumTbl[EVT_MAX] =
  * @retval none
  */
 //--------------------------------------------------------------
-void EVTROCK_SetEvtLock( MISC * misc, const int inNo, MYSTATUS *my )
+void EVTLOCK_SetEvtLock( MISC * misc, const int inNo, MYSTATUS *my )
 {
   u32 masic;
   u32 key;
@@ -68,7 +68,7 @@ void EVTROCK_SetEvtLock( MISC * misc, const int inNo, MYSTATUS *my )
  * @retval BOOL
  */
 //--------------------------------------------------------------
-BOOL EVTROCK_ChekcEvtLock( MISC * misc, const int inNo, MYSTATUS *my )
+BOOL EVTLOCK_CheckEvtLock( MISC * misc, const int inNo, MYSTATUS *my )
 {
   u32 masic;
   u32 key;

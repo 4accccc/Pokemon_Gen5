@@ -41,7 +41,7 @@ VMCMD_RESULT EvCmdCheckEvtLock( VMHANDLE *core, void *wk )
     my = GAMEDATA_GetMyStatus(gdata);
   }
 
-  *ret = EVTROCK_ChekcEvtLock( misc, lock_no, my );
+  *ret = EVTLOCK_CheckEvtLock( misc, lock_no, my );
   
   return VMCMD_RESULT_CONTINUE;
 }
