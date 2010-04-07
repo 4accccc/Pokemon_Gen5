@@ -847,7 +847,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
           pWork->dbw->aTVT.mode = CTM_CHILD;
           for( ii=0;ii<6;ii++ )
           {
-            Pwork->dbw->aTVT.macAddress[ii] = macAddress[ii];
+            pWork->dbw->aTVT.macAddress[ii] = macAddress[ii];
           }
           OS_TPrintf("Žq‹@‚É‚È‚Á‚½\n");
         }
