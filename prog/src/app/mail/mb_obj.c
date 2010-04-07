@@ -491,6 +491,7 @@ void MBOBJ_PosSet( MAILBOX_APP_WORK * appwk, u32 id, s16 px, s16 py )
   }else{
     GFL_CLACT_WK_SetPos( appwk->clwk[id], &pos, CLSYS_DEFREND_SUB );
   }
+  GFL_CLACT_WK_SetAnmFrame( appwk->clwk[id], 0 );
 }
 
 //--------------------------------------------------------------------------------------------

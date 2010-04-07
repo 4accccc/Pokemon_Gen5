@@ -90,6 +90,7 @@ static int MainSeq_MailPokeSetMsg( MAILBOX_SYS_WORK * syswk );
 static int MainSeq_MailPokeSetYesNoSet( MAILBOX_SYS_WORK * syswk );
 static int MainSeq_MailDelEnd( MAILBOX_SYS_WORK * syswk );
 static int MainSeq_MailWriteExit( MAILBOX_SYS_WORK * syswk );
+static int MainSeq_MilboxEndAnimeWait( MAILBOX_SYS_WORK *syswk );
 
 static int MainSeq_EraseMailPokeListExit( MAILBOX_SYS_WORK * syswk );
 static int MainSeq_EraseMailPokeSetCancel( MAILBOX_SYS_WORK * syswk );
@@ -154,6 +155,7 @@ static const pMailBoxFunc MainSeq[] = {
   MainSeq_EraseMailPokeSetCancel,     // MBSEQ_MAINSEQ_ERASEMAIL_POKESET_CANCEL,   
   MainSeq_EraseMailPokeSetCancelEnd,  // MBSEQ_MAINSEQ_ERASEMAIL_POKESET_CANCEL_END
   MainSeq_MailWriteExit,              // MBSEQ_MAINSEQ_MAILWRITE_END,        // メー
+  MainSeq_MilboxEndAnimeWait,         // MBSEQ_MAINSEQ_MAILBOX_END_ANIME_WAIT
   MainSeq_MailDelEnd,                 // MBSEQ_MAINSEQ_MAILDEL_END,        //「メー
 };                                    // MBSEQ_MAINSEQ_END         // 終了
                                       
@@ -375,24 +377,6 @@ static int MainSeq_MsgWait( MAILBOX_SYS_WORK * syswk )
     
   }
 
-/*
-  if( GF_MSG_PrintEndCheck( syswk->app->msgID ) == 0 ){
-    // ウェイトなし
-    if( syswk->app->msgTrg == MSG_TRGWAIT_OFF ){
-      return syswk->next_seq;
-    }
-    // タッチ待ち
-    if( GF_TP_GetTrg() == TRUE ){
-      Snd_SePlay( SND_MB_SELECT );
-      return syswk->next_seq;
-    }
-    // ボタン待ち
-    if( sys.trg & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE) ){
-      Snd_SePlay( SND_MB_SELECT );
-      return syswk->next_seq;
-    }
-  }
-*/
   return MBSEQ_MAINSEQ_MSG_WAIT;
 }
 
@@ -566,10 +550,12 @@ static int MainSeq_MailSelectMain( MAILBOX_SYS_WORK * syswk )
     }
     break;
 
-//  case MBUI_MAILSEL_RETURN: // 10: やめる
   case CURSORMOVE_CANCEL:   // キャンセル
     PMSND_PlaySE( SND_MB_CANCEL );
-    return ObjButtonAnmSet( syswk, MBMAIN_OBJ_RET_BTN, MBSEQ_MAINSEQ_MAILBOX_END_SET );
+    MBOBJ_AnmSet( syswk->app, MBMAIN_OBJ_RET_BTN, 9 );
+    syswk->next_seq = MBSEQ_MAINSEQ_MAILBOX_END_SET;
+    return MBSEQ_MAINSEQ_MAILBOX_END_ANIME_WAIT;
+//    return ObjButtonAnmSet( syswk, MBMAIN_OBJ_RET_BTN, MBSEQ_MAINSEQ_MAILBOX_END_SET );
 
   case CURSORMOVE_NO_MOVE_RIGHT:     // カーソルは動かず右が押された
     {
@@ -747,7 +733,10 @@ static int MainSeq_MailReadMain( MAILBOX_SYS_WORK * syswk )
 {
   if( MBUI_MailReadCheck() == TRUE ){
     PMSND_PlaySE( SND_MB_DECIDE );
-    return ObjButtonAnmSet( syswk, MBMAIN_OBJ_RET_BTN, MBSEQ_MAINSEQ_MAIL_READ_END );
+    MBOBJ_AnmSet( syswk->app, MBMAIN_OBJ_RET_BTN, 9 );
+    syswk->next_seq = MBSEQ_MAINSEQ_MAIL_READ_END;
+    return MBSEQ_MAINSEQ_MAILBOX_END_ANIME_WAIT;
+//    return ObjButtonAnmSet( syswk, MBMAIN_OBJ_RET_BTN, MBSEQ_MAINSEQ_MAIL_READ_END );
 
   }
   return MBSEQ_MAINSEQ_MAIL_READ_MAIN;
@@ -768,6 +757,7 @@ static int MainSeq_MailReadEnd( MAILBOX_SYS_WORK * syswk )
   MBUI_MailSelCurMove( syswk, CURSORMOVE_PosGet(syswk->app->cmwk) );
   MBBMP_ReturnPut( syswk->app );
   BGWINFRM_FrameOff( syswk->app->wfrm, MBMAIN_BGWF_SELMAIL );
+  MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_CURSOR, TRUE );
   AlphaSet( syswk->app, FALSE );
   return MBSEQ_MAINSEQ_MAIL_SELECT_MAIN;
 }
@@ -886,6 +876,23 @@ static int MainSeq_MailWriteExit( MAILBOX_SYS_WORK * syswk )
   PokeListWorkCreate( syswk, PL_MODE_MAILSET, syswk->ret_item, syswk->ret_poke );
   syswk->subProcType = SUBPROC_TYPE_PL_MW_END;
   return MBSEQ_MAINSEQ_SUBPROC_CALL;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 終了アイコンのアニメ待ち
+ *
+ * @param   syswk   
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int MainSeq_MilboxEndAnimeWait( MAILBOX_SYS_WORK *syswk )
+{
+  if(GFL_CLACT_WK_CheckAnmActive(syswk->app->clwk[MBMAIN_OBJ_RET_BTN])==FALSE){
+    return syswk->next_seq;
+  }
+  return MBSEQ_MAINSEQ_MAILBOX_END_ANIME_WAIT;
 }
 
 //--------------------------------------------------------------------------------------------
