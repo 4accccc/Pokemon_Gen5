@@ -20,6 +20,7 @@
 
 //自分のモジュール
 #include "net_app/mystery.h"
+#include "mystery_inline.h"
 
 //外部公開
 #include "net_app/mystery_data_util.h"
@@ -113,7 +114,7 @@ u32 MYSTERYDATA_ModifyGiftData( GIFT_PACK_DATA *p_data, GAMEDATA *p_gamedata, HE
       dirty++;
       p_data->event_name[0] = L'　';
       p_data->event_name[1] = GFL_STR_GetEOMCode();
-      OS_TPrintf( "GIFT_PACK_DATA:イベントタイトルが不正のため空文字にしました\n" );
+      OS_TPrintf( "GIFT_PACK_DATA:イベントタイトルが不正でした\n" );
     }
   }
 
@@ -121,9 +122,8 @@ u32 MYSTERYDATA_ModifyGiftData( GIFT_PACK_DATA *p_data, GAMEDATA *p_gamedata, HE
   { 
     if( !(0 <= p_data->event_id && p_data->event_id < MYSTERY_DATA_MAX_EVENT ) )
     { 
-      p_data->event_id  = 0;
       dirty++;
-      OS_TPrintf( "GIFT_PACK_DATA:イベントIDが不正のため０にしました\n" );
+      OS_TPrintf( "GIFT_PACK_DATA:イベントIDが不正でした\n" );
     }
   }
 
@@ -131,9 +131,8 @@ u32 MYSTERYDATA_ModifyGiftData( GIFT_PACK_DATA *p_data, GAMEDATA *p_gamedata, HE
   { 
     if( !(MYSTERYGIFT_TYPE_NONE < p_data->gift_type &&  p_data->gift_type < MYSTERYGIFT_TYPE_MAX) )
     { 
-      p_data->gift_type = MYSTERYGIFT_TYPE_NONE;
       dirty++;
-      OS_TPrintf( "GIFT_PACK_DATA:ギフトタイプが不正のため０にしました\n" );
+      OS_TPrintf( "GIFT_PACK_DATA:ギフトタイプが不正でした\n" );
     }
   }
 
@@ -142,9 +141,8 @@ u32 MYSTERYDATA_ModifyGiftData( GIFT_PACK_DATA *p_data, GAMEDATA *p_gamedata, HE
     switch( p_data->gift_type )
     { 
     case MYSTERYGIFT_TYPE_POKEMON:
-      { 
-        GIFT_PRESENT_POKEMON  *p_poke = &p_data->data.pokemon;
-        POKEMON_PARAM* pp = MYSTERY_CreatePokemon( p_data, heapID, p_gamedata );
+      {
+        POKEMON_PARAM* pp = Mystery_CreatePokemon( p_data, heapID, p_gamedata );
         if( pp == NULL )
         { 
           dirty++;
@@ -158,19 +156,18 @@ u32 MYSTERYDATA_ModifyGiftData( GIFT_PACK_DATA *p_data, GAMEDATA *p_gamedata, HE
       break;
     case MYSTERYGIFT_TYPE_ITEM:
       { 
-        GIFT_PRESENT_ITEM *p_item = &p_data->data.item;
-        if( !(0 <= p_item->itemNo && p_item->itemNo < ITEM_DATA_MAX) )
+        u16 itemNo  = Mystery_CreateItem( p_data );
+        if( itemNo == ITEM_DUMMY_DATA )
         {   
-          p_item->itemNo  = ITEM_MONSUTAABOORU;
           dirty++;
-          OS_TPrintf( "GIFT_PACK_DATA:アイテムNOが不正のためモンスターボールにしました\n" );
+          OS_TPrintf( "GIFT_PACK_DATA:アイテムNOが不正でした\n" );
         }
       }
       break;
     case MYSTERYGIFT_TYPE_POWER:
       { 
-        GIFT_PRESENT_POWER *p_power = &p_data->data.gpower; //@todo
-        if( !( 0 <= p_power->type && p_power->type < GPOWER_ID_MAX) )
+        u16 gpower  = Mystery_CreateGPower( p_data );
+        if( gpower == GPOWER_ID_NULL )
         { 
           dirty++;
           OS_TPrintf( "GIFT_PACK_DATA:Gパワーが不正でした\n" ); 

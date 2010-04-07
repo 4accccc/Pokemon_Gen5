@@ -77,7 +77,7 @@ extern BOOL MYSTERY_ALBUM_IsEnd( const MYSTERY_ALBUM_WORK *cp_wk );
 //=====================================
 typedef struct 
 {
-  GIFT_PACK_DATA *p_data;
+  const GIFT_PACK_DATA *cp_data;
   u32 back_frm;
   u32 font_frm;
   u32 back_plt_num;

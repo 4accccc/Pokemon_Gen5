@@ -33,6 +33,7 @@
 #include "net_app/mystery.h"
 #include "mystery_debug.h"
 #include "mystery_snd.h"
+#include "mystery_inline.h"
 
 //外部公開
 #include "mystery_album.h"
@@ -137,7 +138,7 @@ typedef enum
 typedef struct 
 {
   BOOL            is_exist;
-  GIFT_PACK_DATA  *p_data;
+  GIFT_PACK_DATA  data;
   GFL_BMP_DATA    *p_bmp;
   u32             res_cgx;
   u32             res_cel;
@@ -246,7 +247,7 @@ static inline u32 Mystery_Album_GetIndexToPage( u32 cursor )
 //-------------------------------------
 ///	カードデータ
 //=====================================
-static void MYSTERY_CARD_DATA_Init( MYSTERY_CARD_DATA *p_wk, GIFT_PACK_DATA *p_data, const MYSTERY_ALBUM_SETUP *cp_setup, HEAPID heapID );
+static void MYSTERY_CARD_DATA_Init( MYSTERY_CARD_DATA *p_wk, const GIFT_PACK_DATA *cp_data, const MYSTERY_ALBUM_SETUP *cp_setup, HEAPID heapID );
 static void MYSTERY_CARD_DATA_Exit( MYSTERY_CARD_DATA *p_wk );
 static BOOL MYSTERY_CARD_DATA_IsExist( const MYSTERY_CARD_DATA *cp_wk );
 static const GFL_BMP_DATA *MYSTERY_CARD_DATA_GetBmp( const MYSTERY_CARD_DATA *cp_wk );
@@ -257,7 +258,7 @@ static u32 MYSTERY_CARD_DATA_GetResCgx( const MYSTERY_CARD_DATA *cp_wk );
 static u32 MYSTERY_CARD_DATA_GetResCel( const MYSTERY_CARD_DATA *cp_wk );
 static u32 MYSTERY_CARD_DATA_GetResAnm( const MYSTERY_CARD_DATA *cp_wk );
 static u32 MYSTERY_CARD_DATA_GetType( const MYSTERY_CARD_DATA *cp_wk );
-static GIFT_PACK_DATA *MYSTERY_CARD_DATA_GetGiftBackData( const MYSTERY_CARD_DATA *cp_wk );
+static const GIFT_PACK_DATA *MYSTERY_CARD_DATA_GetGiftBackData( const MYSTERY_CARD_DATA *cp_wk );
 static BOOL MYSTERY_CARD_DATA_IsHave( const MYSTERY_CARD_DATA *cp_wk );
 static u32 MYSTERY_CARD_DATA_GetThumbnailPltOfs( const MYSTERY_CARD_DATA *cp_wk );
 static u32 MYSTERY_CARD_DATA_GetCardPltOfs( const MYSTERY_CARD_DATA *cp_wk );
@@ -413,13 +414,13 @@ MYSTERY_ALBUM_WORK * MYSTERY_ALBUM_Init( const MYSTERY_ALBUM_SETUP *cp_setup, HE
   //カード初期化
   { 
     int i;
-    GIFT_PACK_DATA *p_data;
+    GIFT_PACK_DATA data;
     for( i = 0; i < MYSTERY_ALBUM_CARD_MAX; i++ )
     {
       if( MYSTERYDATA_IsExistsCard( p_wk->setup.p_sv, i) )
       { 
-        p_data  = MYSTERYDATA_GetCardDataOld( p_wk->setup.p_sv, i );
-        MYSTERY_CARD_DATA_Init( &p_wk->data[i], p_data, &p_wk->setup, heapID );
+        MYSTERYDATA_GetCardData( p_wk->setup.p_sv, i, &data );
+        MYSTERY_CARD_DATA_Init( &p_wk->data[i], &data, &p_wk->setup, heapID );
       }
     }   
   }
@@ -492,7 +493,7 @@ MYSTERY_ALBUM_WORK * MYSTERY_ALBUM_Init( const MYSTERY_ALBUM_SETUP *cp_setup, HE
       MYSTERY_CARD_SETUP setup;
       GFL_STD_MemClear( &setup, sizeof(MYSTERY_CARD_SETUP) );
 
-      setup.p_data            = MYSTERY_CARD_DATA_GetGiftBackData( p_data );
+      setup.cp_data            = MYSTERY_CARD_DATA_GetGiftBackData( p_data );
       setup.back_frm          = MYSTERY_ALBUM_CARD_FRM_S;
       setup.font_frm          = MYSTERY_ALBUM_CARD_FONT_S;
       setup.back_plt_num      = MYSTERY_ALBUM_BG_BACK_S_PLT;
@@ -603,7 +604,7 @@ void MYSTERY_ALBUM_Main( MYSTERY_ALBUM_WORK *p_wk )
           MYSTERY_CARD_SETUP setup;
           GFL_STD_MemClear( &setup, sizeof(MYSTERY_CARD_SETUP) );
 
-          setup.p_data            = MYSTERY_CARD_DATA_GetGiftBackData( p_data );
+          setup.cp_data            = MYSTERY_CARD_DATA_GetGiftBackData( p_data );
           setup.back_frm          = MYSTERY_ALBUM_CARD_FRM_S;
           setup.font_frm          = MYSTERY_ALBUM_CARD_FONT_S;
           setup.back_plt_num      = MYSTERY_ALBUM_BG_BACK_S_PLT;
@@ -1374,9 +1375,9 @@ static void Mystery_Album_RemoveCard( MYSTERY_ALBUM_WORK *p_wk, u32 card_index )
     {
       if( MYSTERYDATA_IsExistsCard( p_wk->setup.p_sv, i) )
       { 
-        GIFT_PACK_DATA *p_data;
-        p_data  = MYSTERYDATA_GetCardDataOld( p_wk->setup.p_sv, i );
-        MYSTERY_CARD_DATA_Init( &p_wk->data[i], p_data, &p_wk->setup, p_wk->heapID );
+        GIFT_PACK_DATA data;
+        MYSTERYDATA_GetCardData( p_wk->setup.p_sv, i, &data );
+        MYSTERY_CARD_DATA_Init( &p_wk->data[i], &data, &p_wk->setup, p_wk->heapID );
       }
     }   
   }
@@ -1424,9 +1425,9 @@ static void Mystery_Album_SwapCard( MYSTERY_ALBUM_WORK *p_wk, u32 card_index1, u
     {
       if( MYSTERYDATA_IsExistsCard( p_wk->setup.p_sv, i) )
       { 
-        GIFT_PACK_DATA *p_data;
-        p_data  = MYSTERYDATA_GetCardDataOld( p_wk->setup.p_sv, i );
-        MYSTERY_CARD_DATA_Init( &p_wk->data[i], p_data, &p_wk->setup, p_wk->heapID );
+        GIFT_PACK_DATA data;
+        MYSTERYDATA_GetCardData( p_wk->setup.p_sv, i, &data );
+        MYSTERY_CARD_DATA_Init( &p_wk->data[i], &data, &p_wk->setup, p_wk->heapID );
       }
     }   
   }
@@ -1500,26 +1501,27 @@ static u32 Mystery_Album_GetDataNum( const MYSTERY_ALBUM_WORK *cp_wk )
  *	@param	heapID                  ヒープID
  */
 //-----------------------------------------------------------------------------
-static void MYSTERY_CARD_DATA_Init( MYSTERY_CARD_DATA *p_wk, GIFT_PACK_DATA *p_data, const MYSTERY_ALBUM_SETUP *cp_setup, HEAPID heapID )
+static void MYSTERY_CARD_DATA_Init( MYSTERY_CARD_DATA *p_wk, const GIFT_PACK_DATA *cp_data, const MYSTERY_ALBUM_SETUP *cp_setup, HEAPID heapID )
 { 
   GFL_STD_MemClear( p_wk, sizeof(MYSTERY_CARD_DATA) );
 
-  if( p_data )
+  if( cp_data )
   { 
     p_wk->is_exist  = TRUE;
-    p_wk->p_data    = p_data;
+    p_wk->data    = *cp_data;
 
     p_wk->p_bmp     = GFL_BMP_Create( MYSTERY_ALBUM_THUMBNAIL_DATE_W, MYSTERY_ALBUM_THUMBNAIL_DATE_H,
                       GFL_BMP_16_COLOR, heapID);
+
     //BMPに文字描画しておく
     { 
       STRBUF *p_strbuf_src;
       STRBUF *p_strbuf_dst;
       s32 y,m,d;
 
-      y = MYSTERYDATA_GetYear( p_data->recv_date );
-      m = MYSTERYDATA_GetMonth( p_data->recv_date );
-      d = MYSTERYDATA_GetDay( p_data->recv_date );
+      y = MYSTERYDATA_GetYear( cp_data->recv_date );
+      m = MYSTERYDATA_GetMonth( cp_data->recv_date );
+      d = MYSTERYDATA_GetDay( cp_data->recv_date );
 
       p_strbuf_src  = GFL_MSG_CreateString( cp_setup->p_msg, syachi_mystery_album_005 );
       p_strbuf_dst  = GFL_MSG_CreateString( cp_setup->p_msg, syachi_mystery_album_005 );
@@ -1749,7 +1751,7 @@ static u32 MYSTERY_CARD_DATA_GetResAnm( const MYSTERY_CARD_DATA *cp_wk )
 //-----------------------------------------------------------------------------
 static u32 MYSTERY_CARD_DATA_GetType( const MYSTERY_CARD_DATA *cp_wk )
 { 
-  return cp_wk->p_data->gift_type;
+  return cp_wk->data.gift_type;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1760,9 +1762,9 @@ static u32 MYSTERY_CARD_DATA_GetType( const MYSTERY_CARD_DATA *cp_wk )
  *	@return データ
  */
 //-----------------------------------------------------------------------------
-static GIFT_PACK_DATA *MYSTERY_CARD_DATA_GetGiftBackData( const MYSTERY_CARD_DATA *cp_wk )
+static const GIFT_PACK_DATA *MYSTERY_CARD_DATA_GetGiftBackData( const MYSTERY_CARD_DATA *cp_wk )
 { 
-  return cp_wk->p_data;
+  return &cp_wk->data;
 }
 
 //----------------------------------------------------------------------------
@@ -1776,7 +1778,7 @@ static GIFT_PACK_DATA *MYSTERY_CARD_DATA_GetGiftBackData( const MYSTERY_CARD_DAT
 //-----------------------------------------------------------------------------
 static BOOL MYSTERY_CARD_DATA_IsHave( const MYSTERY_CARD_DATA *cp_wk )
 { 
-  return cp_wk->p_data->have;
+  return cp_wk->data.have;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3172,7 +3174,7 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
     setup.p_msg     = cp_setup->p_msg;
     setup.p_gamedata  = p_gamedata;
  
-    MYSTERY_CARD_DATA_Init( &p_wk->data, cp_setup->p_data, &setup, heapID );
+    MYSTERY_CARD_DATA_Init( &p_wk->data, cp_setup->cp_data, &setup, heapID );
   }
 
   //BG読み込み追加
@@ -3267,13 +3269,13 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
     s32 y,m,d;
 
     tbl[1].p_strbuf = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TITLE_MAX+1, heapID );
-    GFL_STR_SetStringCodeOrderLength( tbl[1].p_strbuf, cp_setup->p_data->event_name, GIFT_DATA_CARD_TITLE_MAX );
-    tbl[2].p_strbuf = GFL_MSG_CreateString( cp_setup->p_msg, syachi_mystery_card_txt_00_01 + cp_setup->p_data->card_message*2 + cp_setup->p_data->have );
+    GFL_STR_SetStringCodeOrderLength( tbl[1].p_strbuf, cp_setup->cp_data->event_name, GIFT_DATA_CARD_TITLE_MAX );
+    tbl[2].p_strbuf = GFL_MSG_CreateString( cp_setup->p_msg, syachi_mystery_card_txt_00_01 + cp_setup->cp_data->card_message*2 + cp_setup->cp_data->have );
     tbl[4].p_strbuf = GFL_MSG_CreateString( cp_setup->p_msg, syachi_mystery_album_008 );
 
-    y = MYSTERYDATA_GetYear( cp_setup->p_data->recv_date );
-    m = MYSTERYDATA_GetMonth( cp_setup->p_data->recv_date );
-    d = MYSTERYDATA_GetDay( cp_setup->p_data->recv_date );
+    y = MYSTERYDATA_GetYear( cp_setup->cp_data->recv_date );
+    m = MYSTERYDATA_GetMonth( cp_setup->cp_data->recv_date );
+    d = MYSTERYDATA_GetDay( cp_setup->cp_data->recv_date );
     p_wordbuf = GFL_MSG_CreateString( cp_setup->p_msg, syachi_mystery_album_008 );
     WORDSET_RegisterNumber( cp_setup->p_word, 0, y, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
     WORDSET_RegisterNumber( cp_setup->p_word, 1, m, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -3340,8 +3342,8 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
   if( MYSTERY_CARD_DATA_GetType(&p_wk->data) == MYSTERYGIFT_TYPE_POKEMON )
   { 
     { 
-      const GIFT_PRESENT_POKEMON  *cp_pokemon = &cp_setup->p_data->data.pokemon;
-      POKEMON_PARAM* p_pp = MYSTERY_CreatePokemon( cp_setup->p_data, GFL_HEAP_LOWID(heapID), p_gamedata );
+      const GIFT_PRESENT_POKEMON  *cp_pokemon = &cp_setup->cp_data->data.pokemon;
+      POKEMON_PARAM* p_pp = Mystery_CreatePokemon( cp_setup->cp_data, GFL_HEAP_LOWID(heapID), p_gamedata );
       ARCHANDLE *p_handle = POKE2DGRA_OpenHandle( heapID );
 
       p_wk->res_silhouette_plt  = POKE2DGRA_OBJ_PLTT_Register( p_handle, cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare, POKEGRA_DIR_FRONT, cp_pokemon->egg, draw_type, cp_setup->silhouette_obj_plt_num*0x20, heapID );

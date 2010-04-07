@@ -22,3 +22,6 @@
 #define MYSTERY_SE_CANCEL       SEQ_SE_CANCEL1  //キャンセル音
 #define MYSTERY_SE_PAGE         SEQ_SE_SYS_03  //ページ切り替え音
 
+#define MYSTERY_SE_MOVIE_FALL   SEQ_SE_SYS_88  //光の玉が降りてくる
+#define MYSTERY_SE_MOVIE_EMIT   SEQ_SE_SYS_89  //光のたまが破裂する
+
