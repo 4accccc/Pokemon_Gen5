@@ -262,7 +262,6 @@ typedef struct
   GFL_EMIT_PTR  p_emitter;
   void          *p_buffer;
   BOOL          is_use;
-  BOOL          is_start;
 } MYSTERY_PTC_WORK;
 
 //-------------------------------------
@@ -444,7 +443,7 @@ static void OBJ_PltFade_Reset( OBJ_WORK *p_wk );
 static void MYSTERY_PTC_Init( MYSTERY_PTC_WORK *p_wk, HEAPID heapID );
 static void MYSTERY_PTC_Exit( MYSTERY_PTC_WORK *p_wk );
 static void MYSTERY_PTC_LoadResource( MYSTERY_PTC_WORK *p_wk, ARCID arcID, ARCDATID datID, HEAPID heapID );
-static void MYSTERY_PTC_Start( MYSTERY_PTC_WORK *p_wk, u32 res_max );
+static void MYSTERY_PTC_Start( MYSTERY_PTC_WORK *p_wk, u32 id );
 static BOOL MYSTERY_PTC_IsUse( const MYSTERY_PTC_WORK *cp_wk );
 //-------------------------------------
 ///	SEQFUNC
@@ -1154,14 +1153,9 @@ static void MYSTERY_PTC_LoadResource( MYSTERY_PTC_WORK *p_wk, ARCID arcID, ARCDA
  *	@param	MYSTERY_PTC_WORK *p_wk ÉèÅ[ÉN
  */
 //-----------------------------------------------------------------------------
-static void MYSTERY_PTC_Start( MYSTERY_PTC_WORK *p_wk, u32 res_max )
+static void MYSTERY_PTC_Start( MYSTERY_PTC_WORK *p_wk, u32 id )
 { 
-  int i;
-  for( i = 0; i < res_max; i++  )
-  { 
-    GFL_PTC_CreateEmitterCallback( p_wk->p_ptc, i, NULL, p_wk );
-  }
-  p_wk->is_start  = TRUE;
+  GFL_PTC_CreateEmitterCallback( p_wk->p_ptc, id, NULL, p_wk );
 }
 //----------------------------------------------------------------------------
 /**
