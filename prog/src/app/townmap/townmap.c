@@ -34,6 +34,7 @@
 //mine
 #include "townmap_grh.h"
 #include "app/townmap.h"
+#include "app/townmap_util.h"
 
 //sound
 #include "townmap_snd.h"
@@ -95,7 +96,7 @@ enum
 	OBJ_PRIORITY_FRONTEND,
 	OBJ_PRIORITY_MARK,
 	OBJ_PRIORITY_EFFECT,
-	OBJ_PRIORITY_MAPOBJ,
+	OBJ_PRIORITY_MAPOBJ,  //BGが違う
 };
 
 //中心座標
@@ -292,7 +293,7 @@ typedef struct
 //=====================================
 typedef struct
 {
-	GFL_CLUNIT			*p_clunit;	//場所はUNITを変えるので作成する
+  GAMEDATA        *p_gamedata;
 	GFL_CLSYS_REND	*p_rend;
 	PLACE_DATA			*p_place;
 	u32							data_num;
@@ -510,7 +511,7 @@ static void CURSOR_SetPullEnable( CURSOR_WORK *p_wk, BOOL on_off );
 //-------------------------------------
 ///	PLACE
 //=====================================
-static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, const TOWNMAP_DATA *cp_data, const TOWNMAP_GRAPHIC_SYS *cp_grh, EVENTWORK *p_ev, HEAPID heapID, BOOL is_debug );
+static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, const TOWNMAP_DATA *cp_data, const TOWNMAP_GRAPHIC_SYS *cp_grh, GAMEDATA *p_gamedata, HEAPID heapID, BOOL is_debug );
 static void PLACE_Exit( PLACE_WORK *p_wk );
 static void PLACE_Main( PLACE_WORK *p_wk );
 static void PLACE_Scale( PLACE_WORK *p_wk, fx32 scale, const GFL_POINT *cp_center_start, const GFL_POINT *cp_center_next );
@@ -525,7 +526,7 @@ static void PLACE_Active( PLACE_WORK *p_wk, const PLACE_DATA *cp_data );
 static void PLACE_NonActive( PLACE_WORK *p_wk );
 static const PLACE_DATA *PLACE_GetDataByZoneID( const PLACE_WORK *cp_wk, u16 zoneID, u16 escapeID );
 static BOOL PLACEDATA_IsVisiblePlaceName( const PLACE_DATA *cp_wk );
-static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 data_idx, GFL_CLUNIT *p_clunit, u32 chr, u32 cel, u32 plt, EVENTWORK *p_ev, HEAPID heapID, BOOL is_debug );
+static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 data_idx, GFL_CLUNIT *p_clunit, u32 chr, u32 cel, u32 plt, GAMEDATA *p_gamedata, HEAPID heapID, BOOL is_debug );
 static void PlaceData_Exit( PLACE_DATA *p_wk );
 static void PlaceData_SetVisible( PLACE_DATA *p_wk, BOOL is_visible );
 static BOOL PlaceData_IsHit( const PLACE_DATA *cp_wk, const GFL_POINT *cp_pos, const GFL_POINT *cp_wld_pos );
@@ -837,23 +838,20 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	//場所作成
 	{	
 		GAMEDATA	*p_gdata;
-		EVENTWORK	*p_ev;
 #ifdef DEBUG_GAMESYS_NONE
 		if( p_wk->p_param->p_gamesys == NULL )
 		{	
-			p_ev	= NULL;
+			p_gdata = NULL;
 		}
 		else
 		{	
 			p_gdata	= GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
-			p_ev		= GAMEDATA_GetEventWork( p_gdata );
 		}
 #else
 		p_gdata	= GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
-		p_ev		= GAMEDATA_GetEventWork( p_gdata );
 #endif //DEBUG_GAMESYS_NONE
 		PLACE_Init( &p_wk->place, p_param->zoneID, p_param->escapeID, p_wk->p_data, p_wk->p_grh,
-				p_ev, HEAPID_TOWNMAP, is_debug );
+				p_gdata, HEAPID_TOWNMAP, is_debug );
 	}
 
 	//カーソル作成
@@ -1798,7 +1796,8 @@ static void CURSOR_Init( CURSOR_WORK *p_wk, GFL_CLWK *p_cursor, GFL_CLWK *p_ring
 
 		GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[CURSOR_CLWK_CURSOR],	TOWNMAP_BG_PRIORITY_TOP_M );
 		GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk[CURSOR_CLWK_CURSOR], OBJ_PRIORITY_CURSOR );
-		GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[CURSOR_CLWK_RING],	TOWNMAP_BG_PRIORITY_TOP_M );
+
+		GFL_CLACT_WK_SetBgPri( p_wk->p_clwk[CURSOR_CLWK_RING],	TOWNMAP_BG_PRIORITY_BAR_M+1 );
 		GFL_CLACT_WK_SetSoftPri( p_wk->p_clwk[CURSOR_CLWK_RING], OBJ_PRIORITY_EFFECT );
 
 		GFL_CLACT_WK_SetAutoAnmFlag( p_wk->p_clwk[CURSOR_CLWK_RING], TRUE );
@@ -2139,24 +2138,13 @@ static void CURSOR_SetPullEnable( CURSOR_WORK *p_wk, BOOL on_off )
  *	@param	heapID								ヒープID
  */
 //-----------------------------------------------------------------------------
-static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, const TOWNMAP_DATA *cp_data, const TOWNMAP_GRAPHIC_SYS *cp_grh, EVENTWORK *p_ev, HEAPID heapID, BOOL is_debug )
+static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, const TOWNMAP_DATA *cp_data, const TOWNMAP_GRAPHIC_SYS *cp_grh, GAMEDATA *p_gamedata, HEAPID heapID, BOOL is_debug )
 {	
+  GFL_CLUNIT  *p_clunit = TOWNMAP_GRAPHIC_GetUnit( cp_grh, TOWNMAP_OBJ_CLUNIT_DEFAULT );
+
 	//クリアー
 	GFL_STD_MemClear( p_wk, sizeof(PLACE_WORK) );
-
-	//ユニット作成
-	//ユーザーレンダラーユニット
-	{	
-		static const GFL_REND_SURFACE_INIT sc_rend_surface_init =
-		{	
-			0,0,256,192,
-			CLSYS_DRAW_MAIN,
-      CLSYS_REND_CULLING_TYPE_NORMAL,
-		};
-		p_wk->p_clunit	= GFL_CLACT_UNIT_Create( 128, 0, heapID );
-		p_wk->p_rend		= GFL_CLACT_USERREND_Create( &sc_rend_surface_init, 1, heapID );
-		GFL_CLACT_UNIT_SetUserRend( p_wk->p_clunit, p_wk->p_rend );
-	}
+  p_wk->p_gamedata  = p_gamedata;
 
 	//作成するCLWKの数を計算
 	{	
@@ -2177,7 +2165,7 @@ static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, cons
 		//初期化
 		for( i = 0; i < p_wk->data_num; i++ )
 		{	
-			PlaceData_Init( &p_wk->p_place[i], cp_data, i, p_wk->p_clunit, chr, cel, plt, p_ev, heapID, is_debug );
+			PlaceData_Init( &p_wk->p_place[i], cp_data, i, p_clunit, chr, cel, plt, p_gamedata, heapID, is_debug );
 		}
 	}
 
@@ -2193,7 +2181,7 @@ static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, cons
 		//リソース取得
 		TOWNMAP_GRAPHIC_GetObjResource( cp_grh, &chr, &cel, &plt );
 		//作成
-		PLACEMARK_Init( &p_wk->player, cp_placedata, p_wk->p_clunit, chr, cel, plt, heapID );
+		PLACEMARK_Init( &p_wk->player, cp_placedata, p_clunit, chr, cel, plt, heapID );
 	}
 
 
@@ -2235,15 +2223,6 @@ static void PLACE_Exit( PLACE_WORK *p_wk )
 
 	//バッファクリア
 	GFL_HEAP_FreeMemory( p_wk->p_place );
-
-	//レンダラ破棄
-	{	
-		GFL_CLACT_UNIT_SetDefaultRend( p_wk->p_clunit );
-		GFL_CLACT_USERREND_Delete( p_wk->p_rend );
-	}
-
-	//ウニット破棄
-	GFL_CLACT_UNIT_Delete( p_wk->p_clunit );
 
 	GFL_STD_MemClear( p_wk, sizeof(PLACE_WORK) );
 }
@@ -2588,17 +2567,20 @@ static const PLACE_DATA *PLACE_GetDataByZoneID( const PLACE_WORK *cp_wk, u16 zon
 {	
 	const PLACE_DATA *cp_data	= NULL;
 	int i;
+  u16 now_zoneID;
+
+  now_zoneID  = TOWNMAP_UTIL_GetRootZoneID( cp_wk->p_gamedata, zoneID );
 
 	//ゾーンと完全対応する場所を取得
 	for( i = 0; i < cp_wk->data_num; i++ )
 	{	
 		cp_data	= &cp_wk->p_place[i];
-		if( zoneID == PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_ZONE_ID ) )
+		if( now_zoneID == PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_ZONE_ID ) )
 		{
 			return cp_data;
 		}
 	}
-
+#if 0
 	//現在地がフィールドではないならば、エスケープID検索
 	if( !ZONEDATA_IsFieldMatrixID( zoneID ) )
 	{	
@@ -2611,6 +2593,9 @@ static const PLACE_DATA *PLACE_GetDataByZoneID( const PLACE_WORK *cp_wk, u16 zon
 			}
 		}
 	}
+#endif
+
+  GF_ASSERT(0);
 
 	return NULL;
 }
@@ -2645,7 +2630,7 @@ static BOOL PLACEDATA_IsVisiblePlaceName( const PLACE_DATA *cp_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 data_idx, GFL_CLUNIT *p_clunit, u32 chr, u32 cel, u32 plt, EVENTWORK *p_ev, HEAPID heapID, BOOL is_debug )
+static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 data_idx, GFL_CLUNIT *p_clunit, u32 chr, u32 cel, u32 plt, GAMEDATA *p_gamedata, HEAPID heapID, BOOL is_debug )
 {	
 	GF_ASSERT( data_idx < TOWNMAP_DATA_MAX );
 
@@ -2661,16 +2646,16 @@ static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 d
 		if( arrive_flag != TOWNMAP_DATA_ERROR )
 		{	
 #ifdef DEBUG_GAMESYS_NONE
-			if( p_ev == NULL )
+			if( p_gamedata == NULL )
 			{	
 				p_wk->is_arrive	= TRUE;
 			}
 			else
 			{	
-				p_wk->is_arrive		= EVENTWORK_CheckEventFlag( p_ev, arrive_flag );
+				p_wk->is_arrive		= TOWNMAP_UTIL_CheckFlag( p_gamedata, arrive_flag );
 			}
 #else
-			p_wk->is_arrive		= EVENTWORK_CheckEventFlag( p_ev, arrive_flag );
+			p_wk->is_arrive		= TOWNMAP_UTIL_CheckFlag( p_gamedata, arrive_flag );
 #endif //DEBUG_GAMESYS_NONE
 		}
 		else
@@ -2709,7 +2694,7 @@ static void PlaceData_Init( PLACE_DATA *p_wk, const TOWNMAP_DATA *cp_data, u32 d
     u16 hide_flag	= TOWNMAP_DATA_GetParam( p_wk->cp_data, p_wk->data_idx, TOWNMAP_DATA_PARAM_HIDE_FLAG );
     if( hide_flag != TOWNMAP_DATA_ERROR )
 		{	
-      p_wk->is_hide		= !EVENTWORK_CheckEventFlag( p_ev, hide_flag );
+      p_wk->is_hide		= !TOWNMAP_UTIL_CheckFlag( p_gamedata, hide_flag );
 		}
 		else
 		{	
@@ -4758,10 +4743,8 @@ static void DEBUGMENU_UPDATE_ArriveFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item 
 	int i;
   u16 arrive_flag;
   GAMEDATA	*p_gdata;
-  EVENTWORK	*p_ev;
 
   p_gdata	= GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
-  p_ev		= GAMEDATA_GetEventWork( p_gdata );
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {	
@@ -4775,7 +4758,7 @@ static void DEBUGMENU_UPDATE_ArriveFlag( void* p_wk_adrs, DEBUGWIN_ITEM* p_item 
 			{	
 				p_data	= &p_place->p_place[ i ];
         arrive_flag	= TOWNMAP_DATA_GetParam( p_data->cp_data, i, TOWNMAP_DATA_PARAM_ARRIVE_FLAG );
-        p_data->is_arrive = EVENTWORK_CheckEventFlag( p_ev, arrive_flag );
+        p_data->is_arrive = TOWNMAP_UTIL_CheckFlag( p_gdata, arrive_flag );
 				p_data->is_sky	  = p_data->is_arrive && TOWNMAP_DATA_GetParam( p_data->cp_data, p_data->data_idx, TOWNMAP_DATA_PARAM_SKY_FLAG );
 			}
 			break;

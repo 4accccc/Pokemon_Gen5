@@ -975,6 +975,7 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   //デモパラメータ
   p_param->p_demo_param = GFL_HEAP_AllocMemory( heapID, sizeof(COMM_BTL_DEMO_PARAM) );
 	GFL_STD_MemClear( p_param->p_demo_param, sizeof(COMM_BTL_DEMO_PARAM) );
+  p_param->p_demo_param->record = GAMEDATA_GetRecordPtr( p_wk->param.p_game_data );
 
   //デモパラメータへの設定
   //自分
