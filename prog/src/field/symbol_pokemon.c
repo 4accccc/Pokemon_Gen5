@@ -64,11 +64,15 @@ static const MMDL_HEADER data_MMdlHeader =
 
 //==============================================================================
 //==============================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 typedef struct {
   u16 move_code;
   u8 limx, limz;
 }SYMPOKE_MV_TABLE;
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 static const SYMPOKE_MV_TABLE symPokeMoveCode[] = {
   { MV_DIR_RND, 0, 0 }, // 固定（４方向ランダム）
   { MV_RND,     1, 1 }, // ランダム移動（狭い）
@@ -80,7 +84,7 @@ static const SYMPOKE_MV_TABLE symPokeMoveCode[] = {
   { MV_SPIN_L,  0, 0 }, // 左回転移動
 };
 
-//==================================================================
+//--------------------------------------------------------------
 /**
  * @brief
  *
@@ -92,7 +96,7 @@ static const SYMPOKE_MV_TABLE symPokeMoveCode[] = {
  * @param   grid_z		グリッド座標Z
  * @param   fx_y		  Y座標(fx32)
  */
-//==================================================================
+//--------------------------------------------------------------
 static void SYMBOLPOKE_AdMMdl(
     const POKEADD_WORK * padd,
     const SYMBOL_POKEMON * sympoke, u16 id, u16 grid_x, u16 grid_z, fx32 fx_y )
@@ -189,6 +193,10 @@ POKEMON_PARAM * SYMBOLPOKE_PP_Create(
   return pp;
 }
 
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+#include "../../../resource/fldmapdata/symbol_map/symbol_map_pos.cdat"
 //--------------------------------------------------------------
 /**
  * @brief シンボルポケモンの動作モデルを配置する
@@ -196,39 +204,53 @@ POKEMON_PARAM * SYMBOLPOKE_PP_Create(
  * @param start_no  配置ナンバーの開始
  * @param sympoke   配置するシンボルポケモンのデータ配列
  * @param poke_num  配置するシンボルポケモンのデータ数
+ *
+ * @note
+ * KEEPゾーンの場合、前半１０は大きいポケモン、後半１０は小さいポケモンの
+ * 領域で、間にポケモンが入っていない条件のデータが来ることもあるので注意。
  */
 //--------------------------------------------------------------
 void SYMBOLPOKE_Add(
     FIELDMAP_WORK *fieldmap, u32 start_no, const SYMBOL_POKEMON * sympoke, int poke_num )
 {
-  enum {
-    gx = 9,
-    gz = 12,
-    gx_space = 3,
-    gz_space = 1
-  };
-
   POKEADD_WORK padd;
   int x, y;
   int rnd_x, rnd_z;
   int idx = 0;
+
+  const u8 * map_pos;
+  SYMBOL_ZONE_TYPE type = SYMBOLZONE_GetZoneTypeFromNumber( start_no );
+  switch (type )
+  {
+  case SYMBOL_ZONE_TYPE_KEEP_LARGE:
+  case SYMBOL_ZONE_TYPE_KEEP_SMALL:
+    map_pos = keepMapPos;
+    break;
+  case SYMBOL_ZONE_TYPE_FREE_LARGE:
+    map_pos = largeMapPos;
+    break;
+  default:
+    GF_ASSERT( 0 );
+    /* FALL THROUGH */
+  case SYMBOL_ZONE_TYPE_FREE_SMALL:
+    map_pos = littleMapPos;
+    break;
+  }
   
   padd.tpdata = TPOKE_DATA_Create( FIELDMAP_GetHeapID(fieldmap) );
   padd.fieldmap = fieldmap;
   padd.start_no = start_no;
 
-  for(y = 0; y < 7; y++){
-    for(x = 0; x < 4; x++){
-      if ( sympoke[idx].monsno != 0 )
-      {
-        rnd_x = GFUser_GetPublicRand0(2);
-        rnd_z = GFUser_GetPublicRand0(2);
-        SYMBOLPOKE_AdMMdl(&padd, &sympoke[idx], idx,
-            gx + gx_space*x + rnd_x, gz + gz_space*y + rnd_z, 0 );
-        poke_num --;
-      }
-      idx ++;
-      if (idx >= SYMBOL_MAP_STOCK_MAX ) goto END;
+  for ( idx = 0; idx < SYMBOL_MAP_STOCK_MAX; idx ++ )
+  {
+    if ( sympoke[idx].monsno != 0 )
+    {
+      rnd_x = GFUser_GetPublicRand0(2);
+      rnd_z = GFUser_GetPublicRand0(2);
+      x = map_pos[ idx * 2 + 0] + rnd_x - 1;
+      y = map_pos[ idx * 2 + 1] + rnd_z - 1;
+      SYMBOLPOKE_AdMMdl(&padd, &sympoke[idx], idx, x, y, 0 );
+      poke_num --;
     }
   }
 END:

@@ -126,6 +126,10 @@ ev_symbol_pokemon_main:
         _SYSWIN_CLOSE()
         _RET
       ELSE
+        _CALL sub_sympoke_move
+        //もりのひろばへいどうした！
+        _SYSWIN_MSG( msg_symbolmap_poke_09, POS_DEFAULT )
+        _SYSWIN_CLOSE()
         //マップに入り直す
         _SYMBOL_MAP_WARP( DIR_NOT )
         _RET
@@ -150,6 +154,10 @@ ev_symbol_pokemon_main:
         _SYSWIN_CLOSE()
         _RET
       ELSE
+        _CALL sub_sympoke_move
+        //もりのおくへいどうした！
+        _SYSWIN_MSG( msg_symbolmap_poke_09, POS_DEFAULT )
+        _SYSWIN_CLOSE()
         //マップに入り直す
         _SYMBOL_MAP_WARP( DIR_NOT )
         _RET
@@ -160,6 +168,19 @@ ev_symbol_pokemon_main:
 
   _RET
 
+sub_sympoke_move:
+{
+  DEFINE_LOCAL  sympokemonsno
+  DEFINE_LOCAL  sympokeformno
+
+  _SYMBOL_MAP_GET_INFO( SCR_SYMMAP_INFO_FRONT_MONSNO, sympokemonsno )
+  _SYMBOL_MAP_GET_INFO( SCR_SYMMAP_INFO_FRONT_FORMNO, sympokeformno )
+  _VOICE_PLAY( sympokemonsno, sympokeformno )
+  _VOICE_WAIT()
+  _OBJ_DEL( SCWK_TARGET_OBJID )
+  _RET
+  }
+  
 
 
 

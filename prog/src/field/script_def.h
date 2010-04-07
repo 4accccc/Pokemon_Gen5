@@ -462,6 +462,8 @@
 #define SCR_SYMMAP_INFO_IS_MINE         (0)   ///<自分のパレスマップか？
 #define SCR_SYMMAP_INFO_IS_KEEPZONE     (1)   ///<キープゾーンか？
 #define SCR_SYMMAP_INFO_IS_ENTRANCE     (2)   ///<入ったマップか？
+#define SCR_SYMMAP_INFO_FRONT_MONSNO    (3)   ///<話しかけ対象のポケモンナンバー
+#define SCR_SYMMAP_INFO_FRONT_FORMNO    (4)   ///<話しかけ対象のフォルムナンバー
 
 
 //--------------------------------------------------------------

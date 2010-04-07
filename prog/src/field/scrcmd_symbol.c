@@ -38,9 +38,12 @@
 #include "arc/fieldmap/zone_id.h"
 #include "event_mapchange.h"
 
+#include "../../../resource/fldmapdata/flagwork/work_define.h"  //SCWK_TARGET_OBJID
+
 //==============================================================================
 //==============================================================================
 static MMDL * getPokeMMdl( SCRCMD_WORK * work, u16 obj_id );
+static void getFrontSymPoke( SCRCMD_WORK * work, SYMBOL_POKEMON * sympoke );
 static POKEMON_PARAM * createPokemon( SCRCMD_WORK * work, MMDL * mmdl, HEAPID heapID );
 static void sendDataChange( SCRCMD_WORK * work );
 
@@ -231,6 +234,20 @@ VMCMD_RESULT EvCmdSymbolMapGetInfo( VMHANDLE * core, void * wk )
       *ret_wk = SYMBOLMAP_IsEntranceID( sid );
     }
     break;
+  case SCR_SYMMAP_INFO_FRONT_MONSNO:
+    {
+      SYMBOL_POKEMON sympoke;
+      getFrontSymPoke( work, &sympoke );
+      *ret_wk = sympoke.monsno;
+    }
+    break;
+  case SCR_SYMMAP_INFO_FRONT_FORMNO:
+    {
+      SYMBOL_POKEMON sympoke;
+      getFrontSymPoke( work, &sympoke );
+      *ret_wk = sympoke.form_no;
+    }
+    break;
   }
   return VMCMD_RESULT_CONTINUE;
 }
@@ -291,6 +308,20 @@ static MMDL * getPokeMMdl( SCRCMD_WORK * work, u16 obj_id )
   MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
   GF_ASSERT( mmdl != NULL );
   return mmdl;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 話しかけ対象のSYMBOL_POKEMONデータを取得
+ */
+//--------------------------------------------------------------
+static void getFrontSymPoke( SCRCMD_WORK * work, SYMBOL_POKEMON * sympoke )
+{
+  SCRIPT_WORK * sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  u16 obj_id = SCRIPT_GetEventWorkValue( sc, gamedata, SCWK_TARGET_OBJID );
+  MMDL * mmdl = getPokeMMdl( work, obj_id );
+  SYMBOLPOKE_GetParam( sympoke, mmdl );
 }
 
 //--------------------------------------------------------------
