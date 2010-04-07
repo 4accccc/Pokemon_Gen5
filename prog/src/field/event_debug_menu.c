@@ -868,7 +868,7 @@ static BOOL debugMenuCallProc_OpenGTSNegoMenu( DEBUG_MENU_EVENT_WORK *wk )
 
 
 
-#if 0
+#if DEBUG_ONLY_FOR_ohno
 //--------------------------------------------------------------
 /**
  * @brief   デバッグ ポケモンをセーブデータに入れる
@@ -880,38 +880,55 @@ static BOOL debugMenuCallProc_OpenGTSNegoMenu( DEBUG_MENU_EVENT_WORK *wk )
 #include "savedata/mystatus.h"
 #include "savedata/mystatus_local.h"
 #include "savedata/record.h"
+#include "savedata/misc.h"
+#include "savedata/undata_update.h"
+#include "savedata/wifihistory.h"
 static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 {
+  int i;
   {
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData(wk->gmSys);
-    DREAMWORLD_SAVEDATA *pdw = SaveControl_DataPtrGet(GAMEDATA_GetSaveControlWork(gamedata), GMDATA_ID_DREAMWORLD);
-    POKEPARTY *party = GAMEDATA_GetMyPokemon(gamedata);
-    POKEMON_PARAM *pp = PokeParty_GetMemberPointer(party, 0);
-    POKEMON_PASO_PARAM  *ppp = PP_GetPPPPointer( pp );
 
-    OS_TPrintf("before monsno = %d, level = %d, item = %d\n", PPP_Get(ppp, ID_PARA_monsno, NULL), PPP_Get(ppp, ID_PARA_level, NULL), PPP_Get(ppp, ID_PARA_item, NULL));
-    DREAMWORLD_SV_SetSleepPokemon(pdw, pp);
-
-//    pp = DREAMWORLD_SV_GetSleepPokemon(pdw);
-  //  OS_TPrintf("after monsno = %d, level = %d, item = %d\n", PPP_Get(ppp, ID_PARA_monsno, NULL), PPP_Get(ppp, ID_PARA_level, NULL), PPP_Get(ppp, ID_PARA_item, NULL));
-
-    {//Myステータス
-      MYSTATUS* pMy = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(wk->gmSys));
-
-      OS_TPrintf("before myst gold=%d,  id=%d, sex=%d\n",pMy->gold,  pMy->id, pMy->sex);
-      pMy->gold = 511;
-      pMy->id = 88776655;
-      pMy->sex = 0;
-      OS_TPrintf("after myst gold=%d,  id=%d, sex=%d\n",pMy->gold, pMy->id, pMy->sex);
+    {//MISC
+      MISC* pMisc = SaveData_GetMisc(GAMEDATA_GetSaveControlWork(gamedata));
+      MISC_SetGold( pMisc, GFUser_GetPublicRand( 12345 ));
+      OS_TPrintf("pMisc gold=%d\n",MISC_GetGold(pMisc));
     }
 
     {//レコード
-      long* rec = (long*)SaveData_GetRecord(GAMEDATA_GetSaveControlWork(gamedata));
+      RECORD* pRec = GAMEDATA_GetRecordPtr(GAMESYSTEM_GetGameData(wk->gmSys));
+      
+      RECORD_Set(pRec, RECID_FISHING_SUCCESS, GFUser_GetPublicRand( 12345 ));
+      RECORD_Set(pRec, RECID_WIFI_TRADE, GFUser_GetPublicRand( 12345 ));
+      RECORD_Set(pRec, RECID_COMM_TRADE, GFUser_GetPublicRand( 12345 ));
+      RECORD_Set(pRec, RECID_IRC_TRADE, GFUser_GetPublicRand( 12345 ));
+      RECORD_Set(pRec, RECID_CAPTURE_POKE, GFUser_GetPublicRand( 12345 ));
+      OS_TPrintf("RECID_FISHING_SUCCESS=%d\n",RECORD_Get(pRec,RECID_FISHING_SUCCESS));
+      OS_TPrintf("RECID_CAPTURE_POKE=%d\n",RECORD_Get(pRec,RECID_CAPTURE_POKE));
+      OS_TPrintf("RECID_WIFI_TRADE=%d\n",RECORD_Get(pRec,RECID_WIFI_TRADE));
+      OS_TPrintf("RECID_COMM_TRADE=%d\n",RECORD_Get(pRec,RECID_COMM_TRADE));
+      OS_TPrintf("RECID_IRC_TRADE=%d\n",RECORD_Get(pRec,RECID_IRC_TRADE));
 
-      OS_TPrintf("before record capture=%d, fishing=%d\n", rec[RECID_CAPTURE_POKE], rec[RECID_FISHING_SUCCESS]);
-      rec[RECID_CAPTURE_POKE] = 7896;
-      rec[RECID_FISHING_SUCCESS] = 3;
-      OS_TPrintf("after record capture=%d, fishing=%d\n", rec[RECID_CAPTURE_POKE], rec[RECID_FISHING_SUCCESS]);
+    }
+    {//国連
+      WIFI_HISTORY* pHis = SaveData_GetWifiHistory(GAMEDATA_GetSaveControlWork(gamedata));
+      for(i=0;i<20;i++){
+        UNITEDNATIONS_SAVE add_data;
+        MYSTATUS aMy;
+        aMy.profileID= GFUser_GetPublicRand(3333);
+        aMy.nation = i+1;
+        MyStatus_Copy( &aMy , &add_data.aMyStatus);
+        add_data.recvPokemon = 1;  //貰ったポケモン
+        add_data.sendPokemon = 100;  //あげたポケモン
+        add_data.favorite = 1;   //趣味
+        add_data.countryCount = 2;  //交換した国の回数
+        add_data.nature = 1;   //性格
+        UNDATAUP_Update(pHis, &add_data);
+      }
+      for(i=0;i<20;i++){
+        MYSTATUS* pMy = WIFIHISTORY_GetUnMyStatus(pHis, i);
+        OS_TPrintf("GTSID = %d\n",pMy->profileID);
+      }
     }
   }
 
@@ -927,8 +944,10 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
  * @retval    BOOL  TRUE=イベント継続
  */
 //--------------------------------------------------------------
-#endif
-#if 1
+//#endif
+//#if 1
+#else
+
 static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 {
   u16 crc=0;

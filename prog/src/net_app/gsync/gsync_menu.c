@@ -1270,7 +1270,7 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
 //  }
   if(GFL_NET_IsInit()){
     pWork->bitold =  pWork->bit;
-    pWork->bit = WIH_DWC_GetAllBeaconTypeBit();
+    pWork->bit = WIH_DWC_GetAllBeaconTypeBit(NULL);
   }
 
   GFL_TCBL_Main( pWork->pMsgTcblSys );

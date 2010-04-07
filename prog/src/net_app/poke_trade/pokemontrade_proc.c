@@ -1089,7 +1089,7 @@ static BOOL POKEMONTRADE_IsWazaPokemon(POKEMON_TRADE_WORK* pWork)
 //いあいぎり／かいりき／なみのり／そらをとぶ／ダイビング／たきのぼり／いわくだき／フラッシュ
   for(i=0;i<4;i++){
     switch( waza[i] ){
-    case WAZANO_ANAWOHORU:		// あなをほる
+//    case WAZANO_ANAWOHORU:		// あなをほる
 		case WAZANO_HURASSYU:			// フラッシュ
 		case WAZANO_IAIGIRI:			// いあいぎり
 		case WAZANO_KAIRIKI:			// かいりき

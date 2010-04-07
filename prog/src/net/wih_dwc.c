@@ -281,10 +281,10 @@ static BOOL _scanPrivacy( WMBssDesc* pChk )
  * @retval  GAME_COMM_STATUS
  */
 //------------------------------------------------------------------------------
-GAME_COMM_STATUS WIH_DWC_GetAllBeaconType(void)
+GAME_COMM_STATUS WIH_DWC_GetAllBeaconType(WIFI_LIST * list)
 {
   int i;
-  GAME_COMM_STATUS_BIT bit  = WIH_DWC_GetAllBeaconTypeBit();
+  GAME_COMM_STATUS_BIT bit  = WIH_DWC_GetAllBeaconTypeBit(list);
 
   //最初に見つかったビットを優先度が高いと判断し、返す
   for( i = 0; i < GAME_COMM_STATUS_MAX; i++ )
@@ -304,7 +304,7 @@ GAME_COMM_STATUS WIH_DWC_GetAllBeaconType(void)
  * @retval  GAME_COMM_STATUS_BIT
  */
 //------------------------------------------------------------------------------
-GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(void)
+GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list)
 { 
   int i;
   GAME_COMM_STATUS_BIT retcode = 0;
@@ -328,7 +328,7 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(void)
   retcode |= GAME_COMM_STATUS_BIT_IRC;
 #endif
   
-  if(-1 != WIH_DWC_TVTCallCheck()){  //TVTは最優先
+  if(-1 != WIH_DWC_TVTCallCheck(list)){  //TVTは最優先
     retcode |= GAME_COMM_STATUS_BIT_WIRELESS_TR;
   }
   if(aNetStruct->gsid == WB_NET_PALACE_SERVICEID){  //パレスでつながっている判定
@@ -472,7 +472,7 @@ void WIH_DWC_ReloadCFG(void)
  * @retval  呼ばれてたらbeaconindexを返す 呼ばれて無い場合-1
  */
 //------------------------------------------------------------------------------
-int WIH_DWC_TVTCallCheck(void)
+int WIH_DWC_TVTCallCheck(WIFI_LIST * list)
 {
   u8 selfMacAdr[6];
   int i,num;

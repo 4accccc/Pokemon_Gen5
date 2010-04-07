@@ -319,7 +319,7 @@ static void _keyWait(SAVEADDR_WORK* pWork)
 
       num = num /2;
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECORDTOP_ADDR", (u32)&rec[0]-(u32)topAddr, 4);
-      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECORDSIZE", (u32)RECORD_GetWorkSize() , 4);
+      OS_TPrintf("\"%s\",\"\",\"%d\"\n","RECORDSIZE", (u32)RECORD_GetWorkSize() );
 
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECORD_CRC", (u32)&rec[num-2]-(u32)topAddr , 2);
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECORD_CODED_NUM", (u32)&rec[num-1]-(u32)topAddr, 2);

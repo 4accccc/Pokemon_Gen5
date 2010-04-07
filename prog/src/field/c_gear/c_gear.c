@@ -832,7 +832,7 @@ static void _PanelPaletteColorSetUp( C_GEAR_WORK* pWork )
   }
 
   if(!pWork->beacon_bit){
-    u32 bit = WIH_DWC_GetAllBeaconTypeBit();
+    u32 bit = WIH_DWC_GetAllBeaconTypeBit( GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(pWork->pGameSys)) );
     if(bit & GAME_COMM_SBIT_IRC_ALL){
       pWork->beacon_bit |= _CGEAR_NET_BIT_IR;
     }
@@ -2878,7 +2878,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
   {
     // トランシーバー反応処理
     if( !pWork->beacon_bit ){
-      u32 bit = WIH_DWC_GetAllBeaconTypeBit();
+      u32 bit = WIH_DWC_GetAllBeaconTypeBit(GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(pWork->pGameSys)));
 
       // トランシーバー再生処理
       if(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR){ // トランシーバー

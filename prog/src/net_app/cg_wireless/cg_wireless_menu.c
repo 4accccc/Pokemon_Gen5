@@ -840,14 +840,14 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
       num = pIn->maxBeaconNum;
 
       {
-        int index = WIH_DWC_TVTCallCheck();
+        int index = WIH_DWC_TVTCallCheck(GAMEDATA_GetWiFiList(pWork->gamedata));
         if(index != -1){
           u8 *macAddress = GFL_NET_GetBeaconMacAddress( index );
           u8 ii;
           pWork->dbw->aTVT.mode = CTM_CHILD;
           for( ii=0;ii<6;ii++ )
           {
-            pWork->dbw->aTVT.macAddress[ii] = macAddress[ii];
+            Pwork->dbw->aTVT.macAddress[ii] = macAddress[ii];
           }
           OS_TPrintf("Žq‹@‚É‚È‚Á‚½\n");
         }
@@ -1249,7 +1249,7 @@ static void _UpdatePalletAnime(CG_WIRELESS_MENU* pWork )
 //------------------------------------------------------------------------------
 static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
 {
-  int index = WIH_DWC_TVTCallCheck();
+  int index = WIH_DWC_TVTCallCheck(GAMEDATA_GetWiFiList(pWork->gamedata));
 
   if(-1 != index ){
     CTVT_COMM_BEACON *beacon = GFL_NET_GetBeaconData(index);
@@ -1458,7 +1458,7 @@ static GFL_PROC_RESULT CG_WirelessMenuProcMain( GFL_PROC * proc, int * seq, void
 
   if(GFL_NET_IsInit()){
     pWork->bitold =  pWork->bit;
-    pWork->bit = WIH_DWC_GetAllBeaconTypeBit();
+    pWork->bit = WIH_DWC_GetAllBeaconTypeBit(GAMEDATA_GetWiFiList(pWork->gamedata));
 
     pWork->unionnumOld = pWork->unionnum;
     pWork->unionnum = GFL_NET_WLGetServiceNumber(WB_NET_UNION);

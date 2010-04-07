@@ -12,6 +12,7 @@
 #include <dwc.h>
 #include "gamesystem/game_comm.h"
 #include "wih.h"
+#include "savedata/wifilist.h"
 
 
 typedef struct _WIH_DWC_WORK  WIH_DWC_WORK;
@@ -32,8 +33,8 @@ extern void WIH_DWC_AllBeaconEnd(WIH_DWC_WORK* pWork);
  *---------------------------------------------------------------------------*/
 
 extern void WIH_DWC_MainLoopScanBeaconData(void);
-extern GAME_COMM_STATUS WIH_DWC_GetAllBeaconType(void);
-extern GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(void);
+extern GAME_COMM_STATUS WIH_DWC_GetAllBeaconType(WIFI_LIST * list);
+extern GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list);
 
 
 extern void WIH_DWC_Stop(void);
@@ -48,4 +49,4 @@ extern void WIH_DWC_DeleteCFG(void);
 extern void WIH_DWC_ReloadCFG(void);
 
 //TVT‚ÉŽ©•ª‚ªŒÄ‚Î‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©
-extern int WIH_DWC_TVTCallCheck(void);
+extern int WIH_DWC_TVTCallCheck(WIFI_LIST * list);

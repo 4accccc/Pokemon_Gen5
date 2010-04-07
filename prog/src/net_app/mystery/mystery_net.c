@@ -750,7 +750,7 @@ static void SEQFUNC_MainBeaconScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
   MYSTERY_NET_WORK *p_wk  = p_wk_adrs;
 
   WIH_DWC_MainLoopScanBeaconData();
-  p_wk->comm_status = WIH_DWC_GetAllBeaconTypeBit();
+  p_wk->comm_status = WIH_DWC_GetAllBeaconTypeBit(NULL);
 }
 
 //----------------------------------------------------------------------------

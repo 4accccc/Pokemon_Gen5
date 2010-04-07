@@ -813,7 +813,7 @@ extern BOOL POKEMONTRADE_IsEggAndLastBattlePokemonChange(POKEMON_TRADE_WORK* pWo
 extern void POKETRADE_MESSAGE_WindowTimeIconStart(POKEMON_TRADE_WORK* pWork);
 
 extern void POKEMONTRADE_DEMOBGMChange(POKEMON_TRADE_WORK* pWork);
-
+extern void IRC_POKMEONTRADE_changeState(POKEMON_TRADE_WORK* pWork,StateFunc* state);
 
 #if _TRADE_DEBUG
 
@@ -823,7 +823,6 @@ extern void IRC_POKMEONTRADE_changeStateDebug(POKEMON_TRADE_WORK* pWork,StateFun
 
 #else  //_NET_DEBUG
 
-extern void IRC_POKMEONTRADE_changeState(POKEMON_TRADE_WORK* pWork,StateFunc* state);
 
 #define   _CHANGE_STATE(pWork, state)  IRC_POKMEONTRADE_changeState(pWork ,state)
 
