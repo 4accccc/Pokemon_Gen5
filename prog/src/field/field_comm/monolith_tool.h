@@ -9,6 +9,7 @@
 #pragma once
 
 #include "savedata/intrude_save.h"  //OCCUPY_INFO
+#include "app/app_taskmenu.h"
 
 
 //==============================================================================
@@ -117,13 +118,21 @@ extern void MonolithTool_TownIcon_Update(GFL_CLWK *cap, const OCCUPY_INFO *occup
 extern GFL_CLWK * MonolithTool_TownCursor_Create(MONOLITH_SETUP *setup, const GFL_POINT *pos, COMMON_RESOURCE_INDEX res_index);
 extern void MonolithTool_TownCursor_Delete(GFL_CLWK *cap);
 
-extern GFL_CLWK * MonolithTool_CancelIcon_Create(MONOLITH_SETUP *setup);
-extern void MonolithTool_CancelIcon_Delete(GFL_CLWK *cap);
-extern void MonolithTool_CancelIcon_Update(GFL_CLWK *cap);
+extern void MonolithTool_CancelIcon_Create(MONOLITH_SETUP *setup, MONOLITH_CANCEL_ICON *cancel);
+extern void MonolithTool_CancelIcon_Delete(MONOLITH_CANCEL_ICON *cancel);
+extern void MonolithTool_CancelIcon_Update(MONOLITH_CANCEL_ICON *cancel);
+extern void MonolithTool_CancelIcon_FlashReq(MONOLITH_CANCEL_ICON *cancel);
+extern BOOL MonolithTool_CancelIcon_FlashCheck(MONOLITH_CANCEL_ICON *cancel);
 
 extern GFL_CLWK * MonolithTool_Arrow_Create(MONOLITH_SETUP *setup, int x, int y, int anmseq);
 extern void MonolithTool_ArrowIcon_Delete(GFL_CLWK *cap);
 extern void MonolithTool_ArrowIcon_Update(GFL_CLWK *cap);
+
+extern APP_TASKMENU_RES * MonolithTool_TaskMenuCreate(MONOLITH_SETUP *setup, int frame_no, HEAPID heap_id);
+extern void MonolithTool_TaskMenuDelete(APP_TASKMENU_RES *app_task_res);
+extern APP_TASKMENU_WORK * MonolithTool_TaskMenu_YesNoInit(MONOLITH_SETUP *setup, APP_TASKMENU_RES *app_task_res, HEAPID heap_id);
+extern void MonolithTool_TaskMenu_YesNoExit(APP_TASKMENU_WORK *app_menu);
+extern BOOL MonolithTool_TaskMenu_Update(MONOLITH_SETUP *setup, int frame_no, APP_TASKMENU_WORK *app_menu, BOOL *ret_yesno);
 
 
 //==============================================================================

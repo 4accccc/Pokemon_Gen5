@@ -14,6 +14,9 @@
 #include "monolith_tool.h"
 #include "intrude_mission.h"
 #include "msg/msg_monolith.h"
+#include "intrude_types.h"
+#include "system/bmp_winframe.h"
+#include "gamesystem/msgspeed.h"
 
 
 //==============================================================================
@@ -29,6 +32,11 @@ enum{
   TITLE_PANEL_CANCEL = TITLE_PANEL_MAX,
 };
 
+///BMP枠のパレット番号
+#define BMPWIN_FRAME_PALNO        (MONOLITH_MENUBAR_PALNO - 1)
+///BMP枠のキャラクタ開始位置
+#define BMPWIN_FRAME_START_CGX    (1)
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -39,7 +47,10 @@ typedef struct{
   s8 select_panel;    ///<選択したパネル(TITLE_PANEL_xxx)
   u8 mission_occ;     ///<TRUE:ミッションが選択できる
   u8 padding;
-  GFL_CLWK *act_cancel;   ///<キャンセルアイコンアクターへのポインタ
+  MONOLITH_CANCEL_ICON cancel_icon;   ///<キャンセルアイコンアクターへのポインタ
+  GFL_BMPWIN *bmpwin;
+  PRINT_STREAM *print_stream;
+  STRBUF *strbuf_stream;
 }MONOLITH_TITLE_WORK;
 
 //==============================================================================
@@ -54,6 +65,13 @@ static void _Title_PanelUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *
 static void _Title_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw);
 static void _Title_CancelIconDelete(MONOLITH_TITLE_WORK *mtw);
 static void _Title_CancelIconUpdate(MONOLITH_TITLE_WORK *mtw);
+static void _Setup_BGFrameSetting(void);
+static void _Setup_BGFrameExit(void);
+static void _Setup_BmpWinCreate(MONOLITH_TITLE_WORK *mtw, MONOLITH_SETUP *setup);
+static void _Setup_BmpWinDelete(MONOLITH_TITLE_WORK *mtw);
+static void _Set_MsgStream(MONOLITH_TITLE_WORK *mtw, MONOLITH_SETUP *setup, u16 msg_id);
+static BOOL _Wait_MsgStream(MONOLITH_SETUP *setup, MONOLITH_TITLE_WORK *mtw);
+static void _Clear_MsgStream(MONOLITH_TITLE_WORK *mtw);
 
 
 //==============================================================================
@@ -192,9 +210,13 @@ static GFL_PROC_RESULT MonolithTitleProc_Init(GFL_PROC * proc, int * seq, void *
   
   mtw->mission_occ = appwk->parent->list_occ;
   
+  _Setup_BGFrameSetting();
+  _Setup_BmpWinCreate(mtw, appwk->setup);
+
   _Title_PanelCreate(appwk, mtw);
   _Title_CancelIconCreate(appwk, mtw);
   
+	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
   return GFL_PROC_RES_FINISH;
 }
 
@@ -213,6 +235,12 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_TITLE_WORK *mtw = mywk;
   int tp_ret;
+  enum{
+    _SEQ_MAIN,
+    _SEQ_DECIDE,
+    _SEQ_DECIDE_WAIT,
+    _SEQ_STREAM_WAIT,
+  };
   
   _Title_PanelUpdate(appwk, mtw);
   _Title_CancelIconUpdate(mtw);
@@ -222,7 +250,7 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
   }
 
   switch(*seq){
-  case 0:
+  case _SEQ_MAIN:
     tp_ret = GFL_UI_TP_HitTrg(TitlePanelRect[mtw->mission_occ]);
     if(tp_ret != GFL_UI_TP_HIT_NONE){
       OS_TPrintf("タッチ有効 %d\n", tp_ret);
@@ -262,22 +290,30 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
       }
     }
     break;
-  case 1:
-    if(mtw->select_panel == TITLE_PANEL_MISSION && appwk->parent->list_occ == FALSE){
-      OS_TPrintf("ミッション選択候補リストが未受信\n");
-      (*seq)--;
-      break;
+  case _SEQ_DECIDE:
+    if(mtw->select_panel == TITLE_PANEL_MISSION){
+      if(appwk->parent->list_occ == FALSE){
+        OS_TPrintf("ミッション選択候補リストが未受信\n");
+        (*seq)--;
+        break;
+      }
+      else if(appwk->parent->intcomm != NULL 
+          && MISSION_RecvCheck(&appwk->parent->intcomm->mission) == TRUE){  //ミッション受注済み
+        _Set_MsgStream(mtw, appwk->setup, msg_mono_title_004);
+        (*seq) = _SEQ_STREAM_WAIT;
+        break;
+      }
     }
     if(mtw->select_panel != TITLE_PANEL_CANCEL){
       MonolithTool_PanelOBJ_Flash(appwk, mtw->panel, 
         TitlePanelMax[mtw->mission_occ], mtw->cursor_pos, FADE_SUB_OBJ);
     }
     else{
-      //※check　キャンセルアイコンを光らす
+      MonolithTool_CancelIcon_FlashReq(&mtw->cancel_icon);
     }
     (*seq)++;
     break;
-  case 2:
+  case _SEQ_DECIDE_WAIT:
     if(mtw->select_panel != TITLE_PANEL_CANCEL){
       if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH){
         appwk->next_menu_index = MONOLITH_MENU_MISSION + mtw->select_panel;
@@ -285,9 +321,19 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
       }
     }
     else{
-      //※check　キャンセルアイコンの光待ち
-      appwk->next_menu_index = MONOLITH_MENU_MISSION + mtw->select_panel;
-      return GFL_PROC_RES_FINISH;
+      if(MonolithTool_CancelIcon_FlashCheck(&mtw->cancel_icon) == FALSE){
+        appwk->next_menu_index = MONOLITH_MENU_MISSION + mtw->select_panel;
+        return GFL_PROC_RES_FINISH;
+      }
+    }
+    break;
+  
+  case _SEQ_STREAM_WAIT:
+    if(_Wait_MsgStream(appwk->setup, mtw) == TRUE){
+      if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+        _Clear_MsgStream(mtw);
+        *seq = _SEQ_MAIN;
+      }
     }
     break;
   }
@@ -310,8 +356,20 @@ static GFL_PROC_RESULT MonolithTitleProc_End( GFL_PROC * proc, int * seq, void *
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_TITLE_WORK *mtw = mywk;
 
+  GFL_DISP_GXS_SetVisibleControlDirect(GX_PLANEMASK_BG3);
+
+  if(mtw->print_stream != NULL){
+    PRINTSYS_PrintStreamDelete(mtw->print_stream);
+  }
+  if(mtw->strbuf_stream != NULL){
+    GFL_STR_DeleteBuffer(mtw->strbuf_stream);
+  }
+
   _Title_PanelDelete(mtw);
   _Title_CancelIconDelete(mtw);
+
+  _Setup_BmpWinDelete(mtw);
+  _Setup_BGFrameExit();
   
   GFL_PROC_FreeWork(proc);
   return GFL_PROC_RES_FINISH;
@@ -399,7 +457,7 @@ static void _Title_PanelUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *
 //==================================================================
 static void _Title_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *mtw)
 {
-  mtw->act_cancel = MonolithTool_CancelIcon_Create(appwk->setup);
+  MonolithTool_CancelIcon_Create(appwk->setup, &mtw->cancel_icon);
 }
 
 //==================================================================
@@ -411,7 +469,7 @@ static void _Title_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_W
 //==================================================================
 static void _Title_CancelIconDelete(MONOLITH_TITLE_WORK *mtw)
 {
-  MonolithTool_CancelIcon_Delete(mtw->act_cancel);
+  MonolithTool_CancelIcon_Delete(&mtw->cancel_icon);
 }
 
 //==================================================================
@@ -423,5 +481,143 @@ static void _Title_CancelIconDelete(MONOLITH_TITLE_WORK *mtw)
 //==================================================================
 static void _Title_CancelIconUpdate(MONOLITH_TITLE_WORK *mtw)
 {
-  MonolithTool_CancelIcon_Update(mtw->act_cancel);
+  MonolithTool_CancelIcon_Update(&mtw->cancel_icon);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   BGフレーム設定
+ */
+//--------------------------------------------------------------
+static void _Setup_BGFrameSetting(void)
+{
+	static const GFL_BG_BGCNT_HEADER bgcnt_frame[] = {
+		{//GFL_BG_FRAME1_S
+			0, 0, MONO_BG_COMMON_SCR_SIZE, 0,
+			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x0c000, 0x8000,
+			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+		},
+	};
+
+	GFL_BG_SetBGControl( GFL_BG_FRAME1_S,   &bgcnt_frame[0],   GFL_BG_MODE_TEXT );
+
+	GFL_BG_FillScreen( GFL_BG_FRAME1_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_OFF);
+}
+
+//--------------------------------------------------------------
+/**
+ * BGフレーム解放
+ */
+//--------------------------------------------------------------
+static void _Setup_BGFrameExit(void)
+{
+	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_OFF);
+  GFL_BG_FreeBGControl(GFL_BG_FRAME1_S);
+}
+
+//--------------------------------------------------------------
+/**
+ * BMPWIN作成
+ *
+ * @param   mtw		
+ * @param   setup		
+ */
+//--------------------------------------------------------------
+static void _Setup_BmpWinCreate(MONOLITH_TITLE_WORK *mtw, MONOLITH_SETUP *setup)
+{
+  GFL_BMP_DATA *bmp;
+
+  BmpWinFrame_CgxSet( GFL_BG_FRAME1_S, BMPWIN_FRAME_START_CGX, MENU_TYPE_SYSTEM, HEAPID_MONOLITH );
+  PaletteWorkSetEx_Arc(setup->pfd, ARCID_FLDMAP_WINFRAME, 
+    BmpWinFrame_WinPalArcGet(MENU_TYPE_SYSTEM), 
+    HEAPID_MONOLITH, FADE_SUB_BG, 0x20, BMPWIN_FRAME_PALNO * 16, 0);
+  
+	mtw->bmpwin = GFL_BMPWIN_Create( GFL_BG_FRAME1_S,
+		1,19,30,4, MONOLITH_BG_DOWN_FONT_PALNO, GFL_BMP_CHRAREA_GET_B );
+
+	bmp = GFL_BMPWIN_GetBmp( mtw->bmpwin );
+	
+	GFL_BMP_Clear( bmp, 0xff );
+//	GFL_BMPWIN_TransVramCharacter( mtw->bmpwin );
+	GFL_BMPWIN_MakeScreen( mtw->bmpwin );
+//	GFL_BG_LoadScreenReq( GFL_BG_FRAME1_S );
+	
+	BmpWinFrame_Write( mtw->bmpwin, WINDOW_TRANS_ON, BMPWIN_FRAME_START_CGX, BMPWIN_FRAME_PALNO );
+}
+
+//--------------------------------------------------------------
+/**
+ * BMPWIN削除
+ *
+ * @param   mtw		
+ */
+//--------------------------------------------------------------
+static void _Setup_BmpWinDelete(MONOLITH_TITLE_WORK *mtw)
+{
+  GFL_BMPWIN_Delete(mtw->bmpwin);
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージ出力開始
+ *
+ * @param   mtw		
+ * @param   setup		
+ */
+//--------------------------------------------------------------
+static void _Set_MsgStream(MONOLITH_TITLE_WORK *mtw, MONOLITH_SETUP *setup, u16 msg_id)
+{
+  GF_ASSERT(mtw->print_stream == NULL);
+  
+  GFL_FONTSYS_SetColor( 1, 2, 15 );
+
+  mtw->strbuf_stream = GFL_MSG_CreateString(setup->mm_monolith, msg_id);
+  
+  mtw->print_stream = PRINTSYS_PrintStream(
+    mtw->bmpwin, 0, 0, mtw->strbuf_stream, setup->font_handle,
+    MSGSPEED_GetWait(), setup->tcbl_sys, 10, HEAPID_MONOLITH, 0xf);
+
+	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_ON);
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージ出力完了待ち
+ *
+ * @param   mtw		
+ *
+ * @retval  BOOL		TRUE:出力完了
+ */
+//--------------------------------------------------------------
+static BOOL _Wait_MsgStream(MONOLITH_SETUP *setup, MONOLITH_TITLE_WORK *mtw)
+{
+  return APP_PRINTSYS_COMMON_PrintStreamFunc( &setup->app_printsys, mtw->print_stream );
+}
+
+//--------------------------------------------------------------
+/**
+ * メッセージクリア
+ *
+ * @param   mtw		
+ */
+//--------------------------------------------------------------
+static void _Clear_MsgStream(MONOLITH_TITLE_WORK *mtw)
+{
+  GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( mtw->bmpwin );
+
+  GF_ASSERT(mtw->print_stream != NULL);
+  PRINTSYS_PrintStreamDelete(mtw->print_stream);
+  mtw->print_stream = NULL;
+  
+  GFL_STR_DeleteBuffer(mtw->strbuf_stream);
+  mtw->strbuf_stream = NULL;
+  
+	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_OFF);
+  GFL_BMP_Clear(bmp, 0xff);
+	GFL_BMPWIN_TransVramCharacter( mtw->bmpwin );
+
+  GFL_FONTSYS_SetColor( 
+    MONOLITH_FONT_DEFCOLOR_LETTER, MONOLITH_FONT_DEFCOLOR_SHADOW, MONOLITH_FONT_DEFCOLOR_BACK );
 }

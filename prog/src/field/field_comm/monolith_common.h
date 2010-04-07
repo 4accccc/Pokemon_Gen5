@@ -49,6 +49,9 @@ enum{
 ///下画面メニューバーのパレット番号
 #define MONOLITH_MENUBAR_PALNO        (MONOLITH_BG_DOWN_FONT_PALNO-1)
 
+///「はい/いいえ」ウィンドウ開始パレット番号(2本使用) pfdの管理外
+#define MONOLITH_BG_YESNO_PALNO     (14)
+
 ///文字色のデフォルト設定
 #define MONOLITH_FONT_DEFCOLOR_LETTER   (0xf)
 #define MONOLITH_FONT_DEFCOLOR_SHADOW   (2)
@@ -167,6 +170,15 @@ typedef struct{
   u8 power_eqp_update;       ///<パワー画面：TRUE:装備しているパワーに変更があった
   u8 padding;
 }MONOLITH_COMMON_WORK;
+
+///キャンセルアイコン制御構造体
+typedef struct{
+  GFL_CLWK *cap;
+  u8 flash_enable;      ///<TRUE:フラッシュアニメ要求
+  u8 wait;
+  u8 flash_anm;
+  u8 padding;
+}MONOLITH_CANCEL_ICON;
 
 ///パネルカラーアニメ制御構造体
 typedef struct{

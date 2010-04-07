@@ -425,6 +425,7 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAME_COMM_SYS_PTR game_comm= GAMESYSTEM_GetGameCommSysPtr(gsys);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   MONOLITH_PARENT_WORK *parent;
   INTRUDE_COMM_SYS_PTR intcomm;
@@ -436,6 +437,7 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
   parent = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(MONOLITH_PARENT_WORK));
 
   if(intcomm != NULL 
+      && intcomm->intrude_status_mine.palace_area != GAMEDATA_GetIntrudeMyID(gamedata)
       && MISSION_MissionList_CheckOcc(
       &intcomm->mission.list[Intrude_GetPalaceArea(intcomm)]) == TRUE){
     palace_area = Intrude_GetPalaceArea(intcomm);

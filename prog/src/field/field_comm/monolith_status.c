@@ -50,7 +50,7 @@ enum{
   
   //ホワイト＆ブラックのレベル
   BMPWIN_POS_WBLV_X = 2,
-  BMPWIN_POS_WBLV_Y = BMPWIN_POS_LEVEL_Y + 4,
+  BMPWIN_POS_WBLV_Y = BMPWIN_POS_LEVEL_Y + 3,
   BMPWIN_POS_WBLV_SIZE_X = 32 - BMPWIN_POS_WBLV_X,
   BMPWIN_POS_WBLV_SIZE_Y = 2,
   
@@ -62,13 +62,13 @@ enum{
   
   //クリアしたミッション
   BMPWIN_POS_CLEAR_MISSION_X = BMPWIN_POS_TIME_X,
-  BMPWIN_POS_CLEAR_MISSION_Y = BMPWIN_POS_TIME_Y + 3,
+  BMPWIN_POS_CLEAR_MISSION_Y = BMPWIN_POS_TIME_Y + 2,
   BMPWIN_POS_CLEAR_MISSION_SIZE_X = 32 - BMPWIN_POS_CLEAR_MISSION_X,
   BMPWIN_POS_CLEAR_MISSION_SIZE_Y = 2,
   
   //使えるGパワーの数
   BMPWIN_POS_USE_GPOWER_X = BMPWIN_POS_TIME_X,
-  BMPWIN_POS_USE_GPOWER_Y = BMPWIN_POS_CLEAR_MISSION_Y + 3,
+  BMPWIN_POS_USE_GPOWER_Y = BMPWIN_POS_CLEAR_MISSION_Y + 2,
   BMPWIN_POS_USE_GPOWER_SIZE_X = 32 - BMPWIN_POS_USE_GPOWER_X,
   BMPWIN_POS_USE_GPOWER_SIZE_Y = 2,
 };
@@ -80,7 +80,7 @@ enum{
 typedef struct{
   GFL_BMPWIN *bmpwin[BMPWIN_MAX];
   PRINT_UTIL print_util[BMPWIN_MAX];
-  GFL_CLWK *act_cancel;
+  MONOLITH_CANCEL_ICON cancel_icon;
 }MONOLITH_STATUS_WORK;
 
 
@@ -161,6 +161,7 @@ static GFL_PROC_RESULT MonolithStatusProc_Init(GFL_PROC * proc, int * seq, void 
   //メッセージ描画
   _Write_Status(appwk, appwk->setup, msw);
   
+	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
   return GFL_PROC_RES_FINISH;
 }
 
@@ -198,13 +199,17 @@ static GFL_PROC_RESULT MonolithStatusProc_Main( GFL_PROC * proc, int * seq, void
 
       if(tp_ret != GFL_UI_TP_HIT_NONE || (trg & PAD_BUTTON_CANCEL)){
         OS_TPrintf("キャンセル選択\n");
+        MonolithTool_CancelIcon_FlashReq(&msw->cancel_icon);
         (*seq)++;
       }
     }
     break;
   case 1:
-    appwk->next_menu_index = MONOLITH_MENU_TITLE;
-    return GFL_PROC_RES_FINISH;
+    if(MonolithTool_CancelIcon_FlashCheck(&msw->cancel_icon) == FALSE){
+      appwk->next_menu_index = MONOLITH_MENU_TITLE;
+      return GFL_PROC_RES_FINISH;
+    }
+    break;
   }
   
   return GFL_PROC_RES_CONTINUE;
@@ -225,6 +230,8 @@ static GFL_PROC_RESULT MonolithStatusProc_End( GFL_PROC * proc, int * seq, void 
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_STATUS_WORK *msw = mywk;
   
+  GFL_DISP_GXS_SetVisibleControlDirect(GX_PLANEMASK_BG3);
+
   //OBJ
   _Status_CancelIconDelete(msw);
   
@@ -472,7 +479,7 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
 //==================================================================
 static void _Status_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_STATUS_WORK *msw)
 {
-  msw->act_cancel = MonolithTool_CancelIcon_Create(appwk->setup);
+  MonolithTool_CancelIcon_Create(appwk->setup, &msw->cancel_icon);
 }
 
 //==================================================================
@@ -484,7 +491,7 @@ static void _Status_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_STATUS
 //==================================================================
 static void _Status_CancelIconDelete(MONOLITH_STATUS_WORK *msw)
 {
-  MonolithTool_CancelIcon_Delete(msw->act_cancel);
+  MonolithTool_CancelIcon_Delete(&msw->cancel_icon);
 }
 
 //==================================================================
@@ -496,5 +503,5 @@ static void _Status_CancelIconDelete(MONOLITH_STATUS_WORK *msw)
 //==================================================================
 static void _Status_CancelIconUpdate(MONOLITH_STATUS_WORK *msw)
 {
-  MonolithTool_CancelIcon_Update(msw->act_cancel);
+  MonolithTool_CancelIcon_Update(&msw->cancel_icon);
 }

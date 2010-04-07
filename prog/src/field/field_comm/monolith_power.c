@@ -160,7 +160,7 @@ typedef struct{
   PRINT_UTIL print_util[_PRINTUTIL_MAX];
   STRBUF *strbuf_stream;
   PRINT_STREAM *print_stream;
-  GFL_CLWK *act_cancel;   ///<キャンセルアイコンアクターへのポインタ
+  MONOLITH_CANCEL_ICON cancel_icon;   ///<キャンセルアイコンアクターへのポインタ
 
   BMPOAM_ACT_PTR bmpoam_power[POWER_ITEM_DISP_NUM];
   GFL_BMP_DATA *bmpoam_power_bmp[POWER_ITEM_DISP_NUM];
@@ -181,6 +181,9 @@ typedef struct{
   s32 decide_cursor_pos;  ///<決定時のカーソル位置
   BOOL cursor_pos_update;   ///<TRUE:カーソル位置に更新があった
   _SET_CURSOR_MODE cursor_mode; ///<カーソルをキーとタッチパネルどちらでいじったか
+  
+  APP_TASKMENU_RES *app_menu_res;
+  APP_TASKMENU_WORK *app_menu_work;
 }MONOLITH_PWSELECT_WORK;
 
 //==============================================================================
@@ -311,6 +314,9 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Init(GFL_PROC * proc, int * seq, 
 
     _Set_TitlePrint(appwk, mpw);
 
+    mpw->app_menu_res = MonolithTool_TaskMenuCreate(
+      appwk->setup, GFL_BG_FRAME0_S, HEAPID_MONOLITH);
+
     appwk->common->power_select_no = GPOWER_ID_NULL;
     
     mpw->vintr_tcb = GFUser_VIntr_CreateTCB(
@@ -334,6 +340,8 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Init(GFL_PROC * proc, int * seq, 
       else{
         _SetCursorPos(mpw, _CURSOR_POS_NONE, _SET_CURSOR_MODE_INIT);
       }
+
+    	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
       return GFL_PROC_RES_FINISH;
     }
     break;
@@ -362,6 +370,9 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     SEQ_FIRST_STREAM,
     SEQ_FIRST_STREAM_WAIT,
     SEQ_TOP,
+    SEQ_YESNO_STREAM,
+    SEQ_YESNO_STREAM_WAIT,
+    SEQ_YESNO_SELECT_WAIT,
     SEQ_DECIDE_STREAM,
     SEQ_DECIDE_SEND,
     SEQ_DECIDE_STREAM_WAIT,
@@ -378,7 +389,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     PRINT_UTIL_Trans(&mpw->print_util[i], appwk->setup->printQue);
   }
 
-  if(appwk->force_finish == TRUE){
+  if(appwk->force_finish == TRUE && (*seq) == SEQ_TOP){
     return GFL_PROC_RES_FINISH;
   }
   
@@ -409,6 +420,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
 
       if(tp_ret == TOUCH_CANCEL || (trg & PAD_BUTTON_CANCEL)){
         OS_TPrintf("キャンセル選択\n");
+        MonolithTool_CancelIcon_FlashReq(&mpw->cancel_icon);
         (*seq) = SEQ_FINISH;
         break;
       }
@@ -440,9 +452,46 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     
     if(mpw->decide_cursor_pos != _CURSOR_POS_NONE){
       PMSND_PlaySE( SEQ_SE_FLD_133 );
-      *seq = SEQ_DECIDE_STREAM;
+      *seq = SEQ_YESNO_STREAM;
     }
     break;
+  
+  case SEQ_YESNO_STREAM:
+    if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_BG) != PANEL_COLORMODE_FLASH
+        && MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH){
+      _Set_MsgStream(mpw, appwk->setup, msg_mono_pow_008);
+      (*seq)++;
+    }
+    break;
+  case SEQ_YESNO_STREAM_WAIT:
+    if(_Wait_MsgStream(appwk->setup, mpw) == TRUE){
+      GF_ASSERT(mpw->app_menu_work == NULL);
+      mpw->app_menu_work = MonolithTool_TaskMenu_YesNoInit(
+        appwk->setup, mpw->app_menu_res, HEAPID_MONOLITH);
+      (*seq)++;
+    }
+    break;
+  case SEQ_YESNO_SELECT_WAIT:
+    {
+      BOOL ret_yesno;
+      if(MonolithTool_TaskMenu_Update(appwk->setup, GFL_BG_FRAME0_S, 
+          mpw->app_menu_work, &ret_yesno) == TRUE){
+        MonolithTool_TaskMenu_YesNoExit(mpw->app_menu_work);
+        mpw->app_menu_work = NULL;
+        _Clear_MsgStream(mpw);
+        if(ret_yesno == TRUE){
+          *seq = SEQ_DECIDE_STREAM;
+        }
+        else{
+          mpw->decide_cursor_pos = _CURSOR_POS_NONE;
+          MonolithTool_PanelBG_Focus(appwk, TRUE, FADE_SUB_BG);
+          MonolithTool_PanelOBJ_Focus(appwk, &mpw->panel, 1, PANEL_NO_FOCUS, FADE_SUB_OBJ);
+          *seq = SEQ_TOP;
+        }
+      }
+    }
+    break;
+    
   case SEQ_DECIDE_STREAM:
     if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_BG) != PANEL_COLORMODE_FLASH
         && MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH){
@@ -485,20 +534,21 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
           *seq = SEQ_TP_RELEASE_WAIT;
         }
         else{
-          *seq = SEQ_TOP;
+          *seq = SEQ_FINISH;
         }
       }
     }
     break;
   case SEQ_TP_RELEASE_WAIT:
     if(GFL_UI_TP_GetCont() == 0){
-      *seq = SEQ_TOP;
+      *seq = SEQ_FINISH;
     }
     break;
     
   case SEQ_FINISH:
     if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_BG) != PANEL_COLORMODE_FLASH
-        && MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH){
+        && MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH
+        && MonolithTool_CancelIcon_FlashCheck(&mpw->cancel_icon) == FALSE){
       appwk->next_menu_index = MONOLITH_MENU_TITLE;
       return GFL_PROC_RES_FINISH;
     }
@@ -525,6 +575,8 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_End( GFL_PROC * proc, int * seq, 
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_PWSELECT_WORK *mpw = mywk;
 
+  GFL_DISP_GXS_SetVisibleControlDirect(GX_PLANEMASK_BG3);
+
   GFL_TCB_DeleteTask( mpw->vintr_tcb );
   
   if(mpw->print_stream != NULL){
@@ -535,6 +587,11 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_End( GFL_PROC * proc, int * seq, 
   }
 
   _Setup_PowerNameBMPDelete(mpw);
+
+  if(mpw->app_menu_work != NULL){
+    MonolithTool_TaskMenu_YesNoExit(mpw->app_menu_work);
+  }
+  MonolithTool_TaskMenuDelete(mpw->app_menu_res);
 
   //OBJ
   _HavePointDelete(mpw);
@@ -724,7 +781,7 @@ static void _Set_TitlePrint(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *
   str_msg = GFL_MSG_CreateString(appwk->setup->mm_monolith, msg_mono_pow_010);
 
   PRINT_UTIL_Print(&mpw->print_util[_PRINTUTIL_TITLE], appwk->setup->printQue, 
-    8, 4, str_msg, appwk->setup->font_handle);
+    24, 4, str_msg, appwk->setup->font_handle);
   
   GFL_STR_DeleteBuffer(str_msg);
 }
@@ -1091,7 +1148,7 @@ static void _HavePointCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK 
   WORDSET_RegisterNumber(appwk->setup->wordset, 0, 0, 4,//occupy->intrude_point, 4, 
     STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
   MonolithTool_Bmpoam_Create(appwk->setup, &mpw->bmpstr_point, COMMON_RESOURCE_INDEX_DOWN, 
-    128+48, 192-_MENU_BAR_Y_LEN/2, 12, 2, msg_mono_pow_013, appwk->setup->wordset);
+    128+48, 192-_MENU_BAR_Y_LEN/2, 13, 2, msg_mono_pow_013, appwk->setup->wordset);
   MonolithTool_Bmpoam_BGPriSet(appwk->setup, &mpw->bmpstr_point, BGPRI_BMPOAM_HAVE_POINT);
 }
 
@@ -1129,7 +1186,7 @@ static void _HavePointUpdate(MONOLITH_SETUP *setup, MONOLITH_PWSELECT_WORK *mpw)
 //==================================================================
 static void _CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw)
 {
-  mpw->act_cancel = MonolithTool_CancelIcon_Create(appwk->setup);
+  MonolithTool_CancelIcon_Create(appwk->setup, &mpw->cancel_icon);
 }
 
 //==================================================================
@@ -1141,7 +1198,7 @@ static void _CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK
 //==================================================================
 static void _CancelIconDelete(MONOLITH_PWSELECT_WORK *mpw)
 {
-  MonolithTool_CancelIcon_Delete(mpw->act_cancel);
+  MonolithTool_CancelIcon_Delete(&mpw->cancel_icon);
 }
 
 //==================================================================
@@ -1153,7 +1210,7 @@ static void _CancelIconDelete(MONOLITH_PWSELECT_WORK *mpw)
 //==================================================================
 static void _CancelIconUpdate(MONOLITH_PWSELECT_WORK *mpw)
 {
-  MonolithTool_CancelIcon_Update(mpw->act_cancel);
+  MonolithTool_CancelIcon_Update(&mpw->cancel_icon);
 }
 
 //==================================================================

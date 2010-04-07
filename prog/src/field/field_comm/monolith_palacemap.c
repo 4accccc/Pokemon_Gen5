@@ -114,6 +114,8 @@ static GFL_PROC_RESULT MonolithPalaceMapProc_Init(GFL_PROC * proc, int * seq, vo
   MonolithTool_Bmpoam_Create(appwk->setup, &mpw->bmpstr_title, COMMON_RESOURCE_INDEX_UP, 
     128, 12, 30, 2, msg_mono_title_000, appwk->setup->wordset);
   _TownIcon_AllCreate(mpw, appwk);
+
+	GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
   
   return GFL_PROC_RES_FINISH;
 }
@@ -164,6 +166,8 @@ static GFL_PROC_RESULT MonolithPalaceMapProc_End( GFL_PROC * proc, int * seq, vo
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_PALACEMAP_WORK *mpw = mywk;
   
+  GFL_DISP_GX_SetVisibleControlDirect(GX_PLANEMASK_BG3);
+
   //OBJ
   _TownIcon_AllDelete(mpw);
   MonolithTool_Bmpoam_Delete(&mpw->bmpstr_title);

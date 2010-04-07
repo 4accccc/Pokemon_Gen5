@@ -121,6 +121,8 @@ static GFL_PROC_RESULT MonolithMissionExplainProc_Init(GFL_PROC * proc, int * se
   
   mmw->view_town = 0xff;  //èââÒÇÃï`âÊÇí Ç∑à◊Ç…ë∂ç›ÇµÇ»Ç¢äXî‘çÜÇê›íË
   
+	GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -182,6 +184,8 @@ static GFL_PROC_RESULT MonolithMissionExplainProc_End( GFL_PROC * proc, int * se
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_MSEXPLAIN_WORK *mmw = mywk;
   
+  GFL_DISP_GX_SetVisibleControlDirect(GX_PLANEMASK_BG3);
+
   //BG
   _Setup_BmpWin_Exit(mmw);
   _Setup_BGFrameExit();

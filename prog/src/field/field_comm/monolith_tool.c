@@ -15,6 +15,7 @@
 #include "monolith_tool.h"
 #include "field/intrude_common.h"
 #include "intrude_work.h"
+#include "msg/msg_monolith.h"
 
 
 //==============================================================================
@@ -37,6 +38,10 @@ enum{
 #define PANEL_SMALL_BMPFONT_POS_X(panel_x)   (panel_x - PANEL_SMALL_CHARSIZE_X/2*8)
 ///パネル(決定)BMPFONT座標X
 #define PANEL_DECIDE_BMPFONT_POS_X(panel_x)   (panel_x - PANEL_DECIDE_CHARSIZE_X/2*8)
+
+///「はい/いいえ」ウィンドウのX位置
+#define _INFO_YESNO_X   ( 32-APP_TASKMENU_PLATE_WIDTH_YN_WIN )
+#define _INFO_YESNO_Y   ( 12 )
 
 
 //==============================================================================
@@ -119,6 +124,9 @@ static const BMPOAM_ACT_DATA BmpOamHead_Str = {
   0,                             //setSerface
   0,                             //draw_type
 };
+
+///キャンセルアイコンのフラッシュウェイト
+#define CANCEL_ICON_FLASH_WAIT    (5)
 
 
 //==================================================================
@@ -822,7 +830,7 @@ void MonolithTool_TownCursor_Delete(GFL_CLWK *cap)
  * @retval  GFL_CLWK *		
  */
 //==================================================================
-GFL_CLWK * MonolithTool_CancelIcon_Create(MONOLITH_SETUP *setup)
+void MonolithTool_CancelIcon_Create(MONOLITH_SETUP *setup, MONOLITH_CANCEL_ICON *cancel)
 {
   GFL_CLWK *cap;
   GFL_CLWK_DATA ActHead_Cancel = {  //キャンセルアイコンのアクターヘッダ
@@ -839,7 +847,7 @@ GFL_CLWK * MonolithTool_CancelIcon_Create(MONOLITH_SETUP *setup)
 
   GFL_CLACT_WK_SetAutoAnmFlag( cap, TRUE );
   
-  return cap;
+  cancel->cap = cap;
 }
 
 //==================================================================
@@ -849,9 +857,9 @@ GFL_CLWK * MonolithTool_CancelIcon_Create(MONOLITH_SETUP *setup)
  * @param   cap		
  */
 //==================================================================
-void MonolithTool_CancelIcon_Delete(GFL_CLWK *cap)
+void MonolithTool_CancelIcon_Delete(MONOLITH_CANCEL_ICON *cancel)
 {
-  GFL_CLACT_WK_Remove(cap);
+  GFL_CLACT_WK_Remove(cancel->cap);
 }
 
 //==================================================================
@@ -861,9 +869,45 @@ void MonolithTool_CancelIcon_Delete(GFL_CLWK *cap)
  * @param   cap		
  */
 //==================================================================
-void MonolithTool_CancelIcon_Update(GFL_CLWK *cap)
+void MonolithTool_CancelIcon_Update(MONOLITH_CANCEL_ICON *cancel)
 {
-  return;
+  if(cancel->flash_enable == TRUE){
+    if(cancel->wait % CANCEL_ICON_FLASH_WAIT == 0){
+      GFL_CLACT_WK_SetPlttOffs(cancel->cap, COMMON_PAL_RETURN + cancel->flash_anm, 
+        CLWK_PLTTOFFS_MODE_PLTT_TOP);
+      cancel->flash_anm ^= 1;
+      if(cancel->wait / CANCEL_ICON_FLASH_WAIT == 3){
+        cancel->flash_enable = FALSE;
+      }
+    }
+    cancel->wait++;
+  }
+}
+
+//==================================================================
+/**
+ * キャンセルアイコンアクター：フラッシュリクエスト
+ *
+ * @param   cancel		
+ */
+//==================================================================
+void MonolithTool_CancelIcon_FlashReq(MONOLITH_CANCEL_ICON *cancel)
+{
+  cancel->flash_enable = TRUE;
+  cancel->wait = 0;
+  cancel->flash_anm = 1;
+}
+
+//==================================================================
+/**
+ * キャンセルアイコンアクター：フラッシュ中かどうかを調べる
+ * @param   cancel		
+ * @retval  BOOL		TRUE:フラッシュ中　FALSE:フラッシュしていない
+ */
+//==================================================================
+BOOL MonolithTool_CancelIcon_FlashCheck(MONOLITH_CANCEL_ICON *cancel)
+{
+  return cancel->flash_enable;
 }
 
 //==================================================================
@@ -920,6 +964,116 @@ void MonolithTool_ArrowIcon_Delete(GFL_CLWK *cap)
 void MonolithTool_ArrowIcon_Update(GFL_CLWK *cap)
 {
   return;
+}
+
+//==================================================================
+/**
+ * メニューシステム：リソース読み込み
+ *
+ * @param   setup		
+ * @param   frame_no		          フレーム番号
+ * @param   heap_id		            ヒープID
+ *
+ * @retval  APP_TASKMENU_RES *		
+ */
+//==================================================================
+APP_TASKMENU_RES * MonolithTool_TaskMenuCreate(MONOLITH_SETUP *setup, int frame_no, HEAPID heap_id)
+{
+  APP_TASKMENU_RES *app_res;
+  
+  app_res = APP_TASKMENU_RES_Create(frame_no, MONOLITH_BG_YESNO_PALNO, 
+    setup->font_handle, setup->printQue, heap_id);
+  return app_res;
+}
+
+//==================================================================
+/**
+ * メニューシステム：リソース破棄
+ *
+ * @param   app_task_res		
+ */
+//==================================================================
+void MonolithTool_TaskMenuDelete(APP_TASKMENU_RES *app_task_res)
+{
+  APP_TASKMENU_RES_Delete(app_task_res);
+}
+
+//==================================================================
+/**
+ * メニューシステム：「はい/いいえ」ウィンドウセットアップ
+ *
+ * @param   setup		
+ * @param   app_task_res		
+ * @param   heap_id		
+ *
+ * @retval  APP_TASKMENU_WORK *		
+ */
+//==================================================================
+APP_TASKMENU_WORK * MonolithTool_TaskMenu_YesNoInit(MONOLITH_SETUP *setup, APP_TASKMENU_RES *app_task_res, HEAPID heap_id)
+{
+  APP_TASKMENU_ITEMWORK itemWork[2];
+  APP_TASKMENU_INITWORK initWork;
+  APP_TASKMENU_WORK *app_menu;
+  
+  itemWork[0].str = GFL_MSG_CreateString( setup->mm_monolith , msg_mono_pow_006 );  //はい
+  itemWork[1].str = GFL_MSG_CreateString( setup->mm_monolith , msg_mono_pow_007 );  //いいえ
+  itemWork[0].msgColor = PRINTSYS_LSB_Make(0xe, 0xf, 0);
+  itemWork[1].msgColor = PRINTSYS_LSB_Make(0xe, 0xf, 0);
+  itemWork[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+  itemWork[1].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+
+  initWork.heapId = heap_id;
+  initWork.itemNum = 2;
+  initWork.itemWork = itemWork;
+  initWork.posType = ATPT_LEFT_UP;
+  initWork.charPosX = _INFO_YESNO_X;
+  initWork.charPosY = _INFO_YESNO_Y;
+  initWork.w = APP_TASKMENU_PLATE_WIDTH_YN_WIN;
+  initWork.h = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
+
+  app_menu = APP_TASKMENU_OpenMenu( &initWork, app_task_res );
+  
+  GFL_STR_DeleteBuffer( itemWork[0].str );
+  GFL_STR_DeleteBuffer( itemWork[1].str );
+  
+  return app_menu;
+}
+
+//==================================================================
+/**
+ * 「はい/いいえ」ウィンドウ破棄
+ *
+ * @param   app_menu		
+ */
+//==================================================================
+void MonolithTool_TaskMenu_YesNoExit(APP_TASKMENU_WORK *app_menu)
+{
+  APP_TASKMENU_CloseMenu( app_menu );
+}
+
+//==================================================================
+/**
+ * 「はい/いいえ」ウィンドウ更新処理
+ *
+ * @param   app_menu		
+ * @param   ret_yesno		戻り値がTRUEの場合、選択結果が入る(TRUE:はい、FALSE:いいえ)
+ *
+ * @retval  BOOL		TRUE:選択終了　FALSE:選択中
+ */
+//==================================================================
+BOOL MonolithTool_TaskMenu_Update(MONOLITH_SETUP *setup, int frame_no, APP_TASKMENU_WORK *app_menu, BOOL *ret_yesno)
+{
+  APP_TASKMENU_UpdateMenu( app_menu );
+  if(APP_TASKMENU_IsFinish( app_menu ) == TRUE){
+    if(APP_TASKMENU_GetCursorPos( app_menu ) == 0){
+      *ret_yesno = TRUE;
+    }
+    else{
+      *ret_yesno = FALSE;
+    }
+    return TRUE;
+  }
+  return FALSE;
 }
 
 

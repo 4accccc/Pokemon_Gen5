@@ -109,6 +109,7 @@ static GFL_PROC_RESULT MonolithPowerExplainProc_Init(GFL_PROC * proc, int * seq,
   _Write_Title(appwk->setup, pew);
   _Write_EqpPower(appwk, appwk->setup, pew);
   
+	GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
   return GFL_PROC_RES_FINISH;
 }
 
@@ -166,6 +167,8 @@ static GFL_PROC_RESULT MonolithPowerExplainProc_End( GFL_PROC * proc, int * seq,
 {
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_POWEREXPLAIN_WORK *pew = mywk;
+
+  GFL_DISP_GX_SetVisibleControlDirect(GX_PLANEMASK_BG3);
   
   //BG
   _Setup_BmpWin_Exit(pew);

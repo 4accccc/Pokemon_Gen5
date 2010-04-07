@@ -31,6 +31,15 @@
 ///モノリス共通素材アクターパレット本数
 #define MONOLITH_COMMON_PLTT_NUM    (3)
 
+///PFDで管理するメインBGパレットサイズ
+#define MONOLITH_PLTT_SIZE_BG_MAIN      (16 - 2)  //-2=「YES/NO」用
+///PFDで管理するサブBGパレットサイズ
+#define MONOLITH_PLTT_SIZE_BG_SUB       (16 - 2)  //-2=「YES/NO」用
+///PFDで管理するメインOBJパレットサイズ
+#define MONOLITH_PLTT_SIZE_OBJ_MAIN     (16 - 2)  //-2=ローカライズ+通信アイコン
+///PFDで管理するサブOBJパレットサイズ
+#define MONOLITH_PLTT_SIZE_OBJ_SUB      (16 - 1)  //-1=ローカライズ用
+
 
 //==============================================================================
 //  構造体定義
@@ -435,10 +444,14 @@ static void _Setup_LibExit(void)
 static void _Setup_PaletteSetting(MONOLITH_SETUP *setup)
 {
   setup->pfd = PaletteFadeInit(HEAPID_MONOLITH);
-  PaletteFadeWorkAllocSet(setup->pfd, FADE_MAIN_OBJ, 16*32, HEAPID_MONOLITH);
-  PaletteFadeWorkAllocSet(setup->pfd, FADE_SUB_OBJ, 16*32, HEAPID_MONOLITH);
-  PaletteFadeWorkAllocSet(setup->pfd, FADE_MAIN_BG, 16*32, HEAPID_MONOLITH);
-  PaletteFadeWorkAllocSet(setup->pfd, FADE_SUB_BG, 16*32, HEAPID_MONOLITH);
+  PaletteFadeWorkAllocSet(setup->pfd, FADE_MAIN_OBJ, 
+    MONOLITH_PLTT_SIZE_OBJ_MAIN*32, HEAPID_MONOLITH);
+  PaletteFadeWorkAllocSet(setup->pfd, FADE_SUB_OBJ, 
+    MONOLITH_PLTT_SIZE_OBJ_SUB*32, HEAPID_MONOLITH);
+  PaletteFadeWorkAllocSet(setup->pfd, FADE_MAIN_BG, 
+    MONOLITH_PLTT_SIZE_BG_MAIN*32, HEAPID_MONOLITH);
+  PaletteFadeWorkAllocSet(setup->pfd, FADE_SUB_BG, 
+    MONOLITH_PLTT_SIZE_BG_SUB*32, HEAPID_MONOLITH);
   PaletteTrans_AutoSet(setup->pfd, TRUE);
 }
 
@@ -522,9 +535,11 @@ static void _Setup_BGGraphicLoad(MONOLITH_SYSTEM *monosys, MONOLITH_SETUP *setup
 {
 	//共通パレット
   PaletteWorkSetEx_ArcHandle(setup->pfd, setup->hdl, 
-    NARC_monolith_mono_bgu_NCLR, HEAPID_MONOLITH, FADE_MAIN_BG, 0, 0, 0);
+    NARC_monolith_mono_bgu_NCLR, HEAPID_MONOLITH, FADE_MAIN_BG, 
+    MONOLITH_PLTT_SIZE_BG_MAIN*0x20, 0, 0);
   PaletteWorkSetEx_ArcHandle(setup->pfd, setup->hdl, 
-    NARC_monolith_mono_bgd_NCLR, HEAPID_MONOLITH, FADE_SUB_BG, 0, 0, 0);
+    NARC_monolith_mono_bgd_NCLR, HEAPID_MONOLITH, FADE_SUB_BG, 
+    MONOLITH_PLTT_SIZE_BG_SUB*0x20, 0, 0);
 
 	//メイン画面：共通素材
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(setup->hdl, NARC_monolith_mono_bgu_lz_NCGR, 
@@ -649,8 +664,8 @@ static void _Setup_ActorSetting(MONOLITH_SETUP *setup)
 	GFL_CLACT_UNIT_SetDefaultRend(setup->clunit);
 
 	//OBJ表示ON
-	GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
-	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
+//	GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
+//	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
 
   //PLTT SLOT
   setup->plttslot = PLTTSLOT_Init(HEAPID_MONOLITH, 16, 16);

@@ -55,7 +55,7 @@ typedef struct{
   STRBUF *strbuf_stream;
   PRINT_STREAM *print_stream;
   GFL_CLWK *act_town[MISSION_LIST_MAX]; ///<街アイコンアクターへのポインタ
-  GFL_CLWK *act_cancel;   ///<キャンセルアイコンアクターへのポインタ
+  MONOLITH_CANCEL_ICON cancel_icon;   ///<キャンセルアイコンアクターへのポインタ
   PANEL_ACTOR panel[_PANEL_MAX];
   MISSION_ENTRY_REQ send_entry_req;     ///<ミッション受注送信バッファ
   GFL_CLWK *act_town_cursor;
@@ -248,6 +248,8 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Init(GFL_PROC * proc, int * seq
   mmw->act_town_cursor = MonolithTool_TownCursor_Create(
     appwk->setup, &TownIconPosTbl[0], COMMON_RESOURCE_INDEX_DOWN);
 
+	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -361,6 +363,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
       }
       else if(tp_ret == TOUCH_CANCEL || (trg & PAD_BUTTON_CANCEL)){
         OS_TPrintf("キャンセル選択\n");
+        MonolithTool_CancelIcon_FlashReq(&mmw->cancel_icon);
         (*seq) = SEQ_FINISH;
       }
     }
@@ -398,7 +401,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
         *seq = SEQ_ORDER_OK_STREAM_WAIT;
       }
       else if(result == MISSION_ENTRY_RESULT_NG){
-        _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_002);
+        _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_003);
         *seq = SEQ_ORDER_NG_STREAM_WAIT;
       }
     }
@@ -414,14 +417,15 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
           *seq = SEQ_FINISH;
         }
         else{
-          *seq = SEQ_TOP;
+          *seq = SEQ_FINISH;
         }
       }
     }
     break;
 
   case SEQ_FINISH:
-    if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH){
+    if(MonolithTool_PanelColor_GetMode(appwk, FADE_SUB_OBJ) != PANEL_COLORMODE_FLASH
+        && MonolithTool_CancelIcon_FlashCheck(&mmw->cancel_icon) == FALSE){
       if(mmw->order_end == TRUE){
         appwk->next_menu_index = MONOLITH_MENU_END;
       }
@@ -451,6 +455,8 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_End( GFL_PROC * proc, int * seq
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_MSSELECT_WORK *mmw = mywk;
   
+  GFL_DISP_GXS_SetVisibleControlDirect(GX_PLANEMASK_BG3);
+
   if(mmw->print_stream != NULL){
     PRINTSYS_PrintStreamDelete(mmw->print_stream);
   }
@@ -770,7 +776,7 @@ static void _Msselect_PanelUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_
 //==================================================================
 static void _Msselect_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_WORK *mmw)
 {
-  mmw->act_cancel = MonolithTool_CancelIcon_Create(appwk->setup);
+  MonolithTool_CancelIcon_Create(appwk->setup, &mmw->cancel_icon);
 }
 
 //==================================================================
@@ -782,7 +788,7 @@ static void _Msselect_CancelIconCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSE
 //==================================================================
 static void _Msselect_CancelIconDelete(MONOLITH_MSSELECT_WORK *mmw)
 {
-  MonolithTool_CancelIcon_Delete(mmw->act_cancel);
+  MonolithTool_CancelIcon_Delete(&mmw->cancel_icon);
 }
 
 //==================================================================
@@ -794,7 +800,7 @@ static void _Msselect_CancelIconDelete(MONOLITH_MSSELECT_WORK *mmw)
 //==================================================================
 static void _Msselect_CancelIconUpdate(MONOLITH_MSSELECT_WORK *mmw)
 {
-  MonolithTool_CancelIcon_Update(mmw->act_cancel);
+  MonolithTool_CancelIcon_Update(&mmw->cancel_icon);
 }
 
 //--------------------------------------------------------------
