@@ -64,6 +64,8 @@ FS_EXTERN_OVERLAY(btl_rec_sel);
 FS_EXTERN_OVERLAY(ircbattlematch);
 extern const GFL_PROC_DATA IrcBattleMatchProcData;
 
+#include "savedata/etc_save.h"
+
 //======================================================================
 //  define
 //======================================================================
