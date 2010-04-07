@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "system/rtc_tool.h"
 #include "item/item.h"
 
 #include "pokelist_gra.naix"
@@ -325,10 +326,12 @@ const BOOL PLIST_DEMO_CheckSheimiToSky( PLIST_WORK *work , POKEMON_PARAM *pp )
     return FALSE;
   }
   {
-    //AM4:00 ～ PM19:59までがフォルムチェンジ可能
+    const int startTime = PM_RTC_GetTimeZoneChangeHour( work->plData->season , TIMEZONE_MORNING );
+    const int endTime = PM_RTC_GetTimeZoneChangeHour( work->plData->season , TIMEZONE_NIGHT );
+    
     RTCTime time;
     GFL_RTC_GetTime( &time );
-    if( time.hour<4 || time.hour>=20 )
+    if( time.hour<startTime || time.hour>=endTime )
     {
       //時間外！
       return FALSE;
