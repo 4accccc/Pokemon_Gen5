@@ -1399,6 +1399,7 @@ static void _set_cursor_pos( FIELD_MENU_WORK *work )
   pos.x = work->activeIcon->posX;
   pos.y = work->activeIcon->posY;
   GFL_CLACT_WK_SetPos( work->cellCursor , &pos , FIELD_MENU_RENDER_SURFACE );
+  work->palanm_count = 0;
 }
 
 //----------------------------------------------------------------------------------
