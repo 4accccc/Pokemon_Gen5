@@ -173,6 +173,30 @@ int GFL_NET_DWC_FriendAutoInputCheck( DWCFriendData* pFriend )
   return  hit;
 }
 
+
+
+//------------------------------------------------------------------
+/**
+ * $brief   ñ≥ê¸ópìoò^ä÷êî
+ * @param   wk
+ * @param   seq
+ * @retval  int
+ */
+//------------------------------------------------------------------
+void GFL_NET_DWC_WriteMyStatus(WIFI_LIST* pList, MYSTATUS* pMyStatus, int addListIndex, int heapID)
+{
+  STRBUF* pBuf;
+
+  pBuf = MyStatus_CreateNameString(pMyStatus, heapID);
+  WifiList_SetFriendName(pList, addListIndex, pBuf);
+  GFL_STR_DeleteBuffer(pBuf);
+  WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_SEX, MyStatus_GetMySex(pMyStatus));
+  WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_ID, MyStatus_GetID(pMyStatus));
+  WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_UNION_GRA, MyStatus_GetTrainerView(pMyStatus));
+}
+
+
+
 //------------------------------------------------------------------
 /**
  * $brief   ñ≥ê¸ópìoò^ä÷êî
@@ -185,18 +209,13 @@ void GFL_NET_DWC_FriendDataWrite(GAMEDATA* pGameData, MYSTATUS* pMyStatus,DWCFri
 {
   WIFI_LIST* pList = GAMEDATA_GetWiFiList(pGameData);
   DWCFriendData *keyList  = WifiList_GetDwcDataPtr(pList, addListIndex);
-  STRBUF* pBuf;
   u8 tr;
 
   if(overWrite != 2){
     MI_CpuCopy8(pFriend, keyList, sizeof(DWCFriendData));
   }
   if((overWrite == 0) || (overWrite == 1)){  //édólïœçX ëSïîè„èëÇ´
-    pBuf = MyStatus_CreateNameString(pMyStatus, heapID);
-    WifiList_SetFriendName(pList, addListIndex, pBuf);
-    GFL_STR_DeleteBuffer(pBuf);
-    WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_SEX, MyStatus_GetMySex(pMyStatus));
-    WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_ID, MyStatus_GetID(pMyStatus));
+    GFL_NET_DWC_WriteMyStatus(pList, pMyStatus, addListIndex, heapID);
   }
   tr = MyStatus_GetTrainerView(pMyStatus);
   WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_UNION_GRA, tr);

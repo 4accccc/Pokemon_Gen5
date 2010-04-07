@@ -35,6 +35,7 @@
 #include "system/main.h"
 #include "system/wipe.h"
 #include "system/rtc_tool.h"
+#include "savedata/etc_save.h"
 
 #include "gamesystem/msgspeed.h"
 #include "poke_tool/monsno_def.h"
@@ -2167,14 +2168,15 @@ static void _makeMyMatchStatus(WIFIP2PMATCH_WORK* wk, u32 status, u32 gamemode)
 {
   MYSTATUS* pMyStatus = GAMEDATA_GetMyStatus(wk->pGameData);
 
-  WIFI_STATUS_SetPMVersion(wk->pMatch, PM_VERSION);
-  WIFI_STATUS_SetPMLang(wk->pMatch, PM_LANG);
-  WIFI_STATUS_SetSex(wk->pMatch, MyStatus_GetMySex(pMyStatus));
-  WIFI_STATUS_SetTrainerView(wk->pMatch,MyStatus_GetTrainerView(pMyStatus));
+  WIFI_STATUS_SetMyStatus(wk->pMatch, pMyStatus);
+//  WIFI_STATUS_SetPMVersion(wk->pMatch, PM_VERSION);
+//  WIFI_STATUS_SetPMLang(wk->pMatch, PM_LANG);
+//  WIFI_STATUS_SetSex(wk->pMatch, MyStatus_GetMySex(pMyStatus));
+//  WIFI_STATUS_SetTrainerView(wk->pMatch,MyStatus_GetTrainerView(pMyStatus));
 
   _myStatusChange_not_send(wk, status, gamemode); // BGMó‘Ô‚È‚Ç‚ð’²®
-  WIFI_STATUS_SetMyNation(wk->pMatch, MyStatus_GetMyNation(pMyStatus));
-  WIFI_STATUS_SetMyArea(wk->pMatch, MyStatus_GetMyArea(pMyStatus));
+//  WIFI_STATUS_SetMyNation(wk->pMatch, MyStatus_GetMyNation(pMyStatus));
+//  WIFI_STATUS_SetMyArea(wk->pMatch, MyStatus_GetMyArea(pMyStatus));
   WIFI_STATUS_SetVChatStatus(wk->pMatch, TRUE);
 
   _sendMatchStatus(wk);
@@ -2235,7 +2237,7 @@ static int _readFriendMatchStatus(WIFIP2PMATCH_WORK* wk)
 
 static int _checkUserDataMatchStatus(WIFIP2PMATCH_WORK* wk)
 {
-  int i,num = 0;
+  int i,num = 0,no;
   BOOL back_up_wait;
   BOOL now_wait;
   MCR_MOVEOBJ* p_obj;
@@ -2271,12 +2273,9 @@ static int _checkUserDataMatchStatus(WIFIP2PMATCH_WORK* wk)
 
         wk->matchStatusBackup[i] = status;
         wk->matchVchatBackup[i] = WIFI_STATUS_GetVChatStatus(p_status);
-#if 1
-        {
-          WifiList_SetFriendInfo(wk->pList, i, WIFILIST_FRIEND_UNION_GRA, WIFI_STATUS_GetTrainerView(p_status));
-          WifiList_SetFriendInfo(wk->pList, i, WIFILIST_FRIEND_SEX, WIFI_STATUS_GetSex(p_status));
-        }
-#endif
+        GFL_NET_DWC_WriteMyStatus(wk->pList, WIFI_STATUS_GetMyStatus(p_status) , i, HEAPID_WIFIP2PMATCH);
+        no = MyStatus_GetID(WIFI_STATUS_GetMyStatus(p_status));
+        EtcSave_SetAcquaintance( SaveData_GetEtc( wk->pSaveData ), no);
         num++;
       }
     }

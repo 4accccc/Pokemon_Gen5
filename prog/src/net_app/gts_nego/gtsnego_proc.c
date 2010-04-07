@@ -39,6 +39,7 @@
 #include "savedata/wifilist.h"
 #include "savedata/wifi_negotiation.h"
 #include "savedata/system_data.h"
+#include "savedata/etc_save.h"
 
 #include "msg/msg_gtsnego.h"
 #include "../../field/event_gtsnego.h"
@@ -580,6 +581,9 @@ static void _timingCheck4( GTSNEGO_WORK *pWork )
     }
     pTargetSt = GAMEDATA_GetMyStatusPlayer(pWork->pGameData, 1-GFL_NET_SystemGetCurrentID());
     MyStatus_Copy(pMy,pTargetSt);
+
+    no = MyStatus_GetID(pMy);
+    EtcSave_SetAcquaintance( SaveData_GetEtc( pWork->pSave ), no);
 
     _CHANGE_STATE(pWork,_timingCheck2);
   }

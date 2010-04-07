@@ -18,12 +18,12 @@
  * @return	,,
  */
 //----------------------------------------------------------
-/*
+
 MYSTATUS* WIFI_STATUS_GetMyStatus(WIFI_STATUS* pStatus)
 {
 	return &pStatus->aMyStatus;
 }
-*/
+
 
 //----------------------------------------------------------
 /**
@@ -31,12 +31,12 @@ MYSTATUS* WIFI_STATUS_GetMyStatus(WIFI_STATUS* pStatus)
  * @return	,,
  */
 //----------------------------------------------------------
-/*
+
 extern void WIFI_STATUS_SetMyStatus(WIFI_STATUS* pStatus, const MYSTATUS* pMy)
 {
 	MyStatus_Copy(pMy,&pStatus->aMyStatus);
 }
-*/
+
 //----------------------------------------------------------
 /**
  * @brief	  WifiStatusを返す
@@ -173,7 +173,7 @@ void WIFI_STATUS_SetMyMac(WIFI_STATUS* pStatus)
 
 
 
-
+#if 0
 void WIFI_STATUS_SetMyNation(WIFI_STATUS* pStatus,u8 no)
 {
 	pStatus->nation = no;
@@ -183,7 +183,7 @@ void WIFI_STATUS_SetMyArea(WIFI_STATUS* pStatus,u8 no)
 {
 	pStatus->area = no;
 }
-
+#endif
 //----------------------------------------------------------
 /**
  * @brief	自分のコールカウンターを取得
@@ -196,3 +196,16 @@ u8 WIFI_STATUS_GetCallCounter(WIFI_STATUS* pStatus)
 	return pStatus->callcounter;
 }
 
+u8 WIFI_STATUS_GetTrainerView(WIFI_STATUS* pStatus)
+{
+  return MyStatus_GetTrainerView(&pStatus->aMyStatus);
+}
+
+/*
+static inline void WIFI_STATUS_SetTrainerView(WIFI_STATUS* pStatus,u8 trainer_view){ pStatus->trainer_view = trainer_view; }
+
+static inline void WIFI_STATUS_SetPMVersion(WIFI_STATUS* pStatus,u8 pm_version){ pStatus->pm_version = pm_version; }
+static inline void WIFI_STATUS_SetPMLang(WIFI_STATUS* pStatus,u8 pm_lang){ pStatus->pm_lang = pm_lang; }
+static inline void WIFI_STATUS_SetSex(WIFI_STATUS* pStatus,u8 sex){ pStatus->sex = sex; }
+static inline u8 WIFI_STATUS_GetSex(WIFI_STATUS* pStatus){ return pStatus->sex; }
+*/

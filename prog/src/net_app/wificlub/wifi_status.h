@@ -7,8 +7,8 @@
  * @date	  2009.6.6
  */
 //============================================================================================
-//#include "savedata/mystatus.h"
-//#include "savedata/mystatus_local.h"
+#include "savedata/mystatus.h"
+#include "savedata/mystatus_local.h"
 
 typedef struct _WIFI_STATUS WIFI_STATUS;
 
@@ -56,29 +56,24 @@ typedef enum{
 
 
 struct _WIFI_STATUS{
-  u32 profileID;                                 //プロファイルID      4
-	u8 VChatMac[6];       // ゲームを呼びかける人のMacアドレス 自分のMACだった場合開始      10
-	u8 MyMac[6];       // 自分のMacアドレス      16
-  u8 trainer_view;	// ユニオンルーム内での見た目  17
-  u8 pm_version;	// バージョン                         18
-	u8 pm_lang;		  // 言語                                19
-	u8 GameMode;         // WIFIでのゲーム等の状態         WIFI_GAME_e       20
-  u8 status;    // 自分の状態                           WIFI_STATUS_e   21
-  u8 nation;           //  国                           22
-  u8 area;             //  地域                        23
-  u8 shooter:1;    //シューター有り無し             24
+  MYSTATUS aMyStatus;  //MYSTATUS
+	u8 VChatMac[6];       // ゲームを呼びかける人のMacアドレス 自分のMACだった場合開始      
+	u8 MyMac[6];       // 自分のMacアドレス      
+	u8 GameMode;         // WIFIでのゲーム等の状態         WIFI_GAME_e       
+  u8 status;    // 自分の状態                           WIFI_STATUS_e   
+  u8 shooter:1;    //シューター有り無し
   u8 VChatStatus:1;       // VChatの状態 
   u8 sex:2;      //性別
   u8 dummybit:4;
-  u8 callcounter;      //呼びかける際のインクリメント数 25
-  u8 dummy3;   //上位バージョン用              26
-  u8 dummy4;   //上位バージョン用              27
-  u8 dummy5;   //上位バージョン用              28
+  u8 callcounter;      //呼びかける際のインクリメント数 
+  u8 dummy3;   //上位バージョン用              
+  u8 dummy4;   //上位バージョン用              
+  u8 dummy5;   //上位バージョン用              
 };
 
 
-//extern MYSTATUS* WIFI_STATUS_GetMyStatus(WIFI_STATUS* pStatus);
-//extern void WIFI_STATUS_SetMyStatus(WIFI_STATUS* pStatus, const MYSTATUS* pMy);
+extern MYSTATUS* WIFI_STATUS_GetMyStatus(WIFI_STATUS* pStatus);
+extern void WIFI_STATUS_SetMyStatus(WIFI_STATUS* pStatus, const MYSTATUS* pMy);
 
 extern u8 WIFI_STATUS_GetWifiStatus(const WIFI_STATUS* pStatus);
 extern void WIFI_STATUS_SetWifiStatus( WIFI_STATUS* pStatus, u8 mode);
@@ -91,8 +86,8 @@ extern void WIFI_STATUS_SetGameMode( WIFI_STATUS* pStatus, u8 mode);
 extern u8 WIFI_STATUS_GetVChatStatus(const WIFI_STATUS* pStatus);
 extern void WIFI_STATUS_SetVChatStatus(WIFI_STATUS* pStatus,u8 vct);
 
-extern void WIFI_STATUS_SetMyNation(WIFI_STATUS* pStatus,u8 no);
-extern void WIFI_STATUS_SetMyArea(WIFI_STATUS* pStatus,u8 no);
+//extern void WIFI_STATUS_SetMyNation(WIFI_STATUS* pStatus,u8 no);
+//extern void WIFI_STATUS_SetMyArea(WIFI_STATUS* pStatus,u8 no);
 
 extern u8 WIFI_STATUS_GetActive(const WIFI_STATUS* pStatus);
 extern BOOL WIFI_STATUS_IsVChatMac(const WIFI_STATUS* pMyStatus, const WIFI_STATUS* pFriendStatus);
@@ -101,13 +96,14 @@ extern void WIFI_STATUS_ResetVChatMac(WIFI_STATUS* pStatus);
 extern void WIFI_STATUS_SetMyMac(WIFI_STATUS* pStatus);
 
 
-static inline void WIFI_STATUS_SetTrainerView(WIFI_STATUS* pStatus,u8 trainer_view){ pStatus->trainer_view = trainer_view; }
-static inline u8 WIFI_STATUS_GetTrainerView(WIFI_STATUS* pStatus){ return pStatus->trainer_view; }
+//static inline void WIFI_STATUS_SetTrainerView(WIFI_STATUS* pStatus,u8 trainer_view){ pStatus->trainer_view = trainer_view; }
+extern u8 WIFI_STATUS_GetTrainerView(WIFI_STATUS* pStatus);
 
-static inline void WIFI_STATUS_SetPMVersion(WIFI_STATUS* pStatus,u8 pm_version){ pStatus->pm_version = pm_version; }
-static inline void WIFI_STATUS_SetPMLang(WIFI_STATUS* pStatus,u8 pm_lang){ pStatus->pm_lang = pm_lang; }
-static inline void WIFI_STATUS_SetSex(WIFI_STATUS* pStatus,u8 sex){ pStatus->sex = sex; }
-static inline u8 WIFI_STATUS_GetSex(WIFI_STATUS* pStatus){ return pStatus->sex; }
+//static inline void WIFI_STATUS_SetPMVersion(WIFI_STATUS* pStatus,u8 pm_version){ pStatus->pm_version = pm_version; }
+//static inline void WIFI_STATUS_SetPMLang(WIFI_STATUS* pStatus,u8 pm_lang){ pStatus->pm_lang = pm_lang; }
+//static inline void WIFI_STATUS_SetSex(WIFI_STATUS* pStatus,u8 sex){ pStatus->sex = sex; }
+//static inline u8 WIFI_STATUS_GetSex(WIFI_STATUS* pStatus){ return pStatus->sex; }
+
 extern u8 WIFI_STATUS_GetCallCounter(WIFI_STATUS* pStatus);
 
 

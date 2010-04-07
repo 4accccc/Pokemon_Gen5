@@ -304,7 +304,8 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       for(i=0;i<UNITEDNATIONS_PEOPLE_MAX;i++){
         MYSTATUS* pMys = &pHis->aUnitedPeople[i].aMyStatus;
         pAddr = (u8*)&pMys->id;
-        OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "GTS_GSID",(u32)pAddr-(u32)topAddr,sizeof(pMys->id));
+        OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "GTS_GSID",(u32)pAddr-(u32)topAddr,sizeof(pMys->profileID));
+        OS_TPrintf(" id %d \n",pMys->profileID);
       }
       
       pAddr = (u8*)&pHis->myCountryCount;
