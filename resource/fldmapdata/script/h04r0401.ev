@@ -19,24 +19,33 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_h04r0401_breederm1_01
-_EVENT_DATA    ev_h04r0401_poke19_01
+_EVENT_DATA    ev_h04r0401_breederm_01
+_EVENT_DATA    ev_h04r0401_breederw_01
+_EVENT_DATA    ev_h04r0401_poke20_01
 _EVENT_DATA_END
 
 
 /************************************************************/
-/*						ポケモンブリーダー					*/
+/*						ポケモンブリーダー男				*/
 /************************************************************/
-EVENT_START	ev_h04r0401_breederm1_01
-//	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0401_breederm_01 )
+EVENT_START	ev_h04r0401_breederm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0401_breederm_01 )
 EVENT_END
 
 
 /************************************************************/
-/*							チラーミィ						*/
+/*						ポケモンブリーダー女				*/
 /************************************************************/
-EVENT_START	ev_h04r0401_poke19_01
-//	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0401_poke19_01 )
+EVENT_START	ev_h04r0401_breederw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0401_breederw_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							ワルビル						*/
+/************************************************************/
+EVENT_START	ev_h04r0401_poke20_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0401_poke20_01 )
 EVENT_END
 
 
