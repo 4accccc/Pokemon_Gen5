@@ -290,6 +290,17 @@ extern BOOL FIELD_RAIL_MAN_GetLineActive( const FIELD_RAIL_MAN * man, u32 index 
 //------------------------------------------------------------------
 extern fx32 FIELD_RAIL_MAN_GetRailGridSize( const FIELD_RAIL_MAN * man );
 
+
+
+
+//------------------------------------------------------------------
+//　別ゾーンのレール情報を使用して、レールロケーションを求める。
+//  ジャンプ先のレールロケーションを求めることに使用
+//------------------------------------------------------------------
+extern void FIELD_RAIL_MAN_ConvertNextWorldNotMuinusToRailLocation( const FIELD_RAIL_MAN * man, const RAIL_SETTING * setting, u16 index, u16 front, u16 side, RAIL_LOCATION* p_location );
+
+
+
 //------------------------------------------------------------------
 // ロケーションでの計算
 //------------------------------------------------------------------
@@ -391,6 +402,7 @@ extern BOOL FIELD_RAIL_TOOL_HitCheckSphere( const VecFx32* person, const VecFx32
 //------------------------------------------------------------------
 extern void FIELD_RAIL_WORK_GetNotMinusRailParam( const FIELD_RAIL_WORK* cp_work, u16* p_index, u16* p_front, u16* p_side ); 
 extern void FIELD_RAIL_WORK_SetNotMinusRailParam( FIELD_RAIL_WORK* p_work, u16 index, u16 front, u16 side ); 
+
 
 #ifdef PM_DEBUG
 // レールグリッドデバック出力

@@ -16,6 +16,8 @@
 #include "arc/fieldmap/field_rail_data.naix"
 #include "arc_def.h"
 
+#include "field/zonedata.h"
+
 #include "field_nogrid_mapper.h"
 
 //-----------------------------------------------------------------------------
@@ -421,6 +423,43 @@ BOOL FLDNOGRID_MAPPER_GetLineActive( const FLDNOGRID_MAPPER* cp_mapper, u32 line
 {
   GF_ASSERT( cp_mapper );
   return FIELD_RAIL_MAN_GetLineActive( cp_mapper->p_railMan, line_index );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  マイナス無しのレール座標をRAIL_LOCATIONに設定
+ *
+ *  @param  cp_mapper   ノーグリッドマッパー
+ *	@param	zoneid      ゾーンID
+ *	@param	index       インデックス
+ *	@param	front       フロント
+ *	@param	side        サイド
+ *	@param	p_location  ロケーション格納先
+ *	@param	heapID      ヒープID
+ */
+//-----------------------------------------------------------------------------
+void FLDNOGRID_MAPPER_ChangeNotMinusRailPosToRailLocation( const FLDNOGRID_MAPPER* cp_mapper, u32 zoneid, u16 index, u16 front, u16 side, RAIL_LOCATION* p_location, HEAPID heapID )
+{
+  FIELD_RAIL_LOADER* p_railloader;
+
+  GF_ASSERT( cp_mapper );
+  GF_ASSERT( ZONEDATA_IsRailMap( zoneid ) );
+
+  heapID = GFL_HEAP_LOWID( heapID );
+
+  // レール情報の読み込み
+  p_railloader = FIELD_RAIL_LOADER_Create( heapID );
+  FIELD_RAIL_LOADER_Load( p_railloader, ZONEDATA_GetRailDataID( zoneid ), heapID );
+
+  // このレール情報を使用して、指定ゾーンのRAIL_LOCATIONを作成
+  FIELD_RAIL_MAN_ConvertNextWorldNotMuinusToRailLocation( cp_mapper->p_railMan, 
+      FIELD_RAIL_LOADER_GetData( p_railloader ), index, front, side, p_location );
+
+
+  // レール情報破棄
+  FIELD_RAIL_LOADER_Delete( p_railloader );
+  
 }
 
 

@@ -113,6 +113,11 @@ extern void FLDNOGRID_MAPPER_SetLineActive( FLDNOGRID_MAPPER* p_mapper, u32 line
 extern BOOL FLDNOGRID_MAPPER_GetLineActive( const FLDNOGRID_MAPPER* cp_mapper, u32 line_index );
 
 
+
+// マイナス無しのレール座標をRAIL_LOCATIONに設定
+extern void FLDNOGRID_MAPPER_ChangeNotMinusRailPosToRailLocation( const FLDNOGRID_MAPPER* cp_mapper, u32 zoneid, u16 index, u16 front, u16 side, RAIL_LOCATION* p_location, HEAPID heapID );
+
+
 // 各モジュール取得
 extern const FIELD_RAIL_MAN* FLDNOGRID_MAPPER_GetRailMan( const FLDNOGRID_MAPPER* cp_mapper );
 extern const FLD_SCENEAREA* FLDNOGRID_MAPPER_GetSceneAreaMan( const FLDNOGRID_MAPPER* cp_mapper );

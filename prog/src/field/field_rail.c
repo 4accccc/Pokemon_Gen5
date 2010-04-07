@@ -864,6 +864,43 @@ fx32 FIELD_RAIL_MAN_GetRailGridSize( const FIELD_RAIL_MAN * man )
   return FX_Mul( man->rail_dat.ofs_unit, RAIL_WALK_OFS<<FX32_SHIFT );
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  別ゾーンのレール情報とマイナスなしレール座標からレールロケーションを作成
+ *
+ *	@param	man         レールマネージャ
+ *	@param	setting     別ゾーンレール情報
+ *	@param	index       ラインインデックス
+ *	@param	front       フロントインデックス
+ *	@param	side        サイドインデックス
+ *	@param	p_location  レールロケーション格納先
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_MAN_ConvertNextWorldNotMuinusToRailLocation( const FIELD_RAIL_MAN * man, const RAIL_SETTING * setting, u16 index, u16 front, u16 side, RAIL_LOCATION* p_location )
+{
+  FIELD_RAIL_WORK* p_railwork;
+  RAIL_LOCATION init = {0};
+  
+  GF_ASSERT( man );
+  GF_ASSERT( setting );
+
+  p_railwork = man->calc_work;
+
+  // 別ゾーンのレール情報を設定
+  p_railwork->rail_dat = setting;
+  FIELD_RAIL_WORK_SetNotMinusRailParam( p_railwork, index, front, side );
+
+  // そのときのロケーションを取得
+  FIELD_RAIL_WORK_GetLocation( p_railwork, p_location );
+
+  // 元のレール情報に戻す
+  p_railwork->rail_dat = &man->rail_dat;
+  FIELD_RAIL_WORK_SetLocation( p_railwork, &init );
+  
+}
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  ロケーションをキーの方向に１グリッド分進めた３D座標を取得
