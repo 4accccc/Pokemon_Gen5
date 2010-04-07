@@ -581,10 +581,10 @@ static void _timingCheck4( GTSNEGO_WORK *pWork )
     }
     pTargetSt = GAMEDATA_GetMyStatusPlayer(pWork->pGameData, 1-GFL_NET_SystemGetCurrentID());
     MyStatus_Copy(pMy,pTargetSt);
-
-    no = MyStatus_GetID(pMy);
-    EtcSave_SetAcquaintance( SaveData_GetEtc( pWork->pSave ), no);
-
+    {
+      int no = MyStatus_GetID(pMy);
+      EtcSave_SetAcquaintance( SaveData_GetEtc( pWork->pSave ), no);
+    }
     _CHANGE_STATE(pWork,_timingCheck2);
   }
 }
