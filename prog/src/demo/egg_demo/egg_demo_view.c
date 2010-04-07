@@ -72,6 +72,16 @@ STEP;
 #define EGG_CRACK_FRAME_02      (112 -3)  // ヒビ中開始 
 #define EGG_CRACK_FRAME_03      (227 -9)  // ヒビ大開始
 
+#define EGG_LAND_FRAME_01   ( 10)  // 着地A-1
+#define EGG_LAND_FRAME_02   ( 15)  // 着地A-2
+#define EGG_LAND_FRAME_03   ( 85)  // 着地B-1
+#define EGG_LAND_FRAME_04   ( 90)  // 着地B-2
+#define EGG_SHAKE_FRAME_01   (150)  // 揺れ始め
+#define EGG_SHAKE_FRAME_02   (309)  // 激しい揺れ開始
+
+#define EGG_SHAKE_WAIT_COUNT_01   (20)  // EGG_SHAKE_FRAME_01<= <EGG_SHAKE_FRAME_02  // SEが鳴り終わったらこれだけ間隔を空ける
+#define EGG_SHAKE_WAIT_COUNT_02   (0)   // EGG_SHAKE_FRAME_02<=
+
 // マナフィ
 // パーティクルのフレームとポケモンアニメーションのフレームを連携させる
 #define MANAFI_PARTICLE_BURST_FRAME   (300)  // パーティクルエフェクトDEMO_MANA01, DEMO_MANA02は全部で300フレームあるらしい。
@@ -303,7 +313,11 @@ struct _EGG_DEMO_VIEW_WORK
   BOOL                     b_white;
   u32                      voicePlayerIdx;
   u32                      wait_count;
- 
+
+  // マナフィ以外の普通のタマゴの揺れ
+  BOOL                     egg_shake_se_play;      // 再生中ならTRUE
+  SEPLAYER_ID              egg_shake_seplayer_id;  // egg_shake_se_playがTRUEのとき有効
+  u32                      egg_shake_wait_count;
   // マナフィのSEの状態
   MANAFI_EGG_SE_STATE      manafi_egg_se_state;
 
@@ -437,6 +451,11 @@ EGG_DEMO_VIEW_WORK* EGG_DEMO_VIEW_Init(
     work->wait_count       = 0;
   }
 
+  // マナフィ以外の普通のタマゴの揺れ
+  {
+    work->egg_shake_se_play = FALSE;
+    work->egg_shake_wait_count = 0;
+  }
   // マナフィのSEの状態
   {
     work->manafi_egg_se_state = MANAFI_EGG_SE_STATE_BEFORE_PLAY;
@@ -575,6 +594,7 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
       }
       else
       {
+        // プレイヤー Player1
         if( work->wait_count == EGG_CRACK_FRAME_01 )
         {
           PMSND_PlaySE( SEQ_SE_EDEMO_01 );
@@ -586,6 +606,67 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
         else if( work->wait_count == EGG_CRACK_FRAME_03 )
         {
           PMSND_PlaySE( SEQ_SE_W181_01 );
+        }
+
+        // プレイヤー player sys
+        if( work->wait_count == EGG_LAND_FRAME_01 )
+        {
+          PMSND_PlaySE( SEQ_SE_SYS_83 );
+        }
+        else if( work->wait_count == EGG_LAND_FRAME_02 )
+        {
+          PMSND_PlaySE( SEQ_SE_SYS_83 );
+        }
+        else if( work->wait_count == EGG_LAND_FRAME_03 )
+        {
+          PMSND_PlaySE( SEQ_SE_SYS_83 );
+        }
+        else if( work->wait_count == EGG_LAND_FRAME_04 )
+        {
+          PMSND_PlaySE( SEQ_SE_SYS_83 );
+        }
+        /*
+        else if( work->wait_count == EGG_SHAKE_FRAME_01 )
+        {
+          PMSND_PlaySE( SEQ_SE_EDEMO_04 );
+        }
+        else if( work->wait_count == EGG_SHAKE_FRAME_02 )
+        {
+          PMSND_PlaySE( SEQ_SE_EDEMO_04 );
+        }
+        */
+
+        // マナフィ以外の普通のタマゴの揺れ
+        if( work->egg_shake_se_play )
+        {
+          if( !PMSND_CheckPlaySE_byPlayerID( work->egg_shake_seplayer_id ) )
+          {
+            work->egg_shake_se_play = FALSE;
+            if( EGG_SHAKE_FRAME_01<=work->wait_count && work->wait_count<EGG_SHAKE_FRAME_02 )
+            {
+              work->egg_shake_wait_count = EGG_SHAKE_WAIT_COUNT_01;
+            }
+            else if( EGG_SHAKE_FRAME_02<work->wait_count )
+            {
+              work->egg_shake_wait_count = EGG_SHAKE_WAIT_COUNT_02;
+            }
+          }
+        }
+        if( work->wait_count >= EGG_SHAKE_FRAME_01 && work->wait_count < particle_burst_frame )
+        {
+          if( !(work->egg_shake_se_play) )
+          {
+            if( work->egg_shake_wait_count == 0 )
+            {
+              work->egg_shake_seplayer_id = PMSND_GetSE_DefaultPlayerID( SEQ_SE_EDEMO_04 );
+              PMSND_PlaySE_byPlayerID( SEQ_SE_EDEMO_04, work->egg_shake_seplayer_id );
+              work->egg_shake_se_play = TRUE;
+            }
+            else
+            {
+              work->egg_shake_wait_count--;
+            }
+          }
         }
       }
       if( work->wait_count == particle_burst_frame )
