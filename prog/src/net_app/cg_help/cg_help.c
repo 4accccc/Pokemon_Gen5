@@ -592,7 +592,8 @@ static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
   //BMPê›íË
   if( page <= CG_HELP_PAGE_WIFI )
   {
-    static const colArr[CG_HELP_PAGE_WIFI+1] = {1,2,2,2,3};
+    static const colArr[CG_HELP_PAGE_WIFI+1] = {1,1,1,1,1};
+    static const posArr[CG_HELP_PAGE_WIFI+1] = {0x0c,0x10,0x10,0x10,0x14};
     void *transBase = (void*)((u32)work->commIconPlt->pRawData + 32*(colArr[page]));
     NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
                                         CG_HELP_PLT_MAIN_ICONBASE * 32 ,
@@ -604,7 +605,7 @@ static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
       {
         for( x=0;x<4;x++ )
         {
-          transBuf[y*4+x] = 0x0c+x + 0x20*y + (CG_HELP_PLT_MAIN_ICONBASE<<12);
+          transBuf[y*4+x] = posArr[page]+x + 0x20*y + (CG_HELP_PLT_MAIN_ICONBASE<<12);
         }
       }
       
