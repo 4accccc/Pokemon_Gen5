@@ -343,7 +343,6 @@ SRCS_OVERLAY_DEV_WIFILIB   = net/net_devwifi.c \
 # k.ohno 10.01.12
 #===> main
 SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
-	      battle/tr_ai/tr_ai.c \
         musical/musical_event.c \
         musical/dressup/musical_dressup_sys.c \
         musical/stage/musical_stage_sys.c \
@@ -1141,7 +1140,10 @@ SRCS_OVERLAY_VRAM_H =	battle/handler/hand_field.c \
 			battle/btl_field.c \
 			battle/btl_string.c
 
-
+#戦闘AI
+#===> SRCS_OVERLAY_FIELD_INIT
+#===> SRCS_OVERLAY_SOGABE_DEBUG
+SRCS_OVERLAY_TR_AI = battle/tr_ai/tr_ai.c
 
 
 # マルチバトル開始前ポケモンリスト
