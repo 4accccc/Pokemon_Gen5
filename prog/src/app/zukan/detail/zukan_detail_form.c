@@ -2191,7 +2191,7 @@ static void PokeiconExit( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk )
 /// 違う姿情報を取得する
 //=====================================
 static void Zukan_Detail_Form_GetDiffInfoWithoutWork( ZUKAN_DETAIL_FORM_PARAM* param, ZKNDTL_COMMON_WORK* cmn,
-                                                      DIFF_INFO*   a_diff_info_list,
+                                                      DIFF_INFO*   a_diff_info_list,  // 要素数a_diff_info_list[DIFF_MAX]で
                                                       u16*         a_diff_num,
                                                       u16*         a_diff_sugata_num,
                                                       u16*         a_diff_irochigai_num,
@@ -2394,6 +2394,69 @@ static void Zukan_Detail_Form_GetDiffInfoWithoutWork( ZUKAN_DETAIL_FORM_PARAM* p
     }
 
     (*a_diff_sugata_num) = (*a_diff_num) - (*a_diff_irochigai_num);
+  }
+
+  // 特別処理
+  {
+    // フォルム0番しか見せないポケモン
+    if(
+           monsno == MONSNO_ARUSEUSU    // アルセウス
+        || monsno == MONSNO_INSEKUTA    // インセクタ
+    )
+    {
+      if( *a_diff_num > 0 )
+      {
+        // 「フォルム0番」と「フォルム0番の色違い」だけ残す
+        DIFF_INFO   tmp_diff_info_list[2];
+        u16         tmp_diff_num             = 0;
+        s16         tmp_diff_curr_no         = -1;
+        s16         tmp_diff_comp_no         = -1;
+        u16 i;
+        for( i=0; i<(*a_diff_num); i++ )
+        {
+          if( a_diff_info_list[i].form == 0 )
+          {
+            tmp_diff_info_list[tmp_diff_num] = a_diff_info_list[i];
+            if( *a_diff_curr_no == i ) tmp_diff_curr_no = tmp_diff_num;
+            if( *a_diff_comp_no == i ) tmp_diff_comp_no = tmp_diff_num;
+            tmp_diff_num++;
+            if( tmp_diff_num == 2 ) break;
+          }
+        }
+        if( tmp_diff_num == 0 )  // 起こり得ないはずだが念のため
+        {
+          tmp_diff_info_list[tmp_diff_num] = a_diff_info_list[0];
+          tmp_diff_num++;
+        }
+        if( tmp_diff_curr_no == -1 )
+        {
+          tmp_diff_curr_no = (tmp_diff_curr_no==0)?(1):(0);
+        }
+        if( tmp_diff_comp_no == -1 )
+        {
+          tmp_diff_comp_no = (tmp_diff_curr_no==0)?(1):(0); 
+        }
+
+        // 結果を持ち帰る
+        for( i=0; i<tmp_diff_num; i++ )
+        {
+          a_diff_info_list[i] = tmp_diff_info_list[i];
+        }
+        *a_diff_num = tmp_diff_num;
+        *a_diff_curr_no = (u16)tmp_diff_curr_no;
+        *a_diff_comp_no = (u16)tmp_diff_comp_no;
+        *a_diff_sugata_num = 0;
+        *a_diff_irochigai_num = 0;
+        for( i=0; i<(*a_diff_num); i++ )
+        {
+          if( a_diff_info_list[i].color_diff == COLOR_DIFF_SPECIAL )
+          {
+            (*a_diff_irochigai_num)++;
+          }
+        }
+        (*a_diff_sugata_num) = (*a_diff_num) - (*a_diff_irochigai_num);
+      }
+    }
   }
 }
 static void Zukan_Detail_Form_GetDiffInfo( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
