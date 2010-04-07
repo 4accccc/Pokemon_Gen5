@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T13:27:35"/>
+	<create user="matsumiya" host="W00224" date="2010-04-07T20:58:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c03r1101_man1_01">
+	<row id="msg_c03r1101_man1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MAN1</attribute>
@@ -304,7 +304,7 @@
 不思議な力を　備えているんだ</language>
 	</row>
 
-	<row id="msg_c03r1101_woman1_01">
+	<row id="msg_c03r1101_woman1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
@@ -316,7 +316,7 @@
 命中率が　さがらないのよ！</language>
 	</row>
 
-	<row id="msg_c03r1101_pokemon_01">
+	<row id="msg_c03r1101_pokemon_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>ポケモン
 ・メッセージ表示とともに鳴き声再生</comment>
 		<attribute name="キャラ指定">ポケモン

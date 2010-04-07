@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T15:00:48"/>
+	<create user="matsumiya" host="W00224" date="2010-04-07T21:06:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="37" top="167" right="742" bottom="795" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -377,7 +377,7 @@
 なかなか　難しいなあ</language>
 	</row>
 
-	<row id="msg_c03r1201_businessman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r1201_businessman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -392,6 +392,39 @@
 自分の　いいたいことだけ　いうと
 争ってばかり　だもんな▽
 他人の　ことも　考えないとね</language>
+	</row>
+
+	<row id="msg_c03r1201_man1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">MAN1</attribute>
+		<language name="JPN" width="256">ポケモンは　ふしぎな　いきもの▼
+とくせい　とよばれる
+ふしぎなちからを　もっているんだ</language>
+		<language name="JPN_KANJI" width="256">ポケモンは　不思議な　いきもの▼
+とくせい　と呼ばれる
+不思議な力を　備えているんだ</language>
+	</row>
+
+	<row id="msg_c03r1201_woman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">WOMAN1</attribute>
+		<language name="JPN" width="256">ミネズミの　とくせいは　するどいめ！▼
+えんまくや　すなかけの　わざでも
+めいちゅうりつが　さがらないのよ！</language>
+		<language name="JPN_KANJI" width="256">ミネズミの　とくせいは　するどいめ！▼
+えんまくや　すなかけの　技でも
+命中率が　さがらないのよ！</language>
+	</row>
+
+	<row id="msg_c03r1201_pokemon_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>ポケモン
+・メッセージ表示とともに鳴き声再生</comment>
+		<attribute name="キャラ指定">ポケモン
+ミネズミ</attribute>
+		<language name="JPN" width="256">きりっ！！</language>
+		<language name="JPN_KANJI" width="256">きりっ！！</language>
 	</row>
 
 	<flowchart-group-list>
