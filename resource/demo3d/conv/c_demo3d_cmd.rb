@@ -9,7 +9,7 @@
 #==============================================
 $h_se_default = {"---"=>"DEMO3D_SE_PARAM_DEFAULT"}
 $h_brightness_disp = {"main"=>"MASK_MAIN_DISPLAY","sub"=>"MASK_SUB_DISPLAY","double"=>"MASK_DOUBLE_DISPLAY"}
-$h_bgm_push_pop = {"change"=>"DEMO3D_BGM_CHANGE","push"=>"DEMO3D_BGM_PUSH","pop"=>"DEMO3D_BGM_POP"}
+$h_bgm_chg_type = {"play"=>"DEMO3D_BGM_PLAY","stop"=>"DEMO3D_BGM_STOP","change"=>"DEMO3D_BGM_CHANGE","push"=>"DEMO3D_BGM_PUSH","pop"=>"DEMO3D_BGM_POP"}
 
 #==============================================
 #プレフィックス・サフィックス定義
@@ -59,7 +59,7 @@ $prm_bgm_change_req = [
   $_cmd_prm.new( P_FREE, P_FREE, nil, nil ), #BGMラベル
   $_cmd_prm.new( 0, 65535, nil, nil ), #fadeout_frame
   $_cmd_prm.new( 0, 65535, nil, nil ), #fadein_frame
-  $_cmd_prm.new( P_LIST, P_LIST, $h_bgm_push_pop, nil ), #push_pop
+  $_cmd_prm.new( P_LIST, P_LIST, $h_bgm_chg_type, nil ), #type
 ] 
 $prm_brightness_req = [
   $_cmd_prm.new( P_LIST, P_LIST, $h_brightness_disp, nil ), #適用画面

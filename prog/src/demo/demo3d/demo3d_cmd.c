@@ -295,6 +295,7 @@ typedef struct _TASKWK_BGM_CHANGE_REQ{
   u8  seq;
   u8  push_f;
   u8  pop_f;
+  u8  type;
   int bgm_no;
   int fadeout_frame;
   int fadein_frame;
@@ -311,15 +312,27 @@ static void tcb_BGMChangeReq( GFL_TCBL *tcb , void* work);
  *  @param  param[0]  BGM-No(0`65535)
  *  @param  param[1]  fadeout_frame(0`65535) 
  *  @param  param[2]  fadein_frame(0`65535)
- *  @param  param[3]  push_f("change"=0 or "push" = 1 or "pop"=2)
+ *  @param  param[3]  type("play"=0,"stop"=1,"change"=2,"push"=3,"pop" =4)
+ *
+ *  type‚ÍDEMO3D_BGM_CHG_TYPEŒ^(demo3d_cmd_def.h)
  */
 //-----------------------------------------------------------------------------
 static void DEMOCMD_BGMChangeReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
 {
-  taskAdd_BGMChangeReq( wk, param[0], sub_ConvFrame(wk,param[1]), sub_ConvFrame(wk,param[2]), param[3] );
+  int bgm_no = param[0];
+  int fadeout_frame = sub_ConvFrame(wk,param[1]);
+  int fadein_frame = sub_ConvFrame(wk,param[2]);
+  int type = param[3];
+
+  if( type == DEMO3D_BGM_PLAY ){ //play
+    PMSND_PlayBGM( bgm_no );
+    PMSND_FadeInBGM( fadein_frame );
+  }else{
+    taskAdd_BGMChangeReq( wk, bgm_no, fadeout_frame, fadein_frame, type );
+  }
 }
 
-static void taskAdd_BGMChangeReq( DEMO3D_CMD_WORK* wk, int bgm_no, int fadeout_frame, int fadein_frame, int push_pop )
+static void taskAdd_BGMChangeReq( DEMO3D_CMD_WORK* wk, int bgm_no, int fadeout_frame, int fadein_frame, int type )
 {
   GFL_TCBL* tcb;
   TASKWK_BGM_CHANGE_REQ* twk;
@@ -330,11 +343,10 @@ static void taskAdd_BGMChangeReq( DEMO3D_CMD_WORK* wk, int bgm_no, int fadeout_f
   MI_CpuClear8( twk, sizeof( TASKWK_BGM_CHANGE_REQ ));
 
   twk->cmd = wk;
-  if( push_pop == 1){
-    twk->push_f = TRUE;
-  }else if(push_pop == 2){
-    twk->pop_f = TRUE;
-  }
+  twk->type = type;
+  twk->push_f = ( type == DEMO3D_BGM_PUSH );
+  twk->pop_f = ( type == DEMO3D_BGM_POP );
+  
   twk->bgm_no = bgm_no;
   twk->fadeout_frame = fadeout_frame;
   twk->fadein_frame = fadein_frame;
@@ -367,6 +379,9 @@ static void tcb_BGMChangeReq( GFL_TCBL *tcb , void* tcb_wk)
       }
     }else{
       PMSND_StopBGM();
+      if( twk->type == DEMO3D_BGM_STOP ){
+        break;
+      }
     }
     if( twk->pop_f ){
       if( twk->cmd->bgm_push_f ) {
@@ -381,6 +396,7 @@ static void tcb_BGMChangeReq( GFL_TCBL *tcb , void* tcb_wk)
     if( twk->fadein_frame ){
       PMSND_FadeInBGM( twk->fadein_frame );
     }
+    break;
   }
   GFL_TCBL_Delete(tcb);
 }

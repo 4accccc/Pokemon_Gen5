@@ -86,10 +86,12 @@ typedef enum
 /**
  *	@brief  BGM変更リクエスト
  *
- *  @param  param[0]  BGMラベル
+ *  @param  param[0]  BGM-No(0～65535)
  *  @param  param[1]  fadeout_frame(0～65535) 
  *  @param  param[2]  fadein_frame(0～65535)
- *  @param  param[3]  push_f("change"=0 or "push" = 1 or "pop"=2)
+ *  @param  param[3]  type("play"=0,"stop"=1,"change"=2,"push"=3,"pop" =4)
+ *
+ *  typeはDEMO3D_BGM_CHG_TYPE型(demo3d_cmd_def.h)
  */
 //======================================================
   DEMO3D_CMD_TYPE_BGM_CHANGE_REQ,
@@ -202,10 +204,12 @@ typedef enum{
 }DEMO3D_SE_EFFECT;
 
 typedef enum{
+  DEMO3D_BGM_PLAY,
+  DEMO3D_BGM_STOP,
   DEMO3D_BGM_CHANGE,
   DEMO3D_BGM_PUSH,
   DEMO3D_BGM_POP,
-}DEMO3D_BGM_PUSHPOP;
+}DEMO3D_BGM_CHG_TYPE;
 
 //--------------------------------------------------------------
 ///	3Dデモコマンドデータ
