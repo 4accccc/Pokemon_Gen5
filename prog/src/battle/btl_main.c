@@ -301,6 +301,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       if( BTL_UTIL_CallProc(&wk->subProc) )
       {
         BTL_N_Printf( DBGSTR_SETUP_DONE );
+        BTL_MAIN_RECORDDATA_Inc( wk, RECID_BATTLE_COUNT );
         return GFL_PROC_RES_FINISH;
       }
    }
@@ -4203,6 +4204,36 @@ static void srcParty_RefrectBtlPartyStartOrder( BTL_MAIN_MODULE* wk, u8 clientID
 BOOL BTL_MAIN_GetSetupStatusFlag( const BTL_MAIN_MODULE* wk, BTL_STATUS_FLAG flag )
 {
   return BATTLE_PARAM_CheckBtlStatusFlag( wk->setupParam, flag );
+}
+
+//=============================================================================================
+/**
+ * 記録データインクリメント
+ *
+ * @param   wk
+ * @param   recID
+ */
+//=============================================================================================
+void BTL_MAIN_RECORDDATA_Inc( const BTL_MAIN_MODULE* wk, int recID )
+{
+  if( wk->setupParam->fRecordPlay ){
+    RECORD_Inc( (RECORD*)(wk->setupParam->recordData), recID );
+  }
+}
+//=============================================================================================
+/**
+ * 記録データ加算
+ *
+ * @param   wk
+ * @param   recID
+ * @param   value
+ */
+//=============================================================================================
+void BTL_MAIN_RECORDDATA_Add( const BTL_MAIN_MODULE* wk, int recID, u32 value )
+{
+  if( wk->setupParam->fRecordPlay ){
+    RECORD_Add( (RECORD*)(wk->setupParam->recordData), recID, value );
+  }
 }
 
 //=============================================================================================

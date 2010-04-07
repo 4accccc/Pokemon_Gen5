@@ -1658,6 +1658,8 @@ void BTL_SERVER_NotifyPokemonCapture( BTL_SERVER* server, const BTL_POKEPARAM* b
   const POKEMON_PARAM* pp;
   pp = BPP_GetSrcData( bpp );
   GAMEBEACON_Set_PokemonGet( PP_Get( pp, ID_PARA_monsno, NULL ) );
+
+  BTL_MAIN_RECORDDATA_Inc( server->mainModule, RECID_CAPTURE_POKE );
 }
 
 void BTL_SERVER_AddBonusMoney( BTL_SERVER* server, u32 volume )

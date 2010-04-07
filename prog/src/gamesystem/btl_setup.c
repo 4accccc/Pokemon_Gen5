@@ -308,6 +308,7 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
   dst->bagCursor    = GAMEDATA_GetBagCursor( gameData );
   dst->zukanData    = GAMEDATA_GetZukanSave( gameData );
   dst->commSupport  = GAMEDATA_GetCommPlayerSupportPtr( gameData );
+  dst->recordData   = GAMEDATA_GetRecordPtr( gameData );
 
   {
     // @todo いずれSAVE_CONTROL_WORKに直アクセスしないように書き換える？

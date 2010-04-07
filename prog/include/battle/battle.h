@@ -23,6 +23,7 @@
 #include "savedata/mystatus.h"
 #include "savedata/myitem_savedata.h"
 #include "savedata/config.h"
+#include "savedata/record.h"
 #include "gamesystem/comm_player_support.h"
 #include "gamesystem/playerwork.h"
 #include "item/shooter_item.h"
@@ -261,6 +262,7 @@ typedef struct {
   MYITEM*           itemData;     ///< アイテムデータ
   BAG_CURSOR*       bagCursor;    ///< バッグカーソルデータ
   ZUKAN_SAVEDATA*   zukanData;    ///< 図鑑データ
+  RECORD*           recordData;   ///< レコードデータ
 
   // ゲームデータ系
   COMM_PLAYER_SUPPORT*  commSupport;  ///< 通信プレイヤーサポート

@@ -2,6 +2,7 @@
 #define __BTL_MAIN_H__
 
 #include "savedata/perapvoice.h"
+#include "savedata/record.h"
 
 #include "btl_main_def.h"
 
@@ -111,6 +112,8 @@ extern u32 BTL_MAIN_GetBonusMoney( const BTL_MAIN_MODULE* wk );
 extern u32 BTL_MAIN_FixBonusMoney( BTL_MAIN_MODULE* wk );
 extern BtlResult BTL_MAIN_ChecBattleResult( BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_NotifyCmdCheckError( BTL_MAIN_MODULE* wk );
+extern void BTL_MAIN_RECORDDATA_Inc( const BTL_MAIN_MODULE* wk, int recID );
+extern void BTL_MAIN_RECORDDATA_Add( const BTL_MAIN_MODULE* wk, int recID, u32 value );
 
 
 /*------------------------------------------------------------------------------*/

@@ -2356,8 +2356,18 @@ void BTLV_SCU_PrintMsgAtOnce( BTLV_SCU* wk, const STRBUF* str )
 {
   GFL_BMP_Clear( wk->bmp, COLIDX_MSGWIN_CLEAR );
   GFL_FONTSYS_SetColor( COLIDX_MSGWIN_LETTER, COLIDX_MSGWIN_SHADOW, COLIDX_MSGWIN_CLEAR );
+
+#if 1
   PRINTSYS_Print( wk->bmp, 0, 0, str, wk->defaultFont );
   GFL_BMPWIN_TransVramCharacter( wk->win );
+#else
+  PRINTSYS_PrintQue( wk->printQue, wk->bmp, 0, 0, str, wk->defaultFont );
+  while( 1 ){
+    if( PRINTSYS_QUE_Main( wk->printQue ) ){ break; }
+  }
+  GFL_BMPWIN_TransVramCharacter( wk->win );
+#endif
+
 
   wk->printSeq = 0;
   wk->printWait = 0;
