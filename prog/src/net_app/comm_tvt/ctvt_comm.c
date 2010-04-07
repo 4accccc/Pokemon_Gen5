@@ -27,6 +27,9 @@
 #include "ctvt_mic.h"
 #include "enc_adpcm.h"
 
+//1にすると、送信完了を相手からフラグでもらう
+#define USE_COMM_SEND_CHECK (0)
+
 //======================================================================
 //	define
 //======================================================================
@@ -318,8 +321,11 @@ CTVT_COMM_WORK* CTVT_COMM_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   }
   
   commWork->isLowerDataInit = TRUE;
+#if USE_COMM_SEND_CHECK
   GFL_NET_LDATA_InitSystem( heapId , COMM_TVT_IsWifi(work) );
-  
+#else
+  GFL_NET_LDATA_InitSystem( heapId , FALSE );
+#endif  
   return commWork;
 }
 
@@ -1328,11 +1334,13 @@ static void CTVT_COMM_Post_WaveData( const int netID, const int size , const voi
     }
     
   }
+#if USE_COMM_SEND_CHECK
   if( COMM_TVT_IsWifi(commWork->parentWork) == TRUE &&
       netID != selfId )
   {
     commWork->reqPermitSendWaveBuf = TRUE;
   }
+#endif
   commWork->isCommWave = FALSE;
   
 }
@@ -1377,11 +1385,13 @@ static const BOOL CTVT_COMM_SendDrawData( COMM_TVT_WORK *work , CTVT_COMM_WORK *
       {
         commWork->drawBufSendPos -= CTVT_COMM_DRAW_BUF_NUM;
       }
+#if USE_COMM_SEND_CHECK
       if( COMM_TVT_IsWifi(work) == TRUE )
       {
         //Wifiの場合はOKをもらうまで次を送らない
         commWork->canSendDrawBuf = FALSE;
       }
+#endif
     }
     return ret;
   }
@@ -1405,13 +1415,14 @@ static void CTVT_COMM_PostDrawData( const int netID, const int size , const void
   {
     DRAW_SYS_SetPenInfo( drawSys , &drawBuf[i] );
   }
+#if USE_COMM_SEND_CHECK
   if( COMM_TVT_IsWifi(commWork->parentWork) == TRUE &&
       netID != selfId )
   {
     //Wifiの時は送信許可を返す
     commWork->reqPermitSendDrawBuf = TRUE;
   }
-  
+#endif
 }
 
 //--------------------------------------------------------------

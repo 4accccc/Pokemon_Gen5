@@ -965,11 +965,13 @@ static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
             {
               talkWork->subState = CTSS_REQ_PLAY;
             }
+#if USE_COMM_SEND_CHECK
             else
             if( COMM_TVT_IsWifi(work) == TRUE )
             {
               CTVT_COMM_SetCanSendWaveBuf( work , commWork , FALSE );
             }
+#endif
           }
         }
       }
