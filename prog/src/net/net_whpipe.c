@@ -85,8 +85,8 @@
 /**
  *  @brief _BEACON_SIZE_FIXには 固定でほしいビーコンパラメータの合計を手で書く
  */
-#define _BEACON_SIZE_FIX (12)
-#define _BEACON_FIXHEAD_SIZE (6)
+#define _BEACON_SIZE_FIX (8)
+#define _BEACON_FIXHEAD_SIZE (2)
 #define _BEACON_USER_SIZE_MAX (WM_SIZE_USER_GAMEINFO-_BEACON_SIZE_FIX)
 
 
@@ -98,7 +98,7 @@
 // WM_SIZE_USER_GAMEINFO  最大 112byte
 // _BEACON_SIZE_FIXには 固定でほしいビーコンパラメータの合計を手で書く
 typedef struct{
-	u8        FixHead[_BEACON_FIXHEAD_SIZE];         ///< 固定で決めた６バイト部分
+	u8        FixHead[_BEACON_FIXHEAD_SIZE];         ///< 固定で決めた２バイト部分
 	u16        GGID;               ///< ゲーム固有のID  一致が必須
 	GameServiceID  		serviceNo; ///< 通信サービス番号
 	u8        ProductOrDevelopment;      ///< 開発と本番とがつながらないようにするため
