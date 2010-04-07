@@ -37,10 +37,6 @@
 #define BGID_D02_ROCK_03                  5
 #define BGID_D02_ROCK_02                  6
 #define BGID_D02_ROCK_04                  7
-#define BGID_D02_ROCK_05                  8
-#define BGID_D02_ROCK_07                  9
-#define BGID_D02_ROCK_08                 10
-#define BGID_D02_ROCK_06                 11
-#define D02_HIDE_ITEM_04                 12
+#define D02_HIDE_ITEM_04                  8
 
 #endif //ZONE_D02_EVB_H

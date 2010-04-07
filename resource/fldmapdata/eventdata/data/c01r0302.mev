@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/12 15:35:58
+#save date:2010/04/07 19:08:19
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01r0302.wms
 #SECTION START:OBJ_EVENT
@@ -47,7 +47,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C01R0302_POKE1_01
 #OBJ CODE Number
-POKE24
+POKE17
 #MOVE CODE Number
 MV_RTLU         
 #EVENT TYPE Number
@@ -78,7 +78,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C01R0302_POKE2_01
 #OBJ CODE Number
-POKE17
+POKE24
 #MOVE CODE Number
 MV_RTRD         
 #EVENT TYPE Number
