@@ -12,6 +12,7 @@
 
 #include "arc_def.h"
 #include "stage_gra.naix"
+#include "dressup_gra.naix"
 
 #include "musical/mus_item_data.h"
 
@@ -28,6 +29,7 @@
 
 #define STA_BUTTON_PLT (0)
 #define STA_BUTTON_BASE_PLT (2)
+#define STA_TOUCH_EFFECT_PLT (3)
 
 //======================================================================
 //  enum
@@ -57,14 +59,15 @@ struct _STA_BUTTON_SYS
   STA_BUTTON_USEITEM_POS useItemPos;
 
   GFL_CLUNIT  *cellUnit;
-  u32 pltIdx[2];
-  u32 ncgIdx[2];
-  u32 anmIdx[2];
+  u32 pltIdx[3];
+  u32 ncgIdx[3];
+  u32 anmIdx[3];
 
   BOOL      useButton[2];
   u16       equipItem[2];
   GFL_CLWK  *clwkButton[2];
   GFL_CLWK  *clwkButtonBase[2];
+  GFL_CLWK  *clwkTouchEffect;
 };
 
 
@@ -98,6 +101,10 @@ STA_BUTTON_SYS* STA_BUTTON_InitSystem( HEAPID heapId , ACTING_WORK* actWork , MU
 
   STA_BUTTON_InitCell( work );
 
+  GXS_SetVisibleWnd( GX_WNDMASK_W0 );
+  G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ , TRUE );
+  G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ , FALSE );
+  G2S_SetWnd0Position( 0 , 128 , 255 , 192 );
   return work;
 }
 
@@ -106,6 +113,8 @@ STA_BUTTON_SYS* STA_BUTTON_InitSystem( HEAPID heapId , ACTING_WORK* actWork , MU
 //--------------------------------------------------------------
 void STA_BUTTON_ExitSystem( STA_BUTTON_SYS *work )
 {
+  GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+
   if( work->equipItem[0] != MUSICAL_ITEM_INVALID )
   {
     GFL_CLACT_WK_Remove( work->clwkButton[0] );
@@ -114,13 +123,17 @@ void STA_BUTTON_ExitSystem( STA_BUTTON_SYS *work )
   {
     GFL_CLACT_WK_Remove( work->clwkButton[1] );
   }
-
+  GFL_CLACT_WK_Remove( work->clwkTouchEffect );
+  
   GFL_CLGRP_PLTT_Release( work->pltIdx[0] );
   GFL_CLGRP_CGR_Release( work->ncgIdx[0] );
   GFL_CLGRP_CELLANIM_Release( work->anmIdx[0] );
   GFL_CLGRP_PLTT_Release( work->pltIdx[1] );
   GFL_CLGRP_CGR_Release( work->ncgIdx[1] );
   GFL_CLGRP_CELLANIM_Release( work->anmIdx[1] );
+  GFL_CLGRP_PLTT_Release( work->pltIdx[2] );
+  GFL_CLGRP_CGR_Release( work->ncgIdx[2] );
+  GFL_CLGRP_CELLANIM_Release( work->anmIdx[2] );
   
   GFL_CLACT_UNIT_Delete( work->cellUnit );
   GFL_HEAP_FreeMemory( work );
@@ -161,6 +174,14 @@ void STA_BUTTON_UpdateSystem( STA_BUTTON_SYS *work )
         work->canUseButton = FALSE;
         work->isUseWait = TRUE;
         work->useItemPos = ret;
+        {
+          GFL_CLACTPOS pos;
+          pos.x = (ret == 0 ? 32 : 256-32);
+          pos.y = 128;
+          GFL_CLACT_WK_ResetAnm( work->clwkTouchEffect );
+          GFL_CLACT_WK_SetDrawEnable( work->clwkTouchEffect, TRUE );
+          GFL_CLACT_WK_SetPos( work->clwkTouchEffect , &pos , CLSYS_DEFREND_SUB );
+        }
       }
     }
   }
@@ -186,6 +207,14 @@ void STA_BUTTON_UpdateSystem( STA_BUTTON_SYS *work )
       }
     }
   }
+  //タッチエフェクト
+  if( GFL_CLACT_WK_GetDrawEnable( work->clwkTouchEffect ) == TRUE )
+  {
+    if( GFL_CLACT_WK_CheckAnmActive( work->clwkTouchEffect ) == FALSE )
+    {
+      GFL_CLACT_WK_SetDrawEnable( work->clwkTouchEffect, FALSE );
+    } 
+  }
 }
 
 
@@ -197,7 +226,7 @@ static void STA_BUTTON_InitCell( STA_BUTTON_SYS *work )
   u8 i;
   MUS_ITEM_DATA_SYS* itemDataSys = STA_ACT_GetItemDataSys( work->actWork );
   //OBJ用
-  work->cellUnit  = GFL_CLACT_UNIT_Create( 4 , 0, work->heapId );
+  work->cellUnit  = GFL_CLACT_UNIT_Create( 5 , 0, work->heapId );
   GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
   //各種素材の読み込み
   {
@@ -209,6 +238,16 @@ static void STA_BUTTON_InitCell( STA_BUTTON_SYS *work )
     work->pltIdx[1] = GFL_CLGRP_PLTT_RegisterEx( arcHandle , NARC_stage_gra_button_base_NCLR , CLSYS_DRAW_SUB , STA_BUTTON_BASE_PLT*0x20 , 0 , 1 , work->heapId  );
     work->ncgIdx[1] = GFL_CLGRP_CGR_Register( arcHandle , NARC_stage_gra_button_base_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
     work->anmIdx[1] = GFL_CLGRP_CELLANIM_Register( arcHandle , NARC_stage_gra_button_base_NCER , NARC_stage_gra_button_base_NANR, work->heapId  );
+  
+    GFL_ARC_CloseDataHandle(arcHandle);
+  }
+  //各種素材の読み込み(ドレスアップからタッチエフェクト
+  {
+    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_DRESSUP_GRA , work->heapId );
+  
+    work->pltIdx[2] = GFL_CLGRP_PLTT_Register( arcHandle , NARC_dressup_gra_anime_sita_NCLR , CLSYS_DRAW_SUB , STA_TOUCH_EFFECT_PLT*32 , work->heapId  );
+    work->ncgIdx[2] = GFL_CLGRP_CGR_Register( arcHandle , NARC_dressup_gra_anime_stage_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
+    work->anmIdx[2] = GFL_CLGRP_CELLANIM_Register( arcHandle , NARC_dressup_gra_anime_stage_NCER , NARC_dressup_gra_anime_stage_NANR, work->heapId  );
   
     GFL_ARC_CloseDataHandle(arcHandle);
   }
@@ -233,7 +272,7 @@ static void STA_BUTTON_InitCell( STA_BUTTON_SYS *work )
       baseAnm = 0;
 
       cellInitData.anmseq = i;
-      cellInitData.softpri = 0;
+      cellInitData.softpri = 10;
       cellInitData.bgpri = 0;
       work->clwkButton[i] = GFL_CLACT_WK_Create( work->cellUnit ,work->ncgIdx[0],work->pltIdx[0],work->anmIdx[0],
                     &cellInitData ,CLSYS_DEFREND_SUB , work->heapId );
@@ -246,6 +285,22 @@ static void STA_BUTTON_InitCell( STA_BUTTON_SYS *work )
 
       STA_BUTTON_TransTexToCell( work , i , work->equipItem[i] , texType );
     }
+  }
+  {
+    //セルの生成
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 128;
+    cellInitData.pos_y = 96;
+    cellInitData.anmseq = 0;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+    work->clwkTouchEffect = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->ncgIdx[2],
+              work->pltIdx[2],
+              work->anmIdx[2],
+              &cellInitData ,CLSYS_DEFREND_SUB , work->heapId );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkTouchEffect, FALSE );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkTouchEffect, TRUE );
   }
 }
 

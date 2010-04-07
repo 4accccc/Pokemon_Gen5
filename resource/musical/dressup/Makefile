@@ -37,6 +37,7 @@ imdres:=$(wildcard *.imd)
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
 gobjects = $(subst .ncg,.NCGR,$(gsources))
+gobjects2 = $(subst .nce,.NCGR,$(esources))
 sobjects = $(subst .nsc,.NSCR,$(ssources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
@@ -57,7 +58,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g2dcvtr $<
 
 .nce.NCER:
-	g2dcvtr $<
+	g2dcvtr $< -ncn
 
 .imd.nsbtx:
 	g3dcvtr $< -etex
@@ -81,7 +82,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(imdobj)
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(imdobj) $(gobjects2)
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 endif

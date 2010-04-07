@@ -333,6 +333,7 @@ struct _FITTING_WORK
   //演出系
   GFL_CLWK  *clwkEffectUp[EFFECT_UP_NUM];
   GFL_CLWK  *clwkEffectDown;
+  GFL_CLWK  *clwkEffectTouch;
   u8        effUpCnt[EFFECT_UP_NUM];
   u8        endEffCnt;
   u8        bgScrollCnt;
@@ -430,6 +431,7 @@ static void DUP_FIT_DrawMessageSort( FITTING_WORK *work , const MUS_POKE_EQUIP_U
 static void DUP_EFFECT_InitCell( FITTING_WORK *work );
 static void DUP_EFFECT_TermCell( FITTING_WORK *work );
 static void DUP_EFFECT_UpdateCell( FITTING_WORK *work );
+static void DUP_EFFECT_DispTouchEffect( FITTING_WORK *work );
 
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_64_E,       // メイン2DエンジンのBG
@@ -1943,6 +1945,7 @@ static void DUP_FIT_UpdateTpMain( FITTING_WORK *work )
       work->state = DUS_GO_CHECK;
       work->animeCnt = 0;
       PMSND_PlaySE( DUP_SE_DECIDE );
+      DUP_EFFECT_DispTouchEffect( work );
     }
   }
   else
@@ -3130,6 +3133,7 @@ static FITTING_RETURN DUP_CHECK_CheckMain(  FITTING_WORK *work )
     }
   };
   int hitRet;
+  GFL_UI_TP_GetPointCont( &work->tpx,&work->tpy );
   
   hitRet = GFL_UI_TP_HitTrg( buttonHitTbl );
   switch( hitRet )
@@ -3137,6 +3141,7 @@ static FITTING_RETURN DUP_CHECK_CheckMain(  FITTING_WORK *work )
   case 0: //決定ボタン
     DUP_CHECK_SaveNowEquip( work );
     PMSND_PlaySE( DUP_SE_KIRAKIRA );
+    DUP_EFFECT_DispTouchEffect( work );
     return FIT_RET_GO_END;
     break;
   case 1: //戻るボタン
@@ -3152,6 +3157,7 @@ static FITTING_RETURN DUP_CHECK_CheckMain(  FITTING_WORK *work )
       DUP_FIT_DrawMessage( work , DUP_MSG_01 , wordSet );
       WORDSET_Delete( wordSet );
     }
+    DUP_EFFECT_DispTouchEffect( work );
     break;
   case GFL_UI_TP_HIT_NONE:
     DUP_CHECK_UpdateTpMain( work );
@@ -3660,7 +3666,7 @@ static void DUP_EFFECT_InitCell( FITTING_WORK *work )
 {
   u8 i;
   
-  //下用
+  //上用
   for( i=0;i<EFFECT_UP_NUM;i++ )
   {
     //セルの生成
@@ -3681,7 +3687,7 @@ static void DUP_EFFECT_InitCell( FITTING_WORK *work )
     work->effUpCnt[i] = 0;
   }
 
-  //上用
+  //下用
   {
     //セルの生成
     GFL_CLWK_DATA cellInitData;
@@ -3697,6 +3703,15 @@ static void DUP_EFFECT_InitCell( FITTING_WORK *work )
               &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
     GFL_CLACT_WK_SetDrawEnable( work->clwkEffectDown, FALSE );
     GFL_CLACT_WK_SetAutoAnmFlag( work->clwkEffectDown, TRUE );
+
+    cellInitData.anmseq = 2;
+    work->clwkEffectTouch = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->objResIdx[DOR_EFFECT_DOWN_PLT],
+              work->objResIdx[DOR_EFFECT_DOWN_NCG],
+              work->objResIdx[DOR_EFFECT_DOWN_ANM],
+              &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkEffectTouch, FALSE );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkEffectTouch, TRUE );
   }
 }
 static void DUP_EFFECT_TermCell( FITTING_WORK *work )
@@ -3706,6 +3721,7 @@ static void DUP_EFFECT_TermCell( FITTING_WORK *work )
   {
     GFL_CLACT_WK_Remove( work->clwkEffectUp[i] );
   }
+  GFL_CLACT_WK_Remove( work->clwkEffectTouch );
   GFL_CLACT_WK_Remove( work->clwkEffectDown );
 }
 static void DUP_EFFECT_UpdateCell( FITTING_WORK *work )
@@ -3748,4 +3764,23 @@ static void DUP_EFFECT_UpdateCell( FITTING_WORK *work )
     }
   }
   
+  //タッチエフェクト
+  if( GFL_CLACT_WK_GetDrawEnable( work->clwkEffectTouch ) == TRUE )
+  {
+    if( GFL_CLACT_WK_CheckAnmActive( work->clwkEffectTouch ) == FALSE )
+    {
+      GFL_CLACT_WK_SetDrawEnable( work->clwkEffectTouch, FALSE );
+    } 
+  }
+  
+}
+
+static void DUP_EFFECT_DispTouchEffect( FITTING_WORK *work )
+{
+  GFL_CLACTPOS pos;
+  pos.x = work->tpx;
+  pos.y = work->tpy;
+  GFL_CLACT_WK_ResetAnm( work->clwkEffectTouch );
+  GFL_CLACT_WK_SetDrawEnable( work->clwkEffectTouch, TRUE );
+  GFL_CLACT_WK_SetPos( work->clwkEffectTouch , &pos , CLSYS_DEFREND_MAIN );
 }
