@@ -499,11 +499,13 @@ u16 ZUKANSAVE_GetDefaultMons( const ZUKAN_SAVEDATA * zw )
  * @return	none
  */
 //-----------------------------------------------------------------------------
+/*
 void ZUKANSAVE_SetShortcutMons( ZUKAN_SAVEDATA * zw, u16 mons )
 {
   zukan_incorrect(zw);
 	zw->shortcutMonsNo = mons;
 }
+*/
 
 //----------------------------------------------------------------------------
 /**
@@ -514,12 +516,13 @@ void ZUKANSAVE_SetShortcutMons( ZUKAN_SAVEDATA * zw, u16 mons )
  * @return	ƒ|ƒPƒ‚ƒ“”Ô†
  */
 //-----------------------------------------------------------------------------
+/*
 u16 ZUKANSAVE_GetShortcutMons( const ZUKAN_SAVEDATA * zw )
 {
   zukan_incorrect(zw);
 	return zw->shortcutMonsNo;
 }
-
+*/
 
 
 

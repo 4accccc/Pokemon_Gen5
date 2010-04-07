@@ -70,7 +70,7 @@ struct ZUKAN_SAVEDATA {
 	u32	ver_up_flg:10;				///< バーションアップフラグ
 	u32	zukan_mode:1;					///< 閲覧中の図鑑モード
 	u32	defaultMonsNo:10;			///< 閲覧中のポケモン番号
-	u32	shortcutMonsNo:10;		///< Ｙ登録されたポケモン番号
+	u32	shortcutMonsNo:10;		///< Ｙ登録されたポケモン番号（諸事情により未使用）
 
   u32 get_flag[POKEZUKAN_ARRAY_LEN];    ///< 捕まえたフラグ用ワーク
 
