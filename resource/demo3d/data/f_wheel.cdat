@@ -12,14 +12,14 @@
 //============================================
 
 static const DEMO3D_SCENE_DATA data_f_wheel_scene = {
-	NARC_data_demo3d_c_cruiser_camera_bin,	///<カメラID
+	NARC_data_demo3d_f_wheel_camera_bin,	///<カメラID
 	DEMO3D_BGM_NONE,	///<BGM No
 	ZONE_ID_T01,	///<ゾーンID
 	DEMO3D_FRAME_RATE_30FPS,	///<フレームレート定義
 	FALSE,	///<2画面連結
 	TRUE,FALSE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
 	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
-	GX_SORTMODE_AUTO,GX_BUFFERMODE_Z,	///<SwapBuf αソートモード,バッファモード
+	GX_SORTMODE_AUTO,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
 	FX32_CONST(40.0),FX32_CONST(40.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
 	FX32_CONST(0.100 ),FX32_CONST(2048.000 ),	///<near,far
@@ -34,7 +34,7 @@ static const DEMO3D_SCENE_DATA data_f_wheel_scene = {
 	{ GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),	///<エッジマーキングカラーテーブル
 	  GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0), },
 	DEMO3D_FADE_BLACK, 30,	///<フェードイン
-	DEMO3D_FADE_BLACK, 30,	///<フェードアウト
+	DEMO3D_FADE_BLACK, 0,	///<フェードアウト
 };
 
 //============================================
@@ -42,6 +42,7 @@ static const DEMO3D_SCENE_DATA data_f_wheel_scene = {
 //============================================
 
 static const DEMO3D_CMD_DATA demo3d_cmd_f_wheel_data[] = {
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1050-60, { MASK_MAIN_DISPLAY, 60, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
 
@@ -59,138 +60,224 @@ static const DEMO3D_CMD_DATA demo3d_cmd_f_wheel_end_data[] = {
 //============================================
 
 ///==================================
-/// cdemo_01 Unit File Resource
+/// hero Unit File Resource
 
-static const u16 res_f_wheel_file_cdemo_01_morning[] = {
- NARC_data_demo3d_cdemo_01_nsbmd,
- NARC_data_demo3d_cdemo_01_nsbtp,
- NARC_data_demo3d_cdemo_01_nsbta,
- NARC_data_demo3d_cdemo_01_nsbca,
-};
-static const u16 res_f_wheel_file_cdemo_01_noon[] = {
- NARC_data_demo3d_cdemo_01_nsbmd,
- NARC_data_demo3d_cdemo_01_nsbtp,
- NARC_data_demo3d_cdemo_01_nsbta,
- NARC_data_demo3d_cdemo_01_nsbca,
-};
-static const u16 res_f_wheel_file_cdemo_01_evening[] = {
- NARC_data_demo3d_cdemo_01_nsbmd,
- NARC_data_demo3d_cdemo_01_nsbtp,
- NARC_data_demo3d_cdemo_01_nsbta,
- NARC_data_demo3d_cdemo_01_nsbca,
-};
-static const u16 res_f_wheel_file_cdemo_01_night[] = {
- NARC_data_demo3d_cdemo_01_nsbmd,
- NARC_data_demo3d_cdemo_01_nsbtp,
- NARC_data_demo3d_cdemo_01_nsbta,
- NARC_data_demo3d_cdemo_01_nsbca,
-};
-static const u16 res_f_wheel_file_cdemo_01_midnight[] = {
- NARC_data_demo3d_cdemo_01_nsbmd,
- NARC_data_demo3d_cdemo_01_nsbtp,
- NARC_data_demo3d_cdemo_01_nsbta,
- NARC_data_demo3d_cdemo_01_nsbca,
+static const u16 res_f_wheel_file_hero[] = {
+ NARC_data_demo3d_fmdl_hero_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4hero_u_nsbtp,
+ NARC_data_demo3d_hero_ine_nsbca,
 };
 
-static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_cdemo_01[] = {
- { res_f_wheel_file_cdemo_01_morning, 4 },
- { res_f_wheel_file_cdemo_01_noon, 4 },
- { res_f_wheel_file_cdemo_01_evening, 4 },
- { res_f_wheel_file_cdemo_01_night, 4 },
- { res_f_wheel_file_cdemo_01_midnight, 4 },
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_hero[] = {
+ { res_f_wheel_file_hero, 3 },
 };
 
 ///==================================
-/// cdemo_02 Unit File Resource
+/// heroine Unit File Resource
 
-static const u16 res_f_wheel_file_cdemo_02[] = {
- NARC_data_demo3d_cdemo_02_nsbmd,
+static const u16 res_f_wheel_file_heroine[] = {
+ NARC_data_demo3d_fmdl_heroine_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4hero_u_nsbtp,
+ NARC_data_demo3d_hero_ine_nsbca,
 };
 
-static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_cdemo_02[] = {
- { res_f_wheel_file_cdemo_02, 1 },
-};
-
-///==================================
-/// cdemo_03 Unit File Resource
-
-static const u16 res_f_wheel_file_cdemo_03[] = {
- NARC_data_demo3d_cdemo_03_nsbmd,
-};
-
-static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_cdemo_03[] = {
- { res_f_wheel_file_cdemo_03, 1 },
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_heroine[] = {
+ { res_f_wheel_file_heroine, 3 },
 };
 
 ///==================================
-/// cdemo_04 Unit File Resource
+/// boss Unit File Resource
 
-static const u16 res_f_wheel_file_cdemo_04[] = {
- NARC_data_demo3d_cdemo_04_nsbmd,
- NARC_data_demo3d_cdemo_04_nsbtp,
+static const u16 res_f_wheel_file_boss[] = {
+ NARC_data_demo3d_fmdl_boss_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4nflip_u_nsbtp,
+ NARC_data_demo3d_sub_obj_nsbca,
 };
 
-static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_cdemo_04[] = {
- { res_f_wheel_file_cdemo_04, 2 },
-};
-
-///==================================
-/// cdemo_05 Unit File Resource
-
-static const u16 res_f_wheel_file_cdemo_05[] = {
- NARC_data_demo3d_cdemo_05_nsbmd,
-};
-
-static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_cdemo_05[] = {
- { res_f_wheel_file_cdemo_05, 1 },
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_boss[] = {
+ { res_f_wheel_file_boss, 3 },
 };
 
 ///==================================
-/// cdemo_06 Unit File Resource
+/// girl2 Unit File Resource
 
-static const u16 res_f_wheel_file_cdemo_06[] = {
- NARC_data_demo3d_cdemo_06_nsbmd,
+static const u16 res_f_wheel_file_girl2[] = {
+ NARC_data_demo3d_fmdl_girl2_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4flip_u_nsbtp,
+ NARC_data_demo3d_sub_obj_nsbca,
 };
 
-static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_cdemo_06[] = {
- { res_f_wheel_file_cdemo_06, 1 },
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_girl2[] = {
+ { res_f_wheel_file_girl2, 3 },
+};
+
+///==================================
+/// dancer Unit File Resource
+
+static const u16 res_f_wheel_file_dancer[] = {
+ NARC_data_demo3d_fmdl_dancer_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4flip_u_nsbtp,
+ NARC_data_demo3d_sub_obj_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_dancer[] = {
+ { res_f_wheel_file_dancer, 3 },
+};
+
+///==================================
+/// mountman Unit File Resource
+
+static const u16 res_f_wheel_file_mountman[] = {
+ NARC_data_demo3d_fmdl_mountman_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4flip_u_nsbtp,
+ NARC_data_demo3d_sub_obj_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_mountman[] = {
+ { res_f_wheel_file_mountman, 3 },
+};
+
+///==================================
+/// trainerm Unit File Resource
+
+static const u16 res_f_wheel_file_trainerm[] = {
+ NARC_data_demo3d_fmdl_trainerm_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4flip_u_nsbtp,
+ NARC_data_demo3d_sub_obj_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_trainerm[] = {
+ { res_f_wheel_file_trainerm, 3 },
+};
+
+///==================================
+/// ol Unit File Resource
+
+static const u16 res_f_wheel_file_ol[] = {
+ NARC_data_demo3d_fmdl_ol_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4nflip_u_nsbtp,
+ NARC_data_demo3d_sub_obj_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_ol[] = {
+ { res_f_wheel_file_ol, 3 },
+};
+
+///==================================
+/// waitress Unit File Resource
+
+static const u16 res_f_wheel_file_waitress[] = {
+ NARC_data_demo3d_fmdl_waitress_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4flip_u_nsbtp,
+ NARC_data_demo3d_sub_obj_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_waitress[] = {
+ { res_f_wheel_file_waitress, 3 },
+};
+
+///==================================
+/// babygirl2 Unit File Resource
+
+static const u16 res_f_wheel_file_babygirl2[] = {
+ NARC_data_demo3d_fmdl_babygirl2_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4flip_u_nsbtp,
+ NARC_data_demo3d_sub_obj_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_babygirl2[] = {
+ { res_f_wheel_file_babygirl2, 3 },
+};
+
+///==================================
+/// boy4 Unit File Resource
+
+static const u16 res_f_wheel_file_boy4[] = {
+ NARC_data_demo3d_fmdl_boy4_nsbmd,
+ NARC_data_demo3d_fmdl_t4x4nflip_u_nsbtp,
+ NARC_data_demo3d_sub_obj_nsbca,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_boy4[] = {
+ { res_f_wheel_file_boy4, 3 },
+};
+
+///==================================
+/// field Unit File Resource
+
+static const u16 res_f_wheel_file_field[] = {
+ NARC_data_demo3d_f_wheel_01_nsbmd,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_field[] = {
+ { res_f_wheel_file_field, 1 },
+};
+
+///==================================
+/// sky Unit File Resource
+
+static const u16 res_f_wheel_file_sky_morning[] = {
+ NARC_data_demo3d_f_wheel_02_nsbmd,
+ NARC_data_demo3d_f_wheel_02d_nsbtp,
+};
+static const u16 res_f_wheel_file_sky_noon[] = {
+ NARC_data_demo3d_f_wheel_02_nsbmd,
+ NARC_data_demo3d_f_wheel_02d_nsbtp,
+};
+static const u16 res_f_wheel_file_sky_evening[] = {
+ NARC_data_demo3d_f_wheel_02_nsbmd,
+ NARC_data_demo3d_f_wheel_02e_nsbtp,
+};
+static const u16 res_f_wheel_file_sky_night[] = {
+ NARC_data_demo3d_f_wheel_02_nsbmd,
+ NARC_data_demo3d_f_wheel_02n_nsbtp,
+};
+static const u16 res_f_wheel_file_sky_midnight[] = {
+ NARC_data_demo3d_f_wheel_02_nsbmd,
+ NARC_data_demo3d_f_wheel_02n_nsbtp,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_sky[] = {
+ { res_f_wheel_file_sky_morning, 2 },
+ { res_f_wheel_file_sky_noon, 2 },
+ { res_f_wheel_file_sky_evening, 2 },
+ { res_f_wheel_file_sky_night, 2 },
+ { res_f_wheel_file_sky_midnight, 2 },
 };
 
 ///========================================================
 /// シーンユニットテーブル
 ///========================================================
 
-static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_cdemo_01_tbl[] = {
- { res_f_wheel_file_unit_cdemo_01, 5 },
- { res_f_wheel_file_unit_cdemo_01, 5 },
+static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_hero_tbl[] = {
+ { res_f_wheel_file_unit_hero, 1 },
+ { res_f_wheel_file_unit_heroine, 1 },
 };
 
-static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_cdemo_02_tbl[] = {
- { res_f_wheel_file_unit_cdemo_02, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_boss_tbl[] = {
+ { res_f_wheel_file_unit_boss, 1 },
+ { res_f_wheel_file_unit_girl2, 1 },
+ { res_f_wheel_file_unit_dancer, 1 },
+ { res_f_wheel_file_unit_mountman, 1 },
+ { res_f_wheel_file_unit_trainerm, 1 },
+ { res_f_wheel_file_unit_ol, 1 },
+ { res_f_wheel_file_unit_waitress, 1 },
+ { res_f_wheel_file_unit_babygirl2, 1 },
+ { res_f_wheel_file_unit_boy4, 1 },
 };
 
-static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_cdemo_03_tbl[] = {
- { res_f_wheel_file_unit_cdemo_03, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_field_tbl[] = {
+ { res_f_wheel_file_unit_field, 1 },
 };
 
-static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_cdemo_04_tbl[] = {
- { res_f_wheel_file_unit_cdemo_04, 1 },
-};
-
-static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_cdemo_05_tbl[] = {
- { res_f_wheel_file_unit_cdemo_05, 1 },
-};
-
-static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_cdemo_06_tbl[] = {
- { res_f_wheel_file_unit_cdemo_06, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_sky_tbl[] = {
+ { res_f_wheel_file_unit_sky, 5 },
 };
 
 static const DEMO3D_SCENE_UNIT res_f_wheel_scene_unit[] = {
- { res_f_wheel_file_unit_cdemo_01_tbl, 2, DEMO3D_UNITCHG_PLAYER_SEX },
- { res_f_wheel_file_unit_cdemo_02_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_f_wheel_file_unit_cdemo_03_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_f_wheel_file_unit_cdemo_04_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_f_wheel_file_unit_cdemo_05_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_f_wheel_file_unit_cdemo_06_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_f_wheel_file_unit_hero_tbl, 2, DEMO3D_UNITCHG_PLAYER_SEX },
+ { res_f_wheel_file_unit_boss_tbl, 9, DEMO3D_UNITCHG_SCENE_ID },
+ { res_f_wheel_file_unit_field_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_f_wheel_file_unit_sky_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 
