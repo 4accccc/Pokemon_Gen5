@@ -1230,6 +1230,10 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipTbl[DRAW_STA_DIR4_MAX] =
   DATA_BlActAnmNonFlip_WalkD3F,
   DATA_BlActAnmNonFlip_WalkL3F,
   DATA_BlActAnmNonFlip_WalkR3F,
+  DATA_BlActAnmNonFlip_WalkU7F,//DRWA_STA_WALK_7F
+  DATA_BlActAnmNonFlip_WalkD7F,
+  DATA_BlActAnmNonFlip_WalkL7F,
+  DATA_BlActAnmNonFlip_WalkR7F,
   DATA_BlActAnmNonFlip_WalkU12F,//DRWA_STA_WALK_12F
   DATA_BlActAnmNonFlip_WalkD12F,
   DATA_BlActAnmNonFlip_WalkL12F,
@@ -1280,6 +1284,10 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipAct0Tbl[DRAW_STA_ACT0_AN
   DATA_BlActAnmNonFlip_WalkD3F,
   DATA_BlActAnmNonFlip_WalkL3F,
   DATA_BlActAnmNonFlip_WalkR3F,
+  DATA_BlActAnmNonFlip_WalkU7F,//DRWA_STA_WALK_7F
+  DATA_BlActAnmNonFlip_WalkD7F,
+  DATA_BlActAnmNonFlip_WalkL7F,
+  DATA_BlActAnmNonFlip_WalkR7F,
   DATA_BlActAnmNonFlip_WalkU12F,//DRWA_STA_WALK_12F
   DATA_BlActAnmNonFlip_WalkD12F,
   DATA_BlActAnmNonFlip_WalkL12F,
@@ -1331,6 +1339,10 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipRivelTbl[DRAW_STA_ACT0_A
   DATA_BlActAnmNonFlip_WalkD3F,
   DATA_BlActAnmNonFlip_WalkL3F,
   DATA_BlActAnmNonFlip_WalkR3F,
+  DATA_BlActAnmNonFlip_WalkU7F,//DRWA_STA_WALK_7F
+  DATA_BlActAnmNonFlip_WalkD7F,
+  DATA_BlActAnmNonFlip_WalkL7F,
+  DATA_BlActAnmNonFlip_WalkR7F,
   DATA_BlActAnmNonFlip_WalkU12F,//DRWA_STA_WALK_12F
   DATA_BlActAnmNonFlip_WalkD12F,
   DATA_BlActAnmNonFlip_WalkL12F,
@@ -1385,6 +1397,10 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipSupportTbl[DRAW_STA_ACT0
   DATA_BlActAnmNonFlip_WalkD3F,
   DATA_BlActAnmNonFlip_WalkL3F,
   DATA_BlActAnmNonFlip_WalkR3F,
+  DATA_BlActAnmNonFlip_WalkU7F,//DRWA_STA_WALK_7F
+  DATA_BlActAnmNonFlip_WalkD7F,
+  DATA_BlActAnmNonFlip_WalkL7F,
+  DATA_BlActAnmNonFlip_WalkR7F,
   DATA_BlActAnmNonFlip_WalkU12F,//DRWA_STA_WALK_12F
   DATA_BlActAnmNonFlip_WalkD12F,
   DATA_BlActAnmNonFlip_WalkL12F,
@@ -1454,6 +1470,10 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipBossN[DRAW_STA_ACT1_ANMN
   DATA_BlActAnmNonFlip_WalkD3F,
   DATA_BlActAnmNonFlip_WalkL3F,
   DATA_BlActAnmNonFlip_WalkR3F,
+  DATA_BlActAnmNonFlip_WalkU7F,//DRWA_STA_WALK_7F
+  DATA_BlActAnmNonFlip_WalkD7F,
+  DATA_BlActAnmNonFlip_WalkL7F,
+  DATA_BlActAnmNonFlip_WalkR7F,
   DATA_BlActAnmNonFlip_WalkU12F,//DRWA_STA_WALK_12F
   DATA_BlActAnmNonFlip_WalkD12F,
   DATA_BlActAnmNonFlip_WalkL12F,
@@ -1511,6 +1531,10 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipSage1[DRAW_STA_ACT0_ANMN
   DATA_BlActAnmNonFlip_WalkD3F,
   DATA_BlActAnmNonFlip_WalkL3F,
   DATA_BlActAnmNonFlip_WalkR3F,
+  DATA_BlActAnmNonFlip_WalkU7F,//DRWA_STA_WALK_7F
+  DATA_BlActAnmNonFlip_WalkD7F,
+  DATA_BlActAnmNonFlip_WalkL7F,
+  DATA_BlActAnmNonFlip_WalkR7F,
   DATA_BlActAnmNonFlip_WalkU12F,//DRWA_STA_WALK_12F
   DATA_BlActAnmNonFlip_WalkD12F,
   DATA_BlActAnmNonFlip_WalkL12F,
@@ -1570,6 +1594,10 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipNinja[DRAW_STA_ACT1_ANMN
   DATA_BlActAnmNonFlip_WalkD3F,
   DATA_BlActAnmNonFlip_WalkL3F,
   DATA_BlActAnmNonFlip_WalkR3F,
+  DATA_BlActAnmNonFlip_WalkU7F,//DRWA_STA_WALK_7F
+  DATA_BlActAnmNonFlip_WalkD7F,
+  DATA_BlActAnmNonFlip_WalkL7F,
+  DATA_BlActAnmNonFlip_WalkR7F,
   DATA_BlActAnmNonFlip_WalkU12F,//DRWA_STA_WALK_12F
   DATA_BlActAnmNonFlip_WalkD12F,
   DATA_BlActAnmNonFlip_WalkL12F,
@@ -1627,6 +1655,10 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipChampion[DRAW_STA_ACT0_A
   DATA_BlActAnmNonFlip_WalkD3F,
   DATA_BlActAnmNonFlip_WalkL3F,
   DATA_BlActAnmNonFlip_WalkR3F,
+  DATA_BlActAnmNonFlip_WalkU7F,//DRWA_STA_WALK_7F
+  DATA_BlActAnmNonFlip_WalkD7F,
+  DATA_BlActAnmNonFlip_WalkL7F,
+  DATA_BlActAnmNonFlip_WalkR7F,
   DATA_BlActAnmNonFlip_WalkU12F,//DRWA_STA_WALK_12F
   DATA_BlActAnmNonFlip_WalkD12F,
   DATA_BlActAnmNonFlip_WalkL12F,

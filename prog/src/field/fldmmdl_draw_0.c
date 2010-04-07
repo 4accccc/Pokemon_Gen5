@@ -559,15 +559,16 @@ static void DrawBlAct_DrawAct( MMDL *mmdl )
     if( status >= DRAW_STA_ACT0 ){
       u16 init_flag = FALSE;
       u16 dir = blact_GetDrawDir( mmdl );
-      u16 anm_idx = (status * DIR_MAX4);
       COMMAN_ANMCTRL_WORK *anmcnt = &work->anmcnt;
       
       if( status != anmcnt->set_anm_status ){
+        u16 anm_idx = DRAW_STA_DIR4_MAX + (status - DRAW_STA_ACT0);
+        
         init_flag = TRUE;
-        anm_idx += status - DRAW_STA_ACT0;
         anmcnt->set_anm_dir = dir;
         anmcnt->set_anm_status = status;
         anmcnt->next_walk_frmidx = 0;
+        KAGAYA_Printf( "MMDL ‰‰‹ZƒAƒjƒ‚»‚Ì0 IDX = %d\n", anm_idx );
         GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
       }
       
@@ -610,14 +611,15 @@ static void DrawBlAct_DrawActNonePause( MMDL *mmdl )
     if( status >= DRAW_STA_ACT0 ){
       u16 init_flag = FALSE;
       u16 dir = blact_GetDrawDir( mmdl );
-      u16 anm_idx = (status * DIR_MAX4);
       COMMAN_ANMCTRL_WORK *anmcnt = &work->anmcnt;
       
       if( status != anmcnt->set_anm_status ){
-        anm_idx += status - DRAW_STA_ACT0;
+        u16 anm_idx = DRAW_STA_DIR4_MAX + (status - DRAW_STA_ACT0);
+        
         anmcnt->set_anm_dir = dir;
         anmcnt->set_anm_status = status;
         anmcnt->next_walk_frmidx = 0;
+        KAGAYA_Printf( "MMDL ‰‰‹ZƒAƒjƒ‚»‚Ì‚P IDX = %d\n", anm_idx );
         GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
       }
       
