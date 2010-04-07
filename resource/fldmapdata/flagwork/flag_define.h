@@ -2524,7 +2524,7 @@
 #define TMFLG_T05R0301_BTLITEM            2750 /* 0x0abe カナワタウン民家：戦闘用アイテム入手イベント */
 #define TMFLG_C08R0201_BTL                2751 /* 0x0abf ソウリュウシティ：バトルハウストレーナー再戦フラグ */
 #define TMFLG_H03_EMPEROR_BTL             2752 /* 0x0ac0 シリンダーブリッジ：暴走族と対戦したフラグ */
-		/* not used  2753(0x0ac1) */
+#define TMFLG_T03R0401_ITEMGET_01         2753 /* 0x0ac1 カゴメタウン：日曜日限定1日1回アイテム入手イベント */
 		/* not used  2754(0x0ac2) */
 		/* not used  2755(0x0ac3) */
 		/* not used  2756(0x0ac4) */
