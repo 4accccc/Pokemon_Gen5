@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-02T18:30:13"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-06T19:19:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="183" top="106" right="1037" bottom="972" maximized="no" rayout="Vertical2">
+	<dialog left="131" top="27" right="985" bottom="893" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="561" right="1280" bottom="959" visible="yes"/>
+		<tag-palette left="1127" top="558" right="1600" bottom="956" visible="yes"/>
 		<band id="0" index="1" style="0000" width="460"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="217"/>
 		<band id="3" index="4" style="0000" width="846"/>
 		<band id="4" index="0" style="0000" width="846"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -351,23 +351,23 @@
 
 ※朝になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
-※ニックネーム名はbadrider2に勝利後、
+※種族名はbadrider2に勝利後、
 　手持ち先頭のポケモンと差し替え
 　デフォルトでは「エンペルト」です</comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
-		<language name="JPN" width="256">アアン？　なんだあ　テメー！▼
+		<language name="JPN" width="256">アアン？　なんだあ？　テメーは！▼
 はなの　きんようびの　よるだけは
 ここは　オイラたら　ばくそうチーム▽
-ブラック[1:02:ポケモンニックネーム:0]の
+ブラック[1:01:ポケモン種族名:0]の
 シマ　なんだぜ！▼
 テメーみたいに そだちが　よさげで
 うらやましい　かんじの▽
 ちびっこは　とっとと▽
 おうちに　かえんな！</language>
-		<language name="JPN_KANJI" width="256">アアン？　なんだあ　テメー！▼
+		<language name="JPN_KANJI" width="256">アアン？　なんだあ？　テメー！▼
 花の　金曜日の　夜だけは
 ここは　オイラたち　爆走チーム▽
-ブラック[1:02:ポケモンニックネーム:0]の
+ブラック[1:01:ポケモン種族名:0]の
 シマ　なんだよお！▼
 テメーみたいに　そだちが　よさげで
 うらやましい　かんじの▽
@@ -383,13 +383,13 @@
 勝利でmsg_h03_badrider1_04へ</comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
 		<language name="JPN" width="256">なんだとお！　この　ダボが！
-ブラック[1:02:ポケモンニックネーム:0]の▽
+ブラック[1:01:ポケモン種族名:0]の▽
 オイラ　なめてんじゃねーぞ！▼
 テメーの　かわいい　ポケモンに
 たっぷり　こってり▽
 くらわして　やるよ！▼</language>
 		<language name="JPN_KANJI" width="256">何だとお！　この　ダボが！
-ブラック[1:02:ポケモンニックネーム:0]の▽
+ブラック[1:01:ポケモン種族名:0]の▽
 オイラ　なめてんじゃねーぞ！▼
 テメーの　可愛い　ポケモンに
 たっぷり　こってり▽
@@ -411,17 +411,17 @@
 		<comment>♂
 イベント終了
 
-※再戦可能。日付を超えたら再度戦闘できます。</comment>
+※再戦可能。次回登場は再戦できます。</comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
 		<language name="JPN" width="256">テメー　オイラに　かったくらいで
 きもちよく　なってんじゃ　ねーぞ！▼
-ブラック[1:02:ポケモンニックネーム:0]と
+ブラック[1:01:ポケモン種族名:0]と
 マジで　ケンカする　つもりなら
 はしの　どっかに　いる▽
 オレたちの　ヘッドと　やってみろよ！</language>
 		<language name="JPN_KANJI" width="256">テメー　オイラに　勝ったくらいで
 気持ちよく　なってんじゃ　ねーぞ！▼
-ブラック[1:02:ポケモンニックネーム:0]と
+ブラック[1:01:ポケモン種族名:0]と
 マジで　ケンカする　つもりなら
 橋の　どっかに　いる▽
 オレたちの　ヘッドと　やってみろよ！</language>
@@ -437,30 +437,31 @@
 
 
 ※朝になるといなくなる
-※ニックネーム名はbadrider2に勝利後、
+※消すタイミングはzoneチェンジ＋時間参照
+※種族名はbadrider2に勝利後、
 　手持ち先頭のポケモンと差し替え
 　デフォルトでは「エンペルト」です
 
-※再戦可能。日付を超えたら再度戦闘できます。</comment>
+※再戦可能。次回登場は再戦できます。</comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
 		<language name="JPN" width="256">なんだ　オマエは……？
 ここは……
-ブラック[1:02:ポケモンニックネーム:0]の▽
+ブラック[1:01:ポケモン種族名:0]の▽
 さいごの　らくえん……▼
 オマエの　ような　ガキには
 ようの　ない　ばしょだ……▼
 それとも……
-ブラック[1:02:ポケモンニックネーム:0]の▽
-ヘッドで　ある　このオレと▽
+ブラック[1:01:ポケモン種族名:0]の▽
+ヘッドである　このオレと▽
 ケンカでもする　つもりか……？▼</language>
 		<language name="JPN_KANJI" width="256">なんだ　オマエは……？
 ここは……
-ブラック[1:02:ポケモンニックネーム:0]の▽
+ブラック[1:01:ポケモン種族名:0]の▽
 最期の　楽園……▼
 オマエの　ような　ガキには
 用の　ない　場所だ……▼
 それとも……
-ブラック[1:02:ポケモンニックネーム:0]の▽
+ブラック[1:01:ポケモン種族名:0]の▽
 ヘッドである　このオレと▽
 ケンカでも　するつもりか……？</language>
 	</row>
@@ -475,13 +476,13 @@
 		<language name="JPN" width="256">グハハハ！　じょうとうだっ！
 いせいの　いい　ガキじゃねえかっ！▼
 いいぜ……
-ブラック[1:02:ポケモンニックネーム:0]を▽
+ブラック[1:01:ポケモン種族名:0]を▽
 まとめる　ヘッドの　ちから……▽
 オマエに　みせて　やるぜっ！▼</language>
 		<language name="JPN_KANJI" width="256">グハハハ！　上等だっ！
 威勢の　いい　ガキじゃねえかっ！▼
 いいぜ……
-ブラック[1:02:ポケモンニックネーム:0]を▽
+ブラック[1:01:ポケモン種族名:0]を▽
 まとめる　ヘッドの　力……▽
 オマエに　みせて　やるぜっ！▼</language>
 	</row>
@@ -494,12 +495,12 @@
 		<language name="JPN" width="256">そうか……
 だったら　さっさと　いきな……▼
 ここは　オレたち
-ブラック[1:02:ポケモンニックネーム:0]の▽
+ブラック[1:01:ポケモン種族名:0]の▽
 さいごの　らくえん　だからな……</language>
 		<language name="JPN_KANJI" width="256">そうか……
 だったら　さっさと　いきな……▼
 ここは　オレたち
-ブラック[1:02:ポケモンニックネーム:0]の▽
+ブラック[1:01:ポケモン種族名:0]の▽
 さいごの　らくえん　だからな……</language>
 	</row>
 
@@ -513,43 +514,41 @@
 そのあかしに……▼
 たった　いまから！
 オレたちの　チームは▽
-ブラック[1:02:ポケモンニックネーム:0]に▽
+ブラック[1:01:ポケモン種族名:0]に▽
 かいめい　することに　したぜ！▼
 そうだぜ！　タフで　ワイルドな
 オマエの　ポケモンの▽
-ニックネームを　いただいたのさ！▼
+なまえを　いただいたのさ！▼
 これで　オレたちの　チームは
 ますます　ワイルドに　なる！▼
-ブラック[1:02:ポケモンニックネーム:0]！
+ブラック[1:01:ポケモン種族名:0]！
 グハハハッ！　コイツはいいぜっ！</language>
 		<language name="JPN_KANJI" width="256">オマエ　なかなか　やるじゃねえか……
 気にいった……　認めてやるぜ……▼
 その証に……▼
 たった　今から！
 オレたちの　チームは▽
-ブラック[1:02:ポケモンニックネーム:0]に▽
+ブラック[1:01:ポケモン種族名:0]に▽
 改名　することに　したぜ！▼
 そうだぜ！　タフで　ワイルドな
 オマエの　ポケモンの▽
-ニックネームを　頂いたのさ！▼
+名前を　頂いたのさ！▼
 これで　オレたちの　チームは
 ますます　ワイルドに　なる！▼
-ブラック[1:02:ポケモンニックネーム:0]！
+ブラック[1:01:ポケモン種族名:0]！
 グハハハッ！　コイツはいいぜっ！</language>
 	</row>
 
 	<row id="msg_h03_badrider3_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
-※金曜日の夜のみ出現
 ※朝になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
-※ニックネーム名はbadrider2に勝利後、
+※種族名はbadrider2に勝利後、
 　手持ち先頭のポケモンと差し替え
 　デフォルトでは「エンペルト」です
-
 イベント終了</comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
-		<language name="JPN" width="256">ブラック[1:02:ポケモンニックネーム:0]！
+		<language name="JPN" width="256">ブラック[1:01:ポケモン種族名:0]！
 スピードだけが　おともだちっ！</language>
 		<language name="JPN_KANJI" width="256">ブラック[1:02:ポケモンニックネーム:0]！
 スピードだけが　お友達っ！</language>
@@ -557,35 +556,33 @@
 
 	<row id="msg_h03_badrider4_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-※金曜日の夜のみ出現
 ※朝になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
-※ニックネーム名はbadrider2に勝利後、
+※種族名はbadrider2に勝利後、
 　手持ち先頭のポケモンと差し替え
 　デフォルトでは「エンペルト」です
 
 イベント終了</comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
-		<language name="JPN" width="256">ブラック[1:02:ポケモンニックネーム:0]！
+		<language name="JPN" width="256">ブラック[1:01:ポケモン種族名:0]！
 よあけまで　だいばくそう　だぜィ！</language>
-		<language name="JPN_KANJI" width="256">ブラック[1:02:ポケモンニックネーム:0]！
+		<language name="JPN_KANJI" width="256">ブラック[1:01:ポケモン種族名:0]！
 夜明けまで　大爆走　だぜィ！</language>
 	</row>
 
 	<row id="msg_h03_badrider5_01">
 		<comment>♂
-※金曜日の夜のみ出現
 ※朝になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
-※ニックネーム名はbadrider2に勝利後、
+※種族名はbadrider2に勝利後、
 　手持ち先頭のポケモンと差し替え
 　デフォルトでは「エンペルト」です
 
 イベント終了</comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
-		<language name="JPN" width="256">ブラック[1:02:ポケモンニックネーム:0]は
+		<language name="JPN" width="256">ブラック[1:01:ポケモン種族名:0]は
 とまらない！　ふりかえらないぜ！</language>
-		<language name="JPN_KANJI" width="256">ブラック[1:02:ポケモンニックネーム:0]は
+		<language name="JPN_KANJI" width="256">ブラック[1:01:ポケモン種族名:0]は
 止まらない！　振り返らないぜ！</language>
 	</row>
 
