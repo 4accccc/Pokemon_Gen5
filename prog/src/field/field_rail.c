@@ -880,7 +880,7 @@ fx32 FIELD_RAIL_MAN_GetRailGridSize( const FIELD_RAIL_MAN * man )
 void FIELD_RAIL_MAN_ConvertNextWorldNotMuinusToRailLocation( const FIELD_RAIL_MAN * man, const RAIL_SETTING * setting, u16 index, u16 front, u16 side, RAIL_LOCATION* p_location )
 {
   FIELD_RAIL_WORK* p_railwork;
-  RAIL_LOCATION init = {0};
+  RAIL_LOCATION init = {0, FIELD_RAIL_TYPE_LINE, RAIL_KEY_DOWN};
   
   GF_ASSERT( man );
   GF_ASSERT( setting );
@@ -889,14 +889,20 @@ void FIELD_RAIL_MAN_ConvertNextWorldNotMuinusToRailLocation( const FIELD_RAIL_MA
 
   // 別ゾーンのレール情報を設定
   p_railwork->rail_dat = setting;
-  FIELD_RAIL_WORK_SetNotMinusRailParam( p_railwork, index, front, side );
 
-  // そのときのロケーションを取得
-  FIELD_RAIL_WORK_GetLocation( p_railwork, p_location );
+  p_location->rail_index  = index;
+  p_location->type        = FIELD_RAIL_TYPE_LINE;
+  p_location->width_grid  = 0;
+  p_location->line_grid   = front;
+
+  FIELD_RAIL_WORK_SetLocation( p_railwork, p_location );
+
+  // サイドを合わせる。
+  p_railwork->width_ofs = side - p_railwork->width_ofs_max;
+  p_location->width_grid = RAIL_OFS_TO_GRID(p_railwork->width_ofs);
 
   // 元のレール情報に戻す
   p_railwork->rail_dat = &man->rail_dat;
-  FIELD_RAIL_WORK_SetLocation( p_railwork, &init );
   
 }
 
