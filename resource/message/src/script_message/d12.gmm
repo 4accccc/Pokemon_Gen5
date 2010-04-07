@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T14:47:59"/>
+	<create user="matsushima" host="W00181" date="2010-04-07T20:47:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1417" top="178" right="2122" bottom="798" maximized="no" rayout="Vertical2">
+	<dialog left="1309" top="122" right="2014" bottom="742" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d12_mariner_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_d12_mariner_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>ポジション（GRIDX=293/GRIDZ=749）
 左向き
 
@@ -300,42 +300,44 @@
 ●「はい／いいえ」ウインドウ表示
 　「はい」→msg_mapscript_d12_mariner_02
 　「いいえ」→msg_mapscript_d12_mariner_03</comment>
-		<attribute name="キャラ指定">船員</attribute>
-		<language name="JPN" width="256">ヒウンシティに　もどって
-たたかいに　そなえますか？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ヒウンシティに　もどって
-戦いに　備えますか？[BE:01:ページ切り替え（クリア）]</language>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
+		<language name="JPN" width="256">ヒウンシティに　もどりますか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ヒウンシティに　もどりますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d12_mariner_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_d12_mariner_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>●「はい」の場合
 
 ・このあと画面暗転。
 ・ヒウンシティに戻ります。
 ※船の出港デモはカット</comment>
-		<attribute name="キャラ指定">船員</attribute>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
 		<language name="JPN" width="256">わかりました！　いそいで
 ヒウンシティに　もどりましょう！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">わかりました！　急いで
 ヒウンシティに　もどりましょう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d12_mariner_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_d12_mariner_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>●「いいえ」の場合</comment>
-		<attribute name="キャラ指定">船員</attribute>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
 		<language name="JPN" width="256">ヒウンシティに　もどりたいときは
 いつでも　こえを　かけて　ください！</language>
 		<language name="JPN_KANJI" width="256">ヒウンシティに　もどりたいときは
 いつでも　声を　かけて　ください！</language>
 	</row>
 
-	<row id="msg_d12_mariner_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_d12_mariner_04" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>●イベント終了後のセリフ
 
 ●「はい／いいえ」ウインドウ表示
 　「はい」→そのまま画面暗転。出航デモはカット
 　「いいえ」→msg_mapscript_d12_mariner_03</comment>
-		<attribute name="キャラ指定">船員</attribute>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
 		<language name="JPN" width="256">ヒウンシティに　もどりますか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ヒウンシティに　もどりますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -389,7 +391,7 @@
 やっつけてくれたんだね！</language>
 	</row>
 
-	<row id="msg_d12_visitor03_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+	<row id="msg_d12_visitor03_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>ポジション（GRIDX=297/GRIDZ=750）
 右向き（向き固定）
 
@@ -403,7 +405,7 @@
 フガ　フガ…！</language>
 	</row>
 
-	<row id="msg_d12_visitor03_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+	<row id="msg_d12_visitor03_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>●イベント終了後のセリフ</comment>
 		<attribute name="キャラ指定">OLDWOMAN1</attribute>
 		<language name="JPN" width="256">まごを　たすけてくれて
@@ -508,22 +510,32 @@
 	</row>
 
 	<row id="msg_d12_sign_01" back-color="#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,,,#ff00ff,,">
-		<attribute name="キャラ指定">看板・桟橋</attribute>
+		<attribute name="キャラ指定">看板・桟橋左</attribute>
 		<language name="JPN" width="256">…２００ねんまえ
 だいふごうが　しまを　かいとり[BE:01:ページ切り替え（クリア）]
 ひとと　ポケモンが
 じゆうに　くらせる[BE:00:ページ切り替え（行送り）]
 せかいを　ねがって[BE:00:ページ切り替え（行送り）]
-リバティ　アイランドと　なづけました</language>
+リバティガーデンとう　と　なづけました</language>
 		<language name="JPN_KANJI" width="256">…２００年前
 大富豪が　島を　買い取り[BE:01:ページ切り替え（クリア）]
 人と　ポケモンが
 自由に　暮らせる[BE:00:ページ切り替え（行送り）]
 世界を　願って[BE:00:ページ切り替え（行送り）]
-リバティ　アイランドと　なづけました</language>
+リバティガーデン島と　なづけました</language>
 	</row>
 
 	<row id="msg_d12_sign_02" back-color="#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,,,#ff00ff,,">
+		<attribute name="キャラ指定">看板・桟橋右</attribute>
+		<language name="JPN" width="256">だい２　さんばし
+かんこうせん　のりばは[BE:00:ページ切り替え（行送り）]
+だい１　さんばしに　なります</language>
+		<language name="JPN_KANJI" width="256">第２桟橋
+観光船　乗り場は[BE:00:ページ切り替え（行送り）]
+第１桟橋に　なります</language>
+	</row>
+
+	<row id="msg_d12_sign_03" back-color="#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,,,#ff00ff,,">
 		<attribute name="キャラ指定">看板・灯台前</attribute>
 		<language name="JPN" width="256">じゆうの　ひかりを　ともす　とうだい[BE:01:ページ切り替え（クリア）]
 かんけいしゃ　いがいの
@@ -534,10 +546,23 @@
 	</row>
 
 	<row id="msg_d12_police02_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>ポジション（GRIDX=304/GRIDZ=756）
-右向き
+		<comment>ポジション（GRIDX=305/GRIDZ=756）
+左向き
 
-●再上陸のセリフ</comment>
+●ビクティ捕獲後～再上陸までのセリフ</comment>
+		<attribute name="キャラ指定">POLICEMAN</attribute>
+		<language name="JPN" width="256">けいかんたいが　けいびせんで
+かけつけてきてね！[BE:01:ページ切り替え（クリア）]
+なかまたちの　かつやくで
+あくのいちみは　いちもうだじんだよ！</language>
+		<language name="JPN_KANJI" width="256">警官隊が　警備船で
+駆けつけてきてね！[BE:01:ページ切り替え（クリア）]
+仲間たちの　活躍で
+悪の一味は　一網打尽だよ！</language>
+	</row>
+
+	<row id="msg_d12_police02_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●再上陸後のセリフ</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
 		<language name="JPN" width="256">あの　ポケモンは　げんきかい？[BE:01:ページ切り替え（クリア）]
 あの　じけん　いらい
@@ -545,6 +570,100 @@
 		<language name="JPN_KANJI" width="256">あの　ポケモンは　元気かい？[BE:01:ページ切り替え（クリア）]
 あの　事件以来
 島は　静かな　もんだよ</language>
+	</row>
+
+	<row id="msg_d12_plasma_sub_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●サブウインドウ</comment>
+		<attribute name="キャラ指定">HAKAIM</attribute>
+		<language name="JPN" width="256">プラズマだんは　ふめつ！</language>
+		<language name="JPN_KANJI" width="256">プラズマ団は　不滅！</language>
+	</row>
+
+	<row id="msg_d12_plasma_sub_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●サブウインドウ</comment>
+		<attribute name="キャラ指定">HAKAIM</attribute>
+		<language name="JPN" width="256">まだ　あきらめないぞ！</language>
+		<language name="JPN_KANJI" width="256">まだ　あきらめないぞ！</language>
+	</row>
+
+	<row id="msg_d12_police_sub_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●サブウインドウ</comment>
+		<attribute name="キャラ指定">POLICEMAN</attribute>
+		<language name="JPN" width="256">あくじは　ゆるさん！</language>
+		<language name="JPN_KANJI" width="256">悪事は　ゆるさん！</language>
+	</row>
+
+	<row id="msg_d12_police_sub_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●サブウインドウ</comment>
+		<attribute name="キャラ指定">POLICEMAN</attribute>
+		<language name="JPN" width="256">さっさと　あるけ！</language>
+		<language name="JPN_KANJI" width="256">さっさと　歩け！</language>
+	</row>
+
+	<row id="msg_d12_hakase2_01" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+		<comment>●アララギ（娘）が遠くから話しかける。
+
+●この後、主人公が２グリッド前進する。</comment>
+		<attribute name="キャラ指定">博士（娘）</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　おかげで
+あくじを　はたらいた　れんちゅうは[BE:00:ページ切り替え（行送り）]
+ごっそり　つかまえられたわよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　おかげで
+悪事を　働いた　連中は[BE:00:ページ切り替え（行送り）]
+ごっそり　捕まえられたわよ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d12_hakase2_02" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+		<attribute name="キャラ指定">博士（娘）</attribute>
+		<language name="JPN" width="256">ビクティが　このしまに　いた　わけは…
+[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ビクティが　この島に　いた　理由は…
+[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d12_hakase2_03" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+		<attribute name="キャラ指定">博士（娘）</attribute>
+		<language name="JPN" width="256">ビクティの　イッシュずかんナンバーが
+０の　りゆうは…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ビクティの　イッシュ図鑑ナンバーが
+０の　理由は…[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d12_police03_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●警官３が小走りにやってきて、セリフ。
+ポジション（GRIDX=308/GRIDZ=763）</comment>
+		<attribute name="キャラ指定">POLICEMAN</attribute>
+		<language name="JPN" width="256">アララギはかせ！[BE:01:ページ切り替え（クリア）]
+こうそく　けいびせんに
+あくとうどもを　つめこみました！[BE:01:ページ切り替え（クリア）]
+ヒウンシティへ　もどるとのことです！
+はかせも　ごじょうせん　ください！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アララギ博士！[BE:01:ページ切り替え（クリア）]
+高速　警備船に
+悪党どもを　詰め込みました！[BE:01:ページ切り替え（クリア）]
+ヒウンシティへ　戻るとのことです！
+博士も　ご乗船　ください！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d12_hakase2_04" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+		<comment>●警官３を向いて、セリフ。
+●再び主人公を向く。</comment>
+		<attribute name="キャラ指定">博士（娘）</attribute>
+		<language name="JPN" width="256">ありがとう
+すぐに　いくわ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ありがとう
+すぐに　いくわ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d12_hakase2_05" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+		<comment>●最後のセリフ。
+
+●セリフ後に、警官隊たちと立ち去る。</comment>
+		<attribute name="キャラ指定">博士（娘）</attribute>
+		<language name="JPN" width="256">ポケモンの　のうりょくを
+あくようするのは　いつも　にんげん…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　能力を
+悪用するのは　いつも　人間…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>

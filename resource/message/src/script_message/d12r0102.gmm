@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T14:50:33"/>
+	<create user="matsushima" host="W00181" date="2010-04-07T22:34:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="263"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="204" top="269" right="909" bottom="887" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -297,192 +297,100 @@
 上向き
 
 ●マップに入るとイベントスタート。
-●このセリフの後、「！」が表示され、
-入り口にいる主人公の方向を見る。</comment>
+●「！」が表示され、入り口方向を向く。
+●一拍（ウエイト８ｆ）後、このセリフ。</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
-		<language name="JPN" width="256">おまえの　むげんの　エネルギーは
-しょうりを　もたらすと　いう…[BE:01:ページ切り替え（クリア）]
-その　ちからは
-プラズマだんが　つかわせてもらうぞ…[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">おまえの　無限の　エネルギーは
-勝利を　もたらすと　いう…[BE:01:ページ切り替え（クリア）]
-その　力は
-プラズマ団が　使わせてもらうぞ…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ビクティ●の力が
+</language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<row id="msg_d12r0102_plasma02_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
-		<comment>●振り向いたあとのセリフ</comment>
+		<comment>●１グリッド前進してから、セリフ。</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
-		<language name="JPN" width="256">ときの　けんりょくしゃたちは
-[1:01:ポケモン種族名:0]の　ちからを[BE:00:ページ切り替え（行送り）]
-せんそうに　りようした…[BE:01:ページ切り替え（クリア）]
-この　ポケモンを　もつ　くには
-せんそうに　かてると　いわれたからだ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">時の　権力者たちは
-[1:01:ポケモン種族名:0]の　力を[BE:00:ページ切り替え（行送り）]
-戦争に　利用した…[BE:01:ページ切り替え（クリア）]
-この　ポケモンを　持つ　国は
-戦争に　勝利すると　いわれたからだ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">しょうりに　みちびく　ポケモン
+それが　この　ビクティ●だ…！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<row id="msg_d12r0102_plasma02_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
-		<comment>●１歩進んでから、ビクティの方を向いてセリフ。</comment>
+		<comment>●１グリッド前進してから、セリフ。
+
+●セリフの後、戦闘開始。</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
-		<language name="JPN" width="256">２００ねん　ほど　むかしの　はなしだ…[BE:01:ページ切り替え（クリア）]
-ひとに　りようされる　[1:01:ポケモン種族名:0]を
-かわいそうに　おもった　だいふごうが[BE:00:ページ切り替え（行送り）]
-この　ちいさな　しまを　かいとって[BE:00:ページ切り替え（行送り）]
-ちかしつを　ひそかに　つくった[BE:01:ページ切り替え（クリア）]
-[1:01:ポケモン種族名:0]を　ひとから
-とおざける　ために…[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">２００年ほど　昔の　話だ…[BE:01:ページ切り替え（クリア）]
-人に　利用される　[1:01:ポケモン種族名:0]を
-かわいそうに　思った　大富豪が[BE:00:ページ切り替え（行送り）]
-この　小さな　島を　買い取って[BE:00:ページ切り替え（行送り）]
-地下室を　密かに　つくった[BE:01:ページ切り替え（クリア）]
-[1:01:ポケモン種族名:0]を　人から
-遠ざける　ために…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">プラズマだんの　しょうりのため
+ビクティ●の　ちからは[BE:00:ページ切り替え（行送り）]
+われわれが　つかわせてもらう…[BE:01:ページ切り替え（クリア）]
+おまえのような　こどもに
+ジャマは　させない！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<row id="msg_d12r0102_plasma02_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
-		<comment>●再び主人公の方を向いて、セリフ。
+		<comment>●戦闘終了後（主人公勝利）
 
-●セリフのあと、1歩主人公に近づいてから
-戦闘開始。</comment>
+●１グリッド後ずさってから、セリフ。</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
-		<language name="JPN" width="256">われわれ　プラズマだんの　もくてきを
-ジャマする　やつは　ようしゃしない…[BE:01:ページ切り替え（クリア）]
-こども　だからって
-てかげんなど　しないぞ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">われわれ　プラズマ団の　目的を
-ジャマする　やつは　容赦しない…[BE:01:ページ切り替え（クリア）]
-子供だからって
-手加減など　しないぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">わたしに　かったからと　いって
+あんしんするのは　まだ　はやい…[BE:01:ページ切り替え（クリア）]
+ビクティ●は　にんげんの　よくぼうに
+ふりまわされた　ポケモン…[BE:01:ページ切り替え（クリア）]
+みろ……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<row id="msg_d12r0102_plasma02_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
-		<comment>●戦闘に勝利後のセリフ。
+		<comment>●セリフ後に、１グリッド右へ後退してから、
+ビクティ方向を向いて、セリフ。
 
-●セリフ後、退場。
-
-※イベント終了後のシーンに切り替わります。</comment>
+●ビクティを捕獲するまで、話しかけたときは
+このセリフを繰り返す。</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
-		<language name="JPN" width="256">こどもの　おまえには
-てにあまる　ちからを[BE:00:ページ切り替え（行送り）]
-この　ポケモンは　もっている…[BE:01:ページ切り替え（クリア）]
-かくごするのだな…！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">子供の　おまえには
-手に余る　力を[BE:00:ページ切り替え（行送り）]
-この　ポケモンは　持っている…[BE:01:ページ切り替え（クリア）]
-覚悟するのだな…！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">じぶんの　うんめいを　のろい
+おまえに　いかりを　ぶつけようと[BE:00:ページ切り替え（行送り）]
+しているぞ……[BE:01:ページ切り替え（クリア）]
+かくごするのだな……</language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
-	<row id="msg_d12r0102_policeman02_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>●プラズマ団幹部と入れ違いに入ってくる。
-●主人公の右隣に立って、セリフ。</comment>
-		<attribute name="キャラ指定">POLICEMAN</attribute>
-		<language name="JPN" width="256">プラズマだんの　れんちゅうは
-にげかえって　いったよ！[BE:00:ページ切り替え（行送り）]
-いいきみだ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">プラズマ団の　連中は
-逃げ帰って　いったよ！[BE:00:ページ切り替え（行送り）]
-いい気味だ！[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_d12r0102_plasma02_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●ビクティ捕獲後
+・主人公ポジション（GRIDX=4/GRIDZ=4）下向き
+・プラズマ団ポジション（GRIDX=6/GRIDZ=8）上向き
+
+●セリフ後、プラズマ団幹部は部屋を逃げるように
+出て行く。</comment>
+		<attribute name="キャラ指定">HAKAIM</attribute>
+		<language name="JPN" width="256">ビクティ●と　ともに　いきるとは
+かこくな　うんめいも　ともにすること[BE:01:ページ切り替え（クリア）]
+おまえに　どれほどの　かくごがあるか
+いつか　ためさせて　もらうぞ…！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
-	<row id="msg_d12r0102_policeman02_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>●ビクティの方を向いてからセリフ。
-
-●セリフ後、msg_d12r0102_victie_01</comment>
-		<attribute name="キャラ指定">POLICEMAN</attribute>
-		<language name="JPN" width="256">とうだいの　ちかしつに
-こんな　ポケモンが　いたなんて…[BE:01:ページ切り替え（クリア）]
-ポケモンの　ちからを
-あくようする　にんげんが　わるいんだ[BE:00:ページ切り替え（行送り）]
-ポケモンに　つみは　ない…[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">灯台の　地下室に
-こんな　ポケモンが　いたなんて…[BE:01:ページ切り替え（クリア）]
-ポケモンの　力を
-悪用する　人間が　悪いんだ[BE:00:ページ切り替え（行送り）]
-ポケモンに　罪は　ない…[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_d12r0102_plasma02_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●ビクティを倒したときのセリフ</comment>
+		<attribute name="キャラ指定">HAKAIM</attribute>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<row id="msg_d12r0102_victie_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
-		<comment>●鳴いたあと、飛び跳ねるアクション。
-　→msg_d12r0102_policeman02_03</comment>
+		<comment>●鳴いたあと戦闘開始。</comment>
 		<attribute name="キャラ指定">VICTIE</attribute>
 		<language name="JPN" width="256">きゅきゅわわーんっ！▼</language>
 		<language name="JPN_KANJI" width="256">きゅきゅわわーんっ！▼</language>
 	</row>
 
-	<row id="msg_d12r0102_policeman02_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>●このセリフのあと、操作自由。
+	<row id="msg_d12r0102_narrator_01">
+		<comment>●ビクティを倒した場合のメッセージ。
 
-●ビクティに話し掛けると、
-　→msg_d12r0102_victie_01
-　→msg_d12r0102_narrator_01</comment>
-		<attribute name="キャラ指定">POLICEMAN</attribute>
-		<language name="JPN" width="256">どんな　ひとか　みぬく　ちからを
-ポケモンは　もっているからね[BE:01:ページ切り替え（クリア）]
-どうやら　この　ポケモンは
-キミを　きにいった　みたいだ[BE:01:ページ切り替え（クリア）]
-はなしかけてごらん[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">どんな人か　見抜く　力を
-ポケモンは　持っているからね[BE:01:ページ切り替え（クリア）]
-どうやら　この　ポケモンは
-キミを　気に入った　みたいだ[BE:01:ページ切り替え（クリア）]
-話しかけてごらん[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d12r0102_narrator_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<comment>●「はい／いいえ」選択肢
-
-「はい」→手持ちとボックスの空きチェック
-　　　　→手持ちに空きが有るmsg_d12r0102_narrator_02
-　　　　→ボックスに空きが有るmsg_d12r0102_narrator_03
-　　　　→空きが無いmsg_d12r0102_policeman02_04
-「いいえ」→msg_d12r0102_policeman02_04</comment>
+●マップに入り直すとビクティは復活。</comment>
 		<attribute name="キャラ指定">ナレーション</attribute>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が
-いっしょに　いきたい　ようす…！[BE:00:ページ切り替え（行送り）]
-つれていきますか？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が
-一緒に　行きたい　様子…！[BE:00:ページ切り替え（行送り）]
-連れていきますか？[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d12r0102_narrator_02" back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<comment>●手持ちに入ったときのメッセージ</comment>
-		<attribute name="キャラ指定">ナレーション</attribute>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]が
-なかまに　なった！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]が
-仲間に　なった！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d12r0102_narrator_03" back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<comment>●ボックスに入ったときのメッセージ</comment>
-		<attribute name="キャラ指定">ナレーション</attribute>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]は　あいている　ボックスに
-てんそうされた！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]は　空いている　ボックスに
-転送された！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_d12r0102_policeman02_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>●ビクティを仲間にしない場合のセリフ。</comment>
-		<attribute name="キャラ指定">POLICEMAN</attribute>
-		<language name="JPN" width="256">この　うすぐらい　ちかしつを
-キミと　いっしょに　でたい　みたいだ</language>
-		<language name="JPN_KANJI" width="256">この　薄暗い　地下室を
-キミと　一緒に　でたい　みたいだ</language>
-	</row>
-
-	<row id="msg_d12r0102_policeman02_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>●ビクティを仲間にしたあとのセリフ。
-繰り返し。</comment>
-		<attribute name="キャラ指定">POLICEMAN</attribute>
-		<language name="JPN" width="256">そろそろ　ふねが　しゅっぱつするよ</language>
-		<language name="JPN_KANJI" width="256">そろそろ　船が　出発するよ</language>
+		<language name="JPN" width="256">ビクティ●は　ちかしつから
+すがたを　けしてしまった…</language>
+		<language name="JPN_KANJI" width="256">ビクティ●は　地下室から
+姿を　消してしまった…</language>
 	</row>
 
 	<flowchart-group-list>
