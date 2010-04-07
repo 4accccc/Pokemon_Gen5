@@ -485,7 +485,7 @@ VMCMD_RESULT EvCmdDemoScene( VMHANDLE *core, void *wk )
     GAMEBEACON_Set_FerrisWheel();
   }
 
-  DEMO3D_PARAM_SetFromEvTime( param, SCRCMD_WORK_GetGameData( work ), demo_id, scene_id );
+  DEMO3D_PARAM_SetFromEvTime( param, SCRCMD_WORK_GetGameSysWork( work ), demo_id, scene_id );
   EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(demo3d), &Demo3DProcData, param, NULL, NULL );
 
   return VMCMD_RESULT_SUSPEND;
