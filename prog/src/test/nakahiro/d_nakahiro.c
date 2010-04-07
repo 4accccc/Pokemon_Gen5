@@ -22,6 +22,7 @@
 #include "app/wifi_note.h"
 #include "app/dendou_pc.h"
 #include "demo/command_demo.h"
+#include "demo/dendou_demo.h"
 #include "../../battle/app/vs_multi_list.h"
 
 #include "arc_def.h"  //ARCID_MESSAGE
@@ -34,7 +35,7 @@
 //============================================================================================
 //  ’è”’è‹`
 //============================================================================================
-#define TOP_MENU_SIZ  ( 14 )
+#define TOP_MENU_SIZ  ( 15 )
 
 typedef struct {
   u32 main_seq;
@@ -64,6 +65,7 @@ typedef struct {
   WIFINOTE_PROC_PARAM wifi_note_data;
 
 	DENDOUPC_PARAM	dpc_data;
+	DENDOUDEMO_PARAM	ddemo_data;
 
 }NAKAHIRO_MAIN_WORK;
 
@@ -90,6 +92,7 @@ enum {
   MAIN_SEQ_WIFI_NOTE,
 
   MAIN_SEQ_DENDOU_PC,
+  MAIN_SEQ_DENDOU_DEMO,
 
   MAIN_SEQ_POKEICON,
 
@@ -435,6 +438,11 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 			DendouRecord_Add( GAMEDATA_GetDendouRecord(wk->gamedata), wk->vsl_data.myPP, &date, wk->heapID );
 		}
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(dendou_pc), &DENDOUPC_ProcData, &wk->dpc_data );
+    wk->main_seq = MAIN_SEQ_END;
+		break;
+
+	case  MAIN_SEQ_DENDOU_DEMO:
+    GFL_PROC_SysCallProc( FS_OVERLAY_ID(dendou_demo), &DENDOUDEMO_ProcData, &wk->ddemo_data );
     wk->main_seq = MAIN_SEQ_END;
 		break;
 

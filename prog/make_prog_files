@@ -1709,6 +1709,14 @@ SRCS_OVERLAY_COMMAND_DEMO = demo/command_demo/command_demo.c \
 							demo/command_demo/cdemo_seq.c \
 							demo/command_demo/cdemo_comm.c
 
+# 殿堂入りデモ
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> GROUP_OVERLAY_UNION_INTRUDE
+SRCS_OVERLAY_DENDOU_DEMO =  demo/dendou_demo/dendou_demo.c \
+							demo/dendou_demo/ddemo_main.c \
+							demo/dendou_demo/ddemo_seq.c \
+							demo/dendou_demo/ddemo_obj.c
+
 #バトルレコーダーバトル＋ブラウザ部分
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS

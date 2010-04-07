@@ -293,3 +293,4 @@
   ARCID_DENDOU_PC_GRA   "dendou_pc_gra.narc"  # 殿堂入りＰＣ画面
   ARCID_BSW_PD "btl_subway_pd.narc" #バトルサブウェイポケモンデータ
   ARCID_BSW_TR "btl_subway_td.narc" #バトルサブウェイトレーナーデータ
+  ARCID_DENDOU_DEMO_GRA "dendou_demo_gra.narc" # 殿堂入りデモ画面

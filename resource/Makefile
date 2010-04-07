@@ -165,7 +165,8 @@ SUBDIRS	=	wmi \
 			camera_sys \
 			cross_comm \
 			dendou_pc \
-			btl_subway
+			btl_subway \
+			dendou_demo
 
 
 include $(RESOURCE_MACRO)
