@@ -166,13 +166,26 @@ const GFL_PROC_DATA Demo3DProcData =
 static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 {
   DEMO3D_MAIN_WORK *wk;
-  DEMO3D_PARAM *param;
-
+  DEMO3D_PARAM *param = pwk;
+#if 0
+  GAME_COMM_SYS_PTR* gcsp = GAMESYSTEM_GetGameCommSysPtr(param->gsys);
+  switch(*seq){
+  case 0:
+    if( GameCommSys_BootCheck() == GAME_COMM_NO_NULL ){
+      break;
+    }
+    GameCommSys_ExitReq(GAME_COMM_SYS_PTR gcsp);
+    (*seq) += 1;
+    return GFL_PROC_RES_CONTINUE;
+  case 1:
+    if(GameCommSys_BootCheck(gcsp) != GAME_COMM_NO_NULL){
+      return GFL_PROC_RES_CONTINUE;
+    }
+    break;
+  }
+#endif  
   //オーバーレイ読み込み
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
-  
-  //引数取得
-  param = pwk;
 
   GF_ASSERT( param->demo_id != DEMO3D_ID_NULL && param->demo_id < DEMO3D_ID_MAX );
 
@@ -349,7 +362,9 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
       if( sub_FadeInOutReq( wk->param->demo_id, WIPE_TYPE_FADEOUT, wk->heapID )){
         return GFL_PROC_RES_FINISH;
       }
+#ifdef PM_DEBUG
       OS_TPrintf("#Demo3D 処理落ちフレーム数 [%d]!!\n",vCountDelay);
+#endif
       (*seq)++;
     }
     break;

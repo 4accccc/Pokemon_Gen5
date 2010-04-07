@@ -158,7 +158,7 @@ static GMEVENT_RESULT FirstGameStartEvent( GMEVENT* event, int* seq, void* wk )
 
 	case 2:
     // ƒfƒ‚‚ðŒÄ‚Ô
-    DEMO3D_PARAM_SetFromRTC( &work->demo3dParam, gameData, DEMO3D_ID_INTRO_TOWN, 0 );
+    DEMO3D_PARAM_SetFromRTC( &work->demo3dParam, gameSystem, DEMO3D_ID_INTRO_TOWN, 0 );
     GAMESYSTEM_CallProc( gameSystem, FS_OVERLAY_ID(demo3d), &Demo3DProcData, &work->demo3dParam );
 		(*seq)++;
 		break;
