@@ -24,7 +24,7 @@ _EVENT_DATA_END
 /*  T02R0302 MIDDLEMAN1の会話用イベントスクリプト			  */
 /**************************************************************/
 EVENT_START   ev_t02r0302_middleman1_01
-	_EASY_TALK_ITEM_EVENT( ITEM_SUUPAABOORU, 1, FE_T02R0302_BALLGET, msg_t02r0302_middleman1_01, msg_t02r0302_middleman1_02, msg_t02r0302_middleman1_02)
+	_EASY_TALK_ITEM_EVENT( ITEM_MONSUTAABOORU, 1, FE_T02R0302_BALLGET, msg_t02r0302_middleman1_01, msg_t02r0302_middleman1_02, msg_t02r0302_middleman1_02)
 EVENT_END
 
 /**************************************************************/
