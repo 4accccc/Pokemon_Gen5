@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c03p13.h"
   .include  "c03p13.h"
+  .include  "d12_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -45,15 +46,70 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c03p13_pilot_01
 	_TALK_OBJ_START()
-	
-	_BALLOONWIN_TALKOBJ_MSG( msg_c03p13_captain_01 )
-	_MSGWIN_CLOSE()
-	
-	//船を見る
-	_OBJ_ANIME( C03P13_PILOT_01, anm_stay_walk_l )
-	_OBJ_ANIME_WAIT()
+
+  //チケットチェック
+  _CALL check_evt_lock
+
+  IF $SCWK_ANSWER == TRUE THEN    //チェックＯＫ
+  {
+    DEFINE_LOCAL msg
+    //話しかけ初めてかをチェック
+    IF $LOCALWORK0 == 0 THEN
+      $LOCALWORK0 = 1
+      $msg = msg_c03p13_captain_02
+    ELSE
+      $msg = msg_c03p13_captain_05
+    ENDIF
+    //島に行く？
+    _BALLOONWIN_TALKOBJ_MSG(msg)
+		_YES_NO_WIN( SCWK_ANSWER )
+		_BALLOONWIN_CLOSE()
+
+    IF $SCWK_ANSWER == SCR_YES THEN
+      //いくで
+    	_BALLOONWIN_TALKOBJ_MSG(msg_c03p13_captain_03)
+      _BALLOONWIN_CLOSE()
+      //ブラックアウト
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      //デモ
+      _CALL_3D_DEMO( DEMO3D_ID_V_BOAT_PORT )
+      //スクリプトリザーブ
+      _RESERVE_SCRIPT( SCRID_RESERVE_D12 )
+      //マップジャンプ
+      _MAP_CHANGE_NO_FADE( ZONE_ID_D12, 295, 1, 748, DIR_RIGHT )
+		ELSE
+      //またね
+      _BALLOONWIN_TALKOBJ_MSG(msg_c03p13_captain_04)
+      _BALLOONWIN_CLOSE()
+      //船を見る
+	    _OBJ_ANIME( C03P13_PILOT_01, anm_stay_walk_l )
+	    _OBJ_ANIME_WAIT()
+		ENDIF
+  }  
+  ELSE
+    //ロマン
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03p13_captain_01 )
+	  _MSGWIN_CLOSE()
+	  //船を見る
+	  _OBJ_ANIME( C03P13_PILOT_01, anm_stay_walk_l )
+	  _OBJ_ANIME_WAIT()
+  ENDIF  
 	
 EVENT_END
+
+//イベントロックチェックoutput:SCWK_ANSWER TRUE:チェックＯＫ　FALSE:チェックＮＧ
+check_evt_lock:
+  //リバティチケット持っているか?
+  _ITEM_CHK( ITEM_RIBATHITIKETTO, 1, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN    //持っている
+    //イベントロックチェック
+    _CHK_EVT_LOCK( EVT_LOCK_NO_VICTYTICKET, SCWK_ANSWER )
+  ELSE                            //持っていない
+    $SCWK_ANSWER = FALSE
+  ENDIF
+  $SCWK_ANSWER = TRUE   //todo
+_RET
 
 //--------------------------------------------------------------------
 //その場歩き

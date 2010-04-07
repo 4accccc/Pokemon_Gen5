@@ -30,62 +30,138 @@ _EVENT_DATA    ev_d12_policeman_01
 _EVENT_DATA    ev_d12_policeman_02
 _EVENT_DATA    ev_d12_bg_board_01
 _EVENT_DATA    ev_d12_bg_board_02
+_EVENT_DATA    ev_reserve_d12
 _EVENT_DATA_END
 
+/************************************************************/
+/*				船から下りたところ                                */
+/************************************************************/
+EVENT_START	ev_reserve_d12
+
+	//マップ遷移ブラックイン
+	_MAP_FADE_BLACK_IN()
+	_MAP_FADE_END_CHECK()
+
+EVENT_END
 
 /**************************************************************/
 /*  D12 pilot_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_pilot_01
-	
+  //もどる？
+  _BALLOONWIN_TALKOBJ_MSG(msg_d12_mariner_01)
+	_YES_NO_WIN( SCWK_ANSWER )
+	_BALLOONWIN_CLOSE()
+  IF $SCWK_ANSWER == SCR_YES THEN
+      //もでるで
+    	_BALLOONWIN_TALKOBJ_MSG(msg_d12_mariner_02)
+      _BALLOONWIN_CLOSE()
+      //マップジャンプ
+      _RAIL_MAP_CHANGE( ZONE_ID_C03P13, 0, 0, 10, DIR_RIGHT )
+		ELSE
+      //またね
+      _BALLOONWIN_TALKOBJ_MSG(msg_d12_mariner_03)
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+		ENDIF
+
 EVENT_END
 
 /**************************************************************/
 /*  D12 backpackerm_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_backpackerm_01
-	
+  IF $LOCALWORK0 == 0 THEN
+    //プラズマ団
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor01_01 )
+  ELSE
+    //うみのかおり
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor01_02 )
+  ENDIF
 EVENT_END
 
 /**************************************************************/
 /*  D12 babyboy1_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_babyboy1_01
-	
+  IF $LOCALWORK0 == 0 THEN
+    //こわい
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor02_01 )
+  ELSE
+  {
+    DEFINE_LOCAL sex
+    _GET_MY_SEX( sex )
+    IF $sex == PM_MALE THEN
+      //おにいちゃん　やっつけた
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor02_02 )
+    ELSE
+      //おねえちゃん　やっつけた
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor02_03 )
+    ENDIF
+  }  
+  ENDIF	
 EVENT_END
 
 /**************************************************************/
 /*  D12 oldwoman1_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_oldwoman1_01
-	
+	IF $LOCALWORK0 == 0 THEN
+    //なめたら・・
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor03_01 )
+  ELSE
+    //ありがと
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor03_02 )
+  ENDIF
 EVENT_END
 
 /**************************************************************/
 /*  D12 hakaim_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_hakaim_01
-	
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_plasma01_01 )
 EVENT_END
 
 /**************************************************************/
 /*  D12 sunglasses_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_sunglasses_01
-	
+  IF $LOCALWORK0 == 0 THEN
+    //せんきょ
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor04_01 )
+  ELSE
+    //ひとりごと
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor04_02 )
+  ENDIF	
 EVENT_END
 
 /**************************************************************/
 /*  D12 woman2_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_woman2_01
-	
+	IF $LOCALWORK0 == 0 THEN
+    //ふるい　とうだい
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor05_01 )
+  ELSE
+    //ポケモン　あくじ
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor05_02 )
+  ENDIF
 EVENT_END
 
 /**************************************************************/
 /*  D12 policeman_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_policeman_01
+  IF $LOCALWORK0 == 0 THEN
+    //プラズマだんの　やつら
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_police01_01 )
+  ELSIF $LOCALWORK0 == 1 THEN
+    //よかった
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_police01_02 )
+  ELSE
+    //たいくつ
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_police01_03 )
+  ENDIF
 	
 EVENT_END
 
@@ -93,7 +169,8 @@ EVENT_END
 /*  D12 policeman_02			                      */
 /**************************************************************/
 EVENT_START   ev_d12_policeman_02
-	
+  //しずかな　もんだ
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_police02_01 )	
 EVENT_END
 
 /**************************************************************/
