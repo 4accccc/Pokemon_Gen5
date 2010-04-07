@@ -811,11 +811,11 @@
 #define FV_T03_FRI                         787 /* 0x0313 カゴメタウン：金曜非表示OBJ用フラグ */
 #define FV_T03_SAT                         788 /* 0x0314 カゴメタウン：土曜非表示OBJ用フラグ */
 #define FV_T03_SUN                         789 /* 0x0315 カゴメタウン：日曜非表示OBJ用フラグ */
-		/* not used   790(0x0316) */
-		/* not used   791(0x0317) */
-		/* not used   792(0x0318) */
-		/* not used   793(0x0319) */
-		/* not used   794(0x031a) */
+#define FV_D12_PEOPLE_01                   790 /* 0x0316 リバティーとう：群集 */
+#define FV_D12_HAKAIM_01                   791 /* 0x0317 リバティーとう：プラズマ団 */
+#define FV_D12_POLECEMAN_02                792 /* 0x0318 リバティーとう：警官 */
+#define FV_D12R0101_POLECEMAN_01           793 /* 0x0319 リバティー室内1：警官 */
+#define FV_D12R0102_HAKAIM_01              794 /* 0x031a リバティー室内2：プラズマ団 */
 		/* not used   795(0x031b) */
 		/* not used   796(0x031c) */
 		/* not used   797(0x031d) */

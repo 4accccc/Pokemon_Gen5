@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/06 18:36:56
+#save date:2010/04/07 20:14:38
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d12.wms
 #SECTION START:OBJ_EVENT
@@ -53,7 +53,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_D12_PEOPLE_01
 #Event Script Name
 SCRID_D12_BACKPACKERM_01
 #Direction Type Number
@@ -84,7 +84,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_D12_PEOPLE_01
 #Event Script Name
 SCRID_D12_BABYBOY1_01
 #Direction Type Number
@@ -115,7 +115,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_D12_PEOPLE_01
 #Event Script Name
 SCRID_D12_OLDWOMAN1_01
 #Direction Type Number
@@ -146,7 +146,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_D12_HAKAIM_01
 #Event Script Name
 SCRID_D12_HAKAIM_01
 #Direction Type Number
@@ -177,7 +177,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_D12_PEOPLE_01
 #Event Script Name
 SCRID_D12_SUNGLASSES_01
 #Direction Type Number
@@ -208,7 +208,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_D12_PEOPLE_01
 #Event Script Name
 SCRID_D12_WOMAN2_01
 #Direction Type Number
@@ -270,7 +270,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_D12_POLECEMAN_02
 #Event Script Name
 SCRID_D12_POLICEMAN_02
 #Direction Type Number

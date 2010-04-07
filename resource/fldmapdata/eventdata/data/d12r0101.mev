@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/06 18:25:38
+#save date:2010/04/07 20:14:52
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d12r0101.wms
 #SECTION START:OBJ_EVENT
@@ -22,7 +22,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_D12R0101_POLECEMAN_01
 #Event Script Name
 SCRID_D12R0101_POLICEMAN_01
 #Direction Type Number
