@@ -27,6 +27,7 @@ typedef enum {
   ANIME_TYPE_BLINK,         // “_–Å
   ANIME_TYPE_BLINK_SHORT,   // “_–Å ( ’Z )
   ANIME_TYPE_BLINK_LONG,    // “_–Å ( ’· )
+  ANIME_TYPE_BLINK_BRIGHT,  // “_–Å ( –¾ )
   ANIME_TYPE_HOLD,          // ˆÃ“]
   ANIME_TYPE_RECOVER,       // ˆÃ“]‚©‚ç‚Ì•œ‹A
 } ANIME_TYPE;
