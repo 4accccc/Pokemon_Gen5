@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-04-07T02:31:51"/>
+	<create user="taya" host="W00146" date="2010-04-07T22:13:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -344,7 +344,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="217"/>
 		<band id="3" index="3" style="0000" width="831"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -780,6 +780,20 @@
 しょうぶは　ひきわけだ！</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]と　[1:00:トレーナー名:1]との
 勝負は　引き分けだ！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_LoseDefault" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>負けたメッセージ（野生＆トレーナー）</comment>
+		<language name="JPN" width="216">[1:00:トレーナー名:0]の　てもとには
+たたかえる　ポケモンが　いない！▼
+…　…　…　…▼
+[1:00:トレーナー名:0]は
+めのまえが　まっくらに　なった！</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]の　手元には
+戦える　ポケモンが　いない！▼
+…　…　…　…▼
+[1:00:トレーナー名:0]は
+目の前が　まっくらに　なった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_GetMoney" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">

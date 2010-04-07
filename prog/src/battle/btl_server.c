@@ -126,6 +126,7 @@ static u8 Irekae_GetEnemyPutPokeID( BTL_SERVER* server );
 static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq );
+static BOOL ServerMain_ExitBattle_LoseWild( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_KeyWait( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForCommPlayer( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForNPC( BTL_SERVER* server, int* seq );
@@ -1009,6 +1010,20 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
       setMainProc( server, ServerMain_ExitBattle_ForCommPlayer );
       break;
 
+    case BTL_COMPETITOR_WILD:
+      if( result == BTL_RESULT_WIN ){
+        u16 winBGM = BTL_MAIN_GetWinBGMNo( server->mainModule );
+        PMSND_PlayBGM( winBGM );
+        setMainProc( server, ServerMain_ExitBattle_KeyWait );
+      }
+      else if( (result == BTL_RESULT_LOSE) || (result == BTL_RESULT_DRAW) ){
+        setMainProc( server, ServerMain_ExitBattle_LoseWild );
+      }
+      else{
+        setMainProc( server, ServerMain_ExitBattle_KeyWait );
+      }
+      break;
+
     default:
       if( result == BTL_RESULT_WIN ){
         u16 winBGM = BTL_MAIN_GetWinBGMNo( server->mainModule );
@@ -1020,7 +1035,6 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
   }
   return FALSE;
 }
-
 //----------------------------------------------------------------------------------
 /**
  * サーバメインループ：バトル終了処理時キー待ち
@@ -1052,6 +1066,35 @@ static BOOL ServerMain_ExitBattle_KeyWait( BTL_SERVER* server, int* seq )
 
   case 1:
     return TRUE;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * サーバメインループ：バトル終了（野生に負け）
+ *
+ * @param   server
+ * @param   seq
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL ServerMain_ExitBattle_LoseWild( BTL_SERVER* server, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    SetAdapterCmdEx( server, BTL_ACMD_EXIT_LOSE_WILD, &server->btlResultContext, sizeof(server->btlResultContext) );
+    (*seq)++;
+    break;
+  case 1:
+    if( WaitAllAdapterReply(server) ){
+      ResetAdapterCmd( server );
+      (*seq)++;
+    }
+    break;
+  case 2:
+    setMainProc( server, ServerMain_ExitBattle_KeyWait );
+    break;
   }
   return FALSE;
 }

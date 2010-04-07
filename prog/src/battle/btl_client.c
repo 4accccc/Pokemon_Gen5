@@ -277,6 +277,7 @@ static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq );
 static BtlResult checkResult( BTL_CLIENT* wk );
 static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_UI_LoseWild( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_NotifyTimeUp( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq );
@@ -875,6 +876,10 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
 
     { BTL_ACMD_EXIT_NPC,
       { SubProc_UI_ExitForNPC,   NULL,  NULL }, },
+
+    { BTL_ACMD_EXIT_LOSE_WILD,
+      { SubProc_UI_LoseWild,   NULL,  NULL }, },
+
 
     { BTL_ACMD_EXIT_COMM,
       { SubProc_UI_ExitCommTrainer,   NULL,  NULL }, },
@@ -3838,31 +3843,32 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
   switch( *seq ){
   case 0:
     {
-      u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
-      int strID = -1;
-
       resultCode = checkResult( wk );
 
-      switch( resultCode ){
-      case BTL_RESULT_WIN:
-        strID = BTL_STRID_STD_WinTrainer;
-        PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
-        break;
-      case BTL_RESULT_LOSE:
-        strID = BTL_STRID_STD_LoseTrainer;
-        break;
-      case BTL_RESULT_DRAW:
-        strID = BTL_STRID_STD_DrawTrainer;
-        break;
-      }
-
-      if( strID >= 0 )
+      if( resultCode == BTL_RESULT_WIN )
       {
-        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, strID );
+        u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
+
+        PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
+
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_WinTrainer );
         BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
         BTLV_StartMsg( wk->viewCore, &wk->strParam );
+        (*seq)++;
       }
-      (*seq)++;
+      else if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_NO_LOSE) == FALSE )
+      {
+        u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LoseDefault );
+        BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+        BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+        BTLV_StartMsg( wk->viewCore, &wk->strParam );
+        (*seq) = 5;
+      }
+      else{
+        return TRUE;
+      }
     }
     break;
   case 1:
@@ -3877,8 +3883,6 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
 
       if( resultCode == BTL_RESULT_WIN ){
         trmsgID = TRMSG_FIGHT_LOSE;
-      }else if( resultCode == BTL_RESULT_LOSE ){
-        trmsgID = TRMSG_FIGHT_WIN;
       }else{
         fExitMsg = FALSE;
       }
@@ -3957,6 +3961,38 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
   }
   return FALSE;
 }
+//---------------------------------------------------
+// ñÏê∂êÌÇ≈ïâÇØÇΩ
+//---------------------------------------------------
+static BOOL SubProc_UI_LoseWild( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    {
+      u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LoseDefault );
+      BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+      BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      (*seq)++;
+    }
+    break;
+
+  case 1:
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      (*seq)++;
+    }
+    break;
+
+  default:
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+
 //---------------------------------------------------
 // êßå¿éûä‘èIóπ
 //---------------------------------------------------

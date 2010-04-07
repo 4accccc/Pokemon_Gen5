@@ -1601,7 +1601,9 @@ BOOL BTLV_ACT_SimpleHPEffect_Wait( BTLV_CORE* wk )
 //=============================================================================================
 void BTLV_AddEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos, u16 effectNo )
 {
-  BTLV_EFFECT_AddByPos( vpos, effectNo );
+  if( !BTL_CLIENT_IsChapterSkipMode(wk->myClient) ){
+    BTLV_EFFECT_AddByPos( vpos, effectNo );
+  }
 }
 BOOL BTLV_WaitEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos )
 {
