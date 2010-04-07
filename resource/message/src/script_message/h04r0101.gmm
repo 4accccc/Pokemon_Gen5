@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-06T16:08:57"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-07T16:38:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="461" top="225" right="1166" bottom="845" maximized="no" rayout="Vertical2">
+	<dialog left="15" top="156" right="720" bottom="776" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -296,12 +296,12 @@
 		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">ホッホッホ　きれいな　はし　じゃろ？▼
 この　はしは　わしの
-ひぃひぃひぃひぃおじいさまの　だいに▽
+ヒイヒイヒイヒイおじいさんの　だいに▽
 かけられた　ふるい　はし　なんじゃよ</language>
 		<language name="JPN_KANJI" width="256">ホッホッホ　きれいな　橋　じゃろ？▼
 この　橋は　ワシの
-ひぃひぃひぃひぃおじいさまの　代に▽
-架けられた　古い　橋　なんじゃよ</language>
+ヒイヒイヒイヒイおじいさんの　代に▽
+架けられた　古い橋　なんじゃよ</language>
 	</row>
 
 	<row id="msg_h04r0101_babygirl1_01">
@@ -310,26 +310,26 @@
 		<attribute name="キャラ指定">BABYGIRL1</attribute>
 		<language name="JPN" width="256">おじいちゃんはねー▼
 ビレッジブリッジの
-だいくさん　なんだよー！</language>
+いしだいくさん　なんだよー！</language>
 		<language name="JPN_KANJI" width="256">おじいちゃんはねー▼
 ビレッジブリッジの
-だいくさん　なんだよー！</language>
+いしだいくさん　なんだよー！</language>
 	</row>
 
 	<row id="msg_h04r0101_woman3_01">
 		<attribute name="キャラ指定">WOMAN3</attribute>
-		<language name="JPN" width="256">はしに　いえが　ついてるの
-めずらしい？▼
-もともとは　さぎょういんの
-きゅうけいじょとして　たてられたの▼
-かんせいした　いまでは
-みんか　として　つかわれているけどね</language>
-		<language name="JPN_KANJI" width="256">橋に　家が　ついてるの
-珍しい？▼
-元々は　作業員の
-休憩所として　建てられたの▼
-完成した　今では
-民家　として　使われているけどね</language>
+		<language name="JPN" width="256">はしに　みんかが
+くっついてるの　めずらしいでしょ？▼
+もともとは　さぎょういんたちの
+きゅうけいごや　だったみたいね▼
+キレイに　かいちく　して
+いまみたいな　みんかに　なったのよ</language>
+		<language name="JPN_KANJI" width="256">橋に　民家が
+くっ付いてるの　珍しいでしょ？▼
+元々は　作業員たちの
+休憩小屋　だったみたいね▼
+キレイに　改築して
+今みたいな　民家に　なったのよ</language>
 	</row>
 
 	<flowchart-group-list>

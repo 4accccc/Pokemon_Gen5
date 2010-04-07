@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-06T16:12:48"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-07T18:49:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="490" top="371" right="1195" bottom="991" maximized="no" rayout="Vertical2">
+	<dialog left="0" top="372" right="705" bottom="992" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,38 +294,36 @@
 
 	<row id="msg_h04r0401_breederm_01">
 		<attribute name="キャラ指定">BREEDERM</attribute>
-		<language name="JPN" width="256">ポケモンも　ひとと　おなじでさ▼
-なにを　やっても
-ダメな　ときが　あるんだよね▼
-そんなときは　いっしょに
-そとへ　でて　きぶんてんかんさ！▼
-おいしい　くうきを　いっぱい　すえば
-なんだって　きっと　うまく　いくさ</language>
-		<language name="JPN_KANJI" width="256">ポケモンも　人と　同じでさ▼
-何を　やっても
-ダメな　時が　あるんだよね▼
-そんな時は　一緒に
-外へ　出て　気分転換さ！▼
-おいしい　空気を　めいっぱい　吸えば
-何だって　きっと　うまく　行くさ</language>
+		<language name="JPN" width="256">はしの　うえで　のむ
+サイコソーダが　かくべつ　でね▽
+よく　ワルビルと　のむんだ</language>
+		<language name="JPN_KANJI" width="256">橋の上で　飲む
+サイコソーダが　格別　でね▽
+よく　ワルビルと　飲むんだ</language>
 	</row>
 
 	<row id="msg_h04r0401_breederw_01">
 		<attribute name="キャラ指定">BREEDERW</attribute>
-		<language name="JPN" width="256">リフレッシュに　さいてきな
-おかが　ひろがる　１２ばんどうろね▼
-のびのびと　そだてられるって
-ブリーダーに　ひょうばん　なのよ</language>
-		<language name="JPN_KANJI" width="256">リフレッシュに　最適な
-丘が　広がる　１２番道路ね▼
-伸び伸びと　育てられるって
-ブリーダーに　評判　なのよ</language>
+		<language name="JPN" width="256">おかが　デコボコの　１２ばんどうろは
+ポケスロンの　とっくんに　さいてきね▼
+……あっ！
+ポケスロンって　いうのはね▼
+わたしの　こきょう　ジョウトちほうで
+すごく　はやってる　スポーツなの</language>
+		<language name="JPN_KANJI" width="256">丘が　デコボコの　１２番道路は
+ポケスロンの　特訓に　最適ね▼
+……あっ！
+ポケスロンって　いうのはね▼
+私の　故郷　ジョウト地方で
+すごく　流行ってる　スポーツなの</language>
 	</row>
 
 	<row id="msg_h04r0401_poke20_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>BREEDERMの
+真横に配置</comment>
 		<attribute name="キャラ指定">POKE20</attribute>
-		<language name="JPN" width="256">ワルビル『……グムグー！</language>
-		<language name="JPN_KANJI" width="256">ワルビル『……グムグー！</language>
+		<language name="JPN" width="256">ワルビル『ゲプー！</language>
+		<language name="JPN_KANJI" width="256">ワルビル『ゲプー！</language>
 	</row>
 
 	<flowchart-group-list>
