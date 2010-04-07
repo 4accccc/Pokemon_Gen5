@@ -6206,6 +6206,28 @@
 
 //--------------------------------------------------------------
 /**
+ * レールマップへ遷移するコマンド
+ * @param zone_id   移動先ゾーンID指定
+ * @param rail_idx  移動先レールインデックス
+ * @param front_idx 移動先フiロントインデックス
+ * @param side_idx  移動先サイドインデックス
+ * @param dir       移動後の向き
+ */
+//--------------------------------------------------------------
+#define _RAIL_MAP_CHANGE( zone_id, rail_idx, front_idx, side_idx, dir )  \
+    _ASM_RAIL_MAP_CHANGE zone_id, rail_idx, front_idx, side_idx, dir
+
+  .macro  _ASM_RAIL_MAP_CHANGE zone_id, rail_idx, front_idx, side_idx, dir
+  .short  EV_SEQ_RAIL_MAP_CHANGE
+  .short  \zone_id
+  .short  \rail_idx
+  .short  \front_idx
+  .short  \side_idx
+  .short  \dir
+  .endm
+  
+//--------------------------------------------------------------
+/**
  * マップ遷移コマンド(ユニオンルーム)
  */
 //--------------------------------------------------------------

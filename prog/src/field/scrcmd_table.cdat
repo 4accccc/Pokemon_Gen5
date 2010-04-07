@@ -358,7 +358,7 @@
   //マップ遷移関連
   DEF_CMD( EvCmdMapChangeBGMKeep, EV_SEQ_MAP_CHANGE_BGM_KEEP )
   DEF_CMD( EvCmdMapChangeByWarp, EV_SEQ_MAP_CHANGE_WARP )
-  NO_CMD()
+  DEF_CMD( EvCmdRailMapChange, EV_SEQ_RAIL_MAP_CHANGE )
   NO_CMD()
 
   DEF_CMD( EvCmdMapChangeBySandStream, EV_SEQ_MAP_CHANGE_SAND_STREAM )
