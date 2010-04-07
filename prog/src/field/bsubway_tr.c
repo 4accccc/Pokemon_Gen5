@@ -935,14 +935,14 @@ u16 BSUBWAY_SCRWORK_GetTrainerNo(
     }
   }else if( stage < 7 ){
     if( round == 6 ){
-      no = TrainerNoRangeTable2[stage][1]-TrainerNoRangeTable2[stage][0]+1;
-      no= TrainerNoRangeTable2[stage][0]+(get_Rand(wk)%no);
+      no = (TrainerNoRangeTable2[stage][1]-TrainerNoRangeTable2[stage][0])+1;
+      no = TrainerNoRangeTable2[stage][0]+(get_Rand(wk)%no);
     }else{
-      no = TrainerNoRangeTable[stage][1]-TrainerNoRangeTable[stage][0]+1;
+      no = (TrainerNoRangeTable[stage][1]-TrainerNoRangeTable[stage][0])+1;
       no = TrainerNoRangeTable[stage][0]+(get_Rand(wk)%no);
     }
   }else{
-    no = TrainerNoRangeTable[7][1]-TrainerNoRangeTable[7][0]+1;
+    no = (TrainerNoRangeTable[7][1]-TrainerNoRangeTable[7][0])+1;
     no = TrainerNoRangeTable[7][0]+(get_Rand(wk)%no);
   }
   
@@ -1002,7 +1002,6 @@ static BSUBWAY_TRAINER_ROM_DATA * alloc_TrainerRomData(
   name = GFL_MSG_CreateString( msgdata, tr_no );
   GFL_STR_GetStringCode( name,
       &tr_data->bt_trd.name[0], BUFLEN_PERSON_NAME );
-  OS_Printf( "トレーナーネーム %s\n", tr_data->bt_trd.name );
   GFL_STR_DeleteBuffer(name);
   GFL_MSG_Delete( msgdata );
   return trd;
@@ -1204,7 +1203,7 @@ BOOL BSUBWAY_SCRWORK_MakeRomTrainerData(
 {
   BOOL      ret = 0;
   BSUBWAY_TRAINER_ROM_DATA  *trd;
-
+  
   //トレーナーデータセット
   trd = alloc_TrainerRomData(tr_data,tr_no,heapID);
 
@@ -1428,13 +1427,8 @@ static BOOL set_BSWayPokemonParam(
 static BSUBWAY_TRAINER_ROM_DATA * get_TrainerRomData(
     u16 tr_no, HEAPID heapID )
 {
+  tr_no += BSW_TR_ARCDATANO_ORG;
   OS_Printf( "BSUBWAY load TrainerRomData Num = %d\n", tr_no );
-  
-  if( tr_no >= 314 ){
-    GF_ASSERT( 0 && "BSUBWAY TRAINER ROM DATA NUM OVER" );
-    tr_no = 0;
-  }
-  
   return GFL_ARC_UTIL_Load( ARCID_BSW_TR, tr_no, 0, heapID );
 }
 
@@ -1461,15 +1455,8 @@ static void * get_TrainerRomData( u16 tr_no, HEAPID heapID )
 static void get_PokemonRomData(
     BSUBWAY_POKEMON_ROM_DATA *prd, int index)
 {
+  index += BSW_PM_ARCDATANO_ORG;
   OS_Printf( "BSUBWAY load PokemonRomData Num = %d\n", index );
-  
-#if 0  
-  if( index >= 314 ){
-    GF_ASSERT( 0 && "BSUBWAY POKEMON ROM DATA NUM OVER" );
-    index = 0;
-  }
-#endif
-  
   GFL_ARC_LoadData( (void*)prd, ARCID_BSW_PD, index );
 }
 
