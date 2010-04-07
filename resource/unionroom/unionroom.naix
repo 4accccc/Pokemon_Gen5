@@ -32,7 +32,9 @@ enum {
 	NARC_unionroom_wb_unionbg_plate_NSCR = 18,
 	NARC_unionroom_wb_unionobj_NCLR = 19,
 	NARC_unionroom_sentaku_nsbmd = 20,
-	NARC_unionroom_sentaku_nsbta = 21
+	NARC_unionroom_sentaku_nsbta = 21,
+	NARC_unionroom_tomo_nsbmd = 22,
+	NARC_unionroom_asonda_nsbmd = 23
 };
 
 /* NARC_UNIONROOM_NAIX_ */

@@ -12,6 +12,8 @@ g2dcvtr wb_unionbg_plate.nsc
 
 g3dcvtr sentaku.imd
 g3dcvtr sentaku.ita
+g3dcvtr tomo.imd
+g3dcvtr asonda.imd
 
 nnsarc -c -i -n unionroom.narc -S unionroom.script
 

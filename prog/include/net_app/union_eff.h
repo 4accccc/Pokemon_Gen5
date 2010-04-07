@@ -17,6 +17,12 @@
 ///ユニオンエフェクト制御システム構造体
 typedef struct _UNION_EFF_SYSTEM UNION_EFF_SYSTEM;
 
+///友達マークの種類
+typedef enum{
+  FRIENDMARK_TYPE_FRIEND,         ///<友達
+  FRIENDMARK_TYPE_ACQUAINTANCE,   ///<知り合い
+}FRIENDMARK_TYPE;
+
 
 //==============================================================================
 //  外部関数宣言
@@ -33,3 +39,4 @@ extern void UNION_EFF_SystemDraw(UNION_EFF_SYSTEM *unieff);
 //  アプリ系
 //--------------------------------------------------------------
 extern void UnionEff_App_ReqFocus(UNION_EFF_SYSTEM *unieff, MMDL *mmdl);
+extern void UnionEff_App_ReqFriendMark(UNION_EFF_SYSTEM *unieff, MMDL *mmdl, FRIENDMARK_TYPE mark_type);
