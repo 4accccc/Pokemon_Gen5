@@ -2240,6 +2240,15 @@ static void Zukan_Detail_Form_GetDiffInfoWithoutWork( ZUKAN_DETAIL_FORM_PARAM* p
 #endif
   }
 
+  // パーソナルのデータではなく、図鑑が持っているデータを使用する
+  {
+    ppd_form_num = ZUKANSAVE_GetFormMax( monsno );  // monsnoのポケモンが図鑑に登録することができるフォルム数を得られる。
+        // プレイヤーが現在までに見たフォルム数を返してくるわけではない。
+        // ポケモンWBでは、0番フォルムから連番で出現する。
+        // 番号飛び飛びのフォルムが出現することはない。
+        // よって、0<= <ZUKANSAVE_GetFormMax( monsno )のフォルムを見たかどうかチェックすればいい。
+  }
+
   // 現在表示する姿
   {
     ZUKANSAVE_GetDrawData(  zkn_sv, monsno, &curr_sex, &curr_rare, &curr_form, param->heap_id );
@@ -2396,6 +2405,9 @@ static void Zukan_Detail_Form_GetDiffInfoWithoutWork( ZUKAN_DETAIL_FORM_PARAM* p
     (*a_diff_sugata_num) = (*a_diff_num) - (*a_diff_irochigai_num);
   }
 
+/*
+  パーソナルのデータではなく、図鑑が持っているデータを使用する
+  ようにしたので、以下の特別処理は不要。
   // 特別処理
   {
     // フォルム0番しか見せないポケモン
@@ -2458,6 +2470,7 @@ static void Zukan_Detail_Form_GetDiffInfoWithoutWork( ZUKAN_DETAIL_FORM_PARAM* p
       }
     }
   }
+*/
 }
 static void Zukan_Detail_Form_GetDiffInfo( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {

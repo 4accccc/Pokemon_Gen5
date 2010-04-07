@@ -6662,7 +6662,7 @@ static void SetZukanDataAll( DEBUG_ZUKAN_WORK * wk )
 	u32	rand;
 	u16	i, j;
 
-	for( i=1; i<MONSNO_END; i++ ){
+	for( i=1; i<=MONSNO_END; i++ ){
 		// «•ÊƒxƒNƒgƒ‹Žæ“¾
 		ppd = POKE_PERSONAL_OpenHandle( i, 0, wk->heapID );
 		sex_vec = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
