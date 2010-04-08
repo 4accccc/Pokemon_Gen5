@@ -192,10 +192,15 @@ static const u8 _CGEAR_NET_CHANGEPAL_ANM_MOD_TBL[] = {
 
 typedef enum{
   _SELECTANIM_NONE,
+  _SELECTANIM_WAIT,
   _SELECTANIM_STANDBY,
   _SELECTANIM_ANIMING,
+  _SELECTANIM_RUN,
+  _SELECTANIM_END,
+
 
 } _SELECTANIM_ENUM;
+#define _SELECT_ANIME_WAIT (16)
 
 
 //-------------------------------------
@@ -307,10 +312,21 @@ typedef struct {
 
 
 // 表示OAMの時間とかの最大
-#define _CLACT_TIMEPARTS_MAX (11)
+enum{
+  _CLACT_TIME_AMPM,
+  _CLACT_TIME_NUMBER_2,
+  _CLACT_TIME_NUMBER_10A,
+  _CLACT_TIME_COLON,
+  _CLACT_TIME_NUMBER_6,
+  _CLACT_TIME_NUMBER_10B,
+  _CLACT_BATT,
+  _CLACT_LOGO,
+  _CLACT_HELP,
+  _CLACT_EDITMARKON,
+  _CLACT_POWER,
+  _CLACT_TIMEPARTS_MAX,
+};
 
-#define _CLACT_EDITMARKOFF (9)
-#define _CLACT_EDITMARKON (9)
 
 //すれ違いよう
 #define _CLACT_CROSS_MAX  (10)
@@ -428,6 +444,18 @@ const static _ANIM_DATA StartUpScreenTable[]={
 
 
 
+
+enum{
+  TOUCH_LABEL_ALL,
+  TOUCH_LABEL_EDIT,
+  TOUCH_LABEL_HELP,
+  TOUCH_LABEL_CROSS,
+  TOUCH_LABEL_RADAR,
+  TOUCH_LABEL_LOGO,
+  TOUCH_LABEL_POWER,
+
+  TOUCH_LABEL_MAX,
+};
 
 static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
  
@@ -558,6 +586,11 @@ struct _C_GEAR_WORK {
   PANEL_MARK_ANIME panel_mark[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
 
   u8 typeAnim[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
+  u8 select_type;
+  u8 select_count;
+
+  // 選択カーソル
+  u8 select_cursor;
 
   // パレットアニメーション
   PANEL_PLT_ANIME plt_anime;
@@ -566,7 +599,6 @@ struct _C_GEAR_WORK {
   u8 beacon_bit;   //ビーコンbit
   u8 touchx;    //タッチされた場所
   u8 touchy;    //タッチされた場所
-  u8 select_counter;  //選択した時のアニメカウンタ
   u8 bAction;
   u8 cellMoveCreateCount;
   u8 cellMoveType;
@@ -654,6 +686,12 @@ static int _PanelMark_GetPatternIndex( const C_GEAR_WORK* cpWork, u32 col_type, 
 static void _modeSelectAnimInit(C_GEAR_WORK* pWork);
 static void _modeSelectAnimWait(C_GEAR_WORK* pWork);
 static void _selectAnimInit(C_GEAR_WORK* pWork,int x,int y);
+
+// カーソル選択アニメ
+static void _CursorSelectAnimeWait( C_GEAR_WORK* pWork );
+
+// イベント待ち
+static void _modeEventWait( C_GEAR_WORK* pWork );
 
 // パレットフェード
 static void _PFadeToBlack( C_GEAR_WORK* pWork );
@@ -760,7 +798,7 @@ static void _selectAnimInit(C_GEAR_WORK* pWork,int x,int y)
   _gearXY2PanelScreen(x, y, &scrx, &scry);
   cellInitData.pos_x = scrx * 8+16;
   cellInitData.pos_y = scry * 8+16;
-  cellInitData.anmseq = NANR_c_gear_obj_CellAnime01;
+  cellInitData.anmseq = NANR_c_gear_obj_CellAnime01 + (pWork->select_type - CGEAR_PANELTYPE_IR);
   cellInitData.softpri = 0;
   cellInitData.bgpri = 0;
   i = x + y * C_GEAR_PANEL_WIDTH;
@@ -775,6 +813,31 @@ static void _selectAnimInit(C_GEAR_WORK* pWork,int x,int y)
   GFL_CLACT_WK_SetDrawEnable( pWork->cellSelect[i], TRUE );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメ完了待ち
+ *
+ *	@param	C_GEAR_WORK* pWork
+ *	@param	x
+ *	@param	y 
+ *
+ *	@retval TRUE  完了
+ *	@retval FALSE 途中
+ */
+//-----------------------------------------------------------------------------
+static BOOL _selectAnimeWait( const C_GEAR_WORK* cpWork,int x,int y )
+{
+  int i;
+
+  i = x + y * C_GEAR_PANEL_WIDTH;
+  if( cpWork->cellSelect[i] ){
+    if( GFL_CLACT_WK_CheckAnmActive( cpWork->cellSelect[i] ) ){
+      return FALSE;
+    }
+  }
+  return TRUE;
+}
+
 
 static void _modeSelectAnimWait(C_GEAR_WORK* pWork)
 {
@@ -783,16 +846,18 @@ static void _modeSelectAnimWait(C_GEAR_WORK* pWork)
   int xbuff[6];
   int ybuff[6];
 
-  pWork->select_counter++;
-
-  if(	pWork->select_counter % 2 != 1){
-    return;
-  }
-
   for(y = 0; y < C_GEAR_PANEL_HEIGHT; y++)
   {
     for(x = 0; x < C_GEAR_PANEL_WIDTH ; x++)
     {
+      // 終了チェック
+      if( pWork->typeAnim[x][y] == _SELECTANIM_RUN ){
+        if( _selectAnimeWait( pWork, x, y ) ){
+          pWork->typeAnim[x][y] = _SELECTANIM_END;
+        }
+      }
+      
+      // 開始チェック
       if(pWork->typeAnim[x][y] == _SELECTANIM_STANDBY)
       {
         _selectAnimInit(pWork, x,y);
@@ -801,23 +866,54 @@ static void _modeSelectAnimWait(C_GEAR_WORK* pWork)
     }
   }
 
+
+  // イベントへジャンプ
+  pWork->select_count ++;
+  if( pWork->select_count >= _SELECT_ANIME_WAIT ){
+    
+    switch(pWork->select_type){
+    case CGEAR_PANELTYPE_IR:
+      pWork->createEvent = FIELD_SUBSCREEN_ACTION_IRC;
+//          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_IRC);
+      break;
+    case CGEAR_PANELTYPE_WIRELESS:
+      pWork->createEvent = FIELD_SUBSCREEN_ACTION_WIRELESS;
+//          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_WIRELESS);
+      break;
+    case CGEAR_PANELTYPE_WIFI:
+      pWork->createEvent = FIELD_SUBSCREEN_ACTION_GSYNC;
+//          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_GSYNC);
+      break;
+    }
+
+    _CHANGE_STATE(pWork,_modeEventWait);
+    return ;
+  }
+
+
   for(y = 0; y < C_GEAR_PANEL_HEIGHT; y++)
   {
     for(x = 0; x < C_GEAR_PANEL_WIDTH ; x++)
     {
+      // 
+      // 広がっていく
       if(pWork->typeAnim[x][y] == _SELECTANIM_ANIMING)
       {
-        _getHexAround(x,y,xbuff,ybuff);
-        for(i=0;i<6;i++)
-        {
-          if((xbuff[i] >= 0) && (xbuff[i] < C_GEAR_PANEL_WIDTH))
-          {
-            int subnum = 1 - xbuff[i] % 2;
-            if((ybuff[i] >= 0) && (ybuff[i] < (C_GEAR_PANEL_HEIGHT-subnum)))
-            {
-              if(pWork->typeAnim[xbuff[i]][ybuff[i]] == _SELECTANIM_NONE){
-                pWork->typeAnim[xbuff[i]][ybuff[i]] = _SELECTANIM_STANDBY;
-              }
+        pWork->typeAnim[x][y] = _SELECTANIM_RUN;
+
+        
+        // 自分の周り６つを探す。
+        _getHexAround( x,y, xbuff, ybuff );
+      
+        for( i=0; i<6; i++ ){
+          // 範囲内？チェック
+          if( (xbuff[i] >= 0) && (xbuff[i] < C_GEAR_PANEL_WIDTH) &&
+              (ybuff[i] >= 0) && (ybuff[i] < C_GEAR_PANEL_HEIGHT) ){
+            // 設定
+            if( pWork->typeAnim[ xbuff[i] ][ ybuff[i] ] == _SELECTANIM_WAIT ){
+              pWork->typeAnim[ xbuff[i] ][ ybuff[i] ] = _SELECTANIM_STANDBY;
+            }else if( pWork->typeAnim[ xbuff[i] ][ ybuff[i] ] == _SELECTANIM_NONE ){
+              pWork->typeAnim[ xbuff[i] ][ ybuff[i] ] = _SELECTANIM_ANIMING;
             }
           }
         }
@@ -843,18 +939,20 @@ static void _modeSelectAnimInit(C_GEAR_WORK* pWork)
   int x,y;
   CGEAR_PANELTYPE_ENUM type;
 
-  pWork->typeAnim[pWork->touchx][pWork->touchy] = _SELECTANIM_STANDBY;
   type = CGEAR_SV_GetPanelType(pWork->pCGSV,pWork->touchx,pWork->touchy);
+  pWork->select_type = type;
+  pWork->select_count = 0;
 
   for(y = 0; y < C_GEAR_PANEL_HEIGHT; y++)
   {
     for(x = 0; x < C_GEAR_PANEL_WIDTH ; x++)
     {
       if(CGEAR_SV_GetPanelType(pWork->pCGSV,x,y) == type){
-        pWork->typeAnim[x][y] = _SELECTANIM_STANDBY;
+        pWork->typeAnim[x][y] = _SELECTANIM_WAIT;
       }
     }
   }
+  pWork->typeAnim[pWork->touchx][pWork->touchy] = _SELECTANIM_STANDBY;
   _modeSelectAnimWait(pWork);
   _CHANGE_STATE(pWork, _modeSelectAnimWait);
 }
@@ -891,23 +989,6 @@ static int getTypeToTouchPos(C_GEAR_WORK* pWork,int touchx,int touchy,int *pxp, 
   return type;
 }
 
-
-//------------------------------------------------------------------------------
-/**
- * @brief   パレスにジャンプする
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _modeSelectJumpPalace(C_GEAR_WORK* pWork)
-{
-
-  if(pWork->select_counter==3){
-  }
-
-
-
-}
 
 //----------------------------------------------------------------------------
 /**
@@ -1016,7 +1097,6 @@ static u32 _PanelPaletteColorSetUp( C_GEAR_WORK* pWork )
           break;
         }
       }
-      TOMOYA_Printf( "wireles_count %d\n", pWork->plt_anime.wireles_count );
     }
   }
 
@@ -1102,8 +1182,6 @@ static BOOL _PanelPaletteIsBeaconChange( GAME_COMM_SYS_PTR game_comm, u32 last_b
     }
   }
 
-  TOMOYA_Printf( "last_bit=0x%x   bit=0x%x\n", last_bit, bit );
-  TOMOYA_Printf( "beacon 0x%x  ret=%d\n", *change_beacon, ret );
   return ret;
 }
 
@@ -1982,7 +2060,7 @@ static void _createSubBg(C_GEAR_WORK* pWork)
 //-----------------------------------------------------------------------------
 static void _setUpSubAlpha( C_GEAR_WORK* pWork )
 {
-  G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG0, GX_BLEND_PLANEMASK_BG1 , 9, 15 );
+  G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1, GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG0, 9, 15 );
 }
 
 
@@ -2014,34 +2092,33 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
   u32 touchx,touchy;
 
   switch(bttnid){
-  case 0:
+  case TOUCH_LABEL_ALL:
     if(GFL_UI_TP_GetPointCont(&touchx,&touchy)){
       pWork->tpx = touchx;
       pWork->tpy = touchy;
     }
     pWork->cellMoveCreateCount = 0;
     break;
-  case 1:
+  case TOUCH_LABEL_EDIT:
     PMSND_PlaySE( SEQ_SE_MSCL_07 );
     pWork->bPanelEdit = pWork->bPanelEdit ^ 1;
     _editMarkONOFF(pWork, pWork->bPanelEdit);
     break;
-  case 2:
-//    PMSND_PlaySE( SEQ_SE_MSCL_07 );
-    pWork->createEvent = FIELD_SUBSCREEN_ACTION_CGEAR_HELP;
-//    FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_CGEAR_HELP);
-    //help
+  case TOUCH_LABEL_HELP:
+    PMSND_PlaySystemSE( SEQ_SE_MSCL_07 );
+    pWork->select_cursor = _CLACT_HELP;
+    _CHANGE_STATE( pWork, _CursorSelectAnimeWait );
     break;
-  case 3:
+  case TOUCH_LABEL_CROSS:
   //  PMSND_PlaySE( SEQ_SE_MSCL_07 );
     pWork->createEvent = FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW;
 //    FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW);
     break;
-  case 4:
+  case TOUCH_LABEL_RADAR:
     pWork->createEvent = FIELD_SUBSCREEN_ACTION_SCANRADAR;
 //    FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_SCANRADAR);
     break;
-  case 5:
+  case TOUCH_LABEL_LOGO:
     PMSND_PlaySE( SEQ_SE_MSCL_07 );
 
     GFL_BG_FreeCharacterArea(GEAR_MAIN_FRAME,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar),
@@ -2057,6 +2134,12 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
     pWork->bgno++;
     pWork->bgno = pWork->bgno % _CGEAR_TYPE_PATTERN_NUM;
 
+    break;
+
+  case TOUCH_LABEL_POWER:
+    PMSND_PlaySystemSE( SEQ_SE_MSCL_07 );
+    pWork->select_cursor = _CLACT_POWER;
+    _CHANGE_STATE( pWork, _CursorSelectAnimeWait );
     break;
   }
 }
@@ -2171,19 +2254,12 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       pWork->touchy = yp;
 
       if(GFL_NET_IsInit()){  //通信ONなら
-        switch(type){
-        case CGEAR_PANELTYPE_IR:
-          pWork->createEvent = FIELD_SUBSCREEN_ACTION_IRC;
-//          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_IRC);
-          break;
-        case CGEAR_PANELTYPE_WIRELESS:
-          pWork->createEvent = FIELD_SUBSCREEN_ACTION_WIRELESS;
-//          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_WIRELESS);
-          break;
-        case CGEAR_PANELTYPE_WIFI:
-          pWork->createEvent = FIELD_SUBSCREEN_ACTION_GSYNC;
-//          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_GSYNC);
-          break;
+        u32 type = CGEAR_SV_GetPanelType(pWork->pCGSV,pWork->touchx,pWork->touchy);
+        
+        if( (type == CGEAR_PANELTYPE_IR) || (type == CGEAR_PANELTYPE_WIFI) ||
+            (type == CGEAR_PANELTYPE_WIRELESS) ){
+          PMSND_PlaySystemSE( GEAR_SE_DECIDE_ );
+          _CHANGE_STATE(pWork,_modeSelectAnimInit);
         }
       }
     }
@@ -2229,9 +2305,11 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
     static u8 anmbuff[]=
     {
       NANR_c_gear_obj_CellAnime_ampm,
-      NANR_c_gear_obj_CellAnime_NO2,NANR_c_gear_obj_CellAnime_NO10a,
+      NANR_c_gear_obj_CellAnime_NO2,
+      NANR_c_gear_obj_CellAnime_NO10a,
       NANR_c_gear_obj_CellAnime_colon,
-      NANR_c_gear_obj_CellAnime_NO6,NANR_c_gear_obj_CellAnime_NO10b,
+      NANR_c_gear_obj_CellAnime_NO6,
+      NANR_c_gear_obj_CellAnime_NO10b,
       NANR_c_gear_obj_CellAnime_batt1,
       NANR_c_gear_obj_CellAnime_loro_all,
       NANR_c_gear_obj_CellAnime_help,
@@ -3298,18 +3376,12 @@ GMEVENT* CGEAR_EventCheck(C_GEAR_WORK* pWork, BOOL bEvReqOK, FIELD_SUBSCREEN_WOR
   }
   switch(pWork->createEvent){
   case FIELD_SUBSCREEN_ACTION_GSYNC:
-    PMSND_PlaySystemSE( GEAR_SE_DECIDE_ );
-    _CHANGE_STATE(pWork,_modeSelectAnimInit);
     event = EVENT_GSync(pWork->pGameSys, fieldWork, NULL, TRUE);
     break;
   case FIELD_SUBSCREEN_ACTION_IRC:
-    PMSND_PlaySystemSE( GEAR_SE_DECIDE_ );
-    _CHANGE_STATE(pWork,_modeSelectAnimInit);
     event = EVENT_IrcBattle(pWork->pGameSys, fieldWork, NULL, TRUE);
     break;
   case FIELD_SUBSCREEN_ACTION_WIRELESS:
-    PMSND_PlaySystemSE( GEAR_SE_DECIDE_ );
-    _CHANGE_STATE(pWork,_modeSelectAnimInit);
     event = EVENT_CG_Wireless(pWork->pGameSys, fieldWork, NULL, TRUE);
     break;
   case FIELD_SUBSCREEN_ACTION_SCANRADAR:
@@ -3321,7 +3393,6 @@ GMEVENT* CGEAR_EventCheck(C_GEAR_WORK* pWork, BOOL bEvReqOK, FIELD_SUBSCREEN_WOR
     event = EVENT_ChangeSubScreen(pWork->pGameSys, fieldWork, FIELD_SUBSCREEN_BEACON_VIEW);
     break;
   case FIELD_SUBSCREEN_ACTION_CGEAR_HELP:
-    PMSND_PlaySystemSE( SEQ_SE_MSCL_07 );
     {
       CG_HELP_INIT_WORK *initWork = GFL_HEAP_AllocClearMemory( HEAPID_PROC,sizeof(CG_HELP_INIT_WORK) );
       initWork->myStatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(pWork->pGameSys));
@@ -3376,5 +3447,62 @@ static void _modeSetSavePanelType( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pSV,int x
   _typeAnimation(pWork);
 }
 
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カーソル選択　待ち　アニメーション
+ *
+ *	@param	pWork 
+ */
+//-----------------------------------------------------------------------------
+static void _CursorSelectAnimeWait( C_GEAR_WORK* pWork )
+{
+  switch( pWork->state_seq ){
+  case 0:
+    // アニメーション開始
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[ pWork->select_cursor ], TRUE );
+    pWork->state_seq ++;
+    break;
+
+  case 1:
+    if( GFL_CLACT_WK_CheckAnmActive( pWork->cellCursor[ pWork->select_cursor ] ) == FALSE ){
+
+      
+      switch( pWork->select_cursor ){
+      case _CLACT_HELP:
+        pWork->createEvent = FIELD_SUBSCREEN_ACTION_CGEAR_HELP;
+        break;
+      case _CLACT_POWER:
+        pWork->createEvent = FIELD_SUBSCREEN_ACTION_CGEAR_HELP;
+        break;
+
+      default:
+        // 選択カーソル不明
+        GF_ASSERT(0);
+        break;
+      }
+      _CHANGE_STATE(pWork,_modeEventWait);
+    }
+    break;
+
+  default:
+    break;
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  イベント待ち
+ *
+ *	@param	pWork 
+ */
+//-----------------------------------------------------------------------------
+static void _modeEventWait( C_GEAR_WORK* pWork )
+{
+}
 
 
