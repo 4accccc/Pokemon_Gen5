@@ -196,8 +196,10 @@ _ELEVATOR_DATA_END
 sub_elevator_main:
     _TALK_START_SE_PLAY()
 
+    //エレベーターに乗り込む
     _CALL sub_elevator_in
 
+    //フロア選択
     _SYSWIN_MSG( msg_elevator_01, POS_DOWN )
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, SCWK_ANSWER )
     _ELEVATOR_MAKE_LIST()
@@ -207,8 +209,6 @@ sub_elevator_main:
 
     _DEBUG_PRINT_WK( SCWK_ANSWER )
     IF $SCWK_ANSWER != 0xff && $SCWK_ANSWER != EV_WIN_B_CANCEL THEN
-        //エレベーターに乗り込む
-        //_CALL sub_elevator_in
 
         _TIME_WAIT( 10 )
         _SE_PLAY( SEQ_SE_FLD_23 ) //エレベーター移動音
@@ -222,15 +222,15 @@ sub_elevator_main:
         _MAP_FADE_BLACK_IN()
         _MAP_FADE_END_CHECK()
 
-        _TIME_WAIT( 60 )
+        _TIME_WAIT( 15 )
         _SE_STOP()
         _SE_PLAY( SEQ_SE_FLD_87 ) //エレベーター到着音
         _SE_WAIT()
-        //エレベーターから出てくる
-        _CALL sub_elevator_out
-    ELSE
-        _CALL sub_elevator_out
     ENDIF
+
+    //エレベーターから出てくる
+    _CALL sub_elevator_out
+
     _RET
 
 
@@ -240,31 +240,27 @@ sub_elevator_main:
 /**************************************************************/
 sub_elevator_in:
     _TIME_WAIT( 15 )          //キー選択音終了待ち
-    //_SE_PLAY( SEQ_SE_FLD_23 ) //エレベーター移動音
-    //_TIME_WAIT( 45 )
-    //_SE_STOP()
-    //_SE_PLAY( SEQ_SE_FLD_87 ) //エレベーター到着音
-    //_SE_WAIT()
+
     _PLAYER_POS_GET( HEROX, HEROZ )
     $HEROX += 2
     $HEROZ -= 1
     _BMODEL_ANIME_CREATE( ELEVATOR_ID, SCR_BMID_DOOR, HEROX, HEROZ )
     _BMODEL_ANIME_SET( ELEVATOR_ID, SCR_BMANM_DOOR_OPEN )
-    _BMODEL_ANIME_WAIT( ELEVATOR_ID )
+    _BMODEL_ANIME_WAIT( ELEVATOR_ID ) //エレベーター開く
 
     IF $TALK_POS == 0 THEN
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in_from_board )
     ELSE
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in_from_front )
     ENDIF
-    _OBJ_ANIME_WAIT()
+    _OBJ_ANIME_WAIT() //エレベーター内へ移動
 
     _BMODEL_ANIME_SET( ELEVATOR_ID, SCR_BMANM_DOOR_CLOSE )
     _BMODEL_ANIME_WAIT( ELEVATOR_ID )
-    _BMODEL_ANIME_DELETE( ELEVATOR_ID )
+    _BMODEL_ANIME_DELETE( ELEVATOR_ID ) //エレベーター閉まる
 
-    //_TIME_WAIT( 10 )
-    //_SE_PLAY( SEQ_SE_FLD_23 ) //エレベーター移動音
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_down )
+    _OBJ_ANIME_WAIT() //下を向く
     _RET
 
 _ANIME_LABEL anm_player_in_from_front
@@ -276,15 +272,14 @@ _ANIME_LABEL anm_player_in_from_board
     _ANIME_DATA AC_WALK_U_8F, 2
     _ANIME_DATA ACMD_END,0
     
+_ANIME_LABEL  anm_player_turn_down
+    _ANIME_DATA AC_DIR_D, 1
+    _ANIME_DATA ACMD_END,0
 
 /**************************************************************/
 /*    エレベーターから出てくる演出                            */
 /**************************************************************/
 sub_elevator_out:
-    //_TIME_WAIT( 60 )
-    //_SE_STOP()
-    //_SE_PLAY( SEQ_SE_FLD_87 ) //エレベーター到着音
-    //_SE_WAIT()
     _PLAYER_POS_GET( HEROX, HEROZ )
     $HEROZ += 1
     _BMODEL_ANIME_CREATE( ELEVATOR_ID, SCR_BMID_DOOR, HEROX, HEROZ )
