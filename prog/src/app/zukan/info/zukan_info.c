@@ -1405,7 +1405,7 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
         disp_no = chihou_no_list[work->monsno];
         GFL_HEAP_FreeMemory( chihou_no_list );
       }
-      if( disp_no != 0 )  // ”Ô†”»–¾
+      if( disp_no != POKEPER_CHIHOU_NO_NONE )  // ”Ô†”»–¾
       {
         WORDSET* wordset = WORDSET_Create( work->heap_id );
         WORDSET_RegisterNumber( wordset, 0, disp_no, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
@@ -1574,7 +1574,7 @@ static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_L
         disp_no = chihou_no_list[work->monsno];
         GFL_HEAP_FreeMemory( chihou_no_list );
       }
-      if( disp_no != 0 )  // ”Ô†”»–¾
+      if( disp_no != POKEPER_CHIHOU_NO_NONE )  // ”Ô†”»–¾
       {
         WORDSET* wordset = WORDSET_Create( work->heap_id );
         WORDSET_RegisterNumber( wordset, 0, disp_no, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );

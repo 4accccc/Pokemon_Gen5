@@ -442,7 +442,7 @@ u16 ZUKAN_GetNumberRow(
     for( i=0; i<full_num; i++ )
     {
       u16  monsno = full_list[i];
-      if( zenkoku_to_chihou_list[monsno] != 0 )
+      if( zenkoku_to_chihou_list[monsno] != POKEPER_CHIHOU_NO_NONE )
       {
         chihou_appear_list[chihou_appear_count] = monsno;
         chihou_appear_count++;

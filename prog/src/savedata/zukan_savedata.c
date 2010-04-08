@@ -609,7 +609,7 @@ u16 ZUKANSAVE_GetLocalPokeGetCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
   for( i=1; i<=MONSNO_END; i++ ){
     if( ZUKANSAVE_GetPokeGetFlag( zw, i ) == TRUE ){
       // 地方図鑑にいるかチェック
-      if( buf[i] != 0 ){
+      if( buf[i] != POKEPER_CHIHOU_NO_NONE ){
         num++;
       }
     }
@@ -705,7 +705,7 @@ u16 ZUKANSAVE_GetLocalPokeSeeCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
   for( i=1; i<=MONSNO_END; i++ ){
     if( ZUKANSAVE_GetPokeSeeFlag( zw, i ) == TRUE ){
       // 地方図鑑にいるかチェック
-      if( buf[i] != 0 ){
+      if( buf[i] != POKEPER_CHIHOU_NO_NONE ){
         num++;
       }
     }
@@ -911,7 +911,7 @@ u16 ZUKANSAVE_GetLocalGetCompCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
 
   for( i=1; i<=ZUKANSAVE_ZENKOKU_MONSMAX; i++ ){
     if( ZUKANSAVE_GetPokeGetFlag( zw, i ) == TRUE ){
-      if( buf[i] != 0 ){
+      if( buf[i] != POKEPER_CHIHOU_NO_NONE ){
         if( check_LocalCompMonsno( i ) == TRUE ){
           num++;
         }

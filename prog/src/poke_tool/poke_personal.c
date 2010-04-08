@@ -324,7 +324,7 @@ POKEPER_SEX_TYPE PokePersonal_SexVecTypeGet( POKEPER_SEX sex_vec )
  *  @note           戻り値の配列は呼び出し元で解放して下さい。
  *  @note           戻り値をu16* listで受け取ったとすると、
  *                  list[monsno]で地方図鑑番号が得られる(0<=monsno<=MONSNO_END)。
- *                  0のときはそのmonsnoのポケモンは地方図鑑に登場しない。
+ *                  POKEPER_CHIHOU_NO_NONEのときはそのmonsnoのポケモンは地方図鑑に登場しない。
  *
  */
 //------------------------------------------------------------------
@@ -343,7 +343,7 @@ u16* POKE_PERSONAL_GetZenkokuToChihouArray( HEAPID heap_id, u16* num )
     u16 i;
     for( i=0; i<chihou_num; i++ )
     {
-      if( chihou_list[i] != 0 ) chihou_appear_num++;
+      if( chihou_list[i] != POKEPER_CHIHOU_NO_NONE ) chihou_appear_num++;
     }
     *num = chihou_appear_num;
   }

@@ -412,7 +412,7 @@ static void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *info
       no = infoWork->localZukanNoList[no];
     }
     
-    if( no == 0 )
+    if( no == POKEPER_CHIHOU_NO_NONE )
     {
       PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_ZUKAN] , wordSet , mes_status_02_16 , 
                                      PSTATUS_INFO_STR_ZUKAN_VAL_X , PSTATUS_INFO_STR_ZUKAN_VAL_Y , PSTATUS_STR_COL_VALUE );

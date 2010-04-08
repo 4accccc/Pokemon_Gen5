@@ -881,7 +881,7 @@ static void PokeNumberPut( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info, u32
 			num = syswk->app->localNo[info->mons];
 		}
 
-		if( num != 0 ){
+		if( num != POKEPER_CHIHOU_NO_NONE ){
 			u32	npx;
 
 			ExStrPrint(
