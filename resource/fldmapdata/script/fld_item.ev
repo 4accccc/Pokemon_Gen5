@@ -176,10 +176,10 @@ _EVENT_DATA ev_fld_item_93
 _EVENT_DATA ev_fld_item_94
 _EVENT_DATA ev_fld_item_95
 _EVENT_DATA ev_fld_item_96
+_EVENT_DATA ev_fld_item_97
 _EVENT_DATA ev_fld_item_288
 _EVENT_DATA ev_fld_item_289
 _EVENT_DATA ev_fld_item_290
-_EVENT_DATA ev_fld_item_97
 _EVENT_DATA ev_fld_item_98
 _EVENT_DATA ev_fld_item_99
 _EVENT_DATA ev_fld_item_100
@@ -1445,6 +1445,13 @@ EVENT_START ev_fld_item_96
 EVENT_END
 
 //--------------------------------------------------------------
+// MAP=r11 X=494 Y=165 ITEM=プロテクター FLAG=97
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_97
+  _FLD_ITEM_EVENT ITEM_PUROTEKUTAA,1
+EVENT_END
+
+//--------------------------------------------------------------
 // MAP=h04 X=408 Y=120 ITEM=すごいキズぐすり FLAG=288
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_288
@@ -1463,13 +1470,6 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_290
   _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r11 X=494 Y=165 ITEM=プロテクター FLAG=97
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_97
-  _FLD_ITEM_EVENT ITEM_PUROTEKUTAA,1
 EVENT_END
 
 //--------------------------------------------------------------
