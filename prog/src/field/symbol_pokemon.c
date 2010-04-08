@@ -132,6 +132,7 @@ static void SYMBOLPOKE_AdMMdl(
   grid_pos->y = fx_y;
   
   MMDLSYS_AddMMdl(mmdl_sys, &head, zone_id);
+  TAMADA_Printf("idx=%02d (%2d,%2d)\n", id, grid_x, grid_z );
 }
 
 //--------------------------------------------------------------
@@ -208,15 +209,18 @@ POKEMON_PARAM * SYMBOLPOKE_PP_Create(
  * @note
  * KEEPゾーンの場合、前半１０は大きいポケモン、後半１０は小さいポケモンの
  * 領域で、間にポケモンが入っていない条件のデータが来ることもあるので注意。
+ *
+ * @todo
+ * 消える演出をもう少しどうにかできないか？考える
  */
 //--------------------------------------------------------------
 void SYMBOLPOKE_Add(
     FIELDMAP_WORK *fieldmap, u32 start_no, const SYMBOL_POKEMON * sympoke, int poke_num )
 {
   POKEADD_WORK padd;
-  int x, y;
-  int rnd_x, rnd_z;
   int idx = 0;
+  u16 jx, jz;
+  MMDL * jiki;
 
   const u8 * map_pos;
   SYMBOL_ZONE_TYPE type = SYMBOLZONE_GetZoneTypeFromNumber( start_no );
@@ -241,19 +245,30 @@ void SYMBOLPOKE_Add(
   padd.fieldmap = fieldmap;
   padd.start_no = start_no;
 
+  jiki = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer( fieldmap ) );
+  jx = MMDL_GetGridPosX( jiki );
+  jz = MMDL_GetGridPosZ( jiki );
+
   for ( idx = 0; idx < SYMBOL_MAP_STOCK_MAX; idx ++ )
   {
     if ( sympoke[idx].monsno != 0 )
     {
-      rnd_x = GFUser_GetPublicRand0(2);
-      rnd_z = GFUser_GetPublicRand0(2);
-      x = map_pos[ idx * 2 + 0] + rnd_x - 1;
-      y = map_pos[ idx * 2 + 1] + rnd_z - 1;
-      SYMBOLPOKE_AdMMdl(&padd, &sympoke[idx], idx, x, y, 0 );
+      int x, z;
+      int rnd_x, rnd_z;
+      rnd_x = GFUser_GetPublicRand0(2) - 1;
+      rnd_z = GFUser_GetPublicRand0(2) - 1;
+      x = map_pos[ idx * 2 + 0 ] + rnd_x;
+      z = map_pos[ idx * 2 + 1 ] + rnd_z;
+      if ( jx == x && jz == z )
+      { //自機との重なりを回避する
+        if (rnd_x) x -= rnd_x;
+        else if (rnd_z) z -= rnd_z;
+        else x += 1;
+      }
+      SYMBOLPOKE_AdMMdl(&padd, &sympoke[idx], idx, x, z, 0 );
       poke_num --;
     }
   }
-END:
 
   TPOKE_DATA_Delete( padd.tpdata );
 }
