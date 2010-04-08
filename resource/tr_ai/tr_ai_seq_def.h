@@ -533,13 +533,13 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 
 	.macro	IF_TABLE_JUMP		tableadrs,jumpadrs	
 	.short	AI_IF_TABLE_JUMP
-	.long		\tableadrs
+	.long		(\tableadrs-.)-4
 	.long		(\jumpadrs-.)-4
 	.endm
 
 	.macro	IFN_TABLE_JUMP		tableadrs,jumpadrs
 	.short	AI_IFN_TABLE_JUMP
-	.long		\tableadrs
+	.long		(\tableadrs-.)-4
 	.long		(\jumpadrs-.)-4
 	.endm
 
