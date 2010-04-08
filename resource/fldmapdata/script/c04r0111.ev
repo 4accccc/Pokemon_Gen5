@@ -500,6 +500,18 @@ EVENT_START ev_c04r0111_home
         
         //送信ビーコンセット：バトルサブウェイでトロフィー取得 
         _BEACON_SET_REQ_SUBWAY_TROPHY_GET() 
+        
+        //トロフィのバニッシュフラグをリセット
+        SWITCH $play_mode
+        CASE BSWAY_MODE_S_SINGLE THEN
+          _FLAG_RESET( FV_T01R0102_TROPHY_01 )
+        CASE BSWAY_MODE_S_DOUBLE THEN
+          _FLAG_RESET( FV_T01R0102_TROPHY_02 )
+        CASE BSWAY_MODE_S_MULTI THEN
+          _FLAG_RESET( FV_T01R0102_TROPHY_03 )
+        CASE BSWAY_MODE_S_COMM_MULTI THEN
+          _FLAG_RESET( FV_T01R0102_TROPHY_03 )
+        ENDSWITCH
       ENDIF
     ELSE  //ノーマルボスである
       //おめでとうございます

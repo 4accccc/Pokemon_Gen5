@@ -499,7 +499,7 @@ static GMEVENT_RESULT event_BigStoneShake(
     if( MMDL_CheckPossibleAcmd(m_jiki) == TRUE ){
       MMDL_SetAcmd( m_jiki,
           MMDL_ChangeDirAcmdCode(work->dir,AC_STAY_WALK_U_16F) );
-      PMSND_PlaySE( SEQ_SE_FLD_63 );
+      PMSND_PlaySE( SEQ_SE_WALL_HIT );
       (*seq)++;
     }
   case 1:
