@@ -12,6 +12,7 @@
 
 #define D08R0301_LEADER7_01                0
 #define D08R0301_HAKASE1_01                1
+#define D08R0301_FLD_ITEM_01               2
 
 #endif //ZONE_D08R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d08r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

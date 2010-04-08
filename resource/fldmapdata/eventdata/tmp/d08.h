@@ -14,6 +14,7 @@
 #define D08_SUPPORT_01                     2
 #define D08_CHAMPION_01                    3
 #define D08_LEADER7_01                     4
+#define D08_FLD_ITEM_01                    5
 
 #endif //ZONE_D08_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d08.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

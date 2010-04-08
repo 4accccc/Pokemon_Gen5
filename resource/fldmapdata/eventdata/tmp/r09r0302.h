@@ -14,7 +14,6 @@
 #define TR_ELITEW_08                       1
 #define R09R0302_FLD_ITEM_01               2
 #define R09R0302_FLD_ITEM_02               3
-#define R09R0302_FLD_ITEM_03               4
 
 #endif //ZONE_R09R0302_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r09r0302.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
