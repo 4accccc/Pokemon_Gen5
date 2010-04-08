@@ -1,3 +1,13 @@
+#==============================================================================
+#
+#   パレスの森のポケモン配置テーブル用コンバータ
+#
+#   2010.04.07  tamada
+#
+#   西野さん作成の仕様書から適当にテーブルを生成するためだけのフィルタ。
+#   汎用性などは考慮されていないので、注意。
+#
+#==============================================================================
 $KCODE = "SJIS"
 
 class SymbolMapError < Exception; end
@@ -40,7 +50,7 @@ def put_pos_list( symmap, symposname, subsymposname )
   }
     if subsymposname != nil then
       #printf( "static const u8 %s[] = {\n", subsymposname )
-      pos_list[1 .. -1].each_with_index{| p, no |
+      pos_list_s[1 .. -1].each_with_index{| p, no |
         printf("\t%2d,%2d, //%2d\n", p[0],p[1],no+1 )
       }
       #printf("};\n\n")
