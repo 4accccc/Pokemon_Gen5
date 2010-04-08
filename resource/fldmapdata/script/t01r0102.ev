@@ -271,22 +271,22 @@ ev_first_pkeget:
 
 	ENDIF
 	
-/*	//～～を手に入れた
-	_PLAYER_NAME( 0 )	 //プレイヤー名を反映
-	_SYSWIN_MSG( msg_t01r0102_ball_get_01, POS_DOWN )
+	//～～を手に入れた
+//	_PLAYER_NAME( 0 )	 //プレイヤー名を反映
+//	_SYSWIN_MSG( msg_t01r0102_ball_get_01, POS_DOWN )
 	
 	//ME鳴らす
-	_ME_PLAY( SEQ_ME_POKEGET )
-	_ME_WAIT()
-	_AB_KEYWAIT_MARK()
-	_SYSWIN_CLOSE()
+//	_ME_PLAY( SEQ_ME_POKEGET )
+//	_ME_WAIT()
+//	_AB_KEYWAIT_MARK()
+//	_SYSWIN_CLOSE()
 	
 	//ポケモン追加
 	_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, lwk_poke_num, 0, 5 )
 	
 	//初期３体入手フラグ
 	_FLAG_SET( SYS_FLAG_FIRST_POKE_GET )
-*/	
+	
 	}
 	//=====================================================//
 
@@ -414,10 +414,10 @@ ev_first_pkeget:
 	_MSGWIN_CLOSE()
 
 	//チェレンはポケモンを回復させた
-//	_SE_PLAY( SEQ_SE_RECOVERY )
+	_SE_PLAY( SEQ_SE_RECOVERY )
 	_SYSWIN_MSG( msg_t01r0102_black_10, POS_DEFAULT )
 	_MSGWIN_CLOSE()
-//	_SE_WAIT()
+	_SE_WAIT()
 	
 	//ライバル：主人公を見て
 	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_l )
@@ -443,11 +443,11 @@ ev_first_pkeget:
 	ENDIF
 
 	//システム：～～のポケモンを回復してくれた
-//	_SE_PLAY( SEQ_SE_RECOVERY )
+	_SE_PLAY( SEQ_SE_RECOVERY )
 	_PLAYER_NAME( 0 )
 	_SYSWIN_MSG( msg_t01r0102_black_12, POS_DEFAULT )
 	_MSGWIN_CLOSE()
-//	_SE_WAIT()
+	_SE_WAIT()
 
 	//回復処理
 	_TEMOTI_POKEMON_KAIFUKU()
