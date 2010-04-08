@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-03-04T14:32:10"/>
+	<create user="taya" host="W00146" date="2010-04-08T19:10:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -457,6 +457,46 @@
 		<language name="JPN" width="256">コマンド</language>
 	</row>
 
+	<row id="DBGF_LABEL_AI_0">
+		<language name="JPN" width="256">AI きほん</language>
+	</row>
+
+	<row id="DBGF_LABEL_AI_1">
+		<language name="JPN" width="256">AI つよめ</language>
+	</row>
+
+	<row id="DBGF_LABEL_AI_2">
+		<language name="JPN" width="256">AI エキスパ</language>
+	</row>
+
+	<row id="DBGF_LABEL_AI_3">
+		<language name="JPN" width="256">AI ほじょ</language>
+	</row>
+
+	<row id="DBGF_LABEL_AI_4">
+		<language name="JPN" width="256">AI ギャンブル</language>
+	</row>
+
+	<row id="DBGF_LABEL_AI_5">
+		<language name="JPN" width="256">AI ダメージ</language>
+	</row>
+
+	<row id="DBGF_LABEL_AI_6">
+		<language name="JPN" width="256">AI リレー</language>
+	</row>
+
+	<row id="DBGF_LABEL_AI_7">
+		<language name="JPN" width="256">AI ダブル</language>
+	</row>
+
+	<row id="DBGF_LABEL_AI_8">
+		<language name="JPN" width="256">AI てんこう</language>
+	</row>
+
+	<row id="DBGF_LABEL_AI_9">
+		<language name="JPN" width="256">AI いやがらせ</language>
+	</row>
+
 	<row id="DBGF_ITEM_SAVE">
 		<language name="JPN" width="256">セーブ</language>
 	</row>
@@ -594,7 +634,7 @@
 	</row>
 
 	<row id="DBGF_BG_00">
-		<language name="JPN" width="256">くさむら</language>
+		<language name="JPN" width="256">くさむら□</language>
 	</row>
 
 	<row id="DBGF_BG_01">
@@ -638,7 +678,7 @@
 	</row>
 
 	<row id="DBGF_LAND_00">
-		<language name="JPN" width="256">しばふ</language>
+		<language name="JPN" width="256">しばふ□</language>
 	</row>
 
 	<row id="DBGF_LAND_01">
@@ -646,47 +686,87 @@
 	</row>
 
 	<row id="DBGF_LAND_02">
-		<language name="JPN" width="256">じめん１</language>
+		<language name="JPN" width="256">じめん　しき１</language>
 	</row>
 
 	<row id="DBGF_LAND_03">
-		<language name="JPN" width="256">じめん２</language>
+		<language name="JPN" width="256">じめん　しき２</language>
 	</row>
 
 	<row id="DBGF_LAND_04">
-		<language name="JPN" width="256">くさ</language>
+		<language name="JPN" width="256">いどうかのう</language>
 	</row>
 
 	<row id="DBGF_LAND_05">
-		<language name="JPN" width="256">すいじょう</language>
+		<language name="JPN" width="256">くさ</language>
 	</row>
 
 	<row id="DBGF_LAND_06">
-		<language name="JPN" width="256">せつげん</language>
+		<language name="JPN" width="256">すいじょう</language>
 	</row>
 
 	<row id="DBGF_LAND_07">
-		<language name="JPN" width="256">すなち</language>
+		<language name="JPN" width="256">せつげん</language>
 	</row>
 
 	<row id="DBGF_LAND_08">
-		<language name="JPN" width="256">あさいしつげん</language>
+		<language name="JPN" width="256">すなち</language>
 	</row>
 
 	<row id="DBGF_LAND_09">
-		<language name="JPN" width="256">どうくつ</language>
+		<language name="JPN" width="256">あさいしつげん</language>
 	</row>
 
 	<row id="DBGF_LAND_10">
-		<language name="JPN" width="256">みずたまり</language>
+		<language name="JPN" width="256">どうくつ</language>
 	</row>
 
 	<row id="DBGF_LAND_11">
-		<language name="JPN" width="256">あさせ</language>
+		<language name="JPN" width="256">みずたまり</language>
 	</row>
 
 	<row id="DBGF_LAND_12">
+		<language name="JPN" width="256">あさせ</language>
+	</row>
+
+	<row id="DBGF_LAND_13">
 		<language name="JPN" width="256">ひょうじょう</language>
+	</row>
+
+	<row id="DBGF_LAND_14">
+		<language name="JPN" width="256">しつない</language>
+	</row>
+
+	<row id="DBGF_LAND_15">
+		<language name="JPN" width="256">パレス</language>
+	</row>
+
+	<row id="DBGF_LAND_16">
+		<language name="JPN" width="256">してんのう ゴースト</language>
+	</row>
+
+	<row id="DBGF_LAND_17">
+		<language name="JPN" width="256">してんのう かくとう</language>
+	</row>
+
+	<row id="DBGF_LAND_18">
+		<language name="JPN" width="256">してんのう あく</language>
+	</row>
+
+	<row id="DBGF_LAND_19">
+		<language name="JPN" width="256">してんのう エスパー</language>
+	</row>
+
+	<row id="DBGF_LAND_20">
+		<language name="JPN" width="256">Ｎせんよう</language>
+	</row>
+
+	<row id="DBGF_LAND_21">
+		<language name="JPN" width="256">ゲーチス</language>
+	</row>
+
+	<row id="DBGF_LAND_22">
+		<language name="JPN" width="256">チャンピオン</language>
 	</row>
 
 	<row id="DBGF_SEASON_0">
