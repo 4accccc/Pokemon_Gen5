@@ -18,7 +18,8 @@ SUBDIRS	=	gym_denki \
 					gate \
 					d06 \
 					league_front \
-					sppoke
+					sppoke \
+					d12
 
 .PHONY:	do-build clean
 
