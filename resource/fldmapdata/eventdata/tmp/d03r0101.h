@@ -36,6 +36,8 @@
 #define D03R0101_FLD_ITEM_05              22
 #define D03R0101_FLD_ITEM_7               23
 #define D03R0101_FLD_ITEM_06              24
+#define TR_RANGERM_11                     25
+#define TR_RANGERW_11                     26
 
 #endif //ZONE_D03R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d03r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
