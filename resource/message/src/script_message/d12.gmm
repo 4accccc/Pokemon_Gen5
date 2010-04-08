@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-04-07T20:47:09"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T17:46:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1309" top="122" right="2014" bottom="742" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -604,7 +604,8 @@
 		<comment>●アララギ（娘）が遠くから話しかける。
 
 ●この後、主人公が２グリッド前進する。</comment>
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　おかげで
 あくじを　はたらいた　れんちゅうは[BE:00:ページ切り替え（行送り）]
 ごっそり　つかまえられたわよ！[BE:01:ページ切り替え（クリア）]</language>
@@ -614,7 +615,8 @@
 	</row>
 
 	<row id="msg_d12_hakase2_02" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">ビクティが　このしまに　いた　わけは…
 [BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ビクティが　この島に　いた　理由は…
@@ -622,7 +624,8 @@
 	</row>
 
 	<row id="msg_d12_hakase2_03" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">ビクティの　イッシュずかんナンバーが
 ０の　りゆうは…[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ビクティの　イッシュ図鑑ナンバーが
@@ -648,7 +651,8 @@
 	<row id="msg_d12_hakase2_04" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
 		<comment>●警官３を向いて、セリフ。
 ●再び主人公を向く。</comment>
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">ありがとう
 すぐに　いくわ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ありがとう
@@ -659,7 +663,8 @@
 		<comment>●最後のセリフ。
 
 ●セリフ後に、警官隊たちと立ち去る。</comment>
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">ポケモンの　のうりょくを
 あくようするのは　いつも　にんげん…[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ポケモンの　能力を
