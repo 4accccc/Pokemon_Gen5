@@ -96,6 +96,7 @@ SCRCMD_WORK * SCRCMD_WORK_Create(
 	work = GFL_HEAP_AllocClearMemoryLo( heapID, sizeof(SCRCMD_WORK) );
 	work->heapID = heapID;
 	work->head = *head;
+  work->before_win_pos_type = SCRCMD_MSGWIN_MAX;
 	return( work );
 }
 

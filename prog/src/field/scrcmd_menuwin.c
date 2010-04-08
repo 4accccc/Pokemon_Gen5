@@ -332,8 +332,7 @@ static void sysWin_AddWindow( SCRCMD_WORK *work, u8 up_down )
         y = 19;
         up_down = SCRCMD_MSGWIN_DOWN;
         break;
-      case SCRCMD_MSGWIN_DEFAULT:
-        GF_ASSERT( 0 && "SYSWIN BEFORE POS ERROR" );
+      case SCRCMD_MSGWIN_MAX: //初回　前回記録無し
         y = 19;
         up_down = SCRCMD_MSGWIN_DOWN;
         break;
@@ -1182,6 +1181,25 @@ static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
     
     bwin_work->obj_id = objID;
     
+    if( pos_type == SCRCMD_MSGWIN_DEFAULT ){ //過去or自機の位置から割り当て
+      u16 before_pos = SCRCMD_WORK_GetBeforeWindowPosType( work );
+      
+      if( before_pos == SCRCMD_MSGWIN_MAX ){ //初回である
+        VecFx32 pos,jiki_pos;
+        
+        MMDL_GetVectorPos( npc, &pos );
+        MMDL_GetVectorPos( jiki, &jiki_pos ); //時期の位置から割り当て
+        
+        pos_type = SCRCMD_MSGWIN_DOWN;
+        
+        if( pos.z < jiki_pos.z ){
+          pos_type = SCRCMD_MSGWIN_UP;
+        }
+      }else{ //履歴あり
+        pos_type = before_pos;
+      }
+    }
+    
     switch( pos_type ){
     case SCRCMD_MSGWIN_UPLEFT: //ウィンドウ上　吹き出し向き左
       idx = FLDTALKMSGWIN_IDX_UPPER;
@@ -1204,21 +1222,10 @@ static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
     case SCRCMD_MSGWIN_DOWN: //ウィンドウ下　吹き出し位置自動
       idx = FLDTALKMSGWIN_IDX_LOWER;
       break;
-    case SCRCMD_MSGWIN_DEFAULT: //自機の位置から自動割り当て
-      {
-        VecFx32 pos,jiki_pos;
-      
-        MMDL_GetVectorPos( npc, &pos );
-        MMDL_GetVectorPos( jiki, &jiki_pos );
-        
-        idx = FLDTALKMSGWIN_IDX_LOWER;
-        pos_type = SCRCMD_MSGWIN_DOWNLEFT;
-        
-        if( pos.z < jiki_pos.z ){
-          idx = FLDTALKMSGWIN_IDX_UPPER;
-          pos_type = SCRCMD_MSGWIN_UPLEFT;
-        }
-      }
+    case SCRCMD_MSGWIN_DEFAULT:
+      GF_ASSERT( 0 && "SYSWIN BEFORE POS ERROR" );
+      idx = FLDTALKMSGWIN_IDX_LOWER;
+      pos_type = SCRCMD_MSGWIN_DOWN;
       break;
     }
     
