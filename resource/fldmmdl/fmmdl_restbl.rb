@@ -285,6 +285,9 @@ def ncgparam_get( listfile, mdlstr, anmstr )
   listfile.gets #一行抜かし
   listfile.gets #一行抜かし
   
+  mdlstr = mdlstr.strip #先頭末尾の空白、改行削除
+  anmstr = anmstr.strip
+
   while line = listfile.gets
     line = line.strip
     str = line.split( "," )
@@ -293,22 +296,30 @@ def ncgparam_get( listfile, mdlstr, anmstr )
       break
     end
     
-    if( str[0] != nil && str[0] == anmstr )
-      i = 1
-      while data = str[i]
-        param = data.split( "/" )
+    if( str[0] != nil )
+      str[0] = str[0].strip
+
+      if( str[0] == anmstr )
+        i = 1
+        while data = str[i]
+          param = data.split( "/" )
         
-        if( param[0] != nil && param[0] == mdlstr )
-          h = Hash.new
-          h.store( "str_width", param[1] )
-          h.store( "str_height", param[2] )
-          h.store( "str_count", param[3] )
-          h.store( "str_imdfile", param[4] )
-          h.store( "str_flag_dummy", param[5] )
-          return h
+          if( param[0] != nil )
+            param[0] = param[0].strip
+            
+            if( param[0] == mdlstr )
+              h = Hash.new
+              h.store( "str_width", param[1] )
+              h.store( "str_height", param[2] )
+              h.store( "str_count", param[3] )
+              h.store( "str_imdfile", param[4] )
+              h.store( "str_flag_dummy", param[5] )
+              return h
+            end
+          end
+          
+          i = i + 1
         end
-        
-        i = i + 1
       end
     end
   end
