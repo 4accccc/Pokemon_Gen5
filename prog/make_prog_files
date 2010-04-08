@@ -1076,7 +1076,6 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btl_server_flow.c \
 			battle/btl_server_cmd.c \
 			battle/btl_client.c \
-			battle/btl_adapter.c \
 			battle/btl_net.c \
 			battle/btl_pokeparam.c \
 			battle/btl_event.c \
@@ -1084,7 +1083,6 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/handler/hand_tokusei.c \
 			battle/handler/hand_item.c \
 			battle/handler/hand_waza.c \
-			battle/btl_pospoke_state.c \
 			battle/btl_util.c \
 			battle/btlv/btlv_core.c \
 			battle/btlv/btlv_scu.c
@@ -1144,6 +1142,8 @@ SRCS_OVERLAY_VRAM_H =	battle/handler/hand_field.c \
 			battle/btl_pokeset.c \
 			battle/btl_wazarec.c \
 			battle/btl_deadrec.c \
+			battle/btl_pospoke_state.c \
+			battle/btl_adapter.c \
 			battle/btl_string.c
 
 
