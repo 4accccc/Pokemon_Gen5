@@ -3509,7 +3509,6 @@
   .short EV_SEQ_DISP_FADE_CHECK
   .endm
 
-
 //--------------------------------------------------------------
 /**
  *  @def  _WHITE_OUT
@@ -3552,6 +3551,49 @@
 #define _BLACK_IN() \
     _DISP_FADE_START(DISP_FADE_BLACKOUT,16,0,DISP_FADE_SPEED)
 
+
+//--------------------------------------------------------------
+/**
+ *  @def  _WHITE_OUT_SLOW
+ *  @brief  遅いホワイトアウト
+ *  @param none
+ *  @note _DISP_FADE_END_CHECK()で終了待ちをしてください
+ */
+//--------------------------------------------------------------
+#define _WHITE_OUT_SLOW() \
+    _DISP_FADE_START(DISP_FADE_WHITEOUT,0,16,DISP_SLOW_FADE_SPEED)
+
+//--------------------------------------------------------------
+/**
+ *  @def  _WHITE_IN_SLOW
+ *  @brief  遅いホワイトイン
+ *  @param none
+ */
+//--------------------------------------------------------------
+#define _WHITE_IN_SLOW() \
+    _DISP_FADE_START(DISP_FADE_WHITEOUT,16,0,DISP_SLOW_FADE_SPEED)
+
+//--------------------------------------------------------------
+/**
+ *  @def  _BLACK_OUT_SLOW
+ *  @brief  遅いブラックアウト
+ *  @param  none
+ *  @note _DISP_FADE_END_CHECK()で終了待ちをしてください
+ */
+//--------------------------------------------------------------
+#define _BLACK_OUT_SLOW() \
+    _DISP_FADE_START(DISP_FADE_BLACKOUT,0,16,DISP_SLOW_FADE_SPEED)
+  
+//--------------------------------------------------------------
+/**
+ *  @def  _BLACK_IN_SLOW
+ *  @brief  遅いブラックイン
+ *  @param  none
+ */
+//--------------------------------------------------------------
+#define _BLACK_IN_SLOW() \
+    _DISP_FADE_START(DISP_FADE_BLACKOUT,16,0,DISP_SLOW_FADE_SPEED)
+  
 //======================================================================
 //  アイテム関連
 //======================================================================

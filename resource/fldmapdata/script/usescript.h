@@ -199,7 +199,8 @@
 
 //フェード共通速度
 #define DISP_FADE_SPEED (2)
-
+//スローフェード共通速度
+#define DISP_SLOW_FADE_SPEED (4)
 
 //いあいぎりエフェクト表示開始から, OBJを消すまでの待ち時間
 #define EV_HIDEN_IAIGIRI_OBJDEL_WAIT (3)
