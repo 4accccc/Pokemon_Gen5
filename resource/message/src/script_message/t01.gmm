@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T15:49:15"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T12:11:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="118" right="1984" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="523"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="536"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="690"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -300,7 +300,8 @@
 　連れ歩きで研究所前まで移動
 ・研究所前まで移動したら
 　msg_t01_black_02表示</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]
 ポケモンと　いっしょに
 どこかに　いってみたい　きもち[BE:00:ページ切り替え（行送り）]
@@ -319,7 +320,8 @@
 		<comment>♂
 ・話しかけたとき
 （図鑑入手まで繰り返し）</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『もうしわけないけれど
 ベルの　いえまで　いってくれる？[BE:01:ページ切り替え（クリア）]
 きっと　いえで
@@ -336,7 +338,8 @@
 		<comment>♀：研究所の前
 ・t01r0301でのイベント後
 　友達♂の隣に配置</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『……さっきのは　ヒミツだよ</language>
 		<language name="JPN_KANJI" width="256">ベル『……さっきのは　秘密だよ</language>
 	</row>
@@ -346,7 +349,8 @@
 ・話しかけたとき一度友達♀をみてから
 　主人公と向き合ってこのメッセージ表示
 ・画面切り替えで研究所内へ</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『さ！
 はかせに　あおう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『さ！
@@ -416,7 +420,8 @@
 	<row id="msg_t01_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けて</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『はい！
 たいせつに　つかわせてもらいます▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『はい！
@@ -435,7 +440,8 @@
 	<row id="msg_t01_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてmama_06</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『あ　ありがとうございます！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『あ　ありがとうございます！▼</language>
 	</row>
@@ -501,7 +507,8 @@
 ・このとき、3人、顔を見合わせる？
 ・メッセージ表示後、1番道路へ
 ・続けてwhite_02</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『タウンマップを　つかえば
 じぶんが　どこにいるか　わかる……▽
 これは　うれしいな！▼
@@ -518,7 +525,8 @@
 		<comment>♀
 ・メッセージ表示後、1番道路へ
 ・画面外に消えると主人公、操作可能に</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『あっ　まってよお
 [1:00:トレーナー名:0]も　はやく　きてね▼</language>
 		<language name="JPN_KANJI" width="256">ベル『あっ　待ってよお
@@ -534,7 +542,8 @@
 　メッセージ表示後、主人公
 　GRIDX=788、GRIDZ=737に移動
 ・続けてblack_06</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]
 こっち　だよ！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]
@@ -544,7 +553,8 @@
 	<row id="msg_t01_black_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてwhite_05</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『ベルがね
 たびを　はじめるなら▽
 さいしょの　いっぽは▽
@@ -561,7 +571,8 @@
 　下入力→black_08
 ・サポートと会話→white_05
 ・ライバルと会話→black_07</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『ねえ　[1:00:トレーナー名:0]！▼
 みんなで　いっしょに
 １ばんどうろに　ふみだそうよ！▼</language>
@@ -594,7 +605,8 @@
 　速度で一番道路へ
 ・このときカメラ移動なし
 ・画面外に消えると主人公操作可能に</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">せーの！！▼</language>
 		<language name="JPN_KANJI" width="256">せーの！！▼</language>
 	</row>
@@ -706,7 +718,8 @@
 　家からでるとイベント発動
 ・続けてwhite_end_01
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『やあ　[1:00:トレーナー名:0]
 ハンサムさんの　はなしは　おわった？▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『やあ　[1:00:トレーナー名:0]
@@ -717,7 +730,8 @@
 		<comment>♀
 ・クリア後
 ・続けてblack_end_02</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『……ふたりとも　ごめんね▼
 サンヨウシティの　ジムリーダーさん
 よびに　いってたら▽
@@ -732,7 +746,8 @@
 		<comment>♂
 ・クリア後
 ・続けてwhite_end_02</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……それをいうなら
 ぼくだって　ゲーチスを▽
 ダークトリニティに　つれさられたし▼</language>
@@ -745,7 +760,8 @@
 		<comment>♀
 ・クリア後
 ・続けてblack_end_03</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『……ゲーチス？
 ダークトリニティ？▼</language>
 		<language name="JPN_KANJI" width="256">ベル『……ゲーチス？
@@ -758,7 +774,8 @@
 ・続けてwhite_end_03w　か
 　white_end_03b
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……こんど　おしえるよ▼
 それよりもさ　ベル
 きみたちは　これから　どうするの？▼</language>
@@ -771,7 +788,8 @@
 		<comment>♀
 ・クリア後＋WHITEver
 ・続けてblack_end_04</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『あたしね　あたしね
 ホワイトフォレストに　いくつもり！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『あたしね　あたしね
@@ -782,7 +800,8 @@
 		<comment>♀
 ・クリア後＋BLACKver
 ・続けてblack_end_04</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『あたしね　あたしね
 ブラックシティに　いくつもり！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『あたしね　あたしね
@@ -792,7 +811,8 @@
 	<row id="msg_t01_black_end_04" text-color="#0000ff,,,#ff0000,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてhakase1_end_01</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『ああ
 ライモンシティから　つながる▽
 １６ばんどうろの　さきだね▼
@@ -916,7 +936,8 @@ hakase1_end_05
 ・クリア後
 ・メッセージ表示後、ベルの家のほうへ移動
 ・画面外に消えると続けてblack_end_05</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『へえ　ぜんこくずかん……▼
 あたしの　しらない　ポケモンが
 まだまだ　たくさん　いるんだね▼
@@ -938,7 +959,8 @@ hakase1_end_05
 ・クリア後
 ・ベルの移動先を見たままメッセージ表示
 ・続けてblack_end_06</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『たびをしても
 マイペースは　かわらないね　ベルは▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『旅をしても
@@ -951,7 +973,8 @@ hakase1_end_05
 ・メッセージ表示後、ベルと反対側から
 　一番道路に向かう
 ・画面外に消えると主人公、操作可能に</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">ぼくは　もういちど
 １ばんどうろから　じゅんばんに▽
 めぐっていく　つもりさ▼

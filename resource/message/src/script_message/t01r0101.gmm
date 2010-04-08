@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-04T14:32:08"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T12:13:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,27 +292,29 @@
 	</lock>
 
 
-	<row id="msg_t01r0101_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0101_black_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてwhite_01</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『おばさん　さわがしくして
 ほんとうに　すみませんでした！▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『おばさん　騒がしくして
 本当に　すみませんでした！▼</language>
 	</row>
 
-	<row id="msg_t01r0101_white_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0101_white_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてmama_01a</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『あ　あのー
 おかたづけ……▼</language>
 		<language name="JPN_KANJI" width="256">ベル『あ　あのー
 おかたづけ……▼</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_01a">
+	<row id="msg_t01r0101_mama_01a" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・続けてblack_02</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
@@ -328,10 +330,11 @@
 待っているんじゃないの？▼</language>
 	</row>
 
-	<row id="msg_t01r0101_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0101_black_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてwhite_02</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『はい！
 では　しつれい　しますね▼
 じゃあ　アララギはかせに
@@ -342,39 +345,42 @@
 お礼を　いいに　いかないと▼</language>
 	</row>
 
-	<row id="msg_t01r0101_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0101_black_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてwhite_02</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『ポケモンけんきゅうじょの
 まえで　まってるよ▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『ポケモン研究所の
 前で　待ってるよ▼</language>
 	</row>
 
-	<row id="msg_t01r0101_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0101_white_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてママを見て、white_03表示</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『あっ
 あたし　いちど　いえにもどるね▼</language>
 		<language name="JPN_KANJI" width="256">ベル『あっ
 あたし　一度　家にもどるね▼</language>
 	</row>
 
-	<row id="msg_t01r0101_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0101_white_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後、友達♂、友達♀退場
 ・続けて主人公ママ
 　主人公に隣接してmama_01表示</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">おばさん　どうも
 おじゃましましたあ▼</language>
 		<language name="JPN_KANJI" width="256">おばさん　どうも
 おじゃましましたあ▼</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_01">
+	<row id="msg_t01r0101_mama_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・続けてmama_02</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
@@ -390,7 +396,7 @@
 鳴き声とか　聞こえてきたわよ！▼</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_02" back-color=",,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0101_mama_02" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color=",,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>♀
 ・別方向を向いてメッセージ表示
 ・続けてmama_03
@@ -402,7 +408,7 @@
 みんなと　ポケモン勝負▼</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_03">
+	<row id="msg_t01r0101_mama_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・メッセージ表示後、
 　画面暗転して回復処理
@@ -415,9 +421,9 @@
 休ませて　あげないと！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0101_mama_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
-・テレビトランシーバー入手処理</comment>
+・ライブキャスター入手処理</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ポケモン
 げんきに　なったわね！▼
@@ -431,7 +437,7 @@
 修理から　戻ってきてたわ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_04_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0101_mama_04_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ポケモン図鑑入手まで繰り返し</comment>
 		<language name="JPN" width="256">あなたも　はかせに
@@ -442,7 +448,7 @@
 じゃ　いってらっしゃい！</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_05" back-color=",,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0101_mama_05" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color=",,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ポケモン図鑑入手後から
 　ランニングシューズ入手するまで
