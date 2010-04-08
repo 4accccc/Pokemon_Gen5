@@ -642,8 +642,8 @@ BOOL WifiList_CheckFriendData( WIFI_LIST* pWifiList , const STRCODE *name , cons
         const u32 friendSex = WifiList_GetFriendInfo( pWifiList , i , WIFILIST_FRIEND_SEX );
         if( friendSex == sex )
         {
-          STRCODE *friendName = WifiList_GetFriendNamePtr( pWifiList, i );
-          if( STRTOOL_Comp(name,friendName) == TRUE )
+          //STRCODE *friendName = WifiList_GetFriendNamePtr( pWifiList, i );
+          //if( STRTOOL_Comp(name,friendName) == TRUE )
           {
             return TRUE;
           }
