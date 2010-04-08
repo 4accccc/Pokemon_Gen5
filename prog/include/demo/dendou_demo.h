@@ -11,6 +11,8 @@
 #pragma	once
 
 #include "poke_tool/pokeparty.h"
+#include "savedata/mystatus.h"
+#include "savedata/playtime.h"
 
 
 //============================================================================================
@@ -21,8 +23,8 @@
 typedef struct {
 	// [ in ]
 	const POKEPARTY * party;
-//	const MYSTATUS * mystatus;
-//	const PLAYTIME * ptime;
+	const MYSTATUS * mystatus;
+	const PLAYTIME * ptime;
 }DENDOUDEMO_PARAM;
 
 

@@ -120,6 +120,18 @@ static const DDEMO_CLWK_DATA PokeBackClactParamTbl = {
 	0, CLSYS_DRAW_MAIN
 };
 
+static const DDEMO_CLWK_DATA Mes2ClactParamTbl = {
+	{ 128, 24, 2, 10, 0 },
+	DDEMOOBJ_CHRRES_ETC, DDEMOOBJ_PALRES_ETC, DDEMOOBJ_CELRES_ETC,
+	0, CLSYS_DRAW_MAIN
+};
+
+static const DDEMO_CLWK_DATA Info2ClactParamTbl = {
+	{ 128, 144, 2, 10, 0 },
+	DDEMOOBJ_CHRRES_ETC, DDEMOOBJ_PALRES_ETC, DDEMOOBJ_CELRES_ETC,
+	0, CLSYS_DRAW_MAIN
+};
+
 
 
 void DDEMOOBJ_Init( DDEMOMAIN_WORK * wk )
@@ -144,10 +156,12 @@ void DDEMOOBJ_AnmMain( DDEMOMAIN_WORK * wk )
 {
 	u32	i;
 
-	if( GFL_G3D_DOUBLE3D_GetFlip() == TRUE ){
-		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
-	}else{
-		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	if( wk->double3dFlag == TRUE ){
+		if( GFL_G3D_DOUBLE3D_GetFlip() == TRUE ){
+			GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
+		}else{
+			GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+		}
 	}
 
 	for( i=0; i<DDEMOOBJ_ID_MAX; i++ ){
@@ -186,29 +200,24 @@ void DDEMOOBJ_Move( DDEMOMAIN_WORK * wk, u32 id, s16 mx, s16 my )
 	DDEMOOBJ_SetPos( wk, id, x, y );
 }
 
-
-/*
-
-void DPCOBJ_SetVanish( DPCMAIN_WORK * wk, u32 id, BOOL flg )
+void DDEMOOBJ_SetVanish( DDEMOMAIN_WORK * wk, u32 id, BOOL flg )
 {
 	if( wk->clwk[id] != NULL ){
 		GFL_CLACT_WK_SetDrawEnable( wk->clwk[id], flg );
 	}
 }
 
-void DPCOBJ_SetAutoAnm( DPCMAIN_WORK * wk, u32 id, u32 anm )
+void DDEMOOBJ_SetAutoAnm( DDEMOMAIN_WORK * wk, u32 id, u32 anm )
 {
 	GFL_CLACT_WK_SetAnmFrame( wk->clwk[id], 0 );
 	GFL_CLACT_WK_SetAnmSeq( wk->clwk[id], anm );
 	GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[id], TRUE );
 }
 
-BOOL DPCOBJ_CheckAnm( DPCMAIN_WORK * wk, u32 id )
+BOOL DDEMOOBJ_CheckAnm( DDEMOMAIN_WORK * wk, u32 id )
 {
 	return GFL_CLACT_WK_CheckAnmActive( wk->clwk[id] );
 }
-
-*/
 
 
 
@@ -615,7 +624,6 @@ static void InitFontOam( DDEMOMAIN_WORK * wk )
 
 	wk->fntoam = BmpOam_Init( HEAPID_DENDOU_DEMO, wk->clunit );
 
-//	finit.pltt_index = PALNUM_FOAM;
 	finit.pltt_index = wk->palRes[DDEMOOBJ_PALRES_FOAM];
 	finit.pal_offset = 0;		// pltt_indexのパレット内でのオフセット
 	finit.soft_pri = 4;			// ソフトプライオリティ
@@ -633,11 +641,9 @@ static void InitFontOam( DDEMOMAIN_WORK * wk )
 	finit.y = MES_PY-8;
 
 	fobj->oam = BmpOam_ActorAdd( wk->fntoam, &finit );
-//	BmpOam_ActorSetDrawEnable( fobj->oam, FALSE );
 
-	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_01 );
-	x   = PRINTSYS_GetStrWidth( str, wk->font, 0 );
 	GFL_BMP_Clear( wk->fobj[DDEMOOBJ_FOAM_MES].bmp, 0 );
+	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_01 );
 	PrintFontOam( wk, DDEMOOBJ_FOAM_MES, wk->font, str, 12, 0 );
 	GFL_STR_DeleteBuffer( str );
 
@@ -651,7 +657,6 @@ static void InitFontOam( DDEMOMAIN_WORK * wk )
 	finit.y = INFO_PY-8;
 
 	fobj->oam = BmpOam_ActorAdd( wk->fntoam, &finit );
-//	BmpOam_ActorSetDrawEnable( fobj->oam, FALSE );
 
 	//「ポケモンリーグ　チャンピオン　おめでとう」
 	fobj = &wk->fobj[DDEMOOBJ_FOAM_MES2];
@@ -660,14 +665,15 @@ static void InitFontOam( DDEMOMAIN_WORK * wk )
 
 	finit.bmp = fobj->bmp;
 	finit.x = 0;
-	finit.y = 0;
+	finit.y = 16;
 
 	fobj->oam = BmpOam_ActorAdd( wk->fntoam, &finit );
 	BmpOam_ActorSetDrawEnable( fobj->oam, FALSE );
 
-	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_05 );
 	GFL_BMP_Clear( wk->fobj[DDEMOOBJ_FOAM_MES2].bmp, 0 );
-	PrintFontOam( wk, DDEMOOBJ_FOAM_MES2, wk->font, str, 0, 0 );
+	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_05 );
+	x   = PRINTSYS_GetStrWidth( str, wk->font, 0 );
+	PrintFontOam( wk, DDEMOOBJ_FOAM_MES2, wk->font, str, (FOAM_MES2_SX*8-x)/2, 0 );
 	GFL_STR_DeleteBuffer( str );
 
 	// プレイヤー情報
@@ -677,12 +683,34 @@ static void InitFontOam( DDEMOMAIN_WORK * wk )
 
 	finit.bmp = fobj->bmp;
 	finit.x = 0;
-	finit.y = 0;
+	finit.y = 160;
 
 	fobj->oam = BmpOam_ActorAdd( wk->fntoam, &finit );
 	BmpOam_ActorSetDrawEnable( fobj->oam, FALSE );
 
 	GFL_BMP_Clear( wk->fobj[DDEMOOBJ_FOAM_PLAYER].bmp, 0 );
+	// 名前
+	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_06 );
+	WORDSET_RegisterPlayerName( wk->wset, 0, wk->dat->mystatus );
+	WORDSET_ExpandStr( wk->wset, wk->exp, str );
+	PrintFontOam( wk, DDEMOOBJ_FOAM_PLAYER, wk->font, wk->exp, 8, 0 );
+	GFL_STR_DeleteBuffer( str );
+	// ID
+	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_07 );
+	WORDSET_RegisterNumber(
+		wk->wset, 0, MyStatus_GetID_Low(wk->dat->mystatus), 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+	WORDSET_ExpandStr( wk->wset, wk->exp, str );
+	PrintFontOam( wk, DDEMOOBJ_FOAM_PLAYER, wk->font, wk->exp, 96, 0 );
+	GFL_STR_DeleteBuffer( str );
+	// プレイタイム
+	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_08 );
+	WORDSET_RegisterNumber(
+		wk->wset, 0, PLAYTIME_GetHour(wk->dat->ptime), 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterNumber(
+		wk->wset, 1, PLAYTIME_GetMinute(wk->dat->ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+	WORDSET_ExpandStr( wk->wset, wk->exp, str );
+	PrintFontOam( wk, DDEMOOBJ_FOAM_PLAYER, wk->font, wk->exp, 184, 0 );
+	GFL_STR_DeleteBuffer( str );
 }
 
 static void ExitFontOam( DDEMOMAIN_WORK * wk )
@@ -748,12 +776,13 @@ void DDEMOOBJ_MoveFontOamPos( DDEMOMAIN_WORK * wk )
 	BmpOam_ActorSetPos( wk->fobj[DDEMOOBJ_FOAM_INFO].oam, x, y-8 );
 }
 
+void BOX2OBJ_FontOamVanish( DDEMOMAIN_WORK * wk, u32 idx, BOOL flg )
+{
+	BmpOam_ActorSetDrawEnable( wk->fobj[idx].oam, flg );
+}
+
 
 /*
-void BOX2OBJ_FontOamVanish( BOX2_APP_WORK * appwk, u32 idx, BOOL flg )
-{
-	BmpOam_ActorSetDrawEnable( appwk->fobj[idx].oam, flg );
-}
 
 BOOL BOX2OBJ_CheckFontOamVanish( BOX2_APP_WORK * appwk, u32 idx )
 {
@@ -784,3 +813,15 @@ void BOX2OBJ_BoxNameScroll( BOX2_APP_WORK * appwk, s8 mv )
 	}
 }
 */
+
+
+void DDEMOOBJ_Init2ndScene( DDEMOMAIN_WORK * wk )
+{
+	wk->clwk[DDEMOOBJ_ID_2ND_MES]  = CleateClact( wk, &Mes2ClactParamTbl );
+	wk->clwk[DDEMOOBJ_ID_2ND_INFO] = CleateClact( wk, &Info2ClactParamTbl );
+	DDEMOOBJ_SetVanish( wk, DDEMOOBJ_ID_2ND_MES, FALSE );
+	DDEMOOBJ_SetVanish( wk, DDEMOOBJ_ID_2ND_INFO, FALSE );
+
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+}

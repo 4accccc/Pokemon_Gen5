@@ -80,7 +80,6 @@ BOOL DDEMOSEQ_MainSeq( DDEMOMAIN_WORK * wk )
 
 	DDEMOOBJ_AnmMain( wk );
 	DDEMOMAIN_Main3D( wk );
-	GFL_G3D_DOUBLE3D_SetSwapFlag();
 
 	return TRUE;
 }
@@ -189,11 +188,13 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 {
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 		PMSND_StopBGM();
+		DDEMOMAIN_ExitDouble3D( wk );
 		return SetFadeOut( wk, MAINSEQ_RELEASE );
 	}
 
 	switch( wk->subSeq ){
 	case 0:		// 初期ウェイト
+		DDEMOMAIN_InitDouble3D( wk );
 		wk->subSeq++;
 //		PMSND_PlayBGM( SEQ_BGM_E_DENDOUIRI );
 		return SetWait( wk, DEF_1ST_START_WAIT );
@@ -349,6 +350,7 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 		wk->pokePos++;
 		if( wk->pokePos == wk->pokeMax ){
 			wk->subSeq = 0;
+			DDEMOMAIN_ExitDouble3D( wk );
 			return MAINSEQ_2ND_MAIN;
 		}else{
 			wk->subSeq = 3;
@@ -360,18 +362,59 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 }
 
 
+#define	DEF_2ND_WIN_PUT_WAIT	( 16 )
+#define	DEF_2ND_INFO_PUT_WAIT	( 32 )
+#define	DEF_2ND_MES_PUT_WAIT	( 60*5 )
 
 static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk )
 {
-	PMSND_StopBGM();
-	return MAINSEQ_RELEASE;
+	switch( wk->subSeq ){
+	case 0:		// 初期化
+		// サブ画面をメインに
+		GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
+		DDEMOMAIN_Init2ndSceneBgFrame();
+		DDEMOOBJ_Init2ndScene( wk );
+		wk->subSeq++;
+		return SetFadeIn( wk, MAINSEQ_2ND_MAIN );
 
-/*
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-		return SetFadeOut( wk, MAINSEQ_RELEASE );
+	case 1:		// 主人公落下
+		wk->subSeq++;
+		break;
+
+	case 2:		// ウィンドウオープン
+		DDEMOOBJ_SetVanish( wk, DDEMOOBJ_ID_2ND_MES, TRUE );
+		DDEMOOBJ_SetVanish( wk, DDEMOOBJ_ID_2ND_INFO, TRUE );
+		DDEMOOBJ_SetAutoAnm( wk, DDEMOOBJ_ID_2ND_MES, 2 );
+		DDEMOOBJ_SetAutoAnm( wk, DDEMOOBJ_ID_2ND_INFO, 2 );
+		wk->subSeq++;
+		break;
+
+	case 3:		// ウィンドウ表示待ち
+		if( DDEMOOBJ_CheckAnm( wk, DDEMOOBJ_ID_2ND_MES ) == FALSE ){
+			wk->subSeq++;
+			return SetWait( wk, DEF_2ND_WIN_PUT_WAIT );
+		}
+		break;
+
+	case 4:		// プレイヤー情報表示
+		BOX2OBJ_FontOamVanish( wk, DDEMOOBJ_FOAM_PLAYER, TRUE );
+		wk->subSeq++;
+		return SetWait( wk, DEF_2ND_INFO_PUT_WAIT );
+
+	case 5:		// メッセージ表示
+		BOX2OBJ_FontOamVanish( wk, DDEMOOBJ_FOAM_MES2, TRUE );
+		wk->subSeq++;
+		return SetWait( wk, DEF_2ND_MES_PUT_WAIT );
+
+	// 終了待ち
+	default:
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+			DDEMOMAIN_Exit2ndSceneBgFrame();
+			return SetFadeOut( wk, MAINSEQ_RELEASE );
+		}
 	}
+
 	return MAINSEQ_2ND_MAIN;
-*/
 }
 
 

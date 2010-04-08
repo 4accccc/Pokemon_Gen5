@@ -101,8 +101,8 @@ void DDEMOMAIN_ExitVBlank( DDEMOMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void VBlankTask( GFL_TCB * tcb, void * work )
 {
+	DDEMOMAIN_WORK * wk = work;
 /*
-	DPCMAIN_WORK * wk;
 	u32	i;
 
 	wk = work;
@@ -112,7 +112,9 @@ static void VBlankTask( GFL_TCB * tcb, void * work )
 	PaletteFadeTrans( wk->pfd );
 */
 	GFL_CLACT_SYS_VBlankFunc();
-	GFL_G3D_DOUBLE3D_VblankIntr();
+	if( wk->double3dFlag == TRUE ){
+		GFL_G3D_DOUBLE3D_VblankIntr();
+	}
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
 
@@ -216,6 +218,14 @@ void DDEMOMAIN_ExitBg(void)
 	GFL_BG_Exit();
 }
 
+void DDEMOMAIN_Init2ndSceneBgFrame(void)
+{
+}
+
+void DDEMOMAIN_Exit2ndSceneBgFrame(void)
+{
+}
+
 void DDEMOMAIN_SetBlendAlpha(void)
 {
 	G2_SetBlendAlpha(
@@ -245,10 +255,10 @@ void DDEMOMAIN_InitMsg( DDEMOMAIN_WORK * wk )
 							ARCID_FONT, NARC_font_num_gftr,
 							GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_DENDOU_DEMO );
 	wk->wset = WORDSET_Create( HEAPID_DENDOU_DEMO );
-	wk->que  = PRINTSYS_QUE_Create( HEAPID_DENDOU_DEMO );
+//	wk->que  = PRINTSYS_QUE_Create( HEAPID_DENDOU_DEMO );
 	wk->exp  = GFL_STR_CreateBuffer( EXP_BUF_SIZE, HEAPID_DENDOU_DEMO );
 
-  PRINTSYS_QUE_ForceCommMode( wk->que, TRUE );      // テスト
+//  PRINTSYS_QUE_ForceCommMode( wk->que, TRUE );      // テスト
 }
 
 //--------------------------------------------------------------------------------------------
@@ -263,7 +273,7 @@ void DDEMOMAIN_InitMsg( DDEMOMAIN_WORK * wk )
 void DDEMOMAIN_ExitMsg( DDEMOMAIN_WORK * wk )
 {
 	GFL_STR_DeleteBuffer( wk->exp );
-	PRINTSYS_QUE_Delete( wk->que );
+//	PRINTSYS_QUE_Delete( wk->que );
 	WORDSET_Delete( wk->wset );
 	GFL_FONT_Delete( wk->nfnt );
 	GFL_FONT_Delete( wk->font );
@@ -283,16 +293,18 @@ static const u32 SndTbl[] = {
 
 void DDEMOMAIN_InitSound( DDEMOMAIN_WORK * wk )
 {
-	PMSND_PlayBGM( SEQ_BGM_E_DENDOUIRI );
-	PMSND_PauseBGM( TRUE );
+//	PMSND_PlayBGM( SEQ_BGM_E_DENDOUIRI );
+//	PMSND_PauseBGM( TRUE );
 
 	wk->sndHandle = SOUNDMAN_PresetSoundTbl( SndTbl, NELEMS(SndTbl) );
 
-	PMSND_PauseBGM( FALSE );
+//	PMSND_PauseBGM( FALSE );
+	PMSND_PlayBGM( SEQ_BGM_E_DENDOUIRI );
 }
 
 void DDEMOMAIN_ExitSound( DDEMOMAIN_WORK * wk )
 {
+	PMSND_StopBGM();
 	SOUNDMAN_ReleasePresetData( wk->sndHandle );
 }
 
@@ -435,8 +447,6 @@ void DDEMOMAIN_Init3D( DDEMOMAIN_WORK * wk )
 		HEAPID_DENDOU_DEMO,	// ヒープID
 		NULL );							// セットアップ関数(NULLの時はDefaultSetUp)
 
-	GFL_G3D_DOUBLE3D_Init( HEAPID_DENDOU_DEMO );	// 2画面3D初期化
-
 	// ハンドル作成
 	wk->g3d_util  = GFL_G3D_UTIL_Create( 0, 0, HEAPID_DENDOU_DEMO );
 	// 管理システム作成
@@ -518,35 +528,46 @@ void DDEMOMAIN_Exit3D( DDEMOMAIN_WORK * wk )
 	GFL_G3D_SCENE_Delete( wk->g3d_scene );
 	GFL_G3D_UTIL_Delete( wk->g3d_util );
 
-	GFL_G3D_DOUBLE3D_Exit();
 	GFL_G3D_Exit();
 }
 
+void DDEMOMAIN_InitDouble3D( DDEMOMAIN_WORK * wk )
+{
+	if( wk->double3dFlag == TRUE ){ return; }
+
+	GFL_G3D_DOUBLE3D_Init( HEAPID_DENDOU_DEMO );	// 2画面3D初期化
+	wk->double3dFlag = TRUE;
+}
+
+void DDEMOMAIN_ExitDouble3D( DDEMOMAIN_WORK * wk )
+{
+	if( wk->double3dFlag == FALSE ){ return; }
+
+	wk->double3dFlag = FALSE;
+	GFL_G3D_DOUBLE3D_Exit();
+}
+
+
 void DDEMOMAIN_Main3D( DDEMOMAIN_WORK * wk )
 {
-/*
-	GFL_G3D_SCENEOBJ * obj = GFL_G3D_SCENEOBJ_Get( wk->local->g3d_scene, wk->local->g3d_obj_id );
-
-	if( wk->local->box_anm == JEWELBOX_ANM_MOVE ){
-		GFL_G3D_SCENEOBJ_LoopAnimeFrame( obj, wk->local->box_anm, FX32_ONE );
+	// ２画面３Ｄ
+	if( wk->double3dFlag == TRUE ){
+		GFL_G3D_SCENE_Main( wk->g3d_scene );
+		if( GFL_G3D_DOUBLE3D_GetFlip() == TRUE ){
+//			GFL_G3D_CAMERA_Switching( wk->g3d_camera[0] );
+//			GFL_G3D_SCENE_SetDrawParticleSW( wk->g3d_scene, TRUE );
+			CreateParticleCamera( wk, TRUE );
+		}else{
+//			GFL_G3D_CAMERA_Switching( wk->g3d_camera[1] );
+//			GFL_G3D_SCENE_SetDrawParticleSW( wk->g3d_scene, FALSE );
+			CreateParticleCamera( wk, FALSE );
+		}
+		GFL_G3D_SCENE_Draw( wk->g3d_scene );  
+		GFL_G3D_DOUBLE3D_SetSwapFlag();
 	}else{
-		GFL_G3D_SCENEOBJ_IncAnimeFrame( obj, wk->local->box_anm, FX32_ONE );
+		GFL_G3D_SCENE_Main( wk->g3d_scene );
+		GFL_G3D_SCENE_Draw( wk->g3d_scene );  
 	}
-*/
-	GFL_G3D_SCENE_Main( wk->g3d_scene );
-
-	if( GFL_G3D_DOUBLE3D_GetFlip() == TRUE ){
-//		GFL_G3D_CAMERA_Switching( wk->g3d_camera[0] );
-//		GFL_G3D_SCENE_SetDrawParticleSW( wk->g3d_scene, TRUE );
-		CreateParticleCamera( wk, TRUE );
-	}else{
-//		GFL_G3D_CAMERA_Switching( wk->g3d_camera[1] );
-//		GFL_G3D_SCENE_SetDrawParticleSW( wk->g3d_scene, FALSE );
-		CreateParticleCamera( wk, FALSE );
-	}
-
-	GFL_G3D_SCENE_Draw( wk->g3d_scene );  
-//	GFL_G3D_DOUBLE3D_SetSwapFlag();
 }
 
 

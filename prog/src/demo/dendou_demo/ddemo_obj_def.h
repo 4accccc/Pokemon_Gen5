@@ -22,6 +22,11 @@ enum {
 
 	DDEMOOBJ_ID_EFF,
 
+	DDEMOOBJ_ID_PLAYER_M,			// プレイヤー（メイン画面）
+	DDEMOOBJ_ID_PLAYER_S,			// プレイヤー（サブ画面）
+	DDEMOOBJ_ID_2ND_MES,
+	DDEMOOBJ_ID_2ND_INFO,
+
 	DDEMOOBJ_ID_MAX
 };
 
@@ -30,6 +35,8 @@ enum {
 	DDEMOOBJ_CHRRES_POKE = 0,		// ポケモン（正面）
 	DDEMOOBJ_CHRRES_POKE_B,			// ポケモン（背面）
 	DDEMOOBJ_CHRRES_ETC,
+	DDEMOOBJ_CHRRES_PLAYER_M,		// プレイヤー（メイン画面）
+	DDEMOOBJ_CHRRES_PLAYER_S,		// プレイヤー（サブ画面）
 	DDEMOOBJ_CHRRES_MAX
 };
 
@@ -39,6 +46,8 @@ enum {
 	DDEMOOBJ_PALRES_POKE_B,			// ポケモン（背面）
 	DDEMOOBJ_PALRES_ETC,
 	DDEMOOBJ_PALRES_FOAM,
+	DDEMOOBJ_PALRES_PLAYER_M,		// プレイヤー（メイン画面）
+	DDEMOOBJ_PALRES_PLAYER_S,		// プレイヤー（サブ画面）
 	DDEMOOBJ_PALRES_MAX
 };
 
@@ -47,6 +56,8 @@ enum {
 	DDEMOOBJ_CELRES_POKE = 0,		// ポケモン（正面）
 	DDEMOOBJ_CELRES_POKE_B,			// ポケモン（背面）
 	DDEMOOBJ_CELRES_ETC,
+	DDEMOOBJ_CELRES_PLAYER_M,		// プレイヤー（メイン画面）
+	DDEMOOBJ_CELRES_PLAYER_S,		// プレイヤー（サブ画面）
 	DDEMOOBJ_CELRES_MAX
 };
 

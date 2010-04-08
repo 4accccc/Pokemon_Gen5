@@ -42,6 +42,7 @@ typedef struct {
 	GFL_G3D_LIGHTSET * g3d_light;
 //	u32	g3d_obj_id;
 //	u32	box_anm;
+	BOOL	double3dFlag;
 
 	GFL_PTC_PTR	ptc;											// パーティクル
 	u8	ptcWork[PARTICLE_LIB_HEAP_SIZE];	// パーティクルで使用するワーク
@@ -51,7 +52,7 @@ typedef struct {
 	GFL_MSGDATA * mman;					// メッセージデータマネージャ
 	WORDSET * wset;							// 単語セット
 	STRBUF * exp;								// メッセージ展開領域
-	PRINT_QUE * que;						// プリントキュー
+//	PRINT_QUE * que;						// プリントキュー
 
 	// OBJ
 	GFL_CLUNIT * clunit;
@@ -99,6 +100,8 @@ extern const GFL_DISP_VRAM * DDEMOMAIN_GetVramBankData(void);
 
 extern void DDEMOMAIN_InitBg(void);
 extern void DDEMOMAIN_ExitBg(void);
+extern void DDEMOMAIN_Init2ndSceneBgFrame(void);
+extern void DDEMOMAIN_Exit2ndSceneBgFrame(void);
 
 extern void DDEMOMAIN_SetBlendAlpha(void);
 
@@ -116,6 +119,8 @@ extern void DDEMOMAIN_LoadPokeVoice( DDEMOMAIN_WORK * wk );
 
 extern void DDEMOMAIN_Init3D( DDEMOMAIN_WORK * wk );
 extern void DDEMOMAIN_Exit3D( DDEMOMAIN_WORK * wk );
+extern void DDEMOMAIN_InitDouble3D( DDEMOMAIN_WORK * wk );
+extern void DDEMOMAIN_ExitDouble3D( DDEMOMAIN_WORK * wk );
 extern void DDEMOMAIN_Main3D( DDEMOMAIN_WORK * wk );
 
 extern void DDEMOMAIN_InitParticle( DDEMOMAIN_WORK * wk );
