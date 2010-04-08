@@ -207,6 +207,7 @@
 #define WK_SCENE_C03P15                  16595 /* 0x40d3 ヒウンシティ(プライムピア)：イベント用ワーク */
 #define WK_SCENE_N01R0301                16596 /* 0x40d4 N城3Ｆ：ダークトリニティイベント用ワーク */
 #define WK_SCENE_N01R0401                16597 /* 0x40d5 N城4Ｆ：ダークトリニティイベント用ワーク */
+#define WK_SCENE_C04_BTLREC              16598 /* 0x40d6 ライモンシティ：バトルレコーダー入手イベント用 ※必須イベントでは無い */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
