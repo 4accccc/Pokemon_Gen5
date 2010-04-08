@@ -711,8 +711,6 @@ ev_long_talker:
 /*	甲板部への移動用ＰＯＳ								      */ 
 /**************************************************************/
 EVENT_START		ev_pos_c03r0801_move_01
-  //@todo ここに甲板に出るアニメとかを書ける
-
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
   _FIELD_CLOSE()
@@ -729,7 +727,7 @@ EVENT_START		ev_pos_c03r0801_move_01
 	//予約スクリプト
 	_RESERVE_SCRIPT( SCRID_RESERVE_C03P16_CABINGUIDE_01 )
 
-	//@todo ＢＧ初期化処理
+	//ＢＧ初期化処理
 	_MAP_FADE_INT_BG()
 	
 	//マップチェンジ
@@ -739,9 +737,9 @@ EVENT_START		ev_pos_c03r0801_move_01
     //船内に戻ってくる
     _MAP_FADE_BLACK_IN()
 
-    //@todo ここに甲板から戻ってくるアニメとかを書ける
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_out )
-	_OBJ_ANIME_WAIT()
+    //甲板から戻ってくるアニメとか
+  	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_out )
+  	_OBJ_ANIME_WAIT()
 
     _MAP_FADE_END_CHECK()
   ENDIF
