@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_D12R0101_POLICEMAN_01 (1)
+#define SCRID_ZONE_D12_R0101 (2)
 
 #endif //_D12R0101_DEF_H_

@@ -54,8 +54,8 @@ EVENT_START		ev_c03p13_pilot_01
   {
     DEFINE_LOCAL msg
     //話しかけ初めてかをチェック
-    IF $LOCALWORK0 == 0 THEN
-      $LOCALWORK0 = 1
+    IF FLAG_OFF(FE_C03P13_PILOT_TALK_01) THEN
+      _FLAG_SET(FE_C03P13_PILOT_TALK_01)
       $msg = msg_c03p13_captain_02
     ELSE
       $msg = msg_c03p13_captain_05
@@ -66,6 +66,12 @@ EVENT_START		ev_c03p13_pilot_01
 		_BALLOONWIN_CLOSE()
 
     IF $SCWK_ANSWER == SCR_YES THEN
+      //シーンを進行
+      IF $WK_SCENE_VICTORY == 0 THEN          //イベントまだ
+        $WK_SCENE_VICTORY = 1
+      ELSIF $WK_SCENE_VICTORY == 5 THEN       //連行イベント終わった
+        $WK_SCENE_VICTORY = 6
+      ENDIF 
       //いくで
     	_BALLOONWIN_TALKOBJ_MSG(msg_c03p13_captain_03)
       _BALLOONWIN_CLOSE()

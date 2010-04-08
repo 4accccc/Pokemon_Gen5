@@ -20,28 +20,214 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_d12r0102_hakaim_01
-_EVENT_DATA    ev_d12r0102_policeman_01
 _EVENT_DATA    ev_d12r0102_poke14_01
+_EVENT_DATA    ev_zone_d12r0102
+_EVENT_DATA    ev_init_d12r0102
+_EVENT_DATA    ev_scene_d12r0102
+
 _EVENT_DATA_END
 
+/************************************************************/
+/*		ゾーンチェンジ                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_d12r0102
+
+  IF $WK_SCENE_VICTORY == 0 THEN    //不正対策
+    _FLAG_SET(FV_D12R0102_HAKAIM_01)       //プラズマ幹部いない
+    _FLAG_SET(FV_D12R0102_POKE14_01)       //ビクティいない
+  ELSIF $WK_SCENE_VICTORY <= 3 THEN    //まだビクティつかまえてない
+    _FLAG_RESET(FV_D12R0102_HAKAIM_01)     //プラズマ幹部いる
+    _FLAG_RESET(FV_D12R0102_POKE14_01)     //ビクティいる
+  ELSE
+    _FLAG_SET(FV_D12R0102_HAKAIM_01)       //プラズマ幹部いない
+    _FLAG_SET(FV_D12R0102_POKE14_01)       //ビクティいない
+  ENDIF
+
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_d12r0102
+  IF $WK_SCENE_VICTORY == 2 THEN
+    //プラズマ団位置変更
+    _OBJ_POS_CHANGE( D12R0102_HAKAIM_01, 6, 0, 8, DIR_LEFT )
+  ELSIF $WK_SCENE_VICTORY == 3 THEN
+    //プラズマ団位置変更
+    _OBJ_POS_CHANGE( D12R0102_HAKAIM_01, 6, 0, 8, DIR_LEFT )
+  ENDIF
+INIT_EVENT_END
+
+/************************************************************/
+/*		シーンチェンジ                            */
+/************************************************************/
+EVENT_START   ev_scene_d12r0102
+  //「！」
+  _OBJ_ANIME( D12R0102_HAKAIM_01, anm_gyoe )
+  _OBJ_ANIME_WAIT()
+  //「ビクティの力が」
+  _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_01 , D12R0102_HAKAIM_01, POS_DOWN )
+	_BALLOONWIN_CLOSE()
+  //前進
+  _OBJ_ANIME( D12R0102_HAKAIM_01, anm_move )
+  _OBJ_ANIME_WAIT()
+  //「勝利を導く」
+  _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_02 , D12R0102_HAKAIM_01, POS_DOWN )
+	_BALLOONWIN_CLOSE()
+  //前進
+  _OBJ_ANIME( D12R0102_HAKAIM_01, anm_move )
+  _OBJ_ANIME_WAIT()
+  //「じゃまするな」
+  _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_03 , D12R0102_HAKAIM_01, POS_DOWN )
+	_BALLOONWIN_CLOSE()
+
+  //戦闘
+  {
+    //トレーナー戦呼び出し
+		_TRAINER_BTL_SET( TRID_SCIENTISTW_01, 0 )
+    //敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF
+  }
+
+  //プラズマ団一掃
+  $WK_SCENE_VICTORY = 2
+
+  _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_04 , D12R0102_HAKAIM_01, POS_DOWN )
+	_BALLOONWIN_CLOSE()
+  _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_05 , D12R0102_HAKAIM_01, POS_DOWN )
+	_BALLOONWIN_CLOSE()
+
+  //はける
+  _OBJ_ANIME( D12R0102_HAKAIM_01, anm_move2 )
+  _OBJ_ANIME_WAIT()
+
+EVENT_END
 
 /**************************************************************/
-/*  D12R0101 hakaim_01			                      */
+/*  D12R0102 hakaim_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12r0102_hakaim_01
-	
+  //かったからといって
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12r0102_plasma02_05 )
 EVENT_END
 
 /**************************************************************/
-/*  D12R0101 policeman_01			                      */
-/**************************************************************/
-EVENT_START   ev_d12r0102_policeman_01
-	
-EVENT_END
-
-/**************************************************************/
-/*  D12R0101 poke14_01			                      */
+/*  D12R0102 poke14_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12r0102_poke14_01
-	
+  _TALK_OBJ_START()
+  //ビクティ鳴き声
+  _VOICE_PLAY( MONSNO_657, 0 )
+  _GIZAPLAINWIN_MSG_POS( msg_d12r0102_victie_01, POS_DOWN)
+  _VOICE_WAIT()
+  _GIZAPLAINWIN_CLOSE()
+
+  //チケットチェック
+  _CALL check_evt_lock
+
+  IF $SCWK_ANSWER == TRUE THEN    //チェックＯＫ
+    //戦闘
+    {
+      DEFINE_LOCAL flag
+      $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
+      $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
+      _WILD_BTL_SET_EX( MONSNO_657 , 15, flag ) // Lv15 ビクティ
+    }
+    //ビクティを消す
+    _FLAG_SET( FV_D12R0102_POKE14_01 )
+    _OBJ_DEL(D12R0102_POKE14_01)
+
+    //位置変更
+    _OBJ_POS_CHANGE( D12R0102_HAKAIM_01, 6, 0, 8, DIR_UP )
+    _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 4, 0, 4, DIR_UP )
+
+    _WILD_LOSE_CHECK( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+      _WILD_WIN()
+    ELSE
+      _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+    ENDIF
+
+    _WILD_RETRY_CHECK( SCWK_ANSWER )
+    SWITCH $SCWK_ANSWER
+    CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN //勝利した場合、あるいは逃げた場合
+      //シーンワーク更新 ビクティとバトルした（捕獲してない）
+      $WK_SCENE_VICTORY = 3
+    CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
+      //シーンワーク更新 ビクティ捕獲
+      $WK_SCENE_VICTORY = 4
+      //プラズマ団消す
+      _FLAG_SET(FV_D12_HAKAIM_01)
+    ENDSWITCH
+
+    //捕獲したかで分岐
+    IF $WK_SCENE_VICTORY == 4 THEN    //捕獲
+      _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_06 , D12R0102_HAKAIM_01, POS_UP )
+	    _BALLOONWIN_CLOSE()
+      //逃げる
+      _OBJ_ANIME( D12R0102_HAKAIM_01, anm_escape )
+      _OBJ_ANIME_WAIT()
+      //プラズマ団消す
+      _FLAG_SET( FV_D12R0102_HAKAIM_01 )
+      _OBJ_DEL(D12R0102_HAKAIM_01)
+    ELSE
+      //「すがたをけした」
+      _SYSWIN_MSG(msg_d12r0102_narrator_01, POS_DOWN)
+      _SYSWIN_CLOSE()
+      //
+      _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_07 , D12R0102_HAKAIM_01, POS_UP )
+	    _BALLOONWIN_CLOSE()
+    ENDIF
+  ENDIF  
 EVENT_END
+
+//イベントロックチェックoutput:SCWK_ANSWER TRUE:チェックＯＫ　FALSE:チェックＮＧ
+check_evt_lock:
+  //リバティチケット持っているか?
+  _ITEM_CHK( ITEM_RIBATHITIKETTO, 1, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN    //持っている
+    //イベントロックチェック
+    _CHK_EVT_LOCK( EVT_LOCK_NO_VICTYTICKET, SCWK_ANSWER )
+  ELSE                            //持っていない
+    $SCWK_ANSWER = FALSE
+  ENDIF
+  $SCWK_ANSWER = TRUE   //todo
+_RET
+
+//--------------------------------------------------------------
+//	「！」
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	前進
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_move
+  _ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	敗北した後
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_move2
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	逃げる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_escape
+  _ANIME_DATA	AC_WALK_L_4F,2
+  _ANIME_DATA	AC_WALK_D_4F,2
+	_ANIME_DATA	ACMD_END,0
+

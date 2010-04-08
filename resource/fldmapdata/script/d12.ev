@@ -31,7 +31,114 @@ _EVENT_DATA    ev_d12_policeman_02
 _EVENT_DATA    ev_d12_bg_board_01
 _EVENT_DATA    ev_d12_bg_board_02
 _EVENT_DATA    ev_reserve_d12
+_EVENT_DATA    ev_zone_d12
+_EVENT_DATA    ev_scene_d12
 _EVENT_DATA_END
+
+/************************************************************/
+/*		ゾーンチェンジ                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_d12
+
+  SWITCH $WK_SCENE_VICTORY
+  CASE 1 THEN   //イベント開始
+    _FLAG_SET(FV_D12_POLECEMAN_02)      //警官いない（建物の中にいる）
+    _FLAG_SET(FV_D12_EVENTEND_01)       //プラズマ団連行イベント関連ＯＢＪいない
+    _FLAG_RESET(FV_D12_PEOPLE_01)       //観光客いる
+    _FLAG_RESET(FV_D12_HAKAIM_01)       //プラズマしたっぱいる
+  CASE 2 THEN   //プラズマ団一掃
+    _FLAG_SET(FV_D12_POLECEMAN_02)      //警官いない（建物の中にいる）
+    _FLAG_SET(FV_D12_EVENTEND_01)       //プラズマ団連行イベント関連ＯＢＪいない
+    _FLAG_RESET(FV_D12_PEOPLE_01)       //観光客いる
+    _FLAG_RESET(FV_D12_HAKAIM_01)       //プラズマしたっぱいる
+  CASE 3 THEN   //ビクティ捕獲失敗
+    _FLAG_RESET(FV_D12_PEOPLE_01)       //観光客いる
+    _FLAG_RESET(FV_D12_HAKAIM_01)       //プラズマしたっぱいる
+    _FLAG_SET(FV_D12_EVENTEND_01)       //プラズマ団連行イベント関連ＯＢＪいない
+    _FLAG_SET(FV_D12_POLECEMAN_02)      //警官いない（建物の中にいる）
+  CASE 4 THEN   //ビクティ捕獲直後
+    _FLAG_RESET(FV_D12_PEOPLE_01)       //観光客いる
+    _FLAG_SET(FV_D12_HAKAIM_01)         //プラズマしたっぱいない
+    _FLAG_RESET(FV_D12_EVENTEND_01)     //プラズマ団連行イベント関連ＯＢＪいる
+    _FLAG_RESET(FV_D12_POLECEMAN_02)    //警官いる（建物の中にいない）
+  CASE 5 THEN   //連行イベント直後(このシーケンスにはこないが)
+    _FLAG_RESET(FV_D12_PEOPLE_01)       //観光客いる
+    _FLAG_SET(FV_D12_HAKAIM_01)         //プラズマしたっぱいない
+    _FLAG_SET(FV_D12_EVENTEND_01)       //プラズマ団連行イベント関連ＯＢＪいない
+    _FLAG_RESET(FV_D12_POLECEMAN_02)    //警官いる（建物の中にいない）
+  CASE 6 THEN   //イベント後の島来訪
+    _FLAG_SET(FV_D12_PEOPLE_01)         //観光客いない
+    _FLAG_SET(FV_D12_HAKAIM_01)         //プラズマしたっぱいない
+    _FLAG_SET(FV_D12_EVENTEND_01)       //プラズマ団連行イベント関連ＯＢＪいない
+    _FLAG_RESET(FV_D12_POLECEMAN_02)    //警官いる（建物の中にいない）  
+  DEFAULT
+    _FLAG_SET(FV_D12_PEOPLE_01)         //観光客いない
+    _FLAG_SET(FV_D12_HAKAIM_01)         //プラズマしたっぱいない
+    _FLAG_SET(FV_D12_EVENTEND_01)       //プラズマ団連行イベント関連ＯＢＪいない
+    _FLAG_RESET(FV_D12_POLECEMAN_02)    //警官いる（建物の中にいない）
+  ENDSWITCH
+INIT_EVENT_END
+
+/************************************************************/
+/*		シーンチェンジ                             */
+/************************************************************/
+EVENT_START   ev_scene_d12
+  //連行イベント
+
+  //カメラ移動
+
+  //サブメッセージ
+
+  //アニメ終了
+
+  //カメラ戻し
+
+  //連行ＯＢＪ消す
+  _OBJ_DEL(D12_HAKAIM_02)
+  _OBJ_DEL(D12_HAKAIM_03)
+  _OBJ_DEL(D12_HAKAIM_04)
+  _OBJ_DEL(D12_POLICE_07)
+  _OBJ_DEL(D12_POLICE_08)
+  _OBJ_DEL(D12_POLICE_09)
+  _OBJ_DEL(D12_POLICE_10)
+
+  //自機移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
+  _OBJ_ANIME_WAIT()
+  //タグ０番にプレーヤー名取得
+  _PLAYER_NAME(0)
+  //○○のおかげ
+  _BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_01 , D12_HAKASE1_01, POS_UP )
+	_BALLOONWIN_CLOSE()
+  //自機移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move2 )
+  _OBJ_ANIME_WAIT()
+
+  _BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_02 , D12_HAKASE1_01, POS_UP )
+	_BALLOONWIN_CLOSE()
+  _BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_03 , D12_HAKASE1_01, POS_UP )
+	_BALLOONWIN_CLOSE()
+  _BALLOONWIN_OBJMSG_POS( msg_d12_police03_01 , D12_POLICE_03, POS_UP )
+	_BALLOONWIN_CLOSE()
+  _BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_04 , D12_HAKASE1_01, POS_UP )
+	_BALLOONWIN_CLOSE()
+  _BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_05 , D12_HAKASE1_01, POS_UP )
+	_BALLOONWIN_CLOSE()
+
+  //アララギと取り巻きＯＢＪ消す
+  _OBJ_DEL(D12_HAKASE1_01)
+  _OBJ_DEL(D12_POLICE_03)
+  _OBJ_DEL(D12_POLICE_04)
+  _OBJ_DEL(D12_POLICE_05)
+  _OBJ_DEL(D12_POLICE_06)
+  _OBJ_DEL(D12_POLICE_11)
+
+  //イベントバニッシュフラグＯＮ
+  _FLAG_SET( FV_D12_EVENTEND_01 )
+
+  //イベント終了　シーンワーク変更
+  $WK_SCENE_VICTORY = 5
+EVENT_END
 
 /************************************************************/
 /*				船から下りたところ                                */
@@ -53,25 +160,24 @@ EVENT_START   ev_d12_pilot_01
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
   IF $SCWK_ANSWER == SCR_YES THEN
-      //もでるで
-    	_BALLOONWIN_TALKOBJ_MSG(msg_d12_mariner_02)
-      _BALLOONWIN_CLOSE()
-      //マップジャンプ
-      _RAIL_MAP_CHANGE( ZONE_ID_C03P13, 0, 0, 10, DIR_RIGHT )
-		ELSE
-      //またね
-      _BALLOONWIN_TALKOBJ_MSG(msg_d12_mariner_03)
-      _LAST_KEYWAIT()
-      _BALLOONWIN_CLOSE()
-		ENDIF
-
+    //もどるで
+  	_BALLOONWIN_TALKOBJ_MSG(msg_d12_mariner_02)
+    _BALLOONWIN_CLOSE()
+    //マップジャンプ
+    _RAIL_MAP_CHANGE( ZONE_ID_C03P13, 0, 0, 10, DIR_RIGHT )
+	ELSE
+    //またね
+    _BALLOONWIN_TALKOBJ_MSG(msg_d12_mariner_03)
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+	ENDIF
 EVENT_END
 
 /**************************************************************/
 /*  D12 backpackerm_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_backpackerm_01
-  IF $LOCALWORK0 == 0 THEN
+  IF $WK_SCENE_VICTORY <= 3 THEN
     //プラズマ団
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor01_01 )
   ELSE
@@ -84,7 +190,7 @@ EVENT_END
 /*  D12 babyboy1_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_babyboy1_01
-  IF $LOCALWORK0 == 0 THEN
+  IF $WK_SCENE_VICTORY <= 3 THEN
     //こわい
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor02_01 )
   ELSE
@@ -106,7 +212,7 @@ EVENT_END
 /*  D12 oldwoman1_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_oldwoman1_01
-	IF $LOCALWORK0 == 0 THEN
+	IF $WK_SCENE_VICTORY <= 3 THEN
     //なめたら・・
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor03_01 )
   ELSE
@@ -126,7 +232,7 @@ EVENT_END
 /*  D12 sunglasses_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_sunglasses_01
-  IF $LOCALWORK0 == 0 THEN
+  IF $WK_SCENE_VICTORY <= 3 THEN
     //せんきょ
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor04_01 )
   ELSE
@@ -139,7 +245,7 @@ EVENT_END
 /*  D12 woman2_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_woman2_01
-	IF $LOCALWORK0 == 0 THEN
+	IF $WK_SCENE_VICTORY <= 3 THEN
     //ふるい　とうだい
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_visitor05_01 )
   ELSE
@@ -152,10 +258,13 @@ EVENT_END
 /*  D12 policeman_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_policeman_01
-  IF $LOCALWORK0 == 0 THEN
+  IF $WK_SCENE_VICTORY == 0 THEN
+    //たいくつ
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_police01_03 )
+  ELSIF $WK_SCENE_VICTORY <= 3 THEN
     //プラズマだんの　やつら
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_police01_01 )
-  ELSIF $LOCALWORK0 == 1 THEN
+  ELSIF $WK_SCENE_VICTORY <= 5 THEN
     //よかった
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_police01_02 )
   ELSE
@@ -169,8 +278,13 @@ EVENT_END
 /*  D12 policeman_02			                      */
 /**************************************************************/
 EVENT_START   ev_d12_policeman_02
-  //しずかな　もんだ
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_police02_01 )	
+  IF $WK_SCENE_VICTORY == 5 THEN
+    //けいかんたいが
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_police02_01 )	
+  ELSE
+    //しずかな　もんだ
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12_police02_02 )	
+  ENDIF
 EVENT_END
 
 /**************************************************************/
@@ -186,3 +300,22 @@ EVENT_END
 EVENT_START   ev_d12_bg_board_02
 	_EASY_BGWIN_MSG( msg_d12_sign_02,TYPE_POST )
 EVENT_END
+
+
+
+//--------------------------------------------------------------
+//	自機移動
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_player_move
+  _ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	自機移動
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_player_move2
+  _ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+  
+
+

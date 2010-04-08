@@ -20,12 +20,47 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_d12r0101_policeman_01
+_EVENT_DATA    ev_zone_d12_r0101
 _EVENT_DATA_END
 
+/************************************************************/
+/*		ゾーンチェンジ                             */
+/************************************************************/
+INIT_EVENT_START   ev_zone_d12_r0101
+
+  IF $WK_SCENE_VICTORY <= 3 THEN        //イベント開始
+    _FLAG_RESET(FV_D12R0101_POLECEMAN_01)     //いる
+  ELSE
+    _FLAG_SET(FV_D12R0101_POLECEMAN_01)       //いない
+  ENDIF
+INIT_EVENT_END
 
 /**************************************************************/
 /*  D12R0101 policeman_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12r0101_policeman_01
-	
+{
+  DEFINE_LOCAL msg
+  _TALK_OBJ_START()
+
+  //てつだわせろ
+  _BALLOONWIN_TALKOBJ_MSG(msg_d12r0101_policeman02_01)
+	_YES_NO_WIN( SCWK_ANSWER )
+	_BALLOONWIN_CLOSE()
+	IF $SCWK_ANSWER == SCR_YES THEN
+    //回復処理
+    _TEMOTI_POKEMON_KAIFUKU()
+    _ME_PLAY( SEQ_ME_ASA )
+		_ME_WAIT()
+    //とめてくれ
+    $msg = msg_d12r0101_policeman02_02
+	ELSE
+    //おしえてくれ
+    $msg = msg_d12r0101_policeman02_03
+  ENDIF
+
+  _BALLOONWIN_TALKOBJ_MSG(msg)
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+}
 EVENT_END
