@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T18:52:54"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T17:41:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -341,7 +341,8 @@
 ・コンテナに入ってすぐ
 ・メッセージ表示後、「？」マーク表示して
 　次のメッセージ表示</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……それにしても▼
 チャンピオンが　いっていた
 トレーナーにとって▽
@@ -358,7 +359,8 @@
 		<comment>♂
 ・メッセージ表示後、
 　ライバルだけ、コンテナの奥へ移動</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">……かんがえても
 わかるわけ　ないよね▼
 さて　なかを　しらべよう▼</language>
@@ -374,7 +376,8 @@
 ・はい/いいえ
 ・はい→black_04
 　いいえ→black_05</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……？
 この　おくにも　だれか　いるね[BE:01:ページ切り替え（クリア）]
 ひょっとしたら　プラズマだん　かな
@@ -391,7 +394,8 @@
 ・メッセージ表示後、ライバル先導で
 　プラズマ団の手前まで移動
 ・続けてsage2_01</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">じゃ　行こうか[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">じゃ　行こうか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -400,7 +404,8 @@
 		<comment>♂
 ・いいえ選択時
 ・再度話しかけたときはblack_03から</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">……じゅんびして　きてよ
 ここで　まっているから</language>
 		<language name="JPN_KANJI" width="256">……準備して　きてよ

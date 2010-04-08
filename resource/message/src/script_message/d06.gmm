@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T21:04:31"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T17:42:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -307,7 +307,8 @@
 ・メッセージ後、主人公！マーク表示して
 　下向きになり一歩下へ移動
 ・ヤーコン登場する</comment>
-		<attribute name="キャラ指定">LEADER5</attribute>
+		<attribute name="キャラ指定">LEADER5
+ヤーコン</attribute>
 		<language name="JPN" width="256">ヤーコン『またせたな[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ヤーコン『待たせたな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -317,7 +318,8 @@
 ・メッセージ表示後
 　ポケモン「ミネズミ」の動作モデル出現
 ・続けてmsg_d06_leader_03</comment>
-		<attribute name="キャラ指定">LEADER5</attribute>
+		<attribute name="キャラ指定">LEADER5
+ヤーコン</attribute>
 		<language name="JPN" width="256">これは　デンチュラという
 でんきタイプ　ポケモンの　すだな[BE:01:ページ切り替え（クリア）]
 なんで　こんな　ところに
@@ -337,7 +339,8 @@
 ・ポケモンが巣に向かい技を出したような演出
 ・巣を削除する処理
 ・続けてleader_04</comment>
-		<attribute name="キャラ指定">LEADER5</attribute>
+		<attribute name="キャラ指定">LEADER5
+ヤーコン</attribute>
 		<language name="JPN" width="256">やれい！
 ワルビルっ！！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">やれい！
@@ -349,7 +352,8 @@
 ・主人公と向き合ってアイテム入手処理
 　No405「じならし」
 ・続けてleader_05</comment>
-		<attribute name="キャラ指定">LEADER5</attribute>
+		<attribute name="キャラ指定">LEADER5
+ヤーコン</attribute>
 		<language name="JPN" width="256">ほらよ！
 この　わざマシンを　くれてやる[BE:01:ページ切り替え（クリア）]
 ヤーコンさま　じまんの　わざマシンだ[BE:01:ページ切り替え（クリア）]
@@ -365,7 +369,8 @@
 	<row id="msg_d06_leader_05">
 		<comment>♂
 ・続けてleader_06</comment>
-		<attribute name="キャラ指定">LEADER5</attribute>
+		<attribute name="キャラ指定">LEADER5
+ヤーコン</attribute>
 		<language name="JPN" width="256">その「じならし」はだな……
 ダメージを　あたえつつ▽
 あいての　すばやさを　さげる　わざ▼
@@ -386,7 +391,8 @@
 		<comment>♂
 ・表示後、道をくだりc05方面へ移動
 　画面外に消えると、主人公操作可能に</comment>
-		<attribute name="キャラ指定">LEADER5</attribute>
+		<attribute name="キャラ指定">LEADER5
+ヤーコン</attribute>
 		<language name="JPN" width="256">オレには　おまえさんの　さいのうが
 どれほどのものか　わからんが[BE:01:ページ切り替え（クリア）]
 いけると　おもうなら　どこまでも[BE:01:ページ切り替え（クリア）]

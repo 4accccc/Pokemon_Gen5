@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T18:31:00"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T17:40:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -455,7 +455,8 @@
 	<row id="msg_d03r0101_rival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：d08イベント後
 ・GRIDX=61、GRIDZ=30</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『ここが
 こだいのしろの　いりぐち[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『ここが
@@ -467,7 +468,8 @@
 ・画面上向きでメッセージ表示
 ・表示後、画面上方向に移動
 　画面外に消えると、主人公操作可能に</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">……アデクさん　さきに　いったよ
 ぼくたちも　いそごう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">……アデクさん　先に行ったよ
@@ -477,7 +479,8 @@
 	<row id="msg_d03r0101_rival_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：d04r0601のイベント後
 ・画面暗転から復帰後メッセージ自動で表示</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……うまく　いえない▼
 だけど　ぜったいに　ゆるせない▼
 なにが　ぜつぼうする
@@ -494,7 +497,8 @@
 		<comment>♂：d04r0601のイベント後
 ・メッセージ表示後
 　ライブキャスター受信音</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">アデク『……Ｎという　おとこ
 なにを　のぞんでいるのだろう？▼
 ２ひきの　ドラゴンが　たたかい
@@ -515,7 +519,8 @@
 		<comment>♂：d04r0601のイベント後
 ・メッセージ後、ＴＶトランシーバー画面に切り替え
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！　きみの
 ライブキャスター　だれから？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！　きみの
@@ -529,6 +534,8 @@
 ・表示後、チャンピオンに「そらをとぶ」演出で
 　動作モデル削除
 ・続けてmsg_d03r0101_rival_05</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">アデク『……アララギの　むすめめ
 ここまで　こえが　きこえたぞ▽
 なにやら　たいへんな　ようすだな▼
@@ -547,7 +554,8 @@
 		<comment>♂：d04r0601のイベント後
 ・c02gym0101でダークストーン（ライトストーン）入手で
 　ここから削除</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……ぼくは
 もういちど　このなかを　さがす▼
 ゲーチスの　いうことを

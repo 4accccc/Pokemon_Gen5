@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-07T23:20:03"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T17:40:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -299,7 +299,8 @@
 ・pos（詳細未定）を踏むとイベント発動
 　ライバルのメッセージ表示後
 　主人公がライバルの隣まで移動</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……[1:00:トレーナー名:0]　こっちだよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『……[1:00:トレーナー名:0]　こっちだよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -382,7 +383,7 @@
 	<row id="msg_d04r0601_champion_01">
 		<comment>♂
 ・続けてsage1_03</comment>
-		<attribute name="キャラ指定">チャンピオン
+		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『……ときはなつ　だと？▼
 トレーナーと　ともにある
@@ -506,7 +507,7 @@
 	<row id="msg_d04r0601_champion_02">
 		<comment>♂
 ・続けてsage1_04</comment>
-		<attribute name="キャラ指定">チャンピオン
+		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『……ワシは　まけぬ！▼
 ポケモンを　あいする
@@ -580,7 +581,8 @@
 ・このとき残った動作モデル、下向き
 　（ゲーチスの移動に追従する）
 ・続けてchampion_03</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……アデクさん
 これから　どうするのですか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『……アデクさん
@@ -591,7 +593,8 @@
 		<comment>♂
 ・WHITEver
 ・続けてrival_03</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">アデク『……ふむう▼
 ポケモンリーグに　もどり
 Ｎと　たたかうしか　ないな▼
@@ -612,7 +615,8 @@
 		<comment>♂
 ・BLACKver
 ・続けてrival_03</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">アデク『……ふむう▼
 ポケモンリーグに　もどり
 Ｎと　たたかうしか　ないな▼
@@ -632,7 +636,8 @@
 	<row id="msg_d04r0601_rival_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてchampion_04</comment>
-		<attribute name="キャラ指定">ライバル</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……アデクさん
 とにかく　そとに　でませんか[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『……アデクさん
@@ -643,7 +648,8 @@
 		<comment>♂
 ・メッセージ表示後、画面暗転
 ・d03r0101に続く</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">アデク『……うむ　そうするか
 なんだか　ここは　いきぐるしいわ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アデク『……うむ　そうするか
