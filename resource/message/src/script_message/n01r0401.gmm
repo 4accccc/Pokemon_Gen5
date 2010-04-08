@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T14:41:14"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T15:37:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1292" top="218" right="1997" bottom="846" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,33 +294,35 @@
 
 	<row id="msg_n01r0401_ninja1_01">
 		<comment>♂
-・posを踏むと出現しメッセージ表示
-・続けてninja2_01</comment>
+・このマップに来たときにイベント発生
+・n01r0402からダークトリニティが出現し
+　主人公に隣接してメッセージ表示</comment>
 		<attribute name="キャラ指定">NINJA
 ダークトリニティ</attribute>
-		<language name="JPN" width="256">……プラズマだんは
-ゲーチスさまが　つくられた▼
-しちけんじんも　めがみも
-われら　ダークトリニティも▽
-ゲーチスさまが　あつめたのだ……▼</language>
-		<language name="JPN_KANJI" width="256">……プラズマ団は
-ゲーチスさまが　組織なされた▼
-七賢人も　女神も
-われら　ダークトリニティも▽
-ゲーチスさまが　集めたのだ……▼</language>
+		<language name="JPN" width="256">あの　へやは
+Ｎさまに　あたえられた　せかい……▼</language>
+		<language name="JPN_KANJI" width="256">あの　部屋は
+Ｎさまに　与えられた　世界……▼</language>
 	</row>
 
 	<row id="msg_n01r0401_ninja2_01">
 		<comment>♂
-・2体目のダークトリニティ出現
-・メッセージ表示後、２体とも削除
+・メッセージ表示後、ダークトリニティ消える芝居
 　主人公操作可能に</comment>
 		<attribute name="キャラ指定">NINJA
 ダークトリニティ</attribute>
-		<language name="JPN" width="256">……たたかえ▼
-それが　ゲーチスさまの　のぞみ……▼</language>
-		<language name="JPN_KANJI" width="256">……戦え▼
-それが　ゲーチスさまの　望み……▼</language>
+		<language name="JPN" width="256">わたしは　はいっても
+なにも　おもわないが……▽
+おまえなら　なにか　かんじるかもな▼
+そして　さいごの　でんごんだ▼
+たたかえ！　Ｎさまと
+それが　ゲーチスさまの　のぞみ！▼</language>
+		<language name="JPN_KANJI" width="256">わたしは　はいっても
+なにも　思わないが……▽
+おまえなら　なにか　感じるかもな▼
+そして　最後の　伝言だ▼
+戦え！　Ｎさまと
+それが　ゲーチスさまの　望み！▼</language>
 	</row>
 
 	<flowchart-group-list>
