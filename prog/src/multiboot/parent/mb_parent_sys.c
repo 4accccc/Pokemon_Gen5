@@ -1067,24 +1067,18 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
   work->confirmState = MPCS_NONE;
   work->romTitleStr = GFL_HEAP_AllocClearMemory( work->heapId , MB_GAME_NAME_LENGTH*2 );
   work->romInfoStr = GFL_HEAP_AllocClearMemory( work->heapId , MB_GAME_INTRO_LENGTH*2 );
-  MB_MSG_MessageCreateWordset( work->msgWork );
-  MB_MSG_MessageWordsetName( work->msgWork , 0 , GAMEDATA_GetMyStatus(work->initWork->gameData) );
-  {
-    STRBUF *workStr;
-    if( work->mode == MPM_POKE_SHIFTER )
-    {
-      workStr = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_TITLE );
-    }
-    else
-    {
-      workStr = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_TITLE_MOVIE );
-    }
-    titleStr = GFL_STR_CreateBuffer( 128 , work->heapId );
-    WORDSET_ExpandStr( MB_MSG_GetWordSet(work->msgWork) , titleStr , workStr );
-    GFL_STR_DeleteBuffer( workStr );
-  }
-  MB_MSG_MessageDeleteWordset( work->msgWork );
 
+  //タイトル
+  if( work->mode == MPM_POKE_SHIFTER )
+  {
+    titleStr = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_TITLE );
+  }
+  else
+  {
+    titleStr = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_TITLE_MOVIE );
+  }
+
+  //説明
   if( work->mode == MPM_POKE_SHIFTER )
   {
     infoStr  = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_INFO );
@@ -1176,8 +1170,34 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
 
         MB_MSG_MessageHide( work->msgWork );
         MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE );
+
         MB_MSG_MessageCreateWordset( work->msgWork );
-        MB_MSG_MessageWordsetName( work->msgWork , 0 , GAMEDATA_GetMyStatus(work->initWork->gameData) );
+        {
+          //DS本体名の設定(10文字
+      #if (defined(SDK_TWL))
+          OSOwnerInfoEx info;
+          OS_GetOwnerInfoEx( &info );
+      #else
+          OSOwnerInfo info;
+          OS_GetOwnerInfo( &info );
+      #endif    
+          {
+            u8 i;
+            STRBUF *workStr = GFL_STR_CreateBuffer( 16 , work->heapId );
+            //EOMの変換
+            for( i=0;i<11;i++ )
+            {
+              if( info.nickName[i] == 0 )
+              {
+                info.nickName[i] = GFL_STR_GetEOMCode();
+              }
+            }
+            GFL_STR_SetStringCode( workStr , info.nickName );
+            MB_MSG_MessageWordsetStrBuf( work->msgWork , 0 , workStr );
+
+            GFL_STR_DeleteBuffer( workStr );
+          }
+        }
         if( work->mode == MPM_POKE_SHIFTER )
         {
           MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 , MSGSPEED_GetWait() );
@@ -1441,14 +1461,15 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
   {
   case MPCS_INIT:
     MB_MSG_MessageHide( work->msgWork );
-    MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE_UP );
 
     if( work->mode == MPM_POKE_SHIFTER )
     {
+      MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE_UP );
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_10 , MSGSPEED_GetWait() );
     }
     else
     {
+      MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_22 , MSGSPEED_GetWait() );
     }
     work->confirmState = MPCS_WAIT_MSG;
@@ -1456,13 +1477,29 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
   case MPCS_WAIT_MSG:
     if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
     {
-      MB_MSG_DispYesNo( work->msgWork , MMYT_UP );
+      if( work->mode == MPM_POKE_SHIFTER )
+      {
+        MB_MSG_DispYesNo( work->msgWork , MMYT_UP );
+      }
+      else
+      {
+        MB_MSG_DispYesNoUpper( work->msgWork , MMYT_UP );
+      }
       work->confirmState = MPCS_WAIT_CONFIRM;
     }
     break;
   case MPCS_WAIT_CONFIRM:
     {
-      const MB_MSG_YESNO_RET ret = MB_MSG_UpdateYesNo( work->msgWork );
+      MB_MSG_YESNO_RET ret;
+      if( work->mode == MPM_POKE_SHIFTER )
+      {
+        ret = MB_MSG_UpdateYesNo( work->msgWork );
+      }
+      else
+      {
+        ret = MB_MSG_UpdateYesNoUpper( work->msgWork );
+      }
+
       if( ret == MMYR_RET1 )
       {
         GF_ASSERT_MSG( MBP_GetState() == MBP_STATE_ENTRY , "state is not[MBP_STATE_ENTRY][%d]!!!\n",MBP_GetState() );
@@ -1473,7 +1510,14 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
       else
       if( ret == MMYR_RET2 )
       {
-        MB_MSG_ClearYesNo( work->msgWork );
+        if( work->mode == MPM_POKE_SHIFTER )
+        {
+          MB_MSG_ClearYesNo( work->msgWork );
+        }
+        else
+        {
+          MB_MSG_ClearYesNoUpper( work->msgWork );
+        }
         MB_MSG_MessageHide( work->msgWork );
         
         MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE );

@@ -106,6 +106,7 @@ extern void MB_MSG_MessageCreateWordset( MB_MSG_WORK *work );
 extern void MB_MSG_MessageDeleteWordset( MB_MSG_WORK *work );
 extern void MB_MSG_MessageWordsetName( MB_MSG_WORK *msgWork , const u32 bufId , MYSTATUS *myStatus);
 extern void MB_MSG_MessageWordsetNumber( MB_MSG_WORK *msgWork , const u32 bufId , const u32 num , const u32 keta );
+extern void MB_MSG_MessageWordsetStrBuf( MB_MSG_WORK *msgWork , const u32 bufId , STRBUF *strBuf );
 
 extern void MB_MSG_DispYesNo( MB_MSG_WORK *msgWork , const MB_MSG_YESNO_TYPE type );
 extern void MB_MSG_ClearYesNo( MB_MSG_WORK *msgWork );

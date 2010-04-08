@@ -537,6 +537,11 @@ void MB_MSG_MessageWordsetNumber( MB_MSG_WORK *msgWork , const u32 bufId , const
 {
   WORDSET_RegisterNumber( msgWork->wordSet , bufId , num , keta , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
 }
+void MB_MSG_MessageWordsetStrBuf( MB_MSG_WORK *msgWork , const u32 bufId , STRBUF *strBuf )
+{
+  //DS本体名用
+  WORDSET_RegisterWord( msgWork->wordSet , bufId , strBuf , 0 , TRUE , PM_LANG );
+}
 
 //--------------------------------------------------------------------------
 //  選択肢表示

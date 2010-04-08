@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-24T17:48:50"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-04-08T14:57:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -67,6 +67,11 @@
 			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
 			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
@@ -77,6 +82,14 @@
 				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
 				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
 			</tag>
+			<tag entry="15" japanese="趣味（調査レーダー）" english="趣味（調査レーダー）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="16" japanese="Gパワー名称" english="Gパワー名称" view="EP" width="156" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">Gパワーの名称です</comment>
+				<comment language="english">Gパワーの名称です</comment>
+			</tag>
 			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">ポケモンの特殊状態です。</comment>
@@ -86,6 +99,9 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
 				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="19" japanese="アンケート回答" english="アンケート回答" view="EP" width="108" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -108,19 +124,17 @@
 				<comment language="japanese">ぼうけんノートなどで使う</comment>
 				<comment language="english">ぼうけんノートなどで使う</comment>
 			</tag>
-			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+			<tag entry="34" japanese="ミュージカル演目名" english="ミュージカル演目名" view="EP" width="234" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">コンテストのジャンル
-「○○○○○コンテスト」</comment>
-				<comment language="english">コンテストのジャンル
-「○○○○○コンテスト」</comment>
+				<comment language="japanese">ミュージカルの演目名</comment>
+				<comment language="english">ミュージカルの演目名</comment>
 			</tag>
-			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+			<tag entry="35" japanese="ミュージカルコンディション" english="ミュージカルコンディション" view="EP" width="65" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">○○○○ランク
-「ランク」も含む</comment>
-				<comment language="english">○○○○ランク
-「ランク」も含む</comment>
+				<comment language="japanese">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
+				<comment language="english">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
 			</tag>
 			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -182,6 +196,22 @@
 				<comment language="japanese">スペイン語の挨拶</comment>
 				<comment language="english">スペイン語の挨拶</comment>
 			</tag>
+			<tag entry="49" japanese="ミュージカルグッズ部位" english="ミュージカルグッズ部位" view="EP" width="39" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="50" japanese="PDW家具名" english="PDW家具名" view="EP" width="169" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="51" japanese="ミュージカル客層" english="ミュージカル客層" view="EP" width="78" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">おとこのひと、女の子等</comment>
+				<comment language="english">おとこのひと、女の子等</comment>
+			</tag>
+			<tag entry="52" japanese="DS本体名" english="DS本体名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">DS本体のユーザー名</comment>
+				<comment language="english">DS本体のユーザー名</comment>
+			</tag>
 		</group>
 
 		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
@@ -213,6 +243,9 @@
 			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="08" japanese="９桁" english="９桁" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
 		</group>
 
 		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
@@ -241,6 +274,13 @@
 				<comment language="english">描画X座標を加算します。
 使用は許可制です。</comment>
 			</tag>
+			<tag entry="05" japanese="X指定" english="X指定" view="EP" length="0" line="1">
+				<parameter number="0" japanese="Ｘ座標" english="Ｘ座標" type="int16"/>
+				<comment language="japanese">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+				<comment language="english">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+			</tag>
 		</group>
 
 		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
@@ -261,11 +301,21 @@
 			</tag>
 			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
 			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+			</tag>
 		</group>
 
 		<group entry="254" japanese="文字列展開" english="Word">
 		</group>
 
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
 		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
 		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
 		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
@@ -312,14 +362,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="133" top="189" right="838" bottom="817" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -347,7 +397,8 @@
 ハートゴールド・ソウルシルバー
 いずれかの　ソフトを　セットし
 『ＤＳダウンロードプレイ』から
-『ポケシフター　[1:00:トレーナー名:0]』を
+『ポケシフター　
+[1:34:DS本体名:0]』を
 えらんでください</language>
 		<language name="JPN_KANJI" width="208">もう１つの　ＤＳに
 ポケットモンスターの
@@ -355,7 +406,8 @@
 ハートゴールド・ソウルシルバー
 いずれかの　ソフトを　セットし
 『ＤＳダウンロードプレイ』から
-『ポケシフター　[1:00:トレーナー名:0]』を
+『ポケシフター　
+[1:34:DS本体名:0]』を
 選んでください</language>
 	</row>
 
@@ -434,16 +486,18 @@
 		<comment>DLROMの名前
 48文字185ドット以内
 DSシステムフォントなので
-幅が違います。注意！</comment>
-		<language name="JPN" width="208">ポケシフター　[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="208">ポケシフター　[1:00:トレーナー名:0]</language>
+幅が違います。注意！
+漢字不可！</comment>
+		<language name="JPN" width="208">ポケシフター</language>
+		<language name="JPN_KANJI" width="208">ポケシフター</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_ROM_INFO">
 		<comment>DLROMの説明
 96文字(２行可)199ドット以内
 DSシステムフォントなので
-幅が違います。注意！</comment>
+幅が違います。注意！
+漢字不可！</comment>
 		<language name="JPN" width="208">ポケットモンスター シャチ
 ポケシフター プログラム</language>
 		<language name="JPN_KANJI" width="208">ポケットモンスター シャチ
@@ -454,20 +508,22 @@ DSシステムフォントなので
 		<comment>DLROMの名前
 48文字185ドット以内
 DSシステムフォントなので
-幅が違います。注意！</comment>
-		<language name="JPN" width="208">てんそうマシン　[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="208">転送マシン　[1:00:トレーナー名:0]</language>
+幅が違います。注意！
+漢字不可！</comment>
+		<language name="JPN" width="208">てんそうマシン</language>
+		<language name="JPN_KANJI" width="208">てんそうマシン</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_ROM_INFO_MOVIE">
 		<comment>DLROMの説明
 96文字(２行可)199ドット以内
 DSシステムフォントなので
-幅が違います。注意！</comment>
+幅が違います。注意！
+漢字不可！</comment>
 		<language name="JPN" width="208">ポケットモンスター シャチ
 てんそうマシン プログラム</language>
 		<language name="JPN_KANJI" width="208">ポケットモンスター シャチ
-転送マシン プログラム</language>
+てんそうマシン プログラム</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_SYS_01">
@@ -488,7 +544,8 @@ DSシステムフォントなので
 ハートゴールド・ソウルシルバー
 いずれかの　ソフトを　セットし
 『ＤＳダウンロードプレイ』から
-『てんそうマシン　[1:00:トレーナー名:0]』を
+『てんそうマシン　
+[1:34:DS本体名:0]』を
 えらんでください</language>
 		<language name="JPN_KANJI" width="208">もう１つの　ＤＳに
 ポケットモンスターの
@@ -496,7 +553,8 @@ DSシステムフォントなので
 ハートゴールド・ソウルシルバー
 いずれかの　ソフトを　セットし
 『ＤＳダウンロードプレイ』から
-『転送マシン　[1:00:トレーナー名:0]』を
+『転送マシン　
+[1:34:DS本体名:0]』を
 選んでください</language>
 	</row>
 
