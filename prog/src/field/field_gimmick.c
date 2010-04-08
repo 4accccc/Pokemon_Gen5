@@ -57,6 +57,8 @@ FS_EXTERN_OVERLAY(sppoke_gimmick);
 FS_EXTERN_OVERLAY(palace_gimmick);
 FS_EXTERN_OVERLAY(palace_map_gimmick);
 FS_EXTERN_OVERLAY(field_gimmick_d12);
+FS_EXTERN_OVERLAY(field_gimmick_d06);
+FS_EXTERN_OVERLAY(field_gimmick_bsubway);
 
 const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
 	NULL,					//0:–³‚µ
@@ -85,22 +87,22 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(field_gimmick_gate),  // H01R0101
   FS_OVERLAY_ID(field_gimmick_gate),  // H01R0201
   FS_OVERLAY_ID(field_gimmick_gate),  // C03R0601
-  NULL,//D06_GIMMICK_Setup,
-  NULL,//D06_GIMMICK_Setup,
-  NULL,//D06_GIMMICK_Setup,
+  FS_OVERLAY_ID(field_gimmick_d06),   // D06_GIMMICK_Setup,
+  FS_OVERLAY_ID(field_gimmick_d06),   // D06_GIMMICK_Setup,
+  FS_OVERLAY_ID(field_gimmick_d06),   // D06_GIMMICK_Setup,
   NULL,//LEAGUE_FRONT_01_GIMMICK_Setup,
   NULL,//LEAGUE_FRONT_02_GIMMICK_Setup,
   FS_OVERLAY_ID(field_gimmick_gate),  // D03R0201
   FS_OVERLAY_ID(field_gimmick_bgate),
-  NULL,//C04R01002
-  NULL,//C04R01003
-  NULL,//C04R01004
-  NULL,//C04R01005
-  NULL,//C04R01006
-  NULL,//C04R01007
-  NULL,//C04R01008
-  NULL,//C04R01010
-  NULL,//C04R01011
+  FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01002
+  FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01003
+  FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01004
+  FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01005
+  FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01006
+  FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01007
+  FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01008
+  FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01010
+  FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01011
   FS_OVERLAY_ID(field_gimmick_gate),  // R01R0101
   FS_OVERLAY_ID(field_gimmick_gate),  // R15R0101
   FS_OVERLAY_ID(field_gimmick_gate),  // R11R0101
@@ -110,7 +112,7 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(sppoke_gimmick),  // C03R0901
   FS_OVERLAY_ID(palace_gimmick),  //
   FS_OVERLAY_ID(palace_map_gimmick),  //
-  NULL,//C04R0109
+  FS_OVERLAY_ID(field_gimmick_bsubway),//C04R0109
   FS_OVERLAY_ID(field_gimmick_d12), //D12
 };
 

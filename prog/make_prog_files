@@ -113,7 +113,6 @@ SRCS  +=    $(SOUNDSRC) \
         field/event_wificlub.c \
         field/event_colosseum_battle.c \
         field/event_battle_call.c \
-        field/event_bsubway.c \
         field/event_wifi_bsubway.c \
         field/field_light_status.c \
         system/mcss.c \
@@ -685,7 +684,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_autoway.c \
         field/event_current.c \
         field/fldeff_d06denki.c \
-        field/field_gimmick_d06.c \
         field/event_debug_season_display.c \
         field/event_debug_demo3d.c \
         field/land_data_patch.c \
@@ -721,7 +719,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/united_nations.c \
         field/scrcmd_un.c \
         field/fldeff_btrain.c \
-        field/field_gimmick_bsubway.c \
         field/fldeff_hide.c \
         field/fldeff_bubble.c \
         field/trial_house.c \
@@ -739,7 +736,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_poke_win.c \
         field/scrcmd_evt_lock.c \
         field/palace_warp_check.c \
-        field/scrcmd_record.c
+        field/scrcmd_record.c \
+        field/event_bsubway.c
 
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置
 #===> GROUP_OVERLAY_UNION_INTRUDE
@@ -868,6 +866,14 @@ SRCS_OVERLAY_FIELD_GIMMICK_GATE = field/field_gimmick_gate.c \
                                   field/elboard_zone_data.c \
                                   field/event_look_elboard.c \
                                   field/elboard_spnews_data.c
+
+#===> GROUP_OVERLAY_SUBSCREEN
+#GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_FIELD_GIMMICK_D06 = field/field_gimmick_d06.c
+
+#===> GROUP_OVERLAY_SUBSCREEN
+#GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_FIELD_GIMMICK_BSUBWAY = field/field_gimmick_bsubway.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
