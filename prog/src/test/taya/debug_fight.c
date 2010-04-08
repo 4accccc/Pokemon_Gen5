@@ -203,6 +203,18 @@ typedef enum {
   SELITEM_FLD_HOUR,
   SELITEM_FLD_MINUTE,
 
+  SELITEM_AI0,
+  SELITEM_AI1,
+  SELITEM_AI2,
+  SELITEM_AI3,
+  SELITEM_AI4,
+  SELITEM_AI5,
+  SELITEM_AI6,
+  SELITEM_AI7,
+  SELITEM_AI8,
+  SELITEM_AI9,
+
+
   SELITEM_MAX,
   SELITEM_NULL = SELITEM_MAX,
 
@@ -314,8 +326,6 @@ enum {
   LAYOUT_LABEL_HOUR_X          = LAYOUT_LABEL_PAGE3_X,
   LAYOUT_LABEL_MINUTE_X        = LAYOUT_LABEL_PAGE3_X,
 
-
-
   LAYOUT_LABEL_BACKGROUND_Y    = 8,
   LAYOUT_LABEL_LAND_Y          = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT,
   LAYOUT_LABEL_SEASON_Y        = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*2,
@@ -323,6 +333,19 @@ enum {
   LAYOUT_LABEL_ZONEID_Y        = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*4,
   LAYOUT_LABEL_HOUR_Y          = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*5,
   LAYOUT_LABEL_MINUTE_Y        = LAYOUT_LABEL_BACKGROUND_Y+LAYOUT_PARTY_DATA_LINE_HEIGHT*6,
+
+
+  LAYOUT_LABEL_AI_X   = 160,
+  LAYOUT_LABEL_AI_0_Y = 8,
+  LAYOUT_LABEL_AI_1_Y = LAYOUT_LABEL_AI_0_Y + LAYOUT_PARTY_DATA_LINE_HEIGHT,
+  LAYOUT_LABEL_AI_2_Y = LAYOUT_LABEL_AI_0_Y + LAYOUT_PARTY_DATA_LINE_HEIGHT*2,
+  LAYOUT_LABEL_AI_3_Y = LAYOUT_LABEL_AI_0_Y + LAYOUT_PARTY_DATA_LINE_HEIGHT*3,
+  LAYOUT_LABEL_AI_4_Y = LAYOUT_LABEL_AI_0_Y + LAYOUT_PARTY_DATA_LINE_HEIGHT*4,
+  LAYOUT_LABEL_AI_5_Y = LAYOUT_LABEL_AI_0_Y + LAYOUT_PARTY_DATA_LINE_HEIGHT*5,
+  LAYOUT_LABEL_AI_6_Y = LAYOUT_LABEL_AI_0_Y + LAYOUT_PARTY_DATA_LINE_HEIGHT*6,
+  LAYOUT_LABEL_AI_7_Y = LAYOUT_LABEL_AI_0_Y + LAYOUT_PARTY_DATA_LINE_HEIGHT*7,
+  LAYOUT_LABEL_AI_8_Y = LAYOUT_LABEL_AI_0_Y + LAYOUT_PARTY_DATA_LINE_HEIGHT*8,
+  LAYOUT_LABEL_AI_9_Y = LAYOUT_LABEL_AI_0_Y + LAYOUT_PARTY_DATA_LINE_HEIGHT*9,
 
 };
 
@@ -394,6 +417,18 @@ static const LABEL_LAYOUT LabelLayout_Page3[] = {
   { DBGF_LABEL_ZONEID,     LAYOUT_LABEL_ZONEID_X,       LAYOUT_LABEL_ZONEID_Y     },
   { DBGF_LABEL_HOUR,       LAYOUT_LABEL_HOUR_X,         LAYOUT_LABEL_HOUR_Y       },
   { DBGF_LABEL_MINUTE,     LAYOUT_LABEL_MINUTE_X,       LAYOUT_LABEL_MINUTE_Y     },
+
+  { DBGF_LABEL_AI_0,       LAYOUT_LABEL_AI_X,        LAYOUT_LABEL_AI_0_Y,  },
+  { DBGF_LABEL_AI_1,       LAYOUT_LABEL_AI_X,        LAYOUT_LABEL_AI_1_Y   },
+  { DBGF_LABEL_AI_2,       LAYOUT_LABEL_AI_X,        LAYOUT_LABEL_AI_2_Y   },
+  { DBGF_LABEL_AI_3,       LAYOUT_LABEL_AI_X,        LAYOUT_LABEL_AI_3_Y   },
+  { DBGF_LABEL_AI_4,       LAYOUT_LABEL_AI_X,        LAYOUT_LABEL_AI_4_Y   },
+  { DBGF_LABEL_AI_5,       LAYOUT_LABEL_AI_X,        LAYOUT_LABEL_AI_5_Y   },
+  { DBGF_LABEL_AI_6,       LAYOUT_LABEL_AI_X,        LAYOUT_LABEL_AI_6_Y   },
+  { DBGF_LABEL_AI_7,       LAYOUT_LABEL_AI_X,        LAYOUT_LABEL_AI_7_Y   },
+  { DBGF_LABEL_AI_8,       LAYOUT_LABEL_AI_X,        LAYOUT_LABEL_AI_8_Y   },
+  { DBGF_LABEL_AI_9,       LAYOUT_LABEL_AI_X,        LAYOUT_LABEL_AI_9_Y   },
+
 };
 
 
@@ -476,13 +511,25 @@ static const ITEM_LAYOUT ItemLayout_Page2[] = {
  *  アイテムレイアウト（３ページ目）
  */
 static const ITEM_LAYOUT ItemLayout_Page3[] = {
-  { SELITEM_BACKGROUND,  LAYOUT_LABEL_BACKGROUND_X  +56,   LAYOUT_LABEL_BACKGROUND_Y },
-  { SELITEM_LAND,        LAYOUT_LABEL_LAND_X        +56,   LAYOUT_LABEL_LAND_Y       },
-  { SELITEM_SEASON,      LAYOUT_LABEL_SEASON_X      +56,   LAYOUT_LABEL_SEASON_Y     },
-  { SELITEM_WEATHER,     LAYOUT_LABEL_WEATHER_X     +56,   LAYOUT_LABEL_WEATHER_Y    },
-  { SELITEM_ZONEID,      LAYOUT_LABEL_ZONEID_X      +56,   LAYOUT_LABEL_ZONEID_Y     },
-  { SELITEM_FLD_HOUR,    LAYOUT_LABEL_HOUR_X        +56,   LAYOUT_LABEL_HOUR_Y       },
-  { SELITEM_FLD_MINUTE,  LAYOUT_LABEL_MINUTE_X      +56,   LAYOUT_LABEL_MINUTE_Y     },
+  { SELITEM_BACKGROUND,  LAYOUT_LABEL_BACKGROUND_X  +50,   LAYOUT_LABEL_BACKGROUND_Y },
+  { SELITEM_LAND,        LAYOUT_LABEL_LAND_X        +50,   LAYOUT_LABEL_LAND_Y       },
+  { SELITEM_SEASON,      LAYOUT_LABEL_SEASON_X      +50,   LAYOUT_LABEL_SEASON_Y     },
+  { SELITEM_WEATHER,     LAYOUT_LABEL_WEATHER_X     +50,   LAYOUT_LABEL_WEATHER_Y    },
+  { SELITEM_ZONEID,      LAYOUT_LABEL_ZONEID_X      +50,   LAYOUT_LABEL_ZONEID_Y     },
+  { SELITEM_FLD_HOUR,    LAYOUT_LABEL_HOUR_X        +50,   LAYOUT_LABEL_HOUR_Y       },
+  { SELITEM_FLD_MINUTE,  LAYOUT_LABEL_MINUTE_X      +50,   LAYOUT_LABEL_MINUTE_Y     },
+
+  { SELITEM_AI0,         LAYOUT_LABEL_AI_X + 72,    LAYOUT_LABEL_AI_0_Y   },
+  { SELITEM_AI1,         LAYOUT_LABEL_AI_X + 72,    LAYOUT_LABEL_AI_1_Y   },
+  { SELITEM_AI2,         LAYOUT_LABEL_AI_X + 72,    LAYOUT_LABEL_AI_2_Y   },
+  { SELITEM_AI3,         LAYOUT_LABEL_AI_X + 72,    LAYOUT_LABEL_AI_3_Y   },
+  { SELITEM_AI4,         LAYOUT_LABEL_AI_X + 72,    LAYOUT_LABEL_AI_4_Y   },
+  { SELITEM_AI5,         LAYOUT_LABEL_AI_X + 72,    LAYOUT_LABEL_AI_5_Y   },
+  { SELITEM_AI6,         LAYOUT_LABEL_AI_X + 72,    LAYOUT_LABEL_AI_6_Y   },
+  { SELITEM_AI7,         LAYOUT_LABEL_AI_X + 72,    LAYOUT_LABEL_AI_7_Y   },
+  { SELITEM_AI8,         LAYOUT_LABEL_AI_X + 72,    LAYOUT_LABEL_AI_8_Y   },
+  { SELITEM_AI9,         LAYOUT_LABEL_AI_X + 72,    LAYOUT_LABEL_AI_9_Y   },
+
 };
 
 
@@ -550,16 +597,16 @@ typedef struct {
   u32  btlType  : 5;
   u32  commMode : 1;
   u32  msgSpeed : 3;
-  u32  fWazaEff : 1;
   u32  fSubway  : 1;
   u32  recMode  : 2;
   u32  recBufID : 2;
   u32  backGround      : 4;
-  u32  landForm        : 4;
+  u32  landForm        : 5;
   u32  season          : 2;
   u32  weather         : 3;
   u32  badgeCount      : 4;
 
+  u32  fWazaEff      : 1;
   u32  fMustTuika    : 1;
   u32  fMustToku     : 1;
   u32  fMustItem     : 1;
@@ -570,6 +617,18 @@ typedef struct {
   u32  fDmgRandomOff : 1;
   u32  fSkipBtlIn    : 1;
   u32  btlRule       : 1;
+  u32  fAI_0         : 1;
+  u32  fAI_1         : 1;
+  u32  fAI_2         : 1;
+  u32  fAI_3         : 1;
+  u32  fAI_4         : 1;
+  u32  fAI_5         : 1;
+  u32  fAI_6         : 1;
+  u32  fAI_7         : 1;
+  u32  fAI_8         : 1;
+  u32  fAI_9         : 1;
+
+
 
   u16  LimitTimeCommand;
   u8   LimitTimeGameMinute;
@@ -617,6 +676,7 @@ struct _DEBUG_BTL_WORK {
   u16                 saveSeq0;
   u16                 saveSeq1;
   u32                 saveTimer;
+  u32                 tr_ai_bit;
 
   DEBUG_BTL_SAVEDATA  saveData;
 
@@ -1264,6 +1324,18 @@ static void selItem_Increment( DEBUG_BTL_WORK* wk, u16 itemID, int incValue )
     save->fSkipBtlIn ^= 1;
     break;
 
+  case SELITEM_AI0:   save->fAI_0 ^= 1; break;
+  case SELITEM_AI1:   save->fAI_1 ^= 1; break;
+  case SELITEM_AI2:   save->fAI_2 ^= 1; break;
+  case SELITEM_AI3:   save->fAI_3 ^= 1; break;
+  case SELITEM_AI4:   save->fAI_4 ^= 1; break;
+  case SELITEM_AI5:   save->fAI_5 ^= 1; break;
+  case SELITEM_AI6:   save->fAI_6 ^= 1; break;
+  case SELITEM_AI7:   save->fAI_7 ^= 1; break;
+  case SELITEM_AI8:   save->fAI_8 ^= 1; break;
+  case SELITEM_AI9:   save->fAI_9 ^= 1; break;
+
+
   case SELITEM_LIMIT_GAME_MIN:
     {
       int val = save->LimitTimeGameMinute + incValue;
@@ -1443,6 +1515,17 @@ static void PrintItem( DEBUG_BTL_WORK* wk, u16 itemID, BOOL fSelect )
         case SELITEM_HIT_100PER:    printItem_Flag( wk, wk->saveData.fHit100Per, wk->strbuf ); break;
         case SELITEM_DMG_RAND_OFF:  printItem_Flag( wk, wk->saveData.fDmgRandomOff, wk->strbuf ); break;
         case SELITEM_SKIP_BTLIN:    printItem_Flag( wk, wk->saveData.fSkipBtlIn, wk->strbuf ); break;
+
+        case SELITEM_AI0: printItem_Flag( wk, wk->saveData.fAI_0,    wk->strbuf ); break;
+        case SELITEM_AI1: printItem_Flag( wk, wk->saveData.fAI_1,    wk->strbuf ); break;
+        case SELITEM_AI2: printItem_Flag( wk, wk->saveData.fAI_2,    wk->strbuf ); break;
+        case SELITEM_AI3: printItem_Flag( wk, wk->saveData.fAI_3,    wk->strbuf ); break;
+        case SELITEM_AI4: printItem_Flag( wk, wk->saveData.fAI_4,    wk->strbuf ); break;
+        case SELITEM_AI5: printItem_Flag( wk, wk->saveData.fAI_5,    wk->strbuf ); break;
+        case SELITEM_AI6: printItem_Flag( wk, wk->saveData.fAI_6,    wk->strbuf ); break;
+        case SELITEM_AI7: printItem_Flag( wk, wk->saveData.fAI_7,    wk->strbuf ); break;
+        case SELITEM_AI8: printItem_Flag( wk, wk->saveData.fAI_8,    wk->strbuf ); break;
+        case SELITEM_AI9: printItem_Flag( wk, wk->saveData.fAI_9,    wk->strbuf ); break;
 
         case SELITEM_LIMIT_GAME_MIN:  printItem_Number( wk, wk->saveData.LimitTimeGameMinute, wk->strbuf ); break;
         case SELITEM_LIMIT_GAME_SEC:  printItem_Number( wk, wk->saveData.LimitTimeGameSec, wk->strbuf ); break;
@@ -1678,13 +1761,25 @@ static BOOL mainProc_Root( DEBUG_BTL_WORK* wk, int* seq )
       { SELITEM_LIMIT_GAME_SEC, SELITEM_LIMIT_GAME_MIN,SELITEM_LIMIT_COMMAND, SELITEM_NULL,           SELITEM_MUST_TUIKA    },
       { SELITEM_LIMIT_COMMAND,  SELITEM_LIMIT_GAME_SEC,SELITEM_LIMIT_GAME_MIN,SELITEM_NULL,           SELITEM_MUST_TUIKA    },
   /*    CurrentItem,            Up-Item,               Down-Item,             Right-Item,             Left-Item */
-      { SELITEM_BACKGROUND,     SELITEM_FLD_MINUTE,    SELITEM_LAND,          SELITEM_NULL,           SELITEM_NULL          },
-      { SELITEM_LAND,           SELITEM_BACKGROUND,    SELITEM_SEASON,        SELITEM_NULL,           SELITEM_NULL          },
-      { SELITEM_SEASON,         SELITEM_LAND,          SELITEM_WEATHER,       SELITEM_NULL,           SELITEM_NULL          },
-      { SELITEM_WEATHER,        SELITEM_SEASON,        SELITEM_ZONEID,        SELITEM_NULL,           SELITEM_NULL          },
-      { SELITEM_ZONEID,         SELITEM_WEATHER,       SELITEM_FLD_HOUR,      SELITEM_NULL,           SELITEM_NULL          },
-      { SELITEM_FLD_HOUR,       SELITEM_ZONEID,        SELITEM_FLD_MINUTE,    SELITEM_NULL,           SELITEM_NULL          },
-      { SELITEM_FLD_MINUTE,     SELITEM_FLD_HOUR,      SELITEM_BACKGROUND,    SELITEM_NULL,           SELITEM_NULL          },
+      { SELITEM_BACKGROUND,     SELITEM_FLD_MINUTE,    SELITEM_LAND,          SELITEM_AI0,            SELITEM_AI0,          },
+      { SELITEM_LAND,           SELITEM_BACKGROUND,    SELITEM_SEASON,        SELITEM_AI1,            SELITEM_AI1,          },
+      { SELITEM_SEASON,         SELITEM_LAND,          SELITEM_WEATHER,       SELITEM_AI2,            SELITEM_AI2,          },
+      { SELITEM_WEATHER,        SELITEM_SEASON,        SELITEM_ZONEID,        SELITEM_AI3,            SELITEM_AI3,          },
+      { SELITEM_ZONEID,         SELITEM_WEATHER,       SELITEM_FLD_HOUR,      SELITEM_AI4,            SELITEM_AI4,          },
+      { SELITEM_FLD_HOUR,       SELITEM_ZONEID,        SELITEM_FLD_MINUTE,    SELITEM_AI5,            SELITEM_AI5,          },
+      { SELITEM_FLD_MINUTE,     SELITEM_FLD_HOUR,      SELITEM_BACKGROUND,    SELITEM_AI6,            SELITEM_AI6,          },
+
+      { SELITEM_AI0,            SELITEM_AI9,           SELITEM_AI1,           SELITEM_BACKGROUND,     SELITEM_BACKGROUND    },
+      { SELITEM_AI1,            SELITEM_AI0,           SELITEM_AI2,           SELITEM_LAND,           SELITEM_LAND,         },
+      { SELITEM_AI2,            SELITEM_AI1,           SELITEM_AI3,           SELITEM_SEASON,         SELITEM_SEASON,       },
+      { SELITEM_AI3,            SELITEM_AI2,           SELITEM_AI4,           SELITEM_WEATHER,        SELITEM_WEATHER,      },
+      { SELITEM_AI4,            SELITEM_AI3,           SELITEM_AI5,           SELITEM_ZONEID,         SELITEM_ZONEID,       },
+      { SELITEM_AI5,            SELITEM_AI4,           SELITEM_AI6,           SELITEM_FLD_HOUR,       SELITEM_FLD_HOUR,     },
+      { SELITEM_AI6,            SELITEM_AI5,           SELITEM_AI7,           SELITEM_FLD_MINUTE,     SELITEM_FLD_MINUTE,   },
+      { SELITEM_AI7,            SELITEM_AI6,           SELITEM_AI8,           SELITEM_NULL,           SELITEM_NULL          },
+      { SELITEM_AI8,            SELITEM_AI7,           SELITEM_AI9,           SELITEM_NULL,           SELITEM_NULL          },
+      { SELITEM_AI9,            SELITEM_AI8,           SELITEM_AI0,           SELITEM_NULL,           SELITEM_NULL          },
+
 
   /*    CurrentItem,            Up-Item,               Down-Item,             Right-Item,            Left-Item */
     };
@@ -1926,6 +2021,24 @@ static BOOL mainProc_Load( DEBUG_BTL_WORK* wk, int* seq )
 static const GFLNetInitializeStruct NetInitParamNormal;
 static const GFLNetInitializeStruct NetInitParamMulti;
 
+static u32 make_ai_bit( const DEBUG_BTL_SAVEDATA* save )
+{
+  u32 ai_bit = 0;
+
+  ai_bit |= ( save->fAI_0 );
+  ai_bit |= ( save->fAI_1 << 1);
+  ai_bit |= ( save->fAI_2 << 2);
+  ai_bit |= ( save->fAI_3 << 3);
+  ai_bit |= ( save->fAI_4 << 4);
+  ai_bit |= ( save->fAI_5 << 5);
+  ai_bit |= ( save->fAI_6 << 6);
+  ai_bit |= ( save->fAI_7 << 7);
+  ai_bit |= ( save->fAI_8 << 8);
+  ai_bit |= ( save->fAI_9 << 9);
+
+  return ai_bit;
+}
+
 static BOOL mainProc_StartBattle( DEBUG_BTL_WORK* wk, int* seq )
 {
 FS_EXTERN_OVERLAY(battle);
@@ -1968,6 +2081,9 @@ FS_EXTERN_OVERLAY(battle);
 
     BATTLE_PARAM_Init( &wk->setupParam );
     savework_SetParty( &wk->saveData, wk );
+
+    wk->tr_ai_bit = make_ai_bit( &wk->saveData );
+    OS_TPrintf(" Debug AI_BIT = %02x\n", wk->tr_ai_bit );
 
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 16, 0 );
 
@@ -2129,6 +2245,9 @@ FS_EXTERN_OVERLAY(battle);
 
             BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
             BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy2, BTL_CLIENT_ENEMY2 );
+
+            wk->setupParam.tr_data[ BTL_CLIENT_ENEMY1 ]->ai_bit = wk->tr_ai_bit;
+            wk->setupParam.tr_data[ BTL_CLIENT_ENEMY2 ]->ai_bit = wk->tr_ai_bit;
           }
           break;
         }
@@ -2153,6 +2272,7 @@ FS_EXTERN_OVERLAY(battle);
         BTL_SETUP_Single_Trainer( &wk->setupParam, wk->gameData,
           &wk->fieldSit, trID, HEAPID_BTL_DEBUG_SYS );
         BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+        wk->setupParam.tr_data[ BTL_CLIENT_ENEMY1 ]->ai_bit = wk->tr_ai_bit;
         break;
       case BTL_RULE_DOUBLE:
         switch( btltype_GetMultiType(wk->saveData.btlType) ){
@@ -2169,6 +2289,8 @@ FS_EXTERN_OVERLAY(battle);
             BTL_SETUP_Tag_Trainer( &wk->setupParam, wk->gameData, &wk->fieldSit, trID, trID2, HEAPID_BTL_DEBUG_SYS );
             BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
             BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy2, BTL_CLIENT_ENEMY2 );
+            wk->setupParam.tr_data[ BTL_CLIENT_ENEMY1 ]->ai_bit = wk->tr_ai_bit;
+            wk->setupParam.tr_data[ BTL_CLIENT_ENEMY2 ]->ai_bit = wk->tr_ai_bit;
 
             TAYA_Printf("P_AA Ptn trID1=%d, trID2=%d\n",
               wk->setupParam.tr_data[BTL_CLIENT_ENEMY1]->tr_id,
@@ -2186,6 +2308,9 @@ FS_EXTERN_OVERLAY(battle);
             BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyFriend, BTL_CLIENT_PARTNER );
             BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
             BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy2, BTL_CLIENT_ENEMY2 );
+            wk->setupParam.tr_data[ BTL_CLIENT_ENEMY1 ]->ai_bit = wk->tr_ai_bit;
+            wk->setupParam.tr_data[ BTL_CLIENT_ENEMY2 ]->ai_bit = wk->tr_ai_bit;
+            wk->setupParam.tr_data[ BTL_CLIENT_PARTNER ]->ai_bit = wk->tr_ai_bit;
           }
           break;
         }
@@ -2194,11 +2319,13 @@ FS_EXTERN_OVERLAY(battle);
         BTL_SETUP_Triple_Trainer( &wk->setupParam, wk->gameData,
           &wk->fieldSit, trID, HEAPID_BTL_DEBUG_SYS );
         BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+        wk->setupParam.tr_data[ BTL_CLIENT_ENEMY1 ]->ai_bit = wk->tr_ai_bit;
         break;
       case BTL_RULE_ROTATION:
         BTL_SETUP_Rotation_Trainer( &wk->setupParam, wk->gameData,
           &wk->fieldSit, trID, HEAPID_BTL_DEBUG_SYS );
         BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+        wk->setupParam.tr_data[ BTL_CLIENT_ENEMY1 ]->ai_bit = wk->tr_ai_bit;
         break;
       }
       if( wk->saveData.fSubway ){
