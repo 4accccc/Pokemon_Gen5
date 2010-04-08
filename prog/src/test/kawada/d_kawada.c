@@ -1090,6 +1090,8 @@ static void EggDemoExit( KAWADA_MAIN_WORK* wk )
 // i‰»ƒfƒ‚
 static void ShinkaDemoInit( KAWADA_MAIN_WORK* wk )
 {
+  BOOL b_field = TRUE;
+
   ZONEDATA_Open( wk->heapID );
   GAMEBEACON_Setting(wk->gamedata);
 
@@ -1099,7 +1101,9 @@ static void ShinkaDemoInit( KAWADA_MAIN_WORK* wk )
   PokeParty_InitWork(wk->party);
   PokeParty_Init(wk->party, 6);
   PokeParty_Add( wk->party, wk->pp );
-  
+ 
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) b_field = FALSE;
+
   {
     SHINKA_DEMO_PARAM* sdp = GFL_HEAP_AllocMemory( wk->heapID, sizeof( SHINKA_DEMO_PARAM ) );
     sdp->gamedata          = wk->gamedata;
@@ -1107,8 +1111,8 @@ static void ShinkaDemoInit( KAWADA_MAIN_WORK* wk )
     sdp->after_mons_no     = MONSNO_RIZAADON;
     sdp->shinka_pos        = 0;
     sdp->shinka_cond       = SHINKA_COND_LEVELUP;
-    sdp->b_field           = TRUE;
-    sdp->b_enable_cancel   = FALSE;
+    sdp->b_field           = b_field;
+    sdp->b_enable_cancel   = TRUE;
     wk->shinka_demo_param  = sdp;
   }
   GFL_PROC_LOCAL_CallProc( wk->local_procsys, FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, wk->shinka_demo_param );

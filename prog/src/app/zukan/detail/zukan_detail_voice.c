@@ -1881,7 +1881,7 @@ static void Zukan_Detail_Voice_GraphReset( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
 
     GFL_BMP_Clear( bmp_data, 0 );  // ƒNƒŠƒA‚µ‚Ä‚¨‚­
     GFL_BMP_Fill( bmp_data, bitmap_min_x, SGRAPH_DATA_Y_TO_BITMAP_Y(0), bitmap_size_x, 1, SGRAPH_COLOR );
-    GFL_BMPWIN_TransVramCharacter( work->graph_bmpwin );
+    //GFL_BMPWIN_TransVramCharacter( work->graph_bmpwin );
   }
 
   Zukan_Detail_Voice_GraphMakeTransScreen_VBlank( param, work, cmn );
@@ -2463,7 +2463,7 @@ static void Zukan_Detail_Voice_AlphaInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN
 
   {
     int ev1 = 16;
-    int ev2 = 4;
+    int ev2 = 8;
     G2_SetBlendAlpha(
         GX_BLEND_PLANEMASK_BG2,
         GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,

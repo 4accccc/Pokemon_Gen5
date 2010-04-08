@@ -43,7 +43,7 @@ static const u16 zkn_area_zone_group[ZKN_AREA_ZONE_GROUP_MAX] =
   ZONE_ID_D07,  // 205
   ZONE_ID_D08,  // 213
   ZONE_ID_D09,  // 222
-  ZONE_ID_D10R0101,  // 239
+  ZONE_ID_D10,  // 238
   ZONE_ID_D12,  // 243
   ZONE_ID_D13,  // 246
   ZONE_ID_R03R0301,  // 333
