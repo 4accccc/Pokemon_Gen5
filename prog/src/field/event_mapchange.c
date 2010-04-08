@@ -20,7 +20,6 @@
 
 #include "system/main.h"
 #include "sound/pm_sndsys.h" // サウンドシステム参照
-#include "demo/demo3d.h" //『はじめから』の3Dデモ
 
 #include "item/itemsym.h"
 
@@ -50,7 +49,8 @@
 #include "event_entrance_in.h"
 #include "event_entrance_out.h"
 #include "event_appear.h"
-#include "event_disappear.h" 
+#include "event_disappear.h"
+#include "event_demo3d.h"
 #include "savedata/gimmickwork.h"   //for GIMMICKWORK
 #include "field_comm/intrude_main.h"
 #include "field/field_comm/intrude_field.h" //PALACE_MAP_LEN
@@ -119,7 +119,6 @@ static void setNowLoaction(LOCATION * return_loc, FIELDMAP_WORK * fieldmap);
 typedef struct {
   GAMESYS_WORK*   gameSystem;
   GAME_INIT_WORK* gameInitWork;
-  DEMO3D_PARAM    demo3dParam;
 } FIRST_START_WORK;
 
 typedef struct PALACE_JUMP_tag
@@ -158,17 +157,11 @@ static GMEVENT_RESULT FirstGameStartEvent( GMEVENT* event, int* seq, void* wk )
 
 	case 2:
     // デモを呼ぶ
-    DEMO3D_PARAM_SetFromRTC( &work->demo3dParam, gameSystem, DEMO3D_ID_INTRO_TOWN, 0 );
-    GAMESYSTEM_CallProc( gameSystem, FS_OVERLAY_ID(demo3d), &Demo3DProcData, &work->demo3dParam );
+    GMEVENT_CallEvent( event, EVENT_CallDemo3D( gameSystem, DEMO3D_ID_INTRO_TOWN, 0, TRUE ));
 		(*seq)++;
 		break;
 
 	case 3:
-    // デモの終了を待つ
-    if( GAMESYSTEM_IsProcExists( gameSystem ) == GFL_PROC_MAIN_NULL ) { (*seq)++; }
-		break;
-
-  case 4:
     // イベント変更
     {
       GMEVENT* nextEvent;
@@ -211,7 +204,6 @@ typedef struct {
   GAMEDATA * gamedata;
   GAMEINIT_MODE game_init_mode;
   LOCATION loc_req;
-  DEMO3D_PARAM demo3dParam;
 }FIRST_MAPIN_WORK;
 
 //------------------------------------------------------------------

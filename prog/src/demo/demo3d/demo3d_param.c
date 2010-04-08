@@ -40,7 +40,7 @@ void DEMO3D_PARAM_Set( DEMO3D_PARAM* pp, const GAMESYS_WORK* gsys, u8 demo_id, u
   pp->min = t_min;
   pp->season = season;
 
-  if( gsys != NULL ){
+  {
     MYSTATUS* my = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData((GAMESYS_WORK*)gsys) );
     pp->player_sex = MyStatus_GetMySex(my);
   }

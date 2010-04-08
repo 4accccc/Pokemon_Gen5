@@ -46,7 +46,7 @@
 #include "field/monolith_main.h"
 #include "field\field_comm\intrude_mission.h"
 
-#include "demo/demo3d.h"  //Demo3DProcData etc.
+#include "event_demo3d.h"
 #include "app/local_tvt_sys.h"  //LocalTvt_ProcData etc.
 #include "app/chihou_zukan_award.h"
 #include "app/zenkoku_zukan_award.h"
@@ -469,7 +469,7 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
 //======================================================================
 //--------------------------------------------------------------
 /**
- * @brief   デモ呼び出し
+ * @brief   デモ3Dプロセスコールイベント呼び出し
  * @param core    仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
@@ -478,17 +478,13 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdDemoScene( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  DEMO3D_PARAM * param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(DEMO3D_PARAM) );
   u16 demo_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 scene_id = SCRCMD_GetVMWorkValue( core, wk );
 
-  if( demo_id == DEMO3D_ID_F_WHEEL ){
-    GAMEBEACON_Set_FerrisWheel();
-  }
-
-  DEMO3D_PARAM_SetFromEvTime( param, SCRCMD_WORK_GetGameSysWork( work ), demo_id, scene_id );
-  EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(demo3d), &Demo3DProcData, param, NULL, NULL );
+  SCRIPT_CallEvent( sc, EVENT_CallDemo3D( gsys, demo_id, scene_id, FALSE ) );
 
   return VMCMD_RESULT_SUSPEND;
 }
