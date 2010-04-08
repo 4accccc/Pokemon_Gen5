@@ -53,6 +53,7 @@ GMEVENT* EVENT_CallDemo3D( GAMESYS_WORK* gsys, u16 demo_id, u16 scene_id, BOOL u
   if( demo_id == DEMO3D_ID_F_WHEEL ){
     GAMEBEACON_Set_FerrisWheel();
   }
+  return event;
 }
 
 static GMEVENT_RESULT CallDemo3DEvent(GMEVENT * event, int * seq, void *work)
