@@ -101,9 +101,6 @@ SRCS  +=    $(SOUNDSRC) \
         field/fldmmdl.c \
         field/field_location.c \
         field/field_status.c \
-        field/event_gameover.c \
-        field/event_gameclear.c \
-        field/event_gamestart.c \
         field/event_fieldmap_control.c \
         field/event_battle.c \
         field/event_gsync.c \
@@ -383,6 +380,9 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/field_skill.c \
         field/scrcmd_network.c \
         field/scrcmd_rebattle_trainer.c \
+        field/event_gameover.c \
+        field/event_gameclear.c \
+        field/event_gamestart.c \
         field/event_cg_wireless.c \
         field/event_fieldmap_menu.c \
 				field/event_shortcut_menu.c \

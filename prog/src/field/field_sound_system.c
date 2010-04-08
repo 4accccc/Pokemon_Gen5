@@ -48,7 +48,7 @@ typedef enum{
 // RequestAcceptTable[ システム状態 ][ リクエスト ] が TRUE の時,
 // システムは そのリクエストを処理することが出来る.
 //
-static BOOL RequestAcceptTable[ FSND_STATE_NUM ][ FSND_BGM_REQUEST_NUM ] = 
+static const u8 RequestAcceptTable[ FSND_STATE_NUM ][ FSND_BGM_REQUEST_NUM ] = 
 {
                         /* NONE    F_IN    F_OUT   PUSH    POP     CHANGE  S_BY    F_PLAY */
   /* STOP             */{  FALSE,  FALSE,  FALSE,  FALSE,   TRUE,   TRUE,   TRUE,   TRUE,  },
@@ -74,7 +74,7 @@ static BOOL RequestAcceptTable[ FSND_STATE_NUM ][ FSND_BGM_REQUEST_NUM ] =
 //  DeadRockTable[ 最終リクエスト ][ 新規リクエスト ] が FALSE の時, 
 //  新規リクエストを受理することが出来ずに, デッドロック状態となる.
 //
-static BOOL DeadRockTable[ FSND_BGM_REQUEST_NUM ][ FSND_BGM_REQUEST_NUM ] = 
+static const u8 DeadRockTable[ FSND_BGM_REQUEST_NUM ][ FSND_BGM_REQUEST_NUM ] = 
 {
               /* NONE    F_IN    F_OUT   PUSH    POP     CHANGE  S_BY    F_PLAY */
   /* NONE   */{  FALSE,  FALSE,  FALSE,  FALSE,  FALSE,  FALSE,  FALSE,  FALSE,  }, 
