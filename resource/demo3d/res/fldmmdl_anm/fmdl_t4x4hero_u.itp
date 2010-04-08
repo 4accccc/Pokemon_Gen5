@@ -20,13 +20,13 @@
 <tex_pattern_list_data image_size="32" palette_size="1">
 	<image_name index="0" name="t4x4hero.1"/>
 	<image_name index="1" name="t4x4hero.2"/>
-	<image_name index="2" name="t4x4hero.4"/>
-	<image_name index="3" name="t4x4hero.5"/>
-	<image_name index="4" name="t4x4hero.6"/>
-	<image_name index="5" name="t4x4hero.7"/>
-	<image_name index="6" name="t4x4hero.8"/>
-	<image_name index="7" name="t4x4hero.9"/>
-	<image_name index="8" name="t4x4hero.3"/>
+	<image_name index="2" name="t4x4hero.3"/>
+	<image_name index="3" name="t4x4hero.4"/>
+	<image_name index="4" name="t4x4hero.5"/>
+	<image_name index="5" name="t4x4hero.6"/>
+	<image_name index="6" name="t4x4hero.7"/>
+	<image_name index="7" name="t4x4hero.8"/>
+	<image_name index="8" name="t4x4hero.9"/>
 	<image_name index="9" name="t4x4hero.10"/>
 	<image_name index="10" name="t4x4hero.11"/>
 	<image_name index="11" name="t4x4hero.12"/>
@@ -58,7 +58,7 @@
 		0
 	</frame_idx>
 	<image_idx size="1">
-		2
+		3
 	</image_idx>
 	<palette_idx size="1">
 		0
