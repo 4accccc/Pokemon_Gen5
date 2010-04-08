@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-17T18:54:40"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T12:11:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -298,8 +298,8 @@
 　踏むとゲートから出現し
 　主人公に隣接してメッセージ表示
 ・表示後、戦闘に</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『まってよ　[1:00:トレーナー名:0]！
 ぼくも　ボルトバッジを　もっている▼
 どちらが　つよいのか
@@ -315,8 +315,8 @@
 ・戦闘後メッセージ
 ・続いてカミツレ、画面右から登場し
 　msg_r05_leader_01表示</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……いつも
 いっぽ　およばないんだよね▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……いつも
@@ -376,8 +376,8 @@
 ・カミツレを見ながら
 　（カミツレは？を向いたまま）
 ・続けて</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……どなた　ですか？▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……どなた　ですか？▼</language>
 	</row>
@@ -399,8 +399,8 @@
 ・表示後、チャンピオンに駆け寄る
 　遅れてカミツレ、主人公も移動
 ・続けてchampion_02</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『チャンピオン！？▼
 どうして　チャンピオンが
 こんなところで　あそんでいるのです？▼</language>
@@ -430,8 +430,8 @@
 	<row id="msg_r05_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてchampion_03</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『はじめまして▼
 じぶんは　カノコタウン　しゅっしんの
 チェレンと　いいます▼
@@ -462,8 +462,8 @@
 		<comment>♂
 ・「？」マーク表示してからメッセージ
 ・続けてchampion_04</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……つよさを　もとめる
 それいがいに　なにが　あるのですか？▼
 いちばん　つよい　トレーナー
@@ -529,8 +529,8 @@
 		<comment>♂
 ・表示後、イベントバトルへ
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『わかりました▼
 では　そのまえに……▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『わかりました▼
@@ -542,8 +542,8 @@
 ・主人公と向き合って
 ・主人公ポケモン、ＨＰ・ＰＰ全回復の処理
 　次のメッセージ表示</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレンは
 [1:00:トレーナー名:0]の　ポケモンを▽
 かいふく　してくれた！▼</language>
@@ -556,8 +556,8 @@
 		<comment>♂
 ・上を向いてメッセージ表示
 ・表示後、イベントバトルへ</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『では　いきます！▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『では　いきます！▼</language>
 	</row>
@@ -662,8 +662,8 @@
 ・カミツレが画面外に消えるとメッセージ表示
 ・表示後、画面左に移動し
 　画面外に消えると、主人公操作可能に</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『チャンピオンは　つよい！
 それいがいの　こたえは　ないよ▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『チャンピオンは　強い！
@@ -675,8 +675,8 @@
 ・GRIDX=338、GRIDZ=&quot;431~435到達したとき
 　表示後、主人公が所定の位置に移動
 ・続けてleader_05</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『こっち　だよ▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『こっち　だよ▼</language>
 	</row>
@@ -746,8 +746,8 @@
 		<comment>♂
 ・メッセージ表示後、画面左に
 ・画面外に消えると、主人公操作可能に</comment>
-		<attribute name="キャラ指定">ライバル
-友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『さあ　いこう
 もっと　つよくなる　そのために……！▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『さあ　行こう
@@ -898,6 +898,7 @@ musician_01</attribute>
 
 	<row id="msg_r05_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>橋</comment>
+		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">ホドモエのはねばし</language>
 		<language name="JPN_KANJI" width="256">ホドモエの跳ね橋</language>
 	</row>

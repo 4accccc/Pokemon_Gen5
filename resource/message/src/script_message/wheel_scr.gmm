@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-03-30T16:47:49"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T12:23:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="212" top="230" right="712" bottom="1031" maximized="no" rayout="Vertical2">
+	<dialog left="1670" top="116" right="2170" bottom="909" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="137" right="1280" bottom="535" visible="yes"/>
 		<band id="0" index="1" style="0000" width="492"/>
@@ -365,7 +365,6 @@
 　はい→spring_m_02
 　いいえ→spring_m_03</comment>
 		<attribute name="キャラ指定">GIRL2
-
 ミニスカート</attribute>
 		<language name="JPN" width="256">さいきん　ポカポカ　あったかい
 ひが　つづいて　きもちいいなあ……▼
@@ -390,7 +389,6 @@
 ・はい選択時
 ・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">GIRL2
-
 ミニスカート</attribute>
 		<language name="JPN" width="256">ありがとう！　キミって　ノリいいね！
 じゃあ　さっそくだけど▽
@@ -405,7 +403,6 @@
 ・いいえ選択時
 ・再度話しかけると01から</comment>
 		<attribute name="キャラ指定">GIRL2
-
 ミニスカート</attribute>
 		<language name="JPN" width="256">そっか……
 まあ　いきなり　こんなこと▽
@@ -422,11 +419,10 @@
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
 		<attribute name="キャラ指定">GIRL2
-
 ミニスカート</attribute>
 		<language name="JPN" width="256">わっ！　[1:00:トレーナー名:0]くん
-って　つよーい！！▽
-なんていうか　わたしの▽
+って　つよーい！！▼
+なんていうか　わたしの
 そうぞう　いじょう　だよ！▼
 そんな　たよれる　トレーナーの
 [1:00:トレーナー名:0]くんに▽
@@ -436,8 +432,8 @@
 おんなのこの　おねがいだもん！
 いいよね！！　さ！　のろっ！▼</language>
 		<language name="JPN_KANJI" width="256">わっ！　[1:00:トレーナー名:0]くん
-って　強ーい！！▽
-なんていうか　私の▽
+って　強ーい！！▼
+なんていうか　私の
 想像以上　だよ！▼
 そんな　頼れる　トレーナーの
 [1:00:トレーナー名:0]くんに▽
@@ -453,7 +449,6 @@
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">GIRL2
-
 ミニスカート</attribute>
 		<language name="JPN" width="256">……　……あ　あの　ありがと！▼
 この　かんらんしゃさ　まえから
@@ -473,7 +468,7 @@
 		<language name="JPN_KANJI" width="256">……　……あ　あの　ありがと！▼
 この　観覧車さ　前から
 乗って　みたかったんだけど▽
-ここって　二人乗り　専用だし▼
+ここって　２人乗り　専用だし▼
 友達と　一緒に　乗って
 もし　こわがったり　しちゃったら▽
 恥ずかしい　って　思ってて▼
@@ -484,7 +479,7 @@
 高いとこは　かなり▽
 ダメみたい　だけど……▼
 けど……　ちょっと　楽しかった
-よかったら　また　二人で　乗ろ！</language>
+よかったら　また　２人で　乗ろ！</language>
 	</row>
 
 	<row id="msg_wheel_spring_f_06" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
@@ -496,7 +491,6 @@
 　はい→spring_f_07
 　いいえ→spring_f_08</comment>
 		<attribute name="キャラ指定">GIRL2
-
 ミニスカート</attribute>
 		<language name="JPN" width="256">あ　[1:00:トレーナー名:0]くん！
 ね！　よかったら　また　ちょっと▽
@@ -509,7 +503,7 @@
 		<language name="JPN_KANJI" width="256">あ　[1:00:トレーナー名:0]くん！
 ね！　よかったら　また　ちょっと▽
 私に　付き合って　もらえる？▼
-二人で　ポケモン勝負　したり
+２人で　ポケモン勝負　したり
 あと……　また　一緒に▽
 観覧車　乗ろーよ！▼
 何か　私　今度は
@@ -525,7 +519,6 @@
 ・はい選択時
 ・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">GIRL2
-
 ミニスカート</attribute>
 		<language name="JPN" width="256">へへ　なんか　うれしい！　ありがと！
 [1:00:トレーナー名:0]くん！▼
@@ -546,7 +539,6 @@
 ・いいえ選択時
 ・再度話しかけると07から</comment>
 		<attribute name="キャラ指定">GIRL2
-
 ミニスカート</attribute>
 		<language name="JPN" width="256">そっか……　ざんねん　だけど
 [1:00:トレーナー名:0]くん　って▽
@@ -565,7 +557,6 @@
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
 		<attribute name="キャラ指定">GIRL2
-
 ミニスカート</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]くん　って
 ほんと　ポケモン　つよいよねー▽
@@ -602,7 +593,6 @@
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">GIRL2
-
 ミニスカート</attribute>
 		<language name="JPN" width="256">うう……　やっぱり　こわかった……▼
 でも　なんか……▼
@@ -634,7 +624,6 @@
 　はい→spring_f_02
 　いいえ→spring_f_03</comment>
 		<attribute name="キャラ指定">DANCER
-
 ダンサー</attribute>
 		<language name="JPN" width="256">あーあ　まいにち　あったかいけど
 なんか　ねむくなっちゃうよなー▼
@@ -654,7 +643,7 @@
 な　そこのオマエ　ちょっといい？▼
 オレさ　この　観覧車に
 乗って　みたいんだけどさ▼
-コイツ　二人乗り　専用
+コイツ　２人乗り　専用
 みたいで　オレ　ひとりじゃ▽
 乗せて　もらえないんだよ……▼
 だからさ　もし　よかったら
@@ -669,7 +658,6 @@
 ・はい選択時
 ・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">DANCER
-
 ダンサー</attribute>
 		<language name="JPN" width="256">え？　マジで　いいの？　サンキュー！
 オマエって　いいヤツ　だなー！▼
@@ -686,7 +674,6 @@
 ・いいえ選択時
 ・再度話しかけると01から</comment>
 		<attribute name="キャラ指定">DANCER
-
 ダンサー</attribute>
 		<language name="JPN" width="256">そっか……　なんか　わりーな　
 わざわざ　ひきとめてさ▽
@@ -703,7 +690,6 @@
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
 		<attribute name="キャラ指定">DANCER
-
 ダンサー</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]だっけ？
 オマエ　スゲーな！▼
@@ -732,7 +718,6 @@
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">DANCER
-
 ダンサー</attribute>
 		<language name="JPN" width="256">……　……　……　……え？
 なんで　だまってるの　って？▽
@@ -765,7 +750,7 @@
 なんか……　ドキドキしたし……▼
 たまには　こういうのも
 悪くない　って　思ったよ▼
-よければ　また　二人で　これ
+よければ　また　２人で　これ
 乗ろーぜ！　じゃ　またな！▽
 [1:00:トレーナー名:0]！！</language>
 	</row>
@@ -779,7 +764,6 @@
 　はい→spring_m_07
 　いいえ→spring_m_08</comment>
 		<attribute name="キャラ指定">DANCER
-
 ダンサー</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]じゃん！　げんき？▼
 あ　あのさ　もし　よかったら
@@ -801,7 +785,6 @@
 ・はい選択時
 ・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">DANCER
-
 ダンサー</attribute>
 		<language name="JPN" width="256">え？　いいの？　マジで！？
 やった！　サンキュー！！▽
@@ -824,7 +807,6 @@
 ・いいえ選択時
 ・再度話しかけるとmsg_wheel_spring_m_06から</comment>
 		<attribute name="キャラ指定">DANCER
-
 ダンサー</attribute>
 		<language name="JPN" width="256">そっか……
 わるかったな　むりいって▼
@@ -846,7 +828,6 @@
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
 		<attribute name="キャラ指定">DANCER
-
 ダンサー</attribute>
 		<language name="JPN" width="256">あー！　くやしいぜ！！▼
 しかし　あいかわらず　オマエ
@@ -878,7 +859,6 @@
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">DANCER
-
 ダンサー</attribute>
 		<language name="JPN" width="256">……　……　……　……　……　……▼
 え？　ああ　ゴメン　ゴメン
@@ -910,7 +890,6 @@
 　はい→summer_m_02
 　いいえ→summer_m_03</comment>
 		<attribute name="キャラ指定">MOUNTMAN
-
 山男</attribute>
 		<language name="JPN" width="256">いやあ！　そこの　しょうねん！
 まいにち　ムシムシと　あついな！▼
@@ -935,7 +914,6 @@
 ・はい選択時
 ・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">MOUNTMAN
-
 山男</attribute>
 		<language name="JPN" width="256">そうかあ！　しょうねん！
 キミは　みどころ　アリ　だな！▼
@@ -952,7 +930,6 @@
 ・いいえ選択時
 ・再度話しかけると01から</comment>
 		<attribute name="キャラ指定">MOUNTMAN
-
 山男</attribute>
 		<language name="JPN" width="256">ああ　ざんねんだ　しょうねん！▼
 あつくるしい　なつの　ひととき
@@ -969,7 +946,6 @@
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
 		<attribute name="キャラ指定">MOUNTMAN
-
 山男</attribute>
 		<language name="JPN" width="256">いやあ　よかったよ　しょうねん！
 キミも　キミのポケモンも▽
@@ -984,7 +960,7 @@
 キミも　キミのポケモンも▽
 立派！　結構！　タマランよ！▼
 さあて……▼
-二人の　身体も　心も
+２人の　身体も　心も
 必要　以上に▽
 温まった　ところで……▽
 観覧車に　突入だ！▼
@@ -996,7 +972,6 @@
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">MOUNTMAN
-
 山男</attribute>
 		<language name="JPN" width="256">いやあ　そうぞうを　こえて　アツく
 ムシムシした　くうかんだったなあ！▼
@@ -1014,7 +989,7 @@
 あいだは　進展　したな！　な！▼
 ボクは　しばらく　この辺りで
 ウロウロする　予定だ！▼
-二人の　あいだを　進展
+２人の　あいだを　進展
 させたい　ときは　遠慮なく▽
 声を　かけて　くれたまえ！　な！▽
 では　また会おうな！　少年！</language>
@@ -1029,7 +1004,6 @@
 　はい→summer_ｆ_07
 　いいえ→summer_ｆ_08</comment>
 		<attribute name="キャラ指定">MOUNTMAN
-
 山男</attribute>
 		<language name="JPN" width="256">きたな！　しょうねん！
 みじかい　サマータイムを▽
@@ -1053,7 +1027,6 @@
 ・はい選択時
 ・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">MOUNTMAN
-
 山男</attribute>
 		<language name="JPN" width="256">そうか！　そうかあ！　しょうねん！
 これで　また　ふたりの　あいだは▽
@@ -1061,7 +1034,7 @@
 じゃあ　まずは　あいさつ　がわりに
 ポケモン　イッパツ　やっとくか！▼</language>
 		<language name="JPN_KANJI" width="256">そうか！　そうかあ！　少年！
-これで　また　二人の　あいだは▽
+これで　また　２人の　あいだは▽
 大きく　進展してしまうな！▼
 じゃあ　まずは　あいさつ　代わりに
 ポケモン　イッパツ　やっとくか！▼</language>
@@ -1075,7 +1048,6 @@
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
 		<attribute name="キャラ指定">MOUNTMAN
-
 山男</attribute>
 		<language name="JPN" width="256">なんだ！　なんだよ！　しょうねん！
 ノリが　わるい　じゃないか！▼
@@ -1087,9 +1059,9 @@
 かんがえなおして　きてほしいな</language>
 		<language name="JPN_KANJI" width="256">何だ　何だよ！　少年！
 ノリが　悪い　じゃないか！▼
-二人で　過ごした　あの　時間を
+２人で　過ごした　あの　時間を
 忘れた　わけじゃないだろ？　な？▼
-二人の　サマーに　来年が
+２人の　サマーに　来年が
 あるとは　限らないんだぞ！　な？▽
 ボクは　しばらく　ここにいるから▽
 考え直して　きてほしいな</language>
@@ -1103,7 +1075,6 @@
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">MOUNTMAN
-
 山男</attribute>
 		<language name="JPN" width="256">やはり　しょうねんの　ポケモンは
 たくましく　ごりっぱ　だなあ！▼
@@ -1133,7 +1104,6 @@
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">MOUNTMAN
-
 山男</attribute>
 		<language name="JPN" width="256">シャツと　はだを　はりつける　あせ▼
 ふたりが　すごした　アツい　じかんを
@@ -1144,11 +1114,11 @@
 いつまでも　おわらないな！▼
 では　また　あおう！　しょうねん！</language>
 		<language name="JPN_KANJI" width="256">シャツと　肌を　張り付ける　汗▼
-二人が　過ごした　アツい　時間を
+２人が　過ごした　アツい　時間を
 物語ってしまうな　少年！▼
 これで　ボクらの　仲は　一層
 進展してしまった　わけだ！▼
-ボクら　二人の　夏休みは
+ボクら　２人の　夏休みは
 いつまでも　終わらないな！▼
 では　また　会おう！　少年！</language>
 	</row>
@@ -1159,8 +1129,7 @@
 　はい→summer_f_02
 　いいえ→summer_f_03</comment>
 		<attribute name="キャラ指定">TRAINERM
-
-エリートトレーナー男</attribute>
+エリートトレーナー♂</attribute>
 		<language name="JPN" width="256">まいにち　あついひが　つづくな……▼
 ん？　どうしたんだ……？
 もしかして　この　かんらんしゃに▽
@@ -1180,7 +1149,7 @@
 ん？　どうしたんだ……？
 もしかして　この　観覧車に▽
 興味が　あるのか？▼
-この　観覧車は　二人乗り
+この　観覧車は　２人乗り
 残念だが　あなた　ひとりでは▽
 乗ることが　できないよ▼
 ん……　……　何だい　その　目は？
@@ -1198,8 +1167,7 @@
 ・はい選択時
 ・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">TRAINERM
-
-エリートトレーナー男</attribute>
+エリートトレーナー♂</attribute>
 		<language name="JPN" width="256">そうか　わかった……▼
 そこまで　かんらんしゃに　ひかれる
 あなたが　わたしは　きょうみぶかい▼
@@ -1219,8 +1187,7 @@
 ・いいえ選択時
 ・再度話しかけると01から</comment>
 		<attribute name="キャラ指定">TRAINERM
-
-エリートトレーナー男</attribute>
+エリートトレーナー♂</attribute>
 		<language name="JPN" width="256">そうか　それも　いいだろう……</language>
 		<language name="JPN_KANJI" width="256">そうか　それも　いいだろう……</language>
 	</row>
@@ -1230,8 +1197,7 @@
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
 		<attribute name="キャラ指定">TRAINERM
-
-エリートトレーナー男</attribute>
+エリートトレーナー♂</attribute>
 		<language name="JPN" width="256">……　……　しょうじきに　いおう▼
 まさか　あなたに　まけるとは
 そうぞうも　していなかった……▼
@@ -1259,8 +1225,7 @@
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">TRAINERM
-
-エリートトレーナー男</attribute>
+エリートトレーナー♂</attribute>
 		<language name="JPN" width="256">……　……　……　……　……　……▼
 わたしじしん　しらなかった
 たかい　ばしょが　こんなにも▽
@@ -1302,8 +1267,7 @@
 　はい→summer_m_07
 　いいえ→summer_m_08</comment>
 		<attribute name="キャラ指定">TRAINERM
-
-エリートトレーナー男</attribute>
+エリートトレーナー♂</attribute>
 		<language name="JPN" width="256">ああ……　あなたか……▼
 ……もしかして　もう　いちど
 かんらんしゃに　のりたいのか？▼
@@ -1336,8 +1300,7 @@
 ・いいえ選択時
 ・再度話しかけると06から</comment>
 		<attribute name="キャラ指定">TRAINERM
-
-エリートトレーナー男</attribute>
+エリートトレーナー♂</attribute>
 		<language name="JPN" width="256">あっ　そう……
 やっぱり　しょうぶ　するの……　か▼
 しかたない　いいだろう……
@@ -1356,8 +1319,7 @@
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
 		<attribute name="キャラ指定">TRAINERM
-
-エリートトレーナー男</attribute>
+エリートトレーナー♂</attribute>
 		<language name="JPN" width="256">そうか！　いやー　それは　ざんねん！▼
 きょうこそ　わたしの　じゃくてんを
 こくふくする　ぜっこうの　ときと▽
@@ -1376,8 +1338,7 @@
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">TRAINERM
-
-エリートトレーナー男</attribute>
+エリートトレーナー♂</attribute>
 		<language name="JPN" width="256">……　……　……　し　しかたないな▼
 きょうふを　こくふくし　わたしが
 しんの　エリートへと　しんかする▽
@@ -1400,8 +1361,7 @@
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">TRAINERM
-
-エリートトレーナー男</attribute>
+エリートトレーナー♂</attribute>
 		<language name="JPN" width="256">……　……　……　……　……　……▼
 あなたが　じゃっかん　ほほえんで
 いるように　みえるのは▽
@@ -1436,7 +1396,6 @@
 　はい→fall_m_02
 　いいえ→fall_m_03</comment>
 		<attribute name="キャラ指定">OL
-
 OL</attribute>
 		<language name="JPN" width="256">もう　あきに　なっちゃった……
 なつは　すぎるの　はやいな……▼
@@ -1460,7 +1419,7 @@ OL</attribute>
 あ……　ねえ　そこの　キミ……
 いま　ちょっと　時間　ある？▼
 ここに　観覧車　見えるでしょ？
-これ　二人乗り　専用　なの▽
+これ　２人乗り　専用　なの▽
 でも　今　アタシは　一人ぼっち▽
 だから　乗りたくても　乗れないんだ▼
 で……　もし……　キミさえ
@@ -1479,7 +1438,6 @@ OL</attribute>
 ・はい選択時
 ・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">OL
-
 OL</attribute>
 		<language name="JPN" width="256">フフフ　ありがと……
 キミ　わかいのに　やさしいんだね▼
@@ -1496,7 +1454,6 @@ OL</attribute>
 ・いいえ選択時
 ・再度話しかけると01から</comment>
 		<attribute name="キャラ指定">OL
-
 OL</attribute>
 		<language name="JPN" width="256">そっか……　しかたないよね……
 ゴメンね　いきなり　へんな▽
@@ -1513,7 +1470,6 @@ OL</attribute>
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
 		<attribute name="キャラ指定">OL
-
 OL</attribute>
 		<language name="JPN" width="256">あーあ　まけちゃった！
 おねーさん　がんばったんだけどなー▽
@@ -1534,7 +1490,6 @@ OL</attribute>
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">OL
-
 OL</attribute>
 		<language name="JPN" width="256">……　……　……　……　ゴメン　ね
 かんらんしゃから　みえる　けしき▽
@@ -1561,7 +1516,7 @@ OL</attribute>
 そう　[1:00:トレーナー名:0]くん　か……▼
 アタシ　しばらく　ここにいると
 思うからさ　よかったら▽
-また　二人で　観覧車　乗ろ</language>
+また　２人で　観覧車　乗ろ</language>
 	</row>
 
 	<row id="msg_wheel_fall_f_06" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1570,7 +1525,6 @@ OL</attribute>
 　はい→fall_f_07
 　いいえ→fall_f_08</comment>
 		<attribute name="キャラ指定">OL
-
 OL</attribute>
 		<language name="JPN" width="256">あ……　キミは……
 げんき　だった……？▼
@@ -1588,7 +1542,7 @@ OL</attribute>
 少しの　あいだで　いいから▽
 また　アタシに　付き合って▽
 もらえないかな？▼
-二人で……▼
+２人で……▼
 ポケモンしたり……
 観覧車に　乗ったりして▽
 過ごせたら　うれしいんだけどな……</language>
@@ -1599,7 +1553,6 @@ OL</attribute>
 ・はい選択時
 ・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">OL
-
 OL</attribute>
 		<language name="JPN" width="256">うれしいな……　ありがと……▼
 それとね　わがまま　ついでに　もう
@@ -1622,7 +1575,6 @@ OL</attribute>
 ・いいえ選択時
 ・再度話しかけると06から</comment>
 		<attribute name="キャラ指定">OL
-
 OL</attribute>
 		<language name="JPN" width="256">ハハ……　そうだよね……▼
 キミって　いそがしそう　だし……
@@ -1639,7 +1591,6 @@ OL</attribute>
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
 		<attribute name="キャラ指定">OL
-
 OL</attribute>
 		<language name="JPN" width="256">ふう……　たのしかった……▼
 [1:00:トレーナー名:0]　ってさ
@@ -1672,7 +1623,6 @@ OL</attribute>
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">OL
-
 OL</attribute>
 		<language name="JPN" width="256">……　……　……　……　……　……
 また　[1:00:トレーナー名:0]に▽
@@ -1695,7 +1645,7 @@ OL</attribute>
 [1:00:トレーナー名:0]！
 今日は　ありがと　楽しかった▼
 また　[1:00:トレーナー名:0]と
-二人で　過ごせると　いいな</language>
+２人で　過ごせると　いいな</language>
 	</row>
 
 	<row id="msg_wheel_fall_m_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
@@ -1704,7 +1654,6 @@ OL</attribute>
 　はい→fall_f_02
 　いいえ→fall_f_03</comment>
 		<attribute name="キャラ指定">WAITRESS
-
 ウェイトレス</attribute>
 		<language name="JPN" width="256">なんか　すずしく　なってきたな……
 もうすぐ　さむくなるのかな……▼
@@ -1721,7 +1670,7 @@ OL</attribute>
 え？　あなた　もしかして
 これに　乗りたいんですか？▼
 でも　ここの　観覧車って
-二人乗り　専用　ですよ……▼
+２人乗り　専用　ですよ……▼
 ……　……そうねえ▼
 ワタシと　勝負　しません？
 もし　あなたが　勝てば　ワタシが▽
@@ -1733,7 +1682,6 @@ OL</attribute>
 ・はい選択時
 ・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">WAITRESS
-
 ウェイトレス</attribute>
 		<language name="JPN" width="256">なんか　アッサリ　してますね……
 それとも　じしん　あるのかな？▼
@@ -1752,7 +1700,6 @@ OL</attribute>
 ・いいえ選択時
 ・再度話しかけると01から</comment>
 		<attribute name="キャラ指定">WAITRESS
-
 ウェイトレス</attribute>
 		<language name="JPN" width="256">あっ　そうですか▼
 まあ　わたし　しばらく　このあたり
@@ -1767,7 +1714,6 @@ OL</attribute>
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
 		<attribute name="キャラ指定">WAITRESS
-
 ウェイトレス</attribute>
 		<language name="JPN" width="256">ぜんぜん　かなわなかった……
 ワタシ　ポケモンしょうぶは▽
@@ -1788,7 +1734,6 @@ OL</attribute>
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">WAITRESS
-
 ウェイトレス</attribute>
 		<language name="JPN" width="256">はあー！　たのしかったです！！
 それに　あなたと　はなしてたら▽
@@ -1822,7 +1767,6 @@ OL</attribute>
 　はい→fall_m_07
 　いいえ→fall_m_08</comment>
 		<attribute name="キャラ指定">WAITRESS
-
 ウェイトレス</attribute>
 		<language name="JPN" width="256">あー！　この　あいだの　ひとー！
 げんき　してましたー？▼
@@ -1848,7 +1792,6 @@ OL</attribute>
 ・はい選択時
 ・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">WAITRESS
-
 ウェイトレス</attribute>
 		<language name="JPN" width="256">え！　いいんですか！　ありがとー！
 なんかー　あなたと　いると▽
@@ -1870,7 +1813,6 @@ OL</attribute>
 ・いいえ選択時
 ・再度話しかけると06から</comment>
 		<attribute name="キャラ指定">WAITRESS
-
 ウェイトレス</attribute>
 		<language name="JPN" width="256">え？　ああ……　そうですか……
 むりいって　ごめんなさい▽
@@ -1890,7 +1832,6 @@ OL</attribute>
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
 		<attribute name="キャラ指定">WAITRESS
-
 ウェイトレス</attribute>
 		<language name="JPN" width="256">ふう……　また　まけちゃった！▼
 やっぱり　あなたの　ほうが
@@ -1920,7 +1861,6 @@ OL</attribute>
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">WAITRESS
-
 ウェイトレス</attribute>
 		<language name="JPN" width="256">あーあ　もう　おわっちゃった！▼
 やっぱり　あなたと　あそんでると
@@ -1952,7 +1892,6 @@ OL</attribute>
 　はい→winter_m_02
 　いいえ→winter_m_03</comment>
 		<attribute name="キャラ指定">BABYGIRL2
-
 幼稚園♀</attribute>
 		<language name="JPN" width="256">あーあ　さむいんだから
 ゆき　ふれば　いいのになあー▼
@@ -1997,7 +1936,6 @@ OL</attribute>
 ・はい選択時
 ・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">BABYGIRL2
-
 幼稚園♀</attribute>
 		<language name="JPN" width="256">え！　あそんで　くれるの！
 えへへ　うれしーな！▽
@@ -2012,7 +1950,6 @@ OL</attribute>
 ・いいえ選択時
 ・再度話しかけると01から</comment>
 		<attribute name="キャラ指定">BABYGIRL2
-
 幼稚園♀</attribute>
 		<language name="JPN" width="256">えー！　つまんないー！
 おにーちゃん　つまんないよお！</language>
@@ -2025,7 +1962,6 @@ OL</attribute>
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
 		<attribute name="キャラ指定">BABYGIRL2
-
 幼稚園♀</attribute>
 		<language name="JPN" width="256">たのしかったあ　ありがとー！
 やっぱり　おにーちゃんは▽
@@ -2056,7 +1992,6 @@ OL</attribute>
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">BABYGIRL2
-
 幼稚園♀</attribute>
 		<language name="JPN" width="256">あー！　たのしかったー！
 おにーちゃんは　たのしかった？▼
@@ -2087,7 +2022,6 @@ OL</attribute>
 　はい→winter_m_07
 　いいえ→winter_m_08</comment>
 		<attribute name="キャラ指定">BABYGIRL2
-
 幼稚園♀</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]おにーちゃん！▼
 ねー　ねー　わたち　ひまー！
@@ -2111,7 +2045,6 @@ OL</attribute>
 ・はい選択時
 ・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">BABYGIRL2
-
 幼稚園♀</attribute>
 		<language name="JPN" width="256">えへへ！　やったー！　ありがとー！
 [1:00:トレーナー名:0]　おにーちゃん▼
@@ -2133,7 +2066,6 @@ OL</attribute>
 ・いいえ選択時
 ・再度話しかけると06から</comment>
 		<attribute name="キャラ指定">BABYGIRL2
-
 幼稚園♀</attribute>
 		<language name="JPN" width="256">ぶう……▼
 おにーちゃんも　いそがしんだ？
@@ -2153,7 +2085,6 @@ OL</attribute>
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
 		<attribute name="キャラ指定">BABYGIRL2
-
 幼稚園♀</attribute>
 		<language name="JPN" width="256">えへへ！　たのしかったあ！▼
 [1:00:トレーナー名:0]おにーちゃん
@@ -2181,7 +2112,6 @@ OL</attribute>
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">BABYGIRL2
-
 幼稚園♀</attribute>
 		<language name="JPN" width="256">えへへ！　たのしかったあ！▼
 ね？　ね？　おにーちゃんも
@@ -2221,7 +2151,6 @@ OL</attribute>
 　はい→winter_f_02
 　いいえ→winter_f_03</comment>
 		<attribute name="キャラ指定">BOY4
-
 おぼっちゃま</attribute>
 		<language name="JPN" width="256">やあ……　まいにち　さむいね▼
 ところで……
@@ -2262,7 +2191,6 @@ OL</attribute>
 ・はい選択時
 ・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">BOY4
-
 おぼっちゃま</attribute>
 		<language name="JPN" width="256">ほんとうかい？　ありがとう
 きみは　しんせつな　ひとだね……▼
@@ -2279,7 +2207,6 @@ OL</attribute>
 ・いいえ選択時
 ・再度話しかけると01から</comment>
 		<attribute name="キャラ指定">BOY4
-
 おぼっちゃま</attribute>
 		<language name="JPN" width="256">そうか……　ごめんなさい……
 へんなこと　たのんでしまって……
@@ -2294,7 +2221,6 @@ OL</attribute>
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
 		<attribute name="キャラ指定">BOY4
-
 おぼっちゃま</attribute>
 		<language name="JPN" width="256">う　ううう……　だいじょうぶ……
 ひさしぶりなのに　おもいきり▽
@@ -2329,7 +2255,6 @@ OL</attribute>
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">BOY4
-
 おぼっちゃま</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さん　ありがとう▼
 それに　めいわく　かけてしまって
@@ -2368,7 +2293,6 @@ OL</attribute>
 　はい→winter_m_07
 　いいえ→winter_f_08</comment>
 		<attribute name="キャラ指定">BOY4
-
 おぼっちゃま</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さん……
 さむいけれど　げんきかい？▼
@@ -2400,7 +2324,6 @@ OL</attribute>
 ・はい選択時
 ・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">BOY4
-
 おぼっちゃま</attribute>
 		<language name="JPN" width="256">ありがとう……　うれしいな……
 それじゃあ　まず　いっしょに▽
@@ -2418,7 +2341,6 @@ OL</attribute>
 ・いいえ選択時
 ・再度話しかけると06から</comment>
 		<attribute name="キャラ指定">BOY4
-
 おぼっちゃま</attribute>
 		<language name="JPN" width="256">そうか……　いそがしいんだね
 また　じかんが　あるときにでも▽
@@ -2436,7 +2358,6 @@ OL</attribute>
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
 		<attribute name="キャラ指定">BOY4
-
 おぼっちゃま</attribute>
 		<language name="JPN" width="256">ハァ　ハァ　ハァ……　……　……▼
 まだ……　からだは　ついて
@@ -2470,7 +2391,6 @@ OL</attribute>
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
 		<attribute name="キャラ指定">BOY4
-
 おぼっちゃま</attribute>
 		<language name="JPN" width="256">ごめん……
 また　めいわくかけて　しまったね▼

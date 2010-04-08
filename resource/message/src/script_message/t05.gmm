@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-03-29T22:08:08"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T12:26:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -442,9 +442,9 @@ Sマルチ</comment>
 Wi-Fi</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">この　しゃりょうは
-Wi-Fiトレイン！</language>
+Ｗｉ－Ｆｉトレイン！</language>
 		<language name="JPN_KANJI" width="256">この　しゃりょうは
-Wi-Fiトレイン！</language>
+Ｗｉ－Ｆｉトレイン！</language>
 	</row>
 
 	<row id="msg_t05_railfan_railtalk1_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -552,8 +552,8 @@ Sマルチ</comment>
 カメラ切り替え２（前→後）
 Wi-Fi</comment>
 		<attribute name="キャラ指定">作業員</attribute>
-		<language name="JPN" width="256">これぞ　Wi-Fiトレイン！</language>
-		<language name="JPN_KANJI" width="256">これぞ　Wi-Fiトレイン！</language>
+		<language name="JPN" width="256">これぞ　Ｗｉ－Ｆｉトレイン！</language>
+		<language name="JPN_KANJI" width="256">これぞ　Ｗｉ－Ｆｉトレイン！</language>
 	</row>
 
 	<row id="msg_t05_railfan_railtalk2_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -667,9 +667,9 @@ Sマルチ</comment>
 終了メッセージ
 Wi-Fi</comment>
 		<attribute name="キャラ指定">作業員</attribute>
-		<language name="JPN" width="256">Wi-Fiトレインの　みりょく
+		<language name="JPN" width="256">Ｗｉ－Ｆｉトレインの　みりょく
 たんのう　できたかな</language>
-		<language name="JPN_KANJI" width="256">Wi-Fiトレインの　みりょく
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉトレインの　みりょく
 たんのう　できたかな</language>
 	</row>
 

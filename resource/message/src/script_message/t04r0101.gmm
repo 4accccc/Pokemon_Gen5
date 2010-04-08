@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-07T16:33:42"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T12:31:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -315,11 +315,11 @@
 		<language name="JPN" width="256">……でも　きてみたら　いがいと
 することなくて　ひまでさ▼
 パパは　あのとおり
-いせきひんに　むちゅうだし……▼</language>
+いせきの　どうぐに　むちゅうだし……▼</language>
 		<language name="JPN_KANJI" width="256">……でも　来てみたら　意外と
 することなくて　暇でさ▼
 パパは　あの通り
-遺跡品に　夢中だし……▼</language>
+遺跡の　道具に　夢中だし……▼</language>
 	</row>
 
 	<row id="msg_t04r0101_boy3_03a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -429,12 +429,12 @@
 		<attribute name="キャラ指定">姉
 お嬢様</attribute>
 		<language name="JPN" width="256">ごきげんよう　トレーナーさん▼
-おとうさまの　べっそう
-することが　なくて　たいくつしてましたの！▽
+おとうさまの　べっそうで
+たいくつ　してましたの！▽
 あたくしも　まぜてくださる？▼</language>
 		<language name="JPN_KANJI" width="256">ごきげんよう　トレーナーさん▼
-お父様の　別荘
-することが　なくて　退屈してましたの！▽
+お父様の　別荘で
+退屈してましたの！▽
 あたくしも　まぜてくださる？▼</language>
 	</row>
 
@@ -549,9 +549,9 @@
 まごを　こえる　その　うで
 みせていただこうかしら▼</language>
 		<language name="JPN_KANJI" width="256">孫の　お相手　してくださって
-感謝　しますよ▼
+感謝しますよ▼
 ……どれどれ▼
-孫を　こえる　その　うで
+孫を　こえる　その腕前
 見せていただこうかしら▼</language>
 	</row>
 
@@ -627,7 +627,7 @@
 まごが　あなたと　しょうぶ　したくて▽
 ウズウズしていますよ</language>
 		<language name="JPN_KANJI" width="256">あら　いらっしゃい
-孫が　あなたと　勝負　したくて▽
+孫が　あなたと　勝負したくて▽
 ウズウズしていますよ</language>
 	</row>
 
@@ -666,11 +666,11 @@
 ジェントルマン</attribute>
 		<language name="JPN" width="256">ちが　たぎりますな！
 ……おあいて　おねがいできますかな？▼</language>
-		<language name="JPN_KANJI" width="256">ちが　たぎりますな！
+		<language name="JPN_KANJI" width="256">血が　たぎりますな！
 ……お相手　お願いできますかな？▼</language>
 	</row>
 
-	<row id="msg_t04r0101_gentleman_02a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t04r0101_gentleman_02a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・初回以降
 ・この後戦闘に入る。</comment>
@@ -678,11 +678,11 @@
 ジェントルマン</attribute>
 		<language name="JPN" width="256">ちが　たぎりますな！
 きょうも　おあいて　ねがいますぞ！▼</language>
-		<language name="JPN_KANJI" width="256">ちが　たぎりますな！
+		<language name="JPN_KANJI" width="256">血が　たぎりますな！
 今日も　お相手　願いますぞ！▼</language>
 	</row>
 
-	<row id="msg_t04r0101_gentleman_03a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t04r0101_gentleman_03a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・戦闘終了後、主人公が勝利した場合</comment>
 		<attribute name="キャラ指定">おじいちゃん
@@ -695,7 +695,7 @@
 こんどは　まけませんぞ！▼</language>
 		<language name="JPN_KANJI" width="256">ホッホ　いくつに　なっても
 ポケモン勝負は　楽しいものですな！▼
-たまには　こう言った
+たまには　こういった
 刺激も　悪くない！▼
 いつでも　また　きなさい
 今度は　負けませんぞ！▼</language>
@@ -713,7 +713,7 @@
 しげきも　わるくない！</language>
 		<language name="JPN_KANJI" width="256">ホッホ　いくつに　なっても
 ポケモン勝負は　楽しいものですな！▼
-たまには　こう言った
+たまには　こういった
 刺激も　悪くない！</language>
 	</row>
 
@@ -722,10 +722,12 @@
 ・連戦前、能動的に話しかけた場合</comment>
 		<attribute name="キャラ指定">おじいちゃん
 ジェントルマン</attribute>
-		<language name="JPN" width="256">ホッホ　いらっしゃい
-きみが　くると　しげきがあって　よいですな</language>
-		<language name="JPN_KANJI" width="256">ホッホ　いらっしゃい
-きみが　くると　刺激があって　よいですな</language>
+		<language name="JPN" width="256">ホッホ　いらっしゃい！
+きみが　くると▽
+しげきがあって　よいですな</language>
+		<language name="JPN_KANJI" width="256">ホッホ　いらっしゃい！
+きみが　くると▽
+刺激があって　よいですな</language>
 	</row>
 
 	<row id="msg_t04r0101_gentleman_04a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
@@ -761,7 +763,7 @@
 ベテラントレーナー</attribute>
 		<language name="JPN" width="256">なにごとかしら？
 ずいぶんと　にぎやかね▼</language>
-		<language name="JPN_KANJI" width="256">何ごとかしら？
+		<language name="JPN_KANJI" width="256">なにごとかしら？
 随分と　にぎやかね▼</language>
 	</row>
 
