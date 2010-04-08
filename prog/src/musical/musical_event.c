@@ -28,6 +28,7 @@
 #include "savedata/save_control.h"
 #include "savedata/musical_save.h"
 #include "savedata/record.h"
+#include "savedata/etc_save.h"
 #include "sound/pm_sndsys.h"
 #include "musical/musical_system.h"
 #include "musical/musical_local.h"
@@ -297,6 +298,28 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
       }
       MUS_COMM_StartSendProgram_Data( evWork->scriptWork->commWork , conPointArr , npcArr );
       evWork->state = MES_ENTER_WAITROOM_FIRST_BEF_COMM2;
+      
+      //’m‚è‡‚¢‚Ì“o˜^
+      {
+        u8 i;
+        ETC_SAVE_WORK *etcSave =  SaveData_GetEtc( evWork->saveCtrl );
+
+        for( i=0;i<MUSICAL_POKE_MAX;i++ )
+        {
+          const u8 selfIdx = MUS_COMM_GetSelfMusicalIndex( evWork->scriptWork->commWork );
+          const u8 checkIdx = MUS_COMM_GetMusicalIndex( evWork->scriptWork->commWork , i );
+          if( selfIdx != checkIdx )
+          {
+            MYSTATUS *myStatus = MUS_COMM_GetPlayerMyStatus( evWork->scriptWork->commWork , i );
+            if( myStatus != NULL )
+            {
+              const u32 id = MyStatus_GetID( myStatus );
+              EtcSave_SetAcquaintance( etcSave , id );
+              ARI_TPrintf("set person[%d][%8x(%5d)]\n",i,id,(id&0x0000FFFF));
+            }
+          }
+        }
+      }
     }
     break;
   case MES_ENTER_WAITROOM_FIRST_BEF_COMM2:

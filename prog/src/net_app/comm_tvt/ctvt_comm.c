@@ -113,6 +113,7 @@ typedef struct
 {
   BOOL isEnable;
   BOOL isEnableData;
+  BOOL isRegistPerson;  //’m‚è‡‚¢‚É“o˜^‚µ‚½‚©H
   BOOL isSelf;
   BOOL reqTalk;
   u8   bufferNo;
@@ -723,6 +724,7 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork(work);
       commWork->member[0].isEnable = TRUE;
       commWork->member[0].isEnableData = TRUE;
+      commWork->member[0].isRegistPerson = TRUE;
       commWork->member[0].isSelf = TRUE;
       commWork->member[0].reqTalk = FALSE;
       commWork->member[0].bufferNo = 0xFF;
@@ -1052,6 +1054,7 @@ static void CTVT_COMM_ClearMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *co
   state->isSelf = FALSE;
   state->isEnable = FALSE;
   state->isEnableData = FALSE;
+  state->isRegistPerson = FALSE;
   state->reqTalk = FALSE;
   state->bufferNo = 0xFF;
   state->state = CCSU_NONE;
@@ -1072,6 +1075,18 @@ static void CTVT_COMM_UpdateMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
     //©•ª
     return;
   }
+  //’m‚è‡‚¢‚Ì“o˜^
+  if( state->isRegistPerson == FALSE &&
+      state->isEnableData == TRUE)
+  {
+    if( COMM_TVT_IsWifi(work) == FALSE )
+    {
+      COMM_TVT_RegistPerson( work , (MYSTATUS*)&state->data.myStatusBuff );
+    }
+    state->isRegistPerson = TRUE;
+    
+  }
+
   
   switch( state->state )
   {

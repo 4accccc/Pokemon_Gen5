@@ -17,6 +17,7 @@
 #include "system/ds_system.h"
 #include "sound/pm_sndsys.h"
 #include "app/app_menu_common.h"
+#include "savedata/etc_save.h"
 
 #include "arc_def.h"
 #include "comm_tvt.naix"
@@ -1166,6 +1167,17 @@ void COMM_TVT_DispTalkIcon( COMM_TVT_WORK *work , const u8 idx )
 void COMM_TVT_EraseTalkIcon( COMM_TVT_WORK *work )
 {
   GFL_CLACT_WK_SetDrawEnable( work->clwkRec , FALSE );
+}
+
+void COMM_TVT_RegistPerson( COMM_TVT_WORK *work , MYSTATUS *myStatus )
+{
+  SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( work->initWork->gameData );
+  ETC_SAVE_WORK *etcSave = SaveData_GetEtc( svWork );
+  
+  const u32 id = MyStatus_GetID( myStatus );
+  
+  EtcSave_SetAcquaintance( etcSave, id );
+  CTVT_TPrintf("set person[%8x(%5d)]\n",id,(id&0x0000FFFF));
 }
 
 #pragma mark [>proc func
