@@ -189,9 +189,14 @@ static BOOL itemcheck_Cycle( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WO
 //  PLAYER_WORK *playerWork = GAMEDATA_GetMyPlayerWork( gdata );
   u16 zone_id = PLAYERWORK_getZoneID( playerWork );
   u8 form = PLAYERWORK_GetMoveForm( playerWork ); 
+  MAPATTR attr = FIELD_PLAYER_GetMapAttr( FIELDMAP_GetFieldPlayer( field_wk ) );
+  BOOL not_use_f = MAPATTR_VALUE_CheckCycleNotUse( MAPATTR_GetAttrValue(attr) );
 
   if( form == PLAYER_MOVE_FORM_CYCLE ){
-    return TRUE;  //降りれる。今の所サイクリングロードがないので降りられない場所はない
+    if( not_use_f ){
+      return FALSE;
+    }
+    return TRUE;  //降りれる
   }
   //ゾーンチェック
   if( ZONEDATA_BicycleEnable( zone_id ) == FALSE ){
@@ -200,6 +205,10 @@ static BOOL itemcheck_Cycle( GAMEDATA* gdata, FIELDMAP_WORK* field_wk, PLAYER_WO
 
   //フォルムチェック
   if( form != PLAYER_MOVE_FORM_NORMAL ){
+    return FALSE;
+  }
+  //アトリビュートによるチェック
+  if( not_use_f ){
     return FALSE;
   }
   return TRUE;  //乗れる
