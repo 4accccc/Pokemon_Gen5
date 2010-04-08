@@ -39,7 +39,7 @@ extern NNSSndHandle*	SOUNDMAN_GetHierarchyPlayerSndHandle( void );
 extern int				SOUNDMAN_GetHierarchyPlayerSoundHeapLv( void );
 extern u32				SOUNDMAN_GetHierarchyPlayerSoundIdxByPlayerID( int playerID );
 // 階層プレーヤー状態設定
-extern void				SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv( void );
+//extern void				SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv( void );
 
 // 階層プレーヤー状態復元　※現在再生中のサウンドデータが読み込まれた状態
 extern void	SOUNDMAN_RecoverHierarchyPlayerState( void );
