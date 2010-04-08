@@ -176,7 +176,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
   case _FIELD_POP_BGM:
     if(dbw->push){
       PMSND_PopBGM();
-      PMSND_FadeInBGM( 8 );
+      PMSND_FadeInBGM( PMSND_FADE_NORMAL );
       dbw->push=FALSE;
     } 
     (*seq) ++;
@@ -234,7 +234,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
         (*seq)=_CALL_GAMESYNC_MENU;
         if(dbw->push){
           PMSND_PopBGM();
-          PMSND_FadeInBGM( 8 );
+          PMSND_FadeInBGM( PMSND_FADE_NORMAL );
           dbw->push=FALSE;
         }
       }

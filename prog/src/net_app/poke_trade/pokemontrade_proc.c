@@ -1850,6 +1850,7 @@ static void _touchState_BeforeTimeing2(POKEMON_TRADE_WORK* pWork)
 //      WIPE_ResetBrightness(WIPE_DISP_MAIN);   //@todo つながりの状況をすべて確認してから外す必要がある
 
       POKE_GTS_InitWork(pWork);
+      POKE_GTS_InitEruptedIconResource(pWork);
 
       GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_01, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
@@ -3735,6 +3736,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+      NetErr_App_ReqErrorDisp();
       retCode = GFL_PROC_RES_FINISH;
     }
   }

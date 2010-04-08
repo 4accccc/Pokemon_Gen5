@@ -1933,6 +1933,12 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
   GSYNC_DISP_Main(pWork->pDispWork);
   GSYNC_MESSAGE_Main(pWork->pMessageWork);
 
+  if(GFL_NET_IsInit()){
+    if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+      NetErr_App_ReqErrorDisp();
+      ret = GFL_PROC_RES_FINISH;
+    }
+  }
   return ret;
 }
 

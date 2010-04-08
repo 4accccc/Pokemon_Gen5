@@ -1723,7 +1723,7 @@ void IRC_POKETRADE_InitMainObj(POKEMON_TRADE_WORK* pWork)
   GFL_CLACTPOS pos;
 
   //‘fÞ
-  {
+  if(pWork->cellRes[CHAR_SCROLLBAR_UP]==0){
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
 
     pWork->cellRes[CHAR_SCROLLBAR_UP] =

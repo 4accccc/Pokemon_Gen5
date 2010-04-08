@@ -269,7 +269,9 @@ static void _demoBGMChangeStart(POKEMON_TRADE_WORK* pWork)
 static void _changeDemo_ModelT1(POKEMON_TRADE_WORK* pWork)
 {
 //  _demoBGMChange(pWork->anmCount);
-  
+
+  POKEMONTRADE3D_3DReelPaletteFade(pWork);
+
   if(pWork->mcssStop[0]!=TRUE){  //ƒAƒjƒI—¹‘Ò‚¿
     return;
   }
@@ -279,6 +281,8 @@ static void _changeDemo_ModelT1(POKEMON_TRADE_WORK* pWork)
     _apperFlgCheck(pWork, &pWork->bByebyeMessageEach, &pWork->bByebyeNoJump, pWork->pFriend);
     _apperFlgCheck(pWork, &pWork->bEncountMessageEach, &pWork->bEncountNoJump, pWork->pMy);
   }
+
+  IRC_POKETRADEDEMO_RemoveModel(pWork);
   
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_ANIMEEND,WB_NET_TRADE_SERVICEID);

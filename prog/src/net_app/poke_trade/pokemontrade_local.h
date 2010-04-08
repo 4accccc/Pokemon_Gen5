@@ -666,7 +666,8 @@ struct _POKEMON_TRADE_WORK{
   u32 select6CellRes[2]; //pal anm
   GFL_BMP_DATA* listBmp[GTS_SEL6MSG_NUM];
   u32 listRes[GTS_SEL6MSG_NUM];
-  
+  u16 palette3d[16];
+  u16 palTrans[16];
   u16* scrTray;
   u16* scrTemoti;
   u8* pCharMem;
@@ -691,7 +692,9 @@ struct _POKEMON_TRADE_WORK{
   u8 pokemonGTSSeqSend;  //送るGTSシーケンス番号
   u8 friendBoxNum;  //ともだちのボックス番号
   u8 statusModeOn;  //
-  u8 dummy3;
+  u8 dummy;
+//  u8 time3dfadelen;
+//  u8 time3dfadecount;
 } ;
 
 
@@ -729,6 +732,7 @@ extern void IRC_POKETRADE_SetSubVram(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_SetMainVram(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_TouchStateGTS(POKEMON_TRADE_WORK* pWork);
 
+extern void POKEMONTRADE3D_3DReelPaletteFade(POKEMON_TRADE_WORK *pWork);
 extern void IRC_POKETRADE_3DGraphicSetUp( POKEMON_TRADE_WORK* pWork );
 extern void IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE type);
 extern void IRC_POKETRADE_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork);

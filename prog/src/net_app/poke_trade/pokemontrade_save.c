@@ -234,10 +234,6 @@ static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork)
 }
 
 
-
-#if 1
-
-
 static void _UnDataSend2(POKEMON_TRADE_WORK* pWork)
 {
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),
@@ -270,14 +266,17 @@ static void _UnDataSend(POKEMON_TRADE_WORK* pWork)
   add_data.countryCount = WIFIHISTORY_GetMyCountryCount(pWH) ;  //åä∑ÇµÇΩçëÇÃâÒêî
   add_data.nature =WIFIHISTORY_GetMyNature(pWH);   //ê´äi
 
-  
-  if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_UN, sizeof(add_data), &add_data)){
-    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_UNDATA, WB_NET_TRADE_SERVICEID);
-    _CHANGE_STATE(pWork, _UnDataSend2);
+
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_UN, sizeof(add_data), &add_data)){
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_UNDATA, WB_NET_TRADE_SERVICEID);
+      _CHANGE_STATE(pWork, _UnDataSend2);
+    }
+  }
+  else{
+    _CHANGE_STATE(pWork, _changeDemo_ModelTrade30);
   }
 }
-
-#endif
 
 static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
 {

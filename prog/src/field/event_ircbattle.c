@@ -345,6 +345,9 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
         _setUnionAccount(dbw);  // åä∑èIóπéû
         (*seq) = _CALL_NET_END;
       }
+//      if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+  //      NetErr_DispCall(FALSE);
+    //  }
     }
     break;
   case _CALL_EVOLUTION:

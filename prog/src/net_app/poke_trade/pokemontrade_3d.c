@@ -24,6 +24,7 @@
 #include "savedata/box_savedata.h"
 #include "pokeicon/pokeicon.h"
 
+#include "box_gra.naix"
 #include "tradedemo.naix"
 #include "tradeirdemo.naix"
 #include "system/ica_anime.h"
@@ -36,6 +37,9 @@
 #define cameraFar       ( 400 << FX32_SHIFT )
 
 static void _polygondraw( POKEMON_TRADE_WORK* pWork);
+static void _paletteLoad(POKEMON_TRADE_WORK *pWork);
+static void _paletteFade(POKEMON_TRADE_WORK *pWork);
+
 
 //============================================================================================
 /**
@@ -252,74 +256,10 @@ static void _cameraSetTrade01(POKEMON_TRADE_WORK* pWork)
 }
 
 
-#if 0
 static void _moveSetReel(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus)
 {
-  int a;
-
-  VEC_Set( &pStatus->trans, 0, 0, 0 );
-  VEC_Set( &pStatus->scale, FX32_ONE, FX32_ONE, FX32_ONE );
-  MTX_Identity33( &pStatus->rotate );
-
-  a = -pWork->FriendBoxScrollNum * 65535 / 2976;
-
-  MTX_RotY33(	&pStatus->rotate,FX_SinIdx((u16)a),FX_CosIdx((u16)a));
-  // カメラ更新
-  //  ICA_ANIME_SetCameraStatus( pWork->icaAnime, pWork->camera );
-  GFL_G3D_CAMERA_Switching(pWork->camera );
-
-
-
-  {
-    // 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
-    G3X_SetShading( GX_SHADING_TOON); //GX_SHADING_HIGHLIGHT );
-    G3X_AntiAlias( TRUE );
-    G3X_AlphaTest( FALSE, 0 );	// アルファテスト　　オフ
-    G3X_AlphaBlend( FALSE );		// アルファブレンド　オン
-    G3X_EdgeMarking( FALSE );
-    G3X_SetFog( TRUE, GX_FOGBLEND_COLOR_ALPHA, GX_FOGSLOPE_0x8000, 0 );
-
-    // クリアカラーの設定
-    G3X_SetClearColor(GX_RGB(0,0,0),0,0x7fff,63,FALSE);	//color,alpha,depth,polygonID,fog
-    // ビューポートの設定
-    G3_ViewPort(0, 0, 255, 191);
-
-    // ライト設定
-    {
-      static const GFL_G3D_LIGHT sc_GFL_G3D_LIGHT[] =
-      {
-        {
-          { 0, -FX16_ONE, 0 },
-          GX_RGB( 16,16,16),
-        },
-        {
-          { 0, FX16_ONE, 0 },
-          GX_RGB( 16,16,16),
-        },
-        {
-          { 0, -FX16_ONE, 0 },
-          GX_RGB( 16,16,16),
-        },
-        {
-          { 0, -FX16_ONE, 0 },
-          GX_RGB( 16,16,16),
-        },
-      };
-      int i;
-
-      for( i=0; i<NELEMS(sc_GFL_G3D_LIGHT); i++ ){
-        GFL_G3D_SetSystemLight( i, &sc_GFL_G3D_LIGHT[i] );
-      }
-    }
-  }
-}
-#else
-static void _moveSetReel(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus)
-{
-  int a;
   _polygondraw(pWork);
 }
-#endif
 
 static void _moveSetTrade01(POKEMON_TRADE_WORK* pWork,GFL_G3D_OBJSTATUS* pStatus)
 {
@@ -650,7 +590,6 @@ void POKEMONTRADE_DEMO_IRPTC_Init( POKEMONTRADE_DEMO_WORK* pWork )
 }
 
 static void _panelLoad(POKEMON_TRADE_WORK* pWork,int boxnum);
-static void _panelRelease(POKEMON_TRADE_WORK *pWork);
 
 
 
@@ -725,7 +664,6 @@ void IRC_POKETRADEDEMO_End( POKEMON_TRADE_WORK* pWork )
   GFL_G3D_UTIL_Delete( pWork->g3dUtil );
 
   _demoExit();
-  _panelRelease(pWork);
 
 }
 
@@ -1210,30 +1148,7 @@ static void _panelLoad(POKEMON_TRADE_WORK *pWork,int num)
   GFL_HEAP_FreeMemory(tempBuff);
   GX_EndLoadTex();                   // restore the texture image slots
 
-  //---------------------------------------------------------------------------
-  // Download the texture palettes:
-  //
-  // Transfer the texture palette data on the main memory to the texture palette slots.
-  //---------------------------------------------------------------------------
-
-  GX_BeginLoadTexPltt();             // map the texture palette slots onto LCDC address space
-  {
-    GX_LoadTexPltt((void *)&pal_16plett[0], // a pointer to the texture data on the main memory(4 bytes aligned)
-                   myTexPlttAddr,  // an offset address in the texture palette slots
-                   32);            // the size of the texture palette(s)(in bytes)
-  }
-  GX_EndLoadTexPltt();               // restore the texture palette slots
-
-}
-
-
-static void _panelRelease(POKEMON_TRADE_WORK *pWork)
-{
-
- int i;
-  for(i=0;i<5;i++){
-//    GFL_HEAP_FreeMemory(pWork->pTexBoard[i]);
-  }
+  _paletteLoad(pWork);
 }
 
 
@@ -1482,21 +1397,68 @@ static void _polygondraw(POKEMON_TRADE_WORK *pWork)
 #endif
 
 
-#if 0
 static void _paletteLoad(POKEMON_TRADE_WORK *pWork)
 {
-
+#if 0
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BOX2_GRA, pWork->heapID );
-  int ncgr,nscr;
+  NNSG2dPaletteData* pPal;
+  void* pData = GFL_ARCHDL_UTIL_LoadPalette(p_handle, NARC_box_gra_box_tray_NCLR,
+                                            &pPal, pWork->heapID );
+  u8* paldata = pPal->pRawData;
 
-  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
-    nscr = NARC_trade_wb_gts_bg01_back_NSCR;
-  }
-  else{
-    nscr = NARC_trade_wb_trade_bg01_back_NSCR;
-  }
-  arcData = GFL_ARCHDL_UTIL_Load( p_handle, NARC_box_gra_box_tray_NCLR, FALSE, pWork->heapID );
+  GX_BeginLoadTexPltt();             // map the texture palette slots onto LCDC address space
+  GX_LoadTexPltt(&paldata[64], // a pointer to the texture data on the main memory(4 bytes aligned)
+                 myTexPlttAddr,  // an offset address in the texture palette slots
+                 32);            // the size of the texture palette(s)(in bytes)
+  GX_EndLoadTexPltt();               // restore the texture palette slots
+  GFL_STD_MemCopy(&paldata[64], pWork->palette3d, 32);
 
+  GFL_HEAP_FreeMemory(pData);
   GFL_ARC_CloseDataHandle( p_handle );
-}
+
+#else
+
+  GX_BeginLoadTexPltt();             // map the texture palette slots onto LCDC address space
+  {
+    GX_LoadTexPltt((void *)&pal_16plett[0], // a pointer to the texture data on the main memory(4 bytes aligned)
+                   myTexPlttAddr,  // an offset address in the texture palette slots
+                   32);            // the size of the texture palette(s)(in bytes)
+  }
+  GFL_STD_MemCopy(pal_16plett, pWork->palette3d, 32);
+  GX_EndLoadTexPltt();               // restore the texture palette slots
+
 #endif
+}
+
+
+void POKEMONTRADE3D_3DReelPaletteFade(POKEMON_TRADE_WORK *pWork)
+{
+  static const int _CHANGEPAL_NUM = 16;
+  int pal;
+
+  for(pal = 0; pal < _CHANGEPAL_NUM; pal++){
+    int add,rgb,base;
+    int shift;
+    int mod;
+    pWork->palTrans[pal] = 0;
+    for(rgb = 0; rgb < 3; rgb++){
+      shift = rgb * 5;
+      base = (pWork->palette3d[pal] >> shift) & 0x1f;
+      if(base!=0){
+        base = base - 1;
+      }
+      pWork->palTrans[pal] |= ( base & 0x1f ) << (shift);
+    }
+  }
+
+  GX_BeginLoadTexPltt();             // map the texture palette slots onto LCDC address space
+  {
+    GX_LoadTexPltt(pWork->palTrans,
+                   myTexPlttAddr,  // an offset address in the texture palette slots
+                   32);            // the size of the texture palette(s)(in bytes)
+  }
+  GX_EndLoadTexPltt();               // restore the texture palette slots
+
+}
+
+
