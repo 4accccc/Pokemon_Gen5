@@ -95,6 +95,23 @@ ETC_SAVE_WORK * SaveData_GetEtc( SAVE_CONTROL_WORK * p_sv )
 //==================================================================
 void EtcSave_SetAcquaintance(ETC_SAVE_WORK *etcsave, u32 trainer_id)
 {
+  int i, copy_num;
+  
+  for(i = 0; i < etcsave->acquaintance_occ_num; i++){
+    if(etcsave->acquaintance_trainer_id[etcsave->acquaintance_occ_num] == trainer_id){
+      //Šù‚É“o˜^Ï‚Ý‚Ìl‚È‚Ì‚ÅÅŒã”ö‚É•t‚¯’¼‚·(Žõ–½XV)
+      copy_num = (etcsave->acquaintance_occ_num - 1 - i);
+      if(copy_num <= 0){
+        return; //Šù‚ÉÅŒã”ö
+      }
+      GFL_STD_MemCopy(&etcsave->acquaintance_trainer_id[i + 1], 
+        &etcsave->acquaintance_trainer_id[i], sizeof(u32) * copy_num);
+      etcsave->acquaintance_trainer_id[etcsave->acquaintance_occ_num - 1] = trainer_id;
+      return;
+    }
+  }
+  
+  //V‹K“o˜^
   if(etcsave->acquaintance_occ_num < ACQUAINTANCE_ID_MAX){
     etcsave->acquaintance_trainer_id[etcsave->acquaintance_occ_num] = trainer_id;
     etcsave->acquaintance_occ_num++;
