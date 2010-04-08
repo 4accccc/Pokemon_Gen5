@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-04-07T21:04:13"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T17:51:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -377,9 +377,7 @@
 
 	<row id="msg_h03_badrider1_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
-
 会話後に戦闘へ
-
 勝利でmsg_h03_badrider1_04へ</comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
 		<language name="JPN" width="256">なんだとお！　この　ダボが！
@@ -468,9 +466,7 @@
 
 	<row id="msg_h03_badrider2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-
 会話後に戦闘へ
-
 勝利でmsg_h03_badrider2_04へ</comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
 		<language name="JPN" width="256">グハハハ！　じょうとうだっ！
@@ -561,7 +557,6 @@
 ※種族名はbadrider2に勝利後、
 　手持ち先頭のポケモンと差し替え
 　デフォルトでは「エンペルト」です
-
 イベント終了</comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
 		<language name="JPN" width="256">ブラック[1:01:ポケモン種族名:0]！
@@ -577,7 +572,6 @@
 ※種族名はbadrider2に勝利後、
 　手持ち先頭のポケモンと差し替え
 　デフォルトでは「エンペルト」です
-
 イベント終了</comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
 		<language name="JPN" width="256">ブラック[1:01:ポケモン種族名:0]は
