@@ -155,7 +155,7 @@ static const FLDMENUFUNC_HEADER MenuHeader_MainMenu =
 	2,		//表示文字影色
 	0,		//文字間隔Ｘ
 	0,		//文字間隔Ｙ
-	FLDMENUFUNC_SKIP_NON,	//ページスキップタイプ
+	FLDMENUFUNC_SKIP_LRKEY,	//ページスキップタイプ
 	12,		//文字サイズX(ドット
 	16,		//文字サイズY(ドット
 	1,//32-14,		//表示座標X キャラ単位
@@ -294,7 +294,7 @@ static const FLDMENUFUNC_HEADER MenuHeader_Battle =
 	2,		//表示文字影色
 	0,		//文字間隔Ｘ
 	0,		//文字間隔Ｙ
-	FLDMENUFUNC_SKIP_NON,	//ページスキップタイプ
+	FLDMENUFUNC_SKIP_LRKEY,	//ページスキップタイプ
 	12,		//文字サイズX(ドット
 	16,		//文字サイズY(ドット
 	1,//32-20,		//表示座標X キャラ単位
@@ -329,7 +329,7 @@ static const FLDMENUFUNC_HEADER MenuHeader_PokePartySelect =
 	2,		//表示文字影色
 	0,		//文字間隔Ｘ
 	1,		//文字間隔Ｙ
-	FLDMENUFUNC_SKIP_NON,	//ページスキップタイプ
+	FLDMENUFUNC_SKIP_LRKEY,	//ページスキップタイプ
 	12,		//文字サイズX(ドット
 	16,		//文字サイズY(ドット
 	32-14,		//表示座標X キャラ単位
