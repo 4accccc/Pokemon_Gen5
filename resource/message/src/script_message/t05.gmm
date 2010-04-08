@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T12:26:16"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-04-08T12:38:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="505" top="78" right="1210" bottom="698" maximized="no" rayout="Vertical2">
+	<dialog left="523" top="106" right="1228" bottom="726" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="807" top="103" right="1280" bottom="501" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -315,7 +315,7 @@
 		<comment>看板分類：路線図</comment>
 		<attribute name="キャラ指定">看板：路線図</attribute>
 		<language name="JPN" width="256">イッシュちほうの　ろせんずだ▼</language>
-		<language name="JPN_KANJI" width="256">イッシュちほうの　ろせんずだ▼</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方の　路線図がある▼</language>
 	</row>
 
 	<row id="msg_t05_railfan_01">
@@ -334,10 +334,10 @@
 話しかけスタート
 車両無しのとき</comment>
 		<attribute name="キャラ指定">作業員</attribute>
-		<language name="JPN" width="256">ざんねん　きょうは
-でんしゃが　きていないんだ</language>
-		<language name="JPN_KANJI" width="256">ざんねん　きょうは
-でんしゃが　きていないんだ</language>
+		<language name="JPN" width="256">きみは　あの　でんしゃが
+みえるかい？</language>
+		<language name="JPN_KANJI" width="256">きみは　あの　でんしゃが
+みえるかい？</language>
 	</row>
 
 	<row id="msg_t05_railfan_02">
@@ -348,6 +348,17 @@
 		<language name="JPN_KANJI" width="256">よしきた！▼</language>
 	</row>
 
+	<row id="msg_t05_railfan_02_01">
+		<comment>♂
+「はい」を選択
+車両無しのとき</comment>
+		<attribute name="キャラ指定">作業員</attribute>
+		<language name="JPN" width="256">ともよ！
+いこうぞ！！▼</language>
+		<language name="JPN_KANJI" width="256">ともよ！
+いこうぞ！！▼</language>
+	</row>
+
 	<row id="msg_t05_railfan_03">
 		<comment>♂
 「いいえ」を選択</comment>
@@ -356,6 +367,17 @@
 わかるよ</language>
 		<language name="JPN_KANJI" width="256">あー　いそいで　いるんだね
 わかるよ</language>
+	</row>
+
+	<row id="msg_t05_railfan_03_01">
+		<comment>♂
+「いいえ」を選択
+車両無しのとき</comment>
+		<attribute name="キャラ指定">作業員</attribute>
+		<language name="JPN" width="256">そうだよね
+ざんねんだな……</language>
+		<language name="JPN_KANJI" width="256">そうだよね
+ざんねんだな……</language>
 	</row>
 
 	<row id="msg_t05_railfan_railtalk1_00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -699,7 +721,7 @@ Wi-Fi</comment>
 		<comment>♂
 会話スタート
 はい／いいえ表示</comment>
-		<attribute name="キャラ指定">POLICEMAN</attribute>
+		<attribute name="キャラ指定">RAILMAN</attribute>
 		<language name="JPN" width="256">ライモンシティに　かえる？</language>
 		<language name="JPN_KANJI" width="256">ライモンシティに　かえる？</language>
 	</row>
@@ -709,7 +731,7 @@ Wi-Fi</comment>
 はい
 続いて主人公
 電車の前に移動しマップ遷移</comment>
-		<attribute name="キャラ指定">POLICEMAN</attribute>
+		<attribute name="キャラ指定">RAILMAN</attribute>
 		<language name="JPN" width="256">よし　それじゃあ
 でんしゃに　のってくれ▼</language>
 		<language name="JPN_KANJI" width="256">よし　それじゃあ
@@ -719,11 +741,340 @@ Wi-Fi</comment>
 	<row id="msg_t05_recept_03">
 		<comment>♂
 いいえ</comment>
-		<attribute name="キャラ指定">POLICEMAN</attribute>
+		<attribute name="キャラ指定">RAILMAN</attribute>
 		<language name="JPN" width="256">うんうん　なにもないけど
 ゆっくりしていってよ</language>
 		<language name="JPN_KANJI" width="256">うんうん　なにもないけど
 ゆっくりしていってよ</language>
+	</row>
+
+	<row id="msg_t05_exchange_sys_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>ボロ市
+アイテム入手ME再生
+
+※共通</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]を　ゆずって
+かわりに　[1:09:どうぐ名:2]を　もらった！</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　ゆずって
+かわりに　[1:09:どうぐ名:2]を　もらった！</language>
+	</row>
+
+	<row id="msg_t05_backpackerm_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂　ボロ市
+会話スタート（初回）
+※マップ切り替えでリセット
+はい／いいえ表示
+
+どうでもいい消費アイテムとの交換</comment>
+		<attribute name="キャラ指定">BACKPACKERM</attribute>
+		<language name="JPN" width="256">トレーナーどうしの　たすけあい
+ぶつぶつこうかん　しようよ▼
+そうだなあ……▼
+[1:09:どうぐ名:0]　[2:01:２桁:1]こを
+[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+こうかん　しないかい？</language>
+		<language name="JPN_KANJI" width="256">トレーナーどうしの　たすけあい
+ぶつぶつこうかん　しようよ▼
+そうだなあ……▼
+[1:09:どうぐ名:0]　[2:01:２桁:1]こを
+[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+こうかん　しないかい？</language>
+	</row>
+
+	<row id="msg_t05_backpackerm_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂　ボロ市
+会話スタート（２回目以降）
+※マップ切り替えでリセット
+はい／いいえ表示</comment>
+		<attribute name="キャラ指定">BACKPACKERM</attribute>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]こを
+[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+こうかん　しないかい？</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]こを
+[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+こうかん　しないかい？</language>
+	</row>
+
+	<row id="msg_t05_backpackerm_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂ ボロ市
+はい</comment>
+		<attribute name="キャラ指定">BACKPACKERM</attribute>
+		<language name="JPN" width="256">よーし　レッツこうかん！▼</language>
+		<language name="JPN_KANJI" width="256">よーし　レッツこうかん！▼</language>
+	</row>
+
+	<row id="msg_t05_backpackerm_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂ ボロ市
+いいえ</comment>
+		<attribute name="キャラ指定">BACKPACKERM</attribute>
+		<language name="JPN" width="256">くー　ざんねん！</language>
+		<language name="JPN_KANJI" width="256">くー　ざんねん！</language>
+	</row>
+
+	<row id="msg_t05_backpackerm_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂　ボロ市
+交換後メッセージ</comment>
+		<attribute name="キャラ指定">BACKPACKERM</attribute>
+		<language name="JPN" width="256">ゆふふ　ホクホクな
+こうかん　だったね！</language>
+		<language name="JPN_KANJI" width="256">ゆふふ　ホクホクな
+こうかん　だったね！</language>
+	</row>
+
+	<row id="msg_t05_businessman_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂　ボロ市
+会話スタート（初回）
+※マップ切り替えでリセット
+はい／いいえ表示
+
+
+ほしのかけらとの交換</comment>
+		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+		<language name="JPN" width="256">そこの　きみ！
+わたしと　ビジネスライクな▽
+ぶつぶつこうかんを　しないかい？▼
+そうですね……▼
+[1:09:どうぐ名:0]　[2:01:２桁:1]こを
+[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+こうかん　しないかい？</language>
+		<language name="JPN_KANJI" width="256">そこの　きみ！
+わたしと　ビジネスライクな▽
+ぶつぶつこうかんを　しないかい？▼
+そうですね……▼
+[1:09:どうぐ名:0]　[2:01:２桁:1]こを
+[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+こうかん　しないかい？</language>
+	</row>
+
+	<row id="msg_t05_businessman_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂　ボロ市
+会話スタート（２回目以降）
+※マップ切り替えでリセット
+はい／いいえ表示</comment>
+		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]こを
+[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+こうかん　しないかい？</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]こを
+[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+こうかん　しないかい？</language>
+	</row>
+
+	<row id="msg_t05_businessman_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂ ボロ市
+はい</comment>
+		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+		<language name="JPN" width="256">よーし　レッツビジネス！▼</language>
+		<language name="JPN_KANJI" width="256">よーし　レッツビジネス！▼</language>
+	</row>
+
+	<row id="msg_t05_businessman_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂ ボロ市
+いいえ</comment>
+		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+		<language name="JPN" width="256">わるい　はなしじゃ
+ないと　おもうんだけどな</language>
+		<language name="JPN_KANJI" width="256">わるい　はなしじゃ
+ないと　おもうんだけどな</language>
+	</row>
+
+	<row id="msg_t05_businessman_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂　ボロ市
+交換後メッセージ</comment>
+		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+		<language name="JPN" width="256">フフフ　おたがい
+よい　こうかん　だったね！▽
+こういうの　ウィンウィンな
+かんけいって　いうんだよね</language>
+		<language name="JPN_KANJI" width="256">フフフ　おたがい
+よい　こうかん　だったね！▽
+こういうの　ウィンウィンな
+かんけいって　いうんだよね</language>
+	</row>
+
+	<row id="msg_t05_trainerw_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂　ボロ市
+会話スタート（初回）
+※マップ切り替えでリセット
+はい／いいえ表示
+
+モンスターボールとの交換</comment>
+		<attribute name="キャラ指定">TRAINERW</attribute>
+		<language name="JPN" width="256">あら　あなた？
+そのかおは　わたしの▽
+おめあての　アレを　もってるタイプよね▼
+[1:09:どうぐ名:0]　[2:01:２桁:1]こを
+[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+こうかん　してくれないかな？</language>
+		<language name="JPN_KANJI" width="256">あら　あなた？
+そのかおは　わたしの▽
+おめあての　アレを　もってるタイプよね▼
+[1:09:どうぐ名:0]　[2:01:２桁:1]こを
+[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+こうかん　してくれないかな？</language>
+	</row>
+
+	<row id="msg_t05_trainerw_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂　ボロ市
+会話スタート（２回目以降）
+※マップ切り替えでリセット
+はい／いいえ表示</comment>
+		<attribute name="キャラ指定">TRAINERW</attribute>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]こを
+[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+こうかん　してくれないかな？</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]こを
+[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+こうかん　してくれないかな？</language>
+	</row>
+
+	<row id="msg_t05_trainerw_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂ ボロ市
+はい</comment>
+		<attribute name="キャラ指定">TRAINERW</attribute>
+		<language name="JPN" width="256">やった
+それじゃ　コレどーぞ！▼</language>
+		<language name="JPN_KANJI" width="256">やった
+それじゃ　コレどーぞ！▼</language>
+	</row>
+
+	<row id="msg_t05_trainerw_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂ ボロ市
+いいえ</comment>
+		<attribute name="キャラ指定">TRAINERW</attribute>
+		<language name="JPN" width="256">あら？
+アテが　はずれちゃった</language>
+		<language name="JPN_KANJI" width="256">あら？
+アテが　はずれちゃった</language>
+	</row>
+
+	<row id="msg_t05_trainerw_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂　ボロ市
+交換後メッセージ</comment>
+		<attribute name="キャラ指定">TRAINERW</attribute>
+		<language name="JPN" width="256">ウフフ　このツヤ！
+やっぱり　[1:09:どうぐ名:0]って　ステキよね▼
+わたし　ぐらいになると
+１つ１つ　ツヤの　ちがいが　わかるのよ！</language>
+		<language name="JPN_KANJI" width="256">ウフフ　このツヤ！
+やっぱり　[1:09:どうぐ名:0]って　ステキよね▼
+わたし　ぐらいになると
+１つ１つ　ツヤの　ちがいが　わかるのよ！</language>
+	</row>
+
+	<row id="msg_t05_man3_01">
+		<comment>♂
+見物人
+週末のみ表示</comment>
+		<attribute name="キャラ指定">MAN3</attribute>
+		<language name="JPN" width="256">しゅうまつは　にぎわうなあ▼
+あ　ぼくは　ですね
+でんしゃを　みにきたんですよ</language>
+		<language name="JPN_KANJI" width="256">しゅうまつは　にぎわうなあ▼
+あ　ぼくは　ですね
+でんしゃを　みにきたんですよ</language>
+	</row>
+
+	<row id="msg_t05_woman2_01">
+		<comment>♀
+見物人
+週末のみ表示</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">ぶつぶつこうかん
+やってみたら　いがいと　たのしいわ！</language>
+		<language name="JPN_KANJI" width="256">ぶつぶつこうかん
+やってみたら　いがいと　たのしいわ！</language>
+	</row>
+
+	<row id="msg_t05_mountman_01">
+		<comment>♂
+見物人
+週末のみ表示</comment>
+		<attribute name="キャラ指定">MOUNTMAN</attribute>
+		<language name="JPN" width="256">くうきが　うまい！</language>
+		<language name="JPN_KANJI" width="256">くうきが　うまい！</language>
+	</row>
+
+	<row id="msg_t05_middlewoman2_01">
+		<comment>♀
+見物人
+週末のみ表示</comment>
+		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
+		<language name="JPN" width="256">うっふっふ
+おとくに　こうかん　しちゃうわよー！</language>
+		<language name="JPN_KANJI" width="256">うっふっふ
+おとくに　こうかん　しちゃうわよー！</language>
+	</row>
+
+	<row id="msg_t05_woman1_01">
+		<comment>♀
+見物人
+週末のみ表示</comment>
+		<attribute name="キャラ指定">WOMAN1</attribute>
+		<language name="JPN" width="256">だれかが　もっていたどうぐ
+そのどうぐから　もちぬしの▽
+おもいを　かんじることがあるの</language>
+		<language name="JPN_KANJI" width="256">だれかが　もっていたどうぐ
+そのどうぐから　もちぬしの▽
+おもいを　かんじることがあるの</language>
+	</row>
+
+	<row id="msg_t05_boy3_01">
+		<comment>♂
+見物人
+週末のみ表示</comment>
+		<attribute name="キャラ指定">BOY3</attribute>
+		<language name="JPN" width="256">でんしゃ　カッケー！▼
+え　おかあさん？
+どこかで　こうしょうしてるよ</language>
+		<language name="JPN_KANJI" width="256">でんしゃ　カッケー！▼
+え　おかあさん？
+どこかで　こうしょうしてるよ</language>
+	</row>
+
+	<row id="msg_t05_oldman1_01">
+		<comment>♂
+住人
+平日</comment>
+		<attribute name="キャラ指定">OLDMAN1</attribute>
+		<language name="JPN" width="256">しゅうまつは
+ぶつぶつこうかんで　にぎわうよ</language>
+		<language name="JPN_KANJI" width="256">しゅうまつは
+ぶつぶつこうかんで　にぎわうよ</language>
+	</row>
+
+	<row id="msg_t05_oldman1_02">
+		<comment>♂
+住人
+週末</comment>
+		<attribute name="キャラ指定">OLDMAN1</attribute>
+		<language name="JPN" width="256">きょうも　おおにぎわい
+きみも　ぶつぶつこうかん　かい？</language>
+		<language name="JPN_KANJI" width="256">きょうも　おおにぎわい
+きみも　ぶつぶつこうかん　かい？</language>
+	</row>
+
+	<row id="msg_t05_railman_01">
+		<comment>♂
+住人
+平日</comment>
+		<attribute name="キャラ指定">RAILMAN</attribute>
+		<language name="JPN" width="256">たくさんの　しゃりょうが
+ここで　やすんでいくんだよ</language>
+		<language name="JPN_KANJI" width="256">たくさんの　しゃりょうが
+ここで　やすんでいくんだよ</language>
+	</row>
+
+	<row id="msg_t05_railman_02">
+		<comment>♂
+住人
+週末</comment>
+		<attribute name="キャラ指定">RAILMAN</attribute>
+		<language name="JPN" width="256">ひとが　たくさん　いるとさ
+でんしゃも　うれしそうな　きがするよ</language>
+		<language name="JPN_KANJI" width="256">ひとが　たくさん　いるとさ
+でんしゃも　うれしそうな　きがするよ</language>
 	</row>
 
 	<flowchart-group-list>
