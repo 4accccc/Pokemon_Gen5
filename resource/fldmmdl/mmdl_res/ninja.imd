@@ -236,114 +236,6 @@
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 bbb0 00bb 0000 0000 0000 
-			0000 0000 b000 fffb bbff 0000 0000 0000 
-			0000 0000 fb00 ffff ffff 000b 0000 0000 
-			0000 0000 feb0 ffff ffff 00cf 0000 0000 
-			0000 0000 ffdc ffff ffff 0cff 0000 0000 
-			0000 0000 fffc dfff ffff 0cff 0000 0000 
-			0000 c000 fdfe fdff ffff bfff 0000 0000 
-			0000 c000 ffae ffcf ffff bfff 0000 0000 
-			0000 ec00 fffa dffc bfff bdef 0000 0000 
-			0000 cc00 fffa fbcc dbff 0bcd 0000 0000 
-			0000 a000 fffe ffbd bbff abbb 0000 0000 
-			0000 a000 ffec ffbe bbdf abbb 0000 0000 
-			0000 0000 eeda fdbd babf 76bb 0000 0000 
-			0000 0000 ddda fadd bdbf 7866 0000 0000 
-			0000 0000 dcda d9dd 669f 0788 0000 0000 
-			0000 0000 dc90 a9cd bb9f 09bb 0000 0000 
-			0000 0000 c900 aa9d 9aa9 0099 0000 0000 
-			0000 0000 a000 aa9c 099a 0000 0000 0000 
-			0000 0000 0000 6aa9 0097 0000 0000 0000 
-			0000 0000 0000 64a9 0076 0000 0000 0000 
-			0000 0000 9000 64aa 0007 0000 0000 0000 
-			0000 0000 9000 6799 000a 0000 0000 0000 
-			0000 0000 a900 b99a 000a 0000 0000 0000 
-			0000 0000 a900 69aa 0007 0000 0000 0000 
-			0000 0000 a900 667a 0007 0000 0000 0000 
-			0000 0000 9900 99aa 0000 0000 0000 0000 
-			0000 0000 9000 9aa9 0000 0000 0000 0000 
-			0000 0000 9000 0999 0000 0000 0000 0000 
-			0000 0000 0000 9990 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-		</bitmap>
-	</tex_image>
-	<tex_image name='t4x4x14.8' format='palette16' original_width='32' original_height='32' index='7' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.8.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 bbb0 00bb 0000 0000 0000 
-			0000 0000 b000 fffb bbff 0000 0000 0000 
-			0000 0000 fb00 ffff ffff 000b 0000 0000 
-			0000 0000 feb0 ffff ffff 00cf 0000 0000 
-			0000 0000 ffdc ffff ffff 0cff 0000 0000 
-			0000 0000 fffc dfff ffff 0cff 0000 0000 
-			0000 c000 fdfe fdff ffff bfff 0000 0000 
-			0000 c000 ffae ffcf ffff bfff 0000 0000 
-			0000 ec00 fffa dffc bfff bdef 0000 0000 
-			0000 cc00 fffa fbcc dbff 0bcd 0000 0000 
-			0000 a000 fffe ffbd bbff abbb 0000 0000 
-			0000 a000 ffec ffbe bbdf abbb 0000 0000 
-			0000 0000 eeda fdbd babf 76bb 0000 0000 
-			0000 0000 ddda fadd bdbf 7866 0000 0000 
-			0000 0000 dcda d9dd 669f 0788 0000 0000 
-			0000 0000 dc90 a9cd bb9f 09bb 0000 0000 
-			0000 0000 c900 aa9d 9aa9 0099 0000 0000 
-			0000 0000 a000 aa9c 099a 0000 0000 0000 
-			0000 0000 0000 6aa9 0097 0000 0000 0000 
-			0000 0000 0000 64a9 0076 0000 0000 0000 
-			0000 0000 9000 64aa 0007 0000 0000 0000 
-			0000 0000 9000 6799 000a 0000 0000 0000 
-			0000 0000 a900 b99a 000a 0000 0000 0000 
-			0000 0000 a900 69aa 0007 0000 0000 0000 
-			0000 0000 9a90 667a 0097 0000 0000 0000 
-			0000 0000 aa90 99a9 009a 0000 0000 0000 
-			0000 0000 9900 aa99 009a 0000 0000 0000 
-			0000 0000 9000 9900 0009 0000 0000 0000 
-			0000 0000 0000 9000 0099 0000 0000 0000 
-		</bitmap>
-	</tex_image>
-	<tex_image name='t4x4x14.9' format='palette16' original_width='32' original_height='32' index='8' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.9.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 bbb0 00bb 0000 0000 0000 
-			0000 0000 b000 fffb bbff 0000 0000 0000 
-			0000 0000 fb00 ffff ffff 000b 0000 0000 
-			0000 0000 feb0 ffff ffff 00cf 0000 0000 
-			0000 0000 ffdc ffff ffff 0cff 0000 0000 
-			0000 0000 fffc dfff ffff 0cff 0000 0000 
-			0000 c000 fdfe fdff ffff bfff 0000 0000 
-			0000 c000 ffae ffcf ffff bfff 0000 0000 
-			0000 ec00 fffa dffc bfff bdef 0000 0000 
-			0000 cc00 fffa fbcc dbff 0bcd 0000 0000 
-			0000 a000 fffe ffbd bbff abbb 0000 0000 
-			0000 a000 ffec ffbe bbdf abbb 0000 0000 
-			0000 0000 eeda fdbd babf 76bb 0000 0000 
-			0000 0000 ddda fadd bdbf 7866 0000 0000 
-			0000 0000 dcda d9dd 669f 0788 0000 0000 
-			0000 0000 dc90 a9cd bb9f 09bb 0000 0000 
-			0000 0000 c900 aa9d 9aa9 0099 0000 0000 
-			0000 0000 a000 aa9c 099a 0000 0000 0000 
-			0000 0000 0000 6aa9 0097 0000 0000 0000 
-			0000 0000 0000 64a9 0076 0000 0000 0000 
-			0000 0000 9000 64aa 0007 0000 0000 0000 
-			0000 0000 a900 6799 000a 0000 0000 0000 
-			0000 0000 a900 b99a 000a 0000 0000 0000 
-			0000 0000 aa90 69aa 0007 0000 0000 0000 
-			0000 0000 aa90 667a 0007 0000 0000 0000 
-			0000 0000 aa90 99aa 009a 0000 0000 0000 
-			0000 0000 a900 999a 0009 0000 0000 0000 
-			0000 0000 9900 0009 0000 0000 0000 0000 
-			0000 0000 9000 0099 0000 0000 0000 0000 
-		</bitmap>
-	</tex_image>
-	<tex_image name='t4x4x14.10' format='palette16' original_width='32' original_height='32' index='9' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.10.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 bb00 0bbb 0000 0000 0000 
 			0000 0000 0000 ffbb bfff 000b 0000 0000 
 			0000 0000 b000 ffff ffff 00bf 0000 0000 
@@ -376,7 +268,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x14.11' format='palette16' original_width='32' original_height='32' index='10' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.11.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+	<tex_image name='t4x4x14.8' format='palette16' original_width='32' original_height='32' index='7' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.8.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -412,7 +304,7 @@
 			0000 0000 0000 9900 0009 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4x14.12' format='palette16' original_width='32' original_height='32' index='11' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.12.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+	<tex_image name='t4x4x14.9' format='palette16' original_width='32' original_height='32' index='8' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.9.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -446,6 +338,114 @@
 			0000 0000 0000 9000 a999 009a 0000 0000 
 			0000 0000 0000 0000 9000 0099 0000 0000 
 			0000 0000 0000 0000 9900 0009 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='t4x4x14.10' format='palette16' original_width='32' original_height='32' index='9' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.10.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 bbb0 00bb 0000 0000 0000 
+			0000 0000 b000 fffb bbff 0000 0000 0000 
+			0000 0000 fb00 ffff ffff 000b 0000 0000 
+			0000 0000 feb0 ffff ffff 00cf 0000 0000 
+			0000 0000 ffdc ffff ffff 0cff 0000 0000 
+			0000 0000 fffc dfff ffff 0cff 0000 0000 
+			0000 c000 fdfe fdff ffff bfff 0000 0000 
+			0000 c000 ffae ffcf ffff bfff 0000 0000 
+			0000 ec00 fffa dffc bfff bdef 0000 0000 
+			0000 cc00 fffa fbcc dbff 0bcd 0000 0000 
+			0000 a000 fffe ffbd bbff abbb 0000 0000 
+			0000 a000 ffec ffbe bbdf abbb 0000 0000 
+			0000 0000 eeda fdbd babf 76bb 0000 0000 
+			0000 0000 ddda fadd bdbf 7866 0000 0000 
+			0000 0000 dcda d9dd 669f 0788 0000 0000 
+			0000 0000 dc90 a9cd bb9f 09bb 0000 0000 
+			0000 0000 c900 aa9d 9aa9 0099 0000 0000 
+			0000 0000 a000 aa9c 099a 0000 0000 0000 
+			0000 0000 0000 6aa9 0097 0000 0000 0000 
+			0000 0000 0000 64a9 0076 0000 0000 0000 
+			0000 0000 9000 64aa 0007 0000 0000 0000 
+			0000 0000 9000 6799 000a 0000 0000 0000 
+			0000 0000 a900 b99a 000a 0000 0000 0000 
+			0000 0000 a900 69aa 0007 0000 0000 0000 
+			0000 0000 a900 667a 0007 0000 0000 0000 
+			0000 0000 9900 99aa 0000 0000 0000 0000 
+			0000 0000 9000 9aa9 0000 0000 0000 0000 
+			0000 0000 9000 0999 0000 0000 0000 0000 
+			0000 0000 0000 9990 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='t4x4x14.11' format='palette16' original_width='32' original_height='32' index='10' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.11.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 bbb0 00bb 0000 0000 0000 
+			0000 0000 b000 fffb bbff 0000 0000 0000 
+			0000 0000 fb00 ffff ffff 000b 0000 0000 
+			0000 0000 feb0 ffff ffff 00cf 0000 0000 
+			0000 0000 ffdc ffff ffff 0cff 0000 0000 
+			0000 0000 fffc dfff ffff 0cff 0000 0000 
+			0000 c000 fdfe fdff ffff bfff 0000 0000 
+			0000 c000 ffae ffcf ffff bfff 0000 0000 
+			0000 ec00 fffa dffc bfff bdef 0000 0000 
+			0000 cc00 fffa fbcc dbff 0bcd 0000 0000 
+			0000 a000 fffe ffbd bbff abbb 0000 0000 
+			0000 a000 ffec ffbe bbdf abbb 0000 0000 
+			0000 0000 eeda fdbd babf 76bb 0000 0000 
+			0000 0000 ddda fadd bdbf 7866 0000 0000 
+			0000 0000 dcda d9dd 669f 0788 0000 0000 
+			0000 0000 dc90 a9cd bb9f 09bb 0000 0000 
+			0000 0000 c900 aa9d 9aa9 0099 0000 0000 
+			0000 0000 a000 aa9c 099a 0000 0000 0000 
+			0000 0000 0000 6aa9 0097 0000 0000 0000 
+			0000 0000 0000 64a9 0076 0000 0000 0000 
+			0000 0000 9000 64aa 0007 0000 0000 0000 
+			0000 0000 9000 6799 000a 0000 0000 0000 
+			0000 0000 a900 b99a 000a 0000 0000 0000 
+			0000 0000 a900 69aa 0007 0000 0000 0000 
+			0000 0000 9a90 667a 0097 0000 0000 0000 
+			0000 0000 aa90 99a9 009a 0000 0000 0000 
+			0000 0000 9900 aa99 009a 0000 0000 0000 
+			0000 0000 9000 9900 0009 0000 0000 0000 
+			0000 0000 0000 9000 0099 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='t4x4x14.12' format='palette16' original_width='32' original_height='32' index='11' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.12.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 bbb0 00bb 0000 0000 0000 
+			0000 0000 b000 fffb bbff 0000 0000 0000 
+			0000 0000 fb00 ffff ffff 000b 0000 0000 
+			0000 0000 feb0 ffff ffff 00cf 0000 0000 
+			0000 0000 ffdc ffff ffff 0cff 0000 0000 
+			0000 0000 fffc dfff ffff 0cff 0000 0000 
+			0000 c000 fdfe fdff ffff bfff 0000 0000 
+			0000 c000 ffae ffcf ffff bfff 0000 0000 
+			0000 ec00 fffa dffc bfff bdef 0000 0000 
+			0000 cc00 fffa fbcc dbff 0bcd 0000 0000 
+			0000 a000 fffe ffbd bbff abbb 0000 0000 
+			0000 a000 ffec ffbe bbdf abbb 0000 0000 
+			0000 0000 eeda fdbd babf 76bb 0000 0000 
+			0000 0000 ddda fadd bdbf 7866 0000 0000 
+			0000 0000 dcda d9dd 669f 0788 0000 0000 
+			0000 0000 dc90 a9cd bb9f 09bb 0000 0000 
+			0000 0000 c900 aa9d 9aa9 0099 0000 0000 
+			0000 0000 a000 aa9c 099a 0000 0000 0000 
+			0000 0000 0000 6aa9 0097 0000 0000 0000 
+			0000 0000 0000 64a9 0076 0000 0000 0000 
+			0000 0000 9000 64aa 0007 0000 0000 0000 
+			0000 0000 a900 6799 000a 0000 0000 0000 
+			0000 0000 a900 b99a 000a 0000 0000 0000 
+			0000 0000 aa90 69aa 0007 0000 0000 0000 
+			0000 0000 aa90 667a 0007 0000 0000 0000 
+			0000 0000 aa90 99aa 009a 0000 0000 0000 
+			0000 0000 a900 999a 0009 0000 0000 0000 
+			0000 0000 9900 0009 0000 0000 0000 0000 
+			0000 0000 9000 0099 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
 	<tex_image name='t4x4x14.13' format='palette16' original_width='32' original_height='32' index='12' height='32' path='C:/home/wb_data3d/field/fldobj/t4x4x14.13.tga' palette_name='t4x4x14' width='32' color0_mode='color'>
