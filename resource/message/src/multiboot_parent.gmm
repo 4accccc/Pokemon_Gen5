@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-04-08T14:57:36"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-04-08T15:57:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -362,7 +362,7 @@
 		</language>
 	</columns>
 
-	<dialog left="133" top="189" right="838" bottom="817" maximized="no" rayout="Vertical2">
+	<dialog left="1" top="189" right="706" bottom="817" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -492,15 +492,27 @@ DSシステムフォントなので
 		<language name="JPN_KANJI" width="208">ポケシフター</language>
 	</row>
 
-	<row id="MSG_MB_PAERNT_ROM_INFO">
+	<row id="MSG_MB_PAERNT_ROM_INFO_B">
 		<comment>DLROMの説明
 96文字(２行可)199ドット以内
 DSシステムフォントなので
 幅が違います。注意！
 漢字不可！</comment>
-		<language name="JPN" width="208">ポケットモンスター シャチ
+		<language name="JPN" width="208">ポケットモンスター ブラック
 ポケシフター プログラム</language>
-		<language name="JPN_KANJI" width="208">ポケットモンスター シャチ
+		<language name="JPN_KANJI" width="208">ポケットモンスター ブラック
+ポケシフター プログラム</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_ROM_INFO_W">
+		<comment>DLROMの説明
+96文字(２行可)199ドット以内
+DSシステムフォントなので
+幅が違います。注意！
+漢字不可！</comment>
+		<language name="JPN" width="208">ポケットモンスター ホワイト
+ポケシフター プログラム</language>
+		<language name="JPN_KANJI" width="208">ポケットモンスター ホワイト
 ポケシフター プログラム</language>
 	</row>
 
@@ -514,15 +526,27 @@ DSシステムフォントなので
 		<language name="JPN_KANJI" width="208">てんそうマシン</language>
 	</row>
 
-	<row id="MSG_MB_PAERNT_ROM_INFO_MOVIE">
+	<row id="MSG_MB_PAERNT_ROM_INFO_MOVIE_B">
 		<comment>DLROMの説明
 96文字(２行可)199ドット以内
 DSシステムフォントなので
 幅が違います。注意！
 漢字不可！</comment>
-		<language name="JPN" width="208">ポケットモンスター シャチ
+		<language name="JPN" width="208">ポケットモンスター ブラック
 てんそうマシン プログラム</language>
-		<language name="JPN_KANJI" width="208">ポケットモンスター シャチ
+		<language name="JPN_KANJI" width="208">ポケットモンスター ブラック
+てんそうマシン プログラム</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_ROM_INFO_MOVIE_W">
+		<comment>DLROMの説明
+96文字(２行可)199ドット以内
+DSシステムフォントなので
+幅が違います。注意！
+漢字不可！</comment>
+		<language name="JPN" width="208">ポケットモンスター ホワイト
+てんそうマシン プログラム</language>
+		<language name="JPN_KANJI" width="208">ポケットモンスター ホワイト
 てんそうマシン プログラム</language>
 	</row>
 

@@ -1081,11 +1081,25 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
   //à–¾
   if( work->mode == MPM_POKE_SHIFTER )
   {
-    infoStr  = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_INFO );
+    if( GET_VERSION() == VERSION_BLACK )
+    {
+      infoStr  = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_INFO_B );
+    }
+    else
+    {
+      infoStr  = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_INFO_W );
+    }
   }
   else
   {
-    infoStr  = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_INFO_MOVIE );
+    if( GET_VERSION() == VERSION_BLACK )
+    {
+      infoStr  = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_INFO_MOVIE_B );
+    }
+    else
+    {
+      infoStr  = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_INFO_MOVIE_W );
+    }
   }
   titleLen = GFL_STR_GetBufferLength( titleStr );
   infoLen = GFL_STR_GetBufferLength( infoStr );
