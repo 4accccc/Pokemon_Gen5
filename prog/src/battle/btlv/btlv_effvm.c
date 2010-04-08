@@ -4056,11 +4056,7 @@ static  int   EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag )
     {
       if( bevw->attack_pos & 1 )
       {
-        if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_AA ) == TRUE )
-        {
-          return BTLV_MCSS_POS_AA;
-        }
-        else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_A ) == TRUE )
+        if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_A ) == TRUE )
         {
           return BTLV_MCSS_POS_A;
         }
@@ -4068,18 +4064,18 @@ static  int   EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag )
         {
           return BTLV_MCSS_POS_C;
         }
-        else
+        else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_E ) == TRUE )
         {
           return BTLV_MCSS_POS_E;
+        }
+        else
+        {
+          return BTLV_MCSS_POS_AA;
         }
       }
       else
       {
-        if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_BB ) == TRUE )
-        {
-          return BTLV_MCSS_POS_BB;
-        }
-        else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_B ) == TRUE )
+        if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_B ) == TRUE )
         {
           return BTLV_MCSS_POS_B;
         }
@@ -4087,9 +4083,13 @@ static  int   EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag )
         {
           return BTLV_MCSS_POS_D;
         }
-        else
+        else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_F ) == TRUE )
         {
           return BTLV_MCSS_POS_F;
+        }
+        else
+        {
+          return BTLV_MCSS_POS_BB;
         }
       }
     }
