@@ -47,3 +47,9 @@ extern void PN_LETTER_Setup( PN_LETTER* letter, const PN_LETTER_SETUP_PARAM* par
 extern void PN_LETTER_Main( PN_LETTER* letter );
 extern void PN_LETTER_MoveStart( PN_LETTER* letter );
 extern const GFL_BMP_DATA* PN_LETTER_GetBitmap( const PN_LETTER* letter );
+extern void PN_LETTER_SetDrawEnable( PN_LETTER* letter, BOOL enable );
+extern int PN_LETTER_GetWidth( const PN_LETTER* letter );
+extern int PN_LETTER_GetHeight( const PN_LETTER* letter );
+extern int PN_LETTER_GetLeft( const PN_LETTER* letter );
+extern int PN_LETTER_GetTop( const PN_LETTER* letter );
+extern BOOL PN_LETTER_IsMoving( const PN_LETTER* letter );

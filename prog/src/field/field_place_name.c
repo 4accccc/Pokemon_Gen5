@@ -7,9 +7,16 @@
  */
 //////////////////////////////////////////////////////////////////////////////////////
 #include <gflib.h>
+#include "savedata/mystatus.h"
 #include "system/bmp_oam.h"
+#include "print/wordset.h"
 #include "field_place_name.h"
 #include "field/zonedata.h"
+#include "field/intrude_common.h"
+#include "field/intrude_comm.h"
+#include "field/field_status.h"
+#include "field_comm/intrude_work.h"
+#include "field_comm/intrude_main.h"
 
 #include "pm_define.h"
 #include "field_oam_pal.h"  // for FLDOAM_PALNO_PLACENAME
@@ -411,6 +418,11 @@ struct _FIELD_PLACE_NAME
 	u32   nextZoneID;		  // 次に表示する地名に対応するゾーンID
 	u8    launchUnitNum;  // 発射済み文字数
   u8    writeCharNum;   // ビットマップへの書き込みが完了した文字数
+
+
+  GAMESYS_WORK* gameSystem;
+  GAMEDATA* gameData;
+  WORDSET* wordset;
 };
 
 
@@ -473,7 +485,7 @@ static void Draw_FADEOUT( const FIELD_PLACE_NAME* sys );
  * @return 地名表示システム・ワークへのポインタ
  */
 //------------------------------------------------------------------------------------
-FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( HEAPID heap_id, FLDMSGBG* msgbg )
+FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heap_id, FLDMSGBG* msgbg )
 {
 	FIELD_PLACE_NAME* sys;
 
@@ -529,6 +541,11 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( HEAPID heap_id, FLDMSGBG* msgbg )
 	// 初期状態を設定
 	SetState( sys, SYSTEM_STATE_HIDE );
 
+  sys->gameSystem = gameSystem;
+  sys->gameData = GAMESYSTEM_GetGameData( gameSystem );
+  sys->wordset = WORDSET_Create( heap_id );
+  
+
 	// 作成したシステムを返す
 	return sys;
 }
@@ -543,6 +560,8 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( HEAPID heap_id, FLDMSGBG* msgbg )
 void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* sys )
 {
 	int i;
+
+  WORDSET_Delete( sys->wordset );
 
 	// 文字バッファを解放
 	GFL_STR_DeleteBuffer( sys->nameBuf );
@@ -1094,6 +1113,7 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* sys )
 
 	// ゾーンIDから地名文字列を取得する
 	str_id = ZONEDATA_GetPlaceNameID( sys->nextZoneID );
+  OS_TFPrintf( 3, "str_id = %d\n", str_id );
 
   // エラー回避
 	if( (str_id < 0) || (msg_place_name_max <= str_id) ){ str_id = 0; } 
@@ -1101,12 +1121,33 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* sys )
   { //「なぞのばしょ」なら表示しない
     OBATA_Printf( "「なぞのばしょ」を検出( zone id = %d )\n", sys->nextZoneID );
     FIELD_PLACE_NAME_Hide( sys );
-  }
-
-  // 表示中のゾーンID, 地名を更新
+  } 
   sys->currentZoneID = sys->nextZoneID;	   
-	GFL_MSG_GetString( sys->msg,	str_id, sys->nameBuf );
-	sys->nameLen = GFL_STR_GetBufferLength( sys->nameBuf );
+
+  {
+    GAME_COMM_SYS_PTR gameComm;
+    INTRUDE_COMM_SYS_PTR intrudeComm;
+    FIELD_STATUS* fieldStatus;
+
+    gameComm = GAMESYSTEM_GetGameCommSysPtr( sys->gameSystem );
+    intrudeComm = Intrude_Check_CommConnect( gameComm );
+    fieldStatus = GAMEDATA_GetFieldStatus( sys->gameData );
+
+    if( intrudeComm && FIELD_STATUS_GetMapMode( fieldStatus ) == MAPMODE_INTRUDE ) { 
+      STRBUF* strbuf = GFL_MSG_CreateString( sys->msg, MAPNAME_INTRUDE );
+      u8 areaNo = Intrude_GetPalaceArea( intrudeComm );
+      MYSTATUS* status = Intrude_GetMyStatus( intrudeComm, areaNo );
+      GFL_MSG_GetString( sys->msg,	str_id, sys->nameBuf );
+      WORDSET_RegisterPlayerName( sys->wordset, 0, status );
+      WORDSET_RegisterPlaceName( sys->wordset, 1, str_id );
+      WORDSET_ExpandStr( sys->wordset, sys->nameBuf, strbuf );
+      GFL_STR_DeleteBuffer( strbuf );
+    }
+    else {
+      GFL_MSG_GetString( sys->msg,	str_id, sys->nameBuf );
+    } 
+    sys->nameLen = GFL_STR_GetBufferLength( sys->nameBuf );
+  }
 }
 
 //-----------------------------------------------------------------------------------

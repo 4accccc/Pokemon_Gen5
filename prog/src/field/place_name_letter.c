@@ -16,7 +16,7 @@
 //===========================================================================
 // ■ デバッグ
 //===========================================================================
-#define DEBUG_MODE
+//#define DEBUG_MODE
 #define PRINT_TARGET (3) // 出力先
 
 
@@ -93,6 +93,8 @@ static GFL_FONT* GetFont( const PN_LETTER* letter ); // フォントを取得する
 static void SetFont( PN_LETTER* letter, GFL_FONT* font ); // フォントを設定する
 static STRCODE GetStrCode( const PN_LETTER* letter ); // 文字コードを取得する
 static void SetStrCode( PN_LETTER* letter, STRCODE code ); // 文字コードを設定する
+static int GetLeft( const PN_LETTER* letter ); // 左上 x 座標を取得する
+static int GetTop( const PN_LETTER* letter ); // 左上 y 座標を取得する
 static int GetStrWidth( const PN_LETTER* letter ); // 文字の幅を取得する
 static void SetStrWidth( PN_LETTER* letter, u8 width ); // 文字の幅を設定する
 static int GetStrHeight( const PN_LETTER* letter ); //文字の高さを取得する
@@ -100,6 +102,7 @@ static void SetStrHeight( PN_LETTER* letter, u8 height ); //文字の高さを設定する
 static const PN_LETTER_PARAM* GetMoveParam( const PN_LETTER* letter ); // 移動パラメータを取得する
 static void SetMoveParam( PN_LETTER* letter, const PN_LETTER_PARAM* param ); // 移動パラメータを設定する
 static GFL_BMP_DATA* GetBitmap( const PN_LETTER* letter ); // ビットマップを取得する
+static void CalcPrintSize( PN_LETTER* letter ); // 文字サイズを計算する
 // 判定
 static BOOL CheckMoving( const PN_LETTER* letter ); // 移動中かどうかをチェックする
 static BOOL CheckMoveEnd( const PN_LETTER* letter ); // 移動が終了したかどうかをチェックする
@@ -118,8 +121,9 @@ static void SetupMoveParam_bySetupParam( PN_LETTER* letter, const PN_LETTER_SETU
 static void ClearBitmap( PN_LETTER* letter ); // ビットマップをクリアする
 static void PrintLetterToBitmap( PN_LETTER* letter ); // 文字をビットマップに書き込む
 static void UpdateBmpOamActorPos( PN_LETTER* letter ); // BMPOAMアクターの座標を更新する
+static void SetDrawEnable( PN_LETTER* letter, BOOL enable ); // 表示・非表示を変更する
 // ユーティリティ
-static void GetPrintSize( GFL_FONT* font, STRCODE code, HEAPID heapID, int* destX, int* destY ); // 文字サイズを取得する
+static void GetPrintSize( GFL_FONT* font, STRCODE code, HEAPID heapID, u8* destX, u8* destY ); // 文字サイズを取得する
 
 
 
@@ -154,6 +158,7 @@ PN_LETTER* PN_LETTER_Create(
   SetHeapID( letter, heapID ); // ヒープIDをセット
   CreateBitmap( letter ); // ビットマップを生成
   CreateBmpOamActor( letter, bmpOamSys, plttRegIdx ); // BMPOAMアクターを生成
+  SetDrawEnable( letter, FALSE ); // 非表示にする
 
 #ifdef DEBUG_MODE
   OS_TFPrintf( PRINT_TARGET, "◆PN_LETTER: create\n" );
@@ -204,6 +209,7 @@ void PN_LETTER_Setup( PN_LETTER* letter, const PN_LETTER_SETUP_PARAM* param )
 
   SetFont( letter, param->font );
   SetStrCode( letter, param->code );
+  CalcPrintSize( letter );
   ClearBitmap( letter );
   PrintLetterToBitmap( letter );
   SetupMoveParam_bySetupParam( letter, param );
@@ -254,6 +260,89 @@ const GFL_BMP_DATA* PN_LETTER_GetBitmap( const PN_LETTER* letter )
   GF_ASSERT( letter->bmp );
 
   return GetBitmap( letter );
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief 表示・非表示を変更する
+ *
+ * @param letter
+ * @param enable 表示する場合 TRUE
+ */
+//---------------------------------------------------------------------------
+void PN_LETTER_SetDrawEnable( PN_LETTER* letter, BOOL enable )
+{
+  SetDrawEnable( letter, enable );
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief 文字幅を取得する
+ *
+ * @param letter
+ *
+ * @return 文字幅
+ */
+//---------------------------------------------------------------------------
+int PN_LETTER_GetWidth( const PN_LETTER* letter )
+{
+  return GetStrWidth( letter );
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief 文字高さを取得する
+ *
+ * @param letter
+ *
+ * @return 文字高さ
+ */
+//---------------------------------------------------------------------------
+int PN_LETTER_GetHeight( const PN_LETTER* letter )
+{
+  return GetStrHeight( letter );
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief 左上 x 座標を取得する
+ *
+ * @param letter
+ *
+ * @return 左上 x 座標
+ */
+//---------------------------------------------------------------------------
+int PN_LETTER_GetLeft( const PN_LETTER* letter )
+{
+  return GetLeft( letter );
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief 左上 y 座標を取得する
+ *
+ * @param letter
+ *
+ * @return 左上 y 座標
+ */
+//---------------------------------------------------------------------------
+int PN_LETTER_GetTop( const PN_LETTER* letter )
+{
+  return GetTop( letter );
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief 移動中かどうかをチェックする
+ *
+ * @param letter
+ *
+ * @return 移動中なら TRUE, そうでないなら FALSE.
+ */
+//---------------------------------------------------------------------------
+BOOL PN_LETTER_IsMoving( const PN_LETTER* letter )
+{
+  return CheckMoving( letter );
 }
 
 
@@ -391,9 +480,6 @@ static void CreateBmpOamActor(
   // アクターを追加
 	letter->bmpOamActor = BmpOam_ActorAdd( bmpOamSys, &actorData ); 
 
-  // 非表示にする
-	BmpOam_ActorSetDrawEnable( letter->bmpOamActor, FALSE );  
-
 #ifdef DEBUG_MODE
   OS_TFPrintf( PRINT_TARGET, "PN_LETTER: create BMPOAM actor\n" );
 #endif
@@ -529,6 +615,34 @@ static BOOL CheckMoving( const PN_LETTER* letter )
 
 //---------------------------------------------------------------------------
 /**
+ * @brief 左上 x 座標を取得する
+ *
+ * @param letter
+ *
+ * @return 左上 x 座標
+ */
+//---------------------------------------------------------------------------
+static int GetLeft( const PN_LETTER* letter )
+{
+  return letter->moveParam.x;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief 左上 y 座標を取得する
+ *
+ * @param letter
+ *
+ * @return 左上 y 座標
+ */
+//---------------------------------------------------------------------------
+static int GetTop( const PN_LETTER* letter )
+{
+  return letter->moveParam.y;
+}
+
+//---------------------------------------------------------------------------
+/**
  * @brief 文字の幅を取得する
  *
  * @param letter
@@ -621,6 +735,31 @@ static GFL_BMP_DATA* GetBitmap( const PN_LETTER* letter )
 {
   return letter->bmp;
 }
+
+//---------------------------------------------------------------------------
+/**
+ * @brief 文字サイズを計算する
+ *
+ * @param letter
+ */
+//---------------------------------------------------------------------------
+static void CalcPrintSize( PN_LETTER* letter )
+{
+  GFL_FONT* font;
+  STRCODE code;
+  HEAPID heapID;
+
+  font   = GetFont( letter );
+  code   = GetStrCode( letter );
+  heapID = GetHeapID( letter );
+
+  GetPrintSize( font, code, heapID, &letter->width, &letter->height );
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: calc print size. (w=%d, h=%d)\n", 
+      GetStrWidth(letter), GetStrHeight(letter) );
+#endif
+} 
 
 //---------------------------------------------------------------------------
 /**
@@ -940,6 +1079,19 @@ static void UpdateBmpOamActorPos( PN_LETTER* letter )
 
 //---------------------------------------------------------------------------
 /**
+ * @brief 表示・非表示を変更する
+ *
+ * @param letter
+ * @param enable 表示する場合 TRUE
+ */
+//---------------------------------------------------------------------------
+static void SetDrawEnable( PN_LETTER* letter, BOOL enable )
+{
+	BmpOam_ActorSetDrawEnable( letter->bmpOamActor, enable );  
+} 
+
+//---------------------------------------------------------------------------
+/**
  * @brief 文字サイズを取得する
  *
  * @param font   フォント
@@ -950,7 +1102,7 @@ static void UpdateBmpOamActorPos( PN_LETTER* letter )
  */
 //---------------------------------------------------------------------------
 static void GetPrintSize( 
-    GFL_FONT* font, STRCODE code, HEAPID heapID, int* destX, int* destY )
+    GFL_FONT* font, STRCODE code, HEAPID heapID, u8* destX, u8* destY )
 {
 	STRCODE strcode[2];
 	STRBUF* strbuf;

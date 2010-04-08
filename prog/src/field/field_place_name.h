@@ -9,6 +9,7 @@
 #pragma once
 #include <gflib.h>
 #include "field/field_msgbg.h"
+#include "gamesystem/gamesystem.h"
 
 
 //====================================================================================
@@ -46,7 +47,7 @@ void FIELD_PLACE_NAME_RecoverBG( FIELD_PLACE_NAME* system );
  * @return ê∂ê¨ÇµÇΩÉVÉXÉeÉÄ
  */
 //------------------------------------------------------------------------------------
-extern FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( HEAPID heapID, FLDMSGBG* msgbg );
+extern FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heapID, FLDMSGBG* msgbg );
 
 //------------------------------------------------------------------------------------
 /**

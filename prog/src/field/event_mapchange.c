@@ -962,6 +962,7 @@ static GMEVENT_RESULT EVENT_MapChangePalace_to_Palace( GMEVENT* event, int* seq,
     (*seq)++;
     break;
   case 5:
+    FIELD_PLACE_NAME_Display( FIELDMAP_GetPlaceNameSys(fieldmap), work->loc_req.zone_id );
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;

@@ -685,7 +685,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     fieldWork->goldMsgWin = NULL;
 
     // 地名表示システム作成
-    fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( HEAPID_FIELD_PRBUF, fieldWork->fldMsgBG );
+    fieldWork->placeNameSys = FIELD_PLACE_NAME_Create( gsys, HEAPID_FIELD_PRBUF, fieldWork->fldMsgBG );
 
     SET_CHECK("setup: camera & scene");  //デバッグ：処理負荷計測
     // フラッシュチェック
