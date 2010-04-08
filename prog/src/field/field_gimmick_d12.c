@@ -127,6 +127,9 @@ void D12_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 //------------------------------------------------------------------------------------------
 void D12_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 {
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+  //アニメーション再生
+  FLD_EXP_OBJ_PlayAnime( exobj_cnt );
 }
 
 //------------------------------------------------------------------------------------------
