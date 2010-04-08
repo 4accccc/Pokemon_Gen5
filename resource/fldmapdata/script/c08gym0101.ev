@@ -249,9 +249,24 @@ EVENT_START	ev_c08gym0101_leader8_01
 			
 			//ゲームクリアしていたら
 			IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
-				_BALLOONWIN_OBJMSG( msg_c08gym0101_leader_06w0002 , C08GYM0101_WKOBJCODE00_01 )
-				_LAST_KEYWAIT()
-				_BALLOONWIN_CLOSE()
+			
+				//アイリス：男女分岐メッセージ
+	
+				//性別が格納されるローカル変数を定義
+				DEFINE_LOCAL SCWK_SEX
+				_GET_MY_SEX(SCWK_SEX)
+				
+				//男性だった場合
+				IF $SCWK_SEX == PM_MALE THEN
+					_BALLOONWIN_OBJMSG( msg_c08gym0101_leader_06w0002 , C08GYM0101_WKOBJCODE00_01)
+					_BALLOONWIN_CLOSE()
+				//女性だった場合
+				ELSE
+					_BALLOONWIN_OBJMSG( msg_c08gym0101_leader_06w0003 , C08GYM0101_WKOBJCODE00_01)
+					_BALLOONWIN_CLOSE()
+				ENDIF
+			
+			
 			ELSE
 			//未クリア
 				_BALLOONWIN_OBJMSG( msg_c08gym0101_leader_06w , C08GYM0101_WKOBJCODE00_01 )

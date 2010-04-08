@@ -43,6 +43,8 @@
 #define C08_HAKAIW_02                     22
 #define C08_HAKAIM_04                     23
 #define C08_HAKAIM_05                     24
+#define C08_OLDMAN1_02                    25
+#define C08_MAN3_02                       26
 
 #endif //ZONE_C08_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
