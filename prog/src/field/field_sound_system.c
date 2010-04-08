@@ -23,7 +23,7 @@
 #define REQUEST_QUEUE_SIZE (10)  // バッファできるリクエストの数
 
 // 内部状態
-typedef enum{
+typedef enum {
   FSND_STATE_STOP,              // 停止中
   FSND_STATE_PLAY,              // 再生中
   FSND_STATE_WAIT,              // 待機中
@@ -91,8 +91,8 @@ static const u8 DeadRockTable[ FSND_BGM_REQUEST_NUM ][ FSND_BGM_REQUEST_NUM ] =
 //=================================================================================
 // ■リクエストの詳細データ
 //=================================================================================
-typedef struct 
-{
+typedef struct {
+
   FSND_BGM_REQUEST request;  // リクエストの種類
   u32             soundIdx;  // BGM No.
   u16         fadeOutFrame;  // 再生中のBGMのフェードアウト フレーム数
@@ -107,8 +107,7 @@ typedef struct
 #define FSND_ENVSE_PLAYER_MAX (2)
 #define FSND_ENVSE_NONE (0xffff)  // SEなし用定数
 #define FSND_ENVSE_VOL_NONE (0xffff)  // SEボリュームなし用定数
-typedef struct 
-{
+typedef struct {
   u16 envse_tbl[ FSND_ENVSE_PLAYER_MAX ];
   u16 envse_vol_tbl[ FSND_ENVSE_PLAYER_MAX ];
   BOOL pause;
@@ -118,8 +117,8 @@ typedef struct
 //================================================================================= 
 // ■フィールドサウンド管理ワーク
 //================================================================================= 
-struct _FIELD_SOUND
-{
+struct _FIELD_SOUND {
+
   // 内部状態
   FSND_STATE state;  // 現在の状態
 
@@ -147,6 +146,7 @@ struct _FIELD_SOUND
 
   // 環境SE管理
   FSND_ENVSE_DATA envse;
+
 };
 
 
@@ -236,6 +236,51 @@ static void DebugPrint_AllInfo( const FIELD_SOUND* fieldSound );
 //常駐SE判定のためのコールバック関数
 static BOOL checkEnableSE( u32 sndIndex );
 //static BOOL checkStaticEntrySE( u32 sndIndex );
+
+
+//================================================================================= 
+// ■動作関数テーブル
+//================================================================================= 
+// リクエストに対する反応
+static void (*RequestCheckFunc[ FSND_STATE_NUM ])( FIELD_SOUND* fsnd ) = 
+{
+  RequestCheck_STOP,            // FSND_STATE_STOP
+  RequestCheck_PLAY,            // FSND_STATE_PLAY
+  RequestCheck_WAIT,            // FSND_STATE_WAIT
+  RequestCheck_FADE_OUT,        // FSND_STATE_FADE_OUT
+  RequestCheck_FADE_IN,         // FSND_STATE_FADE_IN
+  RequestCheck_PUSH,            // FSND_STATE_PUSH
+  RequestCheck_POP_out,         // FSND_STATE_POP_out
+  RequestCheck_POP_in,          // FSND_STATE_POP_in
+  RequestCheck_CHANGE_out,      // FSND_STATE_CHANGE_out
+  RequestCheck_CHANGE_load,     // FSND_STATE_CHANGE_load
+  RequestCheck_CHANGE_in,       // FSND_STATE_CHANGE_in
+  RequestCheck_CHANGE_PUSH_out, // FSND_STATE_CHANGE_PUSH_out
+  RequestCheck_CHANGE_PUSH_load,// FSND_STATE_CHANGE_PUSH_load
+  RequestCheck_STAND_BY_out,    // FSND_STATE_STAND_BY_out
+  RequestCheck_STAND_BY_load,   // FSND_STATE_STAND_BY_load
+};
+
+// システム処理
+static void (*MainFunc[ FSND_STATE_NUM ])( FIELD_SOUND* fsnd ) = 
+{
+  Main_STOP,             // FSND_STATE_STOP
+  Main_PLAY,             // FSND_STATE_PLAY
+  Main_WAIT,             // FSND_STATE_WAIT
+  Main_FADE_OUT,         // FSND_STATE_FADE_OUT
+  Main_FADE_IN,          // FSND_STATE_FADE_IN
+  Main_PUSH,             // FSND_STATE_PUSH
+  Main_POP_out,          // FSND_STATE_POP_out
+  Main_POP_in,           // FSND_STATE_POP_in
+  Main_CHANGE_out,       // FSND_STATE_CHANGE_out
+  Main_CHANGE_load,      // FSND_STATE_CHANGE_load
+  Main_CHANGE_in,        // FSND_STATE_CHANGE_in
+  Main_CHANGE_PUSH_out,  // FSND_STATE_CHANGE_PUSH_out
+  Main_CHANGE_PUSH_load, // FSND_STATE_CHANGE_PUSH_load
+  Main_STAND_BY_out,     // FSND_STATE_STAND_BY_out
+  Main_STAND_BY_load,    // FSND_STATE_STAND_BY_load
+};
+
 
 //================================================================================= 
 // ■システム作成/破棄
@@ -462,44 +507,10 @@ void FIELD_SOUND_Main( FIELD_SOUND* fieldSound )
   RequestQueueCheck( fieldSound );
 
   // リクエストに対する反応
-  switch( fieldSound->state ) {
-  case FSND_STATE_STOP:              RequestCheck_STOP(fieldSound);              break;
-  case FSND_STATE_PLAY:              RequestCheck_PLAY(fieldSound);              break;
-  case FSND_STATE_WAIT:              RequestCheck_WAIT(fieldSound);              break;
-  case FSND_STATE_FADE_OUT:          RequestCheck_FADE_OUT(fieldSound);          break;
-  case FSND_STATE_FADE_IN:           RequestCheck_FADE_IN(fieldSound);           break;
-  case FSND_STATE_PUSH:              RequestCheck_PUSH(fieldSound);              break;
-  case FSND_STATE_POP_out:           RequestCheck_POP_out(fieldSound);           break;
-  case FSND_STATE_POP_in:            RequestCheck_POP_in(fieldSound);            break;
-  case FSND_STATE_CHANGE_out:        RequestCheck_CHANGE_out(fieldSound);        break;
-  case FSND_STATE_CHANGE_load:       RequestCheck_CHANGE_load(fieldSound);       break;
-  case FSND_STATE_CHANGE_in:         RequestCheck_CHANGE_in(fieldSound);         break;
-  case FSND_STATE_CHANGE_PUSH_out:   RequestCheck_CHANGE_PUSH_out(fieldSound);   break;
-  case FSND_STATE_CHANGE_PUSH_load:  RequestCheck_CHANGE_PUSH_load(fieldSound);  break;
-  case FSND_STATE_STAND_BY_out:      RequestCheck_STAND_BY_out(fieldSound);      break;
-  case FSND_STATE_STAND_BY_load:     RequestCheck_STAND_BY_load(fieldSound);     break;
-  default: GF_ASSERT(0);
-  }
+  RequestCheckFunc[ fieldSound->state ]( fieldSound );
 
   // 内部動作
-  switch( fieldSound->state ) {
-  case FSND_STATE_STOP:              Main_STOP(fieldSound);              break;
-  case FSND_STATE_PLAY:              Main_PLAY(fieldSound);              break;
-  case FSND_STATE_WAIT:              Main_WAIT(fieldSound);              break;
-  case FSND_STATE_FADE_OUT:          Main_FADE_OUT(fieldSound);          break;
-  case FSND_STATE_FADE_IN:           Main_FADE_IN(fieldSound);           break;
-  case FSND_STATE_PUSH:              Main_PUSH(fieldSound);              break;
-  case FSND_STATE_POP_out:           Main_POP_out(fieldSound);           break;
-  case FSND_STATE_POP_in:            Main_POP_in(fieldSound);            break;
-  case FSND_STATE_CHANGE_out:        Main_CHANGE_out(fieldSound);        break;
-  case FSND_STATE_CHANGE_load:       Main_CHANGE_load(fieldSound);       break;
-  case FSND_STATE_CHANGE_in:         Main_CHANGE_in(fieldSound);         break;
-  case FSND_STATE_CHANGE_PUSH_out:   Main_CHANGE_PUSH_out(fieldSound);   break;
-  case FSND_STATE_CHANGE_PUSH_load:  Main_CHANGE_PUSH_load(fieldSound);  break;
-  case FSND_STATE_STAND_BY_out:      Main_STAND_BY_out(fieldSound);      break;
-  case FSND_STATE_STAND_BY_load:     Main_STAND_BY_load(fieldSound);     break;
-  default: GF_ASSERT(0);
-  }
+  MainFunc[ fieldSound->state ]( fieldSound );
 
   // TVトランシーバー着信音処理
   RINGTONE_SYS_Main( fieldSound->ringToneSys );
