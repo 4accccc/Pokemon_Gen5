@@ -269,6 +269,7 @@ struct _PLIST_WORK
 
   //HPアニメ処理
   u16 befHp;  //回復前のHP
+  s8  anmSpd; //1フレームの増分
   PLIST_CallbackFunc hpAnimeCallBack;
   
   //LvUp用bmpWin

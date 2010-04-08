@@ -1058,6 +1058,16 @@ void PLIST_PLATE_ReDrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
 void PLIST_PALTE_InitHpAnime( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
 {
   plateWork->nowHp = PP_Get( plateWork->pp , ID_PARA_hp , NULL );
+  work->anmSpd = (plateWork->nowHp - plateWork->dispHp)/100;
+  if( plateWork->nowHp > plateWork->dispHp )
+  {
+    work->anmSpd += 1;
+  }
+  else
+  {
+    work->anmSpd -= 1;
+  }
+  ARI_TPrintf("HP anm spd[%d]\n",work->anmSpd);
 }
 
 //--------------------------------------------------------------
@@ -1067,12 +1077,18 @@ const BOOL PLIST_PALTE_UpdateHpAnime( PLIST_WORK *work , PLIST_PLATE_WORK *plate
 {
   if( plateWork->dispHp < plateWork->nowHp )
   {
-    plateWork->dispHp++;
-
-    if( plateWork->dispHp == 1 )
+    if( plateWork->dispHp == 0 )
     {
       //ライフが増えるので色の変更
       PLIST_PLATE_ChangeColor( work , plateWork , PPC_NORMAL_SELECT );
+    }
+    if( plateWork->dispHp + work->anmSpd > plateWork->nowHp )
+    {
+      plateWork->dispHp = plateWork->nowHp;
+    }
+    else
+    {
+      plateWork->dispHp += work->anmSpd;
     }
     PLIST_PLATE_ReDrawParam( work , plateWork );
     return FALSE;
@@ -1080,7 +1096,14 @@ const BOOL PLIST_PALTE_UpdateHpAnime( PLIST_WORK *work , PLIST_PLATE_WORK *plate
   else
   if( plateWork->dispHp > plateWork->nowHp )
   {
-    plateWork->dispHp--;
+    if( plateWork->dispHp + work->anmSpd < plateWork->nowHp )
+    {
+      plateWork->dispHp = plateWork->nowHp;
+    }
+    else
+    {
+      plateWork->dispHp += work->anmSpd;
+    }
     //瀕死は考慮しない
     PLIST_PLATE_ReDrawParam( work , plateWork );
     return FALSE;

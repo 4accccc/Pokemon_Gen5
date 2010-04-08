@@ -478,6 +478,7 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
       work->reqPlaySe = FALSE;
       PMSND_PlaySystemSE( PLIST_SND_RECOVER );
     }
+    work->mainSeq = PSMS_HPANIME;
     //break;    BreakThrough
   case PSMS_HPANIME:
     if( PLIST_PALTE_UpdateHpAnime( work , work->plateWork[work->pokeCursor] ) == TRUE )
