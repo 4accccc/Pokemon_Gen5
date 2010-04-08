@@ -75,7 +75,7 @@ struct _BTL_ADAPTER {
  */
 //-------------------------------------------------------------------------
 static BTL_ADAPTER* AdappterTable[ BTL_CLIENT_MAX ];
-static u8 CommMode;
+static u32 CommMode;
 
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
