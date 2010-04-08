@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/30 0:19:55
+#save date:2010/04/08 23:56:24
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04.wms
 #SECTION START:OBJ_EVENT
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-248 16 -520
+248 16 -488
 #event number: 2
 #type
 1
@@ -536,7 +536,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-2
+3
 #event number: 0
 #Pos Event Label
 POS_C04_MUSICALGUIDE_01
@@ -571,6 +571,23 @@ EVENTDATA_POSTYPE_GRID
 440 0 -664
 #size
 7 1
+#event number: 2
+#Pos Event Label
+POS_C04_BTLREC_GET
+#Pos Script Name
+SCRID_POS_C04_BTLREC_GET
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C04_BTLREC
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+344 24 -456
+#size
+3 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

@@ -43,6 +43,7 @@ _EVENT_DATA    ev_scene_c04_support_01		//サポートとパパのイベント
 _EVENT_DATA    ev_init_c04
 _EVENT_DATA    ev_bg_c04_board_07
 _EVENT_DATA    ev_bg_c04_board_08
+_EVENT_DATA    ev_pos_c04_btlrec_get		//バトルレコーダー入手イベント
 _EVENT_DATA_END
 
 
@@ -1113,6 +1114,146 @@ _ANIME_LABEL	anm_papa_support_move_04
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_papa_support_goaway_01
 	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*					バトルレコーダー入手					*/
+/************************************************************/
+EVENT_START	ev_pos_c04_btlrec_get
+	{
+	DEFINE_LOCAL	lwk_x
+	DEFINE_LOCAL	lwk_z
+	
+	//主人公：！マーク
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_mark_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//謎の女性：表示
+	_OBJ_ADD_EX( 422, 458, DIR_DOWN, MMDL_ID_EVENTOBJ_00, TRAINERW, MV_DMY )
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+	
+	//謎の女性：一歩前へ
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_btlrec_trainerw_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//そして負けたの…
+	_BALLOONWIN_OBJMSG_POS( msg_c04_trainerw_01, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//謎の女性：階段を下りて
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_btlrec_trainerw_move_02 )
+	
+	_PLAYER_POS_GET( lwk_x, lwk_z )
+	IF $lwk_x == 421 THEN
+		_TIME_WAIT( 8 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_btlrec_player_move_01a )
+	ELSIF $lwk_x == 422 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_btlrec_player_move_01b )
+	ELSE
+		_TIME_WAIT( 8 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_btlrec_player_move_01c )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	//このギアステーションには
+	_BALLOONWIN_OBJMSG_POS( msg_c04_trainerw_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	IF $lwk_x == 421 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_l )
+	ELSIF $lwk_x == 422 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_l )
+	ELSE
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_r )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	//あなたトレーナーね
+	_BALLOONWIN_OBJMSG_POS( msg_c04_trainerw_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	IF $lwk_x == 421 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_l )
+	ELSIF $lwk_x == 422 THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_l )
+	ELSE
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_r )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	//バトルレコーダー入手
+	_ITEM_EVENT_KEYWAIT( ITEM_BATORUREKOODAA, 1 )
+	
+	//バトルレコーダーを持っていると…
+	_BALLOONWIN_OBJMSG_POS( msg_c04_trainerw_04, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//謎の女性：去る
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_btlrec_trainerw_goaway_01 )
+	_TIME_WAIT( 16 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	//謎の女性削除
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	//========================================//
+	//POS無効
+	$WK_SCENE_C04_BTLREC = 1
+	
+	//========================================//
+	
+	}
+EVENT_END
+
+//--------------------------------------------------------------------
+//！マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mark_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//謎の女性：一歩前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_btlrec_trainerw_move_01
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//謎の女性：階段を下りて
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_btlrec_trainerw_move_02
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：謎の女性を見て
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_btlrec_player_move_01a
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_btlrec_player_move_01b
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_btlrec_player_move_01c
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//謎の女性：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_btlrec_trainerw_goaway_01
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA	AC_WALK_L_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 
