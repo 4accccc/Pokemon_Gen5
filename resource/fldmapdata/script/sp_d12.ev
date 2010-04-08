@@ -15,6 +15,14 @@
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_ZONE_CHANGE_LABEL		SCRID_ZONE_D12
+_SCENE_CHANGE_LABEL		sp_d12_tbl
 _SP_EVENT_DATA_END
+
+//テーブル定義
+sp_d12_tbl:
+	_SCENE_CHANGE_DATA		WK_SCENE_VICTORY,4,SCRID_SCENE_D12
+	_SCENE_CHANGE_END
+
 
 
