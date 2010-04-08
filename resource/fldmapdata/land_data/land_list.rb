@@ -546,6 +546,9 @@ file_make_depend.printf( "\t@echo %s\n", STR_WBBIN_ALLTBL )
 file_make_depend.printf( "%s:%s\n", STR_WBBIN_ALLTBL, wbbin_alltbl_need_file )
 file_make_depend.printf( "\t@%s CDAT %s\n", STR_WBBIN_CONVERTER, STR_WBBIN_CDAT )
 
+file_make_depend.printf( "%s:%s\n", STR_WBBIN_CDAT, wbbin_alltbl_need_file )
+file_make_depend.printf( "\t@%s CDAT %s\n", STR_WBBIN_CONVERTER, STR_WBBIN_CDAT )
+
 file_make_depend.printf( "\t@echo %s\n", STR_WBBIN_TBLCHNAGE_LOG )
 file_make_depend.printf( "%s:%s\n", STR_WBBIN_TBLCHNAGE_LOG, STR_WBBIN_ALLTBL )
 file_make_depend.printf( "\t@%s %s ./\n", STR_DIFFCOPY_CONVERTER, STR_WBBIN_ALLTBL )
