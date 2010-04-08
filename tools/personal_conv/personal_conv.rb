@@ -648,7 +648,13 @@ end
       monsno[ split_data[ PARA::POKENAME ] ] = cnt
       gra_hash[ split_data[ PARA::GRA_NO ] ] = cnt
       monsname[ cnt - 1 ] = split_data[ PARA::POKENAME ]
-      chihou_zukan << split_data[ PARA::CHIHOU_NO ].to_i
+
+      if split_data[ PARA::CHIHOU_NO ] == "" || split_data[ PARA::CHIHOU_NO ] == nil
+        chihou_zukan << 999
+      else
+        chihou_zukan << split_data[ PARA::CHIHOU_NO ].to_i
+      end
+
       fp_monsno.print( "#define\t\t" )
       label_str = label.make_label( "MONSNO_", split_data[ PARA::POKENAME ] )
       fp_monsno.print( label_str )
