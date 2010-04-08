@@ -817,10 +817,10 @@
 #define FV_D12R0101_POLECEMAN_01           793 /* 0x0319 リバティー室内1：警官 */
 #define FV_D12R0102_HAKAIM_01              794 /* 0x031a リバティー室内2：プラズマ団 */
 #define FV_D12_EVENTEND_01                 795 /* 0x031b リバティーとう：イベント終了時表示OBJ */
-		/* not used   796(0x031c) */
-		/* not used   797(0x031d) */
-		/* not used   798(0x031e) */
-		/* not used   799(0x031f) */
+#define FV_C03P07_PLASMA_LEADER3           796 /* 0x031c ヒウンシティ（ジムのある通り）：プラズマ団とアーティ */
+#define FV_C03P07_SUPPORT_LEADER8          797 /* 0x031d ヒウンシティ（ジムのある通り）：ベルとアイリス */
+#define FV_C03P15_SUPPORT_LEADER8          798 /* 0x031e ヒウンシティ（プライムピア）：ベルとアイリス */
+#define FV_C03R1101_PLASMA                 799 /* 0x031f ヒウンシティ（ビル）：プラズマ団の面々・リーダー2人・ベル */
 		/* not used   800(0x0320) */
 		/* not used   801(0x0321) */
 		/* not used   802(0x0322) */
