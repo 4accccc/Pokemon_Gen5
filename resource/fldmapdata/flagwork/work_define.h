@@ -205,6 +205,8 @@
 #define WK_SCENE_H04_ITEMNUM             16593 /* 0x40d1 ビレッジブリッジ：持っている配達物の数を保存する */
 #define WK_SCENE_R07R0105_CHAMPION       16594 /* 0x40d2 タワーオブヘブン5F：クリア後イベント用ワーク */
 #define WK_SCENE_C03P15                  16595 /* 0x40d3 ヒウンシティ(プライムピア)：イベント用ワーク */
+#define WK_SCENE_N01R0301                16596 /* 0x40d4 N城3Ｆ：ダークトリニティイベント用ワーク */
+#define WK_SCENE_N01R0401                16597 /* 0x40d5 N城4Ｆ：ダークトリニティイベント用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
