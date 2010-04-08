@@ -187,6 +187,7 @@ static void InitPaletteAnime( FIELD_ITEMMENU_WORK * wk );
 static void ExitPaletteAnime( FIELD_ITEMMENU_WORK * wk );
 static void _sortMessageSet( FIELD_ITEMMENU_WORK * wk );
 static void _sortMessageWait( FIELD_ITEMMENU_WORK * wk );
+static BOOL CheckEventItemUse( FIELD_ITEMMENU_WORK * wk, u8 pocket );
 
 
 //------------------------------------------------------------------------------
@@ -3311,8 +3312,8 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
   }else{
     //「つかう」など
     _tsukau_check( pWork, itemdata, item, tbl );
-    // コロシアム・ユニオンルームでは「みる」のみ
-    if( pWork->mode == BAG_MODE_COLOSSEUM || pWork->mode == BAG_MODE_UNION ){
+    // 特定の場所では「みる」のみ
+		if( CheckEventItemUse( pWork, pocket ) == FALSE ){
       if( tbl[BAG_MENU_USE] != BAG_MENU_MIRU ){
         tbl[BAG_MENU_USE] = 255;
       }
@@ -4150,4 +4151,22 @@ static void _sortMessageWait( FIELD_ITEMMENU_WORK * wk )
 	ITEMDISP_ChangeActive( wk, TRUE );
 //	_CHANGE_STATE( wk, _itemKindSelectMenu );
 	ChangeStateItemKindSelectItemMenu( wk );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		アイテム使用場所チェック
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL CheckEventItemUse( FIELD_ITEMMENU_WORK * wk, u8 pocket )
+{
+	// コロシアム・ユニオンルーム
+	if( wk->mode == BAG_MODE_COLOSSEUM || wk->mode == BAG_MODE_UNION ){
+		return FALSE;
+	}
+	// 裏フィールドで「たいせつなもの」ポケット
+	if( GAMEDATA_GetIntrudeReverseArea( wk->gamedata ) == TRUE && pocket == BAG_POKE_EVENT ){
+		return FALSE;
+	}
+	return TRUE;
 }
