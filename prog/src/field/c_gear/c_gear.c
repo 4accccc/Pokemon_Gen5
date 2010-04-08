@@ -162,16 +162,29 @@ enum{
 };
 static const u16 _CGEAR_NET_CHANGEPAL_ANM_COUNT_MAX[ _CGEAR_NET_CHANGEPAL_ANM_TYPE_MAX ] = 
 {
-  160,
-  200,  // 
+  24,
+  160,  // 
 };
 
-#define _CGEAR_NET_CHANGEPAL_ANM_HIGH_COUNT  ( 160 )
+static const u8 _CGEAR_NET_CHANGEPAL_ANM_MOD_TBL[] = {
+   0, 4, 8, 
+  10,14,18,
+  20,22,24,26,28,
+  30,31,31,31,31,31,30,
+  28,26,24,22,20,
+  18,14,10,
+   8, 4, 0,
+};
+#define _CGEAR_NET_CHANGEPAL_ANM_MOD_NUM_MAX  ( NELEMS(_CGEAR_NET_CHANGEPAL_ANM_MOD_TBL) )
+#define _CGEAR_NET_CHANGEPAL_ANM_MOD_MAX  ( 31 )
+
+#define _CGEAR_NET_CHANGEPAL_ANM_HIGH_COUNT  ( 20)
 
 
 
-#define _CGEAR_NET_CHANGEPAL_ANM_NORMAL_TOPWAIT  ( 20 )
-#define _CGEAR_NET_CHANGEPAL_ANM_NORMAL_COUNT  ( 130 )
+#define _CGEAR_NET_CHANGEPAL_ANM_NORMAL_TOPWAIT  ( 10 )
+#define _CGEAR_NET_CHANGEPAL_ANM_NORMAL_COUNT  ( 140 )
+#define _CGEAR_NET_CHANGEPAL_ANM_NORMAL_MOD_MAX ( 48 ) // ’ÊíŽž‚ÍÊ“x‚ð—Ž‚Æ‚·
 
 
 
@@ -903,8 +916,10 @@ static void _modeSelectJumpPalace(C_GEAR_WORK* pWork)
 //-----------------------------------------------------------------------------
 static void _PanelPaletteAnimeInit( C_GEAR_WORK* pWork )
 {
+  
   _PanelPaletteColorSetUp( pWork );
   pWork->plt_anime.plt_anmtype = _CGEAR_NET_CHANGEPAL_ANM_TYPE_HIGH;
+  pWork->plt_anime.last_bit = -1; // ‚±‚¤‚·‚é‚±‚Æ‚ÅHIGH‚ª‚Q‚©‚¢‚Â‚Ã‚­
 }
 
 
@@ -1060,17 +1075,18 @@ static void _PanelPaletteChange(C_GEAR_WORK* pWork)
 static void _PanelPaletteChangeHigh(C_GEAR_WORK* pWork, int change_panel)
 {
   int mod;
+  int index;
   
   if( pWork->plt_anime.plt_count > _CGEAR_NET_CHANGEPAL_ANM_HIGH_COUNT ){
     return ;
   }
 
-  mod = (pWork->plt_anime.plt_count % (_CGEAR_NET_CHANGEPAL_ANM_HIGH_COUNT/4));
-  if(mod > (_CGEAR_NET_CHANGEPAL_ANM_HIGH_COUNT/8)){
-    mod = (_CGEAR_NET_CHANGEPAL_ANM_HIGH_COUNT/4) - mod;
-  }
+  mod = ((pWork->plt_anime.plt_count) % (_CGEAR_NET_CHANGEPAL_ANM_HIGH_COUNT/2));
 
-  _PanelPaletteChangeCore( pWork, change_panel, mod, (_CGEAR_NET_CHANGEPAL_ANM_HIGH_COUNT/4) );
+  index = (mod * _CGEAR_NET_CHANGEPAL_ANM_MOD_NUM_MAX) / (_CGEAR_NET_CHANGEPAL_ANM_HIGH_COUNT/2);
+  
+  mod = _CGEAR_NET_CHANGEPAL_ANM_MOD_TBL[ index ];
+  _PanelPaletteChangeCore( pWork, change_panel, mod, _CGEAR_NET_CHANGEPAL_ANM_MOD_MAX );
 }
 
 //----------------------------------------------------------------------------
@@ -1081,6 +1097,7 @@ static void _PanelPaletteChangeHigh(C_GEAR_WORK* pWork, int change_panel)
 static void _PanelPaletteChangeNormal(C_GEAR_WORK* pWork, int change_panel)
 {
   int mod;
+  int index;
 
   if( pWork->plt_anime.plt_count > (_CGEAR_NET_CHANGEPAL_ANM_NORMAL_TOPWAIT+_CGEAR_NET_CHANGEPAL_ANM_NORMAL_COUNT) ){
     return ;
@@ -1090,12 +1107,12 @@ static void _PanelPaletteChangeNormal(C_GEAR_WORK* pWork, int change_panel)
     return ;
   }
 
-  mod = ((pWork->plt_anime.plt_count-_CGEAR_NET_CHANGEPAL_ANM_NORMAL_TOPWAIT) % _CGEAR_NET_CHANGEPAL_ANM_NORMAL_COUNT);
-  if(mod >= (_CGEAR_NET_CHANGEPAL_ANM_NORMAL_COUNT/2)){
-    mod = _CGEAR_NET_CHANGEPAL_ANM_NORMAL_COUNT - mod;
-  }
+  mod = ((pWork->plt_anime.plt_count-_CGEAR_NET_CHANGEPAL_ANM_NORMAL_TOPWAIT) % (_CGEAR_NET_CHANGEPAL_ANM_NORMAL_COUNT));
 
-  _PanelPaletteChangeCore( pWork, change_panel, mod,_CGEAR_NET_CHANGEPAL_ANM_NORMAL_COUNT );
+  index = (mod * _CGEAR_NET_CHANGEPAL_ANM_MOD_NUM_MAX) / _CGEAR_NET_CHANGEPAL_ANM_NORMAL_COUNT;
+  
+  mod = _CGEAR_NET_CHANGEPAL_ANM_MOD_TBL[ index ];
+  _PanelPaletteChangeCore( pWork, change_panel, mod, _CGEAR_NET_CHANGEPAL_ANM_NORMAL_MOD_MAX );
 }
 
 static void _PanelPaletteChangeCore( C_GEAR_WORK* pWork, int change_panel, int mod, int mod_max )
