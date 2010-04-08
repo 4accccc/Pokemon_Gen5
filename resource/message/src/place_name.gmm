@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T22:55:37"/>
+	<create user="obata_toshihiro" host="W00209" date="2010-04-08T17:22:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1567" top="198" right="2272" bottom="826" maximized="no" rayout="Vertical2">
+	<dialog left="208" top="140" right="913" bottom="760" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -349,6 +349,12 @@
 		<comment>次のバージョン以降の知らないIＤ用</comment>
 		<language name="JPN" width="256">とおいばしょ</language>
 		<language name="JPN_KANJI" width="256">遠い場所</language>
+	</row>
+
+	<row id="MAPNAME_INTRUDE">
+		<comment>侵入先の地名表示に使用</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の[1:05:マップ名:1]</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の[1:05:マップ名:1]</language>
 	</row>
 
 	<row id="MAPNAME_T1KANOKO">
