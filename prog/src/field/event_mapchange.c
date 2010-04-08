@@ -157,7 +157,7 @@ static GMEVENT_RESULT FirstGameStartEvent( GMEVENT* event, int* seq, void* wk )
 
 	case 2:
     // ƒfƒ‚‚ðŒÄ‚Ô
-    GMEVENT_CallEvent( event, EVENT_CallDemo3D( gameSystem, DEMO3D_ID_INTRO_TOWN, 0, TRUE ));
+    GMEVENT_CallEvent( event, EVENT_CallDemo3D( gameSystem, event, DEMO3D_ID_INTRO_TOWN, 0, TRUE ));
 		(*seq)++;
 		break;
 

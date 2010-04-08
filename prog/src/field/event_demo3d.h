@@ -17,10 +17,12 @@
  *  @brief  デモコールイベント起動
  *
  *  @param  gsys  GAMESYS_WORK*
+ *  @param  parent_ev 親イベントがある場合、そのポインタ
  *  @param  demo_id デモID DEMO3D_ID_C_CRUISER他
  *  @param  scene_id  シーンID
  *  @param  use_rtc 時間をRTCから取るならTRUE,EV-TIMEから取るならFALSE
  */
 //------------------------------------------------------------------
-extern GMEVENT* EVENT_CallDemo3D( GAMESYS_WORK* gsys, u16 demo_id, u16 scene_id, BOOL use_rtc );
+extern GMEVENT* EVENT_CallDemo3D( GAMESYS_WORK* gsys, GMEVENT* parent_ev, u16 demo_id, u16 scene_id, BOOL use_rtc );
+
 

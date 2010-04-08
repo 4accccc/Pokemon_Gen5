@@ -484,7 +484,7 @@ VMCMD_RESULT EvCmdDemoScene( VMHANDLE *core, void *wk )
   u16 demo_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 scene_id = SCRCMD_GetVMWorkValue( core, wk );
 
-  SCRIPT_CallEvent( sc, EVENT_CallDemo3D( gsys, demo_id, scene_id, FALSE ) );
+  SCRIPT_CallEvent( sc, EVENT_CallDemo3D( gsys, SCRIPT_GetEvent( sc ), demo_id, scene_id, FALSE ) );
 
   return VMCMD_RESULT_SUSPEND;
 }

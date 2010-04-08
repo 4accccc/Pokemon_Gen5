@@ -29,15 +29,16 @@ static GMEVENT_RESULT CallDemo3DEvent(GMEVENT * event, int * seq, void *work);
 /*
  *  @brief  デモコールイベント起動
  *
- *  @param  gsys  GAMESYS_WORK*
- *  @param  demo_id デモID DEMO3D_ID_C_CRUISER他
+ *  @param  gsys      GAMESYS_WORK*
+ *  @param  parent    親イベントがある場合、そのポインタ
+ *  @param  demo_id   デモID DEMO3D_ID_C_CRUISER他
  *  @param  scene_id  シーンID
  *  @param  use_rtc 時間をRTCから取るならTRUE,EV-TIMEから取るならFALSE
  */
 //------------------------------------------------------------------
-GMEVENT* EVENT_CallDemo3D( GAMESYS_WORK* gsys, u16 demo_id, u16 scene_id, BOOL use_rtc )
+GMEVENT* EVENT_CallDemo3D( GAMESYS_WORK* gsys, GMEVENT* parent, u16 demo_id, u16 scene_id, BOOL use_rtc )
 {
-	GMEVENT * event = GMEVENT_Create( gsys, NULL, CallDemo3DEvent, sizeof(EVWK_DEMO3D));
+	GMEVENT * event = GMEVENT_Create( gsys, parent, CallDemo3DEvent, sizeof(EVWK_DEMO3D));
 	EVWK_DEMO3D * wk = GMEVENT_GetEventWork(event);
   
   MI_CpuClear8(wk,sizeof(EVWK_DEMO3D));
