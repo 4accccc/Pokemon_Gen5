@@ -123,7 +123,8 @@ const FIELD_SKILL_CHECK_RET FIELD_SKILL_CHECK_CheckForgetSkill( GAMEDATA *gameDa
     {
       return FSCR_NO_MACHINE;
     }
-    if( useSkillBit & FSCB_DIVING )
+    if( (useSkillBit & FSCB_DIVING) ||
+        (useSkillBit & FSCB_NAMINORI) )
     {
       return FSCR_USE_SKILL;
     }
