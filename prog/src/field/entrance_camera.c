@@ -30,7 +30,7 @@
 #define DEBUG_PRINT_ENABLE    // デバッグ出力スイッチ
 #define DEBUG_PRINT_TARGET (3)// デバッグ出力先
 
-#define ZERO_FRAME 
+//#define ZERO_FRAME 
 //--------------------------------------------
 // 通常出入り口のカメラ動作 ( ゼロフレーム版 )
 //--------------------------------------------
@@ -41,12 +41,12 @@
 // 左ドアへの出入り
 #define L_DOOR_FRAME  (0)
 #define L_DOOR_PITCH  (0x1fa1)
-#define L_DOOR_YAW    (0x4000)
+#define L_DOOR_YAW    (0x0e0f)
 #define L_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 // 右ドアへの出入り
 #define R_DOOR_FRAME  (0)
 #define R_DOOR_PITCH  (0x1fa1)
-#define R_DOOR_YAW    (0xc051)
+#define R_DOOR_YAW    (0xf2cc)
 #define R_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 //-------------------------------------
 // 通常出入り口のカメラ動作 ( 通常版 )
@@ -56,12 +56,12 @@
 #define U_DOOR_FRAME  (10)
 #define U_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 // 左ドアへの出入り
-#define L_DOOR_FRAME  (20)
+#define L_DOOR_FRAME  (10)
 #define L_DOOR_PITCH  (0x1fa1)
 #define L_DOOR_YAW    (0x0e0f)
 #define L_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 // 右ドアへの出入り
-#define R_DOOR_FRAME  (20)
+#define R_DOOR_FRAME  (10)
 #define R_DOOR_PITCH  (0x1fa1)
 #define R_DOOR_YAW    (0xf2cc)
 #define R_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
@@ -132,6 +132,7 @@ struct _ECAM_WORK {
 
   ECAM_PARAM param;     // 演出パラメータ
   ANIME_DATA animeData; // アニメーションデータ
+  BOOL setupFlag; // 演出のセットアップが完了済みかどうか
 
   // カメラ復帰用データ
   BOOL              recoveryValidFlag; // 復帰データが有効かどうか
@@ -246,6 +247,9 @@ void ENTRANCE_CAMERA_Setup( ECAM_WORK* work, const ECAM_PARAM* param )
     default:                 GF_ASSERT(0);          break;
     }
   }
+
+  // セットアップ完了
+  work->setupFlag = TRUE;
 }
 
 //-----------------------------------------------------------------------------
@@ -284,6 +288,50 @@ void ENTRANCE_CAMERA_Recover( ECAM_WORK* work )
 {
   if( work->recoveryValidFlag ) {
     RecoverCamera( work );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 演出の有無をチェックする
+ *
+ * @param work
+ *
+ * @return 有効な演出がある場合 TRUE
+ *         そうでなければ FALSE
+ */
+//-----------------------------------------------------------------------------
+BOOL ENTRANCE_CAMERA_IsAnimeExist( const ECAM_WORK* work )
+{
+  // セットアップ後でないとダメ
+  GF_ASSERT( work->setupFlag );
+
+  return CheckCameraAnime(work);
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 演出が０フレームかどうかをチェックする
+ *
+ * @param work
+ *
+ * @return ０フレーム演出データなら TRUE
+ *         そうでなければ FALSE
+ */
+//-----------------------------------------------------------------------------
+BOOL ENTRANCE_CAMERA_IsZeroFrameAnime( const ECAM_WORK* work )
+{
+  const ECAM_PARAM* param = GetECamParam( work );
+  const ANIME_DATA* anime = GetAnimeData( work );
+
+  // セットアップ後でないとダメ
+  GF_ASSERT( work->setupFlag );
+
+  if( anime->frame == 0 ) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
   }
 }
 
@@ -346,6 +394,7 @@ static void InitWork( ECAM_WORK* work, FIELDMAP_WORK* fieldmap )
   work->camera   = FIELDMAP_GetFieldCamera( fieldmap );
   work->recoveryValidFlag = FALSE;
   work->cameraAreaFlag    = FALSE;
+  work->setupFlag = FALSE;
 
 #ifdef DEBUG_PRINT_ENABLE
   OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: InitWork\n" );
@@ -415,14 +464,10 @@ static void ECamSetup_IN( ECAM_WORK* work )
       endParam->length = U_DOOR_LENGTH; 
       break;
     case DIR_LEFT:  
-      endParam->pitch = L_DOOR_PITCH;
       endParam->yaw = L_DOOR_YAW;    
-      endParam->length = L_DOOR_LENGTH; 
       break;
     case DIR_RIGHT: 
-      endParam->pitch = R_DOOR_PITCH;
       endParam->yaw = R_DOOR_YAW;    
-      endParam->length = R_DOOR_LENGTH; 
       break;
     case DIR_DOWN: 
       break;
@@ -513,14 +558,10 @@ static void ECamSetup_OUT( ECAM_WORK* work )
       startParam->length = U_DOOR_LENGTH; 
       break;
     case DIR_LEFT:  
-      startParam->pitch = R_DOOR_PITCH;
       startParam->yaw = R_DOOR_YAW;    
-      startParam->length = R_DOOR_LENGTH; 
       break;
     case DIR_RIGHT: 
-      startParam->pitch = L_DOOR_PITCH;
       startParam->yaw = L_DOOR_YAW;    
-      startParam->length = L_DOOR_LENGTH; 
       break;
     default: GF_ASSERT(0); break;
     }

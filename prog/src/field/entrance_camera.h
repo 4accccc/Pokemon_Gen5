@@ -48,3 +48,8 @@ extern void ENTRANCE_CAMERA_Setup( ECAM_WORK* work, const ECAM_PARAM* param );
 extern void ENTRANCE_CAMERA_Start( ECAM_WORK* work );
 // 演出によって操作したカメラを復帰する
 extern void ENTRANCE_CAMERA_Recover( ECAM_WORK* work );
+
+// 演出の有無をチェックする
+extern BOOL ENTRANCE_CAMERA_IsAnimeExist( const ECAM_WORK* work );
+// 演出が０フレームかどうかをチェックする
+extern BOOL ENTRANCE_CAMERA_IsZeroFrameAnime( const ECAM_WORK* work );
