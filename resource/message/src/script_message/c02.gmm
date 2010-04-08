@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T14:24:22"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T17:20:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -976,7 +976,8 @@ C02ジムリーダー</attribute>
 		<comment>♂：d04r0601イベント後
 ・WHITEver
 ・続けてhakase2_stone_02</comment>
-		<attribute name="キャラ指定">アララギ博士父</attribute>
+		<attribute name="キャラ指定">HAKASE1
+アララギ博士父</attribute>
 		<language name="JPN" width="256">アララギパパ『うむ……！▼
 リュウラセンのとうを
 ちょうさ　したところ▼
@@ -995,7 +996,8 @@ C02ジムリーダー</attribute>
 		<comment>♂：d04r0601イベント後
 ・BLACKer
 ・続けてhakase2_stone_02</comment>
-		<attribute name="キャラ指定">アララギ博士父</attribute>
+		<attribute name="キャラ指定">HAKASE1
+アララギ博士父</attribute>
 		<language name="JPN" width="256">アララギパパ『うむ……！▼
 リュウラセンのとうを
 ちょうさ　したところ▼
@@ -1091,7 +1093,7 @@ C02ジムリーダー</attribute>
 ・はい/いいえの選択肢
 　はい→champion_stone_01y
 　いいえ→champion_stone_01n</comment>
-		<attribute name="キャラ指定">チャンピオン
+		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『ちょっと　まつんだ
 [1:00:トレーナー名:0]！▼
@@ -1115,7 +1117,7 @@ C02ジムリーダー</attribute>
 ・はい/いいえの選択肢
 　はい→champion_stone_01y
 　いいえ→champion_stone_01n</comment>
-		<attribute name="キャラ指定">チャンピオン
+		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『ちょっと　まつんだ
 [1:00:トレーナー名:0]！▼
@@ -1139,7 +1141,7 @@ C02ジムリーダー</attribute>
 ・続けて
 　leader2_stone_06wか
 　leader2_stone_06b</comment>
-		<attribute name="キャラ指定">チャンピオン
+		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『……いまのが
 おまえの　かくご　なんだな▼
@@ -1157,7 +1159,7 @@ C02ジムリーダー</attribute>
 ・再度、はい/いいえの選択肢
 ・はい→champion_stone_01_01n
 　いいえ→champion_stone_01y</comment>
-		<attribute name="キャラ指定">チャンピオン
+		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『では
 Ｎの　のぞむ　せかい……▼
@@ -1176,7 +1178,7 @@ C02ジムリーダー</attribute>
 ・再度、はい/いいえの選択肢
 ・はい→champion_stone_01_01y
 　いいえ→champion_stone_01_01n</comment>
-		<attribute name="キャラ指定">チャンピオン
+		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『ならば　たのむ！▼
 いざ！　というときの　ため
@@ -1193,7 +1195,7 @@ C02ジムリーダー</attribute>
 ・続けて
 　leader2_stone_06wか
 　leader2_stone_06b</comment>
-		<attribute name="キャラ指定">チャンピオン
+		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『……すまぬ
 おしつける　かたちに　なって▼
@@ -1261,7 +1263,8 @@ C02ジムリーダー</attribute>
 		<comment>♂：d04r0601イベント後
 ・WHITEver
 ・続けてhakase2_sub_01</comment>
-		<attribute name="キャラ指定">アララギ博士父</attribute>
+		<attribute name="キャラ指定">HAKASE1
+アララギ博士父</attribute>
 		<language name="JPN" width="256">アララギパパ『……▼
 で　どうすれば
 ストーンから　ドラゴンポケモンが▽
@@ -1286,7 +1289,8 @@ C02ジムリーダー</attribute>
 		<comment>♂：d04r0601イベント後
 ・サブウインで表示
 ・続けてwhite_sub_01</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">……</language>
 		<language name="JPN_KANJI" width="256">……</language>
 	</row>
@@ -1316,7 +1320,7 @@ C02ジムリーダー</attribute>
 	<row id="msg_c02_champion_stone_02" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂：d04r0601イベント後
 ・続けてchampion_stone_03</comment>
-		<attribute name="キャラ指定">チャンピオン
+		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『そうか
 あいつらが　おったな▼</language>
@@ -1332,7 +1336,7 @@ C02ジムリーダー</attribute>
 ・続けて
 　hakase2_stone_03wか
 　hakase2_stone_03b</comment>
-		<attribute name="キャラ指定">チャンピオン
+		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]！
 ソウリュウシティに　むかうぞ▼
@@ -1382,7 +1386,8 @@ C02ジムリーダー</attribute>
 		<comment>♂：d04r0601イベント後
 ・続けてhakase2_stone_04
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">アララギ博士父</attribute>
+		<attribute name="キャラ指定">HAKASE1
+アララギ博士父</attribute>
 		<language name="JPN" width="256">アララギパパ『[1:00:トレーナー名:0]よ▼
 おまえさんの　すぐ　となりには
 いつも　ポケモンが　いること▽

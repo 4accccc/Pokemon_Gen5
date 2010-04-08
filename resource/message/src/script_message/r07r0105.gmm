@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T15:41:10"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T17:22:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -468,7 +468,8 @@
 ・鐘のアニメ再生後に
 　上向きのままメッセージ表示
 ・続けてchampion_end_02</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">アデク『……▼</language>
 		<language name="JPN_KANJI" width="256">アデク『……▼</language>
 	</row>
@@ -477,7 +478,8 @@
 		<comment>♂
 ・右向きでメッセージ表示
 ・続けてchampion_end_03</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">この　タワーオブヘブンに
 かつての　パートナーが　ねむっておる▼
 わしが　トレーナーに　なっての
@@ -497,7 +499,8 @@
 ・下向き、アデクの芝居後に
 　メッセージ表示
 ・続けてchampion_end_04</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">つよい　ポケモン　だったぞ！
 おおしく　けだかく　こころやさしく……▼
 わしと　いっしょに
@@ -513,7 +516,8 @@
 	<row id="msg_r07r0105_champion_end_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてchampion_end_05</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">だが　すべての　ものがたりには
 はじまりと　おわりが　あるように▼
 どんな　いきものの　いのちにも
@@ -535,7 +539,8 @@
 ・続けて
 　champion_end_06　か
 　champion_end_07</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">だが　ポケモンと
 いっしょに　すごせる……▽
 その　よろこびは　ほんものだ▼
@@ -564,7 +569,8 @@
 ・メッセージ表示後、退場
 　画面外に消えると主人公操作可能
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">せかいには　もっと　おおくの
 トレーナーや　ポケモンが　いる！▼
 [1:00:トレーナー名:0]！　おまえも　できるだけ
@@ -581,7 +587,8 @@
 ・メッセージ表示後、退場
 　画面外に消えると主人公操作可能
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">さて　[1:00:トレーナー名:0]
 ポケモンリーグで　まっているぞ！▼</language>
 		<language name="JPN_KANJI" width="256">さて　[1:00:トレーナー名:0]

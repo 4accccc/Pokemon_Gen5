@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T16:21:57"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T17:17:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -345,7 +345,8 @@
 　！マークを表示後、主人公に隣接して
 　メッセージ表示
 ・0＝主人公名前</comment>
-		<attribute name="キャラクター">博士１（父）</attribute>
+		<attribute name="キャラクター">HAKASE1
+アララギ博士父</attribute>
 		<language name="JPN" width="256">おお！　おまえさん！
 [1:00:トレーナー名:0]だろ！！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">おお！　おまえさん！
@@ -359,7 +360,8 @@
 　捕獲済み→_hakase1_03
 　未捕獲→hakase1_04
 ・0＝捕まえた数</comment>
-		<attribute name="キャラクター">博士１（父）</attribute>
+		<attribute name="キャラクター">HAKASE1
+アララギ博士父</attribute>
 		<language name="JPN" width="256">ちょいと　ずかんを　みせてもらうよ
 ……どれどれ[BE:01:ページ切り替え（クリア）]
 つかまえた　かずは
@@ -373,7 +375,8 @@
 	<row id="msg_c06_hakase1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてhakase1_05（この処理は暫定）</comment>
-		<attribute name="キャラクター">博士１（父）</attribute>
+		<attribute name="キャラクター">HAKASE1
+アララギ博士父</attribute>
 		<language name="JPN" width="256">おお！　ギアルを　つかまえておるのか！
 なかなかの　トレーナーじゃな！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">おお！　ギアルを　捕まえておるのか！
@@ -383,7 +386,8 @@
 	<row id="msg_c06_hakase1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてhakase1_05（この処理は暫定）</comment>
-		<attribute name="キャラクター">博士１（父）</attribute>
+		<attribute name="キャラクター">HAKASE1
+アララギ博士父</attribute>
 		<language name="JPN" width="256">ふむう……
 ギアルは　つかまえて　おらぬのか[BE:01:ページ切り替え（クリア）]
 だが　たいした　ポケモンずかん　だ！[BE:01:ページ切り替え（クリア）]</language>
@@ -395,7 +399,8 @@
 	<row id="msg_c06_hakase1_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてhakase1_06</comment>
-		<attribute name="キャラクター">博士１（父）</attribute>
+		<attribute name="キャラクター">HAKASE1
+アララギ博士父</attribute>
 		<language name="JPN" width="256">おぉ　すまない！
 ちと　こうふん　してな[BE:01:ページ切り替え（クリア）]
 わたしの　なまえも
@@ -425,7 +430,8 @@
 ・ポケモン図鑑に
 　フォルムチェンジ確認機能追加予定
 ・続けてhakase1_07</comment>
-		<attribute name="キャラクター">博士１（父）</attribute>
+		<attribute name="キャラクター">HAKASE1
+アララギ博士父</attribute>
 		<language name="JPN" width="256">では　であいを　きねんして
 おまえさんの　ポケモンずかんを[BE:00:ページ切り替え（行送り）]
 パワーアップ！　だな[BE:01:ページ切り替え（クリア）]</language>
@@ -437,7 +443,8 @@
 	<row id="msg_c06_hakase1_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてleader6_01</comment>
-		<attribute name="キャラクター">博士１（父）</attribute>
+		<attribute name="キャラクター">HAKASE1
+アララギ博士父</attribute>
 		<language name="JPN" width="256">アララギ『よし！　これで
 みた　ポケモンの　すがたなら[BE:00:ページ切り替え（行送り）]
 いつでも　みられるように　なったよ！[BE:01:ページ切り替え（クリア）]</language>
@@ -462,7 +469,8 @@
 ・フウロのほうを向いてメッセージ表示
 ・男女性別関係なくこの台詞
 ・続けてleader6_02</comment>
-		<attribute name="キャラクター">博士１（父）</attribute>
+		<attribute name="キャラクター">HAKASE1
+アララギ博士父</attribute>
 		<language name="JPN" width="256">アララギ『おお！　おう！
 すまんすまん[BE:01:ページ切り替え（クリア）]
 フウロくん　こちらは
@@ -496,7 +504,8 @@
 		<comment>♂
 ・主人公を向いてメッセージ表示
 ・続けてhakase1_10</comment>
-		<attribute name="キャラクター">博士１（父）</attribute>
+		<attribute name="キャラクター">HAKASE1
+アララギ博士父</attribute>
 		<language name="JPN" width="256">アララギ『そうだな　[1:00:トレーナー名:0]くん
 ぜひ　ちょうせんすると　いいぞ！[BE:01:ページ切り替え（クリア）]
 なにしろ　ここの　ジムは
@@ -511,7 +520,8 @@
 		<comment>♂
 ・フウロの方を向いてメッセージ表示
 ・続けてleader6_03</comment>
-		<attribute name="キャラクター">博士１（父）</attribute>
+		<attribute name="キャラクター">HAKASE1
+アララギ博士父</attribute>
 		<language name="JPN" width="256">ではな　フウロくん
 また　なにかあったら　たのむぞ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ではな　フウロくん
@@ -538,7 +548,8 @@
 ・メッセージ表示後、画面右方面に移動
 ・画面外に消えると
 　続けてleader6_04</comment>
-		<attribute name="キャラクター">博士１（父）</attribute>
+		<attribute name="キャラクター">HAKASE1
+アララギ博士父</attribute>
 		<language name="JPN" width="256">アララギ『おいおい
 かわいい　かおして[BE:00:ページ切り替え（行送り）]
 そんな　かたいことを　いうな[BE:01:ページ切り替え（クリア）]

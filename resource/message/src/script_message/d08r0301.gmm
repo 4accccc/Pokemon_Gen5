@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T18:57:26"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T17:18:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -311,7 +311,8 @@
 	<row id="msg_d08r0301_hakase1_01">
 		<comment>♂
 ・d08でmsg_d08_white_07表示後</comment>
-		<attribute name="キャラ指定">博士父</attribute>
+		<attribute name="キャラ指定">HAKASE1
+アララギ博士父</attribute>
 		<language name="JPN" width="256">アララギ『この　とうが
 いつごろ　できたのか[BE:00:ページ切り替え（行送り）]
 むすめに　しらべさせるか</language>

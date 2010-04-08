@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T16:04:25"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T17:21:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1782" top="180" right="2487" bottom="808" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -341,7 +341,7 @@
 ・pos（詳細未定）を踏むと発動
 ・主人公に隣接してメッセージ表示
 　メッセージ表示後、プレイヤー誘導</comment>
-		<attribute name="キャラクター">チャンピオン
+		<attribute name="キャラクター">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『……おお　[1:00:トレーナー名:0]か
 こちらだ[BE:01:ページ切り替え（クリア）]</language>
@@ -356,7 +356,7 @@
 ・メッセージ表示後
 　カメラ移動、ゲーチスを中心にする
 ・続けてmsg_c08_sage1_01</comment>
-		<attribute name="キャラクター">チャンピオン
+		<attribute name="キャラクター">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">ウソつき　ゲーチスめ[BE:01:ページ切り替え（クリア）]
 みなを　たぶらかそうと
@@ -570,7 +570,7 @@ WOMAN2</attribute>
 ・表示後、シャガたちのほうに移動
 ・続けてchampion_03
 ・0＝主人公名前</comment>
-		<attribute name="キャラクター">チャンピオン
+		<attribute name="キャラクター">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『いこうか　[1:00:トレーナー名:0]▼</language>
 		<language name="JPN_KANJI" width="256">アデク『いこうか　[1:00:トレーナー名:0]▼</language>
@@ -580,7 +580,7 @@ WOMAN2</attribute>
 		<comment>♂
 ・続けてleader8b_02か
 　leader8b_02a</comment>
-		<attribute name="キャラクター">チャンピオン
+		<attribute name="キャラクター">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『ひさしいな
 アイリスに　シャガよ[BE:01:ページ切り替え（クリア）]</language>
@@ -635,7 +635,7 @@ WOMAN2</attribute>
 		<comment>♂
 ・WHITEならleader8b_03w
 ・BLACKならleader8a_03b</comment>
-		<attribute name="キャラクター">チャンピオン
+		<attribute name="キャラクター">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『ずばり！▼
 ドラゴンポケモンのこと
@@ -713,7 +713,7 @@ WOMAN2</attribute>
 		<comment>♂
 ・続けてleader8a_06
 ・0＝主人公名前</comment>
-		<attribute name="キャラクター">チャンピオン
+		<attribute name="キャラクター">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『おうよ！▼
 その　Ｎという　トレーナーが
@@ -759,7 +759,7 @@ WOMAN2</attribute>
 	<row id="msg_c08_champion_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてchampion_07</comment>
-		<attribute name="キャラクター">チャンピオン
+		<attribute name="キャラクター">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『そうだよな　アイリス▼
 ポケモンを　たたかわせるのは
@@ -777,7 +777,7 @@ WOMAN2</attribute>
 		<comment>♂
 ・続けてchampion_08
 （動作モデルの芝居用に、念のためラベルを分割）</comment>
-		<attribute name="キャラクター">チャンピオン
+		<attribute name="キャラクター">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">さてと……　わしは
 ポケモンリーグに　むかう！▼
@@ -818,7 +818,7 @@ WOMAN2</attribute>
 ・メッセージ表示後、画面右に退場
 　このとき、アイリス、シャガも右を向く
 ・画面外に消えるとmsg_c08_leader8b_04</comment>
-		<attribute name="キャラクター">チャンピオン
+		<attribute name="キャラクター">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">じゃあな　たのんだぞ
 シャガ　アイリス！▼</language>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T18:53:44"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T17:20:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -299,7 +299,8 @@
 ・画面左からライバル登場し
 　隣接してメッセージ表示後に戦闘へ
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！▼
 ぼくの　じつりょくが　どれほどか
 たしかめさせて　もらうよ▼</language>
@@ -315,7 +316,8 @@
 ・戦闘後、フィールドに復帰すると自動で表示
 　このときライバル、主人公の二人、チャンピオン側を向く
 ・続けてblack_02</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">アデク『ほう！　なかなかの
 ポケモンしょうぶで　あったな！▼
 ふたりとも　トレーナーとして
@@ -329,7 +331,8 @@
 	<row id="msg_d07_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてchampion_02</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……どなたかと　おもえば
 チャンピオンの　アデクさん　ですか▼
 じぶんは　まけたのに
@@ -348,7 +351,8 @@
 　GRIDX=133、GRIDZ=245付近に移動（ジャンプする?）
 ・あわせて主人公、ライバルの向きも変更
 ・続けてblack_03</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">アデク『……まったく▼
 とげのある　いいかたをせず
 すなおに　よろこべ▼
@@ -364,7 +368,8 @@
 	<row id="msg_d07_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてchampion_03</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……つよくなれば▼
 チャンピオンに　なれば　それが
 ぼくの　そんざいりゆうに　なる▽
@@ -379,7 +384,8 @@
 		<comment>♂
 ・まずライバルに渡すような演出
 ・続けてchampion_04</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">アデク『ふむう……
 きみは　レンブに　にておるな▼
 なるほど　たしかに
@@ -406,7 +412,8 @@
 ・アイテム入手処理
 　No602「なみのり」
 ・続けてchampion_05</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">ほら　おまえさんも▼</language>
 		<language name="JPN_KANJI" width="256">ほら　おまえさんも▼</language>
 	</row>
@@ -415,7 +422,8 @@
 		<comment>♂
 ・表示後、画面左に移動
 ・続けてblack_04</comment>
-		<attribute name="キャラ指定">チャンピオン</attribute>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
 		<language name="JPN" width="256">アデク『その　わざ
 なみのりを　つかえば▽
 みずのうえを　すすめる！▼
@@ -436,7 +444,8 @@
 		<comment>♂
 ・画面左を見ながら
 ・続けてblack_05</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『なにを　したいか……
 それが　わからないから▽
 つよくなりたいんだよ　ぼくは▼</language>
@@ -451,7 +460,8 @@
 ・表示後、ネジ山内（d07r00201）に移動
 　画面外に消えると主人公操作可能に
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">……じゃあね　[1:00:トレーナー名:0]
 つぎにあうときは　ぼくがかつよ▼</language>
 		<language name="JPN_KANJI" width="256">……じゃあね　[1:00:トレーナー名:0]
