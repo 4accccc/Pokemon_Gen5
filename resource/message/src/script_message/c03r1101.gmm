@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-07T20:58:43"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T12:05:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -291,6 +291,577 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_c03r1101_sage1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・室内にはゲーチス、七賢人×２
+　したっぱ♂×２、したっぱ♀×１
+　アーティ、アイリス、ベル
+・pos移動
+　メッセージ表示
+・続けてleader3_01</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『これは　これは
+ジムリーダーの　アーティさん▼</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『これは　これは
+ジムリーダーの　アーティさん▼</language>
+	</row>
+
+	<row id="msg_c03r1101_leader3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・左右を見てから
+・続けてsage3_01</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『プラズマだん　って
+ひとが　もっている　ものが▽
+ほしくなると　とっちゃう　ひとたち？▼</language>
+		<language name="JPN_KANJI" width="256">アーティ『プラズマ団　って
+人が　もっている　ものが▽
+欲しくなると　盗っちゃう　人たち？▼</language>
+	</row>
+
+	<row id="msg_c03r1101_sage3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・ゲーチスのほうを向いて
+　（ゲーチスは下向きのまま）
+・続けてsage1_02</comment>
+		<attribute name="キャラ指定">七賢人３</attribute>
+		<language name="JPN" width="256">七賢人『ジムの　めのまえに
+かくれがを　ようい　するのも▽
+おもしろいと　おもいましたが▽
+いがいに　はやく　ばれましたな▼</language>
+		<language name="JPN_KANJI" width="256">七賢人『ジムの　眼前に
+隠れ家を　用意するのも▽
+おもしろいと　思いましたが▽
+意外に　早く　ばれましたな▼</language>
+	</row>
+
+	<row id="msg_c03r1101_sage1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・続けて
+　WHITEならleader8w_01w
+　BLACKならleader8w_01b</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『たしかに……▼
+まあ　ワタクシたちの　すばらしき
+アジトは　すでに　ありますからね▼
+さて　あなたがた
+イッシュちほう　けんこくの▽
+でんせつは　ごぞんじ　ですか？▼</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『たしかに……▼
+まあ　ワタクシたちの　すばらしき
+アジトは　すでに　ありますからね▼
+さて　あなたがた
+イッシュ建国の▽
+伝説は　ご存じ　ですか？▼</language>
+	</row>
+
+	<row id="msg_c03r1101_leader8w_01w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・WHITEver
+・続けてsage1_03w</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『しってるよ！
+しろい　ドラゴンポケモン　でしょ！▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『しってるよ！
+しろい　ドラゴンポケモン　でしょ！▼</language>
+	</row>
+
+	<row id="msg_c03r1101_leader8w_01b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・BLACKver
+・続けてsage1_03b</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『しってるよ！
+くろい　ドラゴンポケモン　でしょ！▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『しってるよ！
+くろい　ドラゴンポケモン　でしょ！▼</language>
+	</row>
+
+	<row id="msg_c03r1101_sage1_03w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・WHITEver
+・左右に歩いてからメッセージ（演説時のイメージ）
+・続けてsage1_04</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『そう……　おおくの　たみが
+あらそっていた　せかいを▽
+どうしたら　まとめられるか……？▼
+その　しんじつを　おいもとめた
+えいゆうの　もとに　あらわれ▼
+ちしきを　さずけ
+はむかう　ものには　キバをむいた▽
+しろい　ドラゴンポケモン……▼
+えいゆうと　ポケモンの
+そのすがた　そのちからが▽
+みんなの　こころを　まとめ▽
+イッシュを　つくりあげたのです▼</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『そう……　多くの　民が
+争っていた　世界を▽
+どうしたら　まとめられるか……？▼
+その　真実を　追究した
+英雄の　もとに　現われ▼
+知識を　授け
+刃向かう　存在には　キバをむいた……▽
+白い　ドラゴンポケモン▼
+英雄と　ポケモンの
+その姿　その力が▽
+みんなの　こころを　１つにして▽
+イッシュを　造りあげたのです▼</language>
+	</row>
+
+	<row id="msg_c03r1101_sage1_03b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・BLACKver
+・左右に歩いてからメッセージ（演説時のイメージ）
+・続けてsage1_04</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『そう……　おおくの　たみが
+あらそっていた　せかいを▽
+どうしたら　まとめられるか……？▼
+その　りそうを　おいもとめた
+えいゆうの　もとに　あらわれ▼
+ちしきを　さずけ
+はむかう　ものには　キバをむいた▽
+くろい　ドラゴンポケモン……▼
+えいゆうと　ポケモンの
+そのすがた　そのちからが▽
+みんなの　こころを　まとめ▽
+イッシュを　つくりあげたのです▼</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『そう……　多くの　民が
+争っていた　世界を▽
+どうしたら　まとめられるか……？▼
+その　理想を　追究した
+英雄の　もとに　現われ▼
+知識を　授け
+刃向かう　存在には　キバをむいた……▽
+黒い　ドラゴンポケモン▼
+英雄と　ポケモンの
+その姿　その力が▽
+みんなの　こころを　１つにして▽
+イッシュを　造りあげたのです▼</language>
+	</row>
+
+	<row id="msg_c03r1101_sage1_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・芝居後にメッセージ表示
+・続けてleader3_02</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">いまいちど！　えいゆうと　ポケモンを
+この　イッシュに　よみがえらせ▽
+ひとびとの　こころを　つかめば！▼
+いとも　たやすく　ワタクシの……
+いや　プラズマだんの　のぞむ▽
+せかいに　できるのです！▼</language>
+		<language name="JPN_KANJI" width="256">今一度！　英雄と　ポケモンを
+この　イッシュに　よみがえらせ▽
+人心を　掌握すれば！▼
+いとも　たやすく　ワタクシの……
+いや　プラズマ団の　望む▽
+世界に　できるのです！▼</language>
+	</row>
+
+	<row id="msg_c03r1101_leader3_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてsage3_02</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『この　ヒウンには
+たっくさんの　ひとが　いるよ▼
+それぞれの　かんがえ　ライフスタイル
+ほんっと　バラバラ▼
+しょうじき　なにを　いってるか
+わからないことも　あるんだよねえ</language>
+		<language name="JPN_KANJI" width="256">アーティ『この　ヒウンには
+たっくさんの　人が　いるよ▼
+それぞれの　考え方　ライフスタイル
+ほんっと　バラバラ▼
+正直　なにを　いってるか
+わからないことも　あるんだよねえ</language>
+	</row>
+
+	<row id="msg_c03r1101_sage3_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・サブウインドウで表示
+・続けてsage6_01</comment>
+		<attribute name="キャラ指定">七賢人３</attribute>
+		<language name="JPN" width="256">はて</language>
+		<language name="JPN_KANJI" width="256">はて</language>
+	</row>
+
+	<row id="msg_c03r1101_sage6_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・サブウインドウで表示
+・続けてleader3_03</comment>
+		<attribute name="キャラ指定">七賢人６</attribute>
+		<language name="JPN" width="256">なにをいいだす</language>
+		<language name="JPN_KANJI" width="256">なにをいいだす</language>
+	</row>
+
+	<row id="msg_c03r1101_leader3_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてleader3_04</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『だけど　ポケモンを
+だいじに　しているのは▽
+みんな　おなじ　なんだよね▼
+はじめて　であう　ひととも
+ポケモンを　つうじて　はなすんだ！▽
+しょうぶしたり　こうかんしたりね▼</language>
+		<language name="JPN_KANJI" width="256">アーティ『だけど
+みんなに　共通点が　あってね▽
+ポケモンを　大事にしているよ▼
+初めて　出会う人とも
+ポケモンを　通じて　会話する▽
+勝負をしたり　交換したりね▼</language>
+	</row>
+
+	<row id="msg_c03r1101_leader3_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・一歩前に出てメッセージ表示
+・続けてsage1_05</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">カラクサの　えんぜつ　だっけ？▼
+ポケモンとの　つきあいかたを
+かんがえなおす　きっかけを　くれて▽
+かんしゃ　しているんだよ▼
+そして　ちかったね……！▼
+もっともっと　ポケモンと
+しんけんに　むきあおう　ってね！▼
+あなたたちの　やっていることは
+このように　ポケモンと　ひとの▽
+むすびつきを　つよめるんじゃないの？▼</language>
+		<language name="JPN_KANJI" width="256">カラクサの　演説だっけ？▼
+ポケモンとの　つきあいかたを
+見つめなおす　きっかけを　くれて▽
+感謝しているんだよ▼
+そして　誓ったね……！▼
+もっともっと　ポケモンと
+真剣に　向き合おう　ってね！▼
+あなたたちの　やっていることは
+このように　ポケモンと　人の▽
+結びつきを　強めるんじゃないの？▼</language>
+	</row>
+
+	<row id="msg_c03r1101_sage1_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・続けてsage1_06</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『フハハハ！▼
+つかみどころが　ないようで
+おもいのほか　キレもの　でしたか▼
+ワタクシは　あたまの　いい
+にんげんが　だいすき　でしてね▼
+おうのため　せかいかっこく　から
+ちしきを　もつ　にんげんを　あつめ▽
+しちけんじんを　なのっているほどです▼
+よろしい！　ここは　あなたの
+いけんに　めんじ　ひきあげましょう▼</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『フハハハ！▼
+つかみどころが　ないようで
+存外　キレもの　でしたか▼
+ワタクシは　頭の　いい
+人間が　大好き　でしてね▼
+王のため　世界各国から
+知識人を　集め▽
+七賢人を　名乗っているいるほどです▼
+よろしい！　ここは　あなたの
+指摘に　免じ　ひきあげましょう▼</language>
+	</row>
+
+	<row id="msg_c03r1101_sage1_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・したっぱがベルに隣接する
+・続けてwhite_01</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">そこの　むすめ……
+ポケモンは　かえしてやろう▼</language>
+		<language name="JPN_KANJI" width="256">そこの娘……
+ポケモンは　返してやろう▼</language>
+	</row>
+
+	<row id="msg_c03r1101_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・したっぱが元の位置に戻った後にメッセージ表示
+・続けてleader8w_02</comment>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256">ベル『あっ　ありがとう！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『あっ　ありがとう！▼</language>
+	</row>
+
+	<row id="msg_c03r1101_leader8w_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・その場ジャンプ後にサポートを見て
+　メッセージ表示
+・続けてwhite_02</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『おねえちゃん！！▼
+こいつら　ひとの　だいじな　ポケモン
+とっちゃった　わるもの　なんだよ！？▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『おねえちゃん！！▼
+こいつら　ひとの　だいじな　ポケモン
+とっちゃった　わるもの　なんだよ！？▼</language>
+	</row>
+
+	<row id="msg_c03r1101_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてsage1_07
+・0＝サポートの選んだ最初のポケモン</comment>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256">ベル『で　でもお
+[1:01:ポケモン種族名:0]が　ぶじで　うれしくて▼</language>
+		<language name="JPN_KANJI" width="256">ベル『で　でもお
+[1:01:ポケモン種族名:0]が　無事で　うれしくて▼</language>
+	</row>
+
+	<row id="msg_c03r1101_sage1_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・メッセージ後、画面暗転
+　プラズマ団を削除
+・画面復帰するとleader8w_03から</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『これは　うるわしい
+ポケモンと　ひとの　ゆうじょう！▼
+ですが　ポケモンを
+おろかな　にんげんから　じゆうにする▼
+そのために　でんせつを　さいげんし
+ひとの　こころを　あやつりますよ……▼
+では　ごきげんよう……▼</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『これは　麗しい
+ポケモンと　人の　友情！▼
+ですが　ワタクシは　ポケモンを
+愚かな　人間から　自由にするため▼
+イッシュの　伝説を　再現し
+人心を　掌握しますよ……！▼
+では　ごきげんよう……▼</language>
+	</row>
+
+	<row id="msg_c03r1101_leader8w_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・飛び跳ねてから？
+・続けてleader3_05</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『どーして　わるいヤツを
+みのがしちゃったの！？▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『どーして　わるいヤツを
+みのがしちゃったの！？▼</language>
+	</row>
+
+	<row id="msg_c03r1101_leader3_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてwhite_03</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『……んうん▼
+だって　うばわれた　ポケモンに
+もしものことが　あれば▽
+ボクたちは　どうすれば　いいのさ？▼</language>
+		<language name="JPN_KANJI" width="256">アーティ『……んうん▼
+だって　奪われた　ポケモンに
+もしものことが　あれば▽
+ボクたちは　どうすれば　いいのさ？▼</language>
+	</row>
+
+	<row id="msg_c03r1101_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・続けてleader8w_04</comment>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256">ベル『だいじょうぶ　だよ
+アイリスちゃん　ありがとう！▽
+みんな　ケガ　なかったし▼
+なにより　だいじな　ポケモンと
+こうやって　また　あえたんだもん！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『大丈夫だよ
+アイリスちゃん　ありがとう！▽
+みんな　ケガ　なかったし▼
+なにより　大事な　ポケモンと
+こうやって　また　会えたんだもん！▼</language>
+	</row>
+
+	<row id="msg_c03r1101_leader8w_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・続けてleader3_06</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『そっか……
+だったら　いいんだけど……▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『そっか……
+だったら　いいんだけど……▼</language>
+	</row>
+
+	<row id="msg_c03r1101_leader3_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けてwhite_03</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『で　みんなは
+これから　どうするのさ？▼</language>
+		<language name="JPN_KANJI" width="256">アーティ『で　みんなは
+これから　どうするのさ？▼</language>
+	</row>
+
+	<row id="msg_c03r1101_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてleader8w_05</comment>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256">ベル『……あたしは　ヒウンシティを
+いろいろ　みて　まわりたいけど……▼</language>
+		<language name="JPN_KANJI" width="256">ベル『……あたしは　ヒウンシティを
+いろいろ　みて　まわりたいけど……▼</language>
+	</row>
+
+	<row id="msg_c03r1101_leader8w_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・！マーク表示後
+・続けてwhite_05</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『だいじょーぶ！！▼
+あたしが　ベルおねーちゃんの
+ボディーガード　つづけるから！！▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『だいじょーぶ！！▼
+あたしが　ベルおねーちゃんの
+ボディーガード　つづけるから！！▼</language>
+	</row>
+
+	<row id="msg_c03r1101_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてleader3_07</comment>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256">ベル『アイリスちゃん……▼</language>
+		<language name="JPN_KANJI" width="256">ベル『アイリスちゃん……▼</language>
+	</row>
+
+	<row id="msg_c03r1101_leader3_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けて
+　leader8w_06か
+　leader8w_07</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『んー　いいねえ▼
+アイリスは　とびっきりの
+ポケモントレーナー　だけど▽
+この　まちは　にがて　みたいだし▼
+それに　ほら　ひとも　ポケモンも
+たすけあい！　たすけあい！！▼</language>
+		<language name="JPN_KANJI" width="256">アーティ『んー　いいねえ▼
+アイリスは　とびっきりの
+ポケモントレーナー　だけど▽
+この街は　苦手みたいだし▼
+それに　ほら　人も　ポケモンも
+助け合い！　助け合い！！▼</language>
+	</row>
+
+	<row id="msg_c03r1101_leader8w_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・主人公に隣接してメッセージ表示
+・表示後にアイテム入手処理
+　No188「ヤチェのみ」</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『あと　おにーちゃん！▼
+ポケモン　さがしてくれて　ありがと
+これ　あげる！▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『あと　おにーちゃん！▼
+ポケモン　さがしてくれて　ありがと
+これ　あげる！▼</language>
+	</row>
+
+	<row id="msg_c03r1101_leader8w_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・主人公に隣接してメッセージ表示
+・表示後にアイテム入手処理
+　No188「ヤチェのみ」</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『あと　おねーちゃん！▼
+ポケモン　さがしてくれて　ありがと
+これ　あげる！▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『あと　おねーちゃん！▼
+ポケモン　さがしてくれて　ありがと
+これ　あげる！▼</language>
+	</row>
+
+	<row id="msg_c03r1101_leader8w_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・ベルを押すようにして画面外に移動
+・続けてwhite_06</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『じゃーねー！！▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『じゃーねー！！▼</language>
+	</row>
+
+	<row id="msg_c03r1101_white_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・サブウインドウで表示
+・続けてwhite_07</comment>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256">ちょっ</language>
+		<language name="JPN_KANJI" width="256">ちょっ</language>
+	</row>
+
+	<row id="msg_c03r1101_white_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・サブウインドウで表示
+・画面外に消えた後に続けて
+　leader3_08か
+　leader3_09</comment>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256">ちょっとお</language>
+		<language name="JPN_KANJI" width="256">ちょっとお</language>
+	</row>
+
+	<row id="msg_c03r1101_leader3_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・主人公性別：♂
+・メッセージ表示後、退場
+・画面外に消えると主人公、操作可能に
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『じゃあ　[1:00:トレーナー名:0]くん
+ボクは　ジムで　まってるよ▼</language>
+		<language name="JPN_KANJI" width="256">アーティ『じゃあ　[1:00:トレーナー名:0]くん
+ボクは　ジムで　待ってるよ▼</language>
+	</row>
+
+	<row id="msg_c03r1101_leader3_09" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・主人公性別：♂
+・メッセージ表示後、退場
+・画面外に消えると主人公、操作可能に
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『じゃあ　[1:00:トレーナー名:0]さん
+ボクは　ジムで　まってるよ▼</language>
+		<language name="JPN_KANJI" width="256">アーティ『じゃあ　[1:00:トレーナー名:0]さん
+ボクは　ジムで　待ってるよ▼</language>
+	</row>
 
 	<row id="msg_c03r1101_man1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
