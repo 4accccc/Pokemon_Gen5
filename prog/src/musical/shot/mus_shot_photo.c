@@ -424,10 +424,12 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
 
     if( work->shotData->spotBit & bit )
     {
+      VecFx32 ofs = {0,-FX32_CONST(40.0f),0};
       pos.x = posXArr[i];
-      pos.y = FX32_CONST(120.0f);
+      pos.y = FX32_CONST(160.0f);
       pos.z -= FX32_CONST(30.0f); //‚Ð‚ÆƒLƒƒƒ‰‚ÌŒú‚Ý‚Í30‚ÆŒ©‚é
       STA_POKE_SetPosition( work->pokeSys , work->pokeWork[i] , &pos );
+      STA_POKE_SetPositionOffset( work->pokeSys , work->pokeWork[i] , &ofs );
       lightpos.y = FX32_CONST(88.0f);
       
     }
