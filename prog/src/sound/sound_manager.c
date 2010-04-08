@@ -209,18 +209,28 @@ u32		SOUNDMAN_GetHierarchyPlayerSoundIdxByPlayerID( int playerID )
  *
  */
 //--------------------------------------------------------------------------------------------
-void	SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv( void )
+static int	SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv( void )
 {
 	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
+	int lv;
 
+	lv = player->heapLvReset;
 	player->heapLvReset = NNS_SndHeapSaveState(*pSndHeapHandle);
+#if 1
+	OS_Printf("change player[%d] resetLv %d->%d\n", sndHierarchyArrayPos, lv, player->heapLvReset);
+#endif
+	return lv;
 }
 
-static void	SOUNDMAN_DowngradeHierarchyPlayerSoundHeapLv( void )
+static void	SOUNDMAN_DowngradeHierarchyPlayerSoundHeapLv( int lv )
 {
 	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
 
-	player->heapLvReset = SOUNDMAN_GetHierarchyPlayerSoundHeapLv();
+	NNS_SndHeapLoadState(*pSndHeapHandle, lv);
+#if 1
+	OS_Printf("change player[%d] resetLv %d->%d\n", sndHierarchyArrayPos, player->heapLvReset, lv);
+#endif
+	player->heapLvReset = lv;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -417,11 +427,14 @@ SOUNDMAN_PRESET_HANDLE* SOUNDMAN_PresetSoundTbl( const u32* soundIdxTbl, u32 tbl
 	handle->soundNum = tblNum;
 
 	// リリースの際に復帰するヒープ状態ＬＶを保存
-	handle->heapLvRelease = SOUNDMAN_GetHierarchyPlayerSoundHeapLv();
-	OS_Printf(".....setTbl preset LV %d\n", handle->heapLvRelease);
+	//handle->heapLvRelease = SOUNDMAN_GetHierarchyPlayerSoundHeapLv();
+	//OS_Printf(".....setTbl preset LV %d\n", handle->heapLvRelease);
 
 	// 現在の階層プレーヤーのヒープレベル設定を更新
-	SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv();
+	//SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv();
+
+	// 現在の階層プレーヤーのヒープレベル設定を更新し、リリースの際に復帰するヒープ状態ＬＶを保存
+	handle->heapLvRelease = SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv();
 
 	return handle;
 }
@@ -442,11 +455,14 @@ SOUNDMAN_PRESET_HANDLE* SOUNDMAN_PresetGroup( u32 groupIdx )
 	handle->soundNum = groupInfo->count;
 
 	// リリースの際に復帰するヒープ状態ＬＶを保存
-	handle->heapLvRelease = SOUNDMAN_GetHierarchyPlayerSoundHeapLv();
-	OS_Printf(".....setGrp preset LV %d\n", handle->heapLvRelease);
+	//handle->heapLvRelease = SOUNDMAN_GetHierarchyPlayerSoundHeapLv();
+	//OS_Printf(".....setGrp preset LV %d\n", handle->heapLvRelease);
 
 	// 現在の階層プレーヤーのヒープレベル設定を更新
-	SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv();
+	//SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv();
+
+	// 現在の階層プレーヤーのヒープレベル設定を更新し、リリースの際に復帰するヒープ状態ＬＶを保存
+	handle->heapLvRelease = SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv();
 
 	return handle;
 }
@@ -462,10 +478,10 @@ void SOUNDMAN_ReleasePresetData( SOUNDMAN_PRESET_HANDLE* handle )
 {
 	GF_ASSERT(pSndHeapHandle);
 
-	NNS_SndHeapLoadState(*pSndHeapHandle, handle->heapLvRelease);
-	OS_Printf(".....release preset LV %d\n", handle->heapLvRelease);
+	//NNS_SndHeapLoadState(*pSndHeapHandle, handle->heapLvRelease);
+	//OS_Printf(".....release preset LV %d\n", handle->heapLvRelease);
 
-	SOUNDMAN_DowngradeHierarchyPlayerSoundHeapLv();
+	SOUNDMAN_DowngradeHierarchyPlayerSoundHeapLv(handle->heapLvRelease);
 }
 
 
