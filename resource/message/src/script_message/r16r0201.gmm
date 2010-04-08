@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-03-27T17:32:27"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T13:05:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r16r0201_youngman_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_r16r0201_youngman_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>●イベント発生前
 ・トレーラーハウスの傍にいる青年。
 ・話し掛けたときのセリフ。
@@ -304,10 +304,10 @@
 持つ　人が　いるってことさ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r16r0201_youngman_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_r16r0201_youngman_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・喋り終えると、立ち去りかけてから、
-主人公を向き、
-次のセリフmsg_r16r0201_youngman_03</comment>
+　主人公を向き、
+　次のセリフmsg_r16r0201_youngman_03</comment>
 		<attribute name="キャラ指定">バックパッカー♂</attribute>
 		<language name="JPN" width="256">じぶんは　たのしくないって　ことを
 たのしいって　おもう　ひとも　いる…[BE:01:ページ切り替え（クリア）]
@@ -321,7 +321,7 @@
 ボクは　思うんだ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r16r0201_youngman_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_r16r0201_youngman_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・喋り終えると、今度は立ち去る。</comment>
 		<attribute name="キャラ指定">バックパッカー♂</attribute>
 		<language name="JPN" width="256">せかいじゅうを　まわって
@@ -338,7 +338,7 @@
 大事に　思っているんだろうね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r16r0201_zoro_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r16r0201_zoro_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>●ゾロアークイベント発生時
 ・トレーラーハウスから出てきた女性に
 話し掛けたときのゾロアークの咆哮。
@@ -349,12 +349,11 @@
 		<language name="JPN_KANJI" width="256">こきゅきゅきゅきゅーんっ！！</language>
 	</row>
 
-	<row id="msg_r16r0201_youngman_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_r16r0201_youngman_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>●ゾロアークを捕獲後
-
 ・登場してから叫ぶ。
 ・その後、主人公に近寄り、
-msg_r16r0201_youngman_05</comment>
+　msg_r16r0201_youngman_05</comment>
 		<attribute name="キャラ指定">バックパッカー♂</attribute>
 		<language name="JPN" width="256">やっぱり　ここが
 ゾロアークの　すみか　だったのか！[BE:01:ページ切り替え（クリア）]</language>
@@ -362,9 +361,8 @@ msg_r16r0201_youngman_05</comment>
 ゾロアークの　すみか　だったのか！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r16r0201_youngman_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_r16r0201_youngman_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・主人公の横に立ってからのセリフ。
-
 ・続けてmsg_r16r0201_youngman_06</comment>
 		<attribute name="キャラ指定">バックパッカー♂</attribute>
 		<language name="JPN" width="256">ゾロアークは　じぶんたちの　すみかを
@@ -381,9 +379,8 @@ msg_r16r0201_youngman_05</comment>
 ボクも　化かされていたらしい[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r16r0201_youngman_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_r16r0201_youngman_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・このセリフのあと、周囲を見渡すような小芝居。
-
 ・小芝居のあとmsg_r16r0201_youngman_07</comment>
 		<attribute name="キャラ指定">バックパッカー♂</attribute>
 		<language name="JPN" width="256">キミが　つれていた　ポケモンに
@@ -396,9 +393,9 @@ msg_r16r0201_youngman_05</comment>
 あったんだろうね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r16r0201_youngman_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_r16r0201_youngman_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・言い終えると、青年は立ち去り、
-イベントが終了する。</comment>
+　イベントが終了する。</comment>
 		<attribute name="キャラ指定">バックパッカー♂</attribute>
 		<language name="JPN" width="256">こんな　うつくしい　のはらが
 ここに　あったなんて…[BE:01:ページ切り替え（クリア）]
