@@ -27,15 +27,7 @@
 
 #include "scrcmd_password.h"
 
-#include "message.naix"
-#include "msg\msg_pms_word06.h"
-#include "msg\msg_pms_word07.h"
-#include "msg\msg_pms_word08.h"
-#include "msg\msg_pms_word09.h"
-#include "msg\msg_pms_word10.h"
-#include "msg\msg_pms_word11.h"
-#include "msg\msg_pms_word12.h"
-
+#include "../../../resource/quiz/pms_answer.h"
 
 //--------------------------------------------------------------
 /**
@@ -60,25 +52,26 @@ VMCMD_RESULT EvCmdCheckPassword( VMHANDLE *core, void *wk )
     word1 &= 0x7ff;   //11ビットマスク
     word2 &= 0x7ff;   //11ビットマスク
   }
-  NOZOMU_Printf("w1=%d w2=%d\n",word1,word2);
+
+  OS_Printf("w1=%d w2=%d\n",word1,word2);
 
   //答え比較
   switch(no){
-  case 1:     //1問目
+  case 1: //1問目
     {
       PMS_WORD pms_word;
-      pms_word = PMSW_GetWordNumberByGmmID( NARC_message_pms_word07_dat, pms_word07_35 ); //「みんな」
+      pms_word = password01; //「みんな」
       ans_word1 = pms_word & 0x7ff;   //11ビットマスク
-      pms_word = PMSW_GetWordNumberByGmmID( NARC_message_pms_word10_dat, pms_word10_33 ); //「ハッピー」
+      pms_word = password02; //「ハッピー」
       ans_word2 = pms_word & 0x7ff;   //11ビットマスク
     }
     break;
-  case 2:   //2問目
+  case 2: //2問目
     {
       PMS_WORD pms_word;
-      pms_word = PMSW_GetWordNumberByGmmID( NARC_message_pms_word10_dat, pms_word10_10 ); //「かんたん」
+      pms_word = password03; //「かんたん」
       ans_word1 = pms_word & 0x7ff;   //11ビットマスク
-      pms_word = PMSW_GetWordNumberByGmmID( NARC_message_pms_word12_dat, pms_word12_16 ); //「つうしん」
+      pms_word = password04; //「つうしん」
       ans_word2 = pms_word & 0x7ff;   //11ビットマスク
     }
     break;
@@ -88,7 +81,7 @@ VMCMD_RESULT EvCmdCheckPassword( VMHANDLE *core, void *wk )
     return VMCMD_RESULT_CONTINUE;
   }
 
-  NOZOMU_Printf("aw1=%d aw2=%d\n",ans_word1, ans_word2);
+  OS_Printf("aw1=%d aw2=%d\n",ans_word1, ans_word2);
 
   if ( (ans_word1 == word1)&&(ans_word2 == word2) ) *ret = TRUE;
   else *ret = FALSE;
