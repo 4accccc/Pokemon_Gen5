@@ -887,6 +887,8 @@ void FIELD_RAIL_MAN_ConvertNextWorldNotMuinusToRailLocation( const FIELD_RAIL_MA
 
   p_railwork = man->calc_work;
 
+  TOMOYA_Printf( "index %d front %d side %d\n", index, front, side );
+
   // 別ゾーンのレール情報を設定
   p_railwork->rail_dat = setting;
 
@@ -897,9 +899,10 @@ void FIELD_RAIL_MAN_ConvertNextWorldNotMuinusToRailLocation( const FIELD_RAIL_MA
 
   FIELD_RAIL_WORK_SetLocation( p_railwork, p_location );
 
+  TOMOYA_Printf( "width_ofs_max %d\n", p_railwork->width_ofs_max );
   // サイドを合わせる。
-  p_railwork->width_ofs = side - p_railwork->width_ofs_max;
-  p_location->width_grid = RAIL_OFS_TO_GRID(p_railwork->width_ofs);
+  p_location->width_grid = side - RAIL_OFS_TO_GRID(p_railwork->width_ofs_max);
+  TOMOYA_Printf( "width_grid %d\n", p_location->width_grid );
 
   // 元のレール情報に戻す
   p_railwork->rail_dat = &man->rail_dat;
@@ -2125,8 +2128,7 @@ void FIELD_RAIL_WORK_SetNotMinusRailParam( FIELD_RAIL_WORK* p_work, u16 index, u
   FIELD_RAIL_WORK_SetLocation( p_work, &location );
 
   // サイドを合わせる。
-  p_work->width_ofs = side - p_work->width_ofs_max;
-  location.width_grid = RAIL_OFS_TO_GRID(p_work->width_ofs);
+  location.width_grid = side - RAIL_OFS_TO_GRID(p_work->width_ofs_max);
 
   // 位置やロケーションをサイド設定しなおす
   // 座標の初期化

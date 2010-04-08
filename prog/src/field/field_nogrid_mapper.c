@@ -442,15 +442,25 @@ BOOL FLDNOGRID_MAPPER_GetLineActive( const FLDNOGRID_MAPPER* cp_mapper, u32 line
 void FLDNOGRID_MAPPER_ChangeNotMinusRailPosToRailLocation( const FLDNOGRID_MAPPER* cp_mapper, u32 zoneid, u16 index, u16 front, u16 side, RAIL_LOCATION* p_location, HEAPID heapID )
 {
   FIELD_RAIL_LOADER* p_railloader;
+  FLDNOGRID_RESISTDATA* p_resist;
+  u32 size;
+
 
   GF_ASSERT( cp_mapper );
   GF_ASSERT( ZONEDATA_IsRailMap( zoneid ) );
 
   heapID = GFL_HEAP_LOWID( heapID );
 
+  // セットアップ情報を取得
+  size = GFL_ARC_GetDataSize( ARCID_FLD_RAILSETUP, ZONEDATA_GetRailDataID( zoneid ) );
+
+  p_resist = GFL_HEAP_AllocClearMemory( heapID, size );
+
+  GFL_ARC_LoadData( p_resist, ARCID_FLD_RAILSETUP, ZONEDATA_GetRailDataID( zoneid ) );
+
   // レール情報の読み込み
   p_railloader = FIELD_RAIL_LOADER_Create( heapID );
-  FIELD_RAIL_LOADER_Load( p_railloader, ZONEDATA_GetRailDataID( zoneid ), heapID );
+  FIELD_RAIL_LOADER_Load( p_railloader, p_resist->railDataID, heapID );
 
   // このレール情報を使用して、指定ゾーンのRAIL_LOCATIONを作成
   FIELD_RAIL_MAN_ConvertNextWorldNotMuinusToRailLocation( cp_mapper->p_railMan, 
@@ -460,6 +470,9 @@ void FLDNOGRID_MAPPER_ChangeNotMinusRailPosToRailLocation( const FLDNOGRID_MAPPE
   // レール情報破棄
   FIELD_RAIL_LOADER_Delete( p_railloader );
   
+
+  // セットアップ情報破棄
+  GFL_HEAP_FreeMemory( p_resist );
 }
 
 
