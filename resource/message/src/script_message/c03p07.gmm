@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-04T17:49:58"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T11:43:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,7 +297,8 @@
 ・ポケモンジムまえのpos（お任せ）を踏むと起動
 ・ジムからライバルが登場してメッセージ表示
 ・続けてblack_02</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『やあ
 [1:00:トレーナー名:0]▼
 アーティさんに　いどんだけれど……▼</language>
@@ -310,7 +311,8 @@
 		<comment>♂
 ・ジムのほうを見てメッセージ
 ・続けてblack_03</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">さすが　ジムリーダーだね▼
 ジムバッジを　てにいれるのに
 こんなに　くろう　するなんて▼</language>
@@ -319,12 +321,13 @@
 こんなに　苦戦するなんて▼</language>
 	</row>
 
-	<row id="msg_c03p07_black_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p07_black_03" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・主人公と向き合ってメッセージ
 ・表示後、画面手前に移動する
-　画面外に消えると主人公操作可能</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+・続けてleader3_01</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">ぼくは　いちど
 ポケモンセンターに　もどる▼
 そのあとは　４ばんどうろか……
@@ -337,6 +340,252 @@
 バトルカンパニーで▽
 ポケモンたちを　鍛えるよ▼
 それでは　健闘を　祈る▼</language>
+	</row>
+
+	<row id="msg_c03p07_leader3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・主人公性別：♂
+・チェレン退場し画面外に消えると
+　ジムリーダーが登場してメッセージ
+・続けてleader3_03
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『うおわ？▼
+きみ……　ヤグルマのもりで
+であった　トレーナー　だよね▼
+たしか　なまえは……
+[1:00:トレーナー名:0]くん！▼
+ひょっとして　ジムに　チャレンジ？▼</language>
+		<language name="JPN_KANJI" width="256">アーティ『うおわ？▼
+きみ……　ヤグルマの森で
+であった　トレーナー　だよね▼
+たしか　名前は……
+[1:00:トレーナー名:0]くん！▼
+ひょっとして　ジムに　チャレンジ？▼</language>
+	</row>
+
+	<row id="msg_c03p07_leader3_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・主人公性別：♀
+・チェレン退場し画面外に消えると
+　ジムリーダーが登場してメッセージ
+・続けてleader3_03
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『うおわ？▼
+きみ……　ヤグルマのもりで
+であった　トレーナー　だよね▼
+たしか　なまえは……
+[1:00:トレーナー名:0]さん！▼
+ひょっとして　ジムに　チャレンジ？▼</language>
+		<language name="JPN_KANJI" width="256">アーティ『うおわ？▼
+きみ……　ヤグルマの森で
+であった　トレーナー　だよね▼
+たしか　名前は……
+[1:00:トレーナー名:0]さん！▼
+ひょっとして　ジムに　チャレンジ？▼</language>
+	</row>
+
+	<row id="msg_c03p07_leader3_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、画面下に退場
+　画面外に消えると主人公操作可能に
+・あわせてc03p15にサポート、アイリス出現</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">ジムに　チャレンジ？▼
+あうう……　もうしわけないけど
+ちょいと　まってくれるかな？▼
+れんらくが　あってさ！
+プラズマだんが　いたらしいんだ！▼
+というか　きみも　きてよ！
+プライムピアって▽
+はとばに　いくからさ！！▼</language>
+		<language name="JPN_KANJI" width="256">ジムに　チャレンジ？▼
+あうう……　もうしわけないけど
+ちょいと　待ってくれるかな？▼
+連絡が　あってさ！
+プラズマ団が　いたらしいんだ！▼
+というか　きみも　来てよ！
+プライムピアって▽
+波止場に　行くからさ！！▼</language>
+	</row>
+
+	<row id="msg_c03p07_leader3_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・c03p15、c03イベント後に再度出現
+・posを踏むとメッセージ表示
+・続けてhakaim_01</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『……▼
+まちがいなく　ココだね▼</language>
+		<language name="JPN_KANJI" width="256">アーティ『……▼
+間違いなく　ココだね▼</language>
+	</row>
+
+	<row id="msg_c03p07_hakaim_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・3人配置（１人は女性）
+・はい/いいえ選択肢表示
+・はい→hakaim_03
+　いいえ→hakaim_02
+・はいを選ぶまでこのメッセージを繰り返し</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『いない　いない！▼
+この　なかに　なかまとか
+しちけんじんさまは　いない！▼
+ウソだと　おもうなら
+オレと　しょうぶ　してみるか？</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『いない　いない！▼
+この中に　仲間とか
+七賢人さまは　いない！▼
+ウソだと　思うなら
+オレと　勝負してみるか？</language>
+	</row>
+
+	<row id="msg_c03p07_hakaim_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『……ふぅ
+びびらせるなよな　もう！</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『……ふぅ
+びびらせるなよな　もう！</language>
+	</row>
+
+	<row id="msg_c03p07_hakaim_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・はい選択時
+・続けて
+　leader_05か
+　leader_06</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『くそー！▼
+おれは　こっちの　よわそうな
+ヤツの　あいてを　するから▼
+おまえら　まとめて
+あっちの　つよそうな　ヤツにむかえ▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『くそー！▼
+おれは　こっちの　弱そうな
+ヤツの　相手を　するから▼
+おまえら　まとめて
+あっちの　強いそうな　ヤツにむかえ▼</language>
+	</row>
+
+	<row id="msg_c03p07_leader3_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・主人公性別：♂
+・メッセージ表示後、戦闘に</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『……ったく！▼
+というわけで　[1:00:トレーナー名:0]くん
+そっちの　あいては　おまかせするよ▼</language>
+		<language name="JPN_KANJI" width="256">アーティ『……ったく！▼
+というわけで　[1:00:トレーナー名:0]くん
+そっちの　相手は　おまかせするよ▼</language>
+	</row>
+
+	<row id="msg_c03p07_leader3_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・主人公性別：♀
+・メッセージ表示後、戦闘に</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『……ったく！▼
+というわけで　[1:00:トレーナー名:0]さん
+そっちの　あいては　おまかせするよ▼</language>
+		<language name="JPN_KANJI" width="256">アーティ『……ったく！▼
+というわけで　[1:00:トレーナー名:0]さん
+そっちの　相手は　おまかせするよ▼</language>
+	</row>
+
+	<row id="msg_c03p07_leader3_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・hakaim_01でいいえ選択後</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『……やっぱり　しょうぶして
+なかに　はいるしか　ないのかな</language>
+		<language name="JPN_KANJI" width="256">アーティ『……やっぱり　勝負して
+中に　入るしか　ないのかな</language>
+	</row>
+
+	<row id="msg_c03p07_hakaim_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・戦闘後自動で表示
+・表示後、プラズマ団たち、ビル内に入る</comment>
+		<attribute name="キャラ指定">プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『まずい……▼
+まずいまずいまずいまずいまずいまずい▼
+とりあえず　しちけんじんさまに
+ほうこく　しないと……！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『まずい……▼
+まずいまずいまずいまずいまずいまずい▼
+とりあえず　七賢人さまに
+報告しないと……！▼</language>
+	</row>
+
+	<row id="msg_c03p07_leader8w_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・外周側からアイリスとベルが来る
+・c03p15の二人を削除
+・所定位置に到達してメッセージ表示
+・続けてleader3_08</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『……はあ　まよっちゃった▼
+ライブキャスターで　せつめいされても
+チンプンカンプン　だよ！▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『……はあ　まよっちゃった▼
+ライブキャスターで　せつめいされても
+チンプンカンプン　だよ！▼</language>
+	</row>
+
+	<row id="msg_c03p07_leader3_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・ビル入り口を見たままメッセージ表示
+・表示後、ビル内に
+・続けてleader8w_02</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『ここに　プラズマだんがいる▼
+もしかしたら　うばわれた
+ポケモンも　いるかもしれない▽
+じゃあ　ボクは　いくよ！▼</language>
+		<language name="JPN_KANJI" width="256">アーティ『ここに　プラズマ団がいる▼
+もしかしたら　奪われた
+ポケモンも　いるかもしれない▽
+じゃあ　ボクは　いくよ！▼</language>
+	</row>
+
+	<row id="msg_c03p07_leader8w_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・続けて</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『よーし！
+こんどは　あたしも　たたかう！！▽
+さあ　ベルおねーちゃんも！▼</language>
+		<language name="JPN_KANJI" width="256">アイリス『よーし！
+こんどは　あたしも　たたかう！！▽
+さあ　ベルおねーちゃんも！▼</language>
+	</row>
+
+	<row id="msg_c03p07_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・メッセージ表示後、ベルトアイリス
+　ビル内に入る
+・主人公、操作可能に</comment>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256">ベル『ちょ　ちょっとお▼
+[1:00:トレーナー名:0]も　きてえ！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『ちょ　ちょっとお▼
+[1:00:トレーナー名:0]も　来てえ！▼</language>
 	</row>
 
 	<row id="msg_c03p07_tvt_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -374,7 +623,7 @@ TVトランシーバー</attribute>
 確認しておかないとね</language>
 	</row>
 
-	<row id="msg_c03p07_gymsign_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03p07_gymsign_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ポケモンジム</comment>
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">ヒウンシティ　ポケモンジム
