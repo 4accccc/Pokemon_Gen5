@@ -65,7 +65,7 @@ static const u8 SentenceIdMax[PMS_TYPE_MAX] =  // –{“–‚ÍŒˆ‚ß‘Å‚¿Žè‘Å‚¿“ü—Í‚Å‚Í‚È
   20,
   20,
   20,
-  20,
+  21,
   2,
 };
 

@@ -1903,8 +1903,9 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
     }
   }
  
- if( b_input )
- {
+ if(    b_input
+     && wk->select_id != SELECT_ID_NULL )  // キー入力の場合は、何か選択されていなければならない。
+ {                                         // 何も選択されていないときは、キーのTrg押し直しがあるまで、キー入力は無視する。
     // キー入力
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
     {
