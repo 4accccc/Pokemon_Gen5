@@ -33,6 +33,7 @@
 #include "sp_poke_gimmick.h"
 #include "palace_gimmick.h"
 #include "palace_map_gimmick.h"
+#include "field_gimmick_d12.h"
 
 extern void GYM_SetupTest(FIELDMAP_WORK *fieldWork);
 extern void GYM_EndTest(FIELDMAP_WORK *fieldWork);
@@ -54,6 +55,7 @@ FS_EXTERN_OVERLAY(field_gimmick_h03);
 FS_EXTERN_OVERLAY(field_gimmick_r04d03);
 FS_EXTERN_OVERLAY(sppoke_gimmick);
 FS_EXTERN_OVERLAY(palace_gimmick);
+FS_EXTERN_OVERLAY(field_gimmick_d12);
 
 const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
 	NULL,					//0:無し
@@ -108,6 +110,7 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(palace_gimmick),  //
   NULL,                           // PLCゾーンのマップ
   NULL,//C04R0109
+  FS_OVERLAY_ID(field_gimmick_d12), //D12
 };
 
 const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
@@ -163,6 +166,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   PALACE_GMK_Setup,    //
   PALACE_MAP_GMK_Setup,    //パレスゾーンのマップ
   BSUBWAY_GIMMICK_Setup, //C04R0109
+  D12_GIMMICK_Setup,    //D12
 };
 
 const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
@@ -218,6 +222,7 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   PALACE_GMK_End,    //
   PALACE_MAP_GMK_End,    //パレスゾーンのマップ
   BSUBWAY_GIMMICK_End, //C04R0109
+  D12_GIMMICK_End,    //D12
 };
 
 const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
@@ -273,6 +278,7 @@ const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   PALACE_GMK_Move,    //
   PALACE_MAP_GMK_Move,    //パレスゾーンのマップ
   BSUBWAY_GIMMICK_Move, //C04R0109
+  D12_GIMMICK_Move,    //D12
 };
 
 //---------------------------------------------------------------------------
