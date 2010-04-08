@@ -2746,12 +2746,7 @@ static void _typeAnimation(C_GEAR_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 {
-  if( pWork->state_seq == 0 ){
-    pWork->state_seq = 1;
-    _PanelPaletteAnimeInit( pWork );
-  }else{
-    _PanelPaletteUpdate( pWork ); 
-  }
+  _PanelPaletteUpdate( pWork ); 
   
   GFL_BMN_Main( pWork->pButton );
   _timeAnimation(pWork);
@@ -3064,6 +3059,7 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 
   // パネルアニメのシステムクリア
   _PanelMarkAnimeSysInit( pWork );
+  _PanelPaletteAnimeInit( pWork );
 
 
   //  _PFadeToBlack(pWork);
