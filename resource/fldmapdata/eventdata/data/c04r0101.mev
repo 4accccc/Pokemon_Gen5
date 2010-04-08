@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/02 20:12:42
+#save date:2010/04/08 15:40:43
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0101.wms
 #SECTION START:OBJ_EVENT
@@ -214,7 +214,7 @@ EVENTDATA_POSTYPE_RAIL
 #position
 2 0 -4
 #size
-1 3
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

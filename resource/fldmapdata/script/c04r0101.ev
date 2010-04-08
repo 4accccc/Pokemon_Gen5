@@ -59,7 +59,7 @@ EVENT_END
 //主人公：階段を降りる
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_walk_in
-	_ANIME_DATA	AC_WALK_L_8F,9
+	_ANIME_DATA	AC_WALK_L_8F,10
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -69,7 +69,7 @@ _ANIME_LABEL	anm_player_walk_in
 //スクリプトによる特殊な接続イベント
 EVENT_START	ev_pos_c04r0101_connect_c04
 	//プレイヤー位置を別のレール座標に変更
-	_PLAYER_RAIL_LOC_SET( 4, 5, 1 )
+	_PLAYER_RAIL_LOC_SET( 6, 0, 0 )
 	
 	//主人公：階段を登る
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_out )
