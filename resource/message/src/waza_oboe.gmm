@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2010-03-30T20:38:11"/>
+	<create user="mori" host="W00155" date="2010-04-08T18:31:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 
 	<dialog left="559" top="228" right="1264" bottom="848" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="173" right="1280" bottom="571" visible="no"/>
+		<tag-palette left="67" top="119" right="540" bottom="517" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -542,9 +542,9 @@ msg_waza_omoi_10へ
 		<comment>Ｍ１６
 思い出した用のせりふ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　わすれていた
-[1:07:わざ名:1]を　おもいだした！</language>
+[1:07:わざ名:1]を　おもいだした！▼</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　わすれていた
-[1:07:わざ名:1]を　おもいだした！</language>
+[1:07:わざ名:1]を　おもいだした！▼</language>
 	</row>
 
 	<row id="msg_waza_omoi_08" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -572,9 +572,9 @@ msg_waza_omoi_01へ
 	<row id="msg_waza_omoi_10" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>Ｍ１７
 フィールドへ</comment>
-		<language name="JPN" width="216">[1:00:トレーナー名:2]は　おれいに
+		<language name="JPN" width="216">[1:00:トレーナー名:0]は　おれいに
 ハートのウロコを　１まい　あげた！</language>
-		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:2]は　お礼に
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]は　お礼に
 ハートのウロコを　１枚　あげた！</language>
 	</row>
 
