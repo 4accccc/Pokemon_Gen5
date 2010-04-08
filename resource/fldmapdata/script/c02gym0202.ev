@@ -82,15 +82,19 @@ EVENT_START	ev_c02gym0202_leader2_01
 	$WK_SCENE_C02 = 3
 	
 //============================================//
-
-	ELSE
+	
 	//わざマシンを　もらったあと
-	_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_06 )
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+	ELSE
+		//ゲームクリア後
+		IF FLAG_ON(SYS_FLAG_GAME_CLEAR)THEN	
+			_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_end_01 )
+		ELSE
+			_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_06 )
+		ENDIF
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
 
 	ENDIF
-
 EVENT_END
 
 
