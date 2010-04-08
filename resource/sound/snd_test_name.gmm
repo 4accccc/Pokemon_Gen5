@@ -8269,21 +8269,21 @@
 		<language name="JPN" width="256">SYS-91</language>
 		<language name="JPN_KANJI" width="256">SYS-91</language>
 	</row>
-	<row id="msg_seq_se_dmy_302">
-		<language name="JPN" width="256">DMY-302</language>
-		<language name="JPN_KANJI" width="256">DMY-302</language>
+	<row id="msg_seq_se_bdemo_01">
+		<language name="JPN" width="256">BDEMO-01</language>
+		<language name="JPN_KANJI" width="256">BDEMO-01</language>
 	</row>
-	<row id="msg_seq_se_dmy_303">
-		<language name="JPN" width="256">DMY-303</language>
-		<language name="JPN_KANJI" width="256">DMY-303</language>
+	<row id="msg_seq_se_bdemo_02">
+		<language name="JPN" width="256">BDEMO-02</language>
+		<language name="JPN_KANJI" width="256">BDEMO-02</language>
 	</row>
-	<row id="msg_seq_se_dmy_304">
-		<language name="JPN" width="256">DMY-304</language>
-		<language name="JPN_KANJI" width="256">DMY-304</language>
+	<row id="msg_seq_se_bdemo_03">
+		<language name="JPN" width="256">BDEMO-03</language>
+		<language name="JPN_KANJI" width="256">BDEMO-03</language>
 	</row>
-	<row id="msg_seq_se_dmy_305">
-		<language name="JPN" width="256">DMY-305</language>
-		<language name="JPN_KANJI" width="256">DMY-305</language>
+	<row id="msg_seq_se_bdemo_04">
+		<language name="JPN" width="256">BDEMO-04</language>
+		<language name="JPN_KANJI" width="256">BDEMO-04</language>
 	</row>
 	<row id="msg_seq_se_dmy_306">
 		<language name="JPN" width="256">DMY-306</language>
