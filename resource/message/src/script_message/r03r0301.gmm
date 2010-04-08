@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T19:13:59"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T17:59:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -297,7 +297,8 @@
 ・pos（GRIDX=27、GRIDZ=4~6）を踏むと
 　メッセージ表示
 ・続けてhakaim1_01</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]　きをつけて！▼
 こいつら　はなしが　つうじないよ▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]　気をつけて！▼
@@ -342,7 +343,8 @@
 ・主人公を向いてメッセージ表示
 ・続けてhakaim2_01
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『さすがだね　[1:00:トレーナー名:0]▼
 さあ　あのこから　とりあげた
 ポケモンを　かえしてください▼</language>
@@ -393,7 +395,8 @@
 		<comment>♂
 ・プラズマ団を見たままメッセージ表示
 ・続けて、主人公を見てblack_04</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『まだ　いたとはね……▼
 それにしても　ポケモンドロボウが
 なにを　ひらきなおって　いるんだか▼</language>
@@ -408,7 +411,8 @@
 　ライバル、再度プラズマ団を見る
 ・そしてダブルバトルに
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]▼
 こちらの　コンビネーションで
 かれらが　まちがっていることを▽
@@ -438,7 +442,8 @@
 	<row id="msg_r03r0301_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてhakaiw1_02</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『どんな　りゆう　でも
 ひとのモノを　とったら　ドロボウです▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『どんな　理由でも
@@ -460,7 +465,8 @@
 	<row id="msg_r03r0301_black_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてhakaim1_03</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……なぜ　トレーナーが
 ポケモンを　くるしめて　いるのか▽
 ちょっと　りかい　できないんだけど▼</language>
@@ -498,7 +504,8 @@
 		<comment>♂
 ・画面右をみてメッセージ表示
 ・続けてblack_08</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『ポケモンを
 あいする　トレーナーが　いる▼
 トレーナーを
@@ -518,7 +525,8 @@
 ・メッセージ後、r03方面に移動する
 　画面外に消えると主人公操作可能
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">さてと……
 ポケモンを　かえしてくるよ▼
 [1:00:トレーナー名:0]！　きみとの
@@ -527,34 +535,6 @@
 ポケモンを　返してくるよ▼
 [1:00:トレーナー名:0]！　きみとの
 タッグ　おもしろかったよ▼</language>
-	</row>
-
-	<row id="msg_r03r0301_hakaim_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後、画面暗転で
-　プラズマ団の動作モデル削除</comment>
-		<attribute name="キャラ指定">プラズマ団したっぱ</attribute>
-		<language name="JPN" width="256">プラズマだん『われわれは　ちがう！[BE:01:ページ切り替え（クリア）]
-まあいい　いつか
-じぶんたちの　おろかさに　きづけ……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『われわれは　違う！[BE:01:ページ切り替え（クリア）]
-まあいい　いつか
-自分たちの　愚かさに　気づけ……[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_r03r0301_hakaim_01" back-color="#404040,,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">no　data</language>
-		<language name="JPN_KANJI" width="256">no　data</language>
-	</row>
-
-	<row id="msg_r03r0301_hakaim_02" back-color="#404040,,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">no　data</language>
-		<language name="JPN_KANJI" width="256">no　data</language>
-	</row>
-
-	<row id="msg_r03r0301_hakaim_03" back-color="#404040,,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">no　data</language>
-		<language name="JPN_KANJI" width="256">no　data</language>
 	</row>
 
 	<flowchart-group-list>
