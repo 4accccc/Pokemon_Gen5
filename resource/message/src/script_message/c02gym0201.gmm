@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T16:49:23"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T14:26:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -298,8 +298,8 @@
 ・ジムに入ると
 　主人公に隣接してメッセージ表示
 ・No030「おいしいみず」入手</comment>
-		<attribute name="キャラ指定">GLASSES
-サングラス</attribute>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">はくぶつかんの　そのおくで
 ちょうせんしゃを　まつ　ポケモンジム……[BE:00:ページ切り替え（行送り）]
 なんだか　ふんいき　あるっすよね[BE:01:ページ切り替え（クリア）]
@@ -316,6 +316,8 @@
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手後
 ・ジムバッジ取得まで繰り返し</comment>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">この　ジムはですね
 ほんに　かくされた　もんだいを▽
 といていくと　さきに　すすめます▼
@@ -337,6 +339,8 @@
 ・ジムバッジ取得後
 ・盗難事件クリアまでは
 　msg_c02gym0101_glasses_04</comment>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">はじめて　ここに　きたときと
 ジムバッジを　てにしたあとの[BE:01:ページ切り替え（クリア）]
 みなさんの　ひょうじょうの　ちがいを
@@ -351,6 +355,8 @@
 		<comment>♂
 ・盗難事件の間
 ・メッセージ表示後、うろうろさせる？</comment>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">きいたっすか？　へんな　やつらが
 はくぶつかんに　どかどか　きて……[BE:01:ページ切り替え（クリア）]
 ああ！　ジムバッジ！！

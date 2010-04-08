@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T11:35:54"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T14:30:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -297,12 +297,12 @@
 ・戦闘前メッセージ</comment>
 		<attribute name="キャラ指定">LEADER3
 アーティ</attribute>
-		<language name="JPN" width="256">まちくたびれたー！▼
+		<language name="JPN" width="256">さっきは　ありがとー！▼
 ボクの　むしポケモンが　キミと
 たたかいたいって　さわいでさ[BE:01:ページ切り替え（クリア）]
 ではでは
 さっそくだけど　しょうぶ　だね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">待ちくたびれたー！▼
+		<language name="JPN_KANJI" width="256">さっきは　ありがとー！▼
 ボクの　むしポケモンが　キミと
 戦いたいって　騒いでさ[BE:01:ページ切り替え（クリア）]
 ではでは
@@ -377,7 +377,7 @@
 		<comment>♂
 ・leader_05表示後</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
-		<language name="JPN" width="256">きみは　たびに　でてから
+		<language name="JPN" width="256">キミは　たびに　でてから
 どれだけの　はっけんを　した？▼
 ボクはね　こどものころに
 むしポケモンの　うつくしさに▽
@@ -387,7 +387,7 @@
 いまだに　はっけんが　あるんだ▼
 ほんと　せかいは
 ふしぎで　みちているんだー</language>
-		<language name="JPN_KANJI" width="256">きみは　旅に　でてから
+		<language name="JPN_KANJI" width="256">キミは　旅に　でてから
 どれだけの　発見を　した？▼
 ボクはね　子供のころに
 むしポケモンの　美しさに▽
@@ -435,6 +435,8 @@ jugglimg_05</attribute>
 	<row id="msg_c03gym0101_jugglimg_05_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ</comment>
+		<attribute name="キャラ指定">トレーナー
+jugglimg_05</attribute>
 		<language name="JPN" width="256">かくれていると
 しょうぶの　カンが　にぶるんだよ</language>
 		<language name="JPN_KANJI" width="256">隠れていると
@@ -444,6 +446,8 @@ jugglimg_05</attribute>
 	<row id="msg_c03gym0101_jugglimg_05_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・2回目以降</comment>
+		<attribute name="キャラ指定">トレーナー
+jugglimg_05</attribute>
 		<language name="JPN" width="256">だーかーら！▼
 この　スイッチを　ふんでも
 ボクが　とびだすだけだぞ！？</language>
@@ -472,6 +476,8 @@ jugglimg_06</attribute>
 	<row id="msg_c03gym0101_jugglimg_06_02">
 		<comment>♂
 ・戦闘後メッセージ</comment>
+		<attribute name="キャラ指定">トレーナー
+jugglimg_06</attribute>
 		<language name="JPN" width="256">きみが　スイッチを　ふんでくれないと
 ずっと　かくれたままだったのさ▼
 そう　むしジムの
@@ -485,6 +491,8 @@ jugglimg_06</attribute>
 	<row id="msg_c03gym0101_jugglimg_06_03">
 		<comment>♂
 ・2回目以降</comment>
+		<attribute name="キャラ指定">トレーナー
+jugglimg_06</attribute>
 		<language name="JPN" width="256">こうやって　ゆかに　かくれて
 みを　ひそめていると▽
 むしポケモンの　きもちが　わかるんだ</language>
@@ -499,8 +507,8 @@ jugglimg_06</attribute>
 ・ジムに入ると
 　主人公に隣接してメッセージ表示
 ・No030「おいしいみず」入手</comment>
-		<attribute name="キャラ指定">GLASSES
-サングラス</attribute>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">いやあ
 ヒウンシティは　どうですか？[BE:01:ページ切り替え（クリア）]
 ひとが　おおくて　ジムに
@@ -519,8 +527,8 @@ jugglimg_06</attribute>
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手後
 ・ジムバッジ取得まで繰り返し</comment>
-		<attribute name="キャラ指定">GLASSES
-サングラス</attribute>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">この　ジムはですね
 かべを　つきぬけるのが　テーマっす！▼
 いっけん　とおれそうに　ない
@@ -540,6 +548,8 @@ jugglimg_06</attribute>
 	<row id="msg_c03gym0101_glasses_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得後</comment>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">いやーッ　すごいっすね！[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アーティの
 トリッキーな　こうげきを[BE:00:ページ切り替え（行送り）]
@@ -559,8 +569,8 @@ jugglimg_06</attribute>
 ・ジムストッパー
 　c03r1201イベント終了まで
 ・会話時</comment>
-		<attribute name="キャラ指定">GLASSES
-サングラス</attribute>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">ジムリーダー　なんですけど▼
 プライムピアに　いく！　って
 ちょいと　でていっちゃいましてね▽
@@ -576,8 +586,8 @@ jugglimg_06</attribute>
 ・ジムストッパー
 　c03r1201イベント終了まで
 ・pos時</comment>
-		<attribute name="キャラ指定">GLASSES
-サングラス</attribute>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">ジムリーダー　なんですけど▼
 プライムピアに　いく！　って
 ちょいと　でていっちゃいましてね▽

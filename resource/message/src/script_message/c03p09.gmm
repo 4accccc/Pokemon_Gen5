@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-03T22:37:33"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T14:32:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1567" top="198" right="2272" bottom="826" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,6 +294,7 @@
 
 	<row id="msg_c03p09_iceline_01">
 		<comment>♂：アイスイベント</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">いよいよ　たべられる！
 ならんだかいが　あったぜ！▼</language>
 		<language name="JPN_KANJI" width="256">いよいよ　食べられる！
@@ -302,6 +303,7 @@
 
 	<row id="msg_c03p09_iceline_02">
 		<comment>♀：アイスイベント</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">これを　あじわいたくて　はるばる
 カラクサタウンから　きちゃいました！▼</language>
 		<language name="JPN_KANJI" width="256">これを　味わいたくて　はるばる
@@ -310,6 +312,7 @@
 
 	<row id="msg_c03p09_iceline_03">
 		<comment>♀：アイスイベント</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">ここのー　スィーツー！
 チョーにんき　なんだよー！！▼</language>
 		<language name="JPN_KANJI" width="256">ここのー　スィーツー！
@@ -318,6 +321,7 @@
 
 	<row id="msg_c03p09_iceline_04">
 		<comment>♀：アイスイベント</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">さすが　わだいの　おみせ！
 こんなに　こんでるなんて　すごい！▼</language>
 		<language name="JPN_KANJI" width="256">さすが　話題の　お店！
@@ -330,6 +334,7 @@
 ・はい/いいえの選択肢
 　はい→iceline_05b
 　いいえ→iceline_05c</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">うん？　ここでは
 いま　ヒウンシティで　わだいの▽
 スィーツを　かうことが　できるんだよ▼
@@ -344,6 +349,7 @@
 		<comment>♂：アイスイベント
 ・火曜日
 ・はい選択時</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">そうかー
 けっこう　ならぶぞー！▼
 でも　ぜったい　おいしいから
@@ -358,6 +364,7 @@
 		<comment>♂：アイスイベント
 ・火曜日
 ・いいえ選択時</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">そうかー　こんでるしな▼
 でも　ここだけの　はなし
 きょうは　すいてるほう　なんだよ▽
@@ -372,6 +379,7 @@
 		<comment>♂：アイスイベント
 ・火曜日
 ・購入済み</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">うん？　ここでは
 いま　ヒウンシティで　わだいの▽
 スィーツを　かうことが　できるんだよ▼
@@ -387,6 +395,7 @@
 	<row id="msg_c03p09_iceline_05e" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂：アイスイベント
 ・火曜日以外</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">うん？　ここでは
 いま　ヒウンシティで　わだいの▽
 スィーツを　かうことが　できるんだよ▼
