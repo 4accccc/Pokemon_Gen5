@@ -271,6 +271,11 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
     GFL_CLACT_SYS_Main();
   }
 
+  if( wk->search_se_sync > 0 )
+  { 
+    wk->search_se_sync--;
+  }
+
   GF_ASSERT( GFL_HEAP_CheckHeapSafe(HEAPID_WORLDTRADE) );
 
   return GFL_PROC_RES_CONTINUE;

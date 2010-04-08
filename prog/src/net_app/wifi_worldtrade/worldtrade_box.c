@@ -931,7 +931,7 @@ static void DepositDecideFunc( WORLDTRADE_WORK*wk )
     GFL_CLACT_WK_SetDrawEnable( wk->FingerActWork, 1);
     GFL_CLACT_WK_ResetAnm( wk->FingerActWork);
     wk->subprocess_seq =SUBSEQ_CANCEL_WAIT;
-		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+		PMSND_PlaySE(SE_CANCEL);
 	}else{
 		if(wk->BoxCursorPos!=BOX_CUROSOR_TRAYNAME_POS){
 			PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
@@ -970,6 +970,7 @@ static void ExchangeDecideFunc( WORLDTRADE_WORK*wk )
     GFL_CLACT_WK_SetDrawEnable( wk->FingerActWork, 1);
     GFL_CLACT_WK_ResetAnm( wk->FingerActWork);
     wk->subprocess_seq =SUBSEQ_CANCEL_WAIT;
+
 /**		
 		// サーバーチェックの後タイトルメニューへ
 		WorldTrade_SubProcessChange( wk, WORLDTRADE_PARTNER, 0 );
@@ -1080,7 +1081,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 			
 			wk->BoxTrayNo = RoundWork( wk->BoxTrayNo, 19, 1);
 			NowBoxPageInfoGet( wk, wk->BoxTrayNo );
-			PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+			PMSND_PlaySE(WORLDTRADE_MOVE_SE);
 			break;
 		case TOUCH_LEFT_ARROW:
 			//アニメ
@@ -1089,7 +1090,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 
 			wk->BoxTrayNo = RoundWork( wk->BoxTrayNo, 19, -1);
 			NowBoxPageInfoGet( wk, wk->BoxTrayNo );
-			PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+			PMSND_PlaySE(WORLDTRADE_MOVE_SE);
 			break;
 		case TOUCH_CANCEL:
 			// タイトルに戻ったり、検索画面に戻ったり
@@ -1097,7 +1098,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
       GFL_CLACT_WK_ResetAnm( wk->FingerActWork);
       wk->subprocess_seq =SUBSEQ_CANCEL_WAIT;
 			wk->BoxCursorPos = result;
-      PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+      PMSND_PlaySE(SE_CANCEL);
 			CursorPosPrioritySet( wk->CursorActWork, wk->BoxCursorPos );
 			break;
 		default:
@@ -1190,7 +1191,7 @@ static void CursorControl( WORLDTRADE_WORK *wk )
 
 				wk->BoxTrayNo = RoundWork( wk->BoxTrayNo, 19, tmp-100);
 				NowBoxPageInfoGet( wk, wk->BoxTrayNo );
-				PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+				PMSND_PlaySE(WORLDTRADE_MOVE_SE);
 			}else{
 				move = 1;
 				wk->BoxCursorPos = tmp;

@@ -785,7 +785,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 		WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
 						WIPE_FADE_BLACK, EXCHANGE_SCREEN_SYNC, 1, HEAPID_WORLDTRADE );
 		wk->subprocess_seq  = SUBSEQ_RETURN_SCREEN1;
-		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+		PMSND_PlaySE(SE_CANCEL);
 	}else if(GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT){
 		if( (wk->TouchTrainerPos!=partner_key_tbl[wk->TouchTrainerPos][0]) &&
 				(wk->SearchResult>=partner_key_tbl[wk->TouchTrainerPos][0]+1) ){
@@ -818,7 +818,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 			WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
 						WIPE_FADE_BLACK, EXCHANGE_SCREEN_SYNC, 1, HEAPID_WORLDTRADE );
 			wk->subprocess_seq  = SUBSEQ_RETURN_SCREEN1;
-			PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+			PMSND_PlaySE(SE_CANCEL);
 			OS_Printf("キャンセルタッチ%d\n", result);
 		}
 

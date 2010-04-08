@@ -964,7 +964,14 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 
     GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 
-    PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+    if( wk->TitleCursorPos == 2 )
+    { 
+      PMSND_PlaySE(SE_CANCEL);
+    }
+    else
+    { 
+      PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+    }
 
 		return SEQ_MAIN;
 	}
@@ -985,13 +992,20 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
     GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, 1 );
     wk->subprocess_seq  = SUBSEQ_CURSOR_WAIT;
 
-    PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+    PMSND_PlaySE(SE_CANCEL);
 	}else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
     GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, 1 );
     wk->subprocess_seq  = SUBSEQ_CURSOR_WAIT;
 
-    PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+    if( wk->TitleCursorPos == 2 )
+    { 
+      PMSND_PlaySE(SE_CANCEL);
+    }
+    else
+    { 
+      PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+    }
 
 	}else if(GFL_UI_KEY_GetTrg() & PAD_KEY_UP){
 		if(wk->TitleCursorPos!=0){

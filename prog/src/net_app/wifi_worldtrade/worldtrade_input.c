@@ -1203,7 +1203,7 @@ static u32 WordHead_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
       }
 
       if(ret == 10){
-        PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+        PMSND_PlaySE(SE_CANCEL);
         return BMPMENU_CANCEL;
       }
       GF_ASSERT(ret < 10);
@@ -1217,7 +1217,7 @@ static u32 WordHead_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
 
 
 				if(wk->listpos == 10){				
-          PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+        PMSND_PlaySE(SE_CANCEL);
 					return BMPMENU_CANCEL;
 				}
 				GF_ASSERT(wk->listpos < 10);
@@ -1353,7 +1353,12 @@ static u32 WordHead2_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
       if(decide == BMPMENU_NULL){ //ヤ行の端2文字分の空白をタッチした時のみの処理
         return decide;
       }
-      if(decide == BMPMENU_CANCEL || see_check == NULL || (see_check[head2pokename[wk->Head1] + decide])){
+      if(decide == BMPMENU_CANCEL)
+      { 
+        PMSND_PlaySE(SE_CANCEL);
+        return decide;
+      }
+      else if( see_check == NULL || (see_check[head2pokename[wk->Head1] + decide])){
         PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
         return decide;
       }
@@ -1364,7 +1369,12 @@ static u32 WordHead2_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
     			if(decide == BMPMENU_NULL){ //ヤ行の端2文字分の空白をタッチした時のみの処理
             return decide;
           }
-          if(decide == BMPMENU_CANCEL || see_check == NULL || (see_check[head2pokename[wk->Head1] + decide])){
+          if(decide == BMPMENU_CANCEL )
+          { 
+            PMSND_PlaySE(SE_CANCEL);
+            return decide;
+          }
+          else if( see_check == NULL || (see_check[head2pokename[wk->Head1] + decide])){
             PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
             return decide;
           }
@@ -1653,12 +1663,26 @@ static u32 SexSelect_SelectMain( WORLDTRADE_INPUT_WORK *wk )
         GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
       }
 
-			PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+      if( s_ret_table[ret] == BMPMENU_CANCEL )
+      {
+        PMSND_PlaySE(SE_CANCEL);
+      }
+      else
+      { 
+        PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+      }
 			return s_ret_table[ret];
 		}else{
 		// キー決定
 			if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
-				PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+        if( s_ret_table[wk->listpos] == BMPMENU_CANCEL )
+        { 
+          PMSND_PlaySE(SE_CANCEL);
+        }
+        else
+        { 
+          PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+        }
 				return s_ret_table[wk->listpos];
 
 			}else if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
@@ -1730,7 +1754,7 @@ static u32 LevelDecideFunc( WORLDTRADE_INPUT_WORK *wk, u32 decide )
 {
 	switch(decide){
 	case 4:
-		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+    PMSND_PlaySE(SE_CANCEL);
 		return BMPMENU_CANCEL;
 		break;
 	case 5:
@@ -1959,7 +1983,12 @@ static u32 NationHead1_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
       }
 
       decide = NationHead1DecideFunc( wk, ret );
-      if(decide == BMPMENU_CANCEL || decide == 11 || see_check == NULL || see_check[decide]){
+      if(decide == BMPMENU_CANCEL)
+      { 
+        PMSND_PlaySE(SE_CANCEL);
+        return decide;
+      }
+      if( decide == 11 || see_check == NULL || see_check[decide]){
         PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
         return decide;
       }
@@ -1967,7 +1996,12 @@ static u32 NationHead1_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
 		// キー決定
 			if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
 				decide = NationHead1DecideFunc( wk, wk->listpos );
-        if(decide == BMPMENU_CANCEL || decide == 11 || see_check == NULL || see_check[decide]){
+        if(decide == BMPMENU_CANCEL)
+        { 
+          PMSND_PlaySE(SE_CANCEL);
+          return decide;
+        }
+        else if( decide == 11 || see_check == NULL || see_check[decide]){
           PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
           return decide;
         }
@@ -2002,7 +2036,7 @@ static u32 NationDecideFunc( WORLDTRADE_INPUT_WORK *wk, int decide )
 {
 	switch(decide){
 	case 5:		// キャンセル
-		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+    PMSND_PlaySE(SE_CANCEL);
 		return BMPMENU_CANCEL;
 		break;
 	case 6:		// 左ページへ
@@ -3205,7 +3239,7 @@ static int	wi_seq_pokename_main( WORLDTRADE_INPUT_WORK *wk )
 	u32 ret;
 	switch((ret=PokeName_SelectMain( wk ))){
 	case BMPMENU_CANCEL:
-		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+    PMSND_PlaySE(SE_CANCEL);
 
 		GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );

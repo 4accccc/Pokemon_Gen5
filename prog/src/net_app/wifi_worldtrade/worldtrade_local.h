@@ -594,6 +594,7 @@ typedef struct _WORLDTRADE_WORK{
 
   BOOL  is_sub_graphic_init;
   BOOL  sub_display_continue; //サブ画面引継フラグ
+  int search_se_sync;
 
 #ifdef PM_DEBUG
 	int 					frame;									//

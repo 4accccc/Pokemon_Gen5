@@ -57,6 +57,7 @@ static  int SubSeq_Main( WORLDTRADE_WORK *wk);
 static  int SubSeq_SearchCheck( WORLDTRADE_WORK *wk );
 static  int SubSeq_ServerQuery(WORLDTRADE_WORK *wk );
 static  int SubSeq_ServerResult( WORLDTRADE_WORK *wk );
+static  int SubSeq_ServerSeWait( WORLDTRADE_WORK *wk );
 static  int SubSeq_SearchResultMessage( WORLDTRADE_WORK *wk );
 static  int CursorPosGet( WORLDTRADE_WORK *wk );
 static void CursorMove( WORLDTRADE_WORK *wk );
@@ -129,6 +130,7 @@ enum{
 	SUBSEQ_SEARCH_CHECK,
 	SUBSEQ_SERVER_QUERY,
 	SUBSEQ_SERVER_RESULT,
+  SUBSEQ_SERVER_SE_WAIT,
 	SUBSEQ_SEARCH_RESULT_MESSAGE,
 	SUBSEQ_SEARCH_RESULT_MESSAGE_WAIT,
 
@@ -176,6 +178,7 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 	SubSeq_SearchCheck,				// SUBSEQ_SEARCH_CHECK,     
 	SubSeq_ServerQuery,             // SUBSEQ_SERVER_QUERY,                  
 	SubSeq_ServerResult,            // SUBSEQ_SERVER_RESULT,
+  SubSeq_ServerSeWait,            // SUBSEQ_SERVER_SE_WAIT
 	SubSeq_SearchResultMessage,     // SUBSEQ_SEARCH_RESULT_MESSAGE,
 	SubSeq_SearchResultMessageWait, // SUBSEQ_SEARCH_RESULT_MESSAGE_WAIT,
 
@@ -1038,12 +1041,14 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 	// ------タッチ処理--------
 	u32 ret=TouchPanelFunc( wk );
 	if(ret!=GFL_UI_TP_HIT_NONE){
+    int cursorPos;
 
     GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 
 		TouchCursorMove( wk, ret );
 
-      switch( CursorPosGet( wk ) )
+      cursorPos = CursorPosGet( wk );
+      switch( cursorPos )
       { 
       case CURSOR_POS_SEX:	
         //性別指定ならば、性別が１つしかないポケモンは入力できない
@@ -1101,7 +1106,15 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
       default:
 
         GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
-        PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+
+        if( cursorPos == CURSOR_POS_BACK )
+        { 
+          PMSND_PlaySE(SE_CANCEL);
+        }
+        else
+        { 
+          PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+        }
         GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
         wk->subprocess_seq  = SUBSEQ_DECIDE_WAIT;
         break;
@@ -1122,9 +1135,10 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 
 		// 決定
 		if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
+      int cursorPos = CursorPosGet( wk );
 
       //「えらぶ」と「」以外ならばすぐに押せる
-      switch( CursorPosGet( wk ) )
+      switch( cursorPos )
       {       
       case CURSOR_POS_SEX:	
         //性別指定ならば、性別が１つしかないポケモンは入力できない
@@ -1176,7 +1190,14 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
         break;
 
       default:
-        PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+        if( cursorPos == CURSOR_POS_BACK )
+        { 
+          PMSND_PlaySE(SE_CANCEL);
+        }
+        else
+        { 
+          PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+        }
         GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
         wk->subprocess_seq  = SUBSEQ_DECIDE_WAIT;
         break;
@@ -1190,7 +1211,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 
       GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
       wk->subprocess_seq  = SUBSEQ_CANCEL_WAIT;
-			PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+			PMSND_PlaySE(SE_CANCEL);
 		}else{
 #if 0
 			// タッチパネルチェック
@@ -1238,6 +1259,7 @@ static int SubSeq_SearchCheck( WORLDTRADE_WORK *wk )
 			//PMSND_PlaySE(SE_GTC_NG);
 		}else{
 			PMSND_PlaySE(SE_GTC_SEARCH);
+      wk->search_se_sync  = 118;
 
 			OS_TPrintf("search start\n");
 			OS_Printf( "SearchData  No = %d,  gender = %d, level min= %d max = %d, country = %d\n", wk->Search.characterNo, wk->Search.gender, wk->Search.level_min, wk->Search.level_max, wk->country_code);
@@ -1393,18 +1415,7 @@ static int SubSeq_ServerResult( WORLDTRADE_WORK *wk )
 			// 検索の結果の数を保存
 			wk->SearchResult   = result;
 
-      PMSND_StopSE();
-
-			// 下画面にＯＢＪを反映させる
-			WorldTrade_SubLcdMatchObjAppear( wk, result, 1 );
-
-			if(result==0){
-				FriendViewButtonPrint(  wk->InfoWin[8], wk->MsgManager, FALSE, &wk->print );
-			}else{
-				FriendViewButtonPrint(  wk->InfoWin[8], wk->MsgManager, TRUE, &wk->print );
-			}
-
-			wk->subprocess_seq = SUBSEQ_SEARCH_RESULT_MESSAGE;
+			wk->subprocess_seq = SUBSEQ_SERVER_SE_WAIT;
 			break;
 			
 
@@ -1445,7 +1456,35 @@ static int SubSeq_ServerResult( WORLDTRADE_WORK *wk )
 	return SEQ_MAIN;
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief   サーバー検索SE音待ち
+ *
+ * @param   wk		
+ *
+ * @retval  int		
+ */
+//------------------------------------------------------------------
+static int SubSeq_ServerSeWait( WORLDTRADE_WORK *wk )
+{
+  if( wk->search_se_sync == 0 )
+  { 
+    PMSND_StopSE();
 
+    // 下画面にＯＢＪを反映させる
+    WorldTrade_SubLcdMatchObjAppear( wk, wk->SearchResult, 1 );
+
+    if(wk->SearchResult==0){
+      FriendViewButtonPrint(  wk->InfoWin[8], wk->MsgManager, FALSE, &wk->print );
+    }else{
+      FriendViewButtonPrint(  wk->InfoWin[8], wk->MsgManager, TRUE, &wk->print );
+    }
+
+    wk->subprocess_seq = SUBSEQ_SEARCH_RESULT_MESSAGE;
+  }
+
+  return SEQ_MAIN;
+}
 //------------------------------------------------------------------
 /**
  * @brief   検索結果表示が必要な時は表示

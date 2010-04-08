@@ -635,7 +635,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 	}else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
 		wk->subprocess_seq  = SUBSEQ_END;
 		WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
-		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+		PMSND_PlaySE(SE_CANCEL);
 	}
 	return SEQ_MAIN;
 }
