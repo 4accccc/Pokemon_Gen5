@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r05.h"
   .include  "r05.h"
+  .include  "musical_scr_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -973,21 +974,15 @@ EVENT_START	ev_r05_musician_01
 		_BALLOONWIN_TALKOBJ_MSG( msg_r05_musician_01 )
 		_MSGWIN_CLOSE()
 		
-		//グッズ入手処理（エレキギター）
-		_ADD_MUSICAL_GOODS( 84 )
+		//ミュージカルのグッズ番号をセット
+		$SCWK_TEMP0 = 84	//エレキギター
+		$SCWK_TEMP1 = TRUE	//キー待ち記号なし
 		
-		//文字列を指定タグにセット
-		_MUSICAL_WORD_GOODS_NAME( 0, 84 )	//エレキギター
-		_PLAYER_NAME( 1 )
+		//グッズ入手共通処理へ
+		_CHG_COMMON_SCR	SCRID_MUSICAL_ADD_GOODS
 		
-		//ＭＥ再生
-		_ME_PLAY( SEQ_ME_ACCE )
-		_SYSWIN_MSG( msg_r05_add_goods_01 , POS_DOWN )
-		_ME_WAIT()
-		_MSGWIN_CLOSE()
-		
-		//～～は～～をグッズケースにしまった
-		_SYSWIN_MSG( msg_r05_add_goods_02 , POS_DOWN )
+		//グッズのエレキギターを持たせれば…
+		_BALLOONWIN_TALKOBJ_MSG( msg_r05_musician_02 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
