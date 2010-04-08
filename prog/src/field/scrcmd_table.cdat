@@ -530,7 +530,7 @@
 
   //âÊñ ââèoä÷òA
   DEF_CMD( EvCmdBModelAnimeLoopSet, EV_SEQ_BMODEL_ANIME_LOOP_SET )
-  NO_CMD()
+  DEF_CMD( EvCmdDendouAnime, EV_SEQ_DENDOU_ANIME )
   DEF_CMD(EvCMdBmodelDirectChangeModelID, EV_SEQ_BMODEL_DIRECT_CHANGE_MODEL_ID )
   NO_CMD()
 

@@ -24,6 +24,7 @@
 #include "scrcmd_screeneffects.h"
 
 #include "event_pc_recovery.h"  //EVENT_PcRecoveryAnime
+#include "event_dendou_anime.h"  //EVENT_DendouAnime
 #include "field_player.h"   //FIELD_PLAYER
 #include "fieldmap.h"       //FIELDMAP_GetFieldPlayer
 
@@ -299,12 +300,37 @@ VMCMD_RESULT EvCmdMapFadeCheck( VMHANDLE *core, void *wk )
 //======================================================================
 //--------------------------------------------------------------
 /**
- * ポケセン回復アニメ
- * @param  core    仮想マシン制御構造体へのポインタ
- * @param wk      SCRCMD_WORKへのポインタ
- * @retval VMCMD_RESULT
+ * @brief 殿堂入りアニメ
  *
- * @todo  配置モデルを検索し、その位置にアニメを適用したい。
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param  wk      SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdDendouAnime( VMHANDLE* core, void* wk )
+{
+  GMEVENT* event;
+  GMEVENT* parent;
+  SCRCMD_WORK*  work       = wk;
+  GAMESYS_WORK* gameSystem = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK*  script     = SCRCMD_WORK_GetScriptWork( work );
+  
+  parent = SCRIPT_GetEvent( script );
+  event  = EVENT_DendouAnime( gameSystem, parent );
+  SCRIPT_CallEvent( script, event );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケセン回復アニメ
+ *
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param  wk      SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdPokecenRecoverAnime( VMHANDLE * core, void *wk )

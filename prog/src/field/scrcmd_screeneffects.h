@@ -23,6 +23,7 @@ extern VMCMD_RESULT EvCmdMapFade_BlackOut( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdMapFade_WhiteIn( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdMapFade_WhiteOut( VMHANDLE *core, void *wk );
 
+extern VMCMD_RESULT EvCmdDendouAnime( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdPokecenRecoverAnime( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdPokecenPcOn( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdPokecenPcRun( VMHANDLE * core, void *wk );

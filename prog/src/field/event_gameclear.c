@@ -62,7 +62,7 @@ typedef struct {
 //============================================================================================
 // メインシーケンス
 enum {
-	GMCLEAR_SEQ_INIT = 0,			// 初期化
+	GMCLEAR_SEQ_INIT,			    // 初期化
 	GMCLEAR_SEQ_DENDOU_DEMO,	// 殿堂入りデモ
 	GMCLEAR_SEQ_SAVE_START,		// セーブ開始
 	GMCLEAR_SEQ_SAVE_MESSAGE,	// セーブ中メッセージ表示
@@ -108,19 +108,18 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
 	switch (*seq) {
 	case GMCLEAR_SEQ_INIT:
     PMSND_FadeOutBGM( 30 );
-    { //フィールドマップを終了させる
-      FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gcwk->gsys );
-      GMEVENT * new_event = DEBUG_EVENT_GameEnd( gcwk->gsys, fieldmap );
-      GMEVENT_CallEvent( event, new_event );
-    }
 		(*seq) ++;
 		break;
 
 	case GMCLEAR_SEQ_DENDOU_DEMO:
-    if ( PMSND_CheckFadeOnBGM() == FALSE ) { break; }
-    GFL_FADE_SetMasterBrightReq( 
-        GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 
-        0, 16, -16 );
+    //if ( PMSND_CheckFadeOnBGM() == FALSE ) { break; }
+    //if ( GFL_FADE_CheckFade() == TRUE ) { break; }
+    //フィールドマップを終了させる
+    { 
+      FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gcwk->gsys );
+      GMEVENT * new_event = DEBUG_EVENT_GameEnd( gcwk->gsys, fieldmap );
+      GMEVENT_CallEvent( event, new_event );
+    }
     SCRIPT_CallGameClearScript( gcwk->gsys, HEAPID_PROC ); 
 		(*seq) ++;
 		break;
