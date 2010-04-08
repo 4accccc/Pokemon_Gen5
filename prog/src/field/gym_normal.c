@@ -208,12 +208,9 @@ void GYM_NORMAL_End(FIELDMAP_WORK *fieldWork)
 //--------------------------------------------------------------
 void GYM_NORMAL_Move(FIELDMAP_WORK *fieldWork)
 {
-  int i;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
-
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( ptr );
-
 }
 
 //--------------------------------------------------------------
