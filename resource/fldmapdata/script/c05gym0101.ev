@@ -54,14 +54,14 @@ _EVENT_DATA_END
 /*				接続イベント エントランスから降下			*/
 /************************************************************/
 EVENT_START	ev_reserve_c05gym0101_gymstart_01
-
-	//マップ遷移ブラックイン
-	_MAP_FADE_BLACK_IN()
-
+  //BG初期化
+  _MAP_FADE_INT_BG()
+	//ブラックイン
+	_BLACK_IN_SLOW()
 	//エントランスからリフトが降りる演出（引数0 = 降下アニメ）
 	_GYM_GROUND_EXIT_LIFT( 0 )
-
-	_MAP_FADE_END_CHECK()
+  //フェード待ち
+	_DISP_FADE_END_CHECK()
 
 	//========================================//
 
@@ -524,13 +524,13 @@ EVENT_START	ev_bg_c05gym0101_exitlift_00u
 	_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
 	_SE_WAIT()
 		
-	//マップ遷移ブラックアウト
-	_MAP_FADE_BLACK_OUT()
+	//ブラックアウト
+	_BLACK_OUT_SLOW()
 
 	//リフトを上昇させる（1 = エントランスに移動アニメ）
 	_GYM_GROUND_EXIT_LIFT( 1 )
 
-	_MAP_FADE_END_CHECK()
+	_DISP_FADE_END_CHECK()
 
 	//スクリプト予約 マップチェンジ後にエントランスのリフト上昇演出を起動
 	_RESERVE_SCRIPT( SCRID_RESERVE_C05GYM0201_GYMBACK_01 )
