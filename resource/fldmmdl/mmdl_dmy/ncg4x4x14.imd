@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-04-05T18:39:04" source="ncg4x4nflipact.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-04-05T18:39:04" source="ncg4x4x14.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-04-05T18:39:04" source="ncg4x4nflipact.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-04-05T18:39:04" source="ncg4x4x14.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -30,12 +30,12 @@
 <box_test pos_scale="3" xyz="-2.000000 0.000000 0.000000" whd="4.000000 4.000000 0.000000"/>
 
 <tex_image_array size="14">
-	<tex_image index="0" name="32_anmimd.1"
+	<tex_image index="0" name="t4x4x14.1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="32_anmimd"
-		path="C:/home/wb_data3d/field/fldobj/32_anmimd.1.tga"
+		palette_name="t4x4x14"
+		path="C:/home/wb_data3d/field/fldobj/t4x4x14.1.tga"
 	>
 		<bitmap size="256">
 			eeee eeee eeee eeee eeee eeee eeee eeee
@@ -72,12 +72,12 @@
 			d9aa eccc eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="32_anmimd.10"
+	<tex_image index="1" name="t4x4x14.2"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="32_anmimd"
-		path="C:/home/wb_data3d/field/fldobj/32_anmimd.10.tga"
+		palette_name="t4x4x14"
+		path="C:/home/wb_data3d/field/fldobj/t4x4x14.2.tga"
 	>
 		<bitmap size="256">
 			eeee eeee eeee eeee eeee eeee eeee eeee
@@ -114,12 +114,12 @@
 			d9aa eccc eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="32_anmimd.11"
+	<tex_image index="2" name="t4x4x14.3"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="32_anmimd"
-		path="C:/home/wb_data3d/field/fldobj/32_anmimd.11.tga"
+		palette_name="t4x4x14"
+		path="C:/home/wb_data3d/field/fldobj/t4x4x14.3.tga"
 	>
 		<bitmap size="256">
 			eeee eeee eeee eeee eeee eeee eeee eeee
@@ -156,12 +156,12 @@
 			d9aa eccc eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="32_anmimd.12"
+	<tex_image index="3" name="t4x4x14.4"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="32_anmimd"
-		path="C:/home/wb_data3d/field/fldobj/32_anmimd.12.tga"
+		palette_name="t4x4x14"
+		path="C:/home/wb_data3d/field/fldobj/t4x4x14.4.tga"
 	>
 		<bitmap size="256">
 			eeee eeee eeee eeee eeee eeee eeee eeee
@@ -198,12 +198,12 @@
 			d9aa eccc eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="32_anmimd.13"
+	<tex_image index="4" name="t4x4x14.5"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="32_anmimd"
-		path="C:/home/wb_data3d/field/fldobj/32_anmimd.13.tga"
+		palette_name="t4x4x14"
+		path="C:/home/wb_data3d/field/fldobj/t4x4x14.5.tga"
 	>
 		<bitmap size="256">
 			eeee eeee eeee eeee eeee eeee eeee eeee
@@ -240,12 +240,12 @@
 			d9aa eccc eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="32_anmimd.14"
+	<tex_image index="5" name="t4x4x14.6"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="32_anmimd"
-		path="C:/home/wb_data3d/field/fldobj/32_anmimd.14.tga"
+		palette_name="t4x4x14"
+		path="C:/home/wb_data3d/field/fldobj/t4x4x14.6.tga"
 	>
 		<bitmap size="256">
 			eeee eeee eeee eeee eeee eeee eeee eeee
@@ -282,12 +282,12 @@
 			d9aa eccc eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="32_anmimd.2"
+	<tex_image index="6" name="t4x4x14.7"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="32_anmimd"
-		path="C:/home/wb_data3d/field/fldobj/32_anmimd.2.tga"
+		palette_name="t4x4x14"
+		path="C:/home/wb_data3d/field/fldobj/t4x4x14.7.tga"
 	>
 		<bitmap size="256">
 			eeee eeee eeee eeee eeee eeee eeee eeee
@@ -324,12 +324,12 @@
 			d9aa eccc eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="7" name="32_anmimd.3"
+	<tex_image index="7" name="t4x4x14.8"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="32_anmimd"
-		path="C:/home/wb_data3d/field/fldobj/32_anmimd.3.tga"
+		palette_name="t4x4x14"
+		path="C:/home/wb_data3d/field/fldobj/t4x4x14.8.tga"
 	>
 		<bitmap size="256">
 			eeee eeee eeee eeee eeee eeee eeee eeee
@@ -366,12 +366,12 @@
 			d9aa eccc eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="8" name="32_anmimd.4"
+	<tex_image index="8" name="t4x4x14.9"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="32_anmimd"
-		path="C:/home/wb_data3d/field/fldobj/32_anmimd.4.tga"
+		palette_name="t4x4x14"
+		path="C:/home/wb_data3d/field/fldobj/t4x4x14.9.tga"
 	>
 		<bitmap size="256">
 			eeee eeee eeee eeee eeee eeee eeee eeee
@@ -408,12 +408,12 @@
 			d9aa eccc eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="9" name="32_anmimd.5"
+	<tex_image index="9" name="t4x4x14.10"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="32_anmimd"
-		path="C:/home/wb_data3d/field/fldobj/32_anmimd.5.tga"
+		palette_name="t4x4x14"
+		path="C:/home/wb_data3d/field/fldobj/t4x4x14.10.tga"
 	>
 		<bitmap size="256">
 			eeee eeee eeee eeee eeee eeee eeee eeee
@@ -450,12 +450,12 @@
 			d9aa eccc eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="10" name="32_anmimd.6"
+	<tex_image index="10" name="t4x4x14.11"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="32_anmimd"
-		path="C:/home/wb_data3d/field/fldobj/32_anmimd.6.tga"
+		palette_name="t4x4x14"
+		path="C:/home/wb_data3d/field/fldobj/t4x4x14.11.tga"
 	>
 		<bitmap size="256">
 			eeee eeee eeee eeee eeee eeee eeee eeee
@@ -492,12 +492,12 @@
 			d9aa eccc eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="11" name="32_anmimd.7"
+	<tex_image index="11" name="t4x4x14.12"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="32_anmimd"
-		path="C:/home/wb_data3d/field/fldobj/32_anmimd.7.tga"
+		palette_name="t4x4x14"
+		path="C:/home/wb_data3d/field/fldobj/t4x4x14.12.tga"
 	>
 		<bitmap size="256">
 			eeee eeee eeee eeee eeee eeee eeee eeee
@@ -534,12 +534,12 @@
 			d9aa eccc eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="12" name="32_anmimd.8"
+	<tex_image index="12" name="t4x4x14.13"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="32_anmimd"
-		path="C:/home/wb_data3d/field/fldobj/32_anmimd.8.tga"
+		palette_name="t4x4x14"
+		path="C:/home/wb_data3d/field/fldobj/t4x4x14.13.tga"
 	>
 		<bitmap size="256">
 			eeee eeee eeee eeee eeee eeee eeee eeee
@@ -576,12 +576,12 @@
 			d9aa eccc eeee eeee eeee eeee eeee eeee
 		</bitmap>
 	</tex_image>
-	<tex_image index="13" name="32_anmimd.9"
+	<tex_image index="13" name="t4x4x14.14"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
-		palette_name="32_anmimd"
-		path="C:/home/wb_data3d/field/fldobj/32_anmimd.9.tga"
+		palette_name="t4x4x14"
+		path="C:/home/wb_data3d/field/fldobj/t4x4x14.14.tga"
 	>
 		<bitmap size="256">
 			eeee eeee eeee eeee eeee eeee eeee eeee
@@ -621,14 +621,14 @@
 </tex_image_array>
 
 <tex_palette_array size="1">
-	<tex_palette index="0" name="32_anmimd" color_size="16">
+	<tex_palette index="0" name="t4x4x14" color_size="16">
 		02bf 02bf 02df 06df 0edf 16ff 231f 3b5f
 		539f 6fdf 63bf 77ff 7fff 7fff 7fff 0000
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="1">
-	<material index="0" name="anmimd_1"
+	<material index="0" name="obj"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -689,7 +689,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="pPlane1" kind="mesh"
+	<node index="0" name="mesh0" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
