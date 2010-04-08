@@ -29,6 +29,7 @@
 #include "sound/pm_sndsys.h"
 #include "field/zonedata.h"
 #include "app/townmap_data_sys.h"
+#include "app/townmap_util.h"
 
 #include "../../../../../resource/fldmapdata/zonetable/zone_id.h"
 #include "../../../../../resource/zukan_data/zkn_area_zone_group.cdat"
@@ -1588,7 +1589,6 @@ static void Zukan_Detail_Map_HideSpotInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
   // Zukan_Detail_Map_ObjInitÇ™çœÇÒÇ≈Ç©ÇÁåƒÇ‘Ç±Ç∆
 
   GAMEDATA*  gamedata  = ZKNDTL_COMMON_GetGamedata(cmn);
-  EVENTWORK* eventwork = GAMEDATA_GetEventWork( gamedata );
   u8 i;
   
   for( i=0; i<TOWNMAP_DATA_MAX; i++ )
@@ -1596,7 +1596,7 @@ static void Zukan_Detail_Map_HideSpotInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
     u16 hide_flag	= TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_HIDE_FLAG );
     if( hide_flag != TOWNMAP_DATA_ERROR )
     {
-      BOOL is_hide = !EVENTWORK_CheckEventFlag( eventwork, hide_flag );
+      BOOL is_hide = !TOWNMAP_UTIL_CheckFlag( gamedata, hide_flag );
       if( is_hide )
       {
         work->hide_spot[i].state    = HIDE_STATE_HIDE_TRUE;

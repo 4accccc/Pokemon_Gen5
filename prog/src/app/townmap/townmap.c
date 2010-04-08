@@ -3037,6 +3037,8 @@ static void PlaceData_SetAnmSeq(PLACE_DATA *p_wk, u16 seq )
 //-----------------------------------------------------------------------------
 static void PlaceData_Active( PLACE_DATA *p_wk )
 {	
+  BOOL is_hide_visible  = FALSE;
+
 #ifdef DEBUG_OBJ_ALLVISIBLE
   if( s_is_place_visible_debug )
   { 
@@ -3044,7 +3046,12 @@ static void PlaceData_Active( PLACE_DATA *p_wk )
   }
 #endif
 
-	if( p_wk->is_arrive )
+  if( PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_PLACE_TYPE ) == TOWNMAP_PLACETYPE_HIDE )
+  { 
+    is_hide_visible = !p_wk->is_hide;
+  }
+
+	if( p_wk->is_arrive || is_hide_visible )
 	{	
 		PlaceData_SetVisible( p_wk, TRUE );
 		PlaceData_SetAnmSeq( p_wk,  p_wk->active_anm );
@@ -3063,6 +3070,8 @@ static void PlaceData_Active( PLACE_DATA *p_wk )
 //-----------------------------------------------------------------------------
 static void PlaceData_NonActive( PLACE_DATA *p_wk )
 {	
+  BOOL is_hide_visible  = FALSE;
+
 #ifdef DEBUG_OBJ_ALLVISIBLE
   if( s_is_place_visible_debug )
   { 
@@ -3070,7 +3079,12 @@ static void PlaceData_NonActive( PLACE_DATA *p_wk )
   }
 #endif
 
-	if( p_wk->is_arrive )
+  if( PLACEDATA_GetParam( p_wk,TOWNMAP_DATA_PARAM_PLACE_TYPE ) == TOWNMAP_PLACETYPE_HIDE )
+  { 
+    is_hide_visible = !p_wk->is_hide;
+  }
+
+	if( p_wk->is_arrive || is_hide_visible )
 	{	
 		if( p_wk->p_clwk )
 		{	
