@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-07T22:53:36"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T12:43:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1449" top="201" right="2154" bottom="829" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -497,7 +497,8 @@
 		<comment>♀：シーン1
 ・pos（GRIDX=11、GRIDZ=45~47）で発動
 ・メッセージ表示後、主人公に！マーク</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">おーい！▼</language>
 		<language name="JPN_KANJI" width="256">おーい！▼</language>
 	</row>
@@ -509,7 +510,8 @@
 　移動してメッセージ表示
 ・メッセージ表示後、下を向いてwhite_02表示
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]　しってる？▼
 ういている　いしは
 おせば　うごくんだよ▼</language>
@@ -521,7 +523,8 @@
 	<row id="msg_d06r0101_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてhakase2_01</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ですよね！　はかせ！▼</language>
 		<language name="JPN_KANJI" width="256">ですよね！　博士！▼</language>
 	</row>
@@ -532,7 +535,8 @@
 　GRIDX=9、GRIDZ=47に配置してメッセージ表示
 ・続けてhakase2_02
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『ハーイ！
 げんきしてる？　[1:00:トレーナー名:0]！▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『ハーイ！
@@ -545,7 +549,8 @@
 　その場で上下を見た後、主人公と向き合って
 　メッセージ表示
 ・続けてhakase2_03</comment>
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">あいかわらず　ここ
 ポケモンが　すきそうな　でんきを▽
 たっぷり　おびているわねー！▼
@@ -567,7 +572,8 @@
 		<comment>♀
 ・再度、GRIDX=9、GRIDZ=47に移動して
 ・メッセージ表示後、主人公操作可能に</comment>
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">あたしはね　パパに　たのまれて
 ギアルって　はぐるま　みたいな▽
 ポケモンのこと　しらべているの▼
@@ -590,7 +596,8 @@
 		<comment>♀
 ・シーン2まで繰り返し
 　できればその場で四方を振り向きつつ待機</comment>
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『[1:00:トレーナー名:0]！
 ポケモンずかんは　うまってる？▼
 どんどん　ポケモンと　であって
@@ -605,7 +612,8 @@
 		<comment>♀
 ・シーン2まで繰り返し
 　できればその場で四方を振り向きつつ待機</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『アタシはね
 はかせの　ボディーガードなの！▼
 って　そんな　ひつようないけど……
@@ -622,7 +630,8 @@
 　博士　　GRIDX=30、GRIDZ=25
 　サポートGRIDX=29、GRIDZ=26に配置
 ・続けてhakase2_06</comment>
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『ハーイ！
 なにか　みつかった？▼
 こっちは　おおよその　データを
@@ -637,7 +646,8 @@
 		<comment>♀
 ・左を向いてメッセージ表示
 ・続けてhakase2_07</comment>
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">この　ほらあなは
 はるか　むかしから　あるんだけど……▼
 ギアルが　そんざいしたって
@@ -660,7 +670,8 @@
 		<comment>♀
 ・主人公と向き合ってメッセージ表示
 ・続けてwhite_04</comment>
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">ポケモンたちが
 どこから　きたのか▽
 そして　どこへ　いくのか……▼
@@ -678,7 +689,8 @@
 	<row id="msg_d06r0101_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてhakase2_08</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『ねえねえ　[1:00:トレーナー名:0]！
 ポケモンって　ふしぎ　だよね！▼
 どうして　こんなに
@@ -696,7 +708,8 @@
 ・msg_d06r0101_white_04表示後から
 　d06r0101出口付近のNイベント発生まで
 　繰り返し表示</comment>
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『ポケモンたちが
 どこから　きたのか▽
 そして　どこへ　いくのか……▼
@@ -716,7 +729,8 @@
 ・msg_d06r0101_white_04表示後から
 　d06r0101出口付近のNイベント発生まで
 　繰り返し表示</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『アタシは　ここでも
 ポケモン　つかまえるつもり！▽
 だって　たびは　であい　なんだもん！</language>
@@ -885,7 +899,8 @@
 ・先にメッセージだけ表示
 ・続けてwhite_07表示
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]！▼</language>
 	</row>
@@ -894,7 +909,8 @@
 		<comment>♀
 ・主人公に近づくと、メッセージ表示
 ・続けてhakase2_09表示</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『もうすぐ　フキヨセシティだね▼</language>
 		<language name="JPN_KANJI" width="256">ベル『もうすぐ　フキヨセシティだね▼</language>
 	</row>
@@ -905,7 +921,8 @@
 　主人公とNの間に移動するとメッセージ表示
 ・続けてmsg_d06r0101_boss_05表示
 ・0＝主人公の名前</comment>
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『……ベルは
 みみが　いいのね▼
 あんな　とおくからでも
@@ -948,7 +965,8 @@
 	<row id="msg_d06r0101_hakase2_10">
 		<comment>♀
 ・続けてboss_06表示</comment>
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『あら……
 ずいぶんと　きらわれているのね▼
 だけど　あなたの　いけんも
@@ -1002,7 +1020,8 @@
 	<row id="msg_d06r0101_hakase2_11">
 		<comment>♀
 ・続けてhakase2_12</comment>
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『……まあ　いきなり
 わかってもらえるとは　おもわないけど▼
 すこしづつで　いいから
@@ -1018,7 +1037,8 @@
 ・主人公と向き合ってメッセージ表示
 ・表示後、画面下のほうに移動
 ・続けてwhite_08</comment>
-		<attribute name="キャラ指定">博士（娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">さてと……
 もうすこし　データを　あつめるかなー▼
 わたしたちと　ポケモンが
@@ -1036,7 +1056,8 @@
 ・表示後、あわてた感じで画面下に移動
 　画面外に消えると、主人公操作可能に
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『えーっと　[1:00:トレーナー名:0]！▼
 いまの　わたし　ボディーガードだから
 はかせと　いっしょに　いくね！▼</language>
