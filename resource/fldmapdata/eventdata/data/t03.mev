@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/07 19:10:49
+#save date:2010/04/08 12:48:41
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t03.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t03.wms
 #hold event type:
 1
 #hold event number:
-7
+9
 #event number: 0
 #type
 1
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 48 -24
+120 48 -8
 #event number: 5
 #type
 1
@@ -195,7 +195,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 80 -40
+-40 0 -40
 #event number: 6
 #type
 1
@@ -227,6 +227,68 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 -168 0 56
+#event number: 7
+#type
+1
+#ID name
+T03_POKE_01
+#OBJ CODE Number
+POKE19
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_T03_DAYTIME
+#Event Script Name
+SCRID_T03_POKE_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+3
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-232 48 88
+#event number: 8
+#type
+1
+#ID name
+T03_MIDDLEMAN2_01
+#OBJ CODE Number
+MIDDLEMAN2
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_T03_DAYTIME
+#Event Script Name
+SCRID_T03_MIDDLEMAN2_01
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+104 0 88
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

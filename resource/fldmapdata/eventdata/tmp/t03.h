@@ -20,6 +20,8 @@
 #define T03_BADMAN_01                      4
 #define T03_WAITRESS_01                    5
 #define T03_POLICEMAN_01                   6
+#define T03_POKE_01                        7
+#define T03_MIDDLEMAN2_01                  8
 
 #endif //ZONE_T03_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

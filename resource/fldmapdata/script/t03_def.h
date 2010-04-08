@@ -14,5 +14,7 @@
 #define SCRID_T03_BADMAN_01 (7)
 #define SCRID_T03_WAITRESS_01 (8)
 #define SCRID_T03_POLICEMAN_01 (9)
+#define SCRID_T03_MIDDLEMAN2_01 (10)
+#define SCRID_T03_POKE_01 (11)
 
 #endif //_T03_DEF_H_
