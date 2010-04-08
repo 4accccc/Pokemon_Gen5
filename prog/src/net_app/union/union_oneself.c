@@ -35,6 +35,7 @@
 #include "poke_tool/poke_regulation.h"
 #include "savedata/battle_box_save.h"
 #include "net_app/union_app.h"
+#include "savedata/etc_save.h"
 
 //#include "field/event_ircbattle.h"
 #include "net_app\irc_compatible.h"
@@ -2458,6 +2459,11 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
   case _SEQ_TIMING_WAIT:
     if(GFL_NET_HANDLE_IsTimeSync(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TRADE_PROC_BEFORE, WB_NET_UNION) == TRUE){
+      GAMEDATA *gamedata = GAMESYSTEM_GetGameData(unisys->uniparent->gsys);
+      ETC_SAVE_WORK *etc_save = SaveData_GetEtc( GAMEDATA_GetSaveControlWork(gamedata) );
+      const MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gamedata, 
+        GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()) ^ 1);
+      EtcSave_SetAcquaintance(etc_save, MyStatus_GetID(target_myst)); //知り合い登録
       OS_TPrintf("ポケモン交換前の同期取り成功\n");
       (*seq)++;
     }
@@ -3291,6 +3297,18 @@ static BOOL OneselfSeq_ColosseumFirstDataSharingUpdate(UNION_SYSTEM_PTR unisys, 
     break;
   case 10:
     OS_TPrintf("コロシアムの準備OK! 歩き回り開始！\n");
+    { //知り合い登録
+      GAMEDATA *gamedata = GAMESYSTEM_GetGameData(unisys->uniparent->gsys);
+      ETC_SAVE_WORK *etc_save = SaveData_GetEtc( GAMEDATA_GetSaveControlWork(gamedata) );
+      int member_num = GFL_NET_GetConnectNum();
+      int i;
+      for(i = 0; i < member_num; i++){
+        if(clsys->basic_status[i].occ == TRUE 
+            && i != GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+          EtcSave_SetAcquaintance(etc_save, MyStatus_GetID(&clsys->basic_status[i].myst));
+        }
+      }
+    }
     Colosseum_CommReadySet(clsys, TRUE);
     UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_NORMAL);
     return TRUE;

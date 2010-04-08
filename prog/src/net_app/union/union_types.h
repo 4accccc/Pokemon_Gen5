@@ -258,6 +258,11 @@ typedef enum{
   UNION_CHAT_TYPE_RECRUIT_GURUGURU,     ///<ぐるぐる募集
 }UNION_CHAT_TYPE;
 
+typedef enum{
+  UNION_CHAT_FRIEND_TYPE_NULL,           ///<友達でも知り合いでもない
+  UNION_CHAT_FRIEND_TYPE_FRIEND,         ///<友達
+  UNION_CHAT_FRIEND_TYPE_ACQUAINTANCE,   ///<知り合い
+}UNION_CHAT_FRIEND_TYPE;
 
 ///誰にも話しかけていない時のtalk_obj_id
 #define UNION_MYCOMM_NOT_TALK_OBJ_ID      (0xffff)
@@ -339,6 +344,8 @@ typedef struct{
   UNION_PARTY party;          ///<接続相手の情報
   
   DWCFriendData dwcfriend;    ///<友達情報
+  
+  u32 trainer_id;             ///<発信者のトレーナーID
   
   u8 reserve[4];              ///<将来の為の予約
 }UNION_BEACON;
@@ -458,7 +465,7 @@ typedef struct{
   u8 mac_address[6];                            ///<MacAddress 6
   u8 sex;                                       ///<性別
   u8 chat_type;                                 ///<UNION_CHAT_TYPE_xxx
-  u8 friend;                                    ///<TRUE:友達
+  u8 friend_type;                               ///<UNION_CHAT_FRIEND_TYPE
   u8 padding;
 }UNION_CHAT_DATA;
 

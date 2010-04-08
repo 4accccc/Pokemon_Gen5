@@ -9,9 +9,11 @@
 #pragma once
 
 #include "net_app/union/union_subdisp.h"
+#include "savedata/wifilist.h"
 
 //==============================================================================
 //  äOïîä÷êîêÈåæ
 //==============================================================================
 extern BOOL UnionTool_CheckWayOut(FIELDMAP_WORK *fieldWork);
 extern UNION_APPEAL UnionTool_PlayCategory_to_AppealNo(UNION_PLAY_CATEGORY play_category);
+extern BOOL UnionTool_CheckDwcFriend(WIFI_LIST *wifilist, UNION_BEACON *beacon);

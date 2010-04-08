@@ -664,6 +664,7 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
   
   beacon->trainer_view = MyStatus_GetTrainerView( unisys->uniparent->mystatus );
   beacon->sex = MyStatus_GetMySex(unisys->uniparent->mystatus);
+  beacon->trainer_id = MyStatus_GetID(unisys->uniparent->mystatus);
   
   beacon->chat_type = situ->chat_type;
   beacon->pmsdata = situ->chat_pmsdata;
@@ -671,7 +672,7 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
   
   beacon->my_nation = MyStatus_GetMyNation(unisys->uniparent->mystatus);
   beacon->my_area = MyStatus_GetMyArea(unisys->uniparent->mystatus);
-  
+
   beacon->party = situ->mycomm.party;
   
   {

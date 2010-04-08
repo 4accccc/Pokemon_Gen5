@@ -103,3 +103,28 @@ UNION_APPEAL UnionTool_PlayCategory_to_AppealNo(UNION_PLAY_CATEGORY play_categor
   
   return UNION_APPEAL_NULL;
 }
+
+//--------------------------------------------------------------
+/**
+ * DWCで友達かどうかチェック
+ *
+ * @param   wifilist		
+ * @param   beacon		
+ *
+ * @retval  BOOL		TRUE:友達　FALSE:友達じゃない
+ */
+//--------------------------------------------------------------
+BOOL UnionTool_CheckDwcFriend(WIFI_LIST *wifilist, UNION_BEACON *beacon)
+{
+  int i;
+  
+  for(i = 0; i < WIFILIST_FRIEND_MAX; i++){
+    if(WifiList_IsFriendData(wifilist, i) == TRUE){
+      if(DWC_IsEqualFriendData(
+          WifiList_GetDwcDataPtr( wifilist, i ), &beacon->dwcfriend) == TRUE){
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}

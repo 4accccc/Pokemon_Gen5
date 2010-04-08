@@ -13,7 +13,8 @@
 #include "print\str_tool.h"
 #include "union_local.h"
 #include "union_chat.h"
-#include "savedata/wifilist.h"
+#include "union_tool.h"
+#include "savedata/etc_save.h"
 
 
 //==============================================================================
@@ -68,16 +69,13 @@ void UnionChat_AddChat(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc, const PMS_
     {//友達チェック
       GAMEDATA *gamedata = GAMESYSTEM_GetGameData(unisys->uniparent->gsys);
       WIFI_LIST* wifilist = GAMEDATA_GetWiFiList(gamedata);
-      int i;
+      ETC_SAVE_WORK *etc_save = SaveData_GetEtc( GAMEDATA_GetSaveControlWork(gamedata) );
       
-      for(i = 0; i < WIFILIST_FRIEND_MAX; i++){
-        if(WifiList_IsFriendData(wifilist, i) == TRUE){
-          if(DWC_IsEqualFriendData(
-              WifiList_GetDwcDataPtr( wifilist, i ), &bpc->beacon.dwcfriend) == TRUE){
-            dest->friend = TRUE;
-            break;
-          }
-        }
+      if(UnionTool_CheckDwcFriend(wifilist, &bpc->beacon) == TRUE){
+        dest->friend_type = UNION_CHAT_FRIEND_TYPE_FRIEND;
+      }
+      else if(EtcSave_CheckAcquaintance(etc_save, bpc->beacon.trainer_id) == TRUE){
+        dest->friend_type = UNION_CHAT_FRIEND_TYPE_ACQUAINTANCE;
       }
     }
   }

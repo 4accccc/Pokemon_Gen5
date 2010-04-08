@@ -19,6 +19,7 @@
 #include "union_tool.h"
 #include "net_app/union_eff.h"
 #include "field/fieldmap.h"
+#include "savedata/etc_save.h"
 
 
 //==============================================================================
@@ -309,7 +310,7 @@ static MMDL * UNION_CHARA_GetMmdl(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *pc, 
  * @param   pc		    
  */
 //==================================================================
-static UNION_CHARACTER * UNION_CHARA_AddChar(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *pc, UNION_MEMBER *member, int child_no, BOOL enable)
+static UNION_CHARACTER * UNION_CHARA_AddChar(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *pc, UNION_MEMBER *member, int child_no, BOOL enable, MMDL **dest_mmdl_ptr)
 {
   int i;
   UNION_CHARACTER *unichara;
@@ -329,6 +330,7 @@ static UNION_CHARACTER * UNION_CHARA_AddChar(UNION_SYSTEM_PTR unisys, UNION_BEAC
       if(enable == FALSE){
         MMDL_SetStatusBitVanish( mmdl, TRUE );
       }
+      *dest_mmdl_ptr = mmdl;
       return unichara;
     }
     unichara++;
@@ -361,19 +363,28 @@ static void UNION_CHARA_DeleteOBJ(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *pc, 
  * @param   pc		
  */
 //==================================================================
-static void UNION_CHARA_CheckOBJ_Entry(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *pc)
+static void UNION_CHARA_CheckOBJ_Entry(UNION_SYSTEM_PTR unisys, ETC_SAVE_WORK *etc_save, WIFI_LIST *wifilist, UNION_EFF_SYSTEM *unieff, UNION_BEACON_PC *pc)
 {
   int i;
   UNION_CHARACTER *unichara;
   UNION_BEACON *beacon;
+  MMDL *mmdl;
   
   beacon = &pc->beacon;
   for(i = 0; i < UNION_CONNECT_PLAYER_NUM; i++){
     unichara = pc->chara_group.character[i];
     if(unichara == NULL && beacon->party.member[i].occ == TRUE){
-      pc->chara_group.character[i] = UNION_CHARA_AddChar(unisys, pc, &beacon->party.member[i], i, FALSE);
+      pc->chara_group.character[i] = UNION_CHARA_AddChar(unisys, pc, &beacon->party.member[i], i, FALSE, &mmdl);
       pc->chara_group.character[i]->event_status = BPC_EVENT_STATUS_ENTER;
       UNION_CHAR_EventReq(pc->chara_group.character[i], BPC_EVENT_STATUS_NORMAL);
+      if(i == 0){ //主キャラのみ友達マークチェック
+        if(UnionTool_CheckDwcFriend(wifilist, beacon) == TRUE){
+          UnionEff_App_ReqFriendMark(unieff, mmdl, FRIENDMARK_TYPE_FRIEND);
+        }
+        else if(EtcSave_CheckAcquaintance(etc_save, beacon->trainer_id) == TRUE){
+          UnionEff_App_ReqFriendMark(unieff, mmdl, FRIENDMARK_TYPE_ACQUAINTANCE);
+        }
+      }
     }
   }
 }
@@ -445,6 +456,9 @@ void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata, FIELDMAP_WORK *
   int del_count, child_no;
   const u8 focus_null_mac[6] = {0,0,0,0,0,0};
   BOOL focus_check = FALSE;
+  ETC_SAVE_WORK *etc_save = SaveData_GetEtc( GAMEDATA_GetSaveControlWork(gdata) );
+  WIFI_LIST* wifilist = GAMEDATA_GetWiFiList(gdata);
+  UNION_EFF_SYSTEM *unieff = FIELDMAP_GetUnionEffSystem(fieldmap);
   
   mdlsys = GAMEDATA_GetMMdlSys( gdata );
 
@@ -461,7 +475,7 @@ void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata, FIELDMAP_WORK *
       }
       
       //新規キャラ登録チェック
-      UNION_CHARA_CheckOBJ_Entry(unisys, bpc);
+      UNION_CHARA_CheckOBJ_Entry(unisys, etc_save, wifilist, unieff, bpc);
 
       //フォーカスキャラチェック
       if(focus_check == TRUE){
@@ -772,3 +786,4 @@ static BOOL UnicharaSeq_TalkingUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *
   }
   return FALSE;
 }
+

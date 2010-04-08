@@ -967,8 +967,17 @@ void _UniSub_Chat_DispWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_DATA *chat, u8 
     GFL_STR_DeleteBuffer(buf_name);
     
     //—F’BŽè’ ‚Ì–¼‘O
-    if(chat->friend == TRUE){
-      STRBUF *buf_friend = GFL_MSG_CreateString( unisub->msgdata, msg_union_sub_friend );
+    if(chat->friend_type != UNION_CHAT_FRIEND_TYPE_NULL){
+      STRBUF *buf_friend;
+      u32 msg_id;
+      
+      if(chat->friend_type == UNION_CHAT_FRIEND_TYPE_FRIEND){
+        msg_id = msg_union_sub_friend;
+      }
+      else{
+        msg_id = msg_union_sub_friend2;
+      }
+      buf_friend = GFL_MSG_CreateString( unisub->msgdata, msg_id );
       PRINTSYS_PrintQueColor( unisub->printQue, GFL_BMPWIN_GetBmp(unisub->bmpwin_chat[write_pos]), 
         UNION_BMPWIN_SIZE_X/2, 0, buf_friend, unisub->font_handle, _CHAT_FONT_LSB);
       GFL_STR_DeleteBuffer(buf_friend);
