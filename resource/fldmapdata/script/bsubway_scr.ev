@@ -1038,7 +1038,7 @@ ev_bsw_game_cancel:
   _BSUBWAY_TOOL( BSWSUB_SET_LOSE_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //ê¨ê—ÇÉåÉ|Å[ÉgÇ…
-  _SYSWIN_MSG( msg_bsw_scr_36 , WIN_DOWN )
+  _SYSWIN_MSG( msg_bsw_scr_36 , POS_DOWN )
   _REPORT_CALL( SCWK_ANSWER )
   _MSGWIN_CLOSE()
 
@@ -2018,7 +2018,7 @@ _RET
 //--------------------------------------------------------------
 sub_bsw_common_auto_save:
 {
-  _SYSWIN_MSG( msg_bsw_scr_78 , WIN_DOWN )
+  _SYSWIN_MSG( msg_bsw_scr_78 , POS_DOWN )
   _REPORT_CALL( ret )
   _MSGWIN_CLOSE()
 }
@@ -2089,7 +2089,7 @@ sub_bsw_common_bwin_partner:
   _CALL sub_bsw_common_get_objid_partner
   $obj_id = $SCWK_ANSWER
   
-  _BALLOONWIN_OBJMSG_POS( msg_id, obj_id, POS_D )
+  _BALLOONWIN_OBJMSG_POS( msg_id, obj_id, POS_DOWN )
 }
 _RET
 
@@ -2268,7 +2268,7 @@ sub_bsw_common_bwin_receipt:
   _CALL sub_bsw_common_get_objid_receipt
   $obj_id = $SCWK_ANSWER
   
-  _BALLOONWIN_OBJMSG_POS( msg_id, obj_id, POS_D )
+  _BALLOONWIN_OBJMSG_POS( msg_id, obj_id, POS_DOWN )
 }
 _RET
 

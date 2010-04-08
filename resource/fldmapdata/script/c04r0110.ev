@@ -611,7 +611,7 @@ sub_train_battle_win_next_menu:
     _NUMBER( 0, SCWK_ANSWER, 4 )
     _BSUBWAY_TOOL( BSWTOOL_GET_NEXT_ROUND, BSW_NULL, BSW_NULL, SCWK_ANSWER )
     _NUMBER( 1, SCWK_ANSWER, 1 )
-    _SYSWIN_MSG( msg_c04r0110_01 , WIN_DOWN )
+    _SYSWIN_MSG( msg_c04r0110_01 , POS_DOWN )
     
     
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, SCWK_ANSWER ) //Bキャン無効
@@ -650,7 +650,7 @@ sub_train_battle_win_next_menu:
       _BSUBWAY_TOOL( BSWSUB_CHK_BTLREC_EXIST, BSW_NULL, BSW_NULL, ret )
       
       IF $ret == TRUE THEN //既存ビデオあり
-        _SYSWIN_MSG( msg_c04r0110_09 , WIN_DOWN )
+        _SYSWIN_MSG( msg_c04r0110_09 , POS_DOWN )
         _YES_NO_WIN( ret )
         _SYSWIN_CLOSE()
         
@@ -660,17 +660,17 @@ sub_train_battle_win_next_menu:
       ENDIF
       
       IF $flag == TRUE THEN
-        _SYSWIN_MSG( msg_c04r0110_13, WIN_DOWN )
+        _SYSWIN_MSG( msg_c04r0110_13, POS_DOWN )
         _BSUBWAY_TOOL( BSWSUB_SAVE_BTLREC, BSW_NULL, BSW_NULL, BSW_NULL )
         _PLAYER_NAME( 0 )
-        _SYSWIN_MSG( msg_c04r0110_14, WIN_DOWN )
+        _SYSWIN_MSG( msg_c04r0110_14, POS_DOWN )
         _AB_KEYWAIT()
         _SYSWIN_CLOSE()
       ENDIF
       */
     CASE 2 THEN //休む
       //休むか
-      _SYSWIN_MSG( msg_c04r0110_07 , WIN_DOWN )
+      _SYSWIN_MSG( msg_c04r0110_07 , POS_DOWN )
       _YES_NO_WIN( SCWK_ANSWER )
       _SYSWIN_CLOSE()
       
@@ -685,7 +685,7 @@ sub_train_battle_win_next_menu:
         //ワーク開放
         _BSUBWAY_WORK_RELEASE()
         //レポート
-        _SYSWIN_MSG( msg_c04r0110_08 , WIN_DOWN )
+        _SYSWIN_MSG( msg_c04r0110_08 , POS_DOWN )
         _REPORT_CALL( SCWK_ANSWER )
         //フェードアウト
         _BLACK_OUT()
@@ -696,7 +696,7 @@ sub_train_battle_win_next_menu:
       ENDIF
     CASE 3 THEN //リタイア
       //リタイアするか
-      _SYSWIN_MSG( msg_c04r0110_06 , WIN_DOWN )
+      _SYSWIN_MSG( msg_c04r0110_06 , POS_DOWN )
       _YES_NO_WIN( SCWK_ANSWER )
       _SYSWIN_CLOSE()
       
@@ -735,7 +735,7 @@ sub_train_battle_win_next_menu_comm_multi:
     _NUMBER( 0, SCWK_ANSWER, 4 )
     _BSUBWAY_TOOL( BSWTOOL_GET_NEXT_ROUND, BSW_NULL, BSW_NULL, SCWK_ANSWER )
     _NUMBER( 1, SCWK_ANSWER, 1 )
-    _SYSWIN_MSG( msg_c04r0110_01 , WIN_DOWN )
+    _SYSWIN_MSG( msg_c04r0110_01 , POS_DOWN )
     
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, SCWK_ANSWER ) //Bキャン無効
     _BMPMENU_MAKE_LIST( msg_c04r0110_02, 0 )  //つづける
@@ -749,7 +749,7 @@ sub_train_battle_win_next_menu_comm_multi:
     SWITCH $SCWK_ANSWER
     CASE 0 THEN //続ける
       //お友達の選択を待っています
-      _SYSWIN_MSG( msg_c04r0110_10 , WIN_DOWN )
+      _SYSWIN_MSG( msg_c04r0110_10 , POS_DOWN )
       
       //受信バッファクリア
       _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
@@ -767,7 +767,7 @@ sub_train_battle_win_next_menu_comm_multi:
       _SYSWIN_CLOSE()
       
       IF $LOCALWORK0 == BSWAY_COMM_ROUND_SEL_RETIRE THEN //相手リタイア
-        _SYSWIN_MSG( msg_c04r0110_12 , WIN_DOWN )
+        _SYSWIN_MSG( msg_c04r0110_12 , POS_DOWN )
         _TIME_WAIT( 30 )
         _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_RETIRE_WAIT, BSW_NULL, BSW_NULL )
         _SYSWIN_CLOSE()
@@ -795,7 +795,7 @@ sub_train_battle_win_next_menu_comm_multi:
       _BSUBWAY_TOOL( BSWSUB_CHK_BTLREC_EXIST, BSW_NULL, BSW_NULL, ret )
       
       IF $ret == TRUE THEN //既存ビデオあり
-        _SYSWIN_MSG( msg_c04r0110_09 , WIN_DOWN )
+        _SYSWIN_MSG( msg_c04r0110_09 , POS_DOWN )
         _YES_NO_WIN( ret )
         _SYSWIN_CLOSE()
         
@@ -805,23 +805,23 @@ sub_train_battle_win_next_menu_comm_multi:
       ENDIF
       
       IF $flag == TRUE THEN
-        _SYSWIN_MSG( msg_c04r0110_13, WIN_DOWN )
+        _SYSWIN_MSG( msg_c04r0110_13, POS_DOWN )
         _BSUBWAY_TOOL( BSWSUB_SAVE_BTLREC, BSW_NULL, BSW_NULL, BSW_NULL )
         _PLAYER_NAME( 0 )
-        _SYSWIN_MSG( msg_c04r0110_14, WIN_DOWN )
+        _SYSWIN_MSG( msg_c04r0110_14, POS_DOWN )
         _AB_KEYWAIT()
         _SYSWIN_CLOSE()
       ENDIF
       */
     DEFAULT //リタイア
       //リタイアするか
-      _SYSWIN_MSG( msg_c04r0110_06 , WIN_DOWN )
+      _SYSWIN_MSG( msg_c04r0110_06 , POS_DOWN )
       _YES_NO_WIN( SCWK_ANSWER )
       _SYSWIN_CLOSE()
       
       IF $SCWK_ANSWER == SCR_YES THEN
         //お友達の選択を待っています
-        _SYSWIN_MSG( msg_c04r0110_10 , WIN_DOWN )
+        _SYSWIN_MSG( msg_c04r0110_10 , POS_DOWN )
 
         //受信バッファクリア
         _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
@@ -837,7 +837,7 @@ sub_train_battle_win_next_menu_comm_multi:
         _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_RETIRE_SELECT, BSW_NULL, LOCALWORK0 )
         
         //戻ります
-        _SYSWIN_MSG( msg_c04r0110_12 , WIN_DOWN )
+        _SYSWIN_MSG( msg_c04r0110_12 , POS_DOWN )
         _TIME_WAIT( 30 )
         _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_RETIRE_WAIT, BSW_NULL, BSW_NULL )
         _SYSWIN_CLOSE()

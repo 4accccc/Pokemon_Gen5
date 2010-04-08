@@ -100,7 +100,7 @@ EVENT_START ev_c04r0111_receipt_talk
   _TALK_OBJ_START()
   
   IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN //途中駅
-    _BALLOONWIN_OBJMSG_POS( msg_c04r0111_15, SCWK_TARGET_OBJID, POS_D )
+    _BALLOONWIN_OBJMSG_POS( msg_c04r0111_15, SCWK_TARGET_OBJID, POS_DOWN )
     
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, SCWK_ANSWER )
     _BMPMENU_MAKE_LIST( msg_c04r0111_16, 0 )    //続ける
@@ -482,7 +482,7 @@ EVENT_START ev_c04r0111_home
       _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT, BSW_NULL, BSW_NULL, point )
       _PLAYER_NAME( 0 )
       _NUMBER( 1, point, 2 )
-      _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN ) //BPを手に入れた
+      _SYSWIN_MSG( msg_c04r0111_00 , POS_DOWN ) //BPを手に入れた
       _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
       _ME_WAIT()
       _AB_KEYWAIT()
@@ -510,7 +510,7 @@ EVENT_START ev_c04r0111_home
       _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT, BSW_NULL, BSW_NULL, point )
       _PLAYER_NAME( 0 )
       _NUMBER( 1, point, 2 )
-      _SYSWIN_MSG( msg_c04r0111_00, WIN_DOWN ) //BPを手に入れた
+      _SYSWIN_MSG( msg_c04r0111_00, POS_DOWN ) //BPを手に入れた
       _ME_PLAY( SEQ_ME_ITEM ) //ファンファーレ
       _ME_WAIT()
       _AB_KEYWAIT()
@@ -548,7 +548,7 @@ EVENT_START ev_c04r0111_home
     _BSUBWAY_TOOL( BSWSUB_ADD_BATTLE_POINT, BSW_NULL, BSW_NULL, point )
     _PLAYER_NAME( 0 )
     _NUMBER( 1, point, 2 )
-    _SYSWIN_MSG( msg_c04r0111_00 , WIN_DOWN ) //BPを手に入れた
+    _SYSWIN_MSG( msg_c04r0111_00 , POS_DOWN ) //BPを手に入れた
     _ME_PLAY( SEQ_ME_ITEM )             //ファンファーレ
     _ME_WAIT()
     _AB_KEYWAIT()
@@ -594,7 +594,7 @@ EVENT_START ev_c04r0111_home
   ENDIF
 
   //レポート
-  _SYSWIN_MSG( msg_c04r0111_01 , WIN_DOWN )
+  _SYSWIN_MSG( msg_c04r0111_01 , POS_DOWN )
   _REPORT_CALL( SCWK_ANSWER )
   _SYSWIN_CLOSE()
 

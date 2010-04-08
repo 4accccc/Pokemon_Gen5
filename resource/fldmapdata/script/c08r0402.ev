@@ -50,14 +50,14 @@ EVENT_START		 ev_c08r0402_man1_01
 //	IF FLAG_OFF(FH_01)	THEN	
 	
 		//ぼくはみらいをしりたい！_ぼくはかこにもどりたい！
-		_BALLOONWIN_OBJMSG_WB(msg_c08_man1_01w,msg_c08_man1_01b, C08R0402_MAN1_01 , WIN_DOWN)
+		_BALLOONWIN_OBJMSG_WB(msg_c08_man1_01w,msg_c08_man1_01b, C08R0402_MAN1_01 , POS_DOWN)
 		_MSGWIN_CLOSE()
 
 		//間を作る
 		_TIME_WAIT(16)
 		
 		//どこかにこのまちとにているが
-		_BALLOONWIN_OBJMSG_WB(msg_c08_man1_02w,msg_c08_man1_02b, C08R0402_MAN1_01 , WIN_DOWN)
+		_BALLOONWIN_OBJMSG_WB(msg_c08_man1_02w,msg_c08_man1_02b, C08R0402_MAN1_01 , POS_DOWN)
 		
 		//はい・いいえ
 		_YES_NO_WIN(SCWK_ANSWER)
@@ -89,7 +89,7 @@ EVENT_START		 ev_c08r0402_man1_01
 			_OBJ_ANIME_WAIT()
 					
 			//さあみらいをみせておくれ
-			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_06w,msg_c08_man1_06b, C08R0402_MAN1_01 , WIN_DOWN)		
+			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_06w,msg_c08_man1_06b, C08R0402_MAN1_01 , POS_DOWN)		
 			_MSGWIN_CLOSE()
 			
 			//SEを鳴らす「キィィィイイン」
@@ -103,7 +103,7 @@ EVENT_START		 ev_c08r0402_man1_01
 			_OBJ_ANIME_WAIT()
 			
 			//おおっ！　みらいは……
-			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_07w,msg_c08_man1_07b, C08R0402_MAN1_01 , WIN_DOWN)		
+			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_07w,msg_c08_man1_07b, C08R0402_MAN1_01 , POS_DOWN)		
 			_MSGWIN_CLOSE()
 
 			//間を作る
@@ -114,7 +114,7 @@ EVENT_START		 ev_c08r0402_man1_01
 			_OBJ_ANIME_WAIT()
 			
 			//……もとにもどった？
-			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_08w,msg_c08_man1_08b, C08R0402_MAN1_01 , WIN_DOWN)		
+			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_08w,msg_c08_man1_08b, C08R0402_MAN1_01 , POS_DOWN)		
 			_MSGWIN_CLOSE()
 			
 			//間を作る
@@ -124,7 +124,7 @@ EVENT_START		 ev_c08r0402_man1_01
 			_OBJ_ANIME_WAIT()
 			
 			//そうだ！
-			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_09w,msg_c08_man1_09b, C08R0402_MAN1_01 , WIN_DOWN)		
+			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_09w,msg_c08_man1_09b, C08R0402_MAN1_01 , POS_DOWN)		
 			_MSGWIN_CLOSE()
 
 			//自機にカメラを戻す
@@ -153,7 +153,7 @@ EVENT_START		 ev_c08r0402_man1_01
 			
 			
 			//みらいについて
-			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_10w,msg_c08_man1_10b, C08R0402_MAN1_01 , WIN_DOWN)		
+			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_10w,msg_c08_man1_10b, C08R0402_MAN1_01 , POS_DOWN)		
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			
@@ -165,7 +165,7 @@ EVENT_START		 ev_c08r0402_man1_01
 	ELSE
 		
 		//みらいについて
-		_BALLOONWIN_OBJMSG_WB(msg_c08_man1_10w,msg_c08_man1_10b, C08R0402_MAN1_01 , WIN_DOWN)		
+		_BALLOONWIN_OBJMSG_WB(msg_c08_man1_10w,msg_c08_man1_10b, C08R0402_MAN1_01 , POS_DOWN)		
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
@@ -190,14 +190,14 @@ ev_event_check:
 		//必要なポケモンがいる
 		IF$SCWK_ANSWER == 1 && $LWK_WAZA_CHECK == 1 THEN
 			//あありがとう！
-			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_04w,msg_c08_man1_04b,C08R0402_MAN1_01,WIN_DOWN)
+			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_04w,msg_c08_man1_04b,C08R0402_MAN1_01,POS_DOWN)
 			_MSGWIN_CLOSE()
 			$LWK_POKE_CHECK = 1
 		
 		//必要なポケモンがいない
 		ELSE
 			//あありがとう……ってぼくのおねがいした
-			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_05w,msg_c08_man1_05b,C08R0402_MAN1_01,WIN_DOWN)
+			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_05w,msg_c08_man1_05b,C08R0402_MAN1_01,POS_DOWN)
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			$LWK_POKE_CHECK = 2
@@ -206,7 +206,7 @@ ev_event_check:
 		
 	ELSE
 		//そそうかざんねんだな
-		_BALLOONWIN_OBJMSG_WB(msg_c08_man1_03w,msg_c08_man1_03b,C08R0402_MAN1_01,WIN_DOWN)
+		_BALLOONWIN_OBJMSG_WB(msg_c08_man1_03w,msg_c08_man1_03b,C08R0402_MAN1_01,POS_DOWN)
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		$LWK_POKE_CHECK = 3

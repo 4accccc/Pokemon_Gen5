@@ -1,4 +1,4 @@
-////======================================================================
+//======================================================================
 /**
  * @file	scrcmd_menuwin.c
  * @brief	スクリプトコマンド：メニュー、システムウィンドウ関連
@@ -317,18 +317,18 @@ static void sysWin_AddWindow( SCRCMD_WORK *work, u8 up_down )
       y = 1;
     }else if( up_down == SCRCMD_MSGWIN_DOWN ){
       y = 19;
-    }else if( up_down == SCRCMD_MSGWIN_NON ){ //前回の位置を継続
+    }else if( up_down == SCRCMD_MSGWIN_DEFAULT ){ //前回の位置を継続
       up_down = SCRCMD_WORK_GetBeforeWindowPosType( work );
        
       switch( up_down ){
       case SCRCMD_MSGWIN_UPLEFT:
       case SCRCMD_MSGWIN_UPRIGHT: 
-      case SCRCMD_MSGWIN_UP_AUTO:
+      case SCRCMD_MSGWIN_UP:
         up_down = SCRCMD_MSGWIN_UP;
         break;
       case SCRCMD_MSGWIN_DOWNLEFT:
       case SCRCMD_MSGWIN_DOWNRIGHT:
-      case SCRCMD_MSGWIN_DOWN_AUTO:
+      case SCRCMD_MSGWIN_DOWN:
         y = 19;
         up_down = SCRCMD_MSGWIN_DOWN;
         break;
@@ -348,12 +348,12 @@ static void sysWin_AddWindow( SCRCMD_WORK *work, u8 up_down )
       switch( up_down ){
       case SCRCMD_MSGWIN_UPLEFT:
       case SCRCMD_MSGWIN_UPRIGHT: 
-      case SCRCMD_MSGWIN_UP_AUTO:
+      case SCRCMD_MSGWIN_UP:
         up_down = SCRCMD_MSGWIN_UP;
         break;
       case SCRCMD_MSGWIN_DOWNLEFT:
       case SCRCMD_MSGWIN_DOWNRIGHT:
-      case SCRCMD_MSGWIN_DOWN_AUTO:
+      case SCRCMD_MSGWIN_DOWN:
       case SCRCMD_MSGWIN_DEFAULT:
         y = 19;
         up_down = SCRCMD_MSGWIN_DOWN;
@@ -892,8 +892,8 @@ static void balloonWin_GetOffsetPos(
     x = 2;
     y = 1;
     break;
-  case SCRCMD_MSGWIN_UP_AUTO: //ウィンドウ上　吹き出し位置自動
-  case SCRCMD_MSGWIN_DOWN_AUTO: //ウィンドウ下　吹き出し位置自動
+  case SCRCMD_MSGWIN_UP: //ウィンドウ上　吹き出し位置自動
+  case SCRCMD_MSGWIN_DOWN: //ウィンドウ下　吹き出し位置自動
   case SCRCMD_MSGWIN_DEFAULT: //自機の位置から自動割り当て
     balloonWin_GetDispOffsetPos( pos, offs, cp_g3Dcamera );
     return;
@@ -1198,10 +1198,10 @@ static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
       idx = FLDTALKMSGWIN_IDX_LOWER;
       tail = TAIL_SETPAT_FIX_UR;
       break;
-    case SCRCMD_MSGWIN_UP_AUTO: //ウィンドウ上　吹き出し位置自動
+    case SCRCMD_MSGWIN_UP: //ウィンドウ上　吹き出し位置自動
       idx = FLDTALKMSGWIN_IDX_UPPER;
       break;
-    case SCRCMD_MSGWIN_DOWN_AUTO: //ウィンドウ下　吹き出し位置自動
+    case SCRCMD_MSGWIN_DOWN: //ウィンドウ下　吹き出し位置自動
       idx = FLDTALKMSGWIN_IDX_LOWER;
       break;
     case SCRCMD_MSGWIN_DEFAULT: //自機の位置から自動割り当て
@@ -1224,7 +1224,7 @@ static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
     
     bwin_work->win_idx = idx;
     balloonWin_UpdatePos( work, TRUE );
-      
+    
     setBalloonWindow( work,
         fparam->msgBG, idx, &bwin_work->tail_pos, msgbuf, type, tail );
     

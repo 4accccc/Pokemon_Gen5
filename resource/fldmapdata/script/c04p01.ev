@@ -128,7 +128,7 @@ EVENT_START	ev_pos_c04p01_boss_01
 	_OBJ_ANIME_WAIT()
 	
 	//キミ プラズマだんを
-	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_01, C04P01_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_01, C04P01_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
 	//Ｎ＆主人公：観覧車前へ
@@ -155,7 +155,7 @@ EVENT_START	ev_pos_c04p01_boss_01
 	_OBJ_ANIME_WAIT()
 	
 	//…いないね 観覧車に乗って探そう
-	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_02, C04P01_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_c04p01_boss_02, C04P01_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
 	//主人公：観覧車へ

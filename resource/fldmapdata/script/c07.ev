@@ -104,7 +104,7 @@ EVENT_START   ev_scene_c07_hakase1_01
 	ENDIF
 	
 	//W‚ÆB‚Å‘äŒ‚ğ•Ï‚¦‚é
-	_BALLOONWIN_OBJMSG_WB( msg_c07_hakase1_07w , msg_c07_hakase1_07b , C07_HAKASE1_01 , WIN_NONE)
+	_BALLOONWIN_OBJMSG_WB( msg_c07_hakase1_07w , msg_c07_hakase1_07b , C07_HAKASE1_01 , POS_DEFAULT )
 	_BALLOONWIN_CLOSE()
 	
 	//ã‚ğŒü‚¢‚Ä’‚é

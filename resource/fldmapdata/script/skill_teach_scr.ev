@@ -52,12 +52,12 @@ ev_waza_teacher_dragon:
 /**************************************************************/
 sub_waza_teacher_dragon:
 {
-    _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_01w, msg_skillteach_dragon_01b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+    _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_01w, msg_skillteach_dragon_01b, SCWK_TARGET_OBJID, POS_DEFAULT )
     _YES_NO_WIN( SCWK_ANSWER )
     _BALLOONWIN_CLOSE()
 
     IF $SCWK_ANSWER == SCR_NO THEN
-        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_02w, msg_skillteach_dragon_02b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_02w, msg_skillteach_dragon_02b, SCWK_TARGET_OBJID, POS_DEFAULT )
         _LAST_KEYWAIT()
         _BALLOONWIN_CLOSE()
         _RET
@@ -66,13 +66,13 @@ sub_waza_teacher_dragon:
     _SKILLTEACH_CHECK_PARTY( SCR_SKILLTEACH_MODE_DRAGON, SCWK_ANSWER )
     IF $SCWK_ANSWER == SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG THEN
         //手持ちポケモンでは覚えられない
-        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_04w, msg_skillteach_dragon_04b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_04w, msg_skillteach_dragon_04b, SCWK_TARGET_OBJID, POS_DEFAULT )
         _LAST_KEYWAIT()
         _BALLOONWIN_CLOSE()
         _RET
     ELSIF $SCWK_ANSWER == SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG THEN
         //そのポケモンはなつきが足りない
-        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_03w, msg_skillteach_dragon_03b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_03w, msg_skillteach_dragon_03b, SCWK_TARGET_OBJID, POS_DEFAULT )
         _LAST_KEYWAIT()
         _BALLOONWIN_CLOSE()
         _RET
@@ -81,7 +81,7 @@ sub_waza_teacher_dragon:
     //ポケモン選択
     _SKILLTEACH_SELECT_POKEMON( SCR_SKILLTEACH_MODE_DRAGON, SCWK_ANSWER, select_pos )
     IF $SCWK_ANSWER == FALSE THEN
-        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_02w, msg_skillteach_dragon_02b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_02w, msg_skillteach_dragon_02b, SCWK_TARGET_OBJID, POS_DEFAULT )
         _LAST_KEYWAIT()
         _BALLOONWIN_CLOSE()
         _RET
@@ -91,7 +91,7 @@ sub_waza_teacher_dragon:
     _CHECK_TEMOTI_EGG( SCWK_ANSWER, select_pos )
     IF $SCWK_ANSWER == TRUE THEN
         //タマゴには教えられない
-        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_07w, msg_skillteach_dragon_07b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_07w, msg_skillteach_dragon_07b, SCWK_TARGET_OBJID, POS_DEFAULT )
         _LAST_KEYWAIT()
         _BALLOONWIN_CLOSE()
         _RET
@@ -102,14 +102,14 @@ sub_waza_teacher_dragon:
     SWITCH  $SCWK_ANSWER
     CASE SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG THEN
         //そのポケモンはなつきが足りない
-        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_03w, msg_skillteach_dragon_03b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_03w, msg_skillteach_dragon_03b, SCWK_TARGET_OBJID, POS_DEFAULT )
         _LAST_KEYWAIT()
         _BALLOONWIN_CLOSE()
         _RET
 
     CASE SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG THEN
         //そのポケモンは覚えられない
-        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_06w, msg_skillteach_dragon_06b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_06w, msg_skillteach_dragon_06b, SCWK_TARGET_OBJID, POS_DEFAULT )
         _LAST_KEYWAIT()
         _BALLOONWIN_CLOSE()
         _RET
@@ -117,7 +117,7 @@ sub_waza_teacher_dragon:
     CASE SCR_SKILLTEACH_CHECK_RESULT_ALREADY_NG THEN
         //すでに覚えている
         _WAZA_NAME( 0, WAZANO_RYUUSEIGUN )
-        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_08w, msg_skillteach_dragon_08b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_08w, msg_skillteach_dragon_08b, SCWK_TARGET_OBJID, POS_DEFAULT )
         _LAST_KEYWAIT()
         _BALLOONWIN_CLOSE()
         _RET
@@ -128,7 +128,7 @@ sub_waza_teacher_dragon:
     _CALL sub_skillteacher_system
 
     IF $SCWK_ANSWER == TRUE THEN
-        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_09w, msg_skillteach_dragon_09b, SCWK_TARGET_OBJID, SCRCMD_MSGWIN_NON )
+        _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_09w, msg_skillteach_dragon_09b, SCWK_TARGET_OBJID, POS_DEFAULT )
         _LAST_KEYWAIT()
         _BALLOONWIN_CLOSE()
     ENDIF

@@ -62,7 +62,7 @@ EVENT_START ev_musical_recept_single
 
   _TALK_OBJ_START()
 
-  _BALLOONWIN_OBJMSG_POS( msg_musical_test_01, SCWK_TARGET_OBJID, POS_D )
+  _BALLOONWIN_OBJMSG_POS( msg_musical_test_01, SCWK_TARGET_OBJID, POS_DOWN )
   _CALL ev_musical_recept_first
 
   IF $SCWK_ANSWER == TRUE THEN
@@ -76,7 +76,7 @@ EVENT_START ev_musical_recept_single
       IF $SCWK_ANSWER == FALSE THEN //  選ばなかった
         _CALL ev_musical_exit_common
       ELSE
-        _BALLOONWIN_OBJMSG_POS( msg_musical_test_02, SCWK_TARGET_OBJID, POS_D )
+        _BALLOONWIN_OBJMSG_POS( msg_musical_test_02, SCWK_TARGET_OBJID, POS_DOWN )
         _BALLOONWIN_CLOSE()
 
         //入場アニメ
@@ -118,14 +118,14 @@ EVENT_START ev_musical_recept_fitting
   
   _TALK_OBJ_START()
 
-  _BALLOONWIN_OBJMSG_POS( msg_musical_fitting_01, SCWK_TARGET_OBJID, POS_D )
+  _BALLOONWIN_OBJMSG_POS( msg_musical_fitting_01, SCWK_TARGET_OBJID, POS_DOWN )
   _CALL ev_musical_recept_first
 
   IF $SCWK_ANSWER == TRUE THEN //やめる
     //ポケモン選択
     _CALL ev_musical_select_poke
     IF $SCWK_ANSWER == TRUE THEN //  選ばなかった
-      _BALLOONWIN_OBJMSG_POS( msg_musical_fitting_02, SCWK_TARGET_OBJID, POS_D )
+      _BALLOONWIN_OBJMSG_POS( msg_musical_fitting_02, SCWK_TARGET_OBJID, POS_DOWN )
       _BALLOONWIN_CLOSE()
 
       //入場アニメ
@@ -185,7 +185,7 @@ ev_musical_recept_comm_core:
   //フィールド通信切断
   _FIELD_COMM_EXIT_EVENT_CALL( ret )
   //親になるか子になるか
-  _BALLOONWIN_OBJMSG_POS( msg_musical_recept_wl_01, SCWK_TARGET_OBJID, POS_D )
+  _BALLOONWIN_OBJMSG_POS( msg_musical_recept_wl_01, SCWK_TARGET_OBJID, POS_DOWN )
   
   _BMPMENU_INIT_RIGHT(  MENU_X1, MENU_Y1, 0, 1, retParentChild )
   _BMPMENU_MAKE_LIST( msg_musical_recept_leader, 0 ) //リーダー
@@ -215,7 +215,7 @@ ev_musical_recept_comm_core:
   //デバッグ
 
   //ミュージカルしますか？
-  _BALLOONWIN_OBJMSG_POS( msg_musical_recept_01, SCWK_TARGET_OBJID, POS_D )
+  _BALLOONWIN_OBJMSG_POS( msg_musical_recept_01, SCWK_TARGET_OBJID, POS_DOWN )
   _CALL ev_musical_recept_first
 
   IF $SCWK_ANSWER == FALSE THEN //やめる
@@ -276,7 +276,7 @@ ev_musical_recept_comm_core:
     WHILE $isLoop1 == TRUE
     {
       //赤外線orワイヤレス
-      _BALLOONWIN_OBJMSG_POS( msg_musical_recept_04, SCWK_TARGET_OBJID, POS_D )
+      _BALLOONWIN_OBJMSG_POS( msg_musical_recept_04, SCWK_TARGET_OBJID, POS_DOWN )
       
       _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, ret )
       _BMPMENU_MAKE_LIST( msg_musical_recept_05, 0 ) //赤外線
@@ -294,7 +294,7 @@ ev_musical_recept_comm_core:
       WHILE $isLoop2 == TRUE
       {
         //親になるか子になるか
-        _BALLOONWIN_OBJMSG_POS( msg_musical_recept_wl_01, SCWK_TARGET_OBJID, POS_D )
+        _BALLOONWIN_OBJMSG_POS( msg_musical_recept_wl_01, SCWK_TARGET_OBJID, POS_DOWN )
         
         _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, retParentChild )
         _BMPMENU_MAKE_LIST( msg_musical_recept_leader, 0 ) //リーダー
@@ -477,7 +477,7 @@ ev_musical_exit_common:
   _MUSICAL_TOOLS( MUSICAL_TOOL_EXIT, 0,0,0 )
   _REBOOT_BEACON_SEARCH()
  
-  _BALLOONWIN_OBJMSG_POS( msg_musical_test_03, SCWK_TARGET_OBJID, POS_D )
+  _BALLOONWIN_OBJMSG_POS( msg_musical_test_03, SCWK_TARGET_OBJID, POS_DOWN )
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
   
@@ -514,7 +514,7 @@ ev_musical_recept_first:
       //説明ゾーン ココから
       WHILE $isLoopExp == TRUE
       {
-        _BALLOONWIN_OBJMSG_POS( msg_musical_info_01, SCWK_TARGET_OBJID, POS_D )
+        _BALLOONWIN_OBJMSG_POS( msg_musical_info_01, SCWK_TARGET_OBJID, POS_DOWN )
         //メニュー作成
         _BMPMENU_INIT_RIGHT(  MENU_X1, MENU_Y1, 0, 1, SCWK_ANSWER )
         _BMPMENU_MAKE_LIST( msg_musical_info_02, 0 )
@@ -530,25 +530,25 @@ ev_musical_recept_first:
         $isLoopExp = FALSE
         //参加しますか？をココで出す
         IF  $isFitting == TRUE THEN
-          _BALLOONWIN_OBJMSG_POS( msg_musical_fitting_03, SCWK_TARGET_OBJID, POS_D )
+          _BALLOONWIN_OBJMSG_POS( msg_musical_fitting_03, SCWK_TARGET_OBJID, POS_DOWN )
         ELSE
-          _BALLOONWIN_OBJMSG_POS( msg_musical_recept_08, SCWK_TARGET_OBJID, POS_D )
+          _BALLOONWIN_OBJMSG_POS( msg_musical_recept_08, SCWK_TARGET_OBJID, POS_DOWN )
         ENDIF
         //で、最初に戻って質問から
       ELSIF $SCWK_ANSWER == 0 THEN
-        _BALLOONWIN_OBJMSG_POS( msg_musical_info_03, SCWK_TARGET_OBJID, POS_D )
+        _BALLOONWIN_OBJMSG_POS( msg_musical_info_03, SCWK_TARGET_OBJID, POS_DOWN )
         _BALLOONWIN_CLOSE()
       ELSIF $SCWK_ANSWER == 1 THEN
-        _BALLOONWIN_OBJMSG_POS( msg_musical_info_05, SCWK_TARGET_OBJID, POS_D )
+        _BALLOONWIN_OBJMSG_POS( msg_musical_info_05, SCWK_TARGET_OBJID, POS_DOWN )
         _BALLOONWIN_CLOSE()
       ELSIF $SCWK_ANSWER == 2 THEN
-        _BALLOONWIN_OBJMSG_POS( msg_musical_info_07, SCWK_TARGET_OBJID, POS_D )
+        _BALLOONWIN_OBJMSG_POS( msg_musical_info_07, SCWK_TARGET_OBJID, POS_DOWN )
         _BALLOONWIN_CLOSE()
       ELSIF $SCWK_ANSWER == 3 THEN
-        _BALLOONWIN_OBJMSG_POS( msg_musical_info_09, SCWK_TARGET_OBJID, POS_D )
+        _BALLOONWIN_OBJMSG_POS( msg_musical_info_09, SCWK_TARGET_OBJID, POS_DOWN )
         _BALLOONWIN_CLOSE()
       ELSIF $SCWK_ANSWER == 4 THEN
-        _BALLOONWIN_OBJMSG_POS( msg_musical_info_11, SCWK_TARGET_OBJID, POS_D )
+        _BALLOONWIN_OBJMSG_POS( msg_musical_info_11, SCWK_TARGET_OBJID, POS_DOWN )
         _BALLOONWIN_CLOSE()
       ENDIF
       
@@ -574,7 +574,7 @@ ev_musical_select_poke:
     _GET_MUSICAL_VALUE_COUNT_MUSICAL_POKE( LWK_ENT_CHK )
     IF $LWK_ENT_CHK == 0 THEN
       //参加できるポケモンがいない
-      _BALLOONWIN_OBJMSG_POS( msg_musical_recept_02, SCWK_TARGET_OBJID, POS_D )
+      _BALLOONWIN_OBJMSG_POS( msg_musical_recept_02, SCWK_TARGET_OBJID, POS_DOWN )
       $SCWK_ANSWER = FALSE
       _RET
     ENDIF
@@ -583,7 +583,7 @@ ev_musical_select_poke:
     
     DEFINE_LOCAL LWK_SEL_CANCEL
     //参加ポケモンを選ぶ
-    _BALLOONWIN_OBJMSG_POS( msg_musical_test_05, SCWK_TARGET_OBJID, POS_D )
+    _BALLOONWIN_OBJMSG_POS( msg_musical_test_05, SCWK_TARGET_OBJID, POS_DOWN )
     _BALLOONWIN_CLOSE()
     //選択画面をコール
     _SELECT_MUSCAL_POKE( LWK_SEL_CANCEL , selectPoke )
@@ -609,7 +609,7 @@ recept_select_program:
   
   _TALK_OBJ_START()
 
-  _BALLOONWIN_OBJMSG_POS( msg_musical_test_04, SCWK_TARGET_OBJID, POS_D )
+  _BALLOONWIN_OBJMSG_POS( msg_musical_test_04, SCWK_TARGET_OBJID, POS_DOWN )
   //メニュー作成
   _BMPMENU_INIT_RIGHT(  MENU_X1, MENU_Y1, 0, 1, SCWK_ANSWER )
   //リスト追加

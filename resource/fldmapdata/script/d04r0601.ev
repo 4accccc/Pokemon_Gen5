@@ -52,7 +52,7 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
 
 	//おそろいの　ようですね　わざわざ　こんなところまで
-	_BALLOONWIN_OBJMSG_WB( msg_d04r0601_sage1_01w, msg_d04r0601_sage1_01b, D04R0601_SAGE1_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_d04r0601_sage1_01w, msg_d04r0601_sage1_01b, D04R0601_SAGE1_01, POS_DEFAULT )
 	_BALLOONWIN_CLOSE()
 		
 	//ゲーチス：一歩前へ
@@ -76,7 +76,7 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	_BALLOONWIN_CLOSE()
 
 	//われらが　プラズマだんの　おうは
-	_BALLOONWIN_OBJMSG_WB( msg_d04r0601_sage1_03w, msg_d04r0601_sage1_03b, D04R0601_SAGE1_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_d04r0601_sage1_03w, msg_d04r0601_sage1_03b, D04R0601_SAGE1_01, POS_DEFAULT )
 	_BALLOONWIN_CLOSE()
 		
 	//ワシは　まけぬ！　ポケモンを　あいする
@@ -125,7 +125,7 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	_OBJ_ANIME_WAIT()
 
 	//きゃつは　つよい……　ストーンを　さがしていた
-	_BALLOONWIN_OBJMSG_WB( msg_d04r0601_champion_03w, msg_d04r0601_champion_03b, D04R0601_CHAMPION_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_d04r0601_champion_03w, msg_d04r0601_champion_03b, D04R0601_CHAMPION_01, POS_DEFAULT )
 	_BALLOONWIN_CLOSE()
 	
 	//……じいさん　ここに　いても　なにもないんだろ

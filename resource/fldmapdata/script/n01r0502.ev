@@ -177,7 +177,7 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_TIME_WAIT( 20 )
 	//メッセージ
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_01w, msg_n01r0502_boss_01b, N01R0502_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_01w, msg_n01r0502_boss_01b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()	
 
 	_CAMERA_MOVE( 9688,0,970752,1081344,131103,1212416,50 )	//一番最後の引数は移動にかかるフレーム数
@@ -189,7 +189,7 @@ EVENT_START	ev_pos_n01r0502_lastbtl_01
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//ボクが　のぞむのは　ポケモンだけの　せかい
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_01_01w, msg_n01r0502_boss_01_01b, N01R0502_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_01_01w, msg_n01r0502_boss_01_01b, N01R0502_BOSS_01, POS_DEFAULT )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
@@ -267,7 +267,7 @@ EVENT_START		ev_pos_n01r0502_lastbtl_02
 	_OBJ_ANIME_WAIT()
 	
 	//ほら　キミが　てにいれた
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_02w, msg_n01r0502_boss_02b, N01R0502_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_02w, msg_n01r0502_boss_02b, N01R0502_BOSS_01, POS_DEFAULT )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
@@ -324,7 +324,7 @@ EVENT_START	ev_pos_n01r0502_lastbtl_03
 	_OBJ_ANIME_WAIT()
 
 	//ほら　キミが　てにいれた
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_02w, msg_n01r0502_boss_02b, N01R0502_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_02w, msg_n01r0502_boss_02b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 {	
 	//自機：一歩前に戻る
@@ -392,7 +392,7 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 	_TIME_WAIT(30)
 
 	//ボクは　すこしだけ　キミのことを　きにいっていたのかも
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_03w, msg_n01r0502_boss_03b, N01R0502_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_03w, msg_n01r0502_boss_03b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
 	//Ｎ:自機のほうを見る
@@ -400,15 +400,15 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 	_OBJ_ANIME_WAIT()
 
 	//だけど　ちがった　いま　すごく　ガッカリしているよ
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_04w, msg_n01r0502_boss_04b, N01R0502_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_04w, msg_n01r0502_boss_04b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
 	//キミに　できることは　２つ！
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_04_01w, msg_n01r0502_boss_04_01b, N01R0502_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_04_01w, msg_n01r0502_boss_04_01b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 
 	//おいで　シン！/ム！
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_05w, msg_n01r0502_boss_05b, N01R0502_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_05w, msg_n01r0502_boss_05b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 
 	//シンとムの鳴き声
@@ -527,7 +527,7 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 	_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,60 )	//一番最後の引数は移動にかかるフレーム数	
 
 	//どういうこと　だ？
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_06w, msg_n01r0502_boss_06b, N01R0502_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_06w, msg_n01r0502_boss_06b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 
 	//バッグの　なか……
@@ -543,7 +543,7 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 }
 	
 	//キミの　もつ
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_07w, msg_n01r0502_boss_07b, N01R0502_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_07w, msg_n01r0502_boss_07b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 
 	//【仮】ダーク（ライト）ストーンの演出		森さんに話しは通しています　作成中
@@ -594,7 +594,7 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 	_DISP_FADE_END_CHECK()
 
 	//シンと　ムは……　もとは　ひとつの　いのち
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_08w, msg_n01r0502_boss_08b, N01R0502_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_08w, msg_n01r0502_boss_08b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
 	//シン（ム）が自機の方を見る
@@ -602,7 +602,7 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 	_OBJ_ANIME_WAIT()
 	
 	//シンと　ムは……　もとは　ひとつの　いのち
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_09w, msg_n01r0502_boss_09b, N01R0502_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_09w, msg_n01r0502_boss_09b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 
 	//自機にカメラを戻す
@@ -617,7 +617,7 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 	_CAMERA_END()		//カメラ操作終了
 	
 	//こころして　かかりたまえ
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_10w, msg_n01r0502_boss_10b, N01R0502_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_10w, msg_n01r0502_boss_10b, N01R0502_BOSS_01, POS_DEFAULT )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
@@ -632,7 +632,7 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 	//========================================/
 
 ELSIF $WK_SCENE_N01R0502 == 4 THEN
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_10w, msg_n01r0502_boss_10b, N01R0502_BOSS_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_10w, msg_n01r0502_boss_10b, N01R0502_BOSS_01, POS_DEFAULT )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
@@ -732,7 +732,7 @@ _TALK_OBJ_START()
 	_GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_BLACK THEN
 			_VOICE_PLAY( MONSNO_650, 0 )
-			_GIZAWIN_OBJMSG_POS( msg_n01r0502_pokemon_01b , N01R0502_WKOBJCODE01_01, WIN_NONE )
+			_GIZAWIN_OBJMSG_POS( msg_n01r0502_pokemon_01b , N01R0502_WKOBJCODE01_01, POS_DEFAULT )
 			_MSGWIN_CLOSE()
 			_VOICE_WAIT()
 
@@ -765,7 +765,7 @@ _TALK_OBJ_START()
 			
 		ELSE
 			_VOICE_PLAY( MONSNO_651, 0 )
-			_GIZAWIN_OBJMSG_POS( msg_n01r0502_pokemon_01w , N01R0502_WKOBJCODE01_01, WIN_NONE )
+			_GIZAWIN_OBJMSG_POS( msg_n01r0502_pokemon_01w , N01R0502_WKOBJCODE01_01, POS_DEFAULT )
 			_MSGWIN_CLOSE()
 			_VOICE_WAIT()
 
@@ -858,7 +858,7 @@ ev_last:
 	//捕獲の場合
 	IF FLAG_ON( FE_PACKAGE_POKE_GET ) THEN
 	
-		_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_11w, msg_n01r0502_boss_11b, N01R0502_BOSS_01, WIN_NONE )
+		_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_11w, msg_n01r0502_boss_11b, N01R0502_BOSS_01, POS_DEFAULT )
 		_MSGWIN_CLOSE()
 	
 	ENDIF
@@ -918,7 +918,7 @@ ev_last:
 	_OBJ_ANIME_WAIT()
 	
 	//そなたには　この　ぎょくざは
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_sage1_02w, msg_n01r0502_sage1_02b, N01R0502_SAGE1_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_sage1_02w, msg_n01r0502_sage1_02b, N01R0502_SAGE1_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 
 	_CAMERA_START()		//カメラ操作開始
@@ -1059,7 +1059,7 @@ ev_last:
 	_MSGWIN_CLOSE()
 	
 	//ふむ　なるほどな
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_champion_02w, msg_n01r0502_champion_02b, N01R0502_SAGE1_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_champion_02w, msg_n01r0502_champion_02b, N01R0502_SAGE1_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
 	//だが　ぼくに　えいゆうの　しかくはない！
@@ -1411,7 +1411,7 @@ _TALK_OBJ_START()
 	_MSGWIN_CLOSE()
 	
 	//ふむ　なるほどな
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_champion_02w, msg_n01r0502_champion_02b, N01R0502_SAGE1_01, WIN_NONE )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_champion_02w, msg_n01r0502_champion_02b, N01R0502_SAGE1_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
 	//だが　ぼくに　えいゆうの　しかくはない！

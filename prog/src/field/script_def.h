@@ -246,18 +246,14 @@
 //--------------------------------------------------------------
 /// メッセージウィンドウ上下指定
 //--------------------------------------------------------------
-#define SCRCMD_MSGWIN_UPLEFT    (0)
-#define SCRCMD_MSGWIN_DOWNLEFT  (1)
-#define SCRCMD_MSGWIN_DEFAULT   (2)
-#define SCRCMD_MSGWIN_UPRIGHT   (3)
-#define SCRCMD_MSGWIN_DOWNRIGHT (4)
-#define SCRCMD_MSGWIN_UP_AUTO   (5)
-#define SCRCMD_MSGWIN_DOWN_AUTO (6)
-
-#define SCRCMD_MSGWIN_UP    SCRCMD_MSGWIN_UPLEFT
-#define SCRCMD_MSGWIN_DOWN  SCRCMD_MSGWIN_DOWNLEFT
-#define SCRCMD_MSGWIN_NON   SCRCMD_MSGWIN_DEFAULT 
-
+#define SCRCMD_MSGWIN_DEFAULT   (0)
+#define SCRCMD_MSGWIN_UP        (1)
+#define SCRCMD_MSGWIN_DOWN      (2)
+#define SCRCMD_MSGWIN_UPLEFT    (3)
+#define SCRCMD_MSGWIN_DOWNLEFT  (4)
+#define SCRCMD_MSGWIN_UPRIGHT   (5)
+#define SCRCMD_MSGWIN_DOWNRIGHT (6)
+#define SCRCMD_MSGWIN_MAX       (7)
 
 //--------------------------------------------------------------
 /// システムメッセージウィンドウ　タイムアイコン　スイッチ

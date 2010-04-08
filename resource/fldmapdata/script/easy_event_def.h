@@ -232,7 +232,7 @@
 //--------------------------------------------------------------
   .macro _ASM_EASY_MSG msg_id
   _ASM_TALK_START_SE_PLAY
-  _ASM_SYSWIN_MSG_ALLPUT \msg_id,\WIN_DOWN
+  _ASM_SYSWIN_MSG_ALLPUT \msg_id,\POS_DOWN
   _ASM_LAST_KEYWAIT
   _ASM_SYSWIN_CLOSE
   .endm

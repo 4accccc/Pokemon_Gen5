@@ -61,7 +61,7 @@ EVENT_START	ev_pos_n01r0201_guide_01
 	_OBJ_ANIME_WAIT()
 	
 	//わたしはダークトリニティ
-	_BALLOONWIN_OBJMSG_POS( msg_n01r0201_ninja_02, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0201_ninja_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
 	//主人公＆ダークトリニティ：上を向く
@@ -71,7 +71,7 @@ EVENT_START	ev_pos_n01r0201_guide_01
 	_OBJ_ANIME_WAIT()
 	
 	//まずはあの部屋で休むがよい
-	_BALLOONWIN_OBJMSG_POS( msg_n01r0201_ninja_03, MMDL_ID_EVENTOBJ_00, WIN_NONE )
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0201_ninja_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
 	//ダークトリニティ消える【仮】消す演出が未定

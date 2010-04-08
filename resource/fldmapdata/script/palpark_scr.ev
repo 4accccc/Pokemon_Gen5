@@ -387,7 +387,7 @@ first_anime_evt:
   _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_gyoe )
   _OBJ_ANIME_WAIT()
   //「殿堂入りしとるやないけ！」☆ギザウィンドウ
-  _GIZAWIN_OBJMSG_POS( msg_palpark_first_02, R15R0301_ASSISTANTW_01, WIN_NONE )
+  _GIZAWIN_OBJMSG_POS( msg_palpark_first_02, R15R0301_ASSISTANTW_01, POS_DEFAULT )
   _GIZAWIN_CLOSE()
   //助手「もしかするともしかするで]
   _BALLOONWIN_OBJMSG( msg_palpark_first_21_b, R15R0301_ASSISTANTW_01 )
@@ -450,13 +450,13 @@ first_anime_evt:
   _OBJ_ANIME_WAIT()
 
   //博士「殿堂入りしとるとな！」☆ギザウィンドウ
-  _GIZAWIN_OBJMSG_POS( msg_palpark_first_05, R15R0301_PARK, WIN_NONE )
+  _GIZAWIN_OBJMSG_POS( msg_palpark_first_05, R15R0301_PARK, POS_DEFAULT )
   _GIZAWIN_CLOSE()
   //博士「ファンタスティック」☆ギザウィンドウ
-  _GIZAWIN_OBJMSG_POS( msg_palpark_first_05_b, R15R0301_PARK, WIN_NONE )
+  _GIZAWIN_OBJMSG_POS( msg_palpark_first_05_b, R15R0301_PARK, POS_DEFAULT )
   _GIZAWIN_CLOSE()
   //博士「フーーーーー」☆ギザウィンドウ
-  _GIZAWIN_OBJMSG_POS( msg_palpark_first_05_c, R15R0301_PARK, WIN_NONE )
+  _GIZAWIN_OBJMSG_POS( msg_palpark_first_05_c, R15R0301_PARK, POS_DEFAULT )
   _GIZAWIN_CLOSE()
   //博士乱舞
   _OBJ_ANIME( R15R0301_PARK, anm_spin)

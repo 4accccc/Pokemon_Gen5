@@ -1066,7 +1066,7 @@
   .short 0x0400
   .short \msg_id
   .short \obj_id
-  .short WIN_NONE
+  .short POS_DEFAULT
   .short BALLOONWIN_TYPE_NORMAL
   .endm
 
@@ -1084,7 +1084,7 @@
   .short  EV_SEQ_BALLOONWIN_TALKOBJ_MSG
   .short 0x0400
   .short \msg_id
-  .short WIN_NONE
+  .short POS_DEFAULT
   .short BALLOONWIN_TYPE_NORMAL
   .endm
 
@@ -1103,7 +1103,7 @@
   .short  EV_SEQ_BALLOONWIN_TALKOBJ_MSG
   .short \arc_id
   .short \msg_id
-  .short WIN_NONE
+  .short POS_DEFAULT
   .short BALLOONWIN_TYPE_NORMAL
   .endm
 

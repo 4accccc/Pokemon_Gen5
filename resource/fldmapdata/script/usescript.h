@@ -205,28 +205,16 @@
 #define EV_HIDEN_IAIGIRI_OBJDEL_WAIT (3)
 
 //======================================================================
-//
-//    ウィンドウ関連定義
-//
+//  ウィンドウ関連定義
 //======================================================================
-//ウィンドウ位置（旧定義、廃止予定）
-#define WIN_UP      (SCRCMD_MSGWIN_UPLEFT)
-#define WIN_DOWN    (SCRCMD_MSGWIN_DOWNLEFT)
-#define WIN_NONE    (SCRCMD_MSGWIN_NON)
-
-//システム＆プレーンウィンドウ用位置定義
-#define POS_UP      SCRCMD_MSGWIN_UPLEFT
-#define POS_DOWN    SCRCMD_MSGWIN_DOWNLEFT
-
-//ふきだしウィンドウ用位置定義
-#define POS_UL      SCRCMD_MSGWIN_UPLEFT      /* 左上から */
-#define POS_DL      SCRCMD_MSGWIN_DOWNLEFT    /* 左下から */
-#define POS_UR      SCRCMD_MSGWIN_UPRIGHT     /* 右上から */
-#define POS_DR      SCRCMD_MSGWIN_DOWNRIGHT   /* 左上から */
-#define POS_U       SCRCMD_MSGWIN_UP_AUTO     /* 上、尻尾自動 */
-#define POS_D       SCRCMD_MSGWIN_DOWN_AUTO     /* 下、尻尾自動 */
-
-#define POS_DEFAULT SCRCMD_MSGWIN_DEFAULT     /* 自動振り分け */
+//システム、吹き出しウィンドウ用位置定義
+#define POS_DEFAULT SCRCMD_MSGWIN_DEFAULT   //自動振り分け 兼用 過去位置参考
+#define POS_UP      SCRCMD_MSGWIN_UP        //上 兼用 尻尾自動
+#define POS_DOWN    SCRCMD_MSGWIN_DOWN      //下 兼用 尻尾自動
+#define POS_UL      SCRCMD_MSGWIN_UPLEFT    //左上 BALLOONWIN専用
+#define POS_DL      SCRCMD_MSGWIN_DOWNLEFT  //左下 BALLOONWIN専用
+#define POS_UR      SCRCMD_MSGWIN_UPRIGHT   //右上 BALLOONWIN専用
+#define POS_DR      SCRCMD_MSGWIN_DOWNRIGHT //左上 BALLOONWIN専用
 
 //BGウィンドウタイプ
 #define TYPE_INFO (SCRCMD_BGWIN_TYPE_INFO) //掲示板
