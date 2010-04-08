@@ -816,7 +816,7 @@
 #define FV_D12_POLECEMAN_02                792 /* 0x0318 リバティーとう：警官 */
 #define FV_D12R0101_POLECEMAN_01           793 /* 0x0319 リバティー室内1：警官 */
 #define FV_D12R0102_HAKAIM_01              794 /* 0x031a リバティー室内2：プラズマ団 */
-		/* not used   795(0x031b) */
+#define FV_D12_EVENTEND_01                 795 /* 0x031b リバティーとう：イベント終了時表示OBJ */
 		/* not used   796(0x031c) */
 		/* not used   797(0x031d) */
 		/* not used   798(0x031e) */
