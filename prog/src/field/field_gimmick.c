@@ -55,6 +55,7 @@ FS_EXTERN_OVERLAY(field_gimmick_h03);
 FS_EXTERN_OVERLAY(field_gimmick_r04d03);
 FS_EXTERN_OVERLAY(sppoke_gimmick);
 FS_EXTERN_OVERLAY(palace_gimmick);
+FS_EXTERN_OVERLAY(palace_map_gimmick);
 FS_EXTERN_OVERLAY(field_gimmick_d12);
 
 const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
@@ -108,7 +109,7 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(sppoke_gimmick),  // R08R0101
   FS_OVERLAY_ID(sppoke_gimmick),  // C03R0901
   FS_OVERLAY_ID(palace_gimmick),  //
-  NULL,                           // PLCゾーンのマップ
+  FS_OVERLAY_ID(palace_map_gimmick),  //
   NULL,//C04R0109
   FS_OVERLAY_ID(field_gimmick_d12), //D12
 };

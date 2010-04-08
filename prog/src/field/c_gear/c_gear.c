@@ -508,6 +508,7 @@ typedef struct{
   u8  plt_anmtype;
   u8  wireles_count;
   u32 last_bit;
+  u32 plt_beacon;
 } PANEL_PLT_ANIME;
 
 
@@ -634,6 +635,7 @@ static void _PanelPaletteChangeCore( C_GEAR_WORK* pWork, int change_panel, int m
 static BOOL _PanelPaletteIsEnd(const C_GEAR_WORK* cpWork );
 static void _PanelPaletteUpdate( C_GEAR_WORK* pWork );
 static u32 _PanelPaletteColorSetUp( C_GEAR_WORK* pWork );
+static BOOL _PanelPaletteIsBeaconChange( GAME_COMM_SYS_PTR game_comm, u32 last_bit, u32 bit, u32* change_beacon );
 
 
 static void _PanelMarkAnimeSysInit( C_GEAR_WORK* pWork );
@@ -916,10 +918,21 @@ static void _modeSelectJumpPalace(C_GEAR_WORK* pWork)
 //-----------------------------------------------------------------------------
 static void _PanelPaletteAnimeInit( C_GEAR_WORK* pWork )
 {
-  
-  _PanelPaletteColorSetUp( pWork );
-  pWork->plt_anime.plt_anmtype = _CGEAR_NET_CHANGEPAL_ANM_TYPE_HIGH;
-  pWork->plt_anime.last_bit = -1; // こうすることでHIGHが２かいつづく
+  u32 bit; 
+  u32 pltt_beacon;
+
+  bit = _PanelPaletteColorSetUp( pWork );
+  pWork->plt_anime.last_bit = 0;
+  if( _PanelPaletteIsBeaconChange( GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys), pWork->plt_anime.last_bit, bit, &pltt_beacon ) ){
+    
+    pWork->plt_anime.plt_beacon = pltt_beacon;
+    pWork->plt_anime.plt_anmtype = _CGEAR_NET_CHANGEPAL_ANM_TYPE_HIGH;
+  }else{
+    pWork->plt_anime.plt_beacon = pWork->beacon_bit;
+    pWork->plt_anime.plt_anmtype = _CGEAR_NET_CHANGEPAL_ANM_TYPE_NORMAL;
+  }
+
+  pWork->plt_anime.last_bit = bit;
 }
 
 
@@ -940,13 +953,11 @@ static u32 _PanelPaletteColorSetUp( C_GEAR_WORK* pWork )
 
   // 次のアニメーション確定処理
   if(Intrude_CheckPalaceConnect(pGC)){
-    // pWork->beacon_bit |= GAME_COMM_STATUS_BIT_WIRELESS;  これは使い方がおかしい？
     pWork->beacon_bit |= _CGEAR_NET_BIT_WIRELESS;
+    _PaletteSetColType( pWork, _CGEAR_NET_CHANGEPAL_WIRELES, _CGEAR_NET_PALTYPE_GREEN );
   }
 
-  if(pWork->beacon_bit){
-    pWork->plt_anime.last_bit = 0;
-  }else{
+  if(!pWork->beacon_bit){
     bit = WIH_DWC_GetAllBeaconTypeBit( GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(pWork->pGameSys)) );
 
     
@@ -988,13 +999,11 @@ static u32 _PanelPaletteColorSetUp( C_GEAR_WORK* pWork )
       // トランシーバー以外は順番に
       static const u32 WIRELES_COUNT_MASK[ _CGEAR_NET_WIRELES_TYPE_MAX ] = 
       {
-        GAME_COMM_STATUS_BIT_WIRELESS, 
         GAME_COMM_STATUS_BIT_WIRELESS_UN, 
         GAME_COMM_STATUS_BIT_WIRELESS_FU, 
       };
       static const u32 WIRELES_COUNT_COLOR[ _CGEAR_NET_WIRELES_TYPE_MAX ] = 
       {
-        _CGEAR_NET_PALTYPE_GREEN, 
         _CGEAR_NET_PALTYPE_BLUE, 
         _CGEAR_NET_PALTYPE_RED, 
       };
@@ -1007,10 +1016,95 @@ static u32 _PanelPaletteColorSetUp( C_GEAR_WORK* pWork )
           break;
         }
       }
+      TOMOYA_Printf( "wireles_count %d\n", pWork->plt_anime.wireles_count );
     }
   }
 
   return bit;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  beaconとbeaconをチェックして、変わった情報を設定
+ *
+ *	@param	last_bit
+ *	@param	bit
+ */
+//-----------------------------------------------------------------------------
+static BOOL _PanelPaletteIsBeaconChange( GAME_COMM_SYS_PTR game_comm, u32 last_bit, u32 bit, u32* change_beacon )
+{
+  BOOL ret = FALSE;
+  
+  *change_beacon = 0;
+
+  // 進入最優先
+  if( (last_bit != 0) && Intrude_CheckPalaceConnect( game_comm ) ){
+    *change_beacon |= _CGEAR_NET_BIT_WIRELESS;
+    return TRUE;
+  }
+  
+  // IRC
+  if( (bit & GAME_COMM_STATUS_BIT_IRC) != (last_bit & GAME_COMM_STATUS_BIT_IRC) ){
+    *change_beacon |= _CGEAR_NET_BIT_IR;
+    ret = TRUE;
+  }
+
+  // WIFI
+  {
+    if( (last_bit & GAME_COMM_STATUS_BIT_WIFI) != (bit & GAME_COMM_STATUS_BIT_WIFI) ){      // 登録済み
+      *change_beacon |= _CGEAR_NET_BIT_WIFI;
+      ret = TRUE;
+    }
+    
+    if( ((last_bit & GAME_COMM_STATUS_BIT_WIFI) == 0) && // １つ前が消えている状態で・・・
+        ((bit & GAME_COMM_STATUS_BIT_WIFI) == 0) && ((*change_beacon & _CGEAR_NET_BIT_WIFI)==0) ){
+      
+      if( (last_bit & GAME_COMM_STATUS_BIT_WIFI_FREE) != (bit & GAME_COMM_STATUS_BIT_WIFI_FREE) ){ // かぎなし
+        *change_beacon |= _CGEAR_NET_BIT_WIFI;
+        ret = TRUE;
+      }
+    }
+
+    if( ((last_bit & GAME_COMM_STATUS_BIT_WIFI_FREE) == 0) && // １つ前が消えている状態で・・・
+        ((bit & GAME_COMM_STATUS_BIT_WIFI_FREE) == 0) && ((*change_beacon & _CGEAR_NET_BIT_WIFI)==0)){
+      
+      if( (last_bit & GAME_COMM_STATUS_BIT_WIFI_ZONE) != (bit & GAME_COMM_STATUS_BIT_WIFI_ZONE) ){ // 任天堂ゾーン　など　公式
+        *change_beacon |= _CGEAR_NET_BIT_WIFI;
+        ret = TRUE;
+      }
+    }
+
+    if( ((last_bit & GAME_COMM_STATUS_BIT_WIFI_ZONE) == 0) && // １つ前が消えている状態で・・・
+        ((bit & GAME_COMM_STATUS_BIT_WIFI_ZONE) == 0) && ((*change_beacon & _CGEAR_NET_BIT_WIFI)==0)){
+      
+      if( (last_bit & GAME_COMM_STATUS_BIT_WIFI_LOCK) != (bit & GAME_COMM_STATUS_BIT_WIFI_LOCK) ){ // かぎあり
+        *change_beacon |= _CGEAR_NET_BIT_WIFI;
+        ret = TRUE;
+      }
+    }
+  }
+
+  // Wireless
+  {
+    // まずはトランシーバーがかわった？
+    if( (bit & GAME_COMM_STATUS_BIT_WIRELESS_TR) != (last_bit & GAME_COMM_STATUS_BIT_WIRELESS_TR) ){
+      *change_beacon |= _CGEAR_NET_BIT_WIRELESS;
+      ret = TRUE;
+    }
+    if( ((last_bit & GAME_COMM_STATUS_BIT_WIRELESS_TR) == 0) && // １つ前が消えている状態で・・・
+        ((bit & GAME_COMM_STATUS_BIT_WIRELESS_TR) == 0) && ((*change_beacon & _CGEAR_NET_BIT_WIRELESS)==0) ){
+
+      if( (bit & (GAME_COMM_STATUS_BIT_WIRELESS|GAME_COMM_STATUS_BIT_WIRELESS_UN|GAME_COMM_STATUS_BIT_WIRELESS_FU)) != 
+          (last_bit & (GAME_COMM_STATUS_BIT_WIRELESS|GAME_COMM_STATUS_BIT_WIRELESS_UN|GAME_COMM_STATUS_BIT_WIRELESS_FU)) ){
+        *change_beacon |= _CGEAR_NET_BIT_WIRELESS;
+        ret = TRUE;
+      }
+    }
+  }
+
+  TOMOYA_Printf( "last_bit=0x%x   bit=0x%x\n", last_bit, bit );
+  TOMOYA_Printf( "beacon 0x%x  ret=%d\n", *change_beacon, ret );
+  return ret;
 }
 
 
@@ -1029,13 +1123,17 @@ static void _PanelPaletteUpdate( C_GEAR_WORK* pWork )
     if( _PanelPaletteIsEnd( pWork ) )
     {
       u32 bit;
+      u32 plt_beacon;
+      
       bit = _PanelPaletteColorSetUp( pWork );
-      if( bit == pWork->plt_anime.last_bit ){
-        pWork->plt_anime.plt_anmtype = _CGEAR_NET_CHANGEPAL_ANM_TYPE_NORMAL;
-      }else{
-        pWork->plt_anime.last_bit = bit;
+      if( _PanelPaletteIsBeaconChange( GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys), pWork->plt_anime.last_bit, bit, &plt_beacon ) ){
+        pWork->plt_anime.plt_beacon = plt_beacon;
         pWork->plt_anime.plt_anmtype = _CGEAR_NET_CHANGEPAL_ANM_TYPE_HIGH;
+      }else{
+        pWork->plt_anime.plt_beacon = pWork->beacon_bit;
+        pWork->plt_anime.plt_anmtype = _CGEAR_NET_CHANGEPAL_ANM_TYPE_NORMAL;
       }
+      pWork->plt_anime.last_bit = bit;
     }
   }
 }
@@ -1055,7 +1153,7 @@ static void _PanelPaletteChange(C_GEAR_WORK* pWork)
 
   for(i = 0 ; i < _CGEAR_NET_CHANGEPAL_MAX; i++)
   {
-    if( (pWork->beacon_bit & bittype[ i ]) )
+    if( (pWork->plt_anime.plt_beacon & bittype[ i ]) )
     {
 
       if( pWork->plt_anime.plt_anmtype == _CGEAR_NET_CHANGEPAL_ANM_TYPE_HIGH ){
@@ -2454,10 +2552,8 @@ static void _gearCrossObjMain(C_GEAR_WORK* pWork)
       u8 col;
       GAMEBEACON_Get_FavoriteColor(&dest_buf, beacon_info);
       col = dest_buf; //pWork->crossColor[i] - 1;
-      GFL_CLACT_WK_SetDrawEnable( cp_wk, TRUE );
       if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  col){
         GFL_CLACT_WK_SetAnmIndex( cp_wk,col);
-        GFL_CLACT_WK_SetDrawEnable( cp_wk, TRUE );
       }
     }
     else{
@@ -2466,32 +2562,6 @@ static void _gearCrossObjMain(C_GEAR_WORK* pWork)
   }
 }
 
-//------------------------------------------------------------------------------
-/**
- * @brief   すれ違い用のカラーセット
- * @param   color お気に入りの色
- * @param   index 光らせる場所index
- * @retval  none
- */
-//------------------------------------------------------------------------------
-void CGEAR_SetCrossColor(C_GEAR_WORK* pWork,int color,int index)
-{
-  GF_ASSERT(index < _CLACT_CROSS_MAX);
-  pWork->crossColor[index] = color + 1;
-}
-
-//------------------------------------------------------------------------------
-/**
- * @brief   すれ違い用のカラーリセット
- * @param   index 光らせる場所index
- * @retval  none
- */
-//------------------------------------------------------------------------------
-void CGEAR_ResetCrossColor(C_GEAR_WORK* pWork,int index)
-{
-  GF_ASSERT(index < _CLACT_CROSS_MAX);
-  pWork->crossColor[index] = 01;
-}
 
 
 //------------------------------------------------------------------------------
@@ -2783,6 +2853,8 @@ static void _modeSelectMenuWait2(C_GEAR_WORK* pWork)
     return;
   }
 
+  _PanelPaletteAnimeInit( pWork );
+
   // 通常待機へ遷移
   _CHANGE_STATE(pWork, _modeSelectMenuWait);
 }
@@ -3059,7 +3131,6 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 
   // パネルアニメのシステムクリア
   _PanelMarkAnimeSysInit( pWork );
-  _PanelPaletteAnimeInit( pWork );
 
 
   //  _PFadeToBlack(pWork);

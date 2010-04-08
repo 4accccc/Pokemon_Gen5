@@ -335,7 +335,11 @@ void CGEAR_SV_SetPanelType(CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENU
   if(!(y < C_GEAR_PANEL_HEIGHT)){
     return;
   }
-  if( icon ){
+  if( icon && 
+      (type == CGEAR_PANELTYPE_IR) ||
+      (type == CGEAR_PANELTYPE_WIFI) ||
+      (type == CGEAR_PANELTYPE_WIRELESS) ){
+
     type = CGEAR_PANELTYPE_GET_ICON_TYPE(type);
   }
   if( last ){
