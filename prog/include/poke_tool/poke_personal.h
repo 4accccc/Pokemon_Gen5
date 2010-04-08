@@ -174,6 +174,10 @@ extern void POKE_PERSONAL_LoadWazaOboeTable( u16 mons_no, u16 form_no, POKEPER_W
 extern  u8    PokePersonal_SexGet( POKEMON_PERSONAL_DATA* personalData, u16 monsno, u32 rnd );
 extern POKEPER_SEX_TYPE PokePersonal_SexVecTypeGet( POKEPER_SEX sex_vec );
 
+enum{ 
+  POKEPER_CHIHOU_NO_NONE = 999,     //地方図鑑ナンバーが存在しない定義
+};
+
 // 全国図鑑ナンバーから地方図鑑ナンバーを引く配列を取得
 extern  u16* POKE_PERSONAL_GetZenkokuToChihouArray( HEAPID heap_id, u16* num );
 
