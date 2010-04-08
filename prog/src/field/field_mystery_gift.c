@@ -1,6 +1,9 @@
 //======================================================================
 /**
  * @file  field_mystery_gift.c
+ * @brief ふしぎデータへのアクセスラッパー
+ * @date  2010.02.14
+ * @author  tamada GAMEFREAK inc.
  */
 //======================================================================
 
@@ -15,9 +18,12 @@
 //--------------------------------------------------------------
 /**
  * @brief
+ *
  * @param fd
  * @param index
- * @retval  GIFT_PACK_DATA  利用可能な贈り物データへのポインタ
+ * @param gpd   贈り物データを受け取るためのワーク
+ *
+ * @retval  gpd   利用可能な場合
  * @retval  NULL  利用可能でない場合
  */
 //--------------------------------------------------------------
@@ -38,11 +44,14 @@ static GIFT_PACK_DATA * getEnableGiftData( MYSTERY_DATA * fd, int index, GIFT_PA
 
 //--------------------------------------------------------------
 /**
- * @brief
- * @param fd
- * @param index
- * @retval  GIFT_PACK_DATA
- * @retval  NULLL
+ * @brief 利用可能な贈り物データの取得
+ *
+ * @param   fd      不思議セーブデータへのポインタ
+ * @param   index   贈り物データ位置のインデックスを受け取るためのポインタ
+ * @param   gpd     贈り物データを受け取るためのワーク
+ *
+ * @retval    gpd     利用可能な場合
+ * @retval    NULL    利用可能でない場合
  */
 //--------------------------------------------------------------
 GIFT_PACK_DATA * FIELD_MYSTERYDATA_GetGiftData( MYSTERY_DATA * fd, int * index, GIFT_PACK_DATA * gpd )

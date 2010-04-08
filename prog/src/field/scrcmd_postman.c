@@ -4,6 +4,7 @@
  * @brief	スクリプトコマンド：ふしぎなおくりもの配達員
  * @date	2010.02.12
  * @author  tamada GAMEFREAK inc.
+ *
  */
 //======================================================================
 #include <gflib.h>
@@ -37,11 +38,19 @@
 #include "field/eventdata_system.h"
 #include "field/eventdata_sxy.h"
 
-#include "savedata/intrude_save.h"
+#include "savedata/intrude_save.h"  //GPower
+
+#include "evt_lock.h" //EVTLOCK_SetEvtLock
+#include "item/itemsym.h" //ITEM_RIBATHITIKETTO
 
 //======================================================================
 //======================================================================
-
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+enum {
+  ///ビクティ配布カードのID
+  MYSTERY_DATA_ID_LIBERTY_TICKET  = 2046,
+};
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 typedef BOOL (* MP_FUNC_ADD_CHECK)( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
@@ -54,6 +63,7 @@ typedef u16 (* MP_FUNC_FAILURE_MSG)( WORDSET * wordset, GIFT_PACK_DATA * gpd, SC
  */
 //--------------------------------------------------------------
 typedef struct {
+  int gift_type;
   MP_FUNC_ADD_CHECK add_check_func;
   MP_FUNC_ADD       add_func;
   MP_FUNC_SUCCESS_MSG set_success_words;
@@ -67,6 +77,7 @@ typedef struct {
 //--------------------------------------------------------------
 static MMDL * searchPOSTMANOBJ( FIELDMAP_WORK * fieldWork );
 static int searchEventDataPostmanObj( GAMEDATA * gamedata );
+static BOOL isLibertyTicketCard( const GIFT_PACK_DATA * gpd, u8 gift_type );
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -106,6 +117,11 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
   GIFT_PACK_DATA * gpd = FIELD_MYSTERYDATA_GetGiftData( fd, &index, &aGpd );
   u8 gift_type = FIELD_MYSTERYDATA_GetGiftType( fd );
 
+  if ( PostmanFuncTable[gift_type].gift_type != gift_type )
+  {
+    GF_ASSERT( 0 ); //贈り物データの種類がずれた？
+    return VMCMD_RESULT_CONTINUE;
+  }
   switch ( req )
   {
   case SCR_POSTMAN_REQ_EXISTS:
@@ -135,6 +151,13 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
       if ( MP_Command_Receive( gift_type, work, gamedata, gpd ) == TRUE )
       {
         FIELD_MYSTERYDATA_SetReceived( fd, index );
+        if (isLibertyTicketCard( gpd, gift_type ) == TRUE )
+        {
+          //ビクティ配布チケットだった場合、イベントロックを解除する
+          MISC * misc = GAMEDATA_GetMiscWork( gamedata );
+          MYSTATUS * mystatus = GAMEDATA_GetMyStatus( gamedata );
+          EVTLOCK_SetEvtLock( misc, EVT_LOCK_NO_VICTYTICKET, mystatus );
+        }
       }
     }
     *ret_wk = 0;
@@ -315,7 +338,18 @@ static int searchEventDataPostmanObj( GAMEDATA * gamedata )
   }
   return -1;
 }
-
+//--------------------------------------------------------------
+/**
+ * @brief ビクティ配布の不思議カードデータかのチェック
+ */
+//--------------------------------------------------------------
+static BOOL isLibertyTicketCard( const GIFT_PACK_DATA * gpd, u8 gift_type )
+{
+  if ( gift_type != MYSTERYGIFT_TYPE_ITEM ) return FALSE;
+  if ( gpd->event_id != MYSTERY_DATA_ID_LIBERTY_TICKET ) return FALSE;
+  if ( gpd->data.item.itemNo != ITEM_RIBATHITIKETTO	) return FALSE;
+  return TRUE;
+}
 //======================================================================
 //  ポケモン取得用関数
 //======================================================================
@@ -480,25 +514,29 @@ static u16  PFuncSetFailureGPowerWords( WORDSET * wordset, GIFT_PACK_DATA * gpd,
 //  贈り物の種類毎の分岐用テーブル
 //--------------------------------------------------------------
 static const POSTMAN_FUNC_TABLE PostmanFuncTable[ MYSTERYGIFT_TYPE_MAX ] = {
-  { //MYSTERYGIFT_TYPE_NONE		
+  { 
+    MYSTERYGIFT_TYPE_NONE,
     NULL,
     NULL,
     NULL,
     NULL,
   },
-  { //MYSTERYGIFT_TYPE_POKEMON	
+  { 
+    MYSTERYGIFT_TYPE_POKEMON,
     PFuncCheckPokemon,
     PFuncAddPokemon,
     PFuncSetSuccessPokemonWords,  //msg_postman_06
     PFuncSetFailurePokemonWords,  //msg_postman_07
   },
-  { //MYSTERYGIFT_TYPE_ITEM		
+  { 
+    MYSTERYGIFT_TYPE_ITEM,
     PFuncCheckItem,
     PFuncAddItem,
     PFuncSetSuccessItemWords, //msg_postman_08
     PFuncSetFailureItemWords, //msg_postman_09
   },
-  { //MYSTERYGIFT_TYPE_POWER
+  { 
+    MYSTERYGIFT_TYPE_POWER,
     PFuncCheckGPower,
     PFuncAddGPower,
     PFuncSetSuccessGPowerWords, //msg_postman_10
