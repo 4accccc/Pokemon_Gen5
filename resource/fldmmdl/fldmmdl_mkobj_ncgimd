@@ -659,9 +659,9 @@
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/basketm.ncg ./mmdl_res ./mmdl_dmy/ncg4x4flip.imd 4 4 7
 
 #support.imd
-./mmdl_res/support.imd: ./mmdl_nchara/support.ncg ./mmdl_nchara/support.ncl ./mmdl_dmy/ncg4x4x14.imd fldmmdl_list.csv
+./mmdl_res/support.imd: ./mmdl_nchara/support.ncg ./mmdl_nchara/support.ncl ./mmdl_dmy/ncg4x4x20.imd fldmmdl_list.csv
 	@echo convert ncg_imd support
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/support.ncg ./mmdl_res ./mmdl_dmy/ncg4x4x14.imd 4 4 14
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/support.ncg ./mmdl_res ./mmdl_dmy/ncg4x4x20.imd 4 4 16
 
 #none_debug.imd
 ./mmdl_res/none_debug.imd: ./mmdl_nchara/none_debug.ncg ./mmdl_nchara/none_debug.ncl ./mmdl_dmy/ncg4x4ocell.imd fldmmdl_list.csv
