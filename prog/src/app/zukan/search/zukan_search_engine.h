@@ -87,8 +87,3 @@ extern u16 ZUKAN_GetNumberRow(
                HEAPID   heap_id,
                u16**    list );
 
-//-------------------------------------
-/// 全国図鑑番号から地方図鑑番号を得ることができるリストを得る
-//=====================================
-extern u16* ZUKAN_GetZenkokuToChihouArray( HEAPID heap_id, u16* num );
-
