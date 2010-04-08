@@ -477,9 +477,8 @@ static GFL_PROC_RESULT Egg_Demo_ProcExit( GFL_PROC* proc, int* seq, void* pwk, v
   if( work->trunk_step != TRUNK_STEP_NAMEIN_END )
     Egg_Demo_Exit( param, work );
 
-//  // タッチorキー
-//  GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );  // 必ずキーで終了
-//  ここでは、タッチorキーを変更しない。
+  // タッチorキー
+  GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );  // はい・いいえウィンドウに応えて終わるので、必ずキーで終了
 
   // ヒープ
   {

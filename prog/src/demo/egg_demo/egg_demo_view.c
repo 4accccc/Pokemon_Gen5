@@ -611,19 +611,19 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
         // ƒvƒŒƒCƒ„[ player sys
         if( work->wait_count == EGG_LAND_FRAME_01 )
         {
-          PMSND_PlaySE( SEQ_SE_SYS_83 );
+          PMSND_PlaySE( SEQ_SE_EDEMO_05 );
         }
         else if( work->wait_count == EGG_LAND_FRAME_02 )
         {
-          PMSND_PlaySE( SEQ_SE_SYS_83 );
+          PMSND_PlaySE( SEQ_SE_EDEMO_05 );
         }
         else if( work->wait_count == EGG_LAND_FRAME_03 )
         {
-          PMSND_PlaySE( SEQ_SE_SYS_83 );
+          PMSND_PlaySE( SEQ_SE_EDEMO_05 );
         }
         else if( work->wait_count == EGG_LAND_FRAME_04 )
         {
-          PMSND_PlaySE( SEQ_SE_SYS_83 );
+          PMSND_PlaySE( SEQ_SE_EDEMO_05 );
         }
         /*
         else if( work->wait_count == EGG_SHAKE_FRAME_01 )
@@ -665,6 +665,17 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
             else
             {
               work->egg_shake_wait_count--;
+            }
+          }
+        }
+        else if( work->wait_count == particle_burst_frame )
+        {
+          if( work->egg_shake_se_play )
+          {
+            if( PMSND_CheckPlaySE_byPlayerID( work->egg_shake_seplayer_id ) )
+            {
+              PMSND_StopSE_byPlayerID( work->egg_shake_seplayer_id );
+              work->egg_shake_se_play = FALSE;
             }
           }
         }
