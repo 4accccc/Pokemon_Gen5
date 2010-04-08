@@ -161,6 +161,12 @@ EVENT_START	ev_pos_r16r0201_woman3_01
   //イベントの対象ポケモン(エンテイ、ライコウ、スイクン)を調べる
   _CALL search_target
 
+  IF $target_poke_pos < 6 THEN
+    _CALL zoroaaku_core
+  ENDIF
+EVENT_END
+
+zoroaaku_core:
   //自機の移動
   _CALL move_player
 
@@ -238,8 +244,7 @@ EVENT_START	ev_pos_r16r0201_woman3_01
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
   ENDIF
-
-EVENT_END
+_RET
 
 //自機の移動
 move_player:
