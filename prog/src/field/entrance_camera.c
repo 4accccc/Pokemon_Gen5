@@ -88,6 +88,8 @@ typedef struct {
   u32 frame;           // 動作フレーム数
   u32 validFlag_IN;    // 進入時に有効なデータかどうか
   u32 validFlag_OUT;   // 退出時に有効なデータかどうか
+  u32 targetBindFlag;  // ターゲットのバインドが有効かどうか
+  u32 cameraAreaFlag;  // カメラエリアが有効かどうか
 
 } ECAM_LOAD_DATA; 
 
@@ -119,6 +121,9 @@ typedef struct {
   BOOL validFlag_IN;  // 進入時に有効なデータかどうか
   BOOL validFlag_OUT; // 退出時に有効なデータかどうか
 
+  BOOL targetBindFlag; // ターゲットのバインドが有効かどうか
+  BOOL cameraAreaFlag; // カメラエリアが有効かどうか
+
 } ANIME_DATA; 
 
 
@@ -138,7 +143,7 @@ struct _ECAM_WORK {
   BOOL              recoveryValidFlag; // 復帰データが有効かどうか
   BOOL              recoveryValidFlagSp; // 復帰データが有効かどうか
   FIELD_CAMERA_MODE initialCameraMode; // カメラモード
-  BOOL              cameraAreaFlag;    // カメラエリアの動作フラグ
+  BOOL              initialCameraAreaFlag; // カメラエリアの動作フラグ
 
 };
 
@@ -159,10 +164,10 @@ static void ECamSetup_SP_OUT( ECAM_WORK* work ); // 特殊出入口から出る演出をセッ
 // アニメーションデータ
 static void LoadSpData( ECAM_LOAD_DATA* dest, EXIT_TYPE exitType ); // 特殊出入り口のカメラ動作データを読み込む
 // カメラの準備・復帰
-static void SetupCamera( ECAM_WORK* work ); // カメラの設定を変更する
-static void SetupCameraSp( ECAM_WORK* work ); // カメラの設定を変更する
-static void RecoverCamera( const ECAM_WORK* work ); // カメラの設定を復帰する
-static void RecoverCameraSp( const ECAM_WORK* work ); // カメラの設定を復帰する
+static void SetupCamera( ECAM_WORK* work ); // カメラの設定を変更する ( 通常出入り口用 )
+static void RecoverCamera( const ECAM_WORK* work ); // カメラの設定を復帰する ( 通常出入り口用 )
+static void SetupCameraSp( ECAM_WORK* work ); // カメラの設定を変更する ( 特殊出入り口用 )
+static void RecoverCameraSp( const ECAM_WORK* work ); // カメラの設定を復帰する ( 特殊出入り口用 )
 static void AdjustCameraAngle( FIELD_CAMERA* camera ); // カメラアングルを再計算する
 static void SetCurrentCameraTargetPos( FIELD_CAMERA* camera ); // ターゲット座標を現在の実効値に設定する
 static void SetupCameraTargetPos( FIELD_CAMERA* camera, const VecFx32* targetPos ); // ターゲット座標を変更し, カメラに反映させる
@@ -399,7 +404,7 @@ static void InitWork( ECAM_WORK* work, FIELDMAP_WORK* fieldmap )
   work->fieldmap = fieldmap;
   work->camera   = FIELDMAP_GetFieldCamera( fieldmap );
   work->recoveryValidFlag = FALSE;
-  work->cameraAreaFlag    = FALSE;
+  work->initialCameraAreaFlag    = FALSE;
   work->setupFlag = FALSE;
 
 #ifdef DEBUG_PRINT_ENABLE
@@ -614,6 +619,8 @@ static void ECamSetup_SP_IN( ECAM_WORK* work )
   // 演出の有無を決定
   anime->validFlag_IN  = loadData.validFlag_IN;
   anime->validFlag_OUT = loadData.validFlag_OUT;
+  anime->cameraAreaFlag = loadData.cameraAreaFlag;
+  anime->targetBindFlag = loadData.targetBindFlag;
   if( anime->validFlag_IN == FALSE ) { 
     return; // 以下の処理は不要
   }
@@ -678,6 +685,8 @@ static void ECamSetup_SP_OUT( ECAM_WORK* work )
   // 演出の有無を決定
   anime->validFlag_IN  = loadData.validFlag_IN;
   anime->validFlag_OUT = loadData.validFlag_OUT;
+  anime->cameraAreaFlag = loadData.cameraAreaFlag;
+  anime->targetBindFlag = loadData.targetBindFlag;
   if( anime->validFlag_OUT == FALSE ) { 
     return; // 以下の処理は不要
   }
@@ -691,7 +700,7 @@ static void ECamSetup_SP_OUT( ECAM_WORK* work )
   }
 
   // 自機を一歩移動させた状態にカメラを更新
-  if( CheckOneStep(work) ) {
+  if( !anime->targetBindFlag && CheckOneStep(work) ) {
     SetupCameraTargetPos( camera, &stepPos );
   }
 
@@ -768,6 +777,8 @@ static void LoadSpData( ECAM_LOAD_DATA* dest, EXIT_TYPE exitType )
   OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - frame            = %d\n", dest->frame );
   OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - validFlag_IN     = %d\n", dest->validFlag_IN );
   OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - validFlag_OUT    = %d\n", dest->validFlag_OUT );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - cameraAreaFlag   = %d\n", dest->cameraAreaFlag );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - targetBindFlag   = %d\n", dest->targetBindFlag );
 #endif
 }
 
@@ -798,7 +809,7 @@ static void GetCurrentCameraParam( const FIELD_CAMERA* camera, CAMERA_PARAM* des
 
 //-----------------------------------------------------------------------------
 /**
- * @brief カメラ操作の準備をする
+ * @brief カメラ操作の準備をする ( 通常出入口用 )
  *
  * @param work
  */
@@ -818,7 +829,7 @@ static void SetupCamera( ECAM_WORK* work )
   //FIELD_CAMERA_FreeTarget( camera );
 
   // カメラエリアを無効化
-  //work->cameraAreaFlag = FIELD_CAMERA_GetCameraAreaActive( camera );
+  //work->initialCameraAreaFlag = FIELD_CAMERA_GetCameraAreaActive( camera );
   //FIELD_CAMERA_SetCameraAreaActive( camera, FALSE );
 
   // カメラモードを変更
@@ -831,7 +842,7 @@ static void SetupCamera( ECAM_WORK* work )
 
 //-----------------------------------------------------------------------------
 /**
- * @brief カメラの復帰をする
+ * @brief カメラの復帰をする ( 通常出入口用 )
  *
  * @param work
  */
@@ -844,7 +855,7 @@ static void RecoverCamera( const ECAM_WORK* work )
   GF_ASSERT( work->recoveryValidFlag );
 
   // カメラエリアを復帰
-  //FIELD_CAMERA_SetCameraAreaActive( camera, work->cameraAreaFlag );
+  //FIELD_CAMERA_SetCameraAreaActive( camera, work->initialCameraAreaFlag );
 
   // ターゲットを元に戻す
   FIELD_CAMERA_BindDefaultTarget( camera );
@@ -861,7 +872,7 @@ static void RecoverCamera( const ECAM_WORK* work )
 
 //-----------------------------------------------------------------------------
 /**
- * @brief カメラ操作の準備をする
+ * @brief カメラ操作の準備をする ( 特殊出入り口用 )
  *
  * @param work
  */
@@ -870,6 +881,7 @@ static void SetupCameraSp( ECAM_WORK* work )
 {
   FIELDMAP_WORK* fieldmap = work->fieldmap;
   FIELD_CAMERA*  camera   = work->camera;
+  const ANIME_DATA* anime = GetAnimeData( work );
 
   // レールシステムのカメラ制御を停止
   if( FIELDMAP_GetBaseSystemType( fieldmap ) == FLDMAP_BASESYS_RAIL ) {
@@ -878,11 +890,15 @@ static void SetupCameraSp( ECAM_WORK* work )
   }
 
   // ターゲットのバインドをOFF
-  FIELD_CAMERA_FreeTarget( camera );
+  if( anime->targetBindFlag == FALSE ) {
+    FIELD_CAMERA_FreeTarget( camera );
+  }
 
   // カメラエリアを無効化
-  work->cameraAreaFlag = FIELD_CAMERA_GetCameraAreaActive( camera );
-  FIELD_CAMERA_SetCameraAreaActive( camera, FALSE );
+  if( anime->cameraAreaFlag == FALSE ) {
+    work->initialCameraAreaFlag = FIELD_CAMERA_GetCameraAreaActive( camera );
+    FIELD_CAMERA_SetCameraAreaActive( camera, FALSE );
+  }
 
   // カメラモードを変更
   work->initialCameraMode = FIELD_CAMERA_GetMode( camera ); 
@@ -894,7 +910,7 @@ static void SetupCameraSp( ECAM_WORK* work )
 
 //-----------------------------------------------------------------------------
 /**
- * @brief カメラの復帰をする
+ * @brief カメラの復帰をする ( 特殊出入り口用 )
  *
  * @param work
  */
@@ -903,11 +919,14 @@ static void RecoverCameraSp( const ECAM_WORK* work )
 {
   FIELDMAP_WORK* fieldmap = work->fieldmap;
   FIELD_CAMERA*  camera   = work->camera;
+  const ANIME_DATA* anime = GetAnimeData( work );
 
   GF_ASSERT( work->recoveryValidFlagSp );
 
   // カメラエリアを復帰
-  FIELD_CAMERA_SetCameraAreaActive( camera, work->cameraAreaFlag );
+  if( anime->cameraAreaFlag == FALSE ) {
+    FIELD_CAMERA_SetCameraAreaActive( camera, work->initialCameraAreaFlag );
+  }
 
   // ターゲットを元に戻す
   FIELD_CAMERA_BindDefaultTarget( camera );

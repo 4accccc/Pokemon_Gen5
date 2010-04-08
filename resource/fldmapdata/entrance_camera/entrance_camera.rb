@@ -23,6 +23,8 @@ COLUMN_OFFSET_Z       = 10  # ターゲットオフセット z
 COLUMN_FRAME          = 11  # フレーム数
 COLUMN_VALID_FLAG_IN  = 12  # 動作条件( IN )
 COLUMN_VALID_FLAG_OUT = 13  # 動作条件( OUT )
+COLUMN_TARGET_BIND    = 14  # 動作設定( TargetBind )
+COLUMN_CAMERA_AREA    = 15  # 動作設定( CameraArea )
 
 # 行インデックス
 ROW_HEAD_DATA = 2  # 先頭データ
@@ -49,6 +51,10 @@ class CameraData
     @frame            = 0   # フレーム数
     @validFlag_IN     = 0   # 進入時に有効なデータかどうか
     @validFlag_OUT    = 0   # 退出時に有効なデータかどうか
+    @targetBind_label = nil # 動作設定 ( TargetBind・ラベル )
+    @targetBind       = 0   # 動作設定 ( TargetBind・値 )
+    @cameraArea_label = nil # 動作設定 ( CameraArea・ラベル )
+    @cameraArea       = 0   # 動作設定 ( CameraArea・値 )
   end
 
   # アクセッサ
@@ -56,7 +62,8 @@ class CameraData
                 :pitch, :yaw, :length, 
                 :targetMode_label, :targetMode, :targetX, :targetY, :targetZ,
                 :offsetX, :offsetY, :offsetZ, :frame,
-                :validFlag_IN, :validFlag_OUT
+                :validFlag_IN, :validFlag_OUT,
+                :targetBind_label, :targetBind, :cameraArea_label, :cameraArea
 
   #-----------------------------------------
   # @brief バイナリデータを出力する
@@ -79,6 +86,8 @@ class CameraData
     file.write( [@frame].pack("I") )
     file.write( [@validFlag_IN].pack("I") )
     file.write( [@validFlag_OUT].pack("I") )
+    file.write( [@targetBind].pack("I") )
+    file.write( [@cameraArea].pack("I") )
     file.close()
   end 
   #-----------------------------------------
@@ -102,6 +111,8 @@ class CameraData
     file.puts( "frame         = #{@frame}" )
     file.puts( "validFlag_IN  = #{@validFlag_IN}" )
     file.puts( "validflag_OUT = #{@validFlag_OUT}" )
+    file.puts( "targetBind    = #{@targetBind}(#{@targetBind_label})" )
+    file.puts( "cameraArea    = #{@cameraArea}(#{@cameraArea_label})" )
     file.close()
   end
   #-----------------------------------------
@@ -193,6 +204,25 @@ def GetTargetModeValue( label )
 end
 
 #========================================================================================
+# @brief on/offの値を取得する
+# @param label ラベル ( on or off )
+# @return 指定したラベルに対応する値
+#========================================================================================
+def GetOnOffValue( label )
+  hash = Hash.new
+  hash[ "off" ] = 0
+  hash[ "on"  ] = 1
+
+  # ラベル名エラー
+  if hash.has_key?( label ) == false then 
+    abort( "on/off 指定に誤りがあります。" ) 
+  end
+
+  # ラベルに対応する値を返す
+  return hash[ label ]
+end
+
+#========================================================================================
 # @brief 文字列を数値に変換する
 # @param string 整数値を表す文字列(10進文字列or16進文字列)
 # @return 指定した文字列を変換した値
@@ -239,6 +269,10 @@ ROW_HEAD_DATA.upto( fileData.size - 1 ) do |rowIdx|
   cameraData.frame            = ConvertToNumber( rowItem[ COLUMN_FRAME ] )
   if rowItem[ COLUMN_VALID_FLAG_IN ].include?( "○" ) then cameraData.validFlag_IN = 1 end
   if rowItem[ COLUMN_VALID_FLAG_OUT ].include?( "○" ) then cameraData.validFlag_OUT = 1 end
+  cameraData.targetBind_label = rowItem[ COLUMN_TARGET_BIND ]
+  cameraData.cameraArea_label = rowItem[ COLUMN_CAMERA_AREA ]
+  cameraData.targetBind       = GetOnOffValue( rowItem[ COLUMN_TARGET_BIND ] )
+  cameraData.cameraArea       = GetOnOffValue( rowItem[ COLUMN_CAMERA_AREA ] )
   # 配列に登録
   cameraDataArray << cameraData
 end
