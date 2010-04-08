@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T15:54:11"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-08T12:13:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -501,6 +501,32 @@ GRIDX=６６１、GRIDZ=１７７辺り</comment>
 なーんも　することが　ないのだ▼
 夜は　外に　だれも　いないし
 平和　そのもの　だからなー</language>
+	</row>
+
+	<row id="msg_t03_poke_01" back-color="#00ffff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+
+※夜になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+
+GRIDX=６４１、GRIDZ=１７1辺り</comment>
+		<attribute name="キャラ指定">POKE19</attribute>
+		<language name="JPN" width="256">チラーミィ『グッグ！　グッグ！</language>
+		<language name="JPN_KANJI" width="256">チラーミィ『グッグ！　グッグ！</language>
+	</row>
+
+	<row id="msg_t03_middleman2_01" back-color="#00ffff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+
+※夜になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+
+GRIDX=６６２、GRIDZ=１７0辺り</comment>
+		<attribute name="キャラ指定">middleman2</attribute>
+		<language name="JPN" width="256">オレの　ポケモン　いつも　かってに
+あそびに　いっちゃうんだよ</language>
+		<language name="JPN_KANJI" width="256">オレの　ポケモン　いつも　勝手に
+遊びに　行っちゃうんだよ</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T15:57:23"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-07T20:01:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -675,7 +675,7 @@
 
 ♂</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
-		<language name="JPN" width="256">しごとが　いそがしくてね▽
+		<language name="JPN" width="256">しごとが　いそがしくてね
 しゅうに　いちど　くらいしか▽
 うちに　かえってないんだ▼
 かみさんには　さびしい
@@ -686,7 +686,7 @@
 みやげなんだが　かみさんは▽
 いらない　みたいだから▽
 きみに　やるよ▼</language>
-		<language name="JPN_KANJI" width="256">仕事が　忙しくてね▽
+		<language name="JPN_KANJI" width="256">仕事が　忙しくてね
 週に　一度　くらいしか▽
 家に　帰ってないんだ▼
 かみさんには　さびしい
