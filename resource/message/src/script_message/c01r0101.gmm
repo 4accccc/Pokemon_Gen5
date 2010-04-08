@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T12:35:31"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T14:16:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -314,6 +314,8 @@
 　メッセージ表示
 ・表示後、階段を上る
 　動作モデルが消えると、主人公操作可能に</comment>
+		<attribute name="キャラ指定">ASSISTANTW
+発明家</attribute>
 		<language name="JPN" width="256">マコモ『アタシの　部屋
 この　上なんだ[BE:00:ページ切り替え（行送り）]
 さ　あがって！[BE:01:ページ切り替え（クリア）]</language>
@@ -363,6 +365,8 @@
 	<row id="msg_c01r0101_boy3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・c01ジムバッジ取得後、座標移動</comment>
+		<attribute name="キャラ指定">BOY3
+少年（聡明）</attribute>
 		<language name="JPN" width="256">うえに　すんでる　ねえちゃん
 ああみえて　すごい　けんきゅうか！</language>
 		<language name="JPN_KANJI" width="256">２階の　姉ちゃん
