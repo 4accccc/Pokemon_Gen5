@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-04-08T00:05:21"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T12:51:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1320" top="209" right="2025" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -295,12 +295,12 @@
 	<row id="msg_t05r0101_woman3_01">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">WOMAN3</attribute>
-		<language name="JPN" width="256">カナワタウンといえば
+		<language name="JPN" width="256">カナワタウンと　いえば
 てんしゃだいが　ゆうめいね▽
 はしから　みえたでしょ？</language>
-		<language name="JPN_KANJI" width="256">カナワタウンといえば
-てんしゃだいが　ゆうめいね▽
-はしから　みえたでしょ？</language>
+		<language name="JPN_KANJI" width="256">カナワタウンと　いえば
+転車台が　有名ね▽
+橋から　みえたでしょ？</language>
 	</row>
 
 	<row id="msg_t05r0101_girl2_01">
@@ -311,10 +311,10 @@
 だからね　うんてんするひとも
 せいびをするひとも　しんけんよ！▼
 ってパパが　いってたの</language>
-		<language name="JPN_KANJI" width="256">でんしゃってさ
-たくさんのひとを　のせるでしょ？▼
-だからね　うんてんするひとも
-せいびをするひとも　しんけんよ！▼
+		<language name="JPN_KANJI" width="256">電車ってさ
+たくさんの人を　乗せるでしょ？▼
+だからね　運転する人も
+整備をする人も　真剣よ！▼
 ってパパが　いってたの</language>
 	</row>
 

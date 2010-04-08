@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-04-08T12:38:51"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T12:50:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="523" top="106" right="1228" bottom="726" maximized="no" rayout="Vertical2">
+	<dialog left="1583" top="162" right="2288" bottom="782" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="103" right="1280" bottom="501" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -325,8 +325,8 @@
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">きみも　あの　でんしゃが
 きになると　いうわけだ</language>
-		<language name="JPN_KANJI" width="256">きみも　あの　でんしゃが
-きになると　いうわけだ</language>
+		<language name="JPN_KANJI" width="256">きみも　あの　電車が
+気になると　いうわけだ</language>
 	</row>
 
 	<row id="msg_t05_railfan_01_01">
@@ -336,7 +336,7 @@
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">きみは　あの　でんしゃが
 みえるかい？</language>
-		<language name="JPN_KANJI" width="256">きみは　あの　でんしゃが
+		<language name="JPN_KANJI" width="256">きみは　あの　電車が
 みえるかい？</language>
 	</row>
 
@@ -365,7 +365,7 @@
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">あー　いそいで　いるんだね
 わかるよ</language>
-		<language name="JPN_KANJI" width="256">あー　いそいで　いるんだね
+		<language name="JPN_KANJI" width="256">あー　急いで　いるんだね
 わかるよ</language>
 	</row>
 
@@ -375,9 +375,9 @@
 車両無しのとき</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">そうだよね
-ざんねんだな……</language>
+ざんねん　だな……</language>
 		<language name="JPN_KANJI" width="256">そうだよね
-ざんねんだな……</language>
+残念だな……</language>
 	</row>
 
 	<row id="msg_t05_railfan_railtalk1_00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -387,7 +387,7 @@
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">きょうの　しゃりょうは
 もうそうトレイン！</language>
-		<language name="JPN_KANJI" width="256">きょうの　しゃりょうは
+		<language name="JPN_KANJI" width="256">きょうの　車両は
 もうそうトレイン！</language>
 	</row>
 
@@ -400,7 +400,7 @@
 バトルサブウェイで　もっとも　ふるい！</language>
 		<language name="JPN_KANJI" width="256">シングルトレイン……
 バトルサブウェイで　もっとも▽
-れきしのある　しゃりょうさ</language>
+れきしのある　車両さ</language>
 	</row>
 
 	<row id="msg_t05_railfan_railtalk1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -410,7 +410,7 @@ Sシングル</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">この　しゃりょうは
 スーパーシングルトレイン！</language>
-		<language name="JPN_KANJI" width="256">この　しゃりょうは
+		<language name="JPN_KANJI" width="256">この　車両は
 スーパーシングルトレイン！</language>
 	</row>
 
@@ -421,7 +421,7 @@ Sシングル</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">この　しゃりょうは
 ダブルトレイン！</language>
-		<language name="JPN_KANJI" width="256">この　しゃりょうは
+		<language name="JPN_KANJI" width="256">この　車両は
 ダブルトレイン！</language>
 	</row>
 
@@ -432,7 +432,7 @@ Sダブル</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">この　しゃりょうは
 スーパーダブルトレイン！</language>
-		<language name="JPN_KANJI" width="256">この　しゃりょうは
+		<language name="JPN_KANJI" width="256">この　車両は
 スーパーダブルトレイン！</language>
 	</row>
 
@@ -443,7 +443,7 @@ Sダブル</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">この　しゃりょうは
 マルチトレイン！</language>
-		<language name="JPN_KANJI" width="256">この　しゃりょうは
+		<language name="JPN_KANJI" width="256">この　車両は
 マルチトレイン！</language>
 	</row>
 
@@ -454,7 +454,7 @@ Sマルチ</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">この　しゃりょうは
 スーパーマルチトレイン！</language>
-		<language name="JPN_KANJI" width="256">この　しゃりょうは
+		<language name="JPN_KANJI" width="256">この　車両は
 スーパーマルチトレイン！</language>
 	</row>
 
@@ -465,7 +465,7 @@ Wi-Fi</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">この　しゃりょうは
 Ｗｉ－Ｆｉトレイン！</language>
-		<language name="JPN_KANJI" width="256">この　しゃりょうは
+		<language name="JPN_KANJI" width="256">この　車両は
 Ｗｉ－Ｆｉトレイン！</language>
 	</row>
 
@@ -476,7 +476,7 @@ Wi-Fi</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">ごぞんじ　カナワタウンいき
 ローカルトレイン！</language>
-		<language name="JPN_KANJI" width="256">ごぞんじ　カナワタウンいき
+		<language name="JPN_KANJI" width="256">ご存じ　カナワタウン行き
 ローカルトレイン！</language>
 	</row>
 
@@ -487,7 +487,7 @@ Wi-Fi</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">この　しゃりょうは
 レトロトレイン！</language>
-		<language name="JPN_KANJI" width="256">この　しゃりょうは
+		<language name="JPN_KANJI" width="256">この　車両は
 レトロトレイン！</language>
 	</row>
 
@@ -498,7 +498,7 @@ Wi-Fi</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">この　しゃりょうは
 ニュートレイン！</language>
-		<language name="JPN_KANJI" width="256">この　しゃりょうは
+		<language name="JPN_KANJI" width="256">この　車両は
 ニュートレイン！</language>
 	</row>
 
@@ -615,7 +615,7 @@ Wi-Fi</comment>
 いがいと　たのしい　もんだろ</language>
 		<language name="JPN_KANJI" width="256">どうだい！
 もうそう　するのも▽
-いがいと　たのしい　もんだろ</language>
+意外と　楽しい　もんだろ</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -625,8 +625,8 @@ Wi-Fi</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">シングルトレインの　みりょく
 たんのう　できたかな</language>
-		<language name="JPN_KANJI" width="256">シングルトレインの　みりょく
-たんのう　できたかな</language>
+		<language name="JPN_KANJI" width="256">シングルトレインの　魅力
+堪能できたかな</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -636,8 +636,8 @@ Sシングル</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">スーパーシングルトレインの　みりょく
 たんのう　できたかな</language>
-		<language name="JPN_KANJI" width="256">スーパーシングルトレインの　みりょく
-たんのう　できたかな</language>
+		<language name="JPN_KANJI" width="256">スーパーシングルトレインの　魅力
+堪能できたかな</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -647,8 +647,8 @@ Sシングル</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">ダブルトレインの　みりょく
 たんのう　できたかな</language>
-		<language name="JPN_KANJI" width="256">ダブルトレインの　みりょく
-たんのう　できたかな</language>
+		<language name="JPN_KANJI" width="256">ダブルトレインの　魅力
+堪能できたかな</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -658,8 +658,8 @@ Sダブル</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">スーパーダブルトレインの　みりょく
 たんのう　できたかな</language>
-		<language name="JPN_KANJI" width="256">スーパーダブルトレインの　みりょく
-たんのう　できたかな</language>
+		<language name="JPN_KANJI" width="256">スーパーダブルトレインの　魅力
+堪能できたかな</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -669,8 +669,8 @@ Sダブル</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">マルチトレインの　みりょく
 たんのう　できたかな</language>
-		<language name="JPN_KANJI" width="256">マルチトレインの　みりょく
-たんのう　できたかな</language>
+		<language name="JPN_KANJI" width="256">マルチトレインの　魅力
+堪能できたかな</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -680,8 +680,8 @@ Sマルチ</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">スーパーマルチトレインの　みりょく
 たんのう　できたかな</language>
-		<language name="JPN_KANJI" width="256">スーパーマルチトレインの　みりょく
-たんのう　できたかな</language>
+		<language name="JPN_KANJI" width="256">スーパーマルチトレインの　魅力
+堪能できたかな</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -691,8 +691,8 @@ Wi-Fi</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">Ｗｉ－Ｆｉトレインの　みりょく
 たんのう　できたかな</language>
-		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉトレインの　みりょく
-たんのう　できたかな</language>
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉトレインの　魅力
+堪能できたかな</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -702,8 +702,8 @@ Wi-Fi</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">レトロトレインの　みりょく
 たんのう　できたかな</language>
-		<language name="JPN_KANJI" width="256">レトロトレインの　みりょく
-たんのう　できたかな</language>
+		<language name="JPN_KANJI" width="256">レトロトレインの　魅力
+堪能できたかな</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -713,8 +713,8 @@ Wi-Fi</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">ニュートレインの　みりょく
 たんのう　できたかな</language>
-		<language name="JPN_KANJI" width="256">ニュートレインの　みりょく
-たんのう　できたかな</language>
+		<language name="JPN_KANJI" width="256">ニュートレインの　魅力
+堪能できたかな</language>
 	</row>
 
 	<row id="msg_t05_recept_01">
@@ -735,17 +735,17 @@ Wi-Fi</comment>
 		<language name="JPN" width="256">よし　それじゃあ
 でんしゃに　のってくれ▼</language>
 		<language name="JPN_KANJI" width="256">よし　それじゃあ
-でんしゃに　のってくれ▼</language>
+電車に　のってくれ▼</language>
 	</row>
 
 	<row id="msg_t05_recept_03">
 		<comment>♂
 いいえ</comment>
 		<attribute name="キャラ指定">RAILMAN</attribute>
-		<language name="JPN" width="256">うんうん　なにもないけど
-ゆっくりしていってよ</language>
-		<language name="JPN_KANJI" width="256">うんうん　なにもないけど
-ゆっくりしていってよ</language>
+		<language name="JPN" width="256">うんうん　なにも　ないけど
+ゆっくり　していってよ</language>
+		<language name="JPN_KANJI" width="256">うんうん　なにも　ないけど
+ゆっくり　していってよ</language>
 	</row>
 
 	<row id="msg_t05_exchange_sys_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -771,15 +771,15 @@ Wi-Fi</comment>
 		<language name="JPN" width="256">トレーナーどうしの　たすけあい
 ぶつぶつこうかん　しようよ▼
 そうだなあ……▼
-[1:09:どうぐ名:0]　[2:01:２桁:1]こを
-[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コに▽
 こうかん　しないかい？</language>
-		<language name="JPN_KANJI" width="256">トレーナーどうしの　たすけあい
-ぶつぶつこうかん　しようよ▼
+		<language name="JPN_KANJI" width="256">トレーナー同士の　助け合い
+ぶつぶつ交換　しようよ▼
 そうだなあ……▼
-[1:09:どうぐ名:0]　[2:01:２桁:1]こを
-[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
-こうかん　しないかい？</language>
+[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コに▽
+交換しないかい？</language>
 	</row>
 
 	<row id="msg_t05_backpackerm_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -788,12 +788,12 @@ Wi-Fi</comment>
 ※マップ切り替えでリセット
 はい／いいえ表示</comment>
 		<attribute name="キャラ指定">BACKPACKERM</attribute>
-		<language name="JPN" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]こを
-[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+		<language name="JPN" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コに▽
 こうかん　しないかい？</language>
-		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]こを
-[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
-こうかん　しないかい？</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コに▽
+交換しないかい？</language>
 	</row>
 
 	<row id="msg_t05_backpackerm_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -801,7 +801,7 @@ Wi-Fi</comment>
 はい</comment>
 		<attribute name="キャラ指定">BACKPACKERM</attribute>
 		<language name="JPN" width="256">よーし　レッツこうかん！▼</language>
-		<language name="JPN_KANJI" width="256">よーし　レッツこうかん！▼</language>
+		<language name="JPN_KANJI" width="256">よーし　レッツ交換！▼</language>
 	</row>
 
 	<row id="msg_t05_backpackerm_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -819,7 +819,7 @@ Wi-Fi</comment>
 		<language name="JPN" width="256">ゆふふ　ホクホクな
 こうかん　だったね！</language>
 		<language name="JPN_KANJI" width="256">ゆふふ　ホクホクな
-こうかん　だったね！</language>
+交換　だったね！</language>
 	</row>
 
 	<row id="msg_t05_businessman_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -835,16 +835,16 @@ Wi-Fi</comment>
 わたしと　ビジネスライクな▽
 ぶつぶつこうかんを　しないかい？▼
 そうですね……▼
-[1:09:どうぐ名:0]　[2:01:２桁:1]こを
-[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コに▽
 こうかん　しないかい？</language>
 		<language name="JPN_KANJI" width="256">そこの　きみ！
 わたしと　ビジネスライクな▽
-ぶつぶつこうかんを　しないかい？▼
+ぶつぶつ交換を　しないかい？▼
 そうですね……▼
-[1:09:どうぐ名:0]　[2:01:２桁:1]こを
-[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
-こうかん　しないかい？</language>
+[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コに▽
+交換しないかい？</language>
 	</row>
 
 	<row id="msg_t05_businessman_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -853,12 +853,12 @@ Wi-Fi</comment>
 ※マップ切り替えでリセット
 はい／いいえ表示</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
-		<language name="JPN" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]こを
-[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+		<language name="JPN" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コに▽
 こうかん　しないかい？</language>
-		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]こを
-[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
-こうかん　しないかい？</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コに▽
+交換しないかい？</language>
 	</row>
 
 	<row id="msg_t05_businessman_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -888,9 +888,9 @@ Wi-Fi</comment>
 こういうの　ウィンウィンな
 かんけいって　いうんだよね</language>
 		<language name="JPN_KANJI" width="256">フフフ　おたがい
-よい　こうかん　だったね！▽
+よい　交換　だったね！▽
 こういうの　ウィンウィンな
-かんけいって　いうんだよね</language>
+関係って　いうんだよね</language>
 	</row>
 
 	<row id="msg_t05_trainerw_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -904,15 +904,15 @@ Wi-Fi</comment>
 		<language name="JPN" width="256">あら　あなた？
 そのかおは　わたしの▽
 おめあての　アレを　もってるタイプよね▼
-[1:09:どうぐ名:0]　[2:01:２桁:1]こを
-[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コに▽
 こうかん　してくれないかな？</language>
 		<language name="JPN_KANJI" width="256">あら　あなた？
 そのかおは　わたしの▽
 おめあての　アレを　もってるタイプよね▼
-[1:09:どうぐ名:0]　[2:01:２桁:1]こを
-[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
-こうかん　してくれないかな？</language>
+[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コに▽
+交換して　くれないかな？</language>
 	</row>
 
 	<row id="msg_t05_trainerw_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -921,12 +921,12 @@ Wi-Fi</comment>
 ※マップ切り替えでリセット
 はい／いいえ表示</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
-		<language name="JPN" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]こを
-[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
+		<language name="JPN" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コに▽
 こうかん　してくれないかな？</language>
-		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]こを
-[1:09:どうぐ名:2]　[2:01:２桁:3]こに▽
-こうかん　してくれないかな？</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コに▽
+交換して　くれないかな？</language>
 	</row>
 
 	<row id="msg_t05_trainerw_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -973,7 +973,7 @@ Wi-Fi</comment>
 でんしゃを　みにきたんですよ</language>
 		<language name="JPN_KANJI" width="256">しゅうまつは　にぎわうなあ▼
 あ　ぼくは　ですね
-でんしゃを　みにきたんですよ</language>
+電車を　みにきたんですよ</language>
 	</row>
 
 	<row id="msg_t05_woman2_01">
@@ -983,7 +983,7 @@ Wi-Fi</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">ぶつぶつこうかん
 やってみたら　いがいと　たのしいわ！</language>
-		<language name="JPN_KANJI" width="256">ぶつぶつこうかん
+		<language name="JPN_KANJI" width="256">ぶつぶつ交換
 やってみたら　いがいと　たのしいわ！</language>
 	</row>
 
@@ -1004,7 +1004,7 @@ Wi-Fi</comment>
 		<language name="JPN" width="256">うっふっふ
 おとくに　こうかん　しちゃうわよー！</language>
 		<language name="JPN_KANJI" width="256">うっふっふ
-おとくに　こうかん　しちゃうわよー！</language>
+おとくに　交換　しちゃうわよー！</language>
 	</row>
 
 	<row id="msg_t05_woman1_01">
@@ -1028,7 +1028,7 @@ Wi-Fi</comment>
 		<language name="JPN" width="256">でんしゃ　カッケー！▼
 え　おかあさん？
 どこかで　こうしょうしてるよ</language>
-		<language name="JPN_KANJI" width="256">でんしゃ　カッケー！▼
+		<language name="JPN_KANJI" width="256">電車　カッケー！▼
 え　おかあさん？
 どこかで　こうしょうしてるよ</language>
 	</row>
@@ -1041,7 +1041,7 @@ Wi-Fi</comment>
 		<language name="JPN" width="256">しゅうまつは
 ぶつぶつこうかんで　にぎわうよ</language>
 		<language name="JPN_KANJI" width="256">しゅうまつは
-ぶつぶつこうかんで　にぎわうよ</language>
+ぶつぶつ交換で　にぎわうよ</language>
 	</row>
 
 	<row id="msg_t05_oldman1_02">
@@ -1052,7 +1052,7 @@ Wi-Fi</comment>
 		<language name="JPN" width="256">きょうも　おおにぎわい
 きみも　ぶつぶつこうかん　かい？</language>
 		<language name="JPN_KANJI" width="256">きょうも　おおにぎわい
-きみも　ぶつぶつこうかん　かい？</language>
+きみも　ぶつぶつ交換　かい？</language>
 	</row>
 
 	<row id="msg_t05_railman_01">
@@ -1062,7 +1062,7 @@ Wi-Fi</comment>
 		<attribute name="キャラ指定">RAILMAN</attribute>
 		<language name="JPN" width="256">たくさんの　しゃりょうが
 ここで　やすんでいくんだよ</language>
-		<language name="JPN_KANJI" width="256">たくさんの　しゃりょうが
+		<language name="JPN_KANJI" width="256">たくさんの　車両が
 ここで　やすんでいくんだよ</language>
 	</row>
 
@@ -1074,7 +1074,7 @@ Wi-Fi</comment>
 		<language name="JPN" width="256">ひとが　たくさん　いるとさ
 でんしゃも　うれしそうな　きがするよ</language>
 		<language name="JPN_KANJI" width="256">ひとが　たくさん　いるとさ
-でんしゃも　うれしそうな　きがするよ</language>
+電車も　うれしそうな　きがするよ</language>
 	</row>
 
 	<flowchart-group-list>

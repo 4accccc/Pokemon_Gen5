@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-04-08T11:26:47"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T12:55:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="255"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1357" top="218" right="2062" bottom="838" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -305,7 +305,7 @@
 
 →アイテム入手処理へ</comment>
 		<attribute name="キャラ指定">RAILMAN</attribute>
-		<language name="JPN" width="256">おっと　そのかおは
+		<language name="JPN" width="256">おっと　その　かおは
 ポケモントレーナー！▼
 ぼくは　バトルサブウェイで
 はたらく　てつどういん！▼
@@ -318,18 +318,18 @@
 おとしものが　たえないんだ▼
 そうだ　ひきとりてが　いなかったから
 これを　あげるよ▼</language>
-		<language name="JPN_KANJI" width="256">おっと　そのかおは
+		<language name="JPN_KANJI" width="256">おっと　その顔は
 ポケモントレーナー！▼
 ぼくは　バトルサブウェイで
-はたらく　てつどういん！▼
+働く　鉄道員！▼
 きみは　バトルサブウェイに
-ちょうせん　したことは　あるかな？▼
-いつでも　しんけんしょうぶが　できる
+挑戦したことは　あるかな？▼
+いつでも　真剣勝負が　できる
 ホットな　スポットさ▼
-ただね　こまったことに
-しょうぶに　むちゅうに　なるあまり▽
-おとしものが　たえないんだ▼
-そうだ　ひきとりてが　いなかったから
+ただね　困ったことに
+勝負に　夢中に　なるあまり▽
+落し物が　たえないんだ▼
+そうだ　引き取り手が　いなかったから
 これを　あげるよ▼</language>
 	</row>
 
@@ -340,11 +340,9 @@
 
 →アイテム入手処理へ</comment>
 		<attribute name="キャラ指定">RAILMAN</attribute>
-		<language name="JPN" width="256">また　おとしものが
-でちゃってね▽
+		<language name="JPN" width="256">また　おとしものが　でちゃってね
 どーぞ　どーぞ▼</language>
-		<language name="JPN_KANJI" width="256">また　おとしものが
-でちゃってね▽
+		<language name="JPN_KANJI" width="256">また　落し物が　でちゃってね
 どーぞ　どーぞ▼</language>
 	</row>
 
@@ -360,9 +358,9 @@
 おとしものが　おおくてね！▼
 ひきとりてが　いないから
 よかったら　もらってちょーだいよ▼</language>
-		<language name="JPN_KANJI" width="256">やー　さいきん
-おとしものが　おおくてね！▼
-ひきとりてが　いないから
+		<language name="JPN_KANJI" width="256">やー　最近
+落し物が　多くてね！▼
+引き取り手が　いないから
 よかったら　もらってちょーだいよ▼</language>
 	</row>
 
@@ -372,15 +370,15 @@
 アイテム入手後</comment>
 		<attribute name="キャラ指定">RAILMAN</attribute>
 		<language name="JPN" width="256">いいの　いいの
-えんりょしないで！▼
+えんりょ　しないで！▼
 ぼくが　もっているより
-トレーナーさんが　つかってくれたほうが▽
+トレーナーさんが　つかったほうが▽
 どうぐも　うれしいだろうから！</language>
 		<language name="JPN_KANJI" width="256">いいの　いいの
-えんりょしないで！▼
-ぼくが　もっているより
-トレーナーさんが　つかってくれたほうが▽
-どうぐも　うれしいだろうから！</language>
+遠慮しないで！▼
+ぼくが　持っているより
+トレーナーさんが　使ったほうが▽
+道具も　うれしいだろうから！</language>
 	</row>
 
 	<row id="msg_t05r0301_railman_05">
@@ -390,8 +388,8 @@
 		<attribute name="キャラ指定">RAILMAN</attribute>
 		<language name="JPN" width="256">きがむいたら　バトルサブウェイに
 ちょうせんすると　よいよー</language>
-		<language name="JPN_KANJI" width="256">きがむいたら　バトルサブウェイに
-ちょうせんすると　よいよー</language>
+		<language name="JPN_KANJI" width="256">気が向いたら　バトルサブウェイに
+挑戦すると　よいよー</language>
 	</row>
 
 	<flowchart-group-list>
