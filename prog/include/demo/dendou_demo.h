@@ -20,7 +20,9 @@
 // 外部設定データ
 typedef struct {
 	// [ in ]
-	POKEPARTY * party;
+	const POKEPARTY * party;
+//	const MYSTATUS * mystatus;
+//	const PLAYTIME * ptime;
 }DENDOUDEMO_PARAM;
 
 

@@ -105,6 +105,9 @@ extern void DDEMOMAIN_SetBlendAlpha(void);
 extern void DDEMOMAIN_InitMsg( DDEMOMAIN_WORK * wk );
 extern void DDEMOMAIN_ExitMsg( DDEMOMAIN_WORK * wk );
 
+extern void DDEMOMAIN_InitSound( DDEMOMAIN_WORK * wk );
+extern void DDEMOMAIN_ExitSound( DDEMOMAIN_WORK * wk );
+
 
 extern void DDEMOMAIN_GetPokeMax( DDEMOMAIN_WORK * wk );
 extern void DDEMOMAIN_GetPokeData( DDEMOMAIN_WORK * wk );

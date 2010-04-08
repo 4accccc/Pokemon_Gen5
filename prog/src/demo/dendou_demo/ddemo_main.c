@@ -13,6 +13,7 @@
 #include "arc_def.h"
 #include "message.naix"
 #include "system/gfl_use.h"
+#include "sound/pm_sndsys.h"
 #include "sound/pm_wb_voice.h"
 #include "font/font.naix"
 
@@ -268,6 +269,33 @@ void DDEMOMAIN_ExitMsg( DDEMOMAIN_WORK * wk )
 	GFL_FONT_Delete( wk->font );
 	GFL_MSG_Delete( wk->mman );
 }
+
+static const u32 SndTbl[] = {
+//	SEQ_BGM_E_DENDOUIRI,
+
+	SEQ_SE_DDEMO_02A,
+	SEQ_SE_DDEMO_02B,
+	SEQ_SE_ROTATION_B,
+	SEQ_SE_DDEMO_01,
+	SEQ_SE_DDEMO_03,
+	SEQ_SE_DDEMO_04,
+};
+
+void DDEMOMAIN_InitSound( DDEMOMAIN_WORK * wk )
+{
+	PMSND_PlayBGM( SEQ_BGM_E_DENDOUIRI );
+	PMSND_PauseBGM( TRUE );
+
+	wk->sndHandle = SOUNDMAN_PresetSoundTbl( SndTbl, NELEMS(SndTbl) );
+
+	PMSND_PauseBGM( FALSE );
+}
+
+void DDEMOMAIN_ExitSound( DDEMOMAIN_WORK * wk )
+{
+	SOUNDMAN_ReleasePresetData( wk->sndHandle );
+}
+
 
 
 void DDEMOMAIN_GetPokeMax( DDEMOMAIN_WORK * wk )

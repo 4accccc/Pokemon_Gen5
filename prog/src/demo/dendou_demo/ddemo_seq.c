@@ -85,16 +85,6 @@ BOOL DDEMOSEQ_MainSeq( DDEMOMAIN_WORK * wk )
 	return TRUE;
 }
 
-static const u32 SndTbl[] = {
-//	SEQ_BGM_E_DENDOUIRI,
-
-	SEQ_SE_DDEMO_02A,
-	SEQ_SE_DDEMO_02B,
-	SEQ_SE_ROTATION_B,
-	SEQ_SE_DDEMO_01,
-	SEQ_SE_DDEMO_03,
-	SEQ_SE_DDEMO_04,
-};
 
 static int MainSeq_Init( DDEMOMAIN_WORK * wk )
 {
@@ -123,7 +113,7 @@ static int MainSeq_Init( DDEMOMAIN_WORK * wk )
 
 	DDEMOMAIN_GetPokeMax( wk );
 
-	wk->sndHandle = SOUNDMAN_PresetSoundTbl( SndTbl, NELEMS(SndTbl) );
+	DDEMOMAIN_InitSound( wk );
 
 	DDEMOMAIN_InitVBlank( wk );
 
@@ -134,7 +124,7 @@ static int MainSeq_Release( DDEMOMAIN_WORK * wk )
 {
 	DDEMOMAIN_ExitVBlank( wk );
 
-  SOUNDMAN_ReleasePresetData( wk->sndHandle );
+	DDEMOMAIN_ExitSound( wk );
 
 	DDEMOOBJ_Exit( wk );
 
@@ -197,6 +187,11 @@ static int MainSeq_Wait( DDEMOMAIN_WORK * wk )
 
 static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 {
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+		PMSND_StopBGM();
+		return SetFadeOut( wk, MAINSEQ_RELEASE );
+	}
+
 	switch( wk->subSeq ){
 	case 0:		// 初期ウェイト
 		wk->subSeq++;
