@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c09p01.h"
-  //.include  "c09p01.h"
+  .include  "c09p01.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,8 +21,18 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_bg_c09p01_elevator_01
 _EVENT_DATA    ev_zone_c09p01
+_EVENT_DATA    ev_c09p01_veteranm_01
+_EVENT_DATA    ev_c09p01_veteranw_01
+_EVENT_DATA    ev_pos_c09p01_stopper_01
 _EVENT_DATA_END
 
+
+//------------------------------注意--------------------------------//
+//																	//
+//	LOCALWORK15を使用しました。同マップ内の使用を禁止します。		//
+//				LOCALWORK15⇒ストッパーPOS 常時0で発動	//
+//																	//
+//------------------------------------------------------------------//
 
 /************************************************************/
 /*					ZONE_CHANGE_SCRIPT						*/
@@ -61,3 +71,101 @@ EVENT_START	ev_bg_c09p01_elevator_01
 }
 EVENT_END
 
+/**************************************************************/
+/* veteranm_01                                                      */
+/**************************************************************/
+EVENT_START  ev_c09p01_veteranm_01
+	_TALK_OBJ_START()
+
+	//四天王討伐状況で表示メッセージを変更
+	IF FLAG_ON( SYS_FLAG_BIGFOUR_GHOSTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_FIGHTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_ESPWIN ) THEN
+		
+		//四天王全員に勝利済みならエレベータへの誘導メッセージを表示
+		_BALLOONWIN_OBJMSG_POS( msg_c09p01_veteranm_02 , C09P01_VETERANM_01 , POS_UL )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+				
+	ELSE
+				
+		//それ以外なら通常メッセージを表示
+		_BALLOONWIN_OBJMSG_POS( msg_c09p01_veteranm_01 , C09P01_VETERANM_01 , POS_UL )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+				
+	ENDIF
+	
+EVENT_END
+
+/**************************************************************/
+/* veteranw_01                                                      */
+/**************************************************************/
+EVENT_START  ev_c09p01_veteranw_01
+	_TALK_OBJ_START()
+
+	//四天王討伐状況で表示メッセージを変更
+	IF FLAG_ON( SYS_FLAG_BIGFOUR_GHOSTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_FIGHTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_ESPWIN ) THEN
+		
+		//四天王全員に勝利済みならエレベータへの誘導メッセージを表示
+		_BALLOONWIN_OBJMSG_POS( msg_c09p01_veteranw_02 , C09P01_VETERANW_01 , POS_UL )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+				
+	ELSE
+				
+		//それ以外なら通常メッセージを表示
+		_BALLOONWIN_OBJMSG_POS( msg_c09p01_veteranw_01 , C09P01_VETERANW_01 , POS_UL )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+				
+	ENDIF
+	
+EVENT_END
+
+/**************************************************************/
+/* ストッパー：常時発動                                        */
+/**************************************************************/
+EVENT_START  ev_pos_c09p01_stopper_01
+	
+	//VETERANM「！」
+	_OBJ_ANIME( C09P01_VETERANM_01 , anm_veteranm_stop_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//VETERANM：戻るよう促す
+	
+	//四天王討伐状況で表示メッセージを変更
+	IF FLAG_ON( SYS_FLAG_BIGFOUR_GHOSTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_FIGHTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_ESPWIN ) THEN
+	
+		//四天王全員に勝利済みならエレベータへの誘導メッセージを表示
+		_BALLOONWIN_OBJMSG_POS( msg_c09p01_veteranm_04 , C09P01_VETERANM_01 , POS_UL )
+		_BALLOONWIN_CLOSE()
+				
+	ELSE
+				
+		//それ以外なら通常メッセージを表示
+		_BALLOONWIN_OBJMSG_POS( msg_c09p01_veteranm_03 , C09P01_VETERANM_01 , POS_UL )
+		_BALLOONWIN_CLOSE()
+				
+	ENDIF
+	
+	//主人公戻る
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_stopper_player_return01)
+	_OBJ_ANIME_WAIT()
+		
+EVENT_END
+
+//--------------------------------------------------------------
+//	VETERANMストッパー主人公を引き止める
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_veteranm_stop_01
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	主人公ストッパーで戻される
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_stopper_player_return01
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	ACMD_END,0
