@@ -1946,8 +1946,13 @@ static GFL_PROC_RESULT GSYNCProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
 {
   G_SYNC_WORK* pWork = mywk;
 
+  if(pWork->pAppTask){
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+  }
   GSYNC_MESSAGE_End(pWork->pMessageWork);
   GSYNC_DISP_End(pWork->pDispWork);
+
+
   if(pWork->pp){
     GFL_HEAP_FreeMemory(pWork->pp);
   }
