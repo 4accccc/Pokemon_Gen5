@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T13:33:52"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T14:39:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -559,7 +559,8 @@ princess_01</attribute>
 ・ジムに入ると
 　主人公に隣接してメッセージ表示
 ・No030「おいしいみず」入手</comment>
-		<attribute name="キャラ指定">ダンペイ</attribute>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">どうっすか？
 おどろいたでしょう！？[BE:01:ページ切り替え（クリア）]
 このジムは　みてのとおり
@@ -578,7 +579,8 @@ princess_01</attribute>
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手後
 ・ジムバッジ取得まで繰り返し</comment>
-		<attribute name="キャラ指定">ダンペイ</attribute>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">この　ジェットコースター　ジムは
 まず　コースターに　のる！[BE:01:ページ切り替え（クリア）]
 つぎに　プラットフォーム……
@@ -604,7 +606,8 @@ princess_01</attribute>
 ・ジムバッジ取得後
 ※ジェットコースタームービー
 　ローラーコースタームービー</comment>
-		<attribute name="キャラ指定">ダンペイ</attribute>
+		<attribute name="キャラ指定">DANPEI
+ダンペイ</attribute>
 		<language name="JPN" width="256">カミツレさんの　まぶしく
 かれいな　でんきこうげき！[BE:01:ページ切り替え（クリア）]
 それを　うわまわった　あんたと

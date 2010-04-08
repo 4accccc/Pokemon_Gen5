@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T21:16:27"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T14:41:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1553" top="294" right="2258" bottom="914" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -351,7 +351,7 @@
 	</row>
 
 	<row id="msg_touroku_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>■メッセージ登録少年（ギアステーション内に配置）
+		<comment>■メッセージ登録少年
 ・選択肢表示
 　「じこしょうかい」→msg_touroku_02
 　「かったとき」→msg_touroku_03
@@ -371,7 +371,7 @@
 	</row>
 
 	<row id="msg_touroku_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>■メッセージ登録少年（ギアステーション内に配置）
+		<comment>■メッセージ登録少年
 ・メッセージ終了後簡易会話入力へ
 ・キャンセルした場合→msg_touroku_05
 　入力した場合→msg_touroku_06</comment>
@@ -384,7 +384,7 @@
 	</row>
 
 	<row id="msg_touroku_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>■メッセージ登録少年（ギアステーション内に配置）
+		<comment>■メッセージ登録少年
 ・メッセージ終了後簡易会話入力へ
 ・キャンセルした場合→msg_touroku_05
 　入力した場合→msg_touroku_06</comment>
@@ -397,7 +397,7 @@
 	</row>
 
 	<row id="msg_touroku_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>■メッセージ登録少年（ギアステーション内に配置）
+		<comment>■メッセージ登録少年
 ・メッセージ終了後簡易会話入力へ
 ・キャンセルした場合→msg_touroku_05
 　入力した場合→msg_touroku_06</comment>
@@ -410,7 +410,7 @@
 	</row>
 
 	<row id="msg_touroku_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>■メッセージ登録少年（ギアステーション内に配置）
+		<comment>■メッセージ登録少年
 ・メッセージ終了後簡易会話入力へ
 ・キャンセルした場合→msg_touroku_05
 　入力した場合→msg_touroku_06</comment>
@@ -423,7 +423,7 @@
 	</row>
 
 	<row id="msg_touroku_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>■メッセージ登録少年（ギアステーション内に配置）
+		<comment>■メッセージ登録少年
 ・メッセージ表示後イベント終了
 ・0＝簡易会話単語</comment>
 		<attribute name="キャラ指定">BOY1
@@ -435,7 +435,7 @@
 	</row>
 
 	<row id="msg_touroku_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>■メッセージ登録少年（ギアステーション内に配置）
+		<comment>■メッセージ登録少年
 ・メッセージ表示後イベント終了</comment>
 		<attribute name="キャラ指定">BOY1
 少年</attribute>
@@ -446,7 +446,7 @@
 	</row>
 
 	<row id="msg_touroku_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>■メッセージ登録少年（ギアステーション内に配置）
+		<comment>■メッセージ登録少年
 　「はい」→選択肢表示へ
 　「いいえ」→msg_touroku_05</comment>
 		<attribute name="キャラ指定">BOY1

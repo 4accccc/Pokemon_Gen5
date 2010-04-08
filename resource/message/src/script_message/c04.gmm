@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-07T22:22:46"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T14:39:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1455" top="95" right="2160" bottom="875" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -429,7 +429,7 @@
 ・続けて隣接してwhite_02
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀
-サポート</attribute>
+ベル</attribute>
 		<language name="JPN" width="256">ベル『おーい　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ベル『おーい　[1:00:トレーナー名:0]！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -439,7 +439,7 @@
 ・表示後、その場で一回転アニメ
 ・続けてwhite_04</comment>
 		<attribute name="キャラ指定">友達♀
-サポート</attribute>
+ベル</attribute>
 		<language name="JPN" width="256">はかせに　おしえてもらったけど
 ライモンシティって▽
 みどころ　いっぱい　なんでしょ！▼
@@ -459,7 +459,7 @@
 ・表示後、画面上に移動
 ・画面外に消えると、主人公操作可能に</comment>
 		<attribute name="キャラ指定">友達♀
-サポート</attribute>
+ベル</attribute>
 		<language name="JPN" width="256">あたしは　ミュージカルに
 いくつもりなの！　じゃあねえ！！▼</language>
 		<language name="JPN_KANJI" width="256">あたしは　ミュージカルに
@@ -474,7 +474,7 @@
 ・msg_c04_white_07表示後は
 　このイベントは発生しない</comment>
 		<attribute name="キャラ指定">友達♀
-サポート</attribute>
+ベル</attribute>
 		<language name="JPN" width="256">ベル『おーい　[1:00:トレーナー名:0]！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『おーい　[1:00:トレーナー名:0]！▼</language>
 	</row>
@@ -485,7 +485,7 @@
 　ミュージカルホールに
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀
-サポート</attribute>
+ベル</attribute>
 		<language name="JPN" width="256">さっき　ミュージカルホールを
 のぞいたんだけど　すごいよー！？▼
 せっかくだからさー
@@ -506,7 +506,7 @@
 　このメッセージ表示
 ・表示後、サポートと主人公、ミュージカルホール内へ</comment>
 		<attribute name="キャラ指定">友達♀
-サポート</attribute>
+ベル</attribute>
 		<language name="JPN" width="256">はい　とうちゃくー！
 じゃあ　はいろうっ！▼</language>
 		<language name="JPN_KANJI" width="256">はい　到着ー！
@@ -521,7 +521,7 @@
 ・表示後、サポートと主人公、ミュージカルホール内へ
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀
-サポート</attribute>
+ベル</attribute>
 		<language name="JPN" width="256">ベル『あっ　[1:00:トレーナー名:0]！▼
 ミュージカルが　きになる？
 じゃあ　いっしょに　はいろうっ！▼</language>
@@ -537,7 +537,7 @@
 　さらに一歩前進してイベント開始
 　続けてmiddleman1_01</comment>
 		<attribute name="キャラ指定">友達♀
-サポート</attribute>
+ベル</attribute>
 		<language name="JPN" width="256">ベル『パパ！？
 どうしたの　こんなところで？▼</language>
 		<language name="JPN_KANJI" width="256">ベル『パパ！？
@@ -565,7 +565,7 @@
 ・続けてmiddleman1_02
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀
-サポート</attribute>
+ベル</attribute>
 		<language name="JPN" width="256">ベル『やだあ！！▼
 [1:00:トレーナー名:0]や　ともだちと
 いっしょに　たび　するんだもん！▼</language>
@@ -589,7 +589,7 @@
 		<comment>♀
 ・続けてleader_01</comment>
 		<attribute name="キャラ指定">友達♀
-サポート</attribute>
+ベル</attribute>
 		<language name="JPN" width="256">ベル『だったら▼
 アタシは　アタシ！
 パパは　パパ　だもん！▼</language>
@@ -704,7 +704,7 @@
 （一歩前に出て）
 ・続けてmiddleman1_05</comment>
 		<attribute name="キャラ指定">友達♀
-サポート</attribute>
+ベル</attribute>
 		<language name="JPN" width="256">ベル『おねがい！▼
 パパの　しんぱいとおり
 たいへんなことが　あるのは
