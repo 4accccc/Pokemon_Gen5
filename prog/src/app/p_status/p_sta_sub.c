@@ -325,6 +325,10 @@ void PSTATUS_SUB_Main( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
       ofs.y = (sin*PSTATUS_SUB_TURN_HEIGHT);
       PSTATUS_SUB_SetShadowHeight( work , subWork , ofs.y );
     }
+    if( subWork->isGround == TRUE )
+    {
+      ofs.y = 0;
+    }
     MCSS_SetOfsPosition( subWork->pokeMcss , &ofs );
     MCSS_SetOfsPosition( subWork->pokeMcssBack , &ofs );
     GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );

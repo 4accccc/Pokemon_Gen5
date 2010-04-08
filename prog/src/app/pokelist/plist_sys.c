@@ -353,6 +353,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
 
   GFL_NET_WirelessIconEasy_HoldLCD( TRUE , work->heapId );
   GFL_NET_ReloadIcon();
+
   
 #if USE_DEBUGWIN_SYSTEM
   PLIST_InitDebug( work );
@@ -621,6 +622,7 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
       {
         POKEMON_PARAM *pp = PokeParty_GetMemberPointer(work->plData->pp, i);
         PP_Put( pp , ID_PARA_hp , 1 );
+        PP_Put( pp , ID_PARA_pp1 , 1 );
         PP_SetSick( pp , POKESICK_DOKU );
       }
     }
@@ -784,6 +786,10 @@ static void PLIST_InitGraphic( PLIST_WORK *work )
   {
     vramBank.sub_obj = GX_VRAM_SUB_OBJ_128_D;
     vramBank.teximage = GX_VRAM_TEX_NONE;
+  }
+  else
+  {
+    vramBank.sub_obj = GX_VRAM_SUB_OBJ_16_I;
   }
 
   GFL_DISP_GX_InitVisibleControl();
@@ -3103,6 +3109,7 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
       const BOOL canUse = STATUS_RCV_RecoverCheck( work->selectPokePara , work->plData->item , work->menuRet-PMIT_WAZA_1 , work->heapId );
       if( canUse == TRUE )
       {
+        GFL_BG_LoadScreenReq( PLIST_BG_MENU );  //‚¿‚ç‚Â‚«‚Ú‚¤‚µI
         PLIST_ITEM_MSG_UseItemFunc( work );
         
         //ŽÀÛ‚ÉÁ”ï‚Æ“K—p
