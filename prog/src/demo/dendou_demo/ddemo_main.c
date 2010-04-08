@@ -11,16 +11,20 @@
 #include <gflib.h>
 
 #include "arc_def.h"
+#include "message.naix"
 #include "system/gfl_use.h"
+#include "sound/pm_wb_voice.h"
+#include "font/font.naix"
 
 #include "ddemo_main.h"
 #include "dendou_demo_gra.naix"
 
 
-
 //============================================================================================
 //	定数定義
 //============================================================================================
+#define	EXP_BUF_SIZE	( 1024 )	// テンポラリメッセージバッファサイズ
+
 #define DTCM_SIZE		(0x1000)		// ジオメトリバッファの使用サイズ
 
 
@@ -103,10 +107,10 @@ static void VBlankTask( GFL_TCB * tcb, void * work )
 	wk = work;
 
 	GFL_BG_VBlankFunc();
-	GFL_CLACT_SYS_VBlankFunc();
 
 	PaletteFadeTrans( wk->pfd );
 */
+	GFL_CLACT_SYS_VBlankFunc();
 	GFL_G3D_DOUBLE3D_VblankIntr();
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
@@ -218,6 +222,91 @@ void DDEMOMAIN_SetBlendAlpha(void)
 		GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BD,
 		6, 10 );
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  メッセージ関連初期化
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void DDEMOMAIN_InitMsg( DDEMOMAIN_WORK * wk )
+{
+	wk->mman = GFL_MSG_Create(
+							GFL_MSG_LOAD_NORMAL,
+							ARCID_MESSAGE, NARC_message_dendou_demo_dat, HEAPID_DENDOU_DEMO );
+	wk->font = GFL_FONT_Create(
+							ARCID_FONT, NARC_font_large_gftr,
+							GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_DENDOU_DEMO );
+  wk->nfnt = GFL_FONT_Create(
+							ARCID_FONT, NARC_font_num_gftr,
+							GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_DENDOU_DEMO );
+	wk->wset = WORDSET_Create( HEAPID_DENDOU_DEMO );
+	wk->que  = PRINTSYS_QUE_Create( HEAPID_DENDOU_DEMO );
+	wk->exp  = GFL_STR_CreateBuffer( EXP_BUF_SIZE, HEAPID_DENDOU_DEMO );
+
+  PRINTSYS_QUE_ForceCommMode( wk->que, TRUE );      // テスト
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  メッセージ関連解放
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void DDEMOMAIN_ExitMsg( DDEMOMAIN_WORK * wk )
+{
+	GFL_STR_DeleteBuffer( wk->exp );
+	PRINTSYS_QUE_Delete( wk->que );
+	WORDSET_Delete( wk->wset );
+	GFL_FONT_Delete( wk->nfnt );
+	GFL_FONT_Delete( wk->font );
+	GFL_MSG_Delete( wk->mman );
+}
+
+
+void DDEMOMAIN_GetPokeMax( DDEMOMAIN_WORK * wk )
+{
+	wk->pokeMax = PokeParty_GetPokeCount( wk->dat->party );
+}
+
+void DDEMOMAIN_GetPokeData( DDEMOMAIN_WORK * wk )
+{
+	POKEMON_PARAM * pp;
+	BOOL	fast;
+	
+	pp = PokeParty_GetMemberPointer( wk->dat->party, wk->pokePos );
+
+	fast = PP_FastModeOn( pp );
+
+	wk->monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+	wk->type   = PP_Get( pp, ID_PARA_type1, NULL );
+	wk->form   = PP_Get( pp, ID_PARA_form_no, NULL );
+
+	PP_FastModeOff( pp, fast );
+}
+
+void DDEMOMAIN_LoadPokeVoice( DDEMOMAIN_WORK * wk )
+{
+	// @TODO ペラップチェック
+	if( wk->monsno == MONSNO_PERAPPU ){
+#if 0
+		PMV_REF	pmvRef;
+    PMV_MakeRefDataMine( &pmvRef );
+		wk->voicePlayer = PMVOICE_LoadOnly( wk->monsno, wk->form, 64, FALSE, 0, 0, FALSE, (u32)&pmvRef );
+#else
+		wk->voicePlayer = PMVOICE_LoadOnly( wk->monsno, wk->form, 64, FALSE, 0, 0, FALSE, NULL );
+#endif
+	}else{
+		wk->voicePlayer = PMVOICE_LoadOnly( wk->monsno, wk->form, 64, FALSE, 0, 0, FALSE, NULL );
+	}
+}
+
 
 
 

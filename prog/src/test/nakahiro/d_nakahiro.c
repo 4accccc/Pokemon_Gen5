@@ -442,6 +442,9 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		break;
 
 	case  MAIN_SEQ_DENDOU_DEMO:
+		wk->vsl_data.myPP = PokeParty_AllocPartyWork( wk->heapID );
+		SetPokeParty( wk, wk->vsl_data.myPP, VSMListMonsL, VSMListItemL );
+		wk->ddemo_data.party = wk->vsl_data.myPP;
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(dendou_demo), &DENDOUDEMO_ProcData, &wk->ddemo_data );
     wk->main_seq = MAIN_SEQ_END;
 		break;
