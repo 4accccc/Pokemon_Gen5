@@ -136,6 +136,7 @@ struct _ECAM_WORK {
 
   // カメラ復帰用データ
   BOOL              recoveryValidFlag; // 復帰データが有効かどうか
+  BOOL              recoveryValidFlagSp; // 復帰データが有効かどうか
   FIELD_CAMERA_MODE initialCameraMode; // カメラモード
   BOOL              cameraAreaFlag;    // カメラエリアの動作フラグ
 
@@ -159,7 +160,9 @@ static void ECamSetup_SP_OUT( ECAM_WORK* work ); // 特殊出入口から出る演出をセッ
 static void LoadSpData( ECAM_LOAD_DATA* dest, EXIT_TYPE exitType ); // 特殊出入り口のカメラ動作データを読み込む
 // カメラの準備・復帰
 static void SetupCamera( ECAM_WORK* work ); // カメラの設定を変更する
+static void SetupCameraSp( ECAM_WORK* work ); // カメラの設定を変更する
 static void RecoverCamera( const ECAM_WORK* work ); // カメラの設定を復帰する
+static void RecoverCameraSp( const ECAM_WORK* work ); // カメラの設定を復帰する
 static void AdjustCameraAngle( FIELD_CAMERA* camera ); // カメラアングルを再計算する
 static void SetCurrentCameraTargetPos( FIELD_CAMERA* camera ); // ターゲット座標を現在の実効値に設定する
 static void SetupCameraTargetPos( FIELD_CAMERA* camera, const VecFx32* targetPos ); // ターゲット座標を変更し, カメラに反映させる
@@ -288,6 +291,9 @@ void ENTRANCE_CAMERA_Recover( ECAM_WORK* work )
 {
   if( work->recoveryValidFlag ) {
     RecoverCamera( work );
+  }
+  else if( work->recoveryValidFlagSp ) {
+    RecoverCameraSp( work );
   }
 }
 
@@ -456,8 +462,8 @@ static void ECamSetup_IN( ECAM_WORK* work )
     VecFx32 ofs = {0, 0, 0};
 
     GetCurrentCameraParam( work->camera, endParam );
-    endParam->targetPos = endPos;
-    endParam->targetOffset = ofs;
+    //endParam->targetPos = endPos;
+    //endParam->targetOffset = ofs;
 
     switch( playerDir ) {
     case DIR_UP:    
@@ -565,8 +571,8 @@ static void ECamSetup_OUT( ECAM_WORK* work )
       break;
     default: GF_ASSERT(0); break;
     }
-    startParam->targetPos = stepPos;
-    VEC_Set( &startParam->targetOffset, 0, 0, 0 );
+    //startParam->targetPos = stepPos;
+    //VEC_Set( &startParam->targetOffset, 0, 0, 0 );
   }
 
   // 最終パラメータ ( = 現在値 )
@@ -620,7 +626,7 @@ static void ECamSetup_SP_IN( ECAM_WORK* work )
     FIELD_PLAYER_GetPos( player, &stepPos );
   }
 
-  SetupCamera( work ); // カメラの設定を変更
+  SetupCameraSp( work ); // カメラの設定を変更
   AdjustCameraAngle( camera ); // カメラアングルを再計算
   SetCurrentCameraTargetPos( camera ); // ターゲット座標を初期化
 
@@ -689,7 +695,7 @@ static void ECamSetup_SP_OUT( ECAM_WORK* work )
     SetupCameraTargetPos( camera, &stepPos );
   }
 
-  SetupCamera( work );
+  SetupCameraSp( work );
   AdjustCameraAngle( camera );
 
   // 最終パラメータ ( = 現在値 )
@@ -809,11 +815,11 @@ static void SetupCamera( ECAM_WORK* work )
   }
 
   // ターゲットのバインドをOFF
-  FIELD_CAMERA_FreeTarget( camera );
+  //FIELD_CAMERA_FreeTarget( camera );
 
   // カメラエリアを無効化
-  work->cameraAreaFlag = FIELD_CAMERA_GetCameraAreaActive( camera );
-  FIELD_CAMERA_SetCameraAreaActive( camera, FALSE );
+  //work->cameraAreaFlag = FIELD_CAMERA_GetCameraAreaActive( camera );
+  //FIELD_CAMERA_SetCameraAreaActive( camera, FALSE );
 
   // カメラモードを変更
   work->initialCameraMode = FIELD_CAMERA_GetMode( camera ); 
@@ -836,6 +842,69 @@ static void RecoverCamera( const ECAM_WORK* work )
   FIELD_CAMERA*  camera   = work->camera;
 
   GF_ASSERT( work->recoveryValidFlag );
+
+  // カメラエリアを復帰
+  //FIELD_CAMERA_SetCameraAreaActive( camera, work->cameraAreaFlag );
+
+  // ターゲットを元に戻す
+  FIELD_CAMERA_BindDefaultTarget( camera );
+
+  // カメラモードを復帰
+  FIELD_CAMERA_ChangeMode( camera, work->initialCameraMode );
+
+  // レールシステムのカメラ制御を復帰
+  if( FIELDMAP_GetBaseSystemType( fieldmap ) == FLDMAP_BASESYS_RAIL ) {
+    FLDNOGRID_MAPPER* NGMapper = FIELDMAP_GetFldNoGridMapper( fieldmap );
+    FLDNOGRID_MAPPER_SetRailCameraActive( NGMapper, TRUE );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief カメラ操作の準備をする
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void SetupCameraSp( ECAM_WORK* work )
+{
+  FIELDMAP_WORK* fieldmap = work->fieldmap;
+  FIELD_CAMERA*  camera   = work->camera;
+
+  // レールシステムのカメラ制御を停止
+  if( FIELDMAP_GetBaseSystemType( fieldmap ) == FLDMAP_BASESYS_RAIL ) {
+    FLDNOGRID_MAPPER* NGMapper = FIELDMAP_GetFldNoGridMapper( fieldmap );
+    FLDNOGRID_MAPPER_SetRailCameraActive( NGMapper, FALSE );
+  }
+
+  // ターゲットのバインドをOFF
+  FIELD_CAMERA_FreeTarget( camera );
+
+  // カメラエリアを無効化
+  work->cameraAreaFlag = FIELD_CAMERA_GetCameraAreaActive( camera );
+  FIELD_CAMERA_SetCameraAreaActive( camera, FALSE );
+
+  // カメラモードを変更
+  work->initialCameraMode = FIELD_CAMERA_GetMode( camera ); 
+  FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+  // フラグセット
+  work->recoveryValidFlagSp = TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief カメラの復帰をする
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void RecoverCameraSp( const ECAM_WORK* work )
+{
+  FIELDMAP_WORK* fieldmap = work->fieldmap;
+  FIELD_CAMERA*  camera   = work->camera;
+
+  GF_ASSERT( work->recoveryValidFlagSp );
 
   // カメラエリアを復帰
   FIELD_CAMERA_SetCameraAreaActive( camera, work->cameraAreaFlag );
