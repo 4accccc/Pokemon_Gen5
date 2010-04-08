@@ -34,6 +34,7 @@
 #ifdef PM_DEBUG
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_morimoto
 #define POINT_VIEW
+#define AI_SEQ_PRINT
 #endif
 #endif
 
@@ -307,7 +308,6 @@ static  void  ai_if_chouhatsu( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond )
 static  void  ai_if_hinshi( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
 static  BOOL  branch_act( VMHANDLE* vmh, BranchCond cond, int src, int dst, int adrs );
 static  BtlPokePos get_poke_pos( TR_AI_WORK* taw, int side );
-static  u32   get_table_data( int* adrs );
 static  int   get_tokusei( TR_AI_WORK* taw, int side, BtlPokePos pos );
 static  const BTL_POKEPARAM*  get_bpp( TR_AI_WORK* taw, BtlPokePos pos );
 static  const BTL_POKEPARAM*  get_bpp_from_party( const BTL_PARTY* pty, u8 idx );
@@ -973,6 +973,10 @@ static  VMCMD_RESULT  AI_IF_RND_UNDER( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_RND_UNDER\n");
+#endif
+
   ai_if_rnd( vmh, taw, COND_UNDER );
 
   return taw->vmcmd_result;
@@ -980,6 +984,10 @@ static  VMCMD_RESULT  AI_IF_RND_UNDER( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IF_RND_OVER( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_RND_OVER\n");
+#endif
 
   ai_if_rnd( vmh, taw, COND_OVER );
 
@@ -989,6 +997,10 @@ static  VMCMD_RESULT  AI_IF_RND_EQUAL( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_RND_EQUAL\n");
+#endif
+
   ai_if_rnd( vmh, taw, COND_EQUAL );
 
   return taw->vmcmd_result;
@@ -996,6 +1008,10 @@ static  VMCMD_RESULT  AI_IF_RND_EQUAL( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_RND_EQUAL( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_RND_EQUAL\n");
+#endif
 
   ai_if_rnd( vmh, taw, COND_NOTEQUAL );
 
@@ -1010,6 +1026,10 @@ static  void  ai_if_rnd( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond )
   int adrs  = ( int )VMGetU32( vmh );
   int rnd = GFL_STD_MtRand( 256 );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("value:%d adrs:%d rnd:%d\n",value,adrs,rnd);
+#endif
+
   branch_act( vmh, cond, rnd, value, adrs );
 }
 
@@ -1020,6 +1040,10 @@ static  VMCMD_RESULT  AI_INCDEC( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   int value = ( int )VMGetU32( vmh );
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_INCDEC\n");
+#endif
 
   taw->waza_point[ taw->waza_pos ] += value;
 
@@ -1038,6 +1062,10 @@ static  VMCMD_RESULT  AI_IF_HP_UNDER( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_HP_UNDER\n");
+#endif
+
   ai_if_hp( vmh, taw, COND_UNDER );
 
   return taw->vmcmd_result;
@@ -1047,6 +1075,10 @@ static  VMCMD_RESULT  AI_IF_HP_OVER( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_HP_OVER\n");
+#endif
+
   ai_if_hp( vmh, taw, COND_OVER );
 
   return taw->vmcmd_result;
@@ -1055,6 +1087,10 @@ static  VMCMD_RESULT  AI_IF_HP_EQUAL( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_HP_EQUAL\n");
+#endif
+
   ai_if_hp( vmh, taw, COND_EQUAL );
 
   return taw->vmcmd_result;
@@ -1062,6 +1098,10 @@ static  VMCMD_RESULT  AI_IF_HP_EQUAL( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_HP_EQUAL( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_HP_EQUAL\n");
+#endif
 
   ai_if_hp( vmh, taw, COND_NOTEQUAL );
 
@@ -1089,6 +1129,10 @@ static  VMCMD_RESULT  AI_IF_POKESICK( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_POKESICK\n");
+#endif
+
   ai_if_pokesick( vmh, context_work, COND_NOTEQUAL );
 
   return taw->vmcmd_result;
@@ -1096,6 +1140,10 @@ static  VMCMD_RESULT  AI_IF_POKESICK( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_POKESICK( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_POKESICK\n");
+#endif
 
   ai_if_pokesick( vmh, context_work, COND_EQUAL );
 
@@ -1122,6 +1170,10 @@ static  VMCMD_RESULT  AI_IF_WAZASICK( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_WAZASICK\n");
+#endif
+
   ai_if_wazasick( vmh, taw, COND_EQUAL );
 
   return taw->vmcmd_result;
@@ -1129,6 +1181,10 @@ static  VMCMD_RESULT  AI_IF_WAZASICK( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_WAZASICK( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_WAZASICK\n");
+#endif
 
   ai_if_wazasick( vmh, taw, COND_NOTEQUAL );
 
@@ -1156,6 +1212,10 @@ static  VMCMD_RESULT  AI_IF_DOKUDOKU( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_DOKUDOKU\n");
+#endif
+
   ai_if_moudoku( vmh, taw, COND_EQUAL );
 
   return taw->vmcmd_result;
@@ -1163,6 +1223,10 @@ static  VMCMD_RESULT  AI_IF_DOKUDOKU( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_DOKUDOKU( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_DOKUDOKU\n");
+#endif
 
   ai_if_moudoku( vmh, taw, COND_NOTEQUAL );
 
@@ -1198,6 +1262,10 @@ static  VMCMD_RESULT  AI_IF_CONTFLG( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_CONTFLG\n");
+#endif
+
   ai_if_contflg( vmh, taw, COND_EQUAL );
 
   return taw->vmcmd_result;
@@ -1205,6 +1273,10 @@ static  VMCMD_RESULT  AI_IF_CONTFLG( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_CONTFLG( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_CONTFLG\n");
+#endif
 
   ai_if_contflg( vmh, taw, COND_NOTEQUAL );
 
@@ -1231,6 +1303,10 @@ static  VMCMD_RESULT  AI_IF_SIDEEFF( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_SIDEEFF\n");
+#endif
+
   ai_if_sideeff( vmh, taw, COND_EQUAL );
 
   return taw->vmcmd_result;
@@ -1238,6 +1314,10 @@ static  VMCMD_RESULT  AI_IF_SIDEEFF( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_SIDEEFF( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_SIDEEFF\n");
+#endif
 
   ai_if_sideeff( vmh, taw, COND_NOTEQUAL );
 
@@ -1265,6 +1345,10 @@ static  VMCMD_RESULT  AI_IF_UNDER( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_UNDER\n");
+#endif
+
   ai_if( vmh, taw, COND_UNDER );
 
   return taw->vmcmd_result;
@@ -1272,6 +1356,10 @@ static  VMCMD_RESULT  AI_IF_UNDER( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IF_OVER( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_OVER\n");
+#endif
 
   ai_if( vmh, taw, COND_OVER );
 
@@ -1281,6 +1369,10 @@ static  VMCMD_RESULT  AI_IF_EQUAL( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_EQUAL\n");
+#endif
+
   ai_if( vmh, taw, COND_EQUAL );
 
   return taw->vmcmd_result;
@@ -1288,6 +1380,10 @@ static  VMCMD_RESULT  AI_IF_EQUAL( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_EQUAL( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_EQUAL\n");
+#endif
 
   ai_if( vmh, taw, COND_NOTEQUAL );
 
@@ -1297,6 +1393,10 @@ static  VMCMD_RESULT  AI_IF_BIT( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_BIT\n");
+#endif
+
   ai_if( vmh, taw, COND_BIT );
 
   return taw->vmcmd_result;
@@ -1304,6 +1404,10 @@ static  VMCMD_RESULT  AI_IF_BIT( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_BIT( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_BIT\n");
+#endif
 
   ai_if( vmh, taw, COND_NBIT );
 
@@ -1329,6 +1433,10 @@ static  VMCMD_RESULT  AI_IF_WAZANO( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_WAZANO\n");
+#endif
+
   ai_if_wazano( vmh, taw, COND_EQUAL );
 
   return taw->vmcmd_result;
@@ -1336,6 +1444,10 @@ static  VMCMD_RESULT  AI_IF_WAZANO( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_WAZANO( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_WAZANO\n");
+#endif
 
   ai_if_wazano( vmh, taw, COND_NOTEQUAL );
 
@@ -1358,17 +1470,22 @@ static  void  ai_if_wazano( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond )
 static  VMCMD_RESULT  AI_IF_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
-  int tbl_adrs  = ( int )VMGetU32( vmh );
+  int *tbl_adrs = (int*)(vmh->adrs + ( int )VMGetU32( vmh ));
   int jump_adrs = ( int )VMGetU32( vmh );
   int data;
 
-  while( ( data = get_table_data( &tbl_adrs ) ) != TR_AI_TABLE_END )
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_TABLE_JUMP\n");
+#endif
+
+  while( *tbl_adrs != TR_AI_TABLE_END )
   {
-    if( taw->calc_work == data )
+    if( taw->calc_work == *tbl_adrs )
     {
       VMCMD_Jump( vmh, vmh->adrs + jump_adrs );
       break;
     }
+    tbl_adrs++;
   }
 
   return taw->vmcmd_result;
@@ -1376,16 +1493,21 @@ static  VMCMD_RESULT  AI_IF_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
-  int tbl_adrs  = ( int )VMGetU32( vmh );
+  int *tbl_adrs = (int*)(vmh->adrs + ( int )VMGetU32( vmh ));
   int jump_adrs = ( int )VMGetU32( vmh );
   int data;
 
-  while( ( data = get_table_data( &tbl_adrs ) ) != TR_AI_TABLE_END )
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_TABLE_JUMP\n");
+#endif
+
+  while( *tbl_adrs != TR_AI_TABLE_END )
   {
-    if( taw->calc_work == data )
+    if( taw->calc_work == *tbl_adrs )
     {
       return taw->vmcmd_result;
     }
+    tbl_adrs++;
   }
   VMCMD_Jump( vmh, vmh->adrs + jump_adrs );
 
@@ -1400,6 +1522,10 @@ static  VMCMD_RESULT  AI_IF_HAVE_DAMAGE_WAZA( VMHANDLE* vmh, void* context_work 
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   int adrs = ( int )VMGetU32( vmh );
   int i;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_HAVE_DAMAGE_WAZA\n");
+#endif
 
   for( i = 0 ; i < BPP_WAZA_GetCount( taw->atk_bpp ) ; i++ )
   {
@@ -1421,6 +1547,10 @@ static  VMCMD_RESULT  AI_IFN_HAVE_DAMAGE_WAZA( VMHANDLE* vmh, void* context_work
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   int adrs = ( int )VMGetU32( vmh );
   int i;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_HAVE_DAMAGE_WAZA\n");
+#endif
 
   for( i = 0 ; i < BPP_WAZA_GetCount( taw->atk_bpp ) ; i++ )
   {
@@ -1445,6 +1575,10 @@ static  VMCMD_RESULT  AI_CHECK_TURN( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_TURN\n");
+#endif
+
   taw->calc_work = BTL_SVFTOOL_GetTurnCount( taw->svfWork );
 
   return taw->vmcmd_result;
@@ -1459,6 +1593,10 @@ static  VMCMD_RESULT  AI_CHECK_TYPE( VMHANDLE* vmh, void* context_work )
   int side  = ( int )VMGetU32( vmh );
   PokeTypePair  atk_type = BPP_GetPokeType( taw->atk_bpp );
   PokeTypePair  def_type = BPP_GetPokeType( taw->def_bpp );
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_TYPE\n");
+#endif
 
   switch( side ){
   case CHECK_ATTACK_TYPE1:
@@ -1515,6 +1653,10 @@ static  VMCMD_RESULT  AI_CHECK_IRYOKU( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_IRYOKU\n");
+#endif
+
   taw->calc_work = WAZADATA_GetPower( taw->waza_no );
 
   return taw->vmcmd_result;
@@ -1527,6 +1669,10 @@ static  VMCMD_RESULT  AI_COMP_POWER( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   int loss_flag = ( int )VMGetU32( vmh );
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_COMP_POWER\n");
+#endif
 
   //@todo 作成したけど、これで良いか後で確認
   {
@@ -1573,6 +1719,10 @@ static  VMCMD_RESULT  AI_CHECK_LAST_WAZA( VMHANDLE* vmh, void* context_work )
   int side  = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_LAST_WAZA\n");
+#endif
+
   taw->calc_work = BPP_GetPrevWazaID( get_bpp( taw, pos ) );
 
   return taw->vmcmd_result;
@@ -1590,6 +1740,10 @@ static  VMCMD_RESULT  AI_IF_FIRST( VMHANDLE* vmh, void* context_work )
   //@todo これで良いか確認。
   u16 atk_agility = BTL_SVFTOOL_CalcAgility( taw->svfWork, taw->atk_bpp, TRUE );
   u16 def_agility = BTL_SVFTOOL_CalcAgility( taw->svfWork, taw->def_bpp, TRUE );
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_FIRST\n");
+#endif
 
   if( atk_agility > def_agility ){
     VMCMD_Jump( vmh, vmh->adrs + adrs );
@@ -1611,6 +1765,10 @@ static  VMCMD_RESULT  AI_CHECK_BENCH_COUNT( VMHANDLE* vmh, void* context_work )
   //前衛の数
   u8  front_count = BTL_MAIN_GetClientCoverPosCount( taw->wk, clientID );
   int i;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_BENCH_COUNT\n");
+#endif
 
   taw->calc_work = 0;
 
@@ -1634,6 +1792,10 @@ static  VMCMD_RESULT  AI_CHECK_WAZANO( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_WAZANO\n");
+#endif
+
   taw->calc_work = taw->waza_no;
 
   return taw->vmcmd_result;
@@ -1645,6 +1807,10 @@ static  VMCMD_RESULT  AI_CHECK_WAZANO( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_CHECK_WAZASEQNO( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_WAZASEQNO\n");
+#endif
 
   taw->calc_work = get_waza_param( taw, taw->waza_no, WAZAPARAM_AI_SEQNO );
 
@@ -1660,6 +1826,10 @@ static  VMCMD_RESULT  AI_CHECK_TOKUSEI( VMHANDLE* vmh, void* context_work )
   int side  = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_TOKUSEI\n");
+#endif
+
   taw->calc_work = get_tokusei( taw, side, pos );
 
   return taw->vmcmd_result;
@@ -1671,6 +1841,10 @@ static  VMCMD_RESULT  AI_CHECK_TOKUSEI( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_CHECK_AISYOU( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_AISYOU\n");
+#endif
 
   GF_ASSERT_MSG( 0, "未作成" );
 
@@ -1688,6 +1862,10 @@ static  VMCMD_RESULT  AI_CHECK_WAZA_AISYOU( VMHANDLE* vmh, void* context_work )
   BtlTypeAff  aff = BTL_SVFTOOL_SimulationAffinity(
             taw->svfWork, BPP_GetID(taw->atk_bpp), BPP_GetID(taw->def_bpp), taw->waza_no );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_WAZA_AISYOU\n");
+#endif
+
   branch_act( vmh, COND_EQUAL, aff, aisyou, adrs );
 
   return taw->vmcmd_result;
@@ -1700,6 +1878,10 @@ static  VMCMD_RESULT  AI_IF_BENCH_COND( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_BENCH_COND\n");
+#endif
+
   ai_if_bench_cond( vmh, taw, COND_EQUAL );
 
   return taw->vmcmd_result;
@@ -1707,6 +1889,10 @@ static  VMCMD_RESULT  AI_IF_BENCH_COND( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_BENCH_COND( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_BENCH_COND\n");
+#endif
 
   ai_if_bench_cond( vmh, taw, COND_NOTEQUAL );
 
@@ -1748,6 +1934,10 @@ static  VMCMD_RESULT  AI_CHECK_WEATHER( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_WEATHER\n");
+#endif
+
   taw->calc_work = BTL_FIELD_GetWeather();
 
   return taw->vmcmd_result;
@@ -1760,6 +1950,10 @@ static  VMCMD_RESULT  AI_IF_WAZA_SEQNO_JUMP( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_WAZA_SEQNO_JUMP\n");
+#endif
+
   ai_if_waza_seq_no_jump( vmh, taw, COND_EQUAL );
 
   return taw->vmcmd_result;
@@ -1767,6 +1961,10 @@ static  VMCMD_RESULT  AI_IF_WAZA_SEQNO_JUMP( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_WAZA_SEQNO_JUMP( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_WAZA_SEQNO_JUMP\n");
+#endif
 
   ai_if_waza_seq_no_jump( vmh, taw, COND_NOTEQUAL );
 
@@ -1791,6 +1989,10 @@ static  VMCMD_RESULT  AI_IF_PARA_UNDER( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_PARA_UNDER\n");
+#endif
+
   ai_if_para( vmh, taw, COND_UNDER );
 
   return taw->vmcmd_result;
@@ -1798,6 +2000,10 @@ static  VMCMD_RESULT  AI_IF_PARA_UNDER( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IF_PARA_OVER( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_PARA_OVER\n");
+#endif
 
   ai_if_para( vmh, taw, COND_OVER );
 
@@ -1807,6 +2013,10 @@ static  VMCMD_RESULT  AI_IF_PARA_EQUAL( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_PARA_EQUAL\n");
+#endif
+
   ai_if_para( vmh, taw, COND_EQUAL );
 
   return taw->vmcmd_result;
@@ -1814,6 +2024,10 @@ static  VMCMD_RESULT  AI_IF_PARA_EQUAL( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_PARA_EQUAL( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_PARA_EQUAL\n");
+#endif
 
   ai_if_para( vmh, taw, COND_NOTEQUAL );
 
@@ -1842,6 +2056,10 @@ static  VMCMD_RESULT  AI_IF_WAZA_HINSHI( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_WAZA_HINSHI\n");
+#endif
+
   ai_if_waza_hinshi( vmh, taw, COND_OR_UNDER );
 
   return taw->vmcmd_result;
@@ -1849,6 +2067,10 @@ static  VMCMD_RESULT  AI_IF_WAZA_HINSHI( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_WAZA_HINSHI( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_WAZA_HINSHI\n");
+#endif
 
   ai_if_waza_hinshi( vmh, taw, COND_OVER );
 
@@ -1876,6 +2098,10 @@ static  VMCMD_RESULT  AI_IF_HAVE_WAZA( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_HAVE_WAZA\n");
+#endif
+
   ai_if_have_waza( vmh, taw, COND_EQUAL );
 
   return taw->vmcmd_result;
@@ -1883,6 +2109,10 @@ static  VMCMD_RESULT  AI_IF_HAVE_WAZA( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_HAVE_WAZA( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_HAVE_WAZA\n");
+#endif
 
   ai_if_have_waza( vmh, taw, COND_NOTEQUAL );
 
@@ -1955,6 +2185,10 @@ static  VMCMD_RESULT  AI_IF_HAVE_WAZA_SEQNO( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_HAVE_WAZA_SEQNO\n");
+#endif
+
   ai_if_have_waza_seqno( vmh, taw, COND_EQUAL );
 
   return taw->vmcmd_result;
@@ -1962,6 +2196,10 @@ static  VMCMD_RESULT  AI_IF_HAVE_WAZA_SEQNO( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_HAVE_WAZA_SEQNO( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_HAVE_WAZA_SEQNO\n");
+#endif
 
   ai_if_have_waza_seqno( vmh, taw, COND_NOTEQUAL );
 
@@ -2018,6 +2256,10 @@ static  VMCMD_RESULT  AI_IF_WAZA_CHECK_STATE( VMHANDLE* vmh, void* context_work 
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_WAZA_CHECK_STATE\n");
+#endif
+
   GF_ASSERT_MSG( 0, "未作成" );
 
   return taw->vmcmd_result;
@@ -2029,6 +2271,11 @@ static  VMCMD_RESULT  AI_IF_WAZA_CHECK_STATE( VMHANDLE* vmh, void* context_work 
 static  VMCMD_RESULT  AI_ESCAPE( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_ESCAPE\n");
+#endif
+
 
   GF_ASSERT_MSG( 0, "未作成" );
 
@@ -2042,6 +2289,10 @@ static  VMCMD_RESULT  AI_SAFARI_ESCAPE_JUMP( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_SAFARI_ESCAPE_JUMP\n");
+#endif
+
   GF_ASSERT_MSG( 0, "未作成" );
 
   return taw->vmcmd_result;
@@ -2053,6 +2304,10 @@ static  VMCMD_RESULT  AI_SAFARI_ESCAPE_JUMP( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_SAFARI( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_SAFARI\n");
+#endif
 
   GF_ASSERT_MSG( 0, "未作成" );
 
@@ -2067,6 +2322,10 @@ static  VMCMD_RESULT  AI_CHECK_SOUBI_ITEM( VMHANDLE* vmh, void* context_work )
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   int side  = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_SOUBI_ITEM\n");
+#endif
 
   taw->calc_work = BPP_GetItem( get_bpp( taw, pos ) );
 
@@ -2083,6 +2342,10 @@ static  VMCMD_RESULT  AI_CHECK_SOUBI_EQUIP( VMHANDLE* vmh, void* context_work )
   BtlPokePos  pos = get_poke_pos( taw, side );
   u32 item = BPP_GetItem( get_bpp( taw, pos ) );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_SOUBI_EQUIP\n");
+#endif
+
   taw->calc_work = ITEM_GetParam( item, ITEM_PRM_EQUIP, taw->heapID );
 
   return taw->vmcmd_result;
@@ -2096,6 +2359,10 @@ static  VMCMD_RESULT  AI_CHECK_POKESEX( VMHANDLE* vmh, void* context_work )
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   int side  = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_POKESEX\n");
+#endif
 
   taw->calc_work = BPP_GetValue( get_bpp( taw, pos ), BPP_SEX );
 
@@ -2112,6 +2379,10 @@ static  VMCMD_RESULT  AI_CHECK_NEKODAMASI( VMHANDLE* vmh, void* context_work )
   BtlPokePos  pos = get_poke_pos( taw, side );
   const BTL_POKEPARAM* bpp = get_bpp( taw, pos );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_NEKODAMASI\n");
+#endif
+
   taw->calc_work = ( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_ACTION_DONE) == FALSE );
 
   return taw->vmcmd_result;
@@ -2126,6 +2397,10 @@ static  VMCMD_RESULT  AI_CHECK_TAKUWAERU( VMHANDLE* vmh, void* context_work )
   int side  = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_TAKUWAERU\n");
+#endif
+
   taw->calc_work = BPP_COUNTER_Get( get_bpp( taw, pos ), BPP_COUNTER_TAKUWAERU );
 
   return taw->vmcmd_result;
@@ -2138,6 +2413,10 @@ static  VMCMD_RESULT  AI_CHECK_BTL_RULE( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_BTL_RULE\n");
+#endif
+
   taw->calc_work = taw->rule;
 
   return taw->vmcmd_result;
@@ -2149,6 +2428,10 @@ static  VMCMD_RESULT  AI_CHECK_BTL_RULE( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_CHECK_BTL_COMPETITOR( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_BTL_COMPETITOR\n");
+#endif
 
   taw->calc_work = taw->competitor;
 
@@ -2164,6 +2447,10 @@ static  VMCMD_RESULT  AI_CHECK_RECYCLE_ITEM( VMHANDLE* vmh, void* context_work )
   int side  = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_RECYCLE_ITEM\n");
+#endif
+
   taw->calc_work = BPP_GetConsumedItem( get_bpp( taw, pos ) );
 
   return taw->vmcmd_result;
@@ -2175,6 +2462,10 @@ static  VMCMD_RESULT  AI_CHECK_RECYCLE_ITEM( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_CHECK_WORKWAZA_TYPE( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_WORKWAZA_TYPE\n");
+#endif
 
   GF_ASSERT_MSG( 0, "未作成" );
 
@@ -2190,6 +2481,10 @@ static  VMCMD_RESULT  AI_CHECK_WORKWAZA_POW( VMHANDLE* vmh, void* context_work )
 
   GF_ASSERT( taw->calc_work < WAZANO_MAX );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_WORKWAZA_POW\n");
+#endif
+
   taw->calc_work = get_waza_param( taw, taw->calc_work, WAZAPARAM_POWER );
 
   return taw->vmcmd_result;
@@ -2201,6 +2496,10 @@ static  VMCMD_RESULT  AI_CHECK_WORKWAZA_POW( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_CHECK_WORKWAZA_SEQNO( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_WORKWAZA_SEQNO\n");
+#endif
 
   taw->calc_work = get_waza_param( taw, taw->calc_work, WAZAPARAM_AI_SEQNO );
 
@@ -2216,6 +2515,10 @@ static  VMCMD_RESULT  AI_CHECK_MAMORU_COUNT( VMHANDLE* vmh, void* context_work )
   int side  = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
   const BTL_POKEPARAM* bpp = get_bpp( taw, pos );
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_MAMORU_COUNT\n");
+#endif
 
   if( ( BPP_GetPrevWazaID( bpp ) != WAZANO_MAMORU ) &&
       ( BPP_GetPrevWazaID( bpp ) != WAZANO_MIKIRI ) &&
@@ -2239,6 +2542,10 @@ static  VMCMD_RESULT  AI_JUMP( VMHANDLE* vmh, void* context_work )
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   int adrs  = ( int )VMGetU32( vmh );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_JUMP\n");
+#endif
+
   VMCMD_Jump( vmh, vmh->adrs + adrs );
 
   return taw->vmcmd_result;
@@ -2250,6 +2557,10 @@ static  VMCMD_RESULT  AI_JUMP( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_AIEND( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_AIEND\n");
+#endif
 
   taw->status_flag |= AI_STATUSFLAG_END;
 
@@ -2273,6 +2584,10 @@ static  VMCMD_RESULT  AI_IF_LEVEL( VMHANDLE* vmh, void* context_work )
 
   GF_ASSERT( value < LEVEL_EQUAL + 1 );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_LEVEL\n");
+#endif
+
   branch_act( vmh, cond[ value ], atk_level, def_level, adrs );
 
   return taw->vmcmd_result;
@@ -2285,6 +2600,10 @@ static  VMCMD_RESULT  AI_IF_CHOUHATSU( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_CHOUHATSU\n");
+#endif
+
   ai_if_chouhatsu( vmh, taw, COND_EQUAL );
 
   return taw->vmcmd_result;
@@ -2292,6 +2611,10 @@ static  VMCMD_RESULT  AI_IF_CHOUHATSU( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_CHOUHATSU( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_CHOUHATSU\n");
+#endif
 
   ai_if_chouhatsu( vmh, taw, COND_NOTEQUAL );
 
@@ -2317,6 +2640,10 @@ static  VMCMD_RESULT  AI_IF_MIKATA_ATTACK( VMHANDLE* vmh, void* context_work )
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   int adrs  = ( int )VMGetU32( vmh );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_MIKATA_ATTACK\n");
+#endif
+
   branch_act( vmh, COND_EQUAL, ( taw->atk_btl_poke_pos & 1 ), ( taw->def_btl_poke_pos & 1 ), adrs );
 
   return taw->vmcmd_result;
@@ -2332,6 +2659,10 @@ static  VMCMD_RESULT  AI_CHECK_HAVE_TYPE( VMHANDLE* vmh, void* context_work )
   PokeType  type  = ( PokeType )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
   PokeTypePair  poke_type = BPP_GetPokeType( get_bpp( taw, pos ) );
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_HAVE_TYPE\n");
+#endif
 
   if( ( PokeTypePair_GetType1( poke_type ) == type ) ||
       ( PokeTypePair_GetType2( poke_type ) == type ) )
@@ -2357,6 +2688,10 @@ static  VMCMD_RESULT  AI_CHECK_HAVE_TOKUSEI( VMHANDLE* vmh, void* context_work )
   BtlPokePos  pos = get_poke_pos( taw, side );
   int have_tokusei = get_tokusei( taw, side, pos );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_HAVE_TOKUSEI\n");
+#endif
+
   if( have_tokusei == tokusei )
   {
     taw->calc_work = HAVE_YES;
@@ -2381,6 +2716,10 @@ static  VMCMD_RESULT  AI_IF_ALREADY_MORAIBI( VMHANDLE* vmh, void* context_work )
   BtlPokePos  pos = get_poke_pos( taw, side );
   const BTL_POKEPARAM* bpp = get_bpp( taw, pos );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_ALREADY_MORAIBI\n");
+#endif
+
   //@todo 作ったけどこれで良いか後で確認
   if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_MORAIBI) ){
     VMCMD_Jump( vmh, vmh->adrs + adrs );
@@ -2401,6 +2740,10 @@ static  VMCMD_RESULT  AI_IF_HAVE_ITEM( VMHANDLE* vmh, void* context_work )
   BtlPokePos  pos = get_poke_pos( taw, side );
   u32 have_item = BPP_GetItem( get_bpp( taw, pos ) );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_HAVE_ITEM\n");
+#endif
+
   //@todo 作ったけどこれで良いか後で確認
   if( item == have_item ){
     VMCMD_Jump( vmh, vmh->adrs + adrs );
@@ -2418,6 +2761,10 @@ static  VMCMD_RESULT  AI_FLDEFF_CHECK( VMHANDLE* vmh, void* context_work )
   BtlFieldEffect  fldeff = ( BtlFieldEffect )VMGetU32( vmh );
   int adrs = ( int )VMGetU32( vmh );
   BOOL data = BTL_FIELD_CheckEffect( fldeff );
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_FLDEFF_CHECK\n");
+#endif
 
   branch_act( vmh, COND_EQUAL, data, TRUE, adrs );
 
@@ -2437,6 +2784,11 @@ static  VMCMD_RESULT  AI_CHECK_SIDEEFF_COUNT( VMHANDLE* vmh, void* context_work 
   //flagでまきびし、どくびしを分岐
   // @todo 作ったけどこれでいいか確認
   BtlSideEffect  effect = (flag)? BTL_SIDEEFF_MAKIBISI : BTL_SIDEEFF_DOKUBISI;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_SIDEEFF_COUNT\n");
+#endif
+
   taw->calc_work = BTL_SVFTOOL_GetSideEffectCount( taw->svfWork, pos, effect );
 
   return taw->vmcmd_result;
@@ -2456,6 +2808,10 @@ static  VMCMD_RESULT  AI_IF_BENCH_HPDEC( VMHANDLE* vmh, void* context_work )
   //前衛の数
   u8  front_count = BTL_MAIN_GetClientCoverPosCount( taw->wk, clientID );
   int i;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_BENCH_HPDEC\n");
+#endif
 
   for( i = front_count ; i < BTL_PARTY_GetMemberCount( pty ) ; i++ )
   {
@@ -2488,6 +2844,10 @@ static  VMCMD_RESULT  AI_IF_BENCH_PPDEC( VMHANDLE* vmh, void* context_work )
   //前衛の数
   u8  front_count = BTL_MAIN_GetClientCoverPosCount( taw->wk, clientID );
   int i, j;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_BENCH_PPDEC\n");
+#endif
 
   for( i = front_count ; i < BTL_PARTY_GetMemberCount( pty ) ; i++ )
   {
@@ -2522,6 +2882,10 @@ static  VMCMD_RESULT  AI_CHECK_NAGETSUKERU_IRYOKU( VMHANDLE* vmh, void* context_
   int side = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_NAGETSUKERU_IRYOKU\n");
+#endif
+
   taw->calc_work = 0;
 
   //差し押さえされているかチェック
@@ -2541,6 +2905,10 @@ static  VMCMD_RESULT  AI_CHECK_PP_REMAIN( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_PP_REMAIN\n");
+#endif
+
   taw->calc_work = BPP_WAZA_GetPP( taw->atk_bpp, taw->waza_pos );
 
   return taw->vmcmd_result;
@@ -2556,6 +2924,10 @@ static  VMCMD_RESULT  AI_IF_TOTTEOKI( VMHANDLE* vmh, void* context_work )
   int adrs = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
   const BTL_POKEPARAM* bpp = get_bpp( taw, pos );
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_TOTTEOKI\n");
+#endif
 
   //持っている技を出し切っていないか、持っている技が2以上ない場合は失敗
   if( ( BPP_WAZA_GetUsedCountInAlive( bpp ) >= BPP_WAZA_GetCount( bpp ) ) && (BPP_WAZA_GetCount( bpp ) > 1) )
@@ -2573,6 +2945,10 @@ static  VMCMD_RESULT  AI_CHECK_WAZA_KIND( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_WAZA_KIND\n");
+#endif
+
   taw->calc_work = get_waza_param( taw, taw->waza_no, WAZAPARAM_DAMAGE_TYPE );
 
   return taw->vmcmd_result;
@@ -2584,6 +2960,10 @@ static  VMCMD_RESULT  AI_CHECK_WAZA_KIND( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_CHECK_LAST_WAZA_KIND( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_LAST_WAZA_KIND\n");
+#endif
 
   taw->calc_work = get_waza_param( taw, BPP_GetPrevWazaID( taw->def_bpp ), WAZAPARAM_DAMAGE_TYPE );
 
@@ -2600,6 +2980,10 @@ static  VMCMD_RESULT  AI_CHECK_AGI_RANK( VMHANDLE* vmh, void* context_work )
   BtlPokePos  pos = get_poke_pos( taw, side );
   const BTL_POKEPARAM* bpp = get_bpp( taw, pos );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_AGI_RANK\n");
+#endif
+
   taw->calc_work = BTL_SVFTOOL_CalcAgilityRank( taw->svfWork, bpp, TRUE );
 
   return taw->vmcmd_result;
@@ -2614,6 +2998,10 @@ static  VMCMD_RESULT  AI_CHECK_SLOWSTART_TURN( VMHANDLE* vmh, void* context_work
   int side = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_SLOWSTART_TURN\n");
+#endif
+
   taw->calc_work = BPP_GetTurnCount( get_bpp( taw, pos ) );
 
   return taw->vmcmd_result;
@@ -2625,6 +3013,10 @@ static  VMCMD_RESULT  AI_CHECK_SLOWSTART_TURN( VMHANDLE* vmh, void* context_work
 static  VMCMD_RESULT  AI_IF_BENCH_DAMAGE_MAX( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_BENCH_DAMAGE_MAX\n");
+#endif
 
   //@todo
   GF_ASSERT_MSG( 0, "未作成" );
@@ -2639,6 +3031,10 @@ static  VMCMD_RESULT  AI_IF_HAVE_BATSUGUN( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_HAVE_BATSUGUN\n");
+#endif
+
   //@todo
   GF_ASSERT_MSG( 0, "未作成" );
 
@@ -2651,6 +3047,10 @@ static  VMCMD_RESULT  AI_IF_HAVE_BATSUGUN( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IF_LAST_WAZA_DAMAGE_CHECK( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_LAST_WAZA_DAMAGE_CHECK\n");
+#endif
 
   //@todo
   GF_ASSERT_MSG( 0, "未作成" );
@@ -2677,6 +3077,10 @@ static  VMCMD_RESULT  AI_CHECK_STATUS_UP( VMHANDLE* vmh, void* context_work )
     BPP_AVOID_RATIO,
   };
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_STATUS_UP\n");
+#endif
+
   taw->calc_work = 0;
 
   for( i = 0 ; i < NELEMS( id_tbl ) ; i++ )
@@ -2701,6 +3105,10 @@ static  VMCMD_RESULT  AI_CHECK_STATUS_DIFF( VMHANDLE* vmh, void* context_work )
   int flag = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_STATUS_DIFF\n");
+#endif
+
   taw->calc_work = BPP_GetValue( get_bpp( taw, pos ), flag ) - BPP_GetValue( taw->atk_bpp, flag );
 
   return taw->vmcmd_result;
@@ -2713,6 +3121,10 @@ static  VMCMD_RESULT  AI_IF_CHECK_STATUS_UNDER( VMHANDLE* vmh, void* context_wor
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_CHECK_STATUS_UNDER\n");
+#endif
+
   GF_ASSERT_MSG( 0, "未作成" );
 
   return taw->vmcmd_result;
@@ -2721,6 +3133,10 @@ static  VMCMD_RESULT  AI_IF_CHECK_STATUS_OVER( VMHANDLE* vmh, void* context_work
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_CHECK_STATUS_OVER\n");
+#endif
+
   GF_ASSERT_MSG( 0, "未作成" );
 
   return taw->vmcmd_result;
@@ -2728,6 +3144,10 @@ static  VMCMD_RESULT  AI_IF_CHECK_STATUS_OVER( VMHANDLE* vmh, void* context_work
 static  VMCMD_RESULT  AI_IF_CHECK_STATUS_EQUAL( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_CHECK_STATUS_EQUAL\n");
+#endif
 
   GF_ASSERT_MSG( 0, "未作成" );
 
@@ -2740,6 +3160,10 @@ static  VMCMD_RESULT  AI_IF_CHECK_STATUS_EQUAL( VMHANDLE* vmh, void* context_wor
 static  VMCMD_RESULT  AI_COMP_POWER_WITH_PARTNER( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_COMP_POWER_WITH_PARTNER\n");
+#endif
 
   //@todo
   GF_ASSERT_MSG( 0, "未作成" );
@@ -2754,6 +3178,10 @@ static  VMCMD_RESULT  AI_IF_HINSHI( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_HINSHI\n");
+#endif
+
   ai_if_hinshi( vmh, taw, COND_EQUAL );
 
   return taw->vmcmd_result;
@@ -2762,6 +3190,10 @@ static  VMCMD_RESULT  AI_IF_HINSHI( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_HINSHI( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_HINSHI\n");
+#endif
 
   ai_if_hinshi( vmh, taw, COND_NOTEQUAL );
 
@@ -2788,6 +3220,10 @@ static  VMCMD_RESULT  AI_GET_TOKUSEI( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_GET_TOKUSEI\n");
+#endif
+
   //@todo
   GF_ASSERT_MSG( 0, "未作成" );
 
@@ -2803,6 +3239,10 @@ static  VMCMD_RESULT  AI_IF_MIGAWARI( VMHANDLE* vmh, void* context_work )
   int side = ( int )VMGetU32( vmh );
   int adrs = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_MIGAWARI\n");
+#endif
 
   if( BPP_MIGAWARI_IsExist( get_bpp( taw, pos ) ) )
   {
@@ -2912,45 +3352,6 @@ static  BtlPokePos  get_poke_pos( TR_AI_WORK* taw, int side )
     break;
   }
   return btl_poke_pos;
-}
-
-//============================================================================================
-/**
- *  テーブルデータをu8型で取得
- */
-//============================================================================================
-static  inline  u8  get_u8_data( int* adrs )
-{
-  u8 ret = *(adrs);
-  ++ adrs;
-  return ret;
-}
-
-//============================================================================================
-/**
- *  テーブルデータをu32型で取得
- */
-//============================================================================================
-static  u32 get_table_data( int* adrs )
-{
-  u32 val;
-  u8  a,b,c,d;
-
-  a = get_u8_data( adrs );
-  b = get_u8_data( adrs );
-  c = get_u8_data( adrs );
-  d = get_u8_data( adrs );
-
-  val = 0;
-  val += (u32)d;
-  val <<= 8;
-  val += (u32)c;
-  val <<= 8;
-  val += (u32)b;
-  val <<= 8;
-  val += (u32)a;
-
-  return val;
 }
 
 //============================================================================================
