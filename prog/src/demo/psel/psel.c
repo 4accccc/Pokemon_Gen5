@@ -225,6 +225,8 @@ static const u8 bmpwin_setup[TEXT_MAX][9] =
 #define S02_FADE_IN_WAIT  (2)
 #define S02_FADE_OUT_WAIT (1*THREE_INTERRUPT)
 
+#define FADE_SPEED_INSIDE_DEMO   (1)     // ‚±‚Ìƒfƒ‚‚Å‚ÌƒtƒF[ƒh‘¬“xŒW”
+
 
 // 2D OBJ
 enum
@@ -255,6 +257,7 @@ typedef enum
   TARGET_NONE       = TARGET_MAX,         // ‚Ç‚ê‚à‘I‘ğ‚µ‚Ä‚¢‚È‚¢‚Æ‚«
   TARGET_POKE_START = TARGET_KUSA,        // TARGET_POKE_START<= <=TARGET_POKE_END
   TARGET_POKE_END   = TARGET_MIZU,
+  TARGET_POKE_DEFAULT   = TARGET_HONOO,  // ƒL[‘€ì‚Ì‚Æ‚«‚ÉÅ‰‚É‘I‚Î‚ê‚éƒfƒtƒHƒ‹ƒg
 }
 TARGET;
 
@@ -343,21 +346,21 @@ static const POKE_MOVE_DATA poke_move_data[TARGET_POKE_MAX] =
   {
      53,  73,  90,  83, 128,  94,
      8, 12, 16,
-    16,
+     8,//16,
      4,  4,
     32, 32,
   },
   {
     128,  68, 128,  81, 128,  94,
      8, 12, 16,
-    16,
+     8,//16,
      4,  4,
     32, 32,
   },
   {
     202,  73, 165,  83, 128,  94,
      8, 12, 16,
-    16,
+     8,//16,
      4,  4,
     32, 32,
   },
@@ -760,6 +763,9 @@ typedef struct
   INSIDE_BALL_PAL_ANIME_STATE inside_ball_pal_anime_state;
   u8                          inside_ball_pal_anime_count;
   u8                          inside_ball_pal_anime_end;
+
+  // ƒtƒF[ƒh‘¬“xŒW”
+  int                         fade_speed_outside_demo;  // ‚±‚Ìƒfƒ‚‚É“ü‚é‘O‚ÌƒtƒF[ƒh‘¬“xŒW”‚ğŠo‚¦‚Ä‚¨‚­
 }
 PSEL_WORK;
 
@@ -801,6 +807,7 @@ static void Psel_ThreeS02OnlyMbSelectAnimeMain( PSEL_WORK* work );  // –ˆƒtƒŒ[ƒ
 static void Psel_PokeSetInit( PSEL_WORK* work );
 static void Psel_PokeSetExit( PSEL_WORK* work );
 static void Psel_PokeSetMain( PSEL_WORK* work );
+static void Psel_PokeSetDrawStart( PSEL_WORK* work );
 static void Psel_PokeSetSelectStart( PSEL_WORK* work, TARGET target_poke );
 
 // ww‚µƒJ[ƒ\ƒ‹
@@ -1030,6 +1037,10 @@ static GFL_PROC_RESULT Psel_ProcInit( GFL_PROC* proc, int* seq, void* pwk, void*
     work->param         = (PSEL_PARAM*)pwk;
   }
 
+  // ƒtƒF[ƒh‘¬“xŒW”
+  work->fade_speed_outside_demo = GFL_FADE_GetFadeSpeed();  // ‚±‚Ìƒfƒ‚‚É“ü‚é‘O‚ÌƒtƒF[ƒh‘¬“xŒW”‚ğŠo‚¦‚Ä‚¨‚­
+  GFL_FADE_SetFadeSpeed( FADE_SPEED_INSIDE_DEMO );
+
   // ƒ^ƒbƒ`orƒL[
   work->ktst = GFL_UI_CheckTouchOrKey();
 
@@ -1064,6 +1075,9 @@ static GFL_PROC_RESULT Psel_ProcExit( GFL_PROC* proc, int* seq, void* pwk, void*
 
   // ƒ^ƒbƒ`orƒL[
   GFL_UI_SetTouchOrKey( work->ktst );
+
+  // ƒtƒF[ƒh‘¬“xŒW”
+  GFL_FADE_SetFadeSpeed( work->fade_speed_outside_demo );  // ‚±‚Ìƒfƒ‚‚É“ü‚é‘O‚ÌƒtƒF[ƒh‘¬“xŒW”‚É–ß‚µ‚Ä‚¨‚­
 
   // ƒq[ƒvAƒpƒ‰ƒ[ƒ^‚È‚Ç
   {
@@ -1681,7 +1695,7 @@ static void Psel_PokeSetInit( PSEL_WORK* work )
           work->poke_set[i].res[j][TWO_OBJ_RES_NCE],
           &cldata, CLSYS_DEFREND_SUB, work->heap_id );
       
-      GFL_CLACT_WK_SetDrawEnable( work->poke_set[i].clwk[j], TRUE );
+      GFL_CLACT_WK_SetDrawEnable( work->poke_set[i].clwk[j], FALSE );
     }
   }
 
@@ -1842,6 +1856,15 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
     case POKE_MOVE_REQ_NONE:     count_add =  0; break;
     case POKE_MOVE_REQ_P0_TO_P2: count_add = +1; break;
     case POKE_MOVE_REQ_P2_TO_P0: count_add = -1; break;
+    }
+
+    // –ß‚è‚Íˆêu‚Å
+    {
+      if( count_add < 0 )
+      {
+        p->move_step_count = 0;
+        p->move_step = POKE_MOVE_STEP_P0_TO_P1;
+      }
     }
 
     switch( p->move_step )
@@ -2045,6 +2068,21 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
       else if( order[1] == i ) softpri=POKE_SOFTPRI_MIDDLE;
       else                     softpri=POKE_SOFTPRI_BACK;    // if( order[2] == i )
       GFL_CLACT_WK_SetSoftPri( work->poke_set[i].clwk[POKE_BIG], softpri );
+    }
+  }
+}
+
+static void Psel_PokeSetDrawStart( PSEL_WORK* work )
+{
+  u8 i;
+  u8 j;
+  // small
+  j = POKE_SMALL;
+  // CLWK•`‰æ
+  {
+    for( i=0; i<TARGET_POKE_MAX; i++ )
+    {
+      GFL_CLACT_WK_SetDrawEnable( work->poke_set[i].clwk[j], TRUE );
     }
   }
 }
@@ -2963,6 +3001,12 @@ static void Psel_PokeSetPalMain( PSEL_WORK* work )
         {
           work->poke_set[i].pal_anime_count++;
           need_trans = TRUE;
+          
+          // –ß‚è‚Íˆêu‚Å
+          {
+            work->poke_set[i].pal_anime_count = 16;
+            need_trans = TRUE;
+          }
         }
       }
       break;
@@ -3631,6 +3675,9 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
       Psel_TextExplainStreamStart( work, msg_t01r0102_ball_select_01 );
       
       *seq = S02_MAIN_SEQ_EXPLAIN_WAIT;
+
+      // ƒ{ƒbƒNƒX‚ªŠJ‚¢‚½‚çƒ|ƒPƒ‚ƒ“‚Ì•`‰æŠJn
+      Psel_PokeSetDrawStart( work );
     }
     break;
   case S02_MAIN_SEQ_EXPLAIN_WAIT:
@@ -3639,6 +3686,9 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
       {
         // ƒeƒLƒXƒg‚ÆƒEƒBƒ“ƒhƒE‚Í•\¦‚µ‚Á‚Ï‚È‚µ
         *seq = S02_MAIN_SEQ_SELECT_INIT;
+
+        // •K‚¸ƒ^ƒbƒ`‘€ì‚ÅŠJn
+        work->ktst = GFL_APP_KTST_TOUCH;
       }
     }
     break;
@@ -3649,7 +3699,7 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
       {
         if( work->select_target_poke == TARGET_NONE )
         {
-          work->select_target_poke = TARGET_POKE_START;
+          work->select_target_poke = TARGET_POKE_DEFAULT;
           select_change = TRUE;  // ‚Ç‚ê‚à‘I‚Î‚ê‚Ä‚¢‚È‚¢ó‘Ô‚©‚çÅ‰‚Ì‚ğ‘I‚ñ‚Å‚¢‚éó‘Ô‚É‚È‚Á‚½‚Ì‚ÅTRUE‚É‚µ‚½‚ªA‘O‚ª‚Ç‚ê‚à‘I‚Î‚ê‚Ä‚¢‚È‚¢ó‘Ô‚È‚Ì‚Å‰½‚à‘‚©‚ê‚Ä‚¢‚È‚¢‚Í‚¸‚¾‚©‚çATRUE‚É‚µ‚È‚­‚Ä‚à–â‘è‚Í‚È‚¢
         }
         Psel_FingerDrawEnable( work, TRUE );

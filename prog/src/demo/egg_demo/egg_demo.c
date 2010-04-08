@@ -1117,6 +1117,7 @@ static void Egg_Demo_SoundPlayHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work 
 }
 static void Egg_Demo_SoundPushHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
+  // ここはフェードしなくていい
   PMSND_PauseBGM( TRUE );
   PMSND_PushBGM();
 }
@@ -1124,6 +1125,7 @@ static void Egg_Demo_SoundPopHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
   PMSND_PopBGM();
   PMSND_PauseBGM( FALSE );
+  PMSND_FadeInBGM( FSND_FADE_FAST );
 }
 static void Egg_Demo_SoundPlayCongratulate( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
