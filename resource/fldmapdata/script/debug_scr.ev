@@ -511,7 +511,8 @@ EVENT_START   ev_debug_murakami
 
 			//C02の博士（父、娘）、チャンピオン、ジムリーダー、サポートを表示
 			_FLAG_RESET(FV_C02_STONEEVENT_01)
-			
+			_FLAG_RESET(FV_C02_STONEEVENT_02)	
+					
 			_OBJ_ADD( C02_CHAMPION_01 ) 
 			_OBJ_ADD( C02_HAKASE1_01 ) 
 			_OBJ_ADD( C02_HAKASE2_01 ) 
