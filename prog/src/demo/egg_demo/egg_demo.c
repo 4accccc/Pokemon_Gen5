@@ -27,6 +27,7 @@
 #include "print/wordset.h"
 #include "poke_tool/poke_tool.h"
 #include "sound/pm_sndsys.h"
+#include "../../field/field_sound.h"
 #include "app/name_input.h"
 #include "poke_tool/poke_memo.h"
 #include "field/zonedata.h"  //ZONEDATA_GetPlaceNameID
@@ -178,6 +179,7 @@ TM_RESULT;
 // 根幹ステップ
 typedef enum
 {
+  TRUNK_STEP_FADE_IN_START,
   TRUNK_STEP_FADE_IN,
   TRUNK_STEP_BELT_OPEN,
   TRUNK_STEP_SOUND_INTRO,
@@ -192,6 +194,7 @@ typedef enum
   TRUNK_STEP_NAMEIN,
   TRUNK_STEP_NAMEIN_BLACK,
   TRUNK_STEP_NAMEIN_END,
+  TRUNK_STEP_SOUND_FADE_OUT,
   TRUNK_STEP_FADE_OUT,
   TRUNK_STEP_END,
 }
@@ -201,9 +204,11 @@ TRUNK_STEP;
 typedef enum
 {
   SOUND_STEP_WAIT,
+  SOUND_STEP_FIELD_FADE_OUT,
   SOUND_STEP_INTRO,
   SOUND_STEP_HATCH,
   SOUND_STEP_CONGRATULATE,
+  SOUND_STEP_HATCH_FADE_OUT,
 }
 SOUND_STEP;
 
@@ -242,6 +247,7 @@ typedef struct
 
   // ステップ
   TRUNK_STEP                  trunk_step;
+  u8                          trunk_wait;
   SOUND_STEP                  sound_step;
   TEXT_STEP                   text_step;
   TM_STEP                     tm_step;
@@ -305,6 +311,7 @@ static BOOL Egg_Demo_ObjIsEndAnime( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 static void Egg_Demo_SoundInit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static void Egg_Demo_SoundExit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static void Egg_Demo_SoundMain( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
+static BOOL Egg_Demo_SoundCheckFadeOutField( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static void Egg_Demo_SoundPlayIntro( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static BOOL Egg_Demo_SoundCheckPlayIntro( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static void Egg_Demo_SoundPlayHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
@@ -314,6 +321,7 @@ static void Egg_Demo_SoundPlayCongratulate( EGG_DEMO_PARAM* param, EGG_DEMO_WORK
 static BOOL Egg_Demo_SoundCheckPlayCongratulate( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static void Egg_Demo_SoundFadeOutHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static BOOL Egg_Demo_SoundCheckFadeOutHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
+static void Egg_Demo_SoundFadeInField( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 
 // TEXT
 static void Egg_Demo_TextInit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
@@ -440,7 +448,8 @@ static GFL_PROC_RESULT Egg_Demo_ProcInit( GFL_PROC* proc, int* seq, void* pwk, v
 
   // ステップ
   {
-    work->trunk_step    = TRUNK_STEP_FADE_IN;
+    work->trunk_step    = TRUNK_STEP_FADE_IN_START;
+    work->trunk_wait    = 5;  // 最初画面が乱れるので、しばし真っ暗のまま待つ
     work->sound_step    = SOUND_STEP_WAIT;
     work->text_step     = TEXT_STEP_WAIT;
     work->tm_step       = TM_STEP_WAIT;
@@ -451,8 +460,8 @@ static GFL_PROC_RESULT Egg_Demo_ProcInit( GFL_PROC* proc, int* seq, void* pwk, v
   // サウンド
   Egg_Demo_SoundInit( param, work );
   
-  // フェードイン(黒→見える)
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
+  // フェードイン(黒→黒)
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 16, 0 );
 
   // ローカルPROCシステムを作成
   work->local_procsys = GFL_PROC_LOCAL_boot( work->heap_id );
@@ -476,9 +485,6 @@ static GFL_PROC_RESULT Egg_Demo_ProcExit( GFL_PROC* proc, int* seq, void* pwk, v
 
   if( work->trunk_step != TRUNK_STEP_NAMEIN_END )
     Egg_Demo_Exit( param, work );
-
-  // タッチorキー
-  GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );  // はい・いいえウィンドウに応えて終わるので、必ずキーで終了
 
   // ヒープ
   {
@@ -505,6 +511,22 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
 
   switch( work->trunk_step )
   {
+  case TRUNK_STEP_FADE_IN_START:
+    {
+      if( work->trunk_wait == 0 )
+      {
+        // 次へ
+        work->trunk_step = TRUNK_STEP_FADE_IN;
+
+        // フェードイン(黒→見える)
+        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
+      }
+      else
+      {
+        work->trunk_wait--;
+      }
+    }
+    break;
   case TRUNK_STEP_FADE_IN:
     {
       if( !GFL_FADE_CheckFade() )
@@ -518,7 +540,8 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
     break;
   case TRUNK_STEP_BELT_OPEN:
     {
-      if( Egg_Demo_ObjIsEndAnime( param, work ) )
+      if(    ( !Egg_Demo_SoundCheckFadeOutField( param, work ) )
+          && Egg_Demo_ObjIsEndAnime( param, work ) )
       {
         // 次へ
         work->trunk_step = TRUNK_STEP_SOUND_INTRO;
@@ -640,12 +663,15 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
       if( tm_result == TM_RESULT_NO )
       {
         // 次へ
-        work->trunk_step = TRUNK_STEP_FADE_OUT;
+        work->trunk_step = TRUNK_STEP_SOUND_FADE_OUT;
 
         // フェードアウト(見える→黒)
         GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FADE_OUT_WAIT );
 
         Egg_Demo_SoundFadeOutHatch( param, work );
+
+        // タッチorキー
+        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );  // はい・いいえウィンドウに応えて終わるので、必ずキーで終了
       }
       else if( tm_result == TM_RESULT_YES )
       {
@@ -654,6 +680,9 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
 
         // フェードアウト(見える→黒)
         GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, NAMEIN_FADE_OUT_WAIT );
+
+        // タッチorキー
+        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );  // はい・いいえウィンドウに応えて終わるので、必ずキーで終了
       }
     }
     break;
@@ -709,12 +738,25 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
     break;
   case TRUNK_STEP_NAMEIN_BLACK:
     {
-      if( Egg_Demo_SoundCheckFadeOutHatch( param, work ) )
+      if( !Egg_Demo_SoundCheckFadeOutHatch( param, work ) )
       {
         // 次へ
         work->trunk_step = TRUNK_STEP_NAMEIN_END;
  
+        Egg_Demo_SoundFadeInField( param, work );
+        
         return GFL_PROC_RES_FINISH;
+      }
+    }
+    break;
+  case TRUNK_STEP_SOUND_FADE_OUT:
+    {
+      if( !Egg_Demo_SoundCheckFadeOutHatch( param, work ) )
+      {
+        // 次へ
+        work->trunk_step = TRUNK_STEP_FADE_OUT;
+        
+        Egg_Demo_SoundFadeInField( param, work );
       }
     }
     break;
@@ -733,6 +775,9 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
     break;
   }
 
+  // サウンド
+  Egg_Demo_SoundMain( param, work );
+  
   if(    work->trunk_step != TRUNK_STEP_NAMEIN
       && work->trunk_step != TRUNK_STEP_NAMEIN_BLACK
       && work->trunk_step != TRUNK_STEP_NAMEIN_END
@@ -745,9 +790,6 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
 
     // タマゴ孵化デモの演出
     EGG_DEMO_VIEW_Main( work->view );
-
-    // サウンド
-    Egg_Demo_SoundMain( param, work );
 
     PRINTSYS_QUE_Main( work->print_que );
 
@@ -996,12 +1038,12 @@ static BOOL Egg_Demo_ObjIsEndAnime( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 //=====================================
 static void Egg_Demo_SoundInit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
-  PMSND_PushBGM();
+  PMSND_FadeOutBGM( FSND_FADE_SHORT );
+  work->sound_step = SOUND_STEP_FIELD_FADE_OUT;
 }
 static void Egg_Demo_SoundExit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
-  PMSND_StopBGM();
-  PMSND_PopBGM();
+  // 何もしない
 }
 static void Egg_Demo_SoundMain( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
@@ -1009,6 +1051,16 @@ static void Egg_Demo_SoundMain( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
   {
   case SOUND_STEP_WAIT:
     {
+    }
+    break;
+  case SOUND_STEP_FIELD_FADE_OUT:
+    {
+      if( !PMSND_CheckFadeOnBGM() )
+      {
+        PMSND_PauseBGM( TRUE );
+        PMSND_PushBGM();
+        work->sound_step = SOUND_STEP_WAIT;
+      }
     }
     break;
   case SOUND_STEP_INTRO:
@@ -1032,7 +1084,21 @@ static void Egg_Demo_SoundMain( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
       }
     }
     break;
+  case SOUND_STEP_HATCH_FADE_OUT:
+    {
+      if( !PMSND_CheckFadeOnBGM() )
+      {
+        PMSND_StopBGM();
+        work->sound_step = SOUND_STEP_WAIT;
+      }
+    }
+    break;
   }
+}
+static BOOL Egg_Demo_SoundCheckFadeOutField( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
+{
+  if( work->sound_step == SOUND_STEP_FIELD_FADE_OUT ) return TRUE;
+  else                                                return FALSE;
 }
 static void Egg_Demo_SoundPlayIntro( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
@@ -1051,11 +1117,13 @@ static void Egg_Demo_SoundPlayHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work 
 }
 static void Egg_Demo_SoundPushHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
+  PMSND_PauseBGM( TRUE );
   PMSND_PushBGM();
 }
 static void Egg_Demo_SoundPopHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
   PMSND_PopBGM();
+  PMSND_PauseBGM( FALSE );
 }
 static void Egg_Demo_SoundPlayCongratulate( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
@@ -1068,11 +1136,20 @@ static BOOL Egg_Demo_SoundCheckPlayCongratulate( EGG_DEMO_PARAM* param, EGG_DEMO
 }
 static void Egg_Demo_SoundFadeOutHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
-  PMSND_FadeOutBGM( 16 * FADE_OUT_WAIT / 2 );
+  PMSND_FadeOutBGM( FSND_FADE_NORMAL );
+  work->sound_step = SOUND_STEP_HATCH_FADE_OUT;
 }
 static BOOL Egg_Demo_SoundCheckFadeOutHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
-  return PMSND_CheckFadeOnBGM();
+  if( work->sound_step == SOUND_STEP_HATCH_FADE_OUT ) return TRUE;
+  else                                                return FALSE;
+}
+static void Egg_Demo_SoundFadeInField( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
+{
+  // フィールドBGM
+  PMSND_PopBGM();
+  PMSND_PauseBGM( FALSE );
+  PMSND_FadeInBGM( FSND_FADE_NORMAL );
 }
 
 //-------------------------------------
