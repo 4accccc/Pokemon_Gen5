@@ -42,6 +42,13 @@ enum {
   PARENT_HEAP_ID = GFL_HEAPID_APP,
 
   BTL_COMMITMENT_POKE_MAX = BTL_CLIENT_MAX * TEMOTI_POKEMAX,
+
+#ifdef ROTATION_NEW_SYSTEM
+  ROTATION_NUM_COVER_POS = 1,
+#else
+  ROTATION_NUM_COVER_POS = 2,
+#endif
+
 };
 
 /*--------------------------------------------------------------------------*/
@@ -169,6 +176,7 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_create_server_client_triple( BTL_MAIN_MODULE* wk, int* seq );
+static BOOL setupseq_comm_create_server_client_rotation( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_start_server( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk );
 static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk );
@@ -553,7 +561,7 @@ static u8 CheckNumCoverPos( const BTL_MAIN_MODULE* wk, u8 clientID )
   case BTL_RULE_SINGLE:
     return 1;
   case BTL_RULE_ROTATION:
-    return 2;
+    return BTL_ROTATION_FRONTPOS_NUM;
   case BTL_RULE_TRIPLE:
     return 3;
   case BTL_RULE_DOUBLE:
@@ -994,9 +1002,9 @@ static BOOL setup_alone_rotation( int* seq, void* work )
   trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
 
   // Client 作成
-  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
+  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, ROTATION_NUM_COVER_POS,
     BTL_CLIENT_TYPE_UI, bagMode, sp->fRecordPlay, &wk->randomContext, wk->heapID );
-  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2,
+  wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, ROTATION_NUM_COVER_POS,
     BTL_CLIENT_TYPE_AI, bagMode, sp->fRecordPlay, &wk->randomContext, wk->heapID );
 
   // 描画エンジン生成
@@ -1006,8 +1014,8 @@ static BOOL setup_alone_rotation( int* seq, void* work )
   BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
 
   // Server に Client を接続
-  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), 0, 2 );
-  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[1]), 1, 2 );
+  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), 0, ROTATION_NUM_COVER_POS );
+  BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[1]), 1, ROTATION_NUM_COVER_POS );
 
   // Server 始動
   BTL_SERVER_Startup( wk->server );
@@ -1126,7 +1134,7 @@ static BOOL setup_comm_rotation( int* seq, void* work )
     setupseq_comm_determine_server,
     setupseq_comm_notify_party_data,
     setupseq_comm_notify_player_data,
-    setupseq_comm_create_server_client_double,
+    setupseq_comm_create_server_client_rotation,
     setupseq_comm_start_server,
   };
 
@@ -1699,6 +1707,60 @@ static BOOL setupseq_comm_create_server_client_triple( BTL_MAIN_MODULE* wk, int*
 }
 //----------------------------------------------------------------------------------
 /**
+ * 通信対戦セットアップシーケンス：サーバ・クライアントモジュール構築（ローテーション用）
+ *
+ * @param   wk
+ * @param   seq
+ *
+ * @retval  BOOL    終了時にTRUEを返す
+ */
+//----------------------------------------------------------------------------------
+static BOOL setupseq_comm_create_server_client_rotation( BTL_MAIN_MODULE* wk, int* seq )
+{
+  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+  u8 clientID = wk->myClientID;
+  u8 bagMode = checkBagMode( sp );
+  u8 numCoverPos = ROTATION_NUM_COVER_POS;
+  u32 i;
+
+  // 自分がサーバ
+  if( wk->ImServer )
+  {
+    wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
+
+    wk->client[clientID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
+        clientID, numCoverPos, BTL_CLIENT_TYPE_UI, bagMode, FALSE, &wk->randomContext, wk->heapID );
+    BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[clientID]), clientID, numCoverPos );
+
+    for(i=0; i<wk->numClients; ++i)
+    {
+      if(i==clientID){ continue; }
+      BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, i, numCoverPos );
+    }
+  }
+  // 自分がサーバではない
+  else
+  {
+    wk->client[ clientID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
+        clientID, numCoverPos, BTL_CLIENT_TYPE_UI, bagMode, FALSE, &wk->randomContext, wk->heapID );
+
+    // コマンド整合性チェックのためサーバを作る
+    wk->cmdCheckServer = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
+    for(i=0; i<BTL_CLIENT_MAX; ++i)
+    {
+      if( BTL_MAIN_IsExistClient(wk, i) ){
+        BTL_SERVER_CmdCheckMode( wk->cmdCheckServer, i, CheckNumCoverPos(wk, i) );
+      }
+    }
+
+    BTL_CLIENT_AttachCmeCheckServer( wk->client[clientID], wk->cmdCheckServer );
+
+  }
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------------
+/**
  * 通信対戦セットアップシーケンス：描画エンジン生成、メインループ始動
  *
  * @param   wk
@@ -1964,7 +2026,11 @@ BtlPokePos BTL_MAIN_GetEnablePosEnd( const BTL_MAIN_MODULE* wk )
     return BTL_POS_2ND_2;
 
   case BTL_RULE_ROTATION:
+    #ifdef ROTATION_NEW_SYSTEM
+    return BTL_POS_2ND_0;
+    #else
     return BTL_POS_2ND_1;
+    #endif
 
   default:
     GF_ASSERT(0);
@@ -2192,7 +2258,11 @@ u8 BTL_MAIN_ExpandBtlPos( const BTL_MAIN_MODULE* wk, BtlExPos exPos, u8* dst )
   case BTL_RULE_TRIPLE:
     return expandPokePos_triple( wk, exType, basePos, dst );
   case BTL_RULE_ROTATION:
+    #ifdef ROTATION_NEW_SYSTEM
+    return expandPokePos_single( wk, exType, basePos, dst );
+    #else
     return expandPokePos_double( wk, exType, basePos, dst );
+    #endif
   }
 }
 // シングル用
@@ -2518,7 +2588,7 @@ BtlPokePos BTL_MAINUTIL_GetOpponentPokePos( BtlRule rule, BtlPokePos basePos, u8
     GF_ASSERT(idx<3);
     break;
   case BTL_RULE_ROTATION:
-    GF_ASSERT(idx<2);
+    GF_ASSERT(idx<BTL_ROTATION_FRONTPOS_NUM);
     break;
   default:
     GF_ASSERT(0);
@@ -2587,7 +2657,6 @@ BtlPokePos BTL_MAINUTIL_GetFacedPokePos( BtlRule rule, BtlPokePos pos )
     return BTL_MAINUTIL_GetOpponentPokePos( rule, pos, 0 );
 
   case BTL_RULE_DOUBLE:
-  case BTL_RULE_ROTATION:
     {
       u8 idx = btlPos_to_sidePosIdx( pos );
       idx ^= 1;
@@ -2604,6 +2673,17 @@ BtlPokePos BTL_MAINUTIL_GetFacedPokePos( BtlRule rule, BtlPokePos pos )
       }
       return BTL_MAINUTIL_GetOpponentPokePos( rule, pos, idx );
     }
+
+  case BTL_RULE_ROTATION:
+    #ifdef ROTATION_NEW_SYSTEM
+      return BTL_MAINUTIL_GetOpponentPokePos( rule, pos, 0 );
+    #else
+    {
+      u8 idx = btlPos_to_sidePosIdx( pos );
+      idx ^= 1;
+      return BTL_MAINUTIL_GetOpponentPokePos( rule, pos, idx );
+    }
+    #endif
   }
 }
 //=============================================================================================
@@ -2637,8 +2717,14 @@ BtlPokePos BTL_MAIN_GetNextPokePos( const BTL_MAIN_MODULE* wk, BtlPokePos basePo
   case BTL_RULE_SINGLE:
     GF_ASSERT(0);
     return basePos;
-  case BTL_RULE_DOUBLE:
+
   case BTL_RULE_ROTATION:
+    #ifdef ROTATION_NEW_SYSTEM
+    GF_ASSERT(0);
+    return basePos;
+    #endif
+    /* fallthru */
+  case BTL_RULE_DOUBLE:
     {
       u8 retPos = (basePos + 2) & 0x03;
       return retPos;

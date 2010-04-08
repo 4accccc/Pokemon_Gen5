@@ -16,6 +16,11 @@
 #include "waza_tool\wazadata.h"
 
 /*--------------------------------------------------------------------------*/
+/* Compili Flags                                                            */
+/*--------------------------------------------------------------------------*/
+#define ROTATION_NEW_SYSTEM   ///< 有効にすると新ローテーションシステム動作になります
+
+/*--------------------------------------------------------------------------*/
 /* Typedefs                                                                 */
 /*--------------------------------------------------------------------------*/
 
@@ -44,6 +49,14 @@ enum {
   BTL_CLIENTID_SA_ENEMY1 = 1,
   BTL_CLIENTID_SA_FRIEND = 2,
   BTL_CLIENTID_SA_ENEMY2 = 3,
+
+  #ifdef ROTATION_NEW_SYSTEM
+    BTL_ROTATION_FRONTPOS_NUM = 1,
+    BTL_ROTATION_BACKPOS_NUM  = 2,
+  #else
+    BTL_ROTATION_FRONTPOS_NUM = 2,
+    BTL_ROTATION_BACKPOS_NUM  = 1,
+  #endif
 };
 
 //--------------------------------------------------------------

@@ -765,10 +765,16 @@ u8 BTL_RULE_GetNumFrontPos( BtlRule rule )
   case BTL_RULE_SINGLE:
     return 1;
   case BTL_RULE_DOUBLE:
-  case BTL_RULE_ROTATION:
     return 2;
   case BTL_RULE_TRIPLE:
     return 3;
+
+  case BTL_RULE_ROTATION:
+  #ifdef ROTATION_NEW_SYSTEM
+    return 1;
+  #else
+    return 2;
+  #endif
   }
   GF_ASSERT(0);
   return 1;
@@ -783,8 +789,10 @@ u8 BTL_RULE_GetNumFrontPos( BtlRule rule )
 //=============================================================================================
 u8 BTL_RULE_HandPokeIndex( BtlRule rule, u8 numCoverPos )
 {
-  if( rule == BTL_RULE_ROTATION ){
-    ++numCoverPos;  // ローテーションの場合、３体目は戦闘に出ているとみなす
+  if( rule == BTL_RULE_ROTATION )
+  {
+    // ローテーションの場合、３体目まで戦闘に出ているとみなす
+    return 3;
   }
   return numCoverPos;
 }

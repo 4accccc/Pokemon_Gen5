@@ -397,6 +397,9 @@ static void setMainProc( BTL_SERVER* sv, ServerMainProc mainProc )
 //----------------------------------------------------------------------------------
 static void setMainProc_Root( BTL_SERVER* server )
 {
+  #ifdef ROTATION_NEW_SYSTEM
+  setMainProc( server, ServerMain_SelectAction );
+  #else
   // ローテーションバトル＆初回ターン以外なら、アクションの前にローテーション選択する
   if( (BTL_MAIN_GetRule(server->mainModule) == BTL_RULE_ROTATION)
   &&  (BTL_SVFTOOL_GetTurnCount(server->flowWork) != 0 )
@@ -405,6 +408,7 @@ static void setMainProc_Root( BTL_SERVER* server )
   }else{
     setMainProc( server, ServerMain_SelectAction );
   }
+  #endif
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -679,6 +683,10 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
  */
 static BOOL check_acton_chapter( BTL_SERVER* server )
 {
+  #ifdef ROTATION_NEW_SYSTEM
+  // 新ローテーションシステムにはローテーション選択シーケンスは無いので常にTRUE
+  return TRUE;
+  #else
   // ローテーション以外なら常にチャプター打つ
   if( BTL_MAIN_GetRule(server->mainModule) != BTL_RULE_ROTATION ){
     return TRUE;
@@ -692,6 +700,7 @@ static BOOL check_acton_chapter( BTL_SERVER* server )
     }
     return FALSE;
   }
+  #endif
 }
 
 //----------------------------------------------------------------------------------

@@ -4186,12 +4186,19 @@ static u8 registerWazaTargets( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, Btl
     break;
 
   case BTL_RULE_DOUBLE:
-  case BTL_RULE_ROTATION:
     numTarget = registerTarget_double( wk, attacker, targetPos, wazaParam, intrPokeID, rec );
     break;
 
   case BTL_RULE_TRIPLE:
     numTarget = registerTarget_triple( wk, attacker, targetPos, wazaParam, intrPokeID, rec );
+    break;
+
+  case BTL_RULE_ROTATION:
+    #ifdef ROTATION_NEW_SYSTEM
+    numTarget = registerTarget_single( wk, attacker, targetPos, wazaParam, intrPokeID, rec );
+    #else
+    numTarget = registerTarget_double( wk, attacker, targetPos, wazaParam, intrPokeID, rec );
+    #endif
     break;
   }
 
@@ -12076,11 +12083,12 @@ u8 BTL_SVFTOOL_GetClientCoverPosCount( BTL_SVFLOW_WORK* wk, u8 pokeID )
 //--------------------------------------------------------------------------------------
 u8 BTL_SVFTOOL_GetMyBenchIndex( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
-  u8 pos = BTL_SVFTOOL_GetClientCoverPosCount( wk, pokeID );
-  if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION ){
-    ++pos;
+  if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_ROTATION ){
+    return BTL_SVFTOOL_GetClientCoverPosCount( wk, pokeID );
   }
-  return pos;
+  else{
+    return BTL_ROTATION_FRONTPOS_NUM + BTL_ROTATION_BACKPOS_NUM;
+  }
 }
 //--------------------------------------------------------------------------------------
 /**
