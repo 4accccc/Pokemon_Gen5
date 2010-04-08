@@ -496,6 +496,9 @@ _ANIME_LABEL	anm_hakase2_kyorokyoro_01
 /**************************************************************/
 EVENT_START    ev_pos_d06r0101_denki_02
 	
+	//名前の格納
+	_PLAYER_NAME(0)
+	
 	//博士2の場所を移動
 	//ホワイトの場所を移動
 	_OBJ_POS_CHANGE( D06R0101_HAKASE2_01, 25, 1, 22, DIR_DOWN )
@@ -988,7 +991,8 @@ _ANIME_LABEL	anm_boss_saru_03
 /*  D06R0101 博士のイベントスクリプト            */
 /**************************************************************/
 EVENT_START    ev_d06r0101_hakase2_01
-	
+	//名前の格納
+	_PLAYER_NAME(0)
 	IF $WK_SCENE_D06R0101 == 2 THEN 
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d06r0101_hakase2_04 )
 	
