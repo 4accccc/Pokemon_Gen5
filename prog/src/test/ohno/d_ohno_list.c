@@ -137,7 +137,7 @@ extern const GFL_PROC_DATA NetFourChildProcData;
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
 	{//
-		DEBUG_OHNO_MSG0017, 
+		DEBUG_OHNO_MSG0027, 
 //		&PokemonTradeWiFiProcData,	
 //		_PokeTradeWorkCreate,
 //		FS_OVERLAY_ID(pokemon_trade)
@@ -175,7 +175,7 @@ static const D_MENULIST DebugMenuList[] = {
 
 
   {//
-		DEBUG_OHNO_MSG0019, 
+		DEBUG_OHNO_MSG0028, 
 		&PokemonTradeDemoProcData,
 //    &PokemonTradeGTSProcData,
 //    &PokemonTradeGTSSendProcData,
@@ -238,8 +238,8 @@ static const D_MENULIST DebugMenuList[] = {
 	},
 
   {//
-		DEBUG_OHNO_MSG0015, 
-		&PokemonTradeIrcProcData,	
+		DEBUG_OHNO_MSG0013, 
+		&PokemonTradeProcData,	
     _PokeIrcTradeWorkCreate,
 		FS_OVERLAY_ID(pokemon_trade)
 	},
@@ -251,13 +251,19 @@ static const D_MENULIST DebugMenuList[] = {
 		FS_OVERLAY_ID(ohno_debugapp)
 	},
    */
-	{//
+/*	{//
 		DEBUG_OHNO_MSG0021, 
 		&NetFourChildProcData,
 		NULL,
 		FS_OVERLAY_ID(ohno_debugapp)
-	},
+	},*/
 	{//
+		DEBUG_OHNO_MSG0017,
+		&GtsNego_ProcData,	
+		_PokeTradeGtsNegoCreate,
+		FS_OVERLAY_ID(gts_negotiate)
+	},
+  {//
 		DEBUG_OHNO_MSG0016, 
 		&DebugSaveAddrProcData,
 		NULL,

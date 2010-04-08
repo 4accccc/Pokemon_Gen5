@@ -373,6 +373,16 @@ static void _wakeupActio8(G_SYNC_WORK* pWork)
 }
 
 
+//-------------------------------------
+///	アニメーションコールバック関数
+//=====================================
+static void _anmcallbackfunc( u32 param, fx32 currentFrame )
+{
+  G_SYNC_WORK* pWork = (G_SYNC_WORK*)param;
+  GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_bed,NANR_gsync_obj_bed);
+}
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ゲームシンク完了
@@ -418,6 +428,15 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
   GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_rug_ani3,NANR_gsync_obj_rug_ani4);
 
   GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_bed,NANR_gsync_obj_bed_ani);
+
+  {
+    GFL_CLWK_ANM_CALLBACK cbwk;
+    cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
+    cbwk.param = (u32)pWork;          // コールバックワーク
+    cbwk.p_func = _anmcallbackfunc, // コールバック関数
+    GSYNC_DISP_SetCallback(pWork->pDispWork,NANR_gsync_obj_bed, &cbwk);
+  }
+  
   GSYNC_DISP_BlendSmokeStart(pWork->pDispWork,FALSE);
   
   

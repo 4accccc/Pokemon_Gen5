@@ -514,6 +514,12 @@ void GSYNC_DISP_ObjChange(GSYNC_DISP_WORK* pWork,int no,int no2)
   GFL_CLACT_WK_SetAnmSeq( pWork->curIcon[no] , no2 );
 }
 
+void GSYNC_DISP_SetCallback(GSYNC_DISP_WORK* pWork,int no,const GFL_CLWK_ANM_CALLBACK* cp_data)
+{
+  GFL_CLACT_WK_StartAnmCallBack( pWork->curIcon[no] , cp_data );
+}
+
+
 void GSYNC_DISP_ObjEnd(GSYNC_DISP_WORK* pWork,int no)
 {
   GFL_CLACT_WK_Remove( pWork->curIcon[no] );

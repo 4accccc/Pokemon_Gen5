@@ -222,7 +222,10 @@ extern MYSTATUS* GTSNEGO_GetMyStatus( GAMEDATA* pGameData, int index);
 
 #if DEBUG_ONLY_FOR_ohno
 #define _NET_DEBUG (1)
-#define _DISP_DEBUG (0)  //ï\é¶çÏÇËÇ±Ç›
+#define _DISP_DEBUG (1)  //ï\é¶çÏÇËÇ±Ç›
+#elif DEBUG_ONLY_FOR_saya_tsuruta
+#define _NET_DEBUG (0)
+#define _DISP_DEBUG (1)  //ï\é¶çÏÇËÇ±Ç›
 #else
 #define _NET_DEBUG (0)
 #define _DISP_DEBUG (0)
