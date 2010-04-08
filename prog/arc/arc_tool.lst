@@ -294,3 +294,4 @@
   ARCID_BSW_PD "btl_subway_pd.narc" #バトルサブウェイポケモンデータ
   ARCID_BSW_TR "btl_subway_td.narc" #バトルサブウェイトレーナーデータ
   ARCID_DENDOU_DEMO_GRA "dendou_demo_gra.narc" # 殿堂入りデモ画面
+  ARCID_GMK_D12 "fieldmap/gmk_d12.narc" # D12ギミックアーカイブ
