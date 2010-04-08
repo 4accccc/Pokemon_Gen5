@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T15:50:12"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T12:39:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,8 +365,8 @@
 ・このメッセージ表示後
 　ポケセン（t02pc0101）内へ画面切り替え
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
-博士</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『ハーイ！
 [1:00:トレーナー名:0]！！▼
 ポケモンと　ともに　みちをゆく！

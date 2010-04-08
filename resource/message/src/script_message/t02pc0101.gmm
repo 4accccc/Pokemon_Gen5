@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-13T15:58:35"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T12:39:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -298,8 +298,8 @@
 　カウンター前まで進むと
 　主人公と向き合ってこのメッセージ表示
 ・同時に友達♀も移動し、white_03表示</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
-博士</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『ここが　ポケモンセンター！
 なんとなく　おちつくでしょ？▼
 それでは　あんない　しまーす！▼</language>
@@ -322,8 +322,8 @@
 　カウンターまで進むと
 　主人公と向き合ってこのメッセージ表示
 ・0＝プレイヤー名</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
-博士</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『ポケモンセンターの
 すごい　ところ！▼
 それは　なんと！
@@ -348,8 +348,8 @@
 　主人公が左か下に移動したとき
 　メッセージ表示後、主人公の位置をもどす
 ・0＝プレイヤー名</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
-博士</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『ちょっと　[1:00:トレーナー名:0]
 どこへ　いくのよ！？▼
 ほら！　おねえさんに　はなしかけて
@@ -363,8 +363,8 @@
 	<row id="msg_t02pc0101_hakase2_03a">
 		<comment>♀
 ・hakase2_03表示後、回復前に再度会話</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
-博士</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『はなしかけるのは
 わたしじゃなくて　おねえさんよ</language>
 		<language name="JPN_KANJI" width="256">アララギ『話しかけるのは
@@ -386,8 +386,8 @@
 		<comment>♀
 ・回復後、メッセージ表示
 ・続けて、パソコン前に移動</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
-博士</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『オーケイ!
 ポケモン　げんきに　なったわね！▼
 じゃ　つぎは　ポケモンセンターの
@@ -403,8 +403,8 @@
 ・回復処理後
 ・パソコンまで進むと
 　主人公と向き合ってこのメッセージ表示</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
-博士</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『これは　パソコン！
 トレーナーなら　だれでも　つかえるの▼
 つれている　ポケモンを　あずけたり▼
@@ -447,8 +447,8 @@
 	<row id="msg_t02pc0101_hakase2_05">
 		<comment>♀
 ・表示後、移動開始</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
-博士</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『まぁ　ベル！
 よく　きづいたわね！▽
 すっごく　いい　しつもんよ▼
@@ -476,8 +476,8 @@
 ・hakase2_05表示後
 　ショップカウンタまで進むと
 　主人公と向き合ってこのメッセージ表示</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
-博士</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『こちらは
 フレンドリィショップ！▼
 やくだつ　どうぐを　かったり▼
@@ -500,8 +500,8 @@
 　画面外に消えると
 　続けてmsg_t02_boodle_06
 ・t01r0401に博士OBJ復帰</comment>
-		<attribute name="キャラ指定">DOCTOR_JR
-博士</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『さてとッ！▼
 これで　きみたちに　トレーナーの
 きその　きそは　おしえたわね！▼

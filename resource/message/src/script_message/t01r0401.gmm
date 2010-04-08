@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-04T14:07:55"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T12:43:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -316,7 +316,7 @@
 ・アニメ後
 　続けてblack_01表示</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士（娘）</attribute>
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">ハーイ！▼
 まってたわよ
 ヤングガールに　ヤングボーイ！▼
@@ -347,7 +347,7 @@
 　3人の前を移動するアニメ
 ・続けてhakase2_03</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士（娘）</attribute>
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『もう！▼
 きょうは　きねんとなる　ひ　でしょ
 かしこまったほうが　いいじゃない▼
@@ -374,7 +374,7 @@
 ・今回はhakase2_04
 　はい/いいえともに同じ流れ</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士（娘）</attribute>
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">あっ　すごーい！
 もう　ポケモンしょうぶを　したのね▼
 それでかな
@@ -399,7 +399,7 @@
 　はい→hakase2_07
 　いいえ→名前入力画面</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士（娘）</attribute>
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『なるほどなるほど
 その　ニックネームで　オーケー？</language>
 		<language name="JPN_KANJI" width="256">アララギ『なるほどなるほど
@@ -412,7 +412,7 @@
 　ニックネーム変わった
 ・続けてhakase2_07表示</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士（娘）</attribute>
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『なるほどなるほど▼
 [1:02:ポケモンニックネーム:0]と　いうんだ
 すっごく　いい　なまえ　よね！▼</language>
@@ -427,7 +427,7 @@
 　ニックネーム変わっていない
 ・続けてhakase2_07表示</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士（娘）</attribute>
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『なるほどなるほど
 ニックネームは　つけないんだ▽
 ま　それも　ありだよね▼</language>
@@ -440,7 +440,7 @@
 		<comment>♀
 ・続けてblack_02表示</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士（娘）</attribute>
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『さて　きみたちに
 ポケモンを　あげた　りゆうだけど……▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『さて　きみたちに
@@ -469,7 +469,7 @@
 ・メッセージ表示後、演出
 ・続けてhakase2_09表示</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士（娘）</attribute>
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『すごいすごい！
 さすが　チェレン！▼
 ポケモンの　ことを
@@ -489,7 +489,7 @@
 ・アニメなどの演出予定
 ・続けてhakase2_10表示</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士（娘）</attribute>
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">ポケモンずかん　とは……！▼
 きみたちが　であった　ポケモンを
 じどうてきに　きろく　していく▽
@@ -515,7 +515,7 @@
 　いいえ→hakase2_11
 ・0＝プレイヤーの名前</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士（娘）</attribute>
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">では　おききします▼
 [1:00:トレーナー名:0]！
 チェレン！　ベル！▼
@@ -535,7 +535,7 @@
 　はい→white_04
 　いいえ→hakase2_11</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士（娘）</attribute>
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『もう！▼
 わたしが　ききたいのは
 せかいを　きりひらく▼
@@ -582,7 +582,7 @@
 　あわせて友達♂、♀も
 ・続けてwhite_02</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士（娘）</attribute>
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『ありがとッ！
 さいこうの　へんじ　よね！▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『ありがとッ！
@@ -601,7 +601,7 @@
 		<comment>♀
 ・メッセージ後、研究所の外へ</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士（娘）</attribute>
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『では　つぎのステップね▼
 どのように　ポケモンと
 であうのかを　おしえるから▽
@@ -645,7 +645,7 @@
 　ないときは続けて図鑑評価
 　hyouka_scr.gmmに</comment>
 		<attribute name="キャラ指定">HAKASE2
-博士（娘）</attribute>
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『ハーイ！　[1:00:トレーナー名:0]！
 さいきんの　ちょうしは　どう？▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『ハーイ！　[1:00:トレーナー名:0]！
