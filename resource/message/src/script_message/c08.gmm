@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-07T22:18:30"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T14:24:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1255,7 +1255,8 @@ WOMAN2</attribute>
 ・c08ジムバッジ取得後にジムから出ると
 　メッセージ表示
 ・続けてhakase2_01w</comment>
-		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<attribute name="キャラクター">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『……ハーイ
 アイリスちゃんは　どうだった？▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『……ハーイ
@@ -1268,7 +1269,8 @@ WOMAN2</attribute>
 ・c08ジムバッジ取得後にジムから出ると
 　メッセージ表示
 ・続けてhakase2_01b</comment>
-		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<attribute name="キャラクター">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『……ハーイ
 シャガさんは　たくましかった？▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『……ハーイ
@@ -1280,7 +1282,8 @@ WOMAN2</attribute>
 ・WHITEver
 ・主人公に近づいて
 ・続けてhakase2_02</comment>
-		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<attribute name="キャラクター">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">あっ　でんせつの　ムを
 ふっかつさせる　ほうほうについての▽
 ほうこくに　きたんだ▼
@@ -1304,7 +1307,8 @@ WOMAN2</attribute>
 ・BLACKver
 ・主人公に近づいて
 ・続けてhakase2_02</comment>
-		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<attribute name="キャラクター">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">あっ　でんせつの　シンを
 ふっかつさせる　ほうほうについての▽
 ほうこくに　きたんだ▼
@@ -1328,7 +1332,8 @@ WOMAN2</attribute>
 ・メッセージ表示後、連れ歩き開始
 ・主人公をGRIDX=431、GRIDZ=139辺りまで誘導
 ・続けてhakase2_03</comment>
-		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<attribute name="キャラクター">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">それよりも　すごいじゃない！▼
 ジムバッジを
 ８コ　そろえたんでしょ▽
@@ -1356,7 +1361,8 @@ WOMAN2</attribute>
 ・所定posに到達すると
 　上向きでメッセージ表示
 ・続けてhakase2_04</comment>
-		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<attribute name="キャラクター">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『あの　ゲートを　くぐり
 １０ばんどうろを　ぬければ▽
 バッジチェックゲート▼
@@ -1377,7 +1383,8 @@ WOMAN2</attribute>
 ・はい→hakase2_05
 　いいえ→hakase2_06
 ・0＝主人公名前</comment>
-		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<attribute name="キャラクター">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">カラクサの　ポケモンセンターを
 あんないしたこと　おもいだしちゃった▼
 ねえ　[1:00:トレーナー名:0]
@@ -1394,7 +1401,8 @@ WOMAN2</attribute>
 		<comment>♀
 ・はい選択時
 ・続けてhakase2_07</comment>
-		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<attribute name="キャラクター">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『あっ！　いいのいいの！
 そういうことは　ぜんぶ　いわなくて▼
 でも　きみたちが
@@ -1415,7 +1423,8 @@ WOMAN2</attribute>
 		<comment>♀
 ・いいえ選択時
 ・続けてhakase2_07</comment>
-		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<attribute name="キャラクター">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『ありがとッ！
 さいこうの　へんじ　よね！▼
 わたしも　きみたちに
@@ -1438,7 +1447,8 @@ WOMAN2</attribute>
 　No001「マスターボール」
 ・続けてhakase2_08
 ・0＝主人公名前</comment>
-		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<attribute name="キャラクター">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
 これ　プレゼントよ！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
@@ -1450,7 +1460,8 @@ WOMAN2</attribute>
 ・アイテム入手後、自動で表示
 ・メッセージ表示後、画面下に移動
 　画面外に消えると、主人公操作可能</comment>
-		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<attribute name="キャラクター">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『その　マスターボールは
 どんな　ポケモンも　ぜったいに▽
 つかまえられる　さいこうの　ボール▼

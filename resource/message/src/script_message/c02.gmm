@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T12:43:42"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T14:24:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,7 +364,8 @@
 ・画面内に配置
 　r03側のPOSを踏むと！マーク後、主人公に隣接
 ・メッセージ表示後、ライバル戦闘で連れ歩き</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『まちに　ついたら
 まず　ポケモンセンター　だよ▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『街に　着いたら
@@ -377,7 +378,8 @@
 　このときライバルと主人公向き合う
 ・メッセージ表示後、ライバルだけ画面左へ移動
 ・画面外に消えると、主人公操作可能</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">このまま　まっすぐ　すすめば
 ポケモンセンター　さ▼
 じゃあ　ぼくは
@@ -615,7 +617,8 @@ C02ジムリーダー</attribute>
 ・盗難イベント中
 ・画面左から登場して
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">サポート（友達♀）</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『ねえねえ　[1:00:トレーナー名:0]
 みんな　あつまって　どうしたの？▼</language>
 		<language name="JPN_KANJI" width="256">ベル『ねえねえ　[1:00:トレーナー名:0]
@@ -630,7 +633,8 @@ C02ジムリーダー</attribute>
 　（このときサポートとライバルを並ばせる）
 ・続けてmsg_c02_leader2_04
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">ライバル（友達♂）</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]
 ジムバッジは　てにいれた？▼
 って　どうしたの？
@@ -745,7 +749,8 @@ C03ジムリーダー</attribute>
 ・盗難イベント中
 ・ダウジングマシン追加
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">サポート（友達♀）</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『あっ　[1:00:トレーナー名:0]
 これを　もっていってよ！▼
 マコモさんから　あずかってたの
@@ -760,7 +765,8 @@ C03ジムリーダー</attribute>
 		<comment>♀
 ・盗難イベント中
 ・続けてmsg_c02_black_04</comment>
-		<attribute name="キャラ指定">サポート（友達♀）</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ダウジングマシンを　つかうと
 めには　みえないけれど▼
 かくれている　どうぐの
@@ -776,7 +782,8 @@ C03ジムリーダー</attribute>
 ・メッセージ表示後、ライバル博物館へ
 ・続けてwhite_04
 ・主人公、操作可能に</comment>
-		<attribute name="キャラ指定">ライバル（友達♂）</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『じじょうが
 わからないけれど　はくぶつかんを▽
 まもれば　いいんだよね？▼</language>
@@ -788,7 +795,8 @@ C03ジムリーダー</attribute>
 		<comment>♀
 ・表示後、サポート、博物館へ
 ・主人公、操作可能に</comment>
-		<attribute name="キャラ指定">サポート（友達♀）</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『あっ　あたしも！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『あっ　あたしも！▼</language>
 	</row>
@@ -910,7 +918,8 @@ C02ジムリーダー</attribute>
 ・所定のposを踏むとイベント発動
 ・続けてleader2_stone_01
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">アララギ博士娘</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『……アデクさんから
 はなしは　きいたわ▼
 [1:00:トレーナー名:0]
@@ -940,7 +949,8 @@ C02ジムリーダー</attribute>
 		<comment>♀：d04r0601イベント後
 ・？表示後にメッセージ表示
 ・続けてleader2_stone_02</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『それって……▼
 リゾートデザートで　みつかった
 ふるいいし　じゃあ▼</language>
@@ -1003,7 +1013,8 @@ C02ジムリーダー</attribute>
 	<row id="msg_c02_hakase2_stone_02" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・続けてleader2_stone_03</comment>
-		<attribute name="キャラ指定">アララギ博士娘</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『……しらべたのは
 アタシ　なんですけど▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『……調べたのは
@@ -1028,7 +1039,8 @@ C02ジムリーダー</attribute>
 	<row id="msg_c02_white_stone_02" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・続けてleader2_stone_04</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『それにしてもお▼
 あのとき　プラズマだんが
 その　ふるいいし　に▽
@@ -1264,7 +1276,8 @@ C02ジムリーダー</attribute>
 		<comment>♀：d04r0601イベント後
 ・サブウインで表示
 ・続けてchampion_sub_01</comment>
-		<attribute name="キャラ指定">アララギ博士娘</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">あっ？</language>
 		<language name="JPN_KANJI" width="256">あっ？</language>
 	</row>
@@ -1282,7 +1295,8 @@ C02ジムリーダー</attribute>
 		<comment>♀：d04r0601イベント後
 ・サブウインで表示
 ・続けてleader2_stone_07</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">えーと</language>
 		<language name="JPN_KANJI" width="256">えーと</language>
 	</row>
@@ -1340,7 +1354,8 @@ C02ジムリーダー</attribute>
 		<comment>♀：d04r0601イベント後
 ・WHITEver
 ・続けてhakase1_stone_03</comment>
-		<attribute name="キャラ指定">アララギ博士娘</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『そっか！▼
 ソウリュウの　アイリスちゃん　なら
 なにか　しっているかも！▼</language>
@@ -1353,7 +1368,8 @@ C02ジムリーダー</attribute>
 		<comment>♀：d04r0601イベント後
 ・BLACKver
 ・続けてhakase1_stone_03</comment>
-		<attribute name="キャラ指定">アララギ博士娘</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『そっか！▼
 ソウリュウの　シャガさん　なら
 なにか　ごぞんじかも！▼</language>
@@ -1383,7 +1399,8 @@ C02ジムリーダー</attribute>
 　博士父と博士娘、画面右へ移動する
 ・画面外に消えると
 　続けてleader2_stone_08</comment>
-		<attribute name="キャラ指定">アララギ博士娘</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『ドラゴンポケモンが
 どのような　そんざい　なのか▼
 めざめさせる　ほうほうが　あるのか
@@ -1430,7 +1447,8 @@ C02ジムリーダー</attribute>
 　別マップに行くまで繰り返し表示
 ・別マップに行くと動作モデル削除
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『……なんだか
 たいへんそう　ってことしか▽
 わからなかったんだけどお▼
