@@ -41,12 +41,12 @@
 // 左ドアへの出入り
 #define L_DOOR_FRAME  (0)
 #define L_DOOR_PITCH  (0x1fa1)
-#define L_DOOR_YAW    (0x0e0f)
+#define L_DOOR_YAW    (0x1089)
 #define L_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 // 右ドアへの出入り
 #define R_DOOR_FRAME  (0)
 #define R_DOOR_PITCH  (0x1fa1)
-#define R_DOOR_YAW    (0xf2cc)
+#define R_DOOR_YAW    (0xf047)
 #define R_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 //-------------------------------------
 // 通常出入り口のカメラ動作 ( 通常版 )
@@ -58,12 +58,12 @@
 // 左ドアへの出入り
 #define L_DOOR_FRAME  (10)
 #define L_DOOR_PITCH  (0x1fa1)
-#define L_DOOR_YAW    (0x0e0f)
+#define L_DOOR_YAW    (0x1089)
 #define L_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 // 右ドアへの出入り
 #define R_DOOR_FRAME  (10)
 #define R_DOOR_PITCH  (0x1fa1)
-#define R_DOOR_YAW    (0xf2cc)
+#define R_DOOR_YAW    (0xf047)
 #define R_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 #endif
 
