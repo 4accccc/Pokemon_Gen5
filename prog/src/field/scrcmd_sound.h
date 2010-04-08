@@ -23,6 +23,9 @@ extern VMCMD_RESULT EvCmdBgmFadeIn( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmFadeWait( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdPlayTempEventBGM( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdBgmPush( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdBgmPop( VMHANDLE *core, void *wk );
+extern BOOL SCREND_CheckEndBGMPushPop( SCREND_CHECK *end_check, int *seq );
 
 extern VMCMD_RESULT EvCmdBgmWait( VMHANDLE *core, void *wk );
 

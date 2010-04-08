@@ -288,8 +288,8 @@
   DEF_CMD( EvCmdPlayTempEventBGM, EV_SEQ_START_TEMP_EVENT_BGM )
 
   DEF_CMD( EvCmdBgmWait, EV_SEQ_BGM_WAIT )
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdBgmPush, EV_SEQ_BGM_PUSH )
+  DEF_CMD( EvCmdBgmPop,  EV_SEQ_BGM_POP )
   NO_CMD()
 
   //ISS

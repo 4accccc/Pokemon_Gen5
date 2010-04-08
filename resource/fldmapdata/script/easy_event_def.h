@@ -11,6 +11,9 @@
  */
 //======================================================================
 
+#define BGM_FADEOUT_FRAME (6)
+#define BGM_FADEIN_FRAME  (60)
+
 //--------------------------------------------------------------
 /**
  * レポート呼び出し
@@ -292,7 +295,7 @@
 
 
 //======================================================================
-//    簡易アプリ操作
+//    3Dデモ系
 //======================================================================
 //--------------------------------------------------------------
 /**
@@ -304,6 +307,110 @@
   _ASM_DEMO_SCENE \demo_no, \scene_id
   _ASM_FIELD_OPEN
   .endm
+
+//--------------------------------------------------------------
+/**
+ *  @brief  3Dデモ専用マップブラックアウト呼び出し
+ */
+//--------------------------------------------------------------
+#define _DEMO_FADEOUT_BLACK_CALL() _ASM_DEMO_FADEOUT_BLACK_CALL
+
+  .macro  _ASM_DEMO_FADEOUT_BLACK_CALL
+  _ASM_MAP_FADE_BLACK_OUT
+  _ASM_MAP_FADE_END_CHECK
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @brief  3Dデモ専用マップブラックイン呼び出し
+ */
+//--------------------------------------------------------------
+#define _DEMO_FADEIN_BLACK_CALL() _ASM_DEMO_FADEIN_BLACK_CALL
+
+  .macro  _ASM_DEMO_FADEIN_BLACK_CALL
+  _ASM_MAP_FADE_BLACK_IN
+  _ASM_MAP_FADE_END_CHECK
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @brief  3Dデモ専用マップブラックアウト　BGMPush付き
+ */
+//--------------------------------------------------------------
+#define _DEMO_FADEOUT_BLACK_WITH_BGM_CALL() _ASM_DEMO_FADEOUT_BLACK_WITH_BGM_CALL
+
+  .macro  _ASM_DEMO_FADEOUT_BLACK_WITH_BGM_CALL
+  _ASM_MAP_FADE_BLACK_OUT
+  _ASM_BGM_PUSH BGM_FADEOUT_FRAME 
+  _ASM_MAP_FADE_END_CHECK
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @brief  3Dデモ専用マップブラックイン BGMPop付き
+ */
+//--------------------------------------------------------------
+#define _DEMO_FADEIN_BLACK_WITH_BGM_CALL() _ASM_DEMO_FADEIN_BLACK_WITH_BGM_CALL
+
+  .macro  _ASM_DEMO_FADEIN_BLACK_WITH_BGM_CALL
+  _ASM_MAP_FADE_BLACK_IN
+  _ASM_BGM_POP  0,BGM_FADEIN_FRAME 
+  _ASM_MAP_FADE_END_CHECK
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @brief  3Dデモ専用マップホワイトアウト呼び出し
+ */
+//--------------------------------------------------------------
+#define _DEMO_FADEOUT_WHITE_CALL() _ASM_DEMO_FADEOUT_WHITE_CALL
+
+  .macro  _ASM_DEMO_FADEOUT_WHITE_CALL
+  _ASM_MAP_FADE_WHITE_OUT
+  _ASM_MAP_FADE_END_CHECK
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @brief  3Dデモ専用マップホワイトイン呼び出し
+ */
+//--------------------------------------------------------------
+#define _DEMO_FADEIN_WHITE_CALL() _ASM_DEMO_FADEIN_WHITE_CALL
+
+  .macro  _ASM_DEMO_FADEIN_WHITE_CALL
+  _ASM_MAP_FADE_WHITE_IN
+  _ASM_MAP_FADE_END_CHECK
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @brief  3Dデモ専用マップホワイトアウト　BGMPush付き
+ */
+//--------------------------------------------------------------
+#define _DEMO_FADEOUT_WHITE_WITH_BGM_CALL() _ASM_DEMO_FADEOUT_WHITE_WITH_BGM_CALL
+
+  .macro  _ASM_DEMO_FADEOUT_WHITE_WITH_BGM_CALL
+  _ASM_MAP_FADE_WHITE_OUT
+  _ASM_BGM_PUSH BGM_FADEOUT_FRAME 
+  _ASM_MAP_FADE_END_CHECK
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @brief  3Dデモ専用マップホワイトイン BGMPop付き
+ */
+//--------------------------------------------------------------
+#define _DEMO_FADEIN_WHITE_WITH_BGM_CALL() _ASM_DEMO_FADEIN_WHITE_WITH_BGM_CALL
+
+  .macro  _ASM_DEMO_FADEIN_WHITE_WITH_BGM_CALL
+  _ASM_MAP_FADE_WHITE_IN
+  _ASM_BGM_POP  0,BGM_FADEIN_FRAME 
+  _ASM_MAP_FADE_END_CHECK
+  .endm
+
+//======================================================================
+//    簡易アプリ操作
+//======================================================================
 
 //--------------------------------------------------------------
 /**

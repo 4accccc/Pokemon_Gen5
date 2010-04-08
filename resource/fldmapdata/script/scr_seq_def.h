@@ -3148,6 +3148,43 @@
 
 //--------------------------------------------------------------
 /**
+ *  @def  _ASM_BGM_PUSH
+ *  @brief  現在のBGMをフェードしてPopする
+ *  @param  fadeout_frame 現在なっている曲をフェードアウトするフレーム数 
+ *
+ *  @note   必ず_BGM_POPと対で使用すること！
+ *  @note   単独での呼び出し禁止！ マクロで包んで使用すること
+ *          使用箇所を限定したいので、利用は玉田さんの許可制
+ */
+//--------------------------------------------------------------
+//#define _BGM_PUSH( fadeout_frame ) _ASM_BGM_PUSH fadeout_frame
+  .macro  _ASM_BGM_PUSH fadeout_frame
+  .short  EV_SEQ_BGM_PUSH
+  .short  \fadeout_frame
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def  _ASM_BGM_POP
+ *  @brief  現在のBGMをフェードして、保存されたBGMをPopしフェードインしながら戻す
+ *  @param  fadeout_frame 現在なっている曲をフェードアウトするフレーム数 
+ *
+ *  @note   必ず_BGM_PUSHと対で使用すること！
+ *  @note   単独での呼び出し禁止！ マクロで包んで使用すること
+ *          使用箇所を限定したいので、利用は玉田さんの許可制
+ *
+ *  @note   鳴っているBGMがない時は、フェードアウトは無視されます 
+ */
+//--------------------------------------------------------------
+//#define _BGM_POP( fadeout_frame, fadein_frame ) _ASM_BGM_POP fadeout_frame, fadein_frame
+  .macro  _ASM_BGM_POP  fadeout_frame, fadein_frame
+  .short  EV_SEQ_BGM_POP
+  .short  \fadeout_frame
+  .short  \fadein_frame
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @def _START_EVENT_BGM
  * @brief スクリプト簡易マクロ：イベントBGM開始
  * @param bgmno
@@ -8801,7 +8838,8 @@
  * @brief デモ呼び出し
  * @param demo_no   デモID指定ナンバー pokemon_wb\prog\include\demo\demo3d_demoid.h 参照
  *
- * @note  フェード処理は別途呼び出す必要がある
+ * @note  フェード処理は別途呼び出す必要があります。
+ *        必ず_DEMO_FADEIN(OUT)_系コマンドを使用してください
  */
 //--------------------------------------------------------------
 #define _CALL_3D_DEMO( demo_no )  \
@@ -8815,7 +8853,60 @@
   .short  \demo_no
   .short  \scene_id
   .endm
-  
+
+//--------------------------------------------------------------
+/**
+ *  @brief  3Dデモ専用マップフェードアウト呼び出し
+ *
+ *  @note _DEMO_FADEIN_BLACK(WHITE)_CALL()と必ず対で使います
+ *
+ *  @note _MAP_FADE_系と異なり、_MAP_FADE_END_CHECKで待つ必要はありません
+ *  @note _CALL_3D_DEMO, _CALL_3D_DEMO_EX とセットで使います
+ */
+//--------------------------------------------------------------
+#define _DEMO_FADEOUT_BLACK_CALL() _ASM_DEMO_FADEOUT_BLACK_CALL
+#define _DEMO_FADEOUT_WHITE_CALL() _ASM_DEMO_FADEOUT_WHITE_CALL
+
+//--------------------------------------------------------------
+/**
+ *  @brief  3Dデモ専用マップフェードイン呼び出し
+ *
+ *  @note _DEMO_FADEOUT_BLACK(WHITE)_CALL()と必ず対で使います
+ *
+ *  @note _MAP_FADE_系と異なり、_MAP_FADE_END_CHECKで待つ必要はありません
+ *  @note _CALL_3D_DEMO, _CALL_3D_DEMO_EX とセットで使います
+ */
+//--------------------------------------------------------------
+#define _DEMO_FADEIN_BLACK_CALL() _ASM_DEMO_FADEIN_BLACK_CALL
+#define _DEMO_FADEIN_WHITE_CALL() _ASM_DEMO_FADEIN_WHITE_CALL
+
+//--------------------------------------------------------------
+/**
+ *  @brief  3Dデモ専用マップフェードアウト呼び出し BGM Push付き
+ *
+ *  @note _DEMO_FADEIN_BLACK(WHITE)_WITH_BGM_CALL()と必ず対で使います
+ *
+ *  @note _MAP_FADE_系と異なり、_MAP_FADE_END_CHECKで待つ必要はありません
+ *  @note _CALL_3D_DEMO, _CALL_3D_DEMO_EX とセットで使います
+ */
+//--------------------------------------------------------------
+#define _DEMO_FADEOUT_BLACK_WITH_BGM_CALL() _ASM_DEMO_FADEOUT_BLACK_WITH_BGM_CALL
+#define _DEMO_FADEOUT_WHITE_WITH_BGM_CALL() _ASM_DEMO_FADEOUT_WHITE_WITH_BGM_CALL
+
+//--------------------------------------------------------------
+/**
+ *  @brief  3Dデモ専用マップフェードイン呼び出し　BGM Pop付き
+ *
+ *  @note _DEMO_FADEOUT_BLACK(WHITE)_WITH_BGM_CALL()と必ず対で使います
+ *
+ *  @note _MAP_FADE_系と異なり、_MAP_FADE_END_CHECKで待つ必要はありません
+ *  @note _CALL_3D_DEMO, _CALL_3D_DEMO_EX とセットで使います
+ */
+//--------------------------------------------------------------
+#define _DEMO_FADEIN_BLACK_WITH_BGM_CALL() _ASM_DEMO_FADEIN_BLACK_WITH_BGM_CALL
+#define _DEMO_FADEIN_WHITE_WITH_BGM_CALL() _ASM_DEMO_FADEIN_WHITE_WITH_BGM_CALL
+
+ 
 //======================================================================
 //  テレビトランシーバーデモ
 //======================================================================

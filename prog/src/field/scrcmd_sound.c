@@ -290,6 +290,81 @@ VMCMD_RESULT EvCmdPlayTempEventBGM( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * 現在のBGMをPushする
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ *
+ * 使用箇所はできるだけ限定したいので、コマンドの利用箇所は許可制
+ * (10.04.7現在 3Dデモ呼び出しのみ)
+ */
+//-------------------------------------------------------------- 
+VMCMD_RESULT EvCmdBgmPush( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work = wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK*       sc   = SCRCMD_WORK_GetScriptWork( work );
+
+  u16 fade_frame = SCRCMD_GetVMWorkValue( core, work );
+  
+  SCRIPT_CallEvent( sc, EVENT_FSND_PushBGM( gsys, fade_frame ));
+
+  SCREND_CHK_SetBitOn( SCREND_CHK_BGM_PUSH_POP );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * 現在のBGMをPopする
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ *
+ * 使用箇所はできるだけ限定したいので、コマンドの利用箇所は許可制
+ * (10.04.7現在 3Dデモ呼び出しのみ)
+ */
+//-------------------------------------------------------------- 
+VMCMD_RESULT EvCmdBgmPop( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work = wk;
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK*       sc   = SCRCMD_WORK_GetScriptWork( work );
+
+  u16 fadeout_frame = SCRCMD_GetVMWorkValue( core, work );
+  u16 fadein_frame = SCRCMD_GetVMWorkValue( core, work );
+  
+  SCRIPT_CallEvent( sc, EVENT_FSND_PopBGM( gsys, fadeout_frame, fadein_frame ));
+  
+  SCREND_CHK_SetBitOff( SCREND_CHK_BGM_PUSH_POP );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGM Push/Pop処理の対チェック
+ *
+ *	@param	end_check   ワーク
+ *	@param	seq         シーケンス
+ *
+ *	@retval TRUE    完了
+ *	@retval FALSE   途中
+ */
+//-----------------------------------------------------------------------------
+BOOL SCREND_CheckEndBGMPushPop( SCREND_CHECK *end_check, int *seq )
+{
+  SCRIPT_WORK *sc = end_check->ScrWk;
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+
+  switch( *seq ){
+  case 0:
+    SCRIPT_CallEvent( sc, EVENT_FSND_PopBGM( end_check->gsys, 0, 0 ));
+    (*seq) ++;
+    break;
+  case 1:
+    return TRUE;
+  }
+  return FALSE;
+}
 
 #if 0
 //--------------------------------------------------------------
