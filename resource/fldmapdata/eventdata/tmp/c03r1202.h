@@ -9,6 +9,7 @@
 #define ZONE_C03R1202_EVC_H
 
 #define C03R1202_BADGE_01                  0
+#define C03R1202_MOUNTAIN_01               1
 
 #endif //ZONE_C03R1202_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r1202.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

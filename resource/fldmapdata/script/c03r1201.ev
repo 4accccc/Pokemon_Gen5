@@ -22,6 +22,9 @@
 _EVENT_DATA		ev_c03r1201_businessman1_01
 _EVENT_DATA		ev_c03r1201_businessman2_01
 _EVENT_DATA		ev_c03r1201_assistantm1_01
+_EVENT_DATA		ev_c03r1201_man1_01
+_EVENT_DATA		ev_c03r1201_woman1_01
+_EVENT_DATA		ev_c03r1201_pokemon_01
 _EVENT_DATA_END
 
 
@@ -69,3 +72,25 @@ EVENT_START		ev_c03r1201_assistantm1_01
 	ENDIF
 	
 EVENT_END
+
+/**************************************************************/
+/*		C03R1201	MAN1スクリプト							  */
+/**************************************************************/
+EVENT_START		ev_c03r1201_man1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1201_man1_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C03R1201	WOMAN1スクリプト						  */
+/**************************************************************/
+EVENT_START		ev_c03r1201_woman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1201_woman1_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C03R1201	POKEMONスクリプト						  */
+/**************************************************************/
+EVENT_START		ev_c03r1201_pokemon_01
+	_EASY_TALK_POKEVOICE( MONSNO_537, msg_c03r1201_pokemon_01 )
+EVENT_END
+

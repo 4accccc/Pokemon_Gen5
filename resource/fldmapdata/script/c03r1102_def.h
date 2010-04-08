@@ -5,6 +5,5 @@
 #define _C03R1102_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C03R1102_MOUNTAIN_01 (1)
 
 #endif //_C03R1102_DEF_H_
