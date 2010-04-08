@@ -33,7 +33,8 @@
 //============================================================================================
 // ■定数
 //============================================================================================
-#define ZERO_CAMERA_WAIT (15) // カメラのゼロフレーム切り替え演出の待ち時間
+#define ZERO_CAMERA_WAIT_IN  (15) // カメラのゼロフレーム切り替え演出の待ち時間 ( 入る時 )
+#define ZERO_CAMERA_WAIT_OUT (15) // カメラのゼロフレーム切り替え演出の待ち時間 ( 出る時 )
 
 
 //============================================================================================
@@ -205,7 +206,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
 
   // カメラのゼロフレーム切り替え待ち
   case SEQ_DOOROUT_ZERO_CAMERA_WAIT:
-    if( ZERO_CAMERA_WAIT < work->waitCount++ ) {
+    if( ZERO_CAMERA_WAIT_OUT < work->waitCount++ ) {
       *seq = SEQ_DOOROUT_CAMERA_ACT_START;
     }
     break;
@@ -310,6 +311,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * wk)
     SEQ_DOORIN_CAMERA_ACT,
     SEQ_DOORIN_CAMERA_ACT_WAIT,
     SEQ_DOORIN_OPENANIME_WAIT,
+    SEQ_DOORIN_ZERO_CAMERA_WAIT,
     SEQ_DOORIN_PLAYER_ONESTEP,
     SEQ_DOORIN_BGM_STAND_BY,
     SEQ_DOORIN_FADEOUT,
@@ -349,7 +351,14 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * wk)
       } 
       // ドアがない場合
       else {
-        *seq = SEQ_DOORIN_PLAYER_ONESTEP;
+        // カメラ演出がゼロフレーム切り替え
+        if( ENTRANCE_CAMERA_IsAnimeExist( work->ECamWork ) &&
+            ENTRANCE_CAMERA_IsZeroFrameAnime( work->ECamWork ) ) {
+          *seq = SEQ_DOORIN_ZERO_CAMERA_WAIT;
+        }
+        else {
+          *seq = SEQ_DOORIN_PLAYER_ONESTEP;
+        }
       }
     }
     break;
@@ -357,6 +366,13 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * wk)
   // ドアオープン待ち
   case SEQ_DOORIN_OPENANIME_WAIT:
     if( CheckDoorAnimeFinish(work) == TRUE ) {
+      *seq = SEQ_DOORIN_PLAYER_ONESTEP;
+    }
+    break;
+  
+  // カメラのゼロフレーム切り替え待ち
+  case SEQ_DOORIN_ZERO_CAMERA_WAIT:
+    if( ZERO_CAMERA_WAIT_IN < work->waitCount++ ) {
       *seq = SEQ_DOORIN_PLAYER_ONESTEP;
     }
     break;
