@@ -3922,9 +3922,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_WB, // camera_area
 		0, // padding
-		185,
+		184,
 		3,
-		183,
+		196,
 	},
 	{//ZONE_ID_C07GYM0101 = 119
 		RSC_HYBRID,
@@ -7840,7 +7840,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
 		0,
 		MC_TYPE_DUNGEON,
-		9,
+		5,
 		TRUE,
 		TRUE,
 		TRUE,
@@ -8038,7 +8038,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
 		0,
 		MC_TYPE_FIELD,
-		0,
+		1,
 		TRUE,
 		TRUE,
 		FALSE,
@@ -13162,9 +13162,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_WB, // camera_area
 		0, // padding
-		783,
+		782,
 		0,
-		753,
+		750,
 	},
 	{//ZONE_ID_T01R0101 = 399
 		RSC_GRID_NOSCROLL,
@@ -13923,7 +13923,7 @@ static const ZONEDATA ZoneData[] = {
 		0, // padding
 		760,
 		0,
-		302,
+		301,
 	},
 	{//ZONE_ID_T04PC0101 = 422
 		RSC_GRID_NOSCROLL,
@@ -14110,7 +14110,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
 		0,
 		MC_TYPE_FIELD,
-		0,
+		1,
 		TRUE,
 		TRUE,
 		FALSE,
