@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-07T21:06:13"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T14:38:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -377,9 +377,8 @@
 なかなか　難しいなあ</language>
 	</row>
 
-	<row id="msg_c03r1201_businessman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c03r1201_businessman2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
 		<language name="JPN" width="256">がいこくから　きて　おもうけど

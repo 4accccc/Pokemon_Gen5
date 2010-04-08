@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T18:11:43"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T14:25:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -299,7 +299,8 @@
 　GRIDX=1～7の設定でもいいかも
 ・続けてblack_01
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">アララギ博士(娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『はーい！
 [1:00:トレーナー名:0]！！▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『はーい！
@@ -311,7 +312,8 @@
 ・メッセージ表示後、主人公を誘導
 　所定の位置(アララギの前）に到達すると
 　hakase2_02表示</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『こっちだよ▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『こっちだよ▼</language>
 	</row>
@@ -319,7 +321,8 @@
 	<row id="msg_c04r0601_hakase2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてhakase2_03</comment>
-		<attribute name="キャラ指定">アララギ博士(娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『カミツレに　よばれて
 でんきタイプの　ポケモンのこと▽
 いろいろ　きかれている　ときに▽
@@ -338,7 +341,8 @@
 		<comment>♀
 ・まずチェレンの前に移動して
 　hakase2_04</comment>
-		<attribute name="キャラ指定">アララギ博士(娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">はい　チェレン！▼</language>
 		<language name="JPN_KANJI" width="256">はい　チェレン！▼</language>
 	</row>
@@ -350,7 +354,8 @@
 　No002「ハイパーボール」×10
 ・続けてhakase2_05
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">アララギ博士(娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]も▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]も▼</language>
 	</row>
@@ -359,7 +364,8 @@
 		<comment>♀
 ・アイテム入手後
 ・続けてhakase2_06</comment>
-		<attribute name="キャラ指定">アララギ博士(娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">いっしょに　いたい　ポケモンと
 であったら　おしむことなく▽
 いい　ボールを　つかいなさいな▼
@@ -378,7 +384,8 @@
 		<comment>♀
 ・横を向いてメッセージ表示
 ・hakase2_07</comment>
-		<attribute name="キャラ指定">アララギ博士(娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">……それと　ポケモンずかんの
 かんせいを　おねがいした▽
 あたしが　こんなことを　いうのも▼
@@ -395,7 +402,8 @@
 		<comment>♀
 ・メッセージ後、画面下に移動
 ・画面外に消えるとblack_02</comment>
-		<attribute name="キャラ指定">アララギ博士(娘）</attribute>
+		<attribute name="キャラ指定">HAKASE2
+アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『……あっ！▼
 ポケモンずかんのこと
 なにもしなくて　いいって▼
@@ -414,7 +422,8 @@
 		<comment>♂
 ・下を向いたままメッセージ表示
 　続けてblack_03</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……はかせったら
 おれいを　いうまえに　いっちゃった▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……博士ったら
@@ -427,7 +436,8 @@
 ・メッセージ表示後、下に移動
 　画面外に消えると主人公、操作可能
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">さて　これから　どうしようか▼
 ……リゾートデザートは
 まだ　きびしいかな？▼

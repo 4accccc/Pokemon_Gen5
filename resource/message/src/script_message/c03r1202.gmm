@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-07T21:06:06"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T14:38:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -309,6 +309,7 @@
 	<row id="msg_c03r1202_badge_02">
 		<comment>♂
 ・いいえ、やめる選択時</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">ほいほい
 しりたくなったら　またきなさい</language>
 		<language name="JPN_KANJI" width="256">ほいほい
@@ -319,6 +320,7 @@
 		<comment>♂
 ・トライバッジ選択時
 ・続けてbadge_11</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">トライバッジを　もっていると
 レベル２０までの　ポケモンが▽
 すなおに　めいれいを　きいてくれるよ▼</language>
@@ -331,6 +333,7 @@
 		<comment>♂
 ・ベーシックバッジ選択時
 ・続けてbadge_11</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">ベーシックバッジを　もっていると
 レベル３０までの　ポケモンが▽
 すなおに　めいれいを　きいてくれるよ▼</language>
@@ -343,6 +346,7 @@
 		<comment>♂
 ・ビートルバッジ選択時
 ・続けてbadge_11</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">ビートルバッジを　もっていると
 レベル４０までの　ポケモンが▽
 すなおに　めいれいを　きいてくれるよ▼</language>
@@ -355,6 +359,7 @@
 		<comment>♂
 ・ボルトバッジ選択時
 ・続けてbadge_11</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">ボルトバッジを　もっていると
 レベル５０までの　ポケモンが▽
 すなおに　めいれいを　きいてくれるよ▼</language>
@@ -367,6 +372,7 @@
 		<comment>♂
 ・クエイクバッジ選択時
 ・続けてbadge_11</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">クエイクバッジを　もっていると
 レベル６０までの　ポケモンが▽
 すなおに　めいれいを　きいてくれるよ▼</language>
@@ -379,6 +385,7 @@
 		<comment>♂
 ・ジェットバッジ選択時
 ・続けてbadge_11</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">ジェットバッジを　もっていると
 レベル７０までの　ポケモンが▽
 すなおに　めいれいを　きいてくれるよ▼</language>
@@ -391,6 +398,7 @@
 		<comment>♂
 ・アイシクルバッジ選択時
 ・続けてbadge_11</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">アイシクルバッジを　もっていると
 レベル８０までの　ポケモンが▽
 すなおに　めいれいを　きいてくれるよ▼</language>
@@ -403,6 +411,7 @@
 		<comment>♂
 ・レジェンドバッジ選択時
 ・続けてbadge_11</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">レジェンドバッジを　もっていると
 すべての　ポケモンが▽
 すなおに　めいれいを　きいてくれるよ▼</language>
@@ -414,6 +423,7 @@
 	<row id="msg_c03r1202_badge_11">
 		<comment>♂
 ・選択肢表示</comment>
+		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">どの　バッジの
 せつめいを　ききたい？</language>
 		<language name="JPN_KANJI" width="256">どの　バッジの
@@ -483,7 +493,7 @@
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_c03r1202_mountain_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r1202_mountain_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MOUNTAIN</attribute>
