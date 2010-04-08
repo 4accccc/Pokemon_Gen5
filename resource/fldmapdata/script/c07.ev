@@ -231,11 +231,16 @@ EVENT_START   ev_scene_c07_leader7_01
 	_BALLOONWIN_OBJMSG_POS( msg_c07_leader7_02 , C07_LEADER7_01 , POS_UR )
 	_BALLOONWIN_CLOSE()
 	
-	//【仮】ダークトリニティ登場
+	//ダークトリニティ登場
 	_TIME_WAIT ( 8 )
 	_OBJ_ADD( C07_NINJA_01 )
 	_OBJ_ADD( C07_NINJA_02 )
 	_OBJ_ADD( C07_NINJA_03 )
+	//登場アニメーション
+	_OBJ_ANIME( C07_NINJA_01 , anm_c07_ninja_coming_01 )
+	_OBJ_ANIME( C07_NINJA_02 , anm_c07_ninja_coming_01 )
+	_OBJ_ANIME( C07_NINJA_03 , anm_c07_ninja_coming_01 )
+	_OBJ_ANIME_WAIT()
 	
 	//主人公・サポート・ライバルびっくりする
 	_OBJ_ANIME( MMDL_ID_PLAYER , anm_c07_player_surprised )
@@ -263,8 +268,16 @@ EVENT_START   ev_scene_c07_leader7_01
 	_BALLOONWIN_OBJMSG_POS( msg_c07_leader7_03 , C07_LEADER7_01 , POS_UR )
 	_BALLOONWIN_CLOSE()
 	
-	//【仮】ダークトリニティ退場
+	//ダークトリニティ退場
 	_TIME_WAIT ( 8 )
+	
+	//退場演出
+	_OBJ_ANIME( C07_NINJA_01 , anm_c07_ninja_bye_01 )
+	_OBJ_ANIME( C07_NINJA_02 , anm_c07_ninja_bye_01 )
+	_OBJ_ANIME( C07_NINJA_03 , anm_c07_ninja_bye_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//OBJ非表示
 	_OBJ_DEL( C07_NINJA_01 )
 	_OBJ_DEL( C07_NINJA_02 )
 	_OBJ_DEL( C07_NINJA_03 )
@@ -370,6 +383,20 @@ _ANIME_LABEL	anm_c07_rival_koutai
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：ダークトリニティ登場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_ninja_coming_01
+	_ANIME_DATA	AC_NINJA_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：ダークトリニティ退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_ninja_bye_01
+	_ANIME_DATA	AC_NINJA_ACT1,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
