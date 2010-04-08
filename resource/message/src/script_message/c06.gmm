@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-28T16:29:31"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T16:21:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -406,7 +406,7 @@
 おまえさんのことは　アイツから
 いろいろ　おしえて　もらっていてな[BE:01:ページ切り替え（クリア）]
 ここで　あえたのは
-なんとも　うれしい　かぎりだ！[BE:01:ページ切り替え（クリア）]</language>
+なんとも　うれしい　かぎりだよ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">おぉ　すまない！
 ちと　興奮　してな[BE:01:ページ切り替え（クリア）]
 わたしの　名前も
@@ -417,7 +417,7 @@
 おまえさんのことは　アイツから
 いろいろ　教えて　もらっていてな[BE:01:ページ切り替え（クリア）]
 ここで　会えたのは
-なんとも　うれしい　かぎりだ！[BE:01:ページ切り替え（クリア）]</language>
+なんとも　うれしい　かぎりだよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c06_hakase1_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -434,16 +434,16 @@
 パワーアップ！　だな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてleader6_01</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">アララギ『よし！　これで
 みた　ポケモンの　すがたなら[BE:00:ページ切り替え（行送り）]
-いつでも　みられるように　なったぞ！[BE:01:ページ切り替え（クリア）]</language>
+いつでも　みられるように　なったよ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アララギ『よし！　これで
 みた　ポケモンの　姿なら[BE:00:ページ切り替え（行送り）]
-いつでも　みられるように　なったぞ！[BE:01:ページ切り替え（クリア）]</language>
+いつでも　みられるように　なったよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c06_leader6_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -460,7 +460,7 @@
 	<row id="msg_c06_hakase1_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・フウロのほうを向いてメッセージ表示
-※男女性別関係なくこの台詞
+・男女性別関係なくこの台詞
 ・続けてleader6_02</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">アララギ『おお！　おう！
@@ -672,7 +672,7 @@
 タワーオブヘブン　っすか？</language>
 	</row>
 
-	<row id="msg_c06_boy3_01">
+	<row id="msg_c06_boy3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">BOY3</attribute>
@@ -686,7 +686,7 @@
 いっさいの　無駄が　ないんです！</language>
 	</row>
 
-	<row id="msg_c06_pilot_01">
+	<row id="msg_c06_pilot_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">PILOT</attribute>
@@ -700,7 +700,7 @@
 そらをとぶ　って　技があるもんね</language>
 	</row>
 
-	<row id="msg_c06_girl2_01">
+	<row id="msg_c06_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">GIRL2</attribute>
@@ -716,7 +716,7 @@
 いかした　ねえちゃん　なんだから！</language>
 	</row>
 
-	<row id="msg_c06_rangerw_01">
+	<row id="msg_c06_rangerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">RANGERW</attribute>
@@ -732,7 +732,7 @@
 その　精神は　変わらないわ</language>
 	</row>
 
-	<row id="msg_c06_workman_01">
+	<row id="msg_c06_workman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">WORKMAN</attribute>
@@ -746,7 +746,7 @@
 １日に　１便　ぐらいだしな</language>
 	</row>
 
-	<row id="msg_c06_woman1_01">
+	<row id="msg_c06_woman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ
 ・最後19文字</comment>
@@ -763,7 +763,7 @@
 無理矢理　奪うのは　同じことなの？</language>
 	</row>
 
-	<row id="msg_c06_boy2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06_boy2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・msg_c06r0101_boy2_01表示後にセットされる
 　No367「つばめがえし」を入手すると登場し

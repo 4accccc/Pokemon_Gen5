@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T15:26:31"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T16:23:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c06r0101_middleman2_01" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_c06r0101_middleman2_01">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">太ったおじさん</attribute>
@@ -306,7 +306,7 @@
 外国へ　輸送できるって　もんだ！</language>
 	</row>
 
-	<row id="msg_c06r0101_babygirl_00" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06r0101_babygirl_00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・c06ジムバッジ入手前</comment>
 		<attribute name="キャラ指定">BABYGIRL</attribute>
@@ -318,7 +318,7 @@
 たいほうで　いっぱい！</language>
 	</row>
 
-	<row id="msg_c06r0101_babygirl_01" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06r0101_babygirl_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・c06ジムバッジ入手後
 　アイテム入手前</comment>
@@ -329,7 +329,7 @@
 かっそーろに　わざマシン！</language>
 	</row>
 
-	<row id="msg_c06r0101_babygirl_02" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c06r0101_babygirl_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">BABYGIRL</attribute>
@@ -343,7 +343,7 @@
 はやい　ポケモンって　なにかなー？</language>
 	</row>
 
-	<row id="msg_c06r0101_boy2_00" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c06r0101_boy2_00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・c06ジムバッジ入手前</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
@@ -355,7 +355,7 @@
 すごく　いいことを　教えてあげる！</language>
 	</row>
 
-	<row id="msg_c06r0101_boy2_01" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c06r0101_boy2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・c06ジムバッジ入手後
 　アイテム入手前
@@ -376,7 +376,7 @@
 ぼくらの　宝物を　埋めたんだ！</language>
 	</row>
 
-	<row id="msg_c06r0101_boy2_02" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c06r0101_boy2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
