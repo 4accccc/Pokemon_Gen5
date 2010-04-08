@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T15:36:48"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T18:00:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -306,6 +306,7 @@
 		<comment>♂
 ・HP/PP満タンでない時
 　続けて画面暗転して回復処理</comment>
+		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
 		<language name="JPN" width="256">なんだい　おつかれかい？
 よし！　ちょっと　やすんでいきなよ▼</language>
 		<language name="JPN_KANJI" width="256">なんだい　おつかれかい？
