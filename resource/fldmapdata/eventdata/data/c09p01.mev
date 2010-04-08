@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/08 15:33:10
+#save date:2010/04/08 15:41:16
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c09p01.wms
 #SECTION START:OBJ_EVENT
@@ -164,7 +164,7 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-232 8 -584
+232 8 -568
 #size
 3 1
 #event number: 1
