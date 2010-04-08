@@ -29,3 +29,7 @@ answer27,デジタル
 answer28,デジタル
 answer29,デジタル
 answer30,たんじょうび
+password01,みんな
+password02,ハッピー
+password03,かんたん
+password04,つうしん
