@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: gmk_d12.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2010-04-08T13:11:39
+ *****************************************************************************/
+
+#ifndef NARC_GMK_D12_NAIX_
+#define NARC_GMK_D12_NAIX_
+
+enum {
+	NARC_gmk_d12_c03_ship_03_nsbmd = 0,
+	NARC_gmk_d12_c03_ship_01_nsbta = 1
+};
+
+/* NARC_GMK_D12_NAIX_ */
+#endif
