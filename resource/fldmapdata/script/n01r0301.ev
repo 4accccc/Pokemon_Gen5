@@ -19,20 +19,83 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_n01r0301
+_EVENT_DATA    ev_pos_n01r0301_ninja_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*   N01R0301：上り階段手前POS起動イベント                    */
 /**************************************************************/
-//ev_zone_n01r0301:
-//  _END
+EVENT_START   ev_pos_n01r0301_ninja_01
+	{
+	//ダークトリニティOBJ作成
+	_OBJ_ADD_EX( 4, 10, DIR_DOWN, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+	
+	//ダークトリニティ登場演出
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0301_ninja_coming_01 )
+	_OBJ_ANIME_WAIT()
+	
+	
+	//主人公の向きが上以外だった時は上を向かせる
+	DEFINE_LOCAL LWK_DIR
+	_PLAYER_DIR_GET( LWK_DIR )
+	
+	IF $LWK_DIR != DIR_UP THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER , anm_n01r0301_player_look_up )
+		_OBJ_ANIME_WAIT()
+	ENDIF
+	
+	//バージョンを取得して発言を分岐
+	DEFINE_LOCAL LCWK_VERSION
+	_GET_ROM_VERSION( LCWK_VERSION )
+	
+	//white
+	IF $LCWK_VERSION == VERSION_WHITE THEN
+		_BALLOONWIN_OBJMSG_POS( msg_n01r0301_ninja_01w , MMDL_ID_EVENTOBJ_00 , POS_DL )
+		_BALLOONWIN_CLOSE()
+		
+	//Black
+	ELSE
+		_BALLOONWIN_OBJMSG_POS( msg_n01r0301_ninja_01b , MMDL_ID_EVENTOBJ_00 , POS_DL )
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+	
+	//少し間を置く
+	_TIME_WAIT ( 18 )
+	
+	//ダークトリニティ退場演出
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0301_ninja_bye_01 )
+	_OBJ_ANIME_WAIT()
+	//ダークトリニティOBJ消す
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	}
+	//========================================//
+	
+	//フラグ操作：N01R0301のPOSを無効に
+	$WK_SCENE_N01R0301 = 1
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_n01r0301:
-  //とりあえず最初のラベルだけ生成している
-  _END
+	//========================================//
+EVENT_END
 
+//--------------------------------------------------------------
+//	N01R0401　入室時イベント：ダークトリニティ登場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_n01r0301_ninja_coming_01
+	_ANIME_DATA	AC_NINJA_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	N01R0401　入室時イベント：主人公上を見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_n01r0301_player_look_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	N01R0401　入室時イベント：ダークトリニティ退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_n01r0301_ninja_bye_01
+	_ANIME_DATA	AC_NINJA_ACT1,1
+	_ANIME_DATA	ACMD_END,0

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_n01r0401.h"
-  //.include  "n01r0401.h"
+  .include  "n01r0401.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,106 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_n01r0401
+_EVENT_DATA    ev_scene_n01r0401_ninja_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*   N01R0401：到着イベント                                        */
 /**************************************************************/
-//ev_zone_n01r0401:
-//  _END
+EVENT_START   ev_scene_n01r0401_ninja_01
+	
+	//入室時少し間を置く
+	_TIME_WAIT ( 8 )
+	
+	{
+	//自機座標取得変数定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+	
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
+	
+	//主人公の座標に応じてダークトリニティOBJ作成
+	SWITCH $POSZ
+	CASE 13 THEN
+		_OBJ_ADD_EX( 10, 13, DIR_LEFT, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+	CASE 14 THEN
+		_OBJ_ADD_EX( 10, 14, DIR_LEFT, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+	CASE 15 THEN
+		_OBJ_ADD_EX( 10, 15, DIR_LEFT, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+	CASE 16 THEN
+		_OBJ_ADD_EX( 10, 16, DIR_LEFT, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+	CASE 17 THEN
+		_OBJ_ADD_EX( 10, 17, DIR_LEFT, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+	DEFAULT  //z15と同じ処理を行う
+		_OBJ_ADD_EX( 10, 15, DIR_LEFT, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+	ENDSWITCH
+	}
+	
+	//ダークトリニティ登場演出
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0401_ninja_coming_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ダークトリニティ：あの部屋は
+	_BALLOONWIN_OBJMSG(msg_n01r0401_ninja1_01,MMDL_ID_EVENTOBJ_00)
+	
+	//ダークトリニティ上を向く
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0401_ninja_look_up )
+	_OBJ_ANIME_WAIT()
+	
+	//少し間を置く
+	_TIME_WAIT ( 24 )
+	
+	_BALLOONWIN_CLOSE()
+	
+	//ダークトリニティプレイヤーの方を向く
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0401_ninja_look_left )
+	_OBJ_ANIME_WAIT()
+	
+	//ダークトリニティ：私は入っても
+	_BALLOONWIN_OBJMSG(msg_n01r0401_ninja2_01,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	//ダークトリニティ退場演出
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0401_ninja_bye_01 )
+	_OBJ_ANIME_WAIT()
+	//ダークトリニティOBJ消す
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	//========================================//
+	
+	//フラグ操作：N01R0401の入室時イベントを無効に
+	$WK_SCENE_N01R0401 = 1
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_n01r0401:
-  //とりあえず最初のラベルだけ生成している
-  _END
+	//========================================//
+EVENT_END
 
+//--------------------------------------------------------------
+//	N01R0401　入室時イベント：ダークトリニティ登場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_n01r0401_ninja_coming_01
+	_ANIME_DATA	AC_NINJA_ACT0,1
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	N01R0401　入室時イベント：ダークトリニティ上を見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_n01r0401_ninja_look_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	N01R0401　入室時イベント：ダークトリニティ、プレイヤーを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_n01r0401_ninja_look_left
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	N01R0401　入室時イベント：ダークトリニティ退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_n01r0401_ninja_bye_01
+	_ANIME_DATA	AC_NINJA_ACT1,1
+	_ANIME_DATA	ACMD_END,0
