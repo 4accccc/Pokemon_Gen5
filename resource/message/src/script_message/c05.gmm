@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T13:57:32"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T16:14:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="145" right="1990" bottom="771" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -382,16 +382,16 @@
 		<attribute name="キャラクター">LEADER5
 ヤーコン</attribute>
 		<language name="JPN" width="256">ヤーコン『なんとでも　いえ[BE:01:ページ切り替え（クリア）]
-だいじなのは　おまえたちが　きたから
-プラズマだんが　まちなかに▽
-にげたと　いうことだ[BE:01:ページ切り替え（クリア）]
+だいじなのは　おまえたちが　きた……
+そして　プラズマだんが　まちなかに▽
+にげていったと　いうことだ[BE:01:ページ切り替え（クリア）]
 じぶんでも　ごういんだと　おもうが
 おまえらも　プラズマだんを　さがせ[BE:00:ページ切り替え（行送り）]
 すごうでの　トレーナー　なんだろ？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ヤーコン『なんとでも　いえ[BE:01:ページ切り替え（クリア）]
-大事なのは　おまえたちが　来たから
-プラズマ団が　街中に▽
-逃げたと　いうことだ[BE:01:ページ切り替え（クリア）]
+大事なのは　おまえたちが　来た……
+そして　プラズマ団が　街中に▽
+逃げていったと　いうことだ[BE:01:ページ切り替え（クリア）]
 自分でも　強引だと　思うが
 おまえらも　プラズマ団を　探せ[BE:00:ページ切り替え（行送り）]
 すごうでの　トレーナー　なんだろ？[BE:01:ページ切り替え（クリア）]</language>
@@ -486,7 +486,7 @@
 ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『おや　ごかいが　あるようで[BE:01:ページ切り替え（クリア）]
 わたしどもは　ポケモンを
-かいほう　しているだけですよ[BE:01:ページ切り替え（クリア）]</language>
+ひとから　にがしている　だけですよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『おや　誤解があるようで[BE:01:ページ切り替え（クリア）]
 私どもは　ポケモンを
 解放している　だけですよ[BE:01:ページ切り替え（クリア）]</language>
@@ -534,10 +534,18 @@
 ・続けてsage1_04</comment>
 		<attribute name="キャラクター">LEADER5
 ヤーコン</attribute>
-		<language name="JPN" width="256">ヤーコン『フン！　わかった
-こいつらを　つれて　かえりな！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ヤーコン『フン！　わかった
-こいつらを　連れて　帰りな！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ヤーコン『……その　ことば
+ウソか　ほんとか　わからんが▼
+たたかわずして　かつ　とはね
+たいした　もんだよ▼
+フン！　わかった
+こいつらを　つれて　かえりな！▼</language>
+		<language name="JPN_KANJI" width="256">ヤーコン『……その言葉
+ウソか　ほんとか　わからんが▼
+戦わずして　勝つ　とはね
+たいした　もんだよ▼
+フン！　わかった
+こいつらを　連れて　帰りな！▼</language>
 	</row>
 
 	<row id="msg_c05_sage1_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -548,8 +556,8 @@
 ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『さすが　こうざんおうと
 よばれる　しょうばいにん……▼
-じょうきょうを　みる　めに
-すぐれておられる[BE:01:ページ切り替え（クリア）]
+すばらしい　はんだんりょくの
+もちぬしで　あられる[BE:01:ページ切り替え（クリア）]
 では……　そちらの　しちけんじんを
 ひきとらせて　いただきます……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『さすが　鉱山王と
