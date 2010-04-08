@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T15:17:17"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T13:57:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1298" top="126" right="2003" bottom="754" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -363,7 +363,8 @@
 	<row id="msg_c05_black_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてleader_02</comment>
-		<attribute name="キャラクター">友達♂</attribute>
+		<attribute name="キャラクター">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……りふじん　です▼
 はしを　おろしてくださって
 かんしゃ　していますけれど▽
@@ -416,7 +417,8 @@
 		<comment>♂
 ・メッセージ表示後、主人公を見る
 ・続けてblack_03a</comment>
-		<attribute name="キャラクター">友達♂</attribute>
+		<attribute name="キャラクター">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『わかりました▼
 いわれなくても
 プラズマだんは　さがしますよ▼
@@ -433,7 +435,8 @@
 		<comment>♂
 ・メッセージ表示後、ライバル、画面左に移動
 ・画面外に消えると、主人公操作可能</comment>
-		<attribute name="キャラクター">友達♂</attribute>
+		<attribute name="キャラクター">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]！
 さきに　いくよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！
@@ -613,7 +616,8 @@
 	<row id="msg_c05_black_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面左に移動</comment>
-		<attribute name="キャラクター">友達♂</attribute>
+		<attribute name="キャラクター">友達♂
+チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……おたがいに
 まちなかでの　あらそいは　さけたね▼
 それにしても　あの　ゲーチス
@@ -671,7 +675,8 @@
 　メッセージのみ表示
 ・続けてwhite_02
 ・0＝主人公名前</comment>
-		<attribute name="キャラクター">友達♀</attribute>
+		<attribute name="キャラクター">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『おう～い！
 [1:00:トレーナー名:0]！！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『おう～い！
@@ -682,7 +687,8 @@
 		<comment>♀
 ・主人公に隣接してメッセージ表示
 ・続けてwhite_03</comment>
-		<attribute name="キャラクター">友達♀</attribute>
+		<attribute name="キャラクター">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ねえねえ
 ひょっとして　ジムに　いってた？▼
 うわああ～！
@@ -699,7 +705,8 @@
 		<comment>♀
 ・サポート頭上に「！」マーク表示後
 　メッセージ表示、続けてトレーナー戦闘に</comment>
-		<attribute name="キャラクター">友達♀</attribute>
+		<attribute name="キャラクター">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ダメダメ！
 かんしん　してばかりじゃ▼
 あたしも　トレーナーだもの
@@ -716,7 +723,8 @@
 ・No603「わざマシン９７「そらをとぶ」」入手
 ・続けてwhite_05
 ・0＝主人公名前</comment>
-		<attribute name="キャラクター">友達♀</attribute>
+		<attribute name="キャラクター">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]とは　ひさびさの
 ポケモンしょうぶ　だったけど▽
 ものすごーく　つよくなってるのね！▼
@@ -743,7 +751,8 @@
 ・その後画面外（ポケセン方向）へ移動
 ・画面外に消えると主人公、操作可能に
 ・0＝主人公名前</comment>
-		<attribute name="キャラクター">友達♀</attribute>
+		<attribute name="キャラクター">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『あのあと　パパが　くれたの！▼
 きっと　いつでも　すぐに
 かえって　これるように！▽

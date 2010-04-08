@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T15:44:26"/>
+	<create user="matsumiya" host="W00224" date="2010-04-08T13:36:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,7 +297,8 @@
 ・下記ストッパーが削除されるとイベント起動条件ON
 ・pos起動（GRIDX=240、GRIDZ=175~185）仮
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]！！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]！！▼</language>
 	</row>
@@ -306,7 +307,8 @@
 		<comment>♀
 ・主人公に隣接してメッセージ表示
 ・続けてトレーナー戦闘に</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">さいきんね　あたし
 いろいろ　かんがえるんだ▼
 たびにでて　じぶんが　なにができるか
@@ -340,7 +342,8 @@
 　No023「かいふくのくすり」（仮）
 ・続けてwhite_04
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『うん！
 [1:00:トレーナー名:0]は　すごい！▼
 あたし　ものすごーく
@@ -356,7 +359,8 @@
 ・その後画面左へ移動
 　画面外に消えると主人公、操作可能に
 ・0＝主人公名前</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]なら
 なにをするのも　だいじょうぶだよ！▽
 あたしが　ほしょう　してあげる！▼
