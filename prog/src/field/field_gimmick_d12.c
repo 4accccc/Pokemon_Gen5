@@ -78,7 +78,7 @@ void D12_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   D12_SV_WORK *gmk_sv_work;
   FLD_EXP_OBJ_CNT_PTR exobj_cnt;
   {
-    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldmap ) );
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_D12 );
   }
@@ -98,7 +98,7 @@ void D12_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
     FLD_EXP_OBJ_ValidCntAnm(exobj_cnt, EXPOBJ_UNIT_IDX, 0, 0, TRUE);
     if (gmk_sv_work->Vanish)
     {
-      FLD_EXP_OBJ_SetVanish(exobj_cnt, EXPOBJ_UNIT_IDX, 0, 0, TRUE);
+      FLD_EXP_OBJ_SetVanish(exobj_cnt, EXPOBJ_UNIT_IDX, 0, TRUE);
     }
   }
 }
@@ -140,7 +140,7 @@ void D12_GIMMICK_Vanish( FIELDMAP_WORK* fieldmap )
 {
   D12_SV_WORK *gmk_sv_work;
   {
-    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldmap ) );
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_D12 );
   }
