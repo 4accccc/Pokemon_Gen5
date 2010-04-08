@@ -36,6 +36,7 @@
 #pragma mark [> define
 
 #define MUS_PHOTO_USE_DEBUG ((USE_DEBUGWIN_SYSTEM)&(1))
+#define MUS_PHOTO_DRAW_TICK (0)
 
 #define MUS_PHOTO_SCROLL_OFFSET (128)
 
@@ -199,6 +200,10 @@ void MUS_SHOT_PHOTO_ExitSystem( MUS_SHOT_PHOTO_WORK *work )
 //--------------------------------------------------------------
 void MUS_SHOT_PHOTO_UpdateSystem( MUS_SHOT_PHOTO_WORK *work )
 {
+#if MUS_PHOTO_DRAW_TICK
+  OSTick tick = OS_GetTick();
+#endif
+
   //ƒAƒjƒ‚³‚¹‚È‚¢‚½‚ß‚ÉŒÄ‚Î‚È‚¢
 #if MUS_PHOTO_USE_DEBUG
   if( work->debWork.startAnm == TRUE )
@@ -209,22 +214,93 @@ void MUS_SHOT_PHOTO_UpdateSystem( MUS_SHOT_PHOTO_WORK *work )
     STA_BG_UpdateSystem( work->bgSys );
   }
   STA_POKE_UpdateSystem( work->pokeSys );
+#if MUS_PHOTO_DRAW_TICK
+  {
+    OSTick nowTick = OS_GetTick();
+    OS_TFPrintf(3,"%5d|",OS_TicksToMicroSeconds(nowTick-tick));
+    tick = nowTick;
+  }
+#endif
   MUS_POKE_DRAW_UpdateSystem( work->drawSys ); 
   STA_LIGHT_UpdateSystem( work->lightSys );
+#if MUS_PHOTO_DRAW_TICK
+  {
+    OSTick nowTick = OS_GetTick();
+    OS_TFPrintf(3,"%5d|",OS_TicksToMicroSeconds(nowTick-tick));
+    tick = nowTick;
+  }
+#endif
 
 
   //3D•`‰æ  
   GFL_G3D_DRAW_Start();
   GFL_G3D_DRAW_SetLookAt();
   {
+#if MUS_PHOTO_DRAW_TICK
+  {
+    OSTick nowTick = OS_GetTick();
+    OS_TFPrintf(3,"%5d|",OS_TicksToMicroSeconds(nowTick-tick));
+    tick = nowTick;
+  }
+#endif
     STA_LIGHT_DrawSystem( work->lightSys );
+#if MUS_PHOTO_DRAW_TICK
+  {
+    OSTick nowTick = OS_GetTick();
+    OS_TFPrintf(3,"%5d|",OS_TicksToMicroSeconds(nowTick-tick));
+    tick = nowTick;
+  }
+#endif
     STA_POKE_DrawSystem( work->pokeSys );
+#if MUS_PHOTO_DRAW_TICK
+  {
+    OSTick nowTick = OS_GetTick();
+    OS_TFPrintf(3,"%5d|",OS_TicksToMicroSeconds(nowTick-tick));
+    tick = nowTick;
+  }
+#endif
     MUS_POKE_DRAW_DrawSystem( work->drawSys ); 
+#if MUS_PHOTO_DRAW_TICK
+  {
+    OSTick nowTick = OS_GetTick();
+    OS_TFPrintf(3,"%5d|",OS_TicksToMicroSeconds(nowTick-tick));
+    tick = nowTick;
+  }
+#endif
     STA_POKE_UpdateSystem_Item( work->pokeSys );  //ƒ|ƒP‚Ì•`‰æŒã‚É“ü‚ê‚é‚±‚Æ
+#if MUS_PHOTO_DRAW_TICK
+  {
+    OSTick nowTick = OS_GetTick();
+    OS_TFPrintf(3,"%5d|",OS_TicksToMicroSeconds(nowTick-tick));
+    tick = nowTick;
+  }
+#endif
     STA_BG_DrawSystem( work->bgSys );
+#if MUS_PHOTO_DRAW_TICK
+  {
+    OSTick nowTick = OS_GetTick();
+    OS_TFPrintf(3,"%5d|",OS_TicksToMicroSeconds(nowTick-tick));
+    tick = nowTick;
+  }
+#endif
     GFL_BBD_Draw( work->bbdSys , work->camera , NULL );
+#if MUS_PHOTO_DRAW_TICK
+  {
+    OSTick nowTick = OS_GetTick();
+    OS_TFPrintf(3,"%5d|",OS_TicksToMicroSeconds(nowTick-tick));
+    tick = nowTick;
+  }
+#endif
   }
   GFL_G3D_DRAW_End();
+#if MUS_PHOTO_DRAW_TICK
+  {
+    OSTick nowTick = OS_GetTick();
+    OS_TFPrintf(3,"%5d|",OS_TicksToMicroSeconds(nowTick-tick));
+    tick = nowTick;
+    OS_TFPrintf(3,"\n");
+  }
+#endif
   
 }
 

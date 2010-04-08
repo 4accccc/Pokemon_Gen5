@@ -157,7 +157,6 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
         shotData->shotPoke[i].equip[0].itemNo = 11;
         shotData->shotPoke[i].equip[0].angle = 0;
         shotData->shotPoke[i].equip[0].equipPos = MUS_POKE_EQU_HAND_R;
-        /*
         shotData->shotPoke[i].equip[1].itemNo = 11;
         shotData->shotPoke[i].equip[1].angle = 0;
         shotData->shotPoke[i].equip[1].equipPos = MUS_POKE_EQU_HAND_L;
@@ -176,7 +175,6 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
         shotData->shotPoke[i].equip[6].itemNo = 11;
         shotData->shotPoke[i].equip[6].angle = 0;
         shotData->shotPoke[i].equip[6].equipPos = MUS_POKE_EQU_EAR_R;
-        */
       }
     }
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
