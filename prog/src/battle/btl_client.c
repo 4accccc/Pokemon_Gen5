@@ -428,8 +428,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->AIRandContext = *randContext;
   if( (wk->myType == BTL_CLIENT_TYPE_AI) && (!fRecPlayMode) )
   {
-    //@todo 本来はBattleSetupParamのトレーナーデータからAIビットを取得したい
-    u32 ai_bit = 0x07;
+    u32 ai_bit = BTL_MAIN_GetClientAIBit( wk->mainModule, wk->myID );
     BTL_SVFLOW_WORK* svf_work = BTL_MAIN_GetSVFWorkForAI( wk->mainModule );
     wk->AIHandle = TR_AI_Init( wk->mainModule, svf_work, wk->pokeCon, ai_bit, wk->heapID );
   }

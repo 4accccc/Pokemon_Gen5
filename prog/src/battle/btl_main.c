@@ -90,6 +90,7 @@ typedef struct {
 
   u16         trainerType;
   u16         trainerID;
+  u32         ai_bit;
   u16         useItem[ BSP_TRAINERDATA_ITEM_MAX ];
 
 }BTL_TRAINER_DATA;
@@ -3294,7 +3295,6 @@ BOOL BTL_MAIN_IsRecordEnable( const BTL_MAIN_MODULE* wk )
   return FALSE;
 }
 
-
 //=============================================================================================
 /**
  * デバッグフラグ取得
@@ -4079,6 +4079,7 @@ static void trainerParam_Init( BTL_MAIN_MODULE* wk )
   for(i=0; i<NELEMS(wk->trainerParam); ++i){
     wk->trainerParam[i].playerStatus = NULL;
     wk->trainerParam[i].trainerID = TRID_NULL;
+    wk->trainerParam[i].ai_bit = 0;
   }
 }
 static void trainerParam_Clear( BTL_MAIN_MODULE* wk )
@@ -4110,6 +4111,7 @@ static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, const BSP_TRAIN
     dst->trainerID = trData->tr_id;
     dst->trainerType = trData->tr_type;
     dst->name = trData->name;
+    dst->ai_bit = trData->ai_bit;
     GFL_STD_MemCopy( trData->use_item, dst->useItem, sizeof(trData->use_item) );
   }
   else{
@@ -4143,6 +4145,15 @@ const STRBUF* BTL_MAIN_GetClientTrainerName( const BTL_MAIN_MODULE* wk, u8 clien
   *tr_type = wk->trainerParam[clientID].trainerType;
   return wk->trainerParam[clientID].name;
 }
+u32 BTL_MAIN_GetClientAIBit( const BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  if( BTL_MAIN_IsClientNPC(wk, clientID) )
+  {
+    return wk->trainerParam[ clientID ].ai_bit;
+  }
+  return 0x00;
+}
+
 // string x 2
 u32 BTL_MAIN_GetClientTrainerID( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
