@@ -127,6 +127,7 @@ extern BOOL MAPATTR_VALUE_CheckNotMoveUp( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckNotMoveDown( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckNotMoveLeft( const MAPATTR_VALUE val );
 extern BOOL MAPATTR_VALUE_CheckNotMoveRight( const MAPATTR_VALUE val );
+extern BOOL MAPATTR_VALUE_CheckCycleNotUse( MAPATTR_VALUE val );
 
 extern EFFENC_TYPE_ID MAPATTR_GetEffectEncountType( MAPATTR attr );
 extern BtlBgAttr MAPATTR_GetBattleAttrID( MAPATTR_VALUE value );

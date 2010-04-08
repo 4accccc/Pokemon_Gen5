@@ -951,6 +951,24 @@ BOOL MAPATTR_VALUE_CheckNotMoveRight( const MAPATTR_VALUE val )
   return( FALSE );
 }
 
+//--------------------------------------------------------------
+/**
+ * 自転車が入れないアトリビュートかチェック
+ * @param val MAPATTR_VALUE
+ * @retval BOOL TRUE=進入不可アトリビュート
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckCycleNotUse( MAPATTR_VALUE val )
+{
+  if( MAPATTR_VALUE_CheckLongGrass(val) ||
+      MAPATTR_VALUE_CheckOze01(val) ||
+      MAPATTR_VALUE_CheckOzeStairs(val) ||
+      MAPATTR_VALUE_CheckSnowNotCycle(val) ){
+    return( TRUE ); //hit
+  }
+  return( FALSE );
+}
+
 /*
  *  @breif  アトリビュート　エフェクトエンカウントタイプチェック
  */
