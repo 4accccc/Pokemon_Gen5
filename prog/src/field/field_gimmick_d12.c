@@ -15,11 +15,56 @@
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 
 #include "arc/arc_def.h"
+#include "arc/fieldmap/gmk_d12.naix"
 #include "gmk_tmp_wk.h"
+#include "field_gimmick_d12_sv.h"
 
 #define EXPOBJ_UNIT_IDX (0)
 //#define ARCID (ARCID_H01_GIMMICK) // ギミックデータのアーカイブID
-#define D12_TMP_ASSIGN_ID  (1)
+
+#define OBJ_NUM (1)
+
+#define SHIP_X  (FIELD_CONST_GRID_FX32_SIZE * 321 + (FIELD_CONST_GRID_FX32_SIZE/2))
+#define SHIP_Y  (FX32_ONE * 8)
+#define SHIP_Z  (FIELD_CONST_GRID_FX32_SIZE * 768 + (FIELD_CONST_GRID_FX32_SIZE/2))
+
+//==========================================================================================
+// ■3Dリソース
+//==========================================================================================
+// リソース
+typedef enum {
+  RES_SHIP_NSBMD,   //船のモデル
+  RES_SHIP_NSBTA,   //船アニメ
+} RES_INDEX;
+
+static const GFL_G3D_UTIL_RES res_table[] = 
+{
+  { ARCID_GMK_D12, NARC_gmk_d12_c03_ship_03_nsbmd, GFL_G3D_UTIL_RESARC },  // 船のモデル
+  { ARCID_GMK_D12, NARC_gmk_d12_c03_ship_01_nsbta, GFL_G3D_UTIL_RESARC },  // 船のアニメ
+};
+
+// オブジェクト
+typedef enum {
+  OBJ_SHIP,  // 船
+} OBJ_INDEX;
+
+//3Dアニメ
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTb[] = {
+  { RES_SHIP_NSBTA,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
+
+static const GFL_G3D_UTIL_OBJ obj_table[OBJ_NUM] = 
+{
+  { RES_SHIP_NSBMD, 0, RES_SHIP_NSBMD, g3Dutil_anmTb, NELEMS(g3Dutil_anmTb) },  // 船
+};
+
+static const GFL_G3D_UTIL_SETUP Setup = {
+  res_table,				//リソーステーブル
+	NELEMS(res_table),		//リソース数
+	obj_table,				//オブジェクト設定テーブル
+	NELEMS(obj_table),		//オブジェクト数
+};
 
 //------------------------------------------------------------------------------------------
 /**
@@ -30,25 +75,32 @@
 //------------------------------------------------------------------------------------------
 void D12_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 {
-#if 0  
-  u32* gmk_save;  // ギミックの実セーブデータ
-  GMK_WORK* work;  // ギミック管理ワーク
-  HEAPID                heapID = FIELDMAP_GetHeapID( fieldmap );
-  FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
-  GAMESYS_WORK*            gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  GAMEDATA*               gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*          gmkwork = GAMEDATA_GetGimmickWork(gdata);
+  D12_SV_WORK *gmk_sv_work;
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_D12 );
+  }
 
-  //汎用ワーク確保
-  GMK_TMP_WK_AllocWork
-      (fieldmap, R04D03_TMP_ASSIGN_ID, FIELDMAP_GetHeapID(fieldmap), sizeof(GMK_WORK));
-  work = GMK_TMP_WK_GetWork(fieldmap, R04D03_TMP_ASSIGN_ID);
+  exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+
   // 拡張オブジェクトのユニットを追加
-  FLD_EXP_OBJ_AddUnit( exobj_cnt, &setup, EXPOBJ_UNIT_IDX );
+  FLD_EXP_OBJ_AddUnit( exobj_cnt, &Setup, EXPOBJ_UNIT_IDX );
 
-  // ギミック管理ワークを初期化 
-  InitWork( work, fieldmap );
-#endif  
+  {
+    VecFx32 pos = { SHIP_X, SHIP_Y, SHIP_Z };
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(exobj_cnt, EXPOBJ_UNIT_IDX, 0);
+    status->trans = pos;
+    //カリングする
+    FLD_EXP_OBJ_SetCulling(exobj_cnt, EXPOBJ_UNIT_IDX, 0, TRUE);
+    //アニメ再生
+    FLD_EXP_OBJ_ValidCntAnm(exobj_cnt, EXPOBJ_UNIT_IDX, 0, 0, TRUE);
+    if (gmk_sv_work->Vanish)
+    {
+      FLD_EXP_OBJ_SetVanish(exobj_cnt, EXPOBJ_UNIT_IDX, 0, 0, TRUE);
+    }
+  }
 }
 
 //------------------------------------------------------------------------------------------
@@ -60,18 +112,10 @@ void D12_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 //------------------------------------------------------------------------------------------
 void D12_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 {
-#if 0  
-  int i;
-  GAMESYS_WORK*    gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  GAMEDATA*       gdata = GAMESYSTEM_GetGameData( gsys );
-  GIMMICKWORK*  gmkwork = GAMEDATA_GetGimmickWork(gdata);
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
 
   //ユニット破棄
   FLD_EXP_OBJ_DelUnit( exobj_cnt, EXPOBJ_UNIT_IDX );  
-  //汎用ワーク解放
-  GMK_TMP_WK_FreeWork(fieldmap, R04D03_TMP_ASSIGN_ID);
-#endif
 }
 
 //------------------------------------------------------------------------------------------
@@ -83,5 +127,25 @@ void D12_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 //------------------------------------------------------------------------------------------
 void D12_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 {
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief ギミックを非表示にする
+ *
+ * @param fieldmap ギミック動作フィールドマップ
+ */
+//------------------------------------------------------------------------------------------
+void D12_GIMMICK_Vanish( FIELDMAP_WORK* fieldmap )
+{
+  D12_SV_WORK *gmk_sv_work;
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
+    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_D12 );
+  }
+
+  gmk_sv_work->Vanish = TRUE;
+
 }
 
