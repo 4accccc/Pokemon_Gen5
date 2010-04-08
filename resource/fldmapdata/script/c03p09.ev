@@ -241,10 +241,20 @@ EVENT_START		ev_c03p09_iceline_05
 			IF $SCWK_ANSWER == 0 THEN
 				_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05b , C03P09_ICELINE_01 , POS_UL )
 				_BALLOONWIN_CLOSE()
-				//話しかけ時のため最後尾に移動
-				_OBJ_ANIME( C03P09_ICELINE_05 ,  anm_iceline_look_up )
-				_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_iceline_player_go_last )
-				_OBJ_ANIME_WAIT()
+				
+				//話しかけ時のため最後尾に移動（話しかけ方向で処理を分岐）
+				DEFINE_LOCAL LWK_DIR
+				_PLAYER_DIR_GET( LWK_DIR )
+				SWITCH $LWK_DIR
+				CASE DIR_LEFT THEN
+					_OBJ_ANIME( C03P09_ICELINE_05 ,  anm_iceline_look_up )
+					_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_iceline_player_go_last_l )
+					_OBJ_ANIME_WAIT()
+				CASE DIR_RIGHT THEN
+					_OBJ_ANIME( C03P09_ICELINE_05 ,  anm_iceline_look_up )
+					_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_iceline_player_go_last_r )
+					_OBJ_ANIME_WAIT()
+				ENDSWITCH
 				
 				//行列処理をコール
 				_CALL ev_r03_ice_procession
@@ -330,9 +340,18 @@ _ANIME_LABEL	 anm_iceline_player_look_lastman_01
 //--------------------------------------------------------------
 //行列の最後尾：直接話しかけた場合プレイヤー最後尾に移動
 //--------------------------------------------------------------
-_ANIME_LABEL	 anm_iceline_player_go_last
+_ANIME_LABEL	 anm_iceline_player_go_last_l
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//行列の最後尾：直接話しかけた場合プレイヤー最後尾に移動
+//--------------------------------------------------------------
+_ANIME_LABEL	 anm_iceline_player_go_last_r
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
