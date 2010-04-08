@@ -229,6 +229,7 @@ void  BTLV_FIELD_Exit( BTLV_FIELD_WORK *bfw )
 //============================================================================================
 void  BTLV_FIELD_Main( BTLV_FIELD_WORK *bfw )
 {
+#if 0
   //アニメーション
 	if(	bfw->anm_count ){
     int i;
@@ -256,6 +257,7 @@ void  BTLV_FIELD_Main( BTLV_FIELD_WORK *bfw )
       }
     }
 	}
+#endif
   //パレットフェード
   BTLV_EFFTOOL_CalcPaletteFade( &bfw->epfw );
 }
