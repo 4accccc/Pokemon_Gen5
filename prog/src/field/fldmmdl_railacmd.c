@@ -665,6 +665,65 @@ static int AC_RailStayWalk_1( MMDL * mmdl )
 
 //--------------------------------------------------------------
 /**
+ * AC_STAY_WALK_U_32F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkU32F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_UP, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_D_32F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkD32F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_DOWN, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_L_32F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkL32F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_LEFT, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_R_32F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkR32F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_RIGHT, GRID_FRAME_32, DRAW_STA_WALK_32F ); 
+	
+	return( TRUE );
+}
+
+
+
+
+//--------------------------------------------------------------
+/**
  * AC_STAY_WALK_U_16F 0
  * @param	mmdl	MMDL * 
  * @retval	int		TRUE=再帰
@@ -828,6 +887,62 @@ static int AC_RailStayWalkL2F_0( MMDL * mmdl )
 static int AC_RailStayWalkR2F_0( MMDL * mmdl )
 {
 	AcRailStayWalkWorkInit( mmdl, DIR_RIGHT, GRID_FRAME_2, DRAW_STA_WALK_2F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_U_4F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkU4F_0( MMDL * mmdl )
+{
+  AcRailStayWalkWorkInit( mmdl, DIR_UP, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_D_4F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkD4F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_DOWN, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_L_4F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkL4F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_LEFT, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
+	
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_STAY_WALK_R_4F 0
+ * @param	mmdl	MMDL * 
+ * @retval	int		TRUE=再帰
+ */
+//--------------------------------------------------------------
+static int AC_RailStayWalkR4F_0( MMDL * mmdl )
+{
+	AcRailStayWalkWorkInit( mmdl, DIR_RIGHT, GRID_FRAME_4, DRAW_STA_WALK_4F ); 
 	
 	return( TRUE );
 }
@@ -1383,6 +1498,46 @@ int (* const DATA_AC_RailDashR_4F_Tbl[])( MMDL * ) =
 
 
 //--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_U_32F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkU_32F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkU32F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_D_32F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkD_32F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkD32F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_L_32F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkL_32F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkL32F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_R_32F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkR_32F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkR32F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
 ///	AC_RAIL_STAY_WALK_U_16F
 //--------------------------------------------------------------
 int (* const DATA_AC_RailStayWalkU_16F_Tbl[])( MMDL * ) =
@@ -1461,6 +1616,49 @@ int (* const DATA_AC_RailStayWalkR_8F_Tbl[])( MMDL * ) =
 	AC_RailStayWalk_1,
   AC_RailEnd,
 };
+
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_U_4F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkU_4F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkU4F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_D_4F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkD_4F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkD4F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_L_4F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkL_4F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkL4F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+//--------------------------------------------------------------
+///	AC_RAIL_STAY_WALK_R_4F
+//--------------------------------------------------------------
+int (* const DATA_AC_RailStayWalkR_4F_Tbl[])( MMDL * ) =
+{
+	AC_RailStayWalkR4F_0,
+	AC_RailStayWalk_1,
+  AC_RailEnd,
+};
+
+
 
 //--------------------------------------------------------------
 ///	AC_RAIL_STAY_WALK_U_2F

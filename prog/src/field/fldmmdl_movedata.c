@@ -1396,10 +1396,10 @@ int (* const * const DATA_RailAcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_RailWalkD_2F_Tbl,            //AC_WALK_D_2F
   DATA_AC_RailWalkL_2F_Tbl,            //AC_WALK_L_2F
   DATA_AC_RailWalkR_2F_Tbl,            //AC_WALK_R_2F
-  DATA_AC_RailDummy,                //AC_STAY_WALK_U_32F
-  DATA_AC_RailDummy,                //AC_STAY_WALK_D_32F
-  DATA_AC_RailDummy,                //AC_STAY_WALK_L_32F
-  DATA_AC_RailDummy,                //AC_STAY_WALK_R_32F
+  DATA_AC_RailStayWalkU_32F_Tbl,                //AC_STAY_WALK_U_32F
+  DATA_AC_RailStayWalkD_32F_Tbl,                //AC_STAY_WALK_D_32F
+  DATA_AC_RailStayWalkL_32F_Tbl,                //AC_STAY_WALK_L_32F
+  DATA_AC_RailStayWalkR_32F_Tbl,                //AC_STAY_WALK_R_32F
   DATA_AC_RailStayWalkU_16F_Tbl,                //AC_STAY_WALK_U_16F
   DATA_AC_RailStayWalkD_16F_Tbl,                //AC_STAY_WALK_D_16F
   DATA_AC_RailStayWalkL_16F_Tbl,                //AC_STAY_WALK_L_16F
@@ -1408,10 +1408,10 @@ int (* const * const DATA_RailAcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_RailStayWalkD_8F_Tbl,                //AC_STAY_WALK_D_8F
   DATA_AC_RailStayWalkL_8F_Tbl,                //AC_STAY_WALK_L_8F
   DATA_AC_RailStayWalkR_8F_Tbl,                //AC_STAY_WALK_R_8F
-  DATA_AC_RailDummy,                //AC_STAY_WALK_U_4F
-  DATA_AC_RailDummy,                //AC_STAY_WALK_D_4F
-  DATA_AC_RailDummy,                //AC_STAY_WALK_L_4F
-  DATA_AC_RailDummy,                //AC_STAY_WALK_R_4F
+  DATA_AC_RailStayWalkU_4F_Tbl,                //AC_STAY_WALK_U_4F
+  DATA_AC_RailStayWalkD_4F_Tbl,                //AC_STAY_WALK_D_4F
+  DATA_AC_RailStayWalkL_4F_Tbl,                //AC_STAY_WALK_L_4F
+  DATA_AC_RailStayWalkR_4F_Tbl,                //AC_STAY_WALK_R_4F
   DATA_AC_RailStayWalkU_2F_Tbl,                //AC_STAY_WALK_U_2F
   DATA_AC_RailStayWalkD_2F_Tbl,                //AC_STAY_WALK_D_2F
   DATA_AC_RailStayWalkL_2F_Tbl,                //AC_STAY_WALK_L_2F

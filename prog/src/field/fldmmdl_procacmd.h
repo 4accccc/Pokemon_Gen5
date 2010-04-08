@@ -306,6 +306,10 @@ extern int (* const DATA_AC_RailDashL_4F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailDashR_4F_Tbl[])( MMDL * );
 
 // STAY WALKŒn
+extern int (* const DATA_AC_RailStayWalkU_32F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailStayWalkD_32F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailStayWalkL_32F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailStayWalkR_32F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailStayWalkU_16F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailStayWalkD_16F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailStayWalkL_16F_Tbl[])( MMDL * );
@@ -314,6 +318,10 @@ extern int (* const DATA_AC_RailStayWalkU_8F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailStayWalkD_8F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailStayWalkL_8F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailStayWalkR_8F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailStayWalkU_4F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailStayWalkD_4F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailStayWalkL_4F_Tbl[])( MMDL * );
+extern int (* const DATA_AC_RailStayWalkR_4F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailStayWalkU_2F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailStayWalkD_2F_Tbl[])( MMDL * );
 extern int (* const DATA_AC_RailStayWalkL_2F_Tbl[])( MMDL * );
