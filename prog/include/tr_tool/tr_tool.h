@@ -144,35 +144,43 @@ typedef struct{
 //トレーナー持ちポケモンパラメータ（データタイプノーマル）
 typedef	struct
 {
-	u16		pow;			//セットするパワー乱数(u8でOKだけど4バイト境界対策）
+	u8		pow;			  //セットするパワー乱数
+  u8    para;       //セットするポケモンのパラメータ（上位4bit：特性　下位4bit：性別）
 	u16		level;			//セットするポケモンのレベル
 	u16		monsno;			//セットするポケモン
+  u16   form_no;    //セットするフォルムナンバー
 }POKEDATA_TYPE_NORMAL;
 
 //トレーナー持ちポケモンパラメータ（データタイプ技）
 typedef	struct
 {
-	u16		pow;			//セットするパワー乱数(u8でOKだけど4バイト境界対策）
+	u8		pow;			  //セットするパワー乱数
+  u8    para;       //セットするポケモンのパラメータ（上位4bit：特性　下位4bit：性別）
 	u16		level;			//セットするポケモンのレベル
 	u16		monsno;			//セットするポケモン
+  u16   form_no;    //セットするフォルムナンバー
 	u16		waza[4];		//持ってる技
 }POKEDATA_TYPE_WAZA;
 
 //トレーナー持ちポケモンパラメータ（データタイプアイテム）
 typedef	struct
 {
-	u16		pow;			//セットするパワー乱数(u8でOKだけど4バイト境界対策）
+	u8		pow;			  //セットするパワー乱数
+  u8    para;       //セットするポケモンのパラメータ（上位4bit：特性　下位4bit：性別）
 	u16		level;			//セットするポケモンのレベル
 	u16		monsno;			//セットするポケモン
+  u16   form_no;    //セットするフォルムナンバー
 	u16		itemno;			//セットするアイテム
 }POKEDATA_TYPE_ITEM;
 
 //トレーナー持ちポケモンパラメータ（データタイプマルチ）
 typedef	struct
 {
-	u16		pow;			//セットするパワー乱数(u8でOKだけど4バイト境界対策）
+	u8		pow;			  //セットするパワー乱数
+  u8    para;       //セットするポケモンのパラメータ（上位4bit：特性　下位4bit：性別）
 	u16		level;			//セットするポケモンのレベル
 	u16		monsno;			//セットするポケモン
+  u16   form_no;    //セットするフォルムナンバー
 	u16		itemno;			//セットするアイテム
 	u16		waza[ PTL_WAZA_MAX ];		//持ってる技
 }POKEDATA_TYPE_MULTI;
