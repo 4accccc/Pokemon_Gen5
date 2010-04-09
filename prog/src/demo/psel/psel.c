@@ -389,6 +389,16 @@ POKE_MOVE_REQ;
 #define POKE_SOFTPRI_MIDDLE (1)  // ’†
 #define POKE_SOFTPRI_FRONT  (0)  // è‘O
 
+// ƒAƒ‹ƒtƒ@ƒAƒjƒ‚Ìó‘Ô
+typedef enum
+{
+  POKE_SET_ALPHA_ANIME_STATE_NONE,
+  POKE_SET_ALPHA_ANIME_STATE_0,
+  POKE_SET_ALPHA_ANIME_STATE_ANIME,
+  POKE_SET_ALPHA_ANIME_STATE_16,
+}
+POKE_SET_ALPHA_ANIME_STATE;
+
 
 // ƒ{[ƒ‹“à‚ğƒCƒ[ƒW‚µ‚½ƒTƒu‰æ–ÊBG
 enum
@@ -723,6 +733,8 @@ typedef struct
   // 2D OBJ
   // ƒ|ƒPƒ‚ƒ“‘å¬ƒZƒbƒg
   POKE_SET                    poke_set[TARGET_POKE_MAX];
+  int                         poke_set_ev1;
+  POKE_SET_ALPHA_ANIME_STATE  poke_set_alpha_anime_state; 
   // ww‚µƒJ[ƒ\ƒ‹
   u32                         finger_res[TWO_OBJ_RES_MAX];
   GFL_CLWK*                   finger_clwk;
@@ -753,7 +765,7 @@ typedef struct
   APP_TASKMENU_WORK*          app_taskmenu_wk;      // ƒ^ƒbƒ`‚Å‚àƒL[‚Å‚ào‚éÅIŠm”F‚Ìu‚Í‚¢vu‚¢‚¢‚¦vƒ{ƒ^ƒ“
 
   // ƒuƒŒƒ“ƒh
-  u8                          ev1;  // G2S_SetBlendAlpha‚Ìev1  // 0<=ev1<=16  // ev2=16-ev1
+  u8                          ev1;  // G2_SetBlendAlpha‚Ìev1  // 0<=ev1<=16  // ev2=16-ev1
 
   // ƒ{[ƒ‹“à‚ğƒCƒ[ƒW‚µ‚½ƒTƒu‰æ–ÊBG‚ÌƒpƒŒƒbƒg
   // ƒIƒŠƒWƒiƒ‹ƒpƒŒƒbƒgƒf[ƒ^
@@ -807,8 +819,12 @@ static void Psel_ThreeS02OnlyMbSelectAnimeMain( PSEL_WORK* work );  // –ˆƒtƒŒ[ƒ
 static void Psel_PokeSetInit( PSEL_WORK* work );
 static void Psel_PokeSetExit( PSEL_WORK* work );
 static void Psel_PokeSetMain( PSEL_WORK* work );
-static void Psel_PokeSetDrawStart( PSEL_WORK* work );
 static void Psel_PokeSetSelectStart( PSEL_WORK* work, TARGET target_poke );
+
+// ƒ|ƒPƒ‚ƒ“‘å¬ƒZƒbƒgƒAƒ‹ƒtƒ@ƒAƒjƒ
+static void Psel_PokeSetAlphaAnimeStart( PSEL_WORK* work );
+static BOOL Psel_PokeSetIsAlphaAnimeEnd( PSEL_WORK* work );
+static void Psel_PokeSetAlphaAnimeMain( PSEL_WORK* work );
 
 // ww‚µƒJ[ƒ\ƒ‹
 static void Psel_FingerInit( PSEL_WORK* work );
@@ -1772,6 +1788,12 @@ static void Psel_PokeSetInit( PSEL_WORK* work )
       work->poke_set[i].move_req          = POKE_MOVE_REQ_NONE;
     }
   }
+
+  // ƒAƒ‹ƒtƒ@ƒAƒjƒ
+  {
+    work->poke_set_ev1 = 0;
+    work->poke_set_alpha_anime_state = POKE_SET_ALPHA_ANIME_STATE_NONE;
+  }
 }
 static void Psel_PokeSetExit( PSEL_WORK* work )
 {
@@ -2072,21 +2094,6 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
   }
 }
 
-static void Psel_PokeSetDrawStart( PSEL_WORK* work )
-{
-  u8 i;
-  u8 j;
-  // small
-  j = POKE_SMALL;
-  // CLWK•`‰æ
-  {
-    for( i=0; i<TARGET_POKE_MAX; i++ )
-    {
-      GFL_CLACT_WK_SetDrawEnable( work->poke_set[i].clwk[j], TRUE );
-    }
-  }
-}
-
 static void Psel_PokeSetSelectStart( PSEL_WORK* work, TARGET target_poke )  // ‰½‰ñŒÄ‚ñ‚Å‚àAƒAƒjƒ‚Ì“r’†‚ÅŒÄ‚ñ‚Å‚àA‘åä•v‚ÈŠæ‹­‚È‚Â‚­‚è‚É‚È‚Á‚Ä‚¢‚é
 {
   u8 i;
@@ -2118,6 +2125,107 @@ static void Psel_PokeSetSelectStart( PSEL_WORK* work, TARGET target_poke )  // ‰
         //GFL_CLACT_WK_SetSoftPri( work->poke_set[i].clwk[POKE_BIG], POKE_SOFTPRI_BACK );  // ’–Ú‚µ‚Ä‚¢‚È‚¢ƒ|ƒPƒ‚ƒ“‚Ì‚Ù‚¤‚ªè‘O‚Ì‚±‚Æ‚à‚ ‚é‚Ì‚ÅA–ˆƒtƒŒ[ƒ€İ’è‚·‚é‚±‚Æ‚É‚µ‚½B
       }
     }
+  }
+}
+
+
+//-------------------------------------
+/// ƒ|ƒPƒ‚ƒ“‘å¬ƒZƒbƒgƒAƒ‹ƒtƒ@ƒAƒjƒ
+//=====================================
+static void Psel_PokeSetAlphaAnimeStart( PSEL_WORK* work )
+{
+  u8 i;
+  u8 j;
+  // small
+  j = POKE_SMALL;
+  // CLWK”¼“§–¾
+  {
+    for( i=0; i<TARGET_POKE_MAX; i++ )
+    {
+      GFL_CLACT_WK_SetObjMode( work->poke_set[i].clwk[j], GX_OAM_MODE_XLU );
+    }
+  }
+
+  // ƒAƒ‹ƒtƒ@ƒAƒjƒ
+  work->poke_set_ev1 = 0;
+  work->poke_set_alpha_anime_state = POKE_SET_ALPHA_ANIME_STATE_0;
+
+  G2S_SetBlendAlpha(
+      GX_BLEND_PLANEMASK_NONE,
+      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+      work->poke_set_ev1, 16 - work->poke_set_ev1 );
+}
+static BOOL Psel_PokeSetIsAlphaAnimeEnd( PSEL_WORK* work )
+{
+  if( work->poke_set_alpha_anime_state == POKE_SET_ALPHA_ANIME_STATE_NONE )  return TRUE;
+  else                                                                       return FALSE;
+}
+static void Psel_PokeSetAlphaAnimeMain( PSEL_WORK* work )
+{
+  switch( work->poke_set_alpha_anime_state )
+  {
+  case POKE_SET_ALPHA_ANIME_STATE_0:
+    {
+      u8 i;
+      u8 j;
+      // small
+      j = POKE_SMALL;
+      // CLWK•`‰æ
+      {
+        for( i=0; i<TARGET_POKE_MAX; i++ )
+        {
+          GFL_CLACT_WK_SetDrawEnable( work->poke_set[i].clwk[j], TRUE );
+        }
+      }
+
+      work->poke_set_alpha_anime_state = POKE_SET_ALPHA_ANIME_STATE_ANIME;
+    }
+    break;
+  case POKE_SET_ALPHA_ANIME_STATE_ANIME:
+    {
+      if( work->poke_set_ev1 < 16 )
+      {
+        work->poke_set_ev1++;
+          
+        if( work->poke_set_ev1 == 16 )
+        {
+          // ƒAƒ‹ƒtƒ@ƒAƒjƒŠ®—¹Ï‚İ
+          u8 i;
+          u8 j;
+          // small
+          j = POKE_SMALL;
+          // CLWK•s“§–¾
+          {
+            for( i=0; i<TARGET_POKE_MAX; i++ )
+            {
+              GFL_CLACT_WK_SetObjMode( work->poke_set[i].clwk[j], GX_OAM_MODE_NORMAL );
+            }
+          }
+      
+          work->poke_set_alpha_anime_state = POKE_SET_ALPHA_ANIME_STATE_16;
+        }
+      
+        G2S_SetBlendAlpha(
+            GX_BLEND_PLANEMASK_NONE,
+            GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+            work->poke_set_ev1, 16 - work->poke_set_ev1 );
+      }
+      else
+      {
+        work->poke_set_alpha_anime_state = POKE_SET_ALPHA_ANIME_STATE_16;
+      }
+    }
+    break;
+  case POKE_SET_ALPHA_ANIME_STATE_16:
+    {
+      G2S_SetBlendAlpha(
+        GX_BLEND_PLANEMASK_BG2/* | GX_BLEND_PLANEMASK_BG3*/,
+        GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+        8, 8 );
+      
+      work->poke_set_alpha_anime_state = POKE_SET_ALPHA_ANIME_STATE_NONE;
+    }
+    break;
   }
 }
 
@@ -2618,12 +2726,18 @@ static BOOL Psel_TextExplainStreamWait( PSEL_WORK* work )  // TRUE‚ª•Ô‚Á‚Ä—ˆ‚½‚ç
     if( ( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) ) || GFL_UI_TP_GetTrg() )
     {
       PRINTSYS_PrintStreamShortWait( work->print_stream, 0 );
+      
+      if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ) work->ktst = GFL_APP_KTST_KEY;
+      else                                                    work->ktst = GFL_APP_KTST_TOUCH;
     }
     break;
   case PRINTSTREAM_STATE_PAUSE:
     if( ( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) ) || GFL_UI_TP_GetTrg() )
     { 
       PRINTSYS_PrintStreamReleasePause( work->print_stream );
+
+      if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ) work->ktst = GFL_APP_KTST_KEY;
+      else                                                    work->ktst = GFL_APP_KTST_TOUCH;
     }
     break;
   case PRINTSTREAM_STATE_DONE:
@@ -3655,6 +3769,7 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
 
   Psel_ThreeS02OnlyMbSelectAnimeMain( work ); 
   Psel_PokeSetMain( work );
+  Psel_PokeSetAlphaAnimeMain( work );
   Psel_PalMain( work );
 
   switch(*seq)
@@ -3676,13 +3791,14 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
       
       *seq = S02_MAIN_SEQ_EXPLAIN_WAIT;
 
-      // ƒ{ƒbƒNƒX‚ªŠJ‚¢‚½‚çƒ|ƒPƒ‚ƒ“‚Ì•`‰æŠJn
-      Psel_PokeSetDrawStart( work );
+      // ƒ{ƒbƒNƒX‚ªŠJ‚¢‚½‚çƒ|ƒPƒ‚ƒ“‚ÌƒAƒ‹ƒtƒ@ƒAƒjƒŠJn
+      Psel_PokeSetAlphaAnimeStart( work );
     }
     break;
   case S02_MAIN_SEQ_EXPLAIN_WAIT:
     {
-      if( Psel_TextExplainStreamWait( work ) )
+      if(    Psel_TextExplainStreamWait( work )     // ƒXƒgƒŠ[ƒ€ƒeƒLƒXƒg‚ª‘S‚Ä•\¦‚³‚ê‚é‚Ì‚ğ‘Ò‚Â
+          && Psel_PokeSetIsAlphaAnimeEnd( work ) )  // ƒ|ƒPƒ‚ƒ“‚ÌƒAƒ‹ƒtƒ@ƒAƒjƒ‚ªŠ®—¹‚·‚é‚Ì‚ğ‘Ò‚Â
       {
         // ƒeƒLƒXƒg‚ÆƒEƒBƒ“ƒhƒE‚Í•\¦‚µ‚Á‚Ï‚È‚µ
         *seq = S02_MAIN_SEQ_SELECT_INIT;

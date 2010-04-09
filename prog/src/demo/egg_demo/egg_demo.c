@@ -961,9 +961,9 @@ static void Egg_Demo_ObjInit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
           handle,
           NARC_egg_demo_particle_demo_egg_NCLR,
           CLSYS_DRAW_MAIN,
-          BG_PAL_POS_M_BELT * 0x20,
+          OBJ_PAL_POS_M_BELT * 0x20,
           0,
-          BG_PAL_NUM_M_BELT,
+          OBJ_PAL_NUM_M_BELT,
           work->heap_id );
       
   work->obj_res[OBJ_RES_BELT_NCG] = GFL_CLGRP_CGR_Register(
