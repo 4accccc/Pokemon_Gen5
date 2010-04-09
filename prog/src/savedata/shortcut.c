@@ -84,7 +84,7 @@ int SHORTCUT_GetWorkSize( void )
 //-----------------------------------------------------------------------------
 void SHORTCUT_Init( SHORTCUT *p_wk )
 {	
-	GFL_STD_MemFill( p_wk->data, SHORTCUT_ID_NULL, sizeof(u8) * SHORTCUT_ID_MAX );
+	GFL_STD_MemFill( p_wk->data, SHORTCUT_ID_NULL, sizeof(u8) * SHORTCUT_SAVE_FLAG_MAX );
 }
 
 //=============================================================================

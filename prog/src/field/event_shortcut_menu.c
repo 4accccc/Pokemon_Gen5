@@ -233,6 +233,9 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 		SEQ_ITEM_CALL,
 		SEQ_ITEM_ERROR,
 		SEQ_ITEM_RETURN,
+    
+    SEQ_RIBBON_ERROR,
+    SEQ_RIBBON_RETURN,
 	};
 
 	EVENT_SHORTCUTMENU_WORK	*p_wk	= p_wk_adrs;
@@ -269,25 +272,61 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 			if( input == SHORTCUTMENU_INPUT_SELECT )
 			{	// 起動チェック
 				ITEMCHECK_ENABLE	enable;
-				BOOL	err = FALSE;
+				BOOL	item_use_err = FALSE;
+        BOOL  ribbon_status_err = FALSE;
+
 				BOOL reverse_use, check_item;
 				check_item = GetItemCheckEnable( shortcutID, &enable, &reverse_use );
+
 				if(reverse_use == FALSE 
 				    && GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData(p_wk->p_gamesys) ) == TRUE){
-          err = TRUE;
+          item_use_err = TRUE;
         }
 				else if(check_item == TRUE){
 					ITEMCHECK_WORK	icwk;
 					ITEMUSE_InitCheckWork( &icwk, p_wk->p_gamesys, p_wk->p_fieldmap );
 					if( ITEMUSE_GetItemUseCheck( &icwk, enable ) == FALSE ){
-						err = TRUE;
+						item_use_err = TRUE;
 					}
 				}
-				// 起動エラー
-				if( err == TRUE ){
+
+        if( shortcutID == SHORTCUT_ID_PSTATUS_RIBBON )
+        { 
+          //リボンの場合は、手持ち内にリボンをつけているポケモンがいれば飛ぶが
+          //いなければエラーメッセージ
+          GAMEDATA  *p_gamedata = GAMESYSTEM_GetGameData(p_wk->p_gamesys);
+          POKEPARTY *p_party  =  GAMEDATA_GetMyPokemon(p_gamedata);
+          BOOL is_ribbon  = FALSE;
+          POKEMON_PARAM *p_pp;
+          int i;
+          for( i = 0; i < PokeParty_GetPokeCount(p_party); i++ )
+          { 
+            p_pp  = PokeParty_GetMemberPointer( p_party, i );
+            if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) && PP_CheckRibbon( p_pp ) )
+            { 
+              is_ribbon = TRUE;
+            }
+          }
+
+          if( is_ribbon == FALSE )
+          { 
+            ribbon_status_err = TRUE;
+          }
+        }
+
+				if( item_use_err == TRUE )
+        {
+          // 起動エラー
 					*p_seq = SEQ_ITEM_ERROR;
-				// 起動
-				}else{
+				}
+        else if( ribbon_status_err == TRUE )
+        { 
+          //リボン画面エラー
+          *p_seq  = SEQ_RIBBON_ERROR;
+        }
+        else
+        {
+          // 起動
 					switch( ShortCutMenu_SetCallType( p_wk->p_link, shortcutID ) )
 					{	
 					case CALLTYPE_PROC:
@@ -298,6 +337,9 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 						break;
 					}
 				}
+
+        //アプリの起動チェック
+
 			}
 			else if( input == SHORTCUTMENU_INPUT_CANCEL )
 			{	
@@ -426,6 +468,27 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 	case SEQ_ITEM_RETURN:
 		//GFL_OVERLAY_Unload( FS_OVERLAY_ID(itemuse) );
 
+		{
+   		MMDLSYS *p_fldmdl = FIELDMAP_GetMMdlSys( p_wk->p_fieldmap );
+      MMDLSYS_ClearPauseMoveProc( p_fldmdl );
+		}
+		return GMEVENT_RES_FINISH;
+
+
+  case SEQ_RIBBON_ERROR:
+		{	
+
+			//MENU破棄
+			ShortCutMenu_Exit( p_wk );
+
+      //NGメッセージ表示
+			GMEVENT_CallEvent(p_event, EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 2 ) );
+
+			*p_seq	= SEQ_RIBBON_RETURN;
+		}
+    break;
+
+  case SEQ_RIBBON_RETURN:
 		{
    		MMDLSYS *p_fldmdl = FIELDMAP_GetMMdlSys( p_wk->p_fieldmap );
       MMDLSYS_ClearPauseMoveProc( p_fldmdl );
@@ -895,7 +958,7 @@ static void ShortCutMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void
 /*
  *  @brief  ショートカットアイテム使用NGメッセージイベント
  *
- *  @param  type    0:通常,1:自転車を降りられない
+ *  @param  type    0:通常,1:自転車を降りられない,2リボン画面を開けない
  */
 static GMEVENT* EVENT_ItemuseNGMsgCall(GAMESYS_WORK * gsys, u8 type )
 {

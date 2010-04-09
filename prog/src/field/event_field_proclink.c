@@ -1193,11 +1193,29 @@ static void * FMenuCallProc_PokeStatus(PROCLINK_WORK* wk, u32 param, EVENT_PROCL
     if( param != EVENT_PROCLINK_DATA_NONE )
     { 
       psData->page  = param;
+
+      //ショートカットからリボン画面を選んだときはリボンを持っている最初のポケモンへ飛ぶ
+      if( psData->page ==  PPT_RIBBON )
+      { 
+        int i;
+        POKEMON_PARAM *p_pp;
+        POKEPARTY *p_party = GAMEDATA_GetMyPokemon( gmData );
+        for( i = 0; i < PokeParty_GetPokeCount(p_party); i++ )
+        { 
+          p_pp  = PokeParty_GetMemberPointer( p_party, i );
+          if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) && PP_CheckRibbon( p_pp ) )
+          { 
+            psData->pos = i;
+            break;
+          }
+        }
+      }
     }
     else
     { 
       psData->page  = PPT_INFO;
     }
+
   }
 
 

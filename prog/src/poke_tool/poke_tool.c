@@ -2206,6 +2206,36 @@ BOOL  POKETOOL_CheckWazaOshie( u16 mons_no, u16 form_no, int waza_oshie_no )
 
   return ( ( POKETOOL_GetPersonalParam( mons_no, form_no, perID ) & waza_oshie_bit ) != 0 );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  なにか１つでもリボンをもっているかチェック
+ *
+ *	@param	const POKEMON_PARAM   ポケモンパラメータ
+ *
+ *	@return TRUE もっている FALSEもっていない
+ */
+//-----------------------------------------------------------------------------
+BOOL PP_CheckRibbon( const POKEMON_PARAM *pp )
+{ 
+  BOOL ret;
+  POKEMON_PASO_PARAM1 *ppp1;
+  POKEMON_PASO_PARAM2 *ppp2;
+  POKEMON_PASO_PARAM3 *ppp3;
+  POKEMON_PASO_PARAM4 *ppp4;
+
+  POKEMON_PASO_PARAM  *ppp  = (POKEMON_PASO_PARAM *)&pp->ppp;
+
+  pp_decordAct( (POKEMON_PARAM*)pp );
+
+  ppp1 = ( POKEMON_PASO_PARAM1 * )POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA1 );
+  ppp2 = ( POKEMON_PASO_PARAM2 * )POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA2 );
+  ppp3 = ( POKEMON_PASO_PARAM3 * )POKETOOL_ppp_get_param_block( ppp, ppp->personal_rnd, ID_POKEPARA3 );
+  ret = ( ppp1->sinou_ribbon != 0 || ppp2->old_ribbon != 0 || ppp3->new_ribbon != 0 );
+
+  pp_encode_act( (POKEMON_PARAM*)pp );
+
+  return ret;
+}
 //=============================================================================================
 /**
  * ポケモンの好みの味かチェック
