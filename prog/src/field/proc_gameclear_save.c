@@ -15,6 +15,12 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_data.h"
 
+#include "savedata/save_tbl.h"
+#include "savedata/record.h"
+#include "savedata/gametime.h"
+#include "savedata/playtime.h"
+#include "ev_time.h"
+
 #include "proc_gameclear_save.h"
 
 #include "system/main.h"  //HEAPID_～
@@ -57,6 +63,9 @@ typedef struct{
 	GFL_BMPWIN *bmpwin;							//BMPウィンドウデータ
 
   BOOL saveSuccessFlag;
+  BOOL dendouSaveInitFlag;   //「殿堂入り」データの分割セーブ初期化が完了したかどうか
+  BOOL dendouSaveFinishFlag; //「殿堂入り」データの分割セーブが完了したかどうか
+  BOOL otherSaveExist; // 既存のデータが存在するかどうか
 
 }GAMECLEAR_MSG_WORK;
 
@@ -99,6 +108,13 @@ static void setup_bg_sys( HEAPID heapID );
 static void release_bg_sys( void );
 static void scr_msg_print( GAMECLEAR_MSG_WORK* wk, u16 msg_id, u8 x, u8 y );
 
+static void ElboardStartChampNews( GAMECLEAR_MSG_WORK* work ); // 電光掲示板にチャンピオンニュースの表示を開始する
+static void UpdateFirstClearDendouData( GAMECLEAR_MSG_WORK* work ); // 初回クリア時の殿堂入りデータを登録する
+static void UpdateFirstClearRecord( GAMECLEAR_MSG_WORK* work ); // 初回クリア時のレコードを登録する
+static void UpdateDendouRecord( GAMECLEAR_MSG_WORK* work ); // 殿堂入り時のレコードを登録する
+static void DendouSave_init( GAMECLEAR_MSG_WORK* work ); // 殿堂入りデータの更新準備
+static void DendouSave_main( GAMECLEAR_MSG_WORK* work ); // 殿堂入りデータの更新処理
+
 
 static GFL_PROC_RESULT GameClearMsgProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
@@ -129,6 +145,17 @@ static GFL_PROC_RESULT GameClearMsgProc_Init( GFL_PROC * proc, int * seq, void *
   gcmwk->arc_id = NARC_message_gameclear_dat;
   gcmwk->gamedata = GAMESYSTEM_GetGameData( gsys );
   gcmwk->mystatus = GAMEDATA_GetMyStatus( gcmwk->gamedata );
+
+  // セーブ可能か？
+  {
+    SAVE_CONTROL_WORK* save;
+    save = GAMEDATA_GetSaveControlWork( gcmwk->gamedata );
+
+    if( SaveControl_IsOverwritingOtherData( save ) ) {
+      // セーブ不可
+      gcmwk->otherSaveExist = TRUE;
+    }
+  }
   
   return GFL_PROC_RES_FINISH;
 }
@@ -202,21 +229,24 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
 
 	//キー待ち
 	case 3:
-		if( (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
+    if( wk->otherSaveExist ) {
+      (*seq) ++; 
+    }
+    else if( (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
       //「レポートをかいています　でんげんをきらないでください」
       scr_msg_print( wk, msg_gameclear_report_01, 0, 0 );
       GAMEDATA_SaveAsyncStart( wk->gamedata );
       (*seq) ++;
     }
     break;
+
   case 4:
-    {
-      // 分割セーブ実行
+    // 分割セーブ実行
+    if( wk->otherSaveExist == FALSE ) {
       SAVE_RESULT result = GAMEDATA_SaveAsyncMain( wk->gamedata );
 
       // 結果を返す
-      switch( result )
-      {
+      switch( result ) {
       case SAVE_RESULT_CONTINUE:
       case SAVE_RESULT_LAST:
         break;
@@ -230,10 +260,48 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
         break;
       }
     }
+    else {
+      (*seq) ++;
+    }
     break;
 
-  case 5:
-    if (wk->saveSuccessFlag) {
+  case 5: 
+    if( wk->otherSaveExist==FALSE && wk->saveSuccessFlag ) {
+      // 電光掲示板にチャンピオンニュースを表示
+      ElboardStartChampNews( wk );
+
+      //「初回クリア」をセーブ
+      if( para->clear_mode == GAMECLEAR_MODE_FIRST ) {
+        UpdateFirstClearDendouData( wk ); // 初「殿堂入り」データ
+        EVTIME_SetGameClearDateTime( wk->gamedata ); // 初回クリアの日時
+        UpdateFirstClearRecord( wk ); // レコードデータ
+      }
+      //「殿堂入り」をセーブ
+      else {
+        UpdateDendouRecord( wk );
+        DendouSave_init( wk );
+      }
+    }
+    (*seq) ++;
+    break;
+
+  case 6:
+    // 殿堂入りデータをセーブ
+    if( wk->otherSaveExist==FALSE && wk->dendouSaveInitFlag ) {
+      DendouSave_main( wk );
+
+      // セーブ終了
+      if( wk->dendouSaveFinishFlag ) { 
+        (*seq) ++; 
+      }
+    }
+    else {
+      (*seq) ++;
+    }
+    break;
+
+  case 7:
+    if (wk->otherSaveExist==FALSE && wk->saveSuccessFlag) {
       //「レポートをかきました」
       scr_msg_print( wk, msg_gameclear_report_02, 0, 0 );
     } else {
@@ -243,7 +311,7 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
     (*seq) ++;
     break;
 
-  case 6:
+  case 8:
 		if( (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
       //「おしまい」
       scr_msg_print( wk, msg_gameclear_02, 0, 0 );
@@ -251,7 +319,7 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
     }
     break;
 
-  case 7:
+  case 9:
 		if( (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
       GFL_FADE_SetMasterBrightReq(
           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, 0 );
@@ -260,7 +328,7 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
 		break;
 
 	//メイン画面フェードアウト待ち
-	case 8:
+	case 10:
     if( GFL_FADE_CheckFade() == FALSE ) {
 
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->bmpwin),  PALNO_BACKGROUND );		//塗りつぶし
@@ -270,7 +338,7 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
 		break;
 
 	//終了開放
-	case 9:
+	case 11:
 		BmpWinFrame_Clear( wk->bmpwin, WINDOW_TRANS_ON );
 		GFL_BMPWIN_Delete( wk->bmpwin );
 
@@ -285,7 +353,7 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
     (*seq) ++;
     break;
 
-  case 10:
+  case 12:
 		return GFL_PROC_RES_FINISH;
 	}
 
@@ -390,6 +458,148 @@ static void scr_msg_print( GAMECLEAR_MSG_WORK* wk, u16 msg_id, u8 x, u8 y )
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief 電光掲示板にチャンピオンニュースの表示を開始する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void ElboardStartChampNews( GAMECLEAR_MSG_WORK* work )
+{
+  MISC* misc;
+  int minutes;
 
+  misc = GAMEDATA_GetMiscWork( work->gamedata );
+  minutes = 60 * 24; // 表示する時間[min]
+  MISC_SetChampNewsMinutes( misc, minutes );
+}
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief 初回クリア時の殿堂入りデータを登録する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void UpdateFirstClearDendouData( GAMECLEAR_MSG_WORK* work )
+{
+  RTCDate date;
+  POKEPARTY* party; 
+  DENDOU_RECORD* record; 
 
+  RTC_GetDate( &date );
+  party  = GAMEDATA_GetMyPokemon( work->gamedata ); 
+  record = GAMEDATA_GetDendouRecord( work->gamedata ); 
+  DendouRecord_Add( record, party, &date, HEAPID_PROC );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 初回クリア時のレコードを登録する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void UpdateFirstClearRecord( GAMECLEAR_MSG_WORK* work )
+{
+  SAVE_CONTROL_WORK* save;
+  RECORD* record;
+  PLAYTIME* ptime;
+  u32 hour, minute, second, time;
+
+  save   = GAMEDATA_GetSaveControlWork( work->gamedata );
+  record = GAMEDATA_GetRecordPtr( work->gamedata );
+  ptime  = SaveData_GetPlayTime( save );
+
+  // プレイ時間を取得
+  hour   = PLAYTIME_GetHour( ptime );
+  minute = PLAYTIME_GetMinute( ptime );
+  second = PLAYTIME_GetSecond( ptime ); 
+  GF_ASSERT( hour   <= PTIME_HOUR_MAX );
+  GF_ASSERT( minute <= PTIME_MINUTE_MAX );
+  GF_ASSERT( second <= PTIME_SECOND_MAX );
+
+  // プレイ時間を登録
+  time = hour * 10000 + minute * 100 + second;
+  RECORD_Set( record, RECID_CLEAR_TIME, time );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 殿堂入り時のレコードを登録する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void UpdateDendouRecord( GAMECLEAR_MSG_WORK* work )
+{
+  SAVE_CONTROL_WORK* save;
+  RECORD* record;
+
+  save = GAMEDATA_GetSaveControlWork( work->gamedata );
+  record = GAMEDATA_GetRecordPtr( work->gamedata );
+
+  // データ上書きチェック
+  if( SaveControl_IsOverwritingOtherData( save ) ) { return; }
+
+  RECORD_Add( record, RECID_DENDOU_CNT, 1 );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 殿堂入りデータの更新準備
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void DendouSave_init( GAMECLEAR_MSG_WORK* work )
+{
+  RTCDate date;
+  POKEPARTY* party;
+  SAVE_CONTROL_WORK* save;
+  DENDOU_SAVEDATA* dendouData;
+  LOAD_RESULT result; 
+
+  RTC_GetDate( &date );
+  party = GAMEDATA_GetMyPokemon( work->gamedata ); 
+  save = GAMEDATA_GetSaveControlWork( work->gamedata );
+  result = SaveControl_Extra_Load( save, SAVE_EXTRA_ID_DENDOU, HEAPID_PROC );
+  dendouData = SaveControl_Extra_DataPtrGet( save, SAVE_EXTRA_ID_DENDOU, EXGMDATA_ID_DENDOU );
+
+  // データ上書きチェック
+  if( SaveControl_IsOverwritingOtherData( save ) ) { return; }
+
+  DendouData_AddRecord( dendouData, party, &date, HEAPID_PROC ); 
+  SaveControl_Extra_SaveAsyncInit( save, SAVE_EXTRA_ID_DENDOU ); 
+
+  work->dendouSaveInitFlag = TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 殿堂入りデータの更新処理
+ *
+ * @param work 
+ */
+//-----------------------------------------------------------------------------
+static void DendouSave_main( GAMECLEAR_MSG_WORK* work )
+{
+  SAVE_CONTROL_WORK* save;
+  SAVE_RESULT save_ret;
+
+  GF_ASSERT( work->dendouSaveInitFlag );
+
+  // データ上書きチェック
+  save = GAMEDATA_GetSaveControlWork( work->gamedata );
+  if( SaveControl_IsOverwritingOtherData( save ) ) { return; }
+
+  // セーブ実行
+  save_ret = SaveControl_Extra_SaveAsyncMain( save, SAVE_EXTRA_ID_DENDOU ); 
+
+  // セーブ終了
+  if( save_ret == SAVE_RESULT_OK || save_ret == SAVE_RESULT_NG ) { 
+    SaveControl_Extra_Unload( save, SAVE_EXTRA_ID_DENDOU ); // 外部データを解放
+    work->dendouSaveFinishFlag = TRUE;
+  }
+} 
