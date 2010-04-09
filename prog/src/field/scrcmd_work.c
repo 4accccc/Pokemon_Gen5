@@ -588,14 +588,22 @@ void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work )
   {
     u32 len;
     u32 max = FLDMENUFUNC_GetListMax( menuWork->listData );
-    if (max > data_MenuHeader.line) len = data_MenuHeader.line;
-    else len = max;
-
+    
+    if( max > data_MenuHeader.line ){
+      len = data_MenuHeader.line;
+    }else{
+      len = max;
+    }
+    
     sy = FLDMENUFUNC_GetListMenuLen(
         len, menuH.font_size_y, menuH.line_spc );
+    
+    if( max > data_MenuHeader.line ){ //1ƒLƒƒƒ‰‘‚â‚µ•¶Žš‚ð”¼•ª’öŒ©‚¹‚é
+      sy++;
+    }
   }
 #endif
-
+  
   count = FLDMENUFUNC_GetListMax( menuWork->listData );
   FLDMENUFUNC_InputHeaderListSize(
       &menuH, count, menuWork->x, menuWork->y, sx, sy );
