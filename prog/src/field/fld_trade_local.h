@@ -22,7 +22,7 @@ typedef struct
 	u32 sp_rnd;			    // ‘¬‚³—”
 	u32 sa_rnd;			    // “ÁU—”
 	u32 sd_rnd;			    // “Á–h—”
-	u32 speabino;		    // “Áê”\—Í
+	u32 tokusei_idx;		// “Á« ( ‰½”Ô–Ú‚Ì“Á«‚© )
   u32 seikaku;        // «Ši
   u32 sex;            // «•Ê
 	u32	mons_id;		    // ID

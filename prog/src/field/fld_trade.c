@@ -39,21 +39,22 @@
 #include "demo/shinka_demo.h"
 #include "poke_tool/poke_memo.h"
 
+#define DEBUG_MODE
+
 FS_EXTERN_OVERLAY(pokemon_trade);
 
 
-//-----------------------------------------------------------------------------
-/**
- *					構造体宣言
-*/
-//-----------------------------------------------------------------------------
-struct _FLD_TRADE_WORK 
-{
-	FLD_TRADE_POKEDATA* p_pokedata;		// 交換ポケモンデータ
-	POKEMON_PARAM*		        p_pp;		// 交換ポケモン
-	MYSTATUS*			         p_myste;		// 交換相手パラメータ
-	u32                   trade_no;	  // 交換ナンバー
-	u32                     heapID;
+//=============================================================================
+// ■ゲーム内交換ワーク
+//=============================================================================
+struct _FLD_TRADE_WORK {
+
+	HEAPID              heapID;
+	u32                 tradeNo;	  // 交換ナンバー
+	FLD_TRADE_POKEDATA* pokeData;		// 交換ポケモンデータ
+	POKEMON_PARAM*		  pokeParam;	// 交換ポケモン
+	MYSTATUS*			      pokeOya;		// 交換相手パラメータ
+
 };
 
 
@@ -62,68 +63,66 @@ struct _FLD_TRADE_WORK
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-static STRBUF* GetTradeMsgData( u32 heapID, u32 idx );
-
+static STRBUF* GetTradeMsgData( u32 heapID, u32 idx ); 
 static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID, 
                              POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data, 
-	                           u32 trade_no );
-
+	                           u32 tradeNo ); 
+#ifdef DEBUG_MODE
 static void PP_Dump( const POKEMON_PARAM* pp );
 static void FTP_Dump( const FLD_TRADE_POKEDATA* ftp );
+#endif
 
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ワーク確保
+ *	@brief	ゲーム内交換ワークを生成する
  *
- *	@param	heap_id		ヒープID
- *	@param	trade_no	交換番号
- *
- *	@return	ワーク
+ *	@param	heap_id	ヒープID
+ *	@param	tradeNo	交換番号
  */
 //-----------------------------------------------------------------------------
-FLD_TRADE_WORK* FLD_TRADE_WORK_Create( u32 heap_id, u32 trade_no )
+FLD_TRADE_WORK* FLD_TRADE_WORK_Create( u32 heap_id, u32 tradeNo )
 {
 	FLD_TRADE_WORK* work;
 	STRBUF* strbuf;
 	STRCODE str_arry[ 128 ];
 
-	GF_ASSERT( trade_no < FLD_TRADE_POKE_NUM );
+	GF_ASSERT( tradeNo < FLD_TRADE_POKE_NUM );
 	
 	work = GFL_HEAP_AllocClearMemory( heap_id, sizeof(FLD_TRADE_WORK) );
 	work->heapID   = heap_id;
-	work->trade_no = trade_no;
+	work->tradeNo = tradeNo;
 
 	// 交換データ読み込み
-  work->p_pokedata = GFL_ARC_LoadDataAllocOfs( ARCID_FLD_TRADE_POKE, trade_no, 
+  work->pokeData = GFL_ARC_LoadDataAllocOfs( ARCID_FLD_TRADE_POKE, tradeNo, 
                                                heap_id, 0, sizeof(FLD_TRADE_POKEDATA) );
   // 交換ポケモンデータ作成
-	work->p_pp = GFL_HEAP_AllocMemory( heap_id, sizeof(POKEMON_PARAM) );
+	work->pokeParam = GFL_HEAP_AllocMemory( heap_id, sizeof(POKEMON_PARAM) );
 
 	// 親データ作成
-	work->p_myste = MyStatus_AllocWork( heap_id );
-	MyStatus_Init( work->p_myste );
-	strbuf = GetTradeMsgData( heap_id, FLD_TRADE_GET_OYA_GMM( trade_no ) );
+	work->pokeOya = MyStatus_AllocWork( heap_id );
+	MyStatus_Init( work->pokeOya );
+	strbuf = GetTradeMsgData( heap_id, FLD_TRADE_GET_OYA_GMM( tradeNo ) );
 	GFL_STR_GetStringCode( strbuf, str_arry, 128 );
 	GFL_STR_DeleteBuffer( strbuf );
-	MyStatus_SetMyName( work->p_myste, str_arry );
-	MyStatus_SetMySex( work->p_myste, work->p_pokedata->oya_sex );
+	MyStatus_SetMyName( work->pokeOya, str_arry );
+	MyStatus_SetMySex( work->pokeOya, work->pokeData->oya_sex );
 	
 	return work;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	ワーク破棄
+ *	@brief ゲーム内交換ワークを破棄する
  *
  *	@param	work		
  */
 //-----------------------------------------------------------------------------
 void FLD_TRADE_WORK_Delete( FLD_TRADE_WORK* work )
 {
-	GFL_HEAP_FreeMemory( work->p_pokedata );
-	GFL_HEAP_FreeMemory( work->p_pp );
-	GFL_HEAP_FreeMemory( work->p_myste );
+	GFL_HEAP_FreeMemory( work->pokeData );
+	GFL_HEAP_FreeMemory( work->pokeParam );
+	GFL_HEAP_FreeMemory( work->pokeOya );
 	GFL_HEAP_FreeMemory( work );
 }
 
@@ -138,7 +137,7 @@ void FLD_TRADE_WORK_Delete( FLD_TRADE_WORK* work )
 //-----------------------------------------------------------------------------
 u32 FLD_TRADE_WORK_GetTradeMonsno( const FLD_TRADE_WORK* cwork )
 {
-	return cwork->p_pokedata->monsno;
+	return cwork->pokeData->monsno;
 }
 
 //----------------------------------------------------------------------------
@@ -152,7 +151,7 @@ u32 FLD_TRADE_WORK_GetTradeMonsno( const FLD_TRADE_WORK* cwork )
 //-----------------------------------------------------------------------------
 u32 FLD_TRADE_WORK_GetChangeMonsno( const FLD_TRADE_WORK* cwork )
 {
-	return cwork->p_pokedata->change_monsno;
+	return cwork->pokeData->change_monsno;
 }
 
 //----------------------------------------------------------------------------
@@ -167,7 +166,7 @@ u32 FLD_TRADE_WORK_GetChangeMonsno( const FLD_TRADE_WORK* cwork )
 //-----------------------------------------------------------------------------
 u32 FLD_TRADE_WORK_GetChangeMonsSex( const FLD_TRADE_WORK* cwork )
 {
-	return cwork->p_pokedata->change_monssex;
+	return cwork->pokeData->change_monssex;
 }
 
 //----------------------------------------------------------------------------
@@ -181,7 +180,7 @@ u32 FLD_TRADE_WORK_GetChangeMonsSex( const FLD_TRADE_WORK* cwork )
 //-----------------------------------------------------------------------------
 u32 FLD_TRADE_WORK_GetTradeMonsOyaSex( const FLD_TRADE_WORK* cwork )
 {
-	return cwork->p_pokedata->oya_sex;
+	return cwork->pokeData->oya_sex;
 }
 
 //----------------------------------------------------------------------------
@@ -210,12 +209,12 @@ static STRBUF* GetTradeMsgData( u32 heapID, u32 str_id )
  *	@param	heapID		heapID
  *	@param	pp		    ポケモンパラム
  *	@param	data		  データ
- *	@param	trade_no	tradeナンバー
+ *	@param	tradeNo	tradeナンバー
  */
 //-----------------------------------------------------------------------------
 static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID, 
                              POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data, 
-	                           u32 trade_no )
+	                           u32 tradeNo )
 {
 	STRBUF* strbuf;
 	u32 placeid; 
@@ -234,10 +233,12 @@ static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID,
   // フォーム
   PP_Put( pp, ID_PARA_form_no, data->formno );
 
+#ifdef DEBUG_MODE
   PP_Dump( pp );
+#endif
 
 	// ニックネーム
-	strbuf = GetTradeMsgData( heapID, FLD_TRADE_GET_POKE_GMM(trade_no) );
+	strbuf = GetTradeMsgData( heapID, FLD_TRADE_GET_POKE_GMM(tradeNo) );
 	PP_Put( pp, ID_PARA_nickname, (u32)strbuf );
 	GFL_STR_DeleteBuffer( strbuf );
 
@@ -250,7 +251,28 @@ static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID,
 	PP_Put( pp, ID_PARA_spedef_rnd, data->sd_rnd );
 
 	// 特性
-  PP_Put( pp, ID_PARA_speabino, data->speabino );
+  {
+    POKEMON_PERSONAL_DATA* ppd;
+    u32 sp1, sp2, sp3;
+    u32 tokusei;
+
+    ppd = POKE_PERSONAL_OpenHandle( data->monsno, data->formno, heapID );
+    sp1 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi1 );
+    sp2 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi2 );
+    sp3 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi3 );
+    POKE_PERSONAL_CloseHandle( ppd );
+
+    switch( data->tokusei_idx ) {
+    case 0: tokusei = sp1; break;
+    case 1: tokusei = sp2; break;
+    case 2: tokusei = sp3; break;
+    default: 
+      GF_ASSERT(0);
+      tokusei = sp1;
+      break;
+    } 
+    PP_Put( pp, ID_PARA_speabino, tokusei );
+  }
 
   // 性格
   PP_Put( pp, ID_PARA_seikaku, data->seikaku );
@@ -266,7 +288,7 @@ static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID,
 	PP_Put( pp, ID_PARA_item, data->item );
 
 	// 親の名前
-	strbuf = GetTradeMsgData( heapID, FLD_TRADE_GET_OYA_GMM(trade_no) );
+	strbuf = GetTradeMsgData( heapID, FLD_TRADE_GET_OYA_GMM(tradeNo) );
 	PP_Put( pp, ID_PARA_oyaname, (u32)strbuf );
 	GFL_STR_DeleteBuffer( strbuf );
 
@@ -284,42 +306,19 @@ static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID,
         pp, POKE_MEMO_GAME_TRADE, mystatus, POKE_MEMO_PLACE_GAME_TRADE, heapID );
   }
 
+#ifdef DEBUG_MODE
   PP_Dump( pp );
+#endif
 
 	// 計算しなおし
 	PP_Renew( pp );
 
 	// レアにならないようにデータ設定されていなかった場合NG
   GF_ASSERT( PP_CheckRare( pp ) == FALSE && "レアポケです。");
-
-  // 特性が種の持ち得ないものだったらNG
-  {
-    POKEMON_PERSONAL_DATA* ppd;
-    u32 monsno, formno;
-    u32 speabi;
-    u32 sp1, sp2, sp3;
-    monsno = PP_Get( pp, ID_PARA_monsno, NULL );
-    formno = PP_Get( pp, ID_PARA_form_no, NULL );
-    speabi = PP_Get( pp, ID_PARA_speabino, NULL );
-    ppd = POKE_PERSONAL_OpenHandle( monsno, formno, heapID );
-    sp1 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi1 );
-    sp2 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi2 );
-    sp3 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_speabi3 );
-    POKE_PERSONAL_CloseHandle( ppd );
-    // 不正な特性を検出
-    if( (speabi!=sp1)||(speabi!=sp2)||(speabi!=sp3) )
-    {
-      OBATA_Printf( "======================================\n" );
-      OBATA_Printf( "不正な特性を検出しました。\n" );
-      OBATA_Printf( "正しい特性は %d or %d or %d です。\n", sp1, sp2, sp3 );
-      OBATA_Printf( "交換ポケモンの特性を %d に設定します。\n", sp1 );
-      OBATA_Printf( "======================================\n" );
-      PP_Put( pp, ID_PARA_speabino, sp1 );
-    }
-  }
 } 
 
 
+#ifdef DEBUG_MODE
 static void PP_Dump( const POKEMON_PARAM* pp )
 {
   u32 val; 
@@ -331,7 +330,7 @@ static void PP_Dump( const POKEMON_PARAM* pp )
   val = PP_Get( pp, ID_PARA_id_no, NULL ); OBATA_Printf( "id_no = %d\n", val );
   val = PP_Get( pp, ID_PARA_exp, NULL ); OBATA_Printf( "exp = %d\n", val );
   val = PP_Get( pp, ID_PARA_friend, NULL ); OBATA_Printf( "friend = %d\n", val );
-  val = PP_Get( pp, ID_PARA_speabino, NULL ); OBATA_Printf( "speabino = %d\n", val );
+  val = PP_Get( pp, ID_PARA_speabino, NULL ); OBATA_Printf( "tokusei_idx = %d\n", val );
   val = PP_Get( pp, ID_PARA_sex, NULL ); OBATA_Printf( "sex = %d\n", val );
   val = PP_Get( pp, ID_PARA_seikaku, NULL ); OBATA_Printf( "seikaku = %d\n", val );
   val = PP_Get( pp, ID_PARA_mark, NULL ); OBATA_Printf( "mark = %d\n", val );
@@ -359,7 +358,9 @@ static void PP_Dump( const POKEMON_PARAM* pp )
   val = PP_Get( pp, ID_PARA_get_place, NULL ); OBATA_Printf( "get_place = %d\n", val );
   OBATA_Printf( "-------------------------------------------------\n" );
 }
+#endif
 
+#ifdef DEBUG_MODE
 static void FTP_Dump( const FLD_TRADE_POKEDATA* ftp )
 {
   OBATA_Printf( "--------------------------------------------- FTP\n" );
@@ -372,7 +373,7 @@ static void FTP_Dump( const FLD_TRADE_POKEDATA* ftp )
   OBATA_Printf( "sp_rnd = %d\n", ftp->sp_rnd );
   OBATA_Printf( "sa_rnd = %d\n", ftp->sa_rnd );
   OBATA_Printf( "sd_rnd = %d\n", ftp->sd_rnd );
-  OBATA_Printf( "speabino = %d\n", ftp->speabino );
+  OBATA_Printf( "tokusei_idx = %d\n", ftp->tokusei_idx );
   OBATA_Printf( "seikaku = %d\n", ftp->seikaku );
   OBATA_Printf( "sex = %d\n", ftp->sex );
   OBATA_Printf( "mons_id = %d\n", ftp->mons_id );
@@ -389,6 +390,7 @@ static void FTP_Dump( const FLD_TRADE_POKEDATA* ftp )
   OBATA_Printf( "change_monssex = %d\n", ftp->change_monssex );
   OBATA_Printf( "-------------------------------------------------\n" );
 }
+#endif
 
 
 //========================================================================================
@@ -436,10 +438,11 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
     // 交換ワーク生成
     work->tradeWork = FLD_TRADE_WORK_Create( HEAPID_PROC, work->tradeNo );
     SetPokemonParam( gameData, HEAPID_PROC, 
-        work->tradeWork->p_pp, work->tradeWork->p_pokedata, work->tradeNo );
-    // DEBUG:
-    PP_Dump( work->tradeWork->p_pp );
-    FTP_Dump( work->tradeWork->p_pokedata );
+        work->tradeWork->pokeParam, work->tradeWork->pokeData, work->tradeNo );
+#ifdef DEBUG_MODE
+    PP_Dump( work->tradeWork->pokeParam );
+    FTP_Dump( work->tradeWork->pokeData );
+#endif
     *seq = SEQ_TRADE;
     break;
 
@@ -451,8 +454,8 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
       work->tradeDemoParam.gamedata = gameData; 
       work->tradeDemoParam.pMy      = GAMEDATA_GetMyStatus( gameData );
       work->tradeDemoParam.pMyPoke  = pokeParam;
-      work->tradeDemoParam.pNPC     = work->tradeWork->p_myste;
-      work->tradeDemoParam.pNPCPoke = work->tradeWork->p_pp;
+      work->tradeDemoParam.pNPC     = work->tradeWork->pokeOya;
+      work->tradeDemoParam.pNPCPoke = work->tradeWork->pokeParam;
       demo = EVENT_FieldSubProc( gameSystem, fieldmap, 
           FS_OVERLAY_ID(pokemon_trade), &PokemonTradeDemoProcData, &work->tradeDemoParam );
       GMEVENT_CallEvent( event, demo );
@@ -463,12 +466,12 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
   // データ更新
   case SEQ_DATA_UPDATE:
     // 手持ちポケ上書き
-    PokeParty_SetMemberData( pokeParty, work->partyPos, work->tradeWork->p_pp );
+    PokeParty_SetMemberData( pokeParty, work->partyPos, work->tradeWork->pokeParam );
     // 図鑑登録
     {
       ZUKAN_SAVEDATA* zukan = GAMEDATA_GetZukanSave( gameData );
-      ZUKANSAVE_SetPokeSee( zukan, work->tradeWork->p_pp );  // 見た
-      ZUKANSAVE_SetPokeGet( zukan, work->tradeWork->p_pp );  // 捕まえた
+      ZUKANSAVE_SetPokeSee( zukan, work->tradeWork->pokeParam );  // 見た
+      ZUKANSAVE_SetPokeGet( zukan, work->tradeWork->pokeParam );  // 捕まえた
     }
     *seq = SEQ_EXIT;
     break;
@@ -531,13 +534,13 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
  * @brief ゲーム内交換イベントを生成する
  *
  * @param gsys ゲームシステム
- * @param trade_no  交換データNo.
+ * @param tradeNo  交換データNo.
  * @param party_pos 交換に出すポケモンの手持ちインデックス
  *
  * @return 生成したイベント
  */
 //----------------------------------------------------------------------------------------
-GMEVENT* EVENT_FieldPokeTrade( GAMESYS_WORK* gsys, u8 trade_no, u8 party_pos )
+GMEVENT* EVENT_FieldPokeTrade( GAMESYS_WORK* gsys, u8 tradeNo, u8 party_pos )
 {
   GMEVENT* event;
   FLD_TRADE_EVWORK* work;
@@ -555,7 +558,7 @@ GMEVENT* EVENT_FieldPokeTrade( GAMESYS_WORK* gsys, u8 trade_no, u8 party_pos )
   work->gameSystem = gsys;
   work->gameData = gameData;
   work->pokeParty = pokeParty;
-  work->tradeNo = trade_no;
+  work->tradeNo = tradeNo;
   work->partyPos = party_pos; 
   work->shinkaDemoParam = NULL;
   return event;

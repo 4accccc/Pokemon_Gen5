@@ -62,7 +62,7 @@ class OutputData
 		@ag_rnd        = 0  # 速さ乱数
 		@sa_rnd        = 0  # 特攻乱数
 		@sd_rnd        = 0  # 特防乱数
-		@tokusei       = 0  # 特殊能力
+		@tokusei_idx   = 0  # 特性 ( 何番目の特性か )
 		@seikaku       = 0  # 性格
 		@sex           = 0  # 性別
 		@id            = 0  # ID
@@ -86,7 +86,7 @@ class OutputData
                 :lavel_change_monsno, :lavel_change_sex,
                 :monsno, :formno, :level,
 		            :hp_rnd, :at_rnd, :df_rnd, :ag_rnd, :sa_rnd, :sd_rnd,
-                :tokusei, :seikaku, :sex, :id,
+                :tokusei_idx, :seikaku, :sex, :id,
                 :style, :beautiful, :cute, :clever, :strong,
                 :item, :oya_sex, :fur, :country, 
                 :change_monsno, :change_sex
@@ -107,7 +107,7 @@ class OutputData
     file.puts("AG_RND        = #{@ag_rnd}")
     file.puts("SA_RND        = #{@sa_rnd}")
     file.puts("SD_RND        = #{@sd_rnd}")
-    file.puts("TOKUSEI       = #{@tokusei}(#{@lavel_tokusei})")
+    file.puts("TOKUSEI       = #{@tokusei_idx}(#{@lavel_tokusei})")
     file.puts("SEIKAKU       = #{@seikaku}(#{@lavel_seikaku})")
     file.puts("SEX           = #{@sex}(#{@lavel_sex})")
     file.puts("ID            = #{@id}")
@@ -140,7 +140,7 @@ class OutputData
     data = Array::new
     data << @monsno << @formno << @level <<
             @hp_rnd << @at_rnd << @df_rnd << @ag_rnd << @sa_rnd << @sd_rnd <<
-            @tokusei << @seikaku << @sex << @id <<
+            @tokusei_idx << @seikaku << @sex << @id <<
             @style << @beautiful << @cute << @clever << @strong <<
             @item << @oya_sex << @fur << @country <<
             @change_monsno << @change_sex
@@ -314,6 +314,24 @@ def GetTokuseiVal( lavel )
 end
 
 #-----------------------------------------------------------
+# @brief 特性のインデックス番号を取得する
+# @param lavel ラベル名
+# @return 指定ラベル名の定義値
+#-----------------------------------------------------------
+def GetTokuseiIndex( lavel )
+  hash = Hash.new
+  hash[ "TOKUSEI_1" ] = 0
+  hash[ "TOKUSEI_2" ] = 1
+  hash[ "TOKUSEI_3" ] = 2
+
+  if hash.has_key?(lavel) == false then
+    abort( "特性(#{lavel})の指定が間違っています\n" )
+  end
+
+  return hash[ lavel ]
+end
+
+#-----------------------------------------------------------
 # @brief 性格の定義番号を取得する
 # @param lavel ラベル名
 # @return 指定ラベル名の定義値
@@ -392,7 +410,7 @@ column_idx.each do |idx|
   data.ag_rnd        = data.ag_rnd.to_i
   data.sa_rnd        = data.sa_rnd.to_i
   data.sd_rnd        = data.sd_rnd.to_i
-  data.tokusei       = GetTokuseiVal(data.lavel_tokusei)
+  data.tokusei_idx   = GetTokuseiIndex(data.lavel_tokusei)
   data.seikaku       = GetSeikakuVal(data.lavel_seikaku)
   data.sex           = GetSexVal(data.lavel_sex)
   data.id            = data.id.to_i
