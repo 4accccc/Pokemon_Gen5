@@ -10,6 +10,7 @@
 $h_se_default = {"---"=>"DEMO3D_SE_PARAM_DEFAULT"}
 $h_brightness_disp = {"main"=>"MASK_MAIN_DISPLAY","sub"=>"MASK_SUB_DISPLAY","double"=>"MASK_DOUBLE_DISPLAY"}
 $h_bgm_chg_type = {"play"=>"DEMO3D_BGM_PLAY","stop"=>"DEMO3D_BGM_STOP","change"=>"DEMO3D_BGM_CHANGE","push"=>"DEMO3D_BGM_PUSH","pop"=>"DEMO3D_BGM_POP"}
+$h_bgm_fade_type = {"fadein"=>"0","fadeout"=>"1"}
 
 #==============================================
 #プレフィックス・サフィックス定義
@@ -54,6 +55,13 @@ $prm_se_pitch_effect_req = [
   $_cmd_prm.new( -32768, 32767, nil, nil ), #エンド
   $_cmd_prm.new( 1, P_FREE, nil, nil ), #フレーム
   $_cmd_prm.new( 0, 3, $h_se_default, nil ), #プレイヤーNo
+] 
+$prm_bgm_play = [
+  $_cmd_prm.new( P_FREE, P_FREE, nil, nil ), #BGMラベル
+] 
+$prm_bgm_fade = [
+  $_cmd_prm.new( P_LIST, P_LIST, $h_bgm_fade_type, nil ), #type
+  $_cmd_prm.new( 1, 65535, nil, nil ), #fade_frame
 ] 
 $prm_bgm_change_req = [
   $_cmd_prm.new( P_FREE, P_FREE, nil, nil ), #BGMラベル
@@ -108,6 +116,9 @@ $cmd_tbl = [
   CDemo3DCmd::new( "SE_VOLUME_EFFECT_REQ", $prm_se_volume_effect_req),
   CDemo3DCmd::new( "SE_PAN_EFFECT_REQ", $prm_se_pan_effect_req),
   CDemo3DCmd::new( "SE_PITCH_EFFECT_REQ", $prm_se_pitch_effect_req),
+  CDemo3DCmd::new( "BGM_PLAY", $prm_bgm_play),
+  CDemo3DCmd::new( "BGM_STOP", nil ),
+  CDemo3DCmd::new( "BGM_FADE", $prm_bgm_fade),
   CDemo3DCmd::new( "BGM_CHANGE_REQ", $prm_bgm_change_req),
   CDemo3DCmd::new( "BRIGHTNESS_REQ", $prm_brightness_req),
   CDemo3DCmd::new( "FLASH_REQ", $prm_flash_req),

@@ -520,23 +520,10 @@ static void set_camera_disp_offset( DEMO3D_ENGINE_WORK* wk, GFL_G3D_CAMERA* p_ca
 //-----------------------------------------------------------------------------
 BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
 {
-  BOOL is_end;
+  BOOL is_end = FALSE;
 
 //  OS_Printf("frame=%f \n", FX_FX32_TO_F32(ICA_ANIME_GetNowFrame( wk->ica_anime )) );
 
-  // コマンド実行
-  if( wk->end_result == DEMO3D_RESULT_NULL){
-    Demo3D_CMD_Main( wk->cmd, ICA_ANIME_GetNowFrame( wk->ica_anime ) );
-  }else{
-    Demo3D_CMD_Main( wk->cmd, -FX32_ONE );
-  }
-
-  // ICAカメラ更新
-  is_end = ICA_ANIME_IncAnimeFrameNoLoop( wk->ica_anime, wk->anime_speed );
-
-  // ICAカメラ座標を設定
-  ICA_CAMERA_SetCameraStatus( wk->camera, wk->ica_anime );
-  
 #ifdef DEBUG_USE_KEY
   // アニメ再生切り替え
   if( CHECK_KEY_TRG( PAD_BUTTON_START ) )
@@ -553,10 +540,18 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
   }
 #endif
 
-  // 画面の表示位置をずらす
-  if( wk->is_double ){
-    set_camera_disp_offset( wk, wk->camera );
+  // コマンド実行
+  if( wk->end_result == DEMO3D_RESULT_NULL){
+    Demo3D_CMD_Main( wk->cmd, ICA_ANIME_GetNowFrame( wk->ica_anime ) );
+  }else{
+    Demo3D_CMD_Main( wk->cmd, -FX32_ONE );
   }
+
+  // ICAカメラ更新
+  is_end = ICA_ANIME_IncAnimeFrameNoLoop( wk->ica_anime, wk->anime_speed );
+
+  // ICAカメラ座標を設定
+  ICA_CAMERA_SetCameraStatus( wk->camera, wk->ica_anime );
 
   // アニメーション更新
 	{
@@ -571,6 +566,11 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
         GFL_G3D_OBJECT_LoopAnimeFrame( obj, j, wk->anime_speed );
       }
     }
+  }
+
+  // 画面の表示位置をずらす
+  if( wk->is_double ){
+    set_camera_disp_offset( wk, wk->camera );
   }
 
   // カメラ切り替え

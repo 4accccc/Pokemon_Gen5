@@ -50,7 +50,10 @@ static void DEMOCMD_SeStop(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* p
 static void DEMOCMD_SeVolumeEffectReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_SePanEffectReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_SePitchEffectReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
-static void DEMOCMD_BGMChangeReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
+static void DEMOCMD_BgmPlay(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
+static void DEMOCMD_BgmStop(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
+static void DEMOCMD_BgmFade(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
+static void DEMOCMD_BgmChangeReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_BrightnessReq(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_FlashReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_LightColorSet(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
@@ -74,7 +77,10 @@ void (*DATA_Demo3D_CmdTable[ DEMO3D_CMD_TYPE_MAX ])() =
   DEMOCMD_SeVolumeEffectReq,
   DEMOCMD_SePanEffectReq,
   DEMOCMD_SePitchEffectReq,
-  DEMOCMD_BGMChangeReq,
+  DEMOCMD_BgmPlay,
+  DEMOCMD_BgmStop,
+  DEMOCMD_BgmFade,
+  DEMOCMD_BgmChangeReq,
   DEMOCMD_BrightnessReq,
   DEMOCMD_FlashReq,
   DEMOCMD_LightColorSet,
@@ -286,6 +292,51 @@ static void sub_SetSeEffect( DEMO3D_SE_EFFECT type, u8 playerNo, int value )
 }
 
 //===================================================================================
+///BGM設定
+//===================================================================================
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  BGM再生 
+ *
+ *	@param	param[0] BGM_Label
+ */
+//-----------------------------------------------------------------------------
+static void DEMOCMD_BgmPlay(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
+{
+  PMSND_PlayBGM( param[0] );
+}
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  BGMストップ
+ *
+ *	@param  none	
+ */
+//-----------------------------------------------------------------------------
+static void DEMOCMD_BgmStop(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
+{
+  PMSND_StopBGM();
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  BGMフェード
+ *
+ *	@param  param[0]	フェードパターン(0:fadein,1:fadeout) 
+ *  @param  param[1]  何frameでフェードするか？
+ */
+//-----------------------------------------------------------------------------
+static void DEMOCMD_BgmFade(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
+{
+  int frame = sub_ConvFrame( wk, param[1] );
+
+  if(param[0] == 0){
+    PMSND_FadeInBGM( frame );
+  }else{
+    PMSND_FadeOutBGM( frame );
+  }
+}
+
+//===================================================================================
 ///BGM変更リクエスト
 //===================================================================================
 typedef struct _TASKWK_BGM_CHANGE_REQ{
@@ -302,8 +353,8 @@ typedef struct _TASKWK_BGM_CHANGE_REQ{
 
 }TASKWK_BGM_CHANGE_REQ;
 
-static void taskAdd_BGMChangeReq( DEMO3D_CMD_WORK* wk, int bgm_no, int fadeout_frame, int fadein_frame, int push_pop );
-static void tcb_BGMChangeReq( GFL_TCBL *tcb , void* work);
+static void taskAdd_BgmChangeReq( DEMO3D_CMD_WORK* wk, int bgm_no, int fadeout_frame, int fadein_frame, int push_pop );
+static void tcb_BgmChangeReq( GFL_TCBL *tcb , void* work);
 
 //-----------------------------------------------------------------------------
 /**
@@ -317,7 +368,7 @@ static void tcb_BGMChangeReq( GFL_TCBL *tcb , void* work);
  *  typeはDEMO3D_BGM_CHG_TYPE型(demo3d_cmd_def.h)
  */
 //-----------------------------------------------------------------------------
-static void DEMOCMD_BGMChangeReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
+static void DEMOCMD_BgmChangeReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
 {
   int bgm_no = param[0];
   int fadeout_frame = sub_ConvFrame(wk,param[1]);
@@ -328,16 +379,16 @@ static void DEMOCMD_BGMChangeReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, i
     PMSND_PlayBGM( bgm_no );
     PMSND_FadeInBGM( fadein_frame );
   }else{
-    taskAdd_BGMChangeReq( wk, bgm_no, fadeout_frame, fadein_frame, type );
+    taskAdd_BgmChangeReq( wk, bgm_no, fadeout_frame, fadein_frame, type );
   }
 }
 
-static void taskAdd_BGMChangeReq( DEMO3D_CMD_WORK* wk, int bgm_no, int fadeout_frame, int fadein_frame, int type )
+static void taskAdd_BgmChangeReq( DEMO3D_CMD_WORK* wk, int bgm_no, int fadeout_frame, int fadein_frame, int type )
 {
   GFL_TCBL* tcb;
   TASKWK_BGM_CHANGE_REQ* twk;
 
-  tcb = GFL_TCBL_Create( wk->tcbsys, tcb_BGMChangeReq, sizeof(TASKWK_BGM_CHANGE_REQ), 0 );
+  tcb = GFL_TCBL_Create( wk->tcbsys, tcb_BgmChangeReq, sizeof(TASKWK_BGM_CHANGE_REQ), 0 );
 
   twk = GFL_TCBL_GetWork(tcb);
   MI_CpuClear8( twk, sizeof( TASKWK_BGM_CHANGE_REQ ));
@@ -358,7 +409,7 @@ static void taskAdd_BGMChangeReq( DEMO3D_CMD_WORK* wk, int bgm_no, int fadeout_f
   }
 }
 
-static void tcb_BGMChangeReq( GFL_TCBL *tcb , void* tcb_wk)
+static void tcb_BgmChangeReq( GFL_TCBL *tcb , void* tcb_wk)
 {
   TASKWK_BGM_CHANGE_REQ* twk = (TASKWK_BGM_CHANGE_REQ*)tcb_wk;
 

@@ -167,23 +167,7 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
 {
   DEMO3D_MAIN_WORK *wk;
   DEMO3D_PARAM *param = pwk;
-#if 0
-  GAME_COMM_SYS_PTR* gcsp = GAMESYSTEM_GetGameCommSysPtr(param->gsys);
-  switch(*seq){
-  case 0:
-    if( GameCommSys_BootCheck() == GAME_COMM_NO_NULL ){
-      break;
-    }
-    GameCommSys_ExitReq(GAME_COMM_SYS_PTR gcsp);
-    (*seq) += 1;
-    return GFL_PROC_RES_CONTINUE;
-  case 1:
-    if(GameCommSys_BootCheck(gcsp) != GAME_COMM_NO_NULL){
-      return GFL_PROC_RES_CONTINUE;
-    }
-    break;
-  }
-#endif  
+  
   //オーバーレイ読み込み
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
 
@@ -255,21 +239,6 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
 { 
   DEMO3D_MAIN_WORK* wk = mywk;
  
-#if 0
-  switch( *seq ){
-  case 0:
-    // フェードアウト リクエスト
-    (*seq) = 1+sub_FadeInOutReq( wk->param->demo_id, WIPE_TYPE_FADEOUT, wk->heapID );
-    return GFL_PROC_RES_CONTINUE;
-  case 1:
-    if( WIPE_SYS_EndCheck() == FALSE ){
-      return GFL_PROC_RES_CONTINUE;
-    }
-    break;
-  default:
-    break;
-  }
-#endif
   // 例外処理エンジン 終了処理
   APP_EXCEPTION_Delete( wk->expection );
 
@@ -316,14 +285,6 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
   DEMO3D_MAIN_WORK* wk = mywk;
   BOOL is_end;
 
-#if 0 
-  // フェード中は処理しない
-  if( WIPE_SYS_EndCheck() == FALSE ){
-  {
-    return GFL_PROC_RES_CONTINUE;
-  }
-#endif
-
   // 例外処理エンジン 主処理
   APP_EXCEPTION_Main( wk->expection );
 
@@ -349,6 +310,7 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
     }
   }
 #endif
+
   switch( *seq ){
   case 0:
     // ループ検出かキー終了有効の時にはキーでも終了
@@ -357,18 +319,20 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
       wk->param->end_frame  = DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT; 
       wk->param->result     = DEMO3D_RESULT_USER_END + is_end;
       DEMO3D_ENGINE_SetEndResult( wk->engine, wk->param->result );
+      
+      #ifdef PM_DEBUG
+        OS_TPrintf("# Demo3D EndFrame = [%d] 処理落ちフレーム数 [%d]!!\n",wk->param->end_frame, vCountDelay);
+      #endif
     
       // フェードアウト リクエスト
       if( sub_FadeInOutReq( wk->param->demo_id, WIPE_TYPE_FADEOUT, wk->heapID )){
         return GFL_PROC_RES_FINISH;
       }
-#ifdef PM_DEBUG
-      OS_TPrintf("#Demo3D 処理落ちフレーム数 [%d]!!\n",vCountDelay);
-#endif
       (*seq)++;
     }
     break;
   case 1:
+    OS_TPrintf("# Demo3D EndOutFrame = [%d] \n",DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT );
     if( WIPE_SYS_EndCheck() == TRUE ){
       return GFL_PROC_RES_FINISH;
     }

@@ -40,6 +40,14 @@
 //======================================================================================
 // ■イベントワーク
 //======================================================================================
+typedef struct _SCENE_TABLE{
+  u16 demo_id:4;  
+  u16 scene_id:4;  
+  u16 bgm_change:1;
+  u16 fadeout_type:1;
+  u16 fadein_type:1;
+}SCENE_TABLE;
+
 typedef struct
 {
   HEAPID           heapID;
@@ -50,38 +58,36 @@ typedef struct
   FLDMENUFUNC*   menuFunc;
   DEMO3D_PARAM   param;
 
-  int            demo_id;
-  int            scene_id;
+  const SCENE_TABLE*   scene;
 } EVENT_WORK;
 
-typedef struct _SCENE_TABLE{
-  u8  demo_id:4;  
-  u8  scene_id:4;  
-}SCENE_TABLE;
+
+#define FADE_BLACK  (0)
+#define FADE_WHITE  (1)
 
 static const SCENE_TABLE DATA_SceneTable[] = {
-  { DEMO3D_ID_C_CRUISER, 0 },       //1
-  { DEMO3D_ID_C_CRUISER_PORT, 0 },  //2
-	{ DEMO3D_ID_G_SHIP_PORT, 0 },     //3
-	{ DEMO3D_ID_INTRO_TOWN, 0 },      //4
-	{ DEMO3D_ID_N_CASTLE, 0 },        //5
-	{ DEMO3D_ID_N_LEGEND_BORN_B, 0 }, //6
-	{ DEMO3D_ID_N_LEGEND_BORN_W, 0 }, //7
-	{ DEMO3D_ID_N_LEGEND_COME_B, 0 }, //8
-	{ DEMO3D_ID_N_LEGEND_COME_W, 0 }, //9
-	{ DEMO3D_ID_N_LEGEND_MEAT_B, 0 }, //10
-	{ DEMO3D_ID_N_LEGEND_MEAT_W, 0 }, //11
-	{ DEMO3D_ID_RIZA_BRIDGE, 0 },     //12
-	{ DEMO3D_ID_V_BOAT_PORT, 0 },     //13
-	{ DEMO3D_ID_F_WHEEL, 0 },         //14
-	{ DEMO3D_ID_F_WHEEL, 1 },         //15
-	{ DEMO3D_ID_F_WHEEL, 2 },         //16
-	{ DEMO3D_ID_F_WHEEL, 3 },         //17
-	{ DEMO3D_ID_F_WHEEL, 4 },         //18
-	{ DEMO3D_ID_F_WHEEL, 5 },         //19
-	{ DEMO3D_ID_F_WHEEL, 6 },         //20
-	{ DEMO3D_ID_F_WHEEL, 7 },         //21
-	{ DEMO3D_ID_F_WHEEL, 8 },         //22
+  { DEMO3D_ID_C_CRUISER, 0, FALSE, FADE_BLACK, FADE_BLACK,   },       //1
+  { DEMO3D_ID_C_CRUISER_PORT, 0, FALSE, FADE_BLACK, FADE_BLACK,   },  //2
+	{ DEMO3D_ID_G_SHIP_PORT, 0, FALSE, FADE_BLACK, FADE_BLACK,   },     //3
+	{ DEMO3D_ID_INTRO_TOWN, 0, TRUE, FADE_WHITE, FADE_WHITE },          //4
+	{ DEMO3D_ID_N_CASTLE, 0, TRUE, FADE_BLACK, FADE_BLACK,   },         //5
+	{ DEMO3D_ID_N_LEGEND_BORN_B, 0, TRUE, FADE_BLACK, FADE_BLACK,   },  //6
+	{ DEMO3D_ID_N_LEGEND_BORN_W, 0, TRUE, FADE_BLACK, FADE_BLACK,   },  //7
+	{ DEMO3D_ID_N_LEGEND_COME_B, 0, TRUE, FADE_BLACK, FADE_BLACK,   },  //8
+	{ DEMO3D_ID_N_LEGEND_COME_W, 0, TRUE, FADE_BLACK, FADE_BLACK,   },  //9
+	{ DEMO3D_ID_N_LEGEND_MEAT_B, 0, FALSE, FADE_BLACK, FADE_BLACK,   }, //10
+	{ DEMO3D_ID_N_LEGEND_MEAT_W, 0, FALSE, FADE_BLACK, FADE_BLACK,   }, //11
+	{ DEMO3D_ID_RIZA_BRIDGE, 0, FALSE, FADE_BLACK, FADE_BLACK,   },     //12
+	{ DEMO3D_ID_V_BOAT_PORT, 0, FALSE, FADE_BLACK, FADE_BLACK,   },     //13
+	{ DEMO3D_ID_F_WHEEL, 0, FALSE, FADE_BLACK, FADE_BLACK,   },         //14
+	{ DEMO3D_ID_F_WHEEL, 1, FALSE, FADE_BLACK, FADE_BLACK,   },         //15
+	{ DEMO3D_ID_F_WHEEL, 2, FALSE, FADE_BLACK, FADE_BLACK,   },         //16
+	{ DEMO3D_ID_F_WHEEL, 3, FALSE, FADE_BLACK, FADE_BLACK,   },         //17
+	{ DEMO3D_ID_F_WHEEL, 4, FALSE, FADE_BLACK, FADE_BLACK,   },         //18
+	{ DEMO3D_ID_F_WHEEL, 5, FALSE, FADE_BLACK, FADE_BLACK,   },         //19
+	{ DEMO3D_ID_F_WHEEL, 6, FALSE, FADE_BLACK, FADE_BLACK,   },         //20
+	{ DEMO3D_ID_F_WHEEL, 7, FALSE, FADE_BLACK, FADE_BLACK,   },         //21
+	{ DEMO3D_ID_F_WHEEL, 8, FALSE, FADE_BLACK, FADE_BLACK,   },         //22
 };
 
 #define DEMO_SCENE_MAX  (NELEMS(DATA_SceneTable))
@@ -212,8 +218,7 @@ static GMEVENT_RESULT debugMenuDemo3DSelectEvent( GMEVENT *event, int *seq, void
       if( ret == FLDMENUFUNC_CANCEL ){ //キャンセル
         return( GMEVENT_RES_FINISH );
       }
-      work->demo_id = DATA_SceneTable[ret].demo_id; 
-      work->scene_id = DATA_SceneTable[ret].scene_id; 
+      work->scene = &DATA_SceneTable[ret]; 
       if( GameCommSys_BootCheck( work->gcsp ) == GAME_COMM_NO_NULL ){
         (*seq) += 2;
       }else{
@@ -228,16 +233,42 @@ static GMEVENT_RESULT debugMenuDemo3DSelectEvent( GMEVENT *event, int *seq, void
     }
     break;
   case 3:
-     DEMO3D_PARAM_SetFromRTC( &work->param, work->gsys, work->demo_id, work->scene_id );
-     GMEVENT_CallEvent( event, EVENT_FieldSubProc( work->gsys, work->fieldmap,
-        FS_OVERLAY_ID(demo3d), &Demo3DProcData, &work->param ) );
-     (*seq)++;
-    break;
+    // フェードアウト
+    if( work->scene->fadeout_type == FADE_BLACK ){
+      GMEVENT_CallEvent(event, EVENT_FieldFadeOut_Black( work->gsys, work->fieldmap, FIELD_FADE_WAIT));
+    }else{
+      GMEVENT_CallEvent(event, EVENT_FieldFadeOut_White( work->gsys, work->fieldmap, FIELD_FADE_WAIT));
+    }
+    if( work->scene->bgm_change ){
+      PMSND_FadeOutBGM(PMSND_FADE_FAST);
+    }
+		(*seq) ++;
+		break;
   case 4:
+    if( work->scene->bgm_change ){
+      PMSND_PushBGM();
+    }
+    DEMO3D_PARAM_SetFromRTC( &work->param, work->gsys, work->scene->demo_id, work->scene->scene_id );
+    GMEVENT_CallEvent( event, EVENT_FieldSubProcNoFade( work->gsys, work->fieldmap,
+        FS_OVERLAY_ID(demo3d), &Demo3DProcData, &work->param ) );
+		(*seq) ++;
+		break;
+	case 5:
+    if( work->scene->bgm_change ){
+      PMSND_PopBGM();
+      PMSND_FadeInBGM(PMSND_FADE_NORMAL);
+    }
+    if( work->scene->fadein_type == FADE_BLACK ){
+      GMEVENT_CallEvent(event, EVENT_FieldFadeIn_Black( work->gsys, work->fieldmap, FIELD_FADE_WAIT));
+    }else{
+      GMEVENT_CallEvent(event, EVENT_FieldFadeIn_White( work->gsys, work->fieldmap, FIELD_FADE_WAIT));
+    }
+		(*seq) ++;
+    break;
+  case 6:
     (*seq) = 0;
     break;
   }
-
   return ( GMEVENT_RES_CONTINUE );
 }
 
