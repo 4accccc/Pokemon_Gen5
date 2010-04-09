@@ -1086,6 +1086,17 @@ static void setupBagItem( GAMEDATA* gameData, HEAPID heapID )
   MYITEM_AddItem( myItem, ITEM_PIIPIIRIKABAA,   99, heapID );
   MYITEM_AddItem( myItem, ITEM_PIIPIIEIDAA,   99, heapID );
   MYITEM_AddItem( myItem, ITEM_PIIPIIMAKKUSU,   99, heapID );
+  MYITEM_AddItem( myItem, ITEM_YOKUATAARU,   99, heapID );
+  MYITEM_AddItem( myItem, ITEM_KURITHIKATTO,   99, heapID );
+  MYITEM_AddItem( myItem, ITEM_EFEKUTOGAADO, 99, heapID );
+  MYITEM_AddItem( myItem, ITEM_PURASUPAWAA, 99, heapID );
+  MYITEM_AddItem( myItem, ITEM_DHIFENDAA, 99, heapID );
+  MYITEM_AddItem( myItem, ITEM_SUPIIDAA, 99, heapID );
+  MYITEM_AddItem( myItem, ITEM_SUPESYARUAPPU, 99, heapID );
+  MYITEM_AddItem( myItem, ITEM_SUPESYARUGAADO, 99, heapID );
+  MYITEM_AddItem( myItem, ITEM_PIPPININGYOU, 99, heapID );
+  MYITEM_AddItem( myItem, ITEM_ENEKONOSIPPO, 99, heapID );
+
 }
 
 //----------------------------------------------------------------------------------
