@@ -16,11 +16,9 @@
 
 #include "arc/arc_def.h"
 #include "arc/fieldmap/gmk_d12.naix"
-#include "gmk_tmp_wk.h"
 #include "field_gimmick_d12_sv.h"
 
 #define EXPOBJ_UNIT_IDX (0)
-//#define ARCID (ARCID_H01_GIMMICK) // ギミックデータのアーカイブID
 
 #define OBJ_NUM (1)
 
@@ -131,24 +129,3 @@ void D12_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   //アニメーション再生
   FLD_EXP_OBJ_PlayAnime( exobj_cnt );
 }
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief ギミックを非表示にする
- *
- * @param fieldmap ギミック動作フィールドマップ
- */
-//------------------------------------------------------------------------------------------
-void D12_GIMMICK_Vanish( FIELDMAP_WORK* fieldmap )
-{
-  D12_SV_WORK *gmk_sv_work;
-  {
-    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldmap ) );
-    GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
-    gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_D12 );
-  }
-
-  gmk_sv_work->Vanish = TRUE;
-
-}
-

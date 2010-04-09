@@ -445,7 +445,10 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_sppoke.c \
         field/evt_lock.c \
         app/name_input/namein_setup.c \
-        field/event_bsubway.c
+        field/event_bsubway.c \
+        field/scrcmd_d12_gmk.c \
+        field/field_gimmick_d12_st.c
+
 
 # wifiƒvƒƒOƒ‰ƒ€
 #===> SRCS_OVERLAY_DEV_WIFILIB

@@ -1015,6 +1015,13 @@
   NO_CMD()
   NO_CMD()
 
+  //D12ギミック制御
+  DEF_CMD( EvCmdD12Gmk_Vanish, EV_SEQ_D12_GMK_VANISH )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+
   END_CMD
 
   //スクリプトコマンドテーブル終了
