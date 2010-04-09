@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-04-07T22:27:22" source="machine_l02.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-04-08T23:56:17" source="machine_l02.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,12 +11,12 @@
 <body>
 
 <tex_srt_info
-	frame_size="82"
-	tool_start_frame="0"
-	tool_end_frame="81"
+	frame_size="60"
+	tool_start_frame="1"
+	tool_end_frame="60"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="on" material_size="3 3"
+	compress_material="on" material_size="6 6"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
@@ -31,25 +31,30 @@
 	0.000000
 </tex_rotate_data>
 
-<tex_translate_data size="83">
-	0.000000 0.000000 0.012451 0.025146 0.037842 0.050781 0.063965 0.077148 0.090576 0.104004
-	0.117676 0.131348 0.145264 0.159180 0.173340 0.187500 0.201904 0.216064 0.230469 0.245117
-	0.259521 0.274170 0.288818 0.303467 0.318359 0.333008 0.347900 0.362549 0.377441 0.392090
-	0.406982 0.421631 0.436523 0.451172 0.465820 0.480469 0.495117 0.509766 0.524170 0.538574
-	0.552979 0.567139 0.581299 0.595459 0.609375 0.623291 0.637207 0.650635 0.664307 0.677734
-	0.690918 0.703857 0.716797 0.729736 0.742188 0.754639 0.766846 0.779053 0.791016 0.802490
-	0.813965 0.825195 0.836182 0.847168 0.857666 0.867920 0.877930 0.887939 0.897461 0.906738
-	0.915771 0.924316 0.932861 0.940918 0.948730 0.956299 0.963623 0.970459 0.977051 0.983154
-	0.989258 0.994629 0.999756
+<tex_translate_data size="61">
+	0.000000 0.016846 0.034180 0.051758 0.069580 0.087891 0.106201 0.125000 0.144043 0.163330
+	0.182861 0.202637 0.222412 0.242432 0.262451 0.282715 0.303223 0.323486 0.343994 0.364502
+	0.385254 0.405762 0.426270 0.446777 0.467041 0.487549 0.507813 0.527832 0.547852 0.567627
+	0.587402 0.606934 0.626221 0.645264 0.664063 0.682373 0.700684 0.718506 0.736084 0.753418
+	0.770264 0.786621 0.802734 0.818359 0.833496 0.848389 0.862549 0.876221 0.889404 0.902100
+	0.914307 0.925781 0.936768 0.947021 0.956543 0.965576 0.973877 0.981445 0.988281 0.994385
+	0.999756
 </tex_translate_data>
 
-<tex_srt_anm_array size="1">
+<tex_srt_anm_array size="2">
 	<tex_srt_anm index="0" material_name="lambert6">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="82" data_head="1"/>
+		<tex_translate_t frame_step="1" data_size="60" data_head="1"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="1" material_name="pasted__lambert6">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="60" data_head="1"/>
 	</tex_srt_anm>
 </tex_srt_anm_array>
 
