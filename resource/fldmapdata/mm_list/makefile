@@ -6,7 +6,7 @@
 #	@author	tamada GAME FREAK inc.
 #
 #----------------------------------------------------------------------------
-USERS = kagaya lee_hyunjung takahashi
+USERS = kagaya lee_hyunjung takahashi saitou
 include $(PROJECT_RSCDIR)/macro_define
 
 #----------------------------------------------------------------------------
