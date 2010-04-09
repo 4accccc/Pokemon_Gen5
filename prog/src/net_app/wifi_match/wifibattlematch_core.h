@@ -68,7 +68,6 @@ typedef struct
   WIFIBATTLEMATCH_CORE_RESULT result;       //[out]終了コード
   WIFIBATTLEMATCH_PARAM       *p_param;     //[in ]外部引数
   WIFIBATTLEMATCH_CORE_MODE   mode;         //[in ]起動モード
-  BtlResult                   btl_result;   //[in ]バトル結果
   RNDMATCH_DATA               *p_rndmatch;  //[in ]セーブデータ
 
   //以下、[in ]常駐データ置き場
@@ -78,6 +77,7 @@ typedef struct
   u32                         *p_server_time;
   WIFIBATTLEMATCH_RECORD_DATA *p_record_data;
   WIFIBATTLEMATCH_RECV_DATA   *p_recv_data;
+  const BATTLEMATCH_BATTLE_SCORE  *cp_btl_score;
 } WIFIBATTLEMATCH_CORE_PARAM;
 
 //=============================================================================

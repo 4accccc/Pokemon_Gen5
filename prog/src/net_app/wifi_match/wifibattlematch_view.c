@@ -2233,6 +2233,8 @@ MATCHINFO_WORK * MATCHINFO_Init( const WIFIBATTLEMATCH_ENEMYDATA *cp_data, GFL_C
 	GFL_STD_MemClear( p_wk, sizeof(MATCHINFO_WORK) );
   p_wk->is_rate = is_rate;
 	p_wk->p_pms	= PMS_DRAW_Init( p_unit, CLSYS_DRAW_MAIN, p_que, p_font, MATCHINFO_PLT_OBJ_PMS, 1, heapID );
+  PMS_DRAW_SetCLWKAutoScrollFlag( p_wk->p_pms, TRUE );
+
   PMS_DRAW_SetNullColorPallet( p_wk->p_pms, 0 );
 	
   rank = CalcRank( cp_data->btl_cnt, cp_data->win_cnt, cp_data->lose_cnt );

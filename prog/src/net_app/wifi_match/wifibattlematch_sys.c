@@ -94,10 +94,6 @@ typedef struct
   //大会モード
   WIFIBATTLEMATCH_TYPE        type;
 
-  //バトルの結果
-  BtlResult                   btl_result;
-  BtlRule                     btl_rule;
-
   //以下PROCのつなぎのために記憶しておくもの
   WIFIBATTLEMATCH_CORE_MODE   core_mode;
 
@@ -539,7 +535,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 				*p_seq	= WBM_SYS_SEQ_EXIT;
 			}
 
-      //SAKEサーバーへのアクセス時間をカウントする
+      //SAKEサーバーへのアクセス時間をカウンダウン
       if( p_wk->server_time > 0 )
       { 
         p_wk->server_time--;
@@ -711,13 +707,13 @@ static void *WBM_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID,
 	p_param->p_param	      = &p_wk->param;
   p_param->mode           = p_wk->core_mode;
   p_param->retmode        = p_wk->type - WIFIBATTLEMATCH_TYPE_RNDRATE;
-  p_param->btl_result     = p_wk->btl_result;
   p_param->p_player_data  = p_wk->p_player_data;
   p_param->p_enemy_data   = p_wk->p_enemy_data;
   p_param->p_svl_result   = &p_wk->svl_result;
   p_param->p_server_time  = &p_wk->server_time;
   p_param->p_record_data  = &p_wk->record_data;
   p_param->p_recv_data    = &p_wk->recv_data;
+  p_param->cp_btl_score   = &p_wk->btl_score;
   { 
     BATTLEMATCH_DATA  *p_btlmatch_sv  = SaveData_GetBattleMatch( GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data ) );
     p_param->p_rndmatch     =  BATTLEMATCH_GetRndMatch( p_btlmatch_sv );
@@ -1189,9 +1185,9 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
   WIFIBATTLEMATCH_BATTLELINK_RESULT result  = p_param->result;
 
   //受け取り
-  p_wk->btl_result  = p_btl_param->result;
-  p_wk->btl_rule  = p_btl_param->rule;
-
+  p_wk->btl_score.rule  = p_btl_param->rule;
+  p_wk->btl_score.result  = p_btl_param->result;
+  p_wk->btl_score.is_dirty  = p_btl_param->cmdIllegalFlag;
   p_wk->btl_score.result  = p_btl_param->result;
   { 
     int i;
@@ -1216,7 +1212,7 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
     p_wk->btl_score.enemy_rest_hp   = 100 * now_hp_all / max_hp_all;
   }
 
-  OS_FPrintf( 3, "バトル結果 %d \n", p_wk->btl_result);
+  OS_FPrintf( 3, "バトル結果 %d \n", p_wk->btl_score.result);
 
   //録画情報にバトル情報を設定
   BattleRec_LoadToolModule();
@@ -1623,7 +1619,7 @@ static BOOL RECPLAY_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adr
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
 
   BTL_SETUP_QuitForRecordPlay( p_param );
-  BATTLE_PARAM_Release( p_param );
+  GFL_HEAP_FreeMemory( p_param->playerStatus[ BTL_CLIENT_PLAYER ] );  //プレイヤーのMySatusは開放されないので
   GFL_HEAP_FreeMemory( p_param );
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );

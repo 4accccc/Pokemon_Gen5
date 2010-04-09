@@ -102,6 +102,10 @@ static const char* scp_stat_record_data_tbl[] =
 //=====================================
 typedef enum 
 {
+  WIFIBATTLEMATCH_SC_SEQ_SEND_TIMING_INIT,
+  WIFIBATTLEMATCH_SC_SEQ_SEND_TIMING_WAIT,
+  WIFIBATTLEMATCH_SC_SEQ_SEND_INIT,
+  WIFIBATTLEMATCH_SC_SEQ_SEND_WAIT,
   WIFIBATTLEMATCH_SC_SEQ_INIT,
   WIFIBATTLEMATCH_SC_SEQ_LOGIN,
   WIFIBATTLEMATCH_SC_SEQ_SESSION_START,
@@ -143,6 +147,8 @@ typedef enum
 #define WIFIBATTLEMATCH_SC_SEND_PLAYERDATA_TIMING     (1)
 #define WIFIBATTLEMATCH_SC_RETURN_PLAYERDATA_TIMING   (2)
 #define WIFIBATTLEMATCH_SC_REPORT_TIMING              (3)
+#define WIFIBATTLEMATCH_SC_DIRTY_TIMING               (4)
+#define WIFIBATTLEMATCH_NET_TIMINGSYNC_CONNECT        15
 
 //-------------------------------------
 ///	その他
@@ -174,7 +180,6 @@ typedef enum
 } MATCHMAKE_KEY;
 
 //マッチメイクタイミングシンク
-#define WIFIBATTLEMATCH_NET_TIMINGSYNC_CONNECT  15
 
 //マッチメイク評価計算式の定数
 #define MATCHMAKE_EVAL_CALC_RATE_STANDARD       (1000)
@@ -191,6 +196,7 @@ typedef enum
   WIFIBATTLEMATCH_NET_RECVFLAG_CANCELREQUEST,
   WIFIBATTLEMATCH_NET_RECVFLAG_POKEPARTY,
   WIFIBATTLEMATCH_NET_RECVFLAG_DIRTYCNT,
+  WIFIBATTLEMATCH_NET_RECVFLAG_FLAG,
   WIFIBATTLEMATCH_NET_RECVFLAG_MAX
 } WIFIBATTLEMATCH_NET_RECVFLAG;
 
@@ -226,6 +232,7 @@ typedef struct
 {
   WIFIBATTLEMATCH_BTLRULE   btl_rule;
   BtlResult btl_result;
+  u32      is_dirty;
 } DWC_SC_WRITE_DATA;
 //SCのリポート作成コア関数
 typedef DWCScResult (*DWCRAP_SC_CREATE_REPORT_CORE_FUNC)( DWC_SC_PLAYERDATA *p_my, const DWC_SC_WRITE_DATA *cp_data, BOOL is_my );
@@ -285,6 +292,7 @@ struct _WIFIBATTLEMATCH_NET_WORK
   u32   next_seq;
   u32   wait_cnt;
   BOOL  is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_MAX];
+  u32   recv_flag;
   
   //SC
   DWC_SC_PLAYERDATA player[2];  //自分は０ 相手は１
@@ -377,6 +385,7 @@ static u8* WifiBattleMatch_RecvBuffAddr(int netID, void* p_wk_adrs, int size);
 static void WifiBattleMatch_RecvMatchCancel(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
 static void WifiBattleMatch_RecvPokeParty(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
 static void WifiBattleMatch_RecvDirtyCnt(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
+static void WifiBattleMatch_RecvFlag(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle);
 
 //-------------------------------------
 ///	SC関係
@@ -387,7 +396,7 @@ static void DwcRap_Sc_SetReportIntentionCallback( DWCScResult theResult, void* t
 static void DwcRap_Sc_SubmitReportCallback( DWCScResult theResult, void* theUserData );
 //private
 static void DwcRap_Sc_Finalize( WIFIBATTLEMATCH_NET_WORK *p_wk );
-static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYERDATA *p_other, const DWC_SC_WRITE_DATA *cp_data, BOOL is_auth, DWCRAP_SC_CREATE_REPORT_CORE_FUNC SC_CreateReportCoreFunc );
+static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYERDATA *p_other, const DWC_SC_WRITE_DATA *cp_data, BOOL is_auth, DWCRAP_SC_CREATE_REPORT_CORE_FUNC SC_CreateReportCoreFunc, BOOL is_disconnect );
 static DWCScResult DwcRap_Sc_CreateReportDebug( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYERDATA *p_other, const WIFIBATTLEMATCH_SC_DEBUG_DATA * cp_data, BOOL is_auth );
 //リポート作成コールバック
 static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const DWC_SC_WRITE_DATA *cp_data, BOOL is_my );
@@ -490,6 +499,7 @@ enum
   WIFIBATTLEMATCH_NETCMD_SEND_CANCELMATCH,
   WIFIBATTLEMATCH_NETCMD_SEND_POKEPARTY,
   WIFIBATTLEMATCH_NETCMD_SEND_DIRTYCNT,
+  WIFIBATTLEMATCH_NETCMD_SEND_FLAG,
   WIFIBATTLEMATCH_NETCMD_MAX,
 };
 static const NetRecvFuncTable sc_net_recv_tbl[] = 
@@ -499,6 +509,7 @@ static const NetRecvFuncTable sc_net_recv_tbl[] =
   {WifiBattleMatch_RecvMatchCancel, NULL},
   {WifiBattleMatch_RecvPokeParty, WifiBattleMatch_RecvBuffAddr },
   {WifiBattleMatch_RecvDirtyCnt, WifiBattleMatch_RecvBuffAddr },
+  {WifiBattleMatch_RecvFlag, NULL },
 };
 
 
@@ -1152,22 +1163,24 @@ static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs )
  *	@param  BtlResult result          対戦結果
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_SC_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_TYPE mode, WIFIBATTLEMATCH_BTLRULE rule, BtlResult result )
+void WIFIBATTLEMATCH_SC_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_TYPE mode, WIFIBATTLEMATCH_BTLRULE rule, const BATTLEMATCH_BATTLE_SCORE *cp_btl_score )
 { 
   if( GFL_NET_IsParentMachine() )
   { 
-    DEBUG_NET_Printf( "！親機 ルール%d 結果%d\n", rule, result );
+    DEBUG_NET_Printf( "！親機 ルール%d 結果%d\n", rule, cp_btl_score->result );
   }
   else
   { 
-    DEBUG_NET_Printf( "！子機 ルール%d 結果%d\n", rule, result );
+    DEBUG_NET_Printf( "！子機 ルール%d 結果%d\n", rule, cp_btl_score->result );
   }
 
   p_wk->seq = 0;
   p_wk->report.btl_rule   = rule;
-  p_wk->report.btl_result = result;
+  p_wk->report.btl_result = cp_btl_score->result;
+  p_wk->report.is_dirty   = cp_btl_score->is_dirty;
   p_wk->is_debug  = FALSE;
-  p_wk->is_auth   = GFL_NET_IsParentMachine();
+  p_wk->is_auth   = FALSE;//GFL_NET_IsParentMachine();
+  p_wk->is_recv[ WIFIBATTLEMATCH_NET_RECVFLAG_FLAG ]  = FALSE;
   
   switch( mode )
   { 
@@ -1216,6 +1229,42 @@ BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk )
   { 
     switch( p_wk->seq )
     { 
+    case WIFIBATTLEMATCH_SC_SEQ_SEND_TIMING_INIT:
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),WIFIBATTLEMATCH_SC_DIRTY_TIMING, WB_NET_WIFIMATCH);
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_TIMING_WAIT;
+      break;
+
+    case WIFIBATTLEMATCH_SC_SEQ_SEND_TIMING_WAIT:
+      if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),WIFIBATTLEMATCH_SC_DIRTY_TIMING,WB_NET_WIFIMATCH))
+      { 
+        //子機しか不正フラグがたたないので、
+        //親機へ送る
+        if( !GFL_NET_IsParentMachine() )
+        { 
+          p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_INIT;
+        }
+        else
+        { 
+          p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_INIT;
+        }
+      }
+      break;
+
+    case WIFIBATTLEMATCH_SC_SEQ_SEND_INIT:
+        if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(), WIFIBATTLEMATCH_NETCMD_SEND_FLAG, sizeof(u32), &p_wk->report.is_dirty ) )
+      { 
+        p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_WAIT;
+      }
+      break;
+
+    case WIFIBATTLEMATCH_SC_SEQ_SEND_WAIT:
+      if( p_wk->is_recv[ WIFIBATTLEMATCH_NET_RECVFLAG_FLAG ] )
+      { 
+        p_wk->report.is_dirty = p_wk->recv_flag;
+        p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_INIT;
+      }
+      break;
+
     //初期化
     case WIFIBATTLEMATCH_SC_SEQ_INIT:
       p_wk->wait_cnt  = 0;
@@ -1355,7 +1404,6 @@ BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk )
     //送信するレポートの種類を通知
     case WIFIBATTLEMATCH_SC_SEQ_INTENTION_START:
       p_wk->wait_cnt++;
-      //第一引数は親のみ正しいという値なのか？
       ret = DWC_ScSetReportIntentionAsync( p_wk->is_auth, DwcRap_Sc_SetReportIntentionCallback, TIMEOUT_MS, p_wk );
       if( ret != DWC_SC_RESULT_NO_ERROR )
       { 
@@ -1467,9 +1515,13 @@ BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk )
     //レポート作成
     case WIFIBATTLEMATCH_SC_SEQ_CREATE_REPORT:
       //レポート作成
+#ifdef PM_DEBUG
       if( !p_wk->is_debug )
+#else
+      if(1)
+#endif
       { 
-        ret = DwcRap_Sc_CreateReport( &p_wk->player[0], &p_wk->player[1], &p_wk->report, p_wk->is_auth, p_wk->SC_CreateReportCoreFunc );
+        ret = DwcRap_Sc_CreateReport( &p_wk->player[0], &p_wk->player[1], &p_wk->report, p_wk->is_auth, p_wk->SC_CreateReportCoreFunc, FALSE );
       }
       else
       { 
@@ -1539,6 +1591,274 @@ BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk )
 
   return FALSE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自分一人の時SCの処理中
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *	@param  DWCScResult               結果
+ *	@retval TRUEならば処理終了  FALSEならば処理進行中or不正エラー
+ */
+//-----------------------------------------------------------------------------
+static BOOL WIFIBATTLEMATCH_SC_ProcessOnly( WIFIBATTLEMATCH_NET_WORK *p_wk )
+{ 
+  DWCScResult ret;
+
+  { 
+    switch( p_wk->seq )
+    { 
+    case WIFIBATTLEMATCH_SC_SEQ_SEND_TIMING_INIT:
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_TIMING_WAIT;
+      break;
+
+    case WIFIBATTLEMATCH_SC_SEQ_SEND_TIMING_WAIT:
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_INIT;
+      break;
+
+    case WIFIBATTLEMATCH_SC_SEQ_SEND_INIT:
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_WAIT;
+      break;
+
+    case WIFIBATTLEMATCH_SC_SEQ_SEND_WAIT:
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_INIT;
+      break;
+
+    //初期化
+    case WIFIBATTLEMATCH_SC_SEQ_INIT:
+      p_wk->wait_cnt  = 0;
+#if 0
+      DEBUG_NET_Printf( "SC:gdbInit\n" );
+      { 
+        DWCGdbError gdb_err;
+        gdb_err = DWC_GdbInitialize( GAME_ID, p_wk->cp_user_data, DWC_SSL_TYPE_SERVER_AUTH );
+        if( gdb_err != DWC_GDB_ERROR_NONE )
+        { 
+          WIFIBATTLEMATCH_NETERR_SetGdbError( &p_wk->error, gdb_err );
+          return FALSE;
+        }
+      }
+#endif
+      DEBUG_NET_Printf( "SC:sc Init\n" );
+      ret = DWC_ScInitialize( GAME_ID,DWC_SSL_TYPE_SERVER_AUTH );
+      if( ret != DWC_SC_RESULT_NO_ERROR )
+      { 
+        WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret );
+        return FALSE;
+      }
+      DEBUG_NET_Printf( "SC:Init end\n" );
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_LOGIN;
+      break;
+
+    //認証情報取得
+    case WIFIBATTLEMATCH_SC_SEQ_LOGIN:
+      ret = DWC_ScGetLoginCertificate( &p_wk->player[0].mCertificate );
+      if( ret != DWC_SC_RESULT_NO_ERROR )
+      { 
+        WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret );
+        return FALSE;
+      }
+      DEBUG_NET_Printf( "SC:Login\n" );
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SESSION_START;
+      break;
+
+    //セッション開始  （ホストが行い、クライアントにセッションIDを伝播する）
+    case WIFIBATTLEMATCH_SC_SEQ_SESSION_START:
+        p_wk->wait_cnt++;
+        ret = DWC_ScCreateSessionAsync( DwcRap_Sc_CreateSessionCallback, TIMEOUT_MS, p_wk );
+        if( ret != DWC_SC_RESULT_NO_ERROR )
+        { 
+          WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret );
+          return FALSE;
+        }
+        DEBUG_NET_Printf( "SC:Session parent\n" );
+        p_wk->async_timeout = 0;
+        p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SESSION_WAIT;
+
+      break;
+
+    //セッション終了待ち
+    case WIFIBATTLEMATCH_SC_SEQ_SESSION_WAIT:
+      if( p_wk->wait_cnt == 0 )
+      { 
+        DEBUG_NET_Printf( "SC:Session process parent\n" );
+        GFL_STD_MemCopy( DWC_ScGetSessionId(), p_wk->player[0].mSessionId, DWC_SC_SESSION_GUID_SIZE );
+        p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_PLAYERDATA_TIMING_START;
+      }
+      else
+      { 
+        if( p_wk->async_timeout++ > ASYNC_TIMEOUT )
+        { 
+          WIFIBATTLEMATCH_NETERR_SetSysError( &p_wk->error, WIFIBATTLEMATCH_NET_SYSERROR_TIMEOUT ); 
+          DwcRap_Sc_Finalize( p_wk );
+          return FALSE;
+        }
+
+        DWC_ScProcess();
+        if( p_wk->result != DWC_SC_RESULT_NO_ERROR )
+        {
+          WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, p_wk->result );
+          return FALSE;
+        }
+      }
+      break;
+
+    //ホストがクライアントへセッションIDを送るためのタイミングとり
+   case WIFIBATTLEMATCH_SC_SEQ_SEND_PLAYERDATA_TIMING_START:
+      GFL_STD_MemCopy( DWC_ScGetConnectionId(), p_wk->player[0].mConnectionId, DWC_SC_CONNECTION_GUID_SIZE );
+      p_wk->seq  = WIFIBATTLEMATCH_SC_SEQ_SEND_PLAYERDATA_TIMING_WAIT;
+      break;
+
+    //タイミング待ち
+    case WIFIBATTLEMATCH_SC_SEQ_SEND_PLAYERDATA_TIMING_WAIT:
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_PLAYERDATA;
+      break;
+
+    //ホストがクライアントへ自分のデータを送る
+    case WIFIBATTLEMATCH_SC_SEQ_SEND_PLAYERDATA:
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_INTENTION_START;
+      break;
+
+    //送信するレポートの種類を通知
+    case WIFIBATTLEMATCH_SC_SEQ_INTENTION_START:
+      p_wk->wait_cnt++;
+      ret = DWC_ScSetReportIntentionAsync( p_wk->is_auth, DwcRap_Sc_SetReportIntentionCallback, TIMEOUT_MS, p_wk );
+      if( ret != DWC_SC_RESULT_NO_ERROR )
+      { 
+        WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret );
+        return FALSE;
+      } 
+      DEBUG_NET_Printf( "SC:intention start\n" );
+      p_wk->async_timeout = 0;
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_INTENTION_WAIT;
+      break;
+
+    //通知待ち
+    case WIFIBATTLEMATCH_SC_SEQ_INTENTION_WAIT:
+      if( p_wk->wait_cnt == 0 )
+      { 
+        DEBUG_NET_Printf( "SC:intention_wait\n" );
+        p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_RETURN_PLAYERDATA_TIMING_START;
+      }
+      else
+      { 
+        if( p_wk->async_timeout++ > ASYNC_TIMEOUT )
+        { 
+          WIFIBATTLEMATCH_NETERR_SetSysError( &p_wk->error, WIFIBATTLEMATCH_NET_SYSERROR_TIMEOUT ); 
+          DwcRap_Sc_Finalize( p_wk );
+          return FALSE;
+        }
+
+        DWC_ScProcess();
+        if( p_wk->result != DWC_SC_RESULT_NO_ERROR )
+        {
+          WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, p_wk->result );
+          return FALSE;
+        }
+      }
+      break;
+
+    //クライアントの情報をホストがもらうためのタイミングとり
+    case WIFIBATTLEMATCH_SC_SEQ_RETURN_PLAYERDATA_TIMING_START:
+      p_wk->seq  = WIFIBATTLEMATCH_SC_SEQ_RETURN_PLAYERDATA_TIMING_WAIT;
+      break;
+
+    //タイミング待ち
+    case WIFIBATTLEMATCH_SC_SEQ_RETURN_PLAYERDATA_TIMING_WAIT:
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_PLAYERDATA_CCID_PARENT;
+      break;
+
+    //お互いのCCID（Intention ConnectionID）を交換する  まずは親データを子に送信
+    case WIFIBATTLEMATCH_SC_SEQ_SEND_PLAYERDATA_CCID_PARENT:
+      DEBUG_NET_Printf( "SC:send data ccid parent\n" );
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_PLAYERDATA_CCID_CHILD;
+      break;
+
+    //次は子のデータを送信
+    case WIFIBATTLEMATCH_SC_SEQ_SEND_PLAYERDATA_CCID_CHILD:
+      DEBUG_NET_Printf( "SC:send data ccid child\n" );
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_CREATE_REPORT_TIMING_START;
+      break;
+
+    //受信後、レポート作成のためのタイミングとり
+    case WIFIBATTLEMATCH_SC_SEQ_CREATE_REPORT_TIMING_START:
+      p_wk->seq  = WIFIBATTLEMATCH_SC_SEQ_CREATE_REPORT_TIMING_WAIT;
+      break;
+
+    //タイミングまち
+    case WIFIBATTLEMATCH_SC_SEQ_CREATE_REPORT_TIMING_WAIT:
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_CREATE_REPORT;
+      break;
+
+    //レポート作成
+    case WIFIBATTLEMATCH_SC_SEQ_CREATE_REPORT:
+      //レポート作成
+      ret = DwcRap_Sc_CreateReport( &p_wk->player[0], &p_wk->player[1], &p_wk->report, p_wk->is_auth, p_wk->SC_CreateReportCoreFunc, TRUE );
+
+      if( ret != DWC_SC_RESULT_NO_ERROR )
+      { 
+        WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret );
+        return FALSE;
+      }
+      DEBUG_NET_Printf( "SC:create report\n" );
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SUBMIT_REPORT_START;
+      break;
+
+    //レポート送信開始
+    case WIFIBATTLEMATCH_SC_SEQ_SUBMIT_REPORT_START:
+      p_wk->wait_cnt++;
+      ret = DWC_ScSubmitReportAsync( p_wk->player[0].mReport, p_wk->is_auth,
+            DwcRap_Sc_SubmitReportCallback, TIMEOUT_MS, p_wk );
+      if( ret != DWC_SC_RESULT_NO_ERROR )
+      { 
+        WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret );
+        return FALSE;
+      }
+      DEBUG_NET_Printf( "SC:submit report start\n" );
+      p_wk->async_timeout = 0;
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SUBMIT_REPORT_WAIT;
+      break;
+
+    //レポート送信中
+    case WIFIBATTLEMATCH_SC_SEQ_SUBMIT_REPORT_WAIT:
+      if( p_wk->wait_cnt == 0 )
+      { 
+        DEBUG_NET_Printf( "SC:submit report wait\n" );
+        p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_EXIT;
+      }
+      else
+      { 
+        if( p_wk->async_timeout++ > ASYNC_TIMEOUT )
+        { 
+          WIFIBATTLEMATCH_NETERR_SetSysError( &p_wk->error, WIFIBATTLEMATCH_NET_SYSERROR_TIMEOUT ); 
+          DwcRap_Sc_Finalize( p_wk );
+          return FALSE;
+        }
+
+        DWC_ScProcess();
+        if( p_wk->result != DWC_SC_RESULT_NO_ERROR )
+        {
+          WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, p_wk->result );
+          return FALSE;
+        }
+      }
+      break;
+
+    //終了！
+    case WIFIBATTLEMATCH_SC_SEQ_EXIT:
+      DEBUG_NET_Printf( "SC:exit\n" );
+      DwcRap_Sc_Finalize( p_wk );
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_END;
+      break;
+
+    case WIFIBATTLEMATCH_SC_SEQ_END:
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -1649,7 +1969,7 @@ static void DwcRap_Sc_Finalize( WIFIBATTLEMATCH_NET_WORK *p_wk )
  *	@return 結果
  */
 //-----------------------------------------------------------------------------
-static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYERDATA *p_other, const DWC_SC_WRITE_DATA *cp_data, BOOL is_auth, DWCRAP_SC_CREATE_REPORT_CORE_FUNC SC_CreateReportCoreFunc )
+static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYERDATA *p_other, const DWC_SC_WRITE_DATA *cp_data, BOOL is_auth, DWCRAP_SC_CREATE_REPORT_CORE_FUNC SC_CreateReportCoreFunc, BOOL is_disconnect )
 { 
   DWCScResult ret;
 
@@ -1689,24 +2009,32 @@ static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYE
       
     DWCScGameResult game_result;
 
-    switch( cp_data->btl_result )
-    { 
-    case BTL_RESULT_RUN_ENEMY:
-      /* fallthrough */
-    case BTL_RESULT_WIN:
-      game_result = DWC_SC_GAME_RESULT_WIN;
-      break;
-    case BTL_RESULT_RUN:
-      /* fallthrough */
-    case BTL_RESULT_LOSE:
-      game_result = DWC_SC_GAME_RESULT_LOSS;
-      break;
-    case BTL_RESULT_DRAW:
-      game_result = DWC_SC_GAME_RESULT_DRAW;
-      break;
-    default:
-      GF_ASSERT_MSG(0, "バトル結果不正値 %d\n", cp_data->btl_result );
+    if( is_disconnect )
+    {
+      game_result = DWC_SC_GAME_RESULT_DISCONNECT;
     }
+    else
+    {
+      switch( cp_data->btl_result )
+      { 
+      case BTL_RESULT_RUN_ENEMY:
+        /* fallthrough */
+      case BTL_RESULT_WIN:
+        game_result = DWC_SC_GAME_RESULT_WIN;
+        break;
+      case BTL_RESULT_RUN:
+        /* fallthrough */
+      case BTL_RESULT_LOSE:
+        game_result = DWC_SC_GAME_RESULT_LOSS;
+        break;
+      case BTL_RESULT_DRAW:
+        game_result = DWC_SC_GAME_RESULT_DRAW;
+        break;
+      default:
+        GF_ASSERT_MSG(0, "バトル結果不正値 %d\n", cp_data->btl_result );
+      }
+    }
+
     ret = DWC_ScReportSetPlayerData(
                 p_my->mReport,
                 0,
@@ -2106,6 +2434,7 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
   DEBUG_NET_Printf( "レポート先%d\n", is_my );
   DEBUG_NET_Printf( "勝ち%d\n", is_win );
   DEBUG_NET_Printf( "負け%d\n", !is_win );
+  DEBUG_NET_Printf( "不正%d\n", cp_data->is_dirty );
   DEBUG_NET_Printf( "-----------Report_end-------------\n" );
 
   //ルールによって送るものが違う
@@ -2187,6 +2516,13 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     GF_ASSERT(0);
   }
 
+  //共通の送るもの
+  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_CHEATS_COUNTER, cp_data->is_dirty != 0 );
+  if( ret != DWC_SC_RESULT_NO_ERROR )
+  { 
+    return ret;
+  }
+
   return ret;
 }
 
@@ -2207,7 +2543,7 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
   BOOL is_win;
   DWCScResult ret;
 
-  //もし相手の情報を書き込むならば、結果を反対にする
+  //もし相手の勝利情報を書き込むならば、結果を反対にする
   is_win = (cp_data->btl_result == BTL_RESULT_WIN || cp_data->btl_result == BTL_RESULT_RUN_ENEMY);  
   if( !is_my )
   {
@@ -2218,6 +2554,7 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
   DEBUG_NET_Printf( "レポート先%d\n", is_my );
   DEBUG_NET_Printf( "勝ち%d\n", is_win );
   DEBUG_NET_Printf( "負け%d\n", !is_win );
+  DEBUG_NET_Printf( "不正%d\n", cp_data->is_dirty );
   DEBUG_NET_Printf( "-----------Report_end-------------\n" );
 
   ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_WIFICUP, 1 );
@@ -2231,6 +2568,11 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
     return ret;
   }
   ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_WIFICUP_LOSE_COUNTER, !is_win );
+  if( ret != DWC_SC_RESULT_NO_ERROR )
+  { 
+    return ret;
+  }
+  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_CHEATS_WIFICUP_COUNTER, cp_data->is_dirty != 0 );
   if( ret != DWC_SC_RESULT_NO_ERROR )
   { 
     return ret;
@@ -2421,6 +2763,36 @@ static void WifiBattleMatch_RecvDirtyCnt(const int netID, const int size, const 
   DEBUG_NET_Printf( "不正カウンタ受信コールバック！netID=%d size=%d \n", netID, size );
 
   p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_DIRTYCNT] = TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フラグ受信コールバック
+ *
+ *	@param	int netID           ネットID
+ *	@param	int size            サイズ
+ *	@param	void* cp_data_adrs  データ
+ *	@param	p_wk_adrs           自分で与えたアドレス
+ *	@param	p_net_handle        ネットハンドル
+ */
+//-----------------------------------------------------------------------------
+static void WifiBattleMatch_RecvFlag(const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE* p_net_handle)
+{ 
+  WIFIBATTLEMATCH_NET_WORK *p_wk  = p_wk_adrs;
+  u32 data  = *(u32*)cp_data_adrs;
+
+  if( p_net_handle != GFL_NET_HANDLE_GetCurrentHandle() )
+  {
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if( netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()) )
+  {
+    return;//自分のは今は受け取らない
+  }
+
+  DEBUG_NET_Printf( "フラグ受信コールバック！netID=%d size=%d \n", netID, size, data );
+
+  p_wk->recv_flag = data;
+  p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_FLAG] = TRUE;
 }
 //=============================================================================
 /**

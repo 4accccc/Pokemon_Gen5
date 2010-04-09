@@ -378,7 +378,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Init( GFL_PROC *p_proc, int *p_s
     { 
       if( p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE )
       { 
-        Util_SaveFreeScore( p_param->p_rndmatch, p_param->p_param->btl_rule, p_param->btl_result );
+        Util_SaveFreeScore( p_param->p_rndmatch, p_param->p_param->btl_rule, p_param->cp_btl_score->result );
       }
       Util_PlayerInfo_CreateStay( p_wk, WIFIBATTLEMATCH_CORE_RETMODE_FREE );
     }
@@ -1445,7 +1445,7 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
   case SEQ_START_REPORT_ATLAS:
 #ifndef SAKE_REPORT_NONE
-    WIFIBATTLEMATCH_SC_Start( p_wk->p_net, WIFIBATTLEMATCH_TYPE_RNDRATE, p_param->p_param->btl_rule, p_param->btl_result );
+    WIFIBATTLEMATCH_SC_Start( p_wk->p_net, WIFIBATTLEMATCH_TYPE_RNDRATE, p_param->p_param->btl_rule, p_param->cp_btl_score );
 #endif
     *p_seq = SEQ_WAIT_REPORT_ATLAS;
     break;

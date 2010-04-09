@@ -72,7 +72,7 @@
 //-------------------------------------
 ///	シンク
 //=====================================
-#define ENEMYDATA_WAIT_SYNC    (180)
+#define ENEMYDATA_WAIT_SYNC    (180+300)
 #define MATCHING_MSG_WAIT_SYNC (120)
 
 //=============================================================================
@@ -178,12 +178,14 @@ static void UTIL_LIST_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk, LVM_MENU_TYPE typ
 static void UTIL_LIST_Delete( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
 static u32 UTIL_LIST_Main( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
 //テキスト
-static void UTIL_TEXT_Print( LIVEBATTLEMATCH_FLOW_WORK *p_wk, u32 strID );
+static void UTIL_TEXT_Print( LIVEBATTLEMATCH_FLOW_WORK *p_wk, u32 strID, WBM_TEXT_TYPE type );
 static BOOL UTIL_TEXT_IsEnd( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
+static void UTIL_TEXT_EndWait( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
 //フロー終了
 static void UTIL_FLOW_End( LIVEBATTLEMATCH_FLOW_WORK *p_wk, LIVEBATTLEMATCH_FLOW_RET ret );
 //自分のカード作成
 static void UTIL_PLAYERINFO_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
+static void UTIL_PLAYERINFO_CreateStay( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
 static void UTIL_PLAYERINFO_Delete( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
 static BOOL UTIL_PLAYERINFO_MoveIn( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
 static BOOL UTIL_PLAYERINFO_MoveOut( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
@@ -249,7 +251,7 @@ LIVEBATTLEMATCH_FLOW_WORK *LIVEBATTLEMATCH_FLOW_Init( const LIVEBATTLEMATCH_FLOW
   p_wk->p_irc = LIVEBATTLEMATCH_IRC_Init( p_wk->param.p_gamedata, heapID );
 
   //待機アイコン
-  { 
+  {
     GFL_CLUNIT  *p_unit;
     p_unit  = WIFIBATTLEMATCH_GRAPHIC_GetClunit( p_wk->param.p_graphic );
     p_wk->p_wait  = WBM_WAITICON_Init( p_unit, p_wk->param.p_view, heapID );
@@ -273,6 +275,11 @@ LIVEBATTLEMATCH_FLOW_WORK *LIVEBATTLEMATCH_FLOW_Init( const LIVEBATTLEMATCH_FLOW
   //ポケパーティテンポラリ
   p_wk->p_party = PokeParty_AllocPartyWork( heapID );
 
+  if( p_wk->param.mode == LIVEBATTLEMATCH_FLOW_MODE_BTL
+      || p_wk->param.mode == LIVEBATTLEMATCH_FLOW_MODE_REC )
+  { 
+    UTIL_PLAYERINFO_CreateStay( p_wk );
+  }
 
   return p_wk;
 }
@@ -380,7 +387,14 @@ static void SEQFUNC_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     WBM_SEQ_SetNext( p_seqwk, SEQFUNC_RecvCard );
     break;
   case LIVEBATTLEMATCH_FLOW_MODE_MENU:    //メインメニューから開始
-    WBM_SEQ_SetNext( p_seqwk, SEQFUNC_StartCup );
+    if( Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS) == DREAM_WORLD_MATCHUP_END )
+    { 
+      WBM_SEQ_SetNext( p_seqwk, SEQFUNC_RecAfter );
+    }
+    else
+    { 
+      WBM_SEQ_SetNext( p_seqwk, SEQFUNC_StartCup );
+    }
     break;
   case LIVEBATTLEMATCH_FLOW_MODE_BTL:    //バトル後から開始
     WBM_SEQ_SetNext( p_seqwk, SEQFUNC_BtlAfter );
@@ -497,18 +511,18 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     break;
   case SEQ_START_MSG_NOLOCK: //すでに選手証があって、バトルボックスがロックされていない
-    UTIL_TEXT_Print( p_wk, LIVE_STR_01 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_01, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_RECVCARD );
     break;
   case SEQ_START_MSG_LOCK:   //すでに選手証があって、バトルボックスがロックされている
-    UTIL_TEXT_Print( p_wk, LIVE_STR_02 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_02, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_RECVCARD );
     break;
 
   case SEQ_START_MSG_RECVCARD: //選手証受け取り
-    UTIL_TEXT_Print( p_wk, LIVE_STR_03 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_03, WBM_TEXT_TYPE_WAIT );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_RECVCARD );
     break;
@@ -523,7 +537,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       LIVEBATTLEMATCH_IRC_RET ret =  LIVEBATTLEMATCH_IRC_WaitRecvRegulation( p_wk->p_irc );
       if( ret != LIVEBATTLEMATCH_IRC_RET_UPDATE )
       { 
-
+        UTIL_TEXT_EndWait( p_wk );
         //Regulation_PrintDebug( &p_wk->regulation_temp );
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
 
@@ -563,7 +577,9 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
       //エラー処理
       if( LIVEBATTLEMATCH_IRC_ERROR_REPAIR_DISCONNECT == LIVEBATTLEMATCH_IRC_CheckErrorRepairType( p_wk->p_irc ) )
-      { 
+      {   
+        UTIL_TEXT_EndWait( p_wk );
+        WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
         *p_seq  = SEQ_START_MSG_RECVCARD;
         break;
       }
@@ -571,6 +587,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       //Bキャンセル
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
       { 
+        UTIL_TEXT_EndWait( p_wk );
         *p_seq  = SEQ_START_CANCEL;
       }
 
@@ -578,6 +595,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       //Aで進む
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
       { 
+        UTIL_TEXT_EndWait( p_wk );
         WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
         LIVEBATTLEMATCH_IRC_StartCancelRecvRegulation( p_wk->p_irc );
         *p_seq  = SEQ_WAIT_RECV_DEBUG;
@@ -606,7 +624,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
   case SEQ_START_MSG_CANCEL:
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
-    UTIL_TEXT_Print( p_wk, LIVE_STR_17 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_17, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_CANCEL );
     break;
@@ -695,7 +713,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_START_MSG_SAVE: //選手証が正しかったのでサインアップしてセーブ
-    UTIL_TEXT_Print( p_wk, LIVE_STR_09 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_09, WBM_TEXT_TYPE_WAIT );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE );
     break;
@@ -736,6 +754,7 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         break;
       case SAVE_RESULT_OK:
       case SAVE_RESULT_NG:
+        UTIL_TEXT_EndWait( p_wk );
         *p_seq  = SEQ_SUCCESS_END;
         break;
       }
@@ -743,24 +762,24 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_START_MSG_DIRTY_CRC:    //不正なレギュレーションをうけとった
-    UTIL_TEXT_Print( p_wk, LIVE_STR_22_1 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_22_1, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_DIRTY_END );
     break;
 
   case SEQ_START_MSG_DIRTY_VER:    //不正なレギュレーションをうけとった
-    UTIL_TEXT_Print( p_wk, LIVE_STR_22_2 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_22_2, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_DIRTY_END );
     break;
 
   case SEQ_START_MSG_RETIRE:   //リタイアした大会を受け取っていた:
-    UTIL_TEXT_Print( p_wk, LIVE_STR_04 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_04, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_DIRTY_END );
     break;
   case SEQ_START_MSG_FINISH:   //終了した大会を受け取っていた:
-    UTIL_TEXT_Print( p_wk, LIVE_STR_05 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_05, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_DIRTY_END );
     break;
@@ -847,7 +866,7 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     break;
   case SEQ_START_MSG_REG:     //バトルボックスのポケモンを登録します
-    UTIL_TEXT_Print( p_wk, LIVE_STR_06 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_06, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_REG_YESNO );
     break;
@@ -876,7 +895,7 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_START_MSG_CANCEL:     //参加ポケモンの登録をやめますか
-    UTIL_TEXT_Print( p_wk, LIVE_STR_07 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_07, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_CANCEL_YESNO );
     break;
@@ -929,7 +948,7 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     break;
   case SEQ_START_MSG_DIRTY_REG:  //レギュレーションと一致しなかった
-    UTIL_TEXT_Print( p_wk, LIVE_STR_08 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_08, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_MOVEOUT_CARD );
     break;
@@ -966,7 +985,7 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_START_MSG_SAVE:     //登録完了セーブ
-    UTIL_TEXT_Print( p_wk, LIVE_STR_09 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_09, WBM_TEXT_TYPE_WAIT );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE ); 
     break;
@@ -984,6 +1003,7 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         break;
       case SAVE_RESULT_OK:
       case SAVE_RESULT_NG:
+        UTIL_TEXT_EndWait( p_wk );
         *p_seq  = SEQ_START_MSG_COMPLATE;
         break;
       }
@@ -992,7 +1012,7 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   case SEQ_START_MSG_COMPLATE: //完了メッセージ
     UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_LOCK );
-    UTIL_TEXT_Print( p_wk, LIVE_STR_10 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_10, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_SUCCESS_END ); 
     break;
@@ -1103,13 +1123,13 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_START_MSG_ERR:
-    UTIL_TEXT_Print( p_wk, LIVE_ERR_01 );
+    UTIL_TEXT_Print( p_wk, LIVE_ERR_01, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_MENU );
     break;
     
   case SEQ_START_MSG_MENU:   //メインメニュー
-    UTIL_TEXT_Print( p_wk, LIVE_STR_11 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_11, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_MENU );
 		break;
@@ -1158,7 +1178,7 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 		break;
 
   case SEQ_START_MSG_UNREG:  //参加を解除する
-    UTIL_TEXT_Print( p_wk, LIVE_STR_13 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_13, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_UNREG );
 		break;
@@ -1186,7 +1206,7 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
 		break;
   case SEQ_START_MSG_DECIDE: //本当に～
-    UTIL_TEXT_Print( p_wk, LIVE_STR_14 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_14, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_DECIDE );
 		break;
@@ -1214,7 +1234,7 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
 		break;
   case SEQ_START_MSG_SAVE:
-    UTIL_TEXT_Print( p_wk, LIVE_STR_09 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_09, WBM_TEXT_TYPE_WAIT );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE ); 
 		break;
@@ -1240,6 +1260,7 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         break;
       case SAVE_RESULT_OK:
       case SAVE_RESULT_NG:
+        UTIL_TEXT_EndWait( p_wk );
         *p_seq  = SEQ_START_MSG_UNLOCK;
         break;
       }
@@ -1247,7 +1268,7 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 		break;
   case SEQ_START_MSG_UNLOCK:
     UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNREGISTER );
-    UTIL_TEXT_Print( p_wk, LIVE_STR_15 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_15, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_MOVEOUT_CARD );
 		break;
@@ -1259,7 +1280,7 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
   
   case SEQ_START_MSG_LOOKBACK: //振り返る
-    UTIL_TEXT_Print( p_wk, LIVE_STR_12 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_12, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_LOOKBACK_END );
 		break;
@@ -1340,7 +1361,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   switch( *p_seq )
   { 
   case SEQ_START_MSG_MATCHING: //マッチング開始
-    UTIL_TEXT_Print( p_wk, LIVE_STR_16 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_16, WBM_TEXT_TYPE_WAIT);
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_CONNECT ); 
 		break;
@@ -1376,7 +1397,8 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
 		break;
   case SEQ_START_MSG_CANCEL_MATCHING: //マッチングやめる
-    UTIL_TEXT_Print( p_wk, LIVE_STR_17 );
+    UTIL_TEXT_EndWait( p_wk );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_17, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_CANCEL_MATCHING );
 		break;
@@ -1425,11 +1447,13 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     if( p_wk->param.p_player_data->wificup_no == p_wk->param.p_enemy_data->wificup_no )
     { 
       OS_TPrintf( "自分の大会 %d 相手の大会 %d\n", p_wk->param.p_player_data->wificup_no, p_wk->param.p_enemy_data->wificup_no );
+      UTIL_TEXT_EndWait( p_wk );
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
       *p_seq  = SEQ_START_MSG_OK;
     }
     else
     { 
+      UTIL_TEXT_EndWait( p_wk );
       WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
       *p_seq  = SEQ_START_DISCONNECT_NOCUP;
     }
@@ -1448,12 +1472,12 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     break;
   case SEQ_START_MSG_NOCUP:  //大会が違うメッセージ
-    UTIL_TEXT_Print( p_wk, LIVE_STR_18 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_18, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_MATCHING );
 		break;
   case SEQ_START_MSG_OK:     //マッチング相手が見つかった！
-    UTIL_TEXT_Print( p_wk, LIVE_STR_19 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_19, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_CNT );
 		break;
@@ -1484,7 +1508,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   case SEQ_START_MSG_WAIT:
     GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
-    UTIL_TEXT_Print( p_wk, LIVE_STR_20 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_20, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_TIMING );
 		break;
@@ -1587,7 +1611,7 @@ static void SEQFUNC_BtlAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     break;
   case SEQ_START_MSG_SAVE:
-    UTIL_TEXT_Print( p_wk, LIVE_STR_09 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_09, WBM_TEXT_TYPE_WAIT );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE );
 		break;
@@ -1646,6 +1670,7 @@ static void SEQFUNC_BtlAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         break;
       case SAVE_RESULT_OK:
       case SAVE_RESULT_NG:
+        UTIL_TEXT_EndWait( p_wk );
         *p_seq  = SEQ_REC_END;
         break;
       }
@@ -1682,7 +1707,7 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_START_SAVE,
     SEQ_WAIT_SAVE,
     SEQ_START_MSG_UNLOCK,
-    SEQ_START_MSG_LOOKBACK,
+    SEQ_START_MSG_LOOKBACK, //最後に振り返れる
     SEQ_START_LIST_LOOKBACK,
     SEQ_WAIT_LIST_LOOKBACK,
     SEQ_START_MSG_END,
@@ -1725,7 +1750,7 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
 		break;
   case SEQ_START_MSG_SAVE:
-    UTIL_TEXT_Print( p_wk, LIVE_STR_09 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_09, WBM_TEXT_TYPE_WAIT );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE );
     break;
@@ -1752,6 +1777,7 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         break;
       case SAVE_RESULT_OK:
       case SAVE_RESULT_NG:
+        UTIL_TEXT_EndWait( p_wk );
         *p_seq  = SEQ_START_MSG_UNLOCK;
         break;
       }
@@ -1760,13 +1786,13 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   case SEQ_START_MSG_UNLOCK:
     UTIL_PLAYERINFO_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
-    UTIL_TEXT_Print( p_wk, LIVE_STR_21 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_21, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_LOOKBACK );
     break;
     
   case SEQ_START_MSG_LOOKBACK:
-    UTIL_TEXT_Print( p_wk, LIVE_STR_23 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_23, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_LOOKBACK );
     break;
@@ -1808,7 +1834,7 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_START_MSG_END:
-    UTIL_TEXT_Print( p_wk, LIVE_STR_24 );
+    UTIL_TEXT_Print( p_wk, LIVE_STR_24, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_MOVEOUT_CARD );
     break;
@@ -1986,9 +2012,9 @@ static u32 UTIL_LIST_Main( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
  *	@param	strID                               文字
  */
 //-----------------------------------------------------------------------------
-static void UTIL_TEXT_Print( LIVEBATTLEMATCH_FLOW_WORK *p_wk, u32 strID )
+static void UTIL_TEXT_Print( LIVEBATTLEMATCH_FLOW_WORK *p_wk, u32 strID, WBM_TEXT_TYPE type )
 { 
-  WBM_TEXT_Print( p_wk->param.p_text, p_wk->p_msg, strID, WBM_TEXT_TYPE_STREAM );
+  WBM_TEXT_Print( p_wk->param.p_text, p_wk->p_msg, strID, type );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2002,6 +2028,17 @@ static void UTIL_TEXT_Print( LIVEBATTLEMATCH_FLOW_WORK *p_wk, u32 strID )
 static BOOL UTIL_TEXT_IsEnd( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
 { 
   return WBM_TEXT_IsEnd( p_wk->param.p_text );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト待機アイコン消し
+ *
+ *	@param	LIVEBATTLEMATCH_FLOW_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void UTIL_TEXT_EndWait( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
+{ 
+  WBM_TEXT_EndWait( p_wk->param.p_text );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2069,6 +2106,24 @@ static void UTIL_PLAYERINFO_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
     p_wk->p_playerinfo	= PLAYERINFO_LIVE_Init( &info_setup, p_my, p_unit, p_wk->param.p_view, p_wk->param.p_font, p_wk->param.p_que, p_wk->p_wifi_msg, p_wk->p_word, p_reg_view, FALSE, p_wk->heapID );
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自分のカードを作成  すでにスライドインしている版
+ *
+ *	@param	LIVEBATTLEMATCH_FLOW_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void UTIL_PLAYERINFO_CreateStay( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
+{ 
+  UTIL_PLAYERINFO_Create( p_wk );
+
+  while( !UTIL_PLAYERINFO_MoveIn( p_wk ) )
+  { 
+
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  自分のカード破棄
