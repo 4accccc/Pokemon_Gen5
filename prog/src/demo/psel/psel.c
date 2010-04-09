@@ -496,6 +496,7 @@ static const GFL_G3D_UTIL_RES s02_res_tbl[] =
   // mb
   { ARCID_PSEL,        NARC_psel_psel_mb_nsbmd,           GFL_G3D_UTIL_RESARC },
   { ARCID_PSEL,        NARC_psel_psel_mb_nsbma,           GFL_G3D_UTIL_RESARC },
+  { ARCID_PSEL,        NARC_psel_psel_mb_nsbca,           GFL_G3D_UTIL_RESARC },
 };
 static const GFL_G3D_UTIL_ANM s02_anm_tbl[] = 
 {
@@ -506,6 +507,7 @@ static const GFL_G3D_UTIL_ANM mb_anm_tbl[] =
 {
   // mb
   { 3, 0 },
+  { 4, 0 },
 };
 static const GFL_G3D_UTIL_OBJ s02_obj_tbl[] = 
 {
@@ -556,7 +558,7 @@ static const VecFx32 three_mb_trans[MB_MAX] =
 
 // 3D全体
 // 最大数
-#define THREE_RES_MAX              (4)   // s02とmbを同時に読み込んだときの総数
+#define THREE_RES_MAX              (5)   // s02とmbを同時に読み込んだときの総数
 #define THREE_OBJ_MAX              (4)   // s02とmbを同時に読み込んだときの総数
 #define THREE_ICA_ANIME_INTERVAL   (10)
 // セットアップ番号

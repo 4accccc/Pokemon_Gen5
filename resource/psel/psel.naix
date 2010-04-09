@@ -49,7 +49,8 @@ enum {
 	NARC_psel_psel_s02_nsbca = 35,
 	NARC_psel_psel_s02_cam_bin = 36,
 	NARC_psel_psel_mb_nsbmd = 37,
-	NARC_psel_psel_mb_nsbma = 38
+	NARC_psel_psel_mb_nsbma = 38,
+	NARC_psel_psel_mb_nsbca = 39
 };
 
 /* NARC_PSEL_NAIX_ */
