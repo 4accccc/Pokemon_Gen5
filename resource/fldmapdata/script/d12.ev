@@ -61,21 +61,25 @@ INIT_EVENT_START   ev_zone_d12
     _FLAG_SET(FV_D12_HAKAIM_01)         //プラズマしたっぱいない
     _FLAG_RESET(FV_D12_EVENTEND_01)     //プラズマ団連行イベント関連ＯＢＪいる
     _FLAG_RESET(FV_D12_POLECEMAN_02)    //警官いる（建物の中にいない）
+    _D12_GMK_VANISH()                   //プラズマ船無し
   CASE 5 THEN   //連行イベント直後(このシーケンスにはこないが)
     _FLAG_RESET(FV_D12_PEOPLE_01)       //観光客いる
     _FLAG_SET(FV_D12_HAKAIM_01)         //プラズマしたっぱいない
     _FLAG_SET(FV_D12_EVENTEND_01)       //プラズマ団連行イベント関連ＯＢＪいない
     _FLAG_RESET(FV_D12_POLECEMAN_02)    //警官いる（建物の中にいない）
+    _D12_GMK_VANISH()                   //プラズマ船無し
   CASE 6 THEN   //イベント後の島来訪
     _FLAG_SET(FV_D12_PEOPLE_01)         //観光客いない
     _FLAG_SET(FV_D12_HAKAIM_01)         //プラズマしたっぱいない
     _FLAG_SET(FV_D12_EVENTEND_01)       //プラズマ団連行イベント関連ＯＢＪいない
-    _FLAG_RESET(FV_D12_POLECEMAN_02)    //警官いる（建物の中にいない）  
+    _FLAG_RESET(FV_D12_POLECEMAN_02)    //警官いる（建物の中にいない）
+    _D12_GMK_VANISH()                   //プラズマ船無し
   DEFAULT
     _FLAG_SET(FV_D12_PEOPLE_01)         //観光客いない
     _FLAG_SET(FV_D12_HAKAIM_01)         //プラズマしたっぱいない
     _FLAG_SET(FV_D12_EVENTEND_01)       //プラズマ団連行イベント関連ＯＢＪいない
     _FLAG_RESET(FV_D12_POLECEMAN_02)    //警官いる（建物の中にいない）
+    _D12_GMK_VANISH()                   //プラズマ船無し
   ENDSWITCH
 INIT_EVENT_END
 
