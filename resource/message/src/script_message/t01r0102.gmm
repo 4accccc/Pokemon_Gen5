@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T22:23:18"/>
+	<create user="matsumiya" host="W00224" date="2010-04-09T15:21:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="668" top="313" right="1141" bottom="711" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -353,7 +353,8 @@
 	<row id="msg_t01r0102_black_01a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・振り向き後メッセージ
-　表示後に友達♀がやってくるアニメ
+　表示後に、つまさきアニメ
+　続けて友達♀がやってくるアニメ
 　続けてwhite_01表示</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
@@ -391,7 +392,7 @@
 
 	<row id="msg_t01r0102_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・続けてblack_03
+・続けてwhite_02_01
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
@@ -485,7 +486,7 @@
 
 	<row id="msg_t01r0102_presentbox_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>システム
-・表示後、箱が開く演出（仮）</comment>
+・表示後、箱が開く演出</comment>
 		<attribute name="キャラ指定">プレゼントボックス</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 プレゼントボックスを　あけはじめた！▼</language>
@@ -795,7 +796,7 @@
 勝負しよーよ！！</language>
 	</row>
 
-	<row id="msg_t01r0102_white_11">
+	<row id="msg_t01r0102_white_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・戦闘後メッセージ
 　フィールドに復帰して煙が消えてから
@@ -829,7 +830,7 @@
 周りを　みれば？▼</language>
 	</row>
 
-	<row id="msg_t01r0102_white_12">
+	<row id="msg_t01r0102_white_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・周囲を見回してからメッセージ表示
 ・続けてwhite_12a</comment>
@@ -841,7 +842,7 @@
 な　なにこれ！？▼</language>
 	</row>
 
-	<row id="msg_t01r0102_white_12a">
+	<row id="msg_t01r0102_white_12a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・主人公を向いてメッセージ表示
 ・続けてblack_09
@@ -931,7 +932,7 @@
 ＰＰが　減っているからね▼</language>
 	</row>
 
-	<row id="msg_t01r0102_white_13">
+	<row id="msg_t01r0102_white_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてblack_14</comment>
 		<attribute name="キャラ指定">友達♀
