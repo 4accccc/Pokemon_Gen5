@@ -188,6 +188,8 @@ extern void PMSND_SetSystemFadeFrames( int fadeOutFrame, int fadeInFrame );
 // 分割ロード・再生
 extern BOOL PMSND_PlayBGMdiv(u32 no, u32* seq, BOOL start);
 
+// 拡張チャンネル再生
+extern void	PMSND_PlayBGM_WideChannel( u32 soundIdx );
 //============================================================================================
 /**
  *
