@@ -16,6 +16,7 @@
 #include "mission_types.h"
 #include "intrude_mission.h"
 #include "intrude_work.h"
+#include "monolith_snd_def.h"
 
 #include "monolith.naix"
 
@@ -206,6 +207,7 @@ static GFL_PROC_RESULT MonolithStatusProc_Main( GFL_PROC * proc, int * seq, void
         else{
           GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
         }
+        PMSND_PlaySE(MONOLITH_SE_CANCEL);
         (*seq)++;
       }
     }

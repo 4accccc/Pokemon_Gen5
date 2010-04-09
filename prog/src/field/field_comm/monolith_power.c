@@ -22,8 +22,8 @@
 #include "gamesystem/g_power.h"
 #include "app_menu_common.naix"
 #include "app/app_menu_common.h"
-#include "sound/pm_sndsys.h"
 #include "gamesystem/game_comm.h"
+#include "monolith_snd_def.h"
 
 
 //==============================================================================
@@ -224,7 +224,7 @@ static void _Setup_PowerNameBMPDelete(MONOLITH_PWSELECT_WORK *mpw);
 static BOOL _PowerNameBMPDraw(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup);
 static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw);
 static void _ScrollBeforeUpdate(MONOLITH_PWSELECT_WORK *mpw);
-static void _SetCursorPos(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos, _SET_CURSOR_MODE mode);
+static BOOL _SetCursorPos(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos, _SET_CURSOR_MODE mode);
 static void _ScrollAfterUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw);
 static BOOL _ScrollPosUpdate(MONOLITH_PWSELECT_WORK *mpw, s32 add_y);
 static void _ScrollPos_BGReflection(MONOLITH_PWSELECT_WORK *mpw);
@@ -374,6 +374,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     SEQ_DECIDE_STREAM,
     SEQ_DECIDE_SEND,
     SEQ_DECIDE_STREAM_WAIT,
+    SEQ_DECIDE_STREAM_KEY_WAIT,
     SEQ_TP_RELEASE_WAIT,
     SEQ_FINISH,
   };
@@ -406,6 +407,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     if(_Wait_MsgStream(appwk->setup, mpw) == TRUE){
       if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
         _Clear_MsgStream(mpw);
+        PMSND_PlaySE(MONOLITH_SE_MSG);
         if(GFL_UI_TP_GetTrg() == FALSE){
           _SetCursorPos(mpw, _DUMMY_PANEL_UP_NUM, _SET_CURSOR_MODE_INIT);
         }
@@ -437,6 +439,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
         else{
           GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         }
+        PMSND_PlaySE(MONOLITH_SE_CANCEL);
         (*seq) = SEQ_FINISH;
         break;
       }
@@ -467,7 +470,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     }
     
     if(mpw->decide_cursor_pos != _CURSOR_POS_NONE){
-      PMSND_PlaySE( SEQ_SE_FLD_133 );
+      PMSND_PlaySE( MONOLITH_SE_DECIDE );
       *seq = SEQ_YESNO_STREAM;
     }
     break;
@@ -529,29 +532,37 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     break;
   case SEQ_DECIDE_STREAM_WAIT:
     if(_Wait_MsgStream(appwk->setup, mpw) == TRUE){
-      if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
-        _Clear_MsgStream(mpw);
-        {
-          GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
-          INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude(GAMEDATA_GetSaveControlWork(gamedata));
-          ISC_SAVE_SetGPowerID(intsave, mpw->use_gpower_id[mpw->decide_cursor_pos]);
-        }
-        {
-          GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(appwk->parent->gsys);
-          GameCommInfo_MessageEntry_GetPower(game_comm, 
-            GAMEDATA_GetIntrudeMyID(GAMESYSTEM_GetGameData(appwk->parent->gsys)), 
-            appwk->parent->palace_area);
-        }
-        appwk->common->power_eqp_update = TRUE;
-        mpw->decide_cursor_pos = _CURSOR_POS_NONE;
-        MonolithTool_PanelBG_Focus(appwk, TRUE, FADE_SUB_BG);
-        MonolithTool_PanelOBJ_Focus(appwk, &mpw->panel, 1, PANEL_NO_FOCUS, FADE_SUB_OBJ);
-        if(GFL_UI_TP_GetTrg()){
-          *seq = SEQ_TP_RELEASE_WAIT;
-        }
-        else{
-          *seq = SEQ_FINISH;
-        }
+      PMSND_PlaySE( MONOLITH_SE_GPOWER_EQP );
+      *seq = SEQ_DECIDE_STREAM_KEY_WAIT;
+    }
+    break;
+  case SEQ_DECIDE_STREAM_KEY_WAIT:
+    if(PMSND_CheckPlayingSEIdx(MONOLITH_SE_GPOWER_EQP) == TRUE){
+      break;
+    }
+    
+    if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+      _Clear_MsgStream(mpw);
+      {
+        GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
+        INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude(GAMEDATA_GetSaveControlWork(gamedata));
+        ISC_SAVE_SetGPowerID(intsave, mpw->use_gpower_id[mpw->decide_cursor_pos]);
+      }
+      {
+        GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(appwk->parent->gsys);
+        GameCommInfo_MessageEntry_GetPower(game_comm, 
+          GAMEDATA_GetIntrudeMyID(GAMESYSTEM_GetGameData(appwk->parent->gsys)), 
+          appwk->parent->palace_area);
+      }
+      appwk->common->power_eqp_update = TRUE;
+      mpw->decide_cursor_pos = _CURSOR_POS_NONE;
+      MonolithTool_PanelBG_Focus(appwk, TRUE, FADE_SUB_BG);
+      MonolithTool_PanelOBJ_Focus(appwk, &mpw->panel, 1, PANEL_NO_FOCUS, FADE_SUB_OBJ);
+      if(GFL_UI_TP_GetTrg()){
+        *seq = SEQ_TP_RELEASE_WAIT;
+      }
+      else{
+        *seq = SEQ_FINISH;
       }
     }
     break;
@@ -1297,12 +1308,14 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
       else{
         _SetCursorPos(mpw, set_pos, _SET_CURSOR_MODE_KEY);
       }
+      PMSND_PlaySE(MONOLITH_SE_SELECT);
       return FALSE;
     }
     else{
       if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
         _SetCursorPos(mpw, mpw->cursor_pos, _SET_CURSOR_MODE_KEY);
         GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+        PMSND_PlaySE(MONOLITH_SE_DECIDE);
         return TRUE;
       }
       else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
@@ -1310,7 +1323,9 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
         if(list_space_pos != 0){
           check_topno++;
         }
-        _SetCursorPos(mpw, mpw->cursor_pos - 1, _SET_CURSOR_MODE_KEY);
+        if(_SetCursorPos(mpw, mpw->cursor_pos - 1, _SET_CURSOR_MODE_KEY) == TRUE){
+          PMSND_PlaySE(MONOLITH_SE_SELECT);
+        }
         if(mpw->cursor_pos < check_topno){
           mpw->one_speed = -(POWER_LIST_SPACE << 8);
         }
@@ -1322,7 +1337,9 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
         if(bottom_list_space != 0){
           //check_bottomno--;
         }
-        _SetCursorPos(mpw, mpw->cursor_pos + 1, _SET_CURSOR_MODE_KEY);
+        if(_SetCursorPos(mpw, mpw->cursor_pos + 1, _SET_CURSOR_MODE_KEY) == TRUE){
+          PMSND_PlaySE(MONOLITH_SE_SELECT);
+        }
         if(mpw->cursor_pos >= check_bottomno){
           mpw->one_speed = POWER_LIST_SPACE << 8;
         }
@@ -1384,6 +1401,7 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
           if(list_no != _LIST_NO_NONE){
             decide_on = TRUE;
             cursor_pos = list_no;
+            PMSND_PlaySE(MONOLITH_SE_SELECT);
           }
         }
       }
@@ -1414,14 +1432,16 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
  *
  * @param   mpw		
  * @param   cursor_pos		カーソル位置(項目番号) ※未選択にするには _CURSOR_POS_NONE
+ *
+ * @retval  TRUE:カーソル位置を変更した　FALSE:カーソル位置を変更しなかった
  */
 //--------------------------------------------------------------
-static void _SetCursorPos(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos, _SET_CURSOR_MODE mode)
+static BOOL _SetCursorPos(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos, _SET_CURSOR_MODE mode)
 {
   if(cursor_pos != _CURSOR_POS_NONE 
       && (cursor_pos >= mpw->power_list_num - _DUMMY_PANEL_DOWN_NUM 
       || cursor_pos < _DUMMY_PANEL_UP_NUM)){
-    return;
+    return FALSE;
   }
 
   mpw->backup_cursor_pos = mpw->cursor_pos;
@@ -1435,6 +1455,7 @@ static void _SetCursorPos(MONOLITH_PWSELECT_WORK *mpw, s32 cursor_pos, _SET_CURS
   mpw->cursor_pos = cursor_pos;
   mpw->cursor_pos_update = TRUE;
   mpw->cursor_mode = mode;
+  return TRUE;
 }
 
 //--------------------------------------------------------------

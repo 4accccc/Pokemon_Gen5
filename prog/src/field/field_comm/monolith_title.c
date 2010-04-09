@@ -17,6 +17,7 @@
 #include "intrude_types.h"
 #include "system/bmp_winframe.h"
 #include "gamesystem/msgspeed.h"
+#include "monolith_snd_def.h"
 
 
 //==============================================================================
@@ -270,6 +271,7 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
         mtw->no_focus = FALSE;
         MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, TitlePanelMax[mtw->mission_occ], 
           mtw->cursor_pos, FADE_SUB_OBJ);
+        PMSND_PlaySE(MONOLITH_SE_SELECT);
       }
       else if(trg & PAD_BUTTON_DECIDE){
         mtw->select_panel = TitlePanelSelectIndex[mtw->mission_occ][mtw->cursor_pos];
@@ -286,6 +288,7 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
         }
         MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, 
           TitlePanelMax[mtw->mission_occ], mtw->cursor_pos, FADE_SUB_OBJ);
+        PMSND_PlaySE(MONOLITH_SE_SELECT);
       }
       else if(repeat & PAD_KEY_UP){
         mtw->cursor_pos--;
@@ -295,6 +298,7 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
         MonolithTool_PanelOBJ_Focus(
           appwk, mtw->panel, TitlePanelMax[mtw->mission_occ], 
           mtw->cursor_pos, FADE_SUB_OBJ);
+        PMSND_PlaySE(MONOLITH_SE_SELECT);
       }
     }
     break;
@@ -302,11 +306,13 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
     if(mtw->select_panel == TITLE_PANEL_MISSION){
       if(appwk->parent->list_occ == FALSE){
         OS_TPrintf("ミッション選択候補リストが未受信\n");
+        GF_ASSERT(0);
         (*seq)--;
         break;
       }
       else if(appwk->parent->intcomm != NULL 
           && MISSION_RecvCheck(&appwk->parent->intcomm->mission) == TRUE){  //ミッション受注済み
+        PMSND_PlaySE(MONOLITH_SE_DECIDE);
         _Set_MsgStream(mtw, appwk->setup, msg_mono_title_004);
         (*seq) = _SEQ_STREAM_WAIT;
         break;
@@ -315,9 +321,11 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
     if(mtw->select_panel != TITLE_PANEL_CANCEL){
       MonolithTool_PanelOBJ_Flash(appwk, mtw->panel, 
         TitlePanelMax[mtw->mission_occ], mtw->cursor_pos, FADE_SUB_OBJ);
+      PMSND_PlaySE(MONOLITH_SE_DECIDE);
     }
     else{
       MonolithTool_CancelIcon_FlashReq(&mtw->cancel_icon);
+      PMSND_PlaySE(MONOLITH_SE_CANCEL);
     }
     (*seq)++;
     break;
@@ -340,6 +348,7 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
     if(_Wait_MsgStream(appwk->setup, mtw) == TRUE){
       if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
         _Clear_MsgStream(mtw);
+        PMSND_PlaySE(MONOLITH_SE_MSG);
         *seq = _SEQ_MAIN;
       }
     }

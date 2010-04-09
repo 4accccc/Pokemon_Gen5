@@ -18,7 +18,7 @@
 #include "monolith.naix"
 #include "system/bmp_winframe.h"
 #include "gamesystem/msgspeed.h"
-#include "sound/pm_sndsys.h"
+#include "monolith_snd_def.h"
 
 
 //==============================================================================
@@ -307,6 +307,18 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
     if(_Wait_MsgStream(appwk->setup, mmw) == TRUE){
       if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
         _Clear_MsgStream(mmw);
+        PMSND_PlaySE(MONOLITH_SE_MSG);
+        
+        if(GFL_UI_TP_GetTrg()){
+          mmw->no_focus = TRUE;
+          MonolithTool_PanelOBJ_Focus(
+            appwk, &mmw->panel[_PANEL_ORDER], 1, PANEL_NO_FOCUS, FADE_SUB_OBJ);
+        }
+        else{
+          mmw->no_focus = FALSE;
+          MonolithTool_PanelOBJ_Focus(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
+        }
+        
         if(mmw->view_mode == VIEW_ORDER){
           *seq = SEQ_TOP;
         }
@@ -333,6 +345,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
       if(trg > 0 && mmw->no_focus == TRUE){
         mmw->no_focus = FALSE;
         MonolithTool_PanelOBJ_Focus(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
+        PMSND_PlaySE(MONOLITH_SE_SELECT);
         break;
       }
       else if(trg & (PAD_KEY_UP | PAD_KEY_RIGHT | PAD_KEY_DOWN | PAD_KEY_LEFT)){
@@ -355,6 +368,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
           }
         }
         appwk->common->mission_select_no = TownCursor_MoveTbl[now_pos];
+        PMSND_PlaySE(MONOLITH_SE_SELECT);
       }
       
       if(tp_ret >= TOUCH_TOWN0 && tp_ret < TOUCH_TOWN0 + MISSION_LIST_MAX){
@@ -362,11 +376,12 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
         appwk->common->mission_select_no = tp_ret;
         mmw->no_focus = TRUE;
         MonolithTool_PanelOBJ_Focus(appwk, &mmw->panel[_PANEL_ORDER], 1, PANEL_NO_FOCUS, FADE_SUB_OBJ);
+        PMSND_PlaySE(MONOLITH_SE_SELECT);
       }
       else if(tp_ret == TOUCH_RECEIVE || (trg & PAD_BUTTON_DECIDE)){
         OS_TPrintf("「受ける」選択\n");
         MonolithTool_PanelOBJ_Flash(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
-        PMSND_PlaySE( SEQ_SE_SYS_68 );
+        PMSND_PlaySE( MONOLITH_SE_DECIDE_MISSION );
         if(tp_ret == TOUCH_RECEIVE){
           GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
         }
@@ -384,6 +399,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
         else{
           GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         }
+        PMSND_PlaySE(MONOLITH_SE_CANCEL);
         (*seq) = SEQ_FINISH;
       }
     }
@@ -402,6 +418,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
         else{
           GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         }
+        PMSND_PlaySE(MONOLITH_SE_CANCEL);
         (*seq) = SEQ_FINISH;
       }
     }
@@ -437,6 +454,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
     if(_Wait_MsgStream(appwk->setup, mmw) == TRUE){
       if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
         _Clear_MsgStream(mmw);
+        PMSND_PlaySE(MONOLITH_SE_MSG);
         if((*seq) == SEQ_ORDER_OK_STREAM_WAIT){
           MISSION_SetMissionEntry(appwk->parent->intcomm, &appwk->parent->intcomm->mission);  //受注者の為、参加セット
           mmw->order_end = TRUE;
