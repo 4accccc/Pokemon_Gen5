@@ -813,6 +813,7 @@ static int card_palette_table[][2]={
 //----------------------------------------------------------------------------------
 static void SetCardPalette(TR_CARD_WORK *wk ,u8 inCardRank, const u8 inPokeBookHold)
 {
+
   if (inPokeBookHold){
       int Version = 1;
 
@@ -995,6 +996,12 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
 {
   // TRAINER_PALETTE(UP_DISPLAY)
   // CARD PALETTE
+#ifdef PM_DEBUG
+  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
+    wk->TrCardData->PokeBookFlg = 0;
+  }
+#endif
+
   SetCardPalette(wk,wk->TrCardData->CardRank, wk->TrCardData->PokeBookFlg);
 
   // UNSER_CASE_COVER PALETTE(UNDER_DISPLAY)
