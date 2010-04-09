@@ -9,6 +9,15 @@
 #ifndef ZONE_C03R1101_EVC_H
 #define ZONE_C03R1101_EVC_H
 
+#define C03R1101_SAGE1_01                  0
+#define C03R1101_SAGE3_01                  1
+#define C03R1101_SAGE6_01                  2
+#define C03R1101_HAKAIM_01                 3
+#define C03R1101_HAKAIM_02                 4
+#define C03R1101_HAKAIW_01                 5
+#define C03R1101_LEADER3_01                6
+#define C03R1101_LEADER8W_01               7
+#define C03R1101_SUPPORT_01                8
 
 #endif //ZONE_C03R1101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r1101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

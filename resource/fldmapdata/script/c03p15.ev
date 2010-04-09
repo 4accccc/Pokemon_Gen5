@@ -23,6 +23,9 @@ _EVENT_DATA		ev_c03p15_gentleman_01
 _EVENT_DATA   ev_zone_c03p15
 _EVENT_DATA   ev_init_c03p15
 _EVENT_DATA   ev_recover_c03p15
+_EVENT_DATA		ev_c03p15_support_01
+_EVENT_DATA		ev_c03p15_leader8w_01
+_EVENT_DATA		ev_scene_c03p15_plazmaevent_01
 _EVENT_DATA_END
 
 
@@ -49,9 +52,17 @@ INIT_EVENT_END
 /**************************************************************/
 /**************************************************************/
 INIT_EVENT_START  ev_init_c03p15
-  IF $LOCALWORK1 == 1 THEN
-    _BMODEL_CHANGE_VIEW_FLAG( SCR_BMID_EVENT, 6, 10, FALSE )
-  ENDIF
+	IF $LOCALWORK1 == 1 THEN
+    	_BMODEL_CHANGE_VIEW_FLAG( SCR_BMID_EVENT, 6, 10, FALSE )
+	ENDIF
+  
+  	IF $WK_SCENE_C03P15 == 1 THEN
+
+		_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 15, 0, 2, DIR_DOWN )
+	
+	ENDIF
+  
+  
 INIT_EVENT_END
 
 /**************************************************************/
@@ -76,3 +87,285 @@ EVENT_START		ev_c03p15_gentleman_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p15_gentleman_01 )
 EVENT_END
 
+/**************************************************************/
+/* 			SUPPORT		C03P15								  */
+/**************************************************************/
+EVENT_START		ev_c03p15_support_01
+
+	//くさタイプ選択の場合
+	IF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_KUSA THEN
+		//0に初期選択ポケモンの名前をセット
+		_MONS_NAME( 1, MONSNO_557 )	//スイッコ
+
+	//ほのおタイプ選択の場合
+	ELSIF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_HONOO THEN
+		//0に初期選択ポケモンの名前をセット
+		_MONS_NAME( 1, MONSNO_551 )	//クサヘビ
+
+	//みずタイプ選択の場合
+	ELSE
+		//0に初期選択ポケモンの名前をセット
+		_MONS_NAME( 1, MONSNO_554 )	//ホットン
+		
+	ENDIF
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p15_white_03 )
+EVENT_END
+
+/**************************************************************/
+/* 			LEADER8W	C03P15								  */
+/**************************************************************/
+EVENT_START		ev_c03p15_leader8w_01
+_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_MF( msg_c03p15_leader8w_03, msg_c03p15_leader8w_04, C03P15_LEADER8W_01, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*			シーンチェンジスクリプト						  */
+/**************************************************************/
+//C03P15が1の時に起動
+EVENT_START		ev_scene_c03p15_plazmaevent_01
+
+	//アーティが自機に気付く
+	_OBJ_ANIME( C03P15_LEADER3_01, anm_leader3_kiduku )
+	_OBJ_ANIME_WAIT()
+	
+	//こっち　こっち！
+	_BALLOONWIN_OBJMSG( msg_c03p15_leader3_01 , C03P15_LEADER3_01 )
+	_MSGWIN_CLOSE()
+
+	//自機：近づく
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come )
+	_OBJ_ANIME_WAIT()
+
+	_CAMERA_START()		//カメラ操作開始
+    _CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	
+	_CAMERA_MOVE( 8315,0,1060864,1015808,0,688128,45 )
+	
+	//アーティ：右を向く
+	_OBJ_ANIME( C03P15_LEADER3_01, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+	
+	//プラズマだん
+	_BALLOONWIN_OBJMSG( msg_c03p15_leader3_02 , C03P15_LEADER3_01 )
+	_MSGWIN_CLOSE()
+	
+	//くさタイプ選択の場合
+	IF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_KUSA THEN
+		//0に初期選択ポケモンの名前をセット
+		_MONS_NAME( 1, MONSNO_557 )	//スイッコ
+	//ほのおタイプ選択の場合
+	ELSIF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_HONOO THEN
+		//0に初期選択ポケモンの名前をセット
+		_MONS_NAME( 1, MONSNO_551 )	//クサヘビ
+	//みずタイプ選択の場合
+	ELSE
+		//0に初期選択ポケモンの名前をセット
+		_MONS_NAME( 1, MONSNO_554 )	//ホットン
+	ENDIF
+	
+	//どうしよう……　あたしの　ポケモン
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG( msg_c03p15_white_01 , C03P15_SUPPORT_01 )
+	_MSGWIN_CLOSE()
+
+	//あたしね　おねーちゃんの　ひめいを　きいて
+	_OBJ_ANIME( C03P15_LEADER8W_01, anm_leader8w_come )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_c03p15_leader8w_01 , C03P15_LEADER8W_01 )
+	_MSGWIN_CLOSE()
+
+	//アイリス……　きみは　できることを　したんだから
+	_BALLOONWIN_OBJMSG( msg_c03p15_leader3_03 , C03P15_LEADER3_01 )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( C03P15_LEADER8W_01, anm_leader8w_jump )
+	_OBJ_ANIME_WAIT()
+	
+	//でも　ダメだもん！　ひとの　ポケモンを
+	_BALLOONWIN_OBJMSG( msg_c03p15_leader8w_02 , C03P15_LEADER8W_01 )
+	_MSGWIN_CLOSE()
+	
+	//……アイリスちゃん
+	_OBJ_ANIME( C03P15_SUPPORT_01, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_c03p15_white_02 , C03P15_SUPPORT_01 )
+	_MSGWIN_CLOSE()
+	
+	//うん！　だから　ポケモンを　とりかえす
+	_BALLOONWIN_OBJMSG( msg_c03p15_leader3_04 , C03P15_LEADER3_01 )
+	_OBJ_ANIME( C03P15_LEADER3_01, anm_stay_u )
+	_BALLOONWIN_OBJMSG_MF( msg_c03p15_leader3_05, msg_c03p15_leader3_06, C03P15_LEADER3_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( C03P15_LEADER3_01, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+	
+	_BALLOONWIN_OBJMSG( msg_c03p15_leader3_07 , C03P15_LEADER3_01 )
+	_MSGWIN_CLOSE()
+
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+
+	//プラズマ団登場
+	_OBJ_ADD_EX( 15,2,DIR_DOWN,MMDL_ID_EVENTOBJ_00,HAKAIW,MV_DMY )
+	
+	//プラズマ団：数歩移動
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_plazma_come )
+	_OBJ_ANIME_WAIT()
+	
+	//一同プラズマ団を見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
+	_OBJ_ANIME( C03P15_LEADER3_01, anm_stay_u )
+	_OBJ_ANIME( C03P15_LEADER8W_01, anm_stay_u )
+	_OBJ_ANIME( C03P15_SUPPORT_01, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+	
+	//なんで　ジムリーダーが　いるの！？
+	_BALLOONWIN_OBJMSG( msg_c03p15_hakaiw_01 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+
+	//プラズマ団：逃げる
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_plazma_leave )
+	_OBJ_ANIME_WAIT()
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+
+	//アーティ：自機の真横に移動
+	_OBJ_ANIME( C03P15_LEADER3_01, anm_leader3_mayoko )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_l )
+	_OBJ_ANIME_WAIT()
+	
+	//～　いくよ！　アイリス！　きみは　そのコの　そばにいて
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG_MF( msg_c03p15_leader3_08, msg_c03p15_leader3_09, C03P15_LEADER3_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//アーティ：追いかける
+	_OBJ_ANIME( C03P15_LEADER3_01, anm_leader3_leave )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
+	_OBJ_ANIME_WAIT()
+
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+
+	//アーティＯＢＪ削除
+	_OBJ_DEL( C03P15_LEADER3_01 )
+	
+	//あたし　ベルおねーちゃんの　ボディガードを　してる！
+	_OBJ_ANIME( C03P15_LEADER8W_01, anm_leader8w_guard )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( C03P15_SUPPORT_01, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 20 )
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_d )
+	_OBJ_ANIME( C03P15_LEADER8W_01, anm_stay_u )
+	_OBJ_ANIME( C03P15_SUPPORT_01, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+	
+	_BALLOONWIN_OBJMSG_MF( msg_c03p15_leader8w_03, msg_c03p15_leader8w_04, C03P15_LEADER8W_01, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+	//カメラ戻す
+	_CAMERA_RECV_MOVE( 30 )//カメラ復帰移動
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+
+	//========================================/
+	
+	//イベント終了
+	$WK_SCENE_C03P15 = 2
+	
+	//C03外周イベント開始
+	$WK_SCENE_C03 = 1
+	
+	//C03アーティのフラグリセット
+	_FLAG_RESET( FV_C03_GUIDE_01 )
+
+	//アーティフラグセット
+	_FLAG_SET( FV_C03P15_LEADER3 )
+	
+	//========================================/
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//		PLAZMA EVENT用アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_leader3_kiduku
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_plazma_come
+	_ANIME_DATA		AC_WALK_D_8F,5
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_player_come
+	_ANIME_DATA		AC_WALK_D_8F,7
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader8w_come
+	_ANIME_DATA		AC_WALK_U_4F,1
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader8w_guard
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader8w_jump
+	_ANIME_DATA		AC_STAY_JUMP_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_plazma_leave
+	_ANIME_DATA		AC_WALK_U_4F,5
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader3_mayoko
+	_ANIME_DATA		AC_WALK_U_4F,1
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader3_leave
+	_ANIME_DATA		AC_WALK_U_4F,8
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA		AC_DIR_U,1
+	_ANIME_DATA		ACMD_END,0

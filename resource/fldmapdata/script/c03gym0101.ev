@@ -40,6 +40,7 @@ _EVENT_DATA		ev_c03gym0101_trainer_01
 _EVENT_DATA		ev_c03gym0101_trainer_02
 _EVENT_DATA		ev_c03gym0101_leader3_01
 _EVENT_DATA		ev_c03gym0101_sunglasses_01
+_EVENT_DATA		ev_pos_c03gym0101_stopper_01
 _EVENT_DATA_END
 
 
@@ -83,44 +84,52 @@ INIT_EVENT_END
 /************************************************************/
 EVENT_START	ev_c03gym0101_sunglasses_01
 
-	_TALK_OBJ_START()
+	IF $WK_SCENE_C03GYM0101 == 0 THEN
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_stop_01 )
+		
+	ELSE
+		
+		_TALK_OBJ_START()
+		
+		//バッジフラグ取得
+		_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_03 )
 
-	//バッジフラグ取得
-	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_03 )
-
-	//バッジフラグで分岐
-	IF $SCWK_TEMP0 == 0 THEN
+		//バッジフラグで分岐
+		IF $SCWK_TEMP0 == 0 THEN
 		//バッジ入手前の処理
 
-		//アイテム入手フラグで分岐
-		IF FLAG_OFF( FE_C03GYM_ITEM ) THEN
-			//アイテム未入手なら、おいしいみず入手イベント
-			_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_01 )
-			_BALLOONWIN_CLOSE()
-			_ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
-			_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_02 )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
+			//アイテム入手フラグで分岐
+			IF FLAG_OFF( FE_C03GYM_ITEM ) THEN
+				//アイテム未入手なら、おいしいみず入手イベント
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_01 )
+				_BALLOONWIN_CLOSE()
+				_ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_02 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
 
-			_FLAG_SET( FE_C03GYM_ITEM )			//アイテム入手フラグをセット
+				_FLAG_SET( FE_C03GYM_ITEM )			//アイテム入手フラグをセット
+
+			ELSE
+				//入手済みならメッセージのみ
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_02 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ENDIF
 
 		ELSE
-			//入手済みならメッセージのみ
-			_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_02 )
+			//バッジ入手後の処理
+
+			//さすがっすよ！
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_03 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
+
 		ENDIF
-
-	ELSE
-		//バッジ入手後の処理
-
-		//さすがっすよ！
-		_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_glasses_03 )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-
-	ENDIF
 	
+	ENDIF
+
 EVENT_END
 	
 /************************************************************/
@@ -274,7 +283,7 @@ ev_leader3_btl:
 	$WK_SCENE_C03 = 1
 	
 	//TVTイベント用・C03P07
-	$WK_SCENE_C03P07 = 2
+	$WK_SCENE_C03P07 = 4
 
 	//トレーナーフラグセット
 	_TRAINER_FLAG_SET( TRID_JUGGLING_02 )
@@ -739,4 +748,88 @@ EVENT_START	ev_c03gym0101_trainer_02
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03gym0101_jugglimg_06_03 )
 EVENT_END
 
+/**************************************************************/
+/*			プラズマ団イベントクリア前　ストッパー			  */
+/**************************************************************/
+EVENT_START		ev_pos_c03gym0101_stopper_01
 
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+	
+	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ )
+
+	SWITCH $LWK_POSX
+	CASE 31 THEN
+		_OBJ_ANIME( C03GYM0101_SUNGLASSES_01, anm_come_31 )
+		_OBJ_ANIME_WAIT()
+	CASE 32 THEN
+		_OBJ_ANIME( C03GYM0101_SUNGLASSES_01, anm_come_32 )
+		_OBJ_ANIME_WAIT()
+	CASE 33 THEN
+		_OBJ_ANIME( C03GYM0101_SUNGLASSES_01, anm_come_33 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look )
+	_OBJ_ANIME_WAIT()
+
+	_BALLOONWIN_OBJMSG( msg_c03gym0101_glasses_stop_02 , C03GYM0101_SUNGLASSES_01 )
+	_MSGWIN_CLOSE()
+
+	SWITCH $LWK_POSX
+	CASE 31 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
+		_OBJ_ANIME( C03GYM0101_SUNGLASSES_01, anm_return_31 )
+		_OBJ_ANIME_WAIT()
+	CASE 32 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
+		_OBJ_ANIME( C03GYM0101_SUNGLASSES_01, anm_return_32 )
+		_OBJ_ANIME_WAIT()
+	CASE 33 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
+		_OBJ_ANIME( C03GYM0101_SUNGLASSES_01, anm_return_33 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//		プラズマ団イベントクリア前用　アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_come_31
+	_ANIME_DATA		AC_WALK_L_8F,3
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_come_32
+	_ANIME_DATA		AC_WALK_L_8F,2
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_come_33
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_return_31
+	_ANIME_DATA		AC_WALK_R_8F,3
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_return_32
+	_ANIME_DATA		AC_WALK_R_8F,2
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_return_33
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_player_back
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_player_look
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0

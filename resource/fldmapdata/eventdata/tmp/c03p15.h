@@ -11,6 +11,9 @@
 
 #define C03P15_WOMAN1_01                   0
 #define C03P15_GENTLEMAN_01                1
+#define C03P15_LEADER8W_01                 2
+#define C03P15_SUPPORT_01                  3
+#define C03P15_LEADER3_01                  4
 
 #endif //ZONE_C03P15_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03p15.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -5,5 +5,6 @@
 #define _C03R1101_DEF_H_
 
 //スクリプトデータID定義
+#define SCRID_POS_C03R1101_PLAZMA_01 (1)
 
 #endif //_C03R1101_DEF_H_

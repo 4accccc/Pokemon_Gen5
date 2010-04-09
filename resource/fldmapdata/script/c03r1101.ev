@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c03r1101.h"
-  //.include  "c03r1101.h"
+  .include  "c03r1101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-
+_EVENT_DATA		ev_pos_c03r1101_plazma_01
 _EVENT_DATA_END
 
 
@@ -29,3 +29,453 @@ _EVENT_DATA_END
 //ev_zone_c03r1101:
 //  _END
 
+/**************************************************************/
+/*		C03R1101	プラズマ団POSイベント					  */
+/**************************************************************/
+EVENT_START		ev_pos_c03r1101_plazma_01
+
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+	
+	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ )
+	
+	SWITCH $LWK_POSX
+	CASE 6 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come6 )
+	CASE 7 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come7 )
+	CASE 8 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come8 )
+	ENDSWITCH
+	
+	_OBJ_ANIME_WAIT()
+
+	_CAMERA_START()		//カメラ操作開始
+    _CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	
+	_CAMERA_MOVE( 9688,0,970752,491520,0,425984,25 )
+
+	//イベント曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
+
+	//これは　これは　ジムリーダーの　アーティさん
+	_BALLOONWIN_OBJMSG( msg_c03r1101_sage1_01 , C03R1101_SAGE1_01 )
+	_MSGWIN_CLOSE()
+	
+	//アーティ：キョロキョロする
+	_OBJ_ANIME( C03R1101_LEADER3_01, anm_leader3_kyoro )
+	_OBJ_ANIME_WAIT()
+	
+	//プラズマ団って　人が　持っているものが
+	_BALLOONWIN_OBJMSG( msg_c03r1101_leader3_01 , C03R1101_LEADER3_01 )
+	_MSGWIN_CLOSE()
+
+	//七賢人３：ゲーチスの横へ移動
+	_OBJ_ANIME( C03R1101_SAGE3_01, anm_sage3_sasayaku )
+	_OBJ_ANIME_WAIT()
+
+	//ジムの　めのまえに
+	_BALLOONWIN_OBJMSG( msg_c03r1101_sage3_01 , C03R1101_SAGE3_01 )
+	_MSGWIN_CLOSE()
+
+	//たしかに……　まあ
+	_BALLOONWIN_OBJMSG( msg_c03r1101_sage1_02 , C03R1101_SAGE1_01 )
+	_MSGWIN_CLOSE()
+
+	//しってるよ！
+	_BALLOONWIN_OBJMSG_WB( msg_c03r1101_leader8w_01w, msg_c03r1101_leader8w_01b, C03R1101_LEADER8W_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//ゲーチス：一歩前へ	七賢人３：後ろへ下がる
+	_OBJ_ANIME( C03R1101_SAGE3_01, anm_sage3_sasayaku1 )
+	_OBJ_ANIME( C03R1101_SAGE1_01, anm_sage1_talk )
+	_OBJ_ANIME_WAIT()
+	
+	//そう　おおくの　たみが　あらそっていた　せかいを
+	_OBJ_ANIME( C03R1101_SAGE1_01, anm_sage1_talk1 )
+	_BALLOONWIN_OBJMSG_WB( msg_c03r1101_sage1_03w, msg_c03r1101_sage1_03b, C03R1101_SAGE1_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	_OBJ_ANIME_WAIT()
+	
+	//いまいちど！　えいゆうと　ポケモンを
+	_OBJ_ANIME( C03R1101_SAGE1_01, anm_sage1_talk2 )
+	_BALLOONWIN_OBJMSG( msg_c03r1101_sage1_04 , C03R1101_SAGE1_01 )
+	_MSGWIN_CLOSE()
+	_OBJ_ANIME_WAIT()
+	
+	//この　ヒウンには　たっくさんの　ひとが　いるよ
+	_BALLOONWIN_OBJMSG_POS( msg_c03r1101_leader3_02 , C03R1101_LEADER3_01, POS_DL )
+	
+	//七賢人が向かい合う
+	_OBJ_ANIME( C03R1101_SAGE3_01, anm_stay_r )
+	_OBJ_ANIME( C03R1101_SAGE6_01, anm_stay_l )
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 5 )
+	_SUBWIN_MSG( msg_c03r1101_sage3_02 , 10 , 3 , 1 ) 
+	_TIME_WAIT( 5 )
+	_SUBWIN_MSG( msg_c03r1101_sage6_01 , 20 , 5 , 2 )
+	
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
+	_TIME_WAIT( 5 )
+	_SUBWIN_CLOSE( 1 )
+	_TIME_WAIT( 5 )
+	_SUBWIN_CLOSE( 2 )
+
+	_OBJ_ANIME( C03R1101_SAGE3_01, anm_stay_d )
+	_OBJ_ANIME( C03R1101_SAGE6_01, anm_stay_d )
+
+	//だけど　ポケモンを　だいじに　しているのは
+	_BALLOONWIN_OBJMSG_POS( msg_c03r1101_leader3_03 , C03R1101_LEADER3_01, POS_DL )
+	_MSGWIN_CLOSE()
+	
+	//アーティ：一歩前へ
+	_OBJ_ANIME( C03R1101_LEADER3_01, anm_leader3_talk )
+	_OBJ_ANIME_WAIT()
+	
+	//カラクサの　えんぜつ　だっけ？
+	_BALLOONWIN_OBJMSG_POS( msg_c03r1101_leader3_04 , C03R1101_LEADER3_01, POS_DL )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( C03R1101_SAGE1_01, anm_stay_d )
+	_OBJ_ANIME_WAIT()
+	
+	//フハハハ！　つかみどころが　ないようで
+	_BALLOONWIN_OBJMSG( msg_c03r1101_sage1_05 , C03R1101_SAGE1_01 )
+	_MSGWIN_CLOSE()
+	
+	//そこの　むすめ
+	_BALLOONWIN_OBJMSG( msg_c03r1101_sage1_06 , C03R1101_SAGE1_01 )
+	_MSGWIN_CLOSE()
+	
+	//したっぱがベルにポケモンを渡す
+	_OBJ_ANIME( C03R1101_HAKAIW_01, anm_hakaiw_watasu )
+	_OBJ_ANIME_WAIT()
+	
+	//あっ　ありがとう
+	_BALLOONWIN_OBJMSG( msg_c03r1101_white_01 , C03R1101_SUPPORT_01 )
+	_MSGWIN_CLOSE()
+	
+	//アイリス：その場ジャンプ後にサポートを見る
+	_OBJ_ANIME( C03R1101_LEADER8W_01, anm_leader8w_jump )
+	_OBJ_ANIME_WAIT()
+	
+	//おねえちゃん！　こいつら　ひとの　だいじな
+	_BALLOONWIN_OBJMSG( msg_c03r1101_leader8w_02 , C03R1101_LEADER8W_01 )
+	_MSGWIN_CLOSE()
+	
+	//くさタイプ選択の場合
+	IF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_KUSA THEN
+		//0に初期選択ポケモンの名前をセット
+		_MONS_NAME( 0, MONSNO_557 )	//スイッコ
+	//ほのおタイプ選択の場合
+	ELSIF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_HONOO THEN
+		//0に初期選択ポケモンの名前をセット
+		_MONS_NAME( 0, MONSNO_551 )	//クサヘビ
+	//みずタイプ選択の場合
+	ELSE
+		//0に初期選択ポケモンの名前をセット
+		_MONS_NAME( 0, MONSNO_554 )	//ホットン
+	ENDIF
+	
+	//で　でもお
+	_OBJ_ANIME( C03R1101_SUPPORT_01, anm_stay_l )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_c03r1101_white_02 , C03R1101_SUPPORT_01 )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( C03R1101_SAGE1_01, anm_stay_d )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME( C03R1101_SUPPORT_01, anm_stay_u )
+	_OBJ_ANIME( C03R1101_LEADER8W_01, anm_stay_u )
+	_OBJ_ANIME_WAIT()
+	
+	//これは　うるわしい　ポケモンと　ひとの　ゆうじょう
+	_BALLOONWIN_OBJMSG( msg_c03r1101_sage1_07 , C03R1101_SAGE1_01 )
+	_MSGWIN_CLOSE()
+	
+	//画面暗転
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+
+	_TIME_WAIT( 30 )
+
+	//OBJ削除
+	_OBJ_DEL( C03R1101_SAGE1_01 )
+	_OBJ_DEL( C03R1101_SAGE3_01 )
+	_OBJ_DEL( C03R1101_SAGE6_01 )
+	_OBJ_DEL( C03R1101_HAKAIM_01 )
+	_OBJ_DEL( C03R1101_HAKAIW_01 )
+	_OBJ_DEL( C03R1101_HAKAIM_02 )
+
+	//画面暗転解除
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+
+	//BGM終了
+	_END_EVENT_BGM()
+	
+	//カメラ戻す
+	_CAMERA_RECV_MOVE( 20 )//カメラ復帰移動
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+	
+	//アイリス：アーティに歩み寄る
+	_OBJ_ANIME( C03R1101_LEADER8W_01, anm_leader8w_talk )
+	_OBJ_ANIME_WAIT()
+	
+	//どーして　わるいヤツを
+	_BALLOONWIN_OBJMSG( msg_c03r1101_leader8w_03 , C03R1101_LEADER8W_01 )
+	_MSGWIN_CLOSE()
+	
+	//んうん　だって　うばわれた
+	_OBJ_ANIME( C03R1101_LEADER3_01, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_c03r1101_leader3_05 , C03R1101_LEADER3_01 )
+	_MSGWIN_CLOSE()
+	
+	//アイリスちゃん　ありがとう！
+	_OBJ_ANIME( C03R1101_SUPPORT_01, anm_support_talk )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_c03r1101_white_03 , C03R1101_SUPPORT_01 )
+	_MSGWIN_CLOSE()
+	
+	//そっか　だったら　いいんだけど
+	_OBJ_ANIME( C03R1101_LEADER8W_01, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_c03r1101_leader8w_04 , C03R1101_LEADER8W_01 )
+	_MSGWIN_CLOSE()
+	
+	//で　みんなは　どうするのさ？
+	_OBJ_ANIME( C03R1101_LEADER3_01, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_c03r1101_leader3_06 , C03R1101_LEADER3_01 )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( C03R1101_LEADER8W_01, anm_stay_l )
+	_OBJ_ANIME_WAIT()
+	
+	//あたしは　ヒウンシティを　いろいろ
+	_OBJ_ANIME( C03R1101_SUPPORT_01, anm_walk_l )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_c03r1101_white_04 , C03R1101_SUPPORT_01 )
+	_MSGWIN_CLOSE()
+	
+	//だいじょーぶ！
+	_OBJ_ANIME( C03R1101_LEADER8W_01, anm_leader8w_talk1 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_c03r1101_leader8w_05 , C03R1101_LEADER8W_01 )
+	_MSGWIN_CLOSE()
+	
+	//アイリスちゃん……
+	_BALLOONWIN_OBJMSG( msg_c03r1101_white_05 , C03R1101_SUPPORT_01 )
+	_MSGWIN_CLOSE()
+	
+	//んー　いいねえ
+	_OBJ_ANIME( C03R1101_LEADER3_01, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_c03r1101_leader3_07 , C03R1101_LEADER3_01 )
+	_MSGWIN_CLOSE()
+	
+	//あと　おにーちゃん！
+	_OBJ_ANIME( C03R1101_LEADER8W_01, anm_stay_d )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_MF( msg_c03r1101_leader8w_06, msg_c03r1101_leader8w_07, C03R1101_LEADER8W_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ヤチェのみ　入手
+	_ITEM_EVENT_KEYWAIT( ITEM_YATHENOMI, 1 )
+	
+	//じゃーねー！！
+	_BALLOONWIN_OBJMSG( msg_c03r1101_leader8w_08 , C03R1101_LEADER8W_01 )
+	_MSGWIN_CLOSE()
+	
+	//アイリス：ベルを押して退場
+	_OBJ_ANIME( C03R1101_LEADER8W_01, anm_leader8w_push )
+	_OBJ_ANIME( C03R1101_SUPPORT_01, anm_support_push )
+	
+	_TIME_WAIT( 5 )
+	_SUBWIN_MSG( msg_c03r1101_white_06 , 20 , 5 , 3 ) 
+	_TIME_WAIT( 20 )
+	_SUBWIN_CLOSE( 3 )
+	_TIME_WAIT( 5 )
+	_SUBWIN_MSG( msg_c03r1101_white_07 , 24 , 9 , 4 )
+	_TIME_WAIT( 20 )
+	_SUBWIN_CLOSE( 4 )
+
+	//OBJ削除
+	_OBJ_DEL( C03R1101_LEADER8W_01 )
+	_OBJ_DEL( C03R1101_SUPPORT_01 )
+
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+	
+	//じゃあ　～くん　ボクは　ジムで
+	_OBJ_ANIME( C03R1101_LEADER3_01, anm_leader3_leave )
+	_OBJ_ANIME_WAIT()
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG_MF( msg_c03r1101_leader3_08, msg_c03r1101_leader3_09, C03R1101_LEADER3_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//アーティ・出る
+	_OBJ_ANIME( C03R1101_LEADER3_01, anm_leader3_leave1 )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_DEL( C03R1101_LEADER3_01 )
+
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+
+	//========================================/
+	
+	//C03R1101終了
+	$WK_SCENE_C03R1101 = 2
+	
+	//フラグセット
+	_FLAG_SET( FV_C03R1101_PLASMA )
+	
+	//ジムPOS無効
+	$WK_SCENE_C03GYM0101 = 1
+	
+	//========================================/
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//		C03R1101	イベント用アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_come6
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+	
+_ANIME_LABEL	anm_player_come7
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_player_come8
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader3_kyoro
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+	
+_ANIME_LABEL	anm_sage3_sasayaku
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_sage3_sasayaku1
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_sage1_talk
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_sage1_talk1
+	_ANIME_DATA		AC_WALK_L_16F,2
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_WALK_R_16F,4
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_sage1_talk2
+	_ANIME_DATA		AC_WALK_L_16F,2
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_stay_u
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_stay_d
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_stay_r
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_stay_l
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_walk_l
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+	
+_ANIME_LABEL	anm_leader3_talk
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+	
+_ANIME_LABEL	anm_hakaiw_watasu
+	_ANIME_DATA		AC_WALK_D_4F,5
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_WALK_U_4F,5
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader8w_jump
+	_ANIME_DATA		AC_STAY_JUMP_U_8F,1
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader8w_talk
+	_ANIME_DATA		AC_WALK_U_4F,1
+	_ANIME_DATA		AC_WALK_L_4F,1
+	_ANIME_DATA		AC_STAY_JUMP_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_support_talk
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader3_move
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader8w_talk1
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		AC_STAY_JUMP_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader8w_push
+	_ANIME_DATA		AC_WALK_U_4F,1
+	_ANIME_DATA		AC_WALK_R_4F,1
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_WALK_D_4F,3
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_support_push
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_WALK_D_4F,2
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader3_leave
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader3_leave1
+	_ANIME_DATA		AC_WALK_D_8F,2
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0

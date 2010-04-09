@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/07 15:00:03
+#save date:2010/04/08 22:10:23
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03.wms
 #SECTION START:OBJ_EVENT
@@ -336,7 +336,7 @@ FV_C03_GUIDE_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_DOWN
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -350,7 +350,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-5 9 5
+5 0 0
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -526,41 +526,7 @@ EVENTDATA_POSTYPE_RAIL
 #hold event type:
 1
 #hold event number:
-2
-#event number: 0
-#Pos Event Label
-C03_RIVALEVENT_01
-#Pos Script Name
-SCRID_POS_C03_RIVALEVENT_01
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_C03
-#Event Trigger Work Value
 0
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-5 7 -2
-#size
-1 7
-#event number: 1
-#Pos Event Label
-C03_RIVALEVENT_02
-#Pos Script Name
-SCRID_POS_C03_RIVALEVENT_02
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-WK_SCENE_C03
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-5 11 -2
-#size
-1 7
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
@@ -661,9 +627,9 @@ EXIT_TYPE_SP30
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-3 23 -5
+3 25 -5
 #size
-6 1
+4 1
 #rail way
 DIR_LEFT
 #event number: 5
@@ -910,7 +876,7 @@ EVENTDATA_POSTYPE_RAIL
 #position
 5 0 -5
 #size
-5 1
+4 1
 #rail way
 DIR_LEFT
 #event number: 18

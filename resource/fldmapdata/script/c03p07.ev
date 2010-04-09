@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c03p07.h"
-  //.include  "c03p07.h"
+  .include  "c03p07.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -24,9 +24,9 @@ _EVENT_DATA		ev_c03p07_trainerw_01
 _EVENT_DATA		ev_scene_c03p07_tvt_01
 _EVENT_DATA		ev_pos_c03p07_rival_01
 _EVENT_DATA		ev_bg_c03p07_gymsign_01
-
 _EVENT_DATA		ev_init_c03p07
 _EVENT_DATA		ev_recover_c03p07
+_EVENT_DATA		ev_pos_c03p07_plazma_01
 _EVENT_DATA_END
 
 
@@ -79,7 +79,7 @@ EVENT_START		ev_scene_c03p07_tvt_01
   _MAP_FADE_END_CHECK()
 	
 	//トランシーバーイベント終了
-	$WK_SCENE_C03P07 = 3
+	$WK_SCENE_C03P07 = 5
 	
 EVENT_END
 
@@ -88,6 +88,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_pos_c03p07_rival_01
 //WK_SCENE_C03P07が０のときに起動
+
 	//階段SE
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
@@ -106,7 +107,7 @@ EVENT_START		ev_pos_c03p07_rival_01
 	_CAMERA_START()		//カメラ操作開始
     _CAMERA_PURGE()		//対象物とカメラのバインドを解く
 	
-	_CAMERA_MOVE( 6917,0,933888,1343488,0,3178496,60 )
+	_CAMERA_MOVE( 6917,0,966656,1409024,0,3178496,60 )
 
 	//やあ　アーティさんに　いどんだけれど
 	_PLAYER_NAME(0)
@@ -136,7 +137,40 @@ EVENT_START		ev_pos_c03p07_rival_01
 
 	//ライバルのOBJ削除
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
 	
+	//ジムリーダー３出現
+	_OBJ_ADD_EX( 25,48,DIR_LEFT,MMDL_ID_EVENTOBJ_00,LEADER3,MV_DMY )
+
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_leader_move )
+	_OBJ_ANIME_WAIT()
+	
+	//自機：リーダーを見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
+	_OBJ_ANIME_WAIT()
+
+	//うおわ？
+	_PLAYER_NAME(0)
+	_BALLOONWIN_OBJMSG_MF( msg_c03p07_leader3_01, msg_c03p07_leader3_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_BALLOONWIN_OBJMSG( msg_c03p07_leader3_03 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_leave )
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_leader_leave )
+	_OBJ_ANIME_WAIT()
+
+	//リーダーのOBJ削除
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+
 	//カメラ戻す
 	_CAMERA_RECV_MOVE( 30 )//カメラ復帰移動
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
@@ -147,6 +181,13 @@ EVENT_START		ev_pos_c03p07_rival_01
 	
 	//ライバルジムイベント終了
 	$WK_SCENE_C03P07 = 1
+	
+	//プライムピアにベルとアイリス・アーティ出現
+	_FLAG_RESET( FV_C03P15_SUPPORT_LEADER8 )
+	_FLAG_RESET( FV_C03P15_LEADER3 )
+	
+	//C03P15のワークに１追加
+	$WK_SCENE_C03P15 = 1
 	
 	//========================================/
 
@@ -163,6 +204,11 @@ _ANIME_LABEL anm_player_gyoe
 _ANIME_LABEL anm_rival_move
 	_ANIME_DATA		AC_WALK_L_8F,3
 	_ANIME_DATA		ACMD_END,0
+	
+_ANIME_LABEL anm_leader_move
+	_ANIME_DATA		AC_WALK_L_4F,3
+	_ANIME_DATA		AC_MARK_GYOE,1
+	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_player_move
 	_ANIME_DATA		AC_WALK_L_8F,3
@@ -176,6 +222,11 @@ _ANIME_LABEL anm_rival_leave
 
 _ANIME_LABEL anm_player_leave
 	_ANIME_DATA		AC_DIR_D,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_leader_leave
+	_ANIME_DATA		AC_WALK_D_4F,12
+	_ANIME_DATA		AC_VANISH_ON,1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_stay_u
@@ -194,9 +245,422 @@ _ANIME_LABEL anm_stay_l
 	_ANIME_DATA		AC_STAY_WALK_L_8F,1
 	_ANIME_DATA		ACMD_END,0
 
+_ANIME_LABEL anm_stay4f_r
+	_ANIME_DATA		AC_STAY_WALK_R_4F,2
+	_ANIME_DATA		ACMD_END,0
+
 /**************************************************************/
 /*	C03P07	ジム看板										  */
 /**************************************************************/
 EVENT_START		ev_bg_c03p07_gymsign_01
 	_EASY_BGWIN_MSG( msg_c03p07_gymsign_01, TYPE_POST )
 EVENT_END
+
+/**************************************************************/
+/*		C03P07	プラズマ団ＰＯＳイベント					  */
+/**************************************************************/
+EVENT_START		ev_pos_c03p07_plazma_01
+
+	//自機の座標を見て、アーティの横へ誘導
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+	
+	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ )
+	
+	SWITCH $LWK_POSX
+	CASE 9 THEN		//X軸が9の場合
+		
+		SWITCH $LWK_POSZ
+		CASE 31 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_posx9_posz31 )
+		CASE 35 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_posx9_posz35 )
+		ENDSWITCH
+	
+	CASE 10 THEN	//X軸が10の場合
+	
+		SWITCH $LWK_POSZ
+		CASE 31 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_posx10_posz31 )
+		CASE 35 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_posx10_posz35 )
+		ENDSWITCH
+	
+	CASE 11 THEN	//X軸が11の場合
+
+		SWITCH $LWK_POSZ
+		CASE 31 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_posx11_posz31 )
+		CASE 35 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_posx11_posz35 )
+		ENDSWITCH
+
+	CASE 12 THEN	//X軸が12の場合
+
+		SWITCH $LWK_POSZ
+		CASE 31 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_posx12_posz31 )
+		CASE 32 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_posx12_posz32 )
+		CASE 33 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_posx12_posz32 )
+		CASE 34 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_posx12_posz32 )
+		CASE 35 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_posx12_posz32 )
+		ENDSWITCH
+
+	ENDSWITCH
+
+	_OBJ_ANIME_WAIT()
+
+	//＝＝＝＝＝座標分岐ここまで
+
+	_CAMERA_START()		//カメラ操作開始
+    _CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	
+	_CAMERA_MOVE( 6917,0,835568,753664,0,2195456,40 )
+
+	_OBJ_ANIME( C03P07_LEADER3_01, anm_stay_d )
+	_OBJ_ANIME_WAIT()
+
+	//まちがいなく　ここだね
+	_BALLOONWIN_OBJMSG( msg_c03p07_leader3_04 , C03P07_LEADER3_01 )
+	_MSGWIN_CLOSE()
+
+	//プラズマ団：そのば足踏み
+	_OBJ_ANIME( C03P07_HAKAIM_01, anm_stay4f_r )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( C03P07_LEADER3_01, anm_stay_l )
+	_OBJ_ANIME_WAIT()
+
+	//いない　いない！　この　なかに　なかまとか
+	_BALLOONWIN_OBJMSG( msg_c03p07_hakaim_01 , C03P07_HAKAIM_01 )
+	_YES_NO_WIN( SCWK_ANSWER )
+	_MSGWIN_CLOSE()
+	
+	//戦わない場合
+	IF $SCWK_ANSWER == SCR_NO THEN
+	
+		_BALLOONWIN_OBJMSG( msg_c03p07_hakaim_02 , C03P07_HAKAIM_01 )
+		_MSGWIN_CLOSE()
+	
+		_OBJ_ANIME( C03P07_LEADER3_01, anm_stay_d )
+		_OBJ_ANIME_WAIT()
+		
+		_BALLOONWIN_OBJMSG( msg_c03p07_leader3_07 , C03P07_LEADER3_01 )
+		_MSGWIN_CLOSE()
+		
+		//自機・戻される
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
+		_OBJ_ANIME_WAIT()
+	
+	//戦う場合
+	ELSE
+		
+		//くそー！　おれは　こっちの　よわそうな
+		_BALLOONWIN_OBJMSG( msg_c03p07_hakaim_03 , C03P07_HAKAIM_01 )
+		_MSGWIN_CLOSE()
+	
+		//ったく！　というわけで
+		_OBJ_ANIME( C03P07_LEADER3_01, anm_stay_d )
+		_OBJ_ANIME_WAIT()
+		_PLAYER_NAME(0)
+		_BALLOONWIN_OBJMSG_MF( msg_c03p07_leader3_05, msg_c03p07_leader3_06, C03P07_LEADER3_01, POS_DEFAULT )
+		_MSGWIN_CLOSE()
+	
+		//プラズマアニメ：アーティ一歩下がる
+		_OBJ_ANIME( C03P07_HAKAIM_01, anm_hakaim1_battle )
+		_OBJ_ANIME( C03P07_HAKAIM_02, anm_hakaim2_battle )
+		_OBJ_ANIME( C03P07_HAKAIW_01, anm_hakaiw1_battle )
+		_OBJ_ANIME( C03P07_LEADER3_01, anm_leader3_battle )
+		_OBJ_ANIME_WAIT()
+		
+		//プラズマ団とポケモン勝負
+		_TRAINER_BTL_SET( TRID_BOSS_01, 0 )
+	
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		
+			_CAMERA_START()		//カメラ操作開始
+			_CAMERA_PURGE()		//対象物とカメラのバインドを解く
+			_CAMERA_MOVE( 6917,0,835568,753664,0,2195456,1 )
+		
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF
+		
+		//プラズマ団1歩ずつ下がる
+		_OBJ_ANIME( C03P07_HAKAIM_01, anm_hakaim1_battle1 )
+		_OBJ_ANIME( C03P07_HAKAIM_02, anm_hakaim2_battle1 )
+		_OBJ_ANIME( C03P07_HAKAIW_01, anm_hakaiw1_battle1 )
+		_OBJ_ANIME_WAIT()
+		
+		//まずい！　まずいまずいまずい
+		_BALLOONWIN_OBJMSG( msg_c03p07_hakaim_04 , C03P07_HAKAIM_01 )
+		_MSGWIN_CLOSE()
+		
+		//プラズマ団：ビル内に逃げる
+		_OBJ_ANIME( C03P07_HAKAIM_01, anm_hakaim1_battle2 )
+		_OBJ_ANIME( C03P07_HAKAIM_02, anm_hakaim2_battle2 )
+		_OBJ_ANIME( C03P07_HAKAIW_01, anm_hakaiw1_battle2 )
+		_OBJ_ANIME_WAIT()
+		
+		//プラズマ団ＯＢＪ削除
+		_OBJ_DEL( C03P07_HAKAIM_01 )
+		_OBJ_DEL( C03P07_HAKAIM_02 )
+		_OBJ_DEL( C03P07_HAKAIW_01 )
+		
+		//階段SE
+		_SE_PLAY( SEQ_SE_KAIDAN )
+		_SE_WAIT()
+		
+		//アイリスとベル登場
+		_FLAG_RESET( FV_C03P07_SUPPORT_LEADER8 )
+		_OBJ_ADD( C03P07_SUPPORT_01 )
+		_OBJ_ADD( C03P07_LEADER8W_01 )
+		
+		//アイリス・ベル：自機の前へ
+		_OBJ_ANIME( C03P07_SUPPORT_01, anm_support_come )
+		_OBJ_ANIME( C03P07_LEADER8W_01, anm_leader8w_come )
+		_OBJ_ANIME_WAIT()
+	
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
+		_OBJ_ANIME_WAIT()
+	
+		//はあ　まよっちゃった　ライブキャスターで
+		_BALLOONWIN_OBJMSG( msg_c03p07_leader8w_01 , C03P07_LEADER8W_01 )
+		_MSGWIN_CLOSE()
+		
+		//ここに　プラズマ団がいる
+		_BALLOONWIN_OBJMSG( msg_c03p07_leader3_08 , C03P07_LEADER3_01 )
+		_MSGWIN_CLOSE()
+		
+		//アーティ：ビル内へ
+		_OBJ_ANIME( C03P07_LEADER3_01, anm_leader3_ou )
+		_OBJ_ANIME_WAIT()
+
+		//階段SE
+		_SE_PLAY( SEQ_SE_KAIDAN )
+		_SE_WAIT()
+
+		//アイリス：その場ジャンプ後・ベルの前へ
+		_OBJ_ANIME( C03P07_LEADER8W_01, anm_leader8w_ou )
+		_OBJ_ANIME_WAIT()
+		
+		//よーし！　こんどは　あたしも　たたかう！
+		_BALLOONWIN_OBJMSG( msg_c03p07_leader8w_02 , C03P07_LEADER8W_01 )
+		_MSGWIN_CLOSE()
+		
+		//アイリス・ベルを引っ張る
+		_OBJ_ANIME( C03P07_LEADER8W_01, anm_leader8w_ou1 )
+		_OBJ_ANIME( C03P07_SUPPORT_01, anm_support_ou )
+		_OBJ_ANIME_WAIT()
+		
+		//ちょ　ちょっとお
+		_PLAYER_NAME(0)
+		_BALLOONWIN_OBJMSG( msg_c03p07_white_01 , C03P07_SUPPORT_01 )
+		_MSGWIN_CLOSE()
+		
+		//アイリス・ベル・ビル内へ
+		_OBJ_ANIME( C03P07_LEADER8W_01, anm_leader8w_ou2 )
+		_OBJ_ANIME( C03P07_SUPPORT_01, anm_support_ou1 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_l )
+		_OBJ_ANIME_WAIT()
+
+		//階段SE
+		_SE_PLAY( SEQ_SE_KAIDAN )
+		_SE_WAIT()
+
+		//アイリス・ベルのOBJ削除
+		_OBJ_DEL( C03P07_LEADER8W_01 )
+		_OBJ_DEL( C03P07_SUPPORT_01 )
+		
+		//========================================/
+		
+		//プラズマ団イベント終了
+		$WK_SCENE_C03P07 = 3
+		
+		//ビル内にゲーチスその他出現＆イベント開始
+		$WK_SCENE_C03R1101 = 1
+		_FLAG_RESET( FV_C03R1101_PLASMA )
+		
+		//C03P07のイベント関連OBJフラグセット
+		_FLAG_SET( FV_C03P07_SUPPORT_LEADER8 )
+		_FLAG_SET( FV_C03P07_PLASMA_LEADER3 )
+		
+		//========================================/
+		
+	ENDIF
+	
+	//カメラ戻す
+	_CAMERA_RECV_MOVE( 30 )//カメラ復帰移動
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//		C03P07	プラズマ団イベント用アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_posx9_posz31
+	_ANIME_DATA		AC_WALK_R_8F,3
+	_ANIME_DATA		AC_WALK_D_8F,2
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_posx9_posz35
+	_ANIME_DATA		AC_WALK_R_8F,2
+	_ANIME_DATA		AC_WALK_U_8F,2
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_posx10_posz31
+	_ANIME_DATA		AC_WALK_R_8F,2
+	_ANIME_DATA		AC_WALK_D_8F,2
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_posx10_posz35
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_WALK_U_8F,2
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_posx11_posz31
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_WALK_D_8F,2
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_posx11_posz35
+	_ANIME_DATA		AC_WALK_U_8F,2
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_posx12_posz31
+	_ANIME_DATA		AC_WALK_D_8F,2
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_posx12_posz32
+	_ANIME_DATA		AC_WALK_D_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_posx12_posz33
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_posx12_posz34
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_posx12_posz35
+	_ANIME_DATA		AC_WALK_U_8F,2
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+	
+_ANIME_LABEL	anm_player_back
+	_ANIME_DATA		AC_WALK_R_8F,2
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim1_battle
+	_ANIME_DATA		AC_WALK_R_4F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim2_battle
+	_ANIME_DATA		AC_WALK_R_4F,3
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaiw1_battle
+	_ANIME_DATA		AC_WALK_R_4F,4
+	_ANIME_DATA		AC_WALK_U_4F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader3_battle
+	_ANIME_DATA		AC_DIR_L,1
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_WALK_R_4F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim1_battle1
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_WALK_L_16F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim2_battle1
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_WALK_L_16F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaiw1_battle1
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_WALK_D_16F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim1_battle2
+	_ANIME_DATA		AC_WALK_L_4F,2
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim2_battle2
+	_ANIME_DATA		AC_WALK_L_4F,3
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaiw1_battle2
+	_ANIME_DATA		AC_WALK_L_4F,5
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_support_come
+	_ANIME_DATA		AC_WALK_U_8F,5
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader8w_come
+	_ANIME_DATA		AC_WALK_U_4F,5
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader3_ou
+	_ANIME_DATA		AC_WALK_L_4F,6
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader8w_ou
+	_ANIME_DATA		AC_STAY_JUMP_L_8F,1
+	_ANIME_DATA		AC_WALK_L_4F,1
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader8w_ou1
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_WALK_U_4F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_support_ou
+	_ANIME_DATA		AC_WALK_U_4F,1
+	_ANIME_DATA		ACMD_END,0
+	
+_ANIME_LABEL	anm_leader8w_ou2
+	_ANIME_DATA		AC_WALK_L_4F,6
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_support_ou1
+	_ANIME_DATA		AC_WALK_U_4F,1
+	_ANIME_DATA		AC_WALK_L_4F,6
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0
+
