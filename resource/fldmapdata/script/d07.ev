@@ -56,7 +56,7 @@ EVENT_START  ev_pos_d07_rival_01
 	_FLAG_RESET(FV_D07_RIVAL_01)
 	_OBJ_ADD(D07_RIVAL_01)
 	
-	//【仮】専用曲鳴らす
+	//専用曲鳴らす
 	_START_TEMP_EVENT_BGM( SEQ_BGM_E_RIVAL )
 
 	//プレイヤーネームを格納

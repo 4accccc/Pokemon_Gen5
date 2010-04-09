@@ -242,6 +242,11 @@ EVENT_START   ev_scene_c07_leader7_01
 	_OBJ_ANIME( C07_NINJA_03 , anm_c07_ninja_coming_01 )
 	_OBJ_ANIME_WAIT()
 	
+	//イベント曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
+	
+	_TIME_WAIT ( 8 )
+	
 	//主人公・サポート・ライバルびっくりする
 	_OBJ_ANIME( MMDL_ID_PLAYER , anm_c07_player_surprised )
 	_OBJ_ANIME( C07_SUPPORT_01 , anm_c07_support_surprised )
@@ -281,6 +286,10 @@ EVENT_START   ev_scene_c07_leader7_01
 	_OBJ_DEL( C07_NINJA_01 )
 	_OBJ_DEL( C07_NINJA_02 )
 	_OBJ_DEL( C07_NINJA_03 )
+	
+	//BGM終了
+	_END_EVENT_BGM()
+	
 	
 	//サポートとライバル、ハチクの方を向く
 	_OBJ_ANIME( C07_SUPPORT_01 , anm_c07_rival_steystep_up )
