@@ -26,6 +26,14 @@
 
 #include "demo3d_data.h"
 
+///////////////////////////////////////////////////////////////
+//demo3dで表示するメッセージアーカイブのヘッダーを記述する
+#include "message.naix"
+#include "msg/msg_wheel_demo.h"
+
+
+///////////////////////////////////////////////////////////////
+//
 #define DEMO3D_DATA_RES_MAX (6) //1unitのリソースmax(imd+アニメ5種)
 
 typedef enum{
