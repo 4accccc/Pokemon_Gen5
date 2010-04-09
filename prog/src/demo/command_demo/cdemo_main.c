@@ -110,6 +110,13 @@ void CDEMOMAIN_BgInit( CDEMO_WORK * wk )
 	G2_SetBG2ControlDCBmp( GX_BG_SCRSIZE_DCBMP_256x256, GX_BG_AREAOVER_XLU, GX_BG_BMPSCRBASE_0x00000 );
 	G2_SetBG3ControlDCBmp( GX_BG_SCRSIZE_DCBMP_256x256, GX_BG_AREAOVER_XLU, GX_BG_BMPSCRBASE_0x20000 );
 
+	{	// 回転拡縮小初期化
+		MtxFx22 mtx;
+	  GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE, FX32_ONE, GFL_CALC2D_AFFINE_MAX_NORMAL );
+		G2_SetBG2Affine( &mtx, 0, 0, 0, 0 );
+		G2_SetBG3Affine( &mtx, 0, 0, 0, 0 );
+	}
+
 	{	// スクリーンクリア
 		void * buf = GFL_HEAP_AllocClearMemory( HEAPID_COMMAND_DEMO_L, 256*192*2 );
     GX_LoadBG2Bmp( buf, 0, 256*192*2 );
