@@ -18,6 +18,6 @@
 #define	MMLID_AREA_OUT18     12
 #define	MMLID_AREA_OUT20     13
 #define	MMLID_AREA_OUT22     14
-#define	MMLID_AREA_OUT30     15
+#define	MMLID_AREA_OUT31     15
 #define	MMLID_NOENTRY        16
 #endif
