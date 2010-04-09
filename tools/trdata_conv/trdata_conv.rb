@@ -25,26 +25,34 @@
   u16     gift_item;
 
 //トレーナー持ちポケモンパラメータ（データタイプノーマル）
-	u16		pow;			//セットするパワー乱数(u8でOKだけど4バイト境界対策）
+	u8		pow;			  //セットするパワー乱数
+  u8    para;       //セットするポケモンのパラメータ（上位4bit：特性　下位4bit：性別）
 	u16		level;			//セットするポケモンのレベル
 	u16		monsno;			//セットするポケモン
+	u16		formno;			//セットするフォルムナンバー
 
 //トレーナー持ちポケモンパラメータ（データタイプ技）
-	u16		pow;			//セットするパワー乱数(u8でOKだけど4バイト境界対策）
+	u8		pow;			  //セットするパワー乱数
+  u8    para;       //セットするポケモンのパラメータ（上位4bit：特性　下位4bit：性別）
 	u16		level;			//セットするポケモンのレベル
 	u16		monsno;			//セットするポケモン
+	u16		formno;			//セットするフォルムナンバー
 	u16		waza[4];		//持ってる技
 
 //トレーナー持ちポケモンパラメータ（データタイプアイテム）
-	u16		pow;			//セットするパワー乱数(u8でOKだけど4バイト境界対策）
+	u8		pow;			  //セットするパワー乱数
+  u8    para;       //セットするポケモンのパラメータ（上位4bit：特性　下位4bit：性別）
 	u16		level;			//セットするポケモンのレベル
 	u16		monsno;			//セットするポケモン
+	u16		formno;			//セットするフォルムナンバー
 	u16		itemno;			//セットするアイテム
 
 //トレーナー持ちポケモンパラメータ（データタイプマルチ）
-	u16		pow;			//セットするパワー乱数(u8でOKだけど4バイト境界対策）
+	u8		pow;			  //セットするパワー乱数
+  u8    para;       //セットするポケモンのパラメータ（上位4bit：特性　下位4bit：性別）
 	u16		level;			//セットするポケモンのレベル
 	u16		monsno;			//セットするポケモン
+	u16		formno;			//セットするフォルムナンバー
 	u16		itemno;			//セットするアイテム
 	u16		waza[ PTL_WAZA_MAX ];		//持ってる技
 =end
@@ -125,6 +133,12 @@ class PARA
     POKE6_NAME
     HP_RECOVER
     GIFT_ITEM
+    POKE1_SPEABI
+    POKE2_SPEABI
+    POKE3_SPEABI
+    POKE4_SPEABI
+    POKE5_SPEABI
+    POKE6_SPEABI
     MAX
   ]
 end
@@ -157,6 +171,12 @@ end
     "♂"=>"PTL_SEX_MALE",
     "♀"=>"PTL_SEX_FEMALE",
     "－"=>"PTL_SEX_UNKNOWN",
+  }
+
+  poke_gender = {  
+    "♂"=>1,
+    "♀"=>2,
+    "－"=>0,
   }
 
 	if ARGV.size < 2
@@ -333,7 +353,27 @@ end
 
       mons = $monsno_hash[ split_data[ PARA::POKE1_NAME + poke_count ] ]
 
-      data = [ pow, lv, mons ].pack( "S3" )
+      if split_data[ PARA::POKE1_GENDER + poke_count * 4 ] == "" || split_data[ PARA::POKE1_GENDER + poke_count * 4 ] == nil
+        para = 0
+      else
+        para = poke_gender[ split_data[ PARA::POKE1_GENDER + poke_count * 4 ] ]
+        if para == nil
+				  printf( "TrainerName:%s No:%d\nUNKOWN GENDER!!\n", split_data[ PARA::TR_NAME ], poke_count + 1 )
+          exit( 1 )
+        end
+      end
+
+      if split_data[ PARA::POKE1_SPEABI + poke_count * 4 ] != "" && split_data[ PARA::POKE1_SPEABI + poke_count * 4 ] != nil
+        if split_data[ PARA::POKE1_SPEABI + poke_count * 4 ].to_i > 3
+				  printf( "TrainerName:%s No:%d\nUNKOWN TOKUSEI!!\n", split_data[ PARA::TR_NAME ], poke_count + 1 )
+          exit( 1 )
+        end
+        para |= ( split_data[ PARA::POKE1_SPEABI + poke_count * 4 ].to_i ) << 4
+      end
+
+      form = split_data[ PARA::POKE1_FORM + poke_count * 4 ].to_i
+
+      data = [ pow, para, lv, mons, form ].pack( "C2 S3" )
 	    data.size.times{ |c|
 		    fp_trpoke.printf("%c",data[ c ])
 	    }
