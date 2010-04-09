@@ -35,23 +35,11 @@
 // ギミックデータのアーカイブID
 #define ARCID (ARCID_LEAGUE_FRONT_GIMMICK)  
 
-// 四天王ライトがリフトと一緒に降下するかどうか
-#define LIGHT_DOWN
-
 // ギミックワークのデータインデックス
 typedef enum{
   GIMMICKWORK_DATA_NUM,
   GIMMICKWORK_DATA_MAX = GIMMICKWORK_DATA_NUM - 1
 } GIMMICKWORK_DATA_INDEX;
-
-// リフトアップ時のパラメータ
-#define LIFT_UP_FRAME (20)
-#define LIFT_UP_CAMERA_X (0x000001f9 << FX32_SHIFT) 
-#define LIFT_UP_CAMERA_Y (0x0000006d << FX32_SHIFT) 
-#define LIFT_UP_CAMERA_Z (0x00000329 << FX32_SHIFT)
-#define LIFT_UP_TARGET_X (0x000001f9 << FX32_SHIFT) 
-#define LIFT_UP_TARGET_Y (0x0000003c << FX32_SHIFT) 
-#define LIFT_UP_TARGET_Z (0x000002d0 << FX32_SHIFT)
 
 
 //==========================================================================================
@@ -152,18 +140,11 @@ static const GFL_G3D_UTIL_ANM anm_table_light_esper[LIGHT_ESPER_ANM_NUM] =
   {RES_LIGHT_ESPER_OFF_NSBTA, 0},
   {RES_LIGHT_ESPER_ON_NSBTA,  0},
 };
+
 //-------------
 // オブジェクト
 //-------------
-typedef enum{
-  OBJ_LIFT,         // リフト
-  OBJ_LIGHT_FIGHT,  // ライト(格闘)
-  OBJ_LIGHT_EVIL,   // ライト(悪)
-  OBJ_LIGHT_GHOST,  // ライト(ゴースト)
-  OBJ_LIGHT_ESPER,  // ライト(エスパー)
-  OBJ_NUM
-} OBJ_INDEX;
-static const GFL_G3D_UTIL_OBJ obj_table[OBJ_NUM] = 
+static const GFL_G3D_UTIL_OBJ obj_table[ LF01_EXOBJ_NUM ] = 
 {
   {RES_LIFT_NSBMD,        0, RES_LIFT_NSBMD,        anm_table_lift,        LIFT_ANM_NUM},
   {RES_LIGHT_FIGHT_NSBMD, 0, RES_LIGHT_FIGHT_NSBMD, anm_table_light_fight, LIGHT_FIGHT_ANM_NUM},
@@ -174,13 +155,9 @@ static const GFL_G3D_UTIL_OBJ obj_table[OBJ_NUM] =
 //----------
 // ユニット
 //----------
-typedef enum{
-  UNIT_GIMMICK,
-  UNIT_NUM
-} UNIT_INDEX;
-static const GFL_G3D_UTIL_SETUP unit[UNIT_NUM] = 
+static const GFL_G3D_UTIL_SETUP unit[ LF01_EXUNIT_NUM ] = 
 { 
-  {res_table, RES_NUM, obj_table, OBJ_NUM},
+  {res_table, RES_NUM, obj_table, LF01_EXOBJ_NUM},
 };
 
 
@@ -224,7 +201,7 @@ static const GFL_G3D_UTIL_SETUP unit[UNIT_NUM] =
 #define LIGHT_ESPER_POS_Z ((LIGHT_ESPER_POS_Z_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
 
 // 配置座標
-static const VecFx32 obj_pos[OBJ_NUM] = 
+static const VecFx32 obj_pos[ LF01_EXOBJ_NUM ] = 
 {
   {LIFT_POS_X,        LIFT_POS_Y,        LIFT_POS_Z},
   {LIGHT_FIGHT_POS_X, LIGHT_FIGHT_POS_Y, LIGHT_FIGHT_POS_Z},
@@ -320,39 +297,6 @@ void LEAGUE_FRONT_01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
     exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
     FLD_EXP_OBJ_PlayAnime( exobj_cnt );
   } 
-  {
-    static BOOL def = TRUE;
-    int key = GFL_UI_KEY_GetCont();
-    int trg = GFL_UI_KEY_GetTrg();
-    if( key & PAD_BUTTON_DEBUG )
-    {
-      if( trg & PAD_BUTTON_A )
-      {
-        FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( fieldmap );
-
-        if( def )
-        {
-          FLD_CAM_MV_PARAM moveParam;
-          FIELD_CAMERA_SetRecvCamParam( camera );
-          moveParam.Chk.Shift = FALSE;
-          moveParam.Chk.Pitch = FALSE;
-          moveParam.Chk.Yaw = FALSE;
-          moveParam.Chk.Dist = FALSE;
-          moveParam.Chk.Fovy = FALSE;
-          moveParam.Chk.Pos = TRUE;
-          VEC_Set( &moveParam.Core.CamPos, LIFT_UP_CAMERA_X, LIFT_UP_CAMERA_Y, LIFT_UP_CAMERA_Z ); 
-          VEC_Set( &moveParam.Core.TrgtPos, LIFT_UP_TARGET_X, LIFT_UP_TARGET_Y, LIFT_UP_TARGET_Z ); 
-          FIELD_CAMERA_SetLinerParamDirect( camera, 
-              &moveParam.Core.CamPos, &moveParam.Core.TrgtPos, &moveParam.Chk, LIFT_UP_FRAME );
-        }
-        else
-        {
-          FIELD_CAMERA_RecvLinerParamDefault( camera, LIFT_UP_FRAME );
-        }
-        def = !def; 
-      }
-    }
-  }
 }
 
 
@@ -424,15 +368,15 @@ static void InitGimmick( LF01WORK* work, FIELDMAP_WORK* fieldmap )
 
   // 拡張オブジェクトのユニットを追加
   exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
-  FLD_EXP_OBJ_AddUnit( exobj_cnt, &unit[UNIT_GIMMICK], UNIT_GIMMICK );
+  FLD_EXP_OBJ_AddUnit( exobj_cnt, &unit[LF01_EXUNIT_GIMMICK], LF01_EXUNIT_GIMMICK );
 
   // 各オブジェの配置
   {
     int obj_idx;
     GFL_G3D_OBJSTATUS* objstatus;
-    for( obj_idx=0; obj_idx<OBJ_NUM; obj_idx++ )
+    for( obj_idx=0; obj_idx<LF01_EXOBJ_NUM; obj_idx++ )
     {
-      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, obj_idx );
+      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, LF01_EXUNIT_GIMMICK, obj_idx );
       VEC_Set( &objstatus->trans, obj_pos[obj_idx].x, obj_pos[obj_idx].y, obj_pos[obj_idx].z );
     }
   }
@@ -454,7 +398,7 @@ static void InitGimmick( LF01WORK* work, FIELDMAP_WORK* fieldmap )
     // 各四天王クリアに応じたアニメを再生
     if( fight && evil && ghost && esper )
     {
-      FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_TA, TRUE );
+      FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF01_EXUNIT_GIMMICK, LF01_EXOBJ_LIFT, LIFT_ANM_TA, TRUE );
     }
   }
 
@@ -473,14 +417,14 @@ static void InitGimmick( LF01WORK* work, FIELDMAP_WORK* fieldmap )
     ghost  = EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_BIGFOUR_GHOSTWIN );
     esper  = EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_BIGFOUR_ESPWIN );
     // アニメ再生
-    if( fight ){ FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIGHT_FIGHT, LIGHT_FIGHT_ANM_ON,  TRUE ); }
-    else       { FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIGHT_FIGHT, LIGHT_FIGHT_ANM_OFF, TRUE ); }
-    if( evil  ){ FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIGHT_EVIL,  LIGHT_EVIL_ANM_ON,   TRUE ); }
-    else       { FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIGHT_EVIL,  LIGHT_EVIL_ANM_OFF,  TRUE ); }
-    if( ghost ){ FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIGHT_GHOST, LIGHT_GHOST_ANM_ON,  TRUE ); }
-    else       { FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIGHT_GHOST, LIGHT_GHOST_ANM_OFF, TRUE ); }
-    if( esper ){ FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIGHT_ESPER, LIGHT_ESPER_ANM_ON,  TRUE ); }
-    else       { FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIGHT_ESPER, LIGHT_ESPER_ANM_OFF, TRUE ); }
+    if( fight ){ FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF01_EXUNIT_GIMMICK, LF01_EXOBJ_LIGHT_FIGHT, LIGHT_FIGHT_ANM_ON,  TRUE ); }
+    else       { FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF01_EXUNIT_GIMMICK, LF01_EXOBJ_LIGHT_FIGHT, LIGHT_FIGHT_ANM_OFF, TRUE ); }
+    if( evil  ){ FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF01_EXUNIT_GIMMICK, LF01_EXOBJ_LIGHT_EVIL,  LIGHT_EVIL_ANM_ON,   TRUE ); }
+    else       { FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF01_EXUNIT_GIMMICK, LF01_EXOBJ_LIGHT_EVIL,  LIGHT_EVIL_ANM_OFF,  TRUE ); }
+    if( ghost ){ FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF01_EXUNIT_GIMMICK, LF01_EXOBJ_LIGHT_GHOST, LIGHT_GHOST_ANM_ON,  TRUE ); }
+    else       { FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF01_EXUNIT_GIMMICK, LF01_EXOBJ_LIGHT_GHOST, LIGHT_GHOST_ANM_OFF, TRUE ); }
+    if( esper ){ FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF01_EXUNIT_GIMMICK, LF01_EXOBJ_LIGHT_ESPER, LIGHT_ESPER_ANM_ON,  TRUE ); }
+    else       { FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF01_EXUNIT_GIMMICK, LF01_EXOBJ_LIGHT_ESPER, LIGHT_ESPER_ANM_OFF, TRUE ); }
   } 
 }
 
@@ -506,173 +450,4 @@ static void LoadGimmick( LF01WORK* work, FIELDMAP_WORK* fieldmap )
 //------------------------------------------------------------------------------------------
 static void SaveGimmick( LF01WORK* work, FIELDMAP_WORK* fieldmap )
 {
-}
-
-
-//==========================================================================================
-// ■ イベント
-//==========================================================================================
-typedef struct
-{
-  GAMESYS_WORK* gsys;
-  FIELDMAP_WORK* fieldmap;
-  ICA_ANIME* liftAnime;  // リフトの移動アニメーション
-
-} LIFTDOWN_EVENTWORK;
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief リフト降下イベント処理
- */
-//------------------------------------------------------------------------------------------
-static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
-{
-  LIFTDOWN_EVENTWORK* work = (LIFTDOWN_EVENTWORK*)wk;
-  FIELD_CAMERA* camera = FIELDMAP_GetFieldCamera( work->fieldmap );
-
-  switch( *seq )
-  {
-  // カメラ移動開始
-  case 0:
-    { // 線形カメラ設定
-      FLD_CAM_MV_PARAM moveParam;
-      moveParam.Chk.Shift = FALSE;
-      moveParam.Chk.Pitch = FALSE;
-      moveParam.Chk.Yaw = FALSE;
-      moveParam.Chk.Dist = FALSE;
-      moveParam.Chk.Fovy = FALSE;
-      moveParam.Chk.Pos = TRUE;
-      VEC_Set( &moveParam.Core.CamPos, LIFT_UP_CAMERA_X, LIFT_UP_CAMERA_Y, LIFT_UP_CAMERA_Z ); 
-      VEC_Set( &moveParam.Core.TrgtPos, LIFT_UP_TARGET_X, LIFT_UP_TARGET_Y, LIFT_UP_TARGET_Z ); 
-      FIELD_CAMERA_SetLinerParamDirect( camera, 
-          &moveParam.Core.CamPos, &moveParam.Core.TrgtPos, &moveParam.Chk, LIFT_UP_FRAME );
-    }
-    (*seq)++;
-    OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
-    break;
-  // カメラ移動終了待ち
-  case 1:
-    if( FIELD_CAMERA_CheckMvFunc(camera) == FALSE )
-    { 
-      (*seq)++; 
-      OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
-    }
-    break;
-  // リフト移動開始
-  case 2:
-    {
-      HEAPID heap_id;
-      heap_id = FIELDMAP_GetHeapID( work->fieldmap );
-      work->liftAnime = ICA_ANIME_CreateAlloc( heap_id, ARCID, 
-                                               NARC_league_front_pl_ele_00_ica_bin );
-    }
-    // エレベータ稼動音開始
-    PMSND_PlaySE( SEQ_SE_FLD_148 );
-    ++(*seq);
-    OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
-    break;
-  // リフト移動終了待ち
-  case 3:
-    // 自機, リフトの座標を更新
-    {
-      VecFx32 trans, pos;
-      FIELD_PLAYER* player;
-      GFL_G3D_OBJSTATUS* objstatus;
-      FLD_EXP_OBJ_CNT_PTR exobj_cnt;
-      // リフト
-      ICA_ANIME_GetTranslate( work->liftAnime, &trans );
-      exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
-      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT );
-      objstatus->trans.y = trans.y;
-#ifdef LIGHT_DOWN
-      // ライト
-      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIGHT_FIGHT );
-      objstatus->trans.y = trans.y;
-      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIGHT_EVIL );
-      objstatus->trans.y = trans.y;
-      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIGHT_GHOST );
-      objstatus->trans.y = trans.y;
-      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIGHT_ESPER );
-      objstatus->trans.y = trans.y;
-#endif
-      // 自機
-      player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-      FIELD_PLAYER_GetPos( player, &pos );
-      pos.y = trans.y;
-      FIELD_PLAYER_SetPos( player, &pos );
-    }
-    // アニメーション更新
-    if( ICA_ANIME_IncAnimeFrame( work->liftAnime, FX32_ONE ) )  // if(アニメ終了)
-    { 
-      ICA_ANIME_Delete( work->liftAnime );
-      ++(*seq); 
-      OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
-    }
-    break;
-  // フェードアウト
-  case 4:
-    {
-      GMEVENT* new_event;
-      new_event = EVENT_FieldFadeOut_Black( work->gsys, work->fieldmap, FIELD_FADE_WAIT );
-      GMEVENT_CallEvent( event, new_event );
-    }
-    ++(*seq);
-    OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
-    break;
-  // マップチェンジ
-  case 5:
-    {
-      GMEVENT* new_event;
-      VecFx32 pos;
-      VEC_Set( &pos, 0, 0, 0 );
-      new_event = EVENT_ChangeMapPosNoFade( work->gsys, work->fieldmap, 
-                                            ZONE_ID_C09P02, &pos, DIR_DOWN );
-      GMEVENT_CallEvent( event, new_event );
-    }
-    ++(*seq);
-    OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
-    break;
-  // 次のイベントへ切り替え
-  case 6:
-    {
-      GMEVENT* next_event;
-      next_event = LEAGUE_FRONT_02_GIMMICK_GetLiftDownEvent( work->gsys, work->fieldmap );
-      GMEVENT_ChangeEvent( event, next_event );
-    }
-    ++(*seq);
-    OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
-    break;
-  // 終了
-  case 7:
-    OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> finish" );
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief リフト降下イベントを作成する
- * 
- * @param gsys     ゲームシステム
- * @param fieldmap フィールドマップ
- *
- * @return リフト降下イベント
- */
-//------------------------------------------------------------------------------------------
-GMEVENT* LEAGUE_FRONT_01_GIMMICK_GetLiftDownEvent( GAMESYS_WORK* gsys, 
-                                                   FIELDMAP_WORK* fieldmap )
-{
-  GMEVENT* event;
-  LIFTDOWN_EVENTWORK* evwork;
-  LF01WORK* gmkwork = GMK_TMP_WK_GetWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
-
-  // 生成
-  event = GMEVENT_Create( gsys, NULL, LiftDownEvent, sizeof(LIFTDOWN_EVENTWORK) );
-  // 初期化
-  evwork = GMEVENT_GetEventWork( event );
-  evwork->gsys      = gsys;
-  evwork->fieldmap  = fieldmap;
-  evwork->liftAnime = NULL;
-  return event;
 }

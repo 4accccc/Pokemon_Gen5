@@ -50,6 +50,8 @@ FS_EXTERN_OVERLAY(field_gym_ground_ent);
 FS_EXTERN_OVERLAY(field_gym_ice);
 FS_EXTERN_OVERLAY(field_gym_dragon);
 FS_EXTERN_OVERLAY(field_gimmick_gate);
+FS_EXTERN_OVERLAY(field_gimmick_lfront01);
+FS_EXTERN_OVERLAY(field_gimmick_lfront02);
 FS_EXTERN_OVERLAY(field_gimmick_h01);
 FS_EXTERN_OVERLAY(field_gimmick_h03);
 FS_EXTERN_OVERLAY(field_gimmick_r04d03);
@@ -90,8 +92,8 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(field_gimmick_d06),   // D06_GIMMICK_Setup,
   FS_OVERLAY_ID(field_gimmick_d06),   // D06_GIMMICK_Setup,
   FS_OVERLAY_ID(field_gimmick_d06),   // D06_GIMMICK_Setup,
-  NULL,//LEAGUE_FRONT_01_GIMMICK_Setup,
-  NULL,//LEAGUE_FRONT_02_GIMMICK_Setup,
+  FS_OVERLAY_ID(field_gimmick_lfront01),//LEAGUE_FRONT_01_GIMMICK_Setup,
+  FS_OVERLAY_ID(field_gimmick_lfront02),//LEAGUE_FRONT_02_GIMMICK_Setup,
   FS_OVERLAY_ID(field_gimmick_gate),  // D03R0201
   FS_OVERLAY_ID(field_gimmick_bgate),
   FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01002

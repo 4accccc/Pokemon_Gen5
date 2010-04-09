@@ -16,6 +16,7 @@
 #include "scrcmd_work.h"
 #include "script_local.h"
 #include "scrcmd.h"
+#include "event_league_front01.h"
 
 
 //---------------------------------------------------------------------------------------
@@ -35,7 +36,7 @@ VMCMD_RESULT EvCmdLeagueFrontLiftDown( VMHANDLE *core, void *wk )
   GMEVENT* event;
 
   // イベント呼び出し
-  event = LEAGUE_FRONT_01_GIMMICK_GetLiftDownEvent( gsys, fieldmap );
+  event = EVENT_LFRONT01_LiftDown( gsys, fieldmap );
   SCRIPT_CallEvent( script, event );
   return VMCMD_RESULT_SUSPEND;
 } 

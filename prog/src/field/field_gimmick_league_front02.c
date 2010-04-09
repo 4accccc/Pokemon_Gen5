@@ -31,9 +31,6 @@
 // ギミックデータのアーカイブID
 #define ARCID (ARCID_LEAGUE_FRONT_GIMMICK)  
 
-// ライトがリフトと一緒に降下するかどうか
-#define LIGHT_DOWN
-
 // ギミックワークのデータインデックス
 typedef enum{
   GIMMICKWORK_DATA_NUM,
@@ -50,7 +47,6 @@ typedef enum{
 typedef enum{
   RES_LIFT_NSBMD,             // リフトのモデル
   RES_LIFT_NSBTA,             // リフトのテクスチャアニメーション
-#ifdef LIGHT_DOWN
   RES_LIGHT_FIGHT_NSBMD,      // ライト(格闘)    モデル
   RES_LIGHT_FIGHT_ON_NSBTA,   // ライト(格闘)    ON
   RES_LIGHT_EVIL_NSBMD,       // ライト(悪)      モデル
@@ -59,14 +55,12 @@ typedef enum{
   RES_LIGHT_GHOST_ON_NSBTA,   // ライト(ゴースト)ON
   RES_LIGHT_ESPER_NSBMD,      // ライト(エスパー)モデル
   RES_LIGHT_ESPER_ON_NSBTA,   // ライト(エスパー)ON
-#endif
   RES_NUM
 } RES_INDEX;
 static const GFL_G3D_UTIL_RES res_table[RES_NUM] = 
 {
   {ARCID, NARC_league_front_pl_ele_01_nsbmd,    GFL_G3D_UTIL_RESARC},
   {ARCID, NARC_league_front_pl_ele_01_nsbta,    GFL_G3D_UTIL_RESARC},
-#ifdef LIGHT_DOWN
   {ARCID, NARC_league_front_pl_lite1_nsbmd,     GFL_G3D_UTIL_RESARC},
   {ARCID, NARC_league_front_pl_lite1_on_nsbta,  GFL_G3D_UTIL_RESARC},
   {ARCID, NARC_league_front_pl_lite2_nsbmd,     GFL_G3D_UTIL_RESARC},
@@ -75,7 +69,6 @@ static const GFL_G3D_UTIL_RES res_table[RES_NUM] =
   {ARCID, NARC_league_front_pl_lite3_on_nsbta,  GFL_G3D_UTIL_RESARC},
   {ARCID, NARC_league_front_pl_lite4_nsbmd,     GFL_G3D_UTIL_RESARC}, 
   {ARCID, NARC_league_front_pl_lite4_on_nsbta,  GFL_G3D_UTIL_RESARC}, 
-#endif
 }; 
 //------------------------
 // アニメーション(リフト)
@@ -88,7 +81,6 @@ static const GFL_G3D_UTIL_ANM anm_table_lift[LIFT_ANM_NUM] =
 {
   {RES_LIFT_NSBTA, 0},
 }; 
-#ifdef LIGHT_DOWN
 //------------------------
 // アニメーション(ライト)
 //------------------------
@@ -128,40 +120,23 @@ static const GFL_G3D_UTIL_ANM anm_table_light_esper[LIGHT_ESPER_ANM_NUM] =
 {
   {RES_LIGHT_ESPER_ON_NSBTA,  0},
 };
-#endif
 //-------------
 // オブジェクト
 //-------------
-typedef enum{
-  OBJ_LIFT,         // リフト
-#ifdef LIGHT_DOWN
-  OBJ_LIGHT_FIGHT,  // ライト(格闘)
-  OBJ_LIGHT_EVIL,   // ライト(悪)
-  OBJ_LIGHT_GHOST,  // ライト(ゴースト)
-  OBJ_LIGHT_ESPER,  // ライト(エスパー)
-#endif
-  OBJ_NUM
-} OBJ_INDEX;
-static const GFL_G3D_UTIL_OBJ obj_table[OBJ_NUM] = 
+static const GFL_G3D_UTIL_OBJ obj_table[LF02_EXOBJ_NUM] = 
 {
   {RES_LIFT_NSBMD,        0, RES_LIFT_NSBMD,        anm_table_lift,        LIFT_ANM_NUM},
-#ifdef LIGHT_DOWN
   {RES_LIGHT_FIGHT_NSBMD, 0, RES_LIGHT_FIGHT_NSBMD, anm_table_light_fight, LIGHT_FIGHT_ANM_NUM},
   {RES_LIGHT_EVIL_NSBMD,  0, RES_LIGHT_EVIL_NSBMD,  anm_table_light_evil,  LIGHT_EVIL_ANM_NUM},
   {RES_LIGHT_GHOST_NSBMD, 0, RES_LIGHT_GHOST_NSBMD, anm_table_light_ghost, LIGHT_GHOST_ANM_NUM},
   {RES_LIGHT_ESPER_NSBMD, 0, RES_LIGHT_ESPER_NSBMD, anm_table_light_esper, LIGHT_ESPER_ANM_NUM},
-#endif
 }; 
 //----------
 // ユニット
 //----------
-typedef enum{
-  UNIT_GIMMICK,
-  UNIT_NUM
-} UNIT_INDEX;
-static const GFL_G3D_UTIL_SETUP unit[UNIT_NUM] = 
+static const GFL_G3D_UTIL_SETUP unit[LF02_EXUNIT_NUM] = 
 { 
-  {res_table, RES_NUM, obj_table, OBJ_NUM},
+  {res_table, RES_NUM, obj_table, LF02_EXOBJ_NUM},
 };
 
 
@@ -169,15 +144,11 @@ static const GFL_G3D_UTIL_SETUP unit[UNIT_NUM] =
 // ■各オブジェの配置
 //========================================================================================== 
 // リフト座標
-#define HALF_GRID ((FIELD_CONST_GRID_SIZE / 2) << FX32_SHIFT)
 #define LIFT_POS_X_GRID (30)
 #define LIFT_POS_Z_GRID (81)
 #define LIFT_POS_X ((LIFT_POS_X_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
 #define LIFT_POS_Y (2 << FX32_SHIFT)
 #define LIFT_POS_Z ((LIFT_POS_Z_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
-#define PLAYER_OFS_X (0)
-#define PLAYER_OFS_Y (0)
-#define PLAYER_OFS_Z ((FIELD_CONST_GRID_SIZE * 2) << FX32_SHIFT)
 // ライト座標(格闘)
 #define LIGHT_FIGHT_POS_X_GRID (27)
 #define LIGHT_FIGHT_POS_Y_GRID (0)
@@ -208,15 +179,13 @@ static const GFL_G3D_UTIL_SETUP unit[UNIT_NUM] =
 #define LIGHT_ESPER_POS_Z ((LIGHT_ESPER_POS_Z_GRID * FIELD_CONST_GRID_SIZE) << FX32_SHIFT)
 
 // 配置座標
-static const VecFx32 obj_pos[OBJ_NUM] = 
+static const VecFx32 obj_pos[LF02_EXOBJ_NUM] = 
 {
   {LIFT_POS_X,        LIFT_POS_Y,        LIFT_POS_Z},
-#ifdef LIGHT_DOWN
   {LIGHT_FIGHT_POS_X, LIGHT_FIGHT_POS_Y, LIGHT_FIGHT_POS_Z},
   {LIGHT_EVIL_POS_X,  LIGHT_EVIL_POS_Y,  LIGHT_EVIL_POS_Z},
   {LIGHT_GHOST_POS_X, LIGHT_GHOST_POS_Y, LIGHT_GHOST_POS_Z},
   {LIGHT_ESPER_POS_X, LIGHT_ESPER_POS_Y, LIGHT_ESPER_POS_Z},
-#endif
 };
 
 //==========================================================================================
@@ -376,18 +345,18 @@ static void InitGimmick( LF02WORK* work, FIELDMAP_WORK* fieldmap )
 
   // 拡張オブジェクトのユニットを追加
   exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
-  FLD_EXP_OBJ_AddUnit( exobj_cnt, &unit[UNIT_GIMMICK], UNIT_GIMMICK );
+  FLD_EXP_OBJ_AddUnit( exobj_cnt, &unit[LF02_EXUNIT_GIMMICK], LF02_EXUNIT_GIMMICK );
 
   // リフトのアニメーション初期化
-  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT, LIFT_ANM_TA, TRUE );
+  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_TA, TRUE );
 
   // 各オブジェの配置
   {
     int obj_idx;
     GFL_G3D_OBJSTATUS* objstatus;
-    for( obj_idx=0; obj_idx<OBJ_NUM; obj_idx++ )
+    for( obj_idx=0; obj_idx<LF02_EXOBJ_NUM; obj_idx++ )
     {
-      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, obj_idx );
+      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, LF02_EXUNIT_GIMMICK, obj_idx );
       VEC_Set( &objstatus->trans, obj_pos[obj_idx].x, obj_pos[obj_idx].y, obj_pos[obj_idx].z );
     }
   }
@@ -418,189 +387,4 @@ static void LoadGimmick( LF02WORK* work, FIELDMAP_WORK* fieldmap )
 //------------------------------------------------------------------------------------------
 static void SaveGimmick( LF02WORK* work, FIELDMAP_WORK* fieldmap )
 {
-}
-
-
-//==========================================================================================
-// ■ イベント
-//==========================================================================================
-typedef struct
-{
-  GAMESYS_WORK* gsys;
-  FIELDMAP_WORK* fieldmap;
-  FIELD_CAMERA* camera;
-  ICA_ANIME* liftAnime;  // リフトの移動アニメーション
-
-} LIFTDOWN_EVENTWORK;
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief  リフトの座標を更新する
- * @return 移動が終了したら TRUE, そうでなければ　FALSE
- */
-//------------------------------------------------------------------------------------------
-static BOOL MoveLift( LIFTDOWN_EVENTWORK* work )
-{
-  BOOL anime_end;
-
-  // アニメーションを進める
-  anime_end = ICA_ANIME_IncAnimeFrame( work->liftAnime, FX32_ONE );
-
-  // リフト・ライトの座標を更新
-  if( !anime_end )
-  {
-    int obj_idx;
-    VecFx32 trans;
-    ICA_ANIME_GetTranslate( work->liftAnime, &trans );
-    for( obj_idx=0; obj_idx<OBJ_NUM; obj_idx++ )
-    {
-      FLD_EXP_OBJ_CNT_PTR exobj_cnt;
-      GFL_G3D_OBJSTATUS* objstatus;
-      exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
-      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, obj_idx );
-      objstatus->trans.y = trans.y; 
-    }
-  }
-  return anime_end;
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief 自機の座標をリフトの動きに合わせる
- */
-//------------------------------------------------------------------------------------------
-static void SetPlayerOnLift( LIFTDOWN_EVENTWORK* work )
-{
-  FIELD_PLAYER* player;
-  VecFx32 pos, trans;
-  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
-  GFL_G3D_OBJSTATUS* objstatus;
-  exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
-  objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, UNIT_GIMMICK, OBJ_LIFT );
-  player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-  VEC_Set( &pos, 
-           objstatus->trans.x + PLAYER_OFS_X, 
-           objstatus->trans.y + PLAYER_OFS_Y, 
-           objstatus->trans.z + PLAYER_OFS_Z );
-  // x, z座標がグリッドの中心になるように調整
-  pos.x = GRID_TO_FX32( FX32_TO_GRID(pos.x) ) + HALF_GRID;
-  pos.z = GRID_TO_FX32( FX32_TO_GRID(pos.z) ) + HALF_GRID;
-  FIELD_PLAYER_SetPos( player, &pos );
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief リフト降下イベント処理
- */
-//------------------------------------------------------------------------------------------
-static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
-{
-  LIFTDOWN_EVENTWORK* work = (LIFTDOWN_EVENTWORK*)wk;
-
-  switch( *seq )
-  {
-  // アニメ開始
-  case 0:
-    { // アニメデータ読み込み
-      HEAPID heap_id;
-      heap_id = FIELDMAP_GetHeapID( work->fieldmap );
-      work->liftAnime = ICA_ANIME_CreateAlloc( heap_id, ARCID, 
-                                               NARC_league_front_pl_ele_01_ica_bin );
-    }
-    // リフトと自機の座標を初期化
-    MoveLift( work );
-    SetPlayerOnLift( work );
-    // カメラのトレース処理停止リクエスト発行
-    FIELD_CAMERA_StopTraceRequest( work->camera );
-    (*seq)++;
-    OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
-    break;
-  case 1:
-    // カメラのトレース処理終了待ち
-    if( FIELD_CAMERA_CheckTrace( work->camera ) == FALSE ) { (*seq)++; }
-    break;
-  // フェードイン
-  case 2:
-    {
-      GMEVENT* new_event;
-      new_event = EVENT_FieldFadeIn_Black( work->gsys, work->fieldmap, FIELD_FADE_WAIT );
-      GMEVENT_CallEvent( event, new_event );
-    }
-    (*seq)++;
-    OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
-    break;
-  // アニメ終了待ち
-  case 3:
-    {
-      BOOL anime_end;
-
-      // リフトを動かす
-      anime_end = MoveLift( work );
-
-      // 自機をリフトに合わせる
-      if( !anime_end ){ SetPlayerOnLift( work ); }
-
-      // アニメ終了判定
-      if( anime_end )
-      { 
-        PMSND_StopSE(); // エレベータ稼動音を停止
-        PMSND_PlaySE( SEQ_SE_FLD_94 ); // エレベータ到着音
-        ICA_ANIME_Delete( work->liftAnime );
-        (*seq)++;
-        OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
-      } 
-    }
-    break;
-  // 終了処理
-  case 4:
-    // 自機を着地させる
-    {
-      VecFx32 pos;
-      fx32 height;
-      FIELD_PLAYER* player;
-      MMDL* mmdl;
-      player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-      mmdl   = FIELD_PLAYER_GetMMdl( player );
-      FIELD_PLAYER_GetPos( player, &pos );
-      MMDL_GetMapPosHeight( mmdl, &pos, &height );
-      pos.y = height;
-      FIELD_PLAYER_SetPos( player, &pos );
-    }
-    (*seq)++;
-    OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
-    break;
-  // 終了
-  case 5:
-    OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> finish\n" );
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief リフト降下イベントを作成する
- * 
- * @param gsys     ゲームシステム
- * @param fieldmap フィールドマップ
- *
- * @return リフト降下イベント
- */
-//------------------------------------------------------------------------------------------
-GMEVENT* LEAGUE_FRONT_02_GIMMICK_GetLiftDownEvent( GAMESYS_WORK* gsys, 
-                                                   FIELDMAP_WORK* fieldmap )
-{
-  GMEVENT* event;
-  LIFTDOWN_EVENTWORK* evwork;
-  LF02WORK* gmkwork = (LF02WORK*)GMK_TMP_WK_GetWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
-
-  // 生成
-  event = GMEVENT_Create( gsys, NULL, LiftDownEvent, sizeof(LIFTDOWN_EVENTWORK) );
-  // 初期化
-  evwork = GMEVENT_GetEventWork( event );
-  evwork->gsys      = gsys;
-  evwork->fieldmap  = fieldmap;
-  evwork->camera    = FIELDMAP_GetFieldCamera( fieldmap );
-  evwork->liftAnime = NULL;
-  return event;
 }

@@ -445,6 +445,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_sppoke.c \
         field/evt_lock.c \
         app/name_input/namein_setup.c \
+        field/event_league_front01.c \
+        field/event_league_front02.c \
         field/event_bsubway.c \
         field/scrcmd_d12_gmk.c \
         field/field_gimmick_d12_st.c
@@ -698,8 +700,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/bsubway_tr.c \
         field/fld_trade.c \
         field/scrcmd_league_front.c \
-        field/field_gimmick_league_front01.c \
-        field/field_gimmick_league_front02.c \
         field/scrcmd_palpark.c \
         field/scrcmd_beacon.c \
         field/party_select_list.c \
@@ -869,6 +869,13 @@ SRCS_OVERLAY_FIELD_GIMMICK_GATE = field/field_gimmick_gate.c \
                                   field/elboard_zone_data.c \
                                   field/event_look_elboard.c \
                                   field/elboard_spnews_data.c
+#===> GROUP_OVERLAY_SUBSCREEN
+#GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_FIELD_GIMMICK_LFRONT01 = field/field_gimmick_league_front01.c
+
+#===> GROUP_OVERLAY_SUBSCREEN
+#GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_FIELD_GIMMICK_LFRONT02 = field/field_gimmick_league_front02.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
