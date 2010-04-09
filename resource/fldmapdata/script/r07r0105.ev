@@ -133,7 +133,7 @@ EVENT_START   ev_bg_r07r0105_bell
 	IF $SCWK_ANSWER01 == 0 THEN
 	
 		//鐘SE再生
-		_SE_PLAY( SEQ_SE_HDEMO_01 )
+		//_SE_PLAY( SEQ_SE_HDEMO_01 )
 		
 		//トレーナーは鐘を鳴らした
 		_PLAINWIN_MSG_DOWN ( msg_r07r0105_chime_02  )
@@ -148,7 +148,7 @@ EVENT_START   ev_bg_r07r0105_bell
 		//鐘アニメ破棄
 		_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
 		
-		_SE_WAIT()
+		//_SE_WAIT()
 		_AB_KEYWAIT_MARK()
 		_PLAINWIN_CLOSE()
 		
@@ -291,7 +291,7 @@ EVENT_START   ev_pos_r07r0105_champion_01
 	_PLAYER_NAME(0)
 	
 	//鐘SE再生
-	_SE_PLAY( SEQ_SE_HDEMO_01 )
+	//_SE_PLAY( SEQ_SE_HDEMO_01 )
 		
 	//鐘のアニメを作成
 	DEFINE_LOCAL	BM_ANIME_ID1
@@ -300,7 +300,7 @@ EVENT_START   ev_pos_r07r0105_champion_01
 	_BMODEL_ANIME_WAIT ( BM_ANIME_ID1 )
 	
 	//鐘SE待ち
-	_SE_WAIT()
+	//_SE_WAIT()
 	
 	//鐘アニメ破棄
 	_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
