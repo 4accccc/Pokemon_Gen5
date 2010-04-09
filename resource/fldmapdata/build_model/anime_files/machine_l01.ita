@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-04-08T23:56:46" source="machine_l01.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-04-09T20:53:29" source="machine_l01.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,9 +11,9 @@
 <body>
 
 <tex_srt_info
-	frame_size="75"
-	tool_start_frame="1"
-	tool_end_frame="75"
+	frame_size="61"
+	tool_start_frame="0"
+	tool_end_frame="60"
 	interpolation="frame"
 	tex_matrix_mode="maya"
 	compress_material="on" material_size="3 3"
@@ -31,15 +31,14 @@
 	0.000000
 </tex_rotate_data>
 
-<tex_translate_data size="76">
-	0.016602 0.033447 0.050049 0.066650 0.083252 0.100098 0.116699 0.133301 0.149902 0.166748
-	0.183350 0.199951 0.216553 0.233398 0.250000 0.266602 0.283447 0.300049 0.316650 0.333252
-	0.350098 0.366699 0.383301 0.399902 0.416748 0.433350 0.449951 0.466553 0.483398 0.500000
-	0.516602 0.533447 0.550049 0.566650 0.583252 0.600098 0.616699 0.633301 0.649902 0.666748
-	0.683350 0.699951 0.716553 0.733398 0.750000 0.766602 0.783447 0.800049 0.816650 0.833252
-	0.850098 0.866699 0.883301 0.899902 0.916748 0.933350 0.949951 0.966553 0.983398 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
-	1.000000 1.000000 1.000000 1.000000 1.000000 0.000000
+<tex_translate_data size="61">
+	0.000000 0.016602 0.033447 0.050049 0.066650 0.083252 0.100098 0.116699 0.133301 0.149902
+	0.166748 0.183350 0.199951 0.216553 0.233398 0.250000 0.266602 0.283447 0.300049 0.316650
+	0.333252 0.350098 0.366699 0.383301 0.399902 0.416748 0.433350 0.449951 0.466553 0.483398
+	0.500000 0.516602 0.533447 0.550049 0.566650 0.583252 0.600098 0.616699 0.633301 0.649902
+	0.666748 0.683350 0.699951 0.716553 0.733398 0.750000 0.766602 0.783447 0.800049 0.816650
+	0.833252 0.850098 0.866699 0.883301 0.899902 0.916748 0.933350 0.949951 0.966553 0.983398
+	1.000000
 </tex_translate_data>
 
 <tex_srt_anm_array size="1">
@@ -47,8 +46,8 @@
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="75" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="75"/>
+		<tex_translate_s frame_step="1" data_size="61" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="1" data_head="0"/>
 	</tex_srt_anm>
 </tex_srt_anm_array>
 
