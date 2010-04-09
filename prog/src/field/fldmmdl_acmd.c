@@ -3063,6 +3063,19 @@ static int AC_Act1_0( MMDL * mmdl )
 
 //--------------------------------------------------------------
 /**
+ * AC_NINJA_ACT0 NINJA専用、DRAW_STA_ACT0を設定
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_NinjaAct0_0( MMDL * mmdl )
+{
+  PMSND_PlaySE( SEQ_SE_FLD_152 );
+  return( AC_Act0_0(mmdl) );
+}
+
+//--------------------------------------------------------------
+/**
  * AC_ACT系共通 1 停止 アニメ一周を待ち停止ステータスにする
  * @param	mmdl	MMDL *
  * @retval	int		TRUE=再起
@@ -5747,6 +5760,16 @@ int (* const DATA_AC_Act1Loop_Tbl[])( MMDL * ) =
 {
 	AC_Act1_0,
 	AC_Act_1_Loop,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+///	AC_NINJA_ACT0
+//--------------------------------------------------------------
+int (* const DATA_AC_NinjaAct0_Tbl[])( MMDL * ) =
+{
+  AC_NinjaAct0_0,
+	AC_Act_1_Stop,
 	AC_End,
 };
 

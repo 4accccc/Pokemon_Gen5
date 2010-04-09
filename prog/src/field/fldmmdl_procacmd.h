@@ -190,6 +190,7 @@ extern int (* const DATA_AC_Act0Stop_Tbl[])( MMDL * );
 extern int (* const DATA_AC_Act0Loop_Tbl[])( MMDL * );
 extern int (* const DATA_AC_Act1Stop_Tbl[])( MMDL * );
 extern int (* const DATA_AC_Act1Loop_Tbl[])( MMDL * );
+extern int (* const DATA_AC_NinjaAct0_Tbl[])( MMDL * );
 
 //--------------------------------------------------------------
 ///	AC_HIDE_PULLOFF

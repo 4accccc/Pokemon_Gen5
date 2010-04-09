@@ -630,7 +630,8 @@
 #define AC_ACT0_LOOP 0xb5 ///<演技(特定OBJ専用
 #define AC_ACT1_STOP 0xb6 ///<演技(特定OBJ専用
 #define AC_ACT1_LOOP 0xb7 ///<演技(特定OBJ専用
-#define ACMD_MAX 0xb8 ///<アニメーションコマンド最大数
+#define AC_NINJA_ACT0 0x08 ///<演技(NINJA専用 出現アニメ
+#define ACMD_MAX 0xb9 ///<アニメーションコマンド最大数
 
 #define ACMD_END 0xfe ///<アニメーションコマンド終了
 #define ACMD_NOT 0xff ///<非アニメーションコマンド
@@ -642,8 +643,7 @@
 #define AC_N_ACT0 (AC_ACT0_STOP) ///<N専用 両手アニメ
 #define AC_N_ACT1 (AC_ACT1_STOP) ///<N専用 首アニメ
 #define AC_SAGE1_ACT0 (AC_ACT0_STOP) ///<SAGE1専用 両手アニメ
-#define AC_NINJA_ACT0 (AC_ACT0_STOP) ///<NINJA専用 出現アニメ
-#define AC_NINJA_ACT1 (AC_ACT0_LOOP) ///<NINJA専用 消去アニメ
+#define AC_NINJA_ACT1 (AC_ACT1_LOOP) ///<NINJA専用 消去アニメ
 #define AC_CHAMPION_ACT0 (AC_ACT0_STOP) ///<CHAMPION専用 加味揺れアニメ
 
 #endif //MMDL_CODE_H_FILE

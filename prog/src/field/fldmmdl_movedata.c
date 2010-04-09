@@ -1364,6 +1364,7 @@ int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_Act0Loop_Tbl,  //AC_ACT0_LOOP
   DATA_AC_Act1Stop_Tbl,  //AC_ACT1_STOP
   DATA_AC_Act1Loop_Tbl,  //AC_ACT1_LOOP
+  DATA_AC_NinjaAct0_Tbl, //AC_NINJA_ACT0
 };
 
 //--------------------------------------------------------------
@@ -1563,6 +1564,7 @@ int (* const * const DATA_RailAcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_RailDummy,  //AC_ACT0_LOOP
   DATA_AC_RailDummy,  //AC_ACT1_STOP
   DATA_AC_RailDummy,  //AC_ACT1_LOOP
+  DATA_AC_RailDummy, //AC_NINJA_ACT0
 };
 
 //==============================================================================
