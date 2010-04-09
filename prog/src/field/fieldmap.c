@@ -127,8 +127,12 @@
 //======================================================================
 #ifdef PM_DEBUG
 
-#define DEBUG_FIELDMAP_SPEED_CHECK
+//#define DEBUG_SPEED_CHECK_ENABLE  //デバッグ速度計測を有効にする
+//#define DEBUG_SPEED_CHECK_MAX
+#include "debug_speed_check.h"  //デバッグ速度計測本体
 
+
+//#define DEBUG_FIELDMAP_SETUP_SPEED_CHECK
 //#define DEBUG_FIELDMAP_INOUT_SPEED_CHECK
 //#define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK    // フィールドマップ描画にかかる処理時間を求める
 
@@ -459,64 +463,6 @@ FS_EXTERN_OVERLAY(field_intrude);
 
 //======================================================================
 //======================================================================
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-#ifdef DEBUG_FIELDMAP_SPEED_CHECK
-
-#define CHECK_MAX 20
-
-typedef struct {
-  u64 checks[CHECK_MAX];
-  const char * mark_str[CHECK_MAX];
-  u32 check_count;
-  OSTick _start_tick;
-  OSTick _end_tick;
-}DEBUG_SPEED_WORK;
-
-static DEBUG_SPEED_WORK debugSpeedWork;
-
-static void SET_CHECK(const char * str){
-  if (debugSpeedWork.check_count >= CHECK_MAX) return;
-  debugSpeedWork.checks[debugSpeedWork.check_count] = OS_GetTick();
-  debugSpeedWork.mark_str[debugSpeedWork.check_count] = str;
-  debugSpeedWork.check_count ++;
-}
-
-static void INIT_CHECK( void )
-{
-  debugSpeedWork.check_count = 0;
-  debugSpeedWork._start_tick = OS_GetTick(); 
-  SET_CHECK("INIT_CHECK");
-}
-
-static u32 TAIL_CHECK( void )
-{
-  OSTick _end_tick = OS_GetTick() - debugSpeedWork._start_tick;
-
-  return _end_tick;
-}
-
-static void PUT_CHECK( void )
-{
-  int i;
-  u64 value;
-  for (i = 1; i < debugSpeedWork.check_count; i++) {
-    OS_TPrintf("%8ld:", debugSpeedWork.checks[i] );
-    value = debugSpeedWork.checks[i] - debugSpeedWork.checks[i-1];
-    OS_TPrintf("%8ld", value);
-    OS_TPrintf(" %s\n", debugSpeedWork.mark_str[i-1]);
-  }
-}
-
-#else
-
-#define INIT_CHECK()  /* DO NOTHING */
-#define SET_CHECK(word)   /* DO NOTHING */
-#define TAIL_CHECK()  0/* DO NOTHING */
-#define PUT_CHECK()   /* DO NOTHING */
-
-#endif
- 
 //======================================================================
 //	フィールドマップ　生成　削除
 //======================================================================
@@ -935,10 +881,11 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   fieldWork->subseq ++;
 
   SET_CHECK("setup: tail");  //デバッグ：処理負荷計測
-#ifdef  PM_DEBUG
+#ifdef  DEBUG_FIELDMAP_SETUP_SPEED_CHECK
   {
-    OSTick _end_tick = TAIL_CHECK();
-    OS_Printf("mainSeqFunc_setup:total %ld\n", OS_TicksToMicroSeconds( _end_tick ) );
+    OSTick end_tick;
+    TAIL_CHECK(&end_tick);
+    OS_Printf("mainSeqFunc_setup:total %ld\n", OS_TicksToMicroSeconds( end_tick ) );
     PUT_CHECK();
   }
 #endif
@@ -2273,8 +2220,9 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 	FIELD_WEATHER_Main( fieldWork->weather_sys, HEAPID_FIELD_PRBUF );
 /*#ifdef PM_DEBUG
   {
-    OSTick debug_fieldmap_end_tick = OS_TicksToMicroSeconds (TAIL_CHECK() );
-    OS_TPrintf( "weather_tick %d\n", debug_fieldmap_end_tick );
+    OSTick debug_fieldmap_end_tick;
+    TAIL_CHECK( &debug_fieldmap_end_tick );
+    OS_TPrintf( "weather_tick %d\n", OS_TicksToMicroSeconds(debug_fieldmap_end_tick) );
   }
 #endif*/
 	FIELD_FOG_Main( fieldWork->fog );
@@ -2752,7 +2700,9 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 
 #ifdef DEBUG_FIELDMAP_ZONE_CHANGE_SYNC
   {
-  OSTick debug_fieldmap_end_tick = OS_TicksToMicroSeconds (TAIL_CHECK() );
+  OSTick debug_fieldmap_end_tick;
+  TAIL_CHECK( &debug_fieldmap_end_tick );
+  debug_fieldmap_end_tick = OS_TicksToMicroSeconds (debug_fieldmap_end_tick);
   if( debug_fieldmap_end_tick > 10000 )
   {
     OS_TPrintf( "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n" );
