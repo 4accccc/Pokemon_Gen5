@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/08 15:55:28
+#save date:2010/04/09 14:51:27
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d09.wms
 #SECTION START:OBJ_EVENT
@@ -564,25 +564,6 @@ EVENTDATA_POSTYPE_RAIL
 DIR_RIGHT
 #event number: 11
 #Door Event Label
-DOOR_ID_D09_R10R0901_EXIT01
-#Next Zone ID Name
-ZONE_ID_R10R0901
-#Next Door ID Name
-DOOR_ID_R10R0901_D09_EXIT01
-#Door Direction
-EXIT_DIR_UP
-#Door Type
-EXIT_TYPE_MAT
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-0 5 1
-#size
-3 1
-#rail way
-DIR_RIGHT
-#event number: 12
-#Door Event Label
 DOOR_ID_D09_D09R0501_EXIT01
 #Next Zone ID Name
 ZONE_ID_D09R0501
@@ -600,7 +581,7 @@ EVENTDATA_POSTYPE_RAIL
 2 1
 #rail way
 DIR_RIGHT
-#event number: 13
+#event number: 12
 #Door Event Label
 DOOR_ID_D09_D09R1401_EXIT01
 #Next Zone ID Name
@@ -619,7 +600,7 @@ EVENTDATA_POSTYPE_RAIL
 2 1
 #rail way
 DIR_RIGHT
-#event number: 14
+#event number: 13
 #Door Event Label
 DOOR_ID_D09_C09_EXIT01
 #Next Zone ID Name
@@ -638,7 +619,7 @@ EVENTDATA_POSTYPE_RAIL
 3 1
 #rail way
 DIR_RIGHT
-#event number: 15
+#event number: 14
 #Door Event Label
 DOOR_ID_D09_D09R1201_EXIT03
 #Next Zone ID Name
@@ -657,7 +638,7 @@ EVENTDATA_POSTYPE_RAIL
 1 1
 #rail way
 DIR_RIGHT
-#event number: 16
+#event number: 15
 #Door Event Label
 DOOR_ID_D09_D09R1201_EXIT02
 #Next Zone ID Name
@@ -676,7 +657,7 @@ EVENTDATA_POSTYPE_RAIL
 1 1
 #rail way
 DIR_RIGHT
-#event number: 17
+#event number: 16
 #Door Event Label
 DOOR_ID_D09_D09R0801_EXIT01
 #Next Zone ID Name
@@ -695,7 +676,7 @@ EVENTDATA_POSTYPE_RAIL
 2 1
 #rail way
 DIR_RIGHT
-#event number: 18
+#event number: 17
 #Door Event Label
 DOOR_ID_D09_D09R1301_EXIT01
 #Next Zone ID Name
@@ -710,6 +691,25 @@ EXIT_TYPE_WALL
 EVENTDATA_POSTYPE_RAIL
 #position
 40 3 -3
+#size
+2 1
+#rail way
+DIR_RIGHT
+#event number: 18
+#Door Event Label
+DOOR_ID_D09_R10R0901_EXIT01
+#Next Zone ID Name
+ZONE_ID_R10R0901
+#Next Door ID Name
+DOOR_ID_R10R0901_D09_EXIT01
+#Door Direction
+EXIT_DIR_UP
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+0 5 2
 #size
 2 1
 #rail way
