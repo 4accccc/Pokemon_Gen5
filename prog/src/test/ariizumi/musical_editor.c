@@ -222,7 +222,7 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
 
   work = GFL_PROC_AllocWork( proc, sizeof(MUS_EDIT_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
   work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_STAGE , NULL );
-  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , MONSNO_PIKUSII , 0 , 0 , HEAPID_MUSICAL_STAGE );
+  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , 400 , 0 , 0 , HEAPID_MUSICAL_STAGE );
   MUSICAL_STAGE_SetData_NPC( work->actInitWork , 1 , MONSNO_RAITYUU , 0 , 0 , HEAPID_MUSICAL_STAGE );
   MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_EREBUU  , 0 , 0 , HEAPID_MUSICAL_STAGE );
   MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_RUKARIO , 0 , 0 , HEAPID_MUSICAL_STAGE );
@@ -1401,7 +1401,7 @@ static void MusicalSetting_UpdateTouch( MUS_EDIT_LOCAL_WORK *work )
     case POKEBUT_POKE_UP:
     case POKEBUT_POKE_UP2:
       {
-        const s8 valueArr2[4] = {-5,-1,1,5};
+        const s8 valueArr2[4] = {-10,-1,1,10};
         s8 moveVal = valueArr2[ ret-POKEBUT_POKE_DOWN2 ];
         s32 tempNo = musPoke->mcssParam.monsno;
         while( moveVal != 0 )
