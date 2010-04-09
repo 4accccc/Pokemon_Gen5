@@ -388,8 +388,8 @@
   DEF_CMD( EvCmdGymAnti_OpenDoor, EV_SEQ_GYM_ANTI_OPEN_DOOR )
   DEF_CMD( EvCmdGymAnti_SwOff, EV_SEQ_GYM_ANTI_SW_OFF )
 
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdGymGround_SetEnterPos, EV_SEQ_GYM_GROUND_SET_ENTER_POS )
+  DEF_CMD( EvCmdGymGroundEnt_SetEnterPos, EV_SEQ_GYM_GROUND_ENT_SET_ENTER_POS )
   NO_CMD()
   NO_CMD()
 

@@ -32,15 +32,14 @@ _EVENT_DATA_END
 /*			ジムフロアから戻ってくる演出					*/
 /************************************************************/
 EVENT_START	ev_reserve_c05gym0201_gymback_01
-
-  //ＢＧ初期化
-  _MAP_FADE_INT_BG()
-	//ブラックイン
-	_BLACK_IN_SLOW()
+  //リフトと自機の位置をセット
+  _GYM_GROUND_ENT_SET_ENTER_POS()
+  //マップブラックイン
+	_MAP_FADE_BLACK_IN_SLOW()
 	//ジムからリフトが戻ってくる演出（引数0 = 上昇アニメ）
 	_GYM_GROUND_ENT_EXIT_LIFT( 0 )
-  //フェード待ち
-	_DISP_FADE_END_CHECK()
+  //マップフェード待ち
+	_MAP_FADE_END_CHECK()
 
 EVENT_END
 
@@ -57,13 +56,13 @@ EVENT_START	ev_c05gym0201_startlift_01
 		_SE_PLAY( SEQ_SE_FLD_61 )		//スイッチＳＥを再生
 		_SE_WAIT()
 
-	  //ブラックアウト
-		_BLACK_OUT_SLOW()
+	  //マップブラックアウト
+    _MAP_FADE_BLACK_OUT_SLOW()
 
 		//リフトを下降させる（1 = 下降アニメ）
 		_GYM_GROUND_ENT_EXIT_LIFT( 1 )
 		
-		_DISP_FADE_END_CHECK()
+		_MAP_FADE_END_CHECK()
 
 		//予約スクリプト マップチェンジ後、リフトが降りるスクリプトを起動する
 		_RESERVE_SCRIPT( SCRID_RESERVE_C05GYM0101_GYMSTART_01 )

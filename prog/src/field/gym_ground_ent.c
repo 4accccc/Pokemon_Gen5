@@ -260,7 +260,8 @@ static GMEVENT_RESULT ExitLiftEvt( GMEVENT* event, int* seq, void* work )
 
   switch(*seq){
   case 0:
-    {
+    //@note Exit が FLASEのときは GYM_GROUND_ENT_SetEnterPos関数で処理を行っているはずなので、フックする
+    if (tmp->Exit){
       //現在ウォッチターゲットを保存
       tmp->Watch = FIELD_CAMERA_GetWatchTarget(camera);
       //カメラのバインドを切る
@@ -387,4 +388,42 @@ static void SetExitLiftDefaultSt(FLD_EXP_OBJ_CNT_PTR ptr)
   anm = FLD_EXP_OBJ_GetAnmCnt( ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx, anm_idx);
   FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
 }
+
+//--------------------------------------------------------------
+/**
+ * 入り口位置（地下から上がってくる位置）にリフトと自機を移動させる
+ * @param	      gsys        ゲームシステムポインタ
+ * @param       inLiftIdx   リフトインデックス
+ * @return      GMEVENT     イベントポインタ
+ */
+//--------------------------------------------------------------
+void GYM_GROUND_ENT_SetEnterPos(GAMESYS_WORK *gsys)
+{
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  GYM_GROUND_ENT_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_GROUND_ENT_TMP_ASSIGN_ID);
+  FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
+  
+  //現在ウォッチターゲットを保存
+  tmp->Watch = FIELD_CAMERA_GetWatchTarget(camera);
+  //カメラのバインドを切る
+  FIELD_CAMERA_FreeTarget(camera);
+  
+  //対象リフト高さ更新
+  {
+    int obj_idx = OBJ_LIFT_0;
+    GFL_G3D_OBJSTATUS *status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, GYM_GROUND_ENT_UNIT_IDX, obj_idx);
+    status->trans.y = DOWN_HEIGHT;
+  }
+  //自機の高さを更新
+  {
+    VecFx32 pos;
+    FIELD_PLAYER *fld_player;
+    fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+    FIELD_PLAYER_GetPos( fld_player, &pos );
+    pos.y = DOWN_HEIGHT;
+    FIELD_PLAYER_SetPos( fld_player, &pos );
+  }
+}
+
 
