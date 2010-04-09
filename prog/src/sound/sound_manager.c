@@ -11,7 +11,7 @@
 #include "sound/sound_manager.h"
 
 static NNSSndHeapHandle*	pSndHeapHandle = NULL;
-#define STATUS_PRINT
+//#define STATUS_PRINT
 //============================================================================================
 /**
  *
@@ -268,20 +268,12 @@ BOOL	SOUNDMAN_LoadHierarchyPlayer( u32 soundIdx )
 #ifdef STATUS_PRINT
 	heapSize = NNS_SndHeapGetFreeSize(*pSndHeapHandle);
 #endif
-	{
-		u32 heapSize = NNS_SndHeapGetFreeSize(*pSndHeapHandle);
-		OS_Printf("soundHeapSize = %d\n", heapSize);
-	}
 	// サウンドデータ（seq, bank）読み込み
 	result = NNS_SndArcLoadSeqEx
 				(soundIdx, NNS_SND_ARC_LOAD_SEQ | NNS_SND_ARC_LOAD_BANK, *pSndHeapHandle);
 	if( result == FALSE){ return FALSE; }
 
 	player->heapLvPush = NNS_SndHeapSaveState(*pSndHeapHandle);
-	{
-		u32 heapSize = NNS_SndHeapGetFreeSize(*pSndHeapHandle);
-		OS_Printf("soundHeapSize = %d\n", heapSize);
-	}
 
 	// サウンドデータ（wave）読み込み
 	result = NNS_SndArcLoadSeqEx(soundIdx, NNS_SND_ARC_LOAD_WAVE, *pSndHeapHandle);
@@ -443,7 +435,7 @@ SOUNDMAN_PRESET_HANDLE* SOUNDMAN_PresetSoundTbl( const u32* soundIdxTbl, u32 tbl
 	// 現在の階層プレーヤーのヒープレベル設定を更新し、リリースの際に復帰するヒープ状態ＬＶを保存
 	handle->heapLvRelease = heapLv;
 	createHierarchyPlayer(NNS_SndHeapSaveState(*pSndHeapHandle));
-#if 1
+#ifdef STATUS_PRINT
 	OS_Printf("change player[%d] svLv %d->%d\n", 
 			sndHierarchyArrayPos, handle->heapLvRelease, player->heapLvDelete);
 #endif
@@ -472,7 +464,10 @@ SOUNDMAN_PRESET_HANDLE* SOUNDMAN_PresetGroup( u32 groupIdx )
 	// 現在の階層プレーヤーのヒープレベル設定を更新し、リリースの際に復帰するヒープ状態ＬＶを保存
 	handle->heapLvRelease = heapLv;
 	createHierarchyPlayer(NNS_SndHeapSaveState(*pSndHeapHandle));
-
+#ifdef STATUS_PRINT
+	OS_Printf("change player[%d] svLv %d->%d\n", 
+			sndHierarchyArrayPos, handle->heapLvRelease, player->heapLvDelete);
+#endif
 	return handle;
 }
 
@@ -489,7 +484,7 @@ void SOUNDMAN_ReleasePresetData( SOUNDMAN_PRESET_HANDLE* handle )
 	int heapLv = handle->heapLvRelease;
 
 	GF_ASSERT(pSndHeapHandle);
-#if 1
+#ifdef STATUS_PRINT
 	OS_Printf("change player[%d] svLv %d->%d\n", 
 			sndHierarchyArrayPos, player->heapLvDelete, handle->heapLvRelease); 
 #endif
