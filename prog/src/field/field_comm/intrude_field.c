@@ -508,6 +508,8 @@ static GMEVENT_RESULT _EventPalaceBarrierMove( GMEVENT *event, int *seq, void *w
     break;
   case _SEQ_MSG_WAIT:
     if( FLDMSGWIN_CheckPrintTrans(barrier->msgWin) == TRUE ){
+      FIELD_PLACE_NAME_DisplayForce( 
+        FIELDMAP_GetPlaceNameSys(barrier->fieldWork), FIELDMAP_GetZoneID(barrier->fieldWork) );
       (*seq)++;
     } 
     break;
