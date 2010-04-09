@@ -12,6 +12,7 @@
 
 #include "system/main.h"
 #include "system/wipe.h"
+#include "poke_tool/monsnum_def.h"
 
 #include "zukan_common.h"
 
@@ -45,6 +46,23 @@ u16 ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 ** list, HEAPID heapID )
 	*list = buf;
 
 	return max;
+}
+
+// ビクティチェック
+BOOL ZKNCOMM_CheckLocalListNumberZero( ZUKAN_SAVEDATA * sv )
+{
+	// 表示モードが全国
+	if( ZUKANSAVE_GetZukanMode( sv ) == TRUE ){
+		return TRUE;
+	}
+
+	// 見た・捕獲した場合
+	if( ZUKANSAVE_GetPokeGetFlag( sv, MONSNO_657 ) == TRUE ||
+			ZUKANSAVE_GetPokeSeeFlag( sv, MONSNO_657 ) == TRUE ){
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 // ソートデータリセット

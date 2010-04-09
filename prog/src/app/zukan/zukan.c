@@ -314,9 +314,13 @@ static int MainSeq_CallList( ZUKAN_MAIN_WORK * wk )
 	list->savedata = wk->prm->savedata;
 
 	list->callMode = wk->listMode;
-	list->list     = wk->list;
-	list->listMax  = wk->listMax;
-
+	if( wk->listMode == ZKNLIST_CALL_NORMAL && ZKNCOMM_CheckLocalListNumberZero(wk->prm->savedata) == FALSE ){
+		list->list    = &wk->list[1];
+		list->listMax = wk->listMax-1;
+	}else{
+		list->list    = wk->list;
+		list->listMax = wk->listMax;
+	}
 	GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(zukan_list), &ZUKANLIST_ProcData, wk->work );
 
 	return NextProcCall( wk, SEQ_LIST_END );
