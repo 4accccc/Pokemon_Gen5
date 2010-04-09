@@ -40,10 +40,10 @@ typedef struct _ITEM_DATA ITEMDATA;   // アイテムデータ
 
 // インデックス取得定義
 enum {
-  ITEM_GET_DATA = 0,    // アイテムデータ
-  ITEM_GET_ICON_CGX,    // アイコンキャラ
-  ITEM_GET_ICON_PAL,    // アイコンパレット
-  ITEM_GET_AGB_NUM    // AGBのアイテム番号
+	ITEM_GET_DATA = 0,    // アイテムデータ
+  ITEM_GET_ICON_CGX,	  // アイコンキャラ
+  ITEM_GET_ICON_PAL,	  // アイコンパレット
+//  ITEM_GET_AGB_NUM		// AGBのアイテム番号
 };
 
 // パラメータ取得定義
@@ -200,7 +200,6 @@ extern void ItemPutIn( void * item, u16 pos1, u16 pos2 );
  * @li  type = ITEM_GET_DATA    : アイテムデータのアーカイブインデックス
  * @li  type = ITEM_GET_ICON_CGX  : アイコンキャラのアーカイブインデックス
  * @li  type = ITEM_GET_ICON_PAL  : アイコンパレットのアーカイブインデックス
- * @li  type = ITEM_GET_AGB_NUM   : AGBのアイテム番号
  */
 //--------------------------------------------------------------------------------------------
 extern u16 ITEM_GetIndex( u16 item, u16 type );
@@ -215,7 +214,7 @@ extern u16 ITEM_GetIndex( u16 item, u16 type );
  * @retval  "ITEM_DUMMY_ID != DPのアイテム番号"
  */
 //--------------------------------------------------------------------------------------------
-extern u16 ITEM_CnvAgbItem( u16 agb );
+//extern u16 ITEM_CnvAgbItem( u16 agb );
 
 //--------------------------------------------------------------
 /**

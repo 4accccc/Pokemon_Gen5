@@ -31,10 +31,10 @@
 //  構造体定義
 //==============================================================================
 typedef struct {
-  u16 arc_data;
+//  u16 arc_data;
   u16 arc_cgx;
   u16 arc_pal;
-  u16 agb_id;
+//  u16 agb_id;
 }ITEMDATA_INDEX;
 
 
@@ -120,7 +120,8 @@ u16 ITEM_GetIndex( u16 item, u16 type )
   switch( type ){
   case ITEM_GET_DATA:   // アイテムデータ
     if( item == ITEM_DUMMY_ID || item == ITEM_RETURN_ID ){ break; }
-    return ItemDataIndex[item].arc_data;
+//    return ItemDataIndex[item].arc_data;
+		return item;
 
   case ITEM_GET_ICON_CGX: // アイコンキャラデータ
     if( item == ITEM_DUMMY_ID ){ return NARC_item_icon_item_dumy_NCGR; }
@@ -131,11 +132,13 @@ u16 ITEM_GetIndex( u16 item, u16 type )
     if( item == ITEM_DUMMY_ID ){ return NARC_item_icon_item_dumy_NCLR; }
     if( item == ITEM_RETURN_ID ){ return NARC_item_icon_item_yaji_NCLR; }
     return ItemDataIndex[item].arc_pal;
-
+/*
   case ITEM_GET_AGB_NUM:  // AGBのアイテム番号
     if( item == ITEM_DUMMY_ID || item == ITEM_RETURN_ID ){ break; }
     return ItemDataIndex[item].agb_id;
+*/
   }
+
   return 0;
 }
 
@@ -149,6 +152,7 @@ u16 ITEM_GetIndex( u16 item, u16 type )
  * @retval  "ITEM_DUMMY_ID != DPのアイテム番号"
  */
 //--------------------------------------------------------------------------------------------
+/*
 u16 ITEM_CnvAgbItem( u16 agb )
 {
   u16 i;
@@ -160,6 +164,7 @@ u16 ITEM_CnvAgbItem( u16 agb )
   }
   return ITEM_DUMMY_ID;
 }
+*/
 
 //--------------------------------------------------------------
 /**
@@ -222,7 +227,8 @@ void * ITEM_GetItemArcData( u16 item, u16 type, HEAPID heap_id )
 
   switch( type ){
   case ITEM_GET_DATA:   // アイテムデータ
-    return GFL_ARC_LoadDataAlloc(ARCID_ITEMDATA, ItemDataIndex[item].arc_data, heap_id);
+//    return GFL_ARC_LoadDataAlloc(ARCID_ITEMDATA, ItemDataIndex[item].arc_data, heap_id);
+    return GFL_ARC_LoadDataAlloc(ARCID_ITEMDATA, item, heap_id);
   case ITEM_GET_ICON_CGX: // アイコンキャラデータ
     return GFL_ARC_LoadDataAlloc(ARCID_ITEMICON, ItemDataIndex[item].arc_cgx, heap_id);
   case ITEM_GET_ICON_PAL: // アイコンパレットデータ
