@@ -244,7 +244,7 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
       (GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 2);
     tw->totalWait = 0;
     tw->seq = SEQ_FADEIN;
-    PMSND_PlayBGM( SEQ_BGM_POKEMON_THEME );
+    PMSND_PlayBGM_WideChannel( SEQ_BGM_POKEMON_THEME );
 
     break;
 
@@ -300,10 +300,10 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 
   case SEQ_FADEOUT:
     if( GFL_FADE_CheckFade() == FALSE &&
-				PMSND_CheckFadeOnBGM() == FALSE ){
-			PMSND_StopBGM();
-			tw->seq = SEQ_END;
-		}
+        PMSND_CheckFadeOnBGM() == FALSE ){
+      PMSND_StopBGM();
+      tw->seq = SEQ_END;
+    }
     MainFunc(tw);
     break;
 
