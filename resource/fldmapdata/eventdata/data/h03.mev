@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/07 20:41:37
+#save date:2010/04/09 16:25:50
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h03.wms
 #SECTION START:OBJ_EVENT
@@ -76,7 +76,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-H03_BADRIDER_04
+H03_BADRIDER1_04
 #OBJ CODE Number
 BADRIDER
 #MOVE CODE Number

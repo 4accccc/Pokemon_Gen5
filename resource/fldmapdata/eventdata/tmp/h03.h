@@ -12,7 +12,7 @@
 
 #define H03_FIGHTERW_01                    0
 #define H03_MIDDLEWOMAN1_01                1
-#define H03_BADRIDER_04                    2
+#define H03_BADRIDER1_04                   2
 #define H03_BADRIDER1_05                   3
 #define H03_BADRIDER1_03                   4
 #define H03_BADRIDER1_01                   5

@@ -12,6 +12,7 @@
 
 #define R16R0201_WOMAN3_01                 0
 #define R16R0201_BACKPACKERM_01            1
+#define R16R0201_FLD_ITEM_01               2
 
 #endif //ZONE_R16R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r16r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

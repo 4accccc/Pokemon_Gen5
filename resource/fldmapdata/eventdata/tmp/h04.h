@@ -35,8 +35,7 @@
 #define H04_BACKPACKERW_01                16
 #define H04_MONSTERBALL_01                17
 #define H04_FLD_ITEM_01                   18
-#define H04_FLD_ITEM_02                   19
-#define H04_FLD_ITEM_03                   20
+#define H04_FLD_ITEM_03                   19
 
 #endif //ZONE_H04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

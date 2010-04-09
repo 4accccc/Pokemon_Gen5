@@ -159,17 +159,17 @@ EVENT_START    ev_h03_badrider1_01
   	
   	IF$SCWK_ANSWER == TRUE THEN
 		//対戦後メッセージ
-		_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider1_04)
+		_BALLOONWIN_OBJMSG_POS(msg_h03_badrider1_04,H03_BADRIDER1_01,POS_UP)
 	ELSE
-		_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider1_01)
+		_BALLOONWIN_OBJMSG_POS(msg_h03_badrider1_01,H03_BADRIDER1_01,POS_UP)
 		_YES_NO_WIN(SCWK_ANSWER)
 		_MSGWIN_CLOSE()
 		
 		IF$SCWK_ANSWER == SCR_YES THEN
-			_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider1_03)
+			_BALLOONWIN_OBJMSG_POS(msg_h03_badrider1_03,H03_BADRIDER1_01,POS_UP)
 			
 		ELSE
-			_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider1_02)
+			_BALLOONWIN_OBJMSG_POS(msg_h03_badrider1_02,H03_BADRIDER1_01,POS_UP)
 			_MSGWIN_CLOSE()
 			
 			_TRAINER_BTL_SET( TRID_BADRIDER_05, 0 )
@@ -185,7 +185,7 @@ EVENT_START    ev_h03_badrider1_01
 			ENDIF
 					
 			//対戦後メッセージ
-			_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider1_04)		
+			_BALLOONWIN_OBJMSG_POS(msg_h03_badrider1_04,H03_BADRIDER1_01,POS_UP)	
 			    	
 		ENDIF
 	ENDIF
@@ -208,17 +208,17 @@ EVENT_START    ev_h03_badrider1_02
   	
   	IF$SCWK_ANSWER == TRUE THEN
 		//対戦後メッセージ
-		_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider2_04)
+		_BALLOONWIN_OBJMSG_POS(msg_h03_badrider2_04,H03_BADRIDER1_02,POS_UP)
 	ELSE
-		_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider2_01)
+		_BALLOONWIN_OBJMSG_POS(msg_h03_badrider2_01,H03_BADRIDER1_02,POS_UP)
 		_YES_NO_WIN(SCWK_ANSWER)
 		_MSGWIN_CLOSE()
 		
 		IF$SCWK_ANSWER == SCR_NO THEN
-			_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider2_03)
+			_BALLOONWIN_OBJMSG_POS(msg_h03_badrider2_03,H03_BADRIDER1_02,POS_UP)
 			
 		ELSE
-			_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider2_02)
+			_BALLOONWIN_OBJMSG_POS(msg_h03_badrider2_02,H03_BADRIDER1_02,POS_UP)
 			_MSGWIN_CLOSE()
 			
 			_TRAINER_BTL_SET( TRID_BADRIDER_06, 0 )
@@ -243,7 +243,7 @@ EVENT_START    ev_h03_badrider1_02
 			//タグにリーダーに勝った際、使用していたポケモンか、エンペルトの種族名をセット
 			_MONS_NAME( 0, WK_OTHER_EMPEROR_MONSNUM )
 			//対戦後メッセージ
-			_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider2_04)		
+			_BALLOONWIN_OBJMSG_POS(msg_h03_badrider2_04,H03_BADRIDER1_02,POS_UP)		
 			    	
 		ENDIF
 	ENDIF
@@ -259,7 +259,10 @@ EVENT_START    ev_h03_badrider1_03
 	//タグにリーダーに勝った際、使用していたポケモンか、エンペルトの種族名をセット
 	_MONS_NAME( 0, WK_OTHER_EMPEROR_MONSNUM )
 	
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider3_01)
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_POS(msg_h03_badrider3_01,H03_BADRIDER1_03,POS_UP)
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 /**************************************************************/
@@ -269,8 +272,11 @@ EVENT_START    ev_h03_badrider1_04
 
 	//タグにリーダーに勝った際、使用していたポケモンか、エンペルトの種族名をセット
 	_MONS_NAME( 0, WK_OTHER_EMPEROR_MONSNUM )
-	
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider4_01)
+
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_POS(msg_h03_badrider4_01,H03_BADRIDER1_04,POS_UP)
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 /**************************************************************/
@@ -280,7 +286,10 @@ EVENT_START    ev_h03_badrider1_05
 
 	//タグにリーダーに勝った際、使用していたポケモンか、エンペルトの種族名をセット
 	_MONS_NAME( 0, WK_OTHER_EMPEROR_MONSNUM )
-	
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h03_badrider5_01)
+
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_POS(msg_h03_badrider5_01,H03_BADRIDER1_05,POS_UP)
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 	
 EVENT_END

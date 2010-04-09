@@ -19,10 +19,9 @@
 #define TR_ESPM_08                         5
 #define TR_ESPW_07                         6
 #define TR_SCIENTISTM_09                   7
-#define D01R0201_FLD_ITEM_01               8
-#define D01R0201_FLD_ITEM_04               9
-#define D01R0201_FLD_ITEM_02              10
-#define D01R0201_FLD_ITEM_03              11
+#define D01R0201_FLD_ITEM_04               8
+#define D01R0201_FLD_ITEM_02               9
+#define D01R0201_FLD_ITEM_03              10
 
 #endif //ZONE_D01R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d01r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
