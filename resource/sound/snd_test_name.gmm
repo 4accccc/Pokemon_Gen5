@@ -8266,9 +8266,9 @@
 		<language name="JPN" width="256">EDEMO-05</language>
 		<language name="JPN_KANJI" width="256">EDEMO-05</language>
 	</row>
-	<row id="msg_seq_se_hdemo_01">
-		<language name="JPN" width="256">HDEMO-01</language>
-		<language name="JPN_KANJI" width="256">HDEMO-01</language>
+	<row id="msg_seq_se_fld_151">
+		<language name="JPN" width="256">FLD-151</language>
+		<language name="JPN_KANJI" width="256">FLD-151</language>
 	</row>
 	<row id="msg_seq_se_sys_91">
 		<language name="JPN" width="256">SYS-91</language>
@@ -8290,9 +8290,9 @@
 		<language name="JPN" width="256">BDEMO-04</language>
 		<language name="JPN_KANJI" width="256">BDEMO-04</language>
 	</row>
-	<row id="msg_seq_se_dmy_306">
-		<language name="JPN" width="256">DMY-306</language>
-		<language name="JPN_KANJI" width="256">DMY-306</language>
+	<row id="msg_seq_se_fld_152">
+		<language name="JPN" width="256">FLD-152</language>
+		<language name="JPN_KANJI" width="256">FLD-152</language>
 	</row>
 	<row id="msg_seq_se_dmy_307">
 		<language name="JPN" width="256">DMY-307</language>
