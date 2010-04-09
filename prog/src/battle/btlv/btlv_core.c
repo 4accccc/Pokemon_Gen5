@@ -466,7 +466,9 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
         core->recPlayerUI.play_chapter = 1;
         core->recPlayerUI.view_chapter = 1;
         core->recPlayerUI.max_chapter = BTL_CLIENT_GetRecPlayerMaxChapter( core->myClient );
-        core->recPlayerUI.stop_flag = BTLV_INPUT_BR_STOP_NONE;
+        core->recPlayerUI.stop_flag = BTL_CLIENT_IsChapterSkipMode(core->myClient)?
+                              BTLV_INPUT_BR_STOP_KEY : BTLV_INPUT_BR_STOP_NONE;
+
         BTLV_SCD_SetupRecPlayerMode( core->scrnD, &core->recPlayerUI );
       }
       return TRUE;
@@ -2552,6 +2554,7 @@ void BTLV_UpdateRecPlayerInput( BTLV_CORE* wk, u16 currentChapter, u16 ctrlChapt
 {
   wk->recPlayerUI.play_chapter = currentChapter;
   wk->recPlayerUI.view_chapter = ctrlChapter;
+  wk->recPlayerUI.stop_flag = BTLV_INPUT_BR_STOP_NONE;
 
   BTLV_SCD_SetupRecPlayerMode( wk->scrnD, &wk->recPlayerUI );
 }
