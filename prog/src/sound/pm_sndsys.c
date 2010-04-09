@@ -576,6 +576,23 @@ void	PMSND_PlayNextBGM_EX( u32 soundIdx, u16 trackBit, u8 fadeOutFrame, u8 fadeI
 }
 
 //------------------------------------------------------------------
+void	PMSND_PlayBGM_WideChannel( u32 soundIdx )
+{
+	BOOL result;
+	PMSND_ResetSystemFadeBGM();
+
+  // 再生可否判定
+	if(checkPlaySound(soundIdx) == FALSE){ return; }
+	PMSND_StopBGM_CORE();
+	result = SOUNDMAN_LoadHierarchyPlayer(soundIdx);
+	if( result == FALSE){ return; }
+
+	// サウンド再生開始
+	result = NNS_SndArcPlayerStartSeqEx
+					(SOUNDMAN_GetHierarchyPlayerSndHandle(), PLAYER_BGM2, -1, -1, soundIdx);
+}
+
+//------------------------------------------------------------------
 /**
  * @brief	サウンド一時停止
  */
