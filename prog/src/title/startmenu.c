@@ -83,8 +83,8 @@ typedef struct {
 	PRINT_UTIL	util[BMPWIN_MAX];
 	PRINT_UTIL	utilWin;
 
-	DELIVERY_BEACON_WORK * bwk;		//「不思議な贈り物」ビーコン管理ワーク
-	BOOL	hushigiFlag;						//「不思議な贈り物」を受信許可フラグ TRUE = 許可
+//	DELIVERY_BEACON_WORK * bwk;		//「不思議な贈り物」ビーコン管理ワーク
+//	BOOL	hushigiFlag;						//「不思議な贈り物」を受信許可フラグ TRUE = 許可
 
 	u16 * listFrame[LIST_ITEM_MAX];
 
@@ -132,7 +132,7 @@ enum {
 
 	MAINSEQ_CONTINUE,
 	MAINSEQ_NEWGAME,
-	MAINSEQ_HUSHIGI,
+//	MAINSEQ_HUSHIGI,
 
 	MAINSEQ_END_SET,
 
@@ -158,7 +158,7 @@ static int MainSeq_Main( START_MENU_WORK * wk );
 static int MainSeq_Scroll( START_MENU_WORK * wk );
 static int MainSeq_Continue( START_MENU_WORK * wk );
 static int MainSeq_NewGame( START_MENU_WORK * wk );
-static int MainSeq_Hushigi( START_MENU_WORK * wk );
+//static int MainSeq_Hushigi( START_MENU_WORK * wk );
 static int MainSeq_EndSet( START_MENU_WORK * wk );
 
 static void InitVBlank( START_MENU_WORK * wk );
@@ -201,9 +201,9 @@ static BOOL MainMessage( START_MENU_WORK * wk );
 static void SetYesNoMenu( START_MENU_WORK * wk );
 static void PutContinueInfo( START_MENU_WORK * wk );
 static void ClearContinueInfo( START_MENU_WORK * wk );
-static void InitHushigiCheck( START_MENU_WORK * wk );
-static void ExitHushigiCheck( START_MENU_WORK * wk );
-static BOOL CheckHushigiBeacon( START_MENU_WORK * wk );
+//static void InitHushigiCheck( START_MENU_WORK * wk );
+//static void ExitHushigiCheck( START_MENU_WORK * wk );
+//static BOOL CheckHushigiBeacon( START_MENU_WORK * wk );
 static int SetButtonAnm( START_MENU_WORK * wk, int next );
 
 
@@ -255,7 +255,7 @@ static const pSTARTMENU_FUNC MainSeq[] = {
 
 	MainSeq_Continue,
 	MainSeq_NewGame,
-	MainSeq_Hushigi,
+//	MainSeq_Hushigi,
 
 	MainSeq_EndSet
 };
@@ -493,19 +493,23 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 //--------------------------------------------------------------------------------------------
 static int MainSeq_Init( START_MENU_WORK * wk )
 {
+/*
 	// セーブデータがない場合は「最初から」の処理に飛ばす
 	if( SaveData_GetExistFlag( wk->savedata ) == FALSE ){
 		wk->listResult = LIST_ITEM_NEW_GAME;
 		return MAINSEQ_END;
 	}
+*/
 
 #ifdef PM_DEBUG
 	// 全メニュー表示許可
-	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
-		MISC_SetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_HUSHIGI, MISC_STARTMENU_FLAG_OPEN );
-		MISC_SetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_BATTLE, MISC_STARTMENU_FLAG_OPEN );
-		MISC_SetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_GAMESYNC, MISC_STARTMENU_FLAG_OPEN );
-		MISC_SetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_MACHINE, MISC_STARTMENU_FLAG_OPEN );
+	if( SaveData_GetExistFlag( wk->savedata ) == TRUE ){
+		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+//			MISC_SetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_HUSHIGI, MISC_STARTMENU_FLAG_OPEN );
+			MISC_SetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_BATTLE, MISC_STARTMENU_FLAG_OPEN );
+			MISC_SetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_GAMESYNC, MISC_STARTMENU_FLAG_OPEN );
+			MISC_SetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_MACHINE, MISC_STARTMENU_FLAG_OPEN );
+		}
 	}
 #endif	// PM_DEBUG
 
@@ -537,7 +541,7 @@ static int MainSeq_Init( START_MENU_WORK * wk )
 
 	SetBlendAlpha();
 
-	InitHushigiCheck( wk );
+//	InitHushigiCheck( wk );
 
 	InitVBlank( wk );
 
@@ -557,7 +561,7 @@ static int MainSeq_Release( START_MENU_WORK * wk )
 {
 	switch( wk->subSeq ){
 	case 0:
-		ExitHushigiCheck( wk );
+//		ExitHushigiCheck( wk );
 		wk->subSeq++;
 
 	case 1:
@@ -689,10 +693,12 @@ static int MainSeq_Main( START_MENU_WORK * wk )
 {
 	BLINKPALANM_Main( wk->blink );
 
+/*
 	// 不思議な贈り物受信チェック
 	if( CheckHushigiBeacon( wk ) == TRUE ){
 		return MAINSEQ_HUSHIGI;
 	}
+*/
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
 		PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
@@ -705,7 +711,7 @@ static int MainSeq_Main( START_MENU_WORK * wk )
 			return SetButtonAnm( wk, MAINSEQ_NEWGAME );
 
 		case LIST_ITEM_HUSHIGI:			// 不思議な贈り物
-			MISC_SetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_HUSHIGI, MISC_STARTMENU_FLAG_VIEW );
+//			MISC_SetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_HUSHIGI, MISC_STARTMENU_FLAG_VIEW );
 			wk->listResult = wk->list[wk->listPos];
 			return SetButtonAnm( wk, MAINSEQ_END_SET );
 
@@ -896,8 +902,15 @@ static int MainSeq_NewGame( START_MENU_WORK * wk )
 {
 	switch( wk->subSeq ){
 	case 0:
-		PutNewGameWarrning( wk );
-		wk->subSeq++;
+		// 続きからが無い場合
+		if( wk->list[0] == LIST_ITEM_NEW_GAME ){
+			wk->listResult = LIST_ITEM_NEW_GAME;
+			wk->subSeq = 0;
+			return SetFadeOut( wk, MAINSEQ_RELEASE );
+		}else{
+			PutNewGameWarrning( wk );
+			wk->subSeq++;
+		}
 		break;
 
 	case 1:
@@ -942,6 +955,7 @@ static int MainSeq_NewGame( START_MENU_WORK * wk )
  * @return	次の処理
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int MainSeq_Hushigi( START_MENU_WORK * wk )
 {
 	switch( wk->subSeq ){
@@ -1000,7 +1014,7 @@ static int MainSeq_Hushigi( START_MENU_WORK * wk )
 
 	return MAINSEQ_HUSHIGI;
 }
-
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1551,6 +1565,7 @@ static void InitObj( START_MENU_WORK * wk )
 																wk->palRes[PALRES_PLAYER],
 																wk->celRes[CELRES_PLAYER],
 																&PlayerObjData, CLSYS_DRAW_MAIN, HEAPID_STARTMENU );
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_PLAYER], FALSE );
 
 		for( i=OBJ_ID_NEW_HUSHIGI; i<=OBJ_ID_NEW_MACHINE; i++ ){
 			wk->clwk[i] = GFL_CLACT_WK_Create(
@@ -1685,16 +1700,18 @@ static void InitList( START_MENU_WORK * wk )
 	
 	i = 0;
 	// 続きから
-	wk->list[i] = LIST_ITEM_CONTINUE;
-	i++;
+	if( SaveData_GetExistFlag( wk->savedata ) == TRUE ){
+		wk->list[i] = LIST_ITEM_CONTINUE;
+		i++;
+	}
 	// 最初から
 	wk->list[i] = LIST_ITEM_NEW_GAME;
 	i++;
 	// 不思議な贈り物
-	if( MISC_GetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_HUSHIGI ) != 0 ){
+//	if( MISC_GetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_HUSHIGI ) != 0 ){
 		wk->list[i] = LIST_ITEM_HUSHIGI;
 		i++;
-	}
+//	}
 	// バトル大会
 	if( MISC_GetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_BATTLE ) != 0 ){
 		wk->list[i] = LIST_ITEM_BATTLE;
@@ -1807,6 +1824,7 @@ static void PutListObj( START_MENU_WORK * wk, u16 idx, s16 py )
 static void InitListPut( START_MENU_WORK * wk )
 {
 	u32	i;
+	BOOL continue_flg;
 	s8	py;
 
 	wk->listPos = 0;
@@ -1814,17 +1832,23 @@ static void InitListPut( START_MENU_WORK * wk )
 	wk->cursorPutPos = LIST_ITEM_PY;
 	py = LIST_ITEM_PY;
 
+	continue_flg = FALSE;
+
 	for( i=0; i<LIST_ITEM_MAX; i++ ){
 		if( wk->list[i] == LIST_ITEM_MAX ){
 			break;
 		}
 		PutListItem( wk, wk->list[i], py );
 
-		if( wk->list[i] == LIST_ITEM_HUSHIGI ){
+		if( wk->list[i] == LIST_ITEM_CONTINUE ){
+			GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_PLAYER], TRUE );
+/*
+		}else if( wk->list[i] == LIST_ITEM_HUSHIGI ){
 			if( MISC_GetStartMenuFlag(wk->misc,MISC_STARTMENU_TYPE_HUSHIGI) == MISC_STARTMENU_FLAG_OPEN ){
 				PutListObj( wk, OBJ_ID_NEW_HUSHIGI, py*8+ListItemData[wk->list[i]].sy*8/2 );
 				GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_NEW_HUSHIGI], TRUE );
 			}
+*/
 		}else if( wk->list[i] == LIST_ITEM_BATTLE ){
 			if( MISC_GetStartMenuFlag(wk->misc,MISC_STARTMENU_TYPE_BATTLE) == MISC_STARTMENU_FLAG_OPEN ){
 				PutListObj( wk, OBJ_ID_NEW_BATTLE, py*8+ListItemData[wk->list[i]].sy*8/2 );
@@ -2012,6 +2036,9 @@ static BOOL CursorMove( START_MENU_WORK * wk, s8 vec )
 {
 	u8	now_item;
 	u8	now_pos;
+	u8	mv_item;
+	s8	mv_pos;
+	s8	cur_py;
 
 	now_pos  = wk->listPos;
 	now_item = wk->list[ now_pos ];
@@ -2023,35 +2050,26 @@ static BOOL CursorMove( START_MENU_WORK * wk, s8 vec )
 			return FALSE;
 		}
 
-		{
-			u8	mv_item;
-			s8	mv_pos;
-			s8	cur_py;
+		mv_pos  = now_pos + vec;
+		mv_item = wk->list[ mv_pos ];
 
-			mv_pos  = now_pos + vec;
-			mv_item = wk->list[ mv_pos ];
+		cur_py = wk->cursorPutPos - ListItemData[mv_item].sy;
 
-			cur_py = wk->cursorPutPos - ListItemData[mv_pos].sy;
+		ChangeListItemPalette( wk, now_item, GetListPutY(wk,wk->cursorPutPos), LIST_PALETTE );
 
-			ChangeListItemPalette( wk, now_item, GetListPutY(wk,wk->cursorPutPos), LIST_PALETTE );
-
+		if( wk->list[0] == LIST_ITEM_CONTINUE ){
 			if( cur_py < LIST_ITEM_PY ){
 				if( mv_pos == 0 ){
 					wk->bgScrollSpeed = ( ListItemData[ mv_item ].sy - (wk->cursorPutPos-LIST_ITEM_PY) ) / 3 * -8;
-//					wk->bgScrollCount = ( ListItemData[ mv_item ].sy - (wk->cursorPutPos-LIST_ITEM_PY) ) * -8;
-//					wk->bgScrollSpeed = wk->bgScrollCount / 3;
-//					OS_Printf( " mv -0 = %d\n", ( ListItemData[ mv_item ].sy - (wk->cursorPutPos-LIST_ITEM_PY) ) );
 					wk->cursorPutPos = LIST_ITEM_PY;
-
 				}else{
 					wk->bgScrollSpeed = ListItemData[ mv_item ].sy / 3 * -8;
-//					wk->bgScrollCount = ListItemData[ mv_item ].sy * -8;
-//					wk->bgScrollSpeed = wk->bgScrollCount / 3;
-
 				}
 			}else{
 				wk->cursorPutPos = cur_py;
 			}
+		}else{
+			wk->cursorPutPos = cur_py;
 		}
 
 	}else{
@@ -2062,30 +2080,25 @@ static BOOL CursorMove( START_MENU_WORK * wk, s8 vec )
 			return FALSE;
 		}
 
-		{
-			u8	mv_item;
-			u8	mv_pos;
-			u8	cur_py;
+		mv_pos  = now_pos + vec;
+		mv_item = wk->list[ mv_pos ];
 
-			mv_pos  = now_pos + vec;
-			mv_item = wk->list[ mv_pos ];
+		cur_py = wk->cursorPutPos + ListItemData[now_item].sy;
 
-			cur_py = wk->cursorPutPos + ListItemData[now_pos].sy;
+		ChangeListItemPalette( wk, now_item, GetListPutY(wk,wk->cursorPutPos), LIST_PALETTE );
 
-			ChangeListItemPalette( wk, now_item, GetListPutY(wk,wk->cursorPutPos), LIST_PALETTE );
-
+		if( wk->list[0] == LIST_ITEM_CONTINUE ){
 			if( cur_py == 24 ){
 				wk->bgScrollSpeed = ListItemData[ mv_item ].sy / 3 * 8;
-//				wk->bgScrollCount = ListItemData[ mv_item ].sy * 8;
-//				wk->bgScrollSpeed = wk->bgScrollCount / 3;
 			}else if( ( cur_py + ListItemData[mv_item].sy ) > 24 ){
 				wk->bgScrollSpeed = ListItemData[ mv_item ].sy / 3 * 8;
-//				wk->bgScrollCount = ListItemData[ mv_item ].sy * 8;
-//				wk->bgScrollSpeed = wk->bgScrollCount / 3;
 			}else{
 				wk->cursorPutPos = cur_py;
 			}
+		}else{
+			wk->cursorPutPos = cur_py;
 		}
+
 	}
 
 	wk->listPos += vec;
@@ -2120,11 +2133,14 @@ static void VanishListObj( START_MENU_WORK * wk, BOOL flg )
 			if( wk->list[i] == LIST_ITEM_MAX ){
 				break;
 			}
+/*
 			if( wk->list[i] == LIST_ITEM_HUSHIGI ){
 				if( MISC_GetStartMenuFlag(wk->misc,MISC_STARTMENU_TYPE_HUSHIGI) == MISC_STARTMENU_FLAG_OPEN ){
 					GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_NEW_HUSHIGI], TRUE );
 				}
 			}else if( wk->list[i] == LIST_ITEM_BATTLE ){
+*/
+			if( wk->list[i] == LIST_ITEM_BATTLE ){
 				if( MISC_GetStartMenuFlag(wk->misc,MISC_STARTMENU_TYPE_BATTLE) == MISC_STARTMENU_FLAG_OPEN ){
 					GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ID_NEW_BATTLE], TRUE );
 				}
@@ -2466,6 +2482,7 @@ static void SetYesNoMenu( START_MENU_WORK * wk )
  * @retval	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void InitHushigiCheck( START_MENU_WORK * wk )
 {
 	if( MISC_GetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_HUSHIGI ) == 0 ){
@@ -2488,6 +2505,7 @@ static void InitHushigiCheck( START_MENU_WORK * wk )
 		wk->hushigiFlag = FALSE;
 	}
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2498,6 +2516,7 @@ static void InitHushigiCheck( START_MENU_WORK * wk )
  * @retval	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void ExitHushigiCheck( START_MENU_WORK * wk )
 {
 	if( wk->bwk != NULL ){
@@ -2505,6 +2524,7 @@ static void ExitHushigiCheck( START_MENU_WORK * wk )
 		wk->bwk = NULL;
 	}
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2515,6 +2535,7 @@ static void ExitHushigiCheck( START_MENU_WORK * wk )
  * @retval	none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static BOOL CheckHushigiBeacon( START_MENU_WORK * wk )
 {
 	// 受信不許可
@@ -2531,7 +2552,7 @@ static BOOL CheckHushigiBeacon( START_MENU_WORK * wk )
 	}
 	return FALSE;
 }
-
+*/
 
 //============================================================================================
 //	その他
