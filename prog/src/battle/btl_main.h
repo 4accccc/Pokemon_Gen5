@@ -237,6 +237,9 @@ typedef struct {
 extern const BTL_TRIPLE_ATTACK_AREA* BTL_MAINUTIL_GetTripleAttackArea( BtlPokePos pos );
 extern BOOL BTL_MAINUTIL_CheckTripleHitArea( BtlPokePos attackerPos, BtlPokePos targetPos );
 
+extern u8 BTL_MAINUTIL_GetRotateInPosIdx( BtlRotateDir dir );
+extern u8 BTL_MAINUTIL_GetRotateOutPosIdx( BtlRotateDir dir );
+
 extern BOOL BTL_MAINUTIL_IsTripleCenterPos( BtlPokePos pos );
 extern BOOL BTL_MAINUTIL_GetTripleFarPos( BtlPokePos myPos, BtlPokePos* farPos );
 

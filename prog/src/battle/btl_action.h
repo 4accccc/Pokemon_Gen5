@@ -25,12 +25,15 @@ typedef enum {
   BTL_ACTION_CHANGE,
   BTL_ACTION_ESCAPE,
   BTL_ACTION_MOVE,
+  BTL_ACTION_ROTATION,
 
-  BTL_ACTION_SKIP,    ///< 反動などで動けない
+  BTL_ACTION_SKIP,      ///< 反動などで動けない
 }BtlAction;
 
 
 typedef union {
+
+  u32 raw;
 
   struct {
     u32 cmd   : 3;
@@ -41,7 +44,8 @@ typedef union {
     u32 cmd       : 3;
     u32 targetPos : 3;
     u32 waza      : 16;
-    u32 _0        : 9;
+    u32 rot_dir   : 3;
+    u32 _0        : 7;
   }fight;
 
   struct {
@@ -70,11 +74,18 @@ typedef union {
     u32 _4      : 29;
   }move;
 
+  struct {
+    u32 cmd     : 3;
+    u32 dir     : 3;
+    u32 _5      : 26;
+  }rotation;
+
 }BTL_ACTION_PARAM;
 
 // たたかうアクション
 static inline void BTL_ACTION_SetFightParam( BTL_ACTION_PARAM* p, WazaID waza, u8 targetPos )
 {
+  p->raw = 0;
   p->fight.cmd = BTL_ACTION_FIGHT;
   p->fight.targetPos = targetPos;
   p->fight.waza = waza;
@@ -82,6 +93,7 @@ static inline void BTL_ACTION_SetFightParam( BTL_ACTION_PARAM* p, WazaID waza, u
 // アイテムつかうアクション
 static inline void BTL_ACTION_SetItemParam( BTL_ACTION_PARAM* p, u16 itemNumber, u8 targetIdx, u8 wazaIdx )
 {
+  p->raw = 0;
   p->item.cmd = BTL_ACTION_ITEM;
   p->item.number = itemNumber;
   p->item.targetIdx = targetIdx;
@@ -90,6 +102,7 @@ static inline void BTL_ACTION_SetItemParam( BTL_ACTION_PARAM* p, u16 itemNumber,
 // 入れ替えポケモン選択アクション（選択対象は未定）
 static inline void BTL_ACTION_SetChangeBegin( BTL_ACTION_PARAM* p )
 {
+  p->raw = 0;
   p->change.cmd = BTL_ACTION_CHANGE;
   p->change.posIdx = 0;
   p->change.memberIdx = 0;
@@ -99,6 +112,7 @@ static inline void BTL_ACTION_SetChangeBegin( BTL_ACTION_PARAM* p )
 // 入れ替えポケモン選択アクション（通常）
 static inline void BTL_ACTION_SetChangeParam( BTL_ACTION_PARAM* p, u8 posIdx, u8 memberIdx )
 {
+  p->raw = 0;
   p->change.cmd = BTL_ACTION_CHANGE;
   p->change.posIdx = posIdx;
   p->change.memberIdx = memberIdx;
@@ -107,9 +121,17 @@ static inline void BTL_ACTION_SetChangeParam( BTL_ACTION_PARAM* p, u8 posIdx, u8
 // 入れ替えポケモン選択アクション（もう戦えるポケモンがいない）
 static inline void BTL_ACTION_SetChangeDepleteParam( BTL_ACTION_PARAM* p )
 {
+  p->raw = 0;
   p->change.cmd = BTL_ACTION_CHANGE;
   p->change.memberIdx = 0;
   p->change.depleteFlag = 1;
+}
+// ローテーション
+static inline void BTL_ACTION_SetRotation( BTL_ACTION_PARAM* p, BtlRotateDir dir )
+{
+  p->raw = 0;
+  p->rotation.cmd = BTL_ACTION_ROTATION;
+  p->rotation.dir = dir;
 }
 static inline BOOL BTL_ACTION_IsDeplete( const BTL_ACTION_PARAM* p )
 {
@@ -128,6 +150,7 @@ static inline void BTL_ACTION_SetMoveParam( BTL_ACTION_PARAM* p )
 static inline void BTL_ACTION_SetNULL( BTL_ACTION_PARAM* p )
 {
   p->gen.cmd = BTL_ACTION_NULL;
+  p->gen.param = 0;
 }
 
 static inline void BTL_ACTION_SetSkip( BTL_ACTION_PARAM* p )

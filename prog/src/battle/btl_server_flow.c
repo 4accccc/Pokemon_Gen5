@@ -134,7 +134,6 @@ typedef struct {
   u32                priority;
 
   u8                 clientID; ///< クライアントID
-  u8                 pokeIdx;  ///< そのクライアントの、何体目？ 0～
   u8                 fDone;    ///< 処理終了フラグ
   u8                 fIntr;    ///< 割り込み許可フラグ
 
@@ -1011,7 +1010,6 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_AC
 
     if( !BPP_IsDead(wk->actOrder[i].bpp) )
     {
-
       BTL_N_Printf( DBGSTR_SVFL_AfterPokeIn_Alive,
               wk->actOrder[i].clientID, action->change.posIdx, action->change.memberIdx );
 
@@ -1307,12 +1305,15 @@ static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk )
 void BTL_SVFLOW_CreateRotationCommand( BTL_SVFLOW_WORK* wk, u8 clientID, BtlRotateDir dir )
 {
   BTL_Printf("クライアント[%d]は回転方向 %d へローテ\n", clientID, dir);
-  SCQUE_PUT_ACT_Rotation( wk->que, clientID, dir );
 
-  if( dir != BTL_ROTATEDIR_STAY )
-  {
+  if( (dir != BTL_ROTATEDIR_STAY)
+  &&  (dir != BTL_ROTATEDIR_NONE)
+  ){
     BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
     BTL_POKEPARAM *outPoke, *inPoke;
+
+    SCQUE_PUT_ACT_Rotation( wk->que, clientID, dir );
+
     BTL_PARTY_RotateMembers( party, dir, &outPoke, &inPoke );
     if( !BPP_IsDead(outPoke) ){
       scproc_ClearPokeDependEffect( wk, outPoke );
@@ -1516,8 +1517,8 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
   const BTL_POKEPARAM* bpp;
   u32   hem_state;
   u16 agility;
-  u8  action, actionPri, wazaPri;
-  u8  i, j, p, numPoke;
+  u8  actionPri, wazaPri;
+  u8  i, j, p, numAction, pokeIdx;
 
 // 全ポケモンの行動内容をワークに格納
   for(i=0, p=0; i<BTL_CLIENT_MAX; ++i)
@@ -1525,30 +1526,44 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
     clwk = BTL_SERVER_GetClientWork( wk->server, i );
     if( clwk == NULL ){ continue; }
 
-    numPoke = BTL_SVCL_ACTION_GetNumActPoke( clientAction, i );
-    for(j=0; j<numPoke; j++)
+    numAction = BTL_SVCL_ACTION_GetNumActPoke( clientAction, i );
+    pokeIdx = 0;
+    TAYA_Printf("Client(%d), actionCnt=%d\n", i, numAction );
+    for(j=0; j<numAction; j++)
     {
       order[p].action = BTL_SVCL_ACTION_Get( clientAction, i, j );
       if( BTL_ACTION_IsDeplete(&order[p].action) ){
         break;
       }
 
-      if( BTL_ACTION_GetAction(&order[p].action) != BTL_ACTION_CHANGE ){
-        order[p].bpp = BTL_PARTY_GetMemberData( clwk->party, j );
-      }else{
+      switch( BTL_ACTION_GetAction(&order[p].action) ){
+      case BTL_ACTION_ROTATION:
+        {
+          order[p].bpp = BTL_PARTY_GetMemberData( clwk->party, pokeIdx );
+          pokeIdx = BTL_MAINUTIL_GetRotateInPosIdx( order[p].action.rotation.dir );
+          TAYA_Printf(" rotate action nextPokeIdx = %d\n", pokeIdx );
+        }
+        break;
+
+      case BTL_ACTION_CHANGE:
         order[p].bpp = BTL_PARTY_GetMemberData( clwk->party, order[p].action.change.posIdx );
+        ++pokeIdx;
+        break;
+
+      default:
+        order[p].bpp = BTL_PARTY_GetMemberData( clwk->party, pokeIdx );
+        ++pokeIdx;
       }
 
       order[p].clientID = i;
-      order[p].pokeIdx = j;
       order[p].fDone = FALSE;
       order[p].fIntr = FALSE;
       ++p;
     }
   }
 // 各ポケモンの行動プライオリティ値を生成
-  numPoke = p;
-  for(i=0; i<numPoke; ++i)
+  numAction = p;
+  for(i=0; i<numAction; ++i)
   {
     hem_state = Hem_PushState( &wk->HEManager );
     bpp = order[i].bpp;
@@ -1556,12 +1571,13 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
 
     // 行動による優先順（優先度高いほど数値大）
     switch( actParam->gen.cmd ){
-    case BTL_ACTION_ESCAPE: actionPri = 4; break;
-    case BTL_ACTION_ITEM:   actionPri = 3; break;
-    case BTL_ACTION_CHANGE: actionPri = 2; break;
-    case BTL_ACTION_SKIP:   actionPri = 0; break;
-    case BTL_ACTION_MOVE:   actionPri = 0; break;
-    case BTL_ACTION_FIGHT:  actionPri = 0; break;
+    case BTL_ACTION_ESCAPE:   actionPri = 4; break;
+    case BTL_ACTION_CHANGE:   actionPri = 3; break;
+    case BTL_ACTION_ITEM:     actionPri = 2; break;
+    case BTL_ACTION_ROTATION: actionPri = 1; break;
+    case BTL_ACTION_SKIP:     actionPri = 0; break;
+    case BTL_ACTION_MOVE:     actionPri = 0; break;
+    case BTL_ACTION_FIGHT:    actionPri = 0; break;
     case BTL_ACTION_NULL: continue;
     default:
       GF_ASSERT(0);
@@ -1601,15 +1617,15 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
   }
 
   // プライオリティ値によるソート
-  sortActionSub( order, numPoke );
+  sortActionSub( order, numAction );
 
   // この時点での処理順をワークに記憶する
-  for(i=0; i<numPoke; ++i){
+  for(i=0; i<numAction; ++i){
     order[i].defaultIdx = i;
   }
 
   // プライオリティ操作イベント呼び出し
-  for(i=0; i<numPoke; ++i)
+  for(i=0; i<numAction; ++i)
   {
     if( (order[i].action.gen.cmd == BTL_ACTION_FIGHT)
     ||  (order[i].action.gen.cmd == BTL_ACTION_MOVE)
@@ -1620,15 +1636,15 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
   }
 
   // 再度、プライオリティ値によるソート
-  sortActionSub( order, numPoke );
+  sortActionSub( order, numAction );
 
-  for(i=0; i<numPoke; ++i)
+  for(i=0; i<numAction; ++i)
   {
     if( ActPri_GetSpPri(order[i].priority) == BTL_SPPRI_HIGH )
     {
-      for(j=i+1; j<numPoke; ++j)
+      for(j=i+1; j<numAction; ++j)
       {
-        // 本来は自分より高優先度だったポケモンが自分の下にいたら、
+        // 自分より高優先度だったポケモンが自分の下にいたら、
         // プライオリティ操作効果発生イベント呼び出し
         if( order[i].defaultIdx > order[j].defaultIdx )
         {
@@ -1951,13 +1967,23 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
       scproc_ActStart( wk, bpp, actOrder->action.gen.cmd );
 
       switch( action.gen.cmd ){
+      #ifdef ROTATION_NEW_SYSTEM
+      case BTL_ACTION_ROTATION:
+        if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION ){
+          TAYA_Printf(" client(%d), なぐる前にローテ dir=%d\n", actOrder->clientID, action.rotation.dir);
+          BTL_SVFLOW_CreateRotationCommand( wk, actOrder->clientID, action.rotation.dir );
+        }
+        else{
+          GF_ASSERT(0);
+        }
+        break;
+      #endif
       case BTL_ACTION_FIGHT:
         if( !FlowFlg_Get(wk, FLOWFLG_FIRST_FIGHT) ){
           scproc_BeforeFirstFight( wk );
           FlowFlg_Set( wk, FLOWFLG_FIRST_FIGHT );
         }
-//        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Fight, action.fight.waza, action.fight.targetPos);
-        OS_TPrintf("【たたかう】ポケ[%d]のワザ[%d]を、位置[%d]の相手に\n", BPP_GetID(bpp), action.fight.waza, action.fight.targetPos);
+        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Fight, BPP_GetID(bpp), action.fight.waza, action.fight.targetPos);
         wk->currentSabotageType = CheckSabotageType( wk, bpp );
         scproc_Fight( wk, bpp, &action );
         break;

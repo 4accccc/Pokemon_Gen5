@@ -110,7 +110,7 @@ void BTL_POSPOKE_Rotate( BTL_POSPOKE_WORK* wk, BtlRotateDir dir, u8 clientID, co
     ROT_MAX = BTL_ROTATE_NUM-1,
   };
 
-  if( dir == BTL_ROTATEDIR_STAY ){
+  if( (dir == BTL_ROTATEDIR_STAY) || (dir == BTL_ROTATEDIR_NONE) ){
     return;
   }
   else
@@ -132,8 +132,20 @@ void BTL_POSPOKE_Rotate( BTL_POSPOKE_WORK* wk, BtlRotateDir dir, u8 clientID, co
     // スライド方向に併せて状態更新
     if( cnt == ROT_MAX )
     {
+    #ifdef ROTATION_NEW_SYSTEM
+      u8 inPosIdx = BTL_MAINUTIL_GetRotateInPosIdx( dir );
+      u8 outPosIdx = BTL_MAINUTIL_GetRotateOutPosIdx( dir );
+
+      wk->state[ idx[inPosIdx] ]  = wk->state[ idx[outPosIdx] ];
+      wk->state[ idx[outPosIdx] ] = wk->state[ idx[0] ];
+
+      if( !BPP_IsDead(inPoke) ){
+        BTL_POSPOKE_PokeIn( wk, idx[0], BPP_GetID(inPoke), pokeCon );
+      }else{
+        wk->state[ idx[0] ].existPokeID = BTL_POKEID_NULL;
+      }
+    #else
       BtlPokePos slideInPos = BTL_POS_MAX;
-      u8 slideInPokeID = BTL_POKEID_NULL;
 
       if( dir == BTL_ROTATEDIR_R )
       {
@@ -156,9 +168,7 @@ void BTL_POSPOKE_Rotate( BTL_POSPOKE_WORK* wk, BtlRotateDir dir, u8 clientID, co
           wk->state[ slideInPos ].existPokeID = BTL_POKEID_NULL;
         }
       }
-
-      BTL_Printf("Client[%d] rotate_%d, front pokeID= %d, %d\n", clientID, dir,
-        wk->state[idx[0]].existPokeID, wk->state[idx[1]].existPokeID );
+    #endif
     }
   }
 }

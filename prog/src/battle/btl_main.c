@@ -3760,6 +3760,30 @@ BOOL BTL_MAINUTIL_CheckTripleHitArea( BtlPokePos attackerPos, BtlPokePos targetP
 
   return FALSE;
 }
+/**
+ *  ローテーション回転方向 -> 新しく入ってくるポケモンの元位置Index取得
+ */
+u8 BTL_MAINUTIL_GetRotateInPosIdx( BtlRotateDir dir )
+{
+  switch( dir ){
+  case BTL_ROTATEDIR_R:  return 1;
+  case BTL_ROTATEDIR_L:  return 2;
+  default:
+    return 0;
+  }
+}
+/**
+ *  ローテーション回転方向 -> 出て行く先のポケモンの位置Index取得
+ */
+u8 BTL_MAINUTIL_GetRotateOutPosIdx( BtlRotateDir dir )
+{
+  switch( dir ){
+  case BTL_ROTATEDIR_R:  return 2;
+  case BTL_ROTATEDIR_L:  return 1;
+  default:
+    return 0;
+  }
+}
 
 
 //------------------------------------------------------------------------------
@@ -3954,6 +3978,28 @@ void BTL_PARTY_RotateMembers( BTL_PARTY* party, BtlRotateDir dir, BTL_POKEPARAM*
 {
   GF_ASSERT(party->memberCount>=3);
 
+  #ifdef ROTATION_NEW_SYSTEM
+  if( (dir!=BTL_ROTATEDIR_NONE) && (dir!=BTL_ROTATEDIR_STAY) )
+  {
+    BTL_POKEPARAM* prev_top_poke = party->member[0];
+    u8  inIdx, outIdx;
+
+    inIdx  = BTL_MAINUTIL_GetRotateInPosIdx( dir );
+    outIdx = BTL_MAINUTIL_GetRotateOutPosIdx( dir );
+
+    party->member[ 0 ]      = party->member[ inIdx ];
+    party->member[ inIdx ]  = party->member[ outIdx ];
+    party->member[ outIdx ] = prev_top_poke;
+
+    if( outPoke != NULL ){
+      *outPoke = prev_top_poke;
+    }
+    if( inPoke != NULL ){
+      *inPoke = party->member[0];
+    }
+
+  }
+  #else
   {
     BTL_POKEPARAM* tmp = party->member[0];
 
@@ -3982,6 +4028,7 @@ void BTL_PARTY_RotateMembers( BTL_PARTY* party, BtlRotateDir dir, BTL_POKEPARAM*
       }
     }
   }
+  #endif
 }
 /**
  * 特定ポケモンのパーティ内Indexを返す（データポインタ指定）
@@ -4326,7 +4373,7 @@ BOOL BTL_MAIN_GetSetupStatusFlag( const BTL_MAIN_MODULE* wk, BTL_STATUS_FLAG fla
 //=============================================================================================
 void BTL_MAIN_RECORDDATA_Inc( const BTL_MAIN_MODULE* wk, int recID )
 {
-  if( wk->setupParam->fRecordPlay ){
+  if( !(wk->setupParam->fRecordPlay) ){
     RECORD_Inc( (RECORD*)(wk->setupParam->recordData), recID );
   }
 }
@@ -4341,7 +4388,7 @@ void BTL_MAIN_RECORDDATA_Inc( const BTL_MAIN_MODULE* wk, int recID )
 //=============================================================================================
 void BTL_MAIN_RECORDDATA_Add( const BTL_MAIN_MODULE* wk, int recID, u32 value )
 {
-  if( wk->setupParam->fRecordPlay ){
+  if( !(wk->setupParam->fRecordPlay) ){
     RECORD_Add( (RECORD*)(wk->setupParam->recordData), recID, value );
   }
 }

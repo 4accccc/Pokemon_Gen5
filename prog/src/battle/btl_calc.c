@@ -752,7 +752,11 @@ u32 BTL_CALC_CalcBaseExp( const BTL_POKEPARAM* bpp )
 //=============================================================================================
 BOOL BTL_RULE_IsNeedSelectTarget( BtlRule rule )
 {
+#ifdef ROTATION_NEW_SYSTEM
+  return ((rule != BTL_RULE_SINGLE) && (rule != BTL_RULE_ROTATION));
+#else
   return (rule != BTL_RULE_SINGLE);
+#endif
 }
 //=============================================================================================
 /**

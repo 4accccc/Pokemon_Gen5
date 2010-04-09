@@ -182,7 +182,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_STR_SetTagWazaName:       return "[TAG] Set WazaName ... waza=%d\n";
   case DBGSTR_STR_SetItemName:          return "set Item Name argIdx=%d, ID=%d ....\n";
   case DBGSTR_SVFL_ActOrderStart:       return "ポケ[%d =monsno:%d]のアクション実行...\n";
-  case DBGSTR_SVFL_ActOrder_Fight:      return "【たたかう】を処理。ワザ[%d]を、位置[%d]の相手に。\n";
+  case DBGSTR_SVFL_ActOrder_Fight:      return "【たたかう】ポケ[%d]のワザ[%d]を、位置[%d]の相手に\n";
   case DBGSTR_SVFL_ActOrder_Item:       return "【どうぐ】を処理。アイテム%dを、%d番の相手に。\n";
   case DBGSTR_SVFL_ActOrder_Change:     return "【ポケモン】を処理。位置%d <- ポケ%d \n";
   case DBGSTR_SVFL_ActOrder_Escape:     return "【にげる】を処理。\n";
