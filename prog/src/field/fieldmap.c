@@ -132,11 +132,12 @@
 #include "debug_speed_check.h"  //デバッグ速度計測本体
 
 
-//#define DEBUG_FIELDMAP_SETUP_SPEED_CHECK
-//#define DEBUG_FIELDMAP_INOUT_SPEED_CHECK
+//#define DEBUG_FIELDMAP_SETUP_SPEED_CHECK  //setupでの処理負荷を表示
+//#define DEBUG_FIELDMAP_INOUT_SPEED_CHECK  //FIELDMAP出入での処理負荷を表示
 //#define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK    // フィールドマップ描画にかかる処理時間を求める
-
-#define DEBUG_FIELDMAP_ZONE_CHANGE_SYNC    // ゾーンチェンジに必要なシンク数を監視
+//#define DEBUG_FIELDMAP_UPDATETOP_SPEED_CHECK  //update_topでの処理負荷を見る
+//#define DEBUG_FIELDMAP_UPDATETAIL_SPEED_CHECK  //update_tailでの処理負荷を見る
+//#define DEBUG_FIELDMAP_ZONE_CHANGE_SYNC    // ゾーンチェンジに必要なシンク数を監視
 
 #endif
 
@@ -905,7 +906,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 { 
+#ifdef  DEBUG_FIELDMAP_INOUT_SPEED_CHECK
   OS_TPrintf("mainSeqFunc_ready\n");
+#endif
 	fldmap_G3D_Control( fieldWork );
 	fldmap_G3D_Draw_top( fieldWork );
 	fldmap_G3D_Draw_tail( fieldWork );
@@ -985,6 +988,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   OSTick debug_fieldmap_end_tick;
 #endif
 
+  INIT_CHECK();
   if (GAMEDATA_GetIsSave( fieldWork->gamedata )) return MAINSEQ_RESULT_CONTINUE;
 
   if (fieldWork->MainHookFlg)
@@ -996,8 +1000,10 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
 	//キーの分割取得カウンタをリセット
 	GFL_UI_ResetFrameRate();
+  SET_CHECK("update_top:zone change check");
 	//ゾーン更新処理
   fldmapMain_UpdateMoveZone( fieldWork );
+  SET_CHECK("update_top:map main func");
   //マップ別 登録処理
   if( GAMESYSTEM_GetEvent(gsys) == NULL) {
     //登録テーブルごとに個別のメイン処理を呼び出し
@@ -1005,12 +1011,15 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
     //時間イベントのアップデート処理を呼び出し
     EVTIME_Update( fieldWork->gamedata );
   }
+  SET_CHECK("update_top:placename & skill eff");
   // 地名表示システム動作処理
   if(fieldWork->placeNameSys){ FIELD_PLACE_NAME_Process( fieldWork->placeNameSys ); }
   // フラッシュ処理
   FIELDSKILL_MAPEFF_Main( fieldWork->fieldskill_mapeff );
+  SET_CHECK("update_top:player update");
   //自機更新
   FIELD_PLAYER_Update( fieldWork->field_player );
+  SET_CHECK("update_top:comm update");
   //通信用処理(プレイヤーの座標の設定とか
   if( ZONEDATA_IsUnionRoom( fieldWork->map_id ) == TRUE
       || ZONEDATA_IsColosseum( fieldWork->map_id ) == TRUE){
@@ -1019,20 +1028,27 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   else{
     IntrudeField_UpdateCommSystem( fieldWork, fieldWork->gsys, fieldWork->field_player );
   }
+  SET_CHECK("update_top:subscreen");
   FIELD_SUBSCREEN_Main(fieldWork->fieldSubscreenWork);
   if(fieldWork->debugWork){ FIELD_DEBUG_UpdateProc( fieldWork->debugWork ); }
+  SET_CHECK("update_top:mmdlsys");
   if( fieldWork->fldMMdlSys != NULL ){
     MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
   }
+  SET_CHECK("update_top:gimmick");
   //ギミック動作
   FLDGMK_MoveFieldGimmick(fieldWork);
+  SET_CHECK("update_top:fldeff");
   FLDEFF_CTRL_Update( fieldWork->fldeff_ctrl );
   if(fieldWork->union_eff != NULL){
     UNION_EFF_SystemUpdate(fieldWork->union_eff);
   }
+  SET_CHECK("update_top:FLDMAPFUNC_Sys_Main");
 	// フィールドマップ用制御タスクシステム
 	FLDMAPFUNC_Sys_Main( fieldWork->fldmapFuncSys );
+  SET_CHECK("update_top:FLDMSGBG_PrintMain");
   if(fieldWork->fldMsgBG ){ FLDMSGBG_PrintMain( fieldWork->fldMsgBG ); }
+  SET_CHECK("update_top:TASK");
   // TCB
   GFL_TCB_Main( fieldWork->fieldmapTCB );
   // タスクマネージャ
@@ -1042,6 +1058,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
     fieldWork->now_pos = *fieldWork->target_now_pos_p;
   }
 
+  SET_CHECK("update_top:g3d_control");
   //Mapシステムに位置を渡している。
   //これがないとマップ移動しないので注意
   FLDMAPPER_SetPos( fieldWork->g3Dmapper, &fieldWork->now_pos );
@@ -1052,13 +1069,16 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
     PL_BOAT_WORK_PTR *wk_ptr = GAMEDATA_GetPlBoatWorkPtr(fieldWork->gamedata);
     PL_BOAT_Main(*wk_ptr);
   }
+  SET_CHECK("update_top:CLACT");
 
 
   // ----------------------top側3D描画処理---------------------------------------
   // これ以降にデータ更新処理を入れないこと。
   GFL_CLACT_SYS_Main(); // CLSYSメイン
   //↑ 2010.03.05　CLSYSメインをテイルからトップへ移動。この移動で、2Ｄ描画と3Ｄ描画に１シンクのずれが生じます。saito
+  SET_CHECK("update_top:DrawTop");
   DrawTop(fieldWork);
+  SET_CHECK("update_top:tail");
 #ifdef DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
   debug_fieldmap_end_tick = OS_GetTick();
   debug_fieldmap_end_tick -= debug_fieldmap_start_tick;
@@ -1066,6 +1086,18 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   if( GFL_UI_KEY_GetCont() & DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK_DRAW_KEY )
   {
     OS_TPrintf( "top_tick %d micro second\n", OS_TicksToMicroSeconds( debug_fieldmap_end_tick ) );
+  }
+#endif
+#ifdef  DEBUG_FIELDMAP_UPDATETOP_SPEED_CHECK
+  {
+    OSTick end_tick;
+    TAIL_CHECK( &end_tick );
+    if ( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_L) ||
+        ( (GFL_UI_KEY_GetCont() & (PAD_BUTTON_L+PAD_BUTTON_R)) == (PAD_BUTTON_L+PAD_BUTTON_R)) )
+    {
+      PUT_CHECK();
+      OS_TPrintf("top_tick:%ld micro sec:%ld\n", end_tick, OS_TicksToMicroSeconds( end_tick ) );
+    }
   }
 #endif
 
@@ -2526,7 +2558,7 @@ static void fldmap_MMDL_InitList(
 		GF_ASSERT( i < MMDL_LIST_MAX );
 	}
 	
-	OS_Printf( "モデルリスト総数 %d\n", i );
+	//OS_Printf( "モデルリスト総数 %d\n", i );
 	
 	mlist->count = i;
 	mlist->id_list[i] = OBJCODEMAX;

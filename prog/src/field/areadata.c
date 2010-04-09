@@ -17,6 +17,10 @@
 #include "arc/fieldmap/area_map_ita.naix"
 #include "arc/fieldmap/area_map_itp.naix"
 
+#ifdef  PM_DEBUG
+//#define DEBUG_DUMP_AREADATA_INFO
+#endif
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 struct AREADATA{
@@ -58,6 +62,7 @@ u16 AREADATA_GetAreaIDMax(void)
 	return AREA_ID_MAX;
 }
 
+#ifdef  DEBUG_DUMP_AREADATA_INFO
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void dumpAreaData(const AREADATA * areadata)
@@ -72,6 +77,7 @@ static void dumpAreaData(const AREADATA * areadata)
   OS_Printf("edgemark_type=%02x\n",areadata->edgemark_type);      ///<エッジマーキング指定
   OS_Printf("bbd_color=%02x\n",areadata->bbd_color);      ///<ビルボードモデル色指定
 }
+#endif
 
 //============================================================================================
 //============================================================================================
@@ -95,7 +101,9 @@ AREADATA * AREADATA_Create(HEAPID heapID, u16 area_id, u32 season_id)
       heapID,
       sizeof(AREADATA) * area_id,
       sizeof(AREADATA) );
+#ifdef  DEBUG_DUMP_AREADATA_INFO
   dumpAreaData(areadata);
+#endif
   return areadata;
 }
 

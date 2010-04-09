@@ -26,18 +26,25 @@ typedef struct {
 
 static DEBUG_SPEED_WORK debugSpeedWork;
 
-static void SET_CHECK(const char * str){
+static void SET_CHECK(const char * str)
+{
   if (debugSpeedWork.check_count >= DEBUG_SPEED_CHECK_MAX) return;
   debugSpeedWork.checks[debugSpeedWork.check_count] = OS_GetTick();
   debugSpeedWork.mark_str[debugSpeedWork.check_count] = str;
   debugSpeedWork.check_count ++;
 }
 
-static void INIT_CHECK( void )
+static void START_CHECK( void )
 {
   debugSpeedWork.check_count = 0;
   debugSpeedWork._start_tick = OS_GetTick(); 
   SET_CHECK("INIT_CHECK");
+}
+
+static void INIT_CHECK( void )
+{
+  GFL_STD_MemClear( &debugSpeedWork, sizeof(DEBUG_SPEED_WORK) );
+  START_CHECK();
 }
 
 static void TAIL_CHECK( OSTick * _end_tick )
@@ -60,6 +67,7 @@ static void PUT_CHECK( void )
 #else
 
 #define INIT_CHECK()  /* DO NOTHING */
+#define START_CHECK() /* DO NOTHING */
 #define SET_CHECK(word)   /* DO NOTHING */
 #define TAIL_CHECK(valiable)  {*(valiable) = 0;}/* DO NOTHING */
 #define PUT_CHECK()   /* DO NOTHING */
