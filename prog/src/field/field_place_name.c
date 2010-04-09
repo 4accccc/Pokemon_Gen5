@@ -1107,6 +1107,9 @@ static void WriteCharUnitIntoBitmapWindow( FIELD_PLACE_NAME* sys )
 static void UpdatePlaceName( FIELD_PLACE_NAME* sys )
 {
 	u16 str_id;
+  BOOL intrudeFlag = FALSE;
+  INTRUDE_COMM_SYS_PTR intrudeComm;
+  u8 intrudeNetID;
   
   // 地名が変わらない
   if( sys->currentZoneID == sys->nextZoneID ){ return; }
@@ -1124,30 +1127,50 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* sys )
   } 
   sys->currentZoneID = sys->nextZoneID;	   
 
+  // 侵入先かどうかを判定
   {
     GAME_COMM_SYS_PTR gameComm;
-    INTRUDE_COMM_SYS_PTR intrudeComm;
     FIELD_STATUS* fieldStatus;
+    int myNetID;
 
     gameComm = GAMESYSTEM_GetGameCommSysPtr( sys->gameSystem );
     intrudeComm = Intrude_Check_CommConnect( gameComm );
     fieldStatus = GAMEDATA_GetFieldStatus( sys->gameData );
+    myNetID = GAMEDATA_GetIntrudeMyID( sys->gameData );
 
-    if( intrudeComm && FIELD_STATUS_GetMapMode( fieldStatus ) == MAPMODE_INTRUDE ) { 
-      STRBUF* strbuf = GFL_MSG_CreateString( sys->msg, MAPNAME_INTRUDE );
-      u8 areaNo = Intrude_GetPalaceArea( intrudeComm );
-      MYSTATUS* status = Intrude_GetMyStatus( intrudeComm, areaNo );
-      GFL_MSG_GetString( sys->msg,	str_id, sys->nameBuf );
-      WORDSET_RegisterPlayerName( sys->wordset, 0, status );
-      WORDSET_RegisterPlaceName( sys->wordset, 1, str_id );
-      WORDSET_ExpandStr( sys->wordset, sys->nameBuf, strbuf );
-      GFL_STR_DeleteBuffer( strbuf );
+    if( intrudeComm ) {
+      intrudeNetID = Intrude_GetPalaceArea( intrudeComm );
+
+      // 他人のフィールドにいる
+      if( FIELD_STATUS_GetMapMode( fieldStatus ) == MAPMODE_INTRUDE ) { 
+        intrudeFlag = TRUE;
+      }
+      // 他人のパレスにいる
+      else if( ZONEDATA_IsPalace( sys->currentZoneID ) && (myNetID != intrudeNetID) ) {
+        intrudeFlag = TRUE;
+      }
     }
     else {
-      GFL_MSG_GetString( sys->msg,	str_id, sys->nameBuf );
-    } 
-    sys->nameLen = GFL_STR_GetBufferLength( sys->nameBuf );
+      intrudeFlag = FALSE;
+    }
   }
+
+  // 侵入先にいる
+  if( intrudeFlag ) {
+    // 侵入先のプレイヤー名を展開
+    STRBUF* strbuf = GFL_MSG_CreateString( sys->msg, MAPNAME_INTRUDE );
+    MYSTATUS* status = Intrude_GetMyStatus( intrudeComm, intrudeNetID );
+    GFL_MSG_GetString( sys->msg,	str_id, sys->nameBuf );
+    WORDSET_RegisterPlayerName( sys->wordset, 0, status );
+    WORDSET_RegisterPlaceName( sys->wordset, 1, str_id );
+    WORDSET_ExpandStr( sys->wordset, sys->nameBuf, strbuf );
+    GFL_STR_DeleteBuffer( strbuf );
+  }
+  // 自分のフィールドにいる
+  else {
+    GFL_MSG_GetString( sys->msg,	str_id, sys->nameBuf );
+  }
+  sys->nameLen = GFL_STR_GetBufferLength( sys->nameBuf );
 }
 
 //-----------------------------------------------------------------------------------
