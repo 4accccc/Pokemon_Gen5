@@ -85,7 +85,7 @@ SDK_COMPILER_ASSERT(sizeof(TRTYPE_GRP_PARAM) == 2);
  */
 //============================================================================================
 static  void  rnd_tmp_get( int mons_no, int form_no, int para, u32* rnd_tmp, HEAPID heapID );
-static  void  pp_set_param( POKEMON_PARAM *pp, int form_no );
+static  void  pp_set_param( POKEMON_PARAM *pp, int form_no, int para );
 static inline u32 TTL_SETUP_POW_PACK( u8 pow );
 
 //============================================================================================
@@ -414,7 +414,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
                     PTL_SETUP_ID_NOT_RARE,
                     TTL_SETUP_POW_PACK( pow ),
                     rnd );
-        pp_set_param( pp, ptn[ i ].form_no );
+        pp_set_param( pp, ptn[ i ].form_no, ptn[ i ].para );
         PokeParty_Add( pparty, pp );
       }
     }
@@ -446,7 +446,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
         {
           PP_SetWazaPos( pp, ptw[ i ].waza[ j ], j );
         }
-        pp_set_param( pp, ptw[ i ].form_no );
+        pp_set_param( pp, ptw[ i ].form_no, ptw[ i ].para );
         PokeParty_Add( pparty, pp );
       }
     }
@@ -475,7 +475,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
                     TTL_SETUP_POW_PACK( pow ),
                     rnd );
         PP_Put( pp, ID_PARA_item, pti[ i ].itemno );
-        pp_set_param( pp, pti[ i ].form_no );
+        pp_set_param( pp, pti[ i ].form_no, pti[ i ].para );
         PokeParty_Add( pparty, pp );
       }
     }
@@ -503,12 +503,12 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
                     PTL_SETUP_ID_NOT_RARE,
                     TTL_SETUP_POW_PACK( pow ),
                     rnd );
-        PP_Put( pp, ID_PARA_item, ( u32 )&ptm[ i ].itemno );
+        PP_Put( pp, ID_PARA_item, ptm[ i ].itemno );
         for( j = 0 ; j < 4 ; j++ )
         {
           PP_SetWazaPos( pp, ptm[ i ].waza[ j ], j );
         }
-        pp_set_param( pp, ptm[ i ].form_no );
+        pp_set_param( pp, ptm[ i ].form_no, ptm[ i ].para );
         PokeParty_Add( pparty, pp );
       }
     }
@@ -575,7 +575,7 @@ static  void  rnd_tmp_get( int mons_no, int form_no, int para, u32* rnd_tmp, HEA
  * @param[in] form_no フォルムナンバー
  */
 //============================================================================================
-static  void  pp_set_param( POKEMON_PARAM* pp, int form_no )
+static  void  pp_set_param( POKEMON_PARAM* pp, int form_no, int para )
 {
   //なつき度の初期値は255
   u8  friend = 255;
@@ -591,6 +591,12 @@ static  void  pp_set_param( POKEMON_PARAM* pp, int form_no )
 
   //フォルムナンバーセット
   PP_Put( pp, ID_PARA_form_no, form_no );
+
+  //第3特性セット
+  if( ( para & 0xf0 ) == 0x30 )
+  { 
+    PP_SetTokusei3( pp, PP_Get( pp, ID_PARA_monsno, NULL ), form_no );
+  }
 
   //性格セット
   { 
