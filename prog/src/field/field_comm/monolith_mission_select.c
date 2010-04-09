@@ -234,24 +234,32 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Init(GFL_PROC * proc, int * seq
 	MONOLITH_MSSELECT_WORK *mmw = mywk;
 	ARCHANDLE *hdl;
   
-  mmw = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_MSSELECT_WORK), HEAPID_MONOLITH);
-  GFL_STD_MemClear(mmw, sizeof(MONOLITH_MSSELECT_WORK));
-  mmw->view_mode = VIEW_ORDER;
+  switch(*seq){
+  case 0:
+    mmw = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_MSSELECT_WORK), HEAPID_MONOLITH);
+    GFL_STD_MemClear(mmw, sizeof(MONOLITH_MSSELECT_WORK));
+    mmw->view_mode = VIEW_ORDER;
+    
+    //BG
+    _Setup_BGFrameSetting();
+    _Setup_BGGraphicLoad(appwk->setup);
+    _Setup_BmpWinCreate(mmw, appwk->setup);
+    //OBJ
+    _TownIcon_AllCreate(mmw, appwk);
+    _Msselect_PanelCreate(appwk, mmw);
+    _Msselect_CancelIconCreate(appwk, mmw);
+    mmw->act_town_cursor = MonolithTool_TownCursor_Create(
+      appwk->setup, &TownIconPosTbl[0], COMMON_RESOURCE_INDEX_DOWN);
+    
+    (*seq)++;
+    break;
+  case 1:
+  	GFL_BG_SetVisible(GFL_BG_FRAME2_S, VISIBLE_ON);
+  	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
+  	return GFL_PROC_RES_FINISH;
+  }
   
-  //BG
-  _Setup_BGFrameSetting();
-  _Setup_BGGraphicLoad(appwk->setup);
-  _Setup_BmpWinCreate(mmw, appwk->setup);
-  //OBJ
-  _TownIcon_AllCreate(mmw, appwk);
-  _Msselect_PanelCreate(appwk, mmw);
-  _Msselect_CancelIconCreate(appwk, mmw);
-  mmw->act_town_cursor = MonolithTool_TownCursor_Create(
-    appwk->setup, &TownIconPosTbl[0], COMMON_RESOURCE_INDEX_DOWN);
-
-	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
-
-  return GFL_PROC_RES_FINISH;
+  return GFL_PROC_RES_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -553,7 +561,6 @@ static void _Setup_BGFrameSetting(void)
 	GFL_BG_FillScreen( GFL_BG_FRAME1_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 	GFL_BG_FillScreen( GFL_BG_FRAME2_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_OFF);
-	GFL_BG_SetVisible(GFL_BG_FRAME2_S, VISIBLE_ON);
 }
 
 //--------------------------------------------------------------

@@ -93,31 +93,39 @@ static GFL_PROC_RESULT MonolithPalaceMapProc_Init(GFL_PROC * proc, int * seq, vo
 	MONOLITH_PALACEMAP_WORK *mpw = mywk;
 	ARCHANDLE *hdl;
   
-  mpw = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_PALACEMAP_WORK), HEAPID_MONOLITH);
-  GFL_STD_MemClear(mpw, sizeof(MONOLITH_PALACEMAP_WORK));
-  
-  //BG
-  _Setup_BGFrameSetting();
-  _Setup_BGGraphicLoad(appwk->setup);
-  //OBJ
-  {
-    MYSTATUS *myst = MonolithTool_GetMystatus(appwk);
+  switch(*seq){
+  case 0:
+    mpw = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_PALACEMAP_WORK), HEAPID_MONOLITH);
+    GFL_STD_MemClear(mpw, sizeof(MONOLITH_PALACEMAP_WORK));
+    
+    //BG
+    _Setup_BGFrameSetting();
+    _Setup_BGGraphicLoad(appwk->setup);
+    //OBJ
+    {
+      MYSTATUS *myst = MonolithTool_GetMystatus(appwk);
 
-    STRBUF *strbuf = 	GFL_STR_CreateBuffer(PERSON_NAME_SIZE + EOM_SIZE, HEAPID_MONOLITH);
+      STRBUF *strbuf = 	GFL_STR_CreateBuffer(PERSON_NAME_SIZE + EOM_SIZE, HEAPID_MONOLITH);
 
-  	GFL_STR_SetStringCodeOrderLength(
-  	  strbuf, MyStatus_GetMyName(myst), PERSON_NAME_SIZE + EOM_SIZE);
-    WORDSET_RegisterWord(appwk->setup->wordset, 0, strbuf, MyStatus_GetMySex(myst), TRUE, PM_LANG);
+    	GFL_STR_SetStringCodeOrderLength(
+    	  strbuf, MyStatus_GetMyName(myst), PERSON_NAME_SIZE + EOM_SIZE);
+      WORDSET_RegisterWord(appwk->setup->wordset, 0, strbuf, MyStatus_GetMySex(myst), TRUE, PM_LANG);
 
-    GFL_STR_DeleteBuffer(strbuf);
+      GFL_STR_DeleteBuffer(strbuf);
+    }
+    MonolithTool_Bmpoam_Create(appwk->setup, &mpw->bmpstr_title, COMMON_RESOURCE_INDEX_UP, 
+      128, 12, 30, 2, msg_mono_title_000, appwk->setup->wordset);
+    _TownIcon_AllCreate(mpw, appwk);
+    
+    (*seq)++;
+    break;
+  case 1:
+  	GFL_BG_SetVisible(GFL_BG_FRAME2_M, VISIBLE_ON);
+  	GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
+  	return GFL_PROC_RES_FINISH;
   }
-  MonolithTool_Bmpoam_Create(appwk->setup, &mpw->bmpstr_title, COMMON_RESOURCE_INDEX_UP, 
-    128, 12, 30, 2, msg_mono_title_000, appwk->setup->wordset);
-  _TownIcon_AllCreate(mpw, appwk);
-
-	GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
   
-  return GFL_PROC_RES_FINISH;
+  return GFL_PROC_RES_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -201,7 +209,6 @@ static void _Setup_BGFrameSetting(void)
 	GFL_BG_SetBGControl( GFL_BG_FRAME2_M,   &bgcnt_frame[0],   GFL_BG_MODE_TEXT );
 
 	GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-	GFL_BG_SetVisible(GFL_BG_FRAME2_M, VISIBLE_ON);
 }
 
 //--------------------------------------------------------------

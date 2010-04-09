@@ -97,20 +97,42 @@ static GFL_PROC_RESULT MonolithPowerExplainProc_Init(GFL_PROC * proc, int * seq,
 	MONOLITH_POWEREXPLAIN_WORK *pew = mywk;
 	ARCHANDLE *hdl;
   
-  pew = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_POWEREXPLAIN_WORK), HEAPID_MONOLITH);
-  GFL_STD_MemClear(pew, sizeof(MONOLITH_POWEREXPLAIN_WORK));
-  pew->print_select_gpower_id = GPOWER_ID_NULL;
-  
-  //BG
-  _Setup_BGFrameSetting();
-  _Setup_BGGraphicLoad(appwk->setup);
-  _Setup_BmpWin_Create(appwk->setup, pew);
+  switch(*seq){
+  case 0:
+    pew = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_POWEREXPLAIN_WORK), HEAPID_MONOLITH);
+    GFL_STD_MemClear(pew, sizeof(MONOLITH_POWEREXPLAIN_WORK));
+    pew->print_select_gpower_id = GPOWER_ID_NULL;
+    
+    //BG
+    _Setup_BGFrameSetting();
+    _Setup_BGGraphicLoad(appwk->setup);
+    _Setup_BmpWin_Create(appwk->setup, pew);
 
-  _Write_Title(appwk->setup, pew);
-  _Write_EqpPower(appwk, appwk->setup, pew);
+    _Write_Title(appwk->setup, pew);
+    _Write_EqpPower(appwk, appwk->setup, pew);
+    
+    (*seq)++;
+    break;
+  case 1:
+    {
+      int i, no_trans = FALSE;
+      
+      for(i = 0; i < BMPWIN_MAX; i++){
+        if(PRINT_UTIL_Trans(&pew->print_util[i], appwk->setup->printQue) == FALSE){
+          no_trans = TRUE;
+        }
+      }
+    	if(no_trans == FALSE){
+      	GFL_BG_SetVisible(GFL_BG_FRAME0_M, VISIBLE_ON);
+      	GFL_BG_SetVisible(GFL_BG_FRAME2_M, VISIBLE_ON);
+      	GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
+      	return GFL_PROC_RES_FINISH;
+      }
+    }
+    break;
+  }
   
-	GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
-  return GFL_PROC_RES_FINISH;
+  return GFL_PROC_RES_CONTINUE;
 }
 
 //--------------------------------------------------------------
@@ -209,8 +231,6 @@ static void _Setup_BGFrameSetting(void)
 
 	GFL_BG_FillScreen( GFL_BG_FRAME0_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 	GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-	GFL_BG_SetVisible(GFL_BG_FRAME0_M, VISIBLE_ON);
-	GFL_BG_SetVisible(GFL_BG_FRAME2_M, VISIBLE_ON);
 }
 
 //--------------------------------------------------------------

@@ -337,9 +337,26 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Init(GFL_PROC * proc, int * seq, 
       else{
         _SetCursorPos(mpw, _CURSOR_POS_NONE, _SET_CURSOR_MODE_INIT);
       }
+      (*seq)++;
+    }
+    break;
+  case 2:
+    {
+      int i;
+      BOOL no_trans = FALSE;
 
-    	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
-      return GFL_PROC_RES_FINISH;
+      for(i = 0; i < _PRINTUTIL_MAX; i++){
+        if(PRINT_UTIL_Trans(&mpw->print_util[i], appwk->setup->printQue) == FALSE){
+          no_trans = TRUE;
+        }
+      }
+      if(no_trans == FALSE){
+      	GFL_BG_SetVisible(GFL_BG_FRAME0_S, VISIBLE_ON);
+      	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_ON);
+      	GFL_BG_SetVisible(GFL_BG_FRAME2_S, VISIBLE_ON);
+      	GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
+        return GFL_PROC_RES_FINISH;
+      }
     }
     break;
   }
@@ -676,9 +693,6 @@ static void _Setup_BGFrameSetting(void)
 	GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 	GFL_BG_FillScreen( GFL_BG_FRAME1_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 	GFL_BG_FillScreen( GFL_BG_FRAME2_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-	GFL_BG_SetVisible(GFL_BG_FRAME0_S, VISIBLE_ON);
-	GFL_BG_SetVisible(GFL_BG_FRAME1_S, VISIBLE_ON);
-	GFL_BG_SetVisible(GFL_BG_FRAME2_S, VISIBLE_ON);
 }
 
 //--------------------------------------------------------------
