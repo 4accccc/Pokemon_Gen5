@@ -11,7 +11,7 @@
 #include "sound/sound_manager.h"
 
 static NNSSndHeapHandle*	pSndHeapHandle = NULL;
-//#define STATUS_PRINT
+#define STATUS_PRINT
 //============================================================================================
 /**
  *
@@ -209,6 +209,7 @@ u32		SOUNDMAN_GetHierarchyPlayerSoundIdxByPlayerID( int playerID )
  *
  */
 //--------------------------------------------------------------------------------------------
+#if 0
 static int	SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv( void )
 {
 	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
@@ -232,6 +233,7 @@ static void	SOUNDMAN_DowngradeHierarchyPlayerSoundHeapLv( int lv )
 #endif
 	player->heapLvReset = lv;
 }
+#endif
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -266,12 +268,20 @@ BOOL	SOUNDMAN_LoadHierarchyPlayer( u32 soundIdx )
 #ifdef STATUS_PRINT
 	heapSize = NNS_SndHeapGetFreeSize(*pSndHeapHandle);
 #endif
+	{
+		u32 heapSize = NNS_SndHeapGetFreeSize(*pSndHeapHandle);
+		OS_Printf("soundHeapSize = %d\n", heapSize);
+	}
 	// サウンドデータ（seq, bank）読み込み
 	result = NNS_SndArcLoadSeqEx
 				(soundIdx, NNS_SND_ARC_LOAD_SEQ | NNS_SND_ARC_LOAD_BANK, *pSndHeapHandle);
 	if( result == FALSE){ return FALSE; }
 
 	player->heapLvPush = NNS_SndHeapSaveState(*pSndHeapHandle);
+	{
+		u32 heapSize = NNS_SndHeapGetFreeSize(*pSndHeapHandle);
+		OS_Printf("soundHeapSize = %d\n", heapSize);
+	}
 
 	// サウンドデータ（wave）読み込み
 	result = NNS_SndArcLoadSeqEx(soundIdx, NNS_SND_ARC_LOAD_WAVE, *pSndHeapHandle);
@@ -328,6 +338,8 @@ void	SOUNDMAN_UnloadHierarchyPlayer( void )
 
 	player->soundIdx = PLAYER_HIERARCHY_EMPTY;
 	NNS_SndHeapLoadState(*pSndHeapHandle, player->heapLvReset);
+	player->heapLvPush = player->heapLvReset;
+	player->heapLvFull = player->heapLvReset;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -415,38 +427,41 @@ struct _SOUNDMAN_PRESET_HANDLE{
 //--------------------------------------------------------------------------------------------
 SOUNDMAN_PRESET_HANDLE* SOUNDMAN_PresetSoundTbl( const u32* soundIdxTbl, u32 tblNum )
 {
+	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
 	SOUNDMAN_PRESET_HANDLE* handle;
-	int heapLvNew;
+	int heapLv;
 	int i;
 
-	GF_ASSERT(pSndHeapHandle);
+	heapLv = player->heapLvDelete;
+	deleteHierarchyPlayer();
 
 	handle = NNS_SndHeapAlloc(*pSndHeapHandle, sizeof(SOUNDMAN_PRESET_HANDLE), NULL, 0, 0);
 
 	for( i=0; i<tblNum; i++ ){ NNS_SndArcLoadSeq(soundIdxTbl[i], *pSndHeapHandle); }
 	handle->soundNum = tblNum;
 
-	// リリースの際に復帰するヒープ状態ＬＶを保存
-	//handle->heapLvRelease = SOUNDMAN_GetHierarchyPlayerSoundHeapLv();
-	//OS_Printf(".....setTbl preset LV %d\n", handle->heapLvRelease);
-
-	// 現在の階層プレーヤーのヒープレベル設定を更新
-	//SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv();
-
 	// 現在の階層プレーヤーのヒープレベル設定を更新し、リリースの際に復帰するヒープ状態ＬＶを保存
-	handle->heapLvRelease = SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv();
-
+	handle->heapLvRelease = heapLv;
+	createHierarchyPlayer(NNS_SndHeapSaveState(*pSndHeapHandle));
+#if 1
+	OS_Printf("change player[%d] svLv %d->%d\n", 
+			sndHierarchyArrayPos, handle->heapLvRelease, player->heapLvDelete);
+#endif
 	return handle;
 }
 
 //--------------------------------------------------------------------------------------------
 SOUNDMAN_PRESET_HANDLE* SOUNDMAN_PresetGroup( u32 groupIdx )
 {
+	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
 	SOUNDMAN_PRESET_HANDLE* handle;
 	const NNSSndArcGroupInfo* groupInfo;
-	int heapLvRelease, heapLvNew;
+	int heapLv;
 
 	GF_ASSERT(pSndHeapHandle);
+
+	heapLv = player->heapLvDelete;
+	deleteHierarchyPlayer();
 
 	handle = NNS_SndHeapAlloc(*pSndHeapHandle, sizeof(SOUNDMAN_PRESET_HANDLE), NULL, 0, 0);
 
@@ -454,15 +469,9 @@ SOUNDMAN_PRESET_HANDLE* SOUNDMAN_PresetGroup( u32 groupIdx )
 	NNS_SndArcLoadGroup(groupIdx, *pSndHeapHandle);
 	handle->soundNum = groupInfo->count;
 
-	// リリースの際に復帰するヒープ状態ＬＶを保存
-	//handle->heapLvRelease = SOUNDMAN_GetHierarchyPlayerSoundHeapLv();
-	//OS_Printf(".....setGrp preset LV %d\n", handle->heapLvRelease);
-
-	// 現在の階層プレーヤーのヒープレベル設定を更新
-	//SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv();
-
 	// 現在の階層プレーヤーのヒープレベル設定を更新し、リリースの際に復帰するヒープ状態ＬＶを保存
-	handle->heapLvRelease = SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv();
+	handle->heapLvRelease = heapLv;
+	createHierarchyPlayer(NNS_SndHeapSaveState(*pSndHeapHandle));
 
 	return handle;
 }
@@ -476,12 +485,17 @@ SOUNDMAN_PRESET_HANDLE* SOUNDMAN_PresetGroup( u32 groupIdx )
 //--------------------------------------------------------------------------------------------
 void SOUNDMAN_ReleasePresetData( SOUNDMAN_PRESET_HANDLE* handle )
 {
+	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
+	int heapLv = handle->heapLvRelease;
+
 	GF_ASSERT(pSndHeapHandle);
-
-	//NNS_SndHeapLoadState(*pSndHeapHandle, handle->heapLvRelease);
-	//OS_Printf(".....release preset LV %d\n", handle->heapLvRelease);
-
-	SOUNDMAN_DowngradeHierarchyPlayerSoundHeapLv(handle->heapLvRelease);
+#if 1
+	OS_Printf("change player[%d] svLv %d->%d\n", 
+			sndHierarchyArrayPos, player->heapLvDelete, handle->heapLvRelease); 
+#endif
+	deleteHierarchyPlayer();
+	NNS_SndHeapLoadState(*pSndHeapHandle, heapLv);
+	createHierarchyPlayer(heapLv);
 }
 
 
