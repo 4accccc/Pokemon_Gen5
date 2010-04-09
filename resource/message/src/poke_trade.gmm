@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-30T11:04:09"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-09T17:19:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="692"/>
 		<band id="3" index="3" style="0000" width="692"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -881,37 +881,44 @@
 		<language name="JPN_KANJI" width="256">タマゴ</language>
 	</row>
 
-	<row id="POKETRADE_STR2_08">
+	<row id="POKETRADE_STR2_08" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="256">ポケモンが　もっている　メールを
 パソコンに　てんそう　しますか？</language>
 		<language name="JPN_KANJI" width="256">ポケモンが　持っている　メールを
 パソコンに　転送しますか？</language>
 	</row>
 
-	<row id="POKETRADE_STR2_09">
+	<row id="POKETRADE_STR2_09" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="256">メールを　すてますが
 よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">メールを　捨てますが
 よろしいですか？</language>
 	</row>
 
-	<row id="POKETRADE_STR2_10">
+	<row id="POKETRADE_STR2_10" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="256">メールボックスが　いっぱいです
 せいりしますか？</language>
 		<language name="JPN_KANJI" width="256">メールボックスが　一杯です
 整理しますか？</language>
 	</row>
 
-	<row id="POKETRADE_STR2_11">
+	<row id="POKETRADE_STR2_11" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="256">メールを　すてました</language>
 		<language name="JPN_KANJI" width="256">メールを　捨てました</language>
 	</row>
 
-	<row id="POKETRADE_STR2_12">
+	<row id="POKETRADE_STR2_12" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="256">とった　メールを
 パソコンに　てんそう　しました</language>
 		<language name="JPN_KANJI" width="256">取った　メールを
 パソコンに　転送しました</language>
+	</row>
+
+	<row id="POKETRADE_STR2_32">
+		<language name="JPN" width="256">あいては　メールを　うけとれません
+こうかんを　キャンセル　します</language>
+		<language name="JPN_KANJI" width="256">相手は　メールを　受け取れません
+交換を　キャンセル　します</language>
 	</row>
 
 	<row id="POKETRADE_STR2_13">
