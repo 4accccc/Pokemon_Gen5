@@ -1021,6 +1021,12 @@
   NO_CMD()
   NO_CMD()
 
+  // 遅いマップフェード
+  DEF_CMD( EvCmdMapFade_BlackInSlow, EV_SEQ_MAP_FADE_BLACK_IN_SLOW )
+  DEF_CMD( EvCmdMapFade_BlackOutSlow, EV_SEQ_MAP_FADE_BLACK_OUT_SLOW )
+  DEF_CMD( EvCmdMapFade_WhiteInSlow, EV_SEQ_MAP_FADE_WHITE_IN_SLOW )
+  DEF_CMD( EvCmdMapFade_WhiteOutSlow, EV_SEQ_MAP_FADE_WHITE_OUT_SLOW )
+
 
   END_CMD
 
