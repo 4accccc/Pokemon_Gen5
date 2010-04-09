@@ -990,13 +990,17 @@ static void	drawTail( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin, BOOL tailOnl
 
 		G3_Color(tmsgwin->color);
 
-		G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
+		//G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
+		G3_TexCoord(0, 8 * FX32_ONE);
 		G3_Vtx(tailData->vtxWin2.x, tailData->vtxWin2.y, tailData->vtxWin2.z); 
-		G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
+		//G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
+		G3_TexCoord(0, 0);
 		G3_Vtx(tailData->vtxWin0.x, tailData->vtxWin0.y, tailData->vtxWin0.z); 
-		G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
+		//G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
+		G3_TexCoord(8 * FX32_ONE, 0);
 		G3_Vtx(tailData->vtxWin1.x, tailData->vtxWin1.y, tailData->vtxWin1.z); 
-		G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
+		//G3_TexCoord(7 * FX32_ONE, 7 * FX32_ONE);
+		G3_TexCoord(8 * FX32_ONE, 8 * FX32_ONE); 
 		G3_Vtx(tailData->vtxWin3.x, tailData->vtxWin3.y, tailData->vtxWin3.z); 
 
 		G3_End();
