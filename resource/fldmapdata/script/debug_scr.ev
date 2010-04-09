@@ -911,8 +911,7 @@ EVENT_END
 /*                                                            */
 /**************************************************************/
 EVENT_START   ev_debug_hosaka
-  _MAP_FADE_BLACK_OUT()
-  _MAP_FADE_END_CHECK()
+  _DEMO_FADEOUT_BLACK_WITH_BGM_CALL()
 
   //Nの城出現デモ呼び出し
   _CALL_3D_DEMO( DEMO3D_ID_N_CASTLE )
@@ -920,8 +919,7 @@ EVENT_START   ev_debug_hosaka
   //チャンピオン部屋のマップ置き換えリクエスト
   _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_CHAMPROOM, TRUE, TRUE )
 
-  _MAP_FADE_BLACK_IN()
-  _MAP_FADE_END_CHECK()
+  _DEMO_FADEIN_BLACK_WITH_BGM_CALL()
 EVENT_END
 
 /**************************************************************/

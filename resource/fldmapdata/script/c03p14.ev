@@ -100,10 +100,8 @@ ev_select_yes:
 	ENDIF
 	_OBJ_ANIME_WAIT()
 	
-	_MAP_FADE_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
-	
 	//３Ｄデモコール
+  _DEMO_FADEOUT_BLACK_CALL_SINGLE()
 	_CALL_3D_DEMO( DEMO3D_ID_G_SHIP_PORT )
 	
 	//予約スクリプト：マップ遷移後、船から下りるスクリプトを起動

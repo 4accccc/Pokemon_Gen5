@@ -119,11 +119,13 @@ sub_wheel_ride_main:
   $i_scene_id = $lwk_entry_id
   $i_scene_id += 1
 	
-  _MAP_FADE_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
+  _START_EVENT_BGM( SEQ_BGM_E_KANRANSYA )			//ÉCÉxÉìÉgã»çƒê∂	
+	
+  _DEMO_FADEOUT_BLACK_CALL()
   _CALL_3D_DEMO_EX( DEMO3D_ID_F_WHEEL, i_scene_id )
-	_MAP_FADE_BLACK_IN()
-	_DISP_FADE_END_CHECK()
+  _DEMO_FADEIN_BLACK_CALL()
+	
+	_END_EVENT_BGM()  //BGMñﬂÇ∑
 
   //Ç‹ÇΩàÍèèÇ…èÊÇÎÇ§ÇÀ
   _WHEEL_TRAINER_MSG( msg_wheel_spring_f_05, lwk_entry_id, lwk_1st_f )  

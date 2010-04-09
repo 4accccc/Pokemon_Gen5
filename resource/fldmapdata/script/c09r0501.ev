@@ -91,9 +91,7 @@ EVENT_START	ev_pos_c09r0501_n_01
 	_BALLOONWIN_OBJMSG( msg_c09r0501_boss_07, C09R0501_N_01 )
 	_MSGWIN_CLOSE()
 	
-	_MAP_FADE_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
-	
+	_DEMO_FADEOUT_BLACK_WITH_BGM_CALL()
 	//Ｎ城出現デモ=============================
 	
 	//マップマトリクスの差し替えフラグをON Ｎ城への通路が突き刺さる【仮】クリア時にフラグリセットするイベントが未実装
@@ -105,11 +103,10 @@ EVENT_START	ev_pos_c09r0501_n_01
 	//Ｎ城出現デモ=============================
 
 	_CAMERA_START()		//カメラ操作開始
-    _CAMERA_PURGE()		//対象物とカメラのバインドを解く
+  _CAMERA_PURGE()		//対象物とカメラのバインドを解く
 	
 	_CAMERA_MOVE( 9688,0,970752,1081344,196655,622592,1 )
-	_MAP_FADE_BLACK_IN()
-	_DISP_FADE_END_CHECK()
+	_DEMO_FADEIN_BLACK_WITH_BGM_CALL()
 	
 	//あれが僕のお城…
 	_BALLOONWIN_OBJMSG( msg_c09r0501_boss_08, C09R0501_N_01 )

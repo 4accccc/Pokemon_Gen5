@@ -61,7 +61,8 @@ INIT_EVENT_START 	ev_zone_n01r0502
 	ENDIF
 /*
 
-*/
+
+*/
 INIT_EVENT_END
 
 /**************************************************************/
@@ -424,10 +425,8 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 }
 
 	//【仮】デモ再生：シン（ム）が謁見の間に突っ込んでくるデモ		デモ作成は４月予定
-	
-	_MAP_FADE_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
-	
+  _DEMO_FADEOUT_BLACK_WITH_BGM_CALL()
+
 	//謁見の間、水が干上がった状態のマップに変更
 	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_04, TRUE, TRUE )
 
@@ -446,8 +445,7 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 
 	_OBJ_ADD( N01R0502_WKOBJCODE00_01 )
 	
-	_MAP_FADE_BLACK_IN()
-	_DISP_FADE_END_CHECK()
+  _DEMO_FADEIN_BLACK_WITH_BGM_CALL()
 	
 	//========================================/
 	
@@ -561,8 +559,7 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 }
 	//【仮】デモ再生：ム（シン）石から復活デモ		デモは４月作成予定です
 	
-	_MAP_FADE_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
+  _DEMO_FADEOUT_BLACK_WITH_BGM_CALL()
 
 {
 
@@ -590,8 +587,7 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 	//カメラ操作　Ｎの位置にカメラを合わせる
 	_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,1 )	//一番最後の引数は移動にかかるフレーム数	
 
-	_MAP_FADE_BLACK_IN()
-	_DISP_FADE_END_CHECK()
+  _DEMO_FADEIN_BLACK_WITH_BGM_CALL()
 
 	//シンと　ムは……　もとは　ひとつの　いのち
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_08w, msg_n01r0502_boss_08b, N01R0502_BOSS_01, POS_DEFAULT )

@@ -8906,6 +8906,19 @@
 #define _DEMO_FADEIN_BLACK_WITH_BGM_CALL() _ASM_DEMO_FADEIN_BLACK_WITH_BGM_CALL
 #define _DEMO_FADEIN_WHITE_WITH_BGM_CALL() _ASM_DEMO_FADEIN_WHITE_WITH_BGM_CALL
 
+//--------------------------------------------------------------
+/**
+ *  @brief  3Dデモ専用マップフェードアウト単独呼び出し
+ *
+ *  @note デモ呼出し後そのままマップチェンジがあり、対コマンドが使えない場合に呼びます
+ *        対コマンドでないので、BGM Push/Popはできません
+ *
+ *  @note _MAP_FADE_系と異なり、_MAP_FADE_END_CHECKで待つ必要はありません
+ *  @note _CALL_3D_DEMO, _CALL_3D_DEMO_EX とセットで使います
+ */
+//--------------------------------------------------------------
+#define _DEMO_FADEOUT_BLACK_CALL_SINGLE() _ASM_DEMO_FADEOUT_BLACK_CALL
+#define _DEMO_FADEOUT_WHITE_CALL_SINGLE() _ASM_DEMO_FADEOUT_WHITE_CALL
  
 //======================================================================
 //  テレビトランシーバーデモ

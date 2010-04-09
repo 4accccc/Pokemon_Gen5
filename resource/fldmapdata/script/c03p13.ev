@@ -76,8 +76,7 @@ EVENT_START		ev_c03p13_pilot_01
     	_BALLOONWIN_TALKOBJ_MSG(msg_c03p13_captain_03)
       _BALLOONWIN_CLOSE()
       //ブラックアウト
-      _MAP_FADE_BLACK_OUT()
-      _MAP_FADE_END_CHECK()
+      _DEMO_FADEOUT_BLACK_CALL_SINGLE()
       //デモ
       _CALL_3D_DEMO( DEMO3D_ID_V_BOAT_PORT )
       //スクリプトリザーブ
