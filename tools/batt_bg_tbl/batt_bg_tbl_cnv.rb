@@ -206,11 +206,12 @@ end
 		exit( 1 )
 	end
 
-	fp_spec = open( ARGV[ ARGV_OUT_DIR ] +	"zone_spec_table.bin", "wb" )
-	fp_hash = open( ARGV[ ARGV_OUT_DIR ] +	"zone_spec.rb", "w" )
+	fp_spec   = open( ARGV[ ARGV_OUT_DIR ] +	"zone_spec_table.bin", "wb" )
+	fp_hash   = open( ARGV[ ARGV_OUT_DIR ] +	"zone_spec.rb", "w" )
 	fp_header = open( ARGV[ ARGV_OUT_DIR ] +	"batt_bg_tbl.h", "w" )
-	fp_stage = open( ARGV[ ARGV_OUT_DIR ] +	"batt_stage.s", "w" )
-	fp_bg = open( ARGV[ ARGV_OUT_DIR ] +	"batt_bg.s", "w" )
+	fp_stage  = open( ARGV[ ARGV_OUT_DIR ] +	"batt_stage.s", "w" )
+	fp_bg     = open( ARGV[ ARGV_OUT_DIR ] +	"batt_bg.s", "w" )
+  fp_scr    = open( ARGV[ ARGV_OUT_DIR ] +	"battgra_3d_wb.scr", "w" )
 
   #ヘッダ部分読み込み
 	str = fp_r.gets
@@ -352,6 +353,7 @@ end
           fp_stage.printf( "\t.long\tBATT_BG_TBL_NO_FILE\n" )
         else
           fp_stage.printf( "\t.long\t%s_%s\n", stage[ i ].get_file_name( FILE_IMD, season ).upcase, ext_table[ kind ] )
+          fp_scr.printf( "\"%s.%s\"\n", stage[ i ].get_file_name( FILE_IMD, season ), ext_table[ kind ] )
         end
       end
     end
@@ -370,6 +372,7 @@ end
           fp_bg.printf( "\t.long\tBATT_BG_TBL_NO_FILE\n" )
         else
           fp_bg.printf( "\t.long\t%s_%s\n", bg[ i ].get_file_name( FILE_IMD, season ).upcase, ext_table[ kind ] )
+          fp_scr.printf( "\"%s.%s\"\n", bg[ i ].get_file_name( FILE_IMD, season ), ext_table[ kind ] )
         end
       end
     end
@@ -462,6 +465,7 @@ end
   fp_header.close
   fp_stage.close
   fp_bg.close
+  fp_scr.close
 
   #タイムスタンプ比較用のダミーファイルを生成
   fp_w = open( "out_end", "w" )
