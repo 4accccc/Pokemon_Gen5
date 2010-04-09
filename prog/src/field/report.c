@@ -687,8 +687,8 @@ static void InitBmp( REPORT_WORK * wk )
 		PLAYTIME * ptime = SaveData_GetPlayTime( sv );
 		str = GFL_MSG_CreateString( mman, REPORT_STR_11 );
 		WORDSET_RegisterNumber( wset, 0, PLAYTIME_GetSaveYear(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-		WORDSET_RegisterNumber( wset, 1, PLAYTIME_GetSaveMonth(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-		WORDSET_RegisterNumber( wset, 2, PLAYTIME_GetSaveDay(ptime ), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+		WORDSET_RegisterNumber( wset, 1, PLAYTIME_GetSaveMonth(ptime), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+		WORDSET_RegisterNumber( wset, 2, PLAYTIME_GetSaveDay(ptime ), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 		WORDSET_RegisterNumber( wset, 3, PLAYTIME_GetSaveHour(ptime), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 		WORDSET_RegisterNumber( wset, 4, PLAYTIME_GetSaveMinute(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 		WORDSET_ExpandStr( wset, exp, str );
