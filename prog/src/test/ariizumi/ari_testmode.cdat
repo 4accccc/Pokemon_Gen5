@@ -88,7 +88,7 @@ static TESTMODE_MENU_LIST menuAriizumi[] =
 	{L"óFíBéËí†"			,TESTMODE_ITEM_SelectDebWifiNote },
 	{L"êîílì¸óÕ"			,TESTMODE_ITEM_SelectDebCodeIn },
 	{L"Ç©ÇÒÇ¢ï∂ì¸óÕ"	,TESTMODE_ITEM_SelectDebPmsInput },
-	{L"LocalTVT"			,TESTMODE_ITEM_SelectDebCGHelp },
+	{L"LocalTVT"			,TESTMODE_ITEM_SelectDebLocalTvt },
 	{L"CG_HELP"	      ,TESTMODE_ITEM_SelectDebCGHelp },
 	{L"MB_BOX"	      ,TESTMODE_ITEM_SelectDebMultiBootBox },
 	{L"MB_CAP"	      ,TESTMODE_ITEM_SelectDebMultiBootCapture },

@@ -557,8 +557,12 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
   
   //3D系の初期化
   { //3D系の設定
-    static const VecFx32 cam_pos = {FX32_CONST(-41.0f),FX32_CONST(0.0f),FX32_CONST(101.0f)};
-    static const VecFx32 cam_target = {FX32_CONST(0.0f),FX32_CONST(0.0f),FX32_CONST(-1.0f)};
+    static const VecFx32 cam_pos = {FX32_CONST(-41.0f),
+                                    FX32_CONST(  0.0f),
+                                    FX32_CONST(101.0f)};
+    static const VecFx32 cam_target = {FX32_CONST(0.0f),
+                                       FX32_CONST(0.0f),
+                                       FX32_CONST(-1.0f)};
     static const VecFx32 cam_up = {0,FX32_ONE,0};
     //エッジマーキングカラー
     static  const GXRgb edge_color_table[8]=
@@ -571,12 +575,12 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
  
     //正射影カメラ
     work->camera =  GFL_G3D_CAMERA_Create( GFL_G3D_PRJORTH, 
-                       FX32_ONE*12.0f,
+                       FX32_ONE*192.0f,
                        0,
                        0,
-                       FX32_ONE*16.0f,
+                       FX32_ONE*256.0f,
                        (FX32_ONE),
-                       (FX32_ONE*200),
+                       (FX32_ONE*400),
                        NULL,
                        &cam_pos,
                        &cam_up,

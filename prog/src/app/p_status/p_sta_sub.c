@@ -30,8 +30,10 @@
 #pragma mark [> define
 
 
-#define PSTATUS_POS_X(val) (FX32_CONST((val)/16.0f))
-#define PSTATUS_POS_Y(val) (FX32_CONST((192.0f-( val ))/16.0f))
+#define PSTATUS_POS_X(val) (FX32_CONST(val))
+#define PSTATUS_POS_Y(val) (FX32_CONST(192.0f-( val )))
+//#define PSTATUS_POS_X(val) (FX32_CONST((val)/16.0f))
+//#define PSTATUS_POS_Y(val) (FX32_CONST((192.0f-( val ))/16.0f))
 
 //#define PSTATUS_MCSS_POS_X (FX32_CONST(( 200+16 )/16.0f))
 //#define PSTATUS_MCSS_POS_Y (FX32_CONST(( 192.0f - (120) )/16.0f))
@@ -100,7 +102,7 @@
 
 //振り向き系定義
 #define PSTATUS_SUB_TURN_TIME (10)
-#define PSTATUS_SUB_TURN_HEIGHT (2)  //FX16にかけるので整数でOK
+#define PSTATUS_SUB_TURN_HEIGHT (2*16)  //FX16にかけるので整数でOK
 
 //前→後ろアニメ定義
 #define PSTATUS_SUB_FLIP_TIME (3)
@@ -295,6 +297,7 @@ void PSTATUS_SUB_Main( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
   {
     //ポケモン振り向き処理
     VecFx32 cam_pos = {PSTATUS_SUB_CAMERA_FRONT_X,FX32_CONST(0.0f),FX32_CONST(101.0f)};
+    VecFx32 shadowScale = {PSTATUS_SUB_SHADOW_SCALE_X , PSTATUS_SUB_SHADOW_SCALE_Y , PSTATUS_SUB_SHADOW_SCALE_Z};
     VecFx32 ofs={0,0,0};
     
     subWork->turnAnimeCnt++;
@@ -331,6 +334,7 @@ void PSTATUS_SUB_Main( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
     }
     MCSS_SetOfsPosition( subWork->pokeMcss , &ofs );
     MCSS_SetOfsPosition( subWork->pokeMcssBack , &ofs );
+    MCSS_SetShadowScale( subWork->pokeMcss , &shadowScale );
     GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
     GFL_G3D_CAMERA_Switching( work->camera );
   }
@@ -626,9 +630,10 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
     VecFx32 cam_pos = {PSTATUS_SUB_CAMERA_FRONT_X,FX32_CONST(0.0f),FX32_CONST(101.0f)};
     VecFx32 shadowScale = {PSTATUS_SUB_SHADOW_SCALE_X , PSTATUS_SUB_SHADOW_SCALE_Y , PSTATUS_SUB_SHADOW_SCALE_Z};
     VecFx32 ofs={0,0,0};
+    VecFx32 shadowOffset= {PSTATUS_SUB_SHADOW_OFFSET_X , PSTATUS_SUB_SHADOW_OFFSET_Y , PSTATUS_SUB_SHADOW_OFFSET_Z};
     
     MCSS_SetOfsPosition( subWork->pokeMcss , &ofs );
-    PSTATUS_SUB_SetShadowOffset( work , subWork , &ofs );
+    PSTATUS_SUB_SetShadowOffset( work , subWork , &shadowOffset );
     MCSS_SetShadowScale( subWork->pokeMcss , &shadowScale );
     
     GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
@@ -641,9 +646,10 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
     VecFx32 cam_pos = {PSTATUS_SUB_CAMERA_BACK_X,FX32_CONST(0.0f),FX32_CONST(101.0f)};
     VecFx32 shadowScale = {PSTATUS_SUB_SHADOW_SCALE_BACK_X , PSTATUS_SUB_SHADOW_SCALE_BACK_Y , PSTATUS_SUB_SHADOW_SCALE_BACK_Z};
     VecFx32 ofs={0,0,0};
+    VecFx32 shadowOffset= {PSTATUS_SUB_SHADOW_OFFSET_X , PSTATUS_SUB_SHADOW_OFFSET_Y , PSTATUS_SUB_SHADOW_OFFSET_Z};
 
     MCSS_SetOfsPosition( subWork->pokeMcss , &ofs );
-    PSTATUS_SUB_SetShadowOffset( work , subWork , &ofs );
+    PSTATUS_SUB_SetShadowOffset( work , subWork , &shadowOffset );
     MCSS_SetShadowScale( subWork->pokeMcssBack , &shadowScale );
     GFL_G3D_CAMERA_SetPos( work->camera , &cam_pos );
     GFL_G3D_CAMERA_Switching( work->camera );
@@ -935,7 +941,7 @@ static const BOOL PSTATUS_SUB_SubActionUpdateStep( PSTATUS_WORK *work , PSTATUS_
     //高さ
     const u16 rad = subWork->subActCount*0x8000/PSTATUS_SUB_STEP_TIME;
     const fx32 sin = FX_SinIdx( rad );
-    ofs.y = (sin*PSTATUS_SUB_STEP_HEIGHT+FX32_CONST(work->friend/64))/16;
+    ofs.y = (sin*PSTATUS_SUB_STEP_HEIGHT+FX32_CONST(work->friend/64));
     PSTATUS_SUB_SetShadowHeight( work , subWork , ofs.y );
   }
   else
@@ -951,19 +957,19 @@ static const BOOL PSTATUS_SUB_SubActionUpdateStep( PSTATUS_WORK *work , PSTATUS_
     {
     case 0:
       //中から右
-      pos.x += FX32_CONST( moveVal )/16;
+      pos.x += FX32_CONST( moveVal );
       break;
     case 1:
       //右から中
-      pos.x += FX32_CONST( moveMax-moveVal )/16;
+      pos.x += FX32_CONST( moveMax-moveVal );
       break;
     case 2:
       //中から左
-      pos.x -= FX32_CONST( moveVal )/16;
+      pos.x -= FX32_CONST( moveVal );
       break;
     case 3:
       //左から中
-      pos.x -= FX32_CONST( moveMax-moveVal )/16;
+      pos.x -= FX32_CONST( moveMax-moveVal );
       break;
     }
   }
@@ -997,7 +1003,7 @@ static const BOOL PSTATUS_SUB_SubActionUpdateJump( PSTATUS_WORK *work , PSTATUS_
     //高さ
     const u16 rad = subWork->subActCount*0x8000/PSTATUS_SUB_JUMP_TIME;
     const fx32 sin = FX_SinIdx( rad );
-    ofs.y = (sin*PSTATUS_SUB_JUMP_HEIGHT+FX32_CONST(work->friend/64))/16;
+    ofs.y = (sin*PSTATUS_SUB_JUMP_HEIGHT+FX32_CONST(work->friend/64));
     PSTATUS_SUB_SetShadowHeight( work , subWork , ofs.y );
   }
   MCSS_SetOfsPosition( subWork->pokeMcss , &ofs );
@@ -1014,8 +1020,8 @@ static const BOOL PSTATUS_SUB_SubActionUpdateJump( PSTATUS_WORK *work , PSTATUS_
 }
 
 #define PSTATUS_SUB_FLOAT_RATE (16)  //x倍してるので、xで割る
-#define PSTATUS_SUB_FLOAT_MAX ( 32*PSTATUS_SUB_FLOAT_RATE )
-#define PSTATUS_SUB_FLOAT_MIN (  8*PSTATUS_SUB_FLOAT_RATE )
+#define PSTATUS_SUB_FLOAT_MAX ( 32*PSTATUS_SUB_FLOAT_RATE*16 )
+#define PSTATUS_SUB_FLOAT_MIN (  8*PSTATUS_SUB_FLOAT_RATE*16 )
 #define PSTATUS_SUB_FLOAT_VAL ( PSTATUS_SUB_FLOAT_MAX-PSTATUS_SUB_FLOAT_MIN)
 #define PSTATUS_SUB_FLOAT_SPEED_MAX (10)  //早いのでMAXのほうが小さいので注意
 #define PSTATUS_SUB_FLOAT_SPEED_MIN (20)
@@ -1059,8 +1065,8 @@ static const BOOL PSTATUS_SUB_SubActionUpdateFloat( PSTATUS_WORK *work , PSTATUS
     {
       //ゆれ
       
-      //ofs.x += FX_CosIdx( subWork->subActCount*(0x10000/PSTATUS_SUB_YURE_SPEED) )*PSTATUS_SUB_YURE_VALUE/16;
-      ofs.y += FX_SinIdx( subWork->subActCount*(0x10000/PSTATUS_SUB_YURE_SPEED) )*PSTATUS_SUB_YURE_VALUE/16;
+      //ofs.x += FX_CosIdx( subWork->subActCount*(0x10000/PSTATUS_SUB_YURE_SPEED) )*PSTATUS_SUB_YURE_VALUE;
+      ofs.y += FX_SinIdx( subWork->subActCount*(0x10000/PSTATUS_SUB_YURE_SPEED) )*PSTATUS_SUB_YURE_VALUE;
       
       subWork->subActCount++;
       if( subWork->subActCount > PSTATUS_SUB_YURE_SPEED )
@@ -1099,7 +1105,7 @@ static const BOOL PSTATUS_SUB_SubActionUpdateFloat( PSTATUS_WORK *work , PSTATUS
       }
     }
     
-    ofs.y += FX32_CONST(subWork->subActValue)/(16*PSTATUS_SUB_FLOAT_RATE);
+    ofs.y += FX32_CONST(subWork->subActValue)/(PSTATUS_SUB_FLOAT_RATE);
     PSTATUS_SUB_SetShadowHeight( work , subWork , ofs.y );
   }
   MCSS_SetOfsPosition( subWork->pokeMcss , &ofs );
@@ -1386,7 +1392,7 @@ static void PSTATUS_SUB_TPCheckRotSpeed( PSTATUS_WORK *work , PSTATUS_SUB_WORK *
 static void PSTATUS_SUB_PokeCreateMcss( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const POKEMON_PASO_PARAM *ppp )
 {
   MCSS_ADD_WORK addWork;
-  VecFx32 scale = {FX32_ONE,FX32_ONE,FX32_ONE};
+  VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE*16};
   VecFx32 shadowScale = {PSTATUS_SUB_SHADOW_SCALE_X , PSTATUS_SUB_SHADOW_SCALE_Y , PSTATUS_SUB_SHADOW_SCALE_Z};
   VecFx32 shadowScaleBack = {PSTATUS_SUB_SHADOW_SCALE_BACK_X , PSTATUS_SUB_SHADOW_SCALE_BACK_Y , PSTATUS_SUB_SHADOW_SCALE_BACK_Z};
   VecFx32 shadowOffset= {PSTATUS_SUB_SHADOW_OFFSET_X , PSTATUS_SUB_SHADOW_OFFSET_Y , PSTATUS_SUB_SHADOW_OFFSET_Z};
