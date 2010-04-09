@@ -42,10 +42,10 @@ static void VBlankTask( GFL_TCB * tcb, void * work );
 // VRAM割り振り
 static const GFL_DISP_VRAM VramTbl = {
 	GX_VRAM_BG_128_D,							// メイン2DエンジンのBG
-	GX_VRAM_BGEXTPLTT_NONE,				// メイン2DエンジンのBG拡張パレット
+	GX_VRAM_BGEXTPLTT_23_G,				// メイン2DエンジンのBG拡張パレット
 
 	GX_VRAM_SUB_BG_128_C,					// サブ2DエンジンのBG
-	GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+	GX_VRAM_SUB_BGEXTPLTT_0123_H,	// サブ2DエンジンのBG拡張パレット
 
 	GX_VRAM_OBJ_128_B,						// メイン2DエンジンのOBJ
 	GX_VRAM_OBJEXTPLTT_NONE,			// メイン2DエンジンのOBJ拡張パレット
@@ -103,14 +103,9 @@ static void VBlankTask( GFL_TCB * tcb, void * work )
 {
 	DDEMOMAIN_WORK * wk = work;
 /*
-	u32	i;
-
-	wk = work;
-
-	GFL_BG_VBlankFunc();
-
 	PaletteFadeTrans( wk->pfd );
 */
+	GFL_BG_VBlankFunc();
 	GFL_CLACT_SYS_VBlankFunc();
 	if( wk->double3dFlag == TRUE ){
 		GFL_G3D_DOUBLE3D_VblankIntr();
@@ -135,7 +130,7 @@ void DDEMOMAIN_InitBg(void)
 
 	{	// BG SYSTEM
 		GFL_BG_SYS_HEADER sysh = {
-			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
+			GX_DISPMODE_GRAPHICS, GX_BGMODE_3, GX_BGMODE_3, GX_BG0_AS_3D,
 		};
 		GFL_BG_SetBGMode( &sysh );
 	}
@@ -220,10 +215,59 @@ void DDEMOMAIN_ExitBg(void)
 
 void DDEMOMAIN_Init2ndSceneBgFrame(void)
 {
+	{	// BG SYSTEM
+		GFL_BG_SYS_HEADER sysh = {
+			GX_DISPMODE_GRAPHICS, GX_BGMODE_3, GX_BGMODE_3, GX_BG0_AS_3D,
+		};
+		GFL_BG_SetBGMode( &sysh );
+	}
+
+	{
+		GFL_BG_BGCNT_HEADER cnth= {
+			0, 0, 0x800, 0, GX_BG_SCRSIZE_256x16PLTT_256x256, GX_BG_COLORMODE_256,
+			GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x10000, 0x10000,
+			GX_BG_EXTPLTT_23, 0, 0, 0, FALSE
+		};
+		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &cnth, GFL_BG_MODE_256X16 );
+		GFL_BG_SetBGControl( GFL_BG_FRAME3_S, &cnth, GFL_BG_MODE_256X16 );
+	}
+
+	GFL_BG_ClearScreen( GFL_BG_FRAME3_M );
+	GFL_BG_ClearScreen( GFL_BG_FRAME3_S );
+
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 }
 
 void DDEMOMAIN_Exit2ndSceneBgFrame(void)
 {
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
+
+	GFL_BG_FreeBGControl( GFL_BG_FRAME3_S );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME3_M );
+}
+
+void DDEMOMAIN_Load2ndBgGraphic(void)
+{
+	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_DENDOU_DEMO_GRA, HEAPID_DENDOU_DEMO );
+
+	GFL_ARCHDL_UTIL_TransVramPalette(
+		ah, NARC_dendou_demo_gra_bg_s2_NCLR, PALTYPE_MAIN_BG_EX, 0x6000, 0x20, HEAPID_DENDOU_DEMO );
+	GFL_ARCHDL_UTIL_TransVramPalette(
+		ah, NARC_dendou_demo_gra_bg_s2_NCLR, PALTYPE_SUB_BG_EX, 0x6000, 0x20, HEAPID_DENDOU_DEMO );
+
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(
+		ah, NARC_dendou_demo_gra_bg_s2_NCGR, GFL_BG_FRAME3_M, 0, 0, FALSE, HEAPID_DENDOU_DEMO );
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(
+		ah, NARC_dendou_demo_gra_bg_s2_NCGR, GFL_BG_FRAME3_S, 0, 0, FALSE, HEAPID_DENDOU_DEMO );
+
+	GFL_ARCHDL_UTIL_TransVramScreen(
+		ah, NARC_dendou_demo_gra_bgd_s2_NSCR, GFL_BG_FRAME3_M, 0, 0, FALSE, HEAPID_DENDOU_DEMO );
+	GFL_ARCHDL_UTIL_TransVramScreen(
+		ah, NARC_dendou_demo_gra_bgd_s2_NSCR, GFL_BG_FRAME3_S, 0, 0, FALSE, HEAPID_DENDOU_DEMO );
+
+	GFL_ARC_CloseDataHandle( ah );
 }
 
 void DDEMOMAIN_SetBlendAlpha(void)

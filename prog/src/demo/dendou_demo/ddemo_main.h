@@ -102,6 +102,7 @@ extern void DDEMOMAIN_InitBg(void);
 extern void DDEMOMAIN_ExitBg(void);
 extern void DDEMOMAIN_Init2ndSceneBgFrame(void);
 extern void DDEMOMAIN_Exit2ndSceneBgFrame(void);
+extern void DDEMOMAIN_Load2ndBgGraphic(void);
 
 extern void DDEMOMAIN_SetBlendAlpha(void);
 

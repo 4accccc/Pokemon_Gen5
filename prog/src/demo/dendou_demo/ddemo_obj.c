@@ -127,7 +127,7 @@ static const DDEMO_CLWK_DATA Mes2ClactParamTbl = {
 };
 
 static const DDEMO_CLWK_DATA Info2ClactParamTbl = {
-	{ 128, 144, 2, 10, 0 },
+	{ 128, 168, 2, 10, 0 },
 	DDEMOOBJ_CHRRES_ETC, DDEMOOBJ_PALRES_ETC, DDEMOOBJ_CELRES_ETC,
 	0, CLSYS_DRAW_MAIN
 };

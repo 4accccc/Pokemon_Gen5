@@ -347,6 +347,12 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 		break;
 
 	case 14:		// 終了チェック
+		// @TODO 面倒なのでショートカット
+		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
+			wk->subSeq = 0;
+			DDEMOMAIN_ExitDouble3D( wk );
+			return MAINSEQ_2ND_MAIN;
+		}
 		wk->pokePos++;
 		if( wk->pokePos == wk->pokeMax ){
 			wk->subSeq = 0;
@@ -371,8 +377,12 @@ static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk )
 	switch( wk->subSeq ){
 	case 0:		// 初期化
 		// サブ画面をメインに
+		DDEMOMAIN_InitVram();
 		GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
+		GFL_DISP_GX_SetVisibleControlDirect( 0 );
+		GFL_DISP_GXS_SetVisibleControlDirect( 0 );
 		DDEMOMAIN_Init2ndSceneBgFrame();
+		DDEMOMAIN_Load2ndBgGraphic();
 		DDEMOOBJ_Init2ndScene( wk );
 		wk->subSeq++;
 		return SetFadeIn( wk, MAINSEQ_2ND_MAIN );
