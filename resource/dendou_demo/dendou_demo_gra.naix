@@ -12,13 +12,19 @@
 
 enum {
 	NARC_dendou_demo_gra_bg_NCLR = 0,
-	NARC_dendou_demo_gra_obj_NCLR = 1,
-	NARC_dendou_demo_gra_obj_typecoler_NCLR = 2,
-	NARC_dendou_demo_gra_bg_NCGR = 3,
-	NARC_dendou_demo_gra_obj_NCGR = 4,
-	NARC_dendou_demo_gra_obj_NCER = 5,
-	NARC_dendou_demo_gra_obj_NANR = 6,
-	NARC_dendou_demo_gra_ddemo_spa = 7
+	NARC_dendou_demo_gra_bg_s2_NCLR = 1,
+	NARC_dendou_demo_gra_obj_NCLR = 2,
+	NARC_dendou_demo_gra_obj_typecoler_NCLR = 3,
+	NARC_dendou_demo_gra_bg_NCGR = 4,
+	NARC_dendou_demo_gra_bg_s2_NCGR = 5,
+	NARC_dendou_demo_gra_obj_NCGR = 6,
+	NARC_dendou_demo_gra_obj_NCER = 7,
+	NARC_dendou_demo_gra_bgd_NSCR = 8,
+	NARC_dendou_demo_gra_bgd_s2_NSCR = 9,
+	NARC_dendou_demo_gra_bgu_NSCR = 10,
+	NARC_dendou_demo_gra_bgu_s2_NSCR = 11,
+	NARC_dendou_demo_gra_obj_NANR = 12,
+	NARC_dendou_demo_gra_ddemo_spa = 13
 };
 
 /* NARC_DENDOU_DEMO_GRA_NAIX_ */

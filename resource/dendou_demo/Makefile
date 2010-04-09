@@ -43,7 +43,7 @@ parsources:=$(wildcard $(addsuffix /*.spr,$(SUBDIRS_PTCL)))
 # リソースが吐き出すファイルを自動でつくる
 lobjects = $(subst .ncl,.NCLR,$(lsources))
 gobjects = $(subst .ncg,.NCGR,$(gsources))
-cobjects = $(subst .nsc,.NSCR,$(csources))
+cobjects = $(subst .nsc,.NSCR,$(ssources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
 
