@@ -7,23 +7,25 @@
  */
 //////////////////////////////////////////////////////////////////////////////////////////// 
 #include "fieldmap.h"
-#include "gmk_tmp_wk.h"
 #include "field_gimmick_league_front01.h"
+#include "gmk_tmp_wk.h"
+#include "field_gimmick_def.h"            // for FLD_GIMMICK_C09P01
+#include "fld_exp_obj.h"                  // for FLD_EXP_OBJ
+#include "event_mapchange.h"              // for EVENT_ChangeMapPosNoFade
+#include "event_fieldmap_control.h"       // for EVENT_FieldBrightOut
+#include "field_gimmick_league_front02.h" // for EVENT_LEAGUE_FRONT_02_GIMMICK_GetLiftDownEvent
+#include "eventwork.h"                    // for EVENTWORK_
+
 #include "gamesystem/game_event.h"
 #include "gamesystem/gamesystem.h"
 #include "savedata/gimmickwork.h"  // for GIMMICKWORK
-#include "system/ica_anime.h"  // for ICA_ANIME
-#include "field_gimmick_def.h"  // for FLD_GIMMICK_C09P01
-#include "field/field_const.h"  // for FIELD_CONST_GRID_SIZE
-#include "fld_exp_obj.h"  // for FLD_EXP_OBJ
-#include "arc/league_front.naix"  // for NARC_xxxx
-#include "../../../resource/fldmapdata/zonetable/zone_id.h"  // for ZONE_ID_C09P02
-#include "event_mapchange.h"  // for EVENT_ChangeMapPosNoFade
-#include "event_fieldmap_control.h"  // for EVENT_FieldBrightOut
-#include "field_gimmick_league_front02.h"  // for EVENT_LEAGUE_FRONT_02_GIMMICK_GetLiftDownEvent
-#include "eventwork.h"  // for EVENTWORK_
-#include "../../../resource/fldmapdata/flagwork/flag_define.h"  // for SYS_FLAG_BIGFOUR_xxxx
-#include "sound/pm_sndsys.h" // for PMSND_xxxx
+#include "system/ica_anime.h"      // for ICA_ANIME
+#include "field/field_const.h"     // for FIELD_CONST_GRID_SIZE
+#include "sound/pm_sndsys.h"       // for PMSND_xxxx
+
+#include "arc/league_front.naix"                               // for NARC_xxxx
+#include "../../../resource/fldmapdata/zonetable/zone_id.h"    // for ZONE_ID_C09P02 
+#include "../../../resource/fldmapdata/flagwork/flag_define.h" // for SYS_FLAG_BIGFOUR_xxxx
 
 
 //==========================================================================================

@@ -9,17 +9,17 @@
 #include "fieldmap.h"
 #include "gmk_tmp_wk.h"
 #include "field_gimmick_league_front02.h"
+#include "field_gimmick_def.h"  // for FLD_GIMMICK_C09P02
+#include "fld_exp_obj.h"  // for FLD_EXP_OBJ
+
 #include "gamesystem/game_event.h"
 #include "gamesystem/gamesystem.h"
-#include "field_gimmick_def.h"  // for FLD_GIMMICK_C09P02
-#include "arc/league_front.naix"  // for NARC_xxxx
 #include "savedata/gimmickwork.h"  // for GIMMICKWORK
-#include "system/ica_anime.h"  // for ICA_ANIME
-#include "fld_exp_obj.h"  // for FLD_EXP_OBJ
-#include "arc/league_front.naix"  // for NARC_xxxx
-#include "field/field_const.h"  // for FIELD_CONST_GRID_SIZE
-#include "event_fieldmap_control.h"  // for EVENT_FieldBrightIn
-#include "sound/pm_sndsys.h" // for PMSND_xxxx
+#include "system/ica_anime.h"      // for ICA_ANIME
+#include "sound/pm_sndsys.h"       // for PMSND_xxxx
+#include "field/field_const.h"     // for FIELD_CONST_GRID_SIZE
+
+#include "arc/league_front.naix" // for NARC_xxxx
 
 
 //==========================================================================================
