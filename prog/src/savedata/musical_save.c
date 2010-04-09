@@ -111,34 +111,43 @@ MUSICAL_SHOT_DATA* MUSICAL_SAVE_GetMusicalShotData( MUSICAL_SAVE *musSave )
 //----------------------------------------------------------
 const BOOL MUSICAL_SAVE_ChackHaveItem( MUSICAL_SAVE *musSave , const u8 itemNo )
 {
-  const u8 arrIdx = itemNo / 8;
-  const u8 bitIdx = itemNo % 8;
-  if( (musSave->itemBit[arrIdx] & (1<<bitIdx)) > 0 )
+  if( itemNo < MUSICAL_ITEM_MAX_REAL )
   {
-    return TRUE;
+    const u8 arrIdx = itemNo / 8;
+    const u8 bitIdx = itemNo % 8;
+    if( (musSave->itemBit[arrIdx] & (1<<bitIdx)) > 0 )
+    {
+      return TRUE;
+    }
   }
   return FALSE;
 }
 
 const BOOL MUSICAL_SAVE_ChackNewItem( MUSICAL_SAVE *musSave , const u8 itemNo )
 {
-  const u8 arrIdx = itemNo / 8;
-  const u8 bitIdx = itemNo % 8;
-  if( (musSave->itemNewBit[arrIdx] & (1<<bitIdx)) > 0 )
+  if( itemNo < MUSICAL_ITEM_MAX_REAL )
   {
-    return TRUE;
+    const u8 arrIdx = itemNo / 8;
+    const u8 bitIdx = itemNo % 8;
+    if( (musSave->itemNewBit[arrIdx] & (1<<bitIdx)) > 0 )
+    {
+      return TRUE;
+    }
   }
   return FALSE;
 }
 
 void MUSICAL_SAVE_AddItem( MUSICAL_SAVE *musSave , const u8 itemNo )
 {
-  const u8 arrIdx = itemNo / 8;
-  const u8 bitIdx = itemNo % 8;
-  
-  musSave->itemBit[arrIdx] |= (1<<bitIdx);
-  musSave->itemNewBit[arrIdx] |= (1<<bitIdx);
-  //OS_TPrintf("AddMusicalItem[%d][%d:%d][%d]\n",itemNo,arrIdx,bitIdx,musSave->itemBit[arrIdx]);
+  if( itemNo < MUSICAL_ITEM_MAX_REAL )
+  {
+    const u8 arrIdx = itemNo / 8;
+    const u8 bitIdx = itemNo % 8;
+    
+    musSave->itemBit[arrIdx] |= (1<<bitIdx);
+    musSave->itemNewBit[arrIdx] |= (1<<bitIdx);
+    //OS_TPrintf("AddMusicalItem[%d][%d:%d][%d]\n",itemNo,arrIdx,bitIdx,musSave->itemBit[arrIdx]);
+  }
 }
 
 void MUSICAL_SAVE_ResetNewItem( MUSICAL_SAVE *musSave )

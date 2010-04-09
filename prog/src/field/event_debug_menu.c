@@ -262,6 +262,7 @@ static BOOL debugMenuCallProc_SymbolPokeFreeLargeFull( DEBUG_MENU_EVENT_WORK * w
 static BOOL debugMenuCallProc_SymbolPokeFreeSmallFull( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenuCallProc_SymbolPokeCountup( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenuCallProc_FadeSpeedChange( DEBUG_MENU_EVENT_WORK * wk );
+static BOOL debugMenuCallProc_Musical( DEBUG_MENU_EVENT_WORK * wk );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -323,6 +324,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR67, debugMenuCallProc_EventPokeCreate },  //イベントポケモン作成
   //{ DEBUG_FIELD_STR69, debugMenuCallProc_SymbolPokeCreate },  //シンボルポケモン作成
   { DEBUG_FIELD_STR69, debugMenuCallProc_SymbolPokeList },  //シンボルポケモン作成
+  { DEBUG_FIELD_STR71, debugMenuCallProc_Musical },  //ミュージカル
 
   { DEBUG_FIELD_TITLE_06, (void*)BMPMENULIST_LABEL },       //○つうしん
   { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },      //WIFIクラブ
@@ -342,7 +344,6 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR47, debugMenu_ControlShortCut },           //Yボタン登録最大
   { DEBUG_FIELD_STR51  , debugMenuCallProc_OpenGTSNegoMenu }, //GTSネゴ
   { DEBUG_FIELD_STR55,   debugMenuCallProc_CGEARPictureSave },//Cギアー写真
-  { DEBUG_FIELD_STR21 , debugMenuCallProc_MusicalSelect },    //ミュージカル
   { DEBUG_FIELD_STR42, debugMenuCallProc_WifiGts },           //GTS
   { DEBUG_FIELD_STR48, debugMenuCallProc_GDS },               //GDS
   { DEBUG_FIELD_STR50, debugMenuCallProc_WazaOshie },         //技教え
@@ -1290,177 +1291,6 @@ static void setupCGearFirstSubscreen(DMESSWORK * dmess)
   FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_CGEARFIRST);
 }
 
-
-//--------------------------------------------------------------
-//  ミュージカル系
-//--------------------------------------------------------------
-FS_EXTERN_OVERLAY(musical);
-#include "musical/musical_local.h"
-#include "musical/musical_define.h"
-#include "musical/musical_system.h"
-#include "musical/musical_dressup_sys.h"
-#include "musical/musical_stage_sys.h"
-#include "poke_tool/poke_tool.h"  //ドレスアップ仮データ用
-#include "poke_tool/monsno_def.h" //ドレスアップ仮データ用
-#include "event_fieldmap_control.h"
-typedef struct {
-  HEAPID heapID;
-  GAMESYS_WORK *gmSys;
-  GMEVENT *gmEvent;
-  GMEVENT *newEvent;
-  FIELDMAP_WORK *fieldWork;
-  FLDMENUFUNC *menuFunc;
-
-  POKEMON_PARAM *pokePara;
-  MUSICAL_POKE_PARAM *musPoke;
-  DRESSUP_INIT_WORK *dupInitWork;
-  u8  menuRet;
-}DEBUG_MENU_EVENT_MUSICAL_SELECT_WORK, DEB_MENU_MUS_WORK;
-static GMEVENT_RESULT debugMenuMusicalSelectEvent( GMEVENT *event, int *seq, void *wk );
-
-static void setupMusicalDressup(DEB_MENU_MUS_WORK * work);
-static void setupMusicarShowPart(DEB_MENU_MUS_WORK * work);
-
-//--------------------------------------------------------------
-/**
- * デバッグメニュー呼び出し　ミュージカル呼び出し
- * @param wk  DEBUG_MENU_EVENT_WORK*
- * @retval  BOOL  TRUE=イベント継続
- */
-//--------------------------------------------------------------
-static debugMenuCallProc_MusicalSelect( DEBUG_MENU_EVENT_WORK *wk )
-{
-  HEAPID heapID = wk->heapID;
-  GMEVENT *event = wk->gmEvent;
-  GAMESYS_WORK *gsys = wk->gmSys;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  DEB_MENU_MUS_WORK *work;
-
-    GMEVENT_Change( event,
-      debugMenuMusicalSelectEvent, sizeof(DEB_MENU_MUS_WORK) );
-    work = GMEVENT_GetEventWork( event );
-    GFL_STD_MemClear( work, sizeof(DEB_MENU_MUS_WORK) );
-
-    work->gmSys = gsys;
-    work->gmEvent = event;
-    work->heapID = heapID;
-    work->fieldWork = fieldWork;
-    work->dupInitWork = NULL;
-    work->musPoke = NULL;
-    work->pokePara = NULL;
-    return( TRUE );
-}
-
-//--------------------------------------------------------------
-static const FLDMENUFUNC_LIST DATA_MusicalMenuList[3] =
-{
-  { DEBUG_FIELD_STR_MUSICAL1, (void*)setupMusicalDressup },
-  { DEBUG_FIELD_STR_MUSICAL2, (void*)setupMusicarShowPart },
-};
-
-static const DEBUG_MENU_INITIALIZER DebugMusicalSelectData = {
-  NARC_message_d_field_dat,
-  NELEMS(DATA_MusicalMenuList),
-  DATA_MusicalMenuList,
-  &DATA_DebugMenuList_Default, //流用
-  1, 1, 16, 17,
-  NULL,
-  NULL
-};
-
-//--------------------------------------------------------------
-/**
- * イベント：ミュージカルデバッグメニュー
- * @param event GMEVENT
- * @param seq   シーケンス
- * @param wk    event work
- * @retval  GMEVENT_RESULT
- */
-//--------------------------------------------------------------
-static GMEVENT_RESULT debugMenuMusicalSelectEvent(
-    GMEVENT *event, int *seq, void *wk )
-{
-  DEB_MENU_MUS_WORK *work = wk;
-
-  switch( *seq )
-  {
-  case 0:
-    work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugMusicalSelectData );
-    (*seq)++;
-    break;
-  case 1:
-    {
-      u32 ret;
-      ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-
-      if( ret == FLDMENUFUNC_NULL ){  //操作無し
-        break;
-      }
-
-      FLDMENUFUNC_DeleteMenu( work->menuFunc );
-
-      if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
-        return( GMEVENT_RES_FINISH );
-      }else{
-        typedef void (* CHANGE_FUNC)(DEB_MENU_MUS_WORK*);
-        CHANGE_FUNC func = (CHANGE_FUNC)ret;
-        func(work);
-        GMEVENT_CallEvent(work->gmEvent, EVENT_FSND_PushBGM(work->gmSys, FSND_FADE_NONE));
-        (*seq)++;
-        return( GMEVENT_RES_CONTINUE );
-      }
-    }
-    break;
-  case 2:
-    GMEVENT_CallEvent(work->gmEvent, work->newEvent);
-    (*seq)++;
-    break;
-  case 3:
-    if( work->dupInitWork != NULL )
-    {
-      MUSICAL_DRESSUP_DeleteInitWork( work->dupInitWork );
-      work->dupInitWork = NULL;
-    }
-    if( work->musPoke != NULL )
-    {
-      GFL_HEAP_FreeMemory( work->musPoke );
-      work->musPoke = NULL;
-    }
-    if( work->pokePara != NULL )
-    {
-      GFL_HEAP_FreeMemory( work->pokePara );
-      work->pokePara = NULL;
-    }
-    (*seq)++;
-    break;
-  case 4:
-    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(work->gmSys, FSND_FADE_NONE, FSND_FADE_NORMAL));
-    (*seq)++;
-    break;
-  case 5:
-    return( GMEVENT_RES_FINISH );
-  }
-
-  return GMEVENT_RES_CONTINUE ;
-}
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void setupMusicalDressup(DEB_MENU_MUS_WORK * work)
-{
-  work->pokePara = PP_Create( MONSNO_PIKUSII , 20 , PTL_SETUP_POW_AUTO , GFL_HEAPID_APP|HEAPDIR_MASK );
-  work->musPoke = MUSICAL_SYSTEM_InitMusPoke( work->pokePara , GFL_HEAPID_APP|HEAPDIR_MASK );
-  work->dupInitWork = MUSICAL_DRESSUP_CreateInitWork( GFL_HEAPID_APP|HEAPDIR_MASK , work->musPoke , SaveControl_GetPointer() );
-
-  work->newEvent = EVENT_FieldSubProc(work->gmSys, work->fieldWork,
-        FS_OVERLAY_ID(musical), &DressUp_ProcData, work->dupInitWork );
-}
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void setupMusicarShowPart(DEB_MENU_MUS_WORK * work)
-{
-  work->newEvent = EVENT_FieldSubProc(work->gmSys, work->fieldWork,
-        FS_OVERLAY_ID(musical), &MusicalStage_ProcData, NULL );
-}
 
 //======================================================================
 //  デバッグメニュー　カメラ操作
@@ -6597,7 +6427,7 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
         u32 i;
 				buf = POKE_PERSONAL_GetZenkokuToChihouArray( work->heapID, NULL );
         for( i=1; i<=MONSNO_END; i++ ){
-					if( buf[i] != POKEPER_CHIHOU_NO_NONE ){
+					if( buf[i] != 0 ){
 						SetZukanDataOne( wk, i, 0, PM_LANG, 0 );
 					}
         }
@@ -6615,7 +6445,7 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
         u32 i;
 				buf = POKE_PERSONAL_GetZenkokuToChihouArray( work->heapID, NULL );
         for( i=1; i<=MONSNO_END; i++ ){
-					if( buf[i] != POKEPER_CHIHOU_NO_NONE ){
+					if( buf[i] != 0 ){
 	          SetZukanDataOne( wk, i, 0, PM_LANG, 1 );
 					}
         }
@@ -6668,7 +6498,7 @@ static void SetZukanLocal( DEBUG_ZUKAN_WORK * wk, u16 count, u32 mode )
   u32 i;
   buf = POKE_PERSONAL_GetZenkokuToChihouArray( wk->heapID, NULL );
   for( i=1; i<=MONSNO_END; i++ ){
-    if( buf[i] != POKEPER_CHIHOU_NO_NONE ){
+    if( buf[i] != 0 ){
       SetZukanDataOne( wk, i, 0, PM_LANG, mode );
       count --;
     }
@@ -6958,6 +6788,7 @@ static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *
         GFL_HEAP_FreeMemory( pp );
       }
     }
+    break;
   }
 
   return GMEVENT_RES_CONTINUE;
@@ -6979,5 +6810,121 @@ static BOOL debugMenuCallProc_SymbolPokeList( DEBUG_MENU_EVENT_WORK *wk )
 
   return TRUE;
 }
+
+//--------------------------------------------------------------
+//ミュージカル関係デバッグ
+//--------------------------------------------------------------
+#include "savedata/musical_save.h"
+#include "musical/musical_debug.h"
+FS_EXTERN_OVERLAY( gds_debug );
+static GMEVENT_RESULT debugMenuMusical( GMEVENT *event, int *seq, void *wk );
+
+
+static const FLDMENUFUNC_LIST DATA_Musical[] =
+{
+  { DEBUG_FIELD_MUSICAL_01, (void*)0 },
+  { DEBUG_FIELD_MUSICAL_02, (void*)1 },
+  { DEBUG_FIELD_MUSICAL_03, (void*)2 },
+};
+
+static const DEBUG_MENU_INITIALIZER DebugMusicalMenu = 
+{
+  NARC_message_d_field_dat,
+  NELEMS(DATA_Musical),
+  DATA_Musical,
+  &DATA_DebugMenuList_Default, //流用
+  1, 1, 16, 17,
+  NULL,
+  NULL
+};
+
+typedef struct
+{
+  HEAPID heapId;
+  GAMESYS_WORK *gmSys;
+  GMEVENT *gmEvent;
+  FLDMENUFUNC *menuFunc;
+  FIELDMAP_WORK *fieldWork;
+}DEBUG_MUSICAL_CREATE;
+
+static BOOL debugMenuCallProc_Musical( DEBUG_MENU_EVENT_WORK * wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  GMEVENT *event = wk->gmEvent;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  DEBUG_MUSICAL_CREATE *work;
+
+  GMEVENT_Change( event, debugMenuMusical, sizeof(DEBUG_MUSICAL_CREATE) );
+
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_MUSICAL_CREATE) );
+
+  work->gmSys = gsys;
+  work->gmEvent = event;
+  work->fieldWork = fieldWork;
+  work->heapId = heapID;
+
+  return TRUE;
+}
+
+static GMEVENT_RESULT debugMenuMusical( GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_MUSICAL_CREATE *work = wk;
+
+  switch( *seq ){
+  case 0:
+    work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapId, &DebugMusicalMenu );
+    (*seq)++;
+    break;
+
+  case 1:
+    {
+      const u32 ret = FLDMENUFUNC_ProcMenu(work->menuFunc);
+      GAMEDATA *gmData = GAMESYSTEM_GetGameData(work->gmSys);
+      MUSICAL_SAVE *musSave = GAMEDATA_GetMusicalSavePtr(gmData);
+      if( ret == FLDMENUFUNC_NULL )
+      {
+        return GMEVENT_RES_CONTINUE;
+      }
+      else
+      if( ret == FLDMENUFUNC_CANCEL )
+      {
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+        return GMEVENT_RES_FINISH;
+      }
+      else
+      {
+        switch( ret )
+        {
+        case 0:
+          {
+            u16 i;
+            for( i=0;i<MUSICAL_ITEM_MAX_REAL;i++ )
+            {
+              MUSICAL_SAVE_AddItem( musSave , i );
+            }
+          }
+          break;
+        case 1:
+          MUSICAL_SAVE_InitWork( musSave );
+          break;
+        case 2:
+          {
+            MUSICAL_SHOT_DATA *shotData = MUSICAL_SAVE_GetMusicalShotData( musSave );
+
+            GFL_OVERLAY_Load( FS_OVERLAY_ID(gds_debug) );
+            MUSICAL_DEBUG_CreateDummyData( shotData , 1 , work->heapId );
+            GFL_OVERLAY_Unload( FS_OVERLAY_ID(gds_debug));
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
 
 #endif  //  PM_DEBUG

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-04-08T11:16:50"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-04-09T17:55:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="32" top="189" right="737" bottom="817" maximized="no" rayout="Vertical2">
+	<dialog left="268" top="248" right="973" bottom="876" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="752" top="242" right="1280" bottom="764" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1813,6 +1813,26 @@ LR→補完&quot;</language>
 	<row id="DEBUG_FIELD_STRESS">
 		<language name="JPN" width="240">へいきんふかチェック</language>
 		<language name="JPN_KANJI" width="240">平均負荷チェック</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR71">
+		<language name="JPN" width="240">ミュージカル</language>
+		<language name="JPN_KANJI" width="240">ミュージカル</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MUSICAL_01">
+		<language name="JPN" width="240">グッズぜんぶ</language>
+		<language name="JPN_KANJI" width="240">グッズ全部</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MUSICAL_02">
+		<language name="JPN" width="240">ミュージカルしょきか</language>
+		<language name="JPN_KANJI" width="240">ミュージカル初期化</language>
+	</row>
+
+	<row id="DEBUG_FIELD_MUSICAL_03">
+		<language name="JPN" width="240">ミュージカルショットさくせい</language>
+		<language name="JPN_KANJI" width="240">ミュージカルショット作成</language>
 	</row>
 
 	<flowchart-group-list>
