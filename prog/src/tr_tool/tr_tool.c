@@ -84,8 +84,8 @@ SDK_COMPILER_ASSERT(sizeof(TRTYPE_GRP_PARAM) == 2);
  * プロトタイプ宣言
  */
 //============================================================================================
-static  void  RndTmpGet( int mons_no, int form_no, int para, u32* rnd_tmp, HEAPID heapID );
-static  void  PokeParaSetFriend( POKEMON_PARAM *pp );
+static  void  rnd_tmp_get( int mons_no, int form_no, int para, u32* rnd_tmp, HEAPID heapID );
+static  void  pp_set_param( POKEMON_PARAM *pp, int form_no );
 static inline u32 TTL_SETUP_POW_PACK( u8 pow );
 
 //============================================================================================
@@ -398,6 +398,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
       ptn = ( POKEDATA_TYPE_NORMAL * )buf;
       for( i = 0 ; i < td->poke_count ; i++ )
       {
+        rnd_tmp_get( ptn[ i ].monsno, ptn[ i ].form_no, ptn[ i ].para, &rnd_tmp, heapID );
         //持ちポケモンデータのパラメータを使用して、ポケモンの個性乱数を生成
         rnd = ptn[ i ].pow + ptn[ i ].level + ptn[ i ].monsno + tr_id;
         GFL_STD_RandInit( &rand_c, rnd );
@@ -413,7 +414,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
                     PTL_SETUP_ID_NOT_RARE,
                     TTL_SETUP_POW_PACK( pow ),
                     rnd );
-        PokeParaSetFriend( pp );
+        pp_set_param( pp, ptn[ i ].form_no );
         PokeParty_Add( pparty, pp );
       }
     }
@@ -425,6 +426,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
       ptw = ( POKEDATA_TYPE_WAZA * )buf;
       for( i = 0 ; i < td->poke_count ; i++ )
       {
+        rnd_tmp_get( ptw[ i ].monsno, ptw[ i ].form_no, ptw[ i ].para, &rnd_tmp, heapID );
         //持ちポケモンデータのパラメータを使用して、ポケモンの個性乱数を生成
         rnd = ptw[ i ].pow + ptw[ i ].level + ptw[i].monsno + tr_id;
         GFL_STD_RandInit( &rand_c, rnd );
@@ -444,7 +446,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
         {
           PP_SetWazaPos( pp, ptw[ i ].waza[ j ], j );
         }
-        PokeParaSetFriend( pp );
+        pp_set_param( pp, ptw[ i ].form_no );
         PokeParty_Add( pparty, pp );
       }
     }
@@ -456,6 +458,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
       pti = ( POKEDATA_TYPE_ITEM * )buf;
       for( i = 0 ; i < td->poke_count ; i++ )
       {
+        rnd_tmp_get( pti[ i ].monsno, pti[ i ].form_no, pti[ i ].para, &rnd_tmp, heapID );
         //持ちポケモンデータのパラメータを使用して、ポケモンの個性乱数を生成
         rnd = pti[ i ].pow + pti[ i ].level + pti[ i ].monsno + tr_id;
         GFL_STD_RandInit( &rand_c, rnd );
@@ -472,7 +475,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
                     TTL_SETUP_POW_PACK( pow ),
                     rnd );
         PP_Put( pp, ID_PARA_item, pti[ i ].itemno );
-        PokeParaSetFriend( pp );
+        pp_set_param( pp, pti[ i ].form_no );
         PokeParty_Add( pparty, pp );
       }
     }
@@ -484,6 +487,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
       ptm = ( POKEDATA_TYPE_MULTI * )buf;
       for( i = 0 ; i < td->poke_count ; i++ )
       {
+        rnd_tmp_get( ptm[ i ].monsno, ptm[ i ].form_no, ptm[ i ].para, &rnd_tmp, heapID );
         //持ちポケモンデータのパラメータを使用して、ポケモンの個性乱数を生成
         rnd = ptm[ i ].pow + ptm[ i ].level + ptm[ i ].monsno + tr_id;
         GFL_STD_RandInit( &rand_c, rnd );
@@ -504,7 +508,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
         {
           PP_SetWazaPos( pp, ptm[ i ].waza[ j ], j );
         }
-        PokeParaSetFriend( pp );
+        pp_set_param( pp, ptm[ i ].form_no );
         PokeParty_Add( pparty, pp );
       }
     }
@@ -531,7 +535,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
  * @param[in/out] rnd_tmp 求める乱数値
  */
 //============================================================================================
-static  void  RndTmpGet( int mons_no, int form_no, int para, u32* rnd_tmp, HEAPID heapID )
+static  void  rnd_tmp_get( int mons_no, int form_no, int para, u32* rnd_tmp, HEAPID heapID )
 {
   int sex     = para & 0x0f;
   int speabi  = ( para & 0xf0 ) >> 4;
@@ -565,12 +569,13 @@ static  void  RndTmpGet( int mons_no, int form_no, int para, u32* rnd_tmp, HEAPI
 
 //============================================================================================
 /**
- * @brief 所持している技からなつき度を設定する
+ * @brief PP_Setup後のパラメータ設定
  *
- * @param[in] pp  POKEMON_PARAM構造体のポインタ
+ * @param[in] pp      POKEMON_PARAM構造体のポインタ
+ * @param[in] form_no フォルムナンバー
  */
 //============================================================================================
-static  void  PokeParaSetFriend( POKEMON_PARAM* pp )
+static  void  pp_set_param( POKEMON_PARAM* pp, int form_no )
 {
   //なつき度の初期値は255
   u8  friend = 255;
@@ -582,7 +587,20 @@ static  void  PokeParaSetFriend( POKEMON_PARAM* pp )
       friend = 0;
     }
   }
-  PP_Put( pp, ID_PARA_friend, ( u32 )&friend );
+  PP_Put( pp, ID_PARA_friend, friend );
+
+  //フォルムナンバーセット
+  PP_Put( pp, ID_PARA_form_no, form_no );
+
+  //性格セット
+  { 
+    int rnd = PP_Get( pp, ID_PARA_personal_rnd, NULL );
+
+    //下位1バイトは性別のために偏りがあるので、上位24bitで計算する
+    rnd >>= 8;
+
+    PP_Put( pp, ID_PARA_seikaku, rnd % PTL_SEIKAKU_MAX );
+  }
 }
 
 //============================================================================================
