@@ -64,6 +64,7 @@ typedef struct {
   FIELD_BMODEL_MAN* bmMan;            // 配置モデルマネージャ
   FIELD_BMODEL*     ballBM[BALL_NUM]; // ボールの配置モデル
   G3DMAPOBJST*      machineObjSt;     // 回復マシン配置モデル
+  FIELD_BMODEL* machineBM;
 
 } EVENT_WORK;
 
@@ -152,19 +153,13 @@ static GMEVENT_RESULT DendouMachineEvent( GMEVENT* event, int* seq, void* wk )
     break;
 
   case 2: 
-    if( ANIME_FINISH_WAIT < work->seqCount ) {
-      /*
-      // フェードアウト開始
-      GFL_FADE_SetMasterBrightReq( 
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 
-          0, 16, 0 );
-          */
+    if( IsRecoveryAnimeEnd( work ) ) {
       (*seq)++;
     }
     break;
 
   case 3:  
-    //ExitEvent( work );
+    ExitEvent( work );
     return GMEVENT_RES_FINISH;
   }
   work->seqCount++;
@@ -217,6 +212,9 @@ static void SetupEvent( EVENT_WORK* work, GAMESYS_WORK* gsys )
     GFL_HEAP_FreeMemory( objst ); 
   }
 
+  if( work->machineObjSt ) {
+    work->machineBM = FIELD_BMODEL_Create( work->bmMan, work->machineObjSt ); 
+  }
 }
 
 //----------------------------------------------------------------------------------------
@@ -230,9 +228,15 @@ static void ExitEvent( EVENT_WORK* work )
 {
   int i;
 
+#if 0
   // ボールの配置モデルを破棄
   for( i=0; i<work->pokemonNum; i++ ) {
     FIELD_BMODEL_Delete( work->ballBM[i] );
+  }
+#endif
+
+  if( work->machineObjSt ) {
+    FIELD_BMODEL_Delete( work->machineBM );
   }
 }
 
@@ -287,7 +291,7 @@ static void StartRecoveryAnime( EVENT_WORK* work )
 
   // マシン
   if( work->machineObjSt ) {
-    G3DMAPOBJST_setAnime( work->bmMan, work->machineObjSt, 0, BMANM_REQ_LOOP );
+    FIELD_BMODEL_StartAnime( work->machineBM, 0 );
   } 
 }
 
@@ -319,8 +323,7 @@ static void StopRecoveryAnime( EVENT_WORK* work )
 //----------------------------------------------------------------------------------------
 static BOOL IsRecoveryAnimeEnd( EVENT_WORK* work )
 {
-  int i;
-
+#if 0
   // 全ボールのアニメーションが終了しているかどうか
   for( i=0; i<work->setBallNum; i++ )
   {
@@ -328,6 +331,15 @@ static BOOL IsRecoveryAnimeEnd( EVENT_WORK* work )
     if( stop != TRUE ) { return FALSE; }
   }
   return TRUE;
+#endif
+
+  // マシンのアニメで判定
+  if( work->machineObjSt ) {
+    return FIELD_BMODEL_WaitCurrentAnime( work->machineBM );
+  }
+  else {
+    return TRUE;
+  }
 } 
 
 //----------------------------------------------------------------------------------------
