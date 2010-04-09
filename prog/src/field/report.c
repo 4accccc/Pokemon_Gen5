@@ -622,8 +622,8 @@ static void InitBmp( REPORT_WORK * wk )
 		RTCDate	date;
 		RTC_GetDate( &date );
 		WORDSET_RegisterNumber( wset, 0, date.year, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-		WORDSET_RegisterNumber( wset, 1, date.month, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-		WORDSET_RegisterNumber( wset, 2, date.day, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+		WORDSET_RegisterNumber( wset, 1, date.month, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+		WORDSET_RegisterNumber( wset, 2, date.day, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
 	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_DATE], wk->que, 0, 0, exp, wk->font, FCOL_P02BN );
