@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-07T18:50:47"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-08T11:15:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="87" top="340" right="792" bottom="960" maximized="no" rayout="Vertical2">
+	<dialog left="445" top="325" right="1150" bottom="945" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -320,16 +320,12 @@
 イッシュで　いちばん　ふるいはし▽
 それが　ここ　ビレッジブリッジさ！▼
 なんでも　２００ねんまえに
-かけた　はし　らしいよ！▼
-すっごく　ふるいのに　いまも
-つかわれてるなんて　すごいよね！</language>
+つくられた　はし　らしいよ！</language>
 		<language name="JPN_KANJI" width="256">教科書に　載ってる
 イッシュで　一番　古い橋▽
-それが　ここ　ビレッジブリッジさ！
+それが　ここ　ビレッジブリッジさ！▼
 何でも　２００年前に
-架けた　橋　らしいよ！▼
-すっごく　古いのに　今も
-使われてるなんて　すごいよね！</language>
+造られた　橋　らしいよ！</language>
 	</row>
 
 	<flowchart-group-list>
