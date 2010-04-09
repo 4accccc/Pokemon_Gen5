@@ -21,7 +21,7 @@
 
 #define  SOUND_CANCEL			(SEQ_SE_CANCEL1)		// キャンセル音
 
-#define  SOUND_CHANGE_SENTENCE	(SEQ_SE_SELECT1)		// 文章変更
+#define  SOUND_CHANGE_SENTENCE	(SEQ_SE_SYS_37)		// 文章変更(左右キー入力、左右ボタンタッチ、定型文が表示されている欄の左右矢印タッチ)
 
 #define  SOUND_CHANGE_CATEGORY	(SEQ_SE_SELECT4)		// カテゴリ変更
 //#define  SOUND_CHANGE_CATEGORY	(SEQ_SE_DP_BUTTON9)		// カテゴリ変更
