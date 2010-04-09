@@ -1075,6 +1075,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
       work->isAnimeBarCursor[0] = FALSE;
       work->isAnimeBarCursor[1] = TRUE;
       PMSND_PlaySystemSE(PSTATUS_SND_PAGE_UD);
+      work->ktst = GFL_APP_END_KEY;
       return TRUE;
     }
   }
@@ -1090,6 +1091,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
       work->isAnimeBarCursor[0] = TRUE;
       work->isAnimeBarCursor[1] = FALSE;
       PMSND_PlaySystemSE(PSTATUS_SND_PAGE_UD);
+      work->ktst = GFL_APP_END_KEY;
       return TRUE;
     }
   }
@@ -1107,6 +1109,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
       work->page++;
       PSTATUS_RefreshDisp( work );
       PMSND_PlaySystemSE(PSTATUS_SND_PAGE_LR);
+      work->ktst = GFL_APP_END_KEY;
       return TRUE;
     }
   }
@@ -1119,6 +1122,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
       work->page--;
       PSTATUS_RefreshDisp( work );
       PMSND_PlaySystemSE(PSTATUS_SND_PAGE_LR);
+      work->ktst = GFL_APP_END_KEY;
       return TRUE;
     }
   }
@@ -1131,6 +1135,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
     work->clwkExitButton = work->clwkBarIcon[SBT_RETURN];
     PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
+    work->ktst = GFL_APP_END_KEY;
     return TRUE;
   }
   else
@@ -1143,6 +1148,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT_ON );
     work->clwkExitButton = work->clwkBarIcon[SBT_EXIT];
     PMSND_PlaySystemSE(PSTATUS_SND_EXIT);
+    work->ktst = GFL_APP_END_KEY;
     return TRUE;
   }
   else
@@ -1161,6 +1167,7 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
         GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CHECK] , APP_COMMON_BARICON_CHECK_ON );
       }
       PMSND_PlaySystemSE(PSTATUS_SND_SHORTCUT);
+      work->ktst = GFL_APP_END_KEY;
     }
     return TRUE;
   }
@@ -1185,6 +1192,7 @@ static const BOOL PSTATUS_UpdateKey_Page( PSTATUS_WORK *work )
       work->page++;
       PSTATUS_RefreshDisp( work );
       PMSND_PlaySystemSE(PSTATUS_SND_PAGE_LR);
+      work->ktst = GFL_APP_END_TOUCH;
       return TRUE;
     }
   }
@@ -1197,6 +1205,7 @@ static const BOOL PSTATUS_UpdateKey_Page( PSTATUS_WORK *work )
       work->page--;
       PSTATUS_RefreshDisp( work );
       PMSND_PlaySystemSE(PSTATUS_SND_PAGE_LR);
+      work->ktst = GFL_APP_END_TOUCH;
       return TRUE;
     }
   }
@@ -1217,6 +1226,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
       work->page = PPT_INFO;
       PSTATUS_RefreshDisp( work );
       PMSND_PlaySystemSE(PSTATUS_SND_PAGE_LR);
+      work->ktst = GFL_APP_END_TOUCH;
     }
     break;
   case SBT_PAGE2:
@@ -1226,6 +1236,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
       work->page = PPT_SKILL;
       PSTATUS_RefreshDisp( work );
       PMSND_PlaySystemSE(PSTATUS_SND_PAGE_LR);
+      work->ktst = GFL_APP_END_TOUCH;
     }
     break;
   case SBT_PAGE3:
@@ -1236,6 +1247,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
       work->page = PPT_RIBBON;
       PSTATUS_RefreshDisp( work );
       PMSND_PlaySystemSE(PSTATUS_SND_PAGE_LR);
+      work->ktst = GFL_APP_END_TOUCH;
     }
     break;
   case SBT_CHECK:
@@ -1252,6 +1264,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
         GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CHECK] , APP_COMMON_BARICON_CHECK_ON );
       }
       PMSND_PlaySystemSE(PSTATUS_SND_SHORTCUT);
+      work->ktst = GFL_APP_END_TOUCH;
     }    
     break;
   case SBT_CURSOR_UP:
@@ -1265,6 +1278,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
         work->isAnimeBarCursor[0] = TRUE;
         work->isAnimeBarCursor[1] = FALSE;
         PMSND_PlaySystemSE(PSTATUS_SND_PAGE_UD);
+        work->ktst = GFL_APP_END_TOUCH;
       }
     }
     break;
@@ -1279,6 +1293,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
         work->isAnimeBarCursor[0] = FALSE;
         work->isAnimeBarCursor[1] = TRUE;
         PMSND_PlaySystemSE(PSTATUS_SND_PAGE_UD);
+        work->ktst = GFL_APP_END_TOUCH;
       }
     }
     break;
@@ -1291,6 +1306,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT_ON );
       work->clwkExitButton = work->clwkBarIcon[SBT_EXIT];
       PMSND_PlaySystemSE(PSTATUS_SND_EXIT);
+      work->ktst = GFL_APP_END_TOUCH;
     }
     break;
   case SBT_RETURN:
@@ -1300,6 +1316,7 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
     work->clwkExitButton = work->clwkBarIcon[SBT_RETURN];
     PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
+    work->ktst = GFL_APP_END_TOUCH;
     break;
     
   }

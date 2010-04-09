@@ -2381,9 +2381,10 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
   if( work->ktst == GFL_APP_KTST_TOUCH && 
       GFL_CLACT_WK_GetDrawEnable( work->clwkCursor[0] ) == FALSE )
   {
-    //非表示のときだけ0に表示するように
-    //↑やっぱしない。
-    if( trg != 0 )
+    //非表示のときだけカーソル位置に表示するように
+    //キャンセル操作時は除く
+    if( trg != 0 &&
+        (trg & (PAD_BUTTON_B|PAD_BUTTON_X)) == 0 )
     {
       if( work->pokeCursor <= PL_SEL_POS_POKE6 )
       {
@@ -2399,9 +2400,8 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
         
         GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
       }
-      
-      work->ktst = GFL_APP_KTST_KEY;
     }
+    work->ktst = GFL_APP_KTST_KEY;
   }
   else
   {
