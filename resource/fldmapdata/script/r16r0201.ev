@@ -161,9 +161,30 @@ EVENT_START	ev_pos_r16r0201_woman3_01
   //イベントの対象ポケモン(エンテイ、ライコウ、スイクン)を調べる
   _CALL search_target
 
-  IF $target_poke_pos < 6 THEN
-    _CALL zoroaaku_core
-  ENDIF
+  {
+    DEFINE_LOCAL pos
+    DEFINE_LOCAL ret_entei
+    DEFINE_LOCAL ret_raikou
+    DEFINE_LOCAL ret_suikun
+    DEFINE_LOCAL evt_ok
+    //イベント発動チェック(イベントエンテイ・ライコウ・スイクンがいるか？)
+    _GET_EVT_POKE_POS( MONSNO_ENTEI, FALSE, pos, ret_entei )
+    _GET_EVT_POKE_POS( MONSNO_RAIKOU, FALSE, pos, ret_raikou )
+    _GET_EVT_POKE_POS( MONSNO_SUIKUN, FALSE, pos, ret_suikun )
+    //判定フラグ初期化
+    $evt_ok = FALSE
+    IF $ret_entei == TRUE THEN          //エンテイいた
+      $evt_ok = TRUE
+    ELSIF $ret_raikou == TRUE THEN      //ライコウいた
+      $evt_ok = TRUE
+    ELSIF $ret_suikun == TRUE THEN      //スイクンいた
+      $evt_ok = TRUE
+    ENDIF
+
+    IF $evt_ok == TRUE THEN
+      _CALL zoroaaku_core
+    ENDIF
+  }  
 EVENT_END
 
 zoroaaku_core:
