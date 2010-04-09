@@ -821,7 +821,7 @@
 #define FV_C03P07_SUPPORT_LEADER8          797 /* 0x031d ヒウンシティ（ジムのある通り）：ベルとアイリス */
 #define FV_C03P15_SUPPORT_LEADER8          798 /* 0x031e ヒウンシティ（プライムピア）：ベルとアイリス */
 #define FV_C03R1101_PLASMA                 799 /* 0x031f ヒウンシティ（ビル）：プラズマ団の面々・リーダー2人・ベル */
-		/* not used   800(0x0320) */
+#define FV_C03P15_LEADER3                  800 /* 0x0320 ヒウンシティ（プライムピア）：アーティ */
 		/* not used   801(0x0321) */
 		/* not used   802(0x0322) */
 		/* not used   803(0x0323) */
