@@ -32,10 +32,9 @@ enum {
 	NARC_gtsnego_nego_under_bg1_NSCR = 18,
 	NARC_gtsnego_nego_under_bg2_NSCR = 19,
 	NARC_gtsnego_nego_under_bg3_NSCR = 20,
-	NARC_gtsnego_nego_wait_under_bg_NSCR = 21,
-	NARC_gtsnego_nego_wait_under_bg2_NSCR = 22,
-	NARC_gtsnego_menubar_NANR = 23,
-	NARC_gtsnego_nego_obj_NANR = 24
+	NARC_gtsnego_nego_wait_under_bg2_NSCR = 21,
+	NARC_gtsnego_menubar_NANR = 22,
+	NARC_gtsnego_nego_obj_NANR = 23
 };
 
 /* NARC_GTSNEGO_NAIX_ */
