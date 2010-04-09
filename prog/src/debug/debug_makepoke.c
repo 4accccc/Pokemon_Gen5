@@ -743,6 +743,7 @@ typedef struct {
   u8              boxEnable[ INPUTBOX_ID_MAX ];
 
   POKEMON_PARAM*  dst;
+  POKEMON_PARAM*  src;
   HEAPID  heapID;
   u8      seq;
 
@@ -822,6 +823,8 @@ static GFL_PROC_RESULT PROC_MAKEPOKE_Init( GFL_PROC* proc, int* seq, void* pwk, 
 
       wk->heapID = HEAPID_DEBUG_MAKEPOKE;
       wk->dst = proc_param->dst;
+      wk->src = GFL_HEAP_AllocMemory( wk->heapID, POKETOOL_GetWorkSize() );
+      GFL_STD_MemCopy( wk->dst, wk->src, POKETOOL_GetWorkSize() );
 
       if( proc_param->oyaStatus ){
         wk->oyaID = MyStatus_GetID( proc_param->oyaStatus );
@@ -869,6 +872,9 @@ static GFL_PROC_RESULT PROC_MAKEPOKE_Main( GFL_PROC* proc, int* seq, void* pwk, 
 }
 static GFL_PROC_RESULT PROC_MAKEPOKE_Quit( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
+  DMP_MAINWORK* wk = mywk;
+
+  GFL_HEAP_FreeMemory( wk->src );
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_DEBUG_MAKEPOKE );
   return GFL_PROC_RES_FINISH;
@@ -1110,6 +1116,10 @@ static BOOL root_ctrl( DMP_MAINWORK* wk )
         u16 key = GFL_UI_KEY_GetTrg();
         if( key & PAD_BUTTON_START ){
           update_dst( wk );
+          return TRUE;
+        }
+        if( key & PAD_BUTTON_B ){
+          GFL_STD_MemCopy( wk->src, wk->dst, POKETOOL_GetWorkSize() );
           return TRUE;
         }
       }
