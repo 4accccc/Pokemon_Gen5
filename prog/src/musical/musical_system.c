@@ -32,7 +32,6 @@
 #include "test/ariizumi/ari_debug.h"
 #include "poke_tool/monsno_def.h"
 
-#include "musical_entry.cdat"
 
 //======================================================================
 //  define
@@ -111,56 +110,27 @@ GFL_PROC_DATA Musical_ProcData =
 };
 */
 
-//ミュージカルの参加資格があるか調べる(仮)
+//ミュージカルの参加資格があるか調べる
 const BOOL  MUSICAL_SYSTEM_CheckEntryMusicalPokeNo( const u16 mons_no )
 {
-  u16 i=0;
-  while( 0xFFFF != MUSICAL_ENTRY_ARR[i] )
-  {
-    if( mons_no == MUSICAL_ENTRY_ARR[i] )
-    {
-      return TRUE;
-    }
-    i++;
-  }
-  //return TRUE;    //仮 FIXME
-  return FALSE;
+  return TRUE;//全部出れる！
 }
 
 const BOOL  MUSICAL_SYSTEM_CheckEntryMusical( POKEMON_PARAM *pokePara )
 {
-  u16 mons_no = PP_Get( pokePara, ID_PARA_monsno, NULL );
-  //FIXME タマゴとか
-  return MUSICAL_SYSTEM_CheckEntryMusicalPokeNo( mons_no );
+  //タマゴとか
+  if( PP_Get( pokePara , ID_PARA_tamago_exist , NULL ) == TRUE )
+  {
+    return FALSE;
+  }
+  
+  return TRUE;
 }
 
 //ミュージカルでの番号に変換
 const u16 MUSICAL_SYSTEM_ChangeMusicalPokeNumber( const u16 mons_no )
 {
-  u16 i=0;
-
-  while( 0xFFFF != MUSICAL_ENTRY_ARR[i] )
-  {
-    if( mons_no == MUSICAL_ENTRY_ARR[i] )
-    {
-      return i;
-    }
-    i++;
-  }
-  //一応最終番号に変換
-  return i-1;
-}
-
-//ランダムでミュージカル参加可能なポケモンを返す
-const u16 MUSICAL_SYSTEM_GetMusicalPokemonRandom( void )
-{
-  u16 i=0;
-
-  while( 0xFFFF != MUSICAL_ENTRY_ARR[i] )
-  {
-    i++;
-  }
-  return MUSICAL_ENTRY_ARR[ GFUser_GetPublicRand0(i) ];
+  return mons_no;
 }
 
 //ミュージカル用パラメータの初期化

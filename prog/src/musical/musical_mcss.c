@@ -1027,7 +1027,7 @@ static	void	MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS_M
 	// マルチセルアニメーションをロード。
 	mcss->mcss_ncer_buf = GFL_ARC_UTIL_LoadCellBank(		maw->arcID, maw->ncer, FALSE, &mcss->mcss_ncer, mcss->heapID );
 	GF_ASSERT( mcss->mcss_ncer_buf != NULL );
-	mcss->mcss_nanr_buf = GFL_ARC_UTIL_LoadAnimeBank(		maw->arcID, maw->nanr, FALSE, &mcss->mcss_nanr, mcss->heapID );
+	mcss->mcss_nanr_buf = GFL_ARC_UTIL_LoadAnimeBank(		maw->arcID, maw->nanr, TRUE, &mcss->mcss_nanr, mcss->heapID );
 	GF_ASSERT( mcss->mcss_nanr_buf != NULL );
 	mcss->mcss_nmcr_buf = GFL_ARC_UTIL_LoadMultiCellBank(	maw->arcID, maw->nmcr, FALSE, &mcss->mcss_nmcr, mcss->heapID );
 	GF_ASSERT( mcss->mcss_nmcr_buf != NULL );
@@ -1081,7 +1081,7 @@ static	void	MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS_M
 			tlw->mcss	 = mcss;
 			// load character data for 3D (software sprite)
 			{
-				tlw->pBufChar = GFL_ARC_UTIL_LoadBGCharacter( maw->arcID, maw->ncbr, FALSE, &tlw->pCharData, mcss->heapID );
+				tlw->pBufChar = GFL_ARC_UTIL_LoadBGCharacter( maw->arcID, maw->ncbr, TRUE, &tlw->pCharData, mcss->heapID );
 				GF_ASSERT( tlw->pBufChar != NULL);
 			}
 

@@ -19,6 +19,9 @@ NARC_CONVERT = "nnsarc -r -l -n -i"
 NARC_CONVERT_OPT = "-S pokegra_wb.scr"
 NARC_NAME = "pokegra_mus.narc"
 
+#リストファイル
+NARC_LIST = "pokegra_wb.scr"
+
 #ファイル更新日比較
 #file1の方が新しければ1を返す
 def CompFileDate( file1 , file2 )
@@ -75,15 +78,29 @@ data_idx = 0
 
 isRefresh = FALSE
 
-while POKEGURA_CONV_LIST[data_idx].to_i < 999
+while POKEGURA_CONV_LIST[data_idx] != "end"
+  noStr = POKEGURA_CONV_LIST[data_idx][0..2]
+  dataNo = noStr.to_i
+  countryName = ""
   
-  print(POKEGURA_CONV_LIST[data_idx] + "\n")
-  searchName = POKEGURA_DATA_DIR + POKEGURA_CONV_LIST[data_idx] + "/*.*"
+  if( dataNo <= 151 )
+    countryName = "1_kanto/"
+  elsif( dataNo <= 251 )
+    countryName = "2_jyoto/"
+  elsif( dataNo <= 386 )
+    countryName = "3_houen/"
+  elsif( dataNo <= 493 )
+    countryName = "4_shinou/"
+  else
+    countryName = "5_issyu/"
+  end
+  
+  searchName = POKEGURA_DATA_DIR + countryName + noStr + "/*.*"
 
-  print(searchName + "\n")
+  print(noStr + " " + searchName + "\n")
 
   Dir::glob(searchName).each{|fileName|
-    print("[" + fileName + "]\n")
+    #print("[" + fileName + "]\n")
     fileType = File::extname(fileName)
     case
     #ncl
@@ -92,6 +109,7 @@ while POKEGURA_CONV_LIST[data_idx].to_i < 999
       if( CompFileDate( fileName , convFile ) == 1 )
         system( "perl " + PERL_TOOL_DIR + "ncl.pl " + fileName + " " + TEMP_DIR )
         system( "cp " + TEMP_DIR + "*.NCLR" + " " + OUTPUT_DIR )
+        system( "rm " + TEMP_DIR + "*.*" )
         isRefresh = TRUE
       end
 
@@ -99,14 +117,16 @@ while POKEGURA_CONV_LIST[data_idx].to_i < 999
     when fileType == '.ncg'
       convFile = OUTPUT_DIR + File::basename( fileName , '.*' ) + '.NCGR'
       if( CompFileDate( fileName , convFile ) == 1 )
-        system( "perl " + PERL_TOOL_DIR + "ncg.pl " + fileName + " " + TEMP_DIR )
+        system( "perl " + PERL_TOOL_DIR + "comp/ncg.pl " + fileName + " " + TEMP_DIR )
         system( "cp " + TEMP_DIR + "*.NCGR" + " " + OUTPUT_DIR )
+        system( "rm " + TEMP_DIR + "*.*" )
         isRefresh = TRUE
       end
       convFile = OUTPUT_DIR + File::basename( fileName , '.*' ) + '.NCBR'
       if( CompFileDate( fileName , convFile ) == 1 )
-        system( "perl " + PERL_TOOL_DIR + "ncgc.pl " + fileName + " " + TEMP_DIR )
+        system( "perl " + PERL_TOOL_DIR + "comp/ncgc.pl " + fileName + " " + TEMP_DIR )
         system( "cp " + TEMP_DIR + "*.NCBR" + " " + OUTPUT_DIR )
+        system( "rm " + TEMP_DIR + "*.*" )
         isRefresh = TRUE
       end
 
@@ -116,6 +136,7 @@ while POKEGURA_CONV_LIST[data_idx].to_i < 999
       if( CompFileDate( fileName , convFile ) == 1 )
         system( "perl " + PERL_TOOL_DIR + "nce_mus.pl " + fileName + " " + TEMP_DIR )
         system( "cp " + TEMP_DIR + "*.NCEC" + " " + OUTPUT_DIR )
+        system( "rm " + TEMP_DIR + "*.*" )
         isRefresh = TRUE
       end
 
@@ -123,26 +144,118 @@ while POKEGURA_CONV_LIST[data_idx].to_i < 999
     when fileType == '.nmc'
       convFile = OUTPUT_DIR + File::basename( fileName , '.*' ) + '.NMCR'
       if( CompFileDate( fileName , convFile ) == 1 )
-        system( "perl " + PERL_TOOL_DIR + "nmc.pl " + fileName + " " + TEMP_DIR )
+        system( "perl " + PERL_TOOL_DIR + "comp/nmc.pl " + fileName + " " + TEMP_DIR )
         system( "cp " + TEMP_DIR + "*.NMCR" + " " + OUTPUT_DIR )
         system( "cp " + TEMP_DIR + "*.NCER" + " " + OUTPUT_DIR )
         system( "cp " + TEMP_DIR + "*.NANR" + " " + OUTPUT_DIR )
         system( "cp " + TEMP_DIR + "*.NMAR" + " " + OUTPUT_DIR )
+        system( "rm " + TEMP_DIR + "*.*" )
         isRefresh = TRUE
       end
 
     end
-    system( "rm " + TEMP_DIR + "*.*" )
 
   }
 
-  
   data_idx = data_idx+1
+
+  #isRefresh = TRUE
 
 end #while
 
 if( isRefresh == TRUE || FileTest.exist?(NARC_NAME) == FALSE )
-    system( NARC_CONVERT + " " + NARC_NAME + " " + NARC_CONVERT_OPT )
+  
+  #リストの作成
+  data_idx = 0
+  outFile = File.open( NARC_LIST, "w" );
+
+  #通常リスト
+  while POKEGURA_CONV_LIST[data_idx] != "end"
+    len = POKEGURA_CONV_LIST[data_idx].length
+    noStr = POKEGURA_CONV_LIST[data_idx][0..2]
+    formStr = ""
+    if( len > 3 )
+      formStr = POKEGURA_CONV_LIST[data_idx][3..(len-1)]
+    end
+    #print(noStr + " " + formStr + "\n")
+
+    outFile.write( "\"data/pfwb_" + noStr + formStr + "_m.NCGR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + "_f.NCGR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCER\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NANR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMCR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMAR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCEC\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + "_m.NCGR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + "_f.NCGR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCER\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NANR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMCR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMAR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCEC\"\n" )
+    outFile.write( "\"data/pmwb_" + noStr + formStr + "_n.NCLR\"\n" )
+    outFile.write( "\"data/pmwb_" + noStr + formStr + "_r.NCLR\"\n" )
+    data_idx = data_idx+1
+  end #while
+
+  #アナザーフォルム
+  data_idx = 0
+  while POKEGURA_CONV_LIST_ANOTHER[data_idx] != "end"
+    len = POKEGURA_CONV_LIST_ANOTHER[data_idx].length
+    noStr = POKEGURA_CONV_LIST_ANOTHER[data_idx][0..2]
+    formStr = ""
+    if( len > 3 )
+      formStr = POKEGURA_CONV_LIST_ANOTHER[data_idx][3..(len-1)]
+    end
+    #print(noStr + " " + formStr + "\n")
+
+    outFile.write( "\"data/pfwb_" + noStr + formStr + "_m.NCGR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + "_f.NCGR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCER\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NANR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMCR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMAR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCEC\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + "_m.NCGR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + "_f.NCGR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCER\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NANR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMCR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMAR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCEC\"\n" )
+    outFile.write( "\"data/pmwb_" + noStr + formStr + "_n.NCLR\"\n" )
+    outFile.write( "\"data/pmwb_" + noStr + formStr + "_r.NCLR\"\n" )
+    data_idx = data_idx+1
+  end #while
+
+  #アナザーフォルム(パレットのみ)
+  data_idx = 0
+  while POKEGURA_CONV_LIST_ANOTHER_PLTT[data_idx] != "end"
+    len = POKEGURA_CONV_LIST_ANOTHER_PLTT[data_idx].length
+    noStr = POKEGURA_CONV_LIST_ANOTHER_PLTT[data_idx][0..2]
+    formStr = ""
+    if( len > 3 )
+      formStr = POKEGURA_CONV_LIST_ANOTHER_PLTT[data_idx][3..(len-1)]
+    end
+    #print(noStr + " " + formStr + "\n")
+
+    outFile.write( "\"data/pmwb_" + noStr + formStr + "_n.NCLR\"\n" )
+    outFile.write( "\"data/pmwb_" + noStr + formStr + "_r.NCLR\"\n" )
+    data_idx = data_idx+1
+  end #while
+
+  outFile.close
+  
+  
+  system( NARC_CONVERT + " " + NARC_NAME + " " + NARC_CONVERT_OPT )
 end
 
 

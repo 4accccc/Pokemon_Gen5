@@ -2,6 +2,9 @@
 
 static const u16 MUSICAL_ENTRY_ARR[]=
 {
+  1,
+  2,
+  3,
   MONSNO_PIKATYUU,
   MONSNO_PIKUSII,
   MONSNO_WARUBIARU,
