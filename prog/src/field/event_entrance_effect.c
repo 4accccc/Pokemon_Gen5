@@ -69,14 +69,14 @@ typedef struct {
 //============================================================================================
 // ■index
 //============================================================================================
-static u8 GetPlayerDir( FIELDMAP_WORK* fieldmap );
-static void GetPlayerFrontPos( FIELDMAP_WORK * fieldmap, VecFx32 * pos );
-static BOOL CheckDoorAnimeFinish( const FIELD_DOOR_ANIME_WORK* work );
-static BOOL CheckDoorExist( const FIELD_DOOR_ANIME_WORK* work );
-static void StartDoorOpen( const FIELD_DOOR_ANIME_WORK* work );
-static void StartDoorClose( const FIELD_DOOR_ANIME_WORK* work );
-static void StartFadeInEvent( GMEVENT* event, const FIELD_DOOR_ANIME_WORK* work );
-static void StartFadeOutEvent( GMEVENT* event, const FIELD_DOOR_ANIME_WORK* work );
+static u8 GetPlayerDir( FIELDMAP_WORK* fieldmap ); // 自機の向きを取得する
+static void GetPlayerFrontPos( FIELDMAP_WORK * fieldmap, VecFx32 * pos ); // 一歩前進した位置の座標を取得する
+static BOOL CheckDoorAnimeFinish( const FIELD_DOOR_ANIME_WORK* work ); // ドアアニメの完了をチェックする
+static BOOL CheckDoorExist( const FIELD_DOOR_ANIME_WORK* work ); // ドアが存在するかどうかをチェックする
+static void StartDoorOpen( const FIELD_DOOR_ANIME_WORK* work ); // ドアオープンを開始する
+static void StartDoorClose( const FIELD_DOOR_ANIME_WORK* work ); // ドアクローズを開始する
+static void StartFadeInEvent( GMEVENT* event, const FIELD_DOOR_ANIME_WORK* work ); // 画面のフェードインイベントを呼び出す
+static void StartFadeOutEvent( GMEVENT* event, const FIELD_DOOR_ANIME_WORK* work ); // 画面のフェードアウトイベントを呼び出す
 
 
 
