@@ -203,9 +203,11 @@ void WIFILOGIN_MESSAGE_End(WIFILOGIN_MESSAGE_WORK* pWork)
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
   if(pWork->infoDispWin){
     GFL_BMPWIN_Delete(pWork->infoDispWin);
+    pWork->infoDispWin  = NULL;
   }
   if(pWork->systemDispWin){
     GFL_BMPWIN_Delete(pWork->systemDispWin);
+    pWork->systemDispWin  = NULL;
   }
   
 	GFL_BMPWIN_Exit();
@@ -322,9 +324,12 @@ void WIFILOGIN_MESSAGE_InfoMessageEnd(WIFILOGIN_MESSAGE_WORK* pWork)
     pWork->timeIcon = NULL;
   }
 
-  BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
-  GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
-  GFL_BG_LoadScreenV_Req(WifiLogin_Message_GetTextFrame( pWork->display ));
+  if( pWork->infoDispWin )
+  { 
+    BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
+    GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
+    GFL_BG_LoadScreenV_Req(WifiLogin_Message_GetTextFrame( pWork->display ));
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -436,7 +441,8 @@ WIFILOGIN_YESNO_WORK* WIFILOGIN_MESSAGE_YesNoStart(WIFILOGIN_MESSAGE_WORK* pWork
     break;
 
   case WIFILOGIN_DISPLAY_UP:
-    yesno_wk->pYesNoWork = WIFILOGIN_MESSAGE_YesNoWinCreate(pWork);
+    yesno_wk->pYesNoWork  = WIFILOGIN_MESSAGE_YesNoWinCreate(pWork);
+    yesno_wk->yesno_ret   = BMPMENU_NULL;
     break;
   }
   return yesno_wk;
@@ -562,9 +568,12 @@ void WIFILOGIN_MESSAGE_SystemMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid
 
 void WIFILOGIN_MESSAGE_SystemMessageEnd(WIFILOGIN_MESSAGE_WORK* pWork)
 {
-  BmpWinFrame_Clear(pWork->systemDispWin, WINDOW_TRANS_OFF);
-  GFL_BMPWIN_ClearScreen(pWork->systemDispWin);
-  GFL_BG_LoadScreenV_Req(WifiLogin_Message_GetSysFrame( pWork->display ));
+  if( pWork->systemDispWin )
+  { 
+    BmpWinFrame_Clear(pWork->systemDispWin, WINDOW_TRANS_OFF);
+    GFL_BMPWIN_ClearScreen(pWork->systemDispWin);
+    GFL_BG_LoadScreenV_Req(WifiLogin_Message_GetSysFrame( pWork->display ));
+  }
 }
 
 

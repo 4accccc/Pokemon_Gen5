@@ -732,6 +732,7 @@ static void _modeLoginWait2(WIFILOGIN_WORK* pWork)
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
       _CHANGE_STATE(pWork,_modeFadeStart);
     }
+    WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
     WIFILOGIN_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
     WIFILOGIN_MESSAGE_YesNoEnd(pWork->pSelectWork);
     pWork->pSelectWork=NULL;
@@ -758,11 +759,9 @@ static void _modeProfileWait(WIFILOGIN_WORK* pWork)
 
 static void _modeErrorRetry(WIFILOGIN_WORK* pWork)
 {
-  if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
     pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_INFO,(pWork->dbw->bg==WIFILOGIN_BG_NORMAL));
     _CHANGE_STATE(pWork,_modeLoginWait2);
-  }
 }
 
 
@@ -1157,6 +1156,11 @@ static GFL_PROC_RESULT WiFiLogin_ProcMain( GFL_PROC * proc, int * seq, void * pw
     }
   }
 
+  //メインプロセスの下にあるど同じフレームないでTRG検知してしまうので、
+  //メインプロセスの上にあげました
+  WIFILOGIN_DISP_Main(pWork->pDispWork);
+  WIFILOGIN_MESSAGE_Main(pWork->pMessageWork);
+
   //メインプロセス
   { 
     StateFunc* state = pWork->state;
@@ -1170,10 +1174,6 @@ static GFL_PROC_RESULT WiFiLogin_ProcMain( GFL_PROC * proc, int * seq, void * pw
   if(pWork->pSelectWork){
     WIFILOGIN_MESSAGE_YesNoUpdate(pWork->pSelectWork);
   }
-
-  WIFILOGIN_DISP_Main(pWork->pDispWork);
-  WIFILOGIN_MESSAGE_Main(pWork->pMessageWork);
-
 
   return retCode;
 }
