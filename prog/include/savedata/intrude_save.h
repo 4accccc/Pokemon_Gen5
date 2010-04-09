@@ -34,6 +34,9 @@ enum{
   MISSION_CLEAR_BLACK,      ///<黒でクリア達成
 };
 
+///Gパワー配布受信bitのワーク数
+#define INTRUDE_SAVE_DISTRIBUTION_BIT_WORK_MAX  (2)
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -132,6 +135,7 @@ extern void ISC_SAVE_SetGPowerID(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower_id
 extern GPOWER_ID ISC_SAVE_GetGPowerID(INTRUDE_SAVE_WORK *intsave);
 extern void ISC_SAVE_SetDistributionGPower(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower_id);
 extern BOOL ISC_SAVE_GetDistributionGPower(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower_id);
+extern void ISC_SAVE_GetDistributionGPower_Array(INTRUDE_SAVE_WORK *intsave, u8 *dest_array, int array_num);
 
 //--------------------------------------------------------------
 //  パレス

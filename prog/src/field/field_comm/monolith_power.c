@@ -47,8 +47,6 @@ enum{
   _PRINTUTIL_MAX,
 };
 
-///Gパワー：片方の条件を満たしていて、もう片方のレベル差分がこの値以内なら灰色
-#define _POWER_GRAY_OFFSET    (3)
 
 //--------------------------------------------------------------
 //  
@@ -220,7 +218,6 @@ static void _Set_MsgStream(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u
 static void _Set_MsgStreamExpand(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup, u16 msg_id);
 static BOOL _Wait_MsgStream(MONOLITH_SETUP *setup, MONOLITH_PWSELECT_WORK *mpw);
 static void _Clear_MsgStream(MONOLITH_PWSELECT_WORK *mpw);
-static MONO_USE_POWER _CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id, const OCCUPY_INFO *occupy);
 static void _Setup_ScreenClear(MONOLITH_PWSELECT_WORK *mpw);
 static void _Setup_PowerNameBMPCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *setup);
 static void _Setup_PowerNameBMPDelete(MONOLITH_PWSELECT_WORK *mpw);
@@ -888,40 +885,6 @@ static void _Clear_MsgStream(MONOLITH_PWSELECT_WORK *mpw)
 
 //--------------------------------------------------------------
 /**
- * パワーの習得状況を調べる
- *
- * @param   setup		
- * @param   gpower_id		GパワーID
- *
- * @retval  MONO_USE_POWER		習得状況
- */
-//--------------------------------------------------------------
-static MONO_USE_POWER _CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id, const OCCUPY_INFO *occupy)
-{
-#if 0
-  return GFUser_GetPublicRand0(MONO_USE_POWER_MAX);
-#endif
-  if(setup->powerdata[gpower_id].level_w <= occupy->white_level){
-    if(setup->powerdata[gpower_id].level_b <= occupy->black_level){
-      return MONO_USE_POWER_OK;
-    }
-    if((s32)setup->powerdata[gpower_id].level_b - occupy->black_level <= _POWER_GRAY_OFFSET){
-      return MONO_USE_POWER_SOMEMORE;
-    }
-  }
-  else if(setup->powerdata[gpower_id].level_b <= occupy->black_level){
-    if(setup->powerdata[gpower_id].level_w <= occupy->white_level){
-      return MONO_USE_POWER_OK;
-    }
-    if((s32)setup->powerdata[gpower_id].level_w - occupy->white_level <= _POWER_GRAY_OFFSET){
-      return MONO_USE_POWER_SOMEMORE;
-    }
-  }
-  return MONO_USE_POWER_NONE;
-}
-
-//--------------------------------------------------------------
-/**
  * リストが画面内に収まっている場合、不必要なスクリーンをクリアする
  *
  * @param   mpw		
@@ -954,7 +917,7 @@ static void _Setup_PowerNameBMPCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSEL
   MONO_USE_POWER use_power;
   int use_count = 0;
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
-  const OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+  const OCCUPY_INFO *occupy = MonolithTool_GetOccupyInfo(appwk);
   
   mpw->use_gpower_id[use_count] = 0;  //画面上部の見えないパネル
   mpw->use_power[use_count] = MONO_USE_POWER_SOMEMORE;
@@ -962,7 +925,7 @@ static void _Setup_PowerNameBMPCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSEL
     GPOWER_NAME_BMP_LEN_X, GPOWER_NAME_BMP_LEN_Y, GFL_BMP_16_COLOR, HEAPID_MONOLITH );
   use_count++;
   for(gpower_id = 0; gpower_id < GPOWER_ID_MAX; gpower_id++){
-    use_power = _CheckUsePower(setup, gpower_id, occupy);
+    use_power = MonolithTool_CheckUsePower(setup, gpower_id, occupy, &appwk->parent->monolith_status);
     if(use_power == MONO_USE_POWER_NONE){
       continue;
     }

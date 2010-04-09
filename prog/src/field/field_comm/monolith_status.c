@@ -440,18 +440,34 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
     BMPWIN_POS_WBLV_SIZE_X / 2 * 8, 0, expand_strbuf, setup->font_handle);
   
   //滞在時間
-  GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_006, strbuf);
-  WORDSET_RegisterNumber(setup->wordset, 0, 999, 3, 
-    STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-  WORDSET_RegisterNumber(setup->wordset, 1, 59, 3, 
-    STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-  WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
-  PRINT_UTIL_Print(&msw->print_util[BMPWIN_TIME], setup->printQue, 
-    0, 0, expand_strbuf, setup->font_handle);
+  {
+    s64 src_seq;
+    u32 hour, minute;
+    src_seq = appwk->parent->monolith_status.palace_sojourn_time;
+    hour = src_seq / 60 / 60; //※check　滞在時間の計算があっているかしっかりデバッグ
+    if(hour > 999){
+      minute = 59;
+    }
+    else{
+      src_seq -= hour * 60 * 60;
+      minute = src_seq / 60;
+    }
+
+    GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_006, strbuf);
+    
+    WORDSET_RegisterNumber(setup->wordset, 0, hour, 3, 
+      STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    WORDSET_RegisterNumber(setup->wordset, 1, minute, 2, 
+      STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
+    PRINT_UTIL_Print(&msw->print_util[BMPWIN_TIME], setup->printQue, 
+      0, 0, expand_strbuf, setup->font_handle);
+  }
   
   //クリアしたミッションの数
   GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_007, strbuf);
-  WORDSET_RegisterNumber(setup->wordset, 0, 99999, 5, 
+  WORDSET_RegisterNumber(setup->wordset, 0, 
+    appwk->parent->monolith_status.clear_mission_count, 5, 
     STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
   PRINT_UTIL_Print(&msw->print_util[BMPWIN_CLEAR_MISSION], setup->printQue, 
@@ -459,8 +475,10 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
   
   //使えるGパワーの数
   GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_005, strbuf);
-  WORDSET_RegisterNumber(setup->wordset, 0, 9999, 4, 
-    STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+  WORDSET_RegisterNumber(setup->wordset, 0, 
+    MonolithTool_CountUsePower(
+    setup, MonolithTool_GetOccupyInfo(appwk), &appwk->parent->monolith_status), 
+    4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
   PRINT_UTIL_Print(&msw->print_util[BMPWIN_USE_GPOWER], setup->printQue, 
     0, 0, expand_strbuf, setup->font_handle);
@@ -505,3 +523,4 @@ static void _Status_CancelIconUpdate(MONOLITH_STATUS_WORK *msw)
 {
   MonolithTool_CancelIcon_Update(&msw->cancel_icon);
 }
+

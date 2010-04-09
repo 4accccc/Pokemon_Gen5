@@ -10,6 +10,7 @@
 
 #include "field/intrude_common.h"
 #include "field/field_comm/mission_types.h"
+#include "field/field_comm/intrude_types.h"
 
 
 //==============================================================================
@@ -20,7 +21,7 @@ typedef struct{
   GAMESYS_WORK *gsys;
   INTRUDE_COMM_SYS_PTR intcomm;
   MISSION_CHOICE_LIST list;     ///<選択候補のミッション一覧
-  
+  MONOLITH_STATUS monolith_status;
   u8 palace_area;
   u8 list_occ;                  ///<TRUE:ミッション一覧受信済み FALSE:未受信(通信相手が居ない)
   u8 padding[2];

@@ -5,6 +5,12 @@
 #pragma once
 
 typedef enum{
+	GPOWER_ID_DISTRIBUTION_START = 33,		//配布Gパワー開始ID(このIDを含む)
+	GPOWER_ID_DISTRIBUTION_END = 38,		//配布Gパワー終了ID(このIDを含む)
+
+	GPOWER_ID_PALACE_START = 39,		//パレスGパワー開始ID(このIDを含む)
+	GPOWER_ID_PALACE_END = 47,		//パレスGパワー終了ID(このIDを含む)
+
 	GPOWER_ID_MAX = 48,		//Gパワー最大数
 	GPOWER_ID_NULL = GPOWER_ID_MAX,		//Gパワーが発動していない
 }GPOWER_ID;

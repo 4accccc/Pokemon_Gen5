@@ -31,6 +31,7 @@
 #include "field/field_status_local.h"  // for FIELD_STATUS_
 #include "intrude_work.h"
 #include "savedata/symbol_save_notwifi.h"
+#include "savedata/intrude_save.h"
 
 
 //==============================================================================
@@ -48,6 +49,7 @@ static void Intrude_CheckLeavePlayer(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_CheckTalkAnswerNG(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_CheckWfbcReq(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_CheckSymbolReq(INTRUDE_COMM_SYS_PTR intcomm);
+static void Intrude_CheckMonolithStatusReq(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_ConvertPlayerPos(INTRUDE_COMM_SYS_PTR intcomm, ZONEID mine_zone_id, fx32 mine_x, INTRUDE_STATUS *target);
 static int Intrude_GetPalaceOffsetNo(const INTRUDE_COMM_SYS_PTR intcomm, int palace_area);
 static void _SendBufferCreate_SymbolData(INTRUDE_COMM_SYS_PTR intcomm,const SYMBOL_DATA_REQ *p_sdr);
@@ -230,6 +232,8 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
   Intrude_CheckWfbcReq(intcomm);
   //シンボルエンカウント要求
   Intrude_CheckSymbolReq(intcomm);
+  //モノリスステータス要求
+  Intrude_CheckMonolithStatusReq(intcomm);
   
   //プレイヤーステータス送信
   if(intcomm->send_status == TRUE){
@@ -439,6 +443,21 @@ static void _SendBufferCreate_SymbolData(INTRUDE_COMM_SYS_PTR intcomm,const SYMB
   sendbuf->symbol_map_id = p_sdr->symbol_map_id;
 }
 
+//--------------------------------------------------------------
+/**
+ * モノリスステータス要求リクエストがあれば送信
+ *
+ * @param   intcomm		
+ */
+//--------------------------------------------------------------
+static void Intrude_CheckMonolithStatusReq(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  if(intcomm->monost_req > 0){
+    if(IntrudeSend_MonolithStatus(intcomm, intcomm->monost_req) == TRUE){
+      intcomm->monost_req = FALSE;
+    }
+  }
+}
 
 //==============================================================================
 //  アクセス関数
@@ -1074,5 +1093,27 @@ BOOL Intrude_OtherPlayerExistence(void)
   }
   OS_TPrintf("誰も居なくなった %d\n", GFL_NET_GetConnectNum());
   return FALSE;
+}
+
+//==================================================================
+/**
+ * 自分のモノリスステータスを作成する
+ *
+ * @param   gamedata		
+ * @param   monost		  代入先
+ */
+//==================================================================
+void Intrude_MyMonolithStatusSet(GAMEDATA *gamedata, MONOLITH_STATUS *monost)
+{
+  INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork(gamedata) );
+  
+  GFL_STD_MemClear(monost, sizeof(MONOLITH_STATUS));
+
+  monost->clear_mission_count = ISC_SAVE_GetMissionClearCount(intsave);
+  monost->palace_sojourn_time = ISC_SAVE_GetPalaceSojournTime(intsave);
+  ISC_SAVE_GetDistributionGPower_Array(
+    intsave, monost->gpower_distribution_bit, INTRUDE_SAVE_DISTRIBUTION_BIT_WORK_MAX);
+
+  monost->occ = TRUE;
 }
 

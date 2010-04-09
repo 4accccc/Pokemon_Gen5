@@ -74,7 +74,7 @@ static void _event_MissionStartWait_Destructor(EVENT_MISSION_START_WAIT *emsw);
 
 //==================================================================
 /**
- * ミッション選択候補リストを取得
+ * モノリス用にミッション選択候補リストを取得
  *
  * @param   core		
  * @param   wk		
@@ -98,7 +98,7 @@ VMCMD_RESULT EvCmdIntrudeMissionChoiceListReq( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * イベント：ミッション選択候補リストを取得
+ * イベント：モノリス用にミッション選択候補リストを取得
  *
  * @param   gsys		
  *
@@ -115,7 +115,7 @@ static GMEVENT * EVENT_Intrude_MissionChoiceListReq(GAMESYS_WORK * gsys)
 
 //--------------------------------------------------------------
 /**
- * イベント処理関数：ミッション選択候補リストを取得
+ * イベント処理関数：モノリス用にミッション選択候補リストを取得
  *
  * @param   event		
  * @param   seq		
@@ -137,6 +137,8 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
     SEQ_INIT,
     SEQ_LIST_REQ,
     SEQ_LIST_RECEIVE_WAIT,
+    SEQ_MONOLITH_STATUS_REQ,
+    SEQ_MONOLITH_STATUS_RECEIVE_WAIT,
   };
   
   intcomm = Intrude_Check_CommConnect(game_comm);
@@ -148,6 +150,7 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
   switch( *seq ){
   case SEQ_INIT:
     MISSION_Init_List(&intcomm->mission); //手元のリストは初期化
+    IntrudeField_MonolithStatus_Init(&intcomm->monolith_status);
     if(GFL_NET_GetConnectNum() <= 1){
       OS_TPrintf("ミッションリスト：一人のため、受信はしない\n");
       return GMEVENT_RES_FINISH;  //自分一人の時はこのままFINISH
@@ -162,6 +165,16 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
   case SEQ_LIST_RECEIVE_WAIT:
     if(MISSION_MissionList_CheckOcc(
         &intcomm->mission.list[Intrude_GetPalaceArea(intcomm)]) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_MONOLITH_STATUS_REQ:
+    if(IntrudeSend_MonolithStatusReq(intcomm, Intrude_GetPalaceArea(intcomm)) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_MONOLITH_STATUS_RECEIVE_WAIT:
+    if(IntrudeField_MonolithStatus_CheckOcc(&intcomm->monolith_status) == TRUE){
       return GMEVENT_RES_FINISH;
     }
     break;

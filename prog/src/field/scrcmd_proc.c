@@ -42,6 +42,7 @@
 #include "app/bag.h"
 
 #include "field_comm\intrude_main.h"
+#include "field_comm\intrude_field.h"
 #include "field/field_comm/intrude_work.h"
 #include "field/monolith_main.h"
 #include "field\field_comm\intrude_mission.h"
@@ -439,14 +440,18 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
   if(intcomm != NULL 
       && intcomm->intrude_status_mine.palace_area != GAMEDATA_GetIntrudeMyID(gamedata)
       && MISSION_MissionList_CheckOcc(
-      &intcomm->mission.list[Intrude_GetPalaceArea(intcomm)]) == TRUE){
+        &intcomm->mission.list[Intrude_GetPalaceArea(intcomm)]) == TRUE
+      && intcomm->monolith_status.occ == TRUE){
     palace_area = Intrude_GetPalaceArea(intcomm);
     list = Intrude_GetChoiceList(intcomm, palace_area);
     parent->list = *list;
+    parent->monolith_status = intcomm->monolith_status;
     parent->list_occ = TRUE;
   }
   else{
+    INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork(gamedata) );
     OS_TPrintf("MonolithProc Call intcomm NULL!!\n");
+    Intrude_MyMonolithStatusSet(gamedata, &parent->monolith_status);
     palace_area = 0;
     parent->list_occ = FALSE;
   }

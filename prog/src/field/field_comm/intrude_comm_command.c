@@ -35,6 +35,8 @@ static void _IntrudeRecv_BingoIntrusion(const int netID, const int size, const v
 static void _IntrudeRecv_BingoIntrusionAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_ReqBingoIntrusionParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_BingoIntrusionParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_MonolithStatusReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_MonolithStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionListReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionList(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -77,6 +79,8 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_BingoIntrusionAnswer, NULL},   //INTRUDE_CMD_BINGO_INTRUSION_ANSWER
   {_IntrudeRecv_ReqBingoIntrusionParam, NULL}, //INTRUDE_CMD_REQ_BINGO_INTRUSION_PARAM
   {_IntrudeRecv_BingoIntrusionParam, NULL},    //INTRUDE_CMD_BINGO_INTRUSION_PARAM
+  {_IntrudeRecv_MonolithStatusReq, NULL},      //INTRUDE_CMD_MONOLITH_STATUS_REQ
+  {_IntrudeRecv_MonolithStatus, NULL},         //INTRUDE_CMD_MONOLITH_STATUS
   {_IntrudeRecv_MissionListReq, NULL},         //INTRUDE_CMD_MISSION_LIST_REQ
   {_IntrudeRecv_MissionList, _RecvHugeBuffer}, //INTRUDE_CMD_MISSION_LIST
   {_MissionOrderConfirm, NULL},                //INTRUDE_CMD_MISSION_ORDER_CONFIRM
@@ -732,6 +736,104 @@ BOOL IntrudeSend_BingoBattleIntrusionParam(BINGO_SYSTEM *bingo, int send_net_id)
 
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
     INTRUDE_CMD_BINGO_INTRUSION_PARAM, sizeof(BINGO_INTRUSION_PARAM), &bingo->intrusion_param, 
+    FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：モノリスステータス要求リクエスト
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_MonolithStatusReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  
+  intcomm->monost_req |= 1 << netID;
+  OS_TPrintf("RECV:monost req netid=%d\n", netID);
+}
+
+//==================================================================
+/**
+ * データ送信：モノリスステータス要求リクエスト
+ *
+ * @param   intcomm		
+ * @param   send_netid		要求相手のNetID
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_MonolithStatusReq(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid)
+{
+  BOOL ret;
+  
+  if(_OtherPlayerExistence() == FALSE){
+    return TRUE;
+  }
+  
+  OS_TPrintf("SEND:monost req netid=%d\n", send_netid);
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_netid,
+    INTRUDE_CMD_MONOLITH_STATUS_REQ, 0, NULL,
+    FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：モノリスステータス
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_MonolithStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const MONOLITH_STATUS *monost = pData;
+  
+  intcomm->monolith_status = *monost;
+  OS_TPrintf("RECV:monost netid=%d\n", netID);
+}
+
+//==================================================================
+/**
+ * データ送信：モノリスステータス
+ *
+ * @param   intcomm		
+ * @param   send_netid_bit		送信先(bit指定)
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_MonolithStatus(INTRUDE_COMM_SYS_PTR intcomm, u32 send_netid_bit)
+{
+  BOOL ret;
+  MONOLITH_STATUS monost;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork(gamedata) );
+  
+  if(_OtherPlayerExistence() == FALSE){
+    return TRUE;
+  }
+  
+  Intrude_MyMonolithStatusSet(gamedata, &monost);
+  
+  OS_TPrintf("SEND:monost netid_bit=%d\n", send_netid_bit);
+  return GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), send_netid_bit,
+    INTRUDE_CMD_MONOLITH_STATUS, sizeof(MONOLITH_STATUS), &monost,
     FALSE, FALSE, FALSE);
 }
 

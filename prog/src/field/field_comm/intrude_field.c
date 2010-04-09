@@ -1316,6 +1316,30 @@ BOOL IntrudeField_GetPalaceTownZoneID(u16 zone_id, VecFx32 *vec)
   return TRUE;
 }
 
+//==================================================================
+/**
+ * モノリスステータスを初期化する
+ *
+ * @param   monost		
+ */
+//==================================================================
+void IntrudeField_MonolithStatus_Init(MONOLITH_STATUS *monost)
+{
+  GFL_STD_MemClear(monost, sizeof(MONOLITH_STATUS));
+}
+
+//==================================================================
+/**
+ * モノリスステータスにデータが入っているかを確かめる
+ *
+ * @param   monost		
+ * @retval  BOOL		TRUE:入っている　FALSE:入っていない
+ */
+//==================================================================
+BOOL IntrudeField_MonolithStatus_CheckOcc(const MONOLITH_STATUS *monost)
+{
+  return monost->occ;
+}
 
 
 

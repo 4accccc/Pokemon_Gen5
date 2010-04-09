@@ -65,6 +65,8 @@ extern GMEVENT * Intrude_CheckPosEvent(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *g
 extern GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *pcActor, const VecFx32 *now_pos, const VecFx32 *front_pos, u16 player_dir);
 extern BOOL IntrudeField_GetPalaceTownZoneID(u16 zone_id, VecFx32 *vec);
 extern const PALACE_ZONE_SETTING * IntrudeField_GetZoneSettingData(u16 zone_id);
+extern void IntrudeField_MonolithStatus_Init(MONOLITH_STATUS *monost);
+extern BOOL IntrudeField_MonolithStatus_CheckOcc(const MONOLITH_STATUS *monost);
 
 
 //--------------------------------------------------------------

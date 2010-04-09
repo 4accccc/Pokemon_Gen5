@@ -60,6 +60,12 @@ typedef enum{
   TALK_TYPE_MAX,
 }TALK_TYPE;
 
+///パワー必要レベル特殊
+enum{
+  POWER_LEVEL_DISTRIBUTION = 0xfe,    ///<配布パワーを示す
+  POWER_LEVEL_PALACE = 0xff,          ///<パレス用パワーを示す
+};
+
 ///ミッション達成で上がるレベル数
 #define MISSION_ACHIEVE_ADD_LEVEL   (1)
 
@@ -101,8 +107,8 @@ typedef struct{
 
 ///パワーデータ
 typedef struct{
-  u8 level_w;             ///<必要Whiteレベル
-  u8 level_b;             ///<必要Blackレベル
+  u8 level_w;             ///<必要Whiteレベル(配布orパレスの場合はPOWER_LEVEL_xxx)
+  u8 level_b;             ///<必要Blackレベル(配布orパレスの場合はPOWER_LEVEL_xxx)
   u16 point;              ///<使用ポイント
 
   u16 msg_id_title;       ///<パワー項目msg_id

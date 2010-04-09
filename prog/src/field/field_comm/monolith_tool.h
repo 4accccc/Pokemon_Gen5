@@ -134,6 +134,9 @@ extern APP_TASKMENU_WORK * MonolithTool_TaskMenu_YesNoInit(MONOLITH_SETUP *setup
 extern void MonolithTool_TaskMenu_YesNoExit(APP_TASKMENU_WORK *app_menu);
 extern BOOL MonolithTool_TaskMenu_Update(MONOLITH_SETUP *setup, int frame_no, APP_TASKMENU_WORK *app_menu, BOOL *ret_yesno);
 
+extern MONO_USE_POWER MonolithTool_CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id, const OCCUPY_INFO *occupy, const MONOLITH_STATUS *monost);
+extern u32 MonolithTool_CountUsePower(MONOLITH_SETUP *setup, const OCCUPY_INFO *occupy, const MONOLITH_STATUS *monost);
+
 
 //==============================================================================
 //  外部データ

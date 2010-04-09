@@ -262,8 +262,8 @@ void ISC_SAVE_SetDistributionGPower(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower
 {
   int dis_no, flag_no, bit_no;
   
-  dis_no = gpower_id - (GPOWER_ID_MAX - 10);
-  if(dis_no < 0){
+  dis_no = gpower_id - GPOWER_ID_DISTRIBUTION_START;
+  if(dis_no < 0 || gpower_id > GPOWER_ID_DISTRIBUTION_END){
     GF_ASSERT(0);
     return;
   }
@@ -287,8 +287,8 @@ BOOL ISC_SAVE_GetDistributionGPower(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower
 {
   int dis_no, flag_no, bit_no;
   
-  dis_no = gpower_id - (GPOWER_ID_MAX - 10);
-  if(dis_no < 0){
+  dis_no = gpower_id - GPOWER_ID_DISTRIBUTION_START;
+  if(dis_no < 0 || gpower_id > GPOWER_ID_DISTRIBUTION_END){
     GF_ASSERT(0);
     return FALSE;
   }
@@ -299,6 +299,25 @@ BOOL ISC_SAVE_GetDistributionGPower(INTRUDE_SAVE_WORK *intsave, GPOWER_ID gpower
     return TRUE;
   }
   return FALSE;
+}
+
+//==================================================================
+/**
+ * 配布専用Gパワーのbitワークを配列コピーする
+ *
+ * @param   intsave		
+ * @param   dest_array		代入先
+ * @param   array_num		  dest_arrayの配列要素数
+ */
+//==================================================================
+void ISC_SAVE_GetDistributionGPower_Array(INTRUDE_SAVE_WORK *intsave, u8 *dest_array, int array_num)
+{
+  int i;
+  
+  GF_ASSERT(array_num >= INTRUDE_SAVE_DISTRIBUTION_BIT_WORK_MAX);
+  for(i = 0; i < INTRUDE_SAVE_DISTRIBUTION_BIT_WORK_MAX; i++){
+    dest_array[i] = intsave->gpower_distribution_bit[i];
+  }
 }
 
 //==================================================================

@@ -191,6 +191,15 @@ typedef struct{
   u8 answer_talk_status;      ///<話しかけられている相手のINTRUDE_TALK_STATUS_???
 }INTRUDE_TALK;
 
+///モノリスステータス(ミッションリスト以外でモノリス画面構築に必要なデータ)
+typedef struct{
+  u32 clear_mission_count;       ///<ミッションクリア数
+  s64 palace_sojourn_time;       ///<パレス滞在時間
+  u8 gpower_distribution_bit[INTRUDE_SAVE_DISTRIBUTION_BIT_WORK_MAX]; ///<Gパワー配布受信bit
+  u8 occ;                        ///<TRUE:データ有効
+  u8 padding;
+}MONOLITH_STATUS;
+
 ///侵入システムワーク
 typedef struct _INTRUDE_COMM_SYS{
   GAME_COMM_SYS_PTR game_comm;
@@ -248,5 +257,9 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 new_mission_recv;        ///<TRUE:新規にミッションを受信した
   u8 palace_in;               ///<TRUE:パレス島に訪れた
   u8 warp_player_netid;       ///<ワープ先のプレイヤーNetID
+  
+  MONOLITH_STATUS monolith_status;  ///<モノリスステータス
+  u8 monost_req;              ///<モノリスステータス要求リクエスト(bit管理)
+  u8 padding[3];
 }INTRUDE_COMM_SYS;
 

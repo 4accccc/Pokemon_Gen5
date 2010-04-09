@@ -45,6 +45,10 @@ PowerData = [];
 
 POWER_TYPE_ARRAY_MAX = 100;
 PowerType = [];
+$PalaceStartNo = 0;
+$PalaceEndNo = -1;
+$DistributionStartNo = 0;
+$DistributionEndNo = -1;
 
 =begin
 //==================================================================
@@ -112,6 +116,10 @@ end
 //==================================================================
 =end
 def DataConv()
+  
+  distribution_start = 0;
+  palace_start = 0;
+  
   for i in 0..PowerData.size-1
     if(PowerData[i].type == "ENCOUNT_UP" || PowerData[i].type == "ENCOUNT_DOWN" \
         || PowerData[i].type == "HATCH_UP" || PowerData[i].type == "EXP_UP" \
@@ -121,6 +129,51 @@ def DataConv()
       num *= 100; #小数を整数に変換する(100倍の固定小数)
       PowerData[i].data = (0x100 * num / 100).to_i;  #下位8bit固定小数にさらに変換
     end
+
+    if(PowerData[i].level_w != "配布" && PowerData[i].level_b != "配布" \
+        && PowerData[i].level_w != "パレス" && PowerData[i].level_b != "パレス")
+      if(palace_start != 0)
+        print "パレスの後にノーマルのGパワーが設定されている"
+        print i;
+        print "\n"
+        exit(200);
+      end
+      if(distribution_start != 0)
+        print "配布の後にノーマルのGパワーが設定されている"
+        print i;
+        print "\n"
+        exit(200);
+      end
+    end
+    
+    if(PowerData[i].level_w == "配布" || PowerData[i].level_b == "配布")
+      if(palace_start != 0)
+        print "配布よりも先 or 途中で パレスが設定されている\n"
+        exit(200);
+      end
+      if(distribution_start == 0)
+        $DistributionStartNo = i;
+        distribution_start = 1;
+      end
+      PowerData[i].level_w = "POWER_LEVEL_DISTRIBUTION";
+      PowerData[i].level_b = "POWER_LEVEL_DISTRIBUTION";
+    elsif(distribution_start == 1 && $DistributionEndNo == -1)
+      $DistributionEndNo = i - 1;
+    end
+    
+    if(PowerData[i].level_w == "パレス" || PowerData[i].level_b == "パレス")
+      if(palace_start == 0)
+        $PalaceStartNo = i;
+        palace_start = 1;
+      end
+      PowerData[i].level_w = "POWER_LEVEL_PALACE";
+      PowerData[i].level_b = "POWER_LEVEL_PALACE";
+    elsif(palace_start == 1 && $PalaceEndNo == -1)
+      $PalaceEndNo = i - 1;
+    end
+  end
+  if($PalaceEndNo == -1)
+    $PalaceEndNo = PowerData.size - 1;
   end
   
   #効果系統を抽出
@@ -182,6 +235,10 @@ def DataFileOutput()
     file.printf("#pragma once\n\n");
     
     file.printf("typedef enum{\n");
+    file.printf("\tGPOWER_ID_DISTRIBUTION_START = %d,\t\t//配布Gパワー開始ID(このIDを含む)\n", $DistributionStartNo);
+    file.printf("\tGPOWER_ID_DISTRIBUTION_END = %d,\t\t//配布Gパワー終了ID(このIDを含む)\n\n", $DistributionEndNo);
+    file.printf("\tGPOWER_ID_PALACE_START = %d,\t\t//パレスGパワー開始ID(このIDを含む)\n", $PalaceStartNo);
+    file.printf("\tGPOWER_ID_PALACE_END = %d,\t\t//パレスGパワー終了ID(このIDを含む)\n\n", $PalaceEndNo);
     file.printf("\tGPOWER_ID_MAX = %d,\t\t//Gパワー最大数\n", PowerData.size);
     file.printf("\tGPOWER_ID_NULL = GPOWER_ID_MAX,\t\t//Gパワーが発動していない\n");
     file.printf("}GPOWER_ID;\n\n");
