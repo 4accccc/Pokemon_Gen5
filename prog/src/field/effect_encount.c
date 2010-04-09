@@ -656,6 +656,7 @@ static BOOL effect_DeleteCheck( FIELD_ENCOUNT* enc )
     return FALSE;
   }
   if( effect_CheckMMdlHit( enc, ep->gx, ep->gy, ep->gz )){
+    effect_EffectDelete( enc, enc->eff_enc );
     return TRUE;
   }
   return FALSE;
