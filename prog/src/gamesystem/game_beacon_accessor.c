@@ -958,6 +958,23 @@ u16 GAMEBEACON_Get_Action_DistributionItemNo(const GAMEBEACON_INFO *info)
 
 //==================================================================
 /**
+ * 行動パラメータ取得：配布Gパワー
+ * @param   info		    ビーコン情報へのポインタ
+ * @retval  GPOWER_ID		GパワーID
+ */
+//==================================================================
+GPOWER_ID GAMEBEACON_Get_Action_DistributionGPower(const GAMEBEACON_INFO *info)
+{
+  switch(info->action.action_no){
+  case GAMEBEACON_ACTION_DISTRIBUTION_GPOWER:
+    return info->action.distribution.gpower_id;
+  }
+  GF_ASSERT(0);
+  return info->action.distribution.gpower_id;
+}
+
+//==================================================================
+/**
  * 行動パラメータ取得：ポケモンのニックネーム
  * @param   info		ビーコン情報へのポインタ
  * @retval  const STRCODE *		ニックネームへのポインタ

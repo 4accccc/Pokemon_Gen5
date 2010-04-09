@@ -90,6 +90,7 @@ typedef enum{
   GAMEBEACON_ACTION_MUSICAL,                  ///<ミュージカル挑戦中                    47
   GAMEBEACON_ACTION_OTHER_GPOWER_USE,         ///<他人のGパワーを使用                   48
   GAMEBEACON_ACTION_FREEWORD,                 ///<一言メッセージ                        49
+  GAMEBEACON_ACTION_DISTRIBUTION_GPOWER,      ///<Gパワー配布                           50
   
 //  GAMEBEACON_ACTION_CONGRATULATIONS,      ///<「おめでとう！」
 //  GAMEBEACON_ACTION_UNION_OUT,            ///<ユニオンルーム退室
@@ -162,6 +163,7 @@ extern void GAMEBEACON_Set_UnionIn(void);
 extern void GAMEBEACON_Set_DistributionPoke(u16 monsno);
 extern void GAMEBEACON_Set_DistributionItem(u16 item);
 extern void GAMEBEACON_Set_DistributionEtc(void);
+extern void GAMEBEACON_Set_DistributionGPower(GPOWER_ID gpower_id);
 #endif
 extern void GAMEBEACON_Set_CriticalHit(const STRBUF *nickname);
 extern void GAMEBEACON_Set_CriticalDamage(const STRBUF *nickname);

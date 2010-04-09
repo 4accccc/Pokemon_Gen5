@@ -33,6 +33,8 @@
 #define MAGIC_KEY_DISTRIBUTION_ITEM    (0x48841dc1)
 ///配信用マジックキー：その他
 #define MAGIC_KEY_DISTRIBUTION_ETC     (0x701ddc92)
+///配信用マジックキー：Gパワー
+#define MAGIC_KEY_DISTRIBUTION_GPOWER  (0xfee48201)
 
 //ここのASSERTにひっかかったらupdate_logをbit管理ではなく配列管理に変更する
 SDK_COMPILER_ASSERT(GAMEBEACON_SYSTEM_LOG_MAX < 32);
@@ -114,6 +116,7 @@ void BEACONINFO_Set_UnionIn(GAMEBEACON_INFO *info);
 void BEACONINFO_Set_DistributionPoke(GAMEBEACON_INFO *info, u16 monsno);
 void BEACONINFO_Set_DistributionItem(GAMEBEACON_INFO *info, u16 item);
 void BEACONINFO_Set_DistributionEtc(GAMEBEACON_INFO *info);
+void BEACONINFO_Set_DistributionGPower(GAMEBEACON_INFO *info, GPOWER_ID g_power_id);
 #endif
 void BEACONINFO_Set_CriticalHit(GAMEBEACON_INFO *info, const STRBUF *nickname);
 void BEACONINFO_Set_CriticalDamage(GAMEBEACON_INFO *info, const STRBUF *nickname);
@@ -456,6 +459,11 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   }
   else if(info->action.action_no == GAMEBEACON_ACTION_DISTRIBUTION_ETC){
     if(info->action.distribution.magic_key != MAGIC_KEY_DISTRIBUTION_ETC){
+      return FALSE; //マジックキー不一致の為、受け取り拒否
+    }
+  }
+  else if(info->action.action_no == GAMEBEACON_ACTION_DISTRIBUTION_GPOWER){
+    if(info->action.distribution.magic_key != MAGIC_KEY_DISTRIBUTION_GPOWER){
       return FALSE; //マジックキー不一致の為、受け取り拒否
     }
   }
@@ -1667,6 +1675,36 @@ void BEACONINFO_Set_DistributionEtc(GAMEBEACON_INFO *info)
 {
   info->action.action_no = GAMEBEACON_ACTION_DISTRIBUTION_ETC;
   info->action.distribution.magic_key = MAGIC_KEY_DISTRIBUTION_ETC;
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：イベントGパワー配布
+ *
+ * @param   g_power_id		GパワーID
+ */
+//==================================================================
+void GAMEBEACON_Set_DistributionGPower(GPOWER_ID g_power_id)
+{
+  if(_CheckPriority(GAMEBEACON_ACTION_DISTRIBUTION_GPOWER) == FALSE){ return; };
+  BEACONINFO_Set_GPower(&GameBeaconSys->send.info, g_power_id);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：イベントGパワー配布
+ *
+ * @param   g_power_id		GパワーID
+ */
+//==================================================================
+void BEACONINFO_Set_DistributionGPower(GAMEBEACON_INFO *info, GPOWER_ID g_power_id)
+{
+  info->action.action_no = GAMEBEACON_ACTION_DISTRIBUTION_GPOWER;
+  info->action.distribution.magic_key = MAGIC_KEY_DISTRIBUTION_GPOWER;
+  info->action.distribution.gpower_id = g_power_id;
 
   BEACONINFO_Set_Details_Walk(info);
 }

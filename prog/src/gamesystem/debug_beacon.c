@@ -53,6 +53,7 @@ extern void BEACONINFO_Set_UnionIn(GAMEBEACON_INFO *info);
 extern void BEACONINFO_Set_DistributionPoke(GAMEBEACON_INFO *info, u16 monsno);
 extern void BEACONINFO_Set_DistributionItem(GAMEBEACON_INFO *info, u16 item);
 extern void BEACONINFO_Set_DistributionEtc(GAMEBEACON_INFO *info);
+extern void BEACONINFO_Set_DistributionGPower(GAMEBEACON_INFO *info, GPOWER_ID g_power_id);
 #endif
 extern void BEACONINFO_Set_CriticalHit(GAMEBEACON_INFO *info, const STRBUF *nickname);
 extern void BEACONINFO_Set_CriticalDamage(GAMEBEACON_INFO *info, const STRBUF *nickname);

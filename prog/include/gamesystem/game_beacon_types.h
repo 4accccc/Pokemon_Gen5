@@ -83,6 +83,7 @@ typedef struct{
     struct{ //配布用
       u16 monsno;                           ///<ポケモン番号
       u16 itemno;                           ///<アイテム番号
+      u16 gpower_id;                        ///<GパワーID
       u32 magic_key;                        ///<マジックキー
     }distribution;
     struct{

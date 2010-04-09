@@ -206,4 +206,8 @@ static const struct{
 		3,		//priority
 		20 * 60,		//life
 	},
+	{	//50  Gパワー配布(GAMEBEACON_ACTION_DISTRIBUTION_GPOWER)
+		5,		//priority
+		20 * 60,		//life
+	},
 };

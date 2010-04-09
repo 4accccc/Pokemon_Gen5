@@ -92,6 +92,7 @@ extern u16 GAMEBEACON_Get_Action_ItemNo(const GAMEBEACON_INFO *info);
 extern u16 GAMEBEACON_Get_Action_WazaNo(const GAMEBEACON_INFO *info);
 extern u16 GAMEBEACON_Get_Action_DistributionMonsno(const GAMEBEACON_INFO *info);
 extern u16 GAMEBEACON_Get_Action_DistributionItemNo(const GAMEBEACON_INFO *info);
+extern GPOWER_ID GAMEBEACON_Get_Action_DistributionGPower(const GAMEBEACON_INFO *info);
 extern void GAMEBEACON_Get_Action_Nickname(const GAMEBEACON_INFO *info, STRBUF *dest);
 extern u16 GAMEBEACON_Get_Action_TrNo(const GAMEBEACON_INFO *info);
 extern u32 GAMEBEACON_Get_Action_ThankyouCount(const GAMEBEACON_INFO *info);
