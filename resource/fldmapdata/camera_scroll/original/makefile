@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= tomoya_takahashi nakatsui tamada fuchino lee_hyunjung ohkubo_tomohiko obata_toshihiro murakami_naoto
+USERS	= tomoya_takahashi nakatsui tamada fuchino lee_hyunjung ohkubo_tomohiko obata_toshihiro murakami_naoto fujiwara_maiko
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
