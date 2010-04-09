@@ -289,3 +289,4 @@
 "nsbmdfiles/door_untower.nsbmd"
 "nsbmdfiles/c09_back.nsbmd"
 "nsbmdfiles/toh_bell01.nsbmd"
+"nsbmdfiles/o_parasol_02.nsbmd"
