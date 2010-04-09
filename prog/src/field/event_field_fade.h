@@ -51,6 +51,7 @@ typedef enum{
 enum {
   FIELD_FADE_DEFAULT_WAIT = -1,
   FIELD_FADE_QUICK_WAIT = -16,
+  FIELD_FADE_SLOW_WAIT = 0,
 };
 
 //==================================================================================
