@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T13:36:19"/>
+	<create user="matsumiya" host="W00224" date="2010-04-09T16:26:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -354,31 +354,71 @@
 感動したから　これ　あげるね▼</language>
 	</row>
 
-	<row id="msg_r08_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r08_white_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・メッセージ表示後
+　下を向き、帽子の芝居をして
+　msg_r08_white_05
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256">ベル『……あたし　ヒウンシティで
+だいじな　ポケモンを　プラズマだんに▽
+うばわれたことが　あるでしょ▽
+だから　すごく　わかるの！！▼
+プラズマだんが　むりやり
+ポケモンを　かいほう　したら▽
+かなしむ　ひと　ばっかりだよ！▼
+[1:00:トレーナー名:0]！
+プラズマだんを　とめて！▼
+ポケモンが　だいすきな　ひとから
+ポケモンを　うばわれないように　して▼
+それが　[1:00:トレーナー名:0]が　もとめる
+しんじつとか　りそうだと　おもう……▼</language>
+		<language name="JPN_KANJI" width="256">ベル『……あたし　ヒウンシティで
+だいじな　ポケモンを　プラズマ団に▽
+奪われたことが　あるでしょ▽
+だから　すごく　わかるの！！▼
+プラズマだんが　ムリヤリ
+ポケモンを　解放したら▽
+悲しむ　人ばっかりだよ！▼
+[1:00:トレーナー名:0]！
+プラズマ団を　とめて！！▼
+ポケモンが　大好きな　人から
+ポケモンを　奪われないように　して▼
+それが　[1:00:トレーナー名:0]が　求める
+真実とか　理想だと　おもう……▼</language>
+	</row>
+
+	<row id="msg_r08_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・その後画面左へ移動
 　画面外に消えると主人公、操作可能に
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
-		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]なら
-なにをするのも　だいじょうぶだよ！▽
+		<language name="JPN" width="256">ベル『ごめんね……　たいへんなのに
+わざわざ　こんなこと　いいにきて▼
+ほんとうは　[1:00:トレーナー名:0]のこと
+リラックスさせる　つもりだったのに▼
+……でも　[1:00:トレーナー名:0]なら
+だいじょうぶだよ▽
+うん！　ぜったいに　だいじょうぶ！▽
 あたしが　ほしょう　してあげる！▼
-だから……　えーっと……
-こういうとき　なにいうんだろ？▼
-ほんとは　[1:00:トレーナー名:0]のこと
-リラックス　させたかったのにい▼
-まあいいや
-バイバーイ！　[1:00:トレーナー名:0]！！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]なら
-なにをするのも　大丈夫だよ！▽
+だから　うん……
+うまく　いえないけど▽
+バイバーイ！！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『ごめんね……　大変なのに
+わざわざ　こんなこと　いいにきて▼
+本当は　[1:00:トレーナー名:0]のこと
+リラックスさせる　つもりだったのに▼
+……でも　[1:00:トレーナー名:0]なら
+大丈夫だよ▽
+うん！　絶対に　大丈夫！▽
 あたしが　保証してあげる！▼
-だから……　えーっと……
-こういうとき　なにいうんだろ？▼
-ほんとは　[1:00:トレーナー名:0]のこと
-リラックス　させたかったのにい▼
-まあいいや
-バイバーイ！　[1:00:トレーナー名:0]！！▼</language>
+だから　うん……
+うまく　いえないけど▽
+バイバーイ！！▼</language>
 	</row>
 
 	<row id="msg_r08_stop1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
