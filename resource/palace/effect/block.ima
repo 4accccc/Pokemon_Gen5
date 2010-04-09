@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-03-30T21:46:26" source="block_002.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-04-09T19:08:32" source="block_004.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,19 +11,18 @@
 <body>
 
 <mat_color_info
-	frame_size="30"
+	frame_size="20"
 	tool_start_frame="1"
-	tool_end_frame="30"
+	tool_end_frame="20"
 	interpolation="frame"
 	compress_material="on" material_size="1 1"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
 
-<mat_color_data size="33">
-	25 0 31 0 9 18 26 29 29 28
-	27 26 24 22 20 17 15 12 9 7
-	4 2 0 0 0 0 0 0 0 0
+<mat_color_data size="23">
+	25 0 31 0 31 0 31 31 31 0
+	31 0 0 0 0 31 0 0 0 0
 	0 0 0
 </mat_color_data>
 
@@ -41,7 +40,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="2"/>
 		<emission_g frame_step="1" data_size="1" data_head="2"/>
 		<emission_b frame_step="1" data_size="1" data_head="2"/>
-		<polygon_alpha frame_step="1" data_size="30" data_head="3"/>
+		<polygon_alpha frame_step="1" data_size="20" data_head="3"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
