@@ -2,12 +2,19 @@
 #  通信アイコンnarcを作るmakefile  
 #  コピーしてtargetnameを書き換えれば汎用的に使えます
 #  2008.08.19
+#	
+#		デコメ用のセルは32k,64k,128kの３種類あるが、コンバートによって
+#		キャラを上書きしているので、
+#		g2dcvtrへ-ncnオプションを加え、自動でリソースを作る場所に
+#		OBJ用のキャラをわけ
+#		きちんと３種類出すようにしました。nagihashi
+#
 #------------------------------------------------------------------------------
 
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= genya_hosaka kitakaze_tomohiro kawada_koji
+USERS	= genya_hosaka kitakaze_tomohiro kawada_koji toru_nagihashi
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -39,6 +46,7 @@ gobjects = $(subst .ncg,.NCGR,$(gsources))
 sobjects = $(subst .nsc,.NSCR,$(ssources))
 eobjects = $(subst .nce,.NCER,$(esources))
 aobjects = $(subst .nce,.NANR,$(esources))
+cgobjects = $(subst .nce,.NCGR,$(esources))	#OBJ用のキャラ
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
@@ -55,7 +63,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g2dcvtr $<
 
 .nce.NCER:
-	g2dcvtr $< -lbl
+	g2dcvtr $< -lbl -ncn
 
 endif
 
@@ -76,7 +84,7 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects)
+$(targetname).narc: $(lobjects) $(gobjects) $(sobjects) $(eobjects) $(aobjects) $(cgobjects)
 	$(COPY) pms2_obj_main_NANR_LBLDEFS.h $(TARGETDIR)../src/app/pms_input
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix

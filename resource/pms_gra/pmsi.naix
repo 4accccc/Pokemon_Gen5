@@ -57,7 +57,10 @@ enum {
 	NARC_pmsi_pms2_obj_dekome_64k_NANR = 43,
 	NARC_pmsi_pms2_obj_main_NANR = 44,
 	NARC_pmsi_pms_obj_main_NANR = 45,
-	NARC_pmsi_pms_obj_sub_NANR = 46
+	NARC_pmsi_pms_obj_sub_NANR = 46,
+	NARC_pmsi_pms2_obj_dekome_128k_NCGR = 47,
+	NARC_pmsi_pms2_obj_dekome_32k_NCGR = 48,
+	NARC_pmsi_pms2_obj_dekome_64k_NCGR = 49
 };
 
 /* NARC_PMSI_NAIX_ */

@@ -83,6 +83,7 @@ struct _PMS_DRAW_WORK {
 static void _get_write_pos( GFL_BMPWIN* win, u8 width, u8 line, GFL_POINT* offset, GFL_POINT* out_pos );
 static u32 _obj_get_ncer( CLSYS_DRAW_TYPE vram_type );
 static u32 _obj_get_nanr( CLSYS_DRAW_TYPE vram_type );
+static u32 _obj_get_ncgr( CLSYS_DRAW_TYPE vram_type );
 static void _obj_loadres( PMS_DRAW_OBJ* obj, u8 pltt_ofs, HEAPID heap_id );
 static void _obj_unloadres( PMS_DRAW_OBJ* obj );
 static GFL_CLWK* _obj_create( PMS_DRAW_OBJ* obj, HEAPID heap_id );
@@ -578,6 +579,41 @@ static u32 _obj_get_nanr( CLSYS_DRAW_TYPE vram_type )
   
   return NARC_pmsi_pms2_obj_dekome_128k_NANR;
 }
+//----------------------------------------------------------------------------
+/**
+ *  @brief  VRAMモードからキャラの取得リソースを判定
+ *
+ *	@param	CLSYS_DRAW_TYPE vram_type CLSYS描画面タイプ
+ *
+ *	@retval キャラのアーカイブID
+ */
+//-----------------------------------------------------------------------------
+static u32 _obj_get_ncgr( CLSYS_DRAW_TYPE vram_type )
+{ 
+  GXOBJVRamModeChar vrammode;
+  
+  if( vram_type == CLSYS_DRAW_MAIN )
+  {
+    vrammode = GX_GetOBJVRamModeChar();
+  }
+  else
+  {
+    vrammode = GXS_GetOBJVRamModeChar();
+  }
+  
+  switch(vrammode){
+  case GX_OBJVRAMMODE_CHAR_1D_32K:
+    return NARC_pmsi_pms2_obj_dekome_32k_NCGR;
+  case GX_OBJVRAMMODE_CHAR_1D_64K:
+    return NARC_pmsi_pms2_obj_dekome_64k_NCGR;
+  case GX_OBJVRAMMODE_CHAR_1D_128K:
+    return NARC_pmsi_pms2_obj_dekome_128k_NCGR;
+  default:
+    GF_ASSERT(0); //非対応のマッピングモード
+  }
+  
+  return NARC_pmsi_pms2_obj_dekome_128k_NANR;
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -593,13 +629,14 @@ static void _obj_loadres( PMS_DRAW_OBJ* obj, u8 pltt_ofs, HEAPID heap_id )
   ARCHANDLE* handle;
   u32 res_ncer = _obj_get_ncer( obj->vram_type );
   u32 res_nanr = _obj_get_nanr( obj->vram_type );
+  u32 res_ncgr = _obj_get_ncgr( obj->vram_type );
 
   // ハンドルオープン
   handle  = GFL_ARC_OpenDataHandle( ARCID_PMSI_GRAPHIC, heap_id );
 
   //リソース読みこみ
   obj->obj_ncl  = GFL_CLGRP_PLTT_RegisterEx( handle, NARC_pmsi_pms2_obj_dekome_NCLR, obj->vram_type, 0x20*pltt_ofs, 0, PMS_DRAW_OBJ_PLTT_NUM, heap_id );
-  obj->obj_ncg = GFL_CLGRP_CGR_Register( handle, NARC_pmsi_pms2_obj_dekome_NCGR, FALSE, obj->vram_type, heap_id );
+  obj->obj_ncg = GFL_CLGRP_CGR_Register( handle, res_ncgr, FALSE, obj->vram_type, heap_id );
   obj->obj_nce = GFL_CLGRP_CELLANIM_Register( handle, res_ncer, res_nanr, heap_id );
 
   GFL_ARC_CloseDataHandle( handle );

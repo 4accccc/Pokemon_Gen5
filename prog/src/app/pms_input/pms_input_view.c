@@ -687,7 +687,7 @@ static void setup_obj_graphic( COMMAND_WORK* cwk, ARCHANDLE* p_handle )
     vwk->resCellDeco[i].pltIdx = GFL_CLGRP_PLTT_Register( p_handle ,
         NARC_pmsi_pms2_obj_dekome_NCLR , CLSYS_DRAW_MAIN+i , 0x20*PALNUM_OBJ_M_PMSDRAW , HEAPID_PMS_INPUT_VIEW );
 		vwk->resCellDeco[i].ncgIdx = GFL_CLGRP_CGR_Register( p_handle ,
-        NARC_pmsi_pms2_obj_dekome_NCGR , FALSE , CLSYS_DRAW_MAIN+i , HEAPID_PMS_INPUT_VIEW );
+        NARC_pmsi_pms2_obj_dekome_64k_NCGR , FALSE , CLSYS_DRAW_MAIN+i , HEAPID_PMS_INPUT_VIEW );
 		vwk->resCellDeco[i].anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle ,
         NARC_pmsi_pms2_obj_dekome_64k_NCER , NARC_pmsi_pms2_obj_dekome_64k_NANR, HEAPID_PMS_INPUT_VIEW );
 	}
