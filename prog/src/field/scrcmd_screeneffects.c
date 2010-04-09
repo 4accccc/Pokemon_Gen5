@@ -907,7 +907,7 @@ static void BrightCntTcb( GFL_TCB* tcb, void* work )
       if ( (wk->fade_io == FADE_IN)||(wk->fade_io == FADE_OUT) ) fade_speed = FIELD_FADE_DEFAULT_WAIT;
       else fade_speed = FIELD_FADE_SLOW_WAIT;
 
-      if ( wk->fade_io == FADE_IN )
+      if ( (wk->fade_io == FADE_IN)||(wk->fade_io == FADE_IN_SLOW) )
       {
         //フェードインのときはＢＧ初期化する
         
