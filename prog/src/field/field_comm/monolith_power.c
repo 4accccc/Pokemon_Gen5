@@ -366,6 +366,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     SEQ_INIT,
     SEQ_FIRST_STREAM,
     SEQ_FIRST_STREAM_WAIT,
+    SEQ_FIRST_STREAM_TP_RELEASE,
     SEQ_TOP,
     SEQ_YESNO_STREAM,
     SEQ_YESNO_STREAM_WAIT,
@@ -405,8 +406,20 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     if(_Wait_MsgStream(appwk->setup, mpw) == TRUE){
       if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
         _Clear_MsgStream(mpw);
-        (*seq) = SEQ_TOP;
+        if(GFL_UI_TP_GetTrg() == FALSE){
+          _SetCursorPos(mpw, _DUMMY_PANEL_UP_NUM, _SET_CURSOR_MODE_INIT);
+        }
+        else{
+          _SetCursorPos(mpw, _CURSOR_POS_NONE, _SET_CURSOR_MODE_INIT);
+        }
+        (*seq)++;
       }
+    }
+    break;
+  case SEQ_FIRST_STREAM_TP_RELEASE: //文字送りに使用したキーとタッチ両方を離すのを待つ
+    if(GFL_UI_TP_GetCont() == FALSE 
+        && (GFL_UI_KEY_GetCont() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL)) == 0){
+      *seq = SEQ_TOP;
     }
     break;
     
@@ -418,6 +431,12 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
       if(tp_ret == TOUCH_CANCEL || (trg & PAD_BUTTON_CANCEL)){
         OS_TPrintf("キャンセル選択\n");
         MonolithTool_CancelIcon_FlashReq(&mpw->cancel_icon);
+        if(tp_ret == TOUCH_CANCEL){
+          GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+        }
+        else{
+          GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+        }
         (*seq) = SEQ_FINISH;
         break;
       }
@@ -1283,6 +1302,7 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
     else{
       if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
         _SetCursorPos(mpw, mpw->cursor_pos, _SET_CURSOR_MODE_KEY);
+        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         return TRUE;
       }
       else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
@@ -1337,6 +1357,7 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
           && tp_y <= _PANEL_DECIDE_Y+PANEL_CHARSIZE_Y/2*8){
         decide_on = TRUE;
         cursor_pos = mpw->cursor_pos;
+        GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
       }
     }
     else if(mpw->speed != 0){ //減速

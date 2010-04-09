@@ -62,6 +62,7 @@ typedef struct{
   u8 no_select;           ///<ミッション受注済み。選択はもう出来ない
   u8 order_end;           ///<TRUE:ミッションを受注して終了
   u8 view_mode;
+  u8 no_focus;        ///<TRUE:カーソルが何もフォーカスしていない状態
 }MONOLITH_MSSELECT_WORK;
 
 //==============================================================================
@@ -329,7 +330,12 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
         break;
       }
       
-      if(trg & (PAD_KEY_UP | PAD_KEY_RIGHT | PAD_KEY_DOWN | PAD_KEY_LEFT)){
+      if(trg > 0 && mmw->no_focus == TRUE){
+        mmw->no_focus = FALSE;
+        MonolithTool_PanelOBJ_Focus(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
+        break;
+      }
+      else if(trg & (PAD_KEY_UP | PAD_KEY_RIGHT | PAD_KEY_DOWN | PAD_KEY_LEFT)){
         int now_pos;
         for(now_pos = 0; now_pos < NELEMS(TownCursor_MoveTbl); now_pos++){
           if(TownCursor_MoveTbl[now_pos] == appwk->common->mission_select_no){
@@ -354,16 +360,30 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
       if(tp_ret >= TOUCH_TOWN0 && tp_ret < TOUCH_TOWN0 + MISSION_LIST_MAX){
         OS_TPrintf("街選択 %d\n", tp_ret);
         appwk->common->mission_select_no = tp_ret;
+        mmw->no_focus = TRUE;
+        MonolithTool_PanelOBJ_Focus(appwk, &mmw->panel[_PANEL_ORDER], 1, PANEL_NO_FOCUS, FADE_SUB_OBJ);
       }
       else if(tp_ret == TOUCH_RECEIVE || (trg & PAD_BUTTON_DECIDE)){
         OS_TPrintf("「受ける」選択\n");
         MonolithTool_PanelOBJ_Flash(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
         PMSND_PlaySE( SEQ_SE_SYS_68 );
+        if(tp_ret == TOUCH_RECEIVE){
+          GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+        }
+        else{
+          GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+        }
         *seq = SEQ_ORDER;
       }
       else if(tp_ret == TOUCH_CANCEL || (trg & PAD_BUTTON_CANCEL)){
         OS_TPrintf("キャンセル選択\n");
         MonolithTool_CancelIcon_FlashReq(&mmw->cancel_icon);
+        if(tp_ret == TOUCH_CANCEL){
+          GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+        }
+        else{
+          GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+        }
         (*seq) = SEQ_FINISH;
       }
     }
@@ -376,6 +396,12 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
 
       if(tp_ret == TOUCH_CANCEL || (trg & PAD_BUTTON_CANCEL)){
         OS_TPrintf("キャンセル選択\n");
+        if(tp_ret == TOUCH_CANCEL){
+          GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+        }
+        else{
+          GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+        }
         (*seq) = SEQ_FINISH;
       }
     }
@@ -724,12 +750,18 @@ static void _Msselect_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_
   MonolithTool_PanelOBJ_Create(appwk->setup, &mmw->panel[_PANEL_ORDER], 
     COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, PANEL_POS_X, PANEL_RECEIVE_Y, 
     msg_mono_mis_000, NULL);
-  MonolithTool_PanelOBJ_Focus(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY ){
+    MonolithTool_PanelOBJ_Focus(appwk, &mmw->panel[_PANEL_ORDER], 1, 0, FADE_SUB_OBJ);
+  }
+  else{
+    MonolithTool_PanelOBJ_Focus(appwk, &mmw->panel[_PANEL_ORDER], 1, PANEL_NO_FOCUS, FADE_SUB_OBJ);
+    mmw->no_focus = TRUE;
+  }
 
   MonolithTool_PanelOBJ_Create(appwk->setup, &mmw->panel[_PANEL_ENFORCEMENT], 
     COMMON_RESOURCE_INDEX_DOWN, PANEL_SIZE_SMALL, PANEL_POS_X, PANEL_RECEIVE_Y, 
     msg_mono_mis_001, NULL);
-  MonolithTool_PanelOBJ_Focus(appwk, &mmw->panel[_PANEL_ENFORCEMENT], 1, 0, FADE_SUB_OBJ);
+//  MonolithTool_PanelOBJ_Focus(appwk, &mmw->panel[_PANEL_ENFORCEMENT], 1, 0, FADE_SUB_OBJ);
   MonolithTool_PanelOBJ_SetEnable(&mmw->panel[_PANEL_ENFORCEMENT], FALSE);
 }
 

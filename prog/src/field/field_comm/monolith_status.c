@@ -200,6 +200,12 @@ static GFL_PROC_RESULT MonolithStatusProc_Main( GFL_PROC * proc, int * seq, void
       if(tp_ret != GFL_UI_TP_HIT_NONE || (trg & PAD_BUTTON_CANCEL)){
         OS_TPrintf("ƒLƒƒƒ“ƒZƒ‹‘I‘ð\n");
         MonolithTool_CancelIcon_FlashReq(&msw->cancel_icon);
+        if(trg & PAD_BUTTON_CANCEL){
+          GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+        }
+        else{
+          GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+        }
         (*seq)++;
       }
     }

@@ -46,7 +46,7 @@ typedef struct{
   s8 cursor_pos;      ///<カーソル位置
   s8 select_panel;    ///<選択したパネル(TITLE_PANEL_xxx)
   u8 mission_occ;     ///<TRUE:ミッションが選択できる
-  u8 padding;
+  u8 no_focus;        ///<TRUE:カーソルが何もフォーカスしていない状態
   MONOLITH_CANCEL_ICON cancel_icon;   ///<キャンセルアイコンアクターへのポインタ
   GFL_BMPWIN *bmpwin;
   PRINT_STREAM *print_stream;
@@ -256,6 +256,8 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
       OS_TPrintf("タッチ有効 %d\n", tp_ret);
       mtw->cursor_pos = tp_ret;
       mtw->select_panel = TitlePanelSelectIndex[mtw->mission_occ][tp_ret];
+      GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+      mtw->no_focus = FALSE;
       (*seq)++;
       break;
     }
@@ -263,7 +265,13 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
       int repeat = GFL_UI_KEY_GetRepeat();
       int trg = GFL_UI_KEY_GetTrg();
       
-      if(trg & PAD_BUTTON_DECIDE){
+      if(trg > 0 && mtw->no_focus == TRUE){
+        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+        mtw->no_focus = FALSE;
+        MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, TitlePanelMax[mtw->mission_occ], 
+          mtw->cursor_pos, FADE_SUB_OBJ);
+      }
+      else if(trg & PAD_BUTTON_DECIDE){
         mtw->select_panel = TitlePanelSelectIndex[mtw->mission_occ][mtw->cursor_pos];
         (*seq)++;
       }
@@ -410,8 +418,14 @@ static void _Title_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_TITLE_WORK *
     }
   }
   
-  MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, TitlePanelMax[mtw->mission_occ], 
-    0, FADE_SUB_OBJ);
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY ){
+    MonolithTool_PanelOBJ_Focus(appwk, mtw->panel, TitlePanelMax[mtw->mission_occ], 
+      0, FADE_SUB_OBJ);
+    mtw->no_focus = FALSE;
+  }
+  else{
+    mtw->no_focus = TRUE;
+  }
 }
 
 //==================================================================
