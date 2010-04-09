@@ -19,6 +19,7 @@
 #include "demo3d_cmdsys.h"
 #include "demo3d_engine_local.h"
 
+
 //コマンドがフリーに使えるBGフレーム定義
 #define DEMO3D_CMD_FREE_BG_M1 (GFL_BG_FRAME1_M)
 

@@ -199,8 +199,7 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 static void Graphic_3d_SetUp( void )
 {
 	// ３Ｄ使用面の設定(表示＆プライオリティー)
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
-	G2_SetBG0Priority(0);
+  GFL_BG_SetBGControl3D( DEMO3D_3D_BG_PRI );
 
 	// 各種描画モードの設定(シェード＆アンチエイリアス＆半透明)
 	//	フォグ、エッジマーキング、トゥーンシェードの詳細設定は
@@ -631,7 +630,8 @@ static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk )
 	{	
 		int i;
 		for( i = 0; i < NELEMS(sc_bgsetup); i++ )
-		{	
+		{
+      GFL_BG_SetVisible( sc_bgsetup[i].frame, VISIBLE_OFF );
 			GFL_BG_FreeBGControl( sc_bgsetup[i].frame );
 		}
 	}
