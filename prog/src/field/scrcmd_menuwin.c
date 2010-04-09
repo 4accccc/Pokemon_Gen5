@@ -752,33 +752,33 @@ VMCMD_RESULT EvCmdGoldWinClose( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 #define OFFS_0_0_X (NUM_FX32(0))
 #define OFFS_0_0_Y (NUM_FX32(16))
-#define OFFS_0_0_Z (NUM_FX32(-10))
+#define OFFS_0_0_Z (NUM_FX32(-8))
 
-#define OFFS_0_1_X (NUM_FX32(-2))
+#define OFFS_0_1_X (NUM_FX32(-8))
 #define OFFS_0_1_Y (NUM_FX32(12))
-#define OFFS_0_1_Z (NUM_FX32(0))
+#define OFFS_0_1_Z (NUM_FX32(-8))
 
-#define OFFS_0_2_X (NUM_FX32(6))
+#define OFFS_0_2_X (NUM_FX32(8))
 #define OFFS_0_2_Y (NUM_FX32(12))
-#define OFFS_0_2_Z (NUM_FX32(0))
+#define OFFS_0_2_Z (NUM_FX32(-8))
 
 #define OFFS_0_3_X (NUM_FX32(0))
 #define OFFS_0_3_Y (NUM_FX32(16))
-#define OFFS_0_3_Z (NUM_FX32(-10))
+#define OFFS_0_3_Z (NUM_FX32(-8))
 
-#define OFFS_1_0_X (NUM_FX32(6))
+#define OFFS_1_0_X (NUM_FX32(0))
 #define OFFS_1_0_Y (NUM_FX32(12))
-#define OFFS_1_0_Z (NUM_FX32(8))
+#define OFFS_1_0_Z (NUM_FX32(-8))
 
-#define OFFS_1_1_X (NUM_FX32(-2))
+#define OFFS_1_1_X (NUM_FX32(-8))
 #define OFFS_1_1_Y (NUM_FX32(12))
-#define OFFS_1_1_Z (NUM_FX32(-2))
+#define OFFS_1_1_Z (NUM_FX32(-8))
 
-#define OFFS_1_2_X (NUM_FX32(6))
+#define OFFS_1_2_X (NUM_FX32(8))
 #define OFFS_1_2_Y (NUM_FX32(12))
-#define OFFS_1_2_Z (NUM_FX32(-2))
+#define OFFS_1_2_Z (NUM_FX32(-8))
 
-#define OFFS_1_3_X (NUM_FX32(-6))
+#define OFFS_1_3_X (NUM_FX32(0))
 #define OFFS_1_3_Y (NUM_FX32(12))
 #define OFFS_1_3_Z (NUM_FX32(8))
 
@@ -846,11 +846,27 @@ static void balloonWin_GetDispOffsetPos(
   
   OS_Printf( "BALLOONWIN TARGET pos %xH,%xH,%xH : x=%d,y=%d : ",
       pos->x, pos->y, pos->z, x, y );
-  
+#if 0  //old
   x >>= 3; // chara size
   x >>= 3; // table size
   y >>= 3; // chara size
   y /= 12; // table size
+#else
+  x >>= 3; //chara size
+
+  if( x < 10 ){ // < 80
+    x = 0;
+  }else if( x >= 10 && x <= 15 ){
+    x = 1;
+  }else if( x >= 16 && x <= 22 ){
+    x = 2;
+  }else{
+    x = 3;
+  }
+  
+  y >>= 3; // chara size
+  y /= 12; // table size
+#endif
   
   if( x < 4 && y < 2 ){
     OS_Printf( "table pos %d,%d\n", y, x );
