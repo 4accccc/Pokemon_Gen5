@@ -87,7 +87,7 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
 //ショートカットIDとプロセスの対応
 static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCUT_ID shortcutID );
-static BOOL GetItemCheckEnable( SHORTCUT_ID shortcutID, ITEMCHECK_ENABLE * enable );
+static BOOL GetItemCheckEnable( SHORTCUT_ID shortcutID, ITEMCHECK_ENABLE * enable, BOOL *reverse_use );
 
 //メニュー作成
 static void ShortCutMenu_Init( SHORTCUTMENU_MODE mode, EVENT_SHORTCUTMENU_WORK *p_wk );
@@ -270,7 +270,13 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 			{	// 起動チェック
 				ITEMCHECK_ENABLE	enable;
 				BOOL	err = FALSE;
-				if( GetItemCheckEnable( shortcutID, &enable ) == TRUE ){
+				BOOL reverse_use, check_item;
+				check_item = GetItemCheckEnable( shortcutID, &enable, &reverse_use );
+				if(reverse_use == FALSE 
+				    && GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData(p_wk->p_gamesys) ) == TRUE){
+          err = TRUE;
+        }
+				else if(check_item == TRUE){
 					ITEMCHECK_WORK	icwk;
 					ITEMUSE_InitCheckWork( &icwk, p_wk->p_gamesys, p_wk->p_fieldmap );
 					if( ITEMUSE_GetItemUseCheck( &icwk, enable ) == FALSE ){
@@ -475,7 +481,13 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 			{	// 起動チェック
 				ITEMCHECK_ENABLE	enable;
 				BOOL	err = FALSE;
-				if( GetItemCheckEnable( shortcutID, &enable ) == TRUE ){
+				BOOL reverse_use, check_item;
+				check_item = GetItemCheckEnable( shortcutID, &enable, &reverse_use );
+				if(reverse_use == FALSE
+				    && GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData(p_wk->p_gamesys) ) == TRUE){
+          err = TRUE;
+        }
+				else if(check_item == TRUE){
 					ITEMCHECK_WORK	icwk;
 					ITEMUSE_InitCheckWork( &icwk, p_wk->p_gamesys, p_wk->p_fieldmap );
 					if( ITEMUSE_GetItemUseCheck( &icwk, enable ) == FALSE ){
@@ -710,8 +722,21 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
 	}
 }
 
-static BOOL GetItemCheckEnable( SHORTCUT_ID shortcutID, ITEMCHECK_ENABLE * enable )
+//--------------------------------------------------------------
+/**
+ * 
+ *
+ * @param   shortcutID		
+ * @param   enable		
+ * @param   reverse_use		TRUE:裏フィールドでも使える　FALSE:裏フィールドでは使えない
+ *
+ * @retval  BOOL		TRUE:アイテム使用チェックの必要有
+ */
+//--------------------------------------------------------------
+static BOOL GetItemCheckEnable( SHORTCUT_ID shortcutID, ITEMCHECK_ENABLE * enable, BOOL *reverse_use )
 {
+  *reverse_use = FALSE;
+  
 	switch( shortcutID ){
 	case SHORTCUT_ID_ZITENSYA:				// 自転車
 		*enable = ITEMCHECK_CYCLE;
@@ -741,6 +766,7 @@ static BOOL GetItemCheckEnable( SHORTCUT_ID shortcutID, ITEMCHECK_ENABLE * enabl
 		return FALSE;
 	}
 
+  *reverse_use = TRUE;
 	return FALSE;
 }
 
