@@ -63,6 +63,7 @@ enum {
 #include "../../../prog/include/battle/battle_bg_def.h"  //戦闘背景ID定義
 #include "../camera_scroll/camera_scroll.naix"//カメラエリアデータ
 #include "../../../prog/src/field/map_change_type.h" //マップ切り替えタイプ定義ファイル
+#include "../../mm_list/mmlist_def.h" //動作モデル登録定義ファイル
 
 enum {
 	enc_dummy = 0xffff,
