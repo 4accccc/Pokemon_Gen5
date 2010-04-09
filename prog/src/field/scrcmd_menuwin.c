@@ -1563,7 +1563,7 @@ static VMCMD_RESULT addPlainWin(
   
   msgbuf = SetExpandWord( work, sc, msg_id );
   
-  if( up_down != 0 ){ //down
+  if( up_down != SCRCMD_MSGWIN_UP ){ //down
     y = 19;
   }
   
