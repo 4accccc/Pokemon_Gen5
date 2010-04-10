@@ -256,6 +256,20 @@ u8 BTL_POSPOKE_GetClientEmptyPos( const BTL_POSPOKE_WORK* wk, u8 clientID, u8* p
  * 指定ポケモンが戦闘の場に出ているか判定
  *
  * @param   wk
+ * @param   bpp
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_POSPOKE_IsExist( const BTL_POSPOKE_WORK* wk, u8 pokeID )
+{
+  return ( BTL_POSPOKE_GetPokeExistPos(wk, pokeID) != BTL_POS_NULL );
+}
+//=============================================================================================
+/**
+ * 指定ポケモンがいる場所IDを取得
+ *
+ * @param   wk
  * @param   pokeID
  *
  * @retval  BtlPokePos    出ている場合は位置ID、出ていない場合は BTL_POS_NULL
@@ -270,7 +284,7 @@ BtlPokePos BTL_POSPOKE_GetPokeExistPos( const BTL_POSPOKE_WORK* wk, u8 pokeID )
       return i;
     }
   }
-  return BTL_POS_MAX;
+  return BTL_POS_NULL;
 }
 
 //=============================================================================================
