@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-10T14:54:08"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-10T18:19:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="482" top="347" right="982" bottom="973" maximized="no" rayout="Vertical2">
+	<dialog left="552" top="509" right="1052" bottom="1135" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="492"/>
@@ -426,11 +426,13 @@ GRIDX=６７０、GRIDZ=１６８辺り
 GRIDX=６６１、GRIDZ=１８９辺り</comment>
 		<attribute name="キャラ指定">BABYBOY2</attribute>
 		<language name="JPN" width="256">よるに　なると　おおきな　あなから
-おばけが　でてくるから　おうちに▽
-いないと　ダメなんだって！</language>
+こわーい　おばけが　でてくるから▽
+おうちに　かえって　おとなしく▽
+してないと　ダメなんだって！</language>
 		<language name="JPN_KANJI" width="256">夜に　なると　大きな　穴から
-お化けが　出て来るから　お家に▽
-いないと　ダメなんだって！</language>
+お化けが　出てくるから▽
+お家に　かえって　大人しく▽
+してないと　ダメなんだって！</language>
 	</row>
 
 	<row id="msg_t03_fishing_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">

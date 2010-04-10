@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-10T14:54:58"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-10T18:09:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -600,17 +600,13 @@
 ※消すタイミングはzoneチェンジ＋時間参照</comment>
 		<attribute name="キャラ指定">BABYBOY2</attribute>
 		<language name="JPN" width="256">よるに　なると　おおきな　あなから
-おばけが　でてくるから　おうちに▽
-いないと　ダメなんだって！▼
-おばけなんて　どうせ　ポケモンさ！
-こわく　なんか　ないやい！▽
-それより　おうちは　たいくつさ！</language>
+こわーい　おばけが　でてくるから▽
+おうちに　かえって　おとなしく▽
+してないと　ダメなんだって！</language>
 		<language name="JPN_KANJI" width="256">夜に　なると　大きな　穴から
-お化けが　出て来るから　お家に▽
-いないと　ダメなんだって！▼
-お化けなんて　どうせ　ポケモンさ！
-怖く　なんか　ないやい！▽
-それより　お家は　退屈さ！</language>
+お化けが　出てくるから▽
+お家に　かえって　大人しく▽
+してないと　ダメなんだって！</language>
 	</row>
 
 	<flowchart-group-list>

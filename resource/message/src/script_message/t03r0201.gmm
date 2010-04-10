@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-10T14:55:50"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-10T18:19:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -300,12 +300,14 @@
 はい→msg_t03_oldwoman1_02
 いいいえ→msg_t03_oldwoman1_03</comment>
 		<attribute name="キャラ指定">oldwoman1</attribute>
-		<language name="JPN" width="256">ぐごご……　ぐごごご………
-……ん　んんう？　なんじゃ？▼
+		<language name="JPN" width="256">ぐごご……　ぐごごご………▼
+……ん　んんう？
+なんじゃ？　おまえさんは？▼
 バーさんの　はなしでも
 ききに　きたんか……？</language>
-		<language name="JPN_KANJI" width="256">ぐごご……　ぐごごご………
-……ん　んんう？　なんじゃ？▼
+		<language name="JPN_KANJI" width="256">ぐごご……　ぐごごご………▼
+……ん　んんう？
+なんじゃ？　おまえさんは？▼
 バーさんの　話でも
 聞きに　来たんか……？</language>
 	</row>
@@ -321,7 +323,7 @@
 そのあなはな　むかし　むかし……
 ふあ……　だめじゃ　ねむい……▼
 そらから　おおきな……
-ふってきて　できた……▼
+……が　ふってきて　できた……▼
 そして　その……　なかには
 よにも　おそろしい……▼
 ……　……　よにも……
@@ -332,7 +334,7 @@
 その穴はな　昔々……
 ふあ……　だめじゃ　眠いわ……▼
 空から　大きな……
-降って　出来た……▼
+……が　降って　出来た……▼
 そして　その……　中には
 世にも　恐ろしい……▼
 ……　……　世にも……
@@ -364,17 +366,17 @@
 しょっちゅう　ながーい　はなし▽
 つきあわされるんだぜ▼
 よるに　なったら　はなしてる
-とちゅうでも　ねちまうし▽
-まったく　フリーダムな▽
-バーちゃんだよ</language>
+とちゅうでも　ねちまうし▼
+ったく　げんき　っていうより
+フリーダムな　バーちゃんだよ</language>
 		<language name="JPN_KANJI" width="256">オレの　バーちゃん　さあ
 昔話が　好きでさ▽
 しょっちゅう　長ーい　話▽
 付き合わされるんだぜ▼
 夜に　なったら　話してる
-途中でも　寝ちまうし▽
-全く　フリーダムな▽
-バーちゃんだよ</language>
+途中でも　寝ちまうし▼
+ったく　元気　っていうより
+フリーダムな　バーちゃんだよ</language>
 	</row>
 
 	<flowchart-group-list>
