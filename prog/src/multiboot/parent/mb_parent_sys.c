@@ -2325,6 +2325,19 @@ static GFL_PROC_RESULT MB_PARENT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_MULTIBOOT );
 
+  if( work->initWork->mode == MPM_MOVIE_TRANS &&
+      work->isNetErr == TRUE )
+  {
+    if( NetErr_App_CheckError() == NET_ERR_CHECK_LIGHT )
+    {
+      NetErr_DispCall( FALSE );
+    }
+    else
+    {
+      NetErr_DispCall( TRUE );
+    }
+  }
+
   return GFL_PROC_RES_FINISH;
 }
 
