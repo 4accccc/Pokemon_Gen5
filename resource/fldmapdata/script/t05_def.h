@@ -13,5 +13,6 @@
 #define SCRID_BG_T05_RAILMAP_01 (6)
 #define SCRID_BG_T05_BOARD_01 (7)
 #define SCRID_T05_RECEPT_01 (8)
+#define SCRID_T05_BOY4_01 (9)
 
 #endif //_T05_DEF_H_

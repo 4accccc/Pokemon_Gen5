@@ -14,6 +14,7 @@
 #define T05_RAILFAN_01                     0
 #define T05_PIPE_01                        1
 #define T05_RECEPT_01                      2
+#define T05_BOY4_01                        3
 
 #endif //ZONE_T05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

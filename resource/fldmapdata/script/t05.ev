@@ -27,6 +27,7 @@ _EVENT_DATA    ev_recover_t05
 _EVENT_DATA    ev_bg_t05_railmap_01	//路線図
 _EVENT_DATA    ev_bg_t05_board_01
 _EVENT_DATA    ev_t05_recept_01		//帰りの電車受付
+_EVENT_DATA    ev_t05_boy4_01
 _EVENT_DATA_END
 
 
@@ -187,6 +188,14 @@ _RET
 /************************************************************/
 EVENT_START	ev_t05_pipe_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t05_iss_01 )
+EVENT_END
+
+
+/************************************************************/
+/*						少年４（ISS説明）					*/
+/************************************************************/
+EVENT_START	ev_t05_boy4_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t05_boy4_01 )
 EVENT_END
 
 
