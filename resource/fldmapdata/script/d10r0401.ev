@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d10r0401.h"
-  //.include  "d10r0401.h"
+  .include  "d10r0401.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,57 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d10r0401
+_EVENT_DATA    ev_d10r0401_poke10_01
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_zone_d10r0401:
-//  _END
+/************************************************************/
+/*							ライ							*/
+/************************************************************/
+EVENT_START	ev_d10r0401_poke10_01
+	_TALK_START_SE_PLAY()
+	
+	_VOICE_PLAY( MONSNO_653,0 )
+	_GIZAPLAINWIN_MSG_POS( msg_d10r0401_poke10_01, POS_UP )
+	_VOICE_WAIT()
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
+	
+	_WILD_BTL_SET_LEGEND( MONSNO_653, 75 )
+	_WILD_LOSE_CHECK( SCWK_ANSWER )
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_d10r0401:
-  //とりあえず最初のラベルだけ生成している
-  _END
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_FLAG_SET( FV_D10R0401_POKE10 )
+		_OBJ_DEL( SCWK_TARGET_OBJID )
+		_WILD_WIN()
+	ELSE
+		_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+	ENDIF
+	
+	_WILD_RETRY_CHECK( SCWK_ANSWER )
+
+	SWITCH $SCWK_ANSWER
+	CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN
+	//勝利した場合、あるいは逃げた場合
+		_SYSWIN_MSG( msg_d10r0401_poke10_02 , POS_DOWN )
+		_LAST_KEYWAIT()
+		_SYSWIN_CLOSE()
+
+	CASE SCR_WILD_BTL_RET_CAPTURE THEN
+	//捕まえた場合
+		//========================================//
+		//捕獲フラグをセット
+		_FLAG_SET( FE_D10R0401_POKE10_GET )
+		//イベント管理用ワークを終了へ
+		$WK_SCENE_D10_LEG = 2
+		//========================================//
+
+    ENDSWITCH
+	
+	//雪の積もっていないマップへ接続変更
+	_SXY_MOVE_EXIT_EVENT( DOOR_ID_D10R0401_D10R0201_EXIT01, 16, 0, 30 )
+	_SXY_MOVE_EXIT_EVENT( DOOR_ID_D10R0401_D10R0301_EXIT01, 16, 0, 31 )
+	
+EVENT_END
+
 
