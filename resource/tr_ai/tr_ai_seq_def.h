@@ -294,6 +294,9 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //みがわり中か？
 	DEF_CMD		AI_IF_MIGAWARI
 
+//ポケモンナンバーのチェック
+	DEF_CMD		AI_CHECK_MONSNO
+
 //------------------------------------------------------------
 //
 //	ランダム分岐
@@ -1437,6 +1440,18 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 	.short	AI_IF_MIGAWARI
 	.long		\side
 	.long		(\adrs-.)-4
+	.endm
+
+//------------------------------------------------------------
+//
+//  ポケモンナンバーのチェック
+//
+//	@param		side	チェックする相手
+//
+//------------------------------------------------------------
+  .macro    CHECK_MONSNO  side
+	.short		AI_CHECK_MONSNO
+	.long		  \side
 	.endm
 
 //------------------------------------------------------------
