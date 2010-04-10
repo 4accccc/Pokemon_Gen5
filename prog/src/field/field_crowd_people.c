@@ -24,6 +24,7 @@
 #include "field/field_msgbg.h"
 
 #include "fieldmap.h"
+#include "ev_time.h"
 #include "field_crowd_people.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h" //SCRID_DUMMY
@@ -396,12 +397,14 @@ static void FIELD_CROWD_PEOPLE_TASK_Create( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
   HEAPID heapID;
   FLDMSGBG* p_fmb = FIELDMAP_GetFldMsgBG( p_fieldmap );
   int timezone;
+  GAMESYS_WORK * p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+  GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys ); 
 
   // 管理システムワーク初期化
   p_wk->p_player  = FIELDMAP_GetFieldPlayer( p_fieldmap );
   p_wk->p_fos     = FIELDMAP_GetMMdlSys( p_fieldmap );
   zone_id = FIELDMAP_GetZoneID( p_fieldmap );
-  timezone = FIELDMAP_GetSeasonTimeZone( p_fieldmap );
+  timezone = EVTIME_GetSeasonTimeZone( p_gdata );
   heapID = FIELDMAP_GetHeapID( p_fieldmap );
 
   GF_ASSERT( timezone < TIMEZONE_MAX );

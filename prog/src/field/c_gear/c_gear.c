@@ -52,6 +52,26 @@
 #endif
 
 
+
+static const u32 _bgpal[]=
+{
+  NARC_c_gear_c_gear_m_NCLR,NARC_c_gear_c_gear_f_NCLR,NARC_c_gear_c_gear_m_NCLR,
+};
+static const u32 _bgcgx[][3]=
+{
+  { NARC_c_gear_c_gear_m1_NCGR,NARC_c_gear_c_gear_f1_NCGR,NARC_c_gear_c_gear_m1_NCGR, },
+  { NARC_c_gear_c_gear_m2_NCGR,NARC_c_gear_c_gear_f2_NCGR,NARC_c_gear_c_gear_m2_NCGR, },
+  { NARC_c_gear_c_gear_m3_NCGR,NARC_c_gear_c_gear_f3_NCGR,NARC_c_gear_c_gear_m3_NCGR, },
+  { NARC_c_gear_c_gear_m4_NCGR,NARC_c_gear_c_gear_f4_NCGR,NARC_c_gear_c_gear_m4_NCGR, },
+  { NARC_c_gear_c_gear_m5_NCGR,NARC_c_gear_c_gear_f5_NCGR,NARC_c_gear_c_gear_m5_NCGR, },
+};
+
+static const u32 _cellpal[]=
+{
+  NARC_c_gear_c_gear_m_obj_NCLR,NARC_c_gear_c_gear_f_obj_NCLR,NARC_c_gear_c_gear_m_obj_NCLR,
+};
+
+
 #define _NET_DEBUG (1)  //デバッグ時は１
 #define _BRIGHTNESS_SYNC (0)  // フェードのＳＹＮＣは要調整
 
@@ -515,6 +535,24 @@ enum
 #define CGEAR_CLACT_BG_PRI  ( 2 )
 
 
+//-------------------------------------
+///	セルACTORユーザー連打ラー
+//=====================================
+enum {
+  CGEAR_REND_SUB,
+
+  CGEAR_REND_MAX,
+} ;
+static const GFL_REND_SURFACE_INIT sc_REND_SURFACE_INIT[ CGEAR_REND_MAX ] = {
+  {
+    0, 0,
+    256, 192,
+    CLSYS_DRAW_SUB,
+    CLSYS_REND_CULLING_TYPE_NOT_AFFINE,
+  },
+};
+
+
 typedef void (StateFunc)(C_GEAR_WORK* pState);
 typedef BOOL (TouchFunc)(int no, C_GEAR_WORK* pState);
 
@@ -558,6 +596,7 @@ struct _C_GEAR_WORK {
   u32 objRes[3];  //CLACTリソース
 
   GFL_CLUNIT *cellUnit;
+  GFL_CLSYS_REND* userRend;
   GFL_CLWK  *cellSelect[C_GEAR_PANEL_WIDTH * C_GEAR_PANEL_HEIGHT];
   GFL_CLWK  *cellCursor[_CLACT_TIMEPARTS_MAX];
   GFL_CLWK  *cellType[_CLACT_TYPE_MAX];
@@ -609,6 +648,7 @@ struct _C_GEAR_WORK {
   u8 startCounter;
   u8 bPanelEdit;
   u8 bgno;
+  u8 sex;
 };
 
 
@@ -645,9 +685,9 @@ static void _gearStartUpAllOff(C_GEAR_WORK* pWork);
 static void _timeAnimation(C_GEAR_WORK* pWork);
 static void _typeAnimation(C_GEAR_WORK* pWork);
 static void _editMarkONOFF(C_GEAR_WORK* pWork,BOOL bOn);
-static void _gearArcCreate(C_GEAR_WORK* pWork, u32 bgno);
+static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno);
 static void _arcGearRelease(C_GEAR_WORK* pWork);
-static void _gearObjResCreate(C_GEAR_WORK* pWork);
+static void _gearObjResCreate(C_GEAR_WORK* pWork, int sex);
 static void _gearObjCreate(C_GEAR_WORK* pWork);
 static void _gearCrossObjCreate(C_GEAR_WORK* pWork);
 
@@ -814,7 +854,7 @@ static void _selectAnimInit(C_GEAR_WORK* pWork,int x,int y)
                                               pWork->objRes[_CLACT_PLT],
                                               pWork->objRes[_CLACT_ANM],
                                               &cellInitData ,
-                                              CLSYS_DEFREND_SUB ,
+                                              CGEAR_REND_SUB,
                                               pWork->heapID );
   GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellSelect[i], TRUE );
   GFL_CLACT_WK_SetDrawEnable( pWork->cellSelect[i], TRUE );
@@ -1900,6 +1940,7 @@ static void _gearGetTypeBestPosition(C_GEAR_WORK* pWork,CGEAR_PANELTYPE_ENUM typ
   _gearXY2PanelScreen(first_x,first_y,px,py);
   CGEAR_SV_SetPanelType( pWork->pCGSV, first_x, first_y, type, TRUE, FALSE );
   _gearPanelBgScreenMake(pWork, first_x, first_y, type );
+  GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
 }
 
 //------------------------------------------------------------------------------
@@ -1931,19 +1972,17 @@ static void _gearPanelBgCreate(C_GEAR_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-static u32 _bgpal[]={NARC_c_gear_c_gear_NCLR,NARC_c_gear_c_gear2_NCLR,NARC_c_gear_c_gear_NCLR};
-static u32 _bgcgx[]={NARC_c_gear_c_gear_NCGR,NARC_c_gear_c_gear2_NCGR,NARC_c_gear_c_gear_NCGR};
 
 
 //static u32 _objpal[]={NARC_c_gear_c_gear_obj_NCLR,NARC_c_gear_c_gear2_obj_NCLR,NARC_c_gear_c_gear_obj_NCLR};
 //static u32 _objcgx[]={NARC_c_gear_c_gear_obj_NCGR,NARC_c_gear_c_gear2_obj_NCGR,NARC_c_gear_c_gear_obj_NCGR};
 
-static void _gearArcCreate(C_GEAR_WORK* pWork, u32 bgno)
+static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno)
 {
   u32 scrno=0;
 
 
-  GFL_ARCHDL_UTIL_TransVramPalette( pWork->handle, _bgpal[ bgno ],
+  GFL_ARCHDL_UTIL_TransVramPalette( pWork->handle, _bgpal[ sex ],
                                     PALTYPE_SUB_BG, 0, 0,  HEAPID_FIELD_SUBSCREEN);
 
 
@@ -1953,7 +1992,7 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, u32 bgno)
     NNSG2dPaletteData* pltt;
     u16* pltt_data;
 
-    buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, _bgpal[ bgno ], &pltt, GFL_HEAP_LOWID(HEAPID_FIELD_SUBSCREEN) );
+    buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, _bgpal[ sex ], &pltt, GFL_HEAP_LOWID(HEAPID_FIELD_SUBSCREEN) );
 
     pltt_data = pltt->pRawData;
     for(y = 0 ; y < _CGEAR_NET_CHANGEPAL_NUM; y++){
@@ -1977,7 +2016,7 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, u32 bgno)
 
 
   // サブ画面BGキャラ転送
-  pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( pWork->handle, _bgcgx[bgno],
+  pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( pWork->handle, _bgcgx[bgno][sex],
                                                                 GEAR_MAIN_FRAME, 0, 0, HEAPID_FIELD_SUBSCREEN);
 
   GFL_ARCHDL_UTIL_TransVramScreenCharOfs(pWork->handle,
@@ -1992,14 +2031,14 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, u32 bgno)
 
 
 
-static void _gearObjResCreate(C_GEAR_WORK* pWork)
+static void _gearObjResCreate(C_GEAR_WORK* pWork, int sex)
 {
   u32 scrno=0;
 
 
 
   pWork->objRes[_CLACT_PLT] = GFL_CLGRP_PLTT_Register( pWork->handle,
-                                                       NARC_c_gear_c_gear_obj_NCLR,
+                                                       _cellpal[sex],
                                                        CLSYS_DRAW_SUB , 0 , HEAPID_FIELD_SUBSCREEN );
   pWork->objRes[_CLACT_CHR] = GFL_CLGRP_CGR_Register( pWork->handle,
                                                       NARC_c_gear_c_gear_obj_NCGR ,
@@ -2178,14 +2217,17 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
                              GFL_ARCUTIL_TRANSINFO_GetSize(pWork->subchar));
 
 //    _arcGearRelease(pWork);
-    _gearArcCreate(pWork, pWork->bgno);
+
+    pWork->bgno++;
+    pWork->bgno = pWork->bgno % _CGEAR_TYPE_PATTERN_NUM;
+
+    CGEAR_SV_SetCGearType( pWork->pCGSV, pWork->bgno );
+
+    _gearArcCreate(pWork, pWork->sex, pWork->bgno);  //ARC読み込み BG&OBJ
     _gearPanelBgCreate(pWork);	// パネル作成
   //  _gearObjCreate(pWork); //CLACT設定
     //_gearCrossObjCreate(pWork);
     _gearMarkObjDrawEnable(pWork,TRUE);
-
-    pWork->bgno++;
-    pWork->bgno = pWork->bgno % _CGEAR_TYPE_PATTERN_NUM;
 
     break;
 
@@ -2233,7 +2275,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
         GFL_CLACTPOS pos;
         pos.x = pWork->tpx;  // OBJ表示の為の補正値
         pos.y = pWork->tpy;
-        GFL_CLACT_WK_SetPos(pWork->cellMove, &pos, CLSYS_DEFREND_SUB);
+        GFL_CLACT_WK_SetPos(pWork->cellMove, &pos, CGEAR_REND_SUB);
       }
       else if(pWork->cellMoveCreateCount > 20){
         GFL_CLWK_DATA cellInitData;
@@ -2255,7 +2297,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
                                                  pWork->objRes[_CLACT_PLT],
                                                  pWork->objRes[_CLACT_ANM],
                                                  &cellInitData ,
-                                                 CLSYS_DEFREND_SUB ,
+                                                 CGEAR_REND_SUB,
                                                  pWork->heapID );
           GFL_CLACT_WK_SetDrawEnable( pWork->cellMove, TRUE );
           GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellMove, TRUE );
@@ -2403,7 +2445,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
                                                 pWork->objRes[_CLACT_PLT],
                                                 pWork->objRes[_CLACT_ANM],
                                                 &cellInitData ,
-                                                CLSYS_DEFREND_SUB ,
+                                                CGEAR_REND_SUB,
                                                 pWork->heapID );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[i], TRUE );
   }
@@ -2431,7 +2473,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
                                               pWork->objRes[_CLACT_PLT],
                                               pWork->objRes[_CLACT_ANM],
                                               &cellInitData ,
-                                              CLSYS_DEFREND_SUB,
+                                              CGEAR_REND_SUB,
                                               pWork->heapID );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellType[i], FALSE );
   }
@@ -2454,7 +2496,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
                                               pWork->objRes[_CLACT_PLT],
                                               pWork->objRes[_CLACT_ANM],
                                               &cellInitData ,
-                                              CLSYS_DEFREND_SUB,
+                                              CGEAR_REND_SUB,
                                               pWork->heapID );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellStartUp[i], FALSE );
     GFL_CLACT_WK_SetAutoAnmSpeed( pWork->cellStartUp[i], FX32_ONE*2 );
@@ -2615,7 +2657,7 @@ static void _gearCrossObjCreate(C_GEAR_WORK* pWork)
                                                pWork->objRes[_CLACT_PLT],
                                                pWork->objRes[_CLACT_ANM],
                                                &cellInitData ,
-                                               CLSYS_DEFREND_SUB,
+                                               CGEAR_REND_SUB,
                                                pWork->heapID );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCross[i], TRUE );
     GFL_CLACT_WK_SetAnmIndex( pWork->cellCross[i], 16);
@@ -2632,7 +2674,7 @@ static void _gearCrossObjCreate(C_GEAR_WORK* pWork)
                                                pWork->objRes[_CLACT_PLT],
                                                pWork->objRes[_CLACT_ANM],
                                                &cellInitData ,
-                                               CLSYS_DEFREND_SUB,
+                                               CGEAR_REND_SUB,
                                                pWork->heapID );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCrossBase, TRUE );
     
@@ -2651,7 +2693,7 @@ static void _gearCrossObjCreate(C_GEAR_WORK* pWork)
                                             pWork->objRes[_CLACT_PLT],
                                             pWork->objRes[_CLACT_ANM],
                                             &cellInitData ,
-                                            CLSYS_DEFREND_SUB,
+                                            CGEAR_REND_SUB,
                                             pWork->heapID );
     GFL_CLACT_WK_SetDrawEnable( pWork->cellRadar, TRUE );
   }
@@ -2733,12 +2775,19 @@ static void _gearCrossObjDelete(C_GEAR_WORK* pWork)
 static void _modeInit(C_GEAR_WORK* pWork,BOOL bBoot)
 {
   MYSTATUS* pMy = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(pWork->pGameSys) );
-  u32 bgno = MyStatus_GetMySex(pMy);
+
+  pWork->sex = MyStatus_GetMySex(pMy);
+  pWork->bgno = CGEAR_SV_GetCGearType(pWork->pCGSV);
 
   //セル系システムの作成
   pWork->cellUnit = GFL_CLACT_UNIT_Create( 56+_CLACT_TIMEPARTS_MAX+STARTUP_ANIME_OBJ_MAX, 0 , pWork->heapID );
-  _gearArcCreate(pWork, bgno);  //ARC読み込み BG&OBJ
-  _gearObjResCreate(pWork);
+
+  // ユーザーレンダラー設定
+  pWork->userRend = GFL_CLACT_USERREND_Create( sc_REND_SURFACE_INIT, CGEAR_REND_MAX, pWork->heapID );
+  GFL_CLACT_UNIT_SetUserRend( pWork->cellUnit, pWork->userRend );
+  
+  _gearArcCreate(pWork, pWork->sex, pWork->bgno);  //ARC読み込み BG&OBJ
+  _gearObjResCreate(pWork, pWork->sex);
   if(bBoot){
     _gearBootInitScreen(pWork);
   }
@@ -2810,6 +2859,7 @@ static void _workEnd(C_GEAR_WORK* pWork)
   }
   _arcGearRelease(pWork);
 
+  GFL_CLACT_USERREND_Delete( pWork->userRend );
   GFL_CLACT_UNIT_Delete( pWork->cellUnit );
 
 
@@ -2928,11 +2978,11 @@ static void _typeAnimation(C_GEAR_WORK* pWork)
     _gearGetTypeBestPosition(pWork, CGEAR_PANELTYPE_IR+i, &x, &y);
     x *= 8;
     y *= 8;
-    //		GFL_CLACT_WK_GetPos( pWork->cellType[i], &pos , CLSYS_DEFREND_SUB);
+    //		GFL_CLACT_WK_GetPos( pWork->cellType[i], &pos , CGEAR_REND_SUB);
     //		if((pos.x != x) || (pos.y != y)){
     pos.x = x+24-6-2;  // OBJ表示の為の補正値
     pos.y = y+6+6+3;
-    GFL_CLACT_WK_SetPos(pWork->cellType[i], &pos, CLSYS_DEFREND_SUB);
+    GFL_CLACT_WK_SetPos(pWork->cellType[i], &pos, CGEAR_REND_SUB);
 
     // X位置をプライオリティに。
     GFL_CLACT_WK_SetSoftPri( pWork->cellType[i], x/8 );
@@ -3058,8 +3108,6 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
   case STARTUP_SEQ_TBL_IN_WAIT:
     if( _gearStartUpMain( pWork ) == TRUE ){
 
-      // 最終フレームで全消し
-      _gearStartUpAllOff( pWork );
       pWork->startCounter = 0;
       pWork->state_seq++;
     }
@@ -3069,6 +3117,8 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
     
     pWork->startCounter ++;
     if( pWork->startCounter >= STARTUP_TBL_ALPHA_TIME_WAIT ){
+      // 最終フレームで全消し
+      _gearStartUpAllOff( pWork );
       pWork->startCounter = 0;
       pWork->state_seq++;
     }
@@ -3436,6 +3486,11 @@ GMEVENT* CGEAR_EventCheck(C_GEAR_WORK* pWork, BOOL bEvReqOK, FIELD_SUBSCREEN_WOR
       event = EVENT_FieldSubProc_Callback(pWork->pGameSys, fieldWork, FS_OVERLAY_ID(cg_help),&CGearHelp_ProcData,initWork,NULL,initWork);
     }
     break;
+
+
+  case FIELD_SUBSCREEN_ACTION_CGEAR_POWER:
+    event = EVENT_ChangeSubScreen(pWork->pGameSys, fieldWork, FIELD_SUBSCREEN_CGEAR_ONOFF);
+    break;
   }
   return event;
 }
@@ -3459,16 +3514,15 @@ static void _modeSetSavePanelType( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pSV,int x
     for( j=0; j<C_GEAR_PANEL_WIDTH; j++ ){
       if( CGEAR_SV_GetPanelType( pSV, j, i ) == type ){
 
-        if( CGEAR_SV_IsPanelTypeLast( pSV, j, i, type ) ){
-          // LastをOFFにする。
-          CGEAR_SV_SetPanelType( pSV, j, i, type, FALSE, FALSE );
-        }
-        
         if( CGEAR_SV_IsPanelTypeIcon( pSV, j, i ) ){
           // OFFにする。
           CGEAR_SV_SetPanelType( pSV, j, i, type, FALSE, TRUE );
           _gearPanelBgScreenMake(pWork, j, i, type);  // 色を普通の色に
+        }else if( CGEAR_SV_IsPanelTypeLast( pSV, j, i, type ) ){
+          // LastをOFFにする。
+          CGEAR_SV_SetPanelType( pSV, j, i, type, FALSE, FALSE );
         }
+        
       }
     }
   }
@@ -3514,7 +3568,7 @@ static void _CursorSelectAnimeWait( C_GEAR_WORK* pWork )
         pWork->createEvent = FIELD_SUBSCREEN_ACTION_CGEAR_HELP;
         break;
       case _CLACT_POWER:
-        pWork->createEvent = FIELD_SUBSCREEN_ACTION_CGEAR_HELP;
+        pWork->createEvent = FIELD_SUBSCREEN_ACTION_CGEAR_POWER;
         break;
 
       default:

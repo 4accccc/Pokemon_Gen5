@@ -235,7 +235,7 @@ CGEAR_PANELTYPE_ENUM CGEAR_SV_GetPanelType(const CGEAR_SAVEDATA* pSV,int x, int 
     return CGEAR_PANELTYPE_NONE;
   }
   // 上位4ビットはカット
-	return pSV->type[x][y] & 0x0f;
+	return (pSV->type[x][y] & 0x0f);
 }
 
 //----------------------------------------------------------------------------
@@ -323,6 +323,7 @@ BOOL CGEAR_SV_IsPanelTypeLast(const CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANE
 //--------------------------------------------------------------------------------------------
 void CGEAR_SV_SetPanelType(CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENUM type, BOOL icon, BOOL last)
 {
+  u32 set_type;
 	GF_ASSERT(type < CGEAR_PANELTYPE_MAX);
   if(!(type < CGEAR_PANELTYPE_MAX)){
     return;
@@ -335,23 +336,24 @@ void CGEAR_SV_SetPanelType(CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENU
   if(!(y < C_GEAR_PANEL_HEIGHT)){
     return;
   }
-  if( icon && 
-      (type == CGEAR_PANELTYPE_IR) ||
+  set_type = type;
+  if( (icon == TRUE) && 
+      ( (type == CGEAR_PANELTYPE_IR) ||
       (type == CGEAR_PANELTYPE_WIFI) ||
-      (type == CGEAR_PANELTYPE_WIRELESS) ){
+      (type == CGEAR_PANELTYPE_WIRELESS) ) ){
 
-    type = CGEAR_PANELTYPE_GET_ICON_TYPE(type);
+    set_type = CGEAR_PANELTYPE_GET_ICON_TYPE(set_type);
   }
   if( last ){
     if( type == CGEAR_PANELTYPE_IR ){
-      type = CGEAR_PANELTYPE_GET_LAST_IR(type);
+      set_type = CGEAR_PANELTYPE_GET_LAST_IR(set_type);
     }else if( type == CGEAR_PANELTYPE_WIFI ){
-      type = CGEAR_PANELTYPE_GET_LAST_WIFI(type);
+      set_type = CGEAR_PANELTYPE_GET_LAST_WIFI(set_type);
     }else if( type == CGEAR_PANELTYPE_WIRELESS ){
-      type = CGEAR_PANELTYPE_GET_LAST_WIRELESS(type);
+      set_type = CGEAR_PANELTYPE_GET_LAST_WIRELESS(set_type);
     }
   }
-	pSV->type[x][y] = type;
+	pSV->type[x][y] = set_type;
 }
 
 //----------------------------------------------------------------------------

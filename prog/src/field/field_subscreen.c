@@ -18,6 +18,7 @@
 #include "infowin/infowin.h"
 #include "c_gear/c_gear.h"
 #include "c_gear/no_gear.h"
+#include "c_gear/c_gear_power_onoff.h"
 #include "field_menu.h"
 #include "dowsing/dowsing.h"
 
@@ -82,6 +83,7 @@ struct _FIELD_SUBSCREEN_WORK {
     GFL_SNDVIEWER * gflSndViewer;
     void * checker;
     REPORT_WORK * reportWork;
+    CGEAR_POWER_ONOFF * cgear_power_onoff;
   };
   u16 angle_h;
   u16 angle_v;
@@ -172,6 +174,12 @@ static void update_report_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 static void draw_report_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 
 
+static void init_cgear_power_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
+static void update_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
+static void exit_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork );
+static GMEVENT* evcheck_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK );
+
+
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
@@ -256,6 +264,15 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     evcheck_nomal_subscreen,
     exit_normal_subscreen,
     actioncallback_normal_subscreen,
+  },
+  { // CGEAR 電源ONOFF
+    FIELD_SUBSCREEN_CGEAR_ONOFF,         // CGEAR電源ON　OFF画面
+    init_cgear_power_subscreen,
+    update_cgear_power_subscreen,
+    NULL ,
+    evcheck_cgear_power_subscreen,
+    exit_cgear_power_subscreen,
+    NULL,
   },
 #if PM_DEBUG
   { // デバッグライト制御パネル
@@ -1391,5 +1408,51 @@ BOOL FIELD_SUBSCREEN_CheckReportType( FIELD_SUBSCREEN_WORK * pWork )
 BOOL FIELD_SUBSCREEN_EnablePalaceUse( FIELD_SUBSCREEN_WORK* pWork )
 {
   return ZONEDATA_EnablePalaceUse(FIELDMAP_GetZoneID( pWork->fieldmap ));
+}
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  CGEAR　電源管理
+ */
+//-----------------------------------------------------------------------------
+static void init_cgear_power_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
+{
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(cgear_onoff));
+  pWork->cgear_power_onoff = CGEAR_POWER_ONOFF_Create( pWork, FIELDMAP_GetGameSysWork(pWork->fieldmap), pWork->heapID );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CGEAR　電源管理　メイン
+ */
+//-----------------------------------------------------------------------------
+static void update_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive )
+{
+  CGEAR_POWER_ONOFF_Main( pWork->cgear_power_onoff, bActive );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CGEAR 電源管理　破棄
+ */
+//-----------------------------------------------------------------------------
+static void exit_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork )
+{
+  CGEAR_POWER_ONOFF_Delete( pWork->cgear_power_onoff );
+
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(cgear_onoff));
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CGEAR　電源管理　イベント管理
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT* evcheck_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK )
+{
+  return CGEAR_POWER_ONOFF_EventCheck( pWork->cgear_power_onoff, bEvReqOK, pWork );
 }
 
