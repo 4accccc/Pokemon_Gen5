@@ -417,9 +417,9 @@ VMCMD_RESULT EvCmdObjPosChange( VMHANDLE *core, void *wk )
 	MMDL *mmdl;
   SCRCMD_WORK *work = wk;
 	u16 obj_id	= SCRCMD_GetVMWorkValue( core, work );
-	u16 x		= SCRCMD_GetVMWorkValue(core,work);
-	u16 y		= SCRCMD_GetVMWorkValue(core,work);
-	u16 z		= SCRCMD_GetVMWorkValue(core,work);
+	s16 x		= SCRCMD_GetVMWorkValue(core,work);
+	s16 y		= SCRCMD_GetVMWorkValue(core,work);
+	s16 z		= SCRCMD_GetVMWorkValue(core,work);
 	u16 dir		= SCRCMD_GetVMWorkValue(core,work);
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   

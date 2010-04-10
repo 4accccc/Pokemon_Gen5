@@ -34,9 +34,9 @@
 VMCMD_RESULT EvCmdMoveBgEventPos( VMHANDLE * core, void * wk )
 {
   u16 id = SCRCMD_GetVMWorkValue( core, wk );
-  u16 gx = SCRCMD_GetVMWorkValue( core, wk );
-  u16 gy = SCRCMD_GetVMWorkValue( core, wk );
-  u16 gz = SCRCMD_GetVMWorkValue( core, wk );
+  s16 gx = SCRCMD_GetVMWorkValue( core, wk );
+  s16 gy = SCRCMD_GetVMWorkValue( core, wk );
+  s16 gz = SCRCMD_GetVMWorkValue( core, wk );
   
   SCRCMD_WORK *work = wk;
   GAMEDATA *       gamedata = SCRCMD_WORK_GetGameData( work );
@@ -51,9 +51,9 @@ VMCMD_RESULT EvCmdMoveBgEventPos( VMHANDLE * core, void * wk )
 VMCMD_RESULT EvCmdMoveExitEventPos( VMHANDLE * core, void * wk )
 {
   u16 id = SCRCMD_GetVMWorkValue( core, wk );
-  u16 gx = SCRCMD_GetVMWorkValue( core, wk );
-  u16 gy = SCRCMD_GetVMWorkValue( core, wk );
-  u16 gz = SCRCMD_GetVMWorkValue( core, wk );
+  s16 gx = SCRCMD_GetVMWorkValue( core, wk );
+  s16 gy = SCRCMD_GetVMWorkValue( core, wk );
+  s16 gz = SCRCMD_GetVMWorkValue( core, wk );
   
   SCRCMD_WORK *work = wk;
   GAMEDATA *       gamedata = SCRCMD_WORK_GetGameData( work );
@@ -69,9 +69,9 @@ VMCMD_RESULT EvCmdMoveNPCDataPos( VMHANDLE * core, void * wk )
 {
   u16 id  = SCRCMD_GetVMWorkValue( core, wk );
   u16 dir = SCRCMD_GetVMWorkValue( core, wk );
-  u16 gx  = SCRCMD_GetVMWorkValue( core, wk );
-  u16 gy  = SCRCMD_GetVMWorkValue( core, wk );
-  u16 gz  = SCRCMD_GetVMWorkValue( core, wk );
+  s16 gx  = SCRCMD_GetVMWorkValue( core, wk );
+  s16 gy  = SCRCMD_GetVMWorkValue( core, wk );
+  s16 gz  = SCRCMD_GetVMWorkValue( core, wk );
   s32 y;
   
   SCRCMD_WORK *work = wk;

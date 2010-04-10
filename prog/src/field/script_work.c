@@ -465,9 +465,13 @@ u16 * SCRIPT_GetEventWork( SCRIPT_WORK *sc, GAMEDATA *gdata, u16 work_no )
 	if( work_no < SCWK_START ){
 		return EVENTWORK_GetEventWorkAdrs(ev,work_no);
 	}
+
+  if ( work_no < SCWK_END ){
+    //スクリプト制御ワークの中で、ANSWORKなどのワークを確保しています
+    return getTempWork( sc, work_no );
+  }
 	
-	//スクリプト制御ワークの中で、ANSWORKなどのワークを確保しています
-  return getTempWork( sc, work_no );
+  return NULL;
 }
 
 //------------------------------------------------------------------
