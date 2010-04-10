@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-04-07T22:34:55"/>
+	<create user="matsushima" host="W00181" date="2010-04-10T19:27:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -300,9 +300,16 @@
 ●「！」が表示され、入り口方向を向く。
 ●一拍（ウエイト８ｆ）後、このセリフ。</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
-		<language name="JPN" width="256">ビクティ●の力が
-</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">むげんの　エネルギーを　つくりだし
+まわりに　ほうしゃしている…[BE:01:ページ切り替え（クリア）]
+その　エネルギーに　ふれたものは
+じつりょく　いじょうの　ちからを[BE:00:ページ切り替え（行送り）]
+はっきすることが　できるという…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">無限の　エネルギーを　作り出し
+まわりに　放射している…[BE:01:ページ切り替え（クリア）]
+その　エネルギーに　触れた者は
+実力　以上の　力を[BE:00:ページ切り替え（行送り）]
+発揮することが　できるという…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d12r0102_plasma02_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -310,7 +317,8 @@
 		<attribute name="キャラ指定">HAKAIM</attribute>
 		<language name="JPN" width="256">しょうりに　みちびく　ポケモン
 それが　この　ビクティ●だ…！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">勝利に　導く　ポケモン
+それが　この　ビクティ●だ…！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d12r0102_plasma02_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -318,12 +326,14 @@
 
 ●セリフの後、戦闘開始。</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
-		<language name="JPN" width="256">プラズマだんの　しょうりのため
-ビクティ●の　ちからは[BE:00:ページ切り替え（行送り）]
-われわれが　つかわせてもらう…[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">プラズマだんが　しょうりするため
+ビクティ●は　われわれが　いただく…[BE:01:ページ切り替え（クリア）]
 おまえのような　こどもに
 ジャマは　させない！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">プラズマ団が　勝利するため
+ビクティ●は　我々が　いただく…[BE:01:ページ切り替え（クリア）]
+お前のような　子供に
+ジャマは　させない！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d12r0102_plasma02_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -334,9 +344,13 @@
 		<language name="JPN" width="256">わたしに　かったからと　いって
 あんしんするのは　まだ　はやい…[BE:01:ページ切り替え（クリア）]
 ビクティ●は　にんげんの　よくぼうに
-ふりまわされた　ポケモン…[BE:01:ページ切り替え（クリア）]
+ふりまわされてきた　ポケモン…[BE:01:ページ切り替え（クリア）]
 みろ……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">わたしに　勝ったからと　いって
+安心するのは　まだ　早い…[BE:01:ページ切り替え（クリア）]
+ビクティ●は　人間の　欲望に
+振り回されてきた　ポケモン…[BE:01:ページ切り替え（クリア）]
+みろ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d12r0102_plasma02_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -350,7 +364,10 @@
 おまえに　いかりを　ぶつけようと[BE:00:ページ切り替え（行送り）]
 しているぞ……[BE:01:ページ切り替え（クリア）]
 かくごするのだな……</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">自分の　運命を　のろい
+お前に　怒りを　ぶつけようと[BE:00:ページ切り替え（行送り）]
+しているぞ……[BE:01:ページ切り替え（クリア）]
+覚悟するのだな……</language>
 	</row>
 
 	<row id="msg_d12r0102_plasma02_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -363,23 +380,32 @@
 		<attribute name="キャラ指定">HAKAIM</attribute>
 		<language name="JPN" width="256">ビクティ●と　ともに　いきるとは
 かこくな　うんめいも　ともにすること[BE:01:ページ切り替え（クリア）]
-おまえに　どれほどの　かくごがあるか
+おまえに　その　かくごが　あるのか
 いつか　ためさせて　もらうぞ…！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN_KANJI" width="256">ビクティ●と　ともに　生きるとは
+過酷な　運命も　ともにすること[BE:01:ページ切り替え（クリア）]
+お前に　その　覚悟が　あるのか
+いつか　ためさせてもらうぞ…！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d12r0102_plasma02_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>●ビクティを倒したときのセリフ</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<language name="JPN" width="256">ビクティ●は　まだ　ちかくにいて
+おまえの　うごきを　みているぞ…[BE:01:ページ切り替え（クリア）]
+おまえが　へやを　いちど　でていけば
+また　もどってくるだろうな…</language>
+		<language name="JPN_KANJI" width="256">ビクティ●は　まだ　近くにいて
+お前の　動きを　見ているぞ…[BE:01:ページ切り替え（クリア）]
+お前が　部屋を　一度　出て行けば
+また　戻ってくるだろうな…</language>
 	</row>
 
 	<row id="msg_d12r0102_victie_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
 		<comment>●鳴いたあと戦闘開始。</comment>
 		<attribute name="キャラ指定">VICTIE</attribute>
-		<language name="JPN" width="256">きゅきゅわわーんっ！▼</language>
-		<language name="JPN_KANJI" width="256">きゅきゅわわーんっ！▼</language>
+		<language name="JPN" width="256">きゅきゅわわーんっ！</language>
+		<language name="JPN_KANJI" width="256">きゅきゅわわーんっ！</language>
 	</row>
 
 	<row id="msg_d12r0102_narrator_01">
