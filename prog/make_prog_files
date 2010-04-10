@@ -740,6 +740,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_poke_win.c \
         field/scrcmd_evt_lock.c \
         field/palace_warp_check.c \
+        field/event_cg_power.c \
         field/scrcmd_record.c
 
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置

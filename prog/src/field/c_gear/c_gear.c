@@ -39,6 +39,7 @@
 #include "../event_fieldmap_control.h"  //CGHELPŒÄ‚Ño‚µ
 #include "../event_research_radar.h"  //EVENT_ResearchRadar
 #include "../event_subscreen.h"      //EVENT_ChangeSubScreen
+#include "../event_cg_power.h"      //EVENT_ChangeSubScreen
 
 
 #ifdef PM_DEBUG
@@ -126,7 +127,7 @@ static const u32 _cellpal[]=
 #define PANEL_WIDTH (C_GEAR_PANEL_WIDTH)
 #define PANEL_SIZEXY (4)   //
 
-#define _CGEAR_TYPE_PATTERN_NUM (2)
+#define _CGEAR_TYPE_PATTERN_NUM (5)
 
 
 typedef enum{
@@ -3489,7 +3490,7 @@ GMEVENT* CGEAR_EventCheck(C_GEAR_WORK* pWork, BOOL bEvReqOK, FIELD_SUBSCREEN_WOR
 
 
   case FIELD_SUBSCREEN_ACTION_CGEAR_POWER:
-    event = EVENT_ChangeSubScreen(pWork->pGameSys, fieldWork, FIELD_SUBSCREEN_CGEAR_ONOFF);
+    event = EVENT_CGearPower(pWork->pGameSys);
     break;
   }
   return event;

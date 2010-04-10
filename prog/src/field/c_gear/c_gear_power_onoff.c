@@ -102,6 +102,9 @@ enum
 	BG_FRAME_BACK_S	= GFL_BG_FRAME2_S,
 	BG_FRAME_MSG_S	= GFL_BG_FRAME1_S,
 	BG_FRAME_YESNO_S	= GFL_BG_FRAME0_S,
+
+	BG_FRAME_PLATE_M	= GFL_BG_FRAME1_M,
+
 };
 
 
@@ -156,13 +159,15 @@ static const GFL_BG_BGCNT_HEADER BGFrameYesNo = {
 //=====================================
 #define TALK_MSG_POS_X  (1)
 #define TALK_MSG_POS_Y  (1)
-#define TALK_MSG_POS_SIZX  (28)
+#define TALK_MSG_POS_SIZX  (30)
 #define TALK_MSG_POS_SIZY  (4)
 
 #define SYS_MSG_POS_X  (1)
 #define SYS_MSG_POS_Y  (13)
-#define SYS_MSG_POS_SIZX  (28)
+#define SYS_MSG_POS_SIZX  (30)
 #define SYS_MSG_POS_SIZY  (10)
+
+#define SYS_CANNOT_MSG_POS_Y  (6)
 
 
 //-------------------------------------
@@ -211,8 +216,8 @@ struct _CGEAR_POWER_ONOFF {
   HEAPID heapID;
 
   GAMESYS_WORK* p_gamesys;
-
   GAME_COMM_SYS_PTR p_gamecomm;
+  FIELD_SUBSCREEN_WORK* p_subscreen;
 
   GFL_ARCUTIL_TRANSINFO back_area;
   GFL_ARCUTIL_TRANSINFO winframe_area;
@@ -289,6 +294,7 @@ CGEAR_POWER_ONOFF* CGEAR_POWER_ONOFF_Create( FIELD_SUBSCREEN_WORK* p_subscrn,GAM
 
   p_sys->p_gamesys  = p_gamesys;
   p_sys->p_gamecomm = GAMESYSTEM_GetGameCommSysPtr( p_gamesys );
+  p_sys->p_subscreen = p_subscrn;
   
   p_sys->heapID     = heapID;
 
@@ -312,11 +318,6 @@ CGEAR_POWER_ONOFF* CGEAR_POWER_ONOFF_Create( FIELD_SUBSCREEN_WORK* p_subscrn,GAM
 
     }
   }
-
-  // 上画面に輝度オフを掛ける
-  // @todo　VBlankで行うようにする。
-  G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0 , GX_BLEND_PLANEMASK_NONE , 
-                            0 , 0 , -6 );
   
   // 初期化シーケンスを実行
   CGEAR_POWER_ONOFF_Main( p_sys, TRUE );
@@ -333,8 +334,6 @@ CGEAR_POWER_ONOFF* CGEAR_POWER_ONOFF_Create( FIELD_SUBSCREEN_WORK* p_subscrn,GAM
 //-----------------------------------------------------------------------------
 void CGEAR_POWER_ONOFF_Delete( CGEAR_POWER_ONOFF* p_sys )
 {
-  G2_BlendNone();
-
   // 描画環境の破棄
   PowerOnOff_ExitGraphic( p_sys );
 
@@ -358,12 +357,13 @@ void CGEAR_POWER_ONOFF_Main( CGEAR_POWER_ONOFF* p_sys, BOOL active )
     PowerOnOff_UpdateCannot,
   };
 
-  if( active ){
-    
-    if( pFunc[ p_sys->type ]( p_sys ) )
-    {
-      p_sys->event_req = POWER_EVENT_REQ_RET_CGEAR;
-    }
+  // 上画面はアクティブでないじょうたいである必要がある。
+  
+
+  if( pFunc[ p_sys->type ]( p_sys ) )
+  {
+    FIELD_SUBSCREEN_SetAction( p_sys->p_subscreen, FIELD_SUBSCREEN_ACTION_CGEAR_POWER_EXIT );
+    p_sys->event_req = POWER_EVENT_REQ_RET_CGEAR;
   }
 }
 
@@ -485,14 +485,17 @@ static void PowerOnOff_InitBg( CGEAR_POWER_ONOFF* p_sys, HEAPID heapID )
   GFL_BG_SetBGControl( BG_FRAME_BACK_S, &BGFrameBack, GFL_BG_MODE_TEXT );
   GFL_BG_ClearScreen( BG_FRAME_BACK_S );
   GFL_BG_LoadScreenReq( BG_FRAME_BACK_S );
+  GFL_BG_SetVisible( BG_FRAME_BACK_S, VISIBLE_ON );
 
   GFL_BG_SetBGControl( BG_FRAME_MSG_S, &BGFrameMsg, GFL_BG_MODE_TEXT );
   GFL_BG_ClearScreen( BG_FRAME_MSG_S );
   GFL_BG_LoadScreenReq( BG_FRAME_MSG_S );
+  GFL_BG_SetVisible( BG_FRAME_MSG_S, VISIBLE_ON );
 
   GFL_BG_SetBGControl( BG_FRAME_YESNO_S, &BGFrameYesNo, GFL_BG_MODE_TEXT );
   GFL_BG_ClearScreen( BG_FRAME_YESNO_S );
   GFL_BG_LoadScreenReq( BG_FRAME_YESNO_S );
+  GFL_BG_SetVisible( BG_FRAME_YESNO_S, VISIBLE_ON );
 
   // バックグラウンドを設定
   {
@@ -623,6 +626,9 @@ static void PowerOnOff_ExitWin( CGEAR_POWER_ONOFF* p_sys )
   if( p_sys->p_printwk ){
     PRINTSYS_PrintStreamDelete( p_sys->p_printwk );
     p_sys->p_printwk = NULL;
+
+    GFL_STR_DeleteBuffer( p_sys->p_str );
+    p_sys->p_str = NULL;
   }
   GFL_TCBL_Exit( p_sys->p_tcbl );
   GFL_BMPWIN_Delete( p_sys->p_sysmsg );
@@ -646,13 +652,13 @@ static void PowerOnOff_PrintMsg( CGEAR_POWER_ONOFF* p_sys, GFL_BMPWIN* p_win, u3
 {
   STRBUF* p_str;
 
-
   p_str = GFL_MSG_CreateString( p_sys->p_msgdata, strID );
   
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(p_win), 0, 0, p_str, p_sys->p_font );
-  
-  BmpWinFrame_WriteAreaMan( p_win, WINDOW_TRANS_ON_V, 
+  BmpWinFrame_WriteAreaMan( p_win, WINDOW_TRANS_ON, 
       p_sys->winframe_area, PLTID_BG_WIN_S );
+  
+  GFL_BMPWIN_TransVramCharacter( p_win );
   
   GFL_STR_DeleteBuffer( p_str );
 }
@@ -690,7 +696,7 @@ static BOOL PowerOnOff_PrintStreamUpdate( CGEAR_POWER_ONOFF* p_sys )
 
   switch( PRINTSYS_PrintStreamGetState(p_sys->p_printwk) ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
-    if( GFL_UI_TP_GetTrg() == TRUE ){
+    if( GFL_UI_TP_GetCont() == TRUE ){
       PRINTSYS_PrintStreamShortWait( p_sys->p_printwk, 0 );
     }
     p_sys->stream_clear_flg = FALSE;
@@ -710,6 +716,9 @@ static BOOL PowerOnOff_PrintStreamUpdate( CGEAR_POWER_ONOFF* p_sys )
     PRINTSYS_PrintStreamDelete( p_sys->p_printwk );
     p_sys->p_printwk = NULL;
     p_sys->stream_clear_flg = FALSE;
+
+    GFL_STR_DeleteBuffer( p_sys->p_str );
+    p_sys->p_str = NULL;
     return TRUE;
   }
 
@@ -733,7 +742,8 @@ static void PowerOnOff_CreateYesNo( CGEAR_POWER_ONOFF* p_sys, HEAPID heapID )
   s_APP_TASKMENU_ITEMWORK[ YESNO_LIST_NO ].str = GFL_MSG_CreateString( p_sys->p_msgdata, cg_power_no );
 
 
-	p_sys->p_yesno	= APP_TASKMENU_OpenMenu( &s_APP_TASKMENU_INITWORK, p_sys->p_yesno_res );
+	p_sys->p_yesno	= APP_TASKMENU_OpenMenuEx( &s_APP_TASKMENU_INITWORK, p_sys->p_yesno_res );
+  APP_TASKMENU_SetDisableKey( p_sys->p_yesno, TRUE );
 
   GFL_STR_DeleteBuffer( s_APP_TASKMENU_ITEMWORK[ YESNO_LIST_YES ].str );
   GFL_STR_DeleteBuffer( s_APP_TASKMENU_ITEMWORK[ YESNO_LIST_NO ].str );
@@ -839,7 +849,10 @@ static BOOL PowerOnOff_UpdateOn( CGEAR_POWER_ONOFF* p_sys )
     break;
 
   case SEQ_ON_END:
-    return TRUE;
+    if( GFL_UI_TP_GetTrg() ){
+      return TRUE;
+    }
+    break;
 
   }
 
@@ -912,6 +925,12 @@ static BOOL PowerOnOff_UpdateCannot( CGEAR_POWER_ONOFF* p_sys )
 {
   switch( p_sys->seq ){
   case SEQ_CANNOT_INIT:
+
+    // window位置を変更
+    GFL_BMPWIN_SetPosY( p_sys->p_sysmsg, SYS_CANNOT_MSG_POS_Y );
+    GFL_BMPWIN_TransVramCharacter( p_sys->p_sysmsg );
+    GFL_BMPWIN_MakeScreen( p_sys->p_sysmsg );
+    
     // 最初のメッセージは、一気に表示しておく。
     PowerOnOff_PrintMsg( p_sys, p_sys->p_sysmsg, cg_power_05 );
 
