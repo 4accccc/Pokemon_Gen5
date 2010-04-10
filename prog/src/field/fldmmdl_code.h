@@ -630,7 +630,7 @@
 #define AC_ACT0_LOOP 0xb5 ///<演技(特定OBJ専用
 #define AC_ACT1_STOP 0xb6 ///<演技(特定OBJ専用
 #define AC_ACT1_LOOP 0xb7 ///<演技(特定OBJ専用
-#define AC_NINJA_ACT0 0x08 ///<演技(NINJA専用 出現アニメ
+#define AC_NINJA_ACT0 0xb8 ///<演技(NINJA専用 出現アニメ
 #define ACMD_MAX 0xb9 ///<アニメーションコマンド最大数
 
 #define ACMD_END 0xfe ///<アニメーションコマンド終了
