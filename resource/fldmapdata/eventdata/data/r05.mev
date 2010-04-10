@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/07 18:17:58
+#save date:2010/04/08 11:21:54
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r05.wms
 #SECTION START:OBJ_EVENT
@@ -266,7 +266,7 @@ R05_MUSICIAN_01
 #OBJ CODE Number
 MUSICIAN
 #MOVE CODE Number
-MV_DMY
+MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
