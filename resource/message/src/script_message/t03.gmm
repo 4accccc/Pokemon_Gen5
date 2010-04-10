@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-08T12:13:59"/>
+	<create user="matsumiya" host="W00224" date="2010-04-10T14:54:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_t03_sign1_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+	<row id="msg_t03_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ここは　カゴメタウン
@@ -435,7 +435,6 @@ GRIDX=６６１、GRIDZ=１８９辺り</comment>
 
 	<row id="msg_t03_fishing_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
 		<comment>♂
-
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
 
@@ -476,7 +475,7 @@ GRIDX=６６５、GRIDZ=１６１辺り</comment>
 GRIDX=６５２、GRIDZ=１７８辺り
 
 ※このＯＢＪは立体交差の誘導のため
-移動させません</comment>
+　移動させません</comment>
 		<attribute name="キャラ指定">waitress</attribute>
 		<language name="JPN" width="256">よのなか　たくさんの　ひとがいて
 そのひとの　かずだけ　こせいや▽
@@ -505,7 +504,6 @@ GRIDX=６６１、GRIDZ=１７７辺り</comment>
 
 	<row id="msg_t03_poke_01" back-color="#00ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
-
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
 
@@ -517,7 +515,6 @@ GRIDX=６４１、GRIDZ=１７1辺り</comment>
 
 	<row id="msg_t03_middleman2_01" back-color="#00ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
-
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
 

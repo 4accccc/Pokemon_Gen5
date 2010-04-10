@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T15:55:54"/>
+	<create user="matsumiya" host="W00224" date="2010-04-10T14:54:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -552,12 +552,11 @@
 	</row>
 
 	<row id="msg_t03r0101_middleman2_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>※金曜日のみ出現しない
+		<comment>♂
+※金曜日のみ出現しない
 
 ※朝になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
-
-♂</comment>
+※消すタイミングはzoneチェンジ＋時間参照</comment>
 		<attribute name="キャラ指定">middleman2</attribute>
 		<language name="JPN" width="256">オレの　ポケモン　いつも　かってに
 あそびに　いっちゃうんだよ▼
@@ -570,22 +569,20 @@
 	</row>
 
 	<row id="msg_t03r0101_poke_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>※土曜日のみ出現しない
+		<comment>♂
+※土曜日のみ出現しない
 
 ※朝になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
-
-♂</comment>
+※消すタイミングはzoneチェンジ＋時間参照</comment>
 		<attribute name="キャラ指定">POKE19</attribute>
 		<language name="JPN" width="256">チラーミィ『グッググ……</language>
 		<language name="JPN_KANJI" width="256">チラーミィ『グッググ……</language>
 	</row>
 
 	<row id="msg_t03r0101_middlewoman1_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>※朝になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
-
-♀</comment>
+		<comment>♀
+※朝になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照</comment>
 		<attribute name="キャラ指定">middlewoman1</attribute>
 		<language name="JPN" width="256">ここは　カゴメタウン▼
 おはようから　おやすみまで
@@ -596,12 +593,11 @@
 	</row>
 
 	<row id="msg_t03r0101_babyboy2_01" back-color="#ffffff,,,,,,,,,,,,,,,,,,">
-		<comment>※月曜日のみ出現しない
+		<comment>♂
+※月曜日のみ出現しない
 
 ※朝になるといなくなる
-※消すタイミングはzoneチェンジ＋時間参照
-
-♂</comment>
+※消すタイミングはzoneチェンジ＋時間参照</comment>
 		<attribute name="キャラ指定">BABYBOY2</attribute>
 		<language name="JPN" width="256">よるに　なると　おおきな　あなから
 おばけが　でてくるから　おうちに▽
