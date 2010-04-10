@@ -127,10 +127,11 @@ extern BOOL GFL_BACKUP_Erase(GFL_SAVEDATA * sv, u32 heap_temp_id);
  * フラッシュを工場出荷状態の値でクリアする
  *
  * @param   heap_id		    テンポラリヒープ
- * @param   flash_size		フラッシュのサイズ(byte)
+ * @param	  start_address	消去開始位置(フラッシュのアドレス（０～）※セクタ指定ではない)
+ * @param   erase_size		消去するサイズ(byte)
  */
 //==================================================================
-extern void GFL_BACKUP_FlashErase(HEAPID heap_id, u32 flash_size);
+extern void GFL_BACKUP_FlashErase(HEAPID heap_id, u32 start_address, u32 erase_size);
 
 //---------------------------------------------------------------------------
 /**
