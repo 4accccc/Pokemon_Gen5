@@ -2203,12 +2203,13 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
   EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
   FIELD_STATUS* fldstatus = GAMEDATA_GetFieldStatus(gamedata);
 
+#ifdef PM_DEBUG
   { 
     char buf[ZONEDATA_NAME_LENGTH*2];
     ZONEDATA_DEBUG_GetZoneName(buf, loc_req->zone_id);
     TAMADA_Printf("MAPCHG_updateGameData:%s\n", buf);
   }
-
+#endif  //PM_DEBUG
   
   //開始位置セット
   MakeNewLocation(evdata, loc_req, &loc);
