@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T22:57:02"/>
+	<create user="matsumiya" host="W00224" date="2010-04-10T17:23:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -494,8 +494,10 @@
 
 	<row id="TM_GUIDE_C03_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ヒウンシティ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">くもを　つらぬくような
+こうそうビルが　そびえる　だいとし</language>
+		<language name="JPN_KANJI" width="256">雲を　貫くような
+摩天楼が　そびえる　大都市</language>
 	</row>
 
 	<row id="TM_PLACE_C03_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
@@ -536,8 +538,10 @@
 
 	<row id="TM_GUIDE_C04_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ライモンシティ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">テーマパークが　たちならび
+かっき　あふれる　ごらくとし</language>
+		<language name="JPN_KANJI" width="256">テーマパークが　建ち並び
+活気あふれる　娯楽都市</language>
 	</row>
 
 	<row id="TM_PLACE_C04_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
@@ -710,8 +714,10 @@
 
 	<row id="TM_GUIDE_T04_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>サザナミタウン</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">なつは　バカンスの　ひとが　つどい
+にぎわう　すなはまの　ひしょち</language>
+		<language name="JPN_KANJI" width="256">夏は　バカンスの人が　集い
+にぎわう　砂浜の　避暑地</language>
 	</row>
 
 	<row id="TM_PLACE_T04_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
@@ -757,9 +763,11 @@
 	</row>
 
 	<row id="TM_GUIDE_R15R0301_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>パルゲート</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<comment>シフトファクトリー</comment>
+		<language name="JPN" width="256">べつちほうの　ポケモンを
+けんきゅう　している　しせつ</language>
+		<language name="JPN_KANJI" width="256">別地方の　ポケモンを
+研究している　施設</language>
 	</row>
 
 	<row id="TM_GUIDE_D01_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -848,8 +856,10 @@
 
 	<row id="TM_GUIDE_R07R0101_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>タワーオブヘブン</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">たましいを　じょうか　させるという
+おおきな　かねが　ある　たかいとう</language>
+		<language name="JPN_KANJI" width="256">魂を　浄化させるという
+大きな　鐘がある　高い塔</language>
 	</row>
 
 	<row id="TM_GUIDE_R08R0101_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1016,8 +1026,10 @@
 
 	<row id="TM_GUIDE_PALACE" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ハイリンク</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">イッシュの　ちゅうしんに　ある
+ふしぎな　パワーが　やどる　ばしょ</language>
+		<language name="JPN_KANJI" width="256">イッシュの　中心に　ある
+不思議な　パワーの　宿る　場所</language>
 	</row>
 
 	<row id="TM_GUIDE_R09R0301_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
