@@ -380,6 +380,10 @@ static void _anmcallbackfunc( u32 param, fx32 currentFrame )
 {
   G_SYNC_WORK* pWork = (G_SYNC_WORK*)param;
   GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_bed,NANR_gsync_obj_bed);
+
+  GSYNC_DISP_ObjInit(pWork->pDispWork,NANR_gsync_obj_bed_shadow);
+
+  GSYNC_DISP_BedSyncPokemonStart(pWork->pDispWork);
 }
 
 

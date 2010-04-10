@@ -513,7 +513,10 @@ static void _messagePMS( GTSNEGO_WORK *pWork )
     EVENT_GTSNEGO_WORK *pParent = pWork->dbw;
     pParent->result = TRUE;
     pWork->timer = _FRIEND_GREE_DOWN_TIME;
-    GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork, GTSNEGO_040);
+//    GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork, GTSNEGO_040);
+    GTSNEGO_MESSAGE_DispCountryInfo(pWork->pMessageWork, GTSNEGO_040);
+    GTSNEGO_MESSAGE_DeleteCountryMsg(pWork->pMessageWork);
+
     GTSNEGO_MESSAGE_PMSDrawInit(pWork->pMessageWork, pWork->pDispWork);
     GTSNEGO_MESSAGE_PMSDisp( pWork->pMessageWork, pPMS);
     _CHANGE_STATE(pWork, _messageEnd);

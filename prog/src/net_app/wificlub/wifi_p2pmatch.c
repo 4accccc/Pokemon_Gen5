@@ -27,6 +27,7 @@
 #include "savedata/wifihistory.h"
 #include "savedata/config.h"
 #include "savedata/battle_box_save.h"
+#include "savedata/etc_save.h"
 
 #include "system/bmp_menuwork.h"
 #include "system/bmp_winframe.h"
@@ -40,6 +41,8 @@
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/pokeparty.h"
 #include "item/itemsym.h"
+#include "system/net_err.h"
+#include "net/dwc_error.h"
 
 
 
@@ -2097,7 +2100,8 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
 
   if(wk->pParentWork->seq != WIFI_GAME_NONE){
 
-    if(wk->pParentWork->btalk){  //話しかけ接続時
+    
+    if(wk->pParentWork->btalk && (!GFL_NET_DWC_IsDisconnect())){  //話しかけ接続時
       _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_UNIONMATCH);
        WifiP2PMatch_FriendListInit2( wk, seq );
 
@@ -5101,10 +5105,11 @@ void WifiP2PMatchRecvMyStatus(const int netID, const int size, const void* pData
   //０，１，２，３が通信用に入れても良い
   pTargetSt = GAMEDATA_GetMyStatusPlayer(wk->pGameData,netID);  //netIDで代入
   MyStatus_Copy(pData,pTargetSt);
-//仕様
-//  WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(wk->pGameData), pTargetSt);
 
-  //  wk->matchGameMode[netID] = pRecvData[0];
+  {
+    ETC_SAVE_WORK * pETC = SaveData_GetEtc( wk->pSaveData );
+    EtcSave_SetAcquaintance(pETC, MyStatus_GetID(pTargetSt));
+  }
 }
 
 
@@ -7108,8 +7113,6 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
     WIFI_MCR_Draw( &wk->matchroom );
   }
 
-
-
   if(wk->SysMsgQue){
     u8 defL, defS, defB;
     GFL_FONTSYS_GetColor( &defL, &defS, &defB );
@@ -7120,6 +7123,16 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
   }
   if(wk->SysMenuQue){
     PRINTSYS_QUE_Main(wk->SysMenuQue);
+  }
+
+
+  if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+    if(GFL_NET_DWC_ERROR_RESULT_RETURN_PROC==GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE)){
+      WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+      WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+      wk->endSeq = WIFI_GAME_ERROR;
+      return GFL_PROC_RES_FINISH;
+    }
   }
   return GFL_PROC_RES_CONTINUE;
 }

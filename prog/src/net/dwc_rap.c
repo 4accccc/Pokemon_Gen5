@@ -7,6 +7,7 @@
  */
 //=============================================================================
 
+#include <gflib.h>
 #include <nitro.h>
 #include <nnsys.h>
 #include <gflib.h>
@@ -116,7 +117,7 @@ typedef struct
   u8 blockClient;   // クライアントを接続禁止にする
   u8 closedflag;		// ConnectionClosedCallback でホスト数が1になったら切断処理に遷移するのか　TRUEで切断処理に遷移　080602 tomoya
   u8 saveing;  //セーブ中に1
-  u8 bFriendSave;  //ともだちコードセーブ中に更新がかからないようにするフラグ
+  u8 bAutoDisconnect;  //切断があった場合にエラーにする時にTRUE
   u8 bWiFiFriendGroup;  ///< 友達と行うサービスかどうか
   u8 bConnectEnable;  ///< 接続許可と禁止を行う
   u8 sendFinish;  //ack
@@ -1523,13 +1524,10 @@ static void ConnectionClosedCallback(DWCError error,
         MYDWC_DEBUGPRINT("MDSTATE_CANCELFINISH\n");
       }
       else {
-        //ここは削除
-        //                OHNO_PRINT("DWC_CloseAllConnectionsHard");
-        //                DWC_CloseAllConnectionsHard( );
-        //				_dWork->state = MDSTATE_DISCONNECT;
-        //     _dWork->state = MDSTATE_DISCONNECTTING;
+        if(_dWork->bAutoDisconnect){
+          GFL_NET_StateSetError(0);
+        }
         _CHANGE_STATE(MDSTATE_DISCONNECTTING);
-
         MYDWC_DEBUGPRINT("MDSTATE_DISCONNECTTING\n");
       }
       if( _dWork->isvchat )
@@ -3039,5 +3037,17 @@ BOOL GFL_NET_DWC_IsDisconnect(void)
   return FALSE;
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   子機がいない場合にエラーにするかどうかを設定
+ * @param   bOn ONOFF
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void GFL_NET_DWC_SetNoChildErrorCheck(BOOL bOn)
+{
+  _dWork->bAutoDisconnect = bOn;
+}
 
 #endif //GFL_NET_WIFI

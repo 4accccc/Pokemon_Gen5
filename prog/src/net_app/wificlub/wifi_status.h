@@ -16,6 +16,7 @@ typedef struct _WIFI_STATUS WIFI_STATUS;
 //---------------WIFISTATUSデータ
 typedef enum{
   WIFI_GAME_NONE,   // 何も無い	NONEのときは出現もしません
+  WIFI_GAME_ERROR,  //エラーになったとき
   WIFI_GAME_LOGIN_WAIT,    // 待機中 何も選んで無い
   WIFI_GAME_UNIONMATCH,   // 繋ぐだけ。繋いだ後に各ゲームに進む
   WIFI_GAME_VCT,      // VCT

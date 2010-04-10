@@ -96,6 +96,7 @@ typedef struct{
 
 enum{
   P2P_INIT,
+  P2P_INIT2,
   P2P_LOGIN,
   P2P_MATCH_BOARD,
   P2P_SELECT,
@@ -143,6 +144,7 @@ typedef struct {
 
 NextMatchKindTbl aNextMatchKindTbl[] = {
   { 0, P2P_EXIT},
+  { 0, P2P_INIT2},  //ERR
   { 0, P2P_EXIT},
   { 0, P2P_EXIT},
   { 0, P2P_EXIT},
@@ -295,22 +297,21 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
 
   switch (ep2p->seq) {
   case P2P_INIT:
-    ep2p->seq = P2P_LOGIN;
+    GFL_STD_MemClear( &ep2p->login, sizeof(WIFILOGIN_PARAM) );
+    ep2p->seq = P2P_INIT2;
+    ep2p->login.mode = WIFILOGIN_MODE_NORMAL;
+    break;
+  case P2P_INIT2:
     { //WIFI引数の設定
-      GFL_STD_MemClear( &ep2p->login, sizeof(WIFILOGIN_PARAM) );
       ep2p->login.gamedata = GAMESYSTEM_GetGameData(pClub->gsys);
       ep2p->login.display = WIFILOGIN_DISPLAY_UP;
       ep2p->login.bg = WIFILOGIN_BG_NORMAL;
       ep2p->login.nsid = WB_NET_WIFICLUB;
     }
-
-
     ep2p->localProc = GFL_PROC_LOCAL_boot(HEAPID_PROC);
-
     GFL_PROC_LOCAL_CallProc(ep2p->localProc,
                             FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &ep2p->login);
-
-    
+    ep2p->seq = P2P_LOGIN;
     break;
   case P2P_LOGIN:
     if( GFL_PROC_LOCAL_Main(ep2p->localProc) != GFL_PROC_MAIN_NULL ){
@@ -345,6 +346,9 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     break;
   case P2P_SELECT:
     ep2p->seq = aNextMatchKindTbl[ep2p->pMatchParam->seq].kind;
+    if(ep2p->pMatchParam->seq == WIFI_GAME_ERROR){
+       ep2p->login.mode = WIFILOGIN_MODE_ERROR;
+    }
     NET_PRINT("P2P_SELECT %d %d\n",ep2p->seq,ep2p->pMatchParam->seq);
     if(P2P_BATTLE != ep2p->seq){  // バトル以外はいらない
       _pokmeonListWorkFree(ep2p);      // ポケモンリストが終わったら要らない

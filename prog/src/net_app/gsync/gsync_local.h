@@ -104,3 +104,6 @@ extern void GSYNC_DISP_SetPerfomance(GSYNC_DISP_WORK* pWork,int percent);
 extern void GSYNC_DISP_PokemonMove(GSYNC_DISP_WORK* pWork);
 extern void GSYNC_DISP_MoveIconAdd(GSYNC_DISP_WORK* pWork,int index, int no, int form, int sex);
 extern void GSYNC_DISP_SetCallback(GSYNC_DISP_WORK* pWork,int no,const GFL_CLWK_ANM_CALLBACK* cp_data);
+extern void GSYNC_DISP_ResetCallback(GSYNC_DISP_WORK* pWork,int no);
+extern void GSYNC_DISP_BedSyncPokemonStart(GSYNC_DISP_WORK* pWork);
+

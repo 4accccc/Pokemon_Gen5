@@ -469,5 +469,15 @@ extern void DWCRAP_StartVChat(void);
 extern BOOL GFL_NET_DWC_IsDisconnect(void);
 
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   子機がいない場合にエラーにするかどうかを設定
+ * @param   bOn ONOFF
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+extern void GFL_NET_DWC_SetNoChildErrorCheck(BOOL bOn);
+
+
 //#include <ppwlobby/ppw_lobby.h>
 

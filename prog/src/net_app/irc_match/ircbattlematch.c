@@ -43,6 +43,8 @@
 
 #include "net/dwc_rapfriend.h"
 #include "poke_tool/status_rcv.h"
+#include "savedata/etc_save.h"
+
 
 
 enum _IBMODE_SELECT {
@@ -704,7 +706,10 @@ static void _recvFriendCode(const int netID, const int size, const void* pData, 
 
   pWork->bFriendAdd = GFL_NET_DWC_FriendDataAdd(pGameData, pTargetSt, (DWCFriendData*)pData, pWork->heapID);
 
-  //WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pGameData), pTargetSt);
+  {
+    ETC_SAVE_WORK * pETC = SaveData_GetEtc( GAMEDATA_GetSaveControlWork(pGameData) );
+    EtcSave_SetAcquaintance(pETC, MyStatus_GetID(pTargetSt));
+  }
 }
 
 

@@ -436,7 +436,7 @@ static int _DevGetError(void)  ///< ƒGƒ‰[‚ð“¾‚é
 
 static void _DevSetNoChildErrorSet(BOOL bOn)
 {
-  //    GFL_NET_WLSetDisconnectOtherError(bOn);
+  GFL_NET_DWC_SetNoChildErrorCheck(bOn);
 }
 
 
