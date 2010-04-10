@@ -14,6 +14,12 @@
 //	ダブルバトル
 //========================================================
 DoubleAISeq:
+  CHECK_BTL_RULE
+	IF_EQUAL		BTL_RULE_DOUBLE,DoubleAISeq_next
+
+  AIEND
+
+DoubleAISeq_next:
 	IF_MIKATA_ATTACK	DoubleAI_MineSeq
 
 //--------------------------------------
