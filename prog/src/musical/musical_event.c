@@ -1462,19 +1462,17 @@ void MUSICAL_EVENT_SetPosPokeName_Wordset( MUSICAL_EVENT_WORK *evWork , const u8
   
   if( isSet == FALSE )
   {
-    /*
     const u8 nameIdx = MUSICAL_PROGRAM_GetNpcNameIdx( evWork->progWork , idx-1 );
-    GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_extra_dat , HEAPID_PROC );
+    GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_extrapoke_dat , HEAPID_PROC );
     STRBUF * tmpBuf = GFL_MSG_CreateString( msgHandle , nameIdx );
     
-    //@TODO ŠCŠO”Å’j—‘Î‰ž
     WORDSET_RegisterWord( wordSet, wordIdx, tmpBuf, 0, TRUE, PM_LANG );
 
     GFL_STR_DeleteBuffer( tmpBuf );
     GFL_MSG_Delete( msgHandle );
-    */
-    const u16 monsno = MUSICAL_PROGRAM_GetNpcMonsno( evWork->progWork , idx-1 );
-    WORDSET_RegisterPokeMonsNameNo( wordSet, wordIdx, monsno );
+    
+    //const u16 monsno = MUSICAL_PROGRAM_GetNpcMonsno( evWork->progWork , idx-1 );
+    //WORDSET_RegisterPokeMonsNameNo( wordSet, wordIdx, monsno );
   }
 }
 

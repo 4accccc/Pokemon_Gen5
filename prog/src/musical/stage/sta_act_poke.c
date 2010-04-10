@@ -70,6 +70,9 @@ struct _STA_POKE_WORK
   BOOL    isFront;
   BOOL    isDrawItem;
   
+  BOOL    isGround; //ジャンプ禁止
+  BOOL    isNoFlip; //反転禁止
+  
   VecFx32         pokePos;
   VecFx32         scale;
   VecFx32         posOfs; //移動差分(アクション用に
@@ -472,8 +475,24 @@ STA_POKE_WORK* STA_POKE_CreatePoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *mus
   pokeWork->isUpdate = TRUE;
   pokeWork->isFront = TRUE;
   pokeWork->isDrawItem = FALSE;
+  pokeWork->isGround = FALSE;
+  pokeWork->isNoFlip = FALSE;
   pokeWork->updateItemUseFunc = NULL;
   pokeWork->drawWork = MUS_POKE_DRAW_Add( work->drawSys , musPoke , TRUE );
+
+  //ジャンプ・反転のチェック
+  {
+    POKEMON_PERSONAL_DATA *personalData = POKE_PERSONAL_OpenHandle( musPoke->mcssParam.monsno , musPoke->mcssParam.form ,work->heapId );
+    if( POKE_PERSONAL_GetParam( personalData ,  POKEPER_ID_no_jump ) == TRUE )
+    {
+      pokeWork->isGround = TRUE;
+    }
+    if( POKE_PERSONAL_GetParam( personalData ,  POKEPER_ID_reverse ) == TRUE )
+    {
+      pokeWork->isNoFlip = TRUE;
+    }
+    POKE_PERSONAL_CloseHandle( personalData );
+  }
 
   VEC_Set( &pokeWork->pokePos , 0,0,0 );
   VEC_Set( &pokeWork->posOfs , 0,0,0 );
@@ -873,6 +892,11 @@ void STA_POKE_SetRotate( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const u1
 {
   pokeWork->rotate = rotate;
   
+  if( pokeWork->isGround == TRUE )
+  {
+    pokeWork->rotate = 0;
+  }
+
   pokeWork->isUpdate = TRUE;
 }
 
@@ -903,6 +927,11 @@ void STA_POKE_SetPositionOffset( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , 
   pokeWork->posOfs.x = pos->x;
   pokeWork->posOfs.y = pos->y;
   pokeWork->posOfs.z = pos->z;
+
+  if( pokeWork->isGround == TRUE )
+  {
+    pokeWork->posOfs.y = 0;
+  }
   
   pokeWork->isUpdate = TRUE;
 }
@@ -949,7 +978,14 @@ STA_POKE_DIR STA_POKE_GetPokeDir( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 
 void STA_POKE_SetPokeDir( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const STA_POKE_DIR dir )
 {
-  pokeWork->dir = dir;
+  if( pokeWork->isNoFlip == TRUE )
+  {
+    pokeWork->dir = SPD_LEFT;
+  }
+  else
+  {
+    pokeWork->dir = dir;
+  }
   pokeWork->isUpdate = TRUE;
 }
 
