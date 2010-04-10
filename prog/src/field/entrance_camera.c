@@ -141,7 +141,6 @@ struct _ECAM_WORK {
 
   // カメラ復帰用データ
   BOOL              recoveryValidFlag;     // 復帰データが有効かどうか
-  BOOL              recoveryValidFlagSp;   // 復帰データが有効かどうか
   FIELD_CAMERA_MODE initialCameraMode;     // カメラモード
   BOOL              initialCameraAreaFlag; // カメラエリアの動作フラグ
 
@@ -293,9 +292,6 @@ void ENTRANCE_CAMERA_Start( ECAM_WORK* work )
 void ENTRANCE_CAMERA_Recover( ECAM_WORK* work )
 {
   if( work->recoveryValidFlag ) {
-    RecoverCamera( work );
-  }
-  else if( work->recoveryValidFlagSp ) {
     RecoverCamera( work );
   }
 }
@@ -562,6 +558,7 @@ static void ECamSetup_OUT( ECAM_WORK* work )
 
   SetupCamera( work ); // カメラの設定を変更
   AdjustCameraAngle( camera ); // カメラアングルを再計算
+  SetCurrentCameraTargetPos( work->camera ); // ターゲット座標を初期化
 
   // 開始パラメータ
   {
@@ -711,6 +708,7 @@ static void ECamSetup_SP_OUT( ECAM_WORK* work )
 
   SetupCamera( work );
   AdjustCameraAngle( camera );
+  SetCurrentCameraTargetPos( work->camera ); // ターゲット座標を初期化
 
   // 最終パラメータ ( = 現在値 )
   GetCurrentCameraParam( camera, endParam );
@@ -847,7 +845,7 @@ static void SetupCamera( ECAM_WORK* work )
   FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
   // フラグセット
-  work->recoveryValidFlagSp = TRUE;
+  work->recoveryValidFlag = TRUE;
 }
 
 //-----------------------------------------------------------------------------
@@ -863,7 +861,7 @@ static void RecoverCamera( const ECAM_WORK* work )
   FIELD_CAMERA*  camera   = work->camera;
   const ANIME_DATA* anime = GetAnimeData( work );
 
-  GF_ASSERT( work->recoveryValidFlagSp );
+  GF_ASSERT( work->recoveryValidFlag );
 
   // カメラエリアを復帰
   if( anime->cameraAreaOffFlag ) {
