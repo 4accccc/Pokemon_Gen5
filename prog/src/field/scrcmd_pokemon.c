@@ -822,6 +822,7 @@ VMCMD_RESULT EvCmdAddPokemonToPartyEx( VMHANDLE *core, void *wk )
     prm.FormNo = formno;
     prm.Level = level;
     prm.ItemNo = itemno;
+    prm.Tokusei = tokusei;
     if ( prm.Tokusei >= PTL_TOKUSEI_SPEC_MAX)
     {
       GF_ASSERT_MSG(0,"%d:tokusei error",prm.Tokusei);
