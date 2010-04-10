@@ -135,6 +135,9 @@ wheel_scr_def.h: wheel_scr.ev
 tamagetake_scr_def.h: tamagetake_scr.ev
 	$(EV_DEF) tamagetake_scr.ev $(SCR_OFFS_ID_H)
 
+tv_scr_def.h: tv_scr.ev
+	$(EV_DEF) tv_scr.ev $(SCR_OFFS_ID_H)
+
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 
