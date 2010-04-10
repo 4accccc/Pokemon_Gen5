@@ -10,6 +10,7 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "system/pokegra.h"
 #include "musical_mcss.h"
 
 #include "arc_def.h"
@@ -365,54 +366,25 @@ enum{
 static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WORK *maw , const BOOL isBack )
 {
 	const POKEMON_PASO_PARAM *ppp = PP_GetPPPPointerConst( musPoke->pokePara );
-	int	mons_no = musPoke->mcssParam.monsno-1;
+	int	mons_no = musPoke->mcssParam.monsno;
 	int	form_no = musPoke->mcssParam.form;
 	int	sex		= musPoke->mcssParam.sex;
 	int	rare	= musPoke->mcssParam.rare;
-	int	file_start;
-	int	file_offset;
-
-	file_start = MUS_POKEGRA_FILE_MAX * MUSICAL_SYSTEM_ChangeMusicalPokeNumber(mons_no);	//ポケモンナンバーからファイルのオフセットを計算
-
+	BOOL egg = FALSE;
+  u8 dir = 0;
   if( isBack == TRUE )
   {
-    file_offset = MUS_POKEGRA_BACK_M_NCGR;
+    dir = 1;
   }
-  else
-  {
-    file_offset = 0;
-  }
-
-	//本来は別フォルム処理を入れる
-#ifdef DEBUG_ONLY_FOR_ariizumi_nobuhiko
-#warning Another Form Nothing With Musical Poke Mcss
-#endif
-
-	//性別のチェック
-	switch( sex ){
-	case PTL_SEX_MALE:
-		break;
-	case PTL_SEX_FEMALE:
-		//オスメス書き分けしているかチェックする（サイズが０なら書き分けなし）
-		sex = ( GFL_ARC_GetDataSize( ARCID_POKEGRA_MUS, file_start + 1 ) == 0 ) ? PTL_SEX_MALE : PTL_SEX_FEMALE;
-		break;
-	case PTL_SEX_UNKNOWN:
-		//性別なしは、オス扱いにする
-		sex = PTL_SEX_MALE;
-		break;
-	default:
-		//ありえない性別
-		GF_ASSERT(0);
-		break;
-	}
 
 	maw->arcID = ARCID_POKEGRA_MUS;
-	maw->ncbr = file_start + file_offset + MUS_POKEGRA_M_NCBR + sex;
-	maw->nclr = file_start + MUS_POKEGRA_NORMAL_NCLR + rare;
-	maw->ncer = file_start + file_offset + MUS_POKEGRA_NCER;
-	maw->nanr = file_start + file_offset + MUS_POKEGRA_NANR;
-	maw->nmcr = file_start + file_offset + MUS_POKEGRA_NMCR;
-	maw->nmar = file_start + file_offset + MUS_POKEGRA_NMAR;
-	maw->ncec = file_start + file_offset + MUS_POKEGRA_NCEC;
-	
+
+	maw->ncbr = POKEGRA_GetCbrArcIndex( mons_no, form_no, sex, rare,  dir, egg );
+	maw->nclr = POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare,  dir, egg );
+	maw->ncer = POKEGRA_GetCelArcIndex( mons_no, form_no, sex, rare,  dir, egg );
+	maw->nanr = POKEGRA_GetAnmArcIndex( mons_no, form_no, sex, rare,  dir, egg );
+	maw->nmcr = POKEGRA_GetMCelArcIndex( mons_no, form_no, sex, rare,  dir, egg );
+	maw->nmar = POKEGRA_GetMAnmArcIndex( mons_no, form_no, sex, rare,  dir, egg );
+	maw->ncec = POKEGRA_GetNcecArcIndex( mons_no, form_no, sex, rare,  dir, egg );
+
 }

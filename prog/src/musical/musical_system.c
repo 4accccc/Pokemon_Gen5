@@ -151,8 +151,8 @@ MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPoke( POKEMON_PARAM *pokePara , HEAPID
   }
   
   musPara->mcssParam.monsno = PP_Get( pokePara, ID_PARA_monsno,	NULL );
-  musPara->mcssParam.sex    = PP_Get( pokePara, ID_PARA_form_no,	NULL );
-  musPara->mcssParam.form = PP_Get( pokePara, ID_PARA_sex,	NULL );
+  musPara->mcssParam.sex    = PP_Get( pokePara, ID_PARA_sex,	NULL );
+  musPara->mcssParam.form   = PP_Get( pokePara, ID_PARA_form_no,	NULL );
   musPara->mcssParam.rare   = PP_CheckRare( pokePara );
   
   return musPara;

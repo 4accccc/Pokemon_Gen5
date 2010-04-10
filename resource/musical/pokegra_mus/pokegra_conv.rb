@@ -62,42 +62,10 @@ end
 alias sfn get_short_path_name
 
 
-#---------------------------------------------------------
-#メイン
-#---------------------------------------------------------
+def convGraFile( mainFolder , subFolder )
+  searchName = POKEGURA_DATA_DIR + mainFolder + subFolder + "/*.*"
 
-print("ミュージカル用ポケモングラフィック変換\n")
-unless FileTest.exist?(OUTPUT_DIR)
-  FileUtils.mkdir_p(OUTPUT_DIR)
-end
-unless FileTest.exist?(TEMP_DIR)
-  FileUtils.mkdir_p(TEMP_DIR)
-end
-
-data_idx = 0
-
-isRefresh = FALSE
-
-while POKEGURA_CONV_LIST[data_idx] != "end"
-  noStr = POKEGURA_CONV_LIST[data_idx][0..2]
-  dataNo = noStr.to_i
-  countryName = ""
-  
-  if( dataNo <= 151 )
-    countryName = "1_kanto/"
-  elsif( dataNo <= 251 )
-    countryName = "2_jyoto/"
-  elsif( dataNo <= 386 )
-    countryName = "3_houen/"
-  elsif( dataNo <= 493 )
-    countryName = "4_shinou/"
-  else
-    countryName = "5_issyu/"
-  end
-  
-  searchName = POKEGURA_DATA_DIR + countryName + noStr + "/*.*"
-
-  print(noStr + " " + searchName + "\n")
+  print(subFolder + " " + searchName + "\n")
 
   Dir::glob(searchName).each{|fileName|
     #print("[" + fileName + "]\n")
@@ -154,14 +122,51 @@ while POKEGURA_CONV_LIST[data_idx] != "end"
       end
 
     end
-
   }
+end
+#---------------------------------------------------------
+#メイン
+#---------------------------------------------------------
+
+print("ミュージカル用ポケモングラフィック変換\n")
+unless FileTest.exist?(OUTPUT_DIR)
+  FileUtils.mkdir_p(OUTPUT_DIR)
+end
+unless FileTest.exist?(TEMP_DIR)
+  FileUtils.mkdir_p(TEMP_DIR)
+end
+
+data_idx = 0
+
+isRefresh = FALSE
+
+while POKEGURA_CONV_LIST[data_idx] != "end"
+  noStr = POKEGURA_CONV_LIST[data_idx][0..2]
+  dataNo = noStr.to_i
+  countryName = ""
+  
+  if( dataNo <= 151 )
+    countryName = "1_kanto/"
+  elsif( dataNo <= 251 )
+    countryName = "2_jyoto/"
+  elsif( dataNo <= 386 )
+    countryName = "3_houen/"
+  elsif( dataNo <= 493 )
+    countryName = "4_shinou/"
+  else
+    countryName = "5_issyu/"
+  end
+  
+  convGraFile( countryName , noStr )
 
   data_idx = data_idx+1
 
   #isRefresh = TRUE
-
 end #while
+
+convGraFile( "" , "egg" )
+convGraFile( "" , "migawari" )
+
 
 if( isRefresh == TRUE || FileTest.exist?(NARC_NAME) == FALSE )
   
@@ -202,6 +207,51 @@ if( isRefresh == TRUE || FileTest.exist?(NARC_NAME) == FALSE )
     data_idx = data_idx+1
   end #while
 
+  #タマゴ追加
+  noStr = "egg"
+  formStr = "_normal"
+  outFile.write( "\"data/pfwb_" + noStr + formStr + "_m.NCGR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + "_f.NCGR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCER\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NANR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMCR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMAR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCEC\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + "_m.NCGR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + "_f.NCGR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCER\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NANR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMCR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMAR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCEC\"\n" )
+  outFile.write( "\"data/pmwb_" + noStr + formStr + "_n.NCLR\"\n" )
+  outFile.write( "\"data/pmwb_" + noStr + formStr + "_r.NCLR\"\n" )
+  formStr = "_manafi"
+  outFile.write( "\"data/pfwb_" + noStr + formStr + "_m.NCGR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + "_f.NCGR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCER\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NANR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMCR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMAR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCEC\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + "_m.NCGR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + "_f.NCGR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCER\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NANR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMCR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMAR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCEC\"\n" )
+  outFile.write( "\"data/pmwb_" + noStr + formStr + "_n.NCLR\"\n" )
+  outFile.write( "\"data/pmwb_" + noStr + formStr + "_r.NCLR\"\n" )
+
   #アナザーフォルム
   data_idx = 0
   while POKEGURA_CONV_LIST_ANOTHER[data_idx] != "end"
@@ -235,6 +285,22 @@ if( isRefresh == TRUE || FileTest.exist?(NARC_NAME) == FALSE )
     outFile.write( "\"data/pmwb_" + noStr + formStr + "_r.NCLR\"\n" )
     data_idx = data_idx+1
   end #while
+  #身代わり追加
+  noStr = "migawari"
+  formStr = ""
+  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCGR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCER\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NANR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMCR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMAR\"\n" )
+  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCEC\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCGR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCER\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NANR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMCR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMAR\"\n" )
+  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCEC\"\n" )
+  outFile.write( "\"data/pmwb_" + noStr + formStr + ".NCLR\"\n" )
 
   #アナザーフォルム(パレットのみ)
   data_idx = 0
