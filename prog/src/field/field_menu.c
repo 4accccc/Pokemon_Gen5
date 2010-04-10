@@ -679,15 +679,8 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_field_menu_menu_back_NSCR, 
                       FIELD_MENU_BG_BACK ,  0 , 0, FALSE , work->tempHeapId );
 
-  // 上画面プレート
-  GFL_ARCHDL_UTIL_TransVramPaletteEx( arcHandle, NARC_field_menu_menu_bg_NCLR, PALTYPE_MAIN_BG, 
-                                      10*32, 10*32, 32, work->tempHeapId );  
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_field_menu_menu_bg2_NCGR ,
-                                        FIELD_MENU_BG_PLATE_M , 100 , 0, FALSE , work->tempHeapId );
-//  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_field_menu_menu_back2_NSCR, 
-//                                   FIELD_MENU_BG_PLATE_M ,  0 , 0, FALSE , work->tempHeapId );
-  GFL_ARCHDL_UTIL_TransVramScreenCharOfs( arcHandle, NARC_field_menu_menu_back2_NSCR,  
-                                          FIELD_MENU_BG_PLATE_M, 0, 100, 0, 0, work->tempHeapId);
+  // 上画面に「下画面をみてね」プレートを表示
+  FIELD_SUBSCREEN_SetMainLCDNavigationScreen( work->tempHeapId );
 
   // セルアクターリソース転送(カーソル）
   work->objRes[FMO_COM_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle, NARC_field_menu_menu_obj_common_NCLR, 

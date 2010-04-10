@@ -129,6 +129,7 @@ extern void FIELD_SUBSCREEN_SetReportBreak( FIELD_SUBSCREEN_WORK * pWork );
 extern BOOL FIELD_SUBSCREEN_CheckReportType( FIELD_SUBSCREEN_WORK * pWork );
 
 extern BOOL FIELD_SUBSCREEN_EnablePalaceUse( FIELD_SUBSCREEN_WORK* pWork );
+extern void FIELD_SUBSCREEN_SetMainLCDNavigationScreen( HEAPID heapID );
 
 
 #ifdef  PM_DEBUG

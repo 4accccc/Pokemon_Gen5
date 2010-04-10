@@ -1020,6 +1020,36 @@ void FIELD_SUBSCREEN_SetTopMenuItemNo( FIELD_SUBSCREEN_WORK* pWork , const FIELD
 
 }
 
+#include "field_menu.naix"
+
+#define MAIN_NAVIGATION_PAL           ( 10*32 )
+#define MAIN_NABIGATION_PAL_SIZE      (    32 )
+#define MAIN_NAVIGATION_CHARA_OFFSET  (   100 ) ///< １から会話ウインドウのキャラクタが入っているので避けるため
+
+//=============================================================================================
+/**
+ * @brief 上画面に「下をみてね」プレートをBG1面に表示する
+ *
+ */
+//=============================================================================================
+void FIELD_SUBSCREEN_SetMainLCDNavigationScreen( HEAPID heapID )
+{
+  ARCHANDLE *handle = GFL_ARC_OpenDataHandle( ARCID_FIELD_MENU, heapID );
+
+  // BG1面には会話ウインドウ用のキャラクターが転送されているので、その部分は避けるようにする
+  GFL_ARCHDL_UTIL_TransVramPaletteEx( handle, NARC_field_menu_menu_bg_NCLR, PALTYPE_MAIN_BG, 
+                                      MAIN_NAVIGATION_PAL, MAIN_NAVIGATION_PAL, 
+                                      MAIN_NABIGATION_PAL_SIZE, heapID );  
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle , NARC_field_menu_menu_bg2_NCGR ,
+                                        GFL_BG_FRAME1_M , MAIN_NAVIGATION_CHARA_OFFSET, 
+                                        0, FALSE , heapID );
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs( handle, NARC_field_menu_menu_back2_NSCR,  
+                                          GFL_BG_FRAME1_M, 0, MAIN_NAVIGATION_CHARA_OFFSET, 
+                                          0, 0, heapID);
+
+  GFL_ARC_CloseDataHandle( handle );
+
+}
 
 //=============================================================================
 //=============================================================================
@@ -1367,7 +1397,7 @@ static void draw_report_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 // 初期化待ち（プリントキュー待ち）
 BOOL FIELD_SUBSCREEN_CheckReportInit( FIELD_SUBSCREEN_WORK * pWork )
 {
-	return REPORT_CheckInit( pWork->reportWork );
+  return REPORT_CheckInit( pWork->reportWork );
 }
 
 // セーブサイズ設定
