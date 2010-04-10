@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T15:45:09"/>
+	<create user="matsumiya" host="W00224" date="2010-04-10T18:42:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1419" top="222" right="2124" bottom="842" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="163" right="2013" bottom="791" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -299,12 +299,12 @@
 　登場芝居をして
 　GRIDX=4、GRIDZ=10に出現しメッセージ</comment>
 		<attribute name="キャラ指定">ＮＩＮＪＡ</attribute>
-		<language name="JPN" width="256">Ｎさまの　りそうの　えいゆうか
+		<language name="JPN" width="256">Ｎさまが　りそうの　えいゆうか
 おまえとの　たたかいで　わかる▼
 おまえが　ポケモンと
 ともに　あゆむ　いまの　せかいを▽
 まもりたいのか……　それもわかる▼</language>
-		<language name="JPN_KANJI" width="256">Ｎさまの　理想の　英雄か
+		<language name="JPN_KANJI" width="256">Ｎさまが　理想の　英雄か
 おまえとの　戦いで　わかる▼
 おまえが　ポケモンと
 共に　歩む　今の　世界を▽
@@ -318,12 +318,12 @@
 　登場芝居をして
 　GRIDX=4、GRIDZ=10に出現しメッセージ</comment>
 		<attribute name="キャラ指定">ＮＩＮＪＡ</attribute>
-		<language name="JPN" width="256">Ｎさまの　しんじつの　えいゆうか
+		<language name="JPN" width="256">Ｎさまが　しんじつの　えいゆうか
 おまえとの　たたかいで　わかる▼
 おまえが　ポケモンと
 ともに　あゆむ　いまの　せかいを▽
 まもりたいのか……　それもわかる▼</language>
-		<language name="JPN_KANJI" width="256">Ｎさまの　理想の　英雄か
+		<language name="JPN_KANJI" width="256">Ｎさまが　理想の　英雄か
 おまえとの　戦いで　わかる▼
 おまえが　ポケモンと
 共に　歩む　今の　世界を▽

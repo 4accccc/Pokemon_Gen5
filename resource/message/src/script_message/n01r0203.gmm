@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T15:17:28"/>
+	<create user="matsumiya" host="W00224" date="2010-04-10T18:40:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="163" right="2013" bottom="791" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -296,9 +296,11 @@
 		<comment>♀
 ・続けて画面暗転と回復処理</comment>
 		<attribute name="キャラ指定">GODDESS1</attribute>
-		<language name="JPN" width="256">わたしは　あいの　めがみ……
+		<language name="JPN" width="256">わたしは　あいの　めがみ……▼
+Ｎと　たたかう　トレーナーよ
 さあ　やすみなさい……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">わたしは　愛の女神……
+		<language name="JPN_KANJI" width="256">わたしは　愛の女神……▼
+Ｎと　戦う　トレーナーよ
 さあ　やすみなさい……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 

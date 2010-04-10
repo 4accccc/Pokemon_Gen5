@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T14:22:22"/>
+	<create user="matsumiya" host="W00224" date="2010-04-10T18:54:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1597" top="230" right="2302" bottom="850" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -296,16 +296,32 @@
 		<comment>♀</comment>
 		<attribute name="キャラ指定">プラズマ団
 したっぱ♀</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">きのうまで　ポケモンを
+あいしていた　トレーナーが▽
+きょう　ポケモンを　てばなす……▼
+あしたは　べつの　トレーナーが
+ポケモンを　にがしていく……</language>
+		<language name="JPN_KANJI" width="256">昨日まで　ポケモンを
+愛していた　トレーナーが▽
+今日　ポケモンを　手放す……▼
+明日は　別の　トレーナーが
+ポケモンを　逃がしていく……</language>
 	</row>
 
 	<row id="msg_n01r0404_hakaiw2_01">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">プラズマ団
 したっぱ♀</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">あっとうてきな　ちからで
+ポケモンを　うばっても▽
+ひとびとは　はんぱつ　するわ▼
+でも　こころを　あやつれば
+じぶんから　ポケモンを　てばなすのよ</language>
+		<language name="JPN_KANJI" width="256">圧倒的な　力で
+ポケモンを　奪ったとしても▽
+人々は　反発するわ▼
+でも　心を　操れば
+自分から　ポケモンを　手放すのよ</language>
 	</row>
 
 	<flowchart-group-list>
