@@ -288,6 +288,7 @@ static  VMCMD_RESULT  AI_IF_HINSHI( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IFN_HINSHI( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_GET_TOKUSEI( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IF_MIGAWARI( VMHANDLE* vmh, void* context_work );
+static  VMCMD_RESULT  AI_CHECK_MONSNO( VMHANDLE* vmh, void* context_work );
 
 static  void  ai_if_rnd( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
 static  void  ai_if_hp( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
@@ -433,6 +434,7 @@ static const VMCMD_FUNC tr_ai_command_table[]={
   AI_IFN_HINSHI,
   AI_GET_TOKUSEI,
   AI_IF_MIGAWARI,
+  AI_CHECK_MONSNO,
 };
 
 enum{
@@ -640,6 +642,9 @@ static  BOOL  waza_ai_single( VMHANDLE* vmh, TR_AI_WORK* taw )
 
   while( taw->ai_bit )
   {
+#ifdef AI_SEQ_PRINT
+    OS_TPrintf("AI_NO:%d\n",taw->ai_no);
+#endif
     if( taw->ai_bit & 1 )
     {
       if( ( taw->status_flag & AI_STATUSFLAG_CONTINUE ) == 0 )
@@ -3248,6 +3253,24 @@ static  VMCMD_RESULT  AI_IF_MIGAWARI( VMHANDLE* vmh, void* context_work )
   {
     VMCMD_Jump( vmh, vmh->adrs + adrs );
   }
+
+  return taw->vmcmd_result;
+}
+
+//------------------------------------------------------------
+//  ポケモンナンバーのチェック
+//------------------------------------------------------------
+static  VMCMD_RESULT  AI_CHECK_MONSNO( VMHANDLE* vmh, void* context_work )
+{ 
+  TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+  int side = ( int )VMGetU32( vmh );
+  BtlPokePos  pos = get_poke_pos( taw, side );
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_CHECK_MONSNO\n");
+#endif
+
+  taw->calc_work = BPP_GetMonsNo( get_bpp( taw, pos ) );
 
   return taw->vmcmd_result;
 }
