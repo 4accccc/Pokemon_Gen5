@@ -114,7 +114,14 @@
 
 #include "test/performance.h"
 
+#include "../../../resource/fld3d_ci/fldci_id_def.h"  // for FLDCIID_MAX
+
 FS_EXTERN_OVERLAY( d_iwasawa );
+
+//======================================================================
+//  global
+//======================================================================
+int DbgCutinNo = 0;
 
 //======================================================================
 //  define
@@ -231,6 +238,7 @@ static BOOL debugMenuCallProc_BBDColor( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_MakeEgg( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_EncEffList( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_Cutin( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_DebugMakeUNData( DEBUG_MENU_EVENT_WORK *p_wk );
 
@@ -297,6 +305,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_MVPOKE,   debugMenuCallProc_DebugMvPokemon },     //いどうポケモン
   { DEBUG_FIELD_STR62,   debugMenuCallProc_BBDColor },            //ビルボードの色
   { DEBUG_FIELD_ENCEFF, debugMenuCallProc_EncEffList },           //エンカウントエフェクト
+  { DEBUG_FIELD_CUTIN, debugMenuCallProc_Cutin },           //カットイン
 
   { DEBUG_FIELD_TITLE_01, (void*)BMPMENULIST_LABEL },       //○システム
   { DEBUG_FIELD_NUMINPUT, debugMenuCallProc_NumInput },     //数値入力
@@ -6959,6 +6968,82 @@ static GMEVENT_RESULT debugMenuMusical( GMEVENT *event, int *seq, void *wk )
 
   return GMEVENT_RES_CONTINUE;
 }
+
+static GMEVENT_RESULT debugCutin(
+    GMEVENT *event, int *seq, void *wk );
+//--------------------------------------------------------------
+/**
+ * カットインデバッグ開始
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_Cutin( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  GMEVENT *event = wk->gmEvent;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  DEBUG_ENCEFF_LIST_EVENT_WORK *work;
+
+  GMEVENT_Change( event,
+    debugCutin, sizeof(DEBUG_ENCEFF_LIST_EVENT_WORK) );
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_ENCEFF_LIST_EVENT_WORK) );
+
+  work->gmSys = gsys;
+  work->gmEvent = event;
+  work->heapID = heapID;
+  work->fieldWork = fieldWork;
+
+  DbgCutinNo = 0;
+  OS_Printf("----------DebugCutinStart----------\n");
+  OS_Printf("DebugCutinNo %d\n",DbgCutinNo);
+  return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：カットイン
+ * @param event GMEVENT
+ * @param seq   シーケンス
+ * @param wk    event work
+ * @retval  GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugCutin(
+    GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_ENCEFF_LIST_EVENT_WORK *work = wk;
+
+  if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
+  {
+    OS_Printf("----------DebugCutinEnd----------\n");
+    return( GMEVENT_RES_FINISH );
+  }
+  else if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_A )
+  {
+    GMEVENT *call_evt;
+    FLD3D_CI_PTR ptr = FIELDMAP_GetFld3dCiPtr(work->fieldWork);
+    call_evt = FLD3D_CI_CreateCutInEvt(work->gmSys, ptr, DbgCutinNo);
+    GMEVENT_CallEvent( event, call_evt );
+  }
+
+  if ( GFL_UI_KEY_GetTrg() == PAD_KEY_UP )
+  {
+    DbgCutinNo++;
+    if ( DbgCutinNo >= FLDCIID_MAX ) DbgCutinNo = 0;
+    OS_Printf("DebugCutinNo %d\n",DbgCutinNo);
+  }else if( GFL_UI_KEY_GetTrg() == PAD_KEY_DOWN )
+  {
+    DbgCutinNo--;
+    if ( DbgCutinNo < 0  ) DbgCutinNo = FLDCIID_MAX-1;
+    OS_Printf("DebugCutinNo %d\n",DbgCutinNo);
+  }
+  
+  return( GMEVENT_RES_CONTINUE );
+}
+
 
 
 #endif  //  PM_DEBUG
