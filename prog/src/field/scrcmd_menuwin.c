@@ -807,7 +807,9 @@ static const VecFx32 data_balloonWinOffsetTbl[2][4] =
  */
 //--------------------------------------------------------------
 static void balloonWin_GetDispOffsetPos(
-    const VecFx32 *pos, VecFx32 *offs, const GFL_G3D_CAMERA *cp_g3Dcamera )
+    const VecFx32 *pos, VecFx32 *offs,
+    const GFL_G3D_CAMERA *cp_g3Dcamera,
+    const FIELD_CAMERA *fld_camera )
 {
   u32 x,y;
   VecFx32 target_pos = *pos;
@@ -876,6 +878,41 @@ static void balloonWin_GetDispOffsetPos(
     *offs = error;
     OS_Printf( "BALLOONWIN OUTSIDE SCREEN\n" );
   }
+  
+  { //カメラピッチから補正座標
+    #define PITCH_MAX (0x4000)
+    #define PITCH_AVE (0x25d8) ///<標準とする値 t01を見本にしてみた
+    #define PITCH_AVE_PER (PITCH_AVE/100)
+    #define PITCH_OFFS_X_SPOINT (NUM_FX32(0))
+    #define PITCH_OFFS_X_PER (PITCH_OFFS_X_SPOINT/100)
+    #define PITCH_OFFS_X(p) \
+      (PITCH_OFFS_X_SPOINT-(((p)/PITCH_AVE_PER)*PITCH_OFFS_X_PER))
+    #define PITCH_OFFS_Y_SPOINT (NUM_FX32(0))
+    #define PITCH_OFFS_Y_PER (PITCH_OFFS_Y_SPOINT/100)
+    #define PITCH_OFFS_Y(p) \
+      (PITCH_OFFS_Y_SPOINT-(((p)/PITCH_AVE_PER)*PITCH_OFFS_Y_PER))
+    #define PITCH_OFFS_Z_SPOINT (NUM_FX32(12))
+    #define PITCH_OFFS_Z_PER (PITCH_OFFS_Z_SPOINT/100)
+    #define PITCH_OFFS_Z(p) \
+      (PITCH_OFFS_Z_SPOINT-(((p)/PITCH_AVE_PER)*PITCH_OFFS_Z_PER))
+    
+    u16 pitch = FIELD_CAMERA_GetAnglePitch( fld_camera );
+    
+    if( pitch < PITCH_MAX ){ //補正対象内
+      VecFx32 offs_pitch = {0,0,0};
+      offs_pitch.x = PITCH_OFFS_X( pitch );
+      offs_pitch.y = PITCH_OFFS_Y( pitch );
+      offs_pitch.z = PITCH_OFFS_Z( pitch );
+      offs->x += offs_pitch.x;
+      offs->y += offs_pitch.y;
+      offs->z += offs_pitch.z;
+      KAGAYA_Printf( "BALLOON PITCH %d(%xH) OFFSET x=%d(%xH), y=%d(%xH), z=%d(%xH)\n",
+          pitch, pitch,
+          offs_pitch.x, offs_pitch.x,
+          offs_pitch.y, offs_pitch.y,
+          offs_pitch.z, offs_pitch.z );
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -887,11 +924,13 @@ static void balloonWin_GetDispOffsetPos(
  */
 //--------------------------------------------------------------
 static void balloonWin_GetOffsetPos(
-    const VecFx32 *pos, VecFx32 *offs, const GFL_G3D_CAMERA *cp_g3Dcamera,
+    const VecFx32 *pos, VecFx32 *offs,
+    const GFL_G3D_CAMERA *cp_g3Dcamera,
+    const FIELD_CAMERA *fld_camera,
     u8 pos_type )
 {
   int x = 0, y = 0;
-
+  
   switch( pos_type ){
   case SCRCMD_MSGWIN_UPLEFT: //ウィンドウ上　吹き出し向き左
     x = 1;
@@ -910,7 +949,7 @@ static void balloonWin_GetOffsetPos(
   case SCRCMD_MSGWIN_UP: //ウィンドウ上　吹き出し位置自動
   case SCRCMD_MSGWIN_DOWN: //ウィンドウ下　吹き出し位置自動
   case SCRCMD_MSGWIN_DEFAULT: //自機の位置から自動割り当て
-    balloonWin_GetDispOffsetPos( pos, offs, cp_g3Dcamera );
+    balloonWin_GetDispOffsetPos( pos, offs, cp_g3Dcamera, fld_camera );
     return;
   }
 
@@ -1054,7 +1093,7 @@ static void balloonWin_UpdatePos( SCRCMD_WORK *work, BOOL init_flag )
         FIELD_CAMERA_GetCameraPtr( p_camera ); //g3Dcamera Lib ハンドル
       u8 pos_type = SCRCMD_WORK_GetWindowPosType( work );
       balloonWin_GetOffsetPos( &bwin_work->tail_pos_org,
-          &bwin_work->tail_offs, cp_g3Dcamera, pos_type );
+          &bwin_work->tail_offs, cp_g3Dcamera, p_camera, pos_type );
     }
   }
   

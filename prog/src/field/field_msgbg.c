@@ -146,6 +146,7 @@ struct _TAG_FLDMSGPRINT
 //--------------------------------------------------------------
 struct _TAG_FLDTALKMSGWIN
 {
+  u8 padding;
   u8 talkMsgWinIdx;
   s16 shake_y;
   
@@ -153,6 +154,11 @@ struct _TAG_FLDTALKMSGWIN
   TALKMSGWIN_SYS *talkMsgWinSys; //FLDMSGBGより
   FLDKEYWAITCURSOR cursor_work;
   FLDMSGBG *fmb;
+  
+  //debug
+  const VecFx32 *watch_pos;
+  VecFx32 d_pos;
+  VecFx32 d_offs;
 };
 
 //--------------------------------------------------------------
@@ -576,7 +582,7 @@ void FLDMSGBG_ReleaseBGResouce( FLDMSGBG *fmb )
     GFL_BG_FreeBGControl( fmb->bgFrame );
     fmb->bgFrame = BGFRAME_ERROR;
   }
-
+  
 #if 0
   if( fmb->bgFrameBld != BGFRAME_ERROR ){
     GFL_BG_FreeBGControl( fmb->bgFrameBld );
@@ -634,6 +640,7 @@ void FLDMSGBG_PrintMain( FLDMSGBG *fmb )
   
   {
     FLDSUBMSGWIN **subWin = fmb->subMsgWinTbl;
+    
     for( i = 0; i < FLDSUBMSGWIN_MAX; i++, subWin++ ){
       if( (*subWin) != NULL ){
         fldSubMsgWin_Print( *subWin );
@@ -643,6 +650,7 @@ void FLDMSGBG_PrintMain( FLDMSGBG *fmb )
   
   {
     FLDMSGPRINT *msgPrint = fmb->msgPrintTbl;
+    
     for( i = 0; i < FLDMSGBG_PRINT_MAX; i++, msgPrint++ ){
       if( msgPrint->printQue != NULL ){
         msgPrint->printTransFlag = PRINT_UTIL_Trans(
@@ -654,6 +662,34 @@ void FLDMSGBG_PrintMain( FLDMSGBG *fmb )
   GFL_TCBL_Main( fmb->printTCBLSys );
   
   if( fmb->talkMsgWinSys != NULL ){
+    FLDTALKMSGWIN *bWin = fmb->balloonMsgWinTbl;
+    
+    for( i = 0; i < FLDTALKMSGWIN_MAX; i++, bWin++ ){
+      if( bWin->talkMsgWinSys != NULL ){
+#ifndef DEBUG_ONLY_FOR_kagaya //debug
+        {
+          int trg = GFL_UI_KEY_GetTrg();
+          int cont = GFL_UI_KEY_GetCont();
+          int rep = GFL_UI_KEY_GetRepeat();
+          
+          if( rep & PAD_KEY_UP ){
+            bWin->d_offs.z -= 0x800;
+            OS_Printf( "バルーンウィンドウ Z=%d(0x%xH)\n", 
+                bWin->d_offs.z/FX32_ONE, bWin->d_offs.z );
+          }else if( rep & PAD_KEY_DOWN ){
+            bWin->d_offs.z += 0x800;
+            OS_Printf( "バルーンウィンドウ Z=%d(0x%xH)\n", 
+                bWin->d_offs.z/FX32_ONE, bWin->d_offs.z );
+          }
+          
+          bWin->d_pos = *bWin->watch_pos;
+          bWin->d_pos.x += bWin->d_offs.x;
+          bWin->d_pos.y += bWin->d_offs.y;
+          bWin->d_pos.z += bWin->d_offs.z;
+        }
+#endif
+      }
+    }
     
     TALKMSGWIN_SystemMain( fmb->talkMsgWinSys );
     TALKMSGWIN_SystemDraw2D( fmb->talkMsgWinSys );
@@ -2714,6 +2750,11 @@ static void fldTalkMsgWin_Add(
 {
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
+  //--- debug
+  tmsg->watch_pos = pos;
+  tmsg->d_pos = *pos;
+  //---
+
   fmb->deriveFont_plttNo = PANO_FONT_TALKMSGWIN;
 
   tmsg->fmb = fmb;
@@ -2723,7 +2764,7 @@ static void fldTalkMsgWin_Add(
   
   winframe_SetPaletteWhith( fmb->heapID );
   setBlendAlpha( FALSE );
-  
+#ifndef DEBUG_ONLY_FOR_kagaya
   switch( idx ){
   case FLDTALKMSGWIN_IDX_UPPER:
     TALKMSGWIN_CreateFixWindowUpper( tmsg->talkMsgWinSys,
@@ -2740,6 +2781,24 @@ static void fldTalkMsgWin_Add(
         FLDTALKMSGWIN_IDX_AUTO, (VecFx32*)pos, strBuf, 15, type, 
         Control_GetMsgWait( &fmb->print_cont ) );
   }
+#else //debug
+  switch( idx ){
+  case FLDTALKMSGWIN_IDX_UPPER:
+    TALKMSGWIN_CreateFixWindowUpper( tmsg->talkMsgWinSys,
+        FLDTALKMSGWIN_IDX_UPPER, &tmsg->d_pos, strBuf, 15,
+        type, tail, Control_GetMsgWait( &fmb->print_cont ) );
+    break;
+  case FLDTALKMSGWIN_IDX_LOWER:
+    TALKMSGWIN_CreateFixWindowLower( tmsg->talkMsgWinSys,
+        FLDTALKMSGWIN_IDX_LOWER, &tmsg->d_pos, strBuf, 15,
+        type, tail, Control_GetMsgWait( &fmb->print_cont ) );
+    break;
+  default:
+    TALKMSGWIN_CreateFixWindowAuto( tmsg->talkMsgWinSys,
+        FLDTALKMSGWIN_IDX_AUTO, &tmsg->d_pos, strBuf, 15, type, 
+        Control_GetMsgWait( &fmb->print_cont ) );
+  }
+#endif
   Control_StartPrint( &fmb->print_cont );
   
   TALKMSGWIN_OpenWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
