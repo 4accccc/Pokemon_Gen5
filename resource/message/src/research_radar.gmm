@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-27T17:59:40"/>
+	<create user="ohmori" host="W00223" date="2010-03-29T16:21:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,44 +334,44 @@
 
 
 	<row id="str_menu_title" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]すれちがい　ちょうさき</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]すれ違い調査機</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]チョー・ＳＡ・レーダー</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]チョー・ＳＡ・レーダー</language>
 	</row>
 
 	<row id="str_menu_caption" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
 		<language name="JPN">[BD:02:Ｘセンタリング]すれちがった　みんなのいけんを
-[BD:02:Ｘセンタリング]ちょうさすることが　できます</language>
+[BD:02:Ｘセンタリング]チョーサすることが　できます</language>
 		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]すれ違った　みんなの意見を
-[BD:02:Ｘセンタリング]調査することが　できます</language>
+[BD:02:Ｘセンタリング]チョーサすることが　できます</language>
 	</row>
 
 	<row id="str_menu_button_change" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさを　きめる</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査を決める</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]チョーサ　をきめる</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]チョーサ　を決める</language>
 	</row>
 
 	<row id="str_menu_button_check" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさを　みる</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査を見る</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]チョーサ　をみる</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]チョーサ　を見る</language>
 	</row>
 
 	<row id="str_select_title" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]－ちょうさ　ないよう－</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]－調査内容－</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]－チョーサ　ないよう－</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]－チョーサ　内容－</language>
 	</row>
 
 	<row id="str_select_direction" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]したの　こうもくから　ちょうさしたい
+		<language name="JPN">[BD:02:Ｘセンタリング]したの　こうもくから　チョーサしたい
 [BD:02:Ｘセンタリング]ないようを　１つ　えらんでください</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]下の項目から　調査したい
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]下の項目から　チョーサしたい
 [BD:02:Ｘセンタリング]内容を　１つ　選んでください</language>
 	</row>
 
 	<row id="str_select_confirm" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN">この　ないようを
-ちょうさ　しますか？</language>
+チョーサ　しますか？</language>
 		<language name="JPN_KANJI">この内容を
-調査しますか？</language>
+チョーサ　しますか？</language>
 	</row>
 
 	<row id="str_select_confirm_ok" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
@@ -385,14 +385,14 @@
 	</row>
 
 	<row id="str_select_determine" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさを　かいしします！</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査を開始します!</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]チョーサを　かいしします！</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]チョーサを開始します!</language>
 	</row>
 
 	<row id="str_check_examining" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]まだ　ちょうさ
+		<language name="JPN">[BD:02:Ｘセンタリング]まだ　チョーサ
 [BD:02:Ｘセンタリング]できていません</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]まだ調査
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]まだ　チョーサ
 [BD:02:Ｘセンタリング]できていません</language>
 	</row>
 
@@ -402,8 +402,8 @@
 	</row>
 
 	<row id="str_check_title" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさ　ほうこく</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査報告　</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]チョーサ　ほうこく</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]チョーサ報告　</language>
 	</row>
 
 	<row id="str_check_answer" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
@@ -458,8 +458,8 @@
 	</row>
 
 	<row id="str_check_analyze_button" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]このちょうさを　みる</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]この報告を見る</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]このチョーサを　みる</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]このチョーサを　みる</language>
 	</row>
 
 	<flowchart-group-list>

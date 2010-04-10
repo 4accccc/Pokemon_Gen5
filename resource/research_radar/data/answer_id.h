@@ -106,17 +106,17 @@
 #define ANSWER_ID_104 (104) //「しゅふ」
 #define ANSWER_ID_105 (105) //「げいじゅつか」
 #define ANSWER_ID_106 (106) //「フリーター」
-#define ANSWER_ID_107 (107) //「さんすくみ　くさ」
-#define ANSWER_ID_108 (108) //「さんすくみ　ほのお」
-#define ANSWER_ID_109 (109) //「さんすくみ　みず」
-#define ANSWER_ID_110 (110) //「ノーマル」
-#define ANSWER_ID_111 (111) //「むし」
-#define ANSWER_ID_112 (112) //「でんき」
-#define ANSWER_ID_113 (113) //「じめん」
-#define ANSWER_ID_114 (114) //「ひこう」
-#define ANSWER_ID_115 (115) //「こおり」
-#define ANSWER_ID_116 (116) //「ドラゴンくろ」
-#define ANSWER_ID_117 (117) //「ドラゴンしろ」
+#define ANSWER_ID_107 (107) //「ポッド」
+#define ANSWER_ID_108 (108) //「デント」
+#define ANSWER_ID_109 (109) //「コーン」
+#define ANSWER_ID_110 (110) //「アロエ」
+#define ANSWER_ID_111 (111) //「アーティ」
+#define ANSWER_ID_112 (112) //「カミツレ」
+#define ANSWER_ID_113 (113) //「ヤーコン」
+#define ANSWER_ID_114 (114) //「フウロ」
+#define ANSWER_ID_115 (115) //「ハチク」
+#define ANSWER_ID_116 (116) //「アイリス」
+#define ANSWER_ID_117 (117) //「シャガ」
 #define ANSWER_ID_118 (118) //「ノーマル」
 #define ANSWER_ID_119 (119) //「ほのお」
 #define ANSWER_ID_120 (120) //「みず」
