@@ -65,6 +65,7 @@
 
 #include "../../../resource/fldmapdata/script/bg_attr_def.h" //SCRID_BG_MSG_～
 #include "../../../resource/fldmapdata/script/hiden_def.h"
+#include "../../../resource/fldmapdata/script/tv_scr_def.h"  //for SCRID_TV
 
 #include "field_gimmick.h"   //for FLDGMK_GimmickCodeCheck
 #include "field_gimmick_def.h"  //for FLD_GIMMICK_GYM_～
@@ -117,6 +118,7 @@
 #ifdef PM_DEBUG
 extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ             宣言元　fieldmap.c
 extern BOOL MapFadeReqFlg;    //マップフェードリクエストフラグ  宣言元　script.c
+
 #endif
 
 
@@ -694,7 +696,6 @@ GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
 	FIELDMAP_WORK * fieldmap_work = GAMESYSTEM_GetFieldMapWork( gsys );
   FIELD_ENCOUNT* encount = FIELDMAP_GetEncount(fieldmap_work); 
   BOOL eff_delete_flag,menu_open_flag;
-
   //エフェクトエンカウントの　OBJとの接触によるエフェクト破棄チェック
   EFFECT_ENC_CheckObjHit( encount );
 
@@ -716,7 +717,6 @@ GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
     FIELD_PLAYER_CheckSpecialDrawForm(
         FIELDMAP_GetFieldPlayer(fieldmap_work), menu_open_flag );
 	}
-
 	return event;
 }
 
@@ -3074,7 +3074,7 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
   static const MAPATTR_EVENTDATA check_attr_data[] = {
     { MAPATTR_VALUE_CheckPC,            DIR_UP,  SCRID_PC },
     { MAPATTR_VALUE_CheckMap,           DIR_NOT, EVENTDATA_ID_NONE },
-    { MAPATTR_VALUE_CheckTV,            DIR_NOT, EVENTDATA_ID_NONE },
+    { MAPATTR_VALUE_CheckTV,            DIR_UP,  SCRID_TV },
     { MAPATTR_VALUE_CheckBookShelf1,    DIR_NOT, SCRID_BG_MSG_BOOK1_01 },
     { MAPATTR_VALUE_CheckBookShelf2,    DIR_NOT, SCRID_BG_MSG_BOOK2_01 },
     { MAPATTR_VALUE_CheckBookShelf3,    DIR_NOT, SCRID_BG_MSG_BOOKRACK1_01 },
