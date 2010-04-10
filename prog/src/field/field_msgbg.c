@@ -142,6 +142,20 @@ struct _TAG_FLDMSGPRINT
 };
 
 //--------------------------------------------------------------
+/// FLDTALKMSGWIN
+//--------------------------------------------------------------
+struct _TAG_FLDTALKMSGWIN
+{
+  u8 talkMsgWinIdx;
+  s16 shake_y;
+  
+  STRBUF *strBuf;
+  TALKMSGWIN_SYS *talkMsgWinSys; //FLDMSGBGより
+  FLDKEYWAITCURSOR cursor_work;
+  FLDMSGBG *fmb;
+};
+
+//--------------------------------------------------------------
 /// FLDMSGBG
 //--------------------------------------------------------------
 struct _TAG_FLDMSGBG
@@ -157,6 +171,8 @@ struct _TAG_FLDMSGBG
   FLDMSGPRINT msgPrintTbl[FLDMSGBG_PRINT_MAX];
   
   FLDSUBMSGWIN *subMsgWinTbl[FLDSUBMSGWIN_MAX];
+  
+  FLDTALKMSGWIN balloonMsgWinTbl[FLDTALKMSGWIN_MAX];
   
   TALKMSGWIN_SYS *talkMsgWinSys;
 
@@ -638,6 +654,7 @@ void FLDMSGBG_PrintMain( FLDMSGBG *fmb )
   GFL_TCBL_Main( fmb->printTCBLSys );
   
   if( fmb->talkMsgWinSys != NULL ){
+    
     TALKMSGWIN_SystemMain( fmb->talkMsgWinSys );
     TALKMSGWIN_SystemDraw2D( fmb->talkMsgWinSys );
   }
@@ -2679,20 +2696,6 @@ GFL_BMPWIN * FLDSYSWIN_STREAM_GetBmpWin( FLDSYSWIN_STREAM *sysWin )
 //  FLDTALKMSGWIN
 //======================================================================
 //--------------------------------------------------------------
-/// FLDTALKMSGWIN
-//--------------------------------------------------------------
-struct _TAG_FLDTALKMSGWIN
-{
-  u8 talkMsgWinIdx;
-  s16 shake_y;
-  
-  STRBUF *strBuf;
-  TALKMSGWIN_SYS *talkMsgWinSys; //FLDMSGBGより
-  FLDKEYWAITCURSOR cursor_work;
-  FLDMSGBG *fmb;
-};
-
-//--------------------------------------------------------------
 /**
  * FLDTALKMSGWIN 吹き出しウィンドウセット
  * @param fmb FLDMSGBG
@@ -2766,7 +2769,30 @@ static void fldTalkMsgWin_Add(
 //--------------------------------------------------------------
 FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
     FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
-    GFL_MSGDATA *msgData, u32 msgID, TALKMSGWIN_TYPE type, TAIL_SETPAT tail )
+    GFL_MSGDATA *msgData, u32 msgID,
+    TALKMSGWIN_TYPE type, TAIL_SETPAT tail )
+{
+  if( idx < FLDTALKMSGWIN_MAX ){
+    FLDTALKMSGWIN *tmsg = &fmb->balloonMsgWinTbl[idx];
+    
+    if( tmsg->talkMsgWinSys == NULL ){
+      tmsg->strBuf = GFL_STR_CreateBuffer( FLDMSGBG_STRLEN, fmb->heapID );
+      GFL_MSG_GetString( msgData, msgID, tmsg->strBuf );
+      fldTalkMsgWin_Add( fmb, tmsg, idx, pos, tmsg->strBuf, type, tail );
+      return( tmsg );
+    }
+  }
+  
+  GF_ASSERT( 0 );
+  return( NULL );
+}
+
+
+#if 0 //old
+FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
+    FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
+    GFL_MSGDATA *msgData, u32 msgID,
+    TALKMSGWIN_TYPE type, TAIL_SETPAT tail )
 {
   FLDTALKMSGWIN *tmsg = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDTALKMSGWIN) );
@@ -2777,6 +2803,7 @@ FLDTALKMSGWIN * FLDTALKMSGWIN_Add( FLDMSGBG *fmb,
   fldTalkMsgWin_Add( fmb, tmsg, idx, pos, tmsg->strBuf, type, tail );
   return( tmsg );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -2794,11 +2821,30 @@ FLDTALKMSGWIN * FLDTALKMSGWIN_AddStrBuf( FLDMSGBG *fmb,
     FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
     STRBUF *strBuf, TALKMSGWIN_TYPE type, TAIL_SETPAT tail )
 {
+  if( idx < FLDTALKMSGWIN_MAX ){
+    FLDTALKMSGWIN *tmsg = &fmb->balloonMsgWinTbl[idx];
+    
+    if( tmsg->talkMsgWinSys == NULL ){
+      fldTalkMsgWin_Add( fmb, tmsg, idx, pos, strBuf, type, tail );
+      return( tmsg );
+    }
+  }
+  
+  GF_ASSERT( 0 );
+  return( NULL );
+}
+
+#if 0 //old
+FLDTALKMSGWIN * FLDTALKMSGWIN_AddStrBuf( FLDMSGBG *fmb,
+    FLDTALKMSGWIN_IDX idx, const VecFx32 *pos,
+    STRBUF *strBuf, TALKMSGWIN_TYPE type, TAIL_SETPAT tail )
+{
   FLDTALKMSGWIN *tmsg = GFL_HEAP_AllocClearMemory(
       fmb->heapID, sizeof(FLDTALKMSGWIN) );
   fldTalkMsgWin_Add( fmb, tmsg, idx, pos, strBuf, type, tail );
   return( tmsg );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -2826,12 +2872,23 @@ void FLDTALKMSGWIN_StartClose( FLDTALKMSGWIN *tmsg )
 //--------------------------------------------------------------
 BOOL FLDTALKMSGWIN_WaitClose( FLDTALKMSGWIN *tmsg )
 {
-  if( TALKMSGWIN_CheckCloseStatus(tmsg->talkMsgWinSys,tmsg->talkMsgWinIdx) ){
+#if 0
+  if( TALKMSGWIN_CheckCloseStatus(
+        tmsg->talkMsgWinSys,tmsg->talkMsgWinIdx) ){
     GFL_HEAP_FreeMemory( tmsg );
     return( TRUE );
   }
   
   return( FALSE );
+#else
+  if( TALKMSGWIN_CheckCloseStatus(
+        tmsg->talkMsgWinSys,tmsg->talkMsgWinIdx) ){
+    MI_CpuClear8( tmsg, sizeof(FLDTALKMSGWIN) );
+    return( TRUE );
+  }
+  
+  return( FALSE );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -2849,7 +2906,7 @@ void FLDTALKMSGWIN_Delete( FLDTALKMSGWIN *tmsg )
   
   TALKMSGWIN_DeleteWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
   FLDKEYWAITCURSOR_Finish( &tmsg->cursor_work );
-  GFL_HEAP_FreeMemory( tmsg );
+  MI_CpuClear8( tmsg, sizeof(FLDTALKMSGWIN) );
 }
 
 #if 0
