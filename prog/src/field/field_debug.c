@@ -6,6 +6,8 @@
  * @date	08.09.29
  */
 //======================================================================
+#ifdef  PM_DEBUG
+
 #include "field_debug.h"
 #include "fieldmap.h"
 #include "field_bg_def.h"
@@ -686,3 +688,5 @@ static void DbgDrawCallBackFunc( NNSG3dRenderObj *renderobj, void *work )
   info->Shp += renderobj->resMdl->info.numShp;
 
 }
+
+#endif  //PM_DEBUG

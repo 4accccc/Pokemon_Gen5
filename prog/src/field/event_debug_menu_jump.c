@@ -7,7 +7,7 @@
  * @date  2009.11.29
  */
 //======================================================================
-#if PM_DEBUG
+#ifdef PM_DEBUG
 
 #include <gflib.h>
 #include "system/main.h"
