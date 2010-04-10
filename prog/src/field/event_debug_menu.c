@@ -6623,6 +6623,7 @@ static void SetZukanDataAll( DEBUG_ZUKAN_WORK * wk )
 //イベントポケモン作成
 //--------------------------------------------------------------
 #include "poke_tool/poke_memo.h"
+#include "field/evt_lock.h" //ロックカプセルのイベントロックのため
 static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *wk );
 
 
@@ -6640,6 +6641,8 @@ static const FLDMENUFUNC_LIST DATA_EventPokeCreate[] =
   { DEBUG_FIELD_EVEPOKE10, (void*)9 },
   { DEBUG_FIELD_EVEPOKE11, (void*)10 },
   { DEBUG_FIELD_EVEPOKE12, (void*)11 },
+  { DEBUG_FIELD_EVEPOKE13, (void*)100 },
+  { DEBUG_FIELD_EVEPOKE14, (void*)101 },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugEventPokeCreateMenu = {
@@ -6710,82 +6713,113 @@ static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *
       }
       else
       {
-        POKEMON_PARAM *pp;
-        //ポケモン作成
-        switch( ret )
+        if( ret < 100 )
         {
-        case 0: //10えいがセレビィ
-          pp = PP_Create( MONSNO_SEREBHI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
-          PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_SEREBIXI_BEFORE );
-          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-          break;
-        case 1: //10えいがエンテイ
-          pp = PP_Create( MONSNO_ENTEI , 50 , PTL_SETUP_RND_RARE , work->heapId );
-          PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
-          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-          break;
-        case 2: //10えいがライコウ
-          pp = PP_Create( MONSNO_RAIKOU , 50 , PTL_SETUP_RND_RARE , work->heapId );
-          PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
-          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-          break;
-        case 3: //10えいがスイクン
-          pp = PP_Create( MONSNO_SUIKUN , 50 , PTL_SETUP_RND_RARE , work->heapId );
-          PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
-          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-          break;
-        case 4: //10えいがセレビィ(後
-          pp = PP_Create( MONSNO_SEREBHI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
-          PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_SEREBIXI_AFTER );
-          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-          break;
-        case 5: //10えいがエンテイ(後
-          pp = PP_Create( MONSNO_ENTEI , 50 , PTL_SETUP_RND_RARE , work->heapId );
-          PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
-          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-          break;
-        case 6: //10えいがライコウ(後
-          pp = PP_Create( MONSNO_RAIKOU , 50 , PTL_SETUP_RND_RARE , work->heapId );
-          PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
-          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-          break;
-        case 7: //10えいがスイクン(後
-          pp = PP_Create( MONSNO_SUIKUN , 50 , PTL_SETUP_RND_RARE , work->heapId );
-          PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
-          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-          break;
-        case 8: //メロディア
-          pp = PP_Create( MONSNO_655 , 50 , PTL_SETUP_RND_AUTO , work->heapId );
-          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-          break;
-        case 9: //ダルタニス
-          pp = PP_Create( MONSNO_654 , 50 , PTL_SETUP_RND_AUTO , work->heapId );
-          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-          break;
-        case 10: //インセクタ
-          pp = PP_Create( MONSNO_656 , 50 , PTL_SETUP_RND_AUTO , work->heapId );
-          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-          break;
-        case 11: //はいふシェイミ
-          pp = PP_Create( MONSNO_SHEIMI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
-          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
-          break;
-        }
-        {
-          u16 oyaName[] = {L'イ',L'ベ',L'ン',L'ト',L'ぽ',L'け',0xFFFF};
-          PP_Put( pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
-          PP_Put( pp , ID_PARA_oyasex , PTL_SEX_MALE );
-        }
-        //手持ちに空きがあれば入れる
-        if( PokeParty_GetPokeCount( party ) < 6 )
-        {
-          PokeParty_Add( party , pp );
+          POKEMON_PARAM *pp;
+          //ポケモン作成
+          switch( ret )
+          {
+          case 0: //10えいがセレビィ
+            pp = PP_Create( MONSNO_SEREBHI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+            PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_SEREBIXI_BEFORE );
+            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+            break;
+          case 1: //10えいがエンテイ
+            pp = PP_Create( MONSNO_ENTEI , 50 , PTL_SETUP_RND_RARE , work->heapId );
+            PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
+            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+            break;
+          case 2: //10えいがライコウ
+            pp = PP_Create( MONSNO_RAIKOU , 50 , PTL_SETUP_RND_RARE , work->heapId );
+            PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
+            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+            break;
+          case 3: //10えいがスイクン
+            pp = PP_Create( MONSNO_SUIKUN , 50 , PTL_SETUP_RND_RARE , work->heapId );
+            PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
+            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+            break;
+          case 4: //10えいがセレビィ(後
+            pp = PP_Create( MONSNO_SEREBHI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+            PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_SEREBIXI_AFTER );
+            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+            break;
+          case 5: //10えいがエンテイ(後
+            pp = PP_Create( MONSNO_ENTEI , 50 , PTL_SETUP_RND_RARE , work->heapId );
+            PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
+            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+            break;
+          case 6: //10えいがライコウ(後
+            pp = PP_Create( MONSNO_RAIKOU , 50 , PTL_SETUP_RND_RARE , work->heapId );
+            PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
+            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+            break;
+          case 7: //10えいがスイクン(後
+            pp = PP_Create( MONSNO_SUIKUN , 50 , PTL_SETUP_RND_RARE , work->heapId );
+            PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
+            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+            break;
+          case 8: //メロディア
+            pp = PP_Create( MONSNO_655 , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+            break;
+          case 9: //ダルタニス
+            pp = PP_Create( MONSNO_654 , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+            break;
+          case 10: //インセクタ
+            pp = PP_Create( MONSNO_656 , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+            break;
+          case 11: //はいふシェイミ
+            pp = PP_Create( MONSNO_SHEIMI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+            PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+            break;
+          }
+          {
+            u16 oyaName[] = {L'イ',L'ベ',L'ン',L'ト',L'ぽ',L'け',0xFFFF};
+            PP_Put( pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+            PP_Put( pp , ID_PARA_oyasex , PTL_SEX_MALE );
+          }
+          //手持ちに空きがあれば入れる
+          if( PokeParty_GetPokeCount( party ) < 6 )
+          {
+            PokeParty_Add( party , pp );
+          }
+          else
+          {
+            BOXDAT_PutPokemon( boxData , PP_GetPPPPointer( pp ) );
+          }
+          GFL_HEAP_FreeMemory( pp );
         }
         else
         {
-          BOXDAT_PutPokemon( boxData , PP_GetPPPPointer( pp ) );
+          switch( ret )
+          {
+          case 100://ロックカプセル
+            {
+              MYITEM_PTR myItem = GAMEDATA_GetMyItem( gmData );
+              MYSTATUS *myStatus = GAMEDATA_GetMyStatus( gmData );
+              MISC *miscData = GAMEDATA_GetMiscWork( gmData );
+              
+              EVTLOCK_SetEvtLock( miscData , EVT_LOCK_NO_LOCKCAPSULE , myStatus );
+              MYITEM_AddItem( myItem , ITEM_ROKKUKAPUSERU , 1 , work->heapId );
+            }
+            break;
+          case 101://ビクティチケット
+            {
+              MYITEM_PTR myItem = GAMEDATA_GetMyItem( gmData );
+              MYSTATUS *myStatus = GAMEDATA_GetMyStatus( gmData );
+              MISC *miscData = GAMEDATA_GetMiscWork( gmData );
+              
+              EVTLOCK_SetEvtLock( miscData , EVT_LOCK_NO_VICTYTICKET , myStatus );
+              MYITEM_AddItem( myItem , ITEM_RIBATHITIKETTO , 1 , work->heapId );
+            }
+            break;
+
+
+          }
         }
-        GFL_HEAP_FreeMemory( pp );
       }
     }
     break;
