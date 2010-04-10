@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T16:55:05"/>
+	<create user="matsumiya" host="W00224" date="2010-04-10T14:35:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1472" top="362" right="2177" bottom="990" maximized="no" rayout="Vertical2">
+	<dialog left="1312" top="188" right="2017" bottom="816" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,6 +315,54 @@
 		<language name="JPN_KANJI" width="256">おなじ　ポケモンでも
 せいかくは　ちがうんだ！▽
 ぼく　はじめて　しったよ！</language>
+	</row>
+
+	<row id="msg_c02r0201_man1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・PDWのアカウントなし</comment>
+		<attribute name="キャラ指定">MAN1</attribute>
+		<language name="JPN" width="256">わたしは　しじん……
+ポエムを　よんでいる▼
+まいにち　そうぞうを　ふくらませて
+そうさくかつどうに　はげんでいる▼
+にんげんは　ねむると　ゆめをみるが
+ポケモンが　もしも　ゆめを　みたら…▼
+どんなふう　なんだろうと　かんがえる
+そうぞうも　つかないね……</language>
+		<language name="JPN_KANJI" width="256">わたしは　詩人……
+ポエムを　詠んでいる▼
+毎日　想像を　ふくらませて
+創作活動に　はげんでいる▼
+人間は　眠ると　夢をみるが
+ポケモンが　もしも　夢を　みたら…▼
+どんな風なんだろうと　考える
+想像も　つかないね……</language>
+	</row>
+
+	<row id="msg_c02r0201_man1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・PDWのアカウントあり</comment>
+		<attribute name="キャラ指定">MAN1</attribute>
+		<language name="JPN" width="256">わたしは　しじん……
+ポエムを　よんでいる▼
+まいにち　そうぞうを　ふくらませて
+そうさくかつどうに　はげんでいる▼
+にんげんは　ねむると　ゆめをみるが
+ポケモンが　もしも　ゆめを　みたら…▼
+そうぞう　してみるだけで
+そうさくいよくが　モリモリ　わくね▼
+きっと　ポケモンも　ねむることが
+たのしいのだろうな！</language>
+		<language name="JPN_KANJI" width="256">わたしは　詩人……
+ポエムを　詠んでいる▼
+毎日　想像を　ふくらませて
+創作活動に　はげんでいる▼
+人間は　眠ると　夢をみるが
+ポケモンが　もしも　夢を　みたら…▼
+想像してみるだけで
+創作意欲が　モリモリ　わくね▼
+きっと　ポケモンも　眠ることが
+楽しいのだろうな！</language>
 	</row>
 
 	<flowchart-group-list>

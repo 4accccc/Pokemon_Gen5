@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T12:27:21"/>
+	<create user="matsumiya" host="W00224" date="2010-04-10T14:37:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="217"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="132" right="1985" bottom="760" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -306,14 +306,96 @@
 独り言を　きかないで　くれるかな？</language>
 	</row>
 
-	<row id="msg_t04r0201_boy4_01">
+	<row id="msg_t04r0201_boy4_01" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・夏だけ出現</comment>
-		<attribute name="キャラ指定">BOY4</attribute>
+		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">……いちばんの　ぜいたくは
 なにもしないことを　たのしむことだね</language>
 		<language name="JPN_KANJI" width="256">……最高の　ぜいたくは
 なにもしないことを　楽しむことだね</language>
+	</row>
+
+	<row id="msg_t04r0201_diet_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・夏だけ出現
+・ポケモン交換前
+・はい/いいえの選択肢表示
+　はい→ポケモン選択画面
+　いいえ→diet_04</comment>
+		<attribute name="キャラ指定">MAN3</attribute>
+		<language name="JPN" width="256">ふぅ……▼
+サザナミタウンで　ゆっくりしてたら
+なんだか　ふとっちゃったぁ▼
+チラーチィが　そばに　いれば
+かっこよくなろう　って▽
+ダイエットできると　おもうんだぁ▼
+きみぃ！　ボクの　ゴンベと
+チラーチィを　こうかんしてよぉ？▼</language>
+		<language name="JPN_KANJI" width="256">ふぅ……▼
+サザナミタウンで　ゆっくりしてたら
+なんだか　ふとっちゃったぁ▼
+チラーチィが　そばに　いれば
+かっこよくなろう　って▽
+ダイエットできると　おもうんだぁ▼
+きみぃ！　ボクの　ゴンベと
+チラーチィを　こうかんしてよぉ？▼</language>
+	</row>
+
+	<row id="msg_t04r0201_diet_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・はい選択
+　ポケモン選択画面で条件を満たすポケモンを選択
+　交換デモ開始
+　終了後、以下のメッセージを自動表示</comment>
+		<attribute name="キャラ指定">MAN3</attribute>
+		<language name="JPN" width="256">ふぅ……　
+ありがとぉ▼
+ボクと　ひとなつを　すごした
+ゴンベを　だいじに　してよぉ▼
+これからは　キミの　チラーチィと
+ダイエットに　はげむよぉ……</language>
+		<language name="JPN_KANJI" width="256">ふぅ……　
+ありがとぉ▼
+ボクと　ひとなつを　すごした
+ゴンベを　だいじに　してよぉ▼
+これからは　キミの　チラーチィと
+ダイエットに　はげむよぉ……</language>
+	</row>
+
+	<row id="msg_t04r0201_diet_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・チラーチィ以外を選択</comment>
+		<attribute name="キャラ指定">MAN3</attribute>
+		<language name="JPN" width="256">ふぅ……　ボクが　ほしいのは
+チラーチィ　だよぉ</language>
+		<language name="JPN_KANJI" width="256">ふぅ……　ボクが　ほしいのは
+チラーチィ　だよぉ</language>
+	</row>
+
+	<row id="msg_t04r0201_diet_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・いいえ選択
+　もしくはポケモン選択画面で「やめる」を選択</comment>
+		<attribute name="キャラ指定">MAN3</attribute>
+		<language name="JPN" width="256">ふぅ……　ざんねんだよぉ</language>
+		<language name="JPN_KANJI" width="256">ふぅ……　ざんねんだよぉ</language>
+	</row>
+
+	<row id="msg_t04r0201_diet_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・ポケモン交換後</comment>
+		<attribute name="キャラ指定">BOY4</attribute>
+		<language name="JPN" width="256">やぁ　きみぃ！
+ポケモンこうかん　してくれたから▽
+すっかり　みちがえたでしょ▼
+チラーチィが　そばに　いたら
+なんだか　おしゃれに　なれましたよ！</language>
+		<language name="JPN_KANJI" width="256">やぁ　きみぃ！
+ポケモンこうかん　してくれたから▽
+すっかり　みちがえたでしょ▼
+チラーチィが　そばに　いたら
+なんだか　おしゃれに　なれましたよ！</language>
 	</row>
 
 	<flowchart-group-list>
