@@ -232,36 +232,36 @@ EVENT_START   ev_pos_c05_gymleader_02
 	_CAMERA_PURGE()		//カメラのバインドを解く
 
 	//カメラ操作　サポートの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,13918208,0,26509312,30 )
+	_CAMERA_MOVE( 9694,0,970800,13926400,0,26443776,40 )
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//七賢人曲再生
 	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
 	
 	//ゲーヂス：はじめまして
-	_BALLOONWIN_OBJMSG(msg_c05_sage1_01,C05_SAGE_01)
+	_BALLOONWIN_OBJMSG_POS(msg_c05_sage1_01,C05_SAGE_01 , POS_DR )
 	_BALLOONWIN_CLOSE()
 	//ヤーコン：いやいや
-	_BALLOONWIN_OBJMSG(msg_c05_leader_04,C05_GYMLEADER_02)
+	_BALLOONWIN_OBJMSG_POS(msg_c05_leader_04,C05_GYMLEADER_02 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	//ゲーヂス：おや ごかいが
-	_BALLOONWIN_OBJMSG(msg_c05_sage1_02,C05_SAGE_01)
+	_BALLOONWIN_OBJMSG_POS(msg_c05_sage1_02,C05_SAGE_01 , POS_DR )
 	_BALLOONWIN_CLOSE()
 	//ヤーコン：で なんだというんだ
-	_BALLOONWIN_OBJMSG(msg_c05_leader_05,C05_GYMLEADER_02)
+	_BALLOONWIN_OBJMSG_POS(msg_c05_leader_05,C05_GYMLEADER_02 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	//ゲーヂス：プラズマだんとしても
-	_BALLOONWIN_OBJMSG(msg_c05_sage1_03,C05_SAGE_01)
+	_BALLOONWIN_OBJMSG_POS(msg_c05_sage1_03,C05_SAGE_01 , POS_DR )
 	_BALLOONWIN_CLOSE()
 	
 	//ヤーコン：ふん！こいつらを連れてかえりな！（その場歩き）
 	_OBJ_ANIME(C05_GYMLEADER_02,anm_c05_gymleader_staystep_d)
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG(msg_c05_leader_06,C05_GYMLEADER_02)
+	_BALLOONWIN_OBJMSG_POS(msg_c05_leader_06,C05_GYMLEADER_02 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//ゲーヂス：さすが
-	_BALLOONWIN_OBJMSG(msg_c05_sage1_04,C05_SAGE_01)
+	_BALLOONWIN_OBJMSG_POS(msg_c05_sage1_04,C05_SAGE_01 , POS_DR )
 	_BALLOONWIN_CLOSE()
 	//ゲーヂス一歩前に出る
 	_OBJ_ANIME(C05_SAGE_01,anm_c05_sage1_01)
@@ -273,9 +273,9 @@ EVENT_START   ev_pos_c05_gymleader_02
 	_OBJ_ANIME(C05_HAKAI_08,anm_c05_hakai_01)
 	_OBJ_ANIME(C05_HAKAI_09,anm_c05_hakai_02)
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG(msg_c05_sage2_01,C05_SAGE_02)
+	_BALLOONWIN_OBJMSG_POS(msg_c05_sage2_01,C05_SAGE_02, POS_DL )
 	_BALLOONWIN_CLOSE()
-	_BALLOONWIN_OBJMSG(msg_c05_sage1_05,C05_SAGE_01)
+	_BALLOONWIN_OBJMSG_POS(msg_c05_sage1_05,C05_SAGE_01, POS_DR )
 	_BALLOONWIN_CLOSE()
 	
 	//画面暗転・プラズマ団OB削除
@@ -297,12 +297,6 @@ EVENT_START   ev_pos_c05_gymleader_02
 	_OBJ_DEL(C05_SAGE_01)
 	_OBJ_DEL(C05_SAGE_02)
 	
-	//自機にカメラを戻す
-	_CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-	_CAMERA_END()		//カメラ操作終了
-	
 	//OBJの配置を変更して画面復帰
 	_OBJ_POS_CHANGE(C05_RIVAL_02,211,0,404,DIR_UP)
 	_OBJ_POS_CHANGE(MMDL_ID_PLAYER,212,0,404,DIR_UP)
@@ -311,7 +305,7 @@ EVENT_START   ev_pos_c05_gymleader_02
 	_DISP_FADE_END_CHECK()
 	
 	//ジムリーダー一言残してジムの前へ
-	_BALLOONWIN_OBJMSG(msg_c05_leader_07,C05_GYMLEADER_02)
+	_BALLOONWIN_OBJMSG_POS(msg_c05_leader_07,C05_GYMLEADER_02 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//ジムへ消えてゆくジムリーダー（ドア前まで）
@@ -343,10 +337,16 @@ EVENT_START   ev_pos_c05_gymleader_02
 
 	}
 	//ライバル町の見学に出かける
-	_BALLOONWIN_OBJMSG(msg_c05_black_02,C05_RIVAL_02)
+	_BALLOONWIN_OBJMSG_POS(msg_c05_black_02,C05_RIVAL_02 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME(C05_RIVAL_02,anm_c05_rival_02)
 	_OBJ_ANIME_WAIT()
+	
+	//自機にカメラを戻す
+	_CAMERA_DEF_MOVE (16) 
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
 	
 	//ジムリーダーとライバルのOBJを削除
 	_OBJ_DEL(C05_RIVAL_02)
