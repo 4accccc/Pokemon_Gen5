@@ -59,6 +59,7 @@
 
 #include "system/playtime_ctrl.h" // for PLAYTIMECTRL_Start
 #include "savedata/gametime.h"  // for GMTIME
+#include "savedata/system_data.h" //SYSTEMDATA_
 #include "gamesystem/pm_season.h"  // for PMSEASON_TOTAL
 #include "ev_time.h"  // EVTIME_Update
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  // SYS_FLAG_SPEXIT_REQUEST
@@ -102,6 +103,8 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work
 
 static GMEVENT* EVENT_FirstGameStart( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInitWork );
 static GMEVENT* EVENT_FirstMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInitWork );
+static GMEVENT* EVENT_ContinueMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInitWork );
+
 static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_MapChangePalace( GMEVENT* event, int* seq, void* wk );
 static GMEVENT * EVENT_ChangeMapPalaceWithCheck( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc);
@@ -115,21 +118,50 @@ static void setNowLoaction(LOCATION * return_loc, FIELDMAP_WORK * fieldmap);
 //
 //============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief ゲーム開始処理
+ */
+//------------------------------------------------------------------
+GMEVENT* EVENT_CallGameStart( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInitWork )
+{
+  GMEVENT* event;
+
+  switch( gameInitWork->mode ) {
+  case GAMEINIT_MODE_FIRST:
+    event = EVENT_FirstGameStart( gameSystem, gameInitWork );
+    break;
+  case GAMEINIT_MODE_CONTINUE:
+    event = EVENT_ContinueMapIn( gameSystem, gameInitWork );
+    break;
+  case GAMEINIT_MODE_DEBUG:
+    event = EVENT_FirstMapIn( gameSystem, gameInitWork );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+
+  return event;
+}
+
+//============================================================================================
+//
+//  「さいしょから」の流れ
+//
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * @brief ゲーム開始演出イベント用ワーク定義
+ */
 //------------------------------------------------------------------
 typedef struct {
   GAMESYS_WORK*   gameSystem;
   GAME_INIT_WORK* gameInitWork;
 } FIRST_START_WORK;
 
-typedef struct PALACE_JUMP_tag
-{
-  LOCATION Loc;
-  GAMESYS_WORK*  gameSystem;
-  GAMEDATA*      gameData;
-  FIELDMAP_WORK* fieldmap;
-}PALACE_JUMP;
-
 //------------------------------------------------------------------
+/**
+ * @brief ゲーム開始演出イベント
+ */
 //------------------------------------------------------------------
 static GMEVENT_RESULT FirstGameStartEvent( GMEVENT* event, int* seq, void* wk )
 {
@@ -174,11 +206,7 @@ static GMEVENT_RESULT FirstGameStartEvent( GMEVENT* event, int* seq, void* wk )
 
 //------------------------------------------------------------------
 /**
- * @brief ゲーム開始処理
- *
- * @todo
- * コンティニュー処理を内部で切り分けているので
- * きちんと関数分割する必要がある
+ * @brief 「さいしょから」でのゲーム開始演出イベント生成
  */
 //------------------------------------------------------------------
 static GMEVENT* EVENT_FirstGameStart( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInitWork )
@@ -197,16 +225,52 @@ static GMEVENT* EVENT_FirstGameStart( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* 
   return event;
 }
 
+//============================================================================================
+//
+//    イベント：新規ゲーム開始
+//
+//============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief 新規ゲーム開始イベント用ワーク定義
+ */
 //------------------------------------------------------------------
 typedef struct {
   GAMESYS_WORK * gsys;
   GAMEDATA * gamedata;
-  GAMEINIT_MODE game_init_mode;
   LOCATION loc_req;
+#ifdef  PM_DEBUG
+  BOOL isDebugModeFlag;   ///<デバッグモードで開始かどうか
+#endif
+
 }FIRST_MAPIN_WORK;
 
 //------------------------------------------------------------------
+/**
+ *	@brief  フィールドの新規開始初期化処理
+ *
+ *	@param	gsys  ゲームシステム
+ *
+ * @note
+ *	GAME_DATA の情報で、新規ゲーム開始時に行いたい処理を記述してください。
+ *
+ *	このタイミングで呼ばれる処理は、OVERLAY　FIELD_INITに配置してください。
+ */
+//------------------------------------------------------------------
+static void GAME_FieldFirstInit( GAMESYS_WORK * gsys )
+{
+  GAMEDATA* gamedata = GAMESYSTEM_GetGameData(gsys);
+
+  // WFBC街自分の場所初期化
+  FIELD_WFBC_CORE_SetUp( GAMEDATA_GetMyWFBCCoreData(gamedata), GAMEDATA_GetMyStatus(gamedata), GFL_HEAPID_APP ); //heap はテンポラリ用
+  FIELD_WFBC_CORE_SetUpZoneData( GAMEDATA_GetMyWFBCCoreData(gamedata) );
+
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 新規ゲーム開始イベント
+ */
 //------------------------------------------------------------------
 static GMEVENT_RESULT FirstMapInEvent(GMEVENT * event, int *seq, void *work)
 {
@@ -217,55 +281,18 @@ static GMEVENT_RESULT FirstMapInEvent(GMEVENT * event, int *seq, void *work)
   FIELDMAP_WORK * fieldmap;
   switch (*seq) {
   case 0:
-    // VRAM全クリア
-    GX_SetBankForLCDC(GX_VRAM_LCDC_ALL);
-    MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_LCDC_VRAM_SIZE);
-    (void)GX_DisableBankForLCDC();
-
-    switch(fmw->game_init_mode){
-    case GAMEINIT_MODE_FIRST:
-      SCRIPT_CallGameStartInitScript( gsys, GFL_HEAPID_APP );
-      FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
-      MAPCHG_setupMapTools( gsys, &fmw->loc_req ); //新しいマップモードなど機能指定を行う
-      MAPCHG_updateGameData( gsys, &fmw->loc_req ); //新しいマップID、初期位置をセット
-      break;
-
-    case GAMEINIT_MODE_DEBUG:
-#if PM_DEBUG
+#ifdef  PM_DEBUG
+    if ( fmw->isDebugModeFlag ) {
       SCRIPT_CallDebugGameStartInitScript( gsys, GFL_HEAPID_APP );
-      FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
-      MAPCHG_setupMapTools( gsys, &fmw->loc_req ); //新しいマップモードなど機能指定を行う
-      MAPCHG_updateGameData( gsys, &fmw->loc_req ); //新しいマップID、初期位置をセット
+    } else {
+      SCRIPT_CallGameStartInitScript( gsys, GFL_HEAPID_APP );
+    }
+#else
+    SCRIPT_CallGameStartInitScript( gsys, GFL_HEAPID_APP );
 #endif
-      break;
-
-    case GAMEINIT_MODE_CONTINUE:
-      if (EVENTWORK_CheckEventFlag( ev, SYS_FLAG_SPEXIT_REQUEST ) )
-      { //特殊接続リクエスト：
-        const LOCATION * spLoc = GAMEDATA_GetSpecialLocation( gamedata );
-        fmw->loc_req = *spLoc;
-        // EVENTWORK_ResetEventFlag( ev, SYS_FLAG_SPEXIT_REQUEST );
-        FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
-        MAPCHG_releaseMapTools( gsys );
-        MAPCHG_setupMapTools( gsys, &fmw->loc_req ); //新しいマップモードなど機能指定を行う
-        MAPCHG_updateGameData( gsys, &fmw->loc_req ); //新しいマップID、初期位置をセット
-      }
-      else
-      {
-        FIELD_STATUS_SetContinueFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
-        MAPCHG_setupMapTools( gsys, &fmw->loc_req ); //新しいマップモードなど機能指定を行う
-        EVTIME_Update( gamedata ); //イベント時間更新
-        FIELD_FLAGCONT_INIT_Continue( gamedata, fmw->loc_req.zone_id ); //コンティニューによるフラグ落とし処理
-        //天気ロード決定
-        //**上のFIELD_FLAGCONT_INIT_Continueで移動ポケモンの天気が抽選されるので、
-        //必ず、その下で行う。**
-        PM_WEATHER_UpdateSaveLoadWeatherNo( gamedata, fmw->loc_req.zone_id );
-      }
-      break;
-
-    default:
-      GF_ASSERT(0);
-    } 
+    FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
+    MAPCHG_setupMapTools( gsys, &fmw->loc_req ); //新しいマップモードなど機能指定を行う
+    MAPCHG_updateGameData( gsys, &fmw->loc_req ); //新しいマップID、初期位置をセット
 
     (*seq)++;
     break;
@@ -280,56 +307,19 @@ static GMEVENT_RESULT FirstMapInEvent(GMEVENT * event, int *seq, void *work)
     break;
 
   case 2:
+    //フィールドマップを開始待ち
     GMEVENT_CallEvent(event, EVENT_FieldOpen_FieldProcOnly(gsys));
     (*seq)++;
     break;
 
   case 3:
-    if( (fmw->game_init_mode == GAMEINIT_MODE_CONTINUE) && 
-        EVENTWORK_CheckEventFlag( ev, SYS_FLAG_SPEXIT_REQUEST ) )
-    {
-      EVENTWORK_ResetEventFlag( ev, SYS_FLAG_SPEXIT_REQUEST );
-      if ( *(EVENTWORK_GetEventWorkAdrs( ev, WK_SYS_SCENE_COMM )) != 0 ) {
-        SCRIPT_CallScript( event, SCRID_POKECEN_ELEVATOR_OUT_CONTINUE, NULL, NULL, HEAPID_FIELDMAP );
-        *seq = 5;
-        break;
-      }
-    }
-    (*seq) ++;
-    break;
-
-  case 4:
     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
     // 画面フェードイン
-    switch( fmw->game_init_mode ) {
-    case GAMEINIT_MODE_DEBUG:
-      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
-      break;
-    case GAMEINIT_MODE_FIRST:
-      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
-      break;
-    case GAMEINIT_MODE_CONTINUE:
-      { // ゲーム終了時の季節を表示する
-        u8 season = GAMEDATA_GetSeasonID( gamedata );
-        GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Season( gsys, fieldmap, season, season ) );
-      }
-      break;
-    default:
-      GF_ASSERT(0);
-    }
-
-    //季節ポケモンフォルムチェンジコンテニュー時は必ず通るようにする
-    {
-      u8 season;
-      POKEPARTY *party;
-      season = GAMEDATA_GetSeasonID(gamedata);
-      party = GAMEDATA_GetMyPokemon(gamedata);
-      SEASONPOKE_FORM_ChangeForm(party, season);
-    }
+    GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
     (*seq)++;
     break;
 
-  case 5:
+  case 4:
     // 地名を表示する
     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
     if( FIELDMAP_GetPlaceNameSys(fieldmap) )
@@ -341,123 +331,235 @@ static GMEVENT_RESULT FirstMapInEvent(GMEVENT * event, int *seq, void *work)
   return GMEVENT_RES_CONTINUE;
 }
 
-//----------------------------------------------------------------------------
-/**
- *	@brief  フィールドの新規開始初期化処理
- *
- *	@param	gsys  ゲームシステム
- *
- *	GAME_DATA の情報で、新規ゲーム開始時に行いたい処理を記述してください。
- *
- *	このタイミングで呼ばれる処理は、OVERLAY　FIELD_INITに配置してください。
- */
-//-----------------------------------------------------------------------------
-static void GAME_FieldFirstInit( GAMESYS_WORK * gsys )
-{
-  GAMEDATA* gamedata = GAMESYSTEM_GetGameData(gsys);
-
-  // WFBC街自分の場所初期化
-  FIELD_WFBC_CORE_SetUp( GAMEDATA_GetMyWFBCCoreData(gamedata), GAMEDATA_GetMyStatus(gamedata), GFL_HEAPID_APP ); //heap はテンポラリ用
-  FIELD_WFBC_CORE_SetUpZoneData( GAMEDATA_GetMyWFBCCoreData(gamedata) );
-}
-
 //------------------------------------------------------------------
 /**
- * @brief ゲーム開始処理
- *
- * @todo
- * コンティニュー処理を内部で切り分けているので
- * きちんと関数分割する必要がある
+ * @brief 新規ゲーム開始イベント生成
  */
 //------------------------------------------------------------------
 static GMEVENT* EVENT_FirstMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInitWork )
 {
   GMEVENT* event;
-  FIRST_MAPIN_WORK* work;
+  FIRST_MAPIN_WORK* fmw;
 
   // イベントを生成する
   event = GMEVENT_Create( gameSystem, NULL, FirstMapInEvent, sizeof(FIRST_MAPIN_WORK) );
-  work  = GMEVENT_GetEventWork( event );
+  fmw  = GMEVENT_GetEventWork( event );
 
   // イベントワークを初期化
-  work->gsys = gameSystem;
-  work->gamedata   = GAMESYSTEM_GetGameData(gameSystem);
-  work->game_init_mode = gameInitWork->mode;
+  fmw->gsys = gameSystem;
+  fmw->gamedata   = GAMESYSTEM_GetGameData(gameSystem);
+  LOCATION_SetGameStart(&fmw->loc_req);
 
-  switch(gameInitWork->mode){
-  case GAMEINIT_MODE_CONTINUE:
-    LOCATION_SetDirect(&work->loc_req, gameInitWork->mapid, gameInitWork->dir, 
-      gameInitWork->pos.x, gameInitWork->pos.y, gameInitWork->pos.z);
-    break;
-  case GAMEINIT_MODE_FIRST:
-    LOCATION_SetGameStart(&work->loc_req);
-    GAME_FieldFirstInit( gameSystem );  // フィールド情報の初期化
-    break;
 #ifdef PM_DEBUG
-  case GAMEINIT_MODE_DEBUG:
+  fmw->isDebugModeFlag = FALSE;
+  if ( gameInitWork->mode == GAMEINIT_MODE_DEBUG )
+  {
+    fmw->isDebugModeFlag = TRUE;
+    //適当に手持ちポケモンをAdd
+    //デバッグアイテム追加などなど…
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_data));
+    DEBUG_SetStartData( GAMESYSTEM_GetGameData( gameSystem ), GFL_HEAPID_APP );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_data));
+    
+    LOCATION_SetDefaultPos(&fmw->loc_req, gameInitWork->mapid);
+
 #ifdef DEBUG_ONLY_FOR_iwasawa
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
        DEBUG_FLG_FlgOn( DEBUG_FLG_ShortcutBtlIn );
     }
 #endif
-    GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_data));
-    //適当に手持ちポケモンをAdd
-    //デバッグアイテム追加などなど…
-    DEBUG_SetStartData( GAMESYSTEM_GetGameData( gameSystem ), GFL_HEAPID_APP );
-
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_data));
-    
-    LOCATION_SetDefaultPos(&work->loc_req, gameInitWork->mapid);
-
-    GAME_FieldFirstInit( gameSystem );  // フィールド情報の初期化
-    break;
+  }
 #endif //PM_DEBUG
+
+  GAME_FieldFirstInit( gameSystem );  // フィールド情報の初期化
+  //DS本体情報のセット
+  {
+    SAVE_CONTROL_WORK * svdt = GAMEDATA_GetSaveControlWork( fmw->gamedata );
+    SYSTEMDATA * sysdt = SaveData_GetSystemData( svdt );
+    SYSTEMDATA_Update( sysdt );
   }
   //プレイ時間カウント　開始
   PLAYTIMECTRL_Start();
 
+  // VRAM全クリア
+  GX_SetBankForLCDC(GX_VRAM_LCDC_ALL);
+  MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_LCDC_VRAM_SIZE);
+  (void)GX_DisableBankForLCDC();
+
   return event;
+}
+
+//============================================================================================
+//
+//  イベント：コンティニュー
+//
+//============================================================================================
+//------------------------------------------------------------------
+/**
+ * ゲームコンティニューイベント用ワーク定義
+ */
+//------------------------------------------------------------------
+typedef struct {
+  GAMESYS_WORK * gsys;
+  GAMEDATA * gamedata;
+  LOCATION loc_req;
+  BOOL sp_exit_flag;    ///<特殊接続で開始するかどうかの判定フラグ
+}CONTINUE_MAPIN_WORK;
+
+//------------------------------------------------------------------
+/**
+ * ゲームコンティニューイベント
+ */
+//------------------------------------------------------------------
+static GMEVENT_RESULT ContinueMapInEvent(GMEVENT * event, int *seq, void *work)
+{
+  CONTINUE_MAPIN_WORK * cmw = work;
+  GAMESYS_WORK * gsys = cmw->gsys;
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
+  EVENTWORK * ev = GAMEDATA_GetEventWork( gamedata );
+  FIELDMAP_WORK * fieldmap;
+  switch (*seq) {
+  case 0:
+    if ( cmw->sp_exit_flag )
+    { //特殊接続リクエスト：いきなり別マップに遷移する
+      const LOCATION * spLoc = GAMEDATA_GetSpecialLocation( gamedata );
+      cmw->loc_req = *spLoc;
+      FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
+      MAPCHG_releaseMapTools( gsys ); //動作モデルの開放など
+      MAPCHG_setupMapTools( gsys, &cmw->loc_req ); //新しいマップモードなど機能指定を行う
+      MAPCHG_updateGameData( gsys, &cmw->loc_req ); //新しいマップID、初期位置をセット
+    }
+    else
+    {
+      FIELD_STATUS_SetContinueFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
+      MAPCHG_setupMapTools( gsys, &cmw->loc_req ); //新しいマップモードなど機能指定を行う
+      EVTIME_Update( gamedata ); //イベント時間更新
+      FIELD_FLAGCONT_INIT_Continue( gamedata, cmw->loc_req.zone_id ); //コンティニューによるフラグ落とし処理
+      //天気ロード決定
+      //**上のFIELD_FLAGCONT_INIT_Continueで移動ポケモンの天気が抽選されるので、
+      //必ず、その下で行う。**
+      PM_WEATHER_UpdateSaveLoadWeatherNo( gamedata, cmw->loc_req.zone_id );
+    }
+    (*seq)++;
+    break;
+
+  case 1:
+    // BGM フェードイン
+    {
+      u32 soundIdx = FSND_GetFieldBGM( gamedata, cmw->loc_req.zone_id );
+      GMEVENT_CallEvent( event, EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_NONE, FSND_FADE_NORMAL ) );
+    }
+    (*seq)++;
+    break;
+
+  case 2:
+    //フィールドマップを開始待ち
+    GMEVENT_CallEvent(event, EVENT_FieldOpen_FieldProcOnly(gsys));
+    (*seq)++;
+    break;
+
+  case 3:
+    if(  cmw->sp_exit_flag && *(EVENTWORK_GetEventWorkAdrs( ev, WK_SYS_SCENE_COMM )) != 0 )
+    {
+      //ポケセンエレベータ演出で再開
+      SCRIPT_CallScript( event, SCRID_POKECEN_ELEVATOR_OUT_CONTINUE, NULL, NULL, HEAPID_FIELDMAP );
+    }
+    else
+    {
+      // 画面フェードイン
+      // ゲーム終了時の季節を表示する
+      u8 season = GAMEDATA_GetSeasonID( gamedata );
+      fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+      GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Season( gsys, fieldmap, season, season ) );
+    }
+    (*seq)++;
+    break;
+
+  case 4:
+    // 地名を表示する
+    fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+    if( FIELDMAP_GetPlaceNameSys(fieldmap) )
+    {
+      FIELD_PLACE_NAME_DisplayForce( FIELDMAP_GetPlaceNameSys(fieldmap), cmw->loc_req.zone_id );
+    }
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
 }
 
 //------------------------------------------------------------------
 /**
- * @brief ゲーム開始処理
+ * @brief ゲームコンティニューイベント生成
  *
- * @todo
- * コンティニュー処理を内部で切り分けているので
- * きちんと関数分割する必要がある
+ * @todo  LOCATION_SetDirectを使用していて問題ないか調査する
+ * @todo  ペナルティ適用時にシェイミのフォルムを戻す処理を入れる
  */
 //------------------------------------------------------------------
-GMEVENT* EVENT_CallGameStart( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInitWork )
+static GMEVENT* EVENT_ContinueMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInitWork )
 {
   GMEVENT* event;
+  CONTINUE_MAPIN_WORK* cmw;
+  EVENTWORK * ev;
 
-  switch( gameInitWork->mode ) {
-  case GAMEINIT_MODE_FIRST:
-    event = EVENT_FirstGameStart( gameSystem, gameInitWork );
-    break;
-  case GAMEINIT_MODE_CONTINUE:
-  case GAMEINIT_MODE_DEBUG:
-    event = EVENT_FirstMapIn( gameSystem, gameInitWork );
-    break;
-  default:
-    GF_ASSERT(0);
+  // イベントを生成する
+  event = GMEVENT_Create( gameSystem, NULL, ContinueMapInEvent, sizeof(CONTINUE_MAPIN_WORK) );
+  cmw  = GMEVENT_GetEventWork( event );
+
+  // イベントワークを初期化
+  cmw->gsys = gameSystem;
+  cmw->gamedata   = GAMESYSTEM_GetGameData(gameSystem);
+  LOCATION_SetDirect(&cmw->loc_req, gameInitWork->mapid, gameInitWork->dir, 
+    gameInitWork->pos.x, gameInitWork->pos.y, gameInitWork->pos.z);
+  ev = GAMEDATA_GetEventWork( cmw->gamedata );
+  cmw->sp_exit_flag = EVENTWORK_CheckEventFlag( ev, SYS_FLAG_SPEXIT_REQUEST );
+  EVENTWORK_ResetEventFlag( ev, SYS_FLAG_SPEXIT_REQUEST );
+
+  //時間書き換えによるペナルティチェック
+  {
+    SAVE_CONTROL_WORK * svdt = GAMEDATA_GetSaveControlWork(cmw->gamedata );
+    SYSTEMDATA * sysdt = SaveData_GetSystemData( svdt );
+    if (!SYSTEMDATA_IdentifyMACAddress(sysdt) || !SYSTEMDATA_IdentifyRTCOffset(sysdt) )
+    {
+      //ペナルティ時間を設定する
+      GMTIME_SetPenaltyTime( SaveData_GetGameTime(svdt) );
+    }
+    //現在のDS本体情報を今後の設定とする
+    SYSTEMDATA_Update( sysdt );
   }
+
+
+  //プレイ時間カウント　開始
+  PLAYTIMECTRL_Start();
+
+  // VRAM全クリア
+  GX_SetBankForLCDC(GX_VRAM_LCDC_ALL);
+  MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_LCDC_VRAM_SIZE);
+  (void)GX_DisableBankForLCDC();
 
   return event;
 }
+
 
 //============================================================================================
 //
 //    イベント：ゲーム終了
 //
 //============================================================================================
+#ifdef  PM_DEBUG
+//------------------------------------------------------------------
+/**
+ * @brief ゲーム終了イベント用ワーク
+ */
+//------------------------------------------------------------------
 typedef struct {
   GAMESYS_WORK * gsys;
   FIELDMAP_WORK * fieldmap;
 }GAME_END_WORK;
 
 //------------------------------------------------------------------
+/**
+ * @brief ゲーム終了イベント
+ */
 //------------------------------------------------------------------
 static GMEVENT_RESULT GameEndEvent(GMEVENT * event, int *seq, void *work)
 {
@@ -494,7 +596,7 @@ static GMEVENT_RESULT GameEndEvent(GMEVENT * event, int *seq, void *work)
 
 //------------------------------------------------------------------
 /**
- * @brief デバッグ用：ゲーム終了
+ * @brief デバッグ用：ゲーム終了イベント生成
  *
  * @note
  * 実際にはゲームを終了させるというインターフェイスは
@@ -509,6 +611,7 @@ GMEVENT * DEBUG_EVENT_CallGameEnd( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap
   gew->fieldmap = fieldmap;
   return event;
 }
+#endif
 
 //============================================================================================
 //
@@ -2004,36 +2107,19 @@ GMEVENT * EVENT_ChangeMapPalace_to_Palace( GAMESYS_WORK* gameSystem, u16 zoneID,
 
 
 
-//------------------------------------------------------------------
-//  ※マップIDをインクリメントしている。最大値になったら先頭に戻る
-//------------------------------------------------------------------
-GMEVENT* DEBUG_EVENT_ChangeToNextMap( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
-{
-  GAMEDATA* gamedata = GAMESYSTEM_GetGameData(gsys);
-  PLAYER_WORK* myplayer = GAMEDATA_GetMyPlayerWork(gamedata);
-  ZONEID next = PLAYERWORK_getZoneID(myplayer);
-  next ++;
-  if (next >= ZONEDATA_GetZoneIDMax()) {
-    next = 0;
-  }
-  return DEBUG_EVENT_ChangeMapDefaultPos(gsys, fieldmap, next);
-}
 
 //============================================================================================
 //
 //
-//  マップ遷移初期化処理
+//  全滅時イベント
 //
 //
 //============================================================================================
-//-----------------------------------------------------------------------------
-/**
- *      全滅時の処理
- */
-//-----------------------------------------------------------------------------
 //-------------------------------------
-///	MAPCHANGE_GAMEOVER
-//=====================================
+/**
+ * @brief ゲームオーバーイベント用ワーク
+ */
+//-------------------------------------
 typedef struct {
   GAMESYS_WORK * gsys;
   GAMEDATA * gamedata;
@@ -2131,7 +2217,7 @@ static GMEVENT_RESULT GMEVENT_GameOver(GMEVENT * event, int * seq, void *work)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  全滅時のマップ遷移処理
+ *	@brief  ゲームオーバーイベント生成
  */
 //-----------------------------------------------------------------------------
 GMEVENT * EVENT_CallGameOver( GAMESYS_WORK * gsys )
@@ -2153,6 +2239,13 @@ GMEVENT * EVENT_CallGameOver( GAMESYS_WORK * gsys )
   return event;
 }
 
+//============================================================================================
+//
+//
+//  マップ遷移初期化処理
+//
+//
+//============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static u16 GetDirValueByDirID(EXIT_DIR dir_id)
@@ -2573,6 +2666,25 @@ static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID)
   }
 }
 
+//============================================================================================
+//
+//
+//  マップ遷移：パレス関連
+//
+//
+//============================================================================================
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+typedef struct PALACE_JUMP_tag
+{
+  LOCATION Loc;
+  GAMESYS_WORK*  gameSystem;
+  GAMEDATA*      gameData;
+  FIELDMAP_WORK* fieldmap;
+}PALACE_JUMP;
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static GMEVENT * EVENT_ChangeMapPalaceWithCheck( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc)
 {
   PALACE_JUMP* work;
@@ -2591,6 +2703,8 @@ static GMEVENT * EVENT_ChangeMapPalaceWithCheck( GAMESYS_WORK* gameSystem, FIELD
 }
 
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
 static GMEVENT * EVENT_ChangeMapPalace( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc)
 {
   PALACE_JUMP* work;
