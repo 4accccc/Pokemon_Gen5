@@ -77,24 +77,34 @@ EVENT_START   ev_r01_poke_getdemo_01
         _OBJ_ANIME_WAIT()
     ENDSWITCH
   } //ローカル変数の参照制限範囲、ここまで。
+  
+	//カメラ操作　博士中心に
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	_CAMERA_MOVE( 9694,0,970800,51675136,0,47480832,50 )
 
 	//上に移動
     _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_up )
     _OBJ_ANIME_WAIT()
+    
+    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//ライバル、アニメ＋メッセージ
 	_OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget_rival_look_hakase )
 	_OBJ_ANIME( R01_SUPPORT_01,anm_R01_pokeget_support_look_hakase )
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG_POS( msg_r01_black_01,R01_RIVAL_01 , POS_DL )
+	_BALLOONWIN_OBJMSG_POS( msg_r01_black_01,R01_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//専用曲鳴らす
 	_START_EVENT_BGM( SEQ_BGM_E_DOCTOR )
 
 	//博士、メッセージ＋アニメ
-	_BALLOONWIN_OBJMSG_POS( msg_r01_hakase2_01,R01_HAKASE2_01 , POS_DL )
+	_BALLOONWIN_OBJMSG_POS( msg_r01_hakase2_01,R01_HAKASE2_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
+	
+	//博士移動・カメラ追従
+	_CAMERA_MOVE( 9688,0,970752,51675136,0,47284224,24 )
 	_OBJ_ANIME( R01_HAKASE2_01,anm_R01_pokeget1 )
 	
 	//サポート＋ライバル博士を見る
@@ -102,14 +112,8 @@ EVENT_START   ev_r01_poke_getdemo_01
 	_OBJ_ANIME( R01_SUPPORT_01,anm_R01_pokeget_up )
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_R01_pokeget_up )
 	
-	_CAMERA_START()		//カメラ操作開始
-	_CAMERA_PURGE()		//カメラのバインドを解く
-	
-	//カメラ操作　博士中心に
-	_CAMERA_MOVE( 9688,0,970752,51675136,0,47337472,30 )
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	
 	_OBJ_ANIME_WAIT()
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//捕獲デモ呼び出し[100216斉藤マ]
 	_CAPTURE_DEMO_SET()
@@ -118,37 +122,35 @@ EVENT_START   ev_r01_poke_getdemo_01
 	_CAMERA_PURGE()		//カメラのバインドを解く
 	
 	//カメラ操作　博士中心に
-	_CAMERA_MOVE( 9688,0,970752,51675136,0,47337472,1 )
+	_CAMERA_MOVE( 9688,0,970752,51675136,0,47284224,1 )
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//暗転終了
 	_WILD_WIN()
-	
-	//博士、メッセージ＋退場アニメ
+
+	//博士戻ってくる・カメラ追従
+	_CAMERA_MOVE( 9688,0,970752,51675136,0,47415296,16 )
 	_OBJ_ANIME( R01_HAKASE2_01,anm_R01_pokeget1a )
 	
-	//自機にカメラを戻す
-	_CAMERA_DEF_MOVE (30) 
-	_CAMERA_WAIT_MOVE()
-	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-	_CAMERA_END()		//カメラ操作終了
-	
 	_OBJ_ANIME_WAIT()
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//サポート＋ライバル戻ってきた博士を見る
 	_OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget_right )
 	_OBJ_ANIME( R01_SUPPORT_01,anm_R01_pokeget_left )
 	_OBJ_ANIME_WAIT()
-
-	_BALLOONWIN_OBJMSG_POS( msg_r01_hakase2_02,R01_HAKASE2_01 , POS_DL )
+	
+	//アララギ：どう？
+	_BALLOONWIN_OBJMSG_POS( msg_r01_hakase2_02,R01_HAKASE2_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 
-//モンスターボール入手
+	//モンスターボール入手
 	_ITEM_EVENT_KEYWAIT(ITEM_MONSUTAABOORU, 5)
 
-	_BALLOONWIN_OBJMSG_POS( msg_r01_hakase2_03,R01_HAKASE2_01 , POS_DL )
+	_BALLOONWIN_OBJMSG_POS( msg_r01_hakase2_03,R01_HAKASE2_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
-
+	
+	//博士退場
 	_OBJ_ANIME( R01_HAKASE2_01,anm_R01_pokeget2 )
 	_OBJ_ANIME_WAIT()
 	//専用曲止まる
@@ -206,6 +208,9 @@ EVENT_START   ev_r01_poke_getdemo_01
 //サポート
 	_BALLOONWIN_OBJMSG_POS( msg_r01_white_04,R01_SUPPORT_01 , POS_UR )
 	_BALLOONWIN_CLOSE()
+	
+	//自機にカメラを戻す
+	_CAMERA_DEF_MOVE (64) 
 
 //ライバル、サポート退場アニメ
 	_OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget6 )
@@ -214,6 +219,11 @@ EVENT_START   ev_r01_poke_getdemo_01
 
 	_OBJ_DEL( R01_RIVAL_01 )
 	_OBJ_DEL( R01_SUPPORT_01 )
+
+	//カメラ待ち
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
 
 //==================================//
 
@@ -384,14 +394,14 @@ _ANIME_LABEL	anm_R01_pokeget4_2
 //	R01　捕獲デモ用：ライバル退場
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_R01_pokeget6
-	_ANIME_DATA	AC_WALK_U_8F,12
+	_ANIME_DATA	AC_WALK_U_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	R01　捕獲デモ用：サポート退場
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_R01_pokeget7
-	_ANIME_DATA	AC_WALK_U_8F,12
+	_ANIME_DATA	AC_WALK_U_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
