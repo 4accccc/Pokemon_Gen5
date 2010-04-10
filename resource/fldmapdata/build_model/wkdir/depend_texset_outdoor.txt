@@ -698,7 +698,8 @@ DEP_TEXSET_IMD_OUTDOOR016 = \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
 	$(SRCDIR)/door_normal03.imd \
-	$(SRCDIR)/h04_ligth.imd
+	$(SRCDIR)/h04_ligth.imd \
+	$(SRCDIR)/o_parasol_02.imd
 
 texset/outdoor016.imd: $(DEP_TEXSET_IMD_OUTDOOR016) texset/tmp/outdoor016.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor016.list
@@ -773,7 +774,8 @@ DEP_TEXSET_IMD_OUTDOOR018 = \
 	$(SRCDIR)/rock_02.imd \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
-	$(SRCDIR)/door_normal03.imd
+	$(SRCDIR)/door_normal03.imd \
+	$(SRCDIR)/o_parasol_02.imd
 
 texset/outdoor018.imd: $(DEP_TEXSET_IMD_OUTDOOR018) texset/tmp/outdoor018.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor018.list

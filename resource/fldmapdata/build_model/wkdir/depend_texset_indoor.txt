@@ -230,6 +230,7 @@ DEP_TEXSET_IMD_INDOOR004 = \
 	$(SRCDIR)/machine_l01.imd \
 	$(SRCDIR)/machine_l02.imd \
 	$(SRCDIR)/win01.imd \
+	$(SRCDIR)/win03.imd \
 	$(SRCDIR)/pcdesk01.imd \
 	$(SRCDIR)/desk01.imd \
 	$(SRCDIR)/vase01.imd \
@@ -1811,6 +1812,8 @@ DEP_TEXSET_IMD_INDOOR039 = \
 	$(SRCDIR)/plant01.imd \
 	$(SRCDIR)/dust01.imd \
 	$(SRCDIR)/poster01.imd \
+	$(SRCDIR)/machine_l01.imd \
+	$(SRCDIR)/machine_l02.imd \
 	$(SRCDIR)/win01.imd \
 	$(SRCDIR)/pcdesk01.imd \
 	$(SRCDIR)/desk01.imd \
@@ -1821,6 +1824,8 @@ DEP_TEXSET_IMD_INDOOR039 = \
 	$(SRCDIR)/desk02.imd \
 	$(SRCDIR)/art01.imd \
 	$(SRCDIR)/object02.imd \
+	$(SRCDIR)/machine01.imd \
+	$(SRCDIR)/machine02.imd \
 	$(SRCDIR)/d0stair_u01.imd \
 	$(SRCDIR)/d0stair_d01.imd \
 	$(SRCDIR)/in_vender01.imd \
