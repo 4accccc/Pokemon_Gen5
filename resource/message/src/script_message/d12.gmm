@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T17:46:28"/>
+	<create user="matsushima" host="W00181" date="2010-04-10T19:59:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="112" right="2013" bottom="732" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -314,10 +314,10 @@
 ※船の出港デモはカット</comment>
 		<attribute name="キャラ指定">PILOT
 船長</attribute>
-		<language name="JPN" width="256">わかりました！　いそいで
-ヒウンシティに　もどりましょう！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">わかりました！　急いで
-ヒウンシティに　もどりましょう！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">すぐに　しゅっこうしますので
+じょうせんして　おまちください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">すぐに　出航しますので
+乗船して　お待ちください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d12_mariner_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -328,18 +328,6 @@
 いつでも　こえを　かけて　ください！</language>
 		<language name="JPN_KANJI" width="256">ヒウンシティに　もどりたいときは
 いつでも　声を　かけて　ください！</language>
-	</row>
-
-	<row id="msg_d12_mariner_04" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<comment>●イベント終了後のセリフ
-
-●「はい／いいえ」ウインドウ表示
-　「はい」→そのまま画面暗転。出航デモはカット
-　「いいえ」→msg_mapscript_d12_mariner_03</comment>
-		<attribute name="キャラ指定">PILOT
-船長</attribute>
-		<language name="JPN" width="256">ヒウンシティに　もどりますか？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ヒウンシティに　もどりますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d12_visitor01_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -436,10 +424,10 @@
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">しまを　せんきょして
 なにを　しようと　してるんだ…？[BE:00:ページ切り替え（行送り）]
-まったく　アヤシイ　れんちゅうだ！[BE:01:ページ切り替え（クリア）]</language>
+まったく　アヤシイ　れんちゅうだ！</language>
 		<language name="JPN_KANJI" width="256">島を　占拠して
 なにを　しようと　してるんだ…？[BE:00:ページ切り替え（行送り）]
-まったく　アヤシイ　連中だ！[BE:01:ページ切り替え（クリア）]</language>
+まったく　アヤシイ　連中だ！</language>
 	</row>
 
 	<row id="msg_d12_visitor04_02" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
