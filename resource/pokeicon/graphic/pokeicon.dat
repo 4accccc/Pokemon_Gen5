@@ -541,8 +541,8 @@ const u8 IconPalAtr[] = {
 	0x00,		// 531 : poke_icon_626_m
 	0x00,		// 532 : poke_icon_627_m
 	0x00,		// 533 : poke_icon_628_m
-	0x00,		// 534 : poke_icon_586_m
-	0x00,		// 535 : poke_icon_587_m
+	0x22,		// 534 : poke_icon_586_m
+	0x22,		// 535 : poke_icon_587_m
 	0x00,		// 536 : poke_icon_588_m
 	0x11,		// 537 : poke_icon_576_m
 	0x00,		// 538 : poke_icon_575_m
