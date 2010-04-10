@@ -1078,6 +1078,7 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
     }
   }
   if(bReturn){
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, pWork->pAppWin, _CROSSCUR_TYPE_NONE);
     GTSNEGO_MESSAGE_DeleteDispLevel(pWork->pMessageWork);
     GTSNEGO_DISP_LevelInputFree(pWork->pDispWork);
@@ -1165,6 +1166,7 @@ static void _MatchingCancelState2(GTSNEGO_WORK* pWork)
     TOUCHBAR_SetVisible(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TOUCHBAR_ICON_RETURN, TRUE);
     switch(selectno){
     case 0:
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
       GFL_NET_StateWifiMatchEnd(TRUE);
       GTSNEGO_DISP_ResetDispSet(pWork->pDispWork);
       GTSNEGO_MESSAGE_ResetDispSet(pWork->pMessageWork);
@@ -1203,6 +1205,7 @@ static void _cancelFlash(GTSNEGO_WORK* pWork)
   if(!GTSNEGO_MESSAGE_CancelButtonDelete(pWork->pMessageWork)){
     return;
   }
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
   GTSNEGO_DISP_ResetDispSet(pWork->pDispWork);
   GTSNEGO_MESSAGE_ResetDispSet(pWork->pMessageWork);
   GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, _CROSSCUR_TYPE_NONE);
@@ -1294,6 +1297,7 @@ static void _friendSelectDecide( GTSNEGO_WORK *pWork )
 
 static void _friendSelectBack( GTSNEGO_WORK *pWork )
 {
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
   GTSNEGO_DISP_FriendSelectFree2(pWork->pDispWork);
   _CHANGE_STATE(pWork,_modeSelectMenuInit);
 }
@@ -1442,6 +1446,8 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
   TOUCHBAR_Main(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork));
   switch( TOUCHBAR_GetTrg(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork))){
   case TOUCHBAR_ICON_RETURN:
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_OFF );
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, pWork->pAppWin, _CROSSCUR_TYPE_NONE);
     GTSNEGO_DISP_FriendSelectFree(pWork->pDispWork);
     GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
@@ -1556,6 +1562,8 @@ static void _modeSelectMenuInit(GTSNEGO_WORK* pWork)
   GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_037);
 
 
+  GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
 
   _CHANGE_STATE(pWork,_modeSelectMenuWait);
 }

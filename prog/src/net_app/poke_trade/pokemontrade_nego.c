@@ -66,9 +66,6 @@
 #define _GTSINFO14_WAIT (60*2)
 
 
-//static void _pokeNickNameMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,BOOL bEgg,POKEMON_TRADE_WORK* pWork);
-//static void _pokeLvMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,POKEMON_TRADE_WORK* pWork);
-//static void _pokeSexMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,POKEMON_TRADE_WORK* pWork);
 static void _Select6MessageInitEnd(POKEMON_TRADE_WORK* pWork);
 static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork);
 static void _menuMyPokemonMenu(POKEMON_TRADE_WORK* pWork);
@@ -598,6 +595,12 @@ static void _changePokemonSendDataNetWait(POKEMON_TRADE_WORK* pWork)
   else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_EGG){
     msgno = POKETRADE_STR2_03;
   }
+  else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_MAIL){
+    msgno = POKETRADE_STR_97;
+  }
+  else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_MAIL){
+    msgno = POKETRADE_STR2_32;
+  }
   else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_TRI_BACK){
     msgno = gtsnego_info_17;
   }
@@ -627,6 +630,9 @@ static void _changePokemonSendDataOk(POKEMON_TRADE_WORK* pWork)
     if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_F, WB_NET_TRADE_SERVICEID)){
       if(POKEMONTRADE_IsEggAndLastBattlePokemonChange(pWork)){
         cmd = POKETRADE_FACTOR_EGG;
+      }
+      else if(POKEMONTRADE_IsMailPokemon(pWork)){
+        cmd = POKETRADE_FACTOR_MAIL;
       }
       if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd)){
         _rapTimingStart( GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_E ,pWork);

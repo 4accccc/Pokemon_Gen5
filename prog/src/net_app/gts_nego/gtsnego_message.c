@@ -898,14 +898,14 @@ static void _SetCountry(GTSNEGO_MESSAGE_WORK* pWork,MYSTATUS* pMyStatus)
   if(pWork->mainMsgWin==NULL){
     pWork->mainMsgWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME1_M ,
-      1 , 15, 30 ,4 ,
+      1 , 16, 28 ,4 ,
       _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->mainMsgWin;
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0);
   GFL_FONTSYS_SetColor(15, 2, 0);
-  PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) , 3, 2, pWork->pStrBuf, pWork->pFontHandle );
+  PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) , 3, 0, pWork->pStrBuf, pWork->pFontHandle );
   GFL_BMPWIN_TransVramCharacter(pwin);
   GFL_BMPWIN_MakeScreen(pwin);
   

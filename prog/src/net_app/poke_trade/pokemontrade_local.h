@@ -107,6 +107,7 @@ typedef enum
   POKETRADE_FACTOR_SINGLE_NG,    //一体選択NG
   POKETRADE_FACTOR_END,            //終わり選択
   POKETRADE_FACTOR_EGG,        // たまごと最後の手持ち交換
+  POKETRADE_FACTOR_MAIL,      //メールボックスがいっぱい
   POKETRADE_FACTOR_WAZA,      //技がまずい
   POKETRADE_FACTOR_TRI_SELECT,   //  ３体選択にすすむ
 
@@ -178,6 +179,8 @@ typedef enum
 
 
 #define _POKEMON_MAIN_FRIENDGIVEMSG_PAL (5)  //メイン画面、説明文のパレット
+#define _POKEMON_MAIN_FRIENDGIVEMSG_PAL_RED (12)  //メイン画面、説明文のパレット
+#define _POKEMON_MAIN_FRIENDGIVEMSG_PAL_BLUE (14)  //メイン画面、説明文のパレット
 
 #define _TRADE_BG_PALLETE_NUM (6)  //交換BGのパレットの本数   0-4
 #define _TOUCHBAR_BG_PALPOS (7)     //タッチバーの色     TOUCHBAR_BG_PLT_NUM （１）本
@@ -546,7 +549,7 @@ struct _POKEMON_TRADE_WORK{
 
   BOX_MANAGER* pBox;
   GAMEDATA* pGameData;
-  MAIL_BLOCK* pMailBlock;
+//  MAIL_BLOCK* pMailBlock;
   MYSTATUS* pMy;
   MYSTATUS* pFriend;
   POKEPARTY* pMyParty;
@@ -692,7 +695,7 @@ struct _POKEMON_TRADE_WORK{
   u8 pokemonGTSSeqSend;  //送るGTSシーケンス番号
   u8 friendBoxNum;  //ともだちのボックス番号
   u8 statusModeOn;  //
-  u8 dummy;
+  u8 friendMailBoxFULL;  //ともだちはメールボックス満杯かどうか
 //  u8 time3dfadelen;
 //  u8 time3dfadecount;
 } ;
@@ -818,6 +821,9 @@ extern void POKETRADE_MESSAGE_WindowTimeIconStart(POKEMON_TRADE_WORK* pWork);
 
 extern void POKEMONTRADE_DEMOBGMChange(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKMEONTRADE_changeState(POKEMON_TRADE_WORK* pWork,StateFunc* state);
+extern BOOL POKEMONTRADE_IsMailBoxFull(POKEMON_TRADE_WORK* pWork);
+extern BOOL POKEMONTRADE_IsMailPokemon(POKEMON_TRADE_WORK* pWork);
+
 
 #if _TRADE_DEBUG
 

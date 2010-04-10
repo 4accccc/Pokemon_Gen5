@@ -49,6 +49,8 @@
 #include "net_app/gtsnego.h"
 #include "net/dwc_rapfriend.h"
 #include "system/net_err.h"
+#include "net/dwc_error.h"
+
 #include "savedata/wifihistory.h"
 #include "savedata/undata_update.h"
 
@@ -58,6 +60,7 @@
 
 #include "pokemontrade_local.h"
 #include "waza_tool/wazano_def.h"
+#include "field/field_skill_check.h"
 
 #define HEAPSIZE_POKETRADE (0xd2000)   //全共通 WiFiだとほぼマックス
 #define HEAPSIZE_POKETRADE_DEMO (0xa2000)   //全共通 WiFiだとほぼマックス
@@ -136,6 +139,23 @@ static const NetRecvFuncTable _PacketTbl[] = {
   {_recvUNData,   NULL},    ///_NETCMD_UN
 
 };
+
+
+// メールボックスに空きがあるかどうか
+static BOOL _IsMailBoxFull(POKEMON_TRADE_WORK* pWork)
+{
+  int id;
+  int itemno = ITEM_DUMMY_DATA;
+  MAIL_DATA* src = NULL;
+  MAIL_BLOCK* pMailBlock = GAMEDATA_GetMailBlock(pWork->pGameData);
+
+  //空き領域検索
+  id = MAIL_SearchNullID(pMailBlock,MAILBLOCK_PASOCOM);
+  if(id == MAILDATA_NULLID){
+    return FALSE;
+  }
+  return TRUE;
+}
 
 
 BOOL POKEMONTRADE_IsInPokemonRecvPoke(POKEMON_PARAM* pp)
@@ -724,7 +744,10 @@ static void _recvFriendBoxNum(const int netID, const int size, const void* pData
     return;//自分のは今は受け取らない
   }
   pWork->friendBoxNum = pRecvData[0];
+  pWork->friendMailBoxFULL = pRecvData[1];
 }
+
+
 
 
 //_NETCMD_EVILCHECK
@@ -1069,7 +1092,7 @@ BOOL POKEMONTRADE_IsEggAndLastBattlePokemonChange(POKEMON_TRADE_WORK* pWork)
 
 static BOOL POKEMONTRADE_IsWazaPokemon(POKEMON_TRADE_WORK* pWork)
 {
-  POKEMON_PARAM* pp1 = IRC_POKEMONTRADE_GetRecvPP(pWork, 0); //自分のポケモン
+  POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0); //自分のポケモン
   int waza[4];
   int i;
   BOOL flg = FALSE;
@@ -1080,24 +1103,19 @@ static BOOL POKEMONTRADE_IsWazaPokemon(POKEMON_TRADE_WORK* pWork)
   if(pWork->selectBoxno != pWork->BOX_TRAY_MAX){
     return FALSE;
   }
-  
-  waza[0]  = PP_Get(pp1,ID_PARA_waza1,NULL);
-  waza[1]  = PP_Get(pp1,ID_PARA_waza2,NULL);
-  waza[2]  = PP_Get(pp1,ID_PARA_waza3,NULL);
-  waza[3]  = PP_Get(pp1,ID_PARA_waza4,NULL);
+  flg = FIELD_SKILL_CHECK_CanTradePoke( PP_GetPPPPointer( pp ),0 );
 
-//いあいぎり／かいりき／なみのり／そらをとぶ／ダイビング／たきのぼり／いわくだき／フラッシュ
-  for(i=0;i<4;i++){
-    switch( waza[i] ){
-//    case WAZANO_ANAWOHORU:		// あなをほる
-		case WAZANO_HURASSYU:			// フラッシュ
-		case WAZANO_IAIGIRI:			// いあいぎり
-		case WAZANO_KAIRIKI:			// かいりき
-		case WAZANO_NAMINORI:			// なみのり
-		case WAZANO_SORAWOTOBU:		// そらをとぶ
-		case WAZANO_DAIBINGU:			// ダイビング
-		case WAZANO_TAKINOBORI:		// たきのぼり
-		case WAZANO_IWAKUDAKI:		// いわくだき
+  return !flg;
+}
+
+
+BOOL POKEMONTRADE_IsMailPokemon(POKEMON_TRADE_WORK* pWork)
+{
+  POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0); //自分のポケモン
+
+  int item = PP_Get( pp , ID_PARA_item ,NULL);
+  if(ITEM_CheckMail(item)){
+    if(pWork->friendMailBoxFULL){
       return TRUE;
     }
   }
@@ -1117,6 +1135,10 @@ void POKETRE_MAIN_ChangePokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
     }
     else if(POKEMONTRADE_IsWazaPokemon(pWork)){
       u8 cmd = POKETRADE_FACTOR_WAZA;
+      bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd);
+    }
+    else if(POKEMONTRADE_IsMailPokemon(pWork)){
+      u8 cmd = POKETRADE_FACTOR_MAIL;
       bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd);
     }
     else{
@@ -1812,6 +1834,12 @@ static void _changeWaitState(POKEMON_TRADE_WORK* pWork)
   else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_WAZA){
     msgno = POKETRADE_STR2_03;
   }
+  else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_MAIL){
+    msgno = POKETRADE_STR_97;
+  }
+  else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_MAIL){
+    msgno = POKETRADE_STR2_32;
+  }
   else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_SINGLE_NG){
     msgno = POKETRADE_STR_97;
   }
@@ -1921,8 +1949,10 @@ static void _touchState_BeforeTimeing1Send(POKEMON_TRADE_WORK* pWork)
 {
   
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    u8 sdata = pWork->BOX_TRAY_MAX;
-    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_FRIENDBOXNUM, 1, &sdata)){
+    u8 sdata[2];
+    sdata[0] = pWork->BOX_TRAY_MAX;
+    sdata[1] = _IsMailBoxFull(pWork);
+    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_FRIENDBOXNUM, 2, &sdata)){
       _CHANGE_STATE(pWork, _touchState_BeforeTimeing12);
     }
   }
@@ -3199,7 +3229,7 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMEDATA* pGameData,BOOL
     pWork->pBox = GAMEDATA_GetBoxManager(pGameData);
     pWork->pMy = GAMEDATA_GetMyStatus( pGameData );
     pWork->pMyParty = GAMEDATA_GetMyPokemon(pGameData);
-    pWork->pMailBlock = GAMEDATA_GetMailBlock(pGameData);
+//    pWork->pMailBlock = GAMEDATA_GetMailBlock(pGameData);
     if(pWork->pFriend==NULL){
       if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
         pWork->pFriend = GAMEDATA_GetMyStatusPlayer(pGameData, 1-GFL_NET_SystemGetCurrentID());
@@ -3214,8 +3244,8 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMEDATA* pGameData,BOOL
 
     GF_ASSERT(pWork->pBox);
     
-    pWork->pMailBlock = GFL_HEAP_AllocClearMemory(pWork->heapID,MAIL_GetBlockWorkSize());
-    MAIL_Init(pWork->pMailBlock);
+//    pWork->pMailBlock = GFL_HEAP_AllocClearMemory(pWork->heapID,MAIL_GetBlockWorkSize());
+//    MAIL_Init(pWork->pMailBlock);
     {
       POKEMON_PARAM *pp;
       int i,j;
@@ -3261,7 +3291,7 @@ static void _savedataHeapEnd(POKEMON_TRADE_WORK* pWork,BOOL bParentWork)
     GFL_HEAP_FreeMemory(pWork->pMy);
 //    GFL_HEAP_FreeMemory(pWork->pFriend);
     GFL_HEAP_FreeMemory(pWork->pMyParty);
-    GFL_HEAP_FreeMemory(pWork->pMailBlock );
+//    GFL_HEAP_FreeMemory(pWork->pMailBlock );
   }
 #endif
 
@@ -3736,8 +3766,15 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
-      NetErr_App_ReqErrorDisp();
+      if(GFL_NET_IsWifiConnect()){
+        GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE);
+      }
+      else{
+        NetErr_App_ReqErrorDisp();
+      }
       retCode = GFL_PROC_RES_FINISH;
+      WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+      WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
     }
   }
 
@@ -3826,7 +3863,7 @@ const GFL_PROC_DATA PokemonTradeProcData = {
 
 //IR用
 const GFL_PROC_DATA PokemonTradeIrcProcData = {
-#if DEBUG_ONLY_FOR_ohno
+#if 0 //DEBUG_ONLY_FOR_ohno
   PokemonTradeUnionNegoProcInit,
 //  PokemonTradeIrcProcInit,
 #else

@@ -283,6 +283,19 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
 
   {
     POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
+    _ITEMMARK_ICON_WORK* pIM = &pWork->aItemMark;
+    int item = PP_Get( pp , ID_PARA_item ,NULL);
+    if(ITEM_CheckMail(item)){
+      MAIL_BLOCK* pMailBlock = GAMEDATA_GetMailBlock(pWork->pGameData);
+      MailSys_MoveMailPoke2Paso(pMailBlock, pp, pWork->heapID);
+    }
+  }
+
+
+
+
+  {
+    POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
     RECORD* pRec = GAMEDATA_GetRecordPtr(pWork->pGameData);
     
     STATUS_RCV_PokeParam_RecoverAll(pp); //回復
@@ -374,6 +387,9 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+
+//データの差し替え
+
 static void _changeDemo_ModelTrade27(POKEMON_TRADE_WORK* pWork)
 {
 
@@ -413,10 +429,13 @@ static void _changeDemo_ModelTrade27(POKEMON_TRADE_WORK* pWork)
     _ITEMMARK_ICON_WORK* pIM = &pWork->aItemMark;
     int item = PP_Get( pp , ID_PARA_item ,NULL);
     if(ITEM_CheckMail(item)){
-      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_08, pWork->pMessageStrBuf );
-      POKETRADE_MESSAGE_WindowOpen(pWork);
-      _CHANGE_STATE(pWork,_mailBoxStart);
-      return;
+//      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_08, pWork->pMessageStrBuf );
+//      POKETRADE_MESSAGE_WindowOpen(pWork);
+   //   _CHANGE_STATE(pWork,_mailBoxStart);
+//      return;
+      
+
+      
     }
   }
   //ポケモンセット
@@ -451,16 +470,12 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork)
         pp2 = IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
       }
       
-   //   POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
     
       after_mons_no = SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, (u32)pp2, &cond, pWork->heapID );
       if( after_mons_no ){
         pWork->pParentWork->ret = POKEMONTRADE_MOVE_EVOLUTION;
         pWork->pParentWork->after_mons_no = after_mons_no;
         pWork->pParentWork->cond = cond;
-
-//        PokeParty_Init( pWork->pParentWork->pParty, TEMOTI_POKEMAX );
-//        PokeParty_Add( pWork->pParentWork->pParty, pp );
         _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);   //
         return ;
       }
@@ -496,8 +511,8 @@ void POKMEONTRADE_EVOLUTION_TimingStart(POKEMON_TRADE_WORK* pWork)
   GFL_NET_ReloadIcon();
 
   {
-    POKEMON_PARAM* pp = PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
-    GF_ASSERT(MAILDATA_NULLID != MailSys_MoveMailPoke2Paso(pWork->pMailBlock, pp, pWork->heapID));
+//    POKEMON_PARAM* pp = PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
+//    GF_ASSERT(MAILDATA_NULLID != MailSys_MoveMailPoke2Paso(pWork->pMailBlock, pp, pWork->heapID));
   }
   
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
@@ -598,202 +613,6 @@ static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork)
   _CHANGE_STATE(pWork,IRC_POKMEONTRADE_ChangeFinish);
 
 }
-
-
-
-
-//-------------------------------------------------
-/**
- *	@brief      メールをパソコンに入れた > セーブに向かう
- *	@param[inout]	POKEMON_TRADE_WORK ワーク
- */
-//-------------------------------------------------
-
-static void _mailSeqEnd(POKEMON_TRADE_WORK* pWork)
-{
-  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
-    return;
-  }
-  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
-
-
-    //ポケモンセット
-    _setPokemonData(pWork);
-
-    _CHANGE_STATE(pWork,_saveStart);  //セーブ処理に行く
-  }
-}
-
-
-//-------------------------------------------------
-/**
- *	@brief    メールを捨てる確認
- *	@param[inout]	_POKEMCSS_MOVE_WORK ワーク
- */
-//-------------------------------------------------
-
-static void _mailTrashYesOrNo(POKEMON_TRADE_WORK* pWork)
-{
-  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
-    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-    POKETRADE_MESSAGE_AppMenuClose(pWork);
-    POKETRADE_MESSAGE_WindowClear(pWork);
-    pWork->pAppTask=NULL;
-
-    switch(selectno){
-    case 0:  //はい
-      {
-        int id = 1-GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-        PP_Put(pWork->recvPoke[id], ID_PARA_item, ITEM_DUMMY_ID);
-      }
-      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_11, pWork->pMessageStrBuf );
-      POKETRADE_MESSAGE_WindowOpen(pWork);
-      _CHANGE_STATE(pWork,_mailSeqEnd);
-      break;
-    default: //いいえ
-      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_08, pWork->pMessageStrBuf );
-      POKETRADE_MESSAGE_WindowOpen(pWork);
-      _CHANGE_STATE(pWork,_mailBoxStart);
-      break;
-    }
-  }
-}
-
-
-//-------------------------------------------------
-/**
- *	@brief    メールを捨てる確認
- *	@param[inout]	_POKEMCSS_MOVE_WORK ワーク
- */
-//-------------------------------------------------
-
-static void _mailTrash(POKEMON_TRADE_WORK* pWork)
-{
-  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
-    return;
-  }
-  {
-    int msg[]={POKETRADE_STR_27, POKETRADE_STR_28};
-    POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
-  }
-  _CHANGE_STATE(pWork,_mailTrashYesOrNo);
-}
-
-
-//-------------------------------------------------
-/**
- *	@brief    パソコンの整理確認
- *	@param[inout]	_POKEMCSS_MOVE_WORK ワーク
- */
-//-------------------------------------------------
-
-static void _mailPCArrangementYesOrNo(POKEMON_TRADE_WORK* pWork)
-{
-  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
-    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-    POKETRADE_MESSAGE_AppMenuClose(pWork);
-    POKETRADE_MESSAGE_WindowClear(pWork);
-    pWork->pAppTask=NULL;
-
-    switch(selectno){
-    case 0:  //はい
-      pWork->pParentWork->ret = POKEMONTRADE_MOVE_MAIL;
-      _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);   //交換デモに行く
-      break;
-    default: //いいえ
-      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_09, pWork->pMessageStrBuf );
-      POKETRADE_MESSAGE_WindowOpen(pWork);
-      _CHANGE_STATE(pWork,_mailTrash);
-      break;
-    }
-  }
-}
-
-
-
-//-------------------------------------------------
-/**
- *	@brief    パソコンの整理確認
- *	@param[inout]	_POKEMCSS_MOVE_WORK ワーク
- */
-//-------------------------------------------------
-
-static void _mailPCArrangement(POKEMON_TRADE_WORK* pWork)
-{
-  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
-    return;
-  }
-  {
-    int msg[]={POKETRADE_STR_27, POKETRADE_STR_28};
-    POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
-  }
-  _CHANGE_STATE(pWork,_mailPCArrangementYesOrNo);
-}
-
-//-------------------------------------------------
-/**
- *	@brief    パソコンにおくるかどうか パソコンがいっぱいならさらに分岐
- *	@param[inout]	_POKEMCSS_MOVE_WORK ワーク
- */
-//-------------------------------------------------
-
-static void _mailPCSendYesOrNo(POKEMON_TRADE_WORK* pWork)
-{
-  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
-    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
-    POKETRADE_MESSAGE_AppMenuClose(pWork);
-    POKETRADE_MESSAGE_WindowClear(pWork);
-    pWork->pAppTask=NULL;
-
-    switch(selectno){
-    case 0:  //はい
-      {
-        int friendID = 1-GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-        int ret = MailSys_MoveMailPoke2Paso(pWork->pMailBlock, pWork->recvPoke[friendID],pWork->heapID);
-#if DEBUG_ONLY_FOR_ohno
-        if(1){ //入らなかった
-#else
-        if(MAILDATA_NULLID==ret){ //入らなかった
-#endif
-          GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_10, pWork->pMessageStrBuf );
-          POKETRADE_MESSAGE_WindowOpen(pWork);
-          _CHANGE_STATE(pWork,_mailPCArrangement);
-        }
-        else{
-          GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_12, pWork->pMessageStrBuf );
-          POKETRADE_MESSAGE_WindowOpen(pWork);
-          _CHANGE_STATE(pWork,_mailSeqEnd);
-        }
-      }
-      break;
-    default: //いいえ
-      //@todo
-      break;
-    }
-  }
-}
-
-//-------------------------------------------------
-/**
- *	@brief      メールの開始
- *	@param[inout]	POKEMON_TRADE_WORK ワーク
- */
-//-------------------------------------------------
-
-static void _mailBoxStart(POKEMON_TRADE_WORK* pWork)
-{
-  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
-    return;
-  }
-  {
-    int msg[]={POKETRADE_STR_27, POKETRADE_STR_28};
-    POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
-  }
-  _CHANGE_STATE(pWork,_mailPCSendYesOrNo);
-
-}
-
-
 
 
 

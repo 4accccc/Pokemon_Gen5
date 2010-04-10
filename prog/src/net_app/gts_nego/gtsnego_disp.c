@@ -1030,6 +1030,12 @@ void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork)
   int i;
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
 
+  for(i=0;i<SCROLL_PANEL_NUM;i++){
+    if(pWork->unionOAM[i]){
+      GFL_CLACT_WK_Remove(pWork->unionOAM[i]);
+      pWork->unionOAM[i]=NULL;
+    }
+  }
   
   
   GTSNEGO_DISP_DeleteTouchWork(pWork);
@@ -1043,12 +1049,6 @@ void GTSNEGO_DISP_FriendSelectFree2(GTSNEGO_DISP_WORK* pWork)
   int i;
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
 
-  for(i=0;i<SCROLL_PANEL_NUM;i++){
-    if(pWork->unionOAM[i]){
-      GFL_CLACT_WK_Remove(pWork->unionOAM[i]);
-      pWork->unionOAM[i]=NULL;
-    }
-  }
   _BGPanelFree(pWork);
 
 
