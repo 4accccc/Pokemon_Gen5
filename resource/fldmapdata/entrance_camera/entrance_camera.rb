@@ -210,8 +210,8 @@ end
 #========================================================================================
 def GetOnOffValue( label )
   hash = Hash.new
-  hash[ "off" ] = 0
-  hash[ "on"  ] = 1
+  hash[ "on"  ] = 0
+  hash[ "off" ] = 1
 
   # ƒ‰ƒxƒ‹–¼ƒGƒ‰[
   if hash.has_key?( label ) == false then 

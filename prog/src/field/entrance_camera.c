@@ -75,22 +75,22 @@
 //=============================================================================
 typedef struct {
 
-  u32 exitType;        // 出入り口タイプ
-  u32 pitch;           // ピッチ
-  u32 yaw;             // ヨー
-  u32 length;          // 距離
-  u32 manualTargetFlag;// ターゲット座標が有効かどうか
-  u32 targetPosX;      // ターゲット座標 x
-  u32 targetPosY;      // ターゲット座標 y
-  u32 targetPosZ;      // ターゲット座標 z
-  u32 targetOffsetX;   // ターゲットオフセット x
-  u32 targetOffsetY;   // ターゲットオフセット y
-  u32 targetOffsetZ;   // ターゲットオフセット z
-  u32 frame;           // 動作フレーム数
-  u32 validFlag_IN;    // 進入時に有効なデータかどうか
-  u32 validFlag_OUT;   // 退出時に有効なデータかどうか
-  u32 targetBindFlag;  // ターゲットのバインドが有効かどうか
-  u32 cameraAreaFlag;  // カメラエリアが有効かどうか
+  u32 exitType;          // 出入り口タイプ
+  u32 pitch;             // ピッチ
+  u32 yaw;               // ヨー
+  u32 length;            // 距離
+  u32 manualTargetFlag;  // ターゲット座標が有効かどうか
+  u32 targetPosX;        // ターゲット座標 x
+  u32 targetPosY;        // ターゲット座標 y
+  u32 targetPosZ;        // ターゲット座標 z
+  u32 targetOffsetX;     // ターゲットオフセット x
+  u32 targetOffsetY;     // ターゲットオフセット y
+  u32 targetOffsetZ;     // ターゲットオフセット z
+  u32 frame;             // 動作フレーム数
+  u32 validFlag_IN;      // 進入時に有効なデータかどうか
+  u32 validFlag_OUT;     // 退出時に有効なデータかどうか
+  u32 targetBindOffFlag; // ターゲットのバインドをOFFにするかどうか
+  u32 cameraAreaOffFlag; // カメラエリアをOFFにするかどうか
 
 } ECAM_LOAD_DATA; 
 
@@ -119,11 +119,8 @@ typedef struct {
   CAMERA_PARAM startParam; // 開始パラメータ
   CAMERA_PARAM endParam;   // 最終パラメータ
 
-  BOOL validFlag_IN;  // 進入時に有効なデータかどうか
-  BOOL validFlag_OUT; // 退出時に有効なデータかどうか
-
-  BOOL targetBindFlag; // ターゲットのバインドが有効かどうか
-  BOOL cameraAreaFlag; // カメラエリアが有効かどうか
+  BOOL targetBindOffFlag; // ターゲットのバインドをOFFにするかどうか
+  BOOL cameraAreaOffFlag; // カメラエリアをOFFにするかどうか
 
 } ANIME_DATA; 
 
@@ -138,12 +135,14 @@ struct _ECAM_WORK {
 
   ECAM_PARAM param;     // 演出パラメータ
   ANIME_DATA animeData; // アニメーションデータ
-  BOOL setupFlag; // 演出のセットアップが完了済みかどうか
+  BOOL setupFlag;       // 演出のセットアップが完了済みかどうか
+  BOOL validFlag_IN;    // 進入時に有効なデータかどうか
+  BOOL validFlag_OUT;   // 退出時に有効なデータかどうか
 
   // カメラ復帰用データ
-  BOOL              recoveryValidFlag; // 復帰データが有効かどうか
-  BOOL              recoveryValidFlagSp; // 復帰データが有効かどうか
-  FIELD_CAMERA_MODE initialCameraMode; // カメラモード
+  BOOL              recoveryValidFlag;     // 復帰データが有効かどうか
+  BOOL              recoveryValidFlagSp;   // 復帰データが有効かどうか
+  FIELD_CAMERA_MODE initialCameraMode;     // カメラモード
   BOOL              initialCameraAreaFlag; // カメラエリアの動作フラグ
 
 };
@@ -165,10 +164,8 @@ static void ECamSetup_SP_OUT( ECAM_WORK* work ); // 特殊出入口から出る演出をセッ
 // アニメーションデータ
 static void LoadSpData( ECAM_LOAD_DATA* dest, EXIT_TYPE exitType ); // 特殊出入り口のカメラ動作データを読み込む
 // カメラの準備・復帰
-static void SetupCamera( ECAM_WORK* work ); // カメラの設定を変更する ( 通常出入り口用 )
-static void RecoverCamera( const ECAM_WORK* work ); // カメラの設定を復帰する ( 通常出入り口用 )
-static void SetupCameraSp( ECAM_WORK* work ); // カメラの設定を変更する ( 特殊出入り口用 )
-static void RecoverCameraSp( const ECAM_WORK* work ); // カメラの設定を復帰する ( 特殊出入り口用 )
+static void SetupCamera( ECAM_WORK* work ); // カメラの設定を変更する
+static void RecoverCamera( const ECAM_WORK* work ); // カメラの設定を復帰する
 static void AdjustCameraAngle( FIELD_CAMERA* camera ); // カメラアングルを再計算する
 static void SetCurrentCameraTargetPos( FIELD_CAMERA* camera ); // ターゲット座標を現在の実効値に設定する
 static void SetupCameraTargetPos( FIELD_CAMERA* camera, const VecFx32* targetPos ); // ターゲット座標を変更し, カメラに反映させる
@@ -299,7 +296,7 @@ void ENTRANCE_CAMERA_Recover( ECAM_WORK* work )
     RecoverCamera( work );
   }
   else if( work->recoveryValidFlagSp ) {
-    RecoverCameraSp( work );
+    RecoverCamera( work );
   }
 }
 
@@ -435,18 +432,26 @@ static void ECamSetup_IN( ECAM_WORK* work )
   switch( playerDir ) {
   case DIR_LEFT:
   case DIR_RIGHT:
-    anime->validFlag_IN  = TRUE;
-    anime->validFlag_OUT = FALSE; 
+    work->validFlag_IN  = TRUE;
+    work->validFlag_OUT = FALSE; 
     break;
   case DIR_UP:
   case DIR_DOWN:
-    anime->validFlag_IN  = FALSE;
-    anime->validFlag_OUT = FALSE; 
-    return; // 以下の処理は不要
+    work->validFlag_IN  = FALSE;
+    work->validFlag_OUT = FALSE; 
+    break;
   default: 
     GF_ASSERT(0); 
     break; 
   }
+
+  if( work->validFlag_IN == FALSE ) { 
+    return; // 以下の処理は不要
+  }
+
+  // ターゲットオフセット・カメラエリアは操作しない
+  anime->cameraAreaOffFlag = FALSE;
+  anime->targetBindOffFlag = FALSE;
 
   // 自機の最終座標を決定
   if( CheckOneStep(work) ) {
@@ -513,17 +518,25 @@ static void ECamSetup_OUT( ECAM_WORK* work )
   case DIR_DOWN:
   case DIR_LEFT:
   case DIR_RIGHT:
-    anime->validFlag_IN  = FALSE;
-    anime->validFlag_OUT = TRUE; 
+    work->validFlag_IN  = FALSE;
+    work->validFlag_OUT = TRUE; 
     break;
   case DIR_UP:
-    anime->validFlag_IN  = FALSE;
-    anime->validFlag_OUT = FALSE; 
-    return; // 以下の処理は不要
+    work->validFlag_IN  = FALSE;
+    work->validFlag_OUT = FALSE; 
+    break;
   default: 
     GF_ASSERT(0); 
     break; 
   }
+
+  if( work->validFlag_OUT == FALSE ) { 
+    return; // 以下の処理は不要
+  }
+
+  // ターゲットオフセット・カメラエリアは操作しない
+  anime->cameraAreaOffFlag = FALSE;
+  anime->targetBindOffFlag = FALSE;
 
   // 開始時のターゲット座標
   if( CheckOneStep(work) ) {
@@ -576,7 +589,7 @@ static void ECamSetup_OUT( ECAM_WORK* work )
   GetCurrentCameraParam( camera, endParam );
 
   // 開始カメラ設定
-  if( anime->validFlag_OUT ) {
+  if( work->validFlag_OUT ) {
     FIELD_CAMERA_SetAnglePitch( camera, startParam->pitch );
     FIELD_CAMERA_SetAngleYaw( camera, startParam->yaw );
     FIELD_CAMERA_SetAngleLen( camera, startParam->length );
@@ -607,13 +620,13 @@ static void ECamSetup_SP_IN( ECAM_WORK* work )
 
   // 演出データをロード
   LoadSpData( &loadData, GetExitType(work) );
+  anime->cameraAreaOffFlag = loadData.cameraAreaOffFlag;
+  anime->targetBindOffFlag = loadData.targetBindOffFlag;
 
   // 演出の有無を決定
-  anime->validFlag_IN  = loadData.validFlag_IN;
-  anime->validFlag_OUT = loadData.validFlag_OUT;
-  anime->cameraAreaFlag = loadData.cameraAreaFlag;
-  anime->targetBindFlag = loadData.targetBindFlag;
-  if( anime->validFlag_IN == FALSE ) { 
+  work->validFlag_IN  = loadData.validFlag_IN;
+  work->validFlag_OUT = loadData.validFlag_OUT;
+  if( work->validFlag_IN == FALSE ) { 
     return; // 以下の処理は不要
   }
 
@@ -625,7 +638,7 @@ static void ECamSetup_SP_IN( ECAM_WORK* work )
     FIELD_PLAYER_GetPos( player, &stepPos );
   }
 
-  SetupCameraSp( work ); // カメラの設定を変更
+  SetupCamera( work ); // カメラの設定を変更
   AdjustCameraAngle( camera ); // カメラアングルを再計算
   SetCurrentCameraTargetPos( camera ); // ターゲット座標を初期化
 
@@ -673,13 +686,13 @@ static void ECamSetup_SP_OUT( ECAM_WORK* work )
 
   // 演出データをロード
   LoadSpData( &loadData, GetExitType(work) );
+  anime->cameraAreaOffFlag = loadData.cameraAreaOffFlag;
+  anime->targetBindOffFlag = loadData.targetBindOffFlag;
 
   // 演出の有無を決定
-  anime->validFlag_IN  = loadData.validFlag_IN;
-  anime->validFlag_OUT = loadData.validFlag_OUT;
-  anime->cameraAreaFlag = loadData.cameraAreaFlag;
-  anime->targetBindFlag = loadData.targetBindFlag;
-  if( anime->validFlag_OUT == FALSE ) { 
+  work->validFlag_IN  = loadData.validFlag_IN;
+  work->validFlag_OUT = loadData.validFlag_OUT;
+  if( work->validFlag_OUT == FALSE ) { 
     return; // 以下の処理は不要
   }
 
@@ -692,11 +705,11 @@ static void ECamSetup_SP_OUT( ECAM_WORK* work )
   }
 
   // 自機を一歩移動させた状態にカメラを更新
-  if( !anime->targetBindFlag && CheckOneStep(work) ) {
+  if( anime->targetBindOffFlag && CheckOneStep(work) ) {
     SetupCameraTargetPos( camera, &stepPos );
   }
 
-  SetupCameraSp( work );
+  SetupCamera( work );
   AdjustCameraAngle( camera );
 
   // 最終パラメータ ( = 現在値 )
@@ -722,7 +735,7 @@ static void ECamSetup_SP_OUT( ECAM_WORK* work )
   }
 
   // 開始カメラ設定
-  if( anime->validFlag_OUT ) {
+  if( work->validFlag_OUT ) {
     FIELD_CAMERA_SetAnglePitch( camera, startParam->pitch );
     FIELD_CAMERA_SetAngleYaw( camera, startParam->yaw );
     FIELD_CAMERA_SetAngleLen( camera, startParam->length );
@@ -769,8 +782,8 @@ static void LoadSpData( ECAM_LOAD_DATA* dest, EXIT_TYPE exitType )
   OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - frame            = %d\n", dest->frame );
   OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - validFlag_IN     = %d\n", dest->validFlag_IN );
   OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - validFlag_OUT    = %d\n", dest->validFlag_OUT );
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - cameraAreaFlag   = %d\n", dest->cameraAreaFlag );
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - targetBindFlag   = %d\n", dest->targetBindFlag );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - cameraAreaOffFlag   = %d\n", dest->cameraAreaOffFlag );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - targetBindOffFlag   = %d\n", dest->targetBindOffFlag );
 #endif
 }
 
@@ -801,75 +814,12 @@ static void GetCurrentCameraParam( const FIELD_CAMERA* camera, CAMERA_PARAM* des
 
 //-----------------------------------------------------------------------------
 /**
- * @brief カメラ操作の準備をする ( 通常出入口用 )
+ * @brief カメラ操作の準備をする
  *
  * @param work
  */
 //-----------------------------------------------------------------------------
 static void SetupCamera( ECAM_WORK* work )
-{
-  FIELDMAP_WORK* fieldmap = work->fieldmap;
-  FIELD_CAMERA*  camera   = work->camera;
-
-  // レールシステムのカメラ制御を停止
-  if( FIELDMAP_GetBaseSystemType( fieldmap ) == FLDMAP_BASESYS_RAIL ) {
-    FLDNOGRID_MAPPER* NGMapper = FIELDMAP_GetFldNoGridMapper( fieldmap );
-    FLDNOGRID_MAPPER_SetRailCameraActive( NGMapper, FALSE );
-  }
-
-  // ターゲットのバインドをOFF
-  //FIELD_CAMERA_FreeTarget( camera );
-
-  // カメラエリアを無効化
-  //work->initialCameraAreaFlag = FIELD_CAMERA_GetCameraAreaActive( camera );
-  //FIELD_CAMERA_SetCameraAreaActive( camera, FALSE );
-
-  // カメラモードを変更
-  work->initialCameraMode = FIELD_CAMERA_GetMode( camera ); 
-  FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
-
-  // フラグセット
-  work->recoveryValidFlag = TRUE;
-}
-
-//-----------------------------------------------------------------------------
-/**
- * @brief カメラの復帰をする ( 通常出入口用 )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------
-static void RecoverCamera( const ECAM_WORK* work )
-{
-  FIELDMAP_WORK* fieldmap = work->fieldmap;
-  FIELD_CAMERA*  camera   = work->camera;
-
-  GF_ASSERT( work->recoveryValidFlag );
-
-  // カメラエリアを復帰
-  //FIELD_CAMERA_SetCameraAreaActive( camera, work->initialCameraAreaFlag );
-
-  // ターゲットを元に戻す
-  FIELD_CAMERA_BindDefaultTarget( camera );
-
-  // カメラモードを復帰
-  FIELD_CAMERA_ChangeMode( camera, work->initialCameraMode );
-
-  // レールシステムのカメラ制御を復帰
-  if( FIELDMAP_GetBaseSystemType( fieldmap ) == FLDMAP_BASESYS_RAIL ) {
-    FLDNOGRID_MAPPER* NGMapper = FIELDMAP_GetFldNoGridMapper( fieldmap );
-    FLDNOGRID_MAPPER_SetRailCameraActive( NGMapper, TRUE );
-  }
-}
-
-//-----------------------------------------------------------------------------
-/**
- * @brief カメラ操作の準備をする ( 特殊出入り口用 )
- *
- * @param work
- */
-//-----------------------------------------------------------------------------
-static void SetupCameraSp( ECAM_WORK* work )
 {
   FIELDMAP_WORK* fieldmap = work->fieldmap;
   FIELD_CAMERA*  camera   = work->camera;
@@ -882,12 +832,12 @@ static void SetupCameraSp( ECAM_WORK* work )
   }
 
   // ターゲットのバインドをOFF
-  if( anime->targetBindFlag == FALSE ) {
+  if( anime->targetBindOffFlag ) {
     FIELD_CAMERA_FreeTarget( camera );
   }
 
   // カメラエリアを無効化
-  if( anime->cameraAreaFlag == FALSE ) {
+  if( anime->cameraAreaOffFlag ) {
     work->initialCameraAreaFlag = FIELD_CAMERA_GetCameraAreaActive( camera );
     FIELD_CAMERA_SetCameraAreaActive( camera, FALSE );
   }
@@ -902,12 +852,12 @@ static void SetupCameraSp( ECAM_WORK* work )
 
 //-----------------------------------------------------------------------------
 /**
- * @brief カメラの復帰をする ( 特殊出入り口用 )
+ * @brief カメラの復帰をする
  *
  * @param work
  */
 //-----------------------------------------------------------------------------
-static void RecoverCameraSp( const ECAM_WORK* work )
+static void RecoverCamera( const ECAM_WORK* work )
 {
   FIELDMAP_WORK* fieldmap = work->fieldmap;
   FIELD_CAMERA*  camera   = work->camera;
@@ -916,7 +866,7 @@ static void RecoverCameraSp( const ECAM_WORK* work )
   GF_ASSERT( work->recoveryValidFlagSp );
 
   // カメラエリアを復帰
-  if( anime->cameraAreaFlag == FALSE ) {
+  if( anime->cameraAreaOffFlag ) {
     FIELD_CAMERA_SetCameraAreaActive( camera, work->initialCameraAreaFlag );
   }
 
@@ -1261,10 +1211,10 @@ static BOOL CheckCameraAnime( const ECAM_WORK* work )
   anime = GetAnimeData( work );
 
   if( param->situation == ECAM_SITUATION_IN ) {
-    return anime->validFlag_IN;
+    return work->validFlag_IN;
   }
   else {
-    return anime->validFlag_OUT;
+    return work->validFlag_OUT;
   }
 }
 

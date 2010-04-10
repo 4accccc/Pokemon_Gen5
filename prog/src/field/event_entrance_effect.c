@@ -384,10 +384,12 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
 
   // イベント終了
   case SEQ_DOOROUT_END:
-    ENTRANCE_CAMERA_Recover( work->ECamWork );
-    ENTRANCE_CAMERA_DeleteWork( work->ECamWork );
-    DeleteDoorBM( work );
-    return GMEVENT_RES_FINISH;
+    if( FIELD_TASK_MAN_IsAllTaskEnd( task_man ) ) {
+      ENTRANCE_CAMERA_Recover( work->ECamWork );
+      ENTRANCE_CAMERA_DeleteWork( work->ECamWork );
+      DeleteDoorBM( work );
+      return GMEVENT_RES_FINISH;
+    }
   }
   return GMEVENT_RES_CONTINUE;
 }
@@ -575,11 +577,9 @@ static GMEVENT_RESULT ExitEvent_DoorIn( GMEVENT * event, int *seq, void * wk )
 
     // イベント終了
   case SEQ_DOORIN_END:
-    if( FIELD_TASK_MAN_IsAllTaskEnd( task_man ) ) {
-      ENTRANCE_CAMERA_Recover( work->ECamWork );
-      ENTRANCE_CAMERA_DeleteWork( work->ECamWork );
-      DeleteDoorBM( work );
-    }
+    ENTRANCE_CAMERA_Recover( work->ECamWork );
+    ENTRANCE_CAMERA_DeleteWork( work->ECamWork );
+    DeleteDoorBM( work );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
