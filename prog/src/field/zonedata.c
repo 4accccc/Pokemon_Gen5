@@ -549,20 +549,6 @@ BOOL ZONEDATA_EnablePalaceUse( u16 zone_id )
 }
 
 //------------------------------------------------------------------
-/**
- * @brief 特殊なサンプルOBJを使用するかどうかの設定取得
- * @param zone_id ゾーン指定ID
- * @param BOOL  TRUEのとき、サンプルOBJを使用する
- */
-//------------------------------------------------------------------
-BOOL ZONEDATA_DEBUG_IsSampleObjUse(u16 zone_id)
-{
-  ZONEDATA* zoneData;
-  zoneData = loadZoneData( zone_id );
-  return zoneData->movemodel_id != 0;
-}
-
-//------------------------------------------------------------------
 // レールオンリーのマップかどうかチェック
 //------------------------------------------------------------------
 BOOL ZONEDATA_IsRailOnlyMap( u16 zone_id )
@@ -1117,9 +1103,42 @@ BOOL ZONEDATA_IsBirthDayWeatherChange( u16 zone_id )
   return FALSE;
 }
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+const char * ZONEDATA_GetAllZoneName(HEAPID heapID)
+{
+  char * namedata;
+  if( data_handle != NULL )
+  {
+    namedata = GFL_ARC_LoadDataAllocByHandle(
+        data_handle->handle, NARC_result_zonedata_zonename_bin, heapID);
+  }
+  else
+  {
+    namedata = GFL_ARC_LoadDataAlloc(
+        ARCID_ZONEDATA, NARC_result_zonedata_zonename_bin, heapID);
+  }
+  return namedata;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief ゾーン名データの取得
+ * @param buffer    名前を取得するためのバッファ(ZONEDATA_NAME_LENGTHの長さが必要）
+ * @param zoneid    取得するゾーンの名前
+ */
+//------------------------------------------------------------------
+u8 ZONEDATA_GetMvMdlID(u16 zone_id)
+{
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->movemodel_id;
+}
 
 //============================================================================================
 //============================================================================================
+
+#ifdef PM_DEBUG
 //------------------------------------------------------------------
 /**
  * @brief ゾーン名データの取得
@@ -1146,19 +1165,17 @@ void ZONEDATA_DEBUG_GetZoneName(char * buffer, u16 zone_id)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief 特殊なサンプルOBJを使用するかどうかの設定取得
+ * @param zone_id ゾーン指定ID
+ * @param BOOL  TRUEのとき、サンプルOBJを使用する
+ */
 //------------------------------------------------------------------
-const char * ZONEDATA_GetAllZoneName(HEAPID heapID)
+BOOL ZONEDATA_DEBUG_IsSampleObjUse(u16 zone_id)
 {
-  char * namedata;
-  if( data_handle != NULL )
-  {
-    namedata = GFL_ARC_LoadDataAllocByHandle(
-        data_handle->handle, NARC_result_zonedata_zonename_bin, heapID);
-  }
-  else
-  {
-    namedata = GFL_ARC_LoadDataAlloc(
-        ARCID_ZONEDATA, NARC_result_zonedata_zonename_bin, heapID);
-  }
-  return namedata;
-} 
+  ZONEDATA* zoneData;
+  zoneData = loadZoneData( zone_id );
+  return zoneData->movemodel_id != 0;
+}
+
+#endif  //PM_DEBUG

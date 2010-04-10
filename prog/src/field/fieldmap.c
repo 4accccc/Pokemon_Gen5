@@ -121,6 +121,8 @@
 
 #include "pleasure_boat.h"    //for PL_BOAT_
 
+#include "../../../resource/fldmapdata/mm_list/mmlist_def.h"  //for MMLID_NOENTRY
+
 
 //======================================================================
 //	DEBUG定義
@@ -148,6 +150,8 @@
 
 
 #define FLD3DCUTIN_SIZE   (0xc000)   //フィールド3Ｄカットインのヒープサイズ
+
+#define MMLID_MAX  (MMLID_NOENTRY)
 
 //======================================================================
 //	define
@@ -2464,10 +2468,14 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
 
 	{ //ビルボードリソース登録
 	  MMDL_LIST mlist;
-	  int list_area_id = 0; //仮
-	  fldmap_MMDL_InitList( &mlist, list_area_id, fieldWork->heapID );
-	  MMDL_BLACTCONT_AddResourceTex(
-	    fieldWork->fldMMdlSys, mlist.id_list, mlist.count );
+	  int list_area_id = ZONEDATA_GetMvMdlID(fieldWork->location.zone_id);
+    NOZOMU_Printf("アリア別動作モデルリスト：zone_id = %d, mmlid = %d\n",fieldWork->location.zone_id, list_area_id);
+    if ( list_area_id < MMLID_MAX )
+    {
+      fldmap_MMDL_InitList( &mlist, list_area_id, fieldWork->heapID );
+	    MMDL_BLACTCONT_AddResourceTex(
+	      fieldWork->fldMMdlSys, mlist.id_list, mlist.count );
+    }
 	}
 	
   MMDL_G3DOBJCONT_Setup( //動作モデルオブジェクト　セットアップ
@@ -2558,7 +2566,7 @@ static void fldmap_MMDL_InitList(
 		GF_ASSERT( i < MMDL_LIST_MAX );
 	}
 	
-	//OS_Printf( "モデルリスト総数 %d\n", i );
+	NOZOMU_Printf( "モデルリスト総数 %d\n", i );
 	
 	mlist->count = i;
 	mlist->id_list[i] = OBJCODEMAX;
