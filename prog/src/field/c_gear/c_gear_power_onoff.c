@@ -502,8 +502,8 @@ static void PowerOnOff_InitBg( CGEAR_POWER_ONOFF* p_sys, HEAPID heapID )
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, heapID );
     MYSTATUS* p_my = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(p_sys->p_gamesys) );
     u32 sex = MyStatus_GetMySex(p_my);
-    static u32 _bgpal[]={NARC_c_gear_c_gear_NCLR,NARC_c_gear_c_gear2_NCLR,NARC_c_gear_c_gear_NCLR};
-    static u32 _bgcgx[]={NARC_c_gear_c_gear_NCGR,NARC_c_gear_c_gear2_NCGR,NARC_c_gear_c_gear_NCGR};
+    static const u32 _bgpal[]={NARC_c_gear_c_gear_m_NCLR,NARC_c_gear_c_gear_f_NCLR,NARC_c_gear_c_gear_m_NCLR};
+    static const u32 _bgcgx[]={NARC_c_gear_c_gear_m1_NCGR,NARC_c_gear_c_gear_f1_NCGR,NARC_c_gear_c_gear_m1_NCGR};
     
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, _bgpal[ sex ],
                                       PALTYPE_SUB_BG, PLTID_BG_BACK_S, 1,  heapID);

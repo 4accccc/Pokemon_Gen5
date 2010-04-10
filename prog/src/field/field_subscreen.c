@@ -1421,7 +1421,7 @@ BOOL FIELD_SUBSCREEN_EnablePalaceUse( FIELD_SUBSCREEN_WORK* pWork )
 static void init_cgear_power_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {
   GFL_OVERLAY_Load(FS_OVERLAY_ID(cgear_onoff));
-  pWork->cgear_power_onoff = CGEAR_POWER_ONOFF_Create( pWork, FIELDMAP_GetGameSysWork(pWork->fieldmap), pWork->heapID );
+  pWork->cgear_power_onoff = CGEAR_POWER_ONOFF_Create( pWork, FIELDMAP_GetGameSysWork(pWork->fieldmap), HEAPID_FIELD_SUBSCREEN );
 }
 
 //----------------------------------------------------------------------------

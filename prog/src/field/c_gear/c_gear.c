@@ -2018,7 +2018,7 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno)
 
   // ƒTƒu‰æ–ÊBGƒLƒƒƒ‰“]‘—
   pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( pWork->handle, _bgcgx[bgno][sex],
-                                                                GEAR_MAIN_FRAME, 0, 0, HEAPID_FIELD_SUBSCREEN);
+                                                                GEAR_MAIN_FRAME, 0, FALSE, HEAPID_FIELD_SUBSCREEN);
 
   GFL_ARCHDL_UTIL_TransVramScreenCharOfs(pWork->handle,
                                          NARC_c_gear_c_gear01_NSCR,
