@@ -16,15 +16,16 @@ def read_table infile
 	now_id = nil
 	line = infile.gets	#	“Ç‚İ”ò‚Î‚µ
 	while line = infile.gets
-		#puts "#{line}"
-		m = /(MMLID_\w+)\W(\d+)\W([0-9A-Z]+)\W.+/.match line
+		#p "#{line}"
+		m = /(MMLID_\w+)\W(\d+)\W([0-9A-Z_]+)\b/.match line
+    #p m
 		if m == nil 
 			puts "NOT HIT!"
 			break
 		else
 			areaID = m[1]
 			mmlID = m[3]
-			unless mmlID =~ /^[0-9A-Z]+$/
+			unless mmlID =~ /^[0-9A-Z_]+$/
 				STDERR.puts "“®ìƒ‚ƒfƒ‹ID‚ª³‚µ‚­‚ ‚è‚Ü‚¹‚ñIF#{mmlID}\n"
 				exit 1
 			end
