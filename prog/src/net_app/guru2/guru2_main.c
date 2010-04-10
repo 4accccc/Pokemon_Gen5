@@ -26,6 +26,7 @@
 #include "system/palanm.h"
 #include "system/bmp_winframe.h"
 #include "savedata/mystatus.h"
+#include "savedata/etc_save.h"
 #include "net/net_save.h"     // NET_SAVE_Init,
 
 #include "print/printsys.h"
@@ -1151,6 +1152,7 @@ static const u32 DATA_KinomiTbl[G2MEMBER_MAX+1][2];
 static const fx32 DATA_DiscRotateDrawOffset[G2MEMBER_MAX+1];
 static BOOL  _me_end_check( void );
 static void  _me_play( int seq_bgm );
+static void _comm_friend_func( GURU2MAIN_WORK *g2m );
 
 
 
@@ -1815,6 +1817,9 @@ static RET Guru2Subproc_EggAddInit( GURU2MAIN_WORK *g2m )
     }
   }
   
+  // ’ÊM—F’B“o˜^ˆ—
+  _comm_friend_func(g2m);
+  
   g2m->disc.rotate_offs_fx = NUM_FX32( wk->offs );
   g2m->seq_no = SEQNO_MAIN_EGG_ADD;
   
@@ -1937,6 +1942,28 @@ static RET Guru2Subproc_SendGameStartFlag( GURU2MAIN_WORK *g2m )
   }
   
   return( RET_NON );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief ‚®‚é‚®‚éŒğŠ·‚ğs‚Á‚½ƒƒ“ƒo[‚ğ’ÊM—F’B‚Æ‚µ‚Ä“o˜^
+ *
+ * @param   g2m   
+ */
+//----------------------------------------------------------------------------------
+static void _comm_friend_func( GURU2MAIN_WORK *g2m )
+{
+  ETC_SAVE_WORK  *etc_save  = SaveData_GetEtc( 
+                                GAMEDATA_GetSaveControlWork(g2m->g2p->param->gamedata));
+  int i;
+  for(i=0;i<G2MEMBER_MAX;i++){
+    if( g2m->comm.my_status[i]!=NULL ){   // Ú‘±‚Å‚«‚Ä‚¢‚ÄA
+      if(i!=GFL_NET_SystemGetCurrentID()){  // ©•ª‚Ì’ÊMID‚¶‚á‚È‚¯‚ê‚Î
+        EtcSave_SetAcquaintance( etc_save, i);
+        OS_Printf("id=%d‚ğ—F’B“o˜^\n", i);
+      }
+    }
+  }
 }
 
 //--------------------------------------------------------------

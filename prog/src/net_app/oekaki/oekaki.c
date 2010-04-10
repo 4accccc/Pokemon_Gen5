@@ -31,7 +31,7 @@
 #include "print/printsys.h"
 #include "sound/pm_sndsys.h"
 #include "app/app_menu_common.h"
-//#include "field/fieldobj.h"
+#include "savedata/etc_save.h"
 
 #include "net_app/oekaki.h"
 #include "oekaki_local.h"
@@ -143,6 +143,7 @@ static void OEKAKI_leave_callback(NetID net_id, const MYSTATUS *mystatus, void *
 static APP_TASKMENU_WORK  *YesNoMenuInit( OEKAKI_WORK *wk );
 static u32 YesNoMenuMain( OEKAKI_WORK *wk );
 static void OekakiResetYesNoWin(OEKAKI_WORK *wk);
+static void _comm_friend_add( OEKAKI_WORK *wk );
 
 
 typedef struct{
@@ -284,7 +285,10 @@ GFL_PROC_RESULT OekakiProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *myw
 
         // ‚¨ŠG‚©‚«Žž‚É‚ÍÚ‘±Ø’f‚ÅƒGƒ‰[ˆµ‚¢‚µ‚È‚¢
 //        CommStateSetErrorCheck(FALSE,TRUE);
-        
+    
+    // Ú‘±‚µ‚Ä‚¢‚é”½‘Î‘¤‚ÌID‚Ìƒƒ“ƒo[‚ð’ÊM—F’B“o˜^
+    _comm_friend_add(wk);
+
     // 3‘ä‚Ü‚ÅÚ‘±‰Â”\‚É‘‚«Š·‚¦(ŠJŽn‚µ‚½Žž‚Í‚Ql‚Å‚±‚±‚É‚­‚é‚Ì‚Å‚ ‚Æˆêl‚¾‚¯“ü‚ê‚é‚æ‚¤‚É‚µ‚Ä‚¨‚­j
     if(GFL_NET_SystemGetCurrentID()==0){
           CommStateSetLimitNum(wk, 3);
@@ -574,8 +578,12 @@ static void OEKAKI_entry_callback(NetID net_id, const MYSTATUS *mystatus, void *
       if(ret==FALSE){
         GF_ASSERT("—“üƒR[ƒ‹ƒoƒbƒN‘—MŽ¸”s\n");
       }
-//    }
   }
+
+  // Ú‘±‚µ‚½ƒƒ“ƒo[‚ð’ÊM—F’B“o˜^
+  _comm_friend_add(wk);
+
+
 }
 
 //----------------------------------------------------------------------------------
@@ -3299,5 +3307,29 @@ static u32 YesNoMenuMain( OEKAKI_WORK *wk )
 
   return ret;
   
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief ‚®‚é‚®‚éŒðŠ·‚ðs‚Á‚½ƒƒ“ƒo[‚ð’ÊM—F’B‚Æ‚µ‚Ä“o˜^
+ *
+ * @param   g2m   
+ */
+//----------------------------------------------------------------------------------
+static void _comm_friend_add( OEKAKI_WORK *wk )
+{
+  ETC_SAVE_WORK  *etc_save  = SaveData_GetEtc( 
+                                GAMEDATA_GetSaveControlWork( wk->param->gamedata));
+  int i;
+  for(i=0;i<OEKAKI_MEMBER_MAX;i++){
+    if(Union_App_GetMystatus(wk->param->uniapp,i)!=NULL){
+      if(GFL_NET_SystemGetCurrentID()!=i){
+        EtcSave_SetAcquaintance( etc_save, i );
+        OS_Printf("id=%d‚ð—F’B“o˜^\n", i);
+      }
+    }
+  }
+
 }
 
