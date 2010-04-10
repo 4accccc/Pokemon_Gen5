@@ -1077,8 +1077,6 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   }
   SET_CHECK("update_top:CLACT");
 
-  OS_TFPrintf( 3, "seasonDispFlag = %d\n", fieldWork->seasonDispFlag );
-
 
   // ----------------------top側3D描画処理---------------------------------------
   // これ以降にデータ更新処理を入れないこと。
