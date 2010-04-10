@@ -12,16 +12,70 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		114,		//sub_x
 		123,		//sub_y
 	},
-	{	//1  表マップ（ワープ座標は裏を参照）
+	{	//1  
+		ZONE_ID_R05R0101,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		114,		//sub_x
+		123,		//sub_y
+	},
+	{	//2  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R06,		//zone_id
 		ZONE_ID_PLC05,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
-		53,		//sub_x
-		108,		//sub_y
+		57,		//sub_x
+		111,		//sub_y
 	},
-	{	//2  表マップ（ワープ座標は裏を参照）
+	{	//3  
+		ZONE_ID_R06R0101,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		57,		//sub_x
+		111,		//sub_y
+	},
+	{	//4  
+		ZONE_ID_R06R0301,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		57,		//sub_x
+		111,		//sub_y
+	},
+	{	//5  
+		ZONE_ID_R06R0201,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		57,		//sub_x
+		111,		//sub_y
+	},
+	{	//6  
+		ZONE_ID_R06R0202,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		57,		//sub_x
+		111,		//sub_y
+	},
+	{	//7  
+		ZONE_ID_R06R0203,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		57,		//sub_x
+		111,		//sub_y
+	},
+	{	//8  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R07,		//zone_id
 		ZONE_ID_PLC06,		//warp_zone_id
 		0,		//warp_grid_x
@@ -30,43 +84,205 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		53,		//sub_x
 		74,		//sub_y
 	},
-	{	//3  表マップ（ワープ座標は裏を参照）
+	{	//9  
+		ZONE_ID_R07R0201,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		53,		//sub_x
+		74,		//sub_y
+	},
+	{	//10  
+		ZONE_ID_R07R0301,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		53,		//sub_x
+		74,		//sub_y
+	},
+	{	//11  
+		ZONE_ID_R07R0101,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		53,		//sub_x
+		74,		//sub_y
+	},
+	{	//12  
+		ZONE_ID_R07R0102,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		53,		//sub_x
+		74,		//sub_y
+	},
+	{	//13  
+		ZONE_ID_R07R0103,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		53,		//sub_x
+		74,		//sub_y
+	},
+	{	//14  
+		ZONE_ID_R07R0104,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		53,		//sub_x
+		74,		//sub_y
+	},
+	{	//15  
+		ZONE_ID_R07R0105,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		53,		//sub_x
+		74,		//sub_y
+	},
+	{	//16  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R08,		//zone_id
 		ZONE_ID_PLC07,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
 		85,		//sub_x
-		59,		//sub_y
+		53,		//sub_y
 	},
-	{	//4  表マップ（ワープ座標は裏を参照）
+	{	//17  
+		ZONE_ID_R08R0201,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		85,		//sub_x
+		53,		//sub_y
+	},
+	{	//18  
+		ZONE_ID_R08R0101,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		85,		//sub_x
+		53,		//sub_y
+	},
+	{	//19  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R09,		//zone_id
 		ZONE_ID_PLC08,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
-		116,		//sub_x
-		59,		//sub_y
+		113,		//sub_x
+		53,		//sub_y
 	},
-	{	//5  表マップ（ワープ座標は裏を参照）
+	{	//20  
+		ZONE_ID_R09R0101,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		113,		//sub_x
+		53,		//sub_y
+	},
+	{	//21  
+		ZONE_ID_R09R0201,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		113,		//sub_x
+		53,		//sub_y
+	},
+	{	//22  
+		ZONE_ID_R09R0202,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		113,		//sub_x
+		53,		//sub_y
+	},
+	{	//23  
+		ZONE_ID_R09R0301,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		113,		//sub_x
+		53,		//sub_y
+	},
+	{	//24  
+		ZONE_ID_R09R0302,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		113,		//sub_x
+		53,		//sub_y
+	},
+	{	//25  
+		ZONE_ID_R09R0303,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		113,		//sub_x
+		53,		//sub_y
+	},
+	{	//26  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R11,		//zone_id
 		ZONE_ID_PLC08,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
 		139,		//sub_x
-		59,		//sub_y
+		53,		//sub_y
 	},
-	{	//6  表マップ（ワープ座標は裏を参照）
+	{	//27  
+		ZONE_ID_R11R0101,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		139,		//sub_x
+		53,		//sub_y
+	},
+	{	//28  
+		ZONE_ID_R11R0201,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		139,		//sub_x
+		53,		//sub_y
+	},
+	{	//29  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R12,		//zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
-		173,		//sub_x
-		59,		//sub_y
+		166,		//sub_x
+		53,		//sub_y
 	},
-	{	//7  表マップ（ワープ座標は裏を参照）
+	{	//30  
+		ZONE_ID_R12R0101,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		166,		//sub_x
+		53,		//sub_y
+	},
+	{	//31  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R13,		//zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
 		0,		//warp_grid_x
@@ -75,34 +291,151 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		202,		//sub_x
 		74,		//sub_y
 	},
-	{	//8  表マップ（ワープ座標は裏を参照）
+	{	//32  
+		ZONE_ID_R13R0101,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		202,		//sub_x
+		74,		//sub_y
+	},
+	{	//33  
+		ZONE_ID_R13R0201,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		202,		//sub_x
+		74,		//sub_y
+	},
+	{	//34  
+		ZONE_ID_R13R0301,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		202,		//sub_x
+		74,		//sub_y
+	},
+	{	//35  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R14,		//zone_id
 		ZONE_ID_PLT04,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
 		202,		//sub_x
-		108,		//sub_y
+		114,		//sub_y
 	},
-	{	//9  表マップ（ワープ座標は裏を参照）
+	{	//36  
+		ZONE_ID_R14R0101,		//zone_id
+		ZONE_ID_PLT04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		202,		//sub_x
+		114,		//sub_y
+	},
+	{	//37  
+		ZONE_ID_R14R0201,		//zone_id
+		ZONE_ID_PLT04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		202,		//sub_x
+		114,		//sub_y
+	},
+	{	//38  
+		ZONE_ID_R14R0202,		//zone_id
+		ZONE_ID_PLT04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		202,		//sub_x
+		114,		//sub_y
+	},
+	{	//39  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R15,		//zone_id
 		ZONE_ID_PLC10,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
-		172,		//sub_x
+		166,		//sub_x
 		123,		//sub_y
 	},
-	{	//10  表マップ（ワープ座標は裏を参照）
+	{	//40  
+		ZONE_ID_R15R0101,		//zone_id
+		ZONE_ID_PLC10,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		166,		//sub_x
+		123,		//sub_y
+	},
+	{	//41  
+		ZONE_ID_R15R0201,		//zone_id
+		ZONE_ID_PLC10,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		166,		//sub_x
+		123,		//sub_y
+	},
+	{	//42  
+		ZONE_ID_R15R0401,		//zone_id
+		ZONE_ID_PLC10,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		166,		//sub_x
+		123,		//sub_y
+	},
+	{	//43  
+		ZONE_ID_R15R0301,		//zone_id
+		ZONE_ID_PLC10,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		166,		//sub_x
+		123,		//sub_y
+	},
+	{	//44  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_R16,		//zone_id
 		ZONE_ID_PLC04,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
-		140,		//sub_x
+		139,		//sub_x
 		123,		//sub_y
 	},
-	{	//11  表マップ（ワープ座標は裏を参照）
+	{	//45  
+		ZONE_ID_R16R0101,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		139,		//sub_x
+		123,		//sub_y
+	},
+	{	//46  
+		ZONE_ID_R16R0201,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		139,		//sub_x
+		123,		//sub_y
+	},
+	{	//47  
+		ZONE_ID_R16R0301,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		139,		//sub_x
+		123,		//sub_y
+	},
+	{	//48  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_H02,		//zone_id
 		ZONE_ID_PLC05,		//warp_zone_id
 		0,		//warp_grid_x
@@ -111,25 +444,88 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		100,		//sub_x
 		123,		//sub_y
 	},
-	{	//12  表マップ（ワープ座標は裏を参照）
+	{	//49  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_H03,		//zone_id
 		ZONE_ID_PLC08,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
 		100,		//sub_x
-		59,		//sub_y
+		53,		//sub_y
 	},
-	{	//13  表マップ（ワープ座標は裏を参照）
+	{	//50  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_H04,		//zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
 		157,		//sub_x
-		59,		//sub_y
+		53,		//sub_y
 	},
-	{	//14  表マップ（ワープ座標は裏を参照）
+	{	//51  
+		ZONE_ID_H04R0101,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		157,		//sub_x
+		53,		//sub_y
+	},
+	{	//52  
+		ZONE_ID_H04R0201,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		157,		//sub_x
+		53,		//sub_y
+	},
+	{	//53  
+		ZONE_ID_H04R0301,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		157,		//sub_x
+		53,		//sub_y
+	},
+	{	//54  
+		ZONE_ID_H04R0401,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		157,		//sub_x
+		53,		//sub_y
+	},
+	{	//55  
+		ZONE_ID_H04R0501,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		157,		//sub_x
+		53,		//sub_y
+	},
+	{	//56  
+		ZONE_ID_H04R0601,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		157,		//sub_x
+		53,		//sub_y
+	},
+	{	//57  
+		ZONE_ID_H04R0701,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		157,		//sub_x
+		53,		//sub_y
+	},
+	{	//58  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_H05,		//zone_id
 		ZONE_ID_PLC10,		//warp_zone_id
 		0,		//warp_grid_x
@@ -138,7 +534,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		157,		//sub_x
 		123,		//sub_y
 	},
-	{	//15  表マップ（ワープ座標は裏を参照）
+	{	//59  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_C04,		//zone_id
 		ZONE_ID_PLC04,		//warp_zone_id
 		0,		//warp_grid_x
@@ -147,7 +543,25 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		128,		//sub_x
 		123,		//sub_y
 	},
-	{	//16  表マップ（ワープ座標は裏を参照）
+	{	//60  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04GYM0101,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//61  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04P01,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//62  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_C04PC0101,		//zone_id
 		ZONE_ID_PLC04,		//warp_zone_id
 		0,		//warp_grid_x
@@ -156,61 +570,763 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		128,		//sub_x
 		123,		//sub_y
 	},
-	{	//17  表マップ（ワープ座標は裏を参照）
+	{	//63  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0101,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//64  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0102,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//65  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0103,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//66  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0104,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//67  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0105,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//68  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0106,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//69  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0107,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//70  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0108,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//71  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0109,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//72  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0110,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//73  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0111,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//74  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0201,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//75  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0202,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//76  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0203,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//77  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0301,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//78  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0302,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//79  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0303,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//80  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0304,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//81  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0305,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//82  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0401,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//83  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0402,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//84  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0403,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//85  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0404,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//86  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0501,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//87  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0502,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//88  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0601,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//89  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0701,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//90  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0801,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//91  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R0901,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//92  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R1001,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//93  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C04R1002,		//zone_id
+		ZONE_ID_PLC04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		123,		//sub_y
+	},
+	{	//94  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_C05,		//zone_id
 		ZONE_ID_PLC05,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
-		70,		//sub_x
+		73,		//sub_x
 		123,		//sub_y
 	},
-	{	//18  表マップ（ワープ座標は裏を参照）
+	{	//95  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C05GYM0101,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		123,		//sub_y
+	},
+	{	//96  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C05GYM0201,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		123,		//sub_y
+	},
+	{	//97  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C05PC0101,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		123,		//sub_y
+	},
+	{	//98  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C05R0101,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		123,		//sub_y
+	},
+	{	//99  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C05R0201,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		123,		//sub_y
+	},
+	{	//100  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C05R0301,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		123,		//sub_y
+	},
+	{	//101  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C05R0401,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		123,		//sub_y
+	},
+	{	//102  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C05R0501,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		123,		//sub_y
+	},
+	{	//103  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C05R0601,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		123,		//sub_y
+	},
+	{	//104  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C05R0701,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		123,		//sub_y
+	},
+	{	//105  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_C06,		//zone_id
 		ZONE_ID_PLC06,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
-		36,		//sub_x
-		90,		//sub_y
+		41,		//sub_x
+		88,		//sub_y
 	},
-	{	//19  表マップ（ワープ座標は裏を参照）
+	{	//106  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C06GYM0101,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		41,		//sub_x
+		88,		//sub_y
+	},
+	{	//107  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C06GYM0201,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		41,		//sub_x
+		88,		//sub_y
+	},
+	{	//108  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C06PC0101,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		41,		//sub_x
+		88,		//sub_y
+	},
+	{	//109  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C06R0101,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		41,		//sub_x
+		88,		//sub_y
+	},
+	{	//110  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C06R0201,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		41,		//sub_x
+		88,		//sub_y
+	},
+	{	//111  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C06R0301,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		41,		//sub_x
+		88,		//sub_y
+	},
+	{	//112  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_C07,		//zone_id
 		ZONE_ID_PLC07,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
-		70,		//sub_x
-		59,		//sub_y
+		73,		//sub_x
+		53,		//sub_y
 	},
-	{	//20  表マップ（ワープ座標は裏を参照）
+	{	//113  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C07GYM0101,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		53,		//sub_y
+	},
+	{	//114  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C07PC0101,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		53,		//sub_y
+	},
+	{	//115  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C07R0101,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		53,		//sub_y
+	},
+	{	//116  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C07R0201,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		53,		//sub_y
+	},
+	{	//117  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C07R0301,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		53,		//sub_y
+	},
+	{	//118  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C07R0401,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		53,		//sub_y
+	},
+	{	//119  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_C08,		//zone_id
 		ZONE_ID_PLC08,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
 		128,		//sub_x
-		59,		//sub_y
+		53,		//sub_y
 	},
-	{	//21  表マップ（ワープ座標は裏を参照）
+	{	//120  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C08GYM0101,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		53,		//sub_y
+	},
+	{	//121  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C08PC0101,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		53,		//sub_y
+	},
+	{	//122  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C08R0101,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		53,		//sub_y
+	},
+	{	//123  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C08R0102,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		53,		//sub_y
+	},
+	{	//124  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C08R0201,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		53,		//sub_y
+	},
+	{	//125  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C08R0202,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		53,		//sub_y
+	},
+	{	//126  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C08R0301,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		53,		//sub_y
+	},
+	{	//127  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C08R0302,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		53,		//sub_y
+	},
+	{	//128  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C08R0401,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		53,		//sub_y
+	},
+	{	//129  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C08R0402,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		53,		//sub_y
+	},
+	{	//130  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C08R0501,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		53,		//sub_y
+	},
+	{	//131  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C08R0601,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		53,		//sub_y
+	},
+	{	//132  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C08R0701,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		53,		//sub_y
+	},
+	{	//133  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C08R0801,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		53,		//sub_y
+	},
+	{	//134  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_C08R0802,		//zone_id
+		ZONE_ID_PLC08,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		128,		//sub_x
+		53,		//sub_y
+	},
+	{	//135  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_T03,		//zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
 		186,		//sub_x
-		59,		//sub_y
+		53,		//sub_y
 	},
-	{	//22  表マップ（ワープ座標は裏を参照）
+	{	//136  
+		ZONE_ID_T03PC0101,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		186,		//sub_x
+		53,		//sub_y
+	},
+	{	//137  
+		ZONE_ID_T03R0101,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		186,		//sub_x
+		53,		//sub_y
+	},
+	{	//138  
+		ZONE_ID_T03R0201,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		186,		//sub_x
+		53,		//sub_y
+	},
+	{	//139  
+		ZONE_ID_T03R0301,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		186,		//sub_x
+		53,		//sub_y
+	},
+	{	//140  
+		ZONE_ID_T03R0401,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		186,		//sub_x
+		53,		//sub_y
+	},
+	{	//141  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_T04,		//zone_id
 		ZONE_ID_PLT04,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
-		220,		//sub_x
-		90,		//sub_y
+		219,		//sub_x
+		88,		//sub_y
 	},
-	{	//23  表マップ（ワープ座標は裏を参照）
+	{	//142  
+		ZONE_ID_T04PC0101,		//zone_id
+		ZONE_ID_PLT04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		219,		//sub_x
+		88,		//sub_y
+	},
+	{	//143  
+		ZONE_ID_T04R0101,		//zone_id
+		ZONE_ID_PLT04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		219,		//sub_x
+		88,		//sub_y
+	},
+	{	//144  
+		ZONE_ID_T04R0201,		//zone_id
+		ZONE_ID_PLT04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		219,		//sub_x
+		88,		//sub_y
+	},
+	{	//145  
+		ZONE_ID_T04R0301,		//zone_id
+		ZONE_ID_PLT04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		219,		//sub_x
+		88,		//sub_y
+	},
+	{	//146  
+		ZONE_ID_T04R0401,		//zone_id
+		ZONE_ID_PLT04,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		219,		//sub_x
+		88,		//sub_y
+	},
+	{	//147  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_BC10,		//zone_id
 		ZONE_ID_PLC10,		//warp_zone_id
 		0,		//warp_grid_x
@@ -219,7 +1335,52 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		186,		//sub_x
 		123,		//sub_y
 	},
-	{	//24  表マップ（ワープ座標は裏を参照）
+	{	//148  
+		ZONE_ID_BC10PCR0101,		//zone_id
+		ZONE_ID_PLC10,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		186,		//sub_x
+		123,		//sub_y
+	},
+	{	//149  
+		ZONE_ID_BC10R0101,		//zone_id
+		ZONE_ID_PLC10,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		186,		//sub_x
+		123,		//sub_y
+	},
+	{	//150  
+		ZONE_ID_BC10R0201,		//zone_id
+		ZONE_ID_PLC10,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		186,		//sub_x
+		123,		//sub_y
+	},
+	{	//151  
+		ZONE_ID_BC10R0301,		//zone_id
+		ZONE_ID_PLC10,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		186,		//sub_x
+		123,		//sub_y
+	},
+	{	//152  
+		ZONE_ID_BC10R0401,		//zone_id
+		ZONE_ID_PLC10,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		186,		//sub_x
+		123,		//sub_y
+	},
+	{	//153  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_WC10,		//zone_id
 		ZONE_ID_PLCW10,		//warp_zone_id
 		0,		//warp_grid_x
@@ -228,25 +1389,286 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		186,		//sub_x
 		123,		//sub_y
 	},
-	{	//25  表マップ（ワープ座標は裏を参照）
+	{	//154  
+		ZONE_ID_WC10PCR0101,		//zone_id
+		ZONE_ID_PLCW10,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		186,		//sub_x
+		123,		//sub_y
+	},
+	{	//155  
+		ZONE_ID_WC10R0101,		//zone_id
+		ZONE_ID_PLCW10,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		186,		//sub_x
+		123,		//sub_y
+	},
+	{	//156  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_D05,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		123,		//sub_y
+	},
+	{	//157  91.0
+		ZONE_ID_D05R0101,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		123,		//sub_y
+	},
+	{	//158  91.0
+		ZONE_ID_D05R0201,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		123,		//sub_y
+	},
+	{	//159  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_D06,		//zone_id
 		ZONE_ID_PLC05,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
-		53,		//sub_x
+		54,		//sub_x
 		108,		//sub_y
 	},
-	{	//26  表マップ（ワープ座標は裏を参照）
+	{	//160  
+		ZONE_ID_D06R0101,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		54,		//sub_x
+		108,		//sub_y
+	},
+	{	//161  
+		ZONE_ID_D06R0201,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		54,		//sub_x
+		108,		//sub_y
+	},
+	{	//162  
+		ZONE_ID_D06R0301,		//zone_id
+		ZONE_ID_PLC05,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		54,		//sub_x
+		108,		//sub_y
+	},
+	{	//163  表マップ（ワープ座標は裏を参照）
 		ZONE_ID_D07,		//zone_id
 		ZONE_ID_PLC06,		//warp_zone_id
 		0,		//warp_grid_x
 		0,		//warp_grid_y
 		0,		//warp_grid_z
-		53,		//sub_x
+		57,		//sub_x
+		69,		//sub_y
+	},
+	{	//164  
+		ZONE_ID_D07R0101,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		57,		//sub_x
+		69,		//sub_y
+	},
+	{	//165  
+		ZONE_ID_D07R0201,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		57,		//sub_x
+		69,		//sub_y
+	},
+	{	//166  
+		ZONE_ID_D07R0301,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		57,		//sub_x
+		69,		//sub_y
+	},
+	{	//167  
+		ZONE_ID_D07R0401,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		57,		//sub_x
+		69,		//sub_y
+	},
+	{	//168  
+		ZONE_ID_D07R0501,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		57,		//sub_x
+		69,		//sub_y
+	},
+	{	//169  
+		ZONE_ID_D07R0601,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		57,		//sub_x
+		69,		//sub_y
+	},
+	{	//170  
+		ZONE_ID_D07R0701,		//zone_id
+		ZONE_ID_PLC06,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		57,		//sub_x
+		69,		//sub_y
+	},
+	{	//171  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_D08,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		53,		//sub_y
+	},
+	{	//172  
+		ZONE_ID_D08R0101,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		53,		//sub_y
+	},
+	{	//173  
+		ZONE_ID_D08R0301,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		53,		//sub_y
+	},
+	{	//174  
+		ZONE_ID_D08R0401,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		53,		//sub_y
+	},
+	{	//175  
+		ZONE_ID_D08R0501,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		53,		//sub_y
+	},
+	{	//176  
+		ZONE_ID_D08R0601,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		53,		//sub_y
+	},
+	{	//177  
+		ZONE_ID_D08R0701,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		53,		//sub_y
+	},
+	{	//178  
+		ZONE_ID_D08R0801,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		53,		//sub_y
+	},
+	{	//179  
+		ZONE_ID_D08R0901,		//zone_id
+		ZONE_ID_PLC07,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		73,		//sub_x
+		53,		//sub_y
+	},
+	{	//180  表マップ（ワープ座標は裏を参照）
+		ZONE_ID_D10,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		202,		//sub_x
 		74,		//sub_y
 	},
-	{	//27  裏マップ
+	{	//181  
+		ZONE_ID_D10R0101,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		202,		//sub_x
+		74,		//sub_y
+	},
+	{	//182  
+		ZONE_ID_D10R0201,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		202,		//sub_x
+		74,		//sub_y
+	},
+	{	//183  
+		ZONE_ID_D10R0301,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		202,		//sub_x
+		74,		//sub_y
+	},
+	{	//184  
+		ZONE_ID_D10R0401,		//zone_id
+		ZONE_ID_PLT03,		//warp_zone_id
+		0,		//warp_grid_x
+		0,		//warp_grid_y
+		0,		//warp_grid_z
+		202,		//sub_x
+		74,		//sub_y
+	},
+	{	//185  裏マップ
 		ZONE_ID_PLC04,		//zone_id
 		ZONE_ID_PLC04,		//warp_zone_id
 		405,		//warp_grid_x
@@ -255,43 +1677,43 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		128,		//sub_x
 		123,		//sub_y
 	},
-	{	//28  裏マップ
+	{	//186  裏マップ
 		ZONE_ID_PLC05,		//zone_id
 		ZONE_ID_PLC05,		//warp_zone_id
 		187,		//warp_grid_x
 		0,		//warp_grid_y
 		413,		//warp_grid_z
-		70,		//sub_x
+		73,		//sub_x
 		123,		//sub_y
 	},
-	{	//29  裏マップ
+	{	//187  裏マップ
 		ZONE_ID_PLC06,		//zone_id
 		ZONE_ID_PLC06,		//warp_zone_id
 		108,		//warp_grid_x
 		0,		//warp_grid_y
 		305,		//warp_grid_z
-		36,		//sub_x
-		90,		//sub_y
+		41,		//sub_x
+		88,		//sub_y
 	},
-	{	//30  裏マップ
+	{	//188  裏マップ
 		ZONE_ID_PLC07,		//zone_id
 		ZONE_ID_PLC07,		//warp_zone_id
 		184,		//warp_grid_x
 		3,		//warp_grid_y
 		196,		//warp_grid_z
-		70,		//sub_x
-		59,		//sub_y
+		73,		//sub_x
+		53,		//sub_y
 	},
-	{	//31  裏マップ
+	{	//189  裏マップ
 		ZONE_ID_PLC08,		//zone_id
 		ZONE_ID_PLC08,		//warp_zone_id
 		425,		//warp_grid_x
 		0,		//warp_grid_y
 		173,		//warp_grid_z
 		128,		//sub_x
-		59,		//sub_y
+		53,		//sub_y
 	},
-	{	//32  裏マップ
+	{	//190  裏マップ
 		ZONE_ID_PLC10,		//zone_id
 		ZONE_ID_PLC10,		//warp_zone_id
 		43,		//warp_grid_x
@@ -300,7 +1722,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		186,		//sub_x
 		123,		//sub_y
 	},
-	{	//33  裏マップ
+	{	//191  裏マップ
 		ZONE_ID_PLCW10,		//zone_id
 		ZONE_ID_PLCW10,		//warp_zone_id
 		43,		//warp_grid_x
@@ -309,7 +1731,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		186,		//sub_x
 		123,		//sub_y
 	},
-	{	//34  裏マップ
+	{	//192  裏マップ
 		ZONE_ID_PLH02,		//zone_id
 		ZONE_ID_PLC05,		//warp_zone_id
 		187,		//warp_grid_x
@@ -318,25 +1740,25 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		100,		//sub_x
 		123,		//sub_y
 	},
-	{	//35  裏マップ
+	{	//193  裏マップ
 		ZONE_ID_PLH03,		//zone_id
 		ZONE_ID_PLC08,		//warp_zone_id
 		425,		//warp_grid_x
 		0,		//warp_grid_y
 		173,		//warp_grid_z
 		100,		//sub_x
-		59,		//sub_y
+		53,		//sub_y
 	},
-	{	//36  裏マップ
+	{	//194  裏マップ
 		ZONE_ID_PLH04,		//zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
 		657,		//warp_grid_x
 		0,		//warp_grid_y
 		185,		//warp_grid_z
 		157,		//sub_x
-		59,		//sub_y
+		53,		//sub_y
 	},
-	{	//37  裏マップ
+	{	//195  裏マップ
 		ZONE_ID_PLH05,		//zone_id
 		ZONE_ID_PLC10,		//warp_zone_id
 		43,		//warp_grid_x
@@ -345,7 +1767,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		157,		//sub_x
 		123,		//sub_y
 	},
-	{	//38  裏マップ
+	{	//196  裏マップ
 		ZONE_ID_PLR05,		//zone_id
 		ZONE_ID_PLC04,		//warp_zone_id
 		405,		//warp_grid_x
@@ -354,16 +1776,16 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		114,		//sub_x
 		123,		//sub_y
 	},
-	{	//39  裏マップ
+	{	//197  裏マップ
 		ZONE_ID_PLR06,		//zone_id
 		ZONE_ID_PLC05,		//warp_zone_id
 		187,		//warp_grid_x
 		0,		//warp_grid_y
 		413,		//warp_grid_z
-		53,		//sub_x
-		108,		//sub_y
+		57,		//sub_x
+		111,		//sub_y
 	},
-	{	//40  裏マップ
+	{	//198  裏マップ
 		ZONE_ID_PLR07,		//zone_id
 		ZONE_ID_PLC06,		//warp_zone_id
 		108,		//warp_grid_x
@@ -372,43 +1794,43 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		53,		//sub_x
 		74,		//sub_y
 	},
-	{	//41  裏マップ
+	{	//199  裏マップ
 		ZONE_ID_PLR08,		//zone_id
 		ZONE_ID_PLC07,		//warp_zone_id
 		184,		//warp_grid_x
 		3,		//warp_grid_y
 		196,		//warp_grid_z
 		85,		//sub_x
-		59,		//sub_y
+		53,		//sub_y
 	},
-	{	//42  裏マップ
+	{	//200  裏マップ
 		ZONE_ID_PLR09,		//zone_id
 		ZONE_ID_PLC08,		//warp_zone_id
 		425,		//warp_grid_x
 		0,		//warp_grid_y
 		173,		//warp_grid_z
-		116,		//sub_x
-		59,		//sub_y
+		113,		//sub_x
+		53,		//sub_y
 	},
-	{	//43  裏マップ
+	{	//201  裏マップ
 		ZONE_ID_PLR11,		//zone_id
 		ZONE_ID_PLC08,		//warp_zone_id
 		425,		//warp_grid_x
 		0,		//warp_grid_y
 		173,		//warp_grid_z
 		139,		//sub_x
-		59,		//sub_y
+		53,		//sub_y
 	},
-	{	//44  裏マップ
+	{	//202  裏マップ
 		ZONE_ID_PLR12,		//zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
 		657,		//warp_grid_x
 		0,		//warp_grid_y
 		185,		//warp_grid_z
-		173,		//sub_x
-		59,		//sub_y
+		166,		//sub_x
+		53,		//sub_y
 	},
-	{	//45  裏マップ
+	{	//203  裏マップ
 		ZONE_ID_PLR13,		//zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
 		657,		//warp_grid_x
@@ -417,67 +1839,157 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		202,		//sub_x
 		74,		//sub_y
 	},
-	{	//46  裏マップ
+	{	//204  裏マップ
 		ZONE_ID_PLR14,		//zone_id
 		ZONE_ID_PLT04,		//warp_zone_id
 		760,		//warp_grid_x
 		-4,		//warp_grid_y
 		300,		//warp_grid_z
 		202,		//sub_x
-		108,		//sub_y
+		114,		//sub_y
 	},
-	{	//47  裏マップ
+	{	//205  裏マップ
 		ZONE_ID_PLR15,		//zone_id
 		ZONE_ID_PLC10,		//warp_zone_id
 		43,		//warp_grid_x
 		0,		//warp_grid_y
 		37,		//warp_grid_z
-		172,		//sub_x
+		166,		//sub_x
 		123,		//sub_y
 	},
-	{	//48  裏マップ
+	{	//206  裏マップ
 		ZONE_ID_PLR16,		//zone_id
 		ZONE_ID_PLC04,		//warp_zone_id
 		405,		//warp_grid_x
 		1,		//warp_grid_y
 		468,		//warp_grid_z
-		140,		//sub_x
+		139,		//sub_x
 		123,		//sub_y
 	},
-	{	//49  裏マップ
+	{	//207  裏マップ
 		ZONE_ID_PLT03,		//zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
 		657,		//warp_grid_x
 		0,		//warp_grid_y
 		185,		//warp_grid_z
 		186,		//sub_x
-		59,		//sub_y
+		53,		//sub_y
 	},
-	{	//50  裏マップ
+	{	//208  裏マップ
 		ZONE_ID_PLT04,		//zone_id
 		ZONE_ID_PLT04,		//warp_zone_id
 		760,		//warp_grid_x
 		-4,		//warp_grid_y
 		300,		//warp_grid_z
-		220,		//sub_x
-		90,		//sub_y
+		219,		//sub_x
+		88,		//sub_y
 	},
-	{	//51  裏マップ
+	{	//209  裏マップ
 		ZONE_ID_PLD06,		//zone_id
 		ZONE_ID_PLC05,		//warp_zone_id
 		187,		//warp_grid_x
 		0,		//warp_grid_y
 		413,		//warp_grid_z
-		53,		//sub_x
+		54,		//sub_x
 		108,		//sub_y
 	},
-	{	//52  裏マップ
+	{	//210  裏マップ
 		ZONE_ID_PLD07,		//zone_id
 		ZONE_ID_PLC06,		//warp_zone_id
 		108,		//warp_grid_x
 		0,		//warp_grid_y
 		305,		//warp_grid_z
-		53,		//sub_x
-		74,		//sub_y
+		57,		//sub_x
+		69,		//sub_y
+	},
+	{	//211  裏マップ
+		ZONE_ID_PALACE01,		//zone_id
+		ZONE_ID_PALACE01,		//warp_zone_id
+		31,		//warp_grid_x
+		2,		//warp_grid_y
+		30,		//warp_grid_z
+		128,		//sub_x
+		88,		//sub_y
+	},
+	{	//212  裏マップ
+		ZONE_ID_PALACE02,		//zone_id
+		ZONE_ID_PALACE01,		//warp_zone_id
+		31,		//warp_grid_x
+		2,		//warp_grid_y
+		30,		//warp_grid_z
+		128,		//sub_x
+		88,		//sub_y
+	},
+	{	//213  裏マップ
+		ZONE_ID_PALACE03,		//zone_id
+		ZONE_ID_PALACE01,		//warp_zone_id
+		31,		//warp_grid_x
+		2,		//warp_grid_y
+		30,		//warp_grid_z
+		128,		//sub_x
+		88,		//sub_y
+	},
+	{	//214  裏マップ
+		ZONE_ID_PALACE04,		//zone_id
+		ZONE_ID_PALACE01,		//warp_zone_id
+		31,		//warp_grid_x
+		2,		//warp_grid_y
+		30,		//warp_grid_z
+		128,		//sub_x
+		88,		//sub_y
+	},
+	{	//215  裏マップ
+		ZONE_ID_PALACE05,		//zone_id
+		ZONE_ID_PALACE01,		//warp_zone_id
+		31,		//warp_grid_x
+		2,		//warp_grid_y
+		30,		//warp_grid_z
+		128,		//sub_x
+		88,		//sub_y
+	},
+	{	//216  裏マップ
+		ZONE_ID_PALACE06,		//zone_id
+		ZONE_ID_PALACE01,		//warp_zone_id
+		31,		//warp_grid_x
+		2,		//warp_grid_y
+		30,		//warp_grid_z
+		128,		//sub_x
+		88,		//sub_y
+	},
+	{	//217  裏マップ
+		ZONE_ID_PALACE07,		//zone_id
+		ZONE_ID_PALACE01,		//warp_zone_id
+		31,		//warp_grid_x
+		2,		//warp_grid_y
+		30,		//warp_grid_z
+		128,		//sub_x
+		88,		//sub_y
+	},
+	{	//218  裏マップ
+		ZONE_ID_PALACE08,		//zone_id
+		ZONE_ID_PALACE01,		//warp_zone_id
+		31,		//warp_grid_x
+		2,		//warp_grid_y
+		30,		//warp_grid_z
+		128,		//sub_x
+		88,		//sub_y
+	},
+	{	//219  裏マップ
+		ZONE_ID_PALACE09,		//zone_id
+		ZONE_ID_PALACE01,		//warp_zone_id
+		31,		//warp_grid_x
+		2,		//warp_grid_y
+		30,		//warp_grid_z
+		128,		//sub_x
+		88,		//sub_y
+	},
+	{	//220  裏マップ
+		ZONE_ID_PALACE10,		//zone_id
+		ZONE_ID_PALACE01,		//warp_zone_id
+		31,		//warp_grid_x
+		2,		//warp_grid_y
+		30,		//warp_grid_z
+		128,		//sub_x
+		88,		//sub_y
 	},
 };
