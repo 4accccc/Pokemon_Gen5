@@ -3145,6 +3145,16 @@
 		<language name="JPN_KANJI" width="216">フレッド</language>
 	</row>
 
+	<row id="baker_03">
+		<language name="JPN" width="216">ハルカ</language>
+		<language name="JPN_KANJI" width="216">ハルカ</language>
+	</row>
+
+	<row id="hakaim1_27">
+		<language name="JPN" width="216">したっぱ</language>
+		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

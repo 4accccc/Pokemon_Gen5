@@ -561,7 +561,9 @@
 #define	TRID_PRINCE_1_08   ( 548 ) 
 #define	TRID_RANGERW_11   ( 549 ) 
 #define	TRID_RANGERM_11   ( 550 ) 
-#define TRID_MAX  ( 551 )
+#define	TRID_BAKER_03   ( 551 ) 
+#define	TRID_HAKAIM1_27   ( 552 ) 
+#define TRID_MAX  ( 553 )
 
 #ifndef __ASM_NO_DEF_  //‚±‚êˆÈ~‚ÍƒAƒZƒ“ƒuƒ‰‚Å‚Í–³‹
 typedef  int TrainerID;
