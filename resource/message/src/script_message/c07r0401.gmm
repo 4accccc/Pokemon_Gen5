@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T18:20:36"/>
+	<create user="matsumiya" host="W00224" date="2010-04-10T14:53:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="124" right="2013" bottom="752" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -410,7 +410,7 @@
 		<comment>♂
 ・レベル差が９９
 ・アイテムが
-　もらえる→オボンの実入手（仮）→gentleman_13
+　もらえる→No221「おうじゃのしるし」→gentleman_13
 　　　この条件でもらえるのは1回のみ
 　もらえない→gentleman_14</comment>
 		<attribute name="キャラ指定">GENTLEMAN
@@ -425,7 +425,7 @@
 		<comment>♂
 ・レベル差が５０～９８
 ・アイテムが
-　もらえる→オボンの実入手（仮）→gentleman_13
+　もらえる→No224「きよめのおふだ」→gentleman_13
 　　　この条件でもらえるのは1回のみ
 　もらえない→gentleman_14</comment>
 		<attribute name="キャラ指定">GENTLEMAN
@@ -440,7 +440,7 @@
 		<comment>♂
 ・レベル差が２５～４９
 ・アイテムが
-　もらえる→オボンの実入手（仮）→gentleman_13
+　もらえる→No231「しあわせタマゴ」→gentleman_13
 　　　この条件でもらえるのは1回のみ
 　もらえない→gentleman_14</comment>
 		<attribute name="キャラ指定">GENTLEMAN
