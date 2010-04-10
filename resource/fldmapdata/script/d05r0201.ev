@@ -32,14 +32,30 @@ _EVENT_DATA    ev_d05r0201_hakaiw_05
 _EVENT_DATA    ev_d05r0201_hakaim_06
 _EVENT_DATA    ev_d05r0201_hakaim_07
 _EVENT_DATA    ev_d05r0201_hakaim_08
+_EVENT_DATA    ev_init_d05r0201
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_d05r0201_flag_change:
-//  _END
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_d05r0201
+	
+
+	//夢ポケモンイベントの値によってプラズマ団のの初期位置を変更する
+	IF $WK_SCENE_D05_PLASMA >= 3 && $WK_SCENE_D05_PLASMA < 8 THEN
+		_OBJ_POS_CHANGE( D05R0201_HAKAIM_01, 3, 0, 10, DIR_DOWN )
+		_OBJ_POS_CHANGE( D05R0201_HAKAIM_02, 3, 0, 9, DIR_DOWN )
+		_OBJ_POS_CHANGE( D05R0201_HAKAIM_03, 7, 0, 11, DIR_DOWN )
+		_OBJ_POS_CHANGE( D05R0201_HAKAIW_04, 2, 0, 11, DIR_DOWN )
+		_OBJ_POS_CHANGE( D05R0201_HAKAIW_05, 6, 0, 11, DIR_DOWN )
+		_OBJ_POS_CHANGE( D05R0201_HAKAIM_06, 1, 0, 11, DIR_DOWN )
+		_OBJ_POS_CHANGE( D05R0201_HAKAIM_07, 4, 0, 9, DIR_DOWN )
+		_OBJ_POS_CHANGE( D05R0201_HAKAIM_08, 5, 0, 10, DIR_DOWN )
+		_OBJ_POS_CHANGE( D05R0201_RIVAL_01, 3, 0, 11, DIR_UP )
+	ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*初回入室時発動イベント：プラズマ団と戦闘                     */
@@ -64,7 +80,7 @@ EVENT_START   ev_reserve_d05r0201_vs_plasma
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//七賢人つぶやき
-	_BALLOONWIN_OBJMSG(msg_d05r0201_sage2_01,D05R0201_SAGE_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d05r0201_sage2_01,D05R0201_SAGE_01 , POS_UL)
 	_BALLOONWIN_CLOSE()
 	
 	//ライバル・主人公プラズマ団に接近
@@ -79,11 +95,11 @@ EVENT_START   ev_reserve_d05r0201_vs_plasma
 	//ライバル達のほうを向いて「おうよりさずかった…」
 	_OBJ_ANIME(D05R0201_SAGE_01,anm_d05r0201_sage_gyoe)
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG(msg_d05r0201_sage2_02,D05R0201_SAGE_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d05r0201_sage2_02,D05R0201_SAGE_01 , POS_UL)
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ団宣戦布告して布陣を組む
-	_BALLOONWIN_OBJMSG(msg_d05r0201_hakaim_01,D05R0201_HAKAIM_08)
+	_BALLOONWIN_OBJMSG_POS(msg_d05r0201_hakaim_01,D05R0201_HAKAIM_08 , POS_UR)
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME(D05R0201_HAKAIM_01,anm_d05r0201_hakai_01)
 	_OBJ_ANIME(D05R0201_HAKAIM_02,anm_d05r0201_hakai_02)
@@ -114,6 +130,14 @@ EVENT_START   ev_reserve_d05r0201_vs_plasma
 	_CAMERA_WAIT_MOVE()
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
+	
+	//=====================================//
+	
+	//***フラグ操作:D05R0201に入室済みとする***
+	$WK_SCENE_D05_PLASMA = 3
+	
+	//=====================================//
+	
 
 EVENT_END
 
@@ -263,6 +287,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_d05r0201_hakaim_03
 {
+
 	//戦闘を既に終えていたら一言メッセージ
 	IF FLAG_ON( FE_D05R0201_PLASMA_01 ) THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_hakaim1_02 )
@@ -296,11 +321,12 @@ EVENT_START   ev_d05r0201_hakaim_03
 		_BALLOONWIN_CLOSE()
 		
 		//全員に勝利した場合終了イベントをコール
-		IF $WK_SCENE_D05_PLASMA == 6 THEN
+		IF $WK_SCENE_D05_PLASMA == 7 THEN
 			_CALL ev_d05r0201_vs_plasma_win
 		ENDIF
 		
 	ENDIF
+
 }
 EVENT_END
 
@@ -308,7 +334,9 @@ EVENT_END
 /*プラズマ団戦闘処理（5）         */
 /**************************************************************/
 EVENT_START   ev_d05r0201_hakaiw_05
+
 {
+
 	//戦闘を既に終えていたら一言メッセージ
 	IF FLAG_ON( FE_D05R0201_PLASMA_02 ) THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_hakaiw1_02 )
@@ -342,11 +370,12 @@ EVENT_START   ev_d05r0201_hakaiw_05
 		_BALLOONWIN_CLOSE()
 		
 		//全員に勝利した場合終了イベントをコール
-		IF $WK_SCENE_D05_PLASMA == 6 THEN
+		IF $WK_SCENE_D05_PLASMA == 7 THEN
 			_CALL ev_d05r0201_vs_plasma_win
 		ENDIF
 		
 	ENDIF
+
 }
 EVENT_END
 
@@ -354,7 +383,9 @@ EVENT_END
 /*プラズマ団戦闘処理（7）         */
 /**************************************************************/
 EVENT_START   ev_d05r0201_hakaim_07
+
 {
+
 	//戦闘を既に終えていたら一言メッセージ
 	IF FLAG_ON( FE_D05R0201_PLASMA_03 ) THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_hakaim3_02 )
@@ -388,11 +419,12 @@ EVENT_START   ev_d05r0201_hakaim_07
 		_BALLOONWIN_CLOSE()
 		
 		//全員に勝利した場合終了イベントをコール
-		IF $WK_SCENE_D05_PLASMA == 6 THEN
+		IF $WK_SCENE_D05_PLASMA == 7 THEN
 			_CALL ev_d05r0201_vs_plasma_win
 		ENDIF
 		
 	ENDIF
+
 }
 EVENT_END
 
@@ -401,6 +433,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_d05r0201_hakaim_08
 {
+
 	//戦闘を既に終えていたら一言メッセージ
 	IF FLAG_ON( FE_D05R0201_PLASMA_04 ) THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_hakaim2_02 )
@@ -434,11 +467,12 @@ EVENT_START   ev_d05r0201_hakaim_08
 		_BALLOONWIN_CLOSE()
 		
 		//全員に勝利した場合終了イベントをコール
-		IF $WK_SCENE_D05_PLASMA == 6 THEN
+		IF $WK_SCENE_D05_PLASMA == 7 THEN
 			_CALL ev_d05r0201_vs_plasma_win
 		ENDIF
 		
 	ENDIF
+
 }
 EVENT_END
 
@@ -454,6 +488,12 @@ ev_d05r0201_vs_plasma_win:
 	_OBJ_ADD(D05R0201_WORKMAN_03)
 	_OBJ_ADD(D05R0201_WORKMAN_04)
 	_OBJ_ADD(D05R0201_LEADER5_01)
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	//カメラ操作　サポートの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,294912,0,753664,40 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//階段SE
 	_SE_PLAY( SEQ_SE_KAIDAN )
@@ -612,7 +652,7 @@ ev_d05r0201_vs_plasma_win:
 	_OBJ_ANIME_WAIT()
 	
 	//ヤーコン：おまえたち
-	_BALLOONWIN_OBJMSG(msg_d05r0201_leader5_03,D05R0201_LEADER5_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d05r0201_leader5_03,D05R0201_LEADER5_01 , POS_DR)
 	_BALLOONWIN_CLOSE()
 	
 	//ヤーコン退場
@@ -631,7 +671,7 @@ ev_d05r0201_vs_plasma_win:
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル：やれやれ
-	_BALLOONWIN_OBJMSG(msg_d05r0201_black_08,D05R0201_RIVAL_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d05r0201_black_08,D05R0201_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//ライバル退場
@@ -644,10 +684,16 @@ ev_d05r0201_vs_plasma_win:
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
 	
+	//自機にカメラを戻す
+	_CAMERA_DEF_MOVE (16) 
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
 	//===========フラグワーク操作===========//
 	
 	//***フラグ操作:全てのイベントをオフに***
-	$WK_SCENE_D05_PLASMA = 7
+	$WK_SCENE_D05_PLASMA = 8
 	
 	//D05R0201のイベントキャラクターを全て非表示にする
 	_FLAG_SET(FV_D05R0201_PLASMA)
@@ -996,28 +1042,36 @@ _ANIME_LABEL	anm_d05r0201_rival_goodbye
 /*プラズマ団一言メッセージ         */
 /**************************************************************/
 EVENT_START   ev_d05r0201_hakaim_01
+
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_hakaim5_01 )
+
 EVENT_END
 
 /**************************************************************/
 /*プラズマ団一言メッセージ         */
 /**************************************************************/
 EVENT_START   ev_d05r0201_hakaim_02
+
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_hakaim6_01 )
+
 EVENT_END
 
 /**************************************************************/
 /*プラズマ団一言メッセージ         */
 /**************************************************************/
 EVENT_START   ev_d05r0201_hakaiw_04
+
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_hakaiw2_01 )
+
 EVENT_END
 
 /**************************************************************/
 /*プラズマ団一言メッセージ         */
 /**************************************************************/
 EVENT_START   ev_d05r0201_hakaim_06
+
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_hakaim6_01)
+
 EVENT_END
 
 /**************************************************************/

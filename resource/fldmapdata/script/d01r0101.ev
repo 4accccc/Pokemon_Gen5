@@ -444,7 +444,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 
 	//ムンナ鳴く
 	_VOICE_PLAY(MONSNO_540,0)
-	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_poke_01,D01R0101_POKE_01, POS_DL )
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_poke_01,D01R0101_POKE_01, POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//ムンナ少し上に移動
@@ -452,13 +452,21 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//サポート：まってぇ！
-	_BALLOONWIN_OBJMSG(msg_d01r0101_white_04,D01R0101_SUPPORT)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_white_04,D01R0101_SUPPORT , POS_DL)
 	_BALLOONWIN_CLOSE()
+	
+	//カメラ操作　ムンナ中心に
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	_CAMERA_MOVE( 9688,0,970752,1802240,0,557056,48 )
 	
 	//サポートと主人公も上に移動
 	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_player_upgo)
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d01r0101_player_upgo)
 	_OBJ_ANIME_WAIT()
+	
+	//カメラ移動待ち
+	 _CAMERA_WAIT_MOVE()
 	
 	//画面外からプラズマ団登場
 	_OBJ_ANIME(D01R0101_HAKAIW_01,anm_d01r0101_hakaiw_coming01)
@@ -466,7 +474,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//プラズマ女：みっけ
-	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaiw_01,D01R0101_HAKAIW_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaiw_01,D01R0101_HAKAIW_01, POS_UL)
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ団ムンナを囲む
@@ -475,7 +483,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//プラズマ男：夢のけむりを出せ！
-	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaim_01,D01R0101_HAKAIM_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaim_01,D01R0101_HAKAIM_01 , POS_UL)
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ男その場歩き
@@ -484,7 +492,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	
 	//ムンナ：むう！
 	_VOICE_PLAY(MONSNO_540,0)
-	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_poke_02,D01R0101_POKE_01, POS_DL )
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_poke_02,D01R0101_POKE_01 , POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//ムンナ左右を見て困惑
@@ -492,7 +500,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//サポート：ちょっと！
-	_BALLOONWIN_OBJMSG(msg_d01r0101_white_05,D01R0101_SUPPORT)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_white_05,D01R0101_SUPPORT , POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ団下を向く
@@ -501,11 +509,11 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//プラズマ男：わたしたちのことか？
-	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaim_02,D01R0101_HAKAIM_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaim_02,D01R0101_HAKAIM_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ女：なにをしてるのか？
-	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaiw_02,D01R0101_HAKAIW_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaiw_02,D01R0101_HAKAIW_01 , POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ男ムンナを蹴る
@@ -516,15 +524,15 @@ EVENT_START   ev_pos_d01r0101_support_04
 	
 	//ムンナ：む…にゅ！
 	_VOICE_PLAY(MONSNO_540,0)
-	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_poke_03,D01R0101_POKE_01, POS_DL )
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_poke_03,D01R0101_POKE_01, POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ男：おら！ゆめのけむりをだせ！
-	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaim_03,D01R0101_HAKAIM_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaim_03,D01R0101_HAKAIM_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//サポート：ひどい！
-	_BALLOONWIN_OBJMSG(msg_d01r0101_white_06,D01R0101_SUPPORT)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_white_06,D01R0101_SUPPORT , POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ男サポートの方を向く
@@ -532,11 +540,11 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//プラズマ女：そうよ
-	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaiw_03,D01R0101_HAKAIW_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaiw_03,D01R0101_HAKAIW_01 , POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ男：というわけで
-	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaim_04,D01R0101_HAKAIM_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaim_04,D01R0101_HAKAIM_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ男隣接
@@ -544,7 +552,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//サポート：えええ！
-	_BALLOONWIN_OBJMSG(msg_d01r0101_white_07,D01R0101_SUPPORT)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_white_07,D01R0101_SUPPORT , POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//戦闘処理
@@ -552,13 +560,17 @@ EVENT_START   ev_pos_d01r0101_support_04
 	//結果チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_CAMERA_START()		//カメラ操作開始
+		_CAMERA_PURGE()		//カメラのバインドを解く
+		_CAMERA_MOVE( 9688,0,970752,1802240,0,557056,1 )
+		
 		_TRAINER_WIN()
 	ELSE
 		_TRAINER_LOSE()
 	ENDIF
 	
 	//プラズマ女：みくびったか？まあいい
-	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaiw_04,D01R0101_HAKAIW_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaiw_04,D01R0101_HAKAIW_01 , POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ女接近
@@ -571,6 +583,10 @@ EVENT_START   ev_pos_d01r0101_support_04
 	//結果チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_CAMERA_START()		//カメラ操作開始
+		_CAMERA_PURGE()		//カメラのバインドを解く
+		_CAMERA_MOVE( 9688,0,970752,1802240,0,557056,1 )
+		
 		_TRAINER_WIN()
 	ELSE
 		_TRAINER_LOSE()
@@ -581,7 +597,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//まさか二人してまけるとはな
-	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaim_05,D01R0101_HAKAIM_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaim_05,D01R0101_HAKAIM_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ団ムンナの横へ
@@ -598,11 +614,11 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_SE_WAIT() 
 	
 	//おら！ゆめのけむりだせ！
-	_BALLOONWIN_OBJMSG(msg_d01r0101_hakaim_06,D01R0101_HAKAIM_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaim_06,D01R0101_HAKAIM_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//サポート：やめたげてよお！
-	_BALLOONWIN_OBJMSG(msg_d01r0101_white_07a,D01R0101_SUPPORT)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_white_07a,D01R0101_SUPPORT , POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//辺りが白くなる
@@ -626,12 +642,12 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_TIME_WAIT( 16 )
 	
 	//プラズマ団驚く
-	_OBJ_ANIME(D01R0101_HAKAIW_01,anm_d01r0101_hakai_to_sage1_left)
-	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakai_to_sage1_left)
+	_OBJ_ANIME(D01R0101_HAKAIW_01,anm_d01r0101_hakai_to_sage1_left_01)
+	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakai_to_sage1_left_02)
 	_OBJ_ANIME_WAIT()
 	
 	//ゲーヂス1：なにをしているのだ？
-	_BALLOONWIN_OBJMSG(msg_d01r0101_sage1_01,D01R0101_SAGE1_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_sage1_01,D01R0101_SAGE1_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//ゲーヂス２作成
@@ -641,12 +657,12 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_TIME_WAIT( 16 )
 	
 	//プラズマ団右を向く
-	_OBJ_ANIME(D01R0101_HAKAIW_01,anm_d01r0101_hakai_to_sage1_right)
-	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakai_to_sage1_right)
+	_OBJ_ANIME(D01R0101_HAKAIW_01,anm_d01r0101_hakai_to_sage1_right_01)
+	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakai_to_sage1_right_02)
 	_OBJ_ANIME_WAIT()
 	
 	//ゲーヂス1：われわれ プラズマ団は
-	_BALLOONWIN_OBJMSG(msg_d01r0101_sage1_02,D01R0101_SAGE1_02)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_sage1_02,D01R0101_SAGE1_02 , POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//ゲーヂス１，２削除
@@ -664,7 +680,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//ゲーヂス３：その やくめ はたせないというのなら
-	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_sage1_03,D01R0101_SAGE1_03, POS_DL )
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_sage1_03,D01R0101_SAGE1_03, POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ団お互いを見る
@@ -673,15 +689,15 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//プラズマ団女：こ、これは…！
-	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaiw_05,D01R0101_HAKAIW_01, POS_DR )
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaiw_05,D01R0101_HAKAIW_01, POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ団男：ああ…
-	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaim_07,D01R0101_HAKAIM_01, POS_DL )
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaim_07,D01R0101_HAKAIM_01, POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ団女：とにかく いますぐ
-	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaiw_06,D01R0101_HAKAIW_01, POS_DR )
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaiw_06,D01R0101_HAKAIW_01, POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//プラズマ団画面外まで逃走
@@ -705,7 +721,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	
 	//ムンナ：むにゃあ！
 	_VOICE_PLAY(MONSNO_516,0)
-	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_poke1_01,D01R0101_POKE_02, POS_DL )
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_poke1_01,D01R0101_POKE_02, POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//サポートと主人公向き合う
@@ -714,7 +730,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//ベル：…いまのって、なあに？
-	_BALLOONWIN_OBJMSG(msg_d01r0101_white_08,D01R0101_SUPPORT)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_white_08,D01R0101_SUPPORT, POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//サポートと主人公上を見る
@@ -723,7 +739,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//それにあのポケモン…
-	_BALLOONWIN_OBJMSG(msg_d01r0101_white_09,D01R0101_SUPPORT)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_white_09,D01R0101_SUPPORT , POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//マコモ：わっ！
@@ -743,7 +759,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//マコモ：待ちきれなくて来ちゃった ってムシャーナ！？
-	_BALLOONWIN_OBJMSG(msg_d01r0101_inventor_02,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_inventor_02,MMDL_ID_EVENTOBJ_00 , POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//サポート上を向く
@@ -753,12 +769,12 @@ EVENT_START   ev_pos_d01r0101_support_04
 	
 	//ムシャーナ：むしゃ？
 	_VOICE_PLAY(MONSNO_516,0)
-	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_poke1_02,D01R0101_POKE_02, POS_DL )
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_poke1_02,D01R0101_POKE_02, POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//ムンナ：むにい
 	_VOICE_PLAY(MONSNO_540,0)
-	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_poke_04,D01R0101_POKE_01, POS_DL )
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_poke_04,D01R0101_POKE_01, POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//ムシャーナムンナ退場
@@ -784,7 +800,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_DEL( D01R0101_POKE_02 )
 	
 	//マコモ：なにがあったの？
-	_BALLOONWIN_OBJMSG(msg_d01r0101_inventor_03,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_inventor_03,MMDL_ID_EVENTOBJ_00 , POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//サポート下を向く
@@ -793,11 +809,11 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//サポート：あっ マコモさん
-	_BALLOONWIN_OBJMSG(msg_d01r0101_white_10,D01R0101_SUPPORT)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_white_10,D01R0101_SUPPORT , POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//マコモ：…なるほどね
-	_BALLOONWIN_OBJMSG(msg_d01r0101_inventor_04,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_inventor_04,MMDL_ID_EVENTOBJ_00 , POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//マコモ：アイテムに隣接
@@ -814,7 +830,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//マコモ：これって ゆめのけむり！？
-	_BALLOONWIN_OBJMSG(msg_d01r0101_inventor_05,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_inventor_05,MMDL_ID_EVENTOBJ_00 , POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//アイテムOBJ削除
@@ -825,7 +841,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//マコモ：これで わたしの けんきゅうが！
-	_BALLOONWIN_OBJMSG(msg_d01r0101_inventor_06,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_inventor_06,MMDL_ID_EVENTOBJ_00 , POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//マコモ退場
@@ -838,9 +854,15 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME_WAIT()
 	
 	//サポート：ふええ
-	_BALLOONWIN_OBJMSG(msg_d01r0101_white_11,D01R0101_SUPPORT)
-	_LAST_KEYWAIT()
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_white_11,D01R0101_SUPPORT , POS_UL )
 	_BALLOONWIN_CLOSE()
+	
+	//自機にカメラを戻す
+	_CAMERA_DEF_MOVE (40) 
+	//カメラ待ち
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
 	
 	//マコモを消す
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
@@ -921,7 +943,6 @@ _ANIME_LABEL	anm_d01r0101_player_upgo
 _ANIME_LABEL	anm_d01r0101_hakaiw_coming01
 	_ANIME_DATA	AC_WALK_R_8F,3
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -1024,7 +1045,7 @@ _ANIME_LABEL	anm_d01r0101_hakaim_to_poke1
 //--------------------------------------------------------------
 //	R01　夢イベント用：プラズマ団ゲーヂスを見る
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_d01r0101_hakai_to_sage1_left
+_ANIME_LABEL	anm_d01r0101_hakai_to_sage1_left_01
 	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
@@ -1032,9 +1053,23 @@ _ANIME_LABEL	anm_d01r0101_hakai_to_sage1_left
 //--------------------------------------------------------------
 //	R01　夢イベント用：プラズマ団ゲーヂスを見る
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_d01r0101_hakai_to_sage1_right
+_ANIME_LABEL	anm_d01r0101_hakai_to_sage1_left_02
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プラズマ団ゲーヂスを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_hakai_to_sage1_right_01
 	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　夢イベント用：プラズマ団ゲーヂスを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d01r0101_hakai_to_sage1_right_02
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
