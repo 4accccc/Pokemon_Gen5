@@ -563,7 +563,8 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     
     tr_data->tr_id = bsw_trainer->player_id;
     tr_data->tr_type = bsw_trainer->tr_type;
-    tr_data->ai_bit = 0xFFFFFFFF;  //最強
+//    tr_data->ai_bit = 0xFFFFFFFF;  //最強
+    tr_data->ai_bit = 0x00000087;  //最強
     
     //トレーナーデータ　name
     GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
@@ -604,7 +605,8 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     
     tr_data->tr_id = bsw_trainer->player_id;
     tr_data->tr_type = bsw_trainer->tr_type;
-    tr_data->ai_bit = 0xFFFFFFFF;  //最強
+//    tr_data->ai_bit = 0xFFFFFFFF;  //最強
+    tr_data->ai_bit = 0x00000087;  //最強
     
     //トレーナーデータ　name
     GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
@@ -648,7 +650,8 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     
     tr_data->tr_id = bsw_trainer->player_id;
     tr_data->tr_type = bsw_trainer->tr_type;
-    tr_data->ai_bit = 0xFFFFFFFF;  //最強
+//    tr_data->ai_bit = 0xFFFFFFFF;  //最強
+    tr_data->ai_bit = 0x00000087;  //最強
     
     //トレーナーデータ　name
     GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
