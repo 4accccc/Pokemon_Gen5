@@ -39,6 +39,7 @@
 #define FST_EXTRA_STREAMING_BREAK_BIT		        (1<<8)		//外部セーブ：ミュージカル：破壊
 #define FST_EXTRA_ZUKAN_WALLPAPER_BREAK_BIT	  	(1<<9)		//外部セーブ：図鑑壁紙：破壊
 #define FST_EXTRA_DENDOU_BREAK_BIT	  	(1<<10)		//外部セーブ：殿堂入り：破壊
+#define FST_OUTSIDE_MYSTERY_BREAK_BIT	  	(1<<11)	//管理外セーブ：不思議な贈り物：破壊
 
 //--------------------------------------------------------------
 //  外部セーブ番号
