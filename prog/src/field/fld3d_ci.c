@@ -625,7 +625,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       //ƒƒCƒ“ˆ—‘‚«Š·‚¦
       ptr->MainSeqFunc = FlySkyMainFunc;
 
-      if ( ptr->CutInNo == FLDCIID_FLY_OUT )
+      if ( (ptr->CutInNo == FLDCIID_FLY_OUT)||(ptr->CutInNo == FLDCIID_FLY_OUT2) )
       {
         fade_event = GMEVENT_Create(gsys, event, WhiteOutEvt, 0);
       }
@@ -1897,7 +1897,10 @@ static GMEVENT_RESULT WhiteInEvt( GMEVENT* event, int* seq, void* work )
 //--------------------------------------------------------------------------------------------
 static BOOL IsFlySkyOut(const int inCutinNo)
 {
-  if ( (inCutinNo == FLDCIID_FLY_OUT) || (inCutinNo == FLDCIID_CHAMP_OUT)) return TRUE;
+  if ( (inCutinNo == FLDCIID_FLY_OUT) ||
+       (inCutinNo == FLDCIID_FLY_OUT2)||
+       (inCutinNo == FLDCIID_CHAMP_OUT))
+    return TRUE;
 
   return FALSE;
 }
@@ -1913,7 +1916,9 @@ static BOOL IsFlySkyOut(const int inCutinNo)
 //--------------------------------------------------------------------------------------------
 static BOOL IsFlySkyIn(const int inCutinNo)
 {
-  if (inCutinNo == FLDCIID_FLY_IN) return TRUE;
+  if ( (inCutinNo == FLDCIID_FLY_IN) ||
+       (inCutinNo == FLDCIID_FLY_IN2) )
+    return TRUE;
 
   return FALSE;
 }
