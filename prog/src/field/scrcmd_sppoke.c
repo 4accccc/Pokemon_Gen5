@@ -266,7 +266,7 @@ static BOOL SearchEventPoke( POKEPARTY* party,
   {
     POKEMON_PARAM *pp = PokeParty_GetMemberPointer(party, i);
     //配布チェック
-//    if ( !POKE_MEMO_CheckEventPokePP( pp ,inEventFlg ) ) continue; @todo   デバッグのために無効化
+    if ( !POKE_MEMO_CheckEventPokePP( pp ,inEventFlg ) ) continue;
     //モンスターナンバーチェック
     if ( PP_Get( pp, ID_PARA_monsno, NULL ) != inMonsNo ) continue;
 
