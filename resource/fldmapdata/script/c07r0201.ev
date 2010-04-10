@@ -132,6 +132,9 @@ EVENT_START ev_scene_c07r0201_game_start
   _BALLOONWIN_CLOSE()
   //「問題」
   _BALLOONWIN_OBJMSG(msg_quiz_start_05, C07R0201_MIDDLEMAN2_01) //話し手：ワカルデ
+  //出題ＭＥ
+  _ME_PLAY(SEQ_ME_QUIZ)
+  _ME_WAIT()
   //問題表示
   _BALLOONWIN_OBJMSG(quiz_msg, C07R0201_MIDDLEMAN2_01) //話し手：ワカルデ
   _BALLOONWIN_CLOSE()
