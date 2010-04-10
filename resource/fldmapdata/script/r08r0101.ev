@@ -39,7 +39,7 @@ DEFINE_LOCAL TrgtObj
 EVENT_START ev_scene_r08r0101
   $is_scene_evt = TRUE    //シーンイベント起動フラグ
   //シーンイベント消化 シーンイベント再起動防止シーケンス
-  $WK_SCENE_R08R0101_LEG = 1
+  $WK_SCENE_R08R0101_LEG = 2
   {
     DEFINE_LOCAL player_x
     DEFINE_LOCAL player_z
@@ -133,7 +133,7 @@ common_root:
       //ちょっと待つ
       _TIME_WAIT(8)
       //シーンイベント消化　シーンイベント完全終了
-      $WK_SCENE_R08R0101_LEG = 2
+      $WK_SCENE_R08R0101_LEG = 3
     ENDIF
 
     //三銃士ポケモンそろっているか？
@@ -211,16 +211,21 @@ INIT_EVENT_START ev_zone_r08r0101
 	_FLAG_SET( FV_R08R0101_POKE5 )
 	_FLAG_SET( FV_R08R0101_POKE6 )
 	_FLAG_SET( FV_R08R0101_POKE11 )
+  _FLAG_SET( FV_R08R0101_OLDMAN1 )  //爺さん非表示
 
-  IF $WK_SCENE_R08R0101_LEG < 2 THEN
+  IF $WK_SCENE_R08R0101_LEG < 3 THEN
     //イベント条件判定
     _GET_EVT_POKE_POS( MONSNO_654, TRUE, pos, SCWK_ANSWER )
     IF $SCWK_ANSWER == TRUE THEN
-      //爺さん非表示
-      _FLAG_SET( FV_R08R0101_OLDMAN1 )
       //シーンイベント起動
+      $WK_SCENE_R08R0101_LEG = 1  
+    ELSE
+      //シーンイベント無効
       $WK_SCENE_R08R0101_LEG = 0
     ENDIF
+  ELSE    //イベント終わっている
+    //爺さん表示
+    _FLAG_RESET( FV_R08R0101_OLDMAN1 )
   ENDIF
 INIT_EVENT_END
 
