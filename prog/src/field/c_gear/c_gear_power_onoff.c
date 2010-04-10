@@ -434,6 +434,9 @@ static void PowerOnOff_InitGraphic( CGEAR_POWER_ONOFF* p_sys, HEAPID heapID )
   // NET ICON
   GFL_NET_ReloadIcon();
 
+
+  // 上画面にパネルを出す。
+  FIELD_SUBSCREEN_SetMainLCDNavigationScreen( heapID );
 }
 
 //----------------------------------------------------------------------------
@@ -445,6 +448,9 @@ static void PowerOnOff_InitGraphic( CGEAR_POWER_ONOFF* p_sys, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void PowerOnOff_ExitGraphic( CGEAR_POWER_ONOFF* p_sys )
 {
+  // 
+  FIELD_SUBSCREEN_OffMainLCDNavigationScreen();
+  
   // Win
   PowerOnOff_ExitWin( p_sys );
 

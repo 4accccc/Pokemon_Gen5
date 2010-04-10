@@ -581,6 +581,16 @@ typedef struct{
   u32 plt_beacon;
 } PANEL_PLT_ANIME;
 
+//-------------------------------------
+///	ボタンパレットフェード処理
+//=====================================
+typedef struct {
+  u32 anime_on;
+  u32 msk;
+  GFL_CLWK* dummy;
+  PALETTE_FADE_PTR  p_fade_ptr;
+  GFL_TCBSYS* p_fade_tcbsys;
+} BUTTON_PAL_FADE;
 
 
 struct _C_GEAR_WORK {
@@ -617,6 +627,8 @@ struct _C_GEAR_WORK {
   void* pfade_tcbsys_wk;
   PALETTE_FADE_PTR            pfade_ptr;
   int createEvent;
+
+  BUTTON_PAL_FADE button_palfade;
 
   u16 palBase[_CGEAR_NET_CHANGEPAL_MAX][_CGEAR_NET_CHANGEPAL_NUM];
   u16 palTrans[_CGEAR_NET_CHANGEPAL_MAX][_CGEAR_NET_CHANGEPAL_NUM];
@@ -736,6 +748,7 @@ static void _selectAnimInit(C_GEAR_WORK* pWork,int x,int y);
 
 // カーソル選択アニメ
 static void _CursorSelectAnimeWait( C_GEAR_WORK* pWork );
+static void _PalAnimeSelectAnimeWait( C_GEAR_WORK* pWork );
 
 // イベント待ち
 static void _modeEventWait( C_GEAR_WORK* pWork );
@@ -744,6 +757,12 @@ static void _modeEventWait( C_GEAR_WORK* pWork );
 static void _PFadeSetBlack( C_GEAR_WORK* pWork );
 static void _PFadeToBlack( C_GEAR_WORK* pWork );
 static void _PFadeFromBlack( C_GEAR_WORK* pWork );
+
+// パレットフェード　ボタンアニメ
+static void _BUTTONPAL_Init( C_GEAR_WORK* pWork, BUTTON_PAL_FADE* p_fwk );
+static void _BUTTONPAL_Exit( BUTTON_PAL_FADE* p_fwk );
+static void _BUTTONPAL_Start( BUTTON_PAL_FADE* p_fwk, u32 msk );
+static BOOL _BUTTONPAL_Update( BUTTON_PAL_FADE* p_fwk );
 
 #ifdef _NET_DEBUG
 #define   _CHANGE_STATE(pWork, state)  _changeStateDebug(pWork ,state, __LINE__)
@@ -2203,13 +2222,16 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
     _CHANGE_STATE( pWork, _CursorSelectAnimeWait );
     break;
   case TOUCH_LABEL_CROSS:
-  //  PMSND_PlaySE( SEQ_SE_MSCL_07 );
-    pWork->createEvent = FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW;
-//    FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW);
+    PMSND_PlaySE( SEQ_SE_MSCL_07 );
+    //  こっちはパレットアニメ
+    pWork->select_cursor = TOUCH_LABEL_CROSS; 
+    _CHANGE_STATE( pWork, _PalAnimeSelectAnimeWait );
     break;
   case TOUCH_LABEL_RADAR:
-    pWork->createEvent = FIELD_SUBSCREEN_ACTION_SCANRADAR;
-//    FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_SCANRADAR);
+    PMSND_PlaySE( SEQ_SE_MSCL_07 );
+    //  こっちはパレットアニメ
+    pWork->select_cursor = TOUCH_LABEL_RADAR; 
+    _CHANGE_STATE( pWork, _PalAnimeSelectAnimeWait );
     break;
   case TOUCH_LABEL_LOGO:
     PMSND_PlaySE( SEQ_SE_MSCL_07 );
@@ -3298,6 +3320,9 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   // パネルアニメのシステムクリア
   _PanelMarkAnimeSysInit( pWork );
 
+  // ボタンパレットアニメシステム初期化
+  _BUTTONPAL_Init( pWork, &pWork->button_palfade );
+
 
   //  _PFadeToBlack(pWork);
   //  OS_TPrintf("zzzz start field_heap = %x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_FIELD_SUBSCREEN));
@@ -3418,6 +3443,8 @@ void CGEAR_ActionCallback( C_GEAR_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno)
 //------------------------------------------------------------------------------
 void CGEAR_Exit( C_GEAR_WORK* pWork )
 {
+  _BUTTONPAL_Exit( &pWork->button_palfade );
+  
   GFL_UI_SleepGoSetFunc(NULL,  NULL);
   GFL_UI_SleepReleaseSetFunc(NULL,  NULL);
 
@@ -3473,11 +3500,9 @@ GMEVENT* CGEAR_EventCheck(C_GEAR_WORK* pWork, BOOL bEvReqOK, FIELD_SUBSCREEN_WOR
     event = EVENT_CG_Wireless(pWork->pGameSys, fieldWork, NULL, TRUE);
     break;
   case FIELD_SUBSCREEN_ACTION_SCANRADAR:
-    PMSND_PlaySystemSE( SEQ_SE_MSCL_07 );
     event = EVENT_ResearchRadar( pWork->pGameSys, fieldWork );
     break;
   case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
-    PMSND_PlaySystemSE( SEQ_SE_MSCL_07 );
     event = EVENT_ChangeSubScreen(pWork->pGameSys, fieldWork, FIELD_SUBSCREEN_BEACON_VIEW);
     break;
   case FIELD_SUBSCREEN_ACTION_CGEAR_HELP:
@@ -3586,6 +3611,58 @@ static void _CursorSelectAnimeWait( C_GEAR_WORK* pWork )
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットアニメでの　選択アニメーション
+ *
+ *	@param	pWork 
+ */
+//-----------------------------------------------------------------------------
+static void _PalAnimeSelectAnimeWait( C_GEAR_WORK* pWork )
+{
+  switch( pWork->state_seq ){
+  case 0:
+    switch( pWork->select_cursor ){
+    case TOUCH_LABEL_CROSS:
+      _BUTTONPAL_Start( &pWork->button_palfade, (1<<6) | (1<<7) | (1<<8) );
+      break;
+    case TOUCH_LABEL_RADAR:
+      _BUTTONPAL_Start( &pWork->button_palfade, (1<<9) );
+      break;
+    default:
+      // 選択カーソル不明
+      GF_ASSERT(0);
+      break;
+    }
+    pWork->state_seq ++;
+    break;
+
+  case 1:
+    if( _BUTTONPAL_Update( &pWork->button_palfade ) ){
+
+      
+      switch( pWork->select_cursor ){
+      case TOUCH_LABEL_CROSS:
+        pWork->createEvent = FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW;
+        break;
+      case TOUCH_LABEL_RADAR:
+        pWork->createEvent = FIELD_SUBSCREEN_ACTION_SCANRADAR;
+        break;
+      default:
+        // 選択カーソル不明
+        GF_ASSERT(0);
+        break;
+      }
+      _CHANGE_STATE(pWork,_modeEventWait);
+    }
+    break;
+
+  default:
+    break;
+  }
+}
+
+
 
 //----------------------------------------------------------------------------
 /**
@@ -3597,5 +3674,121 @@ static void _CursorSelectAnimeWait( C_GEAR_WORK* pWork )
 static void _modeEventWait( C_GEAR_WORK* pWork )
 {
 }
+
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタン　パレット　アニメ  初期化
+ *
+ *	@param	pWork   ワーク
+ *	@param	p_fwk   ワーク
+ */
+//-----------------------------------------------------------------------------
+static void _BUTTONPAL_Init( C_GEAR_WORK* pWork, BUTTON_PAL_FADE* p_fwk )
+{
+  // ダミーのACTOR作成
+  {
+    GFL_CLWK_DATA cellInitData;
+
+    cellInitData.pos_x = 0;
+    cellInitData.pos_y = 0;
+    cellInitData.anmseq = NANR_c_gear_obj_CellAnime_help;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = CGEAR_CLACT_BG_PRI;
+
+    p_fwk->dummy = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                              pWork->objRes[_CLACT_CHR],
+                                              pWork->objRes[_CLACT_PLT],
+                                              pWork->objRes[_CLACT_ANM],
+                                              &cellInitData ,
+                                              CGEAR_REND_SUB,
+                                              pWork->heapID );
+
+    // 表示OFF
+    GFL_CLACT_WK_SetDrawEnable( p_fwk->dummy, FALSE );
+  }
+
+  // パレットフェード
+  p_fwk->p_fade_ptr     = pWork->pfade_ptr;
+  p_fwk->p_fade_tcbsys  = pWork->pfade_tcbsys;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタン　パレット　アニメ  破棄処理
+ *
+ *	@param	p_fwk 
+ */
+//-----------------------------------------------------------------------------
+static void _BUTTONPAL_Exit( BUTTON_PAL_FADE* p_fwk )
+{
+  GFL_CLACT_WK_Remove( p_fwk->dummy );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタン　パレット　アニメ  開始
+ *
+ *	@param	p_fwk   ワーク
+ *	@param	msk     パレットマスク
+ */
+//-----------------------------------------------------------------------------
+static void _BUTTONPAL_Start( BUTTON_PAL_FADE* p_fwk, u32 bit )
+{
+
+  GFL_CLACT_WK_ResetAnm( p_fwk->dummy );
+  GFL_CLACT_WK_SetAutoAnmFlag( p_fwk->dummy, TRUE );
+  GFL_CLACT_WK_SetAutoAnmSpeed( p_fwk->dummy, 2<<FX32_SHIFT );
+
+  p_fwk->anime_on = TRUE;
+
+  p_fwk->msk = bit;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタン　パレット　アニメ　更新
+ *
+ *	@param	p_fwk   ワーク
+ *
+ *	@retval TRUE    完了
+ *	@retval FALSE   途中
+ */
+//-----------------------------------------------------------------------------
+static BOOL _BUTTONPAL_Update( BUTTON_PAL_FADE* p_fwk )
+{
+  u32 frame_index;
+  static const u32 sc_INDEX_Color[] = {
+    0,
+    8,
+    0,
+    8,
+    0,
+    8,
+  };
+  
+  if( p_fwk->anime_on == FALSE ){
+    return TRUE;
+  }
+
+
+  if( GFL_CLACT_WK_CheckAnmActive( p_fwk->dummy ) == FALSE ){
+    p_fwk->anime_on = FALSE;
+    return TRUE;
+  }
+
+  frame_index = GFL_CLACT_WK_GetAnmIndex( p_fwk->dummy );
+  // パレットカラーを調整
+  PaletteFadeReq(
+    p_fwk->p_fade_ptr, PF_BIT_SUB_OBJ, p_fwk->msk,   -120, 0, sc_INDEX_Color[frame_index], 0x0, p_fwk->p_fade_tcbsys
+    );
+  return FALSE;
+}
+
+
 
 
