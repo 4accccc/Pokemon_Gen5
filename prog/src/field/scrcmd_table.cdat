@@ -1027,6 +1027,13 @@
   DEF_CMD( EvCmdMapFade_WhiteInSlow, EV_SEQ_MAP_FADE_WHITE_IN_SLOW )
   DEF_CMD( EvCmdMapFade_WhiteOutSlow, EV_SEQ_MAP_FADE_WHITE_OUT_SLOW )
 
+  // テレビ番組抽選
+  DEF_CMD( EvCmdTV_GetMsg, EV_SEQ_TV_GET_MSG )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
+
 
   END_CMD
 

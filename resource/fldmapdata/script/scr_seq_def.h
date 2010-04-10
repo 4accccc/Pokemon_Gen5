@@ -10873,4 +10873,17 @@
 
   .macro _ASM_D12_GMK_VANISH
   .short EV_SEQ_D12_GMK_VANISH
-  .endm  
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief テレビ番組メッセージ抽選
+ * @param   msg   抽選結果メッセージ
+ */
+//--------------------------------------------------------------
+#define _TV_GET_MSG( msg ) _ASM_TV_GET_MSG msg
+
+  .macro _ASM_TV_GET_MSG msg
+  .short EV_SEQ_TV_GET_MSG
+  .short \msg
+  .endm
