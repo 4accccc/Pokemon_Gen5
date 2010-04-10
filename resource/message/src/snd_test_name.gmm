@@ -4810,13 +4810,13 @@
 		<language name="JPN" width="256">BGM-E-N-CASTLE</language>
 		<language name="JPN_KANJI" width="256">BGM-E-N-CASTLE</language>
 	</row>
-	<row id="msg_seq_bgm_e_legend_p1">
-		<language name="JPN" width="256">BGM-E-LEGEND-P1</language>
-		<language name="JPN_KANJI" width="256">BGM-E-LEGEND-P1</language>
+	<row id="msg_seq_bgm_e_legend_born_b">
+		<language name="JPN" width="256">BGM-E-LEGEND-BORN-B</language>
+		<language name="JPN_KANJI" width="256">BGM-E-LEGEND-BORN-B</language>
 	</row>
-	<row id="msg_seq_bgm_e_legend_p2">
-		<language name="JPN" width="256">BGM-E-LEGEND-P2</language>
-		<language name="JPN_KANJI" width="256">BGM-E-LEGEND-P2</language>
+	<row id="msg_seq_bgm_e_legend_born_w">
+		<language name="JPN" width="256">BGM-E-LEGEND-BORN-W</language>
+		<language name="JPN_KANJI" width="256">BGM-E-LEGEND-BORN-W</language>
 	</row>
 	<row id="msg_seq_bgm_msl_field">
 		<language name="JPN" width="256">BGM-MSL-FIELD</language>
@@ -5034,33 +5034,33 @@
 		<language name="JPN" width="256">BGM-E-SHIRONA</language>
 		<language name="JPN_KANJI" width="256">BGM-E-SHIRONA</language>
 	</row>
-	<row id="msg_seq_bgm_home">
-		<language name="JPN" width="256">BGM-HOME</language>
-		<language name="JPN_KANJI" width="256">BGM-HOME</language>
+	<row id="msg_seq_bgm_e_friend">
+		<language name="JPN" width="256">BGM-E-FRIEND</language>
+		<language name="JPN_KANJI" width="256">BGM-E-FRIEND</language>
 	</row>
-	<row id="msg_seq_bgm_03">
-		<language name="JPN" width="256">BGM-03</language>
-		<language name="JPN_KANJI" width="256">BGM-03</language>
+	<row id="msg_seq_bgm_e_sound_designer">
+		<language name="JPN" width="256">BGM-E-SOUND-DESIGNER</language>
+		<language name="JPN_KANJI" width="256">BGM-E-SOUND-DESIGNER</language>
 	</row>
-	<row id="msg_seq_bgm_04">
-		<language name="JPN" width="256">BGM-04</language>
-		<language name="JPN_KANJI" width="256">BGM-04</language>
+	<row id="msg_seq_bgm_vs_trainer_m">
+		<language name="JPN" width="256">BGM-VS-TRAINER-M</language>
+		<language name="JPN_KANJI" width="256">BGM-VS-TRAINER-M</language>
 	</row>
-	<row id="msg_seq_bgm_05">
-		<language name="JPN" width="256">BGM-05</language>
-		<language name="JPN_KANJI" width="256">BGM-05</language>
+	<row id="msg_seq_bgm_vs_trainer_s">
+		<language name="JPN" width="256">BGM-VS-TRAINER-S</language>
+		<language name="JPN_KANJI" width="256">BGM-VS-TRAINER-S</language>
 	</row>
-	<row id="msg_seq_bgm_06">
-		<language name="JPN" width="256">BGM-06</language>
-		<language name="JPN_KANJI" width="256">BGM-06</language>
+	<row id="msg_seq_bgm_vs_wcs">
+		<language name="JPN" width="256">BGM-VS-WCS</language>
+		<language name="JPN_KANJI" width="256">BGM-VS-WCS</language>
 	</row>
-	<row id="msg_seq_bgm_07">
-		<language name="JPN" width="256">BGM-07</language>
-		<language name="JPN_KANJI" width="256">BGM-07</language>
+	<row id="msg_seq_bgm_e_legend_come_b">
+		<language name="JPN" width="256">BGM-E-LEGEND-COME-B</language>
+		<language name="JPN_KANJI" width="256">BGM-E-LEGEND-COME-B</language>
 	</row>
-	<row id="msg_seq_bgm_08">
-		<language name="JPN" width="256">BGM-08</language>
-		<language name="JPN_KANJI" width="256">BGM-08</language>
+	<row id="msg_seq_bgm_e_legend_come_w">
+		<language name="JPN" width="256">BGM-E-LEGEND-COME-W</language>
+		<language name="JPN_KANJI" width="256">BGM-E-LEGEND-COME-W</language>
 	</row>
 	<row id="msg_seq_bgm_09">
 		<language name="JPN" width="256">BGM-09</language>
@@ -8294,9 +8294,9 @@
 		<language name="JPN" width="256">FLD-152</language>
 		<language name="JPN_KANJI" width="256">FLD-152</language>
 	</row>
-	<row id="msg_seq_se_dmy_307">
-		<language name="JPN" width="256">DMY-307</language>
-		<language name="JPN_KANJI" width="256">DMY-307</language>
+	<row id="msg_seq_se_sdemo_03">
+		<language name="JPN" width="256">SDEMO-03</language>
+		<language name="JPN_KANJI" width="256">SDEMO-03</language>
 	</row>
 	<row id="msg_seq_se_dmy_308">
 		<language name="JPN" width="256">DMY-308</language>
