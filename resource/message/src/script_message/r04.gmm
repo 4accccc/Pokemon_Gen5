@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T18:00:45"/>
+	<create user="matsumiya" host="W00224" date="2010-04-10T21:53:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1340" top="195" right="2045" bottom="823" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -401,21 +401,27 @@
 よろしく　頼むよ！▼</language>
 	</row>
 
-	<row id="msg_r04_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r04_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・戦闘後
 ・メッセージ表示後
-　msg_r04_tvt_01に</comment>
+　msg_r04_tvt_01に
+・0＝ライバルが最初に選んだポケモン
+　　　進化系に合わせて</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『ありがとう！
-なんとなく　わかったことがある▼
-きみの　たたかいかたの　ほうが
-じゅうなんな　かんじが……▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『ありがとう！
-なんとなく　わかったことがある▼
-きみの　戦い方の　方が
-柔軟な　感じが……▼</language>
+		<language name="JPN" width="256">チェレン『なるほどね▼
+きみと　たたかうと
+いろいろ　さんこうに　なる▼
+そして　あらためて　わかったね
+ぼくは　[1:01:ポケモン種族名:0]たちとなら▽
+どこまでも　つよくなれる！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『なるほどね▼
+きみと　戦うと
+いろいろ　参考に　なる▼
+そして　改めて　わかったね
+ぼくは　[1:01:ポケモン種族名:0]たちとなら▽
+どこまでも　強くなれる！▼</language>
 	</row>
 
 	<row id="msg_r04_tvt_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
