@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-04-09T13:00:12" source="psel_mb_07.mb"/>
+	<create user="unno" host="W00199" date="2010-04-10T17:53:00" source="psel_mb_09.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,49 +11,33 @@
 <body>
 
 <mat_color_info
-	frame_size="320"
+	frame_size="160"
 	tool_start_frame="1"
-	tool_end_frame="320"
+	tool_end_frame="160"
 	interpolation="frame"
 	compress_material="on" material_size="6 6"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
 
-<mat_color_data size="322">
+<mat_color_data size="162">
 	25 0 0 5 9 13 16 19 22 25
 	27 28 29 30 31 31 31 31 30 30
-	30 29 28 27 26 25 24 23 22 21
-	19 18 16 15 13 11 9 8 6 4
-	2 0 5 9 13 16 19 22 25 27
-	28 29 30 31 31 31 31 30 30 30
-	29 28 27 26 25 24 23 22 21 19
-	18 16 15 13 11 9 8 6 4 2
-	0 5 9 13 16 19 22 25 27 28
-	29 30 31 31 31 31 30 30 30 29
-	28 27 26 25 24 23 22 21 19 18
-	16 15 13 11 9 8 6 4 2 0
-	5 9 13 16 19 22 25 27 28 29
-	30 31 31 31 31 30 30 30 29 28
-	27 26 25 24 23 22 21 19 18 16
-	15 13 11 9 8 6 4 2 0 5
-	9 13 16 19 22 25 27 28 29 30
-	31 31 31 31 30 30 30 29 28 27
-	26 25 24 23 22 21 19 18 16 15
-	13 11 9 8 6 4 2 0 5 9
-	13 16 19 22 25 27 28 29 30 31
-	31 31 31 30 30 30 29 28 27 26
-	25 24 23 22 21 19 18 16 15 13
-	11 9 8 6 4 2 0 5 9 13
-	16 19 22 25 27 28 29 30 31 31
-	31 31 30 30 30 29 28 27 26 25
-	24 23 22 21 19 18 16 15 13 11
-	9 8 6 4 2 0 5 9 13 16
-	19 22 25 27 28 29 30 31 31 31
-	31 30 30 30 29 28 27 26 25 24
-	23 22 21 19 18 16 15 13 11 9
-	8 6 4 2 0 5 9 13 16 19
-	22 25
+	30 29 28 28 27 26 25 24 22 21
+	20 18 17 15 13 12 10 8 6 4
+	2 0 5 9 13 16 19 22 24 26
+	28 29 30 30 31 31 31 31 30 30
+	29 29 28 27 26 25 23 22 21 19
+	18 16 15 13 12 10 8 7 5 3
+	2 0 5 9 13 16 19 22 24 26
+	28 29 30 30 31 31 31 31 30 30
+	30 29 28 28 27 26 25 24 22 21
+	20 18 17 15 13 12 10 8 6 4
+	2 0 5 9 13 16 19 22 24 26
+	28 29 30 30 31 31 31 31 30 30
+	29 29 28 27 26 25 24 23 21 20
+	18 17 15 14 12 10 9 7 5 4
+	2 0
 </mat_color_data>
 
 <mat_color_anm_array size="1">
@@ -70,7 +54,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="320" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="160" data_head="2"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
