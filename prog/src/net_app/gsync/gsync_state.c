@@ -1038,6 +1038,7 @@ static void _wakeupActio4_2(G_SYNC_WORK* pWork)
 static void _wakeupAction4(G_SYNC_WORK* pWork)
 {
   GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_004);
+  GSYNC_MESSAGE_WindowTimeIconStart(pWork->pMessageWork);
   GSYNC_DISP_ObjEnd(pWork->pDispWork, NANR_gsync_obj_zzz_ani);
   GSYNC_DISP_DreamSmokeBgStart(pWork->pDispWork);
   GSYNC_DISP_BlendSmokeStart(pWork->pDispWork,TRUE);
@@ -1375,6 +1376,7 @@ static void _ghttpInfoWait0(G_SYNC_WORK* pWork)
 {
 
   GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_006);
+  GSYNC_MESSAGE_WindowTimeIconStart(pWork->pMessageWork);
   
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_ACCOUNTINFO, pWork->pNHTTPRap)){
@@ -1580,6 +1582,7 @@ static void _upeffectLoop6(G_SYNC_WORK* pWork)
 
   GSYNC_MESSAGE_NickNameMessageDisp( pWork->pMessageWork, GSYNC_007,0, pWork->pp );
   GSYNC_MESSAGE_MessageDisp(pWork->pMessageWork);
+  GSYNC_MESSAGE_WindowTimeIconStart(pWork->pMessageWork);
   
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_zzz_ani);
   GSYNC_DISP_BlendSmokeStart(pWork->pDispWork,FALSE);
@@ -1727,9 +1730,12 @@ static void _upeffectLoop3(G_SYNC_WORK* pWork)
     GSYNC_DISP_DreamSmokeBgStart(pWork->pDispWork);
 
     GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_001);
+    GSYNC_MESSAGE_WindowTimeIconStart(pWork->pMessageWork);
 
     GSYNC_DISP_BlendSmokeStart(pWork->pDispWork,TRUE);
     GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_rug_ani1,NANR_gsync_obj_rug_ani2);
+    GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_bed,NANR_gsync_obj_bed);
+    GSYNC_DISP_ObjInit(pWork->pDispWork,NANR_gsync_obj_bed_shadow);
 
     PMSND_PlaySE(SEQ_SE_SYS_24);
 

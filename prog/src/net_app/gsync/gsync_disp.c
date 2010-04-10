@@ -225,7 +225,6 @@ static void _HandRelease(GSYNC_DISP_WORK* pWork);
 static void _CreatePokeIconResource(GSYNC_DISP_WORK* pWork);
 static void _blendSmoke(GSYNC_DISP_WORK* pWork);
 static void GSYNC_DISP_IconFreeAll(GSYNC_DISP_WORK* pWork );
-static void _BedSyncPokemonPlay(GSYNC_DISP_WORK* pWork);
 
 
 
@@ -271,7 +270,6 @@ void GSYNC_DISP_Main(GSYNC_DISP_WORK* pWork)
   GFL_CLACT_SYS_Main();
   _blendSmoke(pWork);
   GSYNC_DISP_PokemonMove(pWork);
-  _BedSyncPokemonPlay(pWork);
 
 }
 
@@ -635,24 +633,7 @@ static void _SetBed(GSYNC_DISP_WORK* pWork,int no)
 
 void GSYNC_DISP_BedSyncPokemonStart(GSYNC_DISP_WORK* pWork)
 {
-  GFL_CLACT_WK_GetPos(pWork->curIcon[NANR_gsync_obj_bed], &pWork->BedPos, CLSYS_DEFREND_MAIN);
-  GFL_CLACT_WK_GetPos(pWork->curIcon[CELL_CUR_POKE_PLAYER], &pWork->PokePos, CLSYS_DEFREND_MAIN);
-
-  pWork->bBedSyncPoke=TRUE;
-}
-
-
-static void _BedSyncPokemonPlay(GSYNC_DISP_WORK* pWork)
-{
-  GFL_CLACTPOS aBedPos;
-  GFL_CLACTPOS aPokePos;
-
-  if(pWork->bBedSyncPoke){
-    GFL_CLACT_WK_GetPos(pWork->curIcon[NANR_gsync_obj_bed], &aBedPos,CLSYS_DEFREND_MAIN);
-    aPokePos.x = pWork->PokePos.x + pWork->BedPos.x - aBedPos.x;
-    aPokePos.y = pWork->PokePos.y + pWork->BedPos.y - aBedPos.y;
-    GFL_CLACT_WK_GetPos(pWork->curIcon[CELL_CUR_POKE_PLAYER], &aPokePos,CLSYS_DEFREND_MAIN);
-  }
+  GFL_CLACT_WK_SetAnmSeq( pWork->curIcon[CELL_CUR_POKE_PLAYER] , 2 );
 }
 
 //----------------------------------------------------------------------------

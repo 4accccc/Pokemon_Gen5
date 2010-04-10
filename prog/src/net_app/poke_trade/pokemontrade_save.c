@@ -388,14 +388,33 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
 }
 
 
+static void _mailBoxEnd(POKEMON_TRADE_WORK* pWork)
+{
+
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
+  _CHANGE_STATE(pWork,_saveStart);
+}
+
+static void _mailBoxStart(POKEMON_TRADE_WORK* pWork)
+{
+
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
+  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_12, pWork->pMessageStrBuf );
+  POKETRADE_MESSAGE_WindowOpen(pWork);
+
+  
+  _CHANGE_STATE(pWork,_mailBoxEnd);
+}
+
+
 //データの差し替え
 
 static void _changeDemo_ModelTrade27(POKEMON_TRADE_WORK* pWork)
 {
-
-
-
-  
   {   //ここからいつでもPROCCHANGEしても良いように親ワークに交換情報を格納
     POKEMON_PARAM* pp;// = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
 
@@ -429,18 +448,12 @@ static void _changeDemo_ModelTrade27(POKEMON_TRADE_WORK* pWork)
     _ITEMMARK_ICON_WORK* pIM = &pWork->aItemMark;
     int item = PP_Get( pp , ID_PARA_item ,NULL);
     if(ITEM_CheckMail(item)){
-//      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_08, pWork->pMessageStrBuf );
-//      POKETRADE_MESSAGE_WindowOpen(pWork);
-   //   _CHANGE_STATE(pWork,_mailBoxStart);
-//      return;
-      
-
-      
+      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_08, pWork->pMessageStrBuf );
+      POKETRADE_MESSAGE_WindowOpen(pWork);
+      _CHANGE_STATE(pWork,_mailBoxStart);
+      return;
     }
   }
-  //ポケモンセット
-  _setPokemonData(pWork);
-
 
   _CHANGE_STATE(pWork,_saveStart);
 }
@@ -476,7 +489,7 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork)
         pWork->pParentWork->ret = POKEMONTRADE_MOVE_EVOLUTION;
         pWork->pParentWork->after_mons_no = after_mons_no;
         pWork->pParentWork->cond = cond;
-        _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);   //
+        _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);   //進化しに行く
         return ;
       }
     }
@@ -544,13 +557,6 @@ void POKMEONTRADE_SAVE_TimingStart(POKEMON_TRADE_WORK* pWork)
   GFL_NET_WirelessIconEasy_HoldLCD(TRUE,pWork->heapID); //通信アイコン
   GFL_NET_ReloadIcon();
 
-  //戻ってきたポケモンと入れ替え
- // pWork->selectBoxno = pWork->pParentWork->selectBoxno;
-//  pWork->selectIndex = pWork->pParentWork->selectIndex;
-
-  _setPokemonData(pWork);
-
-  
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
   _CHANGE_STATE(pWork,_changeTimingSaveStart);
@@ -562,6 +568,7 @@ static void _changeTimingSaveStart(POKEMON_TRADE_WORK* pWork)
     return;
   }
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    _setPokemonData(pWork);  //データ差し替え
     pWork->pNetSave = NET_SAVE_Init(pWork->heapID, pWork->pGameData);
     _CHANGE_STATE(pWork, _changeTimingSaveStart2);
   }

@@ -30,6 +30,7 @@
 #include "system/bmp_winframe.h"
 #include "system/bmp_menulist.h"
 #include "system/bmp_menu.h"
+#include "system/time_icon.h"
 #include "sound/pm_sndsys.h"
 #include "../../field/event_ircbattle.h"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
@@ -117,6 +118,7 @@ struct _GSYNC_MESSAGE_WORK {
   GFL_BMPWIN* infoDispWin;
   GFL_BMPWIN* systemDispWin;
   GFL_BMPWIN* mainDispWin[_BMP_WINDOW_NUM];
+  TIMEICON_WORK* pTimeIcon;
 
   PRINT_STREAM* pStream;
 	GFL_TCBLSYS *pMsgTcblSys;
@@ -148,7 +150,7 @@ GSYNC_MESSAGE_WORK* GSYNC_MESSAGE_Init(HEAPID id,int msg_dat)
   pWork->pWordSet    = WORDSET_Create( pWork->heapID );
   GFL_BMPWIN_Init(pWork->heapID);
   GFL_FONTSYS_Init();
-  pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 1 , 0 );
+  pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 2 , 0 );
   pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
   pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
   pWork->pMessageStrBufEx = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
@@ -188,6 +190,23 @@ void GSYNC_MESSAGE_End(GSYNC_MESSAGE_WORK* pWork)
 {
   int i;
   
+  if(pWork->pTimeIcon){
+    TILEICON_Exit(pWork->pTimeIcon);
+    pWork->pTimeIcon=NULL;
+  }
+  if(pWork->infoDispWin){
+    GFL_BMPWIN_Delete(pWork->infoDispWin);
+  }
+  if(pWork->systemDispWin){
+    GFL_BMPWIN_Delete(pWork->systemDispWin);
+  }
+  for(i=0;i< _BMP_WINDOW_NUM;i++){
+    if(pWork->mainDispWin[i]){
+      GFL_BMPWIN_Delete(pWork->mainDispWin[i]);
+    }
+  }
+  
+  
 //  GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
 //                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
   GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar1M),
@@ -209,18 +228,7 @@ void GSYNC_MESSAGE_End(GSYNC_MESSAGE_WORK* pWork)
   GFL_TCBL_Exit(pWork->pMsgTcblSys);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
-  if(pWork->infoDispWin){
-    GFL_BMPWIN_Delete(pWork->infoDispWin);
-  }
-  if(pWork->systemDispWin){
-    GFL_BMPWIN_Delete(pWork->systemDispWin);
-  }
-  for(i=0;i< _BMP_WINDOW_NUM;i++){
-    if(pWork->mainDispWin[i]){
-      GFL_BMPWIN_Delete(pWork->mainDispWin[i]);
-    }
-  }
-  
+
 	GFL_BMPWIN_Exit();
   GFL_HEAP_FreeMemory(pWork);
 }
@@ -323,6 +331,10 @@ BOOL GSYNC_MESSAGE_InfoMessageEndCheck(GSYNC_MESSAGE_WORK* pWork)
 
 void GSYNC_MESSAGE_InfoMessageEnd(GSYNC_MESSAGE_WORK* pWork)
 {
+  if(pWork->pTimeIcon){
+    TILEICON_Exit(pWork->pTimeIcon);
+    pWork->pTimeIcon=NULL;
+  }
   BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
   GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
@@ -553,4 +565,23 @@ void GSYNC_MESSAGE_DispClear(GSYNC_MESSAGE_WORK* pWork)
   }
 }
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   タイムアイコンを出す
+ * @param   POKEMON_TRADE_WORK
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+
+void GSYNC_MESSAGE_WindowTimeIconStart(GSYNC_MESSAGE_WORK* pWork)
+{
+  if(pWork->pTimeIcon){
+    TILEICON_Exit(pWork->pTimeIcon);
+    pWork->pTimeIcon=NULL;
+  }
+  pWork->pTimeIcon =
+    TIMEICON_CreateTcbl(pWork->pMsgTcblSys,pWork->infoDispWin, 15, TIMEICON_DEFAULT_WAIT, pWork->heapID);
+}
 

@@ -141,7 +141,7 @@ static const NetRecvFuncTable _PacketTbl[] = {
 };
 
 
-// メールボックスに空きがあるかどうか
+// メールボックスがフルかどうか
 static BOOL _IsMailBoxFull(POKEMON_TRADE_WORK* pWork)
 {
   int id;
@@ -152,9 +152,9 @@ static BOOL _IsMailBoxFull(POKEMON_TRADE_WORK* pWork)
   //空き領域検索
   id = MAIL_SearchNullID(pMailBlock,MAILBLOCK_PASOCOM);
   if(id == MAILDATA_NULLID){
-    return FALSE;
+    return TRUE;
   }
-  return TRUE;
+  return FALSE;
 }
 
 

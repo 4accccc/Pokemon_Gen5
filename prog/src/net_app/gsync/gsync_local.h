@@ -80,6 +80,7 @@ extern void GSYNC_MESSAGE_NickNameMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgi
 extern void GSYNC_MESSAGE_MessageDisp(GSYNC_MESSAGE_WORK* pWork);
 
 extern APP_TASKMENU_WORK* GSYNC_MESSAGE_SearchButtonStart(GSYNC_MESSAGE_WORK* pWork);
+extern void GSYNC_MESSAGE_WindowTimeIconStart(GSYNC_MESSAGE_WORK* pWork);
 
 
 extern GSYNC_DISP_WORK* GSYNC_DISP_Init(HEAPID id);
