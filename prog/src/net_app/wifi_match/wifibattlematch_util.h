@@ -64,7 +64,6 @@ extern void WBM_TEXT_PrintDebug( WBM_TEXT_WORK* p_wk, const u16 *cp_str, u16 len
 ///	íËêî
 //=====================================
 #define WBM_LIST_SELECT_NULL    (BMPMENULIST_NULL)
-#define WBM_LIST_SELECT_CALNCEL (BMPMENULIST_CANCEL)
 #define WBM_LIST_WINDOW_MAX     (4)
 
 //-------------------------------------
@@ -82,6 +81,9 @@ typedef struct
   u16 font_plt;
   u16 frm_plt;
   u16 frm_chr;
+
+  BOOL  is_cancel;
+  u32   cancel_idx;
 } WBM_LIST_SETUP;
 
 //-------------------------------------

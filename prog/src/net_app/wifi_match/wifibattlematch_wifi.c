@@ -3886,6 +3886,8 @@ static void Util_List_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk, UTIL_LIST_TYPE ty
       setup.strID[0]= WIFIMATCH_WIFI_SELECT_04;
       setup.strID[1]= WIFIMATCH_WIFI_SELECT_05;
       setup.list_max= 2;
+      setup.is_cancel   = TRUE;
+      setup.cancel_idx  = 1;
       p_wk->p_list  = WBM_LIST_Init( &setup, HEAPID_WIFIBATTLEMATCH_CORE );
       break;
 
@@ -3894,6 +3896,8 @@ static void Util_List_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk, UTIL_LIST_TYPE ty
       setup.strID[1]= WIFIMATCH_WIFI_SELECT_02;
       setup.strID[2]= WIFIMATCH_WIFI_SELECT_03;
       setup.list_max= 3;
+      setup.is_cancel   = TRUE;
+      setup.cancel_idx  = 2;
       p_wk->p_list  = WBM_LIST_Init( &setup, HEAPID_WIFIBATTLEMATCH_CORE );
       break;
 
@@ -3901,6 +3905,8 @@ static void Util_List_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk, UTIL_LIST_TYPE ty
       setup.strID[0]= WIFIMATCH_WIFI_SELECT_06;
       setup.strID[1]= WIFIMATCH_WIFI_SELECT_07;
       setup.list_max= 2;
+      setup.is_cancel   = TRUE;
+      setup.cancel_idx  = 1;
       p_wk->p_list  = WBM_LIST_Init( &setup, HEAPID_WIFIBATTLEMATCH_CORE );
       break;
 
@@ -3909,6 +3915,8 @@ static void Util_List_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk, UTIL_LIST_TYPE ty
       setup.strID[1]= WIFIMATCH_WIFI_SELECT_09;
       setup.strID[2]= WIFIMATCH_WIFI_SELECT_10;
       setup.list_max= 3;
+      setup.is_cancel   = TRUE;
+      setup.cancel_idx  = 2;
       p_wk->p_list  = WBM_LIST_InitEx( &setup, 32/2 - 26/2, (24-6)/2 - 3*2/2, 26, 3*2, HEAPID_WIFIBATTLEMATCH_CORE );
       break;
     }

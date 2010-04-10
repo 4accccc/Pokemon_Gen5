@@ -345,6 +345,7 @@ struct _WBM_LIST_WORK
   PRINT_UTIL        print_util;
   BMPMENULIST_WORK  *p_list;
   BMP_MENULIST_DATA *p_list_data;
+  u32               cancel_idx;
 };
 //-------------------------------------
 ///	パブリック
@@ -390,6 +391,7 @@ WBM_LIST_WORK * WBM_LIST_InitEx( const WBM_LIST_SETUP *cp_setup, u8 x, u8 y, u8 
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(WBM_LIST_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(WBM_LIST_WORK) );
   p_wk->p_que = cp_setup->p_que;
+  p_wk->cancel_idx  = cp_setup->cancel_idx;
 
   //BMPWIN作成
   { 
@@ -456,7 +458,16 @@ WBM_LIST_WORK * WBM_LIST_InitEx( const WBM_LIST_SETUP *cp_setup, u8 x, u8 y, u8 
     p_wk->p_list  = BmpMenuList_Set( &header, 0, 0, heapID );
 
     BmpMenuList_SetCursorBmp( p_wk->p_list, heapID );
-    BmpMenuList_SetCancelMode( p_wk->p_list, BMPMENULIST_CANCELMODE_USE );
+
+    if( cp_setup->is_cancel )
+    { 
+      BmpMenuList_SetCancelMode( p_wk->p_list, BMPMENULIST_CANCELMODE_USE );
+    }
+    else
+    {
+      BmpMenuList_SetCancelMode( p_wk->p_list, BMPMENULIST_CANCELMODE_NOT );
+    }
+
     
   }
 
@@ -490,10 +501,18 @@ void WBM_LIST_Exit( WBM_LIST_WORK *p_wk )
 //-----------------------------------------------------------------------------
 u32 WBM_LIST_Main( WBM_LIST_WORK *p_wk )
 { 
-  PRINT_UTIL_Trans( &p_wk->print_util, p_wk->p_que );
-  return BmpMenuList_Main( p_wk->p_list );
-}
+  u32 ret;
 
+  PRINT_UTIL_Trans( &p_wk->print_util, p_wk->p_que );
+  ret = BmpMenuList_Main( p_wk->p_list );
+
+  if( ret == BMPMENULIST_CANCEL )
+  { 
+    ret = p_wk->cancel_idx;
+  }
+
+  return ret;
+}
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *				  シーケンス管理

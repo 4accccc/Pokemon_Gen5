@@ -201,6 +201,20 @@ void BattleRec_DataClear(void)
 { 
   BattleRec_WorkInit(brs);
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メモリ上の対戦録画データを復号化する
+ *	        BattleRec_Saveの後、そのままBRSを使う場合に使用してください
+ *
+ */
+//-----------------------------------------------------------------------------
+void BattleRec_DataDecoded(void)
+{ 
+  GF_ASSERT(brs != NULL);
+
+  BattleRec_Decoded(&brs->rec, sizeof(BATTLE_REC_WORK) - GDS_CRC_SIZE,
+    brs->rec.crc.crc16ccitt_hash + ((brs->rec.crc.crc16ccitt_hash ^ 0xffff) << 16));
+}
 
 //--------------------------------------------------------------
 /**

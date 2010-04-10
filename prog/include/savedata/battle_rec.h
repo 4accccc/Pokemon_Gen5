@@ -160,6 +160,7 @@ extern void BattleRec_Exit(void);
 extern BOOL BattleRec_DataExistCheck(void);
 extern BOOL BattleRec_DataSetCheck(void);
 extern void BattleRec_DataClear(void);
+extern void BattleRec_DataDecoded(void);
 extern void * BattleRec_RecWorkAdrsGet( void );
 extern BOOL BattleRec_Load( SAVE_CONTROL_WORK *sv, HEAPID heapID, LOAD_RESULT *result, int num );
 extern BOOL BattleRec_DataOccCheck(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *result,int num);

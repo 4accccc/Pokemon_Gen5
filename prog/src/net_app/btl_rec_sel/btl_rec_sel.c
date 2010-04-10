@@ -1147,6 +1147,10 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
 #endif
       if( work->battle_rec_new_save_result == SAVE_RESULT_OK || work->battle_rec_new_save_result == SAVE_RESULT_NG )
       {
+        //録画をセーブするとメモリ上のデータを暗号化してしまうので
+        //連続で使えるように復号化しておく
+        BattleRec_DataDecoded();
+
         // タイマーアイコン
         TILEICON_Exit( work->timeicon_wk );
         

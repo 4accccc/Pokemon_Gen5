@@ -2937,6 +2937,8 @@ static void Util_List_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, UTIL_LIST_TYPE typ
       setup.strID[0]= WIFIMATCH_TEXT_007;
       setup.strID[1]= WIFIMATCH_TEXT_008;
       setup.list_max= 2;
+      setup.is_cancel   = TRUE;
+      setup.cancel_idx  = 1;
       break;
 
     case UTIL_LIST_TYPE_FREERATE:
@@ -2944,6 +2946,8 @@ static void Util_List_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, UTIL_LIST_TYPE typ
       setup.strID[1]= WIFIMATCH_TEXT_004;
       setup.strID[2]= WIFIMATCH_TEXT_005;
       setup.list_max= 3;
+      setup.is_cancel   = TRUE;
+      setup.cancel_idx  = 2;
       break;
     }
 
@@ -2979,24 +2983,7 @@ static u32 Util_List_Main( WIFIBATTLEMATCH_RND_WORK *p_wk )
 { 
   if( p_wk->p_list )
   { 
-    u32 ret = WBM_LIST_Main( p_wk->p_list );
-
-    if( p_wk->list_type == UTIL_LIST_TYPE_YESNO )
-    { 
-      if( ret == BMPMENULIST_CANCEL )
-      { 
-        ret = 1;
-      }
-    }
-    else
-    { 
-      if( ret == BMPMENULIST_CANCEL )
-      { 
-        ret = BMPMENULIST_NULL;
-      }
-    }
-    
-    return  ret;
+    return  WBM_LIST_Main( p_wk->p_list );
   }
   else
   { 

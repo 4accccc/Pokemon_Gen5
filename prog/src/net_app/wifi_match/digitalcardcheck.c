@@ -975,6 +975,13 @@ static void Util_PlayerInfo_RenewalData( DIGITALCARD_CHECK_WORK *p_wk, PLAYERINF
 //-----------------------------------------------------------------------------
 static void Util_List_Create( DIGITALCARD_CHECK_WORK *p_wk, UTIL_LIST_TYPE type )
 { 
+  enum
+  { 
+    POS_RIGHT_DOWN,
+    POS_RIGHT_DOWN_LONG,
+  } pos;
+  u32 x,y,w,h;
+
   if( p_wk->p_list == NULL )
   { 
     WBM_LIST_SETUP  setup;
@@ -993,18 +1000,45 @@ static void Util_List_Create( DIGITALCARD_CHECK_WORK *p_wk, UTIL_LIST_TYPE type 
       setup.strID[0]= WIFIMATCH_DPC_SELECT_02;
       setup.strID[1]= WIFIMATCH_DPC_SELECT_03;
       setup.list_max= 2;
+      setup.is_cancel = TRUE;
+      setup.cancel_idx  = 1;
+      pos = POS_RIGHT_DOWN;
       break;
     case UTIL_LIST_TYPE_RETURN:
       setup.strID[0]= WIFIMATCH_DPC_SELECT_00;
       setup.list_max= 1;
+      setup.is_cancel = TRUE;
+      setup.cancel_idx  = 0;
+      pos = POS_RIGHT_DOWN;
       break;
     case UTIL_LIST_TYPE_UNREGISTER:
       setup.strID[0]= WIFIMATCH_DPC_SELECT_01;
       setup.strID[1]= WIFIMATCH_DPC_SELECT_00;
       setup.list_max= 2;
+      setup.is_cancel = TRUE;
+      setup.cancel_idx  = 1;
+      pos = POS_RIGHT_DOWN_LONG;
       break;
     }
-    p_wk->p_list  = WBM_LIST_Init( &setup, p_wk->heapID );
+
+    switch( pos )
+    { 
+    case POS_RIGHT_DOWN:
+      w  = 12;
+      h  = setup.list_max * 2;
+      x  = 32 - w - 1; //1はフレーム分
+      y  = 24 - h - 1 - 6; //１は自分のフレーム分と6はテキスト分
+      break;
+
+    case POS_RIGHT_DOWN_LONG:
+      w  = 15;
+      h  = setup.list_max * 2;
+      x  = 32 - w - 1; //1はフレーム分
+      y  = 24 - h - 1 - 6; //１は自分のフレーム分と6はテキスト分
+    break;
+    }
+
+    p_wk->p_list  = WBM_LIST_InitEx( &setup, x, y, w, h, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------

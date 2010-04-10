@@ -1515,7 +1515,7 @@ static void PlayerInfo_Bmpwin_Live_Create( PLAYERINFO_WORK * p_wk, const PLAYERI
 		},
 		//‘Îí‰ñ”
 		{	
-			10,15,12,2,
+			8,15,14,2,
 		},
 		//‘Îí‰ñ”‚Ì”’l
 		{	

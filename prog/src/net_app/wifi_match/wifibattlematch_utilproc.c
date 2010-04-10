@@ -258,10 +258,12 @@ static BOOL UTIL_WIFI_Main( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATC
   enum
   { 
     SEQ_INIT,
-    SEQ_START_TIMING,
-    SEQ_WAIT_TIMING,
+    SEQ_START_TIMING_S,
+    SEQ_WAIT_TIMING_S,
     SEQ_SEND_PARTY,
     SEQ_RECV_PARTY,
+    SEQ_START_TIMING_E,
+    SEQ_WAIT_TIMING_E,
     SEQ_END,
   };
 
@@ -271,12 +273,12 @@ static BOOL UTIL_WIFI_Main( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATC
     (*p_seq)++;
     break;
 
-  case SEQ_START_TIMING:
+  case SEQ_START_TIMING_S:
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),17, WB_NET_WIFIMATCH);
     (*p_seq)++;
     break;
 
-  case SEQ_WAIT_TIMING:
+  case SEQ_WAIT_TIMING_S:
     if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),17, WB_NET_WIFIMATCH) )
     { 
       (*p_seq)++;
@@ -292,6 +294,18 @@ static BOOL UTIL_WIFI_Main( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATC
 
   case SEQ_RECV_PARTY:
     if( WIFIBATTLEMATCH_NET_RecvPokeParty( p_wk->p_net, p_param->p_enemy_btl_party )  )
+    { 
+      (*p_seq)++;
+    }
+    break;
+
+  case SEQ_START_TIMING_E:
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),18, WB_NET_WIFIMATCH);
+    (*p_seq)++;
+    break;
+
+  case SEQ_WAIT_TIMING_E:
+    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),18, WB_NET_WIFIMATCH) )
     { 
       (*p_seq)++;
     }

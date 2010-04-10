@@ -461,11 +461,12 @@ static void SEQFUNC_WifiMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_WAIT_WIFIMSG,
     SEQ_START_WIFIMENU,
     SEQ_WAIT_WIFIMENU,
-
+#if 0 //戻り確認は使わなくなりました
     SEQ_START_CANCELMSG,
     SEQ_WAIT_CANCELMSG,
     SEQ_START_CANCELMENU,
     SEQ_WAIT_CANCELMENU,
+#endif
   };
   BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk = p_wk_adrs;
 
@@ -519,7 +520,8 @@ static void SEQFUNC_WifiMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
           WBM_SEQ_SetNext( p_seqwk, SEQFUNC_WifiDigitalCard );
           break;
         case 3: //やめる
-          *p_seq  = SEQ_START_CANCELMSG;
+          WBM_SEQ_SetNext( p_seqwk, SEQFUNC_MainMenu );
+          //*p_seq  = SEQ_START_CANCELMSG;
           break;
         }
         UTIL_LIST_Delete( p_wk );
@@ -527,6 +529,7 @@ static void SEQFUNC_WifiMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     break;
 
+#if 0
   case SEQ_START_CANCELMSG:
     UTIL_TEXT_Print( p_wk, BC_STR_05 );
     *p_seq = SEQ_WAIT_CANCELMSG;
@@ -561,6 +564,8 @@ static void SEQFUNC_WifiMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         UTIL_LIST_Delete( p_wk );
       }
     }
+    break;
+#endif
   }
 }
 //----------------------------------------------------------------------------
@@ -723,10 +728,12 @@ static void SEQFUNC_LiveMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_START_LIVEMENU,
     SEQ_WAIT_LIVEMENU,
 
+#if 0 //戻り確認メッセージは使わなくなりました
     SEQ_START_CANCELMSG,
     SEQ_WAIT_CANCELMSG,
     SEQ_START_CANCELMENU,
     SEQ_WAIT_CANCELMENU,
+#endif
   };
   BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk = p_wk_adrs;
 
@@ -792,14 +799,15 @@ static void SEQFUNC_LiveMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
           WBM_SEQ_SetNext( p_seqwk, SEQFUNC_LiveDigitalCard );
           break;
         case 3: //やめる
-          *p_seq  = SEQ_START_CANCELMSG;
+          WBM_SEQ_SetNext( p_seqwk, SEQFUNC_MainMenu );
+          //*p_seq  = SEQ_START_CANCELMSG;
           break;
         }
         UTIL_LIST_Delete( p_wk );
       }
     }
     break;
-
+#if 0
   case SEQ_START_CANCELMSG:
     UTIL_TEXT_Print( p_wk, BC_STR_05 );
     *p_seq = SEQ_WAIT_CANCELMSG;
@@ -834,6 +842,8 @@ static void SEQFUNC_LiveMenu( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         UTIL_LIST_Delete( p_wk );
       }
     }
+    break;
+#endif
   }
 }
 //----------------------------------------------------------------------------
@@ -983,6 +993,8 @@ static void UTIL_LIST_Create( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, BC_MENU_TYPE 
     setup.strID[2]= BC_SELECT_04;
     setup.strID[3]= BC_SELECT_05;
     setup.list_max= 4;
+    setup.is_cancel   = TRUE;
+    setup.cancel_idx  = 3;
     pos = POS_CENTER;
     break;
   case BC_MENU_TYPE_WIFI:
@@ -1002,6 +1014,8 @@ static void UTIL_LIST_Create( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, BC_MENU_TYPE 
     }
     setup.strID[3]= BC_SELECT_05;
     setup.list_max= 4;
+    setup.is_cancel   = TRUE;
+    setup.cancel_idx  = 3;
     pos = POS_CENTER;
     break;
   case BC_MENU_TYPE_LIVE:
@@ -1020,6 +1034,8 @@ static void UTIL_LIST_Create( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, BC_MENU_TYPE 
       }
       setup.strID[3]= BC_SELECT_05;
       setup.list_max= 4;
+      setup.is_cancel   = TRUE;
+      setup.cancel_idx  = 3;
       pos = POS_CENTER;
     }
     break;
@@ -1027,6 +1043,8 @@ static void UTIL_LIST_Create( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, BC_MENU_TYPE 
     setup.strID[0]= BC_SELECT_07;
     setup.strID[1]= BC_SELECT_08;
     setup.list_max= 2;
+    setup.is_cancel   = TRUE;
+    setup.cancel_idx  = 1;
     pos = POS_RIGHT_DOWN;
     break;
   }
@@ -1077,22 +1095,7 @@ static void UTIL_LIST_Delete( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static u32 UTIL_LIST_Main( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk )
 { 
-  u32 ret = WBM_LIST_Main( p_wk->p_list );
-
-  if( ret == WBM_LIST_SELECT_CALNCEL )
-  { 
-    if( p_wk->list_type == BC_MENU_TYPE_YESNO )
-    { 
-      ret = 1;  //NOにする
-    }
-    else
-    { 
-      //キャンセルきかない
-      ret = WBM_LIST_SELECT_NULL;
-    }
-  }
-
-  return ret;
+  return WBM_LIST_Main( p_wk->p_list );
 }
 
 //----------------------------------------------------------------------------

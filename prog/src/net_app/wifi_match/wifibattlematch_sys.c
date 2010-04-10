@@ -638,7 +638,10 @@ static void *BC_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, 
     break;
   }
 
-  PMSND_PlayBGM( WBM_SND_SEQ_MAIN );
+  if( PMSND_GetBGMsoundNo() != WBM_SND_SEQ_MAIN )
+  { 
+    PMSND_PlayBGM( WBM_SND_SEQ_MAIN );
+  }
 		
 	return p_param;
 }
@@ -719,7 +722,10 @@ static void *WBM_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID,
     p_param->p_rndmatch     =  BATTLEMATCH_GetRndMatch( p_btlmatch_sv );
   }
 
-  PMSND_PlayBGM( WBM_SND_SEQ_MAIN );
+  if( PMSND_GetBGMsoundNo() != WBM_SND_SEQ_MAIN )
+  { 
+    PMSND_PlayBGM( WBM_SND_SEQ_MAIN );
+  }
 		
 	return p_param;
 }
@@ -1601,6 +1607,10 @@ static void *RECPLAY_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, 
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
 
+
+  PMSND_StopBGM();
+  PMSND_PlayBGM( p_param->musicDefault );
+
   //デモパラメータ
 	return p_param;
 }
@@ -1617,9 +1627,11 @@ static BOOL RECPLAY_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adr
 { 
   BATTLE_SETUP_PARAM  *p_param  = p_param_adrs;
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
+  
+  PMSND_StopBGM();
 
-  BTL_SETUP_QuitForRecordPlay( p_param );
   GFL_HEAP_FreeMemory( p_param->playerStatus[ BTL_CLIENT_PLAYER ] );  //プレイヤーのMySatusは開放されないので
+  BTL_SETUP_QuitForRecordPlay( p_param );
   GFL_HEAP_FreeMemory( p_param );
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
