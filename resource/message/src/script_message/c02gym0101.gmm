@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T14:25:48"/>
+	<create user="matsumiya" host="W00224" date="2010-04-10T19:03:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="139" right="2004" bottom="767" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="733" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -478,7 +478,7 @@
 われわれ　プラズマだんは
 ポケモンを　じゆうにするため▼
 はくぶつかんに　ある
-ドラゴンの　ほねを　いただく▼</language>
+ドラゴンの　ホネを　いただく▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『来たか　ジムリーダー▼
 われわれ　プラズマ団は
 ポケモンを　自由にするため▼
@@ -553,7 +553,7 @@
 ・ジムバッジ取得後～盗難イベント解決前</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
-		<language name="JPN" width="256">キダチ『あの　ほねは
+		<language name="JPN" width="256">キダチ『あの　ホネは
 アロエが　だいすきな　もの……</language>
 		<language name="JPN_KANJI" width="256">キダチ『あの　骨は……
 アロエが　大好きな　もの……</language>

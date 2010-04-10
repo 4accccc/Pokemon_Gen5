@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T17:52:20"/>
+	<create user="matsumiya" host="W00224" date="2010-04-10T19:27:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="139" right="2004" bottom="767" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -756,8 +756,8 @@
 ・対戦がまだで♀主人公の場合→waitress_02へ
 ・対戦がまだで♂主人公の場合→waitress_03へ
 ・対戦をすでにしていた場合は→waitress_04へ</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">いらっしゃいませ！▼
 しょうぶの　ごよやく
 ありがとうございまーす！</language>
@@ -772,8 +772,8 @@
 ・「いいえ」→waitress_04
 ・「はい」→waitress_05
 </comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">あなた　すっごいわね！
 ぜひ　うちで　やといたいくらい……▼
 どう？　うちで　ウエートレスとして
@@ -789,8 +789,8 @@
 対戦後メッセージ
 ・「いいえ」→waitress_04
 ・「はい」→waitress_05</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">あなた　すっごいわね！
 ぜひ　うちで　やといたいくらい……▼
 どう？　うちで　ウエーターとして
@@ -805,8 +805,8 @@
 		<comment>繰り返しメッセージ
 ・「いいえ」→waitress_05
 ・「はい」→waitress_06</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">あら　あなたね
 やっぱり　はたらいてくれない？</language>
 		<language name="JPN_KANJI" width="256">あら　あなたね
@@ -816,8 +816,8 @@
 	<row id="msg_h04_waitress_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・「いいえ」選択時
 以降話しかけ時→waitress_04</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">そうなの
 ざんねんだけど　しかたないわね！</language>
 		<language name="JPN_KANJI" width="256">そうなの
@@ -830,8 +830,8 @@
 ・「はい」「いいえ」選択表示
 「はい」→waitress_09
 「いいえ」→waitress_07</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">ほんとう！　うれしい！▼
 それじゃあ……　そうね
 しごとの　ないようは　わかる？</language>
@@ -843,8 +843,8 @@
 	<row id="msg_h04_waitress_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・ルール説明1
 →waitress_08</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">この　おみせは　ポケモンと　
 たべられる　サンドイッチやさんなの▼
 あなたには　おきゃくさんから
@@ -863,8 +863,8 @@
 		<comment>・ルール説明2
 →waitress_09
 </comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">そのサンドイッチを　ちゅうもんをした
 おきゃくさんに　はこんでほしいの▽
 まちがえて　はこばないようにね</language>
@@ -877,8 +877,8 @@
 		<comment>・ルール説明3 
 注文を全員から取っている→waitress_10
 注文を全員から取っていない→waitress_13</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">それじゃあ　よろしくね！
 きたい　してるわよ！</language>
 		<language name="JPN_KANJI" width="256">それじゃあ　よろしくね！
@@ -891,19 +891,19 @@
 サンドイッチのトッピングをbmpで入力
 4つのトッピングを入力する
 ・→waitress_11</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
-		<language name="JPN" width="256">[2:00:１桁:]コめの
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
+		<language name="JPN" width="256">[2:00:１桁:0]コめの
 サンドイッチの　トッピングは？</language>
-		<language name="JPN_KANJI" width="256">[2:00:１桁:]コめの
+		<language name="JPN_KANJI" width="256">[2:00:１桁:0]コめの
 サンドイッチの　トッピングは？</language>
 	</row>
 
 	<row id="msg_h04_waitress_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・カートの中に入って、料理を作ってくるアニメ
 ・→waitress_12</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">さすがね！ありがとう！
 じゃあ　つくるから　まっていてね</language>
 		<language name="JPN_KANJI" width="256">さすがね！　ありがとう！
@@ -915,8 +915,8 @@
 →waitress_14
 ・お客さんに全て届けることが失敗していたら
 →waitress_15</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">オーダーどおりに　つくってあるわ　
 まちがわずに　はこんでね</language>
 		<language name="JPN_KANJI" width="256">オーダー通りに　つくってあるわ　
@@ -926,8 +926,8 @@
 	<row id="msg_h04_waitress_13" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・オーダーを全て取っていない場合
 ・オーダーを取ってくるように促す</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">ちゅうもんを　とっていない　
 おきゃくさんが　いるじゃない▽
 ぜんいんから　きいてね！</language>
@@ -939,8 +939,8 @@
 	<row id="msg_h04_waitress_14" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・イベントを成功させた場合
 →waitress_16</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">さて……
 あなたの　はたらきぶりは……▼
 かんぺきね！　おきゃくさんも
@@ -954,8 +954,8 @@
 	<row id="msg_h04_waitress_15" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・イベントを失敗した場合
 →waitress_17</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">さて……
 あなたの　はたらきぶりは……▼
 まだまだ　ってところね
@@ -970,8 +970,8 @@
 		<comment>・アイテムをくれるときのメッセージ
 ・アイテム追加処理「オレンのみ」暫定
 →waitress_17</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">これは　おれいよ
 すごく　がんばっていたわね！</language>
 		<language name="JPN_KANJI" width="256">これは　お礼よ
@@ -981,8 +981,8 @@
 	<row id="msg_h04_waitress_17" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・イベントクリア後メッセージ　
 ・日をまたぐまで、このメッセージ繰り返し</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">きょうは　もう　だいじょうぶかしら
 あした　またきてくれると　うれしいな</language>
 		<language name="JPN_KANJI" width="256">今日は　もう　大丈夫かしら
@@ -993,8 +993,8 @@
 		<comment>・イベント中にPOSを踏んでやめた場合
 ・イベント自体は失敗した状態で終わる
 ・以降、waitress_17繰り返し</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">やめるの？　わかったわ
 いそがしくないから　だいじょうぶよ</language>
 		<language name="JPN_KANJI" width="256">やめるの？　わかったわ
@@ -1009,8 +1009,8 @@
 ・イベントをやめるかどうかの「はい」「いいえ」表示
 ・「はい」選択時→waitress_18
 ・「いいえ」選択時→一歩戻るアニメ</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">あらら　そっちは　こうえんの　そとよ
 ウエートレスの　しごとを　やめるの？</language>
 		<language name="JPN_KANJI" width="256">あらら　そっちは　公園の　外よ
@@ -1025,8 +1025,8 @@
 ・イベントをやめるかどうかの「はい」「いいえ」表示
 ・「はい」選択時→waitress_18
 ・「いいえ」選択時→一歩戻るアニメ</comment>
-		<attribute name="キャラ指定">WAITRESS
-ウェートレス</attribute>
+		<attribute name="キャラ指定">BAKER
+パン屋</attribute>
 		<language name="JPN" width="256">あらら　そっちは　こうえんの　そとよ
 ウエーターの　しごとを　やめるの？</language>
 		<language name="JPN_KANJI" width="256">あらら　そっちは　公園の　外よ
@@ -1279,9 +1279,9 @@
 		<comment>・ウェイトレスにサンドイッチを渡された状態で客に話しかけたとき
 ・タグに数字をセット
 ・プレーンウィンで表示</comment>
-		<language name="JPN" width="256">この　おきゃくさんに　[2:00:１桁:]つめの
+		<language name="JPN" width="256">この　おきゃくさんに　[2:00:１桁:0]つめの
 サンドイッチを　わたしますか？</language>
-		<language name="JPN_KANJI" width="256">この　お客さんに　[2:00:１桁:]つ目の
+		<language name="JPN_KANJI" width="256">この　お客さんに　[2:00:１桁:0]つ目の
 サンドイッチを　渡しますか？</language>
 	</row>
 

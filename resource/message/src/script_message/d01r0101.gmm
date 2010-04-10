@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T17:39:05"/>
+	<create user="matsumiya" host="W00224" date="2010-04-10T19:08:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="139" right="2004" bottom="767" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="141" right="1280" bottom="539" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -619,8 +619,9 @@
 ふしぎなガスを　だして　いろんな▽
 ゆめを　みせるそうじゃない▼
 それを　つかい　ひとびとが
-ポケモンを　てばなしたくなる……▽
-そんな　ゆめを　みせるのよ▼</language>
+ポケモンを　てばなしたくなる……▼
+そんな　ゆめを　みせて
+ひとの　こころを　あやつるのよ▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『なにを　してるのか？▼
 ムンナや
 ムシャーナという　ポケモン▼
@@ -628,8 +629,9 @@
 不思議なガスを　だして　いろんな▽
 夢を　みせるそうじゃない▼
 それを　使い　人々が
-ポケモンを　手放したくなる……▽
-そんな　夢を　みせるのよ▼</language>
+ポケモンを　手放したくなる……▼
+そんな夢を　みせて
+人の　心を　操るのよ▼</language>
 	</row>
 
 	<row id="msg_d01r0101_poke_03" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -712,11 +714,9 @@
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『えええ！
-ちょっと　[1:00:トレーナー名:0]！▽
-あたし　よわいから　おねがい！▼</language>
+たすけて　[1:00:トレーナー名:0]！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『えええ！
-ちょっと　[1:00:トレーナー名:0]！▽
-あたし　弱いから　お願い！▼</language>
+たすけて　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
 	<row id="msg_d01r0101_hakaiw_04" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -824,11 +824,13 @@
 		<attribute name="キャラ指定">プラズマ団♀</attribute>
 		<language name="JPN" width="256">プラズマだん『こ　これは……！▼
 なかまを　あつめるとき……
-えんぜつで　ひとを　だますときの▽
+えんぜつで　ひとを　だまして▽
+あやつろうと　するときの▽
 ゲーチスさま　じゃないわ！▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『こ　これは……！▼
 仲間を　集めるとき……
 演説で　人を　だますときの▽
+操ろうと　するときの▽
 ゲーチスさま　じゃないわ！▼</language>
 	</row>
 
@@ -855,7 +857,7 @@
 		<language name="JPN" width="256">プラズマだん『とにかく　いますぐ
 あやまって　ゆるしてもらいましょう！▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『とにかく　いますぐ
-あやまって　許してもらいましょう！▼</language>
+謝って　許してもらいましょう！▼</language>
 	</row>
 
 	<row id="msg_d01r0101_poke1_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

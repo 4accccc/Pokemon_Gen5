@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T14:07:29"/>
+	<create user="matsumiya" host="W00224" date="2010-04-10T19:17:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1600" top="150" right="2305" bottom="778" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -699,13 +699,15 @@
 		<language name="JPN" width="256">？？？『いいのです▼
 ドラゴンのホネ　ですが
 こんかいは　あきらめましょう▼
-ちょうさの　けっか
-でんせつの　ポケモンと▽
+ちょうさの　けっか　われわれ
+プラズマだんが　さがしもとめている▽
+でんせつの　ポケモン　とは▽
 むかんけい　でしたから▼</language>
 		<language name="JPN_KANJI" width="256">？？？『いいのです▼
 ドラゴンのホネ　ですが
 今回は　あきらめましょう▼
-調査の結果
+調査の結果　我々
+プラズマ団が　探し求めている▽
 伝説の　ポケモンと▽
 無関係でしたから▼</language>
 	</row>
@@ -770,8 +772,8 @@
 	<row id="msg_d02r0101_sage5_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・続けてsage5_05
-
-・トレーナーケースの称号にあわせるかどうか</comment>
+・ジムリーダーの肩書きを
+　トレーナーケースの称号にあわせるかどうか</comment>
 		<attribute name="キャラ指定">SAGE5
 七賢人５</attribute>
 		<language name="JPN" width="256">？？？『わたしは　プラズマだん
@@ -814,17 +816,17 @@
 ・画面復帰し、続けてleader2_02</comment>
 		<attribute name="キャラ指定">SAGE5
 七賢人５</attribute>
-		<language name="JPN" width="256">ですが　われわれは　にんげんから
+		<language name="JPN" width="256">ですが　われわれは
 ポケモンを　かいほう　するため▽
-ひび　どりょくを　しているのです▼
+トレーナーから　ポケモンを　うばう！▼
 ジムリーダーと　いえど
 これいじょうの▽
 ぼうがいは　ゆるしませんよ▼
 いずれ　けっちゃくを　つけるでしょう
 では　そのときを　おたのしみに……▼</language>
-		<language name="JPN_KANJI" width="256">ですが　我々は　人間から
+		<language name="JPN_KANJI" width="256">ですが　我々は
 ポケモンを　解放するため▽
-日々　努力を　しているのです▼
+トレーナーから　ポケモンを　奪う！▼
 ジムリーダーと　いえど
 これ以上の▽
 妨害は　許しませんよ▼
