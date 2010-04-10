@@ -692,6 +692,7 @@ static void COMM_TVT_InitMessage( COMM_TVT_WORK *work )
 //--------------------------------------------------------------------------
 static void COMM_TVT_TermMessage( COMM_TVT_WORK *work )
 {
+  PRINTSYS_QUE_Clear( work->printQue );
   PRINTSYS_QUE_Delete( work->printQue );
   GFL_MSG_Delete( work->msgHandle );
   GFL_FONT_Delete( work->fontHandle );

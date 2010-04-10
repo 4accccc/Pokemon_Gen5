@@ -308,6 +308,7 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
               COMM_TVT_GetObjResIdx( work, CTOR_BAR_BUTTON_M_PLT ),
               COMM_TVT_GetObjResIdx( work, CTOR_BAR_BUTTON_ANM ),
               &cellInitData ,CLSYS_DRAW_MAIN , heapId );
+    GFL_CLACT_WK_SetAutoAnmFlag( drawWork->clwkEditButton[CDED_RETURN] , TRUE );
     for( i=0;i<CDED_MAX;i++ )
     {
       GFL_CLACT_WK_SetDrawEnable( drawWork->clwkEditButton[i] , TRUE );
@@ -735,6 +736,7 @@ static void CTVT_DRAW_UpdateDraw( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     drawWork->state = CDS_EDIT;
     drawWork->barScroll = 0;
     CTVT_DRAW_DrawInfoMsg( work , drawWork , TRUE );
+    GFL_CLACT_WK_SetAnmSeq( drawWork->clwkEditButton[CDED_RETURN] , APP_COMMON_BARICON_RETURN );
     PMSND_PlaySystemSE( CTVT_SND_TOUCH );
   }
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
@@ -779,7 +781,7 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     },
     {
       CTVT_DRAW_BAR_ICON_Y-12, CTVT_DRAW_BAR_ICON_Y+12,
-      CTVT_DRAW_RETURN_X-12,   CTVT_DRAW_RETURN_X+12,
+      CTVT_DRAW_RETURN_X,   CTVT_DRAW_RETURN_X+24,
     },
     {GFL_UI_TP_HIT_END,0,0,0}
   };
@@ -917,6 +919,8 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     CTVT_DRAW_DrawInfoMsg( work , drawWork , FALSE );
     CTVT_DRAW_EreseSubWindow( work , drawWork );
     PMSND_PlaySystemSE( CTVT_SND_CANCEL );
+
+    GFL_CLACT_WK_SetAnmSeq( drawWork->clwkEditButton[CDED_RETURN] , APP_COMMON_BARICON_RETURN_ON );
   }
   if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_PAUSE )
   {
