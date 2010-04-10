@@ -17,6 +17,7 @@
 #include "field_task_target_offset.h"
 #include "field_task_target_pos.h"
 
+#include "field/eventdata_type.h"
 #include "field/field_const.h"     // for FIELD_CONST_xxxx
 #include "field/eventdata_type.h"  // for EXIT_TYPE_xxxx
 #include "arc/arc_def.h"           // for ARCID_xxxx
@@ -432,12 +433,12 @@ static void ECamSetup_IN( ECAM_WORK* work )
 
   // アニメの有無を決定
   switch( playerDir ) {
-  case DIR_UP:
   case DIR_LEFT:
   case DIR_RIGHT:
     anime->validFlag_IN  = TRUE;
     anime->validFlag_OUT = FALSE; 
     break;
+  case DIR_UP:
   case DIR_DOWN:
     anime->validFlag_IN  = FALSE;
     anime->validFlag_OUT = FALSE; 
@@ -471,27 +472,18 @@ static void ECamSetup_IN( ECAM_WORK* work )
     //endParam->targetOffset = ofs;
 
     switch( playerDir ) {
-    case DIR_UP:    
-      endParam->length = U_DOOR_LENGTH; 
-      break;
-    case DIR_LEFT:  
-      endParam->yaw = L_DOOR_YAW;    
-      break;
-    case DIR_RIGHT: 
-      endParam->yaw = R_DOOR_YAW;    
-      break;
-    case DIR_DOWN: 
-      break;
-    default: 
-      GF_ASSERT(0); 
-      break;
+    case DIR_UP:    endParam->length = U_DOOR_LENGTH; break;
+    case DIR_LEFT:  endParam->yaw = L_DOOR_YAW;    break;
+    case DIR_RIGHT: endParam->yaw = R_DOOR_YAW;    break;
+    case DIR_DOWN:  break;
+    default:        GF_ASSERT(0); break;
     }
   }
 
   // アニメフレーム数
   switch( playerDir ) {
-  case DIR_UP:    anime->frame = U_DOOR_FRAME; break;
-  case DIR_DOWN:  anime->frame = 0;            break;
+  case DIR_UP:    anime->frame = 0; break;
+  case DIR_DOWN:  anime->frame = 0; break;
   case DIR_LEFT:  anime->frame = L_DOOR_FRAME; break;
   case DIR_RIGHT: anime->frame = R_DOOR_FRAME; break;
   default: GF_ASSERT(0); break;
@@ -1228,12 +1220,7 @@ static BOOL CheckSpExit( const ECAM_WORK* work )
 
   param = GetECamParam( work );
 
-  if( EXIT_TYPE_SP1 <= param->exitType ) {
-    return TRUE;
-  }
-  else {
-    return FALSE;
-  }
+  return EXIT_TYPE_IsSpExit( param->exitType );
 }
 
 //----------------------------------------------------------------------------- 
