@@ -10,6 +10,9 @@
 
 #include "field_g3d_map.h"
 
+#include "debug/debug_flg.h" //DEBUG_FLG_～
+
+
 //============================================================================================
 /**
  *
@@ -241,12 +244,16 @@ void	FLD_G3D_MAP_Draw( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 	if( DrawGround( g3Dmap, g3Dcamera ) == TRUE ){
 
     // WVP 設定は 地形を引き継ぎ
-    
-		//配置オブジェクト描画
-		if( g3Dmap->globalResObj != NULL ){
-			DrawObj( g3Dmap, g3Dcamera );
-			//DirectDrawObj( g3Dmap, g3Dcamera ); Directは使用しない
-		}
+#ifdef  PM_DEBUG
+    if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableBModel) == FALSE)
+#endif
+    {
+      //配置オブジェクト描画
+      if( g3Dmap->globalResObj != NULL ){
+        DrawObj( g3Dmap, g3Dcamera );
+        //DirectDrawObj( g3Dmap, g3Dcamera ); Directは使用しない
+      }
+    }
 	}
 }
 
