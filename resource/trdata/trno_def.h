@@ -563,7 +563,11 @@
 #define	TRID_RANGERM_11   ( 550 ) 
 #define	TRID_BAKER_03   ( 551 ) 
 #define	TRID_HAKAIM1_27   ( 552 ) 
-#define TRID_MAX  ( 553 )
+#define	TRID_HAKAIM1_28   ( 553 ) 
+#define	TRID_HAKAIM1_29   ( 554 ) 
+#define	TRID_HAKAIM1_30   ( 555 ) 
+#define	TRID_HAKAIM1_31   ( 556 ) 
+#define TRID_MAX  ( 557 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
