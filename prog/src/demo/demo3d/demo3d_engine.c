@@ -130,7 +130,7 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
   wk->env.scene_id = param->scene_id;
   
   wk->env.start_frame = param->start_frame;
-  wk->env.time_zone = GFL_RTC_ConvertHourToTimeZone( param->hour );
+  wk->env.time_zone = PM_RTC_ConvertHourToTimeZone( param->season, param->hour );
   wk->env.player_sex = param->player_sex;
   wk->env.hour = param->hour;
   wk->env.min = param->min;

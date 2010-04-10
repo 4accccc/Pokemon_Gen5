@@ -97,18 +97,25 @@ int PM_RTC_GetTimeZoneChangeMargin( int season, TIMEZONE timezone )
   return sub_second;
 }
 
-
 //--------------------------------------------------------------
 /**
- * @brief	éûä‘ë—ÇÃéÊìæ
- * @return	int	éûä‘ë—Åitimezone.hÇéQè∆Åj
+ * @brief	ñÈÇ©Ç«Ç§Ç©ÇÃîªíË
+ * @retval	TRUE	ç°ÇÕñÈ
+ * @retval	FALSE	ç°ÇÕíã
  */
 //--------------------------------------------------------------
-int GFL_RTC_GetTimeZone( void )
+BOOL PM_RTC_IsNightTime( int season )
 {
-  return PM_RTC_GetTimeZone( PM_RTC_TIMEZONE_DEFAULT_SEASON );
+	switch ( PM_RTC_GetTimeZone(season) ) {
+	case TIMEZONE_MIDNIGHT:
+	case TIMEZONE_NIGHT:
+		return TRUE;
+	}
+	return FALSE;
 }
 
+
+#if 0
 //--------------------------------------------------------------
 /**
  * @brief	éûä‘Ç©ÇÁéûä‘ë—Ç÷ÇÃïœä∑
@@ -120,23 +127,8 @@ int GFL_RTC_ConvertHourToTimeZone(int hour)
 {
   return PM_RTC_ConvertHourToTimeZone( PM_RTC_TIMEZONE_DEFAULT_SEASON, hour );
 }
+#endif
 
-//--------------------------------------------------------------
-/**
- * @brief	ñÈÇ©Ç«Ç§Ç©ÇÃîªíË
- * @retval	TRUE	ç°ÇÕñÈ
- * @retval	FALSE	ç°ÇÕíã
- */
-//--------------------------------------------------------------
-BOOL GFL_RTC_IsNightTime( void )
-{
-	switch (GFL_RTC_GetTimeZone()) {
-	case TIMEZONE_MIDNIGHT:
-	case TIMEZONE_NIGHT:
-		return TRUE;
-	}
-	return FALSE;
-}
 
 //--------------------------------------------------------------
 /**

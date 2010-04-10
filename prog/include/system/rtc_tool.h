@@ -32,9 +32,15 @@ extern int PM_RTC_GetTimeZoneChangeMargin( int season, TIMEZONE timezone );
 // Default 時間帯  
 #define PM_RTC_TIMEZONE_DEFAULT_SEASON  ( PMSEASON_SUMMER )
 //夜かどうかチェック
-extern int GFL_RTC_GetTimeZone( void );
-extern int GFL_RTC_ConvertHourToTimeZone(int hour);
-extern BOOL GFL_RTC_IsNightTime( void );
+extern BOOL PM_RTC_IsNightTime( int season );
+
+/// @todo 上記に置き換わったら廃止する
+static inline BOOL GFL_RTC_IsNightTime( void )
+{
+  return PM_RTC_IsNightTime( PM_RTC_TIMEZONE_DEFAULT_SEASON );
+}
+
+//extern int GFL_RTC_ConvertHourToTimeZone(int hour);
 
 //--------------------------------------------------------------
 //	ツール関数

@@ -263,7 +263,7 @@ const RTCDate * EVTIME_GetRTCDate( const GAMEDATA * gdata )
 int EVTIME_GetTimeZone(const GAMEDATA * gdata)
 {
   GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
-  return GFL_RTC_ConvertHourToTimeZone( tm->sv_time.hour);
+  return PM_RTC_ConvertHourToTimeZone( PM_RTC_TIMEZONE_DEFAULT_SEASON, tm->sv_time.hour);
 }
 
 //------------------------------------------------------------------
