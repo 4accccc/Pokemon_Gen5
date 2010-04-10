@@ -39,28 +39,29 @@ enum {
 #define WIN_STR_CLASS_CGX ( WO_TALK_WIN_CGX+TALK_WIN_CGX_SIZ )
 
 // 「いりょく」
-#define WIN_STR_ATTACK_PX ( 11 )
+#define WIN_STR_ATTACK_PX ( 8 )
 #define WIN_STR_ATTACK_PY ( W_PARAM_PY )
 #define WIN_STR_ATTACK_SX ( 6 )
 #define WIN_STR_ATTACK_SY ( 2 )
 #define WIN_STR_ATTACK_PAL  ( WO_PAL_SYS_FONT )
 #define WIN_STR_ATTACK_CGX  ( WIN_STR_CLASS_CGX + WIN_STR_CLASS_SX * WIN_STR_CLASS_SY )
 
+// 威力値
+#define WIN_PRM_ATTACK_PX ( WIN_STR_ATTACK_PX+6 )
+#define WIN_PRM_ATTACK_PY ( WIN_STR_ATTACK_PY )
+#define WIN_PRM_ATTACK_SX ( 3 )
+#define WIN_PRM_ATTACK_SY ( 2 )
+#define WIN_PRM_ATTACK_PAL  ( WO_PAL_SYS_FONT )
+#define WIN_PRM_ATTACK_CGX  ( WIN_STR_HIT_CGX + WIN_STR_HIT_SX * WIN_STR_HIT_SY )
+
 // 「めいちゅう」
-#define WIN_STR_HIT_PX    ( 20)
+#define WIN_STR_HIT_PX    ( 19)
 #define WIN_STR_HIT_PY    ( W_PARAM_PY )
 #define WIN_STR_HIT_SX    ( 8 )
 #define WIN_STR_HIT_SY    ( 2 )
 #define WIN_STR_HIT_PAL   ( WO_PAL_SYS_FONT )
 #define WIN_STR_HIT_CGX   ( WIN_STR_ATTACK_CGX + WIN_STR_ATTACK_SX * WIN_STR_ATTACK_SY )
 
-// 威力値
-#define WIN_PRM_ATTACK_PX ( WIN_STR_ATTACK_PX+5 )
-#define WIN_PRM_ATTACK_PY ( WIN_STR_ATTACK_PY )
-#define WIN_PRM_ATTACK_SX ( 3 )
-#define WIN_PRM_ATTACK_SY ( 2 )
-#define WIN_PRM_ATTACK_PAL  ( WO_PAL_SYS_FONT )
-#define WIN_PRM_ATTACK_CGX  ( WIN_STR_HIT_CGX + WIN_STR_HIT_SX * WIN_STR_HIT_SY )
 
 // 命中値
 #define WIN_PRM_HIT_PX    ( WIN_STR_HIT_PX+8 )
@@ -273,14 +274,14 @@ enum {
 // アニメナンバー
 enum{
   ANMDW_CURSOR=0,
-  ANMDW_ARROW_DT=0,
-  ANMDW_ARROW_DF=0,
-  ANMDW_ARROW_UT=0,
-  ANMDW_ARROW_UF=0,
-  ANMDW_ARROW_DTA=0,
-  ANMDW_ARROW_DFA=0,
-  ANMDW_ARROW_UTA=0,
-  ANMDW_ARROW_UFA=0,
+  ANMDW_ARROW_DT=2,    // 下タッチできる
+  ANMDW_ARROW_DF=16,   // 下タッチできない
+  ANMDW_ARROW_UT=3,    // 上タッチできる
+  ANMDW_ARROW_UF=17,   // 上タッチできない
+  ANMDW_ARROW_DTA=10,  // 下アニメ後オン
+  ANMDW_ARROW_DFA=23,  // 下アニメ後オフ
+  ANMDW_ARROW_UTA=11,  // 上アニメ後オン
+  ANMDW_ARROW_UFA=24,  // 上アニメ後オフ
   ANMDW_EXIT=0,
 };
 
@@ -295,7 +296,7 @@ enum{
 };
 
 ///パレット数
-#define DW_ACTPAL_NUM (5)
+#define DW_ACTPAL_NUM (6)
 #define TICON_ACTPAL_IDX  (DW_ACTPAL_NUM)
 #define TICON_ACTPAL_IDX_M  (0)
 
@@ -309,7 +310,7 @@ enum{
 #define LIST_CUR_U_PX ( 8*5 )
 #define LIST_CUR_U_PY ( 192-24 )
 // リストカーソル下
-#define LIST_CUR_D_PX ( 0 )
+#define LIST_CUR_D_PX ( 8 )
 #define LIST_CUR_D_PY ( 192-24 )
 // 選択カーソル
 #define SEL_CURSOR_PX ( 127+3 )
@@ -325,8 +326,8 @@ enum{
 
 
 // 分類アイコン
-#define KIND_ICON_PX  ( 73 )
-#define KIND_ICON_PY  ( 55 )
+#define KIND_ICON_PX  ( 33 )
+#define KIND_ICON_PY  ( 56 )
 // タイプアイコン１(下画面)
 #define TYPE_ICON1_PX ( 49 )
 #define TYPE_ICON1_PY ( 80 )

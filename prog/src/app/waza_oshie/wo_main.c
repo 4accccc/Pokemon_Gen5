@@ -79,7 +79,6 @@ FS_EXTERN_OVERLAY( poke_status );
 enum {
   WIN_SPACE_M=0,
   WIN_SPACE_S,
-  WIN_STR_CLASS,    // 「ぶんるい」
   WIN_STR_ATTACK,     // 「いりょく」
   WIN_STR_HIT,      // 「めいちゅう」
   WIN_PRM_ATTACK,     // 威力値
@@ -120,6 +119,11 @@ enum {
   WO_CLA_MAX
 };
 
+enum{
+  WO_ANIME_OBJ=0,   ///< OBJアニメを待つ
+  WO_ANIME_APPTASK, ///< APPTASKUMENUのアニメを待つ
+};
+
 typedef struct _WO_3DWORK{
   GFL_G3D_CAMERA *camera;
   void*     ssm;
@@ -135,8 +139,9 @@ typedef struct {
   u8  sx;
   u8  sy;
   u16 cnt;
-  u16 seq;
-  int next;
+  u16 index;
+  u16 next;
+  u16 mode;
 }BUTTON_ANM_WORK;
 
 typedef struct {
@@ -327,15 +332,20 @@ static void CursorMoveExit( WO_WORK * wk );
 static void ScrollButtonOnOff( WO_WORK * wk );
 static void EnterButtonOnOff( WO_WORK * wk, BOOL flg );
 
-static int RetButtonAnmInit( WO_WORK * wk, int next );
-static int EnterButtonAnmInit( WO_WORK * wk, int next );
-static int ButtonAnmMaun( WO_WORK * wk );
-static int WO_SeqRetButton( WO_WORK * wk );
-static int WO_SeqEnterButton( WO_WORK * wk );
+static int  RetButtonAnmInit( WO_WORK * wk, int next );
+static int  EnterButtonAnmInit( WO_WORK * wk, int next );
+static int  YameruButtonAnmInit( WO_WORK *wk, int next );
+static int  ButtonAnmMaun( WO_WORK * wk );
+static int  WO_SeqRetButton( WO_WORK * wk );
+static int  WO_SeqEnterButton( WO_WORK * wk );
 static void WazaSelBgChange( WO_WORK * wk, u32 pos );
-static int WazaSelectEnter( WO_WORK * wk );
+static int  WazaSelectEnter( WO_WORK * wk );
 static void PassiveSet( BOOL flg );
 static void wazaoshie_3d_setup( void );
+static void WO_AppTaskMenuMain( WO_WORK *wk );
+static int  EnterButtonCheck( WO_WORK *wk );
+static void ScrollButtonAnmChange( WO_WORK * wk, s32 mv );
+static void ScrollButtonInit( WO_WORK *wk );
 
 
 
@@ -366,10 +376,6 @@ static const BMPWIN_DAT BmpWinData[] =
     1, 1, 0, 0
   },
 
-  { // 「ぶんるい」
-    SFRM_PARAM, WIN_STR_CLASS_PX, WIN_STR_CLASS_PY,
-    WIN_STR_CLASS_SX, WIN_STR_CLASS_SY, WIN_STR_CLASS_PAL, WIN_STR_CLASS_CGX
-  },
   { // 「いりょく」
     SFRM_PARAM, WIN_STR_ATTACK_PX, WIN_STR_ATTACK_PY,
     WIN_STR_ATTACK_SX, WIN_STR_ATTACK_SY, WIN_STR_ATTACK_PAL, WIN_STR_ATTACK_CGX
@@ -705,7 +711,8 @@ GFL_PROC_RESULT WazaOshieProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *
     *seq = WO_SeqEnterButton( wk );
     break;
   }
-
+  
+  WO_AppTaskMenuMain(wk);
   WO_3DMain(&wk->p3d);
   GFL_CLACT_SYS_Main( );
   GFL_TCBL_Main( wk->pMsgTcblSys );
@@ -804,6 +811,9 @@ static void InitTaskMenu( WO_WORK *wk )
 //----------------------------------------------------------------------------------
 static void ExitTaskMenu( WO_WORK *wk )
 {
+  // メニュー解放忘れの場合用に
+  EnterButtonOnOff( wk, FALSE );
+  
   // 文字列破棄
   GFL_STR_DeleteBuffer( wk->menuitem[0].str);
   GFL_STR_DeleteBuffer( wk->menuitem[1].str);
@@ -815,6 +825,23 @@ static void ExitTaskMenu( WO_WORK *wk )
   APP_TASKMENU_RES_Delete( wk->app_res );
 
   PRINTSYS_QUE_Delete( wk->printQue );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief タスクメニューメイン関数
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void WO_AppTaskMenuMain( WO_WORK *wk )
+{
+  // 「おぼえる」「もどる」メニューの表示メイン処理
+  if(wk->oboe_menu_work[0]!=NULL){
+    APP_TASKMENU_WIN_Update( wk->oboe_menu_work[0] );
+    APP_TASKMENU_WIN_Update( wk->oboe_menu_work[1] );
+  }
+
 }
 
 //--------------------------------------------------------------------------------------------
@@ -854,6 +881,7 @@ static void WO_DispInit( WO_WORK * wk )
 //  WO_InputModeChange(wk);
 
   CursorMoveInit( wk );
+  ScrollButtonInit(wk);
 
   WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN,   WIPE_TYPE_FADEIN,
                   WIPE_FADE_BLACK,  WIPE_DEF_DIV, WIPE_DEF_SYNC, HEAPID_WAZAOSHIE );
@@ -1448,22 +1476,19 @@ static int WO_SeqSelect( WO_WORK * wk )
 //    PMSND_PlaySE( WO_SE_PAGE_MOVE );
     break;
 
-  case 6:           // もどる
+  case 6:                   // もどる
+    PMSND_PlaySE( WO_SE_CANCEL );
+    if(EnterButtonCheck(wk)){
+      return YameruButtonAnmInit( wk, SEQ_RET_BUTTON );
+    }else{
+      return RetButtonAnmInit( wk, SEQ_RET_BUTTON );
+    }
+    break;
   case CURSORMOVE_CANCEL:   // キャンセル
     PMSND_PlaySE( WO_SE_CANCEL );
     WazaSelBgChange( wk, 5 );
     EnterButtonOnOff( wk, FALSE );  // 決定を消す
-/*
-//    WO_SelCursorChange( wk, wk->dat->pos, PALDW_CURSOR);
-//    WO_ScrollCursorOff( wk );
-    WO_TalkMsgSet( wk, MSG_END_CHECK );
-    wk->ynidx = YESNO_END_CHECK;
-    wk->next_seq = SEQ_YESNO_PUT;
-    return SEQ_MSG_WAIT;
-*/
     return RetButtonAnmInit( wk, SEQ_RET_BUTTON );
-
-
   case 7:   // おぼえる
     PMSND_PlaySE( WO_SE_DECIDE );
     return EnterButtonAnmInit( wk, SEQ_ENTER_BUTTON );
@@ -1472,16 +1497,23 @@ static int WO_SeqSelect( WO_WORK * wk )
 //    PMSND_PlaySE( WO_SE_LIST_MOVE );
     break;
 
+  case CURSORMOVE_NO_MOVE_UP:
+    if(wk->dat->scr!=0){
+      PMSND_PlaySE( WO_SE_PAGE_MOVE );
+      wk->dat->scr--;
+      BattleWazaParamPut( wk, WO_SelWazaGet( wk ) );
+      WO_WazaListDraw( wk );
+      WazaSelBgChange( wk, 5 );
+      ScrollButtonOnOff( wk );
+      ScrollButtonAnmChange( wk, -1 );
+    }
+    break;
+
   case CURSORMOVE_CURSOR_ON:    // カーソル表示
   case CURSORMOVE_NONE:     // 動作なし
     break;
   }
 
-  // 「おぼえる」「もどる」メニューの表示メイン処理
-  if(wk->oboe_menu_work[0]!=NULL){
-    APP_TASKMENU_WIN_Update( wk->oboe_menu_work[0] );
-    APP_TASKMENU_WIN_Update( wk->oboe_menu_work[1] );
-  }
   return SEQ_SELECT;
 
 }
@@ -1773,11 +1805,6 @@ static void WO_DefStrWrite( WO_WORK * wk )
   StrPut( wk, WIN_BACK, wk->fontHandle, WOFCOL_N_WHITE, STR_MODE_CENTER ,4);
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_BACK] );
 */
-
-  // 「ぶんるい」
-  GFL_MSG_GetString( wk->mman, msg_waza_oboe_01_01, wk->mbuf );
-  StrPut( wk, WIN_STR_CLASS, wk->fontHandle, WOFCOL_N_BLACK, STR_MODE_LEFT ,0);
-  GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_STR_CLASS] );
 
   // 「いりょく」
   GFL_MSG_GetString( wk->mman, msg_waza_oboe_01_02, wk->mbuf );
@@ -2111,14 +2138,9 @@ static void BattleWazaParamPut( WO_WORK * wk, u32 prm )
     WO_KindIconChange( wk, prm );
     GFL_CLACT_WK_SetDrawEnable( wk->cap[WO_CLA_KIND], 1 );
 
-    GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_STR_CLASS] );
-/*↑[GS_CONVERT_TAG]*/
     GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_STR_ATTACK] );
-/*↑[GS_CONVERT_TAG]*/
     GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_STR_HIT] );
-/*↑[GS_CONVERT_TAG]*/
   }else{
-    GFL_BMPWIN_ClearTransWindow_VBlank( wk->win[WIN_STR_CLASS] );
     GFL_BMPWIN_ClearTransWindow_VBlank( wk->win[WIN_STR_ATTACK] );
     GFL_BMPWIN_ClearTransWindow_VBlank( wk->win[WIN_STR_HIT] );
   }
@@ -2593,10 +2615,10 @@ static void WO_ResourceLoad( WO_WORK * wk, ARCHANDLE* p_handle )
   // パレット
   wk->clres[1][WO_PAL_ID_APP_COMMON] = GFL_CLGRP_PLTT_RegisterEx(
                                         c_handle, APP_COMMON_GetBarIconPltArcIdx(),
-                                        CLSYS_DRAW_SUB, 0, 0, 2, HEAPID_WAZAOSHIE );
+                                        CLSYS_DRAW_SUB, 0, 0, 4, HEAPID_WAZAOSHIE );
   wk->clres[1][WO_PAL_ID_OBJ] = GFL_CLGRP_PLTT_RegisterEx(
                                 p_handle, NARC_waza_oshie_gra_oam_dw_NCLR,
-                                CLSYS_DRAW_SUB, 2*32,0,1, HEAPID_WAZAOSHIE );
+                                CLSYS_DRAW_SUB, 4*32,0,1, HEAPID_WAZAOSHIE );
 
   wk->clres[1][WO_PAL_ID_TYPE]   = GFL_CLGRP_PLTT_RegisterEx(
                                     c_handle, APP_COMMON_GetPokeTypePltArcIdx(),
@@ -2857,9 +2879,10 @@ static void WO_ObjInit( WO_WORK * wk, ARCHANDLE* p_handle )
                                                ClactParamTbl[i].d_area, HEAPID_WAZAOSHIE );
     GFL_CLACT_WK_SetAutoAnmFlag(wk->cap[i],FALSE);
   }
-
-  GFL_CLACT_WK_SetAutoAnmFlag(wk->cap[WO_CLA_EXIT],TRUE);
-  GFL_CLACT_WK_SetAutoAnmFlag(wk->cap[WO_CLA_CURSOR],TRUE);
+  GFL_CLACT_WK_SetAutoAnmFlag( wk->cap[WO_CLA_EXIT],TRUE );
+  GFL_CLACT_WK_SetAutoAnmFlag( wk->cap[WO_CLA_CURSOR],TRUE );
+  GFL_CLACT_WK_SetAutoAnmFlag( wk->cap[WO_CLA_ARROW_U], TRUE );
+  GFL_CLACT_WK_SetAutoAnmFlag( wk->cap[WO_CLA_ARROW_D], TRUE );
 
 }
 
@@ -3049,16 +3072,16 @@ static void WO_SelCursorChange( WO_WORK * wk, u8 pos, u8 pal )
 
 
 
-//--------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
 /**
- * スクロールカーソル表示切替
+ * @brief スクロールカーソル表示切替
  *
- * @param wk    ワーク
- *
- * @return  none
+ * @param   wk      技教えワーク
+ * @param   idx     0だと下、1だと上
+ * @param   anm_f   
  */
-//--------------------------------------------------------------------------------------------
-static void WO_ScrollCursorPut( WO_WORK * wk ,u8 idx,BOOL anm_f)
+//----------------------------------------------------------------------------------
+static void WO_ScrollCursorPut( WO_WORK *wk, u8 idx, BOOL anm_f )
 {
   u8 flag;
 
@@ -3073,7 +3096,6 @@ static void WO_ScrollCursorPut( WO_WORK * wk ,u8 idx,BOOL anm_f)
   }else{
 //    GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_D],ANMDW_ARROW_DF+flag);
   }
-  GFL_CLACT_WK_SetAutoAnmFlag(wk->cap[WO_CLA_ARROW_D],FALSE);
 
   if(idx == 1 && anm_f){
     flag = 1;
@@ -3087,8 +3109,6 @@ static void WO_ScrollCursorPut( WO_WORK * wk ,u8 idx,BOOL anm_f)
 //    GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_U],ANMDW_ARROW_UF+flag);
   }
   
-//  GFL_CLACT_WK_SetAutoAnmFlag(wk->cap[WO_CLA_ARROW_U],flag);
-  GFL_CLACT_WK_SetAutoAnmFlag(wk->cap[WO_CLA_ARROW_U],FALSE);
 }
 
 
@@ -3203,7 +3223,6 @@ static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos );
 static void ScrollButtonOnOff( WO_WORK * wk );
 static void EnterButtonOnOff( WO_WORK * wk, BOOL flg );
 
-static void ScrollButtonAnmChange( WO_WORK * wk, s32 mv );
 
 #if 0
 static const GFL_UI_TP_HITTBL ListHitTbl[] =
@@ -3242,6 +3261,8 @@ static const CURSORMOVE_DATA ListKeyTbl[]={
   { 80, 124, 0, 0,  5, 5, 5, 5 ,  {TP_SB_PY,TP_SB_PY+TP_SB_SY-1,TP_SBU_PX,TP_SBU_PX+TP_SB_SX-1},},// 05: 上矢印
   { 224, 168, 0, 0, 3, 6, 6, 6 ,  {TP_BACK_PY,TP_BACK_PY+TP_BACK_SY-1,TP_BACK_PX,TP_BACK_PX+TP_BACK_SX-1},},// 06: もどる
   { 224, 168, 0, 0, 7, 7, 7, 7 ,  {TP_ABTN_PY,TP_ABTN_PY+TP_ABTN_SY-1,TP_ABTN_PX,TP_ABTN_PX+TP_ABTN_SX-1},},// 07: おぼえる
+  { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
+
 };
 
 static const CURSORMOVE_CALLBACK ListCallBack = {
@@ -3251,14 +3272,28 @@ static const CURSORMOVE_CALLBACK ListCallBack = {
   CursorMoveCallBack_Touch
 };
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief カーソル・タッチ共通処理初期化
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
 static void CursorMoveInit( WO_WORK * wk )
 {
   wk->cmwk = CURSORMOVE_Create( ListKeyTbl, &ListCallBack, wk, TRUE, 0, HEAPID_WAZAOSHIE );
 
-//  EnterButtonOnOff( wk, FALSE );  // 決定を消す
   ScrollButtonOnOff( wk );    // スクロール設定
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief カーソル・タッチ共通処理解放
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
 static void CursorMoveExit( WO_WORK * wk )
 {
   CURSORMOVE_Exit( wk->cmwk );
@@ -3270,11 +3305,29 @@ static void CM_CursorPut( WO_WORK * wk, int pos )
 }
 */
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief カーソルタッチ共通処理コールバック
+ *
+ * @param   work      
+ * @param   now_pos   現在位置
+ * @param   old_pos   過去位置
+ */
+//----------------------------------------------------------------------------------
 static void CursorMoveCallBack( void * work, int now_pos, int old_pos )
 {
   // ダミー関数
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 【CURSORMOVEコールバック】キー操作時
+ *
+ * @param   work      
+ * @param   now_pos   現在位置
+ * @param   old_pos   過去位置
+ */
+//----------------------------------------------------------------------------------
 static void CursorMoveCallBack_Move( void * work, int now_pos, int old_pos )
 {
   WO_WORK * wk = work;
@@ -3333,6 +3386,15 @@ static void CursorMoveCallBack_Move( void * work, int now_pos, int old_pos )
   WO_SelCursorChange( wk, now_pos, PALDW_CURSOR );
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 【CURSORMOVEコールバック】タッチ時
+ *
+ * @param   work    
+ * @param   now_pos   現在位置
+ * @param   old_pos   過去位置
+ */
+//----------------------------------------------------------------------------------
 static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos )
 {
   WO_WORK * wk = work;
@@ -3376,7 +3438,6 @@ static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos )
   // もどる
   }else if( now_pos == 6 ){
     WazaSelBgChange( wk, 5 );
-    EnterButtonOnOff( wk, FALSE );  // 決定を消す
     if( wk->cm_pos != 6 ){
       now_pos = wk->dat->pos;
       CURSORMOVE_PosSet( wk->cmwk, now_pos );
@@ -3387,6 +3448,7 @@ static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos )
     CURSORMOVE_PosSet( wk->cmwk, now_pos );
   }
 
+  OS_Printf("now_pos=%d\n", now_pos);
   WO_SelCursorChange( wk, now_pos, PALDW_CURSOR );
 }
 
@@ -3400,23 +3462,6 @@ static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos )
 //----------------------------------------------------------------------------------
 static void EnterButtonOnOff( WO_WORK * wk, BOOL flg )
 {
-#if 0
-  // 表示
-  if( flg == TRUE ){
-    CURSORMOVE_MoveTableBitOn( wk->cmwk, 7 );
-    GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_ABTN] );
-    WO_SubBGPartsDraw(
-      wk, BG_ABTN_PX, BG_ABTN_PY, BG_ABTN_SX, BG_ABTN_SY, BG_ABTN_OX+BG_ABTN_SX, BG_ABTN_OY );
-    wk->enter_flg = 1;
-  // 非表示
-  }else{
-    CURSORMOVE_MoveTableBitOff( wk->cmwk, 7 );
-    GFL_BMPWIN_ClearTransWindow_VBlank( wk->win[WIN_ABTN] );
-    WO_SubBGPartsDraw(
-      wk, BG_ABTN_PX, BG_ABTN_PY, BG_ABTN_SX, BG_ABTN_SY, BG_ABTN_OX, BG_ABTN_OY );
-    wk->enter_flg = 0;
-  }
-#endif
   if(flg==TRUE)
   {
     wk->oboe_menu_work[0] = APP_TASKMENU_WIN_Create( wk->app_res, &wk->menuitem[0], 13, 21, 9, HEAPID_WAZAOSHIE );
@@ -3435,6 +3480,31 @@ static void EnterButtonOnOff( WO_WORK * wk, BOOL flg )
 
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 「おぼえる」「やめる」は表示されているか
+ *
+ * @param   wk    
+ *
+ * @retval  int   1:いる  0:いない
+ */
+//----------------------------------------------------------------------------------
+static int EnterButtonCheck( WO_WORK *wk )
+{
+  if( wk->oboe_menu_work[0]!=NULL ){
+    return  1;
+  }
+  
+  return 0;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
 static void ScrollButtonOnOff( WO_WORK * wk )
 {
   if( wk->sel_max < 4 ){
@@ -3456,31 +3526,58 @@ static void ScrollButtonOnOff( WO_WORK * wk )
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 上下ボタン表示アニメ変更
+ *
+ * @param   wk    
+ * @param   mv    
+ */
+//----------------------------------------------------------------------------------
 static void ScrollButtonAnmChange( WO_WORK * wk, s32 mv )
 {
-  GFL_CLACT_WK_SetAutoAnmFlag( wk->cap[WO_CLA_ARROW_U], FALSE );
-  GFL_CLACT_WK_SetAutoAnmFlag( wk->cap[WO_CLA_ARROW_D], FALSE );
-//  GFL_CLACT_WK_SetAutoAnmFlag( wk->cap[WO_CLA_ARROW_U], TRUE );
-//  GFL_CLACT_WK_SetAutoAnmFlag( wk->cap[WO_CLA_ARROW_D], TRUE );
   GFL_CLACT_WK_SetAnmFrame( wk->cap[WO_CLA_ARROW_U], 0 );
   GFL_CLACT_WK_SetAnmFrame( wk->cap[WO_CLA_ARROW_D], 0 );
 
+  // 下に移動
   if( mv > 0 ){
     if( wk->dat->scr + 4 < wk->sel_max ){
-//      GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_D], ANMDW_ARROW_DTA);
+      GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_D], ANMDW_ARROW_DTA);
     }else{
-//      GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_D], ANMDW_ARROW_DFA );
+      GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_D], ANMDW_ARROW_DFA );
     }
-//    GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_U], ANMDW_ARROW_UT );
+    GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_U], ANMDW_ARROW_UT );
   }else{
+  // 上に移動
     if( wk->dat->scr == 0 ){
-//      GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_U], ANMDW_ARROW_UFA);
+      GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_U], ANMDW_ARROW_UFA);
     }else{
-//      GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_U], ANMDW_ARROW_UTA );
+      GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_U], ANMDW_ARROW_UTA );
     }
-//    GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_D], ANMDW_ARROW_DT );
+    GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_D], ANMDW_ARROW_DT );
   }
 }
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 画面初期化時のスクロール矢印アイコンの見た目設定
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void ScrollButtonInit( WO_WORK *wk )
+{
+  if(wk->dat->scr+4 < wk->sel_max){
+    GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_U], ANMDW_ARROW_UF );
+    GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_D], ANMDW_ARROW_DT );
+  }else if(wk->dat->scr==0){
+    GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_U], ANMDW_ARROW_UT );
+    GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_ARROW_D], ANMDW_ARROW_DF );
+    
+  }
+}
+
 
 //----------------------------------------------------------------------------------
 /**
@@ -3494,6 +3591,8 @@ static void WazaSelBgChange( WO_WORK * wk, u32 pos )
 {
   u32 i;
 
+
+  return ;
   for( i=0; i<4; i++ ){
     if( i == pos ){
       WO_SubBGPartsDraw(
@@ -3514,10 +3613,21 @@ static void WazaSelBgChange( WO_WORK * wk, u32 pos )
 }
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 終了ボタンアニメ開始
+ *
+ * @param   wk    
+ * @param   next    
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
 static int RetButtonAnmInit( WO_WORK * wk, int next )
 {
-  BUTTON_ANM_WORK * bawk = &wk->button_anm_work;
 
+  BUTTON_ANM_WORK * bawk = &wk->button_anm_work;
+/*
   bawk->px = 24;
   bawk->py = 20;
   bawk->sx = 8;
@@ -3525,16 +3635,30 @@ static int RetButtonAnmInit( WO_WORK * wk, int next )
 
   bawk->cnt = 0;
   bawk->seq = 0;
+*/
 
-  bawk->next = next;
-
+  bawk->mode  = WO_ANIME_OBJ;
+  bawk->index = WO_CLA_EXIT;
+  bawk->next  = next;
+  // もどるマークアニメ
+  GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_EXIT], 9 );
   return SEQ_BUTTON_ANM;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 「おぼえる」ボタンアニメ開始
+ *
+ * @param   wk    
+ * @param   next    
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
 static int EnterButtonAnmInit( WO_WORK * wk, int next )
 {
   BUTTON_ANM_WORK * bawk = &wk->button_anm_work;
-
+/*
   bawk->px = 16;
   bawk->py = 20;
   bawk->sx = 8;
@@ -3542,36 +3666,60 @@ static int EnterButtonAnmInit( WO_WORK * wk, int next )
 
   bawk->cnt = 0;
   bawk->seq = 0;
-
-  bawk->next = next;
-
+*/
+  bawk->mode  = WO_ANIME_APPTASK;
+  bawk->index = 0;
+  bawk->next  = next;
+  OS_Printf("index=%d, mode=%d,next=%d, adr=%08x", bawk->index, bawk->mode, bawk->next, (u32)wk->oboe_menu_work[bawk->index]);
+  APP_TASKMENU_WIN_SetDecide( wk->oboe_menu_work[bawk->index], TRUE );
   return SEQ_BUTTON_ANM;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 「やめる」ボタンアニメ開始
+ *
+ * @param   wk    
+ * @param   next    
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int YameruButtonAnmInit( WO_WORK *wk, int next )
+{
+
+  BUTTON_ANM_WORK * bawk = &wk->button_anm_work;
+  bawk->mode  = WO_ANIME_APPTASK;
+  bawk->index = 1;
+  bawk->next  = next;
+  OS_Printf("index=%d, mode=%d,next=%d, adr=%08x", bawk->index, bawk->mode, bawk->next, (u32)wk->oboe_menu_work[bawk->index]);
+  APP_TASKMENU_WIN_SetDecide( wk->oboe_menu_work[bawk->index], TRUE );
+  return SEQ_BUTTON_ANM;
+
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief ボタンアニメ待ち
+ *
+ * @param   wk    
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
 static int ButtonAnmMaun( WO_WORK * wk )
 {
   BUTTON_ANM_WORK * bawk = &wk->button_anm_work;
 
-  switch( bawk->seq ){
-  case 0:
-    GFL_BG_ChangeScreenPalette( SFRM_BACK, bawk->px, bawk->py, bawk->sx, bawk->sy, 7 );
-    GFL_BG_LoadScreenV_Req( SFRM_BACK );
-    bawk->seq++;
-    break;
-
-  case 1:
-    bawk->cnt++;
-    if( bawk->cnt == 4 ){
-      GFL_BG_ChangeScreenPalette( SFRM_BACK, bawk->px, bawk->py, bawk->sx, bawk->sy, 0 );
-      GFL_BG_LoadScreenV_Req( SFRM_BACK );
-      bawk->cnt = 0;
-      bawk->seq++;
+  // 指定のOBJかAPPTASKMENUかで終了待ちを行う
+  if(bawk->mode==WO_ANIME_OBJ){
+    if(GFL_CLACT_WK_CheckAnmActive( wk->cap[bawk->index])==FALSE){
+      return bawk->next;
     }
-    break;
-
-  case 2:
-    bawk->cnt++;
-    if( bawk->cnt == 2 ){
+  }else if(bawk->mode==WO_ANIME_APPTASK){
+    if(APP_TASKMENU_WIN_IsFinish(wk->oboe_menu_work[bawk->index])){
+//      APP_TASKMENU_WIN_ResetDecide(wk->oboe_menu_work[bawk->index]);
+        EnterButtonOnOff( wk, FALSE );
       return bawk->next;
     }
   }
