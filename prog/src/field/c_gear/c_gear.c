@@ -3132,10 +3132,6 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
   switch(pWork->state_seq){
   case STARTUP_SEQ_ANIME_START:
 
-    if( WIPE_SYS_EndCheck() == FALSE ){
-      break;
-    }
-    
     // 何もないテーブルを書き込み
     _gearBootInitScreen( pWork ); // 1回表示するため。
 
@@ -3146,6 +3142,24 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
     break;
 
   case STARTUP_SEQ_WIPE_IN:
+
+    if( WIPE_SYS_EndCheck() == FALSE ){
+      break;
+    }
+
+    // 輝度チェック
+    if( GXS_GetMasterBrightness() != 0 ){
+      break;
+    }
+
+    {
+      FIELDMAP_WORK* p_fieldmap = GAMESYSTEM_GetFieldMapWork( pWork->pGameSys );
+      if( FIELDMAP_CheckSeasonDispFlag(p_fieldmap) ){
+        break;
+      }
+    }
+    
+
 
     // 起動アニメだけ表示
     _gearStartUpObjDrawEnabel( pWork, TRUE );
