@@ -1238,7 +1238,7 @@ static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
     
     if( pos_type == SCRCMD_MSGWIN_DEFAULT ){ //過去or自機の位置から割り当て
       u16 before_pos = SCRCMD_WORK_GetBeforeWindowPosType( work );
-      
+#if 0 //old      
       if( before_pos == SCRCMD_MSGWIN_MAX ){ //初回である
         VecFx32 pos,jiki_pos;
         
@@ -1253,6 +1253,20 @@ static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
       }else{ //履歴あり
         pos_type = before_pos;
       }
+#else //吹き出しデフォルトは常に自機の位置から割り当てになった
+      {
+        VecFx32 pos,jiki_pos;
+        
+        MMDL_GetVectorPos( npc, &pos );
+        MMDL_GetVectorPos( jiki, &jiki_pos ); //時期の位置から割り当て
+        
+        pos_type = SCRCMD_MSGWIN_DOWN;
+        
+        if( pos.z < jiki_pos.z ){
+          pos_type = SCRCMD_MSGWIN_UP;
+        }
+      }
+#endif
     }
     
     switch( pos_type ){
