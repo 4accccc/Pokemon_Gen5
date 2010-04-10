@@ -48,7 +48,11 @@ EVENT_START	ev_c03r0401_boy1_01
       _BALLOONWIN_CLOSE()
 
       //自機定位置へ
-      _CALL move_player 
+      _CALL move_player
+
+      // 少年（ゾロア）下向き
+      _OBJ_ANIME( C03R0401_BOY1_01, anm_dir_down )
+      _OBJ_ANIME_WAIT()
 
       //セレビィ出す
       _CALL ball_out
@@ -187,12 +191,20 @@ _RET
 
 //ゾロアに戻る
 change_zoroa:
+  _OBJ_ANIME( C03R0401_BOY1_01, anm_round )
+  _OBJ_ANIME_WAIT()
+  //ホワイトアウト
+  _WHITE_OUT()
+  _DISP_FADE_END_CHECK()
   //男の子を消す
   _FLAG_SET( FV_C03R0401_BOY1_01 )
   _OBJ_DEL(C03R0401_BOY1_01)
   //ゾロア出す
   _FLAG_RESET( FV_C03R0401_POKE22_01 )
   _OBJ_ADD(C03R0401_POKE22_01)
+  //ホワイトイン
+  _WHITE_IN()
+  _DISP_FADE_END_CHECK()
 _RET
 
 add_zoroa:
@@ -440,6 +452,7 @@ EVENT_END
 /*                          ゾロア                          */
 /************************************************************/
 EVENT_START	ev_c03r0401_poke22_01
+  _TALK_OBJ_START()
   //手持ちにイベントセレビィがいるか？
   _GET_EVT_POKE_POS( MONSNO_SEREBHI, FALSE, poke_pos, SCWK_ANSWER )
   
@@ -458,6 +471,10 @@ EVENT_START	ev_c03r0401_poke22_01
 
     //自機定位置へ
     _CALL move_player2
+
+    //ゾロア下向き
+    _OBJ_ANIME( C03R0401_POKE22_01, anm_dir_down )
+    _OBJ_ANIME_WAIT()
 
     //仲間にする処理
     _CALL add_zoroa
@@ -595,3 +612,33 @@ _ANIME_LABEL	anm_right
 _ANIME_LABEL	anm_down
   _ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
+//--------------------------------------------------------------------
+//下向く  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_down
+  _ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//2回転
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_round
+  _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_WAIT_1F,1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_WAIT_1F,1
+  _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_WAIT_1F,1
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_WAIT_1F,1
+  _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_WAIT_1F,1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_WAIT_1F,1
+  _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_WAIT_1F,1
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_WAIT_1F,1
+  _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	ACMD_END,0  
