@@ -26,6 +26,9 @@
 
 #include "net/wih_dwc.h"
 
+#include "field/field_status.h"
+#include "field/field_status_local.h"
+
 #include "gamesystem/game_beacon_accessor.h"
 #include "../../field/field_comm/intrude_work.h"
 #include "../../field/field_comm/intrude_main.h"
@@ -314,6 +317,17 @@ static const u16 sc_PANEL_TYPE_TO_COLOR[] = {
 };
 
 
+
+//-------------------------------------
+///	OAMパレットフェード
+//=====================================
+#define OAM_PFADE_NORMAL_MSK  ( (1<<0x1) | (1<<0x2) | (1<<0x3) )
+//-------------------------------------
+///	BGパレットフェード
+//=====================================
+#define BG_PFADE_NORMAL_MSK  ( (1<<0x1) | (1<<0x2) | (1<<0x3) | (1<<0x4) | (1<<0x5) )
+
+
 //--------------------------
 
 typedef struct {
@@ -486,7 +500,7 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
   { (POS_HELPMARK_Y-8), (POS_HELPMARK_Y+8), (POS_HELPMARK_X-8), (POS_HELPMARK_X+8) },   //HELP
   { (POS_CROSS_Y_CENTER-8), (POS_CROSS_Y_CENTER+8), POS_CROSS_X_CENTER-40, POS_CROSS_X_CENTER+40 },                //SURECHIGAI
   { (POS_SCANRADAR_Y-8), (POS_SCANRADAR_Y+8), (POS_SCANRADAR_X-8), (POS_SCANRADAR_X+8) }, //RADAR
-  { 16, (16+8), 96, (96+(7*8)) },    //CGEARLOGO
+  { 22-8, (22+8), 128-32, 128+32 },    //CGEARLOGO
   { (POS_POWERMARK_Y-8), (POS_POWERMARK_Y+8), (POS_POWERMARK_X-8), (POS_POWERMARK_X+8) },        //電源
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
 };
@@ -626,6 +640,7 @@ struct _C_GEAR_WORK {
   GFL_TCB*                    vblank_tcb;
   void* pfade_tcbsys_wk;
   PALETTE_FADE_PTR            pfade_ptr;
+  
   int createEvent;
 
   BUTTON_PAL_FADE button_palfade;
@@ -698,7 +713,7 @@ static void _gearStartUpAllOff(C_GEAR_WORK* pWork);
 static void _timeAnimation(C_GEAR_WORK* pWork);
 static void _typeAnimation(C_GEAR_WORK* pWork);
 static void _editMarkONOFF(C_GEAR_WORK* pWork,BOOL bOn);
-static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno);
+static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno, BOOL pal_trans);
 static void _arcGearRelease(C_GEAR_WORK* pWork);
 static void _gearObjResCreate(C_GEAR_WORK* pWork, int sex);
 static void _gearObjCreate(C_GEAR_WORK* pWork);
@@ -754,6 +769,7 @@ static void _PalAnimeSelectAnimeWait( C_GEAR_WORK* pWork );
 static void _modeEventWait( C_GEAR_WORK* pWork );
 
 // パレットフェード
+static void _PFadeSetDefaultPal( C_GEAR_WORK* pWork, BOOL comm );
 static void _PFadeSetBlack( C_GEAR_WORK* pWork );
 static void _PFadeToBlack( C_GEAR_WORK* pWork );
 static void _PFadeFromBlack( C_GEAR_WORK* pWork );
@@ -1376,8 +1392,7 @@ static void _PanelPaletteChangeCore( C_GEAR_WORK* pWork, int change_panel, int m
     }
 
     // BGPalette
-    DC_FlushRange(&pWork->palTrans[change_panel][pal], 2);
-    GXS_LoadBGPltt(&pWork->palTrans[change_panel][pal], (16*(pal+_CGEAR_NET_CHANGEPAL_POSY) + _CGEAR_NET_CHANGEPAL_POSX[change_panel]) * 2, 2);
+    PaletteWorkSet( pWork->pfade_ptr, &pWork->palTrans[change_panel][pal], FADE_SUB_BG, (16*(pal+_CGEAR_NET_CHANGEPAL_POSY) + _CGEAR_NET_CHANGEPAL_POSX[change_panel]), 2 );
   }
 }
 
@@ -1702,6 +1717,43 @@ static int _gearPanelTypeNum(C_GEAR_WORK* pWork, CGEAR_PANELTYPE_ENUM type)
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットフェード基準となる　フェード終了値を設定
+ *
+ *	@param	pWork
+ *	@param	comm 
+ */
+//-----------------------------------------------------------------------------
+static void _PFadeSetDefaultPal( C_GEAR_WORK* pWork, BOOL comm )
+{
+  int i, j;
+  u16* p_buff;
+  u16* p_trans;
+  if( !comm ){
+    // 基準値を暗めにする。
+    p_buff = PaletteWorkDefaultWorkGet( pWork->pfade_ptr, FADE_SUB_OBJ );
+    p_trans = PaletteWorkTransWorkGet( pWork->pfade_ptr, FADE_SUB_OBJ );
+    for( i=0; i<16; i++ ){
+      if( (1<<i) & OAM_PFADE_NORMAL_MSK ){
+        // 16こかえる
+        SoftFade( &p_buff[ 16*i ], &p_buff[ 16*i ], 16, 8, 0x0 );
+        GFL_STD_MemCopy32( &p_buff[ 16*i ], &p_trans[ 16*i ], 2*16 );
+      }
+    }
+
+    p_buff = PaletteWorkDefaultWorkGet( pWork->pfade_ptr, FADE_SUB_BG );
+    p_trans = PaletteWorkTransWorkGet( pWork->pfade_ptr, FADE_SUB_BG );
+    for( i=0; i<16; i++ ){
+      if( (1<<i) & BG_PFADE_NORMAL_MSK ){
+        // 16こかえる
+        SoftFade( &p_buff[ 16*i ], &p_buff[ 16*i ], 16, 8, 0x0 );
+        GFL_STD_MemCopy32( &p_buff[ 16*i ], &p_trans[ 16*i ], 2*16 );
+      }
+    }
+  }
+}
+
 static void _PFadeSetBlack( C_GEAR_WORK* pWork )
 {
   // 黒く
@@ -1720,9 +1772,9 @@ static void _PFadeToBlack( C_GEAR_WORK* pWork )
 
 static void _PFadeFromBlack( C_GEAR_WORK* pWork )
 {
-  // 黒から戻る
+  // 黒く
   PaletteFadeReq(
-    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,  1,  16, 0, 0x0, pWork->pfade_tcbsys
+    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,  1, 16, 0, 0x0, pWork->pfade_tcbsys
     );
 }
 
@@ -1997,39 +2049,41 @@ static void _gearPanelBgCreate(C_GEAR_WORK* pWork)
 //static u32 _objpal[]={NARC_c_gear_c_gear_obj_NCLR,NARC_c_gear_c_gear2_obj_NCLR,NARC_c_gear_c_gear_obj_NCLR};
 //static u32 _objcgx[]={NARC_c_gear_c_gear_obj_NCGR,NARC_c_gear_c_gear2_obj_NCGR,NARC_c_gear_c_gear_obj_NCGR};
 
-static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno)
+static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno, BOOL pal_trans)
 {
   u32 scrno=0;
 
+  if( pal_trans ){
 
-  GFL_ARCHDL_UTIL_TransVramPalette( pWork->handle, _bgpal[ sex ],
-                                    PALTYPE_SUB_BG, 0, 0,  HEAPID_FIELD_SUBSCREEN);
+    GFL_ARCHDL_UTIL_TransVramPalette( pWork->handle, _bgpal[ sex ],
+                                      PALTYPE_SUB_BG, 0, 0,  HEAPID_FIELD_SUBSCREEN);
 
 
-  {
-    int x,y, i;
-    void* buff;
-    NNSG2dPaletteData* pltt;
-    u16* pltt_data;
+    {
+      int x,y, i;
+      void* buff;
+      NNSG2dPaletteData* pltt;
+      u16* pltt_data;
 
-    buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, _bgpal[ sex ], &pltt, GFL_HEAP_LOWID(HEAPID_FIELD_SUBSCREEN) );
+      buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, _bgpal[ sex ], &pltt, GFL_HEAP_LOWID(HEAPID_FIELD_SUBSCREEN) );
 
-    pltt_data = pltt->pRawData;
-    for(y = 0 ; y < _CGEAR_NET_CHANGEPAL_NUM; y++){
-      for(x = 0 ; x < _CGEAR_NET_CHANGEPAL_MAX; x++){
-        pWork->palBase[x][y] = pltt_data[(16*(_CGEAR_NET_CHANGEPAL_POSY+y)) + _CGEAR_NET_CHANGEPAL_POSX[x] ];
+      pltt_data = pltt->pRawData;
+      for(y = 0 ; y < _CGEAR_NET_CHANGEPAL_NUM; y++){
+        for(x = 0 ; x < _CGEAR_NET_CHANGEPAL_MAX; x++){
+          pWork->palBase[x][y] = pltt_data[(16*(_CGEAR_NET_CHANGEPAL_POSY+y)) + _CGEAR_NET_CHANGEPAL_POSX[x] ];
+        }
       }
+      GFL_HEAP_FreeMemory( buff );
+
+      buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, NARC_c_gear_c_gear_obj_ani_NCLR, &pltt, GFL_HEAP_LOWID(HEAPID_FIELD_SUBSCREEN) );
+
+      for( i=0; i<_CGEAR_NET_PALTYPE_MAX; i++ ){
+        _PaletteMake(pWork,pltt->pRawData,i);
+      }
+
+      GFL_HEAP_FreeMemory( buff );
+   
     }
-    GFL_HEAP_FreeMemory( buff );
-
-    buff = GFL_ARCHDL_UTIL_LoadPalette( pWork->handle, NARC_c_gear_c_gear_obj_ani_NCLR, &pltt, GFL_HEAP_LOWID(HEAPID_FIELD_SUBSCREEN) );
-
-    for( i=0; i<_CGEAR_NET_PALTYPE_MAX; i++ ){
-      _PaletteMake(pWork,pltt->pRawData,i);
-    }
-
-    GFL_HEAP_FreeMemory( buff );
- 
   }
 
 
@@ -2246,7 +2300,7 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
 
     CGEAR_SV_SetCGearType( pWork->pCGSV, pWork->bgno );
 
-    _gearArcCreate(pWork, pWork->sex, pWork->bgno);  //ARC読み込み BG&OBJ
+    _gearArcCreate(pWork, pWork->sex, pWork->bgno, FALSE);  //ARC読み込み BG&OBJ
     _gearPanelBgCreate(pWork);	// パネル作成
   //  _gearObjCreate(pWork); //CLACT設定
     //_gearCrossObjCreate(pWork);
@@ -2803,13 +2857,13 @@ static void _modeInit(C_GEAR_WORK* pWork,BOOL bBoot)
   pWork->bgno = CGEAR_SV_GetCGearType(pWork->pCGSV);
 
   //セル系システムの作成
-  pWork->cellUnit = GFL_CLACT_UNIT_Create( 56+_CLACT_TIMEPARTS_MAX+STARTUP_ANIME_OBJ_MAX, 0 , pWork->heapID );
+  pWork->cellUnit = GFL_CLACT_UNIT_Create( 57+_CLACT_TIMEPARTS_MAX+STARTUP_ANIME_OBJ_MAX, 0 , pWork->heapID );
 
   // ユーザーレンダラー設定
   pWork->userRend = GFL_CLACT_USERREND_Create( sc_REND_SURFACE_INIT, CGEAR_REND_MAX, pWork->heapID );
   GFL_CLACT_UNIT_SetUserRend( pWork->cellUnit, pWork->userRend );
   
-  _gearArcCreate(pWork, pWork->sex, pWork->bgno);  //ARC読み込み BG&OBJ
+  _gearArcCreate(pWork, pWork->sex, pWork->bgno, TRUE);  //ARC読み込み BG&OBJ
   _gearObjResCreate(pWork, pWork->sex);
   if(bBoot){
     _gearBootInitScreen(pWork);
@@ -3077,6 +3131,10 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
 
   switch(pWork->state_seq){
   case STARTUP_SEQ_ANIME_START:
+
+    if( WIPE_SYS_EndCheck() == FALSE ){
+      break;
+    }
     
     // 何もないテーブルを書き込み
     _gearBootInitScreen( pWork ); // 1回表示するため。
@@ -3088,9 +3146,6 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
     break;
 
   case STARTUP_SEQ_WIPE_IN:
-    // ワイプ復帰
-    WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
     // 起動アニメだけ表示
     _gearStartUpObjDrawEnabel( pWork, TRUE );
@@ -3276,6 +3331,8 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 {
   C_GEAR_WORK *pWork = NULL;
   BOOL ret = FALSE;
+  GAMEDATA* gamedata;
+  FIELD_STATUS* fstatus;
 
   //GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_CGEAR, 0x8000 );
 
@@ -3290,11 +3347,17 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 
   pWork->handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, HEAPID_FIELD_SUBSCREEN );
 
-  pWork->pfade_tcbsys_wk = GFL_HEAP_AllocClearMemory( HEAPID_FIELD_SUBSCREEN, GFL_TCB_CalcSystemWorkSize(1) );
-  pWork->pfade_tcbsys = GFL_TCB_Init( 1, pWork->pfade_tcbsys_wk );
+  pWork->pfade_tcbsys_wk = GFL_HEAP_AllocClearMemory( HEAPID_FIELD_SUBSCREEN, GFL_TCB_CalcSystemWorkSize(4) );
+  pWork->pfade_tcbsys = GFL_TCB_Init( 4, pWork->pfade_tcbsys_wk );
 
-  //	GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, _BRIGHTNESS_SYNC);
-  _CHANGE_STATE(pWork,_modeSelectMenuWait);
+  // セーブ復帰１回目は、起動演出
+  gamedata  = GAMESYSTEM_GetGameData( pGameSys );
+  fstatus   = GAMEDATA_GetFieldStatus(gamedata);
+  if( FIELD_STATUS_GetContinueFlag( fstatus ) ){
+    _CHANGE_STATE(pWork,_modeSelectMenuWait0);
+  }else{
+    _CHANGE_STATE(pWork,_modeSelectMenuWait);
+  }
 
   _createSubBg(pWork);   //BGVRAM設定
   _modeInit(pWork, FALSE);
@@ -3306,8 +3369,12 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   pWork->pfade_ptr = PaletteFadeInit( HEAPID_FIELD_SUBSCREEN );
   PaletteTrans_AutoSet( pWork->pfade_ptr, TRUE );
   PaletteFadeWorkAllocSet( pWork->pfade_ptr, FADE_SUB_OBJ, 0x20*10, HEAPID_FIELD_SUBSCREEN );
+  PaletteFadeWorkAllocSet( pWork->pfade_ptr, FADE_SUB_BG, 0x20*10, HEAPID_FIELD_SUBSCREEN );
   // 現在VRAMにあるパレットを壊さないように、VRAMからパレット内容をコピーする
   PaletteWorkSet_VramCopy( pWork->pfade_ptr, FADE_SUB_OBJ, 0, 0x20*10 );
+  PaletteWorkSet_VramCopy( pWork->pfade_ptr, FADE_SUB_BG, 0, 0x20*10 );
+  _PFadeSetDefaultPal( pWork, GAMESYSTEM_GetAlwaysNetFlag( pWork->pGameSys ) );
+  PaletteFadeTrans( pWork->pfade_ptr );
 
   {
     pWork->vblank_tcb = GFUser_VIntr_CreateTCB( _VBlankFunc, pWork, 1 );
@@ -3453,6 +3520,7 @@ void CGEAR_Exit( C_GEAR_WORK* pWork )
 
   // パレットフェード
   PaletteFadeWorkAllocFree( pWork->pfade_ptr, FADE_SUB_OBJ );
+  PaletteFadeWorkAllocFree( pWork->pfade_ptr, FADE_SUB_BG );
   PaletteFadeFree( pWork->pfade_ptr );
   // タスク
   GFL_TCB_Exit( pWork->pfade_tcbsys );
@@ -3764,11 +3832,11 @@ static BOOL _BUTTONPAL_Update( BUTTON_PAL_FADE* p_fwk )
   u32 frame_index;
   static const u32 sc_INDEX_Color[] = {
     0,
-    8,
+    9,
     0,
-    8,
+    9,
     0,
-    8,
+    9,
   };
   
   if( p_fwk->anime_on == FALSE ){

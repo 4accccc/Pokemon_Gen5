@@ -66,6 +66,7 @@ enum {
 
   SEQ_ON_MSG_PRINT01,
   SEQ_ON_MSG_PRINT01_WAIT,
+  SEQ_ON_MSG_PRINT01_TOUCHWAIT,
 
 
   SEQ_ON_END,
@@ -854,11 +855,15 @@ static BOOL PowerOnOff_UpdateOn( CGEAR_POWER_ONOFF* p_sys )
     }
     break;
 
-  case SEQ_ON_END:
+
+  case SEQ_ON_MSG_PRINT01_TOUCHWAIT:
     if( GFL_UI_TP_GetTrg() ){
-      return TRUE;
+      p_sys->seq ++;
     }
     break;
+
+  case SEQ_ON_END:
+    return TRUE;
 
   }
 
