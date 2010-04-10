@@ -243,7 +243,6 @@ struct _CGEAR_POWER_ONOFF {
 
   BOOL off;
 
-  POWER_EVENT_REQ_TYPE event_req;
 };
 
 //-----------------------------------------------------------------------------
@@ -364,33 +363,7 @@ void CGEAR_POWER_ONOFF_Main( CGEAR_POWER_ONOFF* p_sys, BOOL active )
   if( pFunc[ p_sys->type ]( p_sys ) )
   {
     FIELD_SUBSCREEN_SetAction( p_sys->p_subscreen, FIELD_SUBSCREEN_ACTION_CGEAR_POWER_EXIT );
-    p_sys->event_req = POWER_EVENT_REQ_RET_CGEAR;
   }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  CGEAR　パワー　ONOFF設定　イベントチェック
- *
- *	@param	p_sys     システム
- *	@param	reqOk     リクエスト可能？フラグ？
- *	@param	p_subscrn サブスクリーンワーク
- *
- *	@return イベント
- */
-//-----------------------------------------------------------------------------
-GMEVENT* CGEAR_POWER_ONOFF_EventCheck( CGEAR_POWER_ONOFF* p_sys, BOOL reqOk, FIELD_SUBSCREEN_WORK* p_subscrn )
-{
-  GMEVENT* event = NULL;
-  
-  if(  reqOk ){
-    
-    if( p_sys->event_req == POWER_EVENT_REQ_RET_CGEAR ){
-
-      event = EVENT_ChangeSubScreen(p_sys->p_gamesys, GAMESYSTEM_GetFieldMapWork(p_sys->p_gamesys), FIELD_SUBSCREEN_NORMAL);
-    }
-  }
-  return event;
 }
 
 

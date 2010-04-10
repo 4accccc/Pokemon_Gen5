@@ -177,7 +177,6 @@ static void draw_report_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 static void init_cgear_power_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork );
-static GMEVENT* evcheck_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK );
 
 
 //-----------------------------------------------------------------------------
@@ -270,7 +269,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     init_cgear_power_subscreen,
     update_cgear_power_subscreen,
     NULL ,
-    evcheck_cgear_power_subscreen,
+    NULL,
     exit_cgear_power_subscreen,
     NULL,
   },
@@ -1495,13 +1494,4 @@ static void exit_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork )
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(cgear_onoff));
 }
 
-//----------------------------------------------------------------------------
-/**
- *	@brief  CGEAR　電源管理　イベント管理
- */
-//-----------------------------------------------------------------------------
-static GMEVENT* evcheck_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK )
-{
-  return CGEAR_POWER_ONOFF_EventCheck( pWork->cgear_power_onoff, bEvReqOK, pWork );
-}
 

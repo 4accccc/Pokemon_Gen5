@@ -53,7 +53,6 @@ extern void CGEAR_POWER_ONOFF_Delete( CGEAR_POWER_ONOFF* p_sys );
 
 // ÉÅÉCÉììÆçÏ
 extern void CGEAR_POWER_ONOFF_Main( CGEAR_POWER_ONOFF* p_sys, BOOL active );
-extern GMEVENT* CGEAR_POWER_ONOFF_EventCheck( CGEAR_POWER_ONOFF* p_sys, BOOL reqOk, FIELD_SUBSCREEN_WORK* p_subscrn );
 
 
 #ifdef _cplusplus
