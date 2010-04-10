@@ -2,7 +2,9 @@
 #
 #	シャチプロジェクト用スクリプトフィルタ定義
 #
-#	2007.04　tamada GAME FREAK inc.
+#	2007.04   tamada GAME FREAK inc.
+#
+#	2009.08   tamada  WBプロジェクト用にブランチ
 #
 #	既存のポケモンスクリプトに変数代入文やIF構文を追加するために、
 #	racc（rubyによるyacc=Yet Another Compiler Compiler)を使用した
@@ -24,6 +26,7 @@ class PmScript::Parser
 #	演算子優先順位の定義
 #---------------------------------------------
 prechigh
+  nonassoc UMINUS
 	left	'/'	'*'
 	left	'-'	'+'
 
@@ -526,6 +529,10 @@ rule
 	primary		: NUMBER
 				| IDENT
 				| MACPARAM
+        | '-' NUMBER =UMINUS
+          {
+            result = val
+          }
 
 
 	#---------------------------------------------
