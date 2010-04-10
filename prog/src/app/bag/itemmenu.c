@@ -139,7 +139,7 @@ static void _itemSellYesnoInit( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSellEndMsgWait( FIELD_ITEMMENU_WORK* pWork );
 static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork );
-static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, u8 sub_num );
+static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, int sub_num );
 static void InputNum_Start( FIELD_ITEMMENU_WORK* pWork, BAG_INPUT_MODE mode );
 static void InputNum_Exit( FIELD_ITEMMENU_WORK* pWork );
 static BOOL InputNum_Main( FIELD_ITEMMENU_WORK* pWork );
@@ -2399,7 +2399,7 @@ static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork )
  *  @retval none
  */
 //-----------------------------------------------------------------------------
-static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, u8 sub_num )
+static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, int sub_num )
 {
   BOOL rslt;
   ITEM_ST * item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) ); // 選択中のアイテム
