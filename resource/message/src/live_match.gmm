@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-04-10T15:58:59"/>
+	<create user="shimoyamada" host="W00184" date="2010-04-10T22:48:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -378,10 +378,12 @@
 		<language name="JPN" width="256">バトルたいかいに　さんかするため
 デジタルせんしゅしょうを[BE:00:ページ切り替え（行送り）]
 うわがき　します[BE:01:ページ切り替え（クリア）]
+デジタルせんしゅしょうを
 うわがきしても　よろしい　ですか？</language>
 		<language name="JPN_KANJI" width="256">バトル大会に　参加するため
 デジタル選手証を[BE:00:ページ切り替え（行送り）]
 上書き　します[BE:01:ページ切り替え（クリア）]
+デジタル選手証を
 上書きしても　よろしい　ですか？</language>
 	</row>
 
@@ -656,6 +658,14 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 ふぐあいにより　さいせい　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">最後の　対戦の　記録は
 不具合により　再生できません[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="LIVE_STR_28" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<comment>対戦相手のＡボタン待ち時</comment>
+		<language name="JPN" width="256">つうしん　たいきちゅう　です……
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">通信　待機中　です……
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="LIVE_ERR_01">
