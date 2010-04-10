@@ -35,3 +35,5 @@ while line = csv_file.gets
   index += 1
 end
 
+h_file.printf("#define FLDCIID_MAX (%d)\n",index)
+

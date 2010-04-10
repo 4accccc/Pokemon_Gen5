@@ -30,3 +30,4 @@
 #define FLDCIID_CHAMP_OUT (17)
 #define FLDCIID_FLY_OUT2 (18)
 #define FLDCIID_FLY_IN2 (19)
+#define FLDCIID_MAX (20)
