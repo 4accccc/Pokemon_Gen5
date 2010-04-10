@@ -643,7 +643,7 @@ int FIELD_BMODEL_MAN_ResistAllMapObjects
     if (TRUE == BMODELMAN_GetSubModel(man,
           getResourceID( &objStatus[dataCount] ), &status.trans, &status.id) )
     {
-      TAMADA_Printf("Resist Sub Model:index(%d) model id(%d)\n", dataCount, status.id);
+      //TAMADA_Printf("Resist Sub Model:index(%d) model id(%d)\n", dataCount, status.id);
       resistCount++;
       status.rotate = objStatus[dataCount].rotate;
       status.trans.x += objStatus[dataCount].xpos;
@@ -2258,7 +2258,7 @@ BOOL FIELD_BMODEL_GetSENo( const FIELD_BMODEL * bmodel, u32 anm_idx, u16 * se_no
   *se_no = 0;
   if ( anm_idx >= BMANM_INDEX_MAX )
   {
-    TAMADA_Printf( "anm_idx(%d) >= BMANM_INDEX_MAX\n", anm_idx );
+    GF_ASSERT_MSG( 0, "anm_idx(%d) >= BMANM_INDEX_MAX\n", anm_idx );
     return FALSE;
   }
   for (i = 0; i < NELEMS(SeTbl); i++)
