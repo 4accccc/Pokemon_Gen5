@@ -229,7 +229,7 @@ _ANIME_LABEL	anm_obj_gyoe
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_danpei_move_a 
 	_ANIME_DATA	AC_WALK_L_8F,3
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------
@@ -237,7 +237,7 @@ _ANIME_LABEL	anm_obj_gyoe
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_danpei_move_b 
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -245,15 +245,14 @@ _ANIME_LABEL	anm_obj_gyoe
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_danpei_move_c 
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_danpei_move_d
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_R_8F,3
 	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -262,7 +261,7 @@ _ANIME_LABEL	anm_obj_gyoe
 //	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_danpei_move_e
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -271,7 +270,7 @@ _ANIME_LABEL	anm_obj_gyoe
 //	サングラス：POSでサングラス移動
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_danpei_move_f
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0

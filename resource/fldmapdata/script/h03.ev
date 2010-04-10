@@ -29,6 +29,7 @@ _EVENT_DATA		ev_h03_badrider1_02
 _EVENT_DATA		ev_h03_badrider1_03
 _EVENT_DATA		ev_h03_badrider1_04
 _EVENT_DATA		ev_h03_badrider1_05
+_EVENT_DATA		ev_pos_h03_badrider_01
 _EVENT_DATA_END
 
 /************************************************************/
@@ -91,17 +92,9 @@ INIT_EVENT_START	ev_init_h03
 	ENDIF
 
 INIT_EVENT_END
-
 INIT_EVENT_START	ev_recover_h03
 	//LOCALWORK0→ 曜日
 	//LOCALWORK1→ 時間帯
-	
-	//曜日の取得
-	_GET_WEEK( LOCALWORK0 )
-	
-	//時間帯の取得
-	_GET_TIMEZONE( LOCALWORK1 )
-	
 	IF $LOCALWORK1 == TIMEZONE_NIGHT  || $LOCALWORK1 == TIMEZONE_EVENING THEN
 		IF $LOCALWORK0 == RTC_WEEK_FRIDAY THEN
 			//群集の起動
@@ -120,21 +113,28 @@ EVENT_START    ev_h03_fighterw_01
 	
 	//アイテムを入手しているかによって分岐
 	IF FLAG_OFF(FE_H03_ITEMGET_01) THEN
-		_BALLOONWIN_OBJMSG_POS( msg_h03_fighterw_01, H03_FIGHTERW_01, POS_UR )
+		_BALLOONWIN_OBJMSG_POS( msg_h03_fighterw_01, H03_FIGHTERW_01, POS_UP )
 		_MSGWIN_CLOSE()
 
 		_ITEM_EVENT_KEYWAIT(ITEM_WAZAMASIN43,1)
-		_BALLOONWIN_OBJMSG_POS( msg_h03_fighterw_02, H03_FIGHTERW_01, POS_UR )
+		_BALLOONWIN_OBJMSG_POS( msg_h03_fighterw_02, H03_FIGHTERW_01, POS_UP )
 		
 		//アイテム入手フラグON
 		_FLAG_SET(FE_H03_ITEMGET_01)
 
 	ELSE
-		_BALLOONWIN_OBJMSG_POS( msg_h03_fighterw_02, H03_FIGHTERW_01, POS_UR )
+		_BALLOONWIN_OBJMSG_POS( msg_h03_fighterw_02, H03_FIGHTERW_01, POS_UP)
 	ENDIF
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
+EVENT_END
+
+/**************************************************************/
+/*    POSイベント           */                                                           
+/**************************************************************/ 
+EVENT_START    ev_pos_h03_badrider_01
+	
 EVENT_END
 
 /**************************************************************/
@@ -143,6 +143,10 @@ EVENT_END
 EVENT_START    ev_h03_middlewoman1_01
 	
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h03_middlewoman_01)
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_POS(msg_h03_middlewoman_01, H03_MIDDLEWOMAN1_01, POS_UP )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 

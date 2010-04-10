@@ -278,7 +278,7 @@ EVENT_START   ev_h04_poke100_01
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 				
-	//カメラ操作　チャンピオンの位置にカメラを合わせる
+	//カメラ操作
 	_CAMERA_MOVE( 9170,0,1089626,4082719,217088,1757184,45 )	//一番最後の引数は移動にかかるフレーム数
 	
 	IF FLAG_OFF(FE_H04_DELIVERY_01) && $WK_SCENE_H04_ITEMNUM == 0 THEN
@@ -319,7 +319,7 @@ EVENT_START   ev_h04_poke100_01
 	_CAMERA_WAIT_MOVE()	//カメラ移動
 	
 	//自機にカメラを戻す
-	_CAMERA_RECV_MOVE( 20 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_RECV_MOVE( 32 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
@@ -447,6 +447,15 @@ EVENT_END
 /*		ISS 草笛				*/
 /************************************************************/ 
 EVENT_START   ev_h04_grasssound_01
+
+	_TIME_WAIT(8)
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+				
+	_CAMERA_MOVE(9126,0,1143661,2390274,204800,1810432,32 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	_TIME_WAIT(8)
 	//再生状態かチェック
 	_ISS_SWITCH_CHECK( SCWK_ANSWER,1 )
 
@@ -490,12 +499,28 @@ EVENT_START   ev_h04_grasssound_01
 		ENDIF
 	
 	ENDIF
+	_TIME_WAIT(8)
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 32 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
 EVENT_END
 
 /************************************************************/
 /*		ISS ギター											*/
 /************************************************************/
 EVENT_START   ev_h04_guitar_01
+	
+	_TIME_WAIT(8)
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+				
+	_CAMERA_MOVE(9129,0,1096365,2192792,204800,1810432,32 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	_TIME_WAIT(8)
 	//再生状態かチェック
 	_ISS_SWITCH_CHECK( SCWK_ANSWER,3 )
 
@@ -539,12 +564,28 @@ EVENT_START   ev_h04_guitar_01
 		ENDIF
 	
 	ENDIF
+	_TIME_WAIT(8)
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 32 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
 EVENT_END
 
 /************************************************************/
 /*		ISS ボイスパーカッション							*/
 /************************************************************/
 EVENT_START   ev_h04_voice_01
+
+	_TIME_WAIT(8)
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+				
+	_CAMERA_MOVE(9126,0,1127867,2324222,204800,1810432,32 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	_TIME_WAIT(8)
 	//再生状態かチェック
 	_ISS_SWITCH_CHECK( SCWK_ANSWER,2 )
 
@@ -588,12 +629,29 @@ EVENT_START   ev_h04_voice_01
 		ENDIF
 	
 	ENDIF
+
+	_TIME_WAIT(8)
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 32 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
 EVENT_END
 
 /************************************************************/
 /*		ISS メインボーカル									*/
 /************************************************************/
 EVENT_START   ev_h04_leadsinger_01
+
+	_TIME_WAIT(8)
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+				
+	_CAMERA_MOVE(9126,0,1111841,2258507,204800,1810432,32 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	_TIME_WAIT(8)
 	//再生状態かチェック
 	_ISS_SWITCH_CHECK( SCWK_ANSWER,4 )
 
@@ -637,6 +695,13 @@ EVENT_START   ev_h04_leadsinger_01
 		ENDIF
 	
 	ENDIF
+	_TIME_WAIT(8)
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 32 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
 EVENT_END
 //--------------------------------------------------------------------
 // 共通アニメ：びっくりする                    

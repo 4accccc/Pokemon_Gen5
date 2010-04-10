@@ -188,31 +188,28 @@ EVENT_START    ev_pos_c06_hakase1_01
 
 	//博士が主人公に話しかける
 	//博士:おお！　おまえさん！　[1:00:トレーナー名:0]だろ！！
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_01, C06_HAKASE1_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_01, C06_HAKASE1_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 
 	_TIME_WAIT(16)
 	
 	//捕獲数を格納
-	_NUMBER( 0, LWK_HOKAKU_COUNT, 3 )
+	_NUMBER( 0, LWK_HOKAKU_COUNT, 3 ) 
 
 	//博士が主人公に話しかける
 	//博士:ちょいと　ずかんを　みせてもらうよ
 	_OBJ_ANIME( C06_HAKASE1_01,anm_common_turn_d)
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_02, C06_HAKASE1_01,POS_DR)
-	_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_02, C06_HAKASE1_01,POS_DEFAULT)
 	_OBJ_ANIME_WAIT()
 	
 	//ギアンがいるかどうかで、分岐	
 	//ギアンを捕まえている？
 	IF $LWK_GIAN_CHECK ==  1	THEN
 		//捕まえている
-		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_03, C06_HAKASE1_01,POS_DR)
-		_BALLOONWIN_CLOSE()
+		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_03, C06_HAKASE1_01,POS_DEFAULT)
 	ELSE
 		//捕まえていない
-		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_04, C06_HAKASE1_01,POS_DR)
-		_BALLOONWIN_CLOSE()
+		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_04, C06_HAKASE1_01,POS_DEFAULT)
 	ENDIF
 	
 	_TIME_WAIT(24)
@@ -222,17 +219,14 @@ EVENT_START    ev_pos_c06_hakase1_01
 	
 	//博士が主人公に話しかける
 	//博士:おぉ　すまない！　ちと　こうふん　してな
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_05, C06_HAKASE1_01,POS_DR)
-	_BALLOONWIN_CLOSE()
-
-	_TIME_WAIT(8)
+	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_05, C06_HAKASE1_01,POS_DEFAULT)
 	
 	//ポケモン図鑑がパワーアップする処理 ※フォルム詳細画面追加
 	_SET_ZUKAN_GRAPHIC_FLAG()
 	
 	//博士が主人公に話しかける
 	//博士:では　であいを　きねんして　おまえさんの　ポケモンずかんを
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_06, C06_HAKASE1_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_06, C06_HAKASE1_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
 	//主人公の図鑑をパワーアップするような動き
@@ -245,7 +239,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 	
 	//博士が主人公に話しかける
 	//博士:アララギ『よし！　これで　ポケモンの　みた　すがたなら
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_07, C06_HAKASE1_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_07, C06_HAKASE1_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
 	//ジムリーダーが主人公に隣接
@@ -279,7 +273,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 	
 	//ジムリーダーフウロが喋る
 	//フウロ:？？？『アララギはかせ　そちらの　トレーナーは？
-	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_01, C06_LEADER6_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_01, C06_LEADER6_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
 	//博士がフウロを向く
@@ -290,7 +284,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 	
 	//博士がフウロに喋る
 	//博士:『おお！　おう！　すまんすまん
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_08, C06_HAKASE1_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_08, C06_HAKASE1_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
 	//ジムリーダーが主人公を向く
@@ -301,14 +295,14 @@ EVENT_START    ev_pos_c06_hakase1_01
 	
 	//ジムリーダーフウロが喋る
 	//フウロ:フウロ『わあ！　だったら　ジムに　ちょうせん　するよね！
-	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_02, C06_LEADER6_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_02, C06_LEADER6_01,POS_DEFAULT)
 	_OBJ_ANIME( C06_HAKASE1_01,anm_common_turn_d)
 	_BALLOONWIN_CLOSE()	
 	_OBJ_ANIME_WAIT()
 
 	//博士がフウロに喋る
 	//博士:『そうだな　[1:00:トレーナー名:0]くん
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_09, C06_HAKASE1_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_09, C06_HAKASE1_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 
 	//博士がフウロを向く
@@ -316,7 +310,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 	
 	//博士がフウロに喋る
 	//博士:『ではな　フウロくん　また　なにかあったら　たのむぞ
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_10, C06_HAKASE1_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_10, C06_HAKASE1_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 
 	//フウロが博士を向く
@@ -324,12 +318,12 @@ EVENT_START    ev_pos_c06_hakase1_01
 	
 	//ジムリーダーフウロが喋る
 	//フウロ:『……はかせ　アタシの　ひこうきは　かもつき！
-	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_03, C06_LEADER6_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_03, C06_LEADER6_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()	
 	
 	//博士がフウロに喋る
 	//博士:『おいおい　かわいい　かおして
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_11, C06_HAKASE1_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_11, C06_HAKASE1_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
 	//博士が画面外に移動
@@ -363,7 +357,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 	
 	//ジムリーダーフウロが喋る
 	//フウロ:フウロ『……ったく！　あんな　いいかげんな　かんじで
-	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_04, C06_LEADER6_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_04, C06_LEADER6_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()	
 	
 	_TIME_WAIT(16)
@@ -397,7 +391,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 	
 	//ジムリーダーフウロが喋る
 	//フウロ:さてと……　[1:00:トレーナー名:0]くん　だっけ！
-	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_06, C06_LEADER6_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_06, C06_LEADER6_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()	
 	
 	_TIME_WAIT(8)
@@ -405,14 +399,14 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_OBJ_ANIME_WAIT()
 
 	
-	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_07, C06_LEADER6_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_07, C06_LEADER6_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 
 	//フウロが博士を向く		
 	_TIME_WAIT(12)
 	_CALL		ev_leader06_turn_btl
 	
-	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_08, C06_LEADER6_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_08, C06_LEADER6_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
 	//ジムリーダーが画面外に移動

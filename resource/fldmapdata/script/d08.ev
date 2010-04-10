@@ -52,29 +52,30 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		_MAP_FADE_BLACK_IN()
 		_MAP_FADE_END_CHECK()
 		
+		_TIME_WAIT(16)
 		_PLAYER_NAME(0)
 		//博士が喋る
 		//博士（父）：『まさか……	
-		_BALLOONWIN_OBJMSG(msg_d08_hakase1_06, D08_HAKASE1_01)
+		_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_06, D08_HAKASE1_01,POS_UR)
 		_BALLOONWIN_CLOSE()
 		
 		//ライバルが喋る
 		//ライバル：『あの　Ｎってヤツ！
-		_BALLOONWIN_OBJMSG(msg_d08_black_03, D08_RIVEL_01)
+		_BALLOONWIN_OBJMSG_POS(msg_d08_black_03, D08_RIVEL_01,POS_DR)
 		_BALLOONWIN_CLOSE()
 		
 		//サポートが喋る
 		//サポート：『……そんなに
 		_OBJ_ANIME(D08_SUPPORT_01,anm_turn_s2)
 		_TIME_WAIT(4)
-		_BALLOONWIN_OBJMSG(msg_d08_white_05, D08_SUPPORT_01)
+		_BALLOONWIN_OBJMSG_POS(msg_d08_white_05, D08_SUPPORT_01,POS_DL)
 		_OBJ_ANIME_WAIT()
 		_BALLOONWIN_CLOSE()
 
 		//チャンピオンが喋る
 		//チャンピオン：ああ　すごいぞ！
-		_BALLOONWIN_OBJMSG(msg_d08_champion_01, D08_CHAMPION_01)
-		_BALLOONWIN_CLOSE()
+		_PLAINWIN_MSG_DOWN(msg_d08_champion_01)
+		_MSGWIN_CLOSE()
 
 		//主人公、博士、サポート、ライバル、びっくりする。
 		_OBJ_ANIME( D08_SUPPORT_01,anm_common_gyoe)
@@ -98,7 +99,7 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		//博士（父）：……アデクではないか
 		_OBJ_ANIME( D08_HAKASE1_01,anm_common_turn_d)
 		_TIME_WAIT(4)
-		_BALLOONWIN_OBJMSG(msg_d08_hakase1_07, D08_HAKASE1_01)
+		_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_07, D08_HAKASE1_01,POS_UR)
 		_BALLOONWIN_CLOSE()
 		_OBJ_ANIME_WAIT()
 		
@@ -109,33 +110,33 @@ EVENT_START	ev_reserve_d08_hakase1_01
 
 		//博士が喋る
 		//博士（父）：……うむ
-		_BALLOONWIN_OBJMSG_WB( msg_d08_hakase1_08w, msg_d08_hakase1_08b, D08_HAKASE1_01, POS_DR )
-		_MSGWIN_CLOSE()
+		_BALLOONWIN_OBJMSG_WB( msg_d08_hakase1_08w, msg_d08_hakase1_08b, D08_HAKASE1_01, POS_UR )
+		_BALLOONWIN_CLOSE()
 		
 		_TIME_WAIT(16)
 		//チャンピオンが喋る
 		//チャンピオン：……たしかに
 		_BALLOONWIN_OBJMSG_WB( msg_d08_champion_03w, msg_d08_champion_03b, D08_CHAMPION_01, POS_DR )
-		_MSGWIN_CLOSE()
+		_BALLOONWIN_CLOSE()
 		
 		//サポートが喋る
 		//サポート：……でも　それだと
 		_OBJ_ANIME( D08_SUPPORT_01,anm_common_turn_d)
 		_OBJ_ANIME_WAIT()
 		_OBJ_ANIME( D08_SUPPORT_01,anm_common_turn_d)
-		_BALLOONWIN_OBJMSG(msg_d08_white_06, D08_SUPPORT_01)
+		_BALLOONWIN_OBJMSG_POS(msg_d08_white_06, D08_SUPPORT_01,POS_DL)
 		_BALLOONWIN_CLOSE()
 		_OBJ_ANIME_WAIT()
 		
 		//チャンピオンが喋る
 		//チャンピオン：……おじょうさん
-		_BALLOONWIN_OBJMSG(msg_d08_champion_04, D08_CHAMPION_01)
+		_BALLOONWIN_OBJMSG_POS(msg_d08_champion_04, D08_CHAMPION_01,POS_DR)
 		_BALLOONWIN_CLOSE()
 		
 		_TIME_WAIT(8)
 		//博士が喋る
 		//博士（父）：そうか
-		_BALLOONWIN_OBJMSG(msg_d08_hakase1_09, D08_HAKASE1_01)
+		_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_09, D08_HAKASE1_01,POS_UR)
 		_BALLOONWIN_CLOSE()
 		
 		_TIME_WAIT(8)
@@ -143,7 +144,7 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		//ハチク：……では
 		_OBJ_ANIME(D08_LEADER7_01,anm_common_turn_r)
 		_OBJ_ANIME_WAIT()
-		_BALLOONWIN_OBJMSG(msg_d08_leader7_01, D08_LEADER7_01)
+		_BALLOONWIN_OBJMSG_POS(msg_d08_leader7_01, D08_LEADER7_01,POS_UL)
 		_BALLOONWIN_CLOSE()
 		_OBJ_ANIME(D08_HAKASE1_01,anm_common_turn_l)
 		_OBJ_ANIME_WAIT()
@@ -167,7 +168,7 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
 		_TIME_WAIT(4)
 		_OBJ_ANIME(D08_SUPPORT_01,anm_common_turn_r)
-		_BALLOONWIN_OBJMSG(msg_d08_black_04, D08_RIVEL_01)
+		_BALLOONWIN_OBJMSG_POS(msg_d08_black_04, D08_RIVEL_01,POS_UR)
 		_OBJ_ANIME_WAIT()
 		_BALLOONWIN_CLOSE()
 
@@ -194,7 +195,7 @@ EVENT_START	ev_reserve_d08_hakase1_01
 	
 		//サポートが喋る
 		//サポート：たいへんな　ことに　なっちゃったね
-		_BALLOONWIN_OBJMSG(msg_d08_white_07, D08_SUPPORT_01)
+		_BALLOONWIN_OBJMSG_POS(msg_d08_white_07, D08_SUPPORT_01,POS_UL)
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
@@ -400,24 +401,30 @@ EVENT_START    ev_pos_d08_hakase1_01
 	_OBJ_ANIME(D08_SUPPORT_01,anm_common_turn_u)
 	_OBJ_ANIME_WAIT()
 		
-	_OBJ_ANIME_WAIT()
-
+    _TIME_WAIT(16)
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+				
+	//カメラ操作　チャンピオンの位置にカメラを合わせる
+	_CAMERA_MOVE( 9694,0,970795,11894784,196655,9535488,16 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
 	_TIME_WAIT(4)
 	//博士が喋る
 	//博士（父）：おお　[1:00:トレーナー名:0]か！
-	_BALLOONWIN_OBJMSG(msg_d08_hakase1_00_02, D08_HAKASE1_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_02, D08_HAKASE1_01,POS_UR)
 	_BALLOONWIN_CLOSE()
 
 	//サポートが喋る
 	_OBJ_ANIME( D08_SUPPORT_01,anm_common_turn_u)
 	_OBJ_ANIME_WAIT()
 	//サポート：はじめまして！
-	_BALLOONWIN_OBJMSG(msg_d08_white_00_01, D08_SUPPORT_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d08_white_00_01, D08_SUPPORT_01,POS_DL)
 	_BALLOONWIN_CLOSE()
 		
 	//博士が喋る
 	//博士（父）：そうかい　そうかい　そいつはすげえや
-	_BALLOONWIN_OBJMSG(msg_d08_hakase1_00_03, D08_HAKASE1_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_03, D08_HAKASE1_01,POS_UR)
 	_BALLOONWIN_CLOSE()
 	
 	_TIME_WAIT(8)
@@ -428,7 +435,7 @@ EVENT_START    ev_pos_d08_hakase1_01
 	_TIME_WAIT(20)
 	//サポートが喋る
 	//サポート：……アララギはかせ
-	_BALLOONWIN_OBJMSG(msg_d08_white_00_02, D08_SUPPORT_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d08_white_00_02, D08_SUPPORT_01,POS_DL)
 	_BALLOONWIN_CLOSE()
 
 	//博士が振り向く
@@ -438,25 +445,25 @@ EVENT_START    ev_pos_d08_hakase1_01
 	_TIME_WAIT(8)
 	//博士が喋る
 	//博士（父）：ふぁはは！
-	_BALLOONWIN_OBJMSG_WB(msg_d08_hakase1_00_04w,msg_d08_hakase1_00_04b,D08_HAKASE1_01,POS_DEFAULT)
+	_BALLOONWIN_OBJMSG_WB(msg_d08_hakase1_00_04w,msg_d08_hakase1_00_04b,D08_HAKASE1_01,POS_UR)
 	
 	//博士が喋る
 	//博士（父）：で　おまえさんたちも
-	_BALLOONWIN_OBJMSG(msg_d08_hakase1_00_05, D08_HAKASE1_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_05, D08_HAKASE1_01,POS_UR)
 	_BALLOONWIN_CLOSE()
 	
 	//サポートが喋る
 	//サポート：だいじょうぶ！
 	_OBJ_ANIME( D08_SUPPORT_01,anm_common_turn_u)
 	_TIME_WAIT(4)
-	_BALLOONWIN_OBJMSG(msg_d08_white_00_03, D08_SUPPORT_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d08_white_00_03, D08_SUPPORT_01,POS_DL)
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_CLOSE()
 	
 	_TIME_WAIT(24)
 	//博士が喋る
 	//博士（父）：そうかい　ありがとうよ！
-	_BALLOONWIN_OBJMSG(msg_d08_hakase1_00_06, D08_HAKASE1_01)
+	_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_06, D08_HAKASE1_01,POS_UR)
 	_TIME_WAIT(20)
 	//サポートが振り向く
 	_OBJ_ANIME(D08_SUPPORT_01,anm_common_turn_r)
@@ -466,7 +473,7 @@ EVENT_START    ev_pos_d08_hakase1_01
 	_BALLOONWIN_CLOSE()
 	
 	IF $SCWK_ANSWER == SCR_YES THEN
-		_BALLOONWIN_OBJMSG(msg_d08_hakase1_00_09, D08_HAKASE1_01)
+		_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_09, D08_HAKASE1_01,POS_UR)
 		_BALLOONWIN_CLOSE()
 		
 		_TIME_WAIT(8)
@@ -483,7 +490,7 @@ EVENT_START    ev_pos_d08_hakase1_01
 		_OBJ_ANIME(D08_SUPPORT_01,anm_common_turn_u)		
 		_OBJ_ANIME_WAIT()
 		
-		_BALLOONWIN_OBJMSG(msg_d08_hakase1_00_10, D08_HAKASE1_01)
+		_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_10, D08_HAKASE1_01,POS_UR)
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
@@ -491,11 +498,17 @@ EVENT_START    ev_pos_d08_hakase1_01
 		_FLAG_SET(FE_D08_ITEMGET_01)
 		
 	ELSE
-		_BALLOONWIN_OBJMSG(msg_d08_hakase1_00_07, D08_HAKASE1_01)
+		_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_07, D08_HAKASE1_01,POS_UR)
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	ENDIF
 
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 16 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
 	//============フラグワーク操作=============//
 
 	//D08のライバルを消す

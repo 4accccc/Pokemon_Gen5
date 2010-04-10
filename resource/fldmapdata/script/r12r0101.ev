@@ -20,6 +20,9 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_bg_r12r0101_board_01
+_EVENT_DATA   ev_r12r0101_woman1_01
+_EVENT_DATA   ev_r12r0101_oldman1_01
+_EVENT_DATA   ev_r12r0101_babygirl1_01
 _EVENT_DATA_END
 
 
@@ -35,5 +38,29 @@ _EVENT_DATA_END
 EVENT_START   ev_bg_r12r0101_board_01
 
 	_LOOK_ELBOARD( 45 )
+
+EVENT_END
+/**************************************************************/
+/*  会話のイベントスクリプト*/
+/**************************************************************/
+EVENT_START  ev_r12r0101_woman1_01
+		
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r12r0101_woman1_01)
+
+EVENT_END
+/**************************************************************/
+/*  会話のイベントスクリプト*/
+/**************************************************************/
+EVENT_START  ev_r12r0101_oldman1_01
+		
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r12r0101_oldman1_01)
+
+EVENT_END
+/**************************************************************/
+/*  会話のイベントスクリプト*/
+/**************************************************************/
+EVENT_START  ev_r12r0101_babygirl1_01
+		
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r12r0101_babygirl1_02)
 
 EVENT_END

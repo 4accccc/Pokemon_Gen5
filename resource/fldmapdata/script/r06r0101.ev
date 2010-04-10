@@ -22,6 +22,8 @@
 _EVENT_DATA    	ev_r06r0101
 _EVENT_DATA 	ev_r06r0101_assistantm_01
 _EVENT_DATA 	ev_r06r0101_assistantm_02
+_EVENT_DATA 	ev_bg_r06r0101_case_01
+_EVENT_DATA 	ev_bg_r06r0101_case_02
 _EVENT_DATA_END
 
 
@@ -48,10 +50,51 @@ EVENT_START  ev_r06r0101_assistantm_01
 EVENT_END
 
 /**************************************************************/
-/*  R02 asseitantm1_02GIRL2の会話のイベントスクリプト*/
+/*  R06 asseitantm1_02の会話のイベントスクリプト*/
 /**************************************************************/
 EVENT_START  ev_r06r0101_assistantm_02
-		
+	
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm2_01)
-
+EVENT_END
+/**************************************************************/
+/*  R06 栽培ケース/
+/**************************************************************/
+EVENT_START  ev_bg_r06r0101_case_01
+	{
+	DEFINE_LOCAL LWK_KISETU
+	_GET_SEASON_ID( LWK_KISETU )
+	
+	IF$LWK_KISETU == 0 THEN
+		_PLAINWIN_MSG_DOWN(msg_r06r0101_planter_01)
+	ELSIF$LWK_KISETU == 1 THEN
+		_PLAINWIN_MSG_DOWN(msg_r06r0101_planter_02)
+	ELSIF$LWK_KISETU == 2 THEN
+		_PLAINWIN_MSG_DOWN(msg_r06r0101_planter_03)
+	ELSE
+		_PLAINWIN_MSG_DOWN(msg_r06r0101_planter_04)
+	ENDIF
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	}
+EVENT_END
+/**************************************************************/
+/*  R06 温度計*/
+/**************************************************************/
+EVENT_START  ev_bg_r06r0101_case_02	
+	{
+	DEFINE_LOCAL LWK_KISETU
+	_GET_SEASON_ID( LWK_KISETU )
+	
+	IF$LWK_KISETU == 0 THEN
+		_PLAINWIN_MSG_DOWN(msg_r06r0101_heatgauge_01)
+	ELSIF$LWK_KISETU == 1 THEN
+		_PLAINWIN_MSG_DOWN(msg_r06r0101_heatgauge_02)
+	ELSIF$LWK_KISETU == 2 THEN
+		_PLAINWIN_MSG_DOWN(msg_r06r0101_heatgauge_03)
+	ELSE
+		_PLAINWIN_MSG_DOWN(msg_r06r0101_heatgauge_04)
+	ENDIF
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	}
 EVENT_END

@@ -63,30 +63,6 @@ EVENT_START   ev_pos_r08_support_01
 	 
   	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01)	
 	_OBJ_ANIME_WAIT()
-		
-/*     
-    SWITCH $LWK_PLAYER_POSX
-    CASE 784 THEN
- 		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01_x784)	
-		_TIME_WAIT(32)
-    CASE 785 THEN
- 		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01_x785)	
-		_TIME_WAIT(48)
-    CASE 786 THEN
- 		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01_x786)	
-		_TIME_WAIT(60)
-    CASE 787THEN
- 		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01_x787)	
-		_TIME_WAIT(70)
-    CASE 788THEN
- 		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01_x788)
-		_TIME_WAIT(82)
-    CASE 789THEN
- 		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01_x789)	
-		_TIME_WAIT(94)
-    DEFAULT  
-    ENDSWITCH
-*/   
     
     _TIME_WAIT(16)
 	//ねえねえ！　ポケモンしょうぶしようよ
@@ -123,7 +99,7 @@ EVENT_START   ev_pos_r08_support_01
 	_MSGWIN_CLOSE()
 //	_OBJ_ANIME_WAIT()
 	
-	_TIME_WAIT(4)
+	_TIME_WAIT(20)
 	//サポート退場処理
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_back_01)
     _OBJ_ANIME_WAIT()

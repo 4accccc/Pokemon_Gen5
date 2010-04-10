@@ -43,7 +43,15 @@ EVENT_START    ev_pos_d08r0601_leader07_01
 	
 	//プレイヤーの名前を格納
 	_PLAYER_NAME(0)
+    _TIME_WAIT(8)
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+				
+	//カメラ操作　チャンピオンの位置にカメラを合わせる
+	_CAMERA_MOVE(9694,0,970795,1277952,655519,884736,24 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
+	_TIME_WAIT(16)
 	_OBJ_ANIME(D08R0601_LEADER7_01,anm_common_turn_up)
 	_OBJ_ANIME_WAIT()
 	
@@ -52,6 +60,13 @@ EVENT_START    ev_pos_d08r0601_leader07_01
 	_BALLOONWIN_OBJMSG( msg_d08r0601_leader7_01, D08R0601_LEADER7_01)
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
+
+	_TIME_WAIT(8)
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 24 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
 
 	//============フラグワーク操作=============//
 	
@@ -69,7 +84,15 @@ EVENT_START    ev_pos_d08r0601_rivel_01
 	
 	//プレイヤーの名前を格納
 	_PLAYER_NAME(0)
+    _TIME_WAIT(8)
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
 
+	_TIME_WAIT(16)			
+	//カメラ操作　チャンピオンの位置にカメラを合わせる
+	_CAMERA_MOVE(9664,0,970661,1277952,655519,1089536,16 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
 	_OBJ_ANIME(D08R0601_RIVEL_01,anm_common_turn_left)
 	_OBJ_ANIME_WAIT()
 	
@@ -79,6 +102,13 @@ EVENT_START    ev_pos_d08r0601_rivel_01
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
+	_TIME_WAIT(8)
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 16 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+
 	//============フラグワーク操作=============//
 	
 	//ライバルとハチク、プラズマ団のPOSイベントを無効
@@ -86,7 +116,7 @@ EVENT_START    ev_pos_d08r0601_rivel_01
 	
 	//========================================//
 	
-EVENT_END
+EVENT_END 
 
 /**************************************************************/
 /* 	ライバル                                                     

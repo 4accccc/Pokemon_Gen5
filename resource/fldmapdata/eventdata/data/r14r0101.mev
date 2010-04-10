@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/14 18:51:06
+#save date:2010/04/11 0:40:12
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r14r0101.wms
 #SECTION START:OBJ_EVENT
@@ -26,7 +26,7 @@ BG_R14R0101_BOARD_01
 #Bg Event Type
 BG_TALK_TYPE_BOARD
 #Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
+BG_TALK_DIR_RIGHT
 #Bg Script Name
 SCRID_BG_R14R0101_BOARD_01
 #Pos Type

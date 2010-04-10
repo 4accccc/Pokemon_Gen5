@@ -17,5 +17,9 @@
 #ifndef ZONE_R06R0101_EVB_H
 #define ZONE_R06R0101_EVB_H
 
+#define BG_R06R0101_CASE_01               0
+#define BG_R06R0101_CASE_02               1
+#define BG_R06R0101_CASE_03               2
+#define BG_R06R0101_CASE_04               3
 
 #endif //ZONE_R06R0101_EVB_H

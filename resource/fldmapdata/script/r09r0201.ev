@@ -110,7 +110,10 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_r09r0201_infomationw_01
   
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r09r0201_infomationw_01 )
+	_TALK_OBJ_START()
+	_PLAINWIN_MSG_UP(msg_r09r0201_infomationw_01)
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 

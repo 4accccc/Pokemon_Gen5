@@ -55,6 +55,7 @@ EVENT_START	ev_c02gym0202_leader2_01
 		//バッジ入手前なら、ジムリーダー戦イベント
 		_CALL		ev_leader2_btl
 		
+		_TIME_WAIT(16)
 		//盗難イベント開始
 		_CALL		ev_c02gym_tounan
 
@@ -245,7 +246,6 @@ EVENT_END
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_player_furimuku
 	
-	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 

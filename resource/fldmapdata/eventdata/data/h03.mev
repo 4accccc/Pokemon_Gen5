@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/09 16:25:50
+#save date:2010/04/09 18:54:11
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h03.wms
 #SECTION START:OBJ_EVENT
@@ -246,7 +246,41 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+2
+#event number: 0
+#Pos Event Label
+POS_H03_BADRIDER_01
+#Pos Script Name
+SCRID_POS_H03_BADRIDER_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK1
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 -2264
+#size
+18 1
+#event number: 1
+#Pos Event Label
+POS_H03_BADRIDER_02
+#Pos Script Name
+SCRID_POS_H03_BADRIDER_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK1
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 -296
+#size
+18 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

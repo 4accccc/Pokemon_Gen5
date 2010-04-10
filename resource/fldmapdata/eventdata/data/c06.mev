@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/07 19:12:18
+#save date:2010/04/10 21:28:23
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\C06.wms
 #SECTION START:OBJ_EVENT
@@ -49,7 +49,7 @@ C06_BOY3_01
 #OBJ CODE Number
 BOY3
 #MOVE CODE Number
-MV_LEFT
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name

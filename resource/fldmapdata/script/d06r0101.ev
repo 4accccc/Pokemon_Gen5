@@ -130,8 +130,13 @@ EVENT_START    ev_pos_d06r0101_n_01
 	
 	_TIME_WAIT(15)
 
+	_CAMERA_START()		//カメラ操作開始
+    _CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	_CAMERA_MOVE(9694,0,970795,622592,0,3309568,24)
+    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+    
+    _TIME_WAIT(8)
 	_START_EVENT_BGM( SEQ_BGM_E_N )
-	
 	//Nが振り向く
 	_OBJ_ANIME( D06R0101_BOSS_01, anm_common_turn_down )
 	_OBJ_ANIME_WAIT()
@@ -150,7 +155,6 @@ EVENT_START    ev_pos_d06r0101_n_01
 	_OBJ_ANIME_WAIT()
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 
 	_TIME_WAIT(16)
 	IF $SCWK_ANSWER == SCR_YES THEN
@@ -172,31 +176,16 @@ EVENT_START    ev_pos_d06r0101_n_01
 	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_13,D06R0101_BOSS_01 )
 	_MSGWIN_CLOSE()
 	
-	_TIME_WAIT(12)
+	_TIME_WAIT(16)
  	//Nが移動する
  	_OBJ_ANIME( D06R0101_BOSS_01, anm_boss_saru_01 )
- /*	
-	_CAMERA_START()		//カメラ操作開始
-    _CAMERA_PURGE()		//対象物とカメラのバインドを解く
-	_CAMERA_MOVE(9688,0,970752,819200,0,3047424,75)
-    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
- */
- /*   
- 	//Nが石を押す
-	//Nが退場する
-	
- 	_OBJ_ANIME( D06R0101_BOSS_01, anm_boss_saru_02 )
-     _OBJ_ANIME_WAIT()
- */  
- /* 
-	//カメラが戻る
-   	_CAMERA_RECV_MOVE( 50 )
+    _OBJ_ANIME_WAIT()
+    _END_EVENT_BGM()
+
+   	_CAMERA_RECV_MOVE( 24 )
     _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
-*/
-    _OBJ_ANIME_WAIT()
-    _END_EVENT_BGM()
 
 //===============フラグ操作===============//
 	//POSイベントを無効に
@@ -680,6 +669,7 @@ _ANIME_LABEL	anm_ninja_03_idou_02_a
 /**************************************************************/
 EVENT_START    ev_pos_d06r0101_denki_04
 	
+	_PLAYER_NAME(0)
 	_PLAYER_POS_GET(LWK_HERO_POSX, LWK_HERO_POSZ)
 	
 	//博士2の場所を移動
@@ -697,7 +687,6 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	//Ｎ『……さてと　ポケモンではなく　じぶんの　ちからで
 	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_01, D06R0101_BOSS_01)
 	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
 	
 	//はい・いいえで分岐
 	IF $SCWK_ANSWER ==  SCR_YES THEN
