@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-11-27T19:18:39" source="long_grass_au.mb"/>
+	<create user="fuchino" host="W00152" date="2010-04-10T22:15:11" source="long_grass_au.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2009-11-27T19:18:39" source="long_grass_au.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-04-10T22:15:11" source="long_grass_au.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="2" xyz="-2.000000 4.000000 -1.000000" whd="4.000000 1.000000 3.000000"/>
+<box_test pos_scale="3" xyz="-2.000000 0.375000 -1.875000" whd="4.000000 2.625000 1.750000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="naga_kusa_au"
@@ -38,35 +38,34 @@
 		path="C:/home/wb_data3d/effect_encount/long_grass/tex/naga_kusa_au.tga"
 	>
 		<bitmap size="128">
-			0000 0000 3000 0033 0000 0000 0000 0000
-			0000 0000 4300 0037 3000 0003 0000 0000
-			0000 0000 7430 0003 3013 0037 0000 0000
-			0000 0000 5740 3001 3017 0345 0000 0000
-			0000 0000 3871 8300 0037 0374 0000 0000
-			0000 0000 1873 8400 0004 3581 0000 0000
-			0000 1000 1774 7830 0303 1883 0000 0000
-			0000 1000 4577 5841 1431 3874 0001 0000
-			0000 1000 5578 3784 3835 4877 0001 0000
-			0000 1000 3757 5687 4845 7776 0001 0000
-			0000 1000 4757 5388 6775 6776 0001 0000
-			0000 1000 7646 5378 6575 6744 0001 0000
-			0000 1000 7435 4468 4377 6634 0001 0000
-			0000 0000 4345 4337 4357 3343 0000 0000
-			0000 0000 4003 3307 3435 3430 0000 0000
-			0000 0000 0000 3004 0040 4000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 1000 0011 0000 0000 0000 0000
+			0000 0000 6100 0017 1000 0001 0000 0000
+			0000 0000 7710 0002 1011 0017 0000 0000
+			0000 0000 7730 1001 1017 0176 0000 0000
+			0000 0011 2771 7100 0027 0272 1100 0000
+			0000 0171 1771 7300 0002 1471 1710 0000
+			0000 1710 1773 7710 0221 1771 0171 0000
+			0000 7100 1762 2731 2621 2763 0017 0000
+			0000 3200 1627 1773 2714 7263 0026 0000
+			0000 2000 2276 1576 2714 7362 0023 0000
+			0000 2000 2363 4176 2714 6622 0002 0000
+			0000 0000 2662 4177 2724 3623 0000 0000
+			0000 0000 3620 3277 2724 2623 0000 0000
+			0000 0000 3200 3267 2024 0223 0000 0000
+			0000 0000 3000 0260 2024 0003 0000 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
-	<tex_palette index="0" name="naga_kusa_au_pl" color_size="16">
-		7c0a 25ca 3a30 2a0e 2651 2673 2232 2a95
-		3278 56b5 4a52 7fff 7fff 7fff 7fff 7fff
+	<tex_palette index="0" name="naga_kusa_au_pl" color_size="8">
+		7c1f 2567 25e9 264b 266c 224c 2aaf 3316
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="1">
-	<material index="0" name="naga_kusa_au_lm1"
+	<material index="0" name="naga_kusa_au"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -84,7 +83,7 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
-		tex_tiling="repeat clamp"
+		tex_tiling="flip clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="-0.100098 0.000000"
@@ -98,52 +97,36 @@
 
 <polygon_array size="1">
 	<polygon index="0" name="polygon0"
-		vertex_size="16" polygon_size="4"
-		triangle_size="0" quad_size="4"
-		volume_min="-2.000000 4.000000 -1.000000"
-		volume_max="2.000000 5.000000 2.000000"
-		volume_r="5.477295"
+		vertex_size="8" polygon_size="2"
+		triangle_size="0" quad_size="2"
+		volume_min="-4.000000 0.750000 -3.750000"
+		volume_max="4.000000 6.000000 -0.250000"
+		volume_r="7.909668"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
 			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="16">
+				<primitive index="0" type="quads" vertex_size="8">
 					<mtx idx="0"/>
-					<tex st="32.000000 16.000000"/>
+					<tex st="-32.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-2.000000 4.000000 1.000000"/>
+					<pos_s xyz="-4.000000 0.750000 -0.750000"/>
 					<tex st="0.000000 16.000000"/>
-					<pos_xy xy="2.000000 4.000000"/>
+					<pos_xy xy="4.000000 0.750000"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_yz yz="5.000000 -1.000000"/>
-					<tex st="32.000000 0.000000"/>
-					<pos_xy xy="-2.000000 5.000000"/>
+					<pos_yz yz="2.750000 -3.750000"/>
+					<tex st="-32.000000 0.000000"/>
+					<pos_xy xy="-4.000000 2.750000"/>
 					<tex st="0.000000 16.000000"/>
-					<pos_s xyz="1.500000 4.000000 2.000000"/>
+					<pos_yz yz="4.000000 -0.250000"/>
 					<tex st="32.000000 16.000000"/>
-					<pos_xz xz="1.500000 -1.000000"/>
+					<pos_xy xy="4.000000 4.000000"/>
 					<tex st="32.000000 0.000000"/>
-					<pos_xy xy="0.500000 5.000000"/>
+					<pos_yz yz="6.000000 -3.250000"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xz xz="0.500000 2.000000"/>
-					<tex st="0.000000 16.000000"/>
-					<pos_s xyz="-1.500000 4.000000 -1.000000"/>
-					<tex st="32.000000 16.000000"/>
-					<pos_xz xz="-1.500000 2.000000"/>
-					<tex st="32.000000 0.000000"/>
-					<pos_xy xy="-0.500000 5.000000"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_xz xz="-0.500000 -1.000000"/>
-					<tex st="0.000000 16.000000"/>
-					<pos_s xyz="-2.000000 4.000000 2.000000"/>
-					<tex st="32.000000 16.000000"/>
-					<pos_xy xy="2.000000 4.000000"/>
-					<tex st="32.000000 0.000000"/>
-					<pos_yz yz="5.000000 1.000000"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-2.000000 5.000000"/>
+					<pos_xy xy="-4.000000 6.000000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -151,7 +134,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface11" kind="mesh"
+	<node index="0" name="polySurface1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -163,18 +146,18 @@
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
-		vertex_size="16" polygon_size="4"
-		triangle_size="0" quad_size="4"
-		volume_min="-2.000000 4.000000 -1.000000"
-		volume_max="2.000000 5.000000 2.000000"
-		volume_r="5.477295"
+		vertex_size="8" polygon_size="2"
+		triangle_size="0" quad_size="2"
+		volume_min="-4.000000 0.750000 -3.750000"
+		volume_max="4.000000 6.000000 -0.250000"
+		volume_r="7.909668"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="16" polygon_size="4"
-	triangle_size="0" quad_size="4"/>
+<output_info vertex_size="8" polygon_size="2"
+	triangle_size="0" quad_size="2"/>
 
 </body>
 
