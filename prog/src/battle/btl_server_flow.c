@@ -526,7 +526,7 @@ static BOOL addsick_core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPA
 static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
   WazaSick sick, BPP_SICK_CONT sickCont );
 static BtlWeather scEvent_GetWeather( BTL_SVFLOW_WORK* wk );
-static BOOL scEvent_StdSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick  );
+static BOOL scEvent_WazaSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick  );
 static void scEvent_AddSick_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick );
 static void scEvent_PokeSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker,
   PokeSick sick, BPP_SICK_CONT sickCont );
@@ -2140,7 +2140,7 @@ static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
         rand = BTL_CALC_GetRand( 256 );
         if( rand < (lv_poke - lv_border) )
         {
-          if( !scEvent_StdSick_CheckFail(wk, bpp, POKESICK_NEMURI) ){
+          if( !scEvent_WazaSick_CheckFail(wk, bpp, POKESICK_NEMURI) ){
             return SABOTAGE_GO_SLEEP;
           }
         }
@@ -7135,12 +7135,9 @@ static BOOL addsick_core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPA
   }
   else
   {
-    BOOL fFail = FALSE;
     u32 hem_state = Hem_PushState( &wk->HEManager );
 
-    if( sick < WAZASICK_STD_MAX ){
-      fFail = scEvent_StdSick_CheckFail( wk, target, sick );
-    }
+    BOOL fFail = scEvent_WazaSick_CheckFail( wk, target, sick );
 
     if( !fFail ){
       BTL_Printf( DBGSTR_SVFL_AddSickFixed, sick);
@@ -7262,7 +7259,7 @@ static BtlWeather scEvent_GetWeather( BTL_SVFLOW_WORK* wk )
  * @retval  BOOL    Ž¸”s‚·‚éê‡‚ÍTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL scEvent_StdSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick  )
+static BOOL scEvent_WazaSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick  )
 {
   BOOL fFail = FALSE;
   BTL_EVENTVAR_Push();
