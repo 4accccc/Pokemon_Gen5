@@ -358,6 +358,8 @@ struct _FIELDMAP_WORK
 
   BOOL MainHookFlg;
 
+  BOOL seasonDispFlag; // ‹Gß‚ð•\Ž¦’†‚©‚Ç‚¤‚©
+
 
   FACEUP_WK_PTR FaceUpWkPtr;
 };
@@ -1074,6 +1076,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
     PL_BOAT_Main(*wk_ptr);
   }
   SET_CHECK("update_top:CLACT");
+
+  OS_TFPrintf( 3, "seasonDispFlag = %d\n", fieldWork->seasonDispFlag );
 
 
   // ----------------------top‘¤3D•`‰æˆ—---------------------------------------
@@ -3545,6 +3549,34 @@ BOOL FIELDMAP_CheckDoEvent( const FIELDMAP_WORK* fieldWork )
 u32 FIELDMAP_GetSeasonTimeZone( const FIELDMAP_WORK * fieldWork )
 {
   return PM_RTC_GetTimeZone( GAMEDATA_GetSeasonID(fieldWork->gamedata) );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief ‹Gß‚ð•\Ž¦’†‚©‚Ç‚¤‚©‚ðŽæ“¾‚·‚é
+ *
+ * @param fieldWork
+ *
+ * @return ‹Gß‚ð•\Ž¦’†‚È‚ç TRUE
+ *         ‚»‚¤‚Å‚È‚¯‚ê‚Î FALSE
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELDMAP_CheckSeasonDispFlag( const FIELDMAP_WORK * fieldWork )
+{
+  return fieldWork->seasonDispFlag;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief ‹Gß•\Ž¦’†ƒtƒ‰ƒO‚ðÝ’è‚·‚é
+ *
+ * @param fieldWork
+ * @param flag
+ */
+//-----------------------------------------------------------------------------
+void FIELDMAP_SetSeasonDispFlag( FIELDMAP_WORK * fieldWork, BOOL flag )
+{
+  fieldWork->seasonDispFlag = flag;
 }
 
 

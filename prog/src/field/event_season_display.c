@@ -149,6 +149,7 @@ static void UpdateAlpha_GAMESTART( const EVENT_WORK* work, int seq ); // ƒ¿’l‚ð
 static int GetNextSeq( const EVENT_WORK* work, int seq ); // ŽŸ‚ÌƒV[ƒPƒ“ƒX‚ðŽæ“¾‚·‚é
 static void SetSeq( EVENT_WORK* work, int* seq, int next ); // ƒV[ƒPƒ“ƒX‚ðÝ’è‚·‚é
 static void StepNextSeq( EVENT_WORK* work, int* seq ); // ƒV[ƒPƒ“ƒX‚ð•ÏX‚·‚é
+static void EventInit( EVENT_WORK* work ); // ƒCƒxƒ“ƒgŠJŽnŽž‚Ìˆ—
 static void EventExit( EVENT_WORK* work ); // ƒCƒxƒ“ƒgI—¹Žž‚Ìˆ—
 static EVENT_MODE GetMode( const EVENT_WORK* work ); // “®ìƒ‚[ƒh‚ðŽæ“¾‚·‚é
 static BOOL IsSkipOn( const EVENT_WORK* work ); // ƒXƒLƒbƒv‚·‚é‚©‚Ç‚¤‚©‚ðŽæ“¾‚·‚é
@@ -170,6 +171,7 @@ static GMEVENT_RESULT SeasonDisplay( GMEVENT* event, int* seq, void* wk )
   switch( *seq ) {
   // ‰Šú‰»
   case SEQ_INIT:
+    EventInit( work );
     break;
 
   // •\Ž¦€”õ
@@ -730,6 +732,21 @@ static void StepNextSeq( EVENT_WORK* work, int* seq )
 
 //------------------------------------------------------------------------------
 /**
+ * @brief ƒCƒxƒ“ƒgŠJŽnŽž‚Ìˆ—
+ *
+ * @param work ƒCƒxƒ“ƒgƒ[ƒN
+ */
+//------------------------------------------------------------------------------
+static void EventInit( EVENT_WORK* work )
+{
+  // ‹Gß•\Ž¦’†ƒtƒ‰ƒO‚ðƒZƒbƒg
+  if( work->fieldmap ) {
+    FIELDMAP_SetSeasonDispFlag( work->fieldmap, TRUE );
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
  * @brief ƒCƒxƒ“ƒgI—¹ˆ—
  *
  * @param work ƒCƒxƒ“ƒgƒ[ƒN
@@ -739,6 +756,11 @@ static void EventExit( EVENT_WORK* work )
 {
   // BG‚ð”ñ•\Ž¦‚ÉÝ’è
   GFL_BG_SetVisible( BG_FRAME_SEASON, VISIBLE_OFF ); 
+
+  // ‹Gß•\Ž¦’†ƒtƒ‰ƒO‚ðƒŠƒZƒbƒg
+  if( work->fieldmap ) {
+    FIELDMAP_SetSeasonDispFlag( work->fieldmap, FALSE );
+  }
 }
 
 //------------------------------------------------------------------------------

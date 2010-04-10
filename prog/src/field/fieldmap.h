@@ -141,6 +141,8 @@ extern ENCEFF_CNT_PTR FIELDMAP_GetEncEffCntPtr(FIELDMAP_WORK *fieldWork);
 extern FIELDSKILL_MAPEFF * FIELDMAP_GetFieldSkillMapEffect( FIELDMAP_WORK * fieldWork );
 
 extern u32 FIELDMAP_GetSeasonTimeZone( const FIELDMAP_WORK * fieldWork );
+extern BOOL FIELDMAP_CheckSeasonDispFlag( const FIELDMAP_WORK * fieldWork );
+extern void FIELDMAP_SetSeasonDispFlag( FIELDMAP_WORK * fieldWork, BOOL flag );
 
 extern void FIELDMAP_SetMapFadeReqFlg( FIELDMAP_WORK * fieldWork, const BOOL inReq );
 extern BOOL FIELDMAP_CheckMapFadeReqFlg( FIELDMAP_WORK * fieldWork );
@@ -155,6 +157,7 @@ extern void FIELDMAP_InitBgNoTrans( FIELDMAP_WORK* fieldWork );
 
 extern void FIELDMAP_SetMainFuncHookFlg(FIELDMAP_WORK * fieldWork, const BOOLinFlg);
 extern FACEUP_WK_PTR *FIELDMAP_GetFaceupWkPtrAdr(FIELDMAP_WORK *fieldWork);
+
 #ifdef PM_DEBUG
 extern void FIELDMAP_InitDebugWork( FIELDMAP_WORK* fieldWork );
 #endif  //PM_DEBUG
