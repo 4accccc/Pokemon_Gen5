@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T12:39:17"/>
+	<create user="matsumiya" host="W00224" date="2010-04-10T22:09:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1457" top="325" right="2162" bottom="953" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -445,12 +445,16 @@
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『ポケモンセンターの　まえで
 はかせが　まっていなかった？▼
-ぼくは　いいんだ
-ポケモンセンターのこと　くわしいし</language>
+ぼくは　いいんだよ
+ポケモンセンターのこと　しっているし▼
+なにより　はやく　たたかいたいよ
+つよくなるには　じっせんが　１ばんさ</language>
 		<language name="JPN_KANJI" width="256">チェレン『ポケモンセンターの　前で
 博士が　待っていなかった？▼
-ぼくは　いいんだ
-ポケモンセンターのこと　詳しいし</language>
+ぼくは　いいんだよ
+ポケモンセンターのこと　知っているから▼
+なにより　早く　戦いたいよ
+強くなるには　実戦が　１番さ</language>
 	</row>
 
 	<row id="msg_t02_boodle_06" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -491,10 +495,10 @@
 
 ・0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]▼
-こっち　だよ！▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]▼
-こっち　だよ！▼</language>
+		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]
+こっちに　おいでよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]
+こっちに　おいでよ▼</language>
 	</row>
 
 	<row id="msg_t02_sage1_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -724,15 +728,15 @@
 ・続けてboss_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『……ずいぶんと
-はやくちな　ひと　ですね▼
+はやくち　なんだな▼
 それに　ポケモンが
-はなした……　ですか？▽
-おかしなことを　いうんですね▼</language>
+はなした……　だって？▽
+おかしなことを　いうよね▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……ずいぶんと
-早口な　人ですね▼
+早口なんだな▼
 それに　ポケモンが
-話した……　ですか？▽
-おかしなことを　いうんですね▼</language>
+話した……　だって？▽
+おかしなことを　いうよね▼</language>
 	</row>
 
 	<row id="msg_t02_boss_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -759,16 +763,16 @@
 こちらは　[1:00:トレーナー名:0]▼
 たのまれて　ポケモンずかんを
 かんせい　させるための▽
-たびに　でたところ　です▼
-もっとも　ぼくの　もくひょうは
-チャンピオン　ですが……▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……オレは　チェレン
+たびに　でたところ▼
+ぼくの　もくひょうは
+チャンピオン　だけどね▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……ぼくは　チェレン
 こちらは　[1:00:トレーナー名:0]▼
 頼まれて　ポケモン図鑑を
 完成させるための▽
-旅に　でたところです▼
-もっとも　ぼくの　目標は
-チャンピオン　ですが……▼</language>
+旅に　でたところ▼
+ぼくの　最終目標は
+チャンピオン　だけどね▼</language>
 	</row>
 
 	<row id="msg_t02_boss_03" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -837,23 +841,23 @@
 ・画面外に消えると主人公、操作可能に</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『……ぼくのせいで
-おかしなことに　なったね▽
-だけど　きにしないでよ▼
+おかしなことに　なったな▽
+だけど　きにしないで　いいよ▼
 トレーナーと　ポケモンは
 おたがい　たすけあっているし▼
 ポケモンずかんを　かんせいさせるのは
 ポケモンと　トレーナーが▽
-もっと　なかよくなるため　だから▼
-じゃあね▼</language>
+もっと　なかよくなるため　だからね▼
+じゃあ　ぼくは　さきにいくよ▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……ぼくのせいで
-おかしなことに　なったね▽
-だけど　気にしないでよ▼
+おかしなことに　なったな▽
+だけど　気にしないで　いいよ▼
 トレーナーと　ポケモンは
-おたがい　助け合っているし▼
+お互い　助け合っているし▼
 ポケモン図鑑を　完成させるのは
 ポケモンと　トレーナーが▽
-もっと　仲良くなるため　だから▼
-じゃあね▼</language>
+もっと　知り合うため　だからね▼
+じゃあ　ぼくは　先に行くよ▼</language>
 	</row>
 
 	<row id="msg_t01_woman1_01" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
