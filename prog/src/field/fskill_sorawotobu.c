@@ -71,8 +71,8 @@ GMEVENT * EVENT_FieldSkillSorawotobu(
     }
     else
     {
-      wk->OutCutinNo = FLDCIID_FLY_OUT;
-      wk->InCutinNo = FLDCIID_FLY_IN;
+      wk->OutCutinNo = FLDCIID_FLY_OUT2;
+      wk->InCutinNo = FLDCIID_FLY_IN2;
     }
   }
   LOCATION_SetDefaultPos(&wk->Location, inZoneID);
