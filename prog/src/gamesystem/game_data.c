@@ -1518,6 +1518,30 @@ SAVE_RESULT GAMEDATA_SaveAsyncMain(GAMEDATA *gamedata)
 
 //==================================================================
 /**
+ * @brief   分割セーブをキャンセルする
+ *
+ * @param   gamedata    ゲームデータへのポインタ
+ *
+ * @retval  none
+ */
+//==================================================================
+void GAMEDATA_SaveAsyncCancel(GAMEDATA *gamedata)
+{
+  if( gamedata->is_save == TRUE )
+  {
+    //リセット許可
+    GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_SVLD);
+    //ビーコンのスキャンを再開
+    WIH_DWC_Restart();
+    //セーブ中フラグOFF
+    gamedata->is_save = FALSE;
+
+    SaveControl_SaveAsyncCancel( gamedata->sv_control_ptr );
+  }
+}
+
+//==================================================================
+/**
  * セーブ実行中か調べる
  *
  * @param   gamedata    ゲームデータへのポインタ

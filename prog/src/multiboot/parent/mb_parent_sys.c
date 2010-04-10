@@ -366,6 +366,11 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
 //--------------------------------------------------------------
 static void MB_PARENT_Term( MB_PARENT_WORK *work )
 {
+  if( GAMEDATA_GetIsSave( work->initWork->gameData ) )
+  {
+    GAMEDATA_SaveAsyncCancel( work->initWork->gameData );
+  }
+  
   GFL_TCB_DeleteTask( work->vBlankTcb );
   GFUser_ResetVIntrFunc();
   GFL_NET_WirelessIconEasyEnd();

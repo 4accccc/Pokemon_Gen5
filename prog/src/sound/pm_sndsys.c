@@ -17,6 +17,7 @@
   // とりあえずエラー回避用に定義
   #define BANK_MUS_WB_SHINKA	(1010)
   #define SEQ_BGM_SHINKA	(1010)
+  #define PLAYER_BGM2 (0)
 #endif //MULTI_BOOT_MAKE
 
 

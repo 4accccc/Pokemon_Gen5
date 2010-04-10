@@ -108,6 +108,17 @@ extern void GAMEDATA_SaveAsyncStart(GAMEDATA *gamedata);
 //--------------------------------------------------------------
 extern SAVE_RESULT GAMEDATA_SaveAsyncMain(GAMEDATA *gamedata);
 
+//--------------------------------------------------------------
+/**
+ * @brief   分割セーブをキャンセルする
+ *
+ * @param   gamedata    ゲームデータへのポインタ
+ *
+ * @retval  none
+ */
+//--------------------------------------------------------------
+extern void GAMEDATA_SaveAsyncCancel(GAMEDATA *gamedata);
+
 //==================================================================
 /**
  * セーブ実行中か調べる

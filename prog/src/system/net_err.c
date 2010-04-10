@@ -322,12 +322,12 @@ void NetErr_ErrorSet(void)
     nes->wifi_error   = *GFL_NET_StateGetWifiError();
     nes->error        = GFL_NET_StateGetError();
     
+#ifndef MULTI_BOOT_MAKE  //通常時処理
     if( nes->net_type == GFL_NET_TYPE_WIFI
         || nes->net_type == GFL_NET_TYPE_WIFI_LOBBY
         || nes->net_type == GFL_NET_TYPE_WIFI_GTS )
     { 
 
-#ifndef MULTI_BOOT_MAKE  //通常時処理
       //WIFIならば、軽度と重度を判定
       if( nes->wifi_error.errorType == DWC_ETYPE_LIGHT
           || nes->wifi_error.errorType == DWC_ETYPE_SHOW_ERROR )
@@ -335,7 +335,6 @@ void NetErr_ErrorSet(void)
         nes->err_important_type  = NET_ERR_CHECK_LIGHT;
       }
       else
-#endif  //MULTI_BOOT_MAKE
       { 
         nes->err_important_type  = NET_ERR_CHECK_HEAVY;
       }
@@ -343,8 +342,12 @@ void NetErr_ErrorSet(void)
     else
     {
       //それ以外は重度しかない
-      nes->err_important_type  = NET_ERR_CHECK_HEAVY;
+      nes->err_important_type  = NET_ERR_CHECK_LIGHT;
     }
+#else //MB子機処理
+    //常に重度のエラー
+    nes->err_important_type  = NET_ERR_CHECK_HEAVY;
+#endif  //MULTI_BOOT_MAKE
   }
 }
 
@@ -503,6 +506,10 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 		
 //		OS_SpinWait(10000);
 		
+		while( nes->err_important_type == NET_ERR_CHECK_HEAVY )
+		{
+      ; //重度なエラーは抜けれない
+    }
 		while((PAD_Read() & ERR_DISP_END_BUTTON) != 0){
 			;	//ボタンを一度離すまで待つ
 		}
@@ -788,7 +795,7 @@ static void Local_ErrMessagePrint(void)
 
       mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
           ARCID_MESSAGE, NARC_message_net_err_dat, HEAPID_NET_TEMP);
-
+/*
       switch( nes->error )
       { 
         //致命的ではないエラー
@@ -804,6 +811,15 @@ static void Local_ErrMessagePrint(void)
 
       default:
         msgno = 1;
+      }
+*/
+      if( nes->err_important_type  == NET_ERR_CHECK_HEAVY )
+      {
+        msgno = net_error_0002;
+      }
+      else
+      {
+        msgno = net_error_0001;
       }
     }
 #else
