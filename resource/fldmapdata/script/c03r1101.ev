@@ -202,6 +202,12 @@ EVENT_START		ev_pos_c03r1101_plazma_01
 
 	_TIME_WAIT( 30 )
 
+	//カメラ戻す
+	_CAMERA_RECV_MOVE( 1 )//カメラ復帰移動
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+
 	//OBJ削除
 	_OBJ_DEL( C03R1101_SAGE1_01 )
 	_OBJ_DEL( C03R1101_SAGE3_01 )
@@ -216,13 +222,7 @@ EVENT_START		ev_pos_c03r1101_plazma_01
 
 	//BGM終了
 	_END_EVENT_BGM()
-	
-	//カメラ戻す
-	_CAMERA_RECV_MOVE( 20 )//カメラ復帰移動
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	_CAMERA_BIND()		//カメラバインド
-	_CAMERA_END()		//カメラ操作終了
-	
+
 	//アイリス：アーティに歩み寄る
 	_OBJ_ANIME( C03R1101_LEADER8W_01, anm_leader8w_talk )
 	_OBJ_ANIME_WAIT()

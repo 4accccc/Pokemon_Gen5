@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/09 15:11:09
+#save date:2010/04/11 21:00:17
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p07.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p07.wms
 #hold event type:
 1
 #hold event number:
-8
+11
 #event number: 0
 #type
 1
@@ -86,7 +86,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_C03P07_PLASMA_LEADER3
 #Event Script Name
-SCRID_DUMMY
+SCRID_C03P07_HAKAIM_01
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -117,7 +117,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_C03P07_PLASMA_LEADER3
 #Event Script Name
-SCRID_DUMMY
+SCRID_C03P07_HAKAIM_02
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -148,7 +148,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_C03P07_PLASMA_LEADER3
 #Event Script Name
-SCRID_DUMMY
+SCRID_C03P07_HAKAIW_01
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
@@ -179,7 +179,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_C03P07_PLASMA_LEADER3
 #Event Script Name
-SCRID_DUMMY
+SCRID_C03P07_LEADER3_01
 #Direction Type Number
 DIR_LEFT
 #Parameter 0 Number
@@ -258,6 +258,99 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 -40 0 -360
+#event number: 8
+#type
+1
+#ID name
+C03P07_BUSINESSMAN1_01
+#OBJ CODE Number
+VETERANM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03P07_BUSINESSMAN1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+56 0 -104
+#event number: 9
+#type
+1
+#ID name
+C03P07_BUSINESSMAN2_01
+#OBJ CODE Number
+VETERANM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03P07_BUSINESSMAN2_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 -664
+#event number: 10
+#type
+1
+#ID name
+C03P07_OL1_01
+#OBJ CODE Number
+VETERANM
+#MOVE CODE Number
+MV_RND
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_C03P07_OL1_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+2
+#Move Limit Z Number
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-72 0 -72
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
