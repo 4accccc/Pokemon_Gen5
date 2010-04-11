@@ -364,13 +364,63 @@ extern void GFL_SAVEDATA_GetActualSize(GFL_SAVEDATA *sv, u32 *actual_size, u32 *
 //--------------------------------------------------------------
 extern u16 GFL_BACKUP_BlockCRC_Set(GFL_SAVEDATA *sv, GFL_SVDT_ID gmdataid);
 
+//==================================================================
+/**
+ * フラッシュ直接書き込み：一括書き込み
+ *
+ * @param	flash_address		フラッシュのアドレス（０～）※セクタ指定ではない
+ * @param	src         		書き込むデータのアドレス
+ * @param	len		          書き込むデータの長さ
+ * @return	BOOL	TRUEで成功、FALSEで失敗
+ */
+//==================================================================
+extern BOOL GFL_BACKUP_DirectFlashSave(u32 flash_address, const void * src, u32 len);
+
+//==================================================================
+/**
+ * フラッシュ直接書き込み：分割書き込み：初期化
+ *
+ * @param	flash_address		フラッシュのアドレス（０～）※セクタ指定ではない
+ * @param	src         		書き込むデータのアドレス
+ * @param	len		          書き込むデータの長さ
+ * @return	u16 lock_id
+ */
+//==================================================================
+extern u16 GFL_BACKUP_DirectFlashSaveAsyncInit(u32 flash_address, const void * src, u32 len);
+
+//==================================================================
+/**
+ * フラッシュ直接書き込み：分割書き込み：メイン
+ *
+ * @param   lock_id		    
+ * @param   err_result		処理完了後　TRUE:正常に書き込んで終了　FALSE:エラーで終了
+ *
+ * @retval  BOOL		      TRUE:処理完了　FALSE:処理継続中
+ *
+ * 戻り値がTRUEが返ってきたのを確認してから、err_resultでエラー判定をしてください
+ */
+//==================================================================
+extern BOOL GFL_BACKUP_DirectFlashSaveAsyncMain(u16 lock_id, BOOL *err_result);
+
+//==================================================================
+/**
+ * フラッシュ直接読み出し
+ *
+ * @param	src		フラッシュのアドレス（０～）※セクタ指定ではない
+ * @param	dst		読み込み先アドレス
+ * @param	len		読み込むデータの長さ
+ * @return	BOOL	TRUEで成功、FALSEで失敗
+ */
+//==================================================================
+extern BOOL GFL_BACKUP_DirectFlashLoad(u32 src, void * dst, u32 len);
+
 //==============================================================================
 //	デバッグ用関数
 //==============================================================================
 #ifdef PM_DEBUG
 extern void DEBUG_GFL_BACKUP_BlockSaveFlagGet(const GFL_SAVEDATA *sv, GFL_SVDT_ID gmdataid, BOOL crctable, BOOL footer, BOOL *ret_a, BOOL *ret_b);
 extern void DEBUG_BACKUP_DataWrite(GFL_SAVEDATA *sv, GFL_SVDT_ID gmdataid, void *data, int write_offset, int size, int save_a, int save_b, int save_crc, int save_footer);
-extern BOOL DEBUG_BACKUP_FlashSave(u32 src, void * dst, u32 len);
+extern BOOL DEBUG_BACKUP_FlashSave(u32 flash_address, const void * src, u32 len);
 extern BOOL DEBUG_BACKUP_FlashLoad(u32 src, void * dst, u32 len);
 #endif
 
