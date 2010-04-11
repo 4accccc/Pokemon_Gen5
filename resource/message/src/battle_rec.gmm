@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-04-07T01:05:00"/>
+	<create user="shimoyamada" host="W00184" date="2010-04-11T17:57:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -319,7 +319,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -735,9 +735,9 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:1]：[1:01:ポケモン種族名:0]</language>
 	</row>
 
-	<row id="msg_510">
-		<language name="JPN" font=" 1:small" width="216">[2:01:２桁:0]：[1:0E:トレーナー種別名:1]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[2:01:２桁:0]：[1:0E:トレーナー種別名:1]</language>
+	<row id="msg_510" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<language name="JPN" font=" 1:small" width="216">[2:01:２桁:0] [1:0E:トレーナー種別名:1]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:01:２桁:0] [1:0E:トレーナー種別名:1]</language>
 	</row>
 
 	<row id="msg_511">
@@ -796,10 +796,10 @@
 バトルフロンティア</language>
 	</row>
 
-	<row id="msg_607">
+	<row id="msg_607" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>数字　：　なまえ　のとき使う</comment>
-		<language name="JPN" font=" 1:small" width="216">：</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">：</language>
+		<language name="JPN" font=" 1:small" width="216"></language>
+		<language name="JPN_KANJI" font=" 1:small" width="216"></language>
 	</row>
 
 	<row id="msg_608">
@@ -1651,8 +1651,8 @@
 	</row>
 
 	<row id="msg_10000">
-		<language name="JPN" font=" 1:small" width="216">[BD:02:Ｘセンタリング]ＴＯＵＣＨ　ＨＥＲＥ！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:02:Ｘセンタリング]ＴＯＵＣＨ　ＨＥＲＥ！</language>
+		<language name="JPN" font=" 1:small" width="216">[BD:02:Ｘセンタリング]TOUCH HERE!</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:02:Ｘセンタリング]TOUCH HERE!</language>
 	</row>
 
 	<row id="msg_10001">
