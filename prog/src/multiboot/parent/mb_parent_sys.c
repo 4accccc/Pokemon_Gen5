@@ -433,8 +433,17 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     break;
     
   case MPS_FADEOUT:
-    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    if( work->initWork->mode == MPM_POKE_SHIFTER )
+    {
+      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                  WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    }
+    else
+    {
+      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                  WIPE_FADE_WHITE , WIPE_DEF_DIV , WIPE_DEF_SYNC , work->heapId );
+    }
+
     work->state = MPS_WAIT_FADEOUT;
     break;
   case MPS_WAIT_FADEOUT:
@@ -2306,6 +2315,11 @@ static GFL_PROC_RESULT MB_PARENT_ProcInit( GFL_PROC * proc, int * seq , void *pw
 static GFL_PROC_RESULT MB_PARENT_ProcTerm( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   MB_PARENT_WORK *work = mywk;
+  BOOL isMovieTrans = FALSE;
+  if( work->initWork->mode == MPM_MOVIE_TRANS )
+  {
+    isMovieTrans = TRUE;
+  }
   
   MB_PARENT_Term( work );
 
@@ -2322,9 +2336,6 @@ static GFL_PROC_RESULT MB_PARENT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
       GFL_HEAP_FreeMemory( work->initWork );
     }
   }
-  GFL_PROC_FreeWork( proc );
-  GFL_HEAP_DeleteHeap( HEAPID_MULTIBOOT );
-
   if( work->initWork->mode == MPM_MOVIE_TRANS &&
       work->isNetErr == TRUE )
   {
@@ -2336,6 +2347,15 @@ static GFL_PROC_RESULT MB_PARENT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
     {
       NetErr_DispCall( TRUE );
     }
+  }
+
+  GFL_PROC_FreeWork( proc );
+  GFL_HEAP_DeleteHeap( HEAPID_MULTIBOOT );
+
+
+  if( isMovieTrans == TRUE )
+  {
+    OS_ResetSystem(0);
   }
 
   return GFL_PROC_RES_FINISH;
