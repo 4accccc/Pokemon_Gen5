@@ -332,8 +332,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     if( MB_COMM_IsInitComm(work->commWork) == TRUE )
     {
       //êeã@èÓïÒ
-      if( MB_IsMultiBootChild() == FALSE ||
-          GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+      if( MB_IsMultiBootChild() == FALSE )
       {
         GF_ASSERT_MSG(0,"This DS is not multiboot child!!\n");
       }

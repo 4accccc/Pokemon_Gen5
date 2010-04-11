@@ -249,6 +249,7 @@ static int MUS_COMM_GetBeaconSize(void *pWork);
 static BOOL MUS_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID GameServiceID2);
 
 inline static void MUS_COMM_SetCommState( MUS_COMM_WORK *work , const MUS_COMM_STATE commState );
+static void MUS_COMM_DebugCheckCRC( void *data , const u32 size , const u8 code );
 
 static const NetRecvFuncTable MusCommRecvTable[] = 
 {
@@ -1686,6 +1687,8 @@ const BOOL MUS_COMM_Send_ScriptSize( MUS_COMM_WORK *work )
 const BOOL MUS_COMM_Send_ProgramData( MUS_COMM_WORK *work )
 {
   ARI_TPrintf("Send ProgramData \n");
+  MUS_COMM_DebugCheckCRC( work->distData->programData , work->distData->programDataSize , 2 );
+
   {
     GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
     BOOL ret = GFL_NET_SendDataEx( parentHandle , GFL_NET_SENDID_ALLUSER , 
@@ -1704,6 +1707,8 @@ static void MUS_COMM_Post_ProgramData( const int netID, const int size , const v
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
   ARI_TPrintf("MusComm Finish Post ProgramData.\n");
   work->isPostProgramData = TRUE;
+
+  MUS_COMM_DebugCheckCRC( work->distData->programData , work->distData->programDataSize , 12 );
 }
 
 static u8* MUS_COMM_Post_ProgramDataBuff( int netID, void* pWork , int size )
@@ -1716,6 +1721,7 @@ static u8* MUS_COMM_Post_ProgramDataBuff( int netID, void* pWork , int size )
 const BOOL MUS_COMM_Send_MessageData( MUS_COMM_WORK *work )
 {
   ARI_TPrintf("Send MessageData \n");
+  MUS_COMM_DebugCheckCRC( work->distData->messageData , work->distData->messageDataSize , 1 );
   {
     GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
     BOOL ret = GFL_NET_SendDataEx( parentHandle , GFL_NET_SENDID_ALLUSER , 
@@ -1733,6 +1739,8 @@ static void MUS_COMM_Post_MessageData( const int netID, const int size , const v
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
   ARI_TPrintf("MusComm Finish Post MessageData.\n");
   work->isPostMessageData = TRUE;
+
+  MUS_COMM_DebugCheckCRC( work->distData->messageData , work->distData->messageDataSize , 11 );
 }
 
 static u8*    MUS_COMM_Post_MessageDataBuff( int netID, void* pWork , int size )
@@ -1745,6 +1753,7 @@ static u8*    MUS_COMM_Post_MessageDataBuff( int netID, void* pWork , int size )
 const BOOL MUS_COMM_Send_ScriptData( MUS_COMM_WORK *work )
 {
   ARI_TPrintf("Send ScriptData \n");
+  MUS_COMM_DebugCheckCRC( work->distData->scriptData , work->distData->scriptDataSize , 0 );
   {
     GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
     BOOL ret = GFL_NET_SendDataEx( parentHandle , GFL_NET_SENDID_ALLUSER , 
@@ -1755,13 +1764,16 @@ const BOOL MUS_COMM_Send_ScriptData( MUS_COMM_WORK *work )
       ARI_TPrintf("Send ScriptData is failued!!\n");
     }
     return ret;
-  }}
+  }
+}
 
 static void MUS_COMM_Post_ScriptData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
   ARI_TPrintf("MusComm Finish Post ScriptData.\n");
   work->isPostScriptData = TRUE;
+
+  MUS_COMM_DebugCheckCRC( work->distData->scriptData , work->distData->scriptDataSize , 10 );
 }
 
 static u8*    MUS_COMM_Post_ScriptDataBuff( int netID, void* pWork , int size )
@@ -1988,4 +2000,47 @@ inline static void MUS_COMM_SetCommState( MUS_COMM_WORK *work , const MUS_COMM_S
 GFLNetInitializeStruct* MUS_COMM_GetNetInitStruct(void)
 {
   return &aGFLNetInitMusical;
+}
+
+static void MUS_COMM_DebugCheckCRC( void *data , const u32 size , const u8 code )
+{
+#if 0
+  u16 i;
+  u16 cnt = 0;
+  u32 sum = 0;
+  OS_TFPrintf(3,"MUS_COMM Start  check CRC[%d]\n",code);
+  OS_TFPrintf(1,"MUS_COMM Start  check CRC[%d]\n",code);
+  for( i=0;i<size/2;i++ )
+  {
+    u16 *val = (u16*)((u32)data + i*2);
+    sum += *val;
+    cnt++;
+    if( cnt == 255 )
+    {
+      OS_TFPrintf(3,"[%10d]\n",sum );
+      cnt = 0;
+      sum = 0;
+    }
+  }
+  cnt = 5;
+  for( i=0;i<size;i++ )
+  {
+    u8 *val1 = (u8*)((u32)data + i);
+    OS_TFPrintf(1,"%02x",*val1 );
+    cnt++;
+    
+    if( cnt == 409 )
+    {
+      OS_TFPrintf(1,"\n" );
+      cnt = 0;
+    }
+  }
+
+  OS_TFPrintf(3,"[%10d]\n",sum );
+  OS_TFPrintf(3,"(%d)\n",SVC_GetCRC16( 0 , data , size ));
+  OS_TFPrintf(1,"\n(%d)\n",SVC_GetCRC16( 0 , data , size ));
+  
+
+  OS_TFPrintf(3,"MUS_COMM Finish check CRC[%d]\n",code);
+#endif
 }

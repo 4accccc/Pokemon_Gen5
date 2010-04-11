@@ -83,14 +83,7 @@ BOOL  MB_DATA_GS_LoadData( MB_DATA_WORK *dataWork )
 #if PM_DEBUG
     if( dataWork->isDummyCard == TRUE )
     {
-      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
-      {
-        CARD_IdentifyBackup( CARD_BACKUP_TYPE_FLASH_4MBITS );
-      }
-      else
-      {
-        CARD_IdentifyBackup( CARD_BACKUP_TYPE_FLASH_4MBITS_IRC );
-      }
+      CARD_IdentifyBackup( CARD_BACKUP_TYPE_FLASH_4MBITS_IRC );
     }
     else
 #endif

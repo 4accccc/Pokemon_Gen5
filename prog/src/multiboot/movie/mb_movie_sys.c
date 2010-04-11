@@ -153,8 +153,12 @@ typedef struct
   BOOL isInitCellSys;
   
   CONNECT_BG_PALANM bgAnmWork;
-  
+
 }MB_MOVIE_WORK;
+#if PM_DEBUG
+  static BOOL isAllMove = FALSE;
+#endif //PM_DEBUG
+  
 
 
 //======================================================================
@@ -213,6 +217,10 @@ static void MB_MOVIE_Init( MB_MOVIE_WORK *work )
   work->state = MCS_FADEIN;
   work->dataWork = NULL;
   work->isInitCellSys = FALSE;
+  
+#if PM_DEBUG
+  isAllMove = FALSE;
+#endif //PM_DEBUG
 
   MB_MOVIE_InitGraphic( work );
   MB_MOVIE_LoadResource( work );
@@ -337,8 +345,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
       GFL_NET_WirelessIconEasy_HoldLCD( TRUE , work->heapId );
       GFL_NET_ReloadIcon();
       //e‹@î•ñ
-      if( MB_IsMultiBootChild() == FALSE ||
-          GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+      if( MB_IsMultiBootChild() == FALSE )
       {
         GF_ASSERT_MSG(0,"This DS is not multiboot child!!\n");
       }
@@ -351,6 +358,13 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
       MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_MOVIE_01 );
       MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
       work->state = MCS_WAIT_CONNECT;
+#if PM_DEBUG
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+      {
+        isAllMove = TRUE;
+      }
+#endif //PM_DEBUG
+
     }
     break;
   
@@ -998,6 +1012,15 @@ static const u32 MB_MOVIE_GetMoviePokeNum( MB_MOVIE_WORK *work )
             num++;
             MB_TPrintf("movie poke found!![%d:%d].\n",i,j);
           }
+#if PM_DEBUG
+          if( ret == MUCPR_HIDEN &&
+              isAllMove == TRUE )
+          {
+            itemNoArr[i*MB_POKE_BOX_POKE+j] = PPP_Get( ppp , ID_PARA_item , NULL );
+            num++;
+            MB_TPrintf("movie poke found(hiden&debug)!![%d:%d].\n",i,j);
+          }
+#endif
         }
       }
     }
@@ -1071,12 +1094,12 @@ static const BOOL MB_MOVIE_CheckMoviePoke( POKEMON_PASO_PARAM *ppp )
   }
 
 #if PM_DEBUG
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  if( isAllMove == TRUE )
   {
     return TRUE;
   }
-#endif //PM_DEBUG
-  
+#endif
+
   return FALSE;
 }
 
