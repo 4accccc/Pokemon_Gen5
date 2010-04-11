@@ -1014,7 +1014,7 @@ EVENT_START   ev_scene_c08_gymclear_01
 	_OBJ_ANIME_WAIT()
 	
 	//自機にカメラを戻す
-	_CAMERA_DEF_MOVE (10) 
+	_CAMERA_DEF_MOVE (8) 
 	_CAMERA_WAIT_MOVE()
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
