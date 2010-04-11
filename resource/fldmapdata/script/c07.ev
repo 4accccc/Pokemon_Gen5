@@ -71,52 +71,46 @@ EVENT_START   ev_scene_c07_hakase1_01
 	_OBJ_ANIME( C07_HAKASE1_01 , C07_hakase1_to_player_01 )
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_POS( msg_c07_hakase1_01 , C07_HAKASE1_01,POS_DOWN  )
-	_BALLOONWIN_CLOSE()
 		
 	//なつき度によって会話を分岐
 	//70以上
 	IF $LWK_CHECK_NT >= 70 THEN
-		_BALLOONWIN_OBJMSG( msg_c07_hakase1_02 , C07_HAKASE1_01 )
-		_BALLOONWIN_CLOSE()
+		_BALLOONWIN_OBJMSG_POS( msg_c07_hakase1_02 , C07_HAKASE1_01 ,POS_DOWN  )
 		
 	//70以下
 	ELSE
-		_BALLOONWIN_OBJMSG( msg_c07_hakase1_03 , C07_HAKASE1_01 )
-		_BALLOONWIN_CLOSE()
+		_BALLOONWIN_OBJMSG_POS( msg_c07_hakase1_03 , C07_HAKASE1_01 ,POS_DOWN  )
 		
 	ENDIF
 	
 	//リュウラセンの塔を知っているか？
 	_TALK_OBJ_START()
-	_BALLOONWIN_OBJMSG( msg_c07_hakase1_04 , C07_HAKASE1_01)
+	_BALLOONWIN_OBJMSG_POS( msg_c07_hakase1_04 , C07_HAKASE1_01 ,POS_DOWN  )
 	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
 	
 	//はい
 	IF $SCWK_ANSWER == 0 THEN
-		_BALLOONWIN_OBJMSG( msg_c07_hakase1_05 , C07_HAKASE1_01 )
-		_BALLOONWIN_CLOSE()
+		_BALLOONWIN_OBJMSG_POS( msg_c07_hakase1_05 , C07_HAKASE1_01 ,POS_DOWN  )
 	
 	//いいえ
 	ELSE
-		_BALLOONWIN_OBJMSG( msg_c07_hakase1_06 , C07_HAKASE1_01 )
-		_BALLOONWIN_CLOSE()
+		_BALLOONWIN_OBJMSG_POS( msg_c07_hakase1_06 , C07_HAKASE1_01 ,POS_DOWN  )
 	ENDIF
 	
 	//WとBで台詞を変える
-	_BALLOONWIN_OBJMSG_WB( msg_c07_hakase1_07w , msg_c07_hakase1_07b , C07_HAKASE1_01 , POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_WB( msg_c07_hakase1_07w , msg_c07_hakase1_07b , C07_HAKASE1_01 , POS_DOWN  )
 	_BALLOONWIN_CLOSE()
 	
 	//上を向いて喋る
 	_OBJ_ANIME( C07_HAKASE1_01 , anm_c07_hakase1_02 )
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG( msg_c07_hakase1_08 , C07_HAKASE1_01)
+	_BALLOONWIN_OBJMSG_POS( msg_c07_hakase1_08 , C07_HAKASE1_01,POS_DOWN  )
 	_BALLOONWIN_CLOSE()
 		
 	//主人公に向き合って喋る
 	_OBJ_ANIME( C07_HAKASE1_01 , anm_c07_hakase1_03 )
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG( msg_c07_hakase1_09 , C07_HAKASE1_01)
+	_BALLOONWIN_OBJMSG_POS( msg_c07_hakase1_09 , C07_HAKASE1_01,POS_DOWN  )
 	_BALLOONWIN_CLOSE()
 	
 	//退場
@@ -186,6 +180,11 @@ EVENT_START   ev_scene_c07_leader7_01
 	
 	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
 	
+	//カメラ操作　ライバル中心に
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	_CAMERA_MOVE( 9688,0,970752,11304960,196655,11173888,30 )
+	
 	//主人公ジムから出てくる
 	SWITCH $POSX
 	CASE 171 THEN
@@ -203,6 +202,9 @@ EVENT_START   ev_scene_c07_leader7_01
 	ENDSWITCH
 	
 	}
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
 	//ライバルとサポート会話
 	_BALLOONWIN_OBJMSG_POS( msg_c07_black_01 , C07_RIVAL_01 , POS_DL )
 	_BALLOONWIN_CLOSE()
@@ -254,7 +256,7 @@ EVENT_START   ev_scene_c07_leader7_01
 	_OBJ_ANIME_WAIT()
 	
 	//ダークトリニティ1：さすがはセッカのジムリーダー
-	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_ninja1_01 , C07_NINJA_01 , POS_UR )
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_ninja1_01 , C07_NINJA_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//ダークトリニティ2：（トレーナー名）だけに伝えるつもりだったがまぁいい
@@ -262,7 +264,7 @@ EVENT_START   ev_scene_c07_leader7_01
 	_BALLOONWIN_CLOSE()
 	
 	//ダークトリニティ3：そこでNさまがまっておられる
-	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_ninja3_01 , C07_NINJA_03 , POS_UL )
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_ninja3_01 , C07_NINJA_03 , POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//ハチクその場歩き
@@ -301,7 +303,7 @@ EVENT_START   ev_scene_c07_leader7_01
 	_BALLOONWIN_CLOSE()
 	
 	//ライバル：ぼくも 行きます！
-	_BALLOONWIN_OBJMSG_POS( msg_c07_black_02 , C07_RIVAL_01 , POS_UL )
+	_BALLOONWIN_OBJMSG_POS( msg_c07_black_02 , C07_RIVAL_01 , POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//ハチク退場
@@ -321,6 +323,12 @@ EVENT_START   ev_scene_c07_leader7_01
 	//サポート：わわわ！
 	_BALLOONWIN_OBJMSG_POS( msg_c07_white_03 , C07_SUPPORT_01 , POS_DR )
 	_BALLOONWIN_CLOSE()
+	
+	//自機にカメラを戻す
+	_CAMERA_DEF_MOVE (16) 
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
 
 	//イベント関連OBJ削除
 	_OBJ_DEL( C07_LEADER7_01 )
@@ -382,6 +390,7 @@ _ANIME_LABEL	anm_c07_player_koutai
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -412,7 +421,6 @@ _ANIME_LABEL	anm_c07_ninja_bye_01
 //	C07　リュウラセンイベント開始：主人公驚く
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c07_player_surprised
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 
