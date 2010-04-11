@@ -130,8 +130,10 @@ static GFL_PROC_RESULT PDWACCProc_End( GFL_PROC * proc, int * seq, void * pwk, v
   GFL_HEAP_DeleteHeap(HEAPID_PDWACC);
 
   //ƒ^ƒCƒgƒ‹‚É–ß‚é
-  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+//  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+  OS_ResetSystem(0);
 
+  
   return GFL_PROC_RES_FINISH;
 }
 
