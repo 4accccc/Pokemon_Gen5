@@ -47,9 +47,16 @@ EVENT_START   ev_reserve_c09r0601_champion_01
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_c09r0601_walk_up_01)
 	_OBJ_ANIME_WAIT()
 	
+	//カメラ操作　マシン中心に
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	_CAMERA_MOVE( 9688,0,970752,557056,131103,294912 , 32 )
+	
 	//チャンピオン、ふりむく
 	_OBJ_ANIME(C09R0601_CHAMPION_01,anm_c09r0601_champion_look_player)
 	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//性別が格納されるローカル変数を定義
 	DEFINE_LOCAL SCWK_SEX
@@ -84,8 +91,11 @@ EVENT_START   ev_reserve_c09r0601_champion_01
 	
 	//========================================//
 
-  //殿堂入りアニメイベント
-  _DENDOU_ANIME()
+	//殿堂入りアニメイベント
+	_DENDOU_ANIME()
+	
+	//カメラ処理終了
+	_CAMERA_END()
 	
 	//殿堂入り処理
 	_GOTO_GAMECLEAR_DEMO( 1 )
