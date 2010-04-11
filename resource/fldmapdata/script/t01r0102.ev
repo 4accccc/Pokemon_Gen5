@@ -51,20 +51,22 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	
 	//ライバル会話：博士がポケモンくれるって？
 	_PLAYER_NAME( 0 )		//主人公名取得
-	_BALLOONWIN_OBJMSG( msg_t01r0102_black_01 , T01R0102_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_black_01 , T01R0102_RIVAL_01, POS_DR )
 	_MSGWIN_CLOSE()
 	
-	_TIME_WAIT( 8 )
-	
-	//ライバル：階段をみて
+	//ライバル：いったん階段を見て
 	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_u )
+	_OBJ_ANIME_WAIT()
+	_TIME_WAIT( 16 )
+	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_d )
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル会話：ベルはまた？
-	_BALLOONWIN_OBJMSG( msg_t01r0102_black_01a , T01R0102_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_black_01a , T01R0102_RIVAL_01, POS_DR )
 	_MSGWIN_CLOSE()
 	
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_u )
+	//ライバル：芝居
+	_OBJ_ANIME( T01R0102_RIVAL_01, anm_gamestart_rival_act_01 )
 	_OBJ_ANIME_WAIT()
 	
 	_CAMERA_START()		//カメラ操作開始
@@ -85,11 +87,16 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	
 	_SE_WAIT()	//ＳＥ終了待ち
 	
+	//主人公＆ライバル：サポートを見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_u )
+	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_u )
+	_OBJ_ANIME_WAIT()
+	
 	//サポート曲再生。
 	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
 	
 	//サポート会話：ごめんね　遅くなっちゃった
-	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_white_01, T01R0102_SUPPORT_01, POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_white_01, T01R0102_SUPPORT_01, POS_UR )
 	_MSGWIN_CLOSE()
 	
 	//ライバル：サポートを見る
@@ -114,7 +121,7 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	
 	//サポート会話：ごめんなさい
 	_PLAYER_NAME( 0 )		//主人公名取得
-	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_white_02, T01R0102_SUPPORT_01, POS_UL )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_white_02, T01R0102_SUPPORT_01, POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//サポート：主人公横へ
@@ -124,11 +131,11 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_OBJ_ANIME_WAIT()
 	
 	//サポート会話：で ポケモンはどこ？
-	_BALLOONWIN_OBJMSG( msg_t01r0102_white_02_01, T01R0102_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_white_02_01, T01R0102_SUPPORT_01, POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//ライバル会話：もちろん！
-	_BALLOONWIN_OBJMSG( msg_t01r0102_black_03, T01R0102_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_black_03, T01R0102_RIVAL_01, POS_DR )
 	_BALLOONWIN_CLOSE()
 	
 	//ライバル：プレゼント前へ
@@ -142,7 +149,7 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	
 	//ライバル会話：ボールを調べなよ
 	_PLAYER_NAME( 0 )		//主人公名取得
-	_BALLOONWIN_OBJMSG( msg_t01r0102_black_03a, T01R0102_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_black_03a, T01R0102_RIVAL_01, POS_DR )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
@@ -157,6 +164,13 @@ EVENT_START	ev_scene_t01r0102_gamestart
 //============================================//
 
 EVENT_END
+
+//--------------------------------------------------------------------
+//ライバル：芝居
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_gamestart_rival_act_01
+	_ANIME_DATA	AC_RIVEL_ACT0,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //ライバル：一歩前へ
