@@ -175,14 +175,14 @@ EVENT_END
 //	R10ライバル心配イベント：ライバル登場
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r10_rival_come
-	_ANIME_DATA	AC_WALK_R_8F,9
+	_ANIME_DATA	AC_WALK_R_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	R10ライバル心配イベント：サポート登場
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r10_support_come
-	_ANIME_DATA	AC_WALK_R_8F,9
+	_ANIME_DATA	AC_WALK_R_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -215,7 +215,7 @@ _ANIME_LABEL	anm_r10_player_turn_z119
 //	R10ライバル心配イベント：サポート隣接してアイテムくれる01
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r10_support_gift_01
-	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
@@ -225,7 +225,7 @@ _ANIME_LABEL	anm_r10_support_gift_01
 _ANIME_LABEL	anm_r10_support_gift_02
 	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -233,6 +233,7 @@ _ANIME_LABEL	anm_r10_support_gift_02
 //	R10ライバル心配イベント：サポートからアイテムを受け取る01
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r10_player_gift_01
+	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	AC_STAY_WALK_D_8F,0
 	_ANIME_DATA	ACMD_END,0
 
@@ -261,7 +262,7 @@ _ANIME_LABEL	anm_r10_rival_look_player_01
 //	R10ライバル心配イベント：ライバル退場
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r10_rival_bye
-	_ANIME_DATA	AC_WALK_L_4F,9
+	_ANIME_DATA	AC_WALK_L_4F,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -276,14 +277,14 @@ _ANIME_LABEL	anm_r10_support_look_rival_02
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r10_support_look_player_01
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	R10ライバル心配イベント：サポート退場
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r10_support_bye
-	_ANIME_DATA	AC_WALK_L_8F,9
+	_ANIME_DATA	AC_WALK_L_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 
