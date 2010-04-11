@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/08 18:33:29
+#save date:2010/04/11 15:12:38
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d12r0101.wms
 #SECTION START:OBJ_EVENT
@@ -55,7 +55,7 @@ EV_TYPE_TRAINER
 #Flag Name
 FV_D12_HAKAIM_01
 #Event Script Name
-SCRID_TRID_HAKAIM1_01
+SCRID_TRID_HAKAIM1_31
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
