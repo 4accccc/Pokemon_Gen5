@@ -51,8 +51,11 @@ EVENT_START	ev_scene_t01r0201_support_01
 	_OBJ_ANIME_WAIT()
 
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-
-	_TIME_WAIT( 16 )
+	
+	//サポートパパ：詰め寄る
+	_OBJ_ANIME( T01R0201_MIDDLEMAN1_01, anm_supportpapa_move_01 )
+	_TIME_WAIT( 8 )
+	_OBJ_ANIME_WAIT()
 
 	//ダメだダメだー！
 	_GIZAWIN_OBJMSG_POS( msg_t01r0201_middleman1_01, T01R0201_MIDDLEMAN1_01, POS_UR )
@@ -75,6 +78,10 @@ EVENT_START	ev_scene_t01r0201_support_01
 	//あっ　～～くん！
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0201_white_02 , T01R0201_SUPPORT_01, POS_UL )
 	_BALLOONWIN_CLOSE()
+
+	//サポート：芝居
+	_OBJ_ANIME( T01R0201_SUPPORT_01, anm_heroine_act_01 )
+	_OBJ_ANIME_WAIT()
 
 	//サポート：退出
 	_OBJ_ANIME( T01R0201_SUPPORT_01, anm_heroine_goaway_02 )
@@ -122,6 +129,13 @@ _ANIME_LABEL	anm_player_move_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
+//サポートパパ：詰め寄る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_supportpapa_move_01
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
 //ヒロイン：その場歩き
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_heroine_move_01
@@ -134,6 +148,13 @@ _ANIME_LABEL	anm_heroine_move_01
 _ANIME_LABEL	anm_heroine_goaway_01
 	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート：芝居
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_heroine_act_01
+	_ANIME_DATA	AC_SUPPORT_ACT0,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
