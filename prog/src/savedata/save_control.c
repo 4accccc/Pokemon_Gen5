@@ -13,6 +13,7 @@
 #include "savedata/save_tbl.h"
 #include "savedata/player_data.h"
 #include "savedata/musical_save.h"
+#include "savedata/save_outside.h"
 
 
 //==============================================================================
@@ -26,10 +27,12 @@
 //==============================================================================
 ///セーブデータ管理ワーク構造体
 struct _SAVE_CONTROL_WORK{
-	BOOL new_data_flag;			///<TRUE:新規データ
-	BOOL data_exists;			///<データが存在するかどうか
-	BOOL total_save_flag;		///<TRUE:全体セーブ
-	BOOL backup_now_save_mode_setup;    ///<TRUE:初回セットアップのフラグバックアップ
+	u8 new_data_flag;			///<TRUE:新規データ
+	u8 data_exists;			///<データが存在するかどうか
+	u8 total_save_flag;		///<TRUE:全体セーブ
+	u8 backup_now_save_mode_setup;    ///<TRUE:初回セットアップのフラグバックアップ
+	u8 outside_data_exists;   ///<TRUE:管理外セーブが存在する
+	u8 padding[3];
 	u32 first_status;			///<一番最初のセーブデータチェック結果(bit指定)
 	GFL_SAVEDATA *sv_normal;	///<ノーマル用セーブデータへのポインタ
 	GFL_SAVEDATA *sv_extra[SAVE_EXTRA_ID_MAX];
@@ -42,6 +45,17 @@ struct _SAVE_CONTROL_WORK{
 static SAVE_CONTROL_WORK *SaveControlWork = NULL;
 extern int BATTLE_EXAMINATION_SAVE_GetWorkSize(void);
 
+//==============================================================================
+//  プロトタイプ宣言
+//==============================================================================
+static void _OutsideSave_SaveErase(void);
+
+//--------------------------------------------------------------
+//  オーバーレイID
+//--------------------------------------------------------------
+FS_EXTERN_OVERLAY(outside_save);
+
+
 
 //---------------------------------------------------------------------------
 /**
@@ -53,12 +67,29 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 	SAVE_CONTROL_WORK *ctrl;
 	LOAD_RESULT load_ret;
   SAVE_EXTRA_ID extra_id;
+  BOOL outside_exists = FALSE;
+  BOOL outside_break = FALSE;
+  
+  //内部セーブでヒープを使用しきる前に管理外セーブの存在チェックを行う
+  {
+    OUTSIDE_SAVE_CONTROL *outsv;
+    
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
+    
+    outsv = OutsideSave_SystemLoad(heap_id);
+    outside_exists = OutsideSave_GetExistFlag(outsv);
+    outside_break = OutsideSave_GetBreakFlag(outsv);
+    OutsideSave_SystemUnload(outsv);
+    
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
+  }
   
 	ctrl = GFL_HEAP_AllocClearMemory(heap_id, sizeof(SAVE_CONTROL_WORK));
 	SaveControlWork = ctrl;
 	ctrl->new_data_flag = TRUE;			//新規データ
 	ctrl->total_save_flag = TRUE;		//全体セーブ
 	ctrl->data_exists = FALSE;			//データは存在しない
+	ctrl->outside_data_exists = outside_exists;
 	ctrl->sv_normal = GFL_SAVEDATA_Create(&SaveParam_Normal, heap_id);
 
 #if DEBUG_ONLY_FOR_ohno
@@ -72,6 +103,7 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
   }
 #endif
 
+  //---------------- 内部セーブ＆外部セーブ ----------------
 	//データ存在チェックを行っている
 	load_ret = GFL_BACKUP_Load(ctrl->sv_normal, HEAPID_SAVE_TEMP);
   if(load_ret == LOAD_RESULT_OK || load_ret == LOAD_RESULT_NG){
@@ -82,6 +114,9 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
     }
   }
 	ctrl->first_status = 0;
+	if(outside_exists == TRUE && outside_break == TRUE){
+    ctrl->first_status |= FST_OUTSIDE_MYSTERY_BREAK_BIT;
+  }
 	switch(load_ret){
 	case LOAD_RESULT_OK:				///<データ正常読み込み
 		ctrl->total_save_flag = FALSE;	//全体セーブの必要はない
@@ -266,6 +301,12 @@ SAVE_RESULT SaveControl_SaveAsyncMain(SAVE_CONTROL_WORK *ctrl)
 {
 	SAVE_RESULT result;
 	
+	if(ctrl->outside_data_exists == TRUE){
+    _OutsideSave_SaveErase();
+    ctrl->outside_data_exists = FALSE;
+    return SAVE_RESULT_CONTINUE;
+  }
+  
 	result = GFL_BACKUP_SAVEASYNC_Main(ctrl->sv_normal);
 	if(result == SAVE_RESULT_OK){
 		ctrl->new_data_flag = FALSE;
@@ -389,6 +430,18 @@ BOOL SaveControl_IsOverwritingOtherData(SAVE_CONTROL_WORK * sv)
 	} else {
 		return FALSE;
 	}
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	管理外セーブデータ存在フラグを取得
+ * @param	sv			セーブデータ構造へのポインタ
+ * @return	BOOL		TRUEのとき、セーブデータが存在する
+ */
+//---------------------------------------------------------------------------
+BOOL SaveData_GetOutsideExistFlag(SAVE_CONTROL_WORK * sv)
+{
+	return sv->outside_data_exists;
 }
 
 //---------------------------------------------------------------------------
@@ -657,6 +710,26 @@ void SaveControl_Extra_Erase(SAVE_CONTROL_WORK *ctrl, SAVE_EXTRA_ID extra_id, u3
 {
   GF_ASSERT(ctrl->sv_extra[extra_id] != NULL);
 	GFL_BACKUP_Erase(ctrl->sv_extra[extra_id], heap_temp_id);
+}
+
+//==================================================================
+/**
+ * 管理外セーブ：消去
+ *
+ * 消去用のメモリ確保の必要性や速度などの考慮から、マジックナンバーだけを消去します
+ *
+ * 内部セーブ実行時に処理を行うので、これだけsave_control.cと同じ常駐に配置
+ */
+//==================================================================
+static void _OutsideSave_SaveErase(void)
+{
+  u32 erase_magic_number = 0;
+  
+  OS_TPrintf("== outside Erase start  ==\n");
+  //マジックナンバーだけを消す
+  GFL_BACKUP_DirectFlashSave(OUTSIDE_MM_MYSTERY, &erase_magic_number, sizeof(u32));
+  GFL_BACKUP_DirectFlashSave(OUTSIDE_MM_MYSTERY_MIRROR, &erase_magic_number, sizeof(u32));
+  OS_TPrintf("== outside Erase finish ==\n");
 }
 
 

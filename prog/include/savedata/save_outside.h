@@ -40,7 +40,6 @@ extern OUTSIDE_SAVE_CONTROL * OutsideSave_SystemLoad(HEAPID heap_id);
 extern void OutsideSave_SystemUnload(OUTSIDE_SAVE_CONTROL *outsv_ctrl);
 extern void OutsideSave_SaveAsyncInit(OUTSIDE_SAVE_CONTROL *outsv_ctrl);
 extern BOOL OutsideSave_SaveAsyncMain(OUTSIDE_SAVE_CONTROL *outsv_ctrl);
-extern void OutsideSave_SaveErase(void);
 
 //--------------------------------------------------------------
 //  ÉcÅ[Éã

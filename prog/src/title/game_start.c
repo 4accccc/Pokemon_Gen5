@@ -37,11 +37,13 @@
 #include "sound/sound_manager.h"
 
 #include "sound/pm_voice.h"   // for 
+#include "savedata/save_outside.h"
 
 //==============================================================================
 //  
 //==============================================================================
 FS_EXTERN_OVERLAY(title);
+FS_EXTERN_OVERLAY(outside_save);
 
 typedef enum
 {
@@ -412,6 +414,7 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
+  SAVE_CONTROL_WORK *sv_ctrl = SaveControl_GetPointer();
   GAMESTART_FIRST_WORK *work = mywk;
   GAME_INIT_WORK * init_param;
   VecFx32 pos = {0,0,0};
@@ -424,7 +427,6 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
 #endif
   // Introデモで変更してきたデータをセーブデータへ反映
   {
-    SAVE_CONTROL_WORK *sv_ctrl = SaveControl_GetPointer();
     MyStatus_Copy(work->mystatus, SaveData_GetMyStatus(sv_ctrl));
     CONFIG_Copy(work->config, SaveData_GetConfig(sv_ctrl));
   }
@@ -432,6 +434,21 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
   GFL_HEAP_FreeMemory(work->config);
   
   GFL_PROC_LOCAL_Exit( work->procsys_up );
+
+  //管理外セーブにデータが存在していれば通常セーブ領域へ移す
+  if(SaveData_GetOutsideExistFlag(sv_ctrl) == TRUE){
+    OUTSIDE_SAVE_CONTROL *outsv;
+
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
+
+    outsv = OutsideSave_SystemLoad(GFL_HEAPID_APP);
+    if(OutsideSave_GetExistFlag(outsv) == TRUE){  //一応使用箇所直前でもチェック
+      OutsideSave_MysteryData_Outside_to_Normal(outsv, sv_ctrl);
+    }
+    OutsideSave_SystemUnload(outsv);
+
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
+  }
 
   init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );
 

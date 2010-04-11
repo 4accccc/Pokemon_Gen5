@@ -88,15 +88,15 @@ OUTSIDE_SAVE_CONTROL * OutsideSave_SystemLoad(HEAPID heap_id)
   
   outsv_ctrl = GFL_HEAP_AllocClearMemory(heap_id, sizeof(OUTSIDE_SAVE_CONTROL));
   buf[_MIRROR_A] = &outsv_ctrl->mystery_save;  //A面はシステムのバッファをそのまま使用
-  buf[_MIRROR_B] = GFL_HEAP_AllocClearMemory(heap_id, sizeof(OUTSIDE_SAVE_CONTROL));
+  buf[_MIRROR_B] = GFL_HEAP_AllocClearMemory(heap_id, sizeof(OUTSIDE_MYSTERY_SAVEDATA));
   
   for(no = 0; no < _MIRROR_NUM; no++){
     load_ret[no] = FALSE;
     crc_break[no] = FALSE;
   }
   
-  load_ret[_MIRROR_A] = GFL_BACKUP_DirectFlashLoad(OUTSIDE_MM_MYSTERY, buf[_MIRROR_A], SAVESIZE_OUTSIDE_MYSTERY);
-  load_ret[_MIRROR_B] = GFL_BACKUP_DirectFlashLoad(OUTSIDE_MM_MYSTERY_MIRROR, buf[_MIRROR_B], SAVESIZE_OUTSIDE_MYSTERY);
+  load_ret[_MIRROR_A] = GFL_BACKUP_DirectFlashLoad(OUTSIDE_MM_MYSTERY, buf[_MIRROR_A], sizeof(OUTSIDE_MYSTERY_SAVEDATA));
+  load_ret[_MIRROR_B] = GFL_BACKUP_DirectFlashLoad(OUTSIDE_MM_MYSTERY_MIRROR, buf[_MIRROR_B], sizeof(OUTSIDE_MYSTERY_SAVEDATA));
   
   for(no = 0; no < _MIRROR_NUM; no++){
     if(load_ret[no] == TRUE){
@@ -160,9 +160,13 @@ OUTSIDE_SAVE_CONTROL * OutsideSave_SystemLoad(HEAPID heap_id)
   
   //B面バッファは破棄するので、正常なデータがB面にあった場合はA面バッファにコピー
   if(ok_side == _MIRROR_B){
-    GFL_STD_MemCopy(buf[_MIRROR_B], buf[_MIRROR_A], sizeof(OUTSIDE_SAVE_CONTROL));
+    GFL_STD_MemCopy(buf[_MIRROR_B], buf[_MIRROR_A], sizeof(OUTSIDE_MYSTERY_SAVEDATA));
   }
   GFL_HEAP_FreeMemory(buf[_MIRROR_B]);
+
+  if(ok_side != -1){
+    outsv_ctrl->data_exists = TRUE;
+  }
   return outsv_ctrl;
 }
 
@@ -238,24 +242,6 @@ BOOL OutsideSave_SaveAsyncMain(OUTSIDE_SAVE_CONTROL *outsv_ctrl)
     return TRUE;
   }
   return FALSE;
-}
-
-//==================================================================
-/**
- * 管理外セーブ：消去
- *
- * 消去用のメモリ確保の必要性や速度などの考慮から、マジックナンバーだけを消去します
- */
-//==================================================================
-void OutsideSave_SaveErase(void)
-{
-  u32 erase_magic_number = 0;
-  
-  OS_TPrintf("== outside Erase start  ==\n");
-  //マジックナンバーだけを消す
-  GFL_BACKUP_DirectFlashSave(OUTSIDE_MM_MYSTERY, &erase_magic_number, sizeof(u32));
-  GFL_BACKUP_DirectFlashSave(OUTSIDE_MM_MYSTERY_MIRROR, &erase_magic_number, sizeof(u32));
-  OS_TPrintf("== outside Erase finish ==\n");
 }
 
 
