@@ -47,17 +47,17 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//おーきたきた！
-	_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_01,T01R0401_HAKASE2_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_hakase2_01,T01R0401_HAKASE2_01, POS_UR )
 	_MSGWIN_CLOSE()
 
 	//アララギ博士？どうしたんですか？
-	_BALLOONWIN_OBJMSG( msg_t01r0401_black_02,T01R0401_RIVAL_01 ) //ライバル
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_black_02,T01R0401_RIVAL_01, POS_DR ) //ライバル
 	_MSGWIN_CLOSE()
 
 	//まあまあ！今日は記念となる日だからね
 	_OBJ_ANIME( T01R0401_HAKASE2_01, anm_stay_walk_d )
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_02,T01R0401_HAKASE2_01 ) //博士
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_hakase2_02,T01R0401_HAKASE2_01, POS_UR ) //博士
 	_MSGWIN_CLOSE()
 
 	 //博士：皆の顔を見る
@@ -65,7 +65,7 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	_OBJ_ANIME_WAIT()
 
 	//博士：もう勝負をしたんだね　ニックネームをつける？
-	_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_03,T01R0401_HAKASE2_01 ) //博士
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_hakase2_03,T01R0401_HAKASE2_01, POS_UR ) //博士
 	_YES_NO_WIN( SCWK_ANSWER )
 
 	//はい/いいえで分岐
@@ -81,30 +81,30 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 
 		//ニックネームをつけないんだね
 		_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_06 , T01R0401_HAKASE2_01 )
-		_MSGWIN_CLOSE()
+
 	ENDIF
 
 	//ポケモンを進呈した理由だが…
-	_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_07,T01R0401_HAKASE2_01 )  //博士
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_hakase2_07,T01R0401_HAKASE2_01, POS_UR )  //博士
 	_MSGWIN_CLOSE()
 
 	//ポケモン図鑑ですよね！
-	_BALLOONWIN_OBJMSG( msg_t01r0401_black_03,T01R0401_RIVAL_01 )  //ライバル
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_black_03,T01R0401_RIVAL_01, POS_DR )  //ライバル
 	_MSGWIN_CLOSE()
 
 	//サポート：ライバルを見る
 	_OBJ_ANIME( T01R0401_SUPPORT_01, anm_zukan_support_look_01 )
 	//ずかん？
-	_BALLOONWIN_OBJMSG( msg_t01r0401_white_02,T01R0401_SUPPORT_01 ) //サポート
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_white_02,T01R0401_SUPPORT_01, POS_DL ) //サポート
 	_MSGWIN_CLOSE()
 	_OBJ_ANIME_WAIT()
 
 	//さすがだね！
-	_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_08,T01R0401_HAKASE2_01 )  //博士
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_hakase2_08,T01R0401_HAKASE2_01, POS_UR )  //博士
+	_MSGWIN_CLOSE()
 	//サポート：博士を見る
 	_OBJ_ANIME( T01R0401_SUPPORT_01, anm_stay_walk_u )
 	_OBJ_ANIME_WAIT()
-	_MSGWIN_CLOSE()
 
 	//博士：あらためる
 	_OBJ_ANIME( T01R0401_HAKASE2_01, anm_zukan_doc_move_01 )
@@ -112,14 +112,12 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 
 	//ポケモン図鑑とは！
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
-	_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_09,T01R0401_HAKASE2_01 )  //博士
-	_MSGWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_hakase2_09,T01R0401_HAKASE2_01, POS_UR )  //博士
 
 	//冒険の旅に出かけるかい？
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
-	_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_10,T01R0401_HAKASE2_01 )  //博士
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_hakase2_10,T01R0401_HAKASE2_01, POS_UR )  //博士
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 
 	//いいえなら再質問
 	IF $SCWK_ANSWER == SCR_NO THEN
@@ -132,24 +130,18 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 		WHILE $ans_yes == SCR_NO
 			//そんな言葉は聞きたくない 旅にでかけるよな？
 			//博士：その場歩き（足踏みする感じ）
+			_MSGWIN_CLOSE()
 			_OBJ_ANIME( T01R0401_HAKASE2_01, anm_stay_walk_d )
 			_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_11 , T01R0401_HAKASE2_01 )
 			_OBJ_ANIME_WAIT()
 			_YES_NO_WIN( ans_yes )
-			_MSGWIN_CLOSE()
 			
-			IF $ans_yes == SCR_YES THEN
-				//はいを選択なら
-				//いい返事だ！
-				_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_12 , T01R0401_HAKASE2_01 )
-				_MSGWIN_CLOSE()
-			ENDIF
-
 		ENDWHILE
 	
 	ENDIF
 
-	//はいの処理
+	//はいを選択した
+	_MSGWIN_CLOSE()		//博士の最後のメッセージウインドウを消す
 
 	//はーい！
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_white_04, T01R0401_SUPPORT_01, POS_DL )
@@ -160,7 +152,7 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	_MSGWIN_CLOSE()
 
 	//よし！最高の返事だ！
-	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_hakase2_12,T01R0401_HAKASE2_01, POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_hakase2_12,T01R0401_HAKASE2_01, POS_UR )
 	_MSGWIN_CLOSE()
 
 
@@ -181,7 +173,7 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 //***********************************************************//
 
 	//１番道路に来てくれよな！
-	_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_14,T01R0401_HAKASE2_01 ) 	//博士
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_hakase2_14,T01R0401_HAKASE2_01, POS_UR ) 	//博士
 	_MSGWIN_CLOSE()
 
 	//カメラを主人公位置に戻す
@@ -217,11 +209,11 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	_SE_WAIT()
 
 	//頼まれたから　冒険しても　いいんだよね？
-	_BALLOONWIN_OBJMSG( msg_t01r0401_white_03,T01R0401_SUPPORT_01 )  //サポート
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_white_03,T01R0401_SUPPORT_01, POS_DL )  //サポート
 	_MSGWIN_CLOSE()
 
 	//僕たちも１番道路に行こう！
-	_BALLOONWIN_OBJMSG( msg_t01r0401_black_04,T01R0401_RIVAL_01 )  //ライバル
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_black_04,T01R0401_RIVAL_01, POS_DR )  //ライバル
 	_MSGWIN_CLOSE()
 
 	//サポート＆ライバル：退室
@@ -248,7 +240,7 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	$WK_SCENE_T01R0401 = 1
 
 	//T01ママのタウンマップ入手イベント有効
-	$WK_SCENE_T01 = 1
+//	$WK_SCENE_T01 = 1
 	_FLAG_RESET( FV_T01_MAMA_01 )	//ママを表示
 
 	//スタートメニューに「ふしぎなおくりもの」を追加
@@ -310,16 +302,14 @@ ev_name_input:
 		
 		//～～と言うのか
 		_TEMOTI_NICK_NAME( 0, 0 )	//ニックネーム取得
-		_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_05 , T01R0401_HAKASE2_01 )
-		_MSGWIN_CLOSE()
-	
+		_BALLOONWIN_OBJMSG_POS( msg_t01r0401_hakase2_05 , T01R0401_HAKASE2_01, POS_UR )
+
 	ELSE
 		//入力無し（キャンセル操作で戻ってきた）
 		
 		//ニックネームを　つけないんだね
-		_BALLOONWIN_OBJMSG( msg_t01r0401_hakase2_06 , T01R0401_HAKASE2_01 )
-		_MSGWIN_CLOSE()
-		
+		_BALLOONWIN_OBJMSG_POS( msg_t01r0401_hakase2_06 , T01R0401_HAKASE2_01, POS_UR )
+
 	ENDIF
 
 	}
@@ -362,14 +352,14 @@ _ANIME_LABEL	anm_friends_walk_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_zukan_doc_look_01
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_WAIT_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_WAIT_8F,2
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+//	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
