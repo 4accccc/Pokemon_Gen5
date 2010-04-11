@@ -91,9 +91,9 @@ EVENT_START   ev_c05r0201_boy2_01
 		_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_05 ,C05R0201_BOY2_01)
 		
 	ELSE
-		//【仮】ポケモン名をセリフにセット
-		_MONS_NAME ( 1 , MONSNO_533  ) //交換先
-		_MONS_NAME ( 0 , MONSNO_601  ) //要望
+		//ポケモン名をセリフにセット
+		_MONS_NAME ( 1 , MONSNO_533  ) //交換先（チラーミィ）
+		_MONS_NAME ( 0 , MONSNO_601  ) //要望（ガンクツ）
 	
 		//交換しようよ
 		_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_01 ,C05R0201_BOY2_01)

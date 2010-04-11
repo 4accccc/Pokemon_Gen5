@@ -116,7 +116,7 @@ EVENT_END
 //	èââÒóUì±ÅFëßéqíÜâõÇ÷
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_first_come_boy3_01
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -155,171 +155,219 @@ EVENT_START	ev_t04r0101_boy3_01
 		
 		_TALK_OBJ_START()
 		_BALLOONWIN_OBJMSG_POS( msg_t04r0101_boy3_02, T04R0101_BOY3_01, POS_DEFAULT )
-		_MSGWIN_CLOSE()
+		_YES_NO_WIN( SCWK_ANSWER )
 		
-		//òbÇµÇ©ÇØà íuÇéÊìæ
-		DEFINE_LOCAL LWK_DIR
-		_PLAYER_DIR_GET( LWK_DIR )
+		IF $SCWK_ANSWER == 0 THEN
 		
-		SWITCH $LWK_DIR
-		CASE DIR_LEFT THEN
-			_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_left )
-			_OBJ_ANIME_WAIT()
-		CASE DIR_RIGHT THEN
-			_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_right )
-			_OBJ_ANIME_WAIT()
-		DEFAULT
-		ENDSWITCH
-		
-		SWITCH $WK_SCENE_T04R0101_BTL_FAMILY
-		CASE 1 THEN
-			_CALL ev_t04r0101_btl_vs_boy3
+			_MSGWIN_CLOSE()
 			
-			IF FLAG_OFF( FV_T04R0101_GIRL4_01 ) THEN
+			//òbÇµÇ©ÇØà íuÇéÊìæ
+			DEFINE_LOCAL LWK_DIR
+			_PLAYER_DIR_GET( LWK_DIR )
+			
+			SWITCH $LWK_DIR
+			CASE DIR_LEFT THEN
+				_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_left )
+				_OBJ_ANIME( T04R0101_BOY3_01 , anm_first_come_boy3_look_down )
+				_OBJ_ANIME_WAIT()
+			CASE DIR_RIGHT THEN
+				_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_right )
+				_OBJ_ANIME( T04R0101_BOY3_01 , anm_first_come_boy3_look_down )
+				_OBJ_ANIME_WAIT()
+			DEFAULT
+			ENDSWITCH
+			
+			SWITCH $WK_SCENE_T04R0101_BTL_FAMILY
+			CASE 1 THEN
+				_CALL ev_t04r0101_btl_vs_boy3
+				
+				IF FLAG_OFF( FV_T04R0101_GIRL4_01 ) THEN
+					//éoÇ∆êÌì¨
+					_CALL ev_t04r0101_coming_girl4
+					_CALL ev_t04r0101_btl_vs_girl4
+					//ëcïÍìoèÍ
+					_CALL ev_t04r0101_entrance_lady
+					//éoñﬂÇÈ
+					_CALL ev_t04r0101_return_girl4
+					
+					//======================================//
+			
+					//èüÇøêîÇ++
+					$WK_SCENE_T04R0101_BTL_FAMILY += 1
+					
+					//======================================//
+					
+					//ëcïÍÇ∆êÌì¨
+					_CALL ev_t04r0101_btl_vs_lady
+					_BALLOONWIN_OBJMSG_POS( msg_t04r0101_lady_03, T04R0101_LADY_01, POS_DEFAULT )
+					_MSGWIN_CLOSE()
+					_CALL ev_t04r0101_return_lady
+				ELSE
+					//éoìoèÍ
+					_CALL ev_t04r0101_entrance_girl4
+					_CALL ev_t04r0101_btl_vs_girl4
+					_BALLOONWIN_OBJMSG_POS( msg_t04r0101_girl4_03, T04R0101_GIRL4_01, POS_DEFAULT )
+					_MSGWIN_CLOSE()
+					_CALL ev_t04r0101_return_girl4
+					
+				ENDIF
+
+			CASE 2 THEN
+				_CALL ev_t04r0101_btl_vs_boy3
 				//éoÇ∆êÌì¨
 				_CALL ev_t04r0101_coming_girl4
 				_CALL ev_t04r0101_btl_vs_girl4
-				//ëcïÍìoèÍ
-				_CALL ev_t04r0101_entrance_lady
-				//éoñﬂÇÈ
 				_CALL ev_t04r0101_return_girl4
 				
-				//======================================//
-		
-				//èüÇøêîÇ++
-				$WK_SCENE_T04R0101_BTL_FAMILY += 1
-				
-				//======================================//
-				
-				//ëcïÍÇ∆êÌì¨
-				_CALL ev_t04r0101_btl_vs_lady
-				_BALLOONWIN_OBJMSG_POS( msg_t04r0101_lady_03, T04R0101_LADY_01, POS_DEFAULT )
-				_MSGWIN_CLOSE()
-				_CALL ev_t04r0101_return_lady
-			ELSE
-				//éoìoèÍ
-				_CALL ev_t04r0101_entrance_girl4
-				_CALL ev_t04r0101_btl_vs_girl4
-				_BALLOONWIN_OBJMSG_POS( msg_t04r0101_girl4_03, T04R0101_GIRL4_01, POS_DEFAULT )
-				_MSGWIN_CLOSE()
-				_CALL ev_t04r0101_return_girl4
-				
-			ENDIF
-
-		CASE 2 THEN
-			_CALL ev_t04r0101_btl_vs_boy3
-			//éoÇ∆êÌì¨
-			_CALL ev_t04r0101_coming_girl4
-			_CALL ev_t04r0101_btl_vs_girl4
-			_CALL ev_t04r0101_return_girl4
+				IF FLAG_OFF( FV_T04R0101_LADY_01 ) THEN
+					//ëcïÍÇ∆êÌì¨
+					_CALL ev_t04r0101_coming_lady
+					_CALL ev_t04r0101_btl_vs_lady
+					//ëcïÉìoèÍ
+					_CALL ev_t04r0101_entrance_gentleman
+					//ëcïÍñﬂÇÈ
+					_CALL ev_t04r0101_return_lady
+					
+					//======================================//
 			
-			IF FLAG_OFF( FV_T04R0101_LADY_01 ) THEN
+					//èüÇøêîÇ++
+					$WK_SCENE_T04R0101_BTL_FAMILY += 1
+					
+					//======================================//
+					
+					//ëcïÉÇ∆êÌì¨
+					_CALL ev_t04r0101_btl_vs_gentleman
+					_BALLOONWIN_OBJMSG_POS( msg_t04r0101_gentleman_03, T04R0101_GENTLEMAN_01, POS_DEFAULT )
+					_MSGWIN_CLOSE()
+					_CALL ev_t04r0101_return_gentleman
+					
+				ELSE
+					//ëcïÍìoèÍ
+					_CALL ev_t04r0101_entrance_lady
+					_CALL ev_t04r0101_btl_vs_lady
+					_BALLOONWIN_OBJMSG_POS( msg_t04r0101_lady_03, T04R0101_LADY_01, POS_DEFAULT )
+					_MSGWIN_CLOSE()
+					_CALL ev_t04r0101_return_lady
+					
+				ENDIF
+				
+			CASE 3 THEN
+				_CALL ev_t04r0101_btl_vs_boy3
+				//éoÇ∆êÌì¨
+				_CALL ev_t04r0101_coming_girl4
+				_CALL ev_t04r0101_btl_vs_girl4
+				_CALL ev_t04r0101_return_girl4
 				//ëcïÍÇ∆êÌì¨
 				_CALL ev_t04r0101_coming_lady
 				_CALL ev_t04r0101_btl_vs_lady
-				//ëcïÉìoèÍ
-				_CALL ev_t04r0101_entrance_gentleman
-				//ëcïÍñﬂÇÈ
 				_CALL ev_t04r0101_return_lady
 				
-				//======================================//
-		
-				//èüÇøêîÇ++
-				$WK_SCENE_T04R0101_BTL_FAMILY += 1
-				
-				//======================================//
-				
-				//ëcïÉÇ∆êÌì¨
-				_CALL ev_t04r0101_btl_vs_gentleman
-				_BALLOONWIN_OBJMSG_POS( msg_t04r0101_gentleman_03, T04R0101_GENTLEMAN_01, POS_DEFAULT )
-				_MSGWIN_CLOSE()
-				_CALL ev_t04r0101_return_gentleman
-				
-			ELSE
-				//ëcïÍìoèÍ
-				_CALL ev_t04r0101_entrance_lady
+				IF FLAG_OFF( FV_T04R0101_GENTLEMAN_01 ) THEN
+					//ëcïÉÇ∆êÌì¨
+					_CALL ev_t04r0101_coming_gentleman
+					_CALL ev_t04r0101_btl_vs_gentleman
+					//ïÍìoèÍ
+					_CALL ev_t04r0101_entrance_veteranw
+					//ëcïÉñﬂÇÈ
+					_CALL ev_t04r0101_return_gentleman
+
+					//======================================//
+			
+					//èüÇøêîÇ++
+					$WK_SCENE_T04R0101_BTL_FAMILY += 1
+					
+					//======================================//
+
+					//ïÍÇ∆êÌì¨
+					_CALL ev_t04r0101_btl_vs_veteranw
+					_BALLOONWIN_OBJMSG_POS( msg_t04r0101_veteranw_03, T04R0101_VETERANW_01, POS_DEFAULT )
+					_MSGWIN_CLOSE()
+					_CALL ev_t04r0101_return_veteranw
+				ELSE
+					//ëcïÉìoèÍ
+					_CALL ev_t04r0101_entrance_gentleman
+					_CALL ev_t04r0101_btl_vs_gentleman
+					_BALLOONWIN_OBJMSG_POS( msg_t04r0101_gentleman_03, T04R0101_GENTLEMAN_01, POS_DEFAULT )
+					_MSGWIN_CLOSE()
+					_CALL ev_t04r0101_return_gentleman
+					
+				ENDIF
+
+			CASE 4 THEN
+				_CALL ev_t04r0101_btl_vs_boy3
+				//éoÇ∆êÌì¨
+				_CALL ev_t04r0101_coming_girl4
+				_CALL ev_t04r0101_btl_vs_girl4
+				_CALL ev_t04r0101_return_girl4
+				//ëcïÍÇ∆êÌì¨
+				_CALL ev_t04r0101_coming_lady
 				_CALL ev_t04r0101_btl_vs_lady
-				_BALLOONWIN_OBJMSG_POS( msg_t04r0101_lady_03, T04R0101_LADY_01, POS_DEFAULT )
-				_MSGWIN_CLOSE()
 				_CALL ev_t04r0101_return_lady
-				
-			ENDIF
-			
-		CASE 3 THEN
-			_CALL ev_t04r0101_btl_vs_boy3
-			//éoÇ∆êÌì¨
-			_CALL ev_t04r0101_coming_girl4
-			_CALL ev_t04r0101_btl_vs_girl4
-			_CALL ev_t04r0101_return_girl4
-			//ëcïÍÇ∆êÌì¨
-			_CALL ev_t04r0101_coming_lady
-			_CALL ev_t04r0101_btl_vs_lady
-			_CALL ev_t04r0101_return_lady
-			
-			IF FLAG_OFF( FV_T04R0101_GENTLEMAN_01 ) THEN
 				//ëcïÉÇ∆êÌì¨
 				_CALL ev_t04r0101_coming_gentleman
 				_CALL ev_t04r0101_btl_vs_gentleman
-				//ïÍìoèÍ
-				_CALL ev_t04r0101_entrance_veteranw
-				//ëcïÉñﬂÇÈ
-				_CALL ev_t04r0101_return_gentleman
-
-				//======================================//
-		
-				//èüÇøêîÇ++
-				$WK_SCENE_T04R0101_BTL_FAMILY += 1
-				
-				//======================================//
-
-				//ïÍÇ∆êÌì¨
-				_CALL ev_t04r0101_btl_vs_veteranw
-				_BALLOONWIN_OBJMSG_POS( msg_t04r0101_veteranw_03, T04R0101_VETERANW_01, POS_DEFAULT )
-				_MSGWIN_CLOSE()
-				_CALL ev_t04r0101_return_veteranw
-			ELSE
-				//ëcïÉìoèÍ
-				_CALL ev_t04r0101_entrance_gentleman
-				_CALL ev_t04r0101_btl_vs_gentleman
-				_BALLOONWIN_OBJMSG_POS( msg_t04r0101_gentleman_03, T04R0101_GENTLEMAN_01, POS_DEFAULT )
-				_MSGWIN_CLOSE()
 				_CALL ev_t04r0101_return_gentleman
 				
-			ENDIF
+				IF FLAG_OFF( FV_T04R0101_VETERANW_01 ) THEN
+					//ïÍÇ∆êÌì¨
+					_CALL ev_t04r0101_coming_veteranw
+					_CALL ev_t04r0101_btl_vs_veteranw
+					//åZìoèÍ
+					_CALL ev_t04r0101_entrance_boy4
+					//ïÍñﬂÇÈ
+					_CALL ev_t04r0101_return_veteranw
 
-		CASE 4 THEN
-			_CALL ev_t04r0101_btl_vs_boy3
-			//éoÇ∆êÌì¨
-			_CALL ev_t04r0101_coming_girl4
-			_CALL ev_t04r0101_btl_vs_girl4
-			_CALL ev_t04r0101_return_girl4
-			//ëcïÍÇ∆êÌì¨
-			_CALL ev_t04r0101_coming_lady
-			_CALL ev_t04r0101_btl_vs_lady
-			_CALL ev_t04r0101_return_lady
-			//ëcïÉÇ∆êÌì¨
-			_CALL ev_t04r0101_coming_gentleman
-			_CALL ev_t04r0101_btl_vs_gentleman
-			_CALL ev_t04r0101_return_gentleman
+					//======================================//
 			
-			IF FLAG_OFF( FV_T04R0101_VETERANW_01 ) THEN
+					//èüÇøêîÇ++
+					$WK_SCENE_T04R0101_BTL_FAMILY += 1
+					
+					//======================================//
+
+					//åZÇ∆êÌì¨
+					_CALL ev_t04r0101_btl_vs_boy4
+					
+					//======================================//
+
+					//èüÇøêîÇ++
+					$WK_SCENE_T04R0101_BTL_FAMILY += 1
+					
+					//======================================//
+					
+					_CALL ev_t04r0101_return_boy4
+		
+				ELSE
+					//ïÍìoèÍ
+					_CALL ev_t04r0101_entrance_veteranw
+					_CALL ev_t04r0101_btl_vs_veteranw
+					_BALLOONWIN_OBJMSG_POS( msg_t04r0101_veteranw_03, T04R0101_VETERANW_01, POS_DEFAULT )
+					_MSGWIN_CLOSE()
+					_CALL ev_t04r0101_return_veteranw
+				
+				ENDIF
+				
+			CASE 5 THEN
+				_CALL ev_t04r0101_btl_vs_boy3
+				//éoÇ∆êÌì¨
+				_CALL ev_t04r0101_coming_girl4
+				_CALL ev_t04r0101_btl_vs_girl4
+				_CALL ev_t04r0101_return_girl4
+				//ëcïÍÇ∆êÌì¨
+				_CALL ev_t04r0101_coming_lady
+				_CALL ev_t04r0101_btl_vs_lady
+				_CALL ev_t04r0101_return_lady
+				//ëcïÉÇ∆êÌì¨
+				_CALL ev_t04r0101_coming_gentleman
+				_CALL ev_t04r0101_btl_vs_gentleman
+				_CALL ev_t04r0101_return_gentleman
 				//ïÍÇ∆êÌì¨
 				_CALL ev_t04r0101_coming_veteranw
 				_CALL ev_t04r0101_btl_vs_veteranw
-				//åZìoèÍ
-				_CALL ev_t04r0101_entrance_boy4
-				//ïÍñﬂÇÈ
 				_CALL ev_t04r0101_return_veteranw
-
-				//======================================//
-		
-				//èüÇøêîÇ++
-				$WK_SCENE_T04R0101_BTL_FAMILY += 1
-				
-				//======================================//
-
 				//åZÇ∆êÌì¨
+				_CALL ev_t04r0101_coming_boy4
 				_CALL ev_t04r0101_btl_vs_boy4
+				_CALL ev_t04r0101_return_boy4
 				
 				//======================================//
 
@@ -327,53 +375,19 @@ EVENT_START	ev_t04r0101_boy3_01
 				$WK_SCENE_T04R0101_BTL_FAMILY += 1
 				
 				//======================================//
-				
-				_CALL ev_t04r0101_return_boy4
-	
-			ELSE
-				//ïÍìoèÍ
-				_CALL ev_t04r0101_entrance_veteranw
-				_CALL ev_t04r0101_btl_vs_veteranw
-				_BALLOONWIN_OBJMSG_POS( msg_t04r0101_veteranw_03, T04R0101_VETERANW_01, POS_DEFAULT )
-				_MSGWIN_CLOSE()
-				_CALL ev_t04r0101_return_veteranw
-			
-			ENDIF
-			
-		CASE 5 THEN
-			_CALL ev_t04r0101_btl_vs_boy3
-			//éoÇ∆êÌì¨
-			_CALL ev_t04r0101_coming_girl4
-			_CALL ev_t04r0101_btl_vs_girl4
-			_CALL ev_t04r0101_return_girl4
-			//ëcïÍÇ∆êÌì¨
-			_CALL ev_t04r0101_coming_lady
-			_CALL ev_t04r0101_btl_vs_lady
-			_CALL ev_t04r0101_return_lady
-			//ëcïÉÇ∆êÌì¨
-			_CALL ev_t04r0101_coming_gentleman
-			_CALL ev_t04r0101_btl_vs_gentleman
-			_CALL ev_t04r0101_return_gentleman
-			//ïÍÇ∆êÌì¨
-			_CALL ev_t04r0101_coming_veteranw
-			_CALL ev_t04r0101_btl_vs_veteranw
-			_CALL ev_t04r0101_return_veteranw
-			//åZÇ∆êÌì¨
-			_CALL ev_t04r0101_coming_boy4
-			_CALL ev_t04r0101_btl_vs_boy4
-			_CALL ev_t04r0101_return_boy4
-			
-			//======================================//
-
-			//èüÇøêîÇ++
-			$WK_SCENE_T04R0101_BTL_FAMILY += 1
-			
-			//======================================//
-		ENDSWITCH
+			ENDSWITCH
+		
+		//Ç¢Ç¢Ç¶
+		ELSE
+		
+			_BALLOONWIN_OBJMSG_POS( msg_t04r0101_boy3_02, T04R0101_BOY3_01, POS_DEFAULT )
+			_MSGWIN_CLOSE()
+		
+		ENDIF
 		
 	//ç°ì˙ä˘Ç…ÉCÉxÉìÉgÇèIÇ¶ÇƒÇ¢ÇÈ
 	ELSE
-		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t04r0101_boy3_03)
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t04r0101_boy3_06)
 	
 	ENDIF
 	

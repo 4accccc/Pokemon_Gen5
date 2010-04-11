@@ -11,6 +11,7 @@
 
 #define T04R0201_GENTLEMAN_01              0
 #define T04R0201_BOY4_01                   1
+#define T04R0201_DIET_01                   2
 
 #endif //ZONE_T04R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t04r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

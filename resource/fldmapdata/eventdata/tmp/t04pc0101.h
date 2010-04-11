@@ -16,6 +16,7 @@
 #define T04PC0101_PCWOMAN                  4
 #define T04PC0101_SHOPM1_02                5
 #define T04PC0101_SHOPM1_01                6
+#define T04PC0101_MIDDLEMAN_01             7
 
 #endif //ZONE_T04PC0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t04pc0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

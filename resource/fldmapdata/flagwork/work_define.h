@@ -211,6 +211,7 @@
 #define WK_SCENE_C03GYM0101              16599 /* 0x40d7 C03ヒウンジム：イベント用ワーク */
 #define WK_SCENE_D10_LEG                 16600 /* 0x40d8 ジャイアントホール：伝説（ライ）イベント用ワーク */
 #define WK_SCENE_C03R1101                16601 /* 0x40d9 C03ジム通りのビル：イベント用ワーク */
+#define WK_SCENE_T04R0201_DIET           16602 /* 0x40da サザナミタウン：ポケモン交換イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 

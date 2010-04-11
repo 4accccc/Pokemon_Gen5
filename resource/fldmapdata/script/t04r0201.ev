@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_t04r0201.h"
-  //.include  "t04r0201.h"
+  .include  "t04r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,14 +21,29 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_t04r0201_gentleman_01
 _EVENT_DATA    ev_t04r0201_boy4_01
+_EVENT_DATA    ev_zone_t04r0201
+_EVENT_DATA    ev_t04r0201_diet_01
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_t04r0201_flag_change:
-//  _END
+/************************************************************/
+/*					ZONE_CHANGE_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_t04r0201
+{	
+	//交換イベント前なら可変OBJをMAN3に
+	IF $WK_SCENE_T04R0201_DIET == 0 THEN
+		$OBJCHRWORK0 = MAN3
+	
+	//交換イベント後なら可変OBJをBOY4に
+	ELSIF $WK_SCENE_T04R0201_DIET == 1 THEN
+		$OBJCHRWORK0 = BOY4
+		$WK_SCENE_T04R0201_DIET = 2
+	ELSE
+		$OBJCHRWORK0 = BOY4
+	ENDIF
+}
+INIT_EVENT_END
 
 /**************************************************************/
 /*                 夏だけ出現する独り言紳士                   */
@@ -50,4 +65,95 @@ EVENT_START		ev_t04r0201_boy4_01
 
 EVENT_END
 
+/**************************************************************/
+/*                ゴンベ交換イベント                         */
+/**************************************************************/
+EVENT_START		ev_t04r0201_diet_01
+	{
 
+	//交換後話しかけ（ゾーンチェンジ後）
+	IF $WK_SCENE_T04R0201_DIET == 2 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0201_diet_05 )
+	
+	//交換後話しかけ（ゾーンチェンジ前）
+	ELSIF $WK_SCENE_T04R0201_DIET == 1 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t04r0201_diet_02 )
+		
+	ELSE
+	
+		_TALK_OBJ_START()
+		//ポケモン名をセリフにセット
+		_MONS_NAME ( 1 , MONSNO_446  ) //交換先（ゴンベ）
+		_MONS_NAME ( 0 , MONSNO_534  ) //要望（チラチーノ）
+	
+		//交換しようよ
+		_BALLOONWIN_OBJMSG( msg_t04r0201_diet_01 ,T04R0201_DIET_01)
+		_YES_NO_WIN( SCWK_ANSWER )
+		_BALLOONWIN_CLOSE()
+		
+		//はい
+		IF $SCWK_ANSWER == 0 THEN
+
+			//選択ポケモン格納変数定義
+			DEFINE_LOCAL LWK_CHOICE
+			//キャンセルしたか結果格納変数定義
+			DEFINE_LOCAL LWK_SELECT_RESULT
+			
+			//ポケモン選択画面開く
+			_SELECT_TEMOTI_POKE  ( LWK_SELECT_RESULT , LWK_CHOICE , 0 )
+			
+			
+			//ポケモンを選択した
+			IF $LWK_SELECT_RESULT == TRUE THEN
+			
+				//要望と一致してるかチェック結果格納変数定義
+				DEFINE_LOCAL LWK_TRADE_CHECK
+			
+				//【仮】選択したポケモンが交換可能かチェック
+				_FIELD_POKE_TRADE_CHECK ( LWK_TRADE_CHECK , FLD_TRADE_POKE_533 , LWK_CHOICE )
+				
+				//【仮】交換可能にする（10/04/11現在交換チェックが正常に動いていないため）
+				$LWK_TRADE_CHECK = 0
+				
+				//交換可能である
+				IF $LWK_TRADE_CHECK == FLD_TRADE_ENABLE THEN
+				
+					//【仮】交換処理
+					_FIELD_POKE_TRADE ( FLD_TRADE_POKE_533 , LWK_CHOICE )
+					_BALLOONWIN_OBJMSG( msg_t04r0201_diet_02 ,T04R0201_DIET_01)
+					_LAST_KEYWAIT()
+					_BALLOONWIN_CLOSE()
+					
+					//==================================//
+			
+					//交換完了
+					$WK_SCENE_T04R0201_DIET = 1
+							
+					//==================================//
+		
+				//条件と一致しなかった
+				ELSE
+					//ボクがほしいのは チラチーノだよぉ
+					_BALLOONWIN_OBJMSG( msg_t04r0201_diet_03 ,T04R0201_DIET_01)
+					_LAST_KEYWAIT()
+					_BALLOONWIN_CLOSE()
+				ENDIF
+			
+			//選択キャンセル
+			ELSE
+				_BALLOONWIN_OBJMSG( msg_t04r0201_diet_04 ,T04R0201_DIET_01)
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+				
+			ENDIF
+		
+		//いいえ
+		ELSE
+			_BALLOONWIN_OBJMSG( msg_t04r0201_diet_04 ,T04R0201_DIET_01)
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		ENDIF
+	
+	ENDIF
+	}
+EVENT_END

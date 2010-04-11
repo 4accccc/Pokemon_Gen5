@@ -22,8 +22,27 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_bg_t04_sign1_01
 _EVENT_DATA		ev_t04_boy3_01
+_EVENT_DATA		ev_zone_t04
 _EVENT_DATA_END
 
+/************************************************************/
+/*					ZONE_CHANGE_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_t04
+	
+	_FLAG_SET( FV_T04_SUMMER )
+{
+	//季節チェック
+	DEFINE_LOCAL SCWK_SEASON
+	_GET_SEASON_ID( SCWK_SEASON )
+	
+	//夏だったら住民を表示
+	IF $SCWK_SEASON == PMSEASON_SUMMER THEN
+		_FLAG_RESET( FV_T04_SUMMER )
+	ENDIF
+
+}
+INIT_EVENT_END
 
 /**************************************************************/
 /*  T04 巨大別荘イベント用BOY3                      */
@@ -167,7 +186,6 @@ _RET
 //	巨大別荘：主人公誘導される
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_left_goto_house_01
-	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
@@ -177,21 +195,22 @@ _ANIME_LABEL	anm_player_right_goto_house_01
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_down_goto_house_01
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_left_goto_house_02
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_player_right_goto_house_02
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_down_goto_house_02
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 
@@ -211,17 +230,14 @@ _ANIME_LABEL	anm_right_goto_house_01
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_down_goto_house_01
-	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_left_goto_house_02
-	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_right_goto_house_02
-	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 

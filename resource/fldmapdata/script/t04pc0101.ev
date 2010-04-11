@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_t04pc0101.h"
-  //.include  "t04pc0101.h"
+  .include  "t04pc0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_t04pc0101_shop
 _EVENT_DATA    ev_t04pc0101_fix_shop
+_EVENT_DATA    ev_t04pc0101_middleman_01
 _EVENT_DATA_END
 
 
@@ -39,3 +40,152 @@ EVENT_START ev_t04pc0101_fix_shop
   _TALK_OBJ_START()
   _FIX_SHOP_CALL( T04_FS )
 EVENT_END
+
+/**************************************************************/
+/*   コイキング購入イベント            */
+/**************************************************************/
+EVENT_START   ev_t04pc0101_middleman_01
+
+	//未購入
+	IF FLAG_OFF( FE_T04PC0101_TRADE_01 ) THEN
+		//ポケモン購入処理へジャンプ
+		_CALL ev_t04pc0101_poketrade_01
+		
+	//購入済み
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t04pc0101_middleman_08)
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*CALL：ポケモン入手処理                                */
+/**************************************************************/
+ev_t04pc0101_poketrade_01:
+
+	_TALK_OBJ_START()
+	
+	{
+		//性別が格納されるローカル変数を定義
+	DEFINE_LOCAL SCWK_SEX
+	_GET_MY_SEX(SCWK_SEX)
+	
+	//男性だった場合
+	IF $SCWK_SEX == PM_MALE THEN
+		_BALLOONWIN_OBJMSG( msg_t04pc0101_middleman_01 , T04PC0101_MIDDLEMAN_01)
+	//女性だった場合
+	ELSE
+		_BALLOONWIN_OBJMSG( msg_t04pc0101_middleman_02 , T04PC0101_MIDDLEMAN_01)
+	ENDIF
+	}
+	
+	//所持金の表示
+   	_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+	
+	//ポケモン購入しない？
+	DEFINE_LOCAL SCWK_ANSWER01
+	_YES_NO_WIN( SCWK_ANSWER01 )
+	_BALLOONWIN_CLOSE()
+	
+	//回答により分岐
+	IF $SCWK_ANSWER01 == 0 THEN
+
+
+		//手持ちポケモンをカウント&所持金をチェックして回答を分岐する
+		{
+		
+		//手持ちポケモンのカウント
+		DEFINE_LOCAL LWK_POKE_COUNT
+		_GET_PARTY_POKE_COUNT (LWK_POKE_COUNT,POKECOUNT_MODE_TOTAL)
+		
+		//所持金のチェック
+		DEFINE_LOCAL LWK_GOLD_CHK
+		_CHECK_GOLD( LWK_GOLD_CHK, 500  )
+		
+		//所持金が足りない
+		IF $LWK_GOLD_CHK == 0 THEN
+			_BALLOONWIN_OBJMSG(msg_t04pc0101_middleman_05,T04PC0101_MIDDLEMAN_01)
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+			
+			_GOLD_WIN_CLOSE()
+		
+		//手持ちがいっぱいなら
+		ELSIF $LWK_POKE_COUNT == 6 THEN
+			_BALLOONWIN_OBJMSG(msg_t04pc0101_middleman_06,T04PC0101_MIDDLEMAN_01)
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+			
+			_GOLD_WIN_CLOSE()
+		
+		//500円があって手持ちに空きがあれば持ちタイプに合わせてポケモンを渡す	
+		ELSE
+			
+			//プレイヤーネームを格納
+			_PLAYER_NAME(0)
+			
+			//ME再生
+			_ME_PLAY( SEQ_ME_POKEGET )
+			
+			//所持金を減らして表示ウィンドウから減算
+			_SUBTRACT_GOLD( 500 )
+			_GOLD_WIN_UPDATE( MENU_X1, MENU_Y1 )
+			//プレイヤー名はコイキングを買った！
+			_PLAINWIN_MSG_DOWN( msg_t04pc0101_middleman_03 )
+			
+			//ウィンドウを閉じる
+			_ME_WAIT()
+			_AB_KEYWAIT_MARK()
+			_PLAINWIN_CLOSE()
+			_GOLD_WIN_CLOSE()
+			
+			//コイキングを入手
+			_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_129, 0, 5 )
+			
+			//【仮】コイキングの素早さの個体値をMAXに操作
+			//_SET_TEMOTI_POKE_PARAM( LWK_POKE_COUNT , SCR_POKEPARA_AGI_RND , 31)
+			
+			//名前をつけますか？
+			_SYSWIN_MSG(msg_t04pc0101_middleman_04, POS_DEFAULT )
+			DEFINE_LOCAL NAME_YESNO01
+			_YES_NO_WIN( NAME_YESNO01 )
+			_SYSWIN_CLOSE()
+			
+			//名づけるか分岐
+			IF $NAME_YESNO01 == 0 THEN
+				//はい
+				
+				//名前入力結果が格納されるローカル変数を定義
+				DEFINE_LOCAL SCWK_NAMEINPUT
+				
+				//名前入力画面呼び出し
+				_PARTY_POKE_NAME_INPUT(SCWK_NAMEINPUT,LWK_POKE_COUNT,TRUE)
+				
+			ELSE
+				//いいえの場合はスキップ
+			ENDIF
+		
+			//会話終了
+			_BALLOONWIN_OBJMSG(msg_t04pc0101_middleman_08,T04PC0101_MIDDLEMAN_01)
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+			
+			//======================================//
+			
+			//コイキング購入イベント終了
+			_FLAG_SET( FE_T04PC0101_TRADE_01 )
+			
+			//======================================//
+			
+		ENDIF
+		}
+
+	//いらない場合
+	ELSE
+		_BALLOONWIN_OBJMSG(msg_t04pc0101_middleman_07,T04PC0101_MIDDLEMAN_01)
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+
+_RET

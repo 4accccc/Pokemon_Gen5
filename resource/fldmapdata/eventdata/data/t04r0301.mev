@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/05 19:35:19
+#save date:2010/04/11 16:08:43
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t04r0301.wms
 #SECTION START:OBJ_EVENT
@@ -22,7 +22,7 @@ MV_RIGHT
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_T04_SUMMER
 #Event Script Name
 SCRID_T04R0301_BOY4_01
 #Direction Type Number
@@ -53,7 +53,7 @@ MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_T04_SUMMER
 #Event Script Name
 SCRID_T04R0301_GIRL4_01
 #Direction Type Number
