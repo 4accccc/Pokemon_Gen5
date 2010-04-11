@@ -156,7 +156,9 @@ EVENT_START  ev_pos_d07_rival_01
 	 _TIME_WAIT ( 30 )
 	 
 	//アテグジャンプ
-	 _OBJ_HIGH_JUMP( D07_CHAMPION_01, 142, 0, 206 ) 
+	_OBJ_HIGH_JUMP( D07_CHAMPION_01, 142, 0, 206 ) 
+	_OBJ_ANIME( D07_CHAMPION_01,anm_d07_champion_act_01 )
+	_OBJ_ANIME_WAIT()
 	 
 	 //着地後WAIT
 	 _TIME_WAIT ( 14 )
@@ -302,6 +304,13 @@ _ANIME_LABEL	anm_d07_rival_walk_up1
 _ANIME_LABEL	anm_d07_player_look_champion
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D07　ライバルイベント用：アテグ、ライバルに隣接
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_d07_champion_act_01
+	_ANIME_DATA	AC_CHAMPION_ACT0,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------

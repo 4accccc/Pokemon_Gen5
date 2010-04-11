@@ -325,7 +325,7 @@ EVENT_START   ev_pos_r07r0105_champion_01
 	_BALLOONWIN_OBJMSG( msg_r07r0105_champion_end_02 , R07R0105_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
 	
-	//【仮】チャンピオン芝居
+	//チャンピオン芝居
 	_OBJ_ANIME( R07R0105_CHAMPION_01 ,  anm_endaf_champion_look_d )
 	_OBJ_ANIME_WAIT()
 	
@@ -420,6 +420,7 @@ _ANIME_LABEL	anm_endaf_champion_look_r
 
 _ANIME_LABEL	anm_endaf_champion_look_d
 	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	AC_CHAMPION_ACT0,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
