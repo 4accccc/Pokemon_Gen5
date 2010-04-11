@@ -583,6 +583,9 @@ EVENT_START ev_pos_t01_firststep_01
 	_PLAINWIN_MSG_UP( msg_t01_white_04 )
 	_MSGWIN_CLOSE()
 
+	//【仮】友達集合イベント曲に差し替え予定
+	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
+
 	//主人公：サポート横へ
 	_PLAYER_POS_GET( lwk_pos_x, lwk_pos_z )
 	IF $lwk_pos_x == 786 THEN
@@ -641,6 +644,8 @@ EVENT_START ev_pos_t01_firststep_01
 
 	_OBJ_DEL( T01_RIVAL_01 )
 	_OBJ_DEL( T01_SUPPORT_01 )
+
+	_END_EVENT_BGM()
 
 	//========================================//
 	//POS無効
