@@ -115,9 +115,9 @@ EVENT_START   ev_c07r0401_gentleman_01
 					_BALLOONWIN_OBJMSG( msg_c07r0401_gentleman_09 ,C07R0401_GENTLEMAN_01)
 					_BALLOONWIN_CLOSE()
 					
-					//【仮】この条件に初めて達したならごほうびをあげる（アイテム内容が仮）
+					//この条件に初めて達したならごほうびをあげる（おうじゃのしるし）
 					IF FLAG_OFF( FE_C07R0401_ITEM_GET_LV03 ) THEN
-						_ITEM_EVENT_KEYWAIT ( ITEM_KIZUGUSURI , 1  )
+						_ITEM_EVENT_KEYWAIT ( ITEM_OUZYANOSIRUSI , 1  )
 						_BALLOONWIN_OBJMSG( msg_c07r0401_gentleman_13 ,C07R0401_GENTLEMAN_01)
 						
 						//==================================//
@@ -132,9 +132,9 @@ EVENT_START   ev_c07r0401_gentleman_01
 					_BALLOONWIN_OBJMSG( msg_c07r0401_gentleman_10 ,C07R0401_GENTLEMAN_01)
 					_BALLOONWIN_CLOSE()
 					
-					//【仮】この条件に初めて達したならごほうびをあげる（アイテム内容が仮）
+					//この条件に初めて達したならごほうびをあげる（きよめのおふだ）
 					IF FLAG_OFF( FE_C07R0401_ITEM_GET_LV02 ) THEN
-						_ITEM_EVENT_KEYWAIT ( ITEM_KIZUGUSURI , 1  )
+						_ITEM_EVENT_KEYWAIT ( ITEM_KIYOMENOOHUDA , 1  )
 						_BALLOONWIN_OBJMSG( msg_c07r0401_gentleman_13 ,C07R0401_GENTLEMAN_01)
 						
 						//==================================//
@@ -149,9 +149,9 @@ EVENT_START   ev_c07r0401_gentleman_01
 					_BALLOONWIN_OBJMSG( msg_c07r0401_gentleman_11 ,C07R0401_GENTLEMAN_01)
 					_BALLOONWIN_CLOSE()
 					
-					//【仮】この条件に初めて達したならごほうびをあげる（アイテム内容が仮）
+					//この条件に初めて達したならごほうびをあげる（しあわせタマゴ）
 					IF FLAG_OFF( FE_C07R0401_ITEM_GET_LV01 ) THEN
-						_ITEM_EVENT_KEYWAIT ( ITEM_KIZUGUSURI , 1  )
+						_ITEM_EVENT_KEYWAIT ( ITEM_SIAWASETAMAGO , 1  )
 						_BALLOONWIN_OBJMSG( msg_c07r0401_gentleman_13 ,C07R0401_GENTLEMAN_01)
 						
 						//==================================//

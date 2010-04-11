@@ -44,17 +44,26 @@ EVENT_START	ev_pos_n01r0201_guide_01
 	SWITCH $LWK_POSZ
 	CASE 14 THEN
 		_OBJ_ADD_EX( 21, 14, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+		//ダークトリニティ登場演出
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0201_ninja_coming_01 )
+		_OBJ_ANIME_WAIT()
 	CASE 15 THEN
 		_OBJ_ADD_EX( 21, 15, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+		//ダークトリニティ登場演出
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0201_ninja_coming_01 )
+		_OBJ_ANIME_WAIT()
 	CASE 16 THEN
 		_OBJ_ADD_EX( 21, 16, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+		//ダークトリニティ登場演出
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0201_ninja_coming_01 )
+		_OBJ_ANIME_WAIT()
 	CASE 17 THEN
 		_OBJ_ADD_EX( 21, 17, DIR_RIGHT, MMDL_ID_EVENTOBJ_00, NINJA, MV_DMY )
+		//ダークトリニティ登場演出
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0201_ninja_coming_01 )
+		_OBJ_ANIME_WAIT()
 	ENDSWITCH
 
-	//ダークトリニティ登場【仮】表示する演出が未定
-	_SE_PLAY( SEQ_SE_KAIDAN )
-	_SE_WAIT()
 	
 	//主人公：気づく
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_01 )
@@ -74,10 +83,10 @@ EVENT_START	ev_pos_n01r0201_guide_01
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0201_ninja_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
-	//ダークトリニティ消える【仮】消す演出が未定
+	//ダークトリニティ退場演出
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_n01r0201_ninja_bye_01 )
+	_OBJ_ANIME_WAIT()
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-	_SE_PLAY( SEQ_SE_KAIDAN )
-	_SE_WAIT()
 	
 	//========================================//
 	$WK_SCENE_N01R0201 = 1
@@ -107,4 +116,16 @@ _ANIME_LABEL	anm_staywalk_u
 	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------
+//	N01R0401　入室時イベント：ダークトリニティ登場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_n01r0201_ninja_coming_01
+	_ANIME_DATA	AC_NINJA_ACT0,1
+	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------
+//	N01R0401　入室時イベント：ダークトリニティ退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_n01r0201_ninja_bye_01
+	_ANIME_DATA	AC_NINJA_ACT1,1
+	_ANIME_DATA	ACMD_END,0
