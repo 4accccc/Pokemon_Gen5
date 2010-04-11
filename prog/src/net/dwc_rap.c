@@ -841,7 +841,7 @@ int GFL_NET_DWC_stepmatch( int isCancel )
       _CHANGE_STATE(MDSTATE_PLAYING);
       //      _dWork->state = MDSTATE_PLAYING;
       _dWork->stepMatchResult = STEPMATCH_SUCCESS;
-      return _dWork->stepMatchResult;
+      return STEPMATCH_SUCCESS;//_dWork->stepMatchResult;
     }
     break;
   case MDSTATE_CANCELFINISH:
@@ -2163,6 +2163,7 @@ int GFL_NET_DWC_returnLobby()
       _dWork->state == MDSTATE_LOGIN) {
     //        _dWork->op_aid = -1;
     _CHANGE_STATE(MDSTATE_LOGIN);
+    _dWork->stepMatchResult = STEPMATCH_CONNECT;
     //    _dWork->state = MDSTATE_LOGIN;
     _dWork->newFriendConnect = -1;
     //GFL_NET_DWC_ResetClientBlock();

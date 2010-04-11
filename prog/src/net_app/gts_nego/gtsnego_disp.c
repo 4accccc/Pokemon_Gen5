@@ -1493,8 +1493,12 @@ static int _touchToCurcorPos(GTSNEGO_DISP_WORK* pWork,int y,int max)
     return 0;
   }
 
-  length = length / (max-3);
+  length = length / (max-2);
   ansf = yf / length;
+
+  if(ansf >= max-2 ){
+    ansf = max-3;
+  }
 
   return (int)ansf;
 }

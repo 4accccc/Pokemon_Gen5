@@ -279,7 +279,7 @@ typedef enum{
 } _MENUTYPE_;
 
 
-#define _CANCELENABLE_TIMER (60*30)   // キャンセルになる為のタイマー60min
+#define _CANCELENABLE_TIMER (60*60)   // キャンセルになる為のタイマー60min
 
 
 typedef enum{

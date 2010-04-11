@@ -956,7 +956,8 @@ static int _playerDirectBattleWatch( WIFIP2PMATCH_WORK *wk, int seq )
 static int _playerDirectBattleWatch2( WIFIP2PMATCH_WORK *wk, int seq )
 {
   if(GFL_UI_KEY_GetTrg()){
-    wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
+    _Menu_RegulationDelete(wk);
+  //  wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
   }
   return seq;
@@ -1401,6 +1402,8 @@ static int _playerDirectWait( WIFIP2PMATCH_WORK *wk, int seq )
 static int _playerDirectEnd( WIFIP2PMATCH_WORK *wk, int seq )
 {
   _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
+  GFL_NET_SetAutoErrorCheck(FALSE);
+  GFL_NET_SetNoChildErrorCheck(FALSE);
   GFL_NET_StateWifiMatchEnd(TRUE);
 
   if(GFL_NET_IsParentMachine()){

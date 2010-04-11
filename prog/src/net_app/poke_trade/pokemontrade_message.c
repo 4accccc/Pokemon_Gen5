@@ -268,6 +268,9 @@ void POKETRADE_MESSAGE_WindowOpen(POKEMON_TRADE_WORK* pWork)
 
 void POKETRADE_MESSAGE_WindowTimeIconStart(POKEMON_TRADE_WORK* pWork)
 {
+  if(pWork->pTimeIcon){
+    TILEICON_Exit(pWork->pTimeIcon);
+  }
   pWork->pTimeIcon = TIMEICON_CreateTcbl(pWork->pMsgTcblSys,pWork->mesWin, 15, TIMEICON_DEFAULT_WAIT, pWork->heapID);
 }
 
@@ -355,6 +358,11 @@ void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork)
   if(pWork->pMsgTcblSys==NULL){
     return;
   }
+  POKETRADE_MESSAGE_WindowClose(pWork);
+  if(pWork->pStream){
+    PRINTSYS_PrintStreamDelete( pWork->pStream );
+    pWork->pStream = NULL;
+  }
 
   if(pWork->pAppWin){
     APP_TASKMENU_WIN_Delete(pWork->pAppWin);
@@ -370,7 +378,6 @@ void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork)
     GFL_BMPWIN_Delete(pWork->MyInfoWin);
     pWork->MyInfoWin=NULL;
   }
-  POKETRADE_MESSAGE_WindowClose(pWork);
 
   for(i=0;i<2;i++){
     if(pWork->StatusWin[i]){

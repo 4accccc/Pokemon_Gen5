@@ -1043,6 +1043,8 @@ static void _wakeupAction4(G_SYNC_WORK* pWork)
   GSYNC_DISP_DreamSmokeBgStart(pWork->pDispWork);
   GSYNC_DISP_BlendSmokeStart(pWork->pDispWork,TRUE);
   GSYNC_DISP_ObjChange(pWork->pDispWork,NANR_gsync_obj_rug_ani3,NANR_gsync_obj_rug_ani2);
+  GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed);
+  GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed_shadow);
   PMSND_PlaySE(SEQ_SE_SYS_24);
 
   _CHANGE_STATE(_wakeupActio4_2);

@@ -1301,6 +1301,8 @@ static void _graphicEnd(WIFIP2PMATCH_WORK* wk)
   if(wk->vblankFunc){
     GFL_TCB_DeleteTask( wk->vblankFunc );
   }
+  _TrainerOAMFree( wk );
+  _TouchResExit(wk);
 
 
   // マッチングルーム破棄
@@ -2111,6 +2113,8 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
 
     }
     else{  //相手と切断
+      GFL_NET_SetAutoErrorCheck(FALSE);
+      GFL_NET_SetNoChildErrorCheck(FALSE);
       GFL_NET_StateWifiMatchEnd(TRUE);  // マッチングを切る  @todo専用切断を作るのが適切
       _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
       wk->timer = _RECONECTING_WAIT_TIME;
@@ -3219,7 +3223,6 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
       }
     }
 
-
     // した画面も動かない
     check_friend = MCVSys_Updata( wk, HEAPID_WIFIP2PMATCH );  // した画面も動かす
     p_obj = MCRSYS_GetMoveObjWork( wk, check_friend );
@@ -3399,6 +3402,8 @@ static int _callGameInit( WIFIP2PMATCH_WORK *wk, int seq )
       _commStateChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_UNIONMATCH);
       _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_UNIONMATCH);  // 接続中になる
 
+      WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+      
       _friendNameExpand(wk, n);
       WifiP2PMatchMessagePrint(wk,msg_wifilobby_082, FALSE);
       wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
@@ -5875,6 +5880,10 @@ static void WifiP2PMatch_UserDispOn( WIFIP2PMATCH_WORK *wk, u32 friendNo, u32 he
 //-----------------------------------------------------------------------------
 static void WifiP2PMatch_UserDispOff( WIFIP2PMATCH_WORK *wk, u32 heapID )
 {
+
+  _TrainerOAMFree( wk );
+  _TouchResExit(wk);
+
   MCVSys_UserDispOff( wk );
   MCRSYS_ReloadShadow(wk);
   WIFI_MCR_CursorOff( &wk->matchroom );
@@ -6160,11 +6169,11 @@ static BOOL MCVSys_UserDispEndCheck( WIFIP2PMATCH_WORK *wk  )
     }
   }
   //  移動はcontボタンはトリガー
-//  if( (GFL_UI_KEY_GetCont() & (PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_KEY_UP|PAD_KEY_DOWN)) ||
-//      (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B|PAD_BUTTON_X)) 
-//      ){
+  if( (GFL_UI_KEY_GetCont() & (PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_KEY_UP|PAD_KEY_DOWN)) ||
+      (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B|PAD_BUTTON_X)) 
+      ){
 
-  if( (GFL_UI_KEY_GetCont() & (PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_KEY_UP|PAD_KEY_DOWN)) ){
+//  if( (GFL_UI_KEY_GetCont() & (PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_KEY_UP|PAD_KEY_DOWN)) ){
 
     return TRUE;
   }

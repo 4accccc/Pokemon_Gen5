@@ -1048,7 +1048,10 @@ static void _TrainerOAMDraw( WIFIP2PMATCH_WORK *wk, int friendNo, u32 heapID )
     0,
     0,0,
   };
-
+  if(wk->pTrgra){
+    _TrainerOAMFree(wk);
+  }
+  
   num = WifiList_GetFriendInfo(wk->pList, friendNo, WIFILIST_FRIEND_UNION_GRA );
   num = UnionView_GetTrType( num );
 
@@ -1070,12 +1073,12 @@ static void _TrainerOAMDraw( WIFIP2PMATCH_WORK *wk, int friendNo, u32 heapID )
 
 static void _TrainerOAMFree( WIFIP2PMATCH_WORK *wk )
 {
-  if(wk->trRes[0]){
+  if(wk->pTrgra){
     GFL_CLACT_WK_Remove(wk->pTrgra);
     GFL_CLGRP_CGR_Release(wk->trRes[0]);
     GFL_CLGRP_PLTT_Release(wk->trRes[1]);
     GFL_CLGRP_CELLANIM_Release(wk->trRes[2]);
-    wk->trRes[0]=0;
+    wk->pTrgra = NULL;
   }
 }
 
@@ -1101,6 +1104,11 @@ static void _TOUCHBAR_Init(WIFIP2PMATCH_WORK *wk,HEAPID heapID)
   };
 
   TOUCHBAR_SETUP  touchbar_setup;
+
+  if(wk->pTouchWork){
+    return;
+  }
+  
   GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
 
   touchbar_setup.p_item   = touchbar_icon_tbl;        //ã‚Ì‘‹î•ñ
