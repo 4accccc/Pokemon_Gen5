@@ -623,13 +623,17 @@ EVENT_START	ev_pos_r05_h02demo_01
 	ELSE
 		_OBJ_ANIME( R05_RIVAL_01, anm_rival_look_01b )
 	ENDIF
-	_OBJ_ANIME_WAIT()
+	
+//	_PLAINWIN_MSG_UP( msg_r05_black_10 )
+//	_MSGWIN_CLOSE()
 	
 	_CAMERA_START()		//カメラ操作開始--------------------------------------
 	_CAMERA_PURGE()		//カメラパージ
 	_CAMERA_MOVE(9688,0,970752,22052864,0,28344320, 20)
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_OBJ_ANIME_WAIT()
 	
+	//こっちだよ
 	_BALLOONWIN_OBJMSG_POS( msg_r05_black_10, R05_RIVAL_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
@@ -688,19 +692,19 @@ EVENT_START	ev_pos_r05_h02demo_01
 	_OBJ_ANIME_WAIT()
 	
 	//さ みてて！
-	_BALLOONWIN_OBJMSG_POS( msg_r05_leader_07 , R05_LEADER4_01, POS_UR )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_leader_07 , R05_LEADER4_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//H02デモ呼び出し
-  _DEMO_FADEOUT_BLACK_CALL()
-
+	_DEMO_FADEOUT_BLACK_CALL()
+	
 	_CALL_3D_DEMO( DEMO3D_ID_RIZA_BRIDGE )
 	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラパージ
 	_CAMERA_MOVE(9688,0,970752,21921792,0,28344320, 1)
 	
-  _DEMO_FADEIN_BLACK_CALL()
+	_DEMO_FADEIN_BLACK_CALL()
 	
 	_TIME_WAIT( 16 )
 	
@@ -729,13 +733,14 @@ EVENT_START	ev_pos_r05_h02demo_01
 	_CAMERA_END()		//カメラ操作終了
 	
 	//ライバル：主人公を見て
-	_OBJ_ANIME( R05_RIVAL_01, anm_obj_dir_d )
+	//ライバル：先に行く
+	_OBJ_ANIME( R05_RIVAL_01, anm_rival_move_04 )
 	_OBJ_ANIME_WAIT()
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_obj_dir_u )
 	_OBJ_ANIME_WAIT()
 	
 	//さあ いこう
-	_BALLOONWIN_OBJMSG( msg_r05_black_09 , R05_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_09 , R05_RIVAL_01, POS_UR )
 	_MSGWIN_CLOSE()
 	
 	//ライバル：先に行く
@@ -832,10 +837,16 @@ _ANIME_LABEL	anm_leader_goaway_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
+//ライバル：主人公前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_move_04
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
 //ライバル：去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_goaway_01
-	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,8
 	_ANIME_DATA	ACMD_END,0
 
