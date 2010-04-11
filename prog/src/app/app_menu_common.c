@@ -425,9 +425,15 @@ u32 APP_COMMON_GetTrDummyAnimeArcIdx( const APP_COMMON_MAPPING mapping )
  *	@return	パレットアーカイブインデックス
  */
 //-----------------------------------------------------------------------------
-u32 APP_COMMON_GetBallPltArcIdx( const BALL_ID ball )
+u32 APP_COMMON_GetBallPltArcIdx( BALL_ID ball )
 {	
 	GF_ASSERT_MSG( ball != BALLID_NULL, "ボールIDがNULLです\n" );
+  //製品版でふっとばないように修正値を入れました
+  if( ball == BALLID_NULL )
+  { 
+    ball  = BALLID_MONSUTAABOORU;
+  }
+
 	return NARC_app_menu_common_ball00_NCLR + ball - 1;	//BALLIDは1オリジン
 }
 //----------------------------------------------------------------------------
@@ -439,9 +445,14 @@ u32 APP_COMMON_GetBallPltArcIdx( const BALL_ID ball )
  *	@return	キャラアーカイブインデックス
  */
 //-----------------------------------------------------------------------------
-u32 APP_COMMON_GetBallCharArcIdx( const BALL_ID ball )
+u32 APP_COMMON_GetBallCharArcIdx( BALL_ID ball )
 {	
 	GF_ASSERT_MSG( ball != BALLID_NULL, "ボールIDがNULLです\n" );
+  //製品版でふっとばないように修正値を入れました
+  if( ball == BALLID_NULL )
+  { 
+    ball  = BALLID_MONSUTAABOORU;
+  }
 	return NARC_app_menu_common_ball00_NCGR + ball - 1;	//BALLIDは１オリジン
 }
 //----------------------------------------------------------------------------
@@ -454,9 +465,14 @@ u32 APP_COMMON_GetBallCharArcIdx( const BALL_ID ball )
  *	@return	セルアーカイブインデックス
  */
 //-----------------------------------------------------------------------------
-u32 APP_COMMON_GetBallCellArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING mapping )
+u32 APP_COMMON_GetBallCellArcIdx( BALL_ID ball, const APP_COMMON_MAPPING mapping )
 {	
 	GF_ASSERT_MSG( ball != BALLID_NULL, "ボールIDがNULLです\n" );
+  //製品版でふっとばないように修正値を入れました
+  if( ball == BALLID_NULL )
+  { 
+    ball  = BALLID_MONSUTAABOORU;
+  }
 	return NARC_app_menu_common_ball_32k_NCER + mapping;
 }
 //----------------------------------------------------------------------------
@@ -469,9 +485,14 @@ u32 APP_COMMON_GetBallCellArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING m
  *	@return	パレットアーカイブインデックス
  */
 //-----------------------------------------------------------------------------
-u32 APP_COMMON_GetBallAnimeArcIdx( const BALL_ID ball, const APP_COMMON_MAPPING mapping )
+u32 APP_COMMON_GetBallAnimeArcIdx( BALL_ID ball, const APP_COMMON_MAPPING mapping )
 {	
 	GF_ASSERT_MSG( ball != BALLID_NULL, "ボールIDがNULLです\n" );
+  //製品版でふっとばないように修正値を入れました
+  if( ball == BALLID_NULL )
+  { 
+    ball  = BALLID_MONSUTAABOORU;
+  }
 	return NARC_app_menu_common_ball_32k_NANR + mapping;
 }
 //=============================================================================
