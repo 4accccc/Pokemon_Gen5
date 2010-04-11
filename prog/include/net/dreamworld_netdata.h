@@ -104,13 +104,15 @@ typedef enum{
   DREAM_WORLD_MATCHUP_ENTRY,	  // 参加中
   DREAM_WORLD_MATCHUP_END,	  // 大会終了
   DREAM_WORLD_MATCHUP_RETIRE,		 // 途中で解除
+
+  DREAM_WORLD_MATCHUP_CHANGE_DS,		// DS本体を差し替えた
 } DREAM_WORLD_MATCHUP_TYPE;   /// 世界対戦の進行状況
 
 //下記構造体に書き込まれる、書き込みフラグ
 typedef enum
 { 
-  DREAM_WORLD_ENTRYFLAG_GPF_WRITE,
   DREAM_WORLD_ENTRYFLAG_DS_WRITE,
+  DREAM_WORLD_ENTRYFLAG_GPF_WRITE,
 } DREAM_WORLD_ENTRYFLAG;
 
 /// 世界対戦確認用データ構造体
