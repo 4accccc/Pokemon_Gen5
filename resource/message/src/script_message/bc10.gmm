@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00131" date="2010-03-12T15:28:13"/>
+	<create user="ohmori" host="W00223" date="2010-04-11T19:49:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -937,12 +937,12 @@
 いろんな　トレーナーと▽
 めが　あっちゃうね▼
 わたしと　めがあった　あなたは
-どんな　ポケモンを　だすのかな？</language>
+どんな　ポケモンを　だすのかな？▼</language>
 		<language name="JPN_KANJI" width="256">カナ『キョロキョロして　歩いてると
 いろんな　トレーナーと▽
 めが　あっちゃうね▼
 わたしと　めがあった　あなたは
-どんな　ポケモンを　だすのかな？</language>
+どんな　ポケモンを　だすのかな？▼</language>
 	</row>
 
 	<row id="bc10_14_02">
@@ -981,10 +981,10 @@
 オーヤブ</attribute>
 		<language name="JPN" width="256">オーヤブ『おお……　みなさい！▼
 わたしの　ポケモンが
-きみと　たたかいたいと　いっておるよ</language>
+きみと　たたかいたいと　いっておるよ▼</language>
 		<language name="JPN_KANJI" width="256">オーヤブ『おお……　みなさい！▼
 わたしの　ポケモンが
-きみと　戦いたいと　いっておるよ</language>
+きみと　戦いたいと　いっておるよ▼</language>
 	</row>
 
 	<row id="bc10_15_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1438,9 +1438,9 @@
 		<attribute name="キャラ指定">VETERANM
 ユウ</attribute>
 		<language name="JPN" width="256">まだまだ　ポケモンしょうぶの
-けんきゅうが　たりないようだな▼</language>
+けんきゅうが　たりないようだな</language>
 		<language name="JPN_KANJI" width="256">まだまだ　ポケモン勝負の
-研究が　足りないようだな▼</language>
+研究が　足りないようだな</language>
 	</row>
 
 	<row id="bc10_25_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

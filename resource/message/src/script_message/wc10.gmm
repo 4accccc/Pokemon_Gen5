@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00131" date="2010-03-12T15:33:58"/>
+	<create user="ohmori" host="W00223" date="2010-04-11T19:47:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 	<comment>ナギー</comment>
 </head>
@@ -264,7 +264,7 @@
 		</language>
 	</columns>
 
-	<dialog left="119" top="92" right="907" bottom="707" maximized="no" rayout="Vertical2">
+	<dialog left="2204" top="296" right="2992" bottom="911" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="619" top="121" right="1092" bottom="519" visible="yes"/>
 		<band id="0" index="1" style="0000" width="613"/>
@@ -420,10 +420,10 @@
 ツバサ</attribute>
 		<language name="JPN" width="256">ツバサ『あっ！　きいて　きいて▼
 そこの　そうげんで
-[1:01:ポケモン種族名:1]が　ごはん　たべてたよ！</language>
+ポッポが　ごはん　たべてたよ！</language>
 		<language name="JPN_KANJI" width="256">ツバサ『あっ！　きいて　きいて▼
 そこの　草原で
-[1:01:ポケモン種族名:1]が　ごはん　食べてたよ！</language>
+ポッポが　ごはん　食べてたよ！</language>
 	</row>
 
 	<row id="wc10_02_01">
@@ -434,13 +434,13 @@
 ここの　まちは　すごく　ステキですね▼
 [1:00:トレーナー名:0]さんが　いた
 ブラックシティから　きた　アルです▽
-どうも　よろしくね</language>
+どうも　よろしくね▼</language>
 		<language name="JPN_KANJI" width="256">アル『あら　こんにちは！▼
 おいしい　空気に　のどかな　時間
 ここの街は　すごく　ステキですね▼
 [1:00:トレーナー名:0]さんが　いた
 ブラックシティから　来た　アルです▽
-どうも　よろしくね</language>
+どうも　よろしくね▼</language>
 	</row>
 
 	<row id="wc10_02_02">
@@ -473,10 +473,10 @@
 		<attribute name="キャラ指定">GIRL3
 アル</attribute>
 		<language name="JPN" width="256">このまえ　そこで
-[1:01:ポケモン種族名:1]ちゃんと　であったの！▽
+ケムッソちゃんと　であったの！▽
 ほんとうに　のどかで　ステキね　ここ</language>
 		<language name="JPN_KANJI" width="256">このまえ　そこで
-[1:01:ポケモン種族名:1]ちゃんと　出会ったの！▽
+ケムッソちゃんと　出会ったの！▽
 本当に　のどかで　ステキね　ここ</language>
 	</row>
 
@@ -522,12 +522,12 @@
 	<row id="wc10_03_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BADMAN
 ヤス</attribute>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:1]！▼
-なんだ　おまえか
-さっきよ　[1:01:ポケモン種族名:1]を　みかけたぜ</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:1]！▼
-なんだ　おまえか
-さっきよ　[1:01:ポケモン種族名:1]を　みかけたぜ</language>
+		<language name="JPN" width="256">ゴースか！？▼
+……なんだ　おまえか
+さっきよ　ゴースを　みかけたぜ</language>
+		<language name="JPN_KANJI" width="256">ゴースか！？▼
+……なんだ　おまえか
+さっきよ　ゴースを　みかけたぜ</language>
 	</row>
 
 	<row id="wc10_04_01">
@@ -537,11 +537,11 @@
 		<language name="JPN" width="256">アズサ『まいど　こんにちは！
 [1:00:トレーナー名:0]の　ともだちの　アズサです▼
 ブラックシティに　いたときは
-ちょっこし　だいたん　だったのです</language>
+ちょっこし　だいたん　だったのです▼</language>
 		<language name="JPN_KANJI" width="256">アズサ『まいど　こんにちは！
 [1:00:トレーナー名:0]の　友達の　アズサです▼
 ブラックシティに　いたときは
-ちょっこし　大胆だったのです</language>
+ちょっこし　大胆だったのです▼</language>
 	</row>
 
 	<row id="wc10_04_02">
@@ -552,12 +552,12 @@
 やわやわっと　なりますね！▼
 あせくらしい　ブラックシティと
 おおちがい　ですよ！▽
-いいとこ　ですねー</language>
+いいとこ　ですねー▼</language>
 		<language name="JPN_KANJI" width="256">アズサ『大自然に　囲まれて
 やわやわっと　なりますね！▼
 あせくらしい　ブラックシティと
 大違い　ですよ！▽
-いいとこ　ですねー</language>
+いいとこ　ですねー▼</language>
 	</row>
 
 	<row id="wc10_04_03">
@@ -573,10 +573,10 @@
 	<row id="wc10_04_04">
 		<attribute name="キャラ指定">OL
 アズサ</attribute>
-		<language name="JPN" width="256">あれ　[1:01:ポケモン種族名:1]を　さがしてます？
-[1:01:ポケモン種族名:1]なら　そこで　みましたよ</language>
-		<language name="JPN_KANJI" width="256">あれ　[1:01:ポケモン種族名:1]を　探してます？
-[1:01:ポケモン種族名:1]なら　そこで　みましたよ</language>
+		<language name="JPN" width="256">あれ？　ハネッコを　さがしてます？
+ハネッコなら　そこで　みましたよ</language>
+		<language name="JPN_KANJI" width="256">あれ？　ハネッコを　探してます？
+ハネッコなら　そこで　みましたよ</language>
 	</row>
 
 	<row id="wc10_05_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -620,11 +620,11 @@
 		<attribute name="キャラ指定">BOY2
 ヨシヒサ</attribute>
 		<language name="JPN" width="256">あ！　あのさー！
-[1:01:ポケモン種族名:1]！　[1:01:ポケモン種族名:1]が▼
+エレキッド！　エレキッドが▼
 そこを　にげていったよ！
 おいかけちゃおうかなー</language>
 		<language name="JPN_KANJI" width="256">あ！　あのさー！
-[1:01:ポケモン種族名:1]！　[1:01:ポケモン種族名:1]が▼
+エレキッド！　エレキッドが▼
 そこを　逃げていったよ！
 おいかけちゃおうかなー</language>
 	</row>
@@ -675,10 +675,10 @@
 チサト</attribute>
 		<language name="JPN" width="256">こんにちはぁー▼
 あれれ？　いま　アナタの　うしろを
-[1:01:ポケモン種族名:1]が　かけていったわよ</language>
+トゲピーが　かけていったわよ</language>
 		<language name="JPN_KANJI" width="256">こんにちはぁー▼
 あれれ？　いま　アナタの　後ろを
-[1:01:ポケモン種族名:1]が　かけていったわよ</language>
+トゲピーが　かけていったわよ</language>
 	</row>
 
 	<row id="wc10_07_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -687,11 +687,11 @@
 		<language name="JPN" width="256">ショウゴ『やあ！　こんにちは
 くうきが　すんでて　すばらしいね！▼
 [1:00:トレーナー名:0]のいた　ブラックシティから
-やってきた　ショウゴだよ　よろしく！</language>
+やってきた　ショウゴだよ　よろしく！▼</language>
 		<language name="JPN_KANJI" width="256">ショウゴ『やあ！　こんにちは
 空気が　澄んでて　すばらしいね！▼
 [1:00:トレーナー名:0]のいた　ブラックシティから
-やってきた　ショウゴだよ　よろしく！</language>
+やってきた　ショウゴだよ　よろしく！▼</language>
 	</row>
 
 	<row id="wc10_07_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -727,11 +727,11 @@
 ショウゴ</attribute>
 		<language name="JPN" width="256">やあ！　おれの　ポケモンと
 せいけんづき　してたら▼
-[1:01:ポケモン種族名:1]が　うらやましそうに
+ワンリキーが　うらやましそうに
 みてたからさ　さがしてみたら？</language>
 		<language name="JPN_KANJI" width="256">やあ！　おれの　ポケモンと
 せいけんづき　してたら▼
-[1:01:ポケモン種族名:1]が　うらやましそうに
+ワンリキーが　うらやましそうに
 みてたからさ　探してみたら？</language>
 	</row>
 
@@ -779,11 +779,11 @@
 ノリコ</attribute>
 		<language name="JPN" width="256">あら？　
 あなたも　いっしょに　はしる？▼
-さっき　やせいの　[1:01:ポケモン種族名:1]が　いてね
+さっき　やせいの　ナマケロが　いてね
 はしってたら　あえるかも？</language>
 		<language name="JPN_KANJI" width="256">あら？　
 あなたも　一緒に　走る？▼
-さっき　野生の　[1:01:ポケモン種族名:1]が　いてね
+さっき　野生の　ナマケロが　いてね
 走ってたら　会えるかも？</language>
 	</row>
 
@@ -826,9 +826,13 @@
 		<attribute name="キャラ指定">BUSINESSMAN
 ミヤオ</attribute>
 		<language name="JPN" width="256">どうも　おせわに　なってます！▼
+さっき　ここで
+コリンクを　みましたよ！▼
 いやー　ここは　いるだけで
 きぶんは　リフレッシュ！　ですよ</language>
 		<language name="JPN_KANJI" width="256">どうも　おせわに　なってます！▼
+さっき　ここで
+コリンクを　みましたよ！▼
 いやー　ここは　いるだけで
 気分は　リフレッシュ！　ですよ</language>
 	</row>
@@ -871,11 +875,11 @@
 	<row id="wc10_10_04">
 		<attribute name="キャラ指定">TRAINERM
 ナルオ</attribute>
-		<language name="JPN" width="256">さっき　そこで　[1:01:ポケモン種族名:1]が
+		<language name="JPN" width="256">さっき　そこで　ブビィが
 ぼくに　みとれてたよ▼
 めが　あったら　すぐ　にげちゃった
 ずいぶん　てれや　なんだね</language>
-		<language name="JPN_KANJI" width="256">さっき　そこで　[1:01:ポケモン種族名:1]が
+		<language name="JPN_KANJI" width="256">さっき　そこで　ブビィが
 ぼくに　みとれてたよ▼
 めが　あったら　すぐ　逃げちゃった
 ずいぶん　てれや　なんだね</language>
@@ -918,10 +922,10 @@
 		<attribute name="キャラ指定">ASSISTANTW
 カワセ</attribute>
 		<language name="JPN" width="256">さっき　しんこきゅう　してたら
-まよこで　[1:01:ポケモン種族名:1]も　してたの▽
+まよこで　コイルも　まねしてたの▽
 なんか　おかしくて　わらっちゃった</language>
 		<language name="JPN_KANJI" width="256">さっき　深呼吸してたら
-まよこで　[1:01:ポケモン種族名:1]も　してたの▽
+まよこで　コイルも　まねしてたの▽
 なんか　おかしくて　笑っちゃった</language>
 	</row>
 
@@ -965,11 +969,11 @@
 ユーキ</attribute>
 		<language name="JPN" width="256">くさポケモンの　こきゅうや
 とりポケモンの　さえずり……▼
-……[1:01:ポケモン種族名:1]　いま　あなたの
+……ラルトス　いま　あなたの
 うしろを　はしっていった……</language>
 		<language name="JPN_KANJI" width="256">くさポケモンの　呼吸や
 とりポケモンの　さえずり……▼
-……[1:01:ポケモン種族名:1]　今　あなたの
+……ラルトス　今　あなたの
 後ろを　走っていった……</language>
 	</row>
 
@@ -1013,10 +1017,10 @@
 	<row id="wc10_13_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERM
 マサシ</attribute>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:1]！　[1:01:ポケモン種族名:1]が
+		<language name="JPN" width="256">ムックル！　ムックルが
 そこに　さっきまで　いたよ▽
 さがしてみたら　どうかな？</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:1]！　[1:01:ポケモン種族名:1]が
+		<language name="JPN_KANJI" width="256">ムックル！　ムックルが
 そこに　さっきまで　いたよ▽
 探してみたら　どうかな？</language>
 	</row>
@@ -1059,11 +1063,11 @@
 	<row id="wc10_14_04">
 		<attribute name="キャラ指定">BACKPACKERW
 カナ</attribute>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:1]が　げんきよく
+		<language name="JPN" width="256">ピチューが　げんきよく
 そうげんの　ほうへ　はしっていったよ▼
 わたしも　ポケモンと　いっしょに
 そうげんを　はしろうかしら</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:1]が　元気よく
+		<language name="JPN_KANJI" width="256">ピチューが　元気よく
 草原の　ほうへ　走っていったよ▼
 わたしも　ポケモンと　一緒に
 草原を　走ろうかしら</language>
@@ -1112,11 +1116,11 @@
 		<attribute name="キャラ指定">GENTLEMAN
 オーヤブ</attribute>
 		<language name="JPN" width="256">さきほどな　わたしの　ポケモンが
-やせいの　[1:01:ポケモン種族名:1]と　あそんでいた▼
+やせいの　スボミーと　あそんでいた▼
 わたしを　みたら　にげてしまったが
 じつに　たのしそう　だったよ</language>
 		<language name="JPN_KANJI" width="256">さきほどな　わたしの　ポケモンが
-やせいの　[1:01:ポケモン種族名:1]と　遊んでいた▼
+やせいの　スボミーと　遊んでいた▼
 わたしを　みたら　逃げてしまったが
 じつに　楽しそうだったよ</language>
 	</row>
@@ -1161,10 +1165,10 @@
 	<row id="wc10_16_04">
 		<attribute name="キャラ指定">GIRL4
 リリカ</attribute>
-		<language name="JPN" width="256">きょうは　[1:01:ポケモン種族名:1]を　みかけたわ！▼
+		<language name="JPN" width="256">きょうは　ナゾノクサを　みかけたわ！▼
 あんまり　みたことなかったから
 なんだか　かんどう　しちゃった！</language>
-		<language name="JPN_KANJI" width="256">きょうは　[1:01:ポケモン種族名:1]を　みかけたわ！▼
+		<language name="JPN_KANJI" width="256">きょうは　ナゾノクサを　みかけたわ！▼
 あんまり　みたことなかったから
 なんだか　感動しちゃった！</language>
 	</row>
@@ -1214,11 +1218,11 @@
 		<attribute name="キャラ指定">BOY4
 ミツマサ</attribute>
 		<language name="JPN" width="256">きょうは
-[1:01:ポケモン種族名:1]を　みたよ▼
+メリープを　みたよ▼
 ホワイトフォレスト　ならではの
 であい　だよね！</language>
 		<language name="JPN_KANJI" width="256">今日は
-[1:01:ポケモン種族名:1]を　みたよ▼
+メリープを　みたよ▼
 ホワイトフォレスト　ならではの
 出会い　だよね！</language>
 	</row>
@@ -1263,11 +1267,11 @@
 	<row id="wc10_18_04">
 		<attribute name="キャラ指定">MOUNTMAN
 テルアキ</attribute>
-		<language name="JPN" width="256">きょうは　[1:01:ポケモン種族名:1]と
+		<language name="JPN" width="256">きょうは　ココドラと
 であえたよ　ラッキーだった▼
 やっぱり　ホワイトフォレストは
 わしの　はだに　あうなぁ</language>
-		<language name="JPN_KANJI" width="256">きょうは　[1:01:ポケモン種族名:1]と
+		<language name="JPN_KANJI" width="256">きょうは　ココドラと
 出会えたよ　ラッキーだった▼
 やっぱり　ホワイトフォレストは
 わしの　肌に　あうなぁ</language>
@@ -1304,19 +1308,19 @@
 セキ</attribute>
 		<language name="JPN" width="256">でもなんだか　さいきん
 こうして　のんびり　すごすことに▽
-ちょっと　あせりを　かんじてるの▼</language>
+ちょっと　あせりを　かんじてるの</language>
 		<language name="JPN_KANJI" width="256">でもなんだか　最近
 こうして　のんびり　すごすことに▽
-ちょっと　あせりを　感じてるの▼</language>
+ちょっと　あせりを　感じてるの</language>
 	</row>
 
 	<row id="wc10_19_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">OL
 セキ</attribute>
-		<language name="JPN" width="256">きょうは　[1:01:ポケモン種族名:1]と
+		<language name="JPN" width="256">きょうは　マダツボミと
 いっしょに　すごしたのよ▽
 きちょうな　たいけん　だった！</language>
-		<language name="JPN_KANJI" width="256">きょうは　[1:01:ポケモン種族名:1]と
+		<language name="JPN_KANJI" width="256">きょうは　マダツボミと
 一緒に　すごしたのよ▽
 貴重な　体験だった！</language>
 	</row>
@@ -1359,10 +1363,10 @@
 	<row id="wc10_20_04">
 		<attribute name="キャラ指定">WOMAN3
 ミポ</attribute>
-		<language name="JPN" width="256">しぜんたいで　[1:01:ポケモン種族名:1]とも
+		<language name="JPN" width="256">しぜんたいで　タネボーとも
 ひととも　なかよくできる……▽
 それって　ステキな　ことよね！</language>
-		<language name="JPN_KANJI" width="256">自然体で　[1:01:ポケモン種族名:1]とも
+		<language name="JPN_KANJI" width="256">自然体で　タネボーとも
 人とも　仲良くできる……▽
 それって　ステキな　ことよね！</language>
 	</row>
@@ -1405,9 +1409,9 @@
 	<row id="wc10_21_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BOY3
 ショウ</attribute>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:1]を　みかけたけど
+		<language name="JPN" width="256">サイホーンを　みかけたけど
 しぜんたいで　いいよね　アイツは</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:1]を　みかけたけど
+		<language name="JPN_KANJI" width="256">サイホーンを　みかけたけど
 自然体で　いいよね　アイツは</language>
 	</row>
 
@@ -1457,10 +1461,10 @@
 	<row id="wc10_22_04">
 		<attribute name="キャラ指定">RANGERM
 マツリ</attribute>
-		<language name="JPN" width="256">きょうは　[1:01:ポケモン種族名:1]と　あったよ▼
+		<language name="JPN" width="256">きょうは　ハスボーと　あったよ▼
 なんだか　きもちが　つうじあえた……
 そんな　おもいで　いっぱいだよ</language>
-		<language name="JPN_KANJI" width="256">きょうは　[1:01:ポケモン種族名:1]と　会ったよ▼
+		<language name="JPN_KANJI" width="256">きょうは　ハスボーと　会ったよ▼
 なんだか　気持ちが　通じあえた……
 そんな　思いで　いっぱいだよ</language>
 	</row>
@@ -1507,9 +1511,9 @@
 	<row id="wc10_23_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">RANGERW
 ナギー</attribute>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:1]を　みたんだけど
+		<language name="JPN" width="256">ナックラーを　みたんだけど
 なんだか　こころが　みたされた！</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:1]を　みたんだけど
+		<language name="JPN_KANJI" width="256">ナックラーを　みたんだけど
 なんだか　心が　満たされた！</language>
 	</row>
 
@@ -1554,10 +1558,10 @@
 		<attribute name="キャラ指定">BUSINESSMAN
 タナカ</attribute>
 		<language name="JPN" width="256">もりで　のんびりしてたら
-[1:01:ポケモン種族名:1]と　あったよー！▼
+ケーシィと　あったよー！▼
 すばらしい　じかんだったなぁ</language>
 		<language name="JPN_KANJI" width="256">森で　のんびりしてたら
-[1:01:ポケモン種族名:1]と　あったよー！▼
+ケーシィと　あったよー！▼
 すばらしい　時間だったなぁ</language>
 	</row>
 
@@ -1609,11 +1613,11 @@
 ユウ</attribute>
 		<language name="JPN" width="256">ひろい　しやを　もつことで
 しぜんと　じぶん▽
-じぶんと　[1:01:ポケモン種族名:1]▽
+じぶんと　ニドラン♂▽
 いろんなことに　きづかされるよ</language>
 		<language name="JPN_KANJI" width="256">広い　視野を　もつことで
 自然と　自分▽
-じぶんと　[1:01:ポケモン種族名:1]▽
+じぶんと　ニドラン♂▽
 いろんなことに　きづかされるよ</language>
 	</row>
 
@@ -1667,10 +1671,10 @@
 	<row id="wc10_26_04">
 		<attribute name="キャラ指定">ASSISTANTM
 シミズ</attribute>
-		<language name="JPN" width="256">たような　[1:01:ポケモン種族名:1]
+		<language name="JPN" width="256">たような　ニドラン♀
 たような　こたえ▽
 その　いずれも　ただしいんだよ</language>
-		<language name="JPN_KANJI" width="256">多様な　[1:01:ポケモン種族名:1]
+		<language name="JPN_KANJI" width="256">多様な　ニドラン♀
 多様な　解答▽
 その　いずれも　正しいんだよ</language>
 	</row>
@@ -1724,12 +1728,12 @@
 		<language name="JPN" width="256">まいにちを　いきていくことって
 すこしずつ　へんかがあって▽
 いみの　あることなのね▼
-[1:01:ポケモン種族名:1]を　みていると
+ゴニョニョを　みていると
 そう　おもうわ</language>
 		<language name="JPN_KANJI" width="256">毎日を　生きていくことって
 少しずつ　変化があって▽
 意味の　あることなのね▼
-[1:01:ポケモン種族名:1]を　みていると
+ゴニョニョを　みていると
 そう　思うわ</language>
 	</row>
 
@@ -1773,10 +1777,10 @@
 	<row id="wc10_28_04">
 		<attribute name="キャラ指定">BACKPACKERM
 スズ</attribute>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:1]と　であえる
+		<language name="JPN" width="256">ポリゴンと　であえる
 このもりを　きにいってるんだ▼
 ここで　ゆっくり　くらしたい</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:1]と　出会える
+		<language name="JPN_KANJI" width="256">ポリゴンと　出会える
 この森を　気にいってるんだ▼
 ここで　ゆっくり　暮らしたい</language>
 	</row>
@@ -1824,10 +1828,10 @@
 		<attribute name="キャラ指定">BACKPACKERW
 ユウ</attribute>
 		<language name="JPN" width="256">なにもきめずに あるいていたら
-[1:01:ポケモン種族名:1]に　あえたの！▽
+ピンプクに　あえたの！▽
 うれしかった！</language>
 		<language name="JPN_KANJI" width="256">なにも決めずに　歩いていたら
-[1:01:ポケモン種族名:1]に　会えたの！▽
+ピンプクに　会えたの！▽
 うれしかった！</language>
 	</row>
 
@@ -1871,9 +1875,9 @@
 	<row id="wc10_30_04">
 		<attribute name="キャラ指定">LADY
 アキコ</attribute>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:1]の　うつくしさも
+		<language name="JPN" width="256">タツベイの　うつくしさも
 また　しぜんなのが　いいのよね……</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:1]の　美しさも
+		<language name="JPN_KANJI" width="256">タツベイの　美しさも
 また　自然なのが　いいのよね……</language>
 	</row>
 
