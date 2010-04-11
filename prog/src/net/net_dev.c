@@ -9,6 +9,7 @@
 
 #include <nitro.h>
 #include "gflib.h"
+#include "net/network_define.h"
 
 // 通信GFLIBは通信デバイスを持っていません
 // それはGFLIBに持ってしまうと、余計にライブラリサイズを増やしてしまう為です
@@ -165,4 +166,23 @@ void NET_DeviceUnload(int deviceNo)
     break;
   }
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   通信メイン関数のラップ関数
+ */
+//------------------------------------------------------------------------------
+
+void NET_DEV_Main(void)
+{
+  if( WB_NET_PALACE_SERVICEID==GFL_NET_GetGameServiceID() ){
+    if(OS_GetVBlankCount() % 2){
+      GFL_NET_Main();
+    }
+  }
+  else{
+    GFL_NET_Main();
+  }
+}
+
 
