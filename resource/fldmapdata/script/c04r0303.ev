@@ -41,6 +41,86 @@ _EVENT_DATA_END
 
 
 /************************************************************/
+/*					ZONE_CHANGE_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_c04r0303
+	{
+	DEFINE_LOCAL	lwk_badge_chk
+	
+	
+	//レベル２以降の全トレーナーを非表示にする
+	_FLAG_SET( FV_STADIUM_TRAINER_02 )
+	_FLAG_SET( FV_STADIUM_TRAINER_03 )
+	_FLAG_SET( FV_STADIUM_FAN_01 )
+	_FLAG_SET( FV_STADIUM_FAN_02 )
+	_FLAG_SET( FV_STADIUM_RANDOM_01 )
+	_FLAG_SET( FV_STADIUM_RANDOM_02 )
+	_FLAG_SET( FV_STADIUM_RANDOM_03 )
+	
+	
+//---------シナリオ進行度によってトレーナーを追加表示する------------
+
+	//レベル２
+	_GET_BADGE_FLAG( lwk_badge_chk, BADGE_ID_05 )
+	IF $lwk_badge_chk == TRUE THEN
+		_FLAG_RESET( FV_STADIUM_FAN_01 )		//ファン１人目を追加
+	ENDIF
+	
+	//レベル３
+	_GET_BADGE_FLAG( lwk_badge_chk, BADGE_ID_07 )
+	IF $lwk_badge_chk == TRUE THEN
+		_FLAG_RESET( FV_STADIUM_TRAINER_02 )	//選手２人目を追加
+	ENDIF
+
+	//レベル４（シナリオクリア後なら）
+	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+		_FLAG_RESET( FV_STADIUM_TRAINER_03 )	//選手３人目を追加
+		_FLAG_RESET( FV_STADIUM_FAN_02 )		//ファン２人目を追加
+		_FLAG_RESET( FV_STADIUM_RANDOM_01 )		//ランダム１人目を追加
+		_FLAG_RESET( FV_STADIUM_RANDOM_02 )		//ランダム２人目を追加
+		_FLAG_RESET( FV_STADIUM_RANDOM_03 )		//ランダム３人目を追加
+	ENDIF
+	
+	
+//--------シナリオ進行度によってトレーナーIDを書き換える--------------
+
+	_REBATTLE_TRAINER_START()	// トレーナ情報を確保
+	
+	_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT1, C04R0303_TRAINER_01, 1 )
+	
+	//レベル２
+	_GET_BADGE_FLAG( lwk_badge_chk, BADGE_ID_05 )
+	IF $lwk_badge_chk == TRUE THEN
+		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT1, C04R0303_TRAINER_01, 2 )
+		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_FOOT_1, C04R0303_FAN_01, C04R0303_FAN_01_2, 2 )
+	ENDIF
+	
+	//レベル３
+	_GET_BADGE_FLAG( lwk_badge_chk, BADGE_ID_07 )
+	IF $lwk_badge_chk == TRUE THEN
+		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT1, C04R0303_TRAINER_01, 3 )
+		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT2, C04R0303_TRAINER_02, 3 )
+		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_FOOT_1, C04R0303_FAN_01, C04R0303_FAN_01_2, 3 )
+	ENDIF
+	
+	//レベル４（シナリオクリア後なら）
+	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT1, C04R0303_TRAINER_01, 4 )
+		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT2, C04R0303_TRAINER_02, 4 )
+		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT3, C04R0303_TRAINER_03, 4 )
+		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_FOOT_1, C04R0303_FAN_01, C04R0303_FAN_01_2, 4 )
+		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_FOOT_2, C04R0303_FAN_02, C04R0303_FAN_02_2, 4 )
+		//ランダムトレーナーの抽選
+		_REBATTLE_TRAINER_SETUP_RND_TR( C04R0303_RANDOM_01, C04R0303_RANDOM_02, C04R0303_RANDOM_03 )
+	ENDIF
+	
+	_REBATTLE_TRAINER_END() //トレーナ情報の破棄
+	
+	}
+INIT_EVENT_END
+
+
+/************************************************************/
 /*						アメフト選手１						*/
 /************************************************************/
 EVENT_START	ev_c04r0303_footballm_01
@@ -226,85 +306,5 @@ EVENT_END
 EVENT_START	ev_c04r0303_gentleman_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0303_gentleman_01 )
 EVENT_END
-
-
-/************************************************************/
-/*					ZONE_CHANGE_SCRIPT						*/
-/************************************************************/
-INIT_EVENT_START	ev_zone_c04r0303
-	{
-	DEFINE_LOCAL	lwk_badge_chk
-	
-	
-	//レベル２以降の全トレーナーを非表示にする
-	_FLAG_SET( FV_STADIUM_TRAINER_02 )
-	_FLAG_SET( FV_STADIUM_TRAINER_03 )
-	_FLAG_SET( FV_STADIUM_FAN_01 )
-	_FLAG_SET( FV_STADIUM_FAN_02 )
-	_FLAG_SET( FV_STADIUM_RANDOM_01 )
-	_FLAG_SET( FV_STADIUM_RANDOM_02 )
-	_FLAG_SET( FV_STADIUM_RANDOM_03 )
-	
-	
-//---------シナリオ進行度によってトレーナーを追加表示する------------
-
-	//レベル２
-	_GET_BADGE_FLAG( lwk_badge_chk, BADGE_ID_05 )
-	IF $lwk_badge_chk == TRUE THEN
-		_FLAG_RESET( FV_STADIUM_FAN_01 )		//ファン１人目を追加
-	ENDIF
-	
-	//レベル３
-	_GET_BADGE_FLAG( lwk_badge_chk, BADGE_ID_07 )
-	IF $lwk_badge_chk == TRUE THEN
-		_FLAG_RESET( FV_STADIUM_TRAINER_02 )	//選手２人目を追加
-	ENDIF
-
-	//レベル４（シナリオクリア後なら）
-	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
-		_FLAG_RESET( FV_STADIUM_TRAINER_03 )	//選手３人目を追加
-		_FLAG_RESET( FV_STADIUM_FAN_02 )		//ファン２人目を追加
-		_FLAG_RESET( FV_STADIUM_RANDOM_01 )		//ランダム１人目を追加
-		_FLAG_RESET( FV_STADIUM_RANDOM_02 )		//ランダム２人目を追加
-		_FLAG_RESET( FV_STADIUM_RANDOM_03 )		//ランダム３人目を追加
-	ENDIF
-	
-	
-//--------シナリオ進行度によってトレーナーIDを書き換える--------------
-
-	_REBATTLE_TRAINER_START()	// トレーナ情報を確保
-	
-	_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT1, C04R0303_TRAINER_01, 1 )
-	
-	//レベル２
-	_GET_BADGE_FLAG( lwk_badge_chk, BADGE_ID_05 )
-	IF $lwk_badge_chk == TRUE THEN
-		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT1, C04R0303_TRAINER_01, 2 )
-		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_FOOT_1, C04R0303_FAN_01, C04R0303_FAN_01_2, 2 )
-	ENDIF
-	
-	//レベル３
-	_GET_BADGE_FLAG( lwk_badge_chk, BADGE_ID_07 )
-	IF $lwk_badge_chk == TRUE THEN
-		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT1, C04R0303_TRAINER_01, 3 )
-		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT2, C04R0303_TRAINER_02, 3 )
-		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_FOOT_1, C04R0303_FAN_01, C04R0303_FAN_01_2, 3 )
-	ENDIF
-	
-	//レベル４（シナリオクリア後なら）
-	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
-		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT1, C04R0303_TRAINER_01, 4 )
-		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT2, C04R0303_TRAINER_02, 4 )
-		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT3, C04R0303_TRAINER_03, 4 )
-		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_FOOT_1, C04R0303_FAN_01, C04R0303_FAN_01_2, 4 )
-		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_FOOT_1, C04R0303_FAN_02, C04R0303_FAN_02_2, 4 )
-		//ランダムトレーナーの抽選
-		_REBATTLE_TRAINER_SETUP_RND_TR( C04R0303_RANDOM_01, C04R0303_RANDOM_02, C04R0303_RANDOM_03 )
-	ENDIF
-	
-	_REBATTLE_TRAINER_END() //トレーナ情報の破棄
-	
-	}
-INIT_EVENT_END
 
 
