@@ -45,19 +45,15 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_OBJ_ANIME( T01R0102_RIVAL_01, anm_gamestart_rival_move_01 )
 	_OBJ_ANIME_WAIT()
 	
-	//主人公：ライバルを見る
-//	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
-//	_OBJ_ANIME_WAIT()
-	
 	//ライバル会話：博士がポケモンくれるって？
 	_PLAYER_NAME( 0 )		//主人公名取得
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_black_01 , T01R0102_RIVAL_01, POS_DR )
 	_MSGWIN_CLOSE()
 	
 	//ライバル：いったん階段を見て
-	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_u )
-	_OBJ_ANIME_WAIT()
-	_TIME_WAIT( 16 )
+//	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_u )
+//	_OBJ_ANIME_WAIT()
+//	_TIME_WAIT( 16 )
 	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_d )
 	_OBJ_ANIME_WAIT()
 	
@@ -286,14 +282,14 @@ ev_first_pkeget:
 	ENDIF
 	
 	//～～を手に入れた
-//	_PLAYER_NAME( 0 )	 //プレイヤー名を反映
-//	_SYSWIN_MSG( msg_t01r0102_ball_get_01, POS_DOWN )
+	_PLAYER_NAME( 0 )	 //プレイヤー名を反映
+	_SYSWIN_MSG( msg_t01r0102_ball_get_01, POS_DOWN )
 	
 	//ME鳴らす
-//	_ME_PLAY( SEQ_ME_POKEGET )
-//	_ME_WAIT()
-//	_AB_KEYWAIT_MARK()
-//	_SYSWIN_CLOSE()
+	_ME_PLAY( SEQ_ME_POKEGET )
+	_ME_WAIT()
+	_AB_KEYWAIT_MARK()
+	_SYSWIN_CLOSE()
 	
 	//ポケモン追加
 	_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, lwk_poke_num, 0, 5 )
@@ -458,7 +454,7 @@ ev_first_pkeget:
 
 	//システム：～～のポケモンを回復してくれた
 	_SE_PLAY( SEQ_SE_RECOVERY )
-	_PLAYER_NAME( 0 )
+	_TEMOTI_MONS_NAME( 1, 0 )
 	_SYSWIN_MSG( msg_t01r0102_black_12, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	_SE_WAIT()
@@ -507,7 +503,7 @@ ev_first_pkeget:
 	ENDIF
 
 	//というわけで！
-	_BALLOONWIN_OBJMSG( msg_t01r0102_black_18, T01R0102_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_black_18, T01R0102_RIVAL_01, POS_DR )
 	_MSGWIN_CLOSE()
 
 	//ライバル戦呼び出し　最初の３匹によって分岐　負けてもシナリオ進行

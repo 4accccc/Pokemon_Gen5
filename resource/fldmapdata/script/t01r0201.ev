@@ -74,14 +74,13 @@ EVENT_START	ev_scene_t01r0201_support_01
 	//サポート：外に出ようとする
 	_OBJ_ANIME( T01R0201_SUPPORT_01, anm_heroine_goaway_01 )
 	_OBJ_ANIME_WAIT()
+	//サポート：芝居
+	_OBJ_ANIME( T01R0201_SUPPORT_01, anm_heroine_act_01 )
+	_OBJ_ANIME_WAIT()
 
 	//あっ　～～くん！
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0201_white_02 , T01R0201_SUPPORT_01, POS_UL )
 	_BALLOONWIN_CLOSE()
-
-	//サポート：芝居
-	_OBJ_ANIME( T01R0201_SUPPORT_01, anm_heroine_act_01 )
-	_OBJ_ANIME_WAIT()
 
 	//サポート：退出
 	_OBJ_ANIME( T01R0201_SUPPORT_01, anm_heroine_goaway_02 )
