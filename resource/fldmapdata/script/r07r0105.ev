@@ -124,6 +124,14 @@ EVENT_START   ev_bg_r07r0105_bell
 {
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
+	
+	//フウロイベント中はフウロを振り向かせる
+	IF $WK_SCENE_C07R0105 == 1 THEN
+		//フウロ鐘の方を見る
+		_OBJ_ANIME( R07R0105_LEADER6_01 ,  anm_bell_leader6_look_bell_02 )
+		_OBJ_ANIME_WAIT()
+
+	ENDIF
 
 	//鐘を鳴らしますか？
 	_PLAINWIN_MSG_DOWN( msg_r07r0105_chime_01)
@@ -157,17 +165,17 @@ EVENT_START   ev_bg_r07r0105_bell
 		//鳴り響いた
 		_PLAINWIN_MSG_DOWN ( msg_r07r0105_chime_03  )
 		
-			//フウロイベント中はイベントを起動
-			IF $WK_SCENE_C07R0105 == 1 THEN
-				
-				_AB_KEYWAIT_MARK()
-				_PLAINWIN_CLOSE()
-				_CALL ev_r07r0105_leader6_03
-			ELSE
-				_LAST_KEYWAIT()
-				_PLAINWIN_CLOSE()
-				
-			ENDIF
+		//フウロイベント中はイベントを起動
+		IF $WK_SCENE_C07R0105 == 1 THEN
+			
+			_AB_KEYWAIT_MARK()
+			_PLAINWIN_CLOSE()
+			_CALL ev_r07r0105_leader6_03
+		ELSE
+			_LAST_KEYWAIT()
+			_PLAINWIN_CLOSE()
+			
+		ENDIF
 	ELSE
 		_PLAINWIN_MSG_DOWN ( msg_r07r0105_chime_04  )
 		_LAST_KEYWAIT()
@@ -180,13 +188,15 @@ EVENT_END
 /*				フウロと鐘イベント（２）             */
 /************************************************************/
 ev_r07r0105_leader6_03:
+
+	//カメラ操作　フウロ中心に
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	_CAMERA_MOVE( 9688,0,970752,1081344,458863,884736,30 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//主人公振り向く
 	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_bell_player_look_d )
-	_OBJ_ANIME_WAIT()
-	
-	//フウロ鐘の方を見る
-	_OBJ_ANIME( R07R0105_LEADER6_01 ,  anm_bell_leader6_look_bell_02 )
 	_OBJ_ANIME_WAIT()
 
 	//プレイヤーネームを格納
@@ -215,12 +225,21 @@ ev_r07r0105_leader6_03:
 	_BALLOONWIN_CLOSE()
 	
 	//フウロ退場
+	_CAMERA_MOVE( 9688,0,970752,1081344,458863,1146880,40 )
 	_OBJ_ANIME( R07R0105_LEADER6_01 ,  anm_bell_leader6_goodbye_01 )
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_DEL( R07R0105_LEADER6_01 )
 	_SE_PLAY(SEQ_SE_KAIDAN)		//階段ＳＥ
 	_SE_WAIT()
+	//カメラ待ち
+	_CAMERA_WAIT_MOVE()
+	
+	//自機にカメラを戻す
+	_CAMERA_DEF_MOVE (50) 
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()
+	_CAMERA_END()
 
 	//======================================//
 	
@@ -325,12 +344,17 @@ EVENT_START   ev_pos_r07r0105_champion_01
 	_BALLOONWIN_OBJMSG( msg_r07r0105_champion_end_02 , R07R0105_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
 	
-	//チャンピオン芝居
+	//チャンピオン下を見る
 	_OBJ_ANIME( R07R0105_CHAMPION_01 ,  anm_endaf_champion_look_d )
 	_OBJ_ANIME_WAIT()
 	
 	//チャンピオン：つよい ポケモンだったぞ！
 	_BALLOONWIN_OBJMSG( msg_r07r0105_champion_end_03 , R07R0105_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+	
+	//チャンピオン芝居
+	_OBJ_ANIME( R07R0105_CHAMPION_01 ,  anm_endaf_champion_act_01 )
+	_OBJ_ANIME_WAIT()
 	
 	//チャンピオン：だが すべての ものがたりには
 	_BALLOONWIN_OBJMSG( msg_r07r0105_champion_end_04 , R07R0105_CHAMPION_01 )
@@ -351,22 +375,26 @@ EVENT_START   ev_pos_r07r0105_champion_01
 	//ウィンドウ閉じる
 	_BALLOONWIN_CLOSE()
 	
-	//自機にカメラを戻す
-	_CAMERA_DEF_MOVE (20) 
-	_CAMERA_WAIT_MOVE()
-	_CAMERA_BIND()
-	_CAMERA_END()
-	
 	//チャンピオン退場
 	_OBJ_ANIME( R07R0105_CHAMPION_01 ,  anm_endaf_champion_goodbye_01 )
+	_CAMERA_MOVE( 9688,0,970752,1081344,458863,1146880,60 )
+	
 	//主人公見送る
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_endaf_player_look_champion_01 )
 	//アニメ待ち
 	_OBJ_ANIME_WAIT()
+	//カメラ待ち
+	_CAMERA_WAIT_MOVE()
 	
 	_OBJ_DEL( R07R0105_CHAMPION_01 )
 	_SE_PLAY(SEQ_SE_KAIDAN)		//階段ＳＥ
 	_SE_WAIT()
+	
+	//自機にカメラを戻す
+	_CAMERA_DEF_MOVE (30) 
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()
+	_CAMERA_END()
 	
 	//======================================//
 	
@@ -420,8 +448,16 @@ _ANIME_LABEL	anm_endaf_champion_look_r
 
 _ANIME_LABEL	anm_endaf_champion_look_d
 	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	クリア後チャンピオン：チャンピオン芝居
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_endaf_champion_act_01
 	_ANIME_DATA	AC_CHAMPION_ACT0,1
 	_ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------
 //	クリア後チャンピオン：チャンピオン退場
@@ -430,8 +466,10 @@ _ANIME_LABEL	anm_endaf_champion_look_d
 _ANIME_LABEL	anm_endaf_champion_goodbye_01
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,8
-	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	AC_WALK_R_8F,4
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	AC_WALK_U_8F,2

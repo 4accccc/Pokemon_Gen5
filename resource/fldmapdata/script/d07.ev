@@ -151,14 +151,16 @@ EVENT_START  ev_pos_d07_rival_01
 	//カメラ操作　アテグ中心に
 	_CAMERA_MOVE( 9688,0,1134592,9334784,0,13295616,30 )
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	 
+	_OBJ_ANIME( D07_CHAMPION_01,anm_d07_champion_act_01 )
+	_OBJ_ANIME_WAIT()
 	
 	//WAIT
-	 _TIME_WAIT ( 30 )
+	 _TIME_WAIT ( 22 )
+	 
 	 
 	//アテグジャンプ
 	_OBJ_HIGH_JUMP( D07_CHAMPION_01, 142, 0, 206 ) 
-	_OBJ_ANIME( D07_CHAMPION_01,anm_d07_champion_act_01 )
-	_OBJ_ANIME_WAIT()
 	 
 	 //着地後WAIT
 	 _TIME_WAIT ( 14 )
