@@ -59,42 +59,6 @@
 #include "savedata/dendou_save.h"
 #include "savedata/etc_save.h"
 
-//==============================================================================
-//  定数定義
-//==============================================================================
-#define MAGIC_NUMBER  (0x31053527)
-#define SECTOR_MAX    (SAVE_PAGE_MAX)
-
-///ノーマル領域で使用するセーブサイズ
-#define SAVESIZE_NORMAL   (SAVE_SECTOR_SIZE * SECTOR_MAX)
-
-///ミラーリング領域で使用するセーブ開始アドレス
-#define MIRROR_SAVE_ADDRESS   (0x24000)
-///外部セーブが使用するセーブ開始アドレス
-#define EXTRA_SAVE_START_ADDRESS    (0x48000)
-
-///外部セーブ：メモリマッピング
-enum{
-  EXTRA_MM_REC_MINE = EXTRA_SAVE_START_ADDRESS,
-  EXTRA_MM_REC_MINE_MIRROR = EXTRA_MM_REC_MINE + SAVESIZE_EXTRA_BATTLE_REC,
-  
-  EXTRA_MM_REC_DL_0 = EXTRA_MM_REC_MINE_MIRROR + SAVESIZE_EXTRA_BATTLE_REC,
-  
-  EXTRA_MM_REC_DL_1 = EXTRA_MM_REC_DL_0 + SAVESIZE_EXTRA_BATTLE_REC,
-  
-  EXTRA_MM_REC_DL_2 = EXTRA_MM_REC_DL_1 + SAVESIZE_EXTRA_BATTLE_REC,
-  
-  EXTRA_MM_CGEAR = EXTRA_MM_REC_DL_2 + SAVESIZE_EXTRA_BATTLE_REC,
-
-  EXTRA_MM_BATTLE_EXAMINATION = EXTRA_MM_CGEAR + SAVESIZE_EXTRA_CGEAR_PICTURE,
-
-  EXTRA_MM_STREAMING = EXTRA_MM_BATTLE_EXAMINATION + SAVESIZE_EXTRA_BATTLE_EXAMINATION,
-
-  EXTRA_MM_ZUKAN_WALLPAPER = EXTRA_MM_STREAMING + SAVESIZE_EXTRA_STREAMING,
-  
-  EXTRA_MM_DENDOU = EXTRA_MM_ZUKAN_WALLPAPER + SAVESIZE_EXTRA_ZUKAN_WALLPAPER,
-  EXTRA_MM_DENDOU_MIRROR = EXTRA_MM_DENDOU + SAVESIZE_EXTRA_DENDOU,
-};
 
 
 //--------------------------------------------------------------
@@ -549,7 +513,7 @@ const GFL_SVLD_PARAM SaveParam_Normal = {
   0,                //バックアップ領域先頭アドレス
   MIRROR_SAVE_ADDRESS,      //ミラーリング領域先頭アドレス
   SAVESIZE_NORMAL,        //使用するバックアップ領域の大きさ
-  MAGIC_NUMBER,
+  SAVE_MAGIC_NUMBER,
 };
 
 //--------------------------------------------------------------
@@ -565,7 +529,7 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     EXTRA_MM_REC_MINE,              //バックアップ領域先頭アドレス
     EXTRA_MM_REC_MINE_MIRROR,       //ミラーリング領域先頭アドレス
     SAVESIZE_EXTRA_BATTLE_REC,      //使用するバックアップ領域の大きさ
-    MAGIC_NUMBER,
+    SAVE_MAGIC_NUMBER,
   },
   {//戦闘録画：ダウンロード0番
     SaveDataTbl_Extra_RecDl_0,
@@ -573,7 +537,7 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     EXTRA_MM_REC_DL_0,              //バックアップ領域先頭アドレス
     EXTRA_MM_REC_DL_0,              //ミラーリング領域先頭アドレス ※ミラー無し設定
     SAVESIZE_EXTRA_BATTLE_REC,      //使用するバックアップ領域の大きさ
-    MAGIC_NUMBER,
+    SAVE_MAGIC_NUMBER,
   },
   {//戦闘録画：ダウンロード1番
     SaveDataTbl_Extra_RecDl_1,
@@ -581,7 +545,7 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     EXTRA_MM_REC_DL_1,              //バックアップ領域先頭アドレス
     EXTRA_MM_REC_DL_1,              //ミラーリング領域先頭アドレス ※ミラー無し設定
     SAVESIZE_EXTRA_BATTLE_REC,      //使用するバックアップ領域の大きさ
-    MAGIC_NUMBER,
+    SAVE_MAGIC_NUMBER,
   },
   {//戦闘録画：ダウンロード2番
     SaveDataTbl_Extra_RecDl_2,
@@ -589,7 +553,7 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     EXTRA_MM_REC_DL_2,              //バックアップ領域先頭アドレス
     EXTRA_MM_REC_DL_2,              //ミラーリング領域先頭アドレス ※ミラー無し設定
     SAVESIZE_EXTRA_BATTLE_REC,      //使用するバックアップ領域の大きさ
-    MAGIC_NUMBER,
+    SAVE_MAGIC_NUMBER,
   },
   {//外部セーブパラメータテーブル：CGEARの絵(ミラーリング無)
     SaveDataTbl_Extra_CGEARPicture,
@@ -597,7 +561,7 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     EXTRA_MM_CGEAR,             //バックアップ領域先頭アドレス
     EXTRA_MM_CGEAR,             //ミラーリング領域先頭アドレス ※ミラー無し指定
     SAVESIZE_EXTRA_CGEAR_PICTURE,       //使用するバックアップ領域の大きさ
-    MAGIC_NUMBER,
+    SAVE_MAGIC_NUMBER,
   },
   {//外部セーブパラメータテーブル：バトル検定(ミラーリング無)
     SaveDataTbl_Extra_BattleExamination,
@@ -605,7 +569,7 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     EXTRA_MM_BATTLE_EXAMINATION,             //バックアップ領域先頭アドレス
     EXTRA_MM_BATTLE_EXAMINATION,             //ミラーリング領域先頭アドレス ※ミラー無し指定
     SAVESIZE_EXTRA_BATTLE_EXAMINATION,       //使用するバックアップ領域の大きさ
-    MAGIC_NUMBER,
+    SAVE_MAGIC_NUMBER,
   },
   {//外部セーブパラメータテーブル：ミュージカル配信(ミラーリング無)
     SaveDataTbl_Extra_MusicalDist,
@@ -613,7 +577,7 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     EXTRA_MM_STREAMING,             //バックアップ領域先頭アドレス
     EXTRA_MM_STREAMING,             //ミラーリング領域先頭アドレス ※ミラー無し指定
     SAVESIZE_EXTRA_STREAMING,       //使用するバックアップ領域の大きさ
-    MAGIC_NUMBER,
+    SAVE_MAGIC_NUMBER,
   },
   {//外部セーブパラメータテーブル：図鑑壁紙
     SaveDataTbl_Extra_ZukanWallPaper,
@@ -621,7 +585,7 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     EXTRA_MM_ZUKAN_WALLPAPER,             //バックアップ領域先頭アドレス
     EXTRA_MM_ZUKAN_WALLPAPER,             //ミラーリング領域先頭アドレス ※ミラー無し指定
     SAVESIZE_EXTRA_ZUKAN_WALLPAPER,       //使用するバックアップ領域の大きさ
-    MAGIC_NUMBER,
+    SAVE_MAGIC_NUMBER,
   },
   {//外部セーブパラメータテーブル：図鑑壁紙
     SaveDataTbl_Extra_Dendou,
@@ -629,7 +593,7 @@ const GFL_SVLD_PARAM SaveParam_ExtraTbl[] = {
     EXTRA_MM_DENDOU,                    //バックアップ領域先頭アドレス
     EXTRA_MM_DENDOU_MIRROR,             //ミラーリング領域先頭アドレス
     SAVESIZE_EXTRA_DENDOU,              //使用するバックアップ領域の大きさ
-    MAGIC_NUMBER,
+    SAVE_MAGIC_NUMBER,
   },
 };
 SDK_COMPILER_ASSERT(NELEMS(SaveParam_ExtraTbl) == SAVE_EXTRA_ID_MAX);

@@ -2078,3 +2078,8 @@ SRCS_OVERLAY_KAWADA_DEBUG = test/kawada/d_kawada.c \
 #===> SRCS_OVERLAY_UI_COMMON
 SRCS_OVERLAY_PDC_RETURN =	field/event_pdc_return.c
 
+# 管理外セーブシステム
+#===> SRCS_OVERLAY_INTRO
+#===> SRCS_OVERLAY_MYSTERY
+SRCS_OVERLAY_OUTSIDE_SAVE = savedata/save_outside.c
+

@@ -9,6 +9,7 @@
 #include <gflib.h>
 #include "savedata/save_tbl.h"
 #include "savedata/mystery_data.h"
+#include "mystery_data_local.h"
 
 //============================================================================================
 //============================================================================================
@@ -17,22 +18,6 @@
 #define MYSTERY_DATA_NO_USED		0x00000000
 #define MYSTERY_MENU_FLAG		(MYSTERY_DATA_MAX_EVENT - 1)
 
-//------------------------------------------------------------------
-/**
- * @brief	ふしぎデータの定義
- */
-//------------------------------------------------------------------
-typedef struct{
-  u16 crc16ccitt_hash;  ///<CRC
-  u16 coded_number;   ///<暗号化キー
-}RECORD_CRC;
-
-
-struct MYSTERY_DATA{
-  u8 recv_flag[MYSTERY_DATA_MAX_EVENT / 8];		//256 * 8 = 2048 bit
-  GIFT_PACK_DATA card[GIFT_DATA_MAX];			// カード情報
-  RECORD_CRC crc;   //CRC & 暗号化キー   4 byte
-};
 
 //=============================================================================
 /**

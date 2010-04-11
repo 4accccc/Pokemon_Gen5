@@ -36,7 +36,57 @@
 ///EXTRA領域で殿堂入りが使用するセーブサイズ
 #define SAVESIZE_EXTRA_DENDOU             (0x1800)
 
+///管理外領域で不思議な贈り物が使用するセーブサイズ
+#define SAVESIZE_OUTSIDE_MYSTERY          (0x400)
 
+
+//--------------------------------------------------------------
+//  
+//--------------------------------------------------------------
+#define SAVE_MAGIC_NUMBER  (0x31053527)
+#define SECTOR_MAX    (SAVE_PAGE_MAX)
+
+///ノーマル領域で使用するセーブサイズ
+#define SAVESIZE_NORMAL   (SAVE_SECTOR_SIZE * SECTOR_MAX)
+
+///ミラーリング領域で使用するセーブ開始アドレス
+#define MIRROR_SAVE_ADDRESS   (0x24000)
+///外部セーブが使用するセーブ開始アドレス
+#define EXTRA_SAVE_START_ADDRESS    (0x48000)
+
+///外部セーブ：メモリマッピング
+enum{
+  EXTRA_MM_REC_MINE = EXTRA_SAVE_START_ADDRESS,
+  EXTRA_MM_REC_MINE_MIRROR = EXTRA_MM_REC_MINE + SAVESIZE_EXTRA_BATTLE_REC,
+  
+  EXTRA_MM_REC_DL_0 = EXTRA_MM_REC_MINE_MIRROR + SAVESIZE_EXTRA_BATTLE_REC,
+  
+  EXTRA_MM_REC_DL_1 = EXTRA_MM_REC_DL_0 + SAVESIZE_EXTRA_BATTLE_REC,
+  
+  EXTRA_MM_REC_DL_2 = EXTRA_MM_REC_DL_1 + SAVESIZE_EXTRA_BATTLE_REC,
+  
+  EXTRA_MM_CGEAR = EXTRA_MM_REC_DL_2 + SAVESIZE_EXTRA_BATTLE_REC,
+
+  EXTRA_MM_BATTLE_EXAMINATION = EXTRA_MM_CGEAR + SAVESIZE_EXTRA_CGEAR_PICTURE,
+
+  EXTRA_MM_STREAMING = EXTRA_MM_BATTLE_EXAMINATION + SAVESIZE_EXTRA_BATTLE_EXAMINATION,
+
+  EXTRA_MM_ZUKAN_WALLPAPER = EXTRA_MM_STREAMING + SAVESIZE_EXTRA_STREAMING,
+  
+  EXTRA_MM_DENDOU = EXTRA_MM_ZUKAN_WALLPAPER + SAVESIZE_EXTRA_ZUKAN_WALLPAPER,
+  EXTRA_MM_DENDOU_MIRROR = EXTRA_MM_DENDOU + SAVESIZE_EXTRA_DENDOU,
+};
+
+///管理外セーブ：メモリマッピング
+enum{
+  OUTSIDE_MM_MYSTERY = EXTRA_MM_DENDOU_MIRROR + SAVESIZE_EXTRA_DENDOU,
+  OUTSIDE_MM_MYSTERY_MIRROR = OUTSIDE_MM_MYSTERY + SAVESIZE_OUTSIDE_MYSTERY,
+};
+
+
+//--------------------------------------------------------------
+//  
+//--------------------------------------------------------------
 ///セーブデータ識別ID
 enum{
   GMDATA_ID_BOXDATA,        //ボックスデータグループ
@@ -156,6 +206,7 @@ enum{
 enum{
   EXGMDATA_ID_DENDOU,
 };
+
 
 
 //==============================================================================
