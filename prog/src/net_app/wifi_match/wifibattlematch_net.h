@@ -175,6 +175,7 @@ typedef struct
   s32 win;
   s32 lose;
   s32 rate;
+  s32 record_save_idx;
   u8  pokeparty[ WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE ];
 } WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA;
 
@@ -206,7 +207,7 @@ extern WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepai
 ///	初回処理(必要のない場合は内部で自動的にきる)
 //=====================================
 extern void WIFIBATTLEMATCH_NET_StartInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk );
-extern BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CONTROL_WORK *p_save );
+extern BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 //-------------------------------------
 ///	マッチング
@@ -298,8 +299,8 @@ extern BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk );
 //書き込み
 typedef enum
 { 
-  WIFIBATTLEMATCH_GDB_WRITE_POKEPARTY,  //ポケモンのバッファは外側のものを使います
-  WIFIBATTLEMATCH_GDB_WRITE_WIFI_SCORE,
+  WIFIBATTLEMATCH_GDB_WRITE_POKEPARTY,  //ポケモンのバッファは外側のものを使います + score初期化
+//  WIFIBATTLEMATCH_GDB_WRITE_WIFI_SCORE,
   WIFIBATTLEMATCH_GDB_WRITE_LOGIN_DATE, //データは、いりません（内部でログイン時間をバッファに貯めます）
   WIFIBATTLEMATCH_GDB_WRITE_MYINFO, //データは、いりません＋LOGIN_DATEも設定します
 

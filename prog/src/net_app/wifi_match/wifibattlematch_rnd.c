@@ -99,7 +99,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 #define MATCHING_MSG_WAIT_SYNC (120)
 
 //-------------------------------------
-///	シンク
+///	ヒープサイズ
 //=====================================
 #define WBM_RND_RATE_HEAP_SIZE  (0x30000)
 
@@ -1466,11 +1466,15 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:     //戻る
           WBM_TEXT_EndWait( p_wk->p_text );
           *p_seq = SEQ_START_SAVE_MSG;
+          DWC_RAPCOMMON_ResetSubHeapID();
+          GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
           break;
 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
           WBM_TEXT_EndWait( p_wk->p_text );
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+          DWC_RAPCOMMON_ResetSubHeapID();
+          GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
           break;
         }
       }

@@ -787,7 +787,7 @@ static void _modeDifferDSWait7(WIFILOGIN_WORK* pWork)
 
       //リタイヤ扱いにしてバトルボックスのロック解除
       BATTLE_BOX_SAVE_OffLockFlg( p_bbox_save, BATTLE_BOX_LOCK_BIT_WIFI );
-      Regulation_SetCardParam( p_reg_card, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_RETIRE );
+      Regulation_SetCardParam( p_reg_card, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_CHANGE_DS );
 
       pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
       WifiList_Init(pWork->pList);

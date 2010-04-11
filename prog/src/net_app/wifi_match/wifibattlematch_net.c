@@ -703,7 +703,7 @@ void WIFIBATTLEMATCH_NET_StartInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk )
  *	@return TRUEˆ—Š®—¹  FALSEˆ—’†
  */
 //-----------------------------------------------------------------------------
-BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk, SAVE_CONTROL_WORK *p_save )
+BOOL WIFIBATTLEMATCH_NET_WaitInitialize( WIFIBATTLEMATCH_NET_WORK *p_wk )
 { 
   enum
   { 
@@ -3223,6 +3223,10 @@ static void DwcRap_Gdb_Wifi_GetRecordsCallback(int record_num, DWCGdbField** rec
         { 
           p_data->cheat  = field->value.int_s32;
         }
+        else if( !GFL_STD_StrCmp( field->name, SAKE_STAT_RECORD_SAVE_IDX ) )
+        { 
+          p_data->record_save_idx  = field->value.int_s32;
+        }
         else if( !GFL_STD_StrCmp( field->name, SAKE_STAT_WIFICUP_POKEMON_PARTY ) )
         { 
           DWCGdbBinaryData  *p_binary = &field->value.binary_data;
@@ -3399,13 +3403,35 @@ void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
     break;
 
   case WIFIBATTLEMATCH_GDB_WRITE_POKEPARTY:
-    p_wk->table_name_num  = 1;
-    p_wk->p_field_buff[0].name  = SAKE_STAT_WIFICUP_POKEMON_PARTY;
-    p_wk->p_field_buff[0].type  = DWC_GDB_FIELD_TYPE_BINARY_DATA;
-    p_wk->p_field_buff[0].value.binary_data.data = (u8*)cp_wk_adrs;
-    p_wk->p_field_buff[0].value.binary_data.size = WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE;
-    break;
 
+    p_wk->p_field_buff[0].name  = ATLAS_GET_STAT_NAME( ARENA_ELO_RATING_1V1_WIFICUP );
+    p_wk->p_field_buff[0].type  = DWC_GDB_FIELD_TYPE_INT;
+    p_wk->p_field_buff[0].value.int_s32 = 1500;
+
+    p_wk->p_field_buff[1].name  = ATLAS_GET_STAT_NAME( CHEATS_WIFICUP_COUNTER );
+    p_wk->p_field_buff[1].type  = DWC_GDB_FIELD_TYPE_INT;
+    p_wk->p_field_buff[1].value.int_s32 = 0;
+
+    p_wk->p_field_buff[2].name  = ATLAS_GET_STAT_NAME( DISCONNECTS_WIFICUP_COUNTER );
+    p_wk->p_field_buff[2].type  = DWC_GDB_FIELD_TYPE_INT;
+    p_wk->p_field_buff[2].value.int_s32 = 0;
+
+    p_wk->p_field_buff[3].name  = ATLAS_GET_STAT_NAME( NUM_WIFICUP_LOSE_COUNTER );
+    p_wk->p_field_buff[3].type  = DWC_GDB_FIELD_TYPE_INT;
+    p_wk->p_field_buff[3].value.int_s32 = 0;
+
+    p_wk->p_field_buff[4].name  = ATLAS_GET_STAT_NAME( NUM_WIFICUP_WIN_COUNTER );
+    p_wk->p_field_buff[4].type  = DWC_GDB_FIELD_TYPE_INT;
+    p_wk->p_field_buff[4].value.int_s32 = 0;
+
+    p_wk->p_field_buff[5].name  = SAKE_STAT_WIFICUP_POKEMON_PARTY;
+    p_wk->p_field_buff[5].type  = DWC_GDB_FIELD_TYPE_BINARY_DATA;
+    p_wk->p_field_buff[5].value.binary_data.data = (u8*)cp_wk_adrs;
+    p_wk->p_field_buff[5].value.binary_data.size = WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE;
+    p_wk->table_name_num  = 6;
+
+    break;
+#if 0
   case WIFIBATTLEMATCH_GDB_WRITE_WIFI_SCORE:
     { 
       const WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA *cp_data  = cp_wk_adrs;
@@ -3433,6 +3459,7 @@ void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
       p_wk->table_name_num  = 5;
     }
     break;
+#endif
   case WIFIBATTLEMATCH_GDB_WRITE_LOGIN_DATE:
     { 
       WifiBattleMatch_SetDateTime( &p_wk->datetime );

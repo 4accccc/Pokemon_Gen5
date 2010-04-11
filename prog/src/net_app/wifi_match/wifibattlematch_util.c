@@ -266,6 +266,9 @@ static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type )
   { 
   case WBM_TEXT_TYPE_WAIT:
     GF_ASSERT( p_wk->p_time == NULL );
+
+    WBM_TEXT_EndWait( p_wk );
+
     p_wk->p_time  = TIMEICON_Create( p_wk->p_tcb, p_wk->p_bmpwin, p_wk->clear_chr,
         TIMEICON_DEFAULT_WAIT, p_wk->heapID );
     PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );

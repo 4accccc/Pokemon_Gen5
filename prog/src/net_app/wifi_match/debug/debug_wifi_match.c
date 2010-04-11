@@ -583,7 +583,7 @@ static BOOL SAKE_Main( DEBUG_SAKE_WORK *p_wk )
 
   case SEQ_WAIT_INIT:
     { 
-      if( WIFIBATTLEMATCH_NET_WaitInitialize( p_wk->p_net, p_wk->p_save )  )
+      if( WIFIBATTLEMATCH_NET_WaitInitialize( p_wk->p_net )  )
       { 
         p_wk->seq = SEQ_INIT;
       }
@@ -972,7 +972,7 @@ static BOOL ATLAS_Main( DEBUG_ATLAS_WORK *p_wk )
 
   case SEQ_WAIT_INIT:
     { 
-      if( WIFIBATTLEMATCH_NET_WaitInitialize( p_wk->p_net, p_wk->p_save )  )
+      if( WIFIBATTLEMATCH_NET_WaitInitialize( p_wk->p_net )  )
       { 
         { 
           const u16 str[] = L"送信自分。Aで送信、Xでモード、タッチで値";

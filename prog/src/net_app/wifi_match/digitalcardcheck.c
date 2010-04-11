@@ -102,6 +102,7 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void DC_SEQFUNC_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void DC_SEQFUNC_Retire( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void DC_SEQFUNC_ChangeDS( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void DC_SEQFUNC_NoData( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void DC_SEQFUNC_End( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
@@ -263,6 +264,11 @@ static void DC_SEQFUNC_Init( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
   { 
     //大会を棄権した
     WBM_SEQ_SetNext( p_seqwk, DC_SEQFUNC_Retire );
+  }
+  else if( cup_no > 0 && cup_status == DREAM_WORLD_MATCHUP_CHANGE_DS )
+  { 
+    //DSを差し替えた
+    WBM_SEQ_SetNext( p_seqwk, DC_SEQFUNC_ChangeDS );
   }
   else
   { 
@@ -713,6 +719,97 @@ static void DC_SEQFUNC_Retire( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   case SEQ_START_MSG_RETIRE:
     Util_Text_SetVisible( p_wk, TRUE );
     Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_07 );
+    *p_seq  = SEQ_WAIT_MSG;
+    break;
+
+  case SEQ_WAIT_MSG:
+    if( Util_Text_IsEnd( p_wk ) )
+    { 
+      *p_seq  = SEQ_START_LIST_RETURN;
+    }
+    break;
+
+  case SEQ_START_LIST_RETURN:
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_RETURN );
+    *p_seq  = SEQ_WAIT_LIST_RETURN;
+    break;
+
+  case SEQ_WAIT_LIST_RETURN:
+    { 
+      const u32 select = Util_List_Main( p_wk );
+      if( select != WBM_LIST_SELECT_NULL )
+      { 
+        Util_List_Delete( p_wk );
+        if( select == 0 )
+        { 
+          *p_seq  = SEQ_WAIT_MOVEOUT_PLAYERINFO;
+        }
+      }
+    }
+    break;
+
+  case SEQ_WAIT_MOVEOUT_PLAYERINFO:
+    if( Util_PlayerInfo_MoveOut( p_wk ) )
+    { 
+      *p_seq  = SEQ_PROC_END;
+    }
+    break;
+    
+  case SEQ_PROC_END:
+    WBM_SEQ_SetNext( p_seqwk, DC_SEQFUNC_End );
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デジタル選手証チェック  DSを差し替えた
+ *
+ *	@param	WBM_SEQ_WORK *p_seqwk       シーケンスワーク
+ *	@param  p_seq                       シーケンス
+ *	@param	p_wk_adrs                   ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void DC_SEQFUNC_ChangeDS( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_DRAW_PLAYERINFO,
+    SEQ_WAIT_DRAW_PLAYERINFO,
+    SEQ_WAIT_PUSH,
+    SEQ_START_MSG_RETIRE,
+    SEQ_WAIT_MSG,
+    SEQ_START_LIST_RETURN,
+    SEQ_WAIT_LIST_RETURN,
+    SEQ_WAIT_MOVEOUT_PLAYERINFO,
+    SEQ_PROC_END,
+  };
+  DIGITALCARD_CHECK_WORK	  *p_wk	    = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START_DRAW_PLAYERINFO:
+    Util_PlayerInfo_Create( p_wk );
+    Util_PlayerInfo_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
+    *p_seq  = SEQ_WAIT_DRAW_PLAYERINFO;
+    break;
+
+  case SEQ_WAIT_DRAW_PLAYERINFO:
+    if( Util_PlayerInfo_MoveIn( p_wk ) )
+    { 
+      *p_seq  = SEQ_WAIT_PUSH;
+    }
+    break;
+
+  case SEQ_WAIT_PUSH:
+    if( GFL_UI_KEY_GetTrg() & DIGITALCARDCHECK_PUSH_BUTTON )
+    { 
+      *p_seq  = SEQ_START_MSG_RETIRE;
+    }
+    break;
+
+  case SEQ_START_MSG_RETIRE:
+    Util_Text_SetVisible( p_wk, TRUE );
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_09 );
     *p_seq  = SEQ_WAIT_MSG;
     break;
 
