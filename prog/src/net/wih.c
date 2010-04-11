@@ -249,6 +249,7 @@
 #include <nitro/cht.h>
 
 #include "net.h"
+#include "net/network_define.h"
 #include "net/wih.h"
 #include "net_whpipe.h"
 
@@ -567,6 +568,7 @@ typedef struct{
 static _WM_INFO_STRUCT* _pWmInfo;  //通信用構造体
 
 #define DATASHARING_DOUBLEMODE (TRUE)  //DS,MPを同時に行う場合 1/30と1/60では値が異なる
+#define DATASHARING_DOUBLEMODE_PALACE (FALSE)  //DS,MPを同時に行う場合 1/30と1/60では値が異なる
 
 
 
@@ -668,7 +670,7 @@ static void _MainLoopScanBeaconData(void);
    debug codes
    ====================================================================== */
 
-//#define WMHIGH_DEBUG
+#define WMHIGH_DEBUG
 
 
 #if defined(WMHIGH_DEBUG)
@@ -1175,10 +1177,19 @@ static BOOL WH_StateInStartParentMP(void)
 	_pWmInfo->sRecvBuffer = GFL_NET_Align32Alloc(_pWmInfo->heapID, _pWmInfo->sRecvBufferSize+32);
 	_pWmInfo->sSendBuffer = GFL_NET_Align32Alloc(_pWmInfo->heapID, _pWmInfo->sSendBufferSize+32);
 
-	result = WM_StartMP(WH_StateOutStartParentMP,
-											(u16 *)_pWmInfo->sRecvBuffer, (u16)_pWmInfo->sRecvBufferSize,
-											(u16 *)_pWmInfo->sSendBuffer, (u16)_pWmInfo->sSendBufferSize,
-											WH_MP_FREQUENCY);
+  {
+    int mode;
+    if( WB_NET_PALACE_SERVICEID==GFL_NET_GetGameServiceID() ){
+      mode = WH_MP_FREQUENCY_PALACE;
+    }
+    else{
+      mode = WH_MP_FREQUENCY;
+    }
+    result = WM_StartMP(WH_StateOutStartParentMP,
+                        (u16 *)_pWmInfo->sRecvBuffer, (u16)_pWmInfo->sRecvBufferSize,
+                        (u16 *)_pWmInfo->sSendBuffer, (u16)_pWmInfo->sSendBufferSize,
+                        mode);
+  }
 
 
 	if (result != WM_ERRCODE_OPERATING)
@@ -1222,11 +1233,21 @@ static void WH_StateOutStartParentMP(void *arg)
 			u16     aidBitmap;
 			int mcSize = GFL_NET_GetSendSizeMax();
 			int num = GFL_NET_GetConnectNumMax()-1;
+      int mode;
 
 			aidBitmap = (u16)((1 << (num + 1)) - 1);   // 下位 WH_CHILD_MAX+1 ビットが1の bitmap
 			WH_TRACE("aidBitmap %x\n",aidBitmap);
+
+      if( WB_NET_PALACE_SERVICEID==GFL_NET_GetGameServiceID() ){
+        mode = DATASHARING_DOUBLEMODE_PALACE;
+      }
+      else{
+        mode = DATASHARING_DOUBLEMODE;
+      }
+          
+      
 			result = WM_StartDataSharing(&_pWmInfo->sDSInfo, WH_DS_PORT, aidBitmap,
-																	 mcSize, DATASHARING_DOUBLEMODE);
+																	 mcSize, mode);
 
 			if (result != WM_ERRCODE_SUCCESS)
 			{
@@ -1974,10 +1995,20 @@ static BOOL WH_StateInStartChildMP(void)
 	_pWmInfo->sRecvBuffer = GFL_NET_Align32Alloc(_pWmInfo->heapID, _pWmInfo->sRecvBufferSize+32);
 	_pWmInfo->sSendBuffer = GFL_NET_Align32Alloc(_pWmInfo->heapID, _pWmInfo->sSendBufferSize+32);
 
-	result = WM_StartMP(WH_StateOutStartChildMP,
-											(u16 *)_pWmInfo->sRecvBuffer,(u16)_pWmInfo->sRecvBufferSize,
-											(u16 *)_pWmInfo->sSendBuffer, (u16)_pWmInfo->sSendBufferSize,
-											WH_MP_FREQUENCY);
+
+  {
+    int mode;
+    if( WB_NET_PALACE_SERVICEID==GFL_NET_GetGameServiceID() ){
+      mode = WH_MP_FREQUENCY_PALACE;
+    }
+    else{
+      mode = WH_MP_FREQUENCY;
+    }
+    result = WM_StartMP(WH_StateOutStartChildMP,
+                        (u16 *)_pWmInfo->sRecvBuffer,(u16)_pWmInfo->sRecvBufferSize,
+                        (u16 *)_pWmInfo->sSendBuffer, (u16)_pWmInfo->sSendBufferSize,
+                        mode);
+  }
 
 	if (result != WM_ERRCODE_OPERATING)
 	{
@@ -2043,11 +2074,20 @@ static void WH_StateOutStartChildMP(void *arg)
 			u16     aidBitmap;
 			int mcSize = GFL_NET_GetSendSizeMax();
 			int num = GFL_NET_GetConnectNumMax()-1;
+      int mode;
 
 			aidBitmap = (u16)((1 << (num + 1)) - 1);   // 下位 WH_CHILD_MAX+1 ビットが1の bitmap
 			WH_TRACE("aidBitmap %x\n",aidBitmap);
-			result = WM_StartDataSharing(&_pWmInfo->sDSInfo, WH_DS_PORT, aidBitmap,
-																	 mcSize, DATASHARING_DOUBLEMODE);
+
+      if( WB_NET_PALACE_SERVICEID==GFL_NET_GetGameServiceID() ){
+        mode = DATASHARING_DOUBLEMODE_PALACE;
+      }
+      else{
+        mode = DATASHARING_DOUBLEMODE;
+      }
+
+      result = WM_StartDataSharing(&_pWmInfo->sDSInfo, WH_DS_PORT, aidBitmap,
+																	 mcSize, mode);
 			if (result != WM_ERRCODE_SUCCESS)
 			{
 				WH_REPORT_FAILURE(result);

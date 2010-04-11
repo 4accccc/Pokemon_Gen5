@@ -192,7 +192,8 @@
 // この値を1より大きく(または無制限を示す0に)設定する必要があります。
 // そうでない場合、もっとも優先度の高い1つのプロトコル以外は
 // MP通信を一切実行できなくなってしまいます。
-#define WH_MP_FREQUENCY           2
+#define WH_MP_FREQUENCY           2    ///DS->MP切り替えように２にしてある
+#define WH_MP_FREQUENCY_PALACE           1    //パレスは１で実験
 
 // 通常の MP 通信で使用するポート
 #define WH_DATA_PORT              14
