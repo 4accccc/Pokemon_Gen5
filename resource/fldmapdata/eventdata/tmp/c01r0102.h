@@ -19,5 +19,6 @@
 
 #define BGID_C01R0102_BOOKS_01            0
 #define BGID_C01R0102_BOOKS_02            1
+#define BGID_C01R0102_PC_01               2
 
 #endif //ZONE_C01R0102_EVB_H

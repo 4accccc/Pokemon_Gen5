@@ -365,9 +365,12 @@ EVENT_START		ev_scene_t02_speech_01
 	_OBJ_ANIME_WAIT()
 
 	//なんか　ひろばで　はじまるらしいぞ
-	_BALLOONWIN_OBJMSG( msg_t02_boodle_06 , T02_BOODLE_02 )
+	_BALLOONWIN_OBJMSG_POS( msg_t02_boodle_06 , T02_BOODLE_02,POS_UL )
 	_BALLOONWIN_CLOSE()
-	
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_left )
+	_OBJ_ANIME_WAIT()
+
 	//群集・上を向きながら
 	_OBJ_ANIME( T02_BOODLE_01, anm_boodle_u_talk )
 	_OBJ_ANIME_WAIT()
@@ -375,7 +378,7 @@ EVENT_START		ev_scene_t02_speech_01
 	//んじゃ　ちょいと　いってみるかね
 	_BALLOONWIN_OBJMSG( msg_t02_boodle_07 , T02_BOODLE_01 )
 	_BALLOONWIN_CLOSE()	
-	
+
 	//群集：広場へ移動
 	_OBJ_ANIME( T02_BOODLE_01, anm_boodle_go )
 	_OBJ_ANIME( T02_BOODLE_02, anm_boodle_go )
@@ -411,6 +414,10 @@ _ANIME_LABEL	anm_boodle_d_talk
 _ANIME_LABEL	anm_boodle_u_talk
 	_ANIME_DATA		AC_DIR_U,1
 	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_player_left
+	_ANIME_DATA		AC_DIR_L,1
 	_ANIME_DATA		ACMD_END,0
 
 /************************************************************/
@@ -484,13 +491,6 @@ EVENT_END
 
 t02_speech:
 
-	_CAMERA_START()		//カメラ操作開始
-	_CAMERA_PURGE()		//カメラのバインドを解く
-
-	//カメラ操作　サポートの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,51478528,0,42958848,30 )	//一番最後の引数は移動にかかるフレーム数
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-
 	//ライバル、広場の方へ向く
 	_OBJ_ANIME( T02_RIVAL_02, anm_dir_l )
 	_OBJ_ANIME_WAIT()
@@ -505,9 +505,16 @@ t02_speech:
 	_OBJ_ANIME_WAIT()
 	_OBJ_ANIME( T02_HAKAIM_04, anm_hakaim_in2 )
 	_OBJ_ANIME_WAIT()
-	
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+
+	//カメラ操作　ゲーチスの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,51281920,65551,43024384,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
 	//わたくしの　なまえは　ゲーチス
-	_BALLOONWIN_OBJMSG_POS( msg_t02_sage1_01 , T02_SAGE_01 ,POS_DL )
+	_BALLOONWIN_OBJMSG_POS( msg_t02_sage1_01 , T02_SAGE_01 ,POS_UR )
 
 	//群集見つめあう
 	_OBJ_ANIME( T02_BOODLE_02A, anm_stay_d )
@@ -522,13 +529,13 @@ t02_speech:
 
 	//群集「えっ？」
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_01 , 20 , 5 , 1 ) 
+	_SUBWIN_MSG( msg_t02_boodle_01 , 20 , 10 , 1 ) 
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_01a , 22 , 10 , 2 )
+	_SUBWIN_MSG( msg_t02_boodle_01a , 22 , 15 , 2 )
 
 	//サブウィン・MSGウィンクローズ
 	_AB_KEYWAIT_MARK()
-	_BALLOONWIN_CLOSE()
+	_MSGWIN_CLOSE()
 	_SUBWIN_CLOSE( 1 )
 	_SUBWIN_CLOSE( 2 )
 
@@ -544,19 +551,25 @@ t02_speech:
 	_OBJ_ANIME_WAIT()
 
 	//ゲーチス移動１
+	//カメラ操作　ゲーチスの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,51281920,65551,42893312,30 )	//一番最後の引数は移動にかかるフレーム数
 	_OBJ_ANIME( T02_SAGE_01, anm_sage_move1 )
 	_OBJ_ANIME_WAIT()
-
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
 	//われわれ　人間は　ポケモンと　ともに
-	_BALLOONWIN_OBJMSG_POS( msg_t02_sage2_02 , T02_SAGE_01,POS_DL )
+	_BALLOONWIN_OBJMSG_POS( msg_t02_sage2_02 , T02_SAGE_01,POS_UR )
 	_MSGWIN_CLOSE()
 
 	//ゲーチス移動２
+	//カメラ操作　ゲーチスの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,51281920,65551,43024384,30 )	//一番最後の引数は移動にかかるフレーム数
 	_OBJ_ANIME( T02_SAGE_01, anm_sage_move2 )
 	_OBJ_ANIME_WAIT()
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//トレーナーは　ポケモンに　好き勝手　命令している
-	_BALLOONWIN_OBJMSG_POS( msg_t02_sage3_03 , T02_SAGE_01,POS_DL )
+	_BALLOONWIN_OBJMSG_POS( msg_t02_sage3_03 , T02_SAGE_01,POS_UR )
 
 	//群集見つめあう
 	_OBJ_ANIME( T02_BOODLE_02A, anm_stay_d )
@@ -571,15 +584,15 @@ t02_speech:
 
 	//群集：ざわざわ……
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_02 , 18 , 10 , 3 ) 
+	_SUBWIN_MSG( msg_t02_boodle_02 , 18 , 11 , 3 ) 
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_02a , 22 , 15 , 4 )
+	_SUBWIN_MSG( msg_t02_boodle_02b , 22 , 16 , 4 )
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_02b , 20 , 5 , 5)
+	_SUBWIN_MSG( msg_t02_boodle_02a , 20 , 7 , 5)
 
 	//サブウィン・MSGウィンクローズ
 	_AB_KEYWAIT_MARK()
-	_BALLOONWIN_CLOSE()
+	_MSGWIN_CLOSE()
 	_SUBWIN_CLOSE( 3 )
 	_SUBWIN_CLOSE( 4 )
 	_SUBWIN_CLOSE( 5 )
@@ -596,11 +609,13 @@ t02_speech:
 	_OBJ_ANIME_WAIT()
 
 	//ゲーチス移動３
+	_CAMERA_MOVE( 9688,0,970752,51281920,65551,43155456,30 )	//一番最後の引数は移動にかかるフレーム数
 	_OBJ_ANIME( T02_SAGE_01, anm_sage_move3 )
 	_OBJ_ANIME_WAIT()
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//いいですか　みなさん　ポケモンは　人間とは　異なり
-	_BALLOONWIN_OBJMSG_POS( msg_t02_sage4_04 , T02_SAGE_01,POS_DL )
+	_BALLOONWIN_OBJMSG_POS( msg_t02_sage4_04 , T02_SAGE_01,POS_UR )
 
 	//群集見つめあう
 	_OBJ_ANIME( T02_BOODLE_02A, anm_stay_d )
@@ -615,9 +630,9 @@ t02_speech:
 
 	//群集：？
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_03 , 17 , 5 , 6 ) 
+	_SUBWIN_MSG( msg_t02_boodle_03 , 20 , 10 , 6 ) 
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_03a , 20 , 10 , 7 )
+	_SUBWIN_MSG( msg_t02_boodle_03a , 23 , 15 , 7 )
 
 	//10フレーム待機した後ウィンドウを消す
 	_AB_KEYWAIT_MARK()
@@ -637,22 +652,46 @@ t02_speech:
 	_OBJ_ANIME_WAIT()
 
 	//ゲーチス移動４
+	//カメラ操作　ゲーチスの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,51281920,65551,43024384,30 )	//一番最後の引数は移動にかかるフレーム数
 	_OBJ_ANIME( T02_SAGE_01, anm_sage_move4 )
 	_OBJ_ANIME_WAIT()
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//そうです！　ポケモンを　解放することです！
-	_BALLOONWIN_OBJMSG_POS( msg_t02_sage4_05 , T02_SAGE_01,POS_DL )
+	_BALLOONWIN_OBJMSG_POS( msg_t02_sage4_05 , T02_SAGE_01,POS_UR )
 	_BALLOONWIN_CLOSE()
 
 	//ゲーチス・団員：ゲートへ移動
-	_OBJ_ANIME( T02_SAGE_01, anm_sage1_leave )
-	_OBJ_ANIME( T02_HAKAIW_02, anm_hakai_leave1 )
-	_OBJ_ANIME( T02_HAKAIM_02, anm_hakai_leave2 )
-	_OBJ_ANIME( T02_HAKAIM_03, anm_hakai_leave3 )
-	_OBJ_ANIME( T02_HAKAIM_04, anm_hakai_leave4 )
-	_OBJ_ANIME( T02_HAKAIM_05, anm_hakai_leave5 )
-	_OBJ_ANIME( T02_HAKAIM_06, anm_hakai_leave6 )
-	_OBJ_ANIME( T02_HAKAIW_03, anm_hakai_leave7 )
+	_OBJ_ANIME( T02_HAKAIW_02, anm_hakaiw2_leave1 )
+	_OBJ_ANIME( T02_HAKAIM_02, anm_hakaim2_leave1 )
+	_OBJ_ANIME( T02_HAKAIM_03, anm_hakaim3_leave1 )
+	_OBJ_ANIME( T02_HAKAIM_04, anm_hakaim4_leave1 )
+	_OBJ_ANIME( T02_HAKAIM_05, anm_hakaim5_leave1 )
+	_OBJ_ANIME( T02_HAKAIM_06, anm_hakaim6_leave1 )
+	_OBJ_ANIME( T02_HAKAIW_03, anm_hakaiw3_leave1 )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( T02_SAGE_01, anm_sage1_leave1 )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME( T02_HAKAIW_02, anm_hakaiw2_leave2 )
+	_OBJ_ANIME( T02_HAKAIM_02, anm_hakaim2_leave2 )
+	_OBJ_ANIME( T02_HAKAIM_03, anm_hakaim3_leave2 )
+	_OBJ_ANIME( T02_HAKAIM_04, anm_hakaim4_leave2 )
+	_OBJ_ANIME( T02_HAKAIM_05, anm_hakaim5_leave2 )
+	_OBJ_ANIME( T02_HAKAIM_06, anm_hakaim6_leave2 )
+	_OBJ_ANIME( T02_HAKAIW_03, anm_hakaiw3_leave2 )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME( T02_SAGE_01, anm_sage1_leave2 )
+	_OBJ_ANIME( T02_HAKAIW_02, anm_hakaiw2_leave3 )
+	_OBJ_ANIME( T02_HAKAIM_02, anm_hakaim2_leave3 )
+	_OBJ_ANIME( T02_HAKAIM_03, anm_hakaim3_leave3 )
+	_OBJ_ANIME( T02_HAKAIM_04, anm_hakaim4_leave3 )
+	_OBJ_ANIME( T02_HAKAIM_05, anm_hakaim5_leave3 )
+	_OBJ_ANIME( T02_HAKAIM_06, anm_hakaim6_leave3 )
+	_OBJ_ANIME( T02_HAKAIW_03, anm_hakaiw3_leave3 )
 	_OBJ_ANIME_WAIT()
 
 	//ゲーチス・団員のＯＢＪを消す
@@ -707,7 +746,7 @@ t02_speech:
 	//群集：街の方へ移動
 	_OBJ_ANIME( T02_BOODLE_01A, anm_boodle1_leave )
 	_OBJ_ANIME( T02_BOODLE_02A, anm_boodle2_leave )
-	_OBJ_ANIME( T02_BOODLE_03, anm_boodle3_leave )
+	_OBJ_ANIME( T02_BOODLE_03, anm_boodle4_leave )
 	_OBJ_ANIME( T02_BOODLE_04, anm_boodle4_leave )
 	_OBJ_ANIME( T02_BOODLE_05, anm_boodle1_leave )
 	_OBJ_ANIME( T02_BOODLE_06, anm_boodle2_leave )
@@ -738,12 +777,6 @@ t02_speech:
 	_OBJ_DEL( T02_BOODLE_07 )
 	_OBJ_DEL( T02_BOODLE_08 )
 	
-	//町民復活
-	_FLAG_RESET( FV_T02_SPEECH_AFTER )
-	_OBJ_ADD( T02_OLDWOMAN1_01 )
-	_OBJ_ADD( T02_OLDMAN1_01 )
-	_OBJ_ADD( T02_WOMAN1_01 )
-
 	//Ｎ：下向き
 	_OBJ_ANIME( T02_N_01, anm_dir_d )
 	_OBJ_ANIME_WAIT()
@@ -763,6 +796,13 @@ t02_speech:
 
 	//NのBGM再生
 	_START_EVENT_BGM( SEQ_BGM_E_N )
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+
+	//カメラ操作　ゲーチスの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,51544064,0,43024384,20 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//キミの　ポケモンかな？　今　トレーナーへの
 	_BALLOONWIN_OBJMSG( msg_t02_boss_01 , T02_N_01 )
@@ -804,6 +844,12 @@ t02_speech:
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_CAMERA_START()		//カメラ操作開始
+		_CAMERA_PURGE()		//カメラのバインドを解く
+
+		//カメラ操作　ゲーチスの位置にカメラを合わせる
+		_CAMERA_MOVE( 9688,0,970752,51544064,0,43024384,1 )	//一番最後の引数は移動にかかるフレーム数
+		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 	ELSE
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
@@ -838,6 +884,12 @@ t02_speech:
 	//BGM終了
 	_END_EVENT_BGM()
 
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 20 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+
 	//============================================//
 	
 	//演説イベント終了
@@ -850,6 +902,14 @@ t02_speech:
 	_FLAG_SET( FV_T02_MAN )
 	_FLAG_SET( FV_T02_HAKAI )
 	_FLAG_SET( FV_T02_SAGE )
+
+	//町民復活
+	_FLAG_RESET( FV_T02_SPEECH_AFTER )
+	/*
+	_OBJ_ADD( T02_OLDWOMAN1_01 )
+	_OBJ_ADD( T02_OLDMAN1_01 )
+	_OBJ_ADD( T02_WOMAN1_01 )
+	*/
 
 	//============================================//
 _RET
@@ -964,54 +1024,144 @@ _ANIME_LABEL anm_sage_move4
 //--------------------------------------------------------------
 //	ゲーチス・団員　２番道路へ
 //--------------------------------------------------------------
-_ANIME_LABEL anm_sage1_leave
-	_ANIME_DATA		AC_WALK_L_8F,1
-	_ANIME_DATA		AC_STAY_WALK_L_8F,1
-	_ANIME_DATA		AC_WALK_L_8F,1
-	_ANIME_DATA		AC_WALK_U_8F,7
-	_ANIME_DATA		AC_WALK_L_8F,8
-	_ANIME_DATA		ACMD_END,0
-	
-_ANIME_LABEL anm_hakai_leave1
-	_ANIME_DATA		AC_WAIT_8F,2
-	_ANIME_DATA		AC_WALK_U_8F,4
-	_ANIME_DATA		AC_WALK_L_8F,8
+_ANIME_LABEL anm_sage1_leave1
+	_ANIME_DATA		AC_WALK_L_8F,2
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
 	_ANIME_DATA		ACMD_END,0
 
-_ANIME_LABEL anm_hakai_leave2
-	_ANIME_DATA		AC_WAIT_8F,2
-	_ANIME_DATA		AC_WALK_U_8F,5
-	_ANIME_DATA		AC_WALK_L_8F,8
-	_ANIME_DATA		ACMD_END,0
-
-_ANIME_LABEL anm_hakai_leave3
-	_ANIME_DATA		AC_WAIT_8F,2
-	_ANIME_DATA		AC_WALK_U_8F,6
-	_ANIME_DATA		AC_WALK_L_8F,8
-	_ANIME_DATA		ACMD_END,0
-
-_ANIME_LABEL anm_hakai_leave4
-	_ANIME_DATA		AC_WAIT_8F,2
-	_ANIME_DATA		AC_WALK_U_8F,7
-	_ANIME_DATA		AC_WALK_L_8F,8
-	_ANIME_DATA		ACMD_END,0
-
-_ANIME_LABEL anm_hakai_leave5
-	_ANIME_DATA		AC_WAIT_8F,3
+_ANIME_LABEL anm_sage1_leave2
 	_ANIME_DATA		AC_WALK_U_8F,8
-	_ANIME_DATA		AC_WALK_L_8F,8
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,12
 	_ANIME_DATA		ACMD_END,0
 
-_ANIME_LABEL anm_hakai_leave6
-	_ANIME_DATA		AC_WAIT_8F,3
-	_ANIME_DATA		AC_WALK_U_8F,9
-	_ANIME_DATA		AC_WALK_L_8F,8
+_ANIME_LABEL	anm_hakaiw2_leave1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA		ACMD_END,0
 
-_ANIME_LABEL anm_hakai_leave7
-	_ANIME_DATA		AC_WAIT_8F,3
-	_ANIME_DATA		AC_WALK_U_8F,10
-	_ANIME_DATA		AC_WALK_L_8F,8
+_ANIME_LABEL	anm_hakaim2_leave1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim3_leave1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim4_leave1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_WALK_U_8F,2
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim5_leave1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim6_leave1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaiw3_leave1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaiw2_leave2
+	_ANIME_DATA		AC_WALK_D_8F,2
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim2_leave2
+	_ANIME_DATA		AC_WALK_D_8F,2
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim3_leave2
+	_ANIME_DATA		AC_WALK_D_8F,2
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim4_leave2
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim5_leave2
+	_ANIME_DATA		AC_WALK_U_8F,2
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim6_leave2
+	_ANIME_DATA		AC_WALK_U_8F,2
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaiw3_leave2
+	_ANIME_DATA		AC_WALK_U_8F,2
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaiw2_leave3
+	_ANIME_DATA		AC_WALK_U_8F,8
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,12
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim2_leave3
+	_ANIME_DATA		AC_WALK_U_8F,8
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,12
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim3_leave3
+	_ANIME_DATA		AC_WALK_U_8F,8
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,12
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim4_leave3
+	_ANIME_DATA		AC_WALK_U_8F,7
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		AC_WAIT_8F,1
+	_ANIME_DATA		AC_WALK_L_8F,12
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim5_leave3
+	_ANIME_DATA		AC_WALK_U_8F,8
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		AC_WAIT_8F,2
+	_ANIME_DATA		AC_WALK_L_8F,12
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaim6_leave3
+	_ANIME_DATA		AC_WALK_U_8F,8
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		AC_WAIT_8F,2
+	_ANIME_DATA		AC_WALK_L_8F,12
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_hakaiw3_leave3
+	_ANIME_DATA		AC_WALK_U_8F,8
+	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		AC_WAIT_8F,2
+	_ANIME_DATA		AC_WALK_L_8F,12
 	_ANIME_DATA		ACMD_END,0
 
 //--------------------------------------------------------------
@@ -1073,7 +1223,8 @@ _ANIME_LABEL anm_n_ippo
 //	Ｎ	２番道路へ
 //--------------------------------------------------------------
 _ANIME_LABEL anm_n_leave
-	_ANIME_DATA		AC_WALK_U_8F,10
+	_ANIME_DATA		AC_WALK_U_8F,9
+	_ANIME_DATA		AC_WALK_L_8F,12
 	_ANIME_DATA		ACMD_END,0
 	
 //--------------------------------------------------------------
@@ -1081,9 +1232,8 @@ _ANIME_LABEL anm_n_leave
 //--------------------------------------------------------------
 _ANIME_LABEL anm_rival_leave
 	_ANIME_DATA		AC_WALK_U_8F,10
+	_ANIME_DATA		AC_WALK_L_8F,12
 	_ANIME_DATA		ACMD_END,0
-	
-
 
 /**************************************************************/
 /*  			T02 看板：街								  */

@@ -285,8 +285,21 @@ EVENT_START		ev_pos_r04_rival_01
 	
 	ENDIF
 	
+	//くさタイプ選択の場合
+	IF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_KUSA THEN
+		//0に初期選択ポケモンの名前をセット
+		_MONS_NAME( 0, MONSNO_555 )	
+	//ほのおタイプ選択の場合
+	ELSIF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_HONOO THEN
+		//0に初期選択ポケモンの名前をセット
+		_MONS_NAME( 0, MONSNO_558 )
+	//みずタイプ選択の場合
+	ELSE
+		//0に初期選択ポケモンの名前をセット
+		_MONS_NAME( 0, MONSNO_552 )
+	ENDIF
 	
-	//ありがとう！　なんとなく　わかったことがある
+	//なるほどね　きみと　たたかうと　いろいろ　さんこうに　なる
 	_BALLOONWIN_OBJMSG( msg_r04_black_03 , R04_RIVAL_01 )
 	_MSGWIN_CLOSE()
 	
@@ -295,6 +308,7 @@ EVENT_START		ev_pos_r04_rival_01
 	_ME_WAIT()
 	
 	//アララギ博士からの連絡
+	_PLAYER_NAME(0)
 	_PLAINWIN_MSG_DOWN( msg_r04_tvt_01 )
 	_PLAINWIN_CLOSE()
 	

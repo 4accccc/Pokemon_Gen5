@@ -378,7 +378,7 @@ EVENT_START		ev_pos_c03p07_plazma_01
 		_OBJ_ANIME_WAIT()
 		
 		//プラズマ団とポケモン勝負
-		_TRAINER_BTL_SET( TRID_BOSS_01, 0 )
+		_TRAINER_BTL_SET( TRID_HAKAIM1_27, 0 )
 	
 		//敗戦チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )

@@ -20,6 +20,7 @@ _EVENT_DATA		ev_c01r0102_inventor_01
 _EVENT_DATA		ev_c01r0102_girl3_01
 _EVENT_DATA		ev_c01r0102_books_01
 _EVENT_DATA		ev_c01r0102_books_02
+_EVENT_DATA		ev_c01r0102_pc_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -104,61 +105,34 @@ _TALK_OBJ_START()
 	//重要アイテム「ゆめのけむり」を所持しているか、いないかの分岐
 	//重要アイテム「ゆめのけむり」を持っていない場合
 	IF $WK_SCENE_D01R0101_POKE <= 3 THEN
-		//マコモ『ゆめのあとちに　いる　ふしぎなポケモン』
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_07 )
+		//あなた　アララギから
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_06 )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
 	//重要アイテム「？？？」を持っている場合
 	ELSIF $WK_SCENE_D01R0101_POKE == 4 THEN
-		//マコモ『じゃじゃーん！
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_08 )
-		_MSGWIN_CLOSE()
-
-		//マコモ：一歩横に移動
+		
+		//マコモ：その場ジャンプ
 		DEFINE_LOCAL	LWK_DIR
 		_PLAYER_DIR_GET( LWK_DIR )
 		SWITCH $LWK_DIR
 		CASE DIR_UP THEN
-			_OBJ_ANIME( C01R0102_INVENTOR_01, anm_move_left )
+			_OBJ_ANIME( C01R0102_INVENTOR_01, anm_jump_d )
 			_OBJ_ANIME_WAIT()
 		CASE DIR_DOWN THEN
-			_OBJ_ANIME( C01R0102_INVENTOR_01, anm_move_left )
+			_OBJ_ANIME( C01R0102_INVENTOR_01, anm_jump_u )
 			_OBJ_ANIME_WAIT()
 		CASE DIR_LEFT THEN
-			_OBJ_ANIME( C01R0102_INVENTOR_01, anm_move_down )
+			_OBJ_ANIME( C01R0102_INVENTOR_01, anm_jump_r )
 			_OBJ_ANIME_WAIT()
 		CASE DIR_RIGHT THEN
-			_OBJ_ANIME( C01R0102_INVENTOR_01, anm_move_down )
-			_OBJ_ANIME_WAIT()
-		ENDSWITCH
-			
-		//ムンナたちが　みせる　ゆめは
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_09 )
-		_MSGWIN_CLOSE()
-			
-		//マコモ：主人公と向き合う
-		SWITCH $LWK_DIR
-		CASE DIR_UP THEN
-			_OBJ_ANIME( C01R0102_INVENTOR_01, anm_return_left1 )
-			_OBJ_ANIME_WAIT()
-		CASE DIR_DOWN THEN
-			_OBJ_ANIME( C01R0102_INVENTOR_01, anm_return_left2 )
-			_OBJ_ANIME_WAIT()
-		CASE DIR_LEFT THEN
-			_OBJ_ANIME( C01R0102_INVENTOR_01, anm_return_down1 )
-			_OBJ_ANIME_WAIT()
-		CASE DIR_RIGHT THEN
-			_OBJ_ANIME( C01R0102_INVENTOR_01, anm_return_down2 )
+			_OBJ_ANIME( C01R0102_INVENTOR_01, anm_jump_l )
 			_OBJ_ANIME_WAIT()
 		ENDSWITCH
 		
-		//ムンナたちが　みせる　ゆめは
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_10 )
-		_MSGWIN_CLOSE()
-
-		//そのまえに　Ｃギアをつかえるようにしないとね
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_02 )
+		//マコモ『じゃじゃーん！
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_07 )
 		_MSGWIN_CLOSE()
 
 		//マコモ：パソコンの前に移動
@@ -183,26 +157,44 @@ _TALK_OBJ_START()
 		//Cギア入手SE再生
 		_SE_PLAY( SEQ_SE_DECIDE3 )
 		_SE_WAIT()
+	
+		//ムンナたちが　みせる　ゆめは
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_08 )
+		_MSGWIN_CLOSE()
+			
+		//さてと　ゲームシンク……
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_09 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_MSGWIN_CLOSE()
 
-		//ほら！　Ｃギアがきどうして
+		IF $SCWK_ANSWER == SCR_NO THEN
+		
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_10 )
+			_MSGWIN_CLOSE()
+		
+		ENDIF
+		
+		//ゲームシンクって　ゆめのけむりを　りようして
 		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_11 )
 		_MSGWIN_CLOSE()
 
-		//そして　ポケモンが　ねむり
+		SWITCH $LWK_DIR
+		CASE DIR_UP THEN
+			_OBJ_ANIME( C01R0102_INVENTOR_01, anm_jump_d )
+			_OBJ_ANIME_WAIT()
+		CASE DIR_DOWN THEN
+			_OBJ_ANIME( C01R0102_INVENTOR_01, anm_jump_u )
+			_OBJ_ANIME_WAIT()
+		CASE DIR_LEFT THEN
+			_OBJ_ANIME( C01R0102_INVENTOR_01, anm_jump_r )
+			_OBJ_ANIME_WAIT()
+		CASE DIR_RIGHT THEN
+			_OBJ_ANIME( C01R0102_INVENTOR_01, anm_jump_l )
+			_OBJ_ANIME_WAIT()
+		ENDSWITCH
+
+		//さらに　すごいことが　わかって
 		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_12 )
-		_MSGWIN_CLOSE()
-		
-		//イッシュちほうには　パレス　という
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_13 )
-		_MSGWIN_CLOSE()
-
-		//まあ　りくつは　ともかく
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_14 )
-		_MSGWIN_CLOSE()
-
-		//そうそう　ひとつだけ　ちゅうい　してね
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_15 )
-		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 
 		//ショウロ：自機の真横に移動
@@ -264,8 +256,10 @@ _TALK_OBJ_START()
 		//========================================/
 	ELSE
 	
+		//【仮】ゲームシンクを利用したフラグがない
+	
 		//gamesyncでねかせた　ポケモンを　おこしたら
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_16 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_13 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
@@ -297,6 +291,18 @@ _ANIME_LABEL	anm_return_down1
 _ANIME_LABEL	anm_return_down2
 	_ANIME_DATA AC_WALK_D_8F,1
 	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL	anm_jump_l
+	_ANIME_DATA AC_STAY_JUMP_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL	anm_jump_d
+	_ANIME_DATA AC_STAY_JUMP_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL	anm_jump_u
+	_ANIME_DATA AC_STAY_JUMP_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL	anm_jump_r
+	_ANIME_DATA AC_STAY_JUMP_R_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -500,4 +506,68 @@ EVENT_START   ev_c01r0102_books_02
 	_SYSWIN_MSG( msg_c01r0101_books2_01 , POS_DOWN )
 	_LAST_KEYWAIT()
 	_SYSWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*  C01R0102 パソコンのイベントスクリプト					  */
+/**************************************************************/
+EVENT_START   ev_c01r0102_pc_01
+
+	//ローカル変数を定義
+	DEFINE_LOCAL	LWK_SELECT
+	DEFINE_LOCAL	LWK_REPEAT
+
+
+	IF FLAG_ON( FE_CGEAR_GET ) THEN
+
+		_SYSWIN_MSG( msg_c01r0102_pc_01 , POS_DOWN )
+		_SYSWIN_CLOSE()
+
+		WHILE $LWK_REPEAT != 1
+
+			_SYSWIN_MSG( msg_c01r0102_pc_02 , POS_DOWN )
+
+			//分岐・ゲームシンク・ポケモンのゆめ・やめる
+			_BMPMENU_INIT_RIGHT(MENU_X1, MENU_Y1, 0, 1, LWK_SELECT )
+	
+			_BMPMENU_MAKE_LIST( msg_c01r0102_pc_select_01, 0 )	//ゲームシンク
+			_BMPMENU_MAKE_LIST( msg_c01r0102_pc_select_02, 1 )	//ポケモンのゆめ
+			_BMPMENU_MAKE_LIST( msg_c01r0102_pc_select_03, 2 )	//やめる
+	
+			//メニュー表示
+			_BMPMENU_START()
+
+			SWITCH $LWK_SELECT
+			CASE 0 THEN
+				_SYSWIN_CLOSE()
+				_SYSWIN_MSG( msg_c01r0102_pc_03 , POS_DOWN )
+				_SYSWIN_CLOSE()
+			CASE 1 THEN
+				_SYSWIN_CLOSE()
+				_SYSWIN_MSG( msg_c01r0102_pc_04 , POS_DOWN )
+				_SYSWIN_CLOSE()
+			CASE 2 THEN
+				_SYSWIN_CLOSE()
+				//========================================/
+				//繰り返し脱出
+				$LWK_REPEAT = 1
+				//========================================/
+			DEFAULT
+				_SYSWIN_CLOSE()
+				//========================================/
+				//繰り返し脱出
+				$LWK_REPEAT = 1
+				//========================================/
+			ENDSWITCH
+			
+		ENDWHILE
+		
+	ELSE
+	
+		_SYSWIN_MSG( msg_c01r0102_pc_00 , POS_DOWN )
+		_LAST_KEYWAIT()
+		_SYSWIN_CLOSE()
+	
+	ENDIF
+
 EVENT_END
