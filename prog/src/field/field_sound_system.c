@@ -15,10 +15,19 @@
 
 
 //================================================================================= 
-// ■定数
+// ■デバッグ
 //================================================================================= 
 //#define DEBUG_PRINT_ON         // デバッグ出力スイッチ
 #define PRINT_NO            (1)  // printf出力先コンソール番号
+
+#define DEBUG_DIV_LOAD_COUNT_ON // 分割読み込み回数カウントスイッチ
+#ifdef DEBUG_DIV_LOAD_COUNT_ON
+static int DivLoadCount = 0;
+#endif
+
+//================================================================================= 
+// ■定数
+//================================================================================= 
 #define BGM_NONE            (0)  // BGM番号の無効値
 #define REQUEST_QUEUE_SIZE (10)  // バッファできるリクエストの数
 
@@ -2345,6 +2354,10 @@ static void DivLoadBGM_start( FIELD_SOUND* fieldSound )
   fieldSound->requestBGM = BGM_NONE;
   fieldSound->currentBGM = BGM_NONE;
 
+#ifdef DEBUG_DIV_LOAD_COUNT_ON
+  DivLoadCount = 0;
+#endif
+
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_NO, "FIELD-SOUND: div load BGM(%d) start\n", fieldSound->loadBGM );
 #endif
@@ -2376,6 +2389,10 @@ static BOOL DivLoadBGM_load( FIELD_SOUND* fieldSound )
   // 分割ロード実行
   loadFinished = PMSND_PlayBGMdiv( fieldSound->loadBGM, &(fieldSound->loadSeq), FALSE );
 
+#ifdef DEBUG_DIV_LOAD_COUNT_ON
+  DivLoadCount++;
+#endif
+
   // 分割ロード完了(再生開始)
   if( loadFinished )
   {
@@ -2385,6 +2402,10 @@ static BOOL DivLoadBGM_load( FIELD_SOUND* fieldSound )
 
 #ifdef DEBUG_PRINT_ON
     OS_TFPrintf( PRINT_NO, "FIELD-SOUND: div load BGM(%d) finish\n", fieldSound->currentBGM );
+#endif
+
+#ifdef DEBUG_DIV_LOAD_COUNT_ON
+    OS_TFPrintf( PRINT_NO, "FIELD-SOUND: div load count = %d\n", DivLoadCount );
 #endif
   } 
   return loadFinished;
