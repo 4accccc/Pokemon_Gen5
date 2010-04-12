@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T19:47:54"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T21:55:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1481" top="385" right="2183" bottom="980" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="527"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="540"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="694"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -395,7 +395,7 @@
 すっごく　感謝しています！▼</language>
 	</row>
 
-	<row id="msg_d08_hakase1_00_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_d08_hakase1_00_03" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてwhite_00_02
 ・0＝主人公の名前</comment>
@@ -420,7 +420,7 @@
 話すのは　あとだよ▼
 [1:00:トレーナー名:0]！　ベル！
 状況を　説明するぞ▼
-大挙した　プラズマだんが
+大挙した　プラズマ団が
 塔の　壁を　突き破り▽
 中に　入っていったんだよ▼
 ハチクと……
@@ -1123,16 +1123,16 @@
 つよさ　なんだ……　きっと▼
 そして　ぼくの　つよさは
 ポケモンが　くれたもの　だった▼
-さあ　アデクさん
-はやく　いきましょう！▼</language>
+さあ　チャンピオン
+はやく　いくよ！▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……すこし　わかった▼
 ……こんなとき　ポケモンのため
 だれかのために　なにか　できるのが▽
 強さ　なんだ……　きっと▼
 そして　ぼくの　強さは
 ポケモンが　くれたもの　だった▼
-さあ　アデクさん
-はやく　行きましょう！▼</language>
+さあ　チャンピオン
+はやく　行くよ！▼</language>
 	</row>
 
 	<row id="msg_d08_white_07">
