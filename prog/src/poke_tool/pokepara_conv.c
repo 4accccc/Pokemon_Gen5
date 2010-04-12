@@ -30,12 +30,21 @@ void  PPCONV_ConvertPPPFromPokeShifter( POKEMON_PASO_PARAM* ppp )
   }
 
   //HGSSの捕獲ボールをシャチの捕獲ボール領域にコピー
+
   { 
     u8 get_cassette = PPP_Get( ppp, ID_PARA_get_cassette, NULL );
     if( ( get_cassette == VERSION_GOLD ) || ( get_cassette == VERSION_SILVER ) )
     { 
+      //GSのpoketoolより抜粋
+      // 新しい領域に値があるかチェックをしているのは、GSで作った卵をDP,PLで孵化させると
+      // カセットバージョンはGSだが新領域は０という状況ができてしまうため、
+      // その場合は旧領域を返すようにしました
+      // 不思議な贈り物もHGSS名義なのに旧領域に入っている可能性があるので・・・
       u8  get_ball = PPP_Get( ppp, ID_PARA_dummy_p4_1, NULL ) & 0xff;
-      PPP_Put( ppp, ID_PARA_get_ball, get_ball );
+      if( get_ball != 0 )
+      {
+        PPP_Put( ppp, ID_PARA_get_ball, get_ball );
+      }
     }
   }
 
