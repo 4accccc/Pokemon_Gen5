@@ -137,11 +137,11 @@ static const CURSORMOVE_DATA PartyOutMainCursorMoveData[] =
 	{ 0, 0, 0, 0,	6, 6, 6, 6, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_X_06+TOUCHBAR_ICON_WIDTH-1 } },			// 06: 戻る１
 	{ 0, 0, 0, 0,	7, 7, 7, 7, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },			// 07: 戻る２
 
-	{ 212,  40, 0, 0,	12,  9,  8,  8, {  40,  63, 168, 255 } },		// 08: あずける
-	{ 212,  64, 0, 0,	 8, 10,  9,  9, {  64,  87, 168, 255 } },		// 09: ようすをみる
-	{ 212,  88, 0, 0,	 9, 11, 10, 10, {  88, 111, 168, 255 } },		// 10: マーキング
-	{ 212, 112, 0, 0,	10, 12, 11, 11, { 112, 135, 168, 255 } },		// 11: にがす
-	{ 212, 136, 0, 0,	11,  8, 12, 12, { 136, 159, 168, 255 } },		// 12: とじる
+	{ 212,  40-4, 0, 0,	12,  9,  8,  8, {  40,  63, 168, 255 } },		// 08: あずける
+	{ 212,  64-4, 0, 0,	 8, 10,  9,  9, {  64,  87, 168, 255 } },		// 09: ようすをみる
+	{ 212,  88-4, 0, 0,	 9, 11, 10, 10, {  88, 111, 168, 255 } },		// 10: マーキング
+	{ 212, 112-4, 0, 0,	10, 12, 11, 11, { 112, 135, 168, 255 } },		// 11: にがす
+	{ 212, 136-4, 0, 0,	11,  8, 12, 12, { 136, 159, 168, 255 } },		// 12: とじる
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -187,8 +187,8 @@ static const CURSORMOVE_DATA MarkingCursorMoveData[] =
 	{ 232,  60, 0, 0,	1, 5, 2, 3, { 68,  83, 220, 235 } },		// 03: ハート
 	{ 200,  84, 0, 0,	2, 6, 4, 5, { 92, 107, 188, 203 } },		// 04: ★
 	{ 232,  84, 0, 0,	3, 6, 4, 5, { 92, 107, 220, 235 } },		// 05: ◆
-	{ 212, 112, 0, 0,	CURSORMOVE_RETBIT|4, 7, 6, 6, { 112, 135, 168, 255 } },		// 06:「けってい」
-	{ 212, 136, 0, 0,	6, 7, 7, 7, { 136, 159, 168, 255 } },		// 07:「やめる」
+	{ 212, 112-4, 0, 0,	CURSORMOVE_RETBIT|4, 7, 6, 6, { 112, 135, 168, 255 } },		// 06:「けってい」
+	{ 212, 136-4, 0, 0,	6, 7, 7, 7, { 136, 159, 168, 255 } },		// 07:「やめる」
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -244,11 +244,11 @@ static const CURSORMOVE_DATA PartyInMainCursorMoveData[] =
 	{ 0, 0, 0, 0,	33, 33, 33, 33, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_X_06+TOUCHBAR_ICON_WIDTH-1 } },			// 33: 戻る１
 	{ 0, 0, 0, 0,	34, 34, 34, 34, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },			// 34: 戻る２
 
-	{ 212,  40, 0, 0,	39, 36, 35, 35, {  40,  63, 168, 255 } },		// 35: つれていく
-	{ 212,  64, 0, 0,	35, 37, 36, 36, {  64,  87, 168, 255 } },		// 36: ようすをみる
-	{ 212,  88, 0, 0,	36, 38, 37, 37, {  88, 111, 168, 255 } },		// 37: マーキング
-	{ 212, 112, 0, 0,	37, 39, 38, 38, { 112, 135, 168, 255 } },		// 38: にがす
-	{ 212, 136, 0, 0,	38, 35, 39, 39, { 136, 159, 168, 255 } },		// 39: とじる
+	{ 212,  40-4, 0, 0,	39, 36, 35, 35, {  40,  63, 168, 255 } },		// 35: つれていく
+	{ 212,  64-4, 0, 0,	35, 37, 36, 36, {  64,  87, 168, 255 } },		// 36: ようすをみる
+	{ 212,  88-4, 0, 0,	36, 38, 37, 37, {  88, 111, 168, 255 } },		// 37: マーキング
+	{ 212, 112-4, 0, 0,	37, 39, 38, 38, { 112, 135, 168, 255 } },		// 38: にがす
+	{ 212, 136-4, 0, 0,	38, 35, 39, 39, { 136, 159, 168, 255 } },		// 39: とじる
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -263,10 +263,10 @@ static const CURSORMOVE_CALLBACK PartyInMainCallBack = {
 // ボックステーマ変更
 static const CURSORMOVE_DATA BoxThemaChgCursorMoveData[] =
 {
-	{ 212,  64, 0, 0,	3, 1, 0, 0, {  64,  87, 168, 255 } },		// 00: ジャンプする
-	{ 212,  88, 0, 0,	0, 2, 1, 1, {  88, 111, 168, 255 } },		// 01: かべがみ
-	{ 212, 112, 0, 0,	1, 3, 2, 2, { 112, 135, 168, 255 } },		// 02: なまえ
-	{ 212, 136, 0, 0,	2, 0, 3, 3, { 136, 159, 168, 255 } },		// 03: やめる
+	{ 212,  64-4, 0, 0,	3, 1, 0, 0, {  64,  87, 168, 255 } },		// 00: ジャンプする
+	{ 212,  88-4, 0, 0,	0, 2, 1, 1, {  88, 111, 168, 255 } },		// 01: かべがみ
+	{ 212, 112-4, 0, 0,	1, 3, 2, 2, { 112, 135, 168, 255 } },		// 02: なまえ
+	{ 212, 136-4, 0, 0,	2, 0, 3, 3, { 136, 159, 168, 255 } },		// 03: やめる
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -281,12 +281,12 @@ static const CURSORMOVE_CALLBACK BoxThemaChgCallBack = {
 // 壁紙変更
 static const CURSORMOVE_DATA WallPaperChgCursorMoveData[] =
 {
-	{ 212,  16, 0, 0,	5, 1, 0, 0, {  16,  39, 168, 255 } },		// 00: メニュー１
-	{ 212,  40, 0, 0,	0, 2, 1, 1, {  40,  63, 168, 255 } },		// 01: メニュー２
-	{ 212,  64, 0, 0,	1, 3, 2, 2, {  64,  87, 168, 255 } },		// 02: メニュー３
-	{ 212,  88, 0, 0,	2, 4, 3, 3, {  88, 111, 168, 255 } },		// 03: メニュー４
-	{ 212, 112, 0, 0,	3, 5, 4, 4, { 112, 135, 168, 255 } },		// 04: メニュー５
-	{ 212, 136, 0, 0,	4, 0, 5, 5, { 136, 159, 168, 255 } },		// 05: もどる
+	{ 212,  16-4, 0, 0,	5, 1, 0, 0, {  16,  39, 168, 255 } },		// 00: メニュー１
+	{ 212,  40-4, 0, 0,	0, 2, 1, 1, {  40,  63, 168, 255 } },		// 01: メニュー２
+	{ 212,  64-4, 0, 0,	1, 3, 2, 2, {  64,  87, 168, 255 } },		// 02: メニュー３
+	{ 212,  88-4, 0, 0,	2, 4, 3, 3, {  88, 111, 168, 255 } },		// 03: メニュー４
+	{ 212, 112-4, 0, 0,	3, 5, 4, 4, { 112, 135, 168, 255 } },		// 04: メニュー５
+	{ 212, 136-4, 0, 0,	4, 0, 5, 5, { 136, 159, 168, 255 } },		// 05: もどる
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -345,12 +345,12 @@ static const CURSORMOVE_DATA BoxArrangeMainCursorMoveData[] =
 	{ 0, 0, 0, 0,	34, 34, 34, 34, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_X_06+TOUCHBAR_ICON_WIDTH-1 } },			// 34: 戻る１
 	{ 0, 0, 0, 0,	35, 35, 35, 35, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },			// 35: 戻る２
 
-	{ 212,  16, 0, 0,	41, 37, 36, 36, {  16,  39, 168, 255 } },	// 36: つかむ
-	{ 212,  40, 0, 0,	36, 38, 37, 37, {  40,  63, 168, 255 } },	// 37: ようすをみる
-	{ 212,  64, 0, 0,	37, 39, 38, 38, {  64,  87, 168, 255 } },	// 38: もちもの
-	{ 212,  88, 0, 0,	38, 40, 39, 39, {  88, 111, 168, 255 } },	// 39: マーキング
-	{ 212, 112, 0, 0,	39, 41, 40, 40, { 112, 135, 168, 255 } },	// 40: にがす
-	{ 212, 136, 0, 0,	40, 36, 41, 41, { 136, 159, 168, 255 } },	// 41: とじる
+	{ 212,  16-4, 0, 0,	41, 37, 36, 36, {  16,  39, 168, 255 } },	// 36: つかむ
+	{ 212,  40-4, 0, 0,	36, 38, 37, 37, {  40,  63, 168, 255 } },	// 37: ようすをみる
+	{ 212,  64-4, 0, 0,	37, 39, 38, 38, {  64,  87, 168, 255 } },	// 38: もちもの
+	{ 212,  88-4, 0, 0,	38, 40, 39, 39, {  88, 111, 168, 255 } },	// 39: マーキング
+	{ 212, 112-4, 0, 0,	39, 41, 40, 40, { 112, 135, 168, 255 } },	// 40: にがす
+	{ 212, 136-4, 0, 0,	40, 36, 41, 41, { 136, 159, 168, 255 } },	// 41: とじる
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -440,12 +440,12 @@ static const CURSORMOVE_DATA BoxArrangePartyPokeCursorMoveData[] =
 	{ 0, 0, 0, 0,	7, 7, 7, 7, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_X_06+TOUCHBAR_ICON_WIDTH-1 } },			// 07: 戻る１
 	{ 0, 0, 0, 0,	8, 8, 8, 8, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },			// 08: 戻る２
 
-	{ 212,  16, 0, 0,	14, 10,  9,  9, {  16,  39, 168, 255 } },	// 09: つかむ
-	{ 212,  40, 0, 0,	 9, 11, 10, 10, {  40,  63, 168, 255 } },	// 10: ようすをみる
-	{ 212,  64, 0, 0,	10, 12, 11, 11, {  64,  87, 168, 255 } },	// 11: もちもの
-	{ 212,  88, 0, 0,	11, 13, 12, 12, {  88, 111, 168, 255 } },	// 12: マーキング
-	{ 212, 112, 0, 0,	12, 14, 13, 13, { 112, 135, 168, 255 } },	// 13: にがす
-	{ 212, 136, 0, 0,	13,  9, 14, 14, { 136, 159, 168, 255 } },	// 14: とじる
+	{ 212,  16-4, 0, 0,	14, 10,  9,  9, {  16,  39, 168, 255 } },	// 09: つかむ
+	{ 212,  40-4, 0, 0,	 9, 11, 10, 10, {  40,  63, 168, 255 } },	// 10: ようすをみる
+	{ 212,  64-4, 0, 0,	10, 12, 11, 11, {  64,  87, 168, 255 } },	// 11: もちもの
+	{ 212,  88-4, 0, 0,	11, 13, 12, 12, {  88, 111, 168, 255 } },	// 12: マーキング
+	{ 212, 112-4, 0, 0,	12, 14, 13, 13, { 112, 135, 168, 255 } },	// 13: にがす
+	{ 212, 136-4, 0, 0,	13,  9, 14, 14, { 136, 159, 168, 255 } },	// 14: とじる
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -566,9 +566,9 @@ static const CURSORMOVE_DATA BoxItemArrangeMainCursorMoveData[] =
 	{ 0, 0, 0, 0,	34, 34, 34, 34, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_X_06+TOUCHBAR_ICON_WIDTH-1 } },			// 34: 戻る１
 	{ 0, 0, 0, 0,	35, 35, 35, 35, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },			// 35: 戻る２
 
-	{ 212,  88, 0, 0,	38, 37, 36, 36, {  88, 111, 168, 255 } },	// 36: いどうする
-	{ 212, 112, 0, 0,	36, 38, 37, 37, { 112, 135, 168, 255 } },	// 37: バッグへ or もたせる
-	{ 212, 136, 0, 0,	37, 36, 38, 38, { 136, 159, 168, 255 } },	// 38: とじる
+	{ 212,  88-4, 0, 0,	38, 37, 36, 36, {  88, 111, 168, 255 } },	// 36: いどうする
+	{ 212, 112-4, 0, 0,	36, 38, 37, 37, { 112, 135, 168, 255 } },	// 37: バッグへ or もたせる
+	{ 212, 136-4, 0, 0,	37, 36, 38, 38, { 136, 159, 168, 255 } },	// 38: とじる
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -595,9 +595,9 @@ static const CURSORMOVE_DATA BoxItemArrangePartyPokeCursorMoveData[] =
 	{ 0, 0, 0, 0,	7, 7, 7, 7, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_X_06+TOUCHBAR_ICON_WIDTH-1 } },			// 07: 戻る１
 	{ 0, 0, 0, 0,	8, 8, 8, 8, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },			// 08: 戻る２
 
-	{ 212,  88, 0, 0,	11, 10,  9,  9, {  88, 111, 168, 255 } },		// 09: いどうする
-	{ 212, 112, 0, 0,	 9, 11, 10, 10, { 112, 135, 168, 255 } },		// 10: バッグへ or もたせる
-	{ 212, 136, 0, 0,	10,  9, 11, 11, { 136, 159, 168, 255 } },		// 11: とじる
+	{ 212,  88-4, 0, 0,	11, 10,  9,  9, {  88, 111, 168, 255 } },		// 09: いどうする
+	{ 212, 112-4, 0, 0,	 9, 11, 10, 10, { 112, 135, 168, 255 } },		// 10: バッグへ or もたせる
+	{ 212, 136-4, 0, 0,	10,  9, 11, 11, { 136, 159, 168, 255 } },		// 11: とじる
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -678,10 +678,10 @@ static const CURSORMOVE_DATA BattleBoxMainCursorMoveData[] =
 	{ 0, 0, 0, 0,	34, 34, 34, 34, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_X_06+TOUCHBAR_ICON_WIDTH-1 } },			// 34: 戻る１
 	{ 0, 0, 0, 0,	35, 35, 35, 35, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },			// 35: 戻る２
 
-	{ 212,  64, 0, 0,	39, 37, 36, 36, {  64,  87, 168, 255 } },	// 36: いどうする
-	{ 212,  88, 0, 0,	36, 38, 37, 37, {  88, 111, 168, 255 } },	// 37: ようすをみる
-	{ 212, 112, 0, 0,	37, 39, 38, 38, { 112, 135, 168, 255 } },	// 38: もちもの
-	{ 212, 136, 0, 0,	38, 36, 39, 39, { 136, 159, 168, 255 } },	// 39: やめる
+	{ 212,  64-4, 0, 0,	39, 37, 36, 36, {  64,  87, 168, 255 } },	// 36: いどうする
+	{ 212,  88-4, 0, 0,	36, 38, 37, 37, {  88, 111, 168, 255 } },	// 37: ようすをみる
+	{ 212, 112-4, 0, 0,	37, 39, 38, 38, { 112, 135, 168, 255 } },	// 38: もちもの
+	{ 212, 136-4, 0, 0,	38, 36, 39, 39, { 136, 159, 168, 255 } },	// 39: やめる
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -708,10 +708,10 @@ static const CURSORMOVE_DATA BattleBoxPartyMainCursorMoveData[] =
 	{ 0, 0, 0, 0,	7, 7, 7, 7, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_X_06+TOUCHBAR_ICON_WIDTH-1 } },			// 07: 戻る１
 	{ 0, 0, 0, 0,	8, 8, 8, 8, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },			// 08: 戻る２
 
-	{ 212,  64, 0, 0,	12, 10,  9,  9, {  64,  87, 168, 255 } },	// 09: いどうする
-	{ 212,  88, 0, 0,	 9, 11, 10, 10, {  88, 111, 168, 255 } },	// 10: ようすをみる
-	{ 212, 112, 0, 0,	10, 12, 11, 11, { 112, 135, 168, 255 } },	// 11: もちもの
-	{ 212, 136, 0, 0,	11,  9, 12, 12, { 136, 159, 168, 255 } },	// 12: とじる
+	{ 212,  64-4, 0, 0,	12, 10,  9,  9, {  64,  87, 168, 255 } },	// 09: いどうする
+	{ 212,  88-4, 0, 0,	 9, 11, 10, 10, {  88, 111, 168, 255 } },	// 10: ようすをみる
+	{ 212, 112-4, 0, 0,	10, 12, 11, 11, { 112, 135, 168, 255 } },	// 11: もちもの
+	{ 212, 136-4, 0, 0,	11,  9, 12, 12, { 136, 159, 168, 255 } },	// 12: とじる
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -767,8 +767,8 @@ static const CURSORMOVE_DATA SleepMainCursorMoveData[] =
 
 	{ 0, 0, 0, 0,	33, 33, 33, 33, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },			// 33: 戻る
 
-	{ 212, 112, 0, 0,	35, 35, 34, 34, { 112, 135, 168, 255 } },	// 34: ねかせる
-	{ 212, 136, 0, 0,	34, 34, 35, 35, { 136, 159, 168, 255 } },	// 35: とじる
+	{ 212, 112-4, 0, 0,	35, 35, 34, 34, { 112, 135, 168, 255 } },	// 34: ねかせる
+	{ 212, 136-4, 0, 0,	34, 34, 35, 35, { 136, 159, 168, 255 } },	// 35: とじる
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
@@ -1375,11 +1375,11 @@ u32 BOX2UI_PartyInMain( BOX2_SYS_WORK * syswk )
 */
 
 	if( ret == CURSORMOVE_NONE ){
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_PTIN_MAIN_LEFT;
 		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_PTIN_MAIN_RIGHT;
 		}
@@ -1519,11 +1519,11 @@ u32 BOX2UI_BoxArrangeMain( BOX2_SYS_WORK * syswk )
 	}
 
 	if( ret == CURSORMOVE_NONE ){
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ARRANGE_MAIN_LEFT;
 		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ARRANGE_MAIN_RIGHT;
 		}
@@ -1791,11 +1791,11 @@ u32 BOX2UI_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ARRANGE_PGT_STATUS;
 		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ARRANGE_PGT_LEFT;
 		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ARRANGE_PGT_RIGHT;
 		}
@@ -1973,11 +1973,11 @@ u32 BOX2UI_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ARRANGE_PTGT_STATUS;
 		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ARRANGE_PTGT_LEFT;
 		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ARRANGE_PTGT_RIGHT;
 		}
@@ -2131,11 +2131,11 @@ u32 BOX2UI_BoxItemArrangeMain( BOX2_SYS_WORK * syswk )
 	}
 
 	if( ret == CURSORMOVE_NONE ){
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ITEM_MAIN_LEFT;
 		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ITEM_MAIN_RIGHT;
 		}
@@ -2672,11 +2672,11 @@ u32 BOX2UI_BattleBoxMain( BOX2_SYS_WORK * syswk )
 	}
 
 	if( ret == CURSORMOVE_NONE ){
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_BATTLEBOX_MAIN_LEFT;
 		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_BATTLEBOX_MAIN_RIGHT;
 		}
@@ -2974,11 +2974,11 @@ u32 BOX2UI_SleepMain( BOX2_SYS_WORK * syswk )
 	}
 
 	if( ret == CURSORMOVE_NONE ){
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_SLEEP_MAIN_LEFT;
 		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_SLEEP_MAIN_RIGHT;
 		}

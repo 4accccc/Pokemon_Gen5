@@ -4303,10 +4303,10 @@ static int MainSeq_PartyOutPutMain( BOX2_SYS_WORK * syswk )
 	u32	ret = CURSORMOVE_MainCont( syswk->app->cmwk );
 
 	if( ret == CURSORMOVE_NONE ){
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			ret = BOX2UI_PTOUT_BOXSEL_LEFT;
-		}else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
+		}else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			ret = BOX2UI_PTOUT_BOXSEL_RIGHT;
 		}
