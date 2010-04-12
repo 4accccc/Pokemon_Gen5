@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-04-07T12:35:13"/>
+	<create user="shimoyamada" host="W00184" date="2010-04-12T12:24:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1546" top="591" right="2251" bottom="1219" maximized="no" rayout="Vertical2">
+	<dialog left="1109" top="427" right="1814" bottom="1055" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="308" right="1024" bottom="706" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -399,6 +399,13 @@
 しばらく　おまちください</language>
 		<language name="JPN_KANJI" width="256">スキップ　しています！
 しばらく　お待ちください</language>
+	</row>
+
+	<row id="BI_BattleRecorderChaptetKey">
+		<language name="JPN" width="256">いちじ　ていしちゅう……
+しばらく　おまちください！</language>
+		<language name="JPN_KANJI" width="256">一時　停止中……
+しばらく　お待ちください！</language>
 	</row>
 
 	<flowchart-group-list>
