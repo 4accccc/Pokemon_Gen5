@@ -36,25 +36,33 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	DEFINE_LOCAL  POSZ
 	_PLAYER_POS_GET( POSX,POSZ )
 	
+	//ライバル振り向く
+	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_plasma_staystep )
+	_OBJ_ANIME_WAIT()
+	
+	//チェレン：きをつけて！
+	_BALLOONWIN_OBJMSG_POS( msg_r03r0301_black_01 , R03R0301_RIVAL_01 , POS_UR )
+	_BALLOONWIN_CLOSE()
+	
 	SWITCH $POSZ
 	CASE 4 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r03r0301_player_goz4 )
+		_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_left )
 		_OBJ_ANIME_WAIT()
 	CASE 5 THEN  //目の前に立った時
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r03r0301_player_goz5 )
+		_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_left )
 		_OBJ_ANIME_WAIT()
 	_OBJ_ANIME_WAIT()
 	CASE 6 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r03r0301_player_goz6 )
+		_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_left )
 		_OBJ_ANIME_WAIT()
 	DEFAULT  //一番上と同じ処理
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r03r0301_player_goz4 )
+		_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_left )
 		_OBJ_ANIME_WAIT()
 	ENDSWITCH
-
-	//プラズマ団と会話
-	_BALLOONWIN_OBJMSG_POS( msg_r03r0301_black_01 , R03R0301_RIVAL_01 , POS_UR )
-	_BALLOONWIN_CLOSE()
 	
 	//隣接して戦闘へ
 	_OBJ_ANIME( R03R0301_HAKAIM_01 , anm_r03r0301_plasma_go1 )
@@ -120,6 +128,7 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	
 	//主人公を見て
 	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_down )
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_r03r0301_player_to_rival )
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル：こちらのコンビネーションで
@@ -128,6 +137,7 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	
 	//改めてプラズマ団を見る
 	_OBJ_ANIME( R03R0301_RIVAL_01 , anm_r03r0301_rival_left )
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_r03r0301_rival_left )
 	_OBJ_ANIME_WAIT()
 	
 		
@@ -277,7 +287,7 @@ EVENT_END
 
 _ANIME_LABEL	anm_r03r0301_player_goz4
 	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -286,7 +296,7 @@ _ANIME_LABEL	anm_r03r0301_player_goz4
 
 _ANIME_LABEL	anm_r03r0301_player_goz5
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -294,7 +304,7 @@ _ANIME_LABEL	anm_r03r0301_player_goz5
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_r03r0301_player_goz6
-	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
