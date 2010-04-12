@@ -530,7 +530,7 @@
 #define ITEM_BENIIRONOTAMA		( 534 )		// べにいろのたま
 #define ITEM_AIIRONOTAMA		( 535 )		// あいいろのたま
 #define ITEM_NAZONOSUISYOU		( 536 )		// なぞのすいしょう
-#define ITEM_KIREINAUROKO		( 537 )		// キレイなウロコ
+#define ITEM_KIREINAUROKO		( 537 )		// きれいなウロコ
 #define ITEM_SINKANOKISEKI		( 538 )		// しんかのきせき
 #define ITEM_KARUISI		( 539 )		// かるいし
 #define ITEM_GOTUGOTUMETTO		( 540 )		// ゴツゴツメット
@@ -569,7 +569,7 @@
 #define ITEM_HANENOKASEKI		( 573 )		// はねのカセキ
 #define ITEM_RIBATHITIKETTO		( 574 )		// リバティチケット
 #define ITEM_DERUDAMA		( 575 )		// デルダマ
-#define ITEM_PARESUBOORU		( 576 )		// パレスボール
+#define ITEM_DORIIMUBOORU		( 576 )		// ドリームボール
 #define ITEM_POKEZYARASI		( 577 )		// ポケじゃらし
 #define ITEM_GUZZUKEESU		( 578 )		// グッズケース
 #define ITEM_DORAGONNOHONE		( 579 )		// ドラゴンのホネ

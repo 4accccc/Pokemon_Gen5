@@ -155,7 +155,6 @@
 #define	SOUBI_BUBASINKA		( 144 )
 #define	SOUBI_PORIGON2SINKA		( 145 )
 #define	SOUBI_SAMAYORUSINKA		( 146 )
-#define	SOUBI_HINBASUSINKA		( 147 )
 
 // ãZÅuÇ»Ç∞Ç¬ÇØÇÈÅvå¯â 
 #define	NAGETUKERU_MAHINAOSI		( 1 )

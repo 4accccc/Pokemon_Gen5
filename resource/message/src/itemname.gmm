@@ -2816,8 +2816,8 @@
 	</row>
 
 	<row id="ITEMNAME_537">
-		<language name="JPN" width="256">キレイなウロコ</language>
-		<language name="JPN_KANJI" width="256">キレイなウロコ</language>
+		<language name="JPN" width="256">きれいなウロコ</language>
+		<language name="JPN_KANJI" width="256">きれいなウロコ</language>
 	</row>
 
 	<row id="ITEMNAME_538">
@@ -3011,8 +3011,8 @@
 	</row>
 
 	<row id="ITEMNAME_576">
-		<language name="JPN" width="256">パレスボール</language>
-		<language name="JPN_KANJI" width="256">パレスボール</language>
+		<language name="JPN" width="256">ドリームボール</language>
+		<language name="JPN_KANJI" width="256">ドリームボール</language>
 	</row>
 
 	<row id="ITEMNAME_577">
