@@ -2517,8 +2517,9 @@ static int MainSeq_ArrangePartyMain( BOX2_SYS_WORK * syswk )
 			CURSORMOVE_PosSet( syswk->app->cmwk, pos );
 			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MENU_CLOSE );
 		}
-		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+//		syswk->dat->retMode = BOX_END_MODE_MENU;
+//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
 
 	default:
 		ret += BOX2OBJ_POKEICON_TRAY_MAX;
@@ -3479,8 +3480,9 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
 			CURSORMOVE_PosSet( syswk->app->cmwk, pos );
 			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_MENU_CLOSE );
 		}
-		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+//		syswk->dat->retMode = BOX_END_MODE_MENU;
+//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_END) );
 
 	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
@@ -5569,8 +5571,9 @@ static int MainSeq_ItemPartyMain( BOX2_SYS_WORK * syswk )
 			CURSORMOVE_PosSet( syswk->app->cmwk, pos );
 			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_ITEM_PARTY_MENU_CLOSE );
 		}
-		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+//		syswk->dat->retMode = BOX_END_MODE_MENU;
+//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
 
 	default:
 		ret += BOX2OBJ_POKEICON_TRAY_MAX;
