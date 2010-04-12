@@ -67,6 +67,11 @@
 
 #define GIZA_SHAKE_Y (8) ///<ギザウィンドウ初期揺れ幅
 
+///システムウィンドウデフォルト位置と幅
+#define SYSWIN_DEF_PX (2)
+#define SYSWIN_DEF_SX (27)
+#define SYSWIN_DEF_SY (4)
+
 //--------------------------------------------------------------
 //  メッセージウィンドウ、キャラオフセット
 //--------------------------------------------------------------
@@ -332,7 +337,7 @@ static BOOL bgwin_ScrollBmp(
 
 static void syswin_InitGraphic( HEAPID heapID );
 static void syswin_WriteWindow( const GFL_BMPWIN *bmpwin );
-static GFL_BMPWIN * syswin_InitBmp( u8 pos_y, HEAPID heapID );
+static GFL_BMPWIN * syswin_InitBmp( u8 pos_x, u8 pos_y, u8 sx, u8 sy, HEAPID heapID );
 static void syswin_ClearBmp( GFL_BMPWIN *bmpwin );
 static void syswin_DeleteBmp( GFL_BMPWIN *bmpwin );
 
@@ -1334,31 +1339,26 @@ GFL_BMPWIN * FLDMSGWIN_GetBmpWin( FLDMSGWIN * fldmsgwin )
 //======================================================================
 //  FLDSYSWIN システムウィンドウ関連
 //======================================================================
+
 //--------------------------------------------------------------
 /**
- * システムウィンドウ　追加　メイン
+ * システムウィンドウ　追加(サイズは標準メッセージ枠仕様固定。表示Y位置のみ指定可能)
  * @param fmb FLDMSGBG*
  * @param msgData 表示する初期化済みのGFL_MSGDATA NULL=使用しない
+ * @param bmppos_y    //表示座標Y キャラ単位
  * @retval  FLDSYSWIN*
  */
 //--------------------------------------------------------------
-static FLDSYSWIN * syswin_Add(
-  FLDMSGBG *fmb, GFL_MSGDATA *msgData, u16 bmppos_y )
+FLDSYSWIN * FLDSYSWIN_Add(
+    FLDMSGBG *fmb, GFL_MSGDATA *msgData, u16 bmppos_y )
 {
-  FLDSYSWIN *sysWin;
-  
-  sysWin = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDSYSWIN) );
-  sysWin->fmb = fmb;
-  sysWin->bmpwin = syswin_InitBmp( bmppos_y, fmb->heapID );
-  sysWin->msgPrint = FLDMSGPRINT_SetupPrint( fmb, msgData, sysWin->bmpwin );
-  
-  setBlendAlpha( TRUE );
-  return( sysWin );
+  return FLDSYSWIN_AddEx(
+          fmb, msgData, SYSWIN_DEF_PX, bmppos_y, SYSWIN_DEF_SX, SYSWIN_DEF_SY );
 }
 
 //--------------------------------------------------------------
 /**
- * システムウィンドウ　追加
+ * システムウィンドウ　追加(位置/サイズフル指定版)
  * @param fmb FLDMSGBG*
  * @param msgData 表示する初期化済みのGFL_MSGDATA NULL=使用しない
  * @param bmppos_x    //表示座標X キャラ単位
@@ -1368,13 +1368,20 @@ static FLDSYSWIN * syswin_Add(
  * @retval  FLDSYSWIN*
  */
 //--------------------------------------------------------------
-FLDSYSWIN * FLDSYSWIN_Add(
-    FLDMSGBG *fmb, GFL_MSGDATA *msgData, u16 bmppos_y )
+FLDSYSWIN * FLDSYSWIN_AddEx(
+    FLDMSGBG *fmb, GFL_MSGDATA *msgData, u16 bmppos_x, u16 bmppos_y, u16 bmpsiz_x, u16 bmpsiz_y )
 {
   FLDSYSWIN *sysWin;
   fmb->deriveFont_plttNo = PANO_FONT;
   resetBG2ControlProc( fmb );
-  sysWin = syswin_Add( fmb, msgData, bmppos_y );
+
+  sysWin = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDSYSWIN) );
+  sysWin->fmb = fmb;
+  sysWin->bmpwin = syswin_InitBmp( bmppos_x, bmppos_y, bmpsiz_x, bmpsiz_y, fmb->heapID );
+  sysWin->msgPrint = FLDMSGPRINT_SetupPrint( fmb, msgData, sysWin->bmpwin );
+  
+  setBlendAlpha( TRUE );
+
   return( sysWin );
 }
 
@@ -2496,7 +2503,7 @@ FLDSYSWIN_STREAM * FLDSYSWIN_STREAM_Add(
       fmb->heapID, sizeof(FLDSYSWIN_STREAM) );
   sysWin->fmb = fmb;
   sysWin->msgData = msgData;
-  sysWin->bmpwin = syswin_InitBmp( bmppos_y, fmb->heapID );
+  sysWin->bmpwin = syswin_InitBmp( SYSWIN_DEF_PX, bmppos_y, SYSWIN_DEF_SX, SYSWIN_DEF_SY, fmb->heapID );
   sysWin->strBuf = GFL_STR_CreateBuffer( FLDMSGBG_STRLEN, fmb->heapID );
   
   FLDKEYWAITCURSOR_Init( &sysWin->cursor_work, fmb->heapID );
@@ -4693,13 +4700,13 @@ static void syswin_WriteWindow( const GFL_BMPWIN *bmpwin )
  * @retval  GFL_BMPWIN  作成されたGFL_BMPWIN
  */
 //--------------------------------------------------------------
-static GFL_BMPWIN * syswin_InitBmp( u8 pos_y, HEAPID heapID )
+static GFL_BMPWIN * syswin_InitBmp( u8 pos_x, u8 pos_y, u8 sx, u8 sy, HEAPID heapID )
 {
   GFL_BMP_DATA *bmp;
   GFL_BMPWIN *bmpwin;
   
   bmpwin = GFL_BMPWIN_Create( FLDMSGBG_BGFRAME_BLD,
-    2, pos_y, 27, 4,
+    pos_x, pos_y, sx, sy,
     PANO_FONT, GFL_BMP_CHRAREA_GET_B );
   
   bmp = GFL_BMPWIN_GetBmp( bmpwin );

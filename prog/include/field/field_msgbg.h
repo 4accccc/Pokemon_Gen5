@@ -252,6 +252,8 @@ extern GFL_BMPWIN * FLDMSGWIN_GetBmpWin( FLDMSGWIN * fldmsgwin );
 //システムウィンドウ
 extern FLDSYSWIN * FLDSYSWIN_Add(
     FLDMSGBG *fmb, GFL_MSGDATA *msgData, u16 bmppos_y );
+FLDSYSWIN * FLDSYSWIN_AddEx(
+    FLDMSGBG *fmb, GFL_MSGDATA *msgData, u16 bmppos_x, u16 bmppos_y, u16 bmpsiz_x, u16 bmpsiz_y );
 extern void FLDSYSWIN_Delete( FLDSYSWIN *msgWin );
 extern void FLDSYSWIN_Print( FLDSYSWIN *msgWin, u16 x, u16 y, u32 strID );
 extern void FLDSYSWIN_PrintStrBuf( FLDSYSWIN *msgWin, u16 x, u16 y, STRBUF *strBuf );
