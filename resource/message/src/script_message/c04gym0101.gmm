@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T14:39:37"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T22:27:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -589,7 +589,10 @@ princess_01</attribute>
 ときとして　たおした　あいての
 コースターにも　のってすすむ！[BE:01:ページ切り替え（クリア）]
 そうやって　ジムリーダーの　いる
-ばしょを　めざしてくださいっす！</language>
+ばしょを　めざしてくださいっす！▼
+ちなみに　でんきタイプの
+ポケモンは　じめんタイプの▽
+わざが　にがて　なんすよ……</language>
 		<language name="JPN_KANJI" width="256">この　ジェットコースター　ジムは
 まず　コースターに　乗る！[BE:01:ページ切り替え（クリア）]
 つぎに　プラットフォーム……
@@ -598,7 +601,10 @@ princess_01</attribute>
 ときとして　倒した　相手の
 コースターにも　乗り　進む！[BE:01:ページ切り替え（クリア）]
 そうやって　ジムリーダーの　いる
-場所を　目指してくださいっす！</language>
+場所を　目指してくださいっす！▼
+ちなみに　でんきタイプの
+ポケモンは　じめんタイプの▽
+技が　苦手なんすよ……</language>
 	</row>
 
 	<row id="msg_c04gym0101_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">

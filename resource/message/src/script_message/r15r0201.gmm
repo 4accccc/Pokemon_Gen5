@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T15:58:02"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T22:21:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -318,10 +318,11 @@
 		<comment>♂
 ・自販機の近く</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">じどうはんばいきで　なにを　かうのか
+		<language name="JPN" width="256">みんなは
+じどうはんばいきで　なにを　かうのか▽
 それを　チェックしつづける……▼
 これが　ボクの　じんせいです</language>
-		<language name="JPN_KANJI" width="256">自販機で　なにを　買うのか
+		<language name="JPN_KANJI" width="256">みんなは　自販機で　なにを買うのか
 それを　チェックしつづける……▼
 これが　ボクの　人生です</language>
 	</row>
