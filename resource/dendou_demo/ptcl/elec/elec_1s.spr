@@ -41,11 +41,11 @@
 		clr_g="13"
 		clr_b="13"
 		pos_x="305"
-		pos_y="3350"
+		pos_y="5529"
 		pos_z="0"
 		init_vel_pos="0"
 		init_vel_axis="305"
-		base_scl="20480"
+		base_scl="22118"
 		aspect="4096"
 		start_offset="20"
 		rtt_min="0"
@@ -71,7 +71,7 @@
 		offset_pos="0"
 		dpol_center="0"
 		usr_flag="0"
-		tex_name="fire1.spt"
+		tex_name="elec1.spt"
 	/>
 	<alp_anm
 		alp_s="31"
