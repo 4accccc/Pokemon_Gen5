@@ -158,7 +158,6 @@ _EVENT_DATA ev_fld_item_79
 _EVENT_DATA ev_fld_item_80
 _EVENT_DATA ev_fld_item_162
 _EVENT_DATA ev_fld_item_302
-_EVENT_DATA ev_fld_item_303
 _EVENT_DATA ev_fld_item_81
 _EVENT_DATA ev_fld_item_82
 _EVENT_DATA ev_fld_item_83
@@ -1293,10 +1292,10 @@ EVENT_START ev_fld_item_111
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r08 X=408 Y=120 ITEM=‚°‚ñ‚«‚Ì‚©‚¯‚ç FLAG=79
+// MAP=r08 X=408 Y=120 ITEM=‚Ç‚­ƒoƒŠ FLAG=79
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_79
-  _FLD_ITEM_EVENT ITEM_GENKINOKAKERA,1
+  _FLD_ITEM_EVENT ITEM_DOKUBARI,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1318,13 +1317,6 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_302
   _FLD_ITEM_EVENT ITEM_HAIPAABOORU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r08 X= Y= ITEM=‚Ç‚­ƒoƒŠ FLAG=303
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_303
-  _FLD_ITEM_EVENT ITEM_DOKUBARI,1
 EVENT_END
 
 //--------------------------------------------------------------
