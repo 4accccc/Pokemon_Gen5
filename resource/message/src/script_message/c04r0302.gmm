@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T17:43:20"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T19:00:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1455" top="265" right="2160" bottom="885" maximized="no" rayout="Vertical2">
+	<dialog left="1489" top="348" right="2194" bottom="976" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="134" right="1280" bottom="532" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -373,7 +373,7 @@
 ・練習中は非表示</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">きゃー　こっちむいてー！</language>
-		<language name="JPN_KANJI" width="256">きゃー　こっちむいてー！</language>
+		<language name="JPN_KANJI" width="256">きゃー　こっち向いててー！</language>
 	</row>
 
 	<row id="msg_c04r0302_man3_01">
@@ -381,8 +381,10 @@
 ・分岐なし
 ・練習中は非表示</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
-		<language name="JPN" width="256">きゃー　こっちむいてー！</language>
-		<language name="JPN_KANJI" width="256">きゃー　こっちむいてー！</language>
+		<language name="JPN" width="256">そこだー！！
+そこで　こしを　クイクイっと！！</language>
+		<language name="JPN_KANJI" width="256">そこだー！！
+そこで　腰を　クイクイっと！！</language>
 	</row>
 
 	<row id="msg_c04r0302_maid_01">
@@ -390,8 +392,10 @@
 ・分岐なし
 ・練習中は非表示</comment>
 		<attribute name="キャラ指定">MAID</attribute>
-		<language name="JPN" width="256">モーモーミルク　いかがですかー</language>
-		<language name="JPN_KANJI" width="256">モーモーミルク　いかがですかー</language>
+		<language name="JPN" width="256">あちこち　うごく　ボール
+おいかけるだけで　ふらふらよ</language>
+		<language name="JPN_KANJI" width="256">あちこち　動く　ボール
+追いかけるだけで　ふらふらよ</language>
 	</row>
 
 	<row id="msg_c04r0302_dancer_01">

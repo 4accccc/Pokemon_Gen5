@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T14:49:09"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T18:55:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@
 		</language>
 	</columns>
 
-	<dialog left="36" top="155" right="739" bottom="774" maximized="no" rayout="Vertical2">
+	<dialog left="1417" top="198" right="2120" bottom="817" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="3" right="1280" bottom="401" visible="yes"/>
 		<band id="0" index="1" style="0000" width="462"/>
@@ -357,7 +357,7 @@
 		<band id="2" index="3" style="0000" width="233"/>
 		<band id="3" index="4" style="0000" width="460"/>
 		<band id="4" index="0" style="0000" width="695"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -990,7 +990,7 @@
 		<language name="JPN_KANJI" width="256">「エコーボイス」は　毎ターン
 だれかが　使い続ける　ことで▼
 どんどん　威力が
-上がっていく　わざよ！▼
+あがっていく　技よ！▼
 みんなで　使うと　便利かもね！</language>
 	</row>
 
@@ -1004,9 +1004,9 @@
 ミュージカルなら　ファンがふえる！
 エコーボイスなら　ダメージがふえる！</language>
 		<language name="JPN_KANJI" width="256">ミュージカルも　エコーボイスも
-続けて　いくことが　大事ね！▼
-ミュージカルなら　ファンがふえる！
-エコーボイスなら　ダメージがふえる！</language>
+続けていくことが　大事ね！▼
+ミュージカルなら　ファンが増える！
+エコーボイスなら　ダメージが増える！</language>
 	</row>
 
 	<row id="msg_c04r0201_statue_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">

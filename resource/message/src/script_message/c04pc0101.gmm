@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T14:40:53"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T19:02:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -298,10 +298,14 @@
 紳士</attribute>
 		<language name="JPN" width="256">ライモンシティは　すごいですな！▼
 かいりきの　わざマシンを
-ただで　くれる　ひとが　いましたよ</language>
+ただで　くれる　ひとが　いましたよ▼
+この　ポケモンセンターの　すぐ
+ちかくにいるから　さがしたら　どう？</language>
 		<language name="JPN_KANJI" width="256">ライモンシティは　すごいですな！▼
 かいりきの　技マシンを
-ロハで　くれる　人が　いましたよ</language>
+ロハで　くれる　人が　いましたよ▼
+この　ポケモンセンターの　すぐ
+近くにいるから　探したら　どう？</language>
 	</row>
 
 	<row id="msg_c04pc0101_girl4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
