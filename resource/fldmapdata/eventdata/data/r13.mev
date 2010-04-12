@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/09 17:01:30
+#save date:2010/04/12 21:24:04
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r13.wms
 #SECTION START:OBJ_EVENT
@@ -226,7 +226,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-696 -80 -984
+696 -80 -936
 #event number: 7
 #type
 1
@@ -483,7 +483,7 @@ TR_FISHING_09
 #OBJ CODE Number
 FISHING
 #MOVE CODE Number
-MV_DOWN
+MV_RIGHT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -491,7 +491,7 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_FISHING_09
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -505,7 +505,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-744 -88 -1144
+744 -88 -1128
 #event number: 16
 #type
 1
