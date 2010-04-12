@@ -16,6 +16,7 @@
 //==========================================================================================
 // ■定数
 //==========================================================================================
+//#define DEBUG_PRINT_ENABLE
 #define PI (0x8000)   // π[rad]
 
 // 回転タイプ
@@ -181,15 +182,18 @@ static void UpdateAngle( ROT_WORK* work )
     // タイプに応じた更新を行う
     cam_mode = FIELD_CAMERA_GetMode( camera );
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
-    switch( work->type )
-    {
+    switch( work->type ) {
     case CAMERA_ROT_TYPE_YAW:    
       FIELD_CAMERA_SetAngleYaw( camera, angle );    
+#ifdef DEBUG_PRINT_ENABLE
       OBATA_Printf( "TASK-CAM-ROT: frame = %d, yaw = 0x%x\n", work->frame, angle );
+#endif
       break;
     case CAMERA_ROT_TYPE_PITCH:  
       FIELD_CAMERA_SetAnglePitch( camera, angle );  
+#ifdef DEBUG_PRINT_ENABLE
       OBATA_Printf( "TASK-CAM-ROT: frame = %d, pitch = 0x%x\n", work->frame, angle ); 
+#endif
       break;
     }
     FIELD_CAMERA_ChangeMode( camera, cam_mode );

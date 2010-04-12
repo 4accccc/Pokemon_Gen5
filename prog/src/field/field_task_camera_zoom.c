@@ -14,6 +14,9 @@
 #include "field_task_camera_zoom.h"
 
 
+//#define DEBUG_PRINT_ENABLE
+
+
 //==========================================================================================
 // ■タスクワーク
 //==========================================================================================
@@ -123,7 +126,9 @@ static FIELD_TASK_RETVAL CameraLinearZoom( void* wk )
       float   d2 = FX_FX32_TO_F32( work->endDist );
       float dist = (1-t) * d1 + ( t * d2);
       FIELD_CAMERA_SetAngleLen( camera, FX_F32_TO_FX32( dist ) ); 
+#ifdef DEBUG_PRINT_ENABLE
       OBATA_Printf( "TASK-CAM-ZOOM: frame = %d, length = 0x%x\n", work->frame, (int)dist );
+#endif
     }
     FIELD_CAMERA_ChangeMode( camera, cam_mode );
     if( work->endFrame <= work->frame )
@@ -166,7 +171,9 @@ static FIELD_TASK_RETVAL CameraSharpZoom( void* wk )
       d2   = FX_FX32_TO_F32( work->endDist );
       dist = (1-t) * d1 + ( t * d2);
       FIELD_CAMERA_SetAngleLen( camera, FX_F32_TO_FX32( dist ) ); 
+#ifdef DEBUG_PRINT_ENABLE
       OBATA_Printf( "TASK-CAM-ZOOM: frame = %d, length = 0x%x\n", work->frame, (int)dist );
+#endif
     }
     FIELD_CAMERA_ChangeMode( camera, cam_mode );
     if( work->endFrame <= work->frame )
