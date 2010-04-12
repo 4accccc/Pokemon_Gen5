@@ -157,7 +157,7 @@
 #define WK_SCENE_C09                     16545 /* 0x40a1 ポケモンリーグ外観：イベント用ワーク */
 #define WK_SCENE_C09R0501                16546 /* 0x40a2 ポケモンリーグチャンピオンの部屋：イベント用ワーク */
 #define WK_SCENE_H03                     16547 /* 0x40a3 H03：イベント用ワーク */
-#define WK_SCENE_H03_BTLCOUNT            16548 /* 0x40a4 H03：７人抜きイベントの勝利数カウント用ワーク */
+		/* not used 16548(0x40a4) */
 #define WK_SCENE_N01R0101                16549 /* 0x40a5 N城１F大広間：イベント用ワーク */
 #define WK_SCENE_N01R0201                16550 /* 0x40a6 N城２F大広間：イベント用ワーク */
 #define WK_SCENE_D08_LEGEND              16551 /* 0x40a7 D08リュウラセンの塔：パッケージポケモンイベント用のワーク */
@@ -212,6 +212,7 @@
 #define WK_SCENE_D10_LEG                 16600 /* 0x40d8 ジャイアントホール：伝説（ライ）イベント用ワーク */
 #define WK_SCENE_C03R1101                16601 /* 0x40d9 C03ジム通りのビル：イベント用ワーク */
 #define WK_SCENE_T04R0201_DIET           16602 /* 0x40da サザナミタウン：ポケモン交換イベント用ワーク */
+#define WK_SCENE_H03_BADRIDER            16603 /* 0x40db シリンダーブリッジ：暴走族イベント */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 

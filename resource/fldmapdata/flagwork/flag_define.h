@@ -353,7 +353,7 @@
 #define FE_C03P13_PILOT_TALK_01            337 /* 0x0151 ヒウンシティ：船員の初回会話フラグ */
 #define FE_D10R0401_POKE10_GET             338 /* 0x0152 ジャイアントホール：ライ捕獲フラグ */
 #define FE_T04PC0101_TRADE_01              339 /* 0x0153 サザナミタウン：ポケモンセンターコイキング購入フラグ */
-		/* not used   340(0x0154) */
+#define FE_N_LASTMESSAGE                   340 /* 0x0154 Nの城 謁見の間：ラストメッセージ分岐用フラグ */
 		/* not used   341(0x0155) */
 		/* not used   342(0x0156) */
 		/* not used   343(0x0157) */
