@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T17:42:25"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T19:35:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1324" top="162" right="2029" bottom="790" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -323,15 +323,15 @@
 		<language name="JPN" width="256">これは　デンチュラという
 でんきタイプ　ポケモンの　すだな[BE:01:ページ切り替え（クリア）]
 なんで　こんな　ところに
-すが　あるのか　わからんが[BE:00:ページ切り替え（行送り）]
-でんきタイプには　じめんタイプが[BE:00:ページ切り替え（行送り）]
-こうかばつぐん　よ[BE:01:ページ切り替え（クリア）]</language>
+すが　あるのか　わからんが▼
+こまっている　にんげんが　いるなら
+なんとかするのも　ジムリーダーよ▼</language>
 		<language name="JPN_KANJI" width="256">これは　デンチュラという
 でんきタイプ　ポケモンの　巣だな[BE:01:ページ切り替え（クリア）]
 なんで　こんな　ところに
-巣があるのか　わからんが[BE:00:ページ切り替え（行送り）]
-でんきタイプには　じめんタイプが[BE:00:ページ切り替え（行送り）]
-効果抜群　よ[BE:01:ページ切り替え（クリア）]</language>
+巣があるのか　わからんが▼
+困っている　人間がいるなら
+なんとかするのも　ジムリーダーよ▼</language>
 	</row>
 
 	<row id="msg_d06_leader_03">
@@ -374,15 +374,15 @@
 		<language name="JPN" width="256">その「じならし」はだな……
 ダメージを　あたえつつ▽
 あいての　すばやさを　さげる　わざ▼
-じめんタイプの　ポケモンは
-そうじて　すばやさが　ひくい▼
+じめんタイプの　ポケモンには
+すばやさが　ひくい　ものも　いる▼
 「じならし」を　つかいこなせば
 その　じゃくてんを　カバーできるだろ▼</language>
 		<language name="JPN_KANJI" width="256">その「じならし」はだな……
 ダメージを　与えつつ▽
-相手の　すばやさを　下げる　技▼
-じめんタイプの　ポケモンは
-総じて　すばやさが　低い▼
+相手の　すばやさを　さげる　技▼
+じめんタイプの　ポケモンには
+すばやさが　低いものも　いる▼
 「じならし」を　使いこなせば
 その　弱点を　カバーできるだろ▼</language>
 	</row>
