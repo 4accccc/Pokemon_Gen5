@@ -12,6 +12,7 @@
 
 #include "system/main.h"
 #include "system/bmp_oam.h"
+#include "system/mcss.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "sound/sound_manager.h"
@@ -34,18 +35,27 @@ typedef struct {
 
 	GFL_TCB * vtask;		// TCB ( VBLANK )
 
+	u32	scene;
+
 	SOUNDMAN_PRESET_HANDLE * sndHandle;
 
 	GFL_G3D_UTIL * g3d_util;
 	GFL_G3D_SCENE * g3d_scene;
-	GFL_G3D_CAMERA * g3d_camera[2];
-	GFL_G3D_LIGHTSET * g3d_light;
+//	GFL_G3D_CAMERA * g3d_camera[2];
+//	GFL_G3D_LIGHTSET * g3d_light;
 //	u32	g3d_obj_id;
 //	u32	box_anm;
-	BOOL	double3dFlag;
+//	BOOL	double3dFlag;
+	MCSS_SYS_WORK * mcss;
+	MCSS_WORK * mcssWork;
+	GFL_G3D_CAMERA * mcssCamera;
+	BOOL	mcssAnmEndFlg;
 
 	GFL_PTC_PTR	ptc;											// パーティクル
+	GFL_PTC_PTR	ptcName;									// パーティクル
 	u8	ptcWork[PARTICLE_LIB_HEAP_SIZE];	// パーティクルで使用するワーク
+	u8	ptcNameWork[PARTICLE_LIB_HEAP_SIZE];	// パーティクルで使用するワーク
+	fx32	ptcCamera[5];
 
 	GFL_FONT * font;						// 通常フォント
 	GFL_FONT * nfnt;						// 数字フォント
@@ -60,6 +70,7 @@ typedef struct {
 	u32	chrRes[DDEMOOBJ_CHRRES_MAX];
 	u32	palRes[DDEMOOBJ_PALRES_MAX];
 	u32	celRes[DDEMOOBJ_CELRES_MAX];
+	GFL_CLSYS_REND * clrend;
 
 	// ＯＡＭフォント
 	BMPOAM_SYS_PTR	fntoam;
@@ -92,17 +103,22 @@ typedef int (*pDDEMOMAIN_FUNC)(DDEMOMAIN_WORK*);
 
 
 
-extern void DDEMOMAIN_InitVBlank( DDEMOMAIN_WORK * wk );
+extern void DDEMOMAIN_InitScene1VBlank( DDEMOMAIN_WORK * wk );
+extern void DDEMOMAIN_InitScene2VBlank( DDEMOMAIN_WORK * wk );
 extern void DDEMOMAIN_ExitVBlank( DDEMOMAIN_WORK * wk );
 
-extern void DDEMOMAIN_InitVram(void);
-extern const GFL_DISP_VRAM * DDEMOMAIN_GetVramBankData(void);
+extern void DDEMOMAIN_InitVram( u32 scene );
+extern const GFL_DISP_VRAM * DDEMOMAIN_GetVramBankData( u32 scene );
 
 extern void DDEMOMAIN_InitBg(void);
 extern void DDEMOMAIN_ExitBg(void);
-extern void DDEMOMAIN_Init2ndSceneBgFrame(void);
-extern void DDEMOMAIN_Exit2ndSceneBgFrame(void);
-extern void DDEMOMAIN_Load2ndBgGraphic(void);
+extern void DDEMOMAIN_InitBgMode(void);
+
+extern void DDEMOMAIN_InitScene2BgFrame(void);
+extern void DDEMOMAIN_ExitScene2BgFrame(void);
+extern void DDEMOMAIN_LoadScene2BgGraphic(void);
+
+
 
 extern void DDEMOMAIN_SetBlendAlpha(void);
 
@@ -120,10 +136,24 @@ extern void DDEMOMAIN_LoadPokeVoice( DDEMOMAIN_WORK * wk );
 
 extern void DDEMOMAIN_Init3D( DDEMOMAIN_WORK * wk );
 extern void DDEMOMAIN_Exit3D( DDEMOMAIN_WORK * wk );
-extern void DDEMOMAIN_InitDouble3D( DDEMOMAIN_WORK * wk );
-extern void DDEMOMAIN_ExitDouble3D( DDEMOMAIN_WORK * wk );
 extern void DDEMOMAIN_Main3D( DDEMOMAIN_WORK * wk );
+extern void DDEMOMAIN_MainDouble3D( DDEMOMAIN_WORK * wk );
 
-extern void DDEMOMAIN_InitParticle( DDEMOMAIN_WORK * wk );
-extern void DDEMOMAIN_ExitParticle( DDEMOMAIN_WORK * wk );
-extern void DDEMOMAIN_SetEffectParticle( DDEMOMAIN_WORK * wk, u32 id );
+extern void DDEMOMAIN_InitDouble3D(void);
+extern void DDEMOMAIN_ExitDouble3D(void);
+
+extern void DDEMOMAIN_InitParticle(void);
+extern void DDEMOMAIN_ExitParticle(void);
+extern void DDEMOMAIN_CreateTypeParticle( DDEMOMAIN_WORK * wk );
+extern void DDEMOMAIN_DeleteTypeParticle( DDEMOMAIN_WORK * wk );
+extern void DDEMOMAIN_SetTypeParticle( DDEMOMAIN_WORK * wk, u32 id );
+extern void DDEMOMAIN_CreateNameParticle( DDEMOMAIN_WORK * wk );
+extern void DDEMOMAIN_DeleteNameParticle( DDEMOMAIN_WORK * wk );
+extern void DDEMOMAIN_SetNameParticle( DDEMOMAIN_WORK * wk, u32 id );
+
+extern void DDEMOMAIN_InitMcss( DDEMOMAIN_WORK * wk );
+extern void DDEMOMAIN_ExitMcss( DDEMOMAIN_WORK * wk );
+extern void DDEMOMAIN_AddMcss( DDEMOMAIN_WORK * wk );
+extern void DDEMOMAIN_DelMcss( DDEMOMAIN_WORK * wk );
+extern void DDEMOMAIN_MoveMcss( DDEMOMAIN_WORK * wk, s16 mv );
+extern void DDEMOMAIN_SetMcssCallBack( DDEMOMAIN_WORK * wk );

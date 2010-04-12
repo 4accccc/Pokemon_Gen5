@@ -12,9 +12,8 @@
 
 
 
-extern void DDEMOOBJ_Init( DDEMOMAIN_WORK * wk );
+extern void DDEMOOBJ_Init( DDEMOMAIN_WORK * wk, u32 scene );
 extern void DDEMOOBJ_Exit( DDEMOMAIN_WORK * wk );
-extern void DDEMOOBJ_AnmMain( DDEMOMAIN_WORK * wk );
 
 extern void DDEMOOBJ_SetPos( DDEMOMAIN_WORK * wk, u32 id, s16 x, s16 y );
 extern void DDEMOOBJ_GetPos( DDEMOMAIN_WORK * wk, u32 id, s16 * x, s16 * y );
@@ -29,4 +28,9 @@ extern void DDEMOOBJ_PrintPokeInfo( DDEMOMAIN_WORK * wk );
 extern void DDEMOOBJ_MoveFontOamPos( DDEMOMAIN_WORK * wk );
 extern void BOX2OBJ_FontOamVanish( DDEMOMAIN_WORK * wk, u32 idx, BOOL flg );
 
-extern void DDEMOOBJ_Init2ndScene( DDEMOMAIN_WORK * wk );
+extern void DDEMOOBJ_InitScene1( DDEMOMAIN_WORK * wk );
+extern void DDEMOOBJ_ExitScene1( DDEMOMAIN_WORK * wk );
+extern void DDEMOOBJ_MainScene1( DDEMOMAIN_WORK * wk );
+extern void DDEMOOBJ_InitScene2( DDEMOMAIN_WORK * wk );
+extern void DDEMOOBJ_ExitScene2( DDEMOMAIN_WORK * wk );
+extern void DDEMOOBJ_MainScene2( DDEMOMAIN_WORK * wk );

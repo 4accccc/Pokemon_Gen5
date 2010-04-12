@@ -18,7 +18,6 @@
 #include "ddemo_main.h"
 #include "ddemo_seq.h"
 #include "ddemo_obj.h"
-#include "ddemo_spa.h"
 
 
 static int MainSeq_Init( DDEMOMAIN_WORK * wk );
@@ -26,8 +25,12 @@ static int MainSeq_Release( DDEMOMAIN_WORK * wk );
 static int MainSeq_Wipe( DDEMOMAIN_WORK * wk );
 static int MainSeq_Wait( DDEMOMAIN_WORK * wk );
 
+static int MainSeq_1stInit( DDEMOMAIN_WORK * wk );
 static int MainSeq_1stMain( DDEMOMAIN_WORK * wk );
+static int MainSeq_1stExit( DDEMOMAIN_WORK * wk );
+static int MainSeq_2ndInit( DDEMOMAIN_WORK * wk );
 static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk );
+static int MainSeq_2ndExit( DDEMOMAIN_WORK * wk );
 
 static int SetFadeIn( DDEMOMAIN_WORK * wk, int next );
 static int SetFadeOut( DDEMOMAIN_WORK * wk, int next );
@@ -37,6 +40,8 @@ static int SetWait( DDEMOMAIN_WORK * wk, int wait );
 static void MakeRandMoveParam( DDEMOMAIN_WORK * wk );
 static BOOL MoveObjRand( DDEMOMAIN_WORK * wk, u32 id );
 
+static void RotationBgScene2( DDEMOMAIN_WORK * wk );
+
 
 static const pDDEMOMAIN_FUNC MainSeq[] = {
 	MainSeq_Init,
@@ -44,28 +49,13 @@ static const pDDEMOMAIN_FUNC MainSeq[] = {
 	MainSeq_Wipe,
 	MainSeq_Wait,
 
+	MainSeq_1stInit,
 	MainSeq_1stMain,
-	MainSeq_2ndMain,
-};
+	MainSeq_1stExit,
 
-static const u8 TypePtcTbl[] = {
-	WARTER_1,
-	WARTER_1,
-	WARTER_1,
-	WARTER_1,
-	WARTER_1,
-	WARTER_1,
-	WARTER_1,
-	WARTER_1,
-	WARTER_1,
-	WARTER_1,
-	WARTER_1,
-	WARTER_1,
-	WARTER_1,
-	WARTER_1,
-	WARTER_1,
-	WARTER_1,
-	WARTER_1,
+	MainSeq_2ndInit,
+	MainSeq_2ndMain,
+	MainSeq_2ndExit,
 };
 
 
@@ -78,8 +68,15 @@ BOOL DDEMOSEQ_MainSeq( DDEMOMAIN_WORK * wk )
 		return FALSE;
 	}
 
-	DDEMOOBJ_AnmMain( wk );
-	DDEMOMAIN_Main3D( wk );
+	if( wk->scene == 1 ){
+		DDEMOOBJ_MainScene1( wk );
+		DDEMOMAIN_MainDouble3D( wk );
+//		GFL_G3D_DOUBLE3D_SetSwapFlag();
+	}else if( wk->scene == 2 ){
+		DDEMOOBJ_MainScene2( wk );
+		DDEMOMAIN_Main3D( wk );
+		RotationBgScene2( wk );
+	}
 
 	return TRUE;
 }
@@ -93,43 +90,26 @@ static int MainSeq_Init( DDEMOMAIN_WORK * wk )
 	// ブレンド初期化
 	G2_BlendNone();
 	G2S_BlendNone();
-	// サブ画面をメインに
-	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
 	// 輝度を最低にしておく
 	GX_SetMasterBrightness( -16 );
 	GXS_SetMasterBrightness( -16 );
 
-	DDEMOMAIN_InitVram();
 	DDEMOMAIN_InitBg();
 	DDEMOMAIN_InitMsg( wk );
-
-	DDEMOMAIN_Init3D( wk );
-	DDEMOMAIN_InitParticle( wk );
-
-	DDEMOOBJ_Init( wk );
-
-	DDEMOMAIN_SetBlendAlpha();
+	DDEMOMAIN_InitSound( wk );
 
 	DDEMOMAIN_GetPokeMax( wk );
 
-	DDEMOMAIN_InitSound( wk );
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+		return MAINSEQ_2ND_INIT;
+	}
 
-	DDEMOMAIN_InitVBlank( wk );
-
-	return SetFadeIn( wk, MAINSEQ_1ST_MAIN );
+	return MAINSEQ_1ST_INIT;
 }
 
 static int MainSeq_Release( DDEMOMAIN_WORK * wk )
 {
-	DDEMOMAIN_ExitVBlank( wk );
-
 	DDEMOMAIN_ExitSound( wk );
-
-	DDEMOOBJ_Exit( wk );
-
-	DDEMOMAIN_ExitParticle( wk );
-	DDEMOMAIN_Exit3D( wk );
-
 	DDEMOMAIN_ExitMsg( wk );
 	DDEMOMAIN_ExitBg();
 
@@ -164,6 +144,49 @@ static int MainSeq_Wait( DDEMOMAIN_WORK * wk )
 }
 
 
+static int MainSeq_1stInit( DDEMOMAIN_WORK * wk )
+{
+	DDEMOMAIN_InitVram( 0 );
+	DDEMOMAIN_InitBgMode();
+
+	DDEMOMAIN_Init3D( wk );
+	DDEMOMAIN_InitParticle();
+	DDEMOMAIN_InitDouble3D();
+	DDEMOMAIN_CreateNameParticle( wk );
+
+	DDEMOOBJ_Init( wk, 0 );
+	DDEMOOBJ_InitScene1( wk );
+
+	DDEMOMAIN_SetBlendAlpha();
+
+	DDEMOMAIN_InitScene1VBlank( wk );
+
+	wk->scene = 1;
+
+	return MAINSEQ_1ST_MAIN;
+}
+
+static int MainSeq_1stExit( DDEMOMAIN_WORK * wk )
+{
+	DDEMOMAIN_ExitVBlank( wk );
+
+	G2_BlendNone();
+	G2S_BlendNone();
+
+	DDEMOOBJ_ExitScene1( wk );
+	DDEMOOBJ_Exit( wk );
+
+	DDEMOMAIN_DeleteNameParticle( wk );
+	DDEMOMAIN_ExitDouble3D();
+	DDEMOMAIN_ExitParticle();
+	DDEMOMAIN_Exit3D( wk );
+
+	wk->scene = 0;
+
+	return MAINSEQ_2ND_INIT;
+}
+
+
 #define	DEF_1ST_START_WAIT		( 32 )
 #define	DEF_1ST_PM_LEFT_SPEED	( -16 )
 #define	DEF_1ST_PM_LEFT_COUNT	( (256+96) / GFL_STD_Abs(DEF_1ST_PM_LEFT_SPEED) )
@@ -183,20 +206,18 @@ static int MainSeq_Wait( DDEMOMAIN_WORK * wk )
 
 #define	DEF_1ST_LOOP_WAIT		( 32 )
 
-
 static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 {
+/*
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 		PMSND_StopBGM();
-		DDEMOMAIN_ExitDouble3D( wk );
-		return SetFadeOut( wk, MAINSEQ_RELEASE );
+		return SetFadeOut( wk, MAINSEQ_1ST_EXIT );
 	}
+*/
 
 	switch( wk->subSeq ){
 	case 0:		// 初期ウェイト
-		DDEMOMAIN_InitDouble3D( wk );
 		wk->subSeq++;
-//		PMSND_PlayBGM( SEQ_BGM_E_DENDOUIRI );
 		return SetWait( wk, DEF_1ST_START_WAIT );
 
 	case 1:
@@ -216,10 +237,12 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 			PMSND_PlaySE( SEQ_SE_DDEMO_01 );
 			DDEMOMAIN_GetPokeData( wk );
 			DDEMOMAIN_LoadPokeVoice( wk );
+			DDEMOMAIN_CreateTypeParticle( wk );
 			DDEMOOBJ_AddPoke( wk );
 			DDEMOOBJ_PrintPokeInfo( wk );
 			DDEMOOBJ_MoveFontOamPos( wk );
 			wk->subSeq++;
+			return SetFadeIn( wk, MAINSEQ_1ST_MAIN );
 		}
 		break;
 
@@ -234,11 +257,16 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 		break;
 
 	case 5:		// タイプ別エフェクト表示
-		DDEMOMAIN_SetEffectParticle( wk, TypePtcTbl[wk->type] );
+		DDEMOMAIN_SetTypeParticle( wk, 0 );
+		DDEMOMAIN_SetTypeParticle( wk, 1 );
 		wk->subSeq++;
 		return SetWait( wk, DEF_1ST_TYPE_EFF_WAIT );
 
-	case 6:		// メッセージ移動
+	case 6:
+		DDEMOMAIN_SetNameParticle( wk, 1 );
+		wk->subSeq++;
+
+	case 7:		// メッセージ移動
 		{
 			s16	x, y;
 			DDEMOOBJ_GetPos( wk, DDEMOOBJ_ID_MES, &x, &y );
@@ -255,7 +283,11 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 		}
 		break;
 
-	case 7:		// 情報移動
+	case 8:
+		DDEMOMAIN_SetNameParticle( wk, 0 );
+		wk->subSeq++;
+
+	case 9:		// 情報移動
 		{
 			BOOL	flg;
 			s16	x, y;
@@ -274,7 +306,7 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 		}
 		break;
 
-	case 8:		// ポケモン移動
+	case 10:		// ポケモン移動
 		{
 			BOOL	flg;
 			s16	x, y;
@@ -293,7 +325,7 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 		}
 		break;
 
-	case 9:		// 鳴き声＆キラキラ
+	case 11:		// 鳴き声＆キラキラ
 		if( MoveObjRand( wk, DDEMOOBJ_ID_POKE ) == FALSE ){
 			PMVOICE_PlayOnly( wk->voicePlayer );
 			wk->subSeq++;
@@ -301,13 +333,13 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 		}
 		break;
 
-	case 10:		// 鳴き声＆キラキラ待ち
+	case 12:		// 鳴き声＆キラキラ待ち
 		if( PMVOICE_CheckPlay( wk->voicePlayer ) == FALSE ){
 			wk->subSeq++;
 		}
 		break;
 
-	case 11:		// ポケモンアウト	
+	case 13:		// ポケモンアウト	
 		{
 			s16	x, y;
 			DDEMOOBJ_GetPos( wk, DDEMOOBJ_ID_POKE, &x, &y );
@@ -319,7 +351,7 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 		}
 		break;
 
-	case 12:		// 情報アウト
+	case 14:		// 情報アウト
 		{
 			s16	x, y;
 			DDEMOOBJ_GetPos( wk, DDEMOOBJ_ID_INFO, &x, &y );
@@ -332,7 +364,7 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 		}
 		break;
 
-	case 13:		// メッセージアウト
+	case 15:		// メッセージアウト
 		{
 			s16	x, y;
 			DDEMOOBJ_GetPos( wk, DDEMOOBJ_ID_MES, &x, &y );
@@ -346,52 +378,123 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 		}
 		break;
 
-	case 14:		// 終了チェック
+	case 16:		// 終了チェック
+		DDEMOMAIN_DeleteTypeParticle( wk );
+
 		// @TODO 面倒なのでショートカット
 		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
+			wk->pokePos = 0;
 			wk->subSeq = 0;
-			DDEMOMAIN_ExitDouble3D( wk );
-			return MAINSEQ_2ND_MAIN;
+			return MAINSEQ_1ST_EXIT;
 		}
 		wk->pokePos++;
 		if( wk->pokePos == wk->pokeMax ){
+			wk->pokePos = 0;
 			wk->subSeq = 0;
-			DDEMOMAIN_ExitDouble3D( wk );
-			return MAINSEQ_2ND_MAIN;
+			return MAINSEQ_1ST_EXIT;
 		}else{
 			wk->subSeq = 3;
-			return SetFadeIn( wk, MAINSEQ_1ST_MAIN );
 		}
+		break;
 	}
 
 	return MAINSEQ_1ST_MAIN;
 }
 
 
-#define	DEF_2ND_WIN_PUT_WAIT	( 16 )
-#define	DEF_2ND_INFO_PUT_WAIT	( 32 )
-#define	DEF_2ND_MES_PUT_WAIT	( 60*5 )
+
+
+static int MainSeq_2ndInit( DDEMOMAIN_WORK * wk )
+{
+	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );		// サブ画面をメインに
+
+	DDEMOMAIN_InitVram( 1 );
+	DDEMOMAIN_InitBgMode();
+
+	DDEMOMAIN_InitScene2BgFrame();
+	DDEMOMAIN_LoadScene2BgGraphic();
+
+	DDEMOMAIN_Init3D( wk );
+	DDEMOMAIN_InitMcss( wk );
+
+//	DDEMOMAIN_AddMcss( wk );
+
+	DDEMOOBJ_Init( wk, 1 );
+	DDEMOOBJ_InitScene2( wk );
+
+//	DDEMOMAIN_SetBlendAlpha();
+
+	DDEMOMAIN_InitScene2VBlank( wk );
+
+	wk->scene = 2;
+
+	return SetFadeIn( wk, MAINSEQ_2ND_MAIN );
+}
+
+static int MainSeq_2ndExit( DDEMOMAIN_WORK * wk )
+{
+	DDEMOMAIN_ExitVBlank( wk );
+
+//	G2_BlendNone();
+//	G2S_BlendNone();
+
+	DDEMOOBJ_ExitScene2( wk );
+	DDEMOOBJ_Exit( wk );
+
+	DDEMOMAIN_ExitScene2BgFrame();
+
+//	DDEMOMAIN_DelMcss( wk );
+
+	DDEMOMAIN_ExitMcss( wk );
+	DDEMOMAIN_Exit3D( wk );
+
+	wk->scene = 0;
+
+	return MAINSEQ_RELEASE;
+}
+
+
+
+#define	DEF_2ND_START_WAIT				( 32 )
+#define	DEF_2ND_PLAYER_FALL_SPEED	( 4 )
+#define	DEF_2ND_PLAYER_FALL_COUNT	( (192+128+24+64)/DEF_2ND_PLAYER_FALL_SPEED )
+#define	DEF_2ND_WIN_OPEN_WAIT			( 32 )
+#define	DEF_2ND_WIN_PUT_WAIT			( 16 )
+#define	DEF_2ND_INFO_PUT_WAIT			( 32 )
+#define	DEF_2ND_MES_PUT_WAIT			( 60*5 )
+
+#define	DEF_2ND_POKEIN_WAIT				( 128 )
+#define	DEF_2ND_POKEIN_WAIT_MAX		( 256 )
+#define	DEF_2ND_POKEIN_SPEED			( -8 )
+#define	DEF_2ND_POKEIN_COUNT			( 24 )
+#define	DEF_2ND_POKEOUT_WAIT			( 128 )
+#define	DEF_2ND_POKEOUT_SPEED			( -8 )
+#define	DEF_2ND_POKEOUT_COUNT			( 32+12-DEF_2ND_POKEIN_COUNT )
 
 static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk )
 {
 	switch( wk->subSeq ){
 	case 0:		// 初期化
-		// サブ画面をメインに
-		DDEMOMAIN_InitVram();
-		GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
-		GFL_DISP_GX_SetVisibleControlDirect( 0 );
-		GFL_DISP_GXS_SetVisibleControlDirect( 0 );
-		DDEMOMAIN_Init2ndSceneBgFrame();
-		DDEMOMAIN_Load2ndBgGraphic();
-		DDEMOOBJ_Init2ndScene( wk );
 		wk->subSeq++;
-		return SetFadeIn( wk, MAINSEQ_2ND_MAIN );
+		return SetWait( wk, DEF_2ND_START_WAIT );
 
-	case 1:		// 主人公落下
+	case 1:
+		PMSND_PlaySE( SEQ_SE_DDEMO_03 );
 		wk->subSeq++;
 		break;
 
-	case 2:		// ウィンドウオープン
+	case 2:		// 主人公落下
+		if( wk->wait != DEF_2ND_PLAYER_FALL_COUNT ){
+			DDEMOOBJ_Move( wk, DDEMOOBJ_ID_PLAYER_M, 0, DEF_2ND_PLAYER_FALL_SPEED );
+			DDEMOOBJ_Move( wk, DDEMOOBJ_ID_PLAYER_S, 0, DEF_2ND_PLAYER_FALL_SPEED );
+			wk->wait++;
+		}else{
+			wk->subSeq++;
+			return SetWait( wk, DEF_2ND_WIN_OPEN_WAIT );
+		}
+		break;
+
+	case 3:		// ウィンドウオープン
 		DDEMOOBJ_SetVanish( wk, DDEMOOBJ_ID_2ND_MES, TRUE );
 		DDEMOOBJ_SetVanish( wk, DDEMOOBJ_ID_2ND_INFO, TRUE );
 		DDEMOOBJ_SetAutoAnm( wk, DDEMOOBJ_ID_2ND_MES, 2 );
@@ -399,33 +502,99 @@ static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk )
 		wk->subSeq++;
 		break;
 
-	case 3:		// ウィンドウ表示待ち
+	case 4:		// ウィンドウ表示待ち
 		if( DDEMOOBJ_CheckAnm( wk, DDEMOOBJ_ID_2ND_MES ) == FALSE ){
+			PMSND_PlaySE( SEQ_SE_DDEMO_04 );
 			wk->subSeq++;
 			return SetWait( wk, DEF_2ND_WIN_PUT_WAIT );
 		}
 		break;
 
-	case 4:		// プレイヤー情報表示
+	case 5:		// プレイヤー情報表示
 		BOX2OBJ_FontOamVanish( wk, DDEMOOBJ_FOAM_PLAYER, TRUE );
 		wk->subSeq++;
 		return SetWait( wk, DEF_2ND_INFO_PUT_WAIT );
 
-	case 5:		// メッセージ表示
+	case 6:		// メッセージ表示
 		BOX2OBJ_FontOamVanish( wk, DDEMOOBJ_FOAM_MES2, TRUE );
 		wk->subSeq++;
 		return SetWait( wk, DEF_2ND_MES_PUT_WAIT );
 
 	// 終了待ち
-	default:
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-			DDEMOMAIN_Exit2ndSceneBgFrame();
-			return SetFadeOut( wk, MAINSEQ_RELEASE );
+	case 7:
+		{
+			BOOL	flg = FALSE;
+			if( wk->pokePos == 0 ){
+				if( wk->wait == DEF_2ND_POKEIN_WAIT_MAX ){
+					flg = TRUE;
+				}
+			}else{
+				if( wk->wait == DEF_2ND_POKEIN_WAIT ){
+					flg = TRUE;
+				}
+			}
+			if( flg == TRUE ){
+				DDEMOMAIN_AddMcss( wk );
+				wk->wait = 0;
+				wk->subSeq++;
+				break;
+			}
+			wk->wait++;
+		}
+		break;
+
+	case 8:
+		if( wk->wait != DEF_2ND_POKEIN_COUNT ){
+			DDEMOMAIN_MoveMcss( wk, DEF_2ND_POKEIN_SPEED );
+			wk->wait++;
+		}else{
+			MCSS_ResetAnmStopFlag( wk->mcssWork );
+			wk->wait = 0;
+			wk->subSeq++;
+		}
+		break;
+
+	case 9:
+		if( wk->wait != DEF_2ND_POKEOUT_WAIT ){
+			wk->wait++;
+		}else{
+			DDEMOMAIN_SetMcssCallBack( wk );
+			wk->wait = 0;
+			wk->subSeq++;
+		}
+		break;
+
+	case 10:
+		if( wk->mcssAnmEndFlg == FALSE ){
+			break;
+		}
+		if( wk->wait != DEF_2ND_POKEOUT_COUNT ){
+			DDEMOMAIN_MoveMcss( wk, DEF_2ND_POKEOUT_SPEED );
+			wk->wait++;
+		}else{
+			DDEMOMAIN_DelMcss( wk );
+			wk->wait = 0;
+			wk->pokePos++;
+			if( wk->pokePos == wk->pokeMax ){
+				wk->pokePos = 0;
+			}
+			wk->subSeq = 7;
+		}
+		break;
+	}
+
+	if( wk->subSeq >= 7 ){
+		if( ( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ) ||
+				GFL_UI_TP_GetTrg() == TRUE ){
+			return SetFadeOut( wk, MAINSEQ_2ND_EXIT );
 		}
 	}
 
 	return MAINSEQ_2ND_MAIN;
 }
+
+
+
 
 
 
@@ -479,4 +648,10 @@ static BOOL MoveObjRand( DDEMOMAIN_WORK * wk, u32 id )
 	DDEMOOBJ_SetPos( wk, id, wk->rndDx+wk->rndMx[wk->rndCnt], wk->rndDy+wk->rndMy[wk->rndCnt] );
 	wk->rndCnt++;
 	return TRUE;
+}
+
+static void RotationBgScene2( DDEMOMAIN_WORK * wk )
+{
+	GFL_BG_SetRadianReq( GFL_BG_FRAME3_M, GFL_BG_RADION_INC, 1 );
+	GFL_BG_SetRadianReq( GFL_BG_FRAME3_S, GFL_BG_RADION_INC, 1 );
 }

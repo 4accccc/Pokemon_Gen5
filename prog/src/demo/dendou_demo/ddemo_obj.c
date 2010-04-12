@@ -10,16 +10,10 @@
 //============================================================================================
 #include <gflib.h>
 
-/*
-#include <calctool.h>
-
-#include "system/poke2dgra.h"
-#include "app/app_menu_common.h"
-#include "ui/touchbar.h"
-
-*/
 #include "arc_def.h"
 #include "system/poke2dgra.h"
+#include "system/tr2dgra.h"
+#include "tr_tool/trtype_def.h"
 #include "msg/msg_dendou_demo.h"
 #include "font/font.naix"
 
@@ -41,6 +35,11 @@
 #define	PALSIZ_POKEGRA_B	( 1 )
 #define	PALNUM_FOAM				( PALNUM_POKEGRA_B+PALSIZ_POKEGRA_B )
 #define	PALSIZ_FOAM				( 1 )
+#define	PALNUM_PLAYER_M		( PALNUM_FOAM+PALSIZ_FOAM )
+#define	PALSIZ_PLAYER_M		( 1 )
+
+#define	PALNUM_PLAYER_S		( 0 )
+#define	PALSIZ_PLAYER_S		( 1 )
 
 #define	FCOL_FNTOAM				( PRINTSYS_LSB_Make(15,2,0) )		// フォントカラー：ＯＡＭフォント白抜
 
@@ -81,7 +80,6 @@ typedef struct {
 //============================================================================================
 //	プロトタイプ宣言
 //============================================================================================
-static void InitClact(void);
 static void InitResource( DDEMOMAIN_WORK * wk );
 static void ExitResource( DDEMOMAIN_WORK * wk );
 static void AddClact( DDEMOMAIN_WORK * wk );
@@ -132,37 +130,82 @@ static const DDEMO_CLWK_DATA Info2ClactParamTbl = {
 	0, CLSYS_DRAW_MAIN
 };
 
-
-
-void DDEMOOBJ_Init( DDEMOMAIN_WORK * wk )
+static const DDEMO_CLWK_DATA PlayerClactParamTbl[] =
 {
-	InitClact();
-	InitResource( wk );
-	AddClact( wk );
+	{	// メイン
+		{ 48, -240-64, 0, 10, 1 },
+		DDEMOOBJ_CHRRES_PLAYER_M, DDEMOOBJ_PALRES_PLAYER_M, DDEMOOBJ_CELRES_PLAYER_M,
+		0, CLSYS_DRAW_MAIN
+	},
+	{	// サブ
+		{ 48, -48, 0, 10, 1 },
+		DDEMOOBJ_CHRRES_PLAYER_S, DDEMOOBJ_PALRES_PLAYER_S, DDEMOOBJ_CELRES_PLAYER_S,
+		0, CLSYS_DRAW_SUB
+	}
+};
 
-	InitFontOam( wk );
+
+void DDEMOOBJ_Init( DDEMOMAIN_WORK * wk, u32 scene )
+{
+	if( scene == 0 ){
+		const GFL_CLSYS_INIT init = {
+			0, 0,									// メイン　サーフェースの左上座標
+			0, 512,								// サブ　サーフェースの左上座標
+			4,										// メイン画面OAM管理開始位置	4の倍数
+			124,									// メイン画面OAM管理数				4の倍数
+			0,										// サブ画面OAM管理開始位置		4の倍数
+			0,									// サブ画面OAM管理数					4の倍数
+			0,										// セルVram転送管理数
+
+			DDEMOOBJ_CHRRES_MAX+FNTOAM_CHR_MAX,	// 登録できるキャラデータ数
+			DDEMOOBJ_PALRES_MAX,								// 登録できるパレットデータ数
+			DDEMOOBJ_CELRES_MAX+FNTOAM_CHR_MAX,	// 登録できるセルアニメパターン数
+			0,																	// 登録できるマルチセルアニメパターン数（※現状未対応）
+
+		  16,										// メイン CGR　VRAM管理領域　開始オフセット（キャラクタ単位）
+		  0											// サブ CGR　VRAM管理領域　開始オフセット（キャラクタ単位）
+		};
+		GFL_CLACT_SYS_Create( &init, DDEMOMAIN_GetVramBankData(scene), HEAPID_DENDOU_DEMO );
+	}else{
+		const GFL_CLSYS_INIT init = {
+			0, 0,									// メイン　サーフェースの左上座標
+			0, 512,								// サブ　サーフェースの左上座標
+			4,										// メイン画面OAM管理開始位置	4の倍数
+			124,									// メイン画面OAM管理数				4の倍数
+			4,										// サブ画面OAM管理開始位置		4の倍数
+			124,									// サブ画面OAM管理数					4の倍数
+			0,										// セルVram転送管理数
+
+			DDEMOOBJ_CHRRES_MAX+FNTOAM_CHR_MAX,	// 登録できるキャラデータ数
+			DDEMOOBJ_PALRES_MAX,								// 登録できるパレットデータ数
+			DDEMOOBJ_CELRES_MAX+FNTOAM_CHR_MAX,	// 登録できるセルアニメパターン数
+			0,																	// 登録できるマルチセルアニメパターン数（※現状未対応）
+
+		  16,										// メイン CGR　VRAM管理領域　開始オフセット（キャラクタ単位）
+		  16										// サブ CGR　VRAM管理領域　開始オフセット（キャラクタ単位）
+		};
+		GFL_CLACT_SYS_Create( &init, DDEMOMAIN_GetVramBankData(scene), HEAPID_DENDOU_DEMO );
+	}	
+
+	wk->clunit = GFL_CLACT_UNIT_Create( DDEMOOBJ_ID_MAX+FNTOAM_CHR_MAX, 0, HEAPID_DENDOU_DEMO );
+	wk->fntoam = BmpOam_Init( HEAPID_DENDOU_DEMO, wk->clunit );
+
+	InitResource( wk );
+
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 }
 
 void DDEMOOBJ_Exit( DDEMOMAIN_WORK * wk )
 {
-	ExitFontOam( wk );
-
-	ExitResource( wk );
-	DelClactAll( wk );
+	BmpOam_Exit( wk->fntoam );
+	GFL_CLACT_UNIT_Delete( wk->clunit );
 	GFL_CLACT_SYS_Delete();
 }
 
-void DDEMOOBJ_AnmMain( DDEMOMAIN_WORK * wk )
+static void AnmMain( DDEMOMAIN_WORK * wk )
 {
 	u32	i;
-
-	if( wk->double3dFlag == TRUE ){
-		if( GFL_G3D_DOUBLE3D_GetFlip() == TRUE ){
-			GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
-		}else{
-			GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-		}
-	}
 
 	for( i=0; i<DDEMOOBJ_ID_MAX; i++ ){
 		if( wk->clwk[i] == NULL ){ continue; }
@@ -222,34 +265,9 @@ BOOL DDEMOOBJ_CheckAnm( DDEMOMAIN_WORK * wk, u32 id )
 
 
 
-static void InitClact(void)
-{
-	const GFL_CLSYS_INIT init = {
-		0, 0,									// メイン　サーフェースの左上座標
-		0, 512,								// サブ　サーフェースの左上座標
-		4,										// メイン画面OAM管理開始位置	4の倍数
-		124,									// メイン画面OAM管理数				4の倍数
-		4,										// サブ画面OAM管理開始位置		4の倍数
-		124,									// サブ画面OAM管理数					4の倍数
-		0,										// セルVram転送管理数
-
-		DDEMOOBJ_CHRRES_MAX+FNTOAM_CHR_MAX,	// 登録できるキャラデータ数
-		DDEMOOBJ_PALRES_MAX,								// 登録できるパレットデータ数
-		DDEMOOBJ_CELRES_MAX+FNTOAM_CHR_MAX,	// 登録できるセルアニメパターン数
-		0,																	// 登録できるマルチセルアニメパターン数（※現状未対応）
-
-	  16,										// メイン CGR　VRAM管理領域　開始オフセット（キャラクタ単位）
-	  16										// サブ CGR　VRAM管理領域　開始オフセット（キャラクタ単位）
-	};
-	GFL_CLACT_SYS_Create( &init, DDEMOMAIN_GetVramBankData(), HEAPID_DENDOU_DEMO );
-}
 
 static void InitResource( DDEMOMAIN_WORK * wk )
 {
-	ARCHANDLE * ah;
-	u32 * chr;
-	u32 * pal;
-	u32 * cel;
 	u32	i;
 
 	// 初期化
@@ -262,29 +280,6 @@ static void InitResource( DDEMOMAIN_WORK * wk )
 	for( i=0; i<DDEMOOBJ_CELRES_MAX; i++ ){
 		wk->celRes[i] = RES_NONE;
 	}
-
-	ah = GFL_ARC_OpenDataHandle( ARCID_DENDOU_DEMO_GRA, HEAPID_DENDOU_DEMO );
-
-	wk->chrRes[DDEMOOBJ_CHRRES_ETC] = GFL_CLGRP_CGR_Register(
-																			ah, NARC_dendou_demo_gra_obj_NCGR,
-																			FALSE, CLSYS_DRAW_MAIN, HEAPID_DENDOU_DEMO );
-	wk->palRes[DDEMOOBJ_PALRES_ETC] = GFL_CLGRP_PLTT_Register(
-																			ah, NARC_dendou_demo_gra_obj_NCLR,
-																			CLSYS_DRAW_MAIN, PALNUM_ETC*0x20, HEAPID_DENDOU_DEMO );
-	wk->celRes[DDEMOOBJ_CELRES_ETC] = GFL_CLGRP_CELLANIM_Register(
-																			ah,
-																			NARC_dendou_demo_gra_obj_NCER,
-																			NARC_dendou_demo_gra_obj_NANR,
-																			HEAPID_DENDOU_DEMO );
-
-	GFL_ARC_CloseDataHandle( ah );
-
-	// フォントパレット
-	ah = GFL_ARC_OpenDataHandle( ARCID_FONT, HEAPID_DENDOU_DEMO );
-	wk->palRes[DDEMOOBJ_PALRES_FOAM] = GFL_CLGRP_PLTT_RegisterComp(
-																			ah, NARC_font_default_nclr,
-																			CLSYS_DRAW_MAIN, PALNUM_FOAM*0x20, HEAPID_DENDOU_DEMO );
-	GFL_ARC_CloseDataHandle( ah );
 }
 
 static void ExitResChr( DDEMOMAIN_WORK * wk, u32 idx )
@@ -334,20 +329,6 @@ static GFL_CLWK * CleateClact( DDEMOMAIN_WORK * wk, const DDEMO_CLWK_DATA * prm 
 					&prm->dat, prm->disp, HEAPID_DENDOU_DEMO );
 }
 
-static void AddClact( DDEMOMAIN_WORK * wk )
-{
-	u32	i;
-
-	wk->clunit = GFL_CLACT_UNIT_Create( DDEMOOBJ_ID_MAX+FNTOAM_CHR_MAX, 0, HEAPID_DENDOU_DEMO );
-
-	// 初期化
-	for( i=0; i<DDEMOOBJ_ID_MAX; i++ ){
-		wk->clwk[i] = NULL;
-	}
-
-	wk->clwk[DDEMOOBJ_ID_MES]  = CleateClact( wk, &MesClactParamTbl );
-	wk->clwk[DDEMOOBJ_ID_INFO] = CleateClact( wk, &InfoClactParamTbl );
-}
 
 static void DelClact( DDEMOMAIN_WORK * wk, u32 idx )
 {
@@ -364,7 +345,6 @@ static void DelClactAll( DDEMOMAIN_WORK * wk )
 	for( i=0; i<DDEMOOBJ_ID_MAX; i++ ){
 		DelClact( wk, i );
 	}
-	GFL_CLACT_UNIT_Delete( wk->clunit );
 }
 
 void DDEMOOBJ_AddPoke( DDEMOMAIN_WORK * wk )
@@ -614,15 +594,35 @@ void DPCOBJ_InitFadeEvy( DPCMAIN_WORK * wk, BOOL flg )
 
 
 
+static void DeleteFontOam( DDEMOMAIN_WORK * wk, u32 idx )
+{
+	if( wk->fobj[idx].oam != NULL ){
+		BmpOam_ActorDel( wk->fobj[idx].oam );
+		GFL_BMP_Delete( wk->fobj[idx].bmp );
+		wk->fobj[idx].oam = NULL;
+	}
+}
 
-static void InitFontOam( DDEMOMAIN_WORK * wk )
+static void DeleteFontOamAll( DDEMOMAIN_WORK * wk )
+{
+	u32	i;
+
+	for( i=0; i<DDEMOOBJ_FOAM_MAX; i++ ){
+		DeleteFontOam( wk, i );
+	}
+}
+
+static void PrintFontOam( DDEMOMAIN_WORK * wk, u32 idx, GFL_FONT * font, STRBUF * str, u32 x, u32 y )
+{
+	PRINTSYS_PrintColor( wk->fobj[idx].bmp, x, y, str, font, FCOL_FNTOAM );
+	BmpOam_ActorBmpTrans( wk->fobj[idx].oam );
+}
+
+static void InitScene1FontOam( DDEMOMAIN_WORK * wk )
 {
 	BMPOAM_ACT_DATA	finit;
 	DDEMO_FONTOAM * fobj;
 	STRBUF * str;
-	u32	x;
-
-	wk->fntoam = BmpOam_Init( HEAPID_DENDOU_DEMO, wk->clunit );
 
 	finit.pltt_index = wk->palRes[DDEMOOBJ_PALRES_FOAM];
 	finit.pal_offset = 0;		// pltt_indexのパレット内でのオフセット
@@ -657,6 +657,56 @@ static void InitFontOam( DDEMOMAIN_WORK * wk )
 	finit.y = INFO_PY-8;
 
 	fobj->oam = BmpOam_ActorAdd( wk->fntoam, &finit );
+}
+
+void DDEMOOBJ_PrintPokeInfo( DDEMOMAIN_WORK * wk )
+{
+	POKEMON_PASO_PARAM * ppp;
+	STRBUF * str;
+	u32	x;
+	BOOL	fast;
+
+	ppp  = PP_GetPPPPointer( PokeParty_GetMemberPointer(wk->dat->party,wk->pokePos) );
+	fast = PPP_FastModeOn( ppp );
+
+	GFL_BMP_Clear( wk->fobj[DDEMOOBJ_FOAM_INFO].bmp, 0 );
+
+	// ニックネーム
+	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_02 );
+	WORDSET_RegisterPokeNickNamePPP( wk->wset, 0, ppp );
+	WORDSET_ExpandStr( wk->wset, wk->exp, str );
+	PrintFontOam( wk, DDEMOOBJ_FOAM_INFO, wk->font, wk->exp, 8, 0 );
+	GFL_STR_DeleteBuffer( str );
+
+	// Lv
+	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_03 );
+	x   = PRINTSYS_GetStrWidth( str, wk->nfnt, 0 );
+	PrintFontOam( wk, DDEMOOBJ_FOAM_INFO, wk->nfnt, str, 16*8, 4 );
+	GFL_STR_DeleteBuffer( str );
+
+	// レベル
+	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_04 );
+	WORDSET_RegisterNumber( wk->wset, 0, 999, 0, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_ExpandStr( wk->wset, wk->exp, str );
+	PrintFontOam( wk, DDEMOOBJ_FOAM_INFO, wk->font, wk->exp, 16*8+x, 0 );
+	GFL_STR_DeleteBuffer( str );
+
+	PPP_FastModeOff( ppp, fast );
+}
+
+static void InitScene2FontOam( DDEMOMAIN_WORK * wk )
+{
+	BMPOAM_ACT_DATA	finit;
+	DDEMO_FONTOAM * fobj;
+	STRBUF * str;
+	u32	x;
+
+	finit.pltt_index = wk->palRes[DDEMOOBJ_PALRES_FOAM];
+	finit.pal_offset = 0;		// pltt_indexのパレット内でのオフセット
+	finit.soft_pri = 4;			// ソフトプライオリティ
+	finit.bg_pri = 0;				// BGプライオリティ
+	finit.setSerface = CLWK_SETSF_NONE;
+	finit.draw_type  = CLSYS_DRAW_MAIN;
 
 	//「ポケモンリーグ　チャンピオン　おめでとう」
 	fobj = &wk->fobj[DDEMOOBJ_FOAM_MES2];
@@ -713,57 +763,6 @@ static void InitFontOam( DDEMOMAIN_WORK * wk )
 	GFL_STR_DeleteBuffer( str );
 }
 
-static void ExitFontOam( DDEMOMAIN_WORK * wk )
-{
-	u32	i;
-
-	for( i=0; i<DDEMOOBJ_FOAM_MAX; i++ ){
-		BmpOam_ActorDel( wk->fobj[i].oam );
-		GFL_BMP_Delete( wk->fobj[i].bmp );
-	}
-	BmpOam_Exit( wk->fntoam );
-}
-
-static void PrintFontOam( DDEMOMAIN_WORK * wk, u32 idx, GFL_FONT * font, STRBUF * str, u32 x, u32 y )
-{
-	PRINTSYS_PrintColor( wk->fobj[idx].bmp, x, y, str, font, FCOL_FNTOAM );
-	BmpOam_ActorBmpTrans( wk->fobj[idx].oam );
-}
-
-void DDEMOOBJ_PrintPokeInfo( DDEMOMAIN_WORK * wk )
-{
-	POKEMON_PASO_PARAM * ppp;
-	STRBUF * str;
-	u32	x;
-	BOOL	fast;
-
-	ppp  = PP_GetPPPPointer( PokeParty_GetMemberPointer(wk->dat->party,wk->pokePos) );
-	fast = PPP_FastModeOn( ppp );
-
-	GFL_BMP_Clear( wk->fobj[DDEMOOBJ_FOAM_INFO].bmp, 0 );
-
-	// ニックネーム
-	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_02 );
-	WORDSET_RegisterPokeNickNamePPP( wk->wset, 0, ppp );
-	WORDSET_ExpandStr( wk->wset, wk->exp, str );
-	PrintFontOam( wk, DDEMOOBJ_FOAM_INFO, wk->font, wk->exp, 8, 0 );
-	GFL_STR_DeleteBuffer( str );
-
-	// Lv
-	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_03 );
-	x   = PRINTSYS_GetStrWidth( str, wk->nfnt, 0 );
-	PrintFontOam( wk, DDEMOOBJ_FOAM_INFO, wk->nfnt, str, 16*8, 4 );
-	GFL_STR_DeleteBuffer( str );
-
-	// レベル
-	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_04 );
-	WORDSET_RegisterNumber( wk->wset, 0, 999, 0, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-	WORDSET_ExpandStr( wk->wset, wk->exp, str );
-	PrintFontOam( wk, DDEMOOBJ_FOAM_INFO, wk->font, wk->exp, 16*8+x, 0 );
-	GFL_STR_DeleteBuffer( str );
-
-	PPP_FastModeOff( ppp, fast );
-}
 
 void DDEMOOBJ_MoveFontOamPos( DDEMOMAIN_WORK * wk )
 {
@@ -782,46 +781,123 @@ void BOX2OBJ_FontOamVanish( DDEMOMAIN_WORK * wk, u32 idx, BOOL flg )
 }
 
 
-/*
 
-BOOL BOX2OBJ_CheckFontOamVanish( BOX2_APP_WORK * appwk, u32 idx )
+static void LoadDefaultResource( DDEMOMAIN_WORK * wk )
 {
-	return BmpOam_ActorGetDrawEnable( appwk->fobj[idx].oam );
+	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_DENDOU_DEMO_GRA, HEAPID_DENDOU_DEMO_L );
+
+	wk->chrRes[DDEMOOBJ_CHRRES_ETC] = GFL_CLGRP_CGR_Register(
+																			ah, NARC_dendou_demo_gra_obj_NCGR,
+																			FALSE, CLSYS_DRAW_MAIN, HEAPID_DENDOU_DEMO );
+	wk->palRes[DDEMOOBJ_PALRES_ETC] = GFL_CLGRP_PLTT_Register(
+																			ah, NARC_dendou_demo_gra_obj_NCLR,
+																			CLSYS_DRAW_MAIN, PALNUM_ETC*0x20, HEAPID_DENDOU_DEMO );
+	wk->celRes[DDEMOOBJ_CELRES_ETC] = GFL_CLGRP_CELLANIM_Register(
+																			ah,
+																			NARC_dendou_demo_gra_obj_NCER,
+																			NARC_dendou_demo_gra_obj_NANR,
+																			HEAPID_DENDOU_DEMO );
+
+	GFL_ARC_CloseDataHandle( ah );
+
+	// フォントパレット
+	ah = GFL_ARC_OpenDataHandle( ARCID_FONT, HEAPID_DENDOU_DEMO_L );
+	wk->palRes[DDEMOOBJ_PALRES_FOAM] = GFL_CLGRP_PLTT_RegisterComp(
+																			ah, NARC_font_default_nclr,
+																			CLSYS_DRAW_MAIN, PALNUM_FOAM*0x20, HEAPID_DENDOU_DEMO );
+	GFL_ARC_CloseDataHandle( ah );
 }
 
 
-void BOX2OBJ_SetBoxNamePos( BOX2_APP_WORK * appwk, u32 idx, u32 mv )
+
+void DDEMOOBJ_InitScene1( DDEMOMAIN_WORK * wk )
 {
-	if( mv == BOX2MAIN_TRAY_SCROLL_L ){
-		BmpOam_ActorSetPos( appwk->fobj[idx].oam, BOX2OBJ_BOXNAME_LPX, BOX2OBJ_BOXNAME_DPY );
-	}else{
-		BmpOam_ActorSetPos( appwk->fobj[idx].oam, BOX2OBJ_BOXNAME_RPX, BOX2OBJ_BOXNAME_DPY );
-	}
+	LoadDefaultResource( wk );
+
+	wk->clwk[DDEMOOBJ_ID_MES]  = CleateClact( wk, &MesClactParamTbl );
+	wk->clwk[DDEMOOBJ_ID_INFO] = CleateClact( wk, &InfoClactParamTbl );
+
+	InitScene1FontOam( wk );
 }
 
-void BOX2OBJ_BoxNameScroll( BOX2_APP_WORK * appwk, s8 mv )
+void DDEMOOBJ_ExitScene1( DDEMOMAIN_WORK * wk )
+{
+	DeleteFontOamAll( wk );
+	DelClactAll( wk );
+	ExitResource( wk );
+}
+
+void DDEMOOBJ_MainScene1( DDEMOMAIN_WORK * wk )
 {
 	u32	i;
-	s16	x, y;
 
-	for( i=BOX2MAIN_FNTOAM_BOX_NAME1; i<=BOX2MAIN_FNTOAM_BOX_NAME2; i++ ){
-		BmpOam_ActorGetPos( appwk->fobj[i].oam, &x, &y );
-		BmpOam_ActorSetPos( appwk->fobj[i].oam, x+mv, y );
-		if( x+mv == BOX2OBJ_BOXNAME_LPX || x+mv == BOX2OBJ_BOXNAME_RPX ){
-			BOX2OBJ_FontOamVanish( appwk, i, FALSE );
-		}
+	if( GFL_G3D_DOUBLE3D_GetFlip() == TRUE ){
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
+	}else{
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 	}
+	AnmMain( wk );
 }
-*/
 
 
-void DDEMOOBJ_Init2ndScene( DDEMOMAIN_WORK * wk )
+
+void DDEMOOBJ_InitScene2( DDEMOMAIN_WORK * wk )
 {
+	ARCHANDLE * ah;
+	u32	trID;
+
+	LoadDefaultResource( wk );
+
+	{	// レンダラー作成
+		GFL_REND_SURFACE_INIT	sfinit[] =
+		{
+			{ 0, 0, 256, 192, CLSYS_DRAW_MAIN, CLSYS_REND_CULLING_TYPE_NOT_AFFINE },
+			{ 0, 512, 256, 192, CLSYS_DRAW_SUB, CLSYS_REND_CULLING_TYPE_NOT_AFFINE }
+		};
+		wk->clrend = GFL_CLACT_USERREND_Create( sfinit, 2, HEAPID_DENDOU_DEMO );
+    GFL_CLACT_USERREND_SetOAMAttrCulling( wk->clrend, TRUE );
+		GFL_CLACT_UNIT_SetUserRend( wk->clunit, wk->clrend );
+	}
+
 	wk->clwk[DDEMOOBJ_ID_2ND_MES]  = CleateClact( wk, &Mes2ClactParamTbl );
 	wk->clwk[DDEMOOBJ_ID_2ND_INFO] = CleateClact( wk, &Info2ClactParamTbl );
 	DDEMOOBJ_SetVanish( wk, DDEMOOBJ_ID_2ND_MES, FALSE );
 	DDEMOOBJ_SetVanish( wk, DDEMOOBJ_ID_2ND_INFO, FALSE );
 
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+	// 主人公
+	if( MyStatus_GetMySex( wk->dat->mystatus ) == PM_MALE ){
+		trID = TRTYPE_HERO;
+	}else{
+		trID = TRTYPE_HEROINE;
+	}
+	ah = TR2DGRA_OpenHandle( HEAPID_DENDOU_DEMO_L );
+	// メイン
+	wk->chrRes[DDEMOOBJ_CHRRES_PLAYER_M] = TR2DGRA_OBJ_CGR_Register( ah, trID, CLSYS_DRAW_MAIN, HEAPID_DENDOU_DEMO );
+	wk->palRes[DDEMOOBJ_PALRES_PLAYER_M] = TR2DGRA_OBJ_PLTT_Register( ah, trID, CLSYS_DRAW_MAIN, PALNUM_PLAYER_M*0x20, HEAPID_DENDOU_DEMO );
+	wk->celRes[DDEMOOBJ_CELRES_PLAYER_M] = TR2DGRA_OBJ_CELLANM_Register( trID, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, HEAPID_DENDOU_DEMO );
+	// サブ
+	wk->chrRes[DDEMOOBJ_CHRRES_PLAYER_S] = TR2DGRA_OBJ_CGR_Register( ah, trID, CLSYS_DRAW_SUB, HEAPID_DENDOU_DEMO );
+	wk->palRes[DDEMOOBJ_PALRES_PLAYER_S] = TR2DGRA_OBJ_PLTT_Register( ah, trID, CLSYS_DRAW_SUB, PALNUM_PLAYER_S*0x20, HEAPID_DENDOU_DEMO );
+	wk->celRes[DDEMOOBJ_CELRES_PLAYER_S] = TR2DGRA_OBJ_CELLANM_Register( trID, APP_COMMON_MAPPING_32K, CLSYS_DRAW_SUB, HEAPID_DENDOU_DEMO );
+	GFL_ARC_CloseDataHandle( ah );
+
+	wk->clwk[DDEMOOBJ_ID_PLAYER_M] = CleateClact( wk, &PlayerClactParamTbl[0] );
+	wk->clwk[DDEMOOBJ_ID_PLAYER_S] = CleateClact( wk, &PlayerClactParamTbl[1] );
+
+	InitScene2FontOam( wk );
+}
+
+void DDEMOOBJ_ExitScene2( DDEMOMAIN_WORK * wk )
+{
+	DeleteFontOamAll( wk );
+	DelClactAll( wk );
+
+	GFL_CLACT_USERREND_Delete( wk->clrend );
+
+	ExitResource( wk );
+}
+
+void DDEMOOBJ_MainScene2( DDEMOMAIN_WORK * wk )
+{
+	AnmMain( wk );
 }
