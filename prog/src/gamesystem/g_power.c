@@ -28,8 +28,8 @@
 //  構造体定義
 //==============================================================================
 typedef struct{
+  u32 life[GPOWER_TYPE_MAX];        ///<発生寿命
   u8 occur_power[GPOWER_TYPE_MAX];  ///<発生中のGパワーID(TYPE順に発動中のIDが入っている)
-  s16 life[GPOWER_TYPE_MAX];        ///<発生寿命
   u16 powerdata_data[GPOWER_TYPE_MAX];  ///<発生中のGパワーのPOWER_CONV_DATA.data
   u8 my_power_type;                 ///<自分が発動しているパワーのタイプ
   u8 padding[3];
