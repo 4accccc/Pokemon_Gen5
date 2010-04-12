@@ -168,8 +168,6 @@ EVENT_START   ev_pos_c08_champions_01
 	_OBJ_ANIME( C08_CROWD_05,anm_c08_croud_panic_l )
 	_OBJ_ANIME_WAIT()
 	
-	
-	
 	//群集反応	サブウィンドウ表示
 	_TIME_WAIT( 10 )
 	_SUBWIN_MSG( msg_c08_crowd1_01 , 3 , 9 , 1 ) 
@@ -513,26 +511,24 @@ EVENT_START   ev_pos_c08_champions_01
 	//アイリス主人公に隣接
 	_OBJ_ANIME( C08_LEADER8A_01,anm_c08_leadera_goodbye_01 )
 	_OBJ_ANIME( C08_LEADER8B_01,anm_c08_leaderb_to_player_01 )
+	
+	_TIME_WAIT( 20 )
+	
+	//アイリス：white発言
+	IF $LCWK_VERSION == VERSION_WHITE THEN
+		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_05w , C08_LEADER8B_01 , POS_DR )
+	//アイリス：black発言
+	ELSE
+		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_05b , C08_LEADER8B_01 , POS_DR )
+	ENDIF
+	
+	_BALLOONWIN_CLOSE()
+	
 	_OBJ_ANIME_WAIT()
 	
 	//退場OBJ削除
 	_OBJ_DEL( C08_LEADER8A_01 )
 	_OBJ_DEL( C08_CHAMPION_01 )
-	
-	_OBJ_ANIME_WAIT()
-
-	//アイリス：white発言
-	IF $LCWK_VERSION == VERSION_WHITE THEN
-		
-		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_05w , C08_LEADER8B_01 , POS_DR )
-		_BALLOONWIN_CLOSE()
-	
-	//アイリス：black発言
-	ELSE
-	
-		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_05b , C08_LEADER8B_01 , POS_DR )
-		_BALLOONWIN_CLOSE()
-	ENDIF
 	
 	//アイリス誘導
 	_OBJ_ANIME( C08_LEADER8B_01,anm_c08_leaderb_lead_01 )
@@ -902,8 +898,9 @@ _ANIME_LABEL	anm_c08_leadera_goodbye_01
 //	ゲーヂス演説イベント：アイリス隣接
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c08_leaderb_to_player_01
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_6F,1
+	_ANIME_DATA	AC_WALK_U_6F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
