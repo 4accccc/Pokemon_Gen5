@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-04-12T13:04:17"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-04-12T14:40:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -615,6 +615,14 @@
 	</row>
 
 	<row id="START_MENU_LOAD_WARNING_07">
+		<comment>殿堂入りデータ破損</comment>
+		<language name="JPN" width="256">でんどういりポケモンの　きろくが
+きえてしまった！</language>
+		<language name="JPN_KANJI" width="256">殿堂入りポケモンの　記録が
+消えてしまった！</language>
+	</row>
+
+	<row id="START_MENU_LOAD_WARNING_08">
 		<comment>ふしぎなおくりもの（ビクティ）データ破損</comment>
 		<language name="JPN" width="256">ふしぎなおくりものの　きろくが
 きえてしまった！</language>
