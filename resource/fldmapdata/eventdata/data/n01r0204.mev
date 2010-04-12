@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/05 19:12:36
+#save date:2010/04/12 19:51:52
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\n01r0204.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\n01r0204.wms
 #hold event type:
 1
 #hold event number:
-2
+3
 #event number: 0
 #type
 1
@@ -72,6 +72,37 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 -40 0 56
+#event number: 2
+#type
+1
+#ID name
+N01R0204_FLD_ITEM_01
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_289
+#Event Script Name
+SCRID_FLD_ITEM_289
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 152
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

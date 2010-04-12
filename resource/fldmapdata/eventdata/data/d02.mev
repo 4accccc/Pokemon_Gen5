@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/07 20:53:05
+#save date:2010/04/12 19:11:03
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d02.wms
 #SECTION START:OBJ_EVENT
@@ -152,9 +152,9 @@ SCRID_TRID_KARATE_03
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-1
+2
 #Parameter 1 Number
-4
+3
 #Parameter 2 Number
 0
 #Move Limit X Number
@@ -288,7 +288,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-520 80 -408
+488 80 -456
 #event number: 9
 #type
 1
@@ -359,7 +359,7 @@ TR_BATTLEG_03
 #OBJ CODE Number
 FIGHTERW
 #MOVE CODE Number
-MV_RTRD         
+MV_RTRDUL       
 #EVENT TYPE Number
 EV_TYPE_TRAINER_SPIN_STOP_L
 #Flag Name
@@ -369,19 +369,19 @@ SCRID_TRID_BATTLEG_03
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
-3
+1
 #Parameter 1 Number
-3
+4
 #Parameter 2 Number
 0
 #Move Limit X Number
-5
+4
 #Move Limit Z Number
-5
+4
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-488 80 -376
+472 80 -408
 #event number: 12
 #type
 1

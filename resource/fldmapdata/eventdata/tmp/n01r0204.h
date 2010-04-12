@@ -11,6 +11,7 @@
 
 #define N01R0204_HAKAIM1_01                0
 #define N01R0204_HAKAIM2_01                1
+#define N01R0204_FLD_ITEM_01               2
 
 #endif //ZONE_N01R0204_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/n01r0204.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

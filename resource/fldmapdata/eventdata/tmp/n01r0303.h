@@ -10,6 +10,7 @@
 #define ZONE_N01R0303_EVC_H
 
 #define N01R0303_HAKAIM_01                 0
+#define N01R0303_FLD_ITEM_01               1
 
 #endif //ZONE_N01R0303_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/n01r0303.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
