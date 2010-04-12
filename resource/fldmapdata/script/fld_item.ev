@@ -315,6 +315,10 @@ _EVENT_DATA ev_fld_item_254
 _EVENT_DATA ev_fld_item_288
 _EVENT_DATA ev_fld_item_290
 _EVENT_DATA ev_fld_item_285
+_EVENT_DATA ev_fld_item_303
+_EVENT_DATA ev_fld_item_299
+_EVENT_DATA ev_fld_item_284
+_EVENT_DATA ev_fld_item_289
 _EVENT_DATA ev_fld_item2
 _EVENT_DATA_END
 
@@ -2416,6 +2420,34 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_285
   _FLD_ITEM_EVENT ITEM_TIISANAKINOKO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=N01R0402 X=408 Y=120 ITEM=Ç”ÇµÇ¨Ç»ÉAÉÅ FLAG=303
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_303
+  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=N01R0303 X=408 Y=120 ITEM=Ç∞ÇÒÇ´ÇÃÇ©ÇΩÇ‹ÇË FLAG=299
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_299
+  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=N01R0403 X=408 Y=120 ITEM=Ç©Ç¢Ç”Ç≠ÇÃÇ≠Ç∑ÇË FLAG=284
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_284
+  _FLD_ITEM_EVENT ITEM_KAIHUKUNOKUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=N01R0403 X=408 Y=120 ITEM=Ç‹ÇÒÇΩÇÒÇÃÇ≠Ç∑ÇË FLAG=289
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_289
+  _FLD_ITEM_EVENT ITEM_MANTANNOKUSURI,1
 EVENT_END
 
 
