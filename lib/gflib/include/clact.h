@@ -24,6 +24,7 @@
  *	@data   2010.1.27    アニメーションコールバックを設定
  *	@data   2010.2.5    OAMAttr単位のカリング作成　GFL_CLACT_USERREND_SetOAMAttrCulling　
  *	@data   2010.4.2    アフィンを考慮しないカリングを作成　ユーザーレンダラーの初期化時に指定できるように。
+ *	@data   2010.4.12    カリングなし　設定を作成
  *	                      
  *
  */
@@ -120,7 +121,7 @@ typedef enum{
 typedef enum{
   CLSYS_REND_CULLING_TYPE_NORMAL,       // 通常
   CLSYS_REND_CULLING_TYPE_NOT_AFFINE,   // アフィンを考慮しない     負荷　低
-
+  CLSYS_REND_CULLING_TYPE_NONE,        // カリングを行わない　カリング負荷　最低
   CLSYS_REND_CULLING_TYPE_MAX,    // システム内で使用
 } CLSYS_REND_CULLING_TYPE;
 
