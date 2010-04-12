@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T19:19:25"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T19:24:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1120,20 +1120,6 @@ WOMAN2</attribute>
 		<comment>♀
 ・WHITEver</comment>
 		<attribute name="キャラクター">WOMAN1</attribute>
-		<language name="JPN" width="256">ジムリーダーの　シャガさまは
-ソウリュウを　みちびく　しちょうなの[BE:01:ページ切り替え（クリア）]
-いつもは　たんれんのため
-ポケモンと　レスリングなさってるわ！</language>
-		<language name="JPN_KANJI" width="256">ジムリーダーの　シャガさまは
-ソウリュウを　導く　市長なの[BE:01:ページ切り替え（クリア）]
-いつもは　鍛錬のため
-ポケモンと　レスリングなさってるわ！</language>
-	</row>
-
-	<row id="msg_c08_woman1_01b">
-		<comment>♀
-・BLACKver</comment>
-		<attribute name="キャラクター">WOMAN1</attribute>
 		<language name="JPN" width="256">ジムリーダーの　アイリスちゃん！[BE:01:ページ切り替え（クリア）]
 まだ　こども　だけれど　
 しちょうである　シャガさまが[BE:00:ページ切り替え（行送り）]
@@ -1142,6 +1128,20 @@ WOMAN2</attribute>
 まだ　子供だけれど　
 市長である　シャガさまが[BE:00:ページ切り替え（行送り）]
 認めた　実力者なの！</language>
+	</row>
+
+	<row id="msg_c08_woman1_01b">
+		<comment>♀
+・BLACKver</comment>
+		<attribute name="キャラクター">WOMAN1</attribute>
+		<language name="JPN" width="256">ジムリーダーの　シャガさまは
+ソウリュウを　みちびく　しちょうなの[BE:01:ページ切り替え（クリア）]
+いつもは　たんれんのため
+ポケモンと　レスリングなさってるわ！</language>
+		<language name="JPN_KANJI" width="256">ジムリーダーの　シャガさまは
+ソウリュウを　導く　市長なの[BE:01:ページ切り替え（クリア）]
+いつもは　鍛錬のため
+ポケモンと　レスリングなさってるわ！</language>
 	</row>
 
 	<row id="msg_c08_oldman_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
