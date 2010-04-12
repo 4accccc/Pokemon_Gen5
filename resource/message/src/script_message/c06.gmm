@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T17:17:09"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T17:23:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -67,6 +67,11 @@
 			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
 			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
@@ -77,6 +82,14 @@
 				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
 				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
 			</tag>
+			<tag entry="15" japanese="趣味（調査レーダー）" english="趣味（調査レーダー）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="16" japanese="Gパワー名称" english="Gパワー名称" view="EP" width="156" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">Gパワーの名称です</comment>
+				<comment language="english">Gパワーの名称です</comment>
+			</tag>
 			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">ポケモンの特殊状態です。</comment>
@@ -86,6 +99,9 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
 				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="19" japanese="アンケート回答" english="アンケート回答" view="EP" width="108" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -108,19 +124,17 @@
 				<comment language="japanese">ぼうけんノートなどで使う</comment>
 				<comment language="english">ぼうけんノートなどで使う</comment>
 			</tag>
-			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+			<tag entry="34" japanese="ミュージカル演目名" english="ミュージカル演目名" view="EP" width="234" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">コンテストのジャンル
-「○○○○○コンテスト」</comment>
-				<comment language="english">コンテストのジャンル
-「○○○○○コンテスト」</comment>
+				<comment language="japanese">ミュージカルの演目名</comment>
+				<comment language="english">ミュージカルの演目名</comment>
 			</tag>
-			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+			<tag entry="35" japanese="ミュージカルコンディション" english="ミュージカルコンディション" view="EP" width="65" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">○○○○ランク
-「ランク」も含む</comment>
-				<comment language="english">○○○○ランク
-「ランク」も含む</comment>
+				<comment language="japanese">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
+				<comment language="english">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
 			</tag>
 			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -182,6 +196,22 @@
 				<comment language="japanese">スペイン語の挨拶</comment>
 				<comment language="english">スペイン語の挨拶</comment>
 			</tag>
+			<tag entry="49" japanese="ミュージカルグッズ部位" english="ミュージカルグッズ部位" view="EP" width="39" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="50" japanese="PDW家具名" english="PDW家具名" view="EP" width="169" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="51" japanese="ミュージカル客層" english="ミュージカル客層" view="EP" width="78" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">おとこのひと、女の子等</comment>
+				<comment language="english">おとこのひと、女の子等</comment>
+			</tag>
+			<tag entry="52" japanese="DS本体名" english="DS本体名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">DS本体のユーザー名</comment>
+				<comment language="english">DS本体のユーザー名</comment>
+			</tag>
 		</group>
 
 		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
@@ -213,6 +243,9 @@
 			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="08" japanese="９桁" english="９桁" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
 		</group>
 
 		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
@@ -234,6 +267,20 @@
 				<comment language="english">当該行の文字列を
 ウィンドウ内で右寄せします。</comment>
 			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+			<tag entry="05" japanese="X指定" english="X指定" view="EP" length="0" line="1">
+				<parameter number="0" japanese="Ｘ座標" english="Ｘ座標" type="int16"/>
+				<comment language="japanese">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+				<comment language="english">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+			</tag>
 		</group>
 
 		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
@@ -254,11 +301,21 @@
 			</tag>
 			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
 			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+			</tag>
 		</group>
 
 		<group entry="254" japanese="文字列展開" english="Word">
 		</group>
 
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
 		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
 		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
 		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
@@ -307,7 +364,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="139" right="2004" bottom="767" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +372,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -681,6 +738,171 @@
 どこに　行っちゃったんですかね▼
 ひょっとして　７番道路の
 タワーオブヘブン　っすか？</language>
+	</row>
+
+	<row id="msg_c06_boss_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・c06ジムバッジ取得後に出現
+　ジムから出ると、メッセージ表示
+・続けてboss_02</comment>
+		<attribute name="キャラクター">N</attribute>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……キミの　ポケモンと
+はなしを　させてもらうよ▼
+……ボクは　うまれたころより
+ポケモンと　くらし　そだったからね▽
+ヒトと　はなすよりも　らくなんだ▼
+だって　ポケモンは
+ぜったいに　ウソを　つかない[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……キミの　ポケモンと
+話を　させてもらうよ▼
+……ボクは　生まれたころより
+ポケモンと　暮らし　育ったからね▽
+ヒトと　話すよりも　楽なんだ▼
+だって　ポケモンは
+絶対に　ウソを　つかない[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_c06_boss_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・一歩前進して
+・0＝先頭のポケモン名（ひん死、タマゴのぞく）
+　選ばれたポケモンのレベル
+・続けてboss_03</comment>
+		<attribute name="キャラクター">N</attribute>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1][1:01:ポケモン種族名:0]　だね……▼
+[1:00:トレーナー名:1]は
+どんな　トレーナーか　おしえてよ？[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1][1:01:ポケモン種族名:0]　だね……▼
+[1:00:トレーナー名:1]は
+どんな　トレーナーか　教えてよ？[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_c06_boss_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・続けてboss_04
+・1＝主人公名前
+・2＝c06ジムリーダーに勝利したとき
+　　　対戦に出していたポケモン</comment>
+		<attribute name="キャラクター">N</attribute>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]……そうか　[1:00:トレーナー名:1]は
+カノコタウンで　うまれそだち▽
+ははおやと　ふたりぐらし　なんだ▼
+で　さっき　ジェットバッジを
+てに　いれたとき……▼
+さいごに　のこっていたのは
+[1:01:ポケモン種族名:2]　なんだね[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……そうか　[1:00:トレーナー名:1]は
+カノコタウンで　生まれ育ち▽
+母親と　二人暮らし　なんだ▼
+で　さっき　ジェットバッジを
+手に　入れたとき……▼
+最後に　残っていたのは
+[1:01:ポケモン種族名:2]　なんだね[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_c06_boss_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・続けてboss_05
+・0＝先頭のポケモン名（ひん死、タマゴのぞく）
+※なつき度は無関係</comment>
+		<attribute name="キャラクター">N</attribute>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]それにしても　この　[1:01:ポケモン種族名:1]
+キミを　しんじている　ようだね……▽
+すばらしい……！▼
+すべての　ひとと　ポケモンが
+キミたちの　ように　むきあうなら▼
+ひとに　りよう　されるだけの
+ポケモンを　ときはなたずに▼
+ポケモンたちと　ひとの
+ゆくすえを　みまもることが　できるのに[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]それにしても　この　[1:01:ポケモン種族名:1]
+キミを　信じている　ようだね……▽
+すばらしい……！▼
+すべての　人と　ポケモンが
+キミたちの　ように　向き合うなら▼
+人に　利用されるだけの
+ポケモンを　解き放たずに▼
+ポケモンたちと　人の
+行く末を　見守ることが　できるのに[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_c06_boss_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・続けてboss_06</comment>
+		<attribute name="キャラクター">N</attribute>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]ゲーチスは　プラズマだんを　つかい
+とくべつな　いしを　さがしている▼
+そのなも　ライトストーンと
+ダークストーン……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ゲーチスは　プラズマ団を　使い
+特別な　石を　探している▼
+その名も　ライトストーンと
+ダークストーン……[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_c06_boss_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・続けてboss_07
+・最終行19文字</comment>
+		<attribute name="キャラクター">N</attribute>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]でんせつの　ポケモンは
+その　にくたいが　ほろぶと▼
+ストーンと　なって　ねむりながら
+えいゆうの　たんじょうを　まつ……▼
+その　ストーンから
+ドラゴンポケモンを　よみがえらせ▼
+トモダチに　なり
+ボクが　えいゆうで　あることを▽
+せかいに　みとめさせ　したがわせる……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]伝説の　ポケモンは
+その肉体が　滅ぶと▼
+ストーンと　なって　眠りながら
+英雄の　誕生を　待つ……▼
+その　ストーンから
+ドラゴンポケモンを　よみがえらせ▼
+トモダチに　なり
+ボクが　英雄で　あることを▽
+世界に　認めさせ　従わせる……[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_c06_boss_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・続けてboss_08</comment>
+		<attribute name="キャラクター">N</attribute>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]……ボクの　ゆめは　あらそうことなく
+せかいを　かえること▼
+ちからで　せかいを　かえようとすれば
+さからう　ひとも　でるだろう▼
+そのとき　きずつくのは　わるい
+トレーナーに　りよう　される▽
+むかんけいの　ポケモンたち　だから[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……ボクの　夢は　争うことなく
+世界を　変えること▼
+力で　世界を　変えようとすれば
+反発する　人も　でるだろう▼
+そのとき　傷つくのは　悪意の
+トレーナーに　利用される▽
+無関係の　ポケモンたち　だから[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_c06_boss_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・下向き＋首振りアニメ後にメッセージ表示
+・表示後、画面右に移動
+　画面外に退場すると主人公操作可能に</comment>
+		<attribute name="キャラクター">N</attribute>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]その　けっか……▼
+キミたちの　ように
+おたがい　むきあっている▽
+ポケモンと　トレーナーを▽
+ひきさくことに　なるのは▽
+すこし　むねが　いたむけどね[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]その　けっか……▼
+キミたちの　ように
+お互い　向き合っている▽
+ポケモンと　トレーナーを▽
+引き裂くことに　なるのは▽
+すこし　胸が　痛むけどね[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c06_boy3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">

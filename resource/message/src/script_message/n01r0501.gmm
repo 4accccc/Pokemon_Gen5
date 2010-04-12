@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T17:21:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="243"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,11 +292,156 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_n01r0501_sage1_01w">
+		<comment>♂
+・WHITEver
+・pos（GRIDX=22~25、GRIDZ=14）を踏むと
+　イベント発動
+・n01r0502からゲーチスがでてくる
+　ゲーチス：GRIDX=24、GRIDZ=12
+・続けてsage1_02</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『ようこそ
+ダークストーンを　もつものよ▼</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『ようこそ
+ダークストーンを　持つ者よ▼</language>
+	</row>
+
+	<row id="msg_n01r0501_sage1_01b">
+		<comment>♂
+・BLACKver
+・続けてsage1_02</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『ようこそ
+ライトストーンを　もつものよ▼</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『ようこそ
+ライトストーンを　持つ者よ▼</language>
+	</row>
+
+	<row id="msg_n01r0501_sage1_02">
+		<comment>♂
+・続けてsage1_03</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">ポケモンリーグを　つつみかくすように
+あらわれた　しろは▼
+イッシュが　かわることを
+あらわす　シンボル▼</language>
+		<language name="JPN_KANJI" width="256">ポケモンリーグを　包み隠すように
+出現した　城は▼
+イッシュが　変わることを
+意味する　シンボル▼</language>
+	</row>
+
+	<row id="msg_n01r0501_sage1_03">
+		<comment>♂
+・ゲーチスのアニメ
+・続けてsage1_03</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">その　しろの　おうは
+でんせつの　ぽけもんを　したがえ▽
+チャンピオンを　こえた▽
+さいきょうの　トレーナー！▼
+しかも　せかいを　よくしたいという
+あつい　おもいを　むねに　ひめている！▼
+これを　えいゆうと　よばずして
+だれを　えいゆうと　よぶのです？▼</language>
+		<language name="JPN_KANJI" width="256">その城の　王は
+伝説の　ポケモンを　従え▽
+チャンピオンを　超えた▽
+最強の　トレーナー！▼
+しかも　世界を　良くしたいという
+熱い思いを　胸に　秘めている！▼
+これを　英雄と　呼ばずして
+だれを　英雄と　呼ぶのです？▼</language>
+	</row>
+
+	<row id="msg_n01r0501_sage1_04">
+		<comment>♂
+・続けてsage1_03</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">ここまで　ぶたいそうちが　ととのえば
+ひとびとの　こころは　つかめる！▼
+いとも　たやすく　ワタクシの……
+いや　プラズマだんの　のぞむ▽
+せかいに　できるのです！▼</language>
+		<language name="JPN_KANJI" width="256">ここまで　舞台装置が　整えば
+人々の　心は　つかめる！▼
+いとも　たやすく　ワタクシの……
+いや　プラズマ団の　望む▽
+世界に　できるのです！▼</language>
+	</row>
+
+	<row id="msg_n01r0501_sage1_05">
+		<comment>♂
+・画面左を向いて
+・続けてsage1_03</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">ながかったぞ！▼
+けいかくを　さとられぬよう
+いきを　ひそめていた……▽
+くるしみの　ひびも　おわる！！▼</language>
+		<language name="JPN_KANJI" width="256">長かったぞ！▼
+計画を　悟られぬよう
+息を　潜めていた……▽
+苦しみの　日々も　終わる！！▼</language>
+	</row>
+
+	<row id="msg_n01r0501_sage1_06">
+		<comment>♂
+・上向き
+・続けてsage1_03</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">さあ　すすめ！▼</language>
+		<language name="JPN_KANJI" width="256">さあ　進め！▼</language>
+	</row>
+
+	<row id="msg_n01r0501_sage1_07">
+		<comment>♂
+・下向き
+・続けてsage1_03</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">そして　まけると　しりつつ
+おうと　たたかうのです！▼</language>
+		<language name="JPN_KANJI" width="256">そして　負けると　知りつつ
+王と　戦うのです！▼</language>
+	</row>
+
+	<row id="msg_n01r0501_sage1_08w">
+		<comment>♂
+・WHITEver
+・sage1_07表示以降繰り返し
+・msg_n01r0502_sage1_01表示でココから削除</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『さあ！
+ダークストーンを　もつものよ！▽
+この　へやにて　おうと　たたかえ！</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『さあ！
+ダークストーンを　持つ者よ！▽
+この　へやにて　おうと　たたかえ！</language>
+	</row>
+
+	<row id="msg_n01r0501_sage1_08b">
+		<comment>♂
+・BLACKver
+・sage1_07表示以降繰り返し
+・msg_n01r0502_sage1_01表示でココから削除</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『さあ！
+ライトストーンを　もつものよ！▽
+この　へやにて　おうと　たたかえ！</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『さあ！
+ライトストーンを　持つ者よ！▽
+この　へやにて　おうと　たたかえ！</language>
 	</row>
 
 	<flowchart-group-list>
