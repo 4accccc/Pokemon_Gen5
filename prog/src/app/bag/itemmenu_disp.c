@@ -1489,7 +1489,7 @@ void ITEMDISP_ScrollCursorChangePos( FIELD_ITEMMENU_WORK * pWork )
 	pos.y = SCROLLBAR_GetPosY( length-6, pWork->oamlistpos+1, _SCROLL_TOP_Y, _SCROLL_BOTTOM_Y, 0 );
 	GFL_CLACT_WK_SetPos( pWork->clwkScroll, &pos, CLWK_SETSF_NONE );
 
-	PMSND_PlaySE( SE_BAG_SLIDE );
+//	PMSND_PlaySE( SE_BAG_SLIDE );
 }
 
 //------------------------------------------------------------------------------

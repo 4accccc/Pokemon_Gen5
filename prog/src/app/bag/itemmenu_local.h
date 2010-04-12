@@ -54,6 +54,7 @@ enum
   SE_BAG_RAITOSUTOON  = SEQ_SE_DECIDE2,   ///< ライトストーン・ダークストーン
 	SE_BAG_SLIDE_IN			= SEQ_SE_SYS_90,		///< 開始時のバッグスライドイン
 	SE_BAG_MESSAGE			= SEQ_SE_MESSAGE,		///< メッセージ送り
+	SE_BAG_BAG_GRA			= SEQ_SE_SELECT4,		///< バッグの絵をタッチしたとき
 };
 
 #define ITEMMENU_SCROLLBAR_ENABLE_NUM (7) // スクロールバーが有効になるアイテム数
