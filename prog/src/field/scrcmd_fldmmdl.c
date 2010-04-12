@@ -1224,5 +1224,12 @@ VMCMD_RESULT EvCmdObjRailLocationSet( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
-
-
+//-----------------------------------------------------------------------------
+/**
+ * @brief ÉèÅ[ÉvÇ…ÇÊÇÈè¡ãé
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdObjWarpOut( VMHANDLE *core, void *wk )
+{
+  return VMCMD_RESULT_CONTINUE;
+}

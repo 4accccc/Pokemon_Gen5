@@ -1857,6 +1857,21 @@
   .short  \front
   .short  \side
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 動作モデルのワープによる消去
+ * @param obj_id 適用するOBJID
+ */
+//--------------------------------------------------------------
+#define _OBJ_WARP_OUT( obj_id ) \
+    _ASM_OBJ_WARP_OUT obj_id
+
+  .macro  _ASM_OBJ_WARP_OUT obj_id
+  .short  EV_SEQ_OBJ_WARP_OUT
+  .short  \obj_id
+  .endm
+
   
 //======================================================================
 //  動作モデル　イベント関連

@@ -1033,6 +1033,10 @@
   NO_CMD()
   NO_CMD()
 
+  DEF_CMD( EvCmdObjWarpOut, EV_SEQ_OBJ_WARP_OUT )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
 
 
   END_CMD
