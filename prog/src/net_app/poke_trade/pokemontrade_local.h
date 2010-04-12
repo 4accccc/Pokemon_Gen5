@@ -625,7 +625,7 @@ struct _POKEMON_TRADE_WORK{
   int underSelectIndex;  //まだ相手に見せてないポケモンIndex ステータス表示のポケモン
   int underSelectBoxno;  //まだ相手に見せてないポケモンBox   ステータス表示のポケモン
   int pokemonsetCall;
-  int userNetCommand[2];
+  int pokemonselectnoGTS;
 
   //GTS用
   int GTSSelectIndex[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];  //候補のポケモンIndex
@@ -889,7 +889,7 @@ typedef enum {
   _NETCMD_CHANGEFACTOR = GFL_NET_CMD_IRCTRADE,
   _NETCMD_SELECT_POKEMON,
   _NETCMD_CHANGE_POKEMON,
-  _NETCMD_EGG_AND_BATTLE,
+  _NETCMD_POKEMONSELECT_GTS,
   _NETCMD_LOOKATPOKE,
   _NETCMD_CHANGE_CANCEL,
   _NETCMD_END,

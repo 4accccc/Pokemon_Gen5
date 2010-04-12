@@ -1761,20 +1761,10 @@ static void _Select6MessageInit3(POKEMON_TRADE_WORK* pWork)
 
   if(CheckNegoWaitTimer(pWork)){
 
-/*    if( pWork->userNetCommand[targetID] == _NETCMD_END){
-      //‚ ‚¢‚Ä‚Íƒ|ƒPƒ‚ƒ“ŒðŠ·‚µ‚½‚ª‚Á‚Ä‚¢‚é‚æ‚¤‚Å‚· ‚Å‚à‚Ç‚·
-      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_04, pWork->pMessageStrBuf );
-      POKETRADE_MESSAGE_WindowOpen(pWork);
-      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_RETURN,WB_NET_TRADE_SERVICEID);
-      _CHANGE_STATE(pWork, _Select6MessageInitEndNoSend);
-      return;
-    }*/
     if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-//      if(pWork->pokemonGTSSeq==POKEMONTORADE_SEQ_MISERUOK){
-        GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_04, pWork->pMessageStrBuf );
-        POKETRADE_MESSAGE_WindowOpen(pWork);
-        _CHANGE_STATE(pWork,_Select6MessageInit4);
-//      }
+      GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_04, pWork->pMessageStrBuf );
+      POKETRADE_MESSAGE_WindowOpen(pWork);
+      _CHANGE_STATE(pWork,_Select6MessageInit4);
     }
     else{
       GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_04, pWork->pMessageStrBuf );

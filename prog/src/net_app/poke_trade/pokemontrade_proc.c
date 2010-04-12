@@ -114,13 +114,15 @@ static void _recvFriendBoxNum(const int netID, const int size, const void* pData
 static void _recvChangeFactor(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvEvilCheck(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvUNData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvGTSSelectPokemonIndex(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+
 
 ///通信コマンドテーブル
 static const NetRecvFuncTable _PacketTbl[] = {
   {_recvChangeFactor, NULL },   ///< _NETCMD_CHANGEFACTOR
   {_recvSelectPokemon,   _setChangePokemonBuffer},    ///_NETCMD_SELECT_POKEMON 2 ポケモン見せ合う
   {_recvChangePokemon,   NULL},    ///_NETCMD_CHANGE_POKEMON   3 こうかんけってい
-  {_recvEggAndBattle, NULL },     ///_NETCMD_EGG_AND_BATTLE  3 たまごと最後のバトルポケモン
+  {_recvGTSSelectPokemonIndex, NULL },     ///_NETCMD_POKEMONSELECT_GTS 
   {_recvLookAtPoke, NULL},       ///_NETCMD_LOOKATPOKE   2 ポケモン見せ合う
   {_recvChangeCancel,   NULL},    ///_NETCMD_CHANGE_CANCEL  3 最後にキャンセルする
   {_recvEnd, NULL},         //_NETCMD_END           1 おわり
@@ -535,7 +537,7 @@ POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_MANAGER* boxData , in
 
 static void _userNetCommandClear(POKEMON_TRADE_WORK* pWork)
 {
-  GFL_STD_MemClear(pWork->userNetCommand,sizeof(pWork->userNetCommand));
+  //GFL_STD_MemClear(pWork->userNetCommand,sizeof(pWork->userNetCommand));
 }
 
 //------------------------------------------------------------------------------
@@ -864,7 +866,7 @@ static void _recvCancelPokemon(const int netID, const int size, const void* pDat
     return;//自分のは受け取らない
   }
   _PokemonReset(pWork,1);
-  pWork->userNetCommand[netID] = 0;
+//  pWork->userNetCommand[netID] = 0;
 
 }
 
@@ -926,18 +928,22 @@ static void _recvLookAtPoke(const int netID, const int size, const void* pData, 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
-  pWork->userNetCommand[netID] = _NETCMD_LOOKATPOKE;
+//  pWork->userNetCommand[netID] = _NETCMD_LOOKATPOKE;
 }
 
-//_NETCMD_EGG_AND_BATTLE
-static void _recvEggAndBattle(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+//_NETCMD_POKEMONSELECT_GTS
+static void _recvGTSSelectPokemonIndex(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
   POKEMON_TRADE_WORK *pWork = pWk;
+  u8* pBuff = (u8*)pData;
 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
-  pWork->userNetCommand[netID] = _NETCMD_EGG_AND_BATTLE;
+  if(netID == GFL_NET_SystemGetCurrentID()){
+    return; //自分のデータは要らない
+  }
+  pWork->pokemonselectnoGTS = pBuff[0];
 }
 
 //_NETCMD_CHANGE_CANCEL
@@ -948,7 +954,7 @@ static void _recvChangeCancel(const int netID, const int size, const void* pData
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
-  pWork->userNetCommand[netID] = _NETCMD_CHANGE_CANCEL;
+//  pWork->userNetCommand[netID] = _NETCMD_CHANGE_CANCEL;
 }
 
 //_NETCMD_END
@@ -960,7 +966,7 @@ static void _recvEnd(const int netID, const int size, const void* pData, void* p
     return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
 
-  pWork->userNetCommand[netID] = _NETCMD_END;
+//  pWork->userNetCommand[netID] = _NETCMD_END;
 }
 
 
@@ -972,7 +978,7 @@ static void _recvChangePokemon(const int netID, const int size, const void* pDat
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
-  pWork->userNetCommand[netID] = _NETCMD_CHANGE_POKEMON;
+//  pWork->userNetCommand[netID] = _NETCMD_CHANGE_POKEMON;
 
 }
 
@@ -1757,6 +1763,26 @@ static void _dispSubState(POKEMON_TRADE_WORK* pWork)
   _CHANGE_STATE(pWork,_dispSubStateWait);
 }
 
+
+// 選択したポケモン番号送る
+static void _SendPokemonSelect(POKEMON_TRADE_WORK* pWork)
+{
+  u8 sdata = pWork->pokemonselectno;
+
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    if(!GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_POKEMONSELECT_GTS, 1, &sdata)){
+      return;
+    }
+  }
+  GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+  if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
+    _CHANGE_STATE(pWork,POKMEONTRADE_IRCDEMO_ChangeDemo);
+  }
+  else{
+    _CHANGE_STATE(pWork,IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove);
+  }
+}
+
 //通信同期を取る
 void POKEMONTRADE_changeTimingDemoStart(POKEMON_TRADE_WORK* pWork)
 {
@@ -1767,16 +1793,10 @@ void POKEMONTRADE_changeTimingDemoStart(POKEMON_TRADE_WORK* pWork)
       return;
     }
   }
-  
-
-  GXS_SetVisibleWnd( GX_WNDMASK_NONE );
-  if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
-    _CHANGE_STATE(pWork,POKMEONTRADE_IRCDEMO_ChangeDemo);
-  }
-  else{
-    _CHANGE_STATE(pWork,IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove);
-  }
+  _CHANGE_STATE(pWork, _SendPokemonSelect);
 }
+
+
 
 // 交換の返事を待つ  タイミングＣ用
 static void _changeWaitState(POKEMON_TRADE_WORK* pWork)
@@ -2108,32 +2128,6 @@ static void _endWaitStateNetwork3(POKEMON_TRADE_WORK* pWork)
     _CHANGE_STATE(pWork,_touchState);
   }
 }
-
-
-//終了待ち
-#if 0
-static void _endWaitStateNetwork2(POKEMON_TRADE_WORK* pWork)
-{
-  int targetID = 1 - GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-
-  if((pWork->userNetCommand[0] == _NETCMD_END) && (pWork->userNetCommand[1] == _NETCMD_END)){
-    pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;
-    _CHANGE_STATE(pWork, POKEMONTRADE_PROC_FadeoutStart);
-  }
-  if(pWork->userNetCommand[targetID] == _NETCMD_LOOKATPOKE){
-    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_04, pWork->pMessageStrBuf );
-    POKETRADE_MESSAGE_WindowOpen(pWork);
-    _CHANGE_STATE(pWork, _endCancelState);
-  }
-  if(POKEMONTORADE_SEQ_MISERUOK==pWork->pokemonGTSSeq){
-    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_04, pWork->pMessageStrBuf );
-    POKETRADE_MESSAGE_WindowOpen(pWork);
-    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_RETURN,WB_NET_TRADE_SERVICEID);
-    _CHANGE_STATE(pWork, _endWaitStateNetwork3);
-
-  }
-}
-#endif
 
 //終わるのを相手に伝えている
 static void _endWaitStateNetwork(POKEMON_TRADE_WORK* pWork)
@@ -2704,7 +2698,7 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
   else{
     int myID = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
-    pWork->userNetCommand[myID]=0;
+//    pWork->userNetCommand[myID]=0;
     GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CANCEL_POKEMON,0,NULL);
   }
 

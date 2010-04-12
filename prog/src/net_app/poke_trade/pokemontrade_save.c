@@ -408,14 +408,16 @@ static void _changeDemo_ModelTrade27(POKEMON_TRADE_WORK* pWork)
 
     if(POKEMONTRADEPROC_IsTriSelect(pWork))
     {
-      int no = pWork->pokemonselectno % 3;
-      pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
-      pWork->pParentWork->selectBoxno = pWork->GTSSelectBoxno[0][no];
-      pWork->pParentWork->selectIndex = pWork->GTSSelectIndex[0][no];
+      int no = pWork->pokemonselectnoGTS % 3;
+      pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0);  //相手が選んだポケ
+      pWork->pParentWork->selectBoxno = pWork->GTSSelectBoxno[0][no]; //あいてが選んだ場所
+      pWork->pParentWork->selectIndex = pWork->GTSSelectIndex[0][no]; //
+#if PM_DEBUG
       NET_PRINT("ポケモンNO%d BOX%d INDEX%d SEL%d\n",
                 PP_Get(pp,ID_PARA_monsno,NULL),
                 pWork->pParentWork->selectBoxno,
                 pWork->pParentWork->selectIndex,pWork->pokemonselectno);
+#endif
     }
     else{
       pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
