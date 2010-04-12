@@ -159,7 +159,6 @@ EVENT_START   ev_bg_r07r0105_bell
 		_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
 		
 		_SE_WAIT()
-		_AB_KEYWAIT_MARK()
 		_PLAINWIN_CLOSE()
 		
 		//–Â‚è‹¿‚¢‚½
