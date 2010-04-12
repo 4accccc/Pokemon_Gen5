@@ -127,7 +127,7 @@ struct _APP_TASKMENU_WIN_WORK
 	BOOL isUpdateMsg;
 
 	u16	anmCnt;
-	u16 dummy;
+	u16 anmDouble;
 	u16 transAnmCnt;
   GXRgb transCol;
 	const APP_TASKMENU_RES *res;
@@ -701,7 +701,7 @@ void APP_TASKMENU_RES_Delete( APP_TASKMENU_RES *wk )
 //-----------------------------------------------------------------------------
 APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_Create( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, HEAPID heapID )
 {	
-	return APP_TASKMENU_WIN_CreateEx( res, item, x, y, w, APP_TASKMENU_PLATE_HEIGHT, heapID );
+	return APP_TASKMENU_WIN_CreateEx( res, item, x, y, w, APP_TASKMENU_PLATE_HEIGHT, 1, heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -713,11 +713,12 @@ APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_Create( const APP_TASKMENU_RES *res, co
  *	@param	y			Y座標（キャラ単位）
  *	@param	w			幅（キャラ単位）
  *	@param	h			高さ（キャラ単位）
+ *	@param	anmDouble			BOOL:30fで稼動させる場合でアニメ速度を倍にしたい場合TRUE
  *
  *	@return	単発用ワーク
  */
 //-----------------------------------------------------------------------------
-APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, u8 h, HEAPID heapID )
+APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, u8 h, BOOL anmDouble, HEAPID heapID )
 {	
 	APP_TASKMENU_WIN_WORK *wk;
 
@@ -726,6 +727,7 @@ APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, 
 	GFL_STD_MemClear( wk, sizeof(APP_TASKMENU_WIN_WORK) );
 	wk->res	= res;
 	wk->isUpdateMsg	= TRUE;
+  wk->anmDouble = anmDouble+1;
 
 	//BMPWIN
 	wk->bmpwin	= GFL_BMPWIN_Create( res->frame, x, y , w, h, 
@@ -782,7 +784,7 @@ void APP_TASKMENU_WIN_Update( APP_TASKMENU_WIN_WORK *wk )
   if( wk->isDecide )
   {
     //決定時アニメ
-    const u8 isBlink = (wk->anmCnt/APP_TASKMENU_ANM_INTERVAL)%2;
+    const u8 isBlink = (wk->anmCnt/(APP_TASKMENU_ANM_INTERVAL/wk->anmDouble))%2;
     if( isBlink == 0 )
     {
 			APP_TASKMENU_SetActiveItem( wk->bmpwin, wk->res, TRUE );
@@ -847,7 +849,7 @@ BOOL APP_TASKMENU_WIN_IsDecide( const APP_TASKMENU_WIN_WORK *wk )
 //-----------------------------------------------------------------------------
 const BOOL APP_TASKMENU_WIN_IsFinish( const APP_TASKMENU_WIN_WORK *work )
 {
-  if( work->anmCnt < APP_TASKMENU_ANM_CNT )
+  if( work->anmCnt < (APP_TASKMENU_ANM_CNT/work->anmDouble) )
   {
     return FALSE;
   }

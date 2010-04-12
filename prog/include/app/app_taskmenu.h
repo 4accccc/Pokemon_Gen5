@@ -99,7 +99,7 @@ extern void APP_TASKMENU_SetDisableKey( APP_TASKMENU_WORK *work , const BOOL flg
 //横メニューなどで使用する、単発窓
 //横メニューの際は、「けってい」「やめる」など、複数ウィンドウを作成してください
 extern APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_Create( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, HEAPID heapID );
-extern APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, u8 h, HEAPID heapID );
+extern APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_CreateEx( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, u8 h, BOOL anmDouble, HEAPID heapID );
 extern void APP_TASKMENU_WIN_Delete( APP_TASKMENU_WIN_WORK *wk );
 extern void APP_TASKMENU_WIN_Update( APP_TASKMENU_WIN_WORK *wk );
 extern void APP_TASKMENU_WIN_SetActive( APP_TASKMENU_WIN_WORK *wk, BOOL isActive );
