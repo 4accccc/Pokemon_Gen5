@@ -514,14 +514,7 @@ EVENT_START   ev_pos_c08_champions_01
 	
 	_TIME_WAIT( 20 )
 	
-	//アイリス：white発言
-	IF $LCWK_VERSION == VERSION_WHITE THEN
-		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_05w , C08_LEADER8B_01 , POS_DR )
-	//アイリス：black発言
-	ELSE
-		_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_05b , C08_LEADER8B_01 , POS_DR )
-	ENDIF
-	
+	_BALLOONWIN_OBJMSG_WB( msg_c08_leader8b_05w , msg_c08_leader8b_05b , C08_LEADER8B_01 , POS_DR)
 	_BALLOONWIN_CLOSE()
 	
 	_OBJ_ANIME_WAIT()
