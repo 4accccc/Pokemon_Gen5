@@ -44,7 +44,6 @@
 #define T02_BOODLE_01A                    27
 #define T02_GIRL1_01                      28
 #define T02_DUMMY_01                      29
-#define T02_DUMMY_02                      30
 
 #endif //ZONE_T02_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t02.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
