@@ -109,11 +109,8 @@ EVENT_START		ev_t04r0201_diet_01
 				//要望と一致してるかチェック結果格納変数定義
 				DEFINE_LOCAL LWK_TRADE_CHECK
 			
-				//【仮】選択したポケモンが交換可能かチェック
+				//【仮】選択したポケモンが交換可能かチェック（トレードするデータが仮）
 				_FIELD_POKE_TRADE_CHECK ( LWK_TRADE_CHECK , FLD_TRADE_POKE_533 , LWK_CHOICE )
-				
-				//【仮】交換可能にする（10/04/11現在交換チェックが正常に動いていないため）
-				$LWK_TRADE_CHECK = 0
 				
 				//交換可能である
 				IF $LWK_TRADE_CHECK == FLD_TRADE_ENABLE THEN
