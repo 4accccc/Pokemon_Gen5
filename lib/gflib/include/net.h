@@ -696,6 +696,16 @@ extern BOOL GFL_NET_IsEmptySendData(GFL_NETHANDLE* pNet);
 //----------------------------------------------------------------
 extern BOOL GFL_NET_IsInSendCommandQueue(GFL_NETHANDLE* pNet,int command);
 
+//----------------------------------------------------------------
+/**
+ * @brief   特定のコマンドを入れ替える
+ * @param[in,out]   NetHandle* pNet  通信ハンドル
+ * @param   command 調べるコマンド
+ * @param   changecommand 交換するコマンド
+ * @retval  置換した回数
+ */
+//----------------------------------------------------------------
+extern int GFL_NET_ChangeSendCommandQueue(GFL_NETHANDLE* pNet,int command, int changecommand);
 
 
 //--------その他、ツール類
