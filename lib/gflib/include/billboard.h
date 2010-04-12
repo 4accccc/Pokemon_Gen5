@@ -19,7 +19,7 @@ extern "C" {
 //=============================================================================
 //-------------------------------------
 ///	テクスチャフォーマット
-//=====================================
+//-------------------------------------
 typedef enum {
 	GFL_BBD_TEXFMT_PAL16 = 0,	//16色パレット
 	GFL_BBD_TEXFMT_PAL256,		//256色パレット
@@ -31,7 +31,7 @@ typedef enum {
 
 //-------------------------------------
 ///	ビルボードテクスチャサイズ
-//=====================================
+//-------------------------------------
 typedef enum {
 	GFL_BBD_TEXSIZ_8x8 = 0,
 	GFL_BBD_TEXSIZ_8x16,
@@ -102,7 +102,7 @@ typedef enum {
 
 //-------------------------------------
 ///	ビルボードテクスチャサイズ define定義版
-//=====================================
+//-------------------------------------
 #define GFL_BBD_TEXSIZDEF_8x8 0
 #define GFL_BBD_TEXSIZDEF_8x16 1
 #define GFL_BBD_TEXSIZDEF_8x32 2
@@ -170,7 +170,7 @@ typedef enum {
 
 //-------------------------------------
 ///	ライトマスク
-//=====================================
+//-------------------------------------
 typedef enum {
 	GFL_BBD_LIGHT_NONE = 0,
 	GFL_BBD_LIGHTMASK_0,	// = 1
@@ -192,12 +192,12 @@ typedef enum {
 
 //-------------------------------------
 ///	アルファなし定義
-//=====================================
+//-------------------------------------
 #define GFL_BBD_NON_ALPHA	(31)
 
 //-------------------------------------
 ///	原点タイプ
-//=====================================
+//-------------------------------------
 typedef enum {
 	GFL_BBD_ORIGIN_CENTER,
 	GFL_BBD_ORIGIN_TOP,
@@ -213,6 +213,15 @@ typedef enum {
 	GFL_BBD_ORIGIN_MAX,	// モジュール内で使用
 }GFL_BBD_ORIGIN;
 
+//-------------------------------------
+///	描画タイプ
+//-------------------------------------
+typedef enum {
+	GFL_BBD_DRAWMODE_BILLBORD = 0,
+	GFL_BBD_DRAWMODE_Y_BILLBORD,
+	GFL_BBD_DRAWMODE_NON_BILLBORD,
+}GFL_BBD_DRAWMODE;
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -220,12 +229,12 @@ typedef enum {
 //=============================================================================
 //-------------------------------------
 ///	ビルボードシステム不完全型
-//=====================================
+//-------------------------------------
 typedef struct _GFL_BBD_SYS		GFL_BBD_SYS;
 
 //-------------------------------------
 ///	ビルボードシステム設定用構造体
-//=====================================
+//-------------------------------------
 typedef struct {
 	u16							resCountMax;
 	u16							objCountMax;
@@ -300,8 +309,9 @@ extern int GFL_BBD_AddResourceArc( GFL_BBD_SYS* billboardSys, int arcID, int dat
 extern int GFL_BBD_AddResourcePath( GFL_BBD_SYS* billboardSys, const char* path, int datID,
 									u8 texFmt, u8 texSiz, u8 celSizX, u8 cellSizY ); 
 //		４）テクスチャキー・パレットキーから作成
-extern int GFL_BBD_AddResourceKey( GFL_BBD_SYS* billboardSys, NNSGfdTexKey texKey ,NNSGfdPlttKey plttKey ,
-									u8 texFmt, u8 texSiz, u8 celSizX, u8 cellSizY ); 
+extern int GFL_BBD_AddResourceKey(	GFL_BBD_SYS* billboardSys, 
+																		NNSGfdTexKey texKey ,NNSGfdPlttKey plttKey ,
+																		u8 texFmt, u8 texSiz, u8 celSizX, u8 cellSizY ); 
 //	ビルボードリソース破棄
 //		１）リソースＩＤＸによる破棄
 extern void	GFL_BBD_RemoveResource( GFL_BBD_SYS* billboardSys, int resIdx );
@@ -348,9 +358,27 @@ extern void	GFL_BBD_GetResourceCelOffset( GFL_BBD_SYS* billboardSys, int resIdx,
  */
 //------------------------------------------------------------------
 //	ビルボードオブジェクト追加  (return objIdx)
-extern int	GFL_BBD_AddObject
-		( GFL_BBD_SYS* billboardSys, int resIdx, const fx16 sizX, const fx16 sizY, 
-			const VecFx32* trans, const u8 alpha, const GFL_BBD_LIGHTMASK lightMask );
+//extern int	GFL_BBD_AddObject
+//		( GFL_BBD_SYS* billboardSys, int resIdx, const fx16 sizX, const fx16 sizY, 
+//			const VecFx32* trans, const u8 alpha, const GFL_BBD_LIGHTMASK lightMask );
+extern int	GFL_BBD_AddObjectEx(	GFL_BBD_SYS* billboardSys, 
+																	int resIdx, 
+																	const fx16 sizX, const fx16 sizY, 
+																	const VecFx32* trans, 
+																	const u8 alpha, 
+																	const GFL_BBD_LIGHTMASK lightMask,
+																	const GFL_BBD_DRAWMODE drawMode );
+inline int	GFL_BBD_AddObject(		GFL_BBD_SYS* billboardSys, 
+																	int resIdx, 
+																	const fx16 sizX, const fx16 sizY, 
+																	const VecFx32* trans, 
+																	const u8 alpha, 
+																	const GFL_BBD_LIGHTMASK lightMask )
+{
+	return GFL_BBD_AddObjectEx
+		(billboardSys, resIdx, sizX, sizY, trans, alpha, lightMask, GFL_BBD_DRAWMODE_BILLBORD);
+}
+
 //	ビルボードオブジェクト破棄
 extern void	GFL_BBD_RemoveObject( GFL_BBD_SYS* billboardSys, int objIdx );
 //	ビルボードオブジェクト破棄 Vramのみ

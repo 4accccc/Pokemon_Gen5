@@ -219,8 +219,20 @@ extern void GFL_BBDACT_RemoveResourceUnit
  */
 //------------------------------------------------------------------
 //セットアップ
-extern GFL_BBDACT_ACTUNIT_ID GFL_BBDACT_AddAct( GFL_BBDACT_SYS* bbdActSys, 
-				GFL_BBDACT_RESUNIT_ID idx, GFL_BBDACT_ACT_SETTBL actTbl, u32 actCount );
+extern GFL_BBDACT_ACTUNIT_ID GFL_BBDACT_AddActEx( GFL_BBDACT_SYS* bbdActSys, 
+																									GFL_BBDACT_RESUNIT_ID idx, 
+																									GFL_BBDACT_ACT_SETTBL actTbl, 
+																									u32 actCount,
+																									const GFL_BBD_DRAWMODE drawMode );
+
+inline GFL_BBDACT_ACTUNIT_ID GFL_BBDACT_AddAct( GFL_BBDACT_SYS* bbdActSys, 
+																								GFL_BBDACT_RESUNIT_ID idx, 
+																								GFL_BBDACT_ACT_SETTBL actTbl, 
+																								u32 actCount )
+{
+	return GFL_BBDACT_AddActEx( bbdActSys, idx, actTbl, actCount, GFL_BBD_DRAWMODE_BILLBORD);
+}
+
 //破棄
 extern void GFL_BBDACT_RemoveAct
 				( GFL_BBDACT_SYS* bbdActSys, GFL_BBDACT_ACTUNIT_ID idx, u32 actCount ); 
