@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T18:14:15"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T22:39:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1353" top="269" right="2058" bottom="889" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -356,8 +356,7 @@
 	</row>
 
 	<row id="msg_badgeparty_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
-		<comment>※T03PC0101へ移行
-
+		<comment>♀
 ・はい/いいえの選択肢
 　はい→03
 　いいえ→02</comment>
