@@ -123,6 +123,8 @@ typedef void (*pEmitCBFunc)( GFL_EMIT_PTR, unsigned int );
 extern	void			GFL_PTC_Init(HEAPID heapID);
 extern	void			GFL_PTC_Main(void);
 extern	GFL_PTC_PTR		GFL_PTC_Create(void *work, int work_size, int personal_camera, int heap_id);
+extern  GFL_PTC_PTR		GFL_PTC_CreateEx( void *work, int work_size, int personal_camera,
+                                        int fix_polyID, int min_polyID, int max_polyID, int heap_id );
 extern	void			GFL_PTC_Delete(GFL_PTC_PTR psys);
 extern	void			GFL_PTC_Exit(void);
 extern	BOOL			GFL_PTC_CheckEnable(void);
