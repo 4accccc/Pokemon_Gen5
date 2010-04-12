@@ -32,6 +32,8 @@
 #include "field_task_camera_rot.h"
 #include "field_task_target_offset.h"
 #include "field_task_target_pos.h"
+#include "field_camera_anime.h"
+
 
 //==========================================================================================
 // ■定数
@@ -44,6 +46,14 @@
 #define LIFT_UP_LENGTH (0x0115 << FX32_SHIFT)
 
 
+static const FCAM_PARAM endParam = 
+{
+  0x2d8e, 0x0000, 0x009a << FX32_SHIFT,
+  { 0x001f8 << FX32_SHIFT, 0x00070 << FX32_SHIFT, 0x002df << FX32_SHIFT },
+  { 0, 0, 0 }
+};
+
+
 //==========================================================================================
 // ■ イベントワーク
 //==========================================================================================
@@ -54,6 +64,8 @@ typedef struct {
   FIELD_CAMERA*   camera;
   FIELD_TASK_MAN* taskMan;
   ICA_ANIME*      liftAnime;  // リフトの移動アニメデータ
+  FCAM_ANIME_DATA FCamAnimeData;
+  FCAM_ANIME_WORK* FCamAnimeWork;
 
 } EVENT_WORK;
 
@@ -74,6 +86,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
   switch( *seq ) {
   // カメラ移動開始
   case 0:
+#if 0
   {
     FIELD_TASK* pitch;
     FIELD_TASK* length; 
@@ -84,12 +97,19 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     FIELD_TASK_MAN_AddTask( taskMan, pitch, NULL );
     //FIELD_TASK_MAN_AddTask( taskMan, length, pitch );
   }
+#endif
+    FCAM_ANIME_SetupCamera( work->FCamAnimeWork );
+    FCAM_PARAM_GetCurrentParam( work->camera, &work->FCamAnimeData.startParam );
+    FCAM_ANIME_StartAnime( work->FCamAnimeWork );
     (*seq)++;
     break;
 
   // カメラ移動終了待ち
   case 1:
-    if( FIELD_TASK_MAN_IsAllTaskEnd( taskMan ) ) { (*seq)++; }
+    if( FIELD_TASK_MAN_IsAllTaskEnd( taskMan ) ) { 
+      FCAM_ANIME_DeleteWork( work->FCamAnimeWork );
+      (*seq)++; 
+    }
     break;
 
   // リフト移動開始
@@ -204,5 +224,13 @@ GMEVENT* EVENT_LFRONT01_LiftDown( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* field
   evwork->liftAnime  = NULL;
   evwork->camera     = FIELDMAP_GetFieldCamera( fieldmap );
   evwork->taskMan    = FIELDMAP_GetTaskManager( fieldmap );
+
+  evwork->FCamAnimeData.frame = 20;
+  evwork->FCamAnimeData.endParam = endParam;
+  evwork->FCamAnimeData.targetBindOffFlag = TRUE;
+  evwork->FCamAnimeData.cameraAreaOffFlag = TRUE;
+  evwork->FCamAnimeWork = FCAM_ANIME_CreateWork( fieldmap );
+  FCAM_ANIME_SetAnimeData( evwork->FCamAnimeWork, &evwork->FCamAnimeData );
+
   return event;
-} 
+}
