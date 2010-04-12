@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/11 15:13:16
+#save date:2010/04/12 10:43:46
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d12.wms
 #SECTION START:OBJ_EVENT
@@ -319,7 +319,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-136 16 -120
+8 32 -104
 #event number: 10
 #type
 1
@@ -350,7 +350,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 16 -120
+24 32 -104
 #event number: 11
 #type
 1
@@ -381,7 +381,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 16 -120
+40 32 -104
 #event number: 12
 #type
 1
@@ -567,7 +567,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 16 -120
+-8 32 -104
 #event number: 18
 #type
 1
@@ -598,7 +598,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 16 -104
+24 32 -88
 #event number: 19
 #type
 1
@@ -629,7 +629,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-184 16 -120
+56 32 -104
 #event number: 20
 #type
 1
@@ -660,7 +660,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-152 16 -136
+24 32 -120
 #event number: 21
 #type
 1
@@ -739,9 +739,9 @@ FV_D12_HAKAIM_01
 #Event Script Name
 SCRID_TRID_HAKAIM1_29
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
-3
+1
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -753,7 +753,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 16 -152
+184 16 -168
 #event number: 24
 #type
 1
@@ -807,7 +807,7 @@ SCRID_D12_BG_BOARD_01
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 16 120
+168 16 -152
 #event number: 1
 #Bg Event Label
 D12_BG_BOARD_02
