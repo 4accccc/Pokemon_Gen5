@@ -133,12 +133,12 @@ static const DDEMO_CLWK_DATA Info2ClactParamTbl = {
 static const DDEMO_CLWK_DATA PlayerClactParamTbl[] =
 {
 	{	// ÉÅÉCÉì
-		{ 48, -240-64, 0, 10, 1 },
+		{ 88, -240-64, 0, 10, 1 },
 		DDEMOOBJ_CHRRES_PLAYER_M, DDEMOOBJ_PALRES_PLAYER_M, DDEMOOBJ_CELRES_PLAYER_M,
 		0, CLSYS_DRAW_MAIN
 	},
 	{	// ÉTÉu
-		{ 48, -48, 0, 10, 1 },
+		{ 88, -48, 0, 10, 1 },
 		DDEMOOBJ_CHRRES_PLAYER_S, DDEMOOBJ_PALRES_PLAYER_S, DDEMOOBJ_CELRES_PLAYER_S,
 		0, CLSYS_DRAW_SUB
 	}
