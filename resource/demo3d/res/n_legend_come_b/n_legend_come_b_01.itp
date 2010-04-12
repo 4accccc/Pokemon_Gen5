@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2010-03-30T11:55:17" source="n_legend_come_b_01.mb"/>
+	<create user="james_turner" host="W00212" date="2010-04-09T21:39:36" source="n_legend_come_b_04.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,10 +11,10 @@
 <body>
 
 <tex_pattern_info
-	frame_size="1181"
+	frame_size="1261"
 	tool_start_frame="0"
-	tool_end_frame="1180"
-	compress_material="on" material_size="16 16"
+	tool_end_frame="1260"
+	compress_material="on" material_size="23 20"
 />
 
 <tex_pattern_list_data image_size="13" palette_size="13">
@@ -47,27 +47,30 @@
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="18">
-		0 665 978 0 665 978 0 665 978 0
-		665 978 0 665 978 0 665 978
+	<frame_idx size="21">
+		0 680 1058 0 680 1058 0 680 740 784
+		803 842 0 680 1058 0 680 1058 0 680
+		1058
 	</frame_idx>
-	<image_idx size="18">
-		8 9 10 4 5 4 2 3 2 6
-		7 6 0 1 0 11 12 11
+	<image_idx size="21">
+		4 5 4 0 1 0 8 9 8 10
+		8 10 6 7 6 11 12 11 2 3
+		2
 	</image_idx>
-	<palette_idx size="18">
-		8 9 10 4 5 4 2 3 2 6
-		7 6 0 1 0 11 12 11
+	<palette_idx size="21">
+		4 5 4 0 1 0 8 9 8 10
+		8 10 6 7 6 11 12 11 2 3
+		2
 	</palette_idx>
 </tex_pattern_data>
 
 <tex_pattern_anm_array size="6">
-	<tex_pattern_anm index="0" material_name="n_tp_stone" data_size="3" data_head="0"/>
-	<tex_pattern_anm index="1" material_name="n_tp_grid" data_size="3" data_head="3"/>
-	<tex_pattern_anm index="2" material_name="n_tp_col" data_size="3" data_head="6"/>
-	<tex_pattern_anm index="3" material_name="n_tp_roof" data_size="3" data_head="9"/>
-	<tex_pattern_anm index="4" material_name="n_tp_back" data_size="3" data_head="12"/>
-	<tex_pattern_anm index="5" material_name="n_tp_wall" data_size="3" data_head="15"/>
+	<tex_pattern_anm index="0" material_name="n_tp_grid" data_size="3" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="n_tp_back" data_size="3" data_head="3"/>
+	<tex_pattern_anm index="2" material_name="n_tp_stone" data_size="6" data_head="6"/>
+	<tex_pattern_anm index="3" material_name="n_tp_roof" data_size="3" data_head="12"/>
+	<tex_pattern_anm index="4" material_name="n_tp_wall" data_size="3" data_head="15"/>
+	<tex_pattern_anm index="5" material_name="n_tp_col" data_size="3" data_head="18"/>
 </tex_pattern_anm_array>
 
 </body>

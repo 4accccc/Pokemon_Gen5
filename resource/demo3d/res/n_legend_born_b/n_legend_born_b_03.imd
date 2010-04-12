@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2010-03-30T11:33:37" source="n_legend_born_b.mb"/>
+	<create user="james_turner" host="W00212" date="2010-04-08T18:29:04" source="n_legend_born_b03.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="james_turner" host="W00212" date="2010-03-30T11:33:37" source="n_legend_born_b.mb"/>
+<original_create user="james_turner" host="W00212" date="2010-04-08T18:29:04" source="n_legend_born_b03.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -4517,7 +4517,7 @@
 		tex_tiling="repeat repeat"
 		tex_scale="13.000000 7.000000"
 		tex_rotate="0.000000"
-		tex_translate="0.000000 0.011719"
+		tex_translate="0.000000 0.011475"
 		tex_gen_mode="tex"
 	/>
 	<material index="4" name="fx_f_ring"
@@ -4565,7 +4565,7 @@
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
-		tex_translate="0.000000 0.084229"
+		tex_translate="0.000000 0.083252"
 		tex_gen_mode="tex"
 	/>
 	<material index="6" name="fx_f_tong1_2"
@@ -4589,7 +4589,7 @@
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
-		tex_translate="0.000000 0.084229"
+		tex_translate="0.000000 0.083252"
 		tex_gen_mode="tex"
 	/>
 	<material index="7" name="fx_flare2"

@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2010-03-30T11:23:51" source="n_legend_born_b.mb"/>
+	<create user="james_turner" host="W00212" date="2010-04-08T18:14:59" source="n_legend_born_b03.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,16 +11,16 @@
 <body>
 
 <mat_color_info
-	frame_size="1461"
+	frame_size="1521"
 	tool_start_frame="0"
-	tool_end_frame="1460"
+	tool_end_frame="1520"
 	interpolation="frame"
 	compress_material="on" material_size="9 9"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
 
-<mat_color_data size="4386">
+<mat_color_data size="4566">
 	25 0 16 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
@@ -98,6 +98,7 @@
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
 	0 0 1 1 2 2 3 3 4 5
 	5 6 7 8 9 10 11 12 13 14
 	15 16 17 18 19 20 21 22 23 24
@@ -128,7 +129,12 @@
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 31 0
+	31 31 31 31 31 31 31 31 31 31
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
@@ -240,6 +246,7 @@
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 1 2 2
 	3 4 5 7 8 9 11 12 14 16
 	17 19 20 22 23 24 26 27 28 29
@@ -275,6 +282,11 @@
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
+	31 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
@@ -389,6 +401,7 @@
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 26 16 5 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
@@ -421,7 +434,12 @@
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
-	0 31 31 31 31 31 31 31 31 31
+	0 0 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
@@ -476,7 +494,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="2"/>
 		<emission_g frame_step="1" data_size="1" data_head="2"/>
 		<emission_b frame_step="1" data_size="1" data_head="2"/>
-		<polygon_alpha frame_step="1" data_size="1461" data_head="3"/>
+		<polygon_alpha frame_step="1" data_size="1521" data_head="3"/>
 	</mat_color_anm>
 	<mat_color_anm index="1" material_name="shintail_r1">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
@@ -491,7 +509,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="1461" data_head="1464"/>
+		<polygon_alpha frame_step="1" data_size="1521" data_head="1524"/>
 	</mat_color_anm>
 	<mat_color_anm index="2" material_name="shintail_w1">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
@@ -506,7 +524,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="1461" data_head="2925"/>
+		<polygon_alpha frame_step="1" data_size="1521" data_head="3045"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
