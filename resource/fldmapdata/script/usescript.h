@@ -42,6 +42,7 @@
 #include "../../../prog/include/sound/wb_sound_data.sadl"
 
 #include "../../personal/monsno_def.h"    //ポケモンナンバー
+#include "../../personal/monsnum_def.h"    //ポケモンナンバー
 #include "../../itemconv/itempocket_def.h"  //どうぐポケットナンバー指定
 #include "../../../prog/include/item/itemsym.h"   //アイテムナンバー定義
 
