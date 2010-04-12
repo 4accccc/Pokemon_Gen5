@@ -31,7 +31,7 @@ typedef struct {
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-extern GAME_INIT_WORK * DEBUG_GetGameInitWork(
+extern GAME_INIT_WORK * GAMEINIT_GetGameInitWork(
   GAMEINIT_MODE mode, u16 mapid, VecFx32 *pos, s16 dir );
 
 #ifdef	__cplusplus

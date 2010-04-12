@@ -450,7 +450,7 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
   }
 
-  init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );
+  init_param = GAMEINIT_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );
 
   NAMEIN_FreeParam(work->nameInParam);
   GFL_PROC_FreeWork( proc );
@@ -540,7 +540,7 @@ static GFL_PROC_RESULT GameStart_ContinueProcEnd( GFL_PROC * proc, int * seq, vo
   CONFIG_ApplyMojiMode( SaveData_GetConfig( sv_ctrl ) );  //ロードしたコンフィグに従って文字モード設定
   SaveData_SituationLoad_PlayerWorkSave(sv_ctrl, &plsv);
 
-  init_param = DEBUG_GetGameInitWork(
+  init_param = GAMEINIT_GetGameInitWork(
   GAMEINIT_MODE_CONTINUE, plsv.zoneID, &plsv.position, plsv.direction );
   
   GFL_PROC_FreeWork( proc );
@@ -666,7 +666,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
     CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(sv_ctrl),TRUE);
   }
   
-  init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, ZONE_ID_T01, &pos, 0 );
+  init_param = GAMEINIT_GetGameInitWork(GAMEINIT_MODE_DEBUG, ZONE_ID_T01, &pos, 0 );
   GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
 #endif
 
@@ -746,7 +746,7 @@ static GFL_PROC_RESULT GameStart_DebugSelectNameProcEnd( GFL_PROC * proc, int * 
     //CGEARON
     CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(sv_ctrl),TRUE);
     
-    init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0, &pos, 0 );
+    init_param = GAMEINIT_GetGameInitWork(GAMEINIT_MODE_DEBUG, 0, &pos, 0 );
     GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);
   }
   else

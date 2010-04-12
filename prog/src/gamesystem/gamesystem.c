@@ -71,7 +71,7 @@ static GAMESYS_WORK * GameSysWork;
  *
  */
 //------------------------------------------------------------------
-static GAME_INIT_WORK TestGameInitWork;
+static GAME_INIT_WORK GameInitWork;
 
 //============================================================================================
 //============================================================================================
@@ -163,14 +163,14 @@ const GFL_PROC_DATA GameMainProcData = {
  * @file	ゲーム開始初期化用ワーク取得
  */
 //------------------------------------------------------------------
-GAME_INIT_WORK * DEBUG_GetGameInitWork(GAMEINIT_MODE mode, u16 mapid, VecFx32 *pos, s16 dir )
+GAME_INIT_WORK * GAMEINIT_GetGameInitWork(GAMEINIT_MODE mode, u16 mapid, VecFx32 *pos, s16 dir )
 {
-  GFL_STD_MemClear(&TestGameInitWork, sizeof(GAME_INIT_WORK));
-	TestGameInitWork.mode = mode;
-	TestGameInitWork.mapid = mapid;
-	TestGameInitWork.pos = *pos;
-	TestGameInitWork.dir = dir;
-	return &TestGameInitWork;
+  GFL_STD_MemClear(&GameInitWork, sizeof(GAME_INIT_WORK));
+	GameInitWork.mode = mode;
+	GameInitWork.mapid = mapid;
+	GameInitWork.pos = *pos;
+	GameInitWork.dir = dir;
+	return &GameInitWork;
 }
 
 

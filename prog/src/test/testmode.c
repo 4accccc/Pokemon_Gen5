@@ -916,7 +916,7 @@ static BOOL TESTMODE_ITEM_SelectFuncTamada( TESTMODE_WORK *work , const int idx 
   //GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(debug_tamada), &DebugTamadaMainProcData, NULL);
 #if 0
   {
-    GAME_INIT_WORK * init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_DEBUG, 1);
+    GAME_INIT_WORK * init_param = GAMEINIT_GetGameInitWork(GAMEINIT_MODE_DEBUG, 1);
     TESTMODE_COMMAND_ChangeProc(work,
       NO_OVERLAY_ID, &GameMainProcData, init_param);
   }
