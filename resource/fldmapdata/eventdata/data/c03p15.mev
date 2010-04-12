@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/09 12:54:58
+#save date:2010/04/12 22:12:29
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p15.wms
 #SECTION START:OBJ_EVENT
@@ -194,7 +194,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #Door Event Label
 DOOR_ID_C03P15_C03_EXIT01
@@ -211,6 +211,23 @@ EVENTDATA_POSTYPE_GRID
 #position
 -72 0 232
 #size
-11 1
+5 1
+#event number: 1
+#Door Event Label
+DOOR_ID_C03P15_C03_EXIT02
+#Next Zone ID Name
+ZONE_ID_C03
+#Next Door ID Name
+DOOR_ID_C03_C03P15_EXIT02
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_SP30
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 0 232
+#size
+5 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

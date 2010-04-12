@@ -3,6 +3,7 @@
 #define ZONE_C03P16_EVD_H
 
 #define DOOR_ID_C03P16_C03_EXIT01         0
+#define DOOR_ID_C03P16_C03_EXIT02         1
 
 #endif //ZONE_C03P16_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p16.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

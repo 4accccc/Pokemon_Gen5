@@ -4,11 +4,11 @@
 
 #define DOOR_ID_C03_C03P10_EXIT01         0
 #define DOOR_ID_C03_C03P17_EXIT01         1
-#define DOOR_ID_C03_C03P09_EXIT01         2
-#define DOOR_ID_C03_C03P16_EXIT01         3
-#define DOOR_ID_C03_C03P15_EXIT01         4
-#define DOOR_ID_C03_C03P12_EXIT01         5
-#define DOOR_ID_C03_C03P14_EXIT01         6
+#define DOOR_ID_C03_C03P09_EXIT02         2
+#define DOOR_ID_C03_C03P16_EXIT02         3
+#define DOOR_ID_C03_C03P15_EXIT02         4
+#define DOOR_ID_C03_C03P12_EXIT02         5
+#define DOOR_ID_C03_C03P14_EXIT02         6
 #define DOOR_ID_C03_C03P07_EXIT01         7
 #define DOOR_ID_C03_C03P13_EXIT01         8
 #define DOOR_ID_C03_H01R0201_EXIT01       9
@@ -17,11 +17,11 @@
 #define DOOR_ID_C03_C03R0101_EXIT01      12
 #define DOOR_ID_C03_C03P10_EXIT02        13
 #define DOOR_ID_C03_C03P17_EXIT02        14
-#define DOOR_ID_C03_C03P09_EXIT02        15
-#define DOOR_ID_C03_C03P16_EXIT02        16
-#define DOOR_ID_C03_C03P15_EXIT02        17
-#define DOOR_ID_C03_C03P12_EXIT02        18
-#define DOOR_ID_C03_C03P14_EXIT02        19
+#define DOOR_ID_C03_C03P09_EXIT01        15
+#define DOOR_ID_C03_C03P16_EXIT01        16
+#define DOOR_ID_C03_C03P15_EXIT01        17
+#define DOOR_ID_C03_C03P12_EXIT01        18
+#define DOOR_ID_C03_C03P14_EXIT01        19
 
 #endif //ZONE_C03_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
