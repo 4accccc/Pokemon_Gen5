@@ -686,6 +686,7 @@ static void SEQFUNC_SetNowConfig( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 //=====================================
 static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h, u8 plt, BOOL compressedFlag, HEAPID heapID );
 static BOOL COLLISION_IsRectXPos( const GFL_RECT *cp_rect, const GFL_POINT *cp_pos );
+static void _sound_mode_set( SCROLL_WORK *p_wk, s8 dir, int flag );
 
 //=============================================================================
 /**
@@ -2347,7 +2348,7 @@ static void UI_GetParam( const UI_WORK *cp_wk, UI_INPUT_PARAM param, GFL_POINT *
  */
 //=============================================================================
 //-------------------------------------
-///	
+/// 
 //=====================================
 typedef enum
 {
@@ -2425,13 +2426,13 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait, BOOL is_stream
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  メッセージウィンドウ  プリント開始  MSGDATA指定版
+ *  @brief  メッセージウィンドウ  プリント開始  MSGDATA指定版
  *
- *	@param	MSGWND_WORK* p_wk ワーク
- *	@param	*p_msg  メッセージ
- *	@param	strID 文字
- *	@param	wait  メッセージスピード
- *	@param  is_stream TRUEならばストリーム  is_streamならば一括表示
+ *  @param  MSGWND_WORK* p_wk ワーク
+ *  @param  *p_msg  メッセージ
+ *  @param  strID 文字
+ *  @param  wait  メッセージスピード
+ *  @param  is_stream TRUEならばストリーム  is_streamならば一括表示
  */
 //-----------------------------------------------------------------------------
 static void MSGWND_PrintEx( MSGWND_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, int wait, BOOL is_stream )
@@ -2770,9 +2771,9 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_W
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  動作メイン
+ *  @brief  動作メイン
  *
- *	@param	APPBAR_WORK *p_wk ワーク
+ *  @param  APPBAR_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 static void APPBAR_MoveMain( APPBAR_WORK *p_wk )
@@ -2807,11 +2808,11 @@ static BOOL APPBAR_IsDecide( const APPBAR_WORK *cp_wk, APPBAR_WIN_LIST *p_select
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  演出待ち
+ *  @brief  演出待ち
  *
- *	@param	const APPBAR_WORK *cp_wkt   ワーク
+ *  @param  const APPBAR_WORK *cp_wkt   ワーク
  *
- *	@return TRUEで演出終了  FALSEで演出中
+ *  @return TRUEで演出終了  FALSEで演出中
  */
 //-----------------------------------------------------------------------------
 static BOOL APPBAR_IsWaitEffect( const APPBAR_WORK *cp_wk )
@@ -2825,9 +2826,9 @@ static BOOL APPBAR_IsWaitEffect( const APPBAR_WORK *cp_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  演出を消す
+ *  @brief  演出を消す
  *
- *	@param	APPBAR_WORK *p_wk ワーク
+ *  @param  APPBAR_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
 static void APPBAR_StopEffect( APPBAR_WORK *p_wk )
@@ -3179,10 +3180,10 @@ static void SCROLL_GetConfigParam( const SCROLL_WORK *cp_wk, CONFIG_PARAM *p_par
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  コンフィグパラメータにワイヤレス設定
+ *  @brief  コンフィグパラメータにワイヤレス設定
  *
- *	@param	SCROLL_WORK *p_wk ワーク
- *	@param	param             NETWORK_SEARCH_ON  or NETWORK_SEARCH_OFF
+ *  @param  SCROLL_WORK *p_wk ワーク
+ *  @param  param             NETWORK_SEARCH_ON  or NETWORK_SEARCH_OFF
  */
 //-----------------------------------------------------------------------------
 static void SCROLL_SetConfigParamWireless( SCROLL_WORK *p_wk, u16 param )
@@ -3461,10 +3462,32 @@ static void Scroll_TouchItem( SCROLL_WORK *p_wk, const GFL_POINT *cp_pos )
         {
           PMSND_PlaySE( CONFIG_SE_MOVE );
           CONFIGPARAM_SetItem( &p_wk->now, i );
+          _sound_mode_set( p_wk, p_wk->now.param[3], 0 );  // ステレオ・モノラル設定
           break;
         }
       }
     }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief サウンド出力モードを設定する（ステレオかモノラル）
+ *
+ * @param   p_wk    
+ * @param   dir   0:stereo 1:mono
+ * @param   flag  0:カーソル位置を判定する 1:強制的にセット（キャンセル時用） 
+ */
+//----------------------------------------------------------------------------------
+static void _sound_mode_set( SCROLL_WORK *p_wk, s8 dir, int flag )
+{
+  OS_Printf("line=%d,dir=%d\n", p_wk->select, dir);
+  if(p_wk->select==3 || flag==1){
+    if(dir==0){
+      PMSND_SetStereo( TRUE );
+    }else{
+      PMSND_SetStereo( FALSE );
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -3481,6 +3504,7 @@ static void Scroll_SelectItem( SCROLL_WORK *p_wk, s8 dir )
   if( p_wk->select < CONFIG_LIST_MAX )
   {
     CONFIGPARAM_AddItem( &p_wk->now, p_wk->select, dir );
+    _sound_mode_set( p_wk,p_wk->now.param[p_wk->select],0 );  // ステレオ・モノラル設定
   }
 }
 
@@ -3775,10 +3799,10 @@ static void CONFIRM_PrintMessage( CONFIRM_WORK *p_wk, u32 strID, int wait )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  メッセージ終了待ち
+ *  @brief  メッセージ終了待ち
  *
- *	@param	CONFIRM_WORK *p_wk ワーク
- *	@retval TRUE終了  FALSE処理中
+ *  @param  CONFIRM_WORK *p_wk ワーク
+ *  @retval TRUE終了  FALSE処理中
  */
 //-----------------------------------------------------------------------------
 static BOOL CONFIRM_IsEndMessage( CONFIRM_WORK *p_wk )
@@ -4437,6 +4461,8 @@ static void SEQFUNC_SetPreConfig( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
 
   //設定変更
   CONFIGPARAM_Save( &p_wk->pre );
+  _sound_mode_set( &p_wk->scroll, p_wk->pre.param[3], 1 );  // ステレオ・モノラル設定
+  
 
   SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
 }
