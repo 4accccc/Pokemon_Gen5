@@ -26,7 +26,6 @@
   DEF_CMD( EvCmdDummy,  EV_SEQ_DUMMY ) 
   DEF_CMD( EvCmdEnd,  EV_SEQ_END )
   DEF_CMD( EvCmdTimeWait,  EV_SEQ_TIME_WAIT )
-
   DEF_CMD( EvCmdCall,  EV_SEQ_CALL )
   DEF_CMD( EvCmdRet,  EV_SEQ_RET )
   DEF_CMD( EvCmdDebugPrintWk,  EV_SEQ_DEBUG_PRINT_WK )
@@ -37,43 +36,25 @@
   DEF_CMD( EvCmdPushWork,  EV_SEQ_PUSH_WORK )
   DEF_CMD( EvCmdPopWork,  EV_SEQ_POP_WORK )
   DEF_CMD( EvCmdPop,  EV_SEQ_POP )
-
   DEF_CMD( EvCmdCalcAdd,  EV_SEQ_CALC_ADD )
   DEF_CMD( EvCmdCalcSub,  EV_SEQ_CALC_SUB )
   DEF_CMD( EvCmdCalcMul,  EV_SEQ_CALC_MUL )
   DEF_CMD( EvCmdCalcDiv,  EV_SEQ_CALC_DIV )
-
   DEF_CMD( EvCmdPushFlagValue,  EV_SEQ_PUSH_FLAG )
   DEF_CMD( EvCmdCmpStack,  EV_SEQ_CMP_STACK )
   DEF_CMD( EvCmdWkAnd, EV_SEQ_AND_WK )
   DEF_CMD( EvCmdWkOr, EV_SEQ_OR_WK )
 
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-
 
   //(データロード )・ストア関連
   DEF_CMD( EvCmdLoadRegValue, EV_SEQ_LD_REG_VAL )
   DEF_CMD( EvCmdLoadRegWData, EV_SEQ_LD_REG_WDATA )
-  NO_CMD()
-  NO_CMD()
-
-  NO_CMD()
   DEF_CMD( EvCmdLoadRegReg, EV_SEQ_LD_REG_REG )
-  NO_CMD()
-  NO_CMD()
   
   
   //比較命令
   DEF_CMD( EvCmdCmpRegReg, EV_SEQ_CP_REG_REG )
   DEF_CMD( EvCmdCmpRegValue, EV_SEQ_CP_REG_VAL )
-  NO_CMD()
-  NO_CMD()
-
-  NO_CMD()
-  NO_CMD()
   DEF_CMD( EvCmdCmpWkValue, EV_SEQ_CP_WK_VAL )
   DEF_CMD( EvCmdCmpWkWk, EV_SEQ_CP_WK_WK )
   
@@ -82,41 +63,26 @@
   DEF_CMD( EvCmdVMMachineAdd, EV_SEQ_VM_ADD )
   DEF_CMD( EvCmdChangeCommonScr, EV_SEQ_CHG_COMMON_SCR )
   DEF_CMD( EvCmdChangeLocalScr, EV_SEQ_CHG_LOCAL_SCR )
-  NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
   
   //分岐命令
   DEF_CMD( EvCmdJump, EV_SEQ_JUMP )
   DEF_CMD( EvCmdIfJump, EV_SEQ_IF_JUMP )
   DEF_CMD( EvCmdIfCall, EV_SEQ_IF_CALL )
-  NO_CMD()
 
   DEF_CMD( EvCmdReserveScript, EV_SEQ_RESERVE_SCRIPT )
   DEF_CMD( EvCmdCheckContinueRecover, EV_SEQ_CHECK_CONTINUE_RECOVER )
-  NO_CMD()
-  NO_CMD()
   
   //イベントフラグ関連
   DEF_CMD( EvCmdFlagSet, EV_SEQ_FLAG_SET )
   DEF_CMD( EvCmdFlagReset, EV_SEQ_FLAG_RESET )
-  NO_CMD()
-  NO_CMD()
-
-  NO_CMD()
   DEF_CMD( EvCmdFlagCheck, EV_SEQ_FLAG_CHECK )
-  NO_CMD()
-  NO_CMD()
   
   //ワーク操作関連
   DEF_CMD( EvCmdWkAdd, EV_SEQ_ADD_WK )
   DEF_CMD( EvCmdWkSub, EV_SEQ_SUB_WK )
   DEF_CMD( EvCmdLoadWkValue, EV_SEQ_LD_WK_VAL )
   DEF_CMD( EvCmdLoadWkWk, EV_SEQ_LD_WK_WK )
-
   DEF_CMD( EvCmdLoadWkWkValue, EV_SEQ_LD_WK_WKVAL )
   DEF_CMD( EvCmdWkMul, EV_SEQ_MUL_WK )
   DEF_CMD( EvCmdWkDiv, EV_SEQ_DIV_WK )
@@ -126,19 +92,13 @@
   DEF_CMD( EvCmdCommonProcFieldEventStart, EV_SEQ_COMMON_PROC_FIELD_EVENT_START )
   DEF_CMD( EvCmdCommonProcFieldEventEnd, EV_SEQ_COMMON_PROC_FIELD_EVENT_END )
   DEF_CMD( EvCmdCheckScrEnd, EV_SEQ_CHECK_SCR_END)
-  NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
 
 
   //キー入力関連
   DEF_CMD( EvCmdABKeyWait, EV_SEQ_ABKEYWAIT )
   DEF_CMD( EvCmdLastKeyWait, EV_SEQ_LASTKEYWAIT )
   DEF_CMD( EvCmdWinMsgSetAutoPrintFlag, EV_SEQ_MSGWIN_SET_AUTOPRINT )
-  NO_CMD()
   
   //メッセージウィンドウ
   DEF_CMD( EvCmdSysWinMsg, EV_SEQ_SYSWIN_MSG )
@@ -159,7 +119,6 @@
   DEF_CMD( EvCmdGoldWinOpen, EV_SEQ_GOLD_WIN_OPEN )
   DEF_CMD( EvCmdGoldWinClose, EV_SEQ_GOLD_WIN_CLOSE )
   DEF_CMD( EvCmdGoldWinUpdate, EV_SEQ_GOLD_WIN_UPDATE )
-  NO_CMD()
   
   DEF_CMD( EvCmdBGWinMsg, EV_SEQ_BGWIN_MSG )
   DEF_CMD( EvCmdBGWinClose, EV_SEQ_BGWIN_CLOSE )
@@ -178,43 +137,37 @@
   DEF_CMD( EvCmdItemName, EV_SEQ_ITEM_NAME )
   DEF_CMD( EvCmdItemWazaName, EV_SEQ_ITEM_WAZA_NAME )
   DEF_CMD( EvCmdWazaName, EV_SEQ_WAZA_NAME )
-
   DEF_CMD( EvCmdPocketName, EV_SEQ_POCKET_NAME )
   DEF_CMD( EvCmdPartyPokeMonsName, EV_SEQ_TEMOTI_MONS_NAME )
   DEF_CMD( EvCmdPartyPokeNickName, EV_SEQ_TEMOTI_NICK_NAME )
   DEF_CMD( EvCmdSodateyaPokeMonsName, EV_SEQ_SODATEYA_MONS_NAME )
-
   DEF_CMD( EvCmdPokeTypeName, EV_SEQ_POKETYPE_NAME )
   DEF_CMD( EvCmdMonsName, EV_SEQ_MONS_NAME )
   DEF_CMD( EvCmdMonsName, EV_SEQ_PLACE_NAME )
   DEF_CMD( EvCmdEasyTalkWordName, EV_SEQ_EASY_TALK_WORD_NAME )
-
   DEF_CMD( EvCmdSodateyaPokeNickName, EV_SEQ_SODATEYA_NICK_NAME )
   DEF_CMD( EvCmdNumber, EV_SEQ_NUMBER )
   DEF_CMD( EvCmdMusicalWord , EV_SEQ_MUSICAL_WORD )
   DEF_CMD( EvCmdCountryName , EV_SEQ_COUNTRY_NAME )
-  
   DEF_CMD( EvCmdHobbyName , EV_SEQ_HOBBY_NAME )
   DEF_CMD( EvCmdGPowerName, EV_SEQ_GPOWER_NAME )
   DEF_CMD( EvCmdTrTypeName, EV_SEQ_TRAINER_TYPE_NAME )
   DEF_CMD( EvCmdAnswerName, EV_SEQ_ANSWER_NAME )
+
 
   //動作モデル
   DEF_CMD( EvCmdObjAnime, EV_SEQ_OBJ_ANIME )      
   DEF_CMD( EvCmdObjAnimeWait, EV_SEQ_OBJ_ANIME_WAIT )
   DEF_CMD( EvCmdMoveCodeGet, EV_SEQ_MOVE_CODE_GET )
   DEF_CMD( EvCmdObjPosGet, EV_SEQ_OBJ_POS_GET )
-
   DEF_CMD( EvCmdPlayerPosGet, EV_SEQ_PLAYER_POS_GET )
   DEF_CMD( EvCmdObjAdd, EV_SEQ_OBJ_ADD )
   DEF_CMD( EvCmdObjEventFlagGet, EV_SEQ_OBJ_EV_FLAG_GET )
   DEF_CMD( EvCmdObjAddEvent, EV_SEQ_OBJ_ADD_EV )
-
   DEF_CMD( EvCmdObjDel, EV_SEQ_OBJ_DEL )
 	DEF_CMD( EvCmdObjPosChange, EV_SEQ_OBJ_POS_CHANGE )
   DEF_CMD( EvCmdPlayerDirGet, EV_SEQ_PLAYER_DIR_GET )
   DEF_CMD( EvCmdGetFrontObjID, EV_SEQ_GET_FRONT_OBJID )
-  
   DEF_CMD( EvCmdGetObjID, EV_SEQ_GET_OBJID )
   DEF_CMD( EvCmdPlayerRailLocationGet, EV_SEQ_GET_PLAYER_RAIL_LOC )
   DEF_CMD( EvCmdObjRailLocationGet, EV_SEQ_GET_OBJ_RAIL_LOC )
@@ -225,14 +178,17 @@
   DEF_CMD( EvCmdPlayerRequest, EV_SEQ_PLAYER_REQUEST )
   DEF_CMD( EvCmdPlayerUpDown, EV_SEQ_PLAYER_UPDOWN )
   DEF_CMD( EvCmdPosPlayerTurn, EV_SEQ_POS_PLAYER_TURN )
-  
   DEF_CMD( EvCmdGetPlayerFrom, EV_SEQ_GET_PLAYER_FORM )
   DEF_CMD( EvCmdObjParamGet,  EV_SEQ_OBJ_PARAM_GET )
+  DEF_CMD( EvCmdObjRailSlipDown, EV_SEQ_OBJ_RAIL_SLIPDOWN )
+  DEF_CMD( EvCmdObjHighJump, EV_SEQ_OBJ_HIGH_JUMP )
+  DEF_CMD( EvCmdPlayerRailLocationSet, EV_SEQ_PLAYER_RAIL_LOC_SET )
+  DEF_CMD( EvCmdObjRailLocationSet, EV_SEQ_OBJ_RAIL_LOC_SET )
+  DEF_CMD( EvCmdObjWarpOut, EV_SEQ_OBJ_WARP_OUT )
+
 
   //視線トレーナー関連
   DEF_CMD( EvCmdEyeTrainerIdGet, EV_SEQ_EYE_TRAINER_ID_GET )
-  NO_CMD()
-  
   DEF_CMD( EvCmdEyeTrainerMoveSet, EV_SEQ_EYE_TRAINER_MOVE_SET )
   DEF_CMD( EvCmdEyeTrainerMove, EV_SEQ_EYE_TRAINER_MOVE )
   DEF_CMD( EvCmdEyeTrainerObjIdGet, EV_SEQ_EYE_TRAINER_OBJ_ID_GET )
@@ -252,74 +208,51 @@
   DEF_CMD( EvCmdTrainerLose, EV_SEQ_TRAINER_LOSE )
   DEF_CMD( EvCmdTrainerLoseCheck, EV_SEQ_TRAINER_LOSE_CHECK )
   DEF_CMD( EvCmdTrainerWin, EV_SEQ_TRAINER_WIN )
-  NO_CMD()
 
   DEF_CMD( EvCmd2vs2BattleCheck, EV_SEQ_2VS2_BATTLE_CHECK )
   DEF_CMD( EvCmdDebugBattleSet, EV_SEQ_DEBUG_BTL_SET )
   DEF_CMD( EvCmdBattleResultGet, EV_SEQ_BATTLE_RESULT_GET )
-  NO_CMD()
 
   DEF_CMD( EvCmdTrainerSpecialTypeGet, EV_SEQ_TRAINER_SPTYPE_GET )
   DEF_CMD( EvCmdTrainerItemGet, EV_SEQ_TRAINER_ITEM_GET )
   DEF_CMD( EvCmdGetTradeAfterTrainerBattleSet, EV_SEQ_TRADE_AFTER_TRAINER_BTL_SET )
-  NO_CMD()
   
   //トレーナーフラグ関連
   DEF_CMD( EvCmdTrainerFlagSet, EV_SEQ_TRAINER_FLAG_SET )
   DEF_CMD( EvCmdTrainerFlagReset, EV_SEQ_TRAINER_FLAG_RESET )
   DEF_CMD( EvCmdTrainerFlagCheck, EV_SEQ_TRAINER_FLAG_CHECK )
-  NO_CMD()
 
-  //動作モデル2
-  DEF_CMD( EvCmdObjRailSlipDown, EV_SEQ_OBJ_RAIL_SLIPDOWN )
-  DEF_CMD( EvCmdObjHighJump, EV_SEQ_OBJ_HIGH_JUMP )
-  DEF_CMD( EvCmdPlayerRailLocationSet, EV_SEQ_PLAYER_RAIL_LOC_SET )
-  DEF_CMD( EvCmdObjRailLocationSet, EV_SEQ_OBJ_RAIL_LOC_SET )
   
   //BGM
   DEF_CMD( EvCmdBgmPlay, EV_SEQ_BGM_PLAY )
   DEF_CMD( EvCmdBgmStop, EV_SEQ_BGM_STOP )
   DEF_CMD( EvCmdBgmPlayerPause, EV_SEQ_BGM_PLAYER_PAUSE )
   DEF_CMD( EvCmdBgmPlayCheck, EV_SEQ_BGM_PLAY_CHECK )
-
   DEF_CMD( EvCmdBgmFadeOut, EV_SEQ_BGM_FADEOUT )
   DEF_CMD( EvCmdBgmFadeIn, EV_SEQ_BGM_FADEIN )
   DEF_CMD( EvCmdBgmNowMapPlay, EV_SEQ_BGM_NOW_MAP_RECOVER )
   DEF_CMD( EvCmdPlayTempEventBGM, EV_SEQ_START_TEMP_EVENT_BGM )
-
   DEF_CMD( EvCmdBgmWait, EV_SEQ_BGM_WAIT )
   DEF_CMD( EvCmdBgmPush, EV_SEQ_BGM_PUSH )
   DEF_CMD( EvCmdBgmPop,  EV_SEQ_BGM_POP )
-  NO_CMD()
 
   //ISS
   DEF_CMD( EvCmdIssSwitchOn, EV_SEQ_ISS_SWITCH_ON )
   DEF_CMD( EvCmdIssSwitchOff, EV_SEQ_ISS_SWITCH_OFF )
   DEF_CMD( EvCmdIssSwitchCheck, EV_SEQ_ISS_SWITCH_CHECK )
-  NO_CMD()
   
   //SE
   DEF_CMD( EvCmdSePlay, EV_SEQ_SE_PLAY )
   DEF_CMD( EvCmdSeStop, EV_SEQ_SE_STOP )
   DEF_CMD( EvCmdSeWait, EV_SEQ_SE_WAIT )
-  NO_CMD()
-
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
   
   //ME
   DEF_CMD( EvCmdMePlay, EV_SEQ_ME_PLAY )
   DEF_CMD( EvCmdMeWait, EV_SEQ_ME_WAIT )
-  NO_CMD()
-  NO_CMD()
 
   //ポケモン鳴き声
   DEF_CMD( EvCmdVoicePlay, EV_SEQ_VOICE_PLAY )
   DEF_CMD( EvCmdVoiceWait, EV_SEQ_VOICE_WAIT )
-  NO_CMD()
-  NO_CMD()
 
 
   //メニュー
@@ -327,40 +260,28 @@
   DEF_CMD( EvCmdBmpMenuInitEx, EV_SEQ_BMPMENU_INIT_EX )
   DEF_CMD( EvCmdBmpMenuMakeList, EV_SEQ_BMPMENU_MAKE_LIST )
   DEF_CMD( EvCmdBmpMenuStart, EV_SEQ_BMPMENU_START )
-
   DEF_CMD( EvCmdBmpMenuStart_Breakable, EV_SEQ_BMPMENU_START_BREAKABLE )
   DEF_CMD( EvCmdBmpMenuInitExRight, EV_SEQ_BMPMENU_INIT_EX_RIGHT )
-  NO_CMD()
-  NO_CMD()
 
   //画面フェード
   DEF_CMD( EvCmdDispFadeStart, EV_SEQ_DISP_FADE_START )
   DEF_CMD( EvCmdDispFadeCheck, EV_SEQ_DISP_FADE_CHECK )
-  NO_CMD()
-  NO_CMD()
 
   //アイテム関連
   DEF_CMD( EvCmdAddItem, EV_SEQ_ADD_ITEM )
 	DEF_CMD( EvCmdSubItem, EV_SEQ_SUB_ITEM )
 	DEF_CMD( EvCmdAddItemChk, EV_SEQ_ADD_ITEM_CHK )
 	DEF_CMD( EvCmdCheckItem, EV_SEQ_ITEM_CHK )
-
   DEF_CMD( EvCmdGetItemNum, EV_SEQ_GET_ITEM_NUM )
 	DEF_CMD( EvCmdWazaMachineItemNoCheck, EV_SEQ_WAZA_ITEM_CHK )
   DEF_CMD( EvCmdGetPocketID, EV_SEQ_GET_POCKET_ID )
   DEF_CMD( EvCmdGetEffectEncountItem, EV_SEQ_GET_EFFECT_ENCOUNT_ITEM )
-
   DEF_CMD( EvCmdGetItemType, EV_SEQ_GET_ITEM_TYPE )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
 
   //マップ遷移関連
   DEF_CMD( EvCmdMapChangeBGMKeep, EV_SEQ_MAP_CHANGE_BGM_KEEP )
   DEF_CMD( EvCmdMapChangeByWarp, EV_SEQ_MAP_CHANGE_WARP )
   DEF_CMD( EvCmdRailMapChange, EV_SEQ_RAIL_MAP_CHANGE )
-  NO_CMD()
-
   DEF_CMD( EvCmdMapChangeBySandStream, EV_SEQ_MAP_CHANGE_SAND_STREAM )
   DEF_CMD( EvCmdMapChange, EV_SEQ_MAP_CHANGE )
   DEF_CMD( EvCmdMapChangeToUnion, EV_SEQ_MAP_CHANGE_TO_UNION )
@@ -372,182 +293,128 @@
   DEF_CMD( EvCmdIaigiriEffect, EV_SEQ_IAIGIRI_EFFECT )
   DEF_CMD( EvCmdDiving, EV_SEQ_DIVING )
 
-  //ジムギミック関連
-  DEF_CMD( EvCmdGymElec_Init, EV_SEQ_GYM_ELEC_INIT )
-  DEF_CMD( EvCmdGymElec_PushSw, EV_SEQ_GYM_ELEC_PUSH_SW )
-  DEF_CMD( EvCmdGymNormal_Init, EV_SEQ_GYM_NORMAL_INIT )
-  DEF_CMD( EvCmdGymNormal_Unrock, EV_SEQ_GYM_NORMAL_UNROCK )
-
-  DEF_CMD( EvCmdGymNormal_CheckUnrock, EV_SEQ_GYM_NORMAL_CHK_UNROCK )
-  DEF_CMD( EvCmdGymNormal_MoveWall, EV_SEQ_GYM_NORMAL_MOVE_WALL )
-  DEF_CMD( EvCmdGymElec_SetTrEncFlg, EV_SEQ_GYM_ELEC_SET_TR_ENC_FLG )
-  NO_CMD()
-
-  DEF_CMD( EvCmdGymAnti_Init, EV_SEQ_GYM_ANTI_INIT )
-  DEF_CMD( EvCmdGymAnti_SwOn, EV_SEQ_GYM_ANTI_SW_ON )
-  DEF_CMD( EvCmdGymAnti_OpenDoor, EV_SEQ_GYM_ANTI_OPEN_DOOR )
-  DEF_CMD( EvCmdGymAnti_SwOff, EV_SEQ_GYM_ANTI_SW_OFF )
-
-  DEF_CMD( EvCmdGymGround_SetEnterPos, EV_SEQ_GYM_GROUND_SET_ENTER_POS )
-  DEF_CMD( EvCmdGymGroundEnt_SetEnterPos, EV_SEQ_GYM_GROUND_ENT_SET_ENTER_POS )
-  NO_CMD()
-  NO_CMD()
-
   //プログラム側管理データの取得
   DEF_CMD( EvCmdChangeLangID, EV_SEQ_CHG_LANGID )
   DEF_CMD( EvCmdGetLangID, EV_SEQ_GET_LANG_ID )
   DEF_CMD( EvCmdGetRand, EV_SEQ_GET_RND )
   DEF_CMD( EvCmdGetNowMsgArcID, EV_SEQ_GET_NOW_MSG_ARCID )
-
   DEF_CMD( EvCmdGetTimeZone, EV_SEQ_GET_TIMEZONE )
   DEF_CMD( EvCmdGetTrainerCardRank, EV_SEQ_GET_TRAINER_CARD_RANK )
   DEF_CMD( EvCmdGetWeek, EV_SEQ_GET_WEEK )
   DEF_CMD( EvCmdGetDate, EV_SEQ_GET_DATE )
-
   DEF_CMD( EvCmdGetTime, EV_SEQ_GET_TIME )
   DEF_CMD( EvCmdGetSeasonID, EV_SEQ_GET_SEASON_ID )
   DEF_CMD( EvCmdGetZoneID, EV_SEQ_GET_ZONE_ID )
   DEF_CMD( EvCmdGetBirthDay, EV_SEQ_GET_BIRTHDAY )
-
   DEF_CMD( EvCmdGetBadgeFlag, EV_SEQ_GET_BADGE_FLAG )
   DEF_CMD( EvCmdSetBadgeFlag, EV_SEQ_SET_BADGE_FLAG )
   DEF_CMD( EvCmdGetBadgeCount, EV_SEQ_GET_BADGE_COUNT )
   DEF_CMD( EvCmdGetMapReplaceFlag, EV_SEQ_GET_MAP_REPLACE_FLAG )
-
   DEF_CMD( EvCmdSetWarpID, EV_SEQ_SET_WARP_ID )
   DEF_CMD( EvCmdChangeMapReplaceFlag, EV_SEQ_CHANGE_MAP_REPLACE_FLAG )
   DEF_CMD( EvCmdSetSpLocationHere, EV_SEQ_SET_SP_LOCATION_HERE )
   DEF_CMD( EvCmdSetSpLocationDirect, EV_SEQ_SET_SP_LOCATION_DIRECT )
-
   DEF_CMD( EvCmdGetZukanCount, EV_SEQ_GET_ZUKAN_COUNT )
   DEF_CMD( EvCmdSetZukanFlag, EV_SEQ_SET_ZUKAN_FLAG )
   DEF_CMD( EvCmdGetZukanFlag, EV_SEQ_GET_ZUKAN_FLAG )
-  NO_CMD()
-
   DEF_CMD( EvCmdGetRomVersion, EV_SEQ_GET_ROM_VERSION )
   DEF_CMD( EvCmdGetMySex, EV_SEQ_GET_MY_SEX )
   DEF_CMD( EvCmdGetWirelessSaveMode, EV_SEQ_GET_WIRELESS_SAVEMODE ) 
   DEF_CMD( EvCmdGetShoes, EV_SEQ_GET_SHOES )
-
   DEF_CMD( EvCmdGetBoxWallPaper, EV_SEQ_GET_BOX_WALLPAPER )
   DEF_CMD( EvCmdCheckPlayerViewChange, EV_SEQ_CHECK_PLAYER_VIEW_CHANGE )
   DEF_CMD( EvCmdGetStartMenuFlag, EV_SEQ_GET_START_MENU_FLAG )
   DEF_CMD( EvCmdSetStartMenuFlag, EV_SEQ_SET_START_MENU_FLAG )
+  DEF_CMD( EvCmdChkStartMenuViewFlag, EV_SEQ_CHK_START_MENU_VIEW_FLAG )
 
   DEF_CMD( EvCmdSeaTempleGetStepWalk, EV_SEQ_GET_SEATEMPLE_STEP_WALK )
-  DEF_CMD( EvCmdChkStartMenuViewFlag, EV_SEQ_CHK_START_MENU_VIEW_FLAG )
   DEF_CMD( EvCmdChkDendouData, EV_SEQ_CHK_DENDOU_DATA )
-  NO_CMD()
 
   // 育て屋
   DEF_CMD( EvCmdCheckSodateyaHaveEgg, EV_SEQ_CHECK_SODATEYA_HAVE_EGG )
   DEF_CMD( EvCmdGetSodateyaEgg, EV_SEQ_GET_SODATEYA_EGG )
   DEF_CMD( EvCmdDeleteSodateyaEgg, EV_SEQ_DELETE_SODATEYA_EGG )
   DEF_CMD( EvCmdGetSodateyaPokemonNum, EV_SEQ_GET_SODATEYA_POKEMON_NUM )
-
   DEF_CMD( EvCmdSodateyaLoveCheck, EV_SEQ_SODATEYA_LOVE_CHECK )
   DEF_CMD( EvCmdTrustPokeToSodateya, EV_SEQ_POKE_TO_SODATEYA )
   DEF_CMD( EvCmdCheckOutPokeFromSodateya, EV_SEQ_POKE_FROM_SODATEYA )
   DEF_CMD( EvCmdGetSodateyaPokeMonsNo, EV_SEQ_GET_SODATEYA_POKE_MONSNO )
-
   DEF_CMD( EvCmdGetSodateyaPokeFormNo, EV_SEQ_GET_SODATEYA_POKE_FORMNO )
   DEF_CMD( EvCmdGetSodateyaPokeLv, EV_SEQ_GET_SODATEYA_POKE_LV )
   DEF_CMD( EvCmdGetSodateyaPokeGrowUpLv, EV_SEQ_GET_SODATEYA_POKE_GROWUP_LV )
   DEF_CMD( EvCmdGetSodateyaPokeTakeBackCharge, EV_SEQ_GET_SODATEYA_POKE_CHARGE )
-
   DEF_CMD( EvCmdSodateyaSelectTemotiPokemon, EV_SEQ_SODATEYA_SELECT_POKEMON )
   DEF_CMD( EvCmdGetSodateyaPokeSex, EV_SEQ_GET_SODATEYA_POKE_SEX )
-  NO_CMD()
-  NO_CMD()
 
   // お金
   DEF_CMD( EvCmdAddGold, EV_SEQ_ADD_GOLD )
   DEF_CMD( EvCmdSubtractGold, EV_SEQ_SUBTRACT_GOLD )
   DEF_CMD( EvCmdCheckGold, EV_SEQ_CHECK_GOLD )
-  NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
 
   //手持ちポケモンのPOKEMON_PARAM取得・操作系
   DEF_CMD( EvCmdGetPokemonFriendValue, EV_SEQ_GET_TEMOTI_NATSUKI )
   DEF_CMD( EvCmdSetPokemonFriendValue, EV_SEQ_SET_TEMOTI_NATSUKI )
   DEF_CMD( EvCmdGetPartyPokeMonsNo, EV_SEQ_GET_PARTY_POKE_MONSNO )
   DEF_CMD( EvCmdGetPartyPokeFormNo, EV_SEQ_GET_PARTY_POKE_FORMNO )
-  
   DEF_CMD( EvCmdCheckTemotiPokerus, EV_SEQ_CHECK_TEMOTI_POKERUS )
   DEF_CMD( EvCmdCheckPokemonHP, EV_SEQ_CHECK_TEMOTI_HP )
   DEF_CMD( EvCmdCheckPokemonEgg, EV_SEQ_CHECK_TEMOTI_EGG )
   DEF_CMD( EvCmdGetPartyPokeCount, EV_SEQ_GET_PARTY_POKE_COUNT )
-
   DEF_CMD( EvCmdPokemonRecover, EV_SEQ_POKEMON_RECOVER )
   DEF_CMD( EvCmdPartyPokeNameInput, EV_SEQ_PARTY_POKE_NAME_INPUT )
   DEF_CMD( EvCmdPartyPokeEggBirth, EV_SEQ_PARTY_POKE_EGG_BIRTH )
   DEF_CMD( EvCmdPartyPokeSelect, EV_SEQ_PARTY_POKE_SELECT )
-
   DEF_CMD( EvCmdGetPokemonWazaNum, EV_SEQ_GET_TEMOTI_WAZA_NUM )
   DEF_CMD( EvCmdPartyPokeWazaSelect, EV_SEQ_PARTY_POKE_WAZA_SELECT )
   DEF_CMD( EvCmdGetPokemonWazaID, EV_SEQ_GET_TEMOTI_WAZA_ID )
   DEF_CMD( EvCmdSetPokemonWaza, EV_SEQ_SET_TEMOTI_WAZA )
-
   DEF_CMD( EvCmdAddPokemonToParty, EV_SEQ_ADD_POKEMON_TO_PARTY )
   DEF_CMD( EvCmdGetPartyFrontPoke, EV_SEQ_GET_PARTY_FRONT_POKEMON )
   DEF_CMD( EvCmdAddPokemonToPartyEx, EV_SEQ_ADD_POKEMON_TO_PARTY_EX )
+  DEF_CMD( EvCmdAddTamagoToParty, EV_DEQ_ADD_TAMAGO_TO_PARTY)
   DEF_CMD( EvCmdGetPartyPokeParameter, EV_SEQ_GET_PARTY_POKE_PARAMETER )
-
   DEF_CMD( EvCmdGetPartyPokeParameter, EV_SEQ_SET_PARTY_POKE_PARAMETER )
   DEF_CMD( EvCmdGetParamEXP, EV_SEQ_GET_PARAM_EXP )
   DEF_CMD( EvCmdCheckPokeOwner, EV_SEQ_CHECK_POKE_OWNER )
   DEF_CMD( EvCmdGetPartyPokeCountByMonsNo, EV_SEQ_GET_PARTY_POKE_COUNT_BY_MONSNO )
-
   DEF_CMD( EvCmdChkPokeWaza, EV_SEQ_CHK_POKE_WAZA )
   DEF_CMD( EvCmdChkPokeWazaGroup, EV_SEQ_CHK_POKE_WAZA_GROUP )
   DEF_CMD( EvCmdChgFormNo, EV_SEQ_CHG_FORM_NO )
   DEF_CMD( EvCmdGetPartyPosByMonsNo, EV_SEQ_GET_PARTY_POS_BY_MONSNO )
-
   DEF_CMD( EvCmdCheckPartyPokeGetPlace, EV_SEQ_CHECK_TEMOTI_GETPLACE )
   DEF_CMD( EvCmdGetPartyPokeGetDate, EV_SEQ_GET_TEMOTI_GETDATE )
-  DEF_CMD( EvCmdChgRotomFormNo, EV_SEQ_CHG_ROTOM_FORM_NO )
-  NO_CMD()
-
   DEF_CMD( EvCmdGetPartyPokeType, EV_SEQ_GET_TEMOTI_POKE_TYPE )
+
+  DEF_CMD( EvCmdChgRotomFormNo, EV_SEQ_CHG_ROTOM_FORM_NO )
   DEF_CMD( EvCmdSetFavoritePoke, EV_SEQ_SET_FAVORITE_POKEMON )
   DEF_CMD( EvCmdSetGymVictoryInfo, EV_SEQ_SET_GYM_VICTORY_INFO )
   DEF_CMD( EvCmdGetGymVictoryInfo, EV_SEQ_GET_GYM_VICTORY_INFO )
-
-  NO_CMD()
-  NO_CMD()
   DEF_CMD( EvCmdTradeAfterSaveSet, EV_SEQ_TRADEPOKE_AFTER_SAVE )
-  DEF_CMD( EvCmdAddTamagoToParty, EV_DEQ_ADD_TAMAGO_TO_PARTY)
 
   // ボックス関連
   DEF_CMD( EvCmdGetBoxPokeCount, EV_SEQ_GET_BOX_POKE_COUNT )
   DEF_CMD( EvCmdAddPokemonToBox, EV_SEQ_ADD_POKEMON_TO_BOX )
   DEF_CMD( EvCmdAddPokemonToBoxEx, EV_SEQ_ADD_POKEMON_TO_BOX_EX )
-  NO_CMD()
 
-  //画面演出関連
+
+  //画面演出関連（配置モデル操作など）
   DEF_CMD( EvCmdBModelAnimeLoopSet, EV_SEQ_BMODEL_ANIME_LOOP_SET )
   DEF_CMD( EvCmdDendouAnime, EV_SEQ_DENDOU_ANIME )
-  DEF_CMD(EvCMdBmodelDirectChangeModelID, EV_SEQ_BMODEL_DIRECT_CHANGE_MODEL_ID )
-  NO_CMD()
+  DEF_CMD( EvCMdBmodelDirectChangeModelID, EV_SEQ_BMODEL_DIRECT_CHANGE_MODEL_ID )
+  DEF_CMD( EvCmdBModelAnimeCreate, EV_SEQ_BMODEL_ANIME_CREATE )
+  DEF_CMD( EvCmdBModelAnimeDelete, EV_SEQ_BMODEL_ANIME_DELETE )
+  DEF_CMD( EvCmdBModelAnimeSet, EV_SEQ_BMODEL_ANIME_SET )
+  DEF_CMD( EvCmdBModelAnimeWait, EV_SEQ_BMODEL_ANIME_WAIT )
+  DEF_CMD( EvCmdBModelDirectAnimeSetFinished, EV_SEQ_BMODEL_DIRECT_ANIME_SET_FINISHED )
+  DEF_CMD( EvCmdBModelAnimeStop, EV_SEQ_BMODEL_ANIME_STOP )
+  DEF_CMD( EvCmdBModelDirectChangeViewFlag, EV_SEQ_BMODEL_DIRECT_CHANGE_VIEW_FLAG )
+  DEF_CMD( EvCmdBModelDirectAnimeSetLoop, EV_SEQ_BMODEL_DIRECT_ANIME_SET_LOOP )
 
   DEF_CMD( EvCmdPokecenRecoverAnime, EV_SEQ_POKECEN_RECOVER_ANIME )
   DEF_CMD( EvCmdPokecenPcOn, EV_SEQ_POKECEN_PC_ON )
   DEF_CMD( EvCmdPokecenPcRun, EV_SEQ_POKECEN_PC_RUN )
   DEF_CMD( EvCmdPokecenPcOff, EV_SEQ_POKECEN_PC_OFF )
-
-  DEF_CMD( EvCmdBModelAnimeCreate, EV_SEQ_BMODEL_ANIME_CREATE )
-  DEF_CMD( EvCmdBModelAnimeDelete, EV_SEQ_BMODEL_ANIME_DELETE )
-  DEF_CMD( EvCmdBModelAnimeSet, EV_SEQ_BMODEL_ANIME_SET )
-  DEF_CMD( EvCmdBModelAnimeWait, EV_SEQ_BMODEL_ANIME_WAIT )
-
-  DEF_CMD( EvCmdBModelDirectAnimeSetFinished, EV_SEQ_BMODEL_DIRECT_ANIME_SET_FINISHED )
-  DEF_CMD( EvCmdBModelAnimeStop, EV_SEQ_BMODEL_ANIME_STOP )
-  DEF_CMD( EvCmdBModelDirectChangeViewFlag, EV_SEQ_BMODEL_DIRECT_CHANGE_VIEW_FLAG )
-  DEF_CMD( EvCmdBModelDirectAnimeSetLoop, EV_SEQ_BMODEL_DIRECT_ANIME_SET_LOOP )
 
   DEF_CMD( EvCmdC03Center_ControlPlayerWay, EV_SEQ_C03CENTER_PLAYERWAY )
   DEF_CMD( EvCmdCrowdPeople, EV_SEQ_CROWD_PEOPLE_START )
@@ -557,41 +424,29 @@
   //レポート関連
   DEF_CMD( EvCmdReportCall,   EV_SEQ_REPORT_CALL )
   DEF_CMD( EvCmdGetSaveDataStatus,  EV_SEQ_REPORT_CHECK )
-  NO_CMD()
-  NO_CMD()
 
   // 通信関連
   DEF_CMD( EvCmdFieldCommExitWait,  EV_SEQ_FIELD_COMM_EXIT )
   DEF_CMD( EvCmdGetFieldCommNo, EV_SEQ_GET_FIELD_COMM_NO )
   DEF_CMD( EvCmdAvailableWireless, EV_SEQ_GET_AVAILABLE_WIRELESS )
   DEF_CMD( EvCmdRebootBeaconSearch, EV_SEQ_REBOOT_BEACON_SEARCH )
-
   DEF_CMD( EvCmdDisableFieldComm, EV_SEQ_DISABLE_FIELD_COMM )
   DEF_CMD( EvCmdEnableFieldComm, EV_SEQ_ENABLE_FIELD_COMM )
-  NO_CMD()
-  NO_CMD()
   
   //カメラ操作
   DEF_CMD( EvCmdCamera_Start,   EV_SEQ_CAMERA_START )
   DEF_CMD( EvCmdCamera_End,   EV_SEQ_CAMERA_END )
   DEF_CMD( EvCmdCamera_Purge,   EV_SEQ_CAMERA_PURGE )
   DEF_CMD( EvCmdCamera_Bind,   EV_SEQ_CAMERA_BIND )
-
   DEF_CMD( EvCmdCamera_Move,   EV_SEQ_CAMERA_MOVE )
   DEF_CMD( EvCmdCamera_RecoverMove,   EV_SEQ_CAMERA_RECV_MOVE )
   DEF_CMD( EvCmdCamera_WaitMove,   EV_SEQ_CAMERA_WAIT_MOVE )
   DEF_CMD( EvCmdCamera_MoveByID,   EV_SEQ_CAMERA_MOVE_BY_ID )
-
   DEF_CMD( EvCmdCamera_DefaultCamMove,   EV_SEQ_CAMERA_DEF_MOVE )
   DEF_CMD( EvCmdCamera_Shake,   EV_SEQ_SHAKE_CAMERA )
-  NO_CMD()
-  NO_CMD()
   
   //ショップ関連
   DEF_CMD( EvCmdCallShopProcBuy, EV_SEQ_CALL_SHOP_PROC_BUY )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
   
   //プロセスコール関連
   DEF_CMD( EvCmdFieldOpen,EV_SEQ_FIELD_OPEN )
@@ -603,12 +458,14 @@
   DEF_CMD( EvCmdCallBoxProc, EV_SEQ_CALL_BOX_PROC )
   DEF_CMD( EvCmdCallMailBoxProc, EV_SEQ_CALL_MAILBOX_PROC )
   DEF_CMD( EvCmdCallZukanAward, EV_SEQ_CALL_ZUKAN_AWARD )
-
   DEF_CMD( EvCmdCallGeonet, EV_SEQ_CALL_GEONET_PROC )
   DEF_CMD( EvCmdCallPsel, EV_SEQ_CALL_FIRST_POKE_SELECT )
-  NO_CMD()
-  NO_CMD()
   
+  // デモ呼び出し
+  DEF_CMD( EvCmdDemoScene, EV_SEQ_DEMO_SCENE )
+  DEF_CMD( EvCmdCallTVTDemo, EV_SEQ_CALL_TVT_DEMO )
+  DEF_CMD( EvCmdGameClearDemo, EV_SEQ_GOTO_GAMECLEAR )
+
   //バトルサブウェイ関連
   DEF_CMD( EvCmdBSubwayWorkClear, EV_SEQ_BSUBWAY_WORK_CLEAR )
   DEF_CMD( EvCmdBSubwayWorkCreate, EV_SEQ_BSUBWAY_WORK_CREATE )
@@ -637,7 +494,6 @@
   DEF_CMD( EvCmdMusicalFittingCall, EV_SEQ_MUSICAL_FITTING_CALL )
   DEF_CMD( EvCmdGetMusicalValue, EV_SEQ_GET_MUSICAL_VALUE )
   DEF_CMD( EvCmdGetMusicalFanValue, EV_SEQ_GET_MUSICAL_FAN_VALUE )
-
   DEF_CMD( EvCmdMusicalTools, EV_SEQ_MUSICAL_TOOLS )
   DEF_CMD( EvCmdAddMusicalGoods, EV_SEQ_ADD_MUSICAL_GOODS )
   DEF_CMD( EvCmdResetMusicalFanGiftFlg, EV_SEQ_RESET_MUSICAL_FAN_GIFT_FLG )
@@ -648,28 +504,41 @@
   DEF_CMD( EvCmdIntrudeMissionStart, EV_SEQ_INTRUDE_MISSION_START )
   DEF_CMD( EvCmdIntrudeConnectMapSetting, EV_SEQ_INTRUDE_CONNECT_MAP_SETTING )
   DEF_CMD( EvCmdCallMonolithProc, EV_SEQ_CALL_MONOLITH_PROC )
-  
   DEF_CMD( EvCmdIntrudeMissionChoiceListReq, EV_SEQ_INTRUDE_MISSION_CHOICE_LIST_REQ )
-  NO_CMD()
   DEF_CMD( EvCmdPalaceInDisguise, EV_SEQ_PALACE_IN_DISGUISE )
   DEF_CMD( EvCmdGetDisguiseCode, EV_SEQ_GET_DISGUISE_CODE )
+  DEF_CMD( EvCmdGetMissionEntry, EV_SEQ_GET_MISSION_ENTRY )
+  DEF_CMD( EvCmdIntrudeMissionStartWait, EV_SEQ_MISSION_START_WAIT_EVENT )
+
 
   //ポケモン戦関連
   DEF_CMD( EvCmdWildBattleSet, EV_SEQ_WILD_BTL_SET )
   DEF_CMD( EvCmdWildWin, EV_SEQ_WILD_WIN )
   DEF_CMD( EvCmdWildLose, EV_SEQ_WILD_LOSE )
   DEF_CMD( EvCmdWildLoseCheck, EV_SEQ_WILD_LOSE_CHECK )
-
   DEF_CMD( EvCmdWildBattleRetryCheck, EV_SEQ_WILD_BTL_RETRY_CHECK )
   DEF_CMD( EvCmdCaptureDemoBattleSet, EV_SEQ_CAPTURE_DEMO_SET )
-  NO_CMD()
-  NO_CMD()
 
   // ゲート関連
   DEF_CMD( EvCmdLookElboard, EV_SEQ_LOOK_ELBOARD )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+
+  //ジムギミック関連
+  DEF_CMD( EvCmdGymElec_Init, EV_SEQ_GYM_ELEC_INIT )
+  DEF_CMD( EvCmdGymElec_PushSw, EV_SEQ_GYM_ELEC_PUSH_SW )
+  DEF_CMD( EvCmdGymElec_SetTrEncFlg, EV_SEQ_GYM_ELEC_SET_TR_ENC_FLG )
+
+  DEF_CMD( EvCmdGymNormal_Init, EV_SEQ_GYM_NORMAL_INIT )
+  DEF_CMD( EvCmdGymNormal_Unrock, EV_SEQ_GYM_NORMAL_UNROCK )
+  DEF_CMD( EvCmdGymNormal_CheckUnrock, EV_SEQ_GYM_NORMAL_CHK_UNROCK )
+  DEF_CMD( EvCmdGymNormal_MoveWall, EV_SEQ_GYM_NORMAL_MOVE_WALL )
+
+  DEF_CMD( EvCmdGymAnti_Init, EV_SEQ_GYM_ANTI_INIT )
+  DEF_CMD( EvCmdGymAnti_SwOn, EV_SEQ_GYM_ANTI_SW_ON )
+  DEF_CMD( EvCmdGymAnti_OpenDoor, EV_SEQ_GYM_ANTI_OPEN_DOOR )
+  DEF_CMD( EvCmdGymAnti_SwOff, EV_SEQ_GYM_ANTI_SW_OFF )
+
+  DEF_CMD( EvCmdGymGround_SetEnterPos, EV_SEQ_GYM_GROUND_SET_ENTER_POS )
+  DEF_CMD( EvCmdGymGroundEnt_SetEnterPos, EV_SEQ_GYM_GROUND_ENT_SET_ENTER_POS )
 
   //虫ジム
   DEF_CMD( EvCmdGymInsect_SwOn, EV_SEQ_GYM_INSECT_SW_ON )
@@ -681,7 +550,19 @@
   DEF_CMD( EvCmdGymGround_MvLift, EV_SEQ_GYM_GROUND_MV_LIFT )
   DEF_CMD( EvCmdGymGround_ExitLift, EV_SEQ_GYM_GROUND_EXIT_LIFT )
   DEF_CMD( EvCmdGymGroundEnt_ExitLift, EV_SEQ_GYM_GROUND_ENT_EXIT_LIFT )
-  NO_CMD()
+
+  // 氷ジム
+  DEF_CMD( EvCmdGymIce_SwAnm, EV_SEQ_GYM_ICE_SW_ANM )
+  DEF_CMD( EvCmdGymIce_WallAnm, EV_SEQ_GYM_ICE_WALL_ANM )
+  DEF_CMD( EvCmdGymIce_ChgRail, EV_SEQ_GYM_ICE_CHG_RAIL )
+
+  //ドラゴンジム
+  DEF_CMD( EvCmdGymDragon_Init, EV_SEQ_GYM_DRAGON_INIT )
+  DEF_CMD( EvCmdGymDragon_CallGmk, EV_SEQ_GYM_DRAGON_CALL_GMK )
+  DEF_CMD( EvCmdGymDragon_JumpDown, EV_SEQ_GYM_DRAGON_JUMP_DOWN )
+  DEF_CMD( EvCmdGymDragon_MoveHead, EV_SEQ_GYM_DRAGON_MOVE_HEAD )
+  DEF_CMD( EvCmdGymDragon_MoveArm, EV_SEQ_GYM_DRAGON_MOVE_ARM )
+  
 
   //CGear関連
   DEF_CMD( EvCmdCallCGearGetDemo, EV_SEQ_CALL_CGEAR_GET_DEMO )
@@ -693,30 +574,21 @@
   DEF_CMD( EvCmdFldCi_CallCutin, EV_SEQ_CALL_FLD3D_CUTIN )
   DEF_CMD( EvCmdFldCi_CallPokeCutin, EV_SEQ_CALL_POKE_CUTIN )
   DEF_CMD( EvCmdFldCi_CallNpcFlyCutin, EV_SEQ_CALL_NPCFLY_CUTIN )
-  NO_CMD()
 
   // 四天王関連
   DEF_CMD( EvCmdFourKings_WalkEvent, EV_SEQ_FOURKINGS_WALKEVENT )
   DEF_CMD( EvCmdFourKings_SetCameraParam, EV_SEQ_FOURKINGS_SET_TOP_CAMERA )
   DEF_CMD( EvCmdFourKings_SetSoundSystem, EV_SEQ_FOURKINGS_SET_SOUND_SYSTEM )
-  NO_CMD()
 
   // 遊覧船関連
   DEF_CMD( EvCmdPlBoat_Start, EV_SEQ_PL_BOAT_START )
   DEF_CMD( EvCmdPlBoat_End, EV_SEQ_PL_BOAT_END )
   DEF_CMD( EvCmdPlBoat_GetTrNum, EV_SEQ_PL_BOAT_GET_TR_NUM )
   DEF_CMD( EvCmdPlBoat_AddTime, EV_SEQ_PL_BOAT_ADD_TIME )
-
   DEF_CMD( EvCmdPlBoat_GetRoomInfo, EV_SEQ_PL_BOAT_GET_ROOM_INFO )
   DEF_CMD( EvCmdPlBoat_SetRoomInfo, EV_SEQ_PL_BOAT_SET_ROOM_INFO )
   DEF_CMD( EvCmdPlBoat_CallDemo, EV_SEQ_PL_BOAT_CALL_DEMO )
   DEF_CMD( EvCmdPlBoat_EndGame, EV_SEQ_PL_BOAT_GAME_END )
-
-  // 氷ジム 4つめはドラゴンジム
-  DEF_CMD( EvCmdGymIce_SwAnm, EV_SEQ_GYM_ICE_SW_ANM )
-  DEF_CMD( EvCmdGymIce_WallAnm, EV_SEQ_GYM_ICE_WALL_ANM )
-  DEF_CMD( EvCmdGymIce_ChgRail, EV_SEQ_GYM_ICE_CHG_RAIL )
-  DEF_CMD( EvCmdGymDragon_MoveArm, EV_SEQ_GYM_DRAGON_MOVE_ARM )
 
   // マップフェード
   DEF_CMD( EvCmdMapFade_BlackIn, EV_SEQ_MAP_FADE_BLACK_IN )
@@ -729,58 +601,31 @@
   DEF_CMD( EvCmdMapFade_InitBG, EV_SEQ_MAP_FADE_INIT_BG )
   DEF_CMD( EvCmdMapFade_SeasonIn_Force, EV_SEQ_MAP_FADE_SEASON_IN_FORCE )
 
-  DEF_CMD( EvCmdDemoScene, EV_SEQ_DEMO_SCENE )
-  DEF_CMD( EvCmdCallTVTDemo, EV_SEQ_CALL_TVT_DEMO )
-  DEF_CMD( EvCmdGameClearDemo, EV_SEQ_GOTO_GAMECLEAR )
-  NO_CMD()
+  // 遅いマップフェード
+  DEF_CMD( EvCmdMapFade_BlackInSlow, EV_SEQ_MAP_FADE_BLACK_IN_SLOW )
+  DEF_CMD( EvCmdMapFade_BlackOutSlow, EV_SEQ_MAP_FADE_BLACK_OUT_SLOW )
+  DEF_CMD( EvCmdMapFade_WhiteInSlow, EV_SEQ_MAP_FADE_WHITE_IN_SLOW )
+  DEF_CMD( EvCmdMapFade_WhiteOutSlow, EV_SEQ_MAP_FADE_WHITE_OUT_SLOW )
 
-  //ドラゴンジム
-  DEF_CMD( EvCmdGymDragon_Init, EV_SEQ_GYM_DRAGON_INIT )
-  DEF_CMD( EvCmdGymDragon_CallGmk, EV_SEQ_GYM_DRAGON_CALL_GMK )
-  DEF_CMD( EvCmdGymDragon_JumpDown, EV_SEQ_GYM_DRAGON_JUMP_DOWN )
-  DEF_CMD( EvCmdGymDragon_MoveHead, EV_SEQ_GYM_DRAGON_MOVE_HEAD )
-  
   //対戦系受付ユーティリティ
   DEF_CMD( EvCmdBtlUtilSetRegulationOutPokeName, EV_SEQ_BTL_UTIL_SET_REGULATION_OUT_POKE_NAME )
   DEF_CMD( EvCmdBtlUtilPartySelect, EV_SEQ_BTL_UTIL_PARTY_SELECT )
-  NO_CMD()
-  NO_CMD()
   
   // ポケモンリーグ フロント
   DEF_CMD( EvCmdLeagueFrontLiftDown, EV_SEQ_LEAGUE_FRONT_LIFT_DOWN )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-
-  //侵入関連その２
-  DEF_CMD( EvCmdGetMissionEntry, EV_SEQ_GET_MISSION_ENTRY )
-  DEF_CMD( EvCmdIntrudeMissionStartWait, EV_SEQ_MISSION_START_WAIT_EVENT )
-  NO_CMD()
-  NO_CMD()
 
   //移動ポケモン
   DEF_CMD( EvCmdAddMovePokemon, EV_SEQ_ADD_MOVE_POKEMON )
   DEF_CMD( EvCmdGetMovePokemonStatus, EV_SEQ_GET_MOVE_POKEMON_STATUS )
-  NO_CMD()
-  NO_CMD()
 
   // 交換関連
   DEF_CMD( EvCmdFieldPokeTrade, EV_SEQ_FIELD_POKE_TRADE )
   DEF_CMD( EvCmdFieldPokeTradeCheck, EV_SEQ_FIELD_POKE_TRADE_CHECK )
-  NO_CMD()
-  NO_CMD()
 
-  // 技思い出し関連
-  DEF_CMD( EvCmdCheckRemaindWaza, EV_SEQ_CHECK_WAZA_REMAIND ) 
-  DEF_CMD( EvCmdCallWazaRemindProc, EV_SEQ_CALL_WAZA_REMAIND_PROC )
-  NO_CMD()
-  NO_CMD()
 
   //パルパーク関連
   DEF_CMD( EvCmdPalparkCall    , EV_SEQ_CALL_PALPARK ) 
   DEF_CMD( EvCmdGetPalparkValue, EV_SEQ_GET_PALPARK_VALUE )
-  NO_CMD()
-  NO_CMD()
 
   //WFBC関連
   DEF_CMD( EvCmdWfbc_TalkStart, EV_SEQ_WFBC_TALKSTART )
@@ -795,28 +640,14 @@
 
   //バッジチェックゲート関連
   DEF_CMD( EvCmdJetBadgeGateGimmickInit, EV_SEQ_JET_BADGE_GATE_GIMMICK_INIT )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
   
   //エレベーター
   DEF_CMD( EvCmdElevatorEntryList, EV_SEQ_ELEVATOR_ENTRY_LIST )
   DEF_CMD( EvCmdElevatorBmpMenuMakeList, EV_SEQ_ELEVATOR_MAKE_LIST )
   DEF_CMD( EvCmdElevatorMapChange, EV_SEQ_ELEVATOR_MAP_CHANGE)
-  NO_CMD()
-
-  //ポケモンID数検索
-  DEF_CMD( EvCmdPokeID_SearchNum, EV_SEQ_SEARCH_POKEID_NUM )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
 
   //図鑑評価
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
   DEF_CMD( EvCmdGetZukanComplete, EV_SEQ_GET_ZUKAN_COMPLETE )
-
   DEF_CMD( EvCmdGetZukanHyouka, EV_SEQ_GET_ZUKAN_HYOUKA )
   DEF_CMD( EvCmdSetZukanZenkokuFlag, EV_SEQ_SET_ZUKAN_ZENKOKU_FLAG )
   DEF_CMD( EvCmdGetZukanZenkokuFlag, EV_SEQ_GET_ZUKAN_ZENKOKU_FLAG )
@@ -826,25 +657,20 @@
   DEF_CMD( EvCmdFaceup_Start, EV_SEQ_FACEUP_SATRT )
   DEF_CMD( EvCmdFaceup_End, EV_SEQ_FACEUP_END )
   DEF_CMD( EvCmdFaceup_Change, EV_SEQ_FACEUP_CHG )
-  NO_CMD()
 
   //相性チェック
   DEF_CMD( EvCmdGetFeelingCheckCount, EV_SEQ_GET_FEELING_COUNT )
   DEF_CMD( EvCmdSetFeelingCheckName, EV_SEQ_SET_FEELING_NAME )
-  NO_CMD()
-  NO_CMD()
 
   //国連
   DEF_CMD( EvCmdUn_GetCountryNum, EV_SEQ_UN_GET_COUNTRY_NUM )
   DEF_CMD( EvCmdUn_SetTalkFlg, EV_SEQ_UN_SET_TALK_FLG )
   DEF_CMD( EvCmdUn_CheckTalkFlg, EV_SEQ_UN_CHK_TALK_FLG )
   DEF_CMD( EvCmdUn_SetPlayerNature, EV_SEQ_UN_SET_MY_NATURE )
-
   DEF_CMD( EvCmdUn_SetCountryInfo, EV_SEQ_UN_SET_COUNTRY_INFO )
   DEF_CMD( EvCmdUn_GetRoomObjCode, EV_SEQ_UN_GET_ROOM_OBJ_CODE )
   DEF_CMD( EvCmdUn_GetRoomInfo, EV_SEQ_UN_GET_ROOM_INFO )
   DEF_CMD( EvCmdUn_GetRoomObjMsg, EV_SEQ_UN_GET_ROOM_OBJ_MSG )
-
   DEF_CMD( EvCmdUn_CallFloorSelApp, EV_SEQ_UN_CALL_FLOOR_SEL_APP )
   DEF_CMD( EvCmdUn_GetValidDataNum, EV_SEQ_UN_GET_VALID_DATA_NUM )
   DEF_CMD( EvCmdUn_SetPlayerFavorite, EV_SEQ_UN_SET_MY_FAVORITE )
@@ -856,36 +682,30 @@
   DEF_CMD( EvCmdSkillTeachGetWazaID,  EV_SEQ_SKILLTEACH_GET_WAZAID )
   DEF_CMD( EvCmdSkillTeachSelectPokemon, EV_SEQ_SKILLTEACH_SELECT_POKEMON )
 
+  // 技思い出し関連
+  DEF_CMD( EvCmdCheckRemaindWaza, EV_SEQ_CHECK_WAZA_REMAIND ) 
+  DEF_CMD( EvCmdCallWazaRemindProc, EV_SEQ_CALL_WAZA_REMAIND_PROC )
+
   //イベントデータ操作関連
   DEF_CMD( EvCmdMoveBgEventPos, EV_SEQ_MOVE_BG_EVENT_POS )
   DEF_CMD( EvCmdMoveExitEventPos, EV_SEQ_MOVE_EXIT_EVENT_POS )
   DEF_CMD( EvCmdMoveNPCDataPos, EV_SEQ_MOVE_NPC_DATA_POS )
-  NO_CMD()
 
   //簡易会話
   DEF_CMD( EvCmdCallEasyTalkApp, EV_SEQ_CALL_EASY_TALK_APP )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
 
   //ふしぎなおくりもの配達員
   DEF_CMD( EvCmdPostmanCommand, EV_SEQ_POSTMAN_REQUEST )
-  NO_CMD()
   DEF_CMD( EvCmdDreamWorldCommand, EV_SEQ_PDW_POSTMAN_REQUEST )
-  NO_CMD()
 
   //ビーコン&Gパワー関連
   DEF_CMD( EvCmdBeaconSetRequest, EV_SEQ_BEACON_SET_REQUEST )
   DEF_CMD( EvCmdCheckGPowerFinish, EV_SEQ_CHECK_GPOWER_FINISH )
   DEF_CMD( EvCmdGPowerUseEffect, EV_SEQ_GPOWER_USE_EFFECT )
-  NO_CMD()
 
   // ビッグスタジアム リトルコート
-  NO_CMD()
-  NO_CMD()
   DEF_CMD( EvCmdReBattleTrainerSetUp2vs2TrID, EV_SEQ_REBATTLE_TRAINER_SETUP_2VS2_TRID )
   DEF_CMD( EvCmdReBattleTrainerStart, EV_SEQ_REBATTLE_TRAINER_START )
-
   DEF_CMD( EvCmdReBattleTrainerEnd, EV_SEQ_REBATTLE_TRAINER_END )
   DEF_CMD( EvCmdReBattleTrainerSetUpTrID, EV_SEQ_REBATTLE_TRAINER_SETUP_TRID )
   DEF_CMD( EvCmdReBattleTrainerSetUpRndTr, EV_SEQ_REBATTLE_TRAINER_SETUP_RND_TR )
@@ -916,17 +736,12 @@
   DEF_CMD( EvCmdPDW_CommonTools, EV_SEQ_PDW_COMMON_TOOLS )
   DEF_CMD( EvCmdPDW_FurnitureTools, EV_SEQ_PDW_FURNITURE_TOOLS )
   DEF_CMD( EvCmdPDW_SetFurnitureWord, EV_SEQ_PDW_SET_FURNITURE_WORD )
-  NO_CMD()
 
   //パスワード
   DEF_CMD( EvCmdCheckPassword, EV_SEQ_MACHINE_PASSWORD )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
 
   //クイズ
   DEF_CMD( EvCmdGetQuiz, EV_SEQ_GET_QUIZ )
-  NO_CMD()
 
   // 鑑定士
   DEF_CMD( EvCmdItemJudgeHaveCheck, EV_SEQ_ITEMJUDGE_HAVE_CHECK )
@@ -953,6 +768,7 @@
   DEF_CMD( EvCmdGetResearchTeamRank, EV_SEQ_GET_RESEARCH_TEAM_RANK ) 
   DEF_CMD( EvCmdResearchTeamRankUp, EV_SEQ_RESEARCH_TEAM_RANK_UP ) 
 
+
   //配布イベントで使用するために用意したコマンド
   DEF_CMD( EvCmdGetEvtPokePos, EV_SEQ_GET_EVT_POKE_POS )
   DEF_CMD( EvCmdMoveBall, EV_SEQ_MOVE_BALL )
@@ -966,10 +782,9 @@
 
   DEF_CMD( EvCmdSetEvtPokeAfterFlg, EV_SEQ_SET_EVT_POKE_AFT_FLG )
   DEF_CMD( EvCmdCheckEvtLock, EV_SEQ_CHK_EVT_LOCK )
-  NO_CMD()
-  NO_CMD()
 
-  //
+
+  //シンボルエンカウント関連
   DEF_CMD( EvCmdSymbolMapWarp, EV_SEQ_SYMBOL_MAP_WARP )
   DEF_CMD( EvCmdSymbolMapGetInfo, EV_SEQ_SYMBOL_MAP_GET_INFO )
   DEF_CMD( EvCmdSymbolMapMovePokemon, EV_SEQ_SYMBOL_MAP_MOVE_POKE )
@@ -978,65 +793,36 @@
   DEF_CMD( EvCmdSymbolMapPokeSet, EV_SEQ_SYMBOL_MAP_POKE_SET )
   DEF_CMD( EvCmdSymbolPokeBattle, EV_SEQ_SYMBOL_POKE_BATTLE )
   DEF_CMD( EvCmdSymbolPokeGet, EV_SEQ_SYMBOL_POKE_GET )
-  NO_CMD()
 
   //エンカウントデータ参照イベント関連
   DEF_CMD( EvCmdGetFishingEncountMonsNo, EV_SEQ_GET_FISHING_ENCOUNT_MONSNO )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
   
   //観覧車トレーナー対戦関連
   DEF_CMD( EvCmdGetWheelTrainerObjID, EV_SEQ_GET_WHEEL_TRAINER_OBJ_ID )
   DEF_CMD( EvCmdGetWheelTrainerTrID, EV_SEQ_GET_WHEEL_TRAINER_TR_ID )
-  NO_CMD()
-  NO_CMD()
 
   //トレインタウン用
   DEF_CMD( EvCmdGetTrainModelID, EV_SEQ_GET_TRAIN_MODEL_ID )
   DEF_CMD( EvCmdGetTrainTownCondition, EV_SEQ_GET_TRAIN_TOWN_COND )
-  NO_CMD()
-  NO_CMD()
 
   //ポケモン関連イベント用
   DEF_CMD( EvCmdGetMezameruPowerType, EV_SEQ_GET_MEZAMERU_POWER_TYPE )
   DEF_CMD( EvCmdGetBreederJudgeResult, EV_SEQ_GET_BREEDER_JUDGE_RESULT )
   DEF_CMD( EvCmdWazaMachineLot, EV_SEQ_WAZAMACHINE_LOT )
-  NO_CMD()
+  //ポケモンID数検索
+  DEF_CMD( EvCmdPokeID_SearchNum, EV_SEQ_SEARCH_POKEID_NUM )
 
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+
 
   //レコード数え上げ関連
   DEF_CMD( EvCmdAddRecord, EV_SEQ_ADD_RECORD )
   DEF_CMD( EvCmdGetRecord, EV_SEQ_GET_RECORD )
-  NO_CMD()
-  NO_CMD()
 
   //D12ギミック制御
   DEF_CMD( EvCmdD12Gmk_Vanish, EV_SEQ_D12_GMK_VANISH )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-
-  // 遅いマップフェード
-  DEF_CMD( EvCmdMapFade_BlackInSlow, EV_SEQ_MAP_FADE_BLACK_IN_SLOW )
-  DEF_CMD( EvCmdMapFade_BlackOutSlow, EV_SEQ_MAP_FADE_BLACK_OUT_SLOW )
-  DEF_CMD( EvCmdMapFade_WhiteInSlow, EV_SEQ_MAP_FADE_WHITE_IN_SLOW )
-  DEF_CMD( EvCmdMapFade_WhiteOutSlow, EV_SEQ_MAP_FADE_WHITE_OUT_SLOW )
 
   // テレビ番組抽選
   DEF_CMD( EvCmdTV_GetMsg, EV_SEQ_TV_GET_MSG )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-
-  DEF_CMD( EvCmdObjWarpOut, EV_SEQ_OBJ_WARP_OUT )
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
 
 
   END_CMD
