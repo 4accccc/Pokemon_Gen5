@@ -1037,26 +1037,27 @@ static void _menuMyPokemonSend(POKEMON_TRADE_WORK* pWork)
 
 static BOOL _NEGO_Select6PokemonSelect(POKEMON_TRADE_WORK* pWork, int trgno)
 {
+  int side = trgno / GTS_NEGO_POKESLT_MAX;
+  int poke = trgno % GTS_NEGO_POKESLT_MAX;
+
   if(trgno != -1){
-    POKEMON_PARAM* pp = pWork->GTSSelectPP[1-(trgno/GTS_NEGO_POKESLT_MAX)][trgno%GTS_NEGO_POKESLT_MAX]; //さかさまにする
-    if(pp && PP_Get(pp,ID_PARA_poke_exist,NULL)){
-      pWork->pokemonselectno = trgno;
-
-      OS_TPrintf("pokemonselectno %d\n",pWork->pokemonselectno);
-      
-      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
-      TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
-
-      
-      if(trgno/GTS_NEGO_POKESLT_MAX){  //こちら側は自分のポケモンが入っている 自分のはみるだけ
-        _CHANGE_STATE(pWork,_menuFriendPokemonStart);
+    if(pWork->GTSSelectIndex[1-side][poke]!=-1){
+      POKEMON_PARAM* pp = pWork->GTSSelectPP[ 1-side ][ poke ]; //さかさまにする
+      if(pp && PP_Get(pp,ID_PARA_poke_exist,NULL)){
+        pWork->pokemonselectno = trgno;
+        OS_TPrintf("pokemonselectno %d\n",pWork->pokemonselectno);
+        PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+        TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
+        if(trgno/GTS_NEGO_POKESLT_MAX){  //こちら側は自分のポケモンが入っている 自分のはみるだけ
+          _CHANGE_STATE(pWork,_menuFriendPokemonStart);
+        }
+        else{
+          POKE_MAIN_Pokemonset(pWork, trgno/GTS_NEGO_POKESLT_MAX, pp);
+          GFL_STD_MemCopy(pp, IRC_POKEMONTRADE_GetRecvPP(pWork,0) ,POKETOOL_GetWorkSize());
+          _CHANGE_STATE(pWork, _menuMyPokemonSend);
+        }
+        return TRUE;
       }
-      else{
-        POKE_MAIN_Pokemonset(pWork, trgno/GTS_NEGO_POKESLT_MAX, pp);
-        GFL_STD_MemCopy(pp, IRC_POKEMONTRADE_GetRecvPP(pWork,0) ,POKETOOL_GetWorkSize());
-        _CHANGE_STATE(pWork, _menuMyPokemonSend);
-      }
-      return TRUE;
     }
   }
   return FALSE;

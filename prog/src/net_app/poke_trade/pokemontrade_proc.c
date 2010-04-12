@@ -2988,15 +2988,21 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
     _CHANGE_STATE(pWork,_startSearchMojiState);
     return;
   case TOUCHBAR_ICON_CUTSOM2:
-    if(pWork->selectIndex == -1){  //ポケモン選んで無い場合元に戻す
-      TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE);
-      TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
-    }
-    else{
-      if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+      if(POKE_GTS_IsMyIn(pWork)){
         TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
         TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
         _CHANGE_STATE(pWork, POKE_GTS_Select6MessageInit);
+      }
+      else{
+        TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE);
+        TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
+      }
+    }
+    else{
+      if(pWork->selectIndex == -1){  //ポケモン選んで無い場合元に戻す
+        TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE);
+        TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
       }
       else{
         _CHANGE_STATE(pWork, _changeMenuOpen);
