@@ -43,6 +43,7 @@ SUBDIRS	=	wmi \
 			fldmapdata/zonetable/zoneindex \
 			zukan_data \
 			research_radar \
+			fld_trade \
 			message\
 			fldmmdl \
 			encount \
@@ -130,7 +131,6 @@ SUBDIRS	=	wmi \
 			mail \
 			season_display \
 			zukan_gra \
-			fld_trade \
 			intro \
 			regulation_card \
 			comm_tvt \

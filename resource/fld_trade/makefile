@@ -34,6 +34,7 @@ PM_VER_H_DIR		= ..\\..\\prog\\include\\
 
 #コピー先
 CPY_DIR	= .
+GMM_CPY_DIR = ..\\message\\src\\
 
 # バイナリデータ出力先
 BIN = ./bin
@@ -77,6 +78,7 @@ subdir:
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR) 
+	$(COPY) -f -u fld_trade.gmm $(GMM_CPY_DIR)
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
@@ -96,6 +98,7 @@ $(targetname).narc: $(MAKE_FILE)
 	ruby fld_trade_poke.rb fld_trade_poke.txt $(BIN)
 	nnsarc -c -i -n $(targetname).narc -S fld_trade_list.lst
 	$(NAIXCUT) $(targetname).naix
+	$(COPY) -f -u fld_trade.gmm $(GMM_CPY_DIR)
 
 else
 file_cp:

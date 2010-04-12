@@ -38,6 +38,7 @@
 #include "poke_tool/shinka_check.h"
 #include "demo/shinka_demo.h"
 #include "poke_tool/poke_memo.h"
+#include "include/msg/msg_fld_trade.h"
 
 #define DEBUG_MODE
 
@@ -102,7 +103,7 @@ FLD_TRADE_WORK* FLD_TRADE_WORK_Create( u32 heap_id, u32 tradeNo )
 	// 親データ作成
 	work->pokeOya = MyStatus_AllocWork( heap_id );
 	MyStatus_Init( work->pokeOya );
-	strbuf = GetTradeMsgData( heap_id, FLD_TRADE_GET_OYA_GMM( tradeNo ) );
+	strbuf = GetTradeMsgData( heap_id, work->pokeData->str_id_oya_name );
 	GFL_STR_GetStringCode( strbuf, str_arry, 128 );
 	GFL_STR_DeleteBuffer( strbuf );
 	MyStatus_SetMyName( work->pokeOya, str_arry );
@@ -238,7 +239,7 @@ static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID,
 #endif
 
 	// ニックネーム
-	strbuf = GetTradeMsgData( heapID, FLD_TRADE_GET_POKE_GMM(tradeNo) );
+	strbuf = GetTradeMsgData( heapID, data->str_id_nickname );
 	PP_Put( pp, ID_PARA_nickname, (u32)strbuf );
 	GFL_STR_DeleteBuffer( strbuf );
 
@@ -288,7 +289,7 @@ static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID,
 	PP_Put( pp, ID_PARA_item, data->item );
 
 	// 親の名前
-	strbuf = GetTradeMsgData( heapID, FLD_TRADE_GET_OYA_GMM(tradeNo) );
+	strbuf = GetTradeMsgData( heapID, data->str_id_oya_name );
 	PP_Put( pp, ID_PARA_oyaname, (u32)strbuf );
 	GFL_STR_DeleteBuffer( strbuf );
 

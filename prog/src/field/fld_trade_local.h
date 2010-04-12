@@ -13,6 +13,7 @@
 //=====================================
 typedef struct 
 {
+  u32 trade_id;       // 交換ID
 	u32 monsno;			    // モンスターナンバー
   u32 formno;         // フォームナンバー
   u32 level;          // レベル
@@ -37,17 +38,9 @@ typedef struct
 	u32 world_code;		  // 親の国コード
 	u32 change_monsno;	// 交換するモンスターナンバー
 	u32 change_monssex;	// 交換するポケモンの性別（0:オス,1:メス,2:性別問わず)
+  u32 str_id_nickname; // ニックネームの文字列ID
+  u32 str_id_oya_name; // 親名の文字列ID
 
 } FLD_TRADE_POKEDATA;
-
-#include "include/msg/msg_fld_trade.h"
-
-//-----------------------------------------------------------------------------
-/**
- *					定数宣言
-*/
-//-----------------------------------------------------------------------------
-#define FLD_TRADE_GET_POKE_GMM(x)	(x)
-#define FLD_TRADE_GET_OYA_GMM(x)	(TRADE_OYA_00+x)
 
 #endif //__H_FIELD_TRADE_LOCAL_H__
