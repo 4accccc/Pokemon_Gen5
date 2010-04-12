@@ -27,5 +27,9 @@ extern GMEVENT* EVENT_GPowerEffectEnd( GAMESYS_WORK * gsys );
  */
 extern GMEVENT* EVENT_GPowerUseEffect( GAMESYS_WORK * gsys );
 
+/*
+ *  @brief  発動中のGパワー確認イベント
+ */
+extern GMEVENT* EVENT_GPowerEnableListCheck( GAMESYS_WORK * gsys, FIELDMAP_WORK* fieldmap );
 
 

@@ -15,6 +15,7 @@ enum{
   SEQ_THANK_YOU,
   SEQ_RETURN_CGEAR,
   SEQ_CALL_DETAIL_VIEW,
+  SEQ_EV_REQ_WAIT,
   SEQ_END,
 };
 
@@ -33,6 +34,7 @@ typedef enum{
  EV_RETURN_CGEAR,
  EV_CALL_DETAIL_VIEW,
  EV_GPOWER_USE,
+ EV_GPOWER_CHECK,
  EV_CALL_TALKMSG_INPUT,
 }BEACON_DETAIL_EVENT;
 
@@ -197,14 +199,27 @@ enum{
 
 //タスクメニュー数
 enum{
- TMENU_YES,
- TMENU_NO,
- TMENU_MAX,
+ TMENU_YN_CHECK,
+ TMENU_YN_YES,
+ TMENU_YN_NO,
+ TMENU_YN_MAX,
 };
+enum{
+ TMENU_CHECK_CALL,
+ TMENU_CHECK_CLOSE,
+ TMENU_CHECK_MAX,
+};
+#define TMENU_PY (21)
+#define TMENU_W  (8)
+#define TMENU_H  (APP_TASKMENU_PLATE_HEIGHT)
 
-#define TMENU_YN_PX (16)
-#define TMENU_YN_PY (21)
-#define TMENU_YN_W  (8)
+#define TMENU_YN_PX (8)
+#define TMENU_CHECK_PX (16)
+
+enum{
+ TMENU_ID_YESNO,
+ TMENU_ID_CHECK,
+};
 
 ////////////////////////////////////////////////////
 //アクター関連定義

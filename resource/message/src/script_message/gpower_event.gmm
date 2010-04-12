@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-18T15:51:54"/>
+	<create user="iwasawa" host="W00157" date="2010-04-10T15:31:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,13 +260,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1920" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="785" top="91" right="1258" bottom="715" visible="yes"/>
-		<band id="0" index="0" style="0000" width="459"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="626"/>
-		<band id="3" index="3" style="0000" width="626"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -288,7 +288,7 @@
 	</lock>
 
 
-	<row id="msg_wonderpower_01">
+	<row id="msg_gpower_01">
 		<comment>Ｇパワー使用時のメッセージ
 この後画面フラッシュ</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　デルパワー
@@ -297,7 +297,7 @@
 「[1:1C:簡易会話単語:2]」を使った！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_wonderpower_02_00">
+	<row id="msg_gpower_02_00">
 		<comment>&quot;一定時間たち、効果が切れたときのメッセージ
 同時に切れるパワーがもうない時</comment>
 		<language name="JPN" width="256">「[1:1C:簡易会話単語:2]」の
@@ -306,7 +306,7 @@
 効果が　切れた</language>
 	</row>
 
-	<row id="msg_wonderpower_02_01">
+	<row id="msg_gpower_02_01">
 		<comment>一定時間たち、効果が切れたときのメッセージ
 同時に切れるパワーがまだあるとき</comment>
 		<language name="JPN" width="256">「[1:1C:簡易会話単語:2]」の
@@ -315,84 +315,91 @@
 効果が　切れた[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_01">
+	<row id="msg_gpower_check_start">
+		<comment>Gパワーの状態確認メッセージ</comment>
+		<language name="JPN" width="256">デルパワーの　じょうたいを
+かくにん　します[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">デルパワーの　状態を　確認します[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gpower_effect_01">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　ポケモンに
 そうぐうしやすくなった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　ポケモンに
 遭遇しやすくなった！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_02">
+	<row id="msg_gpower_effect_02">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　ポケモンに
 そうぐうしづらくなった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　ポケモンに
 遭遇しづらくなった！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_03">
+	<row id="msg_gpower_effect_03">
 		<language name="JPN" width="256">ポケモンが　タマゴから
 かえりやすくなった！</language>
 		<language name="JPN_KANJI" width="256">ポケモンが　タマゴから
 かえりやすくなった！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_04">
+	<row id="msg_gpower_effect_04">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンは
 なつきやすくなった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンは
 なつきやすくなった！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_05">
+	<row id="msg_gpower_effect_05">
 		<language name="JPN" width="256">フレンドリィショップで
 やすうりが　はじまった！</language>
 		<language name="JPN_KANJI" width="256">フレンドリィショップで
 安売りが　開始された！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_06">
+	<row id="msg_gpower_effect_06">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　[1:02:ポケモンニックネーム:1]は
 たいりょくが　かいふくした！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　[1:02:ポケモンニックネーム:1]は
 体力が回復した！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_07">
+	<row id="msg_gpower_effect_07">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　[1:02:ポケモンニックネーム:1]は
 ＰＰが　かいふくした！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　[1:02:ポケモンニックネーム:1]は
 ＰＰが回復した！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_08">
+	<row id="msg_gpower_effect_08">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンは
 けいけんちを　もらいやすくなった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンは
 経験値を　もらいやすくなった！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_09">
+	<row id="msg_gpower_effect_09">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンは
 けいけんちを　もらいづらくなった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンは
 経験値を　もらいづらくなった！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_10">
+	<row id="msg_gpower_effect_10">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　おこづかいを
 もらいやすくなった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　おこづかいを
 もらいやすくなった！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_11">
+	<row id="msg_gpower_effect_11">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　ポケモンを
 つかまえやすくなった！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　ポケモンを
 捕まえやすくなった！</language>
 	</row>
 
-	<row id="msg_wonderpower_effect_12">
+	<row id="msg_gpower_effect_12">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンが
 かんぜん　かいふくした！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンが

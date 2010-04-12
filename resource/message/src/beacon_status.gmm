@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-03-29T16:07:50"/>
+	<create user="iwasawa" host="W00157" date="2010-04-10T17:49:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -324,7 +324,9 @@
 
 	<row id="msg_sys_gpower_use01">
 		<comment>0：トレーナー名
-1：デルパワー名</comment>
+1：デルパワー名
+
+※通常プレイヤー用</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが　はつどうした
 [1:11:特殊状態名:1]を　つかいますか？</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが　発動した
@@ -332,6 +334,17 @@
 	</row>
 
 	<row id="msg_sys_gpower_use02">
+		<comment>0：トレーナー名
+1：デルパワー名
+
+※NPC用</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが　はつどうした
+[1:11:特殊状態名:1]を　つかいますか？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが　発動した
+[1:11:特殊状態名:1]を　使いますか？</language>
+	</row>
+
+	<row id="msg_sys_gpower_use_end">
 		<comment>1：デルパワー名</comment>
 		<language name="JPN" width="256">[1:11:特殊状態名:1]を
 つかいました！[BE:01:ページ切り替え（クリア）]</language>
@@ -373,16 +386,34 @@
 残り　[2:02:３桁:4]分[2:01:２桁:5]秒[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_sys_tmenu_yes" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_sys_tmenu_yesno_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>メニュー項目</comment>
+		<language name="JPN" width="256">かくにん</language>
+		<language name="JPN_KANJI" width="256">確認</language>
+	</row>
+
+	<row id="msg_sys_tmenu_yesno_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>メニュー項目</comment>
 		<language name="JPN" width="256">はい</language>
 		<language name="JPN_KANJI" width="256">はい</language>
 	</row>
 
-	<row id="msg_sys_tmenu_no" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_sys_tmenu_yesno_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>メニュー項目</comment>
 		<language name="JPN" width="256">いいえ</language>
 		<language name="JPN_KANJI" width="256">いいえ</language>
+	</row>
+
+	<row id="msg_sys_tmenu_check_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>メニュー項目２</comment>
+		<language name="JPN" width="256">かくにん</language>
+		<language name="JPN_KANJI" width="256">確認</language>
+	</row>
+
+	<row id="msg_sys_tmenu_check_02" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>メニュー項目２</comment>
+		<language name="JPN" width="256">とじる</language>
+		<language name="JPN_KANJI" width="256">閉じる</language>
 	</row>
 
 	<row id="msg_sys_freeword_ini" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -817,6 +848,19 @@ msg_sys_gpower_use00～02が
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
 『[1:1C:簡易会話単語:1]』と
 発言しました</language>
+	</row>
+
+	<row id="msg_beacon_050" text-color=",,,#ff0000,,,,,,,,,,,,,," back-color="#ffff80,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>【注意】
+アクションIDとGMMの並びを同一するために入れているため
+実際には表示されませんがIDを消さないでください！
+
+msg_sys_gpower_use00～02が
+システムメッセージとして利用されます</comment>
+		<language name="JPN" width="256">アクションIDと並びを同一にするための
+ダミーメッセージです</language>
+		<language name="JPN_KANJI" width="256">アクションIDと並びを同一にするための
+ダミーメッセージです</language>
 	</row>
 
 	<flowchart-group-list>

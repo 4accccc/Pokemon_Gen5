@@ -7,6 +7,7 @@
  */
 //============================================================================================
 #include <gflib.h>
+#include "system/main.h"      //GFL_HEAPID_APP参照
 #include "net/network_define.h"
 
 #include "gamesystem/gamesystem.h"
@@ -21,13 +22,15 @@
 #include "field/field_sound.h"
 #include "field/script.h"
 #include "field/script_local.h"
+#include "field/field_msgbg.h"
 #include "./event_fieldmap_control.h"
 #include "./event_gpower.h"
 
 #include "sound/pm_sndsys.h"
 #include "sound/wb_sound_data.sadl"
 
-#include "system/main.h"      //GFL_HEAPID_APP参照
+#include "script_message.naix"
+#include "msg/script/msg_gpower_event.h"
 
 #include "../../../resource/fldmapdata/script/gpower_scr_def.h" //SCRID_～
 
@@ -39,8 +42,26 @@ typedef struct POWER_FLD_EFF{
   GAMEDATA * gdata;
 }POWER_FLD_EFF;
 
+typedef struct POWER_CHECK_WORK{
+  u8  ct;
+  HEAPID  heapID;
+  GAMESYS_WORK* gsys;
+  GAMEDATA* gdata;
+  FIELDMAP_WORK* fieldmap;
+
+  FLDMSGBG* fmb;
+  FLDSYSWIN* win;
+  FLDSYSWIN_STREAM* winStream;
+  GFL_BMPWIN* bmpwin;
+  GFL_MSGDATA* msgData;
+  POWER_CONV_DATA* p_data;
+}POWER_CHECK_WORK;
+
 static GMEVENT_RESULT event_GPowerUseEffectMain(GMEVENT * event, int *  seq, void * work);
 static void sub_InstantPowerUse( GAMESYS_WORK* gsys, WORDSET* wordset, GPOWER_TYPE type );
+static GMEVENT_RESULT event_GPowerEnableListCheckMain(GMEVENT * event, int *  seq, void * work);
+static void sub_InitPowerCheckWork( POWER_CHECK_WORK* wk, GAMESYS_WORK * gsys, FIELDMAP_WORK* fieldmap );
+static void sub_ReleasePowerCheckWork( POWER_CHECK_WORK* wk );
 
 /*
  *  @brief  Gパワー発動イベント
@@ -94,25 +115,72 @@ GMEVENT* EVENT_GPowerEffectEnd( GAMESYS_WORK * gsys )
 GMEVENT* EVENT_GPowerUseEffect( GAMESYS_WORK * gsys )
 {
   GMEVENT* event;
-  POWER_FLD_EFF* ewk;
+  POWER_FLD_EFF* wk;
 
   event = GMEVENT_Create(gsys, NULL, event_GPowerUseEffectMain, sizeof(POWER_FLD_EFF));
   
-  ewk = GMEVENT_GetEventWork(event);
-  ewk->gdata = GAMESYSTEM_GetGameData(gsys);
-  ewk->gsys = gsys;
+  wk = GMEVENT_GetEventWork(event);
+  wk->gdata = GAMESYSTEM_GetGameData(gsys);
+  wk->gsys = gsys;
 
   return event;
 }
+
+////////////////////////////////////////////////////////////////////////////
+//発動中のGパワーを確認するイベント
+////////////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  発動中のGパワー確認イベント
+ */
+GMEVENT* EVENT_GPowerEnableListCheck( GAMESYS_WORK * gsys, FIELDMAP_WORK* fieldmap )
+{
+  GMEVENT* event;
+  POWER_CHECK_WORK* wk;
+
+  event = GMEVENT_Create(gsys, NULL, event_GPowerEnableListCheckMain, sizeof(POWER_CHECK_WORK));
+  wk = GMEVENT_GetEventWork(event);
+
+  sub_InitPowerCheckWork( wk, gsys, fieldmap );
+
+  return event;
+}
+
+static void sub_InitPowerCheckWork( POWER_CHECK_WORK* wk, GAMESYS_WORK * gsys, FIELDMAP_WORK* fieldmap )
+{
+  wk->heapID = HEAPID_FIELDMAP;
+
+  wk->gsys = gsys;
+  wk->fieldmap = fieldmap;
+  wk->gdata = GAMESYSTEM_GetGameData(gsys);
+  wk->fmb = FIELDMAP_GetFldMsgBG( wk->fieldmap );
+
+  wk->p_data = GPOWER_PowerData_LoadAlloc( wk->heapID );
+  wk->msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE,
+          NARC_script_message_gpower_event_dat, wk->heapID );
+}
+
+static void sub_ReleasePowerCheckWork( POWER_CHECK_WORK* wk )
+{
+  GFL_MSG_Delete( wk->msgData );
+  GPOWER_PowerData_Unload( wk->p_data );
+}
+
+
 
 //============================================================================================
 //
 //    サブイベント
 //
 //============================================================================================
+
+//-----------------------------------------------------------------
+/*
+ *  @brief  Gパワー発動エフェクトメイン
+ */
+//-----------------------------------------------------------------
 static GMEVENT_RESULT event_GPowerUseEffectMain(GMEVENT * event, int *  seq, void * work)
 {
-  POWER_FLD_EFF* ewk = work;
+  POWER_FLD_EFF* wk = work;
 
   switch (*seq) {
   case 0:
@@ -136,9 +204,11 @@ static GMEVENT_RESULT event_GPowerUseEffectMain(GMEVENT * event, int *  seq, voi
   return GMEVENT_RES_CONTINUE;
 }
 
+//-----------------------------------------------------------------
 /*
  *  @brief  イベント発動時に効果が現れるパワーの実行処理
  */
+//-----------------------------------------------------------------
 static void sub_InstantPowerUse( GAMESYS_WORK* gsys, WORDSET* wordset, GPOWER_TYPE type )
 {
   u8 pos;
@@ -160,4 +230,47 @@ static void sub_InstantPowerUse( GAMESYS_WORK* gsys, WORDSET* wordset, GPOWER_TY
     break;
   }
 }
+
+//-----------------------------------------------------------------
+/*
+ *  @brief  Gパワー発動中の効果エフェクトメイン
+ */
+//-----------------------------------------------------------------
+static GMEVENT_RESULT event_GPowerEnableListCheckMain(GMEVENT * event, int *  seq, void * work)
+{
+  POWER_CHECK_WORK* wk = work;
+
+  switch (*seq) {
+  case 0:
+    wk->winStream = FLDSYSWIN_STREAM_Add( wk->fmb, wk->msgData, 19 );
+    FLDSYSWIN_STREAM_PrintStart( wk->winStream, 0, 0, msg_gpower_check_start );
+    (*seq)++;
+    break;
+  case 1:
+    if( !FLDSYSWIN_STREAM_Print( wk->winStream )){
+      break;
+    }
+    FLDSYSWIN_STREAM_Delete( wk->winStream );
+    (*seq)++;
+    break;
+  case 2:
+    wk->win = FLDSYSWIN_AddEx( wk->fmb, wk->msgData, 2, 1, 24, 22 );
+    FLDSYSWIN_ClearWindow( wk->win );
+    (*seq)++;
+    break;
+  case 3:
+    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B)){
+      (*seq)++;
+    }
+    break;
+  default:
+    FLDSYSWIN_ClearWindow( wk->win );
+    FLDSYSWIN_Delete( wk->win );
+    sub_ReleasePowerCheckWork( wk );
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+
 

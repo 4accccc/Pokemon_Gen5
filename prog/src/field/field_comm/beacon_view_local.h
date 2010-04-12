@@ -152,6 +152,7 @@ typedef struct _BEACON_VIEW{
   int       io_interval;
   u8        menu_active;
   u8        msg_spd;
+  u8        gpower_check_req;
   LOG_CTRL  ctrl;
 
   ////////////////////////////////////////
@@ -172,7 +173,8 @@ typedef struct _BEACON_VIEW{
   PRINT_STREAM* printStream;
   APP_TASKMENU_RES* menuRes;
   APP_KEYCURSOR_WORK* key_cursor;
-  TMENU_ITEM tmenu[TMENU_MAX];
+  TMENU_ITEM tmenu[TMENU_YN_MAX];
+  TMENU_ITEM tmenu_check[TMENU_CHECK_MAX];
 
   WORDSET *wordset;
   GFL_MSGDATA *mm_status;

@@ -230,6 +230,7 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
   case SEQ_CALL_DETAIL_VIEW:
     wk->seq = seq_CallDetailView( wk );
     break;
+  case SEQ_EV_REQ_WAIT:
   case SEQ_END:
   default:
     //外部リクエストによる終了待ち
@@ -265,6 +266,9 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
   case EV_GPOWER_USE:
     event = EVENT_GPowerEffectStart( wk->gsys, wk->ctrl.g_power, wk->ctrl.mine_power_f );
     wk->ctrl.g_power = GPOWER_ID_NULL;
+    break;
+  case EV_GPOWER_CHECK:
+    event = EVENT_GPowerEnableListCheck( wk->gsys, wk->fieldWork );
     break;
   case EV_CALL_TALKMSG_INPUT:
     event = EVENT_FreeWordInput( wk->gsys, wk->fieldWork, NULL, NAMEIN_FREE_WORD, NULL );
@@ -322,7 +326,6 @@ static void event_RequestReset( BEACON_VIEW_PTR wk )
 static int seq_Main( BEACON_VIEW_PTR wk )
 {
   int ret;
-  
 
   //メイン入力チェック
   ret = BeaconView_CheckInput( wk );
@@ -368,6 +371,9 @@ static int seq_GPowerUse( BEACON_VIEW_PTR wk )
   }
   if( wk->ctrl.g_power != GPOWER_ID_NULL){
     event_Request( wk, EV_GPOWER_USE );
+  }else if( wk->gpower_check_req ){
+    event_Request( wk, EV_GPOWER_CHECK );
+    wk->gpower_check_req = FALSE;
   }
   return SEQ_MAIN;
 }
@@ -730,11 +736,17 @@ static void _sub_TMenuInit( BEACON_VIEW_PTR wk )
   wk->menuRes = APP_TASKMENU_RES_Create( FRM_MENUMSG, BG_PAL_TASKMENU, wk->fontHandle, wk->printQue, wk->heap_sID );
 
   //アイテム初期化
-  for( i = 0;i < TMENU_MAX;i++){
-    wk->tmenu[i].item.str      = GFL_MSG_CreateString( wk->mm_status, msg_sys_tmenu_yes+i ); //メニューに表示する文字列
+  for( i = 0;i < TMENU_YN_MAX;i++){
+    wk->tmenu[i].item.str      = GFL_MSG_CreateString( wk->mm_status, msg_sys_tmenu_yesno_01+i ); //メニューに表示する文字列
     wk->tmenu[i].item.msgColor = APP_TASKMENU_ITEM_MSGCOLOR;   //文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
     wk->tmenu[i].item.type     = APP_TASKMENU_WIN_TYPE_NORMAL; //戻るマークの表示
     wk->tmenu[i].work = NULL;
+  }
+  for( i = 0;i < TMENU_CHECK_MAX;i++){
+    wk->tmenu_check[i].item.str      = GFL_MSG_CreateString( wk->mm_status, msg_sys_tmenu_check_01+i ); //メニューに表示する文字列
+    wk->tmenu_check[i].item.msgColor = APP_TASKMENU_ITEM_MSGCOLOR;   //文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
+    wk->tmenu_check[i].item.type     = APP_TASKMENU_WIN_TYPE_NORMAL; //戻るマークの表示
+    wk->tmenu_check[i].work = NULL;
   }
 }
 
@@ -748,8 +760,13 @@ static void _sub_TMenuInit( BEACON_VIEW_PTR wk )
 static void _sub_TMenuRelease( BEACON_VIEW_PTR wk )
 {
   int i;
-
-  for( i = 0;i < TMENU_MAX; i++){
+  for( i = 0;i < TMENU_CHECK_MAX; i++){
+    if( wk->tmenu_check[i].work != NULL ){
+      APP_TASKMENU_WIN_Delete( wk->tmenu_check[i].work );
+    }
+    GFL_STR_DeleteBuffer( wk->tmenu_check[i].item.str );
+  }
+  for( i = 0;i < TMENU_YN_MAX; i++){
     if( wk->tmenu[i].work != NULL ){
       APP_TASKMENU_WIN_Delete( wk->tmenu[i].work );
     }

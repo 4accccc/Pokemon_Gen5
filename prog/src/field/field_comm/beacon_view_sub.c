@@ -723,50 +723,55 @@ static BOOL print_PopupWindowStreamCheck( BEACON_VIEW_PTR wk )
 }
 
 /*
- *  @brief  TaskMenu生成
+ *  @brief  TaskMenu YesNo生成
  */
-static void tmenu_YnCreate( BEACON_VIEW_PTR wk )
+static void tmenu_Create( BEACON_VIEW_PTR wk, u8 menu_idx )
 {
-  int i;
-  for( i = 0;i < TMENU_MAX;i++){
-    wk->tmenu[i].work = APP_TASKMENU_WIN_Create( wk->menuRes, &wk->tmenu[i].item, 
-                            TMENU_YN_PX+TMENU_YN_W*i, TMENU_YN_PY, TMENU_YN_W, wk->heap_sID );
+  int i,max,px;
+  TMENU_ITEM* tmenu;
+
+  if( menu_idx == TMENU_ID_YESNO ){
+    tmenu = wk->tmenu;
+    max = TMENU_YN_MAX;
+    px = TMENU_YN_PX;
+  }else{
+    tmenu = wk->tmenu_check;
+    max = TMENU_CHECK_MAX;
+    px = TMENU_CHECK_PX;
+  }
+  for( i = 0;i < max;i++){
+    tmenu[i].work = APP_TASKMENU_WIN_CreateEx( wk->menuRes, &tmenu[i].item, 
+                        px+TMENU_W*i, TMENU_PY, TMENU_W, TMENU_H, TRUE, wk->heap_sID );
   }
 }
 
 /*
- *  @brief  TaskMenu YesNo削除
+ *  @brief  TaskMenu アップデート
  */
-static void tmenu_YnDelete( BEACON_VIEW_PTR wk )
+static int tmenu_Update( BEACON_VIEW_PTR wk,u8 menu_idx )
 {
-  int i;
-  for( i = 0;i < TMENU_MAX;i++){
-    APP_TASKMENU_WIN_Delete( wk->tmenu[i].work );
-    wk->tmenu[i].work = NULL;
+  int i,max,ret = -1;
+  TMENU_ITEM* tmenu;
+
+  if( menu_idx == TMENU_ID_YESNO ){
+    tmenu = wk->tmenu;
+    max = TMENU_YN_MAX;
+  }else{
+    tmenu = wk->tmenu_check;
+    max = TMENU_CHECK_MAX;
   }
-}
 
-/*
- *  @brief  TaskMenu YesNoアップデート
- */
-static int tmenu_YnUpdate( BEACON_VIEW_PTR wk )
-{
-  int i,ret = 0;
-
-  for( i = 0;i < TMENU_MAX;i++){
-    if( APP_TASKMENU_WIN_IsTrg( wk->tmenu[i].work )){
-      APP_TASKMENU_WIN_SetDecide( wk->tmenu[i].work, TRUE );
-      if(i == 0){
+  for( i = 0;i < max;i++){
+    if( APP_TASKMENU_WIN_IsTrg( tmenu[i].work )){
+      APP_TASKMENU_WIN_SetDecide( tmenu[i].work, TRUE );
+      if(i < (max-1)){
         sub_PlaySE( BVIEW_SE_DECIDE );
       }else{
         sub_PlaySE( BVIEW_SE_CANCEL );
       }
-      ret |= (i+1);
+      ret = i;
     }
-    APP_TASKMENU_WIN_Update( wk->tmenu[i].work );
-  }
-  if(ret > 2){
-    ret = 1;
+    APP_TASKMENU_WIN_Update( tmenu[i].work );
   }
   return ret;
 }
@@ -774,19 +779,39 @@ static int tmenu_YnUpdate( BEACON_VIEW_PTR wk )
 /*
  *  @brief  TaskMenu 終了アニメ待ち
  */
-static BOOL tmenu_YnEndWait( BEACON_VIEW_PTR wk, u8 idx )
+static BOOL tmenu_YnEndWait( BEACON_VIEW_PTR wk, u8 select )
 {
   int i;
 
-  //すれ違い画面は30fでまわしているので、60fでまわるアプリと比べると
-  //点滅アニメのスピードが想定の半分になってしまう。
-  //それは嫌なので、強引だが2回呼び出してしまう！
-  APP_TASKMENU_WIN_Update( wk->tmenu[idx].work );
-  APP_TASKMENU_WIN_Update( wk->tmenu[idx].work );
-  if( APP_TASKMENU_WIN_IsFinish( wk->tmenu[idx].work )){
-    for( i = 0;i < TMENU_MAX;i++){
+  APP_TASKMENU_WIN_Update( wk->tmenu[select].work );
+
+  if( APP_TASKMENU_WIN_IsFinish( wk->tmenu[select].work )){
+    if( select == TMENU_YN_CHECK ){
+      APP_TASKMENU_WIN_ResetDecide( wk->tmenu[select].work );
+      return TRUE;  //<確認>を選んだ場合消さないでリセット
+    }
+    for( i = 0;i < TMENU_YN_MAX;i++){
       APP_TASKMENU_WIN_Delete( wk->tmenu[i].work );
       wk->tmenu[i].work = NULL;
+    }
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/*
+ *  @brief  TaskMenu Gパワー確認ダイアログ終了アニメ待ち
+ */
+static BOOL tmenu_CheckEndWait( BEACON_VIEW_PTR wk, u8 select )
+{
+  int i;
+
+  APP_TASKMENU_WIN_Update( wk->tmenu_check[select].work );
+
+  if( APP_TASKMENU_WIN_IsFinish( wk->tmenu_check[select].work )){
+    for( i = 0;i < TMENU_CHECK_MAX;i++){
+      APP_TASKMENU_WIN_Delete( wk->tmenu_check[i].work );
+      wk->tmenu_check[i].work = NULL;
     }
     return TRUE;
   }
@@ -1517,6 +1542,7 @@ typedef struct _TASKWK_WIN_GPOWER{
   u8  wait;
   u8  type;
   u8  cancel_f;
+  u8  ret;
   int child_task;
 
   GPOWER_ID  g_power;
@@ -1535,7 +1561,8 @@ static const u8 DATA_GPowerUseMsg[2] = {
 };
 
 static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u32 tr_id, u8 type, int* task_ct );
-static void tcb_WinGPower( GFL_TCBL *tcb , void* work);
+static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* work);
+static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* work);
 
 static void effReq_PopupMsgGPower( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info )
 {
@@ -1560,7 +1587,7 @@ static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u32 tr_id,
   GFL_TCBL* tcb;
   TASKWK_WIN_GPOWER* twk;
 
-  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_WinGPower, sizeof(TASKWK_WIN_GPOWER), 0 );
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_WinGPowerYesNo, sizeof(TASKWK_WIN_GPOWER), 0 );
 
   twk = GFL_TCBL_GetWork(tcb);
   MI_CpuClear8( twk, sizeof( TASKWK_WIN_GPOWER ));
@@ -1599,11 +1626,94 @@ static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u32 tr_id,
   BeaconView_MenuBarViewSet( wk, MENU_THANKS, MENU_ST_OFF );
   BeaconView_MenuBarViewSet( wk, MENU_RETURN, MENU_ST_OFF );
 
+  if( twk->mypower_use || (twk->item_num < twk->item_use )){
+    GFL_TCBL_ChangeFunc( tcb, tcb_WinGPowerCheck );
+  }
   twk->task_ct = task_ct;
   (*task_ct)++;
 }
 
-static void tcb_WinGPower( GFL_TCBL *tcb , void* tcb_wk)
+static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_WIN_GPOWER* twk = (TASKWK_WIN_GPOWER*)tcb_wk;
+  BEACON_VIEW_PTR bvp = twk->bvp;
+
+  if( !bvp->active || (bvp->event_id != EV_NONE)){
+    return;
+  }
+
+  switch( twk->seq ){
+  case 0:
+    GFL_BMP_Clear( bvp->win[WIN_POPUP].bmp, FCOL_POPUP_BASE );
+    print_GetMsgToBuf( bvp, DATA_GPowerUseMsg[twk->type] );
+    print_PopupWindow( bvp, bvp->str_expand, 0 );
+    taskAdd_MsgUpdown( bvp, SCROLL_UP, &twk->child_task );
+    twk->seq++;
+    return;
+  case 1:
+    if( twk->child_task > 0 ){
+      return;
+    }
+    tmenu_Create( bvp, TMENU_ID_YESNO );
+    obj_MenuIconVisibleSet( bvp, FALSE );
+    twk->seq++;
+    return;
+  case 2: //選択待ち
+    {
+      int ret = tmenu_Update( bvp, TMENU_ID_YESNO );
+      if( ret < 0 ){
+        return;
+      }
+      twk->ret = ret;
+      twk->seq++;
+    }
+    return;
+  case 3: //決定アニメ待ち
+    if( !tmenu_YnEndWait( bvp, twk->ret )){
+      return;
+    }
+
+    switch( twk->ret ){
+    case TMENU_YN_CHECK:
+      bvp->event_id = EV_GPOWER_CHECK;
+      twk->seq = 2;
+      return;
+    case TMENU_YN_NO:
+      twk->seq = 5;
+      break;
+    case TMENU_YN_YES:
+      print_GetMsgToBuf( bvp, msg_sys_gpower_use_end );
+      print_PopupWindow( bvp, bvp->str_expand, 0 );
+
+      //使うGパワーを覚えておく
+      bvp->ctrl.g_power = twk->g_power;
+      twk->seq++;
+      break;
+    }
+    draw_LogNumWindow( bvp );
+    obj_MenuIconVisibleSet( bvp, TRUE );
+    return;
+  case 4:
+    if( print_PopupWindowTimeWaitCheck( &twk->wait ) ){
+      twk->seq++;
+    }
+    return;
+  case 5:
+    taskAdd_MsgUpdown( bvp, SCROLL_DOWN, &twk->child_task );
+    twk->seq++;
+    return;
+  case 6:
+    if( twk->child_task ){
+      return;
+    }
+  }
+  BeaconView_MenuBarViewSet( twk->bvp, MENU_ALL, MENU_ST_ON );
+  
+  --(*twk->task_ct);
+  GFL_TCBL_Delete(tcb);
+}
+
+static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* tcb_wk)
 {
   TASKWK_WIN_GPOWER* twk = (TASKWK_WIN_GPOWER*)tcb_wk;
   BEACON_VIEW_PTR bvp = twk->bvp;
@@ -1618,152 +1728,54 @@ static void tcb_WinGPower( GFL_TCBL *tcb , void* tcb_wk)
     
     if( twk->mypower_use ){ //既に使用中
       print_GetMsgToBuf( bvp, msg_sys_gpower_use_err02+(twk->mypower_min != 0) );
-      twk->seq = 4;
     }else if( twk->item_num < twk->item_use ){  //アイテムが足りない
       print_GetMsgToBuf( bvp, msg_sys_gpower_use_err01);
-      twk->seq = 4;
-    }else{
-      print_GetMsgToBuf( bvp, DATA_GPowerUseMsg[twk->type] );
-      twk->seq++;
     }
     print_PopupWindow( bvp, bvp->str_expand, 0 );
-//    GFL_BMPWIN_MakeTransWindow( bvp->win[WIN_POPUP].win );
     taskAdd_MsgUpdown( bvp, SCROLL_UP, &twk->child_task );
+    twk->seq++;
     return;
   case 1:
     if( twk->child_task > 0 ){
       return;
     }
-    tmenu_YnCreate( bvp );
     obj_MenuIconVisibleSet( bvp, FALSE );
     twk->seq++;
     return;
-  case 2: //選択待ち
-    {
-      int ret = tmenu_YnUpdate( bvp );
-      if( ret == 0){
-        return;
-      }
-      twk->cancel_f = ret-1;
-      twk->seq++;
-    }
-    return;
-  case 3: //決定アニメ待ち
-    if( !tmenu_YnEndWait( bvp, twk->cancel_f )){
-      return;
-    }
-    obj_MenuIconVisibleSet( bvp, TRUE );
-    if( twk->cancel_f ){
-      twk->seq = 6;
-    }else{
-      print_GetMsgToBuf( bvp, msg_sys_gpower_use02 );
-      print_PopupWindow( bvp, bvp->str_expand, 0 );
-
-      //使うGパワーを覚えておく
-      bvp->ctrl.g_power = twk->g_power;
-
-      twk->seq = 5;
-    }
-    return;
-  case 4:
-    if( twk->child_task == 0 ){
-      twk->seq++;
-    }
-    return;
-  case 5:
-    if( print_PopupWindowTimeWaitCheck( &twk->wait ) ){
-      twk->seq++;
-    }
-    return;
-  case 6:
-    taskAdd_MsgUpdown( bvp, SCROLL_DOWN, &twk->child_task );
-    twk->seq++;
-    return;
-  case 7:
-    if( twk->child_task ){
-      return;
-    }
-  }
-
-#if 0
-  switch( twk->seq ){
-  case 0:
-    GFL_BMP_Clear( bvp->win[WIN_POPUP].bmp, FCOL_POPUP_BASE );
-    GFL_BMPWIN_MakeTransWindow( bvp->win[WIN_POPUP].win );
-    taskAdd_MsgUpdown( bvp, SCROLL_UP, &twk->child_task );
-    twk->seq++;
-    return;
-  case 1:
-    if( twk->child_task > 0 ){
-      return;
-    }
-    if( twk->mypower_use ){ //既に使用中
-      print_GetMsgToBuf( bvp, msg_sys_gpower_use_err02+(twk->mypower_min != 0) );
-      twk->seq = 5;
-    }else if( twk->item_num < twk->item_use ){  //アイテムが足りない
-      print_GetMsgToBuf( bvp, msg_sys_gpower_use_err01);
-      twk->seq = 5;
-    }else{
-      print_GetMsgToBuf( bvp, DATA_GPowerUseMsg[twk->type] );
-      twk->seq++;
-    }
-    print_PopupWindow( bvp, bvp->str_expand, bvp->msg_spd );
-    return;
   case 2:
-    if( print_PopupWindowStreamCheck( bvp ) ){
-      tmenu_YnCreate( bvp );
-      obj_MenuIconVisibleSet( bvp, FALSE );
-      twk->seq++;
-    }
+    tmenu_Create( bvp, TMENU_ID_CHECK );
+    twk->seq++;
     return;
   case 3: //選択待ち
     {
-      int ret = tmenu_YnUpdate( bvp );
-      if( ret == 0){
+      int ret = tmenu_Update( bvp, TMENU_ID_CHECK );
+      if( ret < 0 ){
         return;
       }
-      twk->cancel_f = ret-1;
+      twk->ret = ret;
       twk->seq++;
     }
     return;
   case 4: //決定アニメ待ち
-    if( !tmenu_YnEndWait( bvp, twk->cancel_f )){
+    if( !tmenu_CheckEndWait( bvp, twk->ret )){
       return;
     }
+    draw_LogNumWindow( bvp );
     obj_MenuIconVisibleSet( bvp, TRUE );
-    if( twk->cancel_f ){
-      twk->seq = 6;
-    }else{
-      print_GetMsgToBuf( bvp, msg_sys_gpower_use02 );
-      print_PopupWindow( bvp, bvp->str_expand, bvp->msg_spd );
-
-      //使うGパワーを覚えておく
-      bvp->ctrl.g_power = twk->g_power;
-
-      twk->seq++;
-    }
-    return;
-  case 5:
-    if( print_PopupWindowStreamCheck( bvp ) ){
-      twk->seq++;
-    }
-    return;
-  case 6:
     taskAdd_MsgUpdown( bvp, SCROLL_DOWN, &twk->child_task );
     twk->seq++;
     return;
-  case 7:
+  case 5:
     if( twk->child_task ){
       return;
     }
   }
-#endif
+  bvp->gpower_check_req = ( twk->ret == TMENU_CHECK_CALL );
+  BeaconView_MenuBarViewSet( twk->bvp, MENU_ALL, MENU_ST_ON );
+  
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
-  
-  BeaconView_MenuBarViewSet( twk->bvp, MENU_ALL, MENU_ST_ON );
 }
-
 
 /////////////////////////////////////////////////////////////////////
 /*
