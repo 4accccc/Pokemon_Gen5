@@ -110,3 +110,27 @@ u32  SHOOTER_ITEM_ItemIndexToCost( u32 item )
   GF_ASSERT_MSG( 0, "登録されていないシューターアイテムです %d", item );
   return 0;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  指定アイテムのシューターテーブルインデックスを取得
+ *
+ *	@param	u32 item  アイテム
+ *
+ *	@return テーブルインデックス
+ */
+//-----------------------------------------------------------------------------
+u32  SHOOTER_ITEM_GetTableIndex( u32 item )
+{ 
+  u32 i;
+  for( i = 0; i < SHOOTER_ITEM_MAX; i++ )
+  { 
+    if( sc_shooter_item_to_item[ i ].name == item )
+    { 
+      return i;
+    }
+  }
+
+  GF_ASSERT_MSG( 0, "登録されていないシューターアイテムです %d", item );
+  return 0;
+}

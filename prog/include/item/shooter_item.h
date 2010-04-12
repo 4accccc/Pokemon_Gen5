@@ -69,5 +69,8 @@ extern u32  SHOOTER_ITEM_ShooterIndexToCost( u32 shooter_item );
 //  アイテムインデックスからシューターのコストを取得
 //=====================================
 extern u32  SHOOTER_ITEM_ItemIndexToCost( u32 item );
-
+//-------------------------------------
+//  指定アイテムのシューターテーブルインデックスを取得
+//=====================================
+extern u32  SHOOTER_ITEM_GetTableIndex( u32 item );
 

@@ -12,6 +12,7 @@
 #include "item_icon.naix"
 #include "agb_itemsym.h"
 #include "item/item.h"
+#include "item/shooter_item.h"
 #include "waza_tool/wazano_def.h"
 #include "itemdata.h"
 #include "message.naix"
@@ -44,6 +45,7 @@ typedef struct {
 #include "itemindex.dat"
 #include "waza_mcn.dat"
 #include "itemtype.dat"
+#include "shooter_item_icon.cdat"
 
 
 //============================================================================================
@@ -137,6 +139,12 @@ u16 ITEM_GetIndex( u16 item, u16 type )
     if( item == ITEM_DUMMY_ID || item == ITEM_RETURN_ID ){ break; }
     return ItemDataIndex[item].agb_id;
 */
+
+	case ITEM_GET_SHOOTER_ICON_CGX:		// シューター用アイコンキャラ
+		return ShooterItemDataIndex[SHOOTER_ITEM_GetTableIndex(item)].arc_cgx;
+
+	case ITEM_GET_SHOOTER_ICON_PAL:		// シューター用アイコンパレット
+		return ShooterItemDataIndex[SHOOTER_ITEM_GetTableIndex(item)].arc_pal;
   }
 
   return 0;

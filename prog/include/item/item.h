@@ -44,6 +44,9 @@ enum {
   ITEM_GET_ICON_CGX,	  // アイコンキャラ
   ITEM_GET_ICON_PAL,	  // アイコンパレット
 //  ITEM_GET_AGB_NUM		// AGBのアイテム番号
+
+  ITEM_GET_SHOOTER_ICON_CGX,	  // シューター用アイコンキャラ
+  ITEM_GET_SHOOTER_ICON_PAL,	  // シューター用アイコンパレット
 };
 
 // パラメータ取得定義

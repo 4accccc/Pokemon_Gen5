@@ -299,16 +299,25 @@ static void BBAG_ClactResManInit( BBAG_WORK * wk )
 static void BBAG_ClactItemLoad( BBAG_WORK * wk )
 {
   ARCHANDLE * ah;
-	u32	i;
-	
+	u8	cgx_type, pal_type;
+	u16	i;
+
+	if( wk->dat->mode == BBAG_MODE_SHOOTER ){
+		cgx_type = ITEM_GET_SHOOTER_ICON_CGX;
+		pal_type = ITEM_GET_SHOOTER_ICON_PAL;
+	}else{
+		cgx_type = ITEM_GET_ICON_CGX;
+		pal_type = ITEM_GET_ICON_PAL;
+	}
+
 	ah = GFL_ARC_OpenDataHandle( ITEM_GetIconArcID(), wk->dat->heap );
 
 	for( i=0; i<7; i++ ){
 	  wk->chrRes[BBAG_CHRRES_ITEM1+i] = GFL_CLGRP_CGR_Register(
-																				ah, ITEM_GetIndex(1,ITEM_GET_ICON_CGX),
+																				ah, ITEM_GetIndex(1,cgx_type),
 																				FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
 	  wk->palRes[BBAG_PALRES_ITEM1+i] = GFL_CLGRP_PLTT_Register(
-																				ah, ITEM_GetIndex(1,ITEM_GET_ICON_PAL),
+																				ah, ITEM_GetIndex(1,pal_type),
 																				CLSYS_DRAW_SUB, i*32, wk->dat->heap );
 	}
   wk->celRes[BBAG_CELRES_ITEM] = GFL_CLGRP_CELLANIM_Register(
@@ -360,18 +369,27 @@ static void BBAG_ItemIconCharChg( BBAG_WORK * wk, u16 item, u32 chrResID, u32 pa
 	NNSG2dCharacterData * dat;
 	void * buf;
 	ARCHANDLE * ah;
+	u8	cgx_type, pal_type;
+
+	if( wk->dat->mode == BBAG_MODE_SHOOTER ){
+		cgx_type = ITEM_GET_SHOOTER_ICON_CGX;
+		pal_type = ITEM_GET_SHOOTER_ICON_PAL;
+	}else{
+		cgx_type = ITEM_GET_ICON_CGX;
+		pal_type = ITEM_GET_ICON_PAL;
+	}
 
 	ah = GFL_ARC_OpenDataHandle( ITEM_GetIconArcID(), wk->dat->heap );
 
 	// キャラ
 	buf = GFL_ARCHDL_UTIL_LoadOBJCharacter(
-					ah, ITEM_GetIndex(item,ITEM_GET_ICON_CGX), FALSE, &dat, wk->dat->heap );
+					ah, ITEM_GetIndex(item,cgx_type), FALSE, &dat, wk->dat->heap );
 	GFL_CLGRP_CGR_Replace( wk->chrRes[chrResID], dat );
 	GFL_HEAP_FreeMemory( buf );
 
 	// パレット
 	PaletteWorkSet_ArcHandle(
-					wk->pfd, ah, ITEM_GetIndex(item,ITEM_GET_ICON_PAL),
+					wk->pfd, ah, ITEM_GetIndex(item,pal_type),
 					wk->dat->heap, FADE_SUB_OBJ, 0x20, palResID * 16 );
 
   GFL_ARC_CloseDataHandle( ah );
@@ -399,10 +417,18 @@ static void BBAG_ItemIconCharChg( BBAG_WORK * wk, u16 item, u32 chrResID, u32 pa
 //--------------------------------------------------------------------------------------------
 static void BBAG_ItemIconPlttChg( BBAG_WORK * wk, u16 item, u32 palResID )
 {
-	GFL_ARC_UTIL_TransVramPalette(
-		ITEM_GetIconArcID(),
-		ITEM_GetIndex(item,ITEM_GET_ICON_PAL),
-		PALTYPE_SUB_OBJ, palResID * 0x20, 0x20, wk->dat->heap );
+	if( wk->dat->mode == BBAG_MODE_SHOOTER ){
+		GFL_ARC_UTIL_TransVramPalette(
+			ITEM_GetIconArcID(),
+			ITEM_GetIndex(item,ITEM_GET_SHOOTER_ICON_PAL),
+			PALTYPE_SUB_OBJ, palResID * 0x20, 0x20, wk->dat->heap );
+	}else{
+		GFL_ARC_UTIL_TransVramPalette(
+			ITEM_GetIconArcID(),
+			ITEM_GetIndex(item,ITEM_GET_ICON_PAL),
+			PALTYPE_SUB_OBJ, palResID * 0x20, 0x20, wk->dat->heap );
+	}
+
 /*
 	PaletteWorkSet_Arc(
 		wk->pfd, ARC_ITEMICON,

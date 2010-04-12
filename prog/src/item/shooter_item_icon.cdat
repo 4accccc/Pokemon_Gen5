@@ -1,0 +1,61 @@
+//============================================================================================
+/**
+ * @file		shooter_item_icon.cdat
+ * @brief		シューター用アイテムアイコンテーブル
+ * @author	Hiroyuki Nakamura
+ * @date		10.04.12
+ */
+//============================================================================================
+
+const ITEMDATA_INDEX ShooterItemDataIndex[] =
+{
+	{ NARC_item_icon_item_666_NCGR, NARC_item_icon_item_666_NCLR },	//クリティカット
+	{ NARC_item_icon_item_666_NCGR, NARC_item_icon_item_667_NCLR }, //スピーダー
+	{ NARC_item_icon_item_666_NCGR, NARC_item_icon_item_668_NCLR }, //スペシャルアップ
+	{ NARC_item_icon_item_666_NCGR, NARC_item_icon_item_669_NCLR }, //スペシャルガード
+	{ NARC_item_icon_item_666_NCGR, NARC_item_icon_item_670_NCLR }, //ディフェンダー
+	{ NARC_item_icon_item_666_NCGR, NARC_item_icon_item_671_NCLR }, //プラスパワー
+	{ NARC_item_icon_item_666_NCGR, NARC_item_icon_item_672_NCLR }, //ヨクアタール
+	{ NARC_item_icon_item_666_NCGR, NARC_item_icon_item_673_NCLR }, //エフェクトガード
+	{ NARC_item_icon_item_698_NCGR, NARC_item_icon_item_698_NCLR }, //キズぐすり
+	{ NARC_item_icon_item_699_NCGR, NARC_item_icon_item_699_NCLR }, //ピーピーエイド
+	{ NARC_item_icon_item_696_NCGR, NARC_item_icon_item_696_NCLR }, //アイテムコール
+	{ NARC_item_icon_item_674_NCGR, NARC_item_icon_item_674_NCLR }, //クリティカット２
+	{ NARC_item_icon_item_674_NCGR, NARC_item_icon_item_675_NCLR }, //スピーダー２
+	{ NARC_item_icon_item_674_NCGR, NARC_item_icon_item_676_NCLR }, //ＳＰアップ２
+	{ NARC_item_icon_item_674_NCGR, NARC_item_icon_item_677_NCLR }, //ＳＰガード２
+	{ NARC_item_icon_item_674_NCGR, NARC_item_icon_item_678_NCLR }, //ディフェンダー２
+	{ NARC_item_icon_item_674_NCGR, NARC_item_icon_item_679_NCLR }, //プラスパワー２
+	{ NARC_item_icon_item_674_NCGR, NARC_item_icon_item_680_NCLR }, //ヨクアタール２
+	{ NARC_item_icon_item_700_NCGR, NARC_item_icon_item_700_NCLR }, //いいキズぐすり
+	{ NARC_item_icon_item_701_NCGR, NARC_item_icon_item_701_NCLR }, //こおりなおし
+	{ NARC_item_icon_item_702_NCGR, NARC_item_icon_item_702_NCLR }, //どくけし
+	{ NARC_item_icon_item_703_NCGR, NARC_item_icon_item_703_NCLR }, //ねむけざまし
+	{ NARC_item_icon_item_704_NCGR, NARC_item_icon_item_704_NCLR }, //まひなおし
+	{ NARC_item_icon_item_705_NCGR, NARC_item_icon_item_705_NCLR }, //やけどなおし
+	{ NARC_item_icon_item_694_NCGR, NARC_item_icon_item_694_NCLR }, //スキルコール
+	{ NARC_item_icon_item_681_NCGR, NARC_item_icon_item_681_NCLR }, //クリティカット３
+	{ NARC_item_icon_item_681_NCGR, NARC_item_icon_item_682_NCLR }, //スピーダー３
+	{ NARC_item_icon_item_681_NCGR, NARC_item_icon_item_683_NCLR }, //ＳＰアップ３
+	{ NARC_item_icon_item_681_NCGR, NARC_item_icon_item_684_NCLR }, //ＳＰガード３
+	{ NARC_item_icon_item_681_NCGR, NARC_item_icon_item_685_NCLR }, //ディフェンダー３
+	{ NARC_item_icon_item_681_NCGR, NARC_item_icon_item_686_NCLR }, //プラスパワー３
+	{ NARC_item_icon_item_681_NCGR, NARC_item_icon_item_687_NCLR }, //ヨクアタール３
+	{ NARC_item_icon_item_706_NCGR, NARC_item_icon_item_706_NCLR }, //すごいキズぐすり
+	{ NARC_item_icon_item_707_NCGR, NARC_item_icon_item_707_NCLR }, //なんでもなおし
+	{ NARC_item_icon_item_708_NCGR, NARC_item_icon_item_708_NCLR }, //ピーピーエイダー
+	{ NARC_item_icon_item_709_NCGR, NARC_item_icon_item_709_NCLR }, //ピーピーリカバー
+	{ NARC_item_icon_item_695_NCGR, NARC_item_icon_item_695_NCLR }, //アイテムドロップ
+	{ NARC_item_icon_item_710_NCGR, NARC_item_icon_item_710_NCLR }, //まんたんのくすり
+	{ NARC_item_icon_item_697_NCGR, NARC_item_icon_item_697_NCLR }, //フラットコール
+	{ NARC_item_icon_item_711_NCGR, NARC_item_icon_item_711_NCLR }, //ピーピーマックス
+	{ NARC_item_icon_item_712_NCGR, NARC_item_icon_item_712_NCLR }, //げんきのかけら
+	{ NARC_item_icon_item_688_NCGR, NARC_item_icon_item_688_NCLR }, //スピーダー６
+	{ NARC_item_icon_item_688_NCGR, NARC_item_icon_item_689_NCLR }, //ＳＰアップ６
+	{ NARC_item_icon_item_688_NCGR, NARC_item_icon_item_690_NCLR }, //ＳＰガード６
+	{ NARC_item_icon_item_688_NCGR, NARC_item_icon_item_691_NCLR }, //ディフェンダー６
+	{ NARC_item_icon_item_688_NCGR, NARC_item_icon_item_692_NCLR }, //プラスパワー６
+	{ NARC_item_icon_item_688_NCGR, NARC_item_icon_item_693_NCLR }, //ヨクアタール６
+	{ NARC_item_icon_item_713_NCGR, NARC_item_icon_item_713_NCLR }, //かいふくのくすり
+	{ NARC_item_icon_item_714_NCGR, NARC_item_icon_item_714_NCLR }, //げんきのかたまり
+};
