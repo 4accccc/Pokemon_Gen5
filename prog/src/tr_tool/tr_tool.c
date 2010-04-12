@@ -283,7 +283,7 @@ u8 TT_TrainerTypeGrpEntryIdxGet( int trtype )
   int i;
   const TRTYPE_GRP_PARAM* prm;
 
-  for(i = 0;i < TRTYPE_GRP_MAX; i++){
+  for(i = 0;i < TRTYPE_GRP_IDX_MAX; i++){
     if( DATA_TrTypeGrpParam[i].tr_type == trtype ){
       return i;
     }
