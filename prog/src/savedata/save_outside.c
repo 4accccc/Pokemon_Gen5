@@ -10,6 +10,8 @@
 #include "savedata/save_tbl.h"
 #include "savedata/save_outside.h"
 
+#include "savedata/mystery_data.h"
+#include "savedata/mystery_data_local.h"
 
 
 //==============================================================================
@@ -290,7 +292,6 @@ BOOL OutsideSave_GetBreakFlag(OUTSIDE_SAVE_CONTROL *outsv_ctrl)
 //==================================================================
 OUTSIDE_MYSTERY * OutsideSave_GetMysterPtr(OUTSIDE_SAVE_CONTROL *outsv_ctrl)
 {
-  GF_ASSERT(outsv_ctrl->data_exists == TRUE);
   return &outsv_ctrl->mystery_save.mystery;
 }
 
@@ -304,7 +305,7 @@ OUTSIDE_MYSTERY * OutsideSave_GetMysterPtr(OUTSIDE_SAVE_CONTROL *outsv_ctrl)
 //==================================================================
 void OutsideSave_MysteryData_Outside_to_Normal(OUTSIDE_SAVE_CONTROL *outsv_ctrl, SAVE_CONTROL_WORK *normal_ctrl)
 {
-  MYSTERY_DATA *normal_mystery = SaveData_GetMysteryData(normal_ctrl);
+  MYSTERY_ORIGINAL_DATA *normal_mystery = SaveControl_DataPtrGet(normal_ctrl, GMDATA_ID_MYSTERYDATA);
   OUTSIDE_MYSTERY *outside_mystery = &outsv_ctrl->mystery_save.mystery;
   int i;
   

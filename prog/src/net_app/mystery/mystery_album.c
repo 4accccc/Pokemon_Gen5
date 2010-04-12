@@ -415,7 +415,7 @@ MYSTERY_ALBUM_WORK * MYSTERY_ALBUM_Init( const MYSTERY_ALBUM_SETUP *cp_setup, HE
   { 
     int i;
     GIFT_PACK_DATA data;
-    for( i = 0; i < MYSTERY_ALBUM_CARD_MAX; i++ )
+    for( i = 0; i < MYSTERY_DATA_GetCardMax( p_wk->setup.p_sv ); i++ )
     {
       if( MYSTERYDATA_IsExistsCard( p_wk->setup.p_sv, i) )
       { 
@@ -550,7 +550,7 @@ void MYSTERY_ALBUM_Exit( MYSTERY_ALBUM_WORK *p_wk )
   //カード破棄
   { 
     int i;
-    for( i = 0; i < MYSTERY_ALBUM_CARD_MAX; i++ )
+    for( i = 0; i < MYSTERY_DATA_GetCardMax( p_wk->setup.p_sv ); i++ )
     {
       MYSTERY_CARD_DATA_Exit( &p_wk->data[i]);
     }   
@@ -1366,12 +1366,12 @@ static void Mystery_Album_RemoveCard( MYSTERY_ALBUM_WORK *p_wk, u32 card_index )
   //カード作り直し
   { 
     int i;
-    for( i = 0; i < MYSTERY_ALBUM_CARD_MAX; i++ )
+    for( i = 0; i < MYSTERY_DATA_GetCardMax( p_wk->setup.p_sv ); i++ )
     {
       MYSTERY_CARD_DATA_Exit( &p_wk->data[i]);
     }
 
-    for( i = 0; i < MYSTERY_ALBUM_CARD_MAX; i++ )
+    for( i = 0; i < MYSTERY_DATA_GetCardMax( p_wk->setup.p_sv ); i++ )
     {
       if( MYSTERYDATA_IsExistsCard( p_wk->setup.p_sv, i) )
       { 
@@ -1416,12 +1416,12 @@ static void Mystery_Album_SwapCard( MYSTERY_ALBUM_WORK *p_wk, u32 card_index1, u
   //カード作り直し
   { 
     int i;
-    for( i = 0; i < MYSTERY_ALBUM_CARD_MAX; i++ )
+    for( i = 0; i < MYSTERY_DATA_GetCardMax( p_wk->setup.p_sv ); i++ )
     {
         MYSTERY_CARD_DATA_Exit( &p_wk->data[i]);
     }
 
-    for( i = 0; i < MYSTERY_ALBUM_CARD_MAX; i++ )
+    for( i = 0; i < MYSTERY_DATA_GetCardMax( p_wk->setup.p_sv ); i++ )
     {
       if( MYSTERYDATA_IsExistsCard( p_wk->setup.p_sv, i) )
       { 
@@ -1448,7 +1448,8 @@ static u32 Mystery_Album_GetPageMax( const MYSTERY_ALBUM_WORK *cp_wk )
 { 
   int cnt;
   u32 max;
-#if 0
+#if 0 //カードがある分だけページが開くのではなく
+      //つねに全てのページが開くようになりました
 
   cnt = Mystery_Album_GetDataNum( cp_wk );
 
@@ -1476,7 +1477,7 @@ static u32 Mystery_Album_GetDataNum( const MYSTERY_ALBUM_WORK *cp_wk )
   int cnt;
 
   cnt = 0;
-  for( i = 0; i < MYSTERY_ALBUM_CARD_MAX; i++ )
+  for( i = 0; i < MYSTERY_DATA_GetCardMax( cp_wk->setup.p_sv ); i++ )
   { 
     if( MYSTERY_CARD_DATA_IsExist(&cp_wk->data[i]))
     { 
@@ -2178,7 +2179,7 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
       { 
         int i;
-        for( i = 0; i < GIFT_DATA_MAX; i++ )
+        for( i = 0; i < MYSTERY_DATA_GetCardMax( p_wk->setup.p_sv ); i++ )
         { 
           MYSTERYDATA_RemoveCardData(p_wk->setup.p_sv, i );
         }
@@ -2905,7 +2906,7 @@ static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
 
       if( is_ok )
       { 
-        GAMEDATA_SaveAsyncStart(p_wk->setup.p_gamedata);
+        MYSTERYDATA_SaveAsyncStart( p_wk->setup.p_sv,p_wk->setup.p_gamedata );
         *p_seq  = SEQ_SAVE_MAIN;
       }
     }
@@ -2913,7 +2914,7 @@ static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
 
   case SEQ_SAVE_MAIN:
     { 
-      SAVE_RESULT result  = GAMEDATA_SaveAsyncMain(p_wk->setup.p_gamedata);
+      SAVE_RESULT result  = MYSTERYDATA_SaveAsyncMain(p_wk->setup.p_sv,p_wk->setup.p_gamedata);
       if( result == SAVE_RESULT_OK )
       { 
         *p_seq  = SEQ_EXIT;

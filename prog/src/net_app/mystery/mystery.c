@@ -580,13 +580,13 @@ static GFL_PROC_RESULT MYSTERY_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 
   p_wk->p_gamedata  = GAMEDATA_Create( HEAPID_MYSTERYGIFT );
 
-  p_wk->p_sv    = SaveData_GetMysteryData( GAMEDATA_GetSaveControlWork(p_wk->p_gamedata) );
+  p_wk->p_sv    = MYSTERY_DATA_Load( GAMEDATA_GetSaveControlWork(p_wk->p_gamedata), HEAPID_MYSTERYGIFT );
 
   //セーブデータをクリア
 #ifdef MYSTERY_SAVEDATA_CLEAR
   { 
     int i;
-    for( i = 0; i < GIFT_DATA_MAX; i++ )
+    for( i = 0; i < MYSTERY_DATA_GetCardMax( p_wk->p_sv ); i++ )
     { 
       if( MYSTERYDATA_IsExistsCard( p_wk->p_sv, i ) )
       { 
@@ -697,6 +697,8 @@ static GFL_PROC_RESULT MYSTERY_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
   //グラフィック破棄
 	MYSTERY_GRAPHIC_Exit( p_wk->p_graphic );
 
+  MYSTERY_DATA_UnLoad( p_wk->p_sv );
+
   //ゲームデータ破棄
   GAMEDATA_Delete( p_wk->p_gamedata );
 
@@ -707,7 +709,8 @@ static GFL_PROC_RESULT MYSTERY_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 	GFL_HEAP_DeleteHeap( HEAPID_MYSTERYGIFT );
 
   //タイトルに戻る
-  GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+  //GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+  OS_ResetSystem(0);
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
 
@@ -1397,7 +1400,7 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
           if( is_full )
           { 
             int i;
-            for( i = 0; i < GIFT_DATA_MAX; i++ )
+            for( i = 0; i < MYSTERY_DATA_GetCardMax( p_wk->p_sv ); i++ )
             { 
               if( MYSTERYDATA_IsHavePresent( p_wk->p_sv, i ) )
               { 
@@ -1409,9 +1412,21 @@ static void SEQFUNC_StartSelect( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_
           if( is_full )
           { 
             if( is_no_recv )
-            { 
+            {
+              u16 strID;
               //未取得の贈り物データがMAX
-              MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_err_001, MYSTERY_TEXT_TYPE_STREAM );
+              //ゲーム開始前とゲーム開始後でエラーが違う
+              if( MYSTERY_DATA_TYPE_OUTSIDE == MYSTERY_DATA_GetDataType( p_wk->p_sv ) )
+              { 
+                //管理外セーブならば、ゲーム開始前メッセージ
+                strID = syachi_mystery_err_008;
+              }
+              else
+              { 
+                strID = syachi_mystery_err_001;
+              }
+              
+              MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, strID, MYSTERY_TEXT_TYPE_STREAM );
               MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_INIT );
               *p_seq  = SEQ_MSG_WAIT;
             }
@@ -2186,13 +2201,13 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_SAVE_INIT:
-    GAMEDATA_SaveAsyncStart(p_wk->p_gamedata);
+    MYSTERYDATA_SaveAsyncStart( p_wk->p_sv,p_wk->p_gamedata );
     *p_seq  = SEQ_SAVE_MAIN;
     break;
 
   case SEQ_SAVE_MAIN:
     { 
-      SAVE_RESULT result  = GAMEDATA_SaveAsyncMain(p_wk->p_gamedata);
+      SAVE_RESULT result  = MYSTERYDATA_SaveAsyncMain(p_wk->p_sv,p_wk->p_gamedata);
       if( result == SAVE_RESULT_OK )
       { 
         *p_seq  = SEQ_BACK_FADE_INIT;

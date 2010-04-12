@@ -110,9 +110,11 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
   u16 req = SCRCMD_GetVMWorkValue( core, wk );
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
   GIFT_PACK_DATA aGpd;
 
-  MYSTERY_DATA * fd = SaveData_GetMysteryData( GAMEDATA_GetSaveControlWork( gamedata ) );
+  //2010412不思議な贈り物セーブデータ取得関数がalloc,free式に変わりましたので置き換えましたnagihashi
+  MYSTERY_DATA * fd = MYSTERY_DATA_Load( GAMEDATA_GetSaveControlWork( gamedata ), heapID );
   int index;
   GIFT_PACK_DATA * gpd = FIELD_MYSTERYDATA_GetGiftData( fd, &index, &aGpd );
   u8 gift_type = FIELD_MYSTERYDATA_GetGiftType( fd );
@@ -120,6 +122,7 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
   if ( PostmanFuncTable[gift_type].gift_type != gift_type )
   {
     GF_ASSERT( 0 ); //贈り物データの種類がずれた？
+    MYSTERY_DATA_UnLoad( fd );
     return VMCMD_RESULT_CONTINUE;
   }
   switch ( req )
@@ -177,6 +180,7 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
   default:
     GF_ASSERT( 0 );
   }
+  MYSTERY_DATA_UnLoad( fd );
   return VMCMD_RESULT_CONTINUE;
 }
 
