@@ -49,6 +49,7 @@ typedef enum
 {
   WIFILOGIN_MODE_NORMAL,      //通常起動
   WIFILOGIN_MODE_ERROR,       //エラーで再びきたときの起動
+  WIFILOGIN_MODE_NOTSAVE,     //初回WIFIでもセーブへ移行しない(不思議な贈り物でしか使わないはずです)
 } WIFILOGIN_MODE;
 
 //-------------------------------------

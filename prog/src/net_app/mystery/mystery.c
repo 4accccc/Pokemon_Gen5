@@ -1286,7 +1286,7 @@ static void SEQFUNC_FadeOut( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 	switch( *p_seq )
 	{	
 	case SEQ_FADEIN_START:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 0 );
 		*p_seq	= SEQ_FADEIN_WAIT;
 		break;
 
@@ -2651,6 +2651,15 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     p_wk->p_wifilogin_param->bg           = WIFILOGIN_BG_NORMAL;
     p_wk->p_wifilogin_param->display      = WIFILOGIN_DISPLAY_UP;
     p_wk->p_wifilogin_param->pSvl         = NULL;
+    if( MYSTERY_DATA_TYPE_OUTSIDE == MYSTERY_DATA_GetDataType( p_wk->p_sv ) )
+    { 
+      //管理外セーブならば、WIFILOGINはセーブへ行かない
+      p_wk->p_wifilogin_param->mode         = WIFILOGIN_MODE_NOTSAVE;
+    }
+    else
+    { 
+      p_wk->p_wifilogin_param->mode         = WIFILOGIN_MODE_NORMAL;
+    }
 
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, p_wk->p_wifilogin_param );
     *p_seq  = SEQ_CREATE;

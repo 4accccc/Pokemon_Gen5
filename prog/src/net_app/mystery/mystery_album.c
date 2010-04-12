@@ -3271,7 +3271,19 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
 
     tbl[1].p_strbuf = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TITLE_MAX+1, heapID );
     GFL_STR_SetStringCodeOrderLength( tbl[1].p_strbuf, cp_setup->cp_data->event_name, GIFT_DATA_CARD_TITLE_MAX );
-    tbl[2].p_strbuf = GFL_MSG_CreateString( cp_setup->p_msg, syachi_mystery_card_txt_00_01 + cp_setup->cp_data->card_message*2 + cp_setup->cp_data->have );
+
+    { 
+      u16 strID;
+      if( cp_setup->cp_data->have )
+      { 
+        strID = syachi_mystery_card_txt_00_02 + cp_setup->cp_data->card_message;
+      }
+      else
+      { 
+        strID = syachi_mystery_card_txt_00_01 + cp_setup->cp_data->card_message;
+      }
+        tbl[2].p_strbuf = GFL_MSG_CreateString( cp_setup->p_msg, strID );
+    }
     tbl[4].p_strbuf = GFL_MSG_CreateString( cp_setup->p_msg, syachi_mystery_album_008 );
 
     y = MYSTERYDATA_GetYear( cp_setup->cp_data->recv_date );

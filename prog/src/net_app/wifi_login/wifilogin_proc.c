@@ -632,7 +632,9 @@ static void _connectingWait(WIFILOGIN_WORK* pWork)
   if(!WIFILOGIN_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  if( GFL_NET_DWC_GetSaving() && pWork->bSaving==FALSE) {  //セーブの必要が生じた
+  if( GFL_NET_DWC_GetSaving() && pWork->bSaving==FALSE 
+      && pWork->dbw->mode != WIFILOGIN_MODE_NOTSAVE
+      ) {  //セーブの必要が生じた
     WIFILOGIN_MESSAGE_InfoMessageDispWaitIcon(pWork->pMessageWork, dwc_message_0015);
     _CHANGE_STATE(pWork, _saveingStart);
   }
@@ -930,9 +932,15 @@ static void _profileIDCheck(WIFILOGIN_WORK* pWork)
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0018);
     _CHANGE_STATE(pWork,_exitEnd2);
   }
-  // 初めての場合
+  //強制セーブ無し
+  else if( pWork->dbw->mode == WIFILOGIN_MODE_NOTSAVE )
+  { 
+    WIFILOGIN_MESSAGE_InfoMessageDisp(pWork->pMessageWork, dwc_message_0002);
+    _CHANGE_STATE(pWork,_modeLoginWait);
+  }
   else if( !DWC_CheckHasProfile( WifiList_GetMyUserInfo(pWork->pList) ) )
   {
+    // 初めての場合
     pWork->bInitMessage=TRUE;
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0003);
