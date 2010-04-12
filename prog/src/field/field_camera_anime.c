@@ -51,6 +51,7 @@ static void DeleteWork( FCAM_ANIME_WORK* work ); // カメラ操作ワークを破棄する
 static void InitWork( FCAM_ANIME_WORK* work, FIELDMAP_WORK* fieldmap ); // カメラ操作ワークを初期化する
 // カメラの準備・復帰
 static void SetupCamera( FCAM_ANIME_WORK* work ); // カメラの設定を変更する
+static void SetupCameraMode( FCAM_ANIME_WORK* work ); // カメラモードの設定を変更する
 static void RecoverCamera( const FCAM_ANIME_WORK* work ); // カメラの設定を復帰する
 static void AdjustCameraAngle( FIELD_CAMERA* camera ); // カメラアングルを再計算する
 static void SetCurrentCameraTargetPos( FIELD_CAMERA* camera ); // ターゲット座標を現在の実効値に設定する
@@ -134,9 +135,10 @@ void FCAM_ANIME_SetAnimeData( FCAM_ANIME_WORK* work, const FCAM_ANIME_DATA* data
 //-----------------------------------------------------------------------------
 void FCAM_ANIME_SetupCamera( FCAM_ANIME_WORK* work )
 {
-  SetupCamera( work );
+  SetupCameraMode( work );
   AdjustCameraAngle( work->camera );
   SetCurrentCameraTargetPos( work->camera ); // ターゲット座標を初期化
+  SetupCamera( work );
 }
 
 //-----------------------------------------------------------------------------
@@ -317,12 +319,24 @@ static void SetupCamera( FCAM_ANIME_WORK* work )
     FIELD_CAMERA_SetCameraAreaActive( camera, FALSE );
   }
 
+  // フラグセット
+  work->recoveryValidFlag = TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief カメラモードをセットアップする
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void SetupCameraMode( FCAM_ANIME_WORK* work )
+{
+  FIELD_CAMERA* camera = work->camera;
+
   // カメラモードを変更
   work->initialCameraMode = FIELD_CAMERA_GetMode( camera ); 
   FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
-
-  // フラグセット
-  work->recoveryValidFlag = TRUE;
 }
 
 //-----------------------------------------------------------------------------
