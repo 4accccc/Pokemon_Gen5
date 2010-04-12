@@ -22,9 +22,9 @@
 
 #define OBJ_NUM (1)
 
-#define SHIP_X  (FIELD_CONST_GRID_FX32_SIZE * 321 + (FIELD_CONST_GRID_FX32_SIZE/2))
+#define SHIP_X  (FIELD_CONST_GRID_FX32_SIZE * 322 + (FIELD_CONST_GRID_FX32_SIZE/2))
 #define SHIP_Y  (FX32_ONE * 8)
-#define SHIP_Z  (FIELD_CONST_GRID_FX32_SIZE * 768 + (FIELD_CONST_GRID_FX32_SIZE/2))
+#define SHIP_Z  (FIELD_CONST_GRID_FX32_SIZE * 767 + (FIELD_CONST_GRID_FX32_SIZE/2))
 
 //==========================================================================================
 // Å°3DÉäÉ\Å[ÉX
