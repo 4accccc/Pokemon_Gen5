@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-09T18:50:02"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T13:06:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1412" top="205" right="2117" bottom="827" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -299,12 +299,12 @@
 ・続けてblack_02</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『やあ
-[1:00:トレーナー名:0]▼
-アーティさんに　いどんだけれど……▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『やあ
-[1:00:トレーナー名:0]▼
-アーティさんに　挑んだけれど……▼</language>
+		<language name="JPN" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼
+たったいま　ジムリーダーの
+アーティさんに　いどんだ　ところさ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼
+たったいま　ジムリーダーの
+アーティさんに　挑んだところさ▼</language>
 	</row>
 
 	<row id="msg_c03p07_black_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -315,10 +315,14 @@
 チェレン</attribute>
 		<language name="JPN" width="256">さすが　ジムリーダーだね▼
 ジムバッジを　てにいれるのに
-こんなに　くろう　するなんて▼</language>
+ちょっと　てこずったけれど▼
+まあ　ぼくに　かかれば
+むしタイプも　もんだい　なしさ▼</language>
 		<language name="JPN_KANJI" width="256">さすが　ジムリーダーだね▼
-ジムバッジを　手に入れるのに
-こんなに　苦戦するなんて▼</language>
+ジムバッジを　入手するのに
+ちょっと　てこずったけれど▼
+まあ　ぼくに　かかれば
+むしタイプも　問題なしさ▼</language>
 	</row>
 
 	<row id="msg_c03p07_black_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -328,18 +332,20 @@
 ・続けてleader3_01</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">ぼくは　いちど
-ポケモンセンターに　もどる▼
-そのあとは　４ばんどうろか……
-バトルカンパニーで▽
-ポケモンたちを　きたえるよ▼
-それでは　けんとうを　いのる▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『ぼくは　一度
-ポケモンセンターに　戻るよ▼
-そのあとは　４番道路か……
-バトルカンパニーで▽
-ポケモンたちを　鍛えるよ▼
-それでは　健闘を　祈る▼</language>
+		<language name="JPN" width="256">このまま　イッシュちほうの
+ジムリーダー　ぜんいんに　かつ▼
+そして　ポケモンリーグに　むかい
+チャンピオンを　たおすよ▼
+そうすれば　だれもが
+ぼくを　つよい　トレーナーとして▽
+みとめてくれるだろう……▼</language>
+		<language name="JPN_KANJI" width="256">このまま　イッシュちほうの
+ジムリーダー　全員に　勝利し▼
+そして　ポケモンリーグに　向かい
+チャンピオンを　倒すよ▼
+そうすれば　だれもが
+ぼくを　強い　トレーナーとして▽
+認めて　くれるだろう……▼</language>
 	</row>
 
 	<row id="msg_c03p07_leader3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-02T18:11:03"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T13:15:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -406,13 +406,17 @@
 つかえる　わざが　あるの！▼
 その　わざマシンで　いあいぎりという
 ほそいきを　きることが　できる▽
-わざを　おぼえさせることが　できるわ▼</language>
+わざを　おぼえさせることが　できるわ▼
+しかも　わざマシンは　なんどでも
+つかえるのよ！　すごいでしょ！▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンが　覚える　技には
 戦っていない　ときでも▽
 使える　技が　あるの！▼
 その　わざマシンで　いあいぎりという
 細い木を　切ることが　できる▽
-技を　覚えさせることが　できるわ▼</language>
+技を　覚えさせることが　できるわ▼▼
+しかも　わざマシンは　何度でも
+使えるのよ！　すごいでしょ！▼</language>
 	</row>
 
 	<row id="msg_c01r0102_inventor_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">

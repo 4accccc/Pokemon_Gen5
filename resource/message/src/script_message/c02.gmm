@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T17:20:09"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T12:59:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -367,9 +367,9 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『まちに　ついたら
-まず　ポケモンセンター　だよ▼</language>
+まず　ポケモンセンター　だよね▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『街に　着いたら
-まず　ポケモンセンター　だよ▼</language>
+まず　ポケモンセンター　だよね▼</language>
 	</row>
 
 	<row id="msg_c02_black_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -381,13 +381,19 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">このまま　まっすぐ　すすめば
-ポケモンセンター　さ▼
-じゃあ　ぼくは
-むこうの　そうこを　みてるから▼</language>
+ポケモンセンター▼
+ついでに　おしえておくけど
+シッポウシティの　ジムリーダーは▽
+ノーマルタイプの　つかいて▼
+かくとうタイプの　ポケモンが　いると
+かなり　ゆうりに　なるだろうね▼</language>
 		<language name="JPN_KANJI" width="256">このまま　まっすぐ　進めば
-ポケモンセンター　さ▼
-じゃあ　ぼくは
-向こうの　倉庫を　見てるから▼</language>
+ポケモンセンター▼
+ついでに　教えておくけど
+シッポウシティの　ジムリーダーは▽
+ノーマルタイプの　使い手▼
+かくとうタイプの　ポケモンが　いると
+かなり　有利に　なるだろうね▼</language>
 	</row>
 
 	<row id="msg_c02_boss_01" text-color="#000000,,,,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
