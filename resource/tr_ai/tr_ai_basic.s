@@ -213,6 +213,7 @@ BasicAI_01:
 	IF_WAZA_SEQNO_JUMP	167,BasicAI_167		//	やけど
 	IF_WAZA_SEQNO_JUMP	168,BasicAI_168		// 	おきみやげ
 	IF_WAZA_SEQNO_JUMP	170,BasicAI_170		//	きあいパンチ
+	IF_WAZA_SEQNO_JUMP	172,BasicAI_172		// 	このゆびとまれ
 	IF_WAZA_SEQNO_JUMP	176,BasicAI_176		// 	てだすけ
 	IF_WAZA_SEQNO_JUMP	177,BasicAI_177		// 	トリック
 	IF_WAZA_SEQNO_JUMP	181,BasicAI_181		// 	ねをはる
@@ -992,6 +993,11 @@ BasicAI_167://やけどをおわせる
 BasicAI_167_end:
 	AIEND
 
+BasicAI_172:			// 	このゆびとまれ
+  CHECK_BTL_RULE
+	IF_EQUAL		BTL_RULE_SINGLE,AI_DEC10
+  AIEND
+
 BasicAI_176://てだすけ
 	CHECK_BTL_RULE
 	IF_EQUAL		BTL_RULE_SINGLE, AI_DEC10
@@ -1632,7 +1638,7 @@ BasicAI_285_end:
 	AIEND
 
 BasicAI_286:			// 	マジックルーム
-	FLDEFF_CHECK	BTL_FLDEFF_MAGICROOM,AI_DEC10		//ワンダールーム中	
+	FLDEFF_CHECK	BTL_FLDEFF_MAGICROOM,AI_DEC10		//マジックルーム中	
 	AIEND
 
 BasicAI_287:			// 	うちおとす

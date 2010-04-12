@@ -13,6 +13,8 @@
 	.include	"../../prog/include/waza_tool/wazano_def.h"
 	.include	"../../prog/include/poke_tool/poke_tool.h"
 	.include	"../../prog/include/poke_tool/tokusyu_def.h"
+	.include	"../../prog/include/poke_tool/monsno_def.h"
+	.include	"../../prog/include/poke_tool/monsnum_def.h"
 	.include	"../../prog/include/item/itemsym.h"
 	.include	"../../prog/include/item/itemequip.h"
   .include  "battle_def.h"

@@ -495,6 +495,14 @@ ExpertAI_11_end:
 	AIEND
 
 //---------------------------------------------------------------------------
+ExpertAI_284:	//	ボディパージ 	
+
+	IFN_HAVE_WAZA_SEQNO	CHECK_DEFENCE,196,ExpertAI_12	    	// くさむすび系
+
+	IF_RND_UNDER	60,ExpertAI_12
+
+	INCDEC		1
+
 ExpertAI_12:	// 素早さアップ
 	IF_FIRST	IF_FIRST_DEFENCE,ExpertAI_12_1
 	INCDEC		-3
@@ -502,6 +510,12 @@ ExpertAI_12:	// 素早さアップ
 
 ExpertAI_12_1:
 	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,31,ExpertAI_12_2		// ひるみ系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,32,ExpertAI_12_2		// 回復系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,37,ExpertAI_12_2		// ねむる
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,132,ExpertAI_12_2		// こうごうせい
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,214,ExpertAI_12_2		// はねやすめ
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,79,ExpertAI_12_2		// みがわり
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,91,ExpertAI_12_2		// いたみわけ
 	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,150,ExpertAI_12_2		// ひるみ系（ふみつけ系）
 	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,98,ExpertAI_12_2		// みちづれ系
 	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,127,ExpertAI_12_2		// バトンタッチ系
@@ -2373,6 +2387,7 @@ ExpertAI_170_ok2:
 ExpertAI_170_end:
 	AIEND
 //---------------------------------------------------------------------------
+
 ExpertAI_171:	// きつけ
 	IF_WAZASICK		CHECK_DEFENCE,WAZASICK_MAHI,ExpertAI_171_ok
 	JUMP		ExpertAI_171_end
@@ -2381,6 +2396,7 @@ ExpertAI_171_ok:
 	INCDEC		1
 ExpertAI_171_end:
 	AIEND
+
 //---------------------------------------------------------------------------
 ExpertAI_177:	// トリック
 //テーブル構成を細かく設定する必要あり
@@ -2963,12 +2979,12 @@ ExpertAI_212:	// りゅうのまい
 
 	IF_HP_OVER	CHECK_ATTACK,50,ExpertAI_212_end	
 
-	IF_RND_UNDER	70,ExpertAI_212_end
+	IF_RND_UNDER	50,ExpertAI_212_end
 	INCDEC		-1
 	JUMP		ExpertAI_212_end
 	
 ExpertAI_212_ok:
-	IF_RND_UNDER	128,ExpertAI_212_end
+	IF_RND_UNDER	50,ExpertAI_212_end
 
 	INCDEC		1
 ExpertAI_212_end:
@@ -3600,7 +3616,52 @@ ExpertAI_238_end:
 //---------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------
-ExpertAI_239:	// いえき：おだてる流用
+ExpertAI_298:			// 	シンプルビーム
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,10,ExpertAI_239_ng		//  アップ系
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,11,ExpertAI_239_ng		//  アップ系
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,12,ExpertAI_239_ng		//  アップ系
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,13,ExpertAI_239_ng		//  アップ系
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,14,ExpertAI_239_ng		//  アップ系
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,15,ExpertAI_239_ng		//  アップ系
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,16,ExpertAI_239_ng		//  アップ系
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,50,ExpertAI_239_ng		//  アップ系
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,51,ExpertAI_239_ng		//  アップ系
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,52,ExpertAI_239_ng		//  アップ系
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,53,ExpertAI_239_ng		//  アップ系
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,54,ExpertAI_239_ng		//  アップ系
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,55,ExpertAI_239_ng		//  アップ系
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,56,ExpertAI_239_ng		//  アップ系
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,109,ExpertAI_239_ng		//  のろい 
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,206,ExpertAI_239_ng		//  コスモパワー 
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,208,ExpertAI_239_ng		//  ビルドアップ 
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,211,ExpertAI_239_ng		//  めいそう 
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,212,ExpertAI_239_ng		//  りゅうのまい 
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,226,ExpertAI_239_ng		//  つぼをつく 
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,277,ExpertAI_239_ng		//  つめとぎ 
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,290,ExpertAI_239_ng		//  ちょうのまい
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,308,ExpertAI_239_ng		//  からをやぶる
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,316,ExpertAI_239_ng		//  せいちょう
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,322,ExpertAI_239_ng		//  とぐろをまく
+
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,18,ExpertAI_239_ok		//  ダウン系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,19,ExpertAI_239_ok		//  ダウン系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,20,ExpertAI_239_ok		//  ダウン系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,21,ExpertAI_239_ok		//  ダウン系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,22,ExpertAI_239_ok		//  ダウン系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,23,ExpertAI_239_ok		//  ダウン系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,24,ExpertAI_239_ok		//  ダウン系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,58,ExpertAI_239_ok		//  ダウン系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,59,ExpertAI_239_ok		//  ダウン系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,60,ExpertAI_239_ok		//  ダウン系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,61,ExpertAI_239_ok		//  ダウン系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,62,ExpertAI_239_ok		//  ダウン系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,63,ExpertAI_239_ok		//  ダウン系
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,64,ExpertAI_239_ok		//  ダウン系
+
+ExpertAI_239:	    // いえき
+	CHECK_TOKUSEI	CHECK_ATTACK
+	IF_TABLE_JUMP	ExpertAI_239_Table,ExpertAI_239_ok
+
 	IF_RND_UNDER		64,ExpertAI_239_end
 	INCDEC		1
 	IF_HP_OVER	CHECK_DEFENCE,70,ExpertAI_239_end
@@ -3612,8 +3673,33 @@ ExpertAI_239_1:
 	INCDEC		-1
 	IF_HP_OVER	CHECK_DEFENCE,30,ExpertAI_239_end
 	INCDEC		-1
+	JUMP		ExpertAI_239_end
+
+ExpertAI_239_ng:
+	INCDEC		-1
+	JUMP		ExpertAI_239_end
+
+ExpertAI_239_ok:
+	IF_RND_UNDER		40,ExpertAI_239_end
+	INCDEC		1
 ExpertAI_239_end:	
 	AIEND
+
+ExpertAI_239_Table:
+	.long	TOKUSYU_ITAZURAGOKORO  	  //いたずらごころ
+	.long	TOKUSYU_MIRAKURUSUKIN  	  //ミラクルスキン
+	.long	TOKUSYU_SYUUKAKU  		    //しゅうかく
+	.long	TOKUSYU_NETUBOUSOU		    //ねつぼうそう
+	.long	TOKUSYU_DOKUBOUSOU		    //どくぼうそう
+	.long	TOKUSYU_TEKUNISYAN		    //テクニシャン
+	.long	TOKUSYU_MAZIKKUGAADO		  //マジックガード
+	.long	TOKUSYU_NOOMARUSUKIN		  //ノーマルスキン
+	.long	TOKUSYU_POIZUNHIIRU		    //ポイズンヒール
+	.long	TOKUSYU_TIKARAMOTI		    //ちからもち
+	.long	TOKUSYU_HUSIGINAMAMORI		//ふしぎなまもり
+	.long	TOKUSYU_KAGEHUMI		      //かげふみ
+	.long	0xffffffff
+
 //---------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------
@@ -4260,56 +4346,454 @@ ExpertAI_270_5:
 	AIEND
 
 ExpertAI_277:			// 	つめとぎ
+	IF_PARA_UNDER	CHECK_ATTACK,PARA_HIT,9,ExpertAI_277_1
+	IF_RND_UNDER	50,ExpertAI_277_1
+	INCDEC		-2
+ExpertAI_277_1:
+	IF_HP_OVER	CHECK_ATTACK,80,ExpertAI_277_end
+
+	INCDEC		-2
+ExpertAI_277_end:
+	AIEND
+
 ExpertAI_278:			// 	ワイドガード
+  AIEND
+
 ExpertAI_279:			// 	ガードシェア
+	CHECK_NEKODAMASI	CHECK_ATTACK
+	IFN_EQUAL	0,ExpertAI_279_dec	//でてきて１ターン目でないなら終了
+
+	IF_PARA_OVER	CHECK_ATTACK,PARA_DEF,7,ExpertAI_279_dec      // 自分のパラメータが上がってたら出さない
+	IF_PARA_OVER	CHECK_ATTACK,PARA_SPEDEF,7,ExpertAI_279_dec   // 自分のパラメータが上がってたら出さない
+
+	IF_PARA_UNDER	CHECK_DEFENCE,PARA_DEF,8,ExpertAI_279_2       // 相手のパラメータが2段階ＵＰ未満
+	IF_PARA_UNDER	CHECK_DEFENCE,PARA_SPEDEF,8,ExpertAI_279_2    // 相手のパラメータが2段階ＵＰ未満
+
+	IF_RND_UNDER	50,ExpertAI_279_1
+  INCDEC    1
+
+ExpertAI_279_1:
+	IF_PARA_UNDER	CHECK_DEFENCE,PARA_DEF,10,ExpertAI_279_2      // 相手のパラメータが4段階ＵＰ未満
+	IF_PARA_UNDER	CHECK_DEFENCE,PARA_SPEDEF,10,ExpertAI_279_2   // 相手のパラメータが4段階ＵＰ未満
+
+	IF_RND_UNDER	50,ExpertAI_279_2
+  INCDEC    1
+
+ExpertAI_279_2:
+  CHECK_MONSNO	CHECK_ATTACK
+	IF_TABLE_JUMP	ExpertAI_279_bougyo_table,ExpertAI_279_bougyo
+	IF_TABLE_JUMP	ExpertAI_279_tokubou_table,ExpertAI_279_bougyo
+
+  CHECK_MONSNO	CHECK_DEFENCE
+	IF_TABLE_JUMP	ExpertAI_279_bougyo_table,ExpertAI_279_inc    // 防御の高いポケモンなら出す
+	IF_TABLE_JUMP	ExpertAI_279_tokubou_table,ExpertAI_279_inc   // 特防の高いポケモンなら出す
+
+	JUMP		ExpertAI_279_end
+
+ExpertAI_279_bougyo:                    //　防御が高いポケモンは基本的にシングル戦では出さない
+	CHECK_BTL_RULE
+	IF_EQUAL		BTL_RULE_SINGLE, AI_DEC10
+	JUMP		ExpertAI_279_end
+
+ExpertAI_279_inc:
+	IF_RND_UNDER	50,ExpertAI_279_end
+  INCDEC    1
+	JUMP		ExpertAI_279_end
+
+ExpertAI_279_dec:
+  INCDEC    -1
+ExpertAI_279_end:
+  AIEND
+
+ExpertAI_279_bougyo_table:         // 防御の固いポケモン群
+	.long	MONSNO_TUBOTUBO      //  230
+	.long	MONSNO_REZIROKKU     //  200
+  .long	MONSNO_HAGANEERU     //  200
+	.long	MONSNO_BOSUGODORA    //  180
+	.long	MONSNO_PARUSHEN      //  180
+	.long	MONSNO_TORIDEPUSU    //  168
+	.long	MONSNO_IWAAKU        //  160
+	.long	MONSNO_REZISUTIRU    //  150
+	.long	MONSNO_DAINOOZU	     //  145
+	.long	MONSNO_GURAADON      //  140●
+	.long	MONSNO_KOOTASU       //  140
+	.long	MONSNO_KODORA        //  140
+	.long	MONSNO_EAAMUDO       //  140
+	.long	MONSNO_FORETOSU      //  140
+	.long	MONSNO_YONOWAARU     //  135
+	.long	MONSNO_NOZUPASU      //  135
+	.long	MONSNO_YUKUSII       //  130
+	.long	MONSNO_RIIFIA        //  130
+	.long	MONSNO_DOSAIDON      //  130
+	.long	MONSNO_METAGUROSU    //  130
+	.long	MONSNO_ZIIRANSU      //  130
+	.long	MONSNO_SAMAYOORU     //  130
+	.long	MONSNO_RUGIA         //  130●
+	.long	MONSNO_GOROONYA      //  130
+
+	.long	MONSNO_510 // デスカーン 145
+	.long	MONSNO_623 // アバゴウラ 133
+	.long	MONSNO_618 // ゴウキーン 131
+	.long	MONSNO_602 // ガンドロス 130
+	.long	MONSNO_645 // アトス     129
+
+	.long	0xffffffff
+
+ExpertAI_279_tokubou_table:         // 特防の固いポケモン群
+	.long	MONSNO_TUBOTUBO      //  230
+	.long	MONSNO_REZIAISU      //  200
+	.long	MONSNO_HOUOU         //  154●
+	.long	MONSNO_RUGIA         //  154●
+	.long	MONSNO_DAINOOZU      //  150
+	.long	MONSNO_REZISUTIRU    //  150
+	.long	MONSNO_KAIOOGA       //  140●
+	.long	MONSNO_MANTAIN       //  140
+	.long	MONSNO_TORIDEPUSU    //  138
+	.long	MONSNO_YONOWAARU     //  135
+	.long	MONSNO_HAPINASU      //  135
+	.long	MONSNO_KURESERIA     //  130
+	.long	MONSNO_YUKUSII       //  130
+	.long	MONSNO_RATHIASU      //  130
+	.long	MONSNO_SAMAYOORU     //  130
+	.long	MONSNO_BURAKKII      //  130
+	.long	MONSNO_MIROKAROSU    //  130
+	.long	MONSNO_HURIIZAA      //  130
+
+	.long	MONSNO_621 //　アイスゴン135
+	.long	MONSNO_647 //　アラミス  129
+
+	.long	0xffffffff
+
 ExpertAI_280:			// 	パワーシェア
+	CHECK_NEKODAMASI	CHECK_ATTACK
+	IFN_EQUAL	0,ExpertAI_280_dec	//でてきて１ターン目でないなら終了
+
+	IF_PARA_OVER	CHECK_ATTACK,PARA_POW,7,ExpertAI_280_dec      // 自分のパラメータが上がってたら出さない
+	IF_PARA_OVER	CHECK_ATTACK,PARA_SPEPOW,7,ExpertAI_280_dec   // 自分のパラメータが上がってたら出さない
+
+	IF_PARA_UNDER	CHECK_DEFENCE,PARA_POW,8,ExpertAI_280_2       // 相手のパラメータが2段階ＵＰ未満
+	IF_PARA_UNDER	CHECK_DEFENCE,PARA_SPEPOW,8,ExpertAI_280_2    // 相手のパラメータが2段階ＵＰ未満
+
+	IF_RND_UNDER	50,ExpertAI_280_1
+  INCDEC    1
+
+ExpertAI_280_1:
+	IF_PARA_UNDER	CHECK_DEFENCE,PARA_POW,10,ExpertAI_280_2      // 相手のパラメータが4段階ＵＰ未満
+	IF_PARA_UNDER	CHECK_DEFENCE,PARA_SPEPOW,10,ExpertAI_280_2   // 相手のパラメータが4段階ＵＰ未満
+
+	IF_RND_UNDER	50,ExpertAI_280_2
+  INCDEC    1
+
+ExpertAI_280_2:
+  CHECK_MONSNO	CHECK_ATTACK
+	IF_TABLE_JUMP	ExpertAI_280_kougeki_table,ExpertAI_280_kougeki 
+	IF_TABLE_JUMP	ExpertAI_280_tokukou_table,ExpertAI_280_kougeki
+
+  CHECK_MONSNO	CHECK_DEFENCE
+	IF_TABLE_JUMP	ExpertAI_280_kougeki_table,ExpertAI_280_inc    // 攻撃の高いポケモンなら出す
+	IF_TABLE_JUMP	ExpertAI_280_tokukou_table,ExpertAI_280_inc    // 特攻の高いポケモンなら出す
+
+	JUMP		ExpertAI_280_end
+
+ExpertAI_280_kougeki:                    //　攻撃が高いポケモンは基本的にシングル戦では使わない
+	CHECK_BTL_RULE
+	IF_EQUAL		BTL_RULE_SINGLE, AI_DEC10
+	JUMP		ExpertAI_280_end
+
+ExpertAI_280_inc:
+	IF_RND_UNDER	50,ExpertAI_280_end
+  INCDEC    1
+	JUMP		ExpertAI_280_end
+
+ExpertAI_280_dec:
+  INCDEC    -1
+ExpertAI_280_end:
+  AIEND
+
+ExpertAI_280_kougeki_table:         // 攻撃の高いポケモン群
+	.long	MONSNO_RAMUPARUDO     //  165
+	.long	MONSNO_REZIGIGASU     //  160
+	.long	MONSNO_KEKKINGU       //  160
+	.long	MONSNO_DEOKISISU      //  150★    
+	.long	MONSNO_REKKUUZA       //  150●
+	.long	MONSNO_GURAADON       //  150●
+	.long	MONSNO_DOSAIDON       //  140
+	.long	MONSNO_METAGUROSU     //  135
+	.long	MONSNO_BOOMANDA       //  135
+	.long	MONSNO_BANGIRASU      //  134
+	.long	MONSNO_KAIRYUU        //  134
+	.long	MONSNO_MANMUU         //  130
+	.long	MONSNO_GABURIASU      //  130
+	.long	MONSNO_ABUSORU        //  130
+	.long	MONSNO_KINOGASSA      //  130
+	.long	MONSNO_HOUOU          //  130●
+	.long	MONSNO_RINGUMA        //  130
+	.long	MONSNO_HASSAMU        //  130
+	.long	MONSNO_BUUSUTAA       //  130
+	.long	MONSNO_SAIDON	        //  130
+	.long	MONSNO_KINGURAA       //  130
+	.long	MONSNO_KAIRIKII       //  130
+
+	.long	MONSNO_650 //　ム         150●
+	.long	MONSNO_547 //　オノノクス 147
+	.long	MONSNO_628 //　シハンドン 140
+	.long	MONSNO_503 //　ヒヒダルマ 140
+	.long	MONSNO_625 //　アーケオス 140
+	.long	MONSNO_543 //　ドリュウズ 135
+	.long	MONSNO_572 //　カブリオン 135
+	.long	MONSNO_653 //　ライ       135●
+	.long	MONSNO_602 //　ガンドロス 135
+	.long	MONSNO_646 //　ポルトス   129
+
+	.long	0xffffffff
+
+ExpertAI_280_tokukou_table:         // 特攻の高いポケモン群
+	.long	MONSNO_MYUUTUU        //  130●
+	.long	MONSNO_PARUKIA        //  150●
+	.long	MONSNO_DHIARUGA       //  150●
+	.long	MONSNO_DEOKISISU      //  150★
+	.long	MONSNO_REKKUUZA       //  150●
+	.long	MONSNO_KAIOOGA        //  150●
+	.long	MONSNO_DAAKURAI       //  135★
+	.long	MONSNO_PORIGONz       //  135
+	.long	MONSNO_HUUDHIN        //  135
+	.long	MONSNO_HIIDORAN       //  130
+	.long	MONSNO_GUREISIA       //  130
+	.long	MONSNO_ZIBAKOIRU      //  130
+	.long	MONSNO_RATHIOSU       //  130
+	.long	MONSNO_EEFI           //  130
+	.long	MONSNO_GENGAA         //  130
+
+	.long	MONSNO_650 //　シン       150● 
+	.long	MONSNO_565 //　シャンデラ 145 
+	.long	MONSNO_644 //　ドラー     135 
+	.long	MONSNO_653 //　ライ       135●
+	.long	MONSNO_654 //　ダルタニス 129★
+
+	.long	0xffffffff
+
 ExpertAI_281:			// 	ワンダールーム
+  AIEND
+
 ExpertAI_282:			// 	サイコショック
+  AIEND
+
 ExpertAI_283:			// 	ベノムショック
-ExpertAI_284:			//	ボディパージ 	
+  AIEND
+
 ExpertAI_285:			// 	テレキネシス
+	IF_PARA_UNDER	CHECK_ATTACK,PARA_HIT,9,ExpertAI_285_1
+	IF_RND_UNDER	50,ExpertAI_285_1
+	INCDEC		-2
+ExpertAI_285_1:
+	IF_HP_OVER	CHECK_ATTACK,70,ExpertAI_285_2
+
+	IF_RND_UNDER	50,ExpertAI_285_2
+	INCDEC		-2
+ExpertAI_285_2:
+	IF_PARA_UNDER	CHECK_DEFENCE,PARA_AVOID,9,ExpertAI_285_end
+
+	IF_RND_UNDER	50,ExpertAI_285_end
+	INCDEC		1
+ExpertAI_285_end:
+	AIEND
+
 ExpertAI_286:			// 	マジックルーム
+	IF_HAVE_ITEM	CHECK_ATTACK,0,ExpertAI_286_ok  //　自分は何も持ってない
+	IF_HAVE_ITEM	CHECK_DEFENCE,ITEM_TABENOKOSI,ExpertAI_286_ok  //　たべのこし
+	IF_HAVE_ITEM	CHECK_DEFENCE,ITEM_KODAWARISUKAAHU,ExpertAI_286_ok  //　こだわりスカーフ
+
+	CHECK_BTL_RULE
+	IF_EQUAL		BTL_RULE_SINGLE,ExpertAI_286_end
+
+	IF_HAVE_ITEM	CHECK_DEFENCE,ITEM_HUUSEN,ExpertAI_286_ok  //　ふうせん
+	JUMP	ExpertAI_286_end
+
+ExpertAI_286_ok:	
+	IF_RND_UNDER	128,ExpertAI_286_end
+	INCDEC		1
+
+ExpertAI_286_end:
+	AIEND
+
 ExpertAI_287:			// 	うちおとす
+	CHECK_TOKUSEI	CHECK_DEFENCE
+	IF_EQUAL	TOKUSYU_HUYUU,ExpertAI_287_1
+
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_FLYING,ExpertAI_287_1
+
+	CHECK_TYPE	CHECK_DEFENCE_TYPE1
+	IF_EQUAL	POKETYPE_HIKOU,ExpertAI_287_1	// ひこうタイプ
+	CHECK_TYPE	CHECK_DEFENCE_TYPE2
+	IF_EQUAL	POKETYPE_HIKOU,ExpertAI_287_1	// ひこうタイプ
+
+	JUMP	ExpertAI_287_end	
+	
+ExpertAI_287_1:	
+	IF_RND_UNDER	64,ExpertAI_287_end
+	INCDEC	+1
+
+ExpertAI_287_end:	
+	AIEND
+
 ExpertAI_288:			// 	やまあらし
+	CHECK_WAZA_AISYOU	AISYOU_0BAI,ExpertAI_288_end
+	CHECK_WAZA_AISYOU	AISYOU_1_4BAI,ExpertAI_288_end
+	CHECK_WAZA_AISYOU	AISYOU_1_2BAI,ExpertAI_288_end
+
+	IF_WAZANO	WAZANO_YAMAARASI,ExpertAI_288_buturi	// 物理
+
+	IF_PARA_UNDER	CHECK_ATTACK,PARA_SPEDEF,8,ExpertAI_288_end
+  JUMP  ExpertAI_288_ok	
+
+ExpertAI_288_buturi:	
+	IF_PARA_UNDER	CHECK_ATTACK,PARA_DEF,8,ExpertAI_288_end
+
+ExpertAI_288_ok:	
+	IF_RND_UNDER	64,ExpertAI_288_end
+	INCDEC	+1
+
+ExpertAI_288_end:	
+	AIEND
+
 ExpertAI_289:			// 	はじけるほのお
+	AIEND
+
 ExpertAI_290:			// 	ちょうのまい
+	IF_FIRST	IF_FIRST_DEFENCE,ExpertAI_290_ok
+
+	IF_HP_OVER	CHECK_ATTACK,50,ExpertAI_290_end	
+
+	IF_RND_UNDER	50,ExpertAI_290_end
+	INCDEC		-1
+	JUMP		ExpertAI_290_end
+	
+ExpertAI_290_ok:
+	IF_RND_UNDER	50,ExpertAI_290_end
+
+	INCDEC		1
+ExpertAI_290_end:
+	AIEND
+
 ExpertAI_291:			// 	ヘビーボンバー
+                                        //　体重が調べたい
+	AIEND
+
 ExpertAI_292:			// 	シンクロノイズ
+                                        //　２～３匹のタイプが調べたい
+	AIEND
+
 ExpertAI_293:			// 	エレクトボール
+	CHECK_WAZA_AISYOU	AISYOU_0BAI,ExpertAI_293_end
+	CHECK_WAZA_AISYOU	AISYOU_1_4BAI,ExpertAI_293_end
+	CHECK_WAZA_AISYOU	AISYOU_1_2BAI,ExpertAI_293_end
+
+	IF_FIRST	IF_FIRST_DEFENCE,ExpertAI_293_ng
+	IF_PARA_UNDER	CHECK_ATTACK,PARA_AGI,8,ExpertAI_293_end
+
+	IF_RND_UNDER	70,ExpertAI_293_end
+	INCDEC		1
+	JUMP		ExpertAI_290_end
+
+ExpertAI_293_ng:
+	INCDEC		-1
+ExpertAI_293_end:
+	AIEND
+
 ExpertAI_294:			// 	みずびたし
+	AIEND
+
 ExpertAI_295:			// 	ニトロチャージ
+	CHECK_WAZA_AISYOU	AISYOU_0BAI,ExpertAI_295_end
+	CHECK_WAZA_AISYOU	AISYOU_1_4BAI,ExpertAI_295_end
+	CHECK_WAZA_AISYOU	AISYOU_1_2BAI,ExpertAI_295_end
+
+	IF_FIRST	IF_FIRST_DEFENCE,ExpertAI_295_ok
+
+	IF_RND_UNDER	50,ExpertAI_295_end
+	INCDEC		-1
+	JUMP		ExpertAI_295_end
+	
+ExpertAI_295_ok:
+	IF_RND_UNDER	50,ExpertAI_295_end
+
+	INCDEC		1
+ExpertAI_295_end:
+	AIEND
+
 ExpertAI_296:			// 	アシッドボム
+	IF_PARA_OVER	CHECK_DEFENCE,PARA_SPEDEF,5,ExpertAI_296_end
+	IF_PARA_OVER	CHECK_DEFENCE,PARA_SPEDEF,3,ExpertAI_296_ng2
+
+ExpertAI_296_ng:
+	INCDEC		-1
+ExpertAI_296_ng2:
+	IF_RND_UNDER	128,ExpertAI_296_end
+	INCDEC		-1
+ExpertAI_296_end:
+	AIEND
+
 ExpertAI_297:			// 	イカサマ
-ExpertAI_298:			// 	シンプルビーム
+	AIEND
+
 ExpertAI_299:			// 	なかまづくり
+	AIEND
 ExpertAI_300:			// 	おさきにどうぞ
+	AIEND
 ExpertAI_301:			// 	りんしょう
+	AIEND
 ExpertAI_302:			// 	エコーボイス
+	AIEND
 ExpertAI_303:			// 	なしくずし
+	AIEND
 ExpertAI_304:			// 	クリアスモッグ
+	AIEND
 ExpertAI_305:			// 	アシストパワー
+	AIEND
 ExpertAI_306:			// 	ファストガード
+	AIEND
 ExpertAI_307:			// 	サイドチェンジ
+	AIEND
 ExpertAI_308:			// 	からをやぶる
+	AIEND
 ExpertAI_309:			// 	いやしのはどう
+	AIEND
 ExpertAI_310:			// 	たたりめ
+	AIEND
 ExpertAI_311:			// 	フリーフォール
+	AIEND
 ExpertAI_312:			// 	ギアチェンジ
+	AIEND
 ExpertAI_313:			// 	ともえなげ
+	AIEND
 ExpertAI_314:			// 	やきつくす
+	AIEND
 ExpertAI_315:			// 	さきおくり
+	AIEND
 ExpertAI_316:			// 	せいちょう
+	AIEND
 ExpertAI_317:			// 	アクロバット
+	AIEND
 ExpertAI_318:			// 	ミラータイプ
+	AIEND
 ExpertAI_319:			// 	かたきうち
+	AIEND
 ExpertAI_320:			// 	いのちがけ
+	AIEND
 ExpertAI_321:			// 	ほたるび
+	AIEND
 ExpertAI_322:			// 	とぐろをまく
+	AIEND
 ExpertAI_323:			// 	ギフトパス
+	AIEND
 ExpertAI_324:			// 	みずのちかい
+	AIEND
 ExpertAI_325:			// 	ほのおのちかい
+	AIEND
 ExpertAI_326:			// 	くさのちかい
+	AIEND
 ExpertAI_327:			// 	ふるいたてる
+	AIEND
 ExpertAI_328:			// 	コットンガード
 	AIEND
 ExpertAI_329:	// 	いにしえのうた
