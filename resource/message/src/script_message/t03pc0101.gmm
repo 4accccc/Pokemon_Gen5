@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-08T17:02:08"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T18:14:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1353" top="269" right="2058" bottom="889" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -308,7 +308,7 @@
 		<language name="JPN_KANJI" width="256">あら　シェイミ！▼
 シェイミと　いえば
 グラシデアのはな　よね！▼
-あたし　たくさん　もっているから
+あたし　たくさん　持っているから
 あなたにも　わけてあげるね▼</language>
 	</row>
 
@@ -327,8 +327,8 @@
 ことばに　ださなくても▼
 ありがとう　って　きもちを
 つたえられるのって　すてきよね</language>
-		<language name="JPN_KANJI" width="256">昔からね　シンオウちほう　では
-ありがとう　って　きもちを▼
+		<language name="JPN_KANJI" width="256">昔からね　シンオウ地方では
+ありがとう　って　気持ちを▼
 伝えるときに　グラシデアのはなを
 ブーケにして　あげていたの▽
 なんだか　いい　話でしょう！▼
@@ -349,7 +349,7 @@
 つたえるときに　グラシデアのはなを
 ブーケにして　あげていたのよ</language>
 		<language name="JPN_KANJI" width="256">グラシデアのはな　知ってる？▼
-むかしからね　シンオウ地方では
+昔からね　シンオウ地方では
 ありがとう　って　気持ちを▼
 伝えるときに　グラシデアのはなを
 ブーケにして　あげていたのよ</language>
