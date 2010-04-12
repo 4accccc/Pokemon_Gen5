@@ -28,6 +28,7 @@
 #define C07_NINJA_03                      10
 #define C07_NINJA_01                      11
 #define C07_NINJA_02                      12
+#define C07_DUMMY_01                      13
 
 #endif //ZONE_C07_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c07.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
