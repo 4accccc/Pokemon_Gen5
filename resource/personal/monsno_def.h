@@ -8,7 +8,9 @@
 //============================================================================================
 
 #pragma once
+#ifndef __ASM_NO_DEF_
 #include  "monsnum_def.h"
+#endif
 
 #define		MONSNO_HUSIGIDANE		( 1 )
 #define		MONSNO_HUSIGISOU		( 2 )
