@@ -298,7 +298,7 @@ def ncgparam_get( listfile, mdlstr, anmstr )
     
     if( str[0] != nil )
       str[0] = str[0].strip
-
+      
       if( str[0] == anmstr )
         i = 1
         while data = str[i]
@@ -320,6 +320,8 @@ def ncgparam_get( listfile, mdlstr, anmstr )
           
           i = i + 1
         end
+        
+        printf( "fmmdl_restbl.rb %s ‚ÉŠY“–î•ñ‚ª‚ ‚è‚Ü‚¹‚ñ\n", anmstr )
       end
     end
   end
