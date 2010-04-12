@@ -30,6 +30,7 @@ _EVENT_DATA    ev_d12_policeman_01
 _EVENT_DATA    ev_d12_policeman_02
 _EVENT_DATA    ev_d12_bg_board_01
 _EVENT_DATA    ev_d12_bg_board_02
+_EVENT_DATA    ev_d12_bg_board_03
 _EVENT_DATA    ev_reserve_d12
 _EVENT_DATA    ev_zone_d12
 _EVENT_DATA    ev_scene_d12
@@ -89,14 +90,38 @@ INIT_EVENT_END
 EVENT_START   ev_scene_d12
   //連行イベント
 
-  //カメラ移動
+  _OBJ_ANIME( D12_POLICE_07, anm_follow_police2 )
+  _OBJ_ANIME( D12_POLICE_09, anm_follow_police1 )
+  _OBJ_ANIME( D12_POLICE_08, anm_follow_police3 )
+  _OBJ_ANIME( D12_POLICE_10, anm_follow_police4 )
+  _OBJ_ANIME( D12_HAKAIM_04, anm_follow_plazuma1 )
+  _OBJ_ANIME( D12_HAKAIM_03, anm_follow_plazuma2 )
+  _OBJ_ANIME( D12_HAKAIM_02, anm_follow_plazuma3 )
 
-  //サブメッセージ
+  //自機移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
 
-  //アニメ終了
+  //サブウィンでしゃべる
+  _TIME_WAIT( 8 )
+	_SUBWIN_MSG( msg_d12_plasma_sub_01 , 2 , 2 , 1 )
+	_TIME_WAIT( 8 )
+	_SUBWIN_MSG( msg_d12_plasma_sub_02 , 10 , 9 , 2 )
+	_TIME_WAIT(8)
+	_SUBWIN_CLOSE( 1 )
+	_TIME_WAIT(8)
+	_SUBWIN_CLOSE( 2 )
 
-  //カメラ戻し
+  _SUBWIN_MSG( msg_d12_police_sub_01 , 2 , 4 , 1 )
+	_TIME_WAIT( 8 )
+	_SUBWIN_MSG( msg_d12_police_sub_02 , 10 , 11 , 2 )
+	_TIME_WAIT(8)
+  _SUBWIN_CLOSE( 1 )
+	_TIME_WAIT(10)
+	_SUBWIN_CLOSE( 2 )
 
+  //アニメ待ち
+  _OBJ_ANIME_WAIT()
+  
   //連行ＯＢＪ消す
   _OBJ_DEL(D12_HAKAIM_02)
   _OBJ_DEL(D12_HAKAIM_03)
@@ -106,9 +131,6 @@ EVENT_START   ev_scene_d12
   _OBJ_DEL(D12_POLICE_09)
   _OBJ_DEL(D12_POLICE_10)
 
-  //自機移動
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
-  _OBJ_ANIME_WAIT()
   //タグ０番にプレーヤー名取得
   _PLAYER_NAME(0)
   //○○のおかげ
@@ -122,12 +144,37 @@ EVENT_START   ev_scene_d12
 	_BALLOONWIN_CLOSE()
   _BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_03 , D12_HAKASE1_01, POS_UP )
 	_BALLOONWIN_CLOSE()
+
+  //伝令出現
+  _OBJ_ANIME( D12_POLICE_11, anm_police_in )
+  _OBJ_ANIME_WAIT()
+  //「船乗って」
   _BALLOONWIN_OBJMSG_POS( msg_d12_police03_01 , D12_POLICE_11, POS_UP )
 	_BALLOONWIN_CLOSE()
+  //右向く
+  _OBJ_ANIME( D12_HAKASE1_01, anm_step_dir_r )
+  _OBJ_ANIME_WAIT()
+  //「すぐいく」
   _BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_04 , D12_HAKASE1_01, POS_UP )
 	_BALLOONWIN_CLOSE()
+  //上向く
+  _OBJ_ANIME( D12_HAKASE1_01, anm_step_dir_u )
+  _OBJ_ANIME_WAIT()
+  //「あくようするのは　にんげん」
   _BALLOONWIN_OBJMSG_POS( msg_d12_hakase2_05 , D12_HAKASE1_01, POS_UP )
 	_BALLOONWIN_CLOSE()
+  //博士退場
+  _OBJ_ANIME( D12_HAKASE1_01, anm_doc_out )
+  //伝令退場
+  _OBJ_ANIME( D12_POLICE_11, anm_police_out )
+  //取り巻き警官退場
+  _OBJ_ANIME( D12_POLICE_03, anm_polices_out )
+  _OBJ_ANIME( D12_POLICE_04, anm_polices_out )
+  _OBJ_ANIME( D12_POLICE_05, anm_polices_out )
+  _OBJ_ANIME( D12_POLICE_06, anm_polices_out )
+
+  //アニメ待ち
+  _OBJ_ANIME_WAIT()
 
   //アララギと取り巻きＯＢＪ消す
   _OBJ_DEL(D12_HAKASE1_01)
@@ -137,6 +184,10 @@ EVENT_START   ev_scene_d12
   _OBJ_DEL(D12_POLICE_06)
   _OBJ_DEL(D12_POLICE_11)
 
+  //汽笛鳴る
+  _SE_PLAY(SEQ_SE_FLD_78)
+  _SE_WAIT()
+  
   //イベントバニッシュフラグＯＮ
   _FLAG_SET( FV_D12_EVENTEND_01 )
 
@@ -305,12 +356,86 @@ EVENT_START   ev_d12_bg_board_02
 	_EASY_BGWIN_MSG( msg_d12_sign_02,TYPE_POST )
 EVENT_END
 
+/**************************************************************/
+/*  D12 bg_board_023		                      */
+/**************************************************************/
+EVENT_START   ev_d12_bg_board_03
+	_EASY_BGWIN_MSG( msg_d12_sign_03,TYPE_POST )
+EVENT_END
 
+//--------------------------------------------------------------
+//	警官　連行
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_follow_police1
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,5
+  _ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------
+//	警官　連行
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_follow_police2
+  _ANIME_DATA	AC_WALK_R_8F,5
+  _ANIME_DATA	AC_WALK_D_8F,5
+  _ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	警官　連行
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_follow_police3
+  _ANIME_DATA	AC_WAIT_8F, 2
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,3
+  _ANIME_DATA	AC_WALK_D_8F,5
+  _ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
+  
+//--------------------------------------------------------------
+//	警官　連行
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_follow_police4
+  _ANIME_DATA	AC_WAIT_8F, 3
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,3
+  _ANIME_DATA	AC_WALK_D_8F,5
+  _ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
+  
+  
+//--------------------------------------------------------------
+//	プラズマ団　連行
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_follow_plazuma1
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	AC_WALK_D_8F,5
+  _ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	プラズマ団　連行
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_follow_plazuma2
+  _ANIME_DATA	AC_WALK_R_8F,3
+  _ANIME_DATA	AC_WALK_D_8F,5
+  _ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	プラズマ団　連行
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_follow_plazuma3
+  _ANIME_DATA	AC_WALK_R_8F,4
+  _ANIME_DATA	AC_WALK_D_8F,5
+  _ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
+  
 //--------------------------------------------------------------
 //	自機移動
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_player_move
+  _ANIME_DATA	AC_WAIT_8F, 3
   _ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 
@@ -320,6 +445,55 @@ _ANIME_LABEL	anm_player_move
 _ANIME_LABEL	anm_player_move2
   _ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	上向く　足踏み付き
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_step_dir_u
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+  
+//--------------------------------------------------------------
+//	上向く　足踏み付き
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_step_dir_r
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	伝令出現
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_police_in
+  _ANIME_DATA	AC_WALK_L_4F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	伝令退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_police_out
+  _ANIME_DATA	AC_WAIT_8F, 2     //博士が2歩歩いてから移動するためのウェイト
+  _ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	博士退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_doc_out
+  _ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	取り巻き警官退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_polices_out
+  _ANIME_DATA	AC_WAIT_8F, 2     //博士が2歩歩いてから移動するためのウェイト
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,10
+	_ANIME_DATA	ACMD_END,0
+ 
+  
+  
+  
   
 
 

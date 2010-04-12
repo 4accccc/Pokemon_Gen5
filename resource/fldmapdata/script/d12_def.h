@@ -16,8 +16,9 @@
 #define SCRID_D12_POLICEMAN_02 (9)
 #define SCRID_D12_BG_BOARD_01 (10)
 #define SCRID_D12_BG_BOARD_02 (11)
-#define SCRID_RESERVE_D12 (12)
-#define SCRID_ZONE_D12 (13)
-#define SCRID_SCENE_D12 (14)
+#define SCRID_D12_BG_BOARD_03 (12)
+#define SCRID_RESERVE_D12 (13)
+#define SCRID_ZONE_D12 (14)
+#define SCRID_SCENE_D12 (15)
 
 #endif //_D12_DEF_H_
