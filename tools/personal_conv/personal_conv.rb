@@ -426,7 +426,7 @@ end
     "通信　マグマブースター"    => [  6, "マグマブースター",  SHINKA_PARAM::ITEM ],
     "通信　あやしいパッチ"      => [  6, "あやしいパッチ",    SHINKA_PARAM::ITEM ],
     "通信　れいかいのぬの"      => [  6, "れいかいのぬの",    SHINKA_PARAM::ITEM ],
-    "通信　かがやきのころも"    => [  6, "かがやきのころも",  SHINKA_PARAM::ITEM ],
+    "通信　キレイなウロコ"      => [  6, "キレイなウロコ",    SHINKA_PARAM::ITEM ],
     "通信　融合進化"            => [  7, "NONE",              SHINKA_PARAM::NONE ],
     "道具　かみなりのいし"      => [  8, "かみなりのいし",    SHINKA_PARAM::ITEM ],
     "道具　たいようのいし"      => [  8, "たいようのいし",    SHINKA_PARAM::ITEM ],
