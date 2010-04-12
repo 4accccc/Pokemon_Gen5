@@ -2833,20 +2833,33 @@ static void _gearCrossObjMain(C_GEAR_WORK* pWork)
   const GAMEBEACON_INFO *beacon_info;
   u8 col;
   int i;
+  s32 log_count = GAMEBEACON_Get_LogCount();
+  int put_count = 0; 
 
-  for(i=0;i < _CLACT_CROSS_MAX ;i++)
+  log_count --; // 0オリジン
+  for(i=0;i < GAMEBEACON_INFO_TBL_MAX;i++)
   {
-    beacon_info = GAMEBEACON_Get_BeaconLog(i);
-    if(beacon_info != NULL){
-      col = GAMEBEACON_Get_FavoriteColorIndex(beacon_info);
-      // colの色を設定
-      PaletteWorkSet( pWork->pfade_ptr, &pWork->crossColor[ col ], FADE_SUB_OBJ, CROSS_COLOR_TRANS_POS_START + (sc_CROSS_COLOR_RES_IDX[ i ]*2), 4 );
-      //GFL_CLACT_WK_SetAnmIndex( cp_wk,col);
+    // 10個表示したら終わり
+    if( put_count >= _CLACT_CROSS_MAX ){
+      break;
     }
-    else{
+    
+    if( log_count < 0 ){
       // 何もなしの色を設定
-      PaletteWorkSet( pWork->pfade_ptr, &pWork->crossColor[ 16 ], FADE_SUB_OBJ, CROSS_COLOR_TRANS_POS_START + (sc_CROSS_COLOR_RES_IDX[ i ]*2), 4 );
-      //GFL_CLACT_WK_SetAnmIndex( cp_wk, 16);
+      PaletteWorkSet( pWork->pfade_ptr, &pWork->crossColor[ 16 ], FADE_SUB_OBJ, CROSS_COLOR_TRANS_POS_START + (sc_CROSS_COLOR_RES_IDX[ put_count ]*2), 4 );
+      put_count ++;
+      
+    }else{
+    
+      beacon_info = GAMEBEACON_Get_BeaconLog(log_count);
+      if(beacon_info != NULL){
+        col = GAMEBEACON_Get_FavoriteColorIndex(beacon_info);
+        // colの色を設定
+        PaletteWorkSet( pWork->pfade_ptr, &pWork->crossColor[ col ], FADE_SUB_OBJ, CROSS_COLOR_TRANS_POS_START + (sc_CROSS_COLOR_RES_IDX[ put_count ]*2), 4 );
+        put_count ++;
+      }
+
+      log_count --;
     }
   }
 }
@@ -3437,6 +3450,10 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 
   // ボタンパレットアニメシステム初期化
   _BUTTONPAL_Init( pWork, &pWork->button_palfade );
+
+  
+  // CrossObj初期化
+  _gearCrossObjMain( pWork );
 
 
   //  _PFadeToBlack(pWork);
