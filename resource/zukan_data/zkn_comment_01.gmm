@@ -2818,6 +2818,11 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_494_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_495_000">
 		<language name="JPN">あたまが　いいため　ゆうしゅうな
 トレーナーの　しじしか　きかない。
 ながい　ツルを　じざいに　あやつる。</language>
@@ -2826,17 +2831,17 @@
 長い　ツルを　自在に　操る。</language>
 	</row>
 
-	<row id="ZKN_COMMENT_01_495_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
 	<row id="ZKN_COMMENT_01_496_000">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_497_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_498_000">
 		<language name="JPN">はなから　ほのおを　だして　きのみを
 やいて　たべる。みがるな　うごきで
 ひのたまを　はななら　うちだす。</language>
@@ -2845,28 +2850,23 @@
 火の玉を　鼻から　撃ち出す。</language>
 	</row>
 
-	<row id="ZKN_COMMENT_01_498_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
 	<row id="ZKN_COMMENT_01_499_000">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_500_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_501_000">
 		<language name="JPN">おなかに　ついている　ホタチで
 けづくろい。ていれを　さぼると
 みずに　うかべなくなってしまうのだ。</language>
 		<language name="JPN_KANJI">お腹に　ついている　ホタチで
 毛づくろい。手入れを　さぼると
 水に　浮かべなくなってしまうのだ。</language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_501_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_502_000">
@@ -3000,17 +3000,17 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_528_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_529_000">
 		<language name="JPN">ちちゅうを　ほりすすむ　スピードは
 じそく　５０キロいじょう。ちじょうを
 はしる　じどうしゃと　いいしょうぶ。</language>
 		<language name="JPN_KANJI">地中を　掘り進む　スピードは
 時速　５０キロ以上。　地上を
 走る　自動車と　いい勝負。</language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_529_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_530_000">
@@ -3134,17 +3134,17 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_554_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_555_000">
 		<language name="JPN">たいないでは　せっし１４００どの
 ほのおが　もえている。ダンプカーを
 パンチ　１ぱつで　はかいする。</language>
 		<language name="JPN_KANJI">体内では　摂氏１４００度の
 炎が　燃えている。ダンプカーを
 パンチ　１発で　破壊する。</language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_555_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_556_000">
@@ -3333,17 +3333,17 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_593_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_594_000">
 		<language name="JPN">どんな　ポケモンとも　なかよしに
 なれる。ママンボウどうしは　ひれで
 ふれあい　きもちを　つたえる。</language>
 		<language name="JPN_KANJI">どんな　ポケモンとも　仲良しに
 なれる。ママンボウ同士は　ひれで
 触れあい　気持ちを　伝える。</language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_594_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_595_000">
@@ -3941,27 +3941,12 @@
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_01_549_001">
+	<row id="ZKN_COMMENT_01_550_001">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_01_554_001">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_584_001">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_584_002">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_584_003">
+	<row id="ZKN_COMMENT_01_555_001">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
@@ -3981,12 +3966,27 @@
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_01_645_001">
+	<row id="ZKN_COMMENT_01_586_001">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_01_645_002">
+	<row id="ZKN_COMMENT_01_586_002">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_586_003">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_646_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_01_646_002">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>

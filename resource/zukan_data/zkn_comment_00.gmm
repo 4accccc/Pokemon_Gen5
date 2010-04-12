@@ -2818,6 +2818,11 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_494_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_00_495_000">
 		<language name="JPN">しっぽの　はっぱで　こうごうせい。
 ひあたりの　いい　ばしょを　このむ。
 ちんちゃく　れいせいな　ポケモンだ。</language>
@@ -2826,17 +2831,17 @@
 沈着冷静な　ポケモンだ。</language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_495_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
 	<row id="ZKN_COMMENT_00_496_000">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_497_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_00_498_000">
 		<language name="JPN">はなの　あなから　ほのおを　ふく。
 カゼを　ひくと　ほのおでは　なく
 まっくろな　けむりに　なってしまう。</language>
@@ -2845,28 +2850,23 @@
 真っ黒な　煙に　なってしまう。</language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_498_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
 	<row id="ZKN_COMMENT_00_499_000">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_500_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_00_501_000">
 		<language name="JPN">かいがらに　にた　ホタチを
 おなかから　はずして　たたかう。
 なくしても　３にちで　さいせいする。</language>
 		<language name="JPN_KANJI">貝殻に　にた　ホタチを
 お腹から　外して　戦う。
 なくしても　３日で　再生する。</language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_501_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_502_000">
@@ -3000,17 +3000,17 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_528_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_00_529_000">
 		<language name="JPN">りょうての　ツメを　かさねあわせて
 ぜんしんで　こうそく　かいてんすると
 もうスピードで　ちちゅうを　いどう。</language>
 		<language name="JPN_KANJI">両手の　ツメを　重ね合わせて
 全身で　高速回転すると
 猛スピードで　地中を　移動。</language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_529_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_530_000">
@@ -3134,17 +3134,17 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_554_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_00_555_000">
 		<language name="JPN">たたかいで　よわると　いわの　ように
 うごかなくなる。せいしんとういつして
 きりょくで　たたかうのだ。</language>
 		<language name="JPN_KANJI">戦いで　弱ると　岩の　ように
 動かなくなる。精神統一して
 気力で　戦うのだ。</language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_555_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_556_000">
@@ -3333,17 +3333,17 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_593_000">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_00_594_000">
 		<language name="JPN">おおうなばらを　ただよって　くらす。
 キズついた　ポケモンを　みつけると
 だきかかえて　きしまで　はこぶ。</language>
 		<language name="JPN_KANJI">大海原を　漂って　暮らす。
 キズついた　ポケモンを　見つけると
 抱きかかえて　岸まで　運ぶ。</language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_594_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_595_000">
@@ -3941,27 +3941,12 @@
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_549_001">
+	<row id="ZKN_COMMENT_00_550_001">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_554_001">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_584_001">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_584_002">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_584_003">
+	<row id="ZKN_COMMENT_00_555_001">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
@@ -3981,12 +3966,27 @@
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_645_001">
+	<row id="ZKN_COMMENT_00_586_001">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="ZKN_COMMENT_00_645_002">
+	<row id="ZKN_COMMENT_00_586_002">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_00_586_003">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_00_646_001">
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="ZKN_COMMENT_00_646_002">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
 	</row>

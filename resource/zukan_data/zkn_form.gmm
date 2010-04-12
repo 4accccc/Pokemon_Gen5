@@ -3091,13 +3091,13 @@
 	</row>
 
 	<row id="ZKN_FORM_549_000">
-		<language name="JPN">くろ</language>
-		<language name="JPN_KANJI">くろ</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_550_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">くろ</language>
+		<language name="JPN_KANJI">くろ</language>
 	</row>
 
 	<row id="ZKN_FORM_551_000">
@@ -3116,13 +3116,13 @@
 	</row>
 
 	<row id="ZKN_FORM_554_000">
-		<language name="JPN">ノーマルモード</language>
-		<language name="JPN_KANJI">ノーマルモード</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_555_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">ノーマルモード</language>
+		<language name="JPN_KANJI">ノーマルモード</language>
 	</row>
 
 	<row id="ZKN_FORM_556_000">
@@ -3266,8 +3266,8 @@
 	</row>
 
 	<row id="ZKN_FORM_584_000">
-		<language name="JPN">はるのすがた</language>
-		<language name="JPN_KANJI">はるのすがた</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_585_000">
@@ -3276,8 +3276,8 @@
 	</row>
 
 	<row id="ZKN_FORM_586_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">はるのすがた</language>
+		<language name="JPN_KANJI">はるのすがた</language>
 	</row>
 
 	<row id="ZKN_FORM_587_000">
@@ -3571,13 +3571,13 @@
 	</row>
 
 	<row id="ZKN_FORM_645_000">
-		<language name="JPN">ライのすがた</language>
-		<language name="JPN_KANJI">ライのすがた</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_646_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">ライのすがた</language>
+		<language name="JPN_KANJI">ライのすがた</language>
 	</row>
 
 	<row id="ZKN_FORM_647_000">
@@ -3915,29 +3915,14 @@
 		<language name="JPN_KANJI">アルセウスのすがた</language>
 	</row>
 
-	<row id="ZKN_FORM_549_001">
+	<row id="ZKN_FORM_550_001">
 		<language name="JPN">しろ</language>
 		<language name="JPN_KANJI">しろ</language>
 	</row>
 
-	<row id="ZKN_FORM_554_001">
+	<row id="ZKN_FORM_555_001">
 		<language name="JPN">ダルマモード</language>
 		<language name="JPN_KANJI">ダルマモード</language>
-	</row>
-
-	<row id="ZKN_FORM_584_001">
-		<language name="JPN">なつのすがた</language>
-		<language name="JPN_KANJI">なつのすがた</language>
-	</row>
-
-	<row id="ZKN_FORM_584_002">
-		<language name="JPN">あきのすがた</language>
-		<language name="JPN_KANJI">あきのすがた</language>
-	</row>
-
-	<row id="ZKN_FORM_584_003">
-		<language name="JPN">ふゆのすがた</language>
-		<language name="JPN_KANJI">ふゆのすがた</language>
 	</row>
 
 	<row id="ZKN_FORM_585_001">
@@ -3955,12 +3940,27 @@
 		<language name="JPN_KANJI">ふゆのすがた</language>
 	</row>
 
-	<row id="ZKN_FORM_645_001">
+	<row id="ZKN_FORM_586_001">
+		<language name="JPN">なつのすがた</language>
+		<language name="JPN_KANJI">なつのすがた</language>
+	</row>
+
+	<row id="ZKN_FORM_586_002">
+		<language name="JPN">あきのすがた</language>
+		<language name="JPN_KANJI">あきのすがた</language>
+	</row>
+
+	<row id="ZKN_FORM_586_003">
+		<language name="JPN">ふゆのすがた</language>
+		<language name="JPN_KANJI">ふゆのすがた</language>
+	</row>
+
+	<row id="ZKN_FORM_646_001">
 		<language name="JPN">ライのすがた</language>
 		<language name="JPN_KANJI">ライのすがた</language>
 	</row>
 
-	<row id="ZKN_FORM_645_002">
+	<row id="ZKN_FORM_646_002">
 		<language name="JPN">ライのすがた</language>
 		<language name="JPN_KANJI">ライのすがた</language>
 	</row>
