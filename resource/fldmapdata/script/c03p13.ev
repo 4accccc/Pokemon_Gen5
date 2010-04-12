@@ -113,7 +113,6 @@ check_evt_lock:
   ELSE                            //éùÇ¡ÇƒÇ¢Ç»Ç¢
     $SCWK_ANSWER = FALSE
   ENDIF
-  $SCWK_ANSWER = TRUE   //todo
 _RET
 
 //--------------------------------------------------------------------
