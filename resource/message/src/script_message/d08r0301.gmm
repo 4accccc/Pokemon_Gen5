@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T17:18:18"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T19:52:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,10 +315,14 @@
 アララギ博士父</attribute>
 		<language name="JPN" width="256">アララギ『この　とうが
 いつごろ　できたのか[BE:00:ページ切り替え（行送り）]
-むすめに　しらべさせるか</language>
+むすめに　しらべさせるか▼
+あれは　ポケモンの　うまれたじきを
+しらべさせれば　せかいいち　だからね</language>
 		<language name="JPN_KANJI" width="256">アララギ『この　塔が
 いつごろ　できたのか[BE:00:ページ切り替え（行送り）]
-娘に　調べさせるか</language>
+娘に　調べさせるか▼
+あれは　ポケモンの　起源を
+調べさせれば　世界一だからね</language>
 	</row>
 
 	<row id="msg_d08r0301_leader7_01w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -327,14 +331,14 @@
 ・WHITEver</comment>
 		<attribute name="キャラ指定">LEADER7
 ハチク</attribute>
-		<language name="JPN" width="256">ハチク『……シンは
-イッシュちほうの　まもりがみ[BE:01:ページ切り替え（クリア）]
-それを　エゴのため
-ねむりから　さますとは……</language>
-		<language name="JPN_KANJI" width="256">ハチク『……シンは
-イッシュ地方の　守り神[BE:01:ページ切り替え（クリア）]
-それを　エゴのため
-眠りから　さますとは……</language>
+		<language name="JPN" width="256">ハチク『……これが　リュウラセンのとう
+ながれる　くうきが　ものものしい▼
+ここで　めざめた　シン
+Ｎに　なにを　みいだしたのか？</language>
+		<language name="JPN_KANJI" width="256">ハチク『……これが　リュウラセンの塔
+流れる　空気が　ものものしい▼
+ここで　目覚めた　シン
+Ｎに　なにを　みいだしたのか？</language>
 	</row>
 
 	<row id="msg_d08r0301_leader7_01b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -343,14 +347,14 @@
 ・BLACKver</comment>
 		<attribute name="キャラ指定">LEADER7
 ハチク</attribute>
-		<language name="JPN" width="256">ハチク『……ムは
-イッシュちほうの　まもりがみ[BE:01:ページ切り替え（クリア）]
-それを　エゴのため
-ねむりから　さますとは……</language>
-		<language name="JPN_KANJI" width="256">ハチク『……ムは
-イッシュ地方の　守り神[BE:01:ページ切り替え（クリア）]
-それを　エゴのため
-眠りから　さますとは……</language>
+		<language name="JPN" width="256">ハチク『……これが　リュウラセンのとう
+ながれる　くうきが　ものものしい▼
+ここで　めざめた　ム
+Ｎに　なにを　みいだしたのか？</language>
+		<language name="JPN_KANJI" width="256">ハチク『……これが　リュウラセンの塔
+流れる　空気が　ものものしい▼
+ここで　目覚めた　ム
+Ｎに　なにを　みいだしたのか？</language>
 	</row>
 
 	<flowchart-group-list>

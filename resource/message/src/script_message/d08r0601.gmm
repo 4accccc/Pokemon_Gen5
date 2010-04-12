@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T16:56:54"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T19:57:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -331,12 +331,12 @@
 　チェレン、左向きのまま、メッセージ表示
 ・GRIDX=18、GRIDZ=18、左向き</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『ぼくも　だいじょうぶ▼
-だけど　こんなに
-プラズマだんが　いるとね……</language>
-		<language name="JPN_KANJI" width="256">チェレン『ぼくも　大丈夫▼
-だけど　こんなに
-プラズマ団が　いるとね……</language>
+		<language name="JPN" width="256">チェレン『だいじょうぶ　だよ▼
+だけど　こんなに　プラズマだんが
+いるとはね……　メンドウだな</language>
+		<language name="JPN_KANJI" width="256">チェレン『大丈夫だよ▼
+だけど　こんなに　プラズマ団が
+いるとはね……　面倒だな</language>
 	</row>
 
 	<row id="msg_d08r0601_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -344,10 +344,10 @@
 ・black_01表示後、繰り返し
 ・話しかけても振り向かない</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……この　ひとたち
-どうして　こんなに　ふんばれるんだ！？</language>
-		<language name="JPN_KANJI" width="256">チェレン『……この人たち
-どうして　こんなに　ふんばれるんだ！？</language>
+		<language name="JPN" width="256">チェレン『……どうして　こんなに
+ふんばれる？　なにを　しんじている？</language>
+		<language name="JPN_KANJI" width="256">チェレン『……どうして　こんなに
+ふんばれる？　なにを　信じている？</language>
 	</row>
 
 	<row id="msg_d08r0601_black_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
