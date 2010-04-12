@@ -197,9 +197,25 @@ EVENT_START   ev_pos_c08_champions_01
 	_OBJ_ANIME( C08_CROWD_05,anm_c08_croud_panic_u )
 	_OBJ_ANIME_WAIT()
 	
-	//ゲーヂスの演説その２
-	_BALLOONWIN_OBJMSG( msg_c08_sage1_02 , C08_SAGE1_01 )
+	//ゲーヂスの演説その１（左に歩いて）
 	_OBJ_ANIME( C08_SAGE1_01,anm_c08_sage1_speach_01 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_c08_sage1_02 , C08_SAGE1_01 )
+	_BALLOONWIN_CLOSE()
+	
+	
+	//ゲーヂスの演説その１（右に歩いて）
+	_OBJ_ANIME( C08_SAGE1_01,anm_c08_sage1_speach_02 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_c08_sage1_02a , C08_SAGE1_01 )
+	_BALLOONWIN_CLOSE()
+	
+	
+	//ゲーヂスの演説その１（正面を向いて演技）
+	_OBJ_ANIME( C08_SAGE1_01,anm_c08_sage1_speach_03 )
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG( msg_c08_sage1_02b , C08_SAGE1_01 )
+	_OBJ_ANIME( C08_SAGE1_01,anm_c08_sage1_speach_04 )
 	_OBJ_ANIME_WAIT()
 	
 	//群集お互いを見る
@@ -613,16 +629,34 @@ _ANIME_LABEL	anm_c08_player_to_crowd_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	ゲーヂス演説イベント：ゲーヂス演説する
+//	ゲーヂス演説イベント：ゲーヂス演説する01
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c08_sage1_speach_01
 	_ANIME_DATA	AC_WALK_L_16F,2
 	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：ゲーヂス演説する02
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_sage1_speach_02
 	_ANIME_DATA	AC_WALK_R_16F,4
 	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：ゲーヂス演説する03
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_sage1_speach_03
 	_ANIME_DATA	AC_WALK_L_16F,2
-	_ANIME_DATA	AC_SAGE1_ACT0,1
 	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：ゲーヂス演説する03
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_sage1_speach_04
+	_ANIME_DATA	AC_SAGE1_ACT0,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
