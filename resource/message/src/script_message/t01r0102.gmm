@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-09T15:21:34"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T18:20:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="139" right="2004" bottom="767" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="668" top="313" right="1141" bottom="711" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -383,11 +383,15 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『ねえ　ベル▼
-マイペースも　いいけどさ
-ポケモンが　もらえるんだよ！▼</language>
+きみが　マイペースなのは
+１０ねんも　まえから　しっているけど▼
+きょうは　アララギはかせ　から
+ポケモンが　もらえるんだよ？▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『ねえ　ベル▼
-マイペースも　いいけどさ
-ポケモンが　もらえるんだよ！▼</language>
+きみが　マイペースなのは
+１０年も　前から　知っているけど▼
+今日は　アララギ博士から
+ポケモンが　もらえるんだよ？▼</language>
 	</row>
 
 	<row id="msg_t01r0102_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
