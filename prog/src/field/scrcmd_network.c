@@ -136,6 +136,22 @@ VMCMD_RESULT EvCmdRebootBeaconSearch( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------------
+/**
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdDisableFieldComm( VMHANDLE * core, void *wk )
+{
+  return VMCMD_RESULT_SUSPEND;
+}
 
+//--------------------------------------------------------------------
+/**
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdEnableFieldComm( VMHANDLE * core, void *wk )
+{
+  return VMCMD_RESULT_SUSPEND;
+}
 
 

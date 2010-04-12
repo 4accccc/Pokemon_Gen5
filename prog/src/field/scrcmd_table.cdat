@@ -566,8 +566,8 @@
   DEF_CMD( EvCmdAvailableWireless, EV_SEQ_GET_AVAILABLE_WIRELESS )
   DEF_CMD( EvCmdRebootBeaconSearch, EV_SEQ_REBOOT_BEACON_SEARCH )
 
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdDisableFieldComm, EV_SEQ_DISABLE_FIELD_COMM )
+  DEF_CMD( EvCmdEnableFieldComm, EV_SEQ_ENABLE_FIELD_COMM )
   NO_CMD()
   NO_CMD()
   
@@ -1011,7 +1011,7 @@
 
   //レコード数え上げ関連
   DEF_CMD( EvCmdAddRecord, EV_SEQ_ADD_RECORD )
-  NO_CMD()
+  DEF_CMD( EvCmdGetRecord, EV_SEQ_GET_RECORD )
   NO_CMD()
   NO_CMD()
 

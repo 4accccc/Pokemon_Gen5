@@ -52,3 +52,30 @@ VMCMD_RESULT EvCmdAddRecord( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * レコード取得
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetRecord( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  u16 id = SCRCMD_GetVMWorkValue( core, work );
+  u16 *ret_wk = SCRCMD_GetVMWork( core, work );
+
+  {
+    RECORD * rec;
+    SAVE_CONTROL_WORK *sv;
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+    sv = GAMEDATA_GetSaveControlWork(gamedata);
+    rec = SaveData_GetRecord(sv);
+
+    *ret_wk = RECORD_Get(rec, id );
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}
+

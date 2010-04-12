@@ -9,4 +9,5 @@
 #include "system/vm.h"
 
 extern VMCMD_RESULT EvCmdAddRecord( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGetRecord( VMHANDLE *core, void *wk );
 
