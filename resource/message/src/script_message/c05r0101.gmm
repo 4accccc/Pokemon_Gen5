@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T21:04:36"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T22:08:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,12 +296,12 @@
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
-		<language name="JPN" width="256">おなじ　ポケモンでも
-おぼえている　わざで▽
-ぜんぜん　ちがうのよね</language>
-		<language name="JPN_KANJI" width="256">同じ　ポケモンでも
-覚えている　技で▽
-ぜんぜん　違うのよね</language>
+		<language name="JPN" width="256">テレビの　ばんぐみで　ときどき
+ポケモンの　わざや　とくせいのこと▽
+おしえてくれたり　するのよ</language>
+		<language name="JPN_KANJI" width="256">テレビの　番組で　ときどき
+ポケモンの　技や　とくせいのこと▽
+教えてくれたり　するのよ</language>
 	</row>
 
 	<row id="msg_c05r0101_boy1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
