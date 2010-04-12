@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T19:24:36"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T22:14:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -369,7 +369,8 @@
 	<row id="msg_c08_sage1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてcrowd1_01表示</comment>
-		<attribute name="キャラクター">ゲーチス</attribute>
+		<attribute name="キャラクター">七賢人
+ゲーチス</attribute>
 		<language name="JPN" width="256">そうなのです！[BE:01:ページ切り替え（クリア）]
 われらが　おう　Ｎさまは
 でんせつの　ポケモンと[BE:00:ページ切り替え（行送り）]
@@ -421,7 +422,8 @@ WOMAN2</attribute>
 	<row id="msg_c08_sage1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてsage1_02a</comment>
-		<attribute name="キャラクター">ゲーチス</attribute>
+		<attribute name="キャラクター">七賢人
+ゲーチス</attribute>
 		<language name="JPN" width="256">ポケモンは　にんげんとは　ことなり
 みちの　かのうせいを　ひめた[BE:00:ページ切り替え（行送り）]
 いきもの　なのです[BE:01:ページ切り替え（クリア）]</language>
@@ -433,6 +435,8 @@ WOMAN2</attribute>
 	<row id="msg_c08_sage1_02a" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてsage1_02b</comment>
+		<attribute name="キャラクター">七賢人
+ゲーチス</attribute>
 		<language name="JPN" width="256">われわれが　まなぶべき　ところを
 かずおおく　もつ　そんざいなのです[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">われわれが　学ぶべき　ところを
@@ -443,6 +447,8 @@ WOMAN2</attribute>
 		<comment>♂
 ・ゲーチスの芝居
 ・続けてcrowd1_02表示</comment>
+		<attribute name="キャラクター">七賢人
+ゲーチス</attribute>
 		<language name="JPN" width="256">その　すばらしさを　みとめ
 われわれの　しはいから[BE:00:ページ切り替え（行送り）]
 かいほう　すべき　そんざいなのです！</language>
@@ -474,7 +480,8 @@ WOMAN2</attribute>
 	<row id="msg_c08_sage1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてsage1_02表示</comment>
-		<attribute name="キャラクター">ゲーチス</attribute>
+		<attribute name="キャラクター">七賢人
+ゲーチス</attribute>
 		<language name="JPN" width="256">われわれ　プラズマだんと　ともに
 あたらしい　くにを！[BE:01:ページ切り替え（クリア）]
 ポケモンも　ひとも
