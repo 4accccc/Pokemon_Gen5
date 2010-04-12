@@ -1140,6 +1140,7 @@ static void setupTopMenuSubscreen(DMESSWORK * dmess);
 static void setupUnionSubscreen(DMESSWORK * dmess);
 static void setupDebugLightSubscreen(DMESSWORK * dmess);
 static void setupCGearFirstSubscreen(DMESSWORK * dmess);
+static void setupNoneSubscreen(DMESSWORK * dmess);
 
 
 //--------------------------------------------------------------
@@ -1181,6 +1182,7 @@ static const FLDMENUFUNC_LIST DATA_SubcreenMenuList[] =
   { DEBUG_FIELD_STR_SUBSCRN01, (void*)setupDebugLightSubscreen },
   { DEBUG_FIELD_STR_SUBSCRN05, (void*)setupUnionSubscreen },
   { DEBUG_FIELD_STR_SUBSCRN06, (void*)setupCGearFirstSubscreen },
+  { DEBUG_FIELD_STR_SUBSCRN07, (void*)setupNoneSubscreen },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubscreenSelectData = {
@@ -1298,6 +1300,12 @@ static void setupDebugLightSubscreen(DMESSWORK * dmess)
 static void setupCGearFirstSubscreen(DMESSWORK * dmess)
 {
   FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_CGEARFIRST);
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void setupNoneSubscreen(DMESSWORK * dmess)
+{
+  FIELD_SUBSCREEN_ChangeForce(dmess->subscreen, FIELD_SUBSCREEN_NOGEAR);
 }
 
 
