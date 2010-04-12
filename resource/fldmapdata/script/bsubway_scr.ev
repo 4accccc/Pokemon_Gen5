@@ -1666,7 +1666,11 @@ sub_receipt_demo_start_train:
   
   //電車移動
   _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, BTRAIN_ANIME_TYPE_START_HOME, BSW_NULL, BSW_NULL )
-  _TIME_WAIT( 45 ) //アニメを少し見せてフェードアウト
+  _SE_PLAY( SEQ_SE_BDEMO_01 ) //電車扉音
+  _TIME_WAIT( 35 )
+  _SE_PLAY( SEQ_SE_BDEMO_02 ) //電車発射音
+  
+  _TIME_WAIT( 15 ) //アニメを少し見せてフェードアウト
 }
 _RET
 
@@ -1930,6 +1934,7 @@ _ANIME_LABEL anm_receipt_demo_arrival_train_partner0
   _ANIME_DATA AC_WAIT_1F,4
   _ANIME_DATA AC_WALK_D_8F,3
   _ANIME_DATA AC_WALK_L_8F,6
+  _ANIME_DATA AC_WALK_U_8F,1
   _ANIME_DATA AC_STAY_WALK_R_8F,1
   _ANIME_DATA ACMD_END,0
 
@@ -1991,6 +1996,8 @@ sub_bsw_common_report_error_exit:
 {
   //ゾーン別プレイモード取得
   _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
+  //受付と主人公の向きを合わせる
   
   //お客様！
   $SCWK_TEMP0 = msg_bsw_scr_37
@@ -2506,8 +2513,11 @@ sub_ttown_demo_start_train:
   
   //電車移動
   _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, BTRAIN_ANIME_TYPE_START_HOME, BSW_NULL, BSW_NULL )
+  _SE_PLAY( SEQ_SE_BDEMO_01 ) //電車扉音
+  _TIME_WAIT( 35 )
+  _SE_PLAY( SEQ_SE_BDEMO_02 ) //電車発射音
   
-  _TIME_WAIT( 60 ) //アニメを少し見せてフェードアウト
+  _TIME_WAIT( 15 ) //アニメを少し見せてフェードアウト
 }
 _RET
 
