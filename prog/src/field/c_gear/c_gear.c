@@ -534,6 +534,8 @@ enum
   STARTUP_SEQ_TBL_IN_WAIT,
   STARTUP_SEQ_TBL_ALPHA_WAIT,
   STARTUP_SEQ_END,
+
+  STARTUP_SEQ_SKIP,
 };
 
 
@@ -756,10 +758,12 @@ static BOOL _PanelPaletteIsBeaconChange( GAME_COMM_SYS_PTR game_comm, u32 last_b
 static void _PanelMarkAnimeSysInit( C_GEAR_WORK* pWork );
 static void _PanelMarkAnimeSysMain( C_GEAR_WORK* pWork );
 static BOOL _PanelMarkAnimeSysIsAnime( const C_GEAR_WORK* cpWork );
+static void _PanelMarkAnimeSysAllStop( C_GEAR_WORK* pWork );
 
 static void _PanelMarkAnimeInit( PANEL_MARK_ANIME* p_mark, int x, int y );
 static void _PanelMarkAnimeSetOff( PANEL_MARK_ANIME* p_mark, C_GEAR_WORK* pWork, CGEAR_PANELTYPE_ENUM panel_type );
 static void _PanelMarkAnimeStart( PANEL_MARK_ANIME* p_mark, C_GEAR_WORK* pWork, u8 color_type, u8 anime_type, CGEAR_PANELTYPE_ENUM panel_type, u16 frame );
+static void _PanelMarkAnimeStop( PANEL_MARK_ANIME* p_mark);
 static void _PanelMarkAnimeMain( PANEL_MARK_ANIME* p_mark, const C_GEAR_WORK* cp_work );
 static void _PanelMarkAnimeWriteScreen( const PANEL_MARK_ANIME* cp_mark, u32 anime_index );
 static BOOL _PanelMarkAnimeIsAnime( const PANEL_MARK_ANIME* cp_mark );
@@ -1504,6 +1508,23 @@ static BOOL _PanelMarkAnimeSysIsAnime( const C_GEAR_WORK* cpWork )
   return result;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  停止処理
+ *
+ *	@param	pWork 
+ */
+//-----------------------------------------------------------------------------
+static void _PanelMarkAnimeSysAllStop( C_GEAR_WORK* pWork )
+{
+  int i, j;
+  for( i=0; i<C_GEAR_PANEL_WIDTH; i++ ){
+    for( j=0; j<C_GEAR_PANEL_HEIGHT; j++ ){
+      _PanelMarkAnimeStop( &pWork->panel_mark[i][j] );
+    }
+  }
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -1573,6 +1594,18 @@ static void _PanelMarkAnimeStart( PANEL_MARK_ANIME* p_mark, C_GEAR_WORK* pWork, 
   // color用のパネルを書き込み。
   _gearPanelBgScreenMake(pWork, p_mark->x, p_mark->y, panel_type);
   _PanelMarkAnimeWriteScreen( p_mark, set_index );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  途中でも停止
+ *
+ *	@param	p_mark
+ */
+//-----------------------------------------------------------------------------
+static void _PanelMarkAnimeStop( PANEL_MARK_ANIME* p_mark)
+{
+  p_mark->anime_on    = FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -2724,11 +2757,13 @@ static void _gearEndStartUpObjAnime(C_GEAR_WORK* pWork)
 {
   int i;
 
-  // オートアニメーション開始
-  for(i=0;i < STARTUP_ANIME_OBJ_MAX;i++)
-  {
-    GFL_CLACT_WK_Remove( pWork->cellStartUp[i] );
-    pWork->cellStartUp[i] =NULL;
+  if( pWork->cellStartUp[0] ){
+    // オートアニメーション開始
+    for(i=0;i < STARTUP_ANIME_OBJ_MAX;i++)
+    {
+      GFL_CLACT_WK_Remove( pWork->cellStartUp[i] );
+      pWork->cellStartUp[i] =NULL;
+    }
   }
 }
 
@@ -3129,7 +3164,8 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
   _timeAnimation(pWork);
   _PanelPaletteChange(pWork);
 
-  
+  _gearCrossObjMain(pWork);
+ 
 
 
 #if 0
@@ -3216,6 +3252,14 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
 
   // アニメ待ち
   case STARTUP_SEQ_ANIME_WAIT:
+
+    // スキップ
+    if( GFL_UI_TP_GetTrg() ){
+      pWork->state_seq = STARTUP_SEQ_SKIP;
+      break;
+    }
+
+    
     if( _gearIsEndStartUpObjAnime( pWork ) == FALSE ){
       break;
     }
@@ -3229,6 +3273,12 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
 
   // ALPHAアニメウエイト
   case STARTUP_SEQ_OAM_ALPHA_WAIT:
+
+    // スキップ
+    if( GFL_UI_TP_GetTrg() ){
+      pWork->state_seq = STARTUP_SEQ_SKIP;
+      break;
+    }
 
     if( pWork->startCounter < STARTUP_OAM_ALPHA_ANIME_FRAME_MAX ){
       pWork->startCounter ++;
@@ -3246,6 +3296,13 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
 
   // テーブルが順に出てくるアニメ
   case STARTUP_SEQ_TBL_IN_WAIT:
+
+    // スキップ
+    if( GFL_UI_TP_GetTrg() ){
+      pWork->state_seq = STARTUP_SEQ_SKIP;
+      break;
+    }
+
     if( _gearStartUpMain( pWork ) == TRUE ){
 
       pWork->startCounter = 0;
@@ -3254,6 +3311,12 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
     break;
 
   case STARTUP_SEQ_TBL_ALPHA_WAIT:
+
+    // スキップ
+    if( GFL_UI_TP_GetTrg() ){
+      pWork->state_seq = STARTUP_SEQ_SKIP;
+      break;
+    }
     
     pWork->startCounter ++;
     if( pWork->startCounter >= STARTUP_TBL_ALPHA_TIME_WAIT ){
@@ -3274,6 +3337,24 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
     _gearAllObjDrawEnabel( pWork, TRUE );
     _gearMarkObjDrawEnable(pWork,FALSE);
     _CHANGE_STATE(pWork, _modeSelectMenuWait2);
+    break;
+
+
+
+  case STARTUP_SEQ_SKIP:
+    _gearEndStartUpObjAnime( pWork );
+    // OAMブラックアウト
+    _PFadeSetBlack(pWork);
+
+    // アニメストップ
+    _PanelMarkAnimeSysAllStop( pWork );
+
+    // 全消し
+    _gearStartUpAllOff( pWork );
+
+    pWork->startCounter = STARTUP_END_TIME_WAIT;
+
+    pWork->state_seq = STARTUP_SEQ_END;
     break;
 
   default:
@@ -3414,6 +3495,7 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   // セーブ復帰１回目は、起動演出
   gamedata  = GAMESYSTEM_GetGameData( pGameSys );
   fstatus   = GAMEDATA_GetFieldStatus(gamedata);
+
   if( FIELD_STATUS_GetContinueFlag( fstatus ) ){
     _CHANGE_STATE(pWork,_modeSelectMenuWait0);
   }else{
@@ -3546,7 +3628,6 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
       state(pWork);
     }
   }
-  _gearCrossObjMain(pWork);
   if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
 
 
