@@ -913,11 +913,11 @@ void BSUBWAY_SCRWORK_ChoiceBattlePartner( BSUBWAY_SCRWORK *bsw_scr )
   
   switch( bsw_scr->play_mode ){
   case BSWAY_MODE_WIFI:
-#if 0 //WB 仮 サーバーデータが古いため。
+#if 1
     BSUBWAY_WIFIDATA_GetBtlPlayerData( bsw_scr->wifiData,
         &bsw_scr->tr_data[0], round );
     break;
-#else
+#else //WB 仮 サーバーデータが古いため
     BSUBWAY_SCRWORK_MakeRomTrainerData(
       bsw_scr, &(bsw_scr->tr_data[0]),
       bsw_scr->trainer[round],
@@ -1389,7 +1389,7 @@ static void bsw_SetCommonScore(
   case BSWAY_MODE_WIFI:
     //ポケモンデータセット
     bsw_SaveMemberPokeData( wk, sv, BSWAY_SCORE_POKE_WIFI );
-
+    
     //スコア押し出し
     BSUBWAY_PLAYDATA_AddWifiRecord(
         wk->playData, wk->rec_down, wk->rec_turn, wk->rec_damage );

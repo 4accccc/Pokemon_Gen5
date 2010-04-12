@@ -342,6 +342,7 @@ sub_train_battle:
     CASE BSWAY_MODE_S_COMM_MULTI THEN
       _CALL sub_anm_battle_start_multi
     CASE BSWAY_MODE_WIFI THEN
+      _CALL sub_anm_battle_start
     ENDSWITCH
     
     _BLACK_OUT()
