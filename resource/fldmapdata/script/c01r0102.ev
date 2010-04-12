@@ -57,10 +57,6 @@ EVENT_START   ev_scene_c01r0102_pdwguide_01
 	
 	//……で　てだすけ　じゃなくて　おねがいしても　いいかな？
 	_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_05 , C01R0102_INVENTOR_01 )
-	_BALLOONWIN_CLOSE()
-	
-	//あなた　アララギから
-	_BALLOONWIN_OBJMSG( msg_c01r0102_inventor_06 , C01R0102_INVENTOR_01 )
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
