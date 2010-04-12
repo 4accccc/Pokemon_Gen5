@@ -79,7 +79,11 @@ typedef struct {
  * @brief	スレッド制御定義
  */
 //------------------------------------------------------------------
+#ifdef PM_DEBUG
+int BGM_BLOCKLOAD_SIZE = 0x2000;
+#else
 #define BGM_BLOCKLOAD_SIZE  (0x2000)
+#endif
 
 typedef enum {
 	THREADLOAD_SEQBANK = 0,

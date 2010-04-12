@@ -128,6 +128,8 @@ static u32 DebugGetMusBefPoint(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 par
 static void DebugSetMusBefPoint(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetMusSumPoint(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetMusSumPoint(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetSoundLoadBlockSize(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetSoundLoadBlockSize(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 
 #include "debug_numinput.cdat"
 
@@ -254,6 +256,9 @@ static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q30 = { D_NINPUT_DATA_LIST,
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_Musical = { 
   D_NINPUT_DATA_LIST,   NELEMS( DNI_MusicalList ), DNI_MusicalList, };
 
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_Sound = { 
+  D_NINPUT_DATA_LIST,   NELEMS( DNI_SoundList ), DNI_SoundList, };
+
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
 {
@@ -358,6 +363,7 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_a_total_q29, (void*)&DATA_A_total_Q29 },
   { dni_a_total_q30, (void*)&DATA_A_total_Q30 },
   { dni_mus_01, (void*)&DATA_Musical },
+  { dni_sound_00, (void*)&DATA_Sound },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
@@ -1145,6 +1151,20 @@ static void DebugSetMusSumPoint(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 pa
 {
   MUSICAL_SAVE_ResetSumPoint( GAMEDATA_GetMusicalSavePtr( gamedata ) );
   MUSICAL_SAVE_AddSumPoint( GAMEDATA_GetMusicalSavePtr( gamedata ) , value );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief サウンド関連
+ */
+//--------------------------------------------------------------
+static u32 DebugGetSoundLoadBlockSize(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return BGM_BLOCKLOAD_SIZE;
+}
+static void DebugSetSoundLoadBlockSize(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  BGM_BLOCKLOAD_SIZE = value;
 }
 
 #endif  //PM_DEBUG

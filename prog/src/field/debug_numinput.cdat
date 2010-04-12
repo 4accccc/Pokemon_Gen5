@@ -717,4 +717,15 @@ static const DEBUG_NUMINPUT_LIST DNI_MusicalList[] = {
   { dni_mus_08, 0, &musBefPoint },
   { dni_mus_09, 0, &musSumPoint },
 };
+
+//////////////////////////////////////////////////////
+///サウンド関連
+static const DEBUG_NUMINPUT_PARAM soundLoadBlockSize = {
+ 0, 0xffff, DebugGetSoundLoadBlockSize, DebugSetSoundLoadBlockSize,
+};
+static const DEBUG_NUMINPUT_LIST DNI_SoundList[] = {
+  //gmm_id, param, dni_param
+  { dni_sound_01, 0, &soundLoadBlockSize },
+};
+
 #endif  //PM_DEBUG
