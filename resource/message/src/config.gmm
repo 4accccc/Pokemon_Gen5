@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T14:56:49"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-12T21:15:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1552" top="245" right="2257" bottom="873" maximized="no" rayout="Vertical2">
+	<dialog left="206" top="65" right="911" bottom="693" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="787" top="36" right="1260" bottom="434" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -370,7 +370,7 @@
 		<language name="JPN_KANJI" width="216" line="2">文字モード</language>
 	</row>
 
-	<row id="mes_config_menu06" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+	<row id="mes_config_menu06" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>メニュー項目「無線」
 ※WBで追加</comment>
 		<language name="JPN" width="216" line="2">むせん</language>
@@ -466,14 +466,14 @@
 		<language name="JPN_KANJI" width="216" line="2">漢字</language>
 	</row>
 
-	<row id="mes_config_sm06_00" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+	<row id="mes_config_sm06_00" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>「無線」-&gt;オン
 ※WBで追加</comment>
 		<language name="JPN" width="216" line="2">オン</language>
 		<language name="JPN_KANJI" width="216" line="2">オン</language>
 	</row>
 
-	<row id="mes_config_sm06_01" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+	<row id="mes_config_sm06_01" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>「無線」-&gt;オフ
 ※WBで追加</comment>
 		<language name="JPN" width="216" line="2">オフ</language>
@@ -535,7 +535,7 @@
 切り替えることが　できます</language>
 	</row>
 
-	<row id="mes_config_comment06" text-color=",,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
+	<row id="mes_config_comment06" text-color=",,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>「無線」の解説文
 ※WBで追加</comment>
 		<language name="JPN" width="216" line="2">いつも　むせんで　つうしんするか
@@ -544,13 +544,22 @@
 ＯＮ／ＯＦＦが　選べます</language>
 	</row>
 
-	<row id="mes_config_comment07" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
+	<row id="mes_config_comment07" text-color=",,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>「レポート」の解説文
 ※WBで追加</comment>
-		<language name="JPN" width="216" line="2">ワイヤレスつうしんを　するまえに
+		<language name="JPN" width="216" line="2">せきがいせんつうしんを　するまえに
 レポートを　かくかどうか　えらべます</language>
-		<language name="JPN_KANJI" width="216" line="2">ワイヤレス通信を　するまえに
+		<language name="JPN_KANJI" width="216" line="2">赤外線通信を　するまえに
 レポートを　書くかどうか　選べます</language>
+	</row>
+
+	<row id="mes_config_comment10" text-color=",,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>他の人のレポートが書かれていて、
+レポートのオン・オフができないとき</comment>
+		<language name="JPN" width="216" line="2">べつの　レポートが　かかれているので
+レポートかかないを　えらべません</language>
+		<language name="JPN_KANJI" width="216" line="2">べつの　レポートが　書かれているので
+レポート書かないを　選べません</language>
 	</row>
 
 	<row id="mes_config_comment20" text-color=",,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
@@ -571,7 +580,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">いいえ</language>
 	</row>
 
-	<row id="mes_config_comment30" text-color=",,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+	<row id="mes_config_comment30" text-color=",,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>パレスに接続中の無線オフのＮＧメッセージ</comment>
 		<language name="JPN" font=" 1:small" width="216" line="2">パレスに　せつぞくちゅう　なので
 オフを　えらべません</language>
