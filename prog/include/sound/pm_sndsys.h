@@ -105,6 +105,10 @@ extern void	PMSND_InitMultiBoot( void* sndData );
 extern void	PMSND_Main( void );
 extern void	PMSND_Exit( void );
 
+
+//	ƒXƒeƒŒƒI/ƒ‚ƒmƒ‰ƒ‹İ’è
+extern void	PMSND_SetStereo( BOOL flag );
+
 //	î•ñæ“¾
 #ifdef PM_DEBUG
 extern u32 PMSND_GetSndHeapSize( void );
