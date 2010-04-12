@@ -26,6 +26,9 @@
 #include "../../../resource/research_radar/data/answer_id_question.cdat"  // for AnswerID_question[][]
 
 
+//#define DEBUG_PRINT_ENABLE
+
+
 static void CheckCurrentResearchFinish( SAVE_CONTROL_WORK* save, u16* RState );
 static void CheckRequestFinish_inAdvance( SAVE_CONTROL_WORK* save, u8 RID, u16* RState );
 static u32 GetCurrentCount( QUESTIONNAIRE_SAVE_WORK* QSave, u8 QID );
@@ -61,8 +64,9 @@ VMCMD_RESULT EvCmdGetResearchTeamRank( VMHANDLE *core, void *wk )
   // 隊員ランクを取得する
   *ret = MISC_CrossComm_GetResearchTeamRank( misc );
 
-  // DEBUG:
+#ifdef DEBUG_PRINT_ENABLE
   OS_TFPrintf( 3, "_GET_RESEARCH_TEAM_RANK ==> %d\n", *ret );
+#endif
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -100,8 +104,9 @@ VMCMD_RESULT EvCmdResearchTeamRankUp( VMHANDLE *core, void *wk )
   // ビーコン送信バッファに反映させる
   GAMEBEACON_SendDataUpdate_ResearchTeamRank( rank );
 
-  // DEBUG:
+#ifdef DEBUG_PRINT_ENABLE
   OS_TFPrintf( 3, "_RESEARCH_TEAM_RANK_UP ==> %d\n", rank );
+#endif
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -128,8 +133,9 @@ VMCMD_RESULT EvCmdGetResearchRequestID( VMHANDLE *core, void *wk )
   // 調査中の調査依頼IDを取得
   *ret = MISC_GetResearchRequestID( misc );
 
-  // DEBUG:
+#ifdef DEBUG_PRINT_ENABLE
   OS_TFPrintf( 3, "_GET_RESEARCH_REQUEST_ID ==> %d\n", *ret );
+#endif
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -164,8 +170,9 @@ VMCMD_RESULT EvCmdGetResearchQuestionID( VMHANDLE *core, void *wk )
   *retQ2 = MISC_GetResearchQuestionID( misc, 1 ); 
   *retQ3 = MISC_GetResearchQuestionID( misc, 2 ); 
 
-  // DEBUG:
+#ifdef DEBUG_PRINT_ENABLE
   OS_TFPrintf( 3, "_GET_RESEARCH_QUESTION_ID ==> %d, %d, %d\n", *retQ1, *retQ2, *retQ3 );
+#endif
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -197,8 +204,9 @@ VMCMD_RESULT EvCmdGetResearchPassedTime( VMHANDLE *core, void *wk )
   // 経過時間を返す
   *ret = passedHour;
 
-  // DEBUG:
+#ifdef DEBUG_PRINT_ENABLE
   OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME ==> %d\n", passedHour );
+#endif
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -230,8 +238,9 @@ VMCMD_RESULT EvCmdStartResearch( VMHANDLE *core, void *wk )
   qID[1] = SCRCMD_GetVMWorkValue( core, work ); // 第三引数: 質問ID2
   qID[2] = SCRCMD_GetVMWorkValue( core, work ); // 第四引数: 質問ID3
 
-  // DEBUG:
+#ifdef DEBUG_PRINT_ENABLE
   OS_TFPrintf( 3, "_START_RESEARCH: reqID=%d, qID[0]=%d, qID[1]=%d, qID[2]=%d\n", reqID, qID[0], qID[1], qID[2] );
+#endif
 
   // 調査依頼IDをセーブ
   MISC_SetResearchRequestID( misc, reqID );
@@ -245,8 +254,9 @@ VMCMD_RESULT EvCmdStartResearch( VMHANDLE *core, void *wk )
   // 調査開始時刻をセーブ
   MISC_SetResearchStartTimeBySecond( misc, GFL_RTC_GetDateTimeBySecond() );
 
-  // DEBUG:
+#ifdef DEBUG_PRINT_ENABLE
   OS_TFPrintf( 3, "_START_RESEARCH: start time=%d\n", GFL_RTC_GetDateTimeBySecond() );
+#endif
 
 
   return VMCMD_RESULT_CONTINUE;
@@ -278,8 +288,9 @@ VMCMD_RESULT EvCmdFinishResearch( VMHANDLE *core, void *wk )
     MISC_SetResearchQuestionID( misc, i, QUESTION_ID_DUMMY );
   }
 
-  // DEBUG:
+#ifdef DEBUG_PRINT_ENABLE
   OS_TFPrintf( 3, "_FINISH_RESEARCH\n" );
+#endif
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -327,7 +338,9 @@ VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk )
         maxCount = sumCount;
         majorityAnswerID = AnswerID_question[ qID ][ ansIdx ];
       }
+#ifdef DEBUG_PRINT_ENABLE
       OS_TFPrintf( 3, 
+#endif
           "questionID=%d, answerIdx=%d, sumCount=%d(%d+%d)\n", 
           qID, ansIdx, sumCount, totalCount, todayCount );
     }
@@ -336,8 +349,9 @@ VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk )
   // 最も多数派の回答IDを返す
   *retWork = majorityAnswerID;
 
-  // DEBUG:
+#ifdef DEBUG_PRINT_ENABLE
   OS_TFPrintf( 3, "_GET_MAJORITY_ANSWER ==> %d\n", *retWork );
+#endif
 
   return VMCMD_RESULT_CONTINUE;
 } 
@@ -369,8 +383,9 @@ VMCMD_RESULT EvCmdSetMyAnswer( VMHANDLE *core, void *wk )
   QuestionnaireAnswer_WriteBit( myAnswer, qID, aIdx );
   GAMEBEACON_SendDataUpdate_Questionnaire( myAnswer );
 
-  // DEBUG:
+#ifdef DEBUG_PRINT_ENABLE
   OS_TFPrintf( 3, "_SET_MY_ANSWER ==> qID=%d, aIdx=%d\n", qID, aIdx );
+#endif
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -423,6 +438,7 @@ VMCMD_RESULT EvCmdCheckAchieveRequest( VMHANDLE* core, void* wk )
     CheckRequestFinish_inAdvance( save, RID, ret_wk );
   }
 
+#ifdef DEBUG_PRINT_ENABLE
   OS_TFPrintf( 3, "_CHECK_ACHIEVE_REQUEST ==> " );
   switch( *ret_wk ) {
   case RESEARCH_REQ_STATE_NULL:             OS_TFPrintf( 3, "NULL" );             break;
@@ -433,6 +449,7 @@ VMCMD_RESULT EvCmdCheckAchieveRequest( VMHANDLE* core, void* wk )
   default: GF_ASSERT(0);
   }
   OS_TFPrintf( 3, "\n" );
+#endif
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -617,8 +634,10 @@ static BOOL CheckNormCount( QUESTIONNAIRE_SAVE_WORK* QSave, u8 RID )
   {
     u32 count = GetCurrentCount( QSave, QID[i] );
 
+#ifdef DEBUG_PRINT_ENABLE
     OS_TFPrintf( 3, 
         "CheckNormCount: QID=%d, norm=%d, count=%d\n", QID[i], norm, count );
+#endif
 
     // ノルマを達成していない
     if( count < norm ) {
@@ -768,9 +787,11 @@ static u16 GetLackCount( SAVE_CONTROL_WORK* save )
   lack = norm - minCount;
   if( lack < 0 ) { lack = 0; }
 
+#ifdef DEBUG_PRINT_ENABLE
   OS_TFPrintf( 3, 
       "GetLackCount: RID=%d, norm=%d, minCount=%d, lack=%d\n", 
       RID, norm, minCount, lack );
+#endif
 
   return lack;
 }

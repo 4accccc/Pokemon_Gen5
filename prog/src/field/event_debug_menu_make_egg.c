@@ -13,7 +13,7 @@
 //--------------------------------------------------------------
 // タマゴ作成　メニューヘッダー
 //--------------------------------------------------------------
-const FLDMENUFUNC_HEADER menuHeader =
+static const FLDMENUFUNC_HEADER menuHeader =
 {
   1,    //リスト項目数
   9,    //表示最大項目数
@@ -38,7 +38,7 @@ const FLDMENUFUNC_HEADER menuHeader =
 //--------------------------------------------------------------
 // メニューリスト
 //--------------------------------------------------------------
-const FLDMENUFUNC_LIST menuList[] = 
+static const FLDMENUFUNC_LIST menuList[] = 
 {
   {STR_NEWBORN,     (void*)STR_NEWBORN},      // うまれたて
   {STR_OLDBORN,     (void*)STR_OLDBORN},      // もうすぐ孵化
@@ -48,7 +48,7 @@ const FLDMENUFUNC_LIST menuList[] =
 //--------------------------------------------------------------
 // メニュー初期化構造体
 //--------------------------------------------------------------
-const DEBUG_MENU_INITIALIZER menuInitializer = 
+static const DEBUG_MENU_INITIALIZER menuInitializer = 
 {
   NARC_message_debug_make_egg_dat,
   NELEMS(menuList),

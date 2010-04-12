@@ -158,9 +158,7 @@ void SODATEYA_TakePokemon( SODATEYA* sodateya, POKEPARTY* party, int pos )
   // すでに最大数預かっている場合
   if( SODATEYA_POKE_MAX <= index )
   {
-    OBATA_Printf( "--------------------------------------------------------------\n" );
     OBATA_Printf( "SODATEYA_TakePokemon: すでに最大数のポケモンを預かっています。\n" );
-    OBATA_Printf( "--------------------------------------------------------------\n" );
     return;
   }
 
@@ -187,9 +185,7 @@ void SODATEYA_TakeBackPokemon( SODATEYA* sodateya, int index, POKEPARTY* party )
   // 指定インデックスにポケモンがいない場合
   if( SODATEYA_WORK_IsValidPokemon( sodateya->work, index ) != TRUE )
   {
-    OBATA_Printf( "------------------------------------------------------------------\n" );
     OBATA_Printf( "SODATEYA_TakeBackPokemon: 指定インデックスには飼育ポケがいません。\n" );
-    OBATA_Printf( "------------------------------------------------------------------\n" );
     return;
   }
 
@@ -219,9 +215,7 @@ void SODATEYA_TakeBackEgg( SODATEYA* sodateya, POKEPARTY* party )
   // タマゴが存在しない場合
   if( SODATEYA_WORK_IsValidEgg( sodateya->work ) != TRUE )
   {
-    OBATA_Printf( "------------------------------------------\n" );
     OBATA_Printf( "SODATEYA_TakeBackEgg: タマゴがありません。\n" );
-    OBATA_Printf( "------------------------------------------\n" );
     return;
   }
   GAMEBEACON_Set_SodateyaEgg();
@@ -247,9 +241,7 @@ void SODATEYA_DeleteEgg( SODATEYA* sodateya )
   // タマゴが存在しない場合
   if( SODATEYA_WORK_IsValidEgg( sodateya->work ) != TRUE )
   {
-    OBATA_Printf( "------------------------------------------\n" );
     OBATA_Printf( "SODATEYA_TakeBackEgg: タマゴがありません。\n" );
-    OBATA_Printf( "------------------------------------------\n" );
   }
 
   SODATEYA_WORK_ClrEgg( sodateya->work );
@@ -332,9 +324,7 @@ u32 SODATEYA_GetPokeLv_Current( const SODATEYA* sodateya, int index )
   // 指定インデックスにポケモンがいない場合
   if( SODATEYA_WORK_IsValidPokemon( sodateya->work, index ) != TRUE )
   {
-    OBATA_Printf( "--------------------------------------------------------------------\n" );
     OBATA_Printf( "SODATEYA_GetPokeLv_Current: 指定インデックスには飼育ポケがいません。\n" );
-    OBATA_Printf( "--------------------------------------------------------------------\n" );
     return 1;
   }
 
@@ -414,9 +404,7 @@ u8 SODATEYA_GetLoveLevel( const SODATEYA* sodateya )
   // 飼育ポケモンが2体いない場合
   if( SODATEYA_WORK_GetPokemonNum( sodateya->work ) < 2 )
   {
-    OBATA_Printf( "--------------------------------------------------\n" );
     OBATA_Printf( "SODATEYA_GetLoveLevel: 預けポケモンが2体いません。\n" );
-    OBATA_Printf( "--------------------------------------------------\n" );
     return LOVE_LV_WORST;
   }
 
@@ -442,9 +430,7 @@ const POKEMON_PARAM* SODATEYA_GetPokemonParam( const SODATEYA* sodateya, int ind
   // 指定インデックスにポケモンがいない場合
   if( SODATEYA_WORK_IsValidPokemon( sodateya->work, index ) != TRUE )
   {
-    OBATA_Printf( "------------------------------------------------------------------\n" );
     OBATA_Printf( "SODATEYA_GetPokemonParam: 指定インデックスには飼育ポケがいません。\n" );
-    OBATA_Printf( "------------------------------------------------------------------\n" );
   }
 
   return SODATEYA_WORK_GetPokemon( sodateya->work, index );
@@ -662,9 +648,7 @@ static u32 LoveCheck( const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2 )
   }
 
   // ココに処理は来ないハズ!!
-  OBATA_Printf( "-------------------------------------\n" );
   OBATA_Printf( "LoveCheck: 意図しない処理フロー発生!!\n" );
-  OBATA_Printf( "-------------------------------------\n" );
   return LOVE_LV_WORST;
 }
 
@@ -968,9 +952,7 @@ static void EggCordinate_special_ability(
   }
   if( 3 <= speabi_index )
   { // 母の特性が, 種の特性に一致しない場合
-    OBATA_Printf( "----------------------------------\n" );
     OBATA_Printf( "母ポケモンの特性に誤りがあります。\n" );
-    OBATA_Printf( "----------------------------------\n" );
     speabi_index = 0; // とりあえず, 特性1を継承することにする
   }
 
@@ -1415,17 +1397,13 @@ static BOOL IsWazaMachineAbleToUse( HEAPID heap_id, u16 monsno, u16 formno, u16 
   // モンスターナンバーを検査
   if( MONSNO_END <= monsno )
   {
-    OBATA_Printf( "------------------------------------------------------------------\n" );
     OBATA_Printf( "IsWazaMachineAbleToUse: 無効なモンスターナンバーが指定されました。\n" );
-    OBATA_Printf( "------------------------------------------------------------------\n" );
     return FALSE;
   } 
   // 技マシン以外のアイテムが指定された場合
   if( (itemno < ITEM_WAZAMASIN01 ) || (ITEM_HIDENMASIN08 < itemno ) )
   {
-    OBATA_Printf( "----------------------------------------------------------------\n" );
     OBATA_Printf( "IsWazaMachineAbleToUse: 技マシン以外のアイテムが指定されました。\n" );
-    OBATA_Printf( "----------------------------------------------------------------\n" );
     return FALSE;
   } 
 
@@ -1479,9 +1457,7 @@ static u16 GetSeedMonsNo( u16 monsno )
   // モンスターナンバーを検査
   if( MONSNO_END <= monsno )
   {
-    OBATA_Printf( "---------------------------------------------------------\n" );
     OBATA_Printf( "GetSeedMonsNo: 無効なモンスターナンバーが指定されました。\n" );
-    OBATA_Printf( "---------------------------------------------------------\n" );
     return monsno; // とりあえず, そのまま返す
   } 
 
