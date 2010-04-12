@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T13:15:00"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T21:00:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1549" top="145" right="2254" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -491,8 +491,9 @@
 あつめられるように　なったわ！▽
 ほんとうに　ありがとうね！▼
 かんしゃの　きもち　として
-Ｃギアを　つかえるように　するね！▼
-Ｃギアとは　せきがいせんや
+Ｃ－ＧＥＡＲを▽
+つかえるように　するね！▼
+Ｃ－ＧＥＡＲとは　せきがいせんや
 むせん　Ｗｉ－Ｆｉなど▽
 つうしんに　かんけいする　デバイスよ▼</language>
 		<language name="JPN_KANJI" width="256">マコモ『じゃじゃーん！▼
@@ -502,8 +503,9 @@
 集められるように　なったわ！▽
 本当に　ありがとうね！▼
 感謝の　気持ちとして
-Ｃギアを　つかえるように　するね！▼
-Ｃギアとは　赤外線や
+Ｃ－ＧＥＡＲを▽
+使えるように　するね！▼
+Ｃ－ＧＥＡＲとは　赤外線や
 無線　Ｗｉ－Ｆｉなど▽
 通信に　関係する　デバイスよ▼</language>
 	</row>
@@ -514,16 +516,16 @@
 ・主人公に近づいてメッセージ表示
 ・続けてinventor_09</comment>
 		<attribute name="キャラ指定">ASSISTANTW</attribute>
-		<language name="JPN" width="256">ほら！　Ｃギアが　きどうして
+		<language name="JPN" width="256">ほら！　Ｃ－ＧＥＡＲが　きどうして
 がめんが　あらわれたでしょ！▼
 その　がめんの　みぎしたに　ある
 ？マークに　タッチすれば▽
-Ｃギアの　せつめいが　よめるわ▼</language>
-		<language name="JPN_KANJI" width="256">ほら！　Ｃギアが　起動して
+Ｃ－ＧＥＡＲの　せつめいが　よめるわ▼</language>
+		<language name="JPN_KANJI" width="256">ほら！　Ｃ－ＧＥＡＲが　起動して
 画面が　あらわれたでしょ！▼
 その　画面の　右下に　ある
 ？マークに　タッチすれば▽
-Ｃギアの　説明が　読めるわ▼</language>
+Ｃ－ＧＥＡＲの　説明が　読めるわ▼</language>
 	</row>
 
 	<row id="msg_c01r0102_inventor_09" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -1041,7 +1043,7 @@
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_pc_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>解説文
 ・続けてpc_02表示</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
@@ -1051,7 +1053,7 @@
 Ｗｉ－Ｆｉコネクションを　つうじて
 せかいじゅうの　トレーナーの▽
 レポートを　あつめる　システム▼
-Ｃギアの　がめんに　ある
+Ｃ－ＧＥＡＲの　がめんに　ある
 Ｗｉ－Ｆｉを　タッチして　あらわれる▽
 [FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]という　ボタンで▼
 ねむらせる　ポケモンを　えらび
@@ -1063,7 +1065,7 @@
 Ｗｉ－Ｆｉコネクションを　通じて
 世界中の　トレーナーの▽
 レポートを　集める　システム▼
-Ｃギアの　画面に　ある
+Ｃ－ＧＥＡＲの　画面に　ある
 Ｗｉ－Ｆｉを　タッチして　表示される▽
 [FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]という　ボタンで▼
 眠らせる　ポケモンを　選び
