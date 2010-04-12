@@ -461,6 +461,7 @@ void GFL_FONT_GetBitMap( const GFL_FONT* wk, STRCODE code, void* dst, GFL_FONT_S
   u32 index;
 
   index = get_glyph_index( wk, code );
+  TAYA_Printf("[GF_FONT] code=%04x, index=%d\n", code, index);
   wk->GetBitmapFunc( wk, index, dst, size );
 }
 
@@ -503,8 +504,9 @@ static u32 get_glyph_index( const GFL_FONT* wk, u32 code )
         int min, max, mid, midIdx;
 
         numEntries = pMap->mapInfo[0];
-        min = 1;
-        max = numEntries;
+        min = 0;
+        max = numEntries - 1;
+
 
         while( min <= max )
         {
@@ -516,11 +518,13 @@ static u32 get_glyph_index( const GFL_FONT* wk, u32 code )
             min = mid + 1;
             continue;
           }
-          if( code < pMap->mapInfo[midIdx] )
+          else if( code < pMap->mapInfo[midIdx] )
           {
             max = mid - 1;
             continue;
           }
+
+
           return pMap->mapInfo[midIdx+1];
         }
       }
