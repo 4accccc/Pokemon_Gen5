@@ -440,9 +440,17 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   dst->playerStatus[BTL_CLIENT_PARTNER] = NULL;
   dst->playerStatus[BTL_CLIENT_ENEMY2] = NULL;
   
+  dst->gameData     = gdata;
   dst->itemData     = GAMEDATA_GetMyItem( gdata );
   dst->bagCursor    = GAMEDATA_GetBagCursor( gdata );
   dst->zukanData    = GAMEDATA_GetZukanSave( gdata );
+  dst->recordData   = GAMEDATA_GetRecordPtr( gdata );
+  
+  {
+    SAVE_CONTROL_WORK *saveCtrl = GAMEDATA_GetSaveControlWork( gdata );
+    dst->configData = SaveData_GetConfig( saveCtrl );
+  }
+  
 //dst->commSupport  = GAMEDATA_GetCommPlayerSupportPtr( gdata );
   dst->commSupport  = NULL;
   
@@ -451,11 +459,6 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   dst->result = BTL_RESULT_WIN;
   
   BTL_SETUP_AllocRecBuffer( dst, HEAPID_PROC );
-  
-  {
-    SAVE_CONTROL_WORK *saveCtrl = GAMEDATA_GetSaveControlWork( gdata );
-    dst->configData = SaveData_GetConfig( saveCtrl );
-  }
   
   dst->rule = BTL_RULE_SINGLE;
   
