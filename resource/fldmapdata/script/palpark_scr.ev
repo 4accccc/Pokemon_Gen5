@@ -50,7 +50,6 @@ palpark_main:
     _FLAG_SET(FE_PALPARK_FIRSTTALK)
     //博士「ユー」
     _BALLOONWIN_OBJMSG( msg_palpark_first_09, R15R0301_PARK )
-    _BALLOONWIN_CLOSE()
     //初回メッセージ「やってみる？」
     _BALLOONWIN_OBJMSG( msg_palpark_09_b, R15R0301_PARK )
   ELSE
@@ -58,8 +57,7 @@ palpark_main:
     _BALLOONWIN_OBJMSG( msg_palpark_02, R15R0301_PARK )
   ENDIF
 
-  _YES_NO_WIN( SCWK_ANSWER )
-  _BALLOONWIN_CLOSE()
+  _YES_NO_WIN( SCWK_ANSWER )    //クローズいらす
   IF $SCWK_ANSWER == 0 THEN     //やる
     DEFINE_LOCAL box_empty_num        //ローカルワーク　ボックスの空き数
     //ボックスの空き状態をチェック
@@ -67,8 +65,7 @@ palpark_main:
     IF $box_empty_num >= 6 THEN          //6以上空きがある
       //「ＤＳある？」
       _BALLOONWIN_OBJMSG( msg_palpark_05, R15R0301_PARK )
-      _YES_NO_WIN( SCWK_ANSWER )
-      _BALLOONWIN_CLOSE()
+      _YES_NO_WIN( SCWK_ANSWER )  //クローズいらず
       IF $SCWK_ANSWER == 0 THEN          //ＤＳある
         //DSiの通信機能はＯＮになってるか？
         _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
@@ -146,7 +143,7 @@ play_palpark:
 
   //「そこにたって」
   _BALLOONWIN_OBJMSG( msg_palpark_08, R15R0301_PARK )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_CLOSE()   //アニメに続くのでクローズ
 
   //主人公マシンインアニメ+フェードアウト
   _CALL player_in_anm
@@ -173,8 +170,7 @@ play_palpark:
   ELSE
     DEFINE_LOCAL result_msg
     //「おつかれ」
-    _BALLOONWIN_OBJMSG( msg_palpark_10, R15R0301_PARK )
-    _BALLOONWIN_CLOSE()
+    _BALLOONWIN_OBJMSG( msg_palpark_10, R15R0301_PARK )   //クローズいらず
 
     IF $palpark_retval == PALPARK_FINISH_HIGHSOCRE THEN   //ハイスコア？
       _CALL score_msg
@@ -191,8 +187,7 @@ play_palpark:
       $result_msg = msg_palpark_12    //「ざんねん」メッセージをいれとく todo
     ENDIF
 
-    _BALLOONWIN_OBJMSG( result_msg, R15R0301_PARK )
-    _BALLOONWIN_CLOSE()
+    _BALLOONWIN_OBJMSG( result_msg, R15R0301_PARK )   //クローズいらず
   ENDIF
 
   _CALL see_you
@@ -200,8 +195,7 @@ _RET
 
 connect_error:
   //通信エラーのときのメッセージ
-  _BALLOONWIN_OBJMSG( msg_palpark_13, R15R0301_PARK )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_OBJMSG( msg_palpark_13, R15R0301_PARK )   //クローズいらず
 _RET
 
 score_msg:
@@ -211,23 +205,22 @@ score_msg:
   //ハイスコア取得
   _GET_PALPARK_VALUE_HIGHSCORE(score)
   
-  IF $score >= 500 THEN
+  IF $score >= 900 THEN
     $score_msg = msg_palpark_score_06
-  ELSIF $score >= 400 THEN
+  ELSIF $score >= 800 THEN
     $score_msg = msg_palpark_score_05
-  ELSIF $score >= 300 THEN
+  ELSIF $score >= 700 THEN
     $score_msg = msg_palpark_score_04
-  ELSIF $score >= 200 THEN
+  ELSIF $score >= 550 THEN
     $score_msg = msg_palpark_score_03
-  ELSIF $score >= 100 THEN
+  ELSIF $score >= 400 THEN
     $score_msg = msg_palpark_score_02
   ELSE
     $score_msg = msg_palpark_score_01
   ENDIF
 
   //「レベル○○」
-  _BALLOONWIN_OBJMSG( score_msg, R15R0301_PARK )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_OBJMSG( score_msg, R15R0301_PARK )  //クローズいらず
 
 _RET
 
@@ -261,7 +254,7 @@ player_in_anm:
 	_OBJ_ANIME_WAIT()  
   //「はじめるよ」
   _BALLOONWIN_OBJMSG( msg_palpark_09, R15R0301_PARK )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_CLOSE()   //ブラックアウトするのでクローズ
 
   //ブラックアウト
   _MAP_FADE_BLACK_OUT()
@@ -382,29 +375,29 @@ first_anime_evt:
 
   //助手「こんちわ」
   _BALLOONWIN_OBJMSG( msg_palpark_first_01, R15R0301_ASSISTANTW_01 )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_CLOSE() //アニメするのでクローズ
   //助手「！」
   _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_gyoe )
   _OBJ_ANIME_WAIT()
   //「殿堂入りしとるやないけ！」☆ギザウィンドウ
   _GIZAWIN_OBJMSG_POS( msg_palpark_first_02, R15R0301_ASSISTANTW_01, POS_DEFAULT )
-  _GIZAWIN_CLOSE()
+  _GIZAWIN_CLOSE()  //バルーンがつづくのでクローズ
   //助手「もしかするともしかするで]
   _BALLOONWIN_OBJMSG( msg_palpark_first_21_b, R15R0301_ASSISTANTW_01 )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_CLOSE()   //アニメするのでクローズ
   //助手後ろ向く
   _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_up_turn )
   _OBJ_ANIME_WAIT()
   //助手「はかせーーー」
   _BALLOONWIN_OBJMSG( msg_palpark_first_20, R15R0301_ASSISTANTW_01 )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_CLOSE() //アニメするのでクローズ
   //助手先行つれてく
   IF $pos_x == 9 THEN       //左
     _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_mov_start1 )
     _OBJ_ANIME_WAIT()
     //「ついてこいや」
     _BALLOONWIN_OBJMSG( msg_palpark_first_18, R15R0301_ASSISTANTW_01 )
-    _BALLOONWIN_CLOSE()
+    _BALLOONWIN_CLOSE() //アニメするのでクローズ
     _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_mov_restart )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mov_start1 )
   ELSIF $pos_x == 11 THEN   //右
@@ -412,7 +405,7 @@ first_anime_evt:
     _OBJ_ANIME_WAIT()
     //「ついてこいや」
     _BALLOONWIN_OBJMSG( msg_palpark_first_18, R15R0301_ASSISTANTW_01 )
-    _BALLOONWIN_CLOSE()
+    _BALLOONWIN_CLOSE() //アニメするのでクローズ
     _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_mov_restart )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mov_start2 )
   ELSE                      //中央
@@ -420,20 +413,20 @@ first_anime_evt:
     _OBJ_ANIME_WAIT()
     //「ついてこいや」
     _BALLOONWIN_OBJMSG( msg_palpark_first_18, R15R0301_ASSISTANTW_01 )
-    _BALLOONWIN_CLOSE()
+    _BALLOONWIN_CLOSE() //アニメするのでクローズ
     _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_mov_restart )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mov_start3 )
   ENDIF
   _OBJ_ANIME_WAIT()
   //助手「きたか」
   _BALLOONWIN_OBJMSG( msg_palpark_first_03, R15R0301_ASSISTANTW_01 )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_CLOSE() //アニメするのでクローズ
   //助手上向く
   _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_dir_up )
   _OBJ_ANIME_WAIT()
   //助手「こいつ殿堂入りしとるで！」
   _BALLOONWIN_OBJMSG( msg_palpark_first_19, R15R0301_ASSISTANTW_01 )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_CLOSE() //アニメするのでクローズ
   //自機を博士の前に助手はける
   _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_asis_mov_back )
   _OBJ_ANIME_WAIT()
@@ -441,7 +434,7 @@ first_anime_evt:
   _OBJ_ANIME_WAIT()
   //博士「なんどもいっとる・・」
   _BALLOONWIN_OBJMSG_POS( msg_palpark_first_04, R15R0301_PARK, POS_DL )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_CLOSE() //アニメするのでクローズ
   //博士「！」
   _OBJ_ANIME( R15R0301_PARK, anm_gyoe )
   _OBJ_ANIME_WAIT()
@@ -451,28 +444,28 @@ first_anime_evt:
 
   //博士「殿堂入りしとるとな！」☆ギザウィンドウ
   _GIZAWIN_OBJMSG_POS( msg_palpark_first_05, R15R0301_PARK, POS_DEFAULT )
-  _GIZAWIN_CLOSE()
+  _GIZAWIN_CLOSE()  //アニメするのでクローズ
   //博士「ファンタスティック」☆ギザウィンドウ
   _GIZAWIN_OBJMSG_POS( msg_palpark_first_05_b, R15R0301_PARK, POS_DEFAULT )
-  _GIZAWIN_CLOSE()
+  _GIZAWIN_CLOSE()  //アニメするのでクローズ
   //博士「フーーーーー」☆ギザウィンドウ
   _GIZAWIN_OBJMSG_POS( msg_palpark_first_05_c, R15R0301_PARK, POS_DEFAULT )
-  _GIZAWIN_CLOSE()
+  _GIZAWIN_CLOSE()  //アニメするのでクローズ
   //博士乱舞
   _OBJ_ANIME( R15R0301_PARK, anm_spin)
   _OBJ_ANIME_WAIT()
   //博士「えーと」
   _BALLOONWIN_OBJMSG( msg_palpark_first_21, R15R0301_PARK )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_CLOSE() //話し手がかわるのでクローズ
   
   //プレーヤー名をタグ0番にセット
   _PLAYER_NAME( 0 )
   //助手「○○や」
   _BALLOONWIN_OBJMSG( msg_palpark_first_06, R15R0301_ASSISTANTW_01 )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_CLOSE() //話し手がかわるのでクローズ
   //博士「○○くん」
   _BALLOONWIN_OBJMSG( msg_palpark_first_07, R15R0301_PARK )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_CLOSE()  //アニメするのでクローズ
   //助手と会話するため自機右向く
   _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_dir_left )
   _OBJ_ANIME_WAIT()
@@ -480,7 +473,7 @@ first_anime_evt:
   _OBJ_ANIME_WAIT() 
   //助手「手ぶらサイコー」
   _BALLOONWIN_OBJMSG( msg_palpark_first_08, R15R0301_ASSISTANTW_01 )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_CLOSE()  //アニメするのでクローズ
   //自機、助手を上向き
   _OBJ_ANIME( R15R0301_ASSISTANTW_01, anm_dir_up )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_up )
