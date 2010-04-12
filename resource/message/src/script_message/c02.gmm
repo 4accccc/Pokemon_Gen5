@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T12:59:54"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T21:51:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -367,9 +367,9 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『まちに　ついたら
-まず　ポケモンセンター　だよね▼</language>
+まず　ポケモンセンター▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『街に　着いたら
-まず　ポケモンセンター　だよね▼</language>
+まず　ポケモンセンター▼</language>
 	</row>
 
 	<row id="msg_c02_black_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -386,14 +386,14 @@
 シッポウシティの　ジムリーダーは▽
 ノーマルタイプの　つかいて▼
 かくとうタイプの　ポケモンが　いると
-かなり　ゆうりに　なるだろうね▼</language>
+かなり　ゆうり　だろうね▼</language>
 		<language name="JPN_KANJI" width="256">このまま　まっすぐ　進めば
 ポケモンセンター▼
 ついでに　教えておくけど
 シッポウシティの　ジムリーダーは▽
 ノーマルタイプの　使い手▼
 かくとうタイプの　ポケモンが　いると
-かなり　有利に　なるだろうね▼</language>
+かなり　有利だろうね▼</language>
 	</row>
 
 	<row id="msg_c02_boss_01" text-color="#000000,,,,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -790,11 +790,10 @@ C03ジムリーダー</attribute>
 ・主人公、操作可能に</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『じじょうが
-わからないけれど　はくぶつかんを▽
-まもれば　いいんだよね？▼</language>
+		<language name="JPN" width="256">チェレン『とりあえず　はくぶつかんを
+まもれば　いいんだね？▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『事情が　わからないけれど
-博物館を　守れば　いいんだよね？▼</language>
+博物館を　守れば　いいんだね？▼</language>
 	</row>
 
 	<row id="msg_c02_white_04" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
