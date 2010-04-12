@@ -556,7 +556,9 @@ end
   fp_monsno.print( "*/\n")
   fp_monsno.print( "//============================================================================================\n" )
   fp_monsno.print( "\n#pragma once\n" )
-  fp_monsno.print( "#include  \"monsnum_def.h\"\n\n" )
+  fp_monsno.print( "#ifndef __ASM_NO_DEF_\n" )
+  fp_monsno.print( "#include  \"monsnum_def.h\"\n" )
+  fp_monsno.print( "#endif\n\n" )
 
   fp_monsnum.print( "//============================================================================================\n" )
   fp_monsnum.print( "/**\n" )
