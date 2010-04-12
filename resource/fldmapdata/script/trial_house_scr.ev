@@ -56,8 +56,7 @@ EVENT_START ev_tri_house_reception
 
     IF $dl_data_valid == TRUE THEN
       _BALLOONWIN_OBJMSG_POS(dl_data_msg, SCWK_TARGET_OBJID, POS_DL )
-      _YES_NO_WIN( SCWK_ANSWER )
-      _BALLOONWIN_CLOSE()
+      _YES_NO_WIN( SCWK_ANSWER )    //クローズいらず
       IF $SCWK_ANSWER == 0 THEN //ダウンロード挑戦
         $download_flg = TRUE
         _CALL charange
@@ -91,9 +90,8 @@ EVENT_START ev_tri_house_reception
       _BMPMENU_MAKE_LIST( msg_trialhouse_str2, 1 )    //せつめい
       _BMPMENU_MAKE_LIST( msg_trialhouse_str8, 2 )    //ダウンロード
       _BMPMENU_MAKE_LIST( msg_trialhouse_str3, 3 )    //やめる
-       _BMPMENU_START()
-      //ウィンドウ閉じる
-      _BALLOONWIN_CLOSE()
+       _BMPMENU_START()   //クローズいらず
+      
       IF $first_list_ret == EV_WIN_B_CANCEL THEN//キャンセル
         //やめるフラグＯＮ
         $exit = TRUE
@@ -160,9 +158,7 @@ charange:
     _BMPMENU_MAKE_LIST( msg_trialhouse_str4, 0 )    //シングル
     _BMPMENU_MAKE_LIST( msg_trialhouse_str5, 1 )    //ダブル
     _BMPMENU_MAKE_LIST( msg_trialhouse_str3, 2 )    //やめる
-    _BMPMENU_START()
-    //ウィンドウ閉じる
-    _BALLOONWIN_CLOSE()
+    _BMPMENU_START()    //クローズいらず
 
     IF $list_ret == EV_WIN_B_CANCEL THEN  //キャンセル
       //やめるフラグＯＮ
@@ -205,7 +201,7 @@ charange:
   _TH_SET_PLAY_MODE( btl_mode )
   //「早速はじめる」
   _BALLOONWIN_OBJMSG_POS(msg_trialhouse_011, SCWK_TARGET_OBJID, POS_DL )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_CLOSE()//アプリに飛ぶのでクローズ
 
   //手持ちかバトルボックスか選ぶウィンドウ表示(メンバチェック込み)
   _BTL_UTIL_PARTY_SELECT_CALL( regulation, party_sel )
@@ -230,7 +226,7 @@ charange:
 
   //「でははじめるよ」
   _BALLOONWIN_OBJMSG_POS(msg_trialhouse_013, SCWK_TARGET_OBJID, POS_DL )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_CLOSE()   //アニメにつづくのでクローズ
 
   //受付係はける
   _OBJ_ANIME( C04R0901_RECEPTION_01, anm_recep_open )
@@ -268,7 +264,7 @@ charange:
 
     //「おつかれさま」
     _BALLOONWIN_OBJMSG_POS(msg_trialhouse_014, SCWK_TARGET_OBJID, POS_DL )
-    _BALLOONWIN_CLOSE()
+    _BALLOONWIN_CLOSE()   //アプリに飛ぶのでクローズ
 
     _TH_CALC_BTL_RESULT( result_rank, point )
 
@@ -380,7 +376,7 @@ recover_anm:
   _NUMBER( 0, next, 1 )
   //「つぎは○人目」
   _BALLOONWIN_OBJMSG_POS(msg_trialhouse_029, SCWK_TARGET_OBJID, POS_DL )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_CLOSE() //アニメつづくのでクローズ
 
   //自機左向く
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_left )
@@ -403,8 +399,8 @@ download:
   ELSE
     //「特別な検定する?」
     _BALLOONWIN_OBJMSG_POS(msg_trialhouse_023, SCWK_TARGET_OBJID, POS_DL )
-    _YES_NO_WIN( SCWK_ANSWER )
-    _BALLOONWIN_CLOSE()
+    _YES_NO_WIN( SCWK_ANSWER )    //ここではクローズしない
+    
     IF $SCWK_ANSWER == 0 THEN //特別な検定やる
       IF $SCWK_ANSWER == SCR_FIELD_COMM_EXIT_CANCEL THEN
         _RET
@@ -425,7 +421,6 @@ download:
       
       //「ダウンロードしました」
       _BALLOONWIN_OBJMSG_POS(msg_trialhouse_025, SCWK_TARGET_OBJID, POS_DL )
-      _BALLOONWIN_CLOSE()
       //「今すぐ挑戦？」
       _BALLOONWIN_OBJMSG_POS(msg_trialhouse_026, SCWK_TARGET_OBJID, POS_DL )
       _YES_NO_WIN( SCWK_ANSWER )
@@ -440,6 +435,8 @@ download:
         _BALLOONWIN_CLOSE()
       ENDIF
     ELSE                      //特別な検定やらない
+      //クローズ
+      _BALLOONWIN_CLOSE()
       $exit = TRUE
     ENDIF
   ENDIF

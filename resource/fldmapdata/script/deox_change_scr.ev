@@ -38,12 +38,13 @@ EVENT_START ev_deox_change
     //隕石に近づける？
     _SYSWIN_MSG(msg_deoxys_01, POS_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
-    _SYSWIN_CLOSE()
     IF $SCWK_ANSWER == 0 THEN
       //手持ちのデオキシスは2匹以上か？
       IF $DEO_NUM == 1 THEN   //1匹発見
         _GET_PARTY_POS( MONSNO_DEOKISISU, SCWK_ANSWER, SEL_POS )
         IF $SCWK_ANSWER == TRUE THEN
+          //システムウィンドウクローズ
+          _SYSWIN_CLOSE()
           //フォルムチェンジシーケンスコール
           _CALL form_change
         ELSE
@@ -59,6 +60,9 @@ EVENT_START ev_deox_change
           _CALL check_poke
         ENDIF
       ENDIF
+    ELSE      //近づけない
+      //システムウィンドウ閉じておわり
+      _SYSWIN_CLOSE()
     ENDIF
   ENDIF  
 
@@ -66,8 +70,8 @@ EVENT_END
 
 //ポケモンのチェック⇒フォルム変更
 check_poke:
-
-DEFINE_LOCAL SEL_MONS_NO            //選択したポケモンのモンスターナンバー
+{
+  DEFINE_LOCAL SEL_MONS_NO            //選択したポケモンのモンスターナンバー
   //タマゴチェックする
   _CHECK_TEMOTI_EGG( SCWK_ANSWER, SEL_POS )
   IF $SCWK_ANSWER == TRUE THEN
@@ -86,6 +90,7 @@ DEFINE_LOCAL SEL_MONS_NO            //選択したポケモンのモンスターナンバー
       _CALL end_msg
     ENDIF
   ENDIF
+}  
 _RET
 
 //フォルムチェンジ実行

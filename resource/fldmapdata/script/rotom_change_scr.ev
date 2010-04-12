@@ -47,8 +47,7 @@ EVENT_START ev_rotom_change
   ELSE
     //ロトムいれる？
     _SYSWIN_MSG(msg_rotom_02, POS_DOWN )
-    _YES_NO_WIN( SCWK_ANSWER )
-    _SYSWIN_CLOSE()
+    _YES_NO_WIN( SCWK_ANSWER )    //ウィンドウクローズしない
     IF $SCWK_ANSWER == 0 THEN
       //手持ちのロトムは２匹以上か？
       IF $ROTO_NUM == 1 THEN    //1匹
@@ -60,7 +59,7 @@ EVENT_START ev_rotom_change
       ELSE                      //複数発見
           //「ロトム選んで」
           _SYSWIN_MSG(msg_rotom_04, POS_DOWN )
-          _SYSWIN_CLOSE()
+          _SYSWIN_CLOSE() //アプリに飛ぶのでクローズ
           //ポケモン選択
           _SELECT_TEMOTI_POKE( SCWK_ANSWER , SEL_POS , 0 )
           IF $SCWK_ANSWER == TRUE THEN
@@ -140,8 +139,7 @@ select_elec:
     _BMPMENU_MAKE_LIST(msg_rotom_window_05, 5 )          //芝刈り機
     _BMPMENU_MAKE_LIST(msg_rotom_normal, 0 )          //元に戻す(ノーマル)
     _BMPMENU_MAKE_LIST( msg_rotom_cancel, 6 )            //やめる
-    _BMPMENU_START()
-    _SYSWIN_CLOSE()
+    _BMPMENU_START()    //クローズいらず
     
     //やめるを選んだ?
     IF $LIST_SEL_RET == 6 THEN       //やめるを選んだ
@@ -166,11 +164,10 @@ select_elec:
     //変換したフォルムナンバーと選択したロトムのフォルムナンバーを比較
     IF $FORM_NO == $ELEC_TO_FORM_NO   THEN       //同じ
       IF $FORM_NO == 0 THEN     //現在ノーマルフォルム
-        _SYSWIN_MSG(msg_rotom_10, POS_DOWN )      //モーターに入ってないよ
+        _SYSWIN_MSG(msg_rotom_10, POS_DOWN )      //モーターに入ってないよ    ループ先頭に戻るからクローズいらず
       ELSE
-        _SYSWIN_MSG(msg_rotom_08, POS_DOWN )      //既に入ってるよ
+        _SYSWIN_MSG(msg_rotom_08, POS_DOWN )      //既に入ってるよ   ループ先頭に戻るからクローズいらず
       ENDIF
-      _SYSWIN_CLOSE()
     ELSE          //違う
       $EXIT = TRUE
     ENDIF
@@ -179,8 +176,9 @@ select_elec:
   //選んだのが「元に戻る」
   IF $ELEC_TO_FORM_NO == 0 THEN
     _CALL decide_del_skill_norm
-    _SYSWIN_MSG(msg_rotom_09, POS_DOWN )      //モーターからでてきた
-    _SYSWIN_CLOSE()
+    //モーターからでてきたラストメッセージ
+    $END_MSG = msg_rotom_09
+    _CALL end_msg
     $SCWK_ANSWER = TRUE   //ノーマルフォルムへはいつでも戻れるのでチェンジ可
   ELSE
     //忘れる技の選出(SCWK_ANSWER == FALSEでチェンジしない)
@@ -247,8 +245,7 @@ decide_del_skill_norm:
       _TEMOTI_NICK_NAME( 0, SEL_POS )
       _WAZA_NAME( 2, NORM_CHECK_SKILL )
       //「旧固有技を忘れた・・」
-      _SYSWIN_MSG( msg_rotom_waza_08 , POS_DOWN )
-      _SYSWIN_CLOSE()
+      _SYSWIN_MSG( msg_rotom_waza_08 , POS_DOWN )   //msg_rotom_09がラストメッセージなのでクローズいらず
     ENDIF
   ENDIF
 _RET
@@ -289,11 +286,10 @@ decide_del_skill:
       $SCWK_ANSWER = TRUE               //技スロットに空きがあるので、チェンジ可
       //「新固有技を覚えた」
       _WAZA_NAME( 2, NEW_SKILL )
-      _SYSWIN_MSG( msg_rotom_waza_07 , POS_DOWN )
-      _SYSWIN_CLOSE()
+      $END_MSG = msg_rotom_waza_07
+      _CALL end_msg
     ENDIF
   ENDIF
-
 _RET
 
 //技を忘れて、新固有技を覚えるメッセージを表示
@@ -302,8 +298,7 @@ del_skill_msg:
   _WAZA_NAME( 1, OLD_SKILL )
   _WAZA_NAME( 2, NEW_SKILL )
   //「旧固有技を忘れて・・」
-  _SYSWIN_MSG( msg_rotom_waza_06 , POS_DOWN )
-  _SYSWIN_CLOSE()
+  _SYSWIN_MSG( msg_rotom_waza_06 , POS_DOWN )   //クローズいらず
   //「新固有技を覚えた」
   $END_MSG = msg_rotom_waza_07
   _CALL end_msg
@@ -319,14 +314,17 @@ select_del_skill:
     _WAZA_NAME( 1, NEW_SKILL )
     //固有技を覚えたい。4つでいっぱい。技忘れる？
     _SYSWIN_MSG( msg_rotom_waza_01 , POS_DOWN )
-    _YES_NO_WIN( SCWK_ANSWER )
-    _SYSWIN_CLOSE()
+    _YES_NO_WIN( SCWK_ANSWER )  //クローズいらず
     IF $SCWK_ANSWER == 0 THEN   //忘れる
+      //アプリに飛ぶのでクローズ
+      _SYSWIN_CLOSE()
       //技忘れ
       _SELECT_WAZA_TEMOTI_POKE( SCWK_ANSWER ,DEL_SKILL_POS ,SEL_POS ,0 )
       IF $SCWK_ANSWER == FALSE THEN     //忘れる技を選択しなかった
         _CALL stop_del_skill
         IF $SCWK_ANSWER == 0 THEN
+          //ループ終了するのでクローズ
+          _SYSWIN_CLOSE()
           $SCWK_ANSWER = FALSE
           $DECIDE = TRUE          //ループ終了
         ENDIF
@@ -335,18 +333,18 @@ select_del_skill:
         _GET_TEMOTI_WAZA_ID( OLD_SKILL ,SEL_POS ,DEL_SKILL_POS )
         //「選択した技を忘れていい？」
         _SYSWIN_MSG( msg_rotom_waza_04 , POS_DOWN )
-        _YES_NO_WIN( SCWK_ANSWER )
-        _SYSWIN_CLOSE()
+        _YES_NO_WIN( SCWK_ANSWER )    //クローズいらず
         IF $SCWK_ANSWER == 0 THEN     //忘れてOK
           //「ポカン」
-          _SYSWIN_MSG( msg_rotom_waza_05 , POS_DOWN )
-          _SYSWIN_CLOSE()
+          _SYSWIN_MSG( msg_rotom_waza_05 , POS_DOWN )//クローズいらず
           _CALL del_skill_msg
           $SCWK_ANSWER = TRUE
           $DECIDE = TRUE            //ループ終了
         ELSE                          //忘れてはNG
           _CALL stop_del_skill
           IF $SCWK_ANSWER == 0 THEN
+            //ループ終了するのでクローズ
+            _SYSWIN_CLOSE()
             $SCWK_ANSWER = FALSE
             $DECIDE = TRUE          //ループ終了
           ENDIF
@@ -355,6 +353,8 @@ select_del_skill:
     ELSE                        //忘れない
       _CALL stop_del_skill
       IF $SCWK_ANSWER == 0 THEN
+        //ループ終了するのでクローズ
+        _SYSWIN_CLOSE()
         $SCWK_ANSWER = FALSE
         $DECIDE = TRUE          //ループ終了
       ENDIF
@@ -365,6 +365,5 @@ _RET
 //技あきらめる？
 stop_del_skill:
   _SYSWIN_MSG( msg_rotom_waza_02 , POS_DOWN )
-  _YES_NO_WIN( SCWK_ANSWER )
-  _SYSWIN_CLOSE()
+  _YES_NO_WIN( SCWK_ANSWER )    //ループに戻る可能性があるので、クローズしない
 _RET

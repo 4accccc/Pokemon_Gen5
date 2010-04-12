@@ -31,9 +31,8 @@ EVENT_START ev_fossil
     $END_MSG = msg_kaseki_12
     _CALL end_msg
   ELSE
-    //「化石研究している」
+    //「化石研究している」クローズいらず
     _BALLOONWIN_TALKOBJ_MSG( msg_kaseki_01 )
-    _BALLOONWIN_CLOSE()
 
     //復元依頼しているか?
     IF $WK_OTHER_KASEKI_NUM != 0 THEN
@@ -44,10 +43,9 @@ EVENT_START ev_fossil
       _CALL search_fossil           //output:FOSSIL_TYPE_NUM  FOSSIL_ITEM_NO(化石を一種類しか持っていないとき、有効な値が入る)
       //化石持ってるか？
       IF $FOSSIL_TYPE_NUM != 0 THEN    //持ってる
-        //「復元する？」
+        //「復元する？」クローズいらず
         _BALLOONWIN_TALKOBJ_MSG( msg_kaseki_02 )
         _YES_NO_WIN( SCWK_ANSWER )
-        _BALLOONWIN_CLOSE()
         IF $SCWK_ANSWER == 0 THEN     //復元する
           _CALL recover_fossil        //input:FOSSIL_TYPE_NUM io:FOSSIL_ITEM_NO(化石を一種類しか持っていないとき、inputとして使用)
         ELSE                          //復元しない
@@ -159,8 +157,7 @@ select_fossil:
   //やめる
   _BMPMENU_MAKE_LIST( msg_kaseki_select_10, 0 )
 
-  _BMPMENU_START()
-  _BALLOONWIN_CLOSE()
+  _BMPMENU_START()  //クローズいらず
 
   //キャンセルチェック
   IF $LIST_SEL_RET != EV_WIN_B_CANCEL THEN
@@ -213,9 +210,9 @@ get_poke:
 
   //ポケモン名をタグ0にセット
   _MONS_NAME(0, RECOVER_POKE)
-  //「戻りました　これが～です」
+  //「戻りました　これが～です」手持ちが一杯でないときのみクローズ
   _BALLOONWIN_TALKOBJ_MSG( msg_kaseki_07 )
-  _BALLOONWIN_CLOSE()
+  
   //手持ちの数取得
   _GET_PARTY_POKE_COUNT( POKE_NUM, POKECOUNT_MODE_TOTAL )
   IF $POKE_NUM == 6 THEN  //手持ち一杯
@@ -225,6 +222,7 @@ get_poke:
     $END_MSG = msg_kaseki_10
     _CALL end_msg
   ELSE
+    _BALLOONWIN_CLOSE()
     //トレーナー名をタグ0にセット
     _PLAYER_NAME( 0 )
     //ポケモン名をタグ1にセット
