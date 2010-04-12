@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T17:02:56"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T19:19:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="139" right="2004" bottom="977" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -371,17 +371,17 @@
 ・続けてcrowd1_01表示</comment>
 		<attribute name="キャラクター">ゲーチス</attribute>
 		<language name="JPN" width="256">そうなのです！[BE:01:ページ切り替え（クリア）]
-われらが　あるじ　Ｎさまは
-パッケージポケモンと[BE:00:ページ切り替え（行送り）]
-たいとうの　たちばで！[BE:01:ページ切り替え（クリア）]
+われらが　おう　Ｎさまは
+でんせつの　ポケモンと[BE:00:ページ切り替え（行送り）]
+ちからを　あわせ！[BE:01:ページ切り替え（クリア）]
 あたらしい　くにを
 つくろうと　なさっています！[BE:01:ページ切り替え（クリア）]
 これこそ　イッシュの　でんせつ
 えいゆうの　くにづくりの　さいげん！</language>
 		<language name="JPN_KANJI" width="256">そうなのです！[BE:01:ページ切り替え（クリア）]
-われらが　主　Ｎさまは
-パッケージポケモンと[BE:00:ページ切り替え（行送り）]
-対等の　立場で！[BE:01:ページ切り替え（クリア）]
+われらが　王　Ｎさまは
+伝説の　ポケモンと[BE:00:ページ切り替え（行送り）]
+力を　あわせ！[BE:01:ページ切り替え（クリア）]
 新しい　理想の　国を
 つくろうと　なさっています！[BE:01:ページ切り替え（クリア）]
 これこそ　イッシュに　伝わる
@@ -418,7 +418,7 @@ WOMAN2</attribute>
 		<language name="JPN_KANJI" width="256">伝説！</language>
 	</row>
 
-	<row id="msg_c08_sage1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_sage1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてsage1_02a</comment>
 		<attribute name="キャラクター">ゲーチス</attribute>
@@ -430,7 +430,7 @@ WOMAN2</attribute>
 生き物　なのです[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08_sage1_02a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c08_sage1_02a" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてsage1_02b</comment>
 		<language name="JPN" width="256">われわれが　まなぶべき　ところを
@@ -439,7 +439,7 @@ WOMAN2</attribute>
 数多く　持つ　存在なのです[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08_sage1_02b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c08_sage1_02b" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ゲーチスの芝居
 ・続けてcrowd1_02表示</comment>
@@ -613,7 +613,7 @@ WOMAN2</attribute>
 あのときの　おにーちゃん！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08_leader8b_02a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c08_leader8b_02a" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・主人公性別：♀
 ・続けてleader8a_02</comment>
@@ -982,7 +982,7 @@ WOMAN2</attribute>
 家に　いらっしゃるよ</language>
 	</row>
 
-	<row id="msg_c08_gentleman_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_gentleman_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・クリア前</comment>
 		<attribute name="キャラクター">GENTLEMAN</attribute>
@@ -1026,7 +1026,7 @@ WOMAN2</attribute>
 刻みこめば　いいんだよ</language>
 	</row>
 
-	<row id="msg_c08_fighterm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c08_fighterm_01">
 		<comment>♂
 ・クリア前</comment>
 		<attribute name="キャラクター">FIGHTERM</attribute>
@@ -1066,7 +1066,7 @@ WOMAN2</attribute>
 あると　思うんだよね</language>
 	</row>
 
-	<row id="msg_c08_boy2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_boy2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・クリア前</comment>
 		<attribute name="キャラクター">BOY2</attribute>
@@ -1100,7 +1100,7 @@ WOMAN2</attribute>
 だって　かっこいいもん！</language>
 	</row>
 
-	<row id="msg_c08_woman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c08_woman1_01">
 		<comment>♀
 ・クリア前</comment>
 		<attribute name="キャラクター">WOMAN1</attribute>
@@ -1144,7 +1144,7 @@ WOMAN2</attribute>
 認めた　実力者なの！</language>
 	</row>
 
-	<row id="msg_c08_oldman_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_oldman_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・クリア前</comment>
 		<attribute name="キャラクター">OLDMAN</attribute>
@@ -1156,7 +1156,7 @@ WOMAN2</attribute>
 苦しめていた　のか……▼</language>
 	</row>
 
-	<row id="msg_c08_oldman_01w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_oldman_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・WHITEver</comment>
 		<attribute name="キャラクター">OLDMAN</attribute>
@@ -1172,7 +1172,7 @@ WOMAN2</attribute>
 わしと　ポケモンとで　決めるさ　</language>
 	</row>
 
-	<row id="msg_c08_oldman_01b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_oldman_01b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・BLACKver</comment>
 		<attribute name="キャラクター">OLDMAN</attribute>
@@ -1188,7 +1188,7 @@ WOMAN2</attribute>
 すごいことだと　よく　かみしめてね</language>
 	</row>
 
-	<row id="msg_c08_man3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c08_man3_01">
 		<comment>♂
 ・クリア前</comment>
 		<attribute name="キャラクター">MAN３</attribute>
@@ -1202,7 +1202,7 @@ WOMAN2</attribute>
 正しいのか……？　わからん</language>
 	</row>
 
-	<row id="msg_c08_man3_01w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c08_man3_01w">
 		<comment>♂
 ・WHITEver</comment>
 		<attribute name="キャラクター">MAN３</attribute>
@@ -1218,7 +1218,7 @@ WOMAN2</attribute>
 理想を　求めているように……</language>
 	</row>
 
-	<row id="msg_c08_man3_01b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c08_man3_01b">
 		<comment>♂
 ・BLACKver</comment>
 		<attribute name="キャラクター">MAN３</attribute>
