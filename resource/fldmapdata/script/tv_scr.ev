@@ -19,6 +19,9 @@ _EVENT_DATA_END
 EVENT_START ev_tv
 {
   DEFINE_LOCAL msg
+  //テレビ見たレコード加算
+  _ADD_RECORD( RECID_WATCH_TV, 1 )
+
   _TV_GET_MSG(msg)
   _SYSWIN_MSG( msg, POS_DOWN )
   _LAST_KEYWAIT()
