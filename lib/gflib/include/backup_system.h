@@ -422,11 +422,12 @@ extern BOOL GFL_BACKUP_DirectFlashLoad(u32 src, void * dst, u32 len);
  * @param   gmdataid		  ロードする対象のID
  * @param   side_a_or_b		0:A面からロード　　1:B面からロード
  * @param   dst		        データ展開先
+ * @param   load_size     ロードするバイトサイズ
  *
  * @retval  BOOL		TRUE:ロード成功　FALSE:ロード失敗
  */
 //==================================================================
-extern BOOL GFL_BACKUP_Page_FlashLoad(GFL_SAVEDATA *sv, GFL_SVDT_ID gmdataid, BOOL side_a_or_b, void *dst);
+extern BOOL GFL_BACKUP_Page_FlashLoad(GFL_SAVEDATA *sv, GFL_SVDT_ID gmdataid, BOOL side_a_or_b, void *dst, u32 load_size);
 
 
 
