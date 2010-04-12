@@ -84,7 +84,7 @@ EVENT_START   ev_scene_d12r0102
   //戦闘
   {
     //トレーナー戦呼び出し
-		_TRAINER_BTL_SET( TRID_SCIENTISTW_01, 0 )
+		_TRAINER_BTL_SET( TRID_HAKAIM1_32, 0 )
     //敗戦チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -196,7 +196,6 @@ check_evt_lock:
   ELSE                            //持っていない
     $SCWK_ANSWER = FALSE
   ENDIF
-  $SCWK_ANSWER = TRUE   //todo
 _RET
 
 //--------------------------------------------------------------
