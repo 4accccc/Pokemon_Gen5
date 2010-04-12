@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-04-01T17:53:40" source="poster01.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-04-12T13:16:01" source="poster01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-04-01T17:53:40" source="poster01.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-04-12T13:16:01" source="poster01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -20,7 +20,7 @@
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="1 1"
+	compress_node="merge" node_size="2 1"
 	compress_material="on" material_size="1 1"
 	output_texture="used"
 	force_full_weight="off"
@@ -57,7 +57,7 @@
 </tex_palette_array>
 
 <material_array size="1">
-	<material index="0" name="lambert2"
+	<material index="0" name="_lambert2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -118,7 +118,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="pPlane1" kind="mesh"
+	<node index="0" name="_pPlane1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
