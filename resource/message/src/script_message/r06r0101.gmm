@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-11T21:57:37"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T20:03:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1405" top="264" right="2106" bottom="884" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="526"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="539"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="693"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -320,68 +320,452 @@
 いえるのでしょうか？</language>
 	</row>
 
-	<row id="msg_r06r0101_planter_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r06r0101_assistantm3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・四季イベント
+・はじめて話しかけたときのみ
+・次回はassistantm3_02から開始
+
+→assistantm3_02</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+助手♂</attribute>
+		<language name="JPN" width="256">われわれは　きせつに　よる
+しぜんの　さまざな　へんかを▽
+けんきゅう　しています▼
+このあたりに　[1:01:ポケモン種族名:0]
+という　ポケモンが　いますよね？▼
+[1:01:ポケモン種族名:0]は　きせつによって
+そのすがたを　へんかさせる　という
+たいへんに　きょうみぶかい▽
+とくちょうを　もっているのですよ▼
+われわれとしては　このポケモンを
+けんきゅうすることで　きせつや▽
+きこうと　ポケモンの　かかわりに
+せまりたいと　かんがえています▼
+そのため　きおん　しつどなどなどを▽
+じゆうじざいに　コントロールし▽
+きせつを　ちょうえつする
+きせきの　くうちょうシステムを▽
+かいはつ　どうにゅう　したんです！▼
+……と▼
+ここまでは　よいのですけれども
+われわれ　いそがしくて　ですね▼
+[1:01:ポケモン種族名:0]を　つかまえにいく
+タイミングが　なかなか　ないのです▼
+そこで　おねがい　なのですが
+[1:01:ポケモン種族名:0]を　つかまえて▽
+その　すがたが　かわったら▽
+ボクの　ところまで　つれてきて▽
+いただけませんか？▼
+あなたの　[1:01:ポケモン種族名:0]の
+すがたが　へんかしたら　われわれも▽
+[1:01:ポケモン種族名:0]を　つかまえて
+その　きせつの　すがたの▽
+[1:01:ポケモン種族名:0]を　ここで▽
+そだててみようと　おもうんです▼</language>
+		<language name="JPN_KANJI" width="256">我々は　季節に　寄る
+自然の　様々な　変化を▽
+研究しています▼
+このあたりに　[1:01:ポケモン種族名:0]
+という　ポケモンが　いますよね？▼
+[1:01:ポケモン種族名:0]は　季節によって
+その姿を　変化させる　という
+大変に　興味深い▽
+特徴を　もっているのですよ▼
+我々としては　このポケモンを
+研究することで　季節や▽
+気候と　ポケモンの　関わりに
+迫りたいと　考えています▼
+そのため　気温　湿度などなどを▽
+自由自在に　コントロールし▽
+季節を　超越する
+奇跡の　空調システムを▽
+開発　導入したんです！▼
+……と▼
+ここまでは　よいのですけれども
+我々　忙しくて　ですね▼
+[1:01:ポケモン種族名:0]を　捕まえにいく
+タイミングが　なかなか　ないのです▼
+そこで　お願い　なのですが
+[1:01:ポケモン種族名:0]を　捕まえて▽
+その　姿が　変わったら▽
+ボクの　ところまで　連れてきて▽
+いただけませんか？▼
+あなたの　[1:01:ポケモン種族名:0]の
+姿が　変化したら　我々も▽
+[1:01:ポケモン種族名:0]を　捕まえて
+その　季節の　姿の▽
+[1:01:ポケモン種族名:0]を　ここで▽
+育ててみようと　思うんです▼</language>
+	</row>
+
+	<row id="msg_r06r0101_assistantm3_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・四季イベント
+
+はい↓
+季節が春（春フォルムの場合）
+assistantm3_03
+
+はい↓
+季節が夏（夏フォルムの場合）
+assistantm3_04
+
+はい↓
+季節が春（秋フォルムの場合）
+assistantm3_05
+
+はい↓
+季節が春（冬フォルムの場合）
+assistantm3_06
+
+すでにフォルムを見せている場合↓
+assistantm3_06
+
+いいえ↓
+assistantm3_07</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+助手♂</attribute>
+		<language name="JPN" width="256">いかがでしょうか？
+よければ　あなたの　つれている▽
+[1:01:ポケモン種族名:0]の　すがたを▽
+はいけんさせて　いただけませんか？▼</language>
+		<language name="JPN_KANJI" width="256">いかがでしょうか？
+よければ　あなたの　連れている▽
+[1:01:ポケモン種族名:0]の　姿を▽
+拝見させて　いただけませんか？▼</language>
+	</row>
+
+	<row id="msg_r06r0101_assistantm3_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・四季イベント
+
+はい↓
+季節が春（春フォルムの場合）
+assistantm3_03
+
+はい↓
+季節が夏（夏フォルムの場合）
+assistantm3_04
+
+はい↓
+季節が春（秋フォルムの場合）
+assistantm3_05
+
+はい↓
+季節が春（冬フォルムの場合）
+assistantm3_06
+
+すでにフォルムを見せている場合↓
+assistantm3_06
+
+いいえ↓
+assistantm3_07</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+助手♂</attribute>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]の　はるの　すがたですね
+この　からだの　けの　ツヤと　いろ……▼
+これは　まるで　おはなばたけ
+では　ありませんか！▼
+いやいや　ありがとうございました
+さっそく　ボクも　[1:01:ポケモン種族名:0]を▽
+つかまえに　いってきますよ</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]の　春の　姿ですね
+この　体の　毛の　ツヤと　色……▼
+これは　まるで　お花畑
+では　ありませんか！▼
+いやいや　ありがとうございました
+さっそく　ボクも　[1:01:ポケモン種族名:0]を▽
+捕まえに　いってきますよ</language>
+	</row>
+
+	<row id="msg_r06r0101_assistantm3_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・四季イベント
+・イベント終了</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+助手♂</attribute>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]の　なつの　すがたですね
+この　からだの　けの　ツヤと　いろ……▼
+これは　まるで　しばふの
+ようでは　ありませんか！▼
+いやいや　ありがとうございました
+さっそく　ボクも　[1:01:ポケモン種族名:0]を▽
+つかまえに　いってきますよ</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]の　夏の　姿ですね
+この　体の　毛の　ツヤと　色……▼
+これは　まるで　芝生の
+ようでは　ありませんか！▼
+いやいや　ありがとうございました
+さっそく　ボクも　[1:01:ポケモン種族名:0]を▽
+捕まえに　いってきますよ</language>
+	</row>
+
+	<row id="msg_r06r0101_assistantm3_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・四季イベント
+・イベント終了</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+助手♂</attribute>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]の　あきの　すがたですね
+この　からだの　けの　ツヤと　いろ……▼
+これは　まるで　おちばの
+じゅうたんでは　ありませんか！▼
+いやいや　ありがとうございました
+さっそく　ボクも　[1:01:ポケモン種族名:0]を▽
+つかまえに　いってきますよ</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]の　秋の　姿ですね
+この　体の　毛の　ツヤと　色……▼
+これは　まるで　落ち葉の
+じゅうたんでは　ありませんか！▼
+いやいや　ありがとうございました
+さっそく　ボクも　[1:01:ポケモン種族名:0]を▽
+つかまえに　いってきますよ</language>
+	</row>
+
+	<row id="msg_r06r0101_assistantm3_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・四季イベント
+・イベント終了</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+助手♂</attribute>
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]の　ふゆの　すがたですね
+この　からだの　けの　ツヤと　いろ……▼
+これは　まるで　せつげんの
+ようでは　ありませんか！▼
+いやいや　ありがとうございました
+さっそく　ボクも　[1:01:ポケモン種族名:0]を▽
+つかまえに　いってきますよ</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]の　冬の　姿ですね
+この　体の　毛の　ツヤと　いろ……▼
+これは　まるで　雪原の
+ようでは　ありませんか！▼
+いやいや　ありがとうございました
+さっそく　ボクも　[1:01:ポケモン種族名:0]を▽
+つかまえに　いってきますよ</language>
+	</row>
+
+	<row id="msg_r06r0101_assistantm3_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・四季イベント
+・イベント終了</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+助手♂</attribute>
+		<language name="JPN" width="256">ありがとうございます！▼
+ですが　そのきせつの　すがたの
+[1:01:ポケモン種族名:0]は　すでに▽
+つかまえてますよ</language>
+		<language name="JPN_KANJI" width="256">ありがとうございます！▼
+ですが　その季節の　姿の
+[1:01:ポケモン種族名:0]は　すでに▽
+捕まえていますよ</language>
+	</row>
+
+	<row id="msg_r06r0101_assistantm3_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・イベント終了</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+助手♂</attribute>
+		<language name="JPN" width="256">そうですか……▼
+われわれの　けんきゅうに
+きょうりょくして　いただけると▽
+たいへん　たすかるのですが……　</language>
+		<language name="JPN_KANJI" width="256">そうですか……▼
+我々の　研究に
+協力して　いただけると▽
+大変　助かるのですが……　</language>
+	</row>
+
+	<row id="msg_r06r0101_assistantm3_09" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・四季イベント
+・すべてのフォルムを見せてから話しかけ
+・アイテム入手処理
+　No未定「未定」
+
+イベント終了</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+助手♂</attribute>
+		<language name="JPN" width="256">あ！　あなたは！▼
+おかげさまで　すべての　すがたの
+[1:01:ポケモン種族名:0]を▽
+つかまえることが　できました▼
+これで　ポケモンと　きせつや
+きこうの　かんけいを　じっくり▽
+けんきゅう　することができます▼
+ありがとう　ございました▼
+たいしたものでは　ありませんが
+うけとってください▼</language>
+		<language name="JPN_KANJI" width="256">あ！　あなたは！▼
+お陰さまで　すべての　姿の
+[1:01:ポケモン種族名:0]を▽
+捕まえることが　できました▼
+これで　ポケモンと　季節や
+気候の　関係を　じっくり▽
+研究　することができます▼
+ありがとう　ございました▼
+大したものでは　ありませんが
+受け取ってください▼</language>
+	</row>
+
+	<row id="msg_r06r0101_assistantm3_10" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+
+・四季イベント
+・アイテム入手後はここから開始
+
+・イベント終了</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+助手♂</attribute>
+		<language name="JPN" width="256">４つの　きせつの　[1:01:ポケモン種族名:0]の
+すがたが　どうじに　みられるのは▽
+せかいで　ここだけ　ですからね▼
+いまじゃ　ちょっとした　ウチの
+マスコットに　なってますよ</language>
+		<language name="JPN_KANJI" width="256">４つの　季節の　[1:01:ポケモン種族名:0]の
+姿が　同時に　見られるのは▽
+世界で　ここだけ　ですからね▼
+今じゃ　ちょっとした　ウチの
+マスコットに　なってますよ</language>
+	</row>
+
+	<row id="msg_r06r0101_poke01_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>・四季イベント
+・msg_r06r0101_assistantm3_04の
+　イベント終了後に一度
+　zone変更して戻ってくると出現
+　</comment>
+		<attribute name="キャラ指定">バンビーナ（春）</attribute>
+		<language name="JPN" width="256">きょん！</language>
+		<language name="JPN_KANJI" width="256">きょん！</language>
+	</row>
+
+	<row id="msg_r06r0101_poke02_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>・四季イベント
+msg_r06r0101_assistantm3_05の
+　イベント終了後に一度
+　zone変更して戻ってくると出現
+　</comment>
+		<attribute name="キャラ指定">バンビーナ（夏）</attribute>
+		<language name="JPN" width="256">きょん！　きょんきょん！</language>
+		<language name="JPN_KANJI" width="256">きょん！　きょんきょん！</language>
+	</row>
+
+	<row id="msg_r06r0101_poke03_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>・四季イベント
+msg_r06r0101_assistantm3_06の
+　イベント終了後に一度
+　zone変更して戻ってくると出現
+　</comment>
+		<attribute name="キャラ指定">バンビーナ（秋）</attribute>
+		<language name="JPN" width="256">きょーん！　きょーん！</language>
+		<language name="JPN_KANJI" width="256">きょーん！　きょーん！</language>
+	</row>
+
+	<row id="msg_r06r0101_poke04_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>・四季イベント
+msg_r06r0101_assistantm3_07の
+　イベント終了後に一度
+　zone変更して戻ってくると出現
+　</comment>
+		<attribute name="キャラ指定">バンビーナ（冬）</attribute>
+		<language name="JPN" width="256">きょん……</language>
+		<language name="JPN_KANJI" width="256">きょん……</language>
+	</row>
+
+	<row id="msg_r06r0101_assistantw1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+
+
+GRID X=7 Y=３に配置</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+助手♀</attribute>
+		<language name="JPN" width="256">となりの　ケースの　なかの
+おんどや　しつどを　きかいで▽
+コントロールしてるの</language>
+		<language name="JPN_KANJI" width="256">となりの　ケースの　なかの
+おんどや　しつどを　きかいで▽
+コントロールしてるの</language>
+	</row>
+
+	<row id="msg_r06r0101_planter_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・春用</comment>
 		<attribute name="キャラ指定">栽培ケース</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ガラスに　さわると　ほんのりつめたい▼
+ケースの　なかでは　しょくぶつが
+かわいい　みを　つけてる！</language>
+		<language name="JPN_KANJI" width="256">ガラスに　触ると　ほんのり冷たい▼
+ケースの　中では　植物が
+可愛い　実を　つけてる！</language>
 	</row>
 
 	<row id="msg_r06r0101_planter_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・夏用</comment>
 		<attribute name="キャラ指定">栽培ケース</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ガラスに　さわると　とても　つめたい▼
+ケースの　なかの　しょくぶつは
+はっぱが　ちって　かれている……</language>
+		<language name="JPN_KANJI" width="256">ガラスに　触ると　とても　冷たい▼
+ケースの　中の　植物は
+葉っぱが　散って　枯れている……</language>
 	</row>
 
 	<row id="msg_r06r0101_planter_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・秋用</comment>
 		<attribute name="キャラ指定">栽培ケース</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ガラスに　さわると　すこしあたたかい▼
+ケースの　なかでは　しょくぶつの
+ちいさな　めが　でてる！</language>
+		<language name="JPN_KANJI" width="256">ガラスに　触ると　少し暖かい▼
+ケースの　中では　植物の
+小さな　芽が　でてる！</language>
 	</row>
 
 	<row id="msg_r06r0101_planter_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・冬用</comment>
 		<attribute name="キャラ指定">栽培ケース</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ガラスに　さわると　すこし　あつい▼
+ケースの　なかは　しょくぶつの
+おおきな　はっぱで　いっぱいだ！</language>
+		<language name="JPN_KANJI" width="256">ガラスに　触ると　少し　熱い▼
+ケースの　中は　植物の
+大きな　葉っぱ　いっぱいだ！</language>
 	</row>
 
 	<row id="msg_r06r0101_heatgauge_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ
 ・春用</comment>
 		<attribute name="キャラ指定">温度計</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">６ばんどうろの　きおん　１６ど</language>
+		<language name="JPN_KANJI" width="256">６番道路の気温　１６度</language>
 	</row>
 
 	<row id="msg_r06r0101_heatgauge_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ
 ・夏用</comment>
 		<attribute name="キャラ指定">温度計</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">６ばんどうろの　きおん　３４ど</language>
+		<language name="JPN_KANJI" width="256">６番道路の気温　３４度</language>
 	</row>
 
 	<row id="msg_r06r0101_heatgauge_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ
 ・秋用</comment>
 		<attribute name="キャラ指定">温度計</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">６ばんどうろの　きおん　１１ど</language>
+		<language name="JPN_KANJI" width="256">６番道路の気温　１１度</language>
 	</row>
 
 	<row id="msg_r06r0101_heatgauge_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ
 ・冬用</comment>
 		<attribute name="キャラ指定">温度計</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">６ばんどうろの　きおん　ー２ど</language>
+		<language name="JPN_KANJI" width="256">６番道路の気温　ー２度</language>
 	</row>
 
 	<flowchart-group-list>
