@@ -103,6 +103,7 @@ typedef struct{
   OSTick TickStart;
   OSTick TickEnd;
   OSTick TickTotal;
+  OSTick TickTotalTT[2];
   u16 Count;
   u16 AvePer;
 }AVERAGE_PRM;
@@ -929,12 +930,15 @@ void DEBUG_PerformanceEndTick(int id)
 
   sub = prm->TickEnd - prm->TickStart;
   prm->TickTotal += sub;
+  prm->TickTotalTT[prm->Count%2] += sub;
   prm->Count++;
 
   if (prm->Count > AVE_COUNT)
   {
     OSTick ave;
-    int ave_sec;
+    OSTick ave_top;
+    OSTick ave_tail;
+    int ave_sec,ave_sec_top,ave_sec_tail;
     int per;
     ave = (prm->TickTotal / AVE_COUNT);
     ave_sec = OS_TicksToMicroSeconds(ave);
@@ -943,9 +947,20 @@ void DEBUG_PerformanceEndTick(int id)
     prm->AvePer = per;
 
     NOZOMU_Printf("ave_sec %d\n",ave_sec);
+    {
+      ave_top = (prm->TickTotalTT[0] / (AVE_COUNT/2));
+      ave_sec_top = OS_TicksToMicroSeconds(ave_top);
+      ave_tail = (prm->TickTotalTT[1] / (AVE_COUNT/2));
+      ave_sec_tail = OS_TicksToMicroSeconds(ave_tail);
+
+      NOZOMU_Printf("ave_sec_top %d\n",ave_sec_top);
+      NOZOMU_Printf("ave_sec_tail %d\n",ave_sec_tail);
+    }
 
     prm->Count = 0;
     prm->TickTotal = 0;
+    prm->TickTotalTT[0] = 0;
+    prm->TickTotalTT[1] = 0;
   }
   //•`‰æ
   DrawStress(METER_TYPE_END, PERFORMANCE_ID_MAIN, prm->AvePer );
