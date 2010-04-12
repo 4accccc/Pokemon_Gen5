@@ -243,7 +243,6 @@ BOOL SymbolSave_GetSymbolPokemon(SYMBOL_SAVE_WORK *symbol_save, u32 no, SYMBOL_P
   return TRUE;
 }
 
-
 //==================================================================
 /**
  * フリーゾーンに空きがあるか調べる
@@ -365,3 +364,60 @@ void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save,
   SymbolSave_Local_Encode(symbol_save);
 }
 
+//==================================================================
+/**
+ * シンボル不正チェック：指定したシンボルポケモンがフラッシュに記録されているか調べる
+ *
+ * @param   ctrl		
+ * @param   spoke		
+ * @param   heap_id		
+ * @param   pp_mode   TRUE:PokemonParamから逆引きして判定に使用出来る値だけを参照して不正チェック
+ *
+ * @retval  int		    
+ *
+ * 直接フラッシュからロードしてきて、比較を行います
+ * シンボルポケモンの新規追加はPDWで行われる為、ゲーム内で登場しているシンボルポケモンのデータは
+ * 必ずフラッシュ上に存在しているはず、という前提のチェックです
+ */
+//==================================================================
+int SymbolSave_CheckFlashLoad(SAVE_CONTROL_WORK *ctrl, const SYMBOL_POKEMON *spoke, HEAPID heap_id, BOOL pp_mode)
+{
+  BOOL load_ret, result = FALSE;
+  SYMBOL_SAVE_WORK *load_symbol;
+  int i, side;
+  enum{
+    _SIDE_A,
+    _SIDE_B,
+    _SIDE_NUM,
+  };
+  
+  load_symbol = GFL_HEAP_AllocClearMemory(heap_id, sizeof(SYMBOL_SAVE_WORK));
+  for(side = 0; side < _SIDE_NUM; side++){
+    load_ret = SaveControl_PageFlashLoad(
+      ctrl, GMDATA_ID_SYMBOL, side, load_symbol, sizeof(SYMBOL_SAVE_WORK));
+    if(load_ret == TRUE){
+      SymbolSave_Local_Decode(load_symbol);
+      for(i = 0; i < SYMBOL_POKE_MAX; i++){
+        if(pp_mode == TRUE){
+          if(load_symbol->symbol_poke[i].monsno == spoke->monsno
+              && load_symbol->symbol_poke[i].form_no == spoke->form_no){
+            result = TRUE;
+            break;
+          }
+        }
+        else{
+          if(GFL_STD_MemComp(&load_symbol->symbol_poke[i], spoke, sizeof(SYMBOL_POKEMON)) == 0){
+            result = TRUE;
+            break;
+          }
+        }
+      }
+    }
+    if(result == TRUE){
+      break;  //※check　B面のみに存在していた場合、ちゃんとチェックが正常に動いているか確認
+    }
+  }
+  GFL_HEAP_FreeMemory(load_symbol);
+  
+  return result;
+}

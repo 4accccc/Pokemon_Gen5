@@ -489,6 +489,24 @@ void SaveControl_GetActualSize(SAVE_CONTROL_WORK *ctrl, u32 *actual_size, u32 *t
 
 //==================================================================
 /**
+ * 指定IDの部分だけをフラッシュから直接ロードする
+ *
+ * @param   sv            
+ * @param   gmdataid		  ロードする対象のID
+ * @param   side_a_or_b		0:A面からロード　　1:B面からロード
+ * @param   dst		        データ展開先
+ * @param   load_size     ロードするバイトサイズ
+ *
+ * @retval  BOOL		TRUE:ロード成功　FALSE:ロード失敗
+ */
+//==================================================================
+BOOL SaveControl_PageFlashLoad(SAVE_CONTROL_WORK *ctrl, GFL_SVDT_ID gmdataid, BOOL side_a_or_b, void *dst, u32 load_size)
+{
+  return GFL_BACKUP_Page_FlashLoad(ctrl->sv_normal, gmdataid, side_a_or_b, dst, load_size);
+}
+
+//==================================================================
+/**
  * 外部セーブデータのロード
  *
  * @param   ctrl		    セーブデータ管理ワークへのポインタ
@@ -731,6 +749,7 @@ static void _OutsideSave_SaveErase(void)
   GFL_BACKUP_DirectFlashSave(OUTSIDE_MM_MYSTERY_MIRROR, &erase_magic_number, sizeof(u32));
   OS_TPrintf("== outside Erase finish ==\n");
 }
+
 
 
 //==============================================================================

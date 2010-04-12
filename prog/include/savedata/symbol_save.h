@@ -141,6 +141,7 @@ static inline u32 SymbolSave_CheckFreeZoneSpace(
 //  ツール関数
 //--------------------------------------------------------------
 extern SYMBOL_ZONE_TYPE SYMBOLZONE_GetZoneTypeFromNumber(u32 no);
+extern int SymbolSave_CheckFlashLoad(SAVE_CONTROL_WORK *ctrl, const SYMBOL_POKEMON *spoke, HEAPID heap_id, BOOL pp_mode);
 
 //==============================================================================
 //  外部データ

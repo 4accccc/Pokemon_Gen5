@@ -44,7 +44,7 @@
 //==============================================================================
 static MMDL * getPokeMMdl( SCRCMD_WORK * work, u16 obj_id );
 static void getFrontSymPoke( SCRCMD_WORK * work, SYMBOL_POKEMON * sympoke );
-static POKEMON_PARAM * createPokemon( SCRCMD_WORK * work, MMDL * mmdl, HEAPID heapID );
+static POKEMON_PARAM * createPokemon( SCRCMD_WORK * work, MMDL * mmdl, HEAPID heapID, SYMBOL_POKEMON *sympoke );
 static void sendDataChange( SCRCMD_WORK * work );
 
 
@@ -67,18 +67,18 @@ VMCMD_RESULT EvCmdSymbolPokeBattle( VMHANDLE *core, void *wk )
   SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
   u16 obj_id = SCRCMD_GetVMWorkValue(core,work);
   u16* ret_wk = SCRCMD_GetVMWork(core,work);  //結果を返すワーク
-
+  SYMBOL_POKEMON sympoke;
 
   MMDL * mmdl = getPokeMMdl( work, obj_id );
   if ( mmdl )
   {
-    POKEMON_PARAM * pp = createPokemon( work, mmdl, HEAPID_PROC );
+    POKEMON_PARAM * pp = createPokemon( work, mmdl, HEAPID_PROC, &sympoke );
     if ( pp )
     {
       SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
       GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
       FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-      GMEVENT * event = EVENT_SymbolPokeBattle( gsys, fieldmap, pp, ret_wk, HEAPID_PROC );
+      GMEVENT * event = EVENT_SymbolPokeBattle( gsys, fieldmap, pp, sympoke, ret_wk, HEAPID_PROC );
       SCRIPT_CallEvent( scw, event );
     }
   }
@@ -176,13 +176,14 @@ VMCMD_RESULT EvCmdSymbolMapSetMonsName( VMHANDLE * core, void * wk )
   SCRCMD_WORK *work = wk;
   u16 obj_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 idx = SCRCMD_GetVMWorkValue( core, wk );
-
+  SYMBOL_POKEMON sympoke;
+  
   MMDL * mmdl = getPokeMMdl( work, obj_id );
 
   if ( mmdl )
   {
     HEAPID     heap_id = SCRCMD_WORK_GetHeapID( work );
-    POKEMON_PARAM * pp = createPokemon( work, mmdl, heap_id );
+    POKEMON_PARAM * pp = createPokemon( work, mmdl, heap_id, &sympoke );
     if ( pp )
     {
       SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
@@ -329,13 +330,12 @@ static void getFrontSymPoke( SCRCMD_WORK * work, SYMBOL_POKEMON * sympoke )
  * @brief シンボルポケモンデータからポケモン生成
  */
 //--------------------------------------------------------------
-static POKEMON_PARAM * createPokemon( SCRCMD_WORK * work, MMDL * mmdl, HEAPID heapID )
+static POKEMON_PARAM * createPokemon( SCRCMD_WORK * work, MMDL * mmdl, HEAPID heapID, SYMBOL_POKEMON *sympoke )
 {
     GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
-    SYMBOL_POKEMON sympoke;
     POKEMON_PARAM * pp;
-    SYMBOLPOKE_GetParam( &sympoke, mmdl );
-    pp = SYMBOLPOKE_PP_Create( HEAPID_PROC, gamedata, &sympoke );
+    SYMBOLPOKE_GetParam( sympoke, mmdl );
+    pp = SYMBOLPOKE_PP_Create( HEAPID_PROC, gamedata, sympoke );
     return pp;
 }
 

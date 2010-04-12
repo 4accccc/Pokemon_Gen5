@@ -54,8 +54,14 @@ typedef struct{
   PDCRET_PARAM *pdcret;
   POKEMON_PARAM *pp;
   BTL_FIELD_SITUATION bfs;
+  SYMBOL_POKEMON sympoke;
   HEAPID heap_id;
   u16 *result_ptr;    ///<捕まえたかどうかを返すためのポインタ
+  
+  u16 pp_crc;    ///<不正チェック用のCRC
+  u32 wrong_first;
+  u32 wrong_second;
+  u32 wrong_therd;
 }EVENT_SYMBOL_BATTLE;
 
 //--------------------------------------------------------------
@@ -90,13 +96,62 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk );
 
 
 
+//--------------------------------------------------------------
+/**
+ * 不正チェック：SYMBOL_POKEMONを対象に不正チェック
+ *
+ * @param   heap_id		
+ * @param   gamedata		
+ * @param   sympoke		
+ *
+ * @retval  inline BOOL		TRUE:正常
+ */
+//--------------------------------------------------------------
+static inline BOOL _CheckWrongSympoke(HEAPID heap_id, GAMEDATA *gamedata, const SYMBOL_POKEMON *sympoke)
+{
+  BOOL ret;
+  ret = SymbolSave_CheckFlashLoad(GAMEDATA_GetSaveControlWork(gamedata), sympoke, heap_id, FALSE);
+  if(!ret){
+    OS_TPrintf("symbol wrong!!\n");
+  }
+  return ret;
+}
+
+//--------------------------------------------------------------
+/**
+ * 不正チェック：POKEMON_PARAMを対象に不正チェック
+ *
+ * @param   heap_id		
+ * @param   gamedata		
+ * @param   pp		
+ *
+ * @retval  inline BOOL		
+ */
+//--------------------------------------------------------------
+static inline BOOL _CheckWrongPokePara(HEAPID heap_id, GAMEDATA *gamedata, POKEMON_PARAM *pp)
+{
+  SYMBOL_POKEMON spoke;
+  BOOL ret;
+  
+  spoke.monsno = PP_Get( pp, ID_PARA_monsno, NULL);
+  spoke.form_no = PP_Get( pp, ID_PARA_form_no, NULL);
+  ret = SymbolSave_CheckFlashLoad(GAMEDATA_GetSaveControlWork(gamedata), &spoke, heap_id, TRUE);
+  if(!ret){
+    OS_TPrintf("symbol pp wrong!!\n");
+  }
+  return ret;
+}
+
+
+
+
 //==================================================================
 /**
  * シンボルポケモン：バトル
  *
  * @param   gsys		
  * @param   fieldWork		
- * @param   spoke		      出現させるシンボルポケモンデータへのポインタ
+ * @param   spoke		      出現させるシンボルポケモンデータ(不正チェック用に参照のみ)
  * @param   result_ptr		結果代入先(TRUE:シンボルポケモンを捕獲した。　FALSE:捕獲しなかった)
  * @param   heap_id		    
  *
@@ -104,7 +159,7 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk );
  */
 //==================================================================
 GMEVENT * EVENT_SymbolPokeBattle(
-    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, POKEMON_PARAM *pp, u16 *result_ptr, HEAPID heap_id)
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, POKEMON_PARAM *pp, SYMBOL_POKEMON sympoke, u16 *result_ptr, HEAPID heap_id)
 {
 	GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
   EVENT_SYMBOL_BATTLE *esb;
@@ -121,6 +176,12 @@ GMEVENT * EVENT_SymbolPokeBattle(
   esb->heap_id = heap_id;
   
   esb->pp = pp;
+  esb->sympoke = sympoke;
+  esb->pp_crc = GFL_STD_CrcCalc( pp, POKETOOL_GetWorkSize() );
+  if(!_CheckWrongSympoke(heap_id, gamedata, &sympoke)){
+    esb->sympoke.monsno = MONSNO_MAX; //でたらめになるパラメータをセット
+  }
+
 
   BTL_FIELD_SITUATION_SetFromFieldStatus( &esb->bfs, gamedata, fieldWork );
 
@@ -159,6 +220,9 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
     (*seq)++;
     break;
   case SEQ_ENCEFF:
+    if(!_CheckWrongPokePara(esb->heap_id, gamedata, esb->pp)){
+      esb->sympoke.form_no = 76; //でたらめになるパラメータをセット
+    }
     ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(esb->fieldWork), event, SYMBOL_ENCEFF_ID);
     (*seq)++;
     break;
@@ -193,6 +257,12 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
     {
       //PDC_RESULTの結果取得
       PDC_RESULT pdc_result = PDC_GetResult( esb->pdc_setup );
+
+      if(_CheckWrongPokePara(esb->heap_id, gamedata, esb->pp) == FALSE
+          || _CheckWrongSympoke(esb->heap_id, gamedata, &esb->sympoke) == FALSE){
+        pdc_result = FALSE;
+      }
+
       if(pdc_result == PDC_RESULT_CAPTURE){
         *(esb->result_ptr) = TRUE;
       }
