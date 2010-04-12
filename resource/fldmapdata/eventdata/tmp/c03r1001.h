@@ -19,5 +19,6 @@
 #define ZONE_C03R1001_EVB_H
 
 #define BGID_C03R1001_ELEVATOR            0
+#define BGID_C03R1001_ELEVATOR_FRONT      1
 
 #endif //ZONE_C03R1001_EVB_H

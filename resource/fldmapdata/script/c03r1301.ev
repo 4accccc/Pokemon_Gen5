@@ -23,6 +23,7 @@ _EVENT_DATA    ev_c03r1301_sunglasses_01
 _EVENT_DATA    ev_c03r1301_boy4_01
 _EVENT_DATA    ev_c03r1301_lady_01
 _EVENT_DATA    ev_init_c03r1301
+_EVENT_DATA    ev_pos_c03r1301_sunglasses_02
 _EVENT_DATA_END
 
 /************************************************************/
@@ -36,18 +37,22 @@ INIT_EVENT_START	ev_init_c03r1301
 		_OBJ_POS_CHANGE( C03R1301_SUNGLASSES_01, 9, 0, 2, DIR_DOWN )
 
 	ELSE
-		_OBJ_POS_CHANGE( C03R1301_SUNGLASSES_01, 5, 0, 2, DIR_DOWN )
+		_OBJ_POS_CHANGE( C03R1301_SUNGLASSES_01, 7, 0, 2, DIR_DOWN )
 	
 	ENDIF
 
 INIT_EVENT_END
 
+//性別格納変数定義
+DEFINE_LOCAL LWK_SEX
+//話しかけ方向定義
+DEFINE_LOCAL LWK_DIR
 /**************************************************************/
 /*	C03R1301	ボディーガード								*/
 /**************************************************************/
 EVENT_START   ev_c03r1301_sunglasses_01
 	_TALK_OBJ_START()
-
+{
 	//C03側から来て通る
 	IF $WK_SCENE_C03R1301_SUNGLASSES == 0 THEN
 	
@@ -59,85 +64,52 @@ EVENT_START   ev_c03r1301_sunglasses_01
 		//「はい」
 		IF $SCWK_ANSWER == SCR_YES THEN
 			
-			//性別格納変数定義
-			DEFINE_LOCAL LWK_SEX
 			//主人公性別取得
 			_GET_MY_SEX ( LWK_SEX )
-			
-			//話しかけ方向取得
-			DEFINE_LOCAL LWK_DIR
-			_PLAYER_DIR_GET(LWK_DIR)
 			
 			//男
 			IF $LWK_SEX == PM_MALE THEN
 			
 				//サングラスその場歩き
-				IF $LWK_DIR == DIR_LEFT THEN
-					_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_stey_step_left )
-					_OBJ_ANIME_WAIT()
-				ELSE
-					_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_stey_step_def )
-					_OBJ_ANIME_WAIT()
-				ENDIF
+				_CALL ev_c03r1301_bodycheck
 			
 				//よし！通っていいぞ！
+				_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_02 , C03R1301_SUNGLASSES_01 )
 				_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_03 , C03R1301_SUNGLASSES_01 )
 				_BALLOONWIN_CLOSE()
 				
 				//階段わきにどく
-				
-				IF $LWK_DIR == DIR_LEFT THEN
-					_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_ok_left )
-					_OBJ_ANIME_WAIT()
-				ELSE
-					_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_ok_def )
-					_OBJ_ANIME_WAIT()
-				ENDIF
-				
-				//==================================//
-					
-				//C03R1301ボディチェック完了（外に出ると初期化）
-				$WK_SCENE_C03R1301_SUNGLASSES = 1
-				
-				//==================================//
-			
+				_CALL ev_c03r1301_moveright
+
 			//女
 			ELSE
 				
 				//サングラスその場歩き
-				IF $LWK_DIR == DIR_LEFT THEN
-					_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_stey_step_left )
-					_OBJ_ANIME_WAIT()
-				ELSE
-					_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_stey_step_def )
-					_OBJ_ANIME_WAIT()
-				ENDIF
-				
+				_CALL ev_c03r1301_bodycheck
+			
 				//よし！通っていいぞ！
 				_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_03 , C03R1301_SUNGLASSES_01 )
 				_BALLOONWIN_CLOSE()
 				
 				//階段わきにどく
+				_CALL ev_c03r1301_moveright
 				
-				IF $LWK_DIR == DIR_LEFT THEN
-					_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_ok_left )
-					_OBJ_ANIME_WAIT()
-				ELSE
-					_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_ok_def )
-					_OBJ_ANIME_WAIT()
-				ENDIF
-				
-				//==================================//
-					
-				//ボディチェック完了（外に出ると初期化）
-				$WK_SCENE_C03R1301_SUNGLASSES = 1
-				
-				//==================================//
 			
 			ENDIF
 		
+			//==================================//
+						
+			//ボディチェック完了（外に出ると初期化）
+			$WK_SCENE_C03R1301_SUNGLASSES = 1
+			
+			//==================================//
+		
 		//「いいえ」
 		ELSE
+		
+			//ボディガード下を再度見る
+			_CALL ev_c03r1301_lookdown
+			
 			_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_05 , C03R1301_SUNGLASSES_01 )
 			_BALLOONWIN_CLOSE()
 		
@@ -150,15 +122,30 @@ EVENT_START   ev_c03r1301_sunglasses_01
 			_BALLOONWIN_CLOSE()
 	
 	ENDIF
-	
+}
 EVENT_END
 
 //--------------------------------------------------------------
-//	ボディガード階段わきにどく
+//	ボディガードその場歩き（右）
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_c03r1301_sunglasses_stey_step_left
+_ANIME_LABEL	anm_c03r1301_sunglasses_stey_step_right
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ボディガードその場歩き（右）
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c03r1301_sunglasses_stey_step_left
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ボディガードその場歩き（下）
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c03r1301_sunglasses_stey_step_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 
 //--------------------------------------------------------------
 //	ボディガード階段わきにどく
@@ -173,7 +160,7 @@ _ANIME_LABEL	anm_c03r1301_sunglasses_stey_step_def
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c03r1301_sunglasses_ok_left
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -182,10 +169,154 @@ _ANIME_LABEL	anm_c03r1301_sunglasses_ok_left
 //	ボディガード階段わきにどく
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c03r1301_sunglasses_ok_def
-	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+
+/**************************************************************/
+/*	C03R1301	ボディーガード（操作盤前POS）				*/
+/**************************************************************/
+EVENT_START   ev_pos_c03r1301_sunglasses_02
+{
+	//主人公の方に振り向く
+	_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_stey_step_left )
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_c03r1301_player_look_right )
+	_OBJ_ANIME_WAIT()
+	
+	//ここを通るか質問
+	_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_01,C03R1301_SUNGLASSES_01)
+	_YES_NO_WIN( SCWK_ANSWER )
+	_BALLOONWIN_CLOSE()
+	
+	//「はい」
+	IF $SCWK_ANSWER == SCR_YES THEN
+			
+		//主人公性別取得
+		_GET_MY_SEX ( LWK_SEX )
+		
+		//男
+		IF $LWK_SEX == PM_MALE THEN
+			
+			//ボディチェック
+			_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_stey_step_left )
+			_OBJ_ANIME_WAIT()
+		
+			//よし！通っていいぞ！
+			_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_02 , C03R1301_SUNGLASSES_01 )
+			_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_03 , C03R1301_SUNGLASSES_01 )
+			_BALLOONWIN_CLOSE()
+			
+			//階段わきにどく
+			_CALL ev_c03r1301_moveright
+				
+		//女
+		ELSE
+			
+			//ボディチェック
+			_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_stey_step_left )
+			_OBJ_ANIME_WAIT()
+		
+			//よし！通っていいぞ！
+			_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_03 , C03R1301_SUNGLASSES_01 )
+			_BALLOONWIN_CLOSE()
+			
+			//階段わきにどく
+			_CALL ev_c03r1301_moveright
+			
+			ENDIF
+		
+			//==================================//
+					
+			//ボディチェック完了（外に出ると初期化）
+			$WK_SCENE_C03R1301_SUNGLASSES = 1
+			
+			//==================================//
+		
+		//「いいえ」
+		ELSE
+			//ボディガード下を再度見る
+			_CALL ev_c03r1301_lookdown
+					
+			_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_05 , C03R1301_SUNGLASSES_01 )
+			_BALLOONWIN_CLOSE()
+		
+		ENDIF
+}
+EVENT_END
+
+/**************************************************************/
+/*CALL：話しかけた方向によってアニメを分岐（ボディチェック）   */
+/**************************************************************/
+ev_c03r1301_bodycheck:
+	//話しかけ方向取得
+	_PLAYER_DIR_GET(LWK_DIR)
+	
+	//サングラスその場歩き
+	IF $LWK_DIR == DIR_LEFT THEN
+		_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_stey_step_right )
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_DIR == DIR_RIGHT THEN
+		_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_stey_step_left )
+		_OBJ_ANIME_WAIT()
+	ELSE
+		_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_stey_step_down )
+		_OBJ_ANIME_WAIT()
+	ENDIF
+_RET
+
+/**************************************************************/
+/*CALL：話しかけた方向によってアニメを分岐（右にどく）        */
+/**************************************************************/
+ev_c03r1301_moveright:
+	//話しかけ方向取得
+	_PLAYER_DIR_GET(LWK_DIR)
+	
+	//右に移動
+	IF $LWK_DIR == DIR_LEFT THEN
+		_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_ok_left )
+		_OBJ_ANIME_WAIT()
+	ELSE
+		_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_ok_def )
+		_OBJ_ANIME_WAIT()
+	ENDIF
+_RET
+
+/**************************************************************/
+/*CALL：話しかけた方向によってアニメを分岐（ボディチェック）   */
+/**************************************************************/
+ev_c03r1301_lookdown:
+	//話しかけ方向取得
+	_PLAYER_DIR_GET(LWK_DIR)
+	
+	//サングラス下以外から話しかけられた時は下を見る
+	IF $LWK_DIR != DIR_UP THEN
+		_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_look_down )
+		_OBJ_ANIME_WAIT()
+	ENDIF
+_RET
+//--------------------------------------------------------------
+//	ボディガード操作盤のほうを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c03r1301_sunglasses_look_left
+	_ANIME_DATA	AC_MARK_GYOE,0
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	主人公ボディガードのほうを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c03r1301_player_look_right
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	ボディガード下のほうを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c03r1301_sunglasses_look_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*	C03R1301	boy4										*/

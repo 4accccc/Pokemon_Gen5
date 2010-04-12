@@ -120,14 +120,14 @@ EVENT_START		ev_pos_c03r0301_cleaningm_01
 	//会長退場02
 	_OBJ_ANIME( C03R0301_CLEANINGM_01 , anm_cleaningm_bye02 )
 	_OBJ_ANIME_WAIT()
-	
-	//会長OBJ非表示
-	_OBJ_DEL( C03R0301_CLEANINGM_01 )
-	
+
 	//ドア閉じる
 	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
 	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
 	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+	
+	//会長OBJ非表示
+	_OBJ_DEL( C03R0301_CLEANINGM_01 )
 	
 	//自機にカメラを戻す
 	_CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
@@ -196,7 +196,6 @@ _ANIME_LABEL	anm_cleaningm_come_x8
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_cleaningm_bye01_x6
 	_ANIME_DATA	AC_WALK_U_8F,6
-	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
@@ -205,7 +204,7 @@ _ANIME_LABEL	anm_cleaningm_bye01_x6
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_cleaningm_bye01_x7
 	_ANIME_DATA	AC_WALK_U_8F,6
-	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
@@ -214,7 +213,7 @@ _ANIME_LABEL	anm_cleaningm_bye01_x7
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_cleaningm_bye01_x8
 	_ANIME_DATA	AC_WALK_U_8F,6
-	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
@@ -222,6 +221,6 @@ _ANIME_LABEL	anm_cleaningm_bye01_x8
 //	会長：退場02
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_cleaningm_bye02
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
