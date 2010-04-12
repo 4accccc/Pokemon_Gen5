@@ -126,6 +126,7 @@ EVENT_START		ev_c05gym0101_leader
 
 		//ヤーコンメッセージ
 		_BALLOONWIN_OBJMSG( msg_c05gym0101_leader_04 , C05GYM0101_LEADER_01 )
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
 		//ジム内ストッパーOBJ削除
