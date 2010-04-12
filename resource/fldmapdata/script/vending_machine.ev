@@ -47,9 +47,7 @@ EVENT_START ev_vending_machine01
     _BMPMENU_MAKE_LIST( msg_vender_select_02, 2 )    //サイコソーダ
     _BMPMENU_MAKE_LIST( msg_vender_select_03, 3 )    //ミックスオレ
     _BMPMENU_MAKE_LIST( msg_vender_select_04, 0 )    //やめる
-    _BMPMENU_START()
-    //ウィンドウ閉じる
-    _SYSWIN_CLOSE()
+    _BMPMENU_START()    //クローズいらず
 
     IF $select_item == EV_WIN_B_CANCEL THEN     //キャンセル
       //「やめた」

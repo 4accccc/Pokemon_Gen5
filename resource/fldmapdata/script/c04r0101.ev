@@ -171,8 +171,7 @@ easy_talk_loop:
     _BMPMENU_MAKE_LIST( msg_touroku__win_05, 4 )  //一番になったとき
     _BMPMENU_MAKE_LIST( msg_touroku__win_04, 0 )  //おしえない
 
-    _BMPMENU_START()
-    _BALLOONWIN_CLOSE()   //ウィンドウ閉じる
+    _BMPMENU_START()  //クローズいらず
     //キャンセルチェック
     IF $list_ret != EV_WIN_B_CANCEL THEN
       IF $list_ret != 0 THEN
@@ -197,7 +196,7 @@ easy_talk_loop:
         ENDSWITCH
 
         _BALLOONWIN_OBJMSG_POS( msg , SCWK_TARGET_OBJID, POS_DL )
-        _BALLOONWIN_CLOSE()
+        _BALLOONWIN_CLOSE() //アプリに飛ぶのでクローズ
         //簡易会話アプリ
         {
           _MAP_FADE_BLACK_OUT()
@@ -212,9 +211,8 @@ easy_talk_loop:
         IF $SCWK_ANSWER == TRUE THEN
           //「他にも教えて」
           _BALLOONWIN_OBJMSG_POS( msg_touroku_07 , SCWK_TARGET_OBJID, POS_DL )
-          _YES_NO_WIN( SCWK_ANSWER )
+          _YES_NO_WIN( SCWK_ANSWER )  //クローズいらず
           IF $SCWK_ANSWER != 0 THEN   //教えない。終了
-            _BALLOONWIN_CLOSE() //ウィンドウ閉じる
             $SCWK_ANSWER = TRUE
             $exit = TRUE    //終了
           ENDIF

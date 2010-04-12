@@ -36,8 +36,7 @@ EVENT_START ev_id_present
     //「交換してる?」
     _BALLOONWIN_TALKOBJ_MSG( msg_id_present_02 )
   ENDIF
-  _YES_NO_WIN( SCWK_ANSWER )
-  _BALLOONWIN_CLOSE()
+  _YES_NO_WIN( SCWK_ANSWER )    //クローズいらず
 
   IF $SCWK_ANSWER == 0 THEN   //はい
     _CALL search
@@ -60,13 +59,10 @@ search:
 
   //「いいですね」
   _BALLOONWIN_TALKOBJ_MSG( msg_id_present_03 )
-  _BALLOONWIN_CLOSE()
-
   //「検索中・・・」
   _BALLOONWIN_TALKOBJ_MSG( msg_id_present_03a )
   //検索コマンド
   _SEARCH_POKEID_NUM( ResultNum )
-  _BALLOONWIN_CLOSE()
 
   //数字セット
   _NUMBER( 0, ResultNum, 2 )
@@ -94,7 +90,6 @@ search:
       $ResultMsg = msg_id_present_06
     ENDIF
     _BALLOONWIN_TALKOBJ_MSG( ResultMsg )
-    _BALLOONWIN_CLOSE()
 
     _CALL get_item
 
@@ -162,10 +157,10 @@ get_item_common:
       ENDIF
       //「プレゼント」
       _BALLOONWIN_TALKOBJ_MSG( GetMsg )
-      _BALLOONWIN_CLOSE()
+      _BALLOONWIN_CLOSE()   //アイテム手に入れるのでクローズ
       $ItemGet = TRUE
       //アイテム取得
-      _ADD_ITEM(ItemNo, 1, SCWK_ANSWER)
+      _ITEM_EVENT_KEYWAIT( ItemNo, 1 )
       //取得フラグON
       _FLAG_SET( CheckFlg )
     ENDIF

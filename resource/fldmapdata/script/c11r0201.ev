@@ -120,7 +120,7 @@ elevator_common:
   _BMPMENU_MAKE_LIST( msg_un_elevator_03, 2 )
   _BMPMENU_START()
 
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_CLOSE()   //この後メッセージが無いのでクローズ
 //  _SYSWIN_CLOSE()
 
   //キャンセルチェック

@@ -26,8 +26,7 @@ DEFINE_LOCAL END_MSG            // 最後のメッセージＩＤ
 EVENT_START ev_namechange
     _TALK_OBJ_START()
     _BALLOONWIN_TALKOBJ_MSG( msg_namechange_01 )
-    _YES_NO_WIN( SCWK_ANSWER )
-    _BALLOONWIN_CLOSE()
+    _YES_NO_WIN( SCWK_ANSWER )  //クローズいらず
 
     IF $SCWK_ANSWER == 1 THEN
       //終了
@@ -42,7 +41,7 @@ EVENT_END
 select_poke:
     //「どのポケモンをうらなう？」
     _BALLOONWIN_TALKOBJ_MSG( msg_namechange_02 )
-    _BALLOONWIN_CLOSE()
+    _BALLOONWIN_CLOSE() //アプリに飛ぶのでクローズ
 
     //ポケモン選択
     _SELECT_TEMOTI_POKE( SCWK_ANSWER , SEL_POS , 0 )
@@ -74,8 +73,7 @@ check_poke:
         _CALL end_msg
       ELSE
         _BALLOONWIN_TALKOBJ_MSG( msg_namechange_03 )
-        _YES_NO_WIN( SCWK_ANSWER )
-        _BALLOONWIN_CLOSE()
+        _YES_NO_WIN( SCWK_ANSWER )  //クローズいらず
 
         IF $SCWK_ANSWER == 1 THEN
           //終了
@@ -83,7 +81,7 @@ check_poke:
         ELSE
           //「どんなニックネームにしようかな」
           _BALLOONWIN_TALKOBJ_MSG( msg_namechange_04 )
-          _BALLOONWIN_CLOSE()
+          _BALLOONWIN_CLOSE() //アプリに飛ぶのでクローズ
           _CALL input_name
         ENDIF  
       ENDIF
