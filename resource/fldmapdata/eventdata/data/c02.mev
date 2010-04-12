@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/26 21:30:05
+#save date:2010/04/12 15:49:58
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02.wms
 #SECTION START:OBJ_EVENT
@@ -18,7 +18,7 @@ C02_ACCORDION_01
 #OBJ CODE Number
 ACCORDION
 #MOVE CODE Number
-MV_DMY
+MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
