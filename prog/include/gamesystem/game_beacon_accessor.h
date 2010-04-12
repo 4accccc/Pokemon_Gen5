@@ -71,6 +71,7 @@ extern u8 GAMEBEACON_Get_Hobby(const GAMEBEACON_INFO *info);
 extern void GAMEBEACON_Get_IntroductionPms(const GAMEBEACON_INFO *info, PMS_DATA *dest_pms);
 extern u8 GAMEBEACON_Get_ResearchTeamRank(const GAMEBEACON_INFO *info);
 extern void GAMEBEACON_Get_FavoriteColor(GXRgb *dest_buf, const GAMEBEACON_INFO *info);
+extern u8 GAMEBEACON_Get_FavoriteColorIndex(const GAMEBEACON_INFO *info);
 extern u32 GAMEBEACON_Get_TrainerID(const GAMEBEACON_INFO *info);
 extern u8 GAMEBEACON_Get_TrainerView(const GAMEBEACON_INFO *info);
 extern u8 GAMEBEACON_Get_Sex(const GAMEBEACON_INFO *info);

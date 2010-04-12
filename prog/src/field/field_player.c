@@ -1384,6 +1384,21 @@ void FIELD_PLAYER_GetNoGridLocation( const FIELD_PLAYER* cp_player, RAIL_LOCATIO
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ＮＯＧＲＩＤ　方向のロケーションを取得
+ *
+ *	@param	cp_player
+ *	@param	dir
+ *	@param	p_location 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_GetDirNoGridLocation( const FIELD_PLAYER* cp_player, u16 dir, RAIL_LOCATION* p_location )
+{
+  GF_ASSERT( cp_player->nogridwk );
+  FIELD_PLAYER_NOGRID_GetDirLocation( cp_player->nogridwk, dir, p_location );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  NOGRIDワーク  レールワークの座標を取得
  *
  *	@param	cp_player プレイヤーワーク

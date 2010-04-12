@@ -642,6 +642,20 @@ void GAMEBEACON_Get_FavoriteColor(GXRgb *dest_buf, const GAMEBEACON_INFO *info)
   *dest_buf = OS_GetFavoriteColor(info->favorite_color_index);
 }
 
+//----------------------------------------------------------------------------
+/**
+ * お気に入りの色インデックスを取得する
+ *
+ * @param   info        ビーコン情報へのポインタ
+ *
+ *	@return 色インデックス  0-15
+ */
+//-----------------------------------------------------------------------------
+u8 GAMEBEACON_Get_FavoriteColorIndex(const GAMEBEACON_INFO *info)
+{
+  return info->favorite_color_index;
+}
+
 //==================================================================
 /**
  * トレーナーIDを取得する

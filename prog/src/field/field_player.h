@@ -261,6 +261,7 @@ extern FIELD_RAIL_WORK* FIELD_PLAYER_GetNoGridRailWork( const FIELD_PLAYER *fld_
 // Location
 extern void FIELD_PLAYER_SetNoGridLocation( FIELD_PLAYER* p_player, const RAIL_LOCATION* cp_location );
 extern void FIELD_PLAYER_GetNoGridLocation( const FIELD_PLAYER* cp_player, RAIL_LOCATION* p_location );
+extern void FIELD_PLAYER_GetDirNoGridLocation( const FIELD_PLAYER* cp_player, u16 dir, RAIL_LOCATION* p_location );
 
 // RailPos
 extern void FIELD_PLAYER_GetNoGridPos( const FIELD_PLAYER* cp_player, VecFx32* p_pos );

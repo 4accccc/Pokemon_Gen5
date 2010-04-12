@@ -604,6 +604,20 @@ void FIELD_PLAYER_NOGRID_GetLocation( const FIELD_PLAYER_NOGRID* cp_player, RAIL
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  Dirのロケーションを取得
+ *
+ *	@param	cp_player
+ *	@param	dir
+ *	@param	p_location 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_PLAYER_NOGRID_GetDirLocation( const FIELD_PLAYER_NOGRID* cp_player, u16 dir, RAIL_LOCATION* p_location )
+{
+  MMDL_GetRailDirLocation( cp_player->p_mmdl, dir, p_location );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  ノーグリッドマッププレイヤー　position取得
  *
  *	@param	cp_player     プレイヤーワーク
