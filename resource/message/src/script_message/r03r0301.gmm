@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T17:59:36"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T21:31:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -299,10 +299,10 @@
 ・続けてhakaim1_01</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]　きをつけて！▼
-こいつら　はなしが　つうじないよ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]　気をつけて！▼
-こいつら　話が　通じないよ▼</language>
+		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！▼
+こいつら　はなしが　つうじないね▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！▼
+こいつら　話が　通じないね▼</language>
 	</row>
 
 	<row id="msg_r03r0301_hakaim1_01">
@@ -345,12 +345,12 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『さすがだね　[1:00:トレーナー名:0]▼
+		<language name="JPN" width="256">チェレン『さすが　[1:00:トレーナー名:0]▼
 さあ　あのこから　とりあげた
-ポケモンを　かえしてください▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『さすがだね　[1:00:トレーナー名:0]▼
+ポケモンを　かえしなよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『さすが　[1:00:トレーナー名:0]▼
 さあ　あの子から　取り上げた
-ポケモンを　返してください▼</language>
+ポケモンを　返しなよ▼</language>
 	</row>
 
 	<row id="msg_r03r0301_hakaim2_01">
@@ -414,13 +414,12 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]▼
-こちらの　コンビネーションで
-かれらが　まちがっていることを▽
-しょうめい　しよう▼</language>
+ぼくとの　コンビネーションで
+かれらの　まちがいを▽
+しょうめい　するよ▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]▼
-こちらの　コンビネーションで
-彼らが　間違っていることを▽
-証明しよう▼</language>
+ぼくとの　コンビネーションで
+かれらの　間違いを　証明するよ▼</language>
 	</row>
 
 	<row id="msg_r03r0301_hakaim2_03">
@@ -444,10 +443,16 @@
 ・続けてhakaiw1_02</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『どんな　りゆう　でも
-ひとのモノを　とったら　ドロボウです▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『どんな　理由でも
-ひとのモノを　とったら　ドロボウです▼</language>
+		<language name="JPN" width="256">チェレン『……やれやれ
+メンドーくさいな▼
+どんな　りゆうが　あろうと
+ひとの　ポケモンを　とって▽
+いいわけ　ないだろ？▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……やれやれ
+面倒くさいな▼
+どんな理由が　あろうと
+人の　ポケモンを　盗って▽
+いいわけ　ないだろ？▼</language>
 	</row>
 
 	<row id="msg_r03r0301_hakaiw1_02">
@@ -469,10 +474,10 @@
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……なぜ　トレーナーが
 ポケモンを　くるしめて　いるのか▽
-ちょっと　りかい　できないんだけど▼</language>
+まったく　りかい　できないね！▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……なぜ　トレーナーが
 ポケモンを　苦しめて　いるのか▽
-ちょっと　理解できないんだけど▼</language>
+まったく　理解できないね！▼</language>
 	</row>
 
 	<row id="msg_r03r0301_hakaim1_03">
