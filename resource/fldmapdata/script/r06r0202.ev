@@ -32,6 +32,7 @@ EVENT_START   ev_pos_r06r0202_oldman1_01
 	//POSによって、移動する
 	DEFINE_LOCAL	LWK_POSX
 	DEFINE_LOCAL	LWK_POSZ
+	DEFINE_LOCAL	LWK_DIR
 
 	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ ) //自機座標取得
 		
@@ -39,21 +40,28 @@ EVENT_START   ev_pos_r06r0202_oldman1_01
 	_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_common_gyoe)
 	_OBJ_ANIME_WAIT()
 	
+	//上向き以外でイベントに入った場合、上を向く
+	_PLAYER_DIR_GET( LWK_DIR )
+	IF$LWK_DIR != 0 THEN
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
+		_OBJ_ANIME_WAIT()
+	ENDIF
+	
 	//主人公を一歩押し戻す
 	//主人公が押し戻される
 	IF $LWK_POSX == 17 THEN	
 		_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_oldman1_push_01_17)
-		_TIME_WAIT(16)
+		_TIME_WAIT(40)
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_pushed_01)
 		_OBJ_ANIME_WAIT()
 	ELSIF $LWK_POSX == 18 THEN
 		_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_oldman1_push_01_18)
-		_TIME_WAIT(16)
+		_TIME_WAIT(24)
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_pushed_01)
 		_OBJ_ANIME_WAIT()
 	ELSIF $LWK_POSX == 19 THEN
 		_OBJ_ANIME(R06R0202_OLDMAN1_01,anm_oldman1_push_01_19)
-		_TIME_WAIT(16)
+		_TIME_WAIT(8)
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_pushed_01)
 		_OBJ_ANIME_WAIT()
 	ENDIF

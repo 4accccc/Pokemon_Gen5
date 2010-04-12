@@ -494,12 +494,12 @@ EVENT_START   ev_debug_murakami
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_09, 9 )	//C02ライバル　ポケセン誘導
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_10, 10 )	//C02　N戦
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_11, 11 )	//R02ランニングシューズ入手
-//		_BMPMENU_MAKE_LIST( msg_debug_murakami_12, 12 )	//R02のサポート戦
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_12, 12 )	//R02のサポート戦
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_13, 13 )	//電気石の洞穴/ダークトリニティとN
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_14, 14 )	//電気石の洞穴/ダークトリニティ
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_15, 15 )	//電気石の洞穴/サポート博士①
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_16, 16 )	//リュウラセンの塔が揺れる１階
-//		_BMPMENU_MAKE_LIST( msg_debug_murakami_17, 17 )	//８番道路のサポート戦
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_17, 17 )	//８番道路のサポート戦
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_18, 18 )	//C02盗難イベント
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_19, 19 )	//テスト用
 		_BMPMENU_MAKE_LIST( msg_debug_00, 100 )	//やめる
@@ -702,12 +702,15 @@ EVENT_START   ev_debug_murakami
 		
 			$WK_SCENE_R08 = 0
 		
-		//テスト用
+
 		ELSIF $SCWK_TEMP1 == 18 THEN		
-		_MAP_CHANGE( ZONE_ID_C02GYM0202, 5, 14, DIR_UP )
+			_MAP_CHANGE( ZONE_ID_C02GYM0202, 5, 14, DIR_UP )
 
+		//テスト用
 		ELSIF $SCWK_TEMP1 == 19 THEN
-
+			$WK_SCENE_R06R0202 = 0
+			_MAP_CHANGE( ZONE_ID_R06R0202, 18, 17, DIR_UP )
+			
 		ELSE
 		ENDIF
 		
