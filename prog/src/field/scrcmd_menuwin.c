@@ -2064,27 +2064,37 @@ BOOL SCREND_CheckEndSpWin( SCREND_CHECK *end_check, int *seq )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdMsgWinClose( VMHANDLE *core, void *wk )
 {
+  BOOL close;
   SCRCMD_WORK *work = wk;
+
+  close = FALSE;
   
   if( SCREND_CHK_CheckBit(SCREND_CHK_WIN_OPEN) ){
     sysWin_Close( work );
+    close = TRUE;
   }
   
   if( SCREND_CHK_CheckBit(SCREND_CHK_PLAINWIN_OPEN) ){
     plainWin_Close( work );
+    close = TRUE;
   }
   
   if( SCREND_CHK_CheckBit(SCREND_CHK_BGWIN_OPEN) ){
     bgWin_Close( work );
+    close = TRUE;
   }
   
   if( SCREND_CHK_CheckBit(SCREND_CHK_SPWIN_OPEN) ){
     spWin_Close( work );
+    close = TRUE;
   }
 
   if( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) ){
     balloonWin_Close( core, work );
+    close = TRUE;
   }
+
+  GF_ASSERT_MSG(close,"ウィンドウクローズを行いませんでした");
  
   return VMCMD_RESULT_SUSPEND;
 }
