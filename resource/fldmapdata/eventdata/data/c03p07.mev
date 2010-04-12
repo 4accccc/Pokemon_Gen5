@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/11 21:00:17
+#save date:2010/04/12 17:21:10
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p07.wms
 #SECTION START:OBJ_EVENT
@@ -264,7 +264,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C03P07_BUSINESSMAN1_01
 #OBJ CODE Number
-VETERANM
+BUSINESSMAN
 #MOVE CODE Number
 MV_RND
 #EVENT TYPE Number
@@ -295,7 +295,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C03P07_BUSINESSMAN2_01
 #OBJ CODE Number
-VETERANM
+BUSINESSMAN
 #MOVE CODE Number
 MV_RND
 #EVENT TYPE Number
@@ -326,7 +326,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 C03P07_OL1_01
 #OBJ CODE Number
-VETERANM
+OL
 #MOVE CODE Number
 MV_RND
 #EVENT TYPE Number

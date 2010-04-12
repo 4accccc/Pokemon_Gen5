@@ -289,9 +289,13 @@ EVENT_START	ev_pos_c09r0501_champion_02
     DEFAULT
 		//正面なので処理なし
     ENDSWITCH
-	
+
+	_OBJ_ANIME( C09R0501_CHAMPION_02, anm_champion_hair )
+	_OBJ_ANIME_WAIT()
+
 	//初回話しかけかチェック
 	IF FLAG_OFF( FE_C09R0501_CHAMPION ) THEN
+	
 		//初回会話
 		_BALLOONWIN_OBJMSG( msg_c09r0501_champion_10, C09R0501_CHAMPION_02 )
 		_MSGWIN_CLOSE()
@@ -395,6 +399,13 @@ _ANIME_LABEL	anm_vs_champion_player_walk_up_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_vs_champion_player_walk_up_02
 	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	チャンピオン：髪揺れ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_champion_hair
+	_ANIME_DATA	AC_CHAMPION_ACT0,1
 	_ANIME_DATA	ACMD_END,0
 
 /************************************************************/

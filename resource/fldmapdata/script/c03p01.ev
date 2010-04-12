@@ -22,6 +22,8 @@
 _EVENT_DATA		ev_c03p01_dancer_01
 _EVENT_DATA		ev_c03p01_dancer_02
 _EVENT_DATA		ev_c03p01_dancer_03
+_EVENT_DATA		ev_bg_c03p01_sign_01
+_EVENT_DATA		ev_c03p01_oldman1_01
 _EVENT_DATA_END
 
 
@@ -574,4 +576,18 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c03p01_dancer_03
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p01_dancer3_01 )
+EVENT_END
+
+/**************************************************************/
+/*			T04		看板									  */
+/**************************************************************/
+EVENT_START		ev_bg_c03p01_sign_01
+	_EASY_BGWIN_MSG( msg_c03p01_sign_01, TYPE_POST)	//簡易メッセージＢＧ用
+EVENT_END
+
+/**************************************************************/
+/*			C03CT	OLDMAN1									  */
+/**************************************************************/
+EVENT_START		ev_c03p01_oldman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p01_oldman1_01 )
 EVENT_END

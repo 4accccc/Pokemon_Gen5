@@ -652,11 +652,25 @@ EVENT_START		ev_c01gym0101_leader1b_01
 			
 		ENDIF
 	//ジムバッジ入手後の場合
-	ELSE	
-		//もし　サンヨウシティの　ジムリーダーが
-		_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_12 , C01GYM0101_LEADER1B_01 )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+	ELSE
+	
+		//ゲームクリア前なら
+		IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
+		
+			//もし　サンヨウシティの　ジムリーダーが
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_12 , C01GYM0101_LEADER1B_01 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+			
+		//ゲームクリア後なら
+		ELSE
+		
+			//……ききましたよ　Ｎのしろの　こと
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_end_01b , C01GYM0101_LEADER1B_01 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		
+		ENDIF
 	
 	ENDIF
 	
@@ -787,11 +801,24 @@ EVENT_START		ev_c01gym0101_leader1a_01
 
 	//ジムバッジ入手後の場合
 	ELSE
+
+		//ゲームクリア前なら
+		IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
 		
-		//わざマシンは　なんどだって　つかえると　いうことは
+			//わざマシンは　なんどだって　つかえると　いうことは
 			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_11 , C01GYM0101_LEADER1A_01 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
+			
+		//ゲームクリア後なら
+		ELSE
+		
+			//おっ！　おまえ！
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_end_01a , C01GYM0101_LEADER1A_01 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		
+		ENDIF
 	
 	ENDIF
 		
@@ -914,11 +941,24 @@ EVENT_START		ev_c01gym0101_leader1c_01
 		ENDIF
 
 	//ジムバッジ入手後の場合
-	ELSE	
-		//ぼくたち　イッシュちほう　では
+	ELSE
+		//ゲームクリア前なら
+		IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN
+		
+			//ぼくたち　イッシュちほう　では
 			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_10 , C01GYM0101_LEADER1C_01 )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
+			
+		//ゲームクリア後なら
+		ELSE
+		
+			//ぼくたち　イッシュちほう　では
+			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_end_01 , C01GYM0101_LEADER1C_01 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		
+		ENDIF
 	
 	ENDIF
 	

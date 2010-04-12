@@ -386,6 +386,12 @@ _ANIME_LABEL	anm_last3_l
 //WK_SYS_N01R0502_ITEMUSEが=2の時に起動
 EVENT_START		ev_scene_n01r0502_lastbtl_04
 
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	
+	//カメラ操作　Ｎの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,30 )	//一番最後の引数は移動にかかるフレーム数
+
 	//Ｎ：横向き
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_slow_r )
 	_OBJ_ANIME_WAIT()
@@ -400,6 +406,10 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_turn )
 	_OBJ_ANIME_WAIT()
 
+	//首振りアニメ
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_kubi )
+	_OBJ_ANIME_WAIT()
+
 	//だけど　ちがった　いま　すごく　ガッカリしているよ
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_04w, msg_n01r0502_boss_04b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
@@ -407,6 +417,10 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 	//キミに　できることは　２つ！
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_04_01w, msg_n01r0502_boss_04_01b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
+
+	//両手アニメ
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_hand )
+	_OBJ_ANIME_WAIT()
 
 	//おいで　シン！/ム！
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_05w, msg_n01r0502_boss_05b, N01R0502_BOSS_01, POS_DEFAULT )
@@ -424,7 +438,7 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 			_VOICE_WAIT()
 }
 
-	//【仮】デモ再生：シン（ム）が謁見の間に突っ込んでくるデモ		デモ作成は４月予定
+	//デモ再生：シン（ム）が謁見の間に突っ込んでくるデモ
   _DEMO_FADEOUT_BLACK_WITH_BGM_CALL()
 
 	//謁見の間、水が干上がった状態のマップに変更
@@ -486,6 +500,21 @@ _ANIME_LABEL	anm_n_turn
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//		芝居・共通アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_n_kubi
+	_ANIME_DATA	AC_N_ACT1,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_n_hand
+	_ANIME_DATA	AC_N_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sage1_hand
+	_ANIME_DATA	AC_SAGE1_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+
 /************************************************************/
 /*	最終イベント５	Ｎ話しかけ起動							*/
 /************************************************************/
@@ -544,7 +573,7 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_07w, msg_n01r0502_boss_07b, N01R0502_BOSS_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 
-	//【仮】ダーク（ライト）ストーンの演出		森さんに話しは通しています　作成中
+	//ダーク（ライト）ストーンの演出
 
 	//～～～ストーンが　はげしく　かがやきだす……！
 {
@@ -557,7 +586,7 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 		ENDIF
 			_SYSWIN_CLOSE()
 }
-	//【仮】デモ再生：ム（シン）石から復活デモ		デモは４月作成予定です
+	//デモ再生：ム（シン）石から復活デモ
 	
   _DEMO_FADEOUT_BLACK_WITH_BGM_CALL()
 
@@ -847,6 +876,12 @@ _ANIME_LABEL	anm_legend_last
 /************************************************************/
 ev_last:
 
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	
+	//カメラ操作　Ｎの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,1081344,0,2392064,30 )
+
 	//Ｎ：シン（ム）の前に移動
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_lastbtl5 )
 	_OBJ_ANIME_WAIT()
@@ -904,9 +939,15 @@ ev_last:
 	//イベント曲再生
 	_START_EVENT_BGM( SEQ_BGM_E_G_CIS )
 
+	//カメラ操作　ゲーチスの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,1081344,0,2654208,30 )
+
 	//それでも　ワタクシと　おなじ　ハルモニア
 	_BALLOONWIN_OBJMSG( msg_n01r0502_sage1_01 , N01R0502_SAGE1_01 )
 	_MSGWIN_CLOSE()
+
+	//カメラ操作　ゲーチスの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,1212416,0,2588672,30 )
 
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_dir_d )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_wait_come2 )
@@ -916,9 +957,6 @@ ev_last:
 	//そなたには　この　ぎょくざは
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_sage1_02w, msg_n01r0502_sage1_02b, N01R0502_SAGE1_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
-
-	_CAMERA_START()		//カメラ操作開始
-	_CAMERA_PURGE()		//カメラのバインドを解く
 	
 	//カメラ操作　Ｎの位置にカメラを合わせる
 	_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,60 )
@@ -982,6 +1020,10 @@ ev_last:
 
 	//ゲーチス：自機の前に移動
 	_OBJ_ANIME( N01R0502_SAGE1_01, anm_gcis_come5 )
+	_OBJ_ANIME_WAIT()
+
+	//ゲーチス：両手アニメ
+	_OBJ_ANIME( N01R0502_SAGE1_01, anm_sage1_hand )
 	_OBJ_ANIME_WAIT()
 
 	//========================================/
@@ -1055,7 +1097,7 @@ ev_last:
 	_MSGWIN_CLOSE()
 	
 	//ふむ　なるほどな
-	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_champion_02w, msg_n01r0502_champion_02b, N01R0502_SAGE1_01, POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_champion_02w, msg_n01r0502_champion_02b, N01R0502_SAGE1_01, POS_DL )
 	_MSGWIN_CLOSE()
 	
 	//だが　ぼくに　えいゆうの　しかくはない！
@@ -1073,7 +1115,11 @@ ev_last:
 	//Ｎよ　おたがい　りかい　しあえなくとも　ひていする
 	_BALLOONWIN_OBJMSG( msg_n01r0502_champion_04 , N01R0502_CHAMPION_01 )
 	_MSGWIN_CLOSE()
-	
+
+	//Ｎ首振りアニメ
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_kubi )
+	_OBJ_ANIME_WAIT()
+
 	//そうだね　いまなら　それも　わかる
 	_BALLOONWIN_OBJMSG( msg_n01r0502_boss_16 , N01R0502_BOSS_01 )
 	_MSGWIN_CLOSE()
@@ -1152,22 +1198,14 @@ ev_last:
 }
 	//Ｎのアップ絵終了
 	_END_FACEUP()
-	
-
-
-	_OBJ_ANIME( N01R0502_WKOBJCODE00_01, anm_legend_last )
-	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_last )
-	_OBJ_ANIME_WAIT()
-
-
-
+/*
 	//自機にカメラを戻す
 	_CAMERA_RECV_MOVE( 10 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
 
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
-	
+*/
 	//========================================/
 	
 	//$WK_SCENE_N01R0502を６にして終了

@@ -16,11 +16,13 @@
 #define C03P01_DANCER_01                   0
 #define C03P01_DANCER_02                   1
 #define C03P01_DANCER_03                   2
+#define C03P01_OLDMAN1_01                  3
 
 #endif //ZONE_C03P01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03p01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_C03P01_EVB_H
 #define ZONE_C03P01_EVB_H
 
+#define BGID_C03P01_SIGN_01               0
 
 #endif //ZONE_C03P01_EVB_H

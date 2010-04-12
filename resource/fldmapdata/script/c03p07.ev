@@ -357,6 +357,12 @@ EVENT_START		ev_pos_c03p07_plazma_01
 	
 		//プラズマ団POSイベント終了
 		$WK_SCENE_C03P07 = 3
+		
+		//カメラ戻す	
+		_CAMERA_RECV_MOVE( 30 )//カメラ復帰移動
+		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+		_CAMERA_BIND()		//カメラバインド
+		_CAMERA_END()		//カメラ操作終了
 	
 	//戦う場合
 	ELSE
@@ -714,6 +720,11 @@ EVENT_END
 EVENT_START		ev_c03p07_hakaim_01
 _TALK_OBJ_START()
 
+	_CAMERA_START()		//カメラ操作開始
+    _CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	
+	_CAMERA_MOVE( 6917,0,835568,753664,0,2195456,40 )
+
 	DEFINE_LOCAL	LWK_DIR
 	_PLAYER_DIR_GET( LWK_DIR )
 	SWITCH $LWK_DIR
@@ -757,6 +768,12 @@ _TALK_OBJ_START()
 	
 		//プラズマ団POSイベント終了
 		$WK_SCENE_C03P07 = 3
+		
+		//カメラ戻す
+		_CAMERA_RECV_MOVE( 30 )//カメラ復帰移動
+		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+		_CAMERA_BIND()		//カメラバインド
+		_CAMERA_END()		//カメラ操作終了
 	
 	//戦う場合
 	ELSE
@@ -913,8 +930,9 @@ _ANIME_LABEL	anm_come_u
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_come_d
-	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 	

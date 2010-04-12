@@ -184,8 +184,8 @@ _TALK_OBJ_START()
 		_BALLOONWIN_OBJMSG( msg_c06gym0101_leader_02 , C06GYM0101_LEADER6_01 )
 		_BALLOONWIN_CLOSE()
 		
-    //リーダー戦勝利時の情報登録
-    _SET_GYM_VICTORY_INFO( BADGE_ID_06 )
+		//リーダー戦勝利時の情報登録
+   		_SET_GYM_VICTORY_INFO( BADGE_ID_06 )
 		//バッジ入手処理
 		_SET_BADGE_FLAG( BADGE_ID_06 )
 		_PLAYER_NAME( 0 )
@@ -233,25 +233,24 @@ _TALK_OBJ_START()
 
 	//ジムバッジを取得している場合
 	ELSE
-			_GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_07 )
-	
-			//ゲームクリア後にメッセージ分岐
-			IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
+		//ゲームクリア後にメッセージ分岐
+		IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
 			
-				//……そういえばなんだけど　セッカシティを　とんだとき
-				_BALLOONWIN_OBJMSG( msg_c06gym0101_leader_06 , C06GYM0101_LEADER6_01 )
-				_LAST_KEYWAIT()
-				_BALLOONWIN_CLOSE()
+			//つぎの　ジムがある　セッカシティは
+			_BALLOONWIN_OBJMSG( msg_c06gym0101_leader_06 , C06GYM0101_LEADER6_01 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
 			
-			//D07のイベントをクリアしている場合
-			ELSE
+		//D07のイベントをクリアしている場合
+		ELSE
 			
-				//どう　げんきに　してる？
-				_BALLOONWIN_OBJMSG( msg_c06gym0101_leader_07 , C06GYM0101_LEADER6_01 )
-				_LAST_KEYWAIT()
-				_BALLOONWIN_CLOSE()
+			//ポケモンも　アナタも　げんきに
+			_BALLOONWIN_OBJMSG( msg_c06gym0101_leader_07 , C06GYM0101_LEADER6_01 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
 			
-			ENDIF
+		ENDIF
+		
 	ENDIF
 
 EVENT_END

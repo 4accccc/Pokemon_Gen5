@@ -85,11 +85,11 @@ EVENT_START		ev_pos_d20r0701_exit_01
 		//浮上アニメ
 		_PLAYER_UPDOWN_EFFECT( 0, 60, 64, 1 )
 		
-		_TIME_WAIT( 10 )
+		_TIME_WAIT( 20 )
 		
 		//暗転処理
-		_MAP_FADE_BLACK_OUT()
-		_DISP_FADE_END_CHECK()
+		_MAP_FADE_BLACK_OUT_SLOW()
+		_MAP_FADE_END_CHECK()
 
 		//予約スクリプト
 		_RESERVE_SCRIPT( SCRID_RESERVE_D20R0801_EVENT_01 )
@@ -144,7 +144,19 @@ _ANIME_LABEL	anm_right_back
 /*		RESERVE												  */
 /**************************************************************/
 EVENT_START		ev_reserve_d20r0701_event_01
+	
+	_SE_PLAY( SEQ_SE_FLD_126 )
+	_SE_WAIT()
+	
 	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
+	
+	//画面を揺らすデモを入れる
+	_SHAKE_CAMERA(8,0,3,15,0,0,0,0)
+
+	_SYSWIN_MSG( msg_d20r0701_sys_03 , POS_DOWN )
+	_LAST_KEYWAIT()
+	_SYSWIN_CLOSE()
+	
 EVENT_END
 

@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/25 12:12:02
+#save date:2010/04/12 19:31:34
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d20r0501.wms
 #SECTION START:OBJ_EVENT
@@ -1416,11 +1416,11 @@ DOOR_ID_D20R0301_D20R0501_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1128 48 -152
+1128 48 -136
 #size
 3 1
 #event number: 1
@@ -1433,11 +1433,11 @@ DOOR_ID_D20R0101_D20R0501_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-840 48 -2264
+840 48 -2248
 #size
 3 1
 #event number: 2
@@ -1450,11 +1450,11 @@ DOOR_ID_D20R0201_D20R0501_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 48 -1256
+-168 48 -1240
 #size
 3 1
 #event number: 3
@@ -1467,11 +1467,11 @@ DOOR_ID_D20R0401_D20R0501_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1992 48 -1208
+1992 48 -1192
 #size
 3 1
 #Map Event List Data End
