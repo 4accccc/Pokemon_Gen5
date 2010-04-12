@@ -57,8 +57,9 @@ DoubleAI_Aisyou_Dec2://1/4相性悪い相手には出しづらい（1/4の確率）
 DoubleAI_StrongAI_START:
 
 //自分の技がパートナーと比べて一番高い技----------------------------------------
-	COMP_POWER_WITH_PARTNER	LOSS_CALC_OFF
-	IFN_EQUAL	COMP_POWER_TOP, DoubleAI_StrongAICheck_Aisyou	//相性チェック
+//	COMP_POWER_WITH_PARTNER	LOSS_CALC_OFF
+//	IFN_EQUAL	COMP_POWER_TOP, DoubleAI_StrongAICheck_Aisyou	//相性チェック
+	JUMP  DoubleAI_StrongAICheck_Aisyou	//↑が出来ていないので応急処置
 
 DoubleAI_StrongCheck:
 	IF_WAZA_SEQNO_JUMP	7,DoubleAI_StrongAI_end		// 自爆

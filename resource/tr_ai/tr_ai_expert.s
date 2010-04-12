@@ -3295,7 +3295,8 @@ ExpertAI_228:	// とんぼがえりok(ほぼ)
 	CHECK_BENCH_COUNT	CHECK_ATTACK
 	IF_EQUAL	0,ExpertAI_228_end			// 味方の控えがいない
 	
-	IF_HAVE_BATSUGUN	ExpertAI_228_ng1	// 抜群を持っている
+//  todo
+//	IF_HAVE_BATSUGUN	ExpertAI_228_ng1	// 抜群を持っている
 	JUMP	ExpertAI_228_1
 
 
@@ -3308,8 +3309,9 @@ ExpertAI_228_ng1:
 	INCDEC	-2
 	
 ExpertAI_228_1:
-	IF_BENCH_DAMAGE_MAX		LOSS_CALC_OFF,ExpertAI_228_2
-	//IF_BENCH_DAMAGE_MAXは正常に動作していない。今内部のプログラム変更は大きいのでこのままで2006.8.4
+// todo
+//	IF_BENCH_DAMAGE_MAX		LOSS_CALC_OFF,ExpertAI_228_2
+//  IF_BENCH_DAMAGE_MAXは正常に動作していない。今内部のプログラム変更は大きいのでこのままで2006.8.4
 	IF_RND_UNDER	64,ExpertAI_228_2
 	INCDEC	-2
 	JUMP	ExpertAI_228_end	
@@ -3726,7 +3728,8 @@ ExpertAI_240_end:
 ExpertAI_241:	// さきどり
 	IF_FIRST	IF_FIRST_DEFENCE,ExpertAI_241_ng
 	
-	IF_LAST_WAZA_DAMAGE_CHECK	CHECK_DEFENCE,LOSS_CALC_OFF,ExpertAI_241_Ok
+//  todo
+//	IF_LAST_WAZA_DAMAGE_CHECK	CHECK_DEFENCE,LOSS_CALC_OFF,ExpertAI_241_Ok
 	JUMP	ExpertAI_241_1
 
 ExpertAI_241_Ok:
@@ -3763,7 +3766,8 @@ ExpertAI_242:	// まねっこ
 
 	IF_FIRST	IF_FIRST_DEFENCE,ExpertAI_242_1
 	
-	IF_LAST_WAZA_DAMAGE_CHECK	CHECK_DEFENCE,LOSS_CALC_OFF,ExpertAI_242_ok
+//  todo
+//	IF_LAST_WAZA_DAMAGE_CHECK	CHECK_DEFENCE,LOSS_CALC_OFF,ExpertAI_242_ok
 
 	CHECK_LAST_WAZA	CHECK_DEFENCE
 	IFN_TABLE_JUMP	ExpertAI_242_Table,ExpertAI_242_1
@@ -3779,7 +3783,8 @@ ExpertAI_242_ok:
 
 
 ExpertAI_242_1://相手の方が早い場合強い技でなければ減算する
-	IF_LAST_WAZA_DAMAGE_CHECK	CHECK_DEFENCE,LOSS_CALC_OFF,ExpertAI_242_3
+//  todo
+//	IF_LAST_WAZA_DAMAGE_CHECK	CHECK_DEFENCE,LOSS_CALC_OFF,ExpertAI_242_3
 	CHECK_LAST_WAZA	CHECK_DEFENCE
 	IF_TABLE_JUMP	ExpertAI_242_Table,ExpertAI_242_3
 
@@ -4067,7 +4072,7 @@ ExpertAI_250_end:
 
 //---------------------------------------------------------------------------
 ExpertAI_251:	// アクアリングok
-	IF_HP_UNDER	CHECK_ATTACK,30,ExpertAI_251_end
+	IF_HP_UNDER	CHECK_ATTACK,50,ExpertAI_251_end
 	IF_RND_UNDER	128,ExpertAI_251_end
 	INCDEC	+1
 ExpertAI_251_end:
@@ -4320,13 +4325,15 @@ ExpertAI_270_2:
 	IF_RND_UNDER	192,ExpertAI_270_3
 	INCDEC		+1
 
-	IF_HAVE_BATSUGUN	ExpertAI_270_hikae_batugun	//抜群を持っている
+//  todo
+//	IF_HAVE_BATSUGUN	ExpertAI_270_hikae_batugun	//抜群を持っている
 	IF_RND_UNDER	192,ExpertAI_270_hikae_batugun
 	INCDEC		+1
 	
 ExpertAI_270_hikae_batugun:	
 
-	IF_BENCH_DAMAGE_MAX		LOSS_CALC_OFF,ExpertAI_270_hikae_nostrong	//控えの方が強い技を持っている
+// todo
+//	IF_BENCH_DAMAGE_MAX		LOSS_CALC_OFF,ExpertAI_270_hikae_nostrong	//控えの方が強い技を持っている
 	JUMP	ExpertAI_270_3
 	
 ExpertAI_270_hikae_nostrong:	
@@ -4738,6 +4745,8 @@ ExpertAI_297:			// 	イカサマ
 
 ExpertAI_299:			// 	なかまづくり
 	AIEND
+
+
 ExpertAI_300:			// 	おさきにどうぞ
 	AIEND
 ExpertAI_301:			// 	りんしょう
