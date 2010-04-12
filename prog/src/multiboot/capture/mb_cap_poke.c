@@ -34,6 +34,7 @@
 #define MB_CAP_POKE_MOVE_OFS_Y (4)
 
 #define MB_CAP_POKE_HIDE_LOOK_OFS (5)
+#define MB_CAP_POKE_HIDE_LOOK_OFS_SMALL (8)
 
 #define MB_CAP_POKE_ANIM_SPEED (8)
 #define MB_CAP_POKE_ANIM_FRAME (2)
@@ -80,6 +81,9 @@ struct _MB_CAP_POKE
   
   BOOL isGround;  //ディグダ
   BOOL isNoFlip;  //反転不可
+  BOOL isSmall;   //小さいポケ(個別定義
+
+  u8 befHitNo;    //連続ヒットを防ぐ処理
 };
 
 
@@ -206,8 +210,11 @@ MB_CAP_POKE* MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_IN
   
   pokeWork->isGround = FALSE;
   pokeWork->isNoFlip = FALSE;
+  pokeWork->isSmall = FALSE;
   
-  //ディグダ・反転チェック
+  pokeWork->befHitNo = 0xFF;
+  
+  //ディグダ・反転チェック・小さいチェック
   {
     const u32 monsno = PPP_Get( initWork->ppp , ID_PARA_monsno , NULL );
     const u32 formno = PPP_Get( initWork->ppp , ID_PARA_form_no , NULL );
@@ -215,12 +222,39 @@ MB_CAP_POKE* MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_IN
     if( POKE_PERSONAL_GetParam( personalData ,  POKEPER_ID_no_jump ) == TRUE )
     {
       pokeWork->isGround = TRUE;
+      MB_TPrintf("Ground!\n");
     }
     if( POKE_PERSONAL_GetParam( personalData , POKEPER_ID_reverse ) == TRUE )
     {
       pokeWork->isNoFlip = TRUE;
+      MB_TPrintf("NoFlip!\n");
     }
     POKE_PERSONAL_CloseHandle( personalData );
+    
+    if( monsno == MONSNO_TORANSERU ||
+        monsno == MONSNO_BIIDORU ||
+        monsno == MONSNO_KORATTA ||
+        monsno == MONSNO_NAZONOKUSA ||
+        monsno == MONSNO_DHIGUDA ||
+        monsno == MONSNO_KOIRU ||
+        monsno == MONSNO_KABUTO ||
+        monsno == MONSNO_ANNOON ||
+        monsno == MONSNO_TEPPOUO ||
+        monsno == MONSNO_ATYAMO ||
+        monsno == MONSNO_KINOKOKO ||
+        monsno == MONSNO_NOZUPASU ||
+        monsno == MONSNO_KOKODORA ||
+        monsno == MONSNO_GOKURIN ||
+        monsno == MONSNO_DOZYOTTI ||
+        monsno == MONSNO_POWARUN ||
+        monsno == MONSNO_RABUKASU ||
+        monsno == MONSNO_MINOMUTTI ||
+        monsno == MONSNO_MANENE ||
+        monsno == MONSNO_TAMANTA )
+    {
+      pokeWork->isSmall = TRUE;
+      MB_TPrintf("Small!\n");
+    }
   }
   
 
@@ -403,6 +437,18 @@ void MB_CAP_POKE_SetSleep( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
   pokeWork->stateFunc = MB_CAP_POKE_StateDown;
 }
 
+void MB_CAP_POKE_SetDownToSleep( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
+{
+  //ダウン状態から眠りへ
+  if( pokeWork->downEff != NULL )
+  {
+    MB_CAP_EFFECT_SetIsFinish( pokeWork->downEff , TRUE );
+    pokeWork->downEff = NULL;
+  }
+  pokeWork->cnt = 0;
+  pokeWork->state = MCPS_SLEEP_FALL;
+}
+
 //--------------------------------------------------------------
 //	ポケモンセット(逃げた
 //--------------------------------------------------------------
@@ -460,8 +506,9 @@ static void MB_CAP_POKE_StateHide(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWo
     //左に出る
     const BOOL flg = TRUE;
     const BOOL flipFlg = FALSE;
+    const u16 ofs = (pokeWork->isSmall == TRUE?MB_CAP_POKE_HIDE_LOOK_OFS_SMALL:MB_CAP_POKE_HIDE_LOOK_OFS);
     MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx , pokeWork->posYidx , &pokeWork->pos );
-    pokeWork->pos.x -= FX32_CONST( MB_CAP_POKE_HIDE_LOOK_OFS );
+    pokeWork->pos.x -= FX32_CONST( ofs );
     pokeWork->pos.y -= FX32_CONST( MB_CAP_POKE_OFS_Y );
     pokeWork->pos.z -= FX32_CONST( MB_CAP_OBJ_BASE_Z-MB_CAP_POKE_BASE_Z );
     GFL_BBD_SetObjectDrawEnable( bbdSys , pokeWork->objIdx , &flg );
@@ -477,8 +524,9 @@ static void MB_CAP_POKE_StateHide(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWo
     //右に出る
     const BOOL flg = TRUE;
     const BOOL flipFlg = ( pokeWork->isNoFlip == FALSE ? TRUE : FALSE );
+    const u16 ofs = (pokeWork->isSmall == TRUE?MB_CAP_POKE_HIDE_LOOK_OFS_SMALL:MB_CAP_POKE_HIDE_LOOK_OFS);
     MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx , pokeWork->posYidx , &pokeWork->pos );
-    pokeWork->pos.x += FX32_CONST( MB_CAP_POKE_HIDE_LOOK_OFS );
+    pokeWork->pos.x += FX32_CONST( ofs );
     pokeWork->pos.y -= FX32_CONST( MB_CAP_POKE_OFS_Y );
     pokeWork->pos.z -= FX32_CONST( MB_CAP_OBJ_BASE_Z-MB_CAP_POKE_BASE_Z );
     GFL_BBD_SetObjectDrawEnable( bbdSys , pokeWork->objIdx , &flg );
@@ -535,6 +583,13 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
         //草からの基準位置
         MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx-1 , pokeWork->posYidx , &nextPos );
         ofs = nextPos.x - pokeWork->startPos.x;
+        if( ofs <= -FX32_CONST(MB_CAP_OBJ_MAIN_X_SPACE+10) )
+        {
+          MB_TPrintf("ADJUST!!!\n");
+          pokeWork->posXidx++;
+          MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx-1 , pokeWork->posYidx , &nextPos );
+          ofs = nextPos.x - pokeWork->startPos.x;
+        }
         pokeWork->pos.x = pokeWork->startPos.x + ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME;
         pokeWork->pos.y = pokeWork->startPos.y;
         pokeWork->pos.z = pokeWork->startPos.z;
@@ -543,6 +598,13 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
         //草からの基準位置
         MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx+1 , pokeWork->posYidx , &nextPos );
         ofs = nextPos.x - pokeWork->startPos.x;
+        if( ofs >= FX32_CONST(MB_CAP_OBJ_MAIN_X_SPACE+10) )
+        {
+          MB_TPrintf("ADJUST!!!\n");
+          pokeWork->posXidx--;
+          MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx+1 , pokeWork->posYidx , &nextPos );
+          ofs = nextPos.x - pokeWork->startPos.x;
+        }
         pokeWork->pos.x = pokeWork->startPos.x + ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME;
         pokeWork->pos.y = pokeWork->startPos.y;
         pokeWork->pos.z = pokeWork->startPos.z;
@@ -555,7 +617,17 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
           //最上段補正！！！
           nextPos.y = FX32_CONST(MB_CAP_OBJ_MAIN_TOP-8);
         }
+        
         ofs = (nextPos.y - FX32_CONST( MB_CAP_POKE_MOVE_OFS_Y )) - pokeWork->startPos.y;
+        if( ofs <= -FX32_CONST(MB_CAP_OBJ_MAIN_Y_SPACE+10) &&
+            pokeWork->posYidx > 0)
+        {
+          MB_TPrintf("ADJUST_DOWN!!!\n");
+          pokeWork->posYidx++;
+          MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx , pokeWork->posYidx-1 , &nextPos );
+          ofs = (nextPos.y - FX32_CONST( MB_CAP_POKE_MOVE_OFS_Y )) - pokeWork->startPos.y;
+        }
+
         pokeWork->pos.x = pokeWork->startPos.x;
         pokeWork->pos.y = pokeWork->startPos.y + ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME;
 
@@ -574,6 +646,14 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
       case MCPD_DOWN:
         MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx , pokeWork->posYidx+1 , &nextPos );
         ofs = (nextPos.y - FX32_CONST( MB_CAP_POKE_MOVE_OFS_Y )) - pokeWork->startPos.y;
+        if( ofs >= FX32_CONST(MB_CAP_OBJ_MAIN_Y_SPACE+10) )
+        {
+          MB_TPrintf("ADJUST_DOWN!!!\n");
+          pokeWork->posYidx--;
+          MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx , pokeWork->posYidx+1 , &nextPos );
+          ofs = (nextPos.y - FX32_CONST( MB_CAP_POKE_MOVE_OFS_Y )) - pokeWork->startPos.y;
+        }
+
         pokeWork->pos.x = pokeWork->startPos.x;
         pokeWork->pos.y = pokeWork->startPos.y + ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME;
         pokeWork->pos.z = pokeWork->startPos.z;
@@ -616,6 +696,7 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
   else
   if( pokeWork->cnt == MB_CAP_POKE_RUN_LOOK_TIME )
   {
+    //着地
     BOOL isCrossPoke = FALSE;
     const BOOL flg = FALSE;
     GFL_BBD_SetObjectDrawEnable( bbdSys , pokeWork->objShadowIdx , &flg );
@@ -735,6 +816,8 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
     pokeWork->startPos.y -= FX32_CONST( MB_CAP_POKE_MOVE_OFS_Y );
     pokeWork->startPos.z -= FX32_CONST( MB_CAP_OBJ_BASE_Z-MB_CAP_POKE_BASE_Z );
 
+    pokeWork->befHitNo = 0xFF;
+
     PMSND_PlaySE_byPlayerID( MB_SND_GRASS_SHAKE , SEPLAYER_SE2 );
   }
   else
@@ -795,21 +878,7 @@ static void MB_CAP_POKE_StateDown(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWo
       {
         //ぶつかってダウンした時のみ
         //方向転換して移動
-        switch( pokeWork->dir )
-        {
-        case MCPD_LEFT:
-          pokeWork->dir = MCPD_RIGHT;
-          break;
-        case MCPD_RIGHT:
-          pokeWork->dir = MCPD_LEFT;
-          break;
-        case MCPD_UP:
-          pokeWork->dir = MCPD_DOWN;
-          break;
-        case MCPD_DOWN:
-          pokeWork->dir = MCPD_UP;
-          break;
-        }
+        MB_CAP_POKE_FlipDir( pokeWork );
       }
 
       if( pokeWork->state == MCPS_DOWN_WAIT ||
@@ -881,3 +950,43 @@ const BOOL MB_CAP_POKE_CheckCanCapture( MB_CAP_POKE *pokeWork )
   }
   return FALSE;
 }
+
+//--------------------------------------------------------------
+//  連続ヒット防止(前回ヒットポケ
+//--------------------------------------------------------------
+const u8 MB_CAP_POKE_GetBefHitPoke( MB_CAP_POKE *pokeWork )
+{
+  return pokeWork->befHitNo;
+}
+
+void MB_CAP_POKE_SetBefHitPoke( MB_CAP_POKE *pokeWork , const u8 no )
+{
+  pokeWork->befHitNo = no;
+}
+
+//--------------------------------------------------------------
+//  連続ヒット防止(同じ方向チェック
+//--------------------------------------------------------------
+const MB_CAP_POKE_DIR MB_CAP_POKE_GetPokeDir( MB_CAP_POKE *pokeWork )
+{
+  return pokeWork->dir;
+}
+void MB_CAP_POKE_FlipDir( MB_CAP_POKE *pokeWork )
+{
+  switch( pokeWork->dir )
+  {
+  case MCPD_LEFT:
+    pokeWork->dir = MCPD_RIGHT;
+    break;
+  case MCPD_RIGHT:
+    pokeWork->dir = MCPD_LEFT;
+    break;
+  case MCPD_UP:
+    pokeWork->dir = MCPD_DOWN;
+    break;
+  case MCPD_DOWN:
+    pokeWork->dir = MCPD_UP;
+    break;
+  }
+}
+

@@ -84,6 +84,7 @@ extern void MB_CAP_POKE_SetRun( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork
 extern void MB_CAP_POKE_SetRunChangeDir( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork , const MB_CAP_POKE_DIR dir );
 extern void MB_CAP_POKE_SetCapture( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
 extern void MB_CAP_POKE_SetDown( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
+extern void MB_CAP_POKE_SetDownToSleep( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
 extern void MB_CAP_POKE_SetSleep( MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
 
 //éwíËç¿ïWÇ…Ç¢ÇÈÇ©ÅH
@@ -91,3 +92,8 @@ extern const BOOL MB_CAP_POKE_CheckPos( const MB_CAP_POKE *pokeWork , const u8 i
 extern const MB_CAP_POKE_STATE MB_CAP_POKE_GetState( const MB_CAP_POKE *pokeWork );
 extern void MB_CAP_POKE_GetHitWork( MB_CAP_POKE *pokeWork , MB_CAP_HIT_WORK *hitWork );
 extern const BOOL MB_CAP_POKE_CheckCanCapture( MB_CAP_POKE *pokeWork );
+
+extern const u8 MB_CAP_POKE_GetBefHitPoke( MB_CAP_POKE *pokeWork );
+extern void MB_CAP_POKE_SetBefHitPoke( MB_CAP_POKE *pokeWork , const u8 no );
+extern const MB_CAP_POKE_DIR MB_CAP_POKE_GetPokeDir( MB_CAP_POKE *pokeWork );
+extern void MB_CAP_POKE_FlipDir( MB_CAP_POKE *pokeWork );

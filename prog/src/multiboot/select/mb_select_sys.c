@@ -622,7 +622,12 @@ static void MB_SELECT_InitGraphic( MB_SELECT_WORK *work )
 
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
   }
-  
+  G2_SetWnd0Position(  0,0,  6,192);
+  G2_SetWnd1Position(163,0,172,192);
+  G2_SetWnd0InsidePlane(GX_WND_PLANEMASK_BG0|GX_WND_PLANEMASK_BG1|GX_WND_PLANEMASK_BG2|GX_WND_PLANEMASK_BG3,TRUE);
+  G2_SetWnd1InsidePlane(GX_WND_PLANEMASK_BG0|GX_WND_PLANEMASK_BG1|GX_WND_PLANEMASK_BG2|GX_WND_PLANEMASK_BG3,TRUE);
+  G2_SetWndOutsidePlane(GX_WND_PLANEMASK_BG0|GX_WND_PLANEMASK_BG1|GX_WND_PLANEMASK_BG2|GX_WND_PLANEMASK_BG3|GX_WND_PLANEMASK_OBJ,TRUE);
+  GX_SetVisibleWnd(GX_WNDMASK_NONE);
 }
 
 static void MB_SELECT_TermGraphic( MB_SELECT_WORK *work )
@@ -957,6 +962,7 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
         }
         GFL_CLACT_WK_SetAnmSeq( work->clwkChangeTray[0] , 5 );
         GFL_CLACT_WK_SetAutoAnmFlag( work->clwkChangeTray[0] , TRUE );
+        GX_SetVisibleWnd(GX_WNDMASK_W0|GX_WNDMASK_W1);
         PMSND_PlaySE( SEQ_SE_SELECT1 );
       }
       else
@@ -966,6 +972,7 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
         work->pageMoveDir = MSD_RIGHT;
         work->state = MSS_CHANGE_PAGE;
         work->changePageCnt = 0;
+        GX_SetVisibleWnd(GX_WNDMASK_W0|GX_WNDMASK_W1);
         if( work->boxPage == MB_POKE_BOX_TRAY-1 )
         {
           MB_SELECT_SetBoxName( work , 0 );
@@ -1419,6 +1426,7 @@ static void MB_SELECT_UpdateChangePage( MB_SELECT_WORK *work )
         work->boxPage++;
       }
     }
+    GX_SetVisibleWnd(GX_WNDMASK_NONE);
     work->state = MSS_MAIN;
   }
   //MB_TPrintf("\n");

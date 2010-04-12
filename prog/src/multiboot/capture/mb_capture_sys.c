@@ -1174,9 +1174,24 @@ static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
           MB_CAP_POKE_GetHitWork( work->pokeWork[j] , &pokeHit2 );
           if( MB_CAPTURE_CheckHit( &pokeHit1,&pokeHit2 ) == TRUE )
           {
-            MB_CAP_POKE_SetDown( work , work->pokeWork[i] );
-            MB_CAP_POKE_SetDown( work , work->pokeWork[j] );
-            PMSND_PlaySE( MB_SND_POKE_DOWN );
+            if( MB_CAP_POKE_GetBefHitPoke( work->pokeWork[i] ) != j &&
+                MB_CAP_POKE_GetBefHitPoke( work->pokeWork[j] ) != i )
+            {
+              if( MB_CAP_POKE_GetPokeDir( work->pokeWork[i] ) == MB_CAP_POKE_GetPokeDir( work->pokeWork[j] ) )
+              {
+                MB_TPrintf("FLIP DIR!!!\n");
+                MB_CAP_POKE_FlipDir( work->pokeWork[j] );
+              }
+              MB_CAP_POKE_SetBefHitPoke( work->pokeWork[i] , j );
+              MB_CAP_POKE_SetBefHitPoke( work->pokeWork[j] , i );
+              MB_CAP_POKE_SetDown( work , work->pokeWork[i] );
+              MB_CAP_POKE_SetDown( work , work->pokeWork[j] );
+              PMSND_PlaySE( MB_SND_POKE_DOWN );
+            }
+            else
+            {
+              MB_TPrintf("CHAIN HIT!!!\n");
+            }
           }
         }
       }
@@ -1386,6 +1401,12 @@ void MB_CAPTURE_HitStarFunc( MB_CAPTURE_WORK *work , MB_CAP_OBJ *starWork )
         pokeState == MCPS_RUN_LOOK )
     {
       MB_CAP_POKE_SetSleep( work , work->pokeWork[i] );
+    }
+    else
+    if( pokeState == MCPS_DOWN_MOVE ||
+        pokeState == MCPS_DOWN_WAIT )
+    {
+      MB_CAP_POKE_SetDownToSleep( work , work->pokeWork[i] );
     }
   }
   {
