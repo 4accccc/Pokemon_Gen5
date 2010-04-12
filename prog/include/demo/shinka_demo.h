@@ -53,27 +53,4 @@ SHINKA_DEMO_PARAM;
 */
 //=============================================================================
 
-#if 0
-
-//-------------------------------------
-/// 進化デモ用パラメータ構造体生成
-//=====================================
-extern  SHINKA_DEMO_PARAM*  SHINKADEMO_AllocParam(
-                                HEAPID heapID, GAMEDATA* gamedata, const POKEPARTY* ppt,
-                                u16 after_mons_no, u8 pos, u8 cond, BOOL b_field );
-
-//-------------------------------------
-/// 進化デモ用パラメータワーク解放
-//=====================================
-extern  void                SHINKADEMO_FreeParam( SHINKA_DEMO_PARAM* sdp );
-
-//-------------------------------------
-/// 進化デモ用パラメータを設定する
-//=====================================
-extern  void                SHINKADEMO_InitParam(
-                                SHINKA_DEMO_PARAM* param,
-                                GAMEDATA* gamedata, const POKEPARTY* ppt,
-                                u16 after_mons_no, u8 pos, u8 cond, BOOL b_field, BOOL b_enable_cancel );
-
-#endif
 

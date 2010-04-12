@@ -20,7 +20,7 @@
 #include "system/mcss.h"
 #include "system/mcss_tool.h"
 
-#include "sound/pm_voice.h"
+#include "sound/pm_wb_voice.h"  // wbではpm_voiceではなくこちらを使う
 #include "sound/wb_sound_data.sadl"
 #include "sound/pm_sndsys.h"
 
@@ -36,27 +36,25 @@
  *  定数定義
  */
 //=============================================================================
-// BGフレーム
-#define BG_FRAME_M_POKEMON        (GFL_BG_FRAME0_M)            // プライオリティ1
-
 // ステップ
 typedef enum
 {
   // EVO
-  STEP_EVO_START,             // 開始待ち中→鳴く
-  STEP_EVO_CRY_BEFORE,        // 鳴き終わるのを待ち中→鳴いた後の開始待ち
-  STEP_EVO_START_AFTER_CRY,   // 鳴いた後の開始待ち中→しばし待ち
-  STEP_EVO_WAIT_BEFORE,       // しばし待ち中→白くする
-  STEP_EVO_WHITE,             // 白くなるのを待ち中→しばし待ち
-  STEP_EVO_WAIT_AFTER_WHITE,  // しばし待ち中→拡大縮小入れ替え演出を開始する
-  STEP_EVO_SCALE,             // 拡大縮小入れ替え演出中→色を付ける
-  STEP_EVO_COLOR,             // 色が付くのを待ち中→しばし待ち
-  STEP_EVO_WAIT_AFTER,        // しばし待ち中→鳴く
-  STEP_EVO_CRY_AFTER,         // 鳴き終わるのを待ち中→終了する
-  STEP_EVO_END,               // 終了中
+  STEP_EVO_CRY_START,                // 鳴き開始待ち中→鳴く
+  STEP_EVO_CRY,                      // 鳴き中
+  STEP_EVO_CHANGE_SATRT,             // 進化開始待ち中→進化
+  STEP_EVO_CHANGE_TO_WHITE_START,    // 進化中  // 白くする
+  STEP_EVO_CHANGE_TO_WHITE,          // 進化中  // 白くなり中
+  STEP_EVO_CHANGE_TRANSFORM,         // 進化中  // 変形
+  STEP_EVO_CHANGE_CANCEL,            // 進化中  // キャンセル
+  STEP_EVO_CHANGE_FROM_WHITE_START,  // 進化中  // 色付きに戻る
+  STEP_EVO_CHANGE_FROM_WHITE,        // 進化中  // 色付きに戻り中
+  STEP_EVO_CHANGE_CRY_START,         // 進化中  // 鳴き開始待ち中
+  STEP_EVO_CHANGE_CRY,               // 進化中  // 鳴き中
+  STEP_EVO_END,                      // 終了中
 
   // AFTER
-  STEP_AFTER,                 // 進化後からスタート
+  STEP_AFTER,                       // 進化後からスタート
 }
 STEP;
 
@@ -128,17 +126,12 @@ POKE;
 #define SCALE_MIN            ( 4.0f)
 #define POKE_SIZE_MAX        (96.0f)
 
-// パーティクル
-typedef enum
-{
-  PARTICLE_SPA_FILE_0,      // ARCID_SHINKA_DEMO    // NARC___particle_shinka_demo_particle_shinka_demo_spa
-  PARTICLE_SPA_FILE_1,      // ARCID_SHINKA_DEMO    // NARC___particle_shinka_demo_particle_shinka_demo_dmy_spa
-  PARTICLE_SPA_FILE_MAX
-}
-PARTICLE_SPA_FILE;
-
 // パーティクル対応
 #define POKE_TEX_ADRS_FOR_PARTICLE (0x30000)
+
+
+// ポケモンのY座標
+#define POKE_Y  (FX_F32_TO_FX32(-24.0f))
 
 
 //=============================================================================
@@ -146,63 +139,6 @@ PARTICLE_SPA_FILE;
 *  構造体宣言
 */
 //=============================================================================
-//-------------------------------------
-/// パーティクル
-//=====================================
-typedef struct
-{
-  u16  frame;
-  u8   spa_idx;
-  u8   res_no;
-}
-PARTICLE_PLAY_DATA;
-
-typedef struct
-{
-  u8             wk[PARTICLE_LIB_HEAP_SIZE];
-  GFL_PTC_PTR    ptc;
-  u8             res_num;
-}
-PARTICLE_SPA_SET;
-
-typedef struct
-{
-  u16                          frame;
-  u16                          data_no;
-  u16                          data_num;
-  const PARTICLE_PLAY_DATA*    data_tbl;
-  PARTICLE_SPA_SET             spa_set[PARTICLE_SPA_FILE_MAX];
-  BOOL                         play;  // TRUEのとき実行中
-  s32                          stop_count;  // stop_count>=0のときカウントダウンし、stop_count==0になったら実行中のものを全て消去する
-}
-PARTICLE_MANAGER;
-
-static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
-{
-  {    0,     PARTICLE_SPA_FILE_0,         0 },  // 0はポケモンを囲むように回る白丸
-  {  110,     PARTICLE_SPA_FILE_0,         1 },  // 1は細い白線が放射される
-  {  140,     PARTICLE_SPA_FILE_0,         1 },
-  {  150,     PARTICLE_SPA_FILE_0,         1 },
-  {  160,     PARTICLE_SPA_FILE_0,         2 },  // 2は太い白線が放射される
-  {  200,     PARTICLE_SPA_FILE_0,         3 },  // 3は黄色丸が放射される(動きがゆっくり)
-  {  215,     PARTICLE_SPA_FILE_0,         4 },
-  {  245,     PARTICLE_SPA_FILE_0,         5 },
-  {  275,     PARTICLE_SPA_FILE_0,         6 },
-  {  305,     PARTICLE_SPA_FILE_0,         4 },  // 4は黄色丸が放射される(動きが速い)
-  {  335,     PARTICLE_SPA_FILE_0,         5 },  // 5は白丸が放射される(動きが速い)
-  {  365,     PARTICLE_SPA_FILE_0,         6 },  // 6は黄色丸が放射される(動きが速い)
-  {  395,     PARTICLE_SPA_FILE_0,         4 },
-  {  425,     PARTICLE_SPA_FILE_0,         5 },
-  {  455,     PARTICLE_SPA_FILE_0,         6 },
-  {  470,     PARTICLE_SPA_FILE_0,         7 },  // 7は大黄色円(短い)
-  {  475,     PARTICLE_SPA_FILE_0,         8 },  // 8は大黄色円(長い、発生の瞬間が唐突過ぎる)
-  {  495,     PARTICLE_SPA_FILE_0,         9 },  // 9は大白円(発生が遅い)
-  {  685,     PARTICLE_SPA_FILE_0,        10 },  // 10は輪が広がる
-  {  725,     PARTICLE_SPA_FILE_0,        12 },  // 12は白丸が放射される
-//  {  810,     PARTICLE_SPA_FILE_0,        11 },  // 11は星がキラキラ放射される
-};
-
-
 //-------------------------------------
 /// MCSSポケモン
 //=====================================
@@ -225,20 +161,21 @@ struct _SHINKADEMO_VIEW_WORK
   SHINKADEMO_VIEW_LAUNCH   launch;
   u16                      after_monsno;
 
-  // ここで一時的に生成する
-  POKEMON_PARAM*           after_pp;
-
+  // ポケモン 
+  POKEMON_PARAM*           after_pp;  // ここで一時的に生成する
+  
   // ステップ
   STEP                     step;
-
-  u32                      voicePlayerIdx;
   u32                      wait_count;
 
   // フラグ
-  BOOL                     b_start;
-  BOOL                     b_start_after_cry;
-  BOOL                     b_cancel;  // 進化キャンセル
-  BOOL                     b_white;
+  BOOL                     b_cry_start;      // 進化前の鳴きスタートしていいときはTRUE
+  BOOL                     b_cry_end;        // 進化前の鳴きが完了していたらTRUE
+  BOOL                     b_change_start;   // 進化スタートしていいときはTRUE
+  BOOL                     b_change_end;     // 進化が完了していたらTRUE
+  BOOL                     b_change_bgm_shinka_start;    // BGM SHINKA曲を開始してもよいか
+  BOOL                     b_change_bgm_shinka_push;     // BGM SHINKA曲をpushしてもよいか
+  BOOL                     b_change_cancel;  // 進化キャンセルしていたらTRUE
 
   // 拡大縮小入れ替え演出
   f32                      scale;
@@ -250,9 +187,6 @@ struct _SHINKADEMO_VIEW_WORK
   // MCSS
   MCSS_SYS_WORK*           mcss_sys_wk;
   POKE_SET                 poke_set[POKE_MAX];
-
-  // パーティクル
-  PARTICLE_MANAGER*        particle_mgr;
 };
 
 
@@ -271,16 +205,6 @@ static u8 NotDispPoke( u8 disp_poke );
 
 static BOOL ShinkaDemo_View_Evolve( SHINKADEMO_VIEW_WORK* work );
 static void ShinkaDemo_View_AdjustPokePos( SHINKADEMO_VIEW_WORK* work );
-
-//-------------------------------------
-/// パーティクル
-//=====================================
-static PARTICLE_MANAGER* Particle_Init( HEAPID heap_id );
-static void Particle_Exit( PARTICLE_MANAGER* mgr );
-static void Particle_Main( PARTICLE_MANAGER* mgr );
-static void Particle_Draw( PARTICLE_MANAGER* mgr );
-static void Particle_Start( PARTICLE_MANAGER* mgr );
-static void Particle_Stop( PARTICLE_MANAGER* mgr, s32 stop_count );
 
 
 //=============================================================================
@@ -318,9 +242,10 @@ SHINKADEMO_VIEW_WORK* SHINKADEMO_VIEW_Init(
     work->pp           = pp;
     work->after_monsno = after_monsno;
   }
-
-  // ここで一時的に生成する
+ 
+  // ポケモン
   {
+    // ここで一時的に生成する
     work->after_pp = PP_Create( 1, 1, 0, work->heap_id );
     POKETOOL_CopyPPtoPP( (POKEMON_PARAM*)(work->pp), work->after_pp );
     PP_ChangeMonsNo( work->after_pp, work->after_monsno );  // 進化
@@ -329,17 +254,22 @@ SHINKADEMO_VIEW_WORK* SHINKADEMO_VIEW_Init(
   // ステップ
   {
     if( work->launch == SHINKADEMO_VIEW_LAUNCH_EVO )
-      work->step         = STEP_EVO_START;
+      work->step         = STEP_EVO_CRY_START;
     else
       work->step         = STEP_AFTER;
+    
+    work->wait_count = 0;
   }
 
   // フラグ
   {
-    work->b_start                = FALSE;
-    work->b_start_after_cry      = FALSE;
-    work->b_cancel               = FALSE;
-    work->b_white                = FALSE;
+    work->b_cry_start                = FALSE;
+    work->b_cry_end                  = FALSE; 
+    work->b_change_start             = FALSE;
+    work->b_change_end               = FALSE;
+    work->b_change_bgm_shinka_start  = FALSE;
+    work->b_change_bgm_shinka_push   = FALSE;
+    work->b_change_cancel            = FALSE;
   }
   
   // 拡大縮小入れ替え演出
@@ -362,9 +292,6 @@ SHINKADEMO_VIEW_WORK* SHINKADEMO_VIEW_Init(
     ShinkaDemo_View_PokeInit( work );
   }
 
-  // パーティクル
-  work->particle_mgr = Particle_Init( work->heap_id );
-
   return work;
 }
 
@@ -379,9 +306,6 @@ SHINKADEMO_VIEW_WORK* SHINKADEMO_VIEW_Init(
 //-----------------------------------------------------------------------------
 void SHINKADEMO_VIEW_Exit( SHINKADEMO_VIEW_WORK* work )
 {
-  // パーティクル
-  Particle_Exit( work->particle_mgr );
-
   // MCSS
   {
     ShinkaDemo_View_PokeExit( work );
@@ -413,140 +337,126 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
   switch(work->step)
   {
   // EVO
-  case STEP_EVO_START:
+  case STEP_EVO_CRY_START:
     {
-      if( work->b_start )
+      if( work->b_cry_start )
       {
         // 次へ
-        work->step = STEP_EVO_CRY_BEFORE;
+        work->step = STEP_EVO_CRY;
 
         {
           u32 monsno  = PP_Get( work->pp, ID_PARA_monsno, NULL );
           u32 form_no = PP_Get( work->pp, ID_PARA_form_no, NULL );
-          work->voicePlayerIdx = PMVOICE_Play( monsno, form_no, 64, FALSE, 0, 0, FALSE, 0 );
+          PMV_PlayVoice( monsno, form_no );
         }
       }
     }
     break;
-  case STEP_EVO_CRY_BEFORE:
+  case STEP_EVO_CRY:
     {
-      if( !PMVOICE_CheckPlay( work->voicePlayerIdx ) )
+      if( !PMV_CheckPlay() )
       {
         // 次へ
-        work->step = STEP_EVO_START_AFTER_CRY;
+        work->step = STEP_EVO_CHANGE_SATRT;
+        
+        work->b_cry_end = TRUE;
       }
     }
     break;
-  case STEP_EVO_START_AFTER_CRY:
+  case STEP_EVO_CHANGE_SATRT:
     {
-      if( work->b_start_after_cry )
+      if( work->b_change_start )
       {
         // 次へ
-        work->step = STEP_EVO_WAIT_BEFORE;
-        
-        //work->wait_count = 60;
-        work->wait_count = 1;
+        work->step = STEP_EVO_CHANGE_TO_WHITE_START;
 
-        // パーティクル
-        Particle_Start( work->particle_mgr );
-
-        PMSND_PlaySE( SEQ_SE_W014_01 );
-      }
-    }
-    break;
-  case STEP_EVO_WAIT_BEFORE:
-    {
-      work->wait_count--;
-      if( work->wait_count == 0 )
-      {
-        // 次へ
-        work->step = STEP_EVO_WHITE;
-        
-        //MCSS_SetPaletteFade( work->poke_set[work->disp_poke].wk, 0, 16, 1, 0x7fff );
-        //MCSS_SetPaletteFade( work->poke_set[work->disp_poke].wk, 0, 16, 2, 0x7fff );
         MCSS_SetPaletteFade( work->poke_set[work->disp_poke].wk, 0, 16, 3, 0x7fff );
         MCSS_SetPaletteFade( work->poke_set[NotDispPoke(work->disp_poke)].wk, 16, 16, 0, 0x7fff );
       }
     }
     break;
-  case STEP_EVO_WHITE:
+  case STEP_EVO_CHANGE_TO_WHITE_START:
+    {
+      // 次へ
+      work->step = STEP_EVO_CHANGE_TO_WHITE;
+
+      MCSS_SetPaletteFade( work->poke_set[work->disp_poke].wk, 0, 16, 3, 0x7fff );
+      MCSS_SetPaletteFade( work->poke_set[NotDispPoke(work->disp_poke)].wk, 16, 16, 0, 0x7fff );
+    }
+    break;
+  case STEP_EVO_CHANGE_TO_WHITE:
     {
       if( !MCSS_CheckExecutePaletteFade( work->poke_set[work->disp_poke].wk ) )
       {
         // 次へ
-        work->step = STEP_EVO_WAIT_AFTER_WHITE;
+        work->step = STEP_EVO_CHANGE_TRANSFORM;
 
-        //work->wait_count = 30;
-        //work->wait_count = 60;
-        work->wait_count = 20;
+        work->b_change_bgm_shinka_start = TRUE;
       }
     }
     break;
-  case STEP_EVO_WAIT_AFTER_WHITE:
-    {
-      work->wait_count--;
-      if( work->wait_count == 0 )
-      {
-        // 次へ
-        work->step = STEP_EVO_SCALE;
-      }
-    }
-    break;
-  case STEP_EVO_SCALE:
+  case STEP_EVO_CHANGE_TRANSFORM:
     {
       if( ShinkaDemo_View_Evolve( work ) )
       {
         // 次へ
-        work->step = STEP_EVO_COLOR;
-        
-        MCSS_SetPaletteFade( work->poke_set[work->disp_poke].wk, 16, 0, 1, 0x7fff );
+        work->step = STEP_EVO_CHANGE_FROM_WHITE_START;
 
-        work->b_white = TRUE;
+        work->b_change_bgm_shinka_push = TRUE;
+      } 
+    }
+    break;
+  case STEP_EVO_CHANGE_CANCEL:
+    {
+      if( ShinkaDemo_View_Evolve( work ) )
+      {
+        // 次へ
+        work->step = STEP_EVO_CHANGE_FROM_WHITE_START;
+
+        work->b_change_bgm_shinka_push = TRUE;
       }
     }
     break;
-  case STEP_EVO_COLOR:
+  case STEP_EVO_CHANGE_FROM_WHITE_START:
     {
-      work->b_white = FALSE;
+      // 次へ
+      work->step = STEP_EVO_CHANGE_FROM_WHITE;
 
+      MCSS_SetPaletteFade( work->poke_set[work->disp_poke].wk, 16, 0, 1, 0x7fff );
+    }
+    break;
+  case STEP_EVO_CHANGE_FROM_WHITE:
+    {
       if( !MCSS_CheckExecutePaletteFade( work->poke_set[work->disp_poke].wk ) )
       {
         // 次へ
-        work->step = STEP_EVO_WAIT_AFTER;
-
-        work->wait_count = 60;
+        work->step = STEP_EVO_CHANGE_CRY_START;
       }
     }
     break;
-  case STEP_EVO_WAIT_AFTER:
+  case STEP_EVO_CHANGE_CRY_START:
     {
-      work->wait_count--;
-      if( work->wait_count == 0 )
       {
         // 次へ
-        work->step = STEP_EVO_CRY_AFTER;
+        work->step = STEP_EVO_CHANGE_CRY;
 
         {
-          const POKEMON_PARAM* curr_pp = (work->b_cancel)?(work->pp):(work->after_pp);
+          const POKEMON_PARAM* curr_pp = (work->b_change_cancel)?(work->pp):(work->after_pp);
           u32 monsno  = PP_Get( curr_pp, ID_PARA_monsno, NULL );
           u32 form_no = PP_Get( curr_pp, ID_PARA_form_no, NULL );
-          work->voicePlayerIdx = PMVOICE_Play( monsno, form_no, 64, FALSE, 0, 0, FALSE, 0 );
+          PMV_PlayVoice( monsno, form_no );
         }
       }
     }
     break;
-  case STEP_EVO_CRY_AFTER:
+  case STEP_EVO_CHANGE_CRY:
     {
-      if( !PMVOICE_CheckPlay( work->voicePlayerIdx ) )
+      if( !PMV_CheckPlay() )
       {
         // 次へ
         work->step = STEP_EVO_END;
 
-        if( !(work->b_cancel) )
-        {
-          VecFx32 pos = { 0, FX_F32_TO_FX32(0.5f), 0 };
-          GFL_PTC_CreateEmitter( work->particle_mgr->spa_set[ PARTICLE_SPA_FILE_0 ].ptc, 11, &pos );
-        }
+        work->b_change_end = TRUE;
       }
     }
     break;
@@ -565,9 +475,6 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
   }
 
   MCSS_Main( work->mcss_sys_wk );
-
-  // パーティクル
-  Particle_Main( work->particle_mgr );
 }
 
 //-----------------------------------------------------------------------------
@@ -584,9 +491,90 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
 void SHINKADEMO_VIEW_Draw( SHINKADEMO_VIEW_WORK* work )
 {
   MCSS_Draw( work->mcss_sys_wk );
+}
 
-  // パーティクル
-  Particle_Draw( work->particle_mgr );
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         進化前の鳴きスタート
+ *
+ *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
+ *
+ *  @retval        
+ */
+//-----------------------------------------------------------------------------
+void SHINKADEMO_VIEW_CryStart( SHINKADEMO_VIEW_WORK* work )
+{
+  work->b_cry_start = TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         進化前の鳴きが完了しているか
+ *
+ *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
+ *
+ *  @retval        完了しているときTRUEを返す
+ */
+//-----------------------------------------------------------------------------
+BOOL SHINKADEMO_VIEW_CryIsEnd( SHINKADEMO_VIEW_WORK* work )
+{
+  return work->b_cry_end;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         進化スタート
+ *
+ *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
+ *
+ *  @retval        
+ */
+//-----------------------------------------------------------------------------
+void SHINKADEMO_VIEW_ChangeStart( SHINKADEMO_VIEW_WORK* work )
+{
+  work->b_change_start = TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         進化が完了しているか
+ *
+ *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
+ *
+ *  @retval        完了しているときTRUEを返す
+ */
+//-----------------------------------------------------------------------------
+BOOL SHINKADEMO_VIEW_ChangeIsEnd( SHINKADEMO_VIEW_WORK* work )
+{
+  return work->b_change_end;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         BGM SHINKA曲を開始してもよいか
+ *
+ *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
+ *
+ *  @retval        開始してもよいときTRUEを返す
+ */
+//-----------------------------------------------------------------------------
+BOOL SHINKADEMO_VIEW_ChangeIsBgmShinkaStart( SHINKADEMO_VIEW_WORK* work )
+{
+  return work->b_change_bgm_shinka_start;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         BGM SHINKA曲をpushしてもよいか
+ *
+ *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
+ *
+ *  @retval        pushしてもよいときTRUEを返す
+ */
+//-----------------------------------------------------------------------------
+BOOL SHINKADEMO_VIEW_ChangeIsBgmShinkaPush( SHINKADEMO_VIEW_WORK* work )
+{
+  return work->b_change_bgm_shinka_push;
 }
 
 //-----------------------------------------------------------------------------
@@ -595,135 +583,20 @@ void SHINKADEMO_VIEW_Draw( SHINKADEMO_VIEW_WORK* work )
  *
  *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
  *
- *  @retval       キャンセルできたときTRUE
+ *  @retval        成功したらTRUEを返し、直ちに進化キャンセルのフローに切り替わる
  */
 //-----------------------------------------------------------------------------
-BOOL SHINKADEMO_VIEW_CancelShinka( SHINKADEMO_VIEW_WORK* work )
+BOOL SHINKADEMO_VIEW_ChangeCancel( SHINKADEMO_VIEW_WORK* work )
 {
-  if( work->count <= ANM_REPEAT_MAX-3 )
+  if( work->step == STEP_EVO_CHANGE_TRANSFORM )
   {
-    work->b_cancel = TRUE;
-
-    // パーティクル
-    Particle_Stop( work->particle_mgr, 30 );
-
-    return TRUE;
+    if( work->count <= ANM_REPEAT_MAX-3 )
+    {
+      work->b_change_cancel = TRUE;
+      work->step = STEP_EVO_CHANGE_CANCEL;
+      return TRUE;
+    }
   }
-  return FALSE;
-}
-
-//-----------------------------------------------------------------------------
-/**
- *  @brief         スタート
- *
- *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
- *
- *  @retval        なし 
- */
-//-----------------------------------------------------------------------------
-void SHINKADEMO_VIEW_StartShinka( SHINKADEMO_VIEW_WORK* work )
-{
-  work->b_start = TRUE;
-
-#if 0
-  // パーティクル
-  Particle_Start( work->particle_mgr );
-#endif
-}
-
-//-----------------------------------------------------------------------------
-/**
- *  @brief         鳴いた後のスタート
- *
- *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
- *
- *  @retval        なし 
- */
-//-----------------------------------------------------------------------------
-void SHINKADEMO_VIEW_StartShinkaAfterCry( SHINKADEMO_VIEW_WORK* work )
-{
-  work->b_start_after_cry = TRUE;
-}
-
-//-----------------------------------------------------------------------------
-/**
- *  @brief         黒帯を表示してもよいか
- *
- *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
- *
- *  @retval        黒帯を表示してもよいときTRUEを返す
- */
-//-----------------------------------------------------------------------------
-BOOL SHINKADEMO_VIEW_IsWndAppear( SHINKADEMO_VIEW_WORK* work )
-{
-  if( work->step >= STEP_EVO_START_AFTER_CRY )
-    return TRUE;
-  else
-    return FALSE;
-}
-
-//-----------------------------------------------------------------------------
-/**
- *  @brief         イントロBGMを再生してもよいか
- *
- *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
- *
- *  @retval        BGMを再生してもよいときTRUEを返す
- */
-//-----------------------------------------------------------------------------
-BOOL SHINKADEMO_VIEW_IsIntroBGMPlay( SHINKADEMO_VIEW_WORK* work )
-{
-  //if(    ( work->step == STEP_EVO_WAIT_BEFORE && work->wait_count < 35 )
-  if(    ( work->step == STEP_EVO_WAIT_BEFORE && work->wait_count < 9999 )
-      || ( STEP_EVO_WHITE <= work->step && work->step < STEP_EVO_COLOR ) )
-    return TRUE;
-  return FALSE;
-}
-
-//-----------------------------------------------------------------------------
-/**
- *  @brief         BGMを再生してもよいか
- *
- *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
- *
- *  @retval        BGMを再生してもよいときTRUEを返す
- */
-//-----------------------------------------------------------------------------
-BOOL SHINKADEMO_VIEW_IsBGMPlay( SHINKADEMO_VIEW_WORK* work )
-{
-  if(    STEP_EVO_SCALE <= work->step  
-      && work->step < STEP_EVO_COLOR )
-    return TRUE;
-  return FALSE;
-}
-
-//-----------------------------------------------------------------------------
-/**
- *  @brief         白く飛ばす演出のためのパレットフェードをして欲しいか(1フレームしかTRUEにならない)
- *
- *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
- *
- *  @retval        パレットフェードをして欲しい1フレームにおいてだけTRUEを返す
- */
-//-----------------------------------------------------------------------------
-BOOL SHINKADEMO_VIEW_ToFromWhite( SHINKADEMO_VIEW_WORK* work )
-{
-  return work->b_white;
-}
-
-//-----------------------------------------------------------------------------
-/**
- *  @brief         終了しているか
- *
- *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
- *
- *  @retval        終了しているときTRUEを返す
- */
-//-----------------------------------------------------------------------------
-BOOL SHINKADEMO_VIEW_IsEndShinka( SHINKADEMO_VIEW_WORK* work )
-{
-  if( work->step >= STEP_EVO_END )
-    return TRUE;
   return FALSE;
 }
 
@@ -784,7 +657,7 @@ static void ShinkaDemo_View_PokeInit( SHINKADEMO_VIEW_WORK* work )
       {
         MCSS_TOOL_MakeMAWPP( work->after_pp, &add_wk, MCSS_DIR_FRONT );
       }
-      work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, 0, 0, 0, &add_wk );
+      work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, 0, POKE_Y, 0, &add_wk );
       MCSS_SetScale( work->poke_set[i].wk, &scale );
 
       if(i == POKE_BEFORE)
@@ -809,7 +682,7 @@ static void ShinkaDemo_View_PokeInit( SHINKADEMO_VIEW_WORK* work )
     i = POKE_AFTER;
 
     MCSS_TOOL_MakeMAWPP( work->pp, &add_wk, MCSS_DIR_FRONT );
-    work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, 0, 0, 0, &add_wk );
+    work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, 0, POKE_Y, 0, &add_wk );
     MCSS_SetScale( work->poke_set[i].wk, &scale );
   }
 
@@ -857,7 +730,7 @@ static BOOL ShinkaDemo_View_Evolve( SHINKADEMO_VIEW_WORK* work )
     work->count++;
     if(
            ( work->count >= ANM_REPEAT_MAX )
-        || ( work->b_cancel && work->disp_poke == POKE_AFTER )
+        || ( work->b_change_cancel && work->disp_poke == POKE_AFTER )
     )
     {
       work->anm_add = ANM_ADD_START;
@@ -876,7 +749,7 @@ static BOOL ShinkaDemo_View_Evolve( SHINKADEMO_VIEW_WORK* work )
     MCSS_SetVanishFlag( work->poke_set[NotDispPoke(work->disp_poke)].wk );
 
     // キャンセル成功しているのに進化してしまわないように、念のため
-    if( b_finish && work->b_cancel )
+    if( b_finish && work->b_change_cancel )
     {
       work->disp_poke = POKE_BEFORE;
       MCSS_ResetVanishFlag( work->poke_set[work->disp_poke].wk );
@@ -948,6 +821,7 @@ static BOOL ShinkaDemo_View_Evolve( SHINKADEMO_VIEW_WORK* work )
 //=====================================
 static void ShinkaDemo_View_AdjustPokePos( SHINKADEMO_VIEW_WORK* work )
 {
+/*
   u8 i;
   for(i=0; i<POKE_MAX; i++)
   {
@@ -963,134 +837,6 @@ static void ShinkaDemo_View_AdjustPokePos( SHINKADEMO_VIEW_WORK* work )
       MCSS_SetOfsPosition( work->poke_set[i].wk, &ofs );
     }
   }
-}
-
-//-------------------------------------
-/// パーティクル
-//=====================================
-static PARTICLE_MANAGER* Particle_Init( HEAPID heap_id )
-{
-  const int spa_file_arc_idx[PARTICLE_SPA_FILE_MAX] =
-  {
-    NARC___particle_shinka_demo_particle_shinka_demo_spa,
-    NARC___particle_shinka_demo_particle_shinka_demo_dmy_spa,
-  };
-  PARTICLE_MANAGER* mgr;
-  u8 i;
-
-  // パーティクル専用カメラ	
-  VecFx32 cam_eye = {            0,         0,   FX32_CONST(70) };
-  VecFx32 cam_up  = {            0,  FX32_ONE,                0 };
-  VecFx32 cam_at  = {            0,         0,                0 };
-  
-  GFL_G3D_PROJECTION proj; 
-	{
-		proj.type      = GFL_G3D_PRJORTH;
-		proj.param1    =  FX32_CONST(3);
-		proj.param2    = -FX32_CONST(3);
-		proj.param3    = -FX32_CONST(4);
-		proj.param4    =  FX32_CONST(4);
-		proj.near      = defaultCameraNear;
-		proj.far       = defaultCameraFar;
-		proj.scaleW    = 0;
-	}
-
-  // PARTICLE_MANAGER
-  {
-    mgr = GFL_HEAP_AllocClearMemory( heap_id, sizeof(PARTICLE_MANAGER) );
-    mgr->frame           = 0;
-    mgr->data_no         = 0;
-    mgr->data_num        = NELEMS(particle_play_data_tbl);
-    mgr->data_tbl        = particle_play_data_tbl;
-    mgr->play            = FALSE;
-    mgr->stop_count      = -1;
-  }
-
-  GFL_PTC_Init( heap_id );
-
-  for(i=0; i<PARTICLE_SPA_FILE_MAX; i++)
-  {
-    void* arc_res;
-
-    mgr->spa_set[i].ptc = GFL_PTC_Create( mgr->spa_set[i].wk, sizeof(mgr->spa_set[i].wk), TRUE, heap_id );
-		GFL_PTC_PersonalCameraDelete( mgr->spa_set[i].ptc );
-		GFL_PTC_PersonalCameraCreate( mgr->spa_set[i].ptc, &proj, DEFAULT_PERSP_WAY, &cam_eye, &cam_up, &cam_at, heap_id );
-    arc_res = GFL_PTC_LoadArcResource( ARCID_SHINKA_DEMO, spa_file_arc_idx[i], heap_id );
-    mgr->spa_set[i].res_num = GFL_PTC_GetResNum( arc_res );
-    GFL_PTC_SetResource( mgr->spa_set[i].ptc, arc_res, TRUE, NULL );
-  }
-
-  return mgr;
-}
-
-static void Particle_Exit( PARTICLE_MANAGER* mgr )
-{
-  GFL_PTC_Exit();
-
-  GFL_HEAP_FreeMemory( mgr );
-}
-
-static void Particle_Main( PARTICLE_MANAGER* mgr )
-{
-  if( mgr->play )
-  {
-#if 0
-    VecFx32 pos = { 0, 0, 0 };
-#else
-    VecFx32 pos = { 0, FX_F32_TO_FX32(0.5f), 0 };
-#endif
-    GFL_EMIT_PTR emit;
-
-    while( mgr->data_no < mgr->data_num )
-    {
-      if( mgr->frame == mgr->data_tbl[mgr->data_no].frame )
-      {
-        emit = GFL_PTC_CreateEmitter( mgr->spa_set[ mgr->data_tbl[mgr->data_no].spa_idx ].ptc, mgr->data_tbl[mgr->data_no].res_no, &pos );
-
-#ifdef DEBUG_CODE
-        {
-          OS_Printf( "EGG_DEMO_VIEW : frame=%d, jspa_idx=%d, res_no=%d, emit=%p\n",
-              mgr->frame, mgr->data_tbl[mgr->data_no].spa_idx, mgr->data_tbl[mgr->data_no].res_no, emit );
-        }
-#endif
-
-        mgr->data_no++;
-      }
-      else
-      {
-        break;
-      }
-    }
-    mgr->frame++;
-  }
-
-  if( mgr->stop_count >= 0 )
-  {
-    if( mgr->stop_count == 0 )
-    {
-      u8 i;
-      for(i=0; i<PARTICLE_SPA_FILE_MAX; i++)
-      {
-        GFL_PTC_DeleteEmitterAll( mgr->spa_set[i].ptc );
-      }
-    }
-    mgr->stop_count--;
-  }
-}
-
-static void Particle_Draw( PARTICLE_MANAGER* mgr )
-{
-  GFL_PTC_Main();
-}
-
-static void Particle_Start( PARTICLE_MANAGER* mgr )
-{
-  mgr->play = TRUE;
-}
-
-static void Particle_Stop( PARTICLE_MANAGER* mgr, s32 stop_count )
-{
-  mgr->play = FALSE;
-  mgr->stop_count = stop_count;
+*/
 }
 

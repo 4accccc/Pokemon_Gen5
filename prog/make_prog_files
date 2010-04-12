@@ -1868,7 +1868,8 @@ SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
 #===> SRCS_OVERLAY_BATTLE_PLIST
 SRCS_OVERLAY_SHINKA_DEMO	= demo/shinka_demo/shinka_demo.c \
 													  demo/shinka_demo/shinka_demo_graphic.c \
-													  demo/shinka_demo/shinka_demo_view.c
+													  demo/shinka_demo/shinka_demo_view.c \
+													  demo/shinka_demo/shinka_demo_effect.c
 
 #中村デバッグ
 #===> SRCS_OVERLAY_NAMEIN

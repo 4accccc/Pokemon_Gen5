@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-23T13:05:22"/>
+	<create user="kawada_koji" host="W00215" date="2010-04-07T14:33:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,7 +294,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1488" top="348" right="2193" bottom="968" maximized="no" rayout="Vertical2">
+	<dialog left="53" top="183" right="758" bottom="811" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="9" right="1280" bottom="407" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -324,17 +324,17 @@
 
 	<row id="SHINKADEMO_ShinkaBeforeMsg">
 		<language name="JPN">……おや！？
-[1:02:ポケモンニックネーム:0]の　ようすが……！▼</language>
+[1:02:ポケモンニックネーム:0]の　ようすが……！</language>
 	</row>
 
 	<row id="SHINKADEMO_ShinkaCancelMsg">
 		<language name="JPN">あれ……？
-[1:02:ポケモンニックネーム:0]の　へんかが　とまった！▼</language>
+[1:02:ポケモンニックネーム:0]の　へんかが　とまった！</language>
 	</row>
 
 	<row id="SHINKADEMO_ShinkaMsg">
 		<language name="JPN">おめでとう！　[1:02:ポケモンニックネーム:0]は
-[1:01:ポケモン種族名:1]に　しんかした！▼</language>
+[1:01:ポケモン種族名:1]に　しんかした！</language>
 	</row>
 
 	<row id="SHINKADEMO_ShinkaSelectMsg">

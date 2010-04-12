@@ -84,8 +84,8 @@ static const GFL_DISP_VRAM sc_vramSetTable =
 	GX_VRAM_SUB_OBJ_16_I,	      // サブ2DエンジンのOBJ
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
 	GX_VRAM_TEX_01_BD,						// テクスチャイメージスロット
-	GX_VRAM_TEXPLTT_0_F,				// テクスチャパレットスロット
-	GX_OBJVRAMMODE_CHAR_1D_128K,// メイン画面OBJマッピングモード		
+	GX_VRAM_TEXPLTT_01_FG,				// テクスチャパレットスロット
+	GX_OBJVRAMMODE_CHAR_1D_64K,// メイン画面OBJマッピングモード		
 	GX_OBJVRAMMODE_CHAR_1D_32K,// サブ画面OBJマッピングモード
 };
 
@@ -260,7 +260,7 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 ///	テクスチャ、ﾊﾟﾚｯﾄのVRAMｻｲｽﾞ
 //=====================================
 #define GRAPHIC_G3D_TEXSIZE	(GFL_G3D_TEX256K)	//バンクのテクスチャイメージスロットｻｲｽﾞとあわせてください
-#define GRAPHIC_G3D_PLTSIZE	(GFL_G3D_PLT16K)	//バンクのﾊﾟﾚｯﾄイメージスロットｻｲｽﾞとあわせてください
+#define GRAPHIC_G3D_PLTSIZE	(GFL_G3D_PLT32K)	//バンクのﾊﾟﾚｯﾄイメージスロットｻｲｽﾞとあわせてください
 
 //-------------------------------------
 ///	カメラ位置
@@ -269,9 +269,18 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 //static const VecFx32 sc_CAMERA_PER_UP			= { 0,FX32_ONE,0 };					//上方向
 //static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,FX32_CONST( 0 ) };	//ターゲット
 
-static const VecFx32 sc_CAMERA_PER_POS    	= { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 30.0f ), FX_F32_TO_FX32( 3000.0f ) };
-static const VecFx32 sc_CAMERA_PER_UP       = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(  1.0f ), FX_F32_TO_FX32(    0.0f ) };
-static const VecFx32 sc_CAMERA_PER_TARGET		= { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 30.0f ), FX_F32_TO_FX32(    0.0f ) };
+//static const VecFx32 sc_CAMERA_PER_POS    	= { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 30.0f ), FX_F32_TO_FX32( 3000.0f ) };
+//static const VecFx32 sc_CAMERA_PER_UP       = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(  1.0f ), FX_F32_TO_FX32(    0.0f ) };
+//static const VecFx32 sc_CAMERA_PER_TARGET		= { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 30.0f ), FX_F32_TO_FX32(    0.0f ) };
+
+static const VecFx32 sc_CAMERA_PER_POS    	= { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 100.0f ) };
+static const VecFx32 sc_CAMERA_PER_UP       = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 1.0f ), FX_F32_TO_FX32(   0.0f ) };
+static const VecFx32 sc_CAMERA_PER_TARGET		= { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   0.0f ) };
+/*
+static const VecFx32 sc_CAMERA_PER_POS    	= { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   100.0f ) };
+static const VecFx32 sc_CAMERA_PER_UP       = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 1.0f ), FX_F32_TO_FX32(     0.0f ) };
+static const VecFx32 sc_CAMERA_PER_TARGET		= { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(     0.0f ) };
+*/
 
 //-------------------------------------
 ///	プロジェクション
@@ -281,13 +290,25 @@ static const VecFx32 sc_CAMERA_PER_TARGET		= { FX_F32_TO_FX32( 0.0f ), FX_F32_TO
 static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
 		( const VecFx32* cp_pos, const VecFx32* cp_up, const VecFx32* cp_target, HEAPID heapID )
 {
-#if 0	//射影
+#if 1	//射影
 	return GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
 									FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
 									FX_CosIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
 									defaultCameraAspect, 0,
 									defaultCameraNear, defaultCameraFar, 0,
 									cp_pos, cp_up, cp_target, heapID );
+
+/*
+#define camera_fovy (10)
+
+	return GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
+									FX_SinIdx( camera_fovy/2 *PERSPWAY_COEFFICIENT ),
+									FX_CosIdx( camera_fovy/2 *PERSPWAY_COEFFICIENT ),
+									defaultCameraAspect, 0,
+									( 1 << FX32_SHIFT ), ( 1024 << FX32_SHIFT ), 0,
+									cp_pos, cp_up, cp_target, heapID );
+*/
+
 #else	//正射影	クリップ面は適当です
 	return GFL_G3D_CAMERA_CreateOrtho( 
 		// const fx32 top, const fx32 bottom, const fx32 left, const fx32 right, 
@@ -350,7 +371,7 @@ static void Graphic_3d_SetUp( void )
 	}
 
 	//レンダリングスワップバッファ
-	GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
+	GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
 }
 
 #endif //GRAPHIC_G3D_USE

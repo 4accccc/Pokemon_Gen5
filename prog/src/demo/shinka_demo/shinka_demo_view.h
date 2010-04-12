@@ -74,41 +74,39 @@ extern void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work );
 extern void SHINKADEMO_VIEW_Draw( SHINKADEMO_VIEW_WORK* work );
 
 //-------------------------------------
+/// 進化前の鳴きスタート
+//=====================================
+extern void SHINKADEMO_VIEW_CryStart( SHINKADEMO_VIEW_WORK* work );
+
+//-------------------------------------
+/// 進化前の鳴きが完了しているか
+//=====================================
+extern BOOL SHINKADEMO_VIEW_CryIsEnd( SHINKADEMO_VIEW_WORK* work );
+
+//-------------------------------------
+/// 進化スタート
+//=====================================
+extern void SHINKADEMO_VIEW_ChangeStart( SHINKADEMO_VIEW_WORK* work );
+
+//-------------------------------------
+/// 進化が完了しているか
+//=====================================
+extern BOOL SHINKADEMO_VIEW_ChangeIsEnd( SHINKADEMO_VIEW_WORK* work );
+
+//-------------------------------------
+/// BGM SHINKA曲を開始してもよいか
+//=====================================
+extern BOOL SHINKADEMO_VIEW_ChangeIsBgmShinkaStart( SHINKADEMO_VIEW_WORK* work );
+
+//-------------------------------------
+/// BGM SHINKA曲をpushしてもよいか
+//=====================================
+extern BOOL SHINKADEMO_VIEW_ChangeIsBgmShinkaPush( SHINKADEMO_VIEW_WORK* work ); 
+
+//-------------------------------------
 /// 進化キャンセル
+//      成功したらTRUEを返し、直ちに進化キャンセルのフローに切り替わる
 //=====================================
-extern BOOL SHINKADEMO_VIEW_CancelShinka( SHINKADEMO_VIEW_WORK* work );
+extern BOOL SHINKADEMO_VIEW_ChangeCancel( SHINKADEMO_VIEW_WORK* work );
 
-//-------------------------------------
-/// スタート
-//=====================================
-extern void SHINKADEMO_VIEW_StartShinka( SHINKADEMO_VIEW_WORK* work );
 
-//-------------------------------------
-/// 鳴いた後のスタート
-//=====================================
-extern void SHINKADEMO_VIEW_StartShinkaAfterCry( SHINKADEMO_VIEW_WORK* work );
-
-//-------------------------------------
-/// 黒帯を表示してもよいか
-//=====================================
-extern BOOL SHINKADEMO_VIEW_IsWndAppear( SHINKADEMO_VIEW_WORK* work );
-
-//-------------------------------------
-/// イントロBGMを再生してもよいか
-//=====================================
-extern BOOL SHINKADEMO_VIEW_IsIntroBGMPlay( SHINKADEMO_VIEW_WORK* work );
-
-//-------------------------------------
-/// BGMを再生してもよいか
-//=====================================
-extern BOOL SHINKADEMO_VIEW_IsBGMPlay( SHINKADEMO_VIEW_WORK* work );
-
-//-------------------------------------
-/// 白く飛ばす演出のためのパレットフェードをして欲しいか(1フレームしかTRUEにならない)
-//=====================================
-extern BOOL SHINKADEMO_VIEW_ToFromWhite( SHINKADEMO_VIEW_WORK* work );
-
-//-------------------------------------
-/// 終了しているか
-//=====================================
-extern BOOL SHINKADEMO_VIEW_IsEndShinka( SHINKADEMO_VIEW_WORK* work );

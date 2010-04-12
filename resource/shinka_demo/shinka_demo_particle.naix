@@ -1,19 +1,28 @@
 /*****************************************************************************
 	Archive file index definition.
-	File: .\particle\shinka_demo_particle.naix
+	File: shinka_demo_particle.naix
 
-	This file was created by NINTENDO NITRO-System Archiver.
+	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2006-07-28T11:23:20
+
  *****************************************************************************/
 
-#ifndef NARC___PARTICLE_SHINKA_DEMO_PARTICLE_NAIX_
-#define NARC___PARTICLE_SHINKA_DEMO_PARTICLE_NAIX_
+#ifndef NARC_SHINKA_DEMO_PARTICLE_NAIX_
+#define NARC_SHINKA_DEMO_PARTICLE_NAIX_
 
 enum {
-	NARC___particle_shinka_demo_particle_shinka_demo_spa = 0,
-	NARC___particle_shinka_demo_particle_shinka_demo_dmy_spa = 1
+	NARC_shinka_demo_particle_demo_egg_NANR = 0,
+	NARC_shinka_demo_particle_demo_egg_NCER = 1,
+	NARC_shinka_demo_particle_demo_egg_NCGR = 2,
+	NARC_shinka_demo_particle_demo_egg_NCLR = 3,
+	NARC_shinka_demo_particle_demo_egg_NSCR = 4,
+	NARC_shinka_demo_particle_demo_egg_bg_NCGR = 5,
+	NARC_shinka_demo_particle_demo_sinka01_nsbca = 6,
+	NARC_shinka_demo_particle_demo_sinka01_nsbma = 7,
+	NARC_shinka_demo_particle_demo_sinka01_nsbmd = 8,
+	NARC_shinka_demo_particle_demo_sinka01_nsbta = 9,
+	NARC_shinka_demo_particle_shinka_demo_spa = 10
 };
 
-/* NARC___PARTICLE_SHINKA_DEMO_PARTICLE_NAIX_ */
+/* NARC_SHINKA_DEMO_PARTICLE_NAIX_ */
 #endif

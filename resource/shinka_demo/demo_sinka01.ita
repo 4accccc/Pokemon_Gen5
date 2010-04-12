@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ita version="1.6.0">
+
+<head>
+	<create user="yoshida" host="W00210" date="2010-03-26T12:31:40" source="demo_sinka01.mb"/>
+	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_srt_info
+	frame_size="101"
+	tool_start_frame="0"
+	tool_end_frame="100"
+	interpolation="frame"
+	tex_matrix_mode="maya"
+	compress_material="on" material_size="2 2"
+	frame_step_mode="1"
+	tolerance_tex_scale="0.100000"
+	tolerance_tex_rotate="0.100000"
+	tolerance_tex_translate="0.010000"
+/>
+
+<tex_scale_data size="1">
+	1.000000
+</tex_scale_data>
+
+<tex_rotate_data size="1">
+	0.000000
+</tex_rotate_data>
+
+<tex_translate_data size="102">
+	0.000000 0.000000 0.010010 0.020020 0.030029 0.040039 0.050049 0.060059 0.070068 0.080078
+	0.090088 0.100098 0.110107 0.120117 0.129883 0.139893 0.149902 0.159912 0.169922 0.179932
+	0.189941 0.199951 0.209961 0.219971 0.229980 0.239990 0.250000 0.260010 0.270020 0.280029
+	0.290039 0.300049 0.310059 0.320068 0.330078 0.340088 0.350098 0.360107 0.370117 0.379883
+	0.389893 0.399902 0.409912 0.419922 0.429932 0.439941 0.449951 0.459961 0.469971 0.479980
+	0.489990 0.500000 0.510010 0.520020 0.530029 0.540039 0.550049 0.560059 0.570068 0.580078
+	0.590088 0.600098 0.610107 0.620117 0.629883 0.639893 0.649902 0.659912 0.669922 0.679932
+	0.689941 0.699951 0.709961 0.719971 0.729980 0.739990 0.750000 0.760010 0.770020 0.780029
+	0.790039 0.800049 0.810059 0.820068 0.830078 0.840088 0.850098 0.860107 0.870117 0.879883
+	0.889893 0.899902 0.909912 0.919922 0.929932 0.939941 0.949951 0.959961 0.969971 0.979980
+	0.989990 1.000000
+</tex_translate_data>
+
+<tex_srt_anm_array size="2">
+	<tex_srt_anm index="0" material_name="demo_sinka01_1">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="101" data_head="1"/>
+	</tex_srt_anm>
+	<tex_srt_anm index="1" material_name="demo_sinka03_1">
+		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
+		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
+		<tex_translate_t frame_step="1" data_size="101" data_head="1"/>
+	</tex_srt_anm>
+</tex_srt_anm_array>
+
+</body>
+
+</ita>
