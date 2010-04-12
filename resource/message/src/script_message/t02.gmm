@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-10T22:09:34"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T12:52:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1457" top="325" right="2162" bottom="953" maximized="no" rayout="Vertical2">
+	<dialog left="1413" top="147" right="2118" bottom="946" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -844,20 +844,24 @@
 おかしなことに　なったな▽
 だけど　きにしないで　いいよ▼
 トレーナーと　ポケモンは
-おたがい　たすけあっているし▼
-ポケモンずかんを　かんせいさせるのは
-ポケモンと　トレーナーが▽
-もっと　なかよくなるため　だからね▼
-じゃあ　ぼくは　さきにいくよ▼</language>
+おたがい　たすけあっている！▼
+じゃあ　ぼくは　さきにいくよ▼
+つぎのまち……　サンヨウシティの
+ジムリーダーと　たたかいたいんだ！▼
+トレーナーが　つよくなるには
+かくちに　いる　ジムリーダーと▽
+たたかうのが　いちばん　だからね▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……ぼくのせいで
 おかしなことに　なったな▽
 だけど　気にしないで　いいよ▼
 トレーナーと　ポケモンは
-お互い　助け合っているし▼
-ポケモン図鑑を　完成させるのは
-ポケモンと　トレーナーが▽
-もっと　知り合うため　だからね▼
-じゃあ　ぼくは　先に行くよ▼</language>
+お互い　助け合っている！▼
+じゃあ　ぼくは　先に行くよ▼
+次の街……　サンヨウシティの
+ジムリーダーと　早く　戦いたいんだ！▼
+トレーナーが　強くなるには
+各地に　いる　ジムリーダーと▽
+戦うのが　一番だからね▼</language>
 	</row>
 
 	<row id="msg_t01_woman1_01" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
