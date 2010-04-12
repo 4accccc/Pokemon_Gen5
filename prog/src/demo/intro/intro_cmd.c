@@ -138,6 +138,9 @@ static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
 static BOOL CMD_MCSS_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_MCSS_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_MCSS_SET_ANIME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_MCSS_CHECK_ANIME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_MCSS_RESET_ANIME_FLAG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_MCSS_MOVE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_MCSS_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_MCSS_TALK_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 
@@ -199,6 +202,9 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   CMD_MCSS_LOAD,
   CMD_MCSS_SET_VISIBLE,
   CMD_MCSS_SET_ANIME,
+	CMD_MCSS_CHECK_ANIME,
+	CMD_MCSS_RESET_ANIME_FLAG,
+	CMD_MCSS_MOVE,
   CMD_MCSS_FADE_REQ,
   CMD_MCSS_TALK_MSG,
 
@@ -893,6 +899,23 @@ static BOOL CMD_MCSS_SET_ANIME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int*
   INTRO_MCSS_SetAnimeIndex( wk->mcss, param[0], param[1] );
   return TRUE;
 }
+
+static BOOL CMD_MCSS_CHECK_ANIME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+	return INTRO_MCSS_CheckAnime( wk->mcss, param[0] );
+}
+
+static BOOL CMD_MCSS_RESET_ANIME_FLAG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+	INTRO_MCSS_ResetAnimeFlag( wk->mcss, param[0] );
+	return TRUE;
+}
+
+static BOOL CMD_MCSS_MOVE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+	return INTRO_MCSS_MoveX( wk->mcss, param[0], param[1], param[2] );
+}
+
 
 //-----------------------------------------------------------------------------
 /**

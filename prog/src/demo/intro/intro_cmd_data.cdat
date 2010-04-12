@@ -56,7 +56,8 @@ static const INTRO_CMD_DATA c_intro_scene_01[] =
 //  { INTRO_CMD_TYPE_WAIT, { 16 } }, // ウェイト
   { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2 }, CMD_READ_NEXT }, // BGM切替
   { INTRO_CMD_TYPE_MCSS_LOAD, {0, 0, 0, 0x5a0c }, CMD_READ_NEXT },    // 博士ロード
-  { INTRO_CMD_TYPE_MCSS_LOAD, {1, MONSNO_533, -FX32_CONST(14), -FX32_CONST(11.5) }, CMD_READ_NEXT },    // ポケモンロード
+//  { INTRO_CMD_TYPE_MCSS_LOAD, {1, MONSNO_533, -FX32_CONST(14), -FX32_CONST(11.5) }, CMD_READ_NEXT },    // ポケモンロード
+  { INTRO_CMD_TYPE_MCSS_LOAD, {1, MONSNO_533, -FX32_CONST(6), -FX32_CONST(11.5) }, CMD_READ_NEXT },    // ポケモンロード
   { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, 1, FALSE }, // ポケモン非表示
   { INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 30, 0, -16 }, }, // ブラックからフェードイン
   { INTRO_CMD_TYPE_BGM_CHANGE_WAIT,  }, // BGM切替待ち
@@ -88,15 +89,20 @@ static const INTRO_CMD_DATA c_intro_scene_02[] =
 //{ INTRO_CMD_TYPE_BRIGHTNESS_SET, { 16, }, }, // 真っ白
 //{ INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 6, 0, 16, }, CMD_READ_NEXT }, // ホワイトからフェードイン
 
-  //@TODO ボールを投げるアニメに変更
-  { INTRO_CMD_TYPE_MCSS_SET_ANIME, { 0, 1 }, }, // 博士のアニメをボールなしに変更
-  { INTRO_CMD_TYPE_SE, { SEQ_SE_NAGERU } }, // ボール投げる音
+  { INTRO_CMD_TYPE_MCSS_MOVE, { 0, FX32_CONST(0.2), FX32_CONST(8.0) }, },      // 博士移動
+  { INTRO_CMD_TYPE_MCSS_RESET_ANIME_FLAG, { 0 }, }, // 博士のアニメチェックフラグをリセット
+  { INTRO_CMD_TYPE_MCSS_CHECK_ANIME, { 0 }, },      // 博士のアニメ終了待ち
 
-  { INTRO_CMD_TYPE_WAIT, 60 }, // ウェイト
+  { INTRO_CMD_TYPE_MCSS_SET_ANIME, { 0, 2 }, },     // 博士をボールを投げるアニメに変更
+  { INTRO_CMD_TYPE_WAIT, 54 },                      // ウェイト
+  { INTRO_CMD_TYPE_SE, { SEQ_SE_NAGERU } },         // ボール投げる音
+  { INTRO_CMD_TYPE_MCSS_CHECK_ANIME, { 0 }, },      // 博士のアニメ終了待ち
+  { INTRO_CMD_TYPE_MCSS_SET_ANIME, { 0, 1 }, },     // 博士を停止アニメに変更
 
   { INTRO_CMD_TYPE_SE, { SEQ_SE_BOWA2 }, CMD_READ_NEXT }, // ボールから出てくる音
   { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, { 1, TRUE }, CMD_READ_NEXT }, // ポケモン表示
-  { INTRO_CMD_TYPE_PARTICLE_MONSTERBALL, { -FX32_CONST(1.2), -FX32_CONST(2.2), 0, }, CMD_READ_NEXT }, // パーティクル モンスターボールを表示
+//  { INTRO_CMD_TYPE_PARTICLE_MONSTERBALL, { -FX32_CONST(1.2), -FX32_CONST(2.2), 0, }, CMD_READ_NEXT }, // パーティクル モンスターボールを表示
+  { INTRO_CMD_TYPE_PARTICLE_MONSTERBALL, { -FX32_CONST(0.5), -FX32_CONST(2.2), 0, }, CMD_READ_NEXT }, // パーティクル モンスターボールを表示
 //{ INTRO_CMD_TYPE_MCSS_SET_ANIME, {1,1}, CMD_READ_NEXT }, // 出現アニメ
   { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, -16, 0, 6 } }, // フェードイン
 
@@ -116,6 +122,8 @@ static const INTRO_CMD_DATA c_intro_scene_02[] =
 static const INTRO_CMD_DATA c_intro_scene_03[] =
 {
   { INTRO_CMD_TYPE_MCSS_FADE_REQ, {1, FALSE }, }, // ポケモン非表示 
+
+  { INTRO_CMD_TYPE_MCSS_MOVE, { 0, -FX32_CONST(0.2), FX32_CONST(0) }, },      // 博士移動
 
   { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_05, 0, 1 } }, // さて　わたしの　はなしは
 

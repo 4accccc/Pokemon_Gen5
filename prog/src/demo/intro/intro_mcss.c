@@ -44,6 +44,7 @@ struct _INTRO_MCSS_WORK
   HEAPID          heap_id;
   MCSS_SYS_WORK*  mcss;
   MCSS_WORK*      mcss_work[ MCSS_ID_MAX ];
+	BOOL	animeFlag[ MCSS_ID_MAX ];
 };
 
 
@@ -66,6 +67,7 @@ struct _INTRO_MCSS_WORK
  *								static関数
  */
 //=============================================================================
+static void McssCallBackFrame( u32 data, fx32 currentFrame );
 
 
 //-----------------------------------------------------------------------------
@@ -159,6 +161,9 @@ void INTRO_MCSS_Add( INTRO_MCSS_WORK* wk, fx32 px, fx32 py, fx32 pz, const MCSS_
   wk->mcss_work[id] = MCSS_Add( wk->mcss, px, py, pz, add );
 
   MCSS_SetScale( wk->mcss_work[id], &scale );
+
+	wk->animeFlag[id] = FALSE;
+	MCSS_SetAnimCtrlCallBack( wk->mcss_work[id], (u32)&wk->animeFlag[id], McssCallBackFrame, 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -195,6 +200,9 @@ void INTRO_MCSS_AddPoke( INTRO_MCSS_WORK* wk, fx32 px, fx32 py, fx32 pz, int mon
   wk->mcss_work[id] = MCSS_Add( wk->mcss, px, py, pz, &add );
   MCSS_SetScale( wk->mcss_work[id], &scale );
 	MCSS_SetAnmStopFlag( wk->mcss_work[id] );
+
+	wk->animeFlag[id] = FALSE;
+	MCSS_SetAnimCtrlCallBack( wk->mcss_work[id], (u32)&wk->animeFlag[id], McssCallBackFrame, 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -244,6 +252,39 @@ void INTRO_MCSS_SetAnimeIndex( INTRO_MCSS_WORK* wk, u8 id, int anm_idx )
   GF_ASSERT( wk->mcss_work[id] );
 
   MCSS_SetAnimeIndex( wk->mcss_work[id], anm_idx );
+
+	wk->animeFlag[id] = FALSE;
+	MCSS_SetAnimCtrlCallBack( wk->mcss_work[id], (u32)&wk->animeFlag[id], McssCallBackFrame, 0 );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  MCSSアニメーション終了チェック
+ *
+ *	@param	INTRO_MCSS_WORK* wk
+ *	@param	id
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+BOOL INTRO_MCSS_CheckAnime( INTRO_MCSS_WORK * wk, u8 id )
+{
+	return wk->animeFlag[id];
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  MCSSアニメーション終了チェック用フラグをリセット
+ *
+ *	@param	INTRO_MCSS_WORK* wk
+ *	@param	id
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INTRO_MCSS_ResetAnimeFlag( INTRO_MCSS_WORK * wk, u8 id )
+{
+	wk->animeFlag[id] = FALSE;
 }
 
 //-----------------------------------------------------------------------------
@@ -347,4 +388,38 @@ void INTRO_MCSS_SetPaletteFade( INTRO_MCSS_WORK* wk, u8 id, u8 start_evy, u8 end
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  アニメ終了時に呼ばれるコールバック関数
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void McssCallBackFrame( u32 data, fx32 currentFrame )
+{
+	BOOL * animeFlag = (BOOL *)data;
+	*animeFlag = TRUE;
+}
 
+
+BOOL INTRO_MCSS_MoveX( INTRO_MCSS_WORK * wk, u8 id, fx32 mx, fx32 px )
+{
+	BOOL	flg;
+	VecFx32	pos;
+
+	MCSS_GetPosition( wk->mcss_work[id], &pos );
+
+	flg = TRUE;
+	pos.x += mx;
+	if( pos.x != px ){
+		if( ( mx > 0 && pos.x > px ) ||
+				( mx < 0 && pos.x < px ) ){
+			pos.x = px;
+		}else{
+			flg = FALSE;
+		}
+	}
+
+	MCSS_SetPosition( wk->mcss_work[id], &pos );
+
+	return flg;
+}
