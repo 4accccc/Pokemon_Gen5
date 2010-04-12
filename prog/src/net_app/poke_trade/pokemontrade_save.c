@@ -388,14 +388,6 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
 }
 
 
-static void _mailBoxEnd(POKEMON_TRADE_WORK* pWork)
-{
-
-  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
-    return;
-  }
-  _CHANGE_STATE(pWork,_saveStart);
-}
 
 static void _mailBoxStart(POKEMON_TRADE_WORK* pWork)
 {
@@ -403,11 +395,7 @@ static void _mailBoxStart(POKEMON_TRADE_WORK* pWork)
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
-  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_12, pWork->pMessageStrBuf );
-  POKETRADE_MESSAGE_WindowOpen(pWork);
-
-  
-  _CHANGE_STATE(pWork,_mailBoxEnd);
+  _CHANGE_STATE(pWork,_saveStart);
 }
 
 

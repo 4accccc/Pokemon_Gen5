@@ -209,6 +209,12 @@ static int _addPokemon(POKEMON_TRADE_WORK* pWork,int side,int index,int boxno,co
   int i;
   
   for(i = 0;i < GTS_NEGO_POKESLT_MAX;i++){
+    if((pWork->GTSSelectIndex[side][i] == index) && (pWork->GTSSelectBoxno[side][i] == boxno)){
+      return -1;
+    }
+  }
+  
+  for(i = 0;i < GTS_NEGO_POKESLT_MAX;i++){
     if((pWork->GTSSelectIndex[side][i] == -1) || (i==GTS_NEGO_POKESLT_MAX-1)){
       OS_TPrintf("‘ã“ü %d %d\n",boxno,index);
 
@@ -224,7 +230,7 @@ static int _addPokemon(POKEMON_TRADE_WORK* pWork,int side,int index,int boxno,co
       return i;
     }
   }
-  return -1;  //‹A‚é‚±‚Æ‚Í–³‚¢
+  return -1;
 }
 
 
@@ -312,16 +318,21 @@ BOOL POKE_GTS_PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork,int index,int boxn
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     no = _addPokemon(pWork,0,index,boxno, pp);
-    if( FALSE == GFL_NET_SendDataEx(pNet, GFL_NET_SENDID_ALLUSER, _NETCMD_THREE_SELECT1+no,
-                                    POKETOOL_GetWorkSize(),pWork->GTSSelectPP[0][no],
-                                    FALSE, FALSE, TRUE)){
-      POKE_GTS_DeletePokemonDirect(pWork,0,no);  //Žæ‚èÁ‚µ
-      GFL_HEAP_FreeMemory(pp);
-      return FALSE;
+    if(no != -1){
+      if( FALSE == GFL_NET_SendDataEx(pNet, GFL_NET_SENDID_ALLUSER, _NETCMD_THREE_SELECT1+no,
+                                      POKETOOL_GetWorkSize(),pWork->GTSSelectPP[0][no],
+                                      FALSE, FALSE, TRUE)){
+        POKE_GTS_DeletePokemonDirect(pWork,0,no);  //Žæ‚èÁ‚µ
+        GFL_HEAP_FreeMemory(pp);
+        return FALSE;
+      }
     }
   }
   else{
     no = _addPokemon(pWork,0,index,boxno, pp);
+  }
+  if(no == -1){
+    return TRUE;
   }
   POKETRADE_2D_GTSPokemonIconSet(pWork,0,no,pp,TRUE);
 #if PM_DEBUG
@@ -1884,6 +1895,11 @@ BOOL POKETRADE_NEGO_IsSelect(POKEMON_TRADE_WORK* pWork,int line , int height)
   int boxno = IRC_TRADE_LINE2TRAY(line,pWork);
   int index = IRC_TRADE_LINE2POKEINDEX(line, height);
 
+  if((pWork->workPokeIndex==index) && (pWork->workBoxno==boxno)){
+    OS_TPrintf("workPokeIndex %d %d\n",boxno, index);
+    return TRUE;
+  }
+  
 
   if(POKEMONTRADEPROC_IsTriSelect(pWork)){
     for(m=0;m<GTS_NEGO_POKESLT_MAX;m++){
@@ -1900,10 +1916,6 @@ BOOL POKETRADE_NEGO_IsSelect(POKEMON_TRADE_WORK* pWork,int line , int height)
         OS_TPrintf("selectIndex %d %d\n",boxno, index);
         return TRUE;
       }
-    }
-    if((pWork->workPokeIndex==index) && (pWork->workBoxno==boxno)){
-      OS_TPrintf("workPokeIndex %d %d\n",boxno, index);
-      return TRUE;
     }
   }
   return FALSE;
@@ -1947,6 +1959,12 @@ void POKE_GTS_DeletePokemonState(POKEMON_TRADE_WORK* pWork)
       return;
     }
   }
+  pWork->selectIndex = -1;
+  pWork->selectBoxno = -1;
+  pWork->workPokeIndex = -1;
+  pWork->workBoxno = -1;
+  pWork->underSelectIndex = -1;
+  pWork->underSelectBoxno = -1;
   if(no!=-1){
     POKE_GTS_DeletePokemonDirect(pWork, 0, no);
     POKETRADE_2D_GTSPokemonIconReset(pWork,0, no);
