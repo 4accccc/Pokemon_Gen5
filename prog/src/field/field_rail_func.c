@@ -786,28 +786,20 @@ void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man)
 	cp_wk = (const RAIL_CAMERAFUNC_FIXANGLE_WORK*)cam_set->work;
 
 	// 座標直指定モード
-	FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_DIRECT_POS );
+	FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
 	// デフォルトターゲットを参照
 	FIELD_CAMERA_BindDefaultTarget( FIELD_RAIL_MAN_GetCamera(man) );
 
   FIELD_RAIL_MAN_GetBindWorkPos( man, &pos );
   {
-    VecFx32 camPos;
     u16 yaw = (u16)cp_wk->yaw;
     u16 pitch = (u16)cp_wk->pitch;
     fx32 len = cp_wk->len;
 
-    getVectorFromAngleValue(&camPos, yaw, pitch, len);
-    VEC_Add(&camPos, &pos, &camPos);
-    FIELD_CAMERA_SetCameraPos(cam, &camPos);
-
-    if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y)
-    {
-      debugPrintWholeVector("CamTgt:", &pos, "\n");
-      debugPrintWholeVector("CamPos:", &camPos, "\n");
-      OS_TPrintf("yaw:%04x pitch:%04x len:%08x\n",yaw, pitch, len);
-    }
+    FIELD_CAMERA_SetAngleYaw( cam, yaw );
+    FIELD_CAMERA_SetAnglePitch( cam, pitch );
+    FIELD_CAMERA_SetAngleLen( cam, len );
   }
 }
 
@@ -818,7 +810,6 @@ void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man)
 //------------------------------------------------------------------
 void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
 {
-  VecFx32 c_s, c_e, c_now, target;
   const FIELD_RAIL_WORK * work = FIELD_RAIL_MAN_GetBindWork( man );
 	const RAIL_POINT* point_s = FIELD_RAIL_GetPointStart( work );
 	const RAIL_POINT* point_e = FIELD_RAIL_GetPointEnd( work );
@@ -831,15 +822,13 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
   GF_ASSERT(FIELD_RAIL_GetType(work) == FIELD_RAIL_TYPE_LINE);
 
 	// 座標直指定モード
-	FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_DIRECT_POS );
+	FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
 	// デフォルトターゲットを参照
 	FIELD_CAMERA_BindDefaultTarget( FIELD_RAIL_MAN_GetCamera(man) );
 
   cs = FIELD_RAIL_POINT_GetCameraSet( work, point_s );
-//  GF_ASSERT(getRailDatCameraFunc( &man->rail_dat, cs->func_index ) == FIELD_RAIL_CAMERAFUNC_FixAngleCamera);
   ce = FIELD_RAIL_POINT_GetCameraSet( work, point_e );
-//  GF_ASSERT(getRailDatCameraFunc( &man->rail_dat, ce->func_index ) == FIELD_RAIL_CAMERAFUNC_FixAngleCamera);
 
 	cs_work = (const RAIL_CAMERAFUNC_FIXANGLE_WORK*)cs->work;
 	ce_work = (const RAIL_CAMERAFUNC_FIXANGLE_WORK*)ce->work;
@@ -848,27 +837,49 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
     u32 div = FIELD_RAIL_GetLineOfsMax(work);
 		s32 line_ofs = FIELD_RAIL_GetLineOfs(work);
     fx32 t = FX_Div( FX32_ONE * line_ofs, div * FX32_ONE );
-    u16 pitch_s = cs_work->pitch;
+    s32 pitch_s = (u16)cs_work->pitch;
+    s32 yaw_s = (u16)cs_work->yaw;
     fx32 len_s = cs_work->len;
-    u16 pitch_e = ce_work->pitch;
+    s32 pitch_e = (u16)ce_work->pitch;
+    s32 yaw_e = (u16)ce_work->yaw;
     fx32 len_e = ce_work->len;
+    s32 pitch_dis;
+    s32 yaw_dis;
 
+    u16 pitch;
+    u16 yaw;
+    fx32 len;
 
-    getVectorFromAngleValue(&c_s, cs_work->yaw, pitch_s, len_s);
-    getVectorFromAngleValue(&c_e, ce_work->yaw, pitch_e, len_e);
+    // 線形補間
+    pitch_dis = (pitch_e - pitch_s);
+    if( pitch_dis >= 0x8000 ){  // 180以上なら、逆回転
+      pitch_dis = pitch_dis - 0x10000;
+    }else if( pitch_dis <= -0x8000 ){
+      pitch_dis = pitch_dis + 0x10000;
+    }
+    pitch = (u16)(pitch_s + (FX_Mul( pitch_dis<<FX32_SHIFT,  t ) >> FX32_SHIFT));
 
-		getIntermediateVector(&c_now, &c_s, &c_e, t);
+    yaw_dis = (yaw_e - yaw_s);
+    if( yaw_dis >= 0x8000 ){  // 180以上なら、逆回転
+      yaw_dis = yaw_dis - 0x10000;
+    }else if( yaw_dis <= -0x8000 ){
+      yaw_dis = yaw_dis + 0x10000;
+    }
+    yaw = (u16)(yaw_s + (FX_Mul( yaw_dis<<FX32_SHIFT,  t ) >> FX32_SHIFT));
 
-		FIELD_RAIL_MAN_GetBindWorkPos( man, &target );
-		VEC_Add(&c_now, &target, &c_now);
-		FIELD_CAMERA_SetCameraPos(cam, &c_now);
+    len = len_s + FX_Mul( len_e - len_s,  t );
+
+    FIELD_CAMERA_SetAngleYaw( cam, yaw );
+    FIELD_CAMERA_SetAnglePitch( cam, pitch );
+    FIELD_CAMERA_SetAngleLen( cam, len );
+
+    /*
+    TOMOYA_Printf( "pitch s = 0x%x pitch e = 0x%x pitch = 0x%x\n", pitch_s, pitch_e, pitch );
+    TOMOYA_Printf( "yaw s = 0x%x yaw e = 0x%x yaw = 0x%x\n", yaw_s, yaw_e, yaw );
+    TOMOYA_Printf( "len s = 0x%x len e = 0x%x len = 0x%x\n", len_s, len_e, len );
+    */
   }
 
-  if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y)
-  {
-    debugPrintWholeVector("CamTgt:", &target, "\n");
-    debugPrintWholeVector("CamPos:", &c_now, "\n");
-  }
 }
 
 //----------------------------------------------------------------------------
