@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T14:37:39"/>
+	<create user="matsumiya" host="W00224" date="2010-04-12T18:52:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="139" right="2004" bottom="767" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c03r1101_sage1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_sage1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・室内にはゲーチス、七賢人×２
 　したっぱ♂×２、したっぱ♀×１
@@ -308,7 +308,7 @@
 ジムリーダーの　アーティさん▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・左右を見てから
 ・続けてsage3_01</comment>
@@ -322,7 +322,7 @@
 欲しくなると　盗っちゃう　人たち？▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r1101_sage3_01">
 		<comment>♂
 ・ゲーチスのほうを向いて
 　（ゲーチスは下向きのまま）
@@ -338,7 +338,7 @@
 意外に　早く　ばれましたな▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_sage1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けて
 　WHITEならleader8w_01w
@@ -359,7 +359,7 @@
 伝説は　ご存じ　ですか？▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_01w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r1101_leader8w_01w">
 		<comment>♀
 ・WHITEver
 ・続けてsage1_03w</comment>
@@ -371,7 +371,7 @@
 しろい　ドラゴンポケモン　でしょ！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_01b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r1101_leader8w_01b">
 		<comment>♀
 ・BLACKver
 ・続けてsage1_03b</comment>
@@ -383,7 +383,7 @@
 くろい　ドラゴンポケモン　でしょ！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage1_03w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_sage1_03w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・WHITEver
 ・左右に歩いてからメッセージ（演説時のイメージ）
@@ -416,7 +416,7 @@
 イッシュを　造りあげたのです▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage1_03b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_sage1_03b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・BLACKver
 ・左右に歩いてからメッセージ（演説時のイメージ）
@@ -449,7 +449,7 @@
 イッシュを　造りあげたのです▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage1_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_sage1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・芝居後にメッセージ表示
 ・続けてleader3_02</comment>
@@ -469,7 +469,7 @@
 世界に　できるのです！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてsage3_02</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -488,7 +488,7 @@
 わからないことも　あるんだよねえ</language>
 	</row>
 
-	<row id="msg_c03r1101_sage3_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r1101_sage3_02">
 		<comment>♂
 ・サブウインドウで表示
 ・続けてsage6_01</comment>
@@ -497,16 +497,16 @@
 		<language name="JPN_KANJI" width="256">はて</language>
 	</row>
 
-	<row id="msg_c03r1101_sage6_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r1101_sage6_01">
 		<comment>♂
 ・サブウインドウで表示
 ・続けてleader3_03</comment>
 		<attribute name="キャラ指定">七賢人６</attribute>
-		<language name="JPN" width="256">なにをいいだす</language>
-		<language name="JPN_KANJI" width="256">なにをいいだす</language>
+		<language name="JPN" width="256">なにを？</language>
+		<language name="JPN_KANJI" width="256">なにを？</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてleader3_04</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -525,7 +525,7 @@
 勝負をしたり　交換したりね▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・一歩前に出てメッセージ表示
 ・続けてsage1_05</comment>
@@ -553,7 +553,7 @@
 結びつきを　強めるんじゃないの？▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage1_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_sage1_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてsage1_06</comment>
 		<attribute name="キャラ指定">七賢人
@@ -575,12 +575,12 @@
 人間が　大好き　でしてね▼
 王のため　世界各国から
 知識人を　集め▽
-七賢人を　名乗っているいるほどです▼
+七賢人を　名乗っているほどです▼
 よろしい！　ここは　あなたの
-指摘に　免じ　ひきあげましょう▼</language>
+意見に　免じ　ひきあげましょう▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage1_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_sage1_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・したっぱがベルに隣接する
 ・続けてwhite_01</comment>
@@ -592,7 +592,7 @@
 ポケモンは　返してやろう▼</language>
 	</row>
 
-	<row id="msg_c03r1101_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1101_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・したっぱが元の位置に戻った後にメッセージ表示
 ・続けてleader8w_02</comment>
@@ -602,7 +602,7 @@
 		<language name="JPN_KANJI" width="256">ベル『あっ　ありがとう！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r1101_leader8w_02">
 		<comment>♀
 ・その場ジャンプ後にサポートを見て
 　メッセージ表示
@@ -617,7 +617,7 @@
 とっちゃった　わるもの　なんだよ！？▼</language>
 	</row>
 
-	<row id="msg_c03r1101_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1101_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてsage1_07
 ・0＝サポートの選んだ最初のポケモン</comment>
@@ -629,7 +629,7 @@
 [1:01:ポケモン種族名:0]が　無事で　うれしくて▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage1_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_sage1_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・メッセージ後、画面暗転
 　プラズマ団を削除
@@ -652,7 +652,7 @@
 では　ごきげんよう……▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r1101_leader8w_03">
 		<comment>♀
 ・飛び跳ねてから？
 ・続けてleader3_05</comment>
@@ -664,7 +664,7 @@
 みのがしちゃったの！？▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてwhite_03</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -679,7 +679,7 @@
 ボクたちは　どうすれば　いいのさ？▼</language>
 	</row>
 
-	<row id="msg_c03r1101_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_white_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・続けてleader8w_04</comment>
 		<attribute name="キャラ指定">友達♀
@@ -696,7 +696,7 @@
 こうやって　また　会えたんだもん！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r1101_leader8w_04">
 		<comment>♀
 ・続けてleader3_06</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -707,7 +707,7 @@
 だったら　いいんだけど……▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてwhite_03</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -718,7 +718,7 @@
 これから　どうするのさ？▼</language>
 	</row>
 
-	<row id="msg_c03r1101_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1101_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてleader8w_05</comment>
 		<attribute name="キャラ指定">友達♀
@@ -729,7 +729,7 @@
 いろいろ　みて　まわりたいけど……▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r1101_leader8w_05">
 		<comment>♀
 ・！マーク表示後
 ・続けてwhite_05</comment>
@@ -743,7 +743,7 @@
 ボディーガード　つづけるから！！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1101_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてleader3_07</comment>
 		<attribute name="キャラ指定">友達♀
@@ -752,7 +752,7 @@
 		<language name="JPN_KANJI" width="256">ベル『アイリスちゃん……▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けて
 　leader8w_06か
@@ -773,7 +773,7 @@
 助け合い！　助け合い！！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r1101_leader8w_06">
 		<comment>♀
 ・主人公に隣接してメッセージ表示
 ・表示後にアイテム入手処理
@@ -788,7 +788,7 @@
 これ　あげる！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r1101_leader8w_07">
 		<comment>♀
 ・主人公に隣接してメッセージ表示
 ・表示後にアイテム入手処理
@@ -803,7 +803,7 @@
 これ　あげる！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader8w_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r1101_leader8w_08">
 		<comment>♀
 ・ベルを押すようにして画面外に移動
 ・続けてwhite_06</comment>
@@ -813,7 +813,7 @@
 		<language name="JPN_KANJI" width="256">アイリス『じゃーねー！！▼</language>
 	</row>
 
-	<row id="msg_c03r1101_white_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1101_white_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・サブウインドウで表示
 ・続けてwhite_07</comment>
@@ -823,7 +823,7 @@
 		<language name="JPN_KANJI" width="256">ちょっ</language>
 	</row>
 
-	<row id="msg_c03r1101_white_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1101_white_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・サブウインドウで表示
 ・画面外に消えた後に続けて
@@ -835,7 +835,7 @@
 		<language name="JPN_KANJI" width="256">ちょっとお</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・主人公性別：♂
 ・メッセージ表示後、退場
@@ -849,7 +849,7 @@
 ボクは　ジムで　待ってるよ▼</language>
 	</row>
 
-	<row id="msg_c03r1101_leader3_09" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03r1101_leader3_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・主人公性別：♂
 ・メッセージ表示後、退場
