@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T21:38:57"/>
+	<create user="matsumiya" host="W00224" date="2010-04-13T18:54:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1287" top="191" right="1992" bottom="819" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -365,12 +365,14 @@
 ・WHITEver
 ・続けてboss_02</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ボクの　トモダチ
-シンが　どれほど　つよいか　ためす……▽
-そのまえに　おわるだなんて！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ボクの　トモダチ
-シンが　どれほど　強いか　試す……▽
-その前に　終わるだなんて！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……おわった！▼
+もう　ポケモンを　きずつけることも
+しばることも　なくなる▼
+トモダチ　シンの　おかげだ！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……終わった！▼
+もう　ポケモンを　きずつけることも
+しばることも　なくなる▼
+トモダチ　シンの　おかげだ！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_01b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -378,12 +380,14 @@
 ・BLACKver
 ・続けてboss_02</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ボクの　トモダチ
-ムが　どれほど　つよいか　ためす……▽
-そのまえに　おわるだなんて！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ボクの　トモダチ
-ムが　どれほど　強いか　試す……▽
-その前に　終わるだなんて！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……おわった！▼
+もう　ポケモンを　きずつけることも
+しばることも　なくなる▼
+トモダチ　ムの　おかげだ！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……終わった！▼
+もう　ポケモンを　きずつけることも
+しばることも　なくなる▼
+トモダチ　ムの　おかげだ！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -482,15 +486,11 @@
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]ボクの　みた　みらいどおり
 キミも　ストーンを　てにいれたんだ▼
 その　ダークストーン……
-ボクの　シンに▽
-はんのう　しているね▽
-どちらが　うえか　きめるつもりかな[BE:09:速度コントロール:0]▼</language>
+シンに　はんのう　しているね[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクの　みた　未来どおり
 キミも　ストーンを　手に入れたんだ▼
 その　ダークストーン……
-ボクの　シンに▽
-反応しているね▽
-雌雄を　決するつもりかな[BE:09:速度コントロール:0]▼</language>
+シンに　反応しているね[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_06b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -499,16 +499,12 @@
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]ボクの　みた　みらいどおり
 キミも　ストーンを　てにいれたんだ▼
-その　ライトストーン……
-ボクの　ムに▽
-はんのう　しているね▽
-どちらが　うえか　きめるつもりかな[BE:09:速度コントロール:0]▼</language>
+その　ダークストーン……
+ムに　はんのう　しているね[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクの　みた　未来どおり
 キミも　ストーンを　手に入れたんだ▼
-その　ライトストーン……
-ボクの　ムに▽
-反応しているね▽
-雌雄を　決するつもりかな[BE:09:速度コントロール:0]▼</language>
+その　ダークストーン……
+ムに　反応しているね[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -555,14 +551,14 @@
 そこで　すべてを　きめよう▼
 ポケモンを　かんぜんに　するため
 ひとびとから　ときはなつか！▼
-それとも　かわらず
-このままで　いるのか……[BE:09:速度コントロール:0]▼</language>
+それとも　ポケモンと　ひとは
+ともに　いるべきなのか……[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]キミも　城に　来るんだ▼
 そこで　すべてを　決めよう▼
 ポケモンを　完全に　するため
 人々から　解き放つか！▼
-それとも　変わらず
-このままで　いるのか……[BE:09:速度コントロール:0]▼</language>
+それとも　ポケモンと　人は
+共に　いるべきなのか……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -591,10 +587,10 @@
 ・続けてchampion_03</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『はい▼
+		<language name="JPN" width="256">チェレン『……まあね▼
 ポケモンリーグを　かちぬきましたよ
 なかなか　タフでしたけど▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『はい▼
+		<language name="JPN_KANJI" width="256">チェレン『……まあね▼
 ポケモンリーグを　勝ち抜きましたよ
 なかなか　タフでしたけど▼</language>
 	</row>
