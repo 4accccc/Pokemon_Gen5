@@ -160,12 +160,13 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	//ポケモン図鑑入手フラグをセット
 	_FLAG_SET( SYS_FLAG_ZUKAN_GET )
 
+	//ME鳴らす
+	_ME_PLAY( SEQ_ME_KEYITEM )
+
 	//ポケモンずかんを手に入れた！
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
 	_SYSWIN_MSG( msg_t01r0401_hakase2_13, POS_DEFAULT )
 
-	//ME鳴らす
-	_ME_PLAY( SEQ_ME_KEYITEM )
 	_ME_WAIT()
 	_AB_KEYWAIT_MARK()
 	_SYSWIN_CLOSE()

@@ -55,8 +55,8 @@ INIT_EVENT_START   ev_init_t01
 	ELSIF $WK_SCENE_T01 == 2 THEN
 		//ママからタウンマップもらった直後なら、ライバルとサポートを１番道路手前に
 
-		_OBJ_POS_CHANGE( T01_RIVAL_01, 789, 0, 737, DIR_UP )
-		_OBJ_POS_CHANGE( T01_SUPPORT_01, 787, 0, 737, DIR_DOWN )
+		_OBJ_POS_CHANGE( T01_RIVAL_01, 787, 0, 737, DIR_UP )
+		_OBJ_POS_CHANGE( T01_SUPPORT_01, 789, 0, 737, DIR_DOWN )
 
 	ELSIF $WK_SCENE_T01 == 4 THEN
 		//クリア後のハンサムイベント後なら、ライバルとサポートを自宅手前に
@@ -371,8 +371,8 @@ EVENT_START	ev_scene_t01_mama_01
 	_OBJ_ANIME_WAIT()
 
 	//ライバル＆サポート：次のイベント位置へ
-	_OBJ_POS_CHANGE( T01_RIVAL_01, 789, 0, 737, DIR_UP )
-	_OBJ_POS_CHANGE( T01_SUPPORT_01, 787, 0, 737, DIR_DOWN )
+	_OBJ_POS_CHANGE( T01_RIVAL_01, 787, 0, 737, DIR_UP )
+	_OBJ_POS_CHANGE( T01_SUPPORT_01, 789, 0, 737, DIR_DOWN )
 
 	//================フラグ操作==================//
 	//イベント無効
@@ -578,12 +578,16 @@ EVENT_START ev_pos_t01_firststep_01
 	DEFINE_LOCAL	lwk_pos_x
 	DEFINE_LOCAL	lwk_pos_z
 
-	_PLAYER_NAME( 0 )
-	_PLAINWIN_MSG_UP( msg_t01_white_04 )
-	_MSGWIN_CLOSE()
+	//サポート：！マーク
+	_OBJ_ANIME( T01_SUPPORT_01, anm_mark_gyoe )
+	_OBJ_ANIME_WAIT()
 
 	//【仮】友達集合イベント曲に差し替え予定
 	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
+
+	_PLAYER_NAME( 0 )
+	_PLAINWIN_MSG_UP( msg_t01_white_04 )
+	_MSGWIN_CLOSE()
 
 	//主人公：サポート横へ
 	_PLAYER_POS_GET( lwk_pos_x, lwk_pos_z )
@@ -606,17 +610,17 @@ EVENT_START ev_pos_t01_firststep_01
 	_OBJ_ANIME( T01_RIVAL_01, anm_stay_walk_d )
 	_OBJ_ANIME_WAIT()
 
-	_BALLOONWIN_OBJMSG_POS( msg_t01_black_06, T01_RIVAL_01, POS_UR )
+	_BALLOONWIN_OBJMSG_POS( msg_t01_black_06, T01_RIVAL_01, POS_UL )
 	_MSGWIN_CLOSE()
 
 	//サポート：主人公横へ
 	_OBJ_ANIME( T01_SUPPORT_01, anm_1ststep_support_move_01 )
 	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
 	_OBJ_ANIME_WAIT()
 
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_POS( msg_t01_white_05, T01_SUPPORT_01, POS_UL )
+	_BALLOONWIN_OBJMSG_POS( msg_t01_white_05, T01_SUPPORT_01, POS_UR )
 	_MSGWIN_CLOSE()
 
 	//ライバル：前を向いて
@@ -624,7 +628,7 @@ EVENT_START ev_pos_t01_firststep_01
 	_OBJ_ANIME_WAIT()
 
 	//さ いこう！
-	_BALLOONWIN_OBJMSG_POS( msg_t01_black_07, T01_RIVAL_01, POS_UR )
+	_BALLOONWIN_OBJMSG_POS( msg_t01_black_07, T01_RIVAL_01, POS_UL )
 	_MSGWIN_CLOSE()
 
 	//主人公＆サポート：前を向いて
@@ -633,7 +637,7 @@ EVENT_START ev_pos_t01_firststep_01
 	_OBJ_ANIME_WAIT()
 
 	//せーの！
-	_BALLOONWIN_OBJMSG_POS( msg_t01_white_06, T01_SUPPORT_01, POS_UL )
+	_BALLOONWIN_OBJMSG_POS( msg_t01_white_06, T01_SUPPORT_01, POS_UR )
 	_MSGWIN_CLOSE()
 
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_1ststep_onestep_01 )
@@ -701,7 +705,7 @@ _ANIME_LABEL	anm_1ststep_player_move_01f
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_1ststep_support_move_01
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 
