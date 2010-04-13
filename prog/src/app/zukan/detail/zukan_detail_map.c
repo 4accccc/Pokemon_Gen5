@@ -45,7 +45,8 @@
 #include "message.naix"
 #include "msg/msg_zkn.h"
 #include "townmap_gra.naix"
-#include "zukan_area.naix"
+//#include "zukan_area_w.naix"  // ここに定義されているenum値を
+//#include "zukan_area_b.naix"  // 使っていないので不要です。
 #include "zukan_gra.naix"
 
 // サウンド
@@ -529,7 +530,7 @@ typedef struct
 
   // タウンマップデータのインデックスからzkn_area_monsno_???.dat中のインデックスを得る配列
   u8 townmap_data_idx_to_zkn_area_idx[TOWNMAP_DATA_MAX];
-  // zukan_area.narcのハンドルを保持しておく
+  // zukan_area_?.narcのハンドルを保持しておく
   ARCHANDLE* area_handle;
 
   // VBlank中TCB
@@ -747,8 +748,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcInit( ZKNDTL_PROC* proc, int* seq
 
   // タウンマップデータのインデックスからzkn_area_monsno_???.dat中のインデックスを得る配列を作成する
   Zukan_Detail_Map_TownmapDataIdxToZknAreaIdxArrayMake( param, work, cmn );
-  // zukan_area.narcのハンドルを保持しておく
-  work->area_handle = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_AREA, param->heap_id );
+  // zukan_area_?.narcのハンドルを保持しておく
+  work->area_handle = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_AREA, param->heap_id );  // arc_tool.lstによって、バージョンによってARCID_ZUKAN_AREAで読み込むファイルが変わるようになっている。
 
   // VBlank中TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Zukan_Detail_Map_VBlankFunc, work, 1 );
@@ -807,7 +808,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcExit( ZKNDTL_PROC* proc, int* seq
   // VBlank中TCB
   GFL_TCB_DeleteTask( work->vblank_tcb );
 
-  // 保持していたzukan_area.narcのハンドル
+  // 保持していたzukan_area_?.narcのハンドル
   GFL_ARC_CloseDataHandle( work->area_handle );
 
   // タウンマップデータ
@@ -2849,7 +2850,9 @@ static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id, ARC
 {
 //#if 0
   u32 size;
-  AREA_DATA* area_data = GFL_ARCHDL_UTIL_LoadEx( handle, NARC_zukan_area_zkn_area_monsno_001_dat + monsno -1, FALSE, heap_id, &size );
+  //AREA_DATA* area_data = GFL_ARCHDL_UTIL_LoadEx( handle, NARC_zukan_area_w_zkn_area_w_monsno_001_dat + monsno -1, FALSE, heap_id, &size );
+  //AREA_DATA* area_data = GFL_ARCHDL_UTIL_LoadEx( handle, NARC_zukan_area_b_zkn_area_b_monsno_001_dat + monsno -1, FALSE, heap_id, &size );
+  AREA_DATA* area_data = GFL_ARCHDL_UTIL_LoadEx( handle, monsno -1, FALSE, heap_id, &size );
   GF_ASSERT_MSG( sizeof(AREA_DATA) == size, "ZUKAN_DETAIL_MAP : AREA_DATAのサイズが異なります。\n" );
   return area_data;
 //#endif

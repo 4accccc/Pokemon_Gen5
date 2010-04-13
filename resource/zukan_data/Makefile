@@ -16,7 +16,8 @@ USERS = kawada_koji
 #------------------------------------------------------------------------------
 targetname_data    = zukan_data
 gmmname            = zkn_height.gmm zkn_weight.gmm zkn_comment_00.gmm zkn_comment_01.gmm zkn_type.gmm zkn_form.gmm
-targetname_area    = zukan_area
+targetname_area_w  = zukan_area_w
+targetname_area_b  = zukan_area_b
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -38,7 +39,8 @@ input_personal            = $(PROJECT_RSCDIR)/personal/personal_wb.csv
 input_zukan               = zukan.csv
 input_encount             = $(PROJECT_RSCDIR)/encount/encount_wb.csv
 input_monsno              = $(PROJECT_ROOT)tools/hash/monsno_hash.rb
-input_area_list           = zkn_area_file_list.lst
+input_area_list_w         = zkn_area_w_file_list.lst
+input_area_list_b         = zkn_area_b_file_list.lst
 input_data_sort_aiueo_idx = zkn_sort_aiueo_idx.h
 input_townmap             = $(PROJECT_RSCDIR)/townmap/data/townmap_data.xls
 input_zonetable           = $(PROJECT_RSCDIR)/fldmapdata/zonetable/zonetable.xls
@@ -47,9 +49,10 @@ input_zoned               = $(PROJECT_RSCDIR)/fldmapdata/zonetable/zone_id.h
 # 依存するファイル
 sources_data        = $(input_personal) \
                       $(input_zukan)
-sources_area        = $(input_encount) \
+sources_area_w      = $(input_encount) \
                       $(input_monsno)
-
+sources_area_b      = $(input_encount) \
+                      $(input_monsno)
 
 .PHONY: do-build clean subdir
 
@@ -58,7 +61,8 @@ sources_area        = $(input_encount) \
 #------------------------------------------------------------------------------
 do-build: subdir \
           $(TARGETDIR)/$(targetname_data).narc \
-          $(TARGETDIR)/$(targetname_area).narc \
+          $(TARGETDIR)/$(targetname_area_w).narc \
+          $(TARGETDIR)/$(targetname_area_b).narc \
           $(foreach eachname, $(gmmname), $(GMMDIR)/$(eachname))
 
 subdir:
@@ -87,9 +91,13 @@ $(GMMDIR)/zkn_type.gmm: zkn_type.gmm
 $(GMMDIR)/zkn_form.gmm: zkn_form.gmm
 	$(COPY) zkn_form.gmm $(GMMDIR)
 
-$(TARGETDIR)/$(targetname_area).narc: $(targetname_area).narc
-	$(COPY) $(targetname_area).narc $(TARGETDIR)
-	$(COPY) $(targetname_area).naix $(TARGETDIR)
+$(TARGETDIR)/$(targetname_area_w).narc: $(targetname_area_w).narc
+	$(COPY) $(targetname_area_w).narc $(TARGETDIR)
+	$(COPY) $(targetname_area_w).naix $(TARGETDIR)
+
+$(TARGETDIR)/$(targetname_area_b).narc: $(targetname_area_b).narc
+	$(COPY) $(targetname_area_b).narc $(TARGETDIR)
+	$(COPY) $(targetname_area_b).naix $(TARGETDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
@@ -110,10 +118,15 @@ $(gmmname): $(sources_data)
 	$(NAIXCUT) $(targetname_data).naix
 	$(COPY) $(gmmname) $(GMMDIR)
 
-$(targetname_area).narc: $(sources_area)
-	perl zkn_encount_make.pl $(input_encount) $(input_monsno)
-	nnsarc -r -l -n -i $(targetname_area) -S $(input_area_list)
-	$(NAIXCUT) $(targetname_area).naix
+$(targetname_area_w).narc: $(sources_area_w)
+	perl zkn_encount_make.pl $(input_encount) $(input_monsno) w
+	nnsarc -r -l -n -i $(targetname_area_w) -S $(input_area_list_w)
+	$(NAIXCUT) $(targetname_area_w).naix
+
+$(targetname_area_b).narc: $(sources_area_b)
+	perl zkn_encount_make.pl $(input_encount) $(input_monsno) b
+	nnsarc -r -l -n -i $(targetname_area_b) -S $(input_area_list_b)
+	$(NAIXCUT) $(targetname_area_b).naix
 
 endif
 
@@ -126,17 +139,23 @@ clean:
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.dat
 	rm -f $(input_data_sort_aiueo_idx)
-	rm -f $(input_area_list)
+	rm -f $(input_area_list_w)
+	rm -f $(input_area_list_b)
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname_data).narc
 	rm -f $(targetname_data).naix
 	rm -f $(gmmname)
-	rm -f $(targetname_area).narc
-	rm -f $(targetname_area).naix
+	rm -f $(targetname_area_w).narc
+	rm -f $(targetname_area_w).naix
+	rm -f $(targetname_area_b).narc
+	rm -f $(targetname_area_b).naix
 endif
 	rm -f $(TARGETDIR)/$(targetname_data).narc
 	rm -f $(TARGETDIR)/$(targetname_data).naix
 	rm -f $(foreach eachname, $(gmmname), $(GMMDIR)/$(eachname))
-	rm -f $(TARGETDIR)/$(targetname_area).narc
-	rm -f $(TARGETDIR)/$(targetname_area).naix
+	rm -f $(TARGETDIR)/$(targetname_area_w).narc
+	rm -f $(TARGETDIR)/$(targetname_area_w).naix
+	rm -f $(TARGETDIR)/$(targetname_area_b).narc
+	rm -f $(TARGETDIR)/$(targetname_area_b).naix
+

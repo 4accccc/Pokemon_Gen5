@@ -30,6 +30,11 @@ use Encode;
 # 引数
 $encount_csv_file_name   = $ARGV[0];  # ????.csv  # shiftjis
 $personal_rb_file_name   = $ARGV[1];  # ????.rb   # shiftjis
+$version                 = $ARGV[2];  # w or b  # 作成するバージョン
+
+# バージョン
+$version_w  = "w";
+$version_b  = "b";
 
 # 複数のゾーンIDをまとめた組(グループgroupと呼ぶことにする)を作成するのに必要なファイル
 # 読み込むファイル
@@ -54,6 +59,9 @@ $temp_zoneid_file_name                  = "zkn_encount_make_pl_temp_zoneid.h";  
 #$encount_csv_row_data_end             = 101;  # encount_csv_row_data_start<=データ<encount_csv_row_data_end
 $encount_csv_col_zonename             =   1;  # ゾーン名(地名を更に細かく分けたもの)。半角英数。
 $encount_csv_col_season               =   2;  # 季節名。春/夏/秋/冬。
+$encount_csv_col_version_difference   =   3;  # バージョン違い。"●"のときバージョン違いあり。
+
+# (w) or (w&b)
 $encount_csv_col_ground_l_start       = 141;
 $encount_csv_col_ground_l_num         =  12;
 $encount_csv_col_ground_h_start       = 153;
@@ -68,6 +76,17 @@ $encount_csv_col_fishing_start        = 187;
 $encount_csv_col_fishing_num          =   5;
 $encount_csv_col_fishing_sp_start     = 192;
 $encount_csv_col_fishing_sp_num       =   5;
+
+# (b)
+$encount_csv_col_ground_l_start_b       = 334;
+$encount_csv_col_ground_h_start_b       = 346;
+$encount_csv_col_ground_sp_start_b      = 358;
+$encount_csv_col_water_start_b          = 370;
+$encount_csv_col_water_sp_start_b       = 375;
+$encount_csv_col_fishing_start_b        = 380;
+$encount_csv_col_fishing_sp_start_b     = 385;
+
+$encount_csv_version_difference_mark  = "●";
 
 $temp_encount_csv_file_name    = "zkn_encount_make_pl_temp_encount.csv";   # utf8
 
@@ -137,6 +156,13 @@ $mons_area_pre_file_name  = "zkn_area_monsno_";  # リトルエンディアン�
 $mons_area_post_file_name = ".dat";              # 例：zkn_area_monsno_001.dat
 $debug_mons_file_name = "debug_zkn_encount_make_mons.csv";  # shiftjis
 
+# バージョンによって$mons_area_pre_file_nameの名前を変更する
+# version w
+$mons_area_pre_file_name_w  = "zkn_area_w_monsno_";
+# version b
+$mons_area_pre_file_name_b  = "zkn_area_b_monsno_";
+
+
 # zone
 $zoneseason_num;  # 「ゾーンAの春」「ゾーンAの夏」を別ものとして数えたときの個数
 @zoneseason_tbl = ();
@@ -163,6 +189,13 @@ $zone_num;  # 「ゾーンAの春」「ゾーンAの夏」を同じものとし�
 
 # MONSNOごとの分布データのファイルのリスト
 $mons_area_file_list_name = "zkn_area_file_list.lst";  # shiftjis
+
+# バージョンによって$mons_area_file_list_nameの名前を変更する
+# version w
+$mons_area_file_list_name_w  = "zkn_area_w_file_list.lst";
+# version b
+$mons_area_file_list_name_b  = "zkn_area_b_file_list.lst";
+
 
 # pokemon_wbのゾーンID
 %zonename_to_real_zoneid_hash = ();  # ゾーン名から「pokemon_wbで決めたゾーンID」を得るためのハッシュ
@@ -196,6 +229,9 @@ $encount_csv_file_name = $temp_encount_csv_file_name;  # これ以降に使用�
 
 &EncodeFileFromShiftjisToUtf8( $personal_rb_file_name, $temp_personal_rb_file_name );
 $personal_rb_file_name = $temp_personal_rb_file_name;  # これ以降に使用するファイルを差し替えておく
+
+# バージョンによって変更するものを変更しておく
+&InitVersion();
 
 # グループ前処理
 &InitGroup();
@@ -379,6 +415,7 @@ sub ReadEncountFile
   $zoneseason_num = 0;
   $zone_num = 0;
 
+  # (w) or (w&b)
   my @col_tbl =
   (
     [ $encount_csv_col_ground_l_start,      $encount_csv_col_ground_l_num,      $zoneseason_col_ground_l_start      ],
@@ -388,6 +425,18 @@ sub ReadEncountFile
     [ $encount_csv_col_water_sp_start,      $encount_csv_col_water_sp_num,      $zoneseason_col_water_sp_start      ],
     [ $encount_csv_col_fishing_start,       $encount_csv_col_fishing_num,       $zoneseason_col_fishing_start       ],
     [ $encount_csv_col_fishing_sp_start,    $encount_csv_col_fishing_sp_num,    $zoneseason_col_fishing_sp_start    ],
+  );
+
+  # (b)
+  my @col_tbl_b =
+  (
+    [ $encount_csv_col_ground_l_start_b,      $encount_csv_col_ground_l_num,      $zoneseason_col_ground_l_start      ],
+    [ $encount_csv_col_ground_h_start_b,      $encount_csv_col_ground_h_num,      $zoneseason_col_ground_h_start      ],
+    [ $encount_csv_col_ground_sp_start_b,     $encount_csv_col_ground_sp_num,     $zoneseason_col_ground_sp_start     ],
+    [ $encount_csv_col_water_start_b,         $encount_csv_col_water_num,         $zoneseason_col_water_start         ],
+    [ $encount_csv_col_water_sp_start_b,      $encount_csv_col_water_sp_num,      $zoneseason_col_water_sp_start      ],
+    [ $encount_csv_col_fishing_start_b,       $encount_csv_col_fishing_num,       $zoneseason_col_fishing_start       ],
+    [ $encount_csv_col_fishing_sp_start_b,    $encount_csv_col_fishing_sp_num,    $zoneseason_col_fishing_sp_start    ],
   );
 
 
@@ -411,15 +460,40 @@ sub ReadEncountFile
       die "season \"$zoneseason_tbl[$zoneseason_num][$zoneseason_col_season]\" error, stopped";
     }
 
-    foreach my $ref (@col_tbl)
+    my $version_difference = 0;  # 0のときバージョン違いなし、1のときバージョン違いあり。
+    if( $values[$encount_csv_col_version_difference] eq $encount_csv_version_difference_mark )
     {
-      for( my $i=0; $i<$$ref[1]; $i++ )
+      $version_difference = 1;
+    }
+    
+    if(    ( $version eq $version_w )
+        || ( $version_difference == 0 ) )
+    {
+      foreach my $ref (@col_tbl)
       {
-        $zoneseason_tbl[$zoneseason_num][$$ref[2]+$i] = $mons_tbl_idx_hash{ $values[$$ref[0]+$i] };
-        if( $values[$$ref[0]+$i] ne "" && (!defined($zoneseason_tbl[$zoneseason_num][$$ref[2]+$i])) )
+        for( my $i=0; $i<$$ref[1]; $i++ )
         {
-          # 存在しないポケモン名
-          die "pokemon name \"$values[$$ref[0]+$i]\" error, stopped";
+          $zoneseason_tbl[$zoneseason_num][$$ref[2]+$i] = $mons_tbl_idx_hash{ $values[$$ref[0]+$i] };
+          if( $values[$$ref[0]+$i] ne "" && (!defined($zoneseason_tbl[$zoneseason_num][$$ref[2]+$i])) )
+          {
+            # 存在しないポケモン名
+            die "pokemon name \"$values[$$ref[0]+$i]\" error, stopped";
+          }
+        }
+      }
+    }
+    else
+    {
+      foreach my $ref (@col_tbl_b)
+      {
+        for( my $i=0; $i<$$ref[1]; $i++ )
+        {
+          $zoneseason_tbl[$zoneseason_num][$$ref[2]+$i] = $mons_tbl_idx_hash{ $values[$$ref[0]+$i] };
+          if( $values[$$ref[0]+$i] ne "" && (!defined($zoneseason_tbl[$zoneseason_num][$$ref[2]+$i])) )
+          {
+            # 存在しないポケモン名
+            die "pokemon name \"$values[$$ref[0]+$i]\" error, stopped";
+          }
         }
       }
     }
@@ -1303,5 +1377,22 @@ sub WriteLeadRealZoneidFile
   printf FH "};\r\n";
 
   close( FH );
+}
+
+##-------------------------------------
+### バージョンによって変更するものを変更しておく
+##=====================================
+sub InitVersion
+{
+  if( $version eq $version_w )
+  {
+    $mons_area_pre_file_name  = $mons_area_pre_file_name_w;
+    $mons_area_file_list_name = $mons_area_file_list_name_w;
+  }
+  else
+  {
+    $mons_area_pre_file_name  = $mons_area_pre_file_name_b;
+    $mons_area_file_list_name = $mons_area_file_list_name_b;
+  }
 }
 
