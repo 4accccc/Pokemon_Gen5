@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/09 18:54:11
+#save date:2010/04/12 23:55:46
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h03.wms
 #SECTION START:OBJ_EVENT
@@ -173,7 +173,7 @@ H03_BADRIDER1_01
 #OBJ CODE Number
 BADRIDER
 #MOVE CODE Number
-MV_RTLD         
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -181,7 +181,7 @@ FV_H03_BADRIDER
 #Event Script Name
 SCRID_H03_BADRIDER1_01
 #Direction Type Number
-DIR_DOWN
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -189,9 +189,9 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-4
+0
 #Move Limit Z Number
-28
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -253,11 +253,11 @@ POS_H03_BADRIDER_01
 #Pos Script Name
 SCRID_POS_H03_BADRIDER_01
 #Pos Check Type
-POS_CHECK_TYPE_NORMAL
+POS_CHECK_TYPE_UP
 #Event Trigger Work Name
-LOCALWORK1
+WK_SCENE_H03_BADRIDER
 #Event Trigger Work Value
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -270,11 +270,11 @@ POS_H03_BADRIDER_02
 #Pos Script Name
 SCRID_POS_H03_BADRIDER_01
 #Pos Check Type
-POS_CHECK_TYPE_NORMAL
+POS_CHECK_TYPE_DOWN
 #Event Trigger Work Name
-LOCALWORK1
+WK_SCENE_H03_BADRIDER
 #Event Trigger Work Value
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
