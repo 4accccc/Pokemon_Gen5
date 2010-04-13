@@ -17,10 +17,12 @@
 #define TR_CYCLINGM_01                     3
 #define TR_CYCLINGW_01                     4
 #define TR_POLICE_02                       5
-#define R16_FLD_ITEM_01                    6
+#define R16_TREE_01                        6
 #define R16_FLD_ITEM_02                    7
 #define R16_STOPPER_01                     8
-#define R16_FLD_ITEM_03                    9
+#define R16_FLD_ITEM_01                    9
+#define R16_ROCK_01                       10
+#define R16_FLD_ITEM_03                   11
 
 #endif //ZONE_R16_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r16.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
