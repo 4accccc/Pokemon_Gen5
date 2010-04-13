@@ -127,12 +127,11 @@
 //======================================================================
 //	DEBUG定義
 //======================================================================
-#ifdef PM_DEBUG
 
-//#define DEBUG_SPEED_CHECK_ENABLE  //デバッグ速度計測を有効にする
-//#define DEBUG_SPEED_CHECK_MAX
+#define DEBUG_SPEED_CHECK_ENABLE  //デバッグ速度計測を有効にする
 #include "debug_speed_check.h"  //デバッグ速度計測本体
 
+#ifdef PM_DEBUG
 
 //#define DEBUG_FIELDMAP_SETUP_SPEED_CHECK  //setupでの処理負荷を表示
 //#define DEBUG_FIELDMAP_INOUT_SPEED_CHECK  //FIELDMAP出入での処理負荷を表示
@@ -141,13 +140,13 @@
 //#define DEBUG_FIELDMAP_UPDATETAIL_SPEED_CHECK  //update_tailでの処理負荷を見る
 //#define DEBUG_FIELDMAP_ZONE_CHANGE_SYNC    // ゾーンチェンジに必要なシンク数を監視
 
-#endif
 
 // フィールドマップ描画にかかる処理時間を求める
 #ifdef DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
 #define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK_DRAW_KEY ( PAD_BUTTON_L )
 #endif //DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
 
+#endif  //PM_DEBUG
 
 #define FLD3DCUTIN_SIZE   (0xc000)   //フィールド3Ｄカットインのヒープサイズ
 
@@ -1091,7 +1090,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 
   if( GFL_UI_KEY_GetCont() & DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK_DRAW_KEY )
   {
-    OS_TPrintf( "top_tick %d micro second\n", OS_TicksToMicroSeconds( debug_fieldmap_end_tick ) );
+    OS_Printf( "top_tick:%d micro second:%d\n",
+        debug_fieldmap_end_tick, OS_TicksToMicroSeconds( debug_fieldmap_end_tick ) );
   }
 #endif
 #ifdef  DEBUG_FIELDMAP_UPDATETOP_SPEED_CHECK
@@ -1102,7 +1102,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
         ( (GFL_UI_KEY_GetCont() & (PAD_BUTTON_L+PAD_BUTTON_R)) == (PAD_BUTTON_L+PAD_BUTTON_R)) )
     {
       PUT_CHECK();
-      OS_TPrintf("top_tick:%ld micro sec:%ld\n", end_tick, OS_TicksToMicroSeconds( end_tick ) );
+      OS_TPrintf("top_tick:%ld", end_tick);
+      OS_TPrintf(" micro sec:%ld\n", OS_TicksToMicroSeconds( end_tick ) );
     }
   }
 #endif
@@ -1130,6 +1131,8 @@ static void DrawTop(FIELDMAP_WORK *fieldWork)
   MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
 }
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
   
@@ -1138,6 +1141,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
   OSTick debug_fieldmap_start_tick = OS_GetTick(); 
   OSTick debug_fieldmap_end_tick;
 #endif
+  INIT_CHECK();
   
   if(GAMEDATA_GetIsSave( fieldWork->gamedata )){
      GAMEDATA_ResetFrameSpritCount(GAMESYSTEM_GetGameData(gsys));
@@ -1147,10 +1151,13 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
   //ロード後半
   FLDMAPPER_MainTail( fieldWork->g3Dmapper );
   
+  SET_CHECK("update_tail:subscreen");
   FIELD_SUBSCREEN_Draw(fieldWork->fieldSubscreenWork);
   
+  SET_CHECK("update_tail:fldmsgbg");
   if(fieldWork->fldMsgBG ){ FLDMSGBG_PrintMain( fieldWork->fldMsgBG ); }
 
+  SET_CHECK("update_tail:place name");
   if(fieldWork->placeNameSys){ FIELD_PLACE_NAME_Draw( fieldWork->placeNameSys ); }
   
 	MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
@@ -1171,15 +1178,29 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
   if( GFL_UI_KEY_GetCont() & DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK_DRAW_KEY )
   {
     const GFL_D3D_INFO *info = GFL_G3D_GetG3dInfoPtr();
-    OS_TPrintf( "draw_tick %d micro second\n", OS_TicksToMicroSeconds( debug_fieldmap_end_tick ) );
-    OS_Printf( "poly_vtx = %d, %d\n",
+    OS_TPrintf( "draw_tick:%d ", debug_fieldmap_end_tick );
+    OS_TPrintf( "micro second:%d\n", OS_TicksToMicroSeconds( debug_fieldmap_end_tick ) );
+    OS_TPrintf( "poly_vtx = %d, %d\n",
         G3X_GetPolygonListRamCount(),
         G3X_GetVtxListRamCount()
         );
-    OS_Printf( "total poly_vtx = %d, %d\n",
+    OS_TPrintf( "total poly_vtx = %d, %d\n",
         info->TotalPolygonNum,
         info->TotalVertexNum
         );
+  }
+#endif
+#ifdef  DEBUG_FIELDMAP_UPDATETAIL_SPEED_CHECK
+  {
+    OSTick end_tick;
+    TAIL_CHECK( &end_tick );
+    if ( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_L) ||
+        ( (GFL_UI_KEY_GetCont() & (PAD_BUTTON_L+PAD_BUTTON_R)) == (PAD_BUTTON_L+PAD_BUTTON_R)) )
+    {
+      PUT_CHECK();
+      OS_TPrintf("tail_tick:%ld", end_tick);
+      OS_TPrintf(" micro sec:%ld\n", OS_TicksToMicroSeconds( end_tick ) );
+    }
   }
 #endif
 
@@ -3266,8 +3287,10 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
 {
   if(fieldWork->fldMsgBG ){ FLDMSGBG_PrintG3D( fieldWork->fldMsgBG ); }
 
+  SET_CHECK("update_tail:mapper draw");
   FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera, FLDMAPPER_DRAW_TAIL );
   
+  SET_CHECK("update_tail:wipe draw");
 	FIELDSKILL_MAPEFF_Draw( fieldWork->fieldskill_mapeff );
 
 
@@ -3276,6 +3299,7 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
   // (WIPE用)
   FIELD_CAMERA_DEBUG_Draw( fieldWork->camera_control );
 #endif
+  SET_CHECK("update_tail:proj calc");
 
   {
 	  MtxFx44 org_pm,pm;
@@ -3296,6 +3320,7 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
 		NNS_G3dGlbFlush();		  //　ジオメトリコマンドを転送
     NNS_G3dGeFlushBuffer(); // 転送まち
 
+    SET_CHECK("update_tail:fldeff draw");
     FLDEFF_CTRL_Draw( fieldWork->fldeff_ctrl );
     
     if(fieldWork->union_eff != NULL){
@@ -3309,8 +3334,10 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
     else
     {
      
+    SET_CHECK("update_tail:g3dobj draw");
     FLD_G3DOBJ_CTRL_Draw( fieldWork->fieldG3dObjCtrl );
     
+    SET_CHECK("update_tail:bbd draw");
     GFL_BBDACT_Draw(
         fieldWork->bbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
     }
@@ -3319,12 +3346,15 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
 		NNS_G3dGlbFlush();		//　ジオメトリコマンドを転送
   }
 
+  SET_CHECK("update_tail:FLDMAPFUNC_Sys_Draw3D");
 	// フィールドマップ用制御タスクシステム
 	FLDMAPFUNC_Sys_Draw3D( fieldWork->fldmapFuncSys );
 
 	
+  SET_CHECK("update_tail:weather 3d");
   FIELD_WEATHER_3DWrite( fieldWork->weather_sys );	// 天気描画処理
 
+  SET_CHECK("update_tail: exp obj draw");
   //フィールド拡張3ＤＯＢＪ描画
   FLD_EXP_OBJ_Draw( fieldWork->ExpObjCntPtr );
 #ifdef PM_DEBUG
@@ -3348,6 +3378,7 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
   }
 #endif  //PM_DEBUG  
 
+  SET_CHECK("update_tail:prt & ci draw");
   FLD_PRTCL_Main();
   FLD3D_CI_Draw( fieldWork->Fld3dCiPtr );
 
