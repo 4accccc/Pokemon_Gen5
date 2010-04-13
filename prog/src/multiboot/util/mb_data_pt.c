@@ -114,6 +114,7 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
       u8 i;
       const u32 boxStartAdd = MB_DATA_GetStartAddress(PT_GMDATA_ID_BOXDATA , dataWork->cardType );
       const u32 itemStartAdd = MB_DATA_GetStartAddress(PT_GMDATA_ID_TEMOTI_ITEM , dataWork->cardType );
+      const u32 statusStartAdd = MB_DATA_GetStartAddress(PT_GMDATA_ID_PLAYER_DATA , dataWork->cardType );
       PT_SAVE_FOOTER *footer[4];
       footer[PT_MAIN_FIRST] = (PT_SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(PT_GMDATA_NORMAL_FOOTER , dataWork->cardType ) ];
       footer[PT_BOX_FIRST]  = (PT_SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(PT_GMDATA_BOX_FOOTER , dataWork->cardType ) ];
@@ -150,11 +151,13 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
           if( dataWork->mainLoadPos == DDS_FIRST )
           {
             dataWork->pItemData = dataWork->pData + itemStartAdd;
+            dataWork->pMyStatus = dataWork->pData + statusStartAdd;
             dataWork->mainSavePos = DDS_SECOND;
           }
           else
           {
             dataWork->pItemData = dataWork->pDataMirror + itemStartAdd;
+            dataWork->pMyStatus = dataWork->pDataMirror + statusStartAdd;
             dataWork->mainSavePos = DDS_FIRST;
           }
 
@@ -170,6 +173,16 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
     break;
   
   case 4: //BOXの解析(テストデータ変換は別の場所で
+    //国コードチェック
+    if( dataWork->errorState == DES_NONE )
+    {
+      PT_MYSTATUS *myStatus = (PT_MYSTATUS*)dataWork->pMysteryData;
+      if( myStatus->region_code != PM_LANG )
+      {
+        dataWork->errorState = DES_ANOTHER_COUNTRY;
+      }
+    }
+    
 #if DEB_ARI
     if( dataWork->pBoxData != NULL )
     {

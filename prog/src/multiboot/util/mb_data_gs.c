@@ -125,6 +125,7 @@ BOOL  MB_DATA_GS_LoadData( MB_DATA_WORK *dataWork )
       const u32 boxStartAdd = MB_DATA_GetStartAddress(GS_GMDATA_ID_BOXDATA , dataWork->cardType );
       const u32 itemStartAdd = MB_DATA_GetStartAddress(GS_GMDATA_ID_TEMOTI_ITEM , dataWork->cardType );
       const u32 mysteryStartAdd = MB_DATA_GetStartAddress(GS_GMDATA_ID_FUSHIGIDATA , dataWork->cardType );
+      const u32 statusStartAdd = MB_DATA_GetStartAddress(GS_GMDATA_ID_PLAYER_DATA , dataWork->cardType );
       GS_SAVE_FOOTER *footer[4];
       footer[GS_MAIN_FIRST] = (GS_SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(GS_GMDATA_NORMAL_FOOTER , dataWork->cardType ) ];
       footer[GS_BOX_FIRST]  = (GS_SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(GS_GMDATA_BOX_FOOTER , dataWork->cardType ) ];
@@ -162,12 +163,14 @@ BOOL  MB_DATA_GS_LoadData( MB_DATA_WORK *dataWork )
           if( dataWork->mainLoadPos == DDS_FIRST )
           {
             dataWork->pItemData = dataWork->pData + itemStartAdd;
+            dataWork->pMyStatus = dataWork->pData + statusStartAdd;
             dataWork->pMysteryData = dataWork->pData + mysteryStartAdd;
             dataWork->mainSavePos = DDS_SECOND;
           }
           else
           {
             dataWork->pItemData = dataWork->pDataMirror + itemStartAdd;
+            dataWork->pMyStatus = dataWork->pDataMirror + statusStartAdd;
             dataWork->pMysteryData = dataWork->pDataMirror + mysteryStartAdd;
             dataWork->mainSavePos = DDS_FIRST;
           }
@@ -183,6 +186,15 @@ BOOL  MB_DATA_GS_LoadData( MB_DATA_WORK *dataWork )
     break;
   
   case 4: 
+    //国コードチェック
+    if( dataWork->errorState == DES_NONE )
+    {
+      GS_MYSTATUS *myStatus = (GS_MYSTATUS*)dataWork->pMyStatus;
+      if( myStatus->region_code != PM_LANG )
+      {
+        dataWork->errorState = DES_ANOTHER_COUNTRY;
+      }
+    }
 #if DEB_ARI
     //BOXの解析(テストデータ変換は別の場所で
     if( dataWork->pBoxData != NULL )

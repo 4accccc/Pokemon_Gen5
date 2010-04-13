@@ -38,6 +38,7 @@ enum DLPLAY_ERROR_STATE
   DES_NONE,
   DES_DISCONNECT,
   DES_MISS_LOAD_BACKUP,
+  DES_ANOTHER_COUNTRY,
 
   DES_MAX,
 };
@@ -82,5 +83,6 @@ struct _MB_DATA_WORK
   u8  *pBoxData;    //読み込み対象のBOXデータアドレス(まだポケモンデータじゃない！
   u8  *pItemData;   //読み込み対象のアイテムデータアドレス(まだアイテムデータじゃない！
   u8  *pMysteryData;//読み込み対象の不思議な贈り物データアドレス
+  u8  *pMyStatus;   //読み込み対象のマイステータすデータアドレス(初回国コードのみ
 };
 
