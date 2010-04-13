@@ -54,6 +54,8 @@ static int MainSeq_WipeOut( ZKNTOPMAIN_WORK * wk );
 static int MainSeq_Main( ZKNTOPMAIN_WORK * wk );
 static int MainSeq_Demo( ZKNTOPMAIN_WORK * wk );
 
+static void ScaleAnimeFrameBG(void);
+
 
 static const pZKNTOP_FUNC	MainSeq[] = {
 	MainSeq_Init,
@@ -88,10 +90,10 @@ static void InitVram(void)
 {
 	const GFL_DISP_VRAM tbl = {
 		GX_VRAM_BG_128_A,							// メイン2DエンジンのBG
-		GX_VRAM_BGEXTPLTT_NONE,				// メイン2DエンジンのBG拡張パレット
+		GX_VRAM_BGEXTPLTT_0123_E,			// メイン2DエンジンのBG拡張パレット
 
 		GX_VRAM_SUB_BG_128_C,					// サブ2DエンジンのBG
-		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+		GX_VRAM_SUB_BGEXTPLTT_0123_H,	// サブ2DエンジンのBG拡張パレット
 
 		GX_VRAM_OBJ_128_B,						// メイン2DエンジンのOBJ
 		GX_VRAM_OBJEXTPLTT_NONE,			// メイン2DエンジンのOBJ拡張パレット
@@ -139,76 +141,76 @@ static void InitBg(void)
 
 	{	// BG SYSTEM
 		GFL_BG_SYS_HEADER sysh = {
-			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
+			GX_DISPMODE_GRAPHICS, GX_BGMODE_3, GX_BGMODE_3, GX_BG0_AS_2D,
 		};
 		GFL_BG_SetBGMode( &sysh );
 	}
 
 	{	// メイン画面：フレーム
-		GFL_BG_BGCNT_HEADER cnth= {
-			0, 29*8, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_256,
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, 0x8000,
-			GX_BG_EXTPLTT_01, 2, 1, 0, FALSE
+		GFL_BG_BGCNT_HEADER cnth = {
+			0, 29*8, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_256,
+			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, 0x10000,
+			GX_BG_EXTPLTT_23, 2, 1, 0, FALSE
 		};
-		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &cnth, GFL_BG_MODE_TEXT );
-		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
+		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &cnth, GFL_BG_MODE_256X16 );
+		GFL_BG_ClearScreen( GFL_BG_FRAME3_M );
 	}
 	{	// メイン画面：カスタムグラフィック
-		GFL_BG_BGCNT_HEADER cnth= {
+		GFL_BG_BGCNT_HEADER cnth = {
 			0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, 0x8000,
+			GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x00000, 0x8000,
 			GX_BG_EXTPLTT_01, 1, 1, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &cnth, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
 	}
 	{	// メイン画面：
-		GFL_BG_BGCNT_HEADER cnth= {
+		GFL_BG_BGCNT_HEADER cnth = {
 			0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_256,
-			GX_BG_SCRBASE_0xd000, GX_BG_CHARBASE_0x00000, 0x8000,
-			GX_BG_EXTPLTT_01, 0, 1, 0, FALSE
+			GX_BG_SCRBASE_0xc000, GX_BG_CHARBASE_0x10000, 0x10000,
+			GX_BG_EXTPLTT_23, 0, 1, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &cnth, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME2_M );
 	}
 
 	{	// サブ画面：背景
-		GFL_BG_BGCNT_HEADER cnth= {
+		GFL_BG_BGCNT_HEADER cnth = {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
-			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,
+			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x10000, 0x10000,
 			GX_BG_EXTPLTT_01, 1, 1, 0, FALSE
 		};
-		GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &cnth, GFL_BG_MODE_TEXT );
-		GFL_BG_ClearScreen( GFL_BG_FRAME0_S );
+		GFL_BG_SetBGControl( GFL_BG_FRAME3_S, &cnth, GFL_BG_MODE_256X16 );
+		GFL_BG_ClearScreen( GFL_BG_FRAME3_S );
 	}
 	{	// サブ画面：フレーム
-		GFL_BG_BGCNT_HEADER cnth= {
+		GFL_BG_BGCNT_HEADER cnth = {
 			0, 3*8, 0x1000, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_256,
-			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,
-			GX_BG_EXTPLTT_01, 0, 1, 0, FALSE
+			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x10000, 0x8000,
+			GX_BG_EXTPLTT_23, 0, 1, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &cnth, GFL_BG_MODE_TEXT );
 		GFL_BG_ClearScreen( GFL_BG_FRAME1_S );
 	}
 
 	GFL_DISP_GX_SetVisibleControl(
-		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_ON );
+		GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 | GX_PLANEMASK_BG3, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl(
-		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1, VISIBLE_ON );
+		GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_ON );
 }
 
 static void ExitBg(void)
 {
 	GFL_DISP_GX_SetVisibleControl(
-		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_OFF );
+		GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 | GX_PLANEMASK_BG3, VISIBLE_OFF );
 	GFL_DISP_GXS_SetVisibleControl(
-		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1, VISIBLE_OFF );
+		GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_OFF );
 
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_S );
-	GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME3_S );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
-	GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME3_M );
 
 	GFL_BG_Exit();
 }
@@ -219,24 +221,32 @@ static void LoadBgGraphic( ZKNTOPMAIN_WORK * wk )
 
 	if( MyStatus_GetMySex( wk->dat->mystatus ) == PTL_SEX_MALE ){
 		GFL_ARCHDL_UTIL_TransVramPalette(
-			ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_ZUKAN_TOP );
+			ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_MAIN_BG_EX, 0x4000, 0, HEAPID_ZUKAN_TOP );
 		GFL_ARCHDL_UTIL_TransVramPalette(
-			ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_SUB_BG, 0, 0, HEAPID_ZUKAN_TOP );
+			ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_MAIN_BG_EX, 0x6000, 0, HEAPID_ZUKAN_TOP );
+		GFL_ARCHDL_UTIL_TransVramPalette(
+			ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_SUB_BG_EX, 0x4000, 0, HEAPID_ZUKAN_TOP );
+		GFL_ARCHDL_UTIL_TransVramPalette(
+			ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_SUB_BG_EX, 0x6000, 0, HEAPID_ZUKAN_TOP );
 	}else{
 		GFL_ARCHDL_UTIL_TransVramPalette(
-			ah, NARC_zukan_gra_top_zkn_top_bg2_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_ZUKAN_TOP );
+			ah, NARC_zukan_gra_top_zkn_top_bg2_NCLR, PALTYPE_MAIN_BG_EX, 0x4000, 0, HEAPID_ZUKAN_TOP );
 		GFL_ARCHDL_UTIL_TransVramPalette(
-			ah, NARC_zukan_gra_top_zkn_top_bg2_NCLR, PALTYPE_SUB_BG, 0, 0, HEAPID_ZUKAN_TOP );
+			ah, NARC_zukan_gra_top_zkn_top_bg2_NCLR, PALTYPE_MAIN_BG_EX, 0x6000, 0, HEAPID_ZUKAN_TOP );
+		GFL_ARCHDL_UTIL_TransVramPalette(
+			ah, NARC_zukan_gra_top_zkn_top_bg2_NCLR, PALTYPE_SUB_BG_EX, 0x4000, 0, HEAPID_ZUKAN_TOP );
+		GFL_ARCHDL_UTIL_TransVramPalette(
+			ah, NARC_zukan_gra_top_zkn_top_bg2_NCLR, PALTYPE_SUB_BG_EX, 0x6000, 0, HEAPID_ZUKAN_TOP );
 	}
 
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-		ah, NARC_zukan_gra_top_zkn_top_cover_NCGR, GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
+		ah, NARC_zukan_gra_top_zkn_top_cover_NCGR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-		ah, NARC_zukan_gra_top_zkn_top_cover_NCGR, GFL_BG_FRAME0_S, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
+		ah, NARC_zukan_gra_top_zkn_top_cover_NCGR, GFL_BG_FRAME1_S, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
 
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_zukan_gra_top_zkn_top_cover_NSCR,
-		GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
+		GFL_BG_FRAME3_M, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_zukan_gra_top_zkn_top_pict_NSCR,
 		GFL_BG_FRAME1_M, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
@@ -246,7 +256,7 @@ static void LoadBgGraphic( ZKNTOPMAIN_WORK * wk )
 
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_zukan_gra_top_zkn_top_sub_bg_NSCR,
-		GFL_BG_FRAME0_S, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
+		GFL_BG_FRAME3_S, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_zukan_gra_top_zkn_top_cover_u_NSCR,
 		GFL_BG_FRAME1_S, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
@@ -282,6 +292,17 @@ static void LoadSaveGraphic( ZKNTOPMAIN_WORK * wk )
 					GFL_BG_FRAME1_M, pal, ZUKANWP_SAVEDATA_PAL_SIZE*2, 0 );
 				GFL_BG_LoadPalette(
 					GFL_BG_FRAME1_S, pal, ZUKANWP_SAVEDATA_PAL_SIZE*2, 0 );
+
+				// 拡張パレットにも読み込み
+	      DC_FlushRange( (void*)pal, ZUKANWP_SAVEDATA_PAL_SIZE*2 );
+        GX_BeginLoadBGExtPltt();
+        GX_LoadBGExtPltt( (const void *)pal, 0x4000, ZUKANWP_SAVEDATA_PAL_SIZE*2 );
+        GX_LoadBGExtPltt( (const void *)pal, 0x6000, ZUKANWP_SAVEDATA_PAL_SIZE*2 );
+        GX_EndLoadBGExtPltt();
+        GXS_BeginLoadBGExtPltt();
+        GXS_LoadBGExtPltt( (const void *)pal, 0x4000, ZUKANWP_SAVEDATA_PAL_SIZE*2 );
+        GXS_LoadBGExtPltt( (const void *)pal, 0x6000, ZUKANWP_SAVEDATA_PAL_SIZE*2 );
+        GXS_EndLoadBGExtPltt();
 			}
 		}
 	}
@@ -402,7 +423,7 @@ static int MainSeq_Demo( ZKNTOPMAIN_WORK * wk )
 			wk->demoSeq++;
 			break;
 		}
-		GFL_BG_SetScrollReq( GFL_BG_FRAME0_M, GFL_BG_SCROLL_Y_DEC, DEMO_SCROLL_SPEED );
+		GFL_BG_SetScrollReq( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_DEC, DEMO_SCROLL_SPEED );
 		GFL_BG_SetScrollReq( GFL_BG_FRAME1_M, GFL_BG_SCROLL_Y_DEC, DEMO_SCROLL_SPEED );
 		GFL_BG_SetScrollReq( GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_DEC, DEMO_SCROLL_SPEED );
 		GFL_BG_SetScrollReq( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_DEC, DEMO_SCROLL_SPEED );
@@ -412,6 +433,10 @@ static int MainSeq_Demo( ZKNTOPMAIN_WORK * wk )
 	case 1:
 		if( wk->demoCnt == DEMO_SCROLL_END_WAIT ){
 			PMSND_PlaySE( SEQ_SE_SYS_77 );
+			GFL_BG_SetRotateCenterReq( GFL_BG_FRAME3_M, GFL_BG_CENTER_X_SET, 128 );
+			GFL_BG_SetRotateCenterReq( GFL_BG_FRAME3_M, GFL_BG_CENTER_Y_SET, 120 );
+			GFL_BG_SetRotateCenterReq( GFL_BG_FRAME3_S, GFL_BG_CENTER_X_SET, 128 );
+			GFL_BG_SetRotateCenterReq( GFL_BG_FRAME3_S, GFL_BG_CENTER_Y_SET, 96 );
 			wk->demoCnt = 0;
 			wk->demoSeq++;
 			break;
@@ -420,10 +445,34 @@ static int MainSeq_Demo( ZKNTOPMAIN_WORK * wk )
 		break;
 
 	case 2:
-		wk->dat->retMode = ZKNTOP_RET_LIST;
-		ZKNCOMM_SetFadeOut( HEAPID_ZUKAN_TOP );
-		return MAINSEQ_WIPE_OUT;
+		ScaleAnimeFrameBG();
+		if( wk->demoCnt == 4 ){
+			WIPE_SYS_Start(
+				WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
+				WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC*4, HEAPID_ZUKAN_TOP );
+			wk->demoCnt = 0;
+			wk->demoSeq++;
+		}else{
+			wk->demoCnt++;
+		}
+		break;
+
+	case 3:
+		ScaleAnimeFrameBG();
+		if( WIPE_SYS_EndCheck() == TRUE ){
+			wk->dat->retMode = ZKNTOP_RET_LIST;
+			return MAINSEQ_RELEASE;
+		}
+		break;
 	}
 
 	return MAINSEQ_DEMO;
+}
+
+static void ScaleAnimeFrameBG(void)
+{
+	GFL_BG_SetScaleReq( GFL_BG_FRAME3_M, GFL_BG_SCALE_X_INC, FX32_ONE/32 );
+	GFL_BG_SetScaleReq( GFL_BG_FRAME3_M, GFL_BG_SCALE_Y_INC, FX32_ONE/32 );
+	GFL_BG_SetScaleReq( GFL_BG_FRAME3_S, GFL_BG_SCALE_X_INC, FX32_ONE/32 );
+	GFL_BG_SetScaleReq( GFL_BG_FRAME3_S, GFL_BG_SCALE_Y_INC, FX32_ONE/32 );
 }

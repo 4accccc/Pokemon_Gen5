@@ -878,7 +878,7 @@ static BOOL debugMenuCallProc_OpenGTSNegoMenu( DEBUG_MENU_EVENT_WORK *wk )
 }
 
 
-
+//#if 0
 #if DEBUG_ONLY_FOR_ohno
 //--------------------------------------------------------------
 /**
@@ -1017,6 +1017,7 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
   return( FALSE );
 }
 #endif
+//#endif
 
 #if 0    //}ŠÓƒeƒXƒg
 
@@ -1049,6 +1050,9 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
   u8* pCGearWork = GFL_HEAP_AllocMemory(HEAPID_FIELDMAP,SAVESIZE_EXTRA_ZUKAN_WALLPAPER);
   TESTZUKAN_DATA* pPic=(TESTZUKAN_DATA*)pCGearWork;
 
+  SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_ZUKAN_WALLPAPER, HEAPID_FIELDMAP,
+                             pCGearWork,SAVESIZE_EXTRA_ZUKAN_WALLPAPER);
+
   pPic->flg=TRUE;
 
   p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, HEAPID_FIELDMAP );
@@ -1061,8 +1065,9 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 
   pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_c_gear_zukantest_NCLR, FALSE, HEAPID_FIELDMAP);
   if( NNS_G2dGetUnpackedPaletteData( pArc, &palData ) ){
+		u16 * pal = (u16 *)palData->pRawData;
     for(i=0;i<16;i++){
-      GFL_STD_MemCopy(palData->pRawData, &pPic->customPalette[32*i], 32);
+      GFL_STD_MemCopy( &pal[16*i], &pPic->customPalette[16*i], 32);
     }
   }
   GFL_HEAP_FreeMemory(pArc);
@@ -1084,6 +1089,16 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
   }
   
   OS_TPrintf("-----%x \n",crc);
+
+  SaveControl_Extra_SaveAsyncInit(pSave,SAVE_EXTRA_ID_ZUKAN_WALLPAPER);
+  while(1){
+    if(SAVE_RESULT_OK==SaveControl_Extra_SaveAsyncMain(pSave,SAVE_EXTRA_ID_ZUKAN_WALLPAPER)){
+      break;
+    }
+    OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+  }
+  SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_ZUKAN_WALLPAPER);
+
 
   GFL_HEAP_FreeMemory(pCGearWork);
 
