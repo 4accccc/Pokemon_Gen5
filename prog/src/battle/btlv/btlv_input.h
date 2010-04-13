@@ -20,7 +20,7 @@
 //戦闘下画面OBJパレット内訳
 /*
 0:モンスターボール
-1:
+1:わるあがきボタン
 2:技＆対象選択ボタンアニメ
 3:天候アイコンうわもの
 4:天候アイコンベース
@@ -30,10 +30,10 @@
 8:技タイプアイコン
 9:技タイプアイコン
 A:技タイプアイコン
-B:空き
+B:ポケモンアイコン
 C:ポケモンアイコン
 D:ポケモンアイコン
-E:ポケモンアイコン
+E:通信アイコン
 F:ローカライズ用予約
 */
 
@@ -41,9 +41,9 @@ typedef struct _BTLV_INPUT_WORK BTLV_INPUT_WORK;
 
 ///技選択画面構成用のデータ
 typedef struct{
-  u16         wazano[ PTL_WAZA_MAX ];
-  u16         pp[ PTL_WAZA_MAX ];
-  u16         ppmax[ PTL_WAZA_MAX ];
+  WazaID      wazano[ PTL_WAZA_MAX ];
+  u8          pp[ PTL_WAZA_MAX ];
+  u8          ppmax[ PTL_WAZA_MAX ];
   BtlvMcssPos pos;
 }BTLV_INPUT_WAZA_PARAM;
 
@@ -115,10 +115,17 @@ typedef struct{
 }BTLV_INPUT_COMMAND_PARAM;
 
 ///ローテーション画面構成用のワーク
+#ifdef ROTATION_NEW_SYSTEM
+typedef struct{
+  const BTL_POKEPARAM*  bpp[ BTL_ROTATE_NUM ];
+  BOOL  waza_exist[ BTL_ROTATE_NUM ][PTL_WAZA_MAX ];
+}BTLV_INPUT_ROTATE_PARAM;
+#else
 typedef struct{
   const POKEMON_PARAM*  pp[ BTL_ROTATE_NUM ];
   BtlRotateDir          before_select_dir;                  //1つ前に選択した方向
 }BTLV_INPUT_ROTATE_PARAM;
+#endif
 
 typedef enum
 {
@@ -171,6 +178,20 @@ typedef struct
 
 #define BTLV_INPUT_NOMOVE ( -128 )
 
+typedef u32 BTLV_INPUT_ROTATE_RESULT; //上位16bit:BtlRotateDir  下位16bit:選択した技の位置orキャンセル
+
+//BtlRotateDir取得
+static inline u16 BTLV_INPUT_GetBtlRotateDir( BTLV_INPUT_ROTATE_RESULT result )
+{
+  return ( result & 0xffff0000 ) >> 16;
+}
+
+//選択した技の位置orキャンセル取得
+static inline u16 BTLV_INPUT_GetSelectWaza( BTLV_INPUT_ROTATE_RESULT result )
+{
+  return ( result & 0xffff );
+}
+
 extern  BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, BtlCompetitor comp, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID );
 extern  BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( BTLV_INPUT_TYPE type, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID );
 extern  void              BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw );
@@ -186,4 +207,5 @@ extern  void              BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_IN
 extern  int               BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl,
                                                  const BTLV_INPUT_KEYTBL* key_tbl );
 extern  BOOL              BTLV_INPUT_CheckInputDemo( BTLV_INPUT_WORK* biw );
+extern  BTLV_INPUT_ROTATE_RESULT  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw );
 

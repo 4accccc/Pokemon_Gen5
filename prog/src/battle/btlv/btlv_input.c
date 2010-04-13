@@ -247,6 +247,8 @@ enum
   MONSNAME6_Y5 = BUTTON4_DOWN_Y,
   MONSNAME6_X6 = MONSNAME6_X3,
   MONSNAME6_Y6 = BUTTON4_DOWN_Y,
+
+  DIR_PLTT     = 0x70,
 };
 
 //技タイプアイコンの表示座標
@@ -355,6 +357,31 @@ enum
   BTLV_INPUT_WEATHER_MOVE_SPEED = 8,
 };
 
+//わるあがきボタン
+enum
+{ 
+  BTLV_INPUT_WARUAGAKI_MAX = 1,
+
+  BTLV_INPUT_WARUAGAKI_X = 128,
+  BTLV_INPUT_WARUAGAKI_Y =  80,
+
+  BTLV_INPUT_WARUAGAKI_MSG_X = 56,
+  BTLV_INPUT_WARUAGAKI_MSG_Y =  8,
+
+  BTLV_INPUT_WARUAGAKI_ANM = 20,
+
+  BTLV_INPUT_WARUAGAKI_L = 14,
+  BTLV_INPUT_WARUAGAKI_S = 10,
+  BTLV_INPUT_WARUAGAKI_B =  0,
+
+  BTLV_INPUT_WARUAGAKI_SIZE_X = 14,
+  BTLV_INPUT_WARUAGAKI_SIZE_Y =  4,
+
+  BTLV_INPUT_WARUAGAKI_8x4_START = 0xcd,
+  BTLV_INPUT_WARUAGAKI_4x4_START = 0xed,
+  BTLV_INPUT_WARUAGAKI_2x4_START = 0xfd,
+};
+
 enum
 {
   BTLV_INPUT_FADE_OUT = 1,
@@ -388,6 +415,9 @@ enum
 
   ROTATE_SCROLL_COUNT = 8,
   ROTATE_SCROLL_SPEED = 64 / ROTATE_SCROLL_COUNT,
+
+  ROTATE_LEFT_BUTTON  = 5,
+  ROTATE_RIGHT_BUTTON = 6,
 };
 
 enum
@@ -510,6 +540,11 @@ struct _BTLV_INPUT_WORK
   GFL_CLUNIT*           weather_clunit;
   GFL_CLWK*             weather_wk[ BTLV_INPUT_WEATHER_ICON_MAX ];
 
+  //わるあがきボタン
+  GFL_CLUNIT*           waruagaki_clunit;
+  GFL_CLWK*             waruagaki_wk;
+  BOOL                  waruagaki_flag;
+
   //フォント
   GFL_FONT*             font;
 
@@ -531,7 +566,12 @@ struct _BTLV_INPUT_WORK
   int                   camera_work_wait;   //カメラワークウェイト
 
   //ローテーション用POKEMON_PARAM
+#ifdef ROTATION_NEW_SYSTEM
+  const BTL_POKEPARAM*  rotate_bpp[ BTLV_INPUT_POKEICON_MAX ];
+  BOOL                  rotate_waza_exist[ BTL_ROTATE_NUM ][PTL_WAZA_MAX ];
+#else
   const POKEMON_PARAM*  rotate_pp[ BTLV_INPUT_POKEICON_MAX ];
+#endif
 };
 
 typedef struct
@@ -633,6 +673,8 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformStandby2PDC( GFL_TCB* tcb, void* work );
+static  void  TCB_TransformCommand2Rotate( GFL_TCB* tcb, void* work );
+static  void  TCB_TransformRotate2Rotate( GFL_TCB* tcb, void* work );
 
 static  void  SetupScaleChange( BTLV_INPUT_WORK* biw, fx32 start_scale, fx32 end_scale, fx32 scale_speed, int pos_y );
 static  void  TCB_ScaleChange( GFL_TCB* tcb, void* work );
@@ -668,6 +710,8 @@ static  void  BTLV_INPUT_DeleteBallGauge( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_CreateCursorOBJ( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_DeleteCursorOBJ( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_DeleteWazaTypeIcon( BTLV_INPUT_WORK* biw );
+static  void  BTLV_INPUT_CreateWaruagakiButton( BTLV_INPUT_WORK* biw );
+static  void  BTLV_INPUT_DeleteWaruagakiButton( BTLV_INPUT_WORK* biw );
 static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, int hit );
 static  int   BTLV_INPUT_CheckKeyBR( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl );
@@ -857,12 +901,13 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
     };
     GFL_BG_SetBGModeDisp( &sysHeader, GFL_BG_SUB_DISP );
   }
-  biw->handle   = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, biw->heapID );
-  biw->wazatype_clunit = GFL_CLACT_UNIT_Create( PTL_WAZA_MAX, 0, biw->heapID );
-  biw->ballgauge_clunit = GFL_CLACT_UNIT_Create( TEMOTI_POKEMAX * 2, 0, biw->heapID );
-  biw->cursor_clunit = GFL_CLACT_UNIT_Create( BTLV_INPUT_CURSOR_MAX, 0, biw->heapID );
-  biw->pokeicon_clunit = GFL_CLACT_UNIT_Create( BTLV_INPUT_POKEICON_MAX, 0, biw->heapID );
-  biw->weather_clunit = GFL_CLACT_UNIT_Create( BTLV_INPUT_WEATHER_ICON_MAX, 0, biw->heapID );
+  biw->handle           = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, biw->heapID );
+  biw->wazatype_clunit  = GFL_CLACT_UNIT_Create( PTL_WAZA_MAX, 2, biw->heapID );
+  biw->ballgauge_clunit = GFL_CLACT_UNIT_Create( TEMOTI_POKEMAX * 2, 2, biw->heapID );
+  biw->cursor_clunit    = GFL_CLACT_UNIT_Create( BTLV_INPUT_CURSOR_MAX, 0, biw->heapID );
+  biw->pokeicon_clunit  = GFL_CLACT_UNIT_Create( BTLV_INPUT_POKEICON_MAX, 2, biw->heapID );
+  biw->weather_clunit   = GFL_CLACT_UNIT_Create( BTLV_INPUT_WEATHER_ICON_MAX, 2, biw->heapID );
+  biw->waruagaki_clunit = GFL_CLACT_UNIT_Create( BTLV_INPUT_WARUAGAKI_MAX, 1, biw->heapID );
 
   BTLV_INPUT_SetFrame();
   BTLV_INPUT_LoadResource( biw );
@@ -985,6 +1030,11 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
   { 
     GFL_CLACT_UNIT_Delete( biw->weather_clunit );
     biw->weather_clunit = NULL;
+  }
+  if( biw->waruagaki_clunit )
+  { 
+    GFL_CLACT_UNIT_Delete( biw->waruagaki_clunit );
+    biw->waruagaki_clunit = NULL;
   }
 
   GFL_BMPWIN_Delete( biw->bmp_win );
@@ -1164,7 +1214,11 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_CreatePokeIcon( biw, bicp );
       BTLV_INPUT_CreateWeatherIcon( biw );
 
+#ifdef ROTATION_NEW_SYSTEM
+      if( ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) || ( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE ) )
+#else
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA )
+#endif
       {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Command, ttw, 1 );
       }
@@ -1176,6 +1230,9 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
           BTLV_INPUT_CreateBallGauge( biw, bicp, BALL_GAUGE_TYPE_ENEMY );
         }
         biw->trainer_flag = bicp->trainer_flag;
+#ifdef ROTATION_NEW_SYSTEM
+        GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Command, ttw, 1 );
+#else
         if( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE )
         {
           GFL_TCB_AddTask( biw->tcbsys, TCB_TransformRotate2Command, ttw, 1 );
@@ -1184,6 +1241,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
         {
           GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Command, ttw, 1 );
         }
+#endif
       }
     }
     break;
@@ -1233,6 +1291,31 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     }
     break;
   case BTLV_INPUT_SCRTYPE_ROTATE:
+#ifdef ROTATION_NEW_SYSTEM
+    {
+      TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+      BTLV_INPUT_ROTATE_PARAM* birp = ( BTLV_INPUT_ROTATE_PARAM * )param;
+      int i, j;
+
+      biw->rotate_flag = 0;
+      biw->rotate_scr = 0;
+
+      for( i = 0 ; i < BTL_ROTATE_NUM ; i++ )
+      {
+        biw->rotate_bpp[ i ] = birp->bpp[ i ];
+        for( j = 0 ; j < PTL_WAZA_MAX ; j++ )
+        { 
+          biw->rotate_waza_exist[ i ][ j ] = birp->waza_exist[ i ][ j ];
+        }
+      }
+
+      BTLV_INPUT_CreateRotateScreen( biw );
+
+      biw->tcb_execute_flag = 1;
+      ttw->biw = biw;
+      GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Rotate, ttw, 1 );
+    }
+#else
     {
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
       BTLV_INPUT_ROTATE_PARAM* birp = ( BTLV_INPUT_ROTATE_PARAM * )param;
@@ -1254,6 +1337,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       ttw->biw = biw;
       GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2Rotate, ttw, 1 );
     }
+#endif
     break;
   case BTLV_INPUT_SCRTYPE_BATTLE_RECORDER:
     {
@@ -1341,6 +1425,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
     }
   }
 
+#ifndef ROTATION_NEW_SYSTEM
   //ローテーション選択は、別判定をする
   if( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE )
   {
@@ -1374,6 +1459,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
     }
     return hit;
   }
+#endif
 
   GF_ASSERT( tp_tbl != NULL );
   GF_ASSERT( key_tbl != NULL );
@@ -1487,6 +1573,101 @@ BOOL  BTLV_INPUT_CheckInputDemo( BTLV_INPUT_WORK* biw )
 
   return ret;
 }
+
+#ifdef ROTATION_NEW_SYSTEM
+//============================================================================================
+/**
+ *  @brief  入力チェック（ローテーション専用）
+ *
+ *  @param[in]  tp_tbl  タッチパネルテーブル
+ *  @param[in]  key_tbl キー操作テーブル
+ */
+//============================================================================================
+BTLV_INPUT_ROTATE_RESULT  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw )
+{
+  int hit, hit_tp;
+
+  //下画面変形中は入力を無視
+  if( ( biw->tcb_execute_flag ) || ( PaletteFadeCheck( biw->pfd ) ) || ( biw->button_reaction ) )
+  {
+    return  GFL_UI_TP_HIT_NONE;
+  }
+
+  if( biw->hit != GFL_UI_TP_HIT_NONE )
+  { 
+    hit = biw->hit;
+    biw->hit = GFL_UI_TP_HIT_NONE;
+    return hit;
+  }
+
+  if( ( biw->camera_work_wait > CAMERA_WORK_WAIT ) &&
+      ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) &&
+      ( biw->scr_type != BTLV_INPUT_SCRTYPE_PDC ) )
+  { 
+    if( !BTLV_EFFECT_CheckExecute() ){
+      BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
+    }
+  }
+  else
+  { 
+    if( biw->main_loop_tcb_flag == TRUE )
+    { 
+      biw->camera_work_wait++;
+    }
+  }
+
+  hit = GFL_UI_TP_HitTrg( RotateTouchData.hit_tbl );
+  if( biw->waruagaki_flag == TRUE )
+  { 
+    hit = BTLV_INPUT_CheckKey( biw, &RotateTouchDataWaruagaki, RotateKeyDataWaruagaki[ biw->rotate_scr ], hit );
+  }
+  else
+  {
+    hit = BTLV_INPUT_CheckKey( biw, &RotateTouchData, RotateKeyData[ biw->rotate_scr ], hit );
+  }
+  if( hit != GFL_UI_TP_HIT_NONE )
+  {
+    if( biw->button_exist[ hit ] == FALSE )
+    {
+      hit = GFL_UI_TP_HIT_NONE;
+    }
+    else
+    {
+      //けっていを選択
+      if( hit < 5 )
+      {
+        SePlayRotateDecide( biw );
+        hit |= rotate_result[ biw->rotate_scr ] << 16;
+      }
+      else
+      {
+        SePlayRotateSelect( biw );
+        SetupRotateAction( biw, hit );
+        hit = GFL_UI_TP_HIT_NONE;
+      }
+    }
+  }
+  if( hit != GFL_UI_TP_HIT_NONE )
+  { 
+    if( biw->waruagaki_flag == TRUE )
+    { 
+      hit = BTLV_INPUT_SetButtonReaction( biw, hit, RotateTouchDataWaruagaki.button_pltt[ hit ] );
+    }
+    else
+    { 
+      hit = BTLV_INPUT_SetButtonReaction( biw, hit, RotateTouchData.button_pltt[ hit ] );
+    }
+    if( biw->main_loop_tcb_flag == TRUE )
+    { 
+      //カメラワークエフェクト
+      BTLV_EFFECT_Stop();
+      BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+      biw->camera_work_wait = 0;
+    }
+  }
+  return hit;
+}
+#endif
 
 //============================================================================================
 /**
@@ -1704,6 +1885,7 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
 //============================================================================================
 static  void  TCB_TransformRotate2Command( GFL_TCB* tcb, void* work )
 {
+#ifndef ROTATION_NEW_SYSTEM
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
   switch( ttw->seq_no ){
@@ -1746,6 +1928,7 @@ static  void  TCB_TransformRotate2Command( GFL_TCB* tcb, void* work )
     }
     break;
   }
+#endif
 }
 
 //============================================================================================
@@ -1978,6 +2161,7 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
 //============================================================================================
 static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
 {
+#ifndef ROTATION_NEW_SYSTEM
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
   switch( ttw->seq_no ){
@@ -2028,6 +2212,7 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
     }
     break;
   }
+#endif
 }
 
 //============================================================================================
@@ -2107,6 +2292,83 @@ static  void  TCB_TransformStandby2PDC( GFL_TCB* tcb, void* work )
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+      ttw->biw->tcb_execute_flag = 0;
+      GFL_HEAP_FreeMemory( ttw );
+      GFL_TCB_DeleteTask( tcb );
+    }
+    break;
+  }
+}
+
+//============================================================================================
+/**
+ *  @brief  下画面変形タスク（コマンド→ローテーション選択）
+ */
+//============================================================================================
+static  void  TCB_TransformCommand2Rotate( GFL_TCB* tcb, void* work )
+{ 
+  TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
+
+  switch( ttw->seq_no ){
+  case 0:
+     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0h_NSCR,
+                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+    GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+    SetupScrollUp( ttw->biw, rotate_scroll_table[ ttw->biw->rotate_scr ][ 0 ],
+                   rotate_scroll_table[ ttw->biw->rotate_scr ][ 1 ], TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
+    SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_FORWARD );
+    SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_APPEAR );
+    SetupBallGaugeMove( ttw->biw, BALL_GAUGE_MOVE_OPEN );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+    ttw->seq_no++;
+    break;
+  case 1:
+  default:
+    if( ttw->biw->tcb_execute_count == 0 )
+    {
+      GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
+      GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
+      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
+      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
+      ttw->biw->tcb_execute_flag = 0;
+      GFL_HEAP_FreeMemory( ttw );
+      GFL_TCB_DeleteTask( tcb );
+    }
+    break;
+  }
+}
+
+//============================================================================================
+/**
+ *  @brief  下画面変形タスク（ローテーション選択）
+ */
+//============================================================================================
+static  void  TCB_TransformRotate2Rotate( GFL_TCB* tcb, void* work )
+{ 
+  TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
+
+  switch( ttw->seq_no ){
+  case 0:
+    GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+    SetupScrollUp( ttw->biw, rotate_scroll_table[ ttw->biw->rotate_scr ][ 0 ],
+                   rotate_scroll_table[ ttw->biw->rotate_scr ][ 1 ], TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+    ttw->seq_no++;
+    break;
+  case 1:
+  default:
+    if( ttw->biw->tcb_execute_count == 0 )
+    {
+      GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
+      GFL_CLACT_UNIT_SetDrawEnable( ttw->biw->wazatype_clunit, TRUE );
+      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X3 );
+      GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y3 );
       ttw->biw->tcb_execute_flag = 0;
       GFL_HEAP_FreeMemory( ttw );
       GFL_TCB_DeleteTask( tcb );
@@ -2532,6 +2794,19 @@ static  void  TCB_WeatherIconMove( GFL_TCB* tcb, void* work )
 //============================================================================================
 static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir )
 {
+#ifdef ROTATION_NEW_SYSTEM
+  TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+
+  BTLV_INPUT_ClearScreen( biw );
+
+  biw->rotate_scr = rotate_screen_table[ biw->rotate_scr ][ dir - 5 ];
+
+  BTLV_INPUT_CreateRotateScreen( biw );
+
+  biw->tcb_execute_flag = 1;
+  ttw->biw = biw;
+  GFL_TCB_AddTask( biw->tcbsys, TCB_TransformRotate2Rotate, ttw, 1 );
+#else
   int i, j;
   int old_rotate_pos = biw->rotate_flag;
   TCB_ROTATE_ACTION*  tra = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_ROTATE_ACTION ) );
@@ -2586,6 +2861,7 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir )
 
   GFL_TCB_AddTask( biw->tcbsys, TCB_RotateAction, tra, 0 );
   biw->tcb_execute_flag = 1;
+#endif
 }
 
 //============================================================================================
@@ -2595,6 +2871,7 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir )
 //============================================================================================
 static  void  TCB_RotateAction( GFL_TCB* tcb, void* work )
 {
+#ifndef ROTATION_NEW_SYSTEM
   TCB_ROTATE_ACTION*  tra = ( TCB_ROTATE_ACTION* )work;
 
   switch( tra->seq_no ){
@@ -2640,6 +2917,7 @@ static  void  TCB_RotateAction( GFL_TCB* tcb, void* work )
     }
     break;
   }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -3011,6 +3289,26 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
     };
     ttw->datID = datID[ type ][ pos ][ bisp->waza_target ];
   }
+  //パレット転送
+  {
+    NNSG2dPaletteData* palData;
+    void* dat;
+    int max = ( biw->type == BTLV_INPUT_TYPE_TRIPLE ) ? 3 : 2;
+    int i;
+
+    for( i = 0 ; i < max ; i++ )
+    { 
+      dat = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, NARC_battgra_wb_sel_up_NCLR, &palData, biw->heapID );
+      PaletteWorkSet( biw->pfd, palData->pRawData, FADE_SUB_BG, DIR_PLTT + i * 0x10, 0x20 );
+      GFL_HEAP_FreeMemory( dat );
+    }
+    for( ; i < max * 2 ; i++ )
+    { 
+      dat = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, NARC_battgra_wb_sel_down_NCLR, &palData, biw->heapID );
+      PaletteWorkSet( biw->pfd, palData->pRawData, FADE_SUB_BG, DIR_PLTT + i * 0x10, 0x20 );
+      GFL_HEAP_FreeMemory( dat );
+    }
+  }
 }
 
 //--------------------------------------------------------------
@@ -3022,6 +3320,10 @@ static  void  BTLV_INPUT_CreateYesNoScreen( BTLV_INPUT_WORK* biw, const BTLV_INP
 {
   STRBUF*       src;
   int           dot_len, char_len;
+
+  GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( MSGCOLOR_PP_WHITE ),
+                        PRINTSYS_LSB_GetS( MSGCOLOR_PP_WHITE ),
+                        PRINTSYS_LSB_GetB( MSGCOLOR_PP_WHITE ) );
 
   FontLenGet( biyp->yes_msg, biw->font, &dot_len, &char_len );
   PRINTSYS_Print( biw->bmp_data, BTLV_INPUT_YESNO_MSG_X - ( dot_len / 2 ), BTLV_INPUT_YES_MSG_Y, biyp->yes_msg, biw->font );
@@ -3044,6 +3346,43 @@ static  void  BTLV_INPUT_CreateYesNoScreen( BTLV_INPUT_WORK* biw, const BTLV_INP
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw )
 {
+#ifdef ROTATION_NEW_SYSTEM
+
+  BTLV_INPUT_WAZA_PARAM biwp;
+  int i;
+
+  for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
+  { 
+    biwp.wazano[ i ]  = 0;
+    biwp.pp[ i ]      = 0;
+    biwp.ppmax[ i ]   = 0;
+  }
+
+  for( i = 0 ; i < BPP_WAZA_GetCount( biw->rotate_bpp[ biw->rotate_scr ] ) ; i++ )
+  { 
+    biwp.wazano[ i ] = BPP_WAZA_GetParticular( biw->rotate_bpp[ biw->rotate_scr ], i, &biwp.pp[ i ], &biwp.ppmax[ i ] );
+  }
+  BTLV_INPUT_CreateWazaScreen( biw, &biwp );
+
+  biw->button_exist[ ROTATE_LEFT_BUTTON ]   = rotate_button_exist_table[ biw->rotate_scr ][ 0 ];
+  biw->button_exist[ ROTATE_RIGHT_BUTTON ]  = rotate_button_exist_table[ biw->rotate_scr ][ 1 ];
+
+  biw->waruagaki_flag = TRUE;
+  for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
+  { 
+    if( biw->rotate_waza_exist[ biw->rotate_scr ][ i ] == TRUE )
+    { 
+      biw->waruagaki_flag = FALSE;
+    }
+  }
+  if( biw->waruagaki_flag == TRUE )
+  { 
+    biw->button_exist[ 0 ] = TRUE;
+    BTLV_INPUT_CreateWaruagakiButton( biw );
+    PaletteFadeReq( biw->pfd, PF_BIT_SUB_BG, 0x1e00, 0, 8, 8, 0, biw->tcbsys );
+  }
+
+#else
   STRBUF *monsname_p;
   STRBUF *monsname_src;
   WORDSET *wordset;
@@ -3082,6 +3421,7 @@ static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw )
                                    GFL_BG_FRAME0_S, 0, 0, FALSE, biw->heapID );
   GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg1e_NSCR,
                                    GFL_BG_FRAME1_S, 0, 0, FALSE, biw->heapID );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -3091,6 +3431,7 @@ static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw )
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_CreateRotatePokeIcon( BTLV_INPUT_WORK* biw )
 {
+#ifndef ROTATION_NEW_SYSTEM
   int i;
   ARCHANDLE*  hdl = GFL_ARC_OpenDataHandle( ARCID_POKEICON, biw->heapID );
 
@@ -3126,6 +3467,7 @@ static  void  BTLV_INPUT_CreateRotatePokeIcon( BTLV_INPUT_WORK* biw )
     }
   }
   GFL_ARC_CloseDataHandle( hdl );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -3211,11 +3553,17 @@ static  void  BTLV_INPUT_ClearScreen( BTLV_INPUT_WORK* biw )
 {
   int i;
 
+  for( i = 0 ; i < BTLV_INPUT_BUTTON_MAX ; i++ )
+  { 
+    biw->button_exist[ i ] = FALSE;
+  }
+
   //技選択
   GFL_BMP_Clear( biw->bmp_data, 0x00 );
   GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
 
   BTLV_INPUT_DeleteWazaTypeIcon( biw );
+  BTLV_INPUT_DeleteWaruagakiButton( biw );
 
   //攻撃対象選択
   GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0, 32, 2, 32, 32, 0 );
@@ -3278,11 +3626,20 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
     int         max = ( biw->type == BTLV_INPUT_TYPE_ROTATION ) ? 2 : biw->type + 1;
     int         mask = 0;
 
+#ifdef ROTATION_NEW_SYSTEM
+    //シングルでは出さないように仕様変更（後でまた出すことになると困るので、処理自体は残しておく）
+    //新しいローテションバトルは1vs1仕様なのでこちらも出さないようにする
+    if( ( biw->type == BTLV_INPUT_TYPE_SINGLE ) || ( biw->type == BTLV_INPUT_TYPE_ROTATION ) )
+    {
+      return;
+    }
+#else
     //シングルでは出さないように仕様変更（後でまた出すことになると困るので、処理自体は残しておく）
     if( biw->type == BTLV_INPUT_TYPE_SINGLE )
     {
       return;
     }
+#endif
 
     hdl = GFL_ARC_OpenDataHandle( ARCID_POKEICON, biw->heapID );
 
@@ -3631,6 +3988,99 @@ static  void  BTLV_INPUT_DeleteWazaTypeIcon( BTLV_INPUT_WORK* biw )
       GFL_CLACT_WK_Remove( biw->wazatype_wk[ i ] );
       biw->wazatype_wk[ i ] = NULL;
     }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   わるあがきボタン生成
+ *
+ * @param[in] biw   システム管理構造体のポインタ
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_CreateWaruagakiButton( BTLV_INPUT_WORK* biw )
+{ 
+  int               i;
+  GFL_CLACTPOS      pos;
+
+  GF_ASSERT( biw->waruagaki_wk == NULL );
+
+  biw->waruagaki_wk = GFL_CLACT_WK_Create( biw->waruagaki_clunit, biw->objcharID, biw->objplttID, biw->objcellID,
+                                           &obj_param, CLSYS_DEFREND_SUB, biw->heapID );
+  pos.x = BTLV_INPUT_WARUAGAKI_X;
+  pos.y = BTLV_INPUT_WARUAGAKI_Y;
+  GFL_CLACT_WK_SetPos( biw->waruagaki_wk, &pos, CLSYS_DEFREND_SUB );
+  GFL_CLACT_WK_SetAutoAnmFlag( biw->waruagaki_wk, TRUE );
+  GFL_CLACT_WK_SetAnmSeq( biw->waruagaki_wk, BTLV_INPUT_WARUAGAKI_ANM );
+
+  //わるあがき技名
+  { 
+    STRBUF* wazaname_p    = GFL_STR_CreateBuffer( BUFLEN_WAZA_NAME, biw->heapID );
+    STRBUF* wazaname_src  = GFL_MSG_CreateString( biw->msg, BI_WazaNameMsg );
+    WORDSET*  wordset     = WORDSET_Create( biw->heapID );
+    GFL_BMP_DATA* bmp     = GFL_BMP_Create( BTLV_INPUT_WARUAGAKI_SIZE_X, BTLV_INPUT_WARUAGAKI_SIZE_Y,
+                                            GFL_BMP_16_COLOR, biw->heapID );
+    u8 letter, shadow, back;
+    int dot_len, char_len;
+  
+    GFL_BMP_Clear( bmp, 0 );
+  
+    GFL_FONTSYS_GetColor( &letter, &shadow, &back );
+    GFL_FONTSYS_SetColor( BTLV_INPUT_WARUAGAKI_L, BTLV_INPUT_WARUAGAKI_S, BTLV_INPUT_WARUAGAKI_B );
+
+    WORDSET_RegisterWazaName( wordset, 0, WAZANO_WARUAGAKI );
+    WORDSET_ExpandStr( wordset, wazaname_p, wazaname_src );
+    FontLenGet( wazaname_p, biw->font, &dot_len, &char_len );
+    PRINTSYS_Print( bmp, BTLV_INPUT_WARUAGAKI_MSG_X - ( dot_len / 2 ), BTLV_INPUT_WARUAGAKI_MSG_Y,
+                    wazaname_p, biw->font );
+    GFL_FONTSYS_SetColor( letter, shadow, back );
+  
+    {
+      void *obj_vram;
+      NNSG2dImageProxy image;
+      u8* bmp_data = GFL_BMP_GetCharacterAdrs( bmp );
+      int i;
+  
+      obj_vram = G2S_GetOBJCharPtr();
+      GFL_CLACT_WK_GetImgProxy( biw->waruagaki_wk, &image );
+
+      for( i = 0 ; i < 4 ; i++ )
+      { 
+        MI_CpuCopy16( &bmp_data[ BTLV_INPUT_WARUAGAKI_SIZE_X * 0x20 * i ],
+                    (void*)( (u32)obj_vram + ( BTLV_INPUT_WARUAGAKI_8x4_START + 8 * i ) * 0x20 +
+                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DSUB ] ),
+                    0x20 * 8 );
+        MI_CpuCopy16( &bmp_data[ 8 * 0x20 + BTLV_INPUT_WARUAGAKI_SIZE_X * 0x20 * i ],
+                    (void*)( (u32)obj_vram + ( BTLV_INPUT_WARUAGAKI_4x4_START + 4 * i ) * 0x20 +
+                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DSUB ] ),
+                    0x20 * 4 );
+        MI_CpuCopy16( &bmp_data[ 12 * 0x20 + BTLV_INPUT_WARUAGAKI_SIZE_X * 0x20 * i ],
+                    (void*)( (u32)obj_vram + ( BTLV_INPUT_WARUAGAKI_2x4_START + 2 * i ) * 0x20 +
+                    image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DSUB ] ),
+                    0x20 * 2 );
+      }
+    }
+  
+    GFL_STR_DeleteBuffer( wazaname_p );
+    GFL_STR_DeleteBuffer( wazaname_src );
+    WORDSET_Delete( wordset );
+    GFL_BMP_Delete( bmp );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   技タイプアイコン削除
+ *
+ * @param[in] biw   システム管理構造体のポインタ
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_DeleteWaruagakiButton( BTLV_INPUT_WORK* biw )
+{ 
+  if( biw->waruagaki_wk != NULL )
+  { 
+    GFL_CLACT_WK_Remove( biw->waruagaki_wk );
+    biw->waruagaki_wk = NULL;
   }
 }
 
