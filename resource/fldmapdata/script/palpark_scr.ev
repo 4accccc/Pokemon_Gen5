@@ -114,7 +114,7 @@ _RET
 save:
   DEFINE_LOCAL report //セーブチェック用
   // レポートを書く
-  _REPORT_EVENT_CALL_WIRELESS( report )
+  _REPORT_EVENT_CALL( report )
   // 書き込みに失敗
   IF $report != SCR_REPORT_OK THEN
     //セーブ失敗
