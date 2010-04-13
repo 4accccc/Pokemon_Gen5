@@ -64,6 +64,7 @@ extern BOOL GAMEBEACON_Check_NPC(const GAMEBEACON_INFO *info);
 extern BOOL GAMEBEACON_Check_Error(const GAMEBEACON_INFO *info);
 extern void GAMEBEACON_Get_PlayerNameToBuf(const GAMEBEACON_INFO *info, STRBUF* strbuf);
 extern int GAMEBEACON_Get_PmVersion(const GAMEBEACON_INFO *info);
+extern int GAMEBEACON_Get_PmLanguage(const GAMEBEACON_INFO *info);
 extern int GAMEBEACON_Get_Nation(const GAMEBEACON_INFO *info);
 extern int GAMEBEACON_Get_Area(const GAMEBEACON_INFO *info);
 extern u8 GAMEBEACON_Get_Job(const GAMEBEACON_INFO *info);

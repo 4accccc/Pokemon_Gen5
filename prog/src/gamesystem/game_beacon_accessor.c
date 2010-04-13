@@ -543,6 +543,18 @@ int GAMEBEACON_Get_PmVersion(const GAMEBEACON_INFO *info)
 
 //==================================================================
 /**
+ * PM_LANGを取得
+ * @param   info		ビーコン情報へのポインタ
+ * @retval  int	  	PM_LANG
+ */
+//==================================================================
+int GAMEBEACON_Get_PmLanguage(const GAMEBEACON_INFO *info)
+{
+  return info->language;
+}
+
+//==================================================================
+/**
  * 住んでいる国を取得
  * @param   info		ビーコン情報へのポインタ
  * @retval  int		  国番号
@@ -1174,7 +1186,11 @@ void GAMEBEACON_InfoWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPI
 
   switch( type ){
   case BEACON_WSET_TRNAME:
-    WORDSET_RegisterTrainerName( wordset, 1, GAMEBEACON_Get_Action_TrNo(info) );
+    {
+      u16 tr_no = GAMEBEACON_Get_Action_TrNo(info);
+      WORDSET_RegisterTrTypeName_byTrID( wordset, 1, tr_no );
+      WORDSET_RegisterTrainerName( wordset, 2, tr_no );
+    }
     break;
   case BEACON_WSET_MONSNAME:
   case BEACON_WSET_POKE_W:
