@@ -55,7 +55,7 @@
 
 #endif
 
-#define OAM_USE_PLTT_NUM (12)
+#define OAM_USE_PLTT_NUM (14)
 
 #define _BLACK_COLOR  (0x0441)
 
@@ -691,6 +691,10 @@ struct _C_GEAR_WORK {
   u8 bgno;
   u8 sex;
   u8 power_flag;  // 電源がはいっているか？
+  u8 use_skip;    // スキップ許可
+
+  u8 sleep_mode;  // イベント中のスリープモード
+  u8 sleep_color_req;
 };
 
 
@@ -717,6 +721,8 @@ static CGEAR_PANELTYPE_ENUM _cgearSave_GetPanelType(const C_GEAR_WORK* cpWork,in
 static BOOL _cgearSave_IsPanelTypeIcon(const C_GEAR_WORK* cpWork,int x, int y);
 static BOOL _cgearSave_IsPanelTypeLast(const C_GEAR_WORK* cpWork,int x, int y, CGEAR_PANELTYPE_ENUM type );
 
+// スキップチェック
+static BOOL _IsEffectSkip( const C_GEAR_WORK* cpWork );
 
 
 // サブBGのセットアップ
@@ -792,9 +798,16 @@ static void _PalAnimeSelectAnimeWait( C_GEAR_WORK* pWork );
 // イベント待ち
 static void _modeEventWait( C_GEAR_WORK* pWork );
 
+// スリープモードの管理
+static void SleepMode_Start( C_GEAR_WORK* pWork );
+static void SleepMode_End( C_GEAR_WORK* pWork );
+static void SleepMode_ColorUpdate( C_GEAR_WORK* pWork );
+static BOOL SleepMode_IsSleep( const C_GEAR_WORK* cpWork );
+
 // パレットフェード
 static void _PFadeSetDefaultPal( C_GEAR_WORK* pWork, BOOL comm );
 static void _PFadeSetBlack( C_GEAR_WORK* pWork );
+static void _PFadeSetSleepBlack( C_GEAR_WORK* pWork, BOOL on_flag );
 static void _PFadeToBlack( C_GEAR_WORK* pWork );
 static void _PFadeFromBlack( C_GEAR_WORK* pWork );
 
@@ -1847,6 +1860,32 @@ static void _PFadeSetBlack( C_GEAR_WORK* pWork )
     );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スリープブラック
+ *
+ *	@param	pWork 
+ */
+//-----------------------------------------------------------------------------
+static void _PFadeSetSleepBlack( C_GEAR_WORK* pWork, BOOL on_flag )
+{
+  int evy;
+  if(on_flag){
+    evy = 8;
+  }else{
+    evy = 0;
+  }
+  // 黒く
+  PaletteFadeReq(
+    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,   -120, 0, evy, _BLACK_COLOR, pWork->pfade_tcbsys
+    );
+
+  // 黒く
+  PaletteFadeReq(
+    pWork->pfade_ptr, PF_BIT_SUB_BG, BG_PFADE_NORMAL_MSK,   -120, 0, evy, _BLACK_COLOR, pWork->pfade_tcbsys
+    );
+}
+
 static void _PFadeToBlack( C_GEAR_WORK* pWork )
 {
   // 黒く
@@ -2461,7 +2500,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
   int xp,yp;
   int type = CGEAR_PANELTYPE_NONE;
 
-  if(!pWork->bAction){
+  if( SleepMode_IsSleep( pWork ) ){
     return;
   }
 
@@ -2579,10 +2618,12 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 static void _editMarkONOFF(C_GEAR_WORK* pWork,BOOL bOn)
 {
   if(bOn){
-    GFL_CLACT_WK_SetAnmIndex( pWork->cellCursor[_CLACT_EDITMARKON], 0 );
+    GFL_CLACT_WK_SetAutoAnmSpeed( pWork->cellCursor[_CLACT_EDITMARKON], 2*FX32_ONE );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[_CLACT_EDITMARKON], TRUE );
   }
   else{
-    GFL_CLACT_WK_SetAnmIndex( pWork->cellCursor[_CLACT_EDITMARKON], 1 );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[_CLACT_EDITMARKON], FALSE );
+    GFL_CLACT_WK_SetAnmIndex( pWork->cellCursor[_CLACT_EDITMARKON], 0 );
   }
 }
 
@@ -3243,15 +3284,21 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
   }
   GFL_BMN_Main( pWork->pButton );
   
+  // スリープカラー反映
+  SleepMode_ColorUpdate( pWork );
   
   _timeAnimation(pWork);
 
-  if( pWork->power_flag ){
-    _PanelPaletteUpdate( pWork ); 
-    _PanelPaletteChange(pWork);
+  // スリープ中は停止
+  if( !SleepMode_IsSleep( pWork ) ){
+    if( pWork->power_flag ){
+      _PanelPaletteUpdate( pWork ); 
+      _PanelPaletteChange(pWork);
 
-    _gearCrossObjMain(pWork);
+      _gearCrossObjMain(pWork);
+    }
   }
+  
  
 
 
@@ -3274,6 +3321,7 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait2(C_GEAR_WORK* pWork)
 {
+  
   if(_gearBootMain(pWork) == FALSE){
     if(pWork->pCall){
       pWork->pCall(pWork->pWork);
@@ -3343,7 +3391,7 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
   case STARTUP_SEQ_OAM_ALPHA_WAIT:
 
     // スキップ
-    if( GFL_UI_TP_GetTrg() ){
+    if( _IsEffectSkip(pWork) ){
       pWork->state_seq = STARTUP_SEQ_SKIP;
       break;
     }
@@ -3366,7 +3414,7 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
   case STARTUP_SEQ_TBL_IN_WAIT:
 
     // スキップ
-    if( GFL_UI_TP_GetTrg() ){
+    if( _IsEffectSkip(pWork) ){
       pWork->state_seq = STARTUP_SEQ_SKIP;
       break;
     }
@@ -3381,7 +3429,7 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
   case STARTUP_SEQ_TBL_ALPHA_WAIT:
 
     // スキップ
-    if( GFL_UI_TP_GetTrg() ){
+    if( _IsEffectSkip(pWork) ){
       pWork->state_seq = STARTUP_SEQ_SKIP;
       break;
     }
@@ -3439,6 +3487,7 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait1(C_GEAR_WORK* pWork)
 {
+
   if(pWork->startCounter==0){
     _PFadeSetBlack(pWork);
     _gearAllObjDrawEnabel( pWork, TRUE );
@@ -3554,6 +3603,7 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   pWork->pGameSys = pGameSys;
   pWork->bAction = TRUE;
   pWork->power_flag = GAMESYSTEM_GetAlwaysNetFlag( pWork->pGameSys );
+  pWork->use_skip = TRUE;
 
   pWork->handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, HEAPID_FIELD_SUBSCREEN );
 
@@ -3628,6 +3678,9 @@ C_GEAR_WORK* CGEAR_FirstInit( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,G
   pWork->pCall = pCall;
   pWork->pWork = pWork2;
 
+  // スキップ不可能
+  pWork->use_skip = FALSE;
+
   // 初期配置情報を設定
   CGEAR_PATTERN_SetUp( pCGSV, pWork->handle, GFUser_GetPublicRand(CGEAR_PATTERN_MAX), 
       HEAPID_FIELD_SUBSCREEN );
@@ -3655,12 +3708,16 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
   if(pWork->bAction != bAction){
 
     // イベント中は、画面を暗く
-    
+    if( bAction == FALSE ){
+      SleepMode_Start( pWork );
+    }else{
+      SleepMode_End( pWork );
+    }
+
     pWork->bAction = bAction;
   }
 
-
-  if(!pWork->bAction){
+  if( SleepMode_IsSleep( pWork ) ){
     FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
     FSND_StopTVTRingTone( fsnd );
   }
@@ -3673,7 +3730,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 
       // トランシーバー再生処理
       if(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR){ // トランシーバー
-        if(pWork->bAction){
+        if(SleepMode_IsSleep( pWork ) == FALSE){
           FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
           //OS_TPrintf("よびだし\n");
           FSND_RequestTVTRingTone( fsnd);
@@ -3688,7 +3745,12 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
   }
   if( pWork->GetOpenTrg ){
     pWork->GetOpenTrg=FALSE;
-    _CHANGE_STATE(pWork,_modeSelectMenuWait1);
+    if( SleepMode_IsSleep( pWork ) == FALSE ){
+      _CHANGE_STATE(pWork,_modeSelectMenuWait1);
+    }else{
+      // スリープ中は簡単に終わらす。
+      WIPE_ResetBrightness(WIPE_DISP_SUB);
+    }
   }
   {
     StateFunc* state = pWork->state;
@@ -3860,14 +3922,10 @@ static void _modeSetSavePanelType( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pSV,int x
 //-----------------------------------------------------------------------------
 static CGEAR_PANELTYPE_ENUM _cgearSave_GetPanelType(const C_GEAR_WORK* cpWork,int x, int y)
 {
-  int yloop[2] = {PANEL_HEIDHT1,PANEL_HEIGHT2};
   if( cpWork->power_flag ){
     return CGEAR_SV_GetPanelType( cpWork->pCGSV, x, y );
   }
 
-  if( yloop[ x % 2 ] > y ){
-    return CGEAR_PANELTYPE_BASE;
-  }
   return CGEAR_PANELTYPE_NONE;
 }
 
@@ -3912,6 +3970,24 @@ static BOOL _cgearSave_IsPanelTypeLast(const C_GEAR_WORK* cpWork,int x, int y, C
 
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スキップチェック
+ *
+ *	@param	const C_GEAR_WORK* cpWork 
+ *
+ *	@retval TRUE  スキップ
+ */
+//-----------------------------------------------------------------------------
+static BOOL _IsEffectSkip( const C_GEAR_WORK* cpWork )
+{
+  if( cpWork->use_skip ){
+    if( GFL_UI_TP_GetTrg() ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
 
 
 
@@ -4024,6 +4100,61 @@ static void _modeEventWait( C_GEAR_WORK* pWork )
 }
 
 
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スリープモード開始
+ *
+ *	@param	pWork   ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SleepMode_Start( C_GEAR_WORK* pWork )
+{
+  pWork->sleep_mode = TRUE;
+  pWork->sleep_color_req = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スリープモード停止
+ *
+ *	@param	pWork ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SleepMode_End( C_GEAR_WORK* pWork )
+{
+  pWork->sleep_mode = FALSE;
+  pWork->sleep_color_req = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  色変換処理
+ *
+ *	@param	pWork 
+ */
+//-----------------------------------------------------------------------------
+static void SleepMode_ColorUpdate( C_GEAR_WORK* pWork )
+{
+  if( pWork->sleep_color_req ){
+    _PFadeSetSleepBlack( pWork, pWork->sleep_mode );
+    pWork->sleep_color_req = FALSE;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スリープモードチェック
+ *
+ *	@param	cpWork 
+ */
+//-----------------------------------------------------------------------------
+static BOOL SleepMode_IsSleep( const C_GEAR_WORK* cpWork )
+{
+  return cpWork->sleep_mode;
+
+}
 
 
 

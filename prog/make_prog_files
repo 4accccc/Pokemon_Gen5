@@ -704,7 +704,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_palpark.c \
         field/scrcmd_beacon.c \
         field/party_select_list.c \
-        field/field_fk_sound_anime.c \
         field/field_bbd_color.c \
         test/camera_adjust_view.c \
 				field/event_comm_talk.c \
@@ -912,7 +911,8 @@ SRCS_OVERLAY_FIELD_CROWD_PEOPLE = field/field_crowd_people.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_FIELD_EVENT_FOURKINGS = field/event_fourkings.c
+SRCS_OVERLAY_FIELD_EVENT_FOURKINGS = field/event_fourkings.c \
+                                     field/field_fk_sound_anime.c
 
 
 #===> GROUP_OVERLAY_SUBSCREEN
