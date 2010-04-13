@@ -2240,6 +2240,7 @@ BOOL BOX2MAIN_PokeItemMoveCheck( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_pos
 		return FALSE;
 	}
 
+/*	今回は「はっきんだま」を持たせられる
 	if( get_item == ITEM_HAKKINDAMA && 
 		BOX2MAIN_PokeParaGet( syswk, put_pos, syswk->tray, ID_PARA_monsno, NULL ) != MONSNO_GIRATHINA ){
 //		OS_Printf( "置けない : はっきんだまはギラティナしか持てない\n" );
@@ -2251,6 +2252,7 @@ BOOL BOX2MAIN_PokeItemMoveCheck( BOX2_SYS_WORK * syswk, u32 get_pos, u32 put_pos
 //		OS_Printf( "置けない : はっきんだまはギラティナしか持てない\n" );
 		return FALSE;
 	}
+*/
 
 	return TRUE;
 }

@@ -7953,10 +7953,13 @@ static int RcvBag_ModeSeiri( BOX2_SYS_WORK * syswk )
 		return next;
 	}
 
+/*	今回は「はっきんだま」を持たせられる
 	if( syswk->subRet == ITEM_HAKKINDAMA &&
 			BOX2MAIN_PokeParaGet(syswk,syswk->get_pos,syswk->tray,ID_PARA_monsno,NULL) != MONSNO_GIRATHINA ){
 		syswk->subRet = 0;
 	}else if( ITEM_CheckMail( syswk->subRet ) == FALSE ){
+*/
+	if( ITEM_CheckMail( syswk->subRet ) == FALSE ){
 		POKEMON_PASO_PARAM * ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
 
 		BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, syswk->subRet );
@@ -8020,10 +8023,13 @@ static int RcvBag_ModeItem( BOX2_SYS_WORK * syswk )
 		return next;
 	}
 
+/*	今回は「はっきんだま」を持たせられる
 	if( syswk->subRet == ITEM_HAKKINDAMA &&
 			BOX2MAIN_PokeParaGet(syswk,syswk->get_pos,syswk->tray,ID_PARA_monsno,NULL) != MONSNO_GIRATHINA ){
 		syswk->subRet = 0;
 	}else if( ITEM_CheckMail( syswk->subRet ) == FALSE ){
+*/
+	if( ITEM_CheckMail( syswk->subRet ) == FALSE ){
 		POKEMON_PASO_PARAM * ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
 
 		BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, syswk->subRet );
@@ -8097,10 +8103,13 @@ static int RcvBag_ModeBattleBox( BOX2_SYS_WORK * syswk )
 		return next;
 	}
 
+/*	今回は「はっきんだま」を持たせられる
 	if( syswk->subRet == ITEM_HAKKINDAMA &&
 			BOX2MAIN_PokeParaGet(syswk,syswk->get_pos,syswk->tray,ID_PARA_monsno,NULL) != MONSNO_GIRATHINA ){
 		syswk->subRet = 0;
 	}else if( ITEM_CheckMail( syswk->subRet ) == FALSE ){
+*/
+	if( ITEM_CheckMail( syswk->subRet ) == FALSE ){
 		POKEMON_PASO_PARAM * ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, syswk->get_pos );
 
 		BOX2MAIN_PokeParaPut( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, syswk->subRet );
