@@ -712,7 +712,8 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork)
       }
       
     
-      after_mons_no = SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, (u32)pp2, &cond, pWork->heapID );
+      after_mons_no = SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, (u32)pp2, GAMEDATA_GetSeasonID( pWork->pGameData),
+                                    &cond, pWork->heapID );
       if( after_mons_no ){
         pWork->pParentWork->ret = POKEMONTRADE_MOVE_EVOLUTION;
         pWork->pParentWork->after_mons_no = after_mons_no;

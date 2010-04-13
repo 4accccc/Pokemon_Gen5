@@ -187,7 +187,8 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 				SHINKA_COND shinka_cond;
 				OS_Printf( "進化チェック %d\n",PP_Get(pp,ID_PARA_monsno,NULL));
 
-				shinkano=SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, item, &shinka_cond, HEAPID_WORLDTRADE );
+				shinkano=SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, item,
+            GAMEDATA_GetSeasonID( GAMESYSTEM_GetGameData( wk->param->gamesys ) ), &shinka_cond, HEAPID_WORLDTRADE );
 				if(shinkano!=0){
 
           SHINKA_DEMO_PARAM *p_param;
@@ -239,7 +240,8 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 					SHINKA_COND shinka_cond;
 					OS_Printf( "進化チェック %d\n",PP_Get(pp,ID_PARA_monsno,NULL));
 
-					shinkano=SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, item, &shinka_cond, HEAPID_WORLDTRADE );
+					shinkano=SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, item,
+            GAMEDATA_GetSeasonID( GAMESYSTEM_GetGameData( wk->param->gamesys ) ), &shinka_cond, HEAPID_WORLDTRADE );
 					if(shinkano!=0){
             SHINKA_DEMO_PARAM *p_param;
 
