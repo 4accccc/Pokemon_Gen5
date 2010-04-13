@@ -1598,7 +1598,7 @@ static void APPBAR_Init( APPBAR_WORK *p_wk, TOWNMAP_MODE mode, GFL_CLUNIT* p_uni
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
     cldata.pos_x  = TOUCHBAR_ICON_X_05;
     cldata.pos_y  = TOUCHBAR_ICON_Y;
-    cldata.anmseq = 9;
+    cldata.anmseq = 7;
     p_wk->p_scale = GFL_CLACT_WK_Create( p_unit, p_wk->res[APPBAR_RES_SCALE_CHR],
         p_wk->res[APPBAR_RES_SCALE_PLT], p_wk->res[APPBAR_RES_SCALE_CEL], &cldata, 0, heapID );
 
@@ -1716,8 +1716,17 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const MAP_WORK *cp_map )
         //ƒ^ƒbƒ`”»’è
         if( is_push && !GFL_CLACT_WK_CheckAnmActive( p_wk->p_scale ) && !MAP_IsScale(cp_map) )
         {	
-
-          GFL_CLACT_WK_StartAnm( p_wk->p_scale );
+          if( GFL_CLACT_WK_GetAnmSeq( p_wk->p_scale) == 7 ) //Šg‘å
+          { 
+            GFL_CLACT_WK_SetAnmSeq( p_wk->p_scale, 9 );
+            GFL_CLACT_WK_StartAnm( p_wk->p_scale );
+          
+          }
+          else
+          { 
+            GFL_CLACT_WK_SetAnmSeq( p_wk->p_scale, 10 );
+            GFL_CLACT_WK_StartAnm( p_wk->p_scale );
+          }
           p_wk->icon  = TOUCHBAR_ICON_SCALE;
           p_wk->seq = SEQ_ANM;
         }
@@ -1729,13 +1738,12 @@ static void APPBAR_Main( APPBAR_WORK *p_wk, const MAP_WORK *cp_map )
       { 
         if( GFL_CLACT_WK_GetAnmSeq( p_wk->p_scale) == 9 )
         { 
-          GFL_CLACT_WK_SetAnmSeq( p_wk->p_scale, 10 );
+          GFL_CLACT_WK_SetAnmSeq( p_wk->p_scale, 8 );
         }
         else
         { 
-          GFL_CLACT_WK_SetAnmSeq( p_wk->p_scale, 9 );
+          GFL_CLACT_WK_SetAnmSeq( p_wk->p_scale, 7 );
         }
-        GFL_CLACT_WK_StopAnm( p_wk->p_scale );
 
         p_wk->seq = SEQ_TOUCH;
       }
