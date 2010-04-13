@@ -825,7 +825,7 @@
 #define FV_D10R0401_POKE10                 801 /* 0x0321 ジャイアントホール：ライ */
 #define FV_T04_SUMMER                      802 /* 0x0322 サザナミタウン：夏だけ町民 */
 #define FV_N01R0501_SAGE1                  803 /* 0x0323 謁見の間前の大広間：ゲーチス */
-		/* not used   804(0x0324) */
+#define FV_C06_BOSS                        804 /* 0x0324 フキヨセジム前：N */
 		/* not used   805(0x0325) */
 		/* not used   806(0x0326) */
 		/* not used   807(0x0327) */
