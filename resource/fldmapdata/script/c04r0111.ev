@@ -409,9 +409,16 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_c04r0111_npc_talk
 {
-  //HOME NPC用メッセージID取得
-  _BSUBWAY_TOOL( BSWTOOL_GET_HOME_NPC_MSGID, SCWK_TARGET_OBJID, BSW_NULL, msg_id )
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_id )
+  DEFINE_LOCAL play_mode
+
+  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
+  IF $play_mode == BSWAY_MODE_WIFI THEN
+    //WIFI用
+  ELSE  //HOME NPC用メッセージID取得
+    _BSUBWAY_TOOL( BSWTOOL_GET_HOME_NPC_MSGID, SCWK_TARGET_OBJID, BSW_NULL, msg_id )
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_id )
+  ENDIF
 }
 EVENT_END
 
