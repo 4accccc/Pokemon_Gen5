@@ -19,6 +19,8 @@
 #include "gamesystem/game_event.h"
 
 #include "event_gameclear.h"  //GAMECLEAR_MODE
+#include "event_field_fade.h"
+#include "event_fieldmap_control_local.h"
 
 #include "system/main.h"  //HEAPID_～
 
@@ -54,10 +56,13 @@ typedef struct {
 //============================================================================================
 // メインシーケンス
 enum {
-	GMCLEAR_SEQ_INIT,			    // 初期化
-	GMCLEAR_SEQ_DENDOU_DEMO,	// 殿堂入りデモ
-	GMCLEAR_SEQ_SAVE_MESSAGE,	// セーブ中メッセージ表示
-	GMCLEAR_SEQ_END,				  // 終了
+	GMCLEAR_SEQ_INIT,			        // 初期化
+  GMCLEAR_SEQ_FADEOUT,          // フェードアウト
+  GMCLEAR_SEQ_COMM_END_WAIT,    // 通信終了待ち
+  GMCLEAR_SEQ_FIELD_CLOSE_WAIT, // フィールドマップ終了待ち
+	GMCLEAR_SEQ_DENDOU_DEMO,	    // 殿堂入りデモ
+	GMCLEAR_SEQ_SAVE_MESSAGE,	    // セーブ中メッセージ表示
+	GMCLEAR_SEQ_END,				      // 終了
 };
 
 
@@ -82,6 +87,8 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
   GMEVENT * call_event;
   GAMEDATA * gamedata = gcwk->gamedata;
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gamedata );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gcwk->gsys );
+  GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( gcwk->gsys );
 
 	switch (*seq) {
 	case GMCLEAR_SEQ_INIT:
@@ -89,13 +96,34 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
 		(*seq) ++;
 		break;
 
-	case GMCLEAR_SEQ_DENDOU_DEMO:
-    //フィールドマップを終了させる
-    { 
-      FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gcwk->gsys );
-      GMEVENT * new_event = DEBUG_EVENT_GameEnd( gcwk->gsys, fieldmap );
-      GMEVENT_CallEvent( event, new_event );
+  case GMCLEAR_SEQ_FADEOUT:
+    //フィールドマップをフェードアウト
+    GMEVENT_CallEvent( event, 
+        EVENT_FieldFadeOut_Black( gcwk->gsys, fieldmap, FIELD_FADE_WAIT ) );
+
+    //通信が動いている場合は終了させる
+    if(GameCommSys_BootCheck(gameComm) != GAME_COMM_NO_NULL){
+      GameCommSys_ExitReq(gameComm);
     }
+		(*seq) ++;
+    break;
+
+  case GMCLEAR_SEQ_COMM_END_WAIT:
+    //通信終了待ち
+    if( GameCommSys_BootCheck(gameComm) != GAME_COMM_NO_NULL ) {
+      break;
+    }
+		(*seq) ++;
+    break;
+
+  case GMCLEAR_SEQ_FIELD_CLOSE_WAIT:
+    //フィールドマップを終了待ち
+    GMEVENT_CallEvent( event, 
+        EVENT_FieldClose_FieldProcOnly( gcwk->gsys, fieldmap ) );
+		(*seq) ++;
+    break;
+
+	case GMCLEAR_SEQ_DENDOU_DEMO:
     SCRIPT_CallGameClearScript( gcwk->gsys, HEAPID_PROC ); 
 		(*seq) ++;
 		break;
