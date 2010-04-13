@@ -1591,14 +1591,14 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
   //‰º‰æ–Ê•ÏŒ`’†‚Í“ü—Í‚ð–³Ž‹
   if( ( biw->tcb_execute_flag ) || ( PaletteFadeCheck( biw->pfd ) ) || ( biw->button_reaction ) )
   {
-    return  GFL_UI_TP_HIT_NONE;
+    return  FALSE;
   }
 
   if( biw->hit != GFL_UI_TP_HIT_NONE )
   { 
     hit = biw->hit;
     biw->hit = GFL_UI_TP_HIT_NONE;
-    return hit;
+    return TRUE;
   }
 
   if( ( biw->camera_work_wait > CAMERA_WORK_WAIT ) &&
