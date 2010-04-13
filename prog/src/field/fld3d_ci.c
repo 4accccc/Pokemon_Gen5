@@ -55,7 +55,7 @@
 #define ENC_CUTIN_MDL_Z_OFS (700)
 
 #define FLYSKY_SE_FRAME (24)      //‹ó‚ð”ò‚Ô‚r‚dÄ¶ƒ^ƒCƒ~ƒ“ƒO
-
+#define CHAMP_FLYSKY_SE_FRAME (24)      //ƒ`ƒƒƒ“ƒsƒIƒ“‹ó‚ð”ò‚Ô‚r‚dÄ¶ƒ^ƒCƒ~ƒ“ƒO
 
 typedef GMEVENT_RESULT (*SETUP_CALLBACK)( GMEVENT* event, int* seq, void* work );
 typedef BOOL (*MAIN_SEQ_FUNC)( GMEVENT* event, FLD3D_CI_PTR ptr );
@@ -2269,8 +2269,11 @@ GMEVENT *FLD3D_CI_CreateNpcFlyCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, co
 //--------------------------------------------------------------------------------------------
 static BOOL FlySkyMainFunc(GMEVENT* event, FLD3D_CI_PTR ptr)
 {
+  int judge_frm;
+  if ( ptr->CutInNo == FLDCIID_CHAMP_OUT ) judge_frm = CHAMP_FLYSKY_SE_FRAME;
+  else judge_frm = FLYSKY_SE_FRAME;
   //‚r‚dÄ¶”»’è
-  if ( ptr->FrameCount == FLYSKY_SE_FRAME )
+  if ( ptr->FrameCount == judge_frm )
   {
     //‚r‚d–Â‚ç‚·
     PMSND_PlaySE( SEQ_SE_FLD_01 );
