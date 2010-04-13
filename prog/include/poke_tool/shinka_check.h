@@ -71,7 +71,7 @@ typedef enum
 #define	SHINKA_MAX	    ( 7 )	  //進化分岐のMAX
 #define SHINKA_FRIEND   ( 220 ) //進化に必要ななつき度
 
-extern  u16         SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u32 param,
+extern  u16	        SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u32 param, u8 season,
                                   SHINKA_COND *cond, HEAPID heapID );
 extern  ARCHANDLE*  SHINKA_GetArcHandle( HEAPID heapID );
 extern  u16         SHINKA_GetParamByHandle( ARCHANDLE* handle, int mons_no, int index, SHINKA_PARAM param );
