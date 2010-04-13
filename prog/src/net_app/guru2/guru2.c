@@ -327,15 +327,15 @@ static BOOL _seq_PokeSelect( GURU2_CALL_WORK *g2call )
       g2call->psd = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(PSTATUS_DATA) );
       GFL_STD_MemFill( g2call->psd, 0, sizeof(PSTATUS_DATA));
       party = GAMEDATA_GetMyPokemon( g2call->gamedata );
-      g2call->psd->ppd        = PokeParty_GetMemberPointer(party, ret);
+      g2call->psd->ppd        = party;
       g2call->psd->game_data  = g2call->gamedata;
       
       //g2call->psd->player_name = MyStatus_GetMyName( mystatus );
       //g2call->psd->player_id   = MyStatus_GetID( mystatus );
       //g2call->psd->player_sex  = MyStatus_GetMySex( mystatus );
-      g2call->psd->ppt  =PST_PP_TYPE_POKEPARAM;
+      g2call->psd->ppt  =PST_PP_TYPE_POKEPARTY;
 
-      g2call->psd->max  = 1;
+      g2call->psd->max  = PokeParty_GetPokeCount( party );
       g2call->psd->pos  = 0;
       g2call->psd->mode = PST_MODE_NO_WAZACHG; // ‹Z“ü‚ê‘Ö‚¦‹ÖŽ~‚É‚·‚é
       g2call->psd->waza = 0;
