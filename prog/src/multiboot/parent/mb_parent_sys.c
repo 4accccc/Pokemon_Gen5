@@ -29,6 +29,7 @@
 #include "wifi_login.naix"
 
 #include "../../../../resource/fldmapdata/script/palpark_scr_local.h"
+#include "../../../resource/fldmapdata/flagwork/work_define.h"
 
 #include "multiboot/mb_parent_sys.h"
 #include "multiboot/mb_comm_sys.h"
@@ -226,6 +227,7 @@ typedef struct
   BOOL            isSendGameData;
   BOOL            isSendRom;
   MB_MSG_YESNO_RET yesNoRet;
+  u16             localHighScore; //今回のハイスコア
   
   //映画用
   BOOL isBoxNotEnough;
@@ -358,6 +360,7 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   
   work->isPostMoviePoke = FALSE;
   work->isPostMovieCapsule = FALSE;
+  work->localHighScore = 0;
 
 }
 
@@ -377,6 +380,12 @@ static void MB_PARENT_Term( MB_PARENT_WORK *work )
   if( work->mode == MPM_MOVIE_TRANS )
   {
     ConnectBGPalAnm_End( &work->bgAnmWork );
+  }
+  else
+  {
+    EVENTWORK *evWork = GAMEDATA_GetEventWork( work->initWork->gameData );
+    u16 *localWk = EVENTWORK_GetEventWorkAdrs( evWork, LOCALWORK0 );
+    *localWk = work->localHighScore;
   }
 
   if( work->gameData != NULL )
@@ -1663,7 +1672,10 @@ static void MB_PARENT_SaveInit( MB_PARENT_WORK *work )
         MB_PARENT_SetFinishState( work , PALPARK_FINISH_NORMAL );
       }
     }
-    
+    if( work->localHighScore < newScore )
+    {
+      work->localHighScore = newScore;
+    }
   }
   
   MB_TPrintf( "MB_Parent Save Init\n" );

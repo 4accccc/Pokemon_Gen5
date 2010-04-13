@@ -177,6 +177,7 @@ play_palpark:
       //「捕まえたポケはボックスへ」
       $result_msg = msg_palpark_11
     ELSIF $palpark_retval == PALPARK_FINISH_NORMAL THEN   //つかまえたポケいる?
+      _CALL score_msg //スコア評価は必ず
       //「捕まえたポケはボックスへ」
       $result_msg = msg_palpark_11
     ELSIF $palpark_retval == PALPARK_FINISH_NO_GET THEN    //捕まえていない
@@ -199,21 +200,21 @@ connect_error:
 _RET
 
 score_msg:
-  DEFINE_LOCAL score
+  //DEFINE_LOCAL score
   DEFINE_LOCAL score_msg
 
   //ハイスコア取得
-  _GET_PALPARK_VALUE_HIGHSCORE(score)
+  //_GET_PALPARK_VALUE_HIGHSCORE(score)
   
-  IF $score >= 900 THEN
+  IF $LOCALWORK0 >= 900 THEN
     $score_msg = msg_palpark_score_06
-  ELSIF $score >= 800 THEN
+  ELSIF $LOCALWORK0 >= 800 THEN
     $score_msg = msg_palpark_score_05
-  ELSIF $score >= 700 THEN
+  ELSIF $LOCALWORK0 >= 700 THEN
     $score_msg = msg_palpark_score_04
-  ELSIF $score >= 550 THEN
+  ELSIF $LOCALWORK0 >= 550 THEN
     $score_msg = msg_palpark_score_03
-  ELSIF $score >= 400 THEN
+  ELSIF $LOCALWORK0 >= 400 THEN
     $score_msg = msg_palpark_score_02
   ELSE
     $score_msg = msg_palpark_score_01
