@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-13T16:23:25"/>
+	<create user="matsumiya" host="W00224" date="2010-04-13T20:39:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="510" top="160" right="1215" bottom="780" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="8" top="31" right="481" bottom="429" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -314,12 +314,12 @@
 [2:00:１桁:3]にん　トレーナーが　います[BE:00:ページ切り替え（行送り）]
 あなたは　[2:00:１桁:4]にんに　かちました[BE:01:ページ切り替え（クリア）]
 ふねは　しゅっこうちゅう　です
-ふねから　おりられますか？</language>
+ふねから　おりますか？</language>
 		<language name="JPN_KANJI" width="256">本日の　ロイヤルイッシュ号には
 [2:00:１桁:3]人　トレーナーが　います[BE:00:ページ切り替え（行送り）]
 あなたは　[2:00:１桁:4]人に　勝ちました[BE:01:ページ切り替え（クリア）]
-船は　出港　しています
-船から　おりられますか？</language>
+船は　出港しています
+船から　降りますか？</language>
 	</row>
 
 	<row id="msg_c03r0801_crew_01a" back-color="#800000,,,#800000,,#800000,#800000,,,,,,#800000,,,,,,">
@@ -329,11 +329,11 @@
 		<language name="JPN" width="256">ほんじつの　ロイヤルイッシュごうには
 [2:00:１桁:3]にん　トレーナーが　います[BE:01:ページ切り替え（クリア）]
 ふねは　しゅっこうちゅう　です
-ふねから　おりられますか？</language>
+ふねから　おりますか？</language>
 		<language name="JPN_KANJI" width="256">本日の　ロイヤルイッシュ号には
 [2:00:１桁:3]人　トレーナーが　います[BE:01:ページ切り替え（クリア）]
-船は　出港　しています
-船から　おりられますか？</language>
+船は　出港しています
+船から　降りますか？</language>
 	</row>
 
 	<row id="msg_c03r0801_crew_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1166,8 +1166,8 @@ msg_c03r0801_hint_02</comment>
 		<comment>全てのトレーナーを倒した際に
 表示されます</comment>
 		<attribute name="キャラ指定">システムメッセージ</attribute>
-		<language name="JPN" width="256">ふねの　なかの　トレーナーを
-すべて　たおした！</language>
+		<language name="JPN" width="256">ふねの　なかの　トレーナー
+すべてに　しょうりした！</language>
 		<language name="JPN_KANJI" width="256">遊覧船内に　いる
 トレーナー全員に　勝利した！</language>
 	</row>
@@ -1194,15 +1194,15 @@ msg_c03r0801_hint_02</comment>
 		<language name="JPN" width="256">ほんじつの　ロイヤルイッシュごうには
 [2:00:１桁:3]にん　トレーナーが　います[BE:00:ページ切り替え（行送り）]
 あなたは……　おめでとうございます！[BE:01:ページ切り替え（クリア）]
-すべての　トレーナーを
-おたおしに　なられたの　ですね！[BE:01:ページ切り替え（クリア）]
+すべての　トレーナーに
+しょうり　なされたのですね！[BE:01:ページ切り替え（クリア）]
 ふねは　しゅっこうちゅう　ですが
 ふねから　おおりに　なられますか？</language>
 		<language name="JPN_KANJI" width="256">本日の　ロイヤルイッシュ号には
 [2:00:１桁:3]人　トレーナーが　います[BE:00:ページ切り替え（行送り）]
 あなたは……　おめでとうございます！[BE:01:ページ切り替え（クリア）]
-すべての　トレーナーを
-お倒しに　なられたの　ですね！[BE:01:ページ切り替え（クリア）]
+すべての　トレーナーに
+勝利なされたのですね！[BE:01:ページ切り替え（クリア）]
 船は　出港　していますが
 船から　お降りに　なられますか？</language>
 	</row>
@@ -1212,7 +1212,7 @@ msg_c03r0801_hint_02</comment>
 表示されます</comment>
 		<attribute name="キャラ指定">システムメッセージ</attribute>
 		<language name="JPN" width="256">ごじょうせん　ありがとうございました▼
-とう　ゆうらんせんは　まもなく
+この　ゆうらんせんは　まもなく
 ヒウンシティに　とうちゃくいたします▼</language>
 		<language name="JPN_KANJI" width="256">ご乗船　ありがとうございました▼
 当　遊覧船は　まもなく
