@@ -51,9 +51,8 @@ SDK_COMPILER_ASSERT( SHOOTER_ITEM_MAX/8 <= SHOOTER_ITEM_BIT_TBL_MAX );
 //-----------------------------------------------------------------------------
 BOOL SHOOTER_ITEM_IsUse( const SHOOTER_ITEM_BIT_WORK *cp_wk, u32 shooter_item )
 { 
-  const u32 bit     = 1<<shooter_item;
-  const u8 bit_idx  = bit / 8;
-  const u8 bit_pos  = bit % 8;
+  const u8 bit_idx  = shooter_item / 8;
+  const u8 bit_pos  = shooter_item % 8;
 
   return (cp_wk->bit_tbl[ bit_idx ] & bit_pos ) != 0;
 }
