@@ -486,8 +486,17 @@ static void sp_gpower_ConditionCheck( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info,
   u16 time;
 
 #ifdef PM_DEBUG
-  if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L) {
-    sp_gpower_RequestSet( wk, SP_GPOWER_REQ_HATCH_UP ); 
+  {
+    int key = GFL_UI_KEY_GetCont();
+    if( key & PAD_BUTTON_L) {
+      sp_gpower_RequestSet( wk, SP_GPOWER_REQ_HATCH_UP ); 
+    }
+    if( key & PAD_BUTTON_R ){
+      sp_gpower_RequestSet( wk, SP_GPOWER_REQ_CAPTURE_UP ); 
+    }
+    if( key & PAD_BUTTON_A ){
+      sp_gpower_RequestSet( wk, SP_GPOWER_REQ_SALE ); 
+    }
   }
 #endif
 
@@ -1850,7 +1859,7 @@ static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
       twk->seq++;
       break;
     }
-    draw_LogNumWindow( bvp );
+    draw_MenuWindow( bvp, msg_sys_now_record );
     obj_MenuIconVisibleSet( bvp, TRUE );
     return;
   case 4:
@@ -1920,7 +1929,7 @@ static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* tcb_wk)
     if( !tmenu_CheckEndWait( bvp, twk->ret )){
       return;
     }
-    draw_LogNumWindow( bvp );
+    draw_MenuWindow( bvp, msg_sys_now_record );
     obj_MenuIconVisibleSet( bvp, TRUE );
     taskAdd_MsgUpdown( bvp, SCROLL_DOWN, &twk->child_task );
     twk->seq++;
