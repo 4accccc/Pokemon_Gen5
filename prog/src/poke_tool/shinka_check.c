@@ -45,13 +45,14 @@ static  BOOL  PokeWazaHaveCheck( POKEMON_PARAM* pp, WazaID waza_no );
  *	@param[in]	param		    アイテム進化チェック時は使用アイテム
  *	                        場所進化の場合は、ZONEID
  *	                        通信融合進化の場合は、交換相手のPOKEMON_PARAMのアドレス
+ *	@param[in]	season      季節
  *	@param[out]	cond        進化条件格納ワークへのポインタ
  *	@param[in]	heapID      ヒープID
  *
  *	@retval	0 進化せず 0以外 進化したポケモンナンバー
  */
 //============================================================================================
-u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u32 param, SHINKA_COND *cond, HEAPID heapID )
+u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u32 param, u8 season, SHINKA_COND *cond, HEAPID heapID )
 {
 	POKEMON_SHINKA_TABLE	*pst;
 	u16	mons_no;
@@ -113,13 +114,13 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u32 param
 				}
 				break;
 			case SHINKA_COND_FRIEND_HIGH_NOON:
-				if( ( GFL_RTC_IsNightTime() == FALSE ) && ( SHINKA_FRIEND <= friend ) )
+				if( ( PM_RTC_IsNightTime( season ) == FALSE ) && ( SHINKA_FRIEND <= friend ) )
         {
 					ret = pst->psd[ i ].ShinkaMons;
 				}
 				break;
 			case SHINKA_COND_FRIEND_HIGH_NIGHT:
-				if( ( GFL_RTC_IsNightTime() == TRUE ) && ( SHINKA_FRIEND <= friend ) )
+				if( ( PM_RTC_IsNightTime( season ) == TRUE ) && ( SHINKA_FRIEND <= friend ) )
         {
 					ret = pst->psd[ i ].ShinkaMons;
 				}
@@ -191,13 +192,13 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u32 param
 				}
 				break;
 			case SHINKA_COND_SOUBI_NOON:
-				if( ( GFL_RTC_IsNightTime() == FALSE ) && ( pst->psd[ i ].ShinkaData == item_no ) )
+				if( ( PM_RTC_IsNightTime( season ) == FALSE ) && ( pst->psd[ i ].ShinkaData == item_no ) )
         {
 					ret = pst->psd[ i ].ShinkaMons;
 				}
 				break;
 			case SHINKA_COND_SOUBI_NIGHT:
-				if( ( GFL_RTC_IsNightTime() == TRUE ) && ( pst->psd[ i ].ShinkaData == item_no ) )
+				if( ( PM_RTC_IsNightTime( season ) == TRUE ) && ( pst->psd[ i ].ShinkaData == item_no ) )
         {
 					ret = pst->psd[ i ].ShinkaMons;
 				}
@@ -301,9 +302,9 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u32 param
           {
 			      break;
 		      }
-          //お互いのポケモンがカブリン、カッチュなら進化
-          if( ( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_KABURIN ) &&
-              ( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_KATTYU ) )
+          //お互いのポケモンがカブリン、カッチュなら進化（名称変更の可能性があるので、注意！）
+          if( ( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_571 ) &&
+              ( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_561 ) )
           { 
 					  ret = pst->psd[ i ].ShinkaMons;
           }
