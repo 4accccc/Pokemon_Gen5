@@ -416,8 +416,11 @@ download:
         _RET
       ENDIF
 
+      //通信中
+      _SYSWIN_MSG_ALLPUT_DOWN( msg_trialhouse_034 )
       //ビーコンサーチ処理
       _TH_SEARCH_BEACON( SCWK_ANSWER )
+      _SYSWIN_CLOSE()
 
       IF $SCWK_ANSWER == FALSE THEN
         //「ダウンロードするものがない」
