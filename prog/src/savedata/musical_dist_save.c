@@ -48,7 +48,7 @@ struct _MUSICAL_DIST_SAVE
   
   DIST_DATA_HEADER *saveDataHeader;
   void *saveDataArc;
-  SAVE_CONTROL_WORK *sv;
+  GAMEDATA *gamedata;
 };
 
 //======================================================================
@@ -68,15 +68,16 @@ void MUSICAL_DIST_SAVE_InitWork(MUSICAL_DIST_SAVE *musDistSave)
   //処理なし
 }
 
-MUSICAL_DIST_SAVE* MUSICAL_DIST_SAVE_LoadData( SAVE_CONTROL_WORK *sv , HEAPID heapId )
+MUSICAL_DIST_SAVE* MUSICAL_DIST_SAVE_LoadData( GAMEDATA *gamedata , HEAPID heapId )
 {
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
   MUSICAL_DIST_SAVE *distSave = GFL_HEAP_AllocClearMemory( heapId , sizeof(MUSICAL_DIST_SAVE) );
   LOAD_RESULT ret;
   distSave->saveData = GFL_HEAP_AllocClearMemory( heapId , MUSICAL_DIST_SAVE_WORK_SIZE );
   ret = SaveControl_Extra_LoadWork( sv , SAVE_EXTRA_ID_MUSICAL_DIST , heapId , distSave->saveData , MUSICAL_DIST_SAVE_WORK_SIZE );
   
   distSave->heapId = heapId;
-  distSave->sv = sv;
+  distSave->gamedata = gamedata;
   distSave->saveSeq = 0;
   if( ret == LOAD_RESULT_OK )
   {
@@ -99,7 +100,7 @@ MUSICAL_DIST_SAVE* MUSICAL_DIST_SAVE_LoadData( SAVE_CONTROL_WORK *sv , HEAPID he
 
 void MUSICAL_DIST_SAVE_UnloadData( MUSICAL_DIST_SAVE *distSave )
 {
-  SaveControl_Extra_Unload( distSave->sv , SAVE_EXTRA_ID_MUSICAL_DIST );
+  SaveControl_Extra_Unload( GAMEDATA_GetSaveControlWork(distSave->gamedata) , SAVE_EXTRA_ID_MUSICAL_DIST );
   if( distSave->saveData != NULL )
   {
     GFL_HEAP_FreeMemory( distSave->saveData );
@@ -108,9 +109,9 @@ void MUSICAL_DIST_SAVE_UnloadData( MUSICAL_DIST_SAVE *distSave )
 }
 
 //InitとMainでセーブの確保・開放、データ有効フラグのセットなどを行います。
-MUSICAL_DIST_SAVE* MUSICAL_DIST_SAVE_SaveMusicalArchive_Init( SAVE_CONTROL_WORK *sv , void *arcData , const u32 size , const HEAPID heapId )
+MUSICAL_DIST_SAVE* MUSICAL_DIST_SAVE_SaveMusicalArchive_Init( GAMEDATA *gamedata , void *arcData , const u32 size , const HEAPID heapId )
 {
-  MUSICAL_DIST_SAVE *distSave = MUSICAL_DIST_SAVE_LoadData( sv , heapId );
+  MUSICAL_DIST_SAVE *distSave = MUSICAL_DIST_SAVE_LoadData( gamedata , heapId );
   if( distSave->saveData != NULL )
   {
     distSave->dataHeader.size = size;
@@ -134,7 +135,7 @@ const BOOL MUSICAL_DIST_SAVE_SaveMusicalArchive_Main( MUSICAL_DIST_SAVE *distSav
     }
     else
     {
-      MUSICAL_SAVE* musSave = MUSICAL_SAVE_GetMusicalSave( distSave->sv );
+      MUSICAL_SAVE* musSave = MUSICAL_SAVE_GetMusicalSave( GAMEDATA_GetSaveControlWork(distSave->gamedata) );
       //有効フラグの設定
       MUSICAL_SAVE_SetEnableDistributData( musSave , TRUE );
       //演目タイトルの退避
@@ -153,13 +154,13 @@ const BOOL MUSICAL_DIST_SAVE_SaveMusicalArchive_Main( MUSICAL_DIST_SAVE *distSav
         GFL_HEAP_FreeMemory( msgData );
         GFL_ARC_CloseDataHandle( arcHandle );
       }
-      SaveControl_Extra_SaveAsyncInit( distSave->sv , SAVE_EXTRA_ID_MUSICAL_DIST );
+      GAMEDATA_ExtraSaveAsyncStart( distSave->gamedata , SAVE_EXTRA_ID_MUSICAL_DIST );
       distSave->saveSeq++;
     }
     break;
   case 1:
     {
-      const SAVE_RESULT ret = SaveControl_Extra_SaveAsyncMain( distSave->sv , SAVE_EXTRA_ID_MUSICAL_DIST );
+      const SAVE_RESULT ret = GAMEDATA_ExtraSaveAsyncMain( distSave->gamedata , SAVE_EXTRA_ID_MUSICAL_DIST );
       if( ret == SAVE_RESULT_OK )
       {
         MUSICAL_DIST_SAVE_UnloadData( distSave );

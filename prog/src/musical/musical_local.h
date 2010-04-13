@@ -9,6 +9,9 @@
 
 #pragma once
 
+#include "gamesystem/game_data.h"
+
+
 //デフォルトでROMに入っている配信データ
 #define MUS_PROGRAM_LOCAL_NUM (4)
 
@@ -71,4 +74,4 @@ typedef struct
 
 MUSICAL_DISTRIBUTE_DATA* MUSICAL_SYSTEM_InitDistributeData( HEAPID workHeapId );
 void MUSICAL_SYSTEM_TermDistributeData( MUSICAL_DISTRIBUTE_DATA *distData );
-void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , SAVE_CONTROL_WORK *saveWork , const u8 programNo , HEAPID strmHeapId);
+void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , SAVE_CONTROL_WORK *saveWork , GAMEDATA *gamedata, const u8 programNo , HEAPID strmHeapId);

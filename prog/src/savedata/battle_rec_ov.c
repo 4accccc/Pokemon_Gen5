@@ -69,7 +69,7 @@ extern BATTLE_REC_SAVEDATA * brs;
  * 内部で暗号化してからセーブを行う
  */
 //--------------------------------------------------------------
-SAVE_RESULT BattleRec_GDS_RecvData_Save(SAVE_CONTROL_WORK *sv, int num, u8 secure, u16 *work0, u16 *work1, HEAPID heap_id)
+SAVE_RESULT BattleRec_GDS_RecvData_Save(GAMEDATA *gamedata, int num, u8 secure, u16 *work0, u16 *work1, HEAPID heap_id)
 {
 	SAVE_RESULT result;
 	
@@ -92,7 +92,7 @@ SAVE_RESULT BattleRec_GDS_RecvData_Save(SAVE_CONTROL_WORK *sv, int num, u8 secur
 		(*work0)++;
 		break;
 	case 1:
-		result = Local_BattleRecSave(sv, brs, num, work1, heap_id);
+		result = Local_BattleRecSave(gamedata, brs, num, work1, heap_id);
 		return result;
 	}
 	return SAVE_RESULT_CONTINUE;
@@ -131,7 +131,7 @@ void BattleRec_GDS_SendData_Conv(SAVE_CONTROL_WORK *sv)
  * @retval	SAVE_RESULT_NG		セーブ失敗
  */
 //--------------------------------------------------------------
-SAVE_RESULT BattleRec_GDS_MySendData_DataNumberSetSave(SAVE_CONTROL_WORK *sv, u64 data_number, u16 *work0, u16 *work1, HEAPID heap_id)
+SAVE_RESULT BattleRec_GDS_MySendData_DataNumberSetSave(GAMEDATA *gamedata, u64 data_number, u16 *work0, u16 *work1, HEAPID heap_id)
 {
 	SAVE_RESULT result;
 
@@ -146,7 +146,7 @@ SAVE_RESULT BattleRec_GDS_MySendData_DataNumberSetSave(SAVE_CONTROL_WORK *sv, u6
 	case 1:
 		//送信時に行っているBattleRec_GDS_SendData_Conv関数で既に暗号化しているはずなので
 		//そのままセーブを行う
-		result = Local_BattleRecSave(sv, brs, LOADDATA_MYREC, work1, heap_id);
+		result = Local_BattleRecSave(gamedata, brs, LOADDATA_MYREC, work1, heap_id);
 		return result;
 	}
 	return SAVE_RESULT_CONTINUE;
@@ -168,7 +168,7 @@ SAVE_RESULT BattleRec_GDS_MySendData_DataNumberSetSave(SAVE_CONTROL_WORK *sv, u6
  * 内部で本体の暗号化処理を行う為、この関数以後はbrsは解放してください。
  */
 //--------------------------------------------------------------
-SAVE_RESULT BattleRec_SecureSetSave(SAVE_CONTROL_WORK *sv, int num, u16 *work0, u16 *work1, HEAPID heap_id)
+SAVE_RESULT BattleRec_SecureSetSave(GAMEDATA *gamedata, int num, u16 *work0, u16 *work1, HEAPID heap_id)
 {
 	SAVE_RESULT result;
 
@@ -188,7 +188,7 @@ SAVE_RESULT BattleRec_SecureSetSave(SAVE_CONTROL_WORK *sv, int num, u16 *work0, 
     (*work0)++;
     break;
   case 1:
-	  result = Local_BattleRecSave(sv, brs, num, work1, heap_id);
+	  result = Local_BattleRecSave(gamedata, brs, num, work1, heap_id);
 	  return result;
 	}
 	return SAVE_RESULT_CONTINUE;

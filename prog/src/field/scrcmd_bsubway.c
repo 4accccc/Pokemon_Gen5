@@ -1517,10 +1517,9 @@ static BOOL evBtlRecSave( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
   BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
   SAVE_RESULT res = BattleRec_Save(
-      save, HEAPID_PROC, BATTLE_MODE_SUBWAY_SINGLE, 0, LOADDATA_MYREC,
+      gdata, HEAPID_PROC, BATTLE_MODE_SUBWAY_SINGLE, 0, LOADDATA_MYREC,
       &bsw_scr->btlrec_save_work[0], &bsw_scr->btlrec_save_work[1] );
   
   if( res == SAVE_RESULT_OK || res == SAVE_RESULT_NG ){

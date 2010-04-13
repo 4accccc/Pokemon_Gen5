@@ -212,7 +212,7 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
   if( evWork->isComm == FALSE || 
       MUS_COMM_GetMode( evWork->scriptWork->commWork ) == MCM_PARENT )
   {
-    MUSICAL_SYSTEM_LoadDistributeData( evWork->distData , evWork->saveCtrl , MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
+    MUSICAL_SYSTEM_LoadDistributeData( evWork->distData , evWork->saveCtrl , evWork->gameData, MUSICAL_SAVE_GetProgramNumber(evWork->musSave) , HEAPID_MUSICAL_STRM );
   }
   
   if( evWork->isComm == TRUE )

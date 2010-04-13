@@ -571,7 +571,7 @@ static void DendouSave_init( GAMECLEAR_MSG_WORK* work )
   if( SaveControl_IsOverwritingOtherData( save ) ) { return; }
 
   DendouData_AddRecord( dendouData, party, &date, HEAPID_PROC ); 
-  SaveControl_Extra_SaveAsyncInit( save, SAVE_EXTRA_ID_DENDOU ); 
+  GAMEDATA_ExtraSaveAsyncStart( work->gamedata, SAVE_EXTRA_ID_DENDOU ); 
 
   work->dendouSaveInitFlag = TRUE;
 }
@@ -595,7 +595,7 @@ static void DendouSave_main( GAMECLEAR_MSG_WORK* work )
   if( SaveControl_IsOverwritingOtherData( save ) ) { return; }
 
   // セーブ実行
-  save_ret = SaveControl_Extra_SaveAsyncMain( save, SAVE_EXTRA_ID_DENDOU ); 
+  save_ret = GAMEDATA_ExtraSaveAsyncMain( work->gamedata, SAVE_EXTRA_ID_DENDOU ); 
 
   // セーブ終了
   if( save_ret == SAVE_RESULT_OK || save_ret == SAVE_RESULT_NG ) { 

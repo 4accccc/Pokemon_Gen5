@@ -1562,6 +1562,67 @@ BOOL GAMEDATA_GetIsSave(const GAMEDATA *gamedata)
 
 //--------------------------------------------------------------
 /**
+ * @brief   外部セーブの分割セーブ開始
+ *
+ * @param   gamedata    ゲームデータへのポインタ
+ *
+ * @retval  none
+ */
+//--------------------------------------------------------------
+void GAMEDATA_ExtraSaveAsyncStart(GAMEDATA *gamedata, SAVE_EXTRA_ID extra_id)
+{
+  //セーブワークの情報を更新
+  GAMEDATA_SaveDataUpdate(gamedata);
+
+  //ビーコンのスキャンを即時停止
+  WIH_DWC_Stop();
+
+  //セーブ中フラグON
+  gamedata->is_save = TRUE;
+
+  //リセット禁止
+  GFL_UI_SoftResetDisable(GFL_UI_SOFTRESET_SVLD);
+  
+  //セーブ開始
+  SaveControl_Extra_SaveAsyncInit(gamedata->sv_control_ptr, extra_id);
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief   外部セーブの分割セーブを実行
+ *
+ * @param   gamedata    ゲームデータへのポインタ
+ * @param   extra_id		外部セーブデータ番号
+ *
+ * @retval  セーブ結果
+ */
+//--------------------------------------------------------------
+SAVE_RESULT GAMEDATA_ExtraSaveAsyncMain(GAMEDATA *gamedata, SAVE_EXTRA_ID extra_id)
+{
+  SAVE_RESULT sr;
+
+  if(PMSND_IsLoading() == TRUE){
+    return SAVE_RESULT_CONTINUE;
+  }
+
+  sr = SaveControl_Extra_SaveAsyncMain(gamedata->sv_control_ptr, extra_id);
+
+  if(sr==SAVE_RESULT_OK || sr==SAVE_RESULT_NG){
+
+    //リセット許可
+    GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_SVLD);
+    //ビーコンのスキャンを再開
+    WIH_DWC_Restart();
+    //セーブ中フラグOFF
+    gamedata->is_save = FALSE;
+  }
+
+  return sr;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   セーブコントロールワークを取得する
  * @param   gamedata      GAMEDATAへのポインタ
  * @return  SAVE_CONTROL_WORK のポインタ

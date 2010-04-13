@@ -164,9 +164,9 @@ extern void BattleRec_DataDecoded(void);
 extern void * BattleRec_RecWorkAdrsGet( void );
 extern BOOL BattleRec_Load( SAVE_CONTROL_WORK *sv, HEAPID heapID, LOAD_RESULT *result, int num );
 extern BOOL BattleRec_DataOccCheck(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *result,int num);
-extern SAVE_RESULT BattleRec_Save(SAVE_CONTROL_WORK *sv, HEAPID heap_id, BATTLE_MODE rec_mode, int fight_count, int num, u16 *work0, u16 *work1);
-extern void BattleRec_SaveDataEraseStart(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int num);
-extern SAVE_RESULT BattleRec_SaveDataEraseMain(SAVE_CONTROL_WORK *sv, int num);
+extern SAVE_RESULT BattleRec_Save(GAMEDATA *gamedata, HEAPID heap_id, BATTLE_MODE rec_mode, int fight_count, int num, u16 *work0, u16 *work1);
+extern void BattleRec_SaveDataEraseStart(GAMEDATA *gamedata, HEAPID heap_id, int num);
+extern SAVE_RESULT BattleRec_SaveDataEraseMain(GAMEDATA *gamedata, int num);
 extern void BattleRec_ClientTemotiGet(u16 mode_bit, int *client_max, int *temoti_max);
 extern void BattleRec_ServerVersionUpdate(int id_no, u32 server_version);
 extern BOOL BattleRec_ServerVersionCheck(void);
@@ -196,17 +196,17 @@ extern void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, HEAPID heapI
 //==============================================================================
 //  一部関数をbattle_rec_ov.cに移動した為、外部公開する必要になったもの
 //==============================================================================
-extern SAVE_RESULT Local_BattleRecSave(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *work, int num, u16 *seq, HEAPID heap_id);
+extern SAVE_RESULT Local_BattleRecSave(GAMEDATA *gamedata, BATTLE_REC_SAVEDATA *work, int num, u16 *seq, HEAPID heap_id);
 extern void BattleRec_Coded(void *data,u32 size,u32 code);
 
 //==============================================================================
 //  battl_rec_ov.c
 //      ※battle_recorderオーバーレイ領域に配置されているので注意!
 //==============================================================================
-extern SAVE_RESULT BattleRec_GDS_RecvData_Save(SAVE_CONTROL_WORK *sv, int num, u8 secure, u16 *work0, u16 *work1, HEAPID heap_id);
+extern SAVE_RESULT BattleRec_GDS_RecvData_Save(GAMEDATA *gamedata, int num, u8 secure, u16 *work0, u16 *work1, HEAPID heap_id);
 extern void BattleRec_GDS_SendData_Conv(SAVE_CONTROL_WORK *sv);
-extern SAVE_RESULT BattleRec_GDS_MySendData_DataNumberSetSave(SAVE_CONTROL_WORK *sv, u64 data_number, u16 *work0, u16 *work1, HEAPID heap_id);
-extern SAVE_RESULT BattleRec_SecureSetSave(SAVE_CONTROL_WORK *sv, int num, u16 *work0, u16 *work1, HEAPID heap_id);
+extern SAVE_RESULT BattleRec_GDS_MySendData_DataNumberSetSave(GAMEDATA *gamedata, u64 data_number, u16 *work0, u16 *work1, HEAPID heap_id);
+extern SAVE_RESULT BattleRec_SecureSetSave(GAMEDATA *gamedata, int num, u16 *work0, u16 *work1, HEAPID heap_id);
 
 #ifdef PM_DEBUG
 extern void DEBUG_BattleRec_SecureFlagSet(SAVE_CONTROL_WORK *sv);

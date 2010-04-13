@@ -231,7 +231,7 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STRM|HEAPDIR_MASK, 0x40000 );
   work->actInitWork->distData = MUSICAL_SYSTEM_InitDistributeData( GFL_HEAPID_APP );
-  MUSICAL_SYSTEM_LoadDistributeData( work->actInitWork->distData , NULL , 0 , HEAPID_MUSICAL_STRM );
+  MUSICAL_SYSTEM_LoadDistributeData( work->actInitWork->distData , NULL , NULL , 0 , HEAPID_MUSICAL_STRM );
 
   work->actInitWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_MUSICAL_STAGE , work->actInitWork->distData , 0 );
   MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_MUSICAL_STAGE , work->actInitWork->progWork , work->actInitWork );
@@ -1082,7 +1082,7 @@ static const BOOL MusicalSetting_Main( MUS_EDIT_LOCAL_WORK *work )
   case 2:
     {
       //SaveControl_GetPointer() デバッグ使用
-      work->distSave = MUSICAL_DIST_SAVE_SaveMusicalArchive_Init( GAMEDATA_GetSaveControlWork(work->gameData) , work->musicalArc , work->arcSize , GFL_HEAP_LOWID( work->heapId ) );
+      work->distSave = MUSICAL_DIST_SAVE_SaveMusicalArchive_Init( work->gameData , work->musicalArc , work->arcSize , GFL_HEAP_LOWID( work->heapId ) );
 
       ARI_TPrintf("セーブ展開・保存開始\n");
       work->distSaveSeq++;

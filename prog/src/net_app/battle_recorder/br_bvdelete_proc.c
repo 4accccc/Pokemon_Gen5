@@ -442,8 +442,7 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
   case SEQ_DELETE_INIT:
     { 
-      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
-      BattleRec_SaveDataEraseStart(p_sv, p_wk->heapID, p_wk->p_param->mode);
+      BattleRec_SaveDataEraseStart(p_wk->p_param->p_gamedata, p_wk->heapID, p_wk->p_param->mode);
     }
     (*p_seq)++;
     break;
@@ -451,8 +450,7 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_DELETE_MAIN:
     { 
       SAVE_RESULT result;
-      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
-      result  = BattleRec_SaveDataEraseMain( p_sv, p_wk->p_param->mode );
+      result  = BattleRec_SaveDataEraseMain( p_wk->p_param->p_gamedata, p_wk->p_param->mode );
 
       if( SAVE_RESULT_OK == result || SAVE_RESULT_NG == result )
       { 

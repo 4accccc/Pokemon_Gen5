@@ -2478,7 +2478,7 @@ static void SaveRecordStart( DEBUG_BTL_WORK* wk, const BATTLE_SETUP_PARAM* setup
 static BOOL SaveRecordWait( DEBUG_BTL_WORK* wk, u8 bufID )
 {
   SAVE_RESULT result;
-  result = BattleRec_Save(wk->saveCtrl, wk->heapID, 0, 0, bufID, &wk->saveSeq0, &wk->saveSeq1);
+  result = BattleRec_Save(wk->gameData, wk->heapID, 0, 0, bufID, &wk->saveSeq0, &wk->saveSeq1);
   switch( result ){
   case SAVE_RESULT_OK:
     {

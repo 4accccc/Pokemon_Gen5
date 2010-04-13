@@ -1140,7 +1140,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
 #else
       if( work->battle_rec_new_save_result != SAVE_RESULT_OK && work->battle_rec_new_save_result != SAVE_RESULT_NG )
       {
-        work->battle_rec_new_save_result = BattleRec_Save( sv, work->heap_id,
+        work->battle_rec_new_save_result = BattleRec_Save( param->gamedata, work->heap_id,
             param->battle_mode, param->fight_count, LOADDATA_MYREC,  // fight_countはバトルサブウェイ以外では使わないので0でいい
             &(work->battle_rec_new_work0), &(work->battle_rec_new_work1) );
       }

@@ -459,12 +459,11 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
     {
 //      BATTLE_EXAMINATION_SAVEDATA *exa;
       GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
-      SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata); 
 //      exa = SaveControl_Extra_DataPtrGet( sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION, 0);
       //バッファからセーブへデータコピー
 //      GFL_STD_MemCopy( evt_wk->Ptr->CommBuf, exa, BATTLE_EXAMINATION_SAVE_GetWorkSize() );
       NOZOMU_Printf("外部セーブにデータを保存\n");   
-      BATTLE_EXAMINATION_SAVE_Write(sv, evt_wk->Ptr->CommBuf, GFL_HEAP_LOWID(HEAPID_PROC));
+      BATTLE_EXAMINATION_SAVE_Write(gamedata, evt_wk->Ptr->CommBuf, GFL_HEAP_LOWID(HEAPID_PROC));
       NOZOMU_Printf("データ受け取り成功\n");
       //受け取りの結果をセット
       *(evt_wk->Ret) = TRUE;    //成功
@@ -628,13 +627,12 @@ void TRIAL_HOUSE_InvalidDLData( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
   BATTLE_EXAMINATION_SAVEDATA exa_data;
   BSUBWAY_PARTNER_DATA *data;
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
   int size = BATTLE_EXAMINATION_SAVE_GetWorkSize();
 
   NOZOMU_Printf("検定データ　%dbyte をクリア\n",size);
 
   GFL_STD_MemClear( &exa_data, size );
-  BATTLE_EXAMINATION_SAVE_Write(sv, &exa_data, GFL_HEAP_LOWID(HEAPID_PROC));
+  BATTLE_EXAMINATION_SAVE_Write(gamedata, &exa_data, GFL_HEAP_LOWID(HEAPID_PROC));
 }
 
 //--------------------------------------------------------------

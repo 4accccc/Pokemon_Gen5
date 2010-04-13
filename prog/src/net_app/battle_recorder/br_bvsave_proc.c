@@ -748,12 +748,11 @@ static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   case SEQ_SAVE_WAIT:
     { 
       SAVE_RESULT result;
-      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata );
 
       u32 rec_mode    = RecHeader_ParamGet( BattleRec_HeaderPtrGet(), RECHEAD_IDX_MODE, 0 );
       u32 fight_count = RecHeader_ParamGet( BattleRec_HeaderPtrGet(), RECHEAD_IDX_COUNTER, 0 );
 
-      result  = BattleRec_Save( p_sv, p_wk->heapID, rec_mode, fight_count, BR_SAVEDATA_OTHER_00+p_wk->save_btn_idx, &p_wk->work0, &p_wk->work1);
+      result  = BattleRec_Save( p_wk->p_param->p_gamedata, p_wk->heapID, rec_mode, fight_count, BR_SAVEDATA_OTHER_00+p_wk->save_btn_idx, &p_wk->work0, &p_wk->work1);
       if( result == SAVE_RESULT_OK || result == SAVE_RESULT_NG )
       { 
         (*p_seq)++;

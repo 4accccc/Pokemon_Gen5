@@ -428,20 +428,21 @@ BOOL BattleRec_DataOccCheck(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *res
  * @retval  SAVE_RESULT_NG      セーブ終了、失敗
  */
 //--------------------------------------------------------------
-SAVE_RESULT Local_BattleRecSave(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *work, int num, u16 *seq, HEAPID heap_id)
+SAVE_RESULT Local_BattleRecSave(GAMEDATA *gamedata, BATTLE_REC_SAVEDATA *work, int num, u16 *seq, HEAPID heap_id)
 {
   SAVE_RESULT result;
-
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+  
   switch(*seq){
   case 0:
     //セーブ対象の外部セーブ領域のセーブシステムを作成(セーブワークの実体はbrsを渡す)
     SaveControl_Extra_SystemSetup(sv, SAVE_EXTRA_ID_REC_MINE + num, heap_id, brs, SAVESIZE_EXTRA_BATTLE_REC);
 
-    SaveControl_Extra_SaveAsyncInit(sv, SAVE_EXTRA_ID_REC_MINE + num);
+    GAMEDATA_ExtraSaveAsyncStart(gamedata, SAVE_EXTRA_ID_REC_MINE + num);
     (*seq)++;
     break;
   case 1:
-    result = SaveControl_Extra_SaveAsyncMain(sv, SAVE_EXTRA_ID_REC_MINE + num);
+    result = GAMEDATA_ExtraSaveAsyncMain(gamedata, SAVE_EXTRA_ID_REC_MINE + num);
     
     if(result == SAVE_RESULT_OK || result == SAVE_RESULT_NG){
       //外部セーブ完了。セーブシステムを破棄
@@ -468,8 +469,9 @@ SAVE_RESULT Local_BattleRecSave(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *work
  * @retval  セーブ結果(SAVE_RESULT_OK or SAVE_RESULT_NG が返るまで場合は毎フレーム呼び続けてください)
  */
 //------------------------------------------------------------------
-SAVE_RESULT BattleRec_Save(SAVE_CONTROL_WORK *sv, HEAPID heap_id, BATTLE_MODE rec_mode, int fight_count, int num, u16 *work0, u16 *work1)
+SAVE_RESULT BattleRec_Save(GAMEDATA *gamedata, HEAPID heap_id, BATTLE_MODE rec_mode, int fight_count, int num, u16 *work0, u16 *work1)
 {
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
   BATTLE_REC_HEADER *head;
   BATTLE_REC_WORK *rec;
   SAVE_RESULT result;
@@ -506,7 +508,7 @@ SAVE_RESULT BattleRec_Save(SAVE_CONTROL_WORK *sv, HEAPID heap_id, BATTLE_MODE re
     (*work0)++;
     break;
   case 1:
-    result = Local_BattleRecSave(sv, brs, num, work1, heap_id);
+    result = Local_BattleRecSave(gamedata, brs, num, work1, heap_id);
     return result;
   }
 
@@ -529,16 +531,17 @@ SAVE_RESULT BattleRec_Save(SAVE_CONTROL_WORK *sv, HEAPID heap_id, BATTLE_MODE re
  *            ->分割セーブにしましたnagihashi100331
  */
 //--------------------------------------------------------------
-void BattleRec_SaveDataEraseStart(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int num)
+void BattleRec_SaveDataEraseStart(GAMEDATA *gamedata, HEAPID heap_id, int num)
 {
   LOAD_RESULT load_result;
   BATTLE_REC_SAVEDATA *all;
-
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+  
   load_result = SaveControl_Extra_Load(sv, SAVE_EXTRA_ID_REC_MINE + num, heap_id);
   all = SaveControl_Extra_DataPtrGet(sv, SAVE_EXTRA_ID_REC_MINE + num, 0);
   BattleRec_WorkInit(all);
 
-  SaveControl_Extra_SaveAsyncInit(sv, SAVE_EXTRA_ID_REC_MINE + num);
+  GAMEDATA_ExtraSaveAsyncStart(gamedata, SAVE_EXTRA_ID_REC_MINE + num);
 }
 
 //--------------------------------------------------------------
@@ -560,11 +563,12 @@ void BattleRec_SaveDataEraseStart(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int num
  *            ->分割セーブにしましたnagihashi100331
  */
 //--------------------------------------------------------------
-SAVE_RESULT BattleRec_SaveDataEraseMain(SAVE_CONTROL_WORK *sv, int num)
+SAVE_RESULT BattleRec_SaveDataEraseMain(GAMEDATA *gamedata, int num)
 {
   SAVE_RESULT result;
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
 
-  result = SaveControl_Extra_SaveAsyncMain(sv, SAVE_EXTRA_ID_REC_MINE + num);
+  result = GAMEDATA_ExtraSaveAsyncMain(gamedata, SAVE_EXTRA_ID_REC_MINE + num);
 
   if( result == SAVE_RESULT_OK || result == SAVE_RESULT_NG )
   { 

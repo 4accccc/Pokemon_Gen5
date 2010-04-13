@@ -559,9 +559,9 @@ static void _cgearsave(G_SYNC_WORK* pWork)
 
     GFL_STD_MemCopy(pCRC, pPic->picture, size);
     
-    SaveControl_Extra_SaveAsyncInit(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE);
+    GAMEDATA_ExtraSaveAsyncStart(pWork->pGameData, SAVE_EXTRA_ID_CGEAR_PICUTRE);
     while(1){
-      if(SAVE_RESULT_OK==SaveControl_Extra_SaveAsyncMain(pSave,SAVE_EXTRA_ID_CGEAR_PICUTRE)){
+      if(SAVE_RESULT_OK==GAMEDATA_ExtraSaveAsyncMain(pWork->pGameData,SAVE_EXTRA_ID_CGEAR_PICUTRE)){
         break;
       }
       OS_WaitIrq(TRUE, OS_IE_V_BLANK);
@@ -597,9 +597,9 @@ static void _zukansave(G_SYNC_WORK* pWork)
     GFL_STD_MemCopy(pCRC, pZknWork, size);
     ZUKANWP_SAVEDATA_SetDataCheckFlag( (ZUKANWP_SAVEDATA *) pZknWork,TRUE );
     
-    SaveControl_Extra_SaveAsyncInit(pSave, SAVE_EXTRA_ID_ZUKAN_WALLPAPER);
+    GAMEDATA_ExtraSaveAsyncStart(pWork->pGameData, SAVE_EXTRA_ID_ZUKAN_WALLPAPER);
     while(1){
-      if(SAVE_RESULT_OK==SaveControl_Extra_SaveAsyncMain(pSave,SAVE_EXTRA_ID_ZUKAN_WALLPAPER)){
+      if(SAVE_RESULT_OK==GAMEDATA_ExtraSaveAsyncMain(pWork->pGameData,SAVE_EXTRA_ID_ZUKAN_WALLPAPER)){
         break;
       }
       OS_WaitIrq(TRUE, OS_IE_V_BLANK);
@@ -628,8 +628,6 @@ static void _musicalsave(G_SYNC_WORK* pWork,int size)
   pWork->musicalNo=DREAM_WORLD_NOPICTURE;
 
   {
-    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(pWork->pGameData);
-
     u16* pCRC = GSYNC_DOWNLOAD_GetData(pWork->pDownload);
     int sizeh = size/2;
     u16 crc;
@@ -640,7 +638,7 @@ static void _musicalsave(G_SYNC_WORK* pWork,int size)
     GF_ASSERT(crc == pCRC[sizeh]);
 
     //ミュージカルセーブ
-    pWork->pMusical = MUSICAL_DIST_SAVE_SaveMusicalArchive_Init( pSave , pCRC, size, pWork->heapID);
+    pWork->pMusical = MUSICAL_DIST_SAVE_SaveMusicalArchive_Init( pWork->pGameData , pCRC, size, pWork->heapID);
     _CHANGE_STATE(_musicalsaveMain);
   }
 }

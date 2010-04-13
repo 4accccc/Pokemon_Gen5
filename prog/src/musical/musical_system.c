@@ -225,7 +225,7 @@ void MUSICAL_SYSTEM_TermDistributeData( MUSICAL_DISTRIBUTE_DATA *distData )
   GFL_HEAP_FreeMemory( distData );
 }
 
-void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , SAVE_CONTROL_WORK *saveWork , const u8 programNo , HEAPID heapId )
+void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , SAVE_CONTROL_WORK *saveWork , GAMEDATA *gamedata, const u8 programNo , HEAPID heapId )
 {
   ARCHANDLE *arcHandle;
   MUSICAL_DIST_SAVE *distSave;
@@ -236,7 +236,7 @@ void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , SAVE
   {
     void *musArc;
     u32 arcSize;
-    distSave = MUSICAL_DIST_SAVE_LoadData( saveWork , heapId );
+    distSave = MUSICAL_DIST_SAVE_LoadData( gamedata , heapId );
     musArc = MUSICAL_DIST_SAVE_GetMusicalArc( distSave );
     arcSize = MUSICAL_DIST_SAVE_GetMusicalArcSize( distSave );
     arcHandle = GFL_ARC_OpenDataHandleByMemory( musArc , arcSize , GFL_HEAP_LOWID(heapId) );

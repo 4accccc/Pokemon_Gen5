@@ -797,7 +797,7 @@ static BOOL RecvSubProccess_DataNumberSetSave(void *work_gdsrap, void *work_recv
 	res = POKE_NET_GDS_GetResponse();
 	param = (POKE_NET_GDS_RESPONSE_BATTLEDATA_REGIST *)(res->Param);
 	ret = BattleRec_GDS_MySendData_DataNumberSetSave(
-		GAMEDATA_GetSaveControlWork(gdsrap->gamedata), param->Code, 
+		gdsrap->gamedata, param->Code, 
 		&recv_sub_work->recv_save_seq0, &recv_sub_work->recv_save_seq1, gdsrap->heap_id);
 	if(ret == SAVE_RESULT_OK || ret == SAVE_RESULT_NG){
 		OS_TPrintf("外部セーブ完了\n");

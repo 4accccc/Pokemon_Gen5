@@ -1001,9 +1001,9 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 
   crc = GFL_STD_CrcCalc( pPic, CGEAR_PICTURTE_ALL_SIZE );
 
-  SaveControl_Extra_SaveAsyncInit(pSave,SAVE_EXTRA_ID_CGEAR_PICUTRE);
+  GAMEDATA_ExtraSaveAsyncStart(GAMESYSTEM_GetGameData(gameSys),SAVE_EXTRA_ID_CGEAR_PICUTRE);
   while(1){
-    if(SAVE_RESULT_OK==SaveControl_Extra_SaveAsyncMain(pSave,SAVE_EXTRA_ID_CGEAR_PICUTRE)){
+    if(SAVE_RESULT_OK==GAMEDATA_ExtraSaveAsyncMain(GAMESYSTEM_GetGameData(gameSys),SAVE_EXTRA_ID_CGEAR_PICUTRE)){
       break;
     }
     OS_WaitIrq(TRUE, OS_IE_V_BLANK);

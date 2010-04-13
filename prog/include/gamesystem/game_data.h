@@ -119,6 +119,30 @@ extern SAVE_RESULT GAMEDATA_SaveAsyncMain(GAMEDATA *gamedata);
 //--------------------------------------------------------------
 extern void GAMEDATA_SaveAsyncCancel(GAMEDATA *gamedata);
 
+//--------------------------------------------------------------
+/**
+ * @brief   外部セーブの分割セーブ開始
+ *
+ * @param   gamedata    ゲームデータへのポインタ
+ * @param   extra_id		外部セーブデータ番号
+ *
+ * @retval  none
+ */
+//--------------------------------------------------------------
+extern void GAMEDATA_ExtraSaveAsyncStart(GAMEDATA *gamedata, SAVE_EXTRA_ID extra_id);
+
+//--------------------------------------------------------------
+/**
+ * @brief   外部セーブの分割セーブを実行
+ *
+ * @param   gamedata    ゲームデータへのポインタ
+ * @param   extra_id		外部セーブデータ番号
+ *
+ * @retval  セーブ結果
+ */
+//--------------------------------------------------------------
+extern SAVE_RESULT GAMEDATA_ExtraSaveAsyncMain(GAMEDATA *gamedata, SAVE_EXTRA_ID extra_id);
+
 //==================================================================
 /**
  * セーブ実行中か調べる
