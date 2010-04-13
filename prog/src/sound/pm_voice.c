@@ -141,6 +141,7 @@ void	PMVOICE_Init
 		// player0 だけは静的確保する
 		if(i == 0){
 			voicePlayer->waveData = staticWaveData;
+			voicePlayer->waveDataBegin = voicePlayer->waveData;
 		}
 	}
 	pmvSys.voicePlayerEnableNum = 1;
@@ -254,6 +255,7 @@ void	PMVOICE_PlayerHeapReserve( int num, HEAPID heapID )
 		voicePlayer = &pmvSys.voicePlayer[i];
 		if(voicePlayer->waveData == NULL){
 			voicePlayer->waveData = GFL_HEAP_AllocClearMemory(heapID, PMVOICE_WAVESIZE_MAX);
+			voicePlayer->waveDataBegin = voicePlayer->waveData;
 			voicePlayer->heapReserveFlag = TRUE;
 		}
 	}
@@ -333,14 +335,14 @@ static void resetPlayerWork( PMVOICE_PLAYER* voicePlayer )
 	voicePlayer->speedSubDiff = 0;
 	voicePlayer->pan = 64;
 	voicePlayer->subWaveUse = FALSE;
-	voicePlayer->waveDataBegin = 0;
+	voicePlayer->waveDataBegin = voicePlayer->waveData;
 }
 
 static void initPlayerWork( PMVOICE_PLAYER* voicePlayer )
 {
-	resetPlayerWork(voicePlayer);
 	voicePlayer->waveData = NULL;
 	voicePlayer->heapReserveFlag = FALSE;
+	resetPlayerWork(voicePlayer);
 }
 
 //------------------------------------------------------------------
@@ -556,7 +558,7 @@ u32		PMVOICE_LoadOnly
 	if( waveLoadFlag == FALSE ){ loadWave(voicePlayer, waveIdx); }
 
 	// 逆再生用データ加工
-	if( reverse ){ reverseBuf(voicePlayer->waveData, voicePlayer->waveSize); }
+	if( reverse ){reverseBuf(voicePlayer->waveDataBegin, voicePlayer->waveSize); }
 
 	// 各種設定
 	//voicePlayer->volume = VOICE_VOLUME;
