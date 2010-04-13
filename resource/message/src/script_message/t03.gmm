@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-10T18:36:21"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-13T12:06:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -355,12 +355,12 @@ GRIDX=６７０、GRIDZ=１６８辺り
 ふってきて　できた　そうじゃ▼
 そして　その　いんせきの　なかには
 よにも　おそろしい　ばけもんが▽
-ひそんで　おったそうな▼　
+ひそんで　おったそうな……▼　
 ばけもんは　ばんに　なると
 つめたい　かぜと　ともに▽
 ひとざとに　あらわれては▽
-ひとや　ポケモンを▽
-とって　くうと　いわれとった▼
+ひとや　ポケモンを　とって▽
+くらうと　いわれとった……▼
 じゃから　むかしの　もんは
 まちを　へいでかこって　ばけもんが▽
 はいって　こられんように　したり▼
@@ -385,12 +385,12 @@ GRIDX=６７０、GRIDZ=１６８辺り
 降って来て　出来た　そうじゃ▼
 そして　その　いんせきの　中には
 世にも　恐ろしい　化けもんが▽
-潜んで　おったそうな▼　
+潜んで　おったそうな……▼　
 化けもんは　晩に　なると
 冷たい　風と　ともに▽
 人里に　現れては▽
-人や　ポケモンを▽
-取って　食うと　言われとった▼
+人や　ポケモンを　取って▽
+食らうと　言われとった……▼
 じゃから　昔の　もんは
 町を　塀で囲って　化けもんが▽
 入って　来られんように　したり▼
@@ -433,7 +433,7 @@ GRIDX=６６１、GRIDZ=１８９辺り</comment>
 してないと　ダメなんだって！</language>
 		<language name="JPN_KANJI" width="256">夜に　なると　大きな　穴から
 お化けが　出てくるから▽
-お家に　かえって　大人しく▽
+お家に　帰って　大人しく▽
 してないと　ダメなんだって！</language>
 	</row>
 
@@ -461,13 +461,13 @@ GRIDX=６７０、GRIDZ=１８７辺り</comment>
 
 GRIDX=６６５、GRIDZ=１６１辺り</comment>
 		<attribute name="キャラ指定">BADMAN</attribute>
-		<language name="JPN" width="256">オレの　バーちゃん　さあ
-むかしばなしが　すきでさ▽
-しょっちゅう　ながーい　はなしに▽
+		<language name="JPN" width="256">オイラの　バーちゃん
+むかしばなしが　すきでよ▽
+しょっちゅう　なげー　はなしに▽
 つきあわされるんだぜ</language>
-		<language name="JPN_KANJI" width="256">オレの　バーちゃん　さあ
-昔話が　好きでさ▽
-しょっちゅう　長ーい　話に▽
+		<language name="JPN_KANJI" width="256">オイラの　バーちゃん
+昔話が　好きでよ▽
+しょっちゅう　なげー　話に▽
 付き合わされるんだぜ</language>
 	</row>
 
@@ -525,9 +525,9 @@ GRIDX=６４１、GRIDZ=１７1辺り</comment>
 GRIDX=６６２、GRIDZ=１７0辺り</comment>
 		<attribute name="キャラ指定">middleman2</attribute>
 		<language name="JPN" width="256">オレの　ポケモン　いつも　かってに
-あそびに　いっちゃうんだよ</language>
+あそびに　いっちまうんだよ</language>
 		<language name="JPN_KANJI" width="256">オレの　ポケモン　いつも　勝手に
-遊びに　行っちゃうんだよ</language>
+遊びに　行っちまうんだよ</language>
 	</row>
 
 	<flowchart-group-list>

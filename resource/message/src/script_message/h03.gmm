@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T23:06:29"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-13T11:51:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1494" top="111" right="2346" bottom="912" maximized="no" rayout="Vertical2">
+	<dialog left="656" top="277" right="1156" bottom="1078" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="558" right="1280" bottom="956" visible="yes"/>
-		<band id="0" index="1" style="0000" width="458"/>
+		<tag-palette left="1268" top="743" right="1741" bottom="1141" visible="yes"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="217"/>
-		<band id="3" index="4" style="0000" width="844"/>
-		<band id="4" index="0" style="0000" width="844"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="3" style="0000" width="325"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -346,8 +346,8 @@
 ※金曜日の夜のみ出現
 
 ・選択肢
-　はい→msg_h03_badrider1_02
-　いいえ→msg_h03_badrider1_03
+　はい→msg_h03_badrider1_03
+　いいえ→msg_h03_badrider1_02
 
 ※朝になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
@@ -451,8 +451,8 @@
 きさまの　ような　ガキには
 えんのない　ばしょさ……▼
 それとも……
-ブラック[1:01:ポケモン種族名:0]▽
-ヘッドの　オレと
+ブラック[1:01:ポケモン種族名:0]の▽
+そうちょうである　このオレと▽
 タイマンでも　してみるか……？▼</language>
 		<language name="JPN_KANJI" width="256">なんだ　オマエは……？▼
 ここは……▼
@@ -461,8 +461,8 @@
 貴様の　ような　ガキには
 縁のない　場所さ……▼
 それとも……
-ブラック[1:01:ポケモン種族名:0]▽
-ヘッドの　オレと
+ブラック[1:01:ポケモン種族名:0]の▽
+総長である　このオレと▽
 タイマンでも　してみるか……？▼</language>
 	</row>
 
@@ -473,16 +473,14 @@
 		<attribute name="キャラ指定">BADRIDER</attribute>
 		<language name="JPN" width="256">グハハハ！　じょうとうだっ！
 いせいの　いい　ガキじゃねえかっ！▼
-いいだろう……
-ブラック[1:01:ポケモン種族名:0]を▽
-まとめる　ヘッドの　ちから……▽
-オマエに　みせて　やろう！▼</language>
+ブラック[1:01:ポケモン種族名:0]を
+まとめる　そうちょうの　ちから……▽
+きさまに　みせて　やろうっ！▼</language>
 		<language name="JPN_KANJI" width="256">グハハハ！　上等だっ！
 威勢の　いい　ガキじゃねえかっ！▼
-いいだろう……
-ブラック[1:01:ポケモン種族名:0]を▽
-まとめる　ヘッドの　力……▽
-オマエに　みせて　やろうっ！▼</language>
+ブラック[1:01:ポケモン種族名:0]を
+まとめる　総長の　力……▽
+貴様に　みせて　やろうっ！▼</language>
 	</row>
 
 	<row id="msg_h03_badrider2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -494,13 +492,13 @@
 だったら　さっさと　きえてくれ……▼
 ここは　いきばのない　オレたち
 ブラック[1:01:ポケモン種族名:0]の▽
-ベスト　プレイス……▽
+ベスト　プレイス……▼
 だれにも　じゃまされたくないのさ……</language>
 		<language name="JPN_KANJI" width="256">そうか……
 だったら　さっさと　消えてくれ……▼
 ここは　行き場のない　オレたち
 ブラック[1:01:ポケモン種族名:0]の▽
-ベスト　プレイス……▽
+ベスト　プレイス……▼
 だれにも　邪魔されたくないのさ……</language>
 	</row>
 
@@ -517,8 +515,8 @@
 ブラック[1:01:ポケモン種族名:0]に▽
 かいめい　することに　したぜ！▼
 そうだぜ！　タフで　ワイルドな
-オマエの　ポケモンの▽
-なまえを　いただいたのさ！▼
+オマエの　ポケモンの　なまえを▽
+いただいたのさ！▼
 これで　オレたちの　チームは
 ますます　ワイルドに　なる！▼
 ブラック[1:01:ポケモン種族名:0]！
@@ -531,8 +529,8 @@
 ブラック[1:01:ポケモン種族名:0]に▽
 改名することに　したぜ！▼
 そうだぜ！　タフで　ワイルドな
-オマエの　ポケモンの▽
-名前を　頂いたのさ！▼
+オマエの　ポケモンの　名前を▽
+頂いたのさ！▼
 これで　オレたちの　チームは
 ますます　ワイルドに　なる！▼
 ブラック[1:01:ポケモン種族名:0]！

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-10T18:19:53"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-13T11:23:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="185" top="9" right="890" bottom="629" maximized="no" rayout="Vertical2">
+	<dialog left="588" top="246" right="1293" bottom="866" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -317,27 +317,27 @@
 ※消すタイミングはzoneチェンジ＋時間参照
 </comment>
 		<attribute name="キャラ指定">oldwoman1</attribute>
-		<language name="JPN" width="256">んん……　じゃあ　はなしてやろう……
-この　まちの　うらには……▽
+		<language name="JPN" width="256">んん……　じゃあ　はなしてやろう……▼
+この　まちの　うらには……
 でっかい　あなが　あいとるんじゃ▼
-そのあなはな　むかし　むかし……
+そのあなはな　むかし　むかし……▼
 ふあ……　だめじゃ　ねむい……▼
-そらから　おおきな……
+そらから　おおきな……▼
 ……が　ふってきて　できた……▼
 そして　その……　なかには
 よにも　おそろしい……▼
-……　……　よにも……
+……　……　よにも……▼
 ぐう……　ぐう……　ぐごご……</language>
-		<language name="JPN_KANJI" width="256">んん……　じゃあ　話してやろう……
-この　町の　裏には……▽
+		<language name="JPN_KANJI" width="256">んん……　じゃあ　話してやろう……▼
+この　町の　裏には……
 でっかい　穴が　開いとるんじゃ▼
-その穴はな　昔々……
+その穴はな　昔々……▼
 ふあ……　だめじゃ　眠いわ……▼
 空から　大きな……
 ……が　降って　出来た……▼
 そして　その……　中には
 世にも　恐ろしい……▼
-……　……　世にも……
+……　……　世にも……▼
 ぐう……　ぐう……　ぐごご……</language>
 	</row>
 
@@ -361,21 +361,21 @@
 ※朝になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照</comment>
 		<attribute name="キャラ指定">BADMAN</attribute>
-		<language name="JPN" width="256">オレの　バーちゃん　さあ
-むかしばなしが　すきでさ▽
-しょっちゅう　ながーい　はなし▽
+		<language name="JPN" width="256">オイラの　バーちゃん
+むかしばなしが　すきでよ▽
+しょっちゅう　なげー　はなしに▽
 つきあわされるんだぜ▼
 よるに　なったら　はなしてる
-とちゅうでも　ねちまうし▼
-ったく　げんき　っていうより
+とちゅうでも　ねちまうし▽
+ったく　げんき　っていうより▽
 フリーダムな　バーちゃんだよ</language>
-		<language name="JPN_KANJI" width="256">オレの　バーちゃん　さあ
-昔話が　好きでさ▽
-しょっちゅう　長ーい　話▽
+		<language name="JPN_KANJI" width="256">オイラの　バーちゃん
+昔話が　好きでよ▽
+しょっちゅう　なげー　話に▽
 付き合わされるんだぜ▼
 夜に　なったら　話してる
-途中でも　寝ちまうし▼
-ったく　元気　っていうより
+途中でも　寝ちまうし▽
+ったく　元気　っていうより▽
 フリーダムな　バーちゃんだよ</language>
 	</row>
 

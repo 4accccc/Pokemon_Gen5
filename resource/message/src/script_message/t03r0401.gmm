@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-10T18:18:01"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-13T10:22:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="76" top="320" right="576" bottom="940" maximized="no" rayout="Vertical2">
+	<dialog left="473" top="520" right="973" bottom="1140" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="492"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="297"/>
 		<band id="3" index="4" style="0000" width="492"/>
 		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -474,13 +474,13 @@
 		<attribute name="キャラ指定">waitress</attribute>
 		<language name="JPN" width="256">よのなか　たくさんの　ひとがいて
 そのひとの　かずだけ　こせいや▽
-かんがえが　あるんだよね▼
+かんがえが　あるんだよね……▼
 たくさんの　ひとに　めぐりあって
 それに　ふれることが　できたら▽
 とっても　しあわせだと　おもうんだ</language>
 		<language name="JPN_KANJI" width="256">世の中　沢山の　人がいて
 その人の　数だけ　個性や▽
-考えが　あるんだよね▼
+考えが　あるんだよね……▼
 沢山の　人に　巡り会って
 それに　触れることが　できたら▽
 とっても　幸せだと　思うんだ</language>
@@ -502,7 +502,7 @@
 ぼく　こわくなんかないよ！</language>
 		<language name="JPN_KANJI" width="256">夜に　なると　大きな　穴から
 お化けが　出てくるから▽
-お家に　かえって　大人しく▽
+お家に　帰って　大人しく▽
 してないと　ダメなんだって！▼
 でも　それって　きっと
 ポケモン　でしょ？▽
@@ -533,15 +533,15 @@
 
 ♂</comment>
 		<attribute name="キャラ指定">BADMAN</attribute>
-		<language name="JPN" width="256">オレの　バーちゃん　さあ
+		<language name="JPN" width="256">オイラの　バーちゃん
 むかしばなしが　すきでよ▽
-ねるまで　ながーい　はなしに▽
+しょっちゅう　なげー　はなしに▽
 つきあわされるんだぜ▼
 たまには　バーちゃん　おいて
 パーッと　あそびに　いきてーよ</language>
-		<language name="JPN_KANJI" width="256">オレの　バーちゃん　さあ
+		<language name="JPN_KANJI" width="256">オイラの　バーちゃん
 昔話が　好きでよ▽
-寝るまで　長ーい　話に▽
+しょっちゅう　なげー　話に▽
 付き合わされるんだぜ▼
 たまには　バーちゃん　置いて
 パーッと　遊びに　いきてーよ</language>
@@ -572,10 +572,10 @@
 ♂</comment>
 		<attribute name="キャラ指定">middleman2</attribute>
 		<language name="JPN" width="256">オレの　ポケモン　いつも　かってに
-あそびに　いっちゃうんだ▼
+あそびに　いっちまうんだ▼
 まったく　だれに　にたんだかな</language>
 		<language name="JPN_KANJI" width="256">オレの　ポケモン　いつも　勝手に
-遊びに　行っちゃうんだ▼
+遊びに　行っちまうんだ▼
 まったく　だれに　似たんだかな</language>
 	</row>
 
@@ -607,7 +607,7 @@
 かみさんには　さびしい
 おもいを　させて　わるいが▽
 まー　デキる　おとこの▽
-しゅくめい　って　やつかなあ▼
+しゅくめい　って　やつだからなァ▼
 ああ　これ　しゅっちょうさきの
 みやげなんだが　かみさん▽
 いらない　みたいだから▽
@@ -618,7 +618,7 @@
 かみさんには　さびしい
 思いを　させて　悪いが▽
 まー　デキる　男の▽
-宿命　って　やつかなあ▼
+宿命　って　やつだからなァ▼
 ああ　これ　出張先の
 土産なんだが　かみさん▽
 いらない　みたいだから▽
