@@ -624,6 +624,19 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       }
     }
     break;
+  //WiFi ホームNPCの会話メッセージ表示
+  case BSWTOOL_WIFI_HOME_NPC_MSG:
+    {
+      u16 obj_id = param0;
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
+      u16 leader_no = MMDL_GetParam( mmdl, MMDL_PARAM_0 );
+      
+      SCRIPT_CallEvent(
+          sc, BSUBWAY_EVENT_MsgWifiHomeNPC(gsys,leader_no,obj_id) );
+    }
+    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
+    return( VMCMD_RESULT_SUSPEND );
   //----TOOL Wifi関連
   //Wifiアップロードフラグをセット
   case BSWTOOL_WIFI_SET_UPLOAD_FLAG:
@@ -1417,8 +1430,9 @@ static void bsway_SetHomeNPC(
     SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
     BSUBWAY_WIFI_DATA *wifiData = SaveControl_DataPtrGet(
         save, GMDATA_ID_BSUBWAY_WIFIDATA );
-    BSUBWAY_LEADER_DATA *leader = BSUBWAY_WIFIDATA_GetLeaderDataAlloc(
+    BSUBWAY_LEADER_DATA *pLeader = BSUBWAY_WIFIDATA_GetLeaderDataAlloc(
         wifiData, HEAPID_PROC );
+    BSUBWAY_LEADER_DATA *leader = pLeader;
     
     for( ; i < HOME_NPC_WIFI_MAX; i++, leader++, obj_id++, pos_tbl++ ){
       id = *(u32*)leader->id_no;
@@ -1437,6 +1451,8 @@ static void bsway_SetHomeNPC(
       MMDL_SetParam( mmdl, i, MMDL_PARAM_0 );
       MMDL_SetEventID( mmdl, SCRID_C04R0111_NPC_TALK );
     }
+    
+    GFL_HEAP_FreeMemory( pLeader );
   }else{
     const HOME_NPC_DATA *data = data_HomeNpcTbl;
     BSUBWAY_SCOREDATA *bsw_score = bsw_scr->scoreData;

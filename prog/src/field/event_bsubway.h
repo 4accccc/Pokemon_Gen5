@@ -35,11 +35,11 @@ extern GMEVENT * BSUBWAY_EVENT_CommBattle(
 extern GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
     BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, int tr_idx );
 
-
-
 //======================================================================
 //  歴代リーダー情報の表示
 //======================================================================
 extern GMEVENT * BSUBWAY_EVENT_CallLeaderBoard(
     GAMESYS_WORK *gsys );
 
+extern GMEVENT * BSUBWAY_EVENT_MsgWifiHomeNPC(
+    GAMESYS_WORK *gsys, u16 leader_no, u16 obj_id );

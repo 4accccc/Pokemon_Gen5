@@ -23,6 +23,8 @@
 #include "event_fieldmap_control.h"
 #include "event_ircbattle.h"
 
+#include "savedata/save_tbl.h"
+
 #include "fieldmap.h"
 
 #include "msgdata.h"
@@ -34,6 +36,7 @@
 #include "bsubway_scrwork.h"
 #include "scrcmd_bsubway.h"
 #include "bsubway_tr.h"
+
 
 #include "event_bsubway.h"
 
@@ -362,40 +365,13 @@ GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
       GF_ASSERT( 0 && "ERROR BSW TRAINER MSG : INDEX OVER" );
       msg_no = 0;
     }
-
+    
     GFL_MSG_GetString( msgdata, msg_no, work->strBuf );
     GFL_MSG_Delete( msgdata );
   }else{ //簡易会話
-    STRBUF *tempBuf;
-    WORDSET *wordset;
-    GFL_MSGDATA *msgdata;
-    u16 stype,sid,word0,word1,skip;
-    
+    PMS_DATA *pms = (PMS_DATA*)bsw_scr->tr_data[tr_idx].bt_trd.appear_word;
+    work->strBuf = PMSDAT_ToString( pms, HEAPID_PROC );
     OS_Printf( "BSW TRAINER BEFORE MSG : IDX = %d, KAIWA MSG\n", tr_idx );
-    
-    tempBuf = GFL_STR_CreateBuffer( 128, HEAPID_PROC );
-    
-    msgdata =  GFL_MSG_Create(
-      GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE,
-      NARC_script_message_bsubway_scr_dat, HEAPID_PROC );
-    
-    wordset = WORDSET_Create( HEAPID_PROC );
-
-    stype = bsw_scr->tr_data[tr_idx].bt_trd.appear_word[0];
-    sid = bsw_scr->tr_data[tr_idx].bt_trd.appear_word[1];
-    word0 = bsw_scr->tr_data[tr_idx].bt_trd.appear_word[2];
-    word1 = bsw_scr->tr_data[tr_idx].bt_trd.appear_word[3];
-    skip = 1;
-    
-    GFL_MSG_GetString( msgdata, msg_bsw_scr_31, tempBuf ); //簡易会話用
-    
-    WORDSET_RegisterPMSWord( wordset, 0, word0 );
-    WORDSET_RegisterPMSWord( wordset, 1, word0 );
-    WORDSET_ExpandStr( wordset, work->strBuf, tempBuf );
-    
-    WORDSET_Delete( wordset );
-    GFL_MSG_Delete( msgdata );
-    GFL_STR_DeleteBuffer( tempBuf );
   }
   
   work->sysWin = FLDSYSWIN_STREAM_Add( msgbg, NULL, 19 );
@@ -841,6 +817,121 @@ GMEVENT * BSUBWAY_EVENT_CommBattle(
   
   demo = BSUBWAY_SCRWORK_CreateBattleDemoParam( bsw_scr, gsys );
   event = ev_CommBattle( gsys, fieldmap, bsw_scr->btl_setup_param, demo );
+  return( event );
+}
+
+//======================================================================
+//  バトルサブウェイ　WiFiホームNPCメッセージ表示
+//======================================================================
+//--------------------------------------------------------------
+/// 
+//--------------------------------------------------------------
+typedef struct
+{
+  GAMESYS_WORK *gsys;
+  BSUBWAY_SCRWORK *bsw_scr;
+  
+  VecFx32 balloonWinPos;
+  FLDTALKMSGWIN *balloonWin;
+  STRBUF *strBuf;
+}EVENT_WORK_MSG_WIFI_HOME_NPC;
+
+//--------------------------------------------------------------
+/**
+ * @param event GMEVENT
+ * @param seq event sequence
+ * @param wk event work
+ * @retval GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT ev_MsgWifiHomeNPC(
+    GMEVENT *event, int *seq, void *wk )
+{
+  EVENT_WORK_MSG_WIFI_HOME_NPC *work = wk;
+  GAMESYS_WORK *gsys = work->gsys;
+  
+  switch( *seq )
+  {
+  case 0:
+    if( FLDTALKMSGWIN_Print(work->balloonWin) == TRUE ){
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+      FLDTALKMSGWIN_StartClose( work->balloonWin );
+    }
+    (*seq)++;
+    break;
+  case 2:
+    if( FLDTALKMSGWIN_WaitClose(work->balloonWin) == TRUE ){
+      FLDTALKMSGWIN_Delete( work->balloonWin );
+      GFL_STR_DeleteBuffer( work->strBuf );
+      return( GMEVENT_RES_FINISH );
+    }
+  }
+  
+  return( GMEVENT_RES_CONTINUE );
+}
+
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+GMEVENT * BSUBWAY_EVENT_MsgWifiHomeNPC(
+    GAMESYS_WORK *gsys, u16 leader_no, u16 obj_id )
+{
+  MMDL *mmdl;
+  PMS_DATA *pms;
+  GMEVENT *event;
+  GAMEDATA *gdata;
+  FLDMSGBG *msgbg;
+  FIELDMAP_WORK *fieldmap;
+  BSUBWAY_LEADER_DATA *leader;
+  EVENT_WORK_MSG_WIFI_HOME_NPC *work;
+  
+  gdata = GAMESYSTEM_GetGameData( gsys );
+  fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  msgbg = FIELDMAP_GetFldMsgBG( fieldmap );
+  
+  event = GMEVENT_Create( gsys, NULL,
+    ev_MsgWifiHomeNPC, sizeof(EVENT_WORK_MSG_WIFI_HOME_NPC) );
+  
+  work = GMEVENT_GetEventWork( event );
+  work->gsys = gsys;
+  
+  { //mmdl
+    MMDLSYS *mmdlsys = GAMEDATA_GetMMdlSys( gdata );
+    mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
+    MMDL_GetVectorPos( mmdl, &work->balloonWinPos );
+  }
+
+  { //leader
+    SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+    BSUBWAY_WIFI_DATA *wifiData = SaveControl_DataPtrGet(
+        save, GMDATA_ID_BSUBWAY_WIFIDATA );
+    leader = BSUBWAY_WIFIDATA_GetLeaderDataAlloc( wifiData, HEAPID_PROC );
+  }  
+  
+  { //簡易会話
+    pms = (PMS_DATA*)leader[leader_no].leader_word;
+    work->strBuf = PMSDAT_ToString( pms, HEAPID_PROC );
+  }
+  
+  //free leader
+  GFL_HEAP_FreeMemory( leader );
+  
+  { //吹き出しウィンドウ
+    work->balloonWin = FLDTALKMSGWIN_AddStrBuf(
+        msgbg,
+        FLDTALKMSGWIN_IDX_AUTO,
+        &work->balloonWinPos,
+        work->strBuf, TALKMSGWIN_TYPE_NORMAL, TAIL_SETPAT_NONE );
+  }
+  
   return( event );
 }
 
