@@ -74,6 +74,7 @@ enum _EVENT_IRCBATTLE {
   _BATTLE_MATCH_START,
   _TIMING_SYNC_CALL_BATTLE,
   _PLAY_EVENT_BGM,
+  _TIMINGBATTLE,
   _CALL_BATTLE,
   _WAIT_BATTLE,
   _CALL_TRADE,
@@ -288,9 +289,27 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     BATTLE_PARAM_SetPokeParty( dbw->para, dbw->pParty, BTL_CLIENT_PLAYER );
     BTL_SETUP_AllocRecBuffer( dbw->para, GFL_HEAPID_APP); //録画バッファ確保
-    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM( gsys, dbw->para->musicDefault, FSND_FADE_FAST, FSND_FADE_NONE ) );
+//    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM( gsys, dbw->para->musicDefault, FSND_FADE_FAST, FSND_FADE_NONE ) );
+    dbw->soundNo = PMSND_GetBGMsoundNo();
+    PMSND_StopBGM();
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGBATTLE, WB_NET_IRCBATTLE);
     (*seq) ++;
     break;
+  case _TIMINGBATTLE:
+    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGBATTLE, WB_NET_IRCBATTLE)==FALSE){
+      break;
+    }
+
+    if(GFL_NET_IsParentMachine()){
+      PMSND_PlayBGM( SEQ_BGM_VS_TRAINER_M );
+    }
+    else{
+      PMSND_PlayBGM( SEQ_BGM_VS_TRAINER_S );
+    }
+    PMSND_FadeInBGM(PMSND_FADE_NORMAL);
+    (*seq) ++;
+    break;
+    
   case _CALL_BATTLE:
     {
 #if 1
@@ -315,7 +334,11 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     BATTLE_PARAM_Delete(dbw->para);
     dbw->para = NULL;
     NET_PRINT("バトル完了\n");
-    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_FAST, FSND_FADE_NONE));
+//    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_FAST, FSND_FADE_NONE));
+    PMSND_StopBGM();
+    PMSND_PlayBGM( dbw->soundNo );
+    PMSND_FadeInBGM(PMSND_FADE_NORMAL);
+
     (*seq) = _CALL_NET_END;
     break;
   case _CALL_TRADE:  //  ポケモン交換

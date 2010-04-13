@@ -670,7 +670,7 @@ static void _MainLoopScanBeaconData(void);
    debug codes
    ====================================================================== */
 
-#define WMHIGH_DEBUG
+//#define WMHIGH_DEBUG
 
 
 #if defined(WMHIGH_DEBUG)
@@ -1179,12 +1179,17 @@ static BOOL WH_StateInStartParentMP(void)
 
   {
     int mode;
+#if 0 //DEBUG_ONLY_FOR_ohno
+    mode = WH_MP_FREQUENCY_PALACE;
+#else
+    
     if( WB_NET_PALACE_SERVICEID==GFL_NET_GetGameServiceID() ){
       mode = WH_MP_FREQUENCY_PALACE;
     }
     else{
       mode = WH_MP_FREQUENCY;
     }
+#endif
     result = WM_StartMP(WH_StateOutStartParentMP,
                         (u16 *)_pWmInfo->sRecvBuffer, (u16)_pWmInfo->sRecvBufferSize,
                         (u16 *)_pWmInfo->sSendBuffer, (u16)_pWmInfo->sSendBufferSize,
@@ -1238,13 +1243,17 @@ static void WH_StateOutStartParentMP(void *arg)
 			aidBitmap = (u16)((1 << (num + 1)) - 1);   // 下位 WH_CHILD_MAX+1 ビットが1の bitmap
 			WH_TRACE("aidBitmap %x\n",aidBitmap);
 
+#if 0 //DEBUG_ONLY_FOR_ohno
+      mode = DATASHARING_DOUBLEMODE_PALACE;
+#else
+
       if( WB_NET_PALACE_SERVICEID==GFL_NET_GetGameServiceID() ){
         mode = DATASHARING_DOUBLEMODE_PALACE;
       }
       else{
         mode = DATASHARING_DOUBLEMODE;
       }
-          
+#endif          
       
 			result = WM_StartDataSharing(&_pWmInfo->sDSInfo, WH_DS_PORT, aidBitmap,
 																	 mcSize, mode);
@@ -1998,12 +2007,16 @@ static BOOL WH_StateInStartChildMP(void)
 
   {
     int mode;
+#if 0 //DEBUG_ONLY_FOR_ohno
+    mode = WH_MP_FREQUENCY_PALACE;
+#else  
     if( WB_NET_PALACE_SERVICEID==GFL_NET_GetGameServiceID() ){
       mode = WH_MP_FREQUENCY_PALACE;
     }
     else{
       mode = WH_MP_FREQUENCY;
     }
+#endif
     result = WM_StartMP(WH_StateOutStartChildMP,
                         (u16 *)_pWmInfo->sRecvBuffer,(u16)_pWmInfo->sRecvBufferSize,
                         (u16 *)_pWmInfo->sSendBuffer, (u16)_pWmInfo->sSendBufferSize,
@@ -2079,13 +2092,17 @@ static void WH_StateOutStartChildMP(void *arg)
 			aidBitmap = (u16)((1 << (num + 1)) - 1);   // 下位 WH_CHILD_MAX+1 ビットが1の bitmap
 			WH_TRACE("aidBitmap %x\n",aidBitmap);
 
+#if 0 //DEBUG_ONLY_FOR_ohno
+      mode = DATASHARING_DOUBLEMODE_PALACE;
+#else  
+
       if( WB_NET_PALACE_SERVICEID==GFL_NET_GetGameServiceID() ){
         mode = DATASHARING_DOUBLEMODE_PALACE;
       }
       else{
         mode = DATASHARING_DOUBLEMODE;
       }
-
+#endif
       result = WM_StartDataSharing(&_pWmInfo->sDSInfo, WH_DS_PORT, aidBitmap,
 																	 mcSize, mode);
 			if (result != WM_ERRCODE_SUCCESS)

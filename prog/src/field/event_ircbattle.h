@@ -31,6 +31,7 @@ struct _EVENT_IRCBATTLE_WORK{
   POKEPARTY* pNetParty[4];
   SAVE_CONTROL_WORK *ctrl;
   int selectType;
+  int soundNo;
   int bBattelBox;
   IRC_COMPATIBLE_PARAM  compatible_param; //ÔŠOüƒƒjƒ…[‚É“n‚·î•ñ
   IRC_MATCH_WORK irc_match;

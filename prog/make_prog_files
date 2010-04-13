@@ -159,7 +159,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/actor_tool.c \
         system/bmp_oam.c \
         net_app/wifi_earth/wifi_country.c \
-        test/matsuda/wflby_debug.c \
         test/ariizumi/debug_pause.c \
         system/wazatype_icon.c \
         net_app/union/union_gra_tool.c \

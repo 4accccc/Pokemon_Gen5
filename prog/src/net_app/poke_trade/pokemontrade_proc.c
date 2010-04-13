@@ -2276,7 +2276,7 @@ static void _MoveSearchPoke(POKEMON_TRADE_WORK* pWork,int moji)
 
 static void _mojiSelectEnd2(POKEMON_TRADE_WORK* pWork)
 {
-    GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+//    GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
     _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
 }
 
@@ -2304,6 +2304,9 @@ static void _mojiSelectEnd(POKEMON_TRADE_WORK* pWork)
 static void _loopSearchMojiState(POKEMON_TRADE_WORK* pWork)
 {
   BOOL endflg=FALSE;
+
+  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
