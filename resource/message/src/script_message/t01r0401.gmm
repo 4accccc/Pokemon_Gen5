@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T21:02:29"/>
+	<create user="matsumiya" host="W00224" date="2010-04-13T21:04:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1457" top="221" right="2162" bottom="849" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="105" right="1999" bottom="733" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -344,14 +344,16 @@
 ・続けてhakase2_03</comment>
 		<attribute name="キャラ指定">HAKASE2
 アララギ博士娘</attribute>
-		<language name="JPN" width="256">アララギ『もう！▼
+		<language name="JPN" width="256">アララギ『もう！　チェレンったら
+ちょっと　クールじゃない？▼
 きょうは　きねんとなる　ひ　でしょ
 かしこまったほうが　いいじゃない▼
 では　あらためて……▼
 わたしの　なまえは　アララギ！▼
 ポケモンという　しゅぞくが
 いつ　うまれたか　しらべています▼</language>
-		<language name="JPN_KANJI" width="256">アララギ『もう！▼
+		<language name="JPN_KANJI" width="256">アララギ『もう！　チェレンったら
+ちょっと　クールじゃない？▼
 きょうは　記念となる　日でしょ
 かしこまったほうが　いいじゃない▼
 では　あらためて……▼

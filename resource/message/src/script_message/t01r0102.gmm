@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T20:22:37"/>
+	<create user="matsumiya" host="W00224" date="2010-04-13T21:08:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="105" right="1999" bottom="733" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="668" top="313" right="1141" bottom="711" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1051,15 +1051,15 @@
 		<language name="JPN" width="256">というわけで
 あいて　してもらうよ▼
 さあ　ぼくたちの
-はじめての　ポケモンしょうぶ！▼
-いっしょに　がんばろう
-よろしくたのむよ！　[1:01:ポケモン種族名:1]！！▼</language>
+はじめての　ポケモンしょうぶ▼
+ぼくが　きみの　つよさを
+ひきだすからね　　[1:01:ポケモン種族名:1]！▼</language>
 		<language name="JPN_KANJI" width="256">というわけで
 相手してもらうよ▼
 さあ　ぼくたちの
-初めての　ポケモン勝負！▼
-一緒に　がんばろう
-よろしく頼むよ！　[1:01:ポケモン種族名:1]！！▼</language>
+初めての　ポケモン勝負▼
+ぼくが　きみの　強さを
+ひきだすからね　　[1:01:ポケモン種族名:1]！▼</language>
 	</row>
 
 	<row id="msg_t01r0102_black_19" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -1084,12 +1084,16 @@
 ・続けてwhite_15</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『この　かんどう……
+		<language name="JPN" width="256">チェレン『はじめての　しょうぶで
+おもわぬ　ふかくを　とったけれど▼
+この　かんどう……
 ようやく　トレーナーに　なれたんだ▼
 ……じゃなくて
 へやのこと　キミの　ママに▽
 あやまらないと　いけないね▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『この　感動……
+		<language name="JPN_KANJI" width="256">チェレン『初めての　勝負で
+思わぬ　不覚を　取ったけれど▼
+この　感動……
 ようやく　トレーナーに　なれたんだ▼
 ……じゃなくて
 部屋のこと　キミの　ママに▽
@@ -1103,16 +1107,12 @@
 ・続けてwhite_15</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『はじめての　しょうぶで
-おもわぬ　ふかくを　とったけれど▼
-この　かんどう……
+		<language name="JPN" width="256">チェレン『この　かんどう……
 ようやく　トレーナーに　なれたんだ▼
 ……じゃなくて
 へやのこと　キミの　ママに▽
 あやまらないと　いけないね▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『初めての　勝負で
-思わぬ　不覚を　取ったけれど▼
-この　感動……
+		<language name="JPN_KANJI" width="256">チェレン『この　感動……
 ようやく　トレーナーに　なれたんだ▼
 ……じゃなくて
 部屋のこと　キミの　ママに▽
