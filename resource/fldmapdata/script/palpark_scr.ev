@@ -65,8 +65,9 @@ palpark_main:
     IF $box_empty_num >= 6 THEN          //6以上空きがある
       //「ＤＳある？」
       _BALLOONWIN_OBJMSG( msg_palpark_05, R15R0301_PARK )
-      _YES_NO_WIN( SCWK_ANSWER )  //クローズいらず
+      _YES_NO_WIN( SCWK_ANSWER )
       IF $SCWK_ANSWER == 0 THEN          //ＤＳある
+        _BALLOONWIN_CLOSE()   //クローズ
         //DSiの通信機能はＯＮになってるか？
         _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
         //FALSEのとき、無線通信は使えない
