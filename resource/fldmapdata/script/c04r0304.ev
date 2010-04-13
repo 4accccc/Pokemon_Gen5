@@ -32,62 +32,6 @@ _EVENT_DATA_END
 
 
 /************************************************************/
-/*							野球選手１						*/
-/************************************************************/
-EVENT_START	ev_c04r0304_baseballm_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0304_baseballm1_01 )
-EVENT_END
-
-
-/************************************************************/
-/*							野球選手２						*/
-/************************************************************/
-EVENT_START	ev_c04r0304_baseballm_02
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0304_baseballm2_01 )
-EVENT_END
-
-
-/************************************************************/
-/*							野球選手３						*/
-/************************************************************/
-EVENT_START	ev_c04r0304_baseballm_03
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0304_baseballm3_01 )
-EVENT_END
-
-
-/************************************************************/
-/*							野球選手４						*/
-/************************************************************/
-EVENT_START	ev_c04r0304_baseballm_04
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0304_baseballm4_01 )
-EVENT_END
-
-
-/************************************************************/
-/*							野球選手５						*/
-/************************************************************/
-EVENT_START	ev_c04r0304_baseballm_05
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0304_baseballm5_01 )
-EVENT_END
-
-
-/************************************************************/
-/*							野球選手６						*/
-/************************************************************/
-EVENT_START	ev_c04r0304_baseballm_06
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0304_baseballm6_01 )
-EVENT_END
-
-
-/************************************************************/
-/*							野球選手７						*/
-/************************************************************/
-EVENT_START	ev_c04r0304_baseballm_07
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0304_baseballm7_01 )
-EVENT_END
-
-
-/************************************************************/
 /*					ZONE_CHANGE_SCRIPT						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_c04r0304
@@ -156,7 +100,7 @@ INIT_EVENT_START	ev_zone_c04r0304
 		_REBATTLE_TRAINER_SETUP_TRID( RB_BASE2, C04R0304_TRAINER_02, 4 )
 		_REBATTLE_TRAINER_SETUP_TRID( RB_BASE3, C04R0304_TRAINER_03, 4 )
 		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_BASE_1, C04R0304_FAN_01, C04R0304_FAN_01_2, 4 )
-		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_BASE_1, C04R0304_FAN_02, C04R0304_FAN_02_2, 4 )
+		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_BASE_2, C04R0304_FAN_02, C04R0304_FAN_02_2, 4 )
 		//ランダムトレーナーの抽選
 		_REBATTLE_TRAINER_SETUP_RND_TR( C04R0304_RANDOM_01, C04R0304_RANDOM_02, C04R0304_RANDOM_03 )
 	ENDIF
@@ -165,5 +109,61 @@ INIT_EVENT_START	ev_zone_c04r0304
 	
 	}
 INIT_EVENT_END
+
+
+/************************************************************/
+/*							野球選手１						*/
+/************************************************************/
+EVENT_START	ev_c04r0304_baseballm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0304_baseballm1_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							野球選手２						*/
+/************************************************************/
+EVENT_START	ev_c04r0304_baseballm_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0304_baseballm2_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							野球選手３						*/
+/************************************************************/
+EVENT_START	ev_c04r0304_baseballm_03
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0304_baseballm3_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							野球選手４						*/
+/************************************************************/
+EVENT_START	ev_c04r0304_baseballm_04
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0304_baseballm4_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							野球選手５						*/
+/************************************************************/
+EVENT_START	ev_c04r0304_baseballm_05
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0304_baseballm5_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							野球選手６						*/
+/************************************************************/
+EVENT_START	ev_c04r0304_baseballm_06
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0304_baseballm6_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							野球選手７						*/
+/************************************************************/
+EVENT_START	ev_c04r0304_baseballm_07
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0304_baseballm7_01 )
+EVENT_END
 
 

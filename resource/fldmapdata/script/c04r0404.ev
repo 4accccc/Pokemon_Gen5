@@ -27,22 +27,6 @@ _EVENT_DATA_END
 
 
 /************************************************************/
-/*						バスケット選手１					*/
-/************************************************************/
-EVENT_START	ev_c04r0404_basketm_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0404_basketm1_01 )
-EVENT_END
-
-
-/************************************************************/
-/*						バスケット選手２					*/
-/************************************************************/
-EVENT_START	ev_c04r0404_basketm_02
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0404_basketm2_01 )
-EVENT_END
-
-
-/************************************************************/
 /*					ZONE_CHANGE_SCRIPT						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_c04r0404
@@ -111,7 +95,7 @@ INIT_EVENT_START	ev_zone_c04r0404
 		_REBATTLE_TRAINER_SETUP_TRID( RB_BASK2, C04R0404_TRAINER_02, 4 )
 		_REBATTLE_TRAINER_SETUP_TRID( RB_BASK3, C04R0404_TRAINER_03, 4 )
 		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_BASK_1, C04R0404_FAN_01, C04R0404_FAN_01_2, 4 )
-		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_BASK_1, C04R0404_FAN_02, C04R0404_FAN_02_2, 4 )
+		_REBATTLE_TRAINER_SETUP_2VS2_TRID( RB_FUN_BASK_2, C04R0404_FAN_02, C04R0404_FAN_02_2, 4 )
 		//ランダムトレーナーの抽選
 		_REBATTLE_TRAINER_SETUP_RND_TR( C04R0404_RANDOM_01, C04R0404_RANDOM_02, C04R0404_RANDOM_03 )
 	ENDIF
@@ -120,5 +104,21 @@ INIT_EVENT_START	ev_zone_c04r0404
 	
 	}
 INIT_EVENT_END
+
+
+/************************************************************/
+/*						バスケット選手１					*/
+/************************************************************/
+EVENT_START	ev_c04r0404_basketm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0404_basketm1_01 )
+EVENT_END
+
+
+/************************************************************/
+/*						バスケット選手２					*/
+/************************************************************/
+EVENT_START	ev_c04r0404_basketm_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0404_basketm2_01 )
+EVENT_END
 
 

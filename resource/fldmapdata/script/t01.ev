@@ -96,7 +96,6 @@ EVENT_START   ev_t01_woman2_01
 	//Š¿Žš‚æ‚è‚à•½‰¼–¼‚ªD‚«H
 	_BALLOONWIN_TALKOBJ_MSG( msg_t01_woman2_01 )
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 
 	IF $SCWK_ANSWER == 0 THEN
 		//‚Í‚¢‚Ìˆ—
