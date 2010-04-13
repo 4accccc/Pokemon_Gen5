@@ -1,8 +1,9 @@
 //============================================================================================
 /**
  * @file  perapvoice.c
- * @brief
- * @date  2006.04.06
+ * @brief ペラップ録音データ保存情報
+ * @author AkitoMori
+ * @date  2010.04.13
  */
 //============================================================================================
 
@@ -12,8 +13,6 @@
 #include "perapvoice_local.h"
 
 
-// @todo ペラップボイス格納ルーチンを書く
-#define PERAPVOICE_NO_FUNC
 
 //============================================================================================
 //============================================================================================
@@ -23,8 +22,8 @@
  */
 //----------------------------------------------------------
 struct PERAPVOICE {
-  BOOL exist_flag;
-  s8 voicedata[PERAPVOICE_LENGTH];
+  BOOL exist_flag;                  ///< 「おしゃべり」で録音をしたので声データが存在する( TRUE or FALSE )
+  s8 voicedata[PERAPVOICE_LENGTH];  ///< 録音した声データ
 };
 
 //============================================================================================
@@ -80,6 +79,7 @@ PERAPVOICE * PERAPVOICE_AllocWork(HEAPID heapID)
 //----------------------------------------------------------
 PERAPVOICE * SaveData_GetPerapVoice(SAVE_CONTROL_WORK * sv)
 {
+  OS_Printf("1:perapvoice adr=%08x\n",(u32)SaveControl_DataPtrGet(sv, GMDATA_ID_PERAPVOICE));
   return (PERAPVOICE*)SaveControl_DataPtrGet(sv, GMDATA_ID_PERAPVOICE);
 }
 
@@ -94,11 +94,7 @@ PERAPVOICE * SaveData_GetPerapVoice(SAVE_CONTROL_WORK * sv)
 //----------------------------------------------------------
 BOOL PERAPVOICE_GetExistFlag(const PERAPVOICE * pv)
 {
-#ifdef PERAPVOICE_NO_FUNC
-  return 0;
-#else
   return pv->exist_flag;
-#endif
 }
 
 //==============================================================================
@@ -112,7 +108,7 @@ BOOL PERAPVOICE_GetExistFlag(const PERAPVOICE * pv)
 //==============================================================================
 void PERAPVOICE_ClearExistFlag( PERAPVOICE * pv )
 {
-  pv->exist_flag = 0;
+  pv->exist_flag = FALSE;
 }
 
 //----------------------------------------------------------
@@ -128,6 +124,28 @@ const void * PERAPVOICE_GetVoiceData(const PERAPVOICE * pv)
 }
 
 //==============================================================================
+// ペラップデータ圧縮 ( WB版 2010.04.13 by mori )
+//
+// WBでは 符号付き8bit 8180hz,1秒で録音するため8180バイトの録音データが生成される。
+// ただセーブデータで押さえてあるのは昔と同じ1000バイトのため、
+// 1/8に縮める必要がある
+//
+// 第１段階
+// 8180のデータを全部参照するわけにはいかないので、8個につき２個だけ参照するようにする。
+// 正確には８個の中の0番目と4番目のデータだけ取り出す。これで４分の１
+//
+// 第２段階
+// 符号付き8bitのデータを縮める。符号付き8bitは-128～127の値を取るのでこのデータをまずは
+// 16で割る(-8～7になる)。その後このデータに８を足して0-15のデータに変換する。
+// 4bitでデータを表現できるようになったので、1btyeに２つずつ詰め込む
+// これで２分の１
+//
+// 180バイト分だけは無視することにする。
+// 1/4と1/2のデータを格納して8180→1000バイト圧縮の出来上がり。
+//
+// 展開は逆で。
+//==============================================================================
+//==============================================================================
 /**
  * $brief   声データの展開
  *
@@ -138,6 +156,9 @@ const void * PERAPVOICE_GetVoiceData(const PERAPVOICE * pv)
  *
  * 06/04/15時点ではペラップボイスは4bit,2khz,1秒サンプリング=1k
  * このデータを8bitに伸ばして2kにして格納する
+ *
+ * 10/04/11時点ではペラップボイスは4bit,8khz/4,1秒サンプリング=1k
+ * このデータを8bitに伸ばして2khz→8khz分格納して8kにして格納する
  */
 //==============================================================================
 void PERAPVOICE_ExpandVoiceData( s8 *des, const s8 *src )
@@ -146,21 +167,27 @@ void PERAPVOICE_ExpandVoiceData( s8 *des, const s8 *src )
   s8 tmp;
   u8 dat;
 
-  // 4bit1kbyteを8bit2kbyteに伸ばす
+  OS_Printf("src=%08x, des=%08x\n", src, des);
+
+  // 4bit1kbyteを8bit8kbyteに伸ばす
   for(i=0;i<PERAPVOICE_LENGTH;i++){
-    dat = src[i]&0x0f;
-    tmp = dat-8;
-    
-    des[count]   = tmp*16;
+    dat = src[i]&0x0f;        // 下位データを取り出して
+    tmp = dat-8;              // 8引いて-8～7のデータにして
+    tmp = tmp*16;             // 16掛けて-128～127のデータにする
+    des[count+0]   = tmp;  // 4回同じデータを格納
+    des[count+1]   = tmp;
+    des[count+2]   = tmp;
+    des[count+3]   = tmp;
 
-    dat = src[i]>>4;
-    tmp = dat-8;
-    des[count+1]   = tmp*16;
+    dat = src[i]>>4;          // 上位のデータを取り出して
+    tmp = dat-8;              // 上と同じ計算を繰り返す
+    tmp = tmp*16;
+    des[count+4]   = tmp;
+    des[count+5]   = tmp;
+    des[count+6]   = tmp;
+    des[count+7]   = tmp;
 
-
-//    des[count  ] = src[i];
-//    des[count+1] = src[i]>>4;
-    count += 2;
+    count += 8;
   }
 }
 
@@ -172,6 +199,8 @@ void PERAPVOICE_ExpandVoiceData( s8 *des, const s8 *src )
  *
  * 06/04/15時点ではペラップボイスは8bit,2khz,1秒サンプリング=2k
  * このデータを4bitに縮めて1kにして格納する
+ * 10/04/10時点ではペラップボイスは8bit,8180hz,1秒サンプリング=8180byte
+ * このデータを4bitかつ8回に2個取り出すように縮めて1kにして格納する
  *
  */
 //----------------------------------------------------------
@@ -184,19 +213,16 @@ void PERAPVOICE_SetVoiceData(PERAPVOICE * pv, const s8 * src)
   // 格納フラグを立てる
   pv->exist_flag = TRUE;
 
-  // 2khz8bitを4bitにして格納
+  // 8180hz8bitを4bit1000バイトにして格納
   count = 0;
-  for(i=0;i<PERAPVOICE_LENGTH*2;i+=2){
-    tmp = (src[i]/16);
-    dat = tmp+8;
-    pv->voicedata[count]   = dat;
-//    pv->voicedata[count]  =  src[i];
+  for(i=0;i<PERAPVOICE_LENGTH*8;i+=8){
+    tmp = (src[i]/16);                // 8バイトの中の0バイト目を取り出して16で割る
+    dat = tmp+8;                      // -8～7のデータに8足して0～15にする
+    pv->voicedata[count]   = dat;     // 下位データとして格納 
 
-    tmp = (src[i+1]/16);
-    dat = tmp+8;
-
-    pv->voicedata[count] |= (dat<<4);
-//    pv->voicedata[count] |= (src[i+1]<<4);
+    tmp = (src[i+4]/16);              // 8バイトの中の4バイト目を取り出して１６で割る
+    dat = tmp+8;                      // -8～7のデータに8足して0～15にする
+    pv->voicedata[count] |= (dat<<4); // 下位データとして格納 
     count++;
   }
 
