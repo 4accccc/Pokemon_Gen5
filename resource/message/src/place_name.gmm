@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-09T11:18:03"/>
+	<create user="shimoyamada" host="W00184" date="2010-04-14T00:54:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -774,6 +774,24 @@
 		<language name="JPN_KANJI" width="256">シフトファクトリー</language>
 	</row>
 
+	<row id="MAPNAME_PALACE_01" text-color="#0000ff,,,,,,,,,,,,,,,,,">
+		<comment>パレス森マップ</comment>
+		<language name="JPN" width="256">ハイリンクのもり</language>
+		<language name="JPN_KANJI" width="256">ハイリンクの森</language>
+	</row>
+
+	<row id="MAPNAME_PALACE_02" text-color="#0000ff,,,,,,,,,,,,,,,,,">
+		<comment>一番奥</comment>
+		<language name="JPN" width="256">もりのひろば</language>
+		<language name="JPN_KANJI" width="256">森の広場</language>
+	</row>
+
+	<row id="MAPNAME_PALACE_03" text-color="#0000ff,,,,,,,,,,,,,,,,,">
+		<comment>シンボル用</comment>
+		<language name="JPN" width="256">もりのおく</language>
+		<language name="JPN_KANJI" width="256">森の奥</language>
+	</row>
+
 	<row id="MAPNAME_P_C4RAIMON" text-color="#0000ff,,,,,,,,,,,,,,,,," back-color="#00ff00,,,,,,,,,,,,,,,,,">
 		<comment>パレス用(仮)</comment>
 		<language name="JPN" width="256">ライモンシティ</language>
@@ -946,12 +964,6 @@
 		<comment>パレス用(仮)</comment>
 		<language name="JPN" width="256">サザナミタウン</language>
 		<language name="JPN_KANJI" width="256">サザナミタウン</language>
-	</row>
-
-	<row id="MAPNAME_PALACE_01" text-color="#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<comment>パレス森マップ</comment>
-		<language name="JPN" width="256">ハイリンクのもり</language>
-		<language name="JPN_KANJI" width="256">ハイリンクの森</language>
 	</row>
 
 	<flowchart-group-list>
