@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-04-10T16:34:23
+	Update:2010-04-13T16:59:11
  *****************************************************************************/
 
 #ifndef NARC_FLD3D_CI_NAIX_
@@ -87,22 +87,29 @@ enum {
 	NARC_fld3d_ci_rival_ci_nsbca = 73,
 	NARC_fld3d_ci_rival_ci_nsbma = 74,
 	NARC_fld3d_ci_rival_ci_nsbta = 75,
-	NARC_fld3d_ci_plasma_ci02_nsbmd = 76,
-	NARC_fld3d_ci_plasma_ci02_nsbca = 77,
-	NARC_fld3d_ci_plasma_ci02_nsbma = 78,
-	NARC_fld3d_ci_plasma_ci02_nsbta = 79,
-	NARC_fld3d_ci_fly_out3_nsbmd = 80,
-	NARC_fld3d_ci_fly_out3_nsbca = 81,
-	NARC_fld3d_ci_fly_out3_nsbma = 82,
-	NARC_fld3d_ci_fly_out3_nsbtp = 83,
-	NARC_fld3d_ci_fly_out2_nsbmd = 84,
-	NARC_fld3d_ci_fly_out2_nsbca = 85,
-	NARC_fld3d_ci_fly_out2_nsbma = 86,
-	NARC_fld3d_ci_fly_out2_nsbtp = 87,
-	NARC_fld3d_ci_fly_in2_nsbmd = 88,
-	NARC_fld3d_ci_fly_in2_nsbca = 89,
-	NARC_fld3d_ci_fly_in2_nsbma = 90,
-	NARC_fld3d_ci_fly_in2_nsbtp = 91
+	NARC_fld3d_ci_plasma_ci01a_nsbmd = 76,
+	NARC_fld3d_ci_plasma_ci01b_nsbmd = 77,
+	NARC_fld3d_ci_plasma_ci01a_nsbca = 78,
+	NARC_fld3d_ci_plasma_ci01a_nsbva = 79,
+	NARC_fld3d_ci_plasma_ci01b_nsbma = 80,
+	NARC_fld3d_ci_plasma_ci01b_nsbta = 81,
+	NARC_fld3d_ci_plasma_ci01b_nsbva = 82,
+	NARC_fld3d_ci_plasma_ci02_nsbmd = 83,
+	NARC_fld3d_ci_plasma_ci02_nsbca = 84,
+	NARC_fld3d_ci_plasma_ci02_nsbma = 85,
+	NARC_fld3d_ci_plasma_ci02_nsbta = 86,
+	NARC_fld3d_ci_fly_out3_nsbmd = 87,
+	NARC_fld3d_ci_fly_out3_nsbca = 88,
+	NARC_fld3d_ci_fly_out3_nsbma = 89,
+	NARC_fld3d_ci_fly_out3_nsbtp = 90,
+	NARC_fld3d_ci_fly_out2_nsbmd = 91,
+	NARC_fld3d_ci_fly_out2_nsbca = 92,
+	NARC_fld3d_ci_fly_out2_nsbma = 93,
+	NARC_fld3d_ci_fly_out2_nsbtp = 94,
+	NARC_fld3d_ci_fly_in2_nsbmd = 95,
+	NARC_fld3d_ci_fly_in2_nsbca = 96,
+	NARC_fld3d_ci_fly_in2_nsbma = 97,
+	NARC_fld3d_ci_fly_in2_nsbtp = 98
 };
 
 /* NARC_FLD3D_CI_NAIX_ */
