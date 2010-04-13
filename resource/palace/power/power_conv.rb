@@ -32,12 +32,14 @@ class POWER_DATA
     @time = "0"                #継続時間(分)
     @msg_id_title = "0"        #パワー項目msg_id
     @msg_id_explain = "0"      #パワー説明msg_id
+    @gpower_id = "0"           #GパワーID
+    @comment = "0"             #効果説明
     @type = "0"                #効果系統
     @data = "0"                #効果データ
   end
 
   attr_accessor :no, :level_w, :level_b, :point, :time;
-  attr_accessor :msg_id_title, :msg_id_explain, :type, :data;
+  attr_accessor :msg_id_title, :msg_id_explain, :type, :data, :gpower_id, :comment;
 end
 
 
@@ -98,7 +100,11 @@ def CsvConvFileCheck()
     PowerData[s].type = line[cell];
     cell += 1;
     PowerData[s].data = line[cell];
-    cell += 3;
+    cell += 2;
+    PowerData[s].gpower_id = line[cell];
+    cell += 1;
+    PowerData[s].comment = line[cell];
+    cell += 1;
     PowerData[s].time = line[cell];
     cell += 1;
 
@@ -235,6 +241,12 @@ def DataFileOutput()
     file.printf("#pragma once\n\n");
     
     file.printf("typedef enum{\n");
+    
+    for i in 0..PowerData.size-1
+      file.printf("\t%s,\t//%d : %s\n", PowerData[i].gpower_id, i, PowerData[i].comment);
+    end
+    
+    file.printf("\n");
     file.printf("\tGPOWER_ID_DISTRIBUTION_START = %d,\t\t//配布Gパワー開始ID(このIDを含む)\n", $DistributionStartNo);
     file.printf("\tGPOWER_ID_DISTRIBUTION_END = %d,\t\t//配布Gパワー終了ID(このIDを含む)\n\n", $DistributionEndNo);
     file.printf("\tGPOWER_ID_PALACE_START = %d,\t\t//パレスGパワー開始ID(このIDを含む)\n", $PalaceStartNo);
