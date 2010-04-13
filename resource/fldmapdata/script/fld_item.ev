@@ -1681,10 +1681,10 @@ EVENT_START ev_fld_item_112
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r16 X=408 Y=120 ITEM=Ç¢Ç¢ÉLÉYÇÆÇ∑ÇË FLAG=113
+// MAP=r16 X=408 Y=120 ITEM=Ç”ÇµÇ¨Ç»ÉAÉÅ FLAG=113
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_113
-  _FLD_ITEM_EVENT ITEM_IIKIZUGUSURI,1
+  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
 EVENT_END
 
 //--------------------------------------------------------------
