@@ -347,10 +347,13 @@ static int seq_Main( BEACON_VIEW_PTR wk )
     wk->io_interval--;
     return SEQ_MAIN;
   }
-  
-  //スタックチェック
-  if( BeaconView_CheckStack( wk ) == FALSE){
-    return SEQ_MAIN;
+ 
+  //特殊Gパワーチェック
+  if( BeaconView_CheckSpecialGPower( wk ) == FALSE ){
+    //スタックチェック
+    if( BeaconView_CheckStack( wk ) == FALSE ){
+      return SEQ_MAIN;
+    }
   }
   wk->io_interval = 30*5; //インターバルを設定
   return SEQ_VIEW_UPDATE;
@@ -536,11 +539,13 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
     wk->my_data.tr_id = MyStatus_GetID( my ) & 0xFFFF;  //下位2byte
     wk->my_data.sex = MyStatus_GetMySex( my );
     wk->my_data.union_char = MyStatus_GetTrainerView( my );
+    wk->my_data.pm_version = PM_VERSION;
   }
   
   //スタックワーク領域取得
   wk->infoStack = GAMEBEACON_InfoTbl_Alloc( wk->heap_sID );
   wk->tmpInfo = GAMEBEACON_Alloc( wk->heap_sID );
+  wk->tmpInfo2 = GAMEBEACON_Alloc( wk->heap_sID );
 
   //Gパワーデータ取得
   wk->gpower_data = GPOWER_PowerData_LoadAlloc( wk->heap_sID );
@@ -559,6 +564,7 @@ static void _sub_DataExit(BEACON_VIEW_PTR wk)
 
   GPOWER_PowerData_Unload( wk->gpower_data );
 
+  GFL_HEAP_FreeMemory( wk->tmpInfo2 );
   GFL_HEAP_FreeMemory( wk->tmpInfo );
   GFL_HEAP_FreeMemory( wk->infoStack );
 }

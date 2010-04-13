@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-04-10T17:49:16"/>
+	<create user="iwasawa" host="W00157" date="2010-04-13T19:02:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="94" top="260" right="799" bottom="888" maximized="no" rayout="Vertical2">
+	<dialog left="1319" top="272" right="2024" bottom="900" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="220" right="1280" bottom="844" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -337,11 +337,13 @@
 		<comment>0：トレーナー名
 1：デルパワー名
 
-※NPC用</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが　はつどうした
-[1:11:特殊状態名:1]を　つかいますか？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが　発動した
-[1:11:特殊状態名:1]を　使いますか？</language>
+※特殊デルパワー発動時</comment>
+		<language name="JPN" width="256">とくしゅデルパワー　はつどう！！
+[1:11:特殊状態名:1]を
+つかいますか？</language>
+		<language name="JPN_KANJI" width="256">特殊デルパワー　発動！！
+[1:11:特殊状態名:1]を
+使いますか？</language>
 	</row>
 
 	<row id="msg_sys_gpower_use_end">
@@ -469,19 +471,19 @@
 
 	<row id="msg_beacon_006" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
-トレーナー　[1:00:トレーナー名:1]との
+[1:0E:トレーナー種別名:1]の[1:00:トレーナー名:2]との
 たいせんを　かいし　しました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-トレーナー　[1:00:トレーナー名:1]との
+[1:0E:トレーナー種別名:1]の[1:00:トレーナー名:2]との
 対戦を　開始しました！</language>
 	</row>
 
 	<row id="msg_beacon_007" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
-トレーナー　[1:00:トレーナー名:1]との
+[1:0E:トレーナー種別名:1]の[1:00:トレーナー名:2]との
 たいせんに　しょうり　しました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-トレーナー　[1:00:トレーナー名:1]との
+[1:0E:トレーナー種別名:1]の[1:00:トレーナー名:2]との
 対戦に　勝利しました！</language>
 	</row>
 

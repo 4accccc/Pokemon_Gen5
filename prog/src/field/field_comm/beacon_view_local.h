@@ -87,6 +87,7 @@ typedef struct _PANEL_WORK{
   u8  n_line; //現在のライン
   u8  rank; //ランク
   u8  sex;  //性別
+  u8  timeout_f;  //タイムアウトフラグ
   u16 tr_id;  //トレーナーID
   s16 px;
   s16 py;
@@ -122,6 +123,7 @@ typedef struct _MY_DATA{
   u32       tr_id;
   u8        sex;
   u8        union_char;
+  u8        pm_version;  ///<PM_VERSION
 }MY_DATA;
 
 
@@ -140,6 +142,7 @@ typedef struct _BEACON_VIEW{
   GAMEBEACON_INFO_TBL*  infoStack;  //スタックワーク
   GAMEBEACON_INFO_TBL*  infoLog;    //ログテーブル
   GAMEBEACON_INFO*      tmpInfo;
+  GAMEBEACON_INFO*      tmpInfo2;
   u16                   tmpTime;
   MY_DATA               my_data;
 
@@ -155,6 +158,9 @@ typedef struct _BEACON_VIEW{
   u8        gpower_check_req;
   LOG_CTRL  ctrl;
 
+  u8        sp_gpower_req_ct;
+  u8        sp_gpower_req[ SP_GPOWER_REQ_MAX ];
+
   ////////////////////////////////////////
   HEAPID      heapID;
   HEAPID      tmpHeapID;
@@ -164,7 +170,7 @@ typedef struct _BEACON_VIEW{
   GFL_TCBLSYS*  pTcbSys;
   GFL_TCB*      tcbVIntr;
 
-  int           eff_task_ct;
+  int           eff_task_ct;  //エフェクトタスク数
 
   PALETTE_FADE_PTR pfd;
 

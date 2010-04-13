@@ -7,6 +7,7 @@
 
 #pragma once
 
+///メインシーケンス
 enum{
   SEQ_MAIN,
   SEQ_VIEW_UPDATE,
@@ -19,6 +20,7 @@ enum{
   SEQ_END,
 };
 
+///サブシーケンス
 enum{
  SSEQ_THANKS_ICON_ANM,
  SSEQ_THANKS_ICON_ANM_WAIT,
@@ -29,6 +31,7 @@ enum{
  SSEQ_THANKS_END,
 };
 
+///イベントリクエストID
 typedef enum{
  EV_NONE,
  EV_RETURN_CGEAR,
@@ -37,6 +40,18 @@ typedef enum{
  EV_GPOWER_CHECK,
  EV_CALL_TALKMSG_INPUT,
 }BEACON_DETAIL_EVENT;
+
+///スペシャルGパワーリクエストID
+typedef enum{
+  SP_GPOWER_REQ_NULL,
+  SP_GPOWER_REQ_HATCH_UP,
+  SP_GPOWER_REQ_NATSUKI_UP,
+  SP_GPOWER_REQ_SALE,
+  SP_GPOWER_REQ_EXP_UP,
+  SP_GPOWER_REQ_MONEY_UP,
+  SP_GPOWER_REQ_CAPTURE_UP,
+  SP_GPOWER_REQ_MAX = SP_GPOWER_REQ_CAPTURE_UP,
+}SP_GPOWER_REQ;
 
 /////////////////////////////////////
 //リテラル
@@ -195,6 +210,8 @@ enum{
 enum{
  GPOWER_USE_MINE, //自分
  GPOWER_USE_BEACON, //他人
+ GPOWER_USE_SPECIAL, //特殊デルパワー
+ GPOWER_USE_MAX,
 };
 
 //タスクメニュー数
