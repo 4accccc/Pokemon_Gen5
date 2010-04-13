@@ -159,15 +159,16 @@ EVENT_START ev_waza_omoidashi
 {
   DEFINE_LOCAL poke_pos  // 対象ポケモンの手持ち位置
 
+	_TALK_OBJ_START()
+
   // 初会話
   {
     DEFINE_LOCAL first_contact
     _FLAG_CHECK( FE_REMIND_FIRSTTALK, first_contact )
     IF $first_contact == TRUE THEN
       _FLAG_SET( FE_REMIND_FIRSTTALK )  // フラグセット
-      _BALLOONWIN_TALKOBJ_MSG( msg_waza_omoi_12 )
-      _LAST_KEYWAIT()
-      _BALLOONWIN_CLOSE()
+      _BALLOONWIN_OBJMSG_POS( msg_waza_omoi_12, SCWK_TARGET_OBJID, POS_DOWN )
+      _AB_KEYWAIT()
     ENDIF
   }
   // ハートのうろこ所持チェック
@@ -182,9 +183,8 @@ EVENT_START ev_waza_omoidashi
   // 思い出させるか確認
   {
     DEFINE_LOCAL ans
-    _BALLOONWIN_TALKOBJ_MSG( msg_waza_omoi_13 )  //「思い出させます？」
+    _BALLOONWIN_OBJMSG_POS( msg_waza_omoi_13, SCWK_TARGET_OBJID, POS_DOWN )  //「思い出させます？」
     _YES_NO_WIN( ans )
-    _BALLOONWIN_CLOSE()
     IF $ans == SCR_NO THEN
       _JUMP omoidashi_exit_byebye
     ENDIF
@@ -192,8 +192,8 @@ EVENT_START ev_waza_omoidashi
   // ポケモン選択
   {
     DEFINE_LOCAL decide
-    _BALLOONWIN_TALKOBJ_MSG( msg_waza_omoi_14 )  //「どの ポケモンに します？」
-    _LAST_KEYWAIT()
+    _BALLOONWIN_OBJMSG_POS( msg_waza_omoi_14, SCWK_TARGET_OBJID, POS_DOWN )  //「どの ポケモンに します？」
+    _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
     _SELECT_TEMOTI_POKE( decide, poke_pos, 0 )
     // キャンセル
@@ -222,8 +222,8 @@ EVENT_START ev_waza_omoidashi
     DEFINE_LOCAL result
     DEFINE_LOCAL tmp
     _TEMOTI_NICK_NAME( 0, poke_pos )
-    _BALLOONWIN_TALKOBJ_MSG( msg_waza_omoi_01 )  //「どの わざ？」
-    _LAST_KEYWAIT()
+    _BALLOONWIN_OBJMSG_POS( msg_waza_omoi_01, SCWK_TARGET_OBJID, POS_DOWN )  //「どの わざ？」
+    _AB_KEYWAIT()
     _BALLOONWIN_CLOSE()
     _CALL_WAZA_REMAIND_PROC( result, poke_pos )
     SWITCH $result
@@ -235,17 +235,17 @@ EVENT_START ev_waza_omoidashi
 
 
 omoidashi_exit_byebye:
-  _BALLOONWIN_TALKOBJ_MSG( msg_waza_omoi_15 )  //「また きてね！」
+  _BALLOONWIN_OBJMSG_POS( msg_waza_omoi_15, SCWK_TARGET_OBJID, POS_DOWN )  //「また きてね！」
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
   _JUMP omoidashi_exit
 omoidashi_exit_egg:
-  _BALLOONWIN_TALKOBJ_MSG( msg_waza_omoi_16 )  //「それ, タマゴだよ」
+  _BALLOONWIN_OBJMSG_POS( msg_waza_omoi_16, SCWK_TARGET_OBJID, POS_DOWN )  //「それ, タマゴだよ」
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
   _JUMP omoidashi_exit 
 omoidashi_exit_disable:
-  _BALLOONWIN_TALKOBJ_MSG( msg_waza_omoi_17 )  //「忘れてる技 ないよ」
+  _BALLOONWIN_OBJMSG_POS( msg_waza_omoi_17, SCWK_TARGET_OBJID, POS_DOWN )  //「忘れてる技 ないよ」
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
   _JUMP omoidashi_exit
