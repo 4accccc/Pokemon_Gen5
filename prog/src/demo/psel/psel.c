@@ -40,6 +40,7 @@
 
 // サウンド
 #include "sound/pm_sndsys.h"
+#include "sound/pm_wb_voice.h"  // wbではpm_voiceではなくこちらを使う
 
 // オーバーレイ
 
@@ -145,8 +146,7 @@ enum
 
 #define PSELSND_DEMO_RIBBON_LOOSE  ( SEQ_SE_SDEMO_01 )
 #define PSELSND_DEMO_BOX_OPEN      ( SEQ_SE_SDEMO_02 )
-
-
+#define PSELSND_DEMO_ZOOM_UP       ( SEQ_SE_SDEMO_03 )
 
 
 // フレーム合わせ
@@ -4007,6 +4007,12 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
       // ズームイン
       Psel_ThreeS02MbZoomAnimeStart( work, work->select_target_poke, FALSE );
 
+      {
+        // ポケモン鳴く
+        u32 formno = 0;  // 0<=formno<POKETOOL_GetPersonalParam( monsno, 0, POKEPER_ID_form_max )
+        PMV_PlayVoice( poke_monsno[work->select_target_poke], formno );
+      }
+
       *seq = S02_MAIN_SEQ_ZOOM_IN_ANIME_WAIT;
     }
     break;
@@ -4088,6 +4094,7 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
     {
       // 決定アニメ
       Psel_ThreeS02MbDecideAnimeStart( work, work->select_target_poke );
+      PMSND_PlaySE( PSELSND_DEMO_ZOOM_UP );
       
       *seq = S02_MAIN_SEQ_DECIDE_ANIME_WAIT;
     }

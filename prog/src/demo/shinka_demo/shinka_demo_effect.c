@@ -159,6 +159,12 @@ static const PARTICLE_ARC particle_arc[PARTICLE_SPA_FILE_MAX] =
   { ARCID_SHINKA_DEMO, NARC_shinka_demo_particle_shinka_demo_spa },
 };
 
+// パーティクルのポリゴンID
+#define PARTICLE_FIX_POLYGON_ID ( 5)
+#define PARTICLE_MIN_POLYGON_ID ( 6)
+#define PARTICLE_MAX_POLYGON_ID (59)
+
+
 //-------------------------------------
 /// パーティクル
 //=====================================
@@ -613,10 +619,14 @@ static PARTICLE_MANAGER* Particle_Init( HEAPID heap_id, u16 data_num, const PART
   {
     void* arc_res;
 
-    mgr->spa_set[i].ptc = GFL_PTC_Create( mgr->spa_set[i].wk, sizeof(mgr->spa_set[i].wk), TRUE, heap_id );
+    //mgr->spa_set[i].ptc = GFL_PTC_Create( mgr->spa_set[i].wk, sizeof(mgr->spa_set[i].wk), TRUE, heap_id );
+    
     //mgr->spa_set[i].ptc = GFL_PTC_Create2( mgr->spa_set[i].wk, sizeof(mgr->spa_set[i].wk), TRUE, heap_id, 5, 6, 63 );  // 3DのポリゴンIDは5にしているが、これだとパーティクルが3Dによって欠けてしまうことがある。単純にZがパーティクルのほうが後ろなのだろうか？
     //mgr->spa_set[i].ptc = GFL_PTC_Create2( mgr->spa_set[i].wk, sizeof(mgr->spa_set[i].wk), TRUE, heap_id, 5, 6, 59 );  // これだとパーティクルが欠けない。6から59よりかなり小さい範囲だと、パーティクル同士で欠けてしまう。
-		//GFL_PTC_PersonalCameraDelete( mgr->spa_set[i].ptc );
+    mgr->spa_set[i].ptc = GFL_PTC_CreateEx( mgr->spa_set[i].wk, sizeof(mgr->spa_set[i].wk), TRUE,
+        PARTICLE_FIX_POLYGON_ID, PARTICLE_MIN_POLYGON_ID, PARTICLE_MAX_POLYGON_ID, heap_id );
+
+    //GFL_PTC_PersonalCameraDelete( mgr->spa_set[i].ptc );
 		//GFL_PTC_PersonalCameraCreate( mgr->spa_set[i].ptc, &proj, DEFAULT_PERSP_WAY, &cam_eye, &cam_up, &cam_at, heap_id );
     arc_res = GFL_PTC_LoadArcResource( particle_arc[i].arc, particle_arc[i].idx, heap_id );
     mgr->spa_set[i].res_num = GFL_PTC_GetResNum( arc_res );
