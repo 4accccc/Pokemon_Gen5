@@ -4007,11 +4007,14 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
       // ズームイン
       Psel_ThreeS02MbZoomAnimeStart( work, work->select_target_poke, FALSE );
 
+/*
+鳴き場所移動
       {
         // ポケモン鳴く
         u32 formno = 0;  // 0<=formno<POKETOOL_GetPersonalParam( monsno, 0, POKEPER_ID_form_max )
         PMV_PlayVoice( poke_monsno[work->select_target_poke], formno );
       }
+*/
 
       *seq = S02_MAIN_SEQ_ZOOM_IN_ANIME_WAIT;
     }
@@ -4133,6 +4136,12 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
     // テキストとウィンドウは表示
     work->vblank_req |= VBLANK_REQ_S02_TEXT_WIN_S_VISIBLE_ON;
     Psel_TextPokeInfoPrintStart( work, work->select_target_poke );
+
+    {
+      // ポケモン鳴く
+      u32 formno = 0;  // 0<=formno<POKETOOL_GetPersonalParam( monsno, 0, POKEPER_ID_form_max )
+      PMV_PlayVoice( poke_monsno[work->select_target_poke], formno );
+    }
   }
   work->poke_info_print = FALSE;
 
