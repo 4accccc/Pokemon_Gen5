@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T12:43:05"/>
+	<create user="matsumiya" host="W00224" date="2010-04-13T21:02:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1457" top="221" right="2162" bottom="849" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -297,10 +297,8 @@
 ・マップに入ると自動で表示
 ・続けてwhite_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『ほら！
-はかせが　まってるよ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『ほら！
-博士が　待ってるよ▼</language>
+		<language name="JPN" width="256">チェレン『ほら　いくよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『ほら　行くよ▼</language>
 	</row>
 
 	<row id="msg_t01r0401_white_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -333,11 +331,9 @@
 		<comment>♂
 ・続けてhakase2_02表示</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『アララギはかせ？▼
-いまさら　そんなこと　なさらなくても
+		<language name="JPN" width="256">チェレン『……アララギはかせ？
 なまえは　しっていますよ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『アララギ博士？▼
-いまさら　そんなこと　なさらなくても
+		<language name="JPN_KANJI" width="256">チェレン『……アララギ博士？
 名前は　知っていますよ▼</language>
 	</row>
 
@@ -352,18 +348,17 @@
 きょうは　きねんとなる　ひ　でしょ
 かしこまったほうが　いいじゃない▼
 では　あらためて……▼
-わたしの　なまえは　アララギ！
-じぶんで　いうのも　なんだけど▽
-わりと　ゆうしゅうな　けんきゅうか！▽
-の　つもり……▼</language>
+わたしの　なまえは　アララギ！▼
+ポケモンという　しゅぞくが
+いつ　うまれたか　しらべています▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『もう！▼
 きょうは　記念となる　日でしょ
 かしこまったほうが　いいじゃない▼
 では　あらためて……▼
-わたしの　名前は　アララギ！
-自分で　いうのも　なんだけど▽
-わりと　優秀な　研究家！▽
-の　つもり……▼</language>
+わたしの　名前は　アララギ！▼
+ポケモンという　種族が
+いつ　誕生したのか……▽
+その起源を　調べています▼</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_03">
@@ -568,10 +563,12 @@
 		<comment>♂
 ・続けてhakase2_12</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『こちらこそ
-よろしく　おねがいします！▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『こちらこそ
-よろしく　お願いします！▼</language>
+		<language name="JPN" width="256">チェレン『ありがとう　ございます▼
+おかげで　ねんがんの
+ポケモントレーナーに　なれました▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『ありがとう　ございます▼
+おかげで　念願の
+ポケモントレーナーに　なれました▼</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_12">
@@ -618,10 +615,14 @@
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ベル『あっ　あたしたち
 はかせに　たのまれたから▽
-ぼうけんしても　いいんだよね？▼</language>
+たびしても　いいんだよね？▼
+じぶんの　やりたいことを
+さがしても　いいんだよね？▼</language>
 		<language name="JPN_KANJI" width="256">ベル『あっ　あたしたち
 博士に　頼まれたから▽
-冒険しても　いいんだよね？▼</language>
+冒険しても　いいんだよね？▼
+自分の　やりたいことを
+探しても　いいんだよね？▼</language>
 	</row>
 
 	<row id="msg_t01r0401_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -629,10 +630,14 @@
 ・メッセージ表示後、友達♂♀退場
 　画面外に消えると、操作可能に</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『ああ　そうだね▼
+		<language name="JPN" width="256">チェレン『ああ▼
+ずかんを　かんせい　させながらなら
+すきなように　たびすれば　いい▼
 というわけで　ぼくたちも
 １ばんどうろに　いくと　しよう▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『ああ　そうだね▼
+		<language name="JPN_KANJI" width="256">チェレン『ああ▼
+図鑑を　完成させながらなら
+好きなように　旅すれば　いい▼
 というわけで　ぼくたちも
 １番道路に　行くと　しよう▼</language>
 	</row>
