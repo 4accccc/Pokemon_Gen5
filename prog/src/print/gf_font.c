@@ -461,7 +461,7 @@ void GFL_FONT_GetBitMap( const GFL_FONT* wk, STRCODE code, void* dst, GFL_FONT_S
   u32 index;
 
   index = get_glyph_index( wk, code );
-  TAYA_Printf("[GF_FONT] code=%04x, index=%d\n", code, index);
+//  TAYA_Printf("[GF_FONT] code=%04x, index=%d\n", code, index);
   wk->GetBitmapFunc( wk, index, dst, size );
 }
 
