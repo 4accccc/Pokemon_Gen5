@@ -149,7 +149,7 @@ ev_item_event_nowait:
     //入手成功システムメッセージ
     $SCWK_TEMP0 = $SCWK_PARAM0
     $SCWK_TEMP1 = $SCWK_PARAM1
-	  _CALL		sub_pocket_me_set									//MEセット
+	  //_CALL		sub_pocket_me_set									//MEセット
 
     _CALL   sub_item_event_nowait
   ENDIF
