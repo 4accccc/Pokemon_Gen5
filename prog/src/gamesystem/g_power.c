@@ -172,14 +172,35 @@ GPOWER_ID GPOWER_Check_OccurID(GPOWER_ID gpower_id, const POWER_CONV_DATA *power
  * 指定したタイプのパワーが発動しているかチェック
  *
  * @param   type		    Gパワータイプ
- * @param   powerdata		パワーデータへのポインタ
  *
  * @retval  GPOWER_ID		発動しているGパワーID (発動していない場合はGPOWER_ID_NULL)
  */
 //==================================================================
-GPOWER_ID GPOWER_Check_OccurType(GPOWER_TYPE type, const POWER_CONV_DATA *powerdata)
+GPOWER_ID GPOWER_Check_OccurType(GPOWER_TYPE type)
 {
   return GPowerSys.occur_power[type];
+}
+
+//==================================================================
+/**
+ * 指定したタイプのパワーが発動しているかチェック
+ *
+ * @param   type		    Gパワータイプ
+ *
+ * @retval  u32		0:発動していない 1以上:残りライフ(秒)
+ */
+//==================================================================
+u32 GPOWER_Check_OccurTypeLife( GPOWER_TYPE type )
+{
+  u32 sec;
+  if( GPowerSys.occur_power[type] == GPOWER_ID_NULL ){
+    return 0;
+  }
+  sec = GPowerSys.life[type]/ONE_SECOND_FRAME;
+  if( sec == 0){
+    return 1; //1秒以下は1秒と返すことにする
+  }
+  return sec;
 }
 
 //==================================================================

@@ -34,7 +34,15 @@
 
 #include "../../../resource/fldmapdata/script/gpower_scr_def.h" //SCRID_～
 
+///////////////////////////////////////////////////////
+//リテラル
+///////////////////////////////////////////////////////
 #define SE_POWER_USE  (SEQ_SE_W295_01)
+#define BUFLEN_TMP_MSG  (64*2+EOM_SIZE)
+
+#define CWIN_STR_OX01  (0)
+#define CWIN_STR_OX02  (8)
+#define CWIN_STR_OY    (16)
 
 typedef struct POWER_FLD_EFF{
   u8  ct;
@@ -45,6 +53,7 @@ typedef struct POWER_FLD_EFF{
 typedef struct POWER_CHECK_WORK{
   u8  ct;
   HEAPID  heapID;
+  HEAPID  tmpHeapID;
   GAMESYS_WORK* gsys;
   GAMEDATA* gdata;
   FIELDMAP_WORK* fieldmap;
@@ -54,7 +63,11 @@ typedef struct POWER_CHECK_WORK{
   FLDSYSWIN_STREAM* winStream;
   GFL_BMPWIN* bmpwin;
   GFL_MSGDATA* msgData;
+  WORDSET* wset;
   POWER_CONV_DATA* p_data;
+
+  STRBUF* s_buf;
+  STRBUF* s_tmp;
 }POWER_CHECK_WORK;
 
 static GMEVENT_RESULT event_GPowerUseEffectMain(GMEVENT * event, int *  seq, void * work);
@@ -62,6 +75,8 @@ static void sub_InstantPowerUse( GAMESYS_WORK* gsys, WORDSET* wordset, GPOWER_TY
 static GMEVENT_RESULT event_GPowerEnableListCheckMain(GMEVENT * event, int *  seq, void * work);
 static void sub_InitPowerCheckWork( POWER_CHECK_WORK* wk, GAMESYS_WORK * gsys, FIELDMAP_WORK* fieldmap );
 static void sub_ReleasePowerCheckWork( POWER_CHECK_WORK* wk );
+static void sub_GPowerEnableListLineDraw( POWER_CHECK_WORK* wk, STRBUF* str, GPOWER_ID g_power, u16 time, u8 line );
+static void sub_GPowerEnableListDraw( POWER_CHECK_WORK* wk );
 
 /*
  *  @brief  Gパワー発動イベント
@@ -148,6 +163,7 @@ GMEVENT* EVENT_GPowerEnableListCheck( GAMESYS_WORK * gsys, FIELDMAP_WORK* fieldm
 static void sub_InitPowerCheckWork( POWER_CHECK_WORK* wk, GAMESYS_WORK * gsys, FIELDMAP_WORK* fieldmap )
 {
   wk->heapID = HEAPID_FIELDMAP;
+  wk->tmpHeapID = GFL_HEAP_LOWID( wk->heapID );
 
   wk->gsys = gsys;
   wk->fieldmap = fieldmap;
@@ -157,10 +173,18 @@ static void sub_InitPowerCheckWork( POWER_CHECK_WORK* wk, GAMESYS_WORK * gsys, F
   wk->p_data = GPOWER_PowerData_LoadAlloc( wk->heapID );
   wk->msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE,
           NARC_script_message_gpower_event_dat, wk->heapID );
+ 
+  wk->wset = WORDSET_Create( wk->heapID );
+ 
+  wk->s_buf = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
+  wk->s_tmp = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
 }
 
 static void sub_ReleasePowerCheckWork( POWER_CHECK_WORK* wk )
 {
+  GFL_STR_DeleteBuffer( wk->s_tmp );
+  GFL_STR_DeleteBuffer( wk->s_buf );
+  WORDSET_Delete( wk->wset );
   GFL_MSG_Delete( wk->msgData );
   GPOWER_PowerData_Unload( wk->p_data );
 }
@@ -254,8 +278,9 @@ static GMEVENT_RESULT event_GPowerEnableListCheckMain(GMEVENT * event, int *  se
     (*seq)++;
     break;
   case 2:
-    wk->win = FLDSYSWIN_AddEx( wk->fmb, wk->msgData, 2, 1, 24, 22 );
+    wk->win = FLDSYSWIN_AddEx( wk->fmb, wk->msgData, 3, 1, 24, 22 );
     FLDSYSWIN_ClearWindow( wk->win );
+    sub_GPowerEnableListDraw( wk );
     (*seq)++;
     break;
   case 3:
@@ -272,5 +297,56 @@ static GMEVENT_RESULT event_GPowerEnableListCheckMain(GMEVENT * event, int *  se
   return GMEVENT_RES_CONTINUE;
 }
 
+//-----------------------------------------------------------------
+/*
+ *  @brief  発動中パワー名描画
+ */
+//-----------------------------------------------------------------
+static void sub_GPowerEnableListLineDraw( POWER_CHECK_WORK* wk, STRBUF* str, GPOWER_ID g_power, u16 time, u8 line )
+{
+  WORDSET_RegisterGPowerName( wk->wset, 0, g_power );
+  IWASAWA_Printf("GPower %d Life = %d\n",g_power,time);
+  WORDSET_RegisterNumber( wk->wset, 1, time/60, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( wk->wset, 2, time%60, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+
+  WORDSET_ExpandStr( wk->wset, wk->s_tmp, str );
+  FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX02, CWIN_STR_OY*line, wk->s_tmp );
+}
+
+//-----------------------------------------------------------------
+/*
+ *  @brief  Gパワー発動中の効果リスト描画
+ */
+//-----------------------------------------------------------------
+static void sub_GPowerEnableListDraw( POWER_CHECK_WORK* wk )
+{
+  INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( wk->gdata ));
+  u8 power,i,line;
+  u16 time;
+
+  //設定しているデルパワーラベル
+  GFL_MSG_GetString( wk->msgData, msg_gpower_check_label01, wk->s_buf );
+  FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*0, wk->s_buf );
+  
+  //設定しているデルパワー
+  GFL_MSG_GetString( wk->msgData, msg_gpower_check_list01, wk->s_buf );
+  power = ISC_SAVE_GetGPowerID(int_sv);
+  if( power != GPOWER_ID_NULL ){
+    sub_GPowerEnableListLineDraw( wk, wk->s_buf, power, 0, 1 );
+  }
+  //発動しているデルパワー
+  GFL_MSG_GetString( wk->msgData, msg_gpower_check_label02, wk->s_buf );
+  FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*2, wk->s_buf );
+
+  GFL_MSG_GetString( wk->msgData, msg_gpower_check_list02, wk->s_buf );
+  for( i = 0, line = 0 ;i < GPOWER_TYPE_MAX;i++){
+    power = GPOWER_Check_OccurType( i );
+    if( power == GPOWER_ID_NULL ){
+      continue;
+    }
+    time = GPOWER_Check_OccurTypeLife( i );
+    sub_GPowerEnableListLineDraw( wk, wk->s_buf, power, time, 3+line++ );
+  }
+}
 
 

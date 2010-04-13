@@ -187,12 +187,10 @@ void BEACON_VIEW_Exit(BEACON_VIEW_PTR wk)
 void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
 {
   int i;
-
-  GFL_TCBL_Main( wk->pTcbSys );
-  
-  //スタックテーブル更新
-  GAMEBEACON_Stack_Update( wk->infoStack );
-
+#ifdef PM_DEBUG
+  int before_seq = wk->seq;
+  OSTick s_tick = OS_GetTick();
+#endif
   if( wk->active != bActive ){
     wk->active = bActive;
     BeaconView_SetViewPassive( wk, !bActive );
@@ -202,6 +200,9 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
       //リクエストを強制破棄
       event_RequestReset( wk );
     }
+#ifdef PM_DEBUG
+  IWASAWA_Printf("BeaconView Tick = %d\n", OS_GetTick()-s_tick);
+#endif
     return; //イベントリクエスト中はメイン処理をスキップ
   }
   if(!bActive){
@@ -236,6 +237,26 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
     //外部リクエストによる終了待ち
     break;
   }
+#ifdef PM_DEBUG
+  IWASAWA_Printf("BeaconView seq = %d tick = %d\n", before_seq, OS_GetTick()-s_tick);
+#endif
+}
+
+//==================================================================
+/**
+ * すれ違い参照画面：描画
+ *
+ * @param   wk		
+ */
+//==================================================================
+void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
+{
+  GFL_TCBL_Main( wk->pTcbSys );
+
+  //スタックテーブル更新
+  GAMEBEACON_Stack_Update( wk->infoStack );
+  
+  BEACON_VIEW_TouchUpdata( wk );
 }
 
 //==================================================================
@@ -280,17 +301,6 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
   return event; 
 }
 
-//==================================================================
-/**
- * すれ違い参照画面：描画
- *
- * @param   wk		
- */
-//==================================================================
-void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
-{
-  BEACON_VIEW_TouchUpdata( wk );
-}
 
 /////////////////////////////////////////////////////////////////
 //
@@ -513,7 +523,7 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
     INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(save);
     wk->my_data.power = ISC_SAVE_GetGPowerID(int_sv);
 #ifdef DEBUG_ONLY_FOR_iwasawa
-    wk->my_data.power = 1;
+//    wk->my_data.power = 1;
 #endif
     wk->my_power_f = (wk->my_data.power == GPOWER_ID_NULL);
   }
@@ -579,7 +589,7 @@ static void _sub_SystemSetup(BEACON_VIEW_PTR wk)
   wk->wordset = WORDSET_Create( wk->heap_sID);
 
 	wk->mm_status = GFL_MSG_Create(
-		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_beacon_status_dat, wk->heap_sID );
+		GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_beacon_status_dat, wk->heap_sID );
 
   wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heap_sID );
   wk->str_expand = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heap_sID );
@@ -892,7 +902,7 @@ static void _sub_ActorCreate( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
  
   //レンダラー作成
   {
-    const GFL_REND_SURFACE_INIT renderInitData = { 0,512,256,192,CLSYS_DRAW_SUB, CLSYS_REND_CULLING_TYPE_NORMAL};
+    const GFL_REND_SURFACE_INIT renderInitData = { 0,512,256,192,CLSYS_DRAW_SUB, CLSYS_REND_CULLING_TYPE_NOT_AFFINE};
     
     wk->cellRender = GFL_CLACT_USERREND_Create( &renderInitData , 1 , wk->heap_sID );
     GFL_CLACT_UNIT_SetUserRend( wk->cellUnit, wk->cellRender );

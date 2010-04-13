@@ -183,17 +183,15 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
 
   //スタックに積まれた情報をチェック
 #ifdef PM_DEBUG
-  if( wk->deb_stack_check_throw ||
-      !GAMEBEACON_Stack_GetInfo( wk->infoStack, wk->tmpInfo, &wk->tmpTime ) ){
-    list_TimeOutCheck( wk );
-    return FALSE;
-  }
-#else
-  if( !GAMEBEACON_Stack_GetInfo( wk->infoStack, wk->tmpInfo, &wk->tmpTime ) ){
+  if( wk->deb_stack_check_throw ){
     list_TimeOutCheck( wk );
     return FALSE;
   }
 #endif
+  if( !GAMEBEACON_Stack_GetInfo( wk->infoStack, wk->tmpInfo, &wk->tmpTime ) ){
+    list_TimeOutCheck( wk );
+    return FALSE;
+  }
 
   //エラーチェック
   if( GAMEBEACON_Check_Error( wk->tmpInfo)){
@@ -1327,10 +1325,6 @@ static void taskAdd_PanelScroll( BEACON_VIEW_PTR wk, PANEL_WORK* pp, u8 dir, u8 
   twk->ax = FX_Div( FX32_CONST( twk->epx - pp->px ), FX32_CONST(twk->frame));
   twk->ay = FX_Div( FX32_CONST( twk->epy - pp->py ), FX32_CONST(twk->frame));
 
-#if 0
-  IWASAWA_Printf( "Scroll dir=%d, start(%d,%d), end(%d,%d) a(%d,%d)\n",
-      dir,pp->px,pp->py,twk->epx,twk->epy,(twk->epx-pp->px),(twk->epy-pp->py));
-#endif
   twk->task_ct = task_ct;
   (*task_ct)++;
 }
@@ -1411,7 +1405,6 @@ static void tcb_MsgUpdown( GFL_TCBL *tcb , void* tcb_wk)
   if( twk->ct++ < twk->frame ){
     twk->y += twk->diff;
     GFL_BG_SetScroll( FRM_POPUP, GFL_BG_SCROLL_Y_SET, twk->y );
-//    IWASAWA_Printf("Popup %d\n",twk->y);
     return;
   }
 
