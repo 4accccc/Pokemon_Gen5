@@ -222,6 +222,8 @@ static void SetDataDisplayType( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispTy
 //「報告を見る」ボタン
 static void UpdateAnalyzeButton( RESEARCH_CHECK_WORK* work ); //「報告を見る」ボタンを更新する
 static void BlinkAnalyzeButton( RESEARCH_CHECK_WORK* work ); //「報告を見る」ボタンを点滅させる
+//「戻る」ボタン
+static void BlinkReturnButton( RESEARCH_CHECK_WORK* work ); //「戻る」ボタンを点滅させる
 // 円グラフ
 static void UpdateCircleGraphs( RESEARCH_CHECK_WORK* work ); // すべての円グラフを更新する
 static void DrawCircleGraphs( const RESEARCH_CHECK_WORK* work ); // すべての円グラフを描画する
@@ -593,8 +595,7 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
 
   //「もどる」ボタン
   if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
-    RESEARCH_COMMON_StartPaletteAnime( 
-        work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // 選択パレットアニメ開始
+    BlinkReturnButton( work );
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // キャンセル音
     SetNextSeq( work, RESEARCH_CHECK_SEQ_FRAME_WAIT );
     SetNextSeq( work, RESEARCH_CHECK_SEQ_FADE_OUT );
@@ -615,6 +616,7 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
   //「円グラフ」タッチ
   if( touch == TOUCH_AREA_GRAPH ) {
     if( GetCountOfQuestion(work) != 0 ) {
+      BlinkAnalyzeButton( work );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
@@ -645,6 +647,7 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
   if( touch == TOUCH_AREA_QUESTION ) {
     MoveMenuCursorDirect( work, MENU_ITEM_ANSWER );
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
+      BlinkAnalyzeButton( work );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
@@ -706,9 +709,8 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
 
   // B ボタン
   if( trg & PAD_BUTTON_B ) {
-    RESEARCH_COMMON_StartPaletteAnime( 
-        work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // 選択パレットアニメ開始
-    PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // キャンセル音
+    BlinkReturnButton( work );
+    PMSND_PlaySE( SEQ_SE_CANCEL1 ); // キャンセル音
     // シーケンス変更
     SetNextSeq( work, RESEARCH_CHECK_SEQ_FRAME_WAIT );
     SetNextSeq( work, RESEARCH_CHECK_SEQ_FADE_OUT );
@@ -749,7 +751,8 @@ static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
     return;
   } 
 
-  // TEST:
+  // TEST: 更新処理
+#ifdef PM_DEBUG
   if( trg & PAD_BUTTON_DEBUG ) {
     SetNextSeq( work, RESEARCH_CHECK_SEQ_UPDATE );
     SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
@@ -759,12 +762,12 @@ static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
     FinishCurrentSeq( work );
     return;
   }
+#endif
 
   //「もどる」ボタン
   if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
-    RESEARCH_COMMON_StartPaletteAnime( 
-        work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // 選択パレットアニメ開始
-    PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // キャンセル音
+    BlinkReturnButton( work );
+    PMSND_PlaySE( SEQ_SE_CANCEL1 ); // キャンセル音
     SetNextSeq( work, RESEARCH_CHECK_SEQ_FRAME_WAIT );
     SetNextSeq( work, RESEARCH_CHECK_SEQ_FADE_OUT );
     SetNextSeq( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
@@ -786,6 +789,7 @@ static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
   //「円グラフ」タッチ
   if( touch == TOUCH_AREA_GRAPH ) {
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
+      BlinkAnalyzeButton( work );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
@@ -860,6 +864,7 @@ static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
         (GetCountOfQuestion(work) != 0) && 
         (work->cursorPos == MENU_ITEM_QUESTION)  ) {
       // シーケンス変更
+      BlinkAnalyzeButton( work );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
@@ -872,9 +877,8 @@ static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
 
   // B ボタン
   if( trg & PAD_BUTTON_B ) {
-    RESEARCH_COMMON_StartPaletteAnime( 
-        work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // 選択パレットアニメ開始
-    PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // キャンセル音
+    BlinkReturnButton( work );
+    PMSND_PlaySE( SEQ_SE_CANCEL1 ); // キャンセル音
     // シーケンス変更
     SetNextSeq( work, RESEARCH_CHECK_SEQ_FRAME_WAIT );
     SetNextSeq( work, RESEARCH_CHECK_SEQ_FADE_OUT );
@@ -2268,6 +2272,18 @@ static void BlinkAnalyzeButton( RESEARCH_CHECK_WORK* work )
   StopPaletteAnime( work, PALETTE_ANIME_HOLD );
   StopPaletteAnime( work, PALETTE_ANIME_RECOVER );
   StartPaletteAnime( work, PALETTE_ANIME_SELECT );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief「戻る」ボタンを点滅させる 
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void BlinkReturnButton( RESEARCH_CHECK_WORK* work )
+{
+  RESEARCH_COMMON_StartPaletteAnime( work->commonWork, COMMON_PALETTE_ANIME_RETURN );
 }
 
 //-----------------------------------------------------------------------------------------
