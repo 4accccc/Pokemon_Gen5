@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-12T18:40:18"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-13T18:44:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -351,7 +351,7 @@
 
 	<dialog left="97" top="134" right="802" bottom="762" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -386,10 +386,10 @@
 
 	<row id="cg_power_02">
 		<language name="JPN" width="216">オンのときは　ＤＳの　ふたを　とじても
-スリープ　じょうたいに　なりません[BE:01:ページ切り替え（クリア）]
+スリープ　じょうたいに　なりません[BE:00:ページ切り替え（行送り）]
 のこりでんちに　ごちゅうい　ください</language>
 		<language name="JPN_KANJI" width="216">オンのときは　ＤＳの　ふたを閉じても
-スリープ状態に　なりません[BE:01:ページ切り替え（クリア）]
+スリープ状態に　なりません[BE:00:ページ切り替え（行送り）]
 残り電池に　ご注意ください</language>
 	</row>
 
