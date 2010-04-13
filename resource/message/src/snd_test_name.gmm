@@ -8298,17 +8298,17 @@
 		<language name="JPN" width="256">SDEMO-03</language>
 		<language name="JPN_KANJI" width="256">SDEMO-03</language>
 	</row>
-	<row id="msg_seq_se_dmy_308">
-		<language name="JPN" width="256">DMY-308</language>
-		<language name="JPN_KANJI" width="256">DMY-308</language>
+	<row id="msg_seq_se_lbdemo_01">
+		<language name="JPN" width="256">LBDEMO-01</language>
+		<language name="JPN_KANJI" width="256">LBDEMO-01</language>
 	</row>
-	<row id="msg_seq_se_dmy_309">
-		<language name="JPN" width="256">DMY-309</language>
-		<language name="JPN_KANJI" width="256">DMY-309</language>
+	<row id="msg_seq_se_lbdemo_02">
+		<language name="JPN" width="256">LBDEMO-02</language>
+		<language name="JPN_KANJI" width="256">LBDEMO-02</language>
 	</row>
-	<row id="msg_seq_se_dmy_310">
-		<language name="JPN" width="256">DMY-310</language>
-		<language name="JPN_KANJI" width="256">DMY-310</language>
+	<row id="msg_seq_se_lbdemo_03">
+		<language name="JPN" width="256">LBDEMO-03</language>
+		<language name="JPN_KANJI" width="256">LBDEMO-03</language>
 	</row>
 	<row id="msg_seq_se_dmy_311">
 		<language name="JPN" width="256">DMY-311</language>
