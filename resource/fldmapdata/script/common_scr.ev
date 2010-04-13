@@ -229,7 +229,7 @@ sub_report_event_call:
     ENDSWITCH
     _TIME_WAIT(1) //画面に反映
     _SYSWIN_TIMEICON( SCR_SYSWIN_TIMEICON_ON )  // タイムアイコンON
-    _SE_PLAY( SEQ_SE_SYS_78 )
+    //_SE_PLAY( SEQ_SE_SYS_78 )
     _REPORT_CALL( temp_work ) // 実セーブ処理
     _SE_STOP()
     _SYSWIN_CLOSE()
