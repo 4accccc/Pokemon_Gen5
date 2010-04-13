@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T15:43:00"/>
+	<create user="matsumiya" host="W00224" date="2010-04-13T17:17:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1287" top="191" right="1992" bottom="819" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,7 +294,6 @@
 
 	<row id="msg_r07r0301_oldwoman_00" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>●移動ポケモンイベント起動前のセリフ。
-
 ●台所に立っている。</comment>
 		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">やさいを　たっぷり　にこんで
@@ -305,7 +304,6 @@
 
 	<row id="msg_r07r0301_oldman_00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,#80ff80,,">
 		<comment>●移動ポケモンイベント起動前のセリフ。
-
 ●テーブルの右脇に配置。</comment>
 		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">りょうりを　している　ときは
