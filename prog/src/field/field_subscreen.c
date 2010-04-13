@@ -709,13 +709,19 @@ void * FIELD_SUBSCREEN_DEBUG_GetControl(FIELD_SUBSCREEN_WORK * pWork)
 //-----------------------------------------------------------------------------
 static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {
+  GAMESYS_WORK* p_gsys;
+  GAMEDATA* p_gdata;
+
+  p_gsys  = FIELDMAP_GetGameSysWork(pWork->fieldmap);
+  p_gdata = GAMESYSTEM_GetGameData(p_gsys);
+  
   // Overlay
   GFL_OVERLAY_Load( FS_OVERLAY_ID(cgear) );
   
-  pWork->cgearWork = CGEAR_Init(CGEAR_SV_GetCGearSaveData(
-    GAMEDATA_GetSaveControlWork(
-    GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(pWork->fieldmap))
-    )), pWork, FIELDMAP_GetGameSysWork(pWork->fieldmap));
+  pWork->cgearWork = CGEAR_Init( CGEAR_SV_GetCGearSaveData( GAMEDATA_GetSaveControlWork( p_gdata) ),
+      pWork, p_gsys, GAMEDATA_GetCGearPowerOnReq( p_gdata ) );
+
+  GAMEDATA_ClearCGearPowerOnReq( p_gdata );
 }
 
 
@@ -728,13 +734,17 @@ static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_
 //-----------------------------------------------------------------------------
 static void init_firstget_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode )
 {
-  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(FIELDMAP_GetGameSysWork(pWork->fieldmap)));
+  GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork(pWork->fieldmap);
+  GAMEDATA* p_gdata = GAMESYSTEM_GetGameData(p_gsys);
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork( p_gdata );
   // Overlay
   GFL_OVERLAY_Load( FS_OVERLAY_ID(cgear) );
 
   pWork->cgearWork = CGEAR_FirstInit(CGEAR_SV_GetCGearSaveData(pSave),
                                      pWork, FIELDMAP_GetGameSysWork(pWork->fieldmap),
-                                     pWork->endCallback, pWork->endCallbackWork );
+                                     pWork->endCallback, pWork->endCallbackWork , TRUE);
+
+  GAMEDATA_ClearCGearPowerOnReq( p_gdata );
 }
 
 

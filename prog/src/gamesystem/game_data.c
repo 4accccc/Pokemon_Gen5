@@ -110,7 +110,7 @@ struct _GAMEDATA{
   
   u8 is_save;             ///<TRUE:ƒZ[ƒuŽÀs’†
   u8 symbol_map_id;       ///<ƒVƒ“ƒ{ƒ‹ƒ}ƒbƒv‚ÌŒ»ÝˆÊ’u
-  u8 padding;
+  u8 cgear_power_on_req;
   
   OCCUPY_INFO occupy[OCCUPY_ID_MAX];    ///<è‹’î•ñ
   FIELD_WFBC_CORE wfbc[GAMEDATA_WFBC_ID_MAX];  ///<WhiteForest BlackCity
@@ -1223,7 +1223,13 @@ BOOL GAMEDATA_GetAlwaysNetFlag( const GAMEDATA *gamedata )
 //-----------------------------------------------------------------------------
 void GAMEDATA_SetAlwaysNetFlag( GAMEDATA *gamedata, BOOL is_on )
 { 
-  NETWORK_SEARCH_MODE mode  = is_on? NETWORK_SEARCH_ON: NETWORK_SEARCH_OFF;
+  NETWORK_SEARCH_MODE mode;
+  if( is_on ){
+    mode = NETWORK_SEARCH_ON;
+    gamedata->cgear_power_on_req = TRUE; // Cgear“dŒ¹‚n‚m
+  }else{
+    mode = NETWORK_SEARCH_OFF;
+  }
   CONFIG_SetNetworkSearchMode( gamedata->config, mode );
 }
 
@@ -1890,3 +1896,31 @@ TRPOKE_AFTER_SAVE* GAMEDATA_GetTrPokeAfterSaveData( GAMEDATA* gdata )
  
 }
 
+
+//==================================================================
+/**
+ * CGear “dŒ¹‚n‚muŠÔƒtƒ‰ƒO Žæ“¾
+ *
+ * @param   gamedata    
+ *
+ * @retval  TRUE    “dŒ¹‚n‚muŠÔ
+ * @retval  FALSE   uŠÔ‚Å‚Í‚È‚¢B
+ */
+//==================================================================
+BOOL GAMEDATA_GetCGearPowerOnReq(const GAMEDATA *gamedata)
+{
+  return gamedata->cgear_power_on_req;
+}
+  
+
+//==================================================================
+/**
+ * CGear “dŒ¹‚n‚muŠÔƒtƒ‰ƒO ƒNƒŠƒA
+ *
+ * @param   gamedata    
+ */
+//==================================================================
+void GAMEDATA_ClearCGearPowerOnReq(GAMEDATA *gamedata)
+{
+  gamedata->cgear_power_on_req = FALSE;
+}

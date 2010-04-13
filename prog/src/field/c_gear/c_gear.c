@@ -55,7 +55,9 @@
 
 #endif
 
+#define OAM_USE_PLTT_NUM (12)
 
+#define _BLACK_COLOR  (0x0441)
 
 static const u32 _bgpal[]=
 {
@@ -330,7 +332,7 @@ static const u16 sc_PANEL_TYPE_TO_COLOR[] = {
 //-------------------------------------
 ///	OAMパレットフェード
 //=====================================
-#define OAM_PFADE_NORMAL_MSK  ( (1<<0x1) | (1<<0x2) | (1<<0x3) )
+#define OAM_PFADE_NORMAL_MSK  ( (1<<0x1) | (1<<0x2) | (1<<0x3) | (1<<0x5) | (1<<0x6) | (1<<0x7) | (1<<0x8) | (1<<0x9) | (1<<0xB) | (1<<0xC) | (1<<0xD) | (1<<0xE) | (1<<0xF) )
 //-------------------------------------
 ///	BGパレットフェード
 //=====================================
@@ -688,6 +690,7 @@ struct _C_GEAR_WORK {
   u8 bPanelEdit;
   u8 bgno;
   u8 sex;
+  u8 power_flag;  // 電源がはいっているか？
 };
 
 
@@ -704,9 +707,16 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork);  // 初期入手の演出
 static void _modeSelectMenuWait1(C_GEAR_WORK* pWork);  // スリープ復帰の演出
 static void _modeSelectMenuWait2(C_GEAR_WORK* pWork);  // 復帰・初期　共通の演出
 static void _gearXY2PanelScreen(int x,int y, int* px, int* py);
+static BOOL _modeSelectWaitSubFadeEnd( const C_GEAR_WORK* cpWork );
 
 
 static void _modeSetSavePanelType( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENUM type );
+
+// CGEARセーブ情報の取得
+static CGEAR_PANELTYPE_ENUM _cgearSave_GetPanelType(const C_GEAR_WORK* cpWork,int x, int y);
+static BOOL _cgearSave_IsPanelTypeIcon(const C_GEAR_WORK* cpWork,int x, int y);
+static BOOL _cgearSave_IsPanelTypeLast(const C_GEAR_WORK* cpWork,int x, int y, CGEAR_PANELTYPE_ENUM type );
+
 
 
 // サブBGのセットアップ
@@ -1036,7 +1046,7 @@ static void _modeSelectAnimInit(C_GEAR_WORK* pWork)
   int x,y;
   CGEAR_PANELTYPE_ENUM type;
 
-  type = CGEAR_SV_GetPanelType(pWork->pCGSV,pWork->touchx,pWork->touchy);
+  type = _cgearSave_GetPanelType(pWork,pWork->touchx,pWork->touchy);
   pWork->select_type = type;
   pWork->select_count = 0;
 
@@ -1044,7 +1054,7 @@ static void _modeSelectAnimInit(C_GEAR_WORK* pWork)
   {
     for(x = 0; x < C_GEAR_PANEL_WIDTH ; x++)
     {
-      if(CGEAR_SV_GetPanelType(pWork->pCGSV,x,y) == type){
+      if(_cgearSave_GetPanelType(pWork,x,y) == type){
         pWork->typeAnim[x][y] = _SELECTANIM_WAIT;
       }
     }
@@ -1078,7 +1088,7 @@ static int getTypeToTouchPos(C_GEAR_WORK* pWork,int touchx,int touchy,int *pxp, 
 
     if((xp < C_GEAR_PANEL_WIDTH) && (yp < yloop[ xp % 2 ]))
     {
-      type = CGEAR_SV_GetPanelType(pWork->pCGSV,xp,yp);
+      type = _cgearSave_GetPanelType(pWork,xp,yp);
     }
   }
   *pxp=xp;
@@ -1263,8 +1273,8 @@ static BOOL _PanelPaletteIsBeaconChange( GAME_COMM_SYS_PTR game_comm, u32 last_b
 
   // Wireless
   {
-    // まずはトランシーバーがかわった？
-    if( (bit & GAME_COMM_STATUS_BIT_WIRELESS_TR) != (last_bit & GAME_COMM_STATUS_BIT_WIRELESS_TR) ){
+    // まずはトランシーバーなら必ず
+    if( (bit & GAME_COMM_STATUS_BIT_WIRELESS_TR) ){
       *change_beacon |= _CGEAR_NET_BIT_WIRELESS;
       ret = TRUE;
     }
@@ -1707,7 +1717,7 @@ static BOOL _PanelMarkAnimeIsAnime( const PANEL_MARK_ANIME* cp_mark )
 //-----------------------------------------------------------------------------
 static int _PanelMark_GetPatternIndex( const C_GEAR_WORK* cpWork, u32 col_type, int x, int y )
 {
-  if( CGEAR_SV_IsPanelTypeIcon( cpWork->pCGSV, x, y ) ){
+  if( _cgearSave_IsPanelTypeIcon( cpWork, x, y ) ){
     return sc_PANEL_COLOR_ANIME_END_INDEX[ col_type ][ 4 ];
   }
 
@@ -1731,6 +1741,38 @@ static void _gearXY2PanelScreen(int x,int y, int* px, int* py)
   *py = ypos[ x % 2 ] + y * PANEL_SIZEXY;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サブ画面フェード完了まち
+ *
+ *	@param	cpWork 
+ *
+ *	@retval TRUE  フェード完了
+ *	@retval FALSE  フェード途中
+ */
+//-----------------------------------------------------------------------------
+static BOOL _modeSelectWaitSubFadeEnd( const C_GEAR_WORK* cpWork )
+{
+  if( WIPE_SYS_EndCheck() == FALSE ){
+    return FALSE;
+  }
+
+  // 輝度チェック
+  if( GXS_GetMasterBrightness() != 0 ){
+    return FALSE;
+  }
+
+  {
+    FIELDMAP_WORK* p_fieldmap = GAMESYSTEM_GetFieldMapWork( cpWork->pGameSys );
+    if( FIELDMAP_CheckSeasonDispFlag(p_fieldmap) ){
+      return FALSE;
+    }
+  }
+
+  return TRUE;
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   パネルの数を取得
@@ -1750,7 +1792,7 @@ static int _gearPanelTypeNum(C_GEAR_WORK* pWork, CGEAR_PANELTYPE_ENUM type)
   {
     for(x = 0; x < C_GEAR_PANEL_WIDTH; x++)
     {
-      if(CGEAR_SV_GetPanelType(pWork->pCGSV,x,y)==type)
+      if(_cgearSave_GetPanelType(pWork,x,y)==type)
       {
         i++;
       }
@@ -1777,21 +1819,21 @@ static void _PFadeSetDefaultPal( C_GEAR_WORK* pWork, BOOL comm )
     // 基準値を暗めにする。
     p_buff = PaletteWorkDefaultWorkGet( pWork->pfade_ptr, FADE_SUB_OBJ );
     p_trans = PaletteWorkTransWorkGet( pWork->pfade_ptr, FADE_SUB_OBJ );
-    for( i=0; i<16; i++ ){
+    for( i=0; i<OAM_USE_PLTT_NUM; i++ ){
       if( (1<<i) & OAM_PFADE_NORMAL_MSK ){
         // 16こかえる
-        SoftFade( &p_buff[ 16*i ], &p_buff[ 16*i ], 16, 8, 0x0 );
-        GFL_STD_MemCopy32( &p_buff[ 16*i ], &p_trans[ 16*i ], 2*16 );
+        SoftFade( &p_buff[ 16*i ], &p_buff[ 16*i ], 16, 8, _BLACK_COLOR );
+        GFL_STD_MemCopy( &p_buff[ 16*i ], &p_trans[ 16*i ], 2*16 );
       }
     }
 
     p_buff = PaletteWorkDefaultWorkGet( pWork->pfade_ptr, FADE_SUB_BG );
     p_trans = PaletteWorkTransWorkGet( pWork->pfade_ptr, FADE_SUB_BG );
-    for( i=0; i<16; i++ ){
+    for( i=0; i<OAM_USE_PLTT_NUM; i++ ){
       if( (1<<i) & BG_PFADE_NORMAL_MSK ){
         // 16こかえる
-        SoftFade( &p_buff[ 16*i ], &p_buff[ 16*i ], 16, 8, 0x0 );
-        GFL_STD_MemCopy32( &p_buff[ 16*i ], &p_trans[ 16*i ], 2*16 );
+        SoftFade( &p_buff[ 16*i ], &p_buff[ 16*i ], 16, 8, _BLACK_COLOR );
+        GFL_STD_MemCopy( &p_buff[ 16*i ], &p_trans[ 16*i ], 2*16 );
       }
     }
   }
@@ -1801,7 +1843,7 @@ static void _PFadeSetBlack( C_GEAR_WORK* pWork )
 {
   // 黒く
   PaletteFadeReq(
-    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,   -120, 0, 16, 0x0, pWork->pfade_tcbsys
+    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,   -120, 0, 16, _BLACK_COLOR, pWork->pfade_tcbsys
     );
 }
 
@@ -1809,7 +1851,7 @@ static void _PFadeToBlack( C_GEAR_WORK* pWork )
 {
   // 黒く
   PaletteFadeReq(
-    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,  1, 0, 16, 0x0, pWork->pfade_tcbsys
+    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,  1, 0, 16, _BLACK_COLOR, pWork->pfade_tcbsys
     );
 }
 
@@ -1817,7 +1859,7 @@ static void _PFadeFromBlack( C_GEAR_WORK* pWork )
 {
   // 黒く
   PaletteFadeReq(
-    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,  1, 16, 0, 0x0, pWork->pfade_tcbsys
+    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,  1, 16, 0, _BLACK_COLOR, pWork->pfade_tcbsys
     );
 }
 
@@ -1875,7 +1917,7 @@ static BOOL _gearBootMain(C_GEAR_WORK* pWork)
       u32 panel_type;
       for(i=0;i < elementof(screenTable);i++){
         if(screenTable[i].time == pWork->startCounter){
-          panel_type = CGEAR_SV_GetPanelType( pWork->pCGSV, screenTable[i].x, screenTable[i].y );
+          panel_type = _cgearSave_GetPanelType( pWork, screenTable[i].x, screenTable[i].y );
           _PanelMarkAnimeStart( &pWork->panel_mark[ screenTable[i].x ][ screenTable[i].y ], 
               pWork, sc_PANEL_TYPE_TO_COLOR[ panel_type ], PANEL_ANIME_TYPE_OFF, panel_type, screenTable[i].frame );
         }
@@ -2017,7 +2059,7 @@ static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANEL
  */
 //------------------------------------------------------------------------------
 
-static void _gearGetTypeBestPosition(C_GEAR_WORK* pWork,CGEAR_PANELTYPE_ENUM type, int* px, int* py)
+static BOOL _gearGetTypeBestPosition(C_GEAR_WORK* pWork,CGEAR_PANELTYPE_ENUM type, int* px, int* py)
 {
   int x,y;
   int first_x, first_y;
@@ -2031,7 +2073,7 @@ static void _gearGetTypeBestPosition(C_GEAR_WORK* pWork,CGEAR_PANELTYPE_ENUM typ
   {
     for(x = 0; x < C_GEAR_PANEL_WIDTH; x++)
     {
-      if(CGEAR_SV_GetPanelType(pWork->pCGSV,x,y) == type)
+      if(_cgearSave_GetPanelType(pWork,x,y) == type)
       {
         // 最初にあった位置を覚えておく。
         if( first_data == FALSE ){
@@ -2041,13 +2083,13 @@ static void _gearGetTypeBestPosition(C_GEAR_WORK* pWork,CGEAR_PANELTYPE_ENUM typ
         }
 
         // 
-        if( CGEAR_SV_IsPanelTypeIcon(pWork->pCGSV,x,y) ){ // アイコンが出る場所
+        if( _cgearSave_IsPanelTypeIcon(pWork,x,y) ){ // アイコンが出る場所
           _gearXY2PanelScreen(x,y,px,py);
-          return ;
+          return TRUE;
         }
 
         // 
-        if( CGEAR_SV_IsPanelTypeLast(pWork->pCGSV,x,y,type) ){ // アイコンが出る場所
+        if( _cgearSave_IsPanelTypeLast(pWork,x,y,type) ){ // アイコンが出る場所
           first_x = x;
           first_y = y;
           first_data = TRUE;
@@ -2056,11 +2098,16 @@ static void _gearGetTypeBestPosition(C_GEAR_WORK* pWork,CGEAR_PANELTYPE_ENUM typ
     }
   }
   
-  // もしなかったら、最初に見つかった位置にする。
-  _gearXY2PanelScreen(first_x,first_y,px,py);
-  CGEAR_SV_SetPanelType( pWork->pCGSV, first_x, first_y, type, TRUE, FALSE );
-  _gearPanelBgScreenMake(pWork, first_x, first_y, type );
-  GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
+  if( first_data ){
+    // もしなかったら、最初に見つかった位置にする。
+    _gearXY2PanelScreen(first_x,first_y,px,py);
+    CGEAR_SV_SetPanelType( pWork->pCGSV, first_x, first_y, type, TRUE, FALSE );
+    _gearPanelBgScreenMake(pWork, first_x, first_y, type );
+    GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
+    return TRUE;
+  }
+
+  return FALSE;
 }
 
 //------------------------------------------------------------------------------
@@ -2075,10 +2122,12 @@ static void _gearPanelBgCreate(C_GEAR_WORK* pWork)
 {
   int x , y;
   int yloop[2] = {PANEL_HEIDHT1,PANEL_HEIGHT2};
+  int type;
 
   for(x = 0; x < PANEL_WIDTH; x++){   // XはPANEL_WIDTH回
     for(y = 0; y < yloop[ x % 2]; y++){ //Yは xの％２でyloopの繰り返し
-      _gearPanelBgScreenMake(pWork, x, y, CGEAR_SV_GetPanelType(pWork->pCGSV,x,y));
+
+      _gearPanelBgScreenMake(pWork, x, y, _cgearSave_GetPanelType(pWork,x,y));
     }
   }
   GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
@@ -2325,6 +2374,15 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
 {
   u32 touchx,touchy;
 
+  // 起動してないなら、電源いがい触れない。
+  if( pWork->power_flag == FALSE ){
+    if( (bttnid != TOUCH_LABEL_LOGO) && 
+        (bttnid != TOUCH_LABEL_POWER) &&
+        (bttnid != TOUCH_LABEL_ALL) ){
+      return ;
+    }
+  }
+
   switch(bttnid){
   case TOUCH_LABEL_ALL:
     if(GFL_UI_TP_GetPointCont(&touchx,&touchy)){
@@ -2355,6 +2413,7 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
     pWork->select_cursor = TOUCH_LABEL_RADAR; 
     _CHANGE_STATE( pWork, _PalAnimeSelectAnimeWait );
     break;
+
   case TOUCH_LABEL_LOGO:
     PMSND_PlaySE( SEQ_SE_MSCL_07 );
 
@@ -2494,7 +2553,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       pWork->touchy = yp;
 
       if(GFL_NET_IsInit()){  //通信ONなら
-        u32 type = CGEAR_SV_GetPanelType(pWork->pCGSV,pWork->touchx,pWork->touchy);
+        u32 type = _cgearSave_GetPanelType(pWork,pWork->touchx,pWork->touchy);
         
         if( (type == CGEAR_PANELTYPE_IR) || (type == CGEAR_PANELTYPE_WIFI) ||
             (type == CGEAR_PANELTYPE_WIRELESS) ){
@@ -2592,7 +2651,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
                                                 &cellInitData ,
                                                 CGEAR_REND_SUB,
                                                 pWork->heapID );
-    GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[i], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[i], FALSE );
   }
   _editMarkONOFF(pWork,FALSE);
 
@@ -2666,7 +2725,7 @@ static void _gearAllObjDrawEnabel(C_GEAR_WORK* pWork,BOOL bFlg)
   // タイプ表示用
   for(i=0;i < _CLACT_TYPE_MAX ;i++)
   {
-    if( pWork->cellType[i] ){
+    if( pWork->cellType[i] && pWork->power_flag ){
       GFL_CLACT_WK_SetDrawEnable( pWork->cellType[i], bFlg );
     }
   }
@@ -2675,21 +2734,27 @@ static void _gearAllObjDrawEnabel(C_GEAR_WORK* pWork,BOOL bFlg)
   for(i=0;i < _CLACT_TIMEPARTS_MAX;i++)
   {
     if( pWork->cellCursor[i] ){
-      GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[i], bFlg );
+      if( ( (i == _CLACT_HELP) || (i == _CLACT_EDITMARKON) ) ){
+        if( pWork->power_flag ){
+          GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[i], bFlg );
+        }
+      }else{
+        GFL_CLACT_WK_SetDrawEnable( pWork->cellCursor[i], bFlg );
+      }
     }
   }
 
 
   // すれ違いよう
-  if( pWork->cellCross ){
+  if( pWork->cellCross && pWork->power_flag ){
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCross, bFlg );
   }
-  if( pWork->cellCrossBase ){
+  if( pWork->cellCrossBase && pWork->power_flag ){
     GFL_CLACT_WK_SetDrawEnable( pWork->cellCrossBase, bFlg );
   }
 
   // レーダー
-  if( pWork->cellRadar ){
+  if( pWork->cellRadar && pWork->power_flag ){
     GFL_CLACT_WK_SetDrawEnable( pWork->cellRadar, bFlg );
   }
   
@@ -2817,7 +2882,7 @@ static void _gearCrossObjCreate(C_GEAR_WORK* pWork)
                                                &cellInitData ,
                                                CGEAR_REND_SUB,
                                                pWork->heapID );
-    GFL_CLACT_WK_SetDrawEnable( pWork->cellCross, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->cellCross, FALSE );
   }
   {
     cellInitData.pos_x = POS_CROSS_X_CENTER;
@@ -2832,7 +2897,7 @@ static void _gearCrossObjCreate(C_GEAR_WORK* pWork)
                                                &cellInitData ,
                                                CGEAR_REND_SUB,
                                                pWork->heapID );
-    GFL_CLACT_WK_SetDrawEnable( pWork->cellCrossBase, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->cellCrossBase, FALSE );
     
   }
 
@@ -2851,7 +2916,7 @@ static void _gearCrossObjCreate(C_GEAR_WORK* pWork)
                                             &cellInitData ,
                                             CGEAR_REND_SUB,
                                             pWork->heapID );
-    GFL_CLACT_WK_SetDrawEnable( pWork->cellRadar, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->cellRadar, FALSE );
   }
 }
 
@@ -2868,8 +2933,14 @@ static void _gearCrossObjMain(C_GEAR_WORK* pWork)
   const GAMEBEACON_INFO *beacon_info;
   u8 col;
   int i;
-  s32 log_count = GAMEBEACON_Get_LogCount();
+  s32 log_count;
   int put_count = 0; 
+
+  if( !pWork->power_flag ){
+    return ;
+  }
+
+  log_count = GAMEBEACON_Get_LogCount();
 
   log_count --; // 0オリジン
   for(i=0;i < GAMEBEACON_INFO_TBL_MAX;i++)
@@ -2951,16 +3022,19 @@ static void _modeInit(C_GEAR_WORK* pWork,BOOL bBoot)
   
   _gearArcCreate(pWork, pWork->sex, pWork->bgno, TRUE);  //ARC読み込み BG&OBJ
   _gearObjResCreate(pWork, pWork->sex);
+  _gearObjCreate(pWork); //CLACT設定
+  _gearCrossObjCreate(pWork);
+  pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
+
   if(bBoot){
     _gearBootInitScreen(pWork);
+    _gearAllObjDrawEnabel(pWork, FALSE);
   }
   else{
     _gearPanelBgCreate(pWork);	// パネル作成
+    _gearAllObjDrawEnabel(pWork, TRUE);
+    _gearMarkObjDrawEnable(pWork,TRUE);
   }
-  _gearObjCreate(pWork); //CLACT設定
-  _gearCrossObjCreate(pWork);
-  _gearMarkObjDrawEnable(pWork,TRUE);
-  pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
 
 }
 
@@ -3134,18 +3208,23 @@ static void _typeAnimation(C_GEAR_WORK* pWork)
   {
     int x,y;
     GFL_CLACTPOS pos;
-    _gearGetTypeBestPosition(pWork, CGEAR_PANELTYPE_IR+i, &x, &y);
-    x *= 8;
-    y *= 8;
-    //		GFL_CLACT_WK_GetPos( pWork->cellType[i], &pos , CGEAR_REND_SUB);
-    //		if((pos.x != x) || (pos.y != y)){
-    pos.x = x+24-6-2;  // OBJ表示の為の補正値
-    pos.y = y+6+6+3;
-    GFL_CLACT_WK_SetPos(pWork->cellType[i], &pos, CGEAR_REND_SUB);
+    if( _gearGetTypeBestPosition(pWork, CGEAR_PANELTYPE_IR+i, &x, &y) ){
+      x *= 8;
+      y *= 8;
+      pos.x = x+24-6-2;  // OBJ表示の為の補正値
+      pos.y = y+6+6+3;
+      GFL_CLACT_WK_SetPos(pWork->cellType[i], &pos, CGEAR_REND_SUB);
 
-    // X位置をプライオリティに。
-    GFL_CLACT_WK_SetSoftPri( pWork->cellType[i], x/8 );
-    //		}
+      // X位置をプライオリティに。
+      GFL_CLACT_WK_SetSoftPri( pWork->cellType[i], x/8 );
+
+    }else{
+
+      pos.x = -64;  // OBJ表示の為の補正値
+      pos.y = 0;
+      GFL_CLACT_WK_SetPos(pWork->cellType[i], &pos, CGEAR_REND_SUB);
+
+    }
   }
 }
 
@@ -3158,13 +3237,21 @@ static void _typeAnimation(C_GEAR_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 {
-  _PanelPaletteUpdate( pWork ); 
-  
+  // 画面が出るまで待つ
+  if( _modeSelectWaitSubFadeEnd( pWork ) == FALSE ){
+    return ;
+  }
   GFL_BMN_Main( pWork->pButton );
+  
+  
   _timeAnimation(pWork);
-  _PanelPaletteChange(pWork);
 
-  _gearCrossObjMain(pWork);
+  if( pWork->power_flag ){
+    _PanelPaletteUpdate( pWork ); 
+    _PanelPaletteChange(pWork);
+
+    _gearCrossObjMain(pWork);
+  }
  
 
 
@@ -3226,22 +3313,9 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
 
   case STARTUP_SEQ_WIPE_IN:
 
-    if( WIPE_SYS_EndCheck() == FALSE ){
+    if( _modeSelectWaitSubFadeEnd( pWork ) == FALSE ){
       break;
     }
-
-    // 輝度チェック
-    if( GXS_GetMasterBrightness() != 0 ){
-      break;
-    }
-
-    {
-      FIELDMAP_WORK* p_fieldmap = GAMESYSTEM_GetFieldMapWork( pWork->pGameSys );
-      if( FIELDMAP_CheckSeasonDispFlag(p_fieldmap) ){
-        break;
-      }
-    }
-    
 
 
     // 起動アニメだけ表示
@@ -3252,12 +3326,6 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
 
   // アニメ待ち
   case STARTUP_SEQ_ANIME_WAIT:
-
-    // スキップ
-    if( GFL_UI_TP_GetTrg() ){
-      pWork->state_seq = STARTUP_SEQ_SKIP;
-      break;
-    }
 
     
     if( _gearIsEndStartUpObjAnime( pWork ) == FALSE ){
@@ -3373,6 +3441,7 @@ static void _modeSelectMenuWait1(C_GEAR_WORK* pWork)
 {
   if(pWork->startCounter==0){
     _PFadeSetBlack(pWork);
+    _gearAllObjDrawEnabel( pWork, TRUE );
     _gearMarkObjDrawEnable(pWork,FALSE);
 
     // 枠部分を表示
@@ -3469,12 +3538,10 @@ static void _VBlankFunc( GFL_TCB* tcb, void* wk )
  * @retval  none
  */
 //------------------------------------------------------------------------------
-C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys )
+C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys, BOOL power_effect )
 {
   C_GEAR_WORK *pWork = NULL;
   BOOL ret = FALSE;
-  GAMEDATA* gamedata;
-  FIELD_STATUS* fstatus;
 
   //GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_CGEAR, 0x8000 );
 
@@ -3486,37 +3553,38 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   pWork->subscreen = pSub;
   pWork->pGameSys = pGameSys;
   pWork->bAction = TRUE;
+  pWork->power_flag = GAMESYSTEM_GetAlwaysNetFlag( pWork->pGameSys );
 
   pWork->handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, HEAPID_FIELD_SUBSCREEN );
 
   pWork->pfade_tcbsys_wk = GFL_HEAP_AllocClearMemory( HEAPID_FIELD_SUBSCREEN, GFL_TCB_CalcSystemWorkSize(4) );
   pWork->pfade_tcbsys = GFL_TCB_Init( 4, pWork->pfade_tcbsys_wk );
 
-  // セーブ復帰１回目は、起動演出
-  gamedata  = GAMESYSTEM_GetGameData( pGameSys );
-  fstatus   = GAMEDATA_GetFieldStatus(gamedata);
-
-  if( FIELD_STATUS_GetContinueFlag( fstatus ) ){
+  if( power_effect ){
     _CHANGE_STATE(pWork,_modeSelectMenuWait0);
   }else{
     _CHANGE_STATE(pWork,_modeSelectMenuWait);
   }
 
   _createSubBg(pWork);   //BGVRAM設定
-  _modeInit(pWork, FALSE);
+  _modeInit(pWork, power_effect);
   if(CGEAR_SV_GetCGearPictureONOFF(pWork->pCGSV)){
     ret = _loadExData(pWork,pGameSys);  //デカール読み込み
   }
   _gearDecalScreenArcCreate(pWork,ret);
 
+  // パネルアニメのシステムクリア
+  _PanelMarkAnimeSysInit( pWork );
+
+
   pWork->pfade_ptr = PaletteFadeInit( HEAPID_FIELD_SUBSCREEN );
   PaletteTrans_AutoSet( pWork->pfade_ptr, TRUE );
-  PaletteFadeWorkAllocSet( pWork->pfade_ptr, FADE_SUB_OBJ, 0x20*10, HEAPID_FIELD_SUBSCREEN );
-  PaletteFadeWorkAllocSet( pWork->pfade_ptr, FADE_SUB_BG, 0x20*10, HEAPID_FIELD_SUBSCREEN );
+  PaletteFadeWorkAllocSet( pWork->pfade_ptr, FADE_SUB_OBJ, 0x20*OAM_USE_PLTT_NUM, HEAPID_FIELD_SUBSCREEN );
+  PaletteFadeWorkAllocSet( pWork->pfade_ptr, FADE_SUB_BG, 0x20*OAM_USE_PLTT_NUM, HEAPID_FIELD_SUBSCREEN );
   // 現在VRAMにあるパレットを壊さないように、VRAMからパレット内容をコピーする
-  PaletteWorkSet_VramCopy( pWork->pfade_ptr, FADE_SUB_OBJ, 0, 0x20*10 );
-  PaletteWorkSet_VramCopy( pWork->pfade_ptr, FADE_SUB_BG, 0, 0x20*10 );
-  _PFadeSetDefaultPal( pWork, GAMESYSTEM_GetAlwaysNetFlag( pWork->pGameSys ) );
+  PaletteWorkSet_VramCopy( pWork->pfade_ptr, FADE_SUB_OBJ, 0, 0x20*OAM_USE_PLTT_NUM );
+  PaletteWorkSet_VramCopy( pWork->pfade_ptr, FADE_SUB_BG, 0, 0x20*OAM_USE_PLTT_NUM );
+  _PFadeSetDefaultPal( pWork, pWork->power_flag );
   PaletteFadeTrans( pWork->pfade_ptr );
 
   {
@@ -3527,8 +3595,6 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   GFL_UI_SleepGoSetFunc(&_SLEEPGO_FUNC,  pWork);
   GFL_UI_SleepReleaseSetFunc(&_SLEEPRELEASE_FUNC,  pWork);
 
-  // パネルアニメのシステムクリア
-  _PanelMarkAnimeSysInit( pWork );
 
   // ボタンパレットアニメシステム初期化
   _BUTTONPAL_Init( pWork, &pWork->button_palfade );
@@ -3553,9 +3619,9 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
  * @retval  none
  */
 //------------------------------------------------------------------------------
-C_GEAR_WORK* CGEAR_FirstInit( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys, STARTUP_ENDCALLBACK* pCall,void* pWork2 )
+C_GEAR_WORK* CGEAR_FirstInit( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys, STARTUP_ENDCALLBACK* pCall,void* pWork2, BOOL power_effect )
 {
-  C_GEAR_WORK* pWork = CGEAR_Init( pCGSV, pSub, pGameSys);
+  C_GEAR_WORK* pWork = CGEAR_Init( pCGSV, pSub, pGameSys, power_effect);
   
   _CHANGE_STATE(pWork,_modeSelectMenuWait0);
   
@@ -3587,9 +3653,11 @@ C_GEAR_WORK* CGEAR_FirstInit( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,G
 void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 {
   if(pWork->bAction != bAction){
+
+    // イベント中は、画面を暗く
+    
     pWork->bAction = bAction;
   }
-  pWork->bAction = bAction;
 
 
   if(!pWork->bAction){
@@ -3750,13 +3818,13 @@ static void _modeSetSavePanelType( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pSV,int x
 
   for( i=0; i<C_GEAR_PANEL_HEIGHT; i++ ){
     for( j=0; j<C_GEAR_PANEL_WIDTH; j++ ){
-      if( CGEAR_SV_GetPanelType( pSV, j, i ) == type ){
+      if( _cgearSave_GetPanelType( pWork, j, i ) == type ){
 
-        if( CGEAR_SV_IsPanelTypeIcon( pSV, j, i ) ){
+        if( _cgearSave_IsPanelTypeIcon( pWork, j, i ) ){
           // OFFにする。
           CGEAR_SV_SetPanelType( pSV, j, i, type, FALSE, TRUE );
           _gearPanelBgScreenMake(pWork, j, i, type);  // 色を普通の色に
-        }else if( CGEAR_SV_IsPanelTypeLast( pSV, j, i, type ) ){
+        }else if( _cgearSave_IsPanelTypeLast( pWork, j, i, type ) ){
           // LastをOFFにする。
           CGEAR_SV_SetPanelType( pSV, j, i, type, FALSE, FALSE );
         }
@@ -3775,6 +3843,74 @@ static void _modeSetSavePanelType( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pSV,int x
   // タイプの表示をリセット
   _typeAnimation(pWork);
 }
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Ｃｇｅａｒセーブ　パネルタイプの取得
+ *
+ *	@param	cpWork
+ *	@param	x   
+ *	@param	y
+ *
+ *	@return パネルタイプ
+ */
+//-----------------------------------------------------------------------------
+static CGEAR_PANELTYPE_ENUM _cgearSave_GetPanelType(const C_GEAR_WORK* cpWork,int x, int y)
+{
+  int yloop[2] = {PANEL_HEIDHT1,PANEL_HEIGHT2};
+  if( cpWork->power_flag ){
+    return CGEAR_SV_GetPanelType( cpWork->pCGSV, x, y );
+  }
+
+  if( yloop[ x % 2 ] > y ){
+    return CGEAR_PANELTYPE_BASE;
+  }
+  return CGEAR_PANELTYPE_NONE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アイコンの出るところかチェック
+ *
+ *	@param	cpWork
+ *	@param	x
+ *	@param	y
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static BOOL _cgearSave_IsPanelTypeIcon(const C_GEAR_WORK* cpWork,int x, int y)
+{
+  if( cpWork->power_flag ){
+    return CGEAR_SV_IsPanelTypeIcon( cpWork->pCGSV, x, y );
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  1つ前にアイコンがあった場所か？チェック
+ *
+ *	@param	cpWork
+ *	@param	x
+ *	@param	y
+ *	@param	type 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static BOOL _cgearSave_IsPanelTypeLast(const C_GEAR_WORK* cpWork,int x, int y, CGEAR_PANELTYPE_ENUM type )
+{
+  if( cpWork->power_flag ){
+    return CGEAR_SV_IsPanelTypeLast( cpWork->pCGSV, x, y, type );
+  }
+  return FALSE;
+}
+
+
 
 
 

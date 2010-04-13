@@ -26,8 +26,8 @@ FS_EXTERN_OVERLAY(cgear);
 
 typedef struct _C_GEAR_WORK  C_GEAR_WORK;
 
-extern C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys );
-extern C_GEAR_WORK* CGEAR_FirstInit( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys, STARTUP_ENDCALLBACK* pFunc, void* pwk );
+extern C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys, BOOL power_effect );
+extern C_GEAR_WORK* CGEAR_FirstInit( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys, STARTUP_ENDCALLBACK* pFunc, void* pwk, BOOL power_effect );
 extern void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction );
 extern void CGEAR_ActionCallback( C_GEAR_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno);
 extern void CGEAR_Exit(C_GEAR_WORK* pWork);
