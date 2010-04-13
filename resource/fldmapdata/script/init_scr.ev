@@ -360,6 +360,10 @@ ev_first_gameclear:
   //ゲームクリアフラグをセット
   _FLAG_SET( SYS_FLAG_GAME_CLEAR )
 
+  //チャンピオン部屋：マップマトリクス差し替え（壊れた状態から元に戻す）
+  _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_02, FALSE, FALSE )
+  //チャンピオン部屋：BGM変更フラグをリセット
+  _FLAG_RESET( SYS_FLAG_BGM_CHAMP )
   //チャンピオン部屋：復帰チャンピオンを表示
   _FLAG_RESET( FV_C09R0501_CHAMPION_02 )
   //復帰チャンピオン戦を有効
@@ -377,9 +381,9 @@ ev_first_gameclear:
   //ボックス壁紙追加
   _GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER1 )
 
-	//R07R0105タワーオブヘブン5F：クリア後チャンピオン
-	_FLAG_RESET( FV_R07R0105_CHAMPION_01 )
-	$WK_SCENE_R07R0105_CHAMPION = 1
+  //R07R0105タワーオブヘブン5F：クリア後チャンピオン
+  _FLAG_RESET( FV_R07R0105_CHAMPION_01 )
+  $WK_SCENE_R07R0105_CHAMPION = 1
 
   //クリア後イベント：自宅１階のハンサムイベント有効
   $WK_SCENE_T01R0101 = 2
@@ -388,24 +392,24 @@ ev_first_gameclear:
   //クリア後イベント：１８番道路の七賢人その６を表示
   _FLAG_RESET( FV_R18_SAGE )
   
-	//D01R0101：七賢人、ゲームクリア後に表示
-	_FLAG_RESET( FV_D01R0101_SAGE )
-	
-	//D05R0201：七賢人、ゲームクリア後に表示
-	_FLAG_RESET( FV_D05R0201_SAGE7 )
-	
-	//C05R0601：ホドモエマーケットお香売り表示
-	_FLAG_RESET( FV_C05R0601_OKOU )
-	
-	//FV_R16_STOPPER_01：16番道路ストッパー解除
-	_FLAG_SET( FV_R16_STOPPER_01 )
-	
-	//FV_R16_STOPPER_01：16番道路ストッパー解除
-	_FLAG_SET( FV_R16_STOPPER_01 )
-	
-	//FV_C08R0701_STOPPER_01：ソウリュウシティ11番道路方面ストッパー解除
-	_FLAG_SET( FV_C08R0701_STOPPER_01 )
-	$WK_SCENE_C08R0701_STOPPER = 1
+  //D01R0101：七賢人、ゲームクリア後に表示
+  _FLAG_RESET( FV_D01R0101_SAGE )
+
+  //D05R0201：七賢人、ゲームクリア後に表示
+  _FLAG_RESET( FV_D05R0201_SAGE7 )
+
+  //C05R0601：ホドモエマーケットお香売り表示
+  _FLAG_RESET( FV_C05R0601_OKOU )
+
+  //FV_R16_STOPPER_01：16番道路ストッパー解除
+  _FLAG_SET( FV_R16_STOPPER_01 )
+
+  //FV_R16_STOPPER_01：16番道路ストッパー解除
+  _FLAG_SET( FV_R16_STOPPER_01 )
+
+  //FV_C08R0701_STOPPER_01：ソウリュウシティ11番道路方面ストッパー解除
+  _FLAG_SET( FV_C08R0701_STOPPER_01 )
+  $WK_SCENE_C08R0701_STOPPER = 1
 
 _RET
 

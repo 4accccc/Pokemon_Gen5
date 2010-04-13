@@ -43,6 +43,8 @@ EVENT_START	ev_pos_c09r0501_n_01
 	
     _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
+	_BGM_PLAY( SEQ_BGM_E_SAGE )
+	
 	//Ｎ：その場歩き
 	_OBJ_ANIME( C09R0501_N_01, anm_stay_walk_r )
 	_OBJ_ANIME_WAIT()
@@ -91,11 +93,16 @@ EVENT_START	ev_pos_c09r0501_n_01
 	_BALLOONWIN_OBJMSG( msg_c09r0501_boss_07, C09R0501_N_01 )
 	_MSGWIN_CLOSE()
 	
-	_DEMO_FADEOUT_BLACK_WITH_BGM_CALL()
+	_DEMO_FADEOUT_BLACK_CALL()
+	_BGM_FADEOUT( 0, 6 )
+	_BGM_STOP()
 	//Ｎ城出現デモ=============================
 	
-	//マップマトリクスの差し替えフラグをON Ｎ城への通路が突き刺さる【仮】クリア時にフラグリセットするイベントが未実装
+	//マップマトリクスの差し替えフラグをON Ｎ城への通路が突き刺さる
 	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_02, TRUE, TRUE )
+	
+	//ゾーンBGM変更フラグをセット
+	_FLAG_SET( SYS_FLAG_BGM_CHAMP )
 	
 	//ここでコール
 	_CALL_3D_DEMO( DEMO3D_ID_N_CASTLE )
@@ -103,10 +110,12 @@ EVENT_START	ev_pos_c09r0501_n_01
 	//Ｎ城出現デモ=============================
 
 	_CAMERA_START()		//カメラ操作開始
-  _CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	_CAMERA_PURGE()		//対象物とカメラのバインドを解く
 	
 	_CAMERA_MOVE( 9688,0,970752,1081344,196655,622592,1 )
-	_DEMO_FADEIN_BLACK_WITH_BGM_CALL()
+	
+	_DEMO_FADEIN_BLACK_CALL()
+	_BGM_PLAY( SEQ_BGM_N_CASTLE_BRIDGE )
 	
 	//あれが僕のお城…
 	_BALLOONWIN_OBJMSG( msg_c09r0501_boss_08, C09R0501_N_01 )
@@ -287,7 +296,7 @@ EVENT_START	ev_pos_c09r0501_champion_02
 	_OBJ_ANIME_WAIT()
 	
     DEFAULT
-		//正面なので処理なし
+	//正面なので処理なし
     ENDSWITCH
 
 	_OBJ_ANIME( C09R0501_CHAMPION_02, anm_champion_hair )
@@ -340,14 +349,6 @@ EVENT_START	ev_pos_c09r0501_champion_02
 	//殿堂入り部屋へシーン切り替え
 	_MAP_CHANGE_WARP( ZONE_ID_C09R0601, 8, 16, DIR_UP )
 	
-	//========================================//
-	
-	//イベントPOS無効
-//	$WK_SCENE_C09R0501 = 3
-	
-	//========================================//
-
-
 EVENT_END
 
 //--------------------------------------------------------------------
@@ -392,6 +393,7 @@ _ANIME_LABEL	anm_vs_champion_champ_walk_up_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_vs_champion_player_walk_up_01
 	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	AC_WARP_UP,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
