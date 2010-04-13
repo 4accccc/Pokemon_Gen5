@@ -16,6 +16,7 @@
 #include "savedata/dreamworld_data.h"
 #include "test/performance.h"
 #include "test/debug_pause.h"
+#include "sound/pm_sndsys.h"
 
 //======================================================================
 //	define
@@ -36,7 +37,7 @@ typedef struct
 {
   RTCTime rtcTime;
   RTCDate rtcDate;
-  
+  BOOL		bgmFlag;
 }DEBUG_SYS_GROUP_WORK;
 
 //======================================================================
@@ -52,6 +53,9 @@ static void DEBWIN_Draw_Pause( void* userWork , DEBUGWIN_ITEM* item );
 
 static void DEBWIN_Update_Kanji( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Draw_Kanji( void* userWork , DEBUGWIN_ITEM* item );
+
+static void DEBWIN_Update_BGM( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Draw_BGM( void* userWork , DEBUGWIN_ITEM* item );
 
 static void DEBWIN_Update_RTC_year( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Update_RTC_month( void* userWork , DEBUGWIN_ITEM* item );
@@ -89,6 +93,7 @@ void DEBUGWIN_AddSystemGroup( const HEAPID heapId )
   sysGroupWork = GFL_HEAP_AllocMemory( heapId , sizeof(DEBUG_SYS_GROUP_WORK) );
   
   GFL_RTC_GetDateTime( &sysGroupWork->rtcDate , &sysGroupWork->rtcTime );
+  sysGroupWork->bgmFlag = TRUE;
   
   DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUPID_SYSTEM , "System" , heapId );
   DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUPID_PDW , "PDW" , heapId );
@@ -99,6 +104,7 @@ void DEBUGWIN_AddSystemGroup( const HEAPID heapId )
   DEBUGWIN_AddItemToGroup( "ふかメーターOFF",DEBWIN_Update_PMeterOff , NULL , DEBUGWIN_GROUPID_SYSTEM , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_Pause   ,DEBWIN_Draw_Pause   , (void*)sysGroupWork , DEBUGWIN_GROUPID_SYSTEM , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_Kanji   ,DEBWIN_Draw_Kanji   , (void*)sysGroupWork , DEBUGWIN_GROUPID_SYSTEM , heapId );
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_BGM   ,DEBWIN_Draw_BGM   , (void*)sysGroupWork , DEBUGWIN_GROUPID_SYSTEM , heapId );
 
   //RTC下
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_RTC_year   ,DEBWIN_Draw_RTC_year   , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
@@ -199,6 +205,28 @@ static void DEBWIN_Draw_Kanji( void* userWork , DEBUGWIN_ITEM* item )
   {
     DEBUGWIN_ITEM_SetNameV( item , "かんじモード[ON]" );
   }
+}
+
+//BGM
+static void DEBWIN_Update_BGM( void* userWork , DEBUGWIN_ITEM* item )
+{
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+		DEBUG_SYS_GROUP_WORK* wk = (DEBUG_SYS_GROUP_WORK*)userWork;
+		wk->bgmFlag ^= 1;
+
+		PMSND_AllPlayerVolumeEnable( wk->bgmFlag, PMSND_MASKPL_BGM );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void DEBWIN_Draw_BGM( void* userWork , DEBUGWIN_ITEM* item )
+{
+	DEBUG_SYS_GROUP_WORK* wk = (DEBUG_SYS_GROUP_WORK*)userWork;
+	
+
+  if(wk->bgmFlag)	{ DEBUGWIN_ITEM_SetNameV( item , "BGM[ON]" ); }
+  else						{ DEBUGWIN_ITEM_SetNameV( item , "BGM[OFF]" ); }
 }
 
 #pragma mark [> RTC
