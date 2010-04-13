@@ -107,11 +107,11 @@ static const int asd[]={1,2,3,4,5};
 //	プロトタイプ宣言
 //==============================================================================
 static BOOL NetErr_DispMain(BOOL fatal_error);
-static void Local_ErrDispInit(void);
+static void Local_ErrDispInit(BOOL fatal_error);
 static void Local_ErrDispExit(void);
 static BOOL Local_SystemOccCheck(void);
 static void Local_ErrDispDraw(void);
-static void Local_ErrMessagePrint(void);
+static void Local_ErrMessagePrint(BOOL fatal_error);
 
 
 //==============================================================================
@@ -266,7 +266,7 @@ void NetErr_DispCallPushPop(void)
 	}
 
 	//エラー画面描画
-	Local_ErrDispInit();
+	Local_ErrDispInit(FALSE);
 	
 //		OS_SpinWait(10000);
 	
@@ -297,7 +297,7 @@ void NetErr_DispCallFatal(void)
 	}
 
 	//エラー画面描画
-	Local_ErrDispInit();
+	Local_ErrDispInit(TRUE);
 	
 //		OS_SpinWait(10000);
 	
@@ -521,7 +521,7 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 
   if(fatal_error == TRUE){
 		//エラー画面描画
-  	Local_ErrDispInit();
+  	Local_ErrDispInit(fatal_error);
 		while(1){}
 	}
   
@@ -530,7 +530,7 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
     NetErr_ExitNetSystem();
 
 		//エラー画面描画
-		Local_ErrDispInit();
+		Local_ErrDispInit(fatal_error);
 		
 //		OS_SpinWait(10000);
 		
@@ -559,9 +559,12 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 //--------------------------------------------------------------
 /**
  * @brief   画面情報を退避し、エラー画面を表示
+ *
+ * @param   fatal_error   TRUE:リセットを促すエラー(Aで抜けられない) 
+ * 
  */
 //--------------------------------------------------------------
-static void Local_ErrDispInit(void)
+static void Local_ErrDispInit(BOOL fatal_error)
 {
 	NET_ERR_SYSTEM *nes = &NetErrSystem;
 	
@@ -612,7 +615,7 @@ static void Local_ErrDispInit(void)
 	
 	//エラー画面描画
 	Local_ErrDispDraw();
-	Local_ErrMessagePrint();
+	Local_ErrMessagePrint(fatal_error);
 	
 	//表示ON
 	GX_SetMasterBrightness(0);
@@ -737,9 +740,12 @@ static void Local_ErrDispDraw(void)
 //--------------------------------------------------------------
 /**
  * @brief   エラーメッセージ表示
+ *
+ * @param   fatal_error   TRUE:リセットを促すエラー(Aで抜けられない) 
+ * 
  */
 //--------------------------------------------------------------
-static void Local_ErrMessagePrint(void)
+static void Local_ErrMessagePrint(BOOL fatal_error)
 {
 	NET_ERR_SYSTEM *nes = &NetErrSystem;
 	GFL_BMP_DATA *bmpdata;
@@ -840,7 +846,7 @@ static void Local_ErrMessagePrint(void)
         msgno = 1;
       }
 */
-      if( nes->err_important_type  == NET_ERR_CHECK_HEAVY )
+      if( nes->err_important_type  == NET_ERR_CHECK_HEAVY || fatal_error == TRUE )
       {
         msgno = net_error_0002;
       }
