@@ -1,4 +1,5 @@
 "batt_fd_vs3.nsbmd"
+"batt_fd_vs3.nsbta"
 "batt_st_vs3.nsbmd"
 "batt_st_vs3.nsbca"
 "shadow.NCLR"
@@ -13,6 +14,7 @@
 "battle_w_bg0e.NSCR"
 "battle_w_bg0f.NSCR"
 "battle_w_bg0g.NSCR"
+"battle_w_bg0h.NSCR"
 "battle_w_bg1a.NSCR"
 "battle_w_bg1b.NSCR"
 "battle_w_bg1c.NSCR"
