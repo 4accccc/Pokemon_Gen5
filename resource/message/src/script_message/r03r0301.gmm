@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T21:31:28"/>
+	<create user="matsumiya" host="W00224" date="2010-04-13T23:01:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -449,7 +449,7 @@
 ひとの　ポケモンを　とって▽
 いいわけ　ないだろ？▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……やれやれ
-面倒くさいな▼
+メンドーくさいな▼
 どんな理由が　あろうと
 人の　ポケモンを　盗って▽
 いいわけ　ないだろ？▼</language>
@@ -511,16 +511,16 @@
 ・続けてblack_08</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『ポケモンを
-あいする　トレーナーが　いる▼
-トレーナーを
-しんじる　ポケモンが　いる▼
+		<language name="JPN" width="256">チェレン『ポケモンの　ちからを
+ひきだす　トレーナーが　いる▼
+トレーナーを　しんじて
+それに　こたえる　ポケモンが　いる▼
 これで　どうして　ポケモンが
 かわいそう　なのか　わからないね▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『ポケモンを
-愛する　トレーナーが　いる▼
-トレーナーを
-信じる　ポケモンが　いる▼
+		<language name="JPN_KANJI" width="256">チェレン『ポケモンの　能力を
+引きだす　トレーナーが　いる▼
+トレーナーを　信じて
+それに　応える　ポケモンが　いる▼
 これで　どうして　ポケモンが
 かわいそう　なのか　わからないね▼</language>
 	</row>
@@ -532,14 +532,10 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">さてと……
-ポケモンを　かえしてくるよ▼
-[1:00:トレーナー名:0]！　きみとの
-タッグ　おもしろかったよ▼</language>
-		<language name="JPN_KANJI" width="256">さてと……
-ポケモンを　返してくるよ▼
-[1:00:トレーナー名:0]！　きみとの
-タッグ　おもしろかったよ▼</language>
+		<language name="JPN" width="256">さてと……　[1:00:トレーナー名:0]
+ぼくが　ポケモンを　かえしてくるよ▼</language>
+		<language name="JPN_KANJI" width="256">さてと……　[1:00:トレーナー名:0]
+ぼくが　ポケモンを　返してくるよ▼</language>
 	</row>
 
 	<flowchart-group-list>
