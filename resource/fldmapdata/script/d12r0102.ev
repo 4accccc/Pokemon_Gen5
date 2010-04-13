@@ -43,6 +43,11 @@ INIT_EVENT_START   ev_zone_d12r0102
     _FLAG_SET(FV_D12R0102_POKE14_01)       //ビクティいない
   ENDIF
 
+  //ビクティ倒した（逃げた）時に入りなおしたときは、シーンをプラズマ団掃討後にする
+  IF $WK_SCENE_VICTORY == 3 THEN
+    $WK_SCENE_VICTORY = 2
+  ENDIF
+
 INIT_EVENT_END
 
 /************************************************************/
@@ -99,12 +104,12 @@ EVENT_START   ev_scene_d12r0102
 
   _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_04 , D12R0102_HAKAIM_01, POS_DOWN )
 	_BALLOONWIN_CLOSE()
-  _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_05 , D12R0102_HAKAIM_01, POS_DOWN )
-	_BALLOONWIN_CLOSE()
-
   //はける
   _OBJ_ANIME( D12R0102_HAKAIM_01, anm_move2 )
   _OBJ_ANIME_WAIT()
+
+  _BALLOONWIN_OBJMSG_POS( msg_d12r0102_plasma02_05 , D12R0102_HAKAIM_01, POS_DOWN )
+	_BALLOONWIN_CLOSE()
 
 EVENT_END
 
@@ -223,8 +228,10 @@ _ANIME_LABEL	anm_move
 //	敗北した後
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_move2
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA AC_DIR_PAUSE_ON,1
   _ANIME_DATA	AC_WALK_R_8F,2
-  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+  _ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
