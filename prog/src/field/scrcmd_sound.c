@@ -71,7 +71,8 @@ VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk )
 
   {
     GMEVENT* event;
-    event = EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_FAST, FSND_FADE_NONE );
+    //event = EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_FAST, FSND_FADE_NONE );
+    event = EVENT_FSND_PlayEventBGM( gsys, soundIdx ); // 100413 ë¶éûçƒê∂Ç…ïœçX
     SCRIPT_CallEvent( sc, event );
   }
 
@@ -285,7 +286,8 @@ VMCMD_RESULT EvCmdPlayTempEventBGM( VMHANDLE *core, void *wk )
   u16            soundIdx = SCRCMD_GetVMWorkValue( core, work );
   GMEVENT* event;
 
-  event = EVENT_FSND_PushPlayNextBGM( gsys, soundIdx, FSND_FADE_FAST, FSND_FADE_NONE );
+  //event = EVENT_FSND_PushPlayNextBGM( gsys, soundIdx, FSND_FADE_FAST, FSND_FADE_NONE );
+  event = EVENT_FSND_PushPlayEventBGM( gsys, soundIdx ); // 100413 ë¶éûçƒê∂Ç…ïœçX
   SCRIPT_CallEvent( sc, event );
   return VMCMD_RESULT_SUSPEND;
 }

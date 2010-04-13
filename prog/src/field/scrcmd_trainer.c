@@ -427,8 +427,12 @@ VMCMD_RESULT EvCmdTrainerBgmSet( VMHANDLE *core, void *wk )
   u16          tr_id = SCRCMD_GetVMWorkValue(core,wk);
   u32           type = TT_TrainerDataParaGet( tr_id, ID_TD_tr_type );
   u32            seq = FSND_GetTrainerEyeBGM( type );
+  GMEVENT*     event = EVENT_FSND_PushPlayEventBGM( gsys, seq );
+  /*
   GMEVENT*     event = EVENT_FSND_PushPlayNextBGM( 
                          gsys, seq, FSND_FADE_FAST, FSND_FADE_NONE );
+                         */
+  // 100413 ë¶éûçƒê∂Ç…ïœçX
 
   SCRIPT_CallEvent( sc, event );
 	return VMCMD_RESULT_SUSPEND;

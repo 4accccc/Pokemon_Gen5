@@ -54,6 +54,11 @@ extern GMEVENT* EVENT_FSND_WaitBGMFade( GAMESYS_WORK* gameSystem );
 // BGM復帰待ち
 extern GMEVENT* EVENT_FSND_WaitBGMPop( GAMESYS_WORK* gameSystem );
 
+// イベント曲・視線曲用 即時再生イベント
+extern GMEVENT* EVENT_FSND_PlayEventBGM( GAMESYS_WORK* gameSystem, u32 soundIdx );
+extern GMEVENT* EVENT_FSND_PushPlayEventBGM( GAMESYS_WORK* gameSystem, u32 soundIdx );
+extern GMEVENT* EVENT_FSND_PlayTrainerEyeBGM( GAMESYS_WORK* gameSystem, u32 soundIdx );
+
 
 //=================================================================================
 // ■プレイヤーの操作により発生するBGMの変更

@@ -569,6 +569,166 @@ static GMEVENT_RESULT ResetBGMEvent( GMEVENT* event, int* seq, void* wk )
   } 
   return GMEVENT_RES_CONTINUE;
 }
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief イベントBGM再生イベント処理関数
+ */
+//---------------------------------------------------------------------------------
+static GMEVENT_RESULT PlayEventBGMEvent( GMEVENT* event, int* seq, void* wk )
+{
+  FSND_EVWORK* work;
+  FIELD_SOUND* fieldSound;
+
+  work = (FSND_EVWORK*)wk;
+  fieldSound = work->fieldSound;
+
+  switch( *seq ) {
+  case 0:  // リクエスト発行
+    FIELD_SOUND_RegisterRequest_FADE_OUT( fieldSound, FSND_FADE_FAST );
+    FIELD_SOUND_RegisterRequest_FORCE_PLAY( fieldSound, work->soundIdx );
+    (*seq)++;
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  } 
+  return GMEVENT_RES_CONTINUE;
+} 
+//--------------------------------------------------------------------------------- 
+/**
+ * @brief イベントBGMの再生イベントを生成する
+ *
+ * @param gameSystem
+ * @param soundIdx   再生するBGM
+ *
+ * @return 生成したイベント
+ */
+//--------------------------------------------------------------------------------- 
+GMEVENT* EVENT_FSND_PlayEventBGM( GAMESYS_WORK* gameSystem, u32 soundIdx )
+{
+  GMEVENT* event;
+  FSND_EVWORK* work;
+  GAMEDATA* gdata;
+
+  gdata = GAMESYSTEM_GetGameData( gameSystem );
+
+  // イベントを生成
+  event = GMEVENT_Create( gameSystem, NULL, PlayEventBGMEvent, sizeof(FSND_EVWORK) );
+
+  // イベントワークを初期化
+  work = GMEVENT_GetEventWork( event );
+  work->fieldSound = GAMEDATA_GetFieldSound( gdata );
+  work->soundIdx = soundIdx;
+
+  return event;
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief イベントBGM再生イベント処理関数 ( フィールド BGM 退避 ver. )
+ */
+//---------------------------------------------------------------------------------
+static GMEVENT_RESULT PushPlayEventBGM( GMEVENT* event, int* seq, void* wk )
+{
+  FSND_EVWORK* work;
+  FIELD_SOUND* fieldSound;
+
+  work = (FSND_EVWORK*)wk;
+  fieldSound = work->fieldSound;
+
+  switch( *seq ) {
+  case 0:  // リクエスト発行
+    FIELD_SOUND_RegisterRequest_PUSH( fieldSound, FSND_FADE_FAST );
+    FIELD_SOUND_RegisterRequest_FORCE_PLAY( fieldSound, work->soundIdx );
+    (*seq)++;
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  } 
+  return GMEVENT_RES_CONTINUE;
+} 
+//--------------------------------------------------------------------------------- 
+/**
+ * @brief イベントBGMの再生イベントを生成する ( フィールド BGM 退避 ver. )
+ *
+ * @param gameSystem
+ * @param soundIdx   再生するBGM
+ *
+ * @return 生成したイベント
+ */
+//--------------------------------------------------------------------------------- 
+GMEVENT* EVENT_FSND_PushPlayEventBGM( GAMESYS_WORK* gameSystem, u32 soundIdx )
+{
+  GMEVENT* event;
+  FSND_EVWORK* work;
+  GAMEDATA* gdata;
+
+  gdata = GAMESYSTEM_GetGameData( gameSystem );
+
+  // イベントを生成
+  event = GMEVENT_Create( gameSystem, NULL, PushPlayEventBGM, sizeof(FSND_EVWORK) );
+
+  // イベントワークを初期化
+  work = GMEVENT_GetEventWork( event );
+  work->fieldSound = GAMEDATA_GetFieldSound( gdata );
+  work->soundIdx = soundIdx;
+
+  return event;
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief 視線曲再生イベント処理関数
+ */
+//---------------------------------------------------------------------------------
+static GMEVENT_RESULT PlayTrainerEyeBGM( GMEVENT* event, int* seq, void* wk )
+{
+  FSND_EVWORK* work;
+  FIELD_SOUND* fieldSound;
+
+  work = (FSND_EVWORK*)wk;
+  fieldSound = work->fieldSound;
+
+  switch( *seq ) {
+  case 0:  // リクエスト発行
+    FIELD_SOUND_RegisterRequest_FADE_OUT( fieldSound, FSND_FADE_FAST );
+    FIELD_SOUND_RegisterRequest_FORCE_PLAY( fieldSound, work->soundIdx );
+    (*seq)++;
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  } 
+  return GMEVENT_RES_CONTINUE;
+} 
+//--------------------------------------------------------------------------------- 
+/**
+ * @brief 視線曲再生イベントを生成する
+ *
+ * @param gameSystem
+ * @param soundIdx   再生するBGM
+ *
+ * @return 生成したイベント
+ */
+//--------------------------------------------------------------------------------- 
+GMEVENT* EVENT_FSND_PlayTrainerEyeBGM( GAMESYS_WORK* gameSystem, u32 soundIdx )
+{
+  GMEVENT* event;
+  FSND_EVWORK* work;
+  GAMEDATA* gdata;
+
+  gdata = GAMESYSTEM_GetGameData( gameSystem );
+
+  // イベントを生成
+  event = GMEVENT_Create( gameSystem, NULL, PlayTrainerEyeBGM, sizeof(FSND_EVWORK) );
+
+  // イベントワークを初期化
+  work = GMEVENT_GetEventWork( event );
+  work->fieldSound = GAMEDATA_GetFieldSound( gdata );
+  work->soundIdx = soundIdx;
+
+  return event;
+}
+
 //--------------------------------------------------------------------------------- 
 /**
  * @brief BGMを停止し, 退避中の全てのBGMを破棄する
