@@ -15,6 +15,7 @@
 #include "app/app_menu_common.h"
 #include "poke_tool/poke_tool.h"
 #include "sound/pm_voice.h"
+#include "sound/pm_wb_voice.h"
 
 #include "arc_def.h"
 #include "message.naix"
@@ -1874,9 +1875,11 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
       if( work->isEgg == FALSE )
       {
         POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP(work);
+        PMV_REF pmvRef;
         const u32 monsNo = PP_Get( pp , ID_PARA_monsno , NULL );
         const u32 formNo = PP_Get( pp , ID_PARA_form_no , NULL );
-        PMVOICE_Play( monsNo , formNo , 64 , FALSE , 0 , 0 , FALSE , 0 );
+        PMV_MakeRefDataMine( &pmvRef );
+        PMVOICE_Play( monsNo , formNo , 64 , FALSE , 0 , 0 , FALSE , (u32)&pmvRef );
       }
     }
     

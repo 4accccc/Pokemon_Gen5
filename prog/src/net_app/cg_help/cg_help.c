@@ -27,6 +27,7 @@
 #include "message.naix"
 #include "font/font.naix"
 #include "msg/msg_cg_help.h"
+#include "field/c_gear/c_gear_obj_NANR_LBLDEFS.h"
 
 #include "net_app/cg_help.h"
 
@@ -585,7 +586,17 @@ static void CG_HELP_DispPage( CG_HELP_WORK *work , const u8 page)
 
 static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
 {
-  static const anmArr[CG_HELP_PAGE_MAX] = {8,9,9,9,10,39,17,14,38};
+  static const anmArr[CG_HELP_PAGE_MAX] = 
+    {
+      NANR_c_gear_obj_CellAnime_IR,
+      NANR_c_gear_obj_CellAnime_WIRELESS,
+      NANR_c_gear_obj_CellAnime_WIRELESS,
+      NANR_c_gear_obj_CellAnime_WIRELESS,
+      NANR_c_gear_obj_CellAnime_WIFI,
+      NANR_c_gear_obj_CellAnime_sure_sample,
+      NANR_c_gear_obj_CellAnime_radar,
+      NANR_c_gear_obj_CellAnime_cus_on,
+      NANR_c_gear_obj_CellAnime_on_off};
   GFL_CLACT_WK_SetAnmSeq( work->clwkIcon , anmArr[page] );
   GFL_CLACT_WK_SetDrawEnable( work->clwkIcon , TRUE );
   
@@ -622,12 +633,6 @@ static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
   GFL_BG_LoadScreenReq(CG_HELP_FRAME_ICON);
 
   //BMPÝ’èÀ•WÝ’è
-  if( page == CG_HELP_PAGE_RESARCH )
-  {
-    GFL_CLACTPOS pos = {4*8+4,6*8+3};
-    GFL_CLACT_WK_SetPos( work->clwkIcon , &pos , CLSYS_DRAW_SUB );
-  }
-  else
   {
     GFL_CLACTPOS pos = {4*8,6*8};
     GFL_CLACT_WK_SetPos( work->clwkIcon , &pos , CLSYS_DRAW_SUB );
@@ -638,7 +643,7 @@ static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
   {
     //Ý’è
     GFL_CLACT_WK_SetAutoAnmFlag( work->clwkIcon , FALSE );
-    GFL_CLACT_WK_SetAnmIndex( work->clwkIcon , 0 );
+    GFL_CLACT_WK_SetAnmIndex( work->clwkIcon , 1 );
   }
   else
   if( page == CG_HELP_PAGE_HELP )
