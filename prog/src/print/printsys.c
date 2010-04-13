@@ -1687,7 +1687,9 @@ u16 PRINTSYS_GetTagCount( const STRBUF* str )
       }
       sp = PRINTSYS_SkipTag( sp );
     }
-    sp++;
+    else {
+      sp++;
+    }
   }
 
   return cnt;
