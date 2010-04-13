@@ -22,6 +22,7 @@ typedef struct
   u16            frame;     // 動作フレーム数
   u16            endFrame;  // 最終フレーム数
   u8             rotateNum; // 回転回数
+  u16            initDir;   // イベント開始時の向き
 
 } TASK_WORK;
 
@@ -48,9 +49,13 @@ static FIELD_TASK_RETVAL RotatePlayer_SpeedDown( void *wk );
 //------------------------------------------------------------------------------------------
 FIELD_TASK* FIELD_TASK_PlayerRotate( FIELDMAP_WORK* fieldmap, int frame, int rot_num )
 {
+  FIELD_PLAYER* player;
   FIELD_TASK* task;
   TASK_WORK* work;
-  HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
+  HEAPID heap_id;
+
+  heap_id = FIELDMAP_GetHeapID( fieldmap );
+  player  = FIELDMAP_GetFieldPlayer( fieldmap );
 
   // 生成
   task = FIELD_TASK_Create( heap_id, sizeof(TASK_WORK), RotatePlayer );
@@ -60,6 +65,7 @@ FIELD_TASK* FIELD_TASK_PlayerRotate( FIELDMAP_WORK* fieldmap, int frame, int rot
   work->frame     = 0;
   work->endFrame  = frame;
   work->rotateNum = rot_num;
+  work->initDir   = FIELD_PLAYER_GetDir( player );
 
   return task;
 }
@@ -75,9 +81,13 @@ FIELD_TASK* FIELD_TASK_PlayerRotate( FIELDMAP_WORK* fieldmap, int frame, int rot
 //------------------------------------------------------------------------------------------
 FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedUp( FIELDMAP_WORK* fieldmap, int frame, int rot_num )
 {
+  FIELD_PLAYER* player;
   FIELD_TASK* task;
   TASK_WORK* work;
-  HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
+  HEAPID heap_id;
+
+  heap_id = FIELDMAP_GetHeapID( fieldmap );
+  player  = FIELDMAP_GetFieldPlayer( fieldmap );
 
   // 生成
   task = FIELD_TASK_Create( heap_id, sizeof(TASK_WORK), RotatePlayer_SpeedUp );
@@ -87,6 +97,7 @@ FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedUp( FIELDMAP_WORK* fieldmap, int frame,
   work->frame     = 0;
   work->endFrame  = frame;
   work->rotateNum = rot_num;
+  work->initDir   = FIELD_PLAYER_GetDir( player );
 
   return task;
 }
@@ -102,9 +113,13 @@ FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedUp( FIELDMAP_WORK* fieldmap, int frame,
 //------------------------------------------------------------------------------------------
 FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedDown( FIELDMAP_WORK* fieldmap, int frame, int rot_num )
 {
+  FIELD_PLAYER* player;
   FIELD_TASK* task;
   TASK_WORK* work;
-  HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
+  HEAPID heap_id;
+
+  heap_id = FIELDMAP_GetHeapID( fieldmap );
+  player  = FIELDMAP_GetFieldPlayer( fieldmap );
 
   // 生成
   task = FIELD_TASK_Create( heap_id, sizeof(TASK_WORK), RotatePlayer_SpeedDown );
@@ -114,6 +129,7 @@ FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedDown( FIELDMAP_WORK* fieldmap, int fram
   work->frame     = 0;
   work->endFrame  = frame;
   work->rotateNum = rot_num;
+  work->initDir   = FIELD_PLAYER_GetDir( player );
 
   return task;
 }
@@ -238,8 +254,17 @@ static FIELD_TASK_RETVAL RotatePlayer( void *wk )
 
   // 指定フレームが経過したら, タスク終了
   work->frame++;
-  if( work->endFrame < work->frame )
-  {
+  if( work->endFrame < work->frame ) {
+    // 自機の向きを元に戻す
+    switch( work->initDir ) {
+    default:
+    case DIR_UP:    anm_cmd = AC_DIR_U; break;
+    case DIR_DOWN:  anm_cmd = AC_DIR_D; break;
+    case DIR_LEFT:  anm_cmd = AC_DIR_L; break;
+    case DIR_RIGHT: anm_cmd = AC_DIR_R; break;
+    }
+    MMDL_SetAcmd( mmdl, anm_cmd );
+    // 終了
     return FIELD_TASK_RETVAL_FINISH;
   }
   return FIELD_TASK_RETVAL_CONTINUE;
@@ -262,8 +287,17 @@ static FIELD_TASK_RETVAL RotatePlayer_SpeedUp( void *wk )
 
   // 指定フレームが経過したら, タスク終了
   work->frame++;
-  if( work->endFrame < work->frame )
-  {
+  if( work->endFrame < work->frame ) {
+    // 自機の向きを元に戻す
+    switch( work->initDir ) {
+    default:
+    case DIR_UP:    anm_cmd = AC_DIR_U; break;
+    case DIR_DOWN:  anm_cmd = AC_DIR_D; break;
+    case DIR_LEFT:  anm_cmd = AC_DIR_L; break;
+    case DIR_RIGHT: anm_cmd = AC_DIR_R; break;
+    }
+    MMDL_SetAcmd( mmdl, anm_cmd );
+    // 終了
     return FIELD_TASK_RETVAL_FINISH;
   }
   return FIELD_TASK_RETVAL_CONTINUE;
@@ -286,8 +320,16 @@ static FIELD_TASK_RETVAL RotatePlayer_SpeedDown( void *wk )
 
   // 指定フレームが経過したら, タスク終了
   work->frame++;
-  if( work->endFrame < work->frame )
-  {
+  if( work->endFrame < work->frame ) {
+    // 自機の向きを元に戻す
+    switch( work->initDir ) {
+    default:
+    case DIR_UP:    anm_cmd = AC_DIR_U; break;
+    case DIR_DOWN:  anm_cmd = AC_DIR_D; break;
+    case DIR_LEFT:  anm_cmd = AC_DIR_L; break;
+    case DIR_RIGHT: anm_cmd = AC_DIR_R; break;
+    }
+    MMDL_SetAcmd( mmdl, anm_cmd );
     return FIELD_TASK_RETVAL_FINISH;
   }
   return FIELD_TASK_RETVAL_CONTINUE;
