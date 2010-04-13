@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T19:30:58"/>
+	<create user="matsumiya" host="W00224" date="2010-04-13T19:36:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1287" top="192" right="1992" bottom="819" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1421,13 +1421,13 @@
 みんなの　りそうも　しんじつも▽
 ちっとも　りかい　できていない▼
 アンタは　ここに　ふさわしくない
-さっさと　たいじょう　しようか▼</language>
+さっさと　たいじょう　しよう▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……あわれだね▼
 ポケモンの　心も　わからなければ
 みんなの　理想も　真実も▽
 ちっとも　理解できていない▼
 アンタは　ここに　ふさわしくない
-さっさと　退場しようか▼</language>
+さっさと　退場しよう▼</language>
 	</row>
 
 	<row id="msg_n01r0502_rematch_black" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
