@@ -127,6 +127,7 @@ struct _BTL_CLIENT {
   BTLV_STRPARAM   strParam;
   BTLV_STRPARAM   strParamSub;
   BTL_SERVER*     cmdCheckServer;
+  BTLV_ROTATION_WAZASEL_PARAM  rotWazaSelParam;
   BtlRotateDir    prevRotateDir;
 
   ClientSubProc  subProc;
@@ -226,6 +227,7 @@ static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq );
 static  BOOL  check_tr_message( BTL_CLIENT* wk, u16* msgID );
 static BOOL selact_Root( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Fight( BTL_CLIENT* wk, int* seq );
+static void setupRotationParams( BTL_CLIENT* wk, BTLV_ROTATION_WAZASEL_PARAM* param );
 static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Item( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Escape( BTL_CLIENT* wk, int* seq );
@@ -697,7 +699,7 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
   case SEQ_RETURN_TO_SV:
     if( BTL_ADAPTER_ReturnCmd(wk->adapter, wk->returnDataPtr, wk->returnDataSize) ){
       wk->myState = SEQ_READ_ACMD;
-      BTL_N_Printf( DBGSTR_CLIENT_RETURN_CMD_DONE, wk->myID );
+      BTL_N_Printf( DBGSTR_CLIENT_RETURN_CMD_DONE, wk->myID, wk->returnDataSize );
     }
     break;
 
@@ -1661,6 +1663,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
   enum {
     SEQ_START = 0,
     SEQ_SELECT_WAZA_START,
+    SEQ_SELECT_ROTATION_WAZA_START,
     SEQ_SELECT_WAZA_WAIT,
     SEQ_CHECK_WAZA_TARGET,
     SEQ_SELECT_TARGET_START,
@@ -1669,16 +1672,30 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
   };
 
   switch( *seq ){
-  case 0:
+  case SEQ_START:
     if( is_waza_unselectable( wk, wk->procPoke, wk->procAction ) ){
       ClientSubProc_Set( wk, selact_CheckFinish );
-    }else{
-      (*seq) = SEQ_SELECT_WAZA_START;
     }
+    else
+    {
+      #ifdef ROTATION_NEW_SYSTEM
+      if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_ROTATION ){
+        (*seq) = SEQ_SELECT_WAZA_START;
+      }else{
+        setupRotationParams( wk, &wk->rotWazaSelParam );
+        (*seq) = SEQ_SELECT_ROTATION_WAZA_START;
+      }
+    }
+    #endif
     break;
 
   case SEQ_SELECT_WAZA_START:
     BTLV_UI_SelectWaza_Start( wk->viewCore, wk->procPoke, wk->procAction );
+    (*seq) = SEQ_SELECT_WAZA_WAIT;
+    break;
+
+  case SEQ_SELECT_ROTATION_WAZA_START:
+    BTLV_UI_SelectRotationWaza_Start( wk->viewCore, &wk->rotWazaSelParam, wk->procAction );
     (*seq) = SEQ_SELECT_WAZA_WAIT;
     break;
 
@@ -1699,7 +1716,8 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
       }
       else if( action == BTL_ACTION_MOVE ){
         ClientSubProc_Set( wk, selact_CheckFinish );
-      }else
+      }
+      else
       {
         if( is_unselectable_waza(wk, wk->procPoke, wk->actionParam[wk->procPokeIdx].fight.waza, &wk->strParam) )
         {
@@ -1722,12 +1740,14 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
               {
                 bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, 1 );
                 dir = BTL_ROTATEDIR_R;
+                BTL_N_Printf( DBGSTR_CLIENT_ROT_R, BPP_GetID(bpp) );
               }
-              else if( keyCont & PAD_BUTTON_R )
+              else if( keyCont & PAD_BUTTON_L )
               {
                 bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, 2 );
-                dir = BTL_ROTATEDIR_R;
-             }
+                dir = BTL_ROTATEDIR_L;
+                BTL_N_Printf( DBGSTR_CLIENT_ROT_L, BPP_GetID(bpp) );
+              }
 
               if( bpp && !BPP_IsDead(bpp) )
               {
@@ -1738,7 +1758,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
                   BTL_ACTION_SetRotation( wk->procAction++, dir );
                   BTL_ACTION_SetFightParam( wk->procAction, waza, BTL_POS_NULL );
                   wk->actionAddCount++;
-//                  OS_TPrintf("ローテ対象ポケ、ワザ有効 dir=%d\n", dir );
+                  BTL_N_Printf( DBGSTR_CLIENT_ROT_Determine, dir );
                 }
               }
             }
@@ -1793,6 +1813,33 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
 
   return FALSE;
 }
+/**
+ *  ローテーションワザ選択用パラメータ初期化
+ */
+static void setupRotationParams( BTL_CLIENT* wk, BTLV_ROTATION_WAZASEL_PARAM* param )
+{
+  const BTL_POKEPARAM* bpp;
+  u32 i, j;
+
+  for(i=0; i<BTL_ROTATE_NUM; ++i)
+  {
+    bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
+    param->poke[ i ].bpp = bpp;
+    if( !BPP_IsDead(bpp) )
+    {
+      for(j=0; j<PTL_WAZA_MAX; ++j){
+        param->poke[ i ].fWazaUsable[ j ] = !is_unselectable_waza( wk, bpp, BPP_WAZA_GetID(bpp,j), NULL );
+      }
+    }
+    else
+    {
+      for(j=0; j<PTL_WAZA_MAX; ++j){
+        param->poke[ i ].fWazaUsable[ j ] = FALSE;
+      }
+    }
+  }
+}
+
 //----------------------------------------------------------------------
 /**
  *  「ポケモン」選択後のいれかえポケモン選択
@@ -1997,6 +2044,8 @@ static BOOL selact_CheckFinish( BTL_CLIENT* wk, int* seq )
   {
     u8 actionCnt = wk->numCoverPos + wk->actionAddCount;
     BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_SelectActionDone, wk->numCoverPos);
+
+    wk->actionAddCount = 0;
     wk->returnDataPtr = &(wk->actionParam[0]);
     wk->returnDataSize = sizeof(wk->actionParam[0]) * actionCnt;
     ClientSubProc_Set( wk, selact_Finish );
@@ -3536,12 +3585,12 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
       {
         numSelect = numPuttable;
       }
-      BTL_Printf("myID=%d 戦闘ポケが死んで %d体選択\n", wk->myID, numSelect);
+      BTL_N_Printf( DBGSTR_CLIENT_AI_PutPokeStart, wk->myID, numSelect);
       for(i=0; i<numSelect; i++)
       {
         BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, wk->myChangePokePos[i], &clientID, &posIdx );
         BTL_ACTION_SetChangeParam( &wk->actionParam[i], posIdx, puttableList[i] );
-        BTL_Printf(" %d番目を新たに出す\n", puttableList[i] );
+        BTL_Printf( DBGSTR_CLIENT_AI_PutPokeDecide, puttableList[i] );
       }
       wk->returnDataPtr = &(wk->actionParam[0]);
       wk->returnDataSize = sizeof(wk->actionParam[0]) * numSelect;

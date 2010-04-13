@@ -85,7 +85,11 @@ typedef enum {
   DBGSTR_CLIENT_CHGAI_UkeTok,
   DBGSTR_CLIENT_CHGAI_SizenKaifuku,
   DBGSTR_CLIENT_CHGAI_WazaEff,
-
+  DBGSTR_CLIENT_ROT_R,
+  DBGSTR_CLIENT_ROT_L,
+  DBGSTR_CLIENT_ROT_Determine,
+  DBGSTR_CLIENT_AI_PutPokeStart,
+  DBGSTR_CLIENT_AI_PutPokeDecide,
 
   DBGSTR_BPP_NemuriWakeCheck,
 
@@ -150,6 +154,7 @@ typedef enum {
   DBGSTR_SVFL_ActOrder_Change,
   DBGSTR_SVFL_ActOrder_Escape,
   DBGSTR_SVFL_ActOrder_Dead,
+  DBGSTR_SVFL_ActOrder_Rotation,
   DBGSTR_SVFL_CorrectTarget_Info,
   DBGSTR_SVFL_CorrectResult,
   DBGSTR_SVFL_CorrectHitFarOn,
@@ -195,6 +200,8 @@ typedef enum {
   DBGSTR_SVFL_AddSickFailCode,
   DBGSTR_SVFL_AddSickFixed,
   DBGSTR_SVFL_WazaExeStart,
+  DBGSTR_SVFL_ActionSortInfo,
+  DBGSTR_SVFL_ActionSortRotation,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,

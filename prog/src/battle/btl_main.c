@@ -3614,7 +3614,7 @@ const BTL_POKEPARAM* BTL_POKECON_GetFrontPokeDataConst( const BTL_POKE_CONTAINER
   btlPos_to_cliendID_and_posIdx( wk->mainModule, pos, &clientID, &posIdx );
   party = &wk->party[ clientID ];
   if( posIdx < BTL_PARTY_GetMemberCount(party) ){
-    BTL_N_PrintfSimple( DBGSTR_MAIN_GetFrontPokeDataResult, clientID, posIdx );
+//    BTL_N_PrintfSimple( DBGSTR_MAIN_GetFrontPokeDataResult, clientID, posIdx );
     return BTL_PARTY_GetMemberDataConst( party, posIdx );
   }else{
     BTL_N_PrintfSimple( DBGSTR_MAIN_PokeConGetByPos, pos, clientID, posIdx );

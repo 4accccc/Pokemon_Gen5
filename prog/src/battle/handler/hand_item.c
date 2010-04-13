@@ -383,9 +383,9 @@ static void handler_Kyuukon_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static const BtlEventHandlerTable* HAND_ADD_ITEM_Juudenti( u32* numElems );
 static void handler_Juudenti_DmgReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Juudenti_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static const BtlEventHandlerTable* HAND_ADD_ITEM_DassyutuPod( u32* numElems );
-static void handler_DassyutuPod_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_DassyutuPod_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_DassyutuButton( u32* numElems );
+static void handler_DassyutuButton_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_DassyutuButton_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void common_Juel_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType type );
 static void common_Juel_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType type );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_HonooNoJuel( u32* numElems );
@@ -600,7 +600,7 @@ static const struct {
   { ITEM_SIMETUKEBANDO,     HAND_ADD_ITEM_SimetukeBand    },  // しめつけバンド
   { ITEM_KYUUKON,           HAND_ADD_ITEM_Kyuukon         },  // きゅうこん
   { ITEM_ZYUUDENTI,         HAND_ADD_ITEM_Juudenti        },  // じゅうでんち
-  { ITEM_DASSYUTUPODDO,     HAND_ADD_ITEM_DassyutuPod     },  // だっしゅつポッド
+  { ITEM_DASSYUTUBOTAN,     HAND_ADD_ITEM_DassyutuButton     },  // だっしゅつボタン
   { ITEM_HONOONOZYUERU,     HAND_ADD_ITEM_HonooNoJuel     },  // ほのおのジュエル
   { ITEM_MIZUNOZYUERU,      HAND_ADD_ITEM_MizuNoJuel      },  // みずのジュエル
   { ITEM_DENKINOZYUERU,     HAND_ADD_ITEM_DenkiNoJuel     },  // でんきのジュエル
@@ -4891,20 +4891,20 @@ static void handler_Juudenti_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 }
 //------------------------------------------------------------------------------
 /**
- *  だっしゅつポッド
+ *  だっしゅつボタン
  */
 //------------------------------------------------------------------------------
-static const BtlEventHandlerTable* HAND_ADD_ITEM_DassyutuPod( u32* numElems )
+static const BtlEventHandlerTable* HAND_ADD_ITEM_DassyutuButton( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_REACTION,     handler_DassyutuPod_Reaction },  // ダメージ反応ハンドラ
-    { BTL_EVENT_USE_ITEM,              handler_DassyutuPod_Use      },  // どうぐ使用ハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION,     handler_DassyutuButton_Reaction },  // ダメージ反応ハンドラ
+    { BTL_EVENT_USE_ITEM,              handler_DassyutuButton_Use      },  // どうぐ使用ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
 // ダメージ反応ハンドラ
-static void handler_DassyutuPod_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_DassyutuButton_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // 自分がダメージを受けた側
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
@@ -4916,7 +4916,7 @@ static void handler_DassyutuPod_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
   }
 }
 // どうぐ使用ハンドラ
-static void handler_DassyutuPod_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_DassyutuButton_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {

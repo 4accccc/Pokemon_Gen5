@@ -796,7 +796,7 @@ u8 BTL_RULE_HandPokeIndex( BtlRule rule, u8 numCoverPos )
   if( rule == BTL_RULE_ROTATION )
   {
     // ローテーションの場合、３体目まで戦闘に出ているとみなす
-    return 3;
+    return BTL_ROTATE_NUM;
   }
   return numCoverPos;
 }

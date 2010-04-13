@@ -144,7 +144,7 @@ void BTLV_InitSystem( HEAPID heapID )
 
   //Wifi接続時はtr_aiをロードしない
   if( GFL_NET_IsWifiConnect() == FALSE )
-  { 
+  {
     GFL_OVERLAY_Load( FS_OVERLAY_ID( tr_ai ) );
   }
 }
@@ -162,7 +162,7 @@ void BTLV_QuitSystem( void )
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( vram_h ) );
   //Wifi接続時はtr_aiをアンロードしない
   if( GFL_NET_IsWifiConnect() == FALSE )
-  { 
+  {
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( tr_ai ) );
   }
 }
@@ -885,7 +885,7 @@ BtlAction BTLV_UI_SelectAction_Wait( BTLV_CORE* core )
 }
 //=============================================================================================
 /**
- * ワザ選択開始
+ * ワザ選択開始（ローテーション以外）
  *
  * @param   core
  * @param   bpp
@@ -896,10 +896,27 @@ void BTLV_UI_SelectWaza_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_AC
 {
   core->procPokeParam = bpp;
   core->procPokeID = BPP_GetID( bpp );
-  BTL_Printf("ワザ選択開始：対象ポケID=%d\n", core->procPokeID);
   core->actionParam = dest;
   mainproc_setup( core, CmdProc_SelectWaza );
 }
+
+//=============================================================================================
+/**
+ * ワザ選択開始（ローテーションバトル専用）
+ *
+ * @param   core
+ * @param   selParam
+ * @param   dest
+ */
+//=============================================================================================
+void  BTLV_UI_SelectRotationWaza_Start( BTLV_CORE* core, BTLV_ROTATION_WAZASEL_PARAM* selParam, BTL_ACTION_PARAM* dest )
+{
+  core->procPokeParam = selParam->poke[0].bpp;
+  core->procPokeID = BPP_GetID( core->procPokeParam );
+  core->actionParam = dest;
+  mainproc_setup( core, CmdProc_SelectWaza );
+}
+
 //=============================================================================================
 /**
  * ワザ選択の強制終了通知（コマンド選択の制限時間）
@@ -2221,11 +2238,15 @@ void BTLV_UI_SelectRotation_Start( BTLV_CORE* wk, BtlRotateDir prevDir )
   const BTL_POKEPARAM* bpp;
   u32 i;
 
+#ifdef ROTATION_NEW_SYSTEM
+
+#else
   for(i=0; i<BTL_ROTATE_NUM; ++i){
     bpp = BTL_PARTY_GetMemberDataConst( party, i );
     rotateParam->pp[i] = BPP_GetSrcData( bpp );
   }
   rotateParam->before_select_dir = prevDir;
+#endif
 
 #ifndef TMP_SELROT_SKIP
   BTLV_SCD_SelectRotate_Start( wk->scrnD, rotateParam );
@@ -2563,7 +2584,7 @@ void BTLV_UpdateRecPlayerInput( BTLV_CORE* wk, u16 currentChapter, u16 ctrlChapt
 {
   wk->recPlayerUI.play_chapter = currentChapter;
   wk->recPlayerUI.view_chapter = ctrlChapter;
-  wk->recPlayerUI.stop_flag = BTLV_INPUT_BR_STOP_NONE;
+  wk->recPlayerUI.stop_flag = BTLV_INPUT_BR_STOP_SKIP;
 
   BTLV_SCD_SetupRecPlayerMode( wk->scrnD, &wk->recPlayerUI );
 }

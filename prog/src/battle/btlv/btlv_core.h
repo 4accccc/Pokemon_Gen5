@@ -26,7 +26,6 @@
 #include "../btl_calc.h"
 #include "../btl_pokeselect.h"
 
-
 #include "btlv_effect.h"
 #include "btlv_common.h"
 
@@ -109,6 +108,28 @@ static inline void BTLV_STRPARAM_SetWait( BTLV_STRPARAM* sp, u8 wait )
 }
 
 
+//----------------------------------------------------------------------
+/**
+ *  ローテーション用ワザ選択時パラメータ
+ */
+//----------------------------------------------------------------------
+typedef struct {
+
+  const BTL_POKEPARAM* bpp;             ///< ポケモンパラメータ
+  u8    fWazaUsable[ PTL_WAZA_MAX ];    ///< ワザ使えるフラグ（使える状態なら該当Index部分がTRUEである）
+
+}BTLV_WAZASEL_POKEMON_PARAM;
+
+typedef struct {
+
+  BTLV_WAZASEL_POKEMON_PARAM    poke[ BTL_ROTATE_NUM ];
+  BTL_ACTION_PARAM   actRotation;
+  BTL_ACTION_PARAM   actWaza;
+
+}BTLV_ROTATION_WAZASEL_PARAM;
+
+
+
 //=============================================================================================
 /**
  * システム初期化
@@ -188,6 +209,7 @@ extern BtlAction  BTLV_UI_SelectAction_Wait( BTLV_CORE* core );
 extern void BTLV_UI_SelectAction_ForceQuit( BTLV_CORE* wk );
 
 extern void BTLV_UI_SelectWaza_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
+extern void  BTLV_UI_SelectRotationWaza_Start( BTLV_CORE* core, BTLV_ROTATION_WAZASEL_PARAM* selParam, BTL_ACTION_PARAM* dest );
 extern BOOL BTLV_UI_SelectWaza_Wait( BTLV_CORE* core );
 extern void BTLV_UI_SelectWaza_ForceQuit( BTLV_CORE* wk );
 

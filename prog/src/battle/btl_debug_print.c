@@ -77,7 +77,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_MAIN_CommError:                return "通信エラーによる終了\n";
 
   case DBGSTR_CLIENT_RETURN_CMD_START:       return "ID[%d], 返信開始へ\n";
-  case DBGSTR_CLIENT_RETURN_CMD_DONE:        return "ID[%d], 返信しました\n";
+  case DBGSTR_CLIENT_RETURN_CMD_DONE:        return "ID[%d], %d byte 返信しました\n";
   case DBGSTR_CLIENT_SelectActionSkip:       return "Act選択(%d体目）スキップ\n";
   case DBGSTR_CLIENT_SelActPokeDead:         return "死んでてスキップなのでCheckedCntそのまま\n";
   case DBGSTR_CLIENT_SelectActionStart:      return "Act選択(%d体目=ID:%d）開始します  checked %d poke\n";
@@ -133,6 +133,11 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_CHGAI_UkeTok:         return "入れ替えたい：受けとくせい\n";
   case DBGSTR_CLIENT_CHGAI_SizenKaifuku:   return "入れ替えたい：しぜんかいふく\n";
   case DBGSTR_CLIENT_CHGAI_WazaEff:        return "入れ替えたい：ワザ相性による\n";
+  case DBGSTR_CLIENT_ROT_R:                return "ローテ右回転  対象ポケ=%d\n";
+  case DBGSTR_CLIENT_ROT_L:                return "ローテ左回転  対象ポケ=%d\n";
+  case DBGSTR_CLIENT_ROT_Determine:        return "ローテ対象ポケ、ワザ有効 dir=%d\n";
+  case DBGSTR_CLIENT_AI_PutPokeStart:      return "myID=%d 戦闘ポケが死んで %d体選択\n";
+  case DBGSTR_CLIENT_AI_PutPokeDecide:     return "  -> %d番目を新たに出す\n";
 
   case DBGSTR_BPP_NemuriWakeCheck:        return "ポケ[%d]のねむりターン最大値=%d, 経過ターン=%d\n";
 
@@ -187,6 +192,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_ActOrder_Change:     return "【ポケモン】を処理。位置%d <- ポケ%d \n";
   case DBGSTR_SVFL_ActOrder_Escape:     return "【にげる】を処理。\n";
   case DBGSTR_SVFL_ActOrder_Dead:       return "【ひんし】なので何もせず\n";
+  case DBGSTR_SVFL_ActOrder_Rotation:   return "【ローテーション】を処理  ClientID=%d, 回転方向=%d\n";
   case DBGSTR_SVFL_CorrectTarget_Info:  return "攻撃ポケ[%d]（位置=%d） -> 狙ったポケ[%d]（位置=%d）死んでいるので補正する\n";
   case DBGSTR_SVFL_CorrectHitFarOn:     return "ワザ[%d] 遠隔ON の補正対象決定\n";
   case DBGSTR_SVFL_CorrectHitFarOff:    return "ワザ[%d] 遠隔OFF の補正対象決定\n";
@@ -237,6 +243,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_AddSickFailCode:     return "状態異常失敗コード=%d\n";
   case DBGSTR_SVFL_AddSickFixed:        return "状態異常決定：コード=%d\n";
   case DBGSTR_SVFL_WazaExeStart:        return "ポケ[%d], waza=%dのワザ出し処理開始\n";
+  case DBGSTR_SVFL_ActionSortInfo:      return "アクションソート:Client(%d), actionCnt=%d\n";
+  case DBGSTR_SVFL_ActionSortRotation:  return ".. rotate action nextPokeIdx = %d\n";
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";
