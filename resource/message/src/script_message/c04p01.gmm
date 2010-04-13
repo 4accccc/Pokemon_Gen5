@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T21:34:19"/>
+	<create user="matsumiya" host="W00224" date="2010-04-13T22:45:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -496,10 +496,12 @@
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……キミは　つよい▼
 だが　ボクには　かえるべき
-みらいが　ある！[BE:09:速度コントロール:0]▼</language>
+みらいが　ある▽
+そのために……！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……キミは　強いな▼
 だが　ボクには　変えるべき
-未来が　ある！[BE:09:速度コントロール:0]▼</language>
+未来が　ある▽
+そのために……！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c04p01_boss_07" back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
