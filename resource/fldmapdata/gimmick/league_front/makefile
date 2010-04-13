@@ -42,6 +42,9 @@ CONVERTDATA = $(GRAPHIC_BIN)/pl_ele_00.nsbmd \
 							$(GRAPHIC_BIN)/pl_lite4.nsbmd \
 							$(GRAPHIC_BIN)/pl_ele_01.nsbta \
 							$(GRAPHIC_BIN)/pl_ele_00_00.nsbta \
+							$(GRAPHIC_BIN)/pl_ele_00_on.nsbta \
+							$(GRAPHIC_BIN)/pl_ele_01_on.nsbta \
+							$(GRAPHIC_BIN)/pl_ele_01_off.nsbta \
 							$(GRAPHIC_BIN)/pl_lite1_on.nsbta \
 							$(GRAPHIC_BIN)/pl_lite2_on.nsbta \
 							$(GRAPHIC_BIN)/pl_lite3_on.nsbta \
@@ -78,6 +81,9 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g3dcvtr $(GRAPHIC_SOURCE)/pl_lite4.imd -o $(GRAPHIC_BIN)/pl_lite4.nsbmd 
 	g3dcvtr $(GRAPHIC_SOURCE)/pl_ele_01.ita -o $(GRAPHIC_BIN)/pl_ele_01.nsbta
 	g3dcvtr $(GRAPHIC_SOURCE)/pl_ele_00_00.ita -o $(GRAPHIC_BIN)/pl_ele_00_00.nsbta
+	g3dcvtr $(GRAPHIC_SOURCE)/pl_ele_00_on.ita -o $(GRAPHIC_BIN)/pl_ele_00_on.nsbta
+	g3dcvtr $(GRAPHIC_SOURCE)/pl_ele_01_on.ita -o $(GRAPHIC_BIN)/pl_ele_01_on.nsbta
+	g3dcvtr $(GRAPHIC_SOURCE)/pl_ele_01_off.ita -o $(GRAPHIC_BIN)/pl_ele_01_off.nsbta
 	g3dcvtr $(GRAPHIC_SOURCE)/pl_lite1_off.ita -o $(GRAPHIC_BIN)/pl_lite1_off.nsbta
 	g3dcvtr $(GRAPHIC_SOURCE)/pl_lite2_off.ita -o $(GRAPHIC_BIN)/pl_lite2_off.nsbta
 	g3dcvtr $(GRAPHIC_SOURCE)/pl_lite3_off.ita -o $(GRAPHIC_BIN)/pl_lite3_off.nsbta

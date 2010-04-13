@@ -46,7 +46,7 @@ typedef enum{
 //----------
 typedef enum{
   RES_LIFT_NSBMD,             // リフトのモデル
-  RES_LIFT_NSBTA,             // リフトのita
+  RES_LIFT_ON_NSBTA,          // リフトのita ( ON )
   RES_LIGHT_FIGHT_NSBMD,      // ライト(格闘)    モデル
   RES_LIGHT_FIGHT_OFF_NSBTA,  // ライト(格闘)    OFF
   RES_LIGHT_FIGHT_ON_NSBTA,   // ライト(格闘)    ON
@@ -63,37 +63,37 @@ typedef enum{
 } RES_INDEX;
 static const GFL_G3D_UTIL_RES res_table[RES_NUM] = 
 {
-  {ARCID, NARC_league_front_pl_ele_00_nsbmd,    GFL_G3D_UTIL_RESARC}, 
-  {ARCID, NARC_league_front_pl_ele_00_00_nsbta, GFL_G3D_UTIL_RESARC},
-  {ARCID, NARC_league_front_pl_lite1_nsbmd,     GFL_G3D_UTIL_RESARC},
-  {ARCID, NARC_league_front_pl_lite1_off_nsbta, GFL_G3D_UTIL_RESARC},
-  {ARCID, NARC_league_front_pl_lite1_on_nsbta,  GFL_G3D_UTIL_RESARC},
-  {ARCID, NARC_league_front_pl_lite2_nsbmd,     GFL_G3D_UTIL_RESARC},
-  {ARCID, NARC_league_front_pl_lite2_off_nsbta, GFL_G3D_UTIL_RESARC},
-  {ARCID, NARC_league_front_pl_lite2_on_nsbta,  GFL_G3D_UTIL_RESARC},
-  {ARCID, NARC_league_front_pl_lite3_nsbmd,     GFL_G3D_UTIL_RESARC},
-  {ARCID, NARC_league_front_pl_lite3_off_nsbta, GFL_G3D_UTIL_RESARC},
-  {ARCID, NARC_league_front_pl_lite3_on_nsbta,  GFL_G3D_UTIL_RESARC},
-  {ARCID, NARC_league_front_pl_lite4_nsbmd,     GFL_G3D_UTIL_RESARC}, 
-  {ARCID, NARC_league_front_pl_lite4_off_nsbta, GFL_G3D_UTIL_RESARC}, 
-  {ARCID, NARC_league_front_pl_lite4_on_nsbta,  GFL_G3D_UTIL_RESARC}, 
+  {ARCID, NARC_league_front_pl_ele_00_nsbmd,     GFL_G3D_UTIL_RESARC},  // リフトのモデル
+  {ARCID, NARC_league_front_pl_ele_00_on_nsbta,  GFL_G3D_UTIL_RESARC},  // リフトのita ( ON )
+  {ARCID, NARC_league_front_pl_lite1_nsbmd,      GFL_G3D_UTIL_RESARC},  // ライト(格闘)    モデル
+  {ARCID, NARC_league_front_pl_lite1_off_nsbta,  GFL_G3D_UTIL_RESARC},  // ライト(格闘)    OFF
+  {ARCID, NARC_league_front_pl_lite1_on_nsbta,   GFL_G3D_UTIL_RESARC},  // ライト(格闘)    ON
+  {ARCID, NARC_league_front_pl_lite2_nsbmd,      GFL_G3D_UTIL_RESARC},  // ライト(悪)      モデル
+  {ARCID, NARC_league_front_pl_lite2_off_nsbta,  GFL_G3D_UTIL_RESARC},  // ライト(悪)      OFF
+  {ARCID, NARC_league_front_pl_lite2_on_nsbta,   GFL_G3D_UTIL_RESARC},  // ライト(悪)      ON
+  {ARCID, NARC_league_front_pl_lite3_nsbmd,      GFL_G3D_UTIL_RESARC},  // ライト(ゴースト)モデル
+  {ARCID, NARC_league_front_pl_lite3_off_nsbta,  GFL_G3D_UTIL_RESARC},  // ライト(ゴースト)OFF
+  {ARCID, NARC_league_front_pl_lite3_on_nsbta,   GFL_G3D_UTIL_RESARC},  // ライト(ゴースト)ON
+  {ARCID, NARC_league_front_pl_lite4_nsbmd,      GFL_G3D_UTIL_RESARC},  // ライト(エスパー)モデル
+  {ARCID, NARC_league_front_pl_lite4_off_nsbta,  GFL_G3D_UTIL_RESARC},  // ライト(エスパー)OFF
+  {ARCID, NARC_league_front_pl_lite4_on_nsbta,   GFL_G3D_UTIL_RESARC},  // ライト(エスパー)ON
 }; 
 //------------------------
 // アニメーション(リフト)
 //------------------------
-typedef enum{
-  LIFT_ANM_TA,  // テクスチャ アニメーション
+typedef enum {
+  LIFT_ANM_ON_TA,  // テクスチャ アニメーション ( ON )
   LIFT_ANM_NUM
 } LIFT_ANM_INDEX;
 static const GFL_G3D_UTIL_ANM anm_table_lift[LIFT_ANM_NUM] = 
 {
-  {RES_LIFT_NSBTA, 0},
+  {RES_LIFT_ON_NSBTA,  0},  // テクスチャ アニメーション ( ON )
 }; 
 //------------------------
 // アニメーション(ライト)
 //------------------------
 // 格闘
-typedef enum{
+typedef enum {
   LIGHT_FIGHT_ANM_OFF,  // OFF
   LIGHT_FIGHT_ANM_ON,   // ON
   LIGHT_FIGHT_ANM_NUM
@@ -392,9 +392,8 @@ static void InitGimmick( LF01WORK* work, FIELDMAP_WORK* fieldmap )
     ghost  = EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_BIGFOUR_GHOSTWIN );
     esper  = EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_BIGFOUR_ESPWIN );
     // 各四天王クリアに応じたアニメを再生
-    if( fight && evil && ghost && esper )
-    {
-      FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF01_EXUNIT_GIMMICK, LF01_EXOBJ_LIFT, LIFT_ANM_TA, TRUE );
+    if( fight && evil && ghost && esper ) {
+      FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF01_EXUNIT_GIMMICK, LF01_EXOBJ_LIFT, LIFT_ANM_ON_TA, TRUE );
     }
   }
 

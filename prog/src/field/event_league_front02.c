@@ -110,15 +110,15 @@ static void SetPlayerOnLift( LIFTDOWN_EVENTWORK* work )
  * @brief リフトのitaアニメを開始する
  */
 //------------------------------------------------------------------------------------------
-static void StartLiftAnimation( LIFTDOWN_EVENTWORK* work )
+static void StartLiftOnAnime( LIFTDOWN_EVENTWORK* work )
 {
   FLD_EXP_OBJ_CNT_PTR exobj_cnt;
   EXP_OBJ_ANM_CNT_PTR exobj_anm;
 
-  exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
-  exobj_anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_TA );
+  exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap ); 
+  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_ON_TA, TRUE ); 
 
-  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_TA, TRUE ); 
+  exobj_anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_ON_TA );
   FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
 }
 
@@ -127,14 +127,65 @@ static void StartLiftAnimation( LIFTDOWN_EVENTWORK* work )
  * @brief リフトのitaアニメを停止する
  */
 //------------------------------------------------------------------------------------------
-static void StopLiftAnimation( LIFTDOWN_EVENTWORK* work )
+static void StopLiftOnAnime( LIFTDOWN_EVENTWORK* work )
 {
   FLD_EXP_OBJ_CNT_PTR exobj_cnt;
   EXP_OBJ_ANM_CNT_PTR exobj_anm;
 
   exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
-  exobj_anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_TA );
+  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_ON_TA, FALSE ); 
 
+  exobj_anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_ON_TA ); 
+  FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief リフトのitaアニメを開始する
+ */
+//------------------------------------------------------------------------------------------
+static void StartLiftOffAnime( LIFTDOWN_EVENTWORK* work )
+{
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+  EXP_OBJ_ANM_CNT_PTR exobj_anm;
+
+  exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap ); 
+  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_OFF_TA, TRUE ); 
+
+  exobj_anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_OFF_TA );
+  FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
+  FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, FALSE );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief リフトのitaアニメの終了をチェックする
+ */
+//------------------------------------------------------------------------------------------
+static BOOL CheckLiftOffAnimeEnd( LIFTDOWN_EVENTWORK* work )
+{
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+  EXP_OBJ_ANM_CNT_PTR exobj_anm;
+
+  exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap ); 
+  exobj_anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_OFF_TA );
+  return FLD_EXP_OBJ_ChkAnmEnd( exobj_anm );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief リフトのitaアニメを停止する
+ */
+//------------------------------------------------------------------------------------------
+static void StopLiftOffAnime( LIFTDOWN_EVENTWORK* work )
+{
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+  EXP_OBJ_ANM_CNT_PTR exobj_anm;
+
+  exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
+  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_OFF_TA, FALSE ); 
+
+  exobj_anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_OFF_TA ); 
   FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
 }
 
@@ -150,7 +201,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
   switch( *seq ) {
   case 0:
     // アニメ開始
-    StartLiftAnimation( work );
+    StartLiftOnAnime( work );
     { // アニメデータ読み込み
       HEAPID heap_id;
       heap_id = FIELDMAP_GetHeapID( work->fieldmap );
@@ -195,7 +246,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       if( anime_end ) { 
         PMSND_StopSE(); // エレベータ稼動音を停止
         PMSND_PlaySE( SEQ_SE_FLD_94 ); // エレベータ到着音
-        StopLiftAnimation( work ); // リフトのアニメーションを停止
+        StopLiftOnAnime( work ); // リフトのアニメーションを停止
         ICA_ANIME_Delete( work->liftAnime );
         (*seq)++;
       } 
@@ -217,11 +268,19 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       pos.y = height;
       FIELD_PLAYER_SetPos( player, &pos );
     }
+    // アニメ開始
+    StartLiftOffAnime( work );
     (*seq)++;
     break;
 
-  // 終了
   case 5:
+    if( CheckLiftOffAnimeEnd( work ) ) { 
+      StopLiftOffAnime( work );
+      (*seq)++; 
+    }
+    break;
+
+  case 6:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;

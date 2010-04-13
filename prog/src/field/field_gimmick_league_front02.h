@@ -20,7 +20,8 @@
 // アニメーション(リフト)
 //------------------------
 typedef enum{
-  LIFT_ANM_TA,  // テクスチャアニメーション
+  LIFT_ANM_ON_TA,  // テクスチャアニメーション ( ON )
+  LIFT_ANM_OFF_TA, // テクスチャアニメーション ( OFF )
   LIFT_ANM_NUM
 } LIFT_ANM_INDEX;
 //-------------

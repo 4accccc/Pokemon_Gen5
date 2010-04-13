@@ -10,13 +10,11 @@
 #include "gmk_tmp_wk.h"
 #include "field_gimmick_league_front02.h"
 #include "field_gimmick_def.h"  // for FLD_GIMMICK_C09P02
-#include "fld_exp_obj.h"  // for FLD_EXP_OBJ
+#include "fld_exp_obj.h"        // for FLD_EXP_OBJ
 
-#include "gamesystem/game_event.h"
 #include "gamesystem/gamesystem.h"
 #include "savedata/gimmickwork.h"  // for GIMMICKWORK
 #include "system/ica_anime.h"      // for ICA_ANIME
-#include "sound/pm_sndsys.h"       // for PMSND_xxxx
 #include "field/field_const.h"     // for FIELD_CONST_GRID_SIZE
 
 #include "arc/league_front.naix" // for NARC_xxxx
@@ -45,9 +43,10 @@ typedef enum{
 //----------
 // リソース
 //----------
-typedef enum{
+typedef enum {
   RES_LIFT_NSBMD,             // リフトのモデル
-  RES_LIFT_NSBTA,             // リフトのテクスチャアニメーション
+  RES_LIFT_ON_NSBTA,          // リフトのテクスチャアニメーション ( ON )
+  RES_LIFT_OFF_NSBTA,         // リフトのテクスチャアニメーション ( OFF )
 #ifdef LIGHT_DOWN
   RES_LIGHT_FIGHT_NSBMD,      // ライト(格闘)    モデル
   RES_LIGHT_FIGHT_ON_NSBTA,   // ライト(格闘)    ON
@@ -60,10 +59,11 @@ typedef enum{
 #endif
   RES_NUM
 } RES_INDEX;
-static const GFL_G3D_UTIL_RES res_table[RES_NUM] = 
+static const GFL_G3D_UTIL_RES res_table[ RES_NUM ] = 
 {
-  {ARCID, NARC_league_front_pl_ele_01_nsbmd,    GFL_G3D_UTIL_RESARC},
-  {ARCID, NARC_league_front_pl_ele_01_nsbta,    GFL_G3D_UTIL_RESARC},
+  {ARCID, NARC_league_front_pl_ele_01_nsbmd,     GFL_G3D_UTIL_RESARC}, 
+  {ARCID, NARC_league_front_pl_ele_01_on_nsbta,  GFL_G3D_UTIL_RESARC},
+  {ARCID, NARC_league_front_pl_ele_01_off_nsbta, GFL_G3D_UTIL_RESARC},
 #ifdef LIGHT_DOWN
   {ARCID, NARC_league_front_pl_lite1_nsbmd,     GFL_G3D_UTIL_RESARC},
   {ARCID, NARC_league_front_pl_lite1_on_nsbta,  GFL_G3D_UTIL_RESARC},
@@ -78,47 +78,48 @@ static const GFL_G3D_UTIL_RES res_table[RES_NUM] =
 //------------------------
 // アニメーション(リフト)
 //------------------------
-static const GFL_G3D_UTIL_ANM anm_table_lift[LIFT_ANM_NUM] = 
+static const GFL_G3D_UTIL_ANM anm_table_lift[ LIFT_ANM_NUM ] = 
 {
-  {RES_LIFT_NSBTA, 0},
+  {RES_LIFT_ON_NSBTA,  0}, 
+  {RES_LIFT_OFF_NSBTA, 0},
 }; 
 #ifdef LIGHT_DOWN
 //------------------------
 // アニメーション(ライト)
 //------------------------
 // 格闘
-typedef enum{
+typedef enum {
   LIGHT_FIGHT_ANM_ON,   // ON
   LIGHT_FIGHT_ANM_NUM
 } LIGHT_FIGHT_ANM_INDEX;
-static const GFL_G3D_UTIL_ANM anm_table_light_fight[LIGHT_FIGHT_ANM_NUM] = 
+static const GFL_G3D_UTIL_ANM anm_table_light_fight[ LIGHT_FIGHT_ANM_NUM ] = 
 {
   {RES_LIGHT_FIGHT_ON_NSBTA,  0},
 };
 // 悪
-typedef enum{
+typedef enum {
   LIGHT_EVIL_ANM_ON,   // ON
   LIGHT_EVIL_ANM_NUM
 } LIGHT_EVIL_ANM_INDEX;
-static const GFL_G3D_UTIL_ANM anm_table_light_evil[LIGHT_EVIL_ANM_NUM] = 
+static const GFL_G3D_UTIL_ANM anm_table_light_evil[ LIGHT_EVIL_ANM_NUM ] = 
 {
   {RES_LIGHT_EVIL_ON_NSBTA,  0},
 };
 // ゴースト
-typedef enum{
+typedef enum {
   LIGHT_GHOST_ANM_ON,   // ON
   LIGHT_GHOST_ANM_NUM
 } LIGHT_GHOST_ANM_INDEX;
-static const GFL_G3D_UTIL_ANM anm_table_light_ghost[LIGHT_GHOST_ANM_NUM] = 
+static const GFL_G3D_UTIL_ANM anm_table_light_ghost[ LIGHT_GHOST_ANM_NUM ] = 
 {
   {RES_LIGHT_GHOST_ON_NSBTA,  0},
 };
 // エスパー
-typedef enum{
+typedef enum {
   LIGHT_ESPER_ANM_ON,   // ON
   LIGHT_ESPER_ANM_NUM
 } LIGHT_ESPER_ANM_INDEX;
-static const GFL_G3D_UTIL_ANM anm_table_light_esper[LIGHT_ESPER_ANM_NUM] = 
+static const GFL_G3D_UTIL_ANM anm_table_light_esper[ LIGHT_ESPER_ANM_NUM ] = 
 {
   {RES_LIGHT_ESPER_ON_NSBTA,  0},
 };
@@ -126,7 +127,7 @@ static const GFL_G3D_UTIL_ANM anm_table_light_esper[LIGHT_ESPER_ANM_NUM] =
 //-------------
 // オブジェクト
 //-------------
-static const GFL_G3D_UTIL_OBJ obj_table[LF02_EXOBJ_NUM] = 
+static const GFL_G3D_UTIL_OBJ obj_table[ LF02_EXOBJ_NUM ] = 
 {
   {RES_LIFT_NSBMD,        0, RES_LIFT_NSBMD,        anm_table_lift,        LIFT_ANM_NUM},
 #ifdef LIGHT_DOWN
@@ -139,7 +140,7 @@ static const GFL_G3D_UTIL_OBJ obj_table[LF02_EXOBJ_NUM] =
 //----------
 // ユニット
 //----------
-static const GFL_G3D_UTIL_SETUP unit[LF02_EXUNIT_NUM] = 
+static const GFL_G3D_UTIL_SETUP unit[ LF02_EXUNIT_NUM ] = 
 { 
   {res_table, RES_NUM, obj_table, LF02_EXOBJ_NUM},
 };
@@ -231,12 +232,9 @@ void LEAGUE_FRONT_02_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   LF02WORK* work;
   HEAPID heap_id;
 
-  // DEBUG:
-  OBATA_Printf( "GIMMICK-LF02: setup\n" ); 
-
   // ギミック管理ワーク作成
-  heap_id      = FIELDMAP_GetHeapID( fieldmap );
-  work         = (LF02WORK*)GMK_TMP_WK_AllocWork( fieldmap, GIMMICK_WORK_ASSIGN_ID,  heap_id, sizeof(LF02WORK) );
+  heap_id = FIELDMAP_GetHeapID( fieldmap );
+  work    = (LF02WORK*)GMK_TMP_WK_AllocWork( fieldmap, GIMMICK_WORK_ASSIGN_ID,  heap_id, sizeof(LF02WORK) );
   work->heapID = heap_id; 
 
   // ギミック初期化
@@ -261,9 +259,6 @@ void LEAGUE_FRONT_02_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 
   // ギミック管理ワーク破棄
   GMK_TMP_WK_FreeWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
-
-  // DEBUG:
-  OBATA_Printf( "GIMMICK-LF02: end\n" );
 }
 
 //------------------------------------------------------------------------------------------
@@ -306,9 +301,6 @@ static void Save( FIELDMAP_WORK* fieldmap, GIMMICKWORK_DATA_INDEX idx, u32 data 
 
   // ギミックワークに保存
   save_work[idx] = data;
-
-  // DEBUG:
-  OBATA_Printf( "GIMMICK-FL02: save[%d] = %d\n", idx, data );
 }
 
 //------------------------------------------------------------------------------------------
@@ -332,9 +324,6 @@ static u32 Load( FIELDMAP_WORK* fieldmap, GIMMICKWORK_DATA_INDEX idx )
   // ギミックワークから取得
   val = save_work[idx];
 
-  // DEBUG:
-  OBATA_Printf( "GIMMICK-FL02: load[%d] = %d\n", idx, val );
-
   return val;
 }
 
@@ -355,7 +344,7 @@ static void InitGimmick( LF02WORK* work, FIELDMAP_WORK* fieldmap )
   FLD_EXP_OBJ_AddUnit( exobj_cnt, &unit[LF02_EXUNIT_GIMMICK], LF02_EXUNIT_GIMMICK );
 
   // リフトのアニメーション初期化
-  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_TA, TRUE );
+  //FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_TA, TRUE );
 
   // 各オブジェの配置
   {
@@ -367,9 +356,6 @@ static void InitGimmick( LF02WORK* work, FIELDMAP_WORK* fieldmap )
       VEC_Set( &objstatus->trans, obj_pos[obj_idx].x, obj_pos[obj_idx].y, obj_pos[obj_idx].z );
     }
   }
-
-  // DEBUG:
-  OBATA_Printf( "GIMMICK-LF02: init gimmick\n" );
 }
 
 //------------------------------------------------------------------------------------------
