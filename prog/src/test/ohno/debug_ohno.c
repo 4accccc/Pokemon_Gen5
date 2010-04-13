@@ -698,6 +698,7 @@ const GFL_PROC_DATA NetFourChildProcData = {
 //--------------------------------------------------------------------
 //ここから不思議な贈り物
 //--------------------------------------------------------------------
+#include "item/itemsym.h"
 
 //不思議な贈り物のデータをセット
 static void _fushigiDataSet(DEBUG_OHNO_CONTROL * pDOC)
@@ -734,14 +735,25 @@ static void _fushigiDataSet(DEBUG_OHNO_CONTROL * pDOC)
     pDOC->aInit.data[i].version   = sc_version_tbl[ i ];
     pDG = (DOWNLOAD_GIFT_DATA* )pDOC->aInit.data[i].pData;
 
-    DEBUG_MYSTERY_SetGiftPokeData(&pDG->data);
-    DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 12, FALSE );
+    DEBUG_MYSTERY_SetGiftItemData(&pDG->data, ITEM_RIBATHITIKETTO );
+    DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, MYSTERY_DATA_EVENT_LIBERTY, TRUE );
     pDG->LangCode = pDOC->aInit.data[i].LangCode;
     pDG->version  = pDOC->aInit.data[i].version;
-    pDG->event_text[0] = L'て';
-    pDG->event_text[1] = L'す';
-    pDG->event_text[2] = L'と';
-    pDG->event_text[3] = 0xffff;
+    pDG->event_text[0] = L'リ';
+    pDG->event_text[1] = L'バ';
+    pDG->event_text[2] = L'テ';
+    pDG->event_text[3] = L'ィ';
+    pDG->event_text[4] = L'チ';
+    pDG->event_text[5] = L'ケ';
+    pDG->event_text[6] = L'ッ';
+    pDG->event_text[7] = L'ト';
+    pDG->event_text[8] = L'が';
+    pDG->event_text[9] = L'も';
+    pDG->event_text[10] = L'ら';
+    pDG->event_text[11] = L'え';
+    pDG->event_text[12] = L'る';
+    pDG->event_text[13] = L'よ';
+    pDG->event_text[14] = 0xffff;
 
     {
       int k,j;
