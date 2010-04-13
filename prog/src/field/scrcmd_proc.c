@@ -548,7 +548,7 @@ VMCMD_RESULT EvCmdCallZukanAward( VMHANDLE *core, void *wk )
   case SCR_ZUKAN_AWARD_CHIHOU:
     {
       CHIHOU_ZUKAN_AWARD_PARAM* param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(CHIHOU_ZUKAN_AWARD_PARAM) );
-      param->mystatus = mystatus;
+      param->gamedata = gdata;
       param->b_fix    = patern;
       EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(chihou_zukan_award), &CHIHOU_ZUKAN_AWARD_ProcData, param, NULL, NULL );
     }
@@ -556,7 +556,7 @@ VMCMD_RESULT EvCmdCallZukanAward( VMHANDLE *core, void *wk )
   case SCR_ZUKAN_AWARD_ZENKOKU:
     {
       ZENKOKU_ZUKAN_AWARD_PARAM* param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(ZENKOKU_ZUKAN_AWARD_PARAM) );
-      param->mystatus = mystatus;
+      param->gamedata = gdata;
       param->b_fix    = patern;
       EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(zenkoku_zukan_award), &ZENKOKU_ZUKAN_AWARD_ProcData, param, NULL, NULL );
     }

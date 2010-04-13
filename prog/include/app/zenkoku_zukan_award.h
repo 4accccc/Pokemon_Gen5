@@ -15,7 +15,7 @@
 // インクルード
 #include <gflib.h>
 
-#include "savedata/mystatus.h"
+#include "gamesystem/gamedata_def.h"
 
 // オーバーレイ
 FS_EXTERN_OVERLAY(zenkoku_zukan_award);
@@ -46,7 +46,7 @@ extern const GFL_PROC_DATA    ZENKOKU_ZUKAN_AWARD_ProcData;
 //=====================================
 typedef struct
 {
-  const MYSTATUS*      mystatus;      ///< [in] 自分状態データ(名前と性別を使用)
+  const GAMEDATA*      gamedata;      ///< [in] 自分状態データMYSTATUSを得たりするために必要(名前と性別を使用)
   BOOL                 b_fix;         ///< [in] 飾ってあるのを見るときTRUE
 }
 ZENKOKU_ZUKAN_AWARD_PARAM;
@@ -62,7 +62,7 @@ ZENKOKU_ZUKAN_AWARD_PARAM;
 //=====================================
 extern ZENKOKU_ZUKAN_AWARD_PARAM*  ZENKOKU_ZUKAN_AWARD_AllocParam(
                                       HEAPID               heap_id,
-                                      const MYSTATUS*      mystatus,
+                                      const GAMEDATA*      gamedata,
                                       BOOL                 b_fix
                                   );
 
@@ -77,7 +77,7 @@ extern void  ZENKOKU_ZUKAN_AWARD_FreeParam(
 //=====================================
 extern void  ZENKOKU_ZUKAN_AWARD_InitParam(
                   ZENKOKU_ZUKAN_AWARD_PARAM*      param,
-                  const MYSTATUS*                 mystatus,
+                  const GAMEDATA*                 gamedata,
                   BOOL                            b_fix
              );
 

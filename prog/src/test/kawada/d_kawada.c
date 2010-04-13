@@ -839,8 +839,17 @@ static void ChihouZukanAwardInit( KAWADA_MAIN_WORK* wk )
   CONFIG_SetMojiMode( cf, MOJIMODE_HIRAGANA );
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) CONFIG_SetMojiMode( cf, MOJIMODE_KANJI );
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) b_fix = FALSE;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+  {
+    u16 min_name[2] = L"1";
+    min_name[1] = 0xffff;  // gflib/src/string/strbuf.c  // EOMCode
+    for( i=0; i<2; i++ )
+    {
+      name[i] = min_name[i];
+    }
+  }
 
-  wk->mystatus = GFL_HEAP_AllocMemory( wk->heapID, MYSTATUS_SAVE_SIZE );
+  wk->mystatus = GAMEDATA_GetMyStatus( wk->gamedata );
   
   for( i=0; i<6; i++ )
   {
@@ -848,14 +857,13 @@ static void ChihouZukanAwardInit( KAWADA_MAIN_WORK* wk )
   }
   wk->mystatus->sex = PM_MALE;
 
-  wk->chihou_zukan_award_param = CHIHOU_ZUKAN_AWARD_AllocParam( wk->heapID, wk->mystatus, b_fix );
+  wk->chihou_zukan_award_param = CHIHOU_ZUKAN_AWARD_AllocParam( wk->heapID, wk->gamedata, b_fix );
   
   GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &CHIHOU_ZUKAN_AWARD_ProcData, wk->chihou_zukan_award_param );
 }
 static void ChihouZukanAwardExit( KAWADA_MAIN_WORK* wk )
 {
   CHIHOU_ZUKAN_AWARD_FreeParam( wk->chihou_zukan_award_param );
-  GFL_HEAP_FreeMemory( wk->mystatus );
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(chihou_zukan_award));
 }
 
@@ -875,8 +883,17 @@ static void ZenkokuZukanAwardInit( KAWADA_MAIN_WORK* wk )
   CONFIG_SetMojiMode( cf, MOJIMODE_HIRAGANA );
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) CONFIG_SetMojiMode( cf, MOJIMODE_KANJI );
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) b_fix = FALSE;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
+  {
+    u16 min_name[2] = L"1";
+    min_name[1] = 0xffff;  // gflib/src/string/strbuf.c  // EOMCode
+    for( i=0; i<2; i++ )
+    {
+      name[i] = min_name[i];
+    }
+  }
 
-  wk->mystatus = GFL_HEAP_AllocMemory( wk->heapID, MYSTATUS_SAVE_SIZE );
+  wk->mystatus = GAMEDATA_GetMyStatus( wk->gamedata );
   
   for( i=0; i<6; i++ )
   {
@@ -884,14 +901,13 @@ static void ZenkokuZukanAwardInit( KAWADA_MAIN_WORK* wk )
   }
   wk->mystatus->sex = PM_FEMALE;
 
-  wk->zenkoku_zukan_award_param = ZENKOKU_ZUKAN_AWARD_AllocParam( wk->heapID, wk->mystatus, b_fix );
+  wk->zenkoku_zukan_award_param = ZENKOKU_ZUKAN_AWARD_AllocParam( wk->heapID, wk->gamedata, b_fix );
   
   GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ZENKOKU_ZUKAN_AWARD_ProcData, wk->zenkoku_zukan_award_param );
 }
 static void ZenkokuZukanAwardExit( KAWADA_MAIN_WORK* wk )
 {
   ZENKOKU_ZUKAN_AWARD_FreeParam( wk->zenkoku_zukan_award_param );
-  GFL_HEAP_FreeMemory( wk->mystatus );
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(zenkoku_zukan_award));
 }
 

@@ -19,6 +19,9 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+#include "gamesystem/gamedata_def.h"
+#include "gamesystem/game_data.h"
+#include "savedata/mystatus.h"
 #include "print/gf_font.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
@@ -260,7 +263,7 @@ const GFL_PROC_DATA    CHIHOU_ZUKAN_AWARD_ProcData =
  *  @brief           パラメータ生成
  *
  *  @param[in]       heap_id       ヒープID
- *  @param[in]       mystatus      自分状態データ(名前と性別を使用)
+ *  @param[in]       gamedata      自分状態データMYSTATUSを得たりするために必要(名前と性別を使用)
  *  @param[in]       b_fix         飾ってあるのを見るときTRUE
  *
  *  @retval          CHIHOU_ZUKAN_AWARD_PARAM
@@ -268,14 +271,14 @@ const GFL_PROC_DATA    CHIHOU_ZUKAN_AWARD_ProcData =
 //------------------------------------------------------------------
 CHIHOU_ZUKAN_AWARD_PARAM*  CHIHOU_ZUKAN_AWARD_AllocParam(
                                 HEAPID               heap_id,
-                                const MYSTATUS*      mystatus,
+                                const GAMEDATA*      gamedata,
                                 BOOL                 b_fix
                            )
 {
   CHIHOU_ZUKAN_AWARD_PARAM* param = GFL_HEAP_AllocMemory( heap_id, sizeof( CHIHOU_ZUKAN_AWARD_PARAM ) );
   CHIHOU_ZUKAN_AWARD_InitParam(
       param,
-      mystatus,
+      gamedata,
       b_fix );
   return param;
 }
@@ -300,7 +303,7 @@ void            CHIHOU_ZUKAN_AWARD_FreeParam(
  *  @brief           パラメータを設定する
  *
  *  @param[in,out]   param         CHIHOU_ZUKAN_AWARD_PARAM
- *  @param[in]       mystatus      自分状態データ(名前と性別を使用)
+ *  @param[in]       gamedata      自分状態データMYSTATUSを得たりするために必要(名前と性別を使用)
  *  @param[in]       b_fix         飾ってあるのを見るときTRUE
  *
  *  @retval          
@@ -308,11 +311,11 @@ void            CHIHOU_ZUKAN_AWARD_FreeParam(
 //------------------------------------------------------------------
 void  CHIHOU_ZUKAN_AWARD_InitParam(
                   CHIHOU_ZUKAN_AWARD_PARAM*      param,
-                  const MYSTATUS*                mystatus,
+                  const GAMEDATA*                gamedata,
                   BOOL                           b_fix
                          )
 {
-  param->mystatus          = mystatus;
+  param->gamedata          = gamedata;
   param->b_fix             = b_fix;
 }
 
@@ -360,8 +363,11 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcInit( GFL_PROC* proc, int* seq, vo
   Chihou_Zukan_Award_ObjInit( work );
 
   // サブBG
-  APP_NOGEAR_SUBSCREEN_Init();
-  APP_NOGEAR_SUBSCREEN_Trans( work->heap_id, work->param->mystatus->sex );  // PM_MALE or PM_FEMALE  // include/pm_version.h
+  {
+    const MYSTATUS*  mystatus  = GAMEDATA_GetMyStatus( (GAMEDATA*)(work->param->gamedata) );  // ちょっとイヤだがconstはずし
+    APP_NOGEAR_SUBSCREEN_Init();
+    APP_NOGEAR_SUBSCREEN_Trans( work->heap_id, mystatus->sex );  // PM_MALE or PM_FEMALE  // include/pm_version.h
+  }
 
   // スクロール
   Chihou_Zukan_Award_ScrollInit( work );
@@ -670,6 +676,7 @@ static void Chihou_Zukan_Award_BgExit( CHIHOU_ZUKAN_AWARD_WORK* work )
 static void Chihou_Zukan_Award_TextInit( CHIHOU_ZUKAN_AWARD_WORK* work )
 {
   u8 i;
+  const MYSTATUS*  mystatus  = GAMEDATA_GetMyStatus( (GAMEDATA*)(work->param->gamedata) );  // ちょっとイヤだがconstはずし
 
   // NULL、ゼロ初期化
   work->msgdata = NULL;
@@ -730,7 +737,7 @@ static void Chihou_Zukan_Award_TextInit( CHIHOU_ZUKAN_AWARD_WORK* work )
     WORDSET* wordset       = WORDSET_Create( work->heap_id );
     STRBUF*  src_strbuf    = GFL_MSG_CreateString( work->msgdata, msg_award_01 );
     STRBUF*  strbuf        = GFL_STR_CreateBuffer( TEXT_NAME_LEN_MAX, work->heap_id );
-    WORDSET_RegisterPlayerName( wordset, 0, work->param->mystatus );
+    WORDSET_RegisterPlayerName( wordset, 0, mystatus );
     WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
     PRINTSYS_PrintQueColor(
         work->print_que,

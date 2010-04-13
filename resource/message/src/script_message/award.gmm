@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kawada_koji" host="W00215" date="2010-03-29T19:28:35"/>
+	<create user="kawada_koji" host="W00215" date="2010-04-14T05:59:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,9 +327,9 @@
 		</language>
 	</columns>
 
-	<dialog left="28" top="138" right="733" bottom="766" maximized="no" rayout="Vertical2">
+	<dialog left="93" top="592" right="798" bottom="1024" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<tag-palette left="807" top="227" right="1280" bottom="625" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -356,14 +356,15 @@
 
 
 	<row id="msg_award_01">
-		<comment>ヘッダ（左寄せ）
-・0＝主人公名前</comment>
+		<comment>ヘッダ（センタリング）
+・0＝主人公名前
+・イッシュ図鑑（地方図鑑）</comment>
 		<language name="JPN" width="256">[BD:02:Ｘセンタリング]プレイヤー　[1:00:トレーナー名:0]さま</language>
 		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]プレイヤー　[1:00:トレーナー名:0]さま</language>
 	</row>
 
 	<row id="msg_award_02">
-		<comment>本文
+		<comment>本文（センタリング）
 ・イッシュ図鑑（地方図鑑）</comment>
 		<language name="JPN" width="256">[BD:02:Ｘセンタリング]シンオウちほうの　ポケモン
 [BD:02:Ｘセンタリング]すべてに　であった
@@ -376,24 +377,56 @@
 	</row>
 
 	<row id="msg_award_03">
-		<comment>本文
+		<comment>本文（左寄せ）
 ・全国図鑑</comment>
-		<language name="JPN" width="256">[BD:02:Ｘセンタリング]ぜんこく　ポケモンずかんを
-[BD:02:Ｘセンタリング]みごと　かんせい　させた
-[BD:02:Ｘセンタリング]いだいなこうせきを　たたえ
-[BD:02:Ｘセンタリング]ここに　しょうめい　します</language>
-		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]全国ポケモン図鑑を
-[BD:02:Ｘセンタリング]みごと　完成させた
-[BD:02:Ｘセンタリング]偉大な功績を　称え
-[BD:02:Ｘセンタリング]ここに　証明します</language>
+		<language name="JPN" width="256">ぜんこく　ポケモンずかんを
+みごと　かんせい　させた
+いだいなこうせきを　たたえ
+ここに　しょうめい　します</language>
+		<language name="JPN_KANJI" width="256">全国ポケモン図鑑を
+みごと　完成させた
+偉大な功績を　称え
+ここに　証明します</language>
 	</row>
 
 	<row id="msg_award_04">
-		<comment>フッタ（右寄せ）</comment>
+		<comment>フッタ（センタリング）
+・イッシュ図鑑（地方図鑑）</comment>
 		<language name="JPN" width="256">[BD:02:Ｘセンタリング]ゲームフリーク
 [BD:02:Ｘセンタリング]スタッフいちどう</language>
 		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]ゲームフリーク
 [BD:02:Ｘセンタリング]スタッフ一同</language>
+	</row>
+
+	<row id="msg_award_05">
+		<comment>ヘッダ（左寄せ）
+・0＝主人公名前
+・全国図鑑</comment>
+		<language name="JPN" width="256">プレイヤー　[1:00:トレーナー名:0]さま</language>
+		<language name="JPN_KANJI" width="256">プレイヤー　[1:00:トレーナー名:0]さま</language>
+	</row>
+
+	<row id="msg_award_06">
+		<comment>フッタ（右寄せ）
+・全国図鑑</comment>
+		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:0]ゲームフリーク
+[BD:03:Ｘ右寄せ:0]スタッフいちどう</language>
+		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:0]ゲームフリーク
+[BD:03:Ｘ右寄せ:0]スタッフ一同</language>
+	</row>
+
+	<row id="msg_award_07">
+		<comment>本文（左寄せ）
+・全国図鑑
+・漢字に半角スペースを入れた</comment>
+		<language name="JPN" width="256">ぜんこく　ポケモンずかんを
+みごと　かんせい　させた
+いだいなこうせきを　たたえ
+ここに　しょうめい　します</language>
+		<language name="JPN_KANJI" width="256">全 国 ポ ケ モ ン 図 鑑 を
+み ご と 　 完 成 さ せ た
+偉 大 な 功 績 を 　 称 え
+こ こ に 　 証 明 し ま す</language>
 	</row>
 
 	<flowchart-group-list>

@@ -19,6 +19,9 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 
+#include "gamesystem/gamedata_def.h"
+#include "gamesystem/game_data.h"
+#include "savedata/mystatus.h"
 #include "print/gf_font.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
@@ -115,14 +118,24 @@ enum
 #define TEXT_COLOR_VALUE_L   (0x1D29)
 #define TEXT_COLOR_VALUE_S   (0x3210)
 
-static const u8 bmpwin_setup[TEXT_MAX][9] =
+static const u8 bmpwin_setup[TEXT_MAX][9] =  // MOJIMODE_HIRAGANA
 {
   // frmnum           posx  posy  sizx  sizy  palnum                dir                    x  y (x,yは無視してセンタリングすることもある)
   {  BG_FRAME_M_TEXT,    0,    0,    1,    1, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
   {  BG_FRAME_M_TEXT,    0,   24,    1,    1, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    1,    4,   30,    3, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    1,    8,   30,    9, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    1,   17,   30,    5, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    7,    4,   20,    3, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },  // センタリングなら 6,    4,   20,    3,
+  {  BG_FRAME_M_TEXT,    7,    8,   20,    9, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },  // センタリングなら 6,    8,   20,    9,
+  {  BG_FRAME_M_TEXT,    6,   17,   20,    5, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
+};
+
+static const u8 bmpwin_setup_kanji[TEXT_MAX][4] =  // MOJIMODE_KANJI
+{
+  // posx  posy   x  y (x,yは無視してセンタリングすることもある)
+  {     0,    0,  0, 0 },
+  {     0,   24,  0, 0 },
+  {     7,    4,  0, 0 },  // センタリングなら{     6,    4,  0, 0 },
+  {     6,    8,  0, 0 },
+  {     6,   17,  0, 0 },
 };
 
 // フェード
@@ -260,7 +273,7 @@ const GFL_PROC_DATA    ZENKOKU_ZUKAN_AWARD_ProcData =
  *  @brief           パラメータ生成
  *
  *  @param[in]       heap_id       ヒープID
- *  @param[in]       mystatus      自分状態データ(名前と性別を使用)
+ *  @param[in]       gamedata      自分状態データMYSTATUSを得たりするために必要(名前と性別を使用)
  *  @param[in]       b_fix         飾ってあるのを見るときTRUE
  *
  *  @retval          ZENKOKU_ZUKAN_AWARD_PARAM
@@ -268,14 +281,14 @@ const GFL_PROC_DATA    ZENKOKU_ZUKAN_AWARD_ProcData =
 //------------------------------------------------------------------
 ZENKOKU_ZUKAN_AWARD_PARAM*  ZENKOKU_ZUKAN_AWARD_AllocParam(
                                 HEAPID               heap_id,
-                                const MYSTATUS*      mystatus,
+                                const GAMEDATA*      gamedata,
                                 BOOL                 b_fix
                            )
 {
   ZENKOKU_ZUKAN_AWARD_PARAM* param = GFL_HEAP_AllocMemory( heap_id, sizeof( ZENKOKU_ZUKAN_AWARD_PARAM ) );
   ZENKOKU_ZUKAN_AWARD_InitParam(
       param,
-      mystatus,
+      gamedata,
       b_fix );
   return param;
 }
@@ -300,7 +313,7 @@ void            ZENKOKU_ZUKAN_AWARD_FreeParam(
  *  @brief           パラメータを設定する
  *
  *  @param[in,out]   param         ZENKOKU_ZUKAN_AWARD_PARAM
- *  @param[in]       mystatus      自分状態データ(名前と性別を使用)
+ *  @param[in]       gamedata      自分状態データMYSTATUSを得たりするために必要(名前と性別を使用)
  *  @param[in]       b_fix         飾ってあるのを見るときTRUE
  *
  *  @retval          
@@ -308,11 +321,11 @@ void            ZENKOKU_ZUKAN_AWARD_FreeParam(
 //------------------------------------------------------------------
 void  ZENKOKU_ZUKAN_AWARD_InitParam(
                   ZENKOKU_ZUKAN_AWARD_PARAM*      param,
-                  const MYSTATUS*                 mystatus,
+                  const GAMEDATA*                 gamedata,
                   BOOL                            b_fix
                          )
 {
-  param->mystatus          = mystatus;
+  param->gamedata          = gamedata;
   param->b_fix             = b_fix;
 }
 
@@ -360,8 +373,11 @@ static GFL_PROC_RESULT Zenkoku_Zukan_Award_ProcInit( GFL_PROC* proc, int* seq, v
   Zenkoku_Zukan_Award_ObjInit( work );
 
   // サブBG
-  APP_NOGEAR_SUBSCREEN_Init();
-  APP_NOGEAR_SUBSCREEN_Trans( work->heap_id, work->param->mystatus->sex );  // PM_MALE or PM_FEMALE  // include/pm_version.h
+  {
+    const MYSTATUS*  mystatus  = GAMEDATA_GetMyStatus( (GAMEDATA*)(work->param->gamedata) );  // ちょっとイヤだがconstはずし
+    APP_NOGEAR_SUBSCREEN_Init();
+    APP_NOGEAR_SUBSCREEN_Trans( work->heap_id, mystatus->sex );  // PM_MALE or PM_FEMALE  // include/pm_version.h
+  }
 
   // スクロール
   Zenkoku_Zukan_Award_ScrollInit( work );
@@ -670,6 +686,10 @@ static void Zenkoku_Zukan_Award_BgExit( ZENKOKU_ZUKAN_AWARD_WORK* work )
 static void Zenkoku_Zukan_Award_TextInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
 {
   u8 i;
+  const MYSTATUS*     mystatus  = GAMEDATA_GetMyStatus( (GAMEDATA*)(work->param->gamedata) );  // ちょっとイヤだがconstはずし
+  SAVE_CONTROL_WORK*  sv        = GAMEDATA_GetSaveControlWork( (GAMEDATA*)(work->param->gamedata) );  // ちょっとイヤだがconstはずし
+  CONFIG*             cfg       = SaveData_GetConfig( sv );
+  MOJIMODE            mojimode  = CONFIG_GetMojiMode( cfg );
 
   // NULL、ゼロ初期化
   work->msgdata = NULL;
@@ -724,18 +744,42 @@ static void Zenkoku_Zukan_Award_TextInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
     GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[i] );
   }
 
+  // MOJIMODE_KANJI
+  if( mojimode == MOJIMODE_KANJI )
+  {
+    for( i=0; i<TEXT_MAX; i++ )
+    {
+      GFL_BMPWIN_SetPosX( work->text_bmpwin[i], bmpwin_setup_kanji[i][0] );
+      GFL_BMPWIN_SetPosY( work->text_bmpwin[i], bmpwin_setup_kanji[i][1] );
+    }
+  }
+
   // テキスト
   // プレイヤー名前さま
   {
     WORDSET* wordset       = WORDSET_Create( work->heap_id );
-    STRBUF*  src_strbuf    = GFL_MSG_CreateString( work->msgdata, msg_award_01 );
+    STRBUF*  src_strbuf    = GFL_MSG_CreateString( work->msgdata, msg_award_05 );
     STRBUF*  strbuf        = GFL_STR_CreateBuffer( TEXT_NAME_LEN_MAX, work->heap_id );
-    WORDSET_RegisterPlayerName( wordset, 0, work->param->mystatus );
+
+    u16 str_width;
+    u16 bmp_width;
+    s16 str_x     = ( mojimode == MOJIMODE_KANJI )?(bmpwin_setup_kanji[TEXT_NAME][2]):(bmpwin_setup[TEXT_NAME][7]);
+    s16 str_y     = ( mojimode == MOJIMODE_KANJI )?(bmpwin_setup_kanji[TEXT_NAME][3]):(bmpwin_setup[TEXT_NAME][8]);
+
+    WORDSET_RegisterPlayerName( wordset, 0, mystatus );
     WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
+
+    str_width = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
+    bmp_width = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_NAME]) );
+    if( bmp_width >= str_width )
+    {
+      //str_x = (s16)( ( bmp_width - str_width ) / 2 );  // この一塊をセンタリング  // 左寄せなのでコメントアウト
+    }
+
     PRINTSYS_PrintQueColor(
         work->print_que,
         GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_NAME]),
-        0, bmpwin_setup[TEXT_NAME][8],  // gmmでセンタリング指定しているのでxは0でいい
+        str_x, str_y,
         strbuf,
         work->font,
         PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
@@ -746,11 +790,35 @@ static void Zenkoku_Zukan_Award_TextInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
 
   // ここに証明します
   {
-    STRBUF*  strbuf       = GFL_MSG_CreateString( work->msgdata, msg_award_03 );
+#ifdef DEBUG_TEXT_MOVE
+    STRBUF*  strbuf       = GFL_MSG_CreateString( work->msgdata, ( GFL_UI_KEY_GetCont() & ( PAD_BUTTON_Y ) ) ? ( msg_award_03 ) : ( msg_award_07 ) );
+#else
+    STRBUF*  strbuf       = GFL_MSG_CreateString( work->msgdata, msg_award_07 );
+#endif
+
+    u16 str_width;
+    u16 bmp_width;
+    s16 str_x     = ( mojimode == MOJIMODE_KANJI )?(bmpwin_setup_kanji[TEXT_MAIN][2]):(bmpwin_setup[TEXT_MAIN][7]);
+    s16 str_y     = ( mojimode == MOJIMODE_KANJI )?(bmpwin_setup_kanji[TEXT_MAIN][3]):(bmpwin_setup[TEXT_MAIN][8]);
+
+    str_width = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
+    bmp_width = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_MAIN]) );
+    if( bmp_width >= str_width )
+    {
+      if( mojimode == MOJIMODE_KANJI )
+      {
+        str_x = (s16)( ( bmp_width - str_width ) / 2 );  // この一塊をセンタリング
+      }
+      else
+      {
+        //str_x = (s16)( ( bmp_width - str_width ) / 2 );  // この一塊をセンタリング  // 左寄せなのでコメントアウト
+      }
+    }
+    
     PRINTSYS_PrintQueColor(
         work->print_que,
         GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_MAIN]),
-        0, bmpwin_setup[TEXT_MAIN][8],  // gmmでセンタリング指定しているのでxは0でいい
+        str_x, str_y,
         strbuf,
         work->font,
         PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
@@ -759,11 +827,24 @@ static void Zenkoku_Zukan_Award_TextInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
 
   // ゲームフリークスタッフ一同
   {
-    STRBUF*  strbuf       = GFL_MSG_CreateString( work->msgdata, msg_award_04 );
+    STRBUF*  strbuf       = GFL_MSG_CreateString( work->msgdata, msg_award_06 );
+
+    u16 str_width;
+    u16 bmp_width;
+    s16 str_x     = ( mojimode == MOJIMODE_KANJI )?(bmpwin_setup_kanji[TEXT_STAFF][2]):(bmpwin_setup[TEXT_STAFF][7]);
+    s16 str_y     = ( mojimode == MOJIMODE_KANJI )?(bmpwin_setup_kanji[TEXT_STAFF][3]):(bmpwin_setup[TEXT_STAFF][8]);
+
+    str_width = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
+    bmp_width = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_STAFF]) );
+    if( bmp_width >= str_width )
+    {
+      //str_x = (s16)( bmp_width - str_width );  // この一塊を右寄せ  // gmmで右寄せ指定しているのでコメントアウト
+    }
+
     PRINTSYS_PrintQueColor(
         work->print_que,
         GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_STAFF]),
-        0, bmpwin_setup[TEXT_STAFF][8],  // gmmでセンタリング指定しているのでxは0でいい
+        str_x, str_y,
         strbuf,
         work->font,
         PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
