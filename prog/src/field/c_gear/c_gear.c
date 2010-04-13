@@ -763,6 +763,7 @@ static BOOL _gearIsEndStartUpObjAnime(const C_GEAR_WORK* cpWork);
 
 // パネルアニメーション処理
 static void _PanelPaletteAnimeInit( C_GEAR_WORK* pWork );
+static void _PanelPaletteAnimeInitSleep( C_GEAR_WORK* pWork );
 static void _PaletteSetColType( C_GEAR_WORK* pWork, int panel,int type );
 static void _PaletteMake(C_GEAR_WORK* pWork,const u16* pltt,int type);
 static void _PanelPaletteChange(C_GEAR_WORK* pWork);
@@ -1127,7 +1128,31 @@ static void _PanelPaletteAnimeInit( C_GEAR_WORK* pWork )
   u32 pltt_beacon;
 
   bit = _PanelPaletteColorSetUp( pWork );
-  pWork->plt_anime.last_bit = 0;
+  pWork->plt_anime.last_bit = bit;  // 光らないようにする。
+  if( _PanelPaletteIsBeaconChange( GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys), pWork->plt_anime.last_bit, bit, &pltt_beacon ) ){
+    
+    pWork->plt_anime.plt_beacon = pltt_beacon;
+    pWork->plt_anime.plt_anmtype = _CGEAR_NET_CHANGEPAL_ANM_TYPE_HIGH;
+  }else{
+    pWork->plt_anime.plt_beacon = pWork->beacon_bit;
+    pWork->plt_anime.plt_anmtype = _CGEAR_NET_CHANGEPAL_ANM_TYPE_NORMAL;
+  }
+
+  pWork->plt_anime.last_bit = bit;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パネルのパレットアニメ処理　初期化  スリープ復帰用
+ */
+//-----------------------------------------------------------------------------
+static void _PanelPaletteAnimeInitSleep( C_GEAR_WORK* pWork )
+{
+  u32 bit; 
+  u32 pltt_beacon;
+
+  bit = _PanelPaletteColorSetUp( pWork );
+  pWork->plt_anime.last_bit = 0;  // 光るようにする。
   if( _PanelPaletteIsBeaconChange( GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys), pWork->plt_anime.last_bit, bit, &pltt_beacon ) ){
     
     pWork->plt_anime.plt_beacon = pltt_beacon;
@@ -1166,9 +1191,9 @@ static u32 _PanelPaletteColorSetUp( C_GEAR_WORK* pWork )
     bit = WIH_DWC_GetAllBeaconTypeBit( GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(pWork->pGameSys)) );
 
     
-    if(bit & GAME_COMM_SBIT_IRC_ALL){
+    /*if(bit & GAME_COMM_SBIT_IRC_ALL){
       pWork->beacon_bit |= _CGEAR_NET_BIT_IR;
-    }
+    }*/
     if(bit & GAME_COMM_SBIT_WIRELESS_ALL){
       pWork->beacon_bit |= _CGEAR_NET_BIT_WIRELESS;
     }
@@ -3336,8 +3361,7 @@ static void _modeSelectMenuWait2(C_GEAR_WORK* pWork)
     return;
   }
 
-  _PanelPaletteAnimeInit( pWork );
-
+  _PanelPaletteAnimeInitSleep( pWork );
   // 通常待機へ遷移
   _CHANGE_STATE(pWork, _modeSelectMenuWait);
 }
@@ -3618,6 +3642,7 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   if( power_effect ){
     _CHANGE_STATE(pWork,_modeSelectMenuWait0);
   }else{
+    _PanelPaletteAnimeInit( pWork );
     _CHANGE_STATE(pWork,_modeSelectMenuWait);
   }
 
