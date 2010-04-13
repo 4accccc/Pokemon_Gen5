@@ -803,7 +803,7 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
   case PIPS_CHECK_SHINKA:
     {
       const u32 monsNo = PP_Get( work->selectPokePara , ID_PARA_monsno , NULL );
-      const u16 evoMonsNo = SHINKA_Check( work->plData->pp , work->selectPokePara , SHINKA_TYPE_LEVELUP , work->plData->zone_id , NULL, NULL , work->heapId );
+      const u16 evoMonsNo = SHINKA_Check( work->plData->pp , work->selectPokePara , SHINKA_TYPE_LEVELUP , work->plData->zone_id , work->plData->season, NULL , work->heapId );
       OS_TFPrintf(3,"[%d][%d]\n",monsNo,evoMonsNo);
       if( evoMonsNo != 0 )
       {

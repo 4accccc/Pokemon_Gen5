@@ -164,6 +164,16 @@ typedef struct {
 //------------------------------------------------------------------
 typedef struct
 {
+  //CONFIG本当は別構造体だけど・・・
+	u16 msg_speed:4;			///<MSGSPEED		ＭＳＧ送りの速度
+	u16 sound_mode:2;			///<SOUNDMODE		サウンド出力
+	u16 battle_rule:1;			///<BATTLERULE		戦闘ルール
+	u16 wazaeff_mode:1;			///<WAZAEFF_MODE	わざエフェクト
+	u16 input_mode:2;			///<INPUTMODE		入力モード
+	u16 window_type:5;			///<WINTYPE			ウィンドウタイプ
+	u16 dummy:1;
+
+  //CONFIG本当は別構造体だけど・・・(ここまで
   STRCODE name[8];    // 16
   u32 id;                     // 20
   u32 gold;                   // 24

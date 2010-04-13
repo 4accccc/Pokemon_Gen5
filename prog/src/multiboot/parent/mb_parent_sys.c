@@ -369,10 +369,6 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
 //--------------------------------------------------------------
 static void MB_PARENT_Term( MB_PARENT_WORK *work )
 {
-  if( GAMEDATA_GetIsSave( work->initWork->gameData ) )
-  {
-    GAMEDATA_SaveAsyncCancel( work->initWork->gameData );
-  }
   
   GFL_TCB_DeleteTask( work->vBlankTcb );
   GFUser_ResetVIntrFunc();
@@ -2327,7 +2323,11 @@ static GFL_PROC_RESULT MB_PARENT_ProcInit( GFL_PROC * proc, int * seq , void *pw
 static GFL_PROC_RESULT MB_PARENT_ProcTerm( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   MB_PARENT_WORK *work = mywk;
+  
+  //ワーク解放後に使うので保持
   BOOL isMovieTrans = FALSE;
+  BOOL isNetErr = work->isNetErr;
+  BOOL isSave = GAMEDATA_GetIsSave( work->initWork->gameData );
   if( work->initWork->mode == MPM_MOVIE_TRANS )
   {
     isMovieTrans = TRUE;
@@ -2348,22 +2348,36 @@ static GFL_PROC_RESULT MB_PARENT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
       GFL_HEAP_FreeMemory( work->initWork );
     }
   }
-  if( work->initWork->mode == MPM_MOVIE_TRANS &&
-      work->isNetErr == TRUE )
-  {
-    if( NetErr_App_CheckError() == NET_ERR_CHECK_LIGHT )
-    {
-      NetErr_DispCall( FALSE );
-    }
-    else
-    {
-      NetErr_DispCall( TRUE );
-    }
-  }
-
+  
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_MULTIBOOT );
 
+  if( isNetErr == TRUE )
+  {
+    //映画の処理(自前でエラーを出す
+    if( isMovieTrans )
+    {
+      if( isSave == TRUE ||
+          NetErr_App_CheckError() == NET_ERR_CHECK_HEAVY )
+      {
+        //セーブ中だったら電源切断へ
+        NetErr_DispCall( TRUE );
+      }
+      else
+      {
+        NetErr_DispCall( FALSE );
+      }
+    }
+    else
+    {
+      //ポケシフターはセーブ中のみ電源を切る
+      if( isSave == TRUE )
+      {
+        //セーブ中だったら電源切断へ
+        NetErr_DispCall( TRUE );
+      }
+    }
+  }
 
   if( isMovieTrans == TRUE )
   {

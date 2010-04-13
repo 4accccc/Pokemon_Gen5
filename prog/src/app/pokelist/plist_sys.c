@@ -3514,7 +3514,7 @@ const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const
 //--------------------------------------------------------------
 const u16 PLIST_UTIL_CheckItemEvolution( PLIST_WORK *work , POKEMON_PARAM *pp , const u16 itemNo )
 {
-  return SHINKA_Check( work->plData->pp , pp , SHINKA_TYPE_ITEM_CHECK , itemNo , NULL , NULL , work->heapId );
+  return SHINKA_Check( work->plData->pp , pp , SHINKA_TYPE_ITEM_CHECK , itemNo , work->plData->season , NULL , work->heapId );
 }
 
 //--------------------------------------------------------------

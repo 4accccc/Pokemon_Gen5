@@ -190,6 +190,7 @@ BOOL  MB_DATA_GS_LoadData( MB_DATA_WORK *dataWork )
     if( dataWork->errorState == DES_NONE )
     {
       GS_MYSTATUS *myStatus = (GS_MYSTATUS*)dataWork->pMyStatus;
+      MB_DATA_TPrintf("RegionCode[%d]\n",myStatus->region_code);
       if( myStatus->region_code != PM_LANG )
       {
         dataWork->errorState = DES_ANOTHER_COUNTRY;
