@@ -25,5 +25,6 @@
 #define W17_HIDE_ITEM_01                  0
 #define W17_HIDE_ITEM_02                  1
 #define W17_HIDE_ITEM_03                  2
+#define BG_W17_SIGN1_01                   3
 
 #endif //ZONE_W17_EVB_H
