@@ -90,10 +90,10 @@ bottom_lsf1 = <<BOTTOM_LSFFILE1
 Ltdautoload LTDMAIN
 {
 	# NITRO/TWL 共有のオーバーレイが在る場合は、さらにその後ろに配置する必要があります。
-  
 BOTTOM_LSFFILE1
-  
+ 
 bottom_lsf2 = <<BOTTOM_LSFFILE2
+	Address	0x02500000
   Object		* (.ltdmain)
 	Object		$(OBJS_LTDAUTOLOAD)
 	Library		$(LLIBS_EX) $(GLIBS_EX)
@@ -353,7 +353,7 @@ File.open(OUTPUT_TWL_LSFFILE, "w" ) {|file|
   file.puts(bottom_lsf1)
   sections.each{|section|
     if section.afterList.include?("EX_MEM_START") == false && section.afterList.include?("LCDC_VRAM_H") == false then
-      file.printf("\tAfter\t%s\n",section.put_name )
+#      file.printf("\tAfter\t%s\n",section.put_name )
     end
   }
   file.puts(bottom_lsf2)

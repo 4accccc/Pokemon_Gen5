@@ -62,6 +62,8 @@ force:
 #-------------------------------------------------------------------
 white:
 	cp ./prog/spec/version_w ./prog/version
+	$(MAKE) -C $(PROG_DIR) clean
+	$(MAKE) -C $(ARC_DIR) clean
 	$(MAKE) -C $(RESOURCE_DIR)
 	$(MAKE) -C $(ARC_DIR) 
 	$(MAKE) -C $(PROG_DIR) 
@@ -69,6 +71,26 @@ white:
 
 black:
 	cp ./prog/spec/version_b ./prog/version
+	$(MAKE) -C $(PROG_DIR) clean
+	$(MAKE) -C $(ARC_DIR) clean
+	$(MAKE) -C $(RESOURCE_DIR)
+	$(MAKE) -C $(ARC_DIR) 
+	$(MAKE) -C $(PROG_DIR) 
+	cp ./prog/spec/version ./prog/version
+
+white_rom:
+	cp ./prog/spec/version_wr ./prog/version
+#	$(MAKE) -C $(PROG_DIR) clean
+#	$(MAKE) -C $(ARC_DIR) clean
+	$(MAKE) -C $(RESOURCE_DIR)
+	$(MAKE) -C $(ARC_DIR) 
+	$(MAKE) -C $(PROG_DIR) 
+	cp ./prog/spec/version ./prog/version
+
+black_rom:
+	cp ./prog/spec/version_br ./prog/version
+	$(MAKE) -C $(PROG_DIR) clean
+	$(MAKE) -C $(ARC_DIR) clean
 	$(MAKE) -C $(RESOURCE_DIR)
 	$(MAKE) -C $(ARC_DIR) 
 	$(MAKE) -C $(PROG_DIR) 

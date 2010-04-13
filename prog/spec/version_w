@@ -2,7 +2,7 @@ PM_DEBUG	=	yes
 PM_VERSION	=	VERSION_WHITE
 PM_LANG		=	LANG_JAPAN
 
-ROM_SPEC= default$(TWL_LIBSUFFIX).rsf
+ROM_SPEC= spec/pokemon_wb_white$(TWL_LIBSUFFIX).rsf
 
 #----------------------------------------------------------------------------
 #	ロム作成用定義　（ＲＯＭ提出の際は有効にしてsrl作成）

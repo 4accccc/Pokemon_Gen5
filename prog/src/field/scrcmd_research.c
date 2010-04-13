@@ -340,9 +340,9 @@ VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk )
       }
 #ifdef DEBUG_PRINT_ENABLE
       OS_TFPrintf( 3, 
-#endif
           "questionID=%d, answerIdx=%d, sumCount=%d(%d+%d)\n", 
           qID, ansIdx, sumCount, totalCount, todayCount );
+#endif
     }
   }
 
