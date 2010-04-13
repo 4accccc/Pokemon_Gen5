@@ -331,7 +331,14 @@ static GMEVENT_RESULT DowsingMachineEvent(GMEVENT* event, int* seq, void* work)
   DOWSINGMACHINEUSE_STRUCT*   pDMU        = work;
   FIELD_SUBSCREEN_WORK*       subscreen   = FIELDMAP_GetFieldSubscreenWork(pDMU->fieldWork);
 
-  FIELD_SUBSCREEN_Change( subscreen, FIELD_SUBSCREEN_DOWSING );
+  if( FIELD_SUBSCREEN_GetMode( subscreen ) == FIELD_SUBSCREEN_DOWSING )  // ダウジングマシンを使っているときは、ダウジングマシンを終了させる
+  {
+    FIELD_SUBSCREEN_Change( subscreen, FIELD_SUBSCREEN_NORMAL );
+  }
+  else
+  {
+    FIELD_SUBSCREEN_Change( subscreen, FIELD_SUBSCREEN_DOWSING );
+  }
 
   return GMEVENT_RES_FINISH;
 }

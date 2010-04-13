@@ -887,10 +887,11 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
         if( item_info.type == ITEM_TYPE_HIDE )
         {
           const ITEM_DATA* item_data = item_info.info.hide.item_data;
-          if( zone_id != (u32)(item_data->zone_id) )
+          if( zone_id != (u32)(item_data->zone_id) )                    // ゾーンIDが異なる
           {
-            if(    (item_data->world_flag)
-                && zone_id_field )
+            if(    (item_data->world_flag)                              // アイテムはフィールドに置いてある
+                && zone_id_field                                        // プレイヤーは現在フィールドにいる
+                && ( !ZONEDATA_IsPalaceField( item_data->zone_id ) ) )  // 裏フィールドに配置したアイテムではない
             {
               // ゾーンIDは違うが、フィールドマップなので同じ座標系
             }

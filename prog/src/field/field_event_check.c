@@ -602,11 +602,11 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   if( req.convRequest ){
 		if(WIPE_SYS_EndCheck()){
       FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
-      if( FIELD_SUBSCREEN_GetMode( subscreen ) == FIELD_SUBSCREEN_DOWSING )  // ダウジングマシンを使っているときは、便利ボタンを使用できない
-      {
-        // 何もしない
-      }
-      else
+      //if( FIELD_SUBSCREEN_GetMode( subscreen ) == FIELD_SUBSCREEN_DOWSING )  // ダウジングマシンを使っているときは、便利ボタンを使用できない
+      //{
+      //  // 何もしない
+      //}
+      //else
       if( EVENT_ShortCutMenu_IsOpen(gsys) )
 			{	
 				event = EVENT_ShortCutMenu( gsys, fieldWork, req.heapID );
@@ -1116,11 +1116,11 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
   if( req.convRequest ){
 		if(WIPE_SYS_EndCheck()){
       FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
-      if( FIELD_SUBSCREEN_GetMode( subscreen ) == FIELD_SUBSCREEN_DOWSING )  // ダウジングマシンを使っているときは、便利ボタンを使用できない
-      {
-        // 何もしない
-      }
-      else
+      //if( FIELD_SUBSCREEN_GetMode( subscreen ) == FIELD_SUBSCREEN_DOWSING )  // ダウジングマシンを使っているときは、便利ボタンを使用できない
+      //{
+      //  // 何もしない
+      //}
+      //else
 			if( EVENT_ShortCutMenu_IsOpen(gsys) )
 			{	
 				event = EVENT_ShortCutMenu( gsys, fieldWork, req.heapID );
