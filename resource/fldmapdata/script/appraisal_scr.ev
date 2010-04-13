@@ -22,6 +22,7 @@
 _EVENT_DATA		ev_appraisal_maid_01
 _EVENT_DATA		ev_appraisal_gentleman_01
 _EVENT_DATA		ev_appraisal_fighterm_01
+_EVENT_DATA		ev_appraisal_sunglasses_01
 _EVENT_DATA_END
 
 
@@ -56,86 +57,107 @@ _TALK_OBJ_START()
 		//========================================/
 
 	ENDIF
-
-	//なんか　アンタの　バッグから
-	_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_02 )
-	_MSGWIN_CLOSE()
-
-	//バッグからアイテムを選択
-	_MAP_FADE_BLACK_OUT()
-	_MAP_FADE_END_CHECK()
-	_FIELD_CLOSE()
-
-	_CALL_BAG_PROC( SCR_BAG_MODE_SELECT, LWK_RETMODE, LWK_ITEM )
-
-	_FIELD_OPEN()
-	_MAP_FADE_BLACK_IN()
-	_MAP_FADE_END_CHECK()
 	
-	IF $LWK_ITEM == 0 THEN
+	//譲るアイテムが存在するかチェック
+	DEFINE_LOCAL LWK_ITEMCHECK
+	_ITEMJUDGE_HAVE_CHECK( SCR_ITEM_JUDGE_OBJTYPE_GOURMET , LWK_ITEMCHECK )
 	
-		//チェ　まあ　しかたないかー
-		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_07 )
-		_LAST_KEYWAIT()
+	//譲るアイテムが存在する
+	IF $LWK_ITEMCHECK == TRUE THEN
+	
+		//なんか　アンタの　バッグから
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_02 )
 		_MSGWIN_CLOSE()
-	
-	ELSE
-	
-		//鑑定
-		_ITEMJUDGE( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_GOURMET, LWK_MONEY )
 
-		//興味無しの場合
-		IF $LWK_MONEY == 0 THEN
+		//バッグからアイテムを選択
+		_MAP_FADE_BLACK_OUT()
+		_MAP_FADE_END_CHECK()
+		_FIELD_CLOSE()
 
-			//ウーン　コイツは　ちょっと
-			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_06 )
+		_CALL_BAG_PROC( SCR_BAG_MODE_SELECT, LWK_RETMODE, LWK_ITEM )
+
+		_FIELD_OPEN()
+		_MAP_FADE_BLACK_IN()
+		_MAP_FADE_END_CHECK()
+		
+		IF $LWK_ITEM == 0 THEN
+		
+			//チェ　まあ　しかたないかー
+			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_07 )
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
-	
-		//興味ありの場合
+		
 		ELSE
 		
-			//金額・アイテム名を格納
-			_NUMBER( 1, LWK_MONEY, 8 )
-			_ITEM_NAME( 0,LWK_ITEM )
-	
-			//ワーオ！　ナイス　スメル！
-			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_03 )
-			_YES_NO_WIN( SCWK_ANSWER )
-			_MSGWIN_CLOSE()
-		
-			//譲る場合
-			IF $SCWK_ANSWER == SCR_YES THEN
+			//鑑定
+			_ITEMJUDGE( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_GOURMET, LWK_MONEY )
 
-				_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+			//興味無しの場合
+			IF $LWK_MONEY == 0 THEN
 
-				//～を渡して　～円をもらった
-				_SYSWIN_MSG( msg_appraisal_g_04, POS_DOWN )
-				_SYSWIN_CLOSE()
-
-				_ADD_GOLD( LWK_MONEY )
-				_GOLD_WIN_UPDATE( MENU_X1, MENU_Y1 )
-				_SE_PLAY( SEQ_SE_SYS_22 )
-				_SE_WAIT()
-
-				_GOLD_WIN_CLOSE()
-
-				//サンキュー！
-				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_05 )
+				//ウーン　コイツは　ちょっと
+				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_06 )
 				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
 		
-			//譲らない場合
+			//興味ありの場合
 			ELSE
+			
+				//金額・アイテム名を格納
+				_NUMBER( 1, LWK_MONEY, 8 )
+				_ITEM_NAME( 0,LWK_ITEM )
 		
-				//チェ　まあ　しかたないかー
-				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_07 )
-				_LAST_KEYWAIT()
+				//ワーオ！　ナイス　スメル！
+				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_03 )
+				_YES_NO_WIN( SCWK_ANSWER )
 				_MSGWIN_CLOSE()
+			
+				//譲る場合
+				IF $SCWK_ANSWER == SCR_YES THEN
+
+					_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+
+					//～を渡して　～円をもらった
+					_SYSWIN_MSG( msg_appraisal_g_04, POS_DOWN )
+					_SYSWIN_CLOSE()
+					
+					//アイテム減算処理
+					DEFINE_LOCAL LWK_REDUCE
+					_SUB_ITEM( LWK_ITEM , 1 , LWK_REDUCE )
+
+					_ADD_GOLD( LWK_MONEY )
+					_GOLD_WIN_UPDATE( MENU_X1, MENU_Y1 )
+					_SE_PLAY( SEQ_SE_SYS_22 )
+					_SE_WAIT()
+
+					_GOLD_WIN_CLOSE()
+
+					//サンキュー！
+					_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_05 )
+					_LAST_KEYWAIT()
+					_MSGWIN_CLOSE()
+			
+				//譲らない場合
+				ELSE
+			
+					//チェ　まあ　しかたないかー
+					_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_07 )
+					_LAST_KEYWAIT()
+					_MSGWIN_CLOSE()
+			
+				ENDIF
 		
 			ENDIF
-	
+		
 		ENDIF
+	
+	//譲るアイテムが存在しない
+	ELSE
+	
+		//ざんねんだけど ないね
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_08 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
 	
 	ENDIF
 
@@ -167,89 +189,109 @@ _TALK_OBJ_START()
 		//========================================/
 
 	ENDIF
-
-	//ワシの　いしを　グラつかせる
-	_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_02 )
-	_MSGWIN_CLOSE()
-
-	//バッグからアイテムを選択
-	_MAP_FADE_BLACK_OUT()
-	_MAP_FADE_END_CHECK()
-	_FIELD_CLOSE()
-
-	_CALL_BAG_PROC( SCR_BAG_MODE_SELECT, LWK_RETMODE, LWK_ITEM )
-
-	_FIELD_OPEN()
-	_MAP_FADE_BLACK_IN()
-	_MAP_FADE_END_CHECK()
-
-	IF $LWK_ITEM == 0 THEN
 	
-		//チェ　まあ　しかたないかー
-		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_07 )
+	//譲るアイテムが存在するかチェック
+	DEFINE_LOCAL LWK_ITEMCHECK
+	_ITEMJUDGE_HAVE_CHECK( SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA , LWK_ITEMCHECK )
+	
+	//譲るアイテムが存在する
+	IF $LWK_ITEMCHECK == TRUE THEN
+
+		//ワシの　いしを　グラつかせる
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_02 )
+		_MSGWIN_CLOSE()
+
+		//バッグからアイテムを選択
+		_MAP_FADE_BLACK_OUT()
+		_MAP_FADE_END_CHECK()
+		_FIELD_CLOSE()
+
+		_CALL_BAG_PROC( SCR_BAG_MODE_SELECT, LWK_RETMODE, LWK_ITEM )
+
+		_FIELD_OPEN()
+		_MAP_FADE_BLACK_IN()
+		_MAP_FADE_END_CHECK()
+
+		IF $LWK_ITEM == 0 THEN
+		
+			//チェ　まあ　しかたないかー
+			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_07 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ELSE
+
+			//鑑定
+			_ITEMJUDGE( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA, LWK_MONEY )
+
+			//興味無しの場合
+			IF $LWK_MONEY == 0 THEN
+
+				//え？　なんじゃこれ？
+				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_06 )
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+		
+			//興味ありの場合
+			ELSE
+
+				//金額・アイテム名を格納
+				_NUMBER( 1, LWK_MONEY, 8 )
+				_ITEM_NAME( 0,LWK_ITEM )
+		
+				//グラグラくるの
+				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_03 )
+				_YES_NO_WIN( SCWK_ANSWER )
+				_MSGWIN_CLOSE()
+			
+				//譲る場合
+				IF $SCWK_ANSWER == SCR_YES THEN
+
+					_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+
+					//～を渡して　～円をもらった
+					_SYSWIN_MSG( msg_appraisal_m_04, POS_DOWN )
+					_SYSWIN_CLOSE()
+					
+					//アイテム減算処理
+					DEFINE_LOCAL LWK_REDUCE
+					_SUB_ITEM( LWK_ITEM , 1 , LWK_REDUCE )
+
+					_ADD_GOLD( LWK_MONEY )
+					_GOLD_WIN_UPDATE( MENU_X1, MENU_Y1 )
+					_SE_PLAY( SEQ_SE_SYS_22 )
+					_SE_WAIT()
+
+					_GOLD_WIN_CLOSE()
+
+					//こうしょう　せいりつじゃな
+					_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_05 )
+					_LAST_KEYWAIT()
+					_MSGWIN_CLOSE()
+				
+				//譲らない場合
+				ELSE
+			
+					//いつか　ゆずってほしいのー
+					_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_07 )
+					_LAST_KEYWAIT()
+					_MSGWIN_CLOSE()
+			
+				ENDIF
+		
+			ENDIF
+		
+		ENDIF
+		
+	//譲るアイテムが存在しない
+	ELSE
+	
+		//ざんねんだけど ないね
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_08 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
-	ELSE
-
-		//鑑定
-		_ITEMJUDGE( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA, LWK_MONEY )
-
-		//興味無しの場合
-		IF $LWK_MONEY == 0 THEN
-
-			//え？　なんじゃこれ？
-			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_06 )
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-	
-		//興味ありの場合
-		ELSE
-
-			//金額・アイテム名を格納
-			_NUMBER( 1, LWK_MONEY, 8 )
-			_ITEM_NAME( 0,LWK_ITEM )
-	
-			//グラグラくるの
-			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_03 )
-			_YES_NO_WIN( SCWK_ANSWER )
-			_MSGWIN_CLOSE()
-		
-			//譲る場合
-			IF $SCWK_ANSWER == SCR_YES THEN
-
-				_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
-
-				//～を渡して　～円をもらった
-				_SYSWIN_MSG( msg_appraisal_m_04, POS_DOWN )
-				_SYSWIN_CLOSE()
-
-				_ADD_GOLD( LWK_MONEY )
-				_GOLD_WIN_UPDATE( MENU_X1, MENU_Y1 )
-				_SE_PLAY( SEQ_SE_SYS_22 )
-				_SE_WAIT()
-
-				_GOLD_WIN_CLOSE()
-
-				//こうしょう　せいりつじゃな
-				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_05 )
-				_LAST_KEYWAIT()
-				_MSGWIN_CLOSE()
-			
-			//譲らない場合
-			ELSE
-		
-				//いつか　ゆずってほしいのー
-				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_07 )
-				_LAST_KEYWAIT()
-				_MSGWIN_CLOSE()
-		
-			ENDIF
-	
-		ENDIF
-	
 	ENDIF
-
 }
 EVENT_END
 
@@ -292,6 +334,10 @@ _TALK_OBJ_START()
 				//～を渡して　～円をもらった
 				_SYSWIN_MSG( msg_appraisal_r_04, POS_DOWN )
 				_SYSWIN_CLOSE()
+				
+				//アイテム減算処理
+				DEFINE_LOCAL LWK_REDUCE
+				_SUB_ITEM( LWK_ITEM , 1 , LWK_REDUCE )
 
 				_ADD_GOLD( LWK_MONEY )
 				_GOLD_WIN_UPDATE( MENU_X1, MENU_Y1 )
@@ -336,21 +382,29 @@ ev_fugou:
 	DEFINE_LOCAL LWK_RETMODE
 	DEFINE_LOCAL LWK_MONEY
 	DEFINE_LOCAL LWK_CROWN
-		//初回話しかけ時
-		IF FLAG_OFF( FE_T04R0101_APPRAISAL_TALK) THEN
+	
+	//初回話しかけ時
+	IF FLAG_OFF( FE_T04R0101_APPRAISAL_TALK) THEN
 
-			//オレ　ごらんのとおりの　リッチな　だいふごう
-			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_01 )
-			_MSGWIN_CLOSE()
+		//オレ　ごらんのとおりの　リッチな　だいふごう
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_01 )
+		_MSGWIN_CLOSE()
+	
+		//========================================/
 		
-			//========================================/
-			
-			//初回話しかけフラグセット
-			_FLAG_SET( FE_T04R0101_APPRAISAL_TALK )
-			
-			//========================================/
+		//初回話しかけフラグセット
+		_FLAG_SET( FE_T04R0101_APPRAISAL_TALK )
+		
+		//========================================/
 
-		ENDIF
+	ENDIF
+		
+	//譲るアイテムが存在するかチェック
+	DEFINE_LOCAL LWK_ITEMCHECK
+	_ITEMJUDGE_HAVE_CHECK( SCR_ITEM_JUDGE_OBJTYPE_RICH , LWK_ITEMCHECK )
+	
+	//譲るアイテムが存在する
+	IF $LWK_ITEMCHECK == TRUE THEN
 
 		//だいふごうの　オレが
 		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_02 )
@@ -407,6 +461,10 @@ ev_fugou:
 					//～を渡して　～円をもらった
 					_SYSWIN_MSG( msg_appraisal_r_04, POS_DOWN )
 					_SYSWIN_CLOSE()
+					
+					//アイテム減算処理
+					DEFINE_LOCAL LWK_REDUCE
+					_SUB_ITEM( LWK_ITEM , 1 , LWK_REDUCE )
 
 					_ADD_GOLD( LWK_MONEY )
 					_GOLD_WIN_UPDATE( MENU_X1, MENU_Y1 )
@@ -433,5 +491,146 @@ ev_fugou:
 			ENDIF
 
 		ENDIF
-		}
+	
+	//譲るアイテムが存在しない
+	ELSE
+	
+		//ざんねんだけど ないね
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_09 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+}
 _RET
+
+/**************************************************************/
+/*			R18 鉱物鑑定士2							  */
+/**************************************************************/
+EVENT_START		ev_appraisal_sunglasses_01
+_TALK_OBJ_START()
+{
+	DEFINE_LOCAL LWK_ITEM
+	DEFINE_LOCAL LWK_RETMODE
+	DEFINE_LOCAL LWK_MONEY
+	
+	//初回話しかけ時
+	IF FLAG_OFF( FE_R18R0101_APPRAISAL_TALK) THEN
+
+		//やあ とつぜんだが
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m2_01 )
+		_MSGWIN_CLOSE()
+		
+		//========================================/
+		
+		//初回話しかけフラグセット
+		_FLAG_SET( FE_R18R0101_APPRAISAL_TALK )
+		
+		//========================================/
+
+	ENDIF
+	
+	//【仮】譲るアイテムが存在するかチェック（指定タイプが仮）
+	DEFINE_LOCAL LWK_ITEMCHECK
+	_ITEMJUDGE_HAVE_CHECK( SCR_ITEM_JUDGE_OBJTYPE_GOURMET , LWK_ITEMCHECK )
+	
+	//譲るアイテムが存在する
+	IF $LWK_ITEMCHECK == TRUE THEN
+
+		//どうだい？ いかしたブツがあるなら
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m2_02 )
+		_MSGWIN_CLOSE()
+
+		//バッグからアイテムを選択
+		_MAP_FADE_BLACK_OUT()
+		_MAP_FADE_END_CHECK()
+		_FIELD_CLOSE()
+
+		_CALL_BAG_PROC( SCR_BAG_MODE_SELECT, LWK_RETMODE, LWK_ITEM )
+
+		_FIELD_OPEN()
+		_MAP_FADE_BLACK_IN()
+		_MAP_FADE_END_CHECK()
+
+		IF $LWK_ITEM == 0 THEN
+		
+			//いかした ブツをみつけたら わたしのところに おいで
+			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m2_07 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ELSE
+
+			//【仮】鑑定（指定タイプが仮）
+			_ITEMJUDGE( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA, LWK_MONEY )
+
+			//興味無しの場合
+			IF $LWK_MONEY == 0 THEN
+
+				//わるいけど だめだねぇ
+				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m2_06 )
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+		
+			//興味ありの場合
+			ELSE
+
+				//金額・アイテム名を格納
+				_NUMBER( 1, LWK_MONEY, 8 )
+				_ITEM_NAME( 0,LWK_ITEM )
+		
+				//イイね ったら イイねえ…
+				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m2_03 )
+				_YES_NO_WIN( SCWK_ANSWER )
+				_MSGWIN_CLOSE()
+			
+				//譲る場合
+				IF $SCWK_ANSWER == SCR_YES THEN
+
+					_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+
+					//～を渡して　～円をもらった
+					_SYSWIN_MSG( msg_appraisal_m2_04, POS_DOWN )
+					_SYSWIN_CLOSE()
+					
+					//アイテム減算処理
+					DEFINE_LOCAL LWK_REDUCE
+					_SUB_ITEM( LWK_ITEM , 1 , LWK_REDUCE )
+
+					_ADD_GOLD( LWK_MONEY )
+					_GOLD_WIN_UPDATE( MENU_X1, MENU_Y1 )
+					_SE_PLAY( SEQ_SE_SYS_22 )
+					_SE_WAIT()
+
+					_GOLD_WIN_CLOSE()
+
+					//ありがとう
+					_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m2_05 )
+					_LAST_KEYWAIT()
+					_MSGWIN_CLOSE()
+				
+				//譲らない場合
+				ELSE
+			
+					//いかした ブツをみつけたら わたしのところに おいで
+					_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m2_07 )
+					_LAST_KEYWAIT()
+					_MSGWIN_CLOSE()
+			
+				ENDIF
+		
+			ENDIF
+		
+		ENDIF
+		
+	//譲るアイテムが存在しない
+	ELSE
+	
+		//ざんねんだけど ないね
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m2_08 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+}
+EVENT_END

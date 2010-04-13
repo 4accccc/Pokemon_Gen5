@@ -22,6 +22,11 @@
 #define TR_WAITER_02                       9
 #define TR_WAITRESS_02                    10
 #define TR_PRINCE_03                      11
+#define R09R0201_FIX_SHOP_01              12
+#define R09R0201_FIX_SHOP_02              13
+#define R09R0201_FIX_SHOP_03              14
+#define R09R0201_FIX_SHOP_04              15
+#define R09R0201_FIX_SHOP_05              16
 
 #endif //ZONE_R09R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r09r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

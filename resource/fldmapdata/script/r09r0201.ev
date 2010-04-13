@@ -31,6 +31,12 @@ _EVENT_DATA    ev_r09r0201_baker_01
 _EVENT_DATA    ev_r09r0201_workman_01
 _EVENT_DATA    ev_bg_r09r0201_statue_01
 
+_EVENT_DATA    ev_r09r0201_fix_shop_01
+_EVENT_DATA    ev_r09r0201_fix_shop_02
+_EVENT_DATA    ev_r09r0201_fix_shop_03
+_EVENT_DATA    ev_r09r0201_fix_shop_04
+_EVENT_DATA    ev_r09r0201_fix_shop_05
+
 _EVENT_DATA_END
 
 
@@ -157,4 +163,44 @@ EVENT_START   ev_r09r0201_workman_01
 		
 	ENDIF
 	
+EVENT_END
+
+//=============================================================
+//ショップカウンター 固定ショップ
+//=============================================================
+EVENT_START ev_r09r0201_fix_shop_01
+  _TALK_OBJ_START()
+  _FIX_SHOP_CALL( SHOP_MALL1 )
+EVENT_END
+
+//=============================================================
+//ショップカウンター 固定ショップ
+//=============================================================
+EVENT_START ev_r09r0201_fix_shop_02
+  _TALK_OBJ_START()
+  _FIX_SHOP_CALL( SHOP_MALL2 )
+EVENT_END
+
+//=============================================================
+//ショップカウンター 固定ショップ
+//=============================================================
+EVENT_START ev_r09r0201_fix_shop_03
+  _TALK_OBJ_START()
+  _FIX_SHOP_CALL( SHOP_MALL3 )
+EVENT_END
+
+//=============================================================
+//ショップカウンター 固定ショップ
+//=============================================================
+EVENT_START ev_r09r0201_fix_shop_04
+  _TALK_OBJ_START()
+  _FIX_SHOP_CALL( SHOP_MALL4 )
+EVENT_END
+
+//=============================================================
+//ショップカウンター 固定ショップ
+//=============================================================
+EVENT_START ev_r09r0201_fix_shop_05
+  _TALK_OBJ_START()
+  _FIX_SHOP_CALL( SHOP_UP )
 EVENT_END
