@@ -6783,17 +6783,20 @@ static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *
             PP_Put( pp , ID_PARA_event_get_flag , TRUE );
             break;
           case 1: //10えいがエンテイ
-            pp = PP_Create( MONSNO_ENTEI , 50 , PTL_SETUP_RND_RARE , work->heapId );
+            pp = GFL_HEAP_AllocClearMemory( work->heapId , POKETOOL_GetWorkSize() );
+            PP_SetupEx( pp , MONSNO_ENTEI , 50 , PTL_SETUP_ID_AUTO , PTL_SETUP_POW_AUTO , PTL_SETUP_RND_RARE );
             PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
             PP_Put( pp , ID_PARA_event_get_flag , TRUE );
             break;
           case 2: //10えいがライコウ
-            pp = PP_Create( MONSNO_RAIKOU , 50 , PTL_SETUP_RND_RARE , work->heapId );
+            pp = GFL_HEAP_AllocClearMemory( work->heapId , POKETOOL_GetWorkSize() );
+            PP_SetupEx( pp , MONSNO_RAIKOU , 50 , PTL_SETUP_ID_AUTO , PTL_SETUP_POW_AUTO , PTL_SETUP_RND_RARE );
             PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
             PP_Put( pp , ID_PARA_event_get_flag , TRUE );
             break;
           case 3: //10えいがスイクン
-            pp = PP_Create( MONSNO_SUIKUN , 50 , PTL_SETUP_RND_RARE , work->heapId );
+            pp = GFL_HEAP_AllocClearMemory( work->heapId , POKETOOL_GetWorkSize() );
+            PP_SetupEx( pp , MONSNO_SUIKUN , 50 , PTL_SETUP_ID_AUTO , PTL_SETUP_POW_AUTO , PTL_SETUP_RND_RARE );
             PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
             PP_Put( pp , ID_PARA_event_get_flag , TRUE );
             break;
@@ -6803,17 +6806,20 @@ static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *
             PP_Put( pp , ID_PARA_event_get_flag , TRUE );
             break;
           case 5: //10えいがエンテイ(後
-            pp = PP_Create( MONSNO_ENTEI , 50 , PTL_SETUP_RND_RARE , work->heapId );
+            pp = GFL_HEAP_AllocClearMemory( work->heapId , POKETOOL_GetWorkSize() );
+            PP_SetupEx( pp , MONSNO_ENTEI , 50 , PTL_SETUP_ID_AUTO , PTL_SETUP_POW_AUTO , PTL_SETUP_RND_RARE );
             PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
             PP_Put( pp , ID_PARA_event_get_flag , TRUE );
             break;
           case 6: //10えいがライコウ(後
-            pp = PP_Create( MONSNO_RAIKOU , 50 , PTL_SETUP_RND_RARE , work->heapId );
+            pp = GFL_HEAP_AllocClearMemory( work->heapId , POKETOOL_GetWorkSize() );
+            PP_SetupEx( pp , MONSNO_RAIKOU , 50 , PTL_SETUP_ID_AUTO , PTL_SETUP_POW_AUTO , PTL_SETUP_RND_RARE );
             PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
             PP_Put( pp , ID_PARA_event_get_flag , TRUE );
             break;
           case 7: //10えいがスイクン(後
-            pp = PP_Create( MONSNO_SUIKUN , 50 , PTL_SETUP_RND_RARE , work->heapId );
+            pp = GFL_HEAP_AllocClearMemory( work->heapId , POKETOOL_GetWorkSize() );
+            PP_SetupEx( pp , MONSNO_SUIKUN , 50 , PTL_SETUP_ID_AUTO , PTL_SETUP_POW_AUTO , PTL_SETUP_RND_RARE );
             PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
             PP_Put( pp , ID_PARA_event_get_flag , TRUE );
             break;
