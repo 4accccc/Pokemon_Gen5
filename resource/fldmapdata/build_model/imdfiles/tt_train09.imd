@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-04-08T22:20:56" source="tt_train09.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-04-12T16:54:47" source="tt_train09.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2010-04-08T22:20:56" source="tt_train09.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2010-04-12T16:54:47" source="tt_train09.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -21,16 +21,29 @@
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
-	compress_material="on" material_size="8 8"
+	compress_material="on" material_size="9 9"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="5" xyz="-0.933594 0.233398 -2.043945" whd="1.866699 2.389893 4.706787"/>
+<box_test pos_scale="5" xyz="-1.093750 0.218750 -2.406250" whd="2.187500 2.404541 5.106445"/>
 
-<tex_image_array size="8">
-	<tex_image index="0" name="tt09_door"
+<tex_image_array size="9">
+	<tex_image index="0" name="h_kage"
+		width="8" height="8" original_width="8" original_height="8"
+		format="a3i5"
+		palette_name="h_kage_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/tt_train09/tex/h_kage.tga"
+	>
+		<bitmap size="32">
+			2020 2020 2020 2020 2020 2020 2020 2020
+			4040 4040 4040 4040 4040 4040 4040 4040
+			4040 4040 4040 4040 4040 4040 4040 4040
+			4040 4040 4040 4040 4040 4040 4040 4040
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="tt09_door"
 		width="32" height="64" original_width="32" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -104,7 +117,7 @@
 			6666 6666 6666 6666 6666 6666 6666 6666
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="tt09_front"
+	<tex_image index="2" name="tt09_front"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -242,7 +255,7 @@
 			3333 3333 3333 3333 3333 3333 3333 3333
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="tt09_side"
+	<tex_image index="3" name="tt09_side"
 		width="16" height="64" original_width="16" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -284,7 +297,7 @@
 			a966 69aa 88a6 0001 a966 69aa 88a6 0001
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="tt09_side02"
+	<tex_image index="4" name="tt09_side02"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -302,7 +315,7 @@
 			2222 2222 2222 2222 1111 1111 1111 1111
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="tt09_side03"
+	<tex_image index="5" name="tt09_side03"
 		width="8" height="64" original_width="8" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -328,7 +341,7 @@
 			6abb 8876 3333 8877 7777 8888 7777 8888
 		</bitmap>
 	</tex_image>
-	<tex_image index="5" name="tt09_tire"
+	<tex_image index="6" name="tt09_tire"
 		width="64" height="32" original_width="64" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -402,7 +415,7 @@
 			2222 2222 2222 2222 9999 9999 9999 9999
 		</bitmap>
 	</tex_image>
-	<tex_image index="6" name="tt09_up"
+	<tex_image index="7" name="tt09_up"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -444,7 +457,7 @@
 			3210 75b4 8887 aaaa 66aa 6666 6666 6666
 		</bitmap>
 	</tex_image>
-	<tex_image index="7" name="tt09_win01"
+	<tex_image index="8" name="tt09_win01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -464,48 +477,51 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="8">
-	<tex_palette index="0" name="tt09_door_pl" color_size="16">
+<tex_palette_array size="9">
+	<tex_palette index="0" name="h_kage_pl" color_size="8">
+		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="tt09_door_pl" color_size="16">
 		354a 24e7 2d29 356b 31b4 14ab 14aa 18cb
 		2951 210c 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="1" name="tt09_front_pl" color_size="16">
+	<tex_palette index="2" name="tt09_front_pl" color_size="16">
 		0c68 0f1a 14a5 14aa 14ab 167a 17fd 1a16
 		210c 2529 252e 28e7 2951 3128 31b4 396a
 	</tex_palette>
-	<tex_palette index="2" name="tt09_side02_pl" color_size="8">
+	<tex_palette index="3" name="tt09_side02_pl" color_size="8">
 		14aa 1ceb 210c 256d 3194 3a11 4a75 7fff
 	</tex_palette>
-	<tex_palette index="3" name="tt09_side03_pl" color_size="16">
+	<tex_palette index="4" name="tt09_side03_pl" color_size="16">
 		167a 1a16 11b4 212c 0c68 0845 14ab 14aa
 		1088 2951 252e 210c 2529 14a5 1084 7fff
 	</tex_palette>
-	<tex_palette index="4" name="tt09_side_pl" color_size="16">
+	<tex_palette index="5" name="tt09_side_pl" color_size="16">
 		17fd 0f1a 167a 1a16 0845 14ab 14aa 1088
 		2951 1ceb 210c 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="5" name="tt09_tire_pl" color_size="16">
+	<tex_palette index="6" name="tt09_tire_pl" color_size="16">
 		150d 10c9 14eb 1d2f 2150 2970 0c65 14a8
 		1086 0c64 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="6" name="tt09_up_pl" color_size="16">
+	<tex_palette index="7" name="tt09_up_pl" color_size="16">
 		0863 0c84 10a5 14c6 18e7 1d09 2d8d 212a
 		254b 18e8 296c 1ce8 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="7" name="tt09_win01_pl" color_size="16">
+	<tex_palette index="8" name="tt09_win01_pl" color_size="16">
 		14aa 210c 252f 28e7 2951 3128 31b4 354a
 		396a 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="8">
-	<material index="0" name="tt09_door"
-		light0="on" light1="off" light2="off" light3="off"
+<material_array size="9">
+	<material index="0" name="h_kage"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="16"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -514,7 +530,7 @@
 		diffuse="25 25 25"
 		ambient="31 31 31"
 		specular="0 0 0"
-		emission="3 3 3"
+		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
 		tex_tiling="repeat repeat"
@@ -523,7 +539,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="tt09_front"
+	<material index="1" name="tt09_door"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -541,13 +557,37 @@
 		emission="3 3 3"
 		shininess_table_flag="off"
 		tex_image_idx="1" tex_palette_idx="1"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="2" name="tt09_front"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="16"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="3 3 3"
+		shininess_table_flag="off"
+		tex_image_idx="2" tex_palette_idx="2"
 		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="tt09_side"
+	<material index="3" name="tt09_side"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -564,38 +604,14 @@
 		specular="0 0 0"
 		emission="3 3 3"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="4"
+		tex_image_idx="3" tex_palette_idx="5"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="tt09_side02"
-		light0="on" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="16"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="31 31 31"
-		specular="0 0 0"
-		emission="3 3 3"
-		shininess_table_flag="off"
-		tex_image_idx="3" tex_palette_idx="2"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="4" name="tt09_side03"
+	<material index="4" name="tt09_side02"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -613,13 +629,13 @@
 		emission="3 3 3"
 		shininess_table_flag="off"
 		tex_image_idx="4" tex_palette_idx="3"
-		tex_tiling="clamp clamp"
+		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="tt09_tire"
+	<material index="5" name="tt09_side03"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -636,14 +652,14 @@
 		specular="0 0 0"
 		emission="3 3 3"
 		shininess_table_flag="off"
-		tex_image_idx="5" tex_palette_idx="5"
-		tex_tiling="repeat repeat"
+		tex_image_idx="5" tex_palette_idx="4"
+		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="6" name="tt09_up"
+	<material index="6" name="tt09_tire"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -667,7 +683,7 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="7" name="tt09_win01"
+	<material index="7" name="tt09_up"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -691,13 +707,37 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
+	<material index="8" name="tt09_win01"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="16"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="3 3 3"
+		shininess_table_flag="off"
+		tex_image_idx="8" tex_palette_idx="8"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
 </material_array>
 
 <matrix_array size="1">
 	<matrix index="0" mtx_weight="1" node_idx="0"/>
 </matrix_array>
 
-<polygon_array size="8">
+<polygon_array size="9">
 	<polygon index="0" name="polygon0"
 		vertex_size="376" polygon_size="126"
 		triangle_size="56" quad_size="70"
@@ -2693,10 +2733,64 @@
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
+	<polygon index="8" name="polygon8"
+		vertex_size="16" polygon_size="5"
+		triangle_size="0" quad_size="5"
+		volume_min="-2.187500 0.437500 -4.812500"
+		volume_max="2.187500 0.437500 5.400879"
+		volume_r="5.843262"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="3">
+				<primitive index="0" type="quad_strip" vertex_size="6">
+					<mtx idx="0"/>
+					<tex st="6.750000 3.062500"/>
+					<pos_s xyz="-1.687500 0.437500 -4.187500"/>
+					<tex st="6.750000 1.562500"/>
+					<pos_xz xz="-2.187500 -4.812500"/>
+					<tex st="2.750000 3.062500"/>
+					<pos_xz xz="-1.687500 4.775879"/>
+					<tex st="2.750000 1.562500"/>
+					<pos_xz xz="-2.187500 5.400879"/>
+					<tex st="6.750000 3.062500"/>
+					<pos_xz xz="1.687500 4.775879"/>
+					<tex st="6.750000 1.562500"/>
+					<pos_xz xz="2.187500 5.400879"/>
+				</primitive>
+				<primitive index="1" type="quad_strip" vertex_size="6">
+					<tex st="2.750000 1.562500"/>
+					<pos_xz xz="-2.187500 -4.812500"/>
+					<tex st="2.750000 3.062500"/>
+					<pos_xz xz="-1.687500 -4.187500"/>
+					<tex st="6.750000 1.562500"/>
+					<pos_xz xz="2.187500 -4.812500"/>
+					<tex st="6.750000 3.062500"/>
+					<pos_xz xz="1.687500 -4.187500"/>
+					<tex st="2.750000 1.562500"/>
+					<pos_xz xz="2.187500 5.400879"/>
+					<tex st="2.750000 3.062500"/>
+					<pos_xz xz="1.687500 4.775879"/>
+				</primitive>
+				<primitive index="2" type="quads" vertex_size="4">
+					<tex st="9.937500 7.375000"/>
+					<pos_xy xy="-1.687500 0.437500"/>
+					<tex st="13.500000 7.375000"/>
+					<pos_xy xy="1.687500 0.437500"/>
+					<tex st="13.500000 3.187500"/>
+					<pos_xz xz="1.687500 -4.187500"/>
+					<tex st="9.937500 3.187500"/>
+					<pos_xy xy="-1.687500 0.437500"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface26" kind="mesh"
+	<node index="0" name="polySurface1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -2707,26 +2801,27 @@
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
-		display_size="8"
-		vertex_size="778" polygon_size="264"
-		triangle_size="86" quad_size="178"
-		volume_min="-1.866699 0.466797 -4.087402"
-		volume_max="1.866699 5.246826 5.326416"
+		display_size="9"
+		vertex_size="794" polygon_size="269"
+		triangle_size="86" quad_size="183"
+		volume_min="-2.187500 0.437500 -4.812500"
+		volume_max="2.187500 5.246826 5.400879"
 		volume_r="7.390381"
 	>
-		<display index="0" material="0" polygon="7" priority="0"/>
-		<display index="1" material="1" polygon="6" priority="0"/>
-		<display index="2" material="2" polygon="1" priority="0"/>
-		<display index="3" material="3" polygon="2" priority="0"/>
-		<display index="4" material="4" polygon="4" priority="0"/>
-		<display index="5" material="5" polygon="0" priority="0"/>
-		<display index="6" material="6" polygon="3" priority="0"/>
-		<display index="7" material="7" polygon="5" priority="0"/>
+		<display index="0" material="0" polygon="8" priority="0"/>
+		<display index="1" material="1" polygon="7" priority="0"/>
+		<display index="2" material="2" polygon="6" priority="0"/>
+		<display index="3" material="3" polygon="1" priority="0"/>
+		<display index="4" material="4" polygon="2" priority="0"/>
+		<display index="5" material="5" polygon="4" priority="0"/>
+		<display index="6" material="6" polygon="0" priority="0"/>
+		<display index="7" material="7" polygon="3" priority="0"/>
+		<display index="8" material="8" polygon="5" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="778" polygon_size="264"
-	triangle_size="86" quad_size="178"/>
+<output_info vertex_size="794" polygon_size="269"
+	triangle_size="86" quad_size="183"/>
 
 </body>
 
