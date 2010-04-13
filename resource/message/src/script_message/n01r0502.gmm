@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T19:27:54"/>
+	<create user="matsumiya" host="W00224" date="2010-04-13T19:30:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1287" top="191" right="1992" bottom="819" maximized="no" rayout="Vertical2">
+	<dialog left="1287" top="192" right="1992" bottom="819" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -753,8 +753,8 @@
 まったく　おなじもの▼
 シンも　ムも　えいゆうの　もとに
 あらわれる　ポケモン……▼
-やはり　キミにも
-えいゆうの　そしつが　あるわけだ[BE:09:速度コントロール:0]▼</language>
+……そうか
+やはり　キミも[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]シンと　ムは……▼
 もとは　ひとつの　命……
 一匹の　ポケモンだった▼
@@ -762,8 +762,8 @@
 まったく　同じもの▼
 シンも　ムも　英雄の　元に
 あらわれる　ポケモン……▼
-やはり　キミにも
-英雄の　素質が　あるわけだ[BE:09:速度コントロール:0]▼</language>
+……そうか
+やはり　キミも[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_08b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -778,8 +778,8 @@
 まったく　おなじもの▼
 ムも　シンも　えいゆうの　もとに
 あらわれる　ポケモン……▼
-やはり　キミにも
-えいゆうの　そしつが　あるわけだ[BE:09:速度コントロール:0]▼</language>
+……そうか
+やはり　キミも[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ムと　シンは……▼
 もとは　ひとつの　命……
 一匹の　ポケモンだった▼
@@ -787,8 +787,8 @@
 まったく　同じもの▼
 シンも　ムも　英雄の　元に
 あらわれる　ポケモン……▼
-やはり　キミにも
-英雄の　素質が　あるわけだ[BE:09:速度コントロール:0]▼</language>
+……そうか
+やはり　キミも[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_09w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
