@@ -481,7 +481,8 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
   case SEQ_EVOLUTION:
     {
       SHINKA_COND cond;
-      u16 afterMonsNo = SHINKA_Check( pokeParty, pokeParam, SHINKA_TYPE_TUUSHIN, 0, &cond, HEAPID_PROC );
+      u16 afterMonsNo = SHINKA_Check( pokeParty, pokeParam, SHINKA_TYPE_TUUSHIN, 0, GAMEDATA_GetSeasonID( gameData ),
+                                      &cond, HEAPID_PROC );
 
       if( afterMonsNo ) {
         GMEVENT* demo;

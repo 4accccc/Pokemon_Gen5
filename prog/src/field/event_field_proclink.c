@@ -1897,6 +1897,7 @@ static void * FMenuCallProc_Evolution(PROCLINK_WORK* wk, u32 param,EVENT_PROCLIN
                                 PokeParty_GetMemberPointer(party,plistData->ret_sel) , 
                                 type , 
                                 plistData->item , 
+                                GAMEDATA_GetSeasonID( gmData ),
                                 &cond , 
                                 HEAPID_PROC );
     }
@@ -1908,6 +1909,7 @@ static void * FMenuCallProc_Evolution(PROCLINK_WORK* wk, u32 param,EVENT_PROCLIN
                                 PokeParty_GetMemberPointer(party,plistData->ret_sel) , 
                                 type , 
                                 GAMEDATA_GetMyPlayerWork(gmData)->zoneID , 
+                                GAMEDATA_GetSeasonID( gmData ),
                                 &cond , 
                                 HEAPID_PROC );
     }
