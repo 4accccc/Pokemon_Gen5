@@ -18,7 +18,7 @@
 /*--------------------------------------------------------------------------*/
 /* Compili Flags                                                            */
 /*--------------------------------------------------------------------------*/
-#if defined DEBUG_ONLY_FOR_taya
+#if defined DEBUG_ONLY_FOR_taya | defined DEBUG_ONLY_FOR_sogabe
 #define ROTATION_NEW_SYSTEM   ///< 有効にすると新ローテーションシステム動作になります
 #endif
 
