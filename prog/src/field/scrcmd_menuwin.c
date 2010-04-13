@@ -704,7 +704,6 @@ VMCMD_RESULT EvCmdGoldWinOpen( VMHANDLE *core, void *wk )
   GFL_STR_DeleteBuffer( strbuf );
   GFL_MSG_Delete( msg_data );
 
-  OBATA_Printf( "EvCmdGoldWinOpen\n" );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -717,8 +716,37 @@ VMCMD_RESULT EvCmdGoldWinOpen( VMHANDLE *core, void *wk )
 //-------------------------------------------------------------- 
 VMCMD_RESULT EvCmdGoldWinUpdate( VMHANDLE *core, void *wk )
 {
-  // 再表示する
-  return EvCmdGoldWinOpen( core, wk );
+  SCRCMD_WORK*   work = wk;
+  GAMESYS_WORK*  gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*      gdata = GAMESYSTEM_GetGameData( gsys );
+  PLAYER_WORK*   player = GAMEDATA_GetMyPlayerWork( gdata ); 
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FLDMSGWIN*     msg_win = FIELDMAP_GetGoldMsgWin( fieldmap );
+  SCRIPT_WORK*   script = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET*       wordset = SCRIPT_GetWordSet( script );
+  STRBUF*        tempbuf = SCRIPT_GetMsgTempBuffer( script );
+  HEAPID         heap_id = FIELDMAP_GetHeapID( fieldmap );
+  GFL_MSGDATA*   msg_data = GFL_MSG_Create( 
+      GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_common_scr_dat, heap_id );
+  STRBUF*        strbuf = GFL_STR_CreateBuffer( 128, heap_id );
+  u32            gold = MISC_GetGold( GAMEDATA_GetMiscWork(gdata) );
+
+  GF_ASSERT( msg_win );
+  
+  // 文字列を作成
+  WORDSET_RegisterNumber( 
+      wordset, 2, gold, GOLD_WIN_KETA, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+  GFL_MSG_GetString( msg_data, msg_yen_01, tempbuf );
+  WORDSET_ExpandStr( wordset, strbuf, tempbuf );
+
+  // 表示を更新
+  FLDMSGWIN_ClearWindow( msg_win );
+  FLDMSGWIN_PrintStrBuf( msg_win, 0, 0, strbuf );
+
+  GFL_STR_DeleteBuffer( strbuf );
+  GFL_MSG_Delete( msg_data );
+
+  return VMCMD_RESULT_CONTINUE;
 }
 
 //--------------------------------------------------------------
