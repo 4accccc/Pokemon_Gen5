@@ -68,16 +68,19 @@ BOOL APP_PRINTSYS_COMMON_PrintStreamFunc( APP_PRINTSYS_COMMON_WORK *wk, PRINT_ST
 
     case PRINTSTREAM_STATE_RUNNING:
       // メッセージスキップ
-			if(wk->trg == FALSE){               //キーを離して無いと有効にならない
-        if( App_PrintSys_IsRelease( wk->type ) )
-        {
-          wk->trg=TRUE;
+      if( (wk->type & APP_PRINTSYS_COMMON_TYPE_NOTSKIP) == FALSE )
+      { 
+        if(wk->trg == FALSE){               //キーを離して無いと有効にならない
+          if( App_PrintSys_IsRelease( wk->type ) )
+          {
+            wk->trg=TRUE;
+          }
         }
-      }
-      else{
-        if( App_PrintSys_IsCont( wk->type ) )
-        {
-          PRINTSYS_PrintStreamShortWait( handle, 0 );
+        else{
+          if( App_PrintSys_IsCont( wk->type ) )
+          {
+            PRINTSYS_PrintStreamShortWait( handle, 0 );
+          }
         }
       }
       break;

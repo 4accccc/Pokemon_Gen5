@@ -57,7 +57,11 @@ FS_EXTERN_OVERLAY(ui_common);
 //=====================================
 #ifdef PM_DEBUG
 #define GAMESYS_NONE_MOVE //ゲームシステムがなくても動く
+
+
+#define SCROLL_MOVE_NONE  //スクロールなし版
 #endif //PM_DEBUG
+
 
 //-------------------------------------
 /// 切り替えマクロ
@@ -148,7 +152,7 @@ typedef enum
   CONFIG_LIST_BTLRULE,
   CONFIG_LIST_SND,
   CONFIG_LIST_STR,
-  CONFIG_LIST_WIRELESS,
+//  CONFIG_LIST_WIRELESS,
   CONFIG_LIST_REPORT,
 
 
@@ -175,8 +179,8 @@ typedef enum
   CONFIG_ITEM_SND_MONO,
   CONFIG_ITEM_STR_HIRAGANA,
   CONFIG_ITEM_STR_KANJI,
-  CONFIG_ITEM_WIRELESS_YES,
-  CONFIG_ITEM_WIRELESS_NO,
+//  CONFIG_ITEM_WIRELESS_YES,
+//  CONFIG_ITEM_WIRELESS_NO,
   CONFIG_ITEM_REPORT_YES,
   CONFIG_ITEM_REPORT_NO,
 
@@ -619,7 +623,7 @@ static void APPBAR_Exit( APPBAR_WORK *p_wk );
 static void APPBAR_Main( APPBAR_WORK *p_wk, const UI_WORK *cp_ui, const SCROLL_WORK *cp_scroll );
 static void APPBAR_MoveMain( APPBAR_WORK *p_wk );
 static BOOL APPBAR_IsDecide( const APPBAR_WORK *cp_wk, APPBAR_WIN_LIST *p_select );
-static BOOL APPBAR_IsWaitEffect( const APPBAR_WORK *cp_wk );
+static BOOL APPBAR_IsWaitEffect( APPBAR_WORK *p_wk );
 static void APPBAR_StopEffect( APPBAR_WORK *p_wk );
 static void APPBAR_ReWrite( APPBAR_WORK *p_wk, HEAPID heapID );
 //-------------------------------------
@@ -633,6 +637,7 @@ static void SCROLL_GetConfigParam( const SCROLL_WORK *cp_wk, CONFIG_PARAM *p_par
 static void SCROLL_SetConfigParamWireless( SCROLL_WORK *p_wk, u16 param );
 static void Scroll_ChangePlt( SCROLL_WORK *p_wk, BOOL is_decide_draw );
 static void Scroll_Move( SCROLL_WORK *p_wk, int y_add );
+static void Scroll_MoveRange( SCROLL_WORK *p_wk, int y_add, int min, int max );
 static void Scroll_TouchItem( SCROLL_WORK *p_wk, const GFL_POINT *cp_pos );
 static void Scroll_SelectItem( SCROLL_WORK *p_wk, s8 dir );
 static CONFIG_LIST Scroll_PosToList( const SCROLL_WORK *cp_wk, const GFL_POINT *cp_pos );
@@ -876,6 +881,7 @@ static const struct
     mes_config_sm05_01,
     24,17,8,2
   },
+#if 0
   //オン
   {
     mes_config_sm06_00,
@@ -886,15 +892,18 @@ static const struct
     mes_config_sm06_01,
     24,20,8,2
   },
+#endif
   //かく
   {
     mes_config_sm07_00,
-    15,23,6,2
+//    15,23,6,2
+    15,20,6,2
   },
   //かかない
   {
     mes_config_sm07_01,
-    24,23,7,2
+//    24,23,7,2
+    24,20,7,2
   },
   //○話の早さ
   {
@@ -921,15 +930,18 @@ static const struct
     mes_config_menu05,
     1,17,8,2
   },
+#if 0
   //○無線
   {
     mes_config_menu06,
     1,20,10,2
   },
+#endif
   //○ワイヤレス接続前レポート
   {
     mes_config_menu07,
-    1,23,10,2
+//    1,23,10,2
+      1,20,10,2
   },
 };
 
@@ -989,6 +1001,7 @@ static const struct
       CONFIG_ITEM_STR_KANJI,
     },
   },
+#if 0
   //CONFIG_LIST_WIRELESS,
   {
     mes_config_comment06,
@@ -998,6 +1011,7 @@ static const struct
       CONFIG_ITEM_WIRELESS_NO,
     },
   },
+#endif
   //CONFIG_LIST_REPORT,
   {
     mes_config_comment07,
@@ -1147,6 +1161,7 @@ static const struct
       23*8,12*8,9*8,24
     }
   },
+#if 0
   //  CONFIG_ITEM_WIRELESS_YES,
   {
     CONFIG_LIST_WIRELESS,
@@ -1169,15 +1184,18 @@ static const struct
       23*8,15*8,9*8,24
     }
   },
+#endif
   //  CONFIG_ITEM_REPORT_YES,
   {
     CONFIG_LIST_REPORT,
     WIRELESSSAVE_ON,
     {
-      15*8,18*8
+      //15*8,18*8
+      15*8,15*8
     },
     {
-      14*8,18*8,9*8,24
+      //14*8,18*8,9*8,24
+      14*8,15*8,9*8,24
     }
   },
   //  CONFIG_ITEM_REPORT_NO,
@@ -1185,10 +1203,12 @@ static const struct
     CONFIG_LIST_REPORT,
     WIRELESSSAVE_OFF,
     {
-      24*8,18*8
+      //24*8,18*8
+      24*8,15*8
     },
     {
-      23*8,18*8,9*8,24
+      //23*8,18*8,9*8,24
+      23*8,15*8,9*8,24
     }
   },
 } ;
@@ -2386,7 +2406,7 @@ static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_fo
   p_wk->p_que     = p_que;
   p_wk->print_update  = MSGWND_PRINT_TYPE_NONE;
 
-  APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->trg_work, APP_PRINTSYS_COMMON_TYPE_BOTH );
+  APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->trg_work, APP_PRINTSYS_COMMON_TYPE_BOTH|APP_PRINTSYS_COMMON_TYPE_NOTSKIP );
   BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_OFF,1, GFL_BMPWIN_GetPalette(p_bmpwin) );
 
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
@@ -2815,12 +2835,17 @@ static BOOL APPBAR_IsDecide( const APPBAR_WORK *cp_wk, APPBAR_WIN_LIST *p_select
  *  @return TRUEで演出終了  FALSEで演出中
  */
 //-----------------------------------------------------------------------------
-static BOOL APPBAR_IsWaitEffect( const APPBAR_WORK *cp_wk )
+static BOOL APPBAR_IsWaitEffect( APPBAR_WORK *p_wk )
 { 
-  BOOL ret  = TRUE;
-  if( cp_wk->is_decide && cp_wk->select != APPBAR_WIN_NULL )
+  BOOL ret  = FALSE;
+  if( p_wk->is_decide && p_wk->select != APPBAR_WIN_NULL )
   { 
-    ret = APP_TASKMENU_WIN_IsFinish( cp_wk->p_win[cp_wk->select] );
+    ret = APP_TASKMENU_WIN_IsFinish( p_wk->p_win[p_wk->select] );
+
+    if( ret )
+    { 
+      APPBAR_StopEffect( p_wk );
+    }
   }
   return ret;
 }
@@ -2837,7 +2862,7 @@ static void APPBAR_StopEffect( APPBAR_WORK *p_wk )
     int i;
     for( i = 0; i < APPBAR_WIN_MAX-1; i++ )
     {
-      APP_TASKMENU_WIN_SetDecide( p_wk->p_win[i], FALSE );
+      APP_TASKMENU_WIN_ResetDecide( p_wk->p_win[i] );
       APP_TASKMENU_WIN_SetActive( p_wk->p_win[i], FALSE );
     }
   }
@@ -2904,10 +2929,13 @@ static void SCROLL_Init( SCROLL_WORK *p_wk, u8 font_frm, u8 back_frm, const GRAP
       p_wk->p_item[i] = GRAPHIC_GetClwk( cp_grp, CLWKID_ITEM_TOP + i );
     }
   }
-
+#ifdef SCROLL_MOVE_NONE
+  //開始オフセットまでずらす
+  Scroll_MoveRange( p_wk, -8, -192, 192 );
+#else
   //開始オフセットまでずらす
   Scroll_Move( p_wk, SCROLL_START_OFS_Y );
-
+#endif
   //キーモードがキーならばカーソル位置を押す
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
   {
@@ -2970,6 +2998,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     break;
 
   case UI_INPUT_SLIDE:
+#ifndef SCROLL_MOVE_NONE
     UI_GetParam( cp_ui, UI_INPUT_PARAM_SLIDEPOS, &slide_pos );
     UI_GetParam( cp_ui, UI_INPUT_PARAM_SLIDENOW, &slide_now );
     UI_GetParam( cp_ui, UI_INPUT_PARAM_TRGPOS, &trg_pos );
@@ -2985,6 +3014,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
         GRAPHIC_StartPalleteFade( p_graphic );
       }
     }
+#endif
     break;
 
   case UI_INPUT_CONT_UP:
@@ -3000,11 +3030,14 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     p_wk->cont_sync = 0;
     p_wk->select--;
     p_wk->select  = MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_CANCEL );
+
+#ifndef SCROLL_MOVE_NONE
     //スクロールする距離になったら動く
     if( p_wk->select < bar_top )
     {
       Scroll_Move( p_wk, -SCROLL_WINDOW_H_DOT );
     }
+#endif
     if( p_wk->select < CONFIG_LIST_MAX )
     {
       p_wk->is_info_update  = TRUE;
@@ -3027,11 +3060,13 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     p_wk->cont_sync = 0;
     p_wk->select++;
     p_wk->select  = MATH_CLAMP( p_wk->select, CONFIG_LIST_MSGSPEED, CONFIG_LIST_CANCEL );
+#ifndef SCROLL_MOVE_NONE
     //スクロールする距離になったら動く
     if( p_wk->select > bar_top+SCROLL_DISPLAY )
     {
       Scroll_Move( p_wk, SCROLL_WINDOW_H_DOT );
     }
+#endif
     if( p_wk->select < CONFIG_LIST_MAX )
     {
       p_wk->is_info_update  = TRUE;
@@ -3043,7 +3078,12 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 
   case UI_INPUT_TOUCH:
     UI_GetParam( cp_ui, UI_INPUT_PARAM_TRGPOS, &trg_pos );
-    if( SCROLL_TOP_BAR_Y < trg_pos.y && trg_pos.y < SCROLL_APP_BAR_Y )
+
+#ifdef SCROLL_MOVE_NONE
+    if(1)
+#else
+    if( SCROLL_TOP_BAR_Y <= trg_pos.y && trg_pos.y <= SCROLL_APP_BAR_Y )
+#endif
     {
       //座標から選択への変換
       p_wk->select  = Scroll_PosToList( p_wk, &trg_pos );
@@ -3188,7 +3228,7 @@ static void SCROLL_GetConfigParam( const SCROLL_WORK *cp_wk, CONFIG_PARAM *p_par
 //-----------------------------------------------------------------------------
 static void SCROLL_SetConfigParamWireless( SCROLL_WORK *p_wk, u16 param )
 { 
-  p_wk->now.param[CONFIG_LIST_WIRELESS] = param;
+ // p_wk->now.param[CONFIG_LIST_WIRELESS] = param;
   Scroll_ChangePlt( p_wk, p_wk->pre_decide_draw );
 }
 //----------------------------------------------------------------------------
@@ -3344,45 +3384,36 @@ static void Scroll_ChangePlt( SCROLL_WORK *p_wk, BOOL is_decide_draw )
       SCROLL_SELECT_PLT = CONFIG_OBJ_PAL_M_07,
     };
 
-    static const u8 sc_bright_obj_plt[] =
-    {
-      CONFIG_OBJ_PAL_M_03,CONFIG_OBJ_PAL_M_01,CONFIG_OBJ_PAL_M_00,CONFIG_OBJ_PAL_M_01,CONFIG_OBJ_PAL_M_03,
-    };
-
     int i, j;
 
-    for( j = bar_top; j < NELEMS(sc_bright_obj_plt) + bar_top; j++ )
+    for( i = 0; i < CONFIG_ITEM_MAX; i++ )
     {
-      for( i = 0; i < CONFIG_ITEM_MAX; i++ )
+      //選択中であれば
+      if( sc_item_info[i].list == p_wk->select && is_decide_draw )
       {
-        //選択中であれば
-        if( sc_item_info[i].list == p_wk->select && is_decide_draw )
+        //ONかOFFか
+        if( CONFIGPARAM_IsItemSetting( &p_wk->now, i ) )
         {
-          //ONかOFFか
-          if( CONFIGPARAM_IsItemSetting( &p_wk->now, i ) )
-          {
-            GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_item[i], 3 );
-          }
-          else
-          {
-            GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_item[i], 2 );
-          }
+          GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_item[i], 3 );
         }
-        else if( sc_item_info[i].list == j )
+        else
         {
-          //ONかOFFか
-          if( CONFIGPARAM_IsItemSetting( &p_wk->now, i ) )
-          {
-            GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_item[i], 0 );
-          }
-          else
-          {
-            GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_item[i], 1 );
-          }
+          GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_item[i], 2 );
+        }
+      }
+      else
+      {
+        //ONかOFFか
+        if( CONFIGPARAM_IsItemSetting( &p_wk->now, i ) )
+        {
+          GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_item[i], 0 );
+        }
+        else
+        {
+          GFL_CLACT_WK_SetAnmSeqDiff( p_wk->p_item[i], 1 );
         }
       }
     }
-
   }
 }
 
@@ -3396,6 +3427,22 @@ static void Scroll_ChangePlt( SCROLL_WORK *p_wk, BOOL is_decide_draw )
 //-----------------------------------------------------------------------------
 static void Scroll_Move( SCROLL_WORK *p_wk, int y_add )
 {
+  Scroll_MoveRange( p_wk, y_add, SCROLL_START, SCROLL_END );
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクロール移動  レンジ指定版
+ *
+ *	@param	SCROLL_WORK *p_wk ワーク
+ *	@param	y_add Y移動値
+ *	@param	min   最小
+ *	@param	max   最大
+ */
+//-----------------------------------------------------------------------------
+static void Scroll_MoveRange( SCROLL_WORK *p_wk, int y_add, int min, int max )
+{ 
   int y;
 
 
@@ -3404,7 +3451,7 @@ static void Scroll_Move( SCROLL_WORK *p_wk, int y_add )
   //制限
   y = GFL_BG_GetScrollY( p_wk->back_frm );
   y += y_add;
-  y = MATH_CLAMP( y, SCROLL_START, SCROLL_END );
+  y = MATH_CLAMP( y, min, max );
 
   //移動
   GFL_BG_SetScrollReq( p_wk->font_frm, GFL_BG_SCROLL_Y_SET, y + SCROLL_FONT_OFS_CHR );
@@ -3428,8 +3475,8 @@ static void Scroll_Move( SCROLL_WORK *p_wk, int y_add )
     }
   }
 
-}
 
+}
 //----------------------------------------------------------------------------
 /**
  *  @brief  タッチで項目を選択する処理
@@ -3453,8 +3500,8 @@ static void Scroll_TouchItem( SCROLL_WORK *p_wk, const GFL_POINT *cp_pos )
       rect.right  = sc_item_info[i].touch_pos.x + sc_item_info[i].touch_pos.w;
 
       //押せる箇所もタッチ範囲に入っているかチェック
-      if( SCROLL_TOP_BAR_Y < rect.top && rect.top < SCROLL_APP_BAR_Y
-          && SCROLL_TOP_BAR_Y < rect.bottom && rect.bottom < SCROLL_APP_BAR_Y )
+      if( SCROLL_TOP_BAR_Y <= rect.top && rect.top <= SCROLL_APP_BAR_Y
+          && SCROLL_TOP_BAR_Y <= rect.bottom && rect.bottom <= SCROLL_APP_BAR_Y )
       {
 
         //矩形
@@ -3841,7 +3888,7 @@ static void CONFIGPARAM_Init( CONFIG_PARAM *p_wk, CONFIG *p_savedata )
   p_wk->param[CONFIG_LIST_BTLRULE]  = CONFIG_GetBattleRule(p_savedata);
   p_wk->param[CONFIG_LIST_SND]      = CONFIG_GetSoundMode(p_savedata);
   p_wk->param[CONFIG_LIST_STR]      = CONFIG_GetMojiMode(p_savedata);
-  p_wk->param[CONFIG_LIST_WIRELESS] = CONFIG_GetNetworkSearchMode(p_savedata);
+//  p_wk->param[CONFIG_LIST_WIRELESS] = CONFIG_GetNetworkSearchMode(p_savedata);
   p_wk->param[CONFIG_LIST_REPORT]   = CONFIG_GetWirelessSaveMode(p_savedata);
 
   { 
@@ -3878,7 +3925,7 @@ static void CONFIGPARAM_Save( const CONFIG_PARAM *cp_wk )
   CONFIG_SetBattleRule( cp_wk->p_savedata, cp_wk->param[CONFIG_LIST_BTLRULE] );
   CONFIG_SetSoundMode( cp_wk->p_savedata, cp_wk->param[CONFIG_LIST_SND] );
   CONFIG_SetMojiMode( cp_wk->p_savedata, cp_wk->param[CONFIG_LIST_STR] );
-  CONFIG_SetNetworkSearchMode( cp_wk->p_savedata, cp_wk->param[CONFIG_LIST_WIRELESS] );
+//  CONFIG_SetNetworkSearchMode( cp_wk->p_savedata, cp_wk->param[CONFIG_LIST_WIRELESS] );
   CONFIG_SetWirelessSaveMode( cp_wk->p_savedata, cp_wk->param[CONFIG_LIST_REPORT] );
 
  { 
@@ -4299,7 +4346,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
         }
       }
     }
-
+#if 0
     //接続禁止メッセージ
     { 
       const BOOL is_wire  = DS_SYSTEM_IsAvailableWireless();
@@ -4336,6 +4383,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
         }
       }
     }
+#endif
     break;
 
   case SEQ_START_NOT_WIRELESS_MESSAGE:
