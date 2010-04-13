@@ -27,14 +27,14 @@ static const ENC_CUTIN_DAT EncCutinDat[] =
   {FLDCIID_RIVAL, NARC_enc_ci_face_enc_gym07_lz_bin, NARC_enc_ci_face_enc_gym07_nclr, SPTR_GYM07, GRA_TRANS_ALL}, //ジムリーダー07
   {FLDCIID_RIVAL, NARC_enc_ci_face_enc_gym08a_lz_bin, NARC_enc_ci_face_enc_gym08a_nclr, SPTR_GYM08A, GRA_TRANS_ALL}, //ジムリーダー08A
   {FLDCIID_RIVAL, NARC_enc_ci_face_enc_gym08b_lz_bin, NARC_enc_ci_face_enc_gym08b_nclr, SPTR_GYM08B, GRA_TRANS_ALL}, //ジムリーダー08B
-  {FLDCIID_RIVAL, NARC_enc_ci_face_enc_bigfour01_lz_bin, NARC_enc_ci_face_enc_bigfour01_nclr, SPTR_BIGFOUR01, GRA_TRANS_ALL}, //四天王1
-  {FLDCIID_RIVAL, NARC_enc_ci_face_enc_bigfour02_lz_bin, NARC_enc_ci_face_enc_bigfour02_nclr, SPTR_BIGFOUR02, GRA_TRANS_ALL}, //四天王2
-  {FLDCIID_RIVAL, NARC_enc_ci_face_enc_bigfour03_lz_bin, NARC_enc_ci_face_enc_bigfour03_nclr, SPTR_BIGFOUR03, GRA_TRANS_ALL}, //四天王3
-  {FLDCIID_RIVAL, NARC_enc_ci_face_enc_bigfour04_lz_bin, NARC_enc_ci_face_enc_bigfour04_nclr, SPTR_BIGFOUR04, GRA_TRANS_ALL}, //四天王4
+  {FLDCIID_SITEN, NARC_enc_ci_face_enc_bigfour01_lz_bin, NARC_enc_ci_face_enc_bigfour01_nclr, SPTR_BIGFOUR01, GRA_TRANS_ALL}, //四天王1
+  {FLDCIID_SITEN, NARC_enc_ci_face_enc_bigfour02_lz_bin, NARC_enc_ci_face_enc_bigfour02_nclr, SPTR_BIGFOUR02, GRA_TRANS_ALL}, //四天王2
+  {FLDCIID_SITEN, NARC_enc_ci_face_enc_bigfour03_lz_bin, NARC_enc_ci_face_enc_bigfour03_nclr, SPTR_BIGFOUR03, GRA_TRANS_ALL}, //四天王3
+  {FLDCIID_SITEN, NARC_enc_ci_face_enc_bigfour04_lz_bin, NARC_enc_ci_face_enc_bigfour04_nclr, SPTR_BIGFOUR04, GRA_TRANS_ALL}, //四天王4
   {FLDCIID_RIVAL, NARC_enc_ci_face_enc_champ_lz_bin, NARC_enc_ci_face_enc_champ_nclr, SPTR_CHAMP, GRA_TRANS_ALL}, //チャンプ
-  {FLDCIID_RIVAL, NARC_enc_ci_face_enc_boss_lz_bin, NARC_enc_ci_face_enc_boss_nclr, SPTR_BOSS, GRA_TRANS_ALL}, //ボス
-  {FLDCIID_RIVAL, NARC_enc_ci_face_enc_sage_lz_bin, NARC_enc_ci_face_enc_sage_nclr, SPTR_SAGE, GRA_TRANS_ALL}, //セージ
-  {0, 0, 0, 0, GRA_TRANS_NONE}, //プラズマ団
+  {FLDCIID_PLASMA02, NARC_enc_ci_face_enc_boss_lz_bin, NARC_enc_ci_face_enc_boss_nclr, SPTR_BOSS, GRA_TRANS_ENEMY}, //ボス
+  {FLDCIID_PLASMA02, NARC_enc_ci_face_enc_sage_lz_bin, NARC_enc_ci_face_enc_sage_nclr, SPTR_SAGE, GRA_TRANS_ENEMY}, //セージ
+  {FLDCIID_PLASMA01, 0, 0, 0, GRA_TRANS_NONE}, //プラズマ団
 };
 
 const ENC_CUTIN_DAT *ENC_CUTIN_NO_GetDat(const int inEncCutinNo)
