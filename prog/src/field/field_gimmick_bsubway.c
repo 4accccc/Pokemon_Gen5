@@ -39,7 +39,7 @@ enum
   BSWGMK_NO_MAX,
 };
 
-#define SHAKE_Y (4)
+#define SHAKE_Y (1)
 
 //======================================================================
 //  struct
@@ -59,7 +59,8 @@ typedef void (*BSW_GMK_DEL_PROC)( BSW_GMK *bsw_gmk, FIELDMAP_WORK *fldmap );
 //--------------------------------------------------------------
 struct _TAG_BSW_GMK
 {
-  u16 init_flag;
+  u8 init_flag;
+  u8 padding;
   u16 gmk_no;
   u16 gmk_id;
   u32 zone_id;
@@ -140,7 +141,7 @@ void BSUBWAY_GIMMICK_Setup( FIELDMAP_WORK *fieldmap )
   bsw_gmk->heapID = heap_id;
   bsw_gmk->gsys = gsys;
   bsw_gmk->fieldmap = fieldmap;
-
+  
   if( data_ProcTbl[bsw_gmk->gmk_no].init_proc != NULL ){
     data_ProcTbl[bsw_gmk->gmk_no].init_proc( bsw_gmk, fieldmap );
   }

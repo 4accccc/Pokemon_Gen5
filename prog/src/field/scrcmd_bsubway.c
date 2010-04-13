@@ -69,6 +69,7 @@ extern const GFL_PROC_DATA IrcBattleMatchProcData;
 //======================================================================
 //  define
 //======================================================================
+#define HOME_NPC_WIFI_MAX (5) ///<WiFiホーム NPC最大数
 
 //======================================================================
 //  struct
@@ -96,7 +97,8 @@ static BOOL evCommRecvData( VMHANDLE *core, void *wk );
 static BOOL evBtlRecSave( VMHANDLE *core, void *wk );
 
 static void bsway_SetHomeNPC(
-    BSUBWAY_SCRWORK *bsw_scr, MMDLSYS *mmdlsys, FIELDMAP_WORK *fieldmap );
+    BSUBWAY_SCRWORK *bsw_scr, GAMEDATA *gdata,
+    MMDLSYS *mmdlsys, FIELDMAP_WORK *fieldmap );
 static u16 bsway_GetHomeNPCMsgID( const MMDL *mmdl );
 
 static u32 bsw_getRegulationLabel( u32 play_mode );
@@ -108,6 +110,9 @@ static const VecFx32 data_PlayModeRecoverPos[BSWAY_MODE_MAX];
 static const u16 data_ModeBossClearFlag[BSWAY_MODE_MAX];
 static const u16 data_ModeBattleMode[BSWAY_MODE_MAX];
 const HOME_NPC_DATA data_HomeNpcTbl[];
+static const u16 data_HomeNpcTbl_WifiMan[10];
+static const u16 data_HomeNpcTbl_WifiWoman[10];
+static const MMDL_GRIDPOS data_HomeNpcWiFiPosTbl[HOME_NPC_WIFI_MAX];
 
 //======================================================================
 //  バトルサブウェイ　スクリプト関連
@@ -884,7 +889,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWSUB_SET_HOME_OBJ:
     {
       MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
-      bsway_SetHomeNPC( bsw_scr, mmdlsys, fieldmap );
+      bsway_SetHomeNPC( bsw_scr, gdata, mmdlsys, fieldmap );
     }
     break;
   //通信中フラグをセット
@@ -1396,44 +1401,75 @@ static BOOL evCommRecvData( VMHANDLE *core, void *wk )
  */
 //--------------------------------------------------------------
 static void bsway_SetHomeNPC(
-    BSUBWAY_SCRWORK *bsw_scr, MMDLSYS *mmdlsys, FIELDMAP_WORK *fieldmap )
+    BSUBWAY_SCRWORK *bsw_scr, GAMEDATA *gdata,
+    MMDLSYS *mmdlsys, FIELDMAP_WORK *fieldmap )
 {
   MMDL *mmdl;
   int i = 0;
-  u16 obj_id = BSW_HOME_OBJID_NPC_FIRST;
   int zone_id = FIELDMAP_GetZoneID( fieldmap );
+  u16 obj_id = BSW_HOME_OBJID_NPC_FIRST;
   BSWAY_PLAYMODE mode = bsw_scr->play_mode;
-  const HOME_NPC_DATA *data = data_HomeNpcTbl;
-  BSUBWAY_SCOREDATA *bsw_score = bsw_scr->scoreData;
-  u16 stage = BSUBWAY_SCOREDATA_GetStageNo( bsw_score, mode );
   
-  switch( mode ){
-  case BSWAY_MODE_S_SINGLE:
-  case BSWAY_MODE_S_DOUBLE:
-  case BSWAY_MODE_S_MULTI:
-  case BSWAY_MODE_S_COMM_MULTI:
-    stage += 3;
-  }
-  
-  while( data->code != OBJCODEMAX ){
-    if( data->stage == stage ){
+  if( mode == BSWAY_MODE_WIFI ){
+    u32 id;
+    u16 code;
+    const MMDL_GRIDPOS *pos_tbl = data_HomeNpcWiFiPosTbl;
+    SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+    BSUBWAY_WIFI_DATA *wifiData = SaveControl_DataPtrGet(
+        save, GMDATA_ID_BSUBWAY_WIFIDATA );
+    BSUBWAY_LEADER_DATA *leader = BSUBWAY_WIFIDATA_GetLeaderDataAlloc(
+        wifiData, HEAPID_PROC );
+    
+    for( ; i < HOME_NPC_WIFI_MAX; i++, leader++, obj_id++, pos_tbl++ ){
+      id = *(u32*)leader->id_no;
+      id %= 10;
+      
+      if( leader->gender == 0 ){
+        code = data_HomeNpcTbl_WifiMan[id];
+      }else{
+        code = data_HomeNpcTbl_WifiWoman[id];
+      }
+
       mmdl = MMDLSYS_AddMMdlParam( mmdlsys,
-          data->gx, data->gz, (DIR_UP+i) % DIR_MAX4,
-          obj_id, data->code, MV_DIR_RND, zone_id );
+          pos_tbl->gx, pos_tbl->gz, (DIR_UP+i) % DIR_MAX4,
+          obj_id, code, MV_DIR_RND, zone_id );
       
       MMDL_SetParam( mmdl, i, MMDL_PARAM_0 );
-      MMDL_SetParam( mmdl, data->msg_id, MMDL_PARAM_1 );
       MMDL_SetEventID( mmdl, SCRID_C04R0111_NPC_TALK );
-      
-      if( obj_id < 0xff ){
-        obj_id++;
-      }else{
-        GF_ASSERT( 0 );
-      }
     }
+  }else{
+    const HOME_NPC_DATA *data = data_HomeNpcTbl;
+    BSUBWAY_SCOREDATA *bsw_score = bsw_scr->scoreData;
+    u16 stage = BSUBWAY_SCOREDATA_GetStageNo( bsw_score, mode );
+
+    switch( mode ){
+    case BSWAY_MODE_S_SINGLE:
+    case BSWAY_MODE_S_DOUBLE:
+    case BSWAY_MODE_S_MULTI:
+    case BSWAY_MODE_S_COMM_MULTI:
+      stage += 3;
+    }
+  
+    while( data->code != OBJCODEMAX ){
+      if( data->stage == stage ){
+        mmdl = MMDLSYS_AddMMdlParam( mmdlsys,
+            data->gx, data->gz, (DIR_UP+i) % DIR_MAX4,
+            obj_id, data->code, MV_DIR_RND, zone_id );
+      
+        MMDL_SetParam( mmdl, i, MMDL_PARAM_0 );
+        MMDL_SetParam( mmdl, data->msg_id, MMDL_PARAM_1 );
+        MMDL_SetEventID( mmdl, SCRID_C04R0111_NPC_TALK );
+      
+        if( obj_id < 0xff ){
+          obj_id++;
+        }else{
+          GF_ASSERT( 0 );
+        }
+      }
     
-    data++;
-    i++;
+      data++;
+      i++;
+    }
   }
 }
 
@@ -1761,6 +1797,52 @@ static const HOME_NPC_DATA data_HomeNpcTbl[] =
   {BUSINESSMAN,10,20,0,16,msg_c04r0111_businessman_3},
   {BUSINESSMAN,18,28,0,14,msg_c04r0111_businessman_4},
   {OBJCODEMAX,0,0,0,0,0},
+};
+
+//--------------------------------------------------------------
+/// バトルサブウェイ　途中駅NPCデータ WiFi用　男
+//--------------------------------------------------------------
+static const u16 data_HomeNpcTbl_WifiMan[10] =
+{
+  BOY2, //たんぱんこぞう
+  BOY1, //じゅくがえり
+  BACKPACKERM, //バックパッカー
+  POLICEMAN, //おまわりさん
+  OLDMAN1,  //げいじゅつか
+  BOY4, //おぼっちゃま
+  PILOT, //パイロット
+  MAN3, //エリートトレーナー
+  OLDMAN1, //ベテラントレーナー
+  GENTLEMAN, //ジェントルマン
+};
+
+//--------------------------------------------------------------
+/// バトルサブウェイ　途中駅NPCデータ WiFi用　女
+//--------------------------------------------------------------
+static const u16 data_HomeNpcTbl_WifiWoman[10] =
+{
+  GIRL1, //ミニスカート
+  GIRL3, //じゅくがえり
+  BACKPACKERW, //バックパッカー
+  OL, //ＯＬ
+  GIRL4, //おじょうさま
+  WOMAN3, //エリートトレーナー
+  OLDWOMAN1, //ベテラントレーナー
+  LADY, //マダム
+  WOMAN3, //エリートトレーナー
+  OLDWOMAN1, //ベテラントレーナー
+};
+
+//--------------------------------------------------------------
+/// バトルサブウェイ　WiFi用　途中駅NPC配置位置
+//--------------------------------------------------------------
+static const MMDL_GRIDPOS data_HomeNpcWiFiPosTbl[HOME_NPC_WIFI_MAX] =
+{
+  {70,0,16},
+  {61,0,14},
+  {47,0,16},
+  {37,0,14},
+  {26,0,16},
 };
 
 //======================================================================
