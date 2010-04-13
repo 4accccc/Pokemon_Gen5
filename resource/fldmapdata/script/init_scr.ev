@@ -271,6 +271,9 @@ init_flags:
 	//N01R0501ゲーチス・謁見の間イベントで非表示
 	_FLAG_SET(FV_N01R0501_SAGE1)
 	
+	//C06　ジムクリアまでNを非表示
+	_FLAG_SET(FV_C06_BOSS)
+	
 }
 _RET
 

@@ -17,5 +17,6 @@
 #define SCRID_BG_C06_SIGN2_01 (10)
 #define SCRID_BG_C06_SIGN3_01 (11)
 #define SCRID_C06_SUNGLASSES_01 (12)
+#define SCRID_SCENE_C06_BOSS_01 (13)
 
 #endif //_C06_DEF_H_

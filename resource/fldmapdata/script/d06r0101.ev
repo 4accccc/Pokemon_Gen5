@@ -43,8 +43,8 @@ INIT_EVENT_START	ev_init_d06r0101
 			_OBJ_POS_CHANGE(D06R0101_HAKASE2_01,16,0,43,DIR_LEFT)
 			_OBJ_POS_CHANGE(D06R0101_HEROINE_01,15,0,40,DIR_LEFT)
 		ELSIF $WK_SCENE_D06R0101 == 3 THEN
-			_OBJ_POS_CHANGE(D06R0101_HAKASE2_01,32,0,25,DIR_LEFT)
-			_OBJ_POS_CHANGE(D06R0101_HEROINE_01,31,0,26,DIR_LEFT)
+			_OBJ_POS_CHANGE(D06R0101_HAKASE2_01,31,0,25,DIR_LEFT)
+			_OBJ_POS_CHANGE(D06R0101_HEROINE_01,30,0,26,DIR_LEFT)
 		ENDIF
 
 	ENDIF
@@ -75,9 +75,11 @@ EVENT_START    ev_pos_d06r0101_n_01
 		_OBJ_POS_CHANGE( D06R0101_NINJA_02, 8, 0, 55, DIR_UP )
 	
 	ENDIF
+	_OBJ_ANIME(D06R0101_NINJA_01,anm_ninja_add)
+	_OBJ_ANIME(D06R0101_NINJA_02,anm_ninja_add)
+	_OBJ_ANIME_WAIT()
 	
-	_TIME_WAIT(4)
-	
+	_TIME_WAIT(8)
 	//主人公びっくりする
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
 	_OBJ_ANIME_WAIT()
@@ -122,14 +124,15 @@ EVENT_START    ev_pos_d06r0101_n_01
 	_OBJ_ANIME_WAIT()
 	_MSGWIN_CLOSE()
 	
-	_TIME_WAIT(12)
-	
+	_TIME_WAIT(16)
 	//ダークトリニティが消える
+	_OBJ_ANIME(D06R0101_NINJA_01,anm_ninja_del)
+	_OBJ_ANIME(D06R0101_NINJA_02,anm_ninja_del)
+	_OBJ_ANIME_WAIT()
 	_OBJ_DEL( D06R0101_NINJA_01 )
 	_OBJ_DEL( D06R0101_NINJA_02 )
 	
-	_TIME_WAIT(15)
-
+	_TIME_WAIT(16)
 	_CAMERA_START()		//カメラ操作開始
     _CAMERA_PURGE()		//対象物とカメラのバインドを解く
 	_CAMERA_MOVE(9694,0,970795,622592,0,3309568,24)
@@ -158,7 +161,7 @@ EVENT_START    ev_pos_d06r0101_n_01
 
 	_TIME_WAIT(16)
 	IF $SCWK_ANSWER == SCR_YES THEN
-		_BALLOONWIN_OBJMSG( msg_d06r0101_boss_11,D06R0101_BOSS_01 )
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_boss_11,D06R0101_BOSS_01, POS_UR )
 		_MSGWIN_CLOSE()
 		
 		//==============フラグワーク操作==============//
@@ -167,13 +170,13 @@ EVENT_START    ev_pos_d06r0101_n_01
 		//============================================//
 	
 	ELSE
-		_BALLOONWIN_OBJMSG( msg_d06r0101_boss_12,D06R0101_BOSS_01 )
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_boss_12,D06R0101_BOSS_01, POS_UR )
 		_MSGWIN_CLOSE()
 		
 	ENDIF
 
 	_TIME_WAIT(8)
-	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_13,D06R0101_BOSS_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_boss_13,D06R0101_BOSS_01,POS_UR )
 	_MSGWIN_CLOSE()
 	
 	_TIME_WAIT(16)
@@ -237,6 +240,20 @@ _ANIME_LABEL	anm_boss_saru_01
 _ANIME_LABEL	anm_boss_saru_02
 	_ANIME_DATA	AC_WALK_R_8F,3
 	_ANIME_DATA	AC_WALK_U_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ダークトリニティ:出現する             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_add
+	_ANIME_DATA AC_NINJA_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ダークトリニティ:消える                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ninja_del
+	_ANIME_DATA AC_NINJA_ACT1,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -582,8 +599,12 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	
 	ENDIF
 	
-	_TIME_WAIT(4)
+	_OBJ_ANIME(D06R0101_NINJA_01,anm_ninja_add)
+	_OBJ_ANIME(D06R0101_NINJA_02,anm_ninja_add)
+	_OBJ_ANIME(D06R0101_NINJA_03,anm_ninja_add)
+	_OBJ_ANIME_WAIT()
 	
+	_TIME_WAIT(8)
 	//主人公がびっくり
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
 	_OBJ_ANIME_WAIT()
@@ -623,10 +644,16 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	_TIME_WAIT(8)
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_down)
 	_OBJ_ANIME_WAIT()
+
+	_OBJ_ANIME(D06R0101_NINJA_01,anm_ninja_del)
+	_OBJ_ANIME(D06R0101_NINJA_02,anm_ninja_del)
+	_OBJ_ANIME(D06R0101_NINJA_03,anm_ninja_del)
+	_OBJ_ANIME_WAIT()
 	
 	_OBJ_DEL(D06R0101_NINJA_01)
 	_OBJ_DEL(D06R0101_NINJA_02)
 	_OBJ_DEL(D06R0101_NINJA_03)
+	_TIME_WAIT(4)
 	
 //===============フラグ操作===============//
 	//POSイベントを無効に
@@ -698,6 +725,9 @@ EVENT_START    ev_pos_d06r0101_denki_04
 		//==============フラグワーク操作==============//
     	//Nイベントのワークをインクリメント
     	$WK_OTHER_N_COUNT += 1
+    	
+    	//ラストメッセージようにフラグをセット
+    	_FLAG_SET(FE_N_LASTMESSAGE)
 		//============================================//
 	
 	ELSE
@@ -858,7 +888,7 @@ EVENT_END
 ev_boss_btl:
 
 	//トレーナー戦呼び出し
-	_TRAINER_BTL_SET( TRID_BOSS_04, 0 )
+	_TRAINER_BTL_SET( TRID_BOSS_1_04, 0 )
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN

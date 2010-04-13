@@ -31,12 +31,174 @@ _EVENT_DATA    ev_c06_monsterball_01
 _EVENT_DATA    ev_bg_c06_sign2_01
 _EVENT_DATA    ev_bg_c06_sign3_01
 _EVENT_DATA		ev_c06_sunglasses_01
+_EVENT_DATA		ev_scene_c06_boss_01
 _EVENT_DATA_END
 
 /**************************************************************/
 /*            ZONE_INIT_LABEL                              　 */
 /**************************************************************/
 
+/**************************************************************/
+/*  C06 ジム前のNのイベント                   */
+/**************************************************************/
+EVENT_START    ev_scene_c06_boss_01
+	
+	DEFINE_LOCAL LWK_POKE_POS
+	DEFINE_LOCAL LWK_POKE_NUM
+	
+	//手持ちの先頭ポケモンネームをセット
+	_GET_PARTY_FRONT_POKEMON( LWK_POKE_POS, POKECOUNT_MODE_BATTLE_ENABLE )
+	_GET_PARTY_POKE_MONSNO( LWK_POKE_NUM, LWK_POKE_POS )
+	_MONS_NAME( 0, LWK_POKE_NUM )
+	
+	//プレイヤーの名前をセット
+	_PLAYER_NAME(1)
+	
+	_TIME_WAIT(8)
+	//NのBGM再生
+	_START_EVENT_BGM( SEQ_BGM_E_N )	
+	
+	//主人公がびっくりする
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
+	_OBJ_ANIME_WAIT()
+	
+	//主人公が振り向く
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT(8)
+	//N「……キミの　ポケモンと　はなしをさせてもらうよ
+	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_01, C06_BOSS_01, POS_UL )
+	_MSGWIN_CLOSE()
+
+	//Nが主人公に近づく
+	_OBJ_ANIME(C06_BOSS_01,anm_c06_boss_walk_01)
+//	_TIME_WAIT(16)
+//	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l_s)
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT(16)
+	//N「○○だね……　どんなトレーナか
+	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_02, C06_BOSS_01, POS_UL )
+	_MSGWIN_CLOSE()
+	
+	_TIME_WAIT(32)
+	//N「……そうか　カノコタウンで　うまれそだち
+	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_03, C06_BOSS_01, POS_UL )
+	_MSGWIN_CLOSE()
+
+	_TIME_WAIT(12)
+	_MONS_NAME( 1, LWK_POKE_NUM )
+	//N「それにしても　この　○○なぜだか
+	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_04, C06_BOSS_01, POS_UL )
+	_MSGWIN_CLOSE()
+
+	_TIME_WAIT(16)
+	//画面下移動する
+	_OBJ_ANIME(C06_BOSS_01,anm_c06_boss_walk_02)
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT(32)
+	//N「ゲーチスは　プラズマだんをつかい
+	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_05, C06_BOSS_01, POS_UL )
+	
+	//N「でんせつの　ポケモンは　そのにくたいが
+	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_06, C06_BOSS_01, POS_UL )
+	_MSGWIN_CLOSE()
+	
+	_TIME_WAIT(8)
+	//Nが下を向く
+	_OBJ_ANIME(C06_BOSS_01,anm_common_turn_d)
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT(24)
+	//N　首振りアニメ
+	_OBJ_ANIME(C06_BOSS_01,anm_boss_senyou)
+	_TIME_WAIT(46)
+	//N「……ボクの　ゆめは　あらそうことなく
+	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_07, C06_BOSS_01, POS_UL )
+	_MSGWIN_CLOSE()
+	_OBJ_ANIME_WAIT()
+/*	
+	_TIME_WAIT(16)
+	//N　首振りアニメ
+	_OBJ_ANIME(C06_BOSS_01,anm_boss_senyou)
+	_TIME_WAIT(32)
+	_OBJ_ANIME(C06_BOSS_01,anm_boss_turn)
+*/	
+	_TIME_WAIT(16)
+	_OBJ_ANIME(C06_BOSS_01,anm_boss_turn)
+	//N「その　けっか……
+	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_08, C06_BOSS_01, POS_UL )
+	_MSGWIN_CLOSE()
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT(8)
+	//画面右に移動する
+	_OBJ_ANIME(C06_BOSS_01,anm_c06_boss_back)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_turn)
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_DEL(C06_BOSS_01)
+	_FLAG_SET(FV_C06_BOSS)
+	
+	//BGM終了
+	_END_EVENT_BGM()
+	
+	//イベントを無効に
+	$WK_SCENE_C06 = 3
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//N : 専用アニメ                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_senyou
+	_ANIME_DATA	AC_N_ACT1,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//N : 振り向き                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_turn
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA AC_STAY_WALK_R_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//N : 主人公に近づく                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_c06_boss_walk_01
+	_ANIME_DATA	AC_WALK_R_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//N : 歩きながら喋る                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_c06_boss_walk_02
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//N : 立ち去る                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_c06_boss_back
+	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_R_8F,9
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//主人公 : Nを追いかけて振り向く                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_turn
+	_ANIME_DATA	AC_WAIT_32F,1
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1	
+	_ANIME_DATA	ACMD_END,0
+	
 /**************************************************************/
 /*  C06 BOY2とGIRL1のつばめがえし入手イベントスクリプト           */
 /**************************************************************/
@@ -169,9 +331,11 @@ EVENT_START    ev_pos_c06_hakase1_01
 	//ジムリーダーが振り向く
 	_OBJ_ANIME( C06_LEADER6_01,anm_common_turn_d)
 	_OBJ_ANIME_WAIT()
-
-	_TIME_WAIT(8)
 	
+	//博士BGMスタート
+	_START_EVENT_BGM(SEQ_BGM_E_DOCTOR2)
+	
+	_TIME_WAIT(8)
 	//博士が主人公に隣接
 	IF $LWK_PLY_X == 100 THEN
 		_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_02_x100)
@@ -354,6 +518,9 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_TIME_WAIT(8)
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_d)
 	_OBJ_ANIME_WAIT()
+
+	//BGM終了
+	_END_EVENT_BGM()
 	
 	//ジムリーダーフウロが喋る
 	//フウロ:フウロ『……ったく！　あんな　いいかげんな　かんじで
@@ -713,6 +880,13 @@ _ANIME_LABEL	anm_common_turn_r
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_l
 	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//共通：ターン左（遅い）                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l_s
+	_ANIME_DATA AC_STAY_WALK_L_16F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------

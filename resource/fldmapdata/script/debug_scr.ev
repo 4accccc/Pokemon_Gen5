@@ -495,8 +495,8 @@ EVENT_START   ev_debug_murakami
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_10, 10 )	//C02　N戦
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_11, 11 )	//R02ランニングシューズ入手
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_12, 12 )	//R02のサポート戦
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_13, 13 )	//電気石の洞穴/ダークトリニティとN
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_14, 14 )	//電気石の洞穴/ダークトリニティ
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_14, 13 )	//電気石の洞穴/ダークトリニティ
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_13, 14 )	//電気石の洞穴/ダークトリニティとN
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_15, 15 )	//電気石の洞穴/サポート博士①
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_16, 16 )	//リュウラセンの塔が揺れる１階
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_17, 17 )	//８番道路のサポート戦

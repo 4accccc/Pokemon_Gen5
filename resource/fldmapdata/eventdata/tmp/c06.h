@@ -27,6 +27,7 @@
 #define C06_BABYGIRL1_01                  10
 #define C06_SUNGLASSES_01                 11
 #define C06_FLD_ITEM_02                   12
+#define C06_BOSS_01                       13
 
 #endif //ZONE_C06_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c06.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

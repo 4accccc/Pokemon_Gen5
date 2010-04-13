@@ -88,16 +88,24 @@ EVENT_START   ev_pos_r08_support_01
 	_OBJ_ANIME_WAIT()
 	
 	_TIME_WAIT(8)
-	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_common_turn_r)
-    _OBJ_ANIME_WAIT()
     _ITEM_EVENT_KEYWAIT(ITEM_KAIHUKUNOKUSURI,1)
     
-	_TIME_WAIT(8)
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_common_turn_d)
+	_OBJ_ANIME_WAIT()
 	
-//	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_03)
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_senyou)
+	_OBJ_ANIME_WAIT()
+
+	_TIME_WAIT(8)
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_common_turn_r)
+	_OBJ_ANIME_WAIT()
+	
 	_BALLOONWIN_OBJMSG_POS( msg_r08_white_04, MMDL_ID_EVENTOBJ_00, POS_DL )
 	_MSGWIN_CLOSE()
-//	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT(20)
+	_BALLOONWIN_OBJMSG_POS( msg_r08_white_05, MMDL_ID_EVENTOBJ_00, POS_DL )
+	_MSGWIN_CLOSE()
 	
 	_TIME_WAIT(20)
 	//サポート退場処理
@@ -257,6 +265,15 @@ _ANIME_LABEL	anm_support_back_01_x789
 	_ANIME_DATA AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 */	
+
+//--------------------------------------------------------------------
+// サポート：専用アニメ                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_support_senyou
+
+	_ANIME_DATA AC_SUPPORT_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+	
 //--------------------------------------------------------------------
 // 共通アニメ：びっくりする                    
 //--------------------------------------------------------------------
