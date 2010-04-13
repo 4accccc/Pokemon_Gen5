@@ -446,6 +446,18 @@ BOOL SaveData_GetOutsideExistFlag(SAVE_CONTROL_WORK * sv)
 
 //---------------------------------------------------------------------------
 /**
+ * @brief	管理外セーブデータ存在フラグをセット
+ * @param	sv			              セーブデータ構造へのポインタ
+ * @param outside_data_exists		TRUEのとき、セーブデータが存在する
+ */
+//---------------------------------------------------------------------------
+void SaveData_SetOutsideExistFlag(SAVE_CONTROL_WORK * sv, BOOL outside_data_exists)
+{
+	sv->outside_data_exists = outside_data_exists;
+}
+
+//---------------------------------------------------------------------------
+/**
  * @brief	セーブデータの初期化
  * @param	sv			セーブデータ構造へのポインタ
  *

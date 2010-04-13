@@ -35,6 +35,8 @@ struct _INTR_SAVE_CONTROL{
   u8 backup_status;           ///<中断時、直前のセーブ状況をバックアップ
   u8 suspend_req;             ///<TRUE:中断リクエスト発生
   u8 no_save;                 ///<TRUE:既にセーブデータがあるのでセーブはしない
+  
+  BOOL outside_exists;        ///<管理外セーブ存在フラグの退避バッファ
 };
 
 
@@ -110,6 +112,9 @@ void IntrSave_Start(INTR_SAVE_CONTROL *isc)
   if(isc->no_save == FALSE){
     //初回セットアップ状態にする
     SaveData_SetNowSaveModeSetupON(isc->ctrl);
+    //管理外セーブに対して何もアクションしないように存在フラグを退避し、無し扱いにしておく
+    isc->outside_exists = SaveData_GetOutsideExistFlag(isc->ctrl);
+    SaveData_SetOutsideExistFlag(isc->ctrl, FALSE);
   }
   isc->status = INTR_SAVE_STATUS_MAIN;
 }
@@ -144,6 +149,8 @@ SAVE_RESULT IntrSave_Main(INTR_SAVE_CONTROL *isc)
     if(result == SAVE_RESULT_OK || result == SAVE_RESULT_NG){
       isc->status = INTR_SAVE_STATUS_FINISH;
       OS_TPrintf("IntSave ... セーブ終了\n");
+      //セーブが終了したので管理外セーブの存在フラグを復帰
+      SaveData_SetOutsideExistFlag(isc->ctrl, isc->outside_exists);
     }
     return result;
   
