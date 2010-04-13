@@ -1248,6 +1248,9 @@ EVENT_START   ev_pos_c02_stone_01
 	_FLAG_SET(FV_R08_STOPPER_01)
 
 	_FLAG_SET( FV_C02GYM0202_LEADER2 ) //ジム2室目からジムリーダーを消す
+	
+	//古代の城にいるライバルを消す
+	_FLAG_SET( FV_D03R0101_RIVAL_02 )
 	//============================================//
 		
 EVENT_END
