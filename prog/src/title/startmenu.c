@@ -47,6 +47,8 @@
 #include "startmenu.naix"
 #include "wifileadingchar.naix"
 
+#include "title_def.h"
+
 
 //============================================================================================
 //	定数定義
@@ -147,8 +149,6 @@ enum {
 typedef int (*pSTARTMENU_FUNC)(START_MENU_WORK*);
 
 #define	SAVE_BREAK_MESSAGE_MAX		( 8 )		// セーブデータ破損メッセージ数
-
-#define	BACK_GROUND_COLOR		( 0x7d8c )	// 背景カラー
 
 
 //============================================================================================
@@ -1086,8 +1086,8 @@ static int MainSeq_SaveBreak( START_MENU_WORK * wk )
 			GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 | GX_PLANEMASK_BG3 | GX_PLANEMASK_OBJ, VISIBLE_OFF );
 		GFL_DISP_GXS_SetVisibleControl(
 			GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 | GX_PLANEMASK_OBJ, VISIBLE_OFF );
-		GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, BACK_GROUND_COLOR );
-		GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, BACK_GROUND_COLOR );
+		GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, BLUE_BACK_GROUND_COLOR );
+		GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, BLUE_BACK_GROUND_COLOR );
 		wk->subSeq++;
 		return SetFadeIn( wk, MAINSEQ_SAVE_BREAK );
 

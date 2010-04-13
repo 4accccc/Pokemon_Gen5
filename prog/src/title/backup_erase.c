@@ -27,6 +27,7 @@
 
 #include "font/font.naix"
 #include "backup_erase.h"
+#include "title_def.h"
 
 
 //============================================================================================
@@ -84,8 +85,6 @@ enum {
 #define	BMPWIN_YESNO_PAL		( FONT_PALETTE_M )
 
 #define	EXP_BUF_SIZE		( 1024 )		// 汎用文字列バッファサイズ
-
-#define	BACK_GROUND_COLOR		( 0x7d8c )	// 背景カラー
 
 
 //============================================================================================
@@ -476,8 +475,8 @@ static void InitBg(void)
 
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
 
-	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, BACK_GROUND_COLOR );
-	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, BACK_GROUND_COLOR );
+	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, BLUE_BACK_GROUND_COLOR );
+	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, BLUE_BACK_GROUND_COLOR );
 }
 
 //--------------------------------------------------------------------------------------------
