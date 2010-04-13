@@ -85,38 +85,6 @@ get_party_state:
 _RET
 
 
-//======================================================================
-// サブルーチン：通常メッセージ表示
-//
-// message_id に指定されたメッセージを表示する
-//======================================================================
-say:
-  _TALK_OBJ_START()
-  _BALLOONWIN_OBJMSG_POS( message_id, SCWK_TARGET_OBJID, POS_DL )
-  _AB_KEYWAIT()
-  _BALLOONWIN_CLOSE() 
-_RET
-
-say_no_wait: // キー待ちなし
-  _TALK_OBJ_START()
-  _BALLOONWIN_OBJMSG_POS( message_id, SCWK_TARGET_OBJID, POS_DL )
-  _BALLOONWIN_CLOSE() 
-_RET
-
-//======================================================================
-// サブルーチン：質問メッセージ表示
-//
-// message_id に指定されたメッセージを表示し, 
-// 「はい」「いいえ」選択ウィンドウを表示する。
-// 選択結果を ask_retval に格納し, ウィンドウを閉じる
-//======================================================================
-ask:
-  _TALK_OBJ_START()
-  _BALLOONWIN_OBJMSG_POS( message_id, SCWK_TARGET_OBJID, POS_DL )
-  _YES_NO_WIN( ask_retval )
-  _BALLOONWIN_CLOSE()
-_RET
-
 
 /**********************************************************************/
 /*                                                                    */
@@ -137,32 +105,34 @@ EVENT_START ev_sodateya_grandpa
   // タマゴがある場合
   //-------------------
   IF $sodateya_have_egg == TRUE THEN  
+
     //「タマゴほしいじゃろ？」
-    $message_id = msg_sodateya_oldman_07
-    _CALL ask
+    _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldman_07, SCWK_TARGET_OBJID, POS_DOWN )
+    _YES_NO_WIN( ask_retval )
     IF $ask_retval == 0 THEN  //「はい」を選択 ==> タマゴを貰う
       $egg_get = TRUE 
     ELSE                      //「いいえ」を選択 ==>「本当は欲しいんじゃろ？」
-      $message_id = msg_sodateya_oldman_10
-      _CALL ask
+      _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldman_10, SCWK_TARGET_OBJID, POS_DOWN )
+      _YES_NO_WIN( ask_retval )
       IF $ask_retval == 0 THEN  //「はい」を選択 ==> タマゴを貰う
         $egg_get = TRUE 
       ENDIF
     ENDIF
+
     // タマゴ受け取り処理
     IF $egg_get == TRUE THEN 
       IF $party_total_num < 6 THEN  // 手持ちに空き有 ==> たまごゲット
         _GET_SODATEYA_EGG()
         //「タマゴを貰った」
         _PLAYER_NAME( 0 )
-        $message_id = msg_sodateya_oldman_08
-        _CALL say
+        _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldman_08, SCWK_TARGET_OBJID, POS_DOWN )
+        _AB_KEYWAIT()
         //「大事に育てなさいよ」
-        $message_id = msg_sodateya_oldman_08_01
-        _CALL say
+        _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldman_08_01, SCWK_TARGET_OBJID, POS_DOWN )
+        _LAST_KEYWAIT()
       ELSE                      // 手持ちがいっぱい ==>「手持ちがいっぱいじゃ」
-        $message_id = msg_sodateya_oldman_09
-        _CALL say
+        _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldman_09, SCWK_TARGET_OBJID, POS_DOWN )
+        _LAST_KEYWAIT()
       ENDIF
     // タマゴ削除
     ELSE
@@ -173,12 +143,12 @@ EVENT_START ev_sodateya_grandpa
   //-------------------
   ELSE                      
     IF $sodateya_poke_num == 0 THEN       // 預けポケモン0体 ==>「わしは育て屋じいさん」
-      $message_id = msg_sodateya_oldman_01
-      _CALL say
+      _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldman_01, SCWK_TARGET_OBJID, POS_DOWN )
+      _LAST_KEYWAIT()
     ELSIF $sodateya_poke_num == 1 THEN    // 預けポケモン1体 ==>「よくきたな」
       _SODATEYA_NICK_NAME( 0, 0 )
-      $message_id = msg_sodateya_oldman_02
-      _CALL say
+      _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldman_02, SCWK_TARGET_OBJID, POS_DOWN )
+      _LAST_KEYWAIT()
     ELSE                            // 預けポケモン2体 ==> 相性チェック
       _CALL love_check
     ENDIF
@@ -209,7 +179,8 @@ love_check:
   ENDIF
 
   // 結果発表
-  _CALL say
+  _BALLOONWIN_OBJMSG_POS( message_id, SCWK_TARGET_OBJID, POS_DOWN )
+  _LAST_KEYWAIT()
 }
 _RET
 
@@ -233,8 +204,9 @@ EVENT_START ev_sodateya_grandma
   //------------------
   IF $sodateya_have_egg == TRUE THEN
     //「そういえば」
-    $message_id = msg_sodateya_oldwoman_04
-    _CALL say
+    _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_04, SCWK_TARGET_OBJID, POS_DOWN )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE() 
   //------------------
   // タマゴがない場合
   //------------------
@@ -242,12 +214,12 @@ EVENT_START ev_sodateya_grandma
     // 初回会話かどうかでメッセージ切り替え
     IF $first_talk == TRUE THEN
       //「あたし育て屋ばあさん」
-      $message_id = msg_sodateya_oldwoman_01
-      _CALL say
+      _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_01, SCWK_TARGET_OBJID, POS_DOWN )
+      //_AB_KEYWAIT()
     ELSE
       //「何をしにきたの？」
-      $message_id = msg_sodateya_oldwoman_02
-      _CALL say
+      _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_02, SCWK_TARGET_OBJID, POS_DOWN )
+      //_AB_KEYWAIT()
     ENDIF
 
     // 所持金表示
@@ -276,8 +248,10 @@ EVENT_START ev_sodateya_grandma
     CASE msg_sodateya_menu_03 THEN       //『ひきとる』
       _CALL player_take_back_pokemon
     CASE msg_sodateya_menu_04 THEN       //『やめる』
-      $message_id = msg_sodateya_oldwoman_03  //「そうかい またおいで」
-      _CALL say
+      //「そうかい またおいで」
+      _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_03, SCWK_TARGET_OBJID, POS_DOWN )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE() 
     ENDSWITCH
 
   ENDIF
@@ -319,8 +293,8 @@ sodateya_adopt_pokemon_core:
 
       //「[ニックネーム]を しばらく預かるぞ」
       _TEMOTI_NICK_NAME( 0, select_party_pos )
-      $message_id = msg_sodateya_oldwoman_08
-      _CALL say_no_wait
+      _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_08, SCWK_TARGET_OBJID, POS_DOWN )
+      _AB_KEYWAIT()
 
       // 育て屋へデータ移動
       _POKE_TO_SODATEYA( select_party_pos )
@@ -358,26 +332,27 @@ sodateya_adopt_pokemon:
     // 手持ちが1匹の場合 ==> 終了
     IF $party_battle_num == 1 THEN
       //「手持ちが1匹しかいないようじゃ」
-      $message_id = msg_sodateya_oldwoman_05
-      _CALL say
+      _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_05, SCWK_TARGET_OBJID, POS_DOWN )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE() 
       _RET
     ENDIF
 
-    // 手持ちが2匹以下でボックスが空の場合 ==> 終了
-    // (はまり回避のため)
+    // 手持ちが2匹以下でボックスが空の場合 ==> 終了 ( はまり回避のため )
     IF $party_battle_num <= 2 THEN
       _GET_BOX_POKE_COUNT( box_count, POKECOUNT_MODE_NOT_EGG )
       IF $box_count == 0 THEN 
-        // @todo メッセージを表示
-        $message_id = msg_sodateya_oldwoman_17
-        _CALL say
+        _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_17, SCWK_TARGET_OBJID, POS_DOWN )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE() 
         _RET
       ENDIF
     ENDIF
 
     //「どのこを 育てる？」
-    $message_id = msg_sodateya_oldwoman_06
-    _CALL say_no_wait
+    _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_06, SCWK_TARGET_OBJID, POS_DOWN )
+    //_AB_KEYWAIT()
+    _BALLOONWIN_CLOSE() 
 
     // あずけコア処理
     _CALL sodateya_adopt_pokemon_core
@@ -386,20 +361,22 @@ sodateya_adopt_pokemon:
 		SWITCH $retval_adopt_core
 		CASE 0 THEN	//-------------------------------- キャンセル ==> 終了
 			//「そうかい またおいで」
-			$message_id = msg_sodateya_oldwoman_03
-			_CALL say
+      _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_03, SCWK_TARGET_OBJID, POS_DOWN )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE() 
       _RET
 		CASE 1 THEN //-------------------------------- タマゴを選択 ==> 終了
       //「それは育てられんぞ」
-      $message_id = msg_sodateya_oldwoman_07
-      _CALL say 
+      _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_07, SCWK_TARGET_OBJID, POS_DOWN )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE() 
       _RET
     CASE 2 THEN //-------------------------------- 預け完了
       // 最大数まで預けていなければ, ループする
       IF $sodateya_poke_num < $sodateya_poke_max THEN
         //「もう1匹 預けるかい？」
-        $message_id = msg_sodateya_oldwoman_10
-        _CALL ask
+        _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_10, SCWK_TARGET_OBJID, POS_DOWN )
+        _YES_NO_WIN( ask_retval )
         IF $ask_retval == 1 THEN   //『いいえ』を選択 ==> 終了
           $loop = FALSE 
         ENDIF
@@ -412,8 +389,9 @@ sodateya_adopt_pokemon:
   ENDWHILE
 
   //「時間がたったら また来なさい」
-  $message_id = msg_sodateya_oldwoman_09
-  _CALL say
+  _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_09, SCWK_TARGET_OBJID, POS_DOWN )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE() 
 }
 _RET
 
@@ -483,8 +461,8 @@ take_back_pokemon_core:
      //「○○くらい育っておるぞ」
      _SODATEYA_NICK_NAME( 0, select_sodateya_pos )
      _NUMBER( 1, grow_level, 2 )
-     $message_id = msg_sodateya_oldwoman_12
-     _CALL say
+     _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_12, SCWK_TARGET_OBJID, POS_DOWN )
+     _AB_KEYWAIT()
    ENDIF
 
    // 所持金表示
@@ -493,14 +471,13 @@ take_back_pokemon_core:
    // 質問「引き取るかい?」
    _SODATEYA_NICK_NAME( 0, select_sodateya_pos )
    _NUMBER( 1, charge, 4 )
-   $message_id = msg_sodateya_oldwoman_13
-   _CALL ask
-
-   // 所持金ウィンドウ消去
-	 _GOLD_WIN_CLOSE()
+   _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_13, SCWK_TARGET_OBJID, POS_DOWN ) 
+   _YES_NO_WIN( ask_retval )
+   _BALLOONWIN_CLOSE() 
 
    // 『いいえ』を選択
    IF $ask_retval == 1 THEN
+     _GOLD_WIN_CLOSE() // 所持金ウィンドウ消去
      $retval_take_back_core = 1
    // 『はい』を選択
    ELSE
@@ -509,15 +486,18 @@ take_back_pokemon_core:
 
      // 所持金が足りない場合 ==> 受け取れず終了
      IF $have_gold == FALSE THEN
+       _GOLD_WIN_CLOSE() // 所持金ウィンドウ消去
        $retval_take_back_core = 0
      // 所持金が足りる場合
      ELSE
        // お金を払う
        _SUBTRACT_GOLD( charge )
+       _GOLD_WIN_UPDATE( 0, 0 )
 
        // 支払いSE
        _SE_PLAY( SEQ_SE_SYS_22 )
        _SE_WAIT()
+       _GOLD_WIN_CLOSE() // 所持金ウィンドウ消去
 
        //引き取りアニメ演出
        _OBJ_ANIME( R03R0201_SODATEYA_GRANDMA, anime_grandma_take_back )
@@ -531,7 +511,7 @@ take_back_pokemon_core:
        //「[ニックネーム]を引き取った！」
        _SODATEYA_NICK_NAME( 0, select_sodateya_pos )
        _PLAYER_NAME( 1 )
-       _SYSWIN_MSG( msg_sodateya_oldwoman_15 , POS_DOWN )
+       _SYSWIN_MSG( msg_sodateya_oldwoman_15, POS_DOWN )
        _SYSWIN_CLOSE()
 
        // 手持ちポケモンに移動
@@ -573,8 +553,8 @@ player_take_back_pokemon:
   DEFINE_LOCAL loop       // FALSEになると繰り返し終了
 
   //「ポケモンをひきとるかい？」
-  $message_id = msg_sodateya_oldwoman_11
-  _CALL say
+  _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_11, SCWK_TARGET_OBJID, POS_DOWN )
+  //_AB_KEYWAIT()
 
   // 引き取りループ
   $loop = TRUE
@@ -584,37 +564,40 @@ player_take_back_pokemon:
     
     // コア処理の結果で分岐
     SWITCH $retval_take_back_core
-    CASE 0 THEN //--------------- お金が足りなかった場合 ==> 終了
+    CASE 0 THEN // お金が足りなかった場合 ==> 終了
       //「お金が足りないよ」
-      $message_id = msg_sodateya_oldwoman_14 
-      _CALL say
+      _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_14, SCWK_TARGET_OBJID, POS_DOWN )
+      _LAST_KEYWAIT()
       $loop = FALSE
-    CASE 1 THEN //--------------- 引き取らなかった場合 ==> 終了
+    CASE 1 THEN // 引き取らなかった場合 ==> 終了
       //「そうかい またおいで」
-      $message_id = msg_sodateya_oldwoman_03
-      _CALL say
+      _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_03, SCWK_TARGET_OBJID, POS_DOWN )
+      _LAST_KEYWAIT()
       $loop = FALSE
-    CASE 2 THEN //--------------- 引き取った場合
+    CASE 2 THEN // 引き取った場合
       // 全ポケモンを引き取った場合 ==> 終了
       IF $sodateya_poke_num == 0 THEN
         //「それじゃあ またきておくれ」
-        $message_id = msg_sodateya_oldwoman_03
-        _CALL say 
+        _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_03, SCWK_TARGET_OBJID, POS_DOWN )
+        _LAST_KEYWAIT()
         $loop = FALSE
       // まだ預けポケモンがいる場合
       ELSE
         // 質問「もう一匹 引き取るかい?」
-        $message_id = msg_sodateya_oldwoman_16
-        _CALL ask
+        _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_16, SCWK_TARGET_OBJID, POS_DOWN )
+        _YES_NO_WIN( ask_retval )
         //『いいえ』==> 終了
         IF $ask_retval == 1 THEN
           //「そうかい またおいで」
-          $message_id = msg_sodateya_oldwoman_03
-          _CALL say 
+          _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_03, SCWK_TARGET_OBJID, POS_DOWN )
+          _LAST_KEYWAIT()
           $loop = FALSE
         ENDIF
       ENDIF
     ENDSWITCH
+
   ENDWHILE
+
+  _BALLOONWIN_CLOSE() 
 }
 _RET 
