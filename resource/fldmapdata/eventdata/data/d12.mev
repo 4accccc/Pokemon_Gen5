@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/13 14:18:16
+#save date:2010/04/13 19:33:33
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d12.wms
 #SECTION START:OBJ_EVENT
@@ -772,7 +772,7 @@ SCRID_TRID_HAKAIM1_30
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
-2
+1
 #Parameter 1 Number
 0
 #Parameter 2 Number
