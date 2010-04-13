@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T17:48:18"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-13T15:27:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -355,9 +355,9 @@
 
 	<row id="msg_d20r0601_sys_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">てんじょうに　あなが　あいている……
+		<language name="JPN" width="256">ここから　うえに　のぼれそうだ▼
 うえの　かいに　すすみますか？</language>
-		<language name="JPN_KANJI" width="256">天井に　穴が　空いている……
+		<language name="JPN_KANJI" width="256">ここから　上に　上がれそうだ▼
 上の階に　進みますか？</language>
 	</row>
 

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-07T16:38:10"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-13T14:57:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -308,11 +308,9 @@
 		<comment>OLDMANから
 ちょっと離れた所に配置</comment>
 		<attribute name="キャラ指定">BABYGIRL1</attribute>
-		<language name="JPN" width="256">おじいちゃんはねー▼
-ビレッジブリッジの
+		<language name="JPN" width="256">おじいちゃんはね　ビレッジブリッジの
 いしだいくさん　なんだよー！</language>
-		<language name="JPN_KANJI" width="256">おじいちゃんはねー▼
-ビレッジブリッジの
+		<language name="JPN_KANJI" width="256">おじいちゃんはね　ビレッジブリッジの
 いしだいくさん　なんだよー！</language>
 	</row>
 
@@ -320,16 +318,12 @@
 		<attribute name="キャラ指定">WOMAN3</attribute>
 		<language name="JPN" width="256">はしに　みんかが
 くっついてるの　めずらしいでしょ？▼
-もともとは　さぎょういんたちの
-きゅうけいごや　だったみたいね▼
-キレイに　かいちく　して
-いまみたいな　みんかに　なったのよ</language>
+かわの　ぞうすいから　まもるために
+たかいところに　いえを　たてたそうよ</language>
 		<language name="JPN_KANJI" width="256">橋に　民家が
 くっ付いてるの　珍しいでしょ？▼
-元々は　作業員たちの
-休憩小屋　だったみたいね▼
-キレイに　改築して
-今みたいな　民家に　なったのよ</language>
+川の　増水から　守るために
+高いところに　家を　建てたそうよ</language>
 	</row>
 
 	<flowchart-group-list>

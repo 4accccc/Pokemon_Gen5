@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-19T18:57:48"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-13T12:07:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -272,7 +272,7 @@
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -294,34 +294,34 @@
 
 	<row id="msg_seatemple_step00">
 		<comment>歩数０歩目</comment>
-		<language name="JPN" width="256">カチッ！
-スイッチの　おとが　ひびいた</language>
+		<language name="JPN" width="256">カチッ！▼
+スイッチのような　おとが　ひびいた</language>
 		<language name="JPN_KANJI" width="256">カチッ！▼
-スイッチの　音が　響いた</language>
+スイッチのような　音が　響いた</language>
 	</row>
 
 	<row id="msg_seatemple_step01">
 		<comment>歩数１００歩目</comment>
-		<language name="JPN" width="256">カチッ！
-また　スイッチの　おとが　した</language>
-		<language name="JPN_KANJI" width="256">カチッ！▼
-また　スイッチの　音が　した</language>
+		<language name="JPN" width="256">ゴゴ……▼
+とおくで　にぶい　おとが　した</language>
+		<language name="JPN_KANJI" width="256">ゴゴ……▼
+遠くで　にぶい音が　した</language>
 	</row>
 
 	<row id="msg_seatemple_step02">
 		<comment>歩数３００歩目</comment>
-		<language name="JPN" width="256">ゴゴゴ
-とおくで　にぶい　おとが　ひびいた</language>
-		<language name="JPN_KANJI" width="256">ゴゴゴ……▼
-遠くで　にぶい音が　響いた</language>
+		<language name="JPN" width="256">ゴゴゴゴ……▼
+にぶい　おとが　ひびいた</language>
+		<language name="JPN_KANJI" width="256">ゴゴゴゴ……▼
+にぶい音が　響いた</language>
 	</row>
 
 	<row id="msg_seatemple_step03">
 		<comment>歩数４５０歩目</comment>
-		<language name="JPN" width="256">ゴゴゴゴゴ……
+		<language name="JPN" width="256">ゴゴゴゴゴゴゴ……！▼
 にぶい　おとが　ちかい！</language>
-		<language name="JPN_KANJI" width="256">ゴゴゴゴゴ……▼
-近くで　にぶい音が　する！</language>
+		<language name="JPN_KANJI" width="256">ゴゴゴゴゴゴゴ……！▼
+にぶい音が　近い！</language>
 	</row>
 
 	<row id="msg_seatemple_step04">
