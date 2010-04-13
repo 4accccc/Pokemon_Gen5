@@ -824,7 +824,7 @@
 #define FV_C03P15_LEADER3                  800 /* 0x0320 ヒウンシティ（プライムピア）：アーティ */
 #define FV_D10R0401_POKE10                 801 /* 0x0321 ジャイアントホール：ライ */
 #define FV_T04_SUMMER                      802 /* 0x0322 サザナミタウン：夏だけ町民 */
-		/* not used   803(0x0323) */
+#define FV_N01R0501_SAGE1                  803 /* 0x0323 謁見の間前の大広間：ゲーチス */
 		/* not used   804(0x0324) */
 		/* not used   805(0x0325) */
 		/* not used   806(0x0326) */
@@ -2393,7 +2393,7 @@
 #define SYS_FLAG_ELBOARD_C08BGYMWIN       2425 /* 0x0979 電光掲示板用フラグ：臨時ニュースC08ジムクリア（verブラック） */
 #define SYS_FLAG_ELBOARD_CHAMPWIN         2426 /* 0x097a 電光掲示板用フラグ：臨時ニュースチャンピオンに勝利 */
 #define SYS_FLAG_CHAMPION_WIN             2427 /* 0x097b 殿堂入りフラグ（チャンピオンに勝利） */
-		/* not used  2428(0x097c) */
+#define SYS_FLAG_BGM_CHAMP                2428 /* 0x097c BGM変更フラグ：Nの城登場後、チャンピオン部屋のBGMを変更する */
 		/* not used  2429(0x097d) */
 		/* not used  2430(0x097e) */
 		/* not used  2431(0x097f) */
@@ -2525,7 +2525,7 @@
 #define TMFLG_C08R0201_BTL                2751 /* 0x0abf ソウリュウシティ：バトルハウストレーナー再戦フラグ */
 #define TMFLG_H03_EMPEROR_BTL             2752 /* 0x0ac0 シリンダーブリッジ：暴走族と対戦したフラグ */
 #define TMFLG_T03R0401_ITEMGET_01         2753 /* 0x0ac1 カゴメタウン：日曜日限定1日1回アイテム入手イベント */
-		/* not used  2754(0x0ac2) */
+#define TMFLG_C03P16_CABIN_01             2754 /* 0x0ac2 ヒウンシティ：遊覧船イベント（1日1回） */
 		/* not used  2755(0x0ac3) */
 		/* not used  2756(0x0ac4) */
 		/* not used  2757(0x0ac5) */
