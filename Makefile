@@ -80,8 +80,8 @@ black:
 
 white_rom:
 	cp ./prog/spec/version_wr ./prog/version
-#	$(MAKE) -C $(PROG_DIR) clean
-#	$(MAKE) -C $(ARC_DIR) clean
+	$(MAKE) -C $(PROG_DIR) clean
+	$(MAKE) -C $(ARC_DIR) clean
 	$(MAKE) -C $(RESOURCE_DIR)
 	$(MAKE) -C $(ARC_DIR) 
 	$(MAKE) -C $(PROG_DIR) 
@@ -95,6 +95,12 @@ black_rom:
 	$(MAKE) -C $(ARC_DIR) 
 	$(MAKE) -C $(PROG_DIR) 
 	cp ./prog/spec/version ./prog/version
+
+master_rom:
+	$(MAKE) white_rom
+	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/IRAJ.srl
+	$(MAKE) black_rom
+	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/IRBJ.srl
 
 # cleanÇµÇΩèÍçáÇ…Ç∑Ç◊Çƒè¡Ç¶ÇÈÇÊÇ§Ç…ãLèqÇµÇƒÇ≠ÇæÇ≥Ç¢
 #--------------------------------------------------------------------
