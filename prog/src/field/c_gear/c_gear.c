@@ -57,7 +57,11 @@
 
 #define OAM_USE_PLTT_NUM (14)
 
-#define _BLACK_COLOR  (0x0441)
+static const u16 _BLACK_COLOR[] = {
+  0x0441,
+  0x0423,
+  0x0441,
+};
 
 static const u32 _bgpal[]=
 {
@@ -1835,7 +1839,7 @@ static void _PFadeSetDefaultPal( C_GEAR_WORK* pWork, BOOL comm )
     for( i=0; i<OAM_USE_PLTT_NUM; i++ ){
       if( (1<<i) & OAM_PFADE_NORMAL_MSK ){
         // 16‚±‚©‚¦‚é
-        SoftFade( &p_buff[ 16*i ], &p_buff[ 16*i ], 16, 8, _BLACK_COLOR );
+        SoftFade( &p_buff[ 16*i ], &p_buff[ 16*i ], 16, 8, _BLACK_COLOR[pWork->sex] );
         GFL_STD_MemCopy( &p_buff[ 16*i ], &p_trans[ 16*i ], 2*16 );
       }
     }
@@ -1845,7 +1849,7 @@ static void _PFadeSetDefaultPal( C_GEAR_WORK* pWork, BOOL comm )
     for( i=0; i<OAM_USE_PLTT_NUM; i++ ){
       if( (1<<i) & BG_PFADE_NORMAL_MSK ){
         // 16‚±‚©‚¦‚é
-        SoftFade( &p_buff[ 16*i ], &p_buff[ 16*i ], 16, 8, _BLACK_COLOR );
+        SoftFade( &p_buff[ 16*i ], &p_buff[ 16*i ], 16, 8, _BLACK_COLOR[pWork->sex] );
         GFL_STD_MemCopy( &p_buff[ 16*i ], &p_trans[ 16*i ], 2*16 );
       }
     }
@@ -1856,7 +1860,7 @@ static void _PFadeSetBlack( C_GEAR_WORK* pWork )
 {
   // •‚­
   PaletteFadeReq(
-    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,   -120, 0, 16, _BLACK_COLOR, pWork->pfade_tcbsys
+    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,   -120, 0, 16, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
     );
 }
 
@@ -1877,12 +1881,12 @@ static void _PFadeSetSleepBlack( C_GEAR_WORK* pWork, BOOL on_flag )
   }
   // •‚­
   PaletteFadeReq(
-    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,   -120, 0, evy, _BLACK_COLOR, pWork->pfade_tcbsys
+    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,   -120, 0, evy, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
     );
 
   // •‚­
   PaletteFadeReq(
-    pWork->pfade_ptr, PF_BIT_SUB_BG, BG_PFADE_NORMAL_MSK,   -120, 0, evy, _BLACK_COLOR, pWork->pfade_tcbsys
+    pWork->pfade_ptr, PF_BIT_SUB_BG, BG_PFADE_NORMAL_MSK,   -120, 0, evy, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
     );
 }
 
@@ -1890,7 +1894,7 @@ static void _PFadeToBlack( C_GEAR_WORK* pWork )
 {
   // •‚­
   PaletteFadeReq(
-    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,  1, 0, 16, _BLACK_COLOR, pWork->pfade_tcbsys
+    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,  1, 0, 16, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
     );
 }
 
@@ -1898,7 +1902,7 @@ static void _PFadeFromBlack( C_GEAR_WORK* pWork )
 {
   // •‚­
   PaletteFadeReq(
-    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,  1, 16, 0, _BLACK_COLOR, pWork->pfade_tcbsys
+    pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,  1, 16, 0, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
     );
 }
 
@@ -2618,12 +2622,13 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 static void _editMarkONOFF(C_GEAR_WORK* pWork,BOOL bOn)
 {
   if(bOn){
+    GFL_CLACT_WK_SetAnmIndex( pWork->cellCursor[_CLACT_EDITMARKON], 0 );
     GFL_CLACT_WK_SetAutoAnmSpeed( pWork->cellCursor[_CLACT_EDITMARKON], 2*FX32_ONE );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[_CLACT_EDITMARKON], TRUE );
   }
   else{
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellCursor[_CLACT_EDITMARKON], FALSE );
-    GFL_CLACT_WK_SetAnmIndex( pWork->cellCursor[_CLACT_EDITMARKON], 0 );
+    GFL_CLACT_WK_SetAnmIndex( pWork->cellCursor[_CLACT_EDITMARKON], 1 );
   }
 }
 
