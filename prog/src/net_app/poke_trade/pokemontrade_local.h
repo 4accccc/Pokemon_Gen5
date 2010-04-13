@@ -1032,8 +1032,7 @@ extern void POKMEONTRADE_DEMO_GTS_ChangeDemo(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_StartMojiSelect(POKEMON_TRADE_WORK* pWork,int x,int y);
 extern void POKEMONTRADE_EndMojiSelect(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADE_CheckMojiSelect(POKEMON_TRADE_WORK* pWork);
-
-
+extern void POKEMONTRADE2D_ChangePokemonPalette(POKEMON_TRADE_WORK* pWork, BOOL bGray);
 
 
 

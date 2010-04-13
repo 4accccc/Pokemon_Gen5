@@ -15,6 +15,7 @@
 #include "trade.naix"
 #include "poke_icon.naix"
 #include "system/main.h"
+#include "system/palanm.h"
 
 #include "net_app/pokemontrade.h"
 #include "pokemontrade_local.h"
@@ -3383,3 +3384,24 @@ BOOL POKEMONTRADE_CheckMojiSelect(POKEMON_TRADE_WORK* pWork)
   return TRUE;
 }
 
+
+
+void POKEMONTRADE2D_ChangePokemonPalette(POKEMON_TRADE_WORK* pWork, BOOL bGray)
+{
+  u32 addr;
+  ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
+  PALETTE_FADE_PTR pP = PaletteFadeInit(pWork->heapID);
+  
+  PaletteFadeWorkAllocSet(pP, FADE_SUB_OBJ, 16 * 32, pWork->heapID);
+  PaletteWorkSetEx_ArcHandle(pP,arcHandlePoke ,POKEICON_GetPalArcIndex() ,pWork->heapID,
+                             FADE_SUB_OBJ, 0, 0, 0);
+  if(bGray){
+    SoftFadePfd(pP, FADE_SUB_OBJ, 0, 16*3, 6, 0);
+  }
+  addr = (u32)PaletteWorkTransWorkGet( pP, FADE_SUB_OBJ );
+  GXS_LoadOBJPltt((void*)addr, 3*32, 3*32);
+
+  PaletteFadeWorkAllocFree(pP,FADE_SUB_OBJ);
+  PaletteFadeFree(pP);
+  GFL_ARC_CloseDataHandle(arcHandlePoke);
+}

@@ -2276,9 +2276,10 @@ static void _MoveSearchPoke(POKEMON_TRADE_WORK* pWork,int moji)
 
 static void _mojiSelectEnd2(POKEMON_TRADE_WORK* pWork)
 {
-//    GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
-    _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
+  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+  _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
 }
+
 
 
 static void _mojiSelectEnd(POKEMON_TRADE_WORK* pWork)
@@ -2291,10 +2292,11 @@ static void _mojiSelectEnd(POKEMON_TRADE_WORK* pWork)
     POKETRADE_MESSAGE_WindowClear(pWork);
     GXS_SetVisibleWnd( GX_WNDMASK_NONE );
     POKE_GTS_VisibleFaceIcon(pWork,TRUE);
+    POKEMONTRADE2D_ChangePokemonPalette(pWork,FALSE);
     _scrollResetAndIconReset(pWork);
     POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
     POKEMONTRADE_EndMojiSelect(pWork);
-    _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
+    _CHANGE_STATE(pWork, _mojiSelectEnd2);
   }
 
 }
@@ -2317,6 +2319,7 @@ static void _loopSearchMojiState(POKEMON_TRADE_WORK* pWork)
       pWork->selectMoji = ans + 1;
       POKEMONTRADE_StartMojiSelect(pWork,tp_mojidata[ans].rect.left,tp_mojidata[ans].rect.top);
       _MoveSearchPoke(pWork,ans);
+      GXS_SetVisibleWnd( GX_WNDMASK_NONE );
       _CHANGE_STATE(pWork, _mojiSelectEnd);
       return;
     }
@@ -2331,6 +2334,7 @@ static void _loopSearchMojiState(POKEMON_TRADE_WORK* pWork)
     POKETRADE_MESSAGE_WindowClear(pWork);
     GXS_SetVisibleWnd( GX_WNDMASK_NONE );
     POKE_GTS_VisibleFaceIcon(pWork,TRUE);
+    POKEMONTRADE2D_ChangePokemonPalette(pWork,FALSE);
     _scrollResetAndIconReset(pWork);
     POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
     POKEMONTRADE_EndMojiSelect(pWork);
@@ -2357,7 +2361,7 @@ static void _startSearchMojiState(POKEMON_TRADE_WORK* pWork)
   POKE_GTS_VisibleFaceIcon(pWork, FALSE);
   
 
-  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ, -8 );
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 , -8 );
 
   {
     G2S_SetWnd0InsidePlane(
@@ -2385,8 +2389,10 @@ static void _startSearchMojiState(POKEMON_TRADE_WORK* pWork)
       FALSE );
     GXS_SetVisibleWnd( GX_WNDMASK_W0|GX_WNDMASK_W1 );
   }
+ // POKETRADE2D_IconAllGray(pWork,TRUE);
 
-
+//  PaletteFadeReq();
+  POKEMONTRADE2D_ChangePokemonPalette(pWork,TRUE);
   
   TOUCHBAR_SetActive( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
 
