@@ -32,7 +32,7 @@
 #include "leader_board_def.h"       // ŠeŽí’è‹`“™
 
 #ifdef PM_DEBUG
-#define SPECIAL_FEBRUARY
+//#define BOARD_TEST_DATA
 #endif
 
 //--------------------------------------------------------------------------------------------
@@ -342,7 +342,7 @@ static void InitWork( LEADERBOARD_WORK *wk, void *pwk )
   }
 
 
-#ifdef PM_DEBUG
+#ifdef BOARD_TEST_DATA
   wk->debugname = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
                              NARC_message_trname_dat, HEAPID_LEADERBOARD );
 
@@ -1664,9 +1664,6 @@ static void _debug_data_set( LEADERBOARD_WORK *wk, BSUBWAY_LEADER_DATA *bData )
   STRBUF *str;
   PMS_DATA *pms;
 
-#ifdef SPECIAL_FEBRUARY
-  num = 23;
-#endif
 
   if(GFL_UI_KEY_GetCont() & PAD_KEY_UP){
     num = 5;
