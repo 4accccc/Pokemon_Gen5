@@ -229,6 +229,10 @@ _TALK_OBJ_START()
 		//電光掲示板フラグセット
 		_FLAG_SET( SYS_FLAG_ELBOARD_C06GYMWIN )
 
+		//ジム前でのNイベントを有効にする
+		$WK_SCENE_C06 = 2
+		_FLAG_RESET(FV_C06_BOSS)
+
 		//========================================/
 
 	//ジムバッジを取得している場合

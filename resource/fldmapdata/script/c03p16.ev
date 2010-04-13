@@ -44,7 +44,7 @@ EVENT_START		ev_reserve_c03p16_cabinguide_01
   IF $WK_OTHER_PASSENGERBOAT == 2 THEN
 		//おめでとうございます！（全抜き用メッセージ）
 		_BALLOONWIN_OBJMSG( msg_c03p16_cabinguide_09 , C03P16_CABINGUIDE_01 )
-		_BALLOONWIN_CLOSE()
+		_MSGWIN_CLOSE()
 		
 		//ご褒美・曜日毎に設定
 		DEFINE_LOCAL	LWK_WEEK
@@ -73,12 +73,15 @@ EVENT_START		ev_reserve_c03p16_cabinguide_01
 	//ごじょうせん　ありがとうございました
 	_BALLOONWIN_OBJMSG( msg_c03p16_cabinguide_07 , C03P16_CABINGUIDE_01 )
 	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+	_MSGWIN_CLOSE()
 
 	//========================================/
 
 	//乗船アニメ用ワークを０にする
 	$WK_OTHER_PASSENGERBOAT = 0
+	
+	//乗船フラグをＯＮにする
+	_FLAG_SET( TMFLG_C03P16_CABIN_01 )
 	
 	//========================================/
 
@@ -120,77 +123,89 @@ _TALK_OBJ_START()
 	//ゲームクリア後なら
 	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
 	
-		_GET_TIMEZONE( LWK_TIMEZONE )
+		//まだ今日は乗っていない場合
+		IF FLAG_OFF( TMFLG_C03P16_CABIN_01 ) THEN
+		
+			_GET_TIMEZONE( LWK_TIMEZONE )
 	
-		//乗船時間内の場合
-		IF $LWK_TIMEZONE == TIMEZONE_EVENING THEN
+			//乗船時間内の場合
+			IF $LWK_TIMEZONE == TIMEZONE_EVENING THEN
 	
-			//けしき　ウキウキ
-			_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01 , C03P16_CABINGUIDE_01, POS_DL )
+				//けしき　ウキウキ
+				_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01 , C03P16_CABINGUIDE_01, POS_DL )
 			
-			//説明を受けた場合のみ繰り返す
-			$LWK_MENU_WHILE = 0
-			WHILE $LWK_MENU_WHILE != 1
+				//説明を受けた場合のみ繰り返す
+				$LWK_MENU_WHILE = 0
+				WHILE $LWK_MENU_WHILE != 1
 				
-				//所持金の表示
-				_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
-				//BMPMENU表示
-				_BMPMENU_INIT_RIGHT( MENU_X2,MENU_Y2,0,1,LWK_MENU )
+					//所持金の表示
+					_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+					//BMPMENU表示
+					_BMPMENU_INIT_RIGHT( MENU_X2,MENU_Y2,0,1,LWK_MENU )
 
-				_BMPMENU_MAKE_LIST( msg_c03p16_cabin_menu_01, 0 )	//ふねにのる
-				_BMPMENU_MAKE_LIST( msg_c03p16_cabin_menu_02, 1 )	//せつめい
-				_BMPMENU_MAKE_LIST( msg_c03p16_cabin_menu_03, 2 )	//やめる
+					_BMPMENU_MAKE_LIST( msg_c03p16_cabin_menu_01, 0 )	//ふねにのる
+					_BMPMENU_MAKE_LIST( msg_c03p16_cabin_menu_02, 1 )	//せつめい
+					_BMPMENU_MAKE_LIST( msg_c03p16_cabin_menu_03, 2 )	//やめる
 			
-				// メニュー表示
-				_BMPMENU_START()
+					// メニュー表示
+					_BMPMENU_START()
+					_MSGWIN_CLOSE()
+			
+					//選択結果で分岐
+					SWITCH $LWK_MENU
+					CASE 0 THEN		//ふねにのる場合
+					
+						_GOLD_WIN_CLOSE()
+						//ループ終了
+						$LWK_MENU_WHILE = 1
+						
+						_CALL ev_cabin
+			
+					CASE 1 THEN		//せつめいを受ける場合
+
+						_GOLD_WIN_CLOSE()
+						_CALL ev_explanation
+						_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01d , C03P16_CABINGUIDE_01, POS_DL )
+
+					CASE 2 THEN		//やめる
+					
+						_GOLD_WIN_CLOSE()
+						//ループ終了
+						$LWK_MENU_WHILE = 1
+					
+						//かしこまりました
+						_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_06 , C03P16_CABINGUIDE_01, POS_DL )
+						_LAST_KEYWAIT()
+						_MSGWIN_CLOSE()
+				
+					ENDSWITCH
+
+				ENDWHILE
+
+			//乗船時間外の場合
+			ELSE
+	
+				//夕方のみの　運航になっております。
+				_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01b , C03P16_CABINGUIDE_01, POS_DL )
+				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
-			
-				//選択結果で分岐
-				SWITCH $LWK_MENU
-				CASE 0 THEN		//ふねにのる場合
-					
-					_GOLD_WIN_CLOSE()
-					//ループ終了
-					$LWK_MENU_WHILE = 1
-					
-					_CALL ev_cabin
-			
-				CASE 1 THEN		//せつめいを受ける場合
-
-					_GOLD_WIN_CLOSE()
-					_CALL ev_explanation
-					_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01d , C03P16_CABINGUIDE_01, POS_DL )
-
-				CASE 2 THEN		//やめる
-					
-					_GOLD_WIN_CLOSE()
-					//ループ終了
-					$LWK_MENU_WHILE = 1
-					
-					//かしこまりました
-					_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_06 , C03P16_CABINGUIDE_01, POS_DL )
-					_LAST_KEYWAIT()
-					_BALLOONWIN_CLOSE()
-				
-				ENDSWITCH
-
-			ENDWHILE
-
-		//乗船時間外の場合
+	
+			ENDIF
+		//もう乗った場合
 		ELSE
-	
-			//夕方のみの　運航になっております。
-			_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01b , C03P16_CABINGUIDE_01, POS_DL )
+		
+			_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_08 , C03P16_CABINGUIDE_01, POS_DL )
 			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-	
+			_MSGWIN_CLOSE()
+		
 		ENDIF
-	
+
 	//ゲームクリア前なら
 	ELSE
+		
 		_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_10 , C03P16_CABINGUIDE_01, POS_DL )
 		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+		_MSGWIN_CLOSE()
 
 	ENDIF
 EVENT_END
@@ -228,7 +243,7 @@ ev_cabin:
 					
 					//まもなく　しゅっこうに　なります
 					_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_05 , C03P16_CABINGUIDE_01, POS_DL )
-					_BALLOONWIN_CLOSE()
+					_MSGWIN_CLOSE()
 
 					//乗船アニメ
 					_OBJ_ANIME( C03P16_CABINGUIDE_01, anm_cabin_in )
@@ -250,7 +265,7 @@ ev_cabin:
 					//お金が　足りません
 					_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01c , C03P16_CABINGUIDE_01, POS_DL )
 					_LAST_KEYWAIT()
-					_BALLOONWIN_CLOSE()
+					_MSGWIN_CLOSE()
 				
 				ENDIF
 _RET
@@ -263,12 +278,12 @@ ev_explanation:
 
 //ロイヤルイッシュ号は～
 _BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01a , C03P16_CABINGUIDE_01, POS_DL )
-_BALLOONWIN_CLOSE()
+
 //イッシュちほうの　おおきなはし
 _BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_02 , C03P16_CABINGUIDE_01, POS_DL )
-_BALLOONWIN_CLOSE()
+
 //甲板では　景色も　楽しめます
 _BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_03 , C03P16_CABINGUIDE_01, POS_DL )
-_BALLOONWIN_CLOSE()
+_MSGWIN_CLOSE()
 
 _RET
