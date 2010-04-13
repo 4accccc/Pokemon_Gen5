@@ -303,6 +303,12 @@ static void sub_DetailWordset(const GAMEBEACON_INFO *info, WORDSET *wordset )
     WORDSET_RegisterPokeMonsNameNo( wordset, 1,GAMEBEACON_Get_Details_BattleMonsNo(info));
     break;
   case GAMEBEACON_DETAILS_NO_BATTLE_TRAINER:
+    {
+      u16 tr_id = GAMEBEACON_Get_Details_BattleTrainer(info);
+      WORDSET_RegisterTrainerName( wordset, 0, tr_id );
+      WORDSET_RegisterTrainerName( wordset, 1, tr_id );
+    }
+    break;
   case GAMEBEACON_DETAILS_NO_BATTLE_JIMLEADER:
   case GAMEBEACON_DETAILS_NO_BATTLE_BIGFOUR:
   case GAMEBEACON_DETAILS_NO_BATTLE_CHAMPION:
