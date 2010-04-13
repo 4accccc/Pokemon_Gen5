@@ -300,12 +300,15 @@ static void BBAG_ClactItemLoad( BBAG_WORK * wk )
 {
   ARCHANDLE * ah;
 	u8	cgx_type, pal_type;
+	u16	dmyItem;
 	u16	i;
 
 	if( wk->dat->mode == BBAG_MODE_SHOOTER ){
+		dmyItem  = SHOOTER_ITEM_ShooterIndexToItemIndex( 0 );
 		cgx_type = ITEM_GET_SHOOTER_ICON_CGX;
 		pal_type = ITEM_GET_SHOOTER_ICON_PAL;
 	}else{
+		dmyItem  = 1;
 		cgx_type = ITEM_GET_ICON_CGX;
 		pal_type = ITEM_GET_ICON_PAL;
 	}
@@ -314,10 +317,10 @@ static void BBAG_ClactItemLoad( BBAG_WORK * wk )
 
 	for( i=0; i<7; i++ ){
 	  wk->chrRes[BBAG_CHRRES_ITEM1+i] = GFL_CLGRP_CGR_Register(
-																				ah, ITEM_GetIndex(1,cgx_type),
+																				ah, ITEM_GetIndex(dmyItem,cgx_type),
 																				FALSE, CLSYS_DRAW_SUB, wk->dat->heap );
 	  wk->palRes[BBAG_PALRES_ITEM1+i] = GFL_CLGRP_PLTT_Register(
-																				ah, ITEM_GetIndex(1,pal_type),
+																				ah, ITEM_GetIndex(dmyItem,pal_type),
 																				CLSYS_DRAW_SUB, i*32, wk->dat->heap );
 	}
   wk->celRes[BBAG_CELRES_ITEM] = GFL_CLGRP_CELLANIM_Register(
