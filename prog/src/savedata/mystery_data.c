@@ -854,18 +854,9 @@ static RECORD_CRC* MysteryData_GetCrc( MYSTERY_DATA *p_wk )
 static void MysteryData_Coded( MYSTERY_DATA *p_wk )
 { 
   void  *p_data = MysteryData_GetDataPtr( p_wk );
-  u32   size    = MysteryData_GetWorkSize( p_wk );
-  RECORD_CRC* p_crc = MysteryData_GetCrc( p_wk );
+  MYSTERY_DATA_TYPE type  = MysteryData_GetDataType( p_wk );
 
-  GF_ASSERT( p_crc->coded_number == 0 );
-
-  p_crc->coded_number = OS_GetVBlankCount() | (OS_GetVBlankCount() << 8);
-  if(p_crc->coded_number==0){
-    p_crc->coded_number = 1;
-  }
-  p_crc->crc16ccitt_hash = GFL_STD_CODED_CheckSum( p_data, size - sizeof(RECORD_CRC));
-  GFL_STD_CODED_Coded( p_data, size - sizeof(RECORD_CRC), 
-    p_crc->crc16ccitt_hash + (p_crc->coded_number << 16));
+  MYSTERYDATA_Coded( p_data, type );
 }
 
 //----------------------------------------------------------------------------
@@ -878,13 +869,77 @@ static void MysteryData_Coded( MYSTERY_DATA *p_wk )
 static void MysteryData_Decoded( MYSTERY_DATA *p_wk )
 { 
   void  *p_data = MysteryData_GetDataPtr( p_wk );
-  u32   size    = MysteryData_GetWorkSize( p_wk );
-  RECORD_CRC* p_crc = MysteryData_GetCrc( p_wk );
+  MYSTERY_DATA_TYPE type  = MysteryData_GetDataType( p_wk );
+
+  MYSTERYDATA_Decoded( p_data, type );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  暗号化
+ *
+ *	@param	void *p_data_adrs データのアドレス
+ *	@param	type              データタイプ
+ */
+//-----------------------------------------------------------------------------
+void MYSTERYDATA_Coded( void *p_data_adrs, MYSTERY_DATA_TYPE type )
+{ 
+  u32   size;
+  RECORD_CRC* p_crc;
+
+  switch( type )
+  { 
+  case MYSTERY_DATA_TYPE_OUTSIDE:  //管理外セーブ
+    size  = sizeof( OUTSIDE_MYSTERY );
+    p_crc = &(((OUTSIDE_MYSTERY*)p_data_adrs)->crc);
+    break;
+  case MYSTERY_DATA_TYPE_ORIGINAL: //通常のセーブ
+    size  = sizeof( MYSTERY_ORIGINAL_DATA );
+    p_crc = &(((MYSTERY_ORIGINAL_DATA*)p_data_adrs)->crc);
+    break;
+  }
+
+  GF_ASSERT( p_crc->coded_number == 0 );
+
+  p_crc->coded_number = OS_GetVBlankCount() | (OS_GetVBlankCount() << 8);
+  if(p_crc->coded_number==0){
+    p_crc->coded_number = 1;
+  }
+  p_crc->crc16ccitt_hash = GFL_STD_CODED_CheckSum( p_data_adrs, size - sizeof(RECORD_CRC));
+  GFL_STD_CODED_Coded( p_data_adrs, size - sizeof(RECORD_CRC), 
+      p_crc->crc16ccitt_hash + (p_crc->coded_number << 16));
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  復号化
+ *
+ *	@param	void *p_data_adrs データのアドレス
+ *	@param	type              データタイプ
+ */
+//-----------------------------------------------------------------------------
+void MYSTERYDATA_Decoded( void *p_data_adrs, MYSTERY_DATA_TYPE type )
+{
+  u32   size;
+  RECORD_CRC* p_crc;
+
+  switch( type )
+  { 
+  case MYSTERY_DATA_TYPE_OUTSIDE:  //管理外セーブ
+    size  = sizeof( OUTSIDE_MYSTERY );
+    p_crc = &(((OUTSIDE_MYSTERY*)p_data_adrs)->crc);
+    break;
+  case MYSTERY_DATA_TYPE_ORIGINAL: //通常のセーブ
+    size  = sizeof( MYSTERY_ORIGINAL_DATA );
+    p_crc = &(((MYSTERY_ORIGINAL_DATA*)p_data_adrs)->crc);
+    break;
+  }
 
   GF_ASSERT(p_crc->coded_number!=0);
 
-  GFL_STD_CODED_Decoded( p_data, size - sizeof(RECORD_CRC), 
+  GFL_STD_CODED_Decoded( p_data_adrs, size - sizeof(RECORD_CRC), 
     p_crc->crc16ccitt_hash + (p_crc->coded_number << 16));
 
   p_crc->coded_number = 0;
+
 }

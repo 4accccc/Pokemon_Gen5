@@ -255,6 +255,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardList( DEBUG_MENU_EVENT_WORK *p_wk )
 static BOOL debugMenuCallProc_MakeMysteryCardPoke( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_MakeMysteryCardItem( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk );
+static BOOL debugMenuCallProc_MakeMysteryCardGLiberty( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static BOOL debugMenuCallProc_Zukan( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_DebugZoneJump( DEBUG_MENU_EVENT_WORK *p_wk );
@@ -5824,6 +5825,7 @@ static const FLDMENUFUNC_LIST DATA_SubMysteryCardMakeList[] =
   { DEBUG_FIELD_MYSTERY_01, debugMenuCallProc_MakeMysteryCardPoke },              //ポケモン作成
   { DEBUG_FIELD_MYSTERY_02, debugMenuCallProc_MakeMysteryCardItem },               //道具作成
   { DEBUG_FIELD_MYSTERY_03, debugMenuCallProc_MakeMysteryCardGPower },              //Gパワー作成
+  { DEBUG_FIELD_MYSTERY_04, debugMenuCallProc_MakeMysteryCardGLiberty },              //リバティ作成
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubMysteryCardMakeData = {
@@ -5914,7 +5916,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardItem( DEBUG_MENU_EVENT_WORK *p_wk )
   {
     if( !MYSTERYDATA_IsEventRecvFlag(p_mystery_sv, i) )
     {
-      DEBUG_MYSTERY_SetGiftItemData( &data );
+      DEBUG_MYSTERY_SetGiftItemData( &data, ITEM_MONSUTAABOORU );
       DEBUG_MYSTERY_SetGiftCommonData( &data, i, FALSE ); 
       MYSTERYDATA_SetCardData( p_mystery_sv, &data );
 
@@ -5979,6 +5981,27 @@ static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk
       break;
     }
   }
+  MYSTERY_DATA_UnLoad( p_mystery_sv );
+
+  return FALSE;
+}
+static BOOL debugMenuCallProc_MakeMysteryCardGLiberty( DEBUG_MENU_EVENT_WORK *p_wk )
+{ 
+  DOWNLOAD_GIFT_DATA  dl_data;
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
+  MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, GFL_HEAPID_APP );
+  GIFT_PACK_DATA  data;
+  int i;
+
+  GFL_STD_MemClear( &dl_data, sizeof(DOWNLOAD_GIFT_DATA) );
+  DEBUG_MYSTERY_SetGiftItemData( &data, ITEM_RIBATHITIKETTO );
+  DEBUG_MYSTERY_SetGiftCommonData( &data, MYSTERY_DATA_EVENT_LIBERTY, FALSE ); 
+  MYSTERYDATA_SetCardData( p_mystery_sv, &data );
+
+  DEBUG_MYSTERY_SetDownLoadData( &dl_data, 0xFFFFFFFF, LANG_JAPAN );
+  dl_data.data  = data;
+
+
   MYSTERY_DATA_UnLoad( p_mystery_sv );
 
   return FALSE;

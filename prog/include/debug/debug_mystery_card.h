@@ -34,7 +34,7 @@
 extern void DEBUG_MYSTERY_SetGiftPokeData( GIFT_PACK_DATA *p_data );
 
 //どうぐデータ作成
-extern void DEBUG_MYSTERY_SetGiftItemData( GIFT_PACK_DATA *p_data );
+extern void DEBUG_MYSTERY_SetGiftItemData( GIFT_PACK_DATA *p_data, u16 itemno );
 
 //GPOWERデータ作成
 extern void DEBUG_MYSTERY_SetGiftGPowerData( GIFT_PACK_DATA *p_data );

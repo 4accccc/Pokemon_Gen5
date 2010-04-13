@@ -308,13 +308,21 @@ void OutsideSave_MysteryData_Outside_to_Normal(OUTSIDE_SAVE_CONTROL *outsv_ctrl,
   MYSTERY_ORIGINAL_DATA *normal_mystery = SaveControl_DataPtrGet(normal_ctrl, GMDATA_ID_MYSTERYDATA);
   OUTSIDE_MYSTERY *outside_mystery = &outsv_ctrl->mystery_save.mystery;
   int i;
-  
+
+  //ïúçÜâª
+  MYSTERYDATA_Decoded( normal_mystery, MYSTERY_DATA_TYPE_ORIGINAL );
+  MYSTERYDATA_Decoded( outside_mystery, MYSTERY_DATA_TYPE_OUTSIDE );
+
+  //ÉfÅ[É^Çì¸ÇÍÇÈ
   for(i = 0; i < MYSTERY_DATA_MAX_EVENT / 8; i++){
     normal_mystery->recv_flag[i] = outside_mystery->recv_flag[i];
   }
   for(i = 0; i < OUTSIDE_MYSTERY_MAX; i++){
     normal_mystery->card[i] = outside_mystery->card[i];
   }
-  normal_mystery->crc = outside_mystery->crc;
+
+  //à√çÜâª
+  MYSTERYDATA_Coded( normal_mystery, MYSTERY_DATA_TYPE_ORIGINAL );
+  MYSTERYDATA_Coded( outside_mystery, MYSTERY_DATA_TYPE_OUTSIDE );
 }
 

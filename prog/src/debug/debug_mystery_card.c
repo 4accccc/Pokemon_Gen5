@@ -76,13 +76,13 @@ void DEBUG_MYSTERY_SetGiftPokeData( GIFT_PACK_DATA *p_data )
  *	@param	GIFT_PACK_DATA *p_data  ƒf[ƒ^ 
  */
 //-----------------------------------------------------------------------------
-void DEBUG_MYSTERY_SetGiftItemData( GIFT_PACK_DATA *p_data )
+void DEBUG_MYSTERY_SetGiftItemData( GIFT_PACK_DATA *p_data, u16 itemno )
 { 
   GFL_STD_MemClear( p_data, sizeof(GIFT_PACK_DATA) );
   //“¹‹ïì¬
   { 
     GIFT_PRESENT_ITEM  *p_item = &p_data->data.item;
-    p_item->itemNo    = ITEM_MONSUTAABOORU;
+    p_item->itemNo    = itemno;
     p_item->movieflag = FALSE;
   }
   p_data->gift_type     = MYSTERYGIFT_TYPE_ITEM;
