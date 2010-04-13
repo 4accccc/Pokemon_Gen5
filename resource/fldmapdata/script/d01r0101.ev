@@ -97,6 +97,14 @@ _TALK_OBJ_START()
 		
 		_BALLOONWIN_OBJMSG(msg_d01r0101_girl_01,D01R0101_GIRL_01)
 		_BALLOONWIN_CLOSE()
+		
+		//======================================//
+			
+		//1回目の会話は繰り返さない用フラグ
+		$WK_SCENE_D01R0101 = 1
+		
+		//======================================//
+		
 		//ポケモン入手処理へジャンプ
 		_CALL ev_d01r0101_pokecount
 		
@@ -162,7 +170,6 @@ ev_d01r0101_pokecount:
 	//回答により分岐
 	IF $SCWK_ANSWER01 == 0 THEN
 
-
 		//手持ちポケモンをカウントして回答を分岐する
 		{
 		DEFINE_LOCAL LWK_POKE_COUNT
@@ -171,14 +178,8 @@ ev_d01r0101_pokecount:
 		//手持ちがいっぱいなら
 		IF $LWK_POKE_COUNT == 6 THEN
 			_BALLOONWIN_OBJMSG(msg_d01r0101_girl_03,D01R0101_GIRL_01)
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
-			
-			//======================================//
-			
-			//1回目の会話は繰り返さない用フラグ
-			$WK_SCENE_D01R0101 = 1
-			
-			//======================================//
 				
 		ELSE
 		//手持ちに空きがあれば持ちタイプに合わせてポケモンを渡す
@@ -256,13 +257,6 @@ ev_d01r0101_pokecount:
 		_BALLOONWIN_OBJMSG(msg_d01r0101_girl_04,D01R0101_GIRL_01)
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
-		
-		//======================================//
-		
-		//1回目の会話は繰り返さない用フラグ
-		$WK_SCENE_D01R0101 = 1
-		
-		//======================================//
 	
 	ENDIF
 
