@@ -5062,9 +5062,9 @@
 		<language name="JPN" width="256">BGM-E-LEGEND-COME-W</language>
 		<language name="JPN_KANJI" width="256">BGM-E-LEGEND-COME-W</language>
 	</row>
-	<row id="msg_seq_bgm_01">
-		<language name="JPN" width="256">BGM-01</language>
-		<language name="JPN_KANJI" width="256">BGM-01</language>
+	<row id="msg_seq_bgm_vs_trainer_wifi">
+		<language name="JPN" width="256">BGM-VS-TRAINER-WIFI</language>
+		<language name="JPN_KANJI" width="256">BGM-VS-TRAINER-WIFI</language>
 	</row>
 	<row id="msg_seq_bgm_02">
 		<language name="JPN" width="256">BGM-02</language>
