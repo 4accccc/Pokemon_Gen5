@@ -1614,17 +1614,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       break;
     // ----------もたせる------------
     case BAG_MENU_MOTASERU:
-      //@TODO check!!!!
-      // ポケモンリスト アイテムを持たせる処理
-      //リストから来たかどうかの分岐を入れました。 Ariizumi 100222
-      if(pWork->mode == BAG_MODE_POKELIST)
-      {
-        pWork->ret_code = BAG_NEXTPROC_ITEMEQUIP;
-      }
-      else
-      {
-        pWork->ret_code = BAG_NEXTPROC_HAVE;
-      }
+      pWork->ret_code = BAG_NEXTPROC_HAVE;
       ITEMDISP_ChangeRetButtonActive( pWork, FALSE );   // 戻るボタンをパッシブへ
       _CHANGE_STATE(pWork,NULL);
       break;
@@ -1666,18 +1656,24 @@ static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork)
   // 決定音
 //  PMSND_PlaySE( SE_BAG_DECIDE );
 
-  //@TODO 上手く言ったら消す
-#if 0
-  if(pWork->mode == BAG_MODE_POKELIST)
-  {
-    // ポケモンリスト アイテムを持たせる処理
-    pWork->ret_code = BAG_NEXTPROC_ITEMEQUIP;
-    _CHANGE_STATE(pWork,NULL);
-  }
-  else 
-#endif
+	// ポケモンリスト「もたせる」
+  if( pWork->mode == BAG_MODE_POKELIST ){
+		if( ITEM_GetParam( pWork->ret_item, ITEM_PRM_EVENT, pWork->heapID ) == 0 &&
+				ITEM_CheckPokeAdd( pWork->ret_item ) == TRUE ){
+			pWork->ret_code = BAG_NEXTPROC_ITEMEQUIP;
+	    _CHANGE_STATE(pWork,NULL);
+		}else{
+			// エラー
+		  GFL_MSG_GetString( pWork->MsgManager, msg_bag_046, pWork->pStrBuf );
+		  ITEMMENU_WordsetItemName( pWork, 0, pWork->ret_item );
+		  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf );
+		  ITEMDISP_ItemInfoWindowDisp( pWork );
+			ITEMDISP_ChangeActive( pWork, FALSE );
+			ITEMDISP_ChangeRetButtonActive( pWork, FALSE );
+	    _CHANGE_STATE( pWork, _itemTrashEndWait );	// 特に問題が無いと思われるので、捨てたときのキー待ちに飛ばしておく
+		}
   // 選択のみの場合
-  if( pWork->mode == BAG_MODE_SELECT ){
+  }else if( pWork->mode == BAG_MODE_SELECT ){
     pWork->ret_code = BAG_NEXTPROC_RETURN;
     _CHANGE_STATE(pWork,NULL);
   // 売る
@@ -3311,47 +3307,35 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
   }
 #endif
 
-  // ポケモンリストでは「もたせる」のみ
-  if( pWork->mode == BAG_MODE_POKELIST ){
-    // もたせる
-    if( ITEM_GetBufParam( itemdata, ITEM_PRM_EVENT ) == 0 ){
-      // ↑だいじなものは弾く
-      if( ITEM_CheckPokeAdd( item->id ) == TRUE ){
-        // ↑もたせられるアイテムか判定
-        tbl[BAG_MENU_GIVE] = BAG_MENU_MOTASERU; 
-      }
+  //「つかう」など
+  _tsukau_check( pWork, itemdata, item, tbl );
+  // 特定の場所では「みる」のみ
+  if( CheckEventItemUse( pWork, pocket ) == FALSE ){
+    if( tbl[BAG_MENU_USE] != BAG_MENU_MIRU ){
+      tbl[BAG_MENU_USE] = 255;
     }
-  }else{
-    //「つかう」など
-    _tsukau_check( pWork, itemdata, item, tbl );
-    // 特定の場所では「みる」のみ
-    if( CheckEventItemUse( pWork, pocket ) == FALSE ){
-      if( tbl[BAG_MENU_USE] != BAG_MENU_MIRU ){
-        tbl[BAG_MENU_USE] = 255;
-      }
-    }
+  }
 
-    // もたせる
-    // すてる
-    if( ITEM_GetBufParam( itemdata, ITEM_PRM_EVENT ) == 0 ){
-      // ↑だいじなものは弾く
-      if( ITEM_CheckPokeAdd( item->id ) == TRUE ){
-        tbl[BAG_MENU_GIVE] = BAG_MENU_MOTASERU;
-      }
-      if( pocket != BAG_POKE_WAZA ){
-        // 技マシンじゃない場合は捨てるを登録
-        tbl[BAG_MENU_SUB] = BAG_MENU_SUTERU;
-      }
+  // もたせる
+  // すてる
+  if( ITEM_GetBufParam( itemdata, ITEM_PRM_EVENT ) == 0 ){
+    // ↑だいじなものは弾く
+    if( ITEM_CheckPokeAdd( item->id ) == TRUE ){
+      tbl[BAG_MENU_GIVE] = BAG_MENU_MOTASERU;
     }
+    if( pocket != BAG_POKE_WAZA ){
+      // 技マシンじゃない場合は捨てるを登録
+      tbl[BAG_MENU_SUB] = BAG_MENU_SUTERU;
+    }
+  }
 
-    // とうろく
-    // かいじょ
-    if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) != 0 ){
-      if( ITEMMENU_GetPosCnvButtonItem( pWork, item->id  ) != -1 ){
-        tbl[BAG_MENU_SUB] = BAG_MENU_KAIZYO;
-      }else{
-        tbl[BAG_MENU_SUB] = BAG_MENU_TOUROKU;
-      }
+  // とうろく
+  // かいじょ
+  if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) != 0 ){
+    if( ITEMMENU_GetPosCnvButtonItem( pWork, item->id  ) != -1 ){
+      tbl[BAG_MENU_SUB] = BAG_MENU_KAIZYO;
+    }else{
+      tbl[BAG_MENU_SUB] = BAG_MENU_TOUROKU;
     }
   }
 
