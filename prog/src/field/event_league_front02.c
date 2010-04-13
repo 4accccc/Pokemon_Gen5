@@ -107,6 +107,39 @@ static void SetPlayerOnLift( LIFTDOWN_EVENTWORK* work )
 
 //------------------------------------------------------------------------------------------
 /**
+ * @brief リフトのitaアニメを開始する
+ */
+//------------------------------------------------------------------------------------------
+static void StartLiftAnimation( LIFTDOWN_EVENTWORK* work )
+{
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+  EXP_OBJ_ANM_CNT_PTR exobj_anm;
+
+  exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
+  exobj_anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_TA );
+
+  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_TA, TRUE ); 
+  FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief リフトのitaアニメを停止する
+ */
+//------------------------------------------------------------------------------------------
+static void StopLiftAnimation( LIFTDOWN_EVENTWORK* work )
+{
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+  EXP_OBJ_ANM_CNT_PTR exobj_anm;
+
+  exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
+  exobj_anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_TA );
+
+  FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
+}
+
+//------------------------------------------------------------------------------------------
+/**
  * @brief リフト降下イベント処理
  */
 //------------------------------------------------------------------------------------------
@@ -114,10 +147,10 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
 {
   LIFTDOWN_EVENTWORK* work = (LIFTDOWN_EVENTWORK*)wk;
 
-  switch( *seq )
-  {
-  // アニメ開始
+  switch( *seq ) {
   case 0:
+    // アニメ開始
+    StartLiftAnimation( work );
     { // アニメデータ読み込み
       HEAPID heap_id;
       heap_id = FIELDMAP_GetHeapID( work->fieldmap );
@@ -130,22 +163,23 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     // カメラのトレース処理停止リクエスト発行
     FIELD_CAMERA_StopTraceRequest( work->camera );
     (*seq)++;
-    OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;
+
   case 1:
     // カメラのトレース処理終了待ち
     if( FIELD_CAMERA_CheckTrace( work->camera ) == FALSE ) { (*seq)++; }
     break;
-  // フェードイン
+
   case 2:
+    // フェードイン
     {
       GMEVENT* new_event;
       new_event = EVENT_FieldFadeIn_Black( work->gsys, work->fieldmap, FIELD_FADE_WAIT );
       GMEVENT_CallEvent( event, new_event );
     }
     (*seq)++;
-    OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;
+
   // アニメ終了待ち
   case 3:
     {
@@ -158,13 +192,12 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       if( !anime_end ){ SetPlayerOnLift( work ); }
 
       // アニメ終了判定
-      if( anime_end )
-      { 
+      if( anime_end ) { 
         PMSND_StopSE(); // エレベータ稼動音を停止
         PMSND_PlaySE( SEQ_SE_FLD_94 ); // エレベータ到着音
+        StopLiftAnimation( work ); // リフトのアニメーションを停止
         ICA_ANIME_Delete( work->liftAnime );
         (*seq)++;
-        OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
       } 
     }
     break;
@@ -184,11 +217,9 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       FIELD_PLAYER_SetPos( player, &pos );
     }
     (*seq)++;
-    OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;
   // 終了
   case 5:
-    OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> finish\n" );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;

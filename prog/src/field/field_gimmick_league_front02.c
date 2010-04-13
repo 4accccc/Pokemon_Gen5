@@ -25,6 +25,7 @@
 //==========================================================================================
 // ■定数
 //==========================================================================================
+
 // ギミックワークのアサインID
 #define GIMMICK_WORK_ASSIGN_ID (1)
 
@@ -47,6 +48,7 @@ typedef enum{
 typedef enum{
   RES_LIFT_NSBMD,             // リフトのモデル
   RES_LIFT_NSBTA,             // リフトのテクスチャアニメーション
+#ifdef LIGHT_DOWN
   RES_LIGHT_FIGHT_NSBMD,      // ライト(格闘)    モデル
   RES_LIGHT_FIGHT_ON_NSBTA,   // ライト(格闘)    ON
   RES_LIGHT_EVIL_NSBMD,       // ライト(悪)      モデル
@@ -55,12 +57,14 @@ typedef enum{
   RES_LIGHT_GHOST_ON_NSBTA,   // ライト(ゴースト)ON
   RES_LIGHT_ESPER_NSBMD,      // ライト(エスパー)モデル
   RES_LIGHT_ESPER_ON_NSBTA,   // ライト(エスパー)ON
+#endif
   RES_NUM
 } RES_INDEX;
 static const GFL_G3D_UTIL_RES res_table[RES_NUM] = 
 {
   {ARCID, NARC_league_front_pl_ele_01_nsbmd,    GFL_G3D_UTIL_RESARC},
   {ARCID, NARC_league_front_pl_ele_01_nsbta,    GFL_G3D_UTIL_RESARC},
+#ifdef LIGHT_DOWN
   {ARCID, NARC_league_front_pl_lite1_nsbmd,     GFL_G3D_UTIL_RESARC},
   {ARCID, NARC_league_front_pl_lite1_on_nsbta,  GFL_G3D_UTIL_RESARC},
   {ARCID, NARC_league_front_pl_lite2_nsbmd,     GFL_G3D_UTIL_RESARC},
@@ -69,18 +73,16 @@ static const GFL_G3D_UTIL_RES res_table[RES_NUM] =
   {ARCID, NARC_league_front_pl_lite3_on_nsbta,  GFL_G3D_UTIL_RESARC},
   {ARCID, NARC_league_front_pl_lite4_nsbmd,     GFL_G3D_UTIL_RESARC}, 
   {ARCID, NARC_league_front_pl_lite4_on_nsbta,  GFL_G3D_UTIL_RESARC}, 
+#endif
 }; 
 //------------------------
 // アニメーション(リフト)
 //------------------------
-typedef enum{
-  LIFT_ANM_TA,  // テクスチャアニメーション
-  LIFT_ANM_NUM
-} LIFT_ANM_INDEX;
 static const GFL_G3D_UTIL_ANM anm_table_lift[LIFT_ANM_NUM] = 
 {
   {RES_LIFT_NSBTA, 0},
 }; 
+#ifdef LIGHT_DOWN
 //------------------------
 // アニメーション(ライト)
 //------------------------
@@ -120,16 +122,19 @@ static const GFL_G3D_UTIL_ANM anm_table_light_esper[LIGHT_ESPER_ANM_NUM] =
 {
   {RES_LIGHT_ESPER_ON_NSBTA,  0},
 };
+#endif
 //-------------
 // オブジェクト
 //-------------
 static const GFL_G3D_UTIL_OBJ obj_table[LF02_EXOBJ_NUM] = 
 {
   {RES_LIFT_NSBMD,        0, RES_LIFT_NSBMD,        anm_table_lift,        LIFT_ANM_NUM},
+#ifdef LIGHT_DOWN
   {RES_LIGHT_FIGHT_NSBMD, 0, RES_LIGHT_FIGHT_NSBMD, anm_table_light_fight, LIGHT_FIGHT_ANM_NUM},
   {RES_LIGHT_EVIL_NSBMD,  0, RES_LIGHT_EVIL_NSBMD,  anm_table_light_evil,  LIGHT_EVIL_ANM_NUM},
   {RES_LIGHT_GHOST_NSBMD, 0, RES_LIGHT_GHOST_NSBMD, anm_table_light_ghost, LIGHT_GHOST_ANM_NUM},
   {RES_LIGHT_ESPER_NSBMD, 0, RES_LIGHT_ESPER_NSBMD, anm_table_light_esper, LIGHT_ESPER_ANM_NUM},
+#endif
 }; 
 //----------
 // ユニット
@@ -182,10 +187,12 @@ static const GFL_G3D_UTIL_SETUP unit[LF02_EXUNIT_NUM] =
 static const VecFx32 obj_pos[LF02_EXOBJ_NUM] = 
 {
   {LIFT_POS_X,        LIFT_POS_Y,        LIFT_POS_Z},
+#ifdef LIGHT_DOWN
   {LIGHT_FIGHT_POS_X, LIGHT_FIGHT_POS_Y, LIGHT_FIGHT_POS_Z},
   {LIGHT_EVIL_POS_X,  LIGHT_EVIL_POS_Y,  LIGHT_EVIL_POS_Z},
   {LIGHT_GHOST_POS_X, LIGHT_GHOST_POS_Y, LIGHT_GHOST_POS_Z},
   {LIGHT_ESPER_POS_X, LIGHT_ESPER_POS_Y, LIGHT_ESPER_POS_Z},
+#endif
 };
 
 //==========================================================================================

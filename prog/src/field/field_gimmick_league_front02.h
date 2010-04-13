@@ -10,19 +10,30 @@
 #include <gflib.h>
 #include "field/fieldmap_proc.h"
 
+// ライトが降下するかどうか
+//#define LIGHT_DOWN
 
 //==========================================================================================
 // ■拡張オブジェクト
 //==========================================================================================
+//------------------------
+// アニメーション(リフト)
+//------------------------
+typedef enum{
+  LIFT_ANM_TA,  // テクスチャアニメーション
+  LIFT_ANM_NUM
+} LIFT_ANM_INDEX;
 //-------------
 // オブジェクト
 //-------------
 typedef enum{
   LF02_EXOBJ_LIFT,         // リフト
+#ifdef LIGHT_DOWN
   LF02_EXOBJ_LIGHT_FIGHT,  // ライト(格闘)
   LF02_EXOBJ_LIGHT_EVIL,   // ライト(悪)
   LF02_EXOBJ_LIGHT_GHOST,  // ライト(ゴースト)
   LF02_EXOBJ_LIGHT_ESPER,  // ライト(エスパー)
+#endif
   LF02_EXOBJ_NUM
 } OBJ_INDEX;
 //----------
