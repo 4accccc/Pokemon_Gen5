@@ -1685,8 +1685,9 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
         setupRotationParams( wk, &wk->rotWazaSelParam );
         (*seq) = SEQ_SELECT_ROTATION_WAZA_START;
       }
+      #endif
     }
-    #endif
+
     break;
 
   case SEQ_SELECT_WAZA_START:
