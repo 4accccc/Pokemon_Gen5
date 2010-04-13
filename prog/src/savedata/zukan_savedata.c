@@ -247,8 +247,11 @@ static void SetZukanTextVersionUp( ZUKAN_SAVEDATA * zw, u16 monsno, u32 lang )
 	if( monsno > POKEZUKAN_TEXT_POSSIBLE ){
 		return;
 	}
-
+#if 0	// @TODO 韓国語があふれるので、100415以降のバージョンで修正する
+  zw->TextVersionUp[monsno] |= ( 1 << (lang-1) );
+#else
   zw->TextVersionUp[monsno] |= ( 1 << lang );
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -1316,7 +1319,11 @@ BOOL ZUKANSAVE_GetTextVersionUpFlag( const ZUKAN_SAVEDATA * zw, u16 monsno, u32 
 	}
 
 	// フラグチェック
+#if 0	// @TODO 韓国語があふれるので、100415以降のバージョンで修正する
+	if( ( zw->TextVersionUp[monsno] & (1<<(country_code-1)) ) == 0 ){
+#else
 	if( ( zw->TextVersionUp[monsno] & (1<<country_code) ) == 0 ){
+#endif
 		return FALSE;
 	}
 	return TRUE;
