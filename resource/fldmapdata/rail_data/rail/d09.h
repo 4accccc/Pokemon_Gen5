@@ -64,3 +64,5 @@
 #define RE_LINE_68 (60)
 #define RE_LINE_69 (61)
 #define RE_LINE_72 (62)
+#define RE_LINE_70 (63)
+#define RE_LINE_71 (64)
