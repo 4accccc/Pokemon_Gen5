@@ -90,6 +90,23 @@ INIT_EVENT_END
 EVENT_START   ev_scene_d12
   //連行イベント
 
+  //サブウィンでしゃべる
+	_SUBWIN_MSG( msg_d12_plasma_sub_01 , 2 , 2 , 1 )
+	_TIME_WAIT( 16 )
+	_SUBWIN_MSG( msg_d12_plasma_sub_02 , 10 , 9 , 2 )
+	_TIME_WAIT(16)
+	_SUBWIN_CLOSE( 1 )
+	_TIME_WAIT(16)
+	_SUBWIN_CLOSE( 2 )
+
+  _SUBWIN_MSG( msg_d12_police_sub_01 , 2 , 4 , 1 )
+	_TIME_WAIT( 16 )
+	_SUBWIN_MSG( msg_d12_police_sub_02 , 10 , 11 , 2 )
+	_TIME_WAIT(16)
+  _SUBWIN_CLOSE( 1 )
+	_TIME_WAIT(16)
+	_SUBWIN_CLOSE( 2 )
+
   _OBJ_ANIME( D12_POLICE_07, anm_follow_police2 )
   _OBJ_ANIME( D12_POLICE_09, anm_follow_police1 )
   _OBJ_ANIME( D12_POLICE_08, anm_follow_police3 )
@@ -100,24 +117,6 @@ EVENT_START   ev_scene_d12
 
   //自機移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
-
-  //サブウィンでしゃべる
-  _TIME_WAIT( 8 )
-	_SUBWIN_MSG( msg_d12_plasma_sub_01 , 2 , 2 , 1 )
-	_TIME_WAIT( 8 )
-	_SUBWIN_MSG( msg_d12_plasma_sub_02 , 10 , 9 , 2 )
-	_TIME_WAIT(8)
-	_SUBWIN_CLOSE( 1 )
-	_TIME_WAIT(8)
-	_SUBWIN_CLOSE( 2 )
-
-  _SUBWIN_MSG( msg_d12_police_sub_01 , 2 , 4 , 1 )
-	_TIME_WAIT( 8 )
-	_SUBWIN_MSG( msg_d12_police_sub_02 , 10 , 11 , 2 )
-	_TIME_WAIT(8)
-  _SUBWIN_CLOSE( 1 )
-	_TIME_WAIT(10)
-	_SUBWIN_CLOSE( 2 )
 
   //アニメ待ち
   _OBJ_ANIME_WAIT()
