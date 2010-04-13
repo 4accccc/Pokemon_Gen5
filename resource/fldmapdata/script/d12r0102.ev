@@ -112,8 +112,13 @@ EVENT_END
 /*  D12R0102 hakaim_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12r0102_hakaim_01
-  //かったからといって
-  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12r0102_plasma02_05 )
+  IF $WK_SCENE_VICTORY == 2 THEN
+    //かったからといって
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12r0102_plasma02_05 )
+  ELSIF $WK_SCENE_VICTORY == 3 THEN
+    //ビクティちかく
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_d12r0102_plasma02_07 )
+  ENDIF  
 EVENT_END
 
 /**************************************************************/
