@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T16:03:15"/>
+	<create user="matsumiya" host="W00224" date="2010-04-13T20:22:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -819,6 +819,23 @@
 あたし　そんな　気がする▼</language>
 	</row>
 
+	<row id="msg_t01r0102_white_11b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・戦闘後メッセージ＋主人公敗北
+　フィールドに復帰して煙が消えてから
+・続けてblack_08</comment>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256">ベル『ふええ▼
+とにかく　むちゅうで
+ポケモンに　わざを　だしてもらったら▽
+わからないうちに　かてちゃったあ……▼</language>
+		<language name="JPN_KANJI" width="256">ベル『ふええ▼
+とにかく　夢中で
+ポケモンに　技を　だしてもらったら▽
+わからないうちに　勝てちゃったあ……▼</language>
+	</row>
+
 	<row id="msg_t01r0102_black_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてwhite_12</comment>
@@ -919,19 +936,19 @@
 回復を　してくれた▼</language>
 	</row>
 
-	<row id="msg_t01r0102_black_13" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0102_black_13" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてblack_12</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『ポケモンの　たいりょく……
 ＨＰを　へらすことなく▽
-かつだなんて　すごいね！▼
+しょうりするのは　すごいよ▼
 だけど　ポケモンの　わざポイント……
 ＰＰが　へっているからね▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『ポケモンの　体力……
 ＨＰを　減らすことなく▽
-勝つだなんて　すごいね！▼
+勝利するのは　すごいよ▼
 だけど　ポケモンの　わざポイント……
 ＰＰが　減っているからね▼</language>
 	</row>
@@ -960,17 +977,19 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『もちろん……！▼
-ぼくは　これいじょう
-へやを　よごしたり　しないし▼
+ぼくの　ちしきが　あれば
+これいじょう▽
+へやを　よごす　わけないし▼
 なにより　きみたちだけで
 ポケモンしょうぶを　たのしむのは▽
-フェアじゃないよね▼</language>
+フェア　じゃないよね▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『もちろん……！▼
-ぼくは　これ以上
-部屋を　汚したり　しないし▼
+ぼくの　知識が　あれば
+これ以上▽
+部屋を　汚すわけないし▼
 なにより　きみたちだけで
 ポケモン勝負を　楽しむのは▽
-フェアじゃないよね▼</language>
+フェア　じゃないよね▼</language>
 	</row>
 
 	<row id="msg_t01r0102_black_15" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -1060,19 +1079,41 @@
 
 	<row id="msg_t01r0102_black_20" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・戦闘後、フィールド復帰してメッセージ表示
+・戦闘後メッセージ
+　フィールド復帰してメッセージ表示
 ・続けてwhite_15</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『この　かんどう……
-うまく　いいあらわせない　けれど▽
-トレーナーに　なったんだね！▼
+ようやく　トレーナーに　なれたんだ▼
 ……じゃなくて
 へやのこと　キミの　ママに▽
 あやまらないと　いけないね▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『この　感動……
-うまく　言い表せないけれど▽
-トレーナーに　なったんだね！▼
+ようやく　トレーナーに　なれたんだ▼
+……じゃなくて
+部屋のこと　キミの　ママに▽
+謝らないと　いけないね▼</language>
+	</row>
+
+	<row id="msg_t01r0102_black_21" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘後メッセージ＋主人公敗北
+　フィールド復帰してメッセージ表示
+・続けてwhite_15</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">チェレン『はじめての　しょうぶで
+おもわぬ　ふかくを　とったけれど▼
+この　かんどう……
+ようやく　トレーナーに　なれたんだ▼
+……じゃなくて
+へやのこと　キミの　ママに▽
+あやまらないと　いけないね▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『初めての　勝負で
+思わぬ　不覚を　取ったけれど▼
+この　感動……
+ようやく　トレーナーに　なれたんだ▼
 ……じゃなくて
 部屋のこと　キミの　ママに▽
 謝らないと　いけないね▼</language>
