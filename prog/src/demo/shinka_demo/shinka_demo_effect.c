@@ -11,6 +11,7 @@
 //============================================================================
 //#define DEBUG_CODE
 //#define SET_PARTICLE_Z_MODE  // これが定義されているとき、パーティクルのZ値を編集できるモードになる
+//#define SET_REAR_FRAME_LENGTH_COLOR_MODE  // これが定義されているとき、白にするまでのフレーム数を編集できるモードになる
 
 
 // インクルード
@@ -119,8 +120,8 @@ typedef enum
 REAR_WHITE_ANIME_STATE;
 
 // REARのフレーム
-#define REAR_FRAME_LENGTH_COLOR      ( 150 )  // STEP_EVO_DEMOになってからこのフレームだけ経過したら白にする
-#define REAR_FRAME_LENGTH_WHITE      ( 120 )  // STEP_EVO_WHITEになってからこのフレームだけ経過したらカラーにする  // REAR_WHITE_ANIME_STATE_WHITEになってからこのフレームだけ経過したらREAR_WHITE_ANIME_STATE_WHITE_TO_COLORにする
+#define REAR_FRAME_LENGTH_COLOR      ( 620 )  // STEP_EVO_DEMOになってからこのフレームだけ経過したら白にする
+#define REAR_FRAME_LENGTH_WHITE      (  60 )  // STEP_EVO_WHITEになってからこのフレームだけ経過したらカラーにする  // REAR_WHITE_ANIME_STATE_WHITEになってからこのフレームだけ経過したらREAR_WHITE_ANIME_STATE_WHITE_TO_COLORにする
 
 
 // パーティクルのY座標
@@ -129,6 +130,10 @@ REAR_WHITE_ANIME_STATE;
 
 #ifdef SET_PARTICLE_Z_MODE
 f32 particle_z = 0.0f;
+#endif
+
+#ifdef SET_REAR_FRAME_LENGTH_COLOR_MODE
+u32 rear_frame_length_color = REAR_FRAME_LENGTH_COLOR;
 #endif
 
 
@@ -470,6 +475,28 @@ void SHINKADEMO_EFFECT_Main( SHINKADEMO_EFFECT_WORK* work )
   }
 #endif
 
+#ifdef SET_REAR_FRAME_LENGTH_COLOR_MODE
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+  {
+    OS_Printf( "rear_frame_length_color = %d\n", rear_frame_length_color );
+  }
+  else if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+  {
+    rear_frame_length_color += 10;
+  }
+  else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+  {
+    rear_frame_length_color -= 10;
+  }
+  else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+  {
+    rear_frame_length_color += 1;
+  }
+  else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+  {
+    rear_frame_length_color -= 1;
+  }
+#endif
 
   // 3D
   ShinkaDemo_Effect_ThreeRearMain( work );
@@ -535,6 +562,10 @@ void SHINKADEMO_EFFECT_Start( SHINKADEMO_EFFECT_WORK* work )
 
   work->step = STEP_EVO_DEMO;
   work->wait_count = REAR_FRAME_LENGTH_COLOR;
+
+#ifdef SET_REAR_FRAME_LENGTH_COLOR_MODE
+  work->wait_count = rear_frame_length_color;
+#endif
 }
 
 //=============================================================================
