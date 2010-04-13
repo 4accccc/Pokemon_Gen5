@@ -612,10 +612,10 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Warp( GMEVENT* event, int* seq, void*
       FIELD_TASK* moveTask;
       FIELD_TASK_MAN* taskMan;
       VecFx32 moveVec;
-      VEC_Set( &moveVec, 0, 100<<FX32_SHIFT, 0 );
-      rotTask = FIELD_TASK_PlayerRotate( fieldmap, 16, 3 );
+      VEC_Set( &moveVec, 0, 150<<FX32_SHIFT, 0 );
+      rotTask = FIELD_TASK_PlayerRotate( fieldmap, 24, 3 );
       fadeOutTask = FIELD_TASK_Fade( fieldmap, GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 1 );
-      moveTask = FIELD_TASK_TransDrawOffset( fieldmap, 16, &moveVec );
+      moveTask = FIELD_TASK_TransDrawOffset( fieldmap, 24, &moveVec );
       taskMan = FIELDMAP_GetTaskManager( fieldmap );
       FIELD_TASK_MAN_AddTask( taskMan, rotTask, NULL );
       FIELD_TASK_MAN_AddTask( taskMan, moveTask, NULL );

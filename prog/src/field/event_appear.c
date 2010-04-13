@@ -549,9 +549,9 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Warp( GMEVENT* event, int* seq, void* wk
       FIELD_TASK* moveTask;
       FIELD_TASK_MAN* taskMan;
       VecFx32 moveVec;
-      VEC_Set( &moveVec, 0, 100<<FX32_SHIFT, 0 );
-      rotTask = FIELD_TASK_PlayerRotate( fieldmap, 16, 2 );
-      moveTask = FIELD_TASK_TransDrawOffset( fieldmap, -16, &moveVec );
+      VEC_Set( &moveVec, 0, 150<<FX32_SHIFT, 0 );
+      rotTask = FIELD_TASK_PlayerRotate( fieldmap, 24, 3 );
+      moveTask = FIELD_TASK_TransDrawOffset( fieldmap, -24, &moveVec );
       taskMan = FIELDMAP_GetTaskManager( fieldmap );
       FIELD_TASK_MAN_AddTask( taskMan, rotTask, NULL );
       FIELD_TASK_MAN_AddTask( taskMan, moveTask, NULL );
