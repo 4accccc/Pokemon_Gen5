@@ -65,11 +65,11 @@ EVENT_START   ev_c06pc0101_man1_01
 	ENDIF
 		
 	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
 		
 	IF $SCWK_ANSWER ==  SCR_NO THEN
 		_BALLOONWIN_TALKOBJ_MSG(msg_c06pc0101_man1_05)
 	ELSE
+		_BALLOONWIN_CLOSE()
 	    _CALL sub_c06pc0101_mezameru_power_check
 	ENDIF
 	    
