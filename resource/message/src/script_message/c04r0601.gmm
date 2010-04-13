@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T14:25:13"/>
+	<create user="matsumiya" host="W00224" date="2010-04-13T21:58:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -424,10 +424,22 @@
 　続けてblack_03</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『……はかせったら
-おれいを　いうまえに　いっちゃった▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……博士ったら
-お礼を　いう前に　いっちゃった▼</language>
+		<language name="JPN" width="256">チェレン『……ぼくたちを
+たびに　ださせるため▽
+ポケモンと　ずかんを　くれた……▼
+そういうこと　らしいね
+かあさんが　おしえてくれたよ▼
+きみと　ベルのママ　３にんで
+せかいを　みせたいからって▽
+アララギはかせに　たのんでね▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……ぼくたちを
+旅立たせるため▽
+ポケモンと　図鑑を　くれた……▼
+そういうこと　らしいね
+かあさんが　教えてくれたよ▼
+きみと　ベルのママ　３人で
+世界を　みせたいからって▽
+アララギ博士に　頼んでね▼</language>
 	</row>
 
 	<row id="msg_c04r0601_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -438,24 +450,22 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">さて　これから　どうしようか▼
-……リゾートデザートは
-まだ　きびしいかな？▼
+		<language name="JPN" width="256">さて　[1:00:トレーナー名:0]
+これから　どうしようか▼
+……いまの　ぼくたちに
+リゾートデザートは　まだ　きびしいな▼
 そうだな……　４ばんどうろで
 まだ　つかまえていない▽
 ポケモンを　つかまえることで▽
-おれいと　させてもらうかな▼
-じゃあね
-[1:00:トレーナー名:0]！▼</language>
-		<language name="JPN_KANJI" width="256">さて　これから　どうしようか▼
-……リゾートデザートは
-まだ　きびしいかな？▼
+おれいと　させてもらうかな▼</language>
+		<language name="JPN_KANJI" width="256">さて　[1:00:トレーナー名:0]
+これから　どうしようか▼
+……いまの　ぼくたちに
+リゾートデザートは　まだ　厳しいな▼
 そうだな……　４番道路で
 まだ　捕まえていない▽
 ポケモンを　つかまえることで▽
-感謝の気持ちと　させてもらうかな▼
-じゃあね
-[1:00:トレーナー名:0]！▼</language>
+感謝の気持ちと　させてもらうかな▼</language>
 	</row>
 
 	<row id="msg_c04r0601_infomationw_01">
