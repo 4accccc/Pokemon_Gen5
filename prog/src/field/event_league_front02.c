@@ -201,6 +201,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       } 
     }
     break;
+
   // 終了処理
   case 4:
     // 自機を着地させる
@@ -218,6 +219,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     }
     (*seq)++;
     break;
+
   // 終了
   case 5:
     return GMEVENT_RES_FINISH;
@@ -242,6 +244,7 @@ GMEVENT* EVENT_LFRONT02_LiftDown( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
 
   // 生成
   event = GMEVENT_Create( gsys, NULL, LiftDownEvent, sizeof(LIFTDOWN_EVENTWORK) );
+
   // 初期化
   evwork = GMEVENT_GetEventWork( event );
   evwork->gsys      = gsys;
