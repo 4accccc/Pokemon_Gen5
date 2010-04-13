@@ -268,6 +268,9 @@ init_flags:
 	_FLAG_SET(FV_C03R1101_PLASMA)
 	_FLAG_SET(FV_C03P15_LEADER3)
 	
+	//N01R0501ゲーチス・謁見の間イベントで非表示
+	_FLAG_SET(FV_N01R0501_SAGE1)
+	
 }
 _RET
 

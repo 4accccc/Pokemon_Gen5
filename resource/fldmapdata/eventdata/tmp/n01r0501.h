@@ -10,6 +10,7 @@
 #ifndef ZONE_N01R0501_EVC_H
 #define ZONE_N01R0501_EVC_H
 
+#define N01R0501_SAGE1_01                  0
 
 #endif //ZONE_N01R0501_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/n01r0501.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

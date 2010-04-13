@@ -453,7 +453,7 @@ EVENT_START		ev_pos_d02r0101_event_02
 	_PLAYER_POS_GET( LWK_POSX , LWK_POSZ )
 
 	//プラズマ団のBGM再生
-	_START_EVENT_BGM( SEQ_BGM_E_PLASMA )
+	_START_TEMP_EVENT_BGM( SEQ_BGM_E_PLASMA )
 
 	_OBJ_ANIME( D02R0101_HAKAIM1_01, anm_gyoeup_dir )
 	_OBJ_ANIME_WAIT()
@@ -495,9 +495,6 @@ EVENT_START		ev_pos_d02r0101_event_02
 	_LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
-	//BGM終了
-	_END_EVENT_BGM()
-
 	//盗難イベントを次に進める
 	$WK_SCENE_D02R0101_HAKAI = 1
 
@@ -537,7 +534,7 @@ EVENT_START		ev_pos_d02r0101_event_03
 	_PLAYER_POS_GET( LWK_POSX , LWK_POSZ )
 
 	//プラズマ団のBGM再生
-	_START_EVENT_BGM( SEQ_BGM_E_PLASMA )
+	_START_TEMP_EVENT_BGM( SEQ_BGM_E_PLASMA )
 
 	//座標による分岐
     SWITCH $LWK_POSZ
@@ -617,8 +614,6 @@ EVENT_START		ev_pos_d02r0101_event_03
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
-	_END_EVENT_BGM()
-
 	//盗難イベントを次に進める
 	$WK_SCENE_D02R0101_HAKAI = 2
 
@@ -680,7 +675,7 @@ EVENT_END
 EVENT_START		ev_pos_d02r0101_event_04
    
 	//プラズマ団のBGM再生
-	_START_EVENT_BGM( SEQ_BGM_E_PLASMA )
+	_START_TEMP_EVENT_BGM( SEQ_BGM_E_PLASMA )
 
     //プラズマ団員：その場歩き
     _OBJ_ANIME( D02R0101_HAKAIM2_01, anm_gyoeleft_staywalk )
@@ -705,8 +700,6 @@ EVENT_START		ev_pos_d02r0101_event_04
     _LAST_KEYWAIT()
     _MSGWIN_CLOSE()
 
-	_END_EVENT_BGM()
-
 	//========================================/
 
 	//盗難イベントを次に進める
@@ -729,7 +722,7 @@ EVENT_END
 EVENT_START		ev_pos_d02r0101_event_05
    
 	//プラズマ団のBGM再生
-	_START_EVENT_BGM( SEQ_BGM_E_PLASMA )
+	_START_TEMP_EVENT_BGM( SEQ_BGM_E_PLASMA )
 
     //自機：プラズマ団員に近づく
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go )
@@ -778,8 +771,6 @@ EVENT_START		ev_pos_d02r0101_event_05
 	_FLAG_RESET( FV_D02R0101_SAGE5 )
 	
 	//=========================================//
-
-	_END_EVENT_BGM()
 
     //……わかった　ぬすんだ　ホネは
     _BALLOONWIN_OBJMSG( msg_d02r0101_hakaim3_02 , D02R0101_HAKAIM3_01 )
@@ -863,7 +854,6 @@ EVENT_START		ev_pos_d02r0101_event_05
 	
 	//わたしは　プラズマだんの　おうの　もとに
 	_BALLOONWIN_OBJMSG_POS( msg_d02r0101_sage5_04 , D02R0101_SAGE5_01,POS_UL )
-    _MSGWIN_CLOSE()
 	
 	//ですが　われわれは
 	_BALLOONWIN_OBJMSG_POS( msg_d02r0101_sage5_05 , D02R0101_SAGE5_01,POS_UL )

@@ -326,6 +326,7 @@ EVENT_START	ev_pos_n01r0502_lastbtl_03
 
 	//ほら　キミが　てにいれた
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_02w, msg_n01r0502_boss_02b, N01R0502_BOSS_01, POS_DEFAULT )
+	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 {	
 	//自機：一歩前に戻る
@@ -412,7 +413,6 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 
 	//だけど　ちがった　いま　すごく　ガッカリしているよ
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_04w, msg_n01r0502_boss_04b, N01R0502_BOSS_01, POS_DEFAULT )
-	_MSGWIN_CLOSE()
 	
 	//キミに　できることは　２つ！
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_04_01w, msg_n01r0502_boss_04_01b, N01R0502_BOSS_01, POS_DEFAULT )
@@ -459,7 +459,7 @@ EVENT_START		ev_scene_n01r0502_lastbtl_04
 
 	_OBJ_ADD( N01R0502_WKOBJCODE00_01 )
 	
-  _DEMO_FADEIN_BLACK_WITH_BGM_CALL()
+	_DEMO_FADEIN_BLACK_WITH_BGM_CALL()
 	
 	//========================================/
 	
@@ -519,29 +519,54 @@ _ANIME_LABEL	anm_sage1_hand
 /*	最終イベント５	Ｎ話しかけ起動							*/
 /************************************************************/
 EVENT_START		ev_n01r0502_boss_01
-	_TALK_OBJ_START()
+_TALK_OBJ_START()
 IF $WK_SCENE_N01R0502 == 3 THEN
-
 	//Nと戦闘
-	//【仮】戦闘呼び出し　全滅処理が未定
-	_TRAINER_BTL_SET( TRID_BOSS_06, 0 )
-	//敗戦チェック
-	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-		_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
+{
+	DEFINE_LOCAL	LWK_ROM
+	_GET_ROM_VERSION( LWK_ROM )
+		IF $LWK_ROM == VERSION_WHITE THEN
+			
+			//戦闘呼び出し　全滅処理が未定
+			_TRAINER_BTL_SET( TRID_BOSS_1_06, 0 )
+			//敗戦チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		
-		//可変OBJの確定
-		_GET_ROM_VERSION( SCWK_ANSWER )
-		IF $SCWK_ANSWER == VERSION_WHITE THEN
-			$OBJCHRWORK0 = SHIN_A	//シン
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
+		
+				//可変OBJの確定
+				$OBJCHRWORK0 = SHIN_A	//シン
+				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		
+			ELSE
+		
+				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		
+			ENDIF
+		
 		ELSE
-			$OBJCHRWORK0 = MU_A		//ム
-		ENDIF
+			//戦闘呼び出し　全滅処理が未定
+			_TRAINER_BTL_SET( TRID_BOSS_1_07, 0 )
+			//敗戦チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		
-		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-	ELSE
-		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-	ENDIF
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
+		
+				//可変OBJの確定
+				$OBJCHRWORK0 = MU_A		//ム
+				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		
+			ELSE
+		
+				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		
+			ENDIF
+			
+		ENDIF
+			_VOICE_WAIT()
+}
 
 	//Ｎ後ずさり
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_back )
@@ -581,8 +606,10 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 	_GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_WHITE THEN
 			_SYSWIN_MSG( msg_n01r0502_stone_03w , POS_DOWN )
+			_SUB_ITEM( ITEM_DAAKUSUTOON,1,SCWK_ANSWER )
 		ELSE
 			_SYSWIN_MSG( msg_n01r0502_stone_03b , POS_DOWN )
+			_SUB_ITEM( ITEM_RAITOSUTOON,1,SCWK_ANSWER )
 		ENDIF
 			_SYSWIN_CLOSE()
 }
@@ -599,7 +626,6 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 		ELSE
 			_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_BORN_B )
 		ENDIF
-
 }
 	//========================================/
 	
@@ -616,7 +642,7 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 	//カメラ操作　Ｎの位置にカメラを合わせる
 	_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,1 )	//一番最後の引数は移動にかかるフレーム数	
 
-  _DEMO_FADEIN_BLACK_WITH_BGM_CALL()
+	_DEMO_FADEIN_BLACK_WITH_BGM_CALL()
 
 	//シンと　ムは……　もとは　ひとつの　いのち
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_08w, msg_n01r0502_boss_08b, N01R0502_BOSS_01, POS_DEFAULT )
@@ -904,12 +930,10 @@ ev_last:
 	_GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_WHITE THEN
 			_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_12w )
-			_PLAINWIN_CLOSE()
 			_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_12_01w )
 			_PLAINWIN_CLOSE()
 		ELSE
 			_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_12b )
-			_PLAINWIN_CLOSE()
 			_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_12_01b )
 			_PLAINWIN_CLOSE()
 		ENDIF
@@ -983,7 +1007,6 @@ ev_last:
 	//そこで　えらばれたのが　！　キミですよ
 	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG( msg_n01r0502_sage1_04 , N01R0502_SAGE1_01 )
-	_MSGWIN_CLOSE()
 
 	_BALLOONWIN_OBJMSG( msg_n01r0502_sage1_05 , N01R0502_SAGE1_01 )
 	_MSGWIN_CLOSE()
@@ -1034,6 +1057,7 @@ ev_last:
 	//ポケモンリーグのチャンピオンとライバル削除
 	_FLAG_SET( FV_C09R0501_RIVAL_01 )
 	_FLAG_SET( FV_C09R0501_CHAMPION_01 )
+	_FLAG_SET( FV_N01R0501_SAGE1 )
 
 	//========================================/
 
@@ -1133,67 +1157,46 @@ ev_last:
 	_PLAINWIN_CLOSE()
 
 	//はいと　答えた回数でメッセージ分岐
-	
 {
 	DEFINE_LOCAL	LWK_ROM
 	_GET_ROM_VERSION( LWK_ROM )
 		//ホワイトバージョンでかつ
 		IF $LWK_ROM == VERSION_WHITE THEN
 			
-			SWITCH $WK_OTHER_N_COUNT
-			CASE 0 THEN
+			//電気石の洞穴ではいを選択した場合
+			IF FLAG_ON( FE_N_LASTMESSAGE ) THEN
+			
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_01 )
 				_LAST_KEYWAIT()
 				_PLAINWIN_CLOSE()
-			//1回の場合
-			CASE 1 THEN
+			
+			//いいえを選択した場合
+			ELSE
+			
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_02 )
 				_LAST_KEYWAIT()
 				_PLAINWIN_CLOSE()
-			//2回の場合
-			CASE 2 THEN
+			
+			ENDIF
+
+		ELSE
+		
+			//電気石の洞穴ではいを選択した場合
+			IF FLAG_ON( FE_N_LASTMESSAGE ) THEN
+			
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_03 )
 				_LAST_KEYWAIT()
 				_PLAINWIN_CLOSE()
-			//3回の場合
-			CASE 3 THEN
+			
+			//いいえを選択した場合
+			ELSE
+			
 				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_04 )
 				_LAST_KEYWAIT()
 				_PLAINWIN_CLOSE()
-			//4回の場合
-			CASE 4 THEN
-				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_05 )
-				_LAST_KEYWAIT()
-				_PLAINWIN_CLOSE()
-			ENDSWITCH
-
-		ELSE
-			SWITCH $WK_OTHER_N_COUNT
-			CASE 0 THEN
-				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_06 )
-				_LAST_KEYWAIT()
-				_PLAINWIN_CLOSE()
-			//1回の場合
-			CASE 1 THEN
-				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_07 )
-				_LAST_KEYWAIT()
-				_PLAINWIN_CLOSE()
-			//2回の場合
-			CASE 2 THEN
-				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_08 )
-				_LAST_KEYWAIT()
-				_PLAINWIN_CLOSE()
-			//3回の場合
-			CASE 3 THEN
-				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_09 )
-				_LAST_KEYWAIT()
-				_PLAINWIN_CLOSE()
-			//4回の場合
-			CASE 4 THEN
-				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_10 )
-				_LAST_KEYWAIT()
-				_PLAINWIN_CLOSE()
-    		ENDSWITCH
+			
+			ENDIF
+		
 		ENDIF
 }
 	//Ｎのアップ絵終了
@@ -1328,12 +1331,12 @@ _ANIME_LABEL	anm_gcis_dotsuku
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_champion_tsureteku2
-	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WAIT_16F,2
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_tsureteku2
-	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_WAIT_16F,2
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 

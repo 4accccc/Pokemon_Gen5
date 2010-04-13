@@ -112,7 +112,7 @@ EVENT_START   ev_scene_c01r0101_pdwguide_01
 	
 	//マコモ『アナタたち　イッシュちほうの　すべての　ポケモンと』
 	_BALLOONWIN_OBJMSG( msg_c01r0101_inventor_01 , C01R0101_INVENTOR_01 )
-	_BALLOONWIN_CLOSE()
+	_MSGWIN_CLOSE()
 	
 	//自機、マコモ：階段の方へ歩く
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_yudo2 )
@@ -125,7 +125,7 @@ EVENT_START   ev_scene_c01r0101_pdwguide_01
 	
 	//マコモ『アタシの　へや　この　うえなんだ』
 	_BALLOONWIN_OBJMSG( msg_c01r0101_inventor_02 , C01R0101_INVENTOR_01 )
-	_BALLOONWIN_CLOSE()
+	_MSGWIN_CLOSE()
 	
 	//階段へ移動
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_yudo3 )

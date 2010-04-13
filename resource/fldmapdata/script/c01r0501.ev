@@ -103,7 +103,6 @@ _TALK_OBJ_START()
 			//どくけしを選んだ場合
 				//せいかいです　つぎのもんだいです
 				_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_03, C01R0501_BOY3_01 ,POS_DL)
-				_MSGWIN_CLOSE()
 				
 				//ねむった　ポケモンを　おこす
 				_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_04, C01R0501_BOY3_01 ,POS_DL)
@@ -286,7 +285,6 @@ _TALK_START_TURN_NOT()
 	
 			//ポケモンが　どくを　うけると
 			_BALLOONWIN_OBJMSG_POS( msg_c01r0501_black_01,C01R0501_RIVAL_01 , POS_UP )
-			_BALLOONWIN_CLOSE()
 		
 			_CALL dir
 		
@@ -294,18 +292,15 @@ _TALK_START_TURN_NOT()
 			_PLAYER_NAME( 0 )
 			_BALLOONWIN_OBJMSG_POS( msg_c01r0501_black_02,C01R0501_RIVAL_01 , POS_UP )
 			_YES_NO_WIN( SCWK_ANSWER )
-			_MSGWIN_CLOSE()
-
+			
 			//はいの場合
 			IF $SCWK_ANSWER == SCR_YES THEN
 
 				_BALLOONWIN_OBJMSG_POS( msg_c01r0501_black_03,C01R0501_RIVAL_01 , POS_UP )
-				_MSGWIN_CLOSE()
 		
 			//いいえの場合
 			ELSE
 				_BALLOONWIN_OBJMSG_POS( msg_c01r0501_black_04,C01R0501_RIVAL_01 , POS_UP )
-				_MSGWIN_CLOSE()
 
 			ENDIF
 
@@ -313,7 +308,6 @@ _TALK_START_TURN_NOT()
 			_PLAYER_NAME( 0 )
 			_BALLOONWIN_OBJMSG_POS( msg_c01r0501_black_10,C01R0501_RIVAL_01 , POS_UP )
 			_YES_NO_WIN( SCWK_ANSWER )
-			_BALLOONWIN_CLOSE()
 			
 			_CALL rival_battle
 		
@@ -326,8 +320,7 @@ _TALK_START_TURN_NOT()
 			_PLAYER_NAME( 0 )
 			_BALLOONWIN_OBJMSG_POS( msg_c01r0501_black_11,C01R0501_RIVAL_01 , POS_UP )
 			_YES_NO_WIN( SCWK_ANSWER )
-			_BALLOONWIN_CLOSE()
-			
+
 			_CALL rival_battle
 		
 		ENDIF

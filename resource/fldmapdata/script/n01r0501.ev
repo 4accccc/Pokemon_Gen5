@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_n01r0501.h"
-  //.include  "n01r0501.h"
+  .include  "n01r0501.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_n01r0501
+_EVENT_DATA		ev_pos_n01r0501_sage1event_01
+_EVENT_DATA		ev_n01r0501_sage1_01
 _EVENT_DATA_END
 
 
@@ -30,9 +31,155 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*		N01R0501	SAGE1	ゲーチスＰＯＳイベント			  */
 /**************************************************************/
-ev_n01r0501:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_pos_n01r0501_sage1event_01
 
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+	
+	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+
+	_FLAG_RESET( FV_N01R0501_SAGE1 )
+	_OBJ_ADD( N01R0501_SAGE1_01 )
+	_OBJ_POS_CHANGE( N01R0501_SAGE1_01, 24, 0, 8, DIR_DOWN )
+
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+	
+	SWITCH $LWK_POSX
+	CASE 22 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_22 )
+	CASE 23 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_23 )
+	CASE 24 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_24 )
+	CASE 25 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_25 )
+	CASE 26 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_26 )
+	ENDSWITCH
+	//ゲーチス：２歩前へ
+	_OBJ_ANIME( N01R0501_SAGE1_01, anm_sage1_move )
+	_OBJ_ANIME_WAIT()
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	
+	//カメラ操作　ゲーチスの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,1605632,0,753664,30 )	//一番最後の引数は移動にかかるフレーム数
+
+	//ようこそ　～ストーンを　もつものよ
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0501_sage1_01w, msg_n01r0501_sage1_01b, N01R0501_SAGE1_01, POS_DEFAULT )
+
+	//ポケモンリーグを　つつみかくすように　あらわれた　しろは
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0501_sage1_02 , N01R0501_SAGE1_01 , POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ゲーチス：芝居
+	_OBJ_ANIME( N01R0501_SAGE1_01, anm_sage1_hand )
+	_OBJ_ANIME_WAIT()
+	
+	//その　しろの　おうは　でんせつの　ポケモンを
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0501_sage1_03 , N01R0501_SAGE1_01 , POS_DEFAULT )
+
+	//ここまで　ぶたいそうちが　ととのえば
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0501_sage1_04 , N01R0501_SAGE1_01 , POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ゲーチス：画面左を向いて
+	_OBJ_ANIME( N01R0501_SAGE1_01, anm_stay_l )
+	_OBJ_ANIME_WAIT()
+
+	//ながかったぞ！　けいかくを　さとられぬよう
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0501_sage1_05 , N01R0501_SAGE1_01 , POS_DEFAULT )
+	_MSGWIN_CLOSE()
+
+	//ゲーチス：画面上を向いて
+	_OBJ_ANIME( N01R0501_SAGE1_01, anm_stay_u )
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0501_sage1_06 , N01R0501_SAGE1_01 , POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	_OBJ_ANIME_WAIT()
+
+	//ゲーチス：画面下を向いて
+	_OBJ_ANIME( N01R0501_SAGE1_01, anm_stay_d )
+	_BALLOONWIN_OBJMSG_POS( msg_n01r0501_sage1_07 , N01R0501_SAGE1_01 , POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	_OBJ_ANIME_WAIT()
+
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 30 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+
+	//========================================/
+	
+	//POSイベント終了
+	$WK_SCENE_N01R0501 = 1
+
+	//========================================/
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//	ゲーチスＰＯＳイベント用アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sage1_move
+	_ANIME_DATA	AC_WALK_D_16F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sage1_hand
+	_ANIME_DATA	AC_SAGE1_ACT0,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_22
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_23
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_24
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_25
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_26
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*		N01R0501	SAGE1	ゲーチスＰＯＳイベント			  */
+/**************************************************************/
+EVENT_START		ev_n01r0501_sage1_01
+_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0501_sage1_08w, msg_n01r0501_sage1_08b, N01R0501_SAGE1_01, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END

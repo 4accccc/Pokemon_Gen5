@@ -95,7 +95,7 @@ INIT_EVENT_START	ev_init_c01gym0101
 		//ポッドの位置を変更する
 		_OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 10, 1, 2, DIR_DOWN )
 		//デントの位置を変更する
-		_OBJ_POS_CHANGE( C01GYM0101_LEADER1C_01, 12, 1, 2, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_LEADER1C_01, 12, 1, 3, DIR_DOWN )
 	
 	ENDIF
 
@@ -333,6 +333,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 		
 		//デント：場所をポッドと交代
 		_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_dento_podchange )
+		_OBJ_ANIME( C01GYM0101_LEADER1B_01, anm_step_d )
 		_OBJ_ANIME_WAIT()		
 	
 		//ということで　ほのおタイプの
@@ -352,6 +353,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 		
 		//デント：場所をコーンと交代
 		_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_dento_cornchange )
+		_OBJ_ANIME( C01GYM0101_LEADER1A_01, anm_step_d )
 		_OBJ_ANIME_WAIT()	
 		
 		//ということで　みずタイプの
@@ -368,6 +370,8 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 
 		//デント：一歩前へ
 		_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_dento_move )
+		_OBJ_ANIME( C01GYM0101_LEADER1A_01, anm_step_d )
+		_OBJ_ANIME( C01GYM0101_LEADER1B_01, anm_step_d )
 		_OBJ_ANIME_WAIT()
 	
 		//ということで　くさタイプを
@@ -480,18 +484,15 @@ _ANIME_LABEL	anm_leader_turndento2
 //	自機　近づく
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_player_tikaduku_11
-	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_player_tikaduku_12
-	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_tikaduku_13
-	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
@@ -513,30 +514,32 @@ _ANIME_LABEL	anm_dento_tenkai
 //	コーン・ポッド・デント　自機前移動
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_dento_move
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_pod_move
 	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_corn_move
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	デント　場所交代
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_dento_podchange
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_dento_cornchange
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -546,6 +549,11 @@ _ANIME_LABEL	anm_dir_d
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_step_d
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*         ジムリーダーコーン（画面右）  戦闘前             */
@@ -691,8 +699,9 @@ _ANIME_LABEL	anm_corn_return
 //	デント　持ち場に戻る
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_dento_comeback
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -839,9 +848,9 @@ _ANIME_LABEL	anm_pod_return
 //	デント　持ち場に戻る
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_dento_podback
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/

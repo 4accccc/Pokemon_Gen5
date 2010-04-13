@@ -175,7 +175,8 @@ EVENT_START   ev_pos_c01_stop
 		
 		//おぬし　ジムバッジの　１つも　もっておらぬ　ようじゃが
 		_BALLOONWIN_OBJMSG( msg_c01_stop_01 , C01_OLDMAN1_01 )
-		_BALLOONWIN_CLOSE()
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
 		
 		//自機：１歩下がる
 		//お爺さん：持ち場に戻る
@@ -194,7 +195,8 @@ EVENT_START   ev_pos_c01_stop
 		
 		//おぬし　ジムバッジの　１つも　もっておらぬ　ようじゃが
 		_BALLOONWIN_OBJMSG( msg_c01_stop_01 , C01_OLDMAN1_01 )
-		_BALLOONWIN_CLOSE()
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
 		
 		//自機：１歩下がる
 		//お爺さん：持ち場に戻る
@@ -231,7 +233,8 @@ EVENT_START   ev_pos_c01_stop1
 		
 		//さっき　はつめいかが
 		_BALLOONWIN_OBJMSG( msg_c01_stop_02 , C01_OLDMAN1_01 )
-		_BALLOONWIN_CLOSE()
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
 		
 		//自機：１歩下がる
 		//お爺さん：持ち場に戻る
@@ -250,7 +253,8 @@ EVENT_START   ev_pos_c01_stop1
 		
 		//さっき　はつめいかが
 		_BALLOONWIN_OBJMSG( msg_c01_stop_02 , C01_OLDMAN1_01 )
-		_BALLOONWIN_CLOSE()
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
 		
 		//自機：１歩下がる
 		//お爺さん：持ち場に戻る
