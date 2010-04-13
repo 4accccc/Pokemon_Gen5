@@ -54,7 +54,7 @@ BOOL SHOOTER_ITEM_IsUse( const SHOOTER_ITEM_BIT_WORK *cp_wk, u32 shooter_item )
   const u8 bit_idx  = shooter_item / 8;
   const u8 bit_pos  = shooter_item % 8;
 
-  return (cp_wk->bit_tbl[ bit_idx ] & bit_pos ) != 0;
+  return (cp_wk->bit_tbl[ bit_idx ] & (1<<bit_pos) ) != 0;
 }
 
 //----------------------------------------------------------------------------
