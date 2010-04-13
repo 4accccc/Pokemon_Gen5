@@ -100,7 +100,7 @@ EVENT_START	ev_reserve_t04r0101_first
 	_OBJ_ANIME_WAIT()
 	
 	//息子：あしたもこいよ！
-	_BALLOONWIN_OBJMSG( msg_t04r0101_boy3_03 , T04R0101_BOY3_01 )
+	_BALLOONWIN_OBJMSG( msg_t04r0101_boy3_03a , T04R0101_BOY3_01 )
 	_BALLOONWIN_CLOSE()
 	
 	//======================================//
@@ -124,7 +124,7 @@ _ANIME_LABEL	anm_first_come_boy3_01
 //	初回誘導：プレイヤー中央へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_first_come_player_01
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -147,7 +147,7 @@ _ANIME_LABEL	anm_first_come_boy3_look_down
 EVENT_START	ev_t04r0101_boy3_01
 
 	//連戦イベントをクリアしている
-	IF $WK_SCENE_T04R0101_BTL_FAMILY == 6 THEN
+	IF $WK_SCENE_T04R0101_BTL_FAMILY == 7 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t04r0101_boy3_05)
 		
 	//今日はまだイベントしていない
@@ -181,213 +181,170 @@ EVENT_START	ev_t04r0101_boy3_01
 			CASE 1 THEN
 				_CALL ev_t04r0101_btl_vs_boy3
 				
-				IF FLAG_OFF( FV_T04R0101_GIRL4_01 ) THEN
-					//姉と戦闘
-					_CALL ev_t04r0101_coming_girl4
-					_CALL ev_t04r0101_btl_vs_girl4
-					//祖母登場
-					_CALL ev_t04r0101_entrance_lady
-					//姉戻る
-					_CALL ev_t04r0101_return_girl4
-					
-					//======================================//
-			
-					//勝ち数を++
-					$WK_SCENE_T04R0101_BTL_FAMILY += 1
-					
-					//======================================//
-					
-					//祖母と戦闘
-					_CALL ev_t04r0101_btl_vs_lady
-					_BALLOONWIN_OBJMSG_POS( msg_t04r0101_lady_03, T04R0101_LADY_01, POS_DEFAULT )
-					_MSGWIN_CLOSE()
-					_CALL ev_t04r0101_return_lady
-				ELSE
-					//姉登場
-					_CALL ev_t04r0101_entrance_girl4
-					_CALL ev_t04r0101_btl_vs_girl4
-					_BALLOONWIN_OBJMSG_POS( msg_t04r0101_girl4_03, T04R0101_GIRL4_01, POS_DEFAULT )
-					_MSGWIN_CLOSE()
-					_CALL ev_t04r0101_return_girl4
-					
-				ENDIF
+				//姉登場
+				_CALL ev_t04r0101_entrance_girl4
+				
+				//======================================//
+		
+				//勝ち数を++（姉登場済み2）
+				$WK_SCENE_T04R0101_BTL_FAMILY += 1
+				
+				//======================================//
+				
+				//姉と戦闘
+				_CALL ev_t04r0101_btl_vs_girl4
+				//姉戻る
+				_CALL ev_t04r0101_return_girl4
 
 			CASE 2 THEN
+				//息子と戦闘
 				_CALL ev_t04r0101_btl_vs_boy3
 				//姉と戦闘
 				_CALL ev_t04r0101_coming_girl4
 				_CALL ev_t04r0101_btl_vs_girl4
-				_CALL ev_t04r0101_return_girl4
+				//祖母登場
+				_CALL ev_t04r0101_entrance_lady
+
+				//======================================//
+		
+				//勝ち数を++（祖母登場済み3）
+				$WK_SCENE_T04R0101_BTL_FAMILY += 1
 				
-				IF FLAG_OFF( FV_T04R0101_LADY_01 ) THEN
-					//祖母と戦闘
-					_CALL ev_t04r0101_coming_lady
-					_CALL ev_t04r0101_btl_vs_lady
-					//祖父登場
-					_CALL ev_t04r0101_entrance_gentleman
-					//祖母戻る
-					_CALL ev_t04r0101_return_lady
-					
-					//======================================//
-			
-					//勝ち数を++
-					$WK_SCENE_T04R0101_BTL_FAMILY += 1
-					
-					//======================================//
-					
-					//祖父と戦闘
-					_CALL ev_t04r0101_btl_vs_gentleman
-					_BALLOONWIN_OBJMSG_POS( msg_t04r0101_gentleman_03, T04R0101_GENTLEMAN_01, POS_DEFAULT )
-					_MSGWIN_CLOSE()
-					_CALL ev_t04r0101_return_gentleman
-					
-				ELSE
-					//祖母登場
-					_CALL ev_t04r0101_entrance_lady
-					_CALL ev_t04r0101_btl_vs_lady
-					_BALLOONWIN_OBJMSG_POS( msg_t04r0101_lady_03, T04R0101_LADY_01, POS_DEFAULT )
-					_MSGWIN_CLOSE()
-					_CALL ev_t04r0101_return_lady
-					
-				ENDIF
+				//======================================//
+				
+				//祖母と戦闘
+				_CALL ev_t04r0101_btl_vs_lady
+				_CALL ev_t04r0101_return_lady
 				
 			CASE 3 THEN
+				//息子と戦闘
 				_CALL ev_t04r0101_btl_vs_boy3
 				//姉と戦闘
 				_CALL ev_t04r0101_coming_girl4
 				_CALL ev_t04r0101_btl_vs_girl4
-				_CALL ev_t04r0101_return_girl4
+				_CALL ev_t04r0101_return_girl4_coming_ledy
 				//祖母と戦闘
-				_CALL ev_t04r0101_coming_lady
 				_CALL ev_t04r0101_btl_vs_lady
-				_CALL ev_t04r0101_return_lady
 				
-				IF FLAG_OFF( FV_T04R0101_GENTLEMAN_01 ) THEN
-					//祖父と戦闘
-					_CALL ev_t04r0101_coming_gentleman
-					_CALL ev_t04r0101_btl_vs_gentleman
-					//母登場
-					_CALL ev_t04r0101_entrance_veteranw
-					//祖父戻る
-					_CALL ev_t04r0101_return_gentleman
-
-					//======================================//
+				//祖父登場
+				_CALL ev_t04r0101_entrance_gentleman
+				
+				//======================================//
 			
-					//勝ち数を++
-					$WK_SCENE_T04R0101_BTL_FAMILY += 1
-					
-					//======================================//
-
-					//母と戦闘
-					_CALL ev_t04r0101_btl_vs_veteranw
-					_BALLOONWIN_OBJMSG_POS( msg_t04r0101_veteranw_03, T04R0101_VETERANW_01, POS_DEFAULT )
-					_MSGWIN_CLOSE()
-					_CALL ev_t04r0101_return_veteranw
-				ELSE
-					//祖父登場
-					_CALL ev_t04r0101_entrance_gentleman
-					_CALL ev_t04r0101_btl_vs_gentleman
-					_BALLOONWIN_OBJMSG_POS( msg_t04r0101_gentleman_03, T04R0101_GENTLEMAN_01, POS_DEFAULT )
-					_MSGWIN_CLOSE()
-					_CALL ev_t04r0101_return_gentleman
-					
-				ENDIF
+				//勝ち数を++（祖父登場済み4）
+				$WK_SCENE_T04R0101_BTL_FAMILY += 1
+				
+				//======================================//
+				
+				//祖父と戦闘
+				_CALL ev_t04r0101_btl_vs_gentleman
+				_CALL ev_t04r0101_return_gentleman
 
 			CASE 4 THEN
+				//息子と戦闘
 				_CALL ev_t04r0101_btl_vs_boy3
 				//姉と戦闘
 				_CALL ev_t04r0101_coming_girl4
 				_CALL ev_t04r0101_btl_vs_girl4
-				_CALL ev_t04r0101_return_girl4
+				_CALL ev_t04r0101_return_girl4_coming_ledy
 				//祖母と戦闘
-				_CALL ev_t04r0101_coming_lady
 				_CALL ev_t04r0101_btl_vs_lady
-				_CALL ev_t04r0101_return_lady
+				_CALL ev_t04r0101_return_lady_coming_gentleman
 				//祖父と戦闘
-				_CALL ev_t04r0101_coming_gentleman
 				_CALL ev_t04r0101_btl_vs_gentleman
-				_CALL ev_t04r0101_return_gentleman
 				
-				IF FLAG_OFF( FV_T04R0101_VETERANW_01 ) THEN
-					//母と戦闘
-					_CALL ev_t04r0101_coming_veteranw
-					_CALL ev_t04r0101_btl_vs_veteranw
-					//兄登場
-					_CALL ev_t04r0101_entrance_boy4
-					//母戻る
-					_CALL ev_t04r0101_return_veteranw
+				//母登場
+				_CALL ev_t04r0101_entrance_veteranw
 
-					//======================================//
-			
-					//勝ち数を++
-					$WK_SCENE_T04R0101_BTL_FAMILY += 1
-					
-					//======================================//
-
-					//兄と戦闘
-					_CALL ev_t04r0101_btl_vs_boy4
-					
-					//======================================//
-
-					//勝ち数を++
-					$WK_SCENE_T04R0101_BTL_FAMILY += 1
-					
-					//======================================//
-					
-					_CALL ev_t04r0101_return_boy4
+				//======================================//
 		
-				ELSE
-					//母登場
-					_CALL ev_t04r0101_entrance_veteranw
-					_CALL ev_t04r0101_btl_vs_veteranw
-					_BALLOONWIN_OBJMSG_POS( msg_t04r0101_veteranw_03, T04R0101_VETERANW_01, POS_DEFAULT )
-					_MSGWIN_CLOSE()
-					_CALL ev_t04r0101_return_veteranw
+				//勝ち数を++（母登場済み5）
+				$WK_SCENE_T04R0101_BTL_FAMILY += 1
 				
-				ENDIF
-				
-			CASE 5 THEN
-				_CALL ev_t04r0101_btl_vs_boy3
-				//姉と戦闘
-				_CALL ev_t04r0101_coming_girl4
-				_CALL ev_t04r0101_btl_vs_girl4
-				_CALL ev_t04r0101_return_girl4
-				//祖母と戦闘
-				_CALL ev_t04r0101_coming_lady
-				_CALL ev_t04r0101_btl_vs_lady
-				_CALL ev_t04r0101_return_lady
-				//祖父と戦闘
-				_CALL ev_t04r0101_coming_gentleman
-				_CALL ev_t04r0101_btl_vs_gentleman
-				_CALL ev_t04r0101_return_gentleman
+				//======================================//
+
 				//母と戦闘
-				_CALL ev_t04r0101_coming_veteranw
 				_CALL ev_t04r0101_btl_vs_veteranw
 				_CALL ev_t04r0101_return_veteranw
+				
+			CASE 5 THEN
+				//息子と戦闘
+				_CALL ev_t04r0101_btl_vs_boy3
+				//姉と戦闘
+				_CALL ev_t04r0101_coming_girl4
+				_CALL ev_t04r0101_btl_vs_girl4
+				_CALL ev_t04r0101_return_girl4_coming_ledy
+				//祖母と戦闘
+				_CALL ev_t04r0101_btl_vs_lady
+				_CALL ev_t04r0101_return_lady_coming_gentleman
+				//祖父と戦闘
+				_CALL ev_t04r0101_btl_vs_gentleman
+				_CALL ev_t04r0101_return_gentleman_coming_veteranw
+				//母と戦闘
+				_CALL ev_t04r0101_btl_vs_veteranw
+				
+				//兄登場
+				_CALL ev_t04r0101_entrance_boy4
+
+				//======================================//
+			
+				//勝ち数を++（兄登場済み6）
+				$WK_SCENE_T04R0101_BTL_FAMILY += 1
+				
+				//======================================//
+				
 				//兄と戦闘
-				_CALL ev_t04r0101_coming_boy4
+				_CALL ev_t04r0101_btl_vs_boy4
+				
+				//======================================//
+
+				//勝ち数を++（全員に勝利した6）
+				$WK_SCENE_T04R0101_BTL_FAMILY += 1
+				
+				//======================================//
+					
+				_CALL ev_t04r0101_return_boy4_veteranw
+			
+			CASE 6 THEN
+				//息子と戦闘
+				_CALL ev_t04r0101_btl_vs_boy3
+				//姉と戦闘
+				_CALL ev_t04r0101_coming_girl4
+				_CALL ev_t04r0101_btl_vs_girl4
+				_CALL ev_t04r0101_return_girl4_coming_ledy
+				//祖母と戦闘
+				_CALL ev_t04r0101_btl_vs_lady
+				_CALL ev_t04r0101_return_lady_coming_gentleman
+				//祖父と戦闘
+				_CALL ev_t04r0101_btl_vs_gentleman
+				_CALL ev_t04r0101_return_gentleman_coming_veteranw
+				//母と戦闘
+				_CALL ev_t04r0101_btl_vs_veteranw
+				_CALL ev_t04r0101_return_veteranw_coming_boy4
+				//兄と戦闘
 				_CALL ev_t04r0101_btl_vs_boy4
 				_CALL ev_t04r0101_return_boy4
 				
 				//======================================//
 
-				//勝ち数を++
+				//勝ち数を++（全員に勝利した7）
 				$WK_SCENE_T04R0101_BTL_FAMILY += 1
 				
 				//======================================//
+				
 			ENDSWITCH
 		
 		//いいえ
 		ELSE
 		
-			_BALLOONWIN_OBJMSG_POS( msg_t04r0101_boy3_02, T04R0101_BOY3_01, POS_DEFAULT )
+			_BALLOONWIN_OBJMSG_POS( msg_t04r0101_boy3_06, T04R0101_BOY3_01, POS_DEFAULT )
 			_MSGWIN_CLOSE()
 		
 		ENDIF
 		
 	//今日既にイベントを終えている
 	ELSE
-		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t04r0101_boy3_06)
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t04r0101_boy3_03)
 	
 	ENDIF
 	
@@ -443,7 +400,8 @@ ev_t04r0101_entrance_girl4:
 	_PLAINWIN_MSG_UP( msg_t04r0101_girl4_01 )
 	_MSGWIN_CLOSE()
 	
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_down )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_all_coming_surprised )
+	_OBJ_ANIME( T04R0101_BOY3_01, anm_all_coming_surprised )
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_ANIME( T04R0101_GIRL4_01, anm_girl4_entrance )
@@ -476,13 +434,15 @@ ev_t04r0101_entrance_lady:
 	_PLAINWIN_MSG_UP( msg_t04r0101_lady_01 )
 	_MSGWIN_CLOSE()
 	
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_down )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_all_coming_surprised )
+	_OBJ_ANIME( T04R0101_GIRL4_01, anm_all_coming_surprised )
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_ANIME( T04R0101_LADY_01, anm_lady_entrance )
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_right )
+	_OBJ_ANIME( T04R0101_GIRL4_01, anm_player_look_right )
 	_OBJ_ANIME_WAIT()
 	
 	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_lady_02, T04R0101_LADY_01, POS_DEFAULT )
@@ -509,13 +469,15 @@ ev_t04r0101_entrance_gentleman:
 	_PLAINWIN_MSG_UP( msg_t04r0101_gentleman_01 )
 	_MSGWIN_CLOSE()
 	
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_down )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_all_coming_surprised )
+	_OBJ_ANIME( T04R0101_LADY_01, anm_all_coming_surprised )
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_ANIME( T04R0101_GENTLEMAN_01, anm_gentleman_entrance )
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_left )
+	_OBJ_ANIME( T04R0101_LADY_01, anm_player_look_left )
 	_OBJ_ANIME_WAIT()
 	
 	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_gentleman_02, T04R0101_GENTLEMAN_01, POS_DEFAULT )
@@ -542,13 +504,15 @@ ev_t04r0101_entrance_veteranw:
 	_PLAINWIN_MSG_UP( msg_t04r0101_veteranw_01 )
 	_MSGWIN_CLOSE()
 	
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_down )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_all_coming_surprised )
+	_OBJ_ANIME( T04R0101_GENTLEMAN_01, anm_all_coming_surprised )
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_ANIME( T04R0101_VETERANW_01, anm_veteranw_entrance )
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_right )
+	_OBJ_ANIME( T04R0101_GENTLEMAN_01, anm_player_look_right )
 	_OBJ_ANIME_WAIT()
 	
 	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_veteranw_02, T04R0101_VETERANW_01, POS_DEFAULT )
@@ -575,13 +539,15 @@ ev_t04r0101_entrance_boy4:
 	_PLAINWIN_MSG_UP( msg_t04r0101_boy4_01 )
 	_MSGWIN_CLOSE()
 	
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_down )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_all_coming_surprised )
+	_OBJ_ANIME( T04R0101_VETERANW_01, anm_all_coming_surprised )
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_ANIME( T04R0101_BOY4_01, anm_boy4_entrance )
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_left )
+	_OBJ_ANIME( T04R0101_VETERANW_01, anm_player_look_left )
 	_OBJ_ANIME_WAIT()
 	
 	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_boy4_02, T04R0101_BOY4_01, POS_DEFAULT )
@@ -597,7 +563,15 @@ _ANIME_LABEL	anm_boy4_entrance
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
-	
+
+//--------------------------------------------------------------------
+//	巨大別荘（共通）：家族登場時に驚いて下を見る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_all_coming_surprised
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 /************************************************************/
 /*CALL：姉来訪						*/
 /************************************************************/
@@ -608,7 +582,7 @@ ev_t04r0101_coming_girl4:
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_left )
 	_OBJ_ANIME_WAIT()
 	
-	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_girl4_02, T04R0101_GIRL4_01, POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_girl4_02a, T04R0101_GIRL4_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 _RET
 
@@ -630,7 +604,7 @@ ev_t04r0101_coming_lady:
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_right )
 	_OBJ_ANIME_WAIT()
 	
-	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_lady_02, T04R0101_LADY_01, POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_lady_02a, T04R0101_LADY_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 _RET
 
@@ -654,7 +628,7 @@ ev_t04r0101_coming_gentleman:
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_left )
 	_OBJ_ANIME_WAIT()
 	
-	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_gentleman_02, T04R0101_GENTLEMAN_01, POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_gentleman_02a, T04R0101_GENTLEMAN_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 _RET
 
@@ -677,7 +651,7 @@ ev_t04r0101_coming_veteranw:
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_right )
 	_OBJ_ANIME_WAIT()
 	
-	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_veteranw_02, T04R0101_VETERANW_01, POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_veteranw_02a, T04R0101_VETERANW_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 _RET
 
@@ -699,7 +673,7 @@ ev_t04r0101_coming_boy4:
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_left )
 	_OBJ_ANIME_WAIT()
 	
-	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_boy4_02, T04R0101_BOY4_01, POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_boy4_02a, T04R0101_BOY4_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 _RET
 
@@ -707,18 +681,41 @@ _RET
 //	巨大別荘：兄来訪
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_boy4_coming
-	_ANIME_DATA	AC_WALK_U_8F,5
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	ACMD_END,0
+
 
 /************************************************************/
 /*CALL：姉戻る						*/
 /************************************************************/
 ev_t04r0101_return_girl4:
+	
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_girl4_03a, T04R0101_GIRL4_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
 	_OBJ_ANIME( T04R0101_GIRL4_01, anm_girl4_return )
 	_OBJ_ANIME_WAIT()
+_RET
+
+/************************************************************/
+/*CALL：姉戻る・祖母来る						*/
+/************************************************************/
+ev_t04r0101_return_girl4_coming_ledy:
+
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_girl4_04a, T04R0101_GIRL4_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( T04R0101_GIRL4_01, anm_girl4_return )
+	_OBJ_ANIME( T04R0101_LADY_01, anm_lady_coming )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_right )
+	_OBJ_ANIME_WAIT()
+	
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_lady_02a, T04R0101_LADY_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
 _RET
 
 //--------------------------------------------------------------------
@@ -734,8 +731,32 @@ _ANIME_LABEL	anm_girl4_return
 /*CALL：祖母戻る						*/
 /************************************************************/
 ev_t04r0101_return_lady:
+	
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_lady_03a, T04R0101_LADY_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( T04R0101_GIRL4_01, anm_girl4_return )
 	_OBJ_ANIME( T04R0101_LADY_01, anm_lady_return )
 	_OBJ_ANIME_WAIT()
+_RET
+
+/************************************************************/
+/*CALL：祖母戻る・祖父来る						*/
+/************************************************************/
+ev_t04r0101_return_lady_coming_gentleman:
+
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_lady_04a, T04R0101_LADY_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( T04R0101_LADY_01, anm_lady_return )
+	_OBJ_ANIME( T04R0101_GENTLEMAN_01, anm_gentleman_coming )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_left )
+	_OBJ_ANIME_WAIT()
+	
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_gentleman_02a, T04R0101_GENTLEMAN_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
 _RET
 
 //--------------------------------------------------------------------
@@ -751,8 +772,32 @@ _ANIME_LABEL	anm_lady_return
 /*CALL：祖父戻る						*/
 /************************************************************/
 ev_t04r0101_return_gentleman:
+
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_gentleman_03a, T04R0101_GENTLEMAN_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( T04R0101_LADY_01, anm_lady_return )
 	_OBJ_ANIME( T04R0101_GENTLEMAN_01, anm_gentleman_return )
 	_OBJ_ANIME_WAIT()
+_RET
+
+/************************************************************/
+/*CALL：祖父戻る・母来る						*/
+/************************************************************/
+ev_t04r0101_return_gentleman_coming_veteranw:
+
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_gentleman_04a, T04R0101_GENTLEMAN_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( T04R0101_GENTLEMAN_01, anm_gentleman_return )
+	_OBJ_ANIME( T04R0101_VETERANW_01, anm_veteranw_coming )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_right )
+	_OBJ_ANIME_WAIT()
+	
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_veteranw_02a, T04R0101_VETERANW_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
 _RET
 
 //--------------------------------------------------------------------
@@ -768,8 +813,32 @@ _ANIME_LABEL	anm_gentleman_return
 /*CALL：母戻る						*/
 /************************************************************/
 ev_t04r0101_return_veteranw:
+
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_veteranw_03a, T04R0101_VETERANW_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
 	_OBJ_ANIME( T04R0101_VETERANW_01, anm_veteranw_return )
+	_OBJ_ANIME( T04R0101_GENTLEMAN_01, anm_gentleman_return )
 	_OBJ_ANIME_WAIT()
+_RET
+
+/************************************************************/
+/*CALL：母戻る						*/
+/************************************************************/
+ev_t04r0101_return_veteranw_coming_boy4:
+	
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_veteranw_04a, T04R0101_VETERANW_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( T04R0101_VETERANW_01, anm_veteranw_return )
+	_OBJ_ANIME( T04R0101_BOY4_01, anm_boy4_coming )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_left )
+	_OBJ_ANIME_WAIT()
+	
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_boy4_02a, T04R0101_BOY4_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
 _RET
 
 //--------------------------------------------------------------------
@@ -785,10 +854,22 @@ _ANIME_LABEL	anm_veteranw_return
 /*CALL：兄戻る						*/
 /************************************************************/
 ev_t04r0101_return_boy4:
-	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_boy4_05, T04R0101_BOY4_01, POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_boy4_03a, T04R0101_BOY4_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
 	_OBJ_ANIME( T04R0101_BOY4_01, anm_boy4_return )
+	_OBJ_ANIME_WAIT()
+_RET
+
+/************************************************************/
+/*CALL：兄戻る						*/
+/************************************************************/
+ev_t04r0101_return_boy4_veteranw:
+	_BALLOONWIN_OBJMSG_POS( msg_t04r0101_boy4_03a, T04R0101_BOY4_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( T04R0101_BOY4_01, anm_boy4_return )
+	_OBJ_ANIME( T04R0101_VETERANW_01, anm_veteranw_return )
 	_OBJ_ANIME_WAIT()
 _RET
 
@@ -836,7 +917,7 @@ ev_t04r0101_btl_vs_boy3:
 _RET
 
 /**************************************************************/
-/*CALL：【仮】姉と戦闘                              */
+/*CALL：姉と戦闘                              */
 /**************************************************************/
 ev_t04r0101_btl_vs_girl4:
 {
@@ -912,7 +993,7 @@ ev_t04r0101_btl_vs_veteranw:
 _RET
 
 /**************************************************************/
-/*CALL：【仮】兄と戦闘                              */
+/*CALL：兄と戦闘                              */
 /**************************************************************/
 ev_t04r0101_btl_vs_boy4:
 {
@@ -936,7 +1017,7 @@ _RET
 EVENT_START	ev_t04r0101_girl4_01
 	
 	//連戦イベントをクリアしている
-	IF $WK_SCENE_T04R0101_BTL_FAMILY == 6 THEN
+	IF $WK_SCENE_T04R0101_BTL_FAMILY == 7 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t04r0101_girl4_05)
 		
 	//今日はまだイベントしていない
@@ -957,7 +1038,7 @@ EVENT_END
 EVENT_START	ev_t04r0101_lady_01
 	
 	//連戦イベントをクリアしている
-	IF $WK_SCENE_T04R0101_BTL_FAMILY == 6 THEN
+	IF $WK_SCENE_T04R0101_BTL_FAMILY == 7 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t04r0101_lady_05)
 		
 	//今日はまだイベントしていない
@@ -978,7 +1059,7 @@ EVENT_END
 EVENT_START	ev_t04r0101_gentleman_01
 	
 	//連戦イベントをクリアしている
-	IF $WK_SCENE_T04R0101_BTL_FAMILY == 6 THEN
+	IF $WK_SCENE_T04R0101_BTL_FAMILY == 7 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t04r0101_gentleman_05)
 		
 	//今日はまだイベントしていない
@@ -999,7 +1080,7 @@ EVENT_END
 EVENT_START	ev_t04r0101_veteranw_01
 	
 	//連戦イベントをクリアしている
-	IF $WK_SCENE_T04R0101_BTL_FAMILY == 6 THEN
+	IF $WK_SCENE_T04R0101_BTL_FAMILY == 7 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t04r0101_veteranw_05)
 		
 	//今日はまだイベントしていない
@@ -1020,7 +1101,7 @@ EVENT_END
 EVENT_START	ev_t04r0101_boy4_01
 	
 	//連戦イベントをクリアしている
-	IF $WK_SCENE_T04R0101_BTL_FAMILY == 6 THEN
+	IF $WK_SCENE_T04R0101_BTL_FAMILY == 7 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_t04r0101_boy4_05)
 		
 	//今日はまだイベントしていない
