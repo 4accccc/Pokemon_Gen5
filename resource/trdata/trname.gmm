@@ -3100,7 +3100,7 @@
 		<language name="JPN_KANJI" width="216">チェレン</language>
 	</row>
 
-	<row id="veteranm_1_09">
+	<row id="veteranm_1_08">
 		<language name="JPN" width="216">モリモト</language>
 		<language name="JPN_KANJI" width="216">モリモト</language>
 	</row>
@@ -3215,7 +3215,7 @@
 		<language name="JPN_KANJI" width="216">レンブ</language>
 	</row>
 
-	<row id="bigfour2_03">
+	<row id="bigfour2_02">
 		<language name="JPN" width="216">ギーマ</language>
 		<language name="JPN_KANJI" width="216">ギーマ</language>
 	</row>
