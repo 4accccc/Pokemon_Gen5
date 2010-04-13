@@ -2449,8 +2449,9 @@ static int MainSeq_ArrangePartyMain( BOX2_SYS_WORK * syswk )
 	case BOX2UI_ARRANGE_PARTY_RETURN2:	// 08: 戻る２
 		PMSND_PlaySE( SE_BOX2_CANCEL );
 //		BOX2MAIN_PokeInfoOff( syswk );
-		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+//		syswk->dat->retMode = BOX_END_MODE_MENU;
+//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
 
 	case BOX2UI_ARRANGE_PARTY_GET:				// 09: つかむ
 		PMSND_PlaySE( SE_BOX2_DECIDE );
@@ -2519,7 +2520,7 @@ static int MainSeq_ArrangePartyMain( BOX2_SYS_WORK * syswk )
 		}
 //		syswk->dat->retMode = BOX_END_MODE_MENU;
 //		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
-		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
 
 	default:
 		ret += BOX2OBJ_POKEICON_TRAY_MAX;
@@ -3441,8 +3442,9 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
 
 	case BOX2UI_BATTLEBOX_PARTY_RETURN2:		// 08: 戻る２
 		PMSND_PlaySE( SE_BOX2_CANCEL );
-		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+//		syswk->dat->retMode = BOX_END_MODE_MENU;
+//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_END) );
 
 	case BOX2UI_BATTLEBOX_PARTY_GET:				// 09: いどうする
 		PMSND_PlaySE( SE_BOX2_DECIDE );
@@ -3482,7 +3484,7 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
 		}
 //		syswk->dat->retMode = BOX_END_MODE_MENU;
 //		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
-		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_END) );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_END) );
 
 	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
@@ -5511,8 +5513,9 @@ static int MainSeq_ItemPartyMain( BOX2_SYS_WORK * syswk )
 	case BOX2UI_ITEM_PARTY_RETURN2:		// 08: 戻る２
 		PMSND_PlaySE( SE_BOX2_CANCEL );
 //		BOX2MAIN_PokeInfoOff( syswk );
-		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+//		syswk->dat->retMode = BOX_END_MODE_MENU;
+//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
 
 	case BOX2UI_ITEM_PARTY_MENU1:			// 09: いどうする
 		PMSND_PlaySE( SE_BOX2_DECIDE );
@@ -5573,7 +5576,7 @@ static int MainSeq_ItemPartyMain( BOX2_SYS_WORK * syswk )
 		}
 //		syswk->dat->retMode = BOX_END_MODE_MENU;
 //		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
-		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_POKE_BTN, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
 
 	default:
 		ret += BOX2OBJ_POKEICON_TRAY_MAX;
