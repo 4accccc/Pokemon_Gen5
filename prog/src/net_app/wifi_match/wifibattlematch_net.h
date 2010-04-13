@@ -296,6 +296,8 @@ typedef enum
 extern void WIFIBATTLEMATCH_GDB_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, int recordID, WIFIBATTLEMATCH_GDB_GETTYPE type, void *p_wk_adrs );
 extern BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
+#define WIFIBATTLEMATCH_GDB_DEFAULT_RATEING (1500)
+
 //èëÇ´çûÇ›
 typedef enum
 { 

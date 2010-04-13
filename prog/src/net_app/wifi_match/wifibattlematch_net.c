@@ -632,6 +632,7 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
   //ŒÂ•Ê‚ÌƒGƒ‰[
   if( repair == WIFIBATTLEMATCH_NET_ERROR_NONE )
   { 
+    BOOL is_clear = FALSE;
     switch( p_error->type )
     { 
     case WIFIBATTLEMATCH_NET_ERRORTYPE_NONE:
@@ -1245,7 +1246,7 @@ BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk )
         }
         else
         { 
-          p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_INIT;
+          p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_WAIT;
         }
       }
       break;
@@ -1253,7 +1254,7 @@ BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk )
     case WIFIBATTLEMATCH_SC_SEQ_SEND_INIT:
         if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(), WIFIBATTLEMATCH_NETCMD_SEND_FLAG, sizeof(u32), &p_wk->report.is_dirty ) )
       { 
-        p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SEND_WAIT;
+        p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_INIT;
       }
       break;
 
@@ -3406,7 +3407,7 @@ void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
 
     p_wk->p_field_buff[0].name  = ATLAS_GET_STAT_NAME( ARENA_ELO_RATING_1V1_WIFICUP );
     p_wk->p_field_buff[0].type  = DWC_GDB_FIELD_TYPE_INT;
-    p_wk->p_field_buff[0].value.int_s32 = 1500;
+    p_wk->p_field_buff[0].value.int_s32 = WIFIBATTLEMATCH_GDB_DEFAULT_RATEING;
 
     p_wk->p_field_buff[1].name  = ATLAS_GET_STAT_NAME( CHEATS_WIFICUP_COUNTER );
     p_wk->p_field_buff[1].type  = DWC_GDB_FIELD_TYPE_INT;
@@ -4411,7 +4412,7 @@ BOOL WIFIBATTLEMATCH_NET_WaitBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL *p_is
   BOOL ret;
   ret = DWC_TOOL_BADWORD_Wait( &p_wk->badword, p_is_bad_word );
 
-  if( ret )
+  if( ret == TRUE && *p_is_bad_word == TRUE )
   { 
     STRBUF  *p_modifiname = DWC_TOOL_CreateBadNickName( p_wk->heapID );
 

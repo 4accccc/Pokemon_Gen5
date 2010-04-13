@@ -101,6 +101,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Init( GFL_PROC *p_proc, i
 
   //モジュール初期化
   p_wk->p_procsys = GFL_PROC_LOCAL_boot( HEAPID_WIFIBATTLEMATCH_SUB );
+  PMSND_FadeOutBGM( 16 );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -172,7 +173,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
 
   switch (*p_seq) {
   case SEQ_CALL_START_DEMO:
-    PMSND_FadeOutBGM( 16 );
+    PMSND_PlayBGM( p_param->p_btl_setup_param->musicDefault );
     // 通信バトル前デモ呼び出し
     {
       p_param->p_demo_param->type = COMM_BTL_DEMO_TYPE_NORMAL_START;
@@ -203,7 +204,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
     }
     break;
   case SEQ_BATTLE_INIT:
-    PMSND_PlayBGM( p_param->p_btl_setup_param->musicDefault );
     GFL_PROC_LOCAL_CallProc(p_wk->p_procsys, NO_OVERLAY_ID, &BtlProcData, p_param->p_btl_setup_param);
     (*p_seq) = SEQ_BATTLE_WAIT;
     break;
@@ -213,7 +213,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
     }
     break;
   case SEQ_BATTLE_END:
-    PMSND_StopBGM();
     OS_TPrintf("バトル完了\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
@@ -262,6 +261,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
     break;
 
   case SEQ_END:
+    PMSND_StopBGM();
     return GFL_PROC_RES_FINISH;
 
   default:

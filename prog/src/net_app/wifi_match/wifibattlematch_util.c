@@ -141,6 +141,11 @@ void WBM_TEXT_Exit( WBM_TEXT_WORK* p_wk )
   { 
     APP_KEYCURSOR_Delete( p_wk->p_keycursor );
   }
+  if( p_wk->p_time )
+  { 
+    TILEICON_Exit( p_wk->p_time );
+    p_wk->p_time  = NULL;
+  }
 
   GFL_TCB_Exit( p_wk->p_tcb );
   GFL_HEAP_FreeMemory( p_wk->p_tcb_area );
@@ -261,14 +266,12 @@ static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type )
     p_wk->p_keycursor = NULL;
   }
 
+  WBM_TEXT_EndWait( p_wk );
+
   //ƒ^ƒCƒv‚²‚Æ‚Ì•¶Žš•`‰æ
   switch( type )
   { 
   case WBM_TEXT_TYPE_WAIT:
-    GF_ASSERT( p_wk->p_time == NULL );
-
-    WBM_TEXT_EndWait( p_wk );
-
     p_wk->p_time  = TIMEICON_Create( p_wk->p_tcb, p_wk->p_bmpwin, p_wk->clear_chr,
         TIMEICON_DEFAULT_WAIT, p_wk->heapID );
     PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );

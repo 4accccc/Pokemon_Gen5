@@ -14,6 +14,8 @@
 #include "battle/battle.h"
 #include "wifibattlematch_data.h"
 #include "savedata/rndmatch_savedata.h"
+#include "net/dreamworld_netdata.h"
+#include "wifibattlematch_net.h"
 
 #include <dwc.h>
 //=============================================================================
@@ -78,6 +80,8 @@ typedef struct
   WIFIBATTLEMATCH_RECORD_DATA *p_record_data;
   WIFIBATTLEMATCH_RECV_DATA   *p_recv_data;
   const BATTLEMATCH_BATTLE_SCORE  *cp_btl_score;
+  DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA *p_gpf_data;
+  WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA       *p_sake_data;
 } WIFIBATTLEMATCH_CORE_PARAM;
 
 //=============================================================================

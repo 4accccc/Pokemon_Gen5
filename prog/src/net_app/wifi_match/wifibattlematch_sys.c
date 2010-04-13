@@ -21,6 +21,7 @@
 #include "poke_tool/poke_regulation.h"
 #include "sound/pm_sndsys.h"
 #include "system/net_err.h"
+#include "net/dreamworld_netdata.h"
 
 //各プロセス
 #include "net_app/wifi_login.h"
@@ -109,6 +110,9 @@ typedef struct
   u32                         server_time;        //サーバアクセス時間
   WIFIBATTLEMATCH_RECORD_DATA record_data;        //戦績
   WIFIBATTLEMATCH_RECV_DATA   recv_data;          //サーバーから受信したデータ
+  BOOL                        is_err_return_login;//WIFILOGINにエラーで戻るとき
+  DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA gpf_data;//GPFサーバーから落としてきた選手証データ
+  WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA   sake_data;
 
 } WIFIBATTLEMATCH_SYS;
 
@@ -459,7 +463,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, 
   //ランダムマッチ以外はタイトルへ戻る
   if( p_wk->param.mode != WIFIBATTLEMATCH_MODE_RANDOM )
   { 
-    GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+    //GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(title), &TitleProcData, NULL);
+    OS_ResetSystem(0);
   }
 
   //引数自動破棄フラグを設定されていたら破棄
@@ -555,7 +560,15 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 		break;
 
 	case WBM_SYS_SEQ_FADEOUT:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+
+    if( p_wk->param.mode != WIFIBATTLEMATCH_MODE_RANDOM )
+    { 
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 0 );
+    }
+    else
+    { 
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+    }
 		*p_seq	= WBM_SYS_SEQ_FADEOUT_WAIT;
 		break;
 
@@ -717,6 +730,8 @@ static void *WBM_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID,
   p_param->p_record_data  = &p_wk->record_data;
   p_param->p_recv_data    = &p_wk->recv_data;
   p_param->cp_btl_score   = &p_wk->btl_score;
+  p_param->p_gpf_data     = &p_wk->gpf_data;
+  p_param->p_sake_data    = &p_wk->sake_data;
   { 
     BATTLEMATCH_DATA  *p_btlmatch_sv  = SaveData_GetBattleMatch( GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data ) );
     p_param->p_rndmatch     =  BATTLEMATCH_GetRndMatch( p_btlmatch_sv );
@@ -770,6 +785,7 @@ static BOOL WBM_CORE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_ad
     break;
   
   case WIFIBATTLEMATCH_CORE_RESULT_ERR_NEXT_LOGIN:
+    p_wk->is_err_return_login = TRUE;
     WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
     break;
 
@@ -934,6 +950,7 @@ static BOOL POKELIST_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_ad
     }
     else if( p_param->result == WIFIBATTLEMATCH_SUBPROC_RESULT_ERROR_NEXT_LOGIN )
     { 
+      p_wk->is_err_return_login = TRUE;
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
     }
   }
@@ -1148,8 +1165,23 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
     p_param->p_demo_param->battle_mode = battle_type * 2 + is_shooter;
   }
 
-  p_param->p_btl_setup_param->musicDefault  = WBM_SND_SEQ_BATTLE;
-  p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
+  //曲の設定
+  if( p_wk->type == WIFIBATTLEMATCH_TYPE_RNDRATE
+      ||  p_wk->type == WIFIBATTLEMATCH_TYPE_RNDFREE )
+  { 
+    p_param->p_btl_setup_param->musicDefault  = WBM_SND_SEQ_BATTLE_RND;
+    p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
+  }
+  else if( p_wk->type == WIFIBATTLEMATCH_TYPE_WIFICUP )
+  { 
+    p_param->p_btl_setup_param->musicDefault  = WBM_SND_SEQ_BATTLE_WIFI;
+    p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
+  }
+  else if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
+  { 
+    p_param->p_btl_setup_param->musicDefault  = WBM_SND_SEQ_BATTLE_LIVE;
+    p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
+  }
 
   //ポケモン設定
   BATTLE_PARAM_SetPokeParty( p_param->p_btl_setup_param, p_wk->p_player_btl_party, BTL_CLIENT_PLAYER );
@@ -1312,6 +1344,16 @@ static void *LOGIN_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, vo
   p_param->pSvl     = &p_wk->svl_result;
   p_param->nsid     = WB_NET_WIFIMATCH;
 
+  if( p_wk->is_err_return_login )
+  { 
+    p_wk->is_err_return_login = FALSE;
+    p_param->mode     = WIFILOGIN_MODE_ERROR;
+  }
+  else
+  { 
+    p_param->mode     = WIFILOGIN_MODE_NORMAL;
+  }
+
   return p_param;
 }
 //----------------------------------------------------------------------------
@@ -1415,6 +1457,7 @@ static BOOL WBM_LISTAFTER_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_par
       break;
 
     case WIFIBATTLEMATCH_LISTAFTER_RESULT_ERROR_NEXT_LOGIN:
+      p_wk->is_err_return_login = TRUE;
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
       break;
     }

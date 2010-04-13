@@ -244,6 +244,7 @@ static void DC_SEQFUNC_Init( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
   const u32 cup_no      = Regulation_GetCardParam( p_reg, REGULATION_CARD_CUPNO );
   const u32 cup_status  = Regulation_GetCardParam( p_reg, REGULATION_CARD_STATUS );
 
+  NAGI_Printf( "card NO%d status%d\n", cup_no, cup_status );
 
   if( cup_no > 0 && cup_status == DREAM_WORLD_MATCHUP_SIGNUP )
   { 
