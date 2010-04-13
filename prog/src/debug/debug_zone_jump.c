@@ -20,6 +20,7 @@
 #include "debug/debug_zone_jump.h"
 #include "field/zonedata.h"
 #include "debug/debug_str_conv.h" // for DEB_STR_CONV_SjisToStrcode
+#include "../../arc/fieldmap/zone_id.h" // for ZONE_ID_MAX
 
 #define PROC_HEAP_SIZE  (0x20000)
 #define PRINT_FRAME (GFL_BG_FRAME1_M)
@@ -114,7 +115,7 @@ typedef struct {
   int           index;
   int           search_first_index;
   int           searchingFlag;
-  const char * nameAllBuf;
+  u16 * nameAllBuf;
 }COMP_SKB_WORK;
 
 typedef struct {
@@ -173,7 +174,8 @@ static BOOL compskb_strncmp( const STRBUF* str1, const STRBUF* str2, u32 len );
 static u32 compskb_search( COMP_SKB_WORK* wk, const STRBUF* word, int org_idx, int* first_idx );
 static BOOL comskb_is_match( COMP_SKB_WORK* wk, const STRBUF* word, int* match_idx );
 
-static void setDebugZoneIDStr( const char * allName, u32 zoneID, STRBUF * strBuf );
+static void setDebugZoneIDStr( const u16 * allName, u32 zoneID, STRBUF * strBuf );
+static void convert( u16 *dst, const u16 *src);
 
 #define HEAPID_DEBUG_ZONE_JUMP  HEAPID_DEBUG_MAKE_UNDATA
 
@@ -204,7 +206,27 @@ static GFL_PROC_RESULT PROC_ZoneJump_Init( GFL_PROC* proc, int* seq, void* pwk, 
       wk->Ret = &proc_param->Ret;
       wk->ZoneID = &proc_param->ZoneID;
     }
-    wk->comp.nameAllBuf = ZONEDATA_GetAllZoneName( wk->HeapID );
+    {
+      const char * buf;
+      buf = ZONEDATA_GetAllZoneName( GFL_HEAP_LOWID( wk->HeapID ) );
+      {
+        int i;
+        int size;
+        size = ZONE_ID_MAX*ZONEDATA_NAME_LENGTH*2;
+        NOZOMU_Printf("size = %x\n",size);
+        wk->comp.nameAllBuf = GFL_HEAP_AllocClearMemory( wk->HeapID, size );
+
+        for (i=0;i<ZONE_ID_MAX;i++){
+          u16 pStrCode[ZONEDATA_NAME_LENGTH];
+          DEB_STR_CONV_SjisToStrcode( &buf[ ZONEDATA_NAME_LENGTH * i ],
+                                      pStrCode,
+                                      ZONEDATA_NAME_LENGTH );
+          convert( &wk->comp.nameAllBuf[ZONEDATA_NAME_LENGTH * i], pStrCode);
+        }
+      }
+      GFL_HEAP_FreeMemory( (void*)buf );
+
+    }
   }
 
   
@@ -746,11 +768,47 @@ static BOOL comskb_is_match( COMP_SKB_WORK* wk, const STRBUF* word, int* match_i
   return FALSE;
 }
 
-static void setDebugZoneIDStr( const char * allName, u32 zoneID, STRBUF * strBuf )
+//----------------------------------------------------------------------------------
+/**
+ * 完全一致する文字列をサーチ
+ *
+ * @param   dst         UNIコード
+ * @param   src         アスキーコード
+ *
+ * @retval none
+ */
+//----------------------------------------------------------------------------------
+static void convert( u16 *dst, const u16 *src)
 {
-  u16 pStrCode[64];
+  int i;
   
-  DEB_STR_CONV_SjisToStrcode( &allName[ ZONEDATA_NAME_LENGTH * zoneID ], pStrCode, 64 );
-  GFL_STR_SetStringCode( strBuf, pStrCode );
+  for(i=0;i<ZONEDATA_NAME_LENGTH;i++)
+  {
+    if ( L'0' <= (*src) && (*src) <= L'9' ){
+      *dst = L'０' + ( (*src)-L'0' );
+    }else if( L'A' <= (*src) && (*src) <= L'Z' ){
+      *dst = L'Ａ' + ( (*src)-L'A' );
+    }else if( L'a' <= (*src) && (*src) <= L'z' ){
+      *dst = L'ａ' + ( (*src)-L'a' );
+    }else{
+      *dst = *src;
+    }
+    dst++;
+    src++;
+  }
 }
 
+static void setDebugZoneIDStr( const u16 * allName, u32 zoneID, STRBUF * strBuf )
+{
+/**
+  u16 pStrCode[64];
+  u16 dst[64];
+
+  DEB_STR_CONV_SjisToStrcode( &allName[ ZONEDATA_NAME_LENGTH * zoneID ], pStrCode, 64 );
+
+  convert( dst, pStrCode);
+  
+  GFL_STR_SetStringCode( strBuf, dst);
+*/
+  GFL_STR_SetStringCode( strBuf, &allName[ ZONEDATA_NAME_LENGTH * zoneID ]);
+}
