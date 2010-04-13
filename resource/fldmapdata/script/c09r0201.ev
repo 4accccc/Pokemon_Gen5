@@ -198,7 +198,7 @@ EVENT_START	ev_c09r0201_bigfour2_01
 			_MSGWIN_CLOSE()
 			
 			//トレーナー戦呼び出し
-			_TRAINER_BTL_SET( TRID_BIGFOUR2_01, 0 )
+			_TRAINER_BTL_SET( TRID_BIGFOUR2_02, 0 )
 			//敗戦チェック
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -332,8 +332,8 @@ _ANIME_LABEL	anm_ply_move_02
 /************************************************************/
 EVENT_START	ev_pos_c09r0201_warp_01
 	
-	//【仮】マップチェンジ
-	_MAP_CHANGE_WARP( ZONE_ID_C09P01, 34, 50, DIR_UP )
+	//マップチェンジ
+	_MAP_CHANGE_WARP( ZONE_ID_C09P01, 31, 47, DIR_UP )
 	
 EVENT_END
 

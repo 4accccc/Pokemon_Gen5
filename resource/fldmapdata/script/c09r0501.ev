@@ -93,6 +93,7 @@ EVENT_START	ev_pos_c09r0501_n_01
 	_BALLOONWIN_OBJMSG( msg_c09r0501_boss_07, C09R0501_N_01 )
 	_MSGWIN_CLOSE()
 	
+	//！注意！ BGM演出のため、特別にBGMフェードを個別にかけています。[100413斉藤マ]
 	_DEMO_FADEOUT_BLACK_CALL()
 	_BGM_FADEOUT( 0, 6 )
 	_BGM_STOP()
