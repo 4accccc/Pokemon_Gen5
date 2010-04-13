@@ -625,6 +625,11 @@
 		<language name="JPN_KANJI" width="216">けんきゅういん</language>
 	</row>
 
+	<row id="MSG_TRTYPE_BOSS_1">
+		<language name="JPN" width="216">プラズマだん</language>
+		<language name="JPN_KANJI" width="216">プラズマだん</language>
+	</row>
+
 	<row id="MSG_TRTYPE_OL">
 		<language name="JPN" width="216">ＯＬ</language>
 		<language name="JPN_KANJI" width="216">ＯＬ</language>
@@ -845,6 +850,11 @@
 		<language name="JPN_KANJI" width="216">サイクリング</language>
 	</row>
 
+	<row id="MSG_TRTYPE_BADRIDER_01">
+		<language name="JPN" width="216">バイクずき</language>
+		<language name="JPN_KANJI" width="216">バイクずき</language>
+	</row>
+
 	<row id="MSG_TRTYPE_SCHOOLB_1">
 		<language name="JPN" width="216">ブルジョワールけ</language>
 		<language name="JPN_KANJI" width="216">ブルジョワールけ</language>
@@ -865,6 +875,11 @@
 		<language name="JPN_KANJI" width="216">ブルジョワールけ</language>
 	</row>
 
+	<row id="MSG_TRTYPE_VETERANM_1">
+		<language name="JPN" width="216">ゲームフリーク</language>
+		<language name="JPN_KANJI" width="216">ゲームフリーク</language>
+	</row>
+
 	<row id="MSG_TRTYPE_PRINCESS_1">
 		<language name="JPN" width="216">ブルジョワールけ</language>
 		<language name="JPN_KANJI" width="216">ブルジョワールけ</language>
@@ -873,6 +888,11 @@
 	<row id="MSG_TRTYPE_PRINCE_1">
 		<language name="JPN" width="216">ブルジョワールけ</language>
 		<language name="JPN_KANJI" width="216">ブルジョワールけ</language>
+	</row>
+
+	<row id="MSG_TRTYPE_DPCHAMPION">
+		<language name="JPN" width="216">ポケモントレーナー</language>
+		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
 
 	<flowchart-group-list>

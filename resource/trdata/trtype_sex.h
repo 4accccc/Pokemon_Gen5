@@ -58,6 +58,7 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_MALE,		//さぎょういん1
 	PTL_SEX_MALE,		//バスケせんしゅ
 	PTL_SEX_FEMALE,		//けんきゅういん♀
+	PTL_SEX_MALE,		//プラズマだん11
 	PTL_SEX_FEMALE,		//ＯＬ
 	PTL_SEX_FEMALE,		//エリートトレーナー♀
 	PTL_SEX_MALE,		//エリートトレーナー♂
@@ -92,7 +93,7 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_MALE,		//してんのう3
 	PTL_SEX_MALE,		//してんのう2
 	PTL_SEX_MALE,		//してんのう4
-	PTL_SEX_MALE,		//プラズマだん1
+	PTL_SEX_MALE,		//プラズマだん11
 	PTL_SEX_MALE,		//てつどういん
 	PTL_SEX_MALE,		//かいパンやろう
 	PTL_SEX_FEMALE,		//ビキニのおねえさん
@@ -102,11 +103,14 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_MALE,		//チャンピオン
 	PTL_SEX_MALE,		//サイクリング♂
 	PTL_SEX_FEMALE,		//サイクリング♀
+	PTL_SEX_MALE,		//バイクずき
 	PTL_SEX_MALE,		//ブルジョワールけ11111
 	PTL_SEX_FEMALE,		//ブルジョワールけ11111
 	PTL_SEX_FEMALE,		//ブルジョワールけ11111
 	PTL_SEX_MALE,		//ブルジョワールけ11111
+	PTL_SEX_MALE,		//ゲームフリーク
 	PTL_SEX_FEMALE,		//ブルジョワールけ11111
 	PTL_SEX_MALE,		//ブルジョワールけ11111
+	PTL_SEX_FEMALE,		//ポケモントレーナー（DPCHAMPION）
 };
 

@@ -835,7 +835,7 @@
 		<language name="JPN_KANJI" width="216">サトミ</language>
 	</row>
 
-	<row id="boss_03">
+	<row id="boss_1_03">
 		<language name="JPN" width="216">Ｎ</language>
 		<language name="JPN_KANJI" width="216">Ｎ</language>
 	</row>
@@ -1480,7 +1480,7 @@
 		<language name="JPN_KANJI" width="216">タケル</language>
 	</row>
 
-	<row id="boss_04">
+	<row id="boss_1_04">
 		<language name="JPN" width="216">Ｎ</language>
 		<language name="JPN_KANJI" width="216">Ｎ</language>
 	</row>
@@ -1490,7 +1490,7 @@
 		<language name="JPN_KANJI" width="216">Ｎ</language>
 	</row>
 
-	<row id="boss_06">
+	<row id="boss_1_06">
 		<language name="JPN" width="216">Ｎ</language>
 		<language name="JPN_KANJI" width="216">Ｎ</language>
 	</row>
@@ -2441,13 +2441,13 @@
 	</row>
 
 	<row id="elitew_16">
-		<language name="JPN" width="216">ハルカ</language>
-		<language name="JPN_KANJI" width="216">ハルカ</language>
+		<language name="JPN" width="216">ルーシー</language>
+		<language name="JPN_KANJI" width="216">ルーシー</language>
 	</row>
 
 	<row id="elitem_16">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">ビリー</language>
+		<language name="JPN_KANJI" width="216">ビリー</language>
 	</row>
 
 	<row id="police_02">
@@ -2875,7 +2875,7 @@
 		<language name="JPN_KANJI" width="216">ベル</language>
 	</row>
 
-	<row id="boss_07">
+	<row id="boss_1_07">
 		<language name="JPN" width="216">Ｎ</language>
 		<language name="JPN_KANJI" width="216">Ｎ</language>
 	</row>
@@ -2920,7 +2920,7 @@
 		<language name="JPN_KANJI" width="216">スミエ</language>
 	</row>
 
-	<row id="badrider_03">
+	<row id="badrider_01_03">
 		<language name="JPN" width="216">チャールズ</language>
 		<language name="JPN_KANJI" width="216">チャールズ</language>
 	</row>
@@ -3100,7 +3100,7 @@
 		<language name="JPN_KANJI" width="216">チェレン</language>
 	</row>
 
-	<row id="veteranm_08">
+	<row id="veteranm_1_09">
 		<language name="JPN" width="216">モリモト</language>
 		<language name="JPN_KANJI" width="216">モリモト</language>
 	</row>
@@ -3178,6 +3178,56 @@
 	<row id="hakaim1_32">
 		<language name="JPN" width="216">したっぱ</language>
 		<language name="JPN_KANJI" width="216">したっぱ</language>
+	</row>
+
+	<row id="boss_03">
+		<language name="JPN" width="216">Ｎ</language>
+		<language name="JPN_KANJI" width="216">Ｎ</language>
+	</row>
+
+	<row id="boss_04">
+		<language name="JPN" width="216">Ｎ</language>
+		<language name="JPN_KANJI" width="216">Ｎ</language>
+	</row>
+
+	<row id="boss_06">
+		<language name="JPN" width="216">Ｎ</language>
+		<language name="JPN_KANJI" width="216">Ｎ</language>
+	</row>
+
+	<row id="boss_07">
+		<language name="JPN" width="216">Ｎ</language>
+		<language name="JPN_KANJI" width="216">Ｎ</language>
+	</row>
+
+	<row id="veteranm_08">
+		<language name="JPN" width="216">サトシ</language>
+		<language name="JPN_KANJI" width="216">サトシ</language>
+	</row>
+
+	<row id="bigfour1_02">
+		<language name="JPN" width="216">シキミ</language>
+		<language name="JPN_KANJI" width="216">シキミ</language>
+	</row>
+
+	<row id="bigfour3_02">
+		<language name="JPN" width="216">レンブ</language>
+		<language name="JPN_KANJI" width="216">レンブ</language>
+	</row>
+
+	<row id="bigfour2_03">
+		<language name="JPN" width="216">ギーマ</language>
+		<language name="JPN_KANJI" width="216">ギーマ</language>
+	</row>
+
+	<row id="bigfour4_02">
+		<language name="JPN" width="216">カトレア</language>
+		<language name="JPN_KANJI" width="216">カトレア</language>
+	</row>
+
+	<row id="dpchampion_01">
+		<language name="JPN" width="216">シロナ</language>
+		<language name="JPN_KANJI" width="216">シロナ</language>
 	</row>
 
 	<flowchart-group-list>
