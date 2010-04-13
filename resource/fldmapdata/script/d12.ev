@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d12.h"
   .include  "d12.h"
+  .include  "c03p13_def.h"    //for reserve
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -91,7 +92,7 @@ EVENT_START   ev_scene_d12
   //連行イベント
 
   //サブウィンでしゃべる
-	_SUBWIN_MSG( msg_d12_plasma_sub_01 , 2 , 2 , 1 )
+	_SUBWIN_MSG( msg_d12_plasma_sub_01 , 4 , 4 , 1 )
 	_TIME_WAIT( 16 )
 	_SUBWIN_MSG( msg_d12_plasma_sub_02 , 10 , 9 , 2 )
 	_TIME_WAIT(16)
@@ -99,7 +100,7 @@ EVENT_START   ev_scene_d12
 	_TIME_WAIT(16)
 	_SUBWIN_CLOSE( 2 )
 
-  _SUBWIN_MSG( msg_d12_police_sub_01 , 2 , 4 , 1 )
+  _SUBWIN_MSG( msg_d12_police_sub_01 , 4 , 6 , 1 )
 	_TIME_WAIT( 16 )
 	_SUBWIN_MSG( msg_d12_police_sub_02 , 10 , 11 , 2 )
 	_TIME_WAIT(16)
@@ -148,7 +149,7 @@ EVENT_START   ev_scene_d12
   _OBJ_ANIME( D12_POLICE_11, anm_police_in )
   _OBJ_ANIME_WAIT()
   //「船乗って」
-  _BALLOONWIN_OBJMSG_POS( msg_d12_police03_01 , D12_POLICE_11, POS_UP )
+  _BALLOONWIN_OBJMSG_POS( msg_d12_police03_01 , D12_POLICE_11, POS_UR )
 	_BALLOONWIN_CLOSE()
   //右向く
   _OBJ_ANIME( D12_HAKASE1_01, anm_step_dir_r )
@@ -202,7 +203,9 @@ EVENT_START	ev_reserve_d12
 	//マップ遷移ブラックイン
 	_MAP_FADE_BLACK_IN()
 	_MAP_FADE_END_CHECK()
-
+  //自機一歩移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_right )
+  _OBJ_ANIME_WAIT()
 EVENT_END
 
 /**************************************************************/
@@ -217,8 +220,15 @@ EVENT_START   ev_d12_pilot_01
     //もどるで
   	_BALLOONWIN_TALKOBJ_MSG(msg_d12_mariner_02)
     _BALLOONWIN_CLOSE()
+    //船長移動
+    _OBJ_ANIME( D12_PILOT_01, anm_move_left )
+    //自機移動
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_left )
+    _OBJ_ANIME_WAIT()
+    //スクリプトリザーブ
+    _RESERVE_SCRIPT( SCRID_RESERVE_C03P13 )
     //マップジャンプ
-    _RAIL_MAP_CHANGE( ZONE_ID_C03P13, 0, 0, 10, DIR_RIGHT )
+    _RAIL_MAP_CHANGE( ZONE_ID_C03P13, 0, 2, 11, DIR_RIGHT )
 	ELSE
     //またね
     _BALLOONWIN_TALKOBJ_MSG(msg_d12_mariner_03)
@@ -490,6 +500,20 @@ _ANIME_LABEL	anm_polices_out
   _ANIME_DATA	AC_WALK_R_8F,10
 	_ANIME_DATA	ACMD_END,0
  
+//--------------------------------------------------------------
+//	船に乗るとき一歩移動
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_move_left
+  _ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	船に降りるとき一歩移動
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_move_right
+  _ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+  
   
   
   

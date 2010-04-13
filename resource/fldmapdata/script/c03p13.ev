@@ -23,8 +23,17 @@
 _EVENT_DATA		ev_c03p13_boy2_01
 _EVENT_DATA		ev_c03p13_veteranm_01
 _EVENT_DATA		ev_c03p13_pilot_01
+_EVENT_DATA		ev_reserve_c03p13
 _EVENT_DATA_END
 
+/************************************************************/
+/*				船から下りたところ                                */
+/************************************************************/
+EVENT_START	ev_reserve_c03p13
+  //自機一歩移動
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_right )
+  _OBJ_ANIME_WAIT()
+EVENT_END
 
 /**************************************************************/
 /* 			BOY2	C03P13									  */
@@ -63,7 +72,6 @@ EVENT_START		ev_c03p13_pilot_01
     //島に行く？
     _BALLOONWIN_TALKOBJ_MSG(msg)
 		_YES_NO_WIN( SCWK_ANSWER )
-		_BALLOONWIN_CLOSE()
 
     IF $SCWK_ANSWER == SCR_YES THEN
       //シーンを進行
@@ -75,6 +83,9 @@ EVENT_START		ev_c03p13_pilot_01
       //いくで
     	_BALLOONWIN_TALKOBJ_MSG(msg_c03p13_captain_03)
       _BALLOONWIN_CLOSE()
+
+      _CALL ship_in
+
       //ブラックアウト
       _DEMO_FADEOUT_BLACK_CALL_SINGLE()
       //デモ
@@ -115,11 +126,63 @@ check_evt_lock:
   ENDIF
 _RET
 
+ship_in:
+{
+  DEFINE_LOCAL dir
+  _PLAYER_DIR_GET( dir )
+
+  IF $dir == DIR_DOWN THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_ship_in_d )
+  ELSIF $dir == DIR_LEFT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_ship_in_l )
+  ELSE
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_ship_in_u )
+  ENDIF
+  _OBJ_ANIME_WAIT()
+}
+_RET
+
 //--------------------------------------------------------------------
 //その場歩き
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_stay_walk_l
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//右に一歩
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_right
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//船に乗る　自機下向き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ship_in_d
+	_ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//船に乗る　自機左
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ship_in_l
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//船に乗る　自機上向き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_ship_in_u
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+  
+ 
+  
+  
 
 
