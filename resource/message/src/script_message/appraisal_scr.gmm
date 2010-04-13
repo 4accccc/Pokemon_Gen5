@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-04T20:01:33"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-04-13T15:34:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1475" top="340" right="2180" bottom="967" maximized="no" rayout="Vertical2">
+	<dialog left="1349" top="294" right="2054" bottom="917" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="279" right="1280" bottom="677" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="370"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -540,6 +540,15 @@ GENTLEMAN</attribute>
 変わらんし　いつか譲って欲しいのー</language>
 	</row>
 
+	<row id="msg_appraisal_m_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<comment>●鑑定アイテム：鉱物
+・買い取れる道具が一つもない</comment>
+		<attribute name="キャラ指定">ジェントルマン
+GENTLEMAN</attribute>
+		<language name="JPN" width="256">アイテムなし</language>
+		<language name="JPN_KANJI" width="256">アイテムなし</language>
+	</row>
+
 	<row id="msg_appraisal_r_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
 		<comment>※進行フローは大富豪もグルメも鉱物も共通
 
@@ -674,6 +683,16 @@ FIGHTERM</attribute>
 ゆずってくれないかね？　かね？</language>
 	</row>
 
+	<row id="msg_appraisal_r_09" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<comment>●鑑定アイテム：大富豪
+・買い取れる道具が一つもない</comment>
+		<attribute name="キャラ指定">格闘家♂
+FIGHTERM</attribute>
+		<language name="JPN" width="256">アイテムなし</language>
+		<language name="JPN_KANJI" width="256">アイテムなし
+</language>
+	</row>
+
 	<row id="msg_appraisal_m2_01" text-color="#0000ff,,,#000000,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
 		<comment>※進行フローは共通
 
@@ -802,6 +821,15 @@ SUNGLASSES</attribute>
 わたしの　ところへ　おいで！▼
 どこよりも　だれよりも　高ーく
 買い取って　あげるからさ……▼</language>
+	</row>
+
+	<row id="msg_appraisal_m2_08" text-color="#0000ff,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<comment>●鑑定アイテム：鉱物２　
+・買い取れる道具が一つもない</comment>
+		<attribute name="キャラ指定">サングラス
+SUNGLASSES</attribute>
+		<language name="JPN" width="256">アイテムなし</language>
+		<language name="JPN_KANJI" width="256">アイテムなし</language>
 	</row>
 
 	<flowchart-group-list>
