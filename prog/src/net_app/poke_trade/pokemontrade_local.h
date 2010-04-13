@@ -27,6 +27,7 @@
 
 #include "savedata/box_savedata.h"  //デバッグアイテム生成用
 
+#include "savedata/mail_util.h"
 #include "system/mcss.h"
 #include "system/mcss_tool.h"
 #include "system/time_icon.h"
@@ -43,6 +44,8 @@
 #include "net/net_save.h"
 #include "net/nhttp_rap.h"
 #include "pm_define.h"
+#include "savedata/wifihistory.h"
+
 
 ///3Dモデルのタイプ
 typedef enum
@@ -478,6 +481,19 @@ typedef struct
 } PENMOVE_WORK;
 
 
+typedef struct
+{
+  MAIL_BLOCK* pMail;
+  RECORD* pRecord;
+  WIFI_HISTORY* pWifiHis;
+  ZUKAN_SAVEDATA* pZukan;
+  WIFI_NEGOTIATION_SAVEDATA* pNego;
+  POKEPARTY* pPokeParty;
+  BOX_TRAY_DATA* pBoxTray;
+} SAVEREV_BACKUP;
+
+
+
 
 
 struct _POKEMON_TRADE_WORK{
@@ -496,6 +512,7 @@ struct _POKEMON_TRADE_WORK{
   TIMEICON_WORK* pTimeIcon;
   HEAPID heapID;
   void* pTexBoard[5];///< ボードテクスチャー
+  SAVEREV_BACKUP aBackup;
   
   int BOX_TRAY_MAX;
   int TRADEBOX_LINEMAX;  ///< ボックスのマックスが決まらないので縦の列が変数
@@ -590,6 +607,7 @@ struct _POKEMON_TRADE_WORK{
 
   NET_SAVE_WORK* pNetSave;
   GFL_CLWK* curIcon[CELL_DISP_NUM];
+  GFL_CLWK* mojiIcon;
 
   int windowNum;
   int anmCount;
@@ -1009,6 +1027,9 @@ extern void POKMEONTRADE_DEMO_GTSUP_ChangeDemo(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE_DEMO_GTSDOWN_ChangeDemo(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE_DEMO_GTSMID_ChangeDemo(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE_DEMO_GTS_ChangeDemo(POKEMON_TRADE_WORK* pWork);
+extern void POKEMONTRADE_StartMojiSelect(POKEMON_TRADE_WORK* pWork,int x,int y);
+extern void POKEMONTRADE_EndMojiSelect(POKEMON_TRADE_WORK* pWork);
+extern BOOL POKEMONTRADE_CheckMojiSelect(POKEMON_TRADE_WORK* pWork);
 
 
 

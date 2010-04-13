@@ -41,6 +41,8 @@ typedef enum
 typedef void (StateFunc)(NET_SAVE_WORK* pState);
 
 struct _NET_SAVE_WORK{
+  SAVE_LASTCALLBACK* lastCallback;
+  void* pWorkOrg;
   StateFunc* state;
   GAMEDATA* pGameData;
   int saveStep;
@@ -120,6 +122,26 @@ NET_SAVE_WORK* NET_SAVE_Init(HEAPID heapID, GAMEDATA* pGameData)
   return pWork;
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief   ポケモン交換開始  ワークつき
+ * @param   NET_SAVE_WORK ワーク
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+NET_SAVE_WORK* NET_SAVE_InitCallback(HEAPID heapID, GAMEDATA* pGameData, SAVE_LASTCALLBACK* pCallback, void* pWorkOrg)
+{
+  NET_SAVE_WORK* pWork = GFL_HEAP_AllocClearMemory(heapID,sizeof(NET_SAVE_WORK));
+
+  pWork->lastCallback = pCallback;
+  pWork->pWorkOrg = pWorkOrg;
+  pWork->pGameData = pGameData;
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_SAVEST, WB_NET_TRADE_SERVICEID);
+  _CHANGE_STATE(pWork, _changeTimingSaveStart2);
+  return pWork;
+}
+
 
 //------------------------------------------------------------------
 /**
@@ -133,7 +155,9 @@ BOOL NET_SAVE_Main(NET_SAVE_WORK* pNetSaveWork)
 {
   if(pNetSaveWork->state){
     pNetSaveWork->state(pNetSaveWork);
-    return FALSE;
+    if(pNetSaveWork->state){
+      return FALSE;
+    }
   }
   return TRUE;
 }
@@ -214,6 +238,9 @@ static void _changeTimingSaveStart5(NET_SAVE_WORK* pWork)
 
 static void _changeDemo_ModelTrade25(NET_SAVE_WORK* pWork)
 {
+  if(pWork->lastCallback){
+    pWork->lastCallback(pWork->pWorkOrg);
+  }
   if(GAMEDATA_SaveAsyncMain(pWork->pGameData) == SAVE_RESULT_OK){
     if(NET_ERR_CHECK_NONE!=NetErr_App_CheckError()){  //エラーなら終了
       _CHANGE_STATE(pWork,NULL);

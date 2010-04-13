@@ -13,6 +13,8 @@
 
 typedef struct _NET_SAVE_WORK NET_SAVE_WORK;
 
+typedef void (SAVE_LASTCALLBACK)(void* pWork);
+
 
 //------------------------------------------------------------------
 /**
@@ -24,6 +26,7 @@ typedef struct _NET_SAVE_WORK NET_SAVE_WORK;
 //------------------------------------------------------------------
 
 extern NET_SAVE_WORK* NET_SAVE_Init(HEAPID heapID, GAMEDATA* pGameData);
+extern NET_SAVE_WORK* NET_SAVE_InitCallback(HEAPID heapID, GAMEDATA* pGameData, SAVE_LASTCALLBACK* pCallback, void* pWorkOrg);
 
 
 //------------------------------------------------------------------

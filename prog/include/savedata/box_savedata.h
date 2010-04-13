@@ -232,3 +232,4 @@ extern void BOXDAT_SetPPPData_Tray( u8 trayIdx , void *dataPtr , BOX_MANAGER *bo
 //==============================================================================================
 extern void BOXTRAYDAT_Init( BOX_TRAY_DATA* traydat );
 extern u32 BOXTRAYDAT_GetTotalSize( void );
+extern BOX_TRAY_DATA* BOXTRAYDAT_GetTrayData( const BOX_MANAGER *boxData , const u32 trayNum );

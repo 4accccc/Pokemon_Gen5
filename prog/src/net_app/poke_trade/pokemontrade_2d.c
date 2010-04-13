@@ -750,6 +750,9 @@ void IRC_POKETRADE_EndIconResource(POKEMON_TRADE_WORK* pWork)
 {
   int i;
 
+  POKEMONTRADE_EndMojiSelect(pWork);
+
+  
   for(i = 0;i< CELL_DISP_NUM;i++){
     if(pWork->curIcon[i]){
       GFL_CLACT_WK_Remove(pWork->curIcon[i]);
@@ -3317,4 +3320,44 @@ void POKEMONTRADE_NEGOBG_SlideInit(POKEMON_TRADE_WORK* pWork,int side,POKEMON_PA
 }
 
 
+void POKEMONTRADE_StartMojiSelect(POKEMON_TRADE_WORK* pWork,int x,int y)
+{
+  GFL_CLWK_DATA cellInitData;
+
+  
+  cellInitData.pos_x = x;
+  cellInitData.pos_y = y;
+  cellInitData.anmseq = 24;
+  cellInitData.softpri = 0;
+  cellInitData.bgpri = 0;
+
+  POKEMONTRADE_EndMojiSelect(pWork);
+    
+  pWork->mojiIcon =
+    GFL_CLACT_WK_Create( pWork->cellUnit ,
+                         pWork->cellRes[CHAR_SCROLLBAR],
+                         pWork->cellRes[PAL_SCROLLBAR],
+                         pWork->cellRes[ANM_SCROLLBAR],
+                         &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+  GFL_CLACT_WK_SetDrawEnable( pWork->mojiIcon, TRUE );
+  GFL_CLACT_WK_SetAutoAnmFlag(pWork->mojiIcon ,TRUE );
+}
+
+void POKEMONTRADE_EndMojiSelect(POKEMON_TRADE_WORK* pWork)
+{
+  
+  if(pWork->mojiIcon){
+    GFL_CLACT_WK_Remove( pWork->mojiIcon);
+    pWork->mojiIcon=NULL;
+  }
+
+}
+
+BOOL POKEMONTRADE_CheckMojiSelect(POKEMON_TRADE_WORK* pWork)
+{
+  if(pWork->mojiIcon){
+    return GFL_CLACT_WK_CheckAnmActive(pWork->mojiIcon);
+  }
+  return FALSE;
+}
 

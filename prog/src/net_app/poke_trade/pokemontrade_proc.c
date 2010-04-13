@@ -2273,6 +2273,18 @@ static void _MoveSearchPoke(POKEMON_TRADE_WORK* pWork,int moji)
   }
 }
 
+
+
+static void _mojiSelectEnd(POKEMON_TRADE_WORK* pWork)
+{
+  if(FALSE == POKEMONTRADE_CheckMojiSelect(pWork)){
+    POKEMONTRADE_EndMojiSelect(pWork);
+    _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
+  }
+
+}
+
+
 // ŒŸõ•¶Žšƒpƒlƒ‹•\Ž¦’†
 static void _loopSearchMojiState(POKEMON_TRADE_WORK* pWork)
 {
@@ -2286,6 +2298,7 @@ static void _loopSearchMojiState(POKEMON_TRADE_WORK* pWork)
       PMSND_PlaySystemSE(POKETRADESE_LANG_SEARCH);
       pWork->selectMoji = ans + 1;
       endflg = TRUE;
+      POKEMONTRADE_StartMojiSelect(pWork, tp_mojidata[ans].rect.top, tp_mojidata[ans].rect.left);
       _MoveSearchPoke(pWork,ans);
     }
   }
@@ -2312,7 +2325,7 @@ static void _loopSearchMojiState(POKEMON_TRADE_WORK* pWork)
 
     POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
 
-    _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
+    _CHANGE_STATE(pWork, _mojiSelectEnd);
 //    POKETRADE_TouchStateGTS
   
 //    _CHANGE_STATE(pWork,_touchState);

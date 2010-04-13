@@ -278,9 +278,251 @@ static void _UnDataSend(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+
+
+
+//=============================================================================================
+/**
+ * @brief  メールデータブロックをバックアップする  ポケモン交換巻き戻し用
+ * @param   gamedata    
+ * @retval  MAIL_BLOCK*   
+ */
+//=============================================================================================
+inline MAIL_BLOCK* MAIL_BackupMailBlock( GAMEDATA *gamedata,HEAPID heapID )
+{
+  MAIL_BLOCK* pBk = GFL_HEAP_AllocMemory(heapID, MAIL_GetBlockWorkSize() );
+  GFL_STD_MemCopy(GAMEDATA_GetMailBlock( gamedata ), pBk, MAIL_GetBlockWorkSize());
+  return pBk;
+}
+
+//=============================================================================================
+/**
+ * @brief  メールデータブロックをバックアップからもどす  ポケモン交換巻き戻し用
+ * @param   gamedata    
+ * @retval  MAIL_BLOCK*   
+ */
+//=============================================================================================
+inline void MAIL_RestoreMailBlock( GAMEDATA *gamedata, MAIL_BLOCK* backup )
+{
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork( gamedata );
+  MAIL_BLOCK* pOrg = GAMEDATA_GetMailBlock( gamedata );
+  GFL_STD_MemCopy(backup, pOrg, MAIL_GetBlockWorkSize());
+  GFL_HEAP_FreeMemory(backup);
+}
+
+
+
+//=============================================================================================
+/**
+ * @brief  レコードブロックをバックアップする  ポケモン交換巻き戻し用
+ * @param   gamedata    
+ * @retval  MAIL_BLOCK*   
+ */
+//=============================================================================================
+inline RECORD* RECORD_BackupBlock( GAMEDATA *gamedata,HEAPID heapID )
+{
+  RECORD* pBk = GFL_HEAP_AllocMemory(heapID, RECORD_GetWorkSize() );
+  GFL_STD_MemCopy(GAMEDATA_GetRecordPtr( gamedata ), pBk, RECORD_GetWorkSize());
+  return pBk;
+}
+
+//=============================================================================================
+/**
+ * @brief  レコードブロックをバックアップからもどす  ポケモン交換巻き戻し用
+ * @param   gamedata    
+ * @retval  MAIL_BLOCK*   
+ */
+//=============================================================================================
+inline void RECORD_RestoreBlock( GAMEDATA *gamedata, RECORD* backup )
+{
+  RECORD* pOrg = GAMEDATA_GetRecordPtr( gamedata );
+  GFL_STD_MemCopy(backup, pOrg, RECORD_GetWorkSize());
+  GFL_HEAP_FreeMemory(backup);
+}
+
+
+//=============================================================================================
+/**
+ * @brief  WiFi通信履歴をバックアップする  ポケモン交換巻き戻し用
+ * @param   gamedata    
+ * @retval  WIFI_HISTORY*   
+ */
+//=============================================================================================
+static WIFI_HISTORY* WIFIHISTORY_BackupBlock( GAMEDATA *gamedata,HEAPID heapID )
+{
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork( gamedata );
+  WIFI_HISTORY* pBk = GFL_HEAP_AllocMemory(heapID, WIFIHISTORY_GetWorkSize() );
+  GFL_STD_MemCopy(SaveData_GetWifiHistory( sv ), pBk, WIFIHISTORY_GetWorkSize());
+  return pBk;
+}
+
+//=============================================================================================
+/**
+ * @brief  WiFi通信履歴をバックアップからもどす  ポケモン交換巻き戻し用
+ * @param   gamedata    
+ * @retval  none
+ */
+//=============================================================================================
+static void WIFIHISTORY_RestoreBlock( GAMEDATA *gamedata, WIFI_HISTORY* backup )
+{
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork( gamedata );
+  WIFI_HISTORY* pOrg = SaveData_GetWifiHistory( sv );
+  GFL_STD_MemCopy(backup, pOrg, WIFIHISTORY_GetWorkSize());
+  GFL_HEAP_FreeMemory(backup);
+}
+
+//=============================================================================================
+/**
+ * @brief  図鑑セーブデータをバックアップする  ポケモン交換巻き戻し用
+ * @param   gamedata    
+ * @retval  ZUKAN_SAVEDATA*   
+ */
+//=============================================================================================
+static ZUKAN_SAVEDATA* ZUKAN_SAVEDATA_BackupBlock( GAMEDATA *gamedata,HEAPID heapID )
+{
+  ZUKAN_SAVEDATA* pBk = GFL_HEAP_AllocMemory(heapID, ZUKANSAVE_GetWorkSize() );
+  GFL_STD_MemCopy(GAMEDATA_GetZukanSave( gamedata ), pBk, ZUKANSAVE_GetWorkSize());
+  return pBk;
+}
+
+//=============================================================================================
+/**
+ * @brief  図鑑セーブデータをバックアップからもどす  ポケモン交換巻き戻し用
+ * @param   gamedata    
+ * @retval  none
+ */
+//=============================================================================================
+static void ZUKAN_SAVEDATA_RestoreBlock( GAMEDATA *gamedata, ZUKAN_SAVEDATA* backup )
+{
+  ZUKAN_SAVEDATA* pOrg = GAMEDATA_GetZukanSave( gamedata );
+  GFL_STD_MemCopy(backup, pOrg, ZUKANSAVE_GetWorkSize());
+  GFL_HEAP_FreeMemory(backup);
+}
+
+
+//=============================================================================================
+/**
+ * @brief  ネゴシエーションセーブデータをバックアップする  ポケモン交換巻き戻し用
+ * @param   gamedata    
+ * @retval  ZUKAN_SAVEDATA*   
+ */
+//=============================================================================================
+static WIFI_NEGOTIATION_SAVEDATA* WIFI_NEGOTIATION_SV_BackupBlock( GAMEDATA *gamedata,HEAPID heapID )
+{
+  WIFI_NEGOTIATION_SAVEDATA* pBk = GFL_HEAP_AllocMemory(heapID, WIFI_NEGOTIATION_SV_GetWorkSize() );
+  GFL_STD_MemCopy(GAMEDATA_GetWifiNegotiation( gamedata ), pBk, WIFI_NEGOTIATION_SV_GetWorkSize());
+  return pBk;
+}
+
+//=============================================================================================
+/**
+ * @brief  ネゴシエーションセーブデータをバックアップからもどす  ポケモン交換巻き戻し用
+ * @param   gamedata    
+ * @retval  none
+ */
+//=============================================================================================
+static void WIFI_NEGOTIATION_SV_RestoreBlock( GAMEDATA *gamedata, WIFI_NEGOTIATION_SAVEDATA* backup )
+{
+  WIFI_NEGOTIATION_SAVEDATA* pOrg = GAMEDATA_GetWifiNegotiation( gamedata );
+  GFL_STD_MemCopy(backup, pOrg, WIFI_NEGOTIATION_SV_GetWorkSize());
+  GFL_HEAP_FreeMemory(backup);
+}
+
+//最後セーブ通過手前で破棄
+static void _lastCallback(void* pW)
+{
+  POKEMON_TRADE_WORK* pWork = (POKEMON_TRADE_WORK*)pW;
+
+  if(pWork->aBackup.pMail){
+    GFL_HEAP_FreeMemory(pWork->aBackup.pMail);
+  }
+  if(pWork->aBackup.pRecord){
+    GFL_HEAP_FreeMemory(pWork->aBackup.pRecord);
+  }
+  if(pWork->aBackup.pWifiHis){
+    GFL_HEAP_FreeMemory(pWork->aBackup.pWifiHis);
+  }
+  if(pWork->aBackup.pZukan){
+    GFL_HEAP_FreeMemory(pWork->aBackup.pZukan);
+  }
+  if(pWork->aBackup.pNego){
+    GFL_HEAP_FreeMemory(pWork->aBackup.pNego);
+  }
+  if(pWork->aBackup.pPokeParty){
+    GFL_HEAP_FreeMemory(pWork->aBackup.pPokeParty);
+  }
+  if(pWork->aBackup.pBoxTray){
+    GFL_HEAP_FreeMemory(pWork->aBackup.pBoxTray);
+  }
+  GFL_STD_MemClear(&pWork->aBackup,sizeof(SAVEREV_BACKUP));
+//  OS_TPrintf("破棄callback\n");
+}
+
+// もしデータが残っている場合エラー終了だから巻き戻す
+static void _removeCallback(void* pW)
+{
+  POKEMON_TRADE_WORK* pWork = (POKEMON_TRADE_WORK*)pW;
+
+  if(pWork->aBackup.pMail){
+    MAIL_RestoreMailBlock(pWork->pGameData, pWork->aBackup.pMail);
+  }
+  if(pWork->aBackup.pRecord){
+    RECORD_RestoreBlock(pWork->pGameData, pWork->aBackup.pRecord);
+  }
+  if(pWork->aBackup.pWifiHis){
+    WIFIHISTORY_RestoreBlock(pWork->pGameData, pWork->aBackup.pWifiHis);
+  }
+  if(pWork->aBackup.pZukan){
+    ZUKAN_SAVEDATA_RestoreBlock(pWork->pGameData, pWork->aBackup.pZukan);
+  }
+  if(pWork->aBackup.pNego){
+    WIFI_NEGOTIATION_SV_RestoreBlock(pWork->pGameData, pWork->aBackup.pNego);
+  }
+  if(pWork->aBackup.pPokeParty){
+    PokeParty_Copy(pWork->aBackup.pPokeParty, pWork->pMyParty );
+  }
+  if(pWork->aBackup.pBoxTray){
+    GFL_STD_MemCopy(pWork->aBackup.pBoxTray,
+                    BOXTRAYDAT_GetTrayData(pWork->pBox, pWork->pParentWork->selectBoxno),
+                    BOXTRAYDAT_GetTotalSize());
+  }
+  GFL_STD_MemClear(&pWork->aBackup,sizeof(SAVEREV_BACKUP));
+ // OS_TPrintf("巻き戻し\n");
+}
+
+
+
+
 static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
 {
+  // バックアップ開始
+//メールを戻す
+//レコードを戻す
+//国連データを戻す
+//図鑑データを戻す
+//ネゴシエーション履歴をもどす
+  //ポケモンを戻す
 
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    ///---バックアップ
+    pWork->aBackup.pMail = MAIL_BackupMailBlock(pWork->pGameData, pWork->heapID);
+    pWork->aBackup.pRecord = RECORD_BackupBlock(pWork->pGameData, pWork->heapID);
+    pWork->aBackup.pWifiHis = WIFIHISTORY_BackupBlock(pWork->pGameData, pWork->heapID);
+    pWork->aBackup.pZukan = ZUKAN_SAVEDATA_BackupBlock(pWork->pGameData, pWork->heapID);
+    pWork->aBackup.pNego = WIFI_NEGOTIATION_SV_BackupBlock(pWork->pGameData, pWork->heapID);
+
+    if(pWork->pParentWork->selectBoxno == BOXDAT_GetTrayMax(pWork->pBox)){ //てもちの交換の場合
+      pWork->aBackup.pPokeParty = PokeParty_AllocPartyWork( pWork->heapID );
+      PokeParty_Copy(pWork->pMyParty, pWork->aBackup.pPokeParty);
+    }
+    else{
+      pWork->aBackup.pBoxTray = GFL_HEAP_AllocMemory(pWork->heapID,BOXDAT_GetOneBoxDataSize());
+      GFL_STD_MemCopy(BOXTRAYDAT_GetTrayData(pWork->pBox, pWork->pParentWork->selectBoxno),
+                      pWork->aBackup.pBoxTray,BOXDAT_GetOneBoxDataSize());
+    }
+  }
+  //---
+    // メール登録
   {
     POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
     _ITEMMARK_ICON_WORK* pIM = &pWork->aItemMark;
@@ -290,10 +532,6 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
       MailSys_MoveMailPoke2Paso(pMailBlock, pp, pWork->heapID);
     }
   }
-
-
-
-
   {
     POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
     RECORD* pRec = GAMEDATA_GetRecordPtr(pWork->pGameData);
@@ -559,7 +797,7 @@ static void _changeTimingSaveStart(POKEMON_TRADE_WORK* pWork)
   }
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     _setPokemonData(pWork);  //データ差し替え
-    pWork->pNetSave = NET_SAVE_Init(pWork->heapID, pWork->pGameData);
+    pWork->pNetSave = NET_SAVE_InitCallback(pWork->heapID, pWork->pGameData, &_lastCallback , pWork);
     _CHANGE_STATE(pWork, _changeTimingSaveStart2);
   }
   else{
@@ -570,6 +808,7 @@ static void _changeTimingSaveStart(POKEMON_TRADE_WORK* pWork)
 static void _changeTimingSaveStart2(POKEMON_TRADE_WORK* pWork)
 {
   if(NET_SAVE_Main(pWork->pNetSave)){
+    _removeCallback(pWork);
     NET_SAVE_Exit(pWork->pNetSave);
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade30);
   }

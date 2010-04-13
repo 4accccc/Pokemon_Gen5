@@ -21,7 +21,6 @@
 
 
 static void PPP_RecoverPP(const POKEMON_PASO_PARAM* pp){}  //ƒ_ƒ~[ŠÖ”
-static BOX_TRAY_DATA* BOXTRAYDAT_GetTrayData( const BOX_MANAGER *boxData , const u32 trayNum );
 static BOX_SAVEDATA* BOXDAT_GetBoxSaveData( const BOX_MANAGER *boxData );
 
 
@@ -1203,7 +1202,7 @@ u32 BOXTRAYDAT_GetTotalSize( void )
   return sizeof( BOX_TRAY_DATA );
 }
 
-static BOX_TRAY_DATA* BOXTRAYDAT_GetTrayData( const BOX_MANAGER *boxData , const u32 trayNum )
+BOX_TRAY_DATA* BOXTRAYDAT_GetTrayData( const BOX_MANAGER *boxData , const u32 trayNum )
 {
   return SaveControl_DataPtrGet(boxData->sv, GMDATA_ID_BOXTRAY_01+trayNum);
 }

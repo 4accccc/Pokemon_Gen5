@@ -153,7 +153,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 
 #if PM_DEBUG
   if(dbw->debugseq != *seq){
-    OS_TPrintf("e irc %d\n");
+    NET_PRINT("e irc %d\n");
     dbw->debugseq = *seq;
   }
 #endif
@@ -281,7 +281,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
                             BTL_COMM_DS, GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() ), HEAPID_PROC );
       dbw->para->multiMode = 1;
       dbw->para->rule = BTL_RULE_DOUBLE;
-      NET_PRINT("multiMode\n");
       break;
     default:
       GF_ASSERT(0);
@@ -326,7 +325,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
     break;
   case _WAIT_TRADE:
-    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
+//    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
       NET_PRINT("ƒ|ƒPƒ‚ƒ“ŒðŠ·‚¨‚í‚è\n");
       if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_EVOLUTION){
         (*seq) = _CALL_EVOLUTION;
@@ -340,7 +339,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 //      if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
   //      NetErr_DispCall(FALSE);
     //  }
-    }
+  //  }
     break;
   case _CALL_EVOLUTION:
     //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
