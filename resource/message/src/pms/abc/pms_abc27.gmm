@@ -696,13 +696,13 @@
 	</row>
 
 	<row id="search_abc_61">
-		<language name="JPN" width="216">ふるきんく</language>
-		<language name="JPN_KANJI" width="216">ふるきんく</language>
+		<language name="JPN" width="216">ふるこんく</language>
+		<language name="JPN_KANJI" width="216">ふるこんく</language>
 	</row>
 
 	<row id="search_abc_62">
-		<language name="JPN" width="216">ふるこんく</language>
-		<language name="JPN_KANJI" width="216">ふるこんく</language>
+		<language name="JPN" width="216">ふるんける</language>
+		<language name="JPN_KANJI" width="216">ふるんける</language>
 	</row>
 
 	<row id="search_abc_63">
