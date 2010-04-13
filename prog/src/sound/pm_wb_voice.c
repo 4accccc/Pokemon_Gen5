@@ -97,21 +97,16 @@ BOOL PMV_CustomVoiceWave( u32     pokeNo,     // [in]ポケモンナンバー
   POKEMON_VOICE_PARAM  pvp;
 
   //ボリューム＆サンプリングレート設定
-//  *volume = VOICE_VOLUME_DEFAULT;
-//  *rate   = VOICE_RATE_DEFAULT;
+  //  *volume = VOICE_VOLUME_DEFAULT;
+  //  *rate   = VOICE_RATE_DEFAULT;
   GFL_ARC_LoadData( &pvp, ARCID_POKEVOICE_PARAM, pokeNo );
   *volume = pvp.volume;
   //*rate   = pvp.frequency;
 
   if( userParam == NULL ){ return FALSE; }  // 既存waveのみ使用
 
-  OS_Printf("2:perapvoice adr=%08x\n",(u32)userParam);
-
-
   //参照ユーザーパラメータ設定
   pmvRef = (PMV_REF*)userParam;
-
-  OS_Printf("pmvRef=%08x\n", (u32)pmvRef);
 
   if(( pokeNo == MONSNO_PERAPPU )&&( pokeFormNo == 0 )){  //ぺラップ判定
     //録音データ存在判定
