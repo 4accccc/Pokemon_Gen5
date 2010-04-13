@@ -567,7 +567,7 @@ _ANIME_LABEL	anm_player_mov_start3
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_asis_mov_start1
   _ANIME_DATA	AC_WALK_R_4F,1
-  _ANIME_DATA	AC_WALK_U_4F,3
+  _ANIME_DATA	AC_WALK_U_4F,1
   _ANIME_DATA AC_WAIT_8F,1
   _ANIME_DATA	AC_STAY_WALK_D_4F,1
 	_ANIME_DATA	ACMD_END,0
@@ -577,7 +577,7 @@ _ANIME_LABEL	anm_asis_mov_start1
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_asis_mov_start2
   _ANIME_DATA	AC_WALK_L_4F,1
-  _ANIME_DATA	AC_WALK_U_4F,3
+  _ANIME_DATA	AC_WALK_U_4F,1
   _ANIME_DATA AC_WAIT_8F,1
   _ANIME_DATA	AC_STAY_WALK_D_4F,1
 	_ANIME_DATA	ACMD_END,0
@@ -586,7 +586,7 @@ _ANIME_LABEL	anm_asis_mov_start2
 //助手が主人公をついていく（自機が中央にいる）
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_asis_mov_start3
-  _ANIME_DATA	AC_WALK_U_4F,3
+  _ANIME_DATA	AC_WALK_U_4F,1
   _ANIME_DATA AC_WAIT_8F,1
   _ANIME_DATA	AC_STAY_WALK_D_4F,1
 	_ANIME_DATA	ACMD_END,0
@@ -595,7 +595,7 @@ _ANIME_LABEL	anm_asis_mov_start3
 //助手再移動
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_asis_mov_restart
-  _ANIME_DATA	AC_WALK_U_4F,10
+  _ANIME_DATA	AC_WALK_U_4F,12
   _ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
