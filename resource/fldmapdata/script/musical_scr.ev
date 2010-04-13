@@ -283,7 +283,6 @@ ev_musical_recept_comm_core:
       _BMPMENU_MAKE_LIST( msg_musical_recept_06, 1 ) //ワイヤレス
       _BMPMENU_MAKE_LIST( msg_musical_recept_return, 2 ) //やめる
       _BMPMENU_START()
-      _BALLOONWIN_CLOSE()
 
       IF $ret == 2 || $ret == EV_WIN_B_CANCEL THEN //やめる
         _CALL ev_musical_exit_common
@@ -301,7 +300,6 @@ ev_musical_recept_comm_core:
         _BMPMENU_MAKE_LIST( msg_musical_recept_group, 1 ) //グループ
         _BMPMENU_MAKE_LIST( msg_musical_recept_return, 2 ) //やめる
         _BMPMENU_START()
-        _BALLOONWIN_CLOSE()
         
         IF $retParentChild == 2||$retParentChild == EV_WIN_B_CANCEL  THEN //やめる
           $isLoop2 = FALSE
@@ -318,6 +316,7 @@ ev_musical_recept_comm_core:
             //実際の通信ロビー処理
             IF $ret == 0 THEN
               //通信開始
+              _BALLOONWIN_CLOSE()
               //第2引数はWLorIrc
               _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 1, 0, 0 )
               _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,1,0,0 )
@@ -501,7 +500,6 @@ ev_musical_recept_first:
     _BMPMENU_MAKE_LIST( msg_musical_recept_no, 1 )
     _BMPMENU_MAKE_LIST( msg_musical_recept_explain, 2 )
     _BMPMENU_START()
-    _BALLOONWIN_CLOSE()
     
     IF $SCWK_ANSWER == 0 THEN
       $SCWK_ANSWER = TRUE
@@ -525,7 +523,6 @@ ev_musical_recept_first:
         _BMPMENU_MAKE_LIST( msg_musical_recept_return , 5 )
 
         _BMPMENU_START()
-        _BALLOONWIN_CLOSE()
       IF $SCWK_ANSWER == 5 || $SCWK_ANSWER == EV_WIN_B_CANCEL THEN
         $isLoopExp = FALSE
         //参加しますか？をココで出す
@@ -537,19 +534,14 @@ ev_musical_recept_first:
         //で、最初に戻って質問から
       ELSIF $SCWK_ANSWER == 0 THEN
         _BALLOONWIN_OBJMSG_POS( msg_musical_info_03, SCWK_TARGET_OBJID, POS_DOWN )
-        _BALLOONWIN_CLOSE()
       ELSIF $SCWK_ANSWER == 1 THEN
         _BALLOONWIN_OBJMSG_POS( msg_musical_info_05, SCWK_TARGET_OBJID, POS_DOWN )
-        _BALLOONWIN_CLOSE()
       ELSIF $SCWK_ANSWER == 2 THEN
         _BALLOONWIN_OBJMSG_POS( msg_musical_info_07, SCWK_TARGET_OBJID, POS_DOWN )
-        _BALLOONWIN_CLOSE()
       ELSIF $SCWK_ANSWER == 3 THEN
         _BALLOONWIN_OBJMSG_POS( msg_musical_info_09, SCWK_TARGET_OBJID, POS_DOWN )
-        _BALLOONWIN_CLOSE()
       ELSIF $SCWK_ANSWER == 4 THEN
         _BALLOONWIN_OBJMSG_POS( msg_musical_info_11, SCWK_TARGET_OBJID, POS_DOWN )
-        _BALLOONWIN_CLOSE()
       ENDIF
       
       }
@@ -626,7 +618,6 @@ recept_select_program:
   _BMPMENU_MAKE_LIST( msg_musical_program_06, 5 ) //やめる
   //メニュー表示
   _BMPMENU_START()
-  _BALLOONWIN_CLOSE()
 
   IF $SCWK_ANSWER == 5 || $SCWK_ANSWER == EV_WIN_B_CANCEL THEN
     $SCWK_ANSWER = FALSE
@@ -782,7 +773,6 @@ fan_main_routine:
     _PLAYER_NAME( 0 )
     _BALLOONWIN_TALKOBJ_MSG( msg_id )
     _AB_KEYWAIT ()
-    _BALLOONWIN_CLOSE()
     
     _GET_MUSICAL_FAN_VALUE_GIFT_TYPE( fan_number , gift_type )
     _GET_MUSICAL_FAN_VALUE_GIFT_NUMBER( fan_number , gift_number )

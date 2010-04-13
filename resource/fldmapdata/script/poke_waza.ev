@@ -52,7 +52,6 @@ wasure_sel_waza_routine:
 			//"[1:07:わざ名:0]をわすれさせて　よいのじゃな？"
 			_BALLOONWIN_TALKOBJ_MSG( msg_wasure_08 )
 			_YES_NO_WIN( yn_ret )
-			_BALLOONWIN_CLOSE()
 			
 			IF $yn_ret == 0 THEN //はい
 				_GET_TEMOTI_WAZA_ID( waza_id , select_pos , waza_pos )
@@ -94,7 +93,7 @@ wasure_main_routine:
 		IF $tf_ret == FALSE THEN	//選択がキャンセル
 			//わざを　わすれさせたく　なったら わしのことを　おもいだすのじゃぞ！
 			_BALLOONWIN_TALKOBJ_MSG( msg_wasure_04 )
-			_AB_KEYWAIT()
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			$is_loop_main = FALSE
 		ELSE
@@ -103,14 +102,12 @@ wasure_main_routine:
 			IF $tf_ret == TRUE THEN		
 				//"なぬ？　それは　タマゴ　じゃからな なにも　わざを　おぼえておらんよ……▼"
 				_BALLOONWIN_TALKOBJ_MSG( msg_wasure_06 )
-				_BALLOONWIN_CLOSE()
 			ELSE
 				//技個数チェック
 				_GET_TEMOTI_WAZA_NUM( waza_num , select_pos )
 				IF $waza_num < 2 THEN	
 					//"なぬ？　そのポケモンは　ひとつしか わざを　おぼえておらんよ？▼"
 					_BALLOONWIN_TALKOBJ_MSG( msg_wasure_05 )
-					_BALLOONWIN_CLOSE()
 				ELSE
 					//技選択ルーチンへ
 					_CALL wasure_sel_waza_routine
@@ -135,18 +132,16 @@ EVENT_START ev_waza_wasure_oyaji
 
 	//えーと……わしは　だれ　じゃったっけっか？
 	_BALLOONWIN_TALKOBJ_MSG( msg_wasure_01 )
-	_BALLOONWIN_CLOSE()
 	//おぬし　ポケモンの　わざをわすれさせに　きたのじゃな
 	_BALLOONWIN_TALKOBJ_MSG( msg_wasure_02 )
 	_YES_NO_WIN( yn_ret )
-	_BALLOONWIN_CLOSE()
 
 	IF $yn_ret == 0 THEN //はい
 		_CALL wasure_main_routine
 	ELSE
 		//わざを　わすれさせたく　なったら わしのことを　おもいだすのじゃぞ！
 		_BALLOONWIN_TALKOBJ_MSG( msg_wasure_04 )
-		_AB_KEYWAIT()
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	
 	ENDIF
