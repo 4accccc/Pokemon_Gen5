@@ -127,7 +127,7 @@
 #define ITEM_HURIIZUKASETTO		( 119 )		// フリーズカセット
 #define ITEM_DASSYUTUPODDO		( 120 )		// だっしゅつポッド
 #define ITEM_KURITHIKATTAA		( 122 )		// クリティカッター
-#define ITEM_HAATONOTYOKO		( 134 )		// ハートのチョコ
+#define ITEM_HAATOSUIITU		( 134 )		// ハートスイーツ
 #define ITEM_KONGOUDAMA		( 135 )		// こんごうだま
 #define ITEM_SIRATAMA		( 136 )		// しらたま
 #define ITEM_HAZIMETEMEERU		( 137 )		// はじめてメール
