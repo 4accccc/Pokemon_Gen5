@@ -62,6 +62,7 @@ GMEVENT * EVENT_GameStart(GAMESYS_WORK * gsys, GAME_INIT_WORK * game_init_work)
 }
 
 
+#ifdef  PM_DEBUG
 //------------------------------------------------------------------
 /**
  * @brief デバッグ用：ゲーム終了
@@ -77,6 +78,7 @@ GMEVENT * DEBUG_EVENT_GameEnd( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
   gew->fieldmap = fieldmap;
   return event;
 }
+#endif  //PM_DEBUG
 
 
 //--------------------------------------------------------------
@@ -118,6 +120,7 @@ void GAMESTART_OVERLAY_FIELD_INIT_UnLoad( void )
 
 
 
+#ifdef  PM_DEBUG
 //-----------------------------------------------------------------------------
 /**
  *    private関数
@@ -154,3 +157,4 @@ static GMEVENT_RESULT GameEndEvent(GMEVENT * event, int *seq, void *work)
   return GMEVENT_RES_CONTINUE;
 }
 
+#endif  //PM_DEBUG

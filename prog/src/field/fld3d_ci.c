@@ -782,10 +782,14 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     {
       FLDMSGBG *fmb = FIELDMAP_GetFldMsgBG( fieldmap );
       FIELD_PLACE_NAME *place_name_sys = FIELDMAP_GetPlaceNameSys( fieldmap );
+#ifdef  PM_DEBUG
       FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( fieldmap );
+#endif
       FLDMSGBG_RecoveryBG( fmb );
       FIELD_PLACE_NAME_RecoverBG( place_name_sys );
+#ifdef  PM_DEBUG
       FIELD_DEBUG_RecoverBgCont( debug );
+#endif
       {
         //ＢＧセットアップ
         G2_SetBG2ControlText(

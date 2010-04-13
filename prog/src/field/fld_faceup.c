@@ -337,7 +337,9 @@ static GMEVENT_RESULT ReleaseEvt( GMEVENT* event, int* seq, void* work )
 static void Release(FIELDMAP_WORK * fieldmap, FACEUP_WK_PTR ptr)
 {
   FIELD_PLACE_NAME *place_name_sys = FIELDMAP_GetPlaceNameSys( fieldmap );
+#ifdef  PM_DEBUG
   FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( fieldmap );
+#endif
 
   GFL_BG_ClearFrame( GFL_BG_FRAME2_M );
 
@@ -349,7 +351,9 @@ static void Release(FIELDMAP_WORK * fieldmap, FACEUP_WK_PTR ptr)
       ptr->CntText.charBase);
   //復帰
   FIELD_PLACE_NAME_RecoverBG( place_name_sys );
+#ifdef  PM_DEBUG
   FIELD_DEBUG_RecoverBgCont( debug );
+#endif
 
   //プライオリティ復帰
   PopPriority(ptr);

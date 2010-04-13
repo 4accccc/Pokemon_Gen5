@@ -331,9 +331,6 @@ struct _FIELDMAP_WORK
 	const DEPEND_FUNCTIONS *func_tbl;
 	void *mapCtrlWork;
 	
-	FIELD_DEBUG_WORK *debugWork;
-
-
   int firstConnectEventID;
 
   GFL_TCBSYS* fieldmapTCB;
@@ -361,6 +358,10 @@ struct _FIELDMAP_WORK
 
 
   FACEUP_WK_PTR FaceUpWkPtr;
+
+#ifdef  PM_DEBUG
+	FIELD_DEBUG_WORK *debugWork;
+#endif
 };
 
 //--------------------------------------------------------------
@@ -861,7 +862,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     // フィールドマップ用制御タスクシステム
     fieldWork->fldmapFuncSys = FLDMAPFUNC_Sys_Create( fieldWork, fieldWork->heapID, FLDMAPFUNC_TASK_MAX );
 
+#ifdef  PM_DEBUG
     fieldWork->debugWork = NULL;
+#endif
 
     //フィールドパーティクル
     fieldWork->FldPrtclSys = FLD_PRTCL_Init(HEAPID_FLD3DCUTIN);
@@ -921,7 +924,9 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   
   if(fieldWork->fldMsgBG){ FLDMSGBG_PrintMain( fieldWork->fldMsgBG ); }
   
+#ifdef  PM_DEBUG
   if(fieldWork->debugWork){ FIELD_DEBUG_UpdateProc( fieldWork->debugWork ); }
+#endif
  
   while( FLDMAPPER_CheckTrans(fieldWork->g3Dmapper) == FALSE ){
     FLDMAPPER_MainTail( fieldWork->g3Dmapper );
@@ -1035,7 +1040,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   }
   SET_CHECK("update_top:subscreen");
   FIELD_SUBSCREEN_Main(fieldWork->fieldSubscreenWork);
+#ifdef  PM_DEBUG
   if(fieldWork->debugWork){ FIELD_DEBUG_UpdateProc( fieldWork->debugWork ); }
+#endif
   SET_CHECK("update_top:mmdlsys");
   if( fieldWork->fldMMdlSys != NULL ){
     MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
@@ -1321,7 +1328,9 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   
   if(fieldWork->fldMsgBG ){ FLDMSGBG_Delete( fieldWork->fldMsgBG ); }
 
+#ifdef  PM_DEBUG
   if(fieldWork->debugWork){ FIELD_DEBUG_Delete( fieldWork->debugWork ); }
+#endif
 
 	GAMEDATA_SetFrameSpritEnable(GAMESYSTEM_GetGameData(gsys), FALSE);
 	GFL_UI_StartFrameRateMode( GFL_UI_FRAMERATE_60 );
@@ -1650,6 +1659,7 @@ MMDLSYS * FIELDMAP_GetMMdlSys( FIELDMAP_WORK *fieldWork )
 	return fieldWork->fldMMdlSys;
 }
 
+#ifdef  PM_DEBUG
 //--------------------------------------------------------------
 /**
  * FIELDMAP_WORK FIELD_DEBUG_WORK取得
@@ -1661,6 +1671,7 @@ FIELD_DEBUG_WORK * FIELDMAP_GetDebugWork( FIELDMAP_WORK *fieldWork )
 {
 	return fieldWork->debugWork;
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -2095,8 +2106,10 @@ void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork )
 		GFL_BG_LoadScreenReq( FLDBG_MFRM_EFF1 );
 	}
 #endif
+#ifdef  PM_DEBUG
   //フィールドデバッグ初期化
   fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, FLDBG_MFRM_EFF1, fieldWork->heapID );
+#endif
 
 #if USE_DEBUGWIN_SYSTEM
 	DEBUGWIN_InitProc( FLDBG_MFRM_MSG , FLDMSGBG_GetFontHandle(fieldWork->fldMsgBG) );
