@@ -1,11 +1,13 @@
 EFFSEQ
-$0001
+$0002
 c:\home\pokemon_wb\resource\particle\wazaeffect\w_064.spa
+C:\home\pokemon_wb\resource\particle\wazaeffect\w_064.spa
 #001
 %00
 カメラ移動	追従	防御側	16	0	8
 エフェクト終了待ち	すべて
 パーティクルデータロード	w_064
+パーティクル再生	w_064	W_064_064_BURN_L	防御側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_064	W_064_064_BURN	防御側	方向無し	2:0:0	1:1:1	1
 パーティクル再生	w_064	W_064_064_HIT_MARK	防御側	方向無し	2:0:0	1:1:1	1
 ポケモンアニメ	防御側	アニメストップ
