@@ -10,6 +10,7 @@
 #include "entrance_camera.h"
 
 #include "field_camera_anime.h"
+#include "field_rail.h"
 #include "fieldmap.h"
 #include "field_task.h"  
 #include "field_task_manager.h"
@@ -133,6 +134,8 @@ static void LoadSpData( ECAM_LOAD_DATA* dest, EXIT_TYPE exitType ); // ì¡éÍèoì¸Ç
 static void SetupCameraTargetPos( FIELD_CAMERA* camera, const VecFx32* targetPos ); // É^Å[ÉQÉbÉgç¿ïWÇïœçXÇµ, ÉJÉÅÉâÇ…îΩâfÇ≥ÇπÇÈ
 // é©ã@
 static void GetOneStepAfterPos( const ECAM_WORK* work, VecFx32* dest ); // àÍï‡êÊÇÃç¿ïWÇéÊìæÇ∑ÇÈ
+static void GetOneStepAfterPos_GRID( const ECAM_WORK* work, VecFx32* dest ); // àÍï‡êÊÇÃç¿ïWÇéÊìæÇ∑ÇÈ ( ÉOÉäÉbÉhÉ}ÉbÉvóp )
+static void GetOneStepAfterPos_RAIL( const ECAM_WORK* work, VecFx32* dest ); // àÍï‡êÊÇÃç¿ïWÇéÊìæÇ∑ÇÈ ( ÉåÅ[ÉãÉ}ÉbÉvóp )
 static u16 GetPlayerDir( const ECAM_WORK* work ); // é©ã@ÇÃå¸Ç´ÇéÊìæÇ∑ÇÈ
 // ÉAÉNÉZÉbÉT
 static FIELDMAP_WORK* GetFieldmap( const ECAM_WORK* work ); // ÉtÉBÅ[ÉãÉhÉ}ÉbÉvÇéÊìæÇ∑ÇÈ
@@ -648,12 +651,12 @@ static void ECamSetup_SP_IN( ECAM_WORK* work )
 //-----------------------------------------------------------------------------
 static void ECamSetup_SP_OUT( ECAM_WORK* work )
 {
-  FCAM_ANIME_DATA*   anime      = &work->animeData;
-  FCAM_PARAM* startParam = &anime->startParam;
-  FCAM_PARAM* endParam   = &anime->endParam;
-  FIELD_CAMERA* camera     = GetCamera( work );
-  FIELD_PLAYER* player     = FIELDMAP_GetFieldPlayer( work->fieldmap );
-  u16           playerDir  = FIELD_PLAYER_GetDir( player );
+  FCAM_ANIME_DATA* anime      = &work->animeData;
+  FCAM_PARAM*      startParam = &anime->startParam;
+  FCAM_PARAM*      endParam   = &anime->endParam;
+  FIELD_CAMERA*    camera     = GetCamera( work );
+  FIELD_PLAYER*    player     = FIELDMAP_GetFieldPlayer( work->fieldmap );
+  u16              playerDir  = FIELD_PLAYER_GetDir( player );
 
   VecFx32 stepPos;
   ECAM_LOAD_DATA loadData;
@@ -783,6 +786,24 @@ static void SetupCameraTargetPos( FIELD_CAMERA* camera, const VecFx32* targetPos
 //----------------------------------------------------------------------------- 
 static void GetOneStepAfterPos( const ECAM_WORK* work, VecFx32* dest )
 {
+  if( FIELDMAP_GetBaseSystemType( work->fieldmap ) == FLDMAP_BASESYS_RAIL ) {
+    GetOneStepAfterPos_RAIL( work, dest );
+  }
+  else {
+    GetOneStepAfterPos_GRID( work, dest );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief àÍï‡êÊÇÃç¿ïWÇéÊìæÇ∑ÇÈ ( ÉOÉäÉbÉhÉ}ÉbÉvóp )
+ *
+ * @param work
+ * @param dest éÊìæÇµÇΩç¿ïWÇÃäiî[êÊ
+ */
+//----------------------------------------------------------------------------- 
+static void GetOneStepAfterPos_GRID( const ECAM_WORK* work, VecFx32* dest )
+{
   FIELD_PLAYER* player;
   u16 playerDir;
   VecFx32 now_pos, way_vec, step_pos;
@@ -805,6 +826,37 @@ static void GetOneStepAfterPos( const ECAM_WORK* work, VecFx32* dest )
     MMDL_GetMapPosHeight( mmdl, &step_pos, &height );
     step_pos.y = height;
   }
+
+  // ç¿ïWÇï‘Ç∑
+  *dest = step_pos;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief àÍï‡êÊÇÃç¿ïWÇéÊìæÇ∑ÇÈ ( ÉåÅ[ÉãÉ}ÉbÉvóp )
+ *
+ * @param work
+ * @param dest éÊìæÇµÇΩç¿ïWÇÃäiî[êÊ
+ */
+//----------------------------------------------------------------------------- 
+static void GetOneStepAfterPos_RAIL( const ECAM_WORK* work, VecFx32* dest )
+{
+  FIELD_PLAYER* player;
+  u16 playerDir;
+  RAIL_LOCATION location;
+  FLDNOGRID_MAPPER* NGMapper;
+  const FIELD_RAIL_MAN* railMan;
+  VecFx32 step_pos;
+
+  // é©ã@ÉfÅ[É^ÇéÊìæ
+  player = FIELDMAP_GetFieldPlayer( work->fieldmap );
+  playerDir = FIELD_PLAYER_GetDir( player );
+
+  // àÍï‡êÊÇÃç¿ïWÇéÊìæ
+  NGMapper = FIELDMAP_GetFldNoGridMapper( work->fieldmap );
+  railMan = FLDNOGRID_MAPPER_GetRailMan( NGMapper );
+  FIELD_PLAYER_GetDirNoGridLocation( player, playerDir, &location );
+  FIELD_RAIL_MAN_GetLocationPosition( railMan, &location, &step_pos );
 
   // ç¿ïWÇï‘Ç∑
   *dest = step_pos;
