@@ -2606,5 +2606,15 @@ GAMEBEACON_INFO * DEBUG_SendBeaconInfo_GetPtr(void)
   return &GameBeaconSys->send.info;
 }
 
+//==================================================================
+/**
+ * デバッグ用：受信ログを全件クリアする
+ */
+//==================================================================
+void DEBUG_RecvBeaconBufferClear(void)
+{
+  GFL_STD_MemClear(GameBeaconSys->log, sizeof(GAMEBEACON_LOG) * GAMEBEACON_SYSTEM_LOG_MAX);
+}
+
 #endif  //PM_DEBUG
 
