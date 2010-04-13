@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/12 14:24:02
+#save date:2010/04/13 20:58:35
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r1001.wms
 #SECTION START:OBJ_EVENT
@@ -26,7 +26,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C03R1001_WOMAN3_01
 #Direction Type Number
-DIR_RIGHT
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -40,7 +40,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 0 120
+-88 0 136
 #event number: 1
 #type
 1
@@ -57,7 +57,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C03R1001_MOUNTAIN_01
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 0 184
+-72 0 168
 #event number: 2
 #type
 1
@@ -88,7 +88,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C03R1001_POKE_01
 #Direction Type Number
-DIR_UP
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number

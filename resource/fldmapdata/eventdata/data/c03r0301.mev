@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/12 14:21:17
+#save date:2010/04/13 20:43:32
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r0301.wms
 #SECTION START:OBJ_EVENT
@@ -88,7 +88,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C03R0301_BUSINESSMAN_01
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number

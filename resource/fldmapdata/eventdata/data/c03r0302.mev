@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/12 14:21:46
+#save date:2010/04/13 20:49:48
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r0302.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--216 0 168
+-216 0 152
 #event number: 1
 #type
 1
@@ -59,7 +59,7 @@ SCRID_TRID_OL_02
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
-2
+1
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -71,7 +71,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--216 0 40
+-184 0 56
 #event number: 2
 #type
 1
@@ -90,7 +90,7 @@ SCRID_TRID_OL_01
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
-3
+2
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -102,7 +102,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 0 104
+-152 0 120
 #event number: 3
 #type
 1
@@ -121,7 +121,7 @@ SCRID_TRID_BUSINESS1_02
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
-2
+4
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -133,7 +133,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 0 40
+-104 0 24
 #event number: 4
 #type
 1
@@ -150,9 +150,9 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_SCIENTISTM_02
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
-0
+2
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -164,7 +164,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--40 0 72
+-56 0 40
 #event number: 5
 #type
 1
@@ -181,7 +181,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C03R0302_SCIENTISTM_03
 #Direction Type Number
-DIR_UP
+DIR_LEFT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -195,7 +195,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 88
+-40 0 72
 #event number: 6
 #type
 1
