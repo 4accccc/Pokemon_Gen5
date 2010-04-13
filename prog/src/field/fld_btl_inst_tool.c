@@ -814,6 +814,7 @@ static void MakePokePara( const BSUBWAY_POKEMON *src, POKEMON_PARAM *dest )
 static void GetPokemonRomData(
     BSUBWAY_POKEMON_ROM_DATA *prd,int index)
 {
+  index += BSW_PM_ARCDATANO_ORG;
   GFL_ARC_LoadData( (void*)prd, ARCID_BSW_PD, index );
 }
 
@@ -828,6 +829,7 @@ static void GetPokemonRomData(
 //--------------------------------------------------------------
 static void * GetTrainerRomData( u16 tr_no, HEAPID heapID )
 {
+  tr_no += BSW_TR_ARCDATANO_ORG;
 #ifdef DEBUG_ONLY_FOR_kagaya
   OS_Printf( "BSUBWAY load TrainerRomData Num = %d\n", tr_no );
 #endif

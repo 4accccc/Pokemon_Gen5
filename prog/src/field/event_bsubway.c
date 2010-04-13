@@ -25,7 +25,9 @@
 
 #include "fieldmap.h"
 
+#include "msgdata.h"
 #include "field/field_msgbg.h"
+#include "print/wordset.h"
 #include "message.naix"
 
 #include "bsubway_scr.h"
@@ -37,6 +39,8 @@
 
 #include "effect_encount.h"
 
+#include "script_message.naix"
+#include "../../../resource/message/dst/script/msg_bsubway_scr.h"
 #include "../../../resource/message/dst/msg_tower_trainer.h"
 
 FS_EXTERN_OVERLAY(pokelist);
@@ -361,21 +365,37 @@ GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
 
     GFL_MSG_GetString( msgdata, msg_no, work->strBuf );
     GFL_MSG_Delete( msgdata );
-  }else{ //簡易会話 kari
+  }else{ //簡易会話
+    STRBUF *tempBuf;
+    WORDSET *wordset;
     GFL_MSGDATA *msgdata;
+    u16 stype,sid,word0,word1,skip;
     
     OS_Printf( "BSW TRAINER BEFORE MSG : IDX = %d, KAIWA MSG\n", tr_idx );
     
+    tempBuf = GFL_STR_CreateBuffer( 128, HEAPID_PROC );
+    
     msgdata =  GFL_MSG_Create(
-      GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-      NARC_message_tower_trainer_dat, HEAPID_PROC );
+      GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE,
+      NARC_script_message_bsubway_scr_dat, HEAPID_PROC );
     
-    GFL_MSG_GetString(
-        msgdata,
-        0,
-        work->strBuf );
+    wordset = WORDSET_Create( HEAPID_PROC );
+
+    stype = bsw_scr->tr_data[tr_idx].bt_trd.appear_word[0];
+    sid = bsw_scr->tr_data[tr_idx].bt_trd.appear_word[1];
+    word0 = bsw_scr->tr_data[tr_idx].bt_trd.appear_word[2];
+    word1 = bsw_scr->tr_data[tr_idx].bt_trd.appear_word[3];
+    skip = 1;
     
+    GFL_MSG_GetString( msgdata, msg_bsw_scr_31, tempBuf ); //簡易会話用
+    
+    WORDSET_RegisterPMSWord( wordset, 0, word0 );
+    WORDSET_RegisterPMSWord( wordset, 1, word0 );
+    WORDSET_ExpandStr( wordset, work->strBuf, tempBuf );
+    
+    WORDSET_Delete( wordset );
     GFL_MSG_Delete( msgdata );
+    GFL_STR_DeleteBuffer( tempBuf );
   }
   
   work->sysWin = FLDSYSWIN_STREAM_Add( msgbg, NULL, 19 );
