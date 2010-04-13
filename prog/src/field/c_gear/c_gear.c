@@ -1272,11 +1272,13 @@ static BOOL _PanelPaletteIsBeaconChange( GAME_COMM_SYS_PTR game_comm, u32 last_b
     return TRUE;
   }
   
+  /*
   // IRC
   if( (bit & GAME_COMM_STATUS_BIT_IRC) != (last_bit & GAME_COMM_STATUS_BIT_IRC) ){
     *change_beacon |= _CGEAR_NET_BIT_IR;
     ret = TRUE;
   }
+  */
 
   // WIFI
   {
