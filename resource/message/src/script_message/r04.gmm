@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T21:33:04"/>
+	<create user="matsumiya" host="W00224" date="2010-04-13T16:31:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1689" top="167" right="2394" bottom="795" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -366,13 +366,13 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『じめんタイプの
-ポケモンを　つかまえておくか？▼
+ポケモンを　つかまえておくか▼
 それとも　ポケモンを　きたえるか
-なやましい　もんだい　だな……</language>
+どちらが　つよくなれる……？</language>
 		<language name="JPN_KANJI" width="256">チェレン『じめんタイプの
-ポケモンを　捕まえておくか？▼
+ポケモンを　捕まえておくか▼
 それとも　ポケモンを　鍛えるか
-悩ましい　問題だな……</language>
+どちらが　強くなれる……</language>
 	</row>
 
 	<row id="msg_r04_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -381,24 +381,18 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『やあ　[1:00:トレーナー名:0]
-ジムバッジを　てにいれたんだね▼
-いきなりで　わるいけれど
-おねがいが　あるんだ▼
-おなじ　ジムバッジを　もつ
-トレーナーどうし　じつりょくが▽
-どれほど　ちがうのか　たしかめたい▼
-というわけで
-よろしく　たのむよ！▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『やあ　[1:00:トレーナー名:0]
-ジムバッジを　手に入れたんだね▼
-いきなりで　悪いけれど
-お願いが　あるんだ▼
-同じ　ジムバッジを　もつ
-トレーナー同士　実力が▽
-どれほど　違うのか　確かめたい▼
-というわけで
-よろしく　頼むよ！▼</language>
+		<language name="JPN" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼
+きみが　ビートルバッジを
+てにいれるのを　まっていた▼
+さっそくだけど
+どちらが　つよい　トレーナーなのか▽
+たしかめさせて　もらうよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼
+きみが　ビートルバッジを
+手に入れるのを　待っていた▼
+早速だけど
+どちらが　強い　トレーナーなのか▽
+確かめさせて　もらうよ▼</language>
 	</row>
 
 	<row id="msg_r04_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -410,18 +404,18 @@
 　　　進化系に合わせて</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『なるほどね▼
-きみと　たたかうと
-いろいろ　さんこうに　なる▼
-そして　あらためて　わかったね
-ぼくは　[1:01:ポケモン種族名:0]たちとなら▽
-どこまでも　つよくなれる！▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『なるほどね▼
-きみと　戦うと
-いろいろ　参考に　なる▼
-そして　改めて　わかったね
-ぼくは　[1:01:ポケモン種族名:0]たちとなら▽
-どこまでも　強くなれる！▼</language>
+		<language name="JPN" width="256">チェレン『……なるほど▼
+きみは　ポケモンの　つよさを
+ひきだして　いるかもね▼
+もんだい　ないよ
+ぼくの　[1:01:ポケモン種族名:0]だって▽
+きたえれば　もっと　つよくなる！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……なるほど▼
+きみは　ポケモンの　強さを
+引き出して　いるかもね▼
+問題ないよ
+ぼくの　[1:01:ポケモン種族名:0]だって▽
+鍛えれば　もっと　強くなる！▼</language>
 	</row>
 
 	<row id="msg_r04_tvt_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -443,13 +437,13 @@ TVトランシーバー</attribute>
 		<language name="JPN" width="256">チェレン『……だって▼
 ライモンシティの　ゲートなら
 この　４ばんどうろを▽
-まっすぐ　すすむだけ▼
-じゃ　ぼくは　さきにいくよ▼</language>
+まっすぐ　すすむだけさ▼
+じゃ　おさきに▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……だって▼
 ライモンシティの　ゲートなら
 この　４番道路を▽
-まっすぐ　進むだけ▼
-じゃ　ぼくは　先に行くよ▼</language>
+まっすぐ　進むだけさ▼
+じゃ　おさきに▼</language>
 	</row>
 
 	<row id="msg_r04_man2_01">
