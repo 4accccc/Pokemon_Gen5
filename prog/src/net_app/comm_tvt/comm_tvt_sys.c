@@ -69,6 +69,7 @@ struct _COMM_TVT_WORK
   BOOL isPause;
   BOOL isSusspendDraw;  //お絵描きログ受信中の待機
   BOOL isReqFinish; //親からの終了通知
+  BOOL isReqDispWarn; //ペアコン警告表示リクエスト
   u16 palAnmCnt;
   u16 palAnmIdx;
   u16 palAnmData[COMM_TVT_PAL_ANM_NUM][16];
@@ -195,6 +196,12 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   work->isPause = FALSE;
   work->isSusspendDraw = FALSE;
   work->isReqFinish = FALSE;
+  work->isReqDispWarn = FALSE;
+
+  if( DS_SYSTEM_IsRestrictPhotoExchange() == TRUE )
+  {
+    work->isReqDispWarn = TRUE;
+  }
 
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
   GFL_NET_ReloadIcon();
@@ -1044,6 +1051,16 @@ const BOOL COMM_TVT_IsWifi( COMM_TVT_WORK *work )
   return FALSE;
 }
 
+//ペアコン表示リクエスト
+const BOOL COMM_TVT_IsReqWarn( COMM_TVT_WORK *work )
+{
+  return work->isReqDispWarn;
+}
+void COMM_TVT_ResetIsReqWarn( COMM_TVT_WORK *work )
+{
+  work->isReqDispWarn = FALSE;
+}
+
 #pragma mark [>util func
 //--------------------------------------------------------------------------
 //  TWL起動かチェック
@@ -1056,11 +1073,10 @@ const BOOL COMM_TVT_IsTwlMode( void )
 const BOOL COMM_TVT_CanUseCamera( void )
 {
 #if (defined(SDK_TWL))
-//  if( DS_SYSTEM_IsRunOnTwl() == TRUE &&
-//      DS_SYSTEM_IsRestrictPhotoExchange() == FALSE )
-  if( DS_SYSTEM_IsRunOnTwl() == TRUE )
+  if( DS_SYSTEM_IsRunOnTwl() == TRUE &&
+      DS_SYSTEM_IsRestrictPhotoExchange() == FALSE )
 #else
-  if( TRUE )
+  if( FALSE )
 #endif
   {
     return TRUE;

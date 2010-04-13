@@ -98,6 +98,9 @@ typedef enum
   
   CCS_FAILUE_CONNECT,
 
+  CCS_DISP_WARN_INIT,
+  CCS_DISP_WARN,
+
 }CTVT_CALL_STATE;
 
 typedef enum
@@ -453,6 +456,12 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
     if( WIPE_SYS_EndCheck() == TRUE )
     {
       const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
+      if( COMM_TVT_IsReqWarn( work ) == TRUE )
+      {
+        //ペアコン警告
+        callWork->state = CCS_DISP_WARN_INIT;
+      }
+      else
       if( initWork->mode == CTM_CHILD ||
           initWork->mode == CTM_WIFI )
       {
@@ -667,10 +676,54 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       }
     }
     break;
+  case CCS_DISP_WARN_INIT:
+    {
+      GFL_BMPWIN_Delete(callWork->msgWin);
+      callWork->msgWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
+                                            2 , 5 , 28 , 14 ,
+                                            CTVT_PAL_BG_SUB_FONT ,
+                                            GFL_BMP_CHRAREA_GET_B );
+      CTVT_CALL_DispMessage( work , callWork , COMM_TVT_SYS_10 );
+    }
+    callWork->state = CCS_DISP_WARN;
+
+    break;
+  case CCS_DISP_WARN:
+    if( GFL_UI_TP_GetTrg() == TRUE )
+    {
+      PMSND_PlaySystemSE( CTVT_SND_DECIDE );
+      BmpWinFrame_Clear( callWork->msgWin , WINDOW_TRANS_ON_V );
+      GFL_BMPWIN_ClearTransWindow( callWork->msgWin );
+      GFL_BMPWIN_Delete(callWork->msgWin);
+      callWork->msgWin = GFL_BMPWIN_Create( CTVT_FRAME_SUB_MSG , 
+                                            1 , 21 , 21 , 2 ,
+                                            CTVT_PAL_BG_SUB_FONT ,
+                                            GFL_BMP_CHRAREA_GET_B );
+      COMM_TVT_ResetIsReqWarn( work );
+      if( initWork->mode == CTM_CHILD ||
+          initWork->mode == CTM_WIFI )
+      {
+        //CGEARから呼び出しできた。
+        GFL_CLACT_WK_SetAnmSeq( callWork->clwkReturn , APP_COMMON_BARICON_RETURN_OFF );
+        CTVT_CALL_DispCallMessage( work , callWork , COMM_TVT_CALL_11 );
+        callWork->reqDispTimeIcon = TRUE;
+        callWork->barState = CCBS_JOIN_PARENT_DIRECT;
+        callWork->state = CCS_WAIT_CONNECT_JOIN_DIRECT;
+      }
+      else
+      {
+        //メッセージのアップデートで出す
+        callWork->state = CCS_MAIN;
+        //CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
+      }
+    }
+    break;
+
   
   }
   
-  if( initWork->mode != CTM_WIFI )
+  if( initWork->mode != CTM_WIFI &&
+      COMM_TVT_IsReqWarn( work ) == FALSE )
   {
     CTVT_CALL_UpdateBeacon( work , callWork );
     {
