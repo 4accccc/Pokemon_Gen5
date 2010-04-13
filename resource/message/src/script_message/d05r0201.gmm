@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T21:46:05"/>
+	<create user="matsumiya" host="W00224" date="2010-04-13T23:07:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,12 +357,12 @@
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……やれやれ
 ほんとうに　かくれていたとは[BE:01:ページ切り替え（クリア）]
-さむいなら
-そとまで　あんない　するけど？[BE:01:ページ切り替え（クリア）]</language>
+さむいなら　メンドーだけど
+そとまで　あんない　するよ？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『……やれやれ
 本当に　隠れていたとは[BE:01:ページ切り替え（クリア）]
-寒いなら
-外まで　案内するけど？[BE:01:ページ切り替え（クリア）]</language>
+寒いなら　メンドーだけど
+外まで　案内するよ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d05r0201_sage2_02">
@@ -413,9 +413,9 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]は
-そっちの　プラズマだんを　たのむよ！</language>
+そっちの　プラズマだんを　たのむ！</language>
 		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]は
-そっちの　プラズマだんを　たのむよ！</language>
+そっちの　プラズマ団を　頼む！</language>
 	</row>
 
 	<row id="msg_d05r0201_hakaim1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

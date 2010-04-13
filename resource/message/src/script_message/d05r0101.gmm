@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T21:44:10"/>
+	<create user="matsumiya" host="W00224" date="2010-04-13T23:06:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -381,11 +381,11 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……？
-この　おくにも　だれか　いるね[BE:01:ページ切り替え（クリア）]
+この　おくにも　だれか　いる[BE:01:ページ切り替え（クリア）]
 ひょっとしたら　プラズマだん　かな
 じゅんびは　いいよね？　[1:00:トレーナー名:0]</language>
 		<language name="JPN_KANJI" width="256">チェレン『……？
-この奥にも　だれか　いるね[BE:01:ページ切り替え（クリア）]
+この奥にも　だれか　いる[BE:01:ページ切り替え（クリア）]
 ひょっとしたら　プラズマ団かな
 準備は　いいよね？　[1:00:トレーナー名:0]</language>
 	</row>
