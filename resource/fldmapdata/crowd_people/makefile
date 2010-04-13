@@ -48,6 +48,7 @@ ZONEID_H = ../zonetable/zone_id.h
 OBJCODE_H = ../../fldmmdl/fldmmdl_objcode.h
 DIR_H = ../../../prog/include/field/field_dir.h
 SCRIPT_H = ../script/crowd_people_scr_def.h
+MSG_H = ../../message/dst/script/msg_crowd_people_scr.h
 
 #------------------------------------------------------------------------------
 #	#サフィックス
@@ -80,12 +81,12 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(XLSFILE) $(ZONEID_H) $(OBJCODE_H) $(DIR_H) $(SCRIPT_H)
+$(targetname).narc: $(XLSFILE) $(ZONEID_H) $(OBJCODE_H) $(DIR_H) $(SCRIPT_H) $(MSG_H)
 	
 	#エクセルデータをタブ区切りにする。
 	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $(TABFILE) -p 0 -s tab $(XLSFILE)
 	#コンバート
-	perl conv.pl $(TABFILE) $(OBJCODE_H) $(DIR_H) $(ZONEID_H) $(LIST_BIN) $(LIST_FILE) $(SCRIPT_H) $(SCRIPT_BIN)
+	perl conv.pl $(TABFILE) $(OBJCODE_H) $(DIR_H) $(ZONEID_H) $(LIST_BIN) $(LIST_FILE) $(SCRIPT_H) $(SCRIPT_BIN) $(MSG_H)
 
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix

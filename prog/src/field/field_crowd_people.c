@@ -223,6 +223,11 @@ typedef struct
   u8 point_num;  // 起動ポイントの数
   u8 obj_code_num;// OBJCODEの数
   u16 obj_code_tbl[FIELD_CROWD_PEOPLE_OBJ_CODE_MAX]; // OBJCODEのテーブル
+
+  u8 noise_start;
+  u8 noise_num;
+  u8 move_frame;
+  u8 pad;
   
   FIELD_CROWD_PEOPLE_BOOT_POINT point[FIELD_CROWD_PEOPLE_BOOT_POINT_MAX];
 } FIELD_CROWD_PEOPLE_BOOT_DATA;
@@ -282,6 +287,7 @@ typedef struct
   u16 move_grid;
   u16 event_id;
   u16 id;
+  u16 move_acmd;
   MMDL* p_mmdl;
 
   const FIELD_CROWD_PEOPLE_BOOT_POINT* cp_point;
@@ -344,6 +350,7 @@ static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Exit( FIELD_CROWD_PEOPLE_BOOL_CONTRO
 static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Main( FIELD_CROWD_PEOPLE_BOOL_CONTROL* p_wk, FIELD_CROWD_PEOPLE* p_sysdata, int timezone );
 static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_SetUpPeople( const FIELD_CROWD_PEOPLE* cp_sysdata, const FIELD_CROWD_PEOPLE_BOOT_DATA* cp_data, const FIELD_CROWD_PEOPLE_BOOT_POINT* cp_point, FIELD_CROWD_PEOPLE_WK* p_people, u16 add_grid );
 static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_StartUp( const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_wk, FIELD_CROWD_PEOPLE* p_sysdata, int timezone );
+static u16 FIELD_CROWD_PEOPLE_BOOT_CONTROL_GetMoveAcmd( const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_wk );
 
 // タイプごとの動き
 static void FIELD_CROWD_PEOPLE_WK_SetUpNormal( FIELD_CROWD_PEOPLE_WK* p_wk );
@@ -365,7 +372,7 @@ static void FIELD_CROWD_PEOPLE_NOISE_Exit( FIELD_CROWD_PEOPLE_NOISE* p_wk );
 static void FIELD_CROWD_PEOPLE_NOISE_Main( FIELD_CROWD_PEOPLE_NOISE* p_wk, const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_boot, const FIELDMAP_WORK* cp_fieldmap );
 
 static void FIELD_CROWD_PEOPLE_NOISEWK_Init( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, u16 id );
-static void FIELD_CROWD_PEOPLE_NOISEWK_Start( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, FLDMSGBG* p_fmb, GFL_MSGDATA* p_msgdata );
+static void FIELD_CROWD_PEOPLE_NOISEWK_Start( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, FLDMSGBG* p_fmb, GFL_MSGDATA* p_msgdata, int noise_msg_start, int noise_msg_num );
 static void FIELD_CROWD_PEOPLE_NOISEWK_Main( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, FLDMSGBG* p_fmb );
 static void FIELD_CROWD_PEOPLE_NOISEWK_Clear( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk );
 static void FIELD_CROWD_PEOPLE_NOISEWK_Off( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, FLDMSGBG* p_fmb );
@@ -625,6 +632,7 @@ static void FIELD_CROWD_PEOPLE_WK_Init( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_
   p_wk->seq       = 0;
   p_wk->type      = 0;
   p_wk->move_dir  = 0;
+  p_wk->move_acmd = FIELD_CROWD_PEOPLE_BOOT_CONTROL_GetMoveAcmd( cp_data );
 
   // Vanish
   MMDL_SetStatusBitVanish( p_wk->p_mmdl, TRUE );
@@ -975,6 +983,33 @@ static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_StartUp( const FIELD_CROWD_PEOPLE_BO
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動に使うアクションコマンドを取得
+ *
+ *	@param	cp_wk     ワーク
+ *
+ *	@return アクションコマンド
+ */
+//-----------------------------------------------------------------------------
+static u16 FIELD_CROWD_PEOPLE_BOOT_CONTROL_GetMoveAcmd( const FIELD_CROWD_PEOPLE_BOOL_CONTROL* cp_wk )
+{
+  if( cp_wk->boot_data.move_frame == 2 ){
+    return AC_WALK_U_2F;
+  }else if( cp_wk->boot_data.move_frame == 4 ){
+    return AC_WALK_U_4F;
+  }else if( cp_wk->boot_data.move_frame == 6 ){
+    return AC_WALK_U_6F;
+  }else if( cp_wk->boot_data.move_frame == 8 ){
+    return AC_WALK_U_8F;
+  }else if( cp_wk->boot_data.move_frame == 16 ){
+    return AC_WALK_U_16F;
+  }
+  // 対応していません。
+  GF_ASSERT( 0 );
+  return AC_WALK_U_8F;
+}
+
 
 
 
@@ -1106,7 +1141,7 @@ static void FIELD_CROWD_PEOPLE_WK_MainNormal( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLS
         }
 
         // よけまーす。
-        MMDL_SetAcmd( p_wk->p_mmdl, AC_WALK_U_6F + move_dir );
+        MMDL_SetAcmd( p_wk->p_mmdl, p_wk->move_acmd + move_dir );
 
         // 設定した方向を保存
         p_wk->last_dir = move_dir;
@@ -1114,7 +1149,7 @@ static void FIELD_CROWD_PEOPLE_WK_MainNormal( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLS
       else
       {
         // そのまま進む
-        MMDL_SetAcmd( p_wk->p_mmdl, AC_WALK_U_6F + p_wk->move_dir );
+        MMDL_SetAcmd( p_wk->p_mmdl, p_wk->move_acmd + p_wk->move_dir );
         p_wk->move_grid --; // 移動距離減算
       }
     }
@@ -1173,7 +1208,7 @@ static void FIELD_CROWD_PEOPLE_WK_MainNasty( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSY
     else
     {
       // そのまま進む
-      MMDL_SetAcmd( p_wk->p_mmdl, AC_WALK_U_6F + p_wk->move_dir );
+      MMDL_SetAcmd( p_wk->p_mmdl, p_wk->move_acmd + p_wk->move_dir );
       p_wk->move_grid --; // 移動距離減算
     }
     p_wk->seq = FIELD_CROWD_PEOPLE_SEQ_NASTY_WALKWAIT;
@@ -1379,7 +1414,7 @@ static void FIELD_CROWD_PEOPLE_NOISE_Main( FIELD_CROWD_PEOPLE_NOISE* p_wk, const
     if( p_wk->wait >= p_wk->wait_max )
     {
       // 表示
-      FIELD_CROWD_PEOPLE_NOISEWK_Start( &p_wk->wk[ p_wk->add_idx ], p_wk->p_fmb, p_wk->p_msgdata );
+      FIELD_CROWD_PEOPLE_NOISEWK_Start( &p_wk->wk[ p_wk->add_idx ], p_wk->p_fmb, p_wk->p_msgdata, cp_boot->boot_data.noise_start, cp_boot->boot_data.noise_num );
       p_wk->add_idx = (p_wk->add_idx + 1) % NOISE_WK_MAX;
 
       // ウエイト初期化
@@ -1432,14 +1467,14 @@ static void FIELD_CROWD_PEOPLE_NOISEWK_Init( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, 
  *	@param	p_fmb 
  */
 //-----------------------------------------------------------------------------
-static void FIELD_CROWD_PEOPLE_NOISEWK_Start( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, FLDMSGBG* p_fmb, GFL_MSGDATA* p_msgdata )
+static void FIELD_CROWD_PEOPLE_NOISEWK_Start( FIELD_CROWD_PEOPLE_NOISE_WK* p_wk, FLDMSGBG* p_fmb, GFL_MSGDATA* p_msgdata, int noise_msg_start, int noise_msg_num )
 {
   u32 rand = GFUser_GetPublicRand( 0 );
   p_wk->flag = TRUE;
   p_wk->wait = 0;
   
   FLDSUBMSGWIN_Add( p_fmb, p_msgdata, 
-      CROWD_NOISE_01 + (rand%NOISE_MSG_MAX), p_wk->id,
+      noise_msg_start + (rand%noise_msg_num), p_wk->id,
       p_wk->x, p_wk->y, NOISE_SIZX, NOISE_SIZY );
 }
 

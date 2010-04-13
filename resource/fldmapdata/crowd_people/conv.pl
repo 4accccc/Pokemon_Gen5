@@ -1,13 +1,13 @@
 ##########################################################
 #
-#   conv.pl   xcel_tab  objcode dir zone_id output_list output_arc script_h output_script
+#   conv.pl   xcel_tab  objcode dir zone_id output_list output_arc script_h output_script msg_header
 #
 ##########################################################
 
 
-if( @ARGV < 8 )
+if( @ARGV < 9 )
 {
-  print( "conv.pl   xcel_tab  objcode dir zone_id output_list output_arc script_h output_script\n" );
+  print( "conv.pl   xcel_tab  objcode dir zone_id output_list output_arc script_h output_script msg_gheader\n" );
   exit(1);
 }
 
@@ -33,6 +33,10 @@ open( FILEIN, $ARGV[6] );
 @SCRIPT_H = <FILEIN>;
 close( FILEIN );
 
+open( FILEIN, $ARGV[8] );
+@MSG_H = <FILEIN>;
+close( FILEIN );
+
 
 $DATA_NUM = 0;
 @DATA_ZONEID = undef;
@@ -43,6 +47,9 @@ $DATA_NUM = 0;
 @DATA_WAIT_MIDNIGHT = undef;
 @DATA_POINT_NUM = undef;
 @DATA_OBJCODE_NUM = undef;
+@DATA_NOISE_START = undef;
+@DATA_NOISE_NUM = undef;
+@DATA_MOVE_FRAME = undef;
 @DATA_OBJCODE00 = undef;
 @DATA_OBJCODE01 = undef;
 @DATA_OBJCODE02 = undef;
@@ -68,23 +75,26 @@ $DATA_IDX_WAIT_NIGHT = 4;
 $DATA_IDX_WAIT_MIDNIGHT = 5;
 $DATA_IDX_POINT_NUM = 6;
 $DATA_IDX_OBJCODE_NUM = 7;
-$DATA_IDX_OBJCODE00 = 8;
-$DATA_IDX_OBJCODE01 = 9;
-$DATA_IDX_OBJCODE02 = 10;
-$DATA_IDX_OBJCODE03 = 11;
-$DATA_IDX_POINT00_LEFT = 12;
-$DATA_IDX_POINT00_RIGHT = 13;
-$DATA_IDX_POINT00_TOP = 14;
-$DATA_IDX_POINT00_BOTTOM = 15;
-$DATA_IDX_POINT00_DIR = 16;
-$DATA_IDX_POINT00_GRID_NUM = 17;
-$DATA_IDX_POINT01_LEFT = 18;
-$DATA_IDX_POINT01_RIGHT = 19;
-$DATA_IDX_POINT01_TOP = 20;
-$DATA_IDX_POINT01_BOTTOM = 21;
-$DATA_IDX_POINT01_DIR = 22;
-$DATA_IDX_POINT01_GRID_NUM = 23;
-$DATA_IDX_NUM = 23;
+$DATA_IDX_NOISE_START = 8;
+$DATA_IDX_NOISE_NUM = 9;
+$DATA_IDX_MOVE_FRAME =10;
+$DATA_IDX_OBJCODE00 = 11;
+$DATA_IDX_OBJCODE01 = 12;
+$DATA_IDX_OBJCODE02 = 13;
+$DATA_IDX_OBJCODE03 = 14;
+$DATA_IDX_POINT00_LEFT = 15;
+$DATA_IDX_POINT00_RIGHT = 16;
+$DATA_IDX_POINT00_TOP = 17;
+$DATA_IDX_POINT00_BOTTOM = 18;
+$DATA_IDX_POINT00_DIR = 19;
+$DATA_IDX_POINT00_GRID_NUM = 20;
+$DATA_IDX_POINT01_LEFT = 21;
+$DATA_IDX_POINT01_RIGHT = 22;
+$DATA_IDX_POINT01_TOP = 23;
+$DATA_IDX_POINT01_BOTTOM = 24;
+$DATA_IDX_POINT01_DIR = 25;
+$DATA_IDX_POINT01_GRID_NUM = 26;
+$DATA_IDX_NUM = 27;
 
 
 
@@ -305,6 +315,27 @@ foreach $one ( @EXCEL_FILE )
           $DATA_POINT01_GRID_NUM[ $i ] = $line[1 + $i];
         }
       }
+      elsif ( $data_count == $DATA_IDX_NOISE_START )
+      {
+        for( $i = 0; $i < $DATA_NUM; $i ++ )
+        {
+          $DATA_NOISE_START[ $i ] = $line[1 + $i];
+        }
+      }
+      elsif ( $data_count == $DATA_IDX_NOISE_NUM )
+      {
+        for( $i = 0; $i < $DATA_NUM; $i ++ )
+        {
+          $DATA_NOISE_NUM[ $i ] = $line[1 + $i];
+        }
+      }
+      elsif ( $data_count == $DATA_IDX_MOVE_FRAME )
+      {
+        for( $i = 0; $i < $DATA_NUM; $i ++ )
+        {
+          $DATA_MOVE_FRAME[ $i ] = $line[1 + $i];
+        }
+      }
       
       $data_count ++;
     }
@@ -353,6 +384,10 @@ for( $i=0; $i<$DATA_NUM; $i++ )
   print( FILEOUT pack( "S", &getOBJCODE($DATA_OBJCODE01[$i]) ) );
   print( FILEOUT pack( "S", &getOBJCODE($DATA_OBJCODE02[$i]) ) );
   print( FILEOUT pack( "S", &getOBJCODE($DATA_OBJCODE03[$i]) ) );
+  print( FILEOUT pack( "C", &getMSG_H($DATA_NOISE_START[$i]) ) );
+  print( FILEOUT pack( "C", $DATA_NOISE_NUM[$i] ) );
+  print( FILEOUT pack( "C", $DATA_MOVE_FRAME[$i] ) );
+  print( FILEOUT pack( "C", 0 ) ); #padding
   print( FILEOUT pack( "S", $DATA_POINT00_TOP[$i] ) );
   print( FILEOUT pack( "S", $DATA_POINT00_BOTTOM[$i] ) );
   print( FILEOUT pack( "S", $DATA_POINT00_LEFT[$i] ) );
@@ -515,6 +550,32 @@ sub getSCRIPT_H
     $script_h =~ s/\n//g;
     
     @line = split( /\s/, $script_h );
+    
+    if( "".$line[1] eq "".$data )
+    {
+      return $line[2];
+    }
+  }
+
+  print( "$data ‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñB\n" );
+  exit(1);
+}
+
+sub getMSG_H
+{
+  my( $data ) = @_;
+  my( $msg_h, @line );
+
+  foreach $msg_h ( @MSG_H )
+  {
+    $msg_h =~ s/ +/ /g;
+    $msg_h =~ s/\t+/ /g;
+    $msg_h =~ s/\(//g;
+    $msg_h =~ s/\)//g;
+    $msg_h =~ s/\r\n//g;
+    $msg_h =~ s/\n//g;
+    
+    @line = split( /\s/, $msg_h );
     
     if( "".$line[1] eq "".$data )
     {
