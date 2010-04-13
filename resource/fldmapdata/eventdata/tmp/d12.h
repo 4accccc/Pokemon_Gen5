@@ -40,7 +40,8 @@
 #ifndef ZONE_D12_EVB_H
 #define ZONE_D12_EVB_H
 
-#define D12_BG_BOARD_01                   0
-#define D12_BG_BOARD_02                   1
+#define D12_BG_BOARD_02                   0
+#define D12_BG_BOARD_03                   1
+#define D12_BG_BOARD_01                   2
 
 #endif //ZONE_D12_EVB_H
