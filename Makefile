@@ -57,6 +57,22 @@ force:
 	rm -rf multiboot/depend/*
 	$(MAKE)
 
+#-------------------------------------------------------------------
+#  色違い・ROM版作成用
+#-------------------------------------------------------------------
+white:
+	cp ./prog/spec/version_w ./prog/version
+	$(MAKE) -C $(RESOURCE_DIR)
+	$(MAKE) -C $(ARC_DIR) 
+	$(MAKE) -C $(PROG_DIR) 
+	cp ./prog/spec/version ./prog/version
+
+black:
+	cp ./prog/spec/version_b ./prog/version
+	$(MAKE) -C $(RESOURCE_DIR)
+	$(MAKE) -C $(ARC_DIR) 
+	$(MAKE) -C $(PROG_DIR) 
+	cp ./prog/spec/version ./prog/version
 
 # cleanした場合にすべて消えるように記述してください
 #--------------------------------------------------------------------
