@@ -26,14 +26,17 @@ enum {
 // 出口総グリッドサイズ　オフセット
 typedef u16 LOC_EXIT_OFS;
 
+#define LOC_EXIT_OFS_DIR_SHIFT    (8)
 #define LOC_EXIT_OFS_SIZE_SHIFT   (4)
 #define LOC_EXIT_OFS_OFS_SHIFT    (0)
+#define LOC_EXIT_OFS_DIR_MSK    (0xf00)
 #define LOC_EXIT_OFS_SIZE_MSK   (0xf0)
 #define LOC_EXIT_OFS_OFS_MSK    (0x0f)
 
+#define LOC_EXIT_OFS_GET_DIR( loc_exit_ofs )   ( (loc_exit_ofs & LOC_EXIT_OFS_DIR_MSK) >> LOC_EXIT_OFS_DIR_SHIFT )
 #define LOC_EXIT_OFS_GET_SIZE( loc_exit_ofs )   ( (loc_exit_ofs & LOC_EXIT_OFS_SIZE_MSK) >> LOC_EXIT_OFS_SIZE_SHIFT )
 #define LOC_EXIT_OFS_GET_OFS( loc_exit_ofs )   ( (loc_exit_ofs & LOC_EXIT_OFS_OFS_MSK) >> LOC_EXIT_OFS_OFS_SHIFT )
-#define LOC_EXIT_OFS_DEF( size, ofs )   ( (size << LOC_EXIT_OFS_SIZE_SHIFT) | (ofs << LOC_EXIT_OFS_OFS_SHIFT) )
+#define LOC_EXIT_OFS_DEF( size, ofs, dir )   ( (size << LOC_EXIT_OFS_SIZE_SHIFT) | (ofs << LOC_EXIT_OFS_OFS_SHIFT) | (dir << LOC_EXIT_OFS_DIR_SHIFT) )
 
 
 

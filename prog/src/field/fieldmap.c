@@ -331,7 +331,6 @@ struct _FIELDMAP_WORK
 	const DEPEND_FUNCTIONS *func_tbl;
 	void *mapCtrlWork;
 	
-  int firstConnectEventID;
 
   GFL_TCBSYS* fieldmapTCB;
   void* fieldmapTCBSysWork;
@@ -958,15 +957,6 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 	// フィールドマップ用制御タスクシステム
 	FLDMAPFUNC_Sys_Main( fieldWork->fldmapFuncSys );
 
-  if (FIELDMAP_GetMapControlType(fieldWork) == FLDMAP_CTRLTYPE_NOGRID)
-  {
-    GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
-    EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData(gamedata);
-    // @TODO 現状は、レールマップ上に３DPOSのイベントとRAILのイベントが
-    // 混合しているので。
-    fieldWork->firstConnectEventID = 
-      EVENTDATA_SearchConnectIDBySphere(evdata, &fieldWork->now_pos);
-  }
   //フィールドマップ用イベント起動チェックをセットする
   if( ZONEDATA_IsUnionRoom( fieldWork->map_id ) == TRUE
       || ZONEDATA_IsColosseum( fieldWork->map_id ) == TRUE){
@@ -1577,13 +1567,6 @@ FIELD_CAMERA * FIELDMAP_GetFieldCamera( FIELDMAP_WORK *fieldWork )
 FLDNOGRID_MAPPER* FIELDMAP_GetFldNoGridMapper( FIELDMAP_WORK *fieldWork )
 {
   return fieldWork->nogridMapper;
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-int * FIELDMAP_GetFirstConnectID( FIELDMAP_WORK * fieldWork )
-{
-  return &fieldWork->firstConnectEventID;
 }
 
 //--------------------------------------------------------------

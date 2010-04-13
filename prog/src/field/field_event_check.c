@@ -252,7 +252,7 @@ static GMEVENT * checkRailSlipDown(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
 static void rememberExitRailInfo(const EV_REQUEST * req, int idx, const RAIL_LOCATION* loc);
 static GMEVENT * getRailChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx,
     const RAIL_LOCATION* loc);
-static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player );
+static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player, const EV_REQUEST * req );
 
 
 //======================================================================
@@ -2364,26 +2364,18 @@ static GMEVENT * checkPushIntrude(const EV_REQUEST * req,
 static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork)
 {
   int idx;
+  const FIELD_PLAYER* cp_player = FIELDMAP_GetFieldPlayer( fieldWork );
+  const MMDL* cp_mmdl = FIELD_PLAYER_GetMMdl( cp_player );
   RAIL_LOCATION pos;
-  int * firstID = FIELDMAP_GetFirstConnectID(fieldWork);
-  FLDNOGRID_MAPPER* nogridMapper = FIELDMAP_GetFldNoGridMapper( fieldWork );
   const CONNECT_DATA* cnct;
 
-  // @TODO ３D座標のイベントとレール座標のイベントを併用しているため複雑
-  {
-    VecFx32 pos_3d;
-    FIELD_PLAYER_GetNoGridPos( req->field_player, &pos_3d );
-    idx = EVENTDATA_SearchConnectIDBySphere(req->evdata, &pos_3d);
-  }
-  if( idx == EXIT_ID_NONE )
-  {
-    FIELD_PLAYER_GetNoGridLocation( req->field_player, &pos );
-    idx = EVENTDATA_SearchConnectIDByRailLocation(req->evdata, &pos);
-  }
+  // レールロケーション
+  MMDL_GetRailLocation( cp_mmdl, &pos );
 
-  if (*firstID == idx) return NULL;
+  // その場チェック　＝　マット
+  idx = EVENTDATA_SearchConnectIDByRailLocation(req->evdata, &pos);
+
   if (idx == EXIT_ID_NONE){
-    *firstID = idx;
     return NULL;
   }
 
@@ -2412,14 +2404,15 @@ static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
   const MMDL* cp_mmdl = FIELD_PLAYER_GetMMdl( cp_player );
   const CONNECT_DATA* cnct;
 
-  MMDL_GetRailLocation( cp_mmdl, &pos );
-  result = MMDL_GetRailFrontLocation( cp_mmdl, &front_pos );
 
   // 目の前が交通不可能出ない場合にはチェックしない
-  if( checkRailFrontMove( cp_player ) )
+  if( checkRailFrontMove( cp_player, req ) )
   {
     return NULL;
   }
+
+  MMDL_GetRailLocation( cp_mmdl, &pos );
+  result = MMDL_GetRailFrontLocation( cp_mmdl, &front_pos );
    
   // その場チェック　＝　マット
   idx = EVENTDATA_SearchConnectIDByRailLocation(req->evdata, &pos);
@@ -2448,6 +2441,7 @@ static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
   
   cnct = EVENTDATA_GetConnectByID( req->evdata, idx );
 
+  TOMOYA_Printf( "player dir %d\n", req->player_dir );
   if( CONNECTDATA_IsClosedExit(cnct) == FALSE && checkConnectExitDir( cnct, req->player_dir ) )
   {
     rememberExitRailInfo( req, idx, &pos );  // front_posは移動不可なので、posにする
@@ -2571,7 +2565,7 @@ static GMEVENT * checkRailSlipDown(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
   const FIELD_PLAYER* cp_player = FIELDMAP_GetFieldPlayer( fieldWork );
 
   // 目の前が交通不可能出ない場合にはチェックしない
-  if( checkRailFrontMove( cp_player ) )
+  if( checkRailFrontMove( cp_player, req ) )
   {
     return NULL;
   }
@@ -2622,13 +2616,13 @@ static GMEVENT * getRailChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * f
 
 //--------------------------------------------------------------
 /**
- *	@brief  レールマップ目の前に移動してるかチェック
+ *	@brief  目の前が交通不可能かチェック
  *
- *	@retval TRUE    している
- *	@retval FALSE   していない
+ *	@retval TRUE    移動可能
+ *	@retval FALSE   移動不可能
  */
 //--------------------------------------------------------------
-static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player )
+static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player, const EV_REQUEST * req )
 {
   RAIL_LOCATION now;
   RAIL_LOCATION old;
@@ -2643,6 +2637,16 @@ static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player )
     return FALSE;
   }
   return TRUE;
+
+  /* @todo 4.15 Rom焼きご　対処　レールの出入り口にアトリビュートを置いてもらう。
+  const MMDL* cp_mmdl = FIELD_PLAYER_GetMMdl( cp_player );
+  
+  if( MMDL_HitCheckRailMoveDir( cp_mmdl, req->player_dir ) & (MMDL_MOVEHITBIT_ATTR|MMDL_MOVEHITBIT_LIM) )
+  {
+    return FALSE;
+  }
+  return TRUE;
+  //*/
 }
 
 //--------------------------------------------------------------
