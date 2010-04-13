@@ -408,6 +408,14 @@ download:
         _RET
       ENDIF
 
+      _CALL save
+      IF $SCWK_ANSWER == FALSE THEN   //セーブ失敗
+        //クローズ
+        _BALLOONWIN_CLOSE()
+        $exit = TRUE
+        _RET
+      ENDIF
+
       //ビーコンサーチ処理
       _TH_SEARCH_BEACON( SCWK_ANSWER )
 
@@ -441,6 +449,26 @@ download:
     ENDIF
   ENDIF
 _RET
+
+//--------------------------------------------------------------------
+//セーブ                   output:SCWK_ANSWER
+//--------------------------------------------------------------------
+save:
+{
+  DEFINE_LOCAL report //セーブチェック用
+  // レポートを書く
+  _REPORT_EVENT_CALL( report )
+  // 書き込みに失敗
+  IF $report != SCR_REPORT_OK THEN
+    //セーブ失敗
+    $SCWK_ANSWER = FALSE
+  ELSE
+    //セーブ成功
+    $SCWK_ANSWER = TRUE
+  ENDIF
+}  
+_RET
+
 
 //--------------------------------------------------------------------
 //受付係はける
