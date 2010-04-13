@@ -237,6 +237,21 @@ BOOL NetErr_DispCall(BOOL fatal_error)
 
 //==================================================================
 /**
+ * Fatalエラー専用としてエラー画面を一発呼び出し
+ *
+ * @param   none		
+ *
+ * @retval  TRUE:エラー画面を呼び出した
+ * @retval  FALSE:呼び出していない
+ */
+//==================================================================
+BOOL NetErr_App_FatalDispCall(void)
+{
+  return NetErr_DispCall(TRUE);
+}
+
+//==================================================================
+/**
  * Push,Pop有のエラー画面一発呼び出し　※軽度エラー専用。通信の終了処理は行いません
  *
  * エラー画面を表示した場合、ユーザーが特定の操作を行わない限り(Aを押す)
@@ -378,8 +393,7 @@ void NetErr_DEBUG_ErrorSet(void)
 /**
  * @brief   アプリ用：エラーが発生したか調べる
  *
- * @retval  TRUE:エラー発生
- * @retval  FALSE:正常動作
+ * @retval  NET_ERR_CHECK
  *
  * アプリ側はこの関数を使用してエラーが発生しているか調べ、
  * エラーが発生していた場合は、各アプリ毎のエラー用処理へ移行してください
@@ -455,6 +469,20 @@ void NetErr_GetTempArea( u8** charArea , u16** scrnArea , u16** plttArea )
   *plttArea = nes->push_pltt_p;
 }
 
+//--------------------------------------------------------------
+/**
+ * エラー発生ワークをクリア
+ *
+ * @param   none		
+ */
+//--------------------------------------------------------------
+void NetErr_ErrWorkInit(void)
+{
+	NET_ERR_SYSTEM *nes = &NetErrSystem;
+	nes->status = NET_ERR_STATUS_NULL;
+  nes->err_important_type = NET_ERR_CHECK_NONE;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  強制切断
@@ -520,8 +548,7 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 		
 		//エラー画面終了
 		Local_ErrDispExit();
-		nes->status = NET_ERR_STATUS_NULL;
-    nes->err_important_type = NET_ERR_CHECK_NONE;
+		NetErr_ErrWorkInit();
 		nes->key_timer = 0;
   	return TRUE;
 	}

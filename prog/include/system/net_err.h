@@ -53,6 +53,7 @@ extern void NetErr_SystemCreate(int heap_id);
 extern void NetErr_SystemExit(void);
 extern void NetErr_Main(void);
 extern void NetErr_ErrorSet(void);
+extern void NetErr_ErrWorkInit(void);
 extern BOOL NetErr_DispCall(BOOL fatal_error);
 extern void NetErr_DispCallPushPop(void);
 extern void NetErr_DispCallFatal(void);
@@ -67,6 +68,7 @@ extern void NetErr_GetTempArea( u8** charArea , u16** scrnArea , u16** plttArea 
 extern NET_ERR_CHECK NetErr_App_CheckError(void);
 extern NET_ERR_CHECK NetErr_App_CheckConnectError(u32 net_bit);
 extern void NetErr_App_ReqErrorDisp(void);
+extern BOOL NetErr_App_FatalDispCall(void);
 
 //--------------------------------------------------------------
 //  デバッグ用
