@@ -314,7 +314,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     BATTLE_PARAM_Delete(dbw->para);
     dbw->para = NULL;
-    NET_PRINT("バトル完了 event_ircbattle\n");
+    NET_PRINT("バトル完了\n");
     GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_FAST, FSND_FADE_NONE));
     (*seq) = _CALL_NET_END;
     break;
@@ -325,8 +325,8 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
     break;
   case _WAIT_TRADE:
-//    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-      NET_PRINT("ポケモン交換おわり\n");
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
+     // NET_PRINT("ポケモン交換おわり\n");
       if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_EVOLUTION){
         (*seq) = _CALL_EVOLUTION;
       }
@@ -336,10 +336,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       else{
         (*seq) = _CALL_NET_END;
       }
-//      if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
-  //      NetErr_DispCall(FALSE);
-    //  }
-  //  }
+    }
     break;
   case _CALL_EVOLUTION:
     //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );

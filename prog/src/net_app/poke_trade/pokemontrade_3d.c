@@ -663,6 +663,13 @@ void IRC_POKETRADEDEMO_End( POKEMON_TRADE_WORK* pWork )
   // 3D管理ユーティリティーの破棄
   GFL_G3D_UTIL_Delete( pWork->g3dUtil );
 
+  if(pWork->pPokemonTradeDemo){
+    POKEMONTRADE_DEMO_PTC_End(pWork->pPokemonTradeDemo, IRPTC_KIND_NUM_MAX);
+    POKEMONTRADE_DEMO_IRICA_Delete(pWork->pPokemonTradeDemo);
+    GFL_HEAP_FreeMemory(pWork->pPokemonTradeDemo);
+    pWork->pPokemonTradeDemo = NULL;
+  }
+
   _demoExit();
 
 }
