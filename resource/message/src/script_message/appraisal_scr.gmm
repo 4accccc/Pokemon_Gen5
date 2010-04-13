@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-04-13T15:34:36"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-04-13T16:58:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -425,14 +425,14 @@ MAID</attribute>
 ビビッと　きちゃう　グルメなスメル……▽
 ちっとも　しないねえ……▼
 グルメな　しょくざいを　みつけたら
-アタイに　おしえてくれよ▼</language>
+アタイに　おしえてくれよ</language>
 		<language name="JPN_KANJI" width="256">クンクン……　クンカ　クンカ……[BE:01:ページ切り替え（クリア）]
 うーん　残念だけど
 アンタの　バッグから▽
 ビビッと　きちゃう　グルメなスメル……▽
 ちっとも　しないねえ……▼
 グルメな　食材を　みつけたら
-アタイに　教えてくれよ▼</language>
+アタイに　教えてくれよ</language>
 	</row>
 
 	<row id="msg_appraisal_m_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
