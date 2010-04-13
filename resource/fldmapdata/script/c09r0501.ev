@@ -25,8 +25,36 @@ _EVENT_DATA    ev_pos_c09r0501_n_01
 _EVENT_DATA    ev_c09r0501_champion_01		//クリア前
 _EVENT_DATA    ev_pos_c09r0501_champion_02		//クリア後（戦闘あり）
 _EVENT_DATA    ev_c09r0501_rival_01
+_EVENT_DATA		ev_init_c09r0501
+_EVENT_DATA		ev_recover_c09r0501
 _EVENT_DATA_END
 
+
+/**************************************************************/
+/*			フィールドイニットスクリプト					  */
+/**************************************************************/
+INIT_EVENT_START	ev_init_c09r0501
+
+	SWITCH $WK_SCENE_C09R0501
+	CASE 1 THEN
+		_OBJ_POS_CHANGE( C09R0501_RIVAL_01, 17, 3, 9, DIR_UP )
+		_OBJ_POS_CHANGE( C09R0501_CHAMPION_01, 17, 3, 8, DIR_DOWN )
+	ENDSWITCH
+
+INIT_EVENT_END
+
+/**************************************************************/
+/*			フィールドイニットスクリプト					  */
+/**************************************************************/
+INIT_EVENT_START	ev_recover_c09r0501
+
+	SWITCH $WK_SCENE_C09R0501
+	CASE 1 THEN
+		_OBJ_POS_CHANGE( C09R0501_RIVAL_01, 17, 3, 9, DIR_UP )
+		_OBJ_POS_CHANGE( C09R0501_CHAMPION_01, 17, 3, 8, DIR_DOWN )
+	ENDSWITCH
+
+INIT_EVENT_END
 
 /************************************************************/
 /*					Ｎ城出現POSイベント						*/

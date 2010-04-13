@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/06 17:36:30
+#save date:2010/04/13 18:17:10
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d04r0301.wms
 #SECTION START:OBJ_EVENT
@@ -53,7 +53,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
-0
+FV_D04R0601_EVENT_01
 #Event Script Name
 SCRID_TRID_HAKAIM1_06
 #Direction Type Number
@@ -84,7 +84,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
-0
+FV_D04R0601_EVENT_01
 #Event Script Name
 SCRID_TRID_HAKAIW1_01
 #Direction Type Number

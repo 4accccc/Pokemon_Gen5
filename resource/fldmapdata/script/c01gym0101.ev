@@ -699,9 +699,8 @@ _ANIME_LABEL	anm_corn_return
 //	デント　持ち場に戻る
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_dento_comeback
-	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -848,9 +847,8 @@ _ANIME_LABEL	anm_pod_return
 //	デント　持ち場に戻る
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_dento_podback
-	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
