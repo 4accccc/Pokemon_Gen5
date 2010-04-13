@@ -619,6 +619,10 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 //	_FLAG_SET( FV_MUSEUM_STONE )	//博物館内の石がなくなる
 //	_OBJ_DEL( C02GYM0101_BLACKSTONE_01 )
 	
+	//煙のSEを鳴らす
+	_SE_PLAY( SEQ_SE_FLD_143 )
+	_SE_WAIT()
+	
 	//ローカル変数定義
 	DEFINE_LOCAL	BM_ANIME_ID1
 	//けむり演出のアニメコントローラを作成

@@ -10,7 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c02r0201.h"
-  //.include  "c02r0201.h"
+  .include  "c02r0201.h"
+  .include "pdw_scr_local.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -22,6 +23,7 @@
 
 _EVENT_DATA    ev_c02r0201_musician_01
 _EVENT_DATA    ev_c02r0201_babyboy1_01
+_EVENT_DATA    ev_c02r0201_man1_01
 _EVENT_DATA_END
 
 
@@ -48,3 +50,22 @@ EVENT_START   ev_c02r0201_babyboy1_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02r0201_babyboy1_01 ) 
 	
 EVENT_END
+
+/**************************************************************/
+/*  C02R0201 MAN1の会話用イベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_c02r0201_man1_01
+	
+	//PDWのアカウントチェック
+	_PDW_COMMON_TOOLS( PDW_TOOLS_CHECK_ACCOUNT , 0 , 0 , SCWK_ANSWER )
+	
+	//PDWのアカウントを持っているかどうかで、メッセージ分岐
+	//PDWアカウントが無い！
+	IF $SCWK_ANSWER == FALSE THEN 
+		_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02r0201_man1_01 )
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02r0201_man1_02 )
+	ENDIF
+	
+EVENT_END
+

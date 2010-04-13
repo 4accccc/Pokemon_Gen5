@@ -752,24 +752,21 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_01
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_01)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_01)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
-	
+
 	IF $SCWK_ANSWER ==  0  THEN
 	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_01)
-		_MSGWIN_CLOSE()
-		
+				
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
+
 		ENDIF
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 
 EVENT_END
 
@@ -780,25 +777,21 @@ EVENT_START		 ev_bg_c02gym0201_category_02
 	
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_01)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_01)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
-	
+
 	IF $SCWK_ANSWER ==  0  THEN
 	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_01)
-		_MSGWIN_CLOSE()
 		
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
+
 		ENDIF
-	
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -808,23 +801,18 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_03
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_01)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_02)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
-	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_02)
-	_MSGWIN_CLOSE()
-		
+		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_02)
+			
 		IF $WK_SCENE_C02GYM0201  < 4 THEN 
 			IF $WK_SCENE_C02GYM0201 != 7 THEN
 				_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-				_LAST_KEYWAIT()
-				_MSGWIN_CLOSE()
+				
 			ENDIF
 		
 		ELSIF $WK_SCENE_C02GYM0201  == 4 THEN 
@@ -833,8 +821,6 @@ EVENT_START		 ev_bg_c02gym0201_category_03
     		_OBJ_ANIME_WAIT() 
 			
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_13)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
 				
 			$WK_SCENE_C02GYM0201 = 5
 
@@ -844,11 +830,11 @@ EVENT_START		 ev_bg_c02gym0201_category_03
 		ELSIF $WK_SCENE_C02GYM0201 > 4THEN 
     		
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_13)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
+
 		ENDIF
-		
+		_LAST_KEYWAIT()		
 	ENDIF
+	_MSGWIN_CLOSE()
 
 EVENT_END
 
@@ -858,23 +844,18 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_04
 
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_01)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_02)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
-	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_02)
-	_MSGWIN_CLOSE()
+		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_02)
 		
 		IF $WK_SCENE_C02GYM0201  < 4 THEN 
 			IF $WK_SCENE_C02GYM0201 != 7 THEN
 				_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-				_LAST_KEYWAIT()
-				_MSGWIN_CLOSE()
+
 			ENDIF
 		
 		ELSIF $WK_SCENE_C02GYM0201  == 4 THEN 
@@ -883,8 +864,6 @@ EVENT_START		 ev_bg_c02gym0201_category_04
     		_OBJ_ANIME_WAIT() 
 			
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_13)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
 				
 			$WK_SCENE_C02GYM0201 = 5
 			
@@ -894,11 +873,11 @@ EVENT_START		 ev_bg_c02gym0201_category_04
 		ELSIF $WK_SCENE_C02GYM0201 > 4THEN 
     		
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_13)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
+
 		ENDIF
-		
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -908,23 +887,18 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_05
 
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_05)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
-	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_05)
-	_MSGWIN_CLOSE()
+		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_05)
 	
 		IF $WK_SCENE_C02GYM0201  < 2 THEN 			
 			IF $WK_SCENE_C02GYM0201 != 7 THEN
 				_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-				_LAST_KEYWAIT()
-				_MSGWIN_CLOSE()
+
 			ENDIF
 		
 		ELSIF $WK_SCENE_C02GYM0201  == 2 THEN 
@@ -933,8 +907,6 @@ EVENT_START		 ev_bg_c02gym0201_category_05
     		_OBJ_ANIME_WAIT() 
     		
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_14)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
 			
 			IF FLAG_ON( FE_C02GYM_TRBTL1) THEN
 				$WK_SCENE_C02GYM0201 = 4
@@ -950,12 +922,11 @@ EVENT_START		 ev_bg_c02gym0201_category_05
 		ELSIF $WK_SCENE_C02GYM0201 > 2 THEN 
 			
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_14)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
 		
 		ENDIF
-		
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -964,24 +935,19 @@ EVENT_END
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_06
 
-_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
-	_MSGWIN_CLOSE()
-	
+	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_05)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
-	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_05)
-	_MSGWIN_CLOSE()
+		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_05)
 	
 		IF $WK_SCENE_C02GYM0201  < 2 THEN 
 			IF $WK_SCENE_C02GYM0201 != 7 THEN
 				_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-				_LAST_KEYWAIT()
-				_MSGWIN_CLOSE()
+
 			ENDIF
 		
 		ELSIF $WK_SCENE_C02GYM0201  == 2 THEN 
@@ -990,8 +956,6 @@ _PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
     		_OBJ_ANIME_WAIT() 
     		
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_14)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
 			
 			IF FLAG_ON( FE_C02GYM_TRBTL1) THEN
 				$WK_SCENE_C02GYM0201 = 4
@@ -1008,12 +972,11 @@ _PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
 		ELSIF $WK_SCENE_C02GYM0201 > 2 THEN 
 			
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_14)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
 		
 		ENDIF
-		
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -1023,25 +986,21 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_07
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_06)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_06)
-		_MSGWIN_CLOSE()
 		
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
+
 		ENDIF
-		
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -1051,25 +1010,21 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_08
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_06)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_06)
-		_MSGWIN_CLOSE()
 		
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
+
 		ENDIF
-	
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -1079,25 +1034,20 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_09
 
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_03)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_09)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_09)
-		_MSGWIN_CLOSE()
 		
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
 		ENDIF
-	
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -1107,25 +1057,21 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_10
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_03)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_09)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_09)
-		_MSGWIN_CLOSE()
 
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
+
 		ENDIF
-	
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -1135,17 +1081,13 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_11
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_03)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_10)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_10)
-	_MSGWIN_CLOSE()
 	
 		IF $WK_SCENE_C02GYM0201  == 1 THEN 
 			
@@ -1153,8 +1095,6 @@ EVENT_START		 ev_bg_c02gym0201_category_11
     		_OBJ_ANIME_WAIT() 
 			
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_16)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
 			
 			$WK_SCENE_C02GYM0201 = 2
 			
@@ -1164,12 +1104,11 @@ EVENT_START		 ev_bg_c02gym0201_category_11
     	ELSIF $WK_SCENE_C02GYM0201 > 1 THEN 
 			
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_16)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-			
+
 		ENDIF
-		
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -1179,27 +1118,21 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_12
 
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_03)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_10)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_10)
-	_MSGWIN_CLOSE()
 	
 		IF $WK_SCENE_C02GYM0201  == 1 THEN 
 			
 			_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe )
     		_OBJ_ANIME_WAIT() 
 			
-					_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_16)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-			
+			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_16)
+
 			$WK_SCENE_C02GYM0201 = 2
 			
 			_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d)
@@ -1208,12 +1141,11 @@ EVENT_START		 ev_bg_c02gym0201_category_12
 		ELSIF $WK_SCENE_C02GYM0201 > 1 THEN 
 			
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_16)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-			
+
 		ENDIF
-		
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -1223,25 +1155,20 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_13
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_01)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_03)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_03)
-		_MSGWIN_CLOSE()
 
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
 		ENDIF
-	
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -1252,25 +1179,20 @@ EVENT_START		 ev_bg_c02gym0201_category_14
 	
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_01)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_03)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_03)
-		_MSGWIN_CLOSE()
 
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
 		ENDIF
-	
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -1280,25 +1202,20 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_15
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_01)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_04)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_04)
-		_MSGWIN_CLOSE()
 
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
 		ENDIF
-	
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -1309,25 +1226,20 @@ EVENT_START		 ev_bg_c02gym0201_category_16
 
 
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_01)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_04)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_04)
-		_MSGWIN_CLOSE()
 		
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
 		ENDIF
-	
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -1337,25 +1249,21 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_17	
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_07)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
-	
+
 	IF $SCWK_ANSWER ==  0  THEN
 	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_07)
-		_MSGWIN_CLOSE()
 		
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
+
 		ENDIF
-	
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -1366,25 +1274,21 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_18
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_07)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_07)
-		_MSGWIN_CLOSE()
 
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
+
 		ENDIF
-	
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 /**************************************************************/
@@ -1394,17 +1298,13 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_19
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_08)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_08)
-		_MSGWIN_CLOSE()
 			
 		IF $WK_SCENE_C02GYM0201 == 6 THEN
 
@@ -1412,10 +1312,7 @@ EVENT_START		 ev_bg_c02gym0201_category_19
 	    	_OBJ_ANIME_WAIT() 
 	    		
 	        _PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_15)
-			_MSGWIN_CLOSE()
-				
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_switch_03)
-			_MSGWIN_CLOSE()
 				
 			//ギミック発動。本棚が横に移動する
 				
@@ -1438,19 +1335,17 @@ EVENT_START		 ev_bg_c02gym0201_category_19
 				
 			//かいだんが　　あらわれた
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_switch_04)
-			_LAST_KEYWAIT()
-	    	_MSGWIN_CLOSE()
 				
 			//本棚が1度しか動かなくする
 			$WK_SCENE_C02GYM0201 = 7
 		ELSE
 	    		
 	    	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_15)
-			_MSGWIN_CLOSE()
 	    		
 		ENDIF
-		
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 //--------------------------------------------------------------
@@ -1466,25 +1361,20 @@ _ANIME_LABEL	anm_book_open
 EVENT_START		 ev_bg_c02gym0201_category_20
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_08)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_08)
-		_MSGWIN_CLOSE()
 		
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
 		ENDIF
-	
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 /**************************************************************/
@@ -1493,25 +1383,20 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_21
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_03)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_11)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
-	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_11)
-		_MSGWIN_CLOSE()
 
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
+
 		ENDIF
-	
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 
 EVENT_END
 
@@ -1521,25 +1406,21 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_22
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_03)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_11)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_11)
-		_MSGWIN_CLOSE()
 
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
+
 		ENDIF
-	
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -1549,23 +1430,17 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_23
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_03)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_12)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_12)
-	_MSGWIN_CLOSE()
 		
 		IF $WK_SCENE_C02GYM0201  < 5 THEN 	
 			IF $WK_SCENE_C02GYM0201 != 7 THEN
 				_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-				_LAST_KEYWAIT()
-				_MSGWIN_CLOSE()
 			ENDIF
 		
 		ELSIF $WK_SCENE_C02GYM0201  == 5 THEN 
@@ -1574,19 +1449,17 @@ EVENT_START		 ev_bg_c02gym0201_category_23
     		_OBJ_ANIME_WAIT() 
     		
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_17)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
 			
 			$WK_SCENE_C02GYM0201 = 6
 		
 		ELSIF $WK_SCENE_C02GYM0201 > 5THEN 
     	
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_17)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
+
 		ENDIF
-		
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 
@@ -1596,23 +1469,18 @@ EVENT_END
 EVENT_START		 ev_bg_c02gym0201_category_24
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_03)
-	_MSGWIN_CLOSE()
-	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_12)
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER ==  0  THEN
 	
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_12)
-	_MSGWIN_CLOSE()
 		
 		IF $WK_SCENE_C02GYM0201  < 5 THEN 
 			IF $WK_SCENE_C02GYM0201 != 7 THEN
 				_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
-				_LAST_KEYWAIT()
-				_MSGWIN_CLOSE()
+
 			ENDIF
 		
 		ELSIF $WK_SCENE_C02GYM0201  == 5 THEN 
@@ -1621,19 +1489,17 @@ EVENT_START		 ev_bg_c02gym0201_category_24
     		_OBJ_ANIME_WAIT() 
     		
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_17)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-			
+
 			$WK_SCENE_C02GYM0201 = 6
 		
 		ELSIF $WK_SCENE_C02GYM0201 > 5THEN 
     	
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_17)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
+
 		ENDIF
-		
+		_LAST_KEYWAIT()
 	ENDIF
+	_MSGWIN_CLOSE()
 	
 EVENT_END
 

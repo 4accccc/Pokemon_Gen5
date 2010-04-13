@@ -7,5 +7,6 @@
 //スクリプトデータID定義
 #define SCRID_C02R0201_MUSICIAN_01 (1)
 #define SCRID_C02R0201_BABYBOY1_01 (2)
+#define SCRID_C02R0201_MAN1_01 (3)
 
 #endif //_C02R0201_DEF_H_
