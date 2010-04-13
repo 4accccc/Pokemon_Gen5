@@ -3320,18 +3320,29 @@ void POKEMONTRADE_NEGOBG_SlideInit(POKEMON_TRADE_WORK* pWork,int side,POKEMON_PA
 }
 
 
+
+
+static void _mojiIconCallback(u32 param, fx32 currentFrame )
+{
+  POKEMON_TRADE_WORK* pWork = (POKEMON_TRADE_WORK*)param;
+  {
+    pWork->mojiIconEnd = TRUE;
+  }
+}
+
+
 void POKEMONTRADE_StartMojiSelect(POKEMON_TRADE_WORK* pWork,int x,int y)
 {
   GFL_CLWK_DATA cellInitData;
 
-  
-  cellInitData.pos_x = x;
-  cellInitData.pos_y = y;
+  cellInitData.pos_x = x+12;
+  cellInitData.pos_y = y+12;
   cellInitData.anmseq = 24;
   cellInitData.softpri = 0;
   cellInitData.bgpri = 0;
 
   POKEMONTRADE_EndMojiSelect(pWork);
+  
     
   pWork->mojiIcon =
     GFL_CLACT_WK_Create( pWork->cellUnit ,
@@ -3341,6 +3352,15 @@ void POKEMONTRADE_StartMojiSelect(POKEMON_TRADE_WORK* pWork,int x,int y)
                          &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
   GFL_CLACT_WK_SetDrawEnable( pWork->mojiIcon, TRUE );
   GFL_CLACT_WK_SetAutoAnmFlag(pWork->mojiIcon ,TRUE );
+//  GFL_CLACT_WK_StartAnm(pWork->mojiIcon  );
+
+  {
+    GFL_CLWK_ANM_CALLBACK cbwk;
+    cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
+    cbwk.param = (u32)pWork;          // コールバックワーク
+    cbwk.p_func = _mojiIconCallback; // コールバック関数
+    GFL_CLACT_WK_StartAnmCallBack(pWork->mojiIcon , &cbwk);
+  }
 }
 
 void POKEMONTRADE_EndMojiSelect(POKEMON_TRADE_WORK* pWork)
@@ -3349,15 +3369,17 @@ void POKEMONTRADE_EndMojiSelect(POKEMON_TRADE_WORK* pWork)
   if(pWork->mojiIcon){
     GFL_CLACT_WK_Remove( pWork->mojiIcon);
     pWork->mojiIcon=NULL;
+    pWork->mojiIconEnd=FALSE;
   }
 
 }
 
 BOOL POKEMONTRADE_CheckMojiSelect(POKEMON_TRADE_WORK* pWork)
 {
-  if(pWork->mojiIcon){
-    return GFL_CLACT_WK_CheckAnmActive(pWork->mojiIcon);
+  if(pWork->mojiIconEnd){
+    POKEMONTRADE_EndMojiSelect(pWork);
+    return FALSE;
   }
-  return FALSE;
+  return TRUE;
 }
 

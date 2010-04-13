@@ -2274,10 +2274,25 @@ static void _MoveSearchPoke(POKEMON_TRADE_WORK* pWork,int moji)
 }
 
 
+static void _mojiSelectEnd2(POKEMON_TRADE_WORK* pWork)
+{
+    GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+    _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
+}
+
 
 static void _mojiSelectEnd(POKEMON_TRADE_WORK* pWork)
 {
   if(FALSE == POKEMONTRADE_CheckMojiSelect(pWork)){
+
+    GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG1|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+    
+    IRC_POKETRADE_EndSubMojiBG(pWork);
+    POKETRADE_MESSAGE_WindowClear(pWork);
+    GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+    POKE_GTS_VisibleFaceIcon(pWork,TRUE);
+    _scrollResetAndIconReset(pWork);
+    POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
     POKEMONTRADE_EndMojiSelect(pWork);
     _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
   }
@@ -2297,40 +2312,30 @@ static void _loopSearchMojiState(POKEMON_TRADE_WORK* pWork)
     if(ans != GFL_UI_TP_HIT_NONE){
       PMSND_PlaySystemSE(POKETRADESE_LANG_SEARCH);
       pWork->selectMoji = ans + 1;
-      endflg = TRUE;
-      POKEMONTRADE_StartMojiSelect(pWork, tp_mojidata[ans].rect.top, tp_mojidata[ans].rect.left);
+      POKEMONTRADE_StartMojiSelect(pWork,tp_mojidata[ans].rect.left,tp_mojidata[ans].rect.top);
       _MoveSearchPoke(pWork,ans);
+      _CHANGE_STATE(pWork, _mojiSelectEnd);
+      return;
     }
   }
 
   TOUCHBAR_Main(pWork->pTouchWork);
   switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
   case TOUCHBAR_ICON_RETURN:
+    GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG1|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
     pWork->selectMoji = 0;
-    endflg=TRUE;
+    IRC_POKETRADE_EndSubMojiBG(pWork);
+    POKETRADE_MESSAGE_WindowClear(pWork);
+    GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+    POKE_GTS_VisibleFaceIcon(pWork,TRUE);
+    _scrollResetAndIconReset(pWork);
+    POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
+    POKEMONTRADE_EndMojiSelect(pWork);
+    _CHANGE_STATE(pWork, _mojiSelectEnd2);
     break;
   default:
     break;
   }
-
-  if(endflg){
-    OS_TPrintf("SELECTMOJI %d\n", pWork->selectMoji);
-    IRC_POKETRADE_EndSubMojiBG(pWork);
-    POKETRADE_MESSAGE_WindowClear(pWork);
-    GXS_SetVisibleWnd( GX_WNDMASK_NONE );
-
-    POKE_GTS_VisibleFaceIcon(pWork,TRUE);
-
-    _scrollResetAndIconReset(pWork);
-
-    POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
-
-    _CHANGE_STATE(pWork, _mojiSelectEnd);
-//    POKETRADE_TouchStateGTS
-  
-//    _CHANGE_STATE(pWork,_touchState);
-  }
-
 }
 
 

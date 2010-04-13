@@ -714,6 +714,8 @@ struct _POKEMON_TRADE_WORK{
   u8 friendBoxNum;  //ともだちのボックス番号
   u8 statusModeOn;  //
   u8 friendMailBoxFULL;  //ともだちはメールボックス満杯かどうか
+  u8 mojiIconEnd;  //文字点滅アイコンが終わったかどうか
+  u8 dummy;
 //  u8 time3dfadelen;
 //  u8 time3dfadecount;
 } ;

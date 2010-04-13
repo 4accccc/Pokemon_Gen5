@@ -10,6 +10,7 @@
 #include <nitro.h>
 #include "gflib.h"
 #include "net/network_define.h"
+#include "net/net_dev.h"
 
 // 通信GFLIBは通信デバイスを持っていません
 // それはGFLIBに持ってしまうと、余計にライブラリサイズを増やしてしまう為です
