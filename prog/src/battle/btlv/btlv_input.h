@@ -207,5 +207,5 @@ extern  void              BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_IN
 extern  int               BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl,
                                                  const BTLV_INPUT_KEYTBL* key_tbl );
 extern  BOOL              BTLV_INPUT_CheckInputDemo( BTLV_INPUT_WORK* biw );
-extern  BTLV_INPUT_ROTATE_RESULT  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw );
+extern  BOOL              BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int* select );
 

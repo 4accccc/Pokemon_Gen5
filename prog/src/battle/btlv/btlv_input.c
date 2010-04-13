@@ -1579,11 +1579,12 @@ BOOL  BTLV_INPUT_CheckInputDemo( BTLV_INPUT_WORK* biw )
 /**
  *  @brief  入力チェック（ローテーション専用）
  *
- *  @param[in]  tp_tbl  タッチパネルテーブル
- *  @param[in]  key_tbl キー操作テーブル
+ *  @param[in]    biw     システム管理構造体へのポインタ
+ *  @param[out]   dir     どっち回転させたか？
+ *  @param[out]   select  どの技を選んだか？
  */
 //============================================================================================
-BTLV_INPUT_ROTATE_RESULT  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw )
+BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int* select )
 {
   int hit, hit_tp;
 
@@ -1637,7 +1638,8 @@ BTLV_INPUT_ROTATE_RESULT  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw )
       if( hit < 5 )
       {
         SePlayRotateDecide( biw );
-        hit |= rotate_result[ biw->rotate_scr ] << 16;
+        *select = hit;
+        *dir    = rotate_result[ biw->rotate_scr ];
       }
       else
       {
@@ -1649,6 +1651,7 @@ BTLV_INPUT_ROTATE_RESULT  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw )
   }
   if( hit != GFL_UI_TP_HIT_NONE )
   { 
+#if 0
     if( biw->waruagaki_flag == TRUE )
     { 
       hit = BTLV_INPUT_SetButtonReaction( biw, hit, RotateTouchDataWaruagaki.button_pltt[ hit ] );
@@ -1657,6 +1660,7 @@ BTLV_INPUT_ROTATE_RESULT  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw )
     { 
       hit = BTLV_INPUT_SetButtonReaction( biw, hit, RotateTouchData.button_pltt[ hit ] );
     }
+#endif
     if( biw->main_loop_tcb_flag == TRUE )
     { 
       //カメラワークエフェクト
@@ -1665,7 +1669,7 @@ BTLV_INPUT_ROTATE_RESULT  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw )
       biw->camera_work_wait = 0;
     }
   }
-  return hit;
+  return ( hit != GFL_UI_TP_HIT_NONE );
 }
 #endif
 
@@ -3379,7 +3383,13 @@ static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw )
   { 
     biw->button_exist[ 0 ] = TRUE;
     BTLV_INPUT_CreateWaruagakiButton( biw );
-    PaletteFadeReq( biw->pfd, PF_BIT_SUB_BG, 0x1e00, 0, 8, 8, 0, biw->tcbsys );
+    PaletteFadeReq( biw->pfd, PF_BIT_SUB_BG, 0x3e00, 0, 8, 8, 0, biw->tcbsys );
+    PaletteFadeReq( biw->pfd, PF_BIT_SUB_OBJ, 0x0700, 0, 8, 8, 0, biw->tcbsys );
+  }
+  else
+  { 
+    PaletteFadeReq( biw->pfd, PF_BIT_SUB_BG, 0x3e00, 0, 0, 0, 0, biw->tcbsys );
+    PaletteFadeReq( biw->pfd, PF_BIT_SUB_OBJ, 0x0700, 0, 0, 0, 0, biw->tcbsys );
   }
 
 #else
