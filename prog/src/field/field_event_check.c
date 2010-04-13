@@ -2537,11 +2537,6 @@ static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *
   if( !(req->stepRequest) ){
     return NULL;
   }
-#ifndef PM_DEBUG
-  if(GFL_NET_IsInit()){
-    return NULL;
-  }
-#endif
   
   // WFBC
   if( ZONEDATA_IsWfbc( req->map_id ) )
