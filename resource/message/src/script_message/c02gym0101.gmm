@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-10T19:03:20"/>
+	<create user="matsumiya" host="W00224" date="2010-04-13T21:18:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="139" right="2004" bottom="767" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="113" right="1990" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="733" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="696"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -372,13 +372,13 @@
 		<language name="JPN" width="256">こちらの　こっかく……
 ドラゴンタイプの　ポケモンですね▼
 おそらく　せかいかくちを
-とびまわっているうちに▽
+とびまわっている　うちに▽
 なんらかの　じこにあって▽
 そのまま　カセキに　なったようです▼</language>
 		<language name="JPN_KANJI" width="256">こちらの　骨格……
 ドラゴンタイプの　ポケモンですね▼
 おそらく　世界各地を
-飛び回っているうちに▽
+飛び回っている　うちに▽
 なんらかの　事故にあって▽
 そのまま　カセキに　なったようです▼</language>
 	</row>
@@ -393,7 +393,7 @@
 なにかしらの
 うちゅうエネルギーを　ひめています▼</language>
 		<language name="JPN_KANJI" width="256">この　石は　すごいですよ
-いん石なんですよ！▼
+いん石　なんですよ！▼
 なにかしらの
 宇宙エネルギーを　秘めています▼</language>
 	</row>
@@ -478,12 +478,12 @@
 われわれ　プラズマだんは
 ポケモンを　じゆうにするため▼
 はくぶつかんに　ある
-ドラゴンの　ホネを　いただく▼</language>
+ドラゴンのホネを　いただく▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『来たか　ジムリーダー▼
 われわれ　プラズマ団は
 ポケモンを　自由にするため▼
 博物館に　ある
-ドラゴンの　骨を　いただく▼</language>
+ドラゴンのホネを　いただく▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_hakaim2_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -581,10 +581,10 @@
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『プラズマだんの　せいで
 ジムリーダーが　いないのか……▽
-なんとも　めいわくな　はなしだね</language>
+なんとも　メンドーな　はなしだね</language>
 		<language name="JPN_KANJI" width="256">チェレン『プラズマ団のせいで
 ジムリーダーが　いないのか……▽
-なんとも　迷惑な　話だね</language>
+なんとも　メンドーな　話だね</language>
 	</row>
 
 	<row id="msg_c02gym0101_ad_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
