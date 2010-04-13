@@ -60,6 +60,7 @@ struct _APPBAR_WORK
 	s32				trg;
 	s32				cont;
 	u32				tbl_len;
+  s32       seq;
 };
 
 
@@ -204,20 +205,39 @@ void APPBAR_Exit( APPBAR_WORK *p_wk )
  *	@brief	APPBAR	メイン処理
  *
  *	@param	APPBAR_WORK *p_wk			ワーク
- *	@param	CURSOR_WORK	cp_cursor	カーソルでボタンを押すのを実現させるため
  *
  */
 //-----------------------------------------------------------------------------
 void APPBAR_Main( APPBAR_WORK *p_wk )
 {
-  if( APP_TASKMENU_WIN_IsTrg( p_wk->p_win ) )
+  enum
   { 
-    APP_TASKMENU_WIN_SetDecide( p_wk->p_win, TRUE );
-    p_wk->trg = APPBAR_ICON_RETURN;
-  }
-  else
-  { 
+    SEQ_TOUCH,
+    SEQ_ANM,
+    SEQ_END,
+  };
+
+  switch( p_wk->seq )
+  {
+  case SEQ_TOUCH:
     p_wk->trg = APPBAR_SELECT_NONE;
+    if( APP_TASKMENU_WIN_IsTrg( p_wk->p_win ) )
+    { 
+      APP_TASKMENU_WIN_SetDecide( p_wk->p_win, TRUE );
+      p_wk->seq = SEQ_ANM;
+    }
+    break;
+  case SEQ_ANM:
+    if( APP_TASKMENU_WIN_IsFinish( p_wk->p_win ) )
+    { 
+      APPBAR_SetNormal( p_wk );
+      p_wk->seq = SEQ_END;
+    }
+    break;
+  case SEQ_END:
+    p_wk->trg = APPBAR_ICON_RETURN;
+    p_wk->seq = SEQ_TOUCH;
+    break;
   }
 
   APP_TASKMENU_WIN_Update( p_wk->p_win );
@@ -245,7 +265,7 @@ APPBAR_ICON APPBAR_GetTrg( const APPBAR_WORK *cp_wk )
 //-----------------------------------------------------------------------------
 void APPBAR_SetNormal( APPBAR_WORK *p_wk )
 { 
-  APP_TASKMENU_WIN_SetDecide( p_wk->p_win, FALSE );
+  APP_TASKMENU_WIN_ResetDecide( p_wk->p_win );
   APP_TASKMENU_WIN_SetActive( p_wk->p_win, FALSE );
 }
 //=============================================================================

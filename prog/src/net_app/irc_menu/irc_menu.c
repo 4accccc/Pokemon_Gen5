@@ -335,6 +335,8 @@ typedef struct
 	u16			frm;
 	u16			select_btn_id;
 	u16			is_touch;
+  u16     seq;
+  u16     cnt;
 } BUTTON_WORK;
 //-------------------------------------
 ///	加速度
@@ -2403,7 +2405,67 @@ static void BUTTON_Exit( BUTTON_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void BUTTON_Main( BUTTON_WORK *p_wk )
 {
-	p_wk->is_touch	= GFL_BMN_Main( p_wk->p_btn );
+  enum
+  { 
+    SEQ_MAIN,
+    SEQ_ANM,
+  };
+
+  switch( p_wk->seq )
+  {
+  case SEQ_MAIN:
+    if( GFL_BMN_Main( p_wk->p_btn ) )
+    { 
+      p_wk->cnt = 0;
+      p_wk->seq = SEQ_ANM;
+    }
+    break;
+
+  case SEQ_ANM:
+    { 
+      const u8 isBlink = (p_wk->cnt/4)%2;
+			u8 active_plt;
+      u8 nonactive_plt;
+			u8 frm;
+			u8 x, y, w, h;
+			GFL_BMPWIN	*p_bmpwin	= p_wk->p_bmpwin[ p_wk->select_btn_id ];
+			frm	= GFL_BMPWIN_GetFrame(p_bmpwin);
+			x		= p_wk->cp_btn_setup_tbl[ p_wk->select_btn_id ].x;
+			y		= p_wk->cp_btn_setup_tbl[ p_wk->select_btn_id ].y;
+			w		= p_wk->cp_btn_setup_tbl[ p_wk->select_btn_id ].w;
+			h		= p_wk->cp_btn_setup_tbl[ p_wk->select_btn_id ].h;
+			switch( p_wk->select_btn_id )
+			{
+			case BTNID_COMATIBLE:
+				active_plt		= IRC_MENU_BG_PAL_M_12;
+        nonactive_plt = IRC_MENU_BG_PAL_M_11;
+				break;
+			case BTNID_RANKING:
+				active_plt		= IRC_MENU_BG_PAL_M_09;
+        nonactive_plt = IRC_MENU_BG_PAL_M_04;
+				break;
+			}
+
+      if( isBlink == 0 )
+      {
+        GFL_BG_ChangeScreenPalette( frm, x, y, w, h, nonactive_plt );
+        GFL_BG_LoadScreenReq( frm );
+      }
+      else
+      {
+        GFL_BG_ChangeScreenPalette( frm, x, y, w, h, active_plt );
+        GFL_BG_LoadScreenReq( frm );
+      }
+      p_wk->cnt++;
+
+      if( p_wk->cnt >= 16 )
+      { 
+        p_wk->is_touch  = TRUE;
+        p_wk->seq = SEQ_MAIN;
+      }
+    }
+    break;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -2421,46 +2483,10 @@ static BOOL BUTTON_IsTouch( const BUTTON_WORK *cp_wk, u32 *p_btnID )
 {	
 	if( cp_wk->is_touch )
 	{	
-		int i;
-		if( p_btnID )
+    if( p_btnID )
 		{	
 			*p_btnID	= cp_wk->select_btn_id;
 		}
-
-		for( i = 0; i < cp_wk->btn_num; i++ )
-		{	
-			u8 active_plt;
-			u8 frm;
-			u8 x, y, w, h;
-			GFL_BMPWIN	*p_bmpwin	= cp_wk->p_bmpwin[i];
-			frm	= GFL_BMPWIN_GetFrame(p_bmpwin);
-			x		= cp_wk->cp_btn_setup_tbl[i].x;
-			y		= cp_wk->cp_btn_setup_tbl[i].y;
-			w		= cp_wk->cp_btn_setup_tbl[i].w;
-			h		= cp_wk->cp_btn_setup_tbl[i].h;
-			switch( i )
-			{
-			case BTNID_COMATIBLE:
-				active_plt		= IRC_MENU_BG_PAL_M_12;
-				break;
-			case BTNID_RANKING:
-				active_plt		= IRC_MENU_BG_PAL_M_09;
-				break;
-			}
-
-			if( i == cp_wk->select_btn_id )
-			{	
-				//選ばれたボタン
-				GFL_BG_ChangeScreenPalette( frm, x, y, w, h, active_plt );
-				GFL_BG_LoadScreenReq( frm );
-			}
-			else
-			{
-				//選ばれなかったボタン
-				GFL_BG_LoadScreenReq( frm );
-			}
-		}
-
 
 		return TRUE;
 	}
@@ -2477,6 +2503,9 @@ static BOOL BUTTON_IsTouch( const BUTTON_WORK *cp_wk, u32 *p_btnID )
 static void BUTTON_Reset( BUTTON_WORK *p_wk )
 { 
   int i;
+
+  p_wk->seq = 0;
+  p_wk->is_touch  = 0;
   for( i = 0; i < p_wk->btn_num; i++ )
   {	
     u8 frm;
