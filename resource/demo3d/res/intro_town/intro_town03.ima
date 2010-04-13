@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-03-27T17:08:55" source="intro_town_11.mb"/>
+	<create user="unno" host="W00199" date="2010-04-13T20:38:51" source="intro_town_13.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,30 +11,36 @@
 <body>
 
 <mat_color_info
-	frame_size="450"
+	frame_size="510"
 	tool_start_frame="1"
-	tool_end_frame="450"
+	tool_end_frame="510"
 	interpolation="frame"
-	compress_material="on" material_size="2 2"
+	compress_material="on" material_size="1 1"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
 
-<mat_color_data size="452">
+<mat_color_data size="512">
 	25 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
-	0 0 1 3 7 11 16 20 24 28
-	30 31 31 31 31 31 31 31 31 31
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 1 3 7
+	11 16 20 24 28 30 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
-	31 31 31 31 30 29 29 28 27 26
-	24 23 22 20 19 17 16 14 12 11
-	9 8 7 5 4 3 2 2 1 0
+	31 31 31 31 31 31 31 31 31 30
+	29 29 28 27 26 24 23 22 20 19
+	17 16 14 12 11 9 8 7 5 4
+	3 2 2 1 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
 	0 0 0 0 0 0 0 0 0 0
@@ -83,7 +89,7 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="450" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="510" data_head="2"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 
