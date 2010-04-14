@@ -98,7 +98,7 @@
 // WM_SIZE_USER_GAMEINFO  最大 112byte
 // _BEACON_SIZE_FIXには 固定でほしいビーコンパラメータの合計を手で書く
 typedef struct{
-	u8        FixHead[_BEACON_FIXHEAD_SIZE];         ///< 固定で決めた２バイト部分
+	u16        CRC;         ///< CRC
 	u16        GGID;               ///< ゲーム固有のID  一致が必須
 	GameServiceID  		serviceNo; ///< 通信サービス番号
 	u8        ProductOrDevelopment;      ///< 開発と本番とがつながらないようにするため
@@ -376,11 +376,15 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
 		return FALSE;   //パレスの為
   }
 #endif
-	GFLR_NET_GetBeaconHeader(sBuff,_BEACON_FIXHEAD_SIZE);
-	if(0 != GFL_STD_MemComp(sBuff, pGF->FixHead , _BEACON_FIXHEAD_SIZE)){
-		NET_PRINT("beacon不一致\n");
-		return FALSE;
-	}
+//	GFLR_NET_GetBeaconHeader(sBuff,_BEACON_FIXHEAD_SIZE);
+//	if(0 != GFL_STD_MemComp(sBuff, pGF->FixHead , _BEACON_FIXHEAD_SIZE)){
+  {
+    u16* pData = (u16*)pGF;
+    if(pGF->CRC != GFL_STD_CrcCalc(&pData[1], sizeof(_GF_BSS_DATA_INFO) - 2) ){
+      NET_PRINT("CRC不一致\n");
+      return FALSE;
+    }
+  }
 	if(pGF->GGID != ggid){
 		NET_PRINT("beacon不一致\n");
 		return FALSE;
@@ -938,11 +942,12 @@ void NET_WHPIPE_BeaconSetInfo( void )
 #else
     pGF->ProductOrDevelopment = POKEMONWB_BEACON_PRODUCT_NO;
 #endif
-    GFLR_NET_GetBeaconHeader(sBuff,_BEACON_FIXHEAD_SIZE);
-    GFL_STD_MemCopy( sBuff, pGF->FixHead, _BEACON_FIXHEAD_SIZE);
+//    GFLR_NET_GetBeaconHeader(sBuff,_BEACON_FIXHEAD_SIZE);
+//    GFL_STD_MemCopy( sBuff, pGF->FixHead, _BEACON_FIXHEAD_SIZE);
 
     pGF->pause = pNetWL->bPauseConnect;
     GFL_STD_MemCopy( pInit->beaconGetFunc(pNetWL->pUserWork), pGF->aBeaconDataBuff, size);
+
     _setBeacon(pNetWL->gameInfoBuff, sizeof(_GF_BSS_DATA_INFO));
 
 	//    DC_FlushRange(pNetWL->gameInfoBuff, size + _BEACON_SIZE_FIX);
@@ -1778,6 +1783,12 @@ static void _setBeacon(void* buff, int size)
 		return;
 	}
 
+  {
+    u16* pData = (u16*)buff;
+    pData[0] = GFL_STD_CrcCalc(&pData[1], size - 2);
+  }
+
+  
 	DC_FlushRange(buff, size);
 	if(WH_GetSystemState() == WH_SYSSTATE_IDLE){
 		WH_SetUserGameInfo(buff, size);
