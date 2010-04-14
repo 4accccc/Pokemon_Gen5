@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-04-10T17:51:07"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-04-14T15:50:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,7 +342,7 @@
 ポケモン　交換　しようよ！▼</language>
 	</row>
 
-	<row id="msg_un_default_man_01">
+	<row id="msg_un_default_man_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,,,#8080ff,,,,,,">
 		<comment>普通♂メッセージ01
 地域がある時</comment>
 		<attribute name="キャラ指定">デフォルト男</attribute>
@@ -363,7 +363,7 @@
 なかなか　楽しいね</language>
 	</row>
 
-	<row id="msg_un_default_man_02">
+	<row id="msg_un_default_man_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,,,#8080ff,,,,,,">
 		<comment>普通♂メッセージ02
 地域がある時</comment>
 		<attribute name="キャラ指定">デフォルト男</attribute>
@@ -391,7 +391,7 @@
 きっと　楽しいから！</language>
 	</row>
 
-	<row id="msg_un_default_man_03">
+	<row id="msg_un_default_man_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,,,#8080ff,,,,,,">
 		<comment>普通メッセージ03</comment>
 		<attribute name="キャラ指定">デフォルト男</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:3]▼
@@ -416,7 +416,7 @@
 来て　僕と　いっしょに　[1:28:趣味:10]　しないかい？</language>
 	</row>
 
-	<row id="msg_un_default_man_04">
+	<row id="msg_un_default_man_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,,,#8080ff,,,,,,">
 		<comment>普通メッセージ04</comment>
 		<attribute name="キャラ指定">デフォルト男</attribute>
 		<language name="JPN" width="256">きいてくれよ！▼
@@ -435,7 +435,7 @@
 一緒に　遊ぼうよ！</language>
 	</row>
 
-	<row id="msg_un_default_man_05">
+	<row id="msg_un_default_man_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,,,#8080ff,,,,,,">
 		<comment>普通メッセージ05</comment>
 		<attribute name="キャラ指定">デフォルト男</attribute>
 		<language name="JPN" width="256">ぼくの　あげた　[1:02:ポケモンニックネーム:9]は
@@ -457,7 +457,7 @@
 きっと　喜ぶから！</language>
 	</row>
 
-	<row id="msg_un_default_woman_00" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_un_default_woman_00">
 		<comment>普通♀初回メッセージ</comment>
 		<attribute name="キャラ指定">デフォルト女</attribute>
 		<language name="JPN" width="256">あ　[1:00:トレーナー名:3]？▼
@@ -602,7 +602,7 @@
 交換した？</language>
 	</row>
 
-	<row id="msg_un_leader_man_00" back-color=",,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_un_leader_man_00" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>リーダー♂初回メッセージ</comment>
 		<attribute name="キャラ指定">リーダー男</attribute>
 		<language name="JPN" width="256">よお　[1:00:トレーナー名:3]！
@@ -624,7 +624,7 @@
 すっげー　気に入ってる！</language>
 	</row>
 
-	<row id="msg_un_leader_man_01">
+	<row id="msg_un_leader_man_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>リーダー♂メッセージ1</comment>
 		<attribute name="キャラ指定">リーダー男</attribute>
 		<language name="JPN" width="256">よぉ　[1:00:トレーナー名:3]！▼
@@ -649,7 +649,7 @@
 できるなんて　すげーよな！</language>
 	</row>
 
-	<row id="msg_un_leader_man_02">
+	<row id="msg_un_leader_man_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>リーダー♂メッセージ2</comment>
 		<attribute name="キャラ指定">リーダー男</attribute>
 		<language name="JPN" width="256">オレの　しゅみ？▼
@@ -675,7 +675,7 @@
 いろんな　人の　趣味　聞いてみるわ！</language>
 	</row>
 
-	<row id="msg_un_leader_man_03">
+	<row id="msg_un_leader_man_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>リーダー♂メッセージ3</comment>
 		<attribute name="キャラ指定">リーダー男</attribute>
 		<language name="JPN" width="256">うっす　[1:00:トレーナー名:3]！▼
@@ -702,7 +702,7 @@
 強くしてくれよな！　頼んだぜ！</language>
 	</row>
 
-	<row id="msg_un_leader_man_04">
+	<row id="msg_un_leader_man_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>リーダー♂メッセージ4</comment>
 		<attribute name="キャラ指定">リーダー男</attribute>
 		<language name="JPN" width="256">おまえ　なんかこくの　やつと
@@ -731,7 +731,7 @@
 [1:28:趣味:10]　やってやってくれよな！</language>
 	</row>
 
-	<row id="msg_un_leader_man_05">
+	<row id="msg_un_leader_man_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>リーダー♂メッセージ5</comment>
 		<attribute name="キャラ指定">リーダー男</attribute>
 		<language name="JPN" width="256">オレさ！▼
@@ -760,7 +760,7 @@
 [1:28:趣味:10]　とか　楽しいぜ！</language>
 	</row>
 
-	<row id="msg_un_leader_woman_00" back-color=",,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_un_leader_woman_00">
 		<comment>リーダー♀初回メッセージ</comment>
 		<attribute name="キャラ指定">リーダー女</attribute>
 		<language name="JPN" width="256">やっほー　[1:00:トレーナー名:3]！▼
@@ -934,7 +934,7 @@
 ちょっと　違うね！</language>
 	</row>
 
-	<row id="msg_un_wierd_man_00" back-color=",,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_un_wierd_man_00" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>変人♂初回メッセージ</comment>
 		<attribute name="キャラ指定">変人男</attribute>
 		<language name="JPN" width="256">ききききキミっ！！
@@ -973,7 +973,7 @@
 また　交換しようじゃないか！</language>
 	</row>
 
-	<row id="msg_un_wierd_man_01">
+	<row id="msg_un_wierd_man_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>変人♂メッセージ1</comment>
 		<attribute name="キャラ指定">変人男</attribute>
 		<language name="JPN" width="256">キミは　なんかこくの　ひとと
@@ -1010,7 +1010,7 @@
 ムハハ！　それじゃっ　アデュー！</language>
 	</row>
 
-	<row id="msg_un_wierd_man_02">
+	<row id="msg_un_wierd_man_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>変人♂メッセージ2</comment>
 		<attribute name="キャラ指定">変人男</attribute>
 		<language name="JPN" width="256">ぬおーーーーッ！▼
@@ -1041,7 +1041,7 @@
 たくさん　しりあうんだッッ！</language>
 	</row>
 
-	<row id="msg_un_wierd_man_03">
+	<row id="msg_un_wierd_man_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>変人♂メッセージ3</comment>
 		<attribute name="キャラ指定">変人男</attribute>
 		<language name="JPN" width="256">キミ　[1:28:趣味:10]ずき？▼
@@ -1072,7 +1072,7 @@
 ぬふーっ　たまらないッ！</language>
 	</row>
 
-	<row id="msg_un_wierd_man_04">
+	<row id="msg_un_wierd_man_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>変人♂メッセージ4</comment>
 		<attribute name="キャラ指定">変人男</attribute>
 		<language name="JPN" width="256">ちょっと　キミ！
@@ -1103,7 +1103,7 @@
 楽しもうでは　ないか！</language>
 	</row>
 
-	<row id="msg_un_wierd_man_05">
+	<row id="msg_un_wierd_man_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>変人♂メッセージ5</comment>
 		<attribute name="キャラ指定">変人男</attribute>
 		<language name="JPN" width="256">きいてくれないか　[1:00:トレーナー名:3]！▼
@@ -1132,7 +1132,7 @@
 世界は　ミラクル！</language>
 	</row>
 
-	<row id="msg_un_wierd_woman_00" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_un_wierd_woman_00">
 		<comment>変人♀初回メッセージ</comment>
 		<attribute name="キャラ指定">変人女</attribute>
 		<language name="JPN" width="256">あっ！
@@ -1367,15 +1367,15 @@
 うれしいよ　ぐふふ▼</language>
 	</row>
 
-	<row id="msg_un_researcher_man_01">
+	<row id="msg_un_researcher_man_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>研究者♂メッセージ1</comment>
 		<attribute name="キャラ指定">研究者男</attribute>
 		<language name="JPN" width="256">ぐふふ▼
 ぼくねぇ　[2:02:３桁:8]かこくの　ひとと
-ポケモン　こうかん　したんだよ　▼
+ポケモン　こうかん　したんだよ▼
 みんな　しゅみが　それぞれ　ちがって
-じつに　きょうみ　ぶかい……▼
-え？　ぼくの　しゅみ？▼
+じつに　きょうみぶかい……▼
+え？　ぼくのしゅみ？▼
 [1:28:趣味:10]　だよ　ぐふっ▼
 きみ　ぼくの　こきょうの
 [1:25:地域名:1]に▽
@@ -1384,10 +1384,10 @@
 おもしろい　たびになるよ　ぐふふ……</language>
 		<language name="JPN_KANJI" width="256">ぐふふ▼
 僕ねぇ　[2:02:３桁:8]カ国の　人と
-ポケモン　交換したんだよ　▼
+ポケモン　交換したんだよ▼
 みんな　趣味が　それぞれ　違って
 実に　興味深い……▼
-え？　僕の　趣味？▼
+え？　僕の趣味？▼
 [1:28:趣味:10]　だよ　ぐふっ▼
 君　僕の　故郷の
 [1:25:地域名:1]に▽
@@ -1396,7 +1396,7 @@
 おもしろい　旅になるよ　ぐふふ……</language>
 	</row>
 
-	<row id="msg_un_researcher_man_02">
+	<row id="msg_un_researcher_man_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>研究者♂メッセージ2</comment>
 		<attribute name="キャラ指定">研究者男</attribute>
 		<language name="JPN" width="256">ぼ　ぼく
@@ -1404,7 +1404,7 @@
 きみが　こうかん　したひとの　なかで
 しゅみが　[1:28:趣味:10]の▽
 ひとは　いた……？▼
-ぼ　ぼく　[2:02:３桁:8]かこくの　ひとと▽
+ぼ　ぼく　[2:02:３桁:8]かこくの　ひとと
 こうかん　してるんだけど▽
 みんな　しゅみ　ちがうんだよね……▼
 くにが　ちがうと　しゅみも
@@ -1413,23 +1413,23 @@
 ……　……　……▼
 ……まぁでも
 ……それも　なんか　いいね</language>
-		<language name="JPN_KANJI" width="256">ぼ　ぼく
-趣味が　[1:28:趣味:10]　なんだけど▼
-君が　交換した人の中で
+		<language name="JPN_KANJI" width="256">ぼ　ぼく　趣味が
+[1:28:趣味:10]　なんだけど▼
+君が　交換した人の　中で
 趣味が　[1:28:趣味:10]の▽
 人は　いた……？▼
-ぼ　ぼく　[2:02:３桁:8]カ国の　人と▽
+ぼ　ぼく　[2:02:３桁:8]カ国の　人と
 交換　してるんだけれど▽
 みんな　趣味　違うんだよね……▼
 国が　違うと　趣味も
 違うのかなぁ……▼
-……　……　……
-……　……　……▼
-……まぁでも
-……それも　なんか　いいね</language>
+……　……
+……　……▼
+……まぁでも▽
+……それも　なんか　良いね</language>
 	</row>
 
-	<row id="msg_un_researcher_man_03">
+	<row id="msg_un_researcher_man_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>研究者♂メッセージ3</comment>
 		<attribute name="キャラ指定">研究者男</attribute>
 		<language name="JPN" width="256">ぼぼ　ぼくの　しゅみは
@@ -1462,7 +1462,7 @@
 こ　これからも　よろしく！</language>
 	</row>
 
-	<row id="msg_un_researcher_man_04">
+	<row id="msg_un_researcher_man_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>研究者♂メッセージ4</comment>
 		<attribute name="キャラ指定">研究者男</attribute>
 		<language name="JPN" width="256">ぬふ　ふふ▼
@@ -1495,7 +1495,7 @@
 来てみてもいいかもよ　ぬふ　ふふ</language>
 	</row>
 
-	<row id="msg_un_researcher_man_05">
+	<row id="msg_un_researcher_man_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>研究者♂メッセージ5</comment>
 		<attribute name="キャラ指定">研究者男</attribute>
 		<language name="JPN" width="256">きき　きみ　なんかこくの　ひとと
@@ -1526,7 +1526,7 @@
 来てみてよ　いつか……</language>
 	</row>
 
-	<row id="msg_un_researcher_woman_00" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_un_researcher_woman_00">
 		<comment>研究者♀メッセージ0</comment>
 		<attribute name="キャラ指定">研究者女</attribute>
 		<language name="JPN" width="256">あ……　あなた……
@@ -1749,7 +1749,7 @@
 話でも　していこうよ！</language>
 	</row>
 
-	<row id="msg_un_soft_man_01">
+	<row id="msg_un_soft_man_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>おっとり♂メッセージ1</comment>
 		<attribute name="キャラ指定">おっとり男</attribute>
 		<language name="JPN" width="256">やぁ　[1:00:トレーナー名:3]▼
@@ -1778,7 +1778,7 @@
 交換してみたいなぁ</language>
 	</row>
 
-	<row id="msg_un_soft_man_02">
+	<row id="msg_un_soft_man_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>おっとり♂メッセージ2</comment>
 		<attribute name="キャラ指定">おっとり男</attribute>
 		<language name="JPN" width="256">やぁ　[1:00:トレーナー名:3]▼
@@ -1813,7 +1813,7 @@
 よかったら　また　交換　しようよ</language>
 	</row>
 
-	<row id="msg_un_soft_man_03">
+	<row id="msg_un_soft_man_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>おっとり♂メッセージ3</comment>
 		<attribute name="キャラ指定">おっとり男</attribute>
 		<language name="JPN" width="256">ねぇ　[1:00:トレーナー名:3]▼
@@ -1846,7 +1846,7 @@
 来てみてよ　結構　いいとこだからさ</language>
 	</row>
 
-	<row id="msg_un_soft_man_04">
+	<row id="msg_un_soft_man_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>おっとり♂メッセージ4</comment>
 		<attribute name="キャラ指定">おっとり男</attribute>
 		<language name="JPN" width="256">おお　[1:00:トレーナー名:3]～
@@ -1879,7 +1879,7 @@
 いつか　きてみてよ</language>
 	</row>
 
-	<row id="msg_un_soft_man_05">
+	<row id="msg_un_soft_man_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>おっとり♂メッセージ5</comment>
 		<attribute name="キャラ指定">おっとり男</attribute>
 		<language name="JPN" width="256">ぼくさぁ　[1:28:趣味:10]　たのしんでると
@@ -1919,7 +1919,7 @@
 楽しい　ところだからさ</language>
 	</row>
 
-	<row id="msg_un_soft_woman_00" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_un_soft_woman_00">
 		<comment>おっとり♀メッセージ0</comment>
 		<attribute name="キャラ指定">おっとり女</attribute>
 		<language name="JPN" width="256">また　あったねぇ　[1:00:トレーナー名:3]
@@ -2185,7 +2185,7 @@
 ポケモン　交換しようよ！▼</language>
 	</row>
 
-	<row id="msg_un_default_man_07">
+	<row id="msg_un_default_man_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>普通♂メッセージ01
 地域が無い時</comment>
 		<attribute name="キャラ指定">デフォルト男</attribute>
@@ -2205,7 +2205,7 @@
 なかなか　楽しいね</language>
 	</row>
 
-	<row id="msg_un_default_man_08">
+	<row id="msg_un_default_man_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>普通♂メッセージ02
 地域が無い時</comment>
 		<attribute name="キャラ指定">デフォルト男</attribute>
@@ -2233,7 +2233,7 @@
 きっと　楽しいから！▼</language>
 	</row>
 
-	<row id="msg_un_default_man_09">
+	<row id="msg_un_default_man_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>普通♂メッセージ03
 地域が無い時</comment>
 		<attribute name="キャラ指定">デフォルト男</attribute>
@@ -2259,7 +2259,7 @@
 来て　僕と　いっしょに　[1:28:趣味:10]　しないかい？</language>
 	</row>
 
-	<row id="msg_un_default_man_10">
+	<row id="msg_un_default_man_10" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>普通♂メッセージ04
 地域が無い時</comment>
 		<attribute name="キャラ指定">デフォルト男</attribute>
@@ -2279,7 +2279,7 @@
 一緒に　遊ぼうよ！</language>
 	</row>
 
-	<row id="msg_un_default_man_11">
+	<row id="msg_un_default_man_11" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>普通♂メッセージ05
 地域が無い時</comment>
 		<attribute name="キャラ指定">デフォルト男</attribute>
@@ -2305,7 +2305,7 @@
 きっと　喜ぶから！</language>
 	</row>
 
-	<row id="msg_un_default_woman_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_un_default_woman_06">
 		<comment>普通♀初回メッセージ
 地域なし</comment>
 		<attribute name="キャラ指定">デフォルト女</attribute>
@@ -2472,7 +2472,7 @@
 すっげー　気に入ってる！▼</language>
 	</row>
 
-	<row id="msg_un_leader_man_07">
+	<row id="msg_un_leader_man_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>リーダー♂メッセージ1
 地域なし</comment>
 		<attribute name="キャラ指定">リーダー男</attribute>
@@ -2500,7 +2500,7 @@
 できるなんて　すげーよな！</language>
 	</row>
 
-	<row id="msg_un_leader_man_08">
+	<row id="msg_un_leader_man_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>リーダー♂メッセージ2
 地域なし</comment>
 		<attribute name="キャラ指定">リーダー男</attribute>
@@ -2526,7 +2526,7 @@
 いろんな人の　趣味　聞いてみるわ！</language>
 	</row>
 
-	<row id="msg_un_leader_man_09">
+	<row id="msg_un_leader_man_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>リーダー♂メッセージ3
 地域なし</comment>
 		<attribute name="キャラ指定">リーダー男</attribute>
@@ -2552,7 +2552,7 @@
 強くして　やってくれよな！　頼んだぜ！</language>
 	</row>
 
-	<row id="msg_un_leader_man_10">
+	<row id="msg_un_leader_man_10" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>リーダー♂メッセージ4
 地域なし</comment>
 		<attribute name="キャラ指定">リーダー男</attribute>
@@ -2582,7 +2582,7 @@
 [1:28:趣味:10]　やってやってくれよな！</language>
 	</row>
 
-	<row id="msg_un_leader_man_11">
+	<row id="msg_un_leader_man_11" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>リーダー♂メッセージ5
 地域なし</comment>
 		<attribute name="キャラ指定">リーダー男</attribute>
@@ -2612,7 +2612,7 @@
 [1:28:趣味:10]　とか　楽しいぜ！</language>
 	</row>
 
-	<row id="msg_un_leader_woman_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_un_leader_woman_06">
 		<comment>リーダー♀　メッセージ0
 地域なし</comment>
 		<attribute name="キャラ指定">リーダー女</attribute>
@@ -2824,7 +2824,7 @@
 また　交換しようじゃないか！▼</language>
 	</row>
 
-	<row id="msg_un_wierd_man_07">
+	<row id="msg_un_wierd_man_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>変人♂メッセージ1
 地域なし</comment>
 		<attribute name="キャラ指定">変人男</attribute>
@@ -2862,7 +2862,7 @@
 ムハハ！　それじゃっ　アデュー！</language>
 	</row>
 
-	<row id="msg_un_wierd_man_08">
+	<row id="msg_un_wierd_man_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>変人♂メッセージ2
 地域なし</comment>
 		<attribute name="キャラ指定">変人男</attribute>
@@ -2894,7 +2894,7 @@
 たくさん　知り合うんだッッ！</language>
 	</row>
 
-	<row id="msg_un_wierd_man_09">
+	<row id="msg_un_wierd_man_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>変人♂メッセージ3
 地域なし</comment>
 		<attribute name="キャラ指定">変人男</attribute>
@@ -2932,7 +2932,7 @@
 たまらないッ！</language>
 	</row>
 
-	<row id="msg_un_wierd_man_10">
+	<row id="msg_un_wierd_man_10" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>変人♂メッセージ4
 地域なし</comment>
 		<attribute name="キャラ指定">変人男</attribute>
@@ -2964,7 +2964,7 @@
 楽しもうでは　ないか！</language>
 	</row>
 
-	<row id="msg_un_wierd_man_11">
+	<row id="msg_un_wierd_man_11" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>変人♂メッセージ5
 地域なし</comment>
 		<attribute name="キャラ指定">変人男</attribute>
@@ -2998,7 +2998,7 @@
 世界は　ミラクル！</language>
 	</row>
 
-	<row id="msg_un_wierd_woman_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_un_wierd_woman_06">
 		<comment>変人♀メッセージ0
 地域なし</comment>
 		<attribute name="キャラ指定">変人女</attribute>
@@ -3249,37 +3249,39 @@
 うれしいよ　ぐふふ▼</language>
 	</row>
 
-	<row id="msg_un_researcher_man_07">
+	<row id="msg_un_researcher_man_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>研究者♂メッセージ1
 地域無し</comment>
 		<attribute name="キャラ指定">研究者男</attribute>
-		<language name="JPN" width="256">ぐふふ▼
+		<language name="JPN" width="256">ぐふっ　ふふっ▼
 ぼくねぇ　[2:02:３桁:8]かこくの　ひとと
-ポケモン　こうかん　したんだよ　▼
+ポケモン　こうかん　したんだよ▼
 みんな　しゅみが　それぞれ　ちがって
 じつに　きょうみ　ぶかい……▼
-え？　ぼくの　しゅみ？▼
+え？　ぼくの　しゅみ？
 [1:28:趣味:10]　だよ　ぐふっ▼
 きみ　ぼくの　こきょうの
 [1:24:国名:0]に▽
 きたくなったら　きてみてよ▼
 きっと　きみにとって
-おもしろい　たびになるよ　ぐふふ……</language>
-		<language name="JPN_KANJI" width="256">ぐふふ▼
+おもしろい　たびになるよ……▽
+……ぐふっ</language>
+		<language name="JPN_KANJI" width="256">ぐふっ　ふふっ▼
 僕ねぇ　[2:02:３桁:8]カ国の　人と
-ポケモン　交換したんだよ　▼
+ポケモン　交換したんだよ▼
 みんな　趣味が　それぞれ　違って
 実に　興味深い……▼
-え？　僕の　趣味？▼
+え？　僕の　趣味？
 [1:28:趣味:10]　だよ　ぐふっ▼
 君　僕の　故郷の
 [1:24:国名:0]に▽
 来たくなったら　来てみてよ▼
 きっと　君にとって
-おもしろい　旅に　なるよ　ぐふふ……</language>
+面白い　旅になるよ……▽
+……ぐふっ</language>
 	</row>
 
-	<row id="msg_un_researcher_man_08">
+	<row id="msg_un_researcher_man_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>研究者♂メッセージ2
 地域無し</comment>
 		<attribute name="キャラ指定">研究者男</attribute>
@@ -3288,12 +3290,13 @@
 きみが　こうかん　したひとの　なかで
 しゅみが　[1:28:趣味:10]の▽
 ひとは　いた……？▼
-ぼ　ぼく　[2:02:３桁:8]かこくの　ひとと▽
+ぼ　ぼく　[2:02:３桁:8]かこくの　ひとと
 こうかん　してるんだけど▽
 みんな　しゅみ　ちがうんだよね……▼
 くにが　ちがうと　しゅみも
-ちがうのかなぁ……▽
-……▽
+ちがうのかなぁ……▼
+……　……
+……　……▼
 ……まぁでも▽
 ……それも　なんか　いいね</language>
 		<language name="JPN_KANJI" width="256">ぼ　ぼく　趣味が
@@ -3301,17 +3304,18 @@
 君が　交換した人の　中で
 趣味が　[1:28:趣味:10]の▽
 人は　いた……？▼
-ぼ　ぼく　[2:02:３桁:8]カ国の　人と▽
+ぼ　ぼく　[2:02:３桁:8]カ国の　人と
 交換　してるんだけれど▽
 みんな　趣味　違うんだよね……▼
 国が　違うと　趣味も
-違うのかなぁ……▽
-……▽
+違うのかなぁ……▼
+……　……
+……　……▼
 ……まぁでも▽
 ……それも　なんか　良いね</language>
 	</row>
 
-	<row id="msg_un_researcher_man_09">
+	<row id="msg_un_researcher_man_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>研究者♂メッセージ3
 地域無し</comment>
 		<attribute name="キャラ指定">研究者男</attribute>
@@ -3345,7 +3349,7 @@
 こ　これからも　よろしく</language>
 	</row>
 
-	<row id="msg_un_researcher_man_10">
+	<row id="msg_un_researcher_man_10" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>研究者♂メッセージ4
 地域無し</comment>
 		<attribute name="キャラ指定">研究者男</attribute>
@@ -3379,7 +3383,7 @@
 いいかもよ　ぬふ　ふふ</language>
 	</row>
 
-	<row id="msg_un_researcher_man_11">
+	<row id="msg_un_researcher_man_11" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>研究者♂メッセージ5
 地域無し</comment>
 		<attribute name="キャラ指定">研究者男</attribute>
@@ -3411,7 +3415,7 @@
 来てみてよ　いつか……</language>
 	</row>
 
-	<row id="msg_un_researcher_woman_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_un_researcher_woman_06">
 		<comment>研究者♀メッセージ0
 地域無し</comment>
 		<attribute name="キャラ指定">研究者女</attribute>
@@ -3640,7 +3644,7 @@
 よければ　ゆっくり　話しようよ▼</language>
 	</row>
 
-	<row id="msg_un_soft_man_07">
+	<row id="msg_un_soft_man_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>おっとり♂メッセージ1
 地域無し</comment>
 		<attribute name="キャラ指定">おっとり男</attribute>
@@ -3670,7 +3674,7 @@
 交換してみたいなぁ</language>
 	</row>
 
-	<row id="msg_un_soft_man_08">
+	<row id="msg_un_soft_man_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>おっとり♂メッセージ2
 地域無し</comment>
 		<attribute name="キャラ指定">おっとり男</attribute>
@@ -3706,7 +3710,7 @@
 良かったら　また　交換　しようよ</language>
 	</row>
 
-	<row id="msg_un_soft_man_09">
+	<row id="msg_un_soft_man_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>おっとり♂メッセージ3
 地域無し</comment>
 		<attribute name="キャラ指定">おっとり男</attribute>
@@ -3740,7 +3744,7 @@
 来てみてよ　結構　いいとこだからさ</language>
 	</row>
 
-	<row id="msg_un_soft_man_10">
+	<row id="msg_un_soft_man_10" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>おっとり♂メッセージ4
 地域無し</comment>
 		<attribute name="キャラ指定">おっとり男</attribute>
@@ -3776,7 +3780,7 @@
 いつか　きてみてよ</language>
 	</row>
 
-	<row id="msg_un_soft_man_11">
+	<row id="msg_un_soft_man_11" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>おっとり♂メッセージ5
 地域無し</comment>
 		<attribute name="キャラ指定">おっとり男</attribute>
@@ -3818,7 +3822,7 @@
 楽しい　ところだからさ</language>
 	</row>
 
-	<row id="msg_un_soft_woman_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_un_soft_woman_06">
 		<comment>おっとり♀メッセージ0
 地域無し</comment>
 		<attribute name="キャラ指定">おっとり女</attribute>
