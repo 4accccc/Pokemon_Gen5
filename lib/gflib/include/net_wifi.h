@@ -120,11 +120,13 @@ extern void GFL_NET_DWC_StopVChat(void);
 //==============================================================================
 /**
  * エラーコードを保持する
- * @param   none
- * @retval  none
+ * @param   code  DWC_GetLastErrorExで取得したエラー番号
+ * @param   type  DWC_GetLastErrorExで取得した処理タイプDWCErrorType
+ * @param   ret   DWC_GetLastErrorExで取得したエラー DWCError
+ * @param   no    主にシステム内エラー　ERRORCODE_HEAPやERRORCODE_TIMEOUT
  */
 //==============================================================================
-extern void GFL_NET_StateSetWifiError(int code, int type, int ret);
+extern void GFL_NET_StateSetWifiError(int code, int type, int ret, int no );
 
 //==============================================================================
 /**
@@ -140,6 +142,7 @@ typedef struct{
   int errorCode;
   int errorType;
   int errorRet;
+  int errorUser;
 } GFL_NETSTATE_DWCERROR;
 
 //==============================================================================
@@ -359,6 +362,7 @@ typedef BOOL (*GFL_NET_MYDWCConnectModeCheckFunc) (int index,void* pWork);
 #define ERRORCODE_0 (STEPMATCH_SUCCESS+5)
 #define ERRORCODE_HEAP (STEPMATCH_SUCCESS+6)
 #define STEPMATCH_CONNECT (STEPMATCH_SUCCESS+7)
+#define ERRORCODE_TIMEOUT (STEPMATCH_SUCCESS+8)
 
 
 #if GFL_NET_WIFI //wifi
