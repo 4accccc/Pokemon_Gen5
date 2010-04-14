@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T23:11:38"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T12:59:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -408,13 +408,15 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:0]……▼
 ぼくは　もうすこし　ここにいるよ
 ちょっと　かんがえたいんだ▼
-チャンピオンに　いわれたこと……
-ぼくが　なにをしたいか　ってこと……</language>
+チャンピオンに　いわれたこと……▼
+つよくなった　ぼくが
+なにを　したいのか　ってこと……</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]……▼
 ぼくは　もうすこし　ここにいるよ
 ちょっと　考えたいんだ▼
-チャンピオンに　いわれたこと……
-ぼくが　なにをしたいか　ってこと……</language>
+チャンピオンに　いわれたこと……▼
+強くなった　ぼくが
+なにを　したいのか　ってこと……</language>
 	</row>
 
 	<flowchart-group-list>
