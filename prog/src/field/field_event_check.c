@@ -1666,14 +1666,8 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
   if( event != NULL) return event;
 
   //育て屋チェック
-  {
-    int i;
-    for( i=0; i<10; i++ )
-    {
-      event = CheckSodateya( req, fieldWork, gsys, gdata );
-      if( event != NULL) return event;
-    }
-  }
+  event = CheckSodateya( req, fieldWork, gsys, gdata );
+  if( event != NULL) return event;
 
   //虫除けスプレーチェック
   event = CheckSpray( fieldWork, gsys, gdata );
