@@ -616,6 +616,7 @@ static void _cgearsave(G_SYNC_WORK* pWork)
     GFL_STD_MemCopy(pCRC, pPic->picture, size);
     CGEAR_SV_SetCGearPictureCRC(CGEAR_SV_GetCGearSaveData(pSave),crc);  //CGEARデカール有効
     GAMEDATA_ExtraSaveAsyncStart(pWork->pGameData, SAVE_EXTRA_ID_CGEAR_PICUTRE);
+    _CHANGE_STATE(_cgearsave2);
   }
 }
 
