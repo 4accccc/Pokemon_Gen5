@@ -130,8 +130,13 @@ POKE;
 #define POKE_TEX_ADRS_FOR_PARTICLE (0x30000)
 
 
-// ポケモンのY座標
-#define POKE_Y  (FX_F32_TO_FX32(-10.0f))
+// ポケモンのX,Y座標
+#define POKE_X  (FX_F32_TO_FX32(-3.0f))
+//#define POKE_Y  (FX_F32_TO_FX32(-10.0f))
+#define POKE_Y  (FX_F32_TO_FX32(-16.0f))
+
+// ポケモンのY座標調整
+#define POKE_Y_ADJUST (0.33f)  // この値を掛ける
 
 
 //=============================================================================
@@ -147,6 +152,61 @@ typedef struct
   MCSS_WORK*           wk;
 }
 POKE_SET;
+
+
+//-------------------------------------
+/// 自作ポリゴンポケモン
+//=====================================
+#define	POKEGRA_LZ	// ポケグラ圧縮有効定義
+
+#define TEXSIZ_S  (128)  // dot
+#define TEXSIZ_T  (128)  // dot
+#define TEXVRAMSIZ  (TEXSIZ_S/8 * TEXSIZ_T/8 * 0x20)  // chrNum_x * chrNum_y * chrSiz
+
+#define	INDEPENDENT_POKE_TEX_ADRS	(0x26000)  // mcssより後ろのアドレスにするとダメみたい。
+#define	INDEPENDENT_POKE_TEX_SIZE	(0x2000)   // 1キャラ32バイトが16キャラx16キャラある(128ドットx128ドット)
+#define	INDEPENDENT_POKE_PAL_ADRS	(0x960)    // mcssより後ろのアドレスにするとダメみたい。
+#define	INDEPENDENT_POKE_PAL_SIZE	(0x0020)
+
+// 何分割するか
+#define INDEPENDENT_PANEL_NUM_X    (12)
+#define INDEPENDENT_PANEL_NUM_Y    (12)
+// 全部を合わせて1枚と見たときのサイズ
+#define INDEPENDENT_PANEL_TOTAL_W  (36)//(96)
+#define INDEPENDENT_PANEL_TOTAL_H  (36)//(96)
+// 全部を合わせて1枚と見たときの最小最大のテクスチャ座標
+#define INDEPENDENT_PANEL_TOTAL_MIN_S  ( 16)
+#define INDEPENDENT_PANEL_TOTAL_MAX_S  (112)
+#define INDEPENDENT_PANEL_TOTAL_MIN_T  ( 16)
+#define INDEPENDENT_PANEL_TOTAL_MAX_T  (112)
+
+// ポリゴンID
+#define INDEPENDENT_BEFORE_POLYGON_ID  (60)
+#define INDEPENDENT_AFTER_POLYGON_ID   (61)
+
+typedef struct
+{
+  // 転送画像展開用
+  NNSG2dCharacterData* chr;
+  NNSG2dPaletteData*   pal;
+  void* chr_buf;
+  void* pal_buf;
+  GFL_BMP_DATA* bmp_data;
+
+  u32 tex_adr;
+  u32 pal_adr;
+
+  VecFx32 pos;
+  int     polygon_id;
+}
+INDEPENDENT_POKE_WORK;
+
+typedef struct
+{
+  INDEPENDENT_POKE_WORK*  wk[POKE_MAX];  // NULLのときはなし
+}
+INDEPENDENT_POKE_MANAGER;
+
 
 //-------------------------------------
 /// ワーク
@@ -187,6 +247,9 @@ struct _SHINKADEMO_VIEW_WORK
   // MCSS
   MCSS_SYS_WORK*           mcss_sys_wk;
   POKE_SET                 poke_set[POKE_MAX];
+
+  // 自作ポリゴンポケモン
+  INDEPENDENT_POKE_MANAGER*  independent_poke_mgr;
 };
 
 
@@ -205,6 +268,20 @@ static u8 NotDispPoke( u8 disp_poke );
 
 static BOOL ShinkaDemo_View_Evolve( SHINKADEMO_VIEW_WORK* work );
 static void ShinkaDemo_View_AdjustPokePos( SHINKADEMO_VIEW_WORK* work );
+
+//-------------------------------------
+/// 自作ポリゴンポケモン
+//=====================================
+static void IndependentPokeManagerInit( SHINKADEMO_VIEW_WORK* work );
+static void IndependentPokeManagerExit( SHINKADEMO_VIEW_WORK* work );
+static void IndependentPokeManagerMain( SHINKADEMO_VIEW_WORK* work );
+static void IndependentPokeManagerDraw( SHINKADEMO_VIEW_WORK* work );
+static INDEPENDENT_POKE_WORK* IndependentPokeInit(
+    int mons_no, int form_no, int sex, int rare, int dir, BOOL egg,
+    u32 tex_adr, u32 pal_adr, HEAPID heap_id );
+static void IndependentPokeExit( INDEPENDENT_POKE_WORK* wk );
+static void IndependentPokeMain( INDEPENDENT_POKE_WORK* wk );
+static void IndependentPokeDraw( INDEPENDENT_POKE_WORK* wk );
 
 
 //=============================================================================
@@ -245,10 +322,15 @@ SHINKADEMO_VIEW_WORK* SHINKADEMO_VIEW_Init(
  
   // ポケモン
   {
-    // ここで一時的に生成する
-    work->after_pp = PP_Create( 1, 1, 0, work->heap_id );
-    POKETOOL_CopyPPtoPP( (POKEMON_PARAM*)(work->pp), work->after_pp );
-    PP_ChangeMonsNo( work->after_pp, work->after_monsno );  // 進化
+    work->after_pp = NULL;
+
+    if( work->launch == SHINKADEMO_VIEW_LAUNCH_EVO )
+    {
+      // ここで一時的に生成する
+      work->after_pp = PP_Create( 1, 1, 0, work->heap_id );
+      POKETOOL_CopyPPtoPP( (POKEMON_PARAM*)(work->pp), work->after_pp );
+      PP_ChangeMonsNo( work->after_pp, work->after_monsno );  // 進化
+    }
   }
   
   // ステップ
@@ -292,6 +374,8 @@ SHINKADEMO_VIEW_WORK* SHINKADEMO_VIEW_Init(
     ShinkaDemo_View_PokeInit( work );
   }
 
+  //IndependentPokeManagerInit( work );
+
   return work;
 }
 
@@ -306,6 +390,8 @@ SHINKADEMO_VIEW_WORK* SHINKADEMO_VIEW_Init(
 //-----------------------------------------------------------------------------
 void SHINKADEMO_VIEW_Exit( SHINKADEMO_VIEW_WORK* work )
 {
+  //IndependentPokeManagerExit( work );
+
   // MCSS
   {
     ShinkaDemo_View_PokeExit( work );
@@ -314,7 +400,10 @@ void SHINKADEMO_VIEW_Exit( SHINKADEMO_VIEW_WORK* work )
 
   // ここで一時的に生成したものを破棄する
   {
-    GFL_HEAP_FreeMemory( work->after_pp );
+    if( work->after_pp )
+    {
+      GFL_HEAP_FreeMemory( work->after_pp );
+    }
   }
 
   // ワーク
@@ -475,6 +564,8 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
   }
 
   MCSS_Main( work->mcss_sys_wk );
+
+  //IndependentPokeManagerMain( work );
 }
 
 //-----------------------------------------------------------------------------
@@ -490,7 +581,16 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
 //-----------------------------------------------------------------------------
 void SHINKADEMO_VIEW_Draw( SHINKADEMO_VIEW_WORK* work )
 {
+#if 1 
   MCSS_Draw( work->mcss_sys_wk );
+
+  //IndependentPokeManagerDraw( work );
+#else
+  こちらにすると、IndependentPokeManagerDrawの絵が背景につられて流れてしまう
+  IndependentPokeManagerDraw( work );
+
+  MCSS_Draw( work->mcss_sys_wk );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -657,7 +757,7 @@ static void ShinkaDemo_View_PokeInit( SHINKADEMO_VIEW_WORK* work )
       {
         MCSS_TOOL_MakeMAWPP( work->after_pp, &add_wk, MCSS_DIR_FRONT );
       }
-      work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, 0, POKE_Y, 0, &add_wk );
+      work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, POKE_X, POKE_Y, 0, &add_wk );
       MCSS_SetScale( work->poke_set[i].wk, &scale );
 
       if(i == POKE_BEFORE)
@@ -682,7 +782,7 @@ static void ShinkaDemo_View_PokeInit( SHINKADEMO_VIEW_WORK* work )
     i = POKE_AFTER;
 
     MCSS_TOOL_MakeMAWPP( work->pp, &add_wk, MCSS_DIR_FRONT );
-    work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, 0, POKE_Y, 0, &add_wk );
+    work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, POKE_X, POKE_Y, 0, &add_wk );
     MCSS_SetScale( work->poke_set[i].wk, &scale );
   }
 
@@ -821,7 +921,6 @@ static BOOL ShinkaDemo_View_Evolve( SHINKADEMO_VIEW_WORK* work )
 //=====================================
 static void ShinkaDemo_View_AdjustPokePos( SHINKADEMO_VIEW_WORK* work )
 {
-/*
   u8 i;
   for(i=0; i<POKE_MAX; i++)
   {
@@ -832,11 +931,331 @@ static void ShinkaDemo_View_AdjustPokePos( SHINKADEMO_VIEW_WORK* work )
       VecFx32 ofs;
       size_y *= work->scale / SCALE_MAX;
       if( size_y > POKE_SIZE_MAX ) size_y = POKE_SIZE_MAX;
-      ofs_y = ( POKE_SIZE_MAX - size_y ) / 2.0f;
+      ofs_y = ( POKE_SIZE_MAX - size_y ) / 2.0f * POKE_Y_ADJUST;
       ofs.x = 0;  ofs.y = FX_F32_TO_FX32(ofs_y);  ofs.z = 0;
       MCSS_SetOfsPosition( work->poke_set[i].wk, &ofs );
     }
   }
-*/
+}
+
+
+//-------------------------------------
+/// 自作ポリゴンポケモン
+//=====================================
+static void IndependentPokeManagerInit( SHINKADEMO_VIEW_WORK* work )
+{
+  INDEPENDENT_POKE_MANAGER* independent_poke_mgr;
+
+  u32 tex_adr = INDEPENDENT_POKE_TEX_ADRS;
+  u32 pal_adr = INDEPENDENT_POKE_PAL_ADRS;
+
+  independent_poke_mgr = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(INDEPENDENT_POKE_MANAGER) );
+
+  {
+    u32  monsno  = PP_Get( work->pp, ID_PARA_monsno, NULL );
+    u32  form_no = PP_Get( work->pp, ID_PARA_form_no, NULL );
+    u8   sex     = PP_GetSex( work->pp );
+    BOOL rare    = PP_CheckRare( work->pp );
+
+    independent_poke_mgr->wk[POKE_BEFORE] = IndependentPokeInit(
+        monsno, form_no, sex, rare, POKEGRA_DIR_FRONT, FALSE,
+        tex_adr, pal_adr, work->heap_id );
+
+    // POKE_BEFOREだけの初期化
+    {
+      INDEPENDENT_POKE_WORK* wk = independent_poke_mgr->wk[POKE_BEFORE];
+
+      if( work->launch == SHINKADEMO_VIEW_LAUNCH_EVO )
+      {
+        wk->pos.x = FX32_ONE * (-30);
+        wk->pos.y = 0;
+        wk->pos.z = 0;
+      }
+      else
+      {
+        wk->pos.x = 0;
+        wk->pos.y = 0;
+        wk->pos.z = 0;
+      }
+
+      wk->polygon_id = INDEPENDENT_BEFORE_POLYGON_ID;
+    }
+  }
+
+  tex_adr += INDEPENDENT_POKE_TEX_SIZE;
+  pal_adr += INDEPENDENT_POKE_PAL_SIZE;
+
+  if( work->launch == SHINKADEMO_VIEW_LAUNCH_EVO )
+  {
+    u32  monsno  = PP_Get( work->after_pp, ID_PARA_monsno, NULL );
+    u32  form_no = PP_Get( work->after_pp, ID_PARA_form_no, NULL );
+    u8   sex     = PP_GetSex( work->after_pp );
+    BOOL rare    = PP_CheckRare( work->after_pp );
+
+    independent_poke_mgr->wk[POKE_AFTER] = IndependentPokeInit(
+        monsno, form_no, sex, rare, POKEGRA_DIR_FRONT, FALSE,
+        tex_adr, pal_adr, work->heap_id );
+
+    // POKE_AFTERだけの初期化
+    {
+      INDEPENDENT_POKE_WORK* wk = independent_poke_mgr->wk[POKE_AFTER];
+
+      wk->pos.x = FX32_ONE * (+30);
+      wk->pos.y = 0;
+      wk->pos.z = 0;
+      
+      wk->polygon_id = INDEPENDENT_AFTER_POLYGON_ID;
+    }
+  }
+  
+  work->independent_poke_mgr = independent_poke_mgr;
+}
+static void IndependentPokeManagerExit( SHINKADEMO_VIEW_WORK* work )
+{
+  INDEPENDENT_POKE_MANAGER* independent_poke_mgr = work->independent_poke_mgr;
+
+  u8 i;
+  for( i=0; i<POKE_MAX; i++ )
+  {
+    if( independent_poke_mgr->wk )
+    {
+      IndependentPokeExit( independent_poke_mgr->wk[i] );
+    }
+  }
+
+  GFL_HEAP_FreeMemory( independent_poke_mgr );
+}
+static void IndependentPokeManagerMain( SHINKADEMO_VIEW_WORK* work )
+{
+  INDEPENDENT_POKE_MANAGER* independent_poke_mgr = work->independent_poke_mgr;
+
+  u8 i;
+  for( i=0; i<POKE_MAX; i++ )
+  {
+    if( independent_poke_mgr->wk )
+    {
+      IndependentPokeMain( independent_poke_mgr->wk[i] );
+    }
+  }
+}
+static void IndependentPokeManagerDraw( SHINKADEMO_VIEW_WORK* work )
+{
+  INDEPENDENT_POKE_MANAGER* independent_poke_mgr = work->independent_poke_mgr;
+
+  u8 i;
+  for( i=0; i<POKE_MAX; i++ )
+  {
+    if( independent_poke_mgr->wk )
+    {
+      IndependentPokeDraw( independent_poke_mgr->wk[i] );
+    }
+  }
+}
+static INDEPENDENT_POKE_WORK* IndependentPokeInit(
+    int mons_no, int form_no, int sex, int rare, int dir, BOOL egg,
+    u32 tex_adr, u32 pal_adr, HEAPID heap_id )
+{
+  INDEPENDENT_POKE_WORK* wk = GFL_HEAP_AllocClearMemory( heap_id, sizeof(INDEPENDENT_POKE_WORK) );
+  
+  wk->bmp_data = GFL_BMP_Create( TEXSIZ_S/8, TEXSIZ_T/8, GFL_BMP_16_COLOR, heap_id );
+
+  wk->tex_adr = tex_adr;
+  wk->pal_adr = pal_adr;
+
+  // ポケモングラフィック取得
+  {
+    u32 cgr, clr;
+    // リソース受け取り
+    cgr	= POKEGRA_GetCgrArcIndex( mons_no, form_no, sex, rare, dir, egg );
+    clr = POKEGRA_GetPalArcIndex( mons_no, form_no, sex, rare, dir, egg );
+    wk->chr = NULL;
+    wk->pal = NULL;
+    // リソースはOBJとして作っているので、LoadOBJじゃないと読み込めない
+#ifdef	POKEGRA_LZ
+    wk->chr_buf = GFL_ARC_UTIL_LoadOBJCharacter( POKEGRA_GetArcID(), cgr, TRUE, &wk->chr, heap_id );
+#else	// POKEGRA_LZ
+    wk->chr_buf = GFL_ARC_UTIL_LoadOBJCharacter( POKEGRA_GetArcID(), cgr, FALSE, &wk->chr, heap_id );
+#endif	// POKEGRA_LZ
+    wk->pal_buf = GFL_ARC_UTIL_LoadPalette( POKEGRA_GetArcID(), clr, &wk->pal, heap_id );
+  }
+
+  // 12x12chrポケグラを16x16chrの真ん中に貼り付ける
+  {
+    u8	*src, *dst;
+    int x, y;
+    int	chrNum = 0;
+
+    src = wk->chr->pRawData;
+		dst = GFL_BMP_GetCharacterAdrs(wk->bmp_data);
+    GFL_STD_MemClear32((void*)dst, TEXVRAMSIZ);
+
+    dst += ( (2*16+2) * 0x20 );
+    // キャラデータは8x8、4x8、8x4、4x4の順番で1Dマッピングされている
+    for (y=0; y<8; y++){
+      for(x=0; x<8; x++){
+        GFL_STD_MemCopy32((void*)(&src[chrNum*0x20]), (void*)(&dst[(y*16+x)*0x20]), 0x20);
+        chrNum++;
+      }
+    }
+    for (y=0; y<8; y++){
+      for(x=8; x<12; x++){
+        GFL_STD_MemCopy32((void*)(&src[chrNum*0x20]), (void*)(&dst[(y*16+x)*0x20]), 0x20);
+        chrNum++;
+      }
+    }
+    for (y=8; y<12; y++){
+      for(x=0; x<8; x++){
+        GFL_STD_MemCopy32((void*)(&src[chrNum*0x20]), (void*)(&dst[(y*16+x)*0x20]), 0x20);
+        chrNum++;
+      }
+    }
+    for (y=8; y<12; y++){
+      for(x=8; x<12; x++){
+        GFL_STD_MemCopy32((void*)(&src[chrNum*0x20]), (void*)(&dst[(y*16+x)*0x20]), 0x20);
+        chrNum++;
+      }
+    }
+  }
+
+  // 16x16chrフォーマットデータをＢＭＰデータに変換
+  GFL_BMP_DataConv_to_BMPformat(wk->bmp_data, FALSE, heap_id);
+  
+  // 転送
+  {
+    BOOL rc;
+    void*	src;
+		u32		dst;
+    src = (void*)GFL_BMP_GetCharacterAdrs(wk->bmp_data);
+		dst = tex_adr;
+    rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_VRAM, dst, src, TEXVRAMSIZ);
+    GF_ASSERT(rc);
+    src = wk->pal->pRawData;
+		dst = pal_adr;
+    rc = NNS_GfdRegisterNewVramTransferTask(NNS_GFD_DST_3D_TEX_PLTT, dst, src, 32);
+    GF_ASSERT(rc);
+  }
+  
+  return wk;
+}
+static void IndependentPokeExit( INDEPENDENT_POKE_WORK* wk )
+{
+  GFL_BMP_Delete( wk->bmp_data );
+  GFL_HEAP_FreeMemory( wk->chr_buf );
+  GFL_HEAP_FreeMemory( wk->pal_buf );
+
+  GFL_HEAP_FreeMemory( wk );
+}
+static void IndependentPokeMain( INDEPENDENT_POKE_WORK* wk )
+{
+}
+
+static void IndependentPokeDraw( INDEPENDENT_POKE_WORK* wk )
+{
+  {
+    G3_TexImageParam(
+        GX_TEXFMT_PLTT16,
+        GX_TEXGEN_TEXCOORD,
+        GX_TEXSIZE_S128,
+        GX_TEXSIZE_T128,
+        GX_TEXREPEAT_ST,
+        GX_TEXFLIP_NONE,
+        GX_TEXPLTTCOLOR0_USE,
+        wk->tex_adr );
+
+    G3_TexPlttBase( wk->pal_adr, GX_TEXFMT_PLTT16 );
+  }
+
+  {
+    int i;
+
+    G3_PushMtx();
+
+    G3_MaterialColorDiffAmb(
+							GX_RGB(31, 31, 31),
+							GX_RGB(31, 31, 31),
+              FALSE
+        );
+
+    G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE);
+
+    //ライトカラー
+    G3_LightColor(GX_LIGHTID_0, GX_RGB(31, 31, 31));
+    // ポリゴンアトリビュート設定
+	  G3_PolygonAttr(
+				   GX_LIGHTMASK_0,			  // ライトを反映
+				   GX_POLYGONMODE_MODULATE,	  // モジュレーションポリゴンモード
+				   GX_CULL_BACK,             // カリング
+				   //GX_CULL_NONE,             // カリング
+				   wk->polygon_id,                         // ポリゴンＩＤ ０
+				   31,					  // アルファ値
+				   GX_POLYGON_ATTR_MISC_NONE );
+
+    {
+      VecFx32 pos = {0,0,0};
+      VecFx32 scale = {FX32_ONE, FX32_ONE, FX32_ONE};
+      fx32  s0, s1, t0, t1;
+      int max, w, h;
+      int sw, th;
+      fx32 start_x, start_y;
+      max = INDEPENDENT_PANEL_NUM_X * INDEPENDENT_PANEL_NUM_Y;
+      w = INDEPENDENT_PANEL_TOTAL_W / INDEPENDENT_PANEL_NUM_X;  // 1枚のパネルのサイズ
+      h = INDEPENDENT_PANEL_TOTAL_H / INDEPENDENT_PANEL_NUM_Y;
+
+      sw = ( INDEPENDENT_PANEL_TOTAL_MAX_S - INDEPENDENT_PANEL_TOTAL_MIN_S ) / INDEPENDENT_PANEL_NUM_X;  // 1枚のパネルのテクスチャの幅
+      th = ( INDEPENDENT_PANEL_TOTAL_MAX_T - INDEPENDENT_PANEL_TOTAL_MIN_T ) / INDEPENDENT_PANEL_NUM_Y;  // 1枚のパネルのテクスチャの高さ
+
+      start_x = - ( FX32_ONE * INDEPENDENT_PANEL_TOTAL_W ) / 2 + ( FX32_ONE * w ) / 2;  // 右が正
+      start_y = ( FX32_ONE * INDEPENDENT_PANEL_TOTAL_H ) / 2 - ( FX32_ONE * h ) / 2;  // 上が正
+
+      for (i=0;i<max;i++)
+      {
+        int x,y;
+       
+        G3_PushMtx();
+
+        x = i%INDEPENDENT_PANEL_NUM_X;
+        y = i/INDEPENDENT_PANEL_NUM_X;
+
+        pos = wk->pos;
+        pos.x += start_x + ( w * x * FX32_ONE );
+        pos.y += start_y - ( h * y * FX32_ONE );
+
+        s0 = ( x * sw + INDEPENDENT_PANEL_TOTAL_MIN_S ) * FX32_ONE;
+        t0 = ( y * th + INDEPENDENT_PANEL_TOTAL_MIN_T ) * FX32_ONE;
+        s1 = s0 + (sw * FX32_ONE);
+        t1 = t0 + (th * FX32_ONE);
+        // 位置設定
+		    G3_Translate(pos.x, pos.y, pos.z);
+        // スケール設定
+		    G3_Scale(scale.x, scale.y, scale.z);
+
+        {
+          MtxFx33 mtx;
+          MTX_RotY33(&mtx, FX_SinIdx(0/*panel->Rot.y*/), FX_CosIdx(0/*panel->Rot.y*/));
+          G3_MultMtx33(&mtx);
+          MTX_RotZ33(&mtx, FX_SinIdx(0/*panel->Rot.z*/), FX_CosIdx(0/*panel->Rot.z*/));
+          G3_MultMtx33(&mtx);
+        }
+
+        G3_Begin( GX_BEGIN_QUADS );
+
+        G3_Normal( 0, 0, FX32_ONE );
+
+        G3_TexCoord(s0, t0);
+	      G3_Vtx( -(FX16_ONE*w/2), (FX16_ONE*h/2), 0 );
+        G3_TexCoord(s0, t1);
+	      G3_Vtx( -(FX16_ONE*w/2), -(FX16_ONE*h/2), 0 );
+        G3_TexCoord(s1, t1);
+	      G3_Vtx( (FX16_ONE*w/2), -(FX16_ONE*h/2), 0 );
+        G3_TexCoord(s1, t0);
+	      G3_Vtx( (FX16_ONE*w/2), (FX16_ONE*h/2), 0 );
+
+        G3_End();
+        G3_PopMtx(1);
+      }
+    }
+
+    G3_PopMtx(1);
+  }
 }
 

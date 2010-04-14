@@ -379,93 +379,6 @@ static void ShinkaDemo_SoundPlayCongratulate( SHINKA_DEMO_PARAM* param, SHINKA_D
 static BOOL ShinkaDemo_SoundCheckPlayCongratulate( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
 static void ShinkaDemo_SoundPlayWazaoboe( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
 
-
-
-
-
-
-
-
-
-
-/*
-
-// VIEW仮
-
-static void SHINKADEMO_VIEW_CryStart();
-static BOOL SHINKADEMO_VIEW_CryIsEnd();
-static void SHINKADEMO_VIEW_ChangeStart();
-static BOOL SHINKADEMO_VIEW_ChangeIsEnd();
-static BOOL SHINKADEMO_VIEW_ChangeIsBgmShinkaStart();
-static BOOL SHINKADEMO_VIEW_ChangeIsBgmShinkaPush();
-static BOOL SHINKADEMO_VIEW_ChangeCancel();
-
-static void SHINKADEMO_VIEW_CryStart()
-{
-}
-static BOOL SHINKADEMO_VIEW_CryIsEnd()
-{
-  static u32 count = 60;
-  if( count == 0 )
-  {
-    return TRUE;
-  }
-  else
-  {
-    count--;
-    return FALSE;
-  }
-}
-static void SHINKADEMO_VIEW_ChangeStart()
-{
-}
-static BOOL SHINKADEMO_VIEW_ChangeIsEnd()
-{
-  static u32 count = 300;
-  if( count == 0 )
-  {
-    return TRUE;
-  }
-  else
-  {
-    count--;
-    return FALSE;
-  }
-}
-static BOOL SHINKADEMO_VIEW_ChangeIsBgmShinkaStart()
-{
-  return TRUE;
-}
-static BOOL SHINKADEMO_VIEW_ChangeIsBgmShinkaPush()
-{
-  static u32 count = 180;
-  if( count == 0 )
-  {
-    return TRUE;
-  }
-  else
-  {
-    count--;
-    return FALSE;
-  }
-}
-static BOOL SHINKADEMO_VIEW_ChangeCancel()
-{
-  return TRUE;
-}
-
-
-*/
-
-
-
-
-
-
-
-
-
-
 // BG
 static void ShinkaDemo_BgInit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
 static void ShinkaDemo_BgExit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
@@ -1436,9 +1349,17 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
     SHINKADEMO_GRAPHIC_2D_Draw( work->graphic );
     // 3D描画
     SHINKADEMO_GRAPHIC_3D_StartDraw( work->graphic );
+#if 0
+    // 半透明ポケモンより手前にエフェクトと背景がある場合
     SHINKADEMO_VIEW_Draw( work->view );
     // 進化デモのパーティクルと背景
     SHINKADEMO_EFFECT_Draw( work->efwk );
+#else
+    // エフェクトと背景より手前に半透明ポケモンがある場合
+    // 進化デモのパーティクルと背景
+    SHINKADEMO_EFFECT_Draw( work->efwk );
+    SHINKADEMO_VIEW_Draw( work->view );
+#endif
     SHINKADEMO_GRAPHIC_3D_EndDraw( work->graphic );
   }
 
