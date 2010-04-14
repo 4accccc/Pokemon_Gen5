@@ -27,7 +27,8 @@ enum {
 	NARC_h01_ship_wait_data_bin = 13,
 	NARC_h01_trailer_01a_nsbmd = 14,
 	NARC_h01_trailer_01b_nsbmd = 15,
-	NARC_h01_h01_ship_nsbmd = 16
+	NARC_h01_h01_ship_nsbmd = 16,
+	NARC_h01_h01_ship_nsbta = 17
 };
 
 /* NARC_H01_NAIX_ */

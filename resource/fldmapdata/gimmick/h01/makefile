@@ -49,7 +49,8 @@ CONVERTDATA = $(BIN)/wind_data.bin \
 							$(BIN)/ship_wait_data.bin \
 							$(BIN)/trailer_01a.nsbmd \
 							$(BIN)/trailer_01b.nsbmd \
-							$(BIN)/h01_ship.nsbmd
+							$(BIN)/h01_ship.nsbmd \
+							$(BIN)/h01_ship.nsbta
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
@@ -71,6 +72,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g3dcvtr $(GRAPHIC)/trailer_01a.imd -o $(BIN)/trailer_01a.nsbmd
 	g3dcvtr $(GRAPHIC)/trailer_01b.imd -o $(BIN)/trailer_01b.nsbmd
 	g3dcvtr $(GRAPHIC)/h01_ship.imd -o $(BIN)/h01_ship.nsbmd
+	g3dcvtr $(GRAPHIC)/h01_ship.ita -o $(BIN)/h01_ship.nsbta
 endif
 
 
