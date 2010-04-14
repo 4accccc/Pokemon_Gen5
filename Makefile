@@ -102,6 +102,12 @@ master_rom:
 	$(MAKE) black_rom
 	cp ./prog/bin/ARM9-TS.HYB/Rom/main.srl ./rom/IRBJ.srl
 
+master:
+	$(MAKE) white
+	cp ./prog/bin/ARM9-TS.HYB/Release/main.srl ./rom/IRAJ_r.srl
+	$(MAKE) black
+	cp ./prog/bin/ARM9-TS.HYB/Release/main.srl ./rom/IRBJ_r.srl
+
 # clean‚µ‚½ê‡‚É‚·‚×‚ÄÁ‚¦‚é‚æ‚¤‚É‹Lq‚µ‚Ä‚­‚¾‚³‚¢
 #--------------------------------------------------------------------
 clean:
