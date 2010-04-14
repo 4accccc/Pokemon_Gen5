@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T12:55:43"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T15:09:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1357" top="218" right="2062" bottom="838" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -302,7 +302,6 @@
 ※バトルサブウェイを利用
 するほど良いアイテムを入手
 
-
 →アイテム入手処理へ</comment>
 		<attribute name="キャラ指定">RAILMAN</attribute>
 		<language name="JPN" width="256">おっと　その　かおは
@@ -337,7 +336,6 @@
 		<comment>♂
 バトルサブウェイの落し物
 ２回目以降
-
 →アイテム入手処理へ</comment>
 		<attribute name="キャラ指定">RAILMAN</attribute>
 		<language name="JPN" width="256">また　おとしものが　でちゃってね
@@ -351,7 +349,6 @@
 バトルサブウェイの落し物
 ２回目以降
 （落し物が多い日）
-
 →アイテム入手処理へ</comment>
 		<attribute name="キャラ指定">RAILMAN</attribute>
 		<language name="JPN" width="256">やー　さいきん
