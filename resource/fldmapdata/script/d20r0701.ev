@@ -151,12 +151,5 @@ EVENT_START		ev_reserve_d20r0701_event_01
 	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 	
-	//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é
-	_SHAKE_CAMERA(8,0,3,15,0,0,0,0)
-
-	_SYSWIN_MSG( msg_d20r0701_sys_03 , POS_DOWN )
-	_LAST_KEYWAIT()
-	_SYSWIN_CLOSE()
-	
 EVENT_END
 

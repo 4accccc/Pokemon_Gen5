@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/11 16:47:59
+#save date:2010/04/14 23:35:20
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01r0102.wms
 #SECTION START:OBJ_EVENT
@@ -57,7 +57,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_C01R0102_GIRL3_01
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number

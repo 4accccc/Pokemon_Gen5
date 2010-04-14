@@ -184,12 +184,10 @@ _TALK_OBJ_START()
 		//さてと　ゲームシンク……
 		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_09 )
 		_YES_NO_WIN( SCWK_ANSWER )
-		_MSGWIN_CLOSE()
 
 		IF $SCWK_ANSWER == SCR_NO THEN
 		
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_10 )
-			_MSGWIN_CLOSE()
 		
 		ENDIF
 		
@@ -215,7 +213,7 @@ _TALK_OBJ_START()
 		//さらに　すごいことが　わかって
 		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_12 )
 		_MSGWIN_CLOSE()
-/*
+
 		//ショウロ：自機の真横に移動
 		SWITCH $LWK_DIR
 		CASE DIR_UP THEN
@@ -252,7 +250,7 @@ _TALK_OBJ_START()
 			_OBJ_ANIME( C01R0102_GIRL3_01, anm_syouro_right1 )
 			_OBJ_ANIME_WAIT()
 		ENDSWITCH
-*/
+
 		//========================================/
 		
 		//ゆめのあとちイベント終了
@@ -423,21 +421,18 @@ EVENT_START   ev_c01r0102_girl3_01
 		//あなた　トレーナー？　じゃあ　ポケモンセンターの
 		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_girl3_01 )
 		_YES_NO_WIN( SCWK_ANSWER )
-		_MSGWIN_CLOSE()
 		
 		//はい選択時
 		IF $SCWK_ANSWER == SCR_YES THEN
 		
 			//さすが！　バトルボックスには
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_girl3_02 )
-			_MSGWIN_CLOSE()
 		
 		//いいえ選択時
 		ELSE
 			
 			//では！　かんたんに
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_girl3_03 )
-			_MSGWIN_CLOSE()
 		
 		ENDIF
 		
