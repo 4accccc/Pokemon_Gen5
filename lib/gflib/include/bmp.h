@@ -9,6 +9,8 @@
 #ifndef _BMP_H_
 #define _BMP_H_
 
+#include <arc_tool.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -150,6 +152,7 @@ extern void GFL_BMP_Copy( const GFL_BMP_DATA *src, GFL_BMP_DATA *dst );
  */
 //--------------------------------------------------------------------------------------------
 extern  GFL_BMP_DATA * GFL_BMP_LoadCharacter( int arcID, int datID, int compflag, HEAPID heapID );
+extern  GFL_BMP_DATA * GFL_BMP_LoadCharacterByHandle( ARCHANDLE* handle, int datID, int compflag, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**

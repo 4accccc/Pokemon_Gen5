@@ -7,6 +7,7 @@
 #ifndef _BMP_WIN_H_
 #define _BMP_WIN_H_
 
+#include <arc_tool.h>
 #include <bg_sys.h>
 #include <bmp.h>
 
