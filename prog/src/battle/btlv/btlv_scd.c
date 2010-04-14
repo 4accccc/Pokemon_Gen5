@@ -712,6 +712,7 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
 
 static BOOL selectRotationWaza_init( int* seq, void* wk_adrs )
 {
+  #ifdef ROTATION_NEW_SYSTEM
   BTLV_SCD* wk = wk_adrs;
   BTLV_INPUT_ROTATE_PARAM birp;
   int i, j;
@@ -726,6 +727,7 @@ static BOOL selectRotationWaza_init( int* seq, void* wk_adrs )
   }
 
   BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_ROTATE, &birp );
+  #endif
 
   return TRUE;
 }
