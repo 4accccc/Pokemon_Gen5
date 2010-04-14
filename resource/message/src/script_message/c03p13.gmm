@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T12:42:23"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T15:30:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,9 +292,9 @@
 	</lock>
 
 
-	<row id="msg_c03p13_boy2_01">
+	<row id="msg_c03p13_boy2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・12月ロム用仮メッセージ</comment>
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">すごいよな　ポケモンって！▼
 たとえ　ちいさくても　じぶんより
@@ -304,9 +304,9 @@
 大きな相手に　立ち向かうんだぜ！</language>
 	</row>
 
-	<row id="msg_c03p13_veteranm_01">
+	<row id="msg_c03p13_veteranm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・12月ロム用仮メッセージ</comment>
+・1仮メッセージ</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">ふぉふぉふぉ！　つよさとは
 からだの　おおきさでは　ない▽

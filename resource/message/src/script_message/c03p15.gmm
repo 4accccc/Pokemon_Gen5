@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T11:46:22"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T15:33:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -330,7 +330,7 @@
 プラズマ団に　とられちゃったあ</language>
 	</row>
 
-	<row id="msg_c03p15_leader8w_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_leader8w_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♀
 ・続けてleader3_03</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -338,12 +338,12 @@
 		<language name="JPN" width="256">？？？『あたしね
 おねーちゃんの　ひめいを　きいて▽
 おいかけたんだよ！▼
-……でも　ここ　おおきくて
+……でも　ここ　おおきいし
 ひとばかりで　みうしなっちゃったの▼</language>
 		<language name="JPN_KANJI" width="256">？？？『あたしね
 おねーちゃんの　ひめいを　きいて▽
 おいかけたんだよ！▼
-……でも　ここ　おおきくて
+……でも　ここ　おおきいし
 ひとばかりで　みうしなっちゃったの▼</language>
 	</row>
 
@@ -358,7 +358,7 @@
 きみは　できることを　したんだから▼</language>
 	</row>
 
-	<row id="msg_c03p15_leader8w_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_leader8w_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♀
 ・続けてwhite_02</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -367,12 +367,16 @@
 ひとの　ポケモンを
 とっちゃ　ダメなんだよ！！▼
 ポケモンと　ひとは　いっしょに
-いるのが　あたりまえ　なんだもん！▼</language>
+いるのが　ステキ　なんだもん！▼
+おたがい　ないものを　だしあって
+ささえあうのが　いちばん　だもん！▼</language>
 		<language name="JPN_KANJI" width="256">アイリス『……でも　ダメだもん！▼
 ひとの　ポケモンを
 とっちゃ　ダメなんだよ！！▼
 ポケモンと　ひとは　いっしょに
-いるのが　あたりまえ　なんだもん！▼</language>
+いるのが　ステキ　なんだもん！▼
+おたがい　ないものを　だしあって
+ささえあうのが　いちばん　だもん！▼</language>
 	</row>
 
 	<row id="msg_c03p15_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">

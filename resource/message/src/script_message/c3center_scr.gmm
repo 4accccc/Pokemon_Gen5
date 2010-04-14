@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T16:59:33"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T15:25:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -295,153 +295,85 @@
 	<row id="msg_c03center_dancer1_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>未使用ファイル</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
-		<language name="JPN" width="256">オーケー！
-レッツ　ダンシング！▼</language>
-		<language name="JPN_KANJI" width="256">オーケー！
-レッツ　ダンシング！▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・続けてdancer1_03</comment>
+	<row id="msg_c03center_dancer1_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
-		<language name="JPN" width="256">どうだい！
-バツグンの　ステップだろ▼
-でさ　なかまが　いれば
-もっと　グッとくると　おもわない？▼</language>
-		<language name="JPN_KANJI" width="256">どうだい！
-バツグンの　ステップだろ▼
-でさ　仲間が　いれば
-もっと　グッとくると　思わない？▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・ダンサー探しイベント開始
-・はい/いいえ選択肢
-　はい→dancer1_04
-　いいえ→dancer1_07</comment>
+	<row id="msg_c03center_dancer1_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
-		<language name="JPN" width="256">そうだ　キミ！
-ダンサーに　こえ　かけてくれない？▼
-ふたり　さそって　くれれば
-トリオのチームで　ダンスできるっしょ！</language>
-		<language name="JPN_KANJI" width="256">そうだ　キミ！
-ダンサーに　声　かけてくれない？▼
-２人　さそって　くれれば
-トリオのチームで　ダンスできるっしょ！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・ダンサー探しイベント中</comment>
+	<row id="msg_c03center_dancer1_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
-		<language name="JPN" width="256">オレと　おんなじ　かっこう！
-そいつは　ダンサー！！</language>
-		<language name="JPN_KANJI" width="256">オレと　おんなじ　格好！
-そいつは　ダンサー！！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・ダンサー探しイベント中
-　再会話時</comment>
+	<row id="msg_c03center_dancer1_05" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
-		<language name="JPN" width="256">さびれた　ストリートと
-はとばで　ダンスしてる　ヤツが▽
-いるって　ウインドが　トークしてた▼
-あっ　かぜのウワサ　ってこと！</language>
-		<language name="JPN_KANJI" width="256">さびれた　ストリートと
-波止場で　ダンスしてる　ヤツが▽
-いるって　ウインドが　トークしてた▼
-あっ　風のウワサ　ってこと！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・会話後、メンバーの方を見て
-　ステイウォーク</comment>
+	<row id="msg_c03center_dancer1_06" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
-		<language name="JPN" width="256">こえを　かけてくれて　サンキュー！
-ステップを　たしかめあってるのさ！</language>
-		<language name="JPN_KANJI" width="256">声を　かけてくれて　サンキュー！
-ステップを　確かめ合ってるのさ！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・いいえ選択時
-・再度会話したときはdancer1_03</comment>
+	<row id="msg_c03center_dancer1_07" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
-		<language name="JPN" width="256">そうかい？　チームくんだら
-すごい　ステップ　みせるのにさ</language>
-		<language name="JPN_KANJI" width="256">そうかい？　チーム組んだら
-すごい　ステップ　みせるのにさ</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03center_dancer2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・C03P12のダンサー会話後・表示</comment>
+	<row id="msg_c03center_dancer2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
-		<language name="JPN" width="256">ぼくのダンスに　たりなかった
-なかまが　できたよ！　うれしいよ！</language>
-		<language name="JPN_KANJI" width="256">ぼくのダンスに　足りなかった
-仲間が　できたよ！　うれしいよ！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03center_dancer3_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・C03P14のダンサー会話後・表示</comment>
+	<row id="msg_c03center_dancer3_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
-		<language name="JPN" width="256">ダンサー　おどる！
-まわりが　よろこぶ！▽
-よろこび　ひろがる！▽
-せかいは　ハッピー！</language>
-		<language name="JPN_KANJI" width="256">ダンサー　おどる！
-周りが　喜ぶ！▽
-喜び　広がる！▽
-世界は　ハッピー！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・全員探した後に話しかけるとこのセリフ
-・アイテム入手処理
-　No223「おまもりこばん」(仮）</comment>
+	<row id="msg_c03center_dancer1_08" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
-		<language name="JPN" width="256">サンキュー！　サイコーの
-チーム　たんじょう　しちゃった！▽
-これは　オレからの　きもち！▼</language>
-		<language name="JPN_KANJI" width="256">サンキュー！　サイコーの
-チーム　誕生しちゃった！▽
-これは　オレからの　気持ち！▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_09" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・アイテム入手後自動で表示
-・再度会話はdancer1_09</comment>
+	<row id="msg_c03center_dancer1_09" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
-		<language name="JPN" width="256">オレたち　ダンスで
-メッセージ　つたえる！▼
-うれしいことや　かなしいこと……
-せかいは　こんなにも▽
-かがやいてる　ってことを！</language>
-		<language name="JPN_KANJI" width="256">オレたち　ダンスで
-メッセージ　伝える！▼
-うれしいことや　悲しいこと……
-世界は　こんなにも▽
-輝いてる　ってことを！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_10" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後、3人で踊れ</comment>
+	<row id="msg_c03center_dancer1_10" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
-		<language name="JPN" width="256">オーケー！
-レッツ　ダンシング！▼</language>
-		<language name="JPN_KANJI" width="256">オーケー！
-レッツ　ダンシング！▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>

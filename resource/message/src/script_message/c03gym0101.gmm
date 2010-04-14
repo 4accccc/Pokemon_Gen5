@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T14:30:30"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T15:27:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -385,8 +385,8 @@
 えをかいたり　しょうぶしたりを
 ずっと　くりかえして……　それでも▽
 いまだに　はっけんが　あるんだ▼
-ほんと　せかいは
-ふしぎで　みちているんだー</language>
+ポケモンと　くらす　せかいは
+ほんと ふしぎで　みちているんだー</language>
 		<language name="JPN_KANJI" width="256">キミは　旅に　でてから
 どれだけの　発見を　した？▼
 ボクはね　子供のころに
@@ -395,8 +395,8 @@
 絵を描いたり　勝負したりを
 ずっと　繰り返して……　それでも▽
 いまだに　発見が　あるんだ▼
-ほんと　世界は
-不思議で　満ちているんだー</language>
+ポケモンと　暮らす　世界は
+ほんと 不思議で　満ちているんだー</language>
 	</row>
 
 	<row id="msg_c03gym0101_leader_end_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
