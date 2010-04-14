@@ -51,7 +51,7 @@ enum{
 //名前
 #define WIN_NAME_PX (3)
 #define WIN_NAME_PY (4)
-#define WIN_NAME_SX (BMP_CSX_TYPE1)
+#define WIN_NAME_SX (BMP_CSX_TYPE2)
 #define WIN_NAME_SY (2)
 
 //トレーナータイプ
@@ -160,7 +160,8 @@ enum{
 #define BMP_WIDTH_TYPE2 (8*BMP_CSX_TYPE2)
 #define BMP_WIDTH_TYPE3 (8*BMP_CSX_TYPE3)
 
-#define SEC_DISP_OFS  (2)   //適当。いい感じに見える値で。
+#define SEC_DISP_OFS  (2) //適当。いい感じに見える値で。
+#define NAME_OFS    (8*1) // 名前表示右スペース
 #define YEN_OFS     (8*1) //「円」表示分右スペース
 #define HIKI_OFS    (8*2) //「ひき」表示分右スペース
 
@@ -263,7 +264,7 @@ static void WriteNumDataFill( TR_CARD_WORK* wk,
                 const StrNumberDispType inDisptype,
                 const u32 inFillSatrt,
                 const u32 inFillWidth,
-                const u32 wait);
+                const u32 col);
 static void WriteStrData( TR_CARD_WORK* wk,
               GFL_BMPWIN *inWin,
               const u32 inBmpWidth,
@@ -365,7 +366,7 @@ void TRCBmp_WriteTrWinInfo(TR_CARD_WORK* wk, GFL_BMPWIN *win[], const TR_CARD_DA
     //なまえ
     GFL_STR_SetStringCode( wk->TmpBuf, inTrCardData->TrainerName );
     WriteStrData( wk, win[TRC_BMPWIN_TR_NAME],
-            BMP_WIDTH_TYPE1, 0, 0, wk->TmpBuf);
+            BMP_WIDTH_TYPE2, NAME_OFS, 0, wk->TmpBuf);
 
     //ずかん
     if (inTrCardData->PokeBookFlg){ //表示フラグがたっているときのみ表示  
@@ -381,27 +382,11 @@ void TRCBmp_WriteTrWinInfo(TR_CARD_WORK* wk, GFL_BMPWIN *win[], const TR_CARD_DA
     // せいかく
     TRCBmp_PrintPersonality( wk, inTrCardData->Personality, 0 );   // セーブデータに性格データ保存がない
     
-    //プレイ時間
-    if ( inTrCardData->TimeUpdate ){  //通常
-      WriteNumData( wk, win[TRC_BMPWIN_PLAY_TIME],
-            BMP_WIDTH_TYPE3, 0, 0, str, PLAYTIME_GetMinute(inTrCardData->PlayTime),
-            TIME_M_DIGIT,
-            STR_NUM_DISP_ZERO,0);   //分
-      WriteNumData( wk, win[TRC_BMPWIN_PLAY_TIME],
-            BMP_WIDTH_TYPE3, 3*8, 0, str, PLAYTIME_GetHour(inTrCardData->PlayTime),
-            TIME_H_DIGIT,
-            STR_NUM_DISP_SPACE,0);    //時
-    }else{            //時間更新しない場合のみ、固定で「：」表示
-      WriteNumData( wk, win[TRC_BMPWIN_PLAY_TIME],
-              BMP_WIDTH_TYPE3, 0, 0, str, inTrCardData->PlayTime_m, TIME_M_DIGIT,
-              STR_NUM_DISP_ZERO,0);   //分
-      WriteNumData( wk, win[TRC_BMPWIN_PLAY_TIME],
-              BMP_WIDTH_TYPE3, 3*8, 0, str, inTrCardData->PlayTime_h, TIME_H_DIGIT,
-              STR_NUM_DISP_SPACE,0);    //時
-      
-      PRINTSYS_Print( GFL_BMPWIN_GetBmp(win[TRC_BMPWIN_PLAY_TIME]) , SEC_DISP_POS_X+SEC_DISP_OFS, 0, wk->CPrmBuf[MSG_TCARD_12], wk->fontHandle );
-    }
-    
+    //おこづかい
+    WriteNumDataWithCredit( wk, win[TRC_BMPWIN_PLAY_TIME],
+            BMP_WIDTH_TYPE3, YEN_OFS, 0, str, inTrCardData->Money, MONEY_DIGIT,
+            STR_NUM_DISP_SPACE,1, 0);
+
     // 簡易会話描画
     {
 
@@ -409,18 +394,6 @@ void TRCBmp_WriteTrWinInfo(TR_CARD_WORK* wk, GFL_BMPWIN *win[], const TR_CARD_DA
         PMS_DRAW_Print( wk->PmsDrawWork, win[TRC_BMPWIN_PMSWORD], &wk->TrCardData->Pms, 0 );
     }
     
-    //スタート時間
-#if 0
-    WriteNumData( wk, win[TRC_BMPWIN_START_TIME],
-            BMP_WIDTH_TYPE3, 1*8, 0, str, inTrCardData->Start_d, DAY_DIGIT,
-            STR_NUM_DISP_ZERO,0); //日
-    WriteNumData( wk, win[TRC_BMPWIN_START_TIME],
-            BMP_WIDTH_TYPE3, 4*8, 0, str, inTrCardData->Start_m, MONTH_DIGIT,
-            STR_NUM_DISP_ZERO,0); //月
-    WriteNumData( wk, win[TRC_BMPWIN_START_TIME],
-            BMP_WIDTH_TYPE3, 7*8, 0, str, inTrCardData->Start_y, YEAR_DIGIT,
-            STR_NUM_DISP_ZERO,0); //年
-#endif
   }
 }
 
@@ -663,12 +636,10 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
     WriteNumData( wk, win, BMP_WIDTH_TYPE0, 0, y, str, inTrCardData->TrainerID, 
                   TR_ID_DIGIT, STR_NUM_DISP_ZERO, col);
     break;
-  case SCORE_LINE_MONEY:  // おこづかい
+  case SCORE_LINE_MONEY:  // プレイじかん
 //    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, y, wk->CPrmBuf[MSG_TCARD_06+1], wk->fontHandle );
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_06+1], col );
-    WriteNumDataWithCredit( wk, win,
-            BMP_WIDTH_TYPE2, YEN_OFS, y, str, inTrCardData->Money, MONEY_DIGIT,
-            STR_NUM_DISP_SPACE,1, col);
+    TRCBmp_WritePlayTime(wk, win, y, wk->TrCardData, wk->PlayTimeBuf, col);
 
     break;
   case SCORE_LINE_START_DATE_1: // はじめたひ１行目
@@ -987,7 +958,7 @@ WriteNumDataFill( TR_CARD_WORK* wk,
           const StrNumberDispType inDisptype,
           const u32 inFillSatrt,
           const u32 inFillWidth,
-          const u32 wait)
+          const u32 col)
 {
   u32 len;
   
@@ -996,9 +967,9 @@ WriteNumDataFill( TR_CARD_WORK* wk,
 
   GFL_BMP_Fill( GFL_BMPWIN_GetBmp(inWin),inFillSatrt,  0, inFillWidth, 2*8, 0 );
 
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(inWin) 
+  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(inWin) 
         , inBmpWidth-(len+inRightSpace), inStartY
-        , buff, wk->fontHandle );
+        , buff, wk->fontHandle, col_tbl[col] );
 }
 
 
@@ -1042,15 +1013,11 @@ static void WriteStrData( TR_CARD_WORK* wk,
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-void TRCBmp_WritePlayTime(TR_CARD_WORK* wk, GFL_BMPWIN  *win[], const TR_CARD_DATA *inTrCardData, STRBUF *str)
+void TRCBmp_WritePlayTime(TR_CARD_WORK* wk, GFL_BMPWIN  *win, int y, const TR_CARD_DATA *inTrCardData, STRBUF *str, int col)
 {
   int hour;
-//  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win[TRC_BMPWIN_PLAY_TIME]), 0 );
   
   GF_ASSERT(inTrCardData->PlayTime!=NULL&&"ERROR:PlayTimeData is NULL!!");
-
-  // 時間表記部分だけクリアする
-  GFL_BMP_Fill( GFL_BMPWIN_GetBmp(win[TRC_BMPWIN_PLAY_TIME]), 18*8, 0, WIN_TIME_SX*8-18*8, 16, 0 );
 
   // プレイ時間書き直し
   hour = PLAYTIME_GetHour(inTrCardData->PlayTime);
@@ -1059,20 +1026,24 @@ void TRCBmp_WritePlayTime(TR_CARD_WORK* wk, GFL_BMPWIN  *win[], const TR_CARD_DA
     hour = HOUR_DISP_MAX;
   }
 
-  WriteNumDataFill( wk, win[TRC_BMPWIN_PLAY_TIME],
-            BMP_WIDTH_TYPE3, 0, 0, str,
+  WriteNumDataFill( wk, win,
+            BMP_WIDTH_TYPE3, 0, y, str,
             PLAYTIME_GetMinute(inTrCardData->PlayTime),
             TIME_M_DIGIT, STR_NUM_DISP_ZERO,
             MINITE_DISP_POS_X,
-            MINITE_DISP_W,0);   //分
-  WriteNumDataFill( wk, win[TRC_BMPWIN_PLAY_TIME],
-            BMP_WIDTH_TYPE3, 3*8, 0, str,
+            MINITE_DISP_W,col);   //分
+  WriteNumDataFill( wk, win,
+            BMP_WIDTH_TYPE3, 3*8, y, str,
             hour,
             TIME_H_DIGIT, STR_NUM_DISP_SPACE,
             HOUR_DISP_POS_X,
-            HOUR_DISP_W,0);   //時
-  //こいつだけリアルタイム更新があるから
-  GFL_BMPWIN_TransVramCharacter(win[TRC_BMPWIN_PLAY_TIME]);
+            HOUR_DISP_W,col);   //時
+
+  // コロン書く
+  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(win), SEC_DISP_POS_X+SEC_DISP_OFS, y,
+                  wk->SecBuf, wk->fontHandle, col_tbl[col] );
+
+
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1088,16 +1059,6 @@ void TRCBmp_WritePlayTime(TR_CARD_WORK* wk, GFL_BMPWIN  *win[], const TR_CARD_DA
 //--------------------------------------------------------------------------------------------
 void TRCBmp_WriteSec(TR_CARD_WORK* wk,GFL_BMPWIN  *win, const BOOL inDisp, STRBUF *inSecBuf)
 {
-  if (inDisp){
-//    GF_STR_PrintColor(win, FONT_SYSTEM, inSecBuf, SEC_DISP_POS_X+SEC_DISP_OFS, 0, MSG_ALLPUT, TR_MSGCOLOR, NULL);
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win) 
-          , SEC_DISP_POS_X+SEC_DISP_OFS, 0
-          , inSecBuf, wk->fontHandle );
-  }else{
-    GFL_BMP_Fill( GFL_BMPWIN_GetBmp(win), SEC_DISP_POS_X, 0, 8, 2*8, 0 );
-//    GFL_BMPWINOn( win );
-  }
-  GFL_BMPWIN_TransVramCharacter(win);
-  GFL_BG_LoadScreenV_Req( FONT_BG);
+  return;
 }
 

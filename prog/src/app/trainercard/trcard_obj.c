@@ -72,7 +72,6 @@ static const BADGE_POS StarPos[] = {
   {8*24,8*12},
 };
 
-static void InitCharPlttManager(void);
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -87,7 +86,6 @@ void InitTRCardCellActor( TR_CARD_OBJ_WORK *wk , const GFL_DISP_VRAM *vramBank)
 {
   int i;
   ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_TRAINERCARD , wk->heapId );
-  InitCharPlttManager();
 
   GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , vramBank, wk->heapId );
   // セルアクター初期化
@@ -214,9 +212,6 @@ void RereaseCellObject(TR_CARD_OBJ_WORK *wk)
   //OAMレンダラー破棄
   GFL_CLACT_SYS_Delete();
 
-//  DeleteCharManager();
-//  DeletePlttManager();
-  
   GX_SetOBJVRamModeChar(GX_OBJVRAMMODE_CHAR_1D_32K);  
 }
 
@@ -233,7 +228,6 @@ void RereaseCellObject(TR_CARD_OBJ_WORK *wk)
 //--------------------------------------------------------------------------------------------
 void SetSActDrawSt( TR_CARD_OBJ_WORK *wk, u8 act_id, u8 anm_pat ,u8 draw_f)
 {
-//  CLACT_SetAnmFlag(wk->ClActWorkS[act_id],TRUE);
   GFL_CLACT_WK_SetAnmSeq( wk->ClActWorkS[act_id],anm_pat);
   GFL_CLACT_WK_ResetAnm(wk->ClActWorkS[act_id]);
   GFL_CLACT_WK_SetDrawEnable(wk->ClActWorkS[act_id],draw_f);  
@@ -271,41 +265,4 @@ void SetEffActDrawSt( TR_CARD_OBJ_WORK *wk, u8 pat ,u8 draw_f)
   GFL_CLACT_WK_ResetAnm(wk->ClActWorkS[ACTS_BTN_EFF]);
   GFL_CLACT_WK_SetDrawEnable(wk->ClActWorkS[ACTS_BTN_EFF],draw_f);  
 }
-
-//--------------------------------------------------------------------------------------------
-/**
- * キャラクタマネージャー
- *パレットマネージャーの初期化
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-static void InitCharPlttManager(void)
-{
-  /*
-  // キャラクタマネージャー初期化
-  {
-    CHAR_MANAGER_MAKE cm = {
-      TR_CARD_CHAR_CONT_NUM,
-      TR_CARD_CHAR_VRAMTRANS_MAIN_SIZE,
-      TR_CARD_CHAR_VRAMTRANS_SUB_SIZE,
-      HEAPID_TR_CARD
-    };
-    InitCharManager(&cm);
-  }
-  // パレットマネージャー初期化
-  InitPlttManager(TR_CARD_PLTT_CONT_NUM, HEAPID_TR_CARD);
-
-  // 読み込み開始位置を初期化
-  CharLoadStartAll();
-  PlttLoadStartAll();
-
-  REND_OAM_UtilOamRamClear_Main(HEAPID_TR_CARD);
-  REND_OAM_UtilOamRamClear_Sub(HEAPID_TR_CARD);
-
-//  DellVramTransferManager();
-  */
-}
-
-
 

@@ -65,7 +65,7 @@ extern void TRCBmp_TransTrWinInfo(TR_CARD_WORK* wk,GFL_BMPWIN *win[]);
 extern void TRCBmp_WriteTrWinInfo(TR_CARD_WORK* wk, GFL_BMPWIN *win[], const TR_CARD_DATA* inTrCardData );
 extern void TRCBmp_WriteTrWinInfoRev(TR_CARD_WORK* wk, GFL_BMPWIN *win[], const TR_CARD_DATA* inTrCardData );
 extern void TRCBmp_NonDispWinInfo(GFL_BMPWIN *win[], const u8 start, const u8 end);
-extern void TRCBmp_WritePlayTime(TR_CARD_WORK* wk, GFL_BMPWIN *win[], const TR_CARD_DATA *inTrCardData, STRBUF *str);
+extern void TRCBmp_WritePlayTime(TR_CARD_WORK* wk, GFL_BMPWIN *win, int y, const TR_CARD_DATA *inTrCardData, STRBUF *str, int col);
 extern void TRCBmp_WriteSec(TR_CARD_WORK* wk,GFL_BMPWIN *win, const BOOL inDisp, STRBUF *inSecBuf);
 extern void TRCBmp_WriteBackButton(TR_CARD_WORK* wk,const u8 on_f);
 extern void TRCBmp_WriteExpWin(TR_CARD_WORK* wk,u8 pat);

@@ -128,6 +128,9 @@ typedef struct TR_CARD_WORK_tag
   NNSG2dScreenData *ScrnData;
   void             *pScrnBCase;
   NNSG2dScreenData *pSBCase;
+  void             *pPalBuf;
+  NNSG2dPaletteData *pPalData;
+  int               blink_count;  // 
   
 //  TOUCH_SW_SYS *ynbtn_wk;   // YesNo選択ボタンワーク
   GFL_TCB      *vblankFunc;

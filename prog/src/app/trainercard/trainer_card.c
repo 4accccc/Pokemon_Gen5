@@ -278,12 +278,13 @@ static void DecodeSignData(const u8 *inRawData, u8 *outData);
 static void EncodeSignData( const u8 *inBmpData, u8 *outData );
 
 static void TransSignData(const int inFrame, const u8 *inSignData, int flag);
-static void UpdatePlayTime(TR_CARD_WORK *wk, const u8 inUpdateFlg);
 static void DispTouchBarObj( TR_CARD_WORK *wk, int is_back );
 static void UpdateSignAnime( TR_CARD_WORK *wk );
 static void Trans_SignScreen( const int inFrame, const int flag );
 static BOOL CardScaling( TR_CARD_WORK *wk );
 static void Change_SignAnimeButton( TR_CARD_WORK *wk, int flag, int OnOff );
+static void Start_SignAnimeButton( TR_CARD_WORK *wk, int flag );
+static void UpdateTextBlink( TR_CARD_WORK *wk );
 
 
 static void Stock_TouchPoint( TR_CARD_WORK *wk, int scale_mode );
@@ -561,9 +562,9 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
       req = CheckInput(wk);           // 入力チェック
       JumpInputResult(wk, req, seq);  // 入力で分岐
       
-      UpdatePlayTime(wk, wk->TrCardData->TimeUpdate);
       UpdateSignAnime(wk);
-      
+      UpdateTextBlink(wk);
+
       if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
         _scruch_sound_func(wk);
         DrawBrushLine( (GFL_BMPWIN*)wk->TrSignData, &wk->AllTouchResult, 
@@ -686,6 +687,9 @@ GFL_PROC_RESULT TrCardProc_End( GFL_PROC * proc, int * seq , void *pwk, void *my
   GFL_HEAP_FreeMemory( wk->TrArcData ); //トレーナーキャラアーカイブデータ解放
 
   GFL_HEAP_FreeMemory( wk->TrScrnArcData );//トレーナースクリーン解放
+
+  // 文字点滅パレット解放
+  GFL_HEAP_FreeMemory( wk->pPalBuf );
 
   TRCBmp_ExitTrCardBmpWin( wk );      // BMPウィンドウ開放
   TrCardBgExit();     // BGL削除
@@ -813,7 +817,7 @@ static int card_palette_table[][2]={
 //----------------------------------------------------------------------------------
 static void SetCardPalette(TR_CARD_WORK *wk ,u8 inCardRank, const u8 inPokeBookHold)
 {
-
+  u32 palette_index;
   if (inPokeBookHold){
       int Version = 1;
 
@@ -827,14 +831,21 @@ static void SetCardPalette(TR_CARD_WORK *wk ,u8 inCardRank, const u8 inPokeBookH
       }
       
       OS_Printf("rank=%d, version=%d", inCardRank, Version);
+
       // ＷＢにあわせてパレット読み込み
-      GFL_ARC_UTIL_TransVramPalette( ARCID_TRAINERCARD, card_palette_table[inCardRank][Version],
-        PALTYPE_SUB_BG , 0 , 2*16*16 ,wk->heapId );
+      palette_index = card_palette_table[inCardRank][Version];
   } else{
-      GFL_ARC_UTIL_TransVramPalette( ARCID_TRAINERCARD, NARC_trainer_case_card_6_NCLR,
-        PALTYPE_SUB_BG , 0 , 2*16*16 ,wk->heapId );
+      palette_index = NARC_trainer_case_card_6_NCLR;
    
   }
+
+  // パレット転送
+  GFL_ARC_UTIL_TransVramPalette( ARCID_TRAINERCARD, palette_index,
+                                 PALTYPE_SUB_BG, 0, 2*16*16 ,wk->heapId );
+  
+  // 点滅用にパレット1列目を保存しておく
+  wk->pPalBuf = GFL_ARC_UTIL_LoadPalette( ARCID_TRAINERCARD, palette_index, 
+                                          &wk->pPalData, wk->heapId );
 }
 
 
@@ -1004,13 +1015,6 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
 
   SetCardPalette(wk,wk->TrCardData->CardRank, wk->TrCardData->PokeBookFlg);
 
-  // UNSER_CASE_COVER PALETTE(UNDER_DISPLAY)
-//  {
-//    GFL_ARC_UTIL_TransVramPalette( ARCID_TRAINERCARD, NARC_trainer_case_card_case_g_NCLR,
-//          PALTYPE_MAIN_BG , 0 , 16*2*16 ,wk->heapId );
-//  }
-  // CASE PALETTE
-
   //TRAINER
   if (wk->TrCardData->OtherTrCard==FALSE){
     wk->TrArcData = GFL_ARC_UTIL_LoadBGCharacter( ARCID_TRAINERCARD, NARC_trainer_case_card_trainer_NCGR,
@@ -1088,6 +1092,8 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void TrCardBgExit( void )
 {
+
+  
   GFL_DISP_GX_SetVisibleControl(
     GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 |
     GX_PLANEMASK_BG3 | GX_PLANEMASK_OBJ, VISIBLE_OFF );
@@ -1248,7 +1254,7 @@ static void EditOK_MineCardAppear( TR_CARD_WORK *wk, int is_back )
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE, ANMS_LOUPE_L,             TRUE);
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_TURN,  ANMS_TURN_L,              TRUE);
 
-      SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, TRUE);
+      SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_WHITE_PEN_L-wk->pen*2, TRUE);
 
       // サインアニメ中か
       Change_SignAnimeButton( wk, wk->TrCardData->SignAnimeOn, TRUE);
@@ -1262,7 +1268,7 @@ static void EditOK_MineCardAppear( TR_CARD_WORK *wk, int is_back )
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK,   APP_COMMON_BARICON_RETURN_OFF, TRUE);
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END,    APP_COMMON_BARICON_EXIT_OFF,   TRUE);
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE,  ANMS_SIMPLE_L,                 TRUE);
-      SetSActDrawSt(&wk->ObjWork,  ACTS_BTN_PEN,    ANMS_BLACK_PEN_L+wk->pen*2,    TRUE);
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_PEN,    ANMS_WHITE_PEN_L-wk->pen*2,    TRUE);
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_TURN,   ANMS_TURN_L,                   FALSE);
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE, ANMS_ANIME_L,                  FALSE);
     }
@@ -1296,7 +1302,7 @@ static void EditNG_MineCardAppear( TR_CARD_WORK *wk, int is_back )
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE, ANMS_LOUPE_L,             FALSE);
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_TURN,  ANMS_TURN_L,              TRUE);
 
-    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, FALSE);
+    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_WHITE_PEN_L-wk->pen*2, FALSE);
 
     // サインアニメ中か
     Change_SignAnimeButton( wk, wk->TrCardData->SignAnimeOn, FALSE);
@@ -1331,7 +1337,7 @@ static void OtherCardAppear( TR_CARD_WORK *wk, int is_back )
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END,   APP_COMMON_BARICON_EXIT,  FALSE);
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE, ANMS_LOUPE_L,             FALSE);
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_TURN,  ANMS_TURN_L,              TRUE);
-    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, FALSE);
+    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_WHITE_PEN_L-wk->pen*2, FALSE);
     Change_SignAnimeButton( wk, wk->TrCardData->SignAnimeOn, FALSE);
     SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BOOKMARK, APP_COMMON_BARICON_CHECK_OFF, FALSE);
   }
@@ -1662,10 +1668,29 @@ static void SetBookMark( TR_CARD_WORK *wk)
 //----------------------------------------------------------------------------------
 static void Change_SignAnimeButton( TR_CARD_WORK *wk, int flag, int OnOff )
 {
-  if(flag==0){
+  if(flag==0){  // 再生ボタン
     SetSActDrawSt(&wk->ObjWork,ACTS_BTN_CHANGE, ANMS_ANIME_L, OnOff);
   }else{
     SetSActDrawSt(&wk->ObjWork,ACTS_BTN_CHANGE, ANMS_STOP_L,  OnOff);
+  }
+
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief アニメボタンの表示を切り替える
+ *
+ * @param   wk    
+ *
+ * @retval  static    
+ */
+//----------------------------------------------------------------------------------
+static void Start_SignAnimeButton( TR_CARD_WORK *wk, int flag )
+{
+  if(flag==0){  // 再生ボタン有効
+    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_CHANGE, ANMS_ANIME_G, TRUE);
+  }else{        // 停止ボタン有効
+    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_CHANGE, ANMS_STOP_G,  TRUE);
   }
 
 }
@@ -1743,15 +1768,16 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
     break;
   case 2:     // カード裏返しボタン
     GFL_UI_TP_GetPointCont( &wk->tp_x , &wk->tp_y );
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_TURN, ANMS_TURN_G ,TRUE);
     return TRC_KEY_REQ_REV_BUTTON;
     break;
   case 3:     // バッジ画面ボタン・アニメON/OFFボタン
     if(wk->is_back){
       // アニメON／OFF
       if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
+        Start_SignAnimeButton( wk, wk->TrCardData->SignAnimeOn );
         wk->TrCardData->SignAnimeOn ^=1;
         Trans_CardBackScreen(wk, wk->TrCardData->Version);
-        Change_SignAnimeButton( wk, wk->TrCardData->SignAnimeOn, TRUE);
         Change_SignAnime( wk, wk->TrCardData->SignAnimeOn );
         OS_Printf("SignAnime = %d\n", wk->TrCardData->SignAnimeOn);
         PMSND_PlaySE( SND_TRCARD_ANIME );
@@ -1766,8 +1792,10 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
     if(wk->is_back && (!wk->isComm) && wk->TrCardData->SignAnimeOn==0){
       if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
           if(wk->ScaleMode==0){
+            SetSActDrawSt(&wk->ObjWork,ACTS_BTN_LOUPE, ANMS_LOUPE_G, TRUE);
             wk->sub_seq = 0;
           }else{
+            SetSActDrawSt(&wk->ObjWork,ACTS_BTN_LOUPE, ANMS_SIMPLE_G, TRUE);
             wk->sub_seq = 3;
           }
           PMSND_PlaySE( SND_TRCARD_LOUPE );
@@ -1779,8 +1807,8 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
     if(wk->is_back){
       if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
         PMSND_PlaySE( SND_TRCARD_PEN );
+        SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_WHITE_PEN_L-wk->pen*2+1, TRUE);
         wk->pen ^=1;
-        SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, TRUE);
         OS_Printf("pen touch\n");
       }
     }
@@ -1833,6 +1861,7 @@ static int large_touch_func( TR_CARD_WORK *wk, int hitNo )
     break;
   case 4:     // 精密描画ボタン
     if(wk->is_back && (!wk->isComm)){
+      SetSActDrawSt(&wk->ObjWork,ACTS_BTN_LOUPE, ANMS_SIMPLE_G, TRUE);
       PMSND_PlaySE( SND_TRCARD_ANIME );
       wk->sub_seq = 3;
       return TRC_KEY_REQ_SCALE_BUTTON;
@@ -1841,8 +1870,8 @@ static int large_touch_func( TR_CARD_WORK *wk, int hitNo )
   case 5:     // ペン先ボタン
     if(wk->is_back){
       PMSND_PlaySE( SND_TRCARD_PEN );
+      SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_WHITE_PEN_L-wk->pen*2+1, TRUE);
       wk->pen ^=1;
-      SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_BLACK_PEN_L+wk->pen*2, TRUE);
       OS_Printf("pen touch\n");
     }
     break;
@@ -2391,39 +2420,6 @@ static void TransSignData(const int inFrame, const u8 *inSignData, const int fla
   Trans_SignScreen( inFrame, flag );
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * プレイ時間更新
- *
- * @param wk        画面のワーク
- * @param inUpdateFlg   時間更新フラグ
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-static void UpdatePlayTime(TR_CARD_WORK *wk, const u8 inUpdateFlg)
-{
-  //更新フラグがたっているかをチェック
-  if (!inUpdateFlg){
-    return;
-  }
-
-  if (!wk->is_back){  //表面の場合のみ描画
-    if (wk->SecCount == 0){
-      TRCBmp_WritePlayTime(wk,wk->win, wk->TrCardData, wk->PlayTimeBuf);
-      //コロン描く
-      TRCBmp_WriteSec(wk,wk->win[TRC_BMPWIN_PLAY_TIME], TRUE, wk->SecBuf);
-    }else if(wk->SecCount == TRC_FRAME_RATE/2){
-      //コロン消す
-      TRCBmp_WriteSec(wk,wk->win[TRC_BMPWIN_PLAY_TIME], FALSE, wk->SecBuf);
-    }
-  }
-  //カウントアップ
-  wk->SecCount++;   //  1/TRC_FRAME_RATEなので
-  if( wk->SecCount >= TRC_FRAME_RATE )
-    wk->SecCount -= TRC_FRAME_RATE;
-}
-
 
 #define SIGN_ANIME_SWITCH_FRAME   ( 20 )
 
@@ -2448,7 +2444,29 @@ static void UpdateSignAnime( TR_CARD_WORK *wk )
   }
 }
 
+#define BLINK_COUNT_MAX       ( 8 )  ///< 点滅カウンタの最大値
+#define BLINK_PAL_DES_OFFSET  (  3 )  ///< 転送先オフセット
+#define BLINK_PAL_SRC_OFFSET  (  3 )  ///< 転送元オフセット
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief レコードデータスクロール時パレットの点滅処理
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void UpdateTextBlink( TR_CARD_WORK *wk )
+{
+  u16 *pal = wk->pPalData->pRawData;
+  if(++wk->blink_count > BLINK_COUNT_MAX){
+    wk->blink_count = 0;
+  }
+  if(wk->blink_count==0){
+    GXS_LoadBGPltt( &pal[BLINK_PAL_SRC_OFFSET], BLINK_PAL_DES_OFFSET*2, 4 );
+  }else if(wk->blink_count==(BLINK_COUNT_MAX/2)){
+    GXS_LoadBGPltt( &pal[BLINK_PAL_SRC_OFFSET+2], BLINK_PAL_DES_OFFSET*2, 4 );
+  }
+}
 
 
 //---------------------------------------------------------
