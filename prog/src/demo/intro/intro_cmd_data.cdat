@@ -89,8 +89,10 @@ static const INTRO_CMD_DATA c_intro_scene_02[] =
 //{ INTRO_CMD_TYPE_BRIGHTNESS_SET, { 16, }, }, // 真っ白
 //{ INTRO_CMD_TYPE_BRIGHTNESS_REQ, { 6, 0, 16, }, CMD_READ_NEXT }, // ホワイトからフェードイン
 
-  { INTRO_CMD_TYPE_MCSS_MOVE, { 0, FX32_CONST(0.2), FX32_CONST(8.0) }, },      // 博士移動
+  { INTRO_CMD_TYPE_CLEAR_WINDOW, },      // メッセージウィンドウクリア
+
   { INTRO_CMD_TYPE_MCSS_RESET_ANIME_FLAG, { 0 }, }, // 博士のアニメチェックフラグをリセット
+  { INTRO_CMD_TYPE_MCSS_MOVE, { 0, FX32_CONST(0.2), FX32_CONST(8.0) }, },      // 博士移動
   { INTRO_CMD_TYPE_MCSS_CHECK_ANIME, { 0 }, },      // 博士のアニメ終了待ち
 
   { INTRO_CMD_TYPE_MCSS_SET_ANIME, { 0, 2 }, },     // 博士をボールを投げるアニメに変更

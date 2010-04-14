@@ -314,6 +314,20 @@ void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id, int win_id )
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  イントロデモ メッセージウィンドウを消す
+ *
+ *	@param	INTRO_MSG_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INTRO_MSG_ClearWindow( INTRO_MSG_WORK* wk )
+{
+	BmpWinFrame_Clear( wk->win_dispwin, WINDOW_TRANS_ON );
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  イントロデモ プリントストリーム状態取得
  *
  *	@param	INTRO_MSG_WORK* wk 

@@ -421,5 +421,9 @@ BOOL INTRO_MCSS_MoveX( INTRO_MCSS_WORK * wk, u8 id, fx32 mx, fx32 px )
 
 	MCSS_SetPosition( wk->mcss_work[id], &pos );
 
+	if( wk->animeFlag[id] == TRUE ){
+		MCSS_SetAnmStopFlag( wk->mcss_work[id] );
+	}
+
 	return flg;
 }

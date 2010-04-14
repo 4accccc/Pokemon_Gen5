@@ -135,6 +135,7 @@ static BOOL CMD_KEY_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param
 static BOOL CMD_LOAD_GMM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_WORDSET( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
+static BOOL CMD_CLEAR_WINDOW( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_MCSS_LOAD( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_MCSS_SET_VISIBLE( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
 static BOOL CMD_MCSS_SET_ANIME( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param );
@@ -199,6 +200,7 @@ static BOOL (*c_cmdtbl[ INTRO_CMD_TYPE_MAX ])() =
   CMD_LOAD_GMM,
   CMD_WORDSET,
   CMD_PRINT_MSG,
+	CMD_CLEAR_WINDOW,
   CMD_MCSS_LOAD,
   CMD_MCSS_SET_VISIBLE,
   CMD_MCSS_SET_ANIME,
@@ -827,6 +829,18 @@ static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
   }
 
   return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  メッセージウィンドウクリア
+ *  @retval
+ */
+//-----------------------------------------------------------------------------
+static BOOL CMD_CLEAR_WINDOW( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
+{
+	INTRO_MSG_ClearWindow( wk->wk_msg );
+	return TRUE;
 }
 
 //-----------------------------------------------------------------------------
