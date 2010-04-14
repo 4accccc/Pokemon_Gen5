@@ -1739,10 +1739,18 @@ int mydwc_HandleError(void)
     }
   }
   if(_dWork->bHeapError){
+    //‚»‚Ì‚Ü‚ÜreturnNo‚ð‚¢‚ê‚Ä‚µ‚Ü‚¤‚ÆA
+    //ERRORCODE_HEAP‚âTIMEOUTˆÈŠO‚Ìƒ‚ƒm‚ª“ü‚Á‚Ä‚µ‚Ü‚¤‚Ì‚Å
+    //ŒŸ’m‚µ‚½‚ç‚¢‚ê‚é
     returnNo = ERRORCODE_HEAP;
+    GFL_NET_StateSetWifiError( errorCode, myErrorType, ret, returnNo );
+  }
+  if(_dWork->state==MDSTATE_TIMEOUT){
+    returnNo = ERRORCODE_TIMEOUT;
+    GFL_NET_StateSetWifiError( errorCode, myErrorType, ret, returnNo );
   }
   if( ret != 0 ){
-    GFL_NET_StateSetWifiError( errorCode, myErrorType, ret);
+    GFL_NET_StateSetWifiError( errorCode, myErrorType, ret, 0 );
   }
   return returnNo;
 }
