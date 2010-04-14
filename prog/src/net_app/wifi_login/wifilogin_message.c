@@ -38,6 +38,7 @@
 #include "wifilogin_local.h"
 #include "wifi_login.naix"
 #include "msg/msg_wifi_system.h"
+#include "app/app_printsys_common.h"
 
 //--------------------------------------------
 // 画面構成定義
@@ -106,6 +107,8 @@ struct _WIFILOGIN_MESSAGE_WORK {
   GFL_BMPWIN* titleWin;
 
   PRINT_STREAM* pStream;
+  APP_PRINTSYS_COMMON_WORK  print_wk;
+
 	GFL_TCBLSYS *pMsgTcblSys;
   PRINT_QUE*  SysMsgQue;
 
@@ -250,6 +253,18 @@ void WIFILOGIN_MESSAGE_InfoMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid)
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
   GFL_FONTSYS_SetColor(1, 2, 15);
 
+  { 
+    APP_PRINTSYS_COMMON_TYPE  type;
+    if( pWork->display == WIFILOGIN_DISPLAY_DOWN )
+    { 
+      type  = APP_PRINTSYS_COMMON_TYPE_BOTH;
+    }
+    else
+    { 
+      type  = APP_PRINTSYS_COMMON_TYPE_KEY;
+    }
+    APP_PRINTSYS_COMMON_PrintStreamInit( &pWork->print_wk, type );
+  }
   pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBuf, pWork->pFontHandle,
                                         MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
 
@@ -289,24 +304,19 @@ void WIFILOGIN_MESSAGE_InfoMessageDispWaitIcon(WIFILOGIN_MESSAGE_WORK* pWork,int
 
 BOOL WIFILOGIN_MESSAGE_InfoMessageEndCheck(WIFILOGIN_MESSAGE_WORK* pWork)
 {
-  if(pWork->pStream){
-    int state = PRINTSYS_PrintStreamGetState( pWork->pStream );
-    switch(state){
-    case PRINTSTREAM_STATE_DONE:
+  BOOL ret  = TRUE;
+
+  if( pWork->pStream )
+  { 
+    ret = APP_PRINTSYS_COMMON_PrintStreamFunc( &pWork->print_wk, pWork->pStream );
+    if( ret )
+    { 
       PRINTSYS_PrintStreamDelete( pWork->pStream );
       pWork->pStream = NULL;
-      break;
-    case PRINTSTREAM_STATE_PAUSE:
-      if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
-        PRINTSYS_PrintStreamReleasePause( pWork->pStream );
-      }
-      break;
-    default:
-      break;
     }
-    return FALSE;  //まだ終わってない
   }
-  return TRUE;// 終わっている
+
+  return ret;
 }
 
 //------------------------------------------------------------------------------
