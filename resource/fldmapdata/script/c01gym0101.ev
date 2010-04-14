@@ -178,7 +178,7 @@ EVENT_END
 /*     ポケモン像		      					              */
 /**************************************************************/
 EVENT_START		ev_bg_c01gym0101_pokezou
-_TALK_OBJ_START()
+	_TALK_START_SE_PLAY()
 	//分岐：ジムバッジ取得しているか、いないか
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
 
