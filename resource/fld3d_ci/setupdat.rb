@@ -80,12 +80,18 @@ while line = csv_file.gets
   ary << GetIdxByStr(vec, column[11])  #MDL_2ANM_2
   ary << GetIdxByStr(vec, column[12])  #MDL_2ANM_3
   ary << 0xffff  #NONE
+
+  if column[14].to_s == "~" then
+    ary << 0
+  else
+    ary << 1
+  end
   
   p ary
 
   #ƒoƒCƒiƒŠì¬
   dst_file = open("bin/#{bin_name}.bin","wb")
-  pack_str = ary.pack("LS14")
+  pack_str = ary.pack("LS14L")
   dst_file.write(pack_str)
 
   list_file.write("\"bin/#{bin_name}.bin\"\n")
