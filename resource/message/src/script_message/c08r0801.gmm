@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T13:57:31"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T16:11:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="207" right="2000" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -327,7 +327,7 @@
 こまったひとも　こまってないひとも！▽
 これを　もっていきなさい！▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンの　技　メロメロで
-こまった人も　こまってない人も！▽
+困った人も　困ってない人も！▽
 これを　持っていきなさい！▼</language>
 	</row>
 

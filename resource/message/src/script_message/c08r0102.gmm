@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T18:22:02"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T16:07:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -321,7 +321,7 @@
 りゅうせいぐんは▽
 ドラゴンタイプ　最強の　技▼
 ただし　使ったあと
-特攻が　がくっと　下がります</language>
+特攻が　がくっと　さがります</language>
 	</row>
 
 	<row id="msg_c08r0102_veteranw_02b" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
@@ -337,7 +337,7 @@
 りゅうせいぐんは▽
 ドラゴンタイプ　最強の　技▼
 ただし　使ったあと
-特攻が　がくっと　下がります</language>
+特攻が　がくっと　さがります</language>
 	</row>
 
 	<row id="msg_c08r0102_footballm_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
