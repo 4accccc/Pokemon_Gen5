@@ -36,6 +36,7 @@
 #define D09_TRAINERM_01                    6
 #define D09_RANGERM_01                     7
 #define D09_FLD_ITEM_01                    8
+#define D09_FLD_ITEM_06                    9
 
 #endif //ZONE_D09_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d09.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
