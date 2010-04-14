@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T22:00:39"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T23:08:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="207" right="1995" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="525"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="538"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="692"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -358,10 +358,16 @@
 ・続けてleader5_01</comment>
 		<attribute name="キャラ指定">七賢人２</attribute>
 		<language name="JPN" width="256">さて……[BE:01:ページ切り替え（クリア）]
+ゲーチスさまは　おまえが
+ここを　とおれりぬけられるか▼
+ためしたいとの　ことだが▼
 いかに　おまえと　いえど
 われら　６にんを　あいてに[BE:00:ページ切り替え（行送り）]
 かちのこれるとは　おもえん[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">さて……[BE:01:ページ切り替え（クリア）]
+ゲーチスさまは　おまえが
+ここを　通り抜けられるか▼
+試したいとの　ことだが▼
 いかに　おまえと　いえど
 われら　６人を　相手に[BE:00:ページ切り替え（行送り）]
 勝ち残るのは　無理と　いうもの[BE:01:ページ切り替え（クリア）]</language>
@@ -452,11 +458,9 @@
 ・続けてleader7_01</comment>
 		<attribute name="キャラ指定">ジムリーダー
 アーティ</attribute>
-		<language name="JPN" width="256">アーティ『……なまえ
-わすれちゃったけど　おんなのこに[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">アーティ『あのう　ベルに
 たのまれちゃったのも　あるし[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アーティ『……名前
-忘れちゃったけど　女の子に[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">アーティ『あのう　ベルに
 頼まれちゃったのも　あるし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -518,10 +522,16 @@
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">七賢人２</attribute>
-		<language name="JPN" width="256">われわれ　プラズマだんの……
-おうの　ジャマを　するでない！</language>
-		<language name="JPN_KANJI" width="256">我々　プラズマ団の……
-王の　ジャマを　するでない！</language>
+		<language name="JPN" width="256">？？？『ゲーチスさまは　いわれた
+われらは　えらばれた　そんざいだと▼
+そう！　せかいを　かえるために
+えらばれ　あつめられた▽
+われらが　まけるなど　ありえぬのだ！</language>
+		<language name="JPN_KANJI" width="256">？？？『ゲーチスさまは　いわれた
+われらは　選ばれた　存在だと▼
+そう！　世界を　変えるために
+選ばれ　集められた▽
+われらが　負けるなど　ありえぬのだ！</language>
 	</row>
 
 	<row id="msg_n01r0101_sage3_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -529,9 +539,9 @@
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">七賢人３</attribute>
-		<language name="JPN" width="256">われわれ　プラズマだんの……
+		<language name="JPN" width="256">？？？『われわれ　プラズマだんの……
 おうの　ジャマを　するでない！</language>
-		<language name="JPN_KANJI" width="256">我々　プラズマ団の……
+		<language name="JPN_KANJI" width="256">？？？『我々　プラズマ団の……
 王の　ジャマを　するでない！</language>
 	</row>
 
@@ -540,10 +550,13 @@
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">七賢人４</attribute>
-		<language name="JPN" width="256">われわれ　プラズマだんの……
-おうの　ジャマを　するでない！</language>
-		<language name="JPN_KANJI" width="256">我々　プラズマ団の……
-王の　ジャマを　するでない！</language>
+		<language name="JPN" width="256">？？？『じんじを　つくして
+てんめいを　まつ▼
+すべてのことは　なした
+あとは　Ｎさまを　しんじ　まつのみ</language>
+		<language name="JPN_KANJI" width="256">？？？『人事を尽くして天命を待つ▼
+すべてのことは　成した
+あとは　Ｎさまを　信じ　待つのみ</language>
 	</row>
 
 	<row id="msg_n01r0101_sage5_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -551,10 +564,16 @@
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">七賢人５</attribute>
-		<language name="JPN" width="256">われわれ　プラズマだんの……
-おうの　ジャマを　するでない！</language>
-		<language name="JPN_KANJI" width="256">我々　プラズマ団の……
-王の　ジャマを　するでない！</language>
+		<language name="JPN" width="256">？？？『いちまいの　はっぱがおち
+てんかが　かわる　ときを　しる▼
+われわれは　れきしを　しっている▼
+この　しろの　しゅつげんは
+イッシュが　かわる　まえぶれ……</language>
+		<language name="JPN_KANJI" width="256">？？？『一葉　落ちて
+天下の秋を知る▼
+我々は　歴史を　知っている▼
+この城の　出現は
+イッシュの　歴史が変わる　前触れ……</language>
 	</row>
 
 	<row id="msg_n01r0101_sage6_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -562,10 +581,12 @@
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">七賢人６</attribute>
-		<language name="JPN" width="256">われわれ　プラズマだんの……
-おうの　ジャマを　するでない！</language>
-		<language name="JPN_KANJI" width="256">我々　プラズマ団の……
-王の　ジャマを　するでない！</language>
+		<language name="JPN" width="256">？？？『あまだれ　いしをうがつ……▼
+ちのそこにて　このひを　まっていた……
+だれにも　ジャマは　させぬよ</language>
+		<language name="JPN_KANJI" width="256">？？？『雨だれ　石をうがつ……▼
+地の底にて　この日を　待っていた……
+だれにも　ジャマは　させぬよ</language>
 	</row>
 
 	<row id="msg_n01r0101_sage7_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -573,10 +594,14 @@
 ・主人公のほうを見ないでメッセージ表示
 ・クリアまで繰り返し</comment>
 		<attribute name="キャラ指定">七賢人７</attribute>
-		<language name="JPN" width="256">われわれ　プラズマだんの……
-おうの　ジャマを　するでない！</language>
-		<language name="JPN_KANJI" width="256">我々　プラズマ団の……
-王の　ジャマを　するでない！</language>
+		<language name="JPN" width="256">？？？『……てんのみちは
+あまりをなくし　ふそくをおぎなう▼
+ひとから　ポケモンを　うばうのは
+しぜんの　バランスを　とっているのだ！</language>
+		<language name="JPN_KANJI" width="256">？？？『……天の道は
+有余を損じて　不足を補う▼
+人から　ポケモンを　奪うのは
+自然の　バランスを　とっているのだ！</language>
 	</row>
 
 	<row id="msg_n01r0101_leader2_02">
