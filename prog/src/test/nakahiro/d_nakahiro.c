@@ -203,10 +203,18 @@ static const u16 DDemoMonsList[][7] =
 	{
 		MONSNO_KORATTA,			// ÉmÅ[É}Éã
 		MONSNO_KAIRIKII,		// Ç©Ç≠Ç∆Ç§
-		MONSNO_PERAPPU,			// Ç–Ç±Ç§
+		MONSNO_KAZAKAMI,		// Ç–Ç±Ç§
 		MONSNO_DOGAASU,			// Ç«Ç≠
 		MONSNO_GURAADON,		// Ç∂ÇﬂÇÒ
 		MONSNO_IWAAKU,			// Ç¢ÇÌ
+/*
+		MONSNO_MIZUGOROU,		// Ç›Ç∏
+		MONSNO_MIZUGOROU,		// Ç›Ç∏
+		MONSNO_MIZUGOROU,		// Ç›Ç∏
+		MONSNO_MIZUGOROU,		// Ç›Ç∏
+		MONSNO_MIZUGOROU,		// Ç›Ç∏
+		MONSNO_MIZUGOROU,		// Ç›Ç∏
+*/
 		0,
 	},
 	{

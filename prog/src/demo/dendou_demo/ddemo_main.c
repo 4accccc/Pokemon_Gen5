@@ -210,6 +210,11 @@ void DDEMOMAIN_InitBgMode(void)
 		GX_DISPMODE_GRAPHICS, GX_BGMODE_3, GX_BGMODE_3, GX_BG0_AS_3D,
 	};
 	GFL_BG_SetBGMode( &sysh );
+
+//	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x7ffff );
+//	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x7ffff );
+	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0 );
+	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0 );
 }
 
 void DDEMOMAIN_InitScene2BgFrame(void)
@@ -244,6 +249,11 @@ void DDEMOMAIN_InitScene2BgFrame(void)
 
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+
+//	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x7ffff );
+//	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x7ffff );
+	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0 );
+	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0 );
 }
 
 void DDEMOMAIN_ExitScene2BgFrame(void)
@@ -773,6 +783,15 @@ void DDEMOMAIN_CreateTypeParticle( DDEMOMAIN_WORK * wk )
 	wk->ptc = GFL_PTC_Create( wk->ptcWork, PARTICLE_LIB_HEAP_SIZE, TRUE, HEAPID_DENDOU_DEMO );
 	res = GFL_PTC_LoadArcResource( ARCID_DENDOU_DEMO_GRA, TypeArcTbl[wk->type], HEAPID_DENDOU_DEMO );
 	GFL_PTC_SetResource( wk->ptc, res, TRUE, NULL );
+
+	{	// 初期カメラを保存
+		GFL_G3D_CAMERA * cmr = GFL_PTC_GetCameraPtr( wk->ptc );
+		GFL_G3D_CAMERA_GetfovySin( cmr, &wk->ptcTypeCamera[0] );
+		GFL_G3D_CAMERA_GetfovyCos( cmr, &wk->ptcTypeCamera[1] );
+		GFL_G3D_CAMERA_GetAspect( cmr, &wk->ptcTypeCamera[2] );
+		GFL_G3D_CAMERA_GetNear( cmr, &wk->ptcTypeCamera[3] );
+		GFL_G3D_CAMERA_GetFar( cmr, &wk->ptcTypeCamera[4] );
+	}
 }
 
 void DDEMOMAIN_DeleteTypeParticle( DDEMOMAIN_WORK * wk )
@@ -797,17 +816,11 @@ void DDEMOMAIN_CreateNameParticle( DDEMOMAIN_WORK * wk )
 
 	{	// 初期カメラを保存
 		GFL_G3D_CAMERA * cmr = GFL_PTC_GetCameraPtr( wk->ptcName );
-/*
-		GFL_G3D_CAMERA_GetTop( cmr, &wk->ptcCamera[0] );
-		GFL_G3D_CAMERA_GetBottom( cmr, &wk->ptcCamera[1] );
-		GFL_G3D_CAMERA_GetLeft( cmr, &wk->ptcCamera[2] );
-		GFL_G3D_CAMERA_GetRight( cmr, &wk->ptcCamera[3] );
-*/
-		GFL_G3D_CAMERA_GetfovySin( cmr, &wk->ptcCamera[0] );
-		GFL_G3D_CAMERA_GetfovyCos( cmr, &wk->ptcCamera[1] );
-		GFL_G3D_CAMERA_GetAspect( cmr, &wk->ptcCamera[2] );
-		GFL_G3D_CAMERA_GetNear( cmr, &wk->ptcCamera[3] );
-		GFL_G3D_CAMERA_GetFar( cmr, &wk->ptcCamera[4] );
+		GFL_G3D_CAMERA_GetfovySin( cmr, &wk->ptcNameCamera[0] );
+		GFL_G3D_CAMERA_GetfovyCos( cmr, &wk->ptcNameCamera[1] );
+		GFL_G3D_CAMERA_GetAspect( cmr, &wk->ptcNameCamera[2] );
+		GFL_G3D_CAMERA_GetNear( cmr, &wk->ptcNameCamera[3] );
+		GFL_G3D_CAMERA_GetFar( cmr, &wk->ptcNameCamera[4] );
 	}
 }
 
@@ -830,18 +843,42 @@ static void CreateParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc, BOOL dis
 
 	if( ptc == NULL ){ return; }
 
+/*
+	projection.type = GFL_G3D_PRJPERS;
+	projection.param1 = wk->ptcNameCamera[0];
+	projection.param2 = wk->ptcNameCamera[1];
+	projection.param3 = wk->ptcNameCamera[2];
+	projection.param4 = 0;
+	projection.near   = wk->ptcNameCamera[3];
+	projection.far    = wk->ptcNameCamera[4];
+	projection.scaleW = 0;
+
+	// サブ画面（上）
+	if( disp == FALSE ){
+		projection.param1 = wk->ptcNameCamera[0]+FX32_CONST(8);
+		projection.param2 = wk->ptcNameCamera[1]+FX32_CONST(8);
+//		projection.param3 = wk->ptcNameCamera[1]+8;
+	}
+*/
+
 	// メイン画面（下）
 	if( disp == TRUE ){
-		projection.param1 = FX32_CONST(3);
-		projection.param2 = -FX32_CONST(3);
+//		projection.param1 = FX32_CONST(3);
+//		projection.param2 = -FX32_CONST(3);
+		projection.param1 = FX32_CONST(3.975);
+		projection.param2 = -FX32_CONST(3.975);
 	// サブ画面（上）
 	}else{
-		projection.param1 = FX32_CONST(9+2);
-		projection.param2 = FX32_CONST(3+2);
+		projection.param1 = FX32_CONST(11.925+2);
+		projection.param2 = FX32_CONST(3.975+2);
+//		projection.param1 = FX32_CONST((9+2));
+//		projection.param2 = FX32_CONST((3+2));
 	}
 	projection.type = GFL_G3D_PRJORTH;
-	projection.param3 = -FX32_CONST(4);
-	projection.param4 = FX32_CONST(4);
+//	projection.param3 = -FX32_CONST(4);
+//	projection.param4 = FX32_CONST(4);
+	projection.param3 = -FX32_CONST(5.3);
+	projection.param4 = FX32_CONST(5.3);
 	projection.near = 0;
 	projection.far  = FX32_CONST( 1024 );	// 正射影なので関係ないが、念のためクリップのfarを設定
 	projection.scaleW = 0;
@@ -857,12 +894,12 @@ static void CreateNameParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc )
 	if( ptc == NULL ){ return; }
 
 	projection.type = GFL_G3D_PRJPERS;
-	projection.param1 = wk->ptcCamera[0];
-	projection.param2 = wk->ptcCamera[1];
-	projection.param3 = wk->ptcCamera[2];
+	projection.param1 = wk->ptcNameCamera[0];
+	projection.param2 = wk->ptcNameCamera[1];
+	projection.param3 = wk->ptcNameCamera[2];
 	projection.param4 = 0;
-	projection.near = wk->ptcCamera[3];
-	projection.far  = wk->ptcCamera[4];
+	projection.near   = wk->ptcNameCamera[3];
+	projection.far    = wk->ptcNameCamera[4];
 	projection.scaleW = 0;
 
 	GFL_PTC_PersonalCameraDelete( ptc );
