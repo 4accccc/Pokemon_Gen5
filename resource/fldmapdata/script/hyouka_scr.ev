@@ -207,7 +207,6 @@ ev_zukan_father:
   _PLAYER_NAME( 0 )
   _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase_01 )
   _YES_NO_WIN( SCWK_ANSWER )
-  _BALLOONWIN_CLOSE()
 
   IF $SCWK_ANSWER == SCR_YES THEN
 
