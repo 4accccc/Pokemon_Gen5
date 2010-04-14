@@ -372,6 +372,19 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
 // パーソナルデータをロードしておく
   ppd = Personal_Load( mons_no, PTL_FORM_NONE );
 
+//個性乱数セット
+//個性乱数から構造体の並びを算出するので、必ず先に確定させる
+  if( rnd == PTL_SETUP_RND_AUTO )
+  {
+    rnd = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
+      __GFL_STD_MtRand();
+  }
+  else if( rnd == PTL_SETUP_RND_RARE )
+  {
+    rnd = id;
+  }
+  PPP_Put( ppp, ID_PARA_personal_rnd, (u32)rnd );
+
 //IDナンバーセット
   if( id == PTL_SETUP_ID_AUTO )
   {
@@ -384,19 +397,6 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
     while( POKETOOL_CheckRare( id, rnd ) ){ id = (id+1)&0xffffffff; }
   }
   PPP_Put( ppp, ID_PARA_id_no, (int)id );
-
-//個性乱数セット
-  if( rnd == PTL_SETUP_RND_AUTO )
-  {
-    rnd = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
-      __GFL_STD_MtRand();
-  }
-  else if( rnd == PTL_SETUP_RND_RARE )
-  {
-    rnd = id;
-  }
-  PPP_Put( ppp, ID_PARA_personal_rnd, (u32)rnd );
-
 
 #ifdef DEBUG_ONLY_FOR_sogabe
 #warning CasetteLanguage Nothing
@@ -2310,9 +2310,23 @@ void  PP_SetTokusei3( POKEMON_PARAM* pp, int mons_no, int form_no )
 void  PPP_SetTokusei3( POKEMON_PASO_PARAM* ppp, int mons_no, int form_no )
 { 
   u32 tokusei = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_speabi3 );
-  if(tokusei){  //@todo ※check 曽我部さんに要確認
+  if(tokusei){
     PPP_Put( ppp, ID_PARA_speabino, tokusei );
     PPP_Put( ppp, ID_PARA_tokusei_3_flag, 1 );
+  }
+  else
+  { 
+    POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
+    u32 rnd = PPP_Get( ppp, ID_PARA_personal_rnd, NULL );
+    u16 param = POKEPER_ID_speabi1;
+    u32 val;
+    if( Personal_GetTokuseiCount( ppd ) == 2 ){
+      if( rnd & PRAND_TOKUSEI_MASK ){
+        param = POKEPER_ID_speabi2;
+      }
+    }
+    val = POKE_PERSONAL_GetParam( ppd, param );
+    PPP_Put( ppp, ID_PARA_speabino, val );
   }
 }
 
