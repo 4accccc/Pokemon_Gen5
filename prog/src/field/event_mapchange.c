@@ -52,6 +52,7 @@
 #include "event_disappear.h"
 #include "event_demo3d.h"
 #include "savedata/gimmickwork.h"   //for GIMMICKWORK
+#include "field_comm/intrude_main.h"
 #include "field_comm/intrude_work.h"
 #include "field/field_comm/intrude_field.h" //PALACE_MAP_LEN
 
