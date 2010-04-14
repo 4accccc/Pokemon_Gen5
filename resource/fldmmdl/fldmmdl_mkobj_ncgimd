@@ -973,6 +973,11 @@
 	@echo convert ncg_imd shirona
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/shirona.ncg ./mmdl_res ./mmdl_dmy/ncg4x4nflip.imd 4 4 12
 
+#item_grass2.imd
+./mmdl_res/item_grass2.imd: ./mmdl_nchara/item_grass2.ncg ./mmdl_nchara/item_grass2.ncl ./mmdl_dmy/ncg4x4ocell.imd fldmmdl_list.csv
+	@echo convert ncg_imd item_grass2
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/item_grass2.ncg ./mmdl_res ./mmdl_dmy/ncg4x4ocell.imd 4 4 1
+
 #tsure_001.imd
 ./mmdl_res/tsure_001.imd: ./mmdl_nchara/pokemon//tsure_001.ncg ./mmdl_nchara/pokemon//tsure_001.ncl ./mmdl_dmy/ncg4x4pokeflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd tsure_001
