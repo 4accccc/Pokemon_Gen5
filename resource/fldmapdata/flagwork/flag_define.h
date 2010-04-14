@@ -356,7 +356,7 @@
 #define FE_N_LASTMESSAGE                   340 /* 0x0154 Nの城 謁見の間：ラストメッセージ分岐用フラグ */
 #define FE_R18R0101_APPRAISAL_TALK         341 /* 0x0155 18番道路：鉱物鑑定士2初回話しかけフラグ */
 #define FE_JUDGE_TALK                      342 /* 0x0156 ジャッジ初回会話フラグ */
-		/* not used   343(0x0157) */
+#define FE_TEACH_COALESCENCE_TALK          343 /* 0x0157 合体技教え初回会話フラグ */
 		/* not used   344(0x0158) */
 		/* not used   345(0x0159) */
 		/* not used   346(0x015a) */
