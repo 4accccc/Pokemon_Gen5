@@ -43,6 +43,18 @@
 
 #define TRTYPE_NONE ( 0xffff )
 
+enum
+{ 
+  BTLV_EFFECT_FOCUS_OFFSET_X = 0x00006b33,
+  BTLV_EFFECT_FOCUS_OFFSET_Y = 0x00004199,
+  BTLV_EFFECT_FOCUS_OFFSET_Z = 0x000114cd,
+};
+
+volatile  fx32  camera_focus_offset_x = 0x00006b33; //BTLV_EFFECT_FOCUS_OFFSET_X 
+volatile  fx32  camera_focus_offset_y = 0x00004199; //BTLV_EFFECT_FOCUS_OFFSET_Y 
+volatile  fx32  camera_focus_offset_z = 0x000114cd; //BTLV_EFFECT_FOCUS_OFFSET_Z 
+volatile  fx32  camera_focus_target_y = 0x00001000; //BTLV_EFFECT_FOCUS_OFFSET_Z 
+
 //============================================================================================
 /**
  *  構造体宣言
@@ -1066,6 +1078,59 @@ void    BTLV_EFFECT_SetMcssVanishFlag( BtlvMcssPos position, BTLV_MCSS_VANISH_FL
 
 //============================================================================================
 /**
+ *  @brief  指定された立ち位置にカメラのフォーカスをあわせる
+ *
+ *  @param[in]  position  セットしたい立ち位置
+ *  @param[in]  move_type 移動タイプ  BTLEFF_CAMERA_MOVE_DIRECT：ダイレクト BTLEFF_CAMERA_MOVE_INTERPOLATION：追従
+ *  @param[in]  frame     移動タイプ追従のとき何フレームで移動するか
+ *  @param[in]  wait      移動タイプ追従のとき１フレーム移動する毎のウェイト
+ *  @param[in]  brake     移動タイプ追従のとき何フレーム目でブレーキをかけるか
+ */
+//============================================================================================
+void    BTLV_EFFECT_SetCameraFocus( BtlvMcssPos position, int move_type, int frame, int wait, int brake )
+{ 
+  VecFx32 pos;
+  VecFx32 target;
+
+  GF_ASSERT( ( move_type == BTLEFF_CAMERA_MOVE_DIRECT ) || ( move_type == BTLEFF_CAMERA_MOVE_INTERPOLATION ) );
+
+  BTLV_EFFECT_GetCameraFocus( position, &pos, &target );
+
+  switch( move_type ){
+  case BTLEFF_CAMERA_MOVE_DIRECT:   //ダイレクト
+    BTLV_CAMERA_MoveCameraPosition( bew->bcw, &pos, &target );
+    break;
+  case BTLEFF_CAMERA_MOVE_INTERPOLATION:  //追従
+    BTLV_CAMERA_MoveCameraInterpolation( bew->bcw, &pos, &target, frame, wait, brake );
+    break;
+  }
+}
+
+//============================================================================================
+/**
+ *  @brief  指定された立ち位置のカメラのフォーカス位置を取得
+ *
+ *  @param[in]    position  セットしたい立ち位置
+ *  @param[out]   pos       取得するカメラポジション
+ *  @param[out]   target    取得するカメラターゲット
+ */
+//============================================================================================
+void    BTLV_EFFECT_GetCameraFocus( BtlvMcssPos position, VecFx32* pos, VecFx32* target )
+{ 
+  BTLV_MCSS_GetPokeDefaultPos( bew->bmw, target, position );
+#if 0
+  pos->x = target->x + BTLV_EFFECT_FOCUS_OFFSET_X;
+  pos->y = target->y + BTLV_EFFECT_FOCUS_OFFSET_Y;
+  pos->z = target->z + BTLV_EFFECT_FOCUS_OFFSET_Z;
+#endif
+  target->y += camera_focus_target_y;
+  pos->x = target->x + camera_focus_offset_x;
+  pos->y = target->y + camera_focus_offset_y;
+  pos->z = target->z + camera_focus_offset_z;
+}
+
+//============================================================================================
+/**
  * @brief  エフェクトで使用されているカメラ管理構造体のポインタを取得
  *
  * @retval bcw カメラ管理構造体
@@ -1321,7 +1386,7 @@ static  void  TCB_BTLV_EFFECT_Rotation( GFL_TCB *tcb, void *work )
 
   switch( tr->seq_no ){
   case 0:
-    BTLV_STAGE_SetAnmReq( bew->bsw, tr->side, 0, ( ( tr->dir == 0 ) ? -FX32_ONE : FX32_ONE ), 100 );
+    BTLV_STAGE_SetAnmReq( bew->bsw, tr->side, 0, ( ( tr->dir == 0 ) ? -FX32_ONE : FX32_ONE ), 60 );
     BTLV_MCSS_SetRotation( bew->bmw, tr->side, tr->dir );
     tr->seq_no++;
     break;

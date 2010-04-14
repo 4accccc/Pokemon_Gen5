@@ -32,7 +32,7 @@
 
 //戦闘エフェクト定義
 enum{
-  BTLEFF_SINGLE_ENCOUNT_1 = WAZANO_MAX + 1,
+  BTLEFF_SINGLE_ENCOUNT_1 = WAZANO_MAX + 1,   //558
   BTLEFF_SINGLE_ENCOUNT_2_SOLO,
   BTLEFF_SINGLE_ENCOUNT_2_TAG,
   BTLEFF_SINGLE_ENCOUNT_3,
@@ -185,6 +185,8 @@ extern  void              BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE type, BOO
 extern  BOOL              BTLV_EFFECT_IsZero( BTLV_TIMER_TYPE type );
 extern  BTLV_MCSS_VANISH_FLAG BTLV_EFFECT_GetMcssVanishFlag( BtlvMcssPos position );
 extern  void              BTLV_EFFECT_SetMcssVanishFlag( BtlvMcssPos position, BTLV_MCSS_VANISH_FLAG flag );
+extern  void              BTLV_EFFECT_SetCameraFocus( BtlvMcssPos position, int move_type, int frame, int wait, int brake );
+extern  void              BTLV_EFFECT_GetCameraFocus( BtlvMcssPos position, VecFx32* pos, VecFx32* target );
 extern  BTLV_CAMERA_WORK* BTLV_EFFECT_GetCameraWork( void );
 extern  BTLV_MCSS_WORK*   BTLV_EFFECT_GetMcssWork( void );
 extern  VMHANDLE*         BTLV_EFFECT_GetVMHandle( void );
