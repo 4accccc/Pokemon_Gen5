@@ -32,7 +32,8 @@ extern "C" {
 typedef enum {
     GFL_UI_SOFTRESET_WIFI = 0x01,   ///< WIFI通信時
     GFL_UI_SOFTRESET_SVLD = 0x02,   ///< セーブロード交換時
-    GFL_UI_SOFTRESET_USER = 0x04,  ///< ここからは外部定義になる
+    GFL_UI_SOFTRESET_MB   = 0x04,   ///< マルチブート子機
+    GFL_UI_SOFTRESET_USER = 0x08,  ///< ここからは外部定義になる
 } GF_UI_SOFTRESET_e;
 
 
@@ -44,7 +45,8 @@ typedef enum {
   GFL_UI_SLEEP_AGBROM = 0x02,    ///< AGBアクセス
   GFL_UI_SLEEP_NET = 0x04,       ///< 通信全般
   GFL_UI_SLEEP_MIC = 0x08,       ///< MIC
-  GFL_UI_SLEEP_USER = 0x10,      ///< ここからは外部定義になる
+  GFL_UI_SLEEP_MB  = 0x10,       ///< マルチブート子機
+  GFL_UI_SLEEP_USER = 0x20,      ///< ここからは外部定義になる
 } GF_UI_SLEEP_e;
 
 
@@ -152,7 +154,7 @@ typedef void (GFL_UI_SOFTRESET_CALLBACK)( void *work ); ///<ソフトリセットコール
 /**
  * @brief UI起動処理(UIには初期化がboot時に行うものしかありません)
  * @param   heapID    ヒープ確保を行うID
- * @param   isMbBoot    マルチブートの子機起動か？(PM系で落ちるので
+ * @param   isMbBoot    マルチブートの子機起動か？(中でソフリとスリープの禁止フラグを立てる
  * @return  UISYS  workハンドル
  */
 //==============================================================================

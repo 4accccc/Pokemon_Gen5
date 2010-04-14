@@ -220,6 +220,7 @@ typedef enum {
 	GFL_BBD_DRAWMODE_BILLBORD = 0,
 	GFL_BBD_DRAWMODE_Y_BILLBORD,
 	GFL_BBD_DRAWMODE_NON_BILLBORD,
+	GFL_BBD_DRAWMODE_XZ_FLAT_BILLBORD,
 }GFL_BBD_DRAWMODE;
 
 //=============================================================================
