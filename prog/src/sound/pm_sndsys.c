@@ -1305,7 +1305,7 @@ BOOL PMSND_PlayBGMdiv(u32 no, u32* seq, BOOL start)
 				createSoundPlayThread( no, THREADLOAD_WAVE);
 				(*seq)++;
 			} else {
-				OS_Sleep(10);
+				OS_Sleep(2);
 			}
 			break;
 		case 2:
@@ -1324,7 +1324,7 @@ BOOL PMSND_PlayBGMdiv(u32 no, u32* seq, BOOL start)
 				(*seq)++;
         return TRUE;
       } else {
-        OS_Sleep(10);
+        OS_Sleep(2);
       }
       break;
 		}
