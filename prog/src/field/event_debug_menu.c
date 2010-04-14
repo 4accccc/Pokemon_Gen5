@@ -6756,8 +6756,6 @@ static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *
     {
       const u32 ret = FLDMENUFUNC_ProcMenu(work->menuFunc);
       GAMEDATA *gmData = GAMESYSTEM_GetGameData(work->gmSys);
-      POKEPARTY *party = GAMEDATA_GetMyPokemon(gmData);
-      BOX_MANAGER *boxData = GAMEDATA_GetBoxManager(gmData);
       
       if( ret == FLDMENUFUNC_NULL )
       {
@@ -6771,6 +6769,10 @@ static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *
       }
       else
       {
+        POKEPARTY *party = GAMEDATA_GetMyPokemon(gmData);
+        BOX_MANAGER *boxData = GAMEDATA_GetBoxManager(gmData);
+        u64 id = 0xbb76c1c5;
+        u64 rnd;
         if( ret < 100 )
         {
           POKEMON_PARAM *pp;
@@ -6783,20 +6785,20 @@ static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *
             PP_Put( pp , ID_PARA_event_get_flag , TRUE );
             break;
           case 1: //10えいがエンテイ
-            pp = GFL_HEAP_AllocClearMemory( work->heapId , POKETOOL_GetWorkSize() );
-            PP_SetupEx( pp , MONSNO_ENTEI , 50 , PTL_SETUP_ID_AUTO , PTL_SETUP_POW_AUTO , PTL_SETUP_RND_RARE );
+            rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_ENTEI , 0 , 0 , 0 , TRUE );
+            pp = PP_CreateEx( MONSNO_ENTEI , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
             PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
             PP_Put( pp , ID_PARA_event_get_flag , TRUE );
             break;
           case 2: //10えいがライコウ
-            pp = GFL_HEAP_AllocClearMemory( work->heapId , POKETOOL_GetWorkSize() );
-            PP_SetupEx( pp , MONSNO_RAIKOU , 50 , PTL_SETUP_ID_AUTO , PTL_SETUP_POW_AUTO , PTL_SETUP_RND_RARE );
+            rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_RAIKOU , 0 , 0 , 0 , TRUE );
+            pp = PP_CreateEx( MONSNO_RAIKOU , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
             PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
             PP_Put( pp , ID_PARA_event_get_flag , TRUE );
             break;
           case 3: //10えいがスイクン
-            pp = GFL_HEAP_AllocClearMemory( work->heapId , POKETOOL_GetWorkSize() );
-            PP_SetupEx( pp , MONSNO_SUIKUN , 50 , PTL_SETUP_ID_AUTO , PTL_SETUP_POW_AUTO , PTL_SETUP_RND_RARE );
+            rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_SUIKUN , 0 , 0 , 0 , TRUE );
+            pp = PP_CreateEx( MONSNO_SUIKUN , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
             PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
             PP_Put( pp , ID_PARA_event_get_flag , TRUE );
             break;
@@ -6806,20 +6808,20 @@ static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *
             PP_Put( pp , ID_PARA_event_get_flag , TRUE );
             break;
           case 5: //10えいがエンテイ(後
-            pp = GFL_HEAP_AllocClearMemory( work->heapId , POKETOOL_GetWorkSize() );
-            PP_SetupEx( pp , MONSNO_ENTEI , 50 , PTL_SETUP_ID_AUTO , PTL_SETUP_POW_AUTO , PTL_SETUP_RND_RARE );
+            rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_ENTEI , 0 , 0 , 0 , TRUE );
+            pp = PP_CreateEx( MONSNO_ENTEI , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
             PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
             PP_Put( pp , ID_PARA_event_get_flag , TRUE );
             break;
           case 6: //10えいがライコウ(後
-            pp = GFL_HEAP_AllocClearMemory( work->heapId , POKETOOL_GetWorkSize() );
-            PP_SetupEx( pp , MONSNO_RAIKOU , 50 , PTL_SETUP_ID_AUTO , PTL_SETUP_POW_AUTO , PTL_SETUP_RND_RARE );
+            rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_RAIKOU , 0 , 0 , 0 , TRUE );
+            pp = PP_CreateEx( MONSNO_RAIKOU , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
             PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
             PP_Put( pp , ID_PARA_event_get_flag , TRUE );
             break;
           case 7: //10えいがスイクン(後
-            pp = GFL_HEAP_AllocClearMemory( work->heapId , POKETOOL_GetWorkSize() );
-            PP_SetupEx( pp , MONSNO_SUIKUN , 50 , PTL_SETUP_ID_AUTO , PTL_SETUP_POW_AUTO , PTL_SETUP_RND_RARE );
+            rnd = POKETOOL_CalcPersonalRandEx( id , MONSNO_SUIKUN , 0 , 0 , 0 , TRUE );
+            pp = PP_CreateEx( MONSNO_SUIKUN , 50 , id , PTL_SETUP_POW_AUTO , rnd , work->heapId );
             PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
             PP_Put( pp , ID_PARA_event_get_flag , TRUE );
             break;
