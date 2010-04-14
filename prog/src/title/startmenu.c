@@ -24,6 +24,7 @@
 #include "savedata/zukan_savedata.h"
 #include "savedata/situation.h"
 #include "savedata/misc.h"
+#include "savedata/c_gear_data.h"
 #include "sound/pm_sndsys.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
@@ -60,6 +61,7 @@ typedef struct {
 	SAVE_CONTROL_WORK * savedata;
   MYSTATUS * mystatus;
 	MISC * misc;
+	CGEAR_SAVEDATA * cgear;
 
 	GFL_TCB * vtask;					// TCB ( VBLANK )
 
@@ -414,6 +416,7 @@ static GFL_PROC_RESULT START_MENU_ProcInit( GFL_PROC * proc, int * seq, void * p
 	wk->savedata = SaveControl_GetPointer();
   wk->mystatus = SaveData_GetMyStatus( wk->savedata );
 	wk->misc     = SaveData_GetMisc( wk->savedata );
+	wk->cgear    = CGEAR_SV_GetCGearSaveData( wk->savedata );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -865,6 +868,12 @@ static int MainSeq_Continue( START_MENU_WORK * wk )
 		// リスト非表示
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2, VISIBLE_OFF );
 		VanishListObj( wk, FALSE );
+		// C-GEARチェック
+		if( CGEAR_SV_GetCGearONOFF(wk->cgear) == FALSE ){
+			wk->continueRet = 1;
+			wk->subSeq = 0;
+			return SetFadeOut( wk, MAINSEQ_RELEASE );
+		}
 		wk->wait = CONTINUE_1ST_WAIT;
 		wk->subSeq++;
 		break;
