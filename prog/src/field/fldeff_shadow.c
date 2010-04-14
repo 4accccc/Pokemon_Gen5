@@ -322,8 +322,8 @@ static void shadowTask_Init( FLDEFF_TASK *task, void *wk )
   {
     GFL_BBDACT_ACTDATA actData;
     actData.resID = 0;  //ResUnit内オフセット指定
-    actData.sizX = 4 * FX32_ONE;
-    actData.sizY = 4 * FX32_ONE;
+    actData.sizX = FX32_ONE;
+    actData.sizY = FX32_ONE;
     actData.alpha = 19;
     actData.drawEnable = TRUE;
     actData.lightMask = GFL_BBD_LIGHTMASK_0;
@@ -411,7 +411,7 @@ static void shadowTask_Draw( FLDEFF_TASK *task, void *wk )
     int flag = TRUE;
     VecFx32 pos;
     MMDL_GetVectorPos( work->fmmdl, &pos );
-    pos.y += NUM_FX32( -2 );
+    //pos.y += NUM_FX32( -2 );
     GFL_BBD_SetObjectDrawEnable( work->eff_shadow->bbdsys, work->bbdIdx, &flag );
     GFL_BBD_SetObjectTrans( work->eff_shadow->bbdsys, work->bbdIdx, &pos );
   } else {

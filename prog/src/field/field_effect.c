@@ -137,7 +137,7 @@ FLDEFF_CTRL * FLDEFF_CTRL_Create(
     GFL_BBD_SetOrigin( bbdsys, GFL_BBD_ORIGIN_CENTER );
 
     { //Scale
-      VecFx32 scale = {FX32_ONE*2,FX32_ONE*2,FX32_ONE*2};
+      VecFx32 scale = {FX32_ONE*8,FX32_ONE*8,FX32_ONE*8};
       GFL_BBD_SetScale( bbdsys, &scale );
     }
     
