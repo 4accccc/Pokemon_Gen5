@@ -50,7 +50,8 @@ typedef enum {
 typedef enum {
   RES_TRAILER_HEAD_NSBMD,  // トレーラー(前)のモデル
   RES_TRAILER_TAIL_NSBMD,  // トレーラー(後)のモデル
-  RES_SHIP_NSBMD,     // 船のモデル
+  RES_SHIP_NSBMD,          // 船のモデル
+  RES_SHIP_NSBTA,          // 船のita
   RES_NUM
 } RES_INDEX;
 static const GFL_G3D_UTIL_RES res_table[RES_NUM] = 
@@ -58,6 +59,17 @@ static const GFL_G3D_UTIL_RES res_table[RES_NUM] =
   { ARCID, NARC_h01_trailer_01a_nsbmd, GFL_G3D_UTIL_RESARC },  // トレーラー(前)のモデル
   { ARCID, NARC_h01_trailer_01b_nsbmd, GFL_G3D_UTIL_RESARC },  // トレーラー(後)のモデル
   { ARCID, NARC_h01_h01_ship_nsbmd,    GFL_G3D_UTIL_RESARC },  // 船のモデル
+  { ARCID, NARC_h01_h01_ship_nsbta,    GFL_G3D_UTIL_RESARC },  // 船のita
+};
+
+// アニメーション
+typedef enum {
+  SHIP_ANIME_ITA,
+  SHIP_ANIME_NUM
+} SHIP_ANIME;
+static const GFL_G3D_UTIL_ANM ship_anime[ SHIP_ANIME_NUM ] = 
+{
+  { RES_SHIP_NSBTA, 0 }, // SHIP_ANIME_ITA
 };
 
 // オブジェクト
@@ -75,7 +87,7 @@ static const GFL_G3D_UTIL_OBJ obj_table[OBJ_NUM] =
   { RES_TRAILER_TAIL_NSBMD, 0, RES_TRAILER_TAIL_NSBMD, NULL, 0 },  // トレーラー1(後)
   { RES_TRAILER_HEAD_NSBMD, 0, RES_TRAILER_HEAD_NSBMD, NULL, 0 },  // トレーラー2(前)
   { RES_TRAILER_TAIL_NSBMD, 0, RES_TRAILER_TAIL_NSBMD, NULL, 0 },  // トレーラー2(後)
-  { RES_SHIP_NSBMD,         0, RES_SHIP_NSBMD,         NULL, 0 },  // 船
+  { RES_SHIP_NSBMD,         0, RES_SHIP_NSBMD,         ship_anime, SHIP_ANIME_NUM },  // 船
 };
 
 // セットアップ情報
@@ -142,6 +154,15 @@ void H01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 
   // 拡張オブジェクトのユニットを追加
   FLD_EXP_OBJ_AddUnit( exobj_cnt, &setup, EXPOBJ_UNIT_IDX );
+
+  // 船のアニメーション開始
+  {
+    EXP_OBJ_ANM_CNT_PTR exobj_anm; 
+    FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_SHIP, SHIP_ANIME_ITA, TRUE ); 
+    exobj_anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_SHIP, SHIP_ANIME_ITA );
+    FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
+    FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, TRUE );
+  }
 
   // ギミック管理ワークを作成
   work = (H01WORK*)GMK_TMP_WK_AllocWork( fieldmap, GIMMICK_WORK_ASSIGN_ID, heapID, sizeof(H01WORK) );
@@ -251,6 +272,13 @@ void H01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
 
   // 風を更新
   UpdateWindVolume( fieldmap, work );
+
+  // 拡張オブジェのアニメーション再生
+  {
+    FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+    FLD_EXP_OBJ_PlayAnime( exobj_cnt );
+  }
+
 }
 
 
