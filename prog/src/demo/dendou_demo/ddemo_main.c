@@ -398,9 +398,8 @@ void DDEMOMAIN_GetPokeData( DDEMOMAIN_WORK * wk )
 
 void DDEMOMAIN_LoadPokeVoice( DDEMOMAIN_WORK * wk )
 {
-	// @TODO ペラップチェック
 	if( wk->monsno == MONSNO_PERAPPU ){
-#if 0
+#if 1
 		PMV_REF	pmvRef;
     PMV_MakeRefDataMine( &pmvRef );
 		wk->voicePlayer = PMVOICE_LoadOnly( wk->monsno, wk->form, 64, FALSE, 0, 0, FALSE, (u32)&pmvRef );
