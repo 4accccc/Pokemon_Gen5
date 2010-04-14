@@ -149,8 +149,9 @@ if ARGV[1] == "true" then
   makeScriptsIndex( ids )
 elsif ARGV[1] == "false" then
   ids = readIDs( ARGV[0] )
-  checkGMMS( ids )
-  checkScripts( ids )
+  #checkGMMS( ids )
+  #checkScripts( ids )
+  makeScriptsIndex( ids )
 else
 end
 
