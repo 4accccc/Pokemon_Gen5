@@ -12,15 +12,15 @@
 #define DOOR_ID_D09_D09R0301_EXIT01       7
 #define DOOR_ID_D09_D09R0401_EXIT01       8
 #define DOOR_ID_D09_D09R1301_EXIT01       9
-#define DOOR_ID_D09_D09R1401_EXIT01      10
-#define DOOR_ID_D09_C09_EXIT01           11
-#define DOOR_ID_D09_D09R1201_EXIT04      12
-#define DOOR_ID_D09_D09R0801_EXIT01      13
-#define DOOR_ID_D09_D09R0701_EXIT01      14
-#define DOOR_ID_D09_R10R0901_EXIT01      15
-#define DOOR_ID_D09_D09R0101_EXIT01      16
-#define DOOR_ID_D09_D09R0201_EXIT01      17
-#define DOOR_ID_D09_D09R1201_EXIT03      18
+#define DOOR_ID_D09_C09_EXIT01           10
+#define DOOR_ID_D09_D09R1201_EXIT04      11
+#define DOOR_ID_D09_D09R0801_EXIT01      12
+#define DOOR_ID_D09_D09R0701_EXIT01      13
+#define DOOR_ID_D09_R10R0901_EXIT01      14
+#define DOOR_ID_D09_D09R0101_EXIT01      15
+#define DOOR_ID_D09_D09R0201_EXIT01      16
+#define DOOR_ID_D09_D09R1201_EXIT03      17
+#define DOOR_ID_D09_D09R1401_EXIT01      18
 
 #endif //ZONE_D09_EVD_H
 //このファイルは../data/d09.mevから自動生成されました
@@ -34,8 +34,8 @@
 #define D09_FLD_ITEM_05                    4
 #define D09_VETERANM_01                    5
 #define D09_TRAINERM_01                    6
-#define D09_FLD_ITEM_01                    7
-#define D09_RANGERM_01                     8
+#define D09_RANGERM_01                     7
+#define D09_FLD_ITEM_01                    8
 
 #endif //ZONE_D09_EVC_H
 //このファイルは../data/d09.mevから自動生成されました
