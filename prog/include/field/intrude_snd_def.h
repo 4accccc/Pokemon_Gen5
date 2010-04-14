@@ -15,5 +15,5 @@
 //  ’è”’è‹`
 //==============================================================================
 ///N“üŽž‚Ì’ÊM‘ÎíBGM
-#define SND_INTRUDE_BATTLE_BGM    (SEQ_BGM_VS_TRAINER)
+#define SND_INTRUDE_BATTLE_BGM    (SEQ_BGM_VS_TRAINER_WIFI)
 
