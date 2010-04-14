@@ -12,6 +12,8 @@
 //============================================================================================
 //	定数定義
 //============================================================================================
+#define	DDEMOOBJ_ID_2ND_EFF_MAX		( 24 )
+
 
 // OBJ ID
 enum {
@@ -27,7 +29,9 @@ enum {
 	DDEMOOBJ_ID_2ND_MES,
 	DDEMOOBJ_ID_2ND_INFO,
 
-	DDEMOOBJ_ID_MAX
+	DDEMOOBJ_ID_2ND_EFF,
+
+	DDEMOOBJ_ID_MAX = DDEMOOBJ_ID_2ND_EFF + DDEMOOBJ_ID_2ND_EFF_MAX
 };
 
 // キャラリソース
@@ -37,6 +41,7 @@ enum {
 	DDEMOOBJ_CHRRES_ETC,
 	DDEMOOBJ_CHRRES_PLAYER_M,		// プレイヤー（メイン画面）
 	DDEMOOBJ_CHRRES_PLAYER_S,		// プレイヤー（サブ画面）
+	DDEMOOBJ_CHRRES_ETC_S,
 	DDEMOOBJ_CHRRES_MAX
 };
 
@@ -48,7 +53,7 @@ enum {
 	DDEMOOBJ_PALRES_FOAM,
 	DDEMOOBJ_PALRES_PLAYER_M,		// プレイヤー（メイン画面）
 	DDEMOOBJ_PALRES_PLAYER_S,		// プレイヤー（サブ画面）
-//	DDEMOOBJ_PALRES_TYPE_WIN,
+	DDEMOOBJ_PALRES_ETC_S,
 	DDEMOOBJ_PALRES_MAX
 };
 
@@ -59,6 +64,7 @@ enum {
 	DDEMOOBJ_CELRES_ETC,
 	DDEMOOBJ_CELRES_PLAYER_M,		// プレイヤー（メイン画面）
 	DDEMOOBJ_CELRES_PLAYER_S,		// プレイヤー（サブ画面）
+	DDEMOOBJ_CELRES_ETC_S,
 	DDEMOOBJ_CELRES_MAX
 };
 

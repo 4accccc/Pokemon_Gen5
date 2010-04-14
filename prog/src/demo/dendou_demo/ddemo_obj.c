@@ -40,7 +40,9 @@
 #define	PALNUM_TYPE_WIN		( PALNUM_PLAYER_M+PALSIZ_PLAYER_M )
 #define	PALSIZ_TYPE_WIN		( 1 )
 
-#define	PALNUM_PLAYER_S		( 0 )
+#define	PALNUM_ETC_S			( 0 )
+#define	PALSIZ_ETC_S			( 3 )
+#define	PALNUM_PLAYER_S		( PALNUM_ETC_S+PALSIZ_ETC_S )
 #define	PALSIZ_PLAYER_S		( 1 )
 
 #define	FCOL_FNTOAM				( PRINTSYS_LSB_Make(15,2,0) )		// フォントカラー：ＯＡＭフォント白抜
@@ -108,6 +110,12 @@ static const DDEMO_CLWK_DATA InfoClactParamTbl = {
 	0, CLSYS_DRAW_MAIN
 };
 
+static const DDEMO_CLWK_DATA PokeFlashClactParamTbl = {
+	{ 48, 144, 6, 8, 0 },
+	DDEMOOBJ_CHRRES_ETC, DDEMOOBJ_PALRES_ETC, DDEMOOBJ_CELRES_ETC,
+	0, CLSYS_DRAW_MAIN
+};
+
 static const DDEMO_CLWK_DATA PokeClactParamTbl = {
 	{ -48, 144, 0, 10, 0 },
 	DDEMOOBJ_CHRRES_POKE, DDEMOOBJ_PALRES_POKE, DDEMOOBJ_CELRES_POKE,
@@ -132,6 +140,20 @@ static const DDEMO_CLWK_DATA Info2ClactParamTbl = {
 	0, CLSYS_DRAW_MAIN
 };
 
+static const DDEMO_CLWK_DATA FlashClactParamTbl[] =
+{
+	{	// メイン
+		{ 0, 0, 4, 8, 0 },
+		DDEMOOBJ_CHRRES_ETC, DDEMOOBJ_PALRES_ETC, DDEMOOBJ_CELRES_ETC,
+		0, CLSYS_DRAW_MAIN
+	},
+	{	// サブ
+		{ 0, 0, 4, 8, 0 },
+		DDEMOOBJ_CHRRES_ETC_S, DDEMOOBJ_PALRES_ETC_S, DDEMOOBJ_CELRES_ETC_S,
+		0, CLSYS_DRAW_SUB
+	},
+};
+
 static const DDEMO_CLWK_DATA PlayerClactParamTbl[] =
 {
 	{	// メイン
@@ -145,6 +167,28 @@ static const DDEMO_CLWK_DATA PlayerClactParamTbl[] =
 		0, CLSYS_DRAW_SUB
 	}
 };
+
+// タイプ別ウィンドウパレットテーブル
+static const u32 TypePalTbl[] = {
+	NARC_dendou_demo_gra_obj_NCLR,						// ノーマル
+	NARC_dendou_demo_gra_type_fight_NCLR,			// かくとう
+	NARC_dendou_demo_gra_type_fly_NCLR,				// ひこう
+	NARC_dendou_demo_gra_type_poison_NCLR,		// どく
+	NARC_dendou_demo_gra_type_ground_NCLR,		// じめん
+	NARC_dendou_demo_gra_type_rock_NCLR,			// いわ
+	NARC_dendou_demo_gra_type_bug_NCLR,				// むし
+	NARC_dendou_demo_gra_type_ghost_NCLR,			// ゴースト
+	NARC_dendou_demo_gra_type_steel_NCLR,			// はがね
+	NARC_dendou_demo_gra_type_fire_NCLR,			// ほのお
+	NARC_dendou_demo_gra_type_warter_NCLR,		// みず
+	NARC_dendou_demo_gra_type_grass_NCLR,			// くさ
+	NARC_dendou_demo_gra_type_elec_NCLR,			// でんき
+	NARC_dendou_demo_gra_type_psyc_NCLR,			// エスパー
+	NARC_dendou_demo_gra_type_ice_NCLR,				// こおり
+	NARC_dendou_demo_gra_type_doragon_NCLR,		// ドラゴン
+	NARC_dendou_demo_gra_type_dark_NCLR,			// あく
+};
+
 
 
 void DDEMOOBJ_Init( DDEMOMAIN_WORK * wk, u32 scene )
@@ -398,28 +442,6 @@ void DDEMOOBJ_AddPoke( DDEMOMAIN_WORK * wk )
 	wk->clwk[DDEMOOBJ_ID_POKE_B] = CleateClact( wk, &PokeBackClactParamTbl );
 }
 
-
-// タイプ別ウィンドウパレットテーブル
-static const u32 TypePalTbl[] = {
-	NARC_dendou_demo_gra_obj_NCLR,						// ノーマル
-	NARC_dendou_demo_gra_type_fight_NCLR,			// かくとう
-	NARC_dendou_demo_gra_type_fly_NCLR,				// ひこう
-	NARC_dendou_demo_gra_type_poison_NCLR,		// どく
-	NARC_dendou_demo_gra_type_ground_NCLR,		// じめん
-	NARC_dendou_demo_gra_type_rock_NCLR,			// いわ
-	NARC_dendou_demo_gra_type_bug_NCLR,				// むし
-	NARC_dendou_demo_gra_type_ghost_NCLR,			// ゴースト
-	NARC_dendou_demo_gra_type_steel_NCLR,			// はがね
-	NARC_dendou_demo_gra_type_fire_NCLR,			// ほのお
-	NARC_dendou_demo_gra_type_warter_NCLR,		// みず
-	NARC_dendou_demo_gra_type_grass_NCLR,			// くさ
-	NARC_dendou_demo_gra_type_elec_NCLR,			// でんき
-	NARC_dendou_demo_gra_type_psyc_NCLR,			// エスパー
-	NARC_dendou_demo_gra_type_ice_NCLR,				// こおり
-	NARC_dendou_demo_gra_type_doragon_NCLR,		// ドラゴン
-	NARC_dendou_demo_gra_type_dark_NCLR,			// あく
-};
-
 void DDEMOOBJ_SetTypeWindow( DDEMOMAIN_WORK * wk )
 {
 	ARCHANDLE * ah;
@@ -662,6 +684,8 @@ void DDEMOOBJ_InitScene1( DDEMOMAIN_WORK * wk )
 
 	wk->clwk[DDEMOOBJ_ID_MES]  = CleateClact( wk, &MesClactParamTbl );
 	wk->clwk[DDEMOOBJ_ID_INFO] = CleateClact( wk, &InfoClactParamTbl );
+	wk->clwk[DDEMOOBJ_ID_EFF] = CleateClact( wk, &PokeFlashClactParamTbl );
+	DDEMOOBJ_SetVanish( wk, DDEMOOBJ_ID_EFF, FALSE );
 
 	InitScene1FontOam( wk );
 }
@@ -688,7 +712,6 @@ void DDEMOOBJ_MainScene1( DDEMOMAIN_WORK * wk )
 
 
 
-
 void DDEMOOBJ_InitScene2( DDEMOMAIN_WORK * wk )
 {
 	ARCHANDLE * ah;
@@ -711,6 +734,22 @@ void DDEMOOBJ_InitScene2( DDEMOMAIN_WORK * wk )
 	wk->clwk[DDEMOOBJ_ID_2ND_INFO] = CleateClact( wk, &Info2ClactParamTbl );
 	DDEMOOBJ_SetVanish( wk, DDEMOOBJ_ID_2ND_MES, FALSE );
 	DDEMOOBJ_SetVanish( wk, DDEMOOBJ_ID_2ND_INFO, FALSE );
+
+	// キラキラ
+	ah = GFL_ARC_OpenDataHandle( ARCID_DENDOU_DEMO_GRA, HEAPID_DENDOU_DEMO_L );
+
+	wk->chrRes[DDEMOOBJ_CHRRES_ETC_S] = GFL_CLGRP_CGR_Register(
+																				ah, NARC_dendou_demo_gra_obj_32k_NCGR,
+																				FALSE, CLSYS_DRAW_SUB, HEAPID_DENDOU_DEMO );
+	wk->palRes[DDEMOOBJ_PALRES_ETC_S] = GFL_CLGRP_PLTT_Register(
+																				ah, NARC_dendou_demo_gra_obj_NCLR,
+																				CLSYS_DRAW_SUB, PALNUM_ETC_S*0x20, HEAPID_DENDOU_DEMO );
+	wk->celRes[DDEMOOBJ_CELRES_ETC_S] = GFL_CLGRP_CELLANIM_Register(
+																				ah,
+																				NARC_dendou_demo_gra_obj_32k_NCER,
+																				NARC_dendou_demo_gra_obj_32k_NANR,
+																				HEAPID_DENDOU_DEMO );
+	GFL_ARC_CloseDataHandle( ah );
 
 	// 主人公
 	if( MyStatus_GetMySex( wk->dat->mystatus ) == PM_MALE ){
@@ -748,4 +787,45 @@ void DDEMOOBJ_ExitScene2( DDEMOMAIN_WORK * wk )
 void DDEMOOBJ_MainScene2( DDEMOMAIN_WORK * wk )
 {
 	AnmMain( wk );
+}
+
+void DDEMOOBJ_SetRandomFlash( DDEMOMAIN_WORK * wk )
+{
+	s16	x, y;
+	u16	anm;
+	u16	i;
+
+	// 稼動していないＯＢＪを削除
+	for( i=DDEMOOBJ_ID_2ND_EFF; i<DDEMOOBJ_ID_2ND_EFF+DDEMOOBJ_ID_2ND_EFF_MAX; i++ ){
+		if( wk->clwk[i] == NULL ){ continue; }
+		if( DDEMOOBJ_CheckAnm( wk, i ) == TRUE ){ continue; }
+		DelClact( wk, i );
+	}
+
+	// ランダム
+	anm = GFUser_GetPublicRand( 4 );
+	if( anm >= 2 ){ return; }
+
+	// 稼動していないＯＢＪを探して追加
+	for( i=DDEMOOBJ_ID_2ND_EFF; i<DDEMOOBJ_ID_2ND_EFF+DDEMOOBJ_ID_2ND_EFF_MAX; i++ ){
+		if( wk->clwk[i] == NULL ){
+			DDEMO_CLWK_DATA	cldat;
+			x = GFUser_GetPublicRand( 256 );
+			y = GFUser_GetPublicRand( 192+24 );
+			// メインへ
+			if( y < 192 ){
+				cldat = FlashClactParamTbl[0];
+				cldat.dat.pos_x = x;
+				cldat.dat.pos_y = y;
+			// サブへ
+			}else{
+				cldat = FlashClactParamTbl[1];
+				cldat.dat.pos_x = x;
+				cldat.dat.pos_y = y - 24;
+			}
+			wk->clwk[i] = CleateClact( wk, &cldat );
+			DDEMOOBJ_SetAutoAnm( wk, i, 4+anm );
+			break;
+		}
+	}
 }

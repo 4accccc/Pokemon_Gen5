@@ -36,3 +36,5 @@ extern void DDEMOOBJ_MainScene1( DDEMOMAIN_WORK * wk );
 extern void DDEMOOBJ_InitScene2( DDEMOMAIN_WORK * wk );
 extern void DDEMOOBJ_ExitScene2( DDEMOMAIN_WORK * wk );
 extern void DDEMOOBJ_MainScene2( DDEMOMAIN_WORK * wk );
+
+extern void DDEMOOBJ_SetRandomFlash( DDEMOMAIN_WORK * wk );

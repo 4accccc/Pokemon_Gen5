@@ -198,6 +198,37 @@ static const u16 VSMListItemR[] = {
   ITEM_HAZIMETEMEERU,
 };
 
+static const u16 DDemoMonsList[][7] =
+{
+	{
+		MONSNO_KORATTA,			// ノーマル
+		MONSNO_KAIRIKII,		// かくとう
+		MONSNO_PERAPPU,			// ひこう
+		MONSNO_DOGAASU,			// どく
+		MONSNO_GURAADON,		// じめん
+		MONSNO_IWAAKU,			// いわ
+		0,
+	},
+	{
+		MONSNO_BATAHURII,		// むし
+		MONSNO_GENGAA,			// ゴースト
+		MONSNO_METAGUROSU,	// はがね
+		MONSNO_ATYAMO,			// ほのお
+		MONSNO_MIZUGOROU,		// みず
+		MONSNO_KIMORI,			// くさ
+		0,
+	},
+	{
+		MONSNO_PIKATYUU,		// でんき
+		MONSNO_KIRURIA,			// エスパー
+		MONSNO_RUUZYURA,		// こおり
+		MONSNO_REKKUUZA,		// ドラゴン
+		MONSNO_BURAKKII,		// あく
+		0,
+	}
+};
+
+
 
 
 static GFL_PROC_RESULT MainProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
@@ -443,7 +474,13 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
 	case  MAIN_SEQ_DENDOU_DEMO:
 		wk->vsl_data.myPP = PokeParty_AllocPartyWork( wk->heapID );
-		SetPokeParty( wk, wk->vsl_data.myPP, VSMListMonsL, VSMListItemL );
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+			SetPokeParty( wk, wk->vsl_data.myPP, &DDemoMonsList[2][0], VSMListItemL );
+		}else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+			SetPokeParty( wk, wk->vsl_data.myPP, &DDemoMonsList[1][0], VSMListItemL );
+		}else{
+			SetPokeParty( wk, wk->vsl_data.myPP, &DDemoMonsList[0][0], VSMListItemL );
+		}
 		wk->ddemo_data.party    = wk->vsl_data.myPP;
 		wk->ddemo_data.mystatus = GAMEDATA_GetMyStatus( wk->gamedata );
 		wk->ddemo_data.ptime    = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(wk->gamedata) );

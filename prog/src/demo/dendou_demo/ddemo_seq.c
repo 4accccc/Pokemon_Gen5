@@ -100,9 +100,11 @@ static int MainSeq_Init( DDEMOMAIN_WORK * wk )
 
 	DDEMOMAIN_GetPokeMax( wk );
 
+/*
 	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
 		return MAINSEQ_2ND_INIT;
 	}
+*/
 
 	return MAINSEQ_1ST_INIT;
 }
@@ -329,13 +331,16 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 	case 11:		// 鳴き声＆キラキラ
 		if( MoveObjRand( wk, DDEMOOBJ_ID_POKE ) == FALSE ){
 			PMVOICE_PlayOnly( wk->voicePlayer );
+			DDEMOOBJ_SetVanish( wk, DDEMOOBJ_ID_EFF, TRUE );
+			DDEMOOBJ_SetAutoAnm( wk, DDEMOOBJ_ID_EFF, 6 );
 			wk->subSeq++;
 			return SetWait( wk, DEF_1ST_PM_RIGHT_WAIT );
 		}
 		break;
 
 	case 12:		// 鳴き声＆キラキラ待ち
-		if( PMVOICE_CheckPlay( wk->voicePlayer ) == FALSE ){
+		if( PMVOICE_CheckPlay( wk->voicePlayer ) == FALSE &&
+				DDEMOOBJ_CheckAnm( wk, DDEMOOBJ_ID_EFF ) == FALSE ){
 			wk->subSeq++;
 		}
 		break;
@@ -381,13 +386,14 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 
 	case 16:		// 終了チェック
 		DDEMOMAIN_DeleteTypeParticle( wk );
-
-		// @TODO 面倒なのでショートカット
+/*
+		// デバッグ用スキップ処理
 		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
 			wk->pokePos = 0;
 			wk->subSeq = 0;
 			return MAINSEQ_1ST_EXIT;
 		}
+*/
 		wk->pokePos++;
 		if( wk->pokePos == wk->pokeMax ){
 			wk->pokePos = 0;
@@ -519,10 +525,19 @@ static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk )
 	case 6:		// メッセージ表示
 		BOX2OBJ_FontOamVanish( wk, DDEMOOBJ_FOAM_MES2, TRUE );
 		wk->subSeq++;
-		return SetWait( wk, DEF_2ND_MES_PUT_WAIT );
+		break;
+
+	case 7:		// ウェイト
+		if( wk->wait == DEF_2ND_MES_PUT_WAIT ){
+			wk->wait = 0;
+			wk->subSeq++;
+		}else{
+			wk->wait++;
+		}
+		break;
 
 	// 終了待ち
-	case 7:
+	case 8:
 		{
 			BOOL	flg = FALSE;
 			if( wk->pokePos == 0 ){
@@ -544,7 +559,7 @@ static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk )
 		}
 		break;
 
-	case 8:
+	case 9:
 		if( wk->wait != DEF_2ND_POKEIN_COUNT ){
 			DDEMOMAIN_MoveMcss( wk, DEF_2ND_POKEIN_SPEED );
 			wk->wait++;
@@ -555,7 +570,7 @@ static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk )
 		}
 		break;
 
-	case 9:
+	case 10:
 		if( wk->wait != DEF_2ND_POKEOUT_WAIT ){
 			wk->wait++;
 		}else{
@@ -565,7 +580,7 @@ static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk )
 		}
 		break;
 
-	case 10:
+	case 11:
 		if( wk->mcssAnmEndFlg == FALSE ){
 			break;
 		}
@@ -579,12 +594,15 @@ static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk )
 			if( wk->pokePos == wk->pokeMax ){
 				wk->pokePos = 0;
 			}
-			wk->subSeq = 7;
+			wk->subSeq = 8;
 		}
 		break;
 	}
 
-	if( wk->subSeq >= 7 ){
+	if( wk->subSeq >= 6 ){
+		DDEMOOBJ_SetRandomFlash( wk );
+	}
+	if( wk->subSeq >= 8 ){
 		if( ( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ) ||
 				GFL_UI_TP_GetTrg() == TRUE ){
 			return SetFadeOut( wk, MAINSEQ_2ND_EXIT );
