@@ -183,7 +183,6 @@ sub_challenge_continue:
   
   //レポート
   _REPORT_CALL( SCWK_ANSWER )
-  _MSGWIN_CLOSE()
   
   //電車発車デモ
   _CALL sub_demo_train_starting
@@ -287,7 +286,6 @@ sub_challenge_continue_comm_multi:
   
     //レポート
     _REPORT_CALL( SCWK_ANSWER )
-    _MSGWIN_CLOSE()
     
     //通信同期待ち
     _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_AUTO_SAVE, BSW_NULL, BSW_NULL )
