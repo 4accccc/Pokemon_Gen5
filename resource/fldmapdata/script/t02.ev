@@ -588,7 +588,7 @@ t02_speech:
 	_TIME_WAIT( 10 )
 	_SUBWIN_MSG( msg_t02_boodle_02b , 22 , 16 , 4 )
 	_TIME_WAIT( 10 )
-	_SUBWIN_MSG( msg_t02_boodle_02a , 20 , 7 , 5)
+	_SUBWIN_MSG( msg_t02_boodle_02a , 24 , 7 , 5)
 
 	//サブウィン・MSGウィンクローズ
 	_AB_KEYWAIT_MARK()
@@ -720,14 +720,16 @@ t02_speech:
 	//BGM終了
 	_END_EVENT_BGM()
 
-	_CAMERA_MOVE( 9688,0,970752,51544064,0,42958848,10 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_MOVE( 9688,0,970752,51544064,0,42958848,15 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//群集おじいさん：キョロキョロ
 	_OBJ_ANIME( T02_BOODLE_08, anm_boodle1_look )
 
-	//Ｎ：右向き
+	//Ｎ：右向き 自機・チェレン：群集の方を見る
 	_OBJ_ANIME( T02_N_01, anm_dir_r )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
+	_OBJ_ANIME( T02_RIVAL_02, anm_stay_u )
 	_OBJ_ANIME_WAIT()
 
 	//今の　演説　わしたちは　どうすれば　いいんだ
@@ -780,15 +782,15 @@ t02_speech:
 	//Ｎ：下向き
 	_OBJ_ANIME( T02_N_01, anm_dir_d )
 	_OBJ_ANIME_WAIT()
-	
-	//画面暗転解除
-	_BLACK_IN()
-	_DISP_FADE_END_CHECK()
 
 	//ライバル：自機と向き合う
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
 	_OBJ_ANIME( T02_RIVAL_02, anm_dir_r )
 	_OBJ_ANIME_WAIT()
+
+	//画面暗転解除
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
 
 	//Ｎ：自機の真横に移動
 	_OBJ_ANIME( T02_N_01, anm_n_come )
@@ -800,7 +802,7 @@ t02_speech:
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 
-	//カメラ操作　ゲーチスの位置にカメラを合わせる
+	//カメラ操作Ｎの位置にカメラを合わせる
 	_CAMERA_MOVE( 9688,0,970752,51544064,0,43024384,20 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
@@ -810,7 +812,7 @@ t02_speech:
 
 	//自機・ライバル：Nの方へ向く
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
-	_OBJ_ANIME( T02_RIVAL_02, anm_dir_u )
+	_OBJ_ANIME( T02_RIVAL_02, anm_stay_u )
 	_OBJ_ANIME_WAIT()
 
 	//ポケモンが　はなした……　ですか？
@@ -855,6 +857,9 @@ t02_speech:
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
 
+	_OBJ_ANIME( T02_N_01, anm_n_afterb )
+	_OBJ_ANIME_WAIT()
+
 	//……負けたか　ボクの　友達たち　ありがとう
 	_BALLOONWIN_OBJMSG( msg_t02_boss_04 , T02_N_01 )
 	_BALLOONWIN_CLOSE()
@@ -864,7 +869,7 @@ t02_speech:
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル：自機の方へ向く
-	_OBJ_ANIME( T02_RIVAL_02, anm_dir_r )
+	_OBJ_ANIME( T02_RIVAL_02, anm_stay_r )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
 	_OBJ_ANIME_WAIT()
 	
@@ -1218,12 +1223,18 @@ _ANIME_LABEL anm_n_come
 _ANIME_LABEL anm_n_ippo
 	_ANIME_DATA		AC_WALK_D_8F,1
 	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_n_afterb
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_WALK_U_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
 	
 //--------------------------------------------------------------
 //	Ｎ	２番道路へ
 //--------------------------------------------------------------
 _ANIME_LABEL anm_n_leave
-	_ANIME_DATA		AC_WALK_U_8F,9
+	_ANIME_DATA		AC_WALK_U_8F,8
 	_ANIME_DATA		AC_WALK_L_8F,12
 	_ANIME_DATA		ACMD_END,0
 	

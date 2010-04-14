@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/18 14:06:52
+#save date:2010/04/14 11:48:04
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r0801.wms
 #SECTION START:OBJ_EVENT
@@ -381,7 +381,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-2152 0 184
+2136 0 200
 #event number: 12
 #type
 1
@@ -412,7 +412,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1960 0 184
+1928 0 200
 #event number: 13
 #type
 1
@@ -443,7 +443,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1720 0 184
+1736 0 200
 #event number: 14
 #type
 1
@@ -474,7 +474,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1624 0 -56
+1640 0 -72
 #event number: 15
 #type
 1
@@ -536,7 +536,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1432 0 -56
+1416 0 -56
 #event number: 17
 #type
 1
@@ -598,7 +598,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1304 0 200
+1320 0 200
 #event number: 19
 #type
 1
@@ -629,7 +629,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1240 0 200
+1208 0 200
 #event number: 20
 #type
 1
@@ -660,7 +660,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1208 0 -56
+1224 0 -56
 #event number: 21
 #type
 1
@@ -691,7 +691,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1032 0 -56
+1016 0 -56
 #event number: 22
 #type
 1
@@ -753,7 +753,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-904 0 184
+920 0 200
 #event number: 24
 #type
 1
