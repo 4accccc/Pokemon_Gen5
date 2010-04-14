@@ -103,7 +103,7 @@ static GFL_PROC_RESULT FieldMapProcInit
           if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == TRUE){
             if(GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
               OS_TPrintf("常時通信モードの為、サーチ起動\n");
-              GameCommSys_Boot(gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH, gsys);
+              GAMESYSTEM_CommBootAlways( gsys );
             }
           }
         #ifdef PM_DEBUG

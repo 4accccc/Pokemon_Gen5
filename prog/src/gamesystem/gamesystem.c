@@ -28,6 +28,7 @@
 
 #include "system/playtime_ctrl.h"  //PLAYTIMECTRL_
 
+#include "savedata/c_gear_data.h" //CGEAR_SV_GetCGearONOFF
 
 
 //============================================================================================
@@ -515,7 +516,8 @@ void GAMESYSTEM_CommBootAlways( GAMESYS_WORK *gsys )
 {
   GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
 
-  if ( GAMESYSTEM_GetAlwaysNetFlag( gsys ) == TRUE )
+  if ( GAMESYSTEM_GetAlwaysNetFlag( gsys ) == TRUE &&
+       (TRUE == CGEAR_SV_GetCGearONOFF(GAMEDATA_GetCGearSaveData(gsys->gamedata))))
   {
     if ( GameCommSys_BootCheck( gcsp ) == GAME_COMM_NO_NULL )
     {

@@ -10,6 +10,8 @@
 
 #include <gflib.h>
 #include "savedata/save_control.h"	//SAVE_CONTROL_WORK
+#include "gamesystem/gamedata_def.h"	//SAVE_CONTROL_WORK
+
 
 
 //----------------------------------------------------------
@@ -68,5 +70,6 @@ extern u8* CGEAR_SV_GetPanelTypeBuff( CGEAR_SAVEDATA* pSV );
 //	セーブデータ取得のための関数
 //----------------------------------------------------------
 extern CGEAR_SAVEDATA* CGEAR_SV_GetCGearSaveData(SAVE_CONTROL_WORK* pSave);
+extern CGEAR_SAVEDATA* GAMEDATA_GetCGearSaveData(GAMEDATA* pGameData);
 
 

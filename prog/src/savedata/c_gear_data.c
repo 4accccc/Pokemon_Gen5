@@ -11,6 +11,7 @@
 
 #include "savedata/save_tbl.h"
 #include "savedata/c_gear_data.h"
+#include "gamesystem/game_data.h"
 #include "system/gf_date.h"
 
 
@@ -379,5 +380,10 @@ CGEAR_SAVEDATA* CGEAR_SV_GetCGearSaveData(SAVE_CONTROL_WORK* pSave)
 	pData = SaveControl_DataPtrGet(pSave, GMDATA_ID_CGEAR);
 	return pData;
 
+}
+
+CGEAR_SAVEDATA* GAMEDATA_GetCGearSaveData(GAMEDATA* pGameData)
+{
+	return CGEAR_SV_GetCGearSaveData(GAMEDATA_GetSaveControlWork(pGameData));
 }
 
