@@ -5311,12 +5311,12 @@
 	</row>
 
 	<row id="ITEMINFO_576">
-		<language name="JPN" width="256">ー
-ー
-ー</language>
-		<language name="JPN_KANJI" width="256">ー
-ー
-ー</language>
+		<language name="JPN" width="256">ハイリンクで　いつのまにか　バッグの
+なかに　あらわれ　どんな　ポケモンも
+つかまえられる　ゆめの　ボール。</language>
+		<language name="JPN_KANJI" width="256">ハイリンクで　いつのまにか　バッグの
+中に　出現し　どんな　ポケモンも
+捕まえられる　夢の　ボール。</language>
 	</row>
 
 	<row id="ITEMINFO_577">
