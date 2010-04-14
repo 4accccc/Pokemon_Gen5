@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-13T14:57:08"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-14T20:02:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -318,12 +318,18 @@
 		<attribute name="キャラ指定">WOMAN3</attribute>
 		<language name="JPN" width="256">はしに　みんかが
 くっついてるの　めずらしいでしょ？▼
-かわの　ぞうすいから　まもるために
-たかいところに　いえを　たてたそうよ</language>
+むかし　かわが　みずで　あふれて
+いえが　ぜんぶ　ながされちゃったの▼
+かわに　ながされないよう　かんがえて
+はしの　うえに　いえを　たてたのよ▽
+シンプル　だけど　ごうりてき　よね</language>
 		<language name="JPN_KANJI" width="256">橋に　民家が
 くっ付いてるの　珍しいでしょ？▼
-川の　増水から　守るために
-高いところに　家を　建てたそうよ</language>
+昔　川が　水で　あふれて
+家が　全部　流されちゃったの▼
+川に　流されないよう　考えて
+橋の上に　家を　建てたのよ▽
+シンプル　だけど　合理的　よね</language>
 	</row>
 
 	<flowchart-group-list>
