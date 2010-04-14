@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-11-19T19:42:31" source="trailer_01b.mb"/>
+	<create user="fuchino" host="W00152" date="2010-04-15T03:35:31" source="trailer_01b.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2009-11-19T19:42:31" source="trailer_01b.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-04-15T03:35:31" source="trailer_01b.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -93,38 +93,38 @@
 		path="C:/home/wb_data3d/build_model/outdoor/trailer_01/tex/trailer_02a.tga"
 	>
 		<bitmap size="256">
-			4444 4444 4444 4444 4444 4444 4444 4444
-			0104 0101 1331 1010 4010 1144 1311 4111
-			1214 1212 2332 2121 4121 2244 2322 4222
-			1214 1212 2332 2121 4121 2244 2322 4222
-			1214 1212 2332 2121 4121 1144 1311 4111
-			1214 1212 2332 2121 4121 2244 2322 4222
-			dede dede edde eded eded ddee dedd eddd
-			1214 1212 2332 2121 4121 1144 1311 4111
-			1214 1212 2332 2121 4121 2244 2322 4222
-			444a 4444 4334 4444 a444 44aa 4344 a444
-			c224 2ccc 2222 ccc2 422c c244 cccc 42cc
-			c224 2ccc 2222 ccc2 422c c244 cccc 42cc
-			aaaa aaaa aaaa aaaa bbbb bbbb bbbb bbbb
-			343a 3434 3434 aa34 98bb 9898 9898 b898
-			4a4a 4a4a 4a4a aa4a b9bb b9b9 b9b9 b9b9
-			4a4a 4a4a 4a4a aa4a b9bb b9b9 b9b9 b9b9
-			4a4a 4a4a 4a4a aa4a b9bb b9b9 b9b9 b9b9
-			4a4a 4a4a 4a4a aa4a b9bb b9b9 b9b9 b9b9
-			343a 3434 3434 aa34 98bb 9898 9898 b898
-			aaaa aaaa aaaa aaaa bbbb bbbb bbbb bbbb
-			9999 9999 9999 9999 9999 9999 9999 9999
-			9999 9999 9999 9999 9999 9999 9999 9999
-			5659 5656 6886 6565 9565 6699 6866 9666
-			6769 6767 7887 7676 9676 7799 7877 9777
-			6769 6767 7887 7676 9676 7799 7877 9777
-			6769 6767 7887 7676 9676 6699 6866 9666
-			6769 6767 7887 7676 9676 7799 7877 9777
-			dede dede edde eded eded ddee dedd eddd
-			6769 6767 7887 7676 9676 6699 6866 9666
-			6769 6767 7887 7676 9676 7799 7877 9777
-			999b 9999 9889 9999 b999 99bb 9899 b999
-			c779 7ccc 7777 ccc7 977c c799 cccc 97cc
+			6666 6666 6666 6666 6666 6666 6666 6666
+			0106 0101 1221 1010 6010 1166 1211 6111
+			1316 1313 3223 3131 6131 3266 3233 6233
+			1316 1313 3223 3131 6131 3266 3233 6233
+			1316 1313 3223 3131 6131 1166 1211 6111
+			1316 1313 3223 3131 6131 3266 3233 6233
+			1316 1313 3223 3131 6131 3266 3233 6233
+			1316 1313 3223 3131 6131 1166 1211 6111
+			1316 1313 3223 3131 6131 3266 3233 6233
+			666a 6666 6226 6666 a666 66aa 6266 a666
+			4336 3444 3333 4443 6334 4366 4444 6344
+			4336 3444 3333 4443 6334 4366 4444 6344
+			aaaa aaaa aaaa aaaa cccc cccc cccc cccc
+			262a 2626 2626 aa26 b8cc b8b8 b8b8 c8b8
+			6a6a 6a6a 6a6a aa6a cbcc cbcb cbcb cbcb
+			6a6a 6a6a 6a6a aa6a cbcc cbcb cbcb cbcb
+			6a6a 6a6a 6a6a aa6a cbcc cbcb cbcb cbcb
+			6a6a 6a6a 6a6a aa6a cbcc cbcb cbcb cbcb
+			262a 2626 2626 aa26 b8cc b8b8 b8b8 c8b8
+			aaaa aaaa aaaa aaaa cccc cccc cccc cccc
+			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+			575b 5757 7887 7575 b575 77bb 7877 b777
+			797b 7979 9889 9797 b797 98bb 9899 b899
+			797b 7979 9889 9797 b797 98bb 9899 b899
+			797b 7979 9889 9797 b797 77bb 7877 b777
+			797b 7979 9889 9797 b797 98bb 9899 b899
+			797b 7979 9889 9797 b797 98bb 9899 b899
+			797b 7979 9889 9797 b797 77bb 7877 b777
+			797b 7979 9889 9797 b797 98bb 9899 b899
+			bbbc bbbb b88b bbbb cbbb bbcc b8bb cbbb
+			499b 9444 9999 4449 b994 49bb 4444 b944
 		</bitmap>
 	</tex_image>
 </tex_image_array>
@@ -138,8 +138,8 @@
 		1084 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="2" name="trailer_02a_pl" color_size="16">
-		114f 1151 1173 1175 1197 11eb 122d 126e
-		12b0 12f2 221a 2355 294a 56b5 5ef7 7fff
+		1d50 2151 2175 2595 294a 3207 3218 3228
+		3688 3aa9 3e7b 3eca 4b0c 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -237,21 +237,21 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="40">
 					<mtx idx="0"/>
-					<tex st="19.000000 32.000000"/>
+					<tex st="20.000000 32.000000"/>
 					<nrm xyz="0.998047 0.000000 0.000000"/>
 					<pos_s xyz="1.375000 1.250000 -1.125000"/>
 					<tex st="0.000000 32.000000"/>
 					<pos_xz xz="1.375000 -5.125000"/>
 					<tex st="0.000000 21.000000"/>
 					<pos_xy xy="1.375000 3.250000"/>
-					<tex st="19.000000 21.000000"/>
+					<tex st="20.000000 21.000000"/>
 					<pos_xz xz="1.375000 -1.125000"/>
 					<tex st="0.000000 32.000000"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_s xyz="-1.375000 1.250000 -5.125000"/>
-					<tex st="19.000000 32.000000"/>
+					<tex st="20.000000 32.000000"/>
 					<pos_xz xz="-1.375000 -1.125000"/>
-					<tex st="19.000000 21.000000"/>
+					<tex st="20.000000 21.000000"/>
 					<pos_xy xy="-1.375000 3.250000"/>
 					<tex st="0.000000 21.000000"/>
 					<pos_xz xz="-1.375000 -5.125000"/>
