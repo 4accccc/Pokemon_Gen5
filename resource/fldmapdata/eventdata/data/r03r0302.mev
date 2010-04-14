@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/15 3:18:39
+#save date:2010/04/15 5:07:00
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03r0302.wms
 #SECTION START:OBJ_EVENT
@@ -138,37 +138,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_BATTLEG_07
-#OBJ CODE Number
-FIGHTERW
-#MOVE CODE Number
-MV_SPIN_L
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-0
-#Event Script Name
-SCRID_TRID_BATTLEG_07
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-3
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-104 0 -632
-#event number: 5
-#type
-1
-#ID name
 TR_KARATE_08
 #OBJ CODE Number
 FIGHTERM
@@ -196,7 +165,7 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 -24 0 -312
-#event number: 6
+#event number: 5
 #type
 1
 #ID name
@@ -227,7 +196,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -8 32 -376
-#event number: 7
+#event number: 6
 #type
 1
 #ID name
@@ -258,6 +227,37 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 40 0 -280
+#event number: 7
+#type
+1
+#ID name
+TR_BATTLEG_07
+#OBJ CODE Number
+FIGHTERW
+#MOVE CODE Number
+MV_RT2
+#EVENT TYPE Number
+EV_TYPE_TR_D_REA
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_BATTLEG_07
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+2
+#Parameter 1 Number
+1
+#Parameter 2 Number
+0
+#Move Limit X Number
+4
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-24 0 -296
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

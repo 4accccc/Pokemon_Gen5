@@ -15,10 +15,10 @@
 #define R03R0302_FLD_ITEM_02               1
 #define R03R0302_FLD_ITEM_03               2
 #define R03R0302_FLD_ITEM_05               3
-#define TR_BATTLEG_07                      4
-#define TR_KARATE_08                       5
-#define R03R0302_FLD_ITEM_04               6
-#define TR_BATTLEG_08                      7
+#define TR_KARATE_08                       4
+#define R03R0302_FLD_ITEM_04               5
+#define TR_BATTLEG_08                      6
+#define TR_BATTLEG_07                      7
 
 #endif //ZONE_R03R0302_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03r0302.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
