@@ -1645,6 +1645,7 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
       {
         SePlayRotateSelect( biw );
         SetupRotateAction( biw, hit );
+        BTLV_EFFECT_SetRotateEffect( rotate_result[ biw->rotate_scr ], 0 );
         hit = GFL_UI_TP_HIT_NONE;
       }
     }
@@ -3379,7 +3380,16 @@ static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw )
       biw->waruagaki_flag = FALSE;
     }
   }
-  if( biw->waruagaki_flag == TRUE )
+  if( BPP_IsDead( biw->rotate_bpp[ biw->rotate_scr ] ) )
+  { 
+    for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
+    { 
+      biw->button_exist[ i ] = FALSE;
+    }
+    PaletteFadeReq( biw->pfd, PF_BIT_SUB_BG, 0x3e00, 0, 8, 8, 0, biw->tcbsys );
+    PaletteFadeReq( biw->pfd, PF_BIT_SUB_OBJ, 0x0700, 0, 8, 8, 0, biw->tcbsys );
+  }
+  else if( biw->waruagaki_flag == TRUE )
   { 
     biw->button_exist[ 0 ] = TRUE;
     BTLV_INPUT_CreateWaruagakiButton( biw );

@@ -1888,6 +1888,18 @@ static  void  TCB_BTLV_MCSS_Rotation( GFL_TCB *tcb, void *work )
     { BTLV_MCSS_POS_A, BTLV_MCSS_POS_C, BTLV_MCSS_POS_E },
     { BTLV_MCSS_POS_B, BTLV_MCSS_POS_D, BTLV_MCSS_POS_F },
   };
+#ifdef ROTATION_NEW_SYSTEM
+  int dst_pos[ 2 ][ 2 ][ 3 ] = {
+    {
+      { BTLV_MCSS_POS_C, BTLV_MCSS_POS_E, BTLV_MCSS_POS_A },
+      { BTLV_MCSS_POS_D, BTLV_MCSS_POS_F, BTLV_MCSS_POS_B },
+    },
+    {
+      { BTLV_MCSS_POS_E, BTLV_MCSS_POS_A, BTLV_MCSS_POS_C },
+      { BTLV_MCSS_POS_F, BTLV_MCSS_POS_B, BTLV_MCSS_POS_D },
+    },
+  };
+#else
   int dst_pos[ 2 ][ 2 ][ 3 ] = {
     {
       { BTLV_MCSS_POS_E, BTLV_MCSS_POS_A, BTLV_MCSS_POS_C },
@@ -1898,6 +1910,7 @@ static  void  TCB_BTLV_MCSS_Rotation( GFL_TCB *tcb, void *work )
       { BTLV_MCSS_POS_D, BTLV_MCSS_POS_F, BTLV_MCSS_POS_B },
     },
   };
+#endif
 
   switch( bmrw->seq_no ){
   case 0:
