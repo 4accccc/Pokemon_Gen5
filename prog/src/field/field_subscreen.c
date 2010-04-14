@@ -711,17 +711,33 @@ static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_
 {
   GAMESYS_WORK* p_gsys;
   GAMEDATA* p_gdata;
+  CGEAR_SAVEDATA* pCGSV;
+  BOOL power_flag;
+  BOOL net_flag;
+  BOOL effect_on;
 
   p_gsys  = FIELDMAP_GetGameSysWork(pWork->fieldmap);
   p_gdata = GAMESYSTEM_GetGameData(p_gsys);
+
+  pCGSV = CGEAR_SV_GetCGearSaveData( GAMEDATA_GetSaveControlWork( p_gdata) );
   
   // Overlay
   GFL_OVERLAY_Load( FS_OVERLAY_ID(cgear) );
-  
-  pWork->cgearWork = CGEAR_Init( CGEAR_SV_GetCGearSaveData( GAMEDATA_GetSaveControlWork( p_gdata) ),
-      pWork, p_gsys, GAMEDATA_GetCGearPowerOnReq( p_gdata ) );
 
-  GAMEDATA_ClearCGearPowerOnReq( p_gdata );
+  power_flag  = CGEAR_SV_GetPowerFlag( pCGSV );
+  net_flag    = GAMESYSTEM_GetAlwaysNetFlag( p_gsys );
+  
+  if( (net_flag == TRUE) && (power_flag == FALSE) ){
+    effect_on = TRUE;
+  }else{
+    effect_on = FALSE;
+  }
+  
+  pWork->cgearWork = CGEAR_Init( pCGSV,
+      pWork, p_gsys, effect_on );
+
+  CGEAR_SV_SetPowerFlag( pCGSV, net_flag );
+
 }
 
 
@@ -737,6 +753,7 @@ static void init_firstget_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREE
   GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork(pWork->fieldmap);
   GAMEDATA* p_gdata = GAMESYSTEM_GetGameData(p_gsys);
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork( p_gdata );
+  CGEAR_SAVEDATA* pCGSV;
   BOOL effect;
   
   // Overlay
@@ -745,11 +762,13 @@ static void init_firstget_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREE
   // もし、通信中ならば、エフェクトあり、ないならエフェクトなし。
   effect = GAMESYSTEM_GetAlwaysNetFlag( p_gsys );
 
-  pWork->cgearWork = CGEAR_FirstInit(CGEAR_SV_GetCGearSaveData(pSave),
+  pCGSV = CGEAR_SV_GetCGearSaveData( pSave );
+  pWork->cgearWork = CGEAR_FirstInit(pCGSV,
                                      pWork, FIELDMAP_GetGameSysWork(pWork->fieldmap),
                                      pWork->endCallback, pWork->endCallbackWork , effect);
 
-  GAMEDATA_ClearCGearPowerOnReq( p_gdata );
+
+  CGEAR_SV_SetPowerFlag( pCGSV, effect );
 }
 
 

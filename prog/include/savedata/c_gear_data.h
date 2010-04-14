@@ -66,6 +66,9 @@ extern BOOL CGEAR_SV_IsPanelTypeLast(const CGEAR_SAVEDATA* pSV,int x, int y, CGE
 extern void CGEAR_SV_SetPanelType(CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENUM type, BOOL icon, BOOL last);
 extern u8* CGEAR_SV_GetPanelTypeBuff( CGEAR_SAVEDATA* pSV );
 
+extern void CGEAR_SV_SetPowerFlag( CGEAR_SAVEDATA* pSV, BOOL flag );
+extern BOOL CGEAR_SV_GetPowerFlag( const CGEAR_SAVEDATA* cpSV );
+
 //----------------------------------------------------------
 //	セーブデータ取得のための関数
 //----------------------------------------------------------

@@ -32,7 +32,7 @@ struct _CGEAR_SAVEDATA {
   u8 CGearPictureON;
   u8 CGearON;
   u8 gearType;
-  u8 dummy1;
+  u8 CGearPowerON;
   u8 dummy2;
   u8 dummy3;
 };
@@ -370,6 +370,37 @@ u8* CGEAR_SV_GetPanelTypeBuff( CGEAR_SAVEDATA* pSV )
 {
   return &pSV->type[0][0];
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CGEAR 電源　設定
+ *
+ *	@param	pSV     セーブデータ
+ *	@param	flag    TRUE：ON　　FALSE：OFF
+ */
+//-----------------------------------------------------------------------------
+void CGEAR_SV_SetPowerFlag( CGEAR_SAVEDATA* pSV, BOOL flag )
+{
+  pSV->CGearPowerON = flag;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CGEARの電源ON・OFFを取得
+ *
+ *	@param	cpSV  セーブデータ
+ *
+ *	@retval TRUE    ON
+ *	@retval FALSE   OFF
+ */
+//-----------------------------------------------------------------------------
+BOOL CGEAR_SV_GetPowerFlag( const CGEAR_SAVEDATA* cpSV )
+{
+  return cpSV->CGearPowerON;
+}
+
+
 
 //----------------------------------------------------------
 //	セーブデータ取得のための関数

@@ -770,24 +770,4 @@ extern void GAMEDATA_PlayTimeCountUp(GAMEDATA *gamedata, u32 value);
 extern void GAMEDATA_PlayTimeSetSaveTime(GAMEDATA *gamedata);
 
 
-//==================================================================
-/**
- * CGear 電源ＯＮ瞬間フラグ 取得    Cgear起動アニメーション表示判定に使用
- *
- * @param   gamedata    
- *
- * @retval  TRUE    電源ＯＮ瞬間
- * @retval  FALSE   瞬間ではない。
- */
-//==================================================================
-extern BOOL GAMEDATA_GetCGearPowerOnReq(const GAMEDATA *gamedata);
-
-//==================================================================
-/**
- * CGear 電源ＯＮ瞬間フラグ クリア
- *
- * @param   gamedata    
- */
-//==================================================================
-extern void GAMEDATA_ClearCGearPowerOnReq(GAMEDATA *gamedata);
 
