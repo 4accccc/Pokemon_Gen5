@@ -3,9 +3,9 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-12-16T12:07:16" source="pl_ele_00_00.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-04-13T19:02:14" source="pl_ele_00_v00.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 </head>
 
 <body>
@@ -16,7 +16,7 @@
 	tool_end_frame="60"
 	interpolation="frame"
 	tex_matrix_mode="maya"
-	compress_material="on" material_size="6 6"
+	compress_material="on" material_size="5 5"
 	frame_step_mode="1"
 	tolerance_tex_scale="0.100000"
 	tolerance_tex_rotate="0.100000"
@@ -31,51 +31,29 @@
 	0.000000
 </tex_rotate_data>
 
-<tex_translate_data size="62">
-	0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.405029 0.296387 0.187500
-	0.092529 0.025391 0.000000 0.019043 0.070068 0.144287 0.233154 0.327881 0.419922 0.500000
-	0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000
-	0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000
-	0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000
-	0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000 0.500000
-	0.500000 0.258545
+<tex_translate_data size="122">
+	0.000000 0.050049 0.100098 0.149902 0.199951 0.250000 0.300049 0.350098 0.399902 0.449951
+	0.500000 0.550049 0.600098 0.649902 0.699951 0.750000 0.800049 0.850098 0.899902 0.949951
+	1.000000 1.050049 1.100098 1.149902 1.199951 1.250000 1.300049 1.350098 1.399902 1.449951
+	1.500000 1.550049 1.600098 1.649902 1.699951 1.750000 1.800049 1.850098 1.899902 1.949951
+	2.000000 2.050049 2.100098 2.149902 2.199951 2.250000 2.300049 2.350098 2.399902 2.449951
+	2.500000 2.550049 2.600098 2.649902 2.699951 2.750000 2.800049 2.850098 2.899902 2.949951
+	3.000000 0.500000 0.541748 0.583252 0.625000 0.666748 0.708252 0.750000 0.791748 0.833252
+	0.875000 0.916748 0.958252 1.000000 1.041748 1.083252 1.125000 1.166748 1.208252 1.250000
+	1.291748 1.333252 1.375000 1.416748 1.458252 1.500000 1.541748 1.583252 1.625000 1.666748
+	1.708252 1.750000 1.791748 1.833252 1.875000 1.916748 1.958252 2.000000 2.041748 2.083252
+	2.125000 2.166748 2.208252 2.250000 2.291748 2.333252 2.375000 2.416748 2.458252 2.500000
+	2.541748 2.583252 2.625000 2.666748 2.708252 2.750000 2.791748 2.833252 2.875000 2.916748
+	2.958252 3.000000
 </tex_translate_data>
 
-<tex_srt_anm_array size="5">
-	<tex_srt_anm index="0" material_name="lambert1">
+<tex_srt_anm_array size="1">
+	<tex_srt_anm index="0" material_name="out32_han2">
 		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="61" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="12"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="1" material_name="pl_ele_2_1">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="1" data_head="61"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="12"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="2" material_name="pl_ele_2_2">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="12"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="3" material_name="pl_ele_2_3">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="12"/>
-	</tex_srt_anm>
-	<tex_srt_anm index="4" material_name="pl_ele_2_4">
-		<tex_scale_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
-		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="1" data_head="12"/>
+		<tex_translate_t frame_step="1" data_size="61" data_head="61"/>
 	</tex_srt_anm>
 </tex_srt_anm_array>
 
