@@ -426,6 +426,7 @@ static GFL_PROC_RESULT BR_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 
 
   //RES”jŠü‘O‚ÉF•Û‘¶
+  if( p_wk->p_param->p_param->mode == BR_MODE_BROWSE )
   { 
     MISC  *p_misc = GAMEDATA_GetMiscWork( p_wk->p_param->p_param->p_gamedata );
     MISC_SetBattleRecorderColor( p_misc, BR_RES_GetColor( p_wk->p_res ) );

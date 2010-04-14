@@ -99,6 +99,10 @@ BR_RES_WORK *BR_RES_Init( BR_RES_COLOR_TYPE color, BOOL is_browse, HEAPID heapID
   if( p_wk->is_browse )
   { 
     p_wk->color     = color;
+    if( p_wk->color == BR_RES_COLOR_TYPE_BLUE )
+    { 
+      p_wk->color = BR_RES_COLOR_TYPE_GREEN;
+    }
   }
   else
   { 
