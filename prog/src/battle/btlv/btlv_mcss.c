@@ -17,6 +17,7 @@
 
 #include "btlv_effect.h"
 
+#include "battle/btl_common.h"
 #include "battle/battgra_wb.naix"
 #include "pokegra/pokegra_wb.naix"
 
@@ -181,12 +182,21 @@ static  const VecFx32 poke_pos_triple_table[]={
 };
 
 static  const VecFx32 poke_pos_rotate_table[]={
+#ifdef ROTATION_NEW_SYSTEM
+  { 0x00000c00, 0x00000666, 0x00004c00 }, //POS_A
+  { 0x00000bcd, 0x00000666, 0xffff7000 }, //POS_B
+  { 0xffffc000, 0x00000666, 0x00007000 }, //POS_C
+  { 0x00004800, 0x00000666, 0xffff4000 }, //POS_D
+  { 0x00005300, 0x00000666, 0x00006300 }, //POS_E
+  { 0xffffb9cd, 0x00000666, 0xffff4000 }, //POS_F
+#else
   { 0xffffe500, 0x00000666, 0x00007000 }, //POS_A
   { 0x000026cd, 0x00000666, 0xffff5a00 }, //POS_B
   { 0x00002800, 0x00000666, 0x00007000 }, //POS_C
   { 0xffffdccd, 0x00000666, 0xffff4700 }, //POS_D
   { 0x00000800, 0x00000666, 0x0000a000 }, //POS_E
   { 0x000004cd, 0x00000666, 0xffff3000 }, //POS_F
+#endif
 };
 
 static  const VecFx32 trainer_pos_table[]={
@@ -226,12 +236,21 @@ static  const fx32 poke_scale_triple_table[]={
 };
 
 static  const fx32 poke_scale_rotate_table[]={
+#ifdef ROTATION_NEW_SYSTEM
+  0x00001270, //POS_A
+  0x000011b0, //POS_B
+  0x00001200, //POS_C
+  0x00001200, //POS_D
+  0x00000ed4, //POS_E
+  0x00001400, //POS_F
+#else
   0x000010f0, //POS_A
   0x00001205, //POS_B
   0x00000f00, //POS_C
   0x00001320, //POS_D
   0x00000e00, //POS_E
   0x000010f0, //POS_F
+#endif
 };
 
 static  const fx32 trainer_scale_table[]={

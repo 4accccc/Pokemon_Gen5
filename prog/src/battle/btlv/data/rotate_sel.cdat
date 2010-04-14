@@ -133,9 +133,9 @@ static  const u8  rotate_button_exist_table[][ 2 ] =
 static  const u8  rotate_screen_table[][ 3 ] =
 { 
   //L               R                 return
-  { ROTATE_SCR_L,   ROTATE_SCR_R,     BTL_ROTATEDIR_STAY },    //SCR_C
-  { ROTATE_SCR_C,   ROTATE_SCR_NONE,  BTL_ROTATEDIR_L },       //SCR_L
-  { ROTATE_SCR_C,   ROTATE_SCR_NONE,  BTL_ROTATEDIR_R },       //SCR_R
+  { ROTATE_SCR_R,   ROTATE_SCR_L,     BTL_ROTATEDIR_STAY },    //SCR_C
+  { ROTATE_SCR_C,   ROTATE_SCR_NONE,  BTL_ROTATEDIR_R },       //SCR_L
+  { ROTATE_SCR_C,   ROTATE_SCR_NONE,  BTL_ROTATEDIR_L },       //SCR_R
 };
 
 static  const u8  rotate_result[] =
