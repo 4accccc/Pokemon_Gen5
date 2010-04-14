@@ -129,6 +129,24 @@ FLDEFF_CTRL * FLDEFF_CTRL_Create(
     fectrl->area_inout_switch= AREADATA_GetInnerOuterSwitch( FIELDMAP_GetAreaData( fieldMapWork ) );
   }
   fectrl_InitProcEffect( fectrl );
+
+  {
+    GFL_BBD_SYS *bbdsys;
+    GFL_BBDACT_SYS * bbdactsys = FIELDMAP_GetSubBbdActSys( fectrl->fieldMapWork );
+    bbdsys = GFL_BBDACT_GetBBDSystem( bbdactsys );
+    GFL_BBD_SetOrigin( bbdsys, GFL_BBD_ORIGIN_CENTER );
+
+    { //Scale
+      VecFx32 scale = {FX32_ONE*2,FX32_ONE*2,FX32_ONE*2};
+      GFL_BBD_SetScale( bbdsys, &scale );
+    }
+    
+    { //Poligon ID
+      u8 id = 2;
+      GFL_BBD_SetPolID( bbdsys, &id );
+    }
+
+  }
   return( fectrl );
 }
 
