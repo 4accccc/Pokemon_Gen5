@@ -245,8 +245,13 @@ EVENT_START ev_scene_c07r0201_game_start
     //アイテムセット
     $item = ITEM_MAHINAOSI
   ENDIF
+
+  //アイテム出現音
+  _SE_PLAY( SEQ_SE_FLD_10 )
   //アイテムボール出現
   _OBJ_ADD_EX( 4, 5, DIR_DOWN, MMDL_ID_EVENTOBJ_00, MONSTERBALL, MV_DMY )
+  //SE待ち
+  _SE_WAIT()
   //自機アイテムボールに近づく
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_mv2 )
   _OBJ_ANIME_WAIT()
