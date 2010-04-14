@@ -40,6 +40,5 @@
 #define R06_HIDE_ITEM_01                  3
 #define R06_HIDE_ITEM_02                  4
 #define R06_HIDE_ITEM_03                  5
-#define R06_HIDE_ITEM_04                  6
 
 #endif //ZONE_R06_EVB_H

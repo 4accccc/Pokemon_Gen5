@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/08 16:31:15
+#save date:2010/04/14 21:17:33
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d08r0701.wms
 #SECTION START:OBJ_EVENT
@@ -18,7 +18,7 @@ D08R0701_FLD_ITEM_01
 #OBJ CODE Number
 MONSTERBALL
 #MOVE CODE Number
-MV_DMY
+MV_RAIL_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -49,7 +49,7 @@ D08R0701_FLD_ITEM_02
 #OBJ CODE Number
 MONSTERBALL
 #MOVE CODE Number
-MV_DMY
+MV_RAIL_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -80,7 +80,7 @@ D08R0701_FLD_ITEM_03
 #OBJ CODE Number
 MONSTERBALL
 #MOVE CODE Number
-MV_DMY
+MV_RAIL_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
