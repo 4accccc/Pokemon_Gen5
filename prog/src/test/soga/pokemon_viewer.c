@@ -35,6 +35,10 @@
 
 #if PM_DEBUG
 
+#if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_yoshida
+#define CAMERA_FOCUS
+#endif
+
 //============================================================================================
 //  íËêîíËã`
 //============================================================================================
@@ -629,6 +633,7 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
 
     BTLV_CAMERA_GetDefaultCameraPosition( &pos, &target );
     BTLV_CAMERA_MoveCameraInterpolation( BTLV_EFFECT_GetCameraWork(), &pos, &target, 20, 0, 20 );
+    BTLV_MCSS_SetOrthoMode( BTLV_EFFECT_GetMcssWork() );
 
 #if 0
     for( mcss_pos = BTLV_MCSS_POS_AA ; mcss_pos < BTLV_MCSS_POS_MAX ; mcss_pos++ )
@@ -682,6 +687,9 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
     if( hit != GFL_UI_TP_HIT_NONE ){
       if( BTLV_EFFECT_CheckExist( hit ) == TRUE ){
         BTLV_MCSS_SetVanishFlag( BTLV_EFFECT_GetMcssWork(), hit, BTLV_MCSS_VANISH_FLIP );
+#ifdef CAMERA_FOCUS
+        BTLV_EFFECT_SetCameraFocus( hit, BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
+#endif
         TextPrint( pvw, hit, hit );
       }
     }
@@ -1038,6 +1046,8 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
       pvw->edit_value = VALUE_X;
       pvw->proj = BTLV_MCSS_PROJ_ORTHO;
       PokemonViewerPP_Put( pvw, hit );
+      BTLV_EFFECT_SetCameraFocus( hit, BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
+      BTLV_MCSS_ResetOrthoMode( BTLV_EFFECT_GetMcssWork() );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S,   VISIBLE_OFF );
       GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_ON );
       ret = TRUE;
