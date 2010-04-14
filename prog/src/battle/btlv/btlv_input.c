@@ -359,7 +359,7 @@ enum
 
 //わるあがきボタン
 enum
-{ 
+{
   BTLV_INPUT_WARUAGAKI_MAX = 1,
 
   BTLV_INPUT_WARUAGAKI_X = 128,
@@ -421,7 +421,7 @@ enum
 };
 
 enum
-{ 
+{
   BR_PLAY_CHAPTER_X = 11 * 8 + 4,
   BR_PLAY_CHAPTER_Y =  1 * 8,
   BR_MAX_CHAPTER_X  = 17 * 8 + 4,
@@ -456,7 +456,7 @@ static  const GFL_CLWK_DATA obj_param =
 };
 
 enum
-{ 
+{
   FINGER_CURSOR_LOOP  = 3,
   FINGER_CURSOR_FRAME = 7,
   FINGER_CURSOR_WAIT  = 16,
@@ -741,7 +741,7 @@ static  void  BTLV_INPUT_VBlank( GFL_TCB *tcb, void *work );
  */
 //============================================================================================
 BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( BTLV_INPUT_TYPE type, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
-{ 
+{
   return BTLV_INPUT_InitCore( type, BTL_COMPETITOR_WILD, pfd, font, cursor_flag, FALSE, heapID );
 }
 
@@ -780,7 +780,7 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, BtlCompetitor comp, PAL
 //============================================================================================
 static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( BTLV_INPUT_TYPE type, BtlCompetitor comp, PALETTE_FADE_PTR pfd,
                                                GFL_FONT* font, u8* cursor_flag, BOOL main_loop_tcb_flag, HEAPID heapID )
-{ 
+{
   BTLV_INPUT_WORK *biw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_INPUT_WORK ) );
 
   biw->heapID = heapID;
@@ -848,7 +848,7 @@ void  BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw )
   GFL_MSG_Delete( biw->msg );
 
   if( biw->bfcw )
-  { 
+  {
     BTLV_FINGER_CURSOR_Exit( biw->bfcw );
   }
 
@@ -934,7 +934,7 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
 
   //メインループはTCBで行う
   if( biw->main_loop_tcb_flag == TRUE )
-  { 
+  {
     biw->main_loop = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), BTLV_INPUT_MainTCB, biw, 0 );
   }
 
@@ -1007,32 +1007,32 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
   }
 
   if( biw->wazatype_clunit )
-  { 
+  {
     GFL_CLACT_UNIT_Delete( biw->wazatype_clunit );
     biw->wazatype_clunit = NULL;
   }
   if( biw->ballgauge_clunit )
-  { 
+  {
     GFL_CLACT_UNIT_Delete( biw->ballgauge_clunit );
     biw->ballgauge_clunit = NULL;
   }
   if( biw->cursor_clunit )
-  { 
+  {
     GFL_CLACT_UNIT_Delete( biw->cursor_clunit );
     biw->cursor_clunit = NULL;
   }
   if( biw->pokeicon_clunit )
-  {  
+  {
     GFL_CLACT_UNIT_Delete( biw->pokeicon_clunit );
     biw->pokeicon_clunit = NULL;
   }
   if( biw->weather_clunit )
-  { 
+  {
     GFL_CLACT_UNIT_Delete( biw->weather_clunit );
     biw->weather_clunit = NULL;
   }
   if( biw->waruagaki_clunit )
-  { 
+  {
     GFL_CLACT_UNIT_Delete( biw->waruagaki_clunit );
     biw->waruagaki_clunit = NULL;
   }
@@ -1044,7 +1044,7 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
   BTLV_INPUT_FreeFrame();
 
   if( biw->main_loop )
-  { 
+  {
     GFL_TCB_DeleteTask( biw->main_loop );
     biw->main_loop = NULL;
   }
@@ -1183,7 +1183,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_DeleteBallGauge( biw );
       BTLV_INPUT_DeletePokeIcon( biw );
       BTLV_INPUT_DeleteWeatherIcon( biw );
-      
+
       if( ( biw->scr_type == BTLV_INPUT_SCRTYPE_COMMAND ) || ( biw->scr_type == BTLV_INPUT_SCRTYPE_YES_NO ) )
       {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Standby, ttw, 1 );
@@ -1304,7 +1304,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       {
         biw->rotate_bpp[ i ] = birp->bpp[ i ];
         for( j = 0 ; j < PTL_WAZA_MAX ; j++ )
-        { 
+        {
           biw->rotate_waza_exist[ i ][ j ] = birp->waza_exist[ i ][ j ];
         }
       }
@@ -1352,14 +1352,14 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_CreateBattleRecorderScreen( biw, bibrp );
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
-      { 
+      {
         TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
         biw->tcb_execute_flag = 1;
         ttw->biw = biw;
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2BattleRecorder, ttw, 1 );
       }
       else
-      { 
+      {
         GFL_BMPWIN_MakeScreen( biw->bmp_win );
         GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
         GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
@@ -1367,7 +1367,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
     }
     break;
   case BTLV_INPUT_SCRTYPE_PDC:
-    { 
+    {
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
@@ -1403,7 +1403,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   }
 
   if( biw->hit != GFL_UI_TP_HIT_NONE )
-  { 
+  {
     hit = biw->hit;
     biw->hit = GFL_UI_TP_HIT_NONE;
     return hit;
@@ -1412,15 +1412,15 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   if( ( biw->camera_work_wait > CAMERA_WORK_WAIT ) &&
       ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) &&
       ( biw->scr_type != BTLV_INPUT_SCRTYPE_PDC ) )
-  { 
+  {
     if( !BTLV_EFFECT_CheckExecute() ){
       BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
     }
   }
   else
-  { 
+  {
     if( biw->main_loop_tcb_flag == TRUE )
-    { 
+    {
       biw->camera_work_wait++;
     }
   }
@@ -1454,7 +1454,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
       }
     }
     if( hit != GFL_UI_TP_HIT_NONE )
-    { 
+    {
       hit = BTLV_INPUT_SetButtonReaction( biw, hit, RotateTouchData.button_pltt[ hit ] );
     }
     return hit;
@@ -1466,7 +1466,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
 
   //バトルレコーダーは、別判定をする
   if( biw->scr_type == BTLV_INPUT_SCRTYPE_BATTLE_RECORDER )
-  { 
+  {
     hit = GFL_UI_TP_HitTrg( tp_tbl->hit_tbl );
     if( hit != GFL_UI_TP_HIT_NONE )
     {
@@ -1487,11 +1487,11 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
       }
     }
     else
-    { 
+    {
       hit = BTLV_INPUT_CheckKeyBR( biw );
     }
     if( hit != GFL_UI_TP_HIT_NONE )
-    { 
+    {
       hit = BTLV_INPUT_SetButtonReaction( biw, hit, tp_tbl->button_pltt[ hit ] );
     }
     return hit;
@@ -1507,25 +1507,25 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
       hit = GFL_UI_TP_HIT_NONE;
     }
     else
-    { 
+    {
       if( hit_tp != GFL_UI_TP_HIT_NONE )
-      { 
+      {
         if( tp_tbl->cancel_flag[ hit ] == FALSE )
-        { 
+        {
           SePlayDecide( biw );
         }
         else
-        { 
+        {
           SePlayCancel( biw );
         }
       }
     }
   }
   if( hit != GFL_UI_TP_HIT_NONE )
-  { 
+  {
     hit = BTLV_INPUT_SetButtonReaction( biw, hit, tp_tbl->button_pltt[ hit ] );
     if( biw->main_loop_tcb_flag == TRUE )
-    { 
+    {
       //カメラワークエフェクト
       BTLV_EFFECT_Stop();
       BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
@@ -1541,31 +1541,31 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
  */
 //============================================================================================
 BOOL  BTLV_INPUT_CheckInputDemo( BTLV_INPUT_WORK* biw )
-{ 
+{
   BOOL  ret = FALSE;
 
-  switch( biw->seq_no ){ 
+  switch( biw->seq_no ){
   case 0:
-    { 
+    {
       int cursor_pos[][ 2 ] = { { 128, 72 }, { 64, 48 }, { 40, 152 } };
       if( biw->bfcw == NULL )
-      { 
+      {
         biw->bfcw = BTLV_FINGER_CURSOR_Init( biw->pfd, 0x0b, biw->heapID );
       }
       if( BTLV_FINGER_CURSOR_Create( biw->bfcw,
                                      cursor_pos[ biw->demo_cursor_pos ][ 0 ],
                                      cursor_pos[ biw->demo_cursor_pos ][ 1 ],
                                      FINGER_CURSOR_LOOP, FINGER_CURSOR_FRAME, FINGER_CURSOR_WAIT ) == FALSE )
-      { 
+      {
         break;
       }
     }
-    biw->seq_no++; 
-    biw->demo_cursor_pos++; 
+    biw->seq_no++;
+    biw->demo_cursor_pos++;
     break;
   case 1:
     if( ( ret = BTLV_FINGER_CURSOR_CheckExecute( biw->bfcw ) ) == TRUE )
-    { 
+    {
       SePlayDecide( biw );
     }
     break;
@@ -1595,7 +1595,7 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
   }
 
   if( biw->hit != GFL_UI_TP_HIT_NONE )
-  { 
+  {
     hit = biw->hit;
     biw->hit = GFL_UI_TP_HIT_NONE;
     return TRUE;
@@ -1604,22 +1604,22 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
   if( ( biw->camera_work_wait > CAMERA_WORK_WAIT ) &&
       ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) &&
       ( biw->scr_type != BTLV_INPUT_SCRTYPE_PDC ) )
-  { 
+  {
     if( !BTLV_EFFECT_CheckExecute() ){
       BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK );
     }
   }
   else
-  { 
+  {
     if( biw->main_loop_tcb_flag == TRUE )
-    { 
+    {
       biw->camera_work_wait++;
     }
   }
 
   hit = GFL_UI_TP_HitTrg( RotateTouchData.hit_tbl );
   if( biw->waruagaki_flag == TRUE )
-  { 
+  {
     hit = BTLV_INPUT_CheckKey( biw, &RotateTouchDataWaruagaki, RotateKeyDataWaruagaki[ biw->rotate_scr ], hit );
   }
   else
@@ -1651,19 +1651,19 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
     }
   }
   if( hit != GFL_UI_TP_HIT_NONE )
-  { 
+  {
 #if 0
     if( biw->waruagaki_flag == TRUE )
-    { 
+    {
       hit = BTLV_INPUT_SetButtonReaction( biw, hit, RotateTouchDataWaruagaki.button_pltt[ hit ] );
     }
     else
-    { 
+    {
       hit = BTLV_INPUT_SetButtonReaction( biw, hit, RotateTouchData.button_pltt[ hit ] );
     }
 #endif
     if( biw->main_loop_tcb_flag == TRUE )
-    { 
+    {
       //カメラワークエフェクト
       BTLV_EFFECT_Stop();
       BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
@@ -2226,7 +2226,7 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
  */
 //============================================================================================
 static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
   switch( ttw->seq_no ){
@@ -2270,7 +2270,7 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
  */
 //============================================================================================
 static  void  TCB_TransformStandby2PDC( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
   switch( ttw->seq_no ){
@@ -2311,7 +2311,7 @@ static  void  TCB_TransformStandby2PDC( GFL_TCB* tcb, void* work )
  */
 //============================================================================================
 static  void  TCB_TransformCommand2Rotate( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
   switch( ttw->seq_no ){
@@ -2352,7 +2352,7 @@ static  void  TCB_TransformCommand2Rotate( GFL_TCB* tcb, void* work )
  */
 //============================================================================================
 static  void  TCB_TransformRotate2Rotate( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_TRANSFORM_WORK* ttw = (TCB_TRANSFORM_WORK *)work;
 
   switch( ttw->seq_no ){
@@ -3302,13 +3302,13 @@ static  void  BTLV_INPUT_CreateDirScreen( BTLV_INPUT_WORK* biw, TCB_TRANSFORM_WO
     int i;
 
     for( i = 0 ; i < max ; i++ )
-    { 
+    {
       dat = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, NARC_battgra_wb_sel_up_NCLR, &palData, biw->heapID );
       PaletteWorkSet( biw->pfd, palData->pRawData, FADE_SUB_BG, DIR_PLTT + i * 0x10, 0x20 );
       GFL_HEAP_FreeMemory( dat );
     }
     for( ; i < max * 2 ; i++ )
-    { 
+    {
       dat = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, NARC_battgra_wb_sel_down_NCLR, &palData, biw->heapID );
       PaletteWorkSet( biw->pfd, palData->pRawData, FADE_SUB_BG, DIR_PLTT + i * 0x10, 0x20 );
       GFL_HEAP_FreeMemory( dat );
@@ -3357,14 +3357,14 @@ static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw )
   int i;
 
   for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
-  { 
+  {
     biwp.wazano[ i ]  = 0;
     biwp.pp[ i ]      = 0;
     biwp.ppmax[ i ]   = 0;
   }
 
   for( i = 0 ; i < BPP_WAZA_GetCount( biw->rotate_bpp[ biw->rotate_scr ] ) ; i++ )
-  { 
+  {
     biwp.wazano[ i ] = BPP_WAZA_GetParticular( biw->rotate_bpp[ biw->rotate_scr ], i, &biwp.pp[ i ], &biwp.ppmax[ i ] );
   }
   BTLV_INPUT_CreateWazaScreen( biw, &biwp );
@@ -3374,14 +3374,14 @@ static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw )
 
   biw->waruagaki_flag = TRUE;
   for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
-  { 
+  {
     if( biw->rotate_waza_exist[ biw->rotate_scr ][ i ] == TRUE )
-    { 
+    {
       biw->waruagaki_flag = FALSE;
     }
   }
   if( BPP_IsDead( biw->rotate_bpp[ biw->rotate_scr ] ) )
-  { 
+  {
     for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
     { 
       biw->button_exist[ i ] = FALSE;
@@ -3397,7 +3397,7 @@ static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw )
     PaletteFadeReq( biw->pfd, PF_BIT_SUB_OBJ, 0x0700, 0, 8, 8, 0, biw->tcbsys );
   }
   else
-  { 
+  {
     PaletteFadeReq( biw->pfd, PF_BIT_SUB_BG, 0x3e00, 0, 0, 0, 0, biw->tcbsys );
     PaletteFadeReq( biw->pfd, PF_BIT_SUB_OBJ, 0x0700, 0, 0, 0, 0, biw->tcbsys );
   }
@@ -3496,7 +3496,7 @@ static  void  BTLV_INPUT_CreateRotatePokeIcon( BTLV_INPUT_WORK* biw )
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_CreateBattleRecorderScreen( BTLV_INPUT_WORK* biw, const BTLV_INPUT_BATTLE_RECORDER_PARAM *bibrp )
-{ 
+{
   STRBUF *chapter_p;
   STRBUF *chapter_src;
   STRBUF *msg_src;
@@ -3519,7 +3519,7 @@ static  void  BTLV_INPUT_CreateBattleRecorderScreen( BTLV_INPUT_WORK* biw, const
     PRINTSYS_Print( biw->bmp_data, BR_MAX_CHAPTER_X, BR_MAX_CHAPTER_Y, chapter_p, biw->font );
 
     if( bibrp->play_chapter != bibrp->view_chapter )
-    { 
+    {
       GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( MSGCOLOR_PP_RED ),
                             PRINTSYS_LSB_GetS( MSGCOLOR_PP_RED ),
                             PRINTSYS_LSB_GetB( MSGCOLOR_PP_RED ) );
@@ -3540,7 +3540,7 @@ static  void  BTLV_INPUT_CreateBattleRecorderScreen( BTLV_INPUT_WORK* biw, const
     GFL_FONTSYS_SetColor( letter, shadow, back );
   }
 
-  switch( bibrp->stop_flag ){ 
+  switch( bibrp->stop_flag ){
   case BTLV_INPUT_BR_STOP_KEY:    //キーによる中断
   case BTLV_INPUT_BR_STOP_BREAK:  //データ破壊による中断
   case BTLV_INPUT_BR_STOP_OVER:   //録画時間オーバーによる中断
@@ -3574,7 +3574,7 @@ static  void  BTLV_INPUT_ClearScreen( BTLV_INPUT_WORK* biw )
   int i;
 
   for( i = 0 ; i < BTLV_INPUT_BUTTON_MAX ; i++ )
-  { 
+  {
     biw->button_exist[ i ] = FALSE;
   }
 
@@ -3998,7 +3998,7 @@ static  void  BTLV_INPUT_DeleteCursorOBJ( BTLV_INPUT_WORK* biw )
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_DeleteWazaTypeIcon( BTLV_INPUT_WORK* biw )
-{ 
+{
   int i;
 
   for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
@@ -4019,7 +4019,7 @@ static  void  BTLV_INPUT_DeleteWazaTypeIcon( BTLV_INPUT_WORK* biw )
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_CreateWaruagakiButton( BTLV_INPUT_WORK* biw )
-{ 
+{
   int               i;
   GFL_CLACTPOS      pos;
 
@@ -4034,7 +4034,7 @@ static  void  BTLV_INPUT_CreateWaruagakiButton( BTLV_INPUT_WORK* biw )
   GFL_CLACT_WK_SetAnmSeq( biw->waruagaki_wk, BTLV_INPUT_WARUAGAKI_ANM );
 
   //わるあがき技名
-  { 
+  {
     STRBUF* wazaname_p    = GFL_STR_CreateBuffer( BUFLEN_WAZA_NAME, biw->heapID );
     STRBUF* wazaname_src  = GFL_MSG_CreateString( biw->msg, BI_WazaNameMsg );
     WORDSET*  wordset     = WORDSET_Create( biw->heapID );
@@ -4042,9 +4042,9 @@ static  void  BTLV_INPUT_CreateWaruagakiButton( BTLV_INPUT_WORK* biw )
                                             GFL_BMP_16_COLOR, biw->heapID );
     u8 letter, shadow, back;
     int dot_len, char_len;
-  
+
     GFL_BMP_Clear( bmp, 0 );
-  
+
     GFL_FONTSYS_GetColor( &letter, &shadow, &back );
     GFL_FONTSYS_SetColor( BTLV_INPUT_WARUAGAKI_L, BTLV_INPUT_WARUAGAKI_S, BTLV_INPUT_WARUAGAKI_B );
 
@@ -4054,18 +4054,18 @@ static  void  BTLV_INPUT_CreateWaruagakiButton( BTLV_INPUT_WORK* biw )
     PRINTSYS_Print( bmp, BTLV_INPUT_WARUAGAKI_MSG_X - ( dot_len / 2 ), BTLV_INPUT_WARUAGAKI_MSG_Y,
                     wazaname_p, biw->font );
     GFL_FONTSYS_SetColor( letter, shadow, back );
-  
+
     {
       void *obj_vram;
       NNSG2dImageProxy image;
       u8* bmp_data = GFL_BMP_GetCharacterAdrs( bmp );
       int i;
-  
+
       obj_vram = G2S_GetOBJCharPtr();
       GFL_CLACT_WK_GetImgProxy( biw->waruagaki_wk, &image );
 
       for( i = 0 ; i < 4 ; i++ )
-      { 
+      {
         MI_CpuCopy16( &bmp_data[ BTLV_INPUT_WARUAGAKI_SIZE_X * 0x20 * i ],
                     (void*)( (u32)obj_vram + ( BTLV_INPUT_WARUAGAKI_8x4_START + 8 * i ) * 0x20 +
                     image.vramLocation.baseAddrOfVram[ NNS_G2D_VRAM_TYPE_2DSUB ] ),
@@ -4080,7 +4080,7 @@ static  void  BTLV_INPUT_CreateWaruagakiButton( BTLV_INPUT_WORK* biw )
                     0x20 * 2 );
       }
     }
-  
+
     GFL_STR_DeleteBuffer( wazaname_p );
     GFL_STR_DeleteBuffer( wazaname_src );
     WORDSET_Delete( wordset );
@@ -4096,9 +4096,9 @@ static  void  BTLV_INPUT_CreateWaruagakiButton( BTLV_INPUT_WORK* biw )
  */
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_DeleteWaruagakiButton( BTLV_INPUT_WORK* biw )
-{ 
+{
   if( biw->waruagaki_wk != NULL )
-  { 
+  {
     GFL_CLACT_WK_Remove( biw->waruagaki_wk );
     biw->waruagaki_wk = NULL;
   }
@@ -4127,11 +4127,11 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
     case BTLV_INPUT_SCRTYPE_WAZA:
     case BTLV_INPUT_SCRTYPE_DIR:
       if( biw->button_exist[ biw->decide_pos[ biw->scr_type ] ] == TRUE )
-      { 
+      {
         biw->cursor_pos = biw->decide_pos[ biw->scr_type ];
       }
       else
-      { 
+      {
         biw->cursor_pos = 0;
       }
       break;
@@ -4180,11 +4180,11 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
       {
         hit = tbl->a_button;
         if( tp_tbl->cancel_flag[ hit ] == FALSE )
-        { 
+        {
           SePlayDecide( biw );
         }
         else
-        { 
+        {
           SePlayCancel( biw );
         }
         decide_flag = TRUE;
@@ -4210,7 +4210,7 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
           if( trg == PAD_BUTTON_B )
           {
             if( move_pos != CURSOR_NOMOVE )
-            { 
+            {
               SePlayCancel( biw );
             }
             hit = move_pos;
@@ -4233,7 +4233,7 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
     case BTLV_INPUT_SCRTYPE_WAZA:
     case BTLV_INPUT_SCRTYPE_DIR:
       if( tp_tbl->cancel_flag[ biw->cursor_pos ] == FALSE )
-      { 
+      {
         biw->decide_pos[ biw->scr_type ] = biw->cursor_pos;
       }
     default:
@@ -4260,15 +4260,15 @@ static  int   BTLV_INPUT_CheckKeyBR( BTLV_INPUT_WORK* biw )
   int rp = GFL_UI_KEY_GetRepeat();
 
   if( rp & PAD_BUTTON_B )
-  { 
+  {
     return BTLV_INPUT_BR_SEL_STOP;
   }
   else if( rp & PAD_KEY_LEFT )
-  { 
+  {
     return BTLV_INPUT_BR_SEL_REW;
   }
   else if( rp & PAD_KEY_RIGHT )
-  { 
+  {
     return BTLV_INPUT_BR_SEL_FF;
   }
   return GFL_UI_TP_HIT_NONE;
@@ -4341,15 +4341,15 @@ static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HIT
  */
 //--------------------------------------------------------------
 static  int  BTLV_INPUT_SetButtonReaction( BTLV_INPUT_WORK* biw, int hit, int pltt )
-{ 
+{
   if( pltt < 0 )
-  { 
+  {
     return hit;
   }
 
   biw->hit = hit;
 
-  { 
+  {
     TCB_BUTTON_REACTION*  tbr = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_BUTTON_REACTION ) );
 
     biw->button_reaction = ( ( pltt & 0x10000 ) == 0 );
@@ -4369,24 +4369,24 @@ static  int  BTLV_INPUT_SetButtonReaction( BTLV_INPUT_WORK* biw, int hit, int pl
  */
 //--------------------------------------------------------------
 static  void  TCB_ButtonReaction( GFL_TCB* tcb, void* work )
-{ 
+{
   TCB_BUTTON_REACTION*  tbr = ( TCB_BUTTON_REACTION* )work;
 
-  switch( tbr->seq_no ){ 
+  switch( tbr->seq_no ){
   case 0:
     PaletteFadeReq( tbr->biw->pfd, PF_BIT_SUB_BG, tbr->pltt, 0, 0, 8, 0x7fff, tbr->biw->tcbsys );
     tbr->seq_no++;
     break;
   case 1:
     if( !PaletteFadeCheck( tbr->biw->pfd ) )
-    { 
+    {
       PaletteFadeReq( tbr->biw->pfd, PF_BIT_SUB_BG, tbr->pltt, 0, 8, 0, 0x7fff, tbr->biw->tcbsys );
       tbr->seq_no++;
     }
     break;
   case 2:
     if( !PaletteFadeCheck( tbr->biw->pfd ) )
-    { 
+    {
       tbr->biw->button_reaction = 0;
       GFL_HEAP_FreeMemory( work );
       GFL_TCB_DeleteTask( tcb );
@@ -4401,7 +4401,7 @@ static  void  TCB_ButtonReaction( GFL_TCB* tcb, void* work )
 static  inline  void  SePlaySelect( BTLV_INPUT_WORK* biw )
 {
   if( biw->comp != BTL_COMPETITOR_COMM )
-  { 
+  {
     PMSND_PlaySE( SEQ_SE_SELECT1 );
   }
 }
@@ -4434,7 +4434,7 @@ static  inline  void  SePlayCancel( BTLV_INPUT_WORK* biw )
 static  inline  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw )
 {
   if( biw->comp != BTL_COMPETITOR_COMM )
-  { 
+  {
     PMSND_PlaySE( SEQ_SE_ROTATION_S );
   }
 }
@@ -4445,7 +4445,7 @@ static  inline  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw )
 static  inline  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw )
 {
   if( biw->comp != BTL_COMPETITOR_COMM )
-  { 
+  {
     PMSND_PlaySE( SEQ_SE_DECIDE2 );
   }
 }
@@ -4456,7 +4456,7 @@ static  inline  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw )
 static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw )
 {
   if( biw->comp != BTL_COMPETITOR_COMM )
-  { 
+  {
     PMSND_PlaySE( SEQ_SE_ROTATION_B );
   }
 }

@@ -111,6 +111,7 @@ struct _BTLV_SCD {
 
   const BTL_POKESELECT_PARAM*   pokesel_param;
   BTL_POKESELECT_RESULT*        pokesel_result;
+  BTLV_ROTATION_WAZASEL_PARAM*  rotationSelParam;
 
   SEL_TARGET_WORK   selTargetWork;
   u8                selTargetDone;
@@ -144,11 +145,14 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs );
 static BOOL selectDemoRoot_loop( int* seq, void* wk_adrs );
 static BOOL selectWaza_init( int* seq, void* wk_adrs );
 static BOOL selectWaza_loop( int* seq, void* wk_adrs );
+static BOOL selectRotationWaza_init( int* seq, void* wk_adrs );
+static BOOL selectRotationWaza_loop( int* seq, void* wk_adrs );
 static void stw_init( SEL_TARGET_WORK* stw );
 static void stw_convert_pos_to_index( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, u8 num );
 static void stw_setSelectablePoke( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, BtlExPos exPos );
 static void stw_setConfirmPoke( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, BtlExPos exPos );
 static void stw_setConfirmField( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, BtlExPos exPos );
+static void stw_addFarPoke( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, WazaID waza, BtlPokePos myPos );
 static BOOL stw_is_enable_hitpos( SEL_TARGET_WORK* stw, int hitPos, const BTL_MAIN_MODULE* mainModule, BtlPokePos* targetPos );
 static inline u8 stwdraw_vpos_to_tblidx( u8 vpos );
 static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk );
@@ -157,9 +161,6 @@ static BOOL stw_draw_wait( BTLV_SCD* wk );
 static BOOL selectTarget_init( int* seq, void* wk_adrs );
 static BOOL selectTarget_loop( int* seq, void* wk_adrs );
 static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk );
-static BOOL selectPokemon_init( int* seq, void* wk_adrs );
-static BOOL selectPokemon_loop( int* seq, void* wk_adrs );
-static void printCommWait( BTLV_SCD* wk );
 
 BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule,
         const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, const BTL_CLIENT* client, HEAPID heapID )
@@ -382,6 +383,28 @@ void BTLV_SCD_StartWazaSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTIO
 
   spstack_push( wk, selectWaza_init, selectWaza_loop );
 }
+//=============================================================================================
+/**
+ * ワザ選択処理（ローテーションバトル用）開始
+ *
+ * @param   wk
+ * @param   selParam
+ * @param   actionParam
+ */
+//=============================================================================================
+void BTLV_SCD_StartRotationWazaSelect( BTLV_SCD* wk, BTLV_ROTATION_WAZASEL_PARAM* selParam, BTL_ACTION_PARAM* actionParam )
+{
+  wk->rotationSelParam = selParam;
+  wk->destActionParam = actionParam;
+  wk->selActionResult = BTL_ACTION_NULL;
+
+  BTL_ACTION_SetNULL( wk->destActionParam );
+  BTL_ACTION_SetNULL( &selParam->actRotation );
+  BTL_ACTION_SetNULL( &selParam->actWaza );
+
+  spstack_push( wk, selectRotationWaza_init, selectRotationWaza_loop );
+}
+
 //=============================================================================================
 /**
  * ワザ選択処理 終了待ち
@@ -683,6 +706,61 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
 
   return FALSE;
 }
+//--------------------------------------------------------------------------------------
+// ローテーションワザ選択
+//--------------------------------------------------------------------------------------
+
+static BOOL selectRotationWaza_init( int* seq, void* wk_adrs )
+{
+  BTLV_SCD* wk = wk_adrs;
+  BTLV_INPUT_ROTATE_PARAM birp;
+  int i, j;
+
+  for(i=0; i<BTL_ROTATE_NUM; ++i)
+  {
+    birp.bpp[ i ] = wk->rotationSelParam->poke[i].bpp;
+    for(j=0; j<PTL_WAZA_MAX; ++j)
+    {
+      birp.waza_exist[ i ][ j ] = wk->rotationSelParam->poke[ i ].fWazaUsable[ j ];
+    }
+  }
+
+  BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_ROTATE, &birp );
+
+  return TRUE;
+}
+
+static BOOL selectRotationWaza_loop( int* seq, void* wk_adrs )
+{
+  BTLV_SCD* wk = wk_adrs;
+  BtlRotateDir dir;
+  int  wazaIdx;
+
+  if( BTLV_INPUT_CheckInputRotate(wk->biw, &dir, &wazaIdx) )
+  {
+    if( wazaIdx != PTL_WAZA_MAX )
+    {
+      int pokeIdx;
+      WazaID waza;
+
+      if( dir == BTL_ROTATEDIR_NONE ){
+        dir = BTL_ROTATEDIR_STAY;
+      }
+
+      pokeIdx = BTL_MAINUTIL_GetRotateInPosIdx( dir );
+      waza = BPP_WAZA_GetID( wk->rotationSelParam->poke[ pokeIdx ].bpp, wazaIdx );
+
+      TAYA_Printf("Rotate dir=%d, pokeIdx=%d\n", dir, pokeIdx);
+
+      BTL_ACTION_SetRotation( &wk->rotationSelParam->actRotation, dir );
+      BTL_ACTION_SetFightParam( &wk->rotationSelParam->actWaza, waza, BTL_POS_NULL );
+      BTL_ACTION_SetFightParam( wk->destActionParam, waza, BTL_POS_NULL );
+    }
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 //--------------------------------------------------------------------------------------
 // ターゲット選択画面描画処理

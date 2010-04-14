@@ -1042,6 +1042,7 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
       break;
     }
   }
+
   return FALSE;
 }
 //----------------------------------------------------------------------------------
@@ -1061,11 +1062,18 @@ static BOOL ServerMain_ExitBattle_KeyWait( BTL_SERVER* server, int* seq )
     {
       u8 touch = FALSE;
 
-      if( (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B))
-      ||  (GFL_UI_TP_GetTrg())
-      ){
+      if( !BTL_MAIN_IsRecordPlayMode(server->mainModule) )
+      {
+        if( (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B))
+        ||  (GFL_UI_TP_GetTrg())
+        ){
+          touch = TRUE;
+        }
+      }
+      else{
         touch = TRUE;
       }
+
       if( touch ){
         ++(*seq);
         return TRUE;
@@ -1078,6 +1086,7 @@ static BOOL ServerMain_ExitBattle_KeyWait( BTL_SERVER* server, int* seq )
   }
   return FALSE;
 }
+
 //----------------------------------------------------------------------------------
 /**
  * サーバメインループ：バトル終了（野生に負け）

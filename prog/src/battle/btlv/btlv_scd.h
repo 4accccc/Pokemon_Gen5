@@ -70,6 +70,7 @@ extern void BTLV_SCD_StartActionSelectDemoCapture( BTLV_SCD* wk, const BTL_POKEP
 extern BtlAction BTLV_SCD_WaitActionSelect( BTLV_SCD* wk );
 
 extern void BTLV_SCD_StartWazaSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
+extern void BTLV_SCD_StartRotationWazaSelect( BTLV_SCD* wk, BTLV_ROTATION_WAZASEL_PARAM* selParam, BTL_ACTION_PARAM* actionParam );
 extern void BTLV_SCD_StartWazaSelectDemoCapture( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
 extern BOOL BTLV_SCD_WaitWazaSelect( BTLV_SCD* wk );
 

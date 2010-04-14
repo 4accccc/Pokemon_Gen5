@@ -17,7 +17,7 @@
 #include "font/font.naix"
 
 
-#include "battle/btl_common.h"
+#include "../btl_common.h"
 #include "battle/btl_main.h"
 #include "battle/btl_action.h"
 #include "battle/btl_calc.h"
@@ -81,6 +81,7 @@ struct _BTLV_CORE {
   BPLIST_DATA           plistData;
   BTL_POKESELECT_RESULT* pokeselResult;
   BTLV_INPUT_BATTLE_RECORDER_PARAM  recPlayerUI;
+  BTLV_ROTATION_WAZASEL_PARAM*      rotationSelParam;
   u8                    selectItemSeq;
   u8                    fActionPrevButton;
 
@@ -102,11 +103,12 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer );
 static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer );
 static  const BTL_POKEPARAM*  get_btl_pokeparam( BTLV_CORE* core, BtlvMcssPos pos );
 static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer );
-static BOOL CmdProc_SelectWaza( BTLV_CORE* core, int* seq, void* workBufer );
 static BOOL CmdProc_SelectTarget( BTLV_CORE* core, int* seq, void* workBufer );
 static void mainproc_setup( BTLV_CORE* core, pCmdProc proc );
 static void mainproc_reset( BTLV_CORE* core );
 static BOOL mainproc_call( BTLV_CORE* core );
+static BOOL CmdProc_SelectWaza( BTLV_CORE* core, int* seq, void* workBufer );
+static BOOL CmdProc_SelectRotationWaza( BTLV_CORE* core, int* seq, void* workBufer );
 static void ForceQuitSelect_Common( BTLV_CORE* core );
 static BOOL subprocDamageEffect( int* seq, void* wk_adrs );
 static BOOL subprocMemberIn( int* seq, void* wk_adrs );
@@ -740,22 +742,6 @@ static BOOL CmdProc_SelectAction( BTLV_CORE* core, int* seq, void* workBufer )
   return FALSE;
 }
 
-static BOOL CmdProc_SelectWaza( BTLV_CORE* core, int* seq, void* workBufer )
-{
-  switch( *seq ){
-  case 0:
-    BTLV_SCD_StartWazaSelect( core->scrnD, core->procPokeParam, core->actionParam );
-    (*seq)++;
-    break;
-  case 1:
-    if( BTLV_SCD_WaitWazaSelect( core->scrnD ) )
-    {
-      return TRUE;
-    }
-    break;
-  }
-  return FALSE;
-}
 //--------------------------------------------------------------------------
 /**
  * ƒƒU‘ÎÛ‘I‘ð
@@ -899,6 +885,22 @@ void BTLV_UI_SelectWaza_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_AC
   core->actionParam = dest;
   mainproc_setup( core, CmdProc_SelectWaza );
 }
+static BOOL CmdProc_SelectWaza( BTLV_CORE* core, int* seq, void* workBufer )
+{
+  switch( *seq ){
+  case 0:
+    BTLV_SCD_StartWazaSelect( core->scrnD, core->procPokeParam, core->actionParam );
+    (*seq)++;
+    break;
+  case 1:
+    if( BTLV_SCD_WaitWazaSelect( core->scrnD ) )
+    {
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
 
 //=============================================================================================
 /**
@@ -913,8 +915,25 @@ void  BTLV_UI_SelectRotationWaza_Start( BTLV_CORE* core, BTLV_ROTATION_WAZASEL_P
 {
   core->procPokeParam = selParam->poke[0].bpp;
   core->procPokeID = BPP_GetID( core->procPokeParam );
+  core->rotationSelParam = selParam;
   core->actionParam = dest;
-  mainproc_setup( core, CmdProc_SelectWaza );
+  mainproc_setup( core, CmdProc_SelectRotationWaza );
+}
+static BOOL CmdProc_SelectRotationWaza( BTLV_CORE* core, int* seq, void* workBufer )
+{
+  switch( *seq ){
+  case 0:
+    BTLV_SCD_StartRotationWazaSelect( core->scrnD, core->rotationSelParam, core->actionParam );
+    (*seq)++;
+    break;
+  case 1:
+    if( BTLV_SCD_WaitWazaSelect( core->scrnD ) )
+    {
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
 }
 
 //=============================================================================================

@@ -136,6 +136,9 @@ void BTL_POSPOKE_Rotate( BTL_POSPOKE_WORK* wk, BtlRotateDir dir, u8 clientID, co
       u8 inPosIdx = BTL_MAINUTIL_GetRotateInPosIdx( dir );
       u8 outPosIdx = BTL_MAINUTIL_GetRotateOutPosIdx( dir );
 
+      TAYA_Printf("PosPoke Rotation  clientID=%d, inPokeID=%d, inIdx=%d, outIdx=%d, pos0=%d, pos1=%d, pos2=%d\n",
+          clientID, BPP_GetID(inPoke), inPosIdx, outPosIdx, idx[0], idx[1], idx[2], );
+
       wk->state[ idx[inPosIdx] ]  = wk->state[ idx[outPosIdx] ];
       wk->state[ idx[outPosIdx] ] = wk->state[ idx[0] ];
 

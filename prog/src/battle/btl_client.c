@@ -275,6 +275,7 @@ static BOOL SubProc_UI_SelectPokemonForChange( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode );
+static u32 SetCoverRotateAction( BTL_CLIENT* wk, BTL_ACTION_PARAM* resultAction );
 static BOOL SubProc_UI_ConfirmIrekae( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq );
@@ -1720,7 +1721,22 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
       }
       else
       {
-        if( is_unselectable_waza(wk, wk->procPoke, wk->actionParam[wk->procPokeIdx].fight.waza, &wk->strParam) )
+        const BTL_POKEPARAM* procPoke = wk->procPoke;
+        BTL_ACTION_PARAM*    procAction = wk->procAction;
+        BtlRotateDir dir = BTL_ROTATEDIR_NONE;
+
+        #ifdef ROTATION_NEW_SYSTEM
+        if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
+        {
+          u8 pokeIdx;
+          dir = wk->rotWazaSelParam.actRotation.rotation.dir;
+          pokeIdx = BTL_MAINUTIL_GetRotateInPosIdx( dir );
+          procPoke = wk->rotWazaSelParam.poke[ pokeIdx ].bpp;
+          BTL_N_Printf( DBGSTR_CLIENT_ROT_Determine, dir, pokeIdx, BPP_GetID(procPoke) );
+        }
+        #endif
+
+        if( is_unselectable_waza(wk, procPoke, procAction->fight.waza, &wk->strParam) )
         {
           selact_startMsg( wk, &wk->strParam );
           (*seq) = SEQ_WAIT_MSG;
@@ -1729,38 +1745,17 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
         {
           // アクションパラメータにローテ方向もセットする仮動作
           #ifdef ROTATION_NEW_SYSTEM
-          if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
+          BtlRule rule = BTL_MAIN_GetRule( wk->mainModule );
+          if( rule == BTL_RULE_ROTATION )
           {
-            u16 idx = BPP_WAZA_SearchIdx( wk->procPoke, wk->procAction->fight.waza );
-            if( idx != PTL_WAZA_MAX )
+            if( (dir != BTL_ROTATEDIR_NONE) && (dir != BTL_ROTATEDIR_STAY) )
             {
-              u16 keyCont = GFL_UI_KEY_GetCont();
-              const BTL_POKEPARAM* bpp = NULL;
-              u8 dir = BTL_ROTATEDIR_STAY;
-              if( keyCont & PAD_BUTTON_R )
+              if( !BPP_IsDead(procPoke) )
               {
-                bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, 1 );
-                dir = BTL_ROTATEDIR_R;
-                BTL_N_Printf( DBGSTR_CLIENT_ROT_R, BPP_GetID(bpp) );
-              }
-              else if( keyCont & PAD_BUTTON_L )
-              {
-                bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, 2 );
-                dir = BTL_ROTATEDIR_L;
-                BTL_N_Printf( DBGSTR_CLIENT_ROT_L, BPP_GetID(bpp) );
-              }
-
-              if( bpp && !BPP_IsDead(bpp) )
-              {
-                if( BPP_WAZA_GetPP(bpp, idx) )
-                {
-                  WazaID waza = BPP_WAZA_GetID( bpp, idx );
-
-                  BTL_ACTION_SetRotation( wk->procAction++, dir );
-                  BTL_ACTION_SetFightParam( wk->procAction, waza, BTL_POS_NULL );
-                  wk->actionAddCount++;
-                  BTL_N_Printf( DBGSTR_CLIENT_ROT_Determine, dir );
-                }
+                WazaID waza = BTL_ACTION_GetWazaID( &(wk->rotWazaSelParam.actWaza) );
+                BTL_ACTION_SetRotation( wk->procAction++, dir );
+                BTL_ACTION_SetFightParam( wk->procAction, waza, BTL_POS_NULL );
+                wk->actionAddCount++;
               }
             }
           }
@@ -1828,8 +1823,13 @@ static void setupRotationParams( BTL_CLIENT* wk, BTLV_ROTATION_WAZASEL_PARAM* pa
     param->poke[ i ].bpp = bpp;
     if( !BPP_IsDead(bpp) )
     {
-      for(j=0; j<PTL_WAZA_MAX; ++j){
+      u32 wazaCnt = BPP_WAZA_GetCount( bpp );
+
+      for(j=0; j<wazaCnt; ++j){
         param->poke[ i ].fWazaUsable[ j ] = !is_unselectable_waza( wk, bpp, BPP_WAZA_GetID(bpp,j), NULL );
+      }
+      while( j < wazaCnt ){
+        param->poke[ i ].fWazaUsable[ j++ ] = FALSE;
       }
     }
     else
@@ -3584,6 +3584,15 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
       // 生きてるポケが出さなければいけない数に足りない場合、そこを諦める
       if( numSelect > numPuttable )
       {
+        #ifdef ROTATION_NEW_SYSTEM
+        if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION ){
+          // 新ローテーションの場合、強制的に生きているポケモンを前に出す回転を行う
+          wk->returnDataSize = SetCoverRotateAction( wk, &(wk->actionParam[0]) );
+          wk->returnDataPtr = &(wk->actionParam[0]);
+          return TRUE;
+        }
+        #endif
+
         numSelect = numPuttable;
       }
       BTL_N_Printf( DBGSTR_CLIENT_AI_PutPokeStart, wk->myID, numSelect);
@@ -3598,6 +3607,19 @@ static BOOL SubProc_AI_SelectPokemon( BTL_CLIENT* wk, int* seq )
     }
     else
     {
+      #ifdef ROTATION_NEW_SYSTEM
+      if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
+      {
+        // 新ローテーションの場合、強制的に生きているポケモンを前に出す回転を行う
+        u32 sendDataSize = SetCoverRotateAction( wk, &(wk->actionParam[0]) );
+        if( sendDataSize ){
+          wk->returnDataSize = sendDataSize;
+          wk->returnDataPtr = &(wk->actionParam[0]);
+          return TRUE;
+        }
+      }
+      #endif
+
       BTL_N_Printf( DBGSTR_CLIENT_NoMorePuttablePoke, wk->myID);
       BTL_ACTION_SetChangeDepleteParam( &wk->actionParam[0] );
       wk->returnDataPtr = &(wk->actionParam[0]);
@@ -3647,7 +3669,8 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
         u8 clientID, outPokeIdx;
 
         // 生きてるポケが出さなければいけない数に足りない場合、そこを諦める
-        if( numSelect > numPuttable ){
+        if( numSelect > numPuttable )
+        {
           numSelect = numPuttable;
         }
 
@@ -3662,6 +3685,19 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
       }
       else
       {
+        #ifdef ROTATION_NEW_SYSTEM
+        if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
+        {
+          // 新ローテーションの場合、強制的に生きているポケモンを前に出す回転を行う
+          u32 sendDataSize = SetCoverRotateAction( wk, &(wk->actionParam[0]) );
+          if( sendDataSize ){
+            wk->returnDataSize = sendDataSize;
+            wk->returnDataPtr = &(wk->actionParam[0]);
+            return TRUE;
+          }
+        }
+        #endif
+
         BTL_N_Printf( DBGSTR_CLIENT_NoMorePuttablePoke, wk->myID);
         BTL_ACTION_SetChangeDepleteParam( &wk->actionParam[0] );
         wk->returnDataPtr = &(wk->actionParam[0]);
@@ -3711,6 +3747,40 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
   }
 
   return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * ローテーションバトルで、前衛が死んで控えが居ない時に回転を行う（後衛を前衛に出すため）
+ *
+ * @param   wk
+ */
+//----------------------------------------------------------------------------------
+static u32 SetCoverRotateAction( BTL_CLIENT* wk, BTL_ACTION_PARAM* resultAction )
+{
+  BtlRotateDir  dir = BTL_ROTATEDIR_R;
+  const BTL_POKEPARAM* bpp;
+  u32 pokeIdx;
+
+  pokeIdx = BTL_MAINUTIL_GetRotateInPosIdx( dir );
+  bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, pokeIdx );
+  if( !BPP_IsDead(bpp) )
+  {
+    BTL_ACTION_SetRotation( resultAction, dir );
+    BTL_N_Printf( DBGSTR_CLIENT_CoverRotateDecide, wk->myID, dir );
+    return sizeof( BTL_ACTION_PARAM );
+  }
+
+  dir = BTL_ROTATEDIR_L;
+  pokeIdx = BTL_MAINUTIL_GetRotateInPosIdx( dir );
+  bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, pokeIdx );
+  if( !BPP_IsDead(bpp) )
+  {
+    BTL_ACTION_SetRotation( resultAction, dir );
+    BTL_N_Printf( DBGSTR_CLIENT_CoverRotateDecide, wk->myID, dir );
+    return sizeof( BTL_ACTION_PARAM );
+  }
+
+  return 0;
 }
 
 //----------------------------------------------------------------------------------

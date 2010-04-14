@@ -135,9 +135,10 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_CHGAI_WazaEff:        return "入れ替えたい：ワザ相性による\n";
   case DBGSTR_CLIENT_ROT_R:                return "ローテ右回転  対象ポケ=%d\n";
   case DBGSTR_CLIENT_ROT_L:                return "ローテ左回転  対象ポケ=%d\n";
-  case DBGSTR_CLIENT_ROT_Determine:        return "ローテ対象ポケ、ワザ有効 dir=%d\n";
+  case DBGSTR_CLIENT_ROT_Determine:        return "ローテ対象ポケ、ワザ有効 dir=%d, Idx=%d, pokeID=%d\n";
   case DBGSTR_CLIENT_AI_PutPokeStart:      return "myID=%d 戦闘ポケが死んで %d体選択\n";
   case DBGSTR_CLIENT_AI_PutPokeDecide:     return "  -> %d番目を新たに出す\n";
+  case DBGSTR_CLIENT_CoverRotateDecide:    return "空きを埋めるローテーション確定 ClientID=%d, dir=%d\n";
 
   case DBGSTR_BPP_NemuriWakeCheck:        return "ポケ[%d]のねむりターン最大値=%d, 経過ターン=%d\n";
 

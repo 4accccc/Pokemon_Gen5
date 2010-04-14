@@ -90,6 +90,7 @@ typedef enum {
   DBGSTR_CLIENT_ROT_Determine,
   DBGSTR_CLIENT_AI_PutPokeStart,
   DBGSTR_CLIENT_AI_PutPokeDecide,
+  DBGSTR_CLIENT_CoverRotateDecide,
 
   DBGSTR_BPP_NemuriWakeCheck,
 

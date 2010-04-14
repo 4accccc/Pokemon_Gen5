@@ -327,7 +327,7 @@ static ACTION_ORDER_WORK* ActOrderTool_SearchForCombiWaza( BTL_SVFLOW_WORK* wk, 
 static u8 ActOrderTool_GetIndex( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder );
 static int ActOrderTool_Intr( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder, u32 intrIndex );
 static void ActOrderTool_SendToLast( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WORK* actOrder );
-static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder );
+static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder, BOOL fAlivePokeOnly );
 static void scproc_ActStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlAction actionCmd );
 static void scEvent_ActProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlAction actionCmd );
 static void scEvent_ActProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
@@ -1033,6 +1033,21 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_AC
       wk->actOrder[i].fDone = TRUE;
     }
   }
+  // 新ローテーションバトルでは空きを埋めるローテーションが発生する
+  #ifdef ROTATION_NEW_SYSTEM
+  if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
+  {
+    for(i=0; i<wk->numActOrder; i++)
+    {
+      action = &wk->actOrder[i].action;
+      if( action->gen.cmd != BTL_ACTION_ROTATION ){ continue; }
+      if( action->change.depleteFlag ){ continue; }
+
+      TAYA_Printf( "空き埋めローテーション発動：ClientID=%d\n", wk->actOrder[i].clientID );
+      ActOrder_Proc( wk, &wk->actOrder[i], FALSE );
+    }
+  }
+  #endif
 
   scproc_AfterMemberIn( wk );
   reqChangePokeForServer( wk );
@@ -1069,7 +1084,7 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
 
   for(i=startOrderIdx; i<wk->numActOrder; i++)
   {
-    ActOrder_Proc( wk, &wk->actOrder[i] );
+    ActOrder_Proc( wk, &wk->actOrder[i], TRUE );
     scproc_CheckExpGet( wk );
 
     // 大爆発など同時全滅のケースは、死亡レコードを見れば解決するんじゃんと思ってる。
@@ -1519,8 +1534,8 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
       switch( BTL_ACTION_GetAction(&order[p].action) ){
       case BTL_ACTION_ROTATION:
         {
-          order[p].bpp = BTL_PARTY_GetMemberData( clwk->party, pokeIdx );
           pokeIdx = BTL_MAINUTIL_GetRotateInPosIdx( order[p].action.rotation.dir );
+          order[p].bpp = BTL_PARTY_GetMemberData( clwk->party, pokeIdx );
           BTL_N_Printf ( DBGSTR_SVFL_ActionSortRotation, pokeIdx );
         }
         break;
@@ -1930,97 +1945,103 @@ static void ActOrderTool_SendToLast( BTL_SVFLOW_WORK* wk, const ACTION_ORDER_WOR
  * @param   actOrder
  */
 //----------------------------------------------------------------------------------
-static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
+static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder, BOOL fAlivePokeOnly )
 {
   if( actOrder->fDone == FALSE )
   {
     BTL_POKEPARAM* bpp = actOrder->bpp;
+    BTL_ACTION_PARAM action = actOrder->action;
+
     actOrder->fDone = TRUE;
+    BTL_N_Printf( DBGSTR_SVFL_ActOrderStart, BPP_GetID(bpp), BPP_GetMonsNo(bpp));
 
-    if( !BPP_IsDead(bpp)
-    &&  (BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, BPP_GetID(bpp)) != BTL_POS_NULL)
-    &&  (!BPP_CheckSick(bpp, WAZASICK_FREEFALL))
+    if( BPP_IsDead(bpp) ){  // 死んでたら実行しない
+      return;
+    }
+    if( (action.gen.cmd != BTL_ACTION_ROTATION)
+    &&  (!BTL_POSPOKE_IsExist(&wk->pospokeWork, BPP_GetID(bpp)))  // ローテーション以外で、場にいないポケは実行しない
     ){
-      BTL_ACTION_PARAM action = actOrder->action;
+      return;
+    }
+    if( BPP_CheckSick(bpp, WAZASICK_FREEFALL) ){  // フリーフォール状態のポケは実行しない
+      return;
+    }
 
-      BTL_N_Printf( DBGSTR_SVFL_ActOrderStart, BPP_GetID(bpp), BPP_GetMonsNo(bpp));
+    scproc_ActStart( wk, bpp, actOrder->action.gen.cmd );
 
-      scproc_ActStart( wk, bpp, actOrder->action.gen.cmd );
-
-      switch( action.gen.cmd ){
-      #ifdef ROTATION_NEW_SYSTEM
-      case BTL_ACTION_ROTATION:
-        if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION ){
-          BTL_N_Printf( DBGSTR_SVFL_ActOrder_Rotation, actOrder->clientID, action.rotation.dir);
-          BTL_SVFLOW_CreateRotationCommand( wk, actOrder->clientID, action.rotation.dir );
-        }
-        else{
-          GF_ASSERT(0);
-        }
-        break;
-      #endif
-      case BTL_ACTION_FIGHT:
-        if( !FlowFlg_Get(wk, FLOWFLG_FIRST_FIGHT) ){
-          scproc_BeforeFirstFight( wk );
-          FlowFlg_Set( wk, FLOWFLG_FIRST_FIGHT );
-        }
-        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Fight, BPP_GetID(bpp), action.fight.waza, action.fight.targetPos);
-        wk->currentSabotageType = CheckSabotageType( wk, bpp );
-        scproc_Fight( wk, bpp, &action );
-        break;
-      case BTL_ACTION_ITEM:
-        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Item, action.item.number, action.item.targetIdx);
-        scproc_TrainerItem_Root( wk, bpp, action.item.number, action.item.param, action.item.targetIdx );
-        break;
-      case BTL_ACTION_CHANGE:
-        BTL_Printf( DBGSTR_SVFL_ActOrder_Change, action.change.posIdx, action.change.memberIdx);
-        scproc_MemberChange( wk, bpp, action.change.memberIdx );
-        scproc_AfterMemberIn( wk );
-        break;
-      case BTL_ACTION_ESCAPE:
-        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Escape );
-        if( scproc_NigeruCmd( wk, bpp ) )
+    switch( action.gen.cmd ){
+    #ifdef ROTATION_NEW_SYSTEM
+    case BTL_ACTION_ROTATION:
+      if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION ){
+        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Rotation, actOrder->clientID, action.rotation.dir);
+        BTL_SVFLOW_CreateRotationCommand( wk, actOrder->clientID, action.rotation.dir );
+      }
+      else{
+        GF_ASSERT(0);
+      }
+      break;
+    #endif
+    case BTL_ACTION_FIGHT:
+      if( !FlowFlg_Get(wk, FLOWFLG_FIRST_FIGHT) ){
+        scproc_BeforeFirstFight( wk );
+        FlowFlg_Set( wk, FLOWFLG_FIRST_FIGHT );
+      }
+      BTL_N_Printf( DBGSTR_SVFL_ActOrder_Fight, BPP_GetID(bpp), action.fight.waza, action.fight.targetPos);
+      wk->currentSabotageType = CheckSabotageType( wk, bpp );
+      scproc_Fight( wk, bpp, &action );
+      break;
+    case BTL_ACTION_ITEM:
+      BTL_N_Printf( DBGSTR_SVFL_ActOrder_Item, action.item.number, action.item.targetIdx);
+      scproc_TrainerItem_Root( wk, bpp, action.item.number, action.item.param, action.item.targetIdx );
+      break;
+    case BTL_ACTION_CHANGE:
+      BTL_Printf( DBGSTR_SVFL_ActOrder_Change, action.change.posIdx, action.change.memberIdx);
+      scproc_MemberChange( wk, bpp, action.change.memberIdx );
+      scproc_AfterMemberIn( wk );
+      break;
+    case BTL_ACTION_ESCAPE:
+      BTL_N_Printf( DBGSTR_SVFL_ActOrder_Escape );
+      if( scproc_NigeruCmd( wk, bpp ) )
+      {
+        wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
+        wk->escapeClientID = actOrder->clientID;
+        if( !BTL_MAINUTIL_IsFriendClientID( wk->escapeClientID, BTL_MAIN_GetPlayerClientID(wk->mainModule)) )
         {
-          wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
-          wk->escapeClientID = actOrder->clientID;
-          if( !BTL_MAINUTIL_IsFriendClientID( wk->escapeClientID, BTL_MAIN_GetPlayerClientID(wk->mainModule)) )
-          {
-            BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_NIGERARETA );
-          }
+          BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_NIGERARETA );
         }
-        else
+      }
+      else
+      {
+        if( actOrder->clientID == BTL_MAIN_GetPlayerClientID(wk->mainModule) )
         {
-          if( actOrder->clientID == BTL_MAIN_GetPlayerClientID(wk->mainModule) )
-          {
-            BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_NIGERU_SIPPAI );
-          }
-          SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
+          BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_NIGERU_SIPPAI );
         }
-        if( ++(wk->nigeruCount) > NIGERU_COUNT_MAX ){
-          wk->nigeruCount = NIGERU_COUNT_MAX;
-        }
-        break;
-      case BTL_ACTION_MOVE:
-        scproc_Move( wk, bpp );
-        break;
-      case BTL_ACTION_SKIP:
-        scPut_CantAction( wk, bpp );
-        break;
-      case BTL_ACTION_NULL:
-        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Dead );
+        SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
+      }
+      if( ++(wk->nigeruCount) > NIGERU_COUNT_MAX ){
+        wk->nigeruCount = NIGERU_COUNT_MAX;
+      }
+      break;
+    case BTL_ACTION_MOVE:
+      scproc_Move( wk, bpp );
+      break;
+    case BTL_ACTION_SKIP:
+      scPut_CantAction( wk, bpp );
+      break;
+    case BTL_ACTION_NULL:
+      BTL_N_Printf( DBGSTR_SVFL_ActOrder_Dead );
 //        scPut_CantAction( wk, bpp );
         break;
-      }
+    }
 
-      BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_ACTION_DONE );
-      scPut_SetContFlag( wk, bpp, BPP_CONTFLG_ACTION_DONE );
+    BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_ACTION_DONE );
+    scPut_SetContFlag( wk, bpp, BPP_CONTFLG_ACTION_DONE );
 
-      {
-        u32 hem_state = Hem_PushState( &wk->HEManager );
-        scEvent_ActProcEnd( wk, bpp );
-        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-        Hem_PopState( &wk->HEManager, hem_state );
-      }
+    {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
+      scEvent_ActProcEnd( wk, bpp );
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      Hem_PopState( &wk->HEManager, hem_state );
     }
   }
 }
@@ -2149,7 +2170,7 @@ static BOOL ActOrder_IntrProc( BTL_SVFLOW_WORK* wk, u8 intrPokeID )
 {
   ACTION_ORDER_WORK* actOrder = ActOrderTool_SearchByPokeID( wk, intrPokeID );
   if( actOrder && (actOrder->fDone == FALSE) ){
-    ActOrder_Proc( wk, actOrder );
+    ActOrder_Proc( wk, actOrder, TRUE );
     return TRUE;
   }
   return FALSE;
