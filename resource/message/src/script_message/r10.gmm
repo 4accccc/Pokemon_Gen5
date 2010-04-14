@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T17:22:52"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T17:33:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1287" top="191" right="1992" bottom="819" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="42" right="2000" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -420,22 +420,28 @@
 しんこくな　かお　するだけじゃ
 なんにも　かわらないんだから▼
 えーっとね　あたしたち
-ポケモンと　であってから▽
+ポケモンと　であってから▼
+おなじ　みちのりを　あゆんだのに
 いろんなことが　あって……▽
-みんな　けっこう　かわっちゃって▼
+みんな　すごく　かわっちゃって▼
+やりたいことも
+できることも　べつべつ　でしょ？▼
 でも　それって
-それぞれの　りそうが　ちがったんだ！▽
+たびの　いみが　あったんだなあ▽
 って　なんか　うれしくなったの▼</language>
 		<language name="JPN_KANJI" width="256">ベル『はい　チェレン
 すこしは　笑おうよ▼
 深刻な　顔　するだけじゃ
 なんにも　かわらないんだから▼
 えーっとね　あたしたち
-ポケモンと　出会ってから▽
+ポケモンと　出会ってから▼
+同じ　道のりを　歩んだのに
 いろんなことが　あって……▽
-みんな　けっこう　変わっちゃって▼
+みんな　すごく　変わっちゃって▼
+やりたいことも
+できることも　べつべつ　でしょ？▼
 でも　それって
-それぞれの　理想が　違ったんだ！▽
+旅の意味が　あったんだなあ▽
 って　なんか　うれしくなったの▼</language>
 	</row>
 
@@ -461,15 +467,13 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
-		<language name="JPN" width="256">ベル『うん！　ちがうのに
-[1:00:トレーナー名:0]のこと　しんぱいして▼
-アタシも　チェレンも
+		<language name="JPN" width="256">ベル『うん！　[1:00:トレーナー名:0]のこと
+しんぱいして　アタシも　チェレンも▽
 いま　ここで　そろってるから▽
 なんだか　おもしろいなって……▼
 ゴメンナサイ▼</language>
-		<language name="JPN_KANJI" width="256">ベル『うん！　違うのに
-[1:00:トレーナー名:0]のこと　心配して▼
-アタシも　チェレンも
+		<language name="JPN_KANJI" width="256">ベル『うん！　[1:00:トレーナー名:0]のこと
+心配して　アタシも　チェレンも▽
 いま　ここで　そろってるから▽
 なんだか　おもしろいなって……▼
 ゴメンナサイ▼</language>
@@ -483,8 +487,7 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『そういうことか▼
-みんなに　とっての
+		<language name="JPN" width="256">チェレン『……みんなに　とっての
 りそうとか　しんじつって▽
 みんなの　かずだけ　あるからね▼
 だけど　だいじな　ときには
@@ -497,9 +500,8 @@
 なにか　あったとき▼
 ぼくが　たすけられるように　なる
 そのために　つよくなる▽
-だから　むりしないで▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『そういうことか▼
-みんなに　とっての
+だから　ムリ　するなよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……みんなに　とっての
 理想とか　真実って▽
 みんなの　数だけ　あるからね▼
 だけど　大事な　ときには
@@ -512,7 +514,7 @@
 なにか　あったとき▼
 ぼくが　助けられるように　なる
 そのために　強くなる▽
-だから　無理しないで▼</language>
+だから　無理するなよ▼</language>
 	</row>
 
 	<row id="msg_r10_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
