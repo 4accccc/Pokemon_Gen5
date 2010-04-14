@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/01 12:17:50
+#save date:2010/04/14 18:22:45
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plr11.wms
 #SECTION START:OBJ_EVENT
@@ -185,11 +185,11 @@ EVENTDATA_POSTYPE_GRID
 1 1
 #event number: 1
 #Door Event Label
-DOOR_ID_PLR11_PLH04_EXIT01
+DOOR_ID_PLR11_PLR12_EXIT01
 #Next Zone ID Name
-ZONE_ID_PLH04
+ZONE_ID_PLR12
 #Next Door ID Name
-DOOR_ID_PLH04_PLR11_EXIT01
+DOOR_ID_PLR12_PLR11_EXIT01
 #Door Direction
 EXIT_DIR_NON
 #Door Type

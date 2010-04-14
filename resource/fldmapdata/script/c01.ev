@@ -174,7 +174,7 @@ EVENT_START   ev_pos_c01_stop
 		_OBJ_ANIME_WAIT()
 		
 		//おぬし　ジムバッジの　１つも　もっておらぬ　ようじゃが
-		_BALLOONWIN_OBJMSG( msg_c01_stop_01 , C01_OLDMAN1_01 )
+		_BALLOONWIN_OBJMSG( msg_c01_stop_01_01 , C01_OLDMAN1_01 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
@@ -194,7 +194,7 @@ EVENT_START   ev_pos_c01_stop
 		_OBJ_ANIME_WAIT()
 		
 		//おぬし　ジムバッジの　１つも　もっておらぬ　ようじゃが
-		_BALLOONWIN_OBJMSG( msg_c01_stop_01 , C01_OLDMAN1_01 )
+		_BALLOONWIN_OBJMSG( msg_c01_stop_01_01 , C01_OLDMAN1_01 )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
@@ -232,8 +232,7 @@ EVENT_START   ev_pos_c01_stop1
 		_OBJ_ANIME_WAIT()
 		
 		//さっき　はつめいかが
-		_BALLOONWIN_OBJMSG( msg_c01_stop_02 , C01_OLDMAN1_01 )
-		_LAST_KEYWAIT()
+		_BALLOONWIN_OBJMSG( msg_c01_stop_02_01 , C01_OLDMAN1_01 )
 		_MSGWIN_CLOSE()
 		
 		//自機：１歩下がる
@@ -252,8 +251,7 @@ EVENT_START   ev_pos_c01_stop1
 		_OBJ_ANIME_WAIT()
 		
 		//さっき　はつめいかが
-		_BALLOONWIN_OBJMSG( msg_c01_stop_02 , C01_OLDMAN1_01 )
-		_LAST_KEYWAIT()
+		_BALLOONWIN_OBJMSG( msg_c01_stop_02_01 , C01_OLDMAN1_01 )
 		_MSGWIN_CLOSE()
 		
 		//自機：１歩下がる
@@ -368,10 +366,6 @@ _TALK_OBJ_START()
 	//ジム内に消えていくアニメ２
 	_OBJ_ANIME( C01_LEADER_01, anm_leader_saru2 )
 	_OBJ_ANIME_WAIT()
-
-	//階段ＳＥ
-	_SE_PLAY(SEQ_SE_KAIDAN)
-	_SE_WAIT()
 
 	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
 	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )

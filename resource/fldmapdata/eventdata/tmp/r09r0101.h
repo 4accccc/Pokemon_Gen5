@@ -4,6 +4,8 @@
 
 #define DOOR_ID_R09R0101_H03_EXIT01       0
 #define DOOR_ID_R09R0101_R09_EXIT01       1
+#define DOOR_ID_R09R0101_H03_EXIT02       2
+#define DOOR_ID_R09R0101_H03_EXIT03       3
 
 #endif //ZONE_R09R0101_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r09r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
