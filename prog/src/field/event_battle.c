@@ -27,6 +27,7 @@
 //#include "poke_tool/monsno_def.h"
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_tool.h"
+#include "poke_tool/natsuki.h"
 #include "waza_tool/wazano_def.h"
 
 #include "event_encount_effect.h"
@@ -138,9 +139,11 @@ static void BeaconReq_BtlWild( BATTLE_SETUP_PARAM* bp, BTL_BEACON_ST state );
 static void BeaconReq_BattleEnd( BATTLE_EVENT_WORK* bew );
 
 static BOOL BEW_IsLoseResult(BATTLE_EVENT_WORK * bew);
-static void BEW_reflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata);
+static void BEW_ReflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata);
 static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM* bp);
 static void BEW_Destructor(BATTLE_EVENT_WORK * bew);
+
+static void ReflectBattleResult_Natsuki(BATTLE_EVENT_WORK * bew);
 
 
 //======================================================================
@@ -619,7 +622,7 @@ static GMEVENT_RESULT fieldBattleEvent(
 
   case 6: 
     //戦闘結果反映処理
-    BEW_reflectBattleResult( bew, gamedata ); 
+    BEW_ReflectBattleResult( bew, gamedata ); 
     //採点処理
     if (bew->Examination)
     {
@@ -922,7 +925,7 @@ static BOOL BEW_IsLoseResult(BATTLE_EVENT_WORK * bew)
  * @todo  戦闘結果からずかんや手持ちポケモン状態などの反映処理を実装する
  */
 //--------------------------------------------------------------
-static void BEW_reflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata)
+static void BEW_ReflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata)
 {
   GAMEDATA_SetLastBattleResult( gamedata, bew->battle_param->result );
 
@@ -931,6 +934,9 @@ static void BEW_reflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata
 
   //ビーコンリクエスト
   BeaconReq_BattleEnd( bew );
+
+  //戦闘後の懐き計算
+  ReflectBattleResult_Natsuki( bew );
   
   //前作では貯金への反映、サファリボールカウントの反映、
   //いったん取っておいたPokeParamの反映などを行っていた
@@ -965,6 +971,32 @@ static void BEW_Destructor(BATTLE_EVENT_WORK * bew)
 {
   if( bew->not_free_bsp == FALSE ){
     BATTLE_PARAM_Delete( bew->battle_param );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   戦闘結果反映　懐き計算
+ */
+//--------------------------------------------------------------
+static void ReflectBattleResult_Natsuki(BATTLE_EVENT_WORK * bew)
+{
+  u8  tr_type;
+  BATTLE_SETUP_PARAM* bp = bew->battle_param;
+
+  if( bp->competitor != BTL_COMPETITOR_TRAINER ){
+    return;
+  }
+  tr_type = TT_TrainerDataParaGet( bp->tr_data[BTL_CLIENT_ENEMY1]->tr_id, ID_TD_tr_type );
+  {
+    //ボス戦だったら懐きアップ
+    TRTYPE_GRP_ID grp_id = TT_TrainerTypeGrpGet( tr_type );
+
+    if( grp_id == TRTYPE_GRP_LEADER ||
+        grp_id == TRTYPE_GRP_BIGFOUR ||
+        grp_id == TRTYPE_GRP_CHAMPION ){
+      NATSUKI_CalcBossBattle( GAMEDATA_GetMyPokemon( bew->gamedata ), bp->fieldSituation.zoneID, HEAPID_PROC );
+    }
   }
 }
 
