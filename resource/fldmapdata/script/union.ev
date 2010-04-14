@@ -53,7 +53,7 @@ EVENT_START ev_union_guide_00
 		//========================================//
 	ENDIF
 
-	_MSGWIN_CLOSE()		//※checkウインドウ連続表示が可能になったら不要
+	//_MSGWIN_CLOSE()		//※checkウインドウ連続表示が可能になったら不要
 	
 	{
   	DEFINE_LOCAL  lwk_loop
@@ -65,7 +65,7 @@ EVENT_START ev_union_guide_00
     	_PLAINWIN_MSG_DOWN( msg_union_info_01_03 )
 
   		//メニュー作成
-  		_BMPMENU_INIT_EX(  MENU_X1, MENU_Y1, 0, 1, lwk_bmpans )
+  		_BMPMENU_INIT_RIGHT(  MENU_X1, MENU_Y1, 0, 1, lwk_bmpans )
   		//リスト追加
   		_BMPMENU_MAKE_LIST( msg_union_info_03_09, 4 )	//チャット
   		_BMPMENU_MAKE_LIST( msg_union_info_03_04, 0 )	//対戦
@@ -75,31 +75,31 @@ EVENT_START ev_union_guide_00
   		_BMPMENU_MAKE_LIST( msg_union_info_03_10, 0xff )	//もどる
   		//メニュー表示
   		_BMPMENU_START()
-  		_MSGWIN_CLOSE()		//※checkウインドウ連続表示が可能になったら不要
+  		//_MSGWIN_CLOSE()		//※checkウインドウ連続表示が可能になったら不要
   		
   		SWITCH $lwk_bmpans
   		CASE 0 THEN
   			//対戦
   			_PLAINWIN_MSG_DOWN( msg_union_info_01_04 )
-  			_MSGWIN_CLOSE()
+  			//_MSGWIN_CLOSE()
   			_PLAINWIN_MSG_DOWN( msg_union_info_01_04_01 )
-  			_MSGWIN_CLOSE()
+  			//_MSGWIN_CLOSE()
   		CASE 1 THEN
   			//交換
   			_PLAINWIN_MSG_DOWN( msg_union_info_01_05 )
-  			_MSGWIN_CLOSE()
+  			//_MSGWIN_CLOSE()
   		CASE 2 THEN
   			//おえかき
   			_PLAINWIN_MSG_DOWN( msg_union_info_01_08 )
-  			_MSGWIN_CLOSE()
+  			//_MSGWIN_CLOSE()
   		CASE 3 THEN
   			//ぐるぐる
   			_PLAINWIN_MSG_DOWN( msg_union_info_01_07 )
-  			_MSGWIN_CLOSE()
+  			//_MSGWIN_CLOSE()
   		CASE 4 THEN
   			//チャット
   			_PLAINWIN_MSG_DOWN( msg_union_info_01_09 )
-  			_MSGWIN_CLOSE()
+  			//_MSGWIN_CLOSE()
   		DEFAULT
   			//もどる
   			$lwk_loop = 0xff
@@ -107,5 +107,5 @@ EVENT_START ev_union_guide_00
   	
   	ENDWHILE
 	}
-	
+	_MSGWIN_CLOSE()
 EVENT_END
