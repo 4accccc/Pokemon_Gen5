@@ -175,6 +175,8 @@ typedef struct _COMM_ENTRY_MENU_SYSTEM{
   COMM_ENTRY_USER examination_user;             ///<審査中のユーザー
   COMM_ENTRY_YESNO yesno;                       ///<「はい・いいえ」制御
   PARENTSEARCH_LIST parentsearch;                 ///<親機探索リスト
+  GFLNetInitializeStruct netInitStruct;         ///<ネット終了時に確保しておく
+  void  *netParentWork;                         ///<ネット終了時に確保しておく
   
   ENTRYMENU_MEMBER_INFO member_info;            ///<参加者情報(親機の場合は送信バッファとして使用)
   u8 member_info_recv;                          ///<TRUE:参加者情報を受信した
@@ -550,7 +552,14 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
         em->seq = _SEQ_SEND_GAMESTART;
       }
       else if(type == DECIDE_TYPE_NG){
-        em->seq = _SEQ_ENTRY;
+        if( CommEntryMenu_GetCompletionNum(em) >= em->max_num )
+        {
+          //人数最大だったらキャンセルチェック
+          em->seq = _SEQ_BREAKUP_CHECK;
+        }
+        else{
+          em->seq = _SEQ_ENTRY;
+        }
       }
     }
     break;
@@ -611,6 +620,8 @@ static BOOL _Update_Child(COMM_ENTRY_MENU_PTR em)
     _SEQ_GAME_CANCEL_WAIT,
     _SEQ_NG_INIT,
     _SEQ_NG_WAIT,
+    _SEQ_RETRY_INIT,
+    _SEQ_RETRY_WAIT,
     _SEQ_CANCEL_INIT,
     _SEQ_FINISH,
   };
@@ -684,7 +695,7 @@ static BOOL _Update_Child(COMM_ENTRY_MENU_PTR em)
     break;
     
   case _SEQ_GAME_CANCEL:
-    _StreamMsgSet(em, msg_game_ng);
+    _StreamMsgSet(em, _GameTypeMsgPack[em->game_type].msgid_breakup_game);
     em->seq = _SEQ_GAME_CANCEL_WAIT;
     break;
   case _SEQ_GAME_CANCEL_WAIT:
@@ -694,6 +705,10 @@ static BOOL _Update_Child(COMM_ENTRY_MENU_PTR em)
     break;
   
   case _SEQ_NG_INIT:
+    //通信復帰のためワークと初期化構造体を退避
+    em->netParentWork = GFL_NET_GetWork();
+    GFL_STD_MemCopy( GFL_NET_GetNETInitStruct() , &em->netInitStruct , sizeof(GFLNetInitializeStruct) );
+    CommEntryMenu_DelCommandTable();
     GFL_NET_Exit(NULL);
     WORDSET_RegisterPlayerName( em->wordset, 0, &em->entry_parent_myst);  //&em->parentsearch.connect_parent->mystatus );
     _StreamMsgSet(em, msg_game_ng);
@@ -701,10 +716,20 @@ static BOOL _Update_Child(COMM_ENTRY_MENU_PTR em)
     break;
   case _SEQ_NG_WAIT:
     if(GFL_NET_IsExit() == TRUE && FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE){
+      em->seq = _SEQ_RETRY_INIT;
+    }
+    break;
+  case _SEQ_RETRY_INIT:
+    GFL_NET_Init( &em->netInitStruct , NULL , em->netParentWork );
+    em->seq = _SEQ_RETRY_WAIT;
+    break;
+  case _SEQ_RETRY_WAIT:
+    if(GFL_NET_IsInit() == TRUE){
+      CommEntryMenu_AddCommandTable(em);
       em->seq = _SEQ_INIT_TALK;
     }
     break;
-    
+  
   case _SEQ_CANCEL_INIT:      //キャンセル処理
     em->entry_result = COMM_ENTRY_RESULT_CANCEL;
     em->seq = _SEQ_FINISH;
@@ -784,7 +809,7 @@ static BOOL _Update_ChildParentConnect(COMM_ENTRY_MENU_PTR em)
     break;
     
   case _SEQ_GAME_CANCEL:
-    _StreamMsgSet(em, msg_game_ng);
+    _StreamMsgSet(em, _GameTypeMsgPack[em->game_type].msgid_breakup_game);
     em->seq = _SEQ_GAME_CANCEL_WAIT;
     break;
   case _SEQ_GAME_CANCEL_WAIT:
@@ -895,7 +920,7 @@ static BOOL _Update_ChildParentDesignate(COMM_ENTRY_MENU_PTR em)
     break;
     
   case _SEQ_GAME_CANCEL:
-    _StreamMsgSet(em, msg_game_ng);
+    _StreamMsgSet(em, _GameTypeMsgPack[em->game_type].msgid_breakup_game);
     em->seq = _SEQ_GAME_CANCEL_WAIT;
     break;
   case _SEQ_GAME_CANCEL_WAIT:
@@ -1537,7 +1562,7 @@ static void _ParentEntry_NameDraw(COMM_ENTRY_MENU_PTR em, COMM_ENTRY_USER *user,
     return; //既に描画済み
   }
   
-  _ParentEntry_NameErase(em, user, netID); //まず既に書かれている名前を消去
+//  _ParentEntry_NameErase(em, user, netID); //まず既に書かれている名前を消去
   
   _MemberInfo_NameDraw(em, &user->mystatus, netID);
 
@@ -1601,7 +1626,7 @@ static void _MemberInfo_NameErase(COMM_ENTRY_MENU_PTR em, int netID)
   if(em->fldmsgwin_list != NULL){
     FLDMSGWIN_FillClearWindow(em->fldmsgwin_list, 
       LISTBMP_START_NAME_X, LISTBMP_START_NAME_Y + netID*8*2, 
-      (LISTBMP_POS_RIGHT - LISTBMP_POS_LEFT) * 8, LISTBMP_START_NAME_Y + netID*8*2);
+      (LISTBMP_POS_RIGHT - LISTBMP_POS_LEFT) * 8, 8*2);
   }
 }
 
@@ -1788,6 +1813,8 @@ static void _ParentSearchList_Setup(COMM_ENTRY_MENU_PTR em)
   _ParentSearchList_SetListString(em);
   em->parentsearch.menufunc = FLDMENUFUNC_AddMenu( field_msgbg,
 	  &ParentSearchMenuListHeader, em->parentsearch.fldmenu_listdata );
+
+  em->parentsearch.local_seq = 0;
 }
 
 //--------------------------------------------------------------
