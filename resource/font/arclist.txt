@@ -2,6 +2,7 @@
 "small.gftr"
 "small_batt.gftr"
 "num.gftr"
+"shinden.gftr"
 "default.nclr"
 "talkwin.nclr"
 "systemwin.nclr"

@@ -57,7 +57,7 @@ $(TARGETDIR)/$(NARCNAME):	$(NARCNAME)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 
-font.narc : large.gftr small.gftr small_batt.gftr num.gftr default.nclr talkwin.nclr systemwin.nclr
+font.narc : large.gftr small.gftr small_batt.gftr num.gftr shinden.gftr default.nclr talkwin.nclr systemwin.nclr
 
 
 large.nftr : large.bmp pokemon_wb.xlor
@@ -75,6 +75,10 @@ small_batt.nftr : small_batt.bmp pokemon_wb.xlor
 num.nftr : num.bmp pokemon_wb_num.xlor
 	fontcvtrc -i bmp -if num.bmp -io pokemon_wb_num.xlor -ib 2 -o nitro -of num.nftr
 	xcopy /D /Y num.nftr w:\font
+
+shinden.nftr : shinden.bmp pokemon_wb_sp.xlor
+	fontcvtrc -i bmp -if shinden.bmp -io pokemon_wb_sp.xlor -ib 2 -o nitro -of shinden.nftr
+	xcopy /D /Y shinden.nftr w:\font
 
 %.gftr: %.nftr
 	fontex $< $@

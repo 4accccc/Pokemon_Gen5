@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE letter-order SYSTEM "letter-order.dtd">
+
+<letter-order version="1.0">
+	<head>
+		<create user="masao taya" date="2010-02-23T01:52:33" />
+		<title>pokemon wb num font</title>
+		<comment>海底神殿用文字セット</comment>
+	</head>
+
+	<body>
+		<area width="16" />
+
+		<order>
+			A B C D E F G H I J K L M N O P 
+			Q R S T U V W X Y Z 1 2 3 4 5 6 
+			7 8 9 ①②③④⑤⑥ <null/><null/><null/><null/><null/><null/><null/>
+		</order>
+	</body>
+</letter-order>
+
