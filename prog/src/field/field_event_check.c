@@ -113,6 +113,7 @@
 #include "event_intrude_secret_item.h"    //
 #include "field_diving_data.h"  //DIVINGSPOT_Check
 #include "poke_tool/natsuki.h"  //NATSUKI_CalcTsurearuki
+#include "poke_tool/tokusyu_def.h" //TOKUSYU_xxxx
 
 
 #ifdef PM_DEBUG
@@ -186,6 +187,8 @@ static GMEVENT* CheckSodateya(
 static GMEVENT* CheckSpray( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckEffectEncount( FIELDMAP_WORK * fieldWork, GAMESYS_WORK* gsys, GAMEDATA* gdata );
 static GMEVENT* CheckGPowerEffectEnd( GAMESYS_WORK* gsys );
+static u8 getHatchCountUpdateValue( POKEPARTY* party );
+static void updateEggHatchCount( POKEPARTY* party );
 static void updatePartyEgg( GAMEDATA * gamedata, POKEPARTY* party );
 static BOOL checkPartyEgg( POKEPARTY* party );
 static void updateFriendyStepCount( GAMEDATA * gamedata, FIELDMAP_WORK * fieldmap );
@@ -1663,8 +1666,14 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
   if( event != NULL) return event;
 
   //育て屋チェック
-  event = CheckSodateya( req, fieldWork, gsys, gdata );
-  if( event != NULL) return event;
+  {
+    int i;
+    for( i=0; i<10; i++ )
+    {
+      event = CheckSodateya( req, fieldWork, gsys, gdata );
+      if( event != NULL) return event;
+    }
+  }
 
   //虫除けスプレーチェック
   event = CheckSpray( fieldWork, gsys, gdata );
@@ -1675,10 +1684,83 @@ static GMEVENT * checkMoveEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWor
 
 //--------------------------------------------------------------
 /**
+ * @brief 孵化カウンタの更新値を取得する
+ *
+ * @param party 手持ちポケモン
+ *
+ * @return 孵化カウンタの更新値
+ */
+//--------------------------------------------------------------
+static u8 getHatchCountUpdateValue( POKEPARTY* party )
+{
+  int i;
+  int partyCount;
+
+  partyCount = PokeParty_GetPokeCount( party );
+
+  for( i=0; i<partyCount; i++ )
+  {
+    POKEMON_PARAM* param;
+    u32 tokusei;
+
+    param = PokeParty_GetMemberPointer( party, i );
+    tokusei = PP_Get( param, ID_PARA_speabino, NULL );
+
+    // 特性「ほのおのからだ」「マグマのよろい」を持つポケモンがいる
+    if( (tokusei == TOKUSYU_HONOONOKARADA) || (tokusei == TOKUSYU_MAGUMANOYOROI) ) {
+      return 2;
+    }
+  }
+
+  return 1;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 手持ちタマゴの孵化カウンタを更新する
+ *
+ * @param party
+ */
+//--------------------------------------------------------------
+static void updateEggHatchCount( POKEPARTY* party )
+{
+  int i;
+  int partyCount;
+  u8 sub_value;
+
+  partyCount = PokeParty_GetPokeCount( party );
+  sub_value  = getHatchCountUpdateValue( party );
+
+  // 手持ちタマゴの残り歩数を減らす
+  for( i=0; i<partyCount; i++ )
+  {
+    POKEMON_PARAM* pp;
+    u32 tamagoFlag, friend;
+
+    pp         = PokeParty_GetMemberPointer( party, i );
+    tamagoFlag = PP_Get( pp, ID_PARA_tamago_flag, NULL );
+    friend     = PP_Get( pp, ID_PARA_friend, NULL ); 
+
+    // タマゴを発見
+    if( tamagoFlag == TRUE ) { 
+      // なつき度を更新
+      if( friend < sub_value ) {
+        friend = 0;
+      }
+      else {
+        friend -= sub_value;
+      }
+      PP_Put( pp, ID_PARA_friend, friend );
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * @brief 手持ちタマゴの孵化カウント更新
  * @param party 更新対象のポケパーティー
  *
- * ※なつき度(タマゴの場合は孵化までの残り歩数)
+ * ※なつき度 = タマゴの場合は孵化までの残り歩数
  */
 //--------------------------------------------------------------
 static void updatePartyEgg( GAMEDATA * gamedata, POKEPARTY* party )
@@ -1700,36 +1782,13 @@ static void updatePartyEgg( GAMEDATA * gamedata, POKEPARTY* party )
   count += GPOWER_Calc_Hatch( ONE_STEP_COUNT );
 
   // 手持ちのタマゴに反映
-  if( MAX_STEP_COUNT < count )
-  {
-    int i;
-    int partyCount;
-
-    partyCount = PokeParty_GetPokeCount( party );
-
-    // 手持ちタマゴの残り歩数を減らす
-    for( i=0; i<partyCount; i++ )
-    {
-      POKEMON_PARAM* param;
-      u32 tamagoFlag, friend;
-
-      param      = PokeParty_GetMemberPointer( party, i );
-      tamagoFlag = PP_Get( param, ID_PARA_tamago_flag, NULL );
-      friend     = PP_Get( param, ID_PARA_friend, NULL ); 
-
-      if( tamagoFlag == TRUE ) 
-      { 
-        if( 0 < friend ){ PP_Put( param, ID_PARA_friend, friend -1 ); }
-      }
-    }
-
-    // 孵化カウンタ初期化
-    count = 0;
+  if( MAX_STEP_COUNT < count ) {
+    updateEggHatchCount( party ); // タマゴのなつき度を更新
+    count = 0; // カウンタ初期化
   }
 
   // セーブデータに反映
-  Situation_SetEggStepCount( situation, count );
-
+  Situation_SetEggStepCount( situation, count ); 
 }
 //--------------------------------------------------------------
 /**
