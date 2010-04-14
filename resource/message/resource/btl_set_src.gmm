@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-04-02T17:19:49"/>
+	<create user="morimoto" host="W00220" date="2010-04-14T12:29:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -424,7 +424,7 @@
 		</language>
 	</columns>
 
-	<dialog left="130" top="0" right="809" bottom="508" maximized="no" rayout="Vertical2">
+	<dialog left="1686" top="426" right="2365" bottom="934" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
 		<tag-palette left="783" top="534" right="1214" bottom="932" visible="yes"/>
 		<band id="0" index="1" style="0001" width="504"/>
@@ -432,7 +432,7 @@
 		<band id="2" index="3" style="0000" width="494"/>
 		<band id="3" index="4" style="0000" width="175"/>
 		<band id="4" index="0" style="0000" width="671"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1313,11 +1313,11 @@
 	</row>
 
 	<row id="BTL_STRID_SET_DassyutuPod">
-		<comment>だっしゅつポッド</comment>
+		<comment>だっしゅつボタン</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-だっしゅつポッドで　もどっていった！</language>
+だっしゅつボタンで　もどっていった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-だっしゅつポッドで　戻っていった！</language>
+だっしゅつボタンで　戻っていった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RedCard">
@@ -1721,7 +1721,8 @@
 ふういんで▽
 [1:07:わざ名:1]が　だせない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-封印で　[1:07:わざ名:1]が　出せない！</language>
+ふういんで▽
+[1:07:わざ名:1]が　出せない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Kanasibari">
@@ -1735,7 +1736,7 @@
 	<row id="BTL_STRID_SET_KanasibariWarn">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　かなしばりで
 [1:07:わざ名:1]が　だせない！</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　金縛りで
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　かなしばりで
 [1:07:わざ名:1]が　出せない！</language>
 	</row>
 
@@ -1743,7 +1744,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 かなしばりが　とけた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-金縛りが　解けた！</language>
+かなしばりが　解けた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_AquaRing">
