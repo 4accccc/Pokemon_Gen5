@@ -31,6 +31,11 @@
 #include "msg/msg_d_tomoya.h"
 
 #include "font/font.naix"
+
+
+//#define DEBUG_CAMERA_ALLCONTROL_MODE_2  // これは、自機とのバインドをカットしたときに、ターゲットオフセットを変更しないモード
+
+
 #endif
 
 //============================================================================================
@@ -1871,8 +1876,13 @@ static void DEBUG_ControlWork( FIELD_CAMERA* camera )
     }
     else
     {
+      
+#ifdef DEBUG_CAMERA_ALLCONTROL_MODE_2
+      VEC_Subtract( &camera->debug_target, &camera->target_offset, &camera->target );
+#else
       VEC_Set( &camera->target, camera->debug_target.x, camera->debug_target.y, camera->debug_target.z );
       VEC_Set( &camera->target_offset, 0,0,0 );
+#endif
     }
 
     // カメラアングル
