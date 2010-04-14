@@ -9,6 +9,7 @@
 
 #include "net_app/union/union_beacon_tool.h"
 #include "system/tr2dgra.h"
+#include "pokeicon/pokeicon.h"
 
 
 
@@ -16,6 +17,35 @@
 #define _TOUCHBAR_OBJ_PALPOS (12)     //タッチバーの色  （１）本
 
 #define CLACT_PALNUM_TRGRA (0)
+
+#define PARENTMENU_Y  ( 5 )
+#define PARENTMENU2_Y  ( 13 )
+
+
+enum{
+  POKEICON_POS_START_X = 3*8,    ///<ポケモンアイコン配置開始位置X
+  POKEICON_POS_SPACE_X = 5*8,    ///<ポケモンアイコン毎の配置間隔X
+  POKEICON_POS_Y = 4*8,          ///<ポケモンアイコンY座標
+
+  ITEMICON_POS_START_X = POKEICON_POS_START_X+8,    ///<アイテムアイコン配置開始位置X
+  ITEMICON_POS_SPACE_X = POKEICON_POS_SPACE_X,    ///<アイテムアイコン毎の配置間隔X
+  ITEMICON_POS_Y = POKEICON_POS_Y+8,          ///<アイテムアイコンY座標
+  
+  LV_POS_X = 0,
+  LV_POS_SPACE_X = POKEICON_POS_SPACE_X,
+  LV_POS_Y = 4*8,
+  
+  SEX_POS_X = 4*8,
+  SEX_POS_SPACE_X = POKEICON_POS_SPACE_X,
+  SEX_POS_Y = 2*8,
+  
+  POKESTATUS_BMP_X = 1,
+  POKESTATUS_BMP_Y = 2,
+  POKESTATUS_BMP_SIZE_X = 30,
+  POKESTATUS_BMP_SIZE_Y = 6,
+};
+
+
 
 static const BMPWIN_YESNO_DAT _yesNoBmpDat = {
   GFL_BG_FRAME2_M, FLD_YESNO_WIN_PX, FLD_YESNO_WIN_PY,
@@ -558,7 +588,6 @@ static BMPMENULIST_HEADER _parentCustomMenuListHeader = {
 };
 
 
-#define PARENTMENU_Y  ( 5 )
 
 //------------------------------------------------------------------
 /**
@@ -591,7 +620,7 @@ static void	_print_callback(BMPMENULIST_WORK * wk,u32 param,u8 y)
 
 static void _modeSelectMenuBase( WIFIP2PMATCH_WORK *wk,BMPMENULIST_HEADER* plisth, _infoMenu* p_menu,int length, int menutype, int width )
 {
-  int i;
+  int i,y;
 
   PRINTSYS_QUE_Clear(wk->SysMenuQue);
 
@@ -604,8 +633,14 @@ static void _modeSelectMenuBase( WIFIP2PMATCH_WORK *wk,BMPMENULIST_HEADER* plist
 
   wk->SubListWin = _BmpWinDel(wk->SubListWin);
   //BMPウィンドウ生成
+  if(menutype!=_MENUTYPE_POKEPARTY){
+    y = PARENTMENU_Y;
+  }
+  else{
+    y = PARENTMENU2_Y;
+  }
   wk->SubListWin = GFL_BMPWIN_Create(
-    GFL_BG_FRAME2_M, 32-width-1, PARENTMENU_Y, width, length * 2, MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+    GFL_BG_FRAME2_M, 32-width-1, y, width, length * 2, MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
   GFL_BMPWIN_MakeScreen(wk->SubListWin);
   BmpWinFrame_Write( wk->SubListWin, WINDOW_TRANS_OFF, GFL_ARCUTIL_TRANSINFO_GetPos(wk->talkwin_m2), COMM_MESFRAME_PAL );
 
@@ -1399,6 +1434,198 @@ static void _battleShooterSelectMenu( WIFIP2PMATCH_WORK *wk )
 
 
 
+#if 1
+//--------------------------------------------------------------
+/**
+ * 指定POKEPARTYのステータス情報を書き込む
+ *
+ * @param   psl		
+ * @param   party		
+ */
+//--------------------------------------------------------------
+static void _Print_DrawPokeStatusBmpWin(WIFIP2PMATCH_WORK *wk, const POKEPARTY *party)
+{
+  STRBUF *buf_lv, *buf_sex, *tempbuf;
+  int i, party_max;
+  u32 monsno, level, sex, nidoran_nickname;
+  POKEMON_PARAM *pp;
+  
+//  _Print_AddPokeStatusBmpWin(psl);
+//  FLDMSGWIN_ClearWindow(psl->fldmsgwin_poke);
+
+  //BMPウィンドウ生成
+  if(!wk->ListWin){
+    wk->ListWin = GFL_BMPWIN_Create(
+      GFL_BG_FRAME2_M, 1, 5,  30, 6,
+      MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+  }
+  BmpWinFrame_Write( wk->ListWin, WINDOW_TRANS_OFF,
+                     GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), COMM_MESFRAME_PAL );
+
+  buf_lv = GFL_STR_CreateBuffer(64, HEAPID_WIFIP2PMATCH);
+  tempbuf = GFL_STR_CreateBuffer(64, HEAPID_WIFIP2PMATCH);
+  
+  //レベル＆性別描画
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->ListWin), WINCLR_COL(FBMP_COL_WHITE) );
+  GFL_BMPWIN_ClearScreen(wk->ListWin);
+
+  party_max = PokeParty_GetPokeCount(party);
+  for(i = 0; i < party_max; i++){
+    OS_Printf("-x-x-x  %d\n",i);
+    pp = PokeParty_GetMemberPointer(party, i);
+    monsno = PP_Get( pp, ID_PARA_monsno, NULL);
+    nidoran_nickname = PP_Get(pp, ID_PARA_nidoran_nickname, NULL);
+    level = PP_Get( pp, ID_PARA_level, NULL);
+    sex = PP_Get( pp, ID_PARA_sex, NULL);
+
+    //レベル
+    GFL_MSG_GetString( wk->MsgManager, msg_wifilobby_1039, tempbuf );
+    WORDSET_RegisterNumber( wk->WordSet, 0, level, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    WORDSET_ExpandStr( wk->WordSet, buf_lv, tempbuf );
+
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->ListWin), 1+SEX_POS_SPACE_X*i, 32,
+                    buf_lv, wk->font_handle_num);
+    
+    //性別
+    if(sex == PM_NEUTRAL 
+        || ((monsno==MONSNO_NIDORAN_F || monsno==MONSNO_NIDORAN_M) && nidoran_nickname==FALSE)){
+      ; //何も描画しない
+    }
+    else if(sex == PM_MALE){
+      GFL_MSG_GetString( wk->MsgManager, msg_wifilobby_1040, tempbuf );
+      PRINTSYS_Print(GFL_BMPWIN_GetBmp(wk->ListWin), SEX_POS_X+SEX_POS_SPACE_X*i, SEX_POS_Y, tempbuf, wk->fontHandle);
+    }
+    else{
+      GFL_MSG_GetString( wk->MsgManager, msg_wifilobby_1041, tempbuf );
+      PRINTSYS_Print(GFL_BMPWIN_GetBmp(wk->ListWin), SEX_POS_X+SEX_POS_SPACE_X*i, SEX_POS_Y, tempbuf, wk->fontHandle);
+    }
+  }
+  
+  GFL_STR_DeleteBuffer(buf_lv);
+  GFL_STR_DeleteBuffer(tempbuf);
+
+  GFL_BMPWIN_MakeScreen( wk->ListWin );
+  GFL_BMPWIN_TransVramCharacter(wk->ListWin);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_M);
+}
+
+
+static void _DeletePokeStatus(WIFIP2PMATCH_WORK *wk)
+{
+  if(wk->ListWin){
+    GFL_BMPWIN_ClearScreen(wk->ListWin);
+    BmpWinFrame_Clear(wk->ListWin,WINDOW_TRANS_ON_V);
+    GFL_BMPWIN_Delete(wk->ListWin);
+    wk->ListWin=NULL;
+  }
+}
+
+#endif
+
+#define _POKEMON_SELECT1_CELLX (22)
+#define _POKEMON_SELECT1_CELLY (54)
+
+static void _pokemonIconCreate(WIFIP2PMATCH_WORK *wk, const POKEPARTY *party,int offset,ARCHANDLE *arcHandlePoke)
+{
+  int i, party_max;
+
+  party_max = PokeParty_GetPokeCount(party);
+  for(i = 0; i < party_max; i++){
+    GFL_CLWK_DATA cellInitData;
+    const POKEMON_PASO_PARAM* ppp = PP_GetPPPPointerConst(PokeParty_GetMemberPointer(party, i));
+
+    cellInitData.pos_x = _POKEMON_SELECT1_CELLX + i*POKEICON_POS_SPACE_X;
+    cellInitData.pos_y = _POKEMON_SELECT1_CELLY;
+    cellInitData.anmseq = 0;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+
+    wk->cellRes[i + offset] = GFL_CLGRP_CGR_Register( arcHandlePoke ,
+                                                      POKEICON_GetCgxArcIndex(ppp),
+                                                      FALSE , CLSYS_DRAW_MAIN , HEAPID_WIFIP2PMATCH );
+
+    wk->pokemonIcon[i + offset] = GFL_CLACT_WK_Create( wk->clactSet,
+                                             wk->cellRes[i + offset],
+                                             wk->cellResPal,
+                                             wk->cellResAnm,
+                                             &cellInitData ,CLSYS_DRAW_MAIN , HEAPID_WIFIP2PMATCH );
+
+    GFL_CLACT_WK_SetPlttOffs( wk->pokemonIcon[i + offset], POKEICON_GetPalNumGetByPPP(ppp), CLWK_PLTTOFFS_MODE_PLTT_TOP );
+
+  }
+}
+
+
+static void _pokeIconResourceCreate(WIFIP2PMATCH_WORK *wk, const POKEPARTY *party, const POKEPARTY *battle)
+{
+  ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON ,HEAPID_WIFIP2PMATCH );
+  wk->cellResPal =
+    GFL_CLGRP_PLTT_RegisterComp( arcHandlePoke ,
+                                 POKEICON_GetPalArcIndex() , CLSYS_DRAW_MAIN ,
+                                 _OBJPLT_POKEICON_OFFSET,
+                                 HEAPID_WIFIP2PMATCH );
+
+  wk->cellResAnm =
+    GFL_CLGRP_CELLANIM_Register( arcHandlePoke ,
+                                 POKEICON_GetCellSubArcIndex() , POKEICON_GetAnmArcIndex(), HEAPID_WIFIP2PMATCH  );
+
+  _pokemonIconCreate(wk, party, 0,arcHandlePoke);
+  _pokemonIconCreate(wk, battle, 6,arcHandlePoke);
+
+  GFL_ARC_CloseDataHandle(arcHandlePoke);
+}
+
+
+static void _pokeIconResourceDelete(WIFIP2PMATCH_WORK *wk)
+{
+  int i;
+
+  if(wk->pokemonIcon[0]==NULL){
+    return;
+  }
+  for(i=0;i<12;i++){
+    if(wk->pokemonIcon[i]){
+      GFL_CLACT_WK_Remove(wk->pokemonIcon[i]);
+      GFL_CLGRP_CGR_Release(wk->cellRes[i]);
+    }
+    wk->pokemonIcon[i] = NULL;
+  }
+  GFL_CLGRP_PLTT_Release(wk->cellResPal);
+  GFL_CLGRP_CELLANIM_Release(wk->cellResAnm);
+}
+
+
+static void _pokeIconDispSwitch(WIFIP2PMATCH_WORK *wk,BOOL bTemochi)
+{
+  int i,j , party_max;
+
+  for(i=0;i<6;i++){
+    if(wk->pokemonIcon[i]){
+      if(bTemochi){
+        GFL_CLACT_WK_SetAutoAnmFlag( wk->pokemonIcon[i] , TRUE );
+        GFL_CLACT_WK_SetDrawEnable( wk->pokemonIcon[i], TRUE );
+      }
+      else{
+        GFL_CLACT_WK_SetAutoAnmFlag( wk->pokemonIcon[i] , FALSE );
+        GFL_CLACT_WK_SetDrawEnable( wk->pokemonIcon[i], FALSE );
+      }
+    }
+  }
+  for(i=6;i<12;i++){
+    if(wk->pokemonIcon[i]){
+      if(bTemochi){
+        GFL_CLACT_WK_SetAutoAnmFlag( wk->pokemonIcon[i] , FALSE );
+        GFL_CLACT_WK_SetDrawEnable( wk->pokemonIcon[i], FALSE );
+      }
+      else{
+        GFL_CLACT_WK_SetAutoAnmFlag( wk->pokemonIcon[i] , TRUE );
+        GFL_CLACT_WK_SetDrawEnable( wk->pokemonIcon[i], TRUE );
+      }
+    }
+  }
+  
+}
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  ポケパーティー選択
@@ -1416,6 +1643,8 @@ static void _battlePokePartySelectMenu( WIFIP2PMATCH_WORK *wk )
 
   _modeSelectMenuBase(wk, &_parentInfoBattleMenuListHeader, _parentPokePartyMenuList,
                       elementof(_parentPokePartyMenuList), _MENUTYPE_POKEPARTY,18);
+
+
 }
 
 //==================================================================

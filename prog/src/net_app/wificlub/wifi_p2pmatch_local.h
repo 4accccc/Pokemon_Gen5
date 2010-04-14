@@ -57,8 +57,8 @@
 #define WIFIP2PMATCH_CORNER_MESSAGE_END_WAIT	( 60 )
 
 
-
-
+//上がめんぽけもんアイコンパレット
+#define _OBJPLT_POKEICON_OFFSET (11*32)
 
 
 
@@ -398,6 +398,7 @@ struct _WIFIP2PMATCH_WORK{
   GFL_MSGDATA *MsgManager;							// 名前入力メッセージデータマネージャー
   GFL_MSGDATA *SysMsgManager;  //
   GFL_FONT 			*fontHandle;
+  GFL_FONT 			*font_handle_num;
  // STRBUF			*TrainerName[WIFIP2PMATCH_MEMBER_MAX];		// 名前
 //  STRBUF			*MsgString;								// メッセージ
   STRBUF*         pExpStrBuf;
@@ -413,6 +414,11 @@ struct _WIFIP2PMATCH_WORK{
   GFL_CLUNIT* clactSet;								// セルアクターセット
   GFL_CLSYS_REND*          renddata;						// 簡易レンダーデータ
 
+  u32 cellRes[12];
+  u32 cellResPal;
+  u32 cellResAnm;
+  GFL_CLWK* pokemonIcon[12];
+  
   GFL_CLWK* pTrgra;   //トレーナーの大きい絵
   u32 trRes[3];       //トレーナーのリソース
 
@@ -484,6 +490,8 @@ struct _WIFIP2PMATCH_WORK{
   u8 DirectMacSet;  //話しかける為のMACをセットした人
   u8 keepGameMode;
   u8 command;   ///< direct進行の為のコマンド
+  u8 backupCursor;
+  u8 dummy;
 };
 
 //通信関連の関数

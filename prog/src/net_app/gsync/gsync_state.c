@@ -161,7 +161,7 @@ struct _G_SYNC_WORK {
   u8 zukanNo;        ///< webで選択した番号  無い場合 0
   u8 downloadType;
   u8 msgBit;
-  u8 dummy;
+  u8 bGet;
 };
 
 
@@ -457,7 +457,15 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
 
 
   GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
-  GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_005,0, pWork->pp);
+
+
+  if(pWork->bGet){
+    GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_005,0, pWork->pp);
+  }
+  else{
+    GSYNC_MESSAGE_NickNameMessageDisp(pWork->pMessageWork,GSYNC_026,0, pWork->pp);
+  }
+
   GSYNC_MESSAGE_SystemMessageDisp(pWork->pMessageWork);
 
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed);
@@ -526,8 +534,6 @@ static void _wakeupAction_save2(G_SYNC_WORK* pWork)
     return;
   }
 
-
-  
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_DOWNLOAD_FINISH, pWork->pNHTTPRap)){
       pWork->aDownFinish.bGet=TRUE;
@@ -545,7 +551,6 @@ static void _wakeupAction_save2(G_SYNC_WORK* pWork)
   }
 }
 
-//テスト 
 
 static void _wakeupAction_1(G_SYNC_WORK* pWork)
 {
@@ -988,8 +993,10 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
                      8,8);
     
     //          _CHANGE_STATE();  //セーブに行く?
+    pWork->bGet=TRUE;
   }
   else{
+    pWork->bGet=FALSE;
     NET_PRINT("取得しなかった%d %d=%d\n",pDream->bGet, pDream->uploadCount,DREAMWORLD_SV_GetUploadCount(pDreamSave));
   }
   

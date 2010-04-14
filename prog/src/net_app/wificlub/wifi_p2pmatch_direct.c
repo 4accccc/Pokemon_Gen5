@@ -1151,9 +1151,16 @@ static int _playerDirectBattleStart2( WIFIP2PMATCH_WORK *wk, int seq )
   if( !WifiP2PMatchMessageEndCheck(wk) ){
     return seq;
   }
+  wk->backupCursor = 2;
   _battlePokePartySelectMenu( wk );
+
+  {
+    POKEPARTY *bb_party = _BBox_PokePartyAlloc(wk->pGameData);
+    _pokeIconResourceCreate(wk, GAMEDATA_GetMyPokemon(wk->pGameData), bb_party);
+    GFL_HEAP_FreeMemory(bb_party);
+  }
   
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START3);
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START3);
   return seq;
 }
 //------------------------------------------------------------------
@@ -1169,10 +1176,27 @@ static int _playerDirectBattleStart3( WIFIP2PMATCH_WORK *wk, int seq )
   int ret = BMPMENULIST_NULL;
   int command,id=0;
   u32 fail_bit;
+  u16 list_bak,cursor_bak;
   
   PRINT_UTIL_Trans( &wk->SysMsgPrintUtil, wk->SysMsgQue );
   ret = BmpMenuList_Main(wk->sublw);
 
+  BmpMenuList_PosGet( wk->sublw, &list_bak, &cursor_bak );
+  if(cursor_bak != wk->backupCursor){
+    wk->backupCursor = cursor_bak;
+    if(cursor_bak==0){
+      _Print_DrawPokeStatusBmpWin(wk, GAMEDATA_GetMyPokemon(wk->pGameData));
+      _pokeIconDispSwitch(wk,TRUE);
+    }
+    else{
+      POKEPARTY *bb_party = _BBox_PokePartyAlloc(wk->pGameData);
+      _Print_DrawPokeStatusBmpWin(wk, bb_party);
+      GFL_HEAP_FreeMemory(bb_party);
+      _pokeIconDispSwitch(wk,FALSE);
+    }
+  }
+
+  
   if(!GFL_NET_IsParentMachine()){
     id = 1;
   }
@@ -1181,8 +1205,7 @@ static int _playerDirectBattleStart3( WIFIP2PMATCH_WORK *wk, int seq )
   case BMPMENULIST_NULL:
     return seq;
   case BMPMENULIST_CANCEL:
-    GF_ASSERT(0);
-    break;
+    return seq;
   case _TEMOTI:
     PokeParty_Copy(GAMEDATA_GetMyPokemon(wk->pGameData), wk->pParentWork->pPokeParty[id]);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4);
@@ -1196,6 +1219,8 @@ static int _playerDirectBattleStart3( WIFIP2PMATCH_WORK *wk, int seq )
     }
     break;
   }
+  _pokeIconResourceDelete(wk);
+  _DeletePokeStatus(wk);
   EndMessageWindowOff(wk);
   wk->SubListWin = _BmpWinDel(wk->SubListWin);
   BmpMenuList_Exit(wk->sublw, NULL, &wk->singleCur[_MENUTYPE_POKEPARTY]);
