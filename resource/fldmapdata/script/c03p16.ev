@@ -249,6 +249,9 @@ ev_cabin:
 					_OBJ_ANIME( C03P16_CABINGUIDE_01, anm_cabin_in )
 					_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in )
 					_OBJ_ANIME_WAIT()
+
+          //乗船アニメ用ワークを０にする
+          $WK_OTHER_PASSENGERBOAT = 0
 			
 					//船員のOBJを消す
 					_OBJ_DEL( C03P16_CABINGUIDE_01 )
