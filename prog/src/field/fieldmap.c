@@ -200,6 +200,9 @@ enum {
   FIELD_G3D_BBDACT_RESMAX	    =   64,
   ///billboardActで使用するオブジェクトの最大設定可能数
   FIELD_G3D_BBDACT_ACTMAX	    =   128,
+
+  FIELD_G3D_SUBBBDACT_RESMAX  =   32,
+  FIELD_G3D_SUBBBDACT_ACTMAX  =   32,
   
   ///<セルアクターリソース最大
   FIELD_CLSYS_RESOUCE_MAX		  =   64,
@@ -313,7 +316,8 @@ struct _FIELDMAP_WORK
   GFL_G3D_CAMERA *g3Dcamera; //g3Dcamera Lib ハンドル
 	GFL_G3D_LIGHTSET *g3Dlightset; //g3Dlight Lib ハンドル
 	GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
-	GFL_BBDACT_SYS *bbdActSys; //ビルボードアクトシステム設定ハンドル
+	GFL_BBDACT_SYS *mainBbdActSys; //ビルボードアクトシステム設定ハンドル
+  GFL_BBDACT_SYS *subBbdActSys;
 
   FLDMAPFUNC_SYS * fldmapFuncSys;
 	
@@ -1682,14 +1686,26 @@ HEAPID FIELDMAP_GetHeapID( FIELDMAP_WORK *fieldWork )
 
 //--------------------------------------------------------------
 /**
- * FIELDMAP_WORK GFL_BBDACT_SYS取得
+ * FIELDMAP_WORK メインGFL_BBDACT_SYS取得
  * @param fieldWork FIELDMAP_WORK
  * @retval GFL_BBDACT_SYS
  */
 //--------------------------------------------------------------
 GFL_BBDACT_SYS * FIELDMAP_GetBbdActSys( FIELDMAP_WORK *fieldWork )
 {
-	return fieldWork->bbdActSys;
+	return fieldWork->mainBbdActSys;
+}
+
+//--------------------------------------------------------------
+/**
+ * FIELDMAP_WORK サブGFL_BBDACT_SYS取得
+ * @param fieldWork FIELDMAP_WORK
+ * @retval GFL_BBDACT_SYS
+ */
+//--------------------------------------------------------------
+GFL_BBDACT_SYS * FIELDMAP_GetSubBbdActSys( FIELDMAP_WORK *fieldWork )
+{
+  return fieldWork->subBbdActSys;
 }
 
 //--------------------------------------------------------------
@@ -2213,13 +2229,18 @@ static void fldmap_G3D_CallBackSetUp( void )
 //--------------------------------------------------------------
 static void fldmap_G3D_Load( FIELDMAP_WORK *fieldWork )
 {
-	fieldWork->bbdActSys = GFL_BBDACT_CreateSys(
+	fieldWork->mainBbdActSys = GFL_BBDACT_CreateSys(
 			FIELD_G3D_BBDACT_RESMAX, FIELD_G3D_BBDACT_ACTMAX,
 			fldmap_G3D_BBDTrans, fieldWork->heapID );
   {
-    GFL_BBD_SYS * bbdsys = GFL_BBDACT_GetBBDSystem(fieldWork->bbdActSys);
+    GFL_BBD_SYS * bbdsys = GFL_BBDACT_GetBBDSystem(fieldWork->mainBbdActSys);
     GFL_BBD_SetOrigin(bbdsys, GFL_BBD_ORIGIN_BOTTOM);
   }
+
+  fieldWork->subBbdActSys = GFL_BBDACT_CreateSys(
+      FIELD_G3D_SUBBBDACT_RESMAX, FIELD_G3D_SUBBBDACT_ACTMAX,
+      fldmap_G3D_BBDTrans, fieldWork->heapID );
+
   fieldmap_G3D_BBDSetColorParam( fieldWork ); // 色設定
 
   
@@ -2258,7 +2279,8 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
     NOZOMU_Printf("マップロード開始\n");
   }
 
-	GFL_BBDACT_Main( fieldWork->bbdActSys );
+	GFL_BBDACT_Main( fieldWork->mainBbdActSys );
+  GFL_BBDACT_Main( fieldWork->subBbdActSys );
   
   // NOGRID動作制御
   FLDNOGRID_MAPPER_Main( fieldWork->nogridMapper );
@@ -2366,7 +2388,8 @@ static void fldmap_G3D_Unload( FIELDMAP_WORK * fieldWork )
 {
 	GFL_G3D_LIGHT_Delete( fieldWork->g3Dlightset );
 	GFL_G3D_CAMERA_Delete( fieldWork->g3Dcamera );
-	GFL_BBDACT_DeleteSys( fieldWork->bbdActSys );
+	GFL_BBDACT_DeleteSys( fieldWork->mainBbdActSys );
+  GFL_BBDACT_DeleteSys( fieldWork->subBbdActSys );
   FLD_G3DOBJ_CTRL_Delete( fieldWork->fieldG3dObjCtrl );
 }
 
@@ -2457,7 +2480,8 @@ static void fieldmap_G3D_BBDSetColorParam( FIELDMAP_WORK * fieldWork )
   // ビルボードカラーの設定
   p_color = FLD_BBD_COLOR_Create( heapID );
   FLD_BBD_COLOR_Load( p_color, bbd_color_idx );
-  FLD_BBD_COLOR_SetData( p_color, GFL_BBDACT_GetBBDSystem(fieldWork->bbdActSys) );
+  FLD_BBD_COLOR_SetData( p_color, GFL_BBDACT_GetBBDSystem(fieldWork->mainBbdActSys) );
+  FLD_BBD_COLOR_SetData( p_color, GFL_BBDACT_GetBBDSystem( fieldWork->subBbdActSys ) );
   FLD_BBD_COLOR_Delete( p_color );
 }
 
@@ -2483,7 +2507,7 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
     fieldWork->g3Dmapper, fieldWork->nogridMapper );
 	
 	MMDL_BLACTCONT_Setup(		//動作モデルビルボード　セットアップ
-		fieldWork->fldMMdlSys, fieldWork->bbdActSys, 32 );
+		fieldWork->fldMMdlSys, fieldWork->mainBbdActSys, 32 );
 
 	{ //ビルボードリソース登録
 	  MMDL_LIST mlist;
@@ -3318,6 +3342,8 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
 
     SET_CHECK("update_tail:fldeff draw");
     FLDEFF_CTRL_Draw( fieldWork->fldeff_ctrl );
+    GFL_BBDACT_Draw(
+        fieldWork->subBbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
     
     if(fieldWork->union_eff != NULL){
       UNION_EFF_SystemDraw( fieldWork->union_eff);
@@ -3335,7 +3361,7 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
     
     SET_CHECK("update_tail:bbd draw");
     GFL_BBDACT_Draw(
-        fieldWork->bbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
+        fieldWork->mainBbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
     }
 
 		NNS_G3dGlbSetProjectionMtx(&org_pm);

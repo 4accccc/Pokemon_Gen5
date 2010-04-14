@@ -103,6 +103,7 @@ extern FIELD_DEBUG_WORK * FIELDMAP_GetDebugWork( FIELDMAP_WORK *fieldWork );
 extern GAMESYS_WORK * FIELDMAP_GetGameSysWork( FIELDMAP_WORK *fieldWork );
 extern HEAPID FIELDMAP_GetHeapID( FIELDMAP_WORK *fieldWork );
 extern GFL_BBDACT_SYS * FIELDMAP_GetBbdActSys( FIELDMAP_WORK *fieldWork );
+extern GFL_BBDACT_SYS * FIELDMAP_GetSubBbdActSys( FIELDMAP_WORK *fieldWork );
 extern FLDMAPPER * FIELDMAP_GetFieldG3Dmapper( FIELDMAP_WORK *fieldWork );
 extern const DEPEND_FUNCTIONS * FIELDMAP_GetDependFunctions( const FIELDMAP_WORK * fieldWork );
 extern u16 FIELDMAP_GetZoneID( const FIELDMAP_WORK * fieldWork );
