@@ -139,6 +139,15 @@ typedef struct
 }ADDACT_RESERVE;
 
 //--------------------------------------------------------------
+/// DELRES_RESERVE
+//--------------------------------------------------------------
+typedef struct
+{
+  u16 compFlag; //データ設置完了ふらぐ
+  u16 res_idx; //削除するリソースインデックス
+}DELRES_RESERVE;
+
+//--------------------------------------------------------------
 /// BLACT_RESERVE
 //--------------------------------------------------------------
 typedef struct
@@ -151,6 +160,8 @@ typedef struct
   ADDRES_RESERVE_PARAM *pReserveResParam;
   ADDRES_RESERVE *pReserveRes;
   ADDACT_RESERVE *pReserveAct;
+  
+  DELRES_RESERVE *pReserveDelRes;
 }BLACT_RESERVE;
 
 //--------------------------------------------------------------
@@ -193,6 +204,8 @@ static void BBDResUnitIndex_AddResUnit(
     MMDL_BLACTCONT *pBlActCont, u16 obj_code, BBDRESBIT flag );
 static void BBDResUnitIndex_RemoveResUnit(
     MMDL_BLACTCONT *pBlActCont, u16 obj_code );
+static void BBDResUnitIndex_RegistRemoveResUnit(
+		MMDL_BLACTCONT *pBlActCont, u16 obj_code );
 static BOOL BBDResUnitIndex_SearchResID(
   MMDL_BLACTCONT *pBlActCont, u16 obj_code, u16 *outID, u16 *outFlag );
 
@@ -224,6 +237,8 @@ static BOOL BlActAddReserve_SearchActorOBJCodeOutID(
 static void BlActAddReserve_CancelActor(
     MMDL_BLACTCONT *pBlActCont, MMDL *mmdl );
 static void BlActAddReserve_ClearWork( ADDACT_RESERVE *pRes );
+static BOOL BlActDelReserve_RegistResource(
+    MMDL_BLACTCONT *pBlActCont, u16 res_idx );
 
 static const MMDL_BBDACT_ANMTBL * BlActAnm_GetAnmTbl( u32 no );
 static GFL_BBDACT_RESUNIT_ID BlActRes_AddRes(
@@ -757,6 +772,45 @@ BOOL MMDL_BLACTCONT_AddActor(
 //--------------------------------------------------------------
 void MMDL_BLACTCONT_DeleteActor( MMDL *mmdl, u32 actID )
 {
+  u16 id,flag,res_idx;
+  u16 code = MMDL_GetOBJCode( mmdl );
+	MMDLSYS *pMMdlSys = (MMDLSYS*)MMDL_GetMMdlSys( mmdl );
+	MMDL_BLACTCONT *pBlActCont = MMDLSYS_GetBlActCont( pMMdlSys );
+  
+  if( actID == MMDL_BLACTID_NULL ){ //まだ追加されていない。
+    BlActAddReserve_CancelActor( pBlActCont, mmdl ); //予約あればキャンセル
+    return;
+  }
+  
+  res_idx = GFL_BBDACT_GetResIdx( pBlActCont->pBbdActSys, actID );
+	GFL_BBDACT_RemoveAct( pBlActCont->pBbdActSys, actID, 1 );
+  
+  if( BBDResUnitIndex_SearchResID(pBlActCont,code,&id,&flag) == TRUE )
+  {
+    if( (flag&BBDRESBIT_TRANS) ) //転送型 アクターの転送用リソース削除
+    {
+	    GFL_BBDACT_RemoveResourceUnit( pBlActCont->pBbdActSys, res_idx, 1 );
+    }
+    
+    if( (flag&BBDRESBIT_GUEST) ) //ゲスト登録 他に利用無ければ削除
+    {
+      if( MMDL_SearchUseOBJCode(mmdl,code) == FALSE )
+      {
+        #if 0 //その場で削除せず
+        BBDResUnitIndex_RemoveResUnit( pBlActCont, code );
+        #else //リソース削除を予約する
+        BBDResUnitIndex_RegistRemoveResUnit( pBlActCont, code );
+        #endif
+        KAGAYA_Printf(
+          "MMDL DEL GUEST RESOURCE CODE=%d, RESID=%d\n", code, id );
+      }
+    }
+  }
+}
+
+#if 0 //old
+void MMDL_BLACTCONT_DeleteActor( MMDL *mmdl, u32 actID )
+{
   u16 id,flag;
   u16 code = MMDL_GetOBJCode( mmdl );
 	MMDLSYS *pMMdlSys = (MMDLSYS*)MMDL_GetMMdlSys( mmdl );
@@ -789,6 +843,7 @@ void MMDL_BLACTCONT_DeleteActor( MMDL *mmdl, u32 actID )
   
 	GFL_BBDACT_RemoveAct( pBlActCont->pBbdActSys, actID, 1 );
 }
+#endif
 
 //======================================================================
 //  フィールド動作モデル ビルボードアクター追加 ユーザー用
@@ -1140,6 +1195,31 @@ static void BBDResUnitIndex_RemoveResUnit(
 
 //--------------------------------------------------------------
 /**
+ * IDCODEIDX BBDACT 指定OBJコードのリソースユニット削除。
+ * 登録データは削除し、リソース削除予約を行う。
+ * @param	pBlActCont MMDL_BLACTCONT
+ * @param	code	OBJコード
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void BBDResUnitIndex_RegistRemoveResUnit(
+		MMDL_BLACTCONT *pBlActCont, u16 obj_code )
+{
+	GFL_BBDACT_RESUNIT_ID id;
+  BOOL ret = IDCodeIndex_SearchCode(
+      &pBlActCont->BBDResUnitIdx, obj_code, &id, NULL );
+	GF_ASSERT( ret == TRUE );
+  
+  if( BlActDelReserve_RegistResource(pBlActCont,id) == FALSE ){
+    //予約一杯ならその場で削除
+    GF_ASSERT( 0 && "MMDL RESERVE DEL RES MAX" );
+	  GFL_BBDACT_RemoveResourceUnit( pBlActCont->pBbdActSys, id, 1 );
+  }
+	IDCodeIndex_DeleteCode( &pBlActCont->BBDResUnitIdx, obj_code );
+}
+
+//--------------------------------------------------------------
+/**
  * IDCODEIDX BBDACT　指定コードのリソースIDを取得
  * @param	pBlActCont MMDL_BLACTCONT
  * @param	code	OBJコード
@@ -1249,6 +1329,8 @@ static void BlActAddReserve_Init( MMDL_BLACTCONT *pBlActCont )
       heapID, sizeof(ADDRES_RESERVE)*pReserve->resDigestFrameMax );
   pReserve->pReserveAct = GFL_HEAP_AllocClearMemory(
       heapID, sizeof(ADDACT_RESERVE)*pReserve->actMax );
+  pReserve->pReserveDelRes = GFL_HEAP_AllocClearMemory(
+      heapID, sizeof(DELRES_RESERVE)*pReserve->resMax );
   
   pReserve->funcFlag = TRUE;
   pBlActCont->pReserve = pReserve;
@@ -1284,6 +1366,18 @@ static void BlActAddReserve_Delete( MMDL_BLACTCONT *pBlActCont )
         }
       }
       GFL_HEAP_FreeMemory( pReserve->pReserveRes );
+    }
+    
+    { //削除リソース
+      DELRES_RESERVE *pDelRes = pReserve->pReserveDelRes;
+      for( i = 0; i < pReserve->resMax; i++, pDelRes++ ){
+        if( pDelRes->compFlag == TRUE ){
+          pDelRes->compFlag = FALSE;
+	        GFL_BBDACT_RemoveResourceUnit(
+              pBlActCont->pBbdActSys, pDelRes->res_idx, 1 );
+        }
+      }
+      GFL_HEAP_FreeMemory( pReserve->pReserveDelRes );
     }
     
     { //アクター
@@ -1505,6 +1599,18 @@ static void BlActAddReserve_DigestResource( MMDL_BLACTCONT *pBlActCont )
                 pRes->code, id );
           }
           #endif
+        }
+      }
+      
+      { //リソース削除
+        DELRES_RESERVE *pDelRes = pReserve->pReserveDelRes;
+        
+        for( i = 0; i < pReserve->resMax; i++, pDelRes++ ){
+          if( pDelRes->compFlag == TRUE ){
+            pDelRes->compFlag = FALSE;
+	          GFL_BBDACT_RemoveResourceUnit(
+              pBlActCont->pBbdActSys, pDelRes->res_idx, 1 );
+          }
         }
       }
     }
@@ -1969,6 +2075,31 @@ static void BlActAddReserve_ClearWork( ADDACT_RESERVE *pRes )
 {
   pRes->compFlag = FALSE;
   MI_CpuClear8( pRes, sizeof(ADDACT_RESERVE) );
+}
+
+//--------------------------------------------------------------
+/**
+ * リソース削除予約　登録
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static BOOL BlActDelReserve_RegistResource(
+    MMDL_BLACTCONT *pBlActCont, u16 res_idx )
+{
+  u32 i = 0;
+  u32 max = pBlActCont->pReserve->resMax;
+  DELRES_RESERVE *pDelRes = pBlActCont->pReserve->pReserveDelRes;
+
+  for( i = 0; i < max; i++, pDelRes++ ){
+    if( pDelRes->compFlag == FALSE ){
+      pDelRes->res_idx = res_idx;
+      pDelRes->compFlag = TRUE;
+      return( TRUE );
+    }
+  }
+  
+  return( FALSE );
 }
 
 //======================================================================
