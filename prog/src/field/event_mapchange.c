@@ -191,6 +191,11 @@ static GMEVENT_RESULT FirstGameStartEvent( GMEVENT* event, int* seq, void* wk )
     break;
 
   case 1:
+    // ‹Gß‚ğ‰Šú‰»‚·‚é
+    {
+      int season = PMSEASON_GetRealTimeSeasonID();
+      PMSEASON_SetSeasonID( gameData, season );
+    }
     // ‹Gß‚ğ•\¦‚·‚é
     {
       u8 season = GAMEDATA_GetSeasonID( gameData );
