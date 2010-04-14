@@ -193,18 +193,25 @@ ev_musical_recept_comm_core:
   _BALLOONWIN_CLOSE()
   
   //WL処理
-  //_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 0, 0, 0 )
-  //_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,0,0,0 )
-  //IR処理
-  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 1, 0, 0 )
-  //リーダー、グループ別参加処理
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 0, 0, 0 )
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,0,0,0 )
   IF $retParentChild == 0 THEN //リーダー
-    _CALL ev_musical_receipt_comm_connect_ir_parent
+    _CALL ev_musical_receipt_comm_connect_parent
   ELSE //グループ
-    _CALL ev_musical_receipt_comm_connect_ir_child
+    _CALL ev_musical_receipt_comm_connect_child
   ENDIF
   //IR処理
-  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT_AFTER_IR ,0,0,0 )
+  
+  //_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 1, 0, 0 )
+  //リーダー、グループ別参加処理
+  //IF $retParentChild == 0 THEN //リーダー
+  //  _CALL ev_musical_receipt_comm_connect_ir_parent
+  //ELSE //グループ
+  //  _CALL ev_musical_receipt_comm_connect_ir_child
+  //ENDIF
+  //_MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT_AFTER_IR ,0,0,0 )
+  
+  //IR処理
   //通信同期(お友達の選択を待っています)
   _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_TIMESYNC, MUSICAL_COMM_SYNC_FIRST, 0, 0 )
   _MUSICAL_CALL(0,MUSICAL_CALL_COMM) //ミュージカル呼び出し
@@ -336,6 +343,7 @@ ev_musical_recept_comm_core:
               //ここからワイヤレス受付処理
 
               //通信開始
+              _BALLOONWIN_CLOSE()
               //第2引数はWLorIrc
               _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_INIT, 0, 0, 0 )
               _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_NET_INIT ,0,0,0 )

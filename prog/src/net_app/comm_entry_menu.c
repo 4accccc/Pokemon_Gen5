@@ -1647,7 +1647,7 @@ static void _ChildEntryMember_ListRewriteUpdate(COMM_ENTRY_MENU_PTR em)
   em->member_info_recv = FALSE;
   
   for(net_id = 0; net_id < COMM_ENTRY_USER_MAX; net_id++){
-    _ParentEntry_NameErase(em, &em->user[net_id], net_id);
+    _MemberInfo_NameErase(em, net_id);
     if(em->member_info.member_bit & (1 << net_id)){
       _MemberInfo_NameDraw(em, &em->member_info.mystatus[net_id], net_id);
     }
