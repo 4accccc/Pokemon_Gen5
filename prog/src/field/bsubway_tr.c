@@ -315,7 +315,7 @@ static void make_PokePara(
   PP_Put(dest,ID_PARA_friend,src->natuki);
 
   //NGネームフラグをチェック
-  if( 1 ){ //デフォルトネームを展開する
+  if( 0 ){ //デフォルトネームを展開する
 #if 0
     GFL_MSGDATA *msgdata;
     STRBUF *def_name;
@@ -573,13 +573,10 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
     
     //トレーナーデータ　word
-#if 0 //正規データがまだ
-    tr_data->win_word = (PMS_DATA*)bsw_trainer->win_word;
-    tr_data->lose_word = (PMS_DATA*)bsw_trainer->lose_word;
-#else
     PMSDAT_Clear( &tr_data->win_word );
     PMSDAT_Clear( &tr_data->lose_word );
-#endif
+    tr_data->win_word = *(PMS_DATA*)bsw_trainer->win_word;
+    tr_data->lose_word = *(PMS_DATA*)bsw_trainer->lose_word;
     
     //ポケモンパーティ
 //    dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );
@@ -615,16 +612,13 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
     
     //トレーナーデータ　word
-#if 0 //正規データがまだ
-    tr_data->win_word = (PMS_DATA*)bsw_trainer->win_word;
-    tr_data->lose_word = (PMS_DATA*)bsw_trainer->lose_word;
-#else
     PMSDAT_Clear( &tr_data->win_word );
     PMSDAT_Clear( &tr_data->lose_word );
-#endif
+    tr_data->win_word = *(PMS_DATA*)bsw_trainer->win_word;
+    tr_data->lose_word = *(PMS_DATA*)bsw_trainer->lose_word;
     
     //ポケモンパーティ
-//    dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );
+//  dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );
     party = dst->party[client];
     PokeParty_Init( party, TEMOTI_POKEMAX );
     
@@ -660,13 +654,10 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
     
     //トレーナーデータ　word
-#if 0 //正規データがまだ
-    tr_data->win_word = (PMS_DATA*)bsw_trainer->win_word;
-    tr_data->lose_word = (PMS_DATA*)bsw_trainer->lose_word;
-#else
     PMSDAT_Clear( &tr_data->win_word );
     PMSDAT_Clear( &tr_data->lose_word );
-#endif
+    tr_data->win_word = *(PMS_DATA*)bsw_trainer->win_word;
+    tr_data->lose_word = *(PMS_DATA*)bsw_trainer->lose_word;
     
     //ポケモンパーティ
 //    dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );

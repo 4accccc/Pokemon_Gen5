@@ -65,11 +65,13 @@ typedef enum
   BBDRES_TRANS_GUEST=(BBDRESBIT_TRANS|BBDRESBIT_GUEST),
 }BBDRESBIT;
 
-///ビルボード描画スケール。(x2 = 描画サイズ1/2)
-#define MMDL_BBD_GLOBAL_SCALE ((FX32_ONE+0xc00)*2)
-///ビルボード描画スケール等倍。(x2 = 描画サイズ1/2)
-#define MMDL_BBD_GLOBAL_SCALE_ONE (FX32_ONE*2)
-///ビルボード描画サイズ (FX16_ONE*4 = 1/2)
+///ビルボード描画スケール。0x1000=x1:0x2000=x2
+#define MMDL_BBD_GLOBAL_SCALE ((FX32_ONE+0xc00)*4)
+
+///ビルボード描画スケール等倍 0x2000=x2
+#define MMDL_BBD_GLOBAL_SCALE_ONE (FX32_ONE*4)
+
+///ビルボード描画サイズ 0x8000=1 0x4000=1/2
 //#define MMDL_BBD_DRAW_SIZE (FX16_ONE*8-1)
 #define MMDL_BBD_DRAW_SIZE (FX16_ONE*4)
 
@@ -456,13 +458,16 @@ static GFL_BBDACT_ACTUNIT_ID blact_AddActorCore(
 {
 	GFL_BBDACT_ACTDATA actData;
 	GFL_BBDACT_ACTUNIT_ID actID;
-  
-	MMDL_BLACTCONT *pBlActCont =
-    MMDLSYS_GetBlActCont( mmdlsys );
+	MMDL_BLACTCONT *pBlActCont = MMDLSYS_GetBlActCont( mmdlsys );
+  const OBJCODE_PARAM *prm = MMDLSYS_GetOBJCodeParam( mmdlsys, code );
 
   actData.resID = resID;
-	actData.sizX = MMDL_BBD_DRAW_SIZE;
-	actData.sizY = MMDL_BBD_DRAW_SIZE;
+  
+  {
+    const u16 *size = DATA_MMDL_BLACT_MdlSizeDrawSize[prm->mdl_size];
+  	actData.sizX = size[0];
+	  actData.sizY = size[1];
+  }
   
 	actData.trans = *pos;
 	actData.alpha = 31;
@@ -475,8 +480,6 @@ static GFL_BBDACT_ACTUNIT_ID blact_AddActorCore(
 		pBlActCont->pBbdActSys, pBlActCont->bbdActResUnitID, &actData, 1 );
    
   {
-	  const OBJCODE_PARAM *prm =
-      MMDLSYS_GetOBJCodeParam( mmdlsys, code );
 	  const MMDL_BBDACT_ANMTBL *anmTbl =
       BlActAnm_GetAnmTbl( prm->anm_id );
     
@@ -485,7 +488,10 @@ static GFL_BBDACT_ACTUNIT_ID blact_AddActorCore(
         actID, (GFL_BBDACT_ANMTBL)anmTbl->pAnmTbl, anmTbl->anm_max );
 	    GFL_BBDACT_SetAnimeIdxOn( pBlActCont->pBbdActSys, actID, 0 );
     }
-    
+  }
+
+  {
+#if 0
     //なぜか64x64だと32x32サイズで表示されてしまう
     //ひとまずサイズ等倍にして対処。kagaya
     if( prm->mdl_size == MMDL_BLACT_MDLSIZE_64x64 ){
@@ -495,6 +501,7 @@ static GFL_BBDACT_ACTUNIT_ID blact_AddActorCore(
         GFL_BBDACT_GetBBDSystem(pBlActCont->pBbdActSys),
         actID, &sizX, &sizY );
     }
+#endif
 	}
 	
 	return( actID );
@@ -957,6 +964,23 @@ GFL_BBDACT_RESUNIT_ID MMDL_BLACTCONT_GetResUnitID(
 		MMDL_BLACTCONT *pBlActCont )
 {
 	return( pBlActCont->bbdActResUnitID );
+}
+
+//--------------------------------------------------------------
+/**
+ * ビルボードアクター　指定された動作モデルのアクター描画サイズを取得する
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void MMDL_BLACTCONT_GetMMdlDrawSize(
+    const MMDL *mmdl, u16 *pSizeX, u16 *pSizeY )
+{
+  const OBJCODE_PARAM *prm = MMDLSYS_GetOBJCodeParam(
+      MMDL_GetMMdlSys(mmdl), MMDL_GetOBJCode(mmdl) );
+  const u16 *size = DATA_MMDL_BLACT_MdlSizeDrawSize[prm->mdl_size];
+  *pSizeX = size[0];
+  *pSizeY = size[1];
 }
 
 //======================================================================

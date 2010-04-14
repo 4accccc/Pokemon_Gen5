@@ -22,10 +22,8 @@
 //#define DEBUG_REFLECT_CHECK
 #endif
 
-#define REF_SCALE_X_DEF (FX16_ONE*4)
-#define REF_SCALE_Y_DEF (FX16_ONE*4)
-#define REF_SCALE_X_UP (REF_SCALE_X_DEF+(FX16_ONE/4))
-#define REF_SCALE_X_DOWN (REF_SCALE_X_DEF-(FX16_ONE/4))
+#define REF_SCALE_X_UP (FX16_ONE/4)
+#define REF_SCALE_X_DOWN (-FX16_ONE/4)
 #define REF_SCALE_X_SPEED (FX16_ONE/64)
 
 #if 0 //dp
@@ -67,10 +65,13 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
+  fx32 scale_x_org;
+  fx32 scale_y_org;
   fx32 scale_x;
   fx32 scale_val_x;
-  u16 flag_initact;
-  u16 flag_initfunc;
+  u8 flag_initact;
+  u8 flag_initfunc;
+  u8 padding[2];
   TASKHEADER_REFLECT head;
   MMDL_BLACTWORK_USER actWork;
   MMDL_CHECKSAME_DATA samedata;
@@ -87,6 +88,8 @@ static void reflectBlAct_Update(
     GFL_BBDACT_SYS *bbdactsys, int actID, void *wk );
 
 static const FLDEFF_TASK_HEADER data_reflectTaskHeader;
+static const fx32 data_offsetY[REFLECT_TYPE_MAX];
+static const fx32 data_offsetZ[MMDL_BLACT_MDLSIZE_MAX];
 
 #ifdef PM_DEBUG
 static BOOL debug_CheckMMdl( const MMDL *mmdl );
@@ -200,7 +203,8 @@ static void reflectTask_Init( FLDEFF_TASK *task, void *wk )
   head = FLDEFF_TASK_GetAddPointer( task );
   
   work->head = *head;
-  work->scale_x = REF_SCALE_X_DEF;
+  work->scale_x_org = 0;
+  work->scale_x = 0;
   work->scale_val_x = REF_SCALE_X_SPEED;
   
   if( work->head.type == REFLECT_TYPE_MIRROR ){ //êLèkñ≥Çµ
@@ -278,21 +282,30 @@ static void reflectTask_Update( FLDEFF_TASK *task, void *wk )
     return;
   }
   
-#if 0
+#if 0  
   if( work->flag_initfunc == FALSE ){
     GFL_BBDACT_SetFunc( work->head.bbdactsys,
         work->actWork.actID, reflectBlAct_Update );
+    work->flag_initfunc = TRUE;
+  }
+#else
+  if( work->flag_initfunc == FALSE ){
+    u16 size_x,size_y;
+    MMDL_BLACTCONT_GetMMdlDrawSize( work->head.mmdl, &size_x, &size_y );
+    work->scale_x_org = size_x;
+    work->scale_y_org = size_y;
+    work->scale_x = work->scale_x_org;
     work->flag_initfunc = TRUE;
   }
 #endif
   
   work->scale_x += work->scale_val_x;
   
- 	if( work->scale_x >= REF_SCALE_X_UP ){
-		work->scale_x = REF_SCALE_X_UP;
+ 	if( work->scale_x >= (work->scale_x_org+REF_SCALE_X_UP) ){
+		work->scale_x = work->scale_x_org + REF_SCALE_X_UP;
 		work->scale_val_x = -work->scale_val_x;
-	}else if( work->scale_x <= REF_SCALE_X_DOWN ){
-		work->scale_x = REF_SCALE_X_DOWN;
+	}else if( work->scale_x <= (work->scale_x_org+REF_SCALE_X_DOWN) ){
+		work->scale_x = work->scale_x_org + REF_SCALE_X_DOWN;
 		work->scale_val_x = -work->scale_val_x;
 	}
 	 
@@ -350,22 +363,26 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
   {
     fx32 x,y,z;
     VecFx32 pos;
- 	  
-    fx32 offs[REFLECT_TYPE_MAX] = {
-	    NUM_FX32(12*2)+NUM_FX32(1),
-		  NUM_FX32(16*2)+NUM_FX32(1),
-		  NUM_FX32(12*2)+NUM_FX32(1),
-	  };
-
-    MMDL_GetVectorDrawOffsetPos( work->head.mmdl, &pos );
+    fx32 offs;
+    const MMDL *mmdl;
+    const OBJCODE_PARAM *param;
+    
+    mmdl = work->head.mmdl;
+    param = MMDL_GetOBJCodeParam( mmdl, MMDL_GetOBJCode(mmdl) );
+    
+    MMDL_GetVectorDrawOffsetPos( mmdl, &pos );
     x = pos.x;
     z = -pos.z;
     
-    MMDL_GetVectorPos( work->head.mmdl, &pos );
-    pos.x += x;
-    pos.z += z + REF_OFFS_Z;
+    offs = data_offsetZ[param->mdl_size];
     
-	  if( MMDL_GetMapPosHeight(work->head.mmdl,&pos,&y) == FALSE ){ 
+    MMDL_GetVectorPos( mmdl, &pos );
+    pos.x += x;
+    pos.z += z + offs;
+    
+    offs = data_offsetY[work->head.type];
+
+	  if( MMDL_GetMapPosHeight(mmdl,&pos,&y) == FALSE ){ 
       //çÇÇ≥éÊìæÉGÉâÅ[
       #if 1
       pos.y = 0;
@@ -373,7 +390,7 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
       pos.y -= offs[0];
       #endif
     }else{
-      pos.y -= offs[work->head.type];
+      pos.y -= offs;
     }
     
     GFL_BBD_SetObjectTrans( bbdsys, actID, &pos );
@@ -384,7 +401,7 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
     int m_idx = GFL_BBDACT_GetBBDActIdxResIdx( bbdactsys, m_actID );
     int idx = GFL_BBDACT_GetBBDActIdxResIdx( bbdactsys, actID );
     fx16 sx = work->scale_x;
-    fx16 sy = REF_SCALE_Y_DEF;
+    fx16 sy = work->scale_y_org;
     
     {
       u16 res_idx = 0;
@@ -433,6 +450,22 @@ static const FLDEFF_TASK_HEADER data_reflectTaskHeader =
   reflectTask_Draw,
 };
 
+//--------------------------------------------------------------
+/// âfÇËçûÇ›ï\é¶à íu
+//--------------------------------------------------------------
+static const fx32 data_offsetY[REFLECT_TYPE_MAX] =
+{
+  NUM_FX32(12*2)+NUM_FX32(1),
+  NUM_FX32(16*2)+NUM_FX32(1),
+  NUM_FX32(12*2)+NUM_FX32(1),
+};
+
+static const fx32 data_offsetZ[MMDL_BLACT_MDLSIZE_MAX] =
+{
+  REF_OFFS_Z, //32
+  REF_OFFS_Z/2, //16
+  REF_OFFS_Z*2+FX32_ONE*1, //64
+};
 
 //======================================================================
 //  define

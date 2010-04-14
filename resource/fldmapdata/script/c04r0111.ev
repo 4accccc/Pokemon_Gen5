@@ -96,7 +96,7 @@ INIT_EVENT_END
 EVENT_START ev_c04r0111_receipt_talk
 {
   DEFINE_LOCAL play_mode
-
+  
   _TALK_OBJ_START()
   
   IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN //途中駅
@@ -107,19 +107,18 @@ EVENT_START ev_c04r0111_receipt_talk
     _BMPMENU_MAKE_LIST( msg_c04r0111_17, 1 )    //ライモン
     _BMPMENU_MAKE_LIST( msg_c04r0111_18, 2 )    //まだここにいる
     _BMPMENU_START()
-    _MSGWIN_CLOSE()
     
     SWITCH $SCWK_ANSWER
     CASE 0 THEN //続けて挑戦
       _CALL sub_challenge_continue_mode
     CASE 1 THEN //ライモン戻り
       _CALL sub_mapchg_receipt
+    DEFAULT
+      _MSGWIN_CLOSE()
     ENDSWITCH
   ELSE //終点
     _CALL sub_mapchg_receipt
   ENDIF
-  
-  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
 }
 EVENT_END
 
@@ -164,7 +163,7 @@ sub_challenge_continue:
   _BALLOONWIN_TALKOBJ_MSG( msg_c04r0111_02 ) //ご案内する前にレポート
   _AB_KEYWAIT()
   _MSGWIN_CLOSE()
-
+  
   //受付をエラー状態に
   $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
   
@@ -482,7 +481,7 @@ EVENT_START ev_c04r0111_home
     
     IF $SCWK_ANSWER == TRUE THEN //スーパーボスである
       //おめでとうございます
-      _BALLOONWIN_OBJMSG_POS( msg_c04r0111_04, obj_id, POS_UR )
+      _BALLOONWIN_OBJMSG_POS( msg_c04r0111_04, obj_id, POS_DOWN )
       _AB_KEYWAIT()
       _MSGWIN_CLOSE()
       
@@ -499,7 +498,7 @@ EVENT_START ev_c04r0111_home
       
       IF $SCWK_ANSWER == 0 THEN //初めて倒した
         //トロフィを差し上げます
-        _BALLOONWIN_OBJMSG_POS( msg_c04r0111_08, obj_id, POS_UR )
+        _BALLOONWIN_OBJMSG_POS( msg_c04r0111_08, obj_id, POS_DOWN )
         _AB_KEYWAIT()
         _MSGWIN_CLOSE()
 
@@ -522,7 +521,7 @@ EVENT_START ev_c04r0111_home
       ENDIF
     ELSE  //ノーマルボスである
       //おめでとうございます
-      _BALLOONWIN_OBJMSG_POS( msg_c04r0111_04, obj_id, POS_UR )
+      _BALLOONWIN_OBJMSG_POS( msg_c04r0111_04, obj_id, POS_DOWN )
       _AB_KEYWAIT()
       _MSGWIN_CLOSE()
       
@@ -543,13 +542,13 @@ EVENT_START ev_c04r0111_home
         
         SWITCH $play_mode
         CASE BSWAY_MODE_SINGLE THEN
-          _BALLOONWIN_OBJMSG_POS( msg_c04r0111_05, obj_id, POS_UR )
+          _BALLOONWIN_OBJMSG_POS( msg_c04r0111_05, obj_id, POS_DOWN )
         CASE BSWAY_MODE_DOUBLE THEN
-          _BALLOONWIN_OBJMSG_POS( msg_c04r0111_06, obj_id, POS_UR )
+          _BALLOONWIN_OBJMSG_POS( msg_c04r0111_06, obj_id, POS_DOWN )
         CASE BSWAY_MODE_MULTI THEN
-          _BALLOONWIN_OBJMSG_POS( msg_c04r0111_07, obj_id, POS_UR )
+          _BALLOONWIN_OBJMSG_POS( msg_c04r0111_07, obj_id, POS_DOWN )
         CASE BSWAY_MODE_COMM_MULTI THEN
-          _BALLOONWIN_OBJMSG_POS( msg_c04r0111_08, obj_id, POS_UR )
+          _BALLOONWIN_OBJMSG_POS( msg_c04r0111_08, obj_id, POS_DOWN )
         ENDSWITCH
         
         _AB_KEYWAIT()
@@ -560,7 +559,7 @@ EVENT_START ev_c04r0111_home
     ENDIF
   ELSE //ボス倒していない
     //おめでとうございます
-    _BALLOONWIN_OBJMSG_POS( msg_c04r0111_03, obj_id, POS_UR )
+    _BALLOONWIN_OBJMSG_POS( msg_c04r0111_03, obj_id, POS_DOWN )
     _AB_KEYWAIT()
     _MSGWIN_CLOSE()
 
@@ -589,10 +588,10 @@ EVENT_START ev_c04r0111_home
         _NUMBER( 1, ret, 2 )
 
         //ランク？になりました
-        _BALLOONWIN_OBJMSG_POS( msg_c04r0111_21, obj_id, POS_UR )
+        _BALLOONWIN_OBJMSG_POS( msg_c04r0111_21, obj_id, POS_DOWN )
       
         //今回の成績をWifiに送るか？
-        _BALLOONWIN_OBJMSG_POS( msg_c04r0111_22, obj_id, POS_UR )
+        _BALLOONWIN_OBJMSG_POS( msg_c04r0111_22, obj_id, POS_DOWN )
         _YES_NO_WIN( SCWK_ANSWER )
         _MSGWIN_CLOSE()
         
@@ -619,16 +618,16 @@ EVENT_START ev_c04r0111_home
 
   IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN
     //途中駅　また話し掛けてくれ
-    _BALLOONWIN_OBJMSG_POS( msg_c04r0111_09, obj_id, POS_UR )
+    _BALLOONWIN_OBJMSG_POS( msg_c04r0111_09, obj_id, POS_DOWN )
   ELSE
     //終点　終点メッセージ
     SWITCH $play_mode
     CASE BSWAY_MODE_SINGLE THEN
-      _BALLOONWIN_OBJMSG_POS( msg_c04r0111_10, obj_id, POS_UR )
+      _BALLOONWIN_OBJMSG_POS( msg_c04r0111_10, obj_id, POS_DOWN )
     CASE BSWAY_MODE_DOUBLE THEN
-      _BALLOONWIN_OBJMSG_POS( msg_c04r0111_11, obj_id, POS_UR )
+      _BALLOONWIN_OBJMSG_POS( msg_c04r0111_11, obj_id, POS_DOWN )
     CASE BSWAY_MODE_MULTI THEN
-      _BALLOONWIN_OBJMSG_POS( msg_c04r0111_12, obj_id, POS_UR )
+      _BALLOONWIN_OBJMSG_POS( msg_c04r0111_12, obj_id, POS_DOWN )
     ENDSWITCH
   ENDIF
   

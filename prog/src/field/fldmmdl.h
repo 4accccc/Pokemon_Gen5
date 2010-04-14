@@ -1055,6 +1055,7 @@ extern const MMDL_BBDACT_ANMTBL
 	DATA_MMDL_BBDACT_ANM_ListTable[MMDL_BLACT_ANMTBLNO_MAX];
 
 extern const u16 DATA_MMDL_BLACT_MdlSize[MMDL_BLACT_MDLSIZE_MAX][2];
+extern const u16 DATA_MMDL_BLACT_MdlSizeDrawSize[MMDL_BLACT_MDLSIZE_MAX][2];
 
 #ifndef MMDL_PL_NULL
 extern const OBJCODE_STATE DATA_FieldOBJCodeDrawStateTbl[];
@@ -1211,6 +1212,8 @@ extern GFL_BBDACT_SYS * MMDL_BLACTCONT_GetBbdActSys(
 		MMDL_BLACTCONT *pBlActCont );
 extern GFL_BBDACT_RESUNIT_ID MMDL_BLACTCONT_GetResUnitID(
 		MMDL_BLACTCONT *pBlActCont );
+extern void MMDL_BLACTCONT_GetMMdlDrawSize(
+    const MMDL *mmdl, u16 *pSizeX, u16 *pSizeY );
 
 extern BOOL MMDL_BLACTCONT_CheckOBJCodeRes(
 		MMDLSYS *mmdlsys, u16 code );

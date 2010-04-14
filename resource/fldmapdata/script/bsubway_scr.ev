@@ -207,7 +207,6 @@ sub_bsw_receipt_guide_wifi:
     $SCWK_TEMP0 = msg_bsw_scr_50 //アップロードするか？
     _CALL sub_bsw_common_bwin_receipt
     _YES_NO_WIN( ret )
-    _MSGWIN_CLOSE()
     
     IF $ret == SCR_YES THEN //アップロードする
       _CALL sub_bsw_receipt_guide_wifi_upload
@@ -229,7 +228,6 @@ sub_bsw_receipt_guide_wifi:
   $SCWK_TEMP0 = msg_bsw_scr_49
   _CALL sub_bsw_common_bwin_receipt
   _AB_KEYWAIT()
-  _MSGWIN_CLOSE()
   
   //選択メニュー
   _CALL sub_receipt_menu_challenge_wifi
@@ -257,7 +255,6 @@ sub_bsw_receipt_guide_wifi_upload:
   $SCWK_TEMP0 = msg_bsw_scr_50
   _CALL sub_bsw_common_bwin_receipt
   _YES_NO_WIN( ret )
-  _MSGWIN_CLOSE()
   
   IF $ret == SCR_YES THEN
     //フィールド通信切断
@@ -275,7 +272,6 @@ sub_bsw_receipt_guide_wifi_upload:
       $SCWK_TEMP0 = msg_bsw_scr_77
       _CALL sub_bsw_common_bwin_receipt
       _AB_KEYWAIT()
-      _MSGWIN_CLOSE()
     ELSE
       _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, ret )
       _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, ret )
@@ -294,7 +290,6 @@ sub_receipt_rekidai_download:
   $SCWK_TEMP0 = msg_bsw_scr_33
   _CALL sub_bsw_common_bwin_receipt
   _YES_NO_WIN( ret )
-  _MSGWIN_CLOSE()
   
   IF $ret == SCR_YES THEN
     //フィールド通信切断
@@ -312,7 +307,6 @@ sub_receipt_rekidai_download:
       $SCWK_TEMP0 = msg_bsw_scr_77
       _CALL sub_bsw_common_bwin_receipt
       _AB_KEYWAIT()
-      _MSGWIN_CLOSE()
     ELSE
       _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_SCDATA, BSW_NULL, BSW_NULL, ret )
       //○○の歴代情報をダウンロードしました
@@ -323,7 +317,6 @@ sub_receipt_rekidai_download:
       $SCWK_TEMP0 = msg_bsw_scr_52
       _CALL sub_bsw_common_bwin_receipt
       _AB_KEYWAIT()
-      _MSGWIN_CLOSE()
     ENDIF
   ENDIF
   
@@ -356,8 +349,6 @@ sub_receipt_menu_challenge:
       $SCWK_ANSWER = 1
     ENDIF
   ENDWHILE
-
-  _MSGWIN_CLOSE()
 }
 _RET
 
@@ -401,8 +392,6 @@ sub_receipt_menu_challenge_wifi:
       $loop = FALSE
     ENDIF
   ENDWHILE
-  
-  _MSGWIN_CLOSE()
 }
 _RET
 
@@ -519,8 +508,7 @@ sub_receipt_challenge_multi:
   $SCWK_TEMP0 = msg_bsw_scr_48
   _CALL sub_bsw_common_bwin_receipt
   _YES_NO_WIN( SCWK_ANSWER )
-  _MSGWIN_CLOSE()
-
+  
   //通信ならワーク切り替え
   IF $SCWK_ANSWER == SCR_YES THEN
     $play_mode = BSWAY_MODE_COMM_MULTI
@@ -562,8 +550,7 @@ sub_receipt_challenge_multi:
     _BMPMENU_MAKE_LIST( msg_bsw_scr_88, 1 ) //赤外線
     _BMPMENU_MAKE_LIST( msg_bsw_scr_89, 0 ) //ワイヤレス
     _BMPMENU_START()
-    _MSGWIN_CLOSE()
-
+    
     //結果(0,1)をフラグにセット
     _BSUBWAY_TOOL( BSWSUB_SET_COMM_IRC_FLAG, SCWK_ANSWER, BSW_NULL, BSW_NULL )
     
@@ -664,18 +651,19 @@ sub_receipt_challenge_multi_comm:
   IF $irc == TRUE THEN
     $SCWK_TEMP0 = msg_bsw_scr_90  //赤外線通信開始しますか
   ELSE
-    $SCWK_TEMP0 = msg_bsw_scr_76  //赤外線通信開始しますか
+    $SCWK_TEMP0 = msg_bsw_scr_76  //ワイヤレス通信開始しますか
   ENDIF
   
   _CALL sub_bsw_common_bwin_receipt
   _YES_NO_WIN( ret )
-  _MSGWIN_CLOSE()
-
+  
   IF $ret == SCR_NO THEN //やめる
     _CALL sub_bsw_common_exit
     _RET
   ENDIF
   
+  _MSGWIN_CLOSE()
+
   //フィールド通信切断
   _FIELD_COMM_EXIT_EVENT_CALL( ret )
   
@@ -690,8 +678,6 @@ sub_receipt_challenge_multi_comm:
   IF $ret == FALSE THEN //切断失敗
     $SCWK_TEMP0 = msg_bsw_scr_77
     _CALL sub_bsw_common_bwin_receipt
-    _MSGWIN_CLOSE()
-
     _CALL sub_bsw_common_exit
     _RET
   ENDIF
@@ -731,13 +717,13 @@ sub_receipt_challenge_multi_comm:
     _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 2 ) //やめる
     _BMPMENU_START()
     
-    _MSGWIN_CLOSE()
-      
     IF $ret == 2 THEN //やめる
       _CALL sub_bsw_common_exit
       _RET
     ENDIF
     
+    _MSGWIN_CLOSE()
+      
     //通信開始
     _BSUBWAY_TOOL( BSWSUB_COMM_START, BSW_NULL, BSW_NULL, BSW_NULL )
     
@@ -781,8 +767,6 @@ sub_receipt_challenge_multi_comm:
     ENDIF
     
     _CALL sub_bsw_common_bwin_receipt
-    _MSGWIN_CLOSE()
-    
     _CALL sub_bsw_common_comm_exit
     _RET
   ENDIF
@@ -1064,7 +1048,7 @@ ev_bsw_game_cancel:
   _SYSWIN_MSG( msg_bsw_scr_36 , POS_DOWN )
   _REPORT_CALL( SCWK_ANSWER )
   _MSGWIN_CLOSE()
-
+  
   //またのご利用を
   _CALL sub_bsw_common_exit
   
@@ -1096,7 +1080,6 @@ ev_bsw_game_after:
     $SCWK_TEMP0 = msg_bsw_scr_35
     _CALL sub_bsw_common_bwin_receipt
     _AB_KEYWAIT()
-    _MSGWIN_CLOSE()
   ENDIF
   
   //またのご利用を
@@ -1162,9 +1145,12 @@ sub_receipt_msg_greet:
   
   _CALL sub_bsw_common_bwin_receipt
   _AB_KEYWAIT()
-  _MSGWIN_CLOSE()
-
+  
   $SCWK_ANSWER = $flag
+  
+  IF $flag == FALSE THEN
+    _MSGWIN_CLOSE()
+  ENDIF
 }
 _RET
 
@@ -1468,7 +1454,6 @@ sub_receipt_demo_partner_in:
   
   _CALL sub_bsw_common_bwin_partner
   _AB_KEYWAIT()
-  _MSGWIN_CLOSE()
 }
 _RET
 
@@ -2082,7 +2067,6 @@ sub_bsw_common_renshou_msg:
     $SCWK_TEMP0 = msg_bsw_scr_08
     _CALL sub_bsw_common_bwin_receipt
     _AB_KEYWAIT()
-    _MSGWIN_CLOSE()
   ENDIF
 }
 _RET

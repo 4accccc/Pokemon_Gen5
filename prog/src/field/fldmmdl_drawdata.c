@@ -2847,3 +2847,17 @@ const u16 DATA_MMDL_BLACT_MdlSize[MMDL_BLACT_MDLSIZE_MAX][2] =
   {16,16}, //MMDL_BLACT_MDLSIZE_16x16
   {64,64}, //MMDL_BLACT_MDLSIZE_64x64
 };
+
+//--------------------------------------------------------------
+/// モデルサイズ別描画サイズ
+//--------------------------------------------------------------
+#define MMDL_BBD_DRAW_SIZE_16 (FX16_ONE*1)
+#define MMDL_BBD_DRAW_SIZE_32 (FX16_ONE*2)
+#define MMDL_BBD_DRAW_SIZE_64 (FX16_ONE*4)
+
+const u16 DATA_MMDL_BLACT_MdlSizeDrawSize[MMDL_BLACT_MDLSIZE_MAX][2] =
+{
+  {MMDL_BBD_DRAW_SIZE_32,MMDL_BBD_DRAW_SIZE_32}, //MMDL_BLACT_MDLSIZE_32x32
+  {MMDL_BBD_DRAW_SIZE_16,MMDL_BBD_DRAW_SIZE_16}, //MMDL_BLACT_MDLSIZE_16x16
+  {MMDL_BBD_DRAW_SIZE_64,MMDL_BBD_DRAW_SIZE_64}, //MMDL_BLACT_MDLSIZE_64x64
+};
