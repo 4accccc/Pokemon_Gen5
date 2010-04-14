@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/25 15:49:24
+#save date:2010/04/14 16:30:43
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r15r0301.wms
 #SECTION START:OBJ_EVENT
@@ -111,7 +111,7 @@ R15R0301_ASSISTANTW_02
 #OBJ CODE Number
 ASSISTANTW
 #MOVE CODE Number
-MV_DMY
+MV_RIGHT
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -119,7 +119,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_PALPARK_ASSISTANTW_02
 #Direction Type Number
-DIR_LEFT
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -133,7 +133,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 48 40
+-152 48 8
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
