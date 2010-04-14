@@ -113,6 +113,10 @@ static GMEVENT * EVENT_ChangeMapPalace( GAMESYS_WORK* gameSystem, FIELDMAP_WORK*
 static void setNowLoaction(LOCATION * return_loc, FIELDMAP_WORK * fieldmap);
 
 static void Escape_SetSPEscapeLocation( GAMEDATA* gamedata, const LOCATION* loc_req );
+static void Escape_GetSPEscapeLocation( const GAMEDATA* gamedata, LOCATION* loc_req );
+
+static void MapChange_SetPlayerMoveFormNormal( GAMEDATA* gamedata );
+
 
 //============================================================================================
 //
@@ -1171,10 +1175,7 @@ static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo( GMEVENT* event, int* seq, 
     break;
   case 2:
     //自機のフォームを二足歩行に戻す
-    {
-      PLAYER_WORK * player = GAMEDATA_GetMyPlayerWork(gameData);
-      PLAYERWORK_SetMoveForm( player, PLAYER_MOVE_FORM_NORMAL );
-    }
+    MapChange_SetPlayerMoveFormNormal( gameData );
     // BGM変更
     FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound );
@@ -1223,10 +1224,7 @@ static GMEVENT_RESULT EVENT_MapChangeByAnawohoru( GMEVENT* event, int* seq, void
     break;
   case 2:
     //自機のフォームを二足歩行に戻す
-    {
-      PLAYER_WORK * player = GAMEDATA_GetMyPlayerWork(gameData);
-      PLAYERWORK_SetMoveForm( player, PLAYER_MOVE_FORM_NORMAL );
-    }
+    MapChange_SetPlayerMoveFormNormal( gameData );
     // BGM変更
     FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound );
@@ -1670,6 +1668,7 @@ GMEVENT* EVENT_ChangeMapByAnanukenohimo( FIELDMAP_WORK* fieldWork, GAMESYS_WORK*
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 
   work->loc_req      = *(GAMEDATA_GetEscapeLocation( work->gameData ));
+  Escape_GetSPEscapeLocation( work->gameData, &work->loc_req );
   work->loc_req.type = LOCATION_TYPE_DIRECT;
   work->exit_type    = EXIT_TYPE_NONE;
 
@@ -1694,6 +1693,7 @@ GMEVENT* EVENT_ChangeMapByAnawohoru( GAMESYS_WORK* gameSystem )
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 
   work->loc_req      = *(GAMEDATA_GetEscapeLocation( work->gameData ));
+  Escape_GetSPEscapeLocation( work->gameData, &work->loc_req );
   work->loc_req.type = LOCATION_TYPE_DIRECT;
   work->exit_type    = EXIT_TYPE_NONE;
 
@@ -1775,6 +1775,18 @@ GMEVENT* EVENT_ChangeMapBySeaTempleDown( GAMESYS_WORK* gameSystem, u16 zone_id )
   MAPCHANGE_WORK_init( work, gameSystem ); 
   LOCATION_SetDefaultPos( &(work->loc_req), zone_id );
   work->exit_type    = EXIT_TYPE_NONE;
+
+  // 特殊接続を保存
+  {
+    // 自機位置を保存
+    LOCATION location;
+    PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( work->gameData );
+    const VecFx32 * vec = PLAYERWORK_getPosition( player );
+    LOCATION_SetDirect( &location, PLAYERWORK_getZoneID( player ), 
+        PLAYERWORK_getDirection_Type( player ), vec->x, vec->y, vec->z );
+
+    GAMEDATA_SetSpecialLocation( work->gameData, &location );
+  }
 
   return event;
 }
@@ -2876,4 +2888,48 @@ static void Escape_SetSPEscapeLocation( GAMEDATA* gamedata, const LOCATION* loc_
   }
 
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brie 特殊な脱出先を取得する
+ *
+ *	@param	gamedata  ゲームデータ
+ *	@param	loc_req   ロケーション
+ */
+//-----------------------------------------------------------------------------
+static void Escape_GetSPEscapeLocation( const GAMEDATA* gamedata, LOCATION* loc_req )
+{
+  const LOCATION* loc_now;
+  
+  loc_now = GAMEDATA_GetStartLocation( gamedata );
+
+  // 今が海底神殿なら、特殊接続を設定
+  if( ZONEDATA_IsSeaTempleDungeon( loc_now->zone_id ) ){
+    *loc_req      = *(GAMEDATA_GetSpecialLocation( gamedata ));
+      
+  }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自機のフォームを通常に戻す
+ *
+ *	@param	gamedata  ゲームデータ
+ */
+//-----------------------------------------------------------------------------
+static void MapChange_SetPlayerMoveFormNormal( GAMEDATA* gamedata )
+{
+  PLAYER_WORK * player = GAMEDATA_GetMyPlayerWork(gamedata);
+  u32 form = PLAYERWORK_GetMoveForm( player );
+
+  if( form != PLAYER_MOVE_FORM_DIVING ){
+    PLAYERWORK_SetMoveForm( player, PLAYER_MOVE_FORM_NORMAL );
+  }else{
+    // ダイビングは波乗りに
+    PLAYERWORK_SetMoveForm( player, PLAYER_MOVE_FORM_SWIM );
+  }
+}
+
 
