@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T17:20:32"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T12:44:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,12 +337,12 @@
 チャンピオンの　アデクさん　ですか▼
 じぶんは　まけたのに
 いい　しょうぶと　いわれれても▽
-しょうじき　こまります▼</language>
+しょうじき　こまりますけど▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……どなたかと　おもえば
 チャンピオンの　アデクさん　ですか▼
 自分は　負けたのに
 いい　勝負と　いわれれても▽
-正直　困ります▼</language>
+正直　困りますけど▼</language>
 	</row>
 
 	<row id="msg_d07_champion_02">
@@ -448,10 +448,10 @@
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『なにを　したいか……
 それが　わからないから▽
-つよくなりたいんだよ　ぼくは▼</language>
+つよくなりたいんだよ　ぼくは！▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『なにを　したいか……
 それが　わからないから▽
-強くなりたいんだよ　ぼくは▼</language>
+強くなりたいんだよ　ぼくは！▼</language>
 	</row>
 
 	<row id="msg_d07_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -462,10 +462,10 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">……じゃあね　[1:00:トレーナー名:0]
-つぎにあうときは　ぼくがかつよ▼</language>
-		<language name="JPN_KANJI" width="256">……じゃあね　[1:00:トレーナー名:0]
-次に会うときは　ぼくが勝つよ▼</language>
+		<language name="JPN" width="256">……[1:00:トレーナー名:0]
+つぎは　ぼくが　かつ！▼</language>
+		<language name="JPN_KANJI" width="256">……[1:00:トレーナー名:0]
+次には　ぼくが　勝つ！▼</language>
 	</row>
 
 	<row id="msg_d07_workman1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
