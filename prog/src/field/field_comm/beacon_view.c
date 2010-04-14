@@ -201,7 +201,12 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
       event_RequestReset( wk );
     }
 #ifdef PM_DEBUG
-  IWASAWA_Printf("BeaconView Tick = %d\n", OS_GetTick()-s_tick);
+    {
+      OSTick tick = OS_GetTick()-s_tick;
+      if( tick > 100 ){
+        IWASAWA_Printf("BeaconView Passive Tick = %d\n", OS_GetTick()-s_tick);
+      }
+    }
 #endif
     return; //イベントリクエスト中はメイン処理をスキップ
   }
@@ -238,7 +243,12 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
     break;
   }
 #ifdef PM_DEBUG
-  IWASAWA_Printf("BeaconView seq = %d tick = %d\n", before_seq, OS_GetTick()-s_tick);
+  {
+    OSTick tick = OS_GetTick()-s_tick;
+    if( tick > 100 ){
+      IWASAWA_Printf("BeaconView seq = %d tick = %d\n", before_seq, tick );
+    }
+  }
 #endif
 }
 
@@ -251,12 +261,27 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
 //==================================================================
 void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
 {
+  #ifdef PM_DEBUG
+  int before_seq = wk->seq;
+  OSTick s_tick = OS_GetTick();
+  #endif
+
   GFL_TCBL_Main( wk->pTcbSys );
 
   //スタックテーブル更新
   GAMEBEACON_Stack_Update( wk->infoStack );
   
-  BEACON_VIEW_TouchUpdata( wk );
+
+  #ifdef PM_DEBUG
+  {
+    OSTick tick = OS_GetTick()-s_tick;
+    if( tick > 100 ){
+      IWASAWA_Printf("BeaconView Draw tick = %d\n", tick );
+    }
+  }
+  #endif
+
+//  BEACON_VIEW_TouchUpdata( wk );
 }
 
 //==================================================================

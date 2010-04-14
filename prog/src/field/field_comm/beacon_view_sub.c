@@ -36,6 +36,16 @@ typedef struct _TRIANGLE{
   POINT p[3];
 }TRIANGLE;
 
+///“ÁŽêGƒpƒ[”z—ñ
+static const DATA_SpGPowerTbl[ SP_GPOWER_REQ_MAX ] = {
+  GPOWER_ID_EGG_INC_S,
+  GPOWER_ID_NATSUKI_S,
+  GPOWER_ID_SALE_S,
+  GPOWER_ID_EXP_INC_S,
+  GPOWER_ID_MONEY_S,
+  GPOWER_ID_CAPTURE_S,
+};
+
 //////////////////////////////////////////////////////////////////
 static void sp_gpower_ConditionCheck( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 old_log_max );
 static void sp_gpower_RequestSet( BEACON_VIEW_PTR wk, u8 req_id );
@@ -564,14 +574,6 @@ static void sp_gpower_RequestSet( BEACON_VIEW_PTR wk, u8 req_id )
 static GPOWER_ID sp_gpower_RequestGet( BEACON_VIEW_PTR wk )
 {
   GPOWER_ID gpower_id;
-  static const DATA_SpGPowerTbl[ SP_GPOWER_REQ_MAX ] = {
-    GPOWER_ID_EGG_INC_MAX,
-    GPOWER_ID_NATSUKI_MAX,
-    GPOWER_ID_SALE_MAX,
-    GPOWER_ID_EXP_INC_MAX,
-    GPOWER_ID_MONEY_MAX,
-    GPOWER_ID_CAPTURE_MAX,
-  };
 
   if( wk->sp_gpower_req[0] == SP_GPOWER_REQ_NULL ){
     return GPOWER_ID_NULL;
