@@ -132,16 +132,14 @@ EVENT_START ev_musical_recept_fitting
       _CALL recept_move_obj_fitting
 
       //c04r0201でも初回イベントで使ってるので注意
-      _MAP_FADE_BLACK_OUT()
-      _DISP_FADE_END_CHECK()
+      _DEMO_MUSICAL_DRESSUP_FADEOUT_CALL()
       _FIELD_CLOSE()
       
       _MUSICAL_FITTING_CALL(selectPoke) //ミュージカル呼び出し
       
       _FIELD_OPEN()
       _CALL recept_move_obj_return_fitting
-      _MAP_FADE_WHITE_IN()
-      _DISP_FADE_END_CHECK()
+      _DEMO_MUSICAL_DRESSUP_FADEIN_CALL()
 
     ENDIF
   ENDIF  
@@ -769,22 +767,24 @@ fan_main_routine:
   ELSE
     
     //応援メッセージ
-    _GET_MUSICAL_FAN_VALUE_CHEER_MSG( fan_number , msg_id )
-    _PLAYER_NAME( 0 )
-    _BALLOONWIN_TALKOBJ_MSG( msg_id )
-    _AB_KEYWAIT ()
-    
     _GET_MUSICAL_FAN_VALUE_GIFT_TYPE( fan_number , gift_type )
     _GET_MUSICAL_FAN_VALUE_GIFT_NUMBER( fan_number , gift_number )
-    _GET_MUSICAL_FAN_VALUE_GIFT_MSG( fan_number , msg_id )
     
     SWITCH $gift_type
     CASE MUSICAL_GIFT_TYPE_NONE THEN
       //渡すものは無い！
       //もしくはもう渡した！
+      _GET_MUSICAL_FAN_VALUE_CHEER_MSG( fan_number , msg_id )
+      _PLAYER_NAME( 0 )
+      _BALLOONWIN_TALKOBJ_MSG( msg_id )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
     CASE MUSICAL_GIFT_TYPE_GOODS THEN
       //グッズをもらう
+      _GET_MUSICAL_FAN_VALUE_GIFT_MSG( fan_number , msg_id )
       //グッズ名のセット
+      _PLAYER_NAME( 0 )
       _MUSICAL_WORD_GOODS_NAME( 1 , gift_number )
       //贈るメッセージ
       _BALLOONWIN_TALKOBJ_MSG( msg_id )
@@ -799,7 +799,9 @@ fan_main_routine:
     CASE MUSICAL_GIFT_TYPE_ITEM THEN
       //アイテム汎用処理をお願いします
       //gift_number にアイテム番号入ってます。
-
+      
+      // TODO 現状処理が無いため動作保証無し
+      
       //渡たすフラグ落とし
       _RESET_MUSICAL_FAN_GIFT_FLG( fan_number )
     ENDSWITCH

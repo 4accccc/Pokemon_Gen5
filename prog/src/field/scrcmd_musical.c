@@ -1099,7 +1099,7 @@ static GMEVENT_RESULT event_Fitting( GMEVENT *event, int *seq, void *work )
   switch( (*seq) )
   {
   case 0:
-    GMEVENT_CallEvent(event, EVENT_FSND_PushBGM(gsys, 30));
+    //GMEVENT_CallEvent(event, EVENT_FSND_PushBGM(gsys, 30));
     (*seq)++;
     break; 
     
@@ -1109,7 +1109,7 @@ static GMEVENT_RESULT event_Fitting( GMEVENT *event, int *seq, void *work )
     break;
     
   case 2:
-    GMEVENT_CallEvent(event, EVENT_FSND_WaitBGMFade(gsys));
+    //GMEVENT_CallEvent(event, EVENT_FSND_WaitBGMFade(gsys));
     (*seq)++;
     break;
     
@@ -1124,7 +1124,7 @@ static GMEVENT_RESULT event_Fitting( GMEVENT *event, int *seq, void *work )
     break;
 
   case 5:
-    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_NORMAL));
+    //GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_NORMAL));
     (*seq)++;
     break;
   //後はフィールドに任せた！！
