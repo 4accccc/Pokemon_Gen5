@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-09T16:26:32"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T16:56:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="207" right="2000" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -379,7 +379,7 @@
 だいじな　ポケモンを　プラズマ団に▽
 奪われたことが　あるでしょ▽
 だから　すごく　わかるの！！▼
-プラズマだんが　ムリヤリ
+プラズマ団が　ムリヤリ
 ポケモンを　解放したら▽
 悲しむ　人ばっかりだよ！▼
 [1:00:トレーナー名:0]！

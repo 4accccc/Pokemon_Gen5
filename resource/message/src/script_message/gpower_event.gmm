@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-04-13T11:50:52"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T16:40:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,14 +260,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="207" right="2000" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="785" top="91" right="1258" bottom="715" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -398,14 +398,14 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　[1:02:ポケモンニックネーム:1]は
 たいりょくが　かいふくした！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　[1:02:ポケモンニックネーム:1]は
-体力が回復した！</language>
+体力が　回復した！</language>
 	</row>
 
 	<row id="msg_gpower_effect_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　[1:02:ポケモンニックネーム:1]は
 ＰＰが　かいふくした！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　[1:02:ポケモンニックネーム:1]は
-ＰＰが回復した！</language>
+ＰＰが　回復した！</language>
 	</row>
 
 	<row id="msg_gpower_effect_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T17:22:40"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T16:56:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="207" right="2000" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -419,7 +419,7 @@
 大歓迎するから！▼</language>
 	</row>
 
-	<row id="msg_r07r0105_chime_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r07r0105_chime_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・はい/いいえ
 ・はい→chime_02
@@ -431,7 +431,7 @@
 鐘を　鳴らしますか？</language>
 	</row>
 
-	<row id="msg_r07r0105_chime_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r07r0105_chime_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・はい選択時
 ・メッセージ表示後、鐘が動き専用SEを鳴らす
@@ -444,7 +444,7 @@
 鐘を　鳴らした……</language>
 	</row>
 
-	<row id="msg_r07r0105_chime_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r07r0105_chime_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">鐘</attribute>
@@ -454,7 +454,7 @@
 あたりに　鳴り響いた……</language>
 	</row>
 
-	<row id="msg_r07r0105_chime_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r07r0105_chime_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">鐘</attribute>
@@ -462,7 +462,7 @@
 		<language name="JPN_KANJI" width="256">鐘を　そのままに　しておいた……</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r07r0105_champion_end_01">
 		<comment>♂
 ・pos起動
 ・鐘のアニメ再生後に
@@ -474,7 +474,7 @@
 		<language name="JPN_KANJI" width="256">アデク『……▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r07r0105_champion_end_02">
 		<comment>♂
 ・右向きでメッセージ表示
 ・続けてchampion_end_03</comment>
@@ -494,7 +494,7 @@
 ときおり　鐘を　鳴らしに　くるのだ▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r07r0105_champion_end_03">
 		<comment>♂
 ・下向き、アデクの芝居後に
 　メッセージ表示
@@ -513,7 +513,7 @@
 強さの　意味も　知らずにな▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r07r0105_champion_end_04">
 		<comment>♂
 ・続けてchampion_end_05</comment>
 		<attribute name="キャラ指定">CHAMPION
@@ -534,7 +534,7 @@
 永遠普遍の　ものではない　と▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r07r0105_champion_end_05">
 		<comment>♂
 ・続けて
 　champion_end_06　か
@@ -563,7 +563,7 @@
 そして　おまえたちに　会えた！▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r07r0105_champion_end_06">
 		<comment>♂
 ・すでに殿堂入りしている
 ・メッセージ表示後、退場
@@ -581,7 +581,7 @@
 多くの　人と　会えよ！▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_r07r0105_champion_end_07">
 		<comment>♂
 ・まだ殿堂入りしていない
 ・メッセージ表示後、退場

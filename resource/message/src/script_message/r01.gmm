@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T16:08:19"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T16:53:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="207" right="2000" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="788" top="101" right="1261" bottom="499" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -313,10 +313,10 @@
 　次のメッセージ表示</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『はかせ
-みんな　そろいましたよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『博士
-みんな　そろいましたよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『アララギはかせ
+そろいましたよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">チェレン『アララギ博士
+そろいましたよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_hakase2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -416,10 +416,10 @@
 　次のmsg_r01_black_03表示</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『いいたいこと　いったら
-いっちゃったね　はかせ……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『いいたいこと　いったら
-行っちゃったね　博士……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『ちなみに　ポケモンが
+とびだしてくるのは　くさむら　さ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">チェレン『ちなみに　ポケモンが
+飛びだしてくるのは　草むら　さ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -427,10 +427,10 @@
 ・続けてmsg_r01_white_01表示</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">それじゃ　ぼくたちも
-カラクサタウンに　むかおう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">それじゃ　ぼくたちも
-カラクサタウンに　向かおう[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">じゃ　ぼくも
+カラクサタウンに　むかうよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">じゃ　ぼくも
+カラクサタウンに　向かうよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_white_01">
@@ -500,21 +500,21 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『なるほどね
-そういうことなら　おもしろいよね[BE:01:ページ切り替え（クリア）]
+そういうことなら　おもしろいな[BE:01:ページ切り替え（クリア）]
 ずかんの　ページも　うまるから
 はかせも　よろこぶだろうし[BE:01:ページ切り替え（クリア）]
 そうだね　それでは
 カラクサタウンに　つくまで[BE:00:ページ切り替え（行送り）]
 ポケモンの　かいふくは[BE:00:ページ切り替え（行送り）]
-じたくで　よろしくね[BE:01:ページ切り替え（クリア）]</language>
+じたくで　よろしく[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『なるほどね
-そういうことなら　おもしろいよね[BE:01:ページ切り替え（クリア）]
+そういうことなら　おもしろいな[BE:01:ページ切り替え（クリア）]
 図鑑の　ページも　埋まるから
 博士も　喜ぶだろうし[BE:01:ページ切り替え（クリア）]
 そうだね　それでは
 カラクサタウンに　着くまで[BE:00:ページ切り替え（行送り）]
 ポケモンの　回復は[BE:00:ページ切り替え（行送り）]
-自宅で　よろしくね[BE:01:ページ切り替え（クリア）]</language>
+自宅で　よろしく[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_white_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -544,15 +544,11 @@
 ベルと　しょうぶ　するのかい？[BE:01:ページ切り替え（クリア）]
 ぼくも　ベルも
 ポケモンずかんの[BE:00:ページ切り替え（行送り）]
-つかまえた　かずは　２ひき　だよ[BE:01:ページ切り替え（クリア）]
-あっ……　アイツが　どれだけ
-つかまえたか　いってしまった……</language>
+つかまえた　かずは　２ひき　だよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『おや　[1:00:トレーナー名:0]
 ベルと　勝負するのかい？[BE:01:ページ切り替え（クリア）]
 ぼくも　ベルも
-図鑑の　捕まえた数は　２匹だよ[BE:01:ページ切り替え（クリア）]
-あっ……　アイツが　どれだけ
-つかまえたか　いってしまった……</language>
+図鑑の　捕まえた数は　２匹だよ</language>
 	</row>
 
 	<row id="msg_r01_white_10">
@@ -593,10 +589,10 @@
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『[2:00:１桁:0]ひき！？[BE:01:ページ切り替え（クリア）]
-すごーい！
+すごい！　すごーい！！
 そんなに　ポケモン　つかまえたんだ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ベル『[2:00:１桁:0]匹！？[BE:01:ページ切り替え（クリア）]
-すごーい！
+すごい！　すごーい！！
 そんなに　ポケモン　捕まえたんだ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -632,10 +628,10 @@
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『じゃあ
 カラクサタウンに　いこう[BE:00:ページ切り替え（行送り）]
-はかせも　まっているからね[BE:01:ページ切り替え（クリア）]</language>
+はかせも　まっている[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『じゃあ
 カラクサタウンに　行こう[BE:00:ページ切り替え（行送り）]
-博士も　待っているからね[BE:01:ページ切り替え（クリア）]</language>
+博士も　待っている[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_black_11a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
