@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-02-04T16:24:01"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-04-14T11:36:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,9 +292,12 @@
 	</lock>
 
 
-	<row id="msg_c04r0104_test">
-		<language name="JPN" width="256">テスト</language>
-		<language name="JPN_KANJI" width="256">テスト</language>
+	<row id="msg_c04r0104_sign1_01">
+		<comment>看板分類：路線図
+システムウインドウ</comment>
+		<attribute name="キャラ指定">看板：路線図</attribute>
+		<language name="JPN" width="256">イッシュちほうの　ろせんずだ▼</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方の　路線図がある▼</language>
 	</row>
 
 	<flowchart-group-list>

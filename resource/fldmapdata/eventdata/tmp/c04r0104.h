@@ -18,5 +18,6 @@
 #ifndef ZONE_C04R0104_EVB_H
 #define ZONE_C04R0104_EVB_H
 
+#define BG_C04R0104_SIGN1_01              0
 
 #endif //ZONE_C04R0104_EVB_H

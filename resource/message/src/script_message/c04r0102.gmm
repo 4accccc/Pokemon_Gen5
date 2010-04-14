@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-02-04T16:23:26"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-04-14T11:35:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1371" top="141" right="2076" bottom="761" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="95" top="69" right="568" bottom="467" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,9 +292,12 @@
 	</lock>
 
 
-	<row id="msg_c04r0102_test">
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+	<row id="msg_c04r0102_sign1_01">
+		<comment>看板分類：路線図
+システムウインドウ</comment>
+		<attribute name="キャラ指定">看板：路線図</attribute>
+		<language name="JPN" width="256">イッシュちほうの　ろせんずだ▼</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方の　路線図がある▼</language>
 	</row>
 
 	<flowchart-group-list>
