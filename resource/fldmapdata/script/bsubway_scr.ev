@@ -177,7 +177,7 @@ sub_bsw_receipt_guide:
   //ようこそ
   _CALL sub_receipt_msg_greet
   
-  IF $SCWK_ANSWER == FALSE THEN //スーパー不可
+  IF $SCWK_ANSWER == FALSE THEN //事前チェックで不可
     _RET
   ENDIF
 
@@ -217,7 +217,7 @@ sub_bsw_receipt_guide_wifi:
   //ようこそ
   _CALL sub_receipt_msg_greet
   
-  IF $SCWK_ANSWER == FALSE THEN //スーパーモード不可
+  IF $SCWK_ANSWER == FALSE THEN //事前チェックで不可
     _RET
   ENDIF
   
@@ -1099,10 +1099,13 @@ _END
 sub_receipt_msg_greet:
 {
   DEFINE_LOCAL flag
+  DEFINE_LOCAL dendou
   
   _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   $flag = TRUE
+  
+  _CHK_DENDOU_DATA( dendou ) //殿堂入りチェック
   
   //プレイモード別　挨拶
   SWITCH $play_mode
@@ -1113,33 +1116,52 @@ sub_receipt_msg_greet:
   CASE BSWAY_MODE_MULTI THEN
     $SCWK_TEMP0 = msg_bsw_scr_02
   CASE BSWAY_MODE_WIFI THEN
-    $SCWK_TEMP0 = msg_bsw_scr_03
-  CASE BSWAY_MODE_S_SINGLE THEN
-    _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, BSWAY_MODE_SINGLE, BSW_NULL, ret )
-    
-    IF $ret == TRUE THEN
-      $SCWK_TEMP0 = msg_bsw_scr_04
-    ELSE
-      $SCWK_TEMP0 = msg_bsw_scr_91  //スーパー無理
+    IF $dendou == FALSE THEN //クリア前
+      $SCWK_TEMP0 = msg_bsw_scr_99
       $flag = FALSE
+    ELSE
+      $SCWK_TEMP0 = msg_bsw_scr_03
+    ENDIF
+  CASE BSWAY_MODE_S_SINGLE THEN
+    IF $dendou == FALSE THEN //クリア前
+      $SCWK_TEMP0 = msg_bsw_scr_96
+      $flag = FALSE
+    ELSE
+      _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, BSWAY_MODE_SINGLE, BSW_NULL, ret )
+      IF $ret == TRUE THEN
+        $SCWK_TEMP0 = msg_bsw_scr_04
+      ELSE
+        $SCWK_TEMP0 = msg_bsw_scr_91  //スーパー無理
+        $flag = FALSE
+      ENDIF
     ENDIF
   CASE BSWAY_MODE_S_DOUBLE THEN
-    _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, BSWAY_MODE_DOUBLE, BSW_NULL, ret )
-    
-    IF $ret == TRUE THEN
-      $SCWK_TEMP0 = msg_bsw_scr_05
-    ELSE
-      $SCWK_TEMP0 = msg_bsw_scr_92  //スーパー無理
+    IF $dendou == FALSE THEN //クリア前
+      $SCWK_TEMP0 = msg_bsw_scr_97
       $flag = FALSE
+    ELSE
+      _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, BSWAY_MODE_DOUBLE, BSW_NULL, ret )
+    
+      IF $ret == TRUE THEN
+        $SCWK_TEMP0 = msg_bsw_scr_05
+      ELSE
+        $SCWK_TEMP0 = msg_bsw_scr_92  //スーパー無理
+        $flag = FALSE
+      ENDIF
     ENDIF
   CASE BSWAY_MODE_S_MULTI THEN
-    _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, BSWAY_MODE_MULTI, BSW_NULL, ret )
-    
-    IF $ret == TRUE THEN
-      $SCWK_TEMP0 = msg_bsw_scr_06
-    ELSE
-      $SCWK_TEMP0 = msg_bsw_scr_93  //スーパー無理
+    IF $dendou == FALSE THEN //クリア前
+      $SCWK_TEMP0 = msg_bsw_scr_98
       $flag = FALSE
+    ELSE
+      _BSUBWAY_TOOL( BSWTOOL_GET_BOSS_CLEAR_FLAG, BSWAY_MODE_MULTI, BSW_NULL, ret )
+    
+      IF $ret == TRUE THEN
+        $SCWK_TEMP0 = msg_bsw_scr_06
+      ELSE
+        $SCWK_TEMP0 = msg_bsw_scr_93  //スーパー無理
+        $flag = FALSE
+      ENDIF
     ENDIF
   ENDSWITCH
   
