@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-10T17:23:47"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T15:00:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="105" right="1999" bottom="733" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="301" right="1263" bottom="699" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -344,74 +344,58 @@
 	</row>
 
 	<row id="TOWNMAP_GUIDE_000" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">はじまりの　まち</language>
-		<language name="JPN_KANJI" width="256">始まりの　町</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="TOWNMAP_GUIDE_001" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">むかしの　かおりがのこる
-ひなびた　まち</language>
-		<language name="JPN_KANJI" width="256">昔の香りが　残る
-ひなびた　町</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="TOWNMAP_GUIDE_002" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">たくさんのひとが　すむ
-さんしゃさんようの　まち</language>
-		<language name="JPN_KANJI" width="256">沢山の人が　住む
-三者三様の　街</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="TOWNMAP_GUIDE_003" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">いしだたみと　そうこがある
-げいじゅつかが　つどうまち</language>
-		<language name="JPN_KANJI" width="256">石畳と　倉庫がある
-芸術家が　集う街</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="TOWNMAP_GUIDE_004" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">たかいビルに　かこまれた
-にぎやかな　だいとし</language>
-		<language name="JPN_KANJI" width="256">高いビルに　囲まれた
-にぎやかな　大都市</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="TOWNMAP_GUIDE_005" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">まるで　ゆうえんちのような
-エンターテインメントの　まち</language>
-		<language name="JPN_KANJI" width="256">まるで　遊園地のような
-エンターテインメントの　街</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="TOWNMAP_GUIDE_006" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">そうこが　たちならぶ
-しおかぜ　かおる　みなとまち</language>
-		<language name="JPN_KANJI" width="256">倉庫が　立ち並ぶ
-潮風香る　港町</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="TOWNMAP_GUIDE_007" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">ひこうじょうがある
-そらへの　げんかんの　まち</language>
-		<language name="JPN_KANJI" width="256">飛行場がある
-空への　玄関の　街</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="TOWNMAP_GUIDE_008" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">しっちたいと　おかわがながれる
-おだやかな　まち</language>
-		<language name="JPN_KANJI" width="256">湿地帯と　小川が流れる
-穏やかな　町</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="TM_PLACE_000" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">ミュージカル</language>
-		<language name="JPN_KANJI" width="256">ミュージカル</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="TM_PLACE_001" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">ポケモンけんきゅうじょ</language>
-		<language name="JPN_KANJI" width="256">ポケモン研究所</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="TM_GUIDE_T01_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -428,8 +412,8 @@
 
 	<row id="TM_PLACE_T01_02" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>名所２</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]のいえ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の家</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="TM_GUIDE_T02_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -514,19 +498,19 @@
 
 	<row id="TM_PLACE_C03_03" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>名所３</comment>
-		<language name="JPN" width="256">すれちがいちょうさたいほんぶ</language>
+		<language name="JPN" width="256">すれちがいちょうさたい</language>
 		<language name="JPN_KANJI" width="256">すれ違い調査隊本部</language>
 	</row>
 
 	<row id="TM_PLACE_C03_04" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>名所４</comment>
-		<language name="JPN" width="256">せいめいはんだんしの　いえ</language>
+		<language name="JPN" width="256">せいめいはんだんのいえ</language>
 		<language name="JPN_KANJI" width="256">姓名判断師の家</language>
 	</row>
 
 	<row id="TM_PLACE_C03_05" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>名所５</comment>
-		<language name="JPN" width="256">マッサージおねえさんの　いえ</language>
+		<language name="JPN" width="256">マッサージのいえ</language>
 		<language name="JPN_KANJI" width="256">マッサージお姉さんの家</language>
 	</row>
 
@@ -734,8 +718,10 @@
 
 	<row id="TM_GUIDE_BC10_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ブラックシティ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">ひとがつどい　はってんを　つづける
+きんだいてきな　ふんいきの　まち</language>
+		<language name="JPN_KANJI" width="256">人が集い　発展を　続ける
+近代的な　雰囲気の　街</language>
 	</row>
 
 	<row id="TM_PLACE_BC10_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
@@ -746,8 +732,10 @@
 
 	<row id="TM_GUIDE_WF10_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ホワイトフォレスト</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">ゆたかな　しぜんに　あこがれた
+ひとが　かくちから　あつまる　ばしょ</language>
+		<language name="JPN_KANJI" width="256">豊かな　自然に　あこがれた
+人が　各地から　集まる　場所</language>
 	</row>
 
 	<row id="TM_PLACE_WF10_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
@@ -758,8 +746,10 @@
 
 	<row id="TM_GUIDE_C11_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ユナイテッドタワー</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">せかい　かっこくの　ひとびとと
+こうりゅうできる　ちょうこうそうビル</language>
+		<language name="JPN_KANJI" width="256">世界各国の　人々と
+交流できる　超高層ビル</language>
 	</row>
 
 	<row id="TM_GUIDE_R15R0301_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -826,8 +816,10 @@
 
 	<row id="TM_GUIDE_D10_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ジャイアントホール</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">ちかづけば　わざわいが　ふりかかると
+いいつたえられる　きょだいな　あな</language>
+		<language name="JPN_KANJI" width="256">近づけば　災いが　降りかかると
+言い伝えられる　巨大な　穴</language>
 	</row>
 
 	<row id="TM_GUIDE_D12_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -838,8 +830,10 @@
 
 	<row id="TM_GUIDE_D13_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>Ｐ２ラボ</comment>
-		<language name="JPN" width="256">ダミー</language>
-		<language name="JPN_KANJI" width="256">ダミー</language>
+		<language name="JPN" width="256">こじまに　ひっそり　たたずむ
+プラズマだんの　けんきゅうじょ</language>
+		<language name="JPN_KANJI" width="256">小島に　ひっそり　たたずむ
+プラズマ団の　研究所</language>
 	</row>
 
 	<row id="TM_GUIDE_R03R0301_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1029,7 +1023,7 @@
 		<language name="JPN" width="256">イッシュの　ちゅうしんに　ある
 ふしぎな　パワーが　やどる　ばしょ</language>
 		<language name="JPN_KANJI" width="256">イッシュの　中心に　ある
-不思議な　パワーの　宿る　場所</language>
+不思議な　パワーが　宿る　場所</language>
 	</row>
 
 	<row id="TM_GUIDE_R09R0301_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
