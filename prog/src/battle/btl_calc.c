@@ -10,6 +10,7 @@
 #include <gflib.h>
 
 #include "tr_tool\trtype_def.h"
+#include "tr_tool\tr_tool.h"
 
 #include "btl_common.h"
 #include "btl_util.h"
@@ -23,6 +24,13 @@
 //--------------------------------------------------------------
 static GFL_STD_RandContext gRandContext = {0};
 static u16* gWazaStoreWork = NULL;
+
+/*--------------------------------------------------------------------------*/
+/* Prototypes                                                               */
+/*--------------------------------------------------------------------------*/
+static BOOL is_include( const u16* tbl, u32 tblElems, u16 wazaID );
+static u32 calcWinMoney_Sub( const BSP_TRAINER_DATA* trData, const POKEPARTY * party );
+
 
 //=============================================================================================
 /**
@@ -684,16 +692,6 @@ WazaID  BTL_CALC_SideEffectIDtoWazaID( BtlSideEffect sideEffect )
 // ランダム技選択
 //=============================================================================================
 
-static BOOL is_include( const u16* tbl, u32 tblElems, u16 wazaID )
-{
-  u32 i;
-  for(i=0; i<tblElems; ++i){
-    if( tbl[i] == wazaID ){
-      return TRUE;
-    }
-  }
-  return FALSE;
-}
 
 //=============================================================================================
 /**
@@ -718,6 +716,16 @@ WazaID BTL_CALC_RandWaza( const u16* wazaTbl, u16 tblElems )
 
   i = BTL_CALC_GetRand( cnt );
   return gWazaStoreWork[ i ];
+}
+static BOOL is_include( const u16* tbl, u32 tblElems, u16 wazaID )
+{
+  u32 i;
+  for(i=0; i<tblElems; ++i){
+    if( tbl[i] == wazaID ){
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 
@@ -844,6 +852,91 @@ BOOL BTL_CALC_IsTrtypeBig4( u16 trType )
   }
   return FALSE;
 }
+//=============================================================================================
+// 賞金計算
+//=============================================================================================
+
+//=============================================================================================
+/**
+ * 勝ったときにもらえるおこづかい金額の計算
+ *
+ * @param   sp
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_CALC_WinMoney( const BATTLE_SETUP_PARAM* sp )
+{
+  u32 money = 0;
+  if( sp->competitor == BTL_COMPETITOR_TRAINER )
+  {
+    u8 clientID = BTL_CLIENT_ENEMY1;
+    if( (sp->tr_data[clientID] != NULL) && (sp->party[clientID] != NULL) ){
+      money += calcWinMoney_Sub( sp->tr_data[clientID], sp->party[clientID] );
+    }
+
+    clientID = BTL_CLIENT_ENEMY2;
+    if( (sp->tr_data[clientID] != NULL) && (sp->party[clientID] != NULL) ){
+      money += calcWinMoney_Sub( sp->tr_data[clientID], sp->party[clientID] );
+    }
+  }
+  return money;
+}
+
+static u32 calcWinMoney_Sub( const BSP_TRAINER_DATA* trData, const POKEPARTY * party )
+{
+  if( party )
+  {
+    u8 poke_cnt = PokeParty_GetPokeCount( party );
+    if( poke_cnt )
+    {
+      const POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, poke_cnt-1 );
+      u32 tr_money_ratio = TT_TrainerDataParaGet( trData->tr_id, ID_TD_gold );
+
+      return (PP_Get(pp, ID_PARA_level, NULL) * tr_money_ratio * 4);
+    }
+  }
+  return 0;
+}
+
+
+
+//=============================================================================================
+/**
+ * 負けた時に支払う金額計算
+ *
+ * @param   badgeCount    プレイヤーバッジ数
+ * @param   party         パーティデータ
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_CALC_LoseMoney( u8 badgeCount, const BTL_PARTY* party )
+{
+  static const u8 ratio[] = {
+    2, 4, 6, 9, 12, 16, 20, 25, 30,
+  };
+  u32 maxLevel, pokeCnt, i;
+
+  pokeCnt = BTL_PARTY_GetMemberCount( party );
+  maxLevel = 1;
+  for(i=0; i<pokeCnt; ++i)
+  {
+    const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( party, i );
+    u32 level = BPP_GetValue( bpp, BPP_LEVEL );
+    if( level > maxLevel ){
+      maxLevel = level;
+    }
+  }
+
+  // 有り得ないけど一応
+  if( badgeCount >= NELEMS(ratio) ){
+    badgeCount = NELEMS(ratio) - 1;
+  }
+
+  return maxLevel * 4 * ratio[ badgeCount ];
+}
+
 
 //=============================================================================================
 // アイテムデータ取得関連

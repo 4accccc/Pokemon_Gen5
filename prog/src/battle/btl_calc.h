@@ -1,4 +1,3 @@
-
 #ifndef __BTL_CALC_H__
 #define __BTL_CALC_H__
 
@@ -134,6 +133,12 @@ extern WazaID  BTL_CALC_SideEffectIDtoWazaID( BtlSideEffect sideEffect );
  */
 //=============================================================================================
 extern BOOL BTL_CALC_TOK_CheckCantChange( PokeTokusei tok );
+
+
+// èüÇ¡ÇΩÇ∆Ç´ÅEïâÇØÇΩéûÇÃÇ®Ç±Ç√Ç©Ç¢åvéZ
+extern u32 BTL_CALC_WinMoney( const BATTLE_SETUP_PARAM* sp );
+extern u32 BTL_CALC_LoseMoney( u8 badgeCount, const BTL_PARTY* party );
+
 
 
 extern void BTL_CALC_ITEM_InitSystem( HEAPID heapID );

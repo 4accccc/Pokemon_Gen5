@@ -4019,11 +4019,11 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
       {
         u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
 
-        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LoseDefault );
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LoseStart );
         BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
         BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
         BTLV_StartMsg( wk->viewCore, &wk->strParam );
-        (*seq) = 5;
+        (*seq) = 6;
       }
       else{
         return TRUE;
@@ -4111,7 +4111,31 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
 
   case 5:
     if( BTLV_WaitMsg(wk->viewCore) ){
+      return TRUE;
+    }
+    break;
+
+  case 6:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      u32 loseMoney = BTL_MAIN_FixLoseMoney( wk->mainModule );
+      if( loseMoney )
+      {
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LoseMoneyTrainer );
+        BTLV_STRPARAM_AddArg( &wk->strParam, wk->myID );
+        BTLV_STRPARAM_AddArg( &wk->strParam, loseMoney );
+        BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      }
       (*seq)++;
+    }
+    break;
+  case 7:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LoseEnd );
+      BTLV_STRPARAM_AddArg( &wk->strParam, wk->myID );
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      (*seq) = 5;
     }
     break;
 
@@ -4127,18 +4151,38 @@ static BOOL SubProc_UI_LoseWild( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
   case 0:
-    {
-      u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+    BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LoseStart );
+    BTLV_STRPARAM_AddArg( &wk->strParam, wk->myID );
+    BTLV_StartMsg( wk->viewCore, &wk->strParam );
+    (*seq)++;
+    break;
 
-      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LoseDefault );
-      BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
-      BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+  case 1:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      u32 loseMoney = BTL_MAIN_FixLoseMoney( wk->mainModule );
+      if( loseMoney )
+      {
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LoseMoneyWild );
+        BTLV_STRPARAM_AddArg( &wk->strParam, wk->myID );
+        BTLV_STRPARAM_AddArg( &wk->strParam, loseMoney );
+        BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      }
+      (*seq)++;
+    }
+    break;
+
+  case 2:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LoseEnd );
+      BTLV_STRPARAM_AddArg( &wk->strParam, wk->myID );
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
       (*seq)++;
     }
     break;
 
-  case 1:
+  case 3:
     if( BTLV_WaitMsg(wk->viewCore) ){
       (*seq)++;
     }

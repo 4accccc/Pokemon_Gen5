@@ -283,8 +283,8 @@ typedef struct {
 
 
   //----- 以下、バトルの結果格納パラメータ ----
+  int         getMoney;         ///< 手に入れたお小遣い
   BtlResult   result;           ///< 勝敗結果
-  u16         getMoney;         ///< 手に入れたお小遣い
   u8          capturedPokeIdx;  ///< 捕獲したポケモンのメンバー内インデックス（partyEnemy1 内）
   u8          commServerVer;    ///< 通信対戦時のサーババージョン（接続したマシン中、最後バージョン）
 

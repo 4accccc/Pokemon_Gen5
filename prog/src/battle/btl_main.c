@@ -121,6 +121,7 @@ struct _BTL_MAIN_MODULE {
 
   u8        posCoverClientID[ BTL_POS_MAX ];
   u32       bonusMoney;
+  u32       loseMoney;
   int       msgSpeed;
   u16       LimitTimeGame;
   u16       LimitTimeCommand;
@@ -138,13 +139,15 @@ struct _BTL_MAIN_MODULE {
   u8        myClientID;
   u8        myOrgPos;
   u8        ImServer;
-  u8        fWazaEffectEnable;
   u8        changeMode;
-  u8        fBonusMoneyFixed;
   u8        MultiAIDataSeq;
   u8        MultiAIClientNum;
   u8        MultiAIClientID;
-  u8        fCommError;
+  u8        fCommError           : 1;
+  u8        fWazaEffectEnable    : 1;
+  u8        fBonusMoneyFixed     : 1;
+  u8        fLoseMoneyFixed      : 1;
+
 
 };
 
@@ -154,8 +157,6 @@ struct _BTL_MAIN_MODULE {
 static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
-static u32 calcBonusSub( const BSP_TRAINER_DATA* trData, const POKEPARTY * party );
-static u32 calcBonusMoneyBase( const BATTLE_SETUP_PARAM* sp );
 static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
 static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
 static u8 checkBagMode( const BATTLE_SETUP_PARAM* setup );
@@ -262,12 +263,12 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->LimitTimeGame = wk->setupParam->LimitTimeGame;
       wk->LimitTimeCommand = wk->setupParam->LimitTimeCommand;
       wk->fBonusMoneyFixed = FALSE;
+      wk->fLoseMoneyFixed = FALSE;
       wk->fCommError = FALSE;
       wk->MultiAIClientNum = 0;
 
       Kentei_ClearField( wk->setupParam );
 
-      wk->bonusMoney = calcBonusMoneyBase( setup_param );
       wk->ppIllusionZoroArc = NULL;
       wk->AIDataContainer = NULL;
 
@@ -278,6 +279,10 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       }
 
       BTL_CALC_InitSys( &wk->randomContext, wk->heapID );
+
+      wk->bonusMoney =  BTL_CALC_WinMoney( setup_param );
+      wk->loseMoney = 0;
+
 
       wk->escapeClientID = BTL_CLIENTID_NULL;
       wk->fWazaEffectEnable = (CONFIG_GetWazaEffectMode(setup_param->configData) == WAZAEFF_MODE_ON);
@@ -327,11 +332,19 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
 
   if( wk->mainLoop( wk ) )
   {
-    checkWinner( wk );
+    BtlResult result = checkWinner( wk );
     Bspstore_RecordData( wk );
     Bspstore_KenteiData( wk );
     reflectPartyData( wk );
-    wk->setupParam->getMoney = wk->bonusMoney;
+
+    switch( result ){
+    case BTL_RESULT_WIN:
+      wk->setupParam->getMoney = wk->bonusMoney;
+      break;
+    case BTL_RESULT_LOSE:
+      wk->setupParam->getMoney = (int)(wk->loseMoney) * -1;
+      break;
+    }
     return GFL_PROC_RES_FINISH;
   }
 
@@ -401,37 +414,6 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
 //======================================================================================================
 //======================================================================================================
 
-
-static u32 calcBonusSub( const BSP_TRAINER_DATA* trData, const POKEPARTY * party )
-{
-  if( party )
-  {
-    u8 poke_cnt = PokeParty_GetPokeCount( party );
-    if( poke_cnt )
-    {
-      const POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, poke_cnt-1 );
-      u32 tr_money_ratio = TT_TrainerDataParaGet( trData->tr_id, ID_TD_gold );
-
-      return (PP_Get(pp, ID_PARA_level, NULL) * tr_money_ratio * 4);
-    }
-  }
-  return 0;
-}
-
-static u32 calcBonusMoneyBase( const BATTLE_SETUP_PARAM* sp )
-{
-  if( sp->competitor == BTL_COMPETITOR_TRAINER )
-  {
-    u32 sum = 0;
-
-    sum += calcBonusSub( sp->tr_data[ BTL_CLIENT_ENEMY1], sp->party[BTL_CLIENT_ENEMY1] );
-    sum += calcBonusSub( sp->tr_data[ BTL_CLIENT_ENEMY2], sp->party[BTL_CLIENT_ENEMY2] );
-
-    return sum;
-  }
-
-  return 0;
-}
 
 // 各種モジュール生成＆関連付けルーチンを設定
 static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param )
@@ -3405,6 +3387,37 @@ u32 BTL_MAIN_FixBonusMoney( BTL_MAIN_MODULE* wk )
 
 //=============================================================================================
 /**
+ * 負けた時の支払い金額を確定させる
+ *
+ * @param   wk
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_MAIN_FixLoseMoney( BTL_MAIN_MODULE* wk )
+{
+  u32 loseMoney = 0;
+
+  if( wk->fLoseMoneyFixed == FALSE )
+  {
+    if( (wk->setupParam->competitor == BTL_COMPETITOR_WILD)
+    ||  (wk->setupParam->competitor == BTL_COMPETITOR_TRAINER)
+    ){
+      u32 holdMoney = MISC_GetGold( GAMEDATA_GetMiscWork(wk->setupParam->gameData) );
+      const BTL_PARTY* playerParty = BTL_POKECON_GetPartyDataConst( &(wk->pokeconForServer), wk->myClientID );
+      loseMoney = BTL_CALC_LoseMoney( wk->setupParam->badgeCount, playerParty );
+      if( loseMoney > holdMoney ){
+        loseMoney = holdMoney;
+      }
+      wk->loseMoney = loseMoney;
+    }
+    wk->fLoseMoneyFixed = TRUE;
+  }
+  return loseMoney;
+}
+
+//=============================================================================================
+/**
  * プレイヤー側が勝ったか判定
  *
  * @param   wk
@@ -4632,6 +4645,7 @@ static void Bspstore_RecordData( BTL_MAIN_MODULE* wk )
     }
   }
 }
+
 
 //----------------------------------------------------------------------------------
 /**

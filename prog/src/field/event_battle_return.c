@@ -120,7 +120,7 @@ static GFL_PROC_RESULT BtlRet_ProcQuit( GFL_PROC * proc, int * seq, void * pwk, 
   BTLRET_WORK* wk = mywk;
 
   // ローカルPROCシステムを破棄
-  GFL_PROC_LOCAL_Exit( wk->local_procsys ); 
+  GFL_PROC_LOCAL_Exit( wk->local_procsys );
 
   if( wk->box_strbuf )
   {
@@ -173,7 +173,11 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         POKERUS_CheckContagion( party );
 
         // おこづかい増やす
-        MISC_AddGold( GAMEDATA_GetMiscWork(param->gameData), param->btlResult->getMoney);
+        if( param->btlResult->getMoney > 0 ){
+          MISC_AddGold( GAMEDATA_GetMiscWork(param->gameData), param->btlResult->getMoney);
+        }else if( param->btlResult->getMoney < 0 ){
+          MISC_SubGold( GAMEDATA_GetMiscWork(param->gameData), param->btlResult->getMoney);
+        }
       }
 
       // 捕獲した
@@ -299,7 +303,7 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
 
         // ポケモンにニックネームを付けた回数
         {
-          RECORD* rec = GAMEDATA_GetRecordPtr(param->gameData); 
+          RECORD* rec = GAMEDATA_GetRecordPtr(param->gameData);
           RECORD_Inc(rec, RECID_NICKNAME);
         }
       }
