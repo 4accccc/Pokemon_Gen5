@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-04-13T18:00:29"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-04-14T16:08:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1082" top="498" right="1582" bottom="1127" maximized="no" rayout="Vertical2">
+	<dialog left="1001" top="448" right="1501" bottom="1077" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="1110" top="103" right="1583" bottom="501" visible="yes"/>
 		<band id="0" index="1" style="0000" width="492"/>
@@ -1194,8 +1194,9 @@ msg_musical_recept_06を
 さんかする　ときの　うけつけです▼
 おともだちと　いっしょに
 さんかする　ばあいは▼
-リーダーとなった　ひとが
-さんかする　えんもくを　えらびます▼
+えんもくを　えらぶ　ひとと
+えらんだ　えんもくに▽
+さんかする　ひとに　わかれてください▼
 むかって　みぎがわは
 ドレスアップ　のみを▽
 おこなう　ことができる　うけつけです▼</language>
@@ -1211,8 +1212,9 @@ msg_musical_recept_06を
 参加する　ときの　受付です▼
 お友だちと　一緒に
 参加する　場合は▼
-リーダーとなった　人が
-参加する　演目を　えらびます▼
+演目を　選ぶ人と
+選んだ　演目に▽
+参加する　人に　別れてください▼
 向かって　右側は
 ドレスアップ　のみを▽
 行う　ことができる　受付です▼</language>
@@ -1231,15 +1233,25 @@ msg_musical_recept_06を
 		<language name="JPN">ミュージカルに　さんかさせる
 ポケモンは　うけつけにて▽
 てもちから　えらぶことが　できます▼
-タマゴで　なければ
-どんな　ポケモンでも▽
-さんかは　かのうですよ▼</language>
+さんかに　せいげんは　ございませんが
+からだの　とくちょうを　りゆうに▼
+いちぶの　グッズを　きかざることが
+にがてな　ポケモンは　いるようです▼
+きになる　ポケモンが　いれば
+とりあえず　しちゃくしつで▼
+ドレスアップ　してみると
+よいかも　しれませんね▼</language>
 		<language name="JPN_KANJI">ミュージカルに　参加させる
 ポケモンは　受付にて▽
 手持ちから　選ぶことが　できます▼
-タマゴで　なければ
-どんな　ポケモンでも▽
-参加は　可能ですよ▼</language>
+参加に　制限は　ございませんが
+身体の　特徴を　理由に▼
+一部の　グッズを　着飾ることが
+苦手な　ポケモンは　いるようです▼
+気になる　ポケモンが　いれば
+とりあえず　試着室で▼
+ドレスアップ　してみると
+よいかも　しれませんね▼</language>
 	</row>
 
 	<row id="msg_musical_info_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
