@@ -119,6 +119,9 @@ ev_zone_c03r0801:
 /**************************************************************/
 //遊覧船タイムアップ
 EVENT_START ev_prg_c03r0801_timeup
+  
+  //汽笛がなっている場合に備えＳＥ鳴り終わり待ち
+  _SE_WAIT()
 
 	_SYSWIN_MSG( msg_c03r0801_sys_02 , POS_DOWN )
 	_SYSWIN_CLOSE()
@@ -686,13 +689,11 @@ ev_long_talker:
   //会話開始
   _TALK_OBJ_START()
   _BALLOONWIN_TALKOBJ_MSG(LWK_NPC_MSG_LONG)
-  _LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
   //ブザーならす
-
- _SE_PLAY( SEQ_SE_FLD_78 )
- _SE_WAIT()
+  _SE_PLAY( SEQ_SE_FLD_78 )
+  _SE_WAIT()
 
   //メッセージＩＤを取得
   _PL_BOAT_GET_ROOM_INFO(LOCALWORK0,PL_BOAT_ROOM_INFO_MSG,1,LWK_NPC_MSG_LONG)
@@ -720,19 +721,12 @@ EVENT_START		ev_pos_c03r0801_move_01
   _FIELD_OPEN()
 
   IF $SCWK_ANSWER == PL_BOAT_DEMO_FINISHED  THEN
-    
-  //遊覧船内ゲーム終了
-	_PL_BOAT_GAME_END()
-
-	//予約スクリプト
-	_RESERVE_SCRIPT( SCRID_RESERVE_C03P16_CABINGUIDE_01 )
-
-	//ＢＧ初期化処理
-	_MAP_FADE_INT_BG()
-	
-	//マップチェンジ
-	_MAP_CHANGE_NO_FADE( ZONE_ID_C03P16, 19, 0, 16, DIR_LEFT )
-	
+    //遊覧船内ゲーム終了
+	  _PL_BOAT_GAME_END()
+    //ＢＧ初期化処理
+	  _MAP_FADE_INT_BG()
+    //遊覧船終了
+    _CALL pl_boat_end
   ELSE
     //船内に戻ってくる
     _MAP_FADE_BLACK_IN()
