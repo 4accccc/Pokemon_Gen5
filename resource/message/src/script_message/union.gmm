@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T17:27:00"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-14T19:12:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1742" top="211" right="2447" bottom="839" maximized="no" rayout="Vertical2">
+	<dialog left="284" top="325" right="985" bottom="931" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="787" top="36" right="1260" bottom="434" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<tag-palette left="786" top="454" right="1259" bottom="852" visible="no"/>
+		<band id="0" index="0" style="0000" width="526"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="693"/>
+		<band id="3" index="3" style="0000" width="693"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -505,35 +505,18 @@
 
 	<row id="msg_union_info_01_09" text-color="#ff78ff,,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>説明お姉さん：説明するのメッセージ
-・チャット</comment>
-		<language name="JPN" width="216" line="2">チャットで　ことばを　えらべば
-ユニオンルーム　にいる[BE:00:ページ切り替え（行送り）]
-みんなに　じぶんのことを[BE:00:ページ切り替え（行送り）]
-アピール　することが　できます！[BE:01:ページ切り替え（クリア）]
-ことばを　えらぶときは
-ひだりしたの　チャットマークを▽
-タッチして　くださいね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216" line="2">チャットで　言葉を　選べば
-ユニオンルーム　にいる[BE:00:ページ切り替え（行送り）]
-みんなに　自分のことを[BE:00:ページ切り替え（行送り）]
-アピール　することが　できます！[BE:01:ページ切り替え（クリア）]
-言葉を　選ぶときは
-左下の　チャットマークを▽
-タッチして　くださいね！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_union_info_01_10" text-color="#ff78ff,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
-		<comment>説明お姉さん：説明するのメッセージ
 ・マーク</comment>
-		<language name="JPN" width="216" line="2">したにある　マークを　タッチすれば
+		<language name="JPN" width="216" line="2">したにある　マークを　タッチすると
+チャットの　ことばを　えらべたり[BE:00:ページ切り替え（行送り）]
 たいせんや　こうかんなど[BE:00:ページ切り替え（行送り）]
-じぶんが　やりたいことを　みんなに[BE:00:ページ切り替え（行送り）]
-つたえる　ことができます[BE:01:ページ切り替え（クリア）]
+じぶんが　やりたいことを　みなに[BE:00:ページ切り替え（行送り）]
+つたえることが　できます[BE:01:ページ切り替え（クリア）]
 また　じぶんと　おなじマークを
 えらんでいる　ひとは　ジャンプします[BE:01:ページ切り替え（クリア）]
 マークを　タッチして　あそびたい
 あいてを　さがして　くださいね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216" line="2">下にある　マークを　タッチすれば
+		<language name="JPN_KANJI" width="216" line="2">下にある　マークを　タッチすると
+チャットの　言葉を　選べたり[BE:00:ページ切り替え（行送り）]
 対戦や　交換など[BE:00:ページ切り替え（行送り）]
 自分が　やりたいことを　みんなに[BE:00:ページ切り替え（行送り）]
 伝えることが　できます[BE:01:ページ切り替え（クリア）]
@@ -980,13 +963,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">ぐるぐる</language>
 	</row>
 
-	<row id="msg_union_info_03_09" text-color="#ff78ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
-		<comment>説明お姉さん：選択肢</comment>
-		<language name="JPN" font=" 1:small" width="216" line="2">チャット</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">チャット</language>
-	</row>
-
-	<row id="msg_union_info_03_11" text-color="#ff78ff,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+	<row id="msg_union_info_03_09" text-color="#ff78ff,,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>説明お姉さん：選択肢</comment>
 		<language name="JPN" font=" 1:small" width="216" line="2">マーク</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">マーク</language>
