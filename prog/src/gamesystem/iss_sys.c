@@ -31,6 +31,7 @@
 #define ISS_Z_ENABLE // ISS-Z 動作スイッチ
 #define ISS_S_ENABLE // ISS-S 動作スイッチ
 #define ISS_B_ENABLE // ISS-B 動作スイッチ
+//#define PRINT_ENABLE
 #define PRINT_TARGET (1) // デバッグ情報の出力先
 #define INVALID_BGM_NO (0xffffffff)  // 監視BGM番号の無効値
 
@@ -280,7 +281,9 @@ static void InitISS( ISS_SYS* system )
   system->issS     = NULL;
   system->issB     = NULL;
 
+#ifdef PRINT_ENABLE
   OS_TFPrintf( PRINT_TARGET, "ISS: init ISS\n" );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -309,7 +312,9 @@ static void SetupISS( ISS_SYS* system, GAMEDATA* gameData, HEAPID heapID )
   CreateISS_S( system );
   CreateISS_B( system );
 
+#ifdef PRINT_ENABLE
   OS_TFPrintf( PRINT_TARGET, "ISS: setup ISS\n" );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -330,7 +335,9 @@ static void CleanUpISS( ISS_SYS* system )
   DeleteISS_S( system );
   DeleteISS_B( system );
 
+#ifdef PRINT_ENABLE
   OS_TFPrintf( PRINT_TARGET, "ISS: clean up ISS\n" );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -352,7 +359,9 @@ static void CreateISS_R( ISS_SYS* system )
 	player = GetPlayerWork( system );
 	system->issR = ISS_ROAD_SYS_Create( player, system->heapID );
 
+#ifdef PRINT_ENABLE
   OS_TFPrintf( PRINT_TARGET, "ISS: create ISS-R\n" );
+#endif
 #endif 
 }
 
@@ -375,7 +384,9 @@ static void CreateISS_C( ISS_SYS* system )
 
 	system->issC = ISS_CITY_SYS_Create( player, system->heapID );
 
+#ifdef PRINT_ENABLE
   OS_TFPrintf( PRINT_TARGET, "ISS: create ISS-C\n" );
+#endif
 #endif
 }
 
@@ -399,7 +410,9 @@ static void CreateISS_D( ISS_SYS* system )
 	system->issD = 
     ISS_DUNGEON_SYS_Create( system->gameData, player, system->heapID );
 
+#ifdef PRINT_ENABLE
   OS_TFPrintf( PRINT_TARGET, "ISS: create ISS-D\n" );
+#endif
 #endif
 }
 
@@ -418,7 +431,9 @@ static void CreateISS_Z( ISS_SYS* system )
 
   system->issZ = ISS_ZONE_SYS_Create( system->heapID );
 
+#ifdef PRINT_ENABLE
   OS_TFPrintf( PRINT_TARGET, "ISS: create ISS-Z\n" );
+#endif
 #endif
 }
 
@@ -437,7 +452,9 @@ static void CreateISS_S( ISS_SYS* system )
 
   system->issS = ISS_SWITCH_SYS_Create( system->heapID );
 
+#ifdef PRINT_ENABLE
   OS_TFPrintf( PRINT_TARGET, "ISS: create ISS-S\n" );
+#endif
 #endif
 }
 
@@ -456,7 +473,9 @@ static void CreateISS_B( ISS_SYS* system )
 
   system->issB = ISS_3DS_SYS_Create( system->heapID );
 
+#ifdef PRINT_ENABLE
   OS_TFPrintf( PRINT_TARGET, "ISS: create ISS-B\n" );
+#endif
 #endif
 }
 
@@ -477,7 +496,9 @@ static void DeleteISS_R( ISS_SYS* system )
 	ISS_ROAD_SYS_Delete( system->issR );
   system->issR = NULL;
 
+#ifdef PRINT_ENABLE
   OS_TFPrintf( PRINT_TARGET, "ISS: delete ISS-R\n" );
+#endif
 #endif
 }
 
@@ -497,7 +518,9 @@ static void DeleteISS_C( ISS_SYS* system )
 	ISS_CITY_SYS_Delete( system->issC );
   system->issC = NULL;
 
+#ifdef PRINT_ENABLE
   OS_TFPrintf( PRINT_TARGET, "ISS: delete ISS-C\n" );
+#endif
 #endif
 }
 
@@ -517,7 +540,9 @@ static void DeleteISS_D( ISS_SYS* system )
 	ISS_DUNGEON_SYS_Delete( system->issD );
   system->issD = NULL;
 
+#ifdef PRINT_ENABLE
   OS_TFPrintf( PRINT_TARGET, "ISS: delete ISS-D\n" );
+#endif
 #endif
 }
 
@@ -537,7 +562,9 @@ static void DeleteISS_Z( ISS_SYS* system )
   ISS_ZONE_SYS_Delete( system->issZ );
   system->issZ = NULL;
 
+#ifdef PRINT_ENABLE
   OS_TFPrintf( PRINT_TARGET, "ISS: delete ISS-Z\n" );
+#endif
 #endif
 }
 
@@ -557,7 +584,9 @@ static void DeleteISS_S( ISS_SYS* system )
   ISS_SWITCH_SYS_Delete( system->issS );
   system->issS = NULL;
 
+#ifdef PRINT_ENABLE
   OS_TFPrintf( PRINT_TARGET, "ISS: delete ISS-S\n" );
+#endif
 #endif
 }
 
@@ -577,7 +606,9 @@ static void DeleteISS_B( ISS_SYS* system )
   ISS_3DS_SYS_Delete( system->issB );
   system->issB = NULL;
 
+#ifdef PRINT_ENABLE
   OS_TFPrintf( PRINT_TARGET, "ISS: delete ISS-B\n" );
+#endif
 #endif
 } 
 
