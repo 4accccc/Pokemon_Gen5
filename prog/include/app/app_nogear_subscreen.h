@@ -109,13 +109,13 @@ enum
 static ARCDATID APP_NOGEAR_SS_arcdatid[APP_NOGEAR_SS_TYPE_MAX][APP_NOGEAR_SS_DATA_MAX] =
 {
   {
-    NARC_c_gear_c_gear_NCLR,
-    NARC_c_gear_c_gear_NCGR,
+    NARC_c_gear_c_gear_m_NCLR,
+    NARC_c_gear_c_gear_m1_NCGR,
     NARC_c_gear_c_gear01_n_NSCR,
   },
   {
-    NARC_c_gear_c_gear2_NCLR,
-    NARC_c_gear_c_gear2_NCGR,
+    NARC_c_gear_c_gear_f_NCLR,
+    NARC_c_gear_c_gear_f1_NCGR,
     NARC_c_gear_c_gear01_n_NSCR,
   },
 };

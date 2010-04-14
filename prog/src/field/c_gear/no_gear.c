@@ -216,8 +216,8 @@ static void _changeStateDebug(NO_GEAR_WORK* pWork,StateFunc state, int line)
  */
 //------------------------------------------------------------------------------
 
-static u32 _bgpal[]={NARC_c_gear_c_gear_NCLR,NARC_c_gear_c_gear2_NCLR,NARC_c_gear_c_gear_NCLR};
-static u32 _bgcgx[]={NARC_c_gear_c_gear_NCGR,NARC_c_gear_c_gear2_NCGR,NARC_c_gear_c_gear_NCGR};
+static const u32 _bgpal[]={NARC_c_gear_c_gear_m_NCLR,NARC_c_gear_c_gear_f_NCLR,NARC_c_gear_c_gear_m_NCLR};
+static const u32 _bgcgx[]={NARC_c_gear_c_gear_m1_NCGR,NARC_c_gear_c_gear_f1_NCGR,NARC_c_gear_c_gear_m1_NCGR};
 
 
 static void _gearArcCreate(NO_GEAR_WORK* pWork)

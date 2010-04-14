@@ -51,8 +51,8 @@ enum
 ///	‚¸‚è—Ž‚¿•ûŒü
 //  Y‚ª1‚©‚í‚é‚²‚Æ‚Ì‚w‚y•ûŒü‚ÌˆÚ“®‹——£
 //=====================================
-//#define RAILSLIPDOWN_MOVE_XZ  ( FX32_CONST(1.1250f) )
-#define RAILSLIPDOWN_MOVE_XZ  ( FX32_CONST(1.1550f) )
+//#define RAILSLIPDOWN_MOVE_XZ  ( FX32_CONST(1.1550f) )
+#define RAILSLIPDOWN_MOVE_XZ  ( FX32_CONST(1.1600f) )
 
 //-------------------------------------
 ///	1ƒtƒŒ[ƒ€‚Å‚Ì‚¸‚è—Ž‚¿‹——£

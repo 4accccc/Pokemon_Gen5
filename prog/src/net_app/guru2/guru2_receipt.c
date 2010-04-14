@@ -843,9 +843,9 @@ static void BgGraphicSet( GURU2RC_WORK * wk, ARCHANDLE* p_handle )
   // ------下画面用BGリソース転送---------
   // サブ画面パレット転送
 
-  GFL_ARC_UTIL_TransVramPalette( ARCID_C_GEAR, NARC_c_gear_c_gear_NCLR,  PALTYPE_SUB_BG,  0, 32*11,   HEAPID_GURU2 );
+  GFL_ARC_UTIL_TransVramPalette( ARCID_C_GEAR, NARC_c_gear_c_gear_m_NCLR,  PALTYPE_SUB_BG,  0, 32*11,   HEAPID_GURU2 );
   // サブ画面キャラ転送
-  GFL_ARC_UTIL_TransVramBgCharacter( ARCID_C_GEAR, NARC_c_gear_c_gear_NCGR,   GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_GURU2);
+  GFL_ARC_UTIL_TransVramBgCharacter( ARCID_C_GEAR, NARC_c_gear_c_gear_m1_NCGR,   GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_GURU2);
   // サブ画面スクリーンキャラ転送
   GFL_ARC_UTIL_TransVramScreen(      ARCID_C_GEAR, NARC_c_gear_c_gear01_n_NSCR, GFL_BG_FRAME2_S, 0, 0, 0, HEAPID_GURU2);
 

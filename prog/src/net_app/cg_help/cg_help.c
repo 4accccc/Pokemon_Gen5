@@ -401,7 +401,7 @@ static void CG_HELP_LoadResource( CG_HELP_WORK *work )
     arcHandle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR , work->heapId );
 
     work->cellResIdx[CHCR_CGEAR_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle , 
-          NARC_c_gear_c_gear_obj_NCLR , CLSYS_DRAW_SUB , 
+          NARC_c_gear_c_gear_m_obj_NCLR, CLSYS_DRAW_SUB , 
           0 , 0 , 15 , work->heapId  );
     work->cellResIdx[CHCR_CGEAR_NCG] = GFL_CLGRP_CGR_Register( arcHandle , 
           NARC_c_gear_c_gear_obj_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
@@ -411,7 +411,7 @@ static void CG_HELP_LoadResource( CG_HELP_WORK *work )
     //通信マーク用背景キャラ
     GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_c_gear_c_gear_NCGR ,
                       CG_HELP_FRAME_ICON , 0 , 0, FALSE , work->heapId );
-    work->commIconPltRes = GFL_ARCHDL_UTIL_LoadPalette( arcHandle , NARC_c_gear_c_gear_NCLR , &work->commIconPlt , work->heapId );
+    work->commIconPltRes = GFL_ARCHDL_UTIL_LoadPalette( arcHandle , NARC_c_gear_c_gear_m_NCLR, &work->commIconPlt , work->heapId );
     GFL_ARC_CloseDataHandle( arcHandle );
   }
   //OBJ初期化
