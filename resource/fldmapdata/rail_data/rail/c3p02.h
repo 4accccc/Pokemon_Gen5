@@ -14,3 +14,7 @@
 #define LINE_LINK34 (10)
 #define div_11_RE_LINE_0 (11)
 #define RE_LINE_6 (12)
+#define div_13_RE_LINE_1 (13)
+#define div_14_RE_LINE_3 (14)
+#define div_15_RE_LINE_5 (15)
+#define div_16_RE_LINE_7 (16)
