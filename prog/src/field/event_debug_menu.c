@@ -5879,7 +5879,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardPoke( DEBUG_MENU_EVENT_WORK *p_wk )
 {
   DOWNLOAD_GIFT_DATA  dl_data;
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
-  MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, GFL_HEAPID_APP );
+  MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, MYSTERYDATA_LOADTYPE_NORMAL,GFL_HEAPID_APP );
   GIFT_PACK_DATA  data;
   int i;
 
@@ -5922,7 +5922,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardItem( DEBUG_MENU_EVENT_WORK *p_wk )
 {
   DOWNLOAD_GIFT_DATA  dl_data;
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
-  MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, GFL_HEAPID_APP );
+  MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, MYSTERYDATA_LOADTYPE_NORMAL,GFL_HEAPID_APP );
   GIFT_PACK_DATA  data;
   int i;
 
@@ -5963,7 +5963,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardGPower( DEBUG_MENU_EVENT_WORK *p_wk
 {
   DOWNLOAD_GIFT_DATA  dl_data;
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
-  MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, GFL_HEAPID_APP );
+  MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, MYSTERYDATA_LOADTYPE_NORMAL, GFL_HEAPID_APP );
   GIFT_PACK_DATA  data;
   int i;
 
@@ -6004,7 +6004,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardGLiberty( DEBUG_MENU_EVENT_WORK *p_
 { 
   DOWNLOAD_GIFT_DATA  dl_data;
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(p_wk->gdata);
-  MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, GFL_HEAPID_APP );
+  MYSTERY_DATA *p_mystery_sv  = MYSTERY_DATA_Load( pSave, MYSTERYDATA_LOADTYPE_NORMAL, GFL_HEAPID_APP );
   GIFT_PACK_DATA  data;
   int i;
 

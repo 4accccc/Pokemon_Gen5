@@ -114,7 +114,7 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
   GIFT_PACK_DATA aGpd;
 
   //2010412不思議な贈り物セーブデータ取得関数がalloc,free式に変わりましたので置き換えましたnagihashi
-  MYSTERY_DATA * fd = MYSTERY_DATA_Load( GAMEDATA_GetSaveControlWork( gamedata ), heapID );
+  MYSTERY_DATA * fd = MYSTERY_DATA_Load( GAMEDATA_GetSaveControlWork( gamedata ), MYSTERYDATA_LOADTYPE_NORMAL, heapID );
   int index;
   GIFT_PACK_DATA * gpd = FIELD_MYSTERYDATA_GetGiftData( fd, &index, &aGpd );
   u8 gift_type = FIELD_MYSTERYDATA_GetGiftType( fd );

@@ -580,7 +580,7 @@ static GFL_PROC_RESULT MYSTERY_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 
   p_wk->p_gamedata  = GAMEDATA_Create( HEAPID_MYSTERYGIFT );
 
-  p_wk->p_sv    = MYSTERY_DATA_Load( GAMEDATA_GetSaveControlWork(p_wk->p_gamedata), HEAPID_MYSTERYGIFT );
+  p_wk->p_sv    = MYSTERY_DATA_Load( GAMEDATA_GetSaveControlWork(p_wk->p_gamedata), MYSTERYDATA_LOADTYPE_AUTO, HEAPID_MYSTERYGIFT );
 
   //セーブデータをクリア
 #ifdef MYSTERY_SAVEDATA_CLEAR

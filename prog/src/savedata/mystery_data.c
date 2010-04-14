@@ -40,7 +40,7 @@ struct _MYSTERY_DATA
  *    全て関数で取得してから使うようにしてください
  */
 //=============================================================================
-static void MysteryData_Init( MYSTERY_DATA *p_wk, SAVE_CONTROL_WORK *p_sv, HEAPID heapID );
+static void MysteryData_Init( MYSTERY_DATA *p_wk, SAVE_CONTROL_WORK *p_sv, MYSTERYDATA_LOADTYPE type, HEAPID heapID );
 static void MysteryData_Exit( MYSTERY_DATA *p_wk );
 static MYSTERY_DATA_TYPE MysteryData_GetDataType( const MYSTERY_DATA *cp_wk );
 static u32 MysteryData_GetWorkSize( const MYSTERY_DATA *cp_wk );
@@ -557,17 +557,18 @@ MYSTERY_DATA * SaveData_GetMysteryData(SAVE_CONTROL_WORK * sv)
  *	@brief  不思議な贈り物セーブデータを作成
  *
  *	@param	SAVE_CONTROL_WORK *p_sv   セーブコントロールワーク
+ *	@param  type                      読み込みタイプ
  *	@param	heapID                    ヒープID
  *
  *	@return MYSTERY_DATA
  */
 //-----------------------------------------------------------------------------
-MYSTERY_DATA * MYSTERY_DATA_Load( SAVE_CONTROL_WORK *p_sv, HEAPID heapID )
+MYSTERY_DATA * MYSTERY_DATA_Load( SAVE_CONTROL_WORK *p_sv, MYSTERYDATA_LOADTYPE type, HEAPID heapID )
 { 
   MYSTERY_DATA *p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(MYSTERY_DATA) );
   GFL_STD_MemClear( p_wk, sizeof(MYSTERY_DATA) );
 
-  MysteryData_Init( p_wk, p_sv, heapID );
+  MysteryData_Init( p_wk, p_sv, type, heapID );
 
   return p_wk;
 }
@@ -624,15 +625,32 @@ MYSTERY_DATA_TYPE MYSTERY_DATA_GetDataType( const MYSTERY_DATA *fd )
  *
  *	@param	MYSTERY_DATA *p_wk  ワーク
  *	@param	*p_sv               セーブデータ
+ *	@param  type                読み込みタイプ
  *	@param  HEAPID              ヒープID
  */
 //-----------------------------------------------------------------------------
-static void MysteryData_Init( MYSTERY_DATA *p_wk, SAVE_CONTROL_WORK *p_sv, HEAPID heapID )
+static void MysteryData_Init( MYSTERY_DATA *p_wk, SAVE_CONTROL_WORK *p_sv, MYSTERYDATA_LOADTYPE type, HEAPID heapID )
 { 
+  BOOL is_normal_sv_use;
+
   GFL_STD_MemClear( p_wk, sizeof(MYSTERY_DATA) );
 
+  //ロードタイプ
+  switch( type )
+  { 
+  case MYSTERYDATA_LOADTYPE_NORMAL:  //通常セーブ
+    is_normal_sv_use  = TRUE;
+    break;
+  case MYSTERYDATA_LOADTYPE_AUTO:    //通常セーブと管理外セーブの自動判別モード
+    is_normal_sv_use  = SaveData_GetExistFlag( p_sv);
+    break;
+  default:
+    is_normal_sv_use  = TRUE;
+    GF_ASSERT(0)
+  }
+
   //通常セーブデータがあるかどうか
-  if( SaveData_GetExistFlag( p_sv) )
+  if( is_normal_sv_use )
   {
     OS_TPrintf( "!!! 不思議な贈り物通常セーブデータで起動 !!!\n" );
 

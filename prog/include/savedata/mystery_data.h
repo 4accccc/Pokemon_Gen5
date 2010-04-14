@@ -212,14 +212,17 @@ typedef struct _MYSTERY_DATA MYSTERY_DATA;
  *
  *        以下関数を使い、ALLOCとFREEをすること。
  *
- *        ※もしかすると後々自動判別ではなくて、指定したいときがあるかもしれないので
- *        そのときはMYSTERY_DATA_LoadEx的な関数を作り、引数でMYSTERY_DATA_TYPEを与えて
- *        読み込むようなものを作るとよいかもしれません
  */
 //------------------------------------------------------------------
 //extern MYSTERY_DATA * SaveData_GetMysteryData(SAVE_CONTROL_WORK * sv);
 
-extern MYSTERY_DATA * MYSTERY_DATA_Load( SAVE_CONTROL_WORK *p_sv, HEAPID heapID );
+typedef enum
+{ 
+  MYSTERYDATA_LOADTYPE_NORMAL,  //通常セーブを見に行く
+  MYSTERYDATA_LOADTYPE_AUTO,    //通常セーブと管理外セーブの自動判別（ここは不思議なおくりもの画面でしか使わない）
+  //管理外だけみに行くモードは不必要なので作成していない
+}MYSTERYDATA_LOADTYPE;
+extern MYSTERY_DATA * MYSTERY_DATA_Load( SAVE_CONTROL_WORK *p_sv, MYSTERYDATA_LOADTYPE type, HEAPID heapID );
 extern void MYSTERY_DATA_UnLoad( MYSTERY_DATA *p_wk );
 
 //------------------------------------------------------------------
