@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T22:04:14"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T12:15:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1308" top="183" right="2013" bottom="811" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -365,14 +365,14 @@
 ・続けてleader_02</comment>
 		<attribute name="キャラクター">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『……りふじん　です▼
-はしを　おろしてくださって
-かんしゃ　していますけれど▽
-それとは　むかんけい　ですよね▼</language>
+		<language name="JPN" width="256">チェレン『……メンドーだな▼
+はしを　おろしてくれて
+かんしゃは　しているけれど▽
+それとは　むかんけい　だよね？▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……理不尽です▼
-橋を　おろしてくださって
-感謝していますけれど▽
-それとは　無関係ですよね▼</language>
+橋を　おろしてくれて
+感謝は　しているけれど▽
+それとは　無関係だよね？▼</language>
 	</row>
 
 	<row id="msg_c05_leader_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -422,13 +422,13 @@
 		<language name="JPN" width="256">チェレン『わかりました▼
 いわれなくても
 プラズマだんは　さがしますよ▼
-ああいう　れんちゅうは
-ほうっておけないし……▼</language>
+メンドーな　れんちゅうを　たおしつつ
+つよくなれる　からね……▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『わかりました▼
 いわれなくても
 プラズマ団は　探しますよ▼
-ああいう　連中は
-放っておけないし……▼</language>
+メンドーな　連中を　倒しつつ
+強くなれるからね……▼</language>
 	</row>
 
 	<row id="msg_c05_black_03a" text-color="#ff0000,,,#000000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,,,,,,,,,,,,,,">
@@ -630,18 +630,22 @@
 まちなかでの　あらそいは　さけたか▼
 それにしても　あの　ゲーチス
 ただもの　じゃないって　かんじだ▼
-ふう……　ちょっと
-あたりを　けんがく　してくる▼
-ホドモエまで　きたのに　まだ
-れいとうコンテナしか　しらないし▼</language>
+……さてと　ぼくは
+ポケモンを　きたえてくるよ▼
+あの　ヤーコンって　ひとには
+ぜったい　まけたくないからね▼
+というか　かんぜん　しょうりで
+ジムバッジを　もらうよ▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……お互いに
 街中での　争いは　避けたか▼
 それにしても　あの　ゲーチス
 ただもの　じゃないって　感じ▼
-ふう……　ちょっと
-あたりを　見学してくる▼
-ホドモエまで　来たのに
-まだ　冷凍コンテナしか　知らないし▼</language>
+……さてと　ぼくは
+ポケモンを　鍛えてくるよ▼
+あの　ヤーコンって　人には
+絶対　負けたくないからね▼
+というか　完全勝利で
+ジムバッジを　もらうよ▼</language>
 	</row>
 
 	<row id="msg_c05_workman1_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
