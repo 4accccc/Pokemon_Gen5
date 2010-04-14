@@ -170,6 +170,7 @@ _EVENT_DATA ev_fld_item_20
 _EVENT_DATA ev_fld_item_21
 _EVENT_DATA ev_fld_item_17
 _EVENT_DATA ev_fld_item_18
+_EVENT_DATA ev_fld_item_282
 _EVENT_DATA ev_fld_item_90
 _EVENT_DATA ev_fld_item_91
 _EVENT_DATA ev_fld_item_92
@@ -1406,6 +1407,13 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_18
   _FLD_ITEM_EVENT ITEM_KAIHUKUNOKUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d09 X=408 Y=120 ITEM=‚È‚ñ‚Å‚à‚È‚¨‚µ FLAG=282
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_282
+  _FLD_ITEM_EVENT ITEM_NANDEMONAOSI,1
 EVENT_END
 
 //--------------------------------------------------------------
