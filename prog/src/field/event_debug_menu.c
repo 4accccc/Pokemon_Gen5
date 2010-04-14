@@ -6905,7 +6905,9 @@ static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_SymbolPokeList( DEBUG_MENU_EVENT_WORK *wk )
 {
-  GMEVENT * new_event = EVENT_DEBUG_SymbolPokeList( wk );
+  GMEVENT * new_event;
+  new_event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+    FS_OVERLAY_ID( debug_symbol ), EVENT_DEBUG_SymbolPokeList, wk );
   GMEVENT_ChangeEvent( wk->gmEvent, new_event );
 
   return TRUE;

@@ -8,6 +8,8 @@
  *
  */
 //======================================================================
+#ifdef  PM_DEBUG
+
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
@@ -99,8 +101,9 @@ static const DEBUG_MENU_INITIALIZER DebugSubSymbolPokeListSelectData = {
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-GMEVENT * EVENT_DEBUG_SymbolPokeList( DEBUG_MENU_EVENT_WORK * wk )
+GMEVENT * EVENT_DEBUG_SymbolPokeList( GAMESYS_WORK * gsys, void * vwk )
 {
+  DEBUG_MENU_EVENT_WORK * wk = vwk;
   DEBUG_MENU_EVENT_WORK   *new_work;
   GMEVENT * new_event;
   new_event = GMEVENT_Create(
@@ -690,3 +693,4 @@ static GMEVENT_RESULT debugMenuSymbolpokeCreate( GMEVENT *event, int *seq, void 
 //======================================================================
 //======================================================================
 
+#endif  //  PM_DEBUG

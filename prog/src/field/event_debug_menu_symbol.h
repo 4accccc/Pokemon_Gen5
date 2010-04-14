@@ -8,4 +8,7 @@
 //======================================================================
 
 #pragma once
-extern GMEVENT * EVENT_DEBUG_SymbolPokeList( DEBUG_MENU_EVENT_WORK * wk );
+
+
+FS_EXTERN_OVERLAY( debug_symbol );
+extern GMEVENT * EVENT_DEBUG_SymbolPokeList( GAMESYS_WORK * gsys, void * vwk );
