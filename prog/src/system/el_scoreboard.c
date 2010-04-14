@@ -87,13 +87,22 @@ typedef struct {
 
 #define COL_B1  (0x18C6)
 #define COL_B2  (0x2108)
-#define COL_F1  (0x021F)
-#define COL_F2  (0x031F)
+#define COL_L1  (0x021F)
+#define COL_L2  (0x031F)
+#define COL_S1  (0x0D73)
+#define COL_S2  (0x0DF3)
 
-static const u16 plttData0[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B1, COL_B2, COL_F1 };
-static const u16 plttData1[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_F1 };
-static const u16 plttData2[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B1, COL_B2, COL_F2 };
-static const u16 plttData3[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_F2 };
+#if 0
+static const u16 plttData0[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B1, COL_B2, COL_L1 };
+static const u16 plttData1[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_L1 };
+static const u16 plttData2[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B1, COL_B2, COL_L2 };
+static const u16 plttData3[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_B1, COL_L2 };
+#else
+static const u16 plttData0[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B1, COL_S1, COL_L1 };
+static const u16 plttData1[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_S1, COL_L1 };
+static const u16 plttData2[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B1, COL_S2, COL_L2 };
+static const u16 plttData3[PLTT_SIZ/COL_SIZ] = { 0x0000, COL_B2, COL_S2, COL_L2 };
+#endif
 
 static const u16* plttData[] = { plttData0, plttData1, plttData2, plttData3 };
 #if 0
@@ -101,6 +110,7 @@ static const u16* plttData[] = { plttData0, plttData1, plttData2, plttData3 };
 #define BCOL2 (0)
 #endif
 
+#define SCOL	(2)
 #define LCOL  (3)
 static void anmElboard(EL_SCOREBOARD_ANMDATA* anmData, int timer);
 
@@ -150,7 +160,7 @@ EL_SCOREBOARD* ELBOARD_Add( const STRBUF* str, const ELB_MODE mode, HEAPID heapI
   PRINTSYS_LSB  lsb;
   elb->mode = mode;
 
-  lsb = PRINTSYS_LSB_Make(LCOL,0,0);
+  lsb = PRINTSYS_LSB_Make(LCOL,SCOL,0);
   F2T_CopyStringAlloc( NULL, str, 0, 2, lsb, heapID, &f2t_work );
 
   elb->texSizIdxS = f2t_work.texSizIdxS;
@@ -408,7 +418,7 @@ EL_SCOREBOARD_TEX*  ELBOARD_TEX_Add_Ex(
   elb_tex->texOffset = INVALID_DATA;
   elb_tex->plttOffset = INVALID_DATA;
 #if 1
-  lsb = PRINTSYS_LSB_Make(LCOL,0,0);
+  lsb = PRINTSYS_LSB_Make(LCOL,SCOL,0);
   rc = F2T_CopyString(g3Dtex, tex_name, NULL, plt_name, str, xpos, ypos, lsb, heapID, &f2t_work );
   if (rc)
   {
@@ -573,7 +583,7 @@ static void printStr
       (const STRBUF* str, u16 xpos, u16 ypos, GFL_BMP_DATA* bmp,
        PRINT_QUE* printQue, GFL_FONT* fontHandle)
 {
-  PRINTSYS_LSB  lsb = PRINTSYS_LSB_Make(LCOL,0,0);
+  PRINTSYS_LSB  lsb = PRINTSYS_LSB_Make(LCOL,SCOL,0);
   clearBitmap(bmp);
 
   PRINTSYS_PrintQueColor(printQue, bmp, xpos, ypos, str, fontHandle, lsb);
