@@ -294,12 +294,12 @@ EVENT_START ev_union
     _BMPMENU_START() 
     // 選択結果で分岐
     SWITCH $ret 
-    CASE msg_pc_union_menu_yes THEN //-------『はい』
+    CASE msg_pc_union_menu_yes THEN //『はい』
      $room_in = TRUE
      _BEACON_SET_REQ_UNION_COUNTER()
-    CASE msg_pc_union_menu_no THEN //--------『いいえ』
+    CASE msg_pc_union_menu_no THEN //『いいえ』
       $room_in = FALSE
-    CASE msg_pc_union_menu_explain THEN //---『せつめいをきく』
+    CASE msg_pc_union_menu_explain THEN //『せつめいをきく』
       $explain = TRUE 
     ENDSWITCH
   ENDIF
