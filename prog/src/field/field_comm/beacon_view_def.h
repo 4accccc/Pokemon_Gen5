@@ -71,6 +71,7 @@ typedef enum{
 
 ///パレット展開位置
 #define FONT_PAL_POPUP    (1)
+#define FONT_PAL_LOGNUM   (4)   //ログ人数表示bmp パレット
 #define BG_PAL_LOCALIZE   (12)  //ローカライズ用空きパレット
 #define FONT_PAL          (13)  //フォントパレット占有
 #define BG_PAL_TASKMENU   (14)  //TaskMenuが2本占有
@@ -93,6 +94,8 @@ typedef enum{
 #define FCOL_POPUP_MAIN (1)
 #define FCOL_POPUP_SDW  (2)
 #define FCOL_POPUP      ( PRINTSYS_MACRO_LSB(FCOL_POPUP_MAIN,FCOL_POPUP_SDW,FCOL_POPUP_BASE))  //BGポップアップ
+#define FCOL_LOGNUM_BASE  (1)
+#define FCOL_LOGNUM     ( PRINTSYS_MACRO_LSB(15,14,FCOL_LOGNUM_BASE))  //ログ人数表示
 
 ///名前を灰色表示するまで経過時間
 #define BEACON_TIMEOUT_FRAME  (3*60*60) //60sec*3
@@ -156,16 +159,9 @@ typedef enum{
 //BMP関連
 
 //パネルメッセージ表示oamウィンドウ
-#define BMP_PANEL_OAM_SX  (15)  //パネルOAM
+#define BMP_PANEL_OAM_SX  (12)  //パネルOAM
 #define BMP_PANEL_OAM_SY  (2)
 
-//ログ数表示oamウィンドウ
-#define BMP_LOGNUM_OAM_PX (4)
-#define BMP_LOGNUM_OAM_PY (8*19)
-#define BMP_LOGNUM_OAM_SX (6)   //ログ数表示OAM
-#define BMP_LOGNUM_OAM_SY (2)
-#define BMP_LOGNUM_OAM_BGPRI  (3)
-#define BMP_LOGNUM_OAM_SPRI   (0)
 //ポップアップウィンドウ
 #define BMP_POPUP_PX (2)
 #define BMP_POPUP_PY (22)
@@ -180,10 +176,18 @@ typedef enum{
 #define BMP_MENU_SY  (3)
 #define BMP_MENU_FRM (FRM_MENUMSG)
 #define BMP_MENU_PAL (FONT_PAL)
+//ログ数表示ウィンドウ
+#define BMP_LOGNUM_PX (0)
+#define BMP_LOGNUM_PY (19)
+#define BMP_LOGNUM_SX (6)   //ログ数表示OAM
+#define BMP_LOGNUM_SY (2)
+#define BMP_LOGNUM_FRM (FRM_BACK)
+#define BMP_LOGNUM_PAL (FONT_PAL_LOGNUM)
 
 enum{
  WIN_POPUP,
  WIN_MENU,
+ WIN_LOGNUM,
  WIN_MAX,
 };
 

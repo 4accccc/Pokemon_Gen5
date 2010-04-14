@@ -119,7 +119,6 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
   BEACON_VIEW* wk;
   
   wk = GFL_HEAP_AllocClearMemory(HEAPID_FIELD_SUBSCREEN, sizeof(BEACON_VIEW));
-//  wk = GFL_HEAP_AllocClearMemory(HEAPID_FIELDMAP, sizeof(BEACON_VIEW));
   wk->gsys = gsys;
   wk->gdata = GAMESYSTEM_GetGameData(gsys);
   wk->fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
@@ -139,7 +138,6 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
   _sub_ActorResourceLoad(wk, wk->arc_handle);
   _sub_ActorCreate(wk, wk->arc_handle);
   _sub_BmpWinCreate(wk);
-  
  
   //初期描画
   BeaconView_InitialDraw( wk );
@@ -261,25 +259,27 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
 //==================================================================
 void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
 {
-  #ifdef PM_DEBUG
-  int before_seq = wk->seq;
-  OSTick s_tick = OS_GetTick();
-  #endif
+#ifdef PM_DEBUG
+  OSTick s_tick,e_tick,t_tick;  // = OS_GetTick();
+#endif
+  
+#ifdef PM_DEBUG
+  s_tick = OS_GetTick();
+#endif
 
   GFL_TCBL_Main( wk->pTcbSys );
+  
+#ifdef PM_DEBUG
+  e_tick = OS_GetTick();
+  t_tick = e_tick-s_tick;
+  if( t_tick > 100 ){
+    IWASAWA_Printf("BeaconView Draw tick %d\n",  t_tick );
+  }
+#endif
 
   //スタックテーブル更新
   GAMEBEACON_Stack_Update( wk->infoStack );
   
-
-  #ifdef PM_DEBUG
-  {
-    OSTick tick = OS_GetTick()-s_tick;
-    if( tick > 100 ){
-      IWASAWA_Printf("BeaconView Draw tick = %d\n", tick );
-    }
-  }
-  #endif
 
 //  BEACON_VIEW_TouchUpdata( wk );
 }
@@ -380,7 +380,7 @@ static int seq_Main( BEACON_VIEW_PTR wk )
       return SEQ_MAIN;
     }
   }
-  wk->io_interval = 30*5; //インターバルを設定
+  wk->io_interval = 30*3; //インターバルを設定
   return SEQ_VIEW_UPDATE;
 }
 
@@ -998,29 +998,12 @@ static void bmpwin_Add( BMP_WIN* win, u8 frm, u8 pal, u8 px, u8 py, u8 sx, u8 sy
 //--------------------------------------------------------------
 static void _sub_BmpWinCreate(BEACON_VIEW_PTR wk)
 {
-	BMPOAM_ACT_DATA	finit;
-  
   bmpwin_Add( &wk->win[WIN_POPUP],
       BMP_POPUP_FRM, BMP_POPUP_PAL, BMP_POPUP_PX, BMP_POPUP_PY,BMP_POPUP_SX, BMP_POPUP_SY );
   bmpwin_Add( &wk->win[WIN_MENU],
       BMP_MENU_FRM, BMP_MENU_PAL, BMP_MENU_PX, BMP_MENU_PY,BMP_MENU_SX, BMP_MENU_SY );
-
-  //人数表示
- 	wk->foamLogNum.bmp = GFL_BMP_Create( BMP_LOGNUM_OAM_SX, BMP_LOGNUM_OAM_SY, GFL_BMP_16_COLOR, wk->heap_sID );
-
-	finit.bmp = wk->foamLogNum.bmp;
-	finit.x = BMP_LOGNUM_OAM_PX;
-	finit.y = BMP_LOGNUM_OAM_PY;
-	finit.pltt_index = wk->objResNormal.res[OBJ_RES_PLTT].tbl[0];
-	finit.pal_offset = ACT_PAL_FONT;		// pltt_indexのパレット内でのオフセット
-	finit.soft_pri = BMP_LOGNUM_OAM_SPRI;			// ソフトプライオリティ
-	finit.bg_pri = BMP_LOGNUM_OAM_BGPRI;				// BGプライオリティ
-	finit.setSerface = ACT_RENDER_ID;
-	finit.draw_type  = CLSYS_DRAW_SUB;
-
-	wk->foamLogNum.oam = BmpOam_ActorAdd( wk->bmpOam, &finit );
-  GFL_BMP_Clear( wk->foamLogNum.bmp, 0 );
-	BmpOam_ActorBmpTrans( wk->foamLogNum.oam );
+  bmpwin_Add( &wk->win[WIN_LOGNUM],
+      BMP_LOGNUM_FRM, BMP_LOGNUM_PAL, BMP_LOGNUM_PX, BMP_LOGNUM_PY,BMP_LOGNUM_SX, BMP_LOGNUM_SY );
 }
 
 //--------------------------------------------------------------
@@ -1034,10 +1017,6 @@ static void _sub_BmpWinDelete(BEACON_VIEW_PTR wk)
 {
   int i;
 	
-  BmpOam_ActorSetDrawEnable( wk->foamLogNum.oam, FALSE );
-  BmpOam_ActorDel( wk->foamLogNum.oam );
-	GFL_BMP_Delete( wk->foamLogNum.bmp );
-  
   for(i = 0; i < WIN_MAX; i++){
     GFL_BMPWIN_Delete( wk->win[i].win );
   }

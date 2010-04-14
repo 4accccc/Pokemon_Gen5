@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-04-13T19:02:25"/>
+	<create user="iwasawa" host="W00157" date="2010-04-14T18:34:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1319" top="272" right="2024" bottom="900" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="220" right="1280" bottom="844" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -453,19 +453,19 @@
 
 	<row id="msg_beacon_004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
-とくべつな　[1:01:ポケモン種族名:1]との
+とくべつな　ポケモンとの
 せんとうを　かいし　しました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-特別な　[1:01:ポケモン種族名:1]との
+特別な　ポケモンとの
 戦闘を　開始しました！</language>
 	</row>
 
 	<row id="msg_beacon_005" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
-とくべつな　[1:01:ポケモン種族名:1]との
+とくべつな　ポケモンとの
 せんとうに　しょうりしました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-特別な　[1:01:ポケモン種族名:1]との
+特別な　ポケモンとの
 戦闘に　勝利しました！</language>
 	</row>
 
@@ -552,10 +552,10 @@
 
 	<row id="msg_beacon_015" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
-とくべつな　[1:01:ポケモン種族名:1]を
+とくべつな　ポケモンを
 つかまえました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-特別な　[1:01:ポケモン種族名:1]を
+特別な　ポケモンを
 捕まえました！</language>
 	</row>
 

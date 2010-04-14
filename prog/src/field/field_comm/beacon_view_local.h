@@ -196,13 +196,11 @@ typedef struct _BEACON_VIEW{
   OBJ_RES_TBL objResUnion;
   OBJ_RES_TBL objResIcon;
   
-  FONT_OAM   foamLogNum; //現在のログ数表示
   BMP_WIN    win[ WIN_MAX ];
  
   PANEL_WORK  panel[PANEL_MAX];
   GFL_CLWK*   pAct[ACT_MAX];
   u32 log_count;
-
 
   //リソース
   RES2D_CHAR  resCharIcon[BEACON_ICON_MAX];

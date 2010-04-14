@@ -808,9 +808,10 @@ static void print_Allput( BEACON_VIEW_PTR wk, GFL_BMP_DATA* bmp, u8 msg_id, u8 x
 static void draw_LogNumWindow( BEACON_VIEW_PTR wk )
 {
   WORDSET_RegisterNumber( wk->wordset, 0, wk->ctrl.max, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-  print_Allput( wk, wk->foamLogNum.bmp, msg_sys_lognum, 0, 0, 0, FCOL_FNTOAM_W );
-	
-  BmpOam_ActorBmpTrans( wk->foamLogNum.oam );
+  GFL_BMP_Clear( wk->win[WIN_LOGNUM].bmp, FCOL_LOGNUM_BASE );
+  print_GetMsgToBuf( wk, msg_sys_lognum );
+  PRINT_UTIL_PrintColor( &wk->win[WIN_LOGNUM].putil, wk->printQue, 4, 0, wk->str_expand, wk->fontHandle, FCOL_LOGNUM );
+  GFL_BMPWIN_MakeTransWindow( wk->win[WIN_LOGNUM].win );
 }
 
 /*
