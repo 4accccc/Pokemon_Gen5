@@ -5066,9 +5066,9 @@
 		<language name="JPN" width="256">BGM-VS-TRAINER-WIFI</language>
 		<language name="JPN_KANJI" width="256">BGM-VS-TRAINER-WIFI</language>
 	</row>
-	<row id="msg_seq_bgm_02">
-		<language name="JPN" width="256">BGM-02</language>
-		<language name="JPN_KANJI" width="256">BGM-02</language>
+	<row id="msg_seq_bgm_win6">
+		<language name="JPN" width="256">BGM-WIN6</language>
+		<language name="JPN_KANJI" width="256">BGM-WIN6</language>
 	</row>
 	<row id="msg_seq_bgm_03">
 		<language name="JPN" width="256">BGM-03</language>
@@ -8321,6 +8321,14 @@
 	<row id="msg_seq_se_lbdemo_06">
 		<language name="JPN" width="256">LBDEMO-06</language>
 		<language name="JPN_KANJI" width="256">LBDEMO-06</language>
+	</row>
+	<row id="msg_seq_se_lbdemo_07">
+		<language name="JPN" width="256">LBDEMO-07</language>
+		<language name="JPN_KANJI" width="256">LBDEMO-07</language>
+	</row>
+	<row id="msg_seq_se_lbdemo_08">
+		<language name="JPN" width="256">LBDEMO-08</language>
+		<language name="JPN_KANJI" width="256">LBDEMO-08</language>
 	</row>
 	<row id="msg_seq_se_dmy_314">
 		<language name="JPN" width="256">DMY-314</language>
