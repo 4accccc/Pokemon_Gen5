@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-04-13T21:10:16"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-14T12:44:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="230" top="358" right="930" bottom="980" maximized="no" rayout="Vertical2">
+	<dialog left="316" top="143" right="1016" bottom="765" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="532" visible="no"/>
 		<band id="0" index="0" style="0000" width="525"/>
@@ -600,6 +600,13 @@
 かしらもじを　えらんでください</language>
 		<language name="JPN_KANJI" width="256">みつけたい　ポケモンの
 頭文字を　選んでください</language>
+	</row>
+
+	<row id="POKETRADE_STR_99">
+		<language name="JPN" width="256">えらんだ　かしらもじのつく
+ポケモンは　いませんでした</language>
+		<language name="JPN_KANJI" width="256">選んだ　頭文字のつく
+ポケモンは　いませんでした</language>
 	</row>
 
 	<row id="POKETRADE_STR_53">
