@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T15:07:42"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-14T18:53:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,13 +357,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="-3" right="1999" bottom="1020" maximized="no" rayout="Vertical2">
+	<dialog left="337" top="11" right="837" bottom="1031" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="yes"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="325"/>
+		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1798,7 +1798,7 @@
 ワザマ『ワザマで　ございます……▼
 さて　うちおとす　ですが
 これは　ものを　投げまして▽
-とんでいる　相手を　地面に▽
+飛んでいる　相手を　地面に▽
 落とすと　という　古典的▽
 そして　げんしてきな　技ですね▼
 日常での　効果的な
@@ -1936,12 +1936,11 @@
 ヒウン大学　教授の▽
 ワザマ　シン　先生を▽
 お招きしたいと　思います▼
-おまねきしたいと　おもいます▼
 ワザマ『ワザマで　ございます……▼
 さて　エコーボイス　ですが
-これは　じぶんや　みかたが▽
-つづけて　つかいつづけることで▽
-いりょくの　あがる　たいへんに▽
+これは　自分や　味方が▽
+続けて　使い続けることで▽
+威力の　あがる　実に▽
 コツコツとした　技です▼
 日常での　効果的な
 使いかたと　いたしましてはね▼
