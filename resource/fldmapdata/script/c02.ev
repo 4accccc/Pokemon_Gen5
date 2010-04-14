@@ -647,7 +647,6 @@ EVENT_START   ev_scene_c02_leader02_01
 	_OBJ_ANIME(C02_SUPPORT_01, anm_common_turn_l)
    	_OBJ_ANIME_WAIT()
     
-    //【仮】ダウンジングマシンをくれる（MEなし）
 	_ITEM_EVENT_KEYWAIT(ITEM_DAUZINGUMASIN, 1)
 	
 	//サポートが喋る

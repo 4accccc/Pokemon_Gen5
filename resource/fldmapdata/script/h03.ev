@@ -500,7 +500,7 @@ EVENT_START    ev_h03_badrider1_02
 				//タイムフラグを操作する
 				_FLAG_SET(TMFLG_H03_EMPEROR_BTL)
 				
-				//【仮】手持ちポケモンの種族名を取得する処理				
+				//手持ちポケモンの種族名を取得する処理				
 				_GET_PARTY_FRONT_POKEMON( LWK_POKE_POS, POKECOUNT_MODE_BATTLE_ENABLE )
 				_GET_PARTY_POKE_MONSNO( WK_OTHER_EMPEROR_MONSNUM, LWK_POKE_POS )
 				
