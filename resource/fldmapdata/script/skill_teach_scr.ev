@@ -54,7 +54,6 @@ sub_waza_teacher_dragon:
 {
     _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_01w, msg_skillteach_dragon_01b, SCWK_TARGET_OBJID, POS_DEFAULT )
     _YES_NO_WIN( SCWK_ANSWER )
-    _BALLOONWIN_CLOSE()
 
     IF $SCWK_ANSWER == SCR_NO THEN
         _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_02w, msg_skillteach_dragon_02b, SCWK_TARGET_OBJID, POS_DEFAULT )
@@ -78,6 +77,7 @@ sub_waza_teacher_dragon:
         _RET
     ENDIF
 
+    _BALLOONWIN_CLOSE()
     //ポケモン選択
     _SKILLTEACH_SELECT_POKEMON( SCR_SKILLTEACH_MODE_DRAGON, SCWK_ANSWER, select_pos )
     IF $SCWK_ANSWER == FALSE THEN
@@ -153,7 +153,6 @@ EVENT_END
 sub_waza_teacher_powerful:
     _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_01 )
     _YES_NO_WIN( SCWK_ANSWER )
-    _BALLOONWIN_CLOSE()
 
     IF $SCWK_ANSWER == SCR_NO THEN
         _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_04 )
@@ -177,6 +176,7 @@ sub_waza_teacher_powerful:
         _RET
     ENDIF
 
+    _BALLOONWIN_CLOSE()
     //ポケモン選択
     _SKILLTEACH_SELECT_POKEMON( SCR_SKILLTEACH_MODE_STRONGEST, SCWK_ANSWER, select_pos )
     IF $SCWK_ANSWER == FALSE THEN
@@ -228,7 +228,6 @@ sub_waza_teacher_powerful:
     _WAZA_NAME( 1, teach_waza_id )
     _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_10 )
     _YES_NO_WIN( SCWK_ANSWER )
-    _BALLOONWIN_CLOSE()
     IF $SCWK_ANSWER == SCR_NO THEN
         _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_04 )
         _LAST_KEYWAIT()
@@ -236,6 +235,7 @@ sub_waza_teacher_powerful:
         _RET
     ENDIF
 
+    _BALLOONWIN_CLOSE()
     //$teach_waza_id = WAZANO_RYUUSEIGUN
     _CALL sub_skillteacher_system
 
@@ -263,14 +263,13 @@ EVENT_END
 /**************************************************************/
 /**************************************************************/
 sub_waza_teacher_coalescence:
-    IF FLAG_OFF( FH_01 ) THEN
+    IF FLAG_OFF( FE_TEACH_COALESCENCE_TALK ) THEN
         _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_01 )
-        _FLAG_SET( FH_01 )
+        _FLAG_SET( FE_TEACH_COALESCENCE_TALK )
     ELSE
         _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_02 )
     ENDIF
     _YES_NO_WIN( SCWK_ANSWER )
-    _BALLOONWIN_CLOSE()
 
     IF $SCWK_ANSWER == SCR_NO THEN
         _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_04 )
@@ -294,6 +293,9 @@ sub_waza_teacher_coalescence:
         _RET
     ENDIF
 
+    //どのポケモンに技を覚えさせるん？
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_05 )
+    _BALLOONWIN_CLOSE()
     //ポケモン選択
     _SKILLTEACH_SELECT_POKEMON( SCR_SKILLTEACH_MODE_COALESCENCE, SCWK_ANSWER, select_pos )
     IF $SCWK_ANSWER == FALSE THEN
@@ -345,7 +347,6 @@ sub_waza_teacher_coalescence:
     _WAZA_NAME( 1, teach_waza_id )
     _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_10 )
     _YES_NO_WIN( SCWK_ANSWER )
-    _BALLOONWIN_CLOSE()
     IF $SCWK_ANSWER == SCR_NO THEN
         _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_coalescence_04 )
         _LAST_KEYWAIT()
@@ -353,6 +354,7 @@ sub_waza_teacher_coalescence:
         _RET
     ENDIF
 
+    _BALLOONWIN_CLOSE()
     //$teach_waza_id = WAZANO_RYUUSEIGUN
     _CALL sub_skillteacher_system
 
@@ -400,10 +402,10 @@ sub_skillteacher_system:
 
     _TEMOTI_NICK_NAME( 0, select_pos )
     _WAZA_NAME( 1, teach_waza_id )
-    _SYSWIN_MSG( msg_skillteach_system_01 , POS_DOWN )
     _ME_PLAY( SEQ_ME_LVUP )
-    _AB_KEYWAIT()
+    _SYSWIN_MSG( msg_skillteach_system_01 , POS_DEFAULT )
     _ME_WAIT()
+    _AB_KEYWAIT_MARK()
     _SYSWIN_CLOSE()
 
     _SET_TEMOTI_WAZA( select_pos , SCWK_ANSWER , teach_waza_id )
@@ -439,15 +441,14 @@ sub_skillteacher_system:
 sub_skillteacher_wasure_ask_retire:
   //"それでは　～をおぼえさせるのをあきらめますか？"
   _WAZA_NAME( 0, teach_waza_id )
-  _SYSWIN_MSG( msg_skillteach_system_03 , POS_DOWN )
+  _SYSWIN_MSG( msg_skillteach_system_03 , POS_DEFAULT )
   _YES_NO_WIN( SCWK_ANSWER )
-  _SYSWIN_CLOSE()
 
   IF $SCWK_ANSWER == SCR_YES THEN
     //"～は　～を　おぼえずにおわった！"
     _TEMOTI_NICK_NAME( 0, select_pos )
     _WAZA_NAME( 1, teach_waza_id )
-    _SYSWIN_MSG( msg_skillteach_system_04 , POS_DOWN )
+    _SYSWIN_MSG( msg_skillteach_system_04 , POS_DEFAULT )
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
     $user_result = TRUE //終了
@@ -465,14 +466,14 @@ sub_skillteacher_wasure_core:
 		//"あたらしくおぼえたい…しかしすでに～"
     _TEMOTI_NICK_NAME( 0, select_pos )
     _WAZA_NAME( 1, teach_waza_id )
-		_SYSWIN_MSG( msg_skillteach_system_02 , POS_DOWN )
+		_SYSWIN_MSG( msg_skillteach_system_02 , POS_DEFAULT )
     _YES_NO_WIN( SCWK_ANSWER )
-		_SYSWIN_CLOSE()
     IF $SCWK_ANSWER == SCR_NO THEN
       _RET
     ENDIF
-		
-		_SELECT_WAZA_TEMOTI_POKE( SCWK_ANSWER , waza_pos , select_pos , 0 )
+    
+    _SYSWIN_CLOSE()
+    _SELECT_WAZA_TEMOTI_POKE( SCWK_ANSWER , waza_pos , select_pos , 0 )
     IF $SCWK_ANSWER == FALSE THEN
       _RET
     ENDIF
@@ -480,10 +481,8 @@ sub_skillteacher_wasure_core:
     _GET_TEMOTI_WAZA_ID( waza_id , select_pos , waza_pos )
     _WAZA_NAME( 0 , waza_id )
     //"～をわすれさせて　よろしいですね？"
-    _SYSWIN_MSG( msg_skillteach_system_05 , POS_DOWN )
-    //_SYSWIN_MSG( msg_skillteach_system_05 , POS_DOWN )
+    _SYSWIN_MSG( msg_skillteach_system_05 , POS_DEFAULT )
     _YES_NO_WIN( SCWK_ANSWER )
-    _SYSWIN_CLOSE()
 
     IF $SCWK_ANSWER == SCR_NO THEN
       _RET
@@ -494,10 +493,10 @@ sub_skillteacher_wasure_core:
     _WAZA_NAME( 1 , waza_id )
     _WAZA_NAME( 2 , teach_waza_id )
     //"1　２　のポカン！"
-    _SYSWIN_MSG( msg_skillteach_system_06 , POS_DOWN )
+    _SYSWIN_MSG( msg_skillteach_system_06 , POS_DEFAULT )
     _ME_PLAY( SEQ_ME_LVUP )
-    _AB_KEYWAIT()
     _ME_WAIT()
+    _AB_KEYWAIT_MARK()
     _SYSWIN_CLOSE()
     
     _SET_TEMOTI_WAZA( select_pos , waza_pos , teach_waza_id )
