@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ica version="1.6.0">
+
+<head>
+	<create user="fuchino" host="W00152" date="2010-04-14T18:00:08" source="c03_ship_02_ica.mb"/>
+	<title>Character Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<node_anm_info
+	frame_size="120"
+	scaling_rule="standard"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tool_end_frame="120"
+	interpolation="frame"
+	compress_node="merge" node_size="1 1"
+	frame_step_mode="1"
+	tolerance_scale="0.100000"
+	tolerance_rotate="0.100000"
+	tolerance_translate="0.010000"
+/>
+
+<node_scale_data size="1">
+	1.000000
+</node_scale_data>
+
+<node_rotate_data size="1">
+	0.000000
+</node_rotate_data>
+
+<node_translate_data size="121">
+	0.000000 0.000000 0.018311 0.031006 0.040771 0.050293 0.062988 0.081299 0.108398 0.146973
+	0.199951 0.261963 0.325195 0.389648 0.455078 0.521973 0.589600 0.658203 0.727783 0.798340
+	0.869385 0.941162 1.013672 1.086426 1.159912 1.233643 1.307861 1.382324 1.456787 1.531494
+	1.606201 1.680908 1.755371 1.829834 1.903809 1.977783 2.051270 2.124268 2.196777 2.268555
+	2.339844 2.410400 2.479980 2.548828 2.616699 2.683594 2.749268 2.813721 2.877197 2.939209
+	3.000000 3.054199 3.097656 3.131348 3.156738 3.175049 3.187256 3.194580 3.198486 3.199707
+	3.199951 3.199707 3.198486 3.194580 3.187256 3.175049 3.156738 3.131348 3.097656 3.054199
+	3.000000 2.939209 2.877197 2.813477 2.748779 2.682861 2.615723 2.547607 2.478516 2.408447
+	2.337402 2.265869 2.193604 2.120605 2.047363 1.973389 1.899170 1.824707 1.750000 1.675049
+	1.600098 1.524902 1.450195 1.375244 1.300781 1.226563 1.152588 1.079346 1.006348 0.934082
+	0.862549 0.791748 0.721680 0.652344 0.584229 0.517090 0.451172 0.386475 0.322998 0.260742
+	0.199951 0.147705 0.108887 0.081299 0.062500 0.050049 0.041504 0.034912 0.027100 0.016357
+	0.000000
+</node_translate_data>
+
+<node_anm_array size="1">
+	<node_anm index="0">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="120" data_head="1"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+</node_anm_array>
+
+</body>
+
+</ica>
