@@ -29,6 +29,8 @@
 #include "backup_erase.h"
 #include "title_def.h"
 
+#include "savedata/save_outside.h"
+
 
 //============================================================================================
 //	定数定義
@@ -131,6 +133,10 @@ const GFL_PROC_DATA BACKUP_ERASE_ProcData = {
   BackupEraseProc_End,
 };
 
+//--------------------------------------------------------------
+//  
+//--------------------------------------------------------------
+FS_EXTERN_OVERLAY(outside_save);
 
 
 
@@ -380,6 +386,11 @@ static void MainSeq_ActionMessage( BACKUP_ERASE_WORK * wk, int * seq )
 		SAVE_CONTROL_WORK * sv;
 		u32	i;
 		sv = SaveControl_GetPointer();
+		{
+      GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
+      OutsideSave_FlashAllErase(HEAPID_BACKUP_ERASE); //管理外セーブを最初にクリア
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID(outside_save) );
+    }
 		SaveControl_Erase( sv );
 		for( i=0; i<SAVE_EXTRA_ID_MAX; i++ ){
 			if( SaveControl_Extra_Load( sv, i, HEAPID_BACKUP_ERASE ) == LOAD_RESULT_OK ){

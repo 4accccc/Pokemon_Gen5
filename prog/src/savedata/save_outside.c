@@ -326,3 +326,20 @@ void OutsideSave_MysteryData_Outside_to_Normal(OUTSIDE_SAVE_CONTROL *outsv_ctrl,
   MYSTERYDATA_Coded( outside_mystery, MYSTERY_DATA_TYPE_OUTSIDE );
 }
 
+//==================================================================
+/**
+ * 管理外セーブ全体をクリアする
+ *
+ * @param   heap_id		
+ */
+//==================================================================
+void OutsideSave_FlashAllErase(HEAPID heap_id)
+{
+  u32 erase_size = SAVESIZE_OUTSIDE_MYSTERY * 2;  //*2=ミラー分込み
+  u8 *erase_buffer = GFL_HEAP_AllocMemory(heap_id, erase_size);
+  
+  GFL_STD_MemFill32(erase_buffer, 0xffffffff, erase_size);
+  GFL_BACKUP_DirectFlashSave(OUTSIDE_MM_MYSTERY, erase_buffer, erase_size);
+  
+  GFL_HEAP_FreeMemory(erase_buffer);
+}
