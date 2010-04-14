@@ -37,5 +37,6 @@
 
 #define R10_BOARD_01                      0
 #define R10_BOARD_02                      1
+#define R10_HIDE_ITEM_01                  2
 
 #endif //ZONE_R10_EVB_H
