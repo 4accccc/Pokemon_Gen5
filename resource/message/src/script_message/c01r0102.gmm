@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T21:00:38"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-04-14T20:14:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1549" top="145" right="2254" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="232" top="88" right="937" bottom="708" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="807" top="439" right="1280" bottom="837" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -510,10 +510,52 @@
 通信に　関係する　デバイスよ▼</language>
 	</row>
 
+	<row id="msg_c01r0102_cgear_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>システムメッセージ
+ＭＥ再生</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は
+[FF:00:色:2]Ｃ－ＧＥＡＲ[FF:00:色:0]を　てにいれた！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
+[FF:00:色:2]Ｃ－ＧＥＡＲ[FF:00:色:0]を　手に入れた！</language>
+	</row>
+
+	<row id="msg_c01r0102_cgear_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>システムメッセージ
+はい／いいえ表示
+
+はい→Ｃギアをアクティブで起動
+いいえ→Ｃギアをパッシブで起動</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">Ｃ－ＧＥＡＲの　でんげんを　いれて
+つうしんきのうを　オンにしますか？</language>
+		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲの　電源を入れて
+通信機能を　オンにしますか？</language>
+	</row>
+
+	<row id="msg_c01r0102_cgear_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>選択肢
+※はい／いいえを特殊な位置に表示するため
+　選択肢メニューとして作成している</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">はい</language>
+		<language name="JPN_KANJI" width="256">はい</language>
+	</row>
+
+	<row id="msg_c01r0102_cgear_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>選択肢
+※はい／いいえを特殊な位置に表示するため
+　選択肢メニューとして作成している</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">いいえ</language>
+		<language name="JPN_KANJI" width="256">いいえ</language>
+	</row>
+
 	<row id="msg_c01r0102_inventor_08" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
 ・主人公に近づいてメッセージ表示
+※はいを選んだ
 ・続けてinventor_09</comment>
 		<attribute name="キャラ指定">ASSISTANTW</attribute>
 		<language name="JPN" width="256">ほら！　Ｃ－ＧＥＡＲが　きどうして
@@ -522,6 +564,25 @@
 ？マークに　タッチすれば▽
 Ｃ－ＧＥＡＲの　せつめいが　よめるわ▼</language>
 		<language name="JPN_KANJI" width="256">ほら！　Ｃ－ＧＥＡＲが　起動して
+画面が　あらわれたでしょ！▼
+その　画面の　右下に　ある
+？マークに　タッチすれば▽
+Ｃ－ＧＥＡＲの　説明が　読めるわ▼</language>
+	</row>
+
+	<row id="msg_c01r0102_inventor_08_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♀
+■d01r0101イベント後
+・主人公に近づいてメッセージ表示
+※いいえを選んだ
+・続けてinventor_09</comment>
+		<attribute name="キャラ指定">ASSISTANTW</attribute>
+		<language name="JPN" width="256">Ｃ－ＧＥＡＲの
+がめんが　あらわれたでしょ！▼
+その　がめんの　みぎしたに　ある
+？マークに　タッチすれば▽
+Ｃ－ＧＥＡＲの　せつめいが　よめるわ▼</language>
+		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲの
 画面が　あらわれたでしょ！▼
 その　画面の　右下に　ある
 ？マークに　タッチすれば▽
@@ -558,21 +619,6 @@
 		<language name="JPN_KANJI" width="256">ダメといっても　説明しまーす▼
 だって　あなたの　おかげで
 ものすごいことが　できるんだもの！！▼</language>
-	</row>
-
-	<row id="msg_c01r0102_inventor_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・メッセージ表示後パソコンを触るアニメ
-・アニメ後、Cギア起動処理
-　起動後、強制ヘルプ画面に（大野さん作成中）
-・ヘルプ終了後、主人公に近づき
-　inventor_11表示</comment>
-		<attribute name="キャラ指定">ASSISTANTW
-発明家</attribute>
-		<language name="JPN" width="256">そのまえに　Ｃギアを
-つかえるように　しないとね▼</language>
-		<language name="JPN_KANJI" width="256">その前に　Ｃギアを
-使えるように　しないとね▼</language>
 	</row>
 
 	<row id="msg_c01r0102_inventor_11" text-color=",,,#ff0000,,,,,,,,,,,,,,,">

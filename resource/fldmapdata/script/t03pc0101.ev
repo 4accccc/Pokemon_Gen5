@@ -70,7 +70,6 @@ EVENT_START ev_badgeparty
     //前説
     _BALLOONWIN_OBJMSG_POS( msg_badgeparty_01, SCWK_TARGET_OBJID, POS_DOWN)
     _YES_NO_WIN( SCWK_ANSWER )
-    _BALLOONWIN_CLOSE()
 
     IF $SCWK_ANSWER == SCR_NO THEN
 
@@ -141,7 +140,6 @@ sub_badgeparty:
     _BMPMENU_MAKE_LIST( msg_badgeparty_select_09, 0xff )
 
     _BMPMENU_START()
-    _BALLOONWIN_CLOSE()
 
     IF $SEL_POS == 0xff || $SEL_POS == EV_WIN_B_CANCEL THEN
         //「わたしが　みなくても～」
@@ -171,7 +169,6 @@ sub_badgeparty:
     CASE BADGE_ID_08 THEN
       _BALLOONWIN_OBJMSG_POS( msg_badgeparty_11, SCWK_TARGET_OBJID, POS_DOWN)
     ENDSWITCH
-    _BALLOONWIN_CLOSE()
 
     // 「～、～　ですね」
     //  勝利時の情報取得：SCWK_ANSWER == そのときの手持ちポケモン数
@@ -192,13 +189,12 @@ sub_badgeparty:
     CASE 6 THEN
       _BALLOONWIN_OBJMSG_POS( msg_badgeparty_17, SCWK_TARGET_OBJID, POS_DOWN)
     ENDSWITCH
-    _BALLOONWIN_CLOSE()
 
     //「ほかの　ジムバッジも　みましょうか？」
     _BALLOONWIN_OBJMSG_POS( msg_badgeparty_18, SCWK_TARGET_OBJID, POS_DOWN)
     _YES_NO_WIN( SCWK_ANSWER )
-    _BALLOONWIN_CLOSE()
     IF $SCWK_ANSWER == SCR_NO THEN
+        _BALLOONWIN_CLOSE()		//メッセージを閉じて終了
         $select_result = FALSE
         _RET
     ENDIF

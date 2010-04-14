@@ -146,16 +146,41 @@ _TALK_OBJ_START()
 			_OBJ_ANIME_WAIT()
 		ENDSWITCH
 
-		//Cギア入手イベント演出
-		_CGEAR_ON_DEMO( TRUE )
-		
-		//Cギア入手SE再生
-		_SE_PLAY( SEQ_SE_DECIDE3 )
-		_SE_WAIT()
-	
-		//ムンナたちが　みせる　ゆめは
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_08 )
+		//Ｃギアを手に入れた！
+		_ME_PLAY( SEQ_ME_KEYITEM )
+		_PLAYER_NAME( 0 )
+		_SYSWIN_MSG( msg_c01r0102_cgear_01, POS_DEFAULT )
+		_ME_WAIT()
+		_AB_KEYWAIT_MARK()
+
+		//Ｃギアの電源を入れる？
+		_SYSWIN_MSG( msg_c01r0102_cgear_02, POS_DOWN )
+		_PUT_CGEAR_COMMENT( TRUE )		//注意書きを表示
+		_BMPMENU_INIT_RIGHT( MENU_X1, 13, 0, 1, SCWK_ANSWER )
+		_BMPMENU_MAKE_LIST( msg_c01r0102_cgear_03, 0 )	//はい
+		_BMPMENU_MAKE_LIST( msg_c01r0102_cgear_04, 1 )	//いいえ
+		_BMPMENU_START()
+		_MSGWIN_CLOSE()
+		_PUT_CGEAR_COMMENT( FALSE )		//注意書きを非表示
+
+		IF $SCWK_ANSWER == 0 THEN
+			//はい選択
+			//Cギア起動ＳＥ
+			_SE_PLAY( SEQ_SE_DECIDE3 )
+			_CGEAR_ON_DEMO( TRUE )		//Ｃギア画面をアクティブで起動
+			_SE_WAIT()
+
+			//ほら！Ｃギアが起動したでしょ！
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_08 )
 			
+		ELSE
+			//いいえ選択
+			_CGEAR_ON_DEMO( FALSE )		//Ｃギア画面をパッシブで起動
+			
+			//Ｃギアの画面があらわれたでしょ？
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_08_01 )
+		ENDIF
+		
 		//さてと　ゲームシンク……
 		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_09 )
 		_YES_NO_WIN( SCWK_ANSWER )
@@ -190,7 +215,7 @@ _TALK_OBJ_START()
 		//さらに　すごいことが　わかって
 		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_12 )
 		_MSGWIN_CLOSE()
-
+/*
 		//ショウロ：自機の真横に移動
 		SWITCH $LWK_DIR
 		CASE DIR_UP THEN
@@ -227,7 +252,7 @@ _TALK_OBJ_START()
 			_OBJ_ANIME( C01R0102_GIRL3_01, anm_syouro_right1 )
 			_OBJ_ANIME_WAIT()
 		ENDSWITCH
-
+*/
 		//========================================/
 		
 		//ゆめのあとちイベント終了
@@ -251,7 +276,7 @@ _TALK_OBJ_START()
 	ELSE
 	
 		//【仮】ゲームシンクを利用したフラグがない
-	
+		
 		//gamesyncでねかせた　ポケモンを　おこしたら
 		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_13 )
 		_LAST_KEYWAIT()
