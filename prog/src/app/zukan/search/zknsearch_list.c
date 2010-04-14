@@ -591,10 +591,10 @@ static void TypeListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, 
 
 	ZKNSEARCHBMP_PutListItem( wk, util, wk->item[itemNum] );
 
-	if( wk->dat->sort->type1 == itemNum ){
+	if( ZKNSEARCHMAIN_GetSortTypeIndex(wk,wk->dat->sort->type1) == itemNum ){
 		ZKNSEARCHOBJ_PutMark( wk, 0, py, disp );
 	}
-	if( wk->dat->sort->type2 == itemNum ){
+	if( ZKNSEARCHMAIN_GetSortTypeIndex(wk,wk->dat->sort->type2) == itemNum ){
 		ZKNSEARCHOBJ_PutMark( wk, 1, py, disp );
 	}
 }

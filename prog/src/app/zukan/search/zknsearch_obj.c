@@ -890,7 +890,9 @@ void ZKNSEARCHOBJ_ChangeTypeMark( ZKNSEARCHMAIN_WORK * wk, u8	pos1, u8 pos2 )
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK2_SW, FALSE );
 
 	if( pos1 != ZKNCOMM_LIST_SORT_NONE ){
-		u8	abs = GFL_STD_Abs( pos1 - list_pos );
+		u8	abs;
+		pos1 = ZKNSEARCHMAIN_GetSortTypeIndex( wk, pos1 );
+		abs  = GFL_STD_Abs( pos1 - list_pos );
 		if( pos1 < list_pos ){
 			if( abs <= 8 ){
 				ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_S, TRUE );
@@ -910,7 +912,9 @@ void ZKNSEARCHOBJ_ChangeTypeMark( ZKNSEARCHMAIN_WORK * wk, u8	pos1, u8 pos2 )
 	}
 
 	if( pos2 != ZKNCOMM_LIST_SORT_NONE ){
-		u8	abs = GFL_STD_Abs( pos2 - list_pos );
+		u8	abs;
+		pos2 = ZKNSEARCHMAIN_GetSortTypeIndex( wk, pos2 );
+		abs  = GFL_STD_Abs( pos2 - list_pos );
 		if( pos2 < list_pos ){
 			if( abs <= 8 ){
 				ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK2_S, TRUE );

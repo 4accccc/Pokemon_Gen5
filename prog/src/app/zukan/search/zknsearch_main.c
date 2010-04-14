@@ -75,6 +75,26 @@ static const GFL_DISP_VRAM VramTbl = {
 	GX_OBJVRAMMODE_CHAR_1D_128K		// サブOBJマッピングモード
 };
 
+static const u32 SortTypeTbl[] = {
+	POKETYPE_AKU,			// あく
+	POKETYPE_IWA,			// いわ
+	POKETYPE_ESPER,		// エスパー
+	POKETYPE_KAKUTOU,	// かくとう
+	POKETYPE_KUSA,		// くさ
+	POKETYPE_KOORI,		// こおり
+	POKETYPE_GHOST,		// ゴースト
+	POKETYPE_JIMEN,		// じめん
+	POKETYPE_DENKI,		// でんき
+	POKETYPE_DOKU,		// どく
+	POKETYPE_DRAGON,	// ドラゴン
+	POKETYPE_NORMAL,	// ノーマル
+	POKETYPE_HAGANE,	// はがね
+	POKETYPE_HIKOU,		// ひこう
+	POKETYPE_HONOO,		// ほのお
+	POKETYPE_MIZU,		// みず
+	POKETYPE_MUSHI,		// むし
+};
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -863,7 +883,19 @@ BOOL ZKNSEARCHMAIN_MainSrameScroll( ZKNSEARCHMAIN_WORK * wk )
 
 
 
+u32 ZKNSEARCHMAIN_GetSortType( ZKNSEARCHMAIN_WORK * wk, u32 pos )
+{
+	return SortTypeTbl[pos];
+}
 
+u32 ZKNSEARCHMAIN_GetSortTypeIndex( ZKNSEARCHMAIN_WORK * wk, u32 type )
+{
+	u32	i;
 
-
-
+	for( i=0; i<POKETYPE_MAX; i++ ){
+		if( SortTypeTbl[i] == type ){
+			return i;
+		}
+	}
+	return ZKNCOMM_LIST_SORT_NONE;
+}

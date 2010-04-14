@@ -432,7 +432,7 @@ void ZKNSEARCHBMP_PutMainPage( ZKNSEARCHMAIN_WORK * wk )
 	}else if( wk->dat->sort->type2 == ZKNCOMM_LIST_SORT_NONE ){
 		StrPrint(
 			wk, ZKNSEARCHBMP_WINIDX_MAIN_ITEM_TYPE,
-			ZKN_SEARCH_TYPE_01+wk->dat->sort->type1,
+			ZKN_SEARCH_TYPE_01+ZKNSEARCHMAIN_GetSortTypeIndex(wk,wk->dat->sort->type1),
 			BMPWIN_ITEM_TYPE_SX*8/2, 4, FCOL_WP15WN, PRINTTOOL_MODE_CENTER );
 	}else{
 		STRBUF * str;
@@ -447,14 +447,14 @@ void ZKNSEARCHBMP_PutMainPage( ZKNSEARCHMAIN_WORK * wk )
 		GFL_STR_DeleteBuffer( str );
 		// タイプ１
 		px -= ( sx / 2 );
-		str = GFL_MSG_CreateString( wk->mman, ZKN_SEARCH_TYPE_01+wk->dat->sort->type1 );
+		str = GFL_MSG_CreateString( wk->mman, ZKN_SEARCH_TYPE_01+ZKNSEARCHMAIN_GetSortTypeIndex(wk,wk->dat->sort->type1) );
 		PRINTTOOL_PrintColor(
 			&wk->win[ZKNSEARCHBMP_WINIDX_MAIN_ITEM_TYPE], wk->que,
 			px, 4, str, wk->font, FCOL_WP15WN, PRINTTOOL_MODE_RIGHT );
 		GFL_STR_DeleteBuffer( str );
 		// タイプ２
 		px += sx;
-		str = GFL_MSG_CreateString( wk->mman, ZKN_SEARCH_TYPE_01+wk->dat->sort->type2 );
+		str = GFL_MSG_CreateString( wk->mman, ZKN_SEARCH_TYPE_01+ZKNSEARCHMAIN_GetSortTypeIndex(wk,wk->dat->sort->type2) );
 		PRINTTOOL_PrintColor(
 			&wk->win[ZKNSEARCHBMP_WINIDX_MAIN_ITEM_TYPE], wk->que,
 			px, 4, str, wk->font, FCOL_WP15WN, PRINTTOOL_MODE_LEFT );
@@ -585,7 +585,7 @@ void ZKNSEARCHBMP_PutTypeItem( ZKNSEARCHMAIN_WORK * wk )
 
 	if( wk->dat->sort->type1 != ZKNCOMM_LIST_SORT_NONE ){
 		StrPrint(
-			wk, ZKNSEARCHBMP_WINIDX_LIST_ITEM1, ZKN_SEARCH_TYPE_01+wk->dat->sort->type1,
+			wk, ZKNSEARCHBMP_WINIDX_LIST_ITEM1, ZKN_SEARCH_TYPE_01+ZKNSEARCHMAIN_GetSortTypeIndex(wk,wk->dat->sort->type1),
 			BMPWIN_LIST_ITEM1_SX*8/2, 0, FCOL_WP15WN, PRINTTOOL_MODE_CENTER );
 	}else{
 		StrPrint(
@@ -595,7 +595,7 @@ void ZKNSEARCHBMP_PutTypeItem( ZKNSEARCHMAIN_WORK * wk )
 
 	if( wk->dat->sort->type2 != ZKNCOMM_LIST_SORT_NONE ){
 		StrPrint(
-			wk, ZKNSEARCHBMP_WINIDX_LIST_ITEM2, ZKN_SEARCH_TYPE_01+wk->dat->sort->type2,
+			wk, ZKNSEARCHBMP_WINIDX_LIST_ITEM2, ZKN_SEARCH_TYPE_01+ZKNSEARCHMAIN_GetSortTypeIndex(wk,wk->dat->sort->type2),
 			BMPWIN_LIST_ITEM2_SX*8/2, 0, FCOL_WP15WN, PRINTTOOL_MODE_CENTER );
 	}else{
 		StrPrint(

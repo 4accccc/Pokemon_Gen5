@@ -983,7 +983,7 @@ static void ResetSortName( ZKNSEARCHMAIN_WORK * wk )
 
 static void ChangeSortType( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 {
-	u32	list_pos = FRAMELIST_GetScrollCount( wk->lwk ) + pos;
+	u32	list_pos = ZKNSEARCHMAIN_GetSortType( wk, FRAMELIST_GetScrollCount(wk->lwk)+pos );
 
 	if( wk->dat->sort->type1 == ZKNCOMM_LIST_SORT_NONE ){
 		wk->dat->sort->type1 = list_pos;
