@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-19T17:14:49"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T22:32:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1301" top="134" right="2006" bottom="762" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="207" right="2000" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -371,22 +371,26 @@
 だが　まだ　おわりではない！▼
 きみの　その　つよさを　しめすべき
 あいてが　もうひとり　いる▼
-……Ｎという　おとこ
-アイツに　かてると　おもうなら……▽
-いや　かたねばならぬと　きめたなら▼
-エレベータに　のり
-さいごの　へやに　すすむが　いいさ</language>
+わが　ししょうの
+チャンピオン　アデク……▼
+もしくは……
+Ｎという　おとこ▼
+どちらが　あいてか　わからぬが
+エレベータに　のり▽
+さいごの　へやに　すすむが　いい</language>
 		<language name="JPN_KANJI" width="256">……すごいね▼
 きみは　ポケモンリーグ　すべての
 四天王に　勝利した▼
 だが　まだ　終わりではない！▼
 きみの　その　強さを　示すべき
-相手が　もうひとり　いる▼
-……Ｎという　男
-アイツに　勝てると　思うなら……▽
-いや　勝たねばならぬと　決めたなら▼
-エレベータに　乗り
-最後の　部屋に　進むが　いいさ</language>
+相手が　もう１人　いる▼
+わが　師匠の
+チャンピオン　アデク……▼
+もしくは……
+Ｎという　男▼
+どちらが　相手か　わからぬが
+エレベータに　乗り▽
+最後の　部屋に　進むが　いい</language>
 	</row>
 
 	<row id="msg_c09r0201_bigfour2_05">

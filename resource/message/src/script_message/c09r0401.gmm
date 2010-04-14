@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-04T19:24:45"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T22:20:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="207" right="2000" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -362,7 +362,7 @@
 アタクシの　相手を　してね</language>
 	</row>
 
-	<row id="msg_c09r0401_bigfour4_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c09r0401_bigfour4_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア前
 ・条件（＝四天王全員に勝利）を満たしていれば
 　戦闘後フィールド復帰時に自動で表示
@@ -372,23 +372,11 @@
 		<language name="JPN" width="256">……どうやら　ポケモンリーグの
 してんのう　ぜんいんに　かったのね▼
 あらわれた　エレベータを　つかえば
-チャンピオンの　へやに　いける……▼
-ただ　そこに　いるのは
-あぶない　トレーナー▼
-あたくしとは　ことなる
-しゅるいの　ちから……▼
-みらいよちに　るいする
-ちからを　もつ　おとこよ……</language>
+チャンピオンの　へやに　いける……▼</language>
 		<language name="JPN_KANJI" width="256">……どうやら　ポケモンリーグの
 四天王　全員に　勝ったのね▼
 広場の　エレベータを　使えば
-チャンピオンの　部屋に　いける……▼
-ただ　そこに　いるのは
-あぶない　トレーナー▼
-あたくしとは　異なる
-種類の　力……▼
-みらいよちに　類する
-力を　持つ　男よ……</language>
+チャンピオンの　部屋に　いける……▼</language>
 	</row>
 
 	<row id="msg_c09r0401_bigfour4_05">
