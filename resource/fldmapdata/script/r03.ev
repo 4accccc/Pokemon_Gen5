@@ -498,10 +498,18 @@ EVENT_START   ev_pos_r03_rival_01
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_POS( msg_r03_white_04 , R03_SUPPORT_01 , POS_UR )
 	_BALLOONWIN_CLOSE()
+	
+	//ライバル：はやくいいなよ！
+	_BALLOONWIN_OBJMSG_POS( msg_r03_black_08 , R03_RIVAL_01 , POS_DL )
+	_BALLOONWIN_CLOSE()
+	
+	//主人公とチェレン向き合う
 	_OBJ_ANIME( R03_RIVAL_01 , anm_rival_01_06_up )
 	_OBJ_ANIME( MMDL_ID_PLAYER , anm_player_look_down )
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG_POS( msg_r03_black_08 , R03_RIVAL_01 , POS_DL )
+	
+	//主人公！ ポケモンを取り戻そう
+	_BALLOONWIN_OBJMSG_POS( msg_r03_black_08_01 , R03_RIVAL_01 , POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//ライバル洞窟方面へ
