@@ -12,6 +12,7 @@
 #include  "item/item.h"
 #include  "poke_tool/monsno_def.h"
 #include  "gamesystem/g_power.h"
+#include  "field/zonedata.h"
 
 //============================================================================================
 /**
@@ -127,6 +128,7 @@ static  void	NATSUKI_CalcAct( POKEMON_PARAM *pp, const s8* natsuki_table, ZONEID
 	int	natsukitmp;
 	u8	ofs;
 	u8	eqp;
+  u16 placeID = ZONEDATA_GetPlaceNameID( zoneID );
 
 	monsno = PP_Get( pp, ID_PARA_monsno_egg , NULL );
 	if( ( monsno == 0 ) || ( monsno == MONSNO_TAMAGO ) )
@@ -158,9 +160,9 @@ static  void	NATSUKI_CalcAct( POKEMON_PARAM *pp, const s8* natsuki_table, ZONEID
 	}
 
 	// Ž©•ª‚ª•ßŠl‚³‚ê‚½êŠ‚¾‚Æ‚à‚¤‚Pã‚ª‚é
-  if( zoneID )
+  if( placeID )
   { 
-	  if( ( natsukitmp > 0 ) && ( PP_Get( pp, ID_PARA_get_place, NULL ) == zoneID ) )
+	  if( ( natsukitmp > 0 ) && ( PP_Get( pp, ID_PARA_get_place, NULL ) == placeID ) )
     {
 		  natsukitmp++;
 	  }
