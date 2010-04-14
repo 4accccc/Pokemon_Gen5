@@ -32,8 +32,8 @@
 ///高さオフセット
 enum{
   HEIGHT_OFFSET_SHADOW = 0x4000,  ///<影の高さ
-  HEIGHT_OFFSET_FOCUS = 0x5000,   ///<影と地面の間に入れる
-  HEIGHT_OFFSET_FRIENDMARK = 0x5800,
+  HEIGHT_OFFSET_FOCUS = 0x6000,   ///<影と地面の間に入れる
+  HEIGHT_OFFSET_FRIENDMARK = 0x6800,
 };
 
 //==============================================================================
