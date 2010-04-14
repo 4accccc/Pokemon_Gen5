@@ -12,8 +12,9 @@
 
 enum {
 	NARC_item_judge_gourmet_dat = 0,
-	NARC_item_judge_rich_dat = 1,
-	NARC_item_judge_stone_mania_dat = 2
+	NARC_item_judge_kouko_dat = 1,
+	NARC_item_judge_rich_dat = 2,
+	NARC_item_judge_stone_mania_dat = 3
 };
 
 /* NARC_ITEM_JUDGE_NAIX_ */

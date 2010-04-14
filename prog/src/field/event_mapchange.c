@@ -264,7 +264,6 @@ static void GAME_FieldFirstInit( GAMESYS_WORK * gsys )
   // WFBC街自分の場所初期化
   FIELD_WFBC_CORE_SetUp( GAMEDATA_GetMyWFBCCoreData(gamedata), GAMEDATA_GetMyStatus(gamedata), GFL_HEAPID_APP ); //heap はテンポラリ用
   FIELD_WFBC_CORE_SetUpZoneData( GAMEDATA_GetMyWFBCCoreData(gamedata) );
-
 }
 
 //------------------------------------------------------------------
@@ -408,6 +407,26 @@ typedef struct {
 
 //------------------------------------------------------------------
 /**
+ *	@brief  フィールドのコンティニュー開始初期化処理
+ *
+ *	@param	gsys  ゲームシステム
+ *
+ * @note
+ *	GAME_DATA の情報で、新規ゲーム開始時に行いたい処理を記述してください。
+ *
+ *	このタイミングで呼ばれる処理は、OVERLAY　FIELD_INITに配置してください。
+ */
+//------------------------------------------------------------------
+static void GAME_FieldContinueInit( GAMESYS_WORK * gsys )
+{
+  GAMEDATA* gamedata = GAMESYSTEM_GetGameData(gsys);
+
+  // WFBCのZONE書き換え処理
+  FIELD_WFBC_CORE_SetUpZoneData( GAMEDATA_GetMyWFBCCoreData(gamedata) );
+}
+
+//------------------------------------------------------------------
+/**
  * ゲームコンティニューイベント
  */
 //------------------------------------------------------------------
@@ -526,6 +545,9 @@ static GMEVENT* EVENT_ContinueMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* g
     //現在のDS本体情報を今後の設定とする
     SYSTEMDATA_Update( sysdt );
   }
+
+  // コンティニュー設定
+  GAME_FieldContinueInit( gameSystem );
 
 
   //プレイ時間カウント　開始

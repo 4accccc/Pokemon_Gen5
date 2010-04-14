@@ -1039,6 +1039,8 @@ void FIELD_SUBSCREEN_SetTopMenuItemNo( FIELD_SUBSCREEN_WORK* pWork , const FIELD
 /**
  * @brief 上画面に「下をみてね」プレートをBG1面に表示する
  *
+ * 消すときは、FIELD_SUBSCREEN_MainDispBrightnessOffを使用する。
+ *
  */
 //=============================================================================================
 void FIELD_SUBSCREEN_SetMainLCDNavigationScreen( HEAPID heapID )
@@ -1063,20 +1065,6 @@ void FIELD_SUBSCREEN_SetMainLCDNavigationScreen( HEAPID heapID )
   G2_SetBlendBrightnessExt( GX_BLEND_PLANEMASK_BG0 , GX_BLEND_PLANEMASK_NONE , 
                             0 , 0 , -6 );
   GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
-}
-
-//=============================================================================================
-/**
- * @brief 上画面に「下をみてね」プレートをBG1面から消す
- *
- */
-//=============================================================================================
-void FIELD_SUBSCREEN_OffMainLCDNavigationScreen( void )
-{
-  
-  GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
-  // 上画面に輝度オフを掛ける
-  G2_BlendNone();
 }
 
 //=============================================================================

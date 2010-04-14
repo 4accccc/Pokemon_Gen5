@@ -51,8 +51,8 @@ enum
 ///	ずり落ち方向
 //  Yが1かわるごとのＸＺ方向の移動距離
 //=====================================
-//#define RAILSLIPDOWN_MOVE_XZ  ( FX32_CONST(1.1550f) )
-#define RAILSLIPDOWN_MOVE_XZ  ( FX32_CONST(1.1600f) )
+#define RAILSLIPDOWN_MOVE_XZ  ( FX32_CONST(1.1550f) )
+#define RAILSLIPDOWN_MOVE_SIDE_HOSEI  (2)
 
 //-------------------------------------
 ///	1フレームでのずり落ち距離
@@ -283,6 +283,11 @@ static void RailSlipDown_Update( GFL_TCB* p_tcb, void* p_work )
         MAPATTR attr;
         MAPATTR_FLAG attr_flag;
         
+        // 補正
+        location.width_grid += RAILSLIPDOWN_MOVE_SIDE_HOSEI;
+        if( location.width_grid > width ){
+           location.width_grid = width;
+        }
 
         // 奥＝マイナス方向
         roop_num = width + location.width_grid;

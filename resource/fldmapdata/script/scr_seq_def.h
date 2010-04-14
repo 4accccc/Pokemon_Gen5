@@ -10414,6 +10414,7 @@
  *                    SCR_ITEM_JUDGE_OBJTYPE_GOURMET      (0)   // グルメ
  *                    SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA  (1)   // 石マニア
  *                    SCR_ITEM_JUDGE_OBJTYPE_RICH         (2)   // 大富豪
+ *                    SCR_ITEM_JUDGE_OBJTYPE_KOUKO        (3)   // 考古学者
  *  @param  ret_wk    持っている：TRUE    もっていない：FALSE
  */
 //--------------------------------------------------------------
@@ -10435,6 +10436,7 @@
  *                    SCR_ITEM_JUDGE_OBJTYPE_GOURMET      (0)   // グルメ
  *                    SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA  (1)   // 石マニア
  *                    SCR_ITEM_JUDGE_OBJTYPE_RICH         (2)   // 大富豪
+ *                    SCR_ITEM_JUDGE_OBJTYPE_KOUKO        (3)   // 考古学者
  *  @param  ret_money 金額格納ワーク      
  *
  *  ret_moneyが0なら興味なし

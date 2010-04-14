@@ -423,7 +423,7 @@ static void PowerOnOff_InitGraphic( CGEAR_POWER_ONOFF* p_sys, HEAPID heapID )
 static void PowerOnOff_ExitGraphic( CGEAR_POWER_ONOFF* p_sys )
 {
   // 
-  FIELD_SUBSCREEN_OffMainLCDNavigationScreen();
+  FIELD_SUBSCREEN_MainDispBrightnessOff( p_sys->heapID );
   
   // Win
   PowerOnOff_ExitWin( p_sys );

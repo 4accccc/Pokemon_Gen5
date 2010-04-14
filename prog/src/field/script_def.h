@@ -451,6 +451,7 @@
 #define SCR_ITEM_JUDGE_OBJTYPE_GOURMET      (0)   // グルメ
 #define SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA  (1)   // 石マニア
 #define SCR_ITEM_JUDGE_OBJTYPE_RICH         (2)   // 大富豪
+#define SCR_ITEM_JUDGE_OBJTYPE_KOUKO        (3)   // 考古学者
 
 //--------------------------------------------------------------
 //    シンボルエンカウント：情報取得用
