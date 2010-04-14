@@ -23,5 +23,6 @@
 
 #define BG_T05_RAILMAP_01                 0
 #define BG_T05_BOARD_01                   1
+#define T05_HIDE_ITEM_01                  2
 
 #endif //ZONE_T05_EVB_H

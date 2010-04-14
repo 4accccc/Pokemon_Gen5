@@ -47,5 +47,6 @@
 #define D03R0101_HIDE_ITEM_01             0
 #define D03R0101_HIDE_ITEM_03             1
 #define D03R0101_HIDE_ITEM_02             2
+#define D03R0101_HIDE_ITEM_04             3
 
 #endif //ZONE_D03R0101_EVB_H

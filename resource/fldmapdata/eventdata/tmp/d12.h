@@ -43,5 +43,6 @@
 #define D12_BG_BOARD_02                   0
 #define D12_BG_BOARD_03                   1
 #define D12_BG_BOARD_01                   2
+#define D12_HIDE_ITEM_01                  3
 
 #endif //ZONE_D12_EVB_H

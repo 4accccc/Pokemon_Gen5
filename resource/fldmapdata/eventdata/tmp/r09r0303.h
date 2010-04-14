@@ -24,5 +24,8 @@
 
 #define R09R0303_HIDE_ITEM_01             0
 #define R09R0303_HIDE_ITEM_02             1
+#define R09R0303_HIDE_ITEM_03             2
+#define R09R0303_HIDE_ITEM_04             3
+#define R09R0303_HIDE_ITEM_05             4
 
 #endif //ZONE_R09R0303_EVB_H

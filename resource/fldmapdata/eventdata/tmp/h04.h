@@ -36,6 +36,8 @@
 #define H04_MONSTERBALL_01                17
 #define H04_FLD_ITEM_01                   18
 #define H04_FLD_ITEM_03                   19
+#define TR_SCHOOLG_08                     20
+#define TR_SCIENTISTW_09                  21
 
 #endif //ZONE_H04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

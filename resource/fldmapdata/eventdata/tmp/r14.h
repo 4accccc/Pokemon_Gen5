@@ -19,6 +19,7 @@
 #define R14_FLD_ITEM_01                    6
 #define R14_FLD_ITEM_02                    7
 #define R14_FLD_ITEM_03                    8
+#define TR_BACKPACKERW_13                  9
 
 #endif //ZONE_R14_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r14.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/14 15:28:56
+#save date:2010/04/15 0:16:20
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03.wms
 #SECTION START:OBJ_EVENT
@@ -1027,7 +1027,7 @@ SCRID_HIDE_ITEM_004
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 16 -184
+40 16 -296
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT

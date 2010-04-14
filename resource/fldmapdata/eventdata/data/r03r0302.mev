@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/12 20:48:17
+#save date:2010/04/15 3:18:39
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03r0302.wms
 #SECTION START:OBJ_EVENT
@@ -185,7 +185,7 @@ DIR_RIGHT
 #Parameter 0 Number
 2
 #Parameter 1 Number
-0
+2
 #Parameter 2 Number
 0
 #Move Limit X Number
@@ -237,7 +237,7 @@ FIGHTERW
 #MOVE CODE Number
 MV_RT2
 #EVENT TYPE Number
-EV_TYPE_TRAINER_KYORO
+EV_TYPE_TR_D_REA
 #Flag Name
 0
 #Event Script Name
@@ -247,7 +247,7 @@ DIR_LEFT
 #Parameter 0 Number
 1
 #Parameter 1 Number
-4
+1
 #Parameter 2 Number
 0
 #Move Limit X Number

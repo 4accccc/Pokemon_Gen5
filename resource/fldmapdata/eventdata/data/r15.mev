@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/14 19:27:13
+#save date:2010/04/15 1:09:13
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r15.wms
 #SECTION START:OBJ_EVENT
@@ -329,7 +329,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-5
+6
 #event number: 0
 #Bg Event Label
 BG_R15_BOARD_01
@@ -395,6 +395,19 @@ SCRID_HIDE_ITEM_115
 EVENTDATA_POSTYPE_GRID
 #position
 120 0 184
+#event number: 5
+#Bg Event Label
+R14_HIDE_ITEM_02
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_134
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+248 -48 -152
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
