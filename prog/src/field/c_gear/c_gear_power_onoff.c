@@ -230,6 +230,7 @@ struct _CGEAR_POWER_ONOFF {
   PRINT_STREAM* p_printwk;
   STRBUF*       p_str;
   BOOL stream_clear_flg;
+  APP_KEYCURSOR_WORK* p_keycursor;
 
   GFL_FONT*       p_font;
   GFL_MSGDATA*    p_msgdata;
@@ -264,7 +265,7 @@ static void PowerOnOff_ExitWin( CGEAR_POWER_ONOFF* p_sys );
 // メッセージ表示
 static void PowerOnOff_PrintMsg( CGEAR_POWER_ONOFF* p_sys, GFL_BMPWIN* p_win, u32 strID );
 static void PowerOnOff_PrintStreamMsg( CGEAR_POWER_ONOFF* p_sys, GFL_BMPWIN* p_win, u32 strID, HEAPID heapID );
-static BOOL PowerOnOff_PrintStreamUpdate( CGEAR_POWER_ONOFF* p_sys );
+static BOOL PowerOnOff_PrintStreamUpdate( CGEAR_POWER_ONOFF* p_sys, GFL_BMPWIN* p_win );
 
 // ボタン
 static void PowerOnOff_CreateYesNo( CGEAR_POWER_ONOFF* p_sys, HEAPID heapID );
@@ -592,6 +593,10 @@ static void PowerOnOff_InitWin( CGEAR_POWER_ONOFF* p_sys, HEAPID heapID )
 
   p_sys->p_tcbl = GFL_TCBL_Init( heapID, heapID, 1, 4 );
 
+  // キーカーソル
+  p_sys->p_keycursor = APP_KEYCURSOR_Create( 15, FALSE, TRUE, heapID );
+  
+
 }
 
 //----------------------------------------------------------------------------
@@ -610,6 +615,10 @@ static void PowerOnOff_ExitWin( CGEAR_POWER_ONOFF* p_sys )
     GFL_STR_DeleteBuffer( p_sys->p_str );
     p_sys->p_str = NULL;
   }
+
+  // キーカーソル
+  APP_KEYCURSOR_Delete( p_sys->p_keycursor );
+
   GFL_TCBL_Exit( p_sys->p_tcbl );
   GFL_BMPWIN_Delete( p_sys->p_sysmsg );
   GFL_BMPWIN_Delete( p_sys->p_talkmsg );
@@ -668,10 +677,14 @@ static void PowerOnOff_PrintStreamMsg( CGEAR_POWER_ONOFF* p_sys, GFL_BMPWIN* p_w
       p_sys->winframe_area, PLTID_BG_WIN_S );
 }
 
-static BOOL PowerOnOff_PrintStreamUpdate( CGEAR_POWER_ONOFF* p_sys )
+static BOOL PowerOnOff_PrintStreamUpdate( CGEAR_POWER_ONOFF* p_sys, GFL_BMPWIN* p_win )
 {
   GFL_TCBL_Main( p_sys->p_tcbl );
   GFL_TCBL_Main( p_sys->p_tcbl );
+
+  // キーカーソル
+  APP_KEYCURSOR_Main( p_sys->p_keycursor, p_sys->p_printwk, p_win );
+  APP_KEYCURSOR_Main( p_sys->p_keycursor, p_sys->p_printwk, p_win );
 
 
   switch( PRINTSYS_PrintStreamGetState(p_sys->p_printwk) ){
@@ -823,7 +836,7 @@ static BOOL PowerOnOff_UpdateOn( CGEAR_POWER_ONOFF* p_sys )
     break;
 
   case SEQ_ON_MSG_PRINT01_WAIT:
-    if( PowerOnOff_PrintStreamUpdate( p_sys ) ){
+    if( PowerOnOff_PrintStreamUpdate( p_sys, p_sys->p_talkmsg ) ){
       p_sys->seq ++;
     }
     break;
