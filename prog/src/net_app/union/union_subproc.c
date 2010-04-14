@@ -968,6 +968,13 @@ static BOOL SubEvent_PokelistBattle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys,
     battle_setup->partyPlayer = clsys->recvbuf.pokeparty[my_net_id];
     battle_setup->standing_pos = clsys->recvbuf.stand_position[my_net_id];
     battle_setup->regulation = unisys->alloc.regulation;
+    if(GFL_NET_NO_PARENTMACHINE == my_net_id 
+        || (clsys->recvbuf.stand_position[GFL_NET_NO_PARENTMACHINE] & 2) == (clsys->recvbuf.stand_position[my_net_id] & 2)){  //親機 or 親機のパートナー(マルチ)
+      battle_setup->music_no = SEQ_BGM_VS_TRAINER_M;
+    }
+    else{
+      battle_setup->music_no = SEQ_BGM_VS_TRAINER_S;
+    }
     Colosseum_SetupBattleDemoParent(clsys, gsys, &battle_setup->demo, HEAPID_UNION);
     
     *child_event = EVENT_ColosseumBattle(gsys, fieldWork, situ->play_category, battle_setup);
