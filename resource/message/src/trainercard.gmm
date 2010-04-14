@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T15:18:59"/>
+	<create user="mori" host="W00155" date="2010-04-14T17:10:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1305" top="103" right="2010" bottom="723" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="88" right="1280" bottom="486" visible="yes"/>
 		<band id="0" index="0" style="0000" width="524"/>
@@ -314,9 +314,10 @@
 	</row>
 
 	<row id="MSG_TCARD_05">
-		<comment>カード表面項目。スコア。単位なし。</comment>
-		<language name="JPN" width="256">プレイじかん</language>
-		<language name="JPN_KANJI" width="256">プレイ時間</language>
+		<comment>カード表面項目。おこづかい。
+単位「円」の表示は画像で行う。</comment>
+		<language name="JPN" width="256">おこづかい</language>
+		<language name="JPN_KANJI" width="256">おこづかい</language>
 	</row>
 
 	<row id="MSG_TCARD_06">
@@ -327,10 +328,10 @@
 	</row>
 
 	<row id="MSG_TCARD_07">
-		<comment>カード表面項目。おこづかい。
-単位「円」の表示は画像で行う。</comment>
-		<language name="JPN" width="256">おこづかい</language>
-		<language name="JPN_KANJI" width="256">おこづかい</language>
+		<comment>カード表面項目。プレイ時間
+「時：分」</comment>
+		<language name="JPN" width="256">プレイじかん</language>
+		<language name="JPN_KANJI" width="256">プレイ時間</language>
 	</row>
 
 	<row id="MSG_TCARD_08">
