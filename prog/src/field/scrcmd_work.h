@@ -19,6 +19,7 @@
 #include "field/field_msgbg.h"
 #include "field/fieldmap_proc.h"
 
+#include "script_local.h"
 
 //======================================================================
 //	define
@@ -70,6 +71,13 @@ typedef struct
   VecFx32 tail_pos_org;
   VecFx32 tail_offs;
 }SCRCMD_BALLOONWIN_WORK;
+
+typedef struct
+{
+  GAMESYS_WORK *gsys;
+  SCRCMD_WORK   *ScrCmdWk;
+  SCRIPT_WORK *ScrWk;
+}SCREND_CHECK;
 
 //======================================================================
 //	proto
@@ -128,4 +136,8 @@ extern BOOL SCRCMD_WORK_ProcMenu_Breakable( SCRCMD_WORK *work );
 //ëﬁîópÉèÅ[ÉNëÄçÏ
 extern void SCRCMD_WORK_BackupUserWork( SCRCMD_WORK *work );
 extern void SCRCMD_WORK_RestoreUserWork( SCRCMD_WORK *work );
+
+//äƒéãVMIDÇÃëÄçÏ
+extern void SCRCMD_WORK_SetWaitVMID( SCRCMD_WORK *work, VMHANDLE_ID vm_id );
+extern VMHANDLE_ID SCRCMD_WORK_GetWaitVMID( const SCRCMD_WORK *work );
 

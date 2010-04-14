@@ -70,7 +70,8 @@ struct _TAG_SCRCMD_WORK
   
   u8 before_win_pos_type;
   u8 win_pos_type;
-  u8 padding[3]; //余り
+  u8 wait_vm_id;
+  u8 padding[2]; //余り
 };
 
 //======================================================================
@@ -767,5 +768,25 @@ void SCRCMD_WORK_RestoreUserWork( SCRCMD_WORK *work )
   GF_ASSERT( backup_work != NULL );
   SCRIPT_RestoreUserWork( SCRCMD_WORK_GetScriptWork( work ), work->backup_work );
   work->backup_work = NULL;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 監視対象VMのIDをセット
+ */
+//--------------------------------------------------------------
+void SCRCMD_WORK_SetWaitVMID( SCRCMD_WORK *work, VMHANDLE_ID vm_id )
+{
+  work->wait_vm_id = vm_id;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 監視対象VMのIDを取得
+ */
+//--------------------------------------------------------------
+VMHANDLE_ID SCRCMD_WORK_GetWaitVMID( const SCRCMD_WORK *work )
+{
+  return work->wait_vm_id;
 }
 

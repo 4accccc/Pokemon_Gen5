@@ -44,6 +44,17 @@
 
 #define SCRIPT_NOT_EXIST_ID (0xffff)
 
+#ifdef  PM_DEBUG
+
+#if defined(DEBUG_ONLY_FOR_tamada) || defined(DEBUG_ONLY_FOR_masafumi_saitou) || defined(DEBUG_ONLY_FOR_mizuguchi_mai) || defined(DEBUG_ONLY_FOR_suginaka_katsunori) || defined(DEBUG_ONLY_FOR_murakami_naoto)
+  
+#define SCRIPT_Printf( ... )  OS_Printf( __VA_ARGS__ )
+#else
+#define SCRIPT_Printf( ... )  ((void)0)
+#endif
+
+#endif  //PM_DEBUG
+
 //============================================================================================
 //	struct
 //============================================================================================
@@ -59,7 +70,7 @@ struct _SCRIPTSYS{
 
   HEAPID heapID;
 	u8 vm_machine_count;	//追加した仮想マシンの数
-	VMHANDLE *vm[VMHANDLE_MAX];	//仮想マシンへのポインタ
+	VMHANDLE *vm[VMHANDLE_ID_MAX];	//仮想マシンへのポインタ
 	
 	SCRIPT_EVENTFUNC next_func;		//スクリプト終了時に呼び出される関数
   void * next_func_params;      //スクリプト終了時に呼び出される関数に渡す引数
@@ -74,10 +85,10 @@ struct _SCRIPTSYS{
 //--------------------------------------------------------------
 static SCRIPTSYS * SCRIPTSYS_Create( HEAPID heapID );
 static void SCRIPTSYS_Delete( SCRIPTSYS * scrsys );
+static BOOL SCRIPTSYS_Run( SCRIPTSYS * scrsys );
 static VMHANDLE * SCRIPTSYS_GetVM( SCRIPTSYS *scrsys, VMHANDLE_ID vm_id );
-static void SCRIPTSYS_AddVM(SCRIPTSYS * scrsys, VMHANDLE * vm, VMHANDLE_ID vm_id);
+static VMHANDLE_ID SCRIPTSYS_AddVM( SCRIPTSYS * scrsys, VMHANDLE * vm );
 static void SCRIPTSYS_RemoveVM( SCRIPTSYS *scrsys, VMHANDLE_ID vm_id );
-static u32 SCRIPTSYS_GetVMCount( const SCRIPTSYS * scrsys );
 static void SCRIPTSYS_EntryNextFunc( SCRIPTSYS *scrsys, GMEVENT * next_event );
 static void SCRIPTSYS_CallNextFunc( SCRIPTSYS *scrsys, GMEVENT * event );
 static BOOL SCRIPTSYS_HasNextFunc( const SCRIPTSYS *scrsys );
@@ -229,6 +240,35 @@ static void SCRIPTSYS_Delete( SCRIPTSYS * scrsys )
 {
   GFL_HEAP_FreeMemory( scrsys );
 }
+
+//--------------------------------------------------------------
+//仮想マシンコントロール
+//--------------------------------------------------------------
+static BOOL SCRIPTSYS_Run( SCRIPTSYS * scrsys )
+{
+  int vm_id;
+  for( vm_id = 0; vm_id < VMHANDLE_ID_MAX; vm_id++ )
+  {
+    VMHANDLE * vm = scrsys->vm[ vm_id ];
+    if( vm != NULL )
+    {
+      if( VM_Control(vm) == FALSE )
+      {	//制御メイン
+        scrsys->vm[vm_id] = NULL;
+        scrsys->vm_machine_count--;
+        SCRVM_Delete( vm );				//スクリプト削除
+      }
+    }
+  }
+
+  //仮想マシンの数をチェック
+  if( scrsys->vm_machine_count > 0 )
+  {
+    return TRUE;
+  } 
+  return FALSE;
+}
+
 //--------------------------------------------------------------
 /**
  * @brief	仮想マシン追加
@@ -237,39 +277,30 @@ static void SCRIPTSYS_Delete( SCRIPTSYS * scrsys )
  * @param vm_id   VMHANDLE_ID (スクリプト用VM指定ID）
  */
 //--------------------------------------------------------------
-static void SCRIPTSYS_AddVM(SCRIPTSYS * scrsys, VMHANDLE * vm, VMHANDLE_ID vm_id)
+static VMHANDLE_ID SCRIPTSYS_AddVM( SCRIPTSYS * scrsys, VMHANDLE * vm )
 {
-  GF_ASSERT(vm_id < VMHANDLE_MAX);
-  GF_ASSERT(scrsys->vm[vm_id] == NULL);
-  scrsys->vm[vm_id] = vm;
-  scrsys->vm_machine_count ++;
-}
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static void SCRIPTSYS_RemoveVM( SCRIPTSYS *scrsys, VMHANDLE_ID vm_id )
-{
-  GF_ASSERT(vm_id < VMHANDLE_MAX);
-  GF_ASSERT(scrsys->vm[vm_id] != NULL);
-  if( scrsys->vm_machine_count == 0 ){
-    GF_ASSERT_MSG(0, "仮想マシンの数が不正です！" );
-    return;
+  int id;
+  for ( id = 0; id < VMHANDLE_ID_MAX; id++)
+  {
+    if ( scrsys->vm[id] == NULL )
+    {
+      scrsys->vm[id] = vm;
+      scrsys->vm_machine_count ++;
+      return id;
+    }
   }
-  scrsys->vm[vm_id] = NULL;
-  scrsys->vm_machine_count--;
+  GF_ASSERT( 0 );
+  return VMHANDLE_ID_MAX;
 }
+
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static VMHANDLE * SCRIPTSYS_GetVM( SCRIPTSYS *scrsys, VMHANDLE_ID vm_id )
 {
-  GF_ASSERT( vm_id < VMHANDLE_MAX );
+  GF_ASSERT( vm_id < VMHANDLE_ID_MAX );
   return scrsys->vm[ vm_id ];
 }
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static u32 SCRIPTSYS_GetVMCount( const SCRIPTSYS * scrsys )
-{
-  return scrsys->vm_machine_count;
-}
+
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static void changeEventFunc( GMEVENT * event, void * work)
@@ -332,21 +363,7 @@ static GMEVENT_RESULT scriptEvent(
   SCRIPTSYS * scrsys = ev_wk->scrsys;
 	
   //仮想マシンコントロール
-  for( i = 0; i < VMHANDLE_MAX; i++ )
-  {
-    VMHANDLE *vm = SCRIPTSYS_GetVM( scrsys, i );
-    if( vm != NULL )
-    {
-      if( VM_Control(vm) == FALSE )
-      {	//制御メイン
-        SCRIPTSYS_RemoveVM( scrsys, i );
-        SCRVM_Delete( vm );				//スクリプト削除
-      }
-    }
-  }
-
-  //仮想マシンの数をチェック
-  if( SCRIPTSYS_GetVMCount( scrsys ) > 0 )
+  if ( SCRIPTSYS_Run( scrsys ) == TRUE )
   {
     return GMEVENT_RES_CONTINUE;
   }
@@ -389,7 +406,7 @@ static GMEVENT * createScriptEvent(
 	
   zone_id = getZoneID( gsys );
   //仮想マシン追加
-  SCRIPT_AddVMachine( ev_sc->sc, zone_id, scr_id, VMHANDLE_MAIN );
+  SCRIPT_AddVMachine( ev_sc->sc, zone_id, scr_id );
 		
 	return event;
 }
@@ -437,18 +454,21 @@ void SCRIPT_EntryNextEvent( SCRIPT_WORK *sc, GMEVENT * next_event )
  * @brief 仮想マシンの追加
  */
 //--------------------------------------------------------------
-void SCRIPT_AddVMachine( SCRIPT_WORK *sc, u16 zone_id, u16 scr_id, VMHANDLE_ID vm_id )
+VMHANDLE_ID SCRIPT_AddVMachine( SCRIPT_WORK *sc, u16 zone_id, u16 scr_id )
 {
   SCRIPTSYS * scrsys = SCRIPT_GetScriptSys( sc );
   if ( scrsys )
   {
     VMHANDLE * vm;
+    VMHANDLE_ID get_id;
     vm = SCRVM_Create( scrsys->heapID, sc, zone_id, scr_id, FALSE );
-    SCRIPTSYS_AddVM( scrsys, vm, vm_id );
+    get_id = SCRIPTSYS_AddVM( scrsys, vm );
+    return get_id;
   }
   else
   {
     GF_ASSERT( 0 ); //SCRIPTSYSが存在しない時は動作させない
+    return VMHANDLE_ID_MAX;
   }
 }
 
@@ -761,15 +781,12 @@ static u16 searchSceneScript( GAMEDATA * gamedata, const u8 * p, u8 key )
 			return SCRIPT_NOT_EXIST_ID;
 		};
 		p += sizeof(u16);									//ワーク分足す
-		//OS_Printf( "work1 = %04x\n", work1 );
 
 		//比較する値(ワーク可)取得
 		work2 = GETU16( p );
 		p += sizeof(u16);									//比較する値分足す(ワーク可)
-		//OS_Printf( "work2 = %d\n", work2 );
 
 		//条件チェック
-		//if( EVENTWORK_GetEventWorkAdrs(ev,work1) == EVENTWORK_GetEventWorkAdrs(ev,work2) ){
 		if( *(EVENTWORK_GetEventWorkAdrs(ev,work1)) == work2 ){
 			return GETU16( p );
 		}
@@ -899,7 +916,7 @@ static u16 getScriptIndex( u32 zone_id, u16 scr_id, u16 * scr_idx, u32 * msg_idx
   {
     char buf[ZONEDATA_NAME_LENGTH];
     ZONEDATA_DEBUG_GetZoneName(buf, zone_id);
-    OS_Printf( "ZONE:%s SCRID:%d\n", buf, scr_id);
+    SCRIPT_Printf( "ZONE:%s SCRID:%d\n", buf, scr_id);
   }
 #endif
 
@@ -912,7 +929,7 @@ static u16 getScriptIndex( u32 zone_id, u16 scr_id, u16 * scr_idx, u32 * msg_idx
       *scr_idx = tbl[i].scr_arc_id;
       *msg_idx = tbl[i].msg_arc_id;
       local_scr_id -= tbl[i].scr_id_start;
-      OS_Printf( "共通スクリプト起動 scr_arc_idx = %d, msg_idx = %d, scr_id = %d\n",
+      SCRIPT_Printf( "共通スクリプト起動 scr_arc_idx = %d, msg_idx = %d, scr_id = %d\n",
         tbl[i].scr_arc_id, tbl[i].msg_arc_id, local_scr_id );
       return local_scr_id;
     }
@@ -926,7 +943,7 @@ static u16 getScriptIndex( u32 zone_id, u16 scr_id, u16 * scr_idx, u32 * msg_idx
     *scr_idx = idx_script;
     *msg_idx = idx_msg;
     local_scr_id -= ID_START_SCR_OFFSET;
-    OS_Printf( "ゾーンスクリプト起動 scr_idx = %d, msg_idx = %d\n",
+    SCRIPT_Printf( "ゾーンスクリプト起動 scr_idx = %d, msg_idx = %d\n",
         idx_script, idx_msg );
     return local_scr_id;
   }

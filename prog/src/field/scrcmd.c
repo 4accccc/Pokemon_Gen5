@@ -857,7 +857,7 @@ static VMCMD_RESULT EvCmdVMMachineAdd( VMHANDLE *core, void *wk )
   scr_id = VMGetU16(core);
 
   //仮想マシン追加
-  SCRIPT_AddVMachine( sc, getZoneID(work), scr_id, VMHANDLE_SUB1 );
+  SCRIPT_AddVMachine( sc, getZoneID(work), scr_id );
   
   return VMCMD_RESULT_SUSPEND;
 }
@@ -873,8 +873,9 @@ static BOOL EvChangeCommonScrWait(VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  VMHANDLE_ID vm_id = SCRCMD_WORK_GetWaitVMID( work );  //監視VMIDを取得
 
-  if ( SCRIPT_GetVMExists( sc, VMHANDLE_SUB1 ) == FALSE )
+  if ( SCRIPT_GetVMExists( sc, vm_id ) == FALSE )
   {
     SCRCMD_WORK_RestoreUserWork( wk );
     return TRUE;
@@ -903,7 +904,10 @@ static VMCMD_RESULT EvCmdChangeCommonScr( VMHANDLE *core, void *wk )
   SCRCMD_WORK_BackupUserWork( wk );
   if ( SCRCMD_WORK_GetSpScriptFlag( work ) == FALSE )
   { //通常スクリプト→仮想マシン追加
-    SCRIPT_AddVMachine( sc, getZoneID(work), scr_id, VMHANDLE_SUB1 );
+    VMHANDLE_ID vm_id;
+    vm_id = SCRIPT_AddVMachine( sc, getZoneID(work), scr_id );
+    //監視VMIDを保持
+    SCRCMD_WORK_SetWaitVMID( work, vm_id );
 
     VMCMD_SetWait( core, EvChangeCommonScrWait );
     return VMCMD_RESULT_SUSPEND;

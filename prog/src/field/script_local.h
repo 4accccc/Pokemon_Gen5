@@ -11,12 +11,12 @@
 //======================================================================
 #pragma once
 
+#include "script.h"
 #include "field/fieldmap_proc.h"
 #include "field/field_msgbg.h"
 
 
 #include "scrend_check_bit.h"
-#include "scrcmd_work.h"      //for SCRCMD_WORK
 
 #include "field_saveanime.h"      //for FIELD_SAVEANIME
 #include "event_movepoke.h"      //for EV_MOVEPOKE_WORK
@@ -29,13 +29,6 @@ typedef struct
 	FLDMSGBG *msgBG;
   FIELDMAP_WORK *fieldMap;
 }SCRIPT_FLDPARAM;
-
-typedef struct
-{
-  GAMESYS_WORK *gsys;
-  SCRCMD_WORK   *ScrCmdWk;
-  SCRIPT_WORK *ScrWk;
-}SCREND_CHECK;
 
 //--------------------------------------------------------------
 // トレーナーデータ管理用
@@ -50,9 +43,10 @@ enum{
 
 //仮想マシンのナンバー
 typedef enum{
-	VMHANDLE_MAIN = 0,		//メイン
-	VMHANDLE_SUB1,			//サブ
-	VMHANDLE_MAX,			//最大数
+	VMHANDLE_ID_MAIN = 0,		//メイン
+	VMHANDLE_ID_SUB1,			//サブ
+  VMHANDLE_ID_SUB2,
+	VMHANDLE_ID_MAX,			//最大数
 }VMHANDLE_ID;
 
 //======================================================================
@@ -112,13 +106,14 @@ extern void SCRIPT_EntryNextEvent( SCRIPT_WORK *sc, GMEVENT * next_event );
  * @param sc
  * @param zone_id 起動するゾーン指定ID
  * @param scr_id  起動するスクリプト指定ID
- * @param vm_id   仮想マシン指定ID
+ *
+ * @return VMHANDLE_ID   仮想マシンID
  *
  *  主にスクリプトコマンドから使用する。
  *  スクリプトを実行する仮想マシンを生成する。
  */
 //--------------------------------------------------------------
-extern void SCRIPT_AddVMachine( SCRIPT_WORK *sc, u16 zone_id, u16 scr_id, VMHANDLE_ID vm_id );
+extern  VMHANDLE_ID SCRIPT_AddVMachine( SCRIPT_WORK *sc, u16 zone_id, u16 scr_id );
 
 //--------------------------------------------------------------
 /**
