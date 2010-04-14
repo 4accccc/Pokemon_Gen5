@@ -22,12 +22,13 @@
 
 #define PL_BOAT_MODE_TIME (180*30)    //180秒
 
+#define WHISTLE_COUNT_MAX (4)
+
 //SE
 #define PL_BOAT_SE_WHISTLE  (SEQ_SE_FLD_78)   //汽笛
 
 typedef enum {
   PL_BOAT_EVT_NONE,
-  PL_BOAT_EVT_MSG,
   PL_BOAT_EVT_WHISTLE,
   PL_BOAT_EVT_END,
 }PL_BOAT_EVT;
@@ -110,11 +111,6 @@ GMEVENT *PL_BOAT_CheckEvt(GAMESYS_WORK *gsys, PL_BOAT_WORK_PTR work)
     BOOL rc;  //イベント発生フラグとして使用
     evt_type = GetEvt(work);
     switch(evt_type){
-    case PL_BOAT_EVT_MSG:
-      //船内アナウンス用スクリプトコール
-      ;
-      rc = TRUE;
-      break;
     case PL_BOAT_EVT_WHISTLE:
       //汽笛リクエスト
       work->WhistleReq = TRUE;
@@ -307,7 +303,7 @@ void PL_BOAT_SetBtlFlg(PL_BOAT_WORK_PTR work, const int inRoomIdx, const BOOL in
 static PL_BOAT_EVT GetEvt(PL_BOAT_WORK_PTR work)
 {
   //現在時間でイベントが発生するかを調べる
-  if ( work->Time >= PL_BOAT_MODE_TIME ){
+  if ( (work->Time >= PL_BOAT_MODE_TIME)&&(work->WhistleCount >= WHISTLE_COUNT_MAX) ){
     return PL_BOAT_EVT_END;
   }
 
