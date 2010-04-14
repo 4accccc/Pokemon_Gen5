@@ -239,9 +239,6 @@ static GFL_PROC_RESULT GdsMainProc_End( GFL_PROC * proc, int * seq, void * pwk, 
 
   GFL_PROC_LOCAL_Exit(gmw->proc_sys);
 
-	//GDSプロック呼び出しパラメータ解放
-	GFL_HEAP_FreeMemory(gmw->proc_param);
-	
 	GFL_PROC_FreeWork( proc );				// PROCワーク開放
 
 	GFL_HEAP_DeleteHeap( HEAPID_GDS_MAIN );
