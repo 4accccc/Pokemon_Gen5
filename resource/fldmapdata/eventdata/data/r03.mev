@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/06 16:30:58
+#save date:2010/04/14 15:28:56
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r03.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-952 16 56
+968 16 56
 #event number: 1
 #type
 1
@@ -1205,7 +1205,7 @@ WK_OTHER_DISCOVER_EGG
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-952 0 -40
+968 0 -40
 #size
 1 3
 #event number: 10
