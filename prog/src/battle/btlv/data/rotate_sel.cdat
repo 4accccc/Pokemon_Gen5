@@ -104,8 +104,8 @@ enum
   ROTATE_SCR_NONE,
 
   ROTATE_SCROLL_X0 = 256,
-  ROTATE_SCROLL_X1 = 0,
-  ROTATE_SCROLL_X2 = 256,
+  ROTATE_SCROLL_X1 = 256,
+  ROTATE_SCROLL_X2 = 0,
   ROTATE_SCROLL_X3 = 0,
 
   ROTATE_SCROLL_Y0 = 0x1c0,
@@ -116,10 +116,10 @@ enum
 
 static  const rotate_scroll_table[][ 2 ] =
 { 
-  { ROTATE_SCROLL_X0, ROTATE_SCROLL_Y0 },
-  { ROTATE_SCROLL_X1, ROTATE_SCROLL_Y1 },
-  { ROTATE_SCROLL_X2, ROTATE_SCROLL_Y2 },
-  { ROTATE_SCROLL_X3, ROTATE_SCROLL_Y3 },
+  { ROTATE_SCROLL_X0, ROTATE_SCROLL_Y0 },   //SCR_C
+  { ROTATE_SCROLL_X1, ROTATE_SCROLL_Y1 },   //SCR_L
+  { ROTATE_SCROLL_X2, ROTATE_SCROLL_Y2 },   //SCR_R
+  { ROTATE_SCROLL_X3, ROTATE_SCROLL_Y3 },   //NONE
 };
 
 static  const u8  rotate_button_exist_table[][ 2 ] =
@@ -130,19 +130,19 @@ static  const u8  rotate_button_exist_table[][ 2 ] =
   { TRUE,   FALSE, },    //SCR_R
 };
 
-static  const u8  rotate_screen_table[][ 3 ] =
+static  const u8  rotate_screen_table[][ 2 ] =
 { 
-  //L               R                 return
-  { ROTATE_SCR_R,   ROTATE_SCR_L,     BTL_ROTATEDIR_STAY },    //SCR_C
-  { ROTATE_SCR_C,   ROTATE_SCR_NONE,  BTL_ROTATEDIR_R },       //SCR_L
-  { ROTATE_SCR_C,   ROTATE_SCR_NONE,  BTL_ROTATEDIR_L },       //SCR_R
+  //L               R                 
+  { ROTATE_SCR_R,   ROTATE_SCR_L,    },    //SCR_C
+  { ROTATE_SCR_C,   ROTATE_SCR_NONE, },       //SCR_L
+  { ROTATE_SCR_C,   ROTATE_SCR_NONE, },       //SCR_R
 };
 
-static  const u8  rotate_result[] =
+static  const BtlRotateDir  rotate_result[] =
 { 
   BTL_ROTATEDIR_STAY,    //SCR_C
-  BTL_ROTATEDIR_L,       //SCR_L
-  BTL_ROTATEDIR_R,       //SCR_R
+  BTL_ROTATEDIR_R,       //SCR_L
+  BTL_ROTATEDIR_L,       //SCR_R
 };
 
 static const GFL_UI_TP_HITTBL RotateTouchDataHitTblWaruagaki[] = {
