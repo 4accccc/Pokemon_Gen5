@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T18:52:43"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T15:53:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="139" right="2004" bottom="767" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="206" right="2000" bottom="834" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -866,31 +866,23 @@
 	<row id="msg_c03r1101_man1_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">MAN1</attribute>
-		<language name="JPN" width="256">ポケモンは　ふしぎな　いきもの▼
-とくせい　とよばれる
-ふしぎなちからを　もっているんだ</language>
-		<language name="JPN_KANJI" width="256">ポケモンは　不思議な　いきもの▼
-とくせい　と呼ばれる
-不思議な力を　備えているんだ</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03r1101_woman1_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
-		<language name="JPN" width="256">ミネズミの　とくせいは　するどいめ！▼
-えんまくや　すなかけの　わざでも
-めいちゅうりつが　さがらないのよ！</language>
-		<language name="JPN_KANJI" width="256">ミネズミの　とくせいは　するどいめ！▼
-えんまくや　すなかけの　技でも
-命中率が　さがらないのよ！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03r1101_pokemon_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">ポケモン
 ミネズミ</attribute>
-		<language name="JPN" width="256">きりっ！！</language>
-		<language name="JPN_KANJI" width="256">きりっ！！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T22:31:01"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T15:56:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="206" right="2000" bottom="834" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -434,12 +434,16 @@ having a good time?</language>
 		<comment>♂
 ・上記動作モデルとテーブルでしゃべっている</comment>
 		<attribute name="キャラ指定">RANGERM</attribute>
-		<language name="JPN" width="256">おれ　さいきんさ
-おきると　かおが　はれてるんだよな▽
-なんでだろう？　むくみってやつか？</language>
-		<language name="JPN_KANJI" width="256">おれ　最近さ
-起きると　顔が　はれてるんだよな▽
-なんでだろう？　むくみってやつか？</language>
+		<language name="JPN" width="256">おれ　めざましどけいの　かわりに
+ポケモンに　うたうの　わざを▽
+つかって　もらっているんだ▼
+だけどさ　さっぱり　おきられないよ
+どうして　なんだろうな！？</language>
+		<language name="JPN_KANJI" width="256">おれ　目覚まし時計の　代わりに
+ポケモンに　うたうの　技を▽
+つかって　もらっているんだ▼
+だけどさ　さっぱり　起きられないよ
+どうして　なんだろうな！？</language>
 	</row>
 
 	<row id="msg_c03r1302_fighterw_01">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-04-09T11:10:45"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T15:50:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="48" top="101" right="753" bottom="721" maximized="no" rayout="Vertical2">
+	<dialog left="1403" top="192" right="2108" bottom="812" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="796" top="425" right="1269" bottom="823" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -615,6 +615,15 @@ msg_c03r0401_girl1_04</comment>
 つれていって　あげられないの？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">……このコを
 つれていって　あげられないの？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0401_statue_01" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
+		<attribute name="キャラ指定">ポケモン像</attribute>
+		<language name="JPN" width="256">なんだか　ふしぎな　かんじの
+ポケモンの　どうぞうが　おいてある</language>
+		<language name="JPN_KANJI" width="256">なんだか　不思議な　感じの
+ポケモンの　銅像が　置いてある</language>
 	</row>
 
 	<flowchart-group-list>
