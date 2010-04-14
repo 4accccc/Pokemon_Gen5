@@ -22,6 +22,7 @@
 #include "sound/pm_sndsys.h"
 
 #include "br_codein_pv.h"
+#include "br_snd.h"
 
 
 #include "test/ariizumi/ari_debug.h"
@@ -251,7 +252,6 @@ BOOL CI_pv_MainInput( BR_CODEIN_WORK* wk )
 		CI_pv_StateUpdate( wk );	
 		
 		GFL_BMN_Main( wk->sys.btn );
-		//CI_KEY_Main( wk );
 		break;
 	}
 	
@@ -421,249 +421,10 @@ BOOL CI_pv_MainUpdate( BR_CODEIN_WORK* wk )
 	bActive = CI_pv_MainTable[ wk->seq ]( wk );	
 	
 //	BMN_Main( wk->sys.btn );
-//	CI_KEY_Main( wk );
 	
 	CI_pv_disp_CurUpdate( wk );
 	
 	return bActive;
-}
-
-
-//--------------------------------------------------------------
-/**
- * @brief	キー入力メイン
- *
- * @param	wk	
- *
- * @retval	none	
- *
- */
-//--------------------------------------------------------------
-void CI_KEY_Main( BR_CODEIN_WORK* wk )
-{
-	const int key_tbl[][ 5 ] = {
-		{ 0, 1, 2, 3, 4 },
-		{ 5, 6, 7, 8, 9 },
-		{ 10,10,10,11,11 },
-	};
-	BOOL bMove = FALSE;
-	
-	int dat = key_tbl[ wk->cur[ 1 ].move_wk.pos.y ][ wk->cur[ 1 ].move_wk.pos.x ];
-	
-	if ( wk->sys.touch == TRUE )
-	{
-		if ( GFL_UI_KEY_GetTrg() )
-		{
-			wk->sys.touch = FALSE;
-			CI_pv_disp_CurSQ_PosSet( wk, dat );
-			if ( dat == 10 || dat == 11 ){
-				if ( wk->cur[ 1 ].state != eANM_CUR_SQ_L ){
-					wk->cur[ 1 ].state = eANM_CUR_SQ_L;
-				}
-			}
-			else {
-				if ( wk->cur[ 1 ].state != eANM_CUR_SQ ){
-					wk->cur[ 1 ].state = eANM_CUR_SQ;
-				}
-			}
-			return;
-		}
-	}
-	
-	if ( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
-		if ( wk->cur[ 1 ].move_wk.pos.y > 0 ){
-			wk->cur[ 1 ].move_wk.pos.y--;
-		}
-		else {
-			wk->cur[ 1 ].move_wk.pos.y = 2;
-		}
-		bMove = TRUE;
-		
-//		PMSND_PlaySystemSE( CI_SE_MOVE );
-	}
-	else if ( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
-		wk->cur[ 1 ].move_wk.pos.y++;
-		wk->cur[ 1 ].move_wk.pos.y %= 3;
-		bMove = TRUE;
-
-//		PMSND_PlaySystemSE( CI_SE_MOVE );
-	}
-	else if ( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
-		
-		if ( dat == 10 ){
-			wk->cur[ 1 ].move_wk.pos.x = 3;
-		}
-		else if ( dat == 11 ){
-			wk->cur[ 1 ].move_wk.pos.x = 0;			
-		}
-		else {				
-			wk->cur[ 1 ].move_wk.pos.x++;
-			wk->cur[ 1 ].move_wk.pos.x %= 5;
-		}
-		bMove = TRUE;
-
-//		PMSND_PlaySystemSE( CI_SE_MOVE );
-	}
-	else if ( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
-		
-		if ( dat == 10 ){
-			wk->cur[ 1 ].move_wk.pos.x = 3;
-		}
-		else if ( dat == 11 ){
-			wk->cur[ 1 ].move_wk.pos.x = 0;			
-		}
-		else {				
-			if ( wk->cur[ 1 ].move_wk.pos.x > 0 ){
-				wk->cur[ 1 ].move_wk.pos.x--;
-			}
-			else {
-				wk->cur[ 1 ].move_wk.pos.x = 4;
-			}
-		}
-		bMove = TRUE;
-
-//		PMSND_PlaySystemSE( CI_SE_MOVE );
-	}
-	else if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-		///< A ボタン押した
-		
-		int cur_p;
-		int now_g;
-		int next_g;
-		
-		if ( dat == 10 ){
-			///< Back 押された場合	
-			CI_pv_Input_back( wk );
-
-//			PMSND_PlaySystemSE( CI_SE_BACK );
-		}		
-		else if ( dat == 11 ){
-			///< End 押された場合
-			CI_pv_Input_End( wk );	
-
-//			PMSND_PlaySystemSE( CI_SE_END );				
-		}
-		else {
-			
-			///< 数字部分で押された場合
-			
-			if ( wk->focus_now == 0 ){ return; }
-						
-			cur_p = wk->cur[ 0 ].state;				
-			wk->code[ cur_p ].state = dat + 1;
-			CI_pv_disp_CurOAM_Visible( wk, 1, FALSE );
-			CI_pv_disp_CurOAM_Visible( wk, 2, TRUE );
-			CI_pv_disp_CurSQ_PosSetEx( wk, dat, 2 );
-			GFL_CLACT_WK_SetAnmSeq( wk->code[ cur_p ].clwk, CI_pv_disp_CodeAnimeGet( wk->code[ cur_p ].state, wk->code[ cur_p ].size ) );
-			GFL_CLACT_WK_SetAnmSeq( wk->cur[ 2 ].clwk, eANM_CUR_TOUCH );
-			
-			now_g = wk->code[ cur_p ].group;
-			cur_p++;
-			if ( cur_p == wk->code_max ){
-									
-				wk->state.param	 = eSTATE_FOCUS_MOVE;
-				wk->state.target = 0;				
-				wk->cur[ 1 ].move_wk.pos.x = 3;
-				wk->cur[ 1 ].move_wk.pos.y = 2;
-				bMove = TRUE;
-			}
-			else {					
-				next_g = wk->code[ cur_p ].group;
-				
-				if ( now_g != next_g ){
-					
-					wk->state.param	 = eSTATE_FOCUS_MOVE;
-					wk->state.target = next_g;
-				}
-				else {
-					
-					wk->state.param	 = eSTATE_CUR_MOVE;
-					wk->state.target = cur_p;
-				}
-//				PMSND_PlaySystemSE( CI_SE_TOUCH );
-			}
-		}
-	}
-	else if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-		///< 戻ると一緒
-		CI_pv_Input_back( wk );
-
-//		PMSND_PlaySystemSE( CI_SE_TOUCH );
-	}
-	else if ( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
-		
-		int button = wk->cur[ 0 ].state;
-		
-		if ( button == 0 ){
-			wk->cur[ 0 ].state = wk->code_max - 1;
-		}
-		else {
-			wk->cur[ 0 ].state--;
-		}
-		button = wk->cur[ 0 ].state;
-		
-		if ( wk->code[ button ].size == TRUE ){
-			///< 入力部分の移動
-			
-			wk->state.param		= eSTATE_CUR_MOVE;
-			wk->state.target	= button;
-		}
-		else {
-			///< 拡縮カレント移動操作
-			
-			wk->state.param		= eSTATE_FOCUS_MOVE;
-			wk->state.target	= wk->code[ button ].group;
-			wk->state.work	 = 1;
-		}
-		
-//		PMSND_PlaySystemSE( CI_SE_MOVE );
-	}
-	else if ( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
-		
-		int button = wk->cur[ 0 ].state;
-		
-		if ( button == wk->code_max - 1 ){
-			wk->cur[ 0 ].state = 0;
-		}
-		else {
-			wk->cur[ 0 ].state++;
-		}
-		button = wk->cur[ 0 ].state;
-		
-		if ( wk->code[ button ].size == TRUE ){
-			///< 入力部分の移動
-			
-			wk->state.param		= eSTATE_CUR_MOVE;
-			wk->state.target	= button;
-		}
-		else {
-			///< 拡縮カレント移動操作
-			
-			wk->state.param		= eSTATE_FOCUS_MOVE;
-			wk->state.target	= wk->code[ button ].group;
-		}
-		
-//		PMSND_PlaySystemSE( CI_SE_MOVE );
-	}
-	
-	
-	if ( bMove == TRUE ){
-//		PMSND_PlaySystemSE( CI_SE_MOVE );
-
-		dat = key_tbl[ wk->cur[ 1 ].move_wk.pos.y ][ wk->cur[ 1 ].move_wk.pos.x ];
-		CI_pv_disp_CurSQ_PosSet( wk, dat );
-		
-		if ( dat == 10 || dat == 11 ){
-			if ( wk->cur[ 1 ].state != eANM_CUR_SQ_L ){
-				wk->cur[ 1 ].state = eANM_CUR_SQ_L;
-			}
-		}
-		else {
-			if ( wk->cur[ 1 ].state != eANM_CUR_SQ ){
-				wk->cur[ 1 ].state = eANM_CUR_SQ;
-			}
-		}
-	}
 }
 
 
@@ -883,7 +644,7 @@ void CI_pv_ButtonManagerCallBack( u32 button, u32 event, void* work )
 				wk->state.param		= eSTATE_FOCUS_MOVE;
 				wk->state.target	= wk->code[ button ].group;
 			}
-//			PMSND_PlaySystemSE( CI_SE_BLOCK );
+      PMSND_PlaySE( BR_SND_SE_NG );
 		}
 		///< その他のボタン
 		else {
@@ -892,17 +653,17 @@ void CI_pv_ButtonManagerCallBack( u32 button, u32 event, void* work )
 			if ( button == eHRT_BACK ){
 				wk->cur[ 1 ].move_wk.pos.x = 0;
 				wk->cur[ 1 ].move_wk.pos.y = 2;
-//				PMSND_PlaySystemSE( CI_SE_BACK );
+        PMSND_PlaySE( BR_SND_SE_NG );
 			}
 			else if ( button == eHRT_END ){
 				wk->cur[ 1 ].move_wk.pos.x = 3;
-				wk->cur[ 1 ].move_wk.pos.y = 2;
-//				PMSND_PlaySystemSE( CI_SE_END );
+        wk->cur[ 1 ].move_wk.pos.y = 2;
+        PMSND_PlaySE( BR_SND_SE_OK );
 			}
 			else {
 				wk->cur[ 1 ].move_wk.pos.x = ( button - eHRT_NUM_0 ) % 5;
 				wk->cur[ 1 ].move_wk.pos.y = ( button - eHRT_NUM_0 ) / 5;
-//				PMSND_PlaySystemSE( CI_SE_TOUCH );
+        PMSND_PlaySE( BR_SND_SE_OK );
 			}
 			
 			///< 数字パネル

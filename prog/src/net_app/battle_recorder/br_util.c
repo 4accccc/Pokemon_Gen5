@@ -1284,6 +1284,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
             p_wk->res_icon_chr,p_wk->res_icon_plt,p_wk->res_icon_cel,
             &data, CLSYS_DEFREND_MAIN, heapID );
         GFL_CLACT_WK_SetPlttOffs( p_wk->p_pokeicon, POKEICON_GetPalNum( mons, form, sex, egg ), CLWK_PLTTOFFS_MODE_OAM_COLOR );
+        GFL_CLACT_WK_SetObjMode( p_wk->p_pokeicon, GX_OAM_MODE_XLU );
       }
     }
   }
@@ -1315,6 +1316,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
           p_wk->res_self_chr,p_wk->res_self_plt,p_wk->res_self_cel,
             &data, CLSYS_DEFREND_MAIN, heapID );
       GFL_CLACT_WK_SetPlttOffs( p_wk->p_selficon, 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+      GFL_CLACT_WK_SetObjMode( p_wk->p_selficon, GX_OAM_MODE_XLU );
     }
   }
 
@@ -2275,6 +2277,7 @@ static void Br_BallEff_Seq_Circle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 
   BR_BALLEFF_WORK *p_wk = p_wk_adrs;
 
+#if 0
   switch( *p_seq )
   { 
   case SEQ_INIT:
@@ -2314,8 +2317,7 @@ static void Br_BallEff_Seq_Circle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     }
     break;
   }
-
-#if 0
+#else
   switch( *p_seq )
   { 
   case SEQ_INIT:

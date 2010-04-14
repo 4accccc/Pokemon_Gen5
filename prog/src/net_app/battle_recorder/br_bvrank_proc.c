@@ -504,6 +504,13 @@ static void Br_Seq_RankingMain( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     {
       if( BR_BTN_GetTrg( p_wk->p_btn, x, y ) )
       { 
+        { 
+          GFL_POINT pos;
+          pos.x = x;
+          pos.y = y;
+          BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+        }
+
         BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
         BR_SEQ_SetNext( p_seqwk,Br_Seq_FadeOut );
       }
@@ -804,7 +811,7 @@ static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR
       0,
       2,
       8,
-      9,
+      10,
       15,
       PLT_BG_M_FONT,
       BG_FRAME_M_FONT,
@@ -853,7 +860,7 @@ static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR
       //‘‚«ž‚Ý
       PRINTSYS_PrintColor( p_bmp, 16-w, 4, p_str1, p_font, BR_PRINT_COL_NORMAL );
       PRINTSYS_PrintColor( p_bmp, 16, 4, p_colon, p_font, BR_PRINT_COL_NORMAL );
-      PRINTSYS_PrintColor( p_bmp, 22, 4, p_str_name, p_font, BR_PRINT_COL_NORMAL );
+      PRINTSYS_PrintColor( p_bmp, 20, 4, p_str_name, p_font, BR_PRINT_COL_NORMAL );
 
       //ƒŠƒXƒg‚ÉÝ’è
       BR_LIST_SetBmp( p_wk->p_list, i, p_bmp );
@@ -986,7 +993,7 @@ static void Br_Rank_CreatePokeIcon( BR_RANK_WORK *p_wk, GFL_CLUNIT *p_unit, HEAP
             POKEICON_GetCgxArcIndexByMonsNumber( temp, sort_data.form_tbl[i], sort_data.gender_tbl[i], FALSE ), FALSE, CLSYS_DRAW_MAIN, heapID );
 
         //CLWKì¬
-        cldata.pos_x  = 106 + j * 24;
+        cldata.pos_x  = 106+4 + j * 24;
         cldata.pos_y  =  76 + i * 24;
         p_wk->p_poke[i][j]  = GFL_CLACT_WK_Create( p_unit,
             p_wk->cgr[i][j], p_wk->plt, p_wk->cel,

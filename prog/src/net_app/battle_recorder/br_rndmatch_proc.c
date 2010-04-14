@@ -593,24 +593,36 @@ static void Br_RndMatch_CreateMainDisplayRnd( BR_RNDMATCH_WORK *p_wk, BR_RNDMATC
 
       switch( i )
       { 
+      case BR_RNDMATCH_MSGWINID_M_RATE_CAPTION: //キャプション
+        { 
+          MYSTATUS  *p_mystatus = GAMEDATA_GetMyStatus( p_param->p_gamedata );
+          WORDSET_RegisterPlayerName( p_word, 0, p_mystatus );
+        }
+        break;
+
       case BR_RNDMATCH_MSGWINID_M_RATE_SINGLE_RATE:  //シングル
          number  = RNDMATCH_GetParam( p_param->p_rndmatch, RNDMATCH_TYPE_RATE_SINGLE, RNDMATCH_PARAM_IDX_RATE ); 
+         WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
         break;
 
       case BR_RNDMATCH_MSGWINID_M_RATE_DOUBLE_RATE:  //ダブル
          number  = RNDMATCH_GetParam( p_param->p_rndmatch, RNDMATCH_TYPE_RATE_DOUBLE, RNDMATCH_PARAM_IDX_RATE ); 
+         WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
         break;
 
       case BR_RNDMATCH_MSGWINID_M_RATE_TRIPLE_RATE:  //トリプル
          number  = RNDMATCH_GetParam( p_param->p_rndmatch, RNDMATCH_TYPE_RATE_TRIPLE, RNDMATCH_PARAM_IDX_RATE ); 
+         WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
         break;
 
       case BR_RNDMATCH_MSGWINID_M_RATE_ROT_RATE:  //ローテ
          number  = RNDMATCH_GetParam( p_param->p_rndmatch, RNDMATCH_TYPE_RATE_ROTATE, RNDMATCH_PARAM_IDX_RATE ); 
+         WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
         break;
 
       case BR_RNDMATCH_MSGWINID_M_RATE_SHOT_RATE:  //シュータ
-         number  = RNDMATCH_GetParam( p_param->p_rndmatch, RNDMATCH_TYPE_RATE_SHOOTER, RNDMATCH_PARAM_IDX_RATE ); 
+         number  = RNDMATCH_GetParam( p_param->p_rndmatch, RNDMATCH_TYPE_RATE_SHOOTER, RNDMATCH_PARAM_IDX_RATE );         
+         WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
         break;
 
       default:
@@ -622,7 +634,6 @@ static void Br_RndMatch_CreateMainDisplayRnd( BR_RNDMATCH_WORK *p_wk, BR_RNDMATC
       { 
         p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
         p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
-        WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
         WORDSET_ExpandStr( p_word, p_strbuf, p_src );
         GFL_STR_DeleteBuffer( p_src );
       }
@@ -1124,6 +1135,7 @@ static void Br_RndMatch_CreateSubDisplay( BR_RNDMATCH_WORK *p_wk, BR_RNDMATCH_PR
     },
   };
   GFL_FONT *p_font;
+  WORDSET *p_word;
   GFL_MSGDATA *p_msg; 
 
 
@@ -1133,6 +1145,7 @@ static void Br_RndMatch_CreateSubDisplay( BR_RNDMATCH_WORK *p_wk, BR_RNDMATCH_PR
 
   p_font  = BR_RES_GetFont( p_param->p_res );
   p_msg   = BR_RES_GetMsgData( p_param->p_res );
+  p_word  = BR_RES_GetWordSet( p_param->p_res );
 
 
   //ボタン作成
@@ -1156,11 +1169,31 @@ static void Br_RndMatch_CreateSubDisplay( BR_RNDMATCH_WORK *p_wk, BR_RNDMATCH_PR
   //メッセージWIN作成
   {
     int i;
+    STRBUF  *p_src      = GFL_STR_CreateBuffer( 128, p_wk->heapID );
+    STRBUF  *p_strbuf   = GFL_STR_CreateBuffer( 128, p_wk->heapID );
+
+    MYSTATUS  *p_mystatus = GAMEDATA_GetMyStatus( p_param->p_gamedata );
+
     for( i = 0; i < BR_RNDMATCH_MSGWINID_S_MAX; i++ )
     { 
       p_wk->p_msgwin_s[i]  = BR_MSGWIN_Init( BG_FRAME_S_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_S_FONT, p_wk->p_que, p_wk->heapID );
-      BR_MSGWIN_PrintColor( p_wk->p_msgwin_s[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
+
+      if( i == 0 )
+      { 
+        GFL_MSG_GetString( p_msg, sc_msgwin_data[i].msgID, p_src );
+        WORDSET_RegisterPlayerName( p_word, 0, p_mystatus );
+        WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+      }
+      else
+      { 
+        GFL_MSG_GetString( p_msg, sc_msgwin_data[i].msgID, p_strbuf );
+      }
+
+      BR_MSGWIN_PrintBufColor( p_wk->p_msgwin_s[i], p_strbuf, p_font, BR_PRINT_COL_NORMAL );
     }
+
+    GFL_STR_DeleteBuffer( p_src );
+    GFL_STR_DeleteBuffer( p_strbuf );
   }
 }
 //----------------------------------------------------------------------------

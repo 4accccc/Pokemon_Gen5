@@ -63,6 +63,7 @@ typedef struct
   MUS_SHOT_PHOTO_WORK *p_photo;
   BR_BTN_WORK	        *p_btn;
   BR_MSGWIN_WORK      *p_msgwin;
+  BOOL                is_photo_display; //TRUEで写真FALSEでプロフィール
 
   //common
   BR_SEQ_WORK         *p_seq;
@@ -419,16 +420,23 @@ static void Br_MusicalLook_Seq_PhotoMain( BR_SEQ_WORK *p_seqwk, int *p_seq, void
   u32 x, y;
   if( GFL_UI_TP_GetPointTrg( &x, &y ) )
   {
+    //戻る
     if( BR_BTN_GetTrg( p_wk->p_btn, x, y ) )
     { 
+      GFL_POINT pos;
+      pos.x = x;
+      pos.y = y;
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
       BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_ReturnPhoto );
     }
 
+    //プロフィール
     if( Br_MusicalLook_GetTrgProfile( p_wk, x, y ) )
     { 
       BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_ChengeProfile );
     }
 
+    //左
     if( Br_MusicalLook_GetTrgLeft( p_wk, x, y ) )
     { 
       if( p_wk->photo_idx - 1 < 0 )
@@ -442,6 +450,7 @@ static void Br_MusicalLook_Seq_PhotoMain( BR_SEQ_WORK *p_seqwk, int *p_seq, void
       BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_ChengePhoto );
     }
 
+    //右
     if( Br_MusicalLook_GetTrgRight( p_wk, x, y ) )
     { 
       p_wk->photo_idx++;
@@ -588,6 +597,7 @@ static void Br_MusicalLook_Seq_NextPhoto( BR_SEQ_WORK *p_seqwk, int *p_seq, void
     }
     break;
   case SEQ_END:
+    p_wk->is_photo_display  = TRUE;
     BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_PhotoMain );
     break;
   }
@@ -617,8 +627,15 @@ static void Br_MusicalLook_Seq_ReturnPhoto( BR_SEQ_WORK *p_seqwk, int *p_seq, vo
 
   switch( *p_seq )
   { 
-  case SEQ_CHANGE_FADEOUT_START:
-    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+  case SEQ_CHANGE_FADEOUT_START:  
+    if( p_wk->is_photo_display )
+    { 
+      BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    }
+    else
+    { 
+      BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    }
     *p_seq  = SEQ_CHANGE_FADEOUT_WAIT;
     break;
   case SEQ_CHANGE_FADEOUT_WAIT:
@@ -637,7 +654,14 @@ static void Br_MusicalLook_Seq_ReturnPhoto( BR_SEQ_WORK *p_seqwk, int *p_seq, vo
     *p_seq  = SEQ_CHANGE_FADEIN_START;
     break;
   case SEQ_CHANGE_FADEIN_START:
-    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    if( p_wk->is_photo_display )
+    { 
+      BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    }
+    else
+    { 
+      BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    }
     *p_seq  = SEQ_CHANGE_FADEIN_WAIT;
     break;
   case SEQ_CHANGE_FADEIN_WAIT:
@@ -798,7 +822,14 @@ static void Br_MusicalLook_Seq_ChengePhoto( BR_SEQ_WORK *p_seqwk, int *p_seq, vo
   switch( *p_seq )
   { 
   case SEQ_CHANGE_FADEOUT_START:
-    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_WHITE, BR_FADE_DISPLAY_MAIN, BR_FADE_DIR_OUT );
+    if( p_wk->is_photo_display )
+    { 
+      BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_WHITE, BR_FADE_DISPLAY_MAIN, BR_FADE_DIR_OUT );
+    }
+    else
+    { 
+      BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_MAIN, BR_FADE_DIR_OUT );
+    }
     *p_seq  = SEQ_CHANGE_FADEOUT_WAIT;
     break;
   case SEQ_CHANGE_FADEOUT_WAIT:
@@ -809,14 +840,30 @@ static void Br_MusicalLook_Seq_ChengePhoto( BR_SEQ_WORK *p_seqwk, int *p_seq, vo
     break;
   case SEQ_CHANGE_MAIN:
 
-    Br_MusicalLook_Photo_DeleteProfile( p_wk, p_wk->p_param );
-    Br_MusicalLook_Photo_DeleteMainDisplay( p_wk, p_wk->p_param );
-    Br_MusicalLook_Photo_CreateMainDisplay( p_wk, p_wk->p_param );
+    if( p_wk->is_photo_display )
+    { 
+      Br_MusicalLook_Photo_DeleteProfile( p_wk, p_wk->p_param );
+      Br_MusicalLook_Photo_DeleteMainDisplay( p_wk, p_wk->p_param );
+      Br_MusicalLook_Photo_CreateMainDisplay( p_wk, p_wk->p_param );
+    }
+    else
+    { 
+      Br_MusicalLook_Photo_DeleteProfile( p_wk, p_wk->p_param );
+      Br_MusicalLook_Photo_DeleteMainDisplay( p_wk, p_wk->p_param );
+      Br_MusicalLook_Photo_CreateProfile( p_wk, p_wk->p_param );
+    }
 
     *p_seq  = SEQ_CHANGE_FADEIN_START;
     break;
   case SEQ_CHANGE_FADEIN_START:
-    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_WHITE, BR_FADE_DISPLAY_MAIN, BR_FADE_DIR_IN );
+    if( p_wk->is_photo_display )
+    { 
+      BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_WHITE, BR_FADE_DISPLAY_MAIN, BR_FADE_DIR_IN );
+    }
+    else
+    { 
+      BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_MAIN, BR_FADE_DIR_IN );
+    }
     *p_seq  = SEQ_CHANGE_FADEIN_WAIT;
     break;
   case SEQ_CHANGE_FADEIN_WAIT:
@@ -892,10 +939,12 @@ static void Br_MusicalLook_Seq_ChengeProfile( BR_SEQ_WORK *p_seqwk, int *p_seq, 
         if( is_musical )
         { 
 
+          p_wk->is_photo_display  = FALSE;
           strID = msg_719;
         }
         else
         { 
+          p_wk->is_photo_display  = TRUE;
           strID = msg_718;
         }
 

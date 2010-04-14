@@ -17,6 +17,7 @@
 
 //自分のモジュール
 #include "br_btn.h"
+#include "br_snd.h"
 
 //セーブデータ
 #include "savedata/battle_rec.h"
@@ -237,6 +238,7 @@ static GFL_PROC_RESULT BR_MENU_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
         { 
           if( x < 8 || 256-8 <x )
           { 
+            PMSND_PlaySE( BR_SND_SE_OK );
             *p_seq  = SEQ_COLOR_PLTFADEOUT_START;
             break;
           }

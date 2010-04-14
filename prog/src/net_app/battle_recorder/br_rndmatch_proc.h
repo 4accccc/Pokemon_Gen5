@@ -13,6 +13,7 @@
 #include "br_res.h"
 #include "br_fade.h"
 #include "savedata/rndmatch_savedata.h"
+#include "gamesystem/game_data.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -34,6 +35,7 @@ typedef struct
   BR_FADE_WORK    *p_fade;      //[in]フェード
 	BR_RES_WORK			*p_res;				//[in]リソース管理
 	BR_PROC_SYS			*p_procsys;		//[in]プロセス管理
+  GAMEDATA        *p_gamedata;  //[in]ゲームデータ
   RNDMATCH_DATA   *p_rndmatch;  //[in]ランダムマッチセーブデータ
 } BR_RNDMATCH_PROC_PARAM;
 

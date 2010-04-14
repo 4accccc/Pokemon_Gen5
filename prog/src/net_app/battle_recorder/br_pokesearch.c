@@ -278,6 +278,11 @@ void BR_POKESEARCH_Main( BR_POKESEARCH_WORK *p_wk )
         if( cancel )
         { 
           //‚â‚ß‚½
+
+          GFL_POINT pos;
+          pos.x = x;
+          pos.y = y;
+          BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
           p_wk->seq       = SEQ_FADEOUT_START;
           p_wk->select    = BR_POKESEARCH_SELECT_CANCEL;
         }
@@ -304,6 +309,11 @@ void BR_POKESEARCH_Main( BR_POKESEARCH_WORK *p_wk )
         if( cancel )
         { 
           //ƒLƒƒƒ“ƒZƒ‹‚µ‚½
+
+          GFL_POINT pos;
+          pos.x = x;
+          pos.y = y;
+          BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
           p_wk->seq       = SEQ_CHANGEOUT_START;
           p_wk->next_seq  = SEQ_HEAD_SELECT;
         }
