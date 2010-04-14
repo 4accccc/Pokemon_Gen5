@@ -943,11 +943,6 @@ static void _Print_DrawPokeStatusBmpWin(PARTY_SELECT_LIST_PTR psl, const POKEPAR
   tempbuf = GFL_STR_CreateBuffer(64, psl->heap_id);
   
   //ƒŒƒxƒ‹•«•Ê•`‰æ
-  GFL_MSG_GetString( psl->msgdata, msg_psl_lv, tempbuf );
-  WORDSET_ExpandStr( psl->wordset, buf_lv, tempbuf );
-
-  GFL_MSG_GetString( psl->msgdata, msg_psl_lv, tempbuf );
-  WORDSET_ExpandStr( psl->wordset, buf_lv, tempbuf );
 
   party_max = PokeParty_GetPokeCount(party);
   for(i = 0; i < party_max; i++){
