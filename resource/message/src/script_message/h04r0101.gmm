@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-14T20:02:18"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T20:20:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="150"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="15" top="156" right="720" bottom="776" maximized="no" rayout="Vertical2">
+	<dialog left="1727" top="201" right="2430" bottom="814" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="695"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -316,20 +316,18 @@
 
 	<row id="msg_h04r0101_woman3_01">
 		<attribute name="キャラ指定">WOMAN3</attribute>
-		<language name="JPN" width="256">はしに　みんかが
-くっついてるの　めずらしいでしょ？▼
+		<language name="JPN" width="256">この　はし　めずらしいでしょ？▼
 むかし　かわが　みずで　あふれて
-いえが　ぜんぶ　ながされちゃったの▼
+いえが　ながされちゃったの▼
 かわに　ながされないよう　かんがえて
 はしの　うえに　いえを　たてたのよ▽
 シンプル　だけど　ごうりてき　よね</language>
-		<language name="JPN_KANJI" width="256">橋に　民家が
-くっ付いてるの　珍しいでしょ？▼
+		<language name="JPN_KANJI" width="256">この橋　珍しいでしょ？▼
 昔　川が　水で　あふれて
-家が　全部　流されちゃったの▼
+家が　流されちゃったの▼
 川に　流されないよう　考えて
 橋の上に　家を　建てたのよ▽
-シンプル　だけど　合理的　よね</language>
+シンプル　だけど　合理的よね</language>
 	</row>
 
 	<flowchart-group-list>
