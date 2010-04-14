@@ -367,13 +367,7 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
 //------------------------------------------------------------------------------------
 void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system )
 {
-  OSTick start, end;
-
   IncStateCount( system ); // 状態カウンタを更新
-
-  DEBUG_PrintSystemState( system );
-  OS_TFPrintf( 3, "[%d]: ", GetStateSeq(system) );
-  start = OS_GetTick();
 
 	// 状態に応じた動作
 	switch( GetState(system) ) {
@@ -388,11 +382,6 @@ void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system )
 
 	// 文字ユニットを動かす
   MoveAllCharUnit( system );
-
-  end = OS_GetTick();
-  OS_TFPrintf( 3, "tick = %d, micro sec = %d\n", 
-      (u32)(end - start),
-      (u32)OS_TicksToMicroSeconds( (end - start) ) );
 }
 
 //------------------------------------------------------------------------------------
