@@ -362,7 +362,6 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
   {
     BTL_FIELD_SITUATION_Init( &sit );
     
-//  dst->netID = 0;
     dst->netHandle = NULL;
     dst->commMode = BTL_COMM_NONE;
     dst->commPos = 0;
@@ -407,6 +406,7 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
     dst->zukanData    = GAMEDATA_GetZukanSave( gameData );
 //  dst->commSupport  = GAMEDATA_GetCommPlayerSupportPtr( gameData );
     dst->commSupport  = NULL;
+    dst->recordData   = GAMEDATA_GetRecordPtr( gameData );
 
     {
       SAVE_CONTROL_WORK *saveCtrl = GAMEDATA_GetSaveControlWork( gameData );
@@ -461,6 +461,11 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
 
     //name
     GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
+
+    NOZOMU_Printf( "base %x,%x,%x\n",L'‚Å',L'‚Î',L'‚®' );
+    NOZOMU_Printf( "raw %x,%x,%x,%x\n",bsw_trainer->name[0],bsw_trainer->name[1],bsw_trainer->name[2],bsw_trainer->name[3] );
+    NOZOMU_Printf( "adr%x\n",tr_data->name );
+
 
     //win word
     pd = (PMS_DATA*)bsw_trainer->win_word;
@@ -552,7 +557,7 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
 static BSP_TRAINER_DATA *CreateBSPTrainerData( HEAPID heapID )
 {
   BSP_TRAINER_DATA* tr_data = GFL_HEAP_AllocClearMemory( heapID, sizeof( BSP_TRAINER_DATA ) );
-  tr_data->name =   GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
+  tr_data->name =   GFL_STR_CreateBuffer( /*PERSON_NAME_SIZE + EOM_SIZE*/BUFLEN_PERSON_NAME, heapID );
   return tr_data;
 }
 
