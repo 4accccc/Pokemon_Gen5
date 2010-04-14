@@ -7,14 +7,15 @@
  */
 //////////////////////////////////////////////////////////////////////////////////////
 #include <gflib.h>
-#include "savedata/mystatus.h"
+#include "field_place_name.h"
+#include "place_name_letter.h"
+
 #include "system/bmp_oam.h"
 #include "print/wordset.h"
-#include "field_place_name.h"
 #include "field/zonedata.h"
+#include "field/field_status.h"
 #include "field/intrude_common.h"
 #include "field/intrude_comm.h"
-#include "field/field_status.h"
 #include "field_comm/intrude_work.h"
 #include "field_comm/intrude_main.h"
 
@@ -26,15 +27,18 @@
 #include "arc/message.naix"
 #include "msg/msg_place_name.h"
 
+#include "../../../resource/fldmapdata/zonetable/zone_id.h"
+
 
 //===================================================================================
 // ■ 定数・マクロ
 //=================================================================================== 
+//#define DEBUG_PRINT_ON // デバッグ出力スイッチ
+#define DEBUG_PRINT_TARGET (3) // デバッグ出力先
+#define MAX_STATE_COUNT ( 0xffff ) // 状態カウンタ最大値
+
 // 最大文字数
 #define MAX_NAME_LENGTH (BUFLEN_PLACE_NAME - BUFLEN_EOM_SIZE)
-
-// 絶対値に変換する
-#define ABS( n ) ( ((n)<0)? -(n) : (n) )
 
 // 1キャラ = 8ドット
 #define CHAR_SIZE (8) 
@@ -49,9 +53,9 @@
 #define BG_FRAME            (GFL_BG_FRAME3_M)	// 使用するBGフレーム
 #define BG_FRAME_PRIORITY   (1)					// BGフレームのプライオリティ
 
-#define	COLOR_NO_LETTER     (1)		            // 文字本体のカラー番号
-#define	COLOR_NO_SHADOW     (2)		            // 影部分のカラー番号
-#define	COLOR_NO_BACKGROUND (0)					// 背景部のカラー番号
+#define	COLOR_NO_LETTER     (1) // 文字本体のカラー番号
+#define	COLOR_NO_SHADOW     (2) // 影部分のカラー番号
+#define	COLOR_NO_BACKGROUND (0) // 背景部のカラー番号
 
 #define ALPHA_PLANE_1 (GX_BLEND_PLANEMASK_BG3)	// αブレンドの第1対象面
 #define ALPHA_PLANE_2 (GX_BLEND_PLANEMASK_BG0)	// αブレンドの第2対象面
@@ -61,11 +65,6 @@
 #define Y_CENTER_POS ( CHAR_SIZE * 2 - 1 )		// 背景帯の中心y座標
 
 #define LAUNCH_INTERVAL (3)	// 文字発射間隔[単位：フレーム]
-
-//--------------------
-// アーカイブ・データ
-//--------------------
-#define	ARC_DATA_ID_MAX (29) // アーカイブ内データIDの最大値
 
 //-----
 // BG 
@@ -110,319 +109,81 @@ typedef enum {
 } SYSTEM_STATE;
 
 
-//===================================================================================
-// ■ 文字ユニット・移動パラメータ
-//===================================================================================
-typedef struct
+static const PN_LETTER_SETUP_PARAM LetterSetupParam = 
 {
-	float x;		// 座標
-	float y;		// 
-	float sx;		// 速度
-	float sy;		// 
-	float ax;		// 加速度
-	float ay;		// 
+  256,                               // 座標
+  Y_CENTER_POS - ( 13 / 2 ), // 
+  -20,                               // 速度
+  0,                                 // 
+  24,                                // 目標位置
+  Y_CENTER_POS - ( 13 / 2 ), // 
+  0,                                 // 目標位置での速度
+  0,                                 // 
 
-	float dx;		// 目標位置
-	float dy;		// 
-	float dsx;	// 目標位置での速度
-	float dsy;	// 
+  0, // フォント
+  0, // 文字
+};
 
-	int tx;			// 残り移動回数( x方向 )
-	int ty;			// 残り移動回数( y方向 )
-}
-CHAR_UNIT_PARAM;
-
-
-//===================================================================================
-// ■文字ユニット
-//===================================================================================
-typedef struct
+GFL_BG_BGCNT_HEADER BGCntHeader = 
 {
-	GFL_BMP_DATA*   bmp;		      // ビットマップ
-	BMPOAM_ACT_PTR  bmpOamActor;	// BMPOAMアクター
-	CHAR_UNIT_PARAM param;		    // 移動パラメータ
-	u8              width;		    // 幅
-	u8              height;		    // 高さ
-	BOOL            moving;		    // 動作フラグ
-}
-CHAR_UNIT;
+  0, 0,					          // 初期表示位置
+  0x800,						      // スクリーンバッファサイズ
+  0,							        // スクリーンバッファオフセット
+  GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
+  GX_BG_COLORMODE_16,			// カラーモード
+  GX_BG_SCRBASE_0x1000,		// スクリーンベースブロック
+  GX_BG_CHARBASE_0x04000,	// キャラクタベースブロック
+  GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
+  GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
+  1,							        // 表示プライオリティー
+  0,							        // エリアオーバーフラグ
+  0,							        // DUMMY
+  FALSE,						      // モザイク設定
+}; 
 
-
-//===================================================================================
-// ■文字ユニットに関する関数群
-//===================================================================================
-static void CHAR_UNIT_Initialize( 
-    CHAR_UNIT* unit, BMPOAM_SYS_PTR bmpoam_sys, u32 pltt_idx, HEAPID heap_id );
-static void CHAR_UNIT_Finalize( CHAR_UNIT* unit );
-static void CHAR_UNIT_Write( 
-    CHAR_UNIT* unit, GFL_FONT* font, STRCODE code, HEAPID heap_id );
-static void CHAR_UNIT_SetMoveParam( CHAR_UNIT* unit, const CHAR_UNIT_PARAM* p_param );
-static void CHAR_UNIT_MoveStart( CHAR_UNIT* unit );
-static void CHAR_UNIT_Move( CHAR_UNIT* unit );
-static BOOL CHAR_UNIT_IsMoving( CHAR_UNIT* unit ); 
-
-
-//------------------------------------------------------------------------------------ 
-/**
- * @brief 初期化関数
- *
- * @param unit       初期化する変数へのポインタ
- * @param bmpoam_sys BMPOAMアクターを追加するシステム
- * @param pltt_idx   適用するパレットの登録インデックス
- * @param heap_id    使用するヒープID
- */
-//------------------------------------------------------------------------------------
-static void CHAR_UNIT_Initialize( 
-    CHAR_UNIT* unit, BMPOAM_SYS_PTR bmpoam_sys, u32 pltt_idx, HEAPID heap_id )
-{
-	BMPOAM_ACT_DATA actor_data;
-
-	// ビットマップを作成
-	unit->bmp = GFL_BMP_Create( 2, 2, GFL_BMP_16_COLOR, heap_id );
-
-	// BMPOAMアクターを作成
-	actor_data.bmp        = unit->bmp;
-	actor_data.x          = 0;
-	actor_data.y          = 0;
-	actor_data.pltt_index = pltt_idx;
-	actor_data.pal_offset = 0;
-	actor_data.soft_pri   = 0;
-	actor_data.bg_pri     = BG_FRAME_PRIORITY;
-	actor_data.setSerface = CLSYS_DEFREND_MAIN;
-	actor_data.draw_type  = CLSYS_DRAW_MAIN; 
-	unit->bmpOamActor = BmpOam_ActorAdd( bmpoam_sys, &actor_data ); 
-	BmpOam_ActorSetDrawEnable( unit->bmpOamActor, FALSE );  // 非表示
-
-	// 初期化
-	unit->param.tx = 0;
-	unit->param.ty = 0;
-	unit->width    = 0;
-	unit->height   = 0;
-	unit->moving   = FALSE;
-}
-
-//------------------------------------------------------------------------------------
-/**
- * @brief 後始末関数
- *
- * @param unit 使用を終了する変数へのポインタ
- */
-//------------------------------------------------------------------------------------
-static void CHAR_UNIT_Finalize( CHAR_UNIT* unit )
-{
-	// BMPOAMアクターを破棄
-	BmpOam_ActorDel( unit->bmpOamActor );
-
-	// ビットマップを破棄
-	GFL_BMP_Delete( unit->bmp );
-}
-
-//------------------------------------------------------------------------------------
-/**
- * @brief 文字ユニットの持つビットマップに文字を書き込む
- *
- * @param unit    書き込み先ユニット
- * @param font    フォント
- * @param code    書き込む文字
- * @param heap_id 使用するヒープID
- */
-//------------------------------------------------------------------------------------
-static void CHAR_UNIT_Write( CHAR_UNIT* unit, GFL_FONT* font, STRCODE code, HEAPID heap_id )
-{
-	int i;
-
-	STRCODE string[2];
-	STRBUF* strbuf = NULL;
-  HEAPID heap_low_id = GFL_HEAP_LOWID( heap_id );
-  PRINTSYS_LSB color = 
-    PRINTSYS_LSB_Make( COLOR_NO_LETTER, COLOR_NO_SHADOW, COLOR_NO_BACKGROUND );
-
-	// 生の文字列を作成し, 文字バッファを作成
-	string[0] = code;
-	string[1] = GFL_STR_GetEOMCode();
-	strbuf    = GFL_STR_CreateBuffer( 2, heap_low_id );
-	GFL_STR_SetStringCodeOrderLength( strbuf, string, 2 );
-
-	// サイズ取得
-	unit->width  = (u8)PRINTSYS_GetStrWidth( strbuf, font, 0 );
-	unit->height = (u8)PRINTSYS_GetStrHeight( strbuf, font );
-
-	// ビットマップに書き込む
-	GFL_BMP_Clear( unit->bmp, 0 );
-	PRINTSYS_PrintColor( unit->bmp, 0, 0, strbuf, font, color );
-	BmpOam_ActorBmpTrans( unit->bmpOamActor );
-
-	// 後始末
-	GFL_STR_DeleteBuffer( strbuf );
-}
-
-//------------------------------------------------------------------------------------
-/**
- * @brief 移動開始時の初期パラメータを設定する
- *
- * @param unit  設定する変数
- * @param param 初期パラメータ
- */
-//------------------------------------------------------------------------------------ 
-static void CHAR_UNIT_SetMoveParam( CHAR_UNIT* unit, const CHAR_UNIT_PARAM* param )
-{
-	float dist_x;
-	float dist_y;
-
-	// パラメータをコピー
-	unit->param    = *param;
-	unit->param.ax = 0;
-	unit->param.ay = 0;
-	unit->param.tx = 0;
-	unit->param.ty = 0;
-
-	// 加速度を計算
-	dist_x = param->dx - param->x;
-	if( dist_x != 0 )
-  {
-    unit->param.ax = 
-      ( ( param->dsx * param->dsx ) - ( param->sx * param->sx ) ) / ( 2 * dist_x );
-  }
-	dist_y = param->dy - param->y;
-	if( dist_y != 0 )
-  {
-    unit->param.ay = 
-      ( ( param->dsy * param->dsy ) - ( param->sy * param->sy ) ) / ( 2 * dist_y );
-  }
-
-	// 移動回数を計算
-	if( unit->param.ax != 0 )
-  {
-    unit->param.tx = (int)( ( unit->param.dsx - unit->param.sx ) / unit->param.ax );
-  }
-	if( unit->param.ay != 0 )
-  {
-    unit->param.ty = (int)( ( unit->param.dsy - unit->param.sy ) / unit->param.ay );
-  }
-
-	// BMPOAMアクターの表示位置を反映
-	BmpOam_ActorSetPos( unit->bmpOamActor, param->x, param->y );
-}
-
-//------------------------------------------------------------------------------------ 
-/**
- * @brief 文字ユニットの移動を開始する
- *
- * @param unit 移動を開始するユニット
- */
-//------------------------------------------------------------------------------------ 
-static void CHAR_UNIT_MoveStart( CHAR_UNIT* unit )
-{
-  unit->moving = TRUE;
-}
-
-//------------------------------------------------------------------------------------ 
-/**
- * @brief 動かす
- *
- * @param unit 動かすユニット
- */
-//------------------------------------------------------------------------------------ 
-static void CHAR_UNIT_Move( CHAR_UNIT* unit )
-{
-	// 動作フラグがセットされていなければ, 動かない
-	if( unit->moving != TRUE ) return;
-
-	// x方向動作
-	if( 0 < unit->param.tx )
-	{
-		// 移動
-		unit->param.x += unit->param.sx;
-
-		// 加速
-		unit->param.sx += unit->param.ax;
-
-		// 残り移動回数をデクリメント
-		unit->param.tx--;
-	}
-	// y方向動作
-	if( 0 < unit->param.ty )
-	{
-		// 移動
-		unit->param.y += unit->param.sy;
-
-		// 加速
-		unit->param.sy += unit->param.ay;
-
-		// 残り移動回数をデクリメント
-		unit->param.ty--;
-	}
-
-	// 残り移動回数が無くなったら, 動作フラグを落とす
-	if( ( unit->param.tx <= 0 ) && ( unit->param.ty <= 0 ) )
-	{
-		unit->moving = FALSE;
-	}
-	// BMPOAMアクターの表示位置に反映
-	BmpOam_ActorSetPos( unit->bmpOamActor, unit->param.x, unit->param.y );
-}
-
-//------------------------------------------------------------------------------------ 
-/**
- * @brief 移動中かどうかを調べる
- *
- * @param unit 調べるユニット
- *
- * @return 移動中なら TRUE
- */
-//------------------------------------------------------------------------------------ 
-static BOOL CHAR_UNIT_IsMoving( CHAR_UNIT* unit )
-{
-	return unit->moving;
-}
 
 
 //===================================================================================
 // ■地名表示システム
 //===================================================================================
-struct _FIELD_PLACE_NAME
-{ 
-	HEAPID heapID;	// ヒープID
-
-  //----------------------
-	// 表示に使用するデータ
-	GFL_MSGDATA* msg;	     // メッセージ・データ
-  GFL_FONT*    font;     // フォント
-
-  //----------------------
-	// 地名
-	STRBUF* nameBuf;		  // 表示中の地名文字列
-	u8      nameLen;	    // 表示中の地名文字数
-
-  //----------------------
-	// BG
-	GFL_BMPWIN*   bmpWin;	      // ビットマップ・ウィンドウ
-	GFL_BMP_DATA* bmpOrg;	      // 文字が書き込まれていない状態
-  u32           nullCharPos;  // NULLキャラクタのキャラNo.
-
-  //----------------------
-	// OBJ
-	u32            resPltt[PLTT_RES_NUM];  // パレットリソース
-	BMPOAM_SYS_PTR bmpOamSys;                    // BMPOAMシステム
-	GFL_CLUNIT*    clunit[CLUNIT_NUM];     // セルアクターユニット
-
-  //----------------------
-	// 文字ユニット
-	CHAR_UNIT charUnit[MAX_NAME_LENGTH];
-
-  //----------------------
-	// 動作に使用するデータ
-	SYSTEM_STATE state;			    // システム状態
-	u16	  stateCount;		  // 状態カウンタ
-	u32	  currentZoneID;  // 現在表示中の地名に対応するゾーンID
-	u32   nextZoneID;		  // 次に表示する地名に対応するゾーンID
-	u8    launchUnitNum;  // 発射済み文字数
-  u8    writeCharNum;   // ビットマップへの書き込みが完了した文字数
-
+struct _FIELD_PLACE_NAME { 
 
   GAMESYS_WORK* gameSystem;
-  GAMEDATA* gameData;
-  WORDSET* wordset;
+  GAMEDATA*     gameData;
+  WORDSET*      wordset;
+	HEAPID        heapID;
+  ARCHANDLE*    arcHandle;
+	GFL_MSGDATA*  msg;
+  GFL_FONT*     font;
+
+	// 地名
+	STRBUF* nameBuf; // 表示中の地名文字列
+	u8      nameLen; // 表示中の地名文字数
+
+	// 帯
+	GFL_BMPWIN*   bmpWin;	     // ビットマップ・ウィンドウ
+	GFL_BMP_DATA* bmpOrg;	     // 文字が書き込まれていない状態
+  u32           nullCharPos; // NULLキャラクタのキャラNo.
+
+	// OBJ
+	u32            resPltt[PLTT_RES_NUM];  // パレットリソース
+	BMPOAM_SYS_PTR bmpOamSys;              // BMPOAMシステム
+	GFL_CLUNIT*    clunit[CLUNIT_NUM];     // セルアクターユニット
+
+	// 動作に使用するデータ
+	SYSTEM_STATE state;	// システム状態
+  u8  stateSeq;       // 状態内シーケンス
+	u16	stateCount;		  // 状態カウンタ
+
+  u16  zoneID; // 表示する場所のID
+  u16  nextZoneID; // 次に表示するゾーンID
+  BOOL nextZoneSetFlag; // 次に表示するゾーンIDがセットされたかどうか
+  BOOL dispStartFlag;   // 表示を開始するかどうか
+
+  PN_LETTER* letters[ MAX_NAME_LENGTH ];
+  u8 setupLetterNum; // セットアップが完了した文字オブジェクトの数
+	u8 launchLetterNum;// 発射済み文字数
+  u8 writeLetterNum; // BG に書き込んだ文字数
 };
 
 
@@ -430,45 +191,101 @@ struct _FIELD_PLACE_NAME
 // ■システムに関する関数
 //===================================================================================
 // BG
-static void SetupBG( FIELD_PLACE_NAME* sys );
-static void CleanBG( FIELD_PLACE_NAME* sys );
-static void ResetBG( FIELD_PLACE_NAME* sys );	
-static void LoadBGPalette( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id ); 
-static void AllocBGNullCharArea( FIELD_PLACE_NAME* sys ); 
-static void AllocBGBitmap( FIELD_PLACE_NAME* sys );
-static void RecoverBmpWin( FIELD_PLACE_NAME* sys );
-// 文字ユニット
-static void LoadClactResource( FIELD_PLACE_NAME* sys ); 
-static void CreateClactUnit( FIELD_PLACE_NAME* sys );
-static void CreateCharUnit( FIELD_PLACE_NAME* sys );
-static void SetupCharUnitAction( FIELD_PLACE_NAME* sys );
-static void SetAllCharUnitVisibleOff( FIELD_PLACE_NAME* sys );
-static void LaunchCharUnit( FIELD_PLACE_NAME* sys );
-static void MoveAllCharUnit( FIELD_PLACE_NAME* sys ); 
+static void SetupBG( FIELD_PLACE_NAME* system );
+static void CleanBG( FIELD_PLACE_NAME* system );
+static void ResetBG( FIELD_PLACE_NAME* system );	
+static void LoadBGPalette( FIELD_PLACE_NAME* system ); // BG パレットを読み込む
+static void AllocBGNullCharArea( FIELD_PLACE_NAME* system ); // 空白キャラエリアを確保する
+static void FreeBGNullCharaArea( FIELD_PLACE_NAME* system ); // 空白キャラエリアを解放する
+static void RecoverBlankBand( FIELD_PLACE_NAME* system ); // 帯を文字が書き込まれていない状態に復帰する
+// OBJ
+static void LoadOBJResource( FIELD_PLACE_NAME* system ); // OBJ リソースを読み込む
+static void UnloadOBJResource( FIELD_PLACE_NAME* system ); // OBJ リソースを解放する
+static void CreateBmpOamSystem( FIELD_PLACE_NAME* system ); // BMPOAM システムを生成する
+static void DeleteBmpOamSystem( FIELD_PLACE_NAME* system ); // BMPOAM システムを破棄する
+static void CreateClactUnit( FIELD_PLACE_NAME* system ); // セルアクターユニットを生成する
+static void DeleteClactUnit( FIELD_PLACE_NAME* system ); // セルアクターユニットを破棄する
+// 文字オブジェクト
+static void SetupLetter( FIELD_PLACE_NAME* system ); // 文字オブジェクトをセットアップする
+static BOOL CheckLetterSetupFinished( const FIELD_PLACE_NAME* system ); // 文字オブジェクトのセットアップが完了したかどうかをチェックする
+static void HideLetters( FIELD_PLACE_NAME* system ); // 文字オブジェクトを非表示にする
+static void LaunchLetter( FIELD_PLACE_NAME* system ); // 文字オブジェクトを発射する
+static void MoveAllCharUnit( FIELD_PLACE_NAME* system ); 
 // BG, 文字ユニットへの書き込み
-static void WritePlaceNameIntoCharUnit( FIELD_PLACE_NAME* sys );
-static void WriteCharUnitIntoBitmapWindow( FIELD_PLACE_NAME* sys );
+static void WriteCharUnitIntoBitmapWindow( FIELD_PLACE_NAME* system );
+static BOOL CheckLetterWriteToBitmapFinished( const FIELD_PLACE_NAME* system );
 // 地名の更新
-static void UpdatePlaceName( FIELD_PLACE_NAME* sys ); 
+static BOOL CheckDispStart( const FIELD_PLACE_NAME* system );
+static void DispStart( FIELD_PLACE_NAME* system );
+static void UpdatePlaceName( FIELD_PLACE_NAME* system ); 
 // 状態の変更
-static void SetState( FIELD_PLACE_NAME* sys, SYSTEM_STATE next_state );
-static void Cancel( FIELD_PLACE_NAME* sys ); 
+static void ChangeState( FIELD_PLACE_NAME* system, SYSTEM_STATE next_state );
+static void Cancel( FIELD_PLACE_NAME* system ); 
 // 各状態時の動作
-static void Process_HIDE( FIELD_PLACE_NAME* sys );
-static void Process_SETUP( FIELD_PLACE_NAME* sys );
-static void Process_FADEIN( FIELD_PLACE_NAME* sys );
-static void Process_WAIT_LAUNCH( FIELD_PLACE_NAME* sys );
-static void Process_LAUNCH( FIELD_PLACE_NAME* sys );
-static void Process_WAIT_FADEOUT( FIELD_PLACE_NAME* sys );
-static void Process_FADEOUT( FIELD_PLACE_NAME* sys ); 
+static void Process_HIDE( FIELD_PLACE_NAME* system );
+static void Process_SETUP( FIELD_PLACE_NAME* system );
+static void Process_FADEIN( FIELD_PLACE_NAME* system );
+static void Process_WAIT_LAUNCH( FIELD_PLACE_NAME* system );
+static void Process_LAUNCH( FIELD_PLACE_NAME* system );
+static void Process_WAIT_FADEOUT( FIELD_PLACE_NAME* system );
+static void Process_FADEOUT( FIELD_PLACE_NAME* system ); 
 // 各状態時の描画処理
-static void Draw_HIDE( const FIELD_PLACE_NAME* sys );
-static void Draw_SETUP( const FIELD_PLACE_NAME* sys );
-static void Draw_FADEIN( const FIELD_PLACE_NAME* sys );
-static void Draw_WAIT_LAUNCH( const FIELD_PLACE_NAME* sys );
-static void Draw_LAUNCH( const FIELD_PLACE_NAME* sys );
-static void Draw_WAIT_FADEOUT( const FIELD_PLACE_NAME* sys );
-static void Draw_FADEOUT( const FIELD_PLACE_NAME* sys );
+static void Draw_HIDE( const FIELD_PLACE_NAME* system );
+static void Draw_SETUP( const FIELD_PLACE_NAME* system );
+static void Draw_FADEIN( const FIELD_PLACE_NAME* system );
+static void Draw_WAIT_LAUNCH( const FIELD_PLACE_NAME* system );
+static void Draw_LAUNCH( const FIELD_PLACE_NAME* system );
+static void Draw_WAIT_FADEOUT( const FIELD_PLACE_NAME* system );
+static void Draw_FADEOUT( const FIELD_PLACE_NAME* system );
+
+
+// システム
+static FIELD_PLACE_NAME* CreatePNSystem( HEAPID heapID ); // 地名表示システムを生成する
+static void InitPNSystem( FIELD_PLACE_NAME* system, GAMESYS_WORK* gameSystem ); // 地名表示システムを初期化する
+static void DeletePNSystem( FIELD_PLACE_NAME* system ); // 地名表示システムを破棄する
+// 生成
+static void CreateWordset( FIELD_PLACE_NAME* system ); // ワードセットを生成する
+static void CreateMessageData( FIELD_PLACE_NAME* system ); // メッセージデータを生成する
+static void CreatePlaceNameBuffer( FIELD_PLACE_NAME* system ); // 地名バッファを生成する
+static void CreateBandBlankBitmap( FIELD_PLACE_NAME* system ); // 白紙帯のビットマップを生成する
+static void CreateBandBitmapWindow( FIELD_PLACE_NAME* system ); // 帯のビットマップウィンドウを生成する
+static void CreateLetters( FIELD_PLACE_NAME* system ); // 文字オブジェクトを生成する
+static void OpenDataHandle( FIELD_PLACE_NAME* system ); // アーカイブデータハンドルを開く
+// 破棄
+static void DeleteWordset( FIELD_PLACE_NAME* system ); // ワードセットを破棄する
+static void DeleteMessageData( FIELD_PLACE_NAME* system ); // メッセージデータを破棄する
+static void DeletePlaceNameBuffer( FIELD_PLACE_NAME* system ); // 地名バッファを破棄する
+static void DeleteBandBlankBitmap( FIELD_PLACE_NAME* system ); // 白紙帯のビットマップを破棄する
+static void DeleteBandBitmapWindow( FIELD_PLACE_NAME* system ); // 帯のビットマップウィンドウを破棄する
+static void DeleteLetters( FIELD_PLACE_NAME* system ); // 文字オブジェクトを破棄する
+static void CloseDataHandle( FIELD_PLACE_NAME* system ); // アーカイブデータハンドルを閉じる
+// 各種ゲッター関数
+static HEAPID GetHeapID( const FIELD_PLACE_NAME* system ); // ヒープIDを取得する
+static ARCHANDLE* GetArcHandle( const FIELD_PLACE_NAME* system ); // アーカイブデータハンドルを取得する
+static GFL_FONT* GetFont( const FIELD_PLACE_NAME* system ); // フォントを取得する
+static GFL_MSGDATA* GetMessageData( const FIELD_PLACE_NAME* system ); // メッセージデータを取得する
+// 各種セッター関数
+static void SetHeapID( FIELD_PLACE_NAME* system, HEAPID heapID ); // ヒープIDを設定する
+static void SetFont( FIELD_PLACE_NAME* system, GFL_FONT* font ); // フォントを設定する
+// システム状態
+static void SetState( FIELD_PLACE_NAME* system, SYSTEM_STATE state ); // システムの状態を設定する
+static SYSTEM_STATE GetState( const FIELD_PLACE_NAME* system ); // システムの状態を取得する
+static u16 GetStateCount( const FIELD_PLACE_NAME* system ); // 状態カウンタを取得する
+static void ResetStateCount( FIELD_PLACE_NAME* system ); // 状態カウンタをリセットする
+static void IncStateCount( FIELD_PLACE_NAME* system ); // 状態カウンタを更新する
+static u8 GetStateSeq( const FIELD_PLACE_NAME* system ); // 状態内シーケンスを取得する
+static void ResetStateSeq( FIELD_PLACE_NAME* system ); // 状態内シーケンスをリセットする
+static void IncStateSeq( FIELD_PLACE_NAME* system ); // 状態内シーケンスをインクリメントする
+// 地名
+static u16 GetZoneID( const FIELD_PLACE_NAME* system ); // ゾーンIDを取得する
+static void SetZoneID( FIELD_PLACE_NAME* system, u16 zoneID ); // ゾーンIDを設定する
+static void SetNextZoneID( FIELD_PLACE_NAME* system, u16 zoneID ); // 次に表示するゾーンIDを設定する
+static const STRBUF* GetPlaceName( const FIELD_PLACE_NAME* system ); // 地名バッファを取得する
+static u8 GetPlaceNameLength( const FIELD_PLACE_NAME* system ); // 地名の文字数を取得する
+// デバッグ
+//#ifdef DEBUG_PRINT_ON
+static void DEBUG_PrintSystemState( const FIELD_PLACE_NAME* system ); // システム状態名を出力する
+//#endif
 
 
 //====================================================================================
@@ -479,124 +296,61 @@ static void Draw_FADEOUT( const FIELD_PLACE_NAME* sys );
 /**
  * @brief 地名表示システムを作成する
  *
- * @param heap_id 使用するヒープID
- * @param msgbg   使用するメッセージ表示システム
+ * @param gameSystem
+ * @param heapID     使用するヒープID
+ * @param msgbg      使用するメッセージ表示システム
  *
- * @return 地名表示システム・ワークへのポインタ
+ * @return 生成したシステム
  */
 //------------------------------------------------------------------------------------
-FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heap_id, FLDMSGBG* msgbg )
+FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heapID, FLDMSGBG* msgbg )
 {
-	FIELD_PLACE_NAME* sys;
+	FIELD_PLACE_NAME* system;
 
-	// システム・ワーク作成
-	sys = (FIELD_PLACE_NAME*)GFL_HEAP_AllocClearMemory( heap_id, sizeof( FIELD_PLACE_NAME ) );
+	system = CreatePNSystem( heapID );
+  InitPNSystem( system, gameSystem );
+  OpenDataHandle( system );
+  CreateWordset( system );
+  CreateMessageData( system );
+  CreatePlaceNameBuffer( system );
+  SetHeapID( system, heapID );
+  SetFont( system, FLDMSGBG_GetFontHandle( msgbg ) );
 
-	// システムの設定
-	sys->heapID        = heap_id;
-	sys->currentZoneID = INVALID_ZONE_ID;
-	sys->nextZoneID    = INVALID_ZONE_ID;
-	sys->nameLen       = 0;
-  sys->writeCharNum  = 0;
-  sys->nullCharPos   = AREAMAN_POS_NOTFOUND;
-  sys->bmpWin        = NULL;
-  sys->bmpOrg        = NULL;
-	sys->msg           = FLDMSGBG_CreateMSGDATA( msgbg, NARC_message_place_name_dat );
-	sys->font          = FLDMSGBG_GetFontHandle( msgbg );
-	sys->nameBuf       = GFL_STR_CreateBuffer( MAX_NAME_LENGTH + 1, sys->heapID );
+	LoadOBJResource( system );
+	CreateClactUnit( system );
+  CreateBmpOamSystem( system );
 
-	// BGの使用準備
-  {
-    GFL_BG_BGCNT_HEADER bgcnt = 
-    {
-      0, 0,					          // 初期表示位置
-      0x800,						      // スクリーンバッファサイズ
-      0,							        // スクリーンバッファオフセット
-      GFL_BG_SCRSIZ_256x256,	// スクリーンサイズ
-      GX_BG_COLORMODE_16,			// カラーモード
-      GX_BG_SCRBASE_0x1000,		// スクリーンベースブロック
-      GX_BG_CHARBASE_0x04000,	// キャラクタベースブロック
-      GFL_BG_CHRSIZ_256x256,	// キャラクタエリアサイズ
-      GX_BG_EXTPLTT_01,			  // BG拡張パレットスロット選択
-      1,							        // 表示プライオリティー
-      0,							        // エリアオーバーフラグ
-      0,							        // DUMMY
-      FALSE,						      // モザイク設定
-    }; 
-    GFL_BG_SetBGControl( BG_FRAME, &bgcnt, GFL_BG_MODE_TEXT );
-  }
-	//ResetBG( sys );
-  //SetupBG( sys );
+	CreateLetters( system ); // 文字オブジェクトを生成
 
-	// セルアクター用リソースの読み込み
-	LoadClactResource( sys );
+  GFL_BG_SetBGControl( BG_FRAME, &BGCntHeader, GFL_BG_MODE_TEXT ); 
 
-	// セルアクターユニットを作成
-	CreateClactUnit( sys );
-	sys->bmpOamSys = BmpOam_Init( heap_id, sys->clunit[ CLUNIT_CHAR_UNIT ] );
-
-	// 文字ユニットを作成
-	CreateCharUnit( sys );
-
-	// 初期状態を設定
-	SetState( sys, SYSTEM_STATE_HIDE );
-
-  sys->gameSystem = gameSystem;
-  sys->gameData = GAMESYSTEM_GetGameData( gameSystem );
-  sys->wordset = WORDSET_Create( heap_id );
-  
-
-	// 作成したシステムを返す
-	return sys;
+	ChangeState( system, SYSTEM_STATE_HIDE );
+	return system;
 }
 
 //------------------------------------------------------------------------------------
 /**
  * @brief 地名表示システムを破棄する
  *
- * @param sys 破棄するシステム
+ * @param system
  */
 //------------------------------------------------------------------------------------
-void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* sys )
+void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
 {
-	int i;
+  DeleteLetters( system ); 
+  DeletePlaceNameBuffer( system ); 
+  DeleteBmpOamSystem( system ); 
+  DeleteClactUnit( system );
+  UnloadOBJResource( system ); 
+  DeleteWordset( system );
+  DeleteMessageData( system ); 
+  DeleteBandBitmapWindow( system );
+  DeleteBandBlankBitmap( system );
+  CloseDataHandle( system );
 
-  WORDSET_Delete( sys->wordset );
+	GFL_BG_FreeBGControl( BG_FRAME ); 
 
-	// 文字バッファを解放
-	GFL_STR_DeleteBuffer( sys->nameBuf );
-
-	// BMPOAMシステムの後始末
-	for( i=0; i<MAX_NAME_LENGTH; i++ )
-	{ 
-		CHAR_UNIT_Finalize( &sys->charUnit[i] );
-	}
-	BmpOam_Exit( sys->bmpOamSys );
-	
-	// セルアクターユニットの破棄
-	for( i=0; i<CLUNIT_NUM; i++ )
-	{
-		GFL_CLACT_UNIT_Delete( sys->clunit[i] );
-	}
-	
-	// セルアクター用リソースの破棄
-	for( i=0; i<PLTT_RES_NUM; i++ )
-	{
-		GFL_CLGRP_PLTT_Release( sys->resPltt[i] );
-	}
-	
-	// 描画用インスタンスの破棄
-	GFL_MSG_Delete( sys->msg );
-
-	// ビットマップ・ウィンドウの破棄
-	if( sys->bmpWin ){ GFL_BMPWIN_Delete( sys->bmpWin ); }
-	if( sys->bmpOrg ){ GFL_BMP_Delete( sys->bmpOrg ); }
-
-	// BGSYSの後始末
-	GFL_BG_FreeBGControl( BG_FRAME );
-
-	// システム・ワーク解放
-	GFL_HEAP_FreeMemory( sys );
+  DeletePNSystem( system );
 } 
 
 
@@ -608,46 +362,56 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* sys )
 /**
  * @brief 地名表示システムの動作処理
  *
- * @param sys 動かすシステム
+ * @param system
  */
 //------------------------------------------------------------------------------------
-void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* sys )
+void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system )
 {
-	// 状態カウンタを更新
-	sys->stateCount++;
+  OSTick start, end;
+
+  IncStateCount( system ); // 状態カウンタを更新
+
+  DEBUG_PrintSystemState( system );
+  OS_TFPrintf( 3, "[%d]: ", GetStateSeq(system) );
+  start = OS_GetTick();
 
 	// 状態に応じた動作
-	switch( sys->state ) {
-  case SYSTEM_STATE_HIDE:         Process_HIDE( sys );		       break;
-  case SYSTEM_STATE_SETUP:        Process_SETUP( sys );		       break;
-  case SYSTEM_STATE_FADEIN:       Process_FADEIN( sys );	       break;
-  case SYSTEM_STATE_WAIT_LAUNCH:  Process_WAIT_LAUNCH( sys );	   break;
-  case SYSTEM_STATE_LAUNCH:       Process_LAUNCH( sys );	       break;
-  case SYSTEM_STATE_WAIT_FADEOUT: Process_WAIT_FADEOUT( sys );	 break;
-  case SYSTEM_STATE_FADEOUT:      Process_FADEOUT( sys );	       break;
+	switch( GetState(system) ) {
+  case SYSTEM_STATE_HIDE:         Process_HIDE( system );		      break;
+  case SYSTEM_STATE_SETUP:        Process_SETUP( system );		    break;
+  case SYSTEM_STATE_FADEIN:       Process_FADEIN( system );	      break;
+  case SYSTEM_STATE_WAIT_LAUNCH:  Process_WAIT_LAUNCH( system );	break;
+  case SYSTEM_STATE_LAUNCH:       Process_LAUNCH( system );	      break;
+  case SYSTEM_STATE_WAIT_FADEOUT: Process_WAIT_FADEOUT( system );	break;
+  case SYSTEM_STATE_FADEOUT:      Process_FADEOUT( system );	    break;
 	}
 
 	// 文字ユニットを動かす
-  MoveAllCharUnit( sys );
+  MoveAllCharUnit( system );
+
+  end = OS_GetTick();
+  OS_TFPrintf( 3, "tick = %d, micro sec = %d\n", 
+      (u32)(end - start),
+      (u32)OS_TicksToMicroSeconds( (end - start) ) );
 }
 
 //------------------------------------------------------------------------------------
 /**
  * @brief 地名表示ウィンドウの描画処理
  *
- * @param sys 描画対象システム
+ * @param system
  */
 //------------------------------------------------------------------------------------
-void FIELD_PLACE_NAME_Draw( const FIELD_PLACE_NAME* sys )
+void FIELD_PLACE_NAME_Draw( const FIELD_PLACE_NAME* system )
 { 
-	switch( sys->state ) {
-  case SYSTEM_STATE_HIDE:		      Draw_HIDE( sys );		      break;
-  case SYSTEM_STATE_SETUP:		    Draw_SETUP( sys );		    break;
-  case SYSTEM_STATE_FADEIN:		    Draw_FADEIN( sys );	      break;
-  case SYSTEM_STATE_WAIT_LAUNCH:	Draw_WAIT_LAUNCH( sys );	break;
-  case SYSTEM_STATE_LAUNCH:		    Draw_LAUNCH( sys );	      break;
-  case SYSTEM_STATE_WAIT_FADEOUT:	Draw_WAIT_FADEOUT( sys );	break;
-  case SYSTEM_STATE_FADEOUT:	    Draw_FADEOUT( sys );	    break;
+	switch( GetState(system) ) {
+  case SYSTEM_STATE_HIDE:		      Draw_HIDE( system );		     break;
+  case SYSTEM_STATE_SETUP:		    Draw_SETUP( system );		     break;
+  case SYSTEM_STATE_FADEIN:		    Draw_FADEIN( system );	     break;
+  case SYSTEM_STATE_WAIT_LAUNCH:	Draw_WAIT_LAUNCH( system );	 break;
+  case SYSTEM_STATE_LAUNCH:		    Draw_LAUNCH( system );	     break;
+  case SYSTEM_STATE_WAIT_FADEOUT:	Draw_WAIT_FADEOUT( system ); break;
+  case SYSTEM_STATE_FADEOUT:	    Draw_FADEOUT( system );	     break;
 	} 
 }
 
@@ -660,68 +424,64 @@ void FIELD_PLACE_NAME_Draw( const FIELD_PLACE_NAME* sys )
 /**
  * @brief ゾーンの切り替えを通知し, 新しい地名を表示する
  *
- * @param sys        ゾーン切り替えを通知するシステム
- * @param next_zone_id 新しいゾーンID
+ * @param system
+ * @param zoneID ゾーンID
  */
 //------------------------------------------------------------------------------------
-void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* sys, u32 next_zone_id )
+void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* system, u32 zoneID )
 { 
   // ゾーンの地名表示フラグが立っていない場所では表示しない
-  if( ZONEDATA_GetPlaceNameFlag( next_zone_id ) != TRUE ) return;
+  if( ZONEDATA_GetPlaceNameFlag( zoneID ) == FALSE ) { return; }
 
 	// 指定されたゾーンIDを次に表示すべきものとして記憶
-	sys->nextZoneID = next_zone_id;
+  SetNextZoneID( system, zoneID );
 
 	// 表示中のウィンドウを退出させる
-	Cancel( sys ); 
+	Cancel( system ); 
 }
 
 //------------------------------------------------------------------------------------
 /**
  * @brief 地名ウィンドウを強制的に表示する
  *
- * @param sys   表示するシステム
- * @param zone_id 表示する場所のゾーンID
+ * @param system
+ * @param zoneID 表示する場所のゾーンID
  */
 //------------------------------------------------------------------------------------
-extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* sys, u32 zone_id )
+extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* system, u32 zoneID )
 {
   // 強制的に表示
-  sys->currentZoneID = INVALID_ZONE_ID;
-  sys->nextZoneID    = zone_id;
+  SetZoneID( system, zoneID );
+  SetNextZoneID( system, zoneID );
+  system->dispStartFlag = TRUE;
 
 	// 表示中のウィンドウを退出させる
-	Cancel( sys ); 
+	Cancel( system ); 
 }
 
 //------------------------------------------------------------------------------------
 /**
  * @brief 地名ウィンドウの表示を強制的に終了する
  *
- * @param sys 表示を終了するシステム
+ * @param system
  */
 //------------------------------------------------------------------------------------
-void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* sys )
+void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* system )
 {
-	SetState( sys, SYSTEM_STATE_HIDE );
+	ChangeState( system, SYSTEM_STATE_HIDE );
 }
 
 //------------------------------------------------------------------------------------
 /**
  * @brief 地名表示ＢＧ復帰
  *
- * @param sys 表示を終了するシステム
+ * @param system
  */
 //------------------------------------------------------------------------------------
-void FIELD_PLACE_NAME_RecoverBG(FIELD_PLACE_NAME* sys)
+void FIELD_PLACE_NAME_RecoverBG( FIELD_PLACE_NAME* system )
 {
-  ResetBG( sys );
-  GFL_BG_FillCharacterRelease( BG_FRAME, 1, 0 );
-  GFL_BG_FillCharacter( BG_FRAME, 0, 1, 0 );
-	
-  RecoverBmpWin(sys);
-	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(sys->bmpWin) );
-	GFL_BMPWIN_MakeTransWindow( sys->bmpWin );
+  ResetBG( system );
+  RecoverBlankBand( system );
 }
 
 
@@ -733,22 +493,18 @@ void FIELD_PLACE_NAME_RecoverBG(FIELD_PLACE_NAME* sys)
 /**
  * @brief BGのセットアップ
  *
- * @param sys 地名表示システム
+ * @param system
  */
 //-----------------------------------------------------------------------------------
-static void SetupBG( FIELD_PLACE_NAME* sys )
-{ 
-  // パレットデータ
-	LoadBGPalette( sys, ARCID_PLACE_NAME, NARC_place_name_place_name_string_NCLR );
-
-	// NULLキャラクタデータ
-  AllocBGNullCharArea( sys );
-
-  // ビットマップデータ
-  AllocBGBitmap( sys );
+static void SetupBG( FIELD_PLACE_NAME* system )
+{
+	LoadBGPalette( system ); 
+  AllocBGNullCharArea( system );
+  CreateBandBlankBitmap( system );
+  CreateBandBitmapWindow( system );
 
 	// ビットマップ・ウィンドウのデータをVRAMに転送
-	GFL_BMPWIN_MakeTransWindow( sys->bmpWin ); 
+	GFL_BMPWIN_MakeTransWindow( system->bmpWin ); 
 
   // BG表示設定
 	GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
@@ -760,34 +516,17 @@ static void SetupBG( FIELD_PLACE_NAME* sys )
 /**
  * @brief BGのクリーンアップ処理
  *
- * @param sys 地名表示システム
+ * @param system
  */
 //-----------------------------------------------------------------------------------
-static void CleanBG( FIELD_PLACE_NAME* sys )
+static void CleanBG( FIELD_PLACE_NAME* system )
 {
 	// キャラVRAM・スクリーンVRAMをクリア
 	GFL_BG_ClearFrame( BG_FRAME );
 
-	// NULLキャラクタデータ
-  if( sys->nullCharPos != AREAMAN_POS_NOTFOUND )
-  {
-    GFL_BG_FreeCharacterArea( BG_FRAME, sys->nullCharPos, CHAR_SIZE * CHAR_SIZE / 2 );
-    sys->nullCharPos = AREAMAN_POS_NOTFOUND;
-  }
-
-	// ビットマップ・ウィンドウ
-  if( sys->bmpWin )
-  {
-    GFL_BMPWIN_Delete( sys->bmpWin );
-    sys->bmpWin = NULL;
-  }
-
-  // キャラクタデータ
-  if( sys->bmpOrg )
-  {
-    GFL_BMP_Delete( sys->bmpOrg );
-    sys->bmpOrg = NULL;
-  }
+  FreeBGNullCharaArea( system ); 
+  DeleteBandBitmapWindow( system );
+  DeleteBandBlankBitmap( system );
 }
 
 //-----------------------------------------------------------------------------------
@@ -805,226 +544,353 @@ static void ResetBG( FIELD_PLACE_NAME* sys )
 
 //------------------------------------------------------------------------------------
 /**
- * @brief パレット・データを読み込む
+ * @brief BGパレットを読み込む
  *
- * @param sys   読み込みを行うシステム
- * @param arc_id  アーカイブデータのインデックス
- * @param data_id アーカイブ内データインデックス
+ * @param system
  */
 //------------------------------------------------------------------------------------
-static void LoadBGPalette( FIELD_PLACE_NAME* sys, u32 arc_id, u32 data_id )
+static void LoadBGPalette( FIELD_PLACE_NAME* system )
 {
+  ARCDATID datID;
 	ARCHANDLE* handle;
+  HEAPID heapID;
 	u32 size;
 	void* src;
-	NNSG2dPaletteData* pltt_data;
-	handle = GFL_ARC_OpenDataHandle( arc_id, sys->heapID );		// アーカイブデータハンドルオープン
-	size    = GFL_ARC_GetDataSizeByHandle( handle, data_id );	// データサイズ取得
-	src   = GFL_HEAP_AllocMemory( sys->heapID, size );				// データバッファ確保
-	GFL_ARC_LoadDataByHandle( handle, data_id, src );					// データ取得
-	NNS_G2dGetUnpackedPaletteData( src, &pltt_data );					// バイナリからデータを展開
-	GFL_BG_LoadPalette( BG_FRAME, pltt_data->pRawData, 0x20, BG_PALETTE_NO );	// パレットデータ転送
-	GFL_HEAP_FreeMemory( src );											          // データバッファ解放
-	GFL_ARC_CloseDataHandle( handle );										    // アーカイブデータハンドルクローズ
+	NNSG2dPaletteData* pal;
+
+  heapID = GetHeapID( system ); 
+	handle = GetArcHandle( system );
+  datID  = NARC_place_name_place_name_back_NCLR;
+
+	size = GFL_ARC_GetDataSizeByHandle( handle, datID );// データサイズ取得
+	src = GFL_HEAP_AllocMemory( system->heapID, size );	// データバッファ確保
+	GFL_ARC_LoadDataByHandle( handle, datID, src );			// データ取得
+	NNS_G2dGetUnpackedPaletteData( src, &pal );					// バイナリからデータを展開
+	GFL_BG_LoadPalette( BG_FRAME, pal->pRawData, 0x20, BG_PALETTE_NO );	// パレットデータ転送
+	GFL_HEAP_FreeMemory( src );											    // データバッファ解放
 }
 
 //------------------------------------------------------------------------------------
 /**
- * @brief 空のBGキャラクタデータを1キャラ分VRAMに確保する
+ * @brief 空白キャラエリアを確保する
  *
- * @param sys 地名表示システム
- *
- * ※キャラクタ番号0を空白キャラクタとして使用するため。
+ * @param system
  */
 //------------------------------------------------------------------------------------
-static void AllocBGNullCharArea( FIELD_PLACE_NAME* sys )
+static void AllocBGNullCharArea( FIELD_PLACE_NAME* system )
 {
-  if( sys->nullCharPos == AREAMAN_POS_NOTFOUND )  // if(未確保)
-  {
-    sys->nullCharPos = GFL_BG_AllocCharacterArea( 
-        BG_FRAME, CHAR_SIZE * CHAR_SIZE / 2, GFL_BG_CHRAREA_GET_F );
+  // 未確保
+  if( system->nullCharPos == AREAMAN_POS_NOTFOUND ) {
+    system->nullCharPos = 
+      GFL_BG_AllocCharacterArea( 
+          BG_FRAME, CHAR_SIZE * CHAR_SIZE / 2, GFL_BG_CHRAREA_GET_F );
   }
 }
 
 //------------------------------------------------------------------------------------
 /**
- * @brief BGビットマップデータを確保する
+ * @brief 空白キャラエリアを解放する
  *
- * @brief sys 地名表示システム
+ * @param system
  */
 //------------------------------------------------------------------------------------
-static void AllocBGBitmap( FIELD_PLACE_NAME* sys )
+static void FreeBGNullCharaArea( FIELD_PLACE_NAME* system )
 {
-	// ビットマップ・ウィンドウ
-  if( sys->bmpWin == NULL )
-  {
-    sys->bmpWin = GFL_BMPWIN_Create( BG_FRAME,
-                                     BMPWIN_POS_X_CHAR, BMPWIN_POS_Y_CHAR, 
-                                     BMPWIN_WIDTH_CHAR, BMPWIN_HEIGHT_CHAR,
-                                     BG_PALETTE_NO, GFL_BMP_CHRAREA_GET_F ); 
-  } 
-  // キャラクタデータ
-  if( sys->bmpOrg == NULL )
-  {
-    sys->bmpOrg = GFL_BMP_LoadCharacter( ARCID_PLACE_NAME, 
-                                         NARC_place_name_place_name_back_NCGR, 
-                                         FALSE, sys->heapID ); 
+  // 確保済み
+  if( system->nullCharPos != AREAMAN_POS_NOTFOUND ) {
+    GFL_BG_FreeCharacterArea( 
+        BG_FRAME, system->nullCharPos, CHAR_SIZE * CHAR_SIZE / 2 );
+    system->nullCharPos = AREAMAN_POS_NOTFOUND;
   }
 }
 
+
 //-----------------------------------------------------------------------------------
 /**
- * @brief ビットマップ・ウィンドウをBGオリジナルデータに復元する
+ * @brief 帯を文字が書き込まれていない状態に復帰する
  *
- * @param sys 操作対象システム
+ * @param system
  */
 //-----------------------------------------------------------------------------------
-static void RecoverBmpWin( FIELD_PLACE_NAME* sys )
+static void RecoverBlankBand( FIELD_PLACE_NAME* system )
 {
-	GFL_BMP_DATA* p_src = sys->bmpOrg;
-	GFL_BMP_DATA* p_dst = GFL_BMPWIN_GetBmp( sys->bmpWin );
+	GFL_BMP_DATA* src = system->bmpOrg;
+	GFL_BMP_DATA* dest = GFL_BMPWIN_GetBmp( system->bmpWin );
 
-	// オリジナル(文字が書き込まれていない状態)をコピーして, VRAMに転送
-	GFL_BMP_Copy( p_src, p_dst );	
-	GFL_BMPWIN_TransVramCharacter( sys->bmpWin );	
+	// 文字が書き込まれていない状態をコピーして, VRAMに転送
+	GFL_BMP_Copy( src, dest );	
+	//GFL_BMPWIN_MakeTransWindow( system->bmpWin );
+	//GFL_BMPWIN_TransVramCharacter( system->bmpWin );
 }
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief セルアクターで使用するリソースを読み込む
+ * @brief OBJ リソースを読み込む
  *
- * @param sys 読み込み対象システム
+ * @param system 
  */
 //-----------------------------------------------------------------------------------
-static void LoadClactResource( FIELD_PLACE_NAME* sys )
+static void LoadOBJResource( FIELD_PLACE_NAME* system )
 {
-	ARCHANDLE* p_arc_handle;
+  HEAPID heapID;
+	ARCHANDLE* handle;
 
-	p_arc_handle = GFL_ARC_OpenDataHandle( ARCID_PLACE_NAME, sys->heapID );
+  heapID = GetHeapID( system );
+	handle = GetArcHandle( system );
 
-	sys->resPltt[ PLTT_RES_CHAR_UNIT ] = 
+	system->resPltt[ PLTT_RES_CHAR_UNIT ] = 
 		GFL_CLGRP_PLTT_RegisterEx( 
-				p_arc_handle, NARC_place_name_place_name_string_NCLR,
-				CLSYS_DRAW_MAIN, FLDOAM_PALNO_PLACENAME * 32, 0, 1, sys->heapID );
+				handle, NARC_place_name_place_name_string_NCLR,
+				CLSYS_DRAW_MAIN, FLDOAM_PALNO_PLACENAME * 32, 0, 1, heapID );
 
-	GFL_ARC_CloseDataHandle( p_arc_handle );
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: LoadOBJResource\n" );
+#endif
 }
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief セルアクターユニットを作成する
+ * @brief OBJ リソースを解放する
  *
- * @param sys 作成対象システム
+ * @param system
  */
 //-----------------------------------------------------------------------------------
-static void CreateClactUnit( FIELD_PLACE_NAME* sys )
+static void UnloadOBJResource( FIELD_PLACE_NAME* system )
 {
-	// セルアクターユニットを作成
-	sys->clunit[ CLUNIT_CHAR_UNIT ] = 
-		GFL_CLACT_UNIT_Create( MAX_NAME_LENGTH, BG_FRAME_PRIORITY, sys->heapID );
+  int i;
+
+	for( i=0; i<PLTT_RES_NUM; i++ )
+	{
+		GFL_CLGRP_PLTT_Release( system->resPltt[i] );
+	}
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: UnloadOBJResource\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief セルアクターユニットを生成する
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void CreateClactUnit( FIELD_PLACE_NAME* system )
+{
+  HEAPID heapID;
+
+  heapID = GetHeapID( system );
+	system->clunit[ CLUNIT_CHAR_UNIT ] = 
+		GFL_CLACT_UNIT_Create( MAX_NAME_LENGTH, BG_FRAME_PRIORITY, heapID );
 
 	// 初期設定
-	GFL_CLACT_UNIT_SetDrawEnable( sys->clunit[ CLUNIT_CHAR_UNIT ], TRUE );
+	GFL_CLACT_UNIT_SetDrawEnable( system->clunit[ CLUNIT_CHAR_UNIT ], TRUE );
+  
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreateClactUnit\n" );
+#endif
 }
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief 文字ユニットを初期化する
+ * @brief セルアクターユニットを破棄する
  *
- * @param sys 作成対象システム
+ * @param system
  */
 //-----------------------------------------------------------------------------------
-static void CreateCharUnit( FIELD_PLACE_NAME* sys )
+static void DeleteClactUnit( FIELD_PLACE_NAME* system )
+{
+  int i;
+
+	for( i=0; i<CLUNIT_NUM; i++ )
+	{
+		GFL_CLACT_UNIT_Delete( system->clunit[i] );
+	}
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: DeleteClactUnit\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 文字オブジェクトを生成する
+ *
+ * @param system 
+ */
+//-----------------------------------------------------------------------------------
+static void CreateLetters( FIELD_PLACE_NAME* system )
 {
 	int i;
 
 	for( i=0; i<MAX_NAME_LENGTH; i++ )
 	{
-		CHAR_UNIT_Initialize( 
-				&sys->charUnit[i], sys->bmpOamSys, 
-				sys->resPltt[ PLTT_RES_CHAR_UNIT ], sys->heapID );
+    system->letters[i] = PN_LETTER_Create( 
+        system->heapID, system->bmpOamSys, system->resPltt[ PLTT_RES_CHAR_UNIT ] );
 	} 
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreateLetters\n" );
+#endif
 }
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief 文字ユニットの動作を設定する
+ * @brief 文字オブジェクトを破棄する
  *
- * @param 設定対象システム
+ * @param system
  */
 //-----------------------------------------------------------------------------------
-static void SetupCharUnitAction( FIELD_PLACE_NAME* sys )
+static void DeleteLetters( FIELD_PLACE_NAME* system )
 {
 	int i;
-	int str_width;	// 文字列の幅
-	int str_height;	// 文字列の高さ
 
-	// 文字列のサイズを取得
-	str_width  = PRINTSYS_GetStrWidth( sys->nameBuf, sys->font, 0 );
-  str_height = PRINTSYS_GetStrHeight( sys->nameBuf, sys->font );
-
-	// 各文字ユニットの設定
+	for( i=0; i<MAX_NAME_LENGTH; i++ )
 	{
-		CHAR_UNIT_PARAM param;
+    PN_LETTER_Delete( system->letters[i] );
+	} 
 
-		// 1文字目の目標パラメータを設定
-		param.x   = 256;
-		param.y   = Y_CENTER_POS - ( str_height / 2 );
-		param.sx  = -20;
-		param.sy  =  0;
-		//param.dx  = 128 - ( str_width / 2 ) - ( sys->nameLen / 2 );	// 中央揃え
-		param.dx  = 24;			// 左詰め
-		param.dy  = param.y;
-		param.dsx = 0;
-		param.dsy = 0;
-
-		// 1文字ずつ設定する
-		for( i=0; i<sys->nameLen; i++ )
-		{
-			// 目標パラメータを設定
-			CHAR_UNIT_SetMoveParam( &sys->charUnit[i], &param );
-
-			// 目標パラメータを更新
-			param.dx += sys->charUnit[i].width + 1;
-		}
-	}
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: DeleteLetters\n" );
+#endif
 }
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief 全文字ユニットを非表示に設定する
+ * @brief アーカイブデータハンドルを開く
  *
- * @param sys 設定対象システム
+ * @param system
  */
 //-----------------------------------------------------------------------------------
-static void SetAllCharUnitVisibleOff( FIELD_PLACE_NAME* sys )
+static void OpenDataHandle( FIELD_PLACE_NAME* system )
+{
+  HEAPID heapID;
+
+  GF_ASSERT( system->arcHandle == NULL );
+
+  heapID = GetHeapID( system );
+  system->arcHandle = GFL_ARC_OpenDataHandle( ARCID_PLACE_NAME, heapID );
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: OpenDataHandle\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief アーカイブデータハンドルを閉じる
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void CloseDataHandle( FIELD_PLACE_NAME* system )
+{
+  if( system->arcHandle ) {
+    GFL_ARC_CloseDataHandle( system->arcHandle );
+    system->arcHandle = NULL;
+  }
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CloseDataHandle\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 文字オブジェクトをセットアップする
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void SetupLetter( FIELD_PLACE_NAME* system )
+{
+  int i, idx;
+  STRCODE code[ MAX_NAME_LENGTH ];
+  PN_LETTER_SETUP_PARAM param;
+
+  idx = system->setupLetterNum;
+  GF_ASSERT( idx < GetPlaceNameLength(system) );
+
+  GFL_STR_GetStringCode( GetPlaceName(system), code, MAX_NAME_LENGTH );
+  param = LetterSetupParam;
+  param.font = system->font;
+  param.code = code[ idx ];
+
+  // 目標位置を決定
+  for( i=0; i<idx; i++ )
+  {
+    param.dx += PN_LETTER_GetWidth( system->letters[i] );
+    param.dx += 1;
+  }
+
+  PN_LETTER_Setup( system->letters[ idx ], &param );
+  system->setupLetterNum++;
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: SetupLetter[%d]\n", idx );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 文字オブジェクトのセットアップが完了したかどうかをチェックする
+ *
+ * @param system
+ *
+ * @return すべての文字オブジェクトのセットアップが完了している場合 TRUE
+ *         そうでなければ FALSE
+ */
+//-----------------------------------------------------------------------------------
+static BOOL CheckLetterSetupFinished( const FIELD_PLACE_NAME* system )
+{
+  if( GetPlaceNameLength(system) <= system->setupLetterNum ) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 文字オブジェクトを非表示にする
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void HideLetters( FIELD_PLACE_NAME* system )
 {
 	int i;
 	
 	for( i=0; i<MAX_NAME_LENGTH; i++ )
 	{
-		BmpOam_ActorSetDrawEnable( sys->charUnit[i].bmpOamActor, FALSE );
+    PN_LETTER_SetDrawEnable( system->letters[i], FALSE );
 	}
 }
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief 文字ユニットを発射する
+ * @brief 文字オブジェクトを発射する
  *
- * @param sys 発射するシステム
+ * @param system
  */
 //-----------------------------------------------------------------------------------
-static void LaunchCharUnit( FIELD_PLACE_NAME* sys )
+static void LaunchLetter( FIELD_PLACE_NAME* system )
 {
-  int i;
+  int idx;
 
   // すでに全てのユニット発射済み
-  if( sys->nameLen <= sys->launchUnitNum ) return;
+  GF_ASSERT( system->launchLetterNum < GetPlaceNameLength(system) );
 
   // 発射
-  i = sys->launchUnitNum++;
-	CHAR_UNIT_MoveStart( &sys->charUnit[i] );
-  BmpOam_ActorSetDrawEnable( sys->charUnit[i].bmpOamActor, TRUE ); // 表示
+  idx = system->launchLetterNum++;
+  PN_LETTER_MoveStart( system->letters[ idx ] );
+  PN_LETTER_SetDrawEnable( system->letters[ idx ], TRUE );
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: LaunchLetter[%d]\n", idx );
+#endif
 }
 
 //-----------------------------------------------------------------------------------
@@ -1040,32 +906,48 @@ static void MoveAllCharUnit( FIELD_PLACE_NAME* sys )
 
 	for( i=0; i<sys->nameLen; i++ )
 	{
-		CHAR_UNIT_Move( &sys->charUnit[i] );
+    PN_LETTER_Main( sys->letters[i] );
 	}
 } 
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief 現在の地名を文字ユニットに書き込む
+ * @brief BMPOAM システムを生成する
  *
- * @param sys   操作対象システム
+ * @param system
  */
-//----------------------------------------------------------------------------------- 
-static void WritePlaceNameIntoCharUnit( FIELD_PLACE_NAME* sys )
+//-----------------------------------------------------------------------------------
+static void CreateBmpOamSystem( FIELD_PLACE_NAME* system )
 {
-  int idx;
-	const STRCODE* strcode = NULL;
+  HEAPID heapID;
 
-  // すでに書き込みが完了済み
-  if( sys->nameLen <= sys->writeCharNum ) return;
+  GF_ASSERT( system->bmpOamSys == NULL );
 
-  // 生の文字列を取得
-  strcode = GFL_STR_GetStringCodePointer( sys->nameBuf );
+  heapID = GetHeapID( system );
+	system->bmpOamSys = BmpOam_Init( heapID, system->clunit[ CLUNIT_CHAR_UNIT ] );
 
-	// 1文字ずつ設定
-  idx = sys->writeCharNum++;
-  CHAR_UNIT_Write( &sys->charUnit[idx], sys->font, strcode[idx], sys->heapID ); 
-	sys->charUnit[idx].param.x = 256;  // 画面外へ
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreateBmpOamSystem\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief BMPOAM システムを破棄する
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void DeleteBmpOamSystem( FIELD_PLACE_NAME* system )
+{
+  if( system->bmpOamSys ) {
+    BmpOam_Exit( system->bmpOamSys );
+    system->bmpOamSys = NULL;
+  }
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: DeleteBmpOamSystem\n" );
+#endif
 }
 
 //-----------------------------------------------------------------------------------
@@ -1077,24 +959,85 @@ static void WritePlaceNameIntoCharUnit( FIELD_PLACE_NAME* sys )
 //-----------------------------------------------------------------------------------
 static void WriteCharUnitIntoBitmapWindow( FIELD_PLACE_NAME* sys )
 {
-	int i;
+  int idx;
 	u16 dx, dy;
-	CHAR_UNIT* p_char;
-	GFL_BMP_DATA* p_src_bmp = NULL;
+  u16 width, height;
+  PN_LETTER* letter;
+	const GFL_BMP_DATA* p_src_bmp = NULL;
 	GFL_BMP_DATA* p_dst_bmp = GFL_BMPWIN_GetBmp( sys->bmpWin );
 
-	// 表示中の全ての文字ユニットをコピーする
-	for( i=0; i<sys->nameLen; i++ )
-	{
-		p_char = &sys->charUnit[i];
-		p_src_bmp = p_char->bmp;
-		dx = p_char->param.x - ( BMPWIN_POS_X_CHAR * CHAR_SIZE );
-		dy = p_char->param.y - ( BMPWIN_POS_Y_CHAR * CHAR_SIZE );
-		GFL_BMP_Print( p_src_bmp, p_dst_bmp, 0, 0, dx, dy, p_char->width, p_char->height, 0 );
-	}
+  idx = sys->writeLetterNum;
+  GF_ASSERT( idx < GetPlaceNameLength(sys) );
+
+  letter = sys->letters[idx];
+  p_src_bmp = PN_LETTER_GetBitmap( letter );
+  dx = PN_LETTER_GetLeft( letter ) - ( BMPWIN_POS_X_CHAR * CHAR_SIZE );
+  dy = PN_LETTER_GetTop( letter )  - ( BMPWIN_POS_Y_CHAR * CHAR_SIZE );
+  width = PN_LETTER_GetWidth( letter );
+  height = PN_LETTER_GetHeight( letter );
+  GFL_BMP_Print( p_src_bmp, p_dst_bmp, 0, 0, dx, dy, width, height, 0 );
+
+  sys->writeLetterNum++;
 
 	// 更新されたキャラデータをVRAMに転送
-	GFL_BMPWIN_TransVramCharacter( sys->bmpWin );
+	//GFL_BMPWIN_TransVramCharacter( sys->bmpWin );
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief すべての文字オブジェクトの書き込みが完了したかどうかをチェックする
+ *
+ * @param system
+ *
+ * @return すべて完了した場合 TRUE
+ *         そうでなければ FALSE
+ */
+//-----------------------------------------------------------------------------------
+static BOOL CheckLetterWriteToBitmapFinished( const FIELD_PLACE_NAME* system )
+{
+  if( GetPlaceNameLength(system) <= system->writeLetterNum ) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 地名の更新をチェックする
+ *
+ * @param system
+ *
+ * @return 地名の表示を開始する場合 TRUE
+ *         そうでなければ FALSE
+ */
+//-----------------------------------------------------------------------------------
+static BOOL CheckDispStart( const FIELD_PLACE_NAME* system )
+{
+  if( system->nextZoneSetFlag ) {
+    if( system->zoneID != system->nextZoneID ) {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 地名の表示を開始する
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void DispStart( FIELD_PLACE_NAME* system )
+{
+  // 表示する地名を更新
+  system->zoneID = system->nextZoneID;
+
+  // 表示開始フラグをセット
+  system->dispStartFlag = TRUE;
 }
 
 //-----------------------------------------------------------------------------------
@@ -1111,21 +1054,16 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* sys )
   INTRUDE_COMM_SYS_PTR intrudeComm;
   u8 intrudeNetID;
   
-  // 地名が変わらない
-  if( sys->currentZoneID == sys->nextZoneID ){ return; }
-
 	// ゾーンIDから地名文字列を取得する
-	str_id = ZONEDATA_GetPlaceNameID( sys->nextZoneID );
-  OS_TFPrintf( 3, "str_id = %d\n", str_id );
+	str_id = ZONEDATA_GetPlaceNameID( GetZoneID(sys) );
 
   // エラー回避
 	if( (str_id < 0) || (msg_place_name_max <= str_id) ){ str_id = 0; } 
 	if( str_id == 0 ) 
   { //「なぞのばしょ」なら表示しない
-    OBATA_Printf( "「なぞのばしょ」を検出( zone id = %d )\n", sys->nextZoneID );
+    OBATA_Printf( "「なぞのばしょ」を検出( zone id = %d )\n", GetZoneID(sys) );
     FIELD_PLACE_NAME_Hide( sys );
-  } 
-  sys->currentZoneID = sys->nextZoneID;	   
+  }
 
   // 侵入先かどうかを判定
   {
@@ -1146,7 +1084,7 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* sys )
         intrudeFlag = TRUE;
       }
       // 他人のパレスにいる
-      else if( ZONEDATA_IsPalace( sys->currentZoneID ) && (myNetID != intrudeNetID) ) {
+      else if( ZONEDATA_IsPalace( GetZoneID(sys) ) && (myNetID != intrudeNetID) ) {
         intrudeFlag = TRUE;
       }
     }
@@ -1177,57 +1115,30 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* sys )
 /**
  * @brief 状態を変更する
  *
- * @param sys      状態を変更するシステム
+ * @param system
  * @param next_state 設定する状態
  */
 //-----------------------------------------------------------------------------------
-static void SetState( FIELD_PLACE_NAME* sys, SYSTEM_STATE next_state )
+static void ChangeState( FIELD_PLACE_NAME* system, SYSTEM_STATE next_state )
 {
-	// 状態を変更し, 状態カウンタを初期化する
-	sys->state      = next_state;
-	sys->stateCount = 0;
+  SetState( system, next_state ); // 状態を設定
+  ResetStateCount( system ); // 状態カウンタをリセット
+  ResetStateSeq( system ); // 状態内シーケンスをリセット
 
 	// 遷移先の状態に応じた初期化
-	switch( next_state )
-	{
+	switch( next_state ) {
 		case SYSTEM_STATE_HIDE:	
 			GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF );	// BGを非表示
-			SetAllCharUnitVisibleOff( sys );			      // 文字ユニットを非表示に
+			HideLetters( system ); // 文字オブジェクトを非表示にする
 			break;
-    case SYSTEM_STATE_SETUP:
-      UpdatePlaceName( sys );          // 表示する地名を更新
-      sys->writeCharNum = 0;          // 書き込み準備
-      FIELD_PLACE_NAME_RecoverBG( sys );  // キャラ・スクリーンデータ復帰
-      break;
 		case SYSTEM_STATE_FADEIN:
-      GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON );	// BGを表示
-      Draw_FADEIN( sys );
-			break;
-		case SYSTEM_STATE_WAIT_LAUNCH:
+      //GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON );	// BGを表示
+      //Draw_FADEIN( system );
 			break;
 		case SYSTEM_STATE_LAUNCH:
-			sys->launchUnitNum = 0;	     // 発射文字数をリセット
-			SetupCharUnitAction( sys );	 // 文字ユニットの動きをセット
-			break;
-		case SYSTEM_STATE_WAIT_FADEOUT:
-			break;
-		case SYSTEM_STATE_FADEOUT:
-			WriteCharUnitIntoBitmapWindow( sys );	// 現時点での文字をBGに書き込む
-			SetAllCharUnitVisibleOff( sys );		// 文字ユニットを非表示に
+			//system->launchLetterNum = 0;	// 発射文字数をリセット
 			break;
 	}
-
-  // DEBUG:
-  OBATA_Printf( "PLACE_NAME: set state ==> " );
-  switch( next_state ) {
-  case SYSTEM_STATE_HIDE:         OBATA_Printf( "HIDE\n" );          break;
-  case SYSTEM_STATE_SETUP:        OBATA_Printf( "SETUP\n" );         break;
-  case SYSTEM_STATE_FADEIN:       OBATA_Printf( "FADEIN\n" );        break;
-  case SYSTEM_STATE_WAIT_LAUNCH:  OBATA_Printf( "WAIT_LAUNCH\n" );   break;
-  case SYSTEM_STATE_LAUNCH:       OBATA_Printf( "LAUNCH\n" );        break;
-  case SYSTEM_STATE_WAIT_FADEOUT: OBATA_Printf( "WAIT_FADEOUT\n" );  break;
-  case SYSTEM_STATE_FADEOUT:      OBATA_Printf( "FADEOUT\n" );       break;
-  }
 }
 
 //-----------------------------------------------------------------------------------
@@ -1244,14 +1155,13 @@ static void Cancel( FIELD_PLACE_NAME* sys )
 	float passed_rate;
 	
 	// 現在の状態に応じた処理
-	switch( sys->state )
-	{
+	switch( sys->state ) {
   case SYSTEM_STATE_HIDE:	
   case SYSTEM_STATE_FADEOUT:
+  case SYSTEM_STATE_LAUNCH:
     return;
   case SYSTEM_STATE_WAIT_LAUNCH:
   case SYSTEM_STATE_WAIT_FADEOUT:
-  case SYSTEM_STATE_LAUNCH:
     next_state  = SYSTEM_STATE_WAIT_FADEOUT;
     start_count = PROCESS_TIME_WAIT_FADEOUT;
     break;
@@ -1270,7 +1180,7 @@ static void Cancel( FIELD_PLACE_NAME* sys )
 	}
 
 	// 状態を更新
-	SetState( sys, next_state );
+	ChangeState( sys, next_state );
 	sys->stateCount = start_count;
 }
 
@@ -1278,15 +1188,20 @@ static void Cancel( FIELD_PLACE_NAME* sys )
 /**
  * @brief 非表示状態時の動作
  *
- * @param sys 動かすシステム
+ * @param system
  */
 //-----------------------------------------------------------------------------------
-static void Process_HIDE( FIELD_PLACE_NAME* sys )
+static void Process_HIDE( FIELD_PLACE_NAME* system )
 {
-	// ゾーンチェンジが通知されたら, 次の状態へ
-	if( sys->currentZoneID != sys->nextZoneID )
-	{
-		SetState( sys, SYSTEM_STATE_SETUP );
+  // 表示開始を監視
+  if( CheckDispStart( system ) ) {
+    DispStart( system );
+  }
+
+	// 表示開始
+	if( system->dispStartFlag ) {
+    system->dispStartFlag = FALSE;
+		ChangeState( system, SYSTEM_STATE_SETUP );
 	}
 }
 
@@ -1294,35 +1209,99 @@ static void Process_HIDE( FIELD_PLACE_NAME* sys )
 /**
  * @brief 準備状態時の動作
  *
- * @param sys 動かすシステム
+ * @param system
  */
 //-----------------------------------------------------------------------------------
-static void Process_SETUP( FIELD_PLACE_NAME* sys )
+static void Process_SETUP( FIELD_PLACE_NAME* system )
 {
-  // 新しい地名を書き込む
-  WritePlaceNameIntoCharUnit( sys );
+  switch( GetStateSeq(system) ) {
+  case 0:
+    system->setupLetterNum = 0;
+    UpdatePlaceName( system );
+    IncStateSeq( system );
+    break;
 
-  // 書き込みが完了したら, 次の状態へ
-  if( sys->nameLen <= sys->writeCharNum )
-  {
-    SetState( sys, SYSTEM_STATE_FADEIN );
-  }
+  case 1:
+    GFL_BG_ClearCharacter( BG_FRAME );
+    IncStateSeq( system );
+    break; 
+  case 2:
+    GFL_BG_ClearScreen( BG_FRAME );
+    IncStateSeq( system );
+    break;
+  case 3:
+    FreeBGNullCharaArea( system ); 
+    DeleteBandBitmapWindow( system );
+    DeleteBandBlankBitmap( system );
+    IncStateSeq( system );
+    break; 
+
+  case 4:
+    LoadBGPalette( system ); 
+    IncStateSeq( system );
+    break; 
+  case 5:
+    AllocBGNullCharArea( system );
+    IncStateSeq( system );
+    break; 
+  case 6:
+    CreateBandBlankBitmap( system );
+    IncStateSeq( system );
+    break; 
+  case 7:
+    CreateBandBitmapWindow( system );
+    IncStateSeq( system );
+    break; 
+  case 8:
+    RecoverBlankBand( system );
+    IncStateSeq( system );
+    break;
+  case 9:
+    GFL_BMPWIN_MakeTransWindow( system->bmpWin ); 
+    IncStateSeq( system );
+    break; 
+
+  case 10:
+    GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
+    GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF ); 
+    G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, ALPHA_VALUE_1, ALPHA_VALUE_2 );
+    IncStateSeq( system );
+    break; 
+
+  case 11:
+    SetupLetter( system ); // 文字オブジェクトをセットアップ
+
+    // 全ての文字オブジェクトのセットアップが完了
+    if( CheckLetterSetupFinished(system) ) {
+      ChangeState( system, SYSTEM_STATE_FADEIN );
+    }
+    break;
+  } 
 }
 
 //-----------------------------------------------------------------------------------
 /**
  * @brief フェード・イン状態時の動作
  *
- * @param sys 動かすシステム
+ * @param system 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Process_FADEIN( FIELD_PLACE_NAME* sys )
+static void Process_FADEIN( FIELD_PLACE_NAME* system )
 {
-	// 一定時間が経過したら, 次の状態へ
-	if( PROCESS_TIME_FADEIN < sys->stateCount )
-	{
-		SetState( sys, SYSTEM_STATE_WAIT_LAUNCH );
-	}
+  switch( GetStateSeq(system) ) {
+  case 0:
+    Draw_FADEIN( system ); // α値を初期化
+    GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON );	// BGを表示
+    IncStateSeq( system );
+    break;
+
+  case 1:
+    // 一定時間が経過したら, 次の状態へ
+    if( PROCESS_TIME_FADEIN < system->stateCount ) {
+      ChangeState( system, SYSTEM_STATE_WAIT_LAUNCH );
+    }
+    break;
+  }
 }
 
 //-----------------------------------------------------------------------------------
@@ -1337,7 +1316,7 @@ static void Process_WAIT_LAUNCH( FIELD_PLACE_NAME* sys )
 	// 一定時間が経過したら, 次の状態へ
 	if( PROCESS_TIME_WAIT_LAUNCH < sys->stateCount )
 	{
-		SetState( sys, SYSTEM_STATE_LAUNCH );
+		ChangeState( sys, SYSTEM_STATE_LAUNCH );
 	}
 }
 
@@ -1345,23 +1324,30 @@ static void Process_WAIT_LAUNCH( FIELD_PLACE_NAME* sys )
 /**
  * @brief 発射状態時の動作
  *
- * @param sys 動かすシステム
+ * @param system
  */
 //-----------------------------------------------------------------------------------
-static void Process_LAUNCH( FIELD_PLACE_NAME* sys )
+static void Process_LAUNCH( FIELD_PLACE_NAME* system )
 {
-	// 一定間隔で文字を発射
-	if( sys->stateCount % LAUNCH_INTERVAL == 0 )
-	{
-		// 発射
-		LaunchCharUnit( sys );
+  switch( GetStateSeq(system) ) {
+  case 0:
+		system->launchLetterNum = 0;	// 発射文字数をリセット
+    IncStateSeq( system );
+    break;
 
-		// すべての文字を発射したら, 次の状態へ
-		if( sys->nameLen <= sys->launchUnitNum )
-		{
-			SetState( sys, SYSTEM_STATE_WAIT_FADEOUT );
-		}
-	}
+  case 1:
+    // 一定間隔で文字を発射
+    if( system->stateCount % LAUNCH_INTERVAL == 0 ) {
+
+      LaunchLetter( system ); // 発射
+
+      // すべての文字を発射したら, 次の状態へ
+      if( system->nameLen <= system->launchLetterNum ) {
+        ChangeState( system, SYSTEM_STATE_WAIT_FADEOUT );
+      }
+    }
+    break;
+  }
 }
 
 //-----------------------------------------------------------------------------------
@@ -1374,19 +1360,46 @@ static void Process_LAUNCH( FIELD_PLACE_NAME* sys )
 static void Process_WAIT_FADEOUT( FIELD_PLACE_NAME* sys )
 {
 	int i;
+  BOOL moveFinish = TRUE;
 
-	// 一定時間が経過
-	if( PROCESS_TIME_WAIT_FADEOUT < sys->stateCount )
-	{
-		// 動いている文字があるなら, 待機状態を維持
-		for( i=0; i<sys->nameLen; i++ )
-		{
-			if( CHAR_UNIT_IsMoving( &sys->charUnit[i] ) == TRUE ) break;
-		}
+  switch( GetStateSeq(sys) ) {
+  case 0:
+    // 全ての文字の停止待ち
+    for( i=0; i<sys->nameLen; i++ )
+    {
+      if( PN_LETTER_IsMoving( sys->letters[i] ) ) { 
+        moveFinish = FALSE;
+        break; 
+      }
+    }
+    if( moveFinish ) {
+      sys->writeLetterNum = 0;
+      IncStateSeq( sys );
+    }
+    break;
 
-		// 次の状態へ
-		SetState( sys, SYSTEM_STATE_FADEOUT );
-	}
+  case 1:
+    WriteCharUnitIntoBitmapWindow( sys );
+    // 全ての文字の書き込み完了
+    if( CheckLetterWriteToBitmapFinished(sys) ) {
+      IncStateSeq( sys );
+    }
+    break;
+  case 2:
+	  GFL_BMPWIN_TransVramCharacter( sys->bmpWin );
+    IncStateSeq( sys );
+    break; 
+  case 3:
+    HideLetters( sys ); // 文字オブジェクトを非表示にする
+    IncStateSeq( sys );
+    break; 
+
+  case 4: 
+    // 一定時間が経過
+    if( PROCESS_TIME_WAIT_FADEOUT < sys->stateCount ) { 
+      ChangeState( sys, SYSTEM_STATE_FADEOUT );
+    }
+  }
 }
 
 //-----------------------------------------------------------------------------------
@@ -1401,7 +1414,7 @@ static void Process_FADEOUT( FIELD_PLACE_NAME* sys )
 	// 一定時間が経過したら, 次の状態へ
 	if( PROCESS_TIME_FADEOUT < sys->stateCount )
 	{
-		SetState( sys, SYSTEM_STATE_HIDE );
+		ChangeState( sys, SYSTEM_STATE_HIDE );
 	}
 }
 
@@ -1497,3 +1510,612 @@ static void Draw_FADEOUT( const FIELD_PLACE_NAME* sys )
 	val2 = (int)( ALPHA_VALUE_2 + (16 - ALPHA_VALUE_2) * rate );
 	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, val1, val2 );
 } 
+
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 地名表示システムを生成する
+ * 
+ * @param heapID 使用するヒープID
+ */
+//-----------------------------------------------------------------------------------
+static FIELD_PLACE_NAME* CreatePNSystem( HEAPID heapID )
+{
+	FIELD_PLACE_NAME* system;
+
+	system = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_PLACE_NAME) );
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreatePNSystem\n" );
+#endif
+
+  return system;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 地名表示システムを初期化する
+ * 
+ * @param system
+ * @param gameSystem
+ */
+//-----------------------------------------------------------------------------------
+static void InitPNSystem( FIELD_PLACE_NAME* system, GAMESYS_WORK* gameSystem )
+{
+  // ゼロクリア
+  GFL_STD_MemClear( system, sizeof(FIELD_PLACE_NAME) );
+
+  // 初期化
+  system->gameSystem = gameSystem;
+  system->gameData = GAMESYSTEM_GetGameData( gameSystem );
+  system->nullCharPos = AREAMAN_POS_NOTFOUND;
+  system->dispStartFlag = FALSE;
+  system->nextZoneSetFlag = FALSE;
+  system->zoneID = ZONE_ID_MAX;
+  system->nextZoneID = ZONE_ID_MAX;
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: InitPNSystem\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 地名表示システムを破棄する
+ * 
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void DeletePNSystem( FIELD_PLACE_NAME* system )
+{
+  GFL_HEAP_FreeMemory( system );
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: DeletePNSystem\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief ワードセットを生成する
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void CreateWordset( FIELD_PLACE_NAME* system )
+{
+  HEAPID heapID;
+
+  GF_ASSERT( system->wordset == NULL );
+
+  heapID = GetHeapID( system ); 
+  system->wordset = WORDSET_Create( heapID );
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreateWordset\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief メッセージデータを生成する
+ * 
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void CreateMessageData( FIELD_PLACE_NAME* system )
+{
+  HEAPID heapID;
+
+  GF_ASSERT( system->msg == NULL );
+
+  heapID = GetHeapID( system ); 
+	system->msg = GFL_MSG_Create( 
+      GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_place_name_dat, heapID );
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreateMessagData\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 地名バッファを生成する
+ * 
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void CreatePlaceNameBuffer( FIELD_PLACE_NAME* system )
+{
+  HEAPID heapID;
+  int length;
+
+  GF_ASSERT( system->nameBuf == NULL );
+
+  heapID = GetHeapID( system ); 
+  length = MAX_NAME_LENGTH + 1; // EOMを考慮して+1
+	system->nameBuf = GFL_STR_CreateBuffer( length, heapID ); 
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreatePlaceNameBuffer\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 白紙帯のビットマップを生成する
+ * 
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void CreateBandBlankBitmap( FIELD_PLACE_NAME* system )
+{
+  HEAPID heapID;
+  ARCHANDLE* handle;
+
+  GF_ASSERT( system->bmpOrg == NULL );
+
+  heapID = GetHeapID( system );
+  handle = GetArcHandle( system );
+
+  system->bmpOrg = 
+    GFL_BMP_LoadCharacterByHandle( 
+        handle, NARC_place_name_place_name_back_NCGR, FALSE, heapID ); 
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreateBandBlankBitmap\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 帯のビットマップウィンドウを生成する
+ * 
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void CreateBandBitmapWindow( FIELD_PLACE_NAME* system )
+{
+  HEAPID heapID;
+
+  GF_ASSERT( system->bmpWin == NULL );
+
+  heapID = GetHeapID( system );
+  system->bmpWin = GFL_BMPWIN_Create( BG_FRAME, 
+                                      BMPWIN_POS_X_CHAR, BMPWIN_POS_Y_CHAR, 
+                                      BMPWIN_WIDTH_CHAR, BMPWIN_HEIGHT_CHAR, 
+                                      BG_PALETTE_NO, GFL_BMP_CHRAREA_GET_F ); 
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreateBandBitmapWindow\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief ワードセットを破棄する
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void DeleteWordset( FIELD_PLACE_NAME* system )
+{
+  if( system->wordset ) {
+    WORDSET_Delete( system->wordset );
+    system->wordset = NULL;
+  }
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: DeleteWordset\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief メッセージデータを破棄する
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void DeleteMessageData( FIELD_PLACE_NAME* system )
+{
+  if( system->msg ) {
+    GFL_MSG_Delete( system->msg );
+    system->msg = NULL;
+  }
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: DeleteMessageData\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 地名バッファを破棄する
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void DeletePlaceNameBuffer( FIELD_PLACE_NAME* system )
+{
+  if( system->nameBuf ) { 
+    GFL_STR_DeleteBuffer( system->nameBuf );
+    system->nameBuf = NULL;
+  }
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: DeletePlaceNameBuffer\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 白紙帯のビットマップを破棄する
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void DeleteBandBlankBitmap( FIELD_PLACE_NAME* system )
+{
+  if( system->bmpOrg ) { 
+    GFL_BMP_Delete( system->bmpOrg ); 
+    system->bmpOrg = NULL;
+  }
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: DeleteBandBlankBitmap\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 帯のビットマップウィンドウを破棄する
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void DeleteBandBitmapWindow( FIELD_PLACE_NAME* system )
+{
+	if( system->bmpWin ) { 
+    GFL_BMPWIN_Delete( system->bmpWin ); 
+    system->bmpWin = NULL;
+  }
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: DeleteBandBitmapWindow\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief ヒープIDを取得する
+ *
+ * @param system
+ *
+ * @return ヒープID
+ */
+//-----------------------------------------------------------------------------------
+static HEAPID GetHeapID( const FIELD_PLACE_NAME* system )
+{
+  return system->heapID;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief アーカイブデータハンドルを取得する
+ *
+ * @param system
+ *
+ * @return アーカイブデータハンドル
+ */
+//-----------------------------------------------------------------------------------
+static ARCHANDLE* GetArcHandle( const FIELD_PLACE_NAME* system )
+{
+  return system->arcHandle;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief フォントを取得する
+ *
+ * @param system
+ *
+ * @return フォント
+ */
+//-----------------------------------------------------------------------------------
+static GFL_FONT* GetFont( const FIELD_PLACE_NAME* system )
+{
+  return system->font;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief メッセージデータを取得する
+ *
+ * @param system
+ *
+ * @return メッセージデータ
+ */
+//-----------------------------------------------------------------------------------
+static GFL_MSGDATA* GetMessageData( const FIELD_PLACE_NAME* system )
+{
+  return system->msg;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief ヒープIDを設定する
+ *
+ * @param system
+ * @param heapID 
+ */
+//-----------------------------------------------------------------------------------
+static void SetHeapID( FIELD_PLACE_NAME* system, HEAPID heapID )
+{
+  system->heapID = heapID;
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: SetHeapID\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief フォントを設定する
+ *
+ * @param system
+ * @param font 
+ */
+//-----------------------------------------------------------------------------------
+static void SetFont( FIELD_PLACE_NAME* system, GFL_FONT* font )
+{
+  system->font = font;
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: SetFont\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief システムの状態を設定する
+ *
+ * @param system
+ * @param state  設定する状態
+ */
+//-----------------------------------------------------------------------------------
+static void SetState( FIELD_PLACE_NAME* system, SYSTEM_STATE state )
+{
+  system->state = state;
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: SetState ==> " );
+  DEBUG_PrintSystemState( system );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief システムの状態を取得する
+ *
+ * @param system
+ *
+ * @return システムの状態
+ */
+//-----------------------------------------------------------------------------------
+static SYSTEM_STATE GetState( const FIELD_PLACE_NAME* system )
+{
+  return system->state;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 状態カウンタを取得する
+ *
+ * @param system
+ *
+ * @return 状態カウンタの値
+ */
+//-----------------------------------------------------------------------------------
+static u16 GetStateCount( const FIELD_PLACE_NAME* system )
+{
+  return system->stateCount;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 状態カウンタをリセットする
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void ResetStateCount( FIELD_PLACE_NAME* system )
+{
+  system->stateCount = 0;
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: ResetStateCount\n" );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 状態カウンタを更新する
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void IncStateCount( FIELD_PLACE_NAME* system )
+{
+  system->stateCount++;
+
+  // 最大値補正
+  if( MAX_STATE_COUNT < system->stateCount ) {
+    system->stateCount = MAX_STATE_COUNT;
+  }
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 状態内シーケンスを取得する
+ *
+ * @param system
+ *
+ * @return 状態内シーケンス番号
+ */
+//-----------------------------------------------------------------------------------
+static u8 GetStateSeq( const FIELD_PLACE_NAME* system )
+{
+  return system->stateSeq;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 状態内シーケンスをリセットする
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void ResetStateSeq( FIELD_PLACE_NAME* system )
+{
+  system->stateSeq = 0;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 状態内シーケンスをインクリメントする
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void IncStateSeq( FIELD_PLACE_NAME* system )
+{
+  system->stateSeq++;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief ゾーンIDを取得する
+ *
+ * @param system
+ *
+ * @return ゾーンID
+ */
+//-----------------------------------------------------------------------------------
+static u16 GetZoneID( const FIELD_PLACE_NAME* system )
+{
+  return system->zoneID;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief ゾーンIDを設定する
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void SetZoneID( FIELD_PLACE_NAME* system, u16 zoneID )
+{
+  system->zoneID = zoneID;
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: SetZoneID (%d)\n", zoneID );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 次に表示するゾーンIDを設定する
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void SetNextZoneID( FIELD_PLACE_NAME* system, u16 zoneID )
+{
+  system->nextZoneID = zoneID;
+  system->nextZoneSetFlag = TRUE;
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: SetNextZoneID (%d)\n", zoneID );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 地名バッファを取得する
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static const STRBUF* GetPlaceName( const FIELD_PLACE_NAME* system )
+{
+  GF_ASSERT( system->nameBuf );
+
+  return system->nameBuf;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 地名の文字数を取得する
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static u8 GetPlaceNameLength( const FIELD_PLACE_NAME* system )
+{
+  return system->nameLen;
+}
+
+
+//#ifdef DEBUG_PRINT_ON
+//-----------------------------------------------------------------------------------
+/**
+ * @brief システム状態名を出力する
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void DEBUG_PrintSystemState( const FIELD_PLACE_NAME* system )
+{
+  switch( GetState(system) ) {
+  case SYSTEM_STATE_HIDE:         OS_TFPrintf( DEBUG_PRINT_TARGET, "HIDE" );          break;
+  case SYSTEM_STATE_SETUP:        OS_TFPrintf( DEBUG_PRINT_TARGET, "SETUP" );         break;
+  case SYSTEM_STATE_FADEIN:       OS_TFPrintf( DEBUG_PRINT_TARGET, "FADEIN" );        break;
+  case SYSTEM_STATE_WAIT_LAUNCH:  OS_TFPrintf( DEBUG_PRINT_TARGET, "WAIT_LAUNCH" );   break;
+  case SYSTEM_STATE_LAUNCH:       OS_TFPrintf( DEBUG_PRINT_TARGET, "LAUNCH" );        break;
+  case SYSTEM_STATE_WAIT_FADEOUT: OS_TFPrintf( DEBUG_PRINT_TARGET, "WAIT_FADEOUT" );  break;
+  case SYSTEM_STATE_FADEOUT:      OS_TFPrintf( DEBUG_PRINT_TARGET, "FADEOUT" );       break;
+  }
+}
+//#endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
