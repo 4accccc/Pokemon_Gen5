@@ -252,6 +252,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   work->isCallForceExit = FALSE;
   work->isComm = FALSE;
   work->reqPlaySe = FALSE;
+  work->canSelectEgg = TRUE;
 
   for( i=0;i<PCR_MAX;i++ )
   {
@@ -1523,6 +1524,7 @@ static void PLIST_InitMode_Select( PLIST_WORK *work )
     PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
     PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_04 );
     work->canExit = FALSE;
+    work->canSelectEgg = FALSE;
     break;
   
   case PL_MODE_ITEMSET:
@@ -1530,12 +1532,14 @@ static void PLIST_InitMode_Select( PLIST_WORK *work )
     PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
     PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_03 );
     work->canExit = FALSE;
+    work->canSelectEgg = FALSE;
     break;
   
   case PL_MODE_WAZASET:
     PLIST_MSG_OpenWindow( work , work->msgWork , PMT_BAR );
     PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_02_05 );
     work->canExit = FALSE;
+    work->canSelectEgg = FALSE;
     break;
   
   case PL_MODE_SODATEYA:
@@ -2443,7 +2447,15 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
       }
       else
       {
-        work->selectState = PSSEL_SELECT;
+        if( work->canSelectEgg == FALSE &&
+            PLIST_PLATE_IsEgg( work , work->plateWork[work->pokeCursor] ) == TRUE )
+        {
+          PMSND_PlaySystemSE( PLIST_SND_ERROR );
+        }
+        else
+        {
+          work->selectState = PSSEL_SELECT;
+        }
       }
     }
     
