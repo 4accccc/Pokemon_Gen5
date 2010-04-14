@@ -400,7 +400,7 @@ static void McssCallBackFrame( u32 data, fx32 currentFrame )
 	*animeFlag = TRUE;
 }
 
-
+// 博士専用...
 BOOL INTRO_MCSS_MoveX( INTRO_MCSS_WORK * wk, u8 id, fx32 mx, fx32 px )
 {
 	BOOL	flg;
@@ -422,7 +422,10 @@ BOOL INTRO_MCSS_MoveX( INTRO_MCSS_WORK * wk, u8 id, fx32 mx, fx32 px )
 	MCSS_SetPosition( wk->mcss_work[id], &pos );
 
 	if( wk->animeFlag[id] == TRUE ){
-		MCSS_SetAnmStopFlag( wk->mcss_work[id] );
+		// 止めちゃうと目パチが動かなくなるので、停止アニメに切り替える
+		// アニメは強制的に停止状態にしておく
+		INTRO_MCSS_SetAnimeIndex( wk, id, 1 );
+		wk->animeFlag[id] = TURE;
 	}
 
 	return flg;
