@@ -45,8 +45,6 @@ ev_shop_counter:
   IF $SCWK_PARAM1 == TRUE THEN
     //挨拶「いらっしゃいませ」
     _BALLOONWIN_TALKOBJ_MSG( msg_shop_greeting )
-    _AB_KEYWAIT()
-    _BALLOONWIN_CLOSE()
   ENDIF
 
   IF $lwk_shop_id == SCR_SHOPID_BP_ITEM || $lwk_shop_id == SCR_SHOPID_BP_WAZA THEN
@@ -118,30 +116,6 @@ sub_bpshop_main:
     _CALL sub_shop_buy
   ENDIF
 
-/*
-  $i_seq = SEQ_MENU
-  $i_loop = TRUE
-  WHILE $i_loop == TRUE
-
-    
-    SWITCH $i_seq
-    CASE SEQ_MENU_CONTINUE THEN
-      _BALLOONWIN_OBJMSG_POS( msg_shop_02 , SCWK_TARGET_OBJID, POS_DL ) //そのほかにお手伝いできることは？
-      $i_seq = SEQ_MENU
-
-    CASE SEQ_MENU THEN
-      _CALL sub_shop_menu
-      $i_seq = $reg_return
-    
-    CASE SEQ_BUY THEN
-      _CALL sub_shop_buy
-      $i_seq = $reg_return 
-    
-    CASE SEQ_EXIT THEN
-      $i_loop = FALSE
-    ENDSWITCH
-  ENDWHILE
-*/
   _BALLOONWIN_OBJMSG_POS( msg_bp_shop_02 , SCWK_TARGET_OBJID, POS_DL ) //BPをためてまたお越しください
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
@@ -164,7 +138,6 @@ sub_shop_menu:
 		
 	//メニュー表示
 	_BMPMENU_START()
-  _BALLOONWIN_CLOSE()
   
   IF $i_ret == EV_WIN_B_CANCEL THEN
     $reg_return = SEQ_EXIT
@@ -182,6 +155,8 @@ sub_shop_buy:
   DEFINE_LOCAL  ret_mode
   
   $ret_mode = SCR_PROC_RETMODE_NORMAL
+  
+  _BALLOONWIN_CLOSE()
   _CALL_SHOP_PROC_BUY( lwk_shop_id, ret_mode )
   
   IF $ret_mode == SCR_PROC_RETMODE_EXIT THEN
@@ -202,6 +177,7 @@ sub_shop_sell:
  
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
+  _BALLOONWIN_CLOSE()
   _FIELD_CLOSE()
   
   _CALL_BAG_PROC( SCR_BAG_MODE_SELL,ret_mode, ret_item )
