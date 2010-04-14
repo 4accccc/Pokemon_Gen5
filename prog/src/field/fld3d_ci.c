@@ -30,6 +30,8 @@
 #include "fldmmdl.h"  //for MMDLSYS
 #include "fieldmap.h" //for FIELDMAP_～
 
+#include "event_field_fade.h"   //for EVENT_FlySkyBrightIn
+
 #define EMITCOUNT_MAX  (2)
 #define OBJCOUNT_MAX  (2)
 #define ANM_TYPE_MAX  (4)
@@ -49,8 +51,7 @@
 #define POKE_VOICE_WAIT (5)
 #define VOICE_VOL_OFS (8)
 
-#define FLYSKY_WHITE_FADE_SPD (0)
-
+#define CUTIN_WHITE_FADE_SPD (0)
 
 #define ENC_CUTIN_MDL_Z_OFS (700)
 
@@ -140,6 +141,7 @@ typedef struct {
   u16 MdlBAnmWait;
   u16 MdlAAnmIdx[ANM_TYPE_MAX];  //4つ目はデータなし
   u16 MdlBAnmIdx[ANM_TYPE_MAX];  //4つ目はデータなし
+  u32 Bright;
 }RES_DEF_DAT;
 
 typedef struct {
@@ -156,6 +158,7 @@ typedef struct {
   u8 ObjNum;
   u8 Anm1Num;
   u8 Anm2Num;
+  u32 Bright;
 }RES_SETUP_DAT;
 
 typedef struct {
@@ -212,7 +215,8 @@ static BOOL EncFadeMain(GMEVENT* event, FLD3D_CI_PTR ptr);
 
 static GMEVENT_RESULT WhiteOutEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT WhiteInEvt( GMEVENT* event, int* seq, void* work );
-static GMEVENT_RESULT WhiteOutEvtNpc( GMEVENT* event, int* seq, void* work );
+static GMEVENT_RESULT FlySkyBlackInEvt( GMEVENT* event, int* seq, void* work );
+//static GMEVENT_RESULT WhiteOutEvtNpc( GMEVENT* event, int* seq, void* work );
 
 static BOOL IsFlySkyOut(const int inCutinNo);
 static BOOL IsFlySkyIn(const int inCutinNo);
@@ -232,6 +236,7 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work );
 static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexName, const char* inPltName, const int inMsgIdx );
 
 static BOOL FlySkyMainFunc(GMEVENT* event, FLD3D_CI_PTR ptr);
+static void ChangeCapDatCol(void);
 
 #define DEF_CAM_NEAR	( 1 << FX32_SHIFT )
 #define DEF_CAM_FAR	( 1024 << FX32_SHIFT )
@@ -617,14 +622,20 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     PushPriority(ptr);
     //表示状態の保存
     PushDisp(ptr);
-    //カットイン共通ホワイトアウト処理
+    //カットイン共通ホワイトアウト処理　（空飛びイン以外）
+    if ( !IsFlySkyIn(ptr->CutInNo) )
+    {
+      GMEVENT* fade_event;
+      fade_event = GMEVENT_Create(gsys, event, WhiteOutEvt, 0);
+      GMEVENT_CallEvent(event, fade_event);
+    }
 
     if ( IsFlySkyOut(ptr->CutInNo) )
     {
-      GMEVENT* fade_event;
+//      GMEVENT* fade_event;
       //メイン処理書き換え
       ptr->MainSeqFunc = FlySkyMainFunc;
-
+/**
       if ( (ptr->CutInNo == FLDCIID_FLY_OUT)||(ptr->CutInNo == FLDCIID_FLY_OUT2) )
       {
         fade_event = GMEVENT_Create(gsys, event, WhiteOutEvt, 0);
@@ -634,10 +645,32 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
         fade_event = GMEVENT_Create(gsys, event, WhiteOutEvtNpc, 0);
       }
       GMEVENT_CallEvent(event, fade_event);
+*/      
     }
     (*seq)++;
     break;
-  case 1:
+  case 1:   //そらを飛ぶカットインシーケンス
+    (*seq)++;
+    if ( (ptr->CutInNo == FLDCIID_FLY_OUT)||(ptr->CutInNo == FLDCIID_FLY_OUT2) )
+    {
+      //自機を非表示
+      MMDL * mmdl;
+      FIELD_PLAYER *fld_player;
+      fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+      mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+      MMDL_SetStatusBitVanish(mmdl, TRUE);
+      break;
+    }else if (ptr->CutInNo == FLDCIID_CHAMP_OUT){
+      //指定OBJを消す
+      NPC_FLY_WORK *fly_work = (NPC_FLY_WORK*)ptr->Work;
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      u16 id = fly_work->ObjID;
+      MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
+      if ( mmdl != NULL ) MMDL_Delete( mmdl );
+      else GF_ASSERT_MSG( 0,"OBJ DEL 対象のOBJが居ません  %d\n",id );
+    }
+    //no break
+  case 2:
     {
       //メイン処理フック
       if ( evt_work->MainHook )
@@ -649,7 +682,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       (*seq)++;
     }
     break;
-  case 2:
+  case 3:
     //キャプチャ終了待ち
     if (ptr->CapEndFlg){
       //キャプチャ終わったら、プライオリティ変更と表示変更
@@ -670,6 +703,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
           GX_BG_BMPSCRBASE_0x00000
       );
       GX_SetBankForBG(GX_VRAM_BG_128_D);
+
       //アルファブレンド
       G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE,
 				GX_BLEND_PLANEMASK_BG2, 0,0);
@@ -678,7 +712,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       (*seq)++;
     }
     break;
-  case 3:
+  case 4:
     //リソースロード
     SetupResource(event, ptr, &evt_work->SetupDat, ptr->CutInNo);
     //セットアップ終了したので3Ｄ面もオン
@@ -690,15 +724,32 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     }
     //フィールド表示モード切替
     FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_CUTIN);
-    if ( IsFlySkyOut(ptr->CutInNo) )
+    
+    //輝度変更する必要がある場合セット
+    if ( evt_work->SetupDat.Bright ){
+      //キャプチャした画像にアクセス
+      ChangeCapDatCol();
+    }
+    (*seq)++;
+    break;
+  case 5:
     {
       GMEVENT* fade_event;
-      fade_event = GMEVENT_Create(gsys, event, WhiteInEvt, 0);
+      if ( IsFlySkyIn(ptr->CutInNo) )
+      {
+        //フェードインイベント
+        fade_event = GMEVENT_Create(gsys, event, FlySkyBlackInEvt, 0);
+      }
+      else
+      {
+        //フェードインイベント
+        fade_event = GMEVENT_Create(gsys, event, WhiteInEvt, 0);
+      }
       GMEVENT_CallEvent(event, fade_event);
     }
     (*seq)++;
     break;
-  case 4:
+  case 6:
     {
       BOOL rc1,rc2,rc3,main_rc;
       //フレームカウント
@@ -726,7 +777,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       if ( main_rc ) (*seq)++;
     }
     break;
-  case 5:
+  case 7:
     //フィールドモード戻し
     FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_NORMAL);
     //リソース解放処理
@@ -756,7 +807,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     }
     (*seq)++;
     break;
-  case 6:
+  case 8:
     //バックカラー設定
     {
       FIELD_LIGHT *light = FIELDMAP_GetFieldLight( fieldmap );
@@ -822,7 +873,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     
     (*seq)++;
     break;
-  case 7:
+  case 9:
     //終了
     return GMEVENT_RES_FINISH;
   }
@@ -1240,6 +1291,7 @@ static void CreateRes(RES_SETUP_DAT *outDat, const u8 inResArcIdx, const HEAPID 
   outDat->Setup.objCount = obj_num;
 
   outDat->SpaIdx = def_dat.SpaIdx;
+  outDat->Bright = def_dat.Bright;
 }
 
 //--------------------------------------------------------------
@@ -1779,28 +1831,20 @@ static GMEVENT_RESULT WhiteOutEvt( GMEVENT* event, int* seq, void* work )
   switch(*seq){
   case 0:
     GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, FLYSKY_WHITE_FADE_SPD );
+          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, CUTIN_WHITE_FADE_SPD );
     (*seq)++;
     break;
   case 1:
     if ( GFL_FADE_CheckFade() == FALSE )
     {
-      //自機を非表示
-      MMDL * mmdl;
-      FIELD_PLAYER *fld_player;
-      fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
-      mmdl = FIELD_PLAYER_GetMMdl( fld_player );
-      MMDL_SetStatusBitVanish(mmdl, TRUE);
-      (*seq)++;
+      return GMEVENT_RES_FINISH;
     }
-    break;
-  case 2:
-    return GMEVENT_RES_FINISH;
   }
 
   return GMEVENT_RES_CONTINUE;
 }
 
+#if 0
 //--------------------------------------------------------------------------------------------
 /**
  * ホワイトアウトイベントNPCそらをとぶ用
@@ -1835,7 +1879,7 @@ static GMEVENT_RESULT WhiteOutEvtNpc( GMEVENT* event, int* seq, void* work )
   switch(*seq){
   case 0:
     GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, FLYSKY_WHITE_FADE_SPD );
+          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, CUTIN_WHITE_FADE_SPD );
     (*seq)++;
     break;
   case 1:
@@ -1856,7 +1900,7 @@ static GMEVENT_RESULT WhiteOutEvtNpc( GMEVENT* event, int* seq, void* work )
 
   return GMEVENT_RES_CONTINUE;
 }
-
+#endif
 //--------------------------------------------------------------------------------------------
 /**
  * ホワイトインイベント
@@ -1877,7 +1921,40 @@ static GMEVENT_RESULT WhiteInEvt( GMEVENT* event, int* seq, void* work )
   switch(*seq){
   case 0:
     GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 0, FLYSKY_WHITE_FADE_SPD );
+          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 0, CUTIN_WHITE_FADE_SPD );
+    (*seq)++;
+    break;
+  case 1:
+    if ( GFL_FADE_CheckFade() == FALSE )
+    {
+      return GMEVENT_RES_FINISH;
+    }
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 空を飛ぶブラックインインイベント
+ *
+ * @param   event       イベントポインタ
+ * @param   *seq        シーケンサ
+ * @param   work        ワークポインタ
+ *
+ * @return	GMEVENT_RESULT    イベント結果
+ */
+//--------------------------------------------------------------------------------------------
+static GMEVENT_RESULT FlySkyBlackInEvt( GMEVENT* event, int* seq, void* work )
+{
+  GAMESYS_WORK *gsys;
+  FIELDMAP_WORK * fieldmap;
+  gsys = GMEVENT_GetGameSysWork(event);
+  fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  switch(*seq){
+  case 0:
+    GFL_FADE_SetMasterBrightReq(
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0 );
     (*seq)++;
     break;
   case 1:
@@ -2288,3 +2365,45 @@ static BOOL FlySkyMainFunc(GMEVENT* event, FLD3D_CI_PTR ptr)
   return FALSE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * キャプチャ画像輝度落としのためのカラー変更
+ *
+ * @param   none
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void ChangeCapDatCol(void)
+{
+  u32 adr_val;
+  void *adr;
+  u16 *col;
+  int i;
+  u8 a,r,g,b;
+  GXVRamBG bg;
+  //ＶＲＡＭ書き換えするので、割り当てを一時的に解除
+  bg = GX_ResetBankForBG();
+  //VRAM_Dのアドレス取得
+  adr_val = HW_LCDC_VRAM_D;
+  adr = (void*)adr_val;
+  col = (u16*)adr;
+  for(i=0;i<256*192;i++)
+  {
+//    NOZOMU_Printf("bef col=%x\n",*col);
+    //RGB分解 と　1/2ブラックブレンド
+    a = (*col >> 15) & 0x1;   //1ビット
+    b = (*col >> 10) & 0x1f;  //5ビット
+    g = (*col >> 5) & 0x1f;   //5ビット
+    r = (*col) & 0x1f;        //5ビット
+
+    b = (b >> 1);
+    g = (g >> 1);
+    r = (r >> 1);
+
+    *col = (a << 15) | (b << 10) | (g<< 5) | (r);
+//    NOZOMU_Printf("aft col=%x\n",*col);
+    col++;
+  }
+  //割り当て復帰
+  GX_SetBankForBG(bg);
+}

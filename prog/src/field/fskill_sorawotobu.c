@@ -246,8 +246,14 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
         mmdl = FIELD_PLAYER_GetMMdl( fld_player );
         MMDL_SetStatusBitVanish(mmdl, TRUE);
       }
-      //ブラックインリクエスト
-      GMEVENT_CallEvent(event, EVENT_FlySkyBrightIn(wk->gsys, fieldWork, FIELD_FADE_BLACK, FIELD_FADE_WAIT, 0));
+      //※ブラックインリクエストはカットインの中で行うＢＧの復帰だけ行う
+      {
+        int mv = GFL_DISP_GetMainVisible();
+        FIELDMAP_InitBGMode();
+        GFL_DISP_GX_SetVisibleControlDirect( mv );
+
+        FIELDMAP_InitBG( fieldWork );
+      }
       (*seq)++;
     }
     break;
