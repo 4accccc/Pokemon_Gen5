@@ -590,7 +590,10 @@ static GMEVENT_RESULT PlayEventBGMEvent( GMEVENT* event, int* seq, void* wk )
     (*seq)++;
     break;
   case 1:
-    return GMEVENT_RES_FINISH;
+    // ë¶éûçƒê∂ÇÃäÆóπë“Çø
+    if( FIELD_SOUND_HaveRequest( fieldSound ) == FALSE ) {
+      return GMEVENT_RES_FINISH;
+    }
   } 
   return GMEVENT_RES_CONTINUE;
 } 
