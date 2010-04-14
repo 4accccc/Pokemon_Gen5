@@ -106,73 +106,67 @@ void BTL_POSPOKE_PokeIn( BTL_POSPOKE_WORK* wk, BtlPokePos pos,  u8 pokeID, BTL_P
 //=============================================================================================
 void BTL_POSPOKE_Rotate( BTL_POSPOKE_WORK* wk, BtlRotateDir dir, u8 clientID, const BTL_POKEPARAM* inPoke, BTL_POKE_CONTAINER* pokeCon )
 {
-  enum {
-    ROT_MAX = BTL_ROTATE_NUM-1,
-  };
-
   if( (dir == BTL_ROTATEDIR_STAY) || (dir == BTL_ROTATEDIR_NONE) ){
     return;
   }
   else
   {
-    u8 idx[ ROT_MAX ];
-    u8 cnt, i;
+    #ifdef ROTATION_NEW_SYSTEM
+
+    u32 i;
+
+    // 該当クライアントの担当位置インデックスを保存
+    for(i=0; i<NELEMS(wk->state); ++i)
+    {
+      if( wk->state[i].clientID == clientID ){ break; }
+    }
+
+    if( i != NELEMS(wk->state) )
+    {
+      if( !BPP_IsDead(inPoke) ){
+        BTL_POSPOKE_PokeIn( wk, i, BPP_GetID(inPoke), pokeCon );
+      }else{
+        wk->state[ i ].existPokeID = BTL_POKEID_NULL;
+      }
+    }
+
+    #else
+
+    u8  idx[ BTL_ROTATION_FRONTPOS_NUM ];
+    BtlPokePos slideInPos = BTL_POS_MAX;
+    u32 cnt, i;
 
     // 該当クライアントの担当位置インデックスを保存
     for(cnt=0, i=0; i<NELEMS(wk->state); ++i)
     {
       if( wk->state[i].clientID == clientID ){
         idx[cnt++] = i;
-        if( cnt >= ROT_MAX ){
+        if( cnt >= BTL_ROTATION_FRONTPOS_NUM ){
           break;
         }
       }
     }
 
-    // スライド方向に併せて状態更新
-    if( cnt == ROT_MAX )
-    {
-    #ifdef ROTATION_NEW_SYSTEM
-      u8 inPosIdx = BTL_MAINUTIL_GetRotateInPosIdx( dir );
-      u8 outPosIdx = BTL_MAINUTIL_GetRotateOutPosIdx( dir );
-
-      TAYA_Printf("PosPoke Rotation  clientID=%d, inPokeID=%d, inIdx=%d, outIdx=%d, pos0=%d, pos1=%d, pos2=%d\n",
-          clientID, BPP_GetID(inPoke), inPosIdx, outPosIdx, idx[0], idx[1], idx[2] );
-
-      wk->state[ idx[inPosIdx] ]  = wk->state[ idx[outPosIdx] ];
-      wk->state[ idx[outPosIdx] ] = wk->state[ idx[0] ];
-
-      if( !BPP_IsDead(inPoke) ){
-        BTL_POSPOKE_PokeIn( wk, idx[0], BPP_GetID(inPoke), pokeCon );
-      }else{
-        wk->state[ idx[0] ].existPokeID = BTL_POKEID_NULL;
-      }
-    #else
-      BtlPokePos slideInPos = BTL_POS_MAX;
-
-      if( dir == BTL_ROTATEDIR_R )
-      {
-        wk->state[ idx[1] ] = wk->state[ idx[0] ];
-        slideInPos = idx[0];
-      }
-      if( dir == BTL_ROTATEDIR_L )
-      {
-        wk->state[ idx[0] ] = wk->state[ idx[1] ];
-        slideInPos = idx[1];
-      }
-
-      if( slideInPos != BTL_POS_MAX )
-      {
-        // 後衛から前衛に出たポケが生きていたら入場と同じ処理
-        if( !BPP_IsDead(inPoke) ){
-          BTL_POSPOKE_PokeIn( wk, slideInPos, BPP_GetID(inPoke), pokeCon );
-        // 死んでいたらその位置を空ける
-        }else{
-          wk->state[ slideInPos ].existPokeID = BTL_POKEID_NULL;
-        }
-      }
-    #endif
+    if( dir == BTL_ROTATEDIR_R ){
+      wk->state[ idx[1] ] = wk->state[ idx[0] ];
+      slideInPos = idx[0];
     }
+    if( dir == BTL_ROTATEDIR_L ){
+      wk->state[ idx[0] ] = wk->state[ idx[1] ];
+      slideInPos = idx[1];
+    }
+
+    if( slideInPos != BTL_POS_MAX )
+    {
+      // 後衛から前衛に出たポケが生きていたら入場と同じ処理
+      if( !BPP_IsDead(inPoke) ){
+        BTL_POSPOKE_PokeIn( wk, slideInPos, BPP_GetID(inPoke), pokeCon );
+      // 死んでいたらその位置を空ける
+      }else{
+        wk->state[ slideInPos ].existPokeID = BTL_POKEID_NULL;
+      }
+    }
+    #endif
   }
 }
 //----------------------------------------------------------------------------------

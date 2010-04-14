@@ -734,6 +734,8 @@ static BOOL selectRotationWaza_init( int* seq, void* wk_adrs )
 
 static BOOL selectRotationWaza_loop( int* seq, void* wk_adrs )
 {
+  #ifdef ROTATION_NEW_SYSTEM
+
   BTLV_SCD* wk = wk_adrs;
   BtlRotateDir dir;
   int  wazaIdx;
@@ -761,6 +763,9 @@ static BOOL selectRotationWaza_loop( int* seq, void* wk_adrs )
     return TRUE;
   }
   return FALSE;
+  #else
+  return TRUE;
+  #endif
 }
 
 
