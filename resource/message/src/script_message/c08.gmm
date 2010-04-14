@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T22:14:58"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T14:43:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="105" right="1999" bottom="733" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1115,12 +1115,12 @@ WOMAN2</attribute>
 ポケモンが　いないと　あたし
 さみしくて　ダメになっちゃう！▼
 だけど　それは　ポケモンを
-りよう　している　だけ……？</language>
+りよう　している　だけなの……？</language>
 		<language name="JPN_KANJI" width="256">……そんなぁ▼
 ポケモンが　いないと　あたし
 さみしくて　ダメになっちゃう！▼
 だけど　それは　ポケモンを
-利用している　だけ……？</language>
+利用している　だけなの……？</language>
 	</row>
 
 	<row id="msg_c08_woman1_01w">
