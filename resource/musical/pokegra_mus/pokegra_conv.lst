@@ -493,6 +493,7 @@ POKEGURA_CONV_LIST = %w[
 491
 492_land
 493_normal
+657
 551
 552
 553
@@ -645,7 +646,6 @@ POKEGURA_CONV_LIST = %w[
 651
 652
 653_a
-657
 654
 655_voice
 656_normal
