@@ -222,9 +222,10 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
     SND_MIC_Main();
     if( SND_MIC_IsAmpOnWaitFlag() == TRUE ){
       TILEICON_Exit( wk->timeIcon );
-      PMSND_PauseBGM( TRUE );
+//      PMSND_PauseBGM( TRUE );
       FLDMSGWIN_STREAM_ClearMessage( wk->msgWin );
       FLDMSGWIN_STREAM_PrintStart( wk->msgWin, 0, 0, perap_msg_01 );
+			GMEVENT_CallEvent( event, EVENT_FSND_PushBGM(wk->gsys,FSND_FADE_FAST) );
       *seq = SEQ_START_MSG;
     }
     break;
@@ -242,7 +243,8 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
         FLDMSGWIN_STREAM_PrintStrBufStart( wk->msgWin, 0, 0, wk->exp );
         SND_MIC_Exit();
         GFL_UI_SleepEnable( GFL_UI_SLEEP_MIC );   // スリープ許可
-        PMSND_PauseBGM( FALSE );
+//        PMSND_PauseBGM( FALSE );
+				GMEVENT_CallEvent( event, EVENT_FSND_PopBGM(wk->gsys,FSND_FADE_NONE,FSND_FADE_SHORT) );
         *seq = SEQ_REC_ERR;   // 失敗
       }
 /*
@@ -272,7 +274,8 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
       SND_PERAP_VoiceDataSave( wk->sv );
       SND_MIC_Exit();
       GFL_UI_SleepEnable( GFL_UI_SLEEP_MIC );   // スリープ許可
-      PMSND_PauseBGM( FALSE );
+//      PMSND_PauseBGM( FALSE );
+			GMEVENT_CallEvent( event, EVENT_FSND_PopBGM(wk->gsys,FSND_FADE_NONE,FSND_FADE_SHORT) );
       *seq = SEQ_ANM;
     }
     break;
