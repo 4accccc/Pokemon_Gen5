@@ -244,7 +244,7 @@ VMCMD_RESULT EvCmdCallCGearGetDemo( VMHANDLE *core, void *wk )
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
   SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( gdata );
   CGEAR_SAVEDATA * cgear_sv = CGEAR_SV_GetCGearSaveData( sv );
-  u16 flag = SCRCMD_GetVMWorkValue( core, wk );
+  u16 power_on = SCRCMD_GetVMWorkValue( core, wk );
 
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
@@ -252,7 +252,7 @@ VMCMD_RESULT EvCmdCallCGearGetDemo( VMHANDLE *core, void *wk )
 
   CGEAR_SV_SetCGearONOFF( cgear_sv, TRUE );
 
-  SCRIPT_CallEvent( sc, CGEARGET_EVENT_Start( gsys ) );
+  SCRIPT_CallEvent( sc, CGEARGET_EVENT_Start( gsys, power_on ) );
   return VMCMD_RESULT_SUSPEND;
 }
 

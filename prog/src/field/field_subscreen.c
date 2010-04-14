@@ -737,12 +737,17 @@ static void init_firstget_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREE
   GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork(pWork->fieldmap);
   GAMEDATA* p_gdata = GAMESYSTEM_GetGameData(p_gsys);
   SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork( p_gdata );
+  BOOL effect;
+  
   // Overlay
   GFL_OVERLAY_Load( FS_OVERLAY_ID(cgear) );
 
+  // もし、通信中ならば、エフェクトあり、ないならエフェクトなし。
+  effect = GAMESYSTEM_GetAlwaysNetFlag( p_gsys );
+
   pWork->cgearWork = CGEAR_FirstInit(CGEAR_SV_GetCGearSaveData(pSave),
                                      pWork, FIELDMAP_GetGameSysWork(pWork->fieldmap),
-                                     pWork->endCallback, pWork->endCallbackWork , TRUE);
+                                     pWork->endCallback, pWork->endCallbackWork , effect);
 
   GAMEDATA_ClearCGearPowerOnReq( p_gdata );
 }

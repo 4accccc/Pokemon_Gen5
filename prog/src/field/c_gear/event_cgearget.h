@@ -23,7 +23,7 @@ extern "C"{
  * CGEAR‹N“®
  */
 //-----------------------------------------------------------------------------
-extern GMEVENT * CGEARGET_EVENT_Start( GAMESYS_WORK *gsys );
+extern GMEVENT * CGEARGET_EVENT_Start( GAMESYS_WORK *gsys, BOOL power_on );
 
 #if PM_DEBUG
 extern void CGEARGET_EVENT_Change(GAMESYS_WORK * gsys,GMEVENT * event);

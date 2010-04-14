@@ -147,7 +147,7 @@ _TALK_OBJ_START()
 		ENDSWITCH
 
 		//Cギア入手イベント演出
-		_CGEAR_ON_DEMO()
+		_CGEAR_ON_DEMO( TRUE )
 		
 		//Cギア入手SE再生
 		_SE_PLAY( SEQ_SE_DECIDE3 )

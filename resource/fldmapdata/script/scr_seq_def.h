@@ -5223,15 +5223,34 @@
 /**
  * @def _CGEAR_ON_DEMO
  * @brief Cギア起動デモ
+ *
+ * @param power_on  TRUE:電源ON状態　FALSE:電源OFF状態
  */
 //--------------------------------------------------------------
-#define _CGEAR_ON_DEMO()  \
-    _ASM_CGEAR_ON_DEMO
+#define _CGEAR_ON_DEMO( power_on )  \
+    _ASM_CGEAR_ON_DEMO power_on
 
-    .macro  _ASM_CGEAR_ON_DEMO
+    .macro  _ASM_CGEAR_ON_DEMO power_on
     .short  EV_SEQ_CALL_CGEAR_GET_DEMO
-    .short  0
+    .short  \power_on
     .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _PUT_CGEAR_COMMENT
+ * @brief Cギア　警告comment表示
+ *
+ * @param on_off    TRUE:ON  FALSE:OFF
+ */
+//--------------------------------------------------------------
+#define _PUT_CGEAR_COMMENT( on_off )  \
+    _ASM_PUT_CGEAR_COMMENT on_off
+
+    .macro  _ASM_PUT_CGEAR_COMMENT on_off
+    .short  EV_SEQ_PUT_CGEAR_COMMENT
+    .short  \on_off
+    .endm
+
 
 //--------------------------------------------------------------
 /**

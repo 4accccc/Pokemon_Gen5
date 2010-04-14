@@ -20,6 +20,10 @@
 ///	シーケンス
 //=====================================
 typedef enum {
+  SEQ_CGEAR_COMM_OFF,
+  SEQ_CGEAR_COMM_OFF_WAIT,
+  SEQ_CGEAR_COMM_ON,
+  
   SEQ_CGEAR_START,
   SEQ_CGEAR_LOOP,
   SEQ_END,
@@ -35,6 +39,7 @@ typedef enum {
 
 typedef struct{
   int end;
+  BOOL power_on;
    GAMESYS_WORK* gsys ;
 } CGEARGET_EVENT_WORK;
 
@@ -59,9 +64,37 @@ static GMEVENT_RESULT CGEARGET_Proc( GMEVENT *event, int *seq, void *wk )
   GAMESYS_WORK* gsys = work->gsys;
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   FIELD_SUBSCREEN_WORK* pSubWork = FIELDMAP_GetFieldSubscreenWork(fieldmap);
+  GAME_COMM_SYS_PTR p_gamecomm = GAMESYSTEM_GetGameCommSysPtr( gsys );
+
+  
   
   switch( *seq )
   {
+  case SEQ_CGEAR_COMM_OFF:
+    // オフ
+    if( GameCommSys_BootCheck( p_gamecomm ) != GAME_COMM_NO_NULL ){
+      GameCommSys_ExitReq( p_gamecomm );
+    }
+    (*seq) ++;
+    break;
+
+  case SEQ_CGEAR_COMM_OFF_WAIT:
+    if( GameCommSys_BootCheck( p_gamecomm ) != GAME_COMM_NO_NULL ){
+      break;
+    }
+    GAMESYSTEM_SetAlwaysNetFlag( gsys, FALSE );
+    (*seq) ++;
+    break;
+
+  case SEQ_CGEAR_COMM_ON:
+    if( work->power_on ){
+      // オン
+      GAMESYSTEM_SetAlwaysNetFlag( gsys, TRUE );
+      GAMESYSTEM_CommBootAlways( gsys );
+    }
+    (*seq) ++;
+    break;
+
   case SEQ_CGEAR_START:
     FIELD_SUBSCREEN_CgearFirst(pSubWork,
                                FIELD_SUBSCREEN_CGEARFIRST,
@@ -90,7 +123,7 @@ static GMEVENT_RESULT CGEARGET_Proc( GMEVENT *event, int *seq, void *wk )
  *	@return イベント
  */
 //-----------------------------------------------------------------------------
-GMEVENT * CGEARGET_EVENT_Start( GAMESYS_WORK *gsys )
+GMEVENT * CGEARGET_EVENT_Start( GAMESYS_WORK *gsys, BOOL power_on )
 {
   GMEVENT * p_event;
   GAMEDATA * p_gdata;
@@ -102,6 +135,8 @@ GMEVENT * CGEARGET_EVENT_Start( GAMESYS_WORK *gsys )
   p_wk = GMEVENT_GetEventWork( p_event );
   GFL_STD_MemClear(p_wk ,sizeof(CGEARGET_EVENT_WORK));
   p_wk->gsys = gsys;
+
+  p_wk->power_on = power_on;
 
   return p_event;
 }

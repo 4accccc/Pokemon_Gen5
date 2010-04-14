@@ -855,6 +855,12 @@ EVENT_END
 EVENT_START   ev_debug_tomoya
 
 //*
+  _CGEAR_ON_DEMO( TRUE )
+  _AB_KEYWAIT()
+  _CGEAR_ON_DEMO( FALSE )
+//*/
+
+/*
   _ITEMJUDGE_HAVE_CHECK( 0, SCWK_ANSWER )
 //*/
 

@@ -698,6 +698,7 @@ struct _C_GEAR_WORK {
   u8 use_skip;    // スキップ許可
 
   u8 sleep_mode;  // イベント中のスリープモード
+  u8 high_sleep_mode;  // Highスリープモード
   u8 sleep_color_req;
 };
 
@@ -805,6 +806,7 @@ static void _modeEventWait( C_GEAR_WORK* pWork );
 
 // スリープモードの管理
 static void SleepMode_Start( C_GEAR_WORK* pWork );
+static void SleepMode_HighSleepStart( C_GEAR_WORK* pWork );
 static void SleepMode_End( C_GEAR_WORK* pWork );
 static void SleepMode_ColorUpdate( C_GEAR_WORK* pWork );
 static BOOL SleepMode_IsSleep( const C_GEAR_WORK* cpWork );
@@ -815,6 +817,7 @@ static void _PFadeSetBlack( C_GEAR_WORK* pWork );
 static void _PFadeSetSleepBlack( C_GEAR_WORK* pWork, BOOL on_flag );
 static void _PFadeToBlack( C_GEAR_WORK* pWork );
 static void _PFadeFromBlack( C_GEAR_WORK* pWork );
+static BOOL _PFadeIsFade( const C_GEAR_WORK* cpWork );
 
 // パレットフェード　ボタンアニメ
 static void _BUTTONPAL_Init( C_GEAR_WORK* pWork, BUTTON_PAL_FADE* p_fwk );
@@ -1933,6 +1936,11 @@ static void _PFadeFromBlack( C_GEAR_WORK* pWork )
     );
 }
 
+static BOOL _PFadeIsFade( const C_GEAR_WORK* cpWork )
+{
+  return PaletteFadeCheck( cpWork->pfade_ptr );
+}
+
 
 
 static void _gearBootInitScreen(C_GEAR_WORK* pWork)
@@ -2005,7 +2013,7 @@ static BOOL _gearBootMain(C_GEAR_WORK* pWork)
     break;
     
   case BOOT_ANIME_SEQ_END:
-    if( _PanelMarkAnimeSysIsAnime( pWork ) == FALSE ){
+    if( (_PanelMarkAnimeSysIsAnime( pWork ) == FALSE) && (_PFadeIsFade( pWork ) == FALSE) ){
       return TRUE;
     }
     break;
@@ -2622,7 +2630,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       pWork->touchx = xp;
       pWork->touchy = yp;
 
-      if(GFL_NET_IsInit()){  //通信ONなら
+      if( !SleepMode_IsSleep( pWork ) ){  //通信ONなら
         u32 type = _cgearSave_GetPanelType(pWork,pWork->touchx,pWork->touchy);
         
         if( (type == CGEAR_PANELTYPE_IR) || (type == CGEAR_PANELTYPE_WIFI) ||
@@ -3686,6 +3694,13 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   _gearCrossObjMain( pWork );
 
 
+  // 通信OFF時は強制スリープ
+  if( (GFL_NET_IsInit() ==FALSE) && pWork->power_flag ){
+    // スリープ
+    SleepMode_HighSleepStart( pWork );
+  }
+
+
   //  _PFadeToBlack(pWork);
   //  OS_TPrintf("zzzz start field_heap = %x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_FIELD_SUBSCREEN));
 
@@ -3705,13 +3720,22 @@ C_GEAR_WORK* CGEAR_FirstInit( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,G
 {
   C_GEAR_WORK* pWork = CGEAR_Init( pCGSV, pSub, pGameSys, power_effect);
   
-  _CHANGE_STATE(pWork,_modeSelectMenuWait0);
   
   pWork->pCall = pCall;
   pWork->pWork = pWork2;
 
-  // スキップ不可能
-  pWork->use_skip = FALSE;
+  if( power_effect ){
+    _CHANGE_STATE(pWork,_modeSelectMenuWait0);
+    // スキップ不可能
+    pWork->use_skip = FALSE;
+  }else{
+    if(pWork->pCall){
+      pWork->pCall(pWork->pWork);
+    }
+    pWork->pCall=NULL;
+    pWork->pWork=NULL;
+  }
+
 
   // 初期配置情報を設定
   CGEAR_PATTERN_SetUp( pCGSV, pWork->handle, GFUser_GetPublicRand(CGEAR_PATTERN_MAX), 
@@ -3754,7 +3778,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
     FSND_StopTVTRingTone( fsnd );
   }
 
-  if(GFL_NET_IsInit())
+  if( !SleepMode_IsSleep( pWork ) )
   {
     // トランシーバー反応処理
     if( !pWork->beacon_bit ){
@@ -4143,8 +4167,28 @@ static void _modeEventWait( C_GEAR_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void SleepMode_Start( C_GEAR_WORK* pWork )
 {
-  pWork->sleep_mode = TRUE;
-  pWork->sleep_color_req = TRUE;
+  if( pWork->high_sleep_mode == FALSE ){
+    if( pWork->sleep_mode == FALSE ){
+      pWork->sleep_mode = TRUE;
+      pWork->sleep_color_req = TRUE;
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スリープモード開始
+ *
+ *	@param	pWork   ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SleepMode_HighSleepStart( C_GEAR_WORK* pWork )
+{
+  if( pWork->sleep_mode == FALSE ){
+    pWork->high_sleep_mode = TRUE;
+    pWork->sleep_mode = TRUE;
+    pWork->sleep_color_req = TRUE;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -4156,8 +4200,12 @@ static void SleepMode_Start( C_GEAR_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void SleepMode_End( C_GEAR_WORK* pWork )
 {
-  pWork->sleep_mode = FALSE;
-  pWork->sleep_color_req = TRUE;
+  if( pWork->high_sleep_mode == FALSE ){
+    if( pWork->sleep_mode == TRUE ){
+      pWork->sleep_mode = FALSE;
+      pWork->sleep_color_req = TRUE;
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
