@@ -823,37 +823,54 @@ void BTowerComm_SendRetireSelect(BSUBWAY_SCRWORK* wk,u16 retire)
 //  トレーナーデータ
 //======================================================================
 //--------------------------------------------------------------
-//  トレーナー番号テーブル　その１
+//  トレーナー番号テーブル　ノーマル １～３週目のラウンド１～６
 //--------------------------------------------------------------
-static const u16 TrainerNoRangeTable[][2]={
-  {  1-1,100-1},
-  { 81-1,120-1},
-  {101-1,140-1},
-  {121-1,160-1},
-  {141-1,180-1},
-  {161-1,200-1},
-  {181-1,220-1},
-  {201-1,300-1},
+static const u16 TrainerNoRangeTable_Normal1_6[3][2] =
+{
+  {  1-1,  50-1}, //stage 1 round 1-6
+  { 31-1,  70-1}, //stage 2 round 1-6
+  { 51-1, 110-1}, //stage 3 round 1-6
 };
 
 //--------------------------------------------------------------
-//  トレーナー番号テーブル　その２
+//  トレーナー番号テーブル　ノーマル １～２週目のラウンド７
+//  ３週目は専用の番号になる。
 //--------------------------------------------------------------
-static const u16 TrainerNoRangeTable2[][2]={
-  {101-1,120-1},
-  {121-1,140-1},
-  {141-1,160-1},
+static const u16 TrainerNoRangeTable_Normal_Round7[2][2] =
+{
+  {  1-1,  50-1}, //stage 1 round 7
+  { 31-1,  70-1}, //stage 2 round 7
+};
+
+//--------------------------------------------------------------
+//  トレーナー番号テーブル　スーパー　１～４週目のラウンド１～６
+//--------------------------------------------------------------
+static const u16 TrainerNoRangeTable_Super1_6[4][2]=
+{
+  {111-1,160-1},
+  {141-1,180-1},
+  {161-1,200-1},
+  {181-1,220-1},
+};
+
+//--------------------------------------------------------------
+//  トレーナー番号テーブル　スーパー　１～４週目のラウンド７
+//--------------------------------------------------------------
+static const u16 TrainerNoRangeTable_Super7[4][2]=
+{
   {161-1,180-1},
   {181-1,200-1},
   {201-1,220-1},
   {221-1,240-1},
-  {201-1,300-1},
 };
 
-#if 0 //old gs
-#define TOWER_MASTER_FIRST  (305)    //0オリジン
-#define TOWER_MASTER_SECOND  (306)
-#endif
+//--------------------------------------------------------------
+//  トレーナー番号テーブル　スーパー　５週目以降の１～７
+//--------------------------------------------------------------
+static const u16 TrainerNoRangeTable_Super_Stage5[1][2]=
+{
+  {201-1,300-1}, //全部同じ
+};
 
 //--------------------------------------------------------------
 /**
@@ -869,47 +886,56 @@ u16 BSUBWAY_SCRWORK_GetTrainerNo(
     BSUBWAY_SCRWORK* wk, u16 stage, u8 round, int play_mode, u8 pair_no )
 {
   u16 no = 0;
+  u16 super = 0;
   s16 boss_no = -1;
+  const u16 *tbl;
   
   OS_Printf( "BSW GET TRAINER NO stage = %d round = %d\n", stage, round );
   
-#if 0 //old gs
-  //タワータイクーンはシングルのみ
-  if( play_mode == BSWAY_MODE_SINGLE ){
-    //タワータイクーン1回目
-    if( (stage==2) && (round==6) ){
-      return TOWER_MASTER_FIRST;
+  if( round == 6 ) //専用ボスか？
+  {
+    if( stage == 2 )
+    {
+      boss_no = 0;  //ノーマルボス
     }
-    //タワータイクーン2回目
-    if((stage==6)&&(round==6)){
-      return TOWER_MASTER_SECOND;
-    }
-  }
-#else //wb
-  
-  if( round == 6 ){ //最後列
-    if( stage == 2 ){
-      boss_no = 0;
-    }else if( stage == 6 ){
-      boss_no = 1;
+    else if( stage == 6 )
+    {
+      boss_no = 1;  //スーパーボス
     }
   }
   
-  if( boss_no != -1 ){
-    switch( play_mode ){
+  switch( play_mode ) //スーパーモードか？
+  {
+  case BSWAY_MODE_S_SINGLE:
+  case BSWAY_MODE_S_DOUBLE:
+  case BSWAY_MODE_S_MULTI:
+  case BSWAY_MODE_S_COMM_MULTI:
+    super = 1;
+  }
+  
+  if( boss_no != -1 ) //専用ボス
+  {
+    switch( play_mode )
+    {
     case BSWAY_MODE_SINGLE:
     case BSWAY_MODE_S_SINGLE:
-      if( boss_no == 0 ){
+      if( boss_no == 0 )
+      {
         no = BSW_TR_DATANO_SINGLE;
-      }else if( boss_no == 1 ){
+      }
+      else if( boss_no == 1 )
+      {
         no = BSW_TR_DATANO_S_SINGLE;
       }
       break;
     case BSWAY_MODE_DOUBLE:
     case BSWAY_MODE_S_DOUBLE:
-      if( boss_no == 0 ){
+      if( boss_no == 0 )
+      {
         no = BSW_TR_DATANO_DOUBLE;
-      }else if( boss_no == 1 ){
+      }
+      else if( boss_no == 1 )
+      {
         no = BSW_TR_DATANO_S_DOUBLE;
       }
       break;
@@ -917,16 +943,25 @@ u16 BSUBWAY_SCRWORK_GetTrainerNo(
     case BSWAY_MODE_COMM_MULTI:
     case BSWAY_MODE_S_MULTI:
     case BSWAY_MODE_S_COMM_MULTI:
-      if( boss_no == 0 ){
-        if( pair_no == 0 ){
+      if( boss_no == 0 )
+      {
+        if( pair_no == 0 )
+        {
           no = BSW_TR_DATANO_MULTI0;
-        }else{
+        }
+        else
+        {
           no = BSW_TR_DATANO_MULTI1;
         }
-      }else if( boss_no == 1 ){
-        if( pair_no == 0 ){
+      }
+      else if( boss_no == 1 )
+      {
+        if( pair_no == 0 )
+        {
           no = BSW_TR_DATANO_S_MULTI0;
-        }else{
+        }
+        else
+        {
           no = BSW_TR_DATANO_S_MULTI1;
         }
       }
@@ -934,22 +969,63 @@ u16 BSUBWAY_SCRWORK_GetTrainerNo(
     default:
       GF_ASSERT( 0 );
     }
-  }else if( stage < 7 ){
-    if( round == 6 ){
-      no = (TrainerNoRangeTable2[stage][1]-TrainerNoRangeTable2[stage][0])+1;
-      no = TrainerNoRangeTable2[stage][0]+(get_Rand(wk)%no);
-    }else{
-      no = (TrainerNoRangeTable[stage][1]-TrainerNoRangeTable[stage][0])+1;
-      no = TrainerNoRangeTable[stage][0]+(get_Rand(wk)%no);
+  }
+  else if( super == 0 ) //ノーマルモード
+  {
+    if( stage < 3 ) //ステージ２まで
+    {
+      if( round < 6 ) //ラウンド１～６
+      {
+        tbl = TrainerNoRangeTable_Normal1_6[stage];
+        no = tbl[1] - tbl[0] + 1;
+        no = tbl[0] + (get_Rand(wk) % no);
+      }
+      else  //ラウンド７
+      {
+        if( stage < 2 )
+        {
+          tbl = TrainerNoRangeTable_Normal_Round7[stage];
+          no = tbl[1] - tbl[0] + 1;
+          no = tbl[0] + (get_Rand(wk) % no);
+        }
+        else //ステージ２以上はありえない
+        {
+          GF_ASSERT( 0 );
+        }
+      }
     }
-  }else{
-    no = (TrainerNoRangeTable[7][1]-TrainerNoRangeTable[7][0])+1;
-    no = TrainerNoRangeTable[7][0]+(get_Rand(wk)%no);
+    else //ステージ３以上はありえない
+    {
+      GF_ASSERT( 0 );
+    }
+  }
+  else //スーパーモード
+  {
+    if( stage < 4 ) //ステージ４まで
+    {
+      if( round < 6 ) //ラウンド１～６
+      {
+        tbl = TrainerNoRangeTable_Super1_6[stage];
+        no = tbl[1] - tbl[0] + 1;
+        no = tbl[0] + (get_Rand(wk) % no);
+      }
+      else //ラウンド７
+      {
+        tbl = TrainerNoRangeTable_Super7[stage];
+        no = tbl[1] - tbl[0] + 1;
+        no = tbl[0] + (get_Rand(wk) % no);
+      }
+    }
+    else //スーパーステージ５以降
+    {
+      tbl = TrainerNoRangeTable_Super_Stage5[0];
+      no = tbl[1] - tbl[0] + 1;
+      no = tbl[0] + (get_Rand(wk) % no);
+    }
   }
   
   OS_Printf( "BSW GET TRAINER NO GET NUM = %d\n", no );
   return no;
-#endif
 }
 
 //--------------------------------------------------------------
@@ -1456,7 +1532,7 @@ static void * get_TrainerRomData( u16 tr_no, HEAPID heapID )
 static void get_PokemonRomData(
     BSUBWAY_POKEMON_ROM_DATA *prd, int index)
 {
-  index += BSW_PM_ARCDATANO_ORG;
+//  index += BSW_PM_ARCDATANO_ORG;
   OS_Printf( "BSUBWAY load PokemonRomData Num = %d\n", index );
   GFL_ARC_LoadData( (void*)prd, ARCID_BSW_PD, index );
 }

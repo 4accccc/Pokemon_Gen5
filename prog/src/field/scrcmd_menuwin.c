@@ -2123,9 +2123,8 @@ VMCMD_RESULT EvCmdMsgWinClose( VMHANDLE *core, void *wk )
     balloonWin_Close( core, work );
     close = TRUE;
   }
-
-  GF_ASSERT_MSG(close,"ウィンドウクローズを行いませんでした");
- 
+  
+  GF_ASSERT_MSG( close, "閉じるウィンドウがありません" );
   return VMCMD_RESULT_SUSPEND;
 }
 

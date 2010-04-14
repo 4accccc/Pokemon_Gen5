@@ -819,7 +819,7 @@ static void MakePokePara( const BSUBWAY_POKEMON *src, POKEMON_PARAM *dest )
 static void GetPokemonRomData(
     BSUBWAY_POKEMON_ROM_DATA *prd,int index)
 {
-  index += BSW_PM_ARCDATANO_ORG;
+//  index += BSW_PM_ARCDATANO_ORG;
   GFL_ARC_LoadData( (void*)prd, ARCID_BSW_PD, index );
 }
 
