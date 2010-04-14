@@ -80,4 +80,5 @@ extern BOOL GameBeacon_ExitWait(int *seq, void *pwk, void *pWork);
 extern void GameBeacon_Update(int *seq, void *pwk, void *pWork);
 
 extern int GameBeacon_GetBeaconSize(void *pWork);
+extern void GameBeacon_SetErrorWait(GAME_BEACON_SYS_PTR gbs);
 

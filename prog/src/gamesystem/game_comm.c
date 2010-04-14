@@ -98,6 +98,8 @@ typedef struct _GAME_COMM_SYS{
   GAME_COMM_STATUS comm_status;         ///<通信ステータス
   GAME_COMM_NO game_comm_no;
   GAME_COMM_NO reserve_comm_game_no;   ///<予約通信ゲーム番号
+  GAME_COMM_NO last_comm_no;            ///<最後に実行していたGAME_COMM_NO
+  u8           padding;
   GAME_COMM_SUB_WORK sub_work;
   void *parent_work;                  ///<呼び出し時に引き渡すポインタ
   void *app_work;                     ///<各アプリケーションが確保したワークのポインタ
@@ -371,6 +373,7 @@ void GameCommSys_Boot(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, void *p
   GF_ASSERT(gcsp->game_comm_no == GAME_COMM_NO_NULL);
   
   gcsp->game_comm_no = game_comm_no;
+  gcsp->last_comm_no = game_comm_no;
   gcsp->parent_work = parent_work;
   GFL_STD_MemClear(&gcsp->sub_work, sizeof(GAME_COMM_SUB_WORK));
 }
@@ -533,6 +536,20 @@ void *GameCommSys_GetAppWork(GAME_COMM_SYS_PTR gcsp)
 GAMEDATA * GameCommSys_GetGameData(GAME_COMM_SYS_PTR gcsp)
 {
   return gcsp->gamedata;
+}
+
+//==================================================================
+/**
+ * 最後に実行していた通信ゲーム番号を取得する
+ *
+ * @param   gcsp		
+ *
+ * @retval  GAME_COMM_NO		最後に実行していたゲーム番号
+ */
+//==================================================================
+GAME_COMM_NO GameCommSys_GetLastCommNo(GAME_COMM_SYS_PTR gcsp)
+{
+  return gcsp->last_comm_no;
 }
 
 //--------------------------------------------------------------

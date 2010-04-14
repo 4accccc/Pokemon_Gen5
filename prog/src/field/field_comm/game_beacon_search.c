@@ -30,6 +30,9 @@ typedef enum{
   GBS_STATUS_UPDATE,  ///<メイン処理実行中
 }GBS_STATUS;
 
+///エラーからの復帰後、一定時間パレスへは接続しない
+#define GBS_ERROR_WAIT_TIMER    (30 * 60)
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -47,6 +50,7 @@ typedef struct _GAME_BEACON_SYS
   GAMEDATA *gamedata;
   GBS_STATUS status;        ///<TRUE:初期化済み
   BOOL fatal_err;   ///<TRUE:エラー発生
+  u32 error_wait;
   GBS_BEACON beacon_send_data;    ///<送信ビーコンデータ
   GBS_TARGET_INFO target_info;    ///<ビーコンで見つけた相手の情報
   
@@ -200,8 +204,10 @@ BOOL GameBeacon_Exit(int *seq, void *pwk, void *pWork)
   
   OS_TPrintf("GameBeaconExit\n");
   WIH_DWC_AllBeaconEnd(gbs->pWDWork);
-	GFL_NET_Exit(GameBeacon_ExitCallback);
-	return TRUE;
+  if(NetErr_App_CheckError() == FALSE){ //通信エラーの時はevent_comm_errorで処理される
+    GFL_NET_Exit(GameBeacon_ExitCallback);
+  }
+  return TRUE;
 }
 
 //==================================================================
@@ -216,9 +222,13 @@ BOOL GameBeacon_Exit(int *seq, void *pwk, void *pWork)
 BOOL GameBeacon_ExitWait(int *seq, void *pwk, void *pWork)
 {
   GAME_BEACON_SYS_PTR gbs = pWork;
+  GAMESYS_WORK *gsys = pwk;
 
-  if(gbs->status == GBS_STATUS_NULL){
+  if(gbs->status == GBS_STATUS_NULL || NetErr_App_CheckError()){
     GFL_HEAP_FreeMemory(gbs);
+    if(NetErr_App_CheckError()){
+      GAMESYSTEM_SetFieldCommErrorReq(gsys, TRUE);
+    }
     OS_TPrintf("GameBeaconWait...Finish\n");
     return TRUE;
   }
@@ -257,6 +267,16 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
   
   if(GAMEDATA_GetIsSave(GAMESYSTEM_GetGameData(gsys)) == TRUE){
     return;
+  }
+  
+  //通信エラーチェック
+  if(NetErr_App_CheckError()){
+    GameCommSys_ExitReq(gcsp);
+    return;
+  }
+
+  if(gbs->error_wait > 0){
+    gbs->error_wait--;
   }
   
   GAMEBEACON_SendBeaconUpdate();
@@ -376,6 +396,9 @@ static GBS_BEACON * GameBeacon_BeaconSearch(GAME_BEACON_SYS_PTR gbs, int *hit_in
     id = GFL_NET_WLGetGameServiceID(i);
     if(!((id==WB_NET_PALACE_SERVICEID) || (id == WB_NET_FIELDMOVE_SERVICEID) )){
       continue;
+    }
+    if(id == WB_NET_PALACE_SERVICEID && gbs->error_wait > 0){
+      continue; //エラータイマーが0になるまでパレスへは接続しない
     }
   	bcon_buff = GFL_NET_GetBeaconData(i);
   	if(bcon_buff != NULL )
@@ -527,4 +550,15 @@ static const GBS_BEACON * GameBeacon_CompareBeacon( const GBS_BEACON *beacon_a ,
   return beacon_b;
 }
 
+//==================================================================
+/**
+ * エラーからの復帰後、一定時間パレスへは接続しないようにタイマーのセット
+ *
+ * @param   gbs		
+ */
+//==================================================================
+void GameBeacon_SetErrorWait(GAME_BEACON_SYS_PTR gbs)
+{
+  gbs->error_wait = GBS_ERROR_WAIT_TIMER;
+}
 

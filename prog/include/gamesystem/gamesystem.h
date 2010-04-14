@@ -225,9 +225,10 @@ extern void GAMESYSTEM_SetAlwaysNetFlag( GAMESYS_WORK * gsys, BOOL is_on );
  * 常時通信フラグをチェックした上で、常時通信を起動する
  *
  * @param   gsys		
+ * @retval  BOOL    TRUE:通信起動した　FALSE:通信を起動しなかった
  */
 //==================================================================
-extern void GAMESYSTEM_CommBootAlways( GAMESYS_WORK *gsys );
+extern BOOL GAMESYSTEM_CommBootAlways( GAMESYS_WORK *gsys );
 
 #ifdef PM_DEBUG
 extern GAMESYS_WORK * DEBUG_GameSysWorkPtrGet(void);
