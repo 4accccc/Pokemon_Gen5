@@ -111,4 +111,5 @@
 #define	TRTYPE_PRINCESS_1    ( 98 )    //ブルジョワールけ11111
 #define	TRTYPE_PRINCE_1    ( 99 )    //ブルジョワールけ11111
 #define	TRTYPE_DPCHAMPION    ( 100 )    //ポケモントレーナー（DPCHAMPION）
-#define	TRTYPE_MAX	( 101 )
+#define	TRTYPE_BOSS_2    ( 101 )    //プラズマだん2
+#define	TRTYPE_MAX	( 102 )

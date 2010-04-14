@@ -895,6 +895,11 @@
 		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
 	</row>
 
+	<row id="MSG_TRTYPE_BOSS_2">
+		<language name="JPN" width="216">プラズマだん</language>
+		<language name="JPN_KANJI" width="216">プラズマだん</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
