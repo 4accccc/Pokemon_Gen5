@@ -175,10 +175,10 @@ struct _FIELD_PLACE_NAME {
   u8  stateSeq;       // 状態内シーケンス
 	u16	stateCount;		  // 状態カウンタ
 
-  u16  zoneID; // 表示する場所のID
-  u16  nextZoneID; // 次に表示するゾーンID
-  BOOL nextZoneSetFlag; // 次に表示するゾーンIDがセットされたかどうか
-  BOOL dispStartFlag;   // 表示を開始するかどうか
+  u16  lastZoneID; // 最後に表示したゾーンID
+  u16  dispZoneID; // 次に表示するゾーンID
+  BOOL dispZoneSetFlag; // 次に表示するゾーンIDがセットされたかどうか
+  BOOL forceDispFlag; // 強制表示フラグ
 
   PN_LETTER* letters[ MAX_NAME_LENGTH ];
   u8 setupLetterNum; // セットアップが完了した文字オブジェクトの数
@@ -215,8 +215,11 @@ static void MoveAllCharUnit( FIELD_PLACE_NAME* system );
 static void WriteCharUnitIntoBitmapWindow( FIELD_PLACE_NAME* system );
 static BOOL CheckLetterWriteToBitmapFinished( const FIELD_PLACE_NAME* system );
 // 地名の更新
+static void SetForceDispFlag( FIELD_PLACE_NAME* system );
+static void ResetForceDispFlag( FIELD_PLACE_NAME* system );
+static BOOL CheckForceDispFlag( const FIELD_PLACE_NAME* system );
 static BOOL CheckDispStart( const FIELD_PLACE_NAME* system );
-static void DispStart( FIELD_PLACE_NAME* system );
+static BOOL CheckPlaceNameIDChange( const FIELD_PLACE_NAME* system );
 static void UpdatePlaceName( FIELD_PLACE_NAME* system ); 
 // 状態の変更
 static void ChangeState( FIELD_PLACE_NAME* system, SYSTEM_STATE next_state );
@@ -277,9 +280,10 @@ static u8 GetStateSeq( const FIELD_PLACE_NAME* system ); // 状態内シーケンスを取
 static void ResetStateSeq( FIELD_PLACE_NAME* system ); // 状態内シーケンスをリセットする
 static void IncStateSeq( FIELD_PLACE_NAME* system ); // 状態内シーケンスをインクリメントする
 // 地名
-static u16 GetZoneID( const FIELD_PLACE_NAME* system ); // ゾーンIDを取得する
-static void SetZoneID( FIELD_PLACE_NAME* system, u16 zoneID ); // ゾーンIDを設定する
-static void SetNextZoneID( FIELD_PLACE_NAME* system, u16 zoneID ); // 次に表示するゾーンIDを設定する
+static u16 GetLastZoneID( const FIELD_PLACE_NAME* system ); // 最後に表示したゾーンIDを取得する
+static void SetLastZoneID( FIELD_PLACE_NAME* system, u16 zoneID ); // 最後に表示したゾーンIDを設定する
+static u16 GetDispZoneID( const FIELD_PLACE_NAME* system ); // 次に表示するゾーンIDを取得する
+static void SetDispZoneID( FIELD_PLACE_NAME* system, u16 zoneID ); // 次に表示するゾーンIDを設定する
 static const STRBUF* GetPlaceName( const FIELD_PLACE_NAME* system ); // 地名バッファを取得する
 static u8 GetPlaceNameLength( const FIELD_PLACE_NAME* system ); // 地名の文字数を取得する
 // デバッグ
@@ -367,7 +371,13 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
 //------------------------------------------------------------------------------------
 void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system )
 {
+  OSTick start, end;
+
   IncStateCount( system ); // 状態カウンタを更新
+
+  DEBUG_PrintSystemState( system );
+  OS_TFPrintf( 3, "[%d]: ", GetStateSeq(system) );
+  start = OS_GetTick();
 
 	// 状態に応じた動作
 	switch( GetState(system) ) {
@@ -382,6 +392,11 @@ void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system )
 
 	// 文字ユニットを動かす
   MoveAllCharUnit( system );
+
+  end = OS_GetTick();
+  OS_TFPrintf( 3, "tick = %d, micro sec = %d\n", 
+      (u32)(end - start),
+      (u32)OS_TicksToMicroSeconds( (end - start) ) );
 }
 
 //------------------------------------------------------------------------------------
@@ -422,8 +437,13 @@ void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* system, u32 zoneID )
   // ゾーンの地名表示フラグが立っていない場所では表示しない
   if( ZONEDATA_GetPlaceNameFlag( zoneID ) == FALSE ) { return; }
 
+  // 初回は強制表示
+  if( system->lastZoneID == ZONE_ID_MAX ) {
+    SetForceDispFlag( system );
+  }
+
 	// 指定されたゾーンIDを次に表示すべきものとして記憶
-  SetNextZoneID( system, zoneID );
+  SetDispZoneID( system, zoneID );
 
 	// 表示中のウィンドウを退出させる
 	Cancel( system ); 
@@ -440,9 +460,8 @@ void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* system, u32 zoneID )
 extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* system, u32 zoneID )
 {
   // 強制的に表示
-  SetZoneID( system, zoneID );
-  SetNextZoneID( system, zoneID );
-  system->dispStartFlag = TRUE;
+  SetDispZoneID( system, zoneID );
+  SetForceDispFlag( system );
 
 	// 表示中のウィンドウを退出させる
 	Cancel( system ); 
@@ -994,6 +1013,45 @@ static BOOL CheckLetterWriteToBitmapFinished( const FIELD_PLACE_NAME* system )
 
 //-----------------------------------------------------------------------------------
 /**
+ * @brief 強制表示フラグを立てる
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void SetForceDispFlag( FIELD_PLACE_NAME* system )
+{
+  system->forceDispFlag = TRUE;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 強制表示フラグを落とす
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void ResetForceDispFlag( FIELD_PLACE_NAME* system )
+{
+  system->forceDispFlag = FALSE;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 強制表示フラグをチェックする
+ *
+ * @param system
+ *
+ * @return 強制表示フラグが立っている場合 TRUE
+ *         そうでなければ FALSE
+ */
+//-----------------------------------------------------------------------------------
+static BOOL CheckForceDispFlag( const FIELD_PLACE_NAME* system )
+{
+  return system->forceDispFlag;
+}
+
+//-----------------------------------------------------------------------------------
+/**
  * @brief 地名の更新をチェックする
  *
  * @param system
@@ -1004,8 +1062,12 @@ static BOOL CheckLetterWriteToBitmapFinished( const FIELD_PLACE_NAME* system )
 //-----------------------------------------------------------------------------------
 static BOOL CheckDispStart( const FIELD_PLACE_NAME* system )
 {
-  if( system->nextZoneSetFlag ) {
-    if( system->zoneID != system->nextZoneID ) {
+  // 強制表示
+  if( CheckForceDispFlag(system) ) { return TRUE; }
+
+  // 新しいゾーンが通知された
+  if( system->dispZoneSetFlag ) {
+    if( system->lastZoneID != system->dispZoneID ) {
       return TRUE;
     }
   }
@@ -1015,18 +1077,29 @@ static BOOL CheckDispStart( const FIELD_PLACE_NAME* system )
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief 地名の表示を開始する
+ * @brief 地名が変化したかどうかをチェックする
  *
  * @param system
+ *
+ * @return 地名が変化した場合 TRUE
+ *         そうでなければ FALSE
  */
 //-----------------------------------------------------------------------------------
-static void DispStart( FIELD_PLACE_NAME* system )
+static BOOL CheckPlaceNameIDChange( const FIELD_PLACE_NAME* system )
 {
-  // 表示する地名を更新
-  system->zoneID = system->nextZoneID;
+  u32 lastID = ZONEDATA_GetPlaceNameID( system->lastZoneID );
+  u32 dispID = ZONEDATA_GetPlaceNameID( system->dispZoneID );
 
-  // 表示開始フラグをセット
-  system->dispStartFlag = TRUE;
+  OS_Printf( "lastZoneID = %d, lastID = %d\n", system->lastZoneID, lastID );
+  OS_Printf( "dispZoneID = %d, dispID = %d\n", system->dispZoneID, dispID );
+
+  // 地名に変化がない
+  if( lastID == dispID ) {
+    return FALSE;
+  }
+  else {
+    return TRUE;
+  }
 }
 
 //-----------------------------------------------------------------------------------
@@ -1044,13 +1117,13 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* sys )
   u8 intrudeNetID;
   
 	// ゾーンIDから地名文字列を取得する
-	str_id = ZONEDATA_GetPlaceNameID( GetZoneID(sys) );
+	str_id = ZONEDATA_GetPlaceNameID( GetDispZoneID(sys) );
 
   // エラー回避
 	if( (str_id < 0) || (msg_place_name_max <= str_id) ){ str_id = 0; } 
 	if( str_id == 0 ) 
   { //「なぞのばしょ」なら表示しない
-    OBATA_Printf( "「なぞのばしょ」を検出( zone id = %d )\n", GetZoneID(sys) );
+    OBATA_Printf( "「なぞのばしょ」を検出( zone id = %d )\n", GetDispZoneID(sys) );
     FIELD_PLACE_NAME_Hide( sys );
   }
 
@@ -1073,7 +1146,7 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* sys )
         intrudeFlag = TRUE;
       }
       // 他人のパレスにいる
-      else if( ZONEDATA_IsPalace( GetZoneID(sys) ) && (myNetID != intrudeNetID) ) {
+      else if( ZONEDATA_IsPalace( GetDispZoneID(sys) ) && (myNetID != intrudeNetID) ) {
         intrudeFlag = TRUE;
       }
     }
@@ -1182,16 +1255,33 @@ static void Cancel( FIELD_PLACE_NAME* sys )
 //-----------------------------------------------------------------------------------
 static void Process_HIDE( FIELD_PLACE_NAME* system )
 {
-  // 表示開始を監視
-  if( CheckDispStart( system ) ) {
-    DispStart( system );
-  }
+  switch( GetStateSeq(system) ) {
+  case 0:
+    if( CheckDispStart( system ) ) {
+      system->dispZoneSetFlag = FALSE;
+      IncStateSeq( system );
+    }
+    break;
 
-	// 表示開始
-	if( system->dispStartFlag ) {
-    system->dispStartFlag = FALSE;
-		ChangeState( system, SYSTEM_STATE_SETUP );
-	}
+  case 1:
+    if( CheckForceDispFlag(system) ) {
+      IncStateSeq( system );
+    }
+    else if( CheckPlaceNameIDChange( system ) ) {
+      IncStateSeq( system );
+    }
+    else {
+      ResetStateSeq( system );
+    }
+    break;
+
+  case 2:
+    // 表示開始
+    ResetForceDispFlag( system );
+    SetLastZoneID( GetDispZoneID(system) );
+    ChangeState( system, SYSTEM_STATE_SETUP );
+    break;
+  }
 }
 
 //-----------------------------------------------------------------------------------
@@ -1538,10 +1628,10 @@ static void InitPNSystem( FIELD_PLACE_NAME* system, GAMESYS_WORK* gameSystem )
   system->gameSystem = gameSystem;
   system->gameData = GAMESYSTEM_GetGameData( gameSystem );
   system->nullCharPos = AREAMAN_POS_NOTFOUND;
-  system->dispStartFlag = FALSE;
-  system->nextZoneSetFlag = FALSE;
-  system->zoneID = ZONE_ID_MAX;
-  system->nextZoneID = ZONE_ID_MAX;
+  system->forceDispFlag = FALSE;
+  system->dispZoneSetFlag = FALSE;
+  system->lastZoneID = ZONE_ID_MAX;
+  system->dispZoneID = ZONE_ID_MAX;
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: InitPNSystem\n" );
@@ -1985,32 +2075,47 @@ static void IncStateSeq( FIELD_PLACE_NAME* system )
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief ゾーンIDを取得する
+ * @brief 最後に表示したゾーンIDを取得する
  *
  * @param system
  *
- * @return ゾーンID
+ * @return 最後に表示した場所のゾーンID
  */
 //-----------------------------------------------------------------------------------
-static u16 GetZoneID( const FIELD_PLACE_NAME* system )
+static u16 GetLastZoneID( const FIELD_PLACE_NAME* system )
 {
-  return system->zoneID;
+  return system->lastZoneID;
 }
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief ゾーンIDを設定する
+ * @brief 最後に表示したゾーンIDを設定する
  *
  * @param system
+ * @param zoneID
  */
 //-----------------------------------------------------------------------------------
-static void SetZoneID( FIELD_PLACE_NAME* system, u16 zoneID )
+static void SetLastZoneID( FIELD_PLACE_NAME* system, u16 zoneID )
 {
-  system->zoneID = zoneID;
+  system->lastZoneID = zoneID;
 
 #ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: SetZoneID (%d)\n", zoneID );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: SetLastZoneID (%d)\n", zoneID );
 #endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 次に表示するゾーンIDを取得する
+ *
+ * @param system
+ *
+ * @return 次に表示する場所のゾーンID
+ */
+//-----------------------------------------------------------------------------------
+static u16 GetDispZoneID( const FIELD_PLACE_NAME* system )
+{
+  return system->dispZoneID;
 }
 
 //-----------------------------------------------------------------------------------
@@ -2020,13 +2125,13 @@ static void SetZoneID( FIELD_PLACE_NAME* system, u16 zoneID )
  * @param system
  */
 //-----------------------------------------------------------------------------------
-static void SetNextZoneID( FIELD_PLACE_NAME* system, u16 zoneID )
+static void SetDispZoneID( FIELD_PLACE_NAME* system, u16 zoneID )
 {
-  system->nextZoneID = zoneID;
-  system->nextZoneSetFlag = TRUE;
+  system->dispZoneID = zoneID;
+  system->dispZoneSetFlag = TRUE;
 
 #ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: SetNextZoneID (%d)\n", zoneID );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: SetDispZoneID (%d)\n", zoneID );
 #endif
 }
 
