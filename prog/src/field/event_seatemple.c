@@ -172,7 +172,6 @@ static GMEVENT_RESULT EVENT_DivingDown( GMEVENT* p_event, int* p_seq, void* p_wo
         FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
         const MMDL* cp_mmdl = FIELD_PLAYER_GetMMdl( p_player );
         
-        FIELD_PLAYER_ChangeOBJCode( p_player, MMDL_GetOBJCode( cp_mmdl ) ); // ダイビング固定にする。
         FIELD_PLAYER_SetMoveForm( p_player, PLAYER_MOVE_FORM_DIVING );
       }
       
@@ -237,7 +236,6 @@ static GMEVENT_RESULT EVENT_DivingUp( GMEVENT* p_event, int* p_seq, void* p_work
     {
       FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
       FIELD_PLAYER_SetMoveForm( p_player, PLAYER_MOVE_FORM_SWIM );
-      FIELD_PLAYER_ClearOBJCodeFix( p_player );
     }
     (*p_seq)++;
     break;

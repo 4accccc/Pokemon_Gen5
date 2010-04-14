@@ -202,16 +202,14 @@ FIELD_PLAYER_CORE * FIELD_PLAYER_CORE_Create(
     }
 	}
 	
+#if 0 // MoveFormがセーブされるようになったため、不要なはず。2010.04.14
   //OBJコードから動作フォームを設定
   if( fixcode == OBJCODEMAX ){
     u16 code = MMDL_GetOBJCode( player_core->fldmmdl );
     PLAYER_MOVE_FORM form = FIELD_PLAYER_GetOBJCodeToMoveForm( sex, code );
-#if 0
-    player_core->move_form = form;
-#else
     PLAYERWORK_SetMoveForm( player_core->playerWork, form );
-#endif
   }
+#endif
   
 	MMDL_SetStatusBitNotZoneDelete( player_core->fldmmdl, TRUE );
 	return( player_core );
