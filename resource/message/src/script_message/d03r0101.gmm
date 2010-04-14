@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T18:13:58"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T16:22:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1287" top="191" right="1992" bottom="819" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="207" right="2000" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -497,16 +497,12 @@
 なにを　のぞんでいるのだろう？▼
 ２ひきの　ドラゴンが　たたかい
 かちのこることで　じぶんの▽
-ただしさを　しょうめい　したいのか▼
-だとすると　ストーンは
-さがしたくない……　そう　おもうぞ▼</language>
+ただしさを　しょうめい　したいのか？▼</language>
 		<language name="JPN_KANJI" width="256">アデク『……Ｎという　男
 なにを　望んでいるのだろう？▼
 ２匹の　ドラゴンの　戦いで
 勝ち残ることで　己の▽
-正しさを　証明したいのか▼
-だとすると　ストーンは
-探したくない……　そう　思うぞ▼</language>
+正しさを　証明したいのか？▼</language>
 	</row>
 
 	<row id="msg_d03r0101_rival_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -552,16 +548,16 @@
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……ぼくは
 もういちど　このなかを　さがす▼
-ゲーチスの　いうことを
-しんじたくないんだ……▼
+あんな　ゲーチスの　いうことなんか
+しんじたく　ないんだ……▼
 きみは　シッポウシティの
-はくぶつかんに　むかいなよ</language>
+はくぶつかんに　むかいな</language>
 		<language name="JPN_KANJI" width="256">チェレン『……ぼくは
-もう一度　この中を　探すよ▼
-ゲーチスの　いうことを
+もう一度　この中を　探す▼
+あんな　ゲーチスの　いうことなんか
 信じたく　ないんだ……▼
 きみは　シッポウシティの
-博物館に　向かいなよ！</language>
+博物館に　向かいな！</language>
 	</row>
 
 	<row id="msg_d03r0101_fighterm_01">
