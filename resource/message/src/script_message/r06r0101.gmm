@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T20:03:09"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T12:19:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -325,8 +325,9 @@
 ・四季イベント
 ・はじめて話しかけたときのみ
 ・次回はassistantm3_02から開始
+　→assistantm3_02
 
-→assistantm3_02</comment>
+・0＝バンビーナ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 助手♂</attribute>
 		<language name="JPN" width="256">われわれは　きせつに　よる
