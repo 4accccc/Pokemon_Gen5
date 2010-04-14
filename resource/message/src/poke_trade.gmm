@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-14T12:44:47"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-14T13:12:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -604,9 +604,9 @@
 
 	<row id="POKETRADE_STR_99">
 		<language name="JPN" width="256">えらんだ　かしらもじのつく
-ポケモンは　いませんでした</language>
+ポケモンは　いません</language>
 		<language name="JPN_KANJI" width="256">選んだ　頭文字のつく
-ポケモンは　いませんでした</language>
+ポケモンは　いません</language>
 	</row>
 
 	<row id="POKETRADE_STR_53">
