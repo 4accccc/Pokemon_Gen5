@@ -425,7 +425,7 @@ BOOL INTRO_MCSS_MoveX( INTRO_MCSS_WORK * wk, u8 id, fx32 mx, fx32 px )
 		// 止めちゃうと目パチが動かなくなるので、停止アニメに切り替える
 		// アニメは強制的に停止状態にしておく
 		INTRO_MCSS_SetAnimeIndex( wk, id, 1 );
-		wk->animeFlag[id] = TURE;
+		wk->animeFlag[id] = TRUE;
 	}
 
 	return flg;
