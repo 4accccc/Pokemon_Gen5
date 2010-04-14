@@ -1,5 +1,5 @@
 // コンバータにより生成
-static const u32 StringID_topicCaption[ TOPIC_ID_NUM ] = 
+static const u8 StringID_topicCaption[ TOPIC_ID_NUM ] = 
 {
   str_topic_0_caption,  // [TOPIC_ID_STYLE]
   str_topic_1_caption,  // [TOPIC_ID_PERSONAL]

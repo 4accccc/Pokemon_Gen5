@@ -568,7 +568,7 @@ file.close
 # 出力データ作成
 outData = Array.new
 outData << "// コンバータにより生成"
-outData << "static const u32 StringID_question[ QUESTION_ID_NUM ] = "
+outData << "static const u8 StringID_question[ QUESTION_ID_NUM ] = "
 outData << "{"
 questions.each do |question|
   outData << "  #{question.titleStringID_lavel},  // [#{question.ID_lavel}]"
@@ -587,7 +587,7 @@ file.close
 # 出力データ作成
 outData = Array.new
 outData << "// コンバータにより生成"
-outData << "static const u32 CaptionStringID_question[ QUESTION_ID_NUM ] = "
+outData << "static const u8 CaptionStringID_question[ QUESTION_ID_NUM ] = "
 outData << "{"
 questions.each do |question|
   outData << "  #{question.captionStringID_lavel},  // [#{question.ID_lavel}]"
@@ -627,7 +627,7 @@ file.close
 # 出力データ作成
 outData = Array.new
 outData << "// コンバータにより生成"
-outData << "static const u32 AnswerID_question[ QUESTION_ID_NUM ][17] = "
+outData << "static const u8 AnswerID_question[ QUESTION_ID_NUM ][17] = "
 outData << "{"
 questions.each do |question|
   data = String.new
@@ -658,7 +658,7 @@ file.close
 # 出力データ作成
 outData = Array.new
 outData << "// コンバータにより生成"
-outData << "static const u32 StringID_topicTitle[ TOPIC_ID_NUM ] = "
+outData << "static const u8 StringID_topicTitle[ TOPIC_ID_NUM ] = "
 outData << "{"
 topics.each do |topic|
   outData << "  #{topic.titleStringID_lavel},  // [#{topic.ID_lavel}]"
@@ -678,7 +678,7 @@ file.close
 # 出力データ作成
 outData = Array.new
 outData << "// コンバータにより生成"
-outData << "static const u32 StringID_topicCaption[ TOPIC_ID_NUM ] = "
+outData << "static const u8 StringID_topicCaption[ TOPIC_ID_NUM ] = "
 outData << "{"
 topics.each do |topic|
   outData << "  #{topic.captionStringID_lavel},  // [#{topic.ID_lavel}]"

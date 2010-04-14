@@ -1,5 +1,5 @@
 // コンバータにより生成
-static const u32 StringID_question[ QUESTION_ID_NUM ] = 
+static const u8 StringID_question[ QUESTION_ID_NUM ] = 
 {
   str_question_00,  // [QUESTION_ID_WB]
   str_question_01,  // [QUESTION_ID_SEX]

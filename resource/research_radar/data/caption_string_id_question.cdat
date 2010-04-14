@@ -1,5 +1,5 @@
 // コンバータにより生成
-static const u32 CaptionStringID_question[ QUESTION_ID_NUM ] = 
+static const u8 CaptionStringID_question[ QUESTION_ID_NUM ] = 
 {
   str_question_00_caption,  // [QUESTION_ID_WB]
   str_question_01_caption,  // [QUESTION_ID_SEX]

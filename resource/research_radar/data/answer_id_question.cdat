@@ -1,5 +1,5 @@
 // コンバータにより生成
-static const u32 AnswerID_question[ QUESTION_ID_NUM ][17] = 
+static const u8 AnswerID_question[ QUESTION_ID_NUM ][17] = 
 {
   { 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
   { 3, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
