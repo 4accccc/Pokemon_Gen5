@@ -21,7 +21,7 @@ static const DEMO3D_SCENE_DATA data_n_legend_meat_w_scene = {
 	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
 	GX_SORTMODE_AUTO,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
-	FX32_CONST(44.0),FX32_CONST(44.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
+	FX32_CONST(35.0),FX32_CONST(35.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
 	FX32_CONST(0.100 ),FX32_CONST(2048.000 ),	///<near,far
 	FX32_CONST(0.1 ),	///<ScaleW
 	0,0,	///<2画面main_ofs,2画面sub_ofs
@@ -42,7 +42,8 @@ static const DEMO3D_SCENE_DATA data_n_legend_meat_w_scene = {
 //============================================
 
 static const DEMO3D_CMD_DATA demo3d_cmd_n_legend_meat_w_data[] = {
- { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 369-29, { MASK_MAIN_DISPLAY, 29, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 490-60, { MASK_MAIN_DISPLAY, 60, 0, 16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 550-60, { MASK_MAIN_DISPLAY, 60, 16, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
 
@@ -66,10 +67,11 @@ static const u16 res_n_legend_meat_w_file_n_legend_meat_w_01[] = {
  NARC_data_demo3d_n_legend_meat_w_01_nsbmd,
  NARC_data_demo3d_n_legend_meat_w_01_nsbta,
  NARC_data_demo3d_n_legend_meat_w_01_nsbca,
+ NARC_data_demo3d_n_legend_meat_w_01_nsbma,
 };
 
 static const DEMO3D_FILE_UNIT res_n_legend_meat_w_file_unit_n_legend_meat_w_01[] = {
- { res_n_legend_meat_w_file_n_legend_meat_w_01, 3 },
+ { res_n_legend_meat_w_file_n_legend_meat_w_01, 4 },
 };
 
 ///==================================
