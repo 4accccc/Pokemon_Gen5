@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_init_c03p10
 _EVENT_DATA    ev_recover_c03p10
+_EVENT_DATA		ev_bg_c03p10_sign_01
 _EVENT_DATA_END
 
 
@@ -38,3 +39,9 @@ INIT_EVENT_START	ev_recover_c03p10
 
 INIT_EVENT_END
 
+/**************************************************************/
+/*		C03P10		ŠÅ”Â									  */
+/**************************************************************/
+EVENT_START		ev_bg_c03p10_sign_01
+	_EASY_BGWIN_MSG( msg_c03p10_sign_01, TYPE_POST )
+EVENT_END
