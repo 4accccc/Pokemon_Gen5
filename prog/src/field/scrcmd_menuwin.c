@@ -730,6 +730,8 @@ VMCMD_RESULT EvCmdGoldWinUpdate( VMHANDLE *core, void *wk )
       GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_common_scr_dat, heap_id );
   STRBUF*        strbuf = GFL_STR_CreateBuffer( 128, heap_id );
   u32            gold = MISC_GetGold( GAMEDATA_GetMiscWork(gdata) );
+  u16            x = SCRCMD_GetVMWorkValue( core, work );  // スクリプト第1引数
+  u16            y = SCRCMD_GetVMWorkValue( core, work );  // スクリプト第2引数
 
   GF_ASSERT( msg_win );
   
