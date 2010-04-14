@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-10-15T14:52:36" source="gate_01.mb"/>
+	<create user="fuchino" host="W00152" date="2010-04-15T04:34:06"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
@@ -22,12 +22,67 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="1 1"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
 <box_test pos_scale="0" xyz="-0.500000 -0.500000 -0.500000" whd="1.000000 1.000000 1.000000"/>
+
+<tex_image_array size="2">
+	<tex_image index="0" name="10_soil"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="10_soil_pl"
+		path="C:/home/wb_data3d/field/out49/chip/tex/10_soil.tga"
+	>
+		<bitmap size="128">
+			1100 4442 4444 0124 1100 3442 4443 0123
+			2110 3442 4444 0124 2110 4442 4134 0124
+			2110 4444 4314 0124 2210 4344 4444 0124
+			2210 3344 4444 0124 2210 4444 4334 0124
+			4210 4444 4434 0122 4210 4444 4444 0122
+			4210 4134 4444 0122 4210 4314 2444 0112
+			4210 4444 2443 0112 4210 4444 2433 0112
+			4210 4434 2444 0011 4210 4433 2444 0011
+			4210 4444 2444 0011 4210 4444 2444 0011
+			4210 4444 2431 0112 4210 4434 2413 0112
+			4210 4434 2444 0112 4210 4444 4444 0122
+			4210 4444 4433 0122 4210 4344 4444 0122
+			2210 4334 4444 0124 2210 4444 4444 0124
+			2210 4444 3444 0124 2110 1444 3343 0124
+			2110 3442 4441 0124 2110 4442 4444 0124
+			1100 4442 4344 0124 1100 4442 4344 0124
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="10_soil_a"
+		width="16" height="8" original_width="16" original_height="8"
+		format="a5i3"
+		palette_name="10_soil_a_pl"
+		path="C:/home/wb_data3d/field/out49/chip/tex/10_soil_a.tga"
+	>
+		<bitmap size="64">
+			f9f9 f8f9 faf8 fafa fafa f8fa f9f8 f9f9
+			f8f8 faf8 fafa b2fa fab2 fafa f8fa f8f8
+			fafa fafa b2fa 6ab2 b26a fab2 fafa fafa
+			fafa fafa 6ab2 026a 6a02 b26a fafa fafa
+			fafa b2fa 026a 0202 0202 6a02 fab2 fafa
+			b2b2 6ab2 0202 0202 0202 0202 b26a b2b2
+			6a6a 026a 0202 0202 0202 0202 6a02 6a6a
+			0202 0202 0202 0202 0202 0202 0202 0202
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="2">
+	<tex_palette index="0" name="10_soil_a_pl" color_size="8">
+		216e 25b0 214d 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="10_soil_pl" color_size="8">
+		1d4c 214d 216e 258e 25b0 7fff 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
 
 <material_array size="1">
 	<material index="0" name="lambert1"
@@ -131,6 +186,27 @@
 
 <output_info vertex_size="24" polygon_size="6"
 	triangle_size="0" quad_size="6"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="2">
+		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="2">
+		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="1">
+		<ex_material index="0" disp_pos="0.000000 240.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="1">
+		<ex_polygon index="0" disp_pos="0.000000 180.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="1">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
