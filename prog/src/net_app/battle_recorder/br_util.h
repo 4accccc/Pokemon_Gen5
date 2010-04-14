@@ -55,6 +55,7 @@ typedef enum
   BR_BALLEFF_MOVE_BIG_CIRCLE,    //‘å‚«‚¢‰~‚ð•`‚­      LOOP
   BR_BALLEFF_MOVE_CIRCLE,        //‰~‚ð•`‚­            LOOP
   BR_BALLEFF_MOVE_CIRCLE_CONT,   //êŠ‚ð•Ï‚¦‚Ä‰~‚ð•`‚­LOOP
+  BR_BALLEFF_MOVE_EMIT_FOLLOW,   //•úŽË‚É“®‚«A‚Â‚¢‚Äs‚­ STOP
 
 }BR_BALLEFF_MOVE;
 //-------------------------------------

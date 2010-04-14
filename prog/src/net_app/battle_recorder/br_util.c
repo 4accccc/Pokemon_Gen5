@@ -1596,22 +1596,35 @@ typedef struct
   fx32 speed;
 } MOVE_HOMING;
 
+typedef struct
+{ 
+  GFL_POINT center_pos;
+  GFL_POINT now_pos;
+  u16 r_x;
+  u16 r_y;
+  u16 init_angle;
+  u16 ellipse_angle;
+  int cnt_max;
+} MOVE_ELLIPSE;
+
 //-------------------------------------
 ///	カーソルワーク
 //=====================================
 struct _BR_BALLEFF_WORK
 { 
   GFL_POINT   init_pos;
+  const GFL_POINT   *cp_folow_pos;
   CLSYS_DRAW_TYPE draw;
   BR_SEQ_WORK *p_seq;
   BR_RES_WORK *p_res;
 
   union
   { 
-    MOVE_LINE   line;
-    MOVE_CIRCLE circle;
-    MOVE_HOMING homing;
-    MOVE_EMIT   emit;
+    MOVE_LINE     line;
+    MOVE_CIRCLE   circle;
+    MOVE_HOMING   homing;
+    MOVE_EMIT     emit;
+    MOVE_ELLIPSE  ellipse;
   }move[BR_BALLEFF_CLWK_MAX];
   GFL_POINT   now_pos[ BR_BALLEFF_CLWK_MAX ];
   GFL_CLWK    *p_clwk[ BR_BALLEFF_CLWK_MAX ];
@@ -1633,6 +1646,7 @@ static void Br_BallEff_Seq_Opening( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
 static void Br_BallEff_Seq_BigCircle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_BallEff_Seq_Circle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_BallEff_Seq_CircleCont( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_BallEff_Seq_EmitFollow( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 //動き
 static void MOVE_EMIT_Init( MOVE_EMIT *p_wk, const GFL_POINT *cp_center_pos, u16 r, u16 max_r, u16 init_angle, u16 end_angle, int cnt_max );
 static BOOL MOVE_EMIT_Main( MOVE_EMIT *p_wk, GFL_POINT *p_now_pos, int cnt );
@@ -1643,6 +1657,9 @@ static BOOL MOVE_LINE_Main( MOVE_LINE *p_wk, GFL_POINT *p_now_pos, int cnt );
 //ホーミング
 static void MOVE_HOMING_Init( MOVE_HOMING *p_wk, const GFL_POINT *cp_homing_pos,const GFL_POINT *cp_init_pos, fx32 speed );
 static BOOL MOVE_HOMING_Main( MOVE_HOMING *p_wk, GFL_POINT *p_now_pos );
+//楕円
+static void MOVE_ELLIPSE_Init( MOVE_ELLIPSE *p_wk, const GFL_POINT *cp_center_pos, u16 r_x, u16 r_y, u16 init_angle, u16 ellipse_angle, int cnt_max );
+static BOOL MOVE_ELLIPSE_Main( MOVE_ELLIPSE *p_wk, GFL_POINT *p_now_pos, int cnt );
 
 //-------------------------------------
 ///	データ
@@ -1676,13 +1693,21 @@ static const GFL_POINT sc_opening_end_pos  =
 //追尾データ
 #define BR_BALLEFF_HOMING_SPEED_FIX  (FX32_CONST( 8.0f ) / 2)
 #define BR_BALLEFF_HOMING_SPEED(x)  (BR_BALLEFF_HOMING_SPEED_FIX  - (x * FX32_CONST( 0.4f ) / 2))
-#define BR_BALLEFF_HOMING_SPEED_OP(x)  (FX32_CONST( 7.0f ) / 2  - (x * FX32_CONST( 0.9f ) / 2))
+#define BR_BALLEFF_HOMING_SPEED_OP(x)  (FX32_CONST( 7.0f ) / 2  - (x * FX32_CONST( 0.7f ) / 2))
+#define BR_BALLEFF_HOMING_SPEED_MENU(x)  (FX32_CONST( 8.0f ) / 2  - (x * FX32_CONST( 0.6f ) / 2))
 
 //円をかく
 #define BR_BALLEFF_CIRCLE_R (15)
 #define BR_BALLEFF_CIRCLE_SYNC (90)
 #define BR_BALLEFF_CIRCLE_USE_MAX (6)
 
+//放射状に動く
+#define BR_BALLEFF_EMIT_SYNC (15)
+#define BR_BALLEFF_EMIT_R_MIN (8)
+#define BR_BALLEFF_EMIT_R_MAX (20)
+#define BR_BALLEFF_EMIT_ANGLE_MIN(x,max) (0xFFFF*x/max)
+#define BR_BALLEFF_EMIT_ANGLE_MAX(x,max) (BR_BALLEFF_EMIT_ANGLE_MIN(x,max)+0xFFFF/(max-1))
+#define BR_BALLEFF_EMIT_FOLLOW_SYNC (16)
 
 //-------------------------------------
 ///	外部公開
@@ -1728,6 +1753,7 @@ BR_BALLEFF_WORK *BR_BALLEFF_Init( GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, CLSYS_
           p_unit, resdata.ncg, resdata.ncl, resdata.nce, &cldata, draw, heapID
           );
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+      GFL_CLACT_WK_SetObjMode( p_wk->p_clwk[i], GX_OAM_MODE_XLU );
     }
   }
 
@@ -1777,7 +1803,7 @@ void BR_BALLEFF_Main( BR_BALLEFF_WORK *p_wk )
  *
  *	@param	BR_BALLEFF_WORK *p_wk ワーク
  *	@param	move                  動作の種類（列挙参照）
- *	@param	GFL_POINT *cp_pos     動作開始位置
+ *	@param	GFL_POINT *cp_pos     動作開始位置 or ついて行く座標のポインタ
  */
 //-----------------------------------------------------------------------------
 void BR_BALLEFF_StartMove( BR_BALLEFF_WORK *p_wk, BR_BALLEFF_MOVE move, const GFL_POINT *cp_pos )
@@ -1785,6 +1811,7 @@ void BR_BALLEFF_StartMove( BR_BALLEFF_WORK *p_wk, BR_BALLEFF_MOVE move, const GF
   if( cp_pos )
   { 
     p_wk->init_pos  = *cp_pos;
+    p_wk->cp_folow_pos  = cp_pos;
   }
   p_wk->is_end      = FALSE;
 
@@ -1812,6 +1839,9 @@ void BR_BALLEFF_StartMove( BR_BALLEFF_WORK *p_wk, BR_BALLEFF_MOVE move, const GF
     break;
   case BR_BALLEFF_MOVE_CIRCLE_CONT:   //場所を変えて円を描くLOOP
     BR_SEQ_SetNext( p_wk->p_seq, Br_BallEff_Seq_CircleCont );
+    break;
+  case BR_BALLEFF_MOVE_EMIT_FOLLOW:   //放射に動き、ついて行く STOP
+    BR_SEQ_SetNext( p_wk->p_seq, Br_BallEff_Seq_EmitFollow );
     break;
   }
 }
@@ -1916,11 +1946,11 @@ static void Br_BallEff_Seq_Emit( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
       p_wk->cnt = 0;
       for( i = 0; i < BR_BALLEFF_CIRCLE_USE_MAX; i++ )
       { 
-        angle = 0xFFFF*i/BR_BALLEFF_CIRCLE_USE_MAX;
-        angle_max = angle + 0xFFFF/BR_BALLEFF_CIRCLE_USE_MAX;
+        angle = BR_BALLEFF_EMIT_ANGLE_MIN(i,BR_BALLEFF_CIRCLE_USE_MAX);
+        angle_max = BR_BALLEFF_EMIT_ANGLE_MAX(i,BR_BALLEFF_CIRCLE_USE_MAX);
 
         MOVE_EMIT_Init( &p_wk->move[i].emit, &p_wk->init_pos, 
-            15, 20, angle, angle_max, 20 );
+            BR_BALLEFF_EMIT_R_MIN, BR_BALLEFF_EMIT_R_MAX, angle, angle_max, BR_BALLEFF_EMIT_SYNC );
 
         GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
       }
@@ -1941,7 +1971,7 @@ static void Br_BallEff_Seq_Emit( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
         GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, p_wk->draw );
       }
 
-      if( p_wk->cnt++ > 20 )
+      if( p_wk->cnt++ > BR_BALLEFF_EMIT_SYNC )
       { 
         *p_seq  = SEQ_EXIT;
       }
@@ -2250,6 +2280,47 @@ static void Br_BallEff_Seq_Circle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   case SEQ_INIT:
     { 
       int i;
+      int idx;
+      p_wk->cnt = 0;
+      for( i = 0; i < BR_BALLEFF_CIRCLE_USE_MAX; i++ )
+      { 
+        MOVE_ELLIPSE_Init( &p_wk->move[i].ellipse, &p_wk->init_pos, 10, 5, 0xFFFF*i/BR_BALLEFF_CIRCLE_USE_MAX, 0xFFFF * 45 /360, BR_BALLEFF_CIRCLE_SYNC );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+      }
+      for( i = BR_BALLEFF_CIRCLE_USE_MAX; i < BR_BALLEFF_CLWK_MAX; i++ )
+      { 
+        idx = i - BR_BALLEFF_CIRCLE_USE_MAX;
+        MOVE_ELLIPSE_Init( &p_wk->move[i].ellipse, &p_wk->init_pos, 10, 5, 0xFFFF*idx/BR_BALLEFF_CIRCLE_USE_MAX, 0xFFFF * (45+90) /360, BR_BALLEFF_CIRCLE_SYNC );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+      }
+    }
+    *p_seq  = SEQ_MAIN;
+    /* fallthr  */
+
+  case SEQ_MAIN:
+    { 
+      int i;
+      GFL_POINT pos;
+      GFL_CLACTPOS  clpos;
+      for( i = 0; i < BR_BALLEFF_CIRCLE_USE_MAX; i++ )
+      { 
+        MOVE_ELLIPSE_Main( &p_wk->move[i].ellipse, &pos, p_wk->cnt );
+        clpos.x = pos.x;
+        clpos.y = pos.y;
+        GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, p_wk->draw );
+      }
+
+      p_wk->cnt++;
+    }
+    break;
+  }
+
+#if 0
+  switch( *p_seq )
+  { 
+  case SEQ_INIT:
+    { 
+      int i;
       p_wk->cnt = 0;
       for( i = 0; i < BR_BALLEFF_CIRCLE_USE_MAX; i++ )
       { 
@@ -2277,6 +2348,7 @@ static void Br_BallEff_Seq_Circle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     }
     break;
   }
+#endif
 }
 //----------------------------------------------------------------------------
 /**
@@ -2293,6 +2365,117 @@ static void Br_BallEff_Seq_CircleCont( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
   BR_BALLEFF_WORK *p_wk = p_wk_adrs;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  放射に動いたあと、ついて行く
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンス
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_BallEff_Seq_EmitFollow( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_INIT_EMIT,
+    SEQ_MAIN_EMIT,
+    SEQ_EXIT_EMIT,
+
+    SEQ_INIT_FOLLOW,
+    SEQ_MAIN_FOLLOW,
+    SEQ_EXIT_FOLLOW,
+  };
+
+  BR_BALLEFF_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_INIT_EMIT:
+    { 
+      int i;
+      u16 angle;
+      u16 angle_max;
+
+
+      p_wk->cnt = 0;
+      for( i = 0; i < BR_BALLEFF_CIRCLE_USE_MAX; i++ )
+      { 
+        angle = BR_BALLEFF_EMIT_ANGLE_MIN(i,BR_BALLEFF_CIRCLE_USE_MAX);
+        angle_max = BR_BALLEFF_EMIT_ANGLE_MAX(i,BR_BALLEFF_CIRCLE_USE_MAX);
+
+        MOVE_EMIT_Init( &p_wk->move[i].emit, &p_wk->init_pos, 
+            BR_BALLEFF_EMIT_R_MIN, BR_BALLEFF_EMIT_R_MAX, angle, angle_max, BR_BALLEFF_EMIT_FOLLOW_SYNC );
+
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+      }
+    }
+    *p_seq  = SEQ_MAIN_EMIT;
+    /* fallthr  */
+
+  case SEQ_MAIN_EMIT:
+    { 
+      int i;
+      GFL_CLACTPOS  clpos;
+      for( i = 0; i < BR_BALLEFF_CIRCLE_USE_MAX; i++ )
+      { 
+        MOVE_EMIT_Main( &p_wk->move[i].emit, &p_wk->now_pos[i], p_wk->cnt );
+        clpos.x = p_wk->now_pos[i].x;
+        clpos.y = p_wk->now_pos[i].y;
+        GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, p_wk->draw );
+      }
+
+      if( p_wk->cnt++ > BR_BALLEFF_EMIT_FOLLOW_SYNC )
+      { 
+        *p_seq  = SEQ_EXIT_EMIT;
+      }
+    }
+    break;
+
+  case SEQ_EXIT_EMIT:
+    if( p_wk->init_pos.x != p_wk->cp_folow_pos->x
+      && p_wk->init_pos.y != p_wk->cp_folow_pos->y)
+    { 
+      *p_seq  = SEQ_INIT_FOLLOW;
+    }
+    break;
+
+  case SEQ_INIT_FOLLOW:
+    { 
+      int i;
+      for( i = 0; i < BR_BALLEFF_CIRCLE_USE_MAX; i++ )
+      { 
+        MOVE_HOMING_Init( &p_wk->move[i].homing, p_wk->cp_folow_pos, &p_wk->now_pos[i], BR_BALLEFF_HOMING_SPEED_MENU(i) );
+      }
+    }
+    *p_seq  = SEQ_MAIN_FOLLOW;
+    /* fallthrough */
+
+  case SEQ_MAIN_FOLLOW:
+    { 
+      int i;
+      BOOL is_end = TRUE;
+      GFL_CLACTPOS  clpos;
+      for( i = 0; i < BR_BALLEFF_CIRCLE_USE_MAX; i++ )
+      { 
+        is_end  &= MOVE_HOMING_Main( &p_wk->move[i].homing, &p_wk->now_pos[i] );
+        clpos.x = p_wk->now_pos[i].x;
+        clpos.y = p_wk->now_pos[i].y;
+        GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, p_wk->draw );
+      }
+      if( is_end )
+      { 
+        *p_seq  = SEQ_EXIT_FOLLOW;
+      }
+    }
+    break;
+
+  case SEQ_EXIT_FOLLOW:
+    BR_SEQ_SetNext( p_seqwk, Br_BallEff_Seq_Nop );
+    break;
+
+  }
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  放射の動き  初期化
@@ -2542,4 +2725,68 @@ static BOOL MOVE_HOMING_Main( MOVE_HOMING *p_wk, GFL_POINT *p_now_pos )
   }
 
   return distance == 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  楕円軌道  初期化
+ *
+ *	@param	MOVE_ELLIPSE *p_wk        ワーク
+ *	@param	GFL_POINT *cp_center_pos  中心座標
+ *	@param	r_x                       半径（X方向）
+ *	@param	r_y                       半径（Y方向）
+ *	@param	init_angle                初期角度
+ *  @param  ellipse_angle             楕円の角度
+ *	@param	cnt_max                   何シンクで１周するか
+ *
+ */
+//-----------------------------------------------------------------------------
+static void MOVE_ELLIPSE_Init( MOVE_ELLIPSE *p_wk, const GFL_POINT *cp_center_pos, u16 r_x, u16 r_y, u16 init_angle, u16 ellipse_angle, int cnt_max )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(MOVE_ELLIPSE) );
+  p_wk->center_pos  = *cp_center_pos;
+  p_wk->r_x         = r_x;
+  p_wk->r_y         = r_y;
+  p_wk->init_angle  = init_angle;
+  p_wk->ellipse_angle = ellipse_angle;
+  p_wk->cnt_max     = cnt_max;
+
+  MOVE_ELLIPSE_Main( p_wk, &p_wk->now_pos, 0 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  楕円軌道  メイン処理
+ *
+ *	@param	MOVE_ELLIPSE *p_wk  ワーク
+ *	@param	*p_now_pos          現在の位置（受け取り）
+ *	@param	cnt                 現在のシンク
+ */
+//-----------------------------------------------------------------------------
+static BOOL MOVE_ELLIPSE_Main( MOVE_ELLIPSE *p_wk, GFL_POINT *p_now_pos, int cnt )
+{ 
+  u16 angle;
+
+  //現在のアングルを取得
+  angle = p_wk->init_angle + (0xFFFF * cnt / p_wk->cnt_max);
+
+  ///角度から座標を求める
+  p_wk->now_pos.x = (FX_Mul( p_wk->r_x * FX_CosIdx( angle ), FX_CosIdx( p_wk->ellipse_angle )) -
+                    FX_Mul( p_wk->r_y * FX_SinIdx( angle ), FX_SinIdx( p_wk->ellipse_angle ) ))
+                    >> FX32_SHIFT;
+
+  p_wk->now_pos.y = (FX_Mul( p_wk->r_x * FX_CosIdx( angle ), FX_SinIdx( p_wk->ellipse_angle )) +
+                    FX_Mul( p_wk->r_y * FX_SinIdx( angle ), FX_CosIdx( p_wk->ellipse_angle ) ))
+                    >> FX32_SHIFT;
+
+  //中心座標を足す
+  p_wk->now_pos.x += p_wk->center_pos.x;
+  p_wk->now_pos.y += p_wk->center_pos.y;
+
+
+  //受け取りバッファに格納
+  if( p_now_pos )
+  { 
+    *p_now_pos  = p_wk->now_pos;
+  }
+
+  return cnt == p_wk->cnt_max;
 }

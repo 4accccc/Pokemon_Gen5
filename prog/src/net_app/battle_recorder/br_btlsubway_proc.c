@@ -140,9 +140,6 @@ typedef struct
 {
 	GFL_CLWK *p_clwk;
 	GFL_CLWK *p_num[OBJNUMBER_MAX];
-  u32 res_chr;
-  u32 res_cel;
-  u32 res_plt;
 } OBJNUMBER_WORK;
 
 //-------------------------------------
@@ -200,7 +197,7 @@ static BR_BTLSUBWAY_SELECT Br_BtlSubway_GetSelect( BR_BTLSUBWAY_WORK *p_wk, u32 
 //-------------------------------------
 ///	OBJNUMBER
 //=====================================
-static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, GFL_CLUNIT *p_clunit, int number, s16 x, s16 y, HEAPID heapID );
+static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, GFL_CLUNIT *p_clunit, const BR_RES_OBJ_DATA *cp_obj_res, int number, s16 x, s16 y, HEAPID heapID );
 static void OBJNUMBER_Exit( OBJNUMBER_WORK *p_wk );
 static void ObjNumber_SetNumber( OBJNUMBER_WORK *p_wk, int number );
 
@@ -251,6 +248,9 @@ static GFL_PROC_RESULT BR_BTLSUBWAY_PROC_Init( GFL_PROC *p_proc, int *p_seq, voi
   p_wk->p_que       = PRINTSYS_QUE_Create( p_wk->heapID );
   p_wk->p_balleff   = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, CLSYS_DRAW_SUB, p_wk->heapID );
 
+  //グラフィック
+  BR_RES_LoadOBJ( p_param->p_res, BR_RES_OBJ_BPFONT_M, p_wk->heapID );
+
 	//グラフィック初期化
   Br_BtlSubway_CreateSubDisplay( p_wk, p_param );
   Br_BtlSubway_CreateMainDisplayNone( p_wk, p_param );
@@ -279,6 +279,8 @@ static GFL_PROC_RESULT BR_BTLSUBWAY_PROC_Exit( GFL_PROC *p_proc, int *p_seq, voi
   Br_BtlSubway_DeleteMainDisplay( p_wk, p_param );
   GFL_BG_LoadScreenReq( BG_FRAME_S_FONT );
   GFL_BG_LoadScreenReq( BG_FRAME_M_FONT );
+
+  BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_BPFONT_M );
 
 	//モジュール破棄
   BR_BALLEFF_Exit( p_wk->p_balleff );
@@ -350,6 +352,10 @@ static GFL_PROC_RESULT BR_BTLSUBWAY_PROC_Main( GFL_PROC *p_proc, int *p_seq, voi
         //終了チェック
         if( BR_BTN_GetTrg( p_wk->p_btn[BR_BTLSUBWAY_BTNID_RETURN], x, y ) )
         {	
+          GFL_POINT pos;
+          pos.x = x;
+          pos.y = y;
+          BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_EMIT, &pos );
           *p_seq  = SEQ_FADEOUT_START;
         }	
       }
@@ -498,8 +504,10 @@ static void Br_BtlSubway_CreateMainDisplayNone( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
   BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_805 );
 
   { 
+    BR_RES_OBJ_DATA obj_res;
     const u16 bp  = BSUBWAY_SCOREDATA_GetBattlePoint( p_param->p_subway );
-    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 88+16, 88, p_wk->heapID );
+    BR_RES_GetOBJRes( p_param->p_res, BR_RES_OBJ_BPFONT_M, &obj_res );
+    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, &obj_res, bp, 88+16, 88, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------
@@ -635,8 +643,10 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
 
   { 
+    BR_RES_OBJ_DATA obj_res;
     const u16 bp  = BSUBWAY_SCOREDATA_GetBattlePoint( p_param->p_subway );
-    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144+16, 32, p_wk->heapID );
+    BR_RES_GetOBJRes( p_param->p_res, BR_RES_OBJ_BPFONT_M, &obj_res );
+    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit,&obj_res,  bp, 144+16, 32, p_wk->heapID );
   }
 
 }
@@ -772,8 +782,10 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
   }
 
   { 
+    BR_RES_OBJ_DATA obj_res;
     const u16 bp  = BSUBWAY_SCOREDATA_GetBattlePoint( p_param->p_subway );
-    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144+16, 32, p_wk->heapID );
+    BR_RES_GetOBJRes( p_param->p_res, BR_RES_OBJ_BPFONT_M, &obj_res );
+    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, &obj_res, bp, 144+16, 32, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------
@@ -985,8 +997,10 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
   }
 
   { 
+    BR_RES_OBJ_DATA obj_res;
     const u16 bp  = BSUBWAY_SCOREDATA_GetBattlePoint( p_param->p_subway );
-    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144+16, 32, p_wk->heapID );
+    BR_RES_GetOBJRes( p_param->p_res, BR_RES_OBJ_BPFONT_M, &obj_res );
+    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, &obj_res, bp, 144+16, 32, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------
@@ -1087,8 +1101,10 @@ static void Br_BtlSubway_CreateMainDisplayWifi( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
     }
   }
   { 
+    BR_RES_OBJ_DATA obj_res;
     const u16 bp  = BSUBWAY_SCOREDATA_GetBattlePoint( p_param->p_subway );
-    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144+16, 32, p_wk->heapID );
+    BR_RES_GetOBJRes( p_param->p_res, BR_RES_OBJ_BPFONT_M, &obj_res );
+    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, &obj_res, bp, 144+16, 32, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------
@@ -1320,27 +1336,9 @@ static BR_BTLSUBWAY_SELECT Br_BtlSubway_GetSelect( BR_BTLSUBWAY_WORK *p_wk, u32 
  *	@param  原点座標
  */
 //-----------------------------------------------------------------------------
-static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, GFL_CLUNIT *p_clunit, int number, s16 x, s16 y, HEAPID heapID )
+static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, GFL_CLUNIT *p_clunit, const BR_RES_OBJ_DATA *cp_obj_res, int number, s16 x, s16 y, HEAPID heapID )
 { 
   GFL_STD_MemClear( p_wk, sizeof(OBJNUMBER_WORK) );
-
-  //リソース読み込み
-  { 
-    ARCHANDLE *p_handle  = GFL_ARC_OpenDataHandle( ARCID_BATTLE_RECORDER_GRA, GFL_HEAP_LOWID(heapID) );
-
-
-    //パレット、セル
-    p_wk->res_plt  = GFL_CLGRP_PLTT_RegisterEx( p_handle, 
-        NARC_battle_recorder_gra_batt_rec_bpfont_NCLR,
-        CLSYS_DRAW_MAIN, PLT_OBJ_M_BTLSUBWAY_BP*0x20, 0, 1, heapID );
-    p_wk->res_cel = GFL_CLGRP_CELLANIM_Register( p_handle,
-        NARC_battle_recorder_gra_batt_rec_bpfont_NCER, NARC_battle_recorder_gra_batt_rec_bpfont_NANR, heapID );
-    p_wk->res_chr = GFL_CLGRP_CGR_Register( p_handle,
-              NARC_battle_recorder_gra_batt_rec_bpfont_NCGR,
-              FALSE, CLSYS_DRAW_MAIN, heapID );
-
-    GFL_ARC_CloseDataHandle( p_handle );
-  }
 
   //CLWK作成
   { 
@@ -1356,18 +1354,19 @@ static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, GFL_CLUNIT *p_clunit, int numb
     cldata.pos_y  = y;
     cldata.anmseq = 10;
     p_wk->p_clwk = GFL_CLACT_WK_Create( p_clunit,
-          p_wk->res_chr, p_wk->res_plt, p_wk->res_cel,
+          cp_obj_res->ncg, cp_obj_res->ncl,cp_obj_res->nce,
             &cldata, CLSYS_DEFREND_MAIN, heapID );
     GFL_CLACT_WK_SetObjMode( p_wk->p_clwk, GX_OAM_MODE_XLU );
 
     //数字
+    cldata.anmseq = 0;
     for( i = 0; i < OBJNUMBER_MAX; i++ )
     {
       cldata.pos_x  = x + 16 + i * 16;
       cldata.pos_y  = y;
 
       p_wk->p_num[i] = GFL_CLACT_WK_Create( p_clunit,
-          p_wk->res_chr, p_wk->res_plt, p_wk->res_cel,
+          cp_obj_res->ncg, cp_obj_res->ncl,cp_obj_res->nce,
             &cldata, CLSYS_DEFREND_MAIN, heapID );
 
       GFL_CLACT_WK_SetObjMode( p_wk->p_num[i], GX_OAM_MODE_XLU );
@@ -1398,13 +1397,6 @@ static void OBJNUMBER_Exit( OBJNUMBER_WORK *p_wk )
       }
     }
     GFL_CLACT_WK_Remove( p_wk->p_clwk );
-  }
-
-  //リソース破棄
-  { 
-    GFL_CLGRP_CGR_Release(p_wk->res_chr);
-    GFL_CLGRP_PLTT_Release(p_wk->res_plt);
-    GFL_CLGRP_CELLANIM_Release(p_wk->res_cel);
   }
 
   GFL_STD_MemClear( p_wk, sizeof(OBJNUMBER_WORK) );

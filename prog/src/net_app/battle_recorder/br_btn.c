@@ -42,9 +42,9 @@ typedef enum
   BR_BTN_MOVE_DOWN_TAG,     //タグ位置からボタン位置へ下がるtarget= need
   BR_BTN_MOVE_NEXT_TARGET,  //ターゲットの座標へいく  
 } BR_BTN_MOVE;
-#define BR_BTN_MOVE_DEFAULT_SYNC  (16)
-#define BR_BTN_MOVE_HIDE_SYNC     (BR_BTN_MOVE_DEFAULT_SYNC)
-#define BR_BTN_MOVE_APPEAR_SYNC   (BR_BTN_MOVE_DEFAULT_SYNC)
+#define BR_BTN_MOVE_DEFAULT_SYNC  (32)
+#define BR_BTN_MOVE_HIDE_SYNC     (16)
+#define BR_BTN_MOVE_APPEAR_SYNC   (16)
 #define BR_BTN_MOVE_UPTAG_M_SYNC   (BR_BTN_MOVE_DEFAULT_SYNC/2)
 #define BR_BTN_MOVE_UPTAG_S_SYNC   (BR_BTN_MOVE_DEFAULT_SYNC/2)
 
@@ -118,6 +118,8 @@ struct _BR_BTNEX_WORK
   s16                 sync_max;
   BR_RES_OBJID        use_resID;
 
+  GFL_POINT           *p_follow_pos;
+
   //画面切り替え用に作りなおす際必要なメンバ
   const BR_RES_WORK   *cp_res;
   HEAPID              heapID;
@@ -144,6 +146,7 @@ struct _BR_BTN_SYS_WORK
 	u32								next_mode;    //次のプロセスモード
 
 	u32								trg_btn;			//押したボタン
+  GFL_POINT         ball_folow_pos; //ボールが追う座標
 
 	u8								btn_now_max;	//現在のボタンバッファ最大
 	u8								btn_now_num;	//現在のボタン数
@@ -159,6 +162,7 @@ struct _BR_BTN_SYS_WORK
   BR_TEXT_WORK      *p_text;      //文字表示
 
   BR_EXIT_TYPE      exit_type;    //文字列
+  BR_BALLEFF_WORK   *p_balleff;
 
   BR_BTN_SYS_RECOVERY_DATA  *p_recovery;  //復帰データ
 };
@@ -222,12 +226,13 @@ static BOOL BR_BTNEX_MainMove( BR_BTNEX_WORK *p_wk );
 static void BR_BTNEX_ChangeDisplay( BR_BTNEX_WORK *p_wk, CLSYS_DRAW_TYPE display );
 static void BR_BTNEX_Copy( const BR_BTN_SYS_WORK *cp_wk, BR_BTNEX_WORK *p_dst, const BR_BTNEX_WORK *cp_src, CLSYS_DRAW_TYPE	display );
 static void BR_BTNEX_SetStackPos( BR_BTNEX_WORK *p_wk, u16 stack_num );
-static void BR_BTNEX_GetPos( const BR_BTNEX_WORK *cp_wk, s16 *p_x, s16 *p_y );
+static void BR_BTNEX_GetPos( const BR_BTNEX_WORK *cp_wk, GFL_POINT *p_pos );
 static void BR_BTNEX_SetPosY( BR_BTNEX_WORK *p_wk, s16 y );
 static u32 BR_BTNEX_GetParam( const BR_BTNEX_WORK *cp_wk, BR_BTN_PARAM param );
 static void BR_BTNEX_SetSoftPriority( BR_BTNEX_WORK *p_wk, u16 soft_pri );
 static void BR_BTNEX_SetBgPriority( BR_BTNEX_WORK *p_wk, u16 bg_pri );
 static void BR_BTNEX_SetPalletOffset( BR_BTNEX_WORK *p_wk, u16 ofs );
+static void BR_BTNEX_SetFollowPtr( BR_BTNEX_WORK *p_wk, GFL_POINT *p_follow_pos );
 
 //typedef BOOL (*BR_BTNEX_MOVEFUNCTION)( BR_BTNEX_WORK *p_wk );
 static BOOL Br_BtnEx_Move_Hide( BR_BTNEX_WORK *p_wk );
@@ -282,7 +287,7 @@ static const GFL_POINT  sc_tag_pos[]  =
  *	@return	ワーク
  */
 //-----------------------------------------------------------------------------
-extern BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, const BR_SAVE_INFO  *cp_saveinfo, BR_BTN_SYS_RECOVERY_DATA *p_recovery, HEAPID heapID )
+BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, const BR_SAVE_INFO  *cp_saveinfo, BR_BTN_SYS_RECOVERY_DATA *p_recovery, BR_BALLEFF_WORK *p_balleff, HEAPID heapID )
 {	
 	BR_BTN_SYS_WORK *p_wk;
 
@@ -298,6 +303,7 @@ extern BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, B
     p_wk->p_recovery  = p_recovery;
 		p_wk->p_bmpoam		= BmpOam_Init( heapID, p_unit);
     p_wk->p_que       = PRINTSYS_QUE_Create( heapID );
+    p_wk->p_balleff   = p_balleff;
 
     {
       BR_BTN_DATA_SETUP setup;
@@ -805,37 +811,7 @@ static void SEQFUNC_Touch( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   BR_BTN_SYS_WORK *p_wk = p_wk_adrs;
 
   p_wk->input	= BR_BTN_SYS_INPUT_NONE;
-
-  //キー押し検知
-  {
-    BR_MENUID menuID  = BR_BTNEX_GetParam( &p_wk->p_btn_now[0], BR_BTN_PARAM_MENUID );
-    if( menuID == BR_BROWSE_MENUID_TOP
-        || menuID == BR_BTLVIDEO_MENUID_TOP
-        || menuID == BR_MUSICAL_MENUID_TOP
-        )
-    { 
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
-      { 
-        PMSND_PlaySE( BR_SND_SE_OK );
-
-        for( i = 0; i < p_wk->btn_now_max; i++ )
-        {	
-          if( BR_BTN_TYPE_EXIT == BR_BTNEX_GetParam( &p_wk->p_btn_now[i], BR_BTN_PARAM_TYPE ) )
-          { 
-            if( p_wk->p_text )
-            { 
-              BR_TEXT_Exit( p_wk->p_text, p_wk->p_res );
-              p_wk->p_text  = NULL;
-            }
-            p_wk->trg_btn	= i;
-            is_trg				= TRUE;
-            p_wk->exit_type = BR_EXIT_TYPE_EXIT;
-            break;
-          }
-        }
-      }
-    }
-  }
+  p_wk->state = BR_BTN_SYS_STATE_WAIT;
 
   //ボタン押し検知
   if( GFL_UI_TP_GetPointTrg( &x, &y ) )
@@ -857,6 +833,13 @@ static void SEQFUNC_Touch( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
           //押せるのでおした
           p_wk->trg_btn	= i;
           is_trg				= TRUE;
+          {
+            p_wk->ball_folow_pos.x  = x;
+            p_wk->ball_folow_pos.y  = y;
+            BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_EMIT_FOLLOW, &p_wk->ball_folow_pos );
+
+            BR_BTNEX_SetFollowPtr( &p_wk->p_btn_now[p_wk->trg_btn], &p_wk->ball_folow_pos );
+          }
           p_wk->exit_type = BR_EXIT_TYPE_RETURN;
           break;
         }
@@ -882,6 +865,9 @@ static void SEQFUNC_Touch( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   //ボタン動作開始
   if( is_trg )
   {	
+
+    p_wk->state = BR_BTN_SYS_STATE_BTN_MOVE;
+
     //押したボタンの情報
     p_wk->next_type	= BR_BTNEX_GetParam(&p_wk->p_btn_now[p_wk->trg_btn],BR_BTN_PARAM_TYPE );
     p_wk->next_valid= BR_BTNEX_GetParam(&p_wk->p_btn_now[p_wk->trg_btn],BR_BTN_PARAM_VALID );
@@ -926,7 +912,6 @@ static void SEQFUNC_Touch( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       BR_SEQ_SetNext( p_seqwk, SEQFUNC_Decide );
     }
   }
-
 }
 
 //----------------------------------------------------------------------------
@@ -955,14 +940,11 @@ static void SEQFUNC_HideBtn( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     { 
       int i;
       GFL_POINT pos;
-      s16 x, y;
       for( i = 0; i < p_wk->btn_now_num; i++ )
       {	
         if( p_wk->trg_btn != i )
         {	
-          BR_BTNEX_GetPos( &p_wk->p_btn_now[p_wk->trg_btn], &x, &y );
-          pos.x = x;
-          pos.y = y;
+          BR_BTNEX_GetPos( &p_wk->p_btn_now[p_wk->trg_btn], &pos );
           BR_BTNEX_StartMove( &p_wk->p_btn_now[i], BR_BTN_MOVE_HIDE, &pos );
         }
       }
@@ -1094,10 +1076,9 @@ static void SEQFUNC_ChangePage( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     //次へ行く場合、押したボタンから次への情報を得る
     u32 nextID					= p_wk->next_proc; 
     GFL_POINT pos;
-    s16 x, y;
 
     //消す前に座標をもらう
-    BR_BTNEX_GetPos( &p_wk->p_btn_now[p_wk->trg_btn], &x, &y );
+    BR_BTNEX_GetPos( &p_wk->p_btn_now[p_wk->trg_btn], &pos );
 
     //決定したボタンをスタックに積む
     Br_Btn_Sys_PushStack( p_wk, &p_wk->p_btn_now[p_wk->trg_btn], CLSYS_DRAW_SUB );
@@ -1109,7 +1090,6 @@ static void SEQFUNC_ChangePage( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     GFL_STD_MemClear( &p_wk->p_btn_now[p_wk->trg_btn], sizeof(BR_BTNEX_WORK) );
 
     //他のボタンを読み変える
-    pos.x = x;
     pos.y = -32;
     Br_Btn_Sys_ReLoadBtn( p_wk, nextID, &pos );
 
@@ -1276,13 +1256,11 @@ static void SEQFUNC_LeaveBtn( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     //ボタンが去る動作開始
     { 
       int i;
-      s16 x;
       GFL_POINT pos;
-      pos.y = 192 + 32;
       for( i = 0; i < p_wk->btn_now_num; i++ )
       {	
-        BR_BTNEX_GetPos( &p_wk->p_btn_now[i], &x, NULL );
-        pos.x = x;
+        BR_BTNEX_GetPos( &p_wk->p_btn_now[i], &pos );
+        pos.y = 192 + 32;
         BR_BTNEX_StartMove( &p_wk->p_btn_now[i], BR_BTN_MOVE_NEXT_TARGET, &pos );
       }
     }
@@ -1514,7 +1492,6 @@ static void SEQFUNC_Decide( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       case BR_BTN_TYPE_SELECT:				//選択用ボタン
         /* fallthrough */
       case BR_BTN_TYPE_RETURN:				//1つ前のメニューへ戻る用ボタン
-        p_wk->state	= BR_BTN_SYS_STATE_WAIT;
         break;
 
       case BR_BTN_TYPE_EXIT:					//バトルレコーダー終了用ボタン
@@ -1660,13 +1637,11 @@ static void SEQFUNC_Close( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     //ボタンが去る動作開始
     { 
       int i;
-      s16 x;
       GFL_POINT pos;
-      pos.y = 192 + 32;
       for( i = 0; i < p_wk->btn_now_num; i++ )
       {	
-        BR_BTNEX_GetPos( &p_wk->p_btn_now[i], &x, NULL );
-        pos.x = x;
+        BR_BTNEX_GetPos( &p_wk->p_btn_now[i], &pos );
+        pos.y = 192 + 32;
         BR_BTNEX_StartMove( &p_wk->p_btn_now[i], BR_BTN_MOVE_NEXT_TARGET, &pos );
       }
     }
@@ -1855,6 +1830,17 @@ static BOOL BR_BTNEX_MainMove( BR_BTNEX_WORK *p_wk )
     { 
       p_wk->move_function = NULL;
     }
+
+    //追尾用の変数へ座標を設定する
+    if( p_wk->p_follow_pos )
+    { 
+      s16 x, y;
+      BR_BTN_GetPos( p_wk->p_btn, &x, &y );
+
+      p_wk->p_follow_pos->x = x + BR_BTN_DATA_WIDTH/2;
+      p_wk->p_follow_pos->y = y;
+    }
+
     return ret;
   }
 
@@ -1884,6 +1870,12 @@ static void BR_BTNEX_ChangeDisplay( BR_BTNEX_WORK *p_wk, CLSYS_DRAW_TYPE display
       bg_pri    = BR_BTN_GetBgPriority( p_wk->p_btn );
 			BR_BTN_Exit( p_wk->p_btn );
 		}
+
+    //いらないデータを破棄
+    {
+      p_wk->p_follow_pos  = NULL;
+    }
+
     //ボタン作成
     {	
       BR_RES_OBJ_DATA	res;
@@ -1978,9 +1970,12 @@ static void BR_BTNEX_SetStackPos( BR_BTNEX_WORK *p_wk, u16 stack_num )
  *	@param	*p_pos 座標
  */
 //-----------------------------------------------------------------------------
-static void BR_BTNEX_GetPos( const BR_BTNEX_WORK *cp_wk, s16 *p_x, s16 *p_y )
+static void BR_BTNEX_GetPos( const BR_BTNEX_WORK *cp_wk, GFL_POINT *p_pos )
 { 
-  BR_BTN_GetPos( cp_wk->p_btn, p_x, p_y );
+  s16 x, y;
+  BR_BTN_GetPos( cp_wk->p_btn, &x, &y );
+  p_pos->x  = x;
+  p_pos->y  = y;
 }
 //----------------------------------------------------------------------------
 /**
@@ -2099,6 +2094,18 @@ static void BR_BTNEX_SetPalletOffset( BR_BTNEX_WORK *p_wk, u16 ofs )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  追尾するための座標を格納する変数を設定する
+ *
+ *	@param	BR_BTNEX_WORK *p_wk ワーク
+ *	@param	*p_follow_pos       追尾座標格納変数
+ */
+//-----------------------------------------------------------------------------
+static void BR_BTNEX_SetFollowPtr( BR_BTNEX_WORK *p_wk, GFL_POINT *p_follow_pos )
+{ 
+  p_wk->p_follow_pos  = p_follow_pos;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  格納する移動
  *
  *	@param	BR_BTNEX_WORK *p_wk   ワーク
@@ -2119,10 +2126,10 @@ static BOOL Br_BtnEx_Move_Hide( BR_BTNEX_WORK *p_wk )
   { 
   case SEQ_INIT:
     {
-      s16 start_y, end_y;
+      GFL_POINT pos;
 
-      BR_BTNEX_GetPos( p_wk, NULL, &start_y );
-      p_wk->start       = start_y;
+      BR_BTNEX_GetPos( p_wk, &pos );
+      p_wk->start       = pos.y;
       p_wk->end         = p_wk->target.y;
       p_wk->sync_now    = 0;
       p_wk->sync_max    = BR_BTN_MOVE_HIDE_SYNC;
@@ -2175,12 +2182,13 @@ static BOOL Br_BtnEx_Move_Appear( BR_BTNEX_WORK *p_wk )
   { 
   case SEQ_INIT:
     {
-      s16 start_y, end_y;
+      GFL_POINT pos;
+      u16 end_y;
 
-      BR_BTNEX_GetPos( p_wk, NULL, &start_y );
+      BR_BTNEX_GetPos( p_wk, &pos );
       end_y  = BR_BTN_DATA_GetParam( p_wk->cp_data, BR_BTN_DATA_PARAM_Y ); 
 
-      p_wk->start       = start_y;
+      p_wk->start       = pos.y;
       p_wk->end         = end_y;
       p_wk->sync_now    = 0;
       p_wk->sync_max    = BR_BTN_MOVE_APPEAR_SYNC;
@@ -2237,12 +2245,12 @@ static BOOL Br_BtnEx_Move_UpTag( BR_BTNEX_WORK *p_wk )
   { 
   case SEQ_INIT_S:
     {
-      s16 start_y, end_y;
+      GFL_POINT pos;
 
-      BR_BTNEX_GetPos( p_wk, NULL, &start_y );
+      BR_BTNEX_GetPos( p_wk, &pos );
       //end_y  = p_wk->target.y;
 
-      p_wk->start       = start_y;
+      p_wk->start       = pos.y;
       p_wk->end         = -BR_BTN_DATA_HEIGHT;
       p_wk->sync_now    = 0;
       p_wk->sync_max    = BR_BTN_MOVE_UPTAG_M_SYNC;
@@ -2276,11 +2284,10 @@ static BOOL Br_BtnEx_Move_UpTag( BR_BTNEX_WORK *p_wk )
 
   case SEQ_INIT_M:
     {
-      s16 start_y, end_y;
+      GFL_POINT pos;
+      BR_BTNEX_GetPos( p_wk, &pos );
 
-      BR_BTNEX_GetPos( p_wk, NULL, &start_y );
-
-      p_wk->start       = start_y;
+      p_wk->start       = pos.y;
       p_wk->end         = p_wk->target.y;
       p_wk->sync_now    = 0;
       p_wk->sync_max    = BR_BTN_MOVE_UPTAG_M_SYNC;
@@ -2338,11 +2345,10 @@ static BOOL Br_BtnEx_Move_DownTag( BR_BTNEX_WORK *p_wk )
   { 
   case SEQ_INIT_M:
     {
-      s16 start_y, end_y;
+      GFL_POINT pos;
+      BR_BTNEX_GetPos( p_wk, &pos );
 
-      BR_BTNEX_GetPos( p_wk, NULL, &start_y );
-
-      p_wk->start       = start_y;
+      p_wk->start       = pos.y;
       p_wk->end         = 192+BR_BTN_DATA_HEIGHT;
       p_wk->sync_now    = 0;
       p_wk->sync_max    = BR_BTN_MOVE_UPTAG_M_SYNC;
@@ -2375,12 +2381,12 @@ static BOOL Br_BtnEx_Move_DownTag( BR_BTNEX_WORK *p_wk )
     break;
 
   case SEQ_INIT_S:
-    {
-      s16 start_y, end_y;
+    { 
+      GFL_POINT pos;
 
-      BR_BTNEX_GetPos( p_wk, NULL, &start_y );
+      BR_BTNEX_GetPos( p_wk, &pos );
 
-      p_wk->start       = start_y;
+      p_wk->start       = pos.y;
       p_wk->end         = p_wk->target.y;
       p_wk->sync_now    = 0;
       p_wk->sync_max    = BR_BTN_MOVE_UPTAG_M_SYNC;
@@ -2433,10 +2439,10 @@ static BOOL Br_BtnEx_Move_NextTarget( BR_BTNEX_WORK *p_wk )
   { 
   case SEQ_INIT:
     {
-      s16 start_y, end_y;
+      GFL_POINT pos;
 
-      BR_BTNEX_GetPos( p_wk, NULL, &start_y );
-      p_wk->start       = start_y;
+      BR_BTNEX_GetPos( p_wk, &pos );
+      p_wk->start       = pos.y;
       p_wk->end         = p_wk->target.y;
       p_wk->sync_now    = 0;
       p_wk->sync_max    = BR_BTN_MOVE_DEFAULT_SYNC;

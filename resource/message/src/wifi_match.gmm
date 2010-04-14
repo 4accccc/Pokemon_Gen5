@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-04-14T11:24:51"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-04-11T17:56:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1109" top="427" right="1814" bottom="1055" maximized="no" rayout="Vertical2">
+	<dialog left="-1031" top="234" right="-531" bottom="862" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="551" top="136" right="1024" bottom="534" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<tag-palette left="551" top="136" right="1024" bottom="534" visible="yes"/>
+		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="325"/>
+		<band id="3" index="3" style="0000" width="591"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -661,8 +661,8 @@
 	<row id="WIFIMATCH_WIFI_STR_05">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">ゲームシンクせっていを　おこない
-だいすきクラブ　ホームページで
-とうろくを　おこなってください</language>
+だいすきクラブ　ホームページで[BE:00:ページ切り替え（行送り）]
+とうろくを　おこなってください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ゲームシンク設定を　行い
 だいすきクラブ　ホームページで[BE:00:ページ切り替え（行送り）]
 登録を　おこなってください[BE:01:ページ切り替え（クリア）]</language>
@@ -903,9 +903,9 @@
 	<row id="WIFIMATCH_WIFI_STR_25">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">たいかい　きかんが　すぎました
-たいかいを　しゅうりょうします</language>
+たいかいを　しゅうりょうします[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">大会　期間が　過ぎました
-大会を　終了します</language>
+大会を　終了します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_26">

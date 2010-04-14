@@ -16,6 +16,7 @@
 #include "print/gf_font.h"
 #include "print/wordset.h"
 
+#include "br_fade.h"
 #include "br_core.h"	//BR_PROCID
 //=============================================================================
 /**
@@ -95,22 +96,26 @@ typedef enum
   BR_RES_OBJ_NUM_S,           //ナンバー
   BR_RES_OBJ_NUM_CURSOR_S,    //ナンバーカーソル
 
+  BR_RES_OBJ_BPFONT_M,        //バトルポイント
+
 	BR_RES_OBJ_MAX
 } BR_RES_OBJID;
 
 //-------------------------------------
-///	色指定
+///	色指定  ここの並びをかえると内部のテーブルがずれます
 //=====================================
 typedef enum
 {
+  BR_RES_COLOR_TYPE_GREEN = 0,
   BR_RES_COLOR_TYPE_BLUE,
-  BR_RES_COLOR_TYPE_GREEN,
   BR_RES_COLOR_TYPE_PINK,
   BR_RES_COLOR_TYPE_BLACK,
   BR_RES_COLOR_TYPE_YELLOW,
   BR_RES_COLOR_TYPE_RED,
   BR_RES_COLOR_TYPE_DBROWN, //ダークブラウン
   BR_RES_COLOR_TYPE_BROWN,
+
+  BR_RES_COLOR_TYPE_MAX,
 } BR_RES_COLOR_TYPE;
 
 //=============================================================================
@@ -167,3 +172,10 @@ extern GFL_FONT * BR_RES_GetFont( const BR_RES_WORK *cp_wk );
 extern GFL_MSGDATA * BR_RES_GetMsgData( const BR_RES_WORK *cp_wk );
 extern WORDSET * BR_RES_GetWordSet( const BR_RES_WORK *cp_wk );
 extern u16 BR_RES_GetFadeColor( const BR_RES_WORK *cp_wk );
+
+//-------------------------------------
+///	色替え
+//=====================================
+extern void BR_RES_ChangeColor( BR_RES_WORK *p_wk, BR_RES_COLOR_TYPE color );
+extern BR_RES_COLOR_TYPE BR_RES_GetColor( const BR_RES_WORK *cp_wk );
+extern void BR_RES_TransPaletteFade( BR_RES_WORK *p_wk, BR_FADE_WORK *p_fade, HEAPID heapID );

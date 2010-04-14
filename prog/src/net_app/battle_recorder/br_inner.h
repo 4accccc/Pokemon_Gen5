@@ -47,8 +47,6 @@ enum
 	PLT_OBJ_M_COMMON	  = 0,  //3本
   PLT_OBJ_M_POKEICON  = 4,  //3本
 
-  PLT_OBJ_M_BTLSUBWAY_BP  = PLT_OBJ_M_POKEICON, //かぶらないので同じ箇所を使用  1本
-
   PLT_OBJ_M_PMS       = 7,
 	PLT_OBJ_S_COMMON	  = 0,  //3本
   PLT_OBJ_S_SPECIAL   = 4,
@@ -97,7 +95,7 @@ typedef struct
 typedef struct 
 {
 	BATTLE_REC_OUTLINE_RECV	    data[ BR_OUTLINE_RECV_MAX ];			  ///< DL した概要一覧
-	u8							            secure_flag[ BR_OUTLINE_RECV_MAX ];	///< DL した概要のフラグ
+	u8							            is_secure[ BR_OUTLINE_RECV_MAX ];	  ///< DL した概要のフラグ
 	int							            data_num;			                      ///< DL した概要一覧の件数
   int                         data_idx;                           ///< 現在みているIDX（ローカルならばBR_OUTLINE_LOCAL_DATA）
 } BR_OUTLINE_DATA;

@@ -319,6 +319,10 @@ static GFL_PROC_RESULT BR_RNDMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, void
         //終了チェック
         if( BR_BTN_GetTrg( p_wk->p_btn[BR_RNDMATCH_BTNID_RETURN], x, y ) )
         {	
+          GFL_POINT pos;
+          pos.x = x;
+          pos.y = y;
+          BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_EMIT, &pos );
           *p_seq  = SEQ_FADEOUT_START;
         }	
       }

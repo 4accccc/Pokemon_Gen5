@@ -99,11 +99,14 @@ typedef struct
   BOOL                  is_profile;
 	HEAPID                heapID;
 
+  u16                   sv_wk0;
+  u16                   sv_wk1;
+
   GDS_PROFILE_PTR       p_profile;
   BATTLE_REC_HEADER_PTR p_header;
+  BOOL                  is_secure;
 
   BOOL                  can_save;
-
 
   BR_RECORD_PROC_PARAM	*p_param;
 } BR_RECORD_WORK;
@@ -134,6 +137,8 @@ static void Br_Record_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 static void Br_Record_Seq_ChangeDrawUp( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_Record_Seq_VideoDownloadRecPlay( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Record_Seq_SecureSave( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Record_Seq_RecPlayBeforeSave( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
 ///	画面作成
@@ -222,6 +227,7 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
     //アウトラインのヘッダを使う
     p_wk->p_header  = &p_wk->p_param->p_outline->data[ p_wk->p_param->p_outline->data_idx ].head;
     p_wk->p_profile  = &p_wk->p_param->p_outline->data[ p_wk->p_param->p_outline->data_idx ].profile;
+    p_wk->is_secure = p_wk->p_param->p_outline->is_secure[ p_wk->p_param->p_outline->data_idx ];
     p_wk->can_save  = TRUE;
     break;
 
@@ -232,6 +238,7 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
     //保存してあるデータを使うときはBRS上に読み込んでいるので、それを使う
     p_wk->p_header  = BattleRec_HeaderPtrGet();
     p_wk->p_profile = BattleRec_GDSProfilePtrGet();
+    p_wk->is_secure = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_SECURE, 0 );
     p_wk->can_save  = FALSE;
     break;
 
@@ -247,6 +254,7 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
       //ただし復帰時はBRS上に読んでいるのでそれを使う
       p_wk->p_header  = BattleRec_HeaderPtrGet();
       p_wk->p_profile = BattleRec_GDSProfilePtrGet();
+      p_wk->is_secure = *p_wk->p_param->cp_is_recplay_finish;
     }
     p_wk->can_save  = TRUE;
     break;
@@ -268,7 +276,20 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
   }
   else
   { 
-    BR_SEQ_SetNext( p_wk->p_seq, Br_Record_Seq_FadeInBefore );
+    //ブラウザモードのとき、戦闘から復帰し、かつ視聴完了した場合
+    //視聴済みセーブへ行く
+    if( (p_wk->p_param->mode == BR_RECODE_PROC_MY
+        || p_wk->p_param->mode == BR_RECODE_PROC_OTHER_00
+        || p_wk->p_param->mode == BR_RECODE_PROC_OTHER_01
+        || p_wk->p_param->mode == BR_RECODE_PROC_OTHER_02
+        ) && p_wk->p_param->is_return && *p_wk->p_param->cp_is_recplay_finish )
+    { 
+      BR_SEQ_SetNext( p_wk->p_seq, Br_Record_Seq_SecureSave );
+    }
+    else
+    {
+      BR_SEQ_SetNext( p_wk->p_seq, Br_Record_Seq_FadeInBefore );
+    }
   }
 
 	return GFL_PROC_RES_FINISH;
@@ -290,6 +311,9 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 
 	BR_RECORD_WORK				*p_wk	= p_wk_adrs;
 	BR_RECORD_PROC_PARAM	*p_param	= p_param_adrs;
+
+  //返す値
+  p_param->is_secure  = p_wk->is_secure;
 
   //画面構築破棄
   GFL_BG_LoadScreenReq( BG_FRAME_S_FONT );
@@ -329,21 +353,6 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
-  enum
-  { 
-    SEQ_FADEIN_START,
-    SEQ_FADEIN_WAIT,
-    SEQ_MAIN,
-
-    SEQ_CHANGEOUT_START,
-    SEQ_CHANGEOUT_WAIT,
-    SEQ_CHANGEIN_START,
-    SEQ_CHANGEIN_WAIT,
-
-    SEQ_FADEOUT_START,
-    SEQ_FADEOUT_WAIT,
-    SEQ_EXIT,
-  };
 
 	BR_RECORD_WORK	*p_wk	= p_wk_adrs;
 
@@ -551,6 +560,10 @@ static void Br_Record_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     //終了チェック
     if( BR_BTN_GetTrg( p_wk->p_btn[BR_RECORD_MAIN_BTNID_RETURN], x, y ) )
     {	
+      GFL_POINT pos;
+      pos.x = x;
+      pos.y = y;
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
       p_wk->p_param->ret  = BR_RECORD_RETURN_FINISH;
       BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
       BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeOut );
@@ -561,6 +574,10 @@ static void Br_Record_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     { 
       if( BR_BTN_GetTrg( p_wk->p_btn[BR_RECORD_MAIN_BTNID_SAVE], x, y ) )
       {	
+        GFL_POINT pos;
+        pos.x = x;
+        pos.y = y;
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
         //ダウンロード後録画へ行く
         BR_PROC_SYS_Push( p_wk->p_param->p_procsys, BR_PROCID_BV_SAVE );
         p_wk->p_param->video_number = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_DATA_NUMBER, 0 );
@@ -574,15 +591,23 @@ static void Br_Record_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       if( p_wk->p_param->mode == BR_RECODE_PROC_DOWNLOAD_RANK
           || p_wk->p_param->mode == BR_RECODE_PROC_DOWNLOAD_NUMBER )
       { 
-        //データダウンロード
+        //GDSモードならばデータダウンロードしてから再生にいく
         BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_VideoDownloadRecPlay );
       }
       else
       { 
-        p_wk->p_param->ret  = BR_RECORD_RETURN_BTLREC;
-        //フェードをすっとばす
-        BR_PROC_SYS_Interruput( p_wk->p_param->p_procsys );
-        BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeOut );
+        //ブラウザモードならば安全視聴フラグがたっていなかったら、
+        //セーブにいってから再生
+        if( p_wk->is_secure == FALSE )
+        { 
+          BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_RecPlayBeforeSave ); 
+        }
+        else
+        { 
+          p_wk->p_param->ret  = BR_RECORD_RETURN_BTLREC;
+          BR_PROC_SYS_Interruput( p_wk->p_param->p_procsys );
+          BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeOut );
+        }
       }
     }
   }
@@ -695,6 +720,7 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
     //作成
     Br_Record_Download_CreateDisplay( p_wk, p_wk->p_param );
 
+    BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_023 );
     *p_seq  = SEQ_FADEIN_START;
     break;
   case SEQ_FADEIN_START:
@@ -877,6 +903,7 @@ static void Br_Record_Seq_VideoDownloadRecPlay( BR_SEQ_WORK *p_seqwk, int *p_seq
 
     //作成
     Br_Record_Download_CreateDisplay( p_wk, p_wk->p_param );
+    BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_023 );
 
     *p_seq  = SEQ_CHANGE_FADEIN_START;
     break;
@@ -994,6 +1021,201 @@ static void Br_Record_Seq_VideoDownloadRecPlay( BR_SEQ_WORK *p_seqwk, int *p_seq
     break;
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  安全視聴済みフラグをセーブ
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_Seq_SecureSave( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_FADEIN_START,
+    SEQ_FADEIN_WAIT,
+    SEQ_FADEIN_END,
+
+    SEQ_SAVE_START,
+    SEQ_SAVE_WAIT,
+
+    SEQ_FADEOUT_START,
+    SEQ_FADEOUT_WAIT,
+    SEQ_FADEOUT_END,
+  };
+
+  BR_RECORD_WORK	*p_wk	= p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_FADEIN_START:
+    Br_Record_Download_CreateDisplay( p_wk, p_wk->p_param );
+    BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_030 );
+
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    *p_seq  = SEQ_FADEIN_WAIT;
+    break;
+  case SEQ_FADEIN_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_FADEIN_END;
+    }
+    break;
+
+  case SEQ_FADEIN_END:
+    *p_seq  = SEQ_SAVE_START;
+    break;
+
+  case SEQ_SAVE_START:
+    p_wk->sv_wk0  = 0;
+    p_wk->sv_wk1  = 0;
+    *p_seq  = SEQ_SAVE_WAIT;
+    break;
+
+  case SEQ_SAVE_WAIT:
+    {
+      SAVE_RESULT result;
+      GF_ASSERT(p_wk->p_param->mode < LOADDATA_DOWNLOAD2 );
+      result  = BattleRec_SecureSetSave( p_wk->p_param->p_gamedata, p_wk->p_param->mode, &p_wk->sv_wk0, &p_wk->sv_wk1, p_wk->heapID );
+      if( result == SAVE_RESULT_OK )
+      { 
+        *p_seq  = SEQ_FADEOUT_START;
+      }
+    }
+    break;
+
+  case SEQ_FADEOUT_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    *p_seq  = SEQ_FADEOUT_WAIT;
+    break;
+
+  case SEQ_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_FADEOUT_END;
+    }
+    break;
+  case SEQ_FADEOUT_END:
+    Br_Record_Download_DeleteDisplay( p_wk, p_wk->p_param );
+    BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeInBefore );
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  視聴前の安全セーブ
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_Seq_RecPlayBeforeSave( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_CHANGE_FADEOUT_START,
+    SEQ_CHANGE_FADEOUT_WAIT,
+    SEQ_CHANGE_MAIN,
+
+    SEQ_FADEIN_START,
+    SEQ_FADEIN_WAIT,
+    SEQ_FADEIN_END,
+
+    SEQ_SAVE_START,
+    SEQ_SAVE_WAIT,
+
+    SEQ_FADEOUT_START,
+    SEQ_FADEOUT_WAIT,
+    SEQ_FADEOUT_END,
+  };
+
+  BR_RECORD_WORK	*p_wk	= p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+
+  case SEQ_CHANGE_FADEOUT_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    *p_seq  = SEQ_CHANGE_FADEOUT_WAIT;
+    break;
+  case SEQ_CHANGE_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    {
+      *p_seq  = SEQ_CHANGE_MAIN;
+    }
+    break;
+  case SEQ_CHANGE_MAIN:
+    //破棄
+    if( p_wk->is_profile )
+    { 
+      BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
+      p_wk->p_profile_disp  = NULL;
+    }
+    else
+    { 
+      Br_Record_DeleteMainDisplay( p_wk,  p_wk->p_param );
+    }
+    Br_Record_DeleteSubDisplay( p_wk, p_wk->p_param );
+    Br_Record_Download_CreateDisplay( p_wk, p_wk->p_param );
+    *p_seq  = SEQ_FADEIN_START;
+    break;
+  case SEQ_FADEIN_START:
+    BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_030 );
+
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    *p_seq  = SEQ_FADEIN_WAIT;
+    break;
+  case SEQ_FADEIN_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_FADEIN_END;
+    }
+    break;
+
+  case SEQ_FADEIN_END:
+    *p_seq  = SEQ_SAVE_START;
+    break;
+
+  case SEQ_SAVE_START:
+    GAMEDATA_SaveAsyncStart( p_wk->p_param->p_gamedata );
+    *p_seq  = SEQ_SAVE_WAIT;
+    break;
+
+  case SEQ_SAVE_WAIT:
+    {
+      SAVE_RESULT result;
+      result  = GAMEDATA_SaveAsyncMain( p_wk->p_param->p_gamedata );
+      if( result == SAVE_RESULT_OK )
+      { 
+        *p_seq  = SEQ_FADEOUT_START;
+      }
+    }
+    break;
+
+  case SEQ_FADEOUT_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    *p_seq  = SEQ_FADEOUT_WAIT;
+    break;
+
+  case SEQ_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_FADEOUT_END;
+    }
+    break;
+  case SEQ_FADEOUT_END:
+    Br_Record_Download_DeleteDisplay( p_wk, p_wk->p_param );
+
+    p_wk->p_param->ret  = BR_RECORD_RETURN_BTLREC;
+    BR_PROC_SYS_Interruput( p_wk->p_param->p_procsys );
+    BR_SEQ_End( p_seqwk );
+    break;
+  }
+}
+
 //=============================================================================
 /**
  *			描画
@@ -1478,7 +1700,6 @@ static void Br_Record_Download_CreateDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_P
   { 
     p_wk->p_text    = BR_TEXT_Init( p_wk->p_param->p_res, p_wk->p_que, p_wk->heapID );
   }
-  BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_023 );
   {
     GFL_POINT pos;
     pos.x = 256/2;

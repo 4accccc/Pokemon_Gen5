@@ -53,6 +53,7 @@ typedef enum
 typedef struct 
 {
   BR_RECORD_RETURN    ret;          //[out]終了モード
+  BOOL                is_secure;    //[out]最後までビデオを見たか(BVSAVEへ渡す情報)
 	BR_RECODE_PROC_MODE	mode;					//[in ]起動モード
   BR_FADE_WORK        *p_fade;      //[in ]フェード
 	BR_RES_WORK					*p_res;				//[in ]リソース管理
@@ -62,9 +63,10 @@ typedef struct
   BR_NET_WORK         *p_net;       //[in ]通信管理
   GAMEDATA            *p_gamedata;  //[in ]ゲームデータ
   BR_RECORD_DATA      *p_record;    //[in ]録画常駐データ
-  BR_OUTLINE_DATA     *p_outline;   //[in ]アウトライン常駐データ
+  BR_OUTLINE_DATA     *p_outline;   //[in]アウトライン常駐データ
   BOOL                is_return;    //[in ]戻り
   const BR_SAVE_INFO  *cp_rec_saveinfo;//[in]自分の録画保存状況
+  const BOOL          *cp_is_recplay_finish;  //[in]録画再生データを見終わったかどうか
 } BR_RECORD_PROC_PARAM;
 
 

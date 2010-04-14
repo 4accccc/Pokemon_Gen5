@@ -96,5 +96,16 @@ extern void BR_FADE_StartChangeFade( BR_FADE_WORK *p_wk, const BR_FADE_CHANGEFAD
 extern void BR_FADE_PALETTE_Copy( BR_FADE_WORK *p_wk );
 extern void BR_FADE_PALETTE_SetColor( BR_FADE_WORK *p_wk, GXRgb rgb );
 extern void BR_FADE_PALETTE_TransColor( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display );
-
 extern void BR_FADE_ALPHA_SetAlpha( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display, u8 ev );
+
+
+typedef enum  //FADEREQ‚ÌSUB_OBJ‚Ü‚Å‚Æ“¯‚¶‚È‚ç‚Ñ
+{ 
+  BR_FADE_PALETTE_LOADTYPE_BG_M,
+  BR_FADE_PALETTE_LOADTYPE_BG_S,
+  BR_FADE_PALETTE_LOADTYPE_OBJ_M,
+  BR_FADE_PALETTE_LOADTYPE_OBJ_S,
+}BR_FADE_PALETTE_LOADTYPE;
+extern void BR_FADE_PALETTE_LoadPalette( BR_FADE_WORK *p_wk, ARCHANDLE *p_handle, ARCDATID datID, BR_FADE_PALETTE_LOADTYPE type, u32 offset, u32 trans_size, HEAPID heapID );
+
+

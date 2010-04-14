@@ -320,6 +320,25 @@ void BR_FADE_ALPHA_SetAlpha( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display, u8 ev 
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アーカイブをパレットフェードに読み込み
+ *
+ *	@param	BR_FADE_WORK *p_wk  ワーク
+ *	@param	*p_handle           ハンドル
+ *	@param	datID               DATAID
+ *	@param	type                読み込みタイプ
+ *	@param	offset              オフセット  色単位
+ *	@param	trans_size          サイズ      バイト単位
+ *	@param	heapID              ヒープID
+ */
+//-----------------------------------------------------------------------------
+void BR_FADE_PALETTE_LoadPalette( BR_FADE_WORK *p_wk, ARCHANDLE *p_handle, ARCDATID datID, BR_FADE_PALETTE_LOADTYPE type, u32 offset, u32 trans_size, HEAPID heapID )
+{ 
+  PaletteWorkSetEx_ArcHandle( p_wk->p_pfd, p_handle, datID, heapID,
+      type, trans_size, offset, 0 );
+}
+
 //=============================================================================
 /**
  *    PRIVATE
@@ -636,12 +655,12 @@ static BOOL Br_Fade_MainPallete( BR_FADE_WORK *p_wk, u32 *p_seq )
         //画面
         if( p_wk->display & BR_FADE_DISPLAY_MAIN )
         { 
-          ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_OBJ, 0x3FFE, ev, p_wk->pfd_color );	///< main	oam
+          ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_OBJ, 0x3FFF, ev, p_wk->pfd_color );	///< main	oam
           ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_BG,  0xBFFF, ev, p_wk->pfd_color );	///< main	bg
         }
         if( p_wk->display & BR_FADE_DISPLAY_SUB )
         { 
-          ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_OBJ, 0xFFFE, ev, p_wk->pfd_color );	///< sub	oam
+          ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_OBJ, 0xFFFF, ev, p_wk->pfd_color );	///< sub	oam
           ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_BG,  0xBFFF, ev, p_wk->pfd_color );	///< sub	bg
         }
       }

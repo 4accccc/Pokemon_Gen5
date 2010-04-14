@@ -563,7 +563,9 @@ static void BR_BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 
   PMSND_PopBGM();
 
-  GFL_HEAP_FreeMemory( p_param->playerStatus[ BTL_CLIENT_PLAYER ] );  //@todo プレイヤーのMySatusは開放されないので
+  p_wk->data.is_recplay_finish = FALSE;//p_param;  @todo バトルから貰う
+
+  GFL_HEAP_FreeMemory( p_param->playerStatus[ BTL_CLIENT_PLAYER ] );  //プレイヤーのMySatusは開放されないので
   BTL_SETUP_QuitForRecordPlay( p_param );
   GFL_HEAP_FreeMemory( p_param );
 

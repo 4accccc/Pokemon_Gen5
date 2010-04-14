@@ -15,6 +15,7 @@
 #include "br_inner.h"
 #include "system/bmp_oam.h"
 #include "br_btn_data.h"
+#include "br_util.h"
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *					ボタン管理システム（MENU_PROCでしか使わないはず）
@@ -35,11 +36,8 @@
 //=====================================
 typedef enum
 {
-	BR_BTN_SYS_STATE_WAIT,	//タッチ待ち
-	BR_BTN_SYS_STATE_HANGER_MOVE,	//移動中
-	BR_BTN_SYS_STATE_BTN_CHANGE,	//ボタン切り替え中
-	BR_BTN_SYS_STATE_APPEAR_MOVE,
-	BR_BTN_SYS_STATE_INPUT,
+	BR_BTN_SYS_STATE_WAIT,	    //タッチ待ち
+	BR_BTN_SYS_STATE_BTN_MOVE,	//ボタン移動中
 } BR_BTN_SYS_STATE;
 
 //-------------------------------------
@@ -76,7 +74,7 @@ typedef struct _BR_BTN_SYS_WORK BR_BTN_SYS_WORK;
  *					PUBILIC関数
 */
 //=============================================================================
-extern BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, const BR_SAVE_INFO  *cp_saveinfo, BR_BTN_SYS_RECOVERY_DATA *p_recovery, HEAPID heapID );
+extern BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, const BR_SAVE_INFO  *cp_saveinfo, BR_BTN_SYS_RECOVERY_DATA *p_recovery, BR_BALLEFF_WORK *p_balleff, HEAPID heapID );
 extern void BR_BTN_SYS_Exit( BR_BTN_SYS_WORK *p_wk );
 extern void BR_BTN_SYS_Main( BR_BTN_SYS_WORK *p_wk );
 extern BR_BTN_SYS_INPUT BR_BTN_SYS_GetInput( const BR_BTN_SYS_WORK *cp_wk, u32 *p_seq, u32 *p_param );

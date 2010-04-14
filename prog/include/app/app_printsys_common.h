@@ -61,6 +61,7 @@ extern void APP_PRINTSYS_COMMON_PrintStreamInit(APP_PRINTSYS_COMMON_WORK *wk, AP
  *	@brief	プリントシステム実行関数
  *  @param  PRINT_STREAM* ストリームハンドル
  *	@param	初期化で渡したトリガーを制御すりワーク u8
+ *	@retval TRUEで終了  FALSEで処理中
  */
 //-----------------------------------------------------------------------------
 extern BOOL APP_PRINTSYS_COMMON_PrintStreamFunc( APP_PRINTSYS_COMMON_WORK *wk, PRINT_STREAM* handle );

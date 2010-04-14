@@ -40,10 +40,11 @@
 //=====================================
 typedef struct 
 {
-  BR_OUTLINE_DATA           outline;        //検索結果データ
-  BR_RECORD_DATA            record;         //レコードで必要なデータ
-  BR_PROC_SYS_RECOVERY_DATA proc_recovery;  //プロセスの繋がり復帰データ
-  u32                       record_mode;    //レコード復帰時のモード
-  BR_SAVE_INFO              rec_saveinfo;   //自分の録画保存状況
-  BR_BTN_SYS_RECOVERY_DATA  btn_recovery;   //ボタンの繋がり復帰データ
+  BR_OUTLINE_DATA           outline;            //検索結果データ
+  BR_RECORD_DATA            record;             //レコードで必要なデータ
+  BR_PROC_SYS_RECOVERY_DATA proc_recovery;      //プロセスの繋がり復帰データ
+  u32                       record_mode;        //レコード復帰時のモード
+  BR_SAVE_INFO              rec_saveinfo;       //自分の録画保存状況
+  BR_BTN_SYS_RECOVERY_DATA  btn_recovery;       //ボタンの繋がり復帰データ
+  BOOL                      is_recplay_finish;  //最後まで録画を見終わった
 } BR_DATA;

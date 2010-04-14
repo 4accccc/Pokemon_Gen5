@@ -25,6 +25,7 @@
 
 //自分のモジュール
 #include "br_inner.h"
+#include "br_fade.h"
 
 //外部参照
 #include "br_res.h"
@@ -718,6 +719,21 @@ void BR_RES_LoadOBJ( BR_RES_WORK *p_wk, BR_RES_OBJID objID, HEAPID heapID )
 			GFL_ARC_CloseDataHandle( p_handle );
     }
     break;
+
+  case BR_RES_OBJ_BPFONT_M:        //バトルポイント
+    { 
+      ARCHANDLE *p_handle  = GFL_ARC_OpenDataHandle( ARCID_BATTLE_RECORDER_GRA, heapID );
+      //パレット、セル
+      p_data->ncl  = p_wk->obj_common_plt[ CLSYS_DRAW_MAIN ];
+      p_data->nce = GFL_CLGRP_CELLANIM_Register( p_handle,
+        NARC_battle_recorder_gra_batt_rec_bpfont_NCER, NARC_battle_recorder_gra_batt_rec_bpfont_NANR, heapID );
+      p_data->ncg = GFL_CLGRP_CGR_Register( p_handle,
+          NARC_battle_recorder_gra_batt_rec_bpfont_NCGR,
+          FALSE, CLSYS_DRAW_MAIN, heapID );
+
+      GFL_ARC_CloseDataHandle( p_handle );
+    }
+    break;
 	}
 
 
@@ -748,6 +764,8 @@ void BR_RES_UnLoadOBJ( BR_RES_WORK *p_wk, BR_RES_OBJID objID )
     break;
 
   //以下キャラとセルだけ解放
+  case BR_RES_OBJ_BPFONT_M:        //バトルポイント
+    /* fallthrough */
   case BR_RES_OBJ_MUSICAL_BTN_M:		//ミュージカル用ボタン、ライン
     /* fallthrough */
   case BR_RES_OBJ_MUSICAL_BTN_S:		//ミュージカル用ボタン、ライン
@@ -803,8 +821,6 @@ BOOL BR_RES_GetOBJRes( const BR_RES_WORK *cp_wk, BR_RES_OBJID objID, BR_RES_OBJ_
 //-----------------------------------------------------------------------------
 void BR_RES_LoadCommon( BR_RES_WORK *p_wk, CLSYS_DRAW_TYPE type, HEAPID heapID )
 {
-
-
 
   //共通グラフィック
   {	
@@ -867,6 +883,7 @@ void BR_RES_UnLoadCommon( BR_RES_WORK *p_wk, CLSYS_DRAW_TYPE type )
 { 
 	//共通グラフィック破棄
 	GFL_CLGRP_PLTT_Release( p_wk->obj_common_plt[ type ] );
+  p_wk->obj_common_plt[ type ]  = GFL_CLGRP_REGISTER_FAILED;
 }
 //=============================================================================
 /**
@@ -925,6 +942,56 @@ u16 BR_RES_GetFadeColor( const BR_RES_WORK *cp_wk )
 { 
   return Br_Res_GetFadeColor( cp_wk->color );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リソースの色を設定
+ *
+ *	@param	BR_RES_WORK *p_wk ワーク
+ *	@param	color             設定色
+ */
+//-----------------------------------------------------------------------------
+void BR_RES_ChangeColor( BR_RES_WORK *p_wk, BR_RES_COLOR_TYPE color )
+{ 
+  p_wk->color = color;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リソースの色を取得
+ *
+ *	@param	const BR_RES_WORK *cp_wk ワーク
+ *
+ *	@return 色
+ */
+//-----------------------------------------------------------------------------
+BR_RES_COLOR_TYPE BR_RES_GetColor( const BR_RES_WORK *cp_wk )
+{ 
+  return cp_wk->color;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  色情報をパレットフェードシステムへ転送
+ *
+ *	@param	BR_RES_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void BR_RES_TransPaletteFade( BR_RES_WORK *p_wk, BR_FADE_WORK *p_fade, HEAPID heapID )
+{ 
+	ARCHANDLE * p_handle  = GFL_ARC_OpenDataHandle( ARCID_BATTLE_RECORDER_GRA, heapID );
+
+  //OBJのパレット
+  BR_FADE_PALETTE_LoadPalette( p_fade, p_handle, Br_Res_GetCommonObjPlt( p_wk->color ), BR_FADE_PALETTE_LOADTYPE_OBJ_M, 0, 0, heapID );
+  BR_FADE_PALETTE_LoadPalette( p_fade, p_handle, Br_Res_GetCommonObjPlt( p_wk->color ), BR_FADE_PALETTE_LOADTYPE_OBJ_S, 0, 0, heapID );
+
+  //BGのパレット
+  //BGFONTのパレット
+  BR_FADE_PALETTE_LoadPalette( p_fade, p_handle, Br_Res_GetCommonBgPlt( p_wk->color ), BR_FADE_PALETTE_LOADTYPE_BG_M, 0, 0, heapID );
+  BR_FADE_PALETTE_LoadPalette( p_fade, p_handle, Br_Res_GetCommonBgPlt( p_wk->color ), BR_FADE_PALETTE_LOADTYPE_BG_S, 0, 0, heapID );
+  BR_FADE_PALETTE_LoadPalette( p_fade, p_handle, Br_Res_GetCommonFontPlt( p_wk->color ), BR_FADE_PALETTE_LOADTYPE_BG_M, PLT_BG_M_FONT*16, 0x20, heapID );
+  BR_FADE_PALETTE_LoadPalette( p_fade, p_handle, Br_Res_GetCommonFontPlt( p_wk->color ), BR_FADE_PALETTE_LOADTYPE_BG_S, PLT_BG_M_FONT*16, 0x20, heapID );
+
+  GFL_ARC_CloseDataHandle( p_handle );
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -939,8 +1006,8 @@ static u16 Br_Res_GetCommonObjPlt( BR_RES_COLOR_TYPE color )
 { 
   static const sc_common_obj_plt[] =
   { 
-    NARC_battle_recorder_gra_batt_rec_gds_obj_NCLR,     //青
     NARC_battle_recorder_gra_batt_rec_browse_obj_NCLR,  //緑
+    NARC_battle_recorder_gra_batt_rec_gds_obj_NCLR,     //青
     NARC_battle_recorder_gra_batt_rec_browse_obj2_NCLR, //ピンク
     NARC_battle_recorder_gra_batt_rec_browse_obj3_NCLR, //黒
     NARC_battle_recorder_gra_batt_rec_browse_obj4_NCLR, //黄
@@ -966,8 +1033,8 @@ static u16 Br_Res_GetCommonBgPlt( BR_RES_COLOR_TYPE color )
 { 
   static const sc_common_bg_plt[]  =
   { 
-    NARC_battle_recorder_gra_batt_rec_gds_bg_NCLR,      //青
     NARC_battle_recorder_gra_batt_rec_browse_bg_NCLR,   //緑
+    NARC_battle_recorder_gra_batt_rec_gds_bg_NCLR,      //青
     NARC_battle_recorder_gra_batt_rec_browse_bg2_NCLR,  //ピンク
     NARC_battle_recorder_gra_batt_rec_browse_bg3_NCLR,  //黒
     NARC_battle_recorder_gra_batt_rec_browse_bg4_NCLR,  //黄
@@ -993,8 +1060,8 @@ static u16 Br_Res_GetCommonFontPlt( BR_RES_COLOR_TYPE color )
 { 
   static const sc_common_font_plt[]  =
   { 
-    NARC_battle_recorder_gra_batt_rec_gds_font_NCLR,      //青
     NARC_battle_recorder_gra_batt_rec_font_NCLR,   //緑
+    NARC_battle_recorder_gra_batt_rec_gds_font_NCLR,      //青
     NARC_battle_recorder_gra_batt_rec_font2_NCLR,  //ピンク
     NARC_battle_recorder_gra_batt_rec_font3_NCLR,  //黒
     NARC_battle_recorder_gra_batt_rec_font4_NCLR,  //黄
@@ -1020,8 +1087,8 @@ static u16 Br_Res_GetFadeColor( BR_RES_COLOR_TYPE color )
 { 
   static const sc_fade_color[]  =
   { 
-    BR_FADE_COLOR_BLUE,     //青
     BR_FADE_COLOR_GREEN,    //緑
+    BR_FADE_COLOR_BLUE,     //青
     BR_FADE_COLOR_PINK,     //ピンク
     BR_FADE_COLOR_BLACK,    //黒
     BR_FADE_COLOR_YELLOW,   //黄

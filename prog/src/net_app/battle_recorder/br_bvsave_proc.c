@@ -76,7 +76,7 @@ typedef struct
 
   BR_BTN_WORK	          *p_btn[ BR_BVSAVE_BTNID_MAX ];
   BR_MSGWIN_WORK        *p_msgwin_s[ BR_BVSAVE_MSGWINID_S_MAX ];
-  BR_BALLEFF_WORK       *p_balleff;
+  BR_BALLEFF_WORK       *p_balleff[ CLSYS_DRAW_MAX ];
 	HEAPID                heapID;
   BR_BVSAVE_PROC_PARAM	*p_param;
 
@@ -123,8 +123,8 @@ static void Br_BvSave_Save_DeleteDisplay( BR_BVSAVE_WORK * p_wk, BR_BVSAVE_PROC_
 //-------------------------------------
 ///	その他
 //=====================================
-static BOOL Br_BvSave_GetTrgYes( u32 x, u32 y );
-static BOOL Br_BvSave_GetTrgNo( u32 x, u32 y );
+static BOOL Br_BvSave_GetTrgYes( BR_BVSAVE_WORK * p_wk, u32 x, u32 y );
+static BOOL Br_BvSave_GetTrgNo( BR_BVSAVE_WORK * p_wk, u32 x, u32 y );
 
 //=============================================================================
 /**
@@ -180,7 +180,13 @@ static GFL_PROC_RESULT BR_BVSAVE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
   p_wk->p_seq = BR_SEQ_Init( p_wk, Br_BvSave_Seq_VideoDownloadSave, p_wk->heapID );
   p_wk->p_que = PRINTSYS_QUE_Create( p_wk->heapID );
 
-  p_wk->p_balleff = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
+  { 
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      p_wk->p_balleff[i] = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, i, p_wk->heapID );
+    }
+  }
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -201,7 +207,13 @@ static GFL_PROC_RESULT BR_BVSAVE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 	BR_BVSAVE_WORK				*p_wk	= p_wk_adrs;
 	BR_BVSAVE_PROC_PARAM	*p_param	= p_param_adrs;
 
-  BR_BALLEFF_Exit( p_wk->p_balleff );
+  { 
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      BR_BALLEFF_Exit( p_wk->p_balleff[i] );
+    }
+  }
 
 	//モジュール破棄
   PRINTSYS_QUE_Delete( p_wk->p_que );
@@ -240,7 +252,13 @@ static GFL_PROC_RESULT BR_BVSAVE_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
   }
 
   //ボール処理
-  BR_BALLEFF_Main( p_wk->p_balleff );
+  { 
+    int i;
+    for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+    { 
+      BR_BALLEFF_Main( p_wk->p_balleff[i] );
+    }
+  }
 
   //表示
   PRINTSYS_QUE_Main( p_wk->p_que );
@@ -338,7 +356,7 @@ static void Br_BvSave_Seq_VideoDownloadSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
       PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
-      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
       *p_seq  = SEQ_DOWNLOAD_END;
     }
     break;
@@ -495,6 +513,10 @@ static void Br_BvSave_Seq_SaveSelect( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_
           //保存場所ボタンを押した
           if( BR_BTN_GetTrg( p_wk->p_btn[i], x, y ) )
           {	
+            GFL_POINT pos;
+            pos.x = x;
+            pos.y = y;
+            BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
             p_wk->save_btn_idx  = idx;
             if( p_wk->p_param->cp_rec_saveinfo->is_valid[BR_SAVEDATA_OTHER_00+idx] )
             { 
@@ -510,6 +532,10 @@ static void Br_BvSave_Seq_SaveSelect( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         //戻るボタンを押した
         if( BR_BTN_GetTrg( p_wk->p_btn[BR_BVSAVE_SAVE_BTNID_RETURN], x, y ) )
         {
+          GFL_POINT pos;
+          pos.x = x;
+          pos.y = y;
+          BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
           *p_seq  = SEQ_FADEOUT_START_RET;
         }
       }
@@ -634,12 +660,12 @@ static void Br_BvSave_Seq_OverWrite( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       u32 x, y;
       if( GFL_UI_TP_GetPointTrg( &x, &y ) )
       {
-        if( Br_BvSave_GetTrgYes( x, y ) )
+        if( Br_BvSave_GetTrgYes( p_wk, x, y ) )
         { 
           *p_seq  = SEQ_FADEOUT_START;
         }
 
-        if( Br_BvSave_GetTrgNo( x, y ) )
+        if( Br_BvSave_GetTrgNo( p_wk, x, y ) )
         { 
           *p_seq  = SEQ_FADEOUT_START_RET;
         }
@@ -741,7 +767,6 @@ static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   case SEQ_SAVE_INIT:
     p_wk->work0 = 0;
     p_wk->work1 = 0;
-    p_wk->p_param->is_save  = TRUE;
     (*p_seq)++;
     break;
 
@@ -749,12 +774,12 @@ static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     { 
       SAVE_RESULT result;
 
-      u32 rec_mode    = RecHeader_ParamGet( BattleRec_HeaderPtrGet(), RECHEAD_IDX_MODE, 0 );
-      u32 fight_count = RecHeader_ParamGet( BattleRec_HeaderPtrGet(), RECHEAD_IDX_COUNTER, 0 );
+      int save_idx  = BR_SAVEDATA_OTHER_00+p_wk->save_btn_idx;
 
-      result  = BattleRec_Save( p_wk->p_param->p_gamedata, p_wk->heapID, rec_mode, fight_count, BR_SAVEDATA_OTHER_00+p_wk->save_btn_idx, &p_wk->work0, &p_wk->work1);
+      result  = BattleRec_GDS_RecvData_Save(p_wk->p_param->p_gamedata, save_idx, p_wk->p_param->is_secure, &p_wk->work0, &p_wk->work1, p_wk->heapID );
       if( result == SAVE_RESULT_OK || result == SAVE_RESULT_NG )
       { 
+        p_wk->p_param->is_save  = TRUE; 
         (*p_seq)++;
       }
     }
@@ -948,7 +973,7 @@ static void Br_BvSave_Download_CreateDisplay( BR_BVSAVE_WORK * p_wk, BR_BVSAVE_P
     GFL_POINT pos;
     pos.x = 256/2;
     pos.y = 192/2;
-    BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
+    BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
   }
 }
 //----------------------------------------------------------------------------
@@ -961,7 +986,7 @@ static void Br_BvSave_Download_CreateDisplay( BR_BVSAVE_WORK * p_wk, BR_BVSAVE_P
 //-----------------------------------------------------------------------------
 static void Br_BvSave_Download_DeleteDisplay( BR_BVSAVE_WORK * p_wk, BR_BVSAVE_PROC_PARAM	*p_param )
 { 
-  BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
+  BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
   if( p_wk->p_text )
   { 
     BR_TEXT_Exit( p_wk->p_text, p_wk->p_param->p_res );
@@ -1115,7 +1140,7 @@ static void Br_BvSave_Save_DeleteDisplay( BR_BVSAVE_WORK * p_wk, BR_BVSAVE_PROC_
  *	@return TRUE入力  FALSE何もしない
  */
 //-----------------------------------------------------------------------------
-static BOOL Br_BvSave_GetTrgYes( u32 x, u32 y )
+static BOOL Br_BvSave_GetTrgYes( BR_BVSAVE_WORK * p_wk, u32 x, u32 y )
 { 
 	GFL_RECT rect;
   BOOL ret;
@@ -1130,6 +1155,10 @@ static BOOL Br_BvSave_GetTrgYes( u32 x, u32 y )
 
   if( ret )
   { 
+    GFL_POINT pos;
+    pos.x = x;
+    pos.y = y;
+    BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
     PMSND_PlaySE( BR_SND_SE_OK );
   }
 
@@ -1145,7 +1174,7 @@ static BOOL Br_BvSave_GetTrgYes( u32 x, u32 y )
  *	@return TRUE入力  FALSE何もしない
  */
 //-----------------------------------------------------------------------------
-static BOOL Br_BvSave_GetTrgNo( u32 x, u32 y )
+static BOOL Br_BvSave_GetTrgNo( BR_BVSAVE_WORK * p_wk, u32 x, u32 y )
 { 
 	GFL_RECT rect;
   BOOL ret;
@@ -1161,6 +1190,10 @@ static BOOL Br_BvSave_GetTrgNo( u32 x, u32 y )
 
   if( ret )
   { 
+    GFL_POINT pos;
+    pos.x = x;
+    pos.y = y;
+    BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
     PMSND_PlaySE( BR_SND_SE_OK );
   }
   return ret;

@@ -130,3 +130,6 @@ extern u32 MISC_GetEvtRockValue( MISC* misc, const int inNo );
 extern u16 MISC_GetChampNewsMinutes( const MISC* misc );
 extern void MISC_SetChampNewsMinutes( MISC* misc, u16 minutes );
 extern void MISC_DecChampNewsMinutes( MISC* misc, u16 minutes );
+//バトルレコーダー
+extern u8 MISC_GetBattleRecorderColor( const MISC * misc );
+extern void MISC_SetBattleRecorderColor( MISC * misc, u8 color );

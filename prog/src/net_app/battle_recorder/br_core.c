@@ -327,10 +327,14 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
     graphic_type  = BR_GRAPHIC_SETUP_2D;
   }
 	p_wk->p_graphic	= BR_GRAPHIC_Init( graphic_type, GX_DISP_SELECT_MAIN_SUB, HEAPID_BATTLE_RECORDER_CORE );
-	p_wk->p_res			= BR_RES_Init( 
-      BR_RES_COLOR_TYPE_GREEN,
-      p_wk->p_param->p_param->mode == BR_MODE_BROWSE,
-      HEAPID_BATTLE_RECORDER_CORE );
+
+  {
+    MISC  *p_misc = GAMEDATA_GetMiscWork( p_wk->p_param->p_param->p_gamedata );
+    p_wk->p_res			= BR_RES_Init( 
+        MISC_GetBattleRecorderColor( p_misc ),
+        p_wk->p_param->p_param->mode == BR_MODE_BROWSE,
+        HEAPID_BATTLE_RECORDER_CORE );
+  }
 
 	BR_RES_LoadBG( p_wk->p_res, BR_RES_BG_START_M, HEAPID_BATTLE_RECORDER_CORE );
 	BR_RES_LoadBG( p_wk->p_res, BR_RES_BG_START_S, HEAPID_BATTLE_RECORDER_CORE );
@@ -419,6 +423,13 @@ static GFL_PROC_RESULT BR_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 
 	//コアプロセス破棄
 	BR_PROC_SYS_Exit(	p_wk->p_procsys );
+
+
+  //RES破棄前に色保存
+  { 
+    MISC  *p_misc = GAMEDATA_GetMiscWork( p_wk->p_param->p_param->p_gamedata );
+    MISC_SetBattleRecorderColor( p_misc, BR_RES_GetColor( p_wk->p_res ) );
+  }
 
 	//グラフィック破棄
 	BR_RES_UnLoadBG( p_wk->p_res, BR_RES_BG_START_M );
@@ -736,6 +747,7 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
   p_param->p_record     = &p_wk->p_param->p_data->record;
   p_param->is_return    = FALSE;
   p_param->cp_rec_saveinfo  = &p_wk->p_param->p_data->rec_saveinfo;
+  p_param->cp_is_recplay_finish = &p_wk->p_param->p_data->is_recplay_finish;
 
   switch( preID )
   { 
@@ -1155,6 +1167,7 @@ static void BR_BVSAVE_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
   p_param->video_number = cp_record_param->video_number;
   p_param->p_gamedata = p_wk->p_param->p_param->p_gamedata;
   p_param->cp_rec_saveinfo = &p_wk->p_param->p_data->rec_saveinfo;
+  p_param->is_secure  = cp_record_param->is_secure;
 }
 //----------------------------------------------------------------------------
 /**

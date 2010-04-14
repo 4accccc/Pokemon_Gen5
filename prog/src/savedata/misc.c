@@ -845,3 +845,31 @@ void MISC_DecChampNewsMinutes( MISC* misc, u16 minutes )
     misc->champ_news_minutes = 0;
   }
 }
+//==============================================================================
+//  バトルレコーダー
+//==============================================================================
+//----------------------------------------------------------------------------
+/** 
+ *	@brief  バトルレコーダーの色を取得
+ *
+ *	@param	const MISC * misc   ミスク
+ *
+ *	@return バトルレコーダーの色
+ */
+//-----------------------------------------------------------------------------
+u8 MISC_GetBattleRecorderColor( const MISC * misc )
+{ 
+  return misc->battle_recorder_flag;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルレコーダーの色を設定
+ *
+ *	@param	MISC * misc ミスク
+ *	@param	color       色（net_app/battle_recorder/br_res.hにあるBR_RES_COLOR_TYPE列挙）
+ */
+//-----------------------------------------------------------------------------
+void MISC_SetBattleRecorderColor( MISC * misc, u8 color )
+{ 
+  misc->battle_recorder_flag  = color;
+}

@@ -37,6 +37,7 @@ typedef struct
   GAMEDATA          *p_gamedata;  //[in ]ゲームデータ
   const BR_SAVE_INFO*cp_rec_saveinfo;//[in ]自分の録画保存状況
   u64               video_number; //[in ]保存するビデオナンバー
+  BOOL              is_secure;    //[in ]視聴済みかどうか
   BOOL              is_save;      //[out]セーブしたかどうか
 } BR_BVSAVE_PROC_PARAM;
 
