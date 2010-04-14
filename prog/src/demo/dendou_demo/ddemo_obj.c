@@ -28,7 +28,7 @@
 #define	RES_NONE	( 0xffffffff )		// リソースなし
 
 #define	PALNUM_ETC				( 0 )
-#define	PALSIZ_ETC				( 2 )
+#define	PALSIZ_ETC				( 3 )
 #define	PALNUM_POKEGRA		( PALNUM_ETC+PALSIZ_ETC )
 #define	PALSIZ_POKEGRA		( 1 )
 #define	PALNUM_POKEGRA_B	( PALNUM_POKEGRA+PALSIZ_POKEGRA )
@@ -37,6 +37,8 @@
 #define	PALSIZ_FOAM				( 1 )
 #define	PALNUM_PLAYER_M		( PALNUM_FOAM+PALSIZ_FOAM )
 #define	PALSIZ_PLAYER_M		( 1 )
+#define	PALNUM_TYPE_WIN		( PALNUM_PLAYER_M+PALSIZ_PLAYER_M )
+#define	PALSIZ_TYPE_WIN		( 1 )
 
 #define	PALNUM_PLAYER_S		( 0 )
 #define	PALSIZ_PLAYER_S		( 1 )
@@ -397,200 +399,43 @@ void DDEMOOBJ_AddPoke( DDEMOMAIN_WORK * wk )
 }
 
 
-/*
-typedef struct {
-	u16	rad;
-	u16	evy;
-}POKE_PUT_DATA;
-
-static const POKE_PUT_DATA PokePutRad[6][6] =
-{
-	{ { 90, 0 }, {   0,  0 }, {   0,  0 }, {   0,  0 }, {   0,  0 }, {  0, 0 } },
-	{ { 90, 0 }, { 270, 12 }, {   0,  0 }, {   0,  0 }, {   0,  0 }, {  0, 0 } },
-	{ { 90, 0 }, { 210, 10 }, { 330, 10 }, {   0,  0 }, {   0,  0 }, {  0, 0 } },
-	{ { 90, 0 }, { 180,  7 }, { 270, 12 }, {   0,  7 }, {   0,  0 }, {  0, 0 } },
-	{ { 90, 0 }, { 162,  8 }, { 234, 10 }, { 306, 10 }, {  18,  8 }, {  0, 0 } },
-	{ { 90, 0 }, { 150,  8 }, { 210, 10 }, { 270, 12 }, { 330, 10 }, { 30, 8 } },
+// タイプ別ウィンドウパレットテーブル
+static const u32 TypePalTbl[] = {
+	NARC_dendou_demo_gra_obj_NCLR,						// ノーマル
+	NARC_dendou_demo_gra_type_fight_NCLR,			// かくとう
+	NARC_dendou_demo_gra_type_fly_NCLR,				// ひこう
+	NARC_dendou_demo_gra_type_poison_NCLR,		// どく
+	NARC_dendou_demo_gra_type_ground_NCLR,		// じめん
+	NARC_dendou_demo_gra_type_rock_NCLR,			// いわ
+	NARC_dendou_demo_gra_type_bug_NCLR,				// むし
+	NARC_dendou_demo_gra_type_ghost_NCLR,			// ゴースト
+	NARC_dendou_demo_gra_type_steel_NCLR,			// はがね
+	NARC_dendou_demo_gra_type_fire_NCLR,			// ほのお
+	NARC_dendou_demo_gra_type_warter_NCLR,		// みず
+	NARC_dendou_demo_gra_type_grass_NCLR,			// くさ
+	NARC_dendou_demo_gra_type_elec_NCLR,			// でんき
+	NARC_dendou_demo_gra_type_psyc_NCLR,			// エスパー
+	NARC_dendou_demo_gra_type_ice_NCLR,				// こおり
+	NARC_dendou_demo_gra_type_doragon_NCLR,		// ドラゴン
+	NARC_dendou_demo_gra_type_dark_NCLR,			// あく
 };
 
-void DPCOBJ_AddPoke( DPCMAIN_WORK * wk )
+void DDEMOOBJ_SetTypeWindow( DDEMOMAIN_WORK * wk )
 {
 	ARCHANDLE * ah;
-	DPC_PARTY_DATA * pt;
-	GFL_CLWK ** clwk;
-	u16	pal;
-	u16	id;
-	u32	i;
+	NNSG2dPaletteData * pal;
+	void * buf;
 
-	// 全ての表示をOFF
-	for( i=DPCOBJ_ID_POKE01; i<=DPCOBJ_ID_POKE16; i++ ){
-		DPCOBJ_SetVanish( wk, i, FALSE );
-	}
+	ah = GFL_ARC_OpenDataHandle( ARCID_DENDOU_DEMO_GRA, HEAPID_DENDOU_DEMO_L );
 
-	pt = &wk->party[wk->page];
-
-	ah  = POKE2DGRA_OpenHandle( HEAPID_DENDOU_PC_L );
-
-	for( i=0; i<pt->pokeMax; i++ ){
-		DPC_CLWK_DATA	dat;
-		BOOL	rare;
-
-		dat  = PokeClactParamTbl[i];
-		rare = POKETOOL_CheckRare( pt->dat[i].idNumber, pt->dat[i].personalRandom );
-
-		if( wk->pokeSwap == 1 ){
-			dat.chrRes += 6;
-			dat.palRes += 6;
-			dat.celRes += 6;
-			pal = PALNUM_POKEGRA + i + 6;
-			id  = DPCOBJ_ID_POKE11 + i;
-			clwk = &wk->clwk[id];
-		}else{
-			pal = PALNUM_POKEGRA + i;
-			id  = DPCOBJ_ID_POKE01 + i;
-			clwk = &wk->clwk[id];
-		}
-
-		wk->chrRes[dat.chrRes] = POKE2DGRA_OBJ_CGR_Register(
-															ah, pt->dat[i].monsno, pt->dat[i].formNumber, pt->dat[i].sex, rare, POKEGRA_DIR_FRONT,
-															FALSE, pt->dat[i].personalRandom, CLSYS_DRAW_MAIN, HEAPID_DENDOU_PC );
-		wk->palRes[dat.palRes] = POKE2DGRA_OBJ_PLTT_Register(
-															ah, pt->dat[i].monsno, pt->dat[i].formNumber, pt->dat[i].sex, rare, POKEGRA_DIR_FRONT,
-															FALSE, CLSYS_DRAW_MAIN, pal*0x20, HEAPID_DENDOU_PC );
-		wk->celRes[dat.celRes] = POKE2DGRA_OBJ_CELLANM_Register(
-															pt->dat[i].monsno, pt->dat[i].formNumber, pt->dat[i].sex, rare, POKEGRA_DIR_FRONT,
-															FALSE, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, HEAPID_DENDOU_PC );
-		*clwk = CleateClact( wk, &dat );
-
-		DPCOBJ_SetPokePos( wk, id, PokePutRad[pt->pokeMax-1][i].rad );
-		wk->nowRad[i] = PokePutRad[pt->pokeMax-1][i].rad;
-
-//		PaletteWorkSet_VramCopy( wk->pfd[i], FADE_MAIN_OBJ, pal*16, 0x20 );
-	}
-	PaletteWorkSet_VramCopy( wk->pfd, FADE_MAIN_OBJ, 0, 0x20*16 );
+	buf = GFL_ARCHDL_UTIL_LoadPalette( ah, TypePalTbl[wk->type], &pal, HEAPID_DENDOU_DEMO );
+	GFL_CLGRP_PLTT_Replace( wk->palRes[DDEMOOBJ_PALRES_ETC], pal, 1 );
+	GFL_HEAP_FreeMemory( buf );
 
 	GFL_ARC_CloseDataHandle( ah );
-
-
-	// 表示してたＯＢＪを削除
-	if( wk->pokeSwap == 1 ){
-		for( i=DPCOBJ_ID_POKE01; i<=DPCOBJ_ID_POKE06; i++ ){
-			DelClact( wk, i );
-		}
-		for( i=DPCOBJ_CHRRES_POKE01; i<=DPCOBJ_CHRRES_POKE06; i++ ){
-			ExitResChr( wk, i );
-		}
-		for( i=DPCOBJ_PALRES_POKE01; i<=DPCOBJ_PALRES_POKE06; i++ ){
-			ExitResPal( wk, i );
-		}
-		for( i=DPCOBJ_CELRES_POKE01; i<=DPCOBJ_CELRES_POKE06; i++ ){
-			ExitResCel( wk, i );
-		}
-	}else{
-		for( i=DPCOBJ_ID_POKE11; i<=DPCOBJ_ID_POKE16; i++ ){
-			DelClact( wk, i );
-		}
-		for( i=DPCOBJ_CHRRES_POKE11; i<=DPCOBJ_CHRRES_POKE16; i++ ){
-			ExitResChr( wk, i );
-		}
-		for( i=DPCOBJ_PALRES_POKE11; i<=DPCOBJ_PALRES_POKE16; i++ ){
-			ExitResPal( wk, i );
-		}
-		for( i=DPCOBJ_CELRES_POKE11; i<=DPCOBJ_CELRES_POKE16; i++ ){
-			ExitResCel( wk, i );
-		}
-	}
-
-	wk->pokeSwap ^= 1;
-
-	DPCOBJ_ChangePokePriority( wk );
-}
-
-u32 DPCOBJ_GetDefaultPoke( DPCMAIN_WORK * wk )
-{
-	if( wk->pokeSwap == 0 ){
-		return DPCOBJ_ID_POKE11;
-	}
-	return DPCOBJ_ID_POKE01;
 }
 
 
-#define	POKE_CX_FX32	( 128 << FX32_SHIFT )		// 動作中心Ｘ座標 (fx32型)
-#define	POKE_CY_FX32	( 88 << FX32_SHIFT )		// 動作中心Ｙ座標 (fx32型)
-#define	POKE_RX_FX32	( 100 << FX32_SHIFT )		// Ｘ半径 (fx32型)
-#define	POKE_RY_FX32	( 44 << FX32_SHIFT )		// Ｙ半径 (fx32型)
-
-void DPCOBJ_SetPokePos( DPCMAIN_WORK * wk, u32 id, u32 rad )
-{
-	fx32	vx, vy;
-	s16	px, py;
-
-	vx = FX_MUL( GFL_CALC_Cos360R(rad), POKE_RX_FX32 ) + POKE_CX_FX32;
-	vy = FX_MUL( GFL_CALC_Sin360R(rad), POKE_RY_FX32 ) + POKE_CY_FX32;
-
-	px = ( vx & FX32_INT_MASK ) >> FX32_SHIFT;
-	py = ( vy & FX32_INT_MASK ) >> FX32_SHIFT;
-
-	DPCOBJ_SetPos( wk, id, px, py );
-}
-
-
-void DPCOBJ_ChangePokePriority( DPCMAIN_WORK * wk )
-{
-	u32	id;
-	s16	x1, y1, x2, y2;
-	u8	pri[6];
-	u8	i, j;
-
-	id = DPCOBJ_GetDefaultPoke( wk );
-
-	for( i=0; i<6; i++ ){
-		pri[i] = id+i;
-	}
-
-	for( i=0; i<wk->party[wk->page].pokeMax-1; i++ ){
-		DPCOBJ_GetPos( wk, pri[i], &x1, &y1 );
-		for( j=i+1; j<wk->party[wk->page].pokeMax; j++ ){
-			DPCOBJ_GetPos( wk, pri[j], &x2, &y2 );
-			if( y1 < y2 ){
-				u8	tmp;
-				tmp = pri[i];
-				pri[i] = pri[j];
-				pri[j] = tmp;
-				y1 = y2;
-			}
-		}
-	}
-
-	for( i=0; i<wk->party[wk->page].pokeMax; i++ ){
-		if( wk->clwk[pri[i]] != NULL ){
-			GFL_CLACT_WK_SetSoftPri( wk->clwk[pri[i]], i );
-		}
-	}
-}
-
-void DPCOBJ_InitFadeEvy( DPCMAIN_WORK * wk, BOOL flg )
-{
-	u16	pos;
-	u16	i;
-
-	pos = wk->pokePos;
-
-	for( i=0; i<wk->party[wk->page].pokeMax; i++ ){
-		if( flg == TRUE ){
-			wk->posEvy[pos] = PokePutRad[wk->party[wk->page].pokeMax-1][i].evy;
-			wk->nowEvy[pos] = wk->posEvy[pos];
-			pos++;
-			if( pos >= wk->party[wk->page].pokeMax ){
-				pos = 0;
-			}
-		}else{
-			wk->posEvy[i] = 0;
-			wk->nowEvy[i] = 0;
-		}
-	}
-}
-*/
 
 
 
@@ -813,6 +658,7 @@ static void LoadDefaultResource( DDEMOMAIN_WORK * wk )
 void DDEMOOBJ_InitScene1( DDEMOMAIN_WORK * wk )
 {
 	LoadDefaultResource( wk );
+	DDEMOOBJ_SetTypeWindow( wk );
 
 	wk->clwk[DDEMOOBJ_ID_MES]  = CleateClact( wk, &MesClactParamTbl );
 	wk->clwk[DDEMOOBJ_ID_INFO] = CleateClact( wk, &InfoClactParamTbl );
@@ -838,6 +684,8 @@ void DDEMOOBJ_MainScene1( DDEMOMAIN_WORK * wk )
 	}
 	AnmMain( wk );
 }
+
+
 
 
 

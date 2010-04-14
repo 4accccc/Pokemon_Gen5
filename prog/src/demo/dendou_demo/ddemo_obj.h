@@ -24,6 +24,8 @@ extern BOOL DDEMOOBJ_CheckAnm( DDEMOMAIN_WORK * wk, u32 id );
 
 extern void DDEMOOBJ_AddPoke( DDEMOMAIN_WORK * wk );
 
+extern void DDEMOOBJ_SetTypeWindow( DDEMOMAIN_WORK * wk );
+
 extern void DDEMOOBJ_PrintPokeInfo( DDEMOMAIN_WORK * wk );
 extern void DDEMOOBJ_MoveFontOamPos( DDEMOMAIN_WORK * wk );
 extern void BOX2OBJ_FontOamVanish( DDEMOMAIN_WORK * wk, u32 idx, BOOL flg );

@@ -241,6 +241,7 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 			DDEMOOBJ_AddPoke( wk );
 			DDEMOOBJ_PrintPokeInfo( wk );
 			DDEMOOBJ_MoveFontOamPos( wk );
+			DDEMOOBJ_SetTypeWindow( wk );
 			wk->subSeq++;
 			return SetFadeIn( wk, MAINSEQ_1ST_MAIN );
 		}

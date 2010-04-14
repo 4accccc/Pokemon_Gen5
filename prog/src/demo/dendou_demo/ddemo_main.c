@@ -303,12 +303,10 @@ void DDEMOMAIN_SetBlendAlpha(void)
 		GX_BLEND_PLANEMASK_BG0,
 		GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BD,
 		6, 10 );
-/*
 	G2S_SetBlendAlpha(
 		GX_BLEND_PLANEMASK_BG0,
 		GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BD,
 		6, 10 );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
