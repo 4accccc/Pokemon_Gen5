@@ -564,7 +564,12 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     bsw_partner = &wk->tr_data[0];
     bsw_trainer = &bsw_partner->bt_trd;
     
-    tr_data->tr_id = bsw_trainer->player_id;
+    if( play_mode == BSWAY_MODE_WIFI ){
+      tr_data->tr_id = 0;
+    }else{
+      tr_data->tr_id = bsw_trainer->player_id;
+    }
+    
     tr_data->tr_type = bsw_trainer->tr_type;
 //    tr_data->ai_bit = 0xFFFFFFFF;  //最強
     tr_data->ai_bit = 0x00000087;  //最強
@@ -575,8 +580,11 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     //トレーナーデータ　word
     PMSDAT_Clear( &tr_data->win_word );
     PMSDAT_Clear( &tr_data->lose_word );
-    tr_data->win_word = *(PMS_DATA*)bsw_trainer->win_word;
-    tr_data->lose_word = *(PMS_DATA*)bsw_trainer->lose_word;
+    
+    if( play_mode == BSWAY_MODE_WIFI ){
+      tr_data->win_word = *(PMS_DATA*)bsw_trainer->win_word;
+      tr_data->lose_word = *(PMS_DATA*)bsw_trainer->lose_word;
+    }
     
     //ポケモンパーティ
 //    dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );
@@ -614,8 +622,6 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     //トレーナーデータ　word
     PMSDAT_Clear( &tr_data->win_word );
     PMSDAT_Clear( &tr_data->lose_word );
-    tr_data->win_word = *(PMS_DATA*)bsw_trainer->win_word;
-    tr_data->lose_word = *(PMS_DATA*)bsw_trainer->lose_word;
     
     //ポケモンパーティ
 //  dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );
@@ -656,8 +662,6 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     //トレーナーデータ　word
     PMSDAT_Clear( &tr_data->win_word );
     PMSDAT_Clear( &tr_data->lose_word );
-    tr_data->win_word = *(PMS_DATA*)bsw_trainer->win_word;
-    tr_data->lose_word = *(PMS_DATA*)bsw_trainer->lose_word;
     
     //ポケモンパーティ
 //    dst->party[client] = PokeParty_AllocPartyWork( HEAPID_PROC );
