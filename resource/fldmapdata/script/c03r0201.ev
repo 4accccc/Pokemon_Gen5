@@ -163,9 +163,9 @@ EVENT_START		ev_c03r0201_clown_01
 				//選択したポケモンがタマゴでないかチェック
 				_CHECK_TEMOTI_EGG  ( LWK_EGG_RESULT , LWK_CHOICE )
 			
-				//【仮】タマゴの場合の台詞
+				//タマゴの場合の台詞
 				IF $LWK_EGG_RESULT == TRUE THEN
-					_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_06 ,C03R0201_CLOWN_01)
+					_BALLOONWIN_OBJMSG( msg_c03r0201_juggling_08 ,C03R0201_CLOWN_01)
 					_LAST_KEYWAIT()
 					_BALLOONWIN_CLOSE()
 		
@@ -188,7 +188,7 @@ EVENT_START		ev_c03r0201_clown_01
 							DEFINE_LOCAL	LWK_STATE_SELECT
 							
 							//分岐
-							_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 0, LWK_STATE_SELECT )
+							_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, LWK_STATE_SELECT )
 							
 							_BMPMENU_MAKE_LIST( msg_c03r0201_select_01, 0 )	//クラボ
 							_BMPMENU_MAKE_LIST( msg_c03r0201_select_02, 1 )	//カゴ

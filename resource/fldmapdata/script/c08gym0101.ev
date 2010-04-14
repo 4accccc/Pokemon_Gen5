@@ -318,6 +318,8 @@ EVENT_START	ev_pos_c08gym0101_f2_03
 			//========================================//
 			//POS起動をオフに
 			$WK_SCENE_C08GYM0101 = 1
+			//トレーナーと戦闘済み
+			_TRAINER_FLAG_SET( TRID_VETERANM_04 )
 			//========================================//
 			
 		ELSE
@@ -345,8 +347,57 @@ EVENT_END
 /*	POS起動トレーナー：会話時                                */
 /************************************************************/
 EVENT_START	ev_c08gym0101_f2_03
-	//【仮】直接話しかけによる戦闘もあり得る。その場合は勝利後にPOSイベントを無効にする。
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c08gym0101_veteranm4_02)
+{
+
+	 _TRAINER_FLAG_CHECK( TRID_VETERANM_04, SCWK_ANSWER )
+	  
+	//戦闘を行っていなかったら直接の話しかけで戦闘を起動
+	IF $SCWK_ANSWER == FALSE THEN
+		
+		_TALK_OBJ_START()
+		
+		//視線曲PLAY
+	 	_TRAINER_BGM_SET( TRID_VETERANM_04 )
+	 	_OBJ_ANIME( TR_C08GYM0101_F2_03,anm_c08r0101_tr_gyoe )
+		_OBJ_ANIME_WAIT()
+		
+		//トレーナーメッセージ
+		_TALK_OBJ_START()
+		_BALLOONWIN_OBJMSG( msg_c08gym0101_veteranm4_01,TR_C08GYM0101_F2_03 )
+		_BALLOONWIN_CLOSE()
+		
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_VETERANM_04, 0 )
+		
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+
+				_TRAINER_WIN()
+				
+				//トレーナーメッセージ
+				_BALLOONWIN_OBJMSG( msg_c08gym0101_veteranm4_02,TR_C08GYM0101_F2_03 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+				
+				//========================================//
+				//POS起動をオフに
+				$WK_SCENE_C08GYM0101 = 1
+				//トレーナーと戦闘済み
+				_TRAINER_FLAG_SET( TRID_VETERANM_04 )
+				//========================================//
+				
+			ELSE
+				_TRAINER_LOSE()
+			ENDIF
+			
+	//戦闘済み
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c08gym0101_veteranm4_02)
+	
+	ENDIF
+}
 EVENT_END
 
 /************************************************************/

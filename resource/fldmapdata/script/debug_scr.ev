@@ -303,7 +303,7 @@ EVENT_START   ev_debug_ando
 		//リスト追加
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_01, 0 )	//アイスイベント初期化
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_02, 1 )	//ネジ山チャンピオンイベント起動
-		_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 2 )	//D05イベント起動
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 2 )	//ムシャーナイベント起動
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 3 )	//R01イベント初期化
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 4 )	//D07R0401イベント初期化
 		_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 5 )	//C03R0301イベント初期化
@@ -317,12 +317,14 @@ EVENT_START   ev_debug_ando
 		ELSIF $SCWK_TEMP2 == 1 THEN
 			$WK_SCENE_D07_RIVAL_01 = 1
 		ELSIF $SCWK_TEMP2 == 2 THEN
-			//バニッシュフラグ操作
-			_FLAG_RESET(FV_D05R0101_RIVAL_02)
-			//フラグ操作
-			$WK_SCENE_D05_PLASMA = 1
-			_FLAG_RESET(FE_D05R0201_PLASMA_03)
-			_FLAG_RESET(FV_D05R0201_PLASMA)
+			$WK_SCENE_D01R0101_POKE = 1
+			_FLAG_SET(FV_D01R0101_SUPPORT_01)
+			//夢ポケモン非表示
+			_FLAG_SET(FV_D01R0101_POKE_01)
+			//アイテムOBJ非表示
+			_FLAG_SET( FV_D01R0101_ITEM_01 )
+			//ゲーヂス非表示
+			_FLAG_SET(FV_D01R0101_GCIS_01)
 		ELSIF $SCWK_TEMP2 == 3 THEN
 			//C07イベント初期化
 			_FLAG_RESET( FV_C07_HAKASE1 )
@@ -332,10 +334,80 @@ EVENT_START   ev_debug_ando
 			_FLAG_RESET(FV_D07R0401PLASMA_01)
 			_FLAG_RESET(FV_D07R0401RIVAL_01)
 		ELSIF $SCWK_TEMP2 == 5 THEN
-			$WK_SCENE_D01R0101_POKE = 1
-			$WK_SCENE_D07_RIVAL_01 = 1
+				//***ワーク操作：C05のPOSを起動***
+				$WK_SCENE_C05 = 4
 		ELSIF $SCWK_TEMP2 == 6 THEN
-			$WK_SCENE_R14R0201_LEG = 0
+			
+			//夢ポケモン受け取ってません
+			//$WK_SCENE_D01R0101 = 0
+			
+			//_FLAG_RESET( FE_C08R0402_ITEMGET_01 )
+			
+			//ブルジョアール家初期化
+			//$WK_SCENE_T04R0101_BTL_FAMILY = 6
+			//_FLAG_SET( FV_T04R0101_GIRL4_01 )
+			//_FLAG_SET( FV_T04R0101_LADY_01 )
+			//_FLAG_SET( FV_T04R0101_GENTLEMAN_01 )
+			//_FLAG_SET( FV_T04R0101_VETERANW_01 )
+			//_FLAG_SET( FV_T04R0101_BOY4_01 )
+			
+			//ポケモン誘拐イベント関連OBJを削除
+			//_FLAG_RESET( FV_R03R0301_RIVAL_01 )
+
+			//R03のお礼イベントを起動
+			//$WK_SCENE_R03_PLASMA = 0
+			
+			_TRAINER_FLAG_RESET( TRID_VETERANM_04 )
+	
+			//C03R0301
+			//会長を非表示
+			//_FLAG_RESET( FV_C03R0301_CLEANINGM_01 )
+			//C03R0301の全てのPOSを無効に
+			//$WK_SCENE_C03R0301 = 0
+			
+			//リバティトレーナー
+			//$WK_SCENE_VICTORY = 1
+			
+			//$WK_SCENE_N01R0201 = 0
+			
+			//$WK_SCENE_C08_GYMCLEAR = 3
+			
+			//演説イベントOBJ非表示
+			//_FLAG_RESET( FV_C08_SAGE1_01 )
+			//C08演説イベントPOSを無効に／誘導イベント（２）へ
+			//$WK_SCENE_C08 = 0
+		
+			//C07ハチク非表示
+			//_FLAG_RESET( FV_C07_RIVAL_01 )
+			//$WK_SCENE_C07 = 2
+			
+			//C07到着イベントPOSを無効に
+			//$WK_SCENE_C07 = 0
+			//_FLAG_RESET( FV_C07_HAKASE1 )
+			
+			//フラグ操作：D07R0401のPOSを無効に
+			//$WK_SCENE_D07R0401 = 0
+			
+			//プラズマ団を非表示に
+			//_FLAG_RESET(FV_D07R0401PLASMA_01)
+			
+			//D07
+			//$WK_SCENE_D07_RIVAL_01 = 1
+			
+			//R07R0105タワーオブヘブン5F：クリア後チャンピオン
+			//_FLAG_RESET( FV_R07R0105_CHAMPION_01 )
+			//$WK_SCENE_R07R0105_CHAMPION = 1
+			
+			//R070105のイベントを終了
+			//$WK_SCENE_C07R0105 = 1
+			//_FLAG_RESET( FV_R070105_LEADER6_01 )
+
+			//R07カザカミ・ライカミイベント起動
+			$WK_SCENE_R07_MOVEPOKE = 3
+			$WK_SCENE_C08_GYMCLEAR = 2
+			
+			//$WK_SCENE_D01R0101_POKE = 1
+			//_FLAG_SET(FV_D01R0101_SUPPORT_01)
 		ENDIF
 	
 EVENT_END

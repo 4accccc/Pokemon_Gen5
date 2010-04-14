@@ -180,7 +180,6 @@ EVENT_START   ev_c05r0601_waitress_01
 			_TIME_WAIT( 30 )
 			_GOLD_WIN_CLOSE()
 						
-			//【仮】コマンドが変更になる予定
 			_SE_PLAY( SEQ_SE_SYS_22 )
 			_SE_WAIT()
 			_ITEM_EVENT_SUCCESS_NOWAIT( ITEM_MOOMOOMIRUKU, LWK_MILK_NUM )

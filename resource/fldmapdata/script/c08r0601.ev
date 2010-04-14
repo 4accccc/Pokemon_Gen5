@@ -36,9 +36,9 @@ EVENT_START   ev_c08r0601_informationw_01
 	IF $WK_SCENE_C08_GYMCLEAR == 0 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0601_infomationw_01 )
 	
-	//【仮】ジムクリア後、R07伝説イベント後
-	//ELSIF $?? == ?? THEN
-		//_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0601_infomationw_04 )
+	//ジムクリア後、R07伝説イベント後
+	ELSIF $WK_SCENE_R07_MOVEPOKE == 3 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0601_infomationw_04 )
 	
 	//R07伝説イベント前
 	ELSE

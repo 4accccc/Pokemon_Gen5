@@ -31,14 +31,14 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*ÅyâºÅzPOLICEMAN                                             */
+/*POLICEMAN                                             */
 /**************************************************************/
 EVENT_START   ev_r07r0101_policeman_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_policeman_01 )
 EVENT_END
 
 /**************************************************************/
-/*ÅyâºÅzMAID                                                 */
+/*MAID                                                 */
 /**************************************************************/
 EVENT_START   ev_r07r0101_maid_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r07r0101_maid_01 )

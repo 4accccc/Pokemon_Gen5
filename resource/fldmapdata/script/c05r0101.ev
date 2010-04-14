@@ -45,8 +45,8 @@ EVENT_START   ev_c05r0101_boy1
 EVENT_END
 
 /**************************************************************/
-/*  【仮】C05R0101 POKEMONの会話用イベントスクリプト*/
+/*  C05R0101 POKEMONの会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c05r0101_pokemon
-	 _EASY_TALK_POKEVOICE(MONSNO_HITOKAGE,msg_c05r0101_pokemon_01)  	
+	 _EASY_TALK_POKEVOICE(MONSNO_537,msg_c05r0101_pokemon_01)  	
 EVENT_END

@@ -518,8 +518,8 @@ ev_r03_ice_shop_buy:
 	//ヒウンアイスを買う場合の処理
 	IF $LWK_ICE_NUM_SELECT == 0 THEN	
 		
-		//【仮】バッグ空きチェック（チェックする対象が仮）
-		_ADD_ITEM_CHK(ITEM_MOOMOOMIRUKU,1,LWK_BAG_CHK)
+		//バッグ空きチェック（チェックする対象が仮）
+		_ADD_ITEM_CHK(ITEM_HIUNAISU,1,LWK_BAG_CHK)
 		//金額チェック
 		_CHECK_GOLD( LWK_GOLD_CHK, LWK_ICE_GOLD  )
 
@@ -549,10 +549,10 @@ ev_r03_ice_shop_buy:
 			_TIME_WAIT( 30 )
 			_GOLD_WIN_CLOSE()
 						
-			//【仮】コマンドが変更になる予定
+			//コマンドが変更になる予定
 			_SE_PLAY( SEQ_SE_SYS_22 )
 			_SE_WAIT()
-			_ITEM_EVENT_SUCCESS_NOWAIT( ITEM_MOOMOOMIRUKU, 1 )
+			_ITEM_EVENT_SUCCESS_NOWAIT( ITEM_HIUNAISU, 1 )
 			
 		ENDIF
 	
@@ -574,8 +574,8 @@ ev_r03_ice_shop_buy:
 		//ヒウンアイスを買う場合の処理
 		IF $LWK_ICE_NUM_SELECT == 0 THEN	
 			
-			//【仮】バッグ空きチェック（チェックする対象が仮）
-			_ADD_ITEM_CHK(ITEM_MOOMOOMIRUKU,1,LWK_BAG_CHK)
+			//バッグ空きチェック（チェックする対象が仮）
+			_ADD_ITEM_CHK(ITEM_HIUNAISU,1,LWK_BAG_CHK)
 			//金額チェック
 			_CHECK_GOLD( LWK_GOLD_CHK, LWK_ICE_GOLD  )
 
@@ -606,10 +606,10 @@ ev_r03_ice_shop_buy:
 				_TIME_WAIT( 30 )
 				_GOLD_WIN_CLOSE()
 							
-				//【仮】コマンドが変更になる予定
+				//コマンドが変更になる予定
 				_SE_PLAY( SEQ_SE_SYS_22 )
 				_SE_WAIT()
-				_ITEM_EVENT_SUCCESS_NOWAIT( ITEM_MOOMOOMIRUKU, 1 )
+				_ITEM_EVENT_SUCCESS_NOWAIT( ITEM_HIUNAISU, 1 )
 				
 			ENDIF
 		
