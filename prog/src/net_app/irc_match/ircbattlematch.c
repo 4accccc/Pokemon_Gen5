@@ -2113,6 +2113,10 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
       
       if(pWork->curIcon[CELL_IRDS1]){
         GFL_CLWK_ANM_CALLBACK cbwk;
+
+        GFL_CLACT_WK_SetAnmSeq(pWork->curIcon[CELL_IRDS1], NANR_ir_ani_CellAnime13);
+        GFL_CLACT_WK_SetAnmSeq(pWork->curIcon[CELL_IRDS3], NANR_ir_ani_CellAnime12);
+
         cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
         cbwk.param = (u32)pWork;          // コールバックワーク
         cbwk.p_func = _modeFlashCallback1; // コールバック関数
@@ -2120,6 +2124,13 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
         cbwk.p_func = _modeFlashCallback2; // コールバック関数
         GFL_CLACT_WK_StartAnmCallBack( pWork->curIcon[CELL_IRDS3], &cbwk );
       }
+
+
+      if(pWork->curIcon[CELL_IRDS1]){
+        GFL_CLACT_WK_SetAnmSeq(pWork->curIcon[CELL_IRDS1], NANR_ir_ani_CellAnime13);
+        GFL_CLACT_WK_SetAnmSeq(pWork->curIcon[CELL_IRDS3], NANR_ir_ani_CellAnime12);
+      }
+
       
       
     }
