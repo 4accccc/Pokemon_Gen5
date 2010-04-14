@@ -984,6 +984,9 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   WIFIBATTLEMATCH_SYS *p_wk     = p_wk_adrs;
   REGULATION* p_reg;
   BOOL is_alloc = FALSE;
+
+  SAVE_CONTROL_WORK *p_sv       = GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data );
+  REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
   
   //デモバトル接続ワーク
   p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(WIFIBATTLEMATCH_BATTLELINK_PARAM) );
@@ -1068,8 +1071,6 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   //WiFI大会のバトル設定
   else if( p_wk->type == WIFIBATTLEMATCH_TYPE_WIFICUP )
   { 
-    SAVE_CONTROL_WORK *p_sv       = GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data );
-    REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
     REGULATION_CARDDATA *p_reg_card    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_WIFI );
     p_reg        = RegulationData_GetRegulation( p_reg_card );
 
@@ -1105,8 +1106,6 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   //LIVE大会のバトル設定
   else if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
   { 
-    SAVE_CONTROL_WORK *p_sv       = GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data );
-    REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
     REGULATION_CARDDATA *p_reg_card    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_LIVE );
     p_reg        = RegulationData_GetRegulation( p_reg_card );
 
@@ -1176,12 +1175,31 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   }
   else if( p_wk->type == WIFIBATTLEMATCH_TYPE_WIFICUP )
   { 
-    p_param->p_btl_setup_param->musicDefault  = WBM_SND_SEQ_BATTLE_WIFI;
+    REGULATION_CARDDATA *p_reg_card    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_WIFI );
+    int bgm_type  = Regulation_GetCardParam( p_reg_card, REGULATION_CARD_BGM );
+    if( bgm_type == WBM_SND_BGM_FAINAL )
+    { 
+      p_param->p_btl_setup_param->musicDefault  = WBM_SND_BGM_FAINAL;
+    }
+    else
+    { 
+      p_param->p_btl_setup_param->musicDefault  = WBM_SND_BGM_NORMAL;
+    }
     p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
   }
   else if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
   { 
-    p_param->p_btl_setup_param->musicDefault  = WBM_SND_SEQ_BATTLE_LIVE;
+    REGULATION_CARDDATA *p_reg_card    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_LIVE );
+    int bgm_type  = Regulation_GetCardParam( p_reg_card, REGULATION_CARD_BGM );
+
+    if( bgm_type == WBM_SND_BGM_FAINAL )
+    { 
+      p_param->p_btl_setup_param->musicDefault  = WBM_SND_BGM_FAINAL;
+    }
+    else
+    { 
+      p_param->p_btl_setup_param->musicDefault  = WBM_SND_BGM_NORMAL;
+    }
     p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
   }
 

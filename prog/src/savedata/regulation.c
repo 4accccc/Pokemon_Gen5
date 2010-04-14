@@ -645,6 +645,8 @@ int Regulation_GetCardParam(const REGULATION_CARDDATA* pReg, REGULATION_CARD_PAR
   case REGULATION_CARD_STATUS:      ///< 大会状態：０未開催／１開催中／２終了
     ret = pReg->status;
     break;
+  case REGULATION_CARD_BGM:         ///< 大会で使用する曲（シーケンス番号がそのまま入っているわけではない
+    ret = pReg->bgm_no;
   }
   return ret;
 }

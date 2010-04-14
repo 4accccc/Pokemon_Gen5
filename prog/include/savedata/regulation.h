@@ -105,6 +105,7 @@ typedef enum  {
   REGULATION_CARD_END_MONTH,   ///< 終了月：01-12
   REGULATION_CARD_END_DAY,     ///< 終了日：01-31
   REGULATION_CARD_STATUS,      ///< 大会状態：net/dreamworld_netdata.hのDREAM_WORLD_MATCHUP_TYPEの値
+  REGULATION_CARD_BGM,         ///< 大会で使用する曲（シーケンス番号がそのまま入っているわけではない）
 } REGULATION_CARD_PARAM_TYPE;
 
 typedef enum {  
@@ -118,8 +119,8 @@ typedef enum {
 typedef enum
 { 
   REGULATION_CARD_BGM_NORMAL, //SEQ_BGM_VS_TRAINER_WIFI
-  REGULATION_CARD_BGM_FINALS, //SEQ_BGM_WCS
-} REGULATION_CARD_BGM;  //wifi大会とlive大会でしか使いません
+  REGULATION_CARD_BGM_FINAL,  //SEQ_BGM_WCS
+} REGULATION_CARD_BGM_TYPE;  //wifi大会とlive大会でしか使いません
 
 typedef enum {
   REGULATION_CARD_TYPE_WIFI,   //WIFI大会で使用
@@ -181,7 +182,7 @@ typedef struct {
   char end_month;//終了月：01-12
   char end_day;//終了日：01-31
   char status;  //大会状態： net/dreamworld_netdata.hのDREAM_WORLD_MATCHUP_TYPEの値
-  u16 bgm_no;   //大会で使用するBGM REGULATION_CARD_BGM列挙参照
+  u16 bgm_no;   //大会で使用するBGM REGULATION_CARD_BGM_TYPE列挙参照
   u16 crc;  //整合性検査
 } REGULATION_CARDDATA;
 
