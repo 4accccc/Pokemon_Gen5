@@ -66,17 +66,19 @@
  * トレーナータイプグループ
  * 拡張する場合、岩澤に確認をお願いします
  */
-#define TRTYPE_GRP_RIVAL    (0) //ライバル
-#define TRTYPE_GRP_SUPPORT  (1) //サポート
-#define TRTYPE_GRP_LEADER   (2) //ジムリーダー
-#define TRTYPE_GRP_BIGFOUR  (3) //四天王
-#define TRTYPE_GRP_CHAMPION (4) //チャンピオン
-#define TRTYPE_GRP_BOSS     (5) //N
-#define TRTYPE_GRP_SAGE     (6) //ゲーチス
-#define TRTYPE_GRP_PLASMA   (7) //プラズマ団
-#define TRTYPE_GRP_BCHAMP   (8) //サブウェイマスター
-#define TRTYPE_GRP_MAX      (9)
-#define TRTYPE_GRP_NONE     (TRTYPE_GRP_MAX)
+#define TRTYPE_GRP_RIVAL          (0) //ライバル
+#define TRTYPE_GRP_SUPPORT        (1) //サポート
+#define TRTYPE_GRP_LEADER         (2) //ジムリーダー
+#define TRTYPE_GRP_BIGFOUR        (3) //四天王
+#define TRTYPE_GRP_CHAMPION       (4) //チャンピオン
+#define TRTYPE_GRP_TRAINER_BOSS   (5) //ポケモントレーナーのN
+#define TRTYPE_GRP_PLASMA_BOSS    (6) //プラズマ団のN
+#define TRTYPE_GRP_LAST_BOSS      (7) //プラズマ団のN(ラストバトル)
+#define TRTYPE_GRP_SAGE           (8) //ゲーチス
+#define TRTYPE_GRP_PLASMA         (9) //プラズマ団
+#define TRTYPE_GRP_BCHAMP         (10) //サブウェイマスター
+#define TRTYPE_GRP_MAX            (11)
+#define TRTYPE_GRP_NONE           (TRTYPE_GRP_MAX)
 
 /*
  * トレーナータイプをグループ化する変換テーブルの参照インデックス定義
@@ -100,12 +102,14 @@
 #define TRTYPE_GRP_IDX_BIGFOUR3		(15)
 #define TRTYPE_GRP_IDX_BIGFOUR4		(16)
 #define TRTYPE_GRP_IDX_CHAMPION		(17)
-#define TRTYPE_GRP_IDX_BOSS			  (18)
-#define TRTYPE_GRP_IDX_SAGE			  (19)
-#define TRTYPE_GRP_IDX_HAKAIM1		(20)
-#define TRTYPE_GRP_IDX_HAKAIW1		(21)
-#define TRTYPE_GRP_IDX_BCHAMP			(22)
-#define TRTYPE_GRP_IDX_MAX        (23)
+#define TRTYPE_GRP_IDX_TRAINER_BOSS (18)
+#define TRTYPE_GRP_IDX_PLASMA_BOSS  (19)
+#define TRTYPE_GRP_IDX_LAST_BOSS 	  (20)
+#define TRTYPE_GRP_IDX_SAGE			  (21)
+#define TRTYPE_GRP_IDX_HAKAIM1		(22)
+#define TRTYPE_GRP_IDX_HAKAIW1		(23)
+#define TRTYPE_GRP_IDX_BCHAMP			(24)
+#define TRTYPE_GRP_IDX_MAX        (25)
 
 //アセンブラでincludeされている場合は、下の宣言を無視できるようにifndefで囲んである
 #ifndef	__ASM_NO_DEF_

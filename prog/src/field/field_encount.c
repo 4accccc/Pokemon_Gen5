@@ -698,10 +698,6 @@ void FIELD_ENCOUNT_SetTrainerBattleParam(
     if(attr != BATTLE_BG_ATTR_MAX){
       bp->fieldSituation.bgAttr = attr;
     }
-    else if( tr_id0 == TRID_BOSS_06 || tr_id0 == TRID_BOSS_07 ){
-      //N最終戦はタイプでは識別できないので直書き
-      bp->fieldSituation.bgAttr = BATTLE_BG_ATTR_BOSS;
-    }
   }
 
   switch(rule){

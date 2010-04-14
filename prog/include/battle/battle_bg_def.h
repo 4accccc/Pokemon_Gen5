@@ -62,7 +62,7 @@ typedef enum {
   BATTLE_BG_ATTR_BIGFOUR2,	///<	四天王２(格闘)
   BATTLE_BG_ATTR_BIGFOUR3,	///<	四天王３(悪)
   BATTLE_BG_ATTR_BIGFOUR4,	///<	四天王４(エスパー)
-  BATTLE_BG_ATTR_BOSS,	    ///<	Ｎ専用
+  BATTLE_BG_ATTR_BOSS,	    ///<	Ｎラストバトル専用
   BATTLE_BG_ATTR_SAGE,	    ///<	ゲーチス
   BATTLE_BG_ATTR_CHAMPION,	///<	チャンピオン
 

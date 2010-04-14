@@ -247,7 +247,8 @@ static void setup_trainer_param( BATTLE_SETUP_PARAM* dst, BTL_CLIENT_ID client, 
     case TRTYPE_GRP_LEADER:
       dst->musicWin = SEQ_BGM_WIN3;
       break;
-    case TRTYPE_GRP_BOSS:
+    case TRTYPE_GRP_PLASMA_BOSS:
+    case TRTYPE_GRP_LAST_BOSS:
     case TRTYPE_GRP_PLASMA:
     case TRTYPE_GRP_SAGE:
       dst->musicWin = SEQ_BGM_WIN4;
