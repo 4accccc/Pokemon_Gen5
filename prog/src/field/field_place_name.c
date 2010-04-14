@@ -1278,7 +1278,7 @@ static void Process_HIDE( FIELD_PLACE_NAME* system )
   case 2:
     // •\Ž¦ŠJŽn
     ResetForceDispFlag( system );
-    SetLastZoneID( GetDispZoneID(system) );
+    SetLastZoneID( system, GetDispZoneID(system) );
     ChangeState( system, SYSTEM_STATE_SETUP );
     break;
   }
