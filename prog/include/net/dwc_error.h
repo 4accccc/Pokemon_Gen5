@@ -23,7 +23,8 @@ typedef enum
   GFL_NET_DWC_ERROR_RESULT_NONE,        //エラーはおきていない
   GFL_NET_DWC_ERROR_RESULT_PRINT_MSG,   //メッセージを描画するだけ
   GFL_NET_DWC_ERROR_RESULT_RETURN_PROC, //PROCから抜けなければならない
-  GFL_NET_DWC_ERROR_RESULT_FATAL, //電源切断のため無限ループになる
+  GFL_NET_DWC_ERROR_RESULT_FATAL,       //電源切断のため無限ループになる
+  GFL_NET_DWC_ERROR_RESULT_TIMEOUT,     //タイムアウト中
 } GFL_NET_DWC_ERROR_RESULT;
 
 

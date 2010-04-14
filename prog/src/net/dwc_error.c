@@ -87,6 +87,11 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy )
         NetErr_DispCallFatal();
         return GFL_NET_DWC_ERROR_RESULT_FATAL;
       }
+
+      if( cp_error->errorUser == ERRORCODE_TIMEOUT )
+      { 
+        return GFL_NET_DWC_ERROR_RESULT_TIMEOUT;
+      }
     }
   }
 

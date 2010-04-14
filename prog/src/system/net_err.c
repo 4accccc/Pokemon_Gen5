@@ -353,10 +353,13 @@ void NetErr_ErrorSet(void)
       { 
         nes->err_important_type  = NET_ERR_CHECK_HEAVY;
       }
+      if( nes->wifi_error.errorUser == ERRORCODE_HEAP )
+      { 
+        nes->err_important_type  = NET_ERR_CHECK_HEAVY;
+      }
     }
     else
     {
-      //それ以外は重度しかない
       nes->err_important_type  = NET_ERR_CHECK_LIGHT;
     }
 #else //MB子機処理
@@ -380,7 +383,7 @@ void NetErr_DEBUG_ErrorSet(void)
 
   //WiFi
 #if defined( DEBUG_ONLY_FOR_ohno ) | defined( DEBUG_ONLY_FOR_matsuda ) | defined( DEBUG_ONLY_FOR_toru_nagihashi )
-  GFL_NET_StateSetWifiError( 1, 1, 1 );
+  GFL_NET_StateSetWifiError( 1, 1, 1, 0 );
   NetErr_ErrorSet();
 #endif
   OS_TPrintf( "ユーザーからエラー設定リクエストが発生しました\n" );
@@ -534,9 +537,9 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 		
 //		OS_SpinWait(10000);
 		
-		while( nes->err_important_type == NET_ERR_CHECK_HEAVY )
+		while( nes->err_important_type == NET_ERR_CHECK_HEAVY || fatal_error == TRUE )
 		{
-      ; //重度なエラーは抜けれない
+      ; //重度なエラーとfatalは抜けれない
     }
 		while((PAD_Read() & ERR_DISP_END_BUTTON) != 0){
 			;	//ボタンを一度離すまで待つ
