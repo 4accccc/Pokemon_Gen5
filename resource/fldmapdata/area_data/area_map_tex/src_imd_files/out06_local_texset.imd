@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-03-27T23:35:23"/>
+	<create user="fuchino" host="W00152" date="2010-04-12T20:59:25"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -71,16 +71,20 @@
 	</tex_image>
 	<tex_image index="2" name="ga_s_futa"
 		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
+		format="palette16"
 		color0_mode="color"
 		palette_name="ga_s_futa_pl"
 		path="C:/home/wb_data3d/field/out06/chip/tex/ga_s_futa.tga"
 	>
-		<bitmap size="32">
-			d415 507f e01a 69af c05a a9ab 815a aa7f
-			956b aaaf 55af faee e6aa eaeb f56a aac2
-			5555 abd0 55aa ab84 95aa ab45 a56a be55
-			a915 0555 e900 4155 fd01 5056 fd05 541b
+		<bitmap size="64">
+			0111 5110 1455 1100 0123 5300 3345 2321
+			1133 4000 2334 3331 1233 3001 1455 3332
+			2334 3111 2454 3333 3345 1112 4353 5433
+			3333 4313 5345 4333 1233 4431 5003 3334
+			1111 1111 4100 3335 2333 1111 3010 3335
+			2333 2111 1011 3344 1233 3211 1111 2453
+			0111 3321 1111 0011 0000 4331 1111 1001
+			0001 5541 1113 1100 0011 5551 0135 1110
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="gake1_s0"
@@ -380,8 +384,8 @@
 	<tex_palette index="1" name="ga_s1_0_pl" color_size="8">
 		21f1 2611 2655 29cf 2a32 2a97 2e54 2eb8
 	</tex_palette>
-	<tex_palette index="2" name="ga_s_futa_pl" color_size="4">
-		1dae 21f0 2653 2eb7
+	<tex_palette index="2" name="ga_s_futa_pl" color_size="8">
+		1dae 21f0 2211 2653 2a95 2eb7 7fff 7fff
 	</tex_palette>
 	<tex_palette index="3" name="gake1_s0_pl" color_size="16">
 		2191 25d5 29f7 2df4 2e18 3256 3ab9 433d
