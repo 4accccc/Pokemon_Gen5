@@ -91,7 +91,7 @@ class FIX_TEX_DATA_MAKER
 					str = array.pop
 					str = new_str + str
 					array << str
-					#スペースが埋まった
+					#スペースが埋まった/AR
 					space_flg = 0
 				else						#空きナシ
 					array = @LineData[line]
@@ -248,9 +248,16 @@ tex_data_array.each { | tex |
 }
 
 #maker.each { | i |  i.Dump}
-p add_path + "/" + ncg_parser.GetPalFileName
+ncl_name = add_path + "/" + ncg_parser.GetPalFileName
+p "search #{ncl_name}"
+if File.exist?(ncl_name) == false then
+  ncl_name2 = add_path + "/" + File::basename(ncg_file_name,'.ncg') + ".ncl" 
+  p "Warning! #{ncl_name} don't exist. the next candidate is #{ncl_name2}"
+  p "second search #{ncl_name2}"
+  ncl_name = ncl_name2
+end
 ncl_parser = NCL_STRUCT.new(1)
-ncl_parser.Pars(add_path + "/" + ncg_parser.GetPalFileName)
+ncl_parser.Pars(ncl_name)
 
 palette_data = ncl_parser.GetPaletteData
 #パレットテキストを整形する
