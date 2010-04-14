@@ -7,6 +7,7 @@
 
 #include <gflib.h>
 #include "system/main.h"
+#include "system/pms_data.h"
 #include "gamesystem/pm_season.h"
 #include "savedata/battle_rec.h"
 #include "sound/wb_sound_data.sadl" //サウンドラベルファイル
@@ -210,6 +211,9 @@ static BSP_TRAINER_DATA* BSP_TRAINER_DATA_Create( HEAPID heapID )
 {
   BSP_TRAINER_DATA* tr_data = GFL_HEAP_AllocClearMemory( heapID, sizeof( BSP_TRAINER_DATA ) );
   tr_data->name =   GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
+
+  PMSDAT_Clear( &tr_data->win_word );
+  PMSDAT_Clear( &tr_data->lose_word );
 
   return tr_data;
 }
