@@ -404,12 +404,17 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     break;
   case _CALL_NET_END:
-    if(GFL_NET_IsInit()){
-      if(GFL_NET_IsParentMachine()){
-        if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL)){
+    if(GFL_NET_IsInit())
+    {
+      if(GFL_NET_IsParentMachine())
+      {
+        if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL))
+        {
           (*seq) ++;
+          break;
         }
-        else{
+        else
+        {
           break;
         }
       }
