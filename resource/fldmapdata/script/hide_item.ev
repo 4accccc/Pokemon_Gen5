@@ -436,8 +436,8 @@ EVENT_START ev_hide_item_056
 EVENT_END
 
 EVENT_START ev_hide_item_057
-//‚U”Ô“¹˜H ( 153, 366 )
-	_ITEM_EVENT_HIDEITEM( 87, 1, FLAG_HIDEITEM_057 )// ‚¨‚¨‚«‚ÈƒLƒmƒR
+//‚P‚O”Ô“¹˜H ( 433, 112 )
+	_ITEM_EVENT_HIDEITEM( 24, 1, FLAG_HIDEITEM_057 )// ‚Ü‚ñ‚½‚ñ‚Ì‚­‚·‚è
 EVENT_END
 
 EVENT_START ev_hide_item_058
