@@ -71,6 +71,7 @@ typedef struct _SAVE_CONTROL_WORK SAVE_CONTROL_WORK;
 //	äOïîä÷êîêÈåæ
 //==============================================================================
 extern SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id);
+extern void SaveControl_SystemExit(void);
 extern SAVE_CONTROL_WORK * SaveControl_GetPointer(void);
 extern LOAD_RESULT SaveControl_Load(SAVE_CONTROL_WORK *ctrl);
 extern SAVE_RESULT SaveControl_Save(SAVE_CONTROL_WORK *ctrl);

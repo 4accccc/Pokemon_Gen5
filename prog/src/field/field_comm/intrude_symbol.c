@@ -12,7 +12,7 @@
 #include "intrude_comm_command.h"
 #include "intrude_types.h"
 #include "field/intrude_symbol.h"
-#include "intrude_main.h"
+#include "intrude_work.h"
 #include "field/fieldmap.h"
 #include "intrude_field.h"
 #include "field/zonedata.h"

@@ -20,7 +20,7 @@
 #include "field/field_dir.h"
 
 #include "field/intrude_symbol.h"
-#include "field_comm/intrude_main.h"  //Intrude_Check_CommConnect
+#include "field_comm/intrude_work.h"  //Intrude_Check_CommConnect
 
 #include "symbol_map.h"
 #include "system/main.h"

@@ -33,7 +33,7 @@
 
 #include "field_comm/intrude_minimono.h"
 #include "field/intrude_symbol.h"
-#include "field_comm/intrude_main.h"    //Intrude_Check_CommConnect
+#include "field_comm/intrude_work.h"    //Intrude_Check_CommConnect
 
 #include "arc/fieldmap/zone_id.h"
 #include "event_mapchange.h"

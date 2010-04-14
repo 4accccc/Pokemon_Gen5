@@ -26,7 +26,7 @@
 #include "event_pdc_return.h"
 #include "poke_tool/poke_tool.h"
 #include "sound/pm_sndsys.h"
-#include "field_comm/intrude_main.h"
+#include "field_comm/intrude_work.h"
 #include "event_mapchange.h"
 
 #include "field/field_const.h"

@@ -11,7 +11,7 @@
 #include "fieldmap/zone_id.h"
 #include "gamesystem/game_comm.h"
 #include "field\intrude_common.h"
-#include "field_comm/intrude_main.h"
+#include "field_comm/intrude_work.h"
 #include "field/intrude_secret_item_def.h"
 
 

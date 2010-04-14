@@ -40,6 +40,20 @@ typedef void (*FUNC_INIT_WORK)(void *);
 typedef u32 GFL_SVDT_ID;
 
 //---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+//セーブ失敗エラーの指定
+typedef enum {
+	GFL_SAVEERROR_DISABLE_WRITE = 0,		///<書き込み失敗の時
+	GFL_SAVEERROR_DISABLE_READ,				///<書き込み前のリードチェック失敗のとき
+}GFL_SAVEERROR_DISABLE;
+
+//フラッシュエラー(ロード時)が発生した場合に呼ばれるコールバック関数型
+typedef void (*GFL_BACKUP_LOAD_ERROR_FUNC)( void );
+//フラッシュエラー(セーブ時)が発生した場合に呼ばれるコールバック関数型
+typedef void (*GFL_BACKUP_SAVE_ERROR_FUNC)( GFL_SAVEERROR_DISABLE err_disable );
+
+
+//---------------------------------------------------------------------------
 /**
  * @brief	セーブデータ内容データ用の構造体定義
  */
@@ -77,7 +91,7 @@ typedef struct {
  *
  */
 //---------------------------------------------------------------------------
-extern void GFL_BACKUP_Init(u32 heap_save_id);
+extern void GFL_BACKUP_Init(u32 heap_save_id, GFL_BACKUP_LOAD_ERROR_FUNC load_error_func, GFL_BACKUP_SAVE_ERROR_FUNC save_error_func);
 
 //---------------------------------------------------------------------------
 /**

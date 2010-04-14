@@ -16,6 +16,7 @@
 //==============================================================================
 //  äOïîä÷êîêÈåæ
 //==============================================================================
+extern INTRUDE_COMM_SYS_PTR Intrude_Check_CommConnect(GAME_COMM_SYS_PTR game_comm);
 extern void IntrudeWork_SetActionStatus(GAME_COMM_SYS_PTR game_comm, INTRUDE_ACTION action);
 extern void Intrude_SetWarpPlayerNetID(GAME_COMM_SYS_PTR game_comm, int net_id);
 extern int Intrude_GetWarpPlayerNetID(GAME_COMM_SYS_PTR game_comm);

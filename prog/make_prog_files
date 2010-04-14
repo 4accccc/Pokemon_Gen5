@@ -223,8 +223,9 @@ SRCS  +=    $(SOUNDSRC) \
         system/time_icon.c \
         demo/demo3d/demo3d_param.c \
         item/shooter_item.c \
-		poke_tool/poke_memo.c \
-		field/field_skill_check.c
+				poke_tool/poke_memo.c \
+				field/field_skill_check.c \
+        system/save_error_warning.c
 
 
 #================================================
@@ -345,13 +346,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
 				net/delivery_beacon.c \
 				net/delivery_irc.c \
 				net_app/mystery/mystery_createdata.c \
-        net_app/union/union_comm.c \
-        net_app/union/union_main.c \
-        net_app/union/union_comm_command.c \
-        net_app/union/union_subproc.c \
-        net_app/union/colosseum_comm_command.c \
-        net_app/union/colosseum.c \
         map/dp3format.c \
+        field/field_comm/intrude_work.c \
         field/script_sys.c \
         field/script_work.c \
         field/scrcmd.c \
@@ -389,13 +385,6 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/event_geonet.c \
         field/event_demo3d.c \
         field/field_comm/bingo_system.c \
-        field/field_comm/intrude_comm.c \
-        field/field_comm/intrude_comm_command.c \
-        field/field_comm/intrude_main.c \
-        field/field_comm/intrude_work.c \
-        field/field_comm/intrude_mission.c \
-        field/field_comm/intrude_battle.c \
-        field/field_comm/intrude_symbol.c \
         field/field_wfbc_data.c \
         field/eventdata_system.c \
         field/fldmmdl_move.c \
@@ -451,6 +440,27 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/field_gimmick_d12_st.c
 
 
+#侵入システムでほぼ常駐に置かなければいけないもの(ユニオンの常駐物と並列化)
+#===> SRCS_OVERLAY_NOTWIFI
+#GROUP_OVERLAY_UNION_INTRUDE_SYSTEM
+SRCS_OVERLAY_INTRUDE_SYSTEM = field/field_comm/intrude_comm.c \
+        field/field_comm/intrude_comm_command.c \
+        field/field_comm/intrude_main.c \
+        field/field_comm/intrude_mission.c \
+        field/field_comm/intrude_battle.c \
+        field/field_comm/intrude_symbol.c
+
+#ユニオンシステムでほぼ常駐に置かなければいけないもの(侵入の常駐物と並列化)
+#===> SRCS_OVERLAY_NOTWIFI
+#GROUP_OVERLAY_UNION_INTRUDE_SYSTEM
+SRCS_OVERLAY_UNION_SYSTEM = net_app/union/union_comm.c \
+        net_app/union/union_main.c \
+        net_app/union/union_comm_command.c \
+        net_app/union/union_subproc.c \
+        net_app/union/colosseum_comm_command.c \
+        net_app/union/colosseum.c
+
+
 # wifiプログラム
 #===> SRCS_OVERLAY_DEV_WIFILIB
 #LIB=>          libvct.$HYB.a
@@ -458,7 +468,7 @@ SRCS_OVERLAY_DEV_WIFI   = net/vchat.c
 
 
 # wirelessプログラム
-#===> SRCS_OVERLAY_NOTWIFI
+#===> GROUP_OVERLAY_UNION_INTRUDE_SYSTEM
 SRCS_OVERLAY_DEV_WIRELESS   =   net/net_devwireless.c \
                   net/net_whpipe.c \
                   net/wih.c
@@ -1720,7 +1730,7 @@ SRCS_OVERLAY_WIFIBATTLEMATCH_CORE = net_app/wifi_match/wifibattlematch_core.c \
 # バトル大会メインメニュー＋LIVEバトルマッチングフロー周り＋IRCネット部分
 # バトル大会メニュー
 #===> SRCS_OVERLAY_DEV_IRC
-#===> SRCS_OVERLAY_NOTWIFI
+#===> GROUP_OVERLAY_UNION_INTRUDE_SYSTEM
 SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = net_app/wifi_match/battle_championship_core.c \
         net_app/wifi_match/battle_championship_flow.c \
         net_app/wifi_match/livebattlematch_flow.c \

@@ -93,6 +93,7 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void );
 //extern const  GFL_PROC_DATA CorpProcData;
 //FS_EXTERN_OVERLAY(title);
 FS_EXTERN_OVERLAY(notwifi);
+FS_EXTERN_OVERLAY(intrude_system);
 
 //------------------------------------------------------------------
 /**
@@ -261,12 +262,9 @@ static  void  GameInit(void)
   /* ユーザーレベルで必要な初期化をここに記述する */
   //WIFIで必要ないプログラムオーバーレイの最初のロード
   GFL_OVERLAY_Load( FS_OVERLAY_ID( notwifi ) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( intrude_system ) );
 
 
-  //セーブ関連初期化
-  SaveControl_SystemInit(HEAPID_SAVE);
-  CONFIG_ApplyMojiMode( SaveData_GetConfig( SaveControl_GetPointer() ) );
-  
   // 通信のデバッグプリントを行う定義
 #ifdef PM_DEBUG
 #if defined(DEBUG_ONLY_FOR_ohno)||defined(DEBUG_ONLY_FOR_toru_nagihashi)||defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
@@ -289,6 +287,10 @@ static  void  GameInit(void)
 
   /* 文字描画システム初期化 */
   PRINTSYS_Init( GFL_HEAPID_SYSTEM );
+  
+  //セーブ関連初期化(フラッシュを認識しない場合、警告画面を出す為、文字描画システムが出来てから)
+  SaveControl_SystemInit(HEAPID_SAVE);
+  CONFIG_ApplyMojiMode( SaveData_GetConfig( SaveControl_GetPointer() ) );
   MSGSPEED_InitSystem( SaveControl_GetPointer() );
 
   //通信エラー画面管理システム初期化

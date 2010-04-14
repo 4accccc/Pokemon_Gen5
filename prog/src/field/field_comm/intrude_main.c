@@ -982,30 +982,6 @@ FIELD_SUBSCREEN_MODE Intrude_SUBSCREEN_Watch(GAME_COMM_SYS_PTR game_comm, FIELD_
 
 //==================================================================
 /**
- * 侵入通信が正常に繋がっているか調べる
- *
- * @param   game_comm		
- *
- * @retval  INTRUDE_COMM_SYS_PTR	繋がっているなら intcomm
- * @retval  INTRUDE_COMM_SYS_PTR	繋がっていないなら NULL
- *
- * 通信相手の返事待ち、親の返事待ち、などしている時に、途中でエラーが発生していないか
- * 監視する処理を共通化。
- */
-//==================================================================
-INTRUDE_COMM_SYS_PTR Intrude_Check_CommConnect(GAME_COMM_SYS_PTR game_comm)
-{
-  INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
-  
-  if(NetErr_App_CheckError() || GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION 
-      || GameCommSys_CheckSystemWaiting(game_comm) == TRUE || intcomm == NULL){
-    return NULL;
-  }
-  return intcomm;
-}
-
-//==================================================================
-/**
  * 侵入時のノーマル変装時のOBJCODEを取得
  *
  * @param   myst

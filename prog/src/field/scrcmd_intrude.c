@@ -26,7 +26,7 @@
 #include "scrcmd_intrude.h"
 
 #include "field_comm\intrude_types.h"
-#include "field_comm\intrude_main.h"
+#include "field_comm\intrude_work.h"
 #include "field_comm\intrude_comm_command.h"
 #include "field/field_comm/intrude_minimono.h"
 #include "field/field_comm/intrude_monolith.h"

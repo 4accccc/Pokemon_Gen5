@@ -52,7 +52,7 @@
 #include "event_disappear.h"
 #include "event_demo3d.h"
 #include "savedata/gimmickwork.h"   //for GIMMICKWORK
-#include "field_comm/intrude_main.h"
+#include "field_comm/intrude_work.h"
 #include "field/field_comm/intrude_field.h" //PALACE_MAP_LEN
 
 #include "net_app/union/union_main.h" // for UNION_CommBoot
@@ -116,6 +116,12 @@ static void Escape_SetSPEscapeLocation( GAMEDATA* gamedata, const LOCATION* loc_
 static void Escape_GetSPEscapeLocation( const GAMEDATA* gamedata, LOCATION* loc_req );
 
 static void MapChange_SetPlayerMoveFormNormal( GAMEDATA* gamedata );
+
+//--------------------------------------------------------------
+//  
+//--------------------------------------------------------------
+FS_EXTERN_OVERLAY(intrude_system);
+FS_EXTERN_OVERLAY(union_system);
 
 
 //============================================================================================
@@ -1455,6 +1461,8 @@ static GMEVENT_RESULT EVENT_MapChangeFromUnion( GMEVENT * event, int *seq, void 
     (*seq)++;
     break;
   case 2:
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( union_system ) );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( intrude_system ) );
     // エレベータからの登場スクリプト実行
     SCRIPT_CallScript( event, SCRID_POKECEN_ELEVATOR_OUT, NULL, NULL, HEAPID_FIELDMAP );
     (*seq)++;
@@ -1486,6 +1494,8 @@ static GMEVENT_RESULT EVENT_MapChangeToUnion( GMEVENT* event, int* seq, void* wk
     break;
   case 1: 
     // マップチェンジ コアイベント
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID( intrude_system ) );
+    GFL_OVERLAY_Load( FS_OVERLAY_ID( union_system ) );
     GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_UNION ) );
     (*seq)++;
     break;

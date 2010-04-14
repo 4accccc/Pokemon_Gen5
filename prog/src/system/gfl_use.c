@@ -27,6 +27,7 @@
 //#include "net_old/net_old.h"
 #include "savedata/save_control.h"
 #include "net/net_dev.h"
+#include "system/save_error_warning.h"
 
 #include "textprint.h"
 
@@ -184,7 +185,7 @@ void GFLUser_Init(void)
 
   //バックアップシステム初期化
 #ifndef MULTI_BOOT_MAKE
-  GFL_BACKUP_Init(HEAPID_SAVE);
+  GFL_BACKUP_Init(HEAPID_SAVE, SaveErrorCall_Load, SaveErrorCall_Save);
 #endif //MULTI_BOOT_MAKE
 
   //システムフォント初期化

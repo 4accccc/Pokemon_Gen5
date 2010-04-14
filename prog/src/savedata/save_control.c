@@ -201,6 +201,21 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 	return ctrl;
 }
 
+//==================================================================
+/**
+ * セーブシステムを破棄
+ */
+//==================================================================
+void SaveControl_SystemExit(void)
+{
+  if(SaveControlWork != NULL){
+    GFL_SAVEDATA_Delete(SaveControlWork->sv_normal);
+    GFL_HEAP_FreeMemory(SaveControlWork);
+    SaveControlWork = NULL;
+  }
+}
+
+
 //---------------------------------------------------------------------------
 /**
  * @brief	セーブデータ管理ワークへのポインタ取得
