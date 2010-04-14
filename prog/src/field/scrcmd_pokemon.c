@@ -952,7 +952,6 @@ VMCMD_RESULT EvCmdSetPokemonWaza( VMHANDLE *core, void *wk )
       for( i=waza_pos ; i<PTL_WAZA_MAX-1 ; i++ )
       {
         const u32 temp_waza_no = PP_Get( pp , ID_PARA_waza1+i+1 , NULL );
-        forgetPos = i+1;
         if( temp_waza_no != 0 )
         {
           const u32 temp_waza_cnt = PP_Get( pp , ID_PARA_pp_count1+i+1 , NULL );
@@ -960,6 +959,8 @@ VMCMD_RESULT EvCmdSetPokemonWaza( VMHANDLE *core, void *wk )
           PP_Put( pp , ID_PARA_waza1+i , temp_waza_no );
           PP_Put( pp , ID_PARA_pp_count1+i , temp_waza_cnt );
           PP_Put( pp , ID_PARA_pp1+i , temp_waza_pp );
+
+          forgetPos = i+1;
         }
         else
         {

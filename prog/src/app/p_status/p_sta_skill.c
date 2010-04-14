@@ -2172,7 +2172,16 @@ static void PSTATUS_SKILL_DispPlate_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WO
 {
   const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
   {
-    const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+plateWork->idx , NULL );
+    u32 wazaNo;
+    if( plateWork->idx < 4 )
+    {
+      wazaNo = PP_Get( pp , ID_PARA_waza1+plateWork->idx , NULL );
+    }
+    else
+    {
+      wazaNo = work->psData->waza;
+    }
+    
     if( plateWork->isUpdateStr == TRUE )
     {
       if( wazaNo != 0 )
