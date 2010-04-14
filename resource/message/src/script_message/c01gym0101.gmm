@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T18:59:53"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T15:17:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -670,7 +670,7 @@
 「ふるいたてる」と　いいます[BE:01:ページ切り替え（クリア）]
 「ふるいたてる」を　使えば
 攻撃と　特攻が　あがります！[BE:01:ページ切り替え（クリア）]
-ちなみに　技マシンは
+ちなみに　わざマシンは
 何度でも　使えるんですよ</language>
 	</row>
 
@@ -691,7 +691,7 @@
 ふう　がんばらないと……　ですね</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_11" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c01gym0101_leader1_11" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・leader1_09表示後に再度会話</comment>
 		<attribute name="キャラ指定">LEADER1c
@@ -701,7 +701,7 @@
 つれている　ポケモン
 すべてに　おなじ　わざを[BE:00:ページ切り替え（行送り）]
 おしえることだって　できるんだぜッ！！</language>
-		<language name="JPN_KANJI" width="256">技マシンは　何度だって
+		<language name="JPN_KANJI" width="256">わざマシンは　何度だって
 使えると　いうことはッ！[BE:01:ページ切り替え（クリア）]
 連れている　ポケモン
 すべてに　同じ　技を[BE:00:ページ切り替え（行送り）]

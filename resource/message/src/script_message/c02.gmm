@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T21:17:00"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T15:21:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1479,318 +1479,143 @@ C02ジムリーダー</attribute>
 タウンマップを　みてね……</language>
 	</row>
 
-	<row id="msg_c02_hakase2_sotne_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀：d04r0601イベント後
-・所定のpos（未定）を踏むとイベント発動
-・続けてmsg_c02_leader2_sotne_01</comment>
+	<row id="msg_c02_hakase2_sotne_01" text-color="#000000,,,#ffffff,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">博士娘</attribute>
-		<language name="JPN" width="256">アララギ『ハーイ！　[1:00:トレーナー名:0]▼
-れきしてきに　センセーションで
-トレーナーとして　めんどうで▽
-すごいことに　まきこまれたわね▼</language>
-		<language name="JPN_KANJI" width="256">アララギ『ハーイ！　[1:00:トレーナー名:0]▼
-歴史的に　センセーションで
-トレーナーとして　面倒で▽
-すごいことに　巻き込まれたわね▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_leader2_sotne_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀：d04r0601イベント後
-・博物館から出現
-　所定のpos（GRIDX=644、GRIDZ=582）に
-　到達するとメッセージ表示
-（古い石を持って登場のイメージ）
-・博物館内のストーンの動作モデル削除
-・続けてmsg_c02_hakase1_sotne_01</comment>
+	<row id="msg_c02_leader2_sotne_01" text-color="#000000,,,#ffffff,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">c02ジムリーダー</attribute>
-		<language name="JPN" width="256">アロエ『……これで　いいんでしょ▼
-この　ふるいいしが
-ドラゴンだって　いうのかい？▼</language>
-		<language name="JPN_KANJI" width="256">アロエ『……これで　いいんでしょ▼
-この　ふるいいしが
-ドラゴンだって　いうのかい？▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_hakase1_sotne_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂：d04r0601イベント後
-・続けてmsg_c02_hakase2_sotne_02</comment>
+	<row id="msg_c02_hakase1_sotne_01" text-color="#000000,,,#ffffff,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">博士父</attribute>
-		<language name="JPN" width="256">アララギパパ『うむ……
-あのあと　リュウラセンのとうを▽
-ちょうさ　したところ▼
-ストーンと　リュウラセンのとう　から
-おなじ　じだいの▽
-こんせきが　みつかったのだ▼</language>
-		<language name="JPN_KANJI" width="256">アララギパパ『うむ……
-あのあと　リュウラセンの塔を▽
-調査したところ▼
-ストーンと　リュウラセンの塔　から
-同じ　時代の▽
-こん跡が　みつかったのだ▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_hakase2_sotne_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀：d04r0601イベント後
-・続けてmsg_c02_white_sotne_01</comment>
+	<row id="msg_c02_hakase2_sotne_02" text-color="#000000,,,#ffffff,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">博士娘</attribute>
-		<language name="JPN" width="256">アララギ『……しらべたのは
-アタシ　なんですけど▼</language>
-		<language name="JPN_KANJI" width="256">アララギ『……調べたのは
-アタシ　なんですけど▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_white_sotne_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀：d04r0601イベント後
-・続けてmsg_c02_leader2_sotne_01</comment>
+	<row id="msg_c02_white_sotne_01" text-color="#000000,,,#ffffff,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">サポート</attribute>
-		<language name="JPN" width="256">ベル『それにしても
-あのとき　プラズマだんが▼
-その　いしの　しょうたいを
-しらなくて　よかったですね▼</language>
-		<language name="JPN_KANJI" width="256">ベル『それにしても
-あのとき　プラズマ団が▼
-その　石の　正体を
-知らなくて　よかったですね▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_leader2_sotne_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀：d04r0601イベント後
-・続けてmsg_c02_hakase1_sotne_02</comment>
+	<row id="msg_c02_leader2_sotne_02" text-color="#000000,,,#ffffff,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">c02ジムリーダー</attribute>
-		<language name="JPN" width="256">アロエ『ああ　あのとき
-あんたたちが　いてくれて▽
-ほんとうに　たすかったよ▼</language>
-		<language name="JPN_KANJI" width="256">アロエ『ああ　あのとき
-あんたたちが　いてくれて▽
-本当に　助かったよ▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_hakase1_sotne_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂：d04r0601イベント後
-・メッセージ表示後、主人公に隣接
-・隣接時、アイテム入手処理
-　「ライトストーン」or「ダークストーン」
-・続けてエフェクトとSEの予定
-　d08r0701でのドラゴン出現デモと同じSE
-・エフェクト終了後msg_c02_white_sotne_02</comment>
+	<row id="msg_c02_hakase1_sotne_02" text-color="#000000,,,#ffffff,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">博士父</attribute>
-		<language name="JPN" width="256">アララギパパ『で　[1:00:トレーナー名:0]▼
-Ｎが　かかげたのは
-これと　おなじ　いし　だったか？▽
-きちんと　たしかめてくれないか？▼</language>
-		<language name="JPN_KANJI" width="256">アララギパパ『で　[1:00:トレーナー名:0]▼
-Ｎが　かかげたのは
-これと　同じ　石　だったか？▽
-きちんと　確かめてくれないか？▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_white_sotne_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀：d04r0601イベント後
-・続けてmsg_c02_champion_sotne_01</comment>
+	<row id="msg_c02_white_sotne_02" text-color="#000000,,,#ffffff,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">サポート</attribute>
-		<language name="JPN" width="256">ベル『！▼
-いま！　[1:00:トレーナー名:0]が
-さわったら　うごきましたよね！？▼</language>
-		<language name="JPN_KANJI" width="256">ベル『！▼
-いま！　[1:00:トレーナー名:0]が
-触ったら　動きましたよね！？▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_champion_sotne_01w" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂：d04r0601イベント後
-・WHITEver
-・続けてmsg_c02_hakase2_sotne_03</comment>
+	<row id="msg_c02_champion_sotne_01w" text-color="#000000,,,#ffffff,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『……そうか
-やはり　そうなのか▼
-[1:00:トレーナー名:0]
-この　ダークストーンは▽
-おまえが　もっているべき　だな▼</language>
-		<language name="JPN_KANJI" width="256">アデク『……そうか
-やはり　そうなのか▼
-[1:00:トレーナー名:0]
-この　ダークストーンは▽
-おまえが　持っているべき　だな▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_champion_sotne_01b" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂：d04r0601イベント後
-・BLACKver
-・続けてmsg_c02_hakase2_sotne_03</comment>
+	<row id="msg_c02_champion_sotne_01b" text-color="#000000,,,#ffffff,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『……そうか
-やはり　そうなのか▼
-[1:00:トレーナー名:0]
-この　ライトストーンは▽
-おまえが　もっているべき　だな▼</language>
-		<language name="JPN_KANJI" width="256">アデク『……そうか
-やはり　そうなのか▼
-[1:00:トレーナー名:0]
-この　ライトストーンは▽
-おまえが　持っているべき　だな▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_hakase2_sotne_03w" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀：d04r0601イベント後
-・WHITEver
-・続けてmsg_c02_champion_sotne_02</comment>
+	<row id="msg_c02_hakase2_sotne_03w" text-color="#000000,,,#ffffff,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">博士娘</attribute>
-		<language name="JPN" width="256">アララギ『で　どうすれば
-その　ダークストーンを▽
-ドラゴンに　もどせるんです？▼
-また　リュウラセンのとう　に
-のぼれば　いいのでしょうか？▼</language>
-		<language name="JPN_KANJI" width="256">アララギ『で　どうすれば
-その　ダークストーンを▽
-ドラゴンに　戻せるんです？▼
-また　リュウラセンの塔　に
-登れば　いいのでしょうか？▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_hakase2_sotne_03b" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀：d04r0601イベント後
-・BLACKver
-・続けてmsg_c02_champion_sotne_02</comment>
+	<row id="msg_c02_hakase2_sotne_03b" text-color="#000000,,,#ffffff,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">博士娘</attribute>
-		<language name="JPN" width="256">アララギ『で　どうすれば
-その　ライトストーンを▽
-ドラゴンに　もどせるんです？▼
-また　リュウラセンのとう　に
-のぼれば　いいのでしょうか？▼</language>
-		<language name="JPN_KANJI" width="256">アララギ『で　どうすれば
-その　ライトストーンを▽
-ドラゴンに　もどせるんです？▼
-また　リュウラセンのとう　に
-のぼれば　いいのでしょうか？▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_champion_sotne_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂：d04r0601イベント後
-・続けてmsg_c02_hakase1_sotne_03</comment>
+	<row id="msg_c02_champion_sotne_02" text-color="#000000,,,#ffffff,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『いま　[1:00:トレーナー名:0]に
-はんのう　したであろう……▼
-それは　[1:00:トレーナー名:0]が
-ドラゴンと　であったからに　ちがいない▼</language>
-		<language name="JPN_KANJI" width="256">アデク『いま　[1:00:トレーナー名:0]に
-反応　したであろう……▼
-それは　[1:00:トレーナー名:0]が
-ドラゴンと　出会ったからに　違いない▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_hakase1_sotne_03" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂：d04r0601イベント後
-・続けてmsg_c02_champion_sotne_03</comment>
+	<row id="msg_c02_hakase1_sotne_03" text-color="#000000,,,#ffffff,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">博士父</attribute>
-		<language name="JPN" width="256">アララギパパ『そうだな……▼
-でないと　とうに　のぼった
-わしにも　はんのう　しないと▽
-おかしい　ということになる▼</language>
-		<language name="JPN_KANJI" width="256">アララギパパ『そうだな……▼
-でないと　塔に　登った
-わしにも　反応しないと▽
-おかしい　ということになる▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_champion_sotne_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂：d04r0601イベント後
-・メッセージ表示後、チャンピオンに「そらをとぶ」演出で
-　動作モデル削除
-・続けてmsg_c02_hakase1_sotne_04</comment>
+	<row id="msg_c02_champion_sotne_03" text-color="#000000,,,#ffffff,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『めざめさせるには　Ｎに……▼
-いや　もういっぴきの　ドラゴンと
-であう！　ということに　なるな▼
-というわけで　だ
-ソウリュウシティに　むかう▼
-あのまちの　ジムリーダーは
-ドラゴンつかい▽
-なにや　おしえてくれるであろう▼</language>
-		<language name="JPN_KANJI" width="256">アデク『目覚めさせるには　Ｎに……▼
-いや　もう一匹の　ドラゴンと
-出会う！　ということに　なるな▼
-というわけで　だ
-ソウリュウシティに　向かう▼
-あの街の　ジムリーダーは
-ドラゴン使い▽
-なにや　教えてくれるであろう▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_hakase1_sotne_04w" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂：d04r0601イベント後
-・WHITEver
-・続けてmsg_c02_hakase2_sotne_03</comment>
+	<row id="msg_c02_hakase1_sotne_04w" text-color="#000000,,,#ffffff,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">博士父</attribute>
-		<language name="JPN" width="256">アララギパパ『……[1:00:トレーナー名:0]よ
-おまえさんが　その　ダークストーンを▽
-てにいれたのは　うんめい　なのかもな▼</language>
-		<language name="JPN_KANJI" width="256">アララギパパ『……[1:00:トレーナー名:0]よ
-おまえさんが　その　ダークストーンを▽
-手に入れたのは　運命　なのかもな▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_hakase1_sotne_04b" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂：d04r0601イベント後
-・BLACKver
-・続けてmsg_c02_hakase2_sotne_03</comment>
-		<language name="JPN" width="256">アララギパパ『……[1:00:トレーナー名:0]よ
-おまえさんが　その　ライトストーンを▽
-てにいれたのは　うんめい　なのかもな▼</language>
-		<language name="JPN_KANJI" width="256">アララギパパ『……[1:00:トレーナー名:0]よ
-おまえさんが　その　ライトストーンを▽
-手に入れたのは　運命　なのかもな▼</language>
+	<row id="msg_c02_hakase1_sotne_04b" text-color="#000000,,,#ffffff,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_hakase2_sotne_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀：d04r0601イベント後
-・msg_c02_champion_sotne_03表示後
-・表示後、博士父と博士娘、画面右へ移動する
-　博士父t01r0401に出現
-・動作モデルが画面外に消えると主人公、操作可能に</comment>
+	<row id="msg_c02_hakase2_sotne_04" text-color="#000000,,,#ffffff,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">博士娘</attribute>
-		<language name="JPN" width="256">アララギ『ドラゴンが
-どんな　そんざい　だったのか▽
-しらべるため　アタシたちは▽
-けんきゅうじょに　もどるわね▼
-……なにが　あっても
-あなたなら　だいじょうぶよ　きっと！▼</language>
-		<language name="JPN_KANJI" width="256">アララギ『ドラゴンが　どんな存在なのか
-調べるため　アタシたちは▽
-研究所に　戻るわね▼
-……なにが　あっても
-あなたなら　大丈夫よ　きっと！▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_leader2_sotne_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀：d04r0601イベント後
-・msg_c02_champion_sotne_03表示後、繰り返し
-・別マップに行くとここから削除</comment>
+	<row id="msg_c02_leader2_sotne_03" text-color="#000000,,,#ffffff,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">c02ジムリーダー</attribute>
-		<language name="JPN" width="256">アロエ『あんしん　しな！▼
-アンタに　なにか　あれば
-あたしたちが　かけつけるからさ！</language>
-		<language name="JPN_KANJI" width="256">アロエ『安心しな！▼
-アンタに　なにか　あれば
-あたしたちが　駆けつけるからさ！</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02_white_sotne_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀：d04r0601イベント後
-・msg_c02_champion_sotne_03表示後、繰り返し
-・別マップに行くとここから削除</comment>
+	<row id="msg_c02_white_sotne_03" text-color="#000000,,,#ffffff,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">サポート</attribute>
-		<language name="JPN" width="256">ベル『どうして……
-どうして　[1:00:トレーナー名:0]なの？▼
-[1:00:トレーナー名:0]が
-その　いしを　もつ　ってことは▼
-Ｎって　ひととも
-たたかうって　ことだよね……</language>
-		<language name="JPN_KANJI" width="256">ベル『どうして……
-どうして　[1:00:トレーナー名:0]なの？▼
-[1:00:トレーナー名:0]が
-その　石を　持つ　ってことは▼
-Ｎって　人とも
-闘うって　ことだよね……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<flowchart-group-list>
