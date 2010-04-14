@@ -402,16 +402,10 @@ download:
     _YES_NO_WIN( SCWK_ANSWER )    //ここではクローズしない
     
     IF $SCWK_ANSWER == 0 THEN //特別な検定やる
-      IF $SCWK_ANSWER == SCR_FIELD_COMM_EXIT_CANCEL THEN
-        _RET
-      ELSIF $SCWK_ANSWER == SCR_FIELD_COMM_EXIT_ERROR THEN
-        _RET
-      ENDIF
-
+      //クローズ
+      _BALLOONWIN_CLOSE()
       _CALL save
       IF $SCWK_ANSWER == FALSE THEN   //セーブ失敗
-        //クローズ
-        _BALLOONWIN_CLOSE()
         $exit = TRUE
         _RET
       ENDIF
@@ -446,8 +440,6 @@ download:
         _BALLOONWIN_CLOSE()
       ENDIF
     ELSE                      //特別な検定やらない
-      //クローズ
-      _BALLOONWIN_CLOSE()
       $exit = TRUE
     ENDIF
   ENDIF
