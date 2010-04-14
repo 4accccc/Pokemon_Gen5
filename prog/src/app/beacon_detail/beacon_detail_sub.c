@@ -305,7 +305,7 @@ static void sub_DetailWordset(const GAMEBEACON_INFO *info, WORDSET *wordset )
   case GAMEBEACON_DETAILS_NO_BATTLE_TRAINER:
     {
       u16 tr_id = GAMEBEACON_Get_Details_BattleTrainer(info);
-      WORDSET_RegisterTrainerName( wordset, 0, tr_id );
+      WORDSET_RegisterTrTypeName_byTrID( wordset, 0, tr_id );
       WORDSET_RegisterTrainerName( wordset, 1, tr_id );
     }
     break;
