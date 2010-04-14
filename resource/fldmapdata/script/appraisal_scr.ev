@@ -505,7 +505,7 @@ ev_fugou:
 _RET
 
 /**************************************************************/
-/*			R18 鉱物鑑定士2							  */
+/*			R18 考古学者							  */
 /**************************************************************/
 EVENT_START		ev_appraisal_sunglasses_01
 _TALK_OBJ_START()
@@ -530,9 +530,9 @@ _TALK_OBJ_START()
 
 	ENDIF
 	
-	//【仮】譲るアイテムが存在するかチェック（指定タイプが仮）
+	//譲るアイテムが存在するかチェック
 	DEFINE_LOCAL LWK_ITEMCHECK
-	_ITEMJUDGE_HAVE_CHECK( SCR_ITEM_JUDGE_OBJTYPE_GOURMET , LWK_ITEMCHECK )
+	_ITEMJUDGE_HAVE_CHECK( SCR_ITEM_JUDGE_OBJTYPE_KOUKO , LWK_ITEMCHECK )
 	
 	//譲るアイテムが存在する
 	IF $LWK_ITEMCHECK == TRUE THEN
@@ -561,8 +561,8 @@ _TALK_OBJ_START()
 		
 		ELSE
 
-			//【仮】鑑定（指定タイプが仮）
-			_ITEMJUDGE( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA, LWK_MONEY )
+			//鑑定
+			_ITEMJUDGE( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_KOUKO, LWK_MONEY )
 
 			//興味無しの場合
 			IF $LWK_MONEY == 0 THEN
