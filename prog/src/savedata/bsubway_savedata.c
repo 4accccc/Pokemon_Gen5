@@ -1096,6 +1096,9 @@ void BSUBWAY_WIFIDATA_GetBtlPlayerData( const BSUBWAY_WIFI_DATA *bsw_wifi, BSUBW
   GFL_STD_MemCopy(src->appear_word,tr->appear_word,8);
   GFL_STD_MemCopy(src->win_word,tr->win_word,8);
   GFL_STD_MemCopy(src->lose_word,tr->lose_word,8);
+
+  //ポケモンデータ取得
+  MI_CpuCopy8(src->poke,poke,sizeof(BSUBWAY_POKEMON)*3);
 }
 
 
