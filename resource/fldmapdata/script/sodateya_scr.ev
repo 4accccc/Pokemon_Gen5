@@ -124,19 +124,26 @@ EVENT_START ev_sodateya_grandpa
       IF $party_total_num < 6 THEN  // 手持ちに空き有 ==> たまごゲット
         _GET_SODATEYA_EGG()
         //「タマゴを貰った」
+        _BALLOONWIN_CLOSE()
         _PLAYER_NAME( 0 )
-        _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldman_08, SCWK_TARGET_OBJID, POS_DOWN )
-        _AB_KEYWAIT()
+        _SYSWIN_MSG( msg_sodateya_oldman_08, POS_DEFAULT )
+        _ME_PLAY( SEQ_ME_TAMAGO_GET )
+        _ME_WAIT()
+        _AB_KEYWAIT_MARK()
+        _SYSWIN_CLOSE()
         //「大事に育てなさいよ」
         _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldman_08_01, SCWK_TARGET_OBJID, POS_DOWN )
         _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
       ELSE                      // 手持ちがいっぱい ==>「手持ちがいっぱいじゃ」
         _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldman_09, SCWK_TARGET_OBJID, POS_DOWN )
         _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
       ENDIF
     // タマゴ削除
     ELSE
       _DELETE_SODATEYA_EGG()
+      _BALLOONWIN_CLOSE()
     ENDIF
   //-------------------
   // タマゴがない場合
@@ -145,10 +152,12 @@ EVENT_START ev_sodateya_grandpa
     IF $sodateya_poke_num == 0 THEN       // 預けポケモン0体 ==>「わしは育て屋じいさん」
       _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldman_01, SCWK_TARGET_OBJID, POS_DOWN )
       _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
     ELSIF $sodateya_poke_num == 1 THEN    // 預けポケモン1体 ==>「よくきたな」
       _SODATEYA_NICK_NAME( 0, 0 )
       _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldman_02, SCWK_TARGET_OBJID, POS_DOWN )
       _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
     ELSE                            // 預けポケモン2体 ==> 相性チェック
       _CALL love_check
     ENDIF
@@ -181,6 +190,7 @@ love_check:
   // 結果発表
   _BALLOONWIN_OBJMSG_POS( message_id, SCWK_TARGET_OBJID, POS_DOWN )
   _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 }
 _RET
 
@@ -223,10 +233,10 @@ EVENT_START ev_sodateya_grandma
     ENDIF
 
     // 所持金表示
-    _GOLD_WIN_OPEN( 21, 1 )
+    _GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
 
     // メニュー作成
-    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, menu_select )
+    _BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, menu_select )
     IF $sodateya_poke_num < $sodateya_poke_max THEN   // 『あずける』
       _BMPMENU_MAKE_LIST( msg_sodateya_menu_02, msg_sodateya_menu_02 )
     ENDIF
@@ -294,7 +304,6 @@ sodateya_adopt_pokemon_core:
       //「[ニックネーム]を しばらく預かるぞ」
       _TEMOTI_NICK_NAME( 0, select_party_pos )
       _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_08, SCWK_TARGET_OBJID, POS_DOWN )
-      _AB_KEYWAIT()
 
       // 育て屋へデータ移動
       _POKE_TO_SODATEYA( select_party_pos )
@@ -462,11 +471,10 @@ take_back_pokemon_core:
      _SODATEYA_NICK_NAME( 0, select_sodateya_pos )
      _NUMBER( 1, grow_level, 2 )
      _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_12, SCWK_TARGET_OBJID, POS_DOWN )
-     _AB_KEYWAIT()
    ENDIF
 
    // 所持金表示
-   _GOLD_WIN_OPEN( 21, 1 )
+   _GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
 
    // 質問「引き取るかい?」
    _SODATEYA_NICK_NAME( 0, select_sodateya_pos )
