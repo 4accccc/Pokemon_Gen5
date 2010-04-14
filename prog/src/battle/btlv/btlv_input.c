@@ -1645,7 +1645,6 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
       {
         SePlayRotateSelect( biw );
         SetupRotateAction( biw, hit );
-        BTLV_EFFECT_SetRotateEffect( rotate_result[ biw->rotate_scr ], 0 );
         hit = GFL_UI_TP_HIT_NONE;
       }
     }
