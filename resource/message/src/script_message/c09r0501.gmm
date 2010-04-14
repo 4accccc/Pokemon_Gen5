@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T18:54:17"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T11:16:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1287" top="191" right="1992" bottom="819" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="989" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -650,26 +650,32 @@
 		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『……まけたわ▼
-すうしき　すうしきと
+とほうもない　ゆめを　かたる
 うるさい　こぞうを　だまらせるほどの▼
 ポケモンとの　きずなを
 みせてやるはず　だったがな……▼
 あいつの　しんねんも
 また　ほんもの　だったいうことか▼
-たのむ
-[1:00:トレーナー名:0]！▼
+こころしろよ
+いつだって　せかいを　かえるのは▽
+ゆめを　ほんきで　おいかける　ヤツだ▼
+そして　たのむ！
+[1:00:トレーナー名:0]！！▼
 ポケモンと　ひとを　きりはなしても
 なにも　うまれん……▽
 それを　おしえてやってくれい</language>
 		<language name="JPN_KANJI" width="256">アデク『……負けたわ▼
-数式　数式と
+とほうもない　夢を　語る
 うるさい　小僧を　だまらせるほどの▼
 ポケモンとの　きずなを
 みせてやるはず　だったがな……▼
 あいつの　信念も
-また　本物だった　ということか▼
-頼む
-[1:00:トレーナー名:0]！▼
+また　本物だった　ということか▼か▼
+心しろよ
+いつだって　世界を　変えるのは▽
+夢を　本気で　追い求める　ヤツだ▼
+頼む！
+[1:00:トレーナー名:0]！！▼
 ポケモンと　人を　切り離しても
 なにも　うまれん……▽
 それを　教えてやってくれい</language>

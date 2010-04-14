@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T17:13:15"/>
+	<create user="matsumiya" host="W00224" date="2010-04-14T11:42:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -317,10 +317,10 @@
 　msg_r05_leader_01表示</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『……なぜ？
-どうして　きみに　かてないんだ？▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……なぜ？
-どうして　きみに　勝てないんだ？▼</language>
+		<language name="JPN" width="256">チェレン『……どうして？
+どうして　きみに　かてない？▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……どうして？
+どうして　きみに　勝てない？▼</language>
 	</row>
 
 	<row id="msg_r05_leader_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -378,8 +378,8 @@
 ・続けて</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『……どなた　ですか？▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……どなた　ですか？▼</language>
+		<language name="JPN" width="256">チェレン『……だれ　ですか？▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……だれ　ですか？▼</language>
 	</row>
 
 	<row id="msg_r05_leader_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -418,13 +418,19 @@
 はじめまして
 ワタシの　なまえは　アデク▼
 イッシュ　ポケモンリーグの
-チャンピオン　だよ▼</language>
+チャンピオン　だよ▼
+ちなみに　あそんでいるのではなく
+たびを　しているのだ！▽
+イッシュの　すみずみまで　しってるぞ▼</language>
 		<language name="JPN_KANJI" width="256">アデク『……聞こえたが　なんとも
 手厳しい　若者だな▼
 はじめまして
 ワタシの　名前は　アデク▼
 イッシュ　ポケモンリーグの
-チャンピオン　だよ▼</language>
+チャンピオン　だよ▼
+ちなみに　遊んでいるのではなく
+旅を　しているのだ！▽
+イッシュの　隅々まで　知ってるぞ▼</language>
 	</row>
 
 	<row id="msg_r05_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -432,16 +438,16 @@
 ・続けてchampion_03</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『はじめまして▼
-じぶんは　カノコタウン　しゅっしんの
+		<language name="JPN" width="256">チェレン『……じぶんは
+カノコタウン　しゅっしんの▽
 チェレンと　いいます▼
 トレーナーとしての　もくてきは
-チャンピオン　です▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『はじめまして▼
-自分は　カノコタウン出身の
+チャンピオン　ですけど▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……自分は
+カノコタウン出身の▽
 チェレンと　いいます▼
 トレーナーとしての　目的は
-チャンピオン　です！▼</language>
+チャンピオン　ですけど▼</language>
 	</row>
 
 	<row id="msg_r05_champion_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -531,10 +537,10 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『わかりました▼
-では　そのまえに……▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『わかりました▼
-では　そのまえに……▼</language>
+		<language name="JPN" width="256">チェレン『……わかりました▼
+じゃ　そのまえに……▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……わかりました▼
+じゃ　そのまえに……▼</language>
 	</row>
 
 	<row id="msg_r05_black_07_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
@@ -558,8 +564,8 @@
 ・表示後、イベントバトルへ</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『では　いきます！▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『では　いきます！▼</language>
+		<language name="JPN" width="256">チェレン『では　いきますよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『では　いきますよ▼</language>
 	</row>
 
 	<row id="msg_r05_champion_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -664,9 +670,9 @@
 　画面外に消えると、主人公操作可能に</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『チャンピオンは　つよい！
+		<language name="JPN" width="256">チェレン『つよいのが　チャンピオン！
 それいがいの　こたえは　ないよ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『チャンピオンは　強い！
+		<language name="JPN_KANJI" width="256">チェレン『強いのが　チャンピオン！
 それ以外の　答えは　ないよ▼</language>
 	</row>
 
@@ -748,10 +754,14 @@
 ・画面外に消えると、主人公操作可能に</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『さあ　いこう
-もっと　つよくなる　そのために……！▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『さあ　行こう
-もっと　強くなる……　そのために！▼</language>
+		<language name="JPN" width="256">チェレン『……ぼくは　トレーナーだ▼
+つよくなり　しょうりすることで
+ぼくの　ただしさを　しょうめいするよ▽
+チャンピオンに　たいしても▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……ぼくは　トレーナーだ▼
+強くなり　勝利することで
+ぼくの　正しさを　証明するよ▽
+チャンピオンに　対しても▼</language>
 	</row>
 
 	<row id="msg_r05_cameraman_01a">
