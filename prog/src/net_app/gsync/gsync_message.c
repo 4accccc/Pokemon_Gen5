@@ -429,10 +429,41 @@ void GSYNC_MESSAGE_SystemMessageDisp(GSYNC_MESSAGE_WORK* pWork)
 {
   GFL_BMPWIN* pwin;
 
-  if(pWork->systemDispWin==NULL){
-    pWork->systemDispWin = GFL_BMPWIN_Create(
-      GFL_BG_FRAME2_S , 1 , 1, 30 , 16 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+  if(pWork->systemDispWin){
+    GFL_BMPWIN_Delete(pWork->systemDispWin);
   }
+
+  pWork->systemDispWin = GFL_BMPWIN_Create(
+    GFL_BG_FRAME2_S , 1 , 1, 30 , 16 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+  pwin = pWork->systemDispWin;
+
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
+  GFL_FONTSYS_SetColor(1, 2, 15);
+
+  PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) ,0,0, pWork->pStrBuf, pWork->pFontHandle );
+  BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2S), _BUTTON_WIN_PAL );
+
+  GFL_BMPWIN_TransVramCharacter(pwin);
+  GFL_BMPWIN_MakeScreen(pwin);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   システムウインドウ（サインインを促す）表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void GSYNC_MESSAGE_CMMessageDisp(GSYNC_MESSAGE_WORK* pWork)
+{
+  GFL_BMPWIN* pwin;
+
+  if(pWork->systemDispWin){
+    GFL_BMPWIN_Delete(pWork->systemDispWin);
+  }
+  pWork->systemDispWin = GFL_BMPWIN_Create(
+    GFL_BG_FRAME2_S , 1 , 9, 30 , 6 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   pwin = pWork->systemDispWin;
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);

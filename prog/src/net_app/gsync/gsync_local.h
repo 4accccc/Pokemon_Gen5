@@ -64,6 +64,7 @@ extern void GSYNC_MESSAGE_ButtonWindowMain(GSYNC_MESSAGE_WORK* pWork);
 
 extern void GSYNC_MESSAGE_SetNormalMessage(GSYNC_MESSAGE_WORK* pWork,int msgid);
 extern void GSYNC_MESSAGE_SystemMessageDisp(GSYNC_MESSAGE_WORK* pWork);
+extern void GSYNC_MESSAGE_CMMessageDisp(GSYNC_MESSAGE_WORK* pWork);
 extern void GSYNC_MESSAGE_SystemMessageEnd(GSYNC_MESSAGE_WORK* pWork);
 extern void GSYNC_MESSAGE_ErrorMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid,int no);
 

@@ -137,7 +137,9 @@ struct _GSYNC_DISP_WORK {
   GFL_CLUNIT	*cellUnit;
   GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
   GFL_TCB *p_hblank; //HBlankハンドル
-
+  NNSG2dPaletteData *palData;
+  void* pPalOrg;
+  
   u32 cellRes[CEL_RESOURCE_MAX];
   GFL_CLWK* curIcon[_CELL_DISP_NUM];
 
@@ -155,6 +157,7 @@ struct _GSYNC_DISP_WORK {
   int blendStart;
   int performCnt;
   int GetIconApper;
+  int starCount;
 };
 
 
@@ -198,7 +201,7 @@ static _GSYNCOBJPOS_STRUCT gsyncObjPosTable[]={
   {128,145,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani2    5 //
   {128,145,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani3    5 //
   {128,145,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani4    5 //
-  {100,125,_ZZZ_CELL_PRI},   //NANR_gsync_obj_zzz_ani    6 //
+  {128,150,_ZZZ_CELL_PRI},   //NANR_gsync_obj_zzz_ani    6 //
   {100,125,_ZZZ_CELL_PRI},   //NANR_gsync_obj_yume_1    6 //
   {128,160,_SMOKE_CELL_PRI},   //NANR_gsync_obj_musha    7 // 
   {128,160,_SHADOW_CELL_PRI},   //NANR_gsync_obj_musha_shadow    7 // 
@@ -280,6 +283,8 @@ void GSYNC_DISP_End(GSYNC_DISP_WORK* pWork)
 
   GSYNC_DISP_IconFreeAll( pWork );
 
+  GFL_HEAP_FreeMemory(pWork->pPalOrg);
+  
   for(i=0;i<PLT_RESOURCE_MAX;i++){
     if(pWork->cellRes[i] ){
       GFL_CLGRP_PLTT_Release(pWork->cellRes[i] );
@@ -427,6 +432,16 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
   GSYNC_DISP_WORK *pWork=work;
 
   GFL_CLACT_SYS_VBlankFunc();	//セルアクターVBlank
+  pWork->starCount++;
+  if((pWork->starCount % 10)==1){
+    int x = (pWork->starCount / 10)+2;
+    u16* pal = (u16*)pWork->palData->pRawData;
+    GX_LoadBGPltt(&pal[x*16], 2*32, 32);
+    GXS_LoadBGPltt(&pal[x*16], 2*32, 32);
+  }
+  if(pWork->starCount>=80){
+    pWork->starCount=0;
+  }
 
 }
 
@@ -451,6 +466,8 @@ static void dispInit(GSYNC_DISP_WORK* pWork)
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
                                               pWork->heapID);
 
+
+    pWork->pPalOrg = GFL_ARCHDL_UTIL_LoadPalette(p_handle, NARC_gsync_gsync_bg_NCLR, &pWork->palData, pWork->heapID);
 
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gsync_gsync_bg_NCLR,
                                       PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
