@@ -112,6 +112,8 @@ static GMEVENT * EVENT_ChangeMapPalace( GAMESYS_WORK* gameSystem, FIELDMAP_WORK*
 
 static void setNowLoaction(LOCATION * return_loc, FIELDMAP_WORK * fieldmap);
 
+static void Escape_SetSPEscapeLocation( GAMEDATA* gamedata, const LOCATION* loc_req );
+
 //============================================================================================
 //
 //  イベント：ゲーム開始
@@ -1985,6 +1987,9 @@ GMEVENT* EVENT_ChangeMapByConnect( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fiel
     {
       GAMEDATA_SetEscapeLocation( gameData, ent );
     }
+
+    // 特別脱出先設定
+    Escape_SetSPEscapeLocation( gameData, &work->loc_req );
   }
   return event;
 }
@@ -2026,9 +2031,10 @@ GMEVENT* EVENT_ChangeMapSorawotobu( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fie
 //  return EVENT_ChangeMapPosNoFadeCore( gameSystem, fieldmap, EV_MAPCHG_FLYSKY, zoneID, pos, dir );  
   MAPCHANGE_WORK* work;
   GMEVENT* event;
+  GAMEDATA *gameData = GAMESYSTEM_GetGameData(gameSystem);
+
   //自機のフォームを二足歩行に戻す
   {
-    GAMEDATA *gameData = GAMESYSTEM_GetGameData(gameSystem);
     PLAYER_WORK * player = GAMEDATA_GetMyPlayerWork(gameData);
     PLAYERWORK_SetMoveForm( player, PLAYER_MOVE_FORM_NORMAL );
   }
@@ -2044,6 +2050,12 @@ GMEVENT* EVENT_ChangeMapSorawotobu( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fie
   work->loc_req.dir_id = dir;
   work->exit_type      = EXIT_TYPE_NONE;
   work->mapchange_type = EV_MAPCHG_FLYSKY; 
+
+  {
+    // 特別脱出先設定
+    Escape_SetSPEscapeLocation( gameData, &work->loc_req );
+  }
+  
   return event;
 }
 
@@ -2829,4 +2841,39 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
   return GMEVENT_RES_CONTINUE;
 }
 
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  脱出先の特殊設定
+ *
+ *	@param	gamedata      ゲームデータ
+ *	@param	loc_req       リクエストロケーション
+ */
+//-----------------------------------------------------------------------------
+static void Escape_SetSPEscapeLocation( GAMEDATA* gamedata, const LOCATION* loc_req )
+{
+  const LOCATION* loc_now;
+  const LOCATION* ent;
+  
+  ent = GAMEDATA_GetEntranceLocation( gamedata );
+  loc_now = GAMEDATA_GetStartLocation( gamedata );
+
+  // 接続先がD09
+  if( ZONEDATA_IsChampionLord( loc_req->zone_id ) ){
+    // 今、チャンピオンリーグ
+    if( loc_now->zone_id == ZONE_ID_C09 ){
+      
+      GAMEDATA_SetEscapeLocation( gamedata, ent );
+    }else if( ZONEDATA_IsChampionLord( loc_now->zone_id ) == FALSE ){ // ChampionLord以外
+      LOCATION location;
+
+      //D09のデフォルトを設定
+      LOCATION_SetDefaultPos( &location, ZONE_ID_D09 );
+      GAMEDATA_SetEscapeLocation( gamedata, &location );
+    }
+  }
+
+}
 

@@ -1135,6 +1135,35 @@ u8 ZONEDATA_GetMvMdlID(u16 zone_id)
   return zoneData->movemodel_id;
 }
 
+
+//------------------------------------------------------------------
+// D09チャンピオンロード関係のZONEか？
+//------------------------------------------------------------------
+BOOL ZONEDATA_IsChampionLord(u16 zone_id)
+{
+  // @todo ZONEIDが変わったらここも確認する必要があります。 2010.04.14
+  switch( zone_id ){
+  case ZONE_ID_D09:
+  case ZONE_ID_D09R0101:
+  case ZONE_ID_D09R0201:
+  case ZONE_ID_D09R0301:
+  case ZONE_ID_D09R0401:
+  case ZONE_ID_D09R0501:
+  case ZONE_ID_D09R0601:
+  case ZONE_ID_D09R0701:
+  case ZONE_ID_D09R0801:
+  case ZONE_ID_D09R0901:
+  case ZONE_ID_D09R1001:
+  case ZONE_ID_D09R1101:
+  case ZONE_ID_D09R1201:
+  case ZONE_ID_D09R1301:
+  case ZONE_ID_D09R1401:
+  case ZONE_ID_D09R1501:
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //============================================================================================
 //============================================================================================
 
