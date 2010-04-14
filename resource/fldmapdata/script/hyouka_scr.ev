@@ -36,7 +36,6 @@ ev_zukan_daughter:
   _PLAYER_NAME( 0 )
   _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_01 )
   _YES_NO_WIN( SCWK_ANSWER )
-  _BALLOONWIN_CLOSE()
 
   IF $SCWK_ANSWER == SCR_YES THEN
   //ずかんを見せる→「はい」
@@ -48,14 +47,12 @@ ev_zukan_daughter:
           _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_02a )
           _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
           _AB_KEYWAIT_MARK()
-          _BALLOONWIN_CLOSE()
       ELSE
       //地方図鑑・見た数
           _CALL sub_zukan_setup_local_see
           _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_02 )
           _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
           _AB_KEYWAIT_MARK()
-          _BALLOONWIN_CLOSE()
       ENDIF
 
       //アイテムをもらえるか？チェック
@@ -149,13 +146,14 @@ sub_zukan_present:
     $SCWK_PARAM1  = 1
     _GLOBAL_CALL  SCRID_ITEM_EVENT_KEYWAIT
     _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_06 )
-    _BALLOONWIN_CLOSE()
     _FLAG_SET( FE_HYOUKA_ITEMGET_01 )
 
     $ITEM_RESULT_COUNT -= 1
     IF $ITEM_RESULT_COUNT != 0 THEN
       //「これもつかってみて！▼」
       _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_09 )
+      _BALLOONWIN_CLOSE()
+    ELSE
     ENDIF
 
   ENDIF
@@ -171,13 +169,13 @@ sub_zukan_present:
     $SCWK_PARAM1  = 1
     _GLOBAL_CALL  SCRID_ITEM_EVENT_KEYWAIT
     _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_07 )
-    _BALLOONWIN_CLOSE()
     _FLAG_SET( FE_HYOUKA_ITEMGET_02 )
 
     $ITEM_RESULT_COUNT -= 1
     IF $ITEM_RESULT_COUNT != 0 THEN
       //「これもつかってみて！▼」
       _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_09 )
+      _BALLOONWIN_CLOSE()
     ENDIF
 
   ENDIF
@@ -193,7 +191,7 @@ sub_zukan_present:
     $SCWK_PARAM1  = 1
     _GLOBAL_CALL  SCRID_ITEM_EVENT_KEYWAIT
     _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_08 )
-    _BALLOONWIN_CLOSE()
+    //_BALLOONWIN_CLOSE()
     _FLAG_SET( FE_HYOUKA_ITEMGET_03 )
 
   ENDIF
