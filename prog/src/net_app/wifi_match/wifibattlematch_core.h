@@ -82,6 +82,7 @@ typedef struct
   const BATTLEMATCH_BATTLE_SCORE  *cp_btl_score;
   DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA *p_gpf_data;
   WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA       *p_sake_data;
+  WIFIBATTLEMATCH_NET_DATA    *p_net_data;
 } WIFIBATTLEMATCH_CORE_PARAM;
 
 //=============================================================================

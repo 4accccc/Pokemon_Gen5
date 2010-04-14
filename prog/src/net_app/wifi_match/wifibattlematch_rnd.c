@@ -353,7 +353,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Init( GFL_PROC *p_proc, int *p_s
 	p_wk->p_word	= WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, WORDSET_COUNTRY_BUFLEN, HEAPID_WIFIBATTLEMATCH_CORE );
 
 	//モジュールの作成
-  p_wk->p_net   = WIFIBATTLEMATCH_NET_Init( p_wk->p_param->p_recv_data->sake_recordID,
+  p_wk->p_net   = WIFIBATTLEMATCH_NET_Init( p_wk->p_param->p_net_data,
       p_param->p_param->p_game_data, p_param->p_svl_result, HEAPID_WIFIBATTLEMATCH_CORE );
   p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_TEXT, PLT_FONT_M, PLT_TEXT_M, CGR_OFS_M_TEXT, p_wk->p_que, p_wk->p_font, HEAPID_WIFIBATTLEMATCH_CORE );
   p_wk->p_seq   = WBM_SEQ_Init( p_wk, WbmRndSeq_Init, HEAPID_WIFIBATTLEMATCH_CORE );
@@ -1050,8 +1050,6 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
 
         //消したくない情報を常駐に保存
         p_wk->p_param->p_recv_data->record_save_idx = p_wk->rnd_score.record_save_idx;
-        p_wk->p_param->p_recv_data->sake_recordID   = WIFIBATTLEMATCH_GDB_GetRecordID( p_wk->p_net );
-        OS_TPrintf(  "レコードID保存%d \n", p_wk->p_param->p_recv_data->sake_recordID );
 
         //自分の情報を表示
         Util_PlayerInfo_Create( p_wk, WIFIBATTLEMATCH_CORE_RETMODE_RATE );
@@ -1433,14 +1431,14 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
   case SEQ_START_REPORT_ATLAS:
 #ifndef SAKE_REPORT_NONE
-    WIFIBATTLEMATCH_SC_Start( p_wk->p_net, WIFIBATTLEMATCH_TYPE_RNDRATE, p_param->p_param->btl_rule, p_param->cp_btl_score );
+    WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_TYPE_RNDRATE, p_param->p_param->btl_rule, p_param->cp_btl_score );
 #endif
     *p_seq = SEQ_WAIT_REPORT_ATLAS;
     break;
   case SEQ_WAIT_REPORT_ATLAS:
     { 
 #ifndef SAKE_REPORT_NONE
-      if( WIFIBATTLEMATCH_SC_Process( p_wk->p_net ) )
+      if( WIFIBATTLEMATCH_SC_ProcessReport( p_wk->p_net ) )
 #endif
       { 
         *p_seq = SEQ_SC_HEAP_EXIT;

@@ -44,6 +44,7 @@
 #include "wifibattlematch_util.h"
 #include "wifibattlematch_data.h"
 #include "wifibattlematch_snd.h"
+#include "wifibattlematch_net.h"
 
 //外部公開
 #include "net_app/wifibattlematch.h"
@@ -109,11 +110,11 @@ typedef struct
   BATTLEMATCH_BATTLE_SCORE    btl_score;          //バトルの成績
   u32                         server_time;        //サーバアクセス時間
   WIFIBATTLEMATCH_RECORD_DATA record_data;        //戦績
-  WIFIBATTLEMATCH_RECV_DATA   recv_data;          //サーバーから受信したデータ
   BOOL                        is_err_return_login;//WIFILOGINにエラーで戻るとき
   DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA gpf_data;//GPFサーバーから落としてきた選手証データ
   WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA   sake_data;
-
+  WIFIBATTLEMATCH_NET_DATA    net_data;   //通信が終了しても残しておくデータ
+  WIFIBATTLEMATCH_RECV_DATA   recv_data;  //サーバーから落としてきたデータ
 } WIFIBATTLEMATCH_SYS;
 
 //=============================================================================
@@ -728,6 +729,7 @@ static void *WBM_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID,
   p_param->p_svl_result   = &p_wk->svl_result;
   p_param->p_server_time  = &p_wk->server_time;
   p_param->p_record_data  = &p_wk->record_data;
+  p_param->p_net_data     = &p_wk->net_data;
   p_param->p_recv_data    = &p_wk->recv_data;
   p_param->cp_btl_score   = &p_wk->btl_score;
   p_param->p_gpf_data     = &p_wk->gpf_data;
@@ -1405,7 +1407,8 @@ static void *WBM_LISTAFTER_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID he
   p_param->p_param        = &p_wk->param;
   p_param->p_player_btl_party = p_wk->p_player_btl_party;
   p_param->p_enemy_btl_party  = p_wk->p_enemy_btl_party;
-  p_param->p_recv_data        = &p_wk->recv_data;
+  p_param->p_net_data        = &p_wk->net_data;
+  p_param->p_recv_data    = &p_wk->recv_data;
 
   if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
   { 

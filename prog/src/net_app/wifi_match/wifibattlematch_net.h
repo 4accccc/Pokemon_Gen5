@@ -180,6 +180,27 @@ typedef struct
   u8  pokeparty[ WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE ];
 } WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA;
 
+//-------------------------------------
+///	プレイヤーデータ
+//=====================================
+typedef struct
+{
+  DWCScLoginCertificatePtr mCertificate;
+  DWCScReportPtr mReport;
+  u8 mSessionId[DWC_SC_SESSION_GUID_SIZE];
+  u8 mConnectionId[DWC_SC_CONNECTION_GUID_SIZE];
+  u8 mStatsAuthdata[DWC_SC_AUTHDATA_SIZE];
+} DWC_SC_PLAYERDATA;
+
+//-------------------------------------
+///	常駐データ
+//=====================================
+typedef struct 
+{
+  int               sake_recordID;
+  DWC_SC_PLAYERDATA sc_player[2];   //自分は0　相手は１
+} WIFIBATTLEMATCH_NET_DATA;
+
 
 //-------------------------------------
 ///	ネットモジュール
@@ -195,7 +216,7 @@ typedef struct _WIFIBATTLEMATCH_NET_WORK WIFIBATTLEMATCH_NET_WORK;
 //-------------------------------------
 ///	ワーク作成
 //=====================================
-extern WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( u32 sake_recordID, GAMEDATA *p_gamedata, DWCSvlResult *p_svl_result, HEAPID heapID );
+extern WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( WIFIBATTLEMATCH_NET_DATA *p_data, GAMEDATA *p_gamedata, DWCSvlResult *p_svl_result, HEAPID heapID );
 extern void WIFIBATTLEMATCH_NET_Exit( WIFIBATTLEMATCH_NET_WORK *p_wk );
 extern void WIFIBATTLEMATCH_NET_Main( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
@@ -234,11 +255,11 @@ extern void WIFIBATTLEMATCH_NET_StopConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOO
 //-------------------------------------
 ///	ATLAS統計・競争関係（SC）
 //=====================================
-extern void WIFIBATTLEMATCH_SC_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_TYPE mode, WIFIBATTLEMATCH_BTLRULE rule, const BATTLEMATCH_BATTLE_SCORE *cp_btl_score );
-extern BOOL WIFIBATTLEMATCH_SC_Process( WIFIBATTLEMATCH_NET_WORK *p_wk );
+extern void WIFIBATTLEMATCH_SC_StartSession( WIFIBATTLEMATCH_NET_WORK *p_wk );
+extern BOOL WIFIBATTLEMATCH_SC_ProcessSession( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
-extern void WIFIBATTLEMATCH_SC_StartNoMatch( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_TYPE mode, WIFIBATTLEMATCH_BTLRULE rule, const BATTLEMATCH_BATTLE_SCORE *cp_btl_score );
-extern BOOL WIFIBATTLEMATCH_SC_ProcessNoMatch( WIFIBATTLEMATCH_NET_WORK *p_wk );
+extern void WIFIBATTLEMATCH_SC_StartReport( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_TYPE mode, WIFIBATTLEMATCH_BTLRULE rule, const BATTLEMATCH_BATTLE_SCORE *cp_btl_score );
+extern BOOL WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 typedef struct
 {
