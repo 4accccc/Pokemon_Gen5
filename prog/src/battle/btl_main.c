@@ -93,6 +93,10 @@ typedef struct {
   u32         ai_bit;
   u16         useItem[ BSP_TRAINERDATA_ITEM_MAX ];
 
+  PMS_DATA  win_word;   //戦闘終了時勝利メッセージ
+  PMS_DATA  lose_word;  //戦闘終了時負けメッセージ
+
+
 }BTL_TRAINER_DATA;
 
 struct _BTL_MAIN_MODULE {
@@ -4174,6 +4178,9 @@ static void trainerParam_StorePlayer( BTL_TRAINER_DATA* dst, HEAPID heapID, cons
   dst->trainerID = TRID_NULL;
   dst->trainerType = (MyStatus_GetMySex(dst->playerStatus) == PTL_SEX_MALE)? TRTYPE_HERO : TRTYPE_HEROINE;
   dst->name = MyStatus_CreateNameString( dst->playerStatus, HEAPID_BTL_SYSTEM );
+
+  PMSDAT_Clear( &dst->win_word );
+  PMSDAT_Clear( &dst->lose_word );
 }
 static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, const BSP_TRAINER_DATA* trData )
 {
@@ -4186,6 +4193,9 @@ static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, const BSP_TRAIN
     dst->name = trData->name;
     dst->ai_bit = trData->ai_bit;
     GFL_STD_MemCopy( trData->use_item, dst->useItem, sizeof(trData->use_item) );
+
+    PMSDAT_Copy( &dst->win_word, &trData->win_word );
+    PMSDAT_Copy( &dst->lose_word, &trData->lose_word );
   }
   else{
     u32 i;
@@ -4195,6 +4205,8 @@ static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, const BSP_TRAIN
     for(i=0; i<NELEMS(dst->useItem); ++i){
       dst->useItem[i] = ITEM_DUMMY_DATA;
     }
+    PMSDAT_Clear( &dst->win_word );
+    PMSDAT_Clear( &dst->lose_word );
   }
 }
 BOOL BTL_MAIN_IsClientNPC( const BTL_MAIN_MODULE* wk, u8 clientID )
@@ -4241,6 +4253,22 @@ u16 BTL_MAIN_GetClientTrainerType( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
   const BTL_TRAINER_DATA* trData = &wk->trainerParam[ clientID ];
   return trData->trainerType;
+}
+
+const PMS_DATA* BTL_MAIN_GetClientPMSData( const BTL_MAIN_MODULE* wk, u8 clientID, BtlResult playerResult )
+{
+  if( (BTL_MAIN_GetCompetitor(wk) == BTL_COMPETITOR_SUBWAY)
+  &&  BTL_MAIN_IsClientNPC(wk, clientID)
+  ){
+    if( playerResult == BTL_RESULT_WIN ){
+      return &wk->trainerParam[ clientID ].lose_word;
+    }
+    else{
+      return &wk->trainerParam[ clientID ].win_word;
+    }
+  }
+  return NULL;
+
 }
 
 const MYSTATUS* BTL_MAIN_GetClientPlayerData( const BTL_MAIN_MODULE* wk, u8 clientID )

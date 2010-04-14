@@ -75,6 +75,7 @@ typedef enum {
   MSGSRC_TOKUSEI,
   MSGSRC_WAZAOBOE,
   MSGSRC_YESNO,
+  MSGSRC_SUBWAY,
 
   MSGDATA_MAX,
 }MsgSrcID;
@@ -154,6 +155,7 @@ void BTL_STR_InitSystem( const BTL_MAIN_MODULE* mainModule, const BTL_CLIENT* cl
     NARC_message_tokusei_dat,
     NARC_message_waza_oboe_dat,
     NARC_message_yesnomenu_dat,
+    NARC_message_tower_trainer_dat,
   };
 
   int i;
@@ -846,8 +848,30 @@ void BTL_STR_MakeStringWaza( STRBUF* dst, u8 pokeID, u16 waza )
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }
 
+//=============================================================================================
+/**
+ * ROM内サブウェイトレーナーの勝敗メッセージを生成
+ *
+ * @param   dst
+ * @param   subwayTRID
+ * @param   playerResult
+ */
+//=============================================================================================
+void BTL_STR_MakeStringSubway( STRBUF* dst, u16 subwayTRID, BtlResult playerResult )
+{
+  if( subwayTRID )
+  {
+    u16 strID = (subwayTRID - 1) * 3;
 
+    if( playerResult == BTL_RESULT_LOSE ){
+      strID += 1;
+    }else{
+      strID += 2;
+    }
 
+    GFL_MSG_GetString( SysWork.msg[MSGSRC_SUBWAY], strID, dst );
+  }
+}
 
 
 

@@ -170,7 +170,6 @@ struct _BTL_CLIENT {
   BTL_POKESELECT_PARAM    pokeSelParam;
   BTL_POKESELECT_RESULT   pokeSelResult;
 
-
   HEAPID heapID;
   u8   myID;
   u8   myType;
@@ -280,7 +279,10 @@ static BOOL SubProc_UI_ConfirmIrekae( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq );
 static BtlResult checkResult( BTL_CLIENT* wk );
+static inline void TrainerGraphicIn( BTL_CLIENT* wk, int client_idx );
 static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq );
+static void setupSubwayTrainerMsg( BTL_CLIENT* wk, BtlResult result );
 static BOOL SubProc_UI_LoseWild( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_NotifyTimeUp( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_ServerCmd( BTL_CLIENT* wk, int* seq );
@@ -880,6 +882,10 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
 
     { BTL_ACMD_EXIT_NPC,
       { SubProc_UI_ExitForNPC,   NULL,  NULL }, },
+
+    { BTL_ACMD_EXIT_SUBWAY_TRAINER,
+        { SubProc_UI_ExitForSubwayTrainer,   NULL,  NULL }, },
+
 
     { BTL_ACMD_EXIT_LOSE_WILD,
       { SubProc_UI_LoseWild,   NULL,  NULL }, },
@@ -3991,18 +3997,40 @@ static BtlResult checkResult( BTL_CLIENT* wk )
   return resultContext->resultCode;
 }
 
+static inline void TrainerGraphicIn( BTL_CLIENT* wk, int client_idx )
+{
+  u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, client_idx );
+  int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
+
+  BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
+  BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
+}
 
 //---------------------------------------------------
 // ゲーム内トレーナー戦を終了
 //---------------------------------------------------
 static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
 {
-  static BtlResult resultCode = 0;
+  enum {
+    SEQ_INIT = 0,
+    SEQ_WIN_START,
+    SEQ_WIN_WAIT_TR1_IN,
+    SEQ_WIN_WAIT_TR1_MSG,
+    SEQ_WIN_WAIT_TR1_OUT,
+    SEQ_WIN_WAIT_TR2_IN,
+    SEQ_WIN_WAIT_TR2_MSG,
+
+    SEQ_LOSE_START,
+    SEQ_LOSE_WAIT_MSG1,
+
+    SEQ_END,
+  };
+
 
   switch( *seq ){
-  case 0:
+  case SEQ_INIT:
     {
-      resultCode = checkResult( wk );
+      BtlResult resultCode = checkResult( wk );
 
       if( resultCode == BTL_RESULT_WIN )
       {
@@ -4013,7 +4041,7 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
         BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_WinTrainer );
         BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
         BTLV_StartMsg( wk->viewCore, &wk->strParam );
-        (*seq)++;
+        (*seq) = SEQ_WIN_START;
       }
       else if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_NO_LOSE) == FALSE )
       {
@@ -4023,99 +4051,77 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
         BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
         BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
         BTLV_StartMsg( wk->viewCore, &wk->strParam );
-        (*seq) = 6;
+        (*seq) = SEQ_LOSE_START;
       }
       else{
         return TRUE;
       }
     }
     break;
-  case 1:
+  case SEQ_WIN_START:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
-      BOOL fExitMsg = TRUE;
-      u16  trmsgID;
-
-      u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
-      u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
-      int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
-
-      if( resultCode == BTL_RESULT_WIN ){
-        trmsgID = TRMSG_FIGHT_LOSE;
-      }else{
-        fExitMsg = FALSE;
-      }
-
-      BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
-      BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
-
-      if( fExitMsg )
-      {
-        BTLV_StartMsgTrainer( wk->viewCore, trainerID, trmsgID );
-      }
-      (*seq)++;
+      TrainerGraphicIn( wk, 0 );
+      (*seq) = SEQ_WIN_WAIT_TR1_IN;
     }
     break;
-  case 2:
-    if( !BTLV_EFFECT_CheckExecute()
-    &&  BTLV_WaitMsg(wk->viewCore)
-    ){
+  case SEQ_WIN_WAIT_TR1_IN:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
+      u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
+      BTLV_StartMsgTrainer( wk->viewCore, trainerID, TRMSG_FIGHT_LOSE );
+      (*seq) = SEQ_WIN_WAIT_TR1_MSG;
+    }
+    break;
+  case SEQ_WIN_WAIT_TR1_MSG:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
       if( BTL_MAIN_IsMultiMode( wk->mainModule ) )
       {
         BTLV_EFFECT_Add( BTLEFF_TRAINER_OUT );
-        (*seq)++;
+        (*seq) = SEQ_WIN_WAIT_TR1_OUT;
       }
       else
       {
-        (*seq) = 4;
+        (*seq) = SEQ_END;
       }
     }
     break;
-  case 3:
+  case SEQ_WIN_WAIT_TR1_OUT:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      TrainerGraphicIn( wk, 1 );
+      (*seq) = SEQ_WIN_WAIT_TR2_IN;
+    }
+    break;
+  case SEQ_WIN_WAIT_TR2_IN:
     if( !BTLV_EFFECT_CheckExecute() )
     {
       u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 1 );
       u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
-      int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
-
-
-      BTLV_EFFECT_DelTrainer( BTLV_MCSS_POS_TR_BB );
-      BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
-      BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
       BTLV_StartMsgTrainer( wk->viewCore, trainerID, TRMSG_FIGHT_LOSE );
-      (*seq)++;
+      (*seq) = SEQ_WIN_WAIT_TR2_MSG;
     }
     break;
-  case 4:
+  case SEQ_WIN_WAIT_TR2_MSG:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
-      if( resultCode == BTL_RESULT_WIN )
+      u32 getMoney = BTL_MAIN_FixBonusMoney( wk->mainModule );
+      if( getMoney )
       {
-        u32 getMoney = BTL_MAIN_FixBonusMoney( wk->mainModule );
+        u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
 
-        if( getMoney )
-        {
-          u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
-
-          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_GetMoney );
-          BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
-          BTLV_STRPARAM_AddArg( &wk->strParam, getMoney );
-          BTLV_StartMsg( wk->viewCore, &wk->strParam );
-          (*seq)++;
-          break;
-        }
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_GetMoney );
+        BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+        BTLV_STRPARAM_AddArg( &wk->strParam, getMoney );
+        BTLV_StartMsg( wk->viewCore, &wk->strParam );
       }
-      return TRUE;
+      (*seq) = SEQ_END;
     }
     break;
 
-  case 5:
-    if( BTLV_WaitMsg(wk->viewCore) ){
-      return TRUE;
-    }
-    break;
-
-  case 6:
+  case SEQ_LOSE_START:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
       u32 loseMoney = BTL_MAIN_FixLoseMoney( wk->mainModule );
@@ -4126,16 +4132,22 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
         BTLV_STRPARAM_AddArg( &wk->strParam, loseMoney );
         BTLV_StartMsg( wk->viewCore, &wk->strParam );
       }
-      (*seq)++;
+      (*seq) = SEQ_LOSE_WAIT_MSG1;
     }
     break;
-  case 7:
+  case SEQ_LOSE_WAIT_MSG1:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_LoseEnd );
       BTLV_STRPARAM_AddArg( &wk->strParam, wk->myID );
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
-      (*seq) = 5;
+      (*seq) = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      return TRUE;
     }
     break;
 
@@ -4144,6 +4156,92 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
   }
   return FALSE;
 }
+//---------------------------------------------------
+// サブウェイトレーナー戦を終了
+//---------------------------------------------------
+static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
+{
+  enum {
+    SEQ_INIT,
+    SEQ_WAIT_TRAINER_IN,
+    SEQ_WAIT_MSG,
+  };
+
+  switch( *seq ){
+  case SEQ_INIT:
+    {
+      BtlResult result = checkResult( wk );
+
+      if( result == BTL_RESULT_WIN )
+      {
+        PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
+      }
+      if( (result == BTL_RESULT_WIN) || (result == BTL_RESULT_LOSE) ){
+        TrainerGraphicIn( wk, 0 );
+        setupSubwayTrainerMsg( wk, result );
+        (*seq) = SEQ_WAIT_TRAINER_IN;
+      }
+      else{
+        return TRUE;
+      }
+    }
+    break;
+
+  case SEQ_WAIT_TRAINER_IN:
+    if( !BTLV_EFFECT_CheckExecute() )
+    {
+      BTLV_StartMsgInBuffer( wk->viewCore );
+      (*seq) = SEQ_WAIT_MSG;
+    }
+    break;
+
+  case SEQ_WAIT_MSG:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      return TRUE;
+    }
+    break;
+  }
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * サブウェイトレーナーの勝敗メッセージをBTLV内部に生成しておく
+ *
+ * @param   wk
+ * @param   result
+ */
+//----------------------------------------------------------------------------------
+static void setupSubwayTrainerMsg( BTL_CLIENT* wk, BtlResult result )
+{
+  u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
+  const PMS_DATA* pms;
+
+  pms = BTL_MAIN_GetClientPMSData( wk->mainModule, clientID, result );
+
+  if( (pms != NULL) && PMSDAT_IsEnabled(pms) )
+  {
+    STRBUF* tmpbuf = PMSDAT_ToString( pms, GFL_HEAP_LOWID(wk->heapID) );
+
+    BTLV_CopyMsgToBuffer( wk->viewCore, tmpbuf );
+
+    GFL_STR_DeleteBuffer( tmpbuf );
+  }
+  else
+  {
+    u32 subwayTrID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
+
+    if( subwayTrID )
+    {
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_SUBWAY_LOCALTRAINER, 0 );
+      BTLV_STRPARAM_AddArg( &wk->strParam, subwayTrID );
+      BTLV_STRPARAM_AddArg( &wk->strParam, result );
+      BTLV_SetMsgToBuffer( wk->viewCore, &wk->strParam );
+    }
+  }
+}
+
 //---------------------------------------------------
 // 野生戦で負けた
 //---------------------------------------------------

@@ -126,10 +126,11 @@ static u8 Irekae_GetEnemyPutPokeID( BTL_SERVER* server );
 static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq );
-static BOOL ServerMain_ExitBattle_LoseWild( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_KeyWait( BTL_SERVER* server, int* seq );
+static BOOL ServerMain_ExitBattle_LoseWild( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForCommPlayer( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForNPC( BTL_SERVER* server, int* seq );
+static BOOL ServerMain_ExitBattle_ForSubwayTrainer( BTL_SERVER* server, int* seq );
 static void print_client_action( const BTL_SVCL_ACTION* clientAction );
 static void print_que_info( BTL_SERVER_CMD_QUE* que, const char* caption );
 static BOOL SendActionRecord( BTL_SERVER* server, BtlRecTiming timingCode, BOOL fChapter );
@@ -1011,8 +1012,11 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
 
     switch( competitor ){
     case BTL_COMPETITOR_TRAINER:
-//    case BTL_COMPETITOR_SUBWAY: // @todo サブウェイトレーナーのメッセージを取得する手だてが今のところ無い。
       setMainProc( server, ServerMain_ExitBattle_ForNPC );
+      break;
+
+    case BTL_COMPETITOR_SUBWAY: // @todo サブウェイトレーナーのメッセージを取得する手だてが今のところ無い。
+      setMainProc( server, ServerMain_ExitBattle_ForSubwayTrainer );
       break;
 
     case BTL_COMPETITOR_COMM:
@@ -1174,6 +1178,36 @@ static BOOL ServerMain_ExitBattle_ForNPC( BTL_SERVER* server, int* seq )
   }
   return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * サーバメインループ：バトル終了（サブウェイトレーナーとの対戦終了）
+ *
+ * @param   server
+ * @param   seq
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL ServerMain_ExitBattle_ForSubwayTrainer( BTL_SERVER* server, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    SetAdapterCmdEx( server, BTL_ACMD_EXIT_SUBWAY_TRAINER, &server->btlResultContext, sizeof(server->btlResultContext) );
+    (*seq)++;
+    break;
+  case 1:
+    if( WaitAllAdapterReply(server) ){
+      ResetAdapterCmd( server );
+      (*seq)++;
+    }
+    break;
+  case 2:
+    setMainProc( server, ServerMain_ExitBattle_KeyWait );
+    break;
+  }
+  return FALSE;
+}
+
 
 //----------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------

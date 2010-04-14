@@ -1827,12 +1827,52 @@ static void StrParamToString( const BTLV_STRPARAM* param, STRBUF* dst )
     break;
   case BTL_STRTYPE_WAZA:
     BTL_STR_MakeStringWaza( dst, param->args[0], param->args[1] );
+    break;
+  case BTL_STRTYPE_SUBWAY_LOCALTRAINER:
+    BTL_STR_MakeStringSubway( dst, param->args[0], param->args[1] );
+    break;
   default:
     GF_ASSERT(0);
     return;
   }
 }
 
+
+//=============================================================================================
+/**
+ * 内部バッファにメッセージコピー
+ *
+ * @param   wk
+ * @param   src
+ */
+//=============================================================================================
+void BTLV_CopyMsgToBuffer( BTLV_CORE* wk, const STRBUF* src )
+{
+  GFL_STR_CopyBuffer( wk->strBuf, src );
+}
+//=============================================================================================
+/**
+ * 内部バッファにメッセージ展開
+ *
+ * @param   wk
+ * @param   param
+ */
+//=============================================================================================
+void BTLV_SetMsgToBuffer(  BTLV_CORE* wk, const BTLV_STRPARAM* param )
+{
+  StrParamToString( param, wk->strBuf );
+}
+//=============================================================================================
+/**
+ * 内部バッファメッセージを表示開始
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_StartMsgInBuffer( BTLV_CORE* wk )
+{
+  PutMsgToSCU( wk, wk->strBuf, BTLV_MSGWAIT_STD );
+}
 
 //=============================================================================================
 /**

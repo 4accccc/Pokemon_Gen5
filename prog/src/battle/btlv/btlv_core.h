@@ -225,6 +225,10 @@ extern void BTLV_UI_Restart( BTLV_CORE* wk );
 extern void BTLV_StartMemberChangeAct( BTLV_CORE* wk, BtlPokePos pos, u8 clientID, u8 memberIdx );
 extern BOOL BTLV_WaitMemberChangeAct( BTLV_CORE* wk );
 
+extern void BTLV_CopyMsgToBuffer( BTLV_CORE* wk, const STRBUF* src );
+extern void BTLV_SetMsgToBuffer( BTLV_CORE* wk, const BTLV_STRPARAM* param );
+extern void BTLV_StartMsgInBuffer( BTLV_CORE* wk );
+
 
 //=============================================================================================
 /**

@@ -21,6 +21,7 @@ typedef enum {
   BTL_STRTYPE_WAZA,
   BTL_STRTYPE_WAZAOBOE,
   BTL_STRTYPE_YESNO,
+  BTL_STRTYPE_SUBWAY_LOCALTRAINER,
 }BtlStrType;
 
 enum {
@@ -81,7 +82,7 @@ extern void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* a
 //=============================================================================================
 extern void BTL_STR_MakeStringWaza( STRBUF* buf, u8 pokeID, u16 waza );
 
-
+extern void BTL_STR_MakeStringSubway( STRBUF* dst, u16 subwayTRID, BtlResult playerResult );
 
 
 
