@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-04-15T03:35:31" source="trailer_01b.mb"/>
+	<create user="fuchino" host="W00152" date="2010-04-15T03:57:25" source="trailer_01b.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2010-04-15T03:35:31" source="trailer_01b.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-04-15T03:57:25" source="trailer_01b.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -93,38 +93,38 @@
 		path="C:/home/wb_data3d/build_model/outdoor/trailer_01/tex/trailer_02a.tga"
 	>
 		<bitmap size="256">
-			6666 6666 6666 6666 6666 6666 6666 6666
-			0106 0101 1221 1010 6010 1166 1211 6111
-			1316 1313 3223 3131 6131 3266 3233 6233
-			1316 1313 3223 3131 6131 3266 3233 6233
-			1316 1313 3223 3131 6131 1166 1211 6111
-			1316 1313 3223 3131 6131 3266 3233 6233
-			1316 1313 3223 3131 6131 3266 3233 6233
-			1316 1313 3223 3131 6131 1166 1211 6111
-			1316 1313 3223 3131 6131 3266 3233 6233
-			666a 6666 6226 6666 a666 66aa 6266 a666
-			4336 3444 3333 4443 6334 4366 4444 6344
-			4336 3444 3333 4443 6334 4366 4444 6344
-			aaaa aaaa aaaa aaaa cccc cccc cccc cccc
-			262a 2626 2626 aa26 b8cc b8b8 b8b8 c8b8
-			6a6a 6a6a 6a6a aa6a cbcc cbcb cbcb cbcb
-			6a6a 6a6a 6a6a aa6a cbcc cbcb cbcb cbcb
-			6a6a 6a6a 6a6a aa6a cbcc cbcb cbcb cbcb
-			6a6a 6a6a 6a6a aa6a cbcc cbcb cbcb cbcb
-			262a 2626 2626 aa26 b8cc b8b8 b8b8 c8b8
-			aaaa aaaa aaaa aaaa cccc cccc cccc cccc
+			4444 4444 4444 4444 4444 4444 4444 4444
+			0104 0101 1221 1010 4010 1144 1211 4111
+			1314 1313 3223 3131 4131 3244 3233 4233
+			1314 1313 3223 3131 4131 3244 3233 4233
+			1314 1313 3223 3131 4131 1144 1211 4111
+			1314 1313 3223 3131 4131 3244 3233 4233
+			1314 1313 3223 3131 4131 3244 3233 4233
+			1314 1313 3223 3131 4131 1144 1211 4111
+			1314 1313 3223 3131 4131 3244 3233 4233
+			4448 4444 4224 4444 8444 4488 4244 8444
+			5334 3555 3333 5553 4335 5344 5555 4355
+			5334 3555 3333 5553 4335 5344 5555 4355
+			8888 8888 8888 8888 cccc cccc cccc cccc
+			2428 2424 2424 8824 b9cc b9b9 b9b9 c9b9
+			4848 4848 4848 8848 cbcc cbcb cbcb cbcb
+			4848 4848 4848 8848 cbcc cbcb cbcb cbcb
+			4848 4848 4848 8848 cbcc cbcb cbcb cbcb
+			4848 4848 4848 8848 cbcc cbcb cbcb cbcb
+			2428 2424 2424 8824 b9cc b9b9 b9b9 c9b9
+			8888 8888 8888 8888 cccc cccc cccc cccc
 			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
 			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
-			575b 5757 7887 7575 b575 77bb 7877 b777
-			797b 7979 9889 9797 b797 98bb 9899 b899
-			797b 7979 9889 9797 b797 98bb 9899 b899
-			797b 7979 9889 9797 b797 77bb 7877 b777
-			797b 7979 9889 9797 b797 98bb 9899 b899
-			797b 7979 9889 9797 b797 98bb 9899 b899
-			797b 7979 9889 9797 b797 77bb 7877 b777
-			797b 7979 9889 9797 b797 98bb 9899 b899
-			bbbc bbbb b88b bbbb cbbb bbcc b8bb cbbb
-			499b 9444 9999 4449 b994 49bb 4444 b944
+			676b 6767 7997 7676 b676 77bb 7977 b777
+			7a7b 7a7a a99a a7a7 b7a7 a9bb a9aa b9aa
+			7a7b 7a7a a99a a7a7 b7a7 a9bb a9aa b9aa
+			7a7b 7a7a a99a a7a7 b7a7 77bb 7977 b777
+			7a7b 7a7a a99a a7a7 b7a7 a9bb a9aa b9aa
+			7a7b 7a7a a99a a7a7 b7a7 a9bb a9aa b9aa
+			7a7b 7a7a a99a a7a7 b7a7 77bb 7977 b777
+			7a7b 7a7a a99a a7a7 b7a7 a9bb a9aa b9aa
+			bbbc bbbb b99b bbbb cbbb bbcc b9bb cbbb
+			5aab a555 aaaa 555a baa5 5abb 5555 ba55
 		</bitmap>
 	</tex_image>
 </tex_image_array>
@@ -138,8 +138,8 @@
 		1084 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="2" name="trailer_02a_pl" color_size="16">
-		1d50 2151 2175 2595 294a 3207 3218 3228
-		3688 3aa9 3e7b 3eca 4b0c 7fff 7fff 7fff
+		192f 2152 2175 2595 25d8 294a 2de6 3228
+		363b 3688 3aa9 3eca 4b0c 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
