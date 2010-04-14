@@ -2526,7 +2526,7 @@
 #define TMFLG_H03_EMPEROR_BTL             2752 /* 0x0ac0 シリンダーブリッジ：暴走族と対戦したフラグ */
 #define TMFLG_T03R0401_ITEMGET_01         2753 /* 0x0ac1 カゴメタウン：日曜日限定1日1回アイテム入手イベント */
 #define TMFLG_C03P16_CABIN_01             2754 /* 0x0ac2 ヒウンシティ：遊覧船イベント（1日1回） */
-		/* not used  2755(0x0ac3) */
+#define TMFLG_H04_KINOMI_SAND             2755 /* 0x0ac3 ビレッジブリッジ：きのみサンドイベント */
 		/* not used  2756(0x0ac4) */
 		/* not used  2757(0x0ac5) */
 		/* not used  2758(0x0ac6) */
