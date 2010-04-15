@@ -384,11 +384,13 @@ static void UNION_CHARA_CheckOBJ_Entry(UNION_SYSTEM_PTR unisys, ETC_SAVE_WORK *e
         else if(EtcSave_CheckAcquaintance(etc_save, beacon->trainer_id) == TRUE){
           UnionEff_App_ReqFriendMark(unieff, mmdl, FRIENDMARK_TYPE_ACQUAINTANCE);
         }
+    #if 0
       #ifdef PM_DEBUG   //ibe mana êÍóp Å¶checkÅ@å„Ç≈è¡Ç∑
         else if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
           UnionEff_App_ReqFriendMark(unieff, mmdl, GFUser_GetPublicRand(2));
         }
       #endif
+    #endif
       }
     }
   }

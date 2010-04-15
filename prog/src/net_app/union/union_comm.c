@@ -550,6 +550,7 @@ static void UnionComm_BeaconSearch(UNION_SYSTEM_PTR unisys)
   
   for(i = 0; i < UNION_RECEIVE_BEACON_MAX; i++){
   	bcon_buff = GFL_NET_GetBeaconData(i);
+#if 0
   #ifdef PM_DEBUG //ibe mana ê—p ¦check@Œã‚ÅÁ‚·
     if(bcon_buff == NULL && (GFL_UI_KEY_GetCont() & PAD_BUTTON_R)){
       int i;
@@ -565,6 +566,7 @@ static void UnionComm_BeaconSearch(UNION_SYSTEM_PTR unisys)
       }
     }
   #endif
+#endif
   	if(bcon_buff != NULL){
       mac_address_ptr = GFL_NET_GetBeaconMacAddress(i);
       if(mac_address_ptr != NULL){
