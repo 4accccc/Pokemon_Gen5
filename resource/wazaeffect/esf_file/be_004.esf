@@ -8,8 +8,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_01_kaiten.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 #001
 %00
-汎用ワークに値をセット	3
 制御モード変更	継続
+汎用ワークに値をセット	3
 立ち位置チェック	POS_AA	いない	NO_EXIST_AA_1
 ポケモン拡縮	POS_AA	ダイレクト	0	0	0	0	0
 ポケモンアニメ	POS_AA	アニメストップ
@@ -86,7 +86,7 @@ SE再生	SEQ_SE_NAGERU	デフォルト	真ん中	0:0:127	0:0:0
 エミッタ移動（座標指定）	be_m_ball_01_kaiten	BE_M_BALL_01_KAITEN_M_BALL_01_KAITEN	直線	8:4:15	POS_E	3:35:5	1:1:0
 ラベル	NO_EXIST_E_2
 タイマーによるウエイト	30
-制御モード変更	逐次
+制御モード変更	継続
 立ち位置チェック	POS_TR_AA	いない	NO_MOVE_AA
 ポケモンパレットフェード	POS_TR_AA	0	16	0	0:0:0
 ポケモンα値	POS_TR_AA	追従	1	16	0	0
