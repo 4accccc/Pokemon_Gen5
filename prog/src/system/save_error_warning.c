@@ -167,7 +167,6 @@ static void Local_WarningDispDraw(void)
 		DC_FlushRange(charData->pRawData, charData->szByte);
 		//念のためDMAを使用するのは避ける
 		GFL_STD_MemCopy16(charData->pRawData, G2_GetBG1CharPtr(), charData->szByte);
-		OS_TPrintf("エラー画面：キャラクタサイズ＝%dbyte\n", charData->szByte);
 		GF_ASSERT(MESSAGE_START_CHARNO*0x20 >= charData->szByte);	//このASSERTに引っかかる場合はBG_DATA_SIZEを大きくする必要がある。その分エラーメッセージに割けるキャラクタ領域が少なくなるので注意
 	}
 	GFL_HEAP_FreeMemory(arcData);
