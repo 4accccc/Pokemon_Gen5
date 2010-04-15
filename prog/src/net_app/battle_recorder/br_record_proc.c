@@ -1589,6 +1589,8 @@ static void Br_Record_AddPokeIcon( BR_RECORD_WORK * p_wk, GFL_CLUNIT *p_clunit, 
 		p_wk->p_icon[ no ] = GFL_CLACT_WK_Create( p_clunit,
           p_wk->res_icon_chr[i],p_wk->res_icon_plt,p_wk->res_icon_cel,
             &cldata, CLSYS_DEFREND_MAIN, heapID );
+
+    GFL_CLACT_WK_SetObjMode( p_wk->p_icon[ no ], GX_OAM_MODE_XLU );
 		
     GFL_CLACT_WK_SetPlttOffs( p_wk->p_icon[ no ], POKEICON_GetPalNum( monsno, form, gender, 0 ),
         CLWK_PLTTOFFS_MODE_OAM_COLOR );
