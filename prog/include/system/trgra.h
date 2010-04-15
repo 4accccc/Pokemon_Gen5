@@ -41,20 +41,20 @@
  *					プロトタイプ宣言
 */
 //=============================================================================
-extern ARCID TRGRA_GetArcID( void );
+extern ARCID TRGRA_GetArcID( int dir );
 //NCGR
-extern ARCDATID TRGRA_GetCgrArcIndex( int tr_type );
+extern ARCDATID TRGRA_GetCgrArcIndex( int tr_type, int dir );
 //NCBR
-extern ARCDATID TRGRA_GetCbrArcIndex( int tr_type );
+extern ARCDATID TRGRA_GetCbrArcIndex( int tr_type, int dir );
 //NCLR
-extern ARCDATID TRGRA_GetPalArcIndex( int tr_type );
+extern ARCDATID TRGRA_GetPalArcIndex( int tr_type, int dir );
 //NCER	-> マルチセル用のパーツです。
-extern ARCDATID TRGRA_GetCelArcIndex( int tr_type );
+extern ARCDATID TRGRA_GetCelArcIndex( int tr_type, int dir );
 //NANR
-extern ARCDATID TRGRA_GetAnmArcIndex( int tr_type );
+extern ARCDATID TRGRA_GetAnmArcIndex( int tr_type, int dir );
 //NMCR
-extern ARCDATID TRGRA_GetMCelArcIndex( int tr_type );
+extern ARCDATID TRGRA_GetMCelArcIndex( int tr_type, int dir );
 //NMAR
-extern ARCDATID TRGRA_GetMAnmArcIndex( int tr_type );
+extern ARCDATID TRGRA_GetMAnmArcIndex( int tr_type, int dir );
 //NCEC MCSS用ファイル
-extern ARCDATID TRGRA_GetNcecArcIndex( int tr_type );
+extern ARCDATID TRGRA_GetNcecArcIndex( int tr_type, int dir );
