@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2010-04-14T17:10:39"/>
+	<create user="mori" host="W00155" date="2010-04-15T15:29:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -387,27 +387,6 @@
 		<language name="JPN_KANJI" width="256">通信交換</language>
 	</row>
 
-	<row id="MSG_TCARD_12">
-		<comment>カード時間表記用項目。
-時間と分の間の「：」で区切り。</comment>
-		<language name="JPN" width="256">:</language>
-		<language name="JPN_KANJI" width="256">:</language>
-	</row>
-
-	<row id="MSG_TCARD_13">
-		<comment>はじめての殿堂入り年月日の項目に代入する記号
-※はじめての殿堂入りをするまで</comment>
-		<language name="JPN" width="256">ーー</language>
-		<language name="JPN_KANJI" width="256">ーー</language>
-	</row>
-
-	<row id="MSG_TCARD_14">
-		<comment>はじめての殿堂入り年月日の項目に代入する記号
-※はじめての殿堂入りをするまで</comment>
-		<language name="JPN" width="256">ーー:ーー</language>
-		<language name="JPN_KANJI" width="256">ーー:ーー</language>
-	</row>
-
 	<row id="MSG_TCARD_15" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>カード裏面項目。野生エンカウント回数。
 項目名と回数を2行に分けて表示。
@@ -476,6 +455,27 @@
 空けて「○○○○ランク」と入れる。</comment>
 		<language name="JPN" width="256">バトルけんてい</language>
 		<language name="JPN_KANJI" width="256">バトル検定</language>
+	</row>
+
+	<row id="MSG_TCARD_12" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+		<comment>カード時間表記用項目。
+時間と分の間の「：」で区切り。</comment>
+		<language name="JPN" width="256">:</language>
+		<language name="JPN_KANJI" width="256">:</language>
+	</row>
+
+	<row id="MSG_TCARD_13" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+		<comment>はじめての殿堂入り年月日の項目に代入する記号
+※はじめての殿堂入りをするまで</comment>
+		<language name="JPN" width="256">ーー</language>
+		<language name="JPN_KANJI" width="256">ーー</language>
+	</row>
+
+	<row id="MSG_TCARD_14" back-color="#ff8080,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+		<comment>はじめての殿堂入り年月日の項目に代入する記号
+※はじめての殿堂入りをするまで</comment>
+		<language name="JPN" width="256">ーー:ーー</language>
+		<language name="JPN_KANJI" width="256">ーー:ーー</language>
 	</row>
 
 	<row id="MSG_TCARD_BACK">
