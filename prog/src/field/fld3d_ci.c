@@ -668,6 +668,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
       if ( mmdl != NULL ) MMDL_Delete( mmdl );
       else GF_ASSERT_MSG( 0,"OBJ DEL ëŒè€ÇÃOBJÇ™ãèÇ‹ÇπÇÒ  %d\n",id );
+      break;
     }
     //no break
   case 2:
