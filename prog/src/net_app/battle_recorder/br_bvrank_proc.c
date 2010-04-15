@@ -364,7 +364,7 @@ static void Br_Seq_FadeInBefore( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
 
     //バトルビデオさいしん３０件
     p_wk->p_title = BR_MSGWIN_Init( BG_FRAME_M_FONT, 3, 3, 26, 4, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
-    BR_MSGWIN_PrintColor( p_wk->p_title, p_msg, msg_605, p_font, BR_PRINT_COL_NORMAL );
+    BR_MSGWIN_PrintColor( p_wk->p_title, p_msg, msg_605+p_wk->p_param->mode, p_font, BR_PRINT_COL_NORMAL );
 
   }
 
@@ -994,7 +994,7 @@ static void Br_Rank_CreatePokeIcon( BR_RANK_WORK *p_wk, GFL_CLUNIT *p_unit, HEAP
 
         //CLWK作成
         cldata.pos_x  = 106+4 + j * 24;
-        cldata.pos_y  =  76 + i * 24;
+        cldata.pos_y  =  76-4 + i * 24;
         p_wk->p_poke[i][j]  = GFL_CLACT_WK_Create( p_unit,
             p_wk->cgr[i][j], p_wk->plt, p_wk->cel,
             &cldata, CLSYS_DRAW_MAIN, heapID );

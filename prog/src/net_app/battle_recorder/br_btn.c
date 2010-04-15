@@ -125,6 +125,7 @@ struct _BR_BTNEX_WORK
   HEAPID              heapID;
   GFL_CLUNIT          *p_unit;
   BMPOAM_SYS_PTR		  p_bmpoam;
+  STRBUF              *p_strbuf;
 };
 
 //-------------------------------------
@@ -1705,6 +1706,7 @@ static void BR_BTNEX_Init( BR_BTNEX_WORK *p_wk, const BR_BTN_DATA *cp_data, GFL_
   p_wk->heapID  = heapID;
   p_wk->p_unit  = p_unit;
   p_wk->p_bmpoam  = p_bmpoam;
+  p_wk->p_strbuf = GFL_STR_CreateCopyBuffer( cp_strbuf, heapID );
 
 	//ƒ{ƒ^ƒ“ì¬
 	{	
@@ -1725,7 +1727,7 @@ static void BR_BTNEX_Init( BR_BTNEX_WORK *p_wk, const BR_BTN_DATA *cp_data, GFL_
 		p_font	= BR_RES_GetFont( cp_res );
 
 		//ì¬
-		p_wk->p_btn		= BR_BTN_InitEx( &cldata, cp_strbuf, BR_BTN_DATA_WIDTH, p_wk->display, p_unit, 
+		p_wk->p_btn		= BR_BTN_InitEx( &cldata, p_wk->p_strbuf, BR_BTN_DATA_WIDTH, p_wk->display, p_unit, 
 				p_bmpoam, p_font, &res, GetHeapLowID( heapID ) );
 
 	}
@@ -1742,6 +1744,7 @@ static void BR_BTNEX_Exit( BR_BTNEX_WORK *p_wk )
 {	
 	if( p_wk->is_use )
 	{	
+    GFL_STR_DeleteBuffer( p_wk->p_strbuf );
     BR_BTN_Exit( p_wk->p_btn );
 		GFL_STD_MemClear( p_wk, sizeof(BR_BTNEX_WORK) );
 	}
@@ -1909,9 +1912,10 @@ static void BR_BTNEX_ChangeDisplay( BR_BTNEX_WORK *p_wk, CLSYS_DRAW_TYPE display
       p_msg		= BR_RES_GetMsgData( p_wk->cp_res );
       msgID		= BR_BTN_DATA_GetParam( p_wk->cp_data, BR_BTN_DATA_PARAM_MSGID );
 
+
       //ì¬
-      p_wk->p_btn		= BR_BTN_Init( &cldata, msgID, BR_BTN_DATA_WIDTH, display, p_wk->p_unit, 
-          p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
+      p_wk->p_btn		= BR_BTN_InitEx( &cldata, p_wk->p_strbuf, BR_BTN_DATA_WIDTH, display, p_wk->p_unit, 
+          p_wk->p_bmpoam, p_font, &res, p_wk->heapID );
     }
   }
 }

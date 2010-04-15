@@ -1649,6 +1649,7 @@ static void Br_BallEff_Seq_BigCircle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 static void Br_BallEff_Seq_Circle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_BallEff_Seq_CircleCont( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_BallEff_Seq_EmitFollow( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_BallEff_Seq_OpeningTouch( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 //動き
 static void MOVE_EMIT_Init( MOVE_EMIT *p_wk, const GFL_POINT *cp_center_pos, u16 r, u16 max_r, u16 init_angle, u16 end_angle, int cnt_max );
 static BOOL MOVE_EMIT_Main( MOVE_EMIT *p_wk, GFL_POINT *p_now_pos, int cnt );
@@ -1845,6 +1846,10 @@ void BR_BALLEFF_StartMove( BR_BALLEFF_WORK *p_wk, BR_BALLEFF_MOVE move, const GF
   case BR_BALLEFF_MOVE_EMIT_FOLLOW:   //放射に動き、ついて行く STOP
     BR_SEQ_SetNext( p_wk->p_seq, Br_BallEff_Seq_EmitFollow );
     break;
+  case BR_BALLEFF_MOVE_OPENING_TOUCH: //開始時のタッチ     　STOP
+    BR_SEQ_SetNext( p_wk->p_seq, Br_BallEff_Seq_OpeningTouch );
+    break;
+
   }
 }
 //----------------------------------------------------------------------------
@@ -2478,6 +2483,77 @@ static void Br_BallEff_Seq_EmitFollow( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
 
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  オープニングのタッチの動き
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンス
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_BallEff_Seq_OpeningTouch( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_START_CIRCLE,
+    SEQ_WAIT_CIRCLE,
+    SEQ_END,
+  };
+   
+  BR_BALLEFF_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_START_CIRCLE:
+    {
+      int i;
+      GFL_CLACTPOS  clpos;
+      u16 now_angle;
+
+      //ボール変更
+      BR_BALLEFF_SetAnmSeq( p_wk, 0 );
+
+      //円を表示  オープニングに続き
+      for( i = BR_BALLEFF_CIRCLE_USE_MAX; i < BR_BALLEFF_CLWK_MAX; i++ )
+      { 
+        now_angle = p_wk->move[i].circle.init_angle + p_wk->cnt / p_wk->move[i].circle.cnt_max;
+        MOVE_EMIT_Init( &p_wk->move[i].emit, &sc_opening_end_pos, BR_BALLEFF_CIRCLE_R, 1, now_angle, now_angle + 0xF000, 30 );
+        GFL_CLACT_WK_SetObjMode( p_wk->p_clwk[i], GX_OAM_MODE_NORMAL );
+      }
+      p_wk->cnt = 0;
+
+      *p_seq  = SEQ_WAIT_CIRCLE;
+    }
+    /* fallthrough */
+
+  case SEQ_WAIT_CIRCLE:
+    { 
+      int i;
+      GFL_POINT pos;
+      GFL_CLACTPOS  clpos;
+      for( i = BR_BALLEFF_CIRCLE_USE_MAX; i < BR_BALLEFF_CLWK_MAX; i++ )
+      { 
+        MOVE_EMIT_Main( &p_wk->move[i].emit, &pos, p_wk->cnt );
+        clpos.x = pos.x;
+        clpos.y = pos.y;
+        GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, p_wk->draw );
+      }
+
+      if( p_wk->cnt++ > 60 )
+      { 
+        *p_seq  = SEQ_END;
+      }
+    }
+    break;
+
+  case SEQ_END:
+    BR_SEQ_SetNext( p_seqwk, Br_BallEff_Seq_Nop );
+    break;
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  放射の動き  初期化
@@ -2518,7 +2594,7 @@ static BOOL MOVE_EMIT_Main( MOVE_EMIT *p_wk, GFL_POINT *p_now_pos, int cnt )
 { 
 
   const u16 diff_angle  = p_wk->end_angle - p_wk->init_angle;
-  const u16 diff_r      = p_wk->max_r - p_wk->r;
+  const s16 diff_r      = (s16)p_wk->max_r - (s16)p_wk->r;
 
   u16 angle;
   u16 r;

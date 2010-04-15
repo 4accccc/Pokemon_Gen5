@@ -184,7 +184,7 @@ void BR_CODEIN_Exit( BR_CODEIN_WORK *wk )
  *
  */
 //--------------------------------------------------------------
-BR_CODEIN_PARAM*	BR_CODEIN_ParamCreate( int heap_id, int word_len, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, int block[] )
+BR_CODEIN_PARAM*	BR_CODEIN_ParamCreate( int heap_id, int word_len, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, BR_BALLEFF_WORK *p_balleff, int block[] )
 {
 	int i;
 	BR_CODEIN_PARAM* wk = NULL;
@@ -194,6 +194,7 @@ BR_CODEIN_PARAM*	BR_CODEIN_ParamCreate( int heap_id, int word_len, GFL_CLUNIT *p
   wk->p_res     = p_res;
 	wk->word_len 	= word_len;	
 	wk->strbuf		= GFL_STR_CreateBuffer( word_len + 1, heap_id );
+  wk->p_balleff = p_balleff;
 	
 	for ( i = 0; i < BR_CODE_BLOCK_MAX; i++ ){
 		wk->block[ i ] = block[ i ];

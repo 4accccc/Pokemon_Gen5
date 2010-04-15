@@ -49,6 +49,7 @@ typedef struct
   BR_TEXT_WORK  *p_text;
   PRINT_QUE     *p_que;
 	HEAPID        heapID;
+  BR_BALLEFF_WORK       *p_balleff;
 } BR_BR_CODEIN_WORK;
 
 
@@ -127,11 +128,13 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
   BR_RES_LoadOBJ( p_param->p_res, BR_RES_OBJ_NUM_CURSOR_S, p_wk->heapID );
   BR_RES_LoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, p_wk->heapID );
 
+
   //モジュール
+  p_wk->p_balleff = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, CLSYS_DRAW_SUB, p_wk->heapID );
   {
     int block[BR_CODE_BLOCK_MAX];
     BR_CODEIN_BlockDataMake_2_5_5( block );
-    p_wk->p_codein_param  = BR_CODEIN_ParamCreate( p_wk->heapID, 12, p_param->p_unit, p_param->p_res, block );
+    p_wk->p_codein_param  = BR_CODEIN_ParamCreate( p_wk->heapID, 12, p_param->p_unit, p_param->p_res, p_wk->p_balleff, block );
     p_wk->p_codein_wk     = BR_CODEIN_Init( p_wk->p_codein_param, p_wk->heapID );
   }
   { 
@@ -159,12 +162,14 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 	BR_BR_CODEIN_WORK				*p_wk	= p_wk_adrs;
 	BR_CODEIN_PROC_PARAM	*p_param	= p_param_adrs;
 
+
 	//モジュール破棄
   { 
     BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
     BR_CODEIN_Exit( p_wk->p_codein_wk );
     BR_CODEIN_ParamDelete( p_wk->p_codein_param );
     PRINTSYS_QUE_Delete( p_wk->p_que );
+    BR_BALLEFF_Exit( p_wk->p_balleff );
   }
 
   //グラフィック破棄
@@ -269,6 +274,7 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
     BR_TEXT_PrintMain( p_wk->p_text );
   }
   PRINTSYS_QUE_Main( p_wk->p_que );
+  BR_BALLEFF_Main( p_wk->p_balleff );
 
 	return GFL_PROC_RES_CONTINUE;
 }

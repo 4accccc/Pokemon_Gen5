@@ -489,7 +489,6 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 //-----------------------------------------------------------------------------
 static void Br_BvDelete_CreateDisplay( BR_BVDELETE_WORK *p_wk, BR_BVDELETE_PROC_PARAM *p_param )
 {
-  //上画面はテキストだけ
   if( p_wk->p_text == NULL )
   { 
     p_wk->p_text  = BR_TEXT_Init( p_param->p_res, p_wk->p_que, p_wk->heapID );

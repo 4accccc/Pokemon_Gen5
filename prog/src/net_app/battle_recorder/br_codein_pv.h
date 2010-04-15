@@ -19,6 +19,7 @@
 #include "msg/msg_battle_rec.h"
 #include "code_input.naix"
 #include "br_codein.h"
+#include "br_util.h"
 
 #define CODE_OAM_MAX		( 12 )					///< 文字コード数
 #define BAR_OAM_MAX			( BR_CODE_BLOCK_MAX - 1 )	///< ブロック

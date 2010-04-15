@@ -637,6 +637,16 @@ static BOOL Br_BvSearch_Seq_Menu_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
       switch( select )
       { 
       case BRSEARCH_DISP_PRINT_PLACE:
+        { 
+          u32 x, y;
+          GFL_POINT pos;
+
+          GFL_UI_TP_GetPointTrg( &x, &y );
+          pos.x = x;
+          pos.y = y;
+          BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+        }
+        PMSND_PlaySE( BR_SND_SE_OK );
         p_param->search_data.battle_mode_no = BATTLEMODE_SEARCH_NO_ALL;
         Br_BvSearch_PrintMainDisplay( p_wk, p_param, BRSEARCH_DISP_PRINT_PLACE );
         BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_710 );
@@ -644,6 +654,16 @@ static BOOL Br_BvSearch_Seq_Menu_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
         return TRUE;
 
       case BRSEARCH_DISP_PRINT_POKE:
+        { 
+          u32 x, y;
+          GFL_POINT pos;
+
+          GFL_UI_TP_GetPointTrg( &x, &y );
+          pos.x = x;
+          pos.y = y;
+          BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+        }
+        PMSND_PlaySE( BR_SND_SE_OK );
         p_param->search_data.monsno     = BATTLE_REC_SEARCH_MONSNO_NONE;
         Br_BvSearch_PrintMainDisplay( p_wk, p_param, BRSEARCH_DISP_PRINT_POKE );
         BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_711 );
@@ -658,9 +678,21 @@ static BOOL Br_BvSearch_Seq_Menu_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
           if( country_code == 0 )
           { 
             BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_725 );
+            PMSND_PlaySE( BR_SND_SE_NG );
           }
           else
           { 
+
+            { 
+              u32 x, y;
+              GFL_POINT pos;
+
+              GFL_UI_TP_GetPointTrg( &x, &y );
+              pos.x = x;
+              pos.y = y;
+              BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+            }
+            PMSND_PlaySE( BR_SND_SE_OK );
             if( p_param->search_data.local_code == BATTLE_REC_SEARCH_LOCAL_CODE_NONE )
             { 
               MYSTATUS  *p_status = GAMEDATA_GetMyStatus( p_param->p_gamedata );
@@ -687,6 +719,12 @@ static BOOL Br_BvSearch_Seq_Menu_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
     { 
       if( BR_BTN_GetTrg( p_wk->p_btn[BR_BVSEARCH_BTNID_MENU_RETURN], x, y ))
       { 
+
+        GFL_POINT pos;
+        pos.x = x;
+        pos.y = y;
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+
         p_wk->next_sub_seq  = BR_BVSEARCH_SUBSEQ_END;
         BR_PROC_SYS_Pop( p_param->p_procsys );
         return TRUE;
@@ -697,6 +735,12 @@ static BOOL Br_BvSearch_Seq_Menu_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
             || p_param->search_data.local_code != BATTLE_REC_SEARCH_LOCAL_CODE_NONE
             || p_param->search_data.battle_mode_no != BATTLEMODE_SEARCH_NO_ALL )
         { 
+
+          GFL_POINT pos;
+          pos.x = x;
+          pos.y = y;
+          BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+
           p_wk->next_sub_seq  = BR_BVSEARCH_SUBSEQ_END;
           BR_PROC_SYS_Push( p_param->p_procsys, BR_PROCID_BV_RANK );
           return TRUE;
@@ -1182,15 +1226,6 @@ static BRSEARCH_MENU_SELECT Br_BvSearch_GetTrgMenu( BR_BVSEARCH_WORK *p_wk )
       if( ( ((u32)( x - sc_rect[i].left) <= (u32)(sc_rect[i].right - sc_rect[i].left))
             & ((u32)( y - sc_rect[i].top) <= (u32)(sc_rect[i].bottom - sc_rect[i].top))) )
       { 
-        
-        u32 x, y;
-        GFL_POINT pos;
-
-        GFL_UI_TP_GetPointTrg( &x, &y );
-        pos.x = x;
-        pos.y = y;
-        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
-        PMSND_PlaySE( BR_SND_SE_OK );
         return i;
       }
     }

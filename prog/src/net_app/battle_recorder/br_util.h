@@ -56,6 +56,7 @@ typedef enum
   BR_BALLEFF_MOVE_CIRCLE,        //円を描く            LOOP
   BR_BALLEFF_MOVE_CIRCLE_CONT,   //場所を変えて円を描くLOOP
   BR_BALLEFF_MOVE_EMIT_FOLLOW,   //放射に動き、ついて行く STOP
+  BR_BALLEFF_MOVE_OPENING_TOUCH, //開始時のタッチ     　STOP
 
 }BR_BALLEFF_MOVE;
 //-------------------------------------

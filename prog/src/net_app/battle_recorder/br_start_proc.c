@@ -339,6 +339,7 @@ static void Br_Start_Seq_Open( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_TOUCH:
     if( GFL_UI_TP_GetTrg() )
     { 
+
       PMSND_PlaySE( BR_SND_SE_TOUCHHERE );
       BR_MSGWIN_Exit( p_wk->p_here );
       p_wk->p_here  = NULL;
@@ -362,6 +363,7 @@ static void Br_Start_Seq_Open( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
       if( is_end )
       { 
+        BR_BALLEFF_StartMove( p_wk->p_balleff[CLSYS_DRAW_SUB], BR_BALLEFF_MOVE_OPENING_TOUCH, NULL );
         (*p_seq)  = SEQ_FADEOUT_INIT;
       }
     }
@@ -380,8 +382,11 @@ static void Br_Start_Seq_Open( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_END:
-    BR_PROC_SYS_Push( p_wk->p_param->p_procsys, BR_PROCID_MENU );
-    BR_SEQ_SetNext( p_seqwk, Br_Start_Seq_End );
+    if( BR_BALLEFF_IsMoveEnd( p_wk->p_balleff[CLSYS_DRAW_SUB] ) )
+    { 
+      BR_PROC_SYS_Push( p_wk->p_param->p_procsys, BR_PROCID_MENU );
+      BR_SEQ_SetNext( p_seqwk, Br_Start_Seq_End );
+    }
     break;
   }
   

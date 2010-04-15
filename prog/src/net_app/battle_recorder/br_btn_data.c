@@ -1134,7 +1134,7 @@ static void BR_BTN_DATA_SYS_ReLoadSaveData( BR_BTN_DATA_SYS *p_wk )
 						p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_saveinfo->is_valid[ 1+id ];
 						if( p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID] )
 						{	
-							p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_MSGID]	= msg_09;
+							p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_MSGID]	= msg_25;
 						}
 					}
           break;

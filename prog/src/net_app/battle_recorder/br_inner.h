@@ -58,7 +58,7 @@ enum
 //=====================================
 #define BR_PRINT_COL_BOOT	  	( PRINTSYS_LSB_Make(  1, 14,  0 ) )	// 起動時の文字色
 #define BR_PRINT_COL_NORMAL 	( PRINTSYS_LSB_Make( 15, 13,  0 ) )	// よく使う文字色
-#define	BR_PRINT_COL_BLACK		( PRINTSYS_LSB_Make( 14, 13,  0 ) )	// フォントカラー
+#define	BR_PRINT_COL_BLACK		( PRINTSYS_LSB_Make( 0xB, 0xD,  0 ) )	// フォントカラー
 #define	BR_PRINT_COL_INFO		  ( PRINTSYS_LSB_Make( 15, 13, 12 ) )	// フォントカラー
 #define	BR_PRINT_COL_PHOTO		( BR_PRINT_COL_NORMAL )
 #define	BR_PRINT_COL_BOX_SHOT	( BR_PRINT_COL_NORMAL )

@@ -1046,14 +1046,14 @@ static void Br_BtlSubway_CreateMainDisplayWifi( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
     { 
       21,
       10,
-      7,
+      6,
       2,
       msg_814,
     },
     { 
-      25,
+      27,
       10,
-      4,
+      3,
       2,
       msg_809,
     },
@@ -1362,7 +1362,7 @@ static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, GFL_CLUNIT *p_clunit, const BR
     cldata.anmseq = 0;
     for( i = 0; i < OBJNUMBER_MAX; i++ )
     {
-      cldata.pos_x  = x + 16 + i * 16;
+      cldata.pos_x  = x + 20 + i * 16;
       cldata.pos_y  = y;
 
       p_wk->p_num[i] = GFL_CLACT_WK_Create( p_clunit,

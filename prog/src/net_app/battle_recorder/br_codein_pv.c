@@ -629,7 +629,7 @@ void CI_pv_ButtonManagerCallBack( u32 button, u32 event, void* work )
 		
 		///< 文字入力部分が押された
 		if ( button >= eHRT_CODE_0 && button <= eHRT_CODE_11 ){
-			
+#if 0
 			CIPV_Printf( "button = %3d\n", button );
 			
 			if ( wk->code[ button ].size == TRUE ){
@@ -645,6 +645,7 @@ void CI_pv_ButtonManagerCallBack( u32 button, u32 event, void* work )
 				wk->state.target	= wk->code[ button ].group;
 			}
       PMSND_PlaySE( BR_SND_SE_NG );
+#endif
 		}
 		///< その他のボタン
 		else {
@@ -653,12 +654,30 @@ void CI_pv_ButtonManagerCallBack( u32 button, u32 event, void* work )
 			if ( button == eHRT_BACK ){
 				wk->cur[ 1 ].move_wk.pos.x = 0;
 				wk->cur[ 1 ].move_wk.pos.y = 2;
-        PMSND_PlaySE( BR_SND_SE_NG );
+        PMSND_PlaySE( BR_SND_SE_OK );
+
+        { 
+          u32 x, y;
+          GFL_POINT pos;
+          GFL_UI_TP_GetPointTrg( &x, &y );
+          pos.x = x;
+          pos.y = y;
+          BR_BALLEFF_StartMove( wk->param.p_balleff, BR_BALLEFF_MOVE_EMIT, &pos );
+        }
 			}
 			else if ( button == eHRT_END ){
 				wk->cur[ 1 ].move_wk.pos.x = 3;
         wk->cur[ 1 ].move_wk.pos.y = 2;
         PMSND_PlaySE( BR_SND_SE_OK );
+
+        { 
+          u32 x, y;
+          GFL_POINT pos;
+          GFL_UI_TP_GetPointTrg( &x, &y );
+          pos.x = x;
+          pos.y = y;
+          BR_BALLEFF_StartMove( wk->param.p_balleff, BR_BALLEFF_MOVE_EMIT, &pos );
+        }
 			}
 			else {
 				wk->cur[ 1 ].move_wk.pos.x = ( button - eHRT_NUM_0 ) % 5;
@@ -675,6 +694,15 @@ void CI_pv_ButtonManagerCallBack( u32 button, u32 event, void* work )
 				
 				if ( wk->focus_now == 0 ){ 
           return;
+        }  
+        
+        { 
+          u32 x, y;
+          GFL_POINT pos;
+          GFL_UI_TP_GetPointTrg( &x, &y );
+          pos.x = x;
+          pos.y = y;
+          BR_BALLEFF_StartMove( wk->param.p_balleff, BR_BALLEFF_MOVE_EMIT, &pos );
         }
 				
 				cur_p = wk->cur[ 0 ].state;				
@@ -683,13 +711,14 @@ void CI_pv_ButtonManagerCallBack( u32 button, u32 event, void* work )
 				GFL_CLACT_WK_SetAnmSeq( wk->code[ cur_p ].clwk, CI_pv_disp_CodeAnimeGet( wk->code[ cur_p ].state, wk->code[ cur_p ].size ) );
 				
 				///< カーソル
-				CI_pv_disp_CurOAM_Visible( wk, 1, TRUE );
+      #if 0
+        CI_pv_disp_CurOAM_Visible( wk, 1, TRUE );
 				CI_pv_disp_CurSQ_PosSet( wk, button - eHRT_NUM_0 );
 				CI_pv_disp_CurOAM_Visible( wk, 1, FALSE );
 				CI_pv_disp_CurOAM_Visible( wk, 2, TRUE );
 				CI_pv_disp_CurSQ_PosSetEx( wk, button - eHRT_NUM_0, 2 );
 				GFL_CLACT_WK_SetAnmSeq( wk->cur[ 2 ].clwk, eANM_CUR_TOUCH );
-							
+			#endif		
 				now_g = wk->code[ cur_p ].group;
 				cur_p++;
 				if ( cur_p == wk->code_max ){

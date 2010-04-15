@@ -11,6 +11,7 @@
 #pragma once
 
 #include "br_res.h"
+#include "br_util.h"
 
 //=============================================================================
 /**
@@ -48,6 +49,7 @@ typedef struct
 	STRBUF*		strbuf;						///< [out]空欄ならバッファそうでなければデフォルト値
   GFL_CLUNIT  *p_unit;        ///< [in ]OAM管理
   BR_RES_WORK *p_res;         ///< [in ]リソース管理
+  BR_BALLEFF_WORK *p_balleff; ///< [in ]演出ワーク
 } BR_CODEIN_PARAM;
 
 //-------------------------------------
@@ -69,7 +71,7 @@ extern void BR_CODEINT_GetNumberBlock( const BR_CODEIN_WORK *wk, int *p_tbl, int
 extern u64 BR_CODEIN_GetNumber( const BR_CODEIN_WORK *wk );
 
 //引数作成
-extern BR_CODEIN_PARAM*	BR_CODEIN_ParamCreate( int heap_id, int word_len, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, int block[] );
+extern BR_CODEIN_PARAM*	BR_CODEIN_ParamCreate( int heap_id, int word_len, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, BR_BALLEFF_WORK *p_balleff, int block[] );
 extern void	 BR_CODEIN_ParamDelete( BR_CODEIN_PARAM* codein_param );
 
 //--------------------------------------------------------------

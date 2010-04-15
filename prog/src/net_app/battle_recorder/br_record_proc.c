@@ -54,8 +54,15 @@ typedef enum
 //=====================================
 typedef enum
 {
-  BR_RECORD_MSGWINID_S_PROFILE,       //プロフィールをみる／しまう
-  BR_RECORD_MSGWINID_S_MAX,
+  BR_RECORD_MSGWINID_S_PROFILE  = 0,       //プロフィールをみる／しまう
+  BR_RECORD_MSGWINID_S_VIDEO_MAX,
+
+  BR_RECORD_MSGWINID_S_YES  = 0,
+  BR_RECORD_MSGWINID_S_NO,
+  BR_RECORD_MSGWINID_S_SAVE_MAX,
+
+
+  BR_RECORD_MSGWINID_S_MAX  = BR_RECORD_MSGWINID_S_SAVE_MAX,
 } BR_RECORD_MSGWINID_S;
 typedef enum
 {
@@ -154,6 +161,9 @@ static void Br_Record_DeleteSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PA
 //ダウンロード画面
 static void Br_Record_Download_CreateDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 static void Br_Record_Download_DeleteDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
+//セーブしますか？
+static void Br_Record_Save_CreateDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM *p_param );
+static void Br_Record_Save_DeleteDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM *p_param );
 
 //-------------------------------------
 ///	その他
@@ -161,7 +171,8 @@ static void Br_Record_Download_DeleteDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_P
 static BOOL Br_Record_Check2vs2( BATTLE_REC_HEADER_PTR p_head );
 static BOOL Br_Record_GetTrgProfile( BR_RECORD_WORK * p_wk, u32 x, u32 y );
 static BOOL Br_Record_GetTrgStart( BR_RECORD_WORK * p_wk, u32 x, u32 y );
-
+static BOOL Br_Record_GetTrgYes( BR_RECORD_WORK *p_wk, u32 x, u32 y );
+static BOOL Br_Record_GetTrgNo( BR_RECORD_WORK *p_wk, u32 x, u32 y );
 //=============================================================================
 /**
  *					外部参照
@@ -1116,10 +1127,28 @@ static void Br_Record_Seq_RecPlayBeforeSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
 { 
   enum
   { 
+    //はい、いいえ
     SEQ_CHANGE_FADEOUT_START,
     SEQ_CHANGE_FADEOUT_WAIT,
     SEQ_CHANGE_MAIN,
 
+    SEQ_FADEIN_START_SEL,
+    SEQ_FADEIN_WAIT_SEL,
+    SEQ_FADEIN_END_SEL,
+
+    SEQ_SELECT,
+
+    SEQ_FADEOUT_START_SEL,
+    SEQ_FADEOUT_WAIT_SEL,
+    SEQ_FADEOUT_END_SEL,
+
+    //選択からもどる
+    SEQ_FADEOUT_START_RET,
+    SEQ_FADEOUT_WAIT_RET,
+    SEQ_FADEOUT_END_RET,
+
+    //セーブ
+    SEQ_CHANGE_SAVE,
     SEQ_FADEIN_START,
     SEQ_FADEIN_WAIT,
     SEQ_FADEIN_END,
@@ -1137,6 +1166,9 @@ static void Br_Record_Seq_RecPlayBeforeSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
   switch( *p_seq )
   { 
 
+    //-------------------------------------
+    ///	はい、いいえ選択
+    //=====================================
   case SEQ_CHANGE_FADEOUT_START:
     BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
     *p_seq  = SEQ_CHANGE_FADEOUT_WAIT;
@@ -1159,6 +1191,85 @@ static void Br_Record_Seq_RecPlayBeforeSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
       Br_Record_DeleteMainDisplay( p_wk,  p_wk->p_param );
     }
     Br_Record_DeleteSubDisplay( p_wk, p_wk->p_param );
+
+    Br_Record_Save_CreateDisplay( p_wk, p_wk->p_param );
+
+    *p_seq  = SEQ_FADEIN_START_SEL;
+    break;
+
+
+  case SEQ_FADEIN_START_SEL:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    (*p_seq)++;
+    break;
+  case SEQ_FADEIN_WAIT_SEL:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_FADEIN_END_SEL:
+      (*p_seq)++;
+    break;
+
+  case SEQ_SELECT:
+    { 
+      u32 x, y;
+      if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+      { 
+        if( Br_Record_GetTrgYes( p_wk, x, y ) )
+        { 
+          *p_seq  = SEQ_FADEOUT_START_SEL;
+          break;
+        }
+
+        if( Br_Record_GetTrgNo( p_wk, x, y ) )
+        { 
+          *p_seq  = SEQ_FADEOUT_START_RET;
+          break;
+        }
+      }
+    }
+    break;
+
+  case SEQ_FADEOUT_START_SEL:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    (*p_seq)++;
+    break;
+  case SEQ_FADEOUT_WAIT_SEL:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_FADEOUT_END_SEL:
+    Br_Record_Save_DeleteDisplay( p_wk, p_wk->p_param );
+    *p_seq  = SEQ_CHANGE_SAVE;
+    break;
+
+    //-------------------------------------
+    ///	戻る
+    //=====================================
+  case SEQ_FADEOUT_START_RET:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    (*p_seq)++;
+    break;
+  case SEQ_FADEOUT_WAIT_RET:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_FADEOUT_END_RET:
+
+    Br_Record_Save_DeleteDisplay( p_wk, p_wk->p_param );
+    BR_SEQ_SetNext( p_seqwk,Br_Record_Seq_FadeInBefore );
+    break;
+
+    //-------------------------------------
+    ///	セーブ
+    //=====================================
+  case SEQ_CHANGE_SAVE:
     Br_Record_Download_CreateDisplay( p_wk, p_wk->p_param );
     *p_seq  = SEQ_FADEIN_START;
     break;
@@ -1724,6 +1835,113 @@ static void Br_Record_Download_DeleteDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_P
     p_wk->p_text  = NULL;
   }
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブ画面を作成
+ *
+ *	@param	BR_RECORD_WORK * p_wk ワーク
+ *	@param	                      引数
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_Save_CreateDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM *p_param )
+{ 
+  if( p_wk->p_text == NULL )
+  { 
+    p_wk->p_text  = BR_TEXT_Init( p_param->p_res, p_wk->p_que, p_wk->heapID );
+  }
+
+  { 
+    WORDSET *p_word     = BR_RES_GetWordSet( p_param->p_res );
+    GFL_MSGDATA *p_msg  = BR_RES_GetMsgData( p_param->p_res );
+    STRBUF  *p_src  = GFL_MSG_CreateString( p_msg, msg_info_013 );
+    STRBUF  *p_dst  = GFL_STR_CreateCopyBuffer( p_src, p_wk->heapID );
+
+    WORDSET_RegisterWord( p_word, 0, 
+        p_param->cp_rec_saveinfo->p_name[ p_param->mode ],
+        p_param->cp_rec_saveinfo->sex[ p_param->mode ],
+        TRUE, PM_LANG );
+
+    WORDSET_ExpandStr( p_word, p_dst, p_src );
+
+    BR_TEXT_PrintBuff( p_wk->p_text, p_param->p_res, p_dst );
+
+    GFL_STR_DeleteBuffer( p_dst );
+    GFL_STR_DeleteBuffer( p_src );
+  }
+
+  //下画面は専用BG
+  BR_RES_LoadBG( p_param->p_res, BR_RES_BG_BVDELETE_S, p_wk->heapID );
+
+  { 
+    static const struct 
+    { 
+      u8 x;
+      u8 y;
+      u8 w;
+      u8 h;
+      u32 msgID;
+    } sc_msgwin_data[BR_RECORD_MSGWINID_S_MAX]  =
+    { 
+      {
+        4,
+        6,
+        9,
+        2,
+        msg_1000,
+      },
+      { 
+        18,
+        6,
+        9,
+        2,
+        msg_1001,
+      },
+    };
+    int i;
+
+    GFL_FONT    *p_font  = BR_RES_GetFont( p_param->p_res );
+    GFL_MSGDATA *p_msg   = BR_RES_GetMsgData( p_param->p_res );
+    for( i = 0; i < BR_RECORD_MSGWINID_S_MAX; i++ )
+    { 
+      p_wk->p_msgwin_s[i]  = BR_MSGWIN_Init( BG_FRAME_S_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_S_FONT, p_wk->p_que, p_wk->heapID );
+      BR_MSGWIN_PrintColor( p_wk->p_msgwin_s[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  セーブ
+ *
+ *	@param	BR_RECORD_WORK * p_wk ワーク
+ *	@param	                      引数
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_Save_DeleteDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM *p_param )
+{ 
+  //メッセージウィンドウ
+  {
+    int i;
+    for( i = 0; i < BR_RECORD_MSGWINID_S_MAX; i++ )
+    {
+      if( p_wk->p_msgwin_s[i] )
+      { 
+        BR_MSGWIN_Exit( p_wk->p_msgwin_s[i] );
+        p_wk->p_msgwin_s[i] = NULL;
+      }
+    }
+  }
+  GFL_BG_LoadScreenReq( BG_FRAME_S_FONT );
+
+  //下画面破棄
+  BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_BVDELETE_S );
+
+  //上画面破棄
+  if( p_wk->p_text )
+  { 
+    BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
+    p_wk->p_text  = NULL;
+  }
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -1820,5 +2038,75 @@ static BOOL Br_Record_GetTrgStart( BR_RECORD_WORK * p_wk, u32 x, u32 y )
     PMSND_PlaySE( BR_SND_SE_OK );
   }
 
+  return ret;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  はいを選択
+ *
+ *	@param	x     X座標
+ *	@param	y     Y座標
+ *
+ *	@return TRUE入力  FALSE何もしない
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_Record_GetTrgYes( BR_RECORD_WORK *p_wk, u32 x, u32 y )
+{ 
+	GFL_RECT rect;
+  BOOL ret;
+
+	rect.left		= (4)*8;
+	rect.right	= (4 + 9)*8;
+	rect.top		= (6)*8;
+	rect.bottom	= (6 + 2)*8;
+
+  ret = ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
+            & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
+
+  if( ret )
+  { 
+    GFL_POINT pos;
+    pos.x = x;
+    pos.y = y;
+    BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+
+    PMSND_PlaySE( BR_SND_SE_OK );
+  }
+
+  return ret;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  いいえを選択
+ *
+ *	@param	x     X座標
+ *	@param	y     Y座標
+ *
+ *	@return TRUE入力  FALSE何もしない
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_Record_GetTrgNo( BR_RECORD_WORK *p_wk, u32 x, u32 y )
+{ 
+	GFL_RECT rect;
+  BOOL ret;
+
+	rect.left		= (18)*8;
+	rect.right	= (18 + 9)*8;
+	rect.top		= (6)*8;
+	rect.bottom	= (6 + 2)*8;
+
+
+  ret = ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
+            & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
+
+  if( ret )
+  { 
+    GFL_POINT pos;
+    pos.x = x;
+    pos.y = y;
+    BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+
+    PMSND_PlaySE( BR_SND_SE_OK );
+  }
   return ret;
 }
