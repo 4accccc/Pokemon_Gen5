@@ -162,8 +162,13 @@ EVENT_START   ev_r03_futago_02
 	DEFINE_LOCAL LCW_POKECOUNT02
 	_GET_PARTY_POKE_COUNT( LCW_POKECOUNT02 , POKECOUNT_MODE_BATTLE_ENABLE )
 	
+	//既に戦闘した
+	IF $WK_SCENE_R03 == 1 THEN
+		//負け台詞
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03_futago_04 )
+	
 	//戦えるポケモンが１匹しかいない
-	IF $LCW_POKECOUNT02 < 2 THEN
+	ELSIF $LCW_POKECOUNT02 < 2 THEN
 		
 		_TALK_OBJ_START()
 			
@@ -176,14 +181,8 @@ EVENT_START   ev_r03_futago_02
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_stoper_player_return01)
 		_OBJ_ANIME_WAIT()
 	
-	//既に戦闘した
-	ELSIF $WK_SCENE_R03 == 1 THEN
-		//負け台詞
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03_futago_04 )
-
 	//ポケモンが２匹以上で戦闘もしていない
 	ELSE
-		
 		_TALK_OBJ_START()
 		
 		//ふたごちゃん（左）が右を向く
@@ -389,6 +388,11 @@ EVENT_START   ev_pos_r03_rival_01
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 			_TRAINER_WIN()
 		ELSE
+			//======================================//
+			//R03OBJ配置初期化
+			_FLAG_SET(FV_R03_RIVAL_01)
+			_FLAG_SET(FV_R03_SUPPORT_01)
+			//======================================//
 			_TRAINER_LOSE()
 		ENDIF
 
@@ -400,6 +404,11 @@ EVENT_START   ev_pos_r03_rival_01
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 			_TRAINER_WIN()
 		ELSE
+			//======================================//
+			//R03OBJ配置初期化
+			_FLAG_SET(FV_R03_RIVAL_01)
+			_FLAG_SET(FV_R03_SUPPORT_01)
+			//======================================//
 			_TRAINER_LOSE()
 		ENDIF
 		
@@ -411,6 +420,11 @@ EVENT_START   ev_pos_r03_rival_01
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 			_TRAINER_WIN()
 		ELSE
+			//======================================//
+			//R03OBJ配置初期化
+			_FLAG_SET(FV_R03_RIVAL_01)
+			_FLAG_SET(FV_R03_SUPPORT_01)
+			//======================================//
 			_TRAINER_LOSE()
 		ENDIF
 		

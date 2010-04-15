@@ -105,6 +105,10 @@ EVENT_START  ev_pos_d07_rival_01
 			_OBJ_ADD(D07_CHAMPION_01)
 			_TRAINER_WIN()
 		ELSE
+			//======================================//
+			//D07OBJ配置初期化
+			_FLAG_SET(FV_D07_RIVAL_01)
+			//======================================//
 			_TRAINER_LOSE()
 		ENDIF
 
@@ -117,6 +121,10 @@ EVENT_START  ev_pos_d07_rival_01
 			_OBJ_ADD(D07_CHAMPION_01)
 			_TRAINER_WIN()
 		ELSE
+			//======================================//
+			//D07OBJ配置初期化
+			_FLAG_SET(FV_D07_RIVAL_01)
+			//======================================//
 			_TRAINER_LOSE()
 		ENDIF
 		
@@ -129,6 +137,10 @@ EVENT_START  ev_pos_d07_rival_01
 			_OBJ_ADD(D07_CHAMPION_01)
 			_TRAINER_WIN()
 		ELSE
+			//======================================//
+			//D07OBJ配置初期化
+			_FLAG_SET(FV_D07_RIVAL_01)
+			//======================================//
 			_TRAINER_LOSE()
 		ENDIF
 		
