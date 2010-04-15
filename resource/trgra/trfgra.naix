@@ -738,7 +738,15 @@ enum {
 	NARC_trfgra_trwb_cyclingw_NMCR = 724,
 	NARC_trfgra_trwb_cyclingw_NMAR = 725,
 	NARC_trfgra_trwb_cyclingw_NCEC = 726,
-	NARC_trfgra_trwb_cyclingw_NCLR = 727
+	NARC_trfgra_trwb_cyclingw_NCLR = 727,
+	NARC_trfgra_trwb_dpchampion_NCGR = 728,
+	NARC_trfgra_trwb_dpchampion_NCBR = 729,
+	NARC_trfgra_trwb_dpchampion_NCER = 730,
+	NARC_trfgra_trwb_dpchampion_NANR = 731,
+	NARC_trfgra_trwb_dpchampion_NMCR = 732,
+	NARC_trfgra_trwb_dpchampion_NMAR = 733,
+	NARC_trfgra_trwb_dpchampion_NCEC = 734,
+	NARC_trfgra_trwb_dpchampion_NCLR = 735
 };
 
 /* NARC_TRFGRA_NAIX_ */

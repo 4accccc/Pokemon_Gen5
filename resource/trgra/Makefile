@@ -60,14 +60,15 @@ RUBY_DIR = ../../tools/clact/
 SCRIPT_DIR = ../../tools/trgra/
 
 #コンバート対象のファイルツリーを生成
-OBJNCGFILE	:= $(wildcard $(RES_DIR)tbwb_*.ncg)
-OBJNCEFILE	:= $(wildcard $(RES_DIR)tbwb_*.nce)
-OBJNCLFILE	:= $(wildcard $(RES_DIR)tbwb_*.ncl)
+TRBNCGFILE	:= $(wildcard $(RES_DIR)tbwb_*.ncg)
+TRBNCEFILE	:= $(wildcard $(RES_DIR)tbwb_*.nce)
+TRBNMCFILE	:= $(wildcard $(RES_DIR)tbwb_*.nmc)
+TRBNCLFILE	:= $(wildcard $(RES_DIR)tbwb_*.ncl)
 
-MCSSNCGFILE	:= $(wildcard $(RES_DIR)trwb_*.ncg)
-MCSSNCEFILE	:= $(wildcard $(RES_DIR)trwb_*.nce)
-MCSSNMCFILE	:= $(wildcard $(RES_DIR)trwb_*.nmc)
-MCSSNCLFILE	:= $(wildcard $(RES_DIR)trwb_*.ncl)
+TRFNCGFILE	:= $(wildcard $(RES_DIR)trwb_*.ncg)
+TRFNCEFILE	:= $(wildcard $(RES_DIR)trwb_*.nce)
+TRFNMCFILE	:= $(wildcard $(RES_DIR)trwb_*.nmc)
+TRFNCLFILE	:= $(wildcard $(RES_DIR)trwb_*.ncl)
 
 .PHONY:	do-build clean subdir
 
@@ -77,41 +78,37 @@ MCSSNCLFILE	:= $(wildcard $(RES_DIR)trwb_*.ncl)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES:	.ncg.nce.ncl
 
-do-build:	sub_dir nmc ncg ncgc nce ncl obj	$(NARCNAME_F) $(NARCNAME_B)
+do-build:	sub_dir nmc ncg ncgc nce ncl	$(NARCNAME_F) $(NARCNAME_B)
 
 sub_dir:
 	@$(MAKE_SUBDIR)
 
 #nmcデータからの生成ルール
-ncg: $(notdir $(MCSSNCGFILE:.ncg=.NCGR))
+ncg: $(notdir $(TRFNCGFILE:.ncg=.NCGR)) $(notdir $(TRBNCGFILE:.ncg=.NCGR))
 %.NCGR: $(RES_DIR)%.ncg
 	perl $(SCRIPT_DIR)tr_ncg.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
 
-ncgc: $(notdir $(MCSSNCGFILE:.ncg=.NCBR))
+ncgc: $(notdir $(TRFNCGFILE:.ncg=.NCBR)) $(notdir $(TRBNCGFILE:.ncg=.NCBR))
 %.NCBR: $(RES_DIR)%.ncg
 	perl $(SCRIPT_DIR)tr_ncgc.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
 
-nce: $(notdir $(MCSSNCEFILE:.nce=.NCEC))
+nce: $(notdir $(TRFNCEFILE:.nce=.NCEC)) $(notdir $(TRBNCEFILE:.nce=.NCEC))
 %.NCEC: $(RES_DIR)%.nce $(SCRIPT_DIR)tr_nce.pl
 	perl $(SCRIPT_DIR)tr_nce.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
 
-nmc: $(notdir $(MCSSNMCFILE:.nmc=.NMCR))
+nmc: $(notdir $(TRFNMCFILE:.nmc=.NMCR)) $(notdir $(TRBNMCFILE:.nmc=.NMCR))
 %.NMCR: $(RES_DIR)%.nmc $(RES_DIR)%.nce
 	perl $(SCRIPT_DIR)tr_nmc.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
 
-ncl: $(notdir $(MCSSNCLFILE:.ncl=.NCLR))
+ncl: $(notdir $(TRFNCLFILE:.ncl=.NCLR)) $(notdir $(TRBNCLFILE:.ncl=.NCLR))
 %.NCLR: $(RES_DIR)%.ncl
 	perl $(SCRIPT_DIR)tr_ncl.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
 
-obj: $(notdir $(OBJNCEFILE:.nce=.NCER))
-%.NCER: $(RES_DIR)%.nce
-	ruby $(RUBY_DIR)clact_conv.rb $(RES_DIR)$*.nce $(RES_DIR)$*.ncg $(RES_DIR)$*.ncl $(G2D_DIR) $(CNV_DIR)
-
-$(NARCNAME_F): $(notdir $(MCSSNCGFILE:.ncg=.NCBR)) $(notdir $(MCSSNCEFILE:.nce=.NCER)) $(notdir $(MCSSNCLFILE:.ncl=.NCLR)) $(SCRFILE_F)
+$(NARCNAME_F): $(notdir $(TRFNCGFILE:.ncg=.NCBR)) $(notdir $(TRFNCEFILE:.nce=.NCER)) $(notdir $(TRFNCLFILE:.ncl=.NCLR)) $(SCRFILE_F)
 	nnsarc -c -l -n -i $(NARCNAME_F) -S $(SCRFILE_F)
 	$(NAIXCUT) $(NAIXNAME_F)
 
-$(NARCNAME_B): $(notdir $(OBJNCGFILE:.ncg=.NCGR)) $(notdir $(OBJNCEFILE:.nce=.NCER)) $(notdir $(OBJNCLFILE:.ncl=.NCLR)) $(SCRFILE_B)
+$(NARCNAME_B): $(notdir $(TRBNCGFILE:.ncg=.NCBR)) $(notdir $(TRBNCEFILE:.nce=.NCER)) $(notdir $(TRBNCLFILE:.ncl=.NCLR)) $(SCRFILE_B)
 	nnsarc -c -l -n -i $(NARCNAME_B) -S $(SCRFILE_B)
 	$(NAIXCUT) $(NAIXNAME_B)
 endif
