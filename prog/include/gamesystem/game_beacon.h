@@ -205,6 +205,7 @@ extern BOOL GAMEBEACON_Get_NewEntry(void);
 extern void GAMEBEACON_SendDataUpdate_Questionnaire(QUESTIONNAIRE_ANSWER_WORK *my_ans);
 #ifdef PM_DEBUG
 extern void DEBUG_GAMEBEACON_Set_NewEntry(void);
+extern GAMEBEACON_INFO * DEBUG_SendBeaconInfo_GetPtr(void);
 extern void DEBUG_RecvBeaconBufferClear(void);
 #endif
 

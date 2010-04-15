@@ -12,6 +12,7 @@
 #include "gamesystem/gamesystem.h"
 #include "field/field_subscreen.h"
 #include "gamesystem/game_beacon.h"
+#include "gamesystem/game_beacon_debug.h"
 #include "gamesystem/msgspeed.h"
 #include "infowin/infowin.h"
 #include "app_menu_common.naix"
@@ -280,8 +281,9 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
   //スタックテーブル更新
   GAMEBEACON_Stack_Update( wk->infoStack );
   
-
-//  BEACON_VIEW_TouchUpdata( wk );
+#ifdef DEBUG_ONLY_FOR_iwasawa
+  BEACON_VIEW_TouchUpdata( wk );
+#endif
 }
 
 //==================================================================
@@ -497,15 +499,15 @@ static void BEACON_VIEW_TouchUpdata(BEACON_VIEW_PTR wk)
   int tp_ret = GFL_UI_TP_HitTrg(TouchRect);
   
   switch(tp_ret){
-  case 0: //Gパワー
-    OS_TPrintf("Gパワー ビーコンセット\n");
-    GAMEBEACON_Set_GPower( 1 );
-
+  case 0: //
+    OS_TPrintf("ランダム ビーコンセット\n");
+    DEBUG_GAMEBEACON_Set_Random();
+//    GAMEBEACON_Set_GPower( 1 );
 //    GAMEBEACON_Set_EncountDown();
     break;
   case 1: //おめでとう
-    OS_TPrintf("おめでとう ビーコンセット\n");
-    GAMEBEACON_Set_Thankyou( wk->gdata, 0x12345678 );
+//    OS_TPrintf("おめでとう ビーコンセット\n");
+//    GAMEBEACON_Set_Thankyou( wk->gdata, 0x12345678 );
 
 //    GAMEBEACON_Set_Congratulations();
     break;
@@ -535,6 +537,7 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   wk->ctrl.max = GAMEBEACON_InfoTblRing_GetEntryNum( wk->infoLog );
   wk->ctrl.view_top = BEACON_STATUS_GetViewTopOffset( wk->b_status );
 
+  IWASAWA_Printf("BeaconViewSetup log_num = %d\n", wk->ctrl.max );
   if( wk->ctrl.max < PANEL_VIEW_MAX ){
     wk->ctrl.view_max = wk->ctrl.max;
   }else{
