@@ -101,7 +101,7 @@ static const struct{
   {2},      //UNION_PLAY_CATEGORY_UNION,          ///<ユニオンルーム
   {2},      //UNION_PLAY_CATEGORY_TALK,           ///<会話中
   {2},      //UNION_PLAY_CATEGORY_TRAINERCARD,    ///<トレーナーカード
-  {4},      //UNION_PLAY_CATEGORY_PICTURE,        ///<お絵かき
+  {5},      //UNION_PLAY_CATEGORY_PICTURE,        ///<お絵かき
   {2},      //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE_SHOOTER,       ///<コロシアム
   {2},      //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE,       ///<コロシアム
   {2},      //UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FLAT_SHOOTER,   ///<コロシアム
@@ -123,7 +123,7 @@ static const struct{
   {4},      //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER,
   {4},      //UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT,
   {2},      //UNION_PLAY_CATEGORY_TRADE,          ///<ポケモン交換
-  {4},      //UNION_PLAY_CATEGORY_GURUGURU,       ///<ぐるぐる交換
+  {5},      //UNION_PLAY_CATEGORY_GURUGURU,       ///<ぐるぐる交換
   {5},      //UNION_PLAY_CATEGORY_RECORD,         ///<レコードコーナー
 };
 
