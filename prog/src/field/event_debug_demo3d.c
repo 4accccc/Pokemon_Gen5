@@ -41,7 +41,7 @@
 // ■イベントワーク
 //======================================================================================
 typedef struct _SCENE_TABLE{
-  u16 demo_id:4;  
+  u16 demo_id:5;  
   u16 scene_id:4;  
   u16 bgm_change:1;
   u16 fadeout_type:1;
@@ -219,6 +219,7 @@ static GMEVENT_RESULT debugMenuDemo3DSelectEvent( GMEVENT *event, int *seq, void
         return( GMEVENT_RES_FINISH );
       }
       work->scene = &DATA_SceneTable[ret]; 
+      IWASAWA_Printf("Demo Select = %d\n",ret);
       if( GameCommSys_BootCheck( work->gcsp ) == GAME_COMM_NO_NULL ){
         (*seq) += 2;
       }else{
