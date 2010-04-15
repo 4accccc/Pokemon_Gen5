@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-10T21:17:17"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-04-15T11:39:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,14 +349,14 @@
 		</language>
 	</columns>
 
-	<dialog left="97" top="134" right="802" bottom="762" maximized="no" rayout="Vertical2">
+	<dialog left="149" top="153" right="854" bottom="780" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -403,30 +403,35 @@
 
 	<row id="CG_HELP_INFO_05">
 		<comment>見出し</comment>
+		<language name="JPN" width="184">「Ｗｉｒｅｌｅｓｓ」について</language>
+		<language name="JPN_KANJI" width="184">「Ｗｉｒｅｌｅｓｓ」について</language>
+	</row>
+
+	<row id="CG_HELP_INFO_06">
+		<comment>見出し</comment>
 		<language name="JPN" width="184">「Ｗｉ－Ｆｉ」について</language>
 		<language name="JPN_KANJI" width="184">「Ｗｉ－Ｆｉ」について</language>
 	</row>
 
-	<row id="CG_HELP_INFO_06">
+	<row id="CG_HELP_INFO_07">
 		<comment>見出し</comment>
 		<language name="JPN" width="184">「すれちがいログ」について</language>
 		<language name="JPN_KANJI" width="184">「すれ違いログ」について</language>
 	</row>
 
-	<row id="CG_HELP_INFO_07">
+	<row id="CG_HELP_INFO_08">
 		<comment>見出し</comment>
 		<language name="JPN" width="184">「ちょうさたんちき」について</language>
 		<language name="JPN_KANJI" width="184">「調査探知機」について</language>
 	</row>
 
-	<row id="CG_HELP_INFO_08">
+	<row id="CG_HELP_INFO_09">
 		<comment>見出し</comment>
 		<language name="JPN" width="184">「カスタム」について</language>
 		<language name="JPN_KANJI" width="184">「カスタム」について</language>
 	</row>
 
-	<row id="CG_HELP_INFO_09">
-		<comment>見出し</comment>
+	<row id="CG_HELP_INFO_10">
 		<language name="JPN" width="184">「ＯＮ／ＯＦＦ」について</language>
 		<language name="JPN_KANJI" width="184">「ＯＮ／ＯＦＦ」について</language>
 	</row>
@@ -455,54 +460,55 @@
 ユニオンルームに　はいっている
 にんずうが　わかります
 また　ワイヤレスの　はいしんを
-おこなっているかも　わかります▼
-ワイヤレスつうしんを　つかって
-ちかくにいる　ともだちと
-つぎの　あそびが　できます
-・ライブキャスター
-・ハイリンク▼
-ライブキャスターは
-Ｃ－ＧＥＡＲで　ともだちコードを
-こうかんしたり　Ｗｉ－Ｆｉクラブで
-いっしょに　あそんだことの　ある
-ともだちと　ライブキャスターを
-つかって　あそべます▼
-ハイリンクは　ボタンを　タッチすれば
-いっしゅんで　ハイリンクに　いけます</language>
+おこなっているかも　わかります</language>
 		<language name="JPN_KANJI" width="224">自分の　周りで　現在
 ユニオンルームに　入っている
 人数が　わかります
 また　ワイヤレスの　配信を
-行っているかも　わかります▼
-ワイヤレス通信を　使って
-近くにいる　友達と
-次の　遊びが　できます
-・ライブキャスター
-・ハイリンク▼
-ライブキャスターは
-Ｃ－ＧＥＡＲで　ともだちコードを
-交換したり　Ｗｉ－Ｆｉクラブで
-一緒に　遊んだことの　ある　友達と
-ライブキャスターで　遊べます▼
-ハイリンクは　ボタンを　タッチすれば
-一瞬で　ハイリンクに　行けます</language>
+行っているかも　わかります</language>
 	</row>
 
 	<row id="CG_HELP_MSG_03">
 		<comment>説明文
 「ワイヤレス」について</comment>
-		<language name="JPN" width="224">ワイヤレス２</language>
-		<language name="JPN_KANJI" width="224">ワイヤレス２</language>
+		<language name="JPN" width="224">ワイヤレスつうしんを　つかって
+ちかくにいる　ともだちと
+つぎの　あそびが　できます
+・ライブキャスター
+・ハイリンク</language>
+		<language name="JPN_KANJI" width="224">ワイヤレス通信を　使って
+近くにいる　友達と
+次の　遊びが　できます
+・ライブキャスター
+・ハイリンク</language>
 	</row>
 
 	<row id="CG_HELP_MSG_04">
 		<comment>説明文
 「ワイヤレス」について</comment>
-		<language name="JPN" width="224">ワイヤレス３</language>
-		<language name="JPN_KANJI" width="224">ワイヤレス３</language>
+		<language name="JPN" width="224">ライブキャスターは
+Ｃ－ＧＥＡＲで　ともだちコードを
+こうかんしたり　Ｗｉ－Ｆｉクラブで
+いっしょに　あそんだことの　ある
+ともだちと　ライブキャスターを
+つかって　あそべます</language>
+		<language name="JPN_KANJI" width="224">ライブキャスターは
+Ｃ－ＧＥＡＲで　ともだちコードを
+交換したり　Ｗｉ－Ｆｉクラブで
+一緒に　遊んだことの　ある　友達と
+ライブキャスターで　遊べます</language>
 	</row>
 
 	<row id="CG_HELP_MSG_05">
+		<comment>説明文
+「ワイヤレス」について</comment>
+		<language name="JPN" width="224">ハイリンクは　ボタンを　タッチすれば
+いっしゅんで　ハイリンクに　いけます</language>
+		<language name="JPN_KANJI" width="224">ハイリンクは　ボタンを　タッチすれば
+一瞬で　ハイリンクに　行けます</language>
+	</row>
+
+	<row id="CG_HELP_MSG_06" text-color=",,,#ff0000,,,,,,,,,,,,,,">
 		<comment>説明文
 「Ｗｉ－Ｆｉ」について</comment>
 		<language name="JPN" width="224">[BD:00:カラー変更:3:4:0]ＧａｍｅＳｙｎｃ[BD:01:カラー変更リセット]という　ボタンで
@@ -515,7 +521,7 @@
 レポートを　送信することが　できます</language>
 	</row>
 
-	<row id="CG_HELP_MSG_06" text-color=",,,#ff0000,,,,,,,,,,,,,,">
+	<row id="CG_HELP_MSG_07">
 		<comment>説明文
 「すれちがいログ」について</comment>
 		<language name="JPN" width="224">すれちがった　ひとが
@@ -532,7 +538,7 @@
 自由に　発言することが　できます</language>
 	</row>
 
-	<row id="CG_HELP_MSG_07">
+	<row id="CG_HELP_MSG_08">
 		<comment>説明文
 「ちょうさたんちき」について</comment>
 		<language name="JPN" width="224">すれちがった　ひとの
@@ -549,7 +555,7 @@
 データを　みることが　できます</language>
 	</row>
 
-	<row id="CG_HELP_MSG_08">
+	<row id="CG_HELP_MSG_09">
 		<comment>説明文
 「カスタム」について
 ・何の色が変わる？</comment>
@@ -563,7 +569,7 @@
 好きな　模様に　できます</language>
 	</row>
 
-	<row id="CG_HELP_MSG_09">
+	<row id="CG_HELP_MSG_10">
 		<comment>説明文
 「Ｃ－ＧＥＡＲ　ＯＮ／ＯＦＦ」について</comment>
 		<language name="JPN" width="224">でんげんマークを　タッチすると

@@ -1398,6 +1398,8 @@ static void PLIST_InitMode( PLIST_WORK *work )
     work->nextMainSeq = PSMS_MSG_WAIT;
     work->mainSeq = PSMS_FADEIN;
     work->canExit = FALSE;
+
+    PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
     break;
     
   case PL_MODE_ITEMSET_RET:
@@ -1456,6 +1458,8 @@ static void PLIST_InitMode( PLIST_WORK *work )
     work->nextMainSeq = PSMS_MSG_WAIT;
     work->mainSeq = PSMS_FADEIN;
     work->canExit = TRUE;
+
+    PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
     break;
   
   //メール画面からの戻り
@@ -2404,8 +2408,8 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
         
         GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
       }
+      work->ktst = GFL_APP_KTST_KEY;
     }
-    work->ktst = GFL_APP_KTST_KEY;
   }
   else
   {
@@ -3983,8 +3987,8 @@ void PLIST_ForceExit_Timeup( PLIST_WORK *work )
       BOOL isFinish = FALSE;
       REGULATION *reg = (REGULATION*)work->plData->reg;
       
-      OS_TPrintf("AutoSelect Start!!\n");
-      OS_TPrintf("Min[%d]Max[%d]\n",reg->NUM_LO,reg->NUM_HI);
+      ARI_TPrintf("AutoSelect Start!!\n");
+      ARI_TPrintf("Min[%d]Max[%d]\n",reg->NUM_LO,reg->NUM_HI);
       while( isFinish == FALSE )
       {
         //現在の選択を初期化
@@ -4006,7 +4010,7 @@ void PLIST_ForceExit_Timeup( PLIST_WORK *work )
             const PLIST_PLATE_CAN_BATTLE ret = PLIST_PLATE_CanJoinBattle( work , work->plateWork[idx] );
             if( ret == PPCB_OK )
             {
-              OS_TPrintf("[%d]",idx);
+              ARI_TPrintf("[%d]",idx);
               work->plData->in_num[work->btlJoinNum] = idx+1;
               work->btlJoinNum++;
             }
@@ -4019,13 +4023,13 @@ void PLIST_ForceExit_Timeup( PLIST_WORK *work )
         if( work->btlJoinNum >= reg->NUM_LO )
         {
           isFinish = TRUE;
-          OS_TPrintf("[OK!]\n");
+          ARI_TPrintf("[OK!]\n");
         }
         else
         {
           //開始位置をずらして探す
           ofs++;
-          OS_TPrintf("[NG!]\n");
+          ARI_TPrintf("[NG!]\n");
           if( ofs >= PLIST_LIST_MAX )
           {
             GF_ASSERT_MSG( ofs < PLIST_LIST_MAX ,"PLIST can't select battle order!!\n" );

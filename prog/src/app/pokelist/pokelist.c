@@ -226,6 +226,24 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
     
     //break through
   case 1:
+#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+    ARI_TPrintf("---Print initialize state---\n");
+    ARI_TPrintf("ktst[%d]\n",GFL_UI_CheckTouchOrKey());
+    ARI_TPrintf("item[%8x]\n",plWork->plData->myitem);
+    ARI_TPrintf("mail[%8x]\n",plWork->plData->mailblock);
+    ARI_TPrintf("cfg [%8x]\n",plWork->plData->cfg);
+    ARI_TPrintf("tvwk[%8x]\n",plWork->plData->tvwk);
+    ARI_TPrintf("reg [%8x]\n",plWork->plData->reg);
+    ARI_TPrintf("zkn [%8x]\n",plWork->plData->zkn);
+    ARI_TPrintf("mode[%d]\n",plWork->plData->mode);
+    ARI_TPrintf("type[%d]\n",plWork->plData->type);
+    ARI_TPrintf("retsel[%d]\n",plWork->plData->ret_sel);
+    ARI_TPrintf("retmod[%d]\n",plWork->plData->ret_mode);
+    ARI_TPrintf("item[%d]\n",plWork->plData->item);
+    ARI_TPrintf("waza[%d]\n",plWork->plData->waza);
+    ARI_TPrintf("---Print initialize state---\n");
+#endif
+   
     if( PLIST_InitPokeList( plWork ) == TRUE )
     {
       return GFL_PROC_RES_FINISH;
