@@ -25,8 +25,10 @@
 #include "field_task_player_trans.h"
 #include "field_task_player_drawoffset.h"
 #include "field_task_fade.h"
+#include "field_task_wait.h"
 #include "field_buildmodel.h"
 #include "field/field_const.h"  // for FIELD_CONST_GRID_SIZE
+#include "field_camera_anime.h"
 
 
 //==========================================================================================
@@ -50,6 +52,11 @@ typedef struct
   // 流砂イベント
   VecFx32      sandStreamPos;  // 流砂中心部の位置
   FIELD_BMODEL* bmSandStream;  // 流砂の配置モデル
+
+  //-----------------------
+  FCAM_ANIME_DATA FCamAnimeData;
+  FCAM_ANIME_WORK* FCamAnimeWork;
+  //-----------------------
 
 } EVENT_WORK;
 
@@ -433,26 +440,36 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Ananukenohimo( GMEVENT* event, int* s
 
   switch( *seq ) {
   case 0:
-    // カメラモードの設定
-    work->cameraMode = FIELD_CAMERA_GetMode( camera );
-    FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     // タスク登録
     { 
       FIELD_TASK* rot_up;
       FIELD_TASK* rot;
-      FIELD_TASK* zoom;
+      FIELD_TASK* wait;
       FIELD_TASK* fade_out;
       rot_up   = FIELD_TASK_PlayerRotate_SpeedUp( fieldmap, 20, 3 );
       rot      = FIELD_TASK_PlayerRotate( fieldmap, 20, 5 );
-      zoom     = FIELD_TASK_CameraLinearZoom( fieldmap, ZOOM_IN_FRAME, ZOOM_IN_DIST );
+      wait     = FIELD_TASK_Wait( fieldmap, ZOOM_IN_FRAME );
       fade_out = FIELD_TASK_Fade( fieldmap, GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 1 );
       FIELD_TASK_MAN_AddTask( taskMan, rot_up, NULL );
       FIELD_TASK_MAN_AddTask( taskMan, rot, rot_up );
-      FIELD_TASK_MAN_AddTask( taskMan, zoom, NULL );
-      FIELD_TASK_MAN_AddTask( taskMan, fade_out, zoom );
+      FIELD_TASK_MAN_AddTask( taskMan, wait, NULL );
+      FIELD_TASK_MAN_AddTask( taskMan, fade_out, wait );
     }
+    // カメラ演出開始
+    work->FCamAnimeWork = FCAM_ANIME_CreateWork( fieldmap );
+    work->FCamAnimeData.frame = 60;
+    work->FCamAnimeData.targetBindOffFlag = TRUE;
+    work->FCamAnimeData.cameraAreaOffFlag = TRUE;
+    FCAM_ANIME_SetAnimeData( work->FCamAnimeWork, &work->FCamAnimeData );
+    FCAM_ANIME_SetupCamera( work->FCamAnimeWork );
+    FCAM_PARAM_GetCurrentParam( camera, &work->FCamAnimeData.startParam );
+    work->FCamAnimeData.endParam = work->FCamAnimeData.startParam;
+    work->FCamAnimeData.endParam.length -= (100 << FX32_SHIFT);
+    FCAM_ANIME_SetCameraStartParam( work->FCamAnimeWork );
+    FCAM_ANIME_StartAnime( work->FCamAnimeWork );
     (*seq)++;
     break;
+
   case 1:
     // 全タスク終了
     if( FIELD_TASK_MAN_IsAllTaskEnd( taskMan ) ) {
@@ -460,12 +477,10 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Ananukenohimo( GMEVENT* event, int* s
       (*seq)++;
     }
     break;
+    
   case 2:
-    // カメラモードの復帰
-    FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
-    (*seq)++;
-    break;
-  case 3:
+    FCAM_ANIME_RecoverCamera( work->FCamAnimeWork );
+    FCAM_ANIME_DeleteWork( work->FCamAnimeWork );
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;
@@ -487,29 +502,39 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Anawohoru( GMEVENT* event, int* seq, 
   switch( *seq )
   {
   case 0:
-    // カメラモードの設定
-    work->cameraMode = FIELD_CAMERA_GetMode( camera );
-    FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     // タスク登録
     {
       FIELD_TASK* rot_up;
       FIELD_TASK* rot;
-      FIELD_TASK* zoom;
+      FIELD_TASK* wait;
       FIELD_TASK* fade_out;
       rot_up   = FIELD_TASK_PlayerRotate_SpeedUp( fieldmap, 20, 4 );
       rot      = FIELD_TASK_PlayerRotate( fieldmap, 20, 5 );
-      zoom     = FIELD_TASK_CameraLinearZoom( fieldmap, ZOOM_IN_FRAME, ZOOM_IN_DIST );
+      wait     = FIELD_TASK_Wait( fieldmap, ZOOM_IN_FRAME );
       fade_out = FIELD_TASK_Fade( fieldmap, GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 1 );
       FIELD_TASK_MAN_AddTask( taskMan, rot_up, NULL );
       FIELD_TASK_MAN_AddTask( taskMan, rot, rot_up );
-      FIELD_TASK_MAN_AddTask( taskMan, zoom, NULL );
-      FIELD_TASK_MAN_AddTask( taskMan, fade_out, zoom );
+      FIELD_TASK_MAN_AddTask( taskMan, wait, NULL );
+      FIELD_TASK_MAN_AddTask( taskMan, fade_out, wait );
       // SE再生
       PMSND_PlaySE( SEQ_SE_FLD_80 );
     }
+    // カメラ演出開始
+    work->FCamAnimeWork = FCAM_ANIME_CreateWork( fieldmap );
+    work->FCamAnimeData.frame = 60;
+    work->FCamAnimeData.targetBindOffFlag = TRUE;
+    work->FCamAnimeData.cameraAreaOffFlag = TRUE;
+    FCAM_ANIME_SetAnimeData( work->FCamAnimeWork, &work->FCamAnimeData );
+    FCAM_ANIME_SetupCamera( work->FCamAnimeWork );
+    FCAM_PARAM_GetCurrentParam( camera, &work->FCamAnimeData.startParam );
+    work->FCamAnimeData.endParam = work->FCamAnimeData.startParam;
+    work->FCamAnimeData.endParam.length -= (100 << FX32_SHIFT);
+    FCAM_ANIME_SetCameraStartParam( work->FCamAnimeWork );
+    FCAM_ANIME_StartAnime( work->FCamAnimeWork );
     work->frame = 0;
     (*seq)++;
     break;
+
   case 1:
     // 岩砕きエフェクト表示
     if( ++work->frame % ANAHORI_EFF_INTVL == 0 )
@@ -524,12 +549,10 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Anawohoru( GMEVENT* event, int* seq, 
       (*seq)++;
     }
     break;
+
   case 2:
-    // カメラモードの復帰
-    FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
-    (*seq)++;
-    break;
-  case 3:
+    FCAM_ANIME_RecoverCamera( work->FCamAnimeWork );
+    FCAM_ANIME_DeleteWork( work->FCamAnimeWork );
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;
@@ -551,38 +574,46 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Teleport( GMEVENT* event, int* seq, v
   switch( *seq )
   {
   case 0:
-    // カメラモードの設定
-    work->cameraMode = FIELD_CAMERA_GetMode( camera );
-    FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
     // タスク登録
     {
       FIELD_TASK* rot_up;
       FIELD_TASK* rot;
-      FIELD_TASK* zoom;
+      FIELD_TASK* wait;
       FIELD_TASK* fade_out;
       rot_up   = FIELD_TASK_PlayerRotate_SpeedUp( fieldmap, 20, 3 );
       rot      = FIELD_TASK_PlayerRotate( fieldmap, 20, 5 );
-      zoom     = FIELD_TASK_CameraLinearZoom( fieldmap, ZOOM_IN_FRAME, ZOOM_IN_DIST );
+      wait     = FIELD_TASK_Wait( fieldmap, ZOOM_IN_FRAME );
       fade_out = FIELD_TASK_Fade( fieldmap, GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 1 );
       FIELD_TASK_MAN_AddTask( taskMan, rot_up, NULL );
       FIELD_TASK_MAN_AddTask( taskMan, rot, rot_up );
-      FIELD_TASK_MAN_AddTask( taskMan, zoom, NULL );
-      FIELD_TASK_MAN_AddTask( taskMan, fade_out, zoom );
+      FIELD_TASK_MAN_AddTask( taskMan, wait, NULL );
+      FIELD_TASK_MAN_AddTask( taskMan, fade_out, wait );
     }
     // SE
     PMSND_PlaySE( SEQ_SE_FLD_05 );
+    // カメラ演出開始
+    work->FCamAnimeWork = FCAM_ANIME_CreateWork( fieldmap );
+    work->FCamAnimeData.frame = 60;
+    work->FCamAnimeData.targetBindOffFlag = TRUE;
+    work->FCamAnimeData.cameraAreaOffFlag = TRUE;
+    FCAM_ANIME_SetAnimeData( work->FCamAnimeWork, &work->FCamAnimeData );
+    FCAM_ANIME_SetupCamera( work->FCamAnimeWork );
+    FCAM_PARAM_GetCurrentParam( camera, &work->FCamAnimeData.startParam );
+    work->FCamAnimeData.endParam = work->FCamAnimeData.startParam;
+    work->FCamAnimeData.endParam.length -= (100 << FX32_SHIFT);
+    FCAM_ANIME_SetCameraStartParam( work->FCamAnimeWork );
+    FCAM_ANIME_StartAnime( work->FCamAnimeWork );
     (*seq)++;
     break;
+
   case 1:
     // タスクの終了待ち
     if( FIELD_TASK_MAN_IsAllTaskEnd( taskMan ) ) { (*seq)++; }
     break;
+
   case 2:
-    // カメラモードの復帰
-    FIELD_CAMERA_ChangeMode( camera, work->cameraMode );
-    (*seq)++;
-    break;
-  case 3:
+    FCAM_ANIME_RecoverCamera( work->FCamAnimeWork );
+    FCAM_ANIME_DeleteWork( work->FCamAnimeWork );
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;
