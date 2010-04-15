@@ -38,6 +38,7 @@
 #define H04_FLD_ITEM_03                   19
 #define TR_SCHOOLG_08                     20
 #define TR_SCIENTISTW_09                  21
+#define H04_BAKER_01                      22
 
 #endif //ZONE_H04_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -19,17 +19,20 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+//ばんど
 _EVENT_DATA    ev_h04_grasssound_01
 _EVENT_DATA    ev_h04_guitar_01
 _EVENT_DATA    ev_h04_voice_01
 _EVENT_DATA    ev_h04_leadsinger_01
+
+//看板
 _EVENT_DATA		ev_bg_h04_sign_01
 _EVENT_DATA		ev_bg_h04_sign_02
 _EVENT_DATA		ev_bg_h04_sign_03
 
 //さんどいっち
-//_EVENT_DATA		ev_pos_h04_waitress
-//_EVENT_DATA		ev_h04_waitress_01
+_EVENT_DATA		ev_pos_h04_baker
+_EVENT_DATA		ev_h04_baker_01
 _EVENT_DATA		ev_h04_man1_01
 _EVENT_DATA		ev_h04_woman1_01
 _EVENT_DATA		ev_h04_girl2_01
@@ -50,7 +53,35 @@ _EVENT_DATA		ev_h04_monsterball_01
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
+//サンドイッチ														//
+//	LOCALWORK	まで使用しました。同マップ内の使用を禁止します。	//
+//				LOCALWORK0⇒POSイベント								//
+//				LOCALWORK1⇒ガールのオーダー内容					//
+//				LOCALWORK2⇒マン１のオーダー内容					//
+//				LOCALWORK3⇒マン３のオーダー内容					//
+//				LOCALWORK4⇒ウーマンのオーダー内容					//
+//				LOCALWORK5⇒ベイカーにする注文1						//
+//				LOCALWORK6⇒ベイカーにする注文2						//
+//				LOCALWORK7⇒ベイカーにする注文3						//
+//				LOCALWORK8⇒ベイカーにする注文4						//
+//				LOCALWORK9⇒お客さんに渡したサンドイッチの数		//
 //																	//
+//	FH	まで使用しました。同マップ内の使用を禁止します。			//
+//				FH_01⇒イベントフラグ								//
+//				FH_02⇒ガールのオーダーフラグ						//
+//				FH_03⇒マン１のオーダーフラグ						//
+//				FH_04⇒マン３のオーダーフラグ						//
+//				FH_05⇒ウーマンのオーダーフラグ						//
+//				FH_06⇒ベイカーのオーダーフラグ						//
+//				FH_07⇒ガールのイートフラグ							//
+//				FH_08⇒マン１のイートフラグ							//
+//				FH_09⇒マン３のイートフラグ							//
+//				FH_10⇒ウーマンのイートフラグ						//
+//				FH_11⇒ガールの成功フラグ							//
+//				FH_12⇒マン１の成功フラグ							//
+//				FH_13⇒マン３の成功フラグ							//
+//				FH_14⇒ウーマンの成功フラグ							//
+//バンド															//
 //	LOCALWORK10～13まで使用しました。同マップ内の使用を禁止します。	//
 //				LOCALWORK10⇒ホイッスル								//
 //				LOCALWORK11⇒ギター									//
@@ -331,74 +362,1107 @@ EVENT_END
 /**************************************************************/
 /*  h04 ウェイトレスPOSイベント                  */
 /**************************************************************/
-/*
-EVENT_START   ev_h04_waitress_01
+EVENT_START   ev_pos_h04_baker
+	{
+	DEFINE_LOCAL LWK_POSX
+	DEFINE_LOCAL LWK_POSZ
+	_PLAYER_POS_GET(LWK_POSX,LWK_POSZ)
 
+	IF $LWK_POSX == 73 THEN
+		_OBJ_ANIME(H04_BAKER_01,anm_baker_come_x72)
+		_TIME_WAIT(8)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
+	ELSIF $LWK_POSX == 86 || $LWK_POSX == 84 THEN
+		_OBJ_ANIME(H04_BAKER_01,anm_baker_come_x86)
+		_TIME_WAIT(8)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)
+	ELSIF $LWK_POSZ == 45 THEN
+		_OBJ_ANIME(H04_BAKER_01,anm_common_turn_r)
+		_TIME_WAIT(8)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	//仕事をやめるの？
+	_GET_MY_SEX( SCWK_ANSWER )
+	IF $SCWK_ANSWER == PM_MALE THEN
+		_PLAINWIN_MSG_DOWN(msg_h04_waitress_20)
+	ELSE
+		_PLAINWIN_MSG_DOWN(msg_h04_waitress_19)
+	ENDIF
+	
+	_YES_NO_WIN(SCWK_ANSWER)
+	_MSGWIN_CLOSE()
+	
+	IF $SCWK_ANSWER == SCR_YES THEN
+		
+		_TIME_WAIT(24)
+		_PLAINWIN_MSG_DOWN(msg_h04_waitress_18)
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+
+		//==============フラグワーク操作==============//
+		//フラグとワークの初期化
+		
+		_FLAG_RESET(FH_01)
+		_FLAG_RESET(FH_02)
+		_FLAG_RESET(FH_03)
+		_FLAG_RESET(FH_04)
+		_FLAG_RESET(FH_05)
+		_FLAG_RESET(FH_06)
+		_FLAG_RESET(FH_07)
+		_FLAG_RESET(FH_08)
+		_FLAG_RESET(FH_09)
+		_FLAG_RESET(FH_10)
+		_FLAG_RESET(FH_11)
+		_FLAG_RESET(FH_12)
+		_FLAG_RESET(FH_13)
+		_FLAG_RESET(FH_14)
+						
+		$LOCALWORK0 = 0
+		$LOCALWORK1 = 0
+		$LOCALWORK2 = 0
+		$LOCALWORK3 = 0
+		$LOCALWORK4 = 0
+		$LOCALWORK5 = 0
+		$LOCALWORK6 = 0
+		$LOCALWORK7 = 0
+		$LOCALWORK8 = 0
+		$LOCALWORK9 = 0
+						
+		//==============フラグワーク操作==============//
+		
+		IF $LWK_POSX == 86 THEN
+			_OBJ_ANIME(H04_BAKER_01,anm_baker_back_x86)
+			_OBJ_ANIME_WAIT()
+		ENDIF		
+	ELSE
+		IF $LWK_POSX == 73 THEN
+			_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_back_x72)
+			_OBJ_ANIME_WAIT()
+			_OBJ_ANIME(H04_BAKER_01,anm_baker_back_x72)
+		ELSIF $LWK_POSX == 86 THEN
+			_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_back_x86)
+			_OBJ_ANIME_WAIT()
+			_OBJ_ANIME(H04_BAKER_01,anm_baker_back_x86)
+		ELSIF $LWK_POSX == 84 THEN
+			_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_back_z45)
+			_OBJ_ANIME_WAIT()
+			_OBJ_ANIME(H04_BAKER_01,anm_baker_back_x86)
+		ELSIF $LWK_POSZ == 45 THEN
+			_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_back_z45)
+		ENDIF
+		_OBJ_ANIME_WAIT()
+	ENDIF
+	}
 EVENT_END
-*/
+
+//--------------------------------------------------------------------
+//POSイベントでやめる？と聞かれ、やめない場合、一歩戻る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_back_x72
+
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_player_back_x86
+
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_back_z45
+
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_baker_come_x86
+
+	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_baker_back_x86
+
+	_ANIME_DATA AC_WALK_L_8F,4
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_baker_come_x72
+
+	_ANIME_DATA AC_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_baker_back_x72
+
+	_ANIME_DATA AC_WALK_R_8F,2
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
 /**************************************************************/
 /*  h04 ビレッジサンドイベント        */
 /**************************************************************/
-/*
-//ウェイトレスさん
-EVENT_START   ev_pos_h04_waitress
 
-//	_EASY_BALLOONWIN_TALKOBJ_MSG()
+//ベイカー
+EVENT_START   ev_h04_baker_01
 
-	//対戦している？
-	IF FLAG_ON(FH_07)THEN
+	DEFINE_LOCAL LWK_NUM
+	DEFINE_LOCAL LWK_POSX_TALK
+	DEFINE_LOCAL LWK_POSZ_TALK
 	
+	_PLAYER_POS_GET(LWK_POSX_TALK,LWK_POSZ_TALK)
+	
+	_TALK_OBJ_START()
+	//その日にまだ、イベントを起動していない？
+	IF FLAG_OFF(TMFLG_H04_KINOMI_SAND) THEN
+		//トレーナーと対戦していないなら、対戦処理に
+		_TRAINER_FLAG_CHECK( TRID_BAKER_03, SCWK_ANSWER )
+	  	IF $SCWK_ANSWER ==  FALSE THEN
+	  		//いらっしゃいませ！　勝負のご予約
+	  		_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_01)
+			_MSGWIN_CLOSE()
+			
+	  		//対戦へ
+			_TRAINER_BTL_SET( TRID_BAKER_03, 0 )
+				
+			//敗戦チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+				_TRAINER_FLAG_SET( TRID_BAKER_03 )
+					
+			ELSE
+				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			ENDIF
+			
+			IF $LWK_POSX_TALK == 76 THEN
+				_OBJ_ANIME(H04_BAKER_01,anm_common_turn_l)
+			ELSIF $LWK_POSX_TALK == 77 THEN
+				_OBJ_ANIME(H04_BAKER_01,anm_common_turn_d)
+			ELSIF $LWK_POSX_TALK == 78 THEN
+				_OBJ_ANIME(H04_BAKER_01,anm_common_turn_r)
+			ENDIF
+			_OBJ_ANIME_WAIT()
+			
+			_TIME_WAIT(24)
+			//対戦後メッセージ
+			//あなた　すっごいわね！
+			_BALLOONWIN_OBJMSG_MF(msg_h04_waitress_03,msg_h04_waitress_02,H04_BAKER_01,POS_DEFAULT)
+			_YES_NO_WIN(SCWK_ANSWER)
+			_MSGWIN_CLOSE()
+		
+		ELSE
+			//あら　あなたね　やっぱり
+	  		_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_04)
+	  		_YES_NO_WIN(SCWK_ANSWER)
+			_MSGWIN_CLOSE()
+		ENDIF
+		
+		_TIME_WAIT(8)
+		IF $SCWK_ANSWER == SCR_YES THEN
+			//ウェイトレスorウェイターの仕事をする？にYES
+			//仕事の内容は分かる？
+		  	_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_06)
+		  	_YES_NO_WIN(SCWK_ANSWER)
+		  	_MSGWIN_CLOSE()
+		  	
+		  	IF $SCWK_ANSWER == SCR_NO THEN
+		  		
+		  		_OBJ_ANIME(H04_BAKER_01,anm_common_turn_d)
+		  		_TIME_WAIT(8)
+		  		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_d)
+		  		
+		  		//仕事の内容を聞く
+		  		//この　おみせは　ポケモンと
+				_CAMERA_START()		//カメラ操作開始
+				_CAMERA_PURGE()		//カメラのバインドを解く
+		  		_OBJ_ANIME_WAIT()
+							
+				_CAMERA_MOVE(9694,0,970795,5210112,0,3244032,24 )	//一番最後の引数は移動にかかるフレーム数
+				_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+				_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+				
+				_TIME_WAIT(16)
+		  		_PLAINWIN_MSG_UP(msg_h04_waitress_07)
+		  		
+				IF $LWK_POSX_TALK == 76 THEN
+			  		_OBJ_ANIME(H04_BAKER_01,anm_common_turn_l)
+		  			_TIME_WAIT(8)
+		  			_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
+				ELSIF $LWK_POSX_TALK == 77 THEN
+		  			_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
+				ELSIF $LWK_POSX_TALK == 78 THEN
+			  		_OBJ_ANIME(H04_BAKER_01,anm_common_turn_r)
+		  			_TIME_WAIT(8)
+		  			_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)
+				ENDIF
+				_OBJ_ANIME_WAIT()
+		  		
+		  		_PLAINWIN_MSG_UP(msg_h04_waitress_08)
+		  		_OBJ_ANIME_WAIT()
+		  		_MSGWIN_CLOSE()
+		  		
+		  		_TIME_WAIT(16)
+		  		_PLAINWIN_MSG_UP(msg_h04_waitress_09)
+		  		_LAST_KEYWAIT()
+		  		_MSGWIN_CLOSE()
+
+				//自機にカメラを戻す
+				_CAMERA_RECV_MOVE( 16 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+				_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+				_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+				_CAMERA_END()		//カメラ操作終了
+
+		  	ELSE
+			  	//それじゃあ、よろしくね！
+			  	_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_09)
+			  	_LAST_KEYWAIT()
+			  	_MSGWIN_CLOSE()
+		  	ENDIF
+		  	
+			//==============フラグワーク操作==============//			
+			//タイムフラグをセット
+			_FLAG_SET(TMFLG_H04_KINOMI_SAND)	
+			
+			//イベントフラグをセット
+			_FLAG_SET(FH_01)
+			
+			//POSイベントを起動
+			$LOCALWORK0 = 1
+			
+			//お客さんに渡すサンドイッチのナンバーを初期化
+			$LOCALWORK9 = 1
+			//==============フラグワーク操作==============//
+			
+		ELSE
+			//そうなの　ざんねんだけど
+			_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_05)
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		ENDIF
+	//その日イベントを起動している？
 	ELSE
-	
+		//その日イベントをすでにクリアしている？
+		//イベント中
+		IF FLAG_ON(FH_01) THEN
+			//全ての客からオーダーを取っている？
+			//全ての客から注文を取っている
+			IF FLAG_ON(FH_02) && FLAG_ON(FH_03) && FLAG_ON(FH_04) && FLAG_ON(FH_05) THEN	
+				
+				IF FLAG_OFF(FH_06) THEN
+					//トッピングをベイカーに伝える
+
+			  		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, LOCALWORK5  )
+					_CALL	ev_order_baker
+					
+			  		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, LOCALWORK6  )
+					_CALL	ev_order_baker
+					
+			  		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, LOCALWORK7  )
+					_CALL	ev_order_baker
+					
+			  		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, LOCALWORK8  )
+					_CALL	ev_order_baker
+										
+					_TIME_WAIT(16)
+					_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_11)
+					_MSGWIN_CLOSE()
+					
+					_TIME_WAIT(16)
+					_OBJ_ANIME(H04_BAKER_01,anm_baker_make1)
+					_OBJ_ANIME_WAIT()
+					_OBJ_DEL(H04_BAKER_01)
+					//階段SE
+					_SE_PLAY( SEQ_SE_KAIDAN )
+					_SE_WAIT()
+					
+					_TIME_WAIT(90)
+
+					//階段SE
+					_SE_PLAY( SEQ_SE_KAIDAN )
+					_OBJ_ADD(H04_BAKER_01)
+					_OBJ_ANIME(H04_BAKER_01,anm_baker_make2)
+					_OBJ_ANIME_WAIT()
+					_SE_WAIT()
+					
+					_PLAYER_POS_GET(LWK_POSX_TALK,LWK_POSZ_TALK)
+					//ベーカリーの向きを調整
+					IF $LWK_POSX_TALK == 76 THEN
+				  		_OBJ_ANIME(H04_BAKER_01,anm_common_turn_l)
+					ELSIF $LWK_POSX_TALK == 78 THEN
+				  		_OBJ_ANIME(H04_BAKER_01,anm_common_turn_r)
+					ENDIF
+					_OBJ_ANIME_WAIT()
+					
+					_TIME_WAIT(16)
+					_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_12)					
+					_LAST_KEYWAIT()
+					_MSGWIN_CLOSE()
+					
+					//==============フラグワーク操作==============//
+					//オーダーを全てベイカーに伝えたフラグON
+					_FLAG_SET(FH_06)
+					//==============フラグワーク操作==============//
+						
+				ELSE
+					//お客さん全員に渡している？
+					IF FLAG_ON(FH_07) && FLAG_ON(FH_08) && FLAG_ON(FH_09) && FLAG_ON(FH_10) THEN
+						_TIME_WAIT(8)
+						//全員に正しく渡せている？
+						IF FLAG_ON(FH_11) && FLAG_ON(FH_12) && FLAG_ON(FH_13) && FLAG_ON(FH_14) THEN
+							_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_14)
+							_MSGWIN_CLOSE()
+							
+							_TIME_WAIT(8)
+							_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_16 )
+							_MSGWIN_CLOSE()
+							
+							_ITEM_EVENT_KEYWAIT(ITEM_ORENNOMI,1)	//【仮】アイテム内容
+
+							_TIME_WAIT(8)
+							_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_17)
+							_LAST_KEYWAIT()
+							_MSGWIN_CLOSE()
+							
+						ELSE
+							_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_15)
+							_MSGWIN_CLOSE()
+							
+							_TIME_WAIT(8)
+							_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_17)
+							_LAST_KEYWAIT()
+							_MSGWIN_CLOSE()
+							
+						ENDIF
+
+						//==============フラグワーク操作==============//
+						//フラグとワークの初期化
+						_FLAG_RESET(FH_01)
+						_FLAG_RESET(FH_02)
+						_FLAG_RESET(FH_03)
+						_FLAG_RESET(FH_04)
+						_FLAG_RESET(FH_05)
+						_FLAG_RESET(FH_06)
+						_FLAG_RESET(FH_07)
+						_FLAG_RESET(FH_08)
+						_FLAG_RESET(FH_09)
+						_FLAG_RESET(FH_10)
+						_FLAG_RESET(FH_11)
+						_FLAG_RESET(FH_12)
+						_FLAG_RESET(FH_13)
+						_FLAG_RESET(FH_14)
+						
+						$LOCALWORK0 = 0
+						$LOCALWORK1 = 0
+						$LOCALWORK2 = 0
+						$LOCALWORK3 = 0
+						$LOCALWORK4 = 0
+						$LOCALWORK5 = 0
+						$LOCALWORK6 = 0
+						$LOCALWORK7 = 0
+						$LOCALWORK8 = 0
+						$LOCALWORK9 = 0
+						
+						//==============フラグワーク操作==============//
+
+					ELSE
+						//オーダー通りに作ってあるわ
+						_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_12)
+						_LAST_KEYWAIT()
+						_MSGWIN_CLOSE()
+					ENDIF
+				ENDIF
+				
+			//注文を取っていない客がいる
+			ELSE
+				//ちゅうもんを　とっていない　おきゃくさんが
+				_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_13)
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+			ENDIF
+			
+		//イベントを終了している
+		ELSE
+			//きょうは　もう　だいじょうぶだから
+			_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_17)
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		ENDIF
 	
 	ENDIF
 
-
 EVENT_END
-*/
+	
+//トッピングをベイカーに注文する
+ev_order_baker:
+	$LWK_NUM += 1
+	_NUMBER( 0, LWK_NUM, 1 )
+	_BALLOONWIN_OBJMSG_POS(msg_h04_waitress_10,H04_BAKER_01,POS_DOWN)
+	_BMPMENU_MAKE_LIST( msg_h04_topping_01, 0 )	//クラボのみ
+	_BMPMENU_MAKE_LIST( msg_h04_topping_02, 1 )	//キーのみ
+	_BMPMENU_MAKE_LIST( msg_h04_topping_03, 2 )	//モモンのみ
+	_BMPMENU_MAKE_LIST( msg_h04_topping_04, 3 )	//カゴのみ
+	_BMPMENU_START()
+	_MSGWIN_CLOSE()
+
+_RET
+
+//--------------------------------------------------------------------
+// ベイカー：料理を作りにカーの中へ                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_baker_make1
+
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ベイカー：料理を作りにカーの中へ                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_baker_make2
+
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+	
 //ガール2
 EVENT_START   ev_h04_girl2_01
+{
+	DEFINE_LOCAL LWK_POSX
+	DEFINE_LOCAL LWK_POSZ
+	_PLAYER_POS_GET(LWK_POSX,LWK_POSZ)
+	
+	DEFINE_LOCAL LWK_GIRL_TAKE
 
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_girl2_02)
 
+	_TALK_OBJ_START()
+	//イベント中？
+	IF FLAG_ON(FH_01) THEN
+		//オーダーしていない？
+		IF FLAG_OFF(FH_02) THEN	
+			//お客さんが注文をする
+			_GET_RND( LOCALWORK1, 4 )
+			IF $LOCALWORK1 == 0 THEN
+				_ITEM_NAME( 0, ITEM_KURABONOMI ) //クラボの実
+			ELSIF $LOCALWORK1 == 1 THEN
+				_ITEM_NAME( 0, ITEM_KIINOMI )//キーの実
+			ELSIF $LOCALWORK1 == 2 THEN
+				_ITEM_NAME( 0, ITEM_MOMONNOMI )//モモンの実
+			ELSIF $LOCALWORK1 == 3 THEN
+				_ITEM_NAME( 0, ITEM_KAGONOMI )//カゴの実
+			ENDIF
+			_BALLOONWIN_TALKOBJ_MSG(msg_h04_girl2_01)
+			_MSGWIN_CLOSE()
+			
+			//ポケモンが振り向く
+			IF $LWK_POSZ == 52 THEN
+				_OBJ_ANIME(H04_POKE19_01,anm_common_turn_u)
+			ELSIF $LWK_POSZ == 53 THEN
+				_OBJ_ANIME(H04_POKE19_01,anm_common_turn_l)
+			ENDIF
+			_OBJ_ANIME_WAIT()
+			
+			_VOICE_PLAY(MONSNO_533,0)
+			_BALLOONWIN_OBJMSG_POS( msg_h04_pokemon_03, H04_POKE19_01, POS_DEFAULT )
+			_VOICE_WAIT()
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+					
+			//オーダーフラグをON
+			_FLAG_SET(FH_02)
+		ELSE
+			//ベイカーにオーダーを済ませ、かつこの客がまだ食べていない
+			IF FLAG_ON(FH_06) && FLAG_OFF(FH_07) THEN
+
+				IF $LOCALWORK9 == 1 THEN
+					$LWK_GIRL_TAKE = $LOCALWORK5
+				ELSIF $LOCALWORK9 == 2 THEN
+					$LWK_GIRL_TAKE = $LOCALWORK6
+				ELSIF $LOCALWORK9 == 3 THEN
+					$LWK_GIRL_TAKE = $LOCALWORK7
+				ELSIF $LOCALWORK9 == 4 THEN
+					$LWK_GIRL_TAKE = $LOCALWORK8
+				ENDIF
+			
+				IF $LWK_GIRL_TAKE == 0 THEN
+					_ITEM_NAME( 0, ITEM_KURABONOMI ) //クラボの実
+				ELSIF $LWK_GIRL_TAKE == 1 THEN
+					_ITEM_NAME( 0, ITEM_KIINOMI )//キーの実
+				ELSIF $LWK_GIRL_TAKE == 2 THEN
+					_ITEM_NAME( 0, ITEM_MOMONNOMI )//モモンの実
+				ELSIF $LWK_GIRL_TAKE == 3 THEN
+					_ITEM_NAME( 0, ITEM_KAGONOMI )//カゴの実
+				ENDIF
+				
+				_PLAINWIN_MSG_DOWN(msg_h04_system_01)
+				_YES_NO_WIN(SCWK_ANSWER)
+				_MSGWIN_CLOSE()
+				
+				IF $SCWK_ANSWER == SCR_YES THEN
+					
+					IF $LOCALWORK9 == 1 THEN
+						$LWK_GIRL_TAKE = $LOCALWORK5
+					ELSIF $LOCALWORK9 == 2 THEN
+						$LWK_GIRL_TAKE = $LOCALWORK6
+					ELSIF $LOCALWORK9 == 3 THEN
+						$LWK_GIRL_TAKE = $LOCALWORK7
+					ELSIF $LOCALWORK9 == 4 THEN
+						$LWK_GIRL_TAKE = $LOCALWORK8
+					ENDIF
+					
+					IF $LOCALWORK1 ==  $LWK_GIRL_TAKE THEN
+						_TIME_WAIT(8)
+						//ポケモンが振り向く
+						IF $LWK_POSZ == 52 THEN
+							_OBJ_ANIME(H04_POKE19_01,anm_common_turn_u)
+						ELSIF $LWK_POSZ == 53 THEN
+							_OBJ_ANIME(H04_POKE19_01,anm_common_turn_l)
+						ENDIF
+						_OBJ_ANIME_WAIT()
+
+						_TIME_WAIT(8)
+						_OBJ_ANIME(H04_GIRL2_01,anm_common_onpu)
+						_OBJ_ANIME(H04_POKE19_01,anm_common_onpu)
+						_OBJ_ANIME_WAIT()
+						
+						_BALLOONWIN_TALKOBJ_MSG(msg_h04_girl2_03)
+						_LAST_KEYWAIT()
+						_MSGWIN_CLOSE()
+
+						
+						//注文成功フラグON
+						_FLAG_SET(FH_11)
+						
+					ELSE
+						_TIME_WAIT(8)
+						//ポケモンが振り向く
+						IF $LWK_POSZ == 52 THEN
+							_OBJ_ANIME(H04_POKE19_01,anm_common_turn_u)
+						ELSIF $LWK_POSZ == 53 THEN
+							_OBJ_ANIME(H04_POKE19_01,anm_common_turn_l)
+						ENDIF
+						_OBJ_ANIME_WAIT()
+
+						_TIME_WAIT(8)
+						_OBJ_ANIME(H04_GIRL2_01,anm_common_hatena)
+						_OBJ_ANIME(H04_POKE19_01,anm_common_hatena)
+						_OBJ_ANIME_WAIT()
+						
+						_BALLOONWIN_TALKOBJ_MSG(msg_h04_girl2_04)
+						_LAST_KEYWAIT()
+						_MSGWIN_CLOSE()
+
+					ENDIF
+					//イートフラグON
+					_FLAG_SET(FH_07)
+					
+					//お客さんに渡したサンドイッチの数をインクリメント
+					$LOCALWORK9 += 1
+				ENDIF
+			ELSE
+				IF FLAG_ON(FH_07) THEN
+					IF FLAG_ON(FH_11)THEN
+						_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_girl2_03)
+					ELSE
+						_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_girl2_04)
+					ENDIF
+				ELSE
+					IF $LOCALWORK1 == 0 THEN
+					_ITEM_NAME( 0, ITEM_KURABONOMI ) //クラボの実
+					ELSIF $LOCALWORK1 == 1 THEN
+						_ITEM_NAME( 0, ITEM_KIINOMI )//キーの実
+					ELSIF $LOCALWORK1 == 2 THEN
+						_ITEM_NAME( 0, ITEM_MOMONNOMI )//モモンの実
+					ELSIF $LOCALWORK1 == 3 THEN
+						_ITEM_NAME( 0, ITEM_KAGONOMI )//カゴの実
+					ENDIF
+					_BALLOONWIN_TALKOBJ_MSG(msg_h04_girl2_01)
+					_MSGWIN_CLOSE()	
+				ENDIF
+			ENDIF
+		ENDIF
+		
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_girl2_02)
+	ENDIF
+}
 EVENT_END
 
 //マン1
 EVENT_START   ev_h04_man1_01
+{
+	DEFINE_LOCAL LWK_POSX
+	DEFINE_LOCAL LWK_POSZ
+	_PLAYER_POS_GET(LWK_POSX,LWK_POSZ)
+	
+	DEFINE_LOCAL LWK_MAN1_TAKE
+	
+	_TALK_OBJ_START()
+	//イベント中？
+	IF FLAG_ON(FH_01) THEN
+		//オーダーしいない？
+		IF FLAG_OFF(FH_03) THEN	
+			//お客さんが注文をする
+			_GET_RND( LOCALWORK2, 4 )
+			IF $LOCALWORK2 == 0 THEN
+				_ITEM_NAME( 0, ITEM_KURABONOMI ) //クラボの実
+			ELSIF $LOCALWORK2 == 1 THEN
+				_ITEM_NAME( 0, ITEM_KIINOMI )//キーの実
+			ELSIF $LOCALWORK2 == 2 THEN
+				_ITEM_NAME( 0, ITEM_MOMONNOMI )//モモンの実
+			ELSIF $LOCALWORK2 == 3 THEN
+				_ITEM_NAME( 0, ITEM_KAGONOMI )//カゴの実
+			ENDIF
+			_BALLOONWIN_TALKOBJ_MSG(msg_h04_man1_01)
+			_MSGWIN_CLOSE()
 
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_man1_02)
+			//ポケモンが振り向く
+			IF $LWK_POSZ == 49 THEN
+				_OBJ_ANIME(H04_PIKACHU_01,anm_common_turn_u)
+			ELSIF $LWK_POSZ == 50 THEN
+				_OBJ_ANIME(H04_PIKACHU_01,anm_common_turn_l)
+			ENDIF
+			_OBJ_ANIME_WAIT()
+			
+			_VOICE_PLAY(MONSNO_025,0)
+			_BALLOONWIN_OBJMSG_POS( msg_h04_pokemon_02, H04_PIKACHU_01, POS_DEFAULT )
+			_VOICE_WAIT()
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+			//オーダーフラグをON
+			_FLAG_SET(FH_03)
 
+		ELSE
+			//ベイカーにオーダーを済ませ、かつこの客がまだ食べていない
+			IF FLAG_ON(FH_06) && FLAG_OFF(FH_08) THEN
+			
+				IF $LOCALWORK9 == 1 THEN
+					$LWK_MAN1_TAKE = $LOCALWORK5
+				ELSIF $LOCALWORK9 == 2 THEN
+					$LWK_MAN1_TAKE = $LOCALWORK6
+				ELSIF $LOCALWORK9 == 3 THEN
+					$LWK_MAN1_TAKE = $LOCALWORK7
+				ELSIF $LOCALWORK9 == 4 THEN
+					$LWK_MAN1_TAKE = $LOCALWORK8
+				ENDIF
+			
+				IF $LWK_MAN1_TAKE== 0 THEN
+					_ITEM_NAME( 0, ITEM_KURABONOMI ) //クラボの実
+				ELSIF $LWK_MAN1_TAKE == 1 THEN
+					_ITEM_NAME( 0, ITEM_KIINOMI )//キーの実
+				ELSIF $LWK_MAN1_TAKE == 2 THEN
+					_ITEM_NAME( 0, ITEM_MOMONNOMI )//モモンの実
+				ELSIF $LWK_MAN1_TAKE == 3 THEN
+					_ITEM_NAME( 0, ITEM_KAGONOMI )//カゴの実
+				ENDIF
+				
+				_PLAINWIN_MSG_DOWN(msg_h04_system_01)
+				_YES_NO_WIN(SCWK_ANSWER)
+				_MSGWIN_CLOSE()
+				
+				IF $SCWK_ANSWER == SCR_YES THEN
+					
+					IF $LOCALWORK9 == 1 THEN
+						$LWK_MAN1_TAKE = $LOCALWORK5
+					ELSIF $LOCALWORK9 == 2 THEN
+						$LWK_MAN1_TAKE = $LOCALWORK6
+					ELSIF $LOCALWORK9 == 3 THEN
+						$LWK_MAN1_TAKE = $LOCALWORK7
+					ELSIF $LOCALWORK9 == 4 THEN
+						$LWK_MAN1_TAKE = $LOCALWORK8
+					ENDIF
+					
+					IF $LOCALWORK2 == $LWK_MAN1_TAKE THEN
+						_TIME_WAIT(8)
+						//ポケモンが振り向く
+						IF $LWK_POSZ == 49 THEN
+							_OBJ_ANIME(H04_PIKACHU_01,anm_common_turn_u)
+						ELSIF $LWK_POSZ == 50 THEN
+							_OBJ_ANIME(H04_PIKACHU_01,anm_common_turn_l)
+						ENDIF
+						_OBJ_ANIME_WAIT()
+
+						_TIME_WAIT(8)
+						_OBJ_ANIME(H04_MAN1_01 ,anm_common_onpu)
+						_OBJ_ANIME(H04_PIKACHU_01,anm_common_onpu)
+						_OBJ_ANIME_WAIT()
+						_BALLOONWIN_TALKOBJ_MSG(msg_h04_man1_03)
+						_LAST_KEYWAIT()
+						_MSGWIN_CLOSE()
+						
+						//注文成功フラグON
+						_FLAG_SET(FH_12)
+					ELSE
+						_TIME_WAIT(8)
+						IF $LWK_POSZ == 49 THEN
+							_OBJ_ANIME(H04_PIKACHU_01,anm_common_turn_u)
+						ELSIF $LWK_POSZ == 50 THEN
+							_OBJ_ANIME(H04_PIKACHU_01,anm_common_turn_l)
+						ENDIF
+						_OBJ_ANIME_WAIT()
+
+						_TIME_WAIT(8)
+						_OBJ_ANIME(H04_MAN1_01 ,anm_common_hatena)
+						_OBJ_ANIME(H04_PIKACHU_01,anm_common_hatena)
+						_OBJ_ANIME_WAIT()
+						_BALLOONWIN_TALKOBJ_MSG(msg_h04_man1_04)
+						_LAST_KEYWAIT()
+						_MSGWIN_CLOSE()
+						
+					ENDIF
+					//イートフラグON
+					_FLAG_SET(FH_08)
+					
+					//お客さんに渡したサンドイッチの数をインクリメント
+					$LOCALWORK9 += 1
+				ENDIF
+			ELSE
+				IF FLAG_ON(FH_08) THEN
+					IF FLAG_ON(FH_12)THEN
+						_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_man1_03)
+					ELSE
+						_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_man1_04)
+					ENDIF
+				ELSE
+					IF $LOCALWORK2 == 0 THEN
+						_ITEM_NAME( 0, ITEM_KURABONOMI ) //クラボの実
+					ELSIF $LOCALWORK2 == 1 THEN
+						_ITEM_NAME( 0, ITEM_KIINOMI )//キーの実
+					ELSIF $LOCALWORK2 == 2 THEN
+						_ITEM_NAME( 0, ITEM_MOMONNOMI )//モモンの実
+					ELSIF $LOCALWORK2 == 3 THEN
+						_ITEM_NAME( 0, ITEM_KAGONOMI )//カゴの実
+					ENDIF
+					_BALLOONWIN_TALKOBJ_MSG(msg_h04_man1_01)
+					_MSGWIN_CLOSE()
+				ENDIF
+			ENDIF
+		ENDIF
+		
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_man1_02)
+	ENDIF
+}
 EVENT_END
 
 //マン三
 EVENT_START   ev_h04_man3_01
+{
+	DEFINE_LOCAL LWK_POSX
+	DEFINE_LOCAL LWK_POSZ
+	_PLAYER_POS_GET(LWK_POSX,LWK_POSZ)
+	
+	DEFINE_LOCAL LWK_MAN3_TAKE
+	
+	_TALK_OBJ_START()
+	//イベント中？
+	IF FLAG_ON(FH_01) THEN
+		//オーダーしいない？
+		IF FLAG_OFF(FH_04) THEN	
+			//お客さんが注文をする
+			_GET_RND( LOCALWORK3, 4 )
+			IF $LOCALWORK3 == 0 THEN
+				_ITEM_NAME( 0, ITEM_KURABONOMI ) //クラボの実
+			ELSIF $LOCALWORK3 == 1 THEN
+				_ITEM_NAME( 0, ITEM_KIINOMI )//キーの実
+			ELSIF $LOCALWORK3 == 2 THEN
+				_ITEM_NAME( 0, ITEM_MOMONNOMI )//モモンの実
+			ELSIF $LOCALWORK3 == 3 THEN
+				_ITEM_NAME( 0, ITEM_KAGONOMI )//カゴの実
+			ENDIF
+			_BALLOONWIN_TALKOBJ_MSG(msg_h04_man3_01)
+			_MSGWIN_CLOSE()
 
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_man3_02)
+			//ポケモンが振り向く
+			IF $LWK_POSZ == 52 THEN
+				_OBJ_ANIME(H04_POKE20_01,anm_common_turn_u)
+			ELSIF $LWK_POSZ == 53 THEN
+				_OBJ_ANIME(H04_POKE20_01,anm_common_turn_l)
+			ENDIF
+			_OBJ_ANIME_WAIT()
+			
+			_VOICE_PLAY(MONSNO_505,0)
+			_BALLOONWIN_OBJMSG_POS( msg_h04_pokemon_04, H04_POKE20_01, POS_DEFAULT )
+			_VOICE_WAIT()
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+			//オーダーフラグをON
+			_FLAG_SET(FH_04)
 
+		ELSE
+			//ベイカーにオーダーを済ませ、かつこの客がまだ食べていない
+			IF FLAG_ON(FH_06) && FLAG_OFF(FH_09) THEN
+			
+				IF $LOCALWORK9 == 1 THEN
+					$LWK_MAN3_TAKE = $LOCALWORK5
+				ELSIF $LOCALWORK9 == 2 THEN
+					$LWK_MAN3_TAKE = $LOCALWORK6
+				ELSIF $LOCALWORK9 == 3 THEN
+					$LWK_MAN3_TAKE = $LOCALWORK7
+				ELSIF $LOCALWORK9 == 4 THEN
+					$LWK_MAN3_TAKE = $LOCALWORK8
+				ENDIF
+			
+				IF $LWK_MAN3_TAKE == 0 THEN
+					_ITEM_NAME( 0, ITEM_KURABONOMI ) //クラボの実
+				ELSIF $LWK_MAN3_TAKE == 1 THEN
+					_ITEM_NAME( 0, ITEM_KIINOMI )//キーの実
+				ELSIF $LWK_MAN3_TAKE == 2 THEN
+					_ITEM_NAME( 0, ITEM_MOMONNOMI )//モモンの実
+				ELSIF $LWK_MAN3_TAKE == 3 THEN
+					_ITEM_NAME( 0, ITEM_KAGONOMI )//カゴの実
+				ENDIF
+				
+				_PLAINWIN_MSG_DOWN(msg_h04_system_01)
+				_YES_NO_WIN(SCWK_ANSWER)
+				_MSGWIN_CLOSE()
+				
+				IF $SCWK_ANSWER == SCR_YES THEN
+					
+					IF $LOCALWORK9 == 1 THEN
+						$LWK_MAN3_TAKE = $LOCALWORK5
+					ELSIF $LOCALWORK9 == 2 THEN
+						$LWK_MAN3_TAKE = $LOCALWORK6
+					ELSIF $LOCALWORK9 == 3 THEN
+						$LWK_MAN3_TAKE = $LOCALWORK7
+					ELSIF $LOCALWORK9 == 4 THEN
+						$LWK_MAN3_TAKE = $LOCALWORK8
+					ENDIF
+					
+					IF $LOCALWORK3 ==  $LWK_MAN3_TAKE THEN
+						_TIME_WAIT(8)
+						//ポケモンが振り向く
+						IF $LWK_POSZ == 52 THEN
+							_OBJ_ANIME(H04_POKE20_01,anm_common_turn_u)
+						ELSIF $LWK_POSZ == 53 THEN
+							_OBJ_ANIME(H04_POKE20_01,anm_common_turn_l)
+						ENDIF
+						_OBJ_ANIME_WAIT()
+
+						_TIME_WAIT(8)
+						_OBJ_ANIME(H04_MAN3_01 ,anm_common_onpu)
+						_OBJ_ANIME(H04_POKE20_01,anm_common_onpu)
+						_OBJ_ANIME_WAIT()
+						_BALLOONWIN_TALKOBJ_MSG(msg_h04_man3_03)
+						_LAST_KEYWAIT()
+						_MSGWIN_CLOSE()
+						
+						//注文成功フラグON
+						_FLAG_SET(FH_13)
+						
+					ELSE
+						_TIME_WAIT(8)
+						//ポケモンが振り向く
+						IF $LWK_POSZ == 52 THEN
+							_OBJ_ANIME(H04_POKE20_01,anm_common_turn_u)
+						ELSIF $LWK_POSZ == 53 THEN
+							_OBJ_ANIME(H04_POKE20_01,anm_common_turn_l)
+						ENDIF
+						_OBJ_ANIME_WAIT()
+
+						_TIME_WAIT(8)
+						_OBJ_ANIME(H04_MAN3_01 ,anm_common_hatena)
+						_OBJ_ANIME(H04_POKE20_01,anm_common_hatena)
+						_OBJ_ANIME_WAIT()
+						_BALLOONWIN_TALKOBJ_MSG(msg_h04_man3_04)
+						_LAST_KEYWAIT()
+						_MSGWIN_CLOSE()
+						
+					ENDIF
+					//イートフラグON
+					_FLAG_SET(FH_09)
+					
+					//お客さんに渡したサンドイッチの数をインクリメント
+					$LOCALWORK9 += 1
+				ENDIF
+			ELSE
+				IF FLAG_ON(FH_09) THEN
+					IF FLAG_ON(FH_13)THEN
+						_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_man3_03)
+					ELSE
+						_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_man3_04)
+					ENDIF
+				ELSE
+					IF $LOCALWORK3 == 0 THEN
+						_ITEM_NAME( 0, ITEM_KURABONOMI ) //クラボの実
+					ELSIF $LOCALWORK3 == 1 THEN
+						_ITEM_NAME( 0, ITEM_KIINOMI )//キーの実
+					ELSIF $LOCALWORK3 == 2 THEN
+						_ITEM_NAME( 0, ITEM_MOMONNOMI )//モモンの実
+					ELSIF $LOCALWORK3 == 3 THEN
+						_ITEM_NAME( 0, ITEM_KAGONOMI )//カゴの実
+					ENDIF
+					_BALLOONWIN_TALKOBJ_MSG(msg_h04_man3_01)
+					_MSGWIN_CLOSE()
+				ENDIF
+			ENDIF
+		ENDIF
+		
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_man3_02)
+	ENDIF
+}
 EVENT_END
 
 //ウーマン1
 EVENT_START   ev_h04_woman1_01
+{
+	DEFINE_LOCAL LWK_POSX
+	DEFINE_LOCAL LWK_POSZ
+	_PLAYER_POS_GET(LWK_POSX,LWK_POSZ)
+	
+	DEFINE_LOCAL LWK_WOMAN_TAKE
+	
+	_TALK_OBJ_START()
+	//イベント中？
+	IF FLAG_ON(FH_01) THEN
+		//オーダーしいない？
+		IF FLAG_OFF(FH_05) THEN	
+			//お客さんが注文をする
+			_GET_RND( LOCALWORK4, 4 )
+			IF $LOCALWORK4 == 0 THEN
+				_ITEM_NAME( 0, ITEM_KURABONOMI ) //クラボの実
+			ELSIF $LOCALWORK4 == 1 THEN
+				_ITEM_NAME( 0, ITEM_KIINOMI )//キーの実
+			ELSIF $LOCALWORK4 == 2 THEN
+				_ITEM_NAME( 0, ITEM_MOMONNOMI )//モモンの実
+			ELSIF $LOCALWORK4 == 3 THEN
+				_ITEM_NAME( 0, ITEM_KAGONOMI )//カゴの実
+			ENDIF
+			_BALLOONWIN_TALKOBJ_MSG(msg_h04_woman1_01)
+			_MSGWIN_CLOSE()
 
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_woman1_02)
+			//ポケモンが振り向く
+			IF $LWK_POSZ == 49 THEN
+				_OBJ_ANIME(H04_POKE17_01,anm_common_turn_u)
+			ELSIF $LWK_POSZ == 50 THEN
+				_OBJ_ANIME(H04_POKE17_01,anm_common_turn_l)
+			ENDIF
+			_OBJ_ANIME_WAIT()
+			
+			_VOICE_PLAY(MONSNO_537,0)
+			_BALLOONWIN_OBJMSG_POS( msg_h04_pokemon_01, H04_POKE17_01, POS_DEFAULT )
+			_VOICE_WAIT()
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+			//オーダーフラグをON
+			_FLAG_SET(FH_05)
 
+		ELSE
+			//ベイカーにオーダーを済ませ、かつこの客がまだ食べていない
+			IF FLAG_ON(FH_06) && FLAG_OFF(FH_10) THEN
+
+				IF $LOCALWORK9 == 1 THEN
+					$LWK_WOMAN_TAKE = $LOCALWORK5
+				ELSIF $LOCALWORK9 == 2 THEN
+					$LWK_WOMAN_TAKE = $LOCALWORK6
+				ELSIF $LOCALWORK9 == 3 THEN
+					$LWK_WOMAN_TAKE = $LOCALWORK7
+				ELSIF $LOCALWORK9 == 4 THEN
+					$LWK_WOMAN_TAKE = $LOCALWORK8
+				ENDIF
+			
+				IF $LWK_WOMAN_TAKE == 0 THEN
+					_ITEM_NAME( 0, ITEM_KURABONOMI ) //クラボの実
+				ELSIF $LWK_WOMAN_TAKE == 1 THEN
+					_ITEM_NAME( 0, ITEM_KIINOMI )//キーの実
+				ELSIF $LWK_WOMAN_TAKE == 2 THEN
+					_ITEM_NAME( 0, ITEM_MOMONNOMI )//モモンの実
+				ELSIF $LWK_WOMAN_TAKE == 3 THEN
+					_ITEM_NAME( 0, ITEM_KAGONOMI )//カゴの実
+				ENDIF
+				
+				_PLAINWIN_MSG_DOWN(msg_h04_system_01)
+				_YES_NO_WIN(SCWK_ANSWER)
+				_MSGWIN_CLOSE()
+				
+				IF $SCWK_ANSWER == SCR_YES THEN
+					
+					IF $LOCALWORK9 == 1 THEN
+						$LWK_WOMAN_TAKE = $LOCALWORK5
+					ELSIF $LOCALWORK9 == 2 THEN
+						$LWK_WOMAN_TAKE = $LOCALWORK6
+					ELSIF $LOCALWORK9 == 3 THEN
+						$LWK_WOMAN_TAKE = $LOCALWORK7
+					ELSIF $LOCALWORK9 == 4 THEN
+						$LWK_WOMAN_TAKE = $LOCALWORK8
+					ENDIF
+					
+					IF $LOCALWORK4 ==  $LWK_WOMAN_TAKE THEN
+						_TIME_WAIT(8)
+						//ポケモンが振り向く
+						IF $LWK_POSZ == 49 THEN
+							_OBJ_ANIME(H04_POKE17_01,anm_common_turn_u)
+						ELSIF $LWK_POSZ == 50 THEN
+							_OBJ_ANIME(H04_POKE17_01,anm_common_turn_l)
+						ENDIF
+						_OBJ_ANIME_WAIT()
+
+						_TIME_WAIT(8)
+						_OBJ_ANIME(H04_WOMAN1_01 ,anm_common_onpu)
+						_OBJ_ANIME(H04_POKE17_01,anm_common_onpu)
+						_OBJ_ANIME_WAIT()
+						_BALLOONWIN_TALKOBJ_MSG(msg_h04_woman1_03)
+						_LAST_KEYWAIT()
+						_MSGWIN_CLOSE()
+						
+						//注文成功フラグON
+						_FLAG_SET(FH_14)
+						
+					ELSE
+						_TIME_WAIT(8)
+						//ポケモンが振り向く
+						IF $LWK_POSZ == 49 THEN
+							_OBJ_ANIME(H04_POKE17_01,anm_common_turn_u)
+						ELSIF $LWK_POSZ == 50 THEN
+							_OBJ_ANIME(H04_POKE17_01,anm_common_turn_l)
+						ENDIF
+						_OBJ_ANIME_WAIT()
+
+						_TIME_WAIT(8)
+						_OBJ_ANIME(H04_WOMAN1_01 ,anm_common_hatena)
+						_OBJ_ANIME(H04_POKE17_01,anm_common_hatena)
+						_OBJ_ANIME_WAIT()
+						_BALLOONWIN_TALKOBJ_MSG(msg_h04_woman1_04)
+						_LAST_KEYWAIT()
+						_MSGWIN_CLOSE()
+						
+					ENDIF
+					//イートフラグON
+					_FLAG_SET(FH_10)
+					
+					//お客さんに渡したサンドイッチの数をインクリメント
+					$LOCALWORK9 += 1
+				ENDIF
+			ELSE
+				IF FLAG_ON(FH_10) THEN
+					IF FLAG_ON(FH_14)THEN
+						_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_woman1_03)
+					ELSE
+						_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_woman1_04)
+					ENDIF
+				ELSE
+					IF $LOCALWORK4 == 0 THEN
+						_ITEM_NAME( 0, ITEM_KURABONOMI ) //クラボの実
+					ELSIF $LOCALWORK4 == 1 THEN
+						_ITEM_NAME( 0, ITEM_KIINOMI )//キーの実
+					ELSIF $LOCALWORK4 == 2 THEN
+						_ITEM_NAME( 0, ITEM_MOMONNOMI )//モモンの実
+					ELSIF $LOCALWORK4 == 3 THEN
+						_ITEM_NAME( 0, ITEM_KAGONOMI )//カゴの実
+					ENDIF
+					_BALLOONWIN_TALKOBJ_MSG(msg_h04_woman1_01)
+					_MSGWIN_CLOSE()
+				ENDIF
+			ENDIF
+		ENDIF
+		
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_woman1_02)
+	ENDIF
+}
 EVENT_END
 
-/*
-//ウェイトレスさんとの対戦
-ev_boss_btl:
-
-//戦闘処理
-		_TRAINER_BTL_SET ( TRID_, 0 )
-		//敗戦チェック
-		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-		ELSE
-			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-		ENDIF
-_RET
-*/
 /**************************************************************/
 /*  h04 会話用イベントスクリプト                      */
 /**************************************************************/
@@ -709,6 +1773,30 @@ EVENT_END
 _ANIME_LABEL	anm_common_gyoe
 
 	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：不思議に思う                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+
+	_ANIME_DATA AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：嬉しい                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_onpu
+
+	_ANIME_DATA AC_MARK_ONPU,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：沈黙                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_tenten
+
+	_ANIME_DATA AC_MARK_TENTEN,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------

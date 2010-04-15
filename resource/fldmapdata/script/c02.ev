@@ -337,14 +337,7 @@ EVENT_START   ev_pos_c02_boss_01
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_03 )
 
 	_TIME_WAIT(24)
-	_CAMERA_RECV_MOVE( 32 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-	_CAMERA_END()		//カメラ操作終了
-	
-	_CAMERA_START()		//カメラ操作開始
-	_CAMERA_PURGE()		//カメラのバインドを解く
-	_CAMERA_MOVE( 9694,0,970795,42237952,0,38502400,32 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_MOVE( 9694,0,970795,42237952,0,38502400,56 )	//一番最後の引数は移動にかかるフレーム数
 	
 	_TIME_WAIT(8)
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
@@ -367,7 +360,7 @@ EVENT_START   ev_pos_c02_boss_01
 	
 	_END_EVENT_BGM()
 
-	_CAMERA_RECV_MOVE( 32 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_DEF_MOVE(32)//引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
