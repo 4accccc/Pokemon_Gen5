@@ -100,7 +100,7 @@ void DEBUG_MYSTERY_SetGiftGPowerData( GIFT_PACK_DATA *p_data )
   //道具作成
   { 
     GIFT_PRESENT_POWER  *p_gpower = &p_data->data.gpower;
-    p_gpower->type  = GPOWER_ID_MAX - 1;  //GPOWER_ID_MAX - 10 からMAXまでが配布用
+    p_gpower->type  = GPOWER_ID_DISTRIBUTION_END - 1;  //GPOWER_ID_DISTRIBUTION_END - 10 からMAXまでが配布用
   }
   p_data->gift_type     = MYSTERYGIFT_TYPE_POWER;
 
