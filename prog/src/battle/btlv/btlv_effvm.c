@@ -49,7 +49,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-//#define DEBUG_OS_PRINT
+#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -601,6 +601,10 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   int table_ofs;
 
   GF_ASSERT_MSG( bevw->sequence == NULL, "すでにエフェクトが起動中です" );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("EFFVM_Start:\nEFFNO:%d\n",waza);
+#endif
 
   bevw->sequence = NULL;
   EFFVM_FreeTcb( bevw );
@@ -2006,6 +2010,7 @@ static VMCMD_RESULT VMEC_TRAINER_SET( VMHANDLE *vmh, void *context_work )
 //============================================================================================
 static VMCMD_RESULT VMEC_TRAINER_MOVE( VMHANDLE *vmh, void *context_work )
 {
+#if 0
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
   int           index;
   int           type;
@@ -2029,6 +2034,31 @@ static VMCMD_RESULT VMEC_TRAINER_MOVE( VMHANDLE *vmh, void *context_work )
   BTLV_CLACT_MovePosition( BTLV_EFFECT_GetCLWK(), index, type, &move_pos, frame, wait, count );
 
   return bevw->control_mode;
+#else
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int           position = BTLV_EFFECT_GetTrainerIndex( ( int )VMGetU32( vmh ) );
+  int           type;
+  VecFx32       move_pos;
+  int           frame;
+  int           wait;
+  int           count;
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_TRAINER_MOVE\n");
+#endif DEBUG_OS_PRINT
+
+  type     = ( int )VMGetU32( vmh );
+  move_pos.x = ( int )VMGetU32( vmh );
+  move_pos.y = ( int )VMGetU32( vmh );
+  move_pos.z  = 0;
+  frame    = ( int )VMGetU32( vmh );
+  wait     = ( int )VMGetU32( vmh );
+  count    = ( int )VMGetU32( vmh );
+
+  BTLV_MCSS_MovePosition( BTLV_EFFECT_GetMcssWork(), position, type, &move_pos, frame, wait, count );
+
+  return bevw->control_mode;
+#endif
 }
 
 //============================================================================================
@@ -2041,6 +2071,7 @@ static VMCMD_RESULT VMEC_TRAINER_MOVE( VMHANDLE *vmh, void *context_work )
 //============================================================================================
 static VMCMD_RESULT VMEC_TRAINER_ANIME_SET( VMHANDLE *vmh, void *context_work )
 {
+#if 0
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
   int index = BTLV_EFFECT_GetTrainerIndex( ( int )VMGetU32( vmh ) );
   int anm_no = ( int )VMGetU32( vmh );
@@ -2052,6 +2083,19 @@ static VMCMD_RESULT VMEC_TRAINER_ANIME_SET( VMHANDLE *vmh, void *context_work )
   BTLV_CLACT_SetAnime( BTLV_EFFECT_GetCLWK(), index, anm_no );
 
   return bevw->control_mode;
+#else
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int position  = ( int )VMGetU32( vmh );
+  int anm_no    = ( int )VMGetU32( vmh );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_TRAINER_ANIME_SET\n");
+#endif DEBUG_OS_PRINT
+
+  BTLV_MCSS_SetAnime( BTLV_EFFECT_GetMcssWork(), position, anm_no );
+
+  return bevw->control_mode;
+#endif
 }
 
 //============================================================================================
@@ -3780,7 +3824,7 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
       {
         pos[ 0 ] = BTLV_MCSS_POS_C;
       }
-      else
+      else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_C ) == TRUE )
       {
         pos[ 0 ] = BTLV_MCSS_POS_E;
       }
@@ -3983,6 +4027,7 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
     else
     {
       pos[ 0 ] = BTLV_MCSS_POS_ERROR;
+      pos_cnt = 0;
     }
   }
 
@@ -4024,11 +4069,7 @@ static  int   EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag )
     position = bevw->attack_pos;
     if( position == BTLV_MCSS_POS_ERROR )
     {
-      if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_AA ) == TRUE )
-      {
-        return BTLV_MCSS_POS_AA;
-      }
-      else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_A ) == TRUE )
+      if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_A ) == TRUE )
       {
         return BTLV_MCSS_POS_A;
       }
@@ -4036,9 +4077,13 @@ static  int   EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag )
       {
         return BTLV_MCSS_POS_C;
       }
-      else
+      else if( BTLV_EFFECT_CheckExist( BTLV_MCSS_POS_E ) == TRUE )
       {
         return BTLV_MCSS_POS_E;
+      }
+      else
+      {
+        return BTLV_MCSS_POS_AA;
       }
     }
     break;
@@ -4108,6 +4153,8 @@ static  int   EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag )
     break;
   }
 
+  position = EFFVM_ConvPosition( vmh, position );
+#if 0
   if( ( position != BTLV_MCSS_POS_ERROR ) && ( position < BTLV_MCSS_POS_MAX ) )
   {
     if( BTLV_EFFECT_CheckExist( position ) == TRUE )
@@ -4119,6 +4166,7 @@ static  int   EFFVM_GetPosition( VMHANDLE *vmh, int pos_flag )
       position = BTLV_MCSS_POS_ERROR;
     }
   }
+#endif
 
   return position;
 }
@@ -4363,7 +4411,9 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( beeiw->vmh );
     BTLV_EFFVM_EMITTER_MOVE_WORK  *beemw;
     VecFx32 rot_axis,line_vec,std_vec;
-    u16     angle;
+    VecFx32 line_vec_xz, line_vec_y;
+    MtxFx43 rot_xz, rot_y;
+    u16     angle, angle_xz, angle_y;
 
     bevw->temp_work[ bevw->temp_work_count ] = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_EMITTER_MOVE_WORK ) );
     beemw = ( BTLV_EFFVM_EMITTER_MOVE_WORK *)bevw->temp_work[ bevw->temp_work_count ];
@@ -4428,6 +4478,26 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     std_vec.y = 0;
     std_vec.z = 0;
 
+#if 0
+    line_vec_xz.x = line_vec.x;
+    line_vec_xz.y = 0;
+    line_vec_xz.z = line_vec.z;
+
+    VEC_Normalize( &line_vec_xz, &line_vec_xz );
+
+    line_vec_y.x = FX32_ONE;
+    line_vec_y.y = line_vec.y;
+    line_vec_y.z = 0;
+    VEC_Normalize( &line_vec_y, &line_vec_y );
+
+    angle_xz = FX_AcosIdx( VEC_DotProduct( &std_vec, &line_vec_xz ) );
+    angle_y = FX_AcosIdx( VEC_DotProduct( &std_vec, &line_vec_y ) );
+
+    MTX_RotY43( &rot_xz, FX_SinIdx( angle_xz ), FX_CosIdx( angle_xz ) );
+    MTX_RotZ43( &rot_y, FX_SinIdx( angle_y ), FX_CosIdx( angle_y ) );
+    MTX_Concat43( &rot_xz, &rot_y, &beemw->mtx43 );
+
+#else
     //内積を求めて角度を出す
     angle = FX_AcosIdx( VEC_DotProduct( &std_vec, &line_vec ) );
 
@@ -4437,6 +4507,7 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
 
     //回転行列を生成する
     MTX_RotAxis43( &beemw->mtx43, &rot_axis, FX_SinIdx( angle ), FX_CosIdx( angle ) );
+#endif
 
     //平行移動行列を生成
     beemw->mtx43._30 = src.x;
@@ -4445,7 +4516,8 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
   }
 
   //srcとdstが一緒のときは、方向なし
-  if( beeiw->src != beeiw->dst )
+  if( ( ( beeiw->src != BTLEFF_PARTICLE_PLAY_SIDE_NONE ) && ( beeiw->dst != BTLEFF_PARTICLE_PLAY_SIDE_NONE ) ) &&
+        ( beeiw->src != beeiw->dst ) )
   {
     MtxFx43 mtx43;
     VecFx32 src_vec, dst_vec, rot_axis;
