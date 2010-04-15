@@ -2110,7 +2110,7 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
       pWork->ircmatchflg=FALSE;
       
       //アニメ終了コールバック登録
-      
+    /*  
       if(pWork->curIcon[CELL_IRDS1]){
         GFL_CLWK_ANM_CALLBACK cbwk;
 
@@ -2124,18 +2124,22 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
         cbwk.p_func = _modeFlashCallback2; // コールバック関数
         GFL_CLACT_WK_StartAnmCallBack( pWork->curIcon[CELL_IRDS3], &cbwk );
       }
+*/
 
-
-      if(pWork->curIcon[CELL_IRDS1]){
+/*      if(pWork->curIcon[CELL_IRDS1]){
         GFL_CLACT_WK_SetAnmSeq(pWork->curIcon[CELL_IRDS1], NANR_ir_ani_CellAnime13);
         GFL_CLACT_WK_SetAnmSeq(pWork->curIcon[CELL_IRDS3], NANR_ir_ani_CellAnime12);
       }
-
-      
-      
+*/
     }
+    _CLACT_AddPos(pWork,0,-2,CELL_IRDS1);
+    _CLACT_AddPos(pWork,0, 2,CELL_IRDS3);
     pWork->ircmatchanimCount++;
-    if(pWork->ircmatchanimCount > 25){;
+    if(pWork->ircmatchanimCount > 30){;
+      
+      GFL_CLACT_WK_SetDrawEnable(pWork->curIcon[CELL_IRDS1],FALSE);
+      GFL_CLACT_WK_SetDrawEnable(pWork->curIcon[CELL_IRDS3],FALSE);
+
       pWork->ircmatchanim=FALSE;
     }
   }
