@@ -828,6 +828,7 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
 	//フィールド話し掛けチェック
   if( req.talkRequest )
   {
+    if(UnionMain_CheckPlayerFreeMode(gsys) == TRUE)
     { //OBJ話し掛け
       MMDL *fmmdl_talk = getFrontTalkOBJ( &req, fieldWork );
       if( fmmdl_talk != NULL )
