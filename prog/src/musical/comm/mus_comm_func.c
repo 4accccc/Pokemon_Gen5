@@ -337,6 +337,7 @@ void* MUS_COMM_InitGameComm(int *seq, void *pwk)
   }
   else
   {
+    aGFLNetInitMusical.bNetType = GFL_NET_TYPE_WIRELESS;
     GFL_NET_Init( &aGFLNetInitMusical , MUS_COMM_FinishNetInitCallback , (void*)work );
   }
 

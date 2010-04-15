@@ -397,6 +397,7 @@ void FIELD_MENU_ExitMenu( FIELD_MENU_WORK* work )
   GFL_BG_FreeBGControl( FIELD_MENU_BG_BACK );
   GFL_BG_FreeBGControl( FIELD_MENU_BG_BUTTON );
   GFL_BG_FreeBGControl( FIELD_MENU_BG_NAME );
+  PRINTSYS_QUE_Clear( work->printQue ); 
   PRINTSYS_QUE_Delete( work->printQue ); 
   GFL_HEAP_FreeMemory( work );
 }
