@@ -38,6 +38,7 @@
 #include "pm_define.h"
 #include "colosseum_comm_command.h"
 #include "app/pokelist/plist_comm.h"
+#include "system/main.h"
 
 
 //==============================================================================
@@ -287,7 +288,6 @@ GMEVENT * UnionSubProc_Create(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork, UN
  * @retval  GMEVENT_RESULT		
  */
 //--------------------------------------------------------------
-#include "system/main.h"
 static GMEVENT_RESULT UnionSubProc_GameChangeEvent(GMEVENT * event, int * seq, void * work)
 {
 	UNION_SUBPROC_EVENT_WORK *subev = work;

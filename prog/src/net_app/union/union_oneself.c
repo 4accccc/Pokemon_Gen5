@@ -706,7 +706,7 @@ static void _PlayerMinePause(UNION_SYSTEM_PTR unisys, FIELDMAP_WORK *fieldWork, 
 //--------------------------------------------------------------
 static BOOL _UnionCheckError_ForceExit(UNION_SYSTEM_PTR unisys)
 {
-  if(NetErr_App_CheckError() == TRUE){
+  if(NetErr_App_CheckError() != NET_ERR_CHECK_NONE){
     UnionOneself_ReqStatus(unisys, UNION_STATUS_FORCE_EXIT);
     return TRUE;
   }
@@ -776,7 +776,7 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
 
   if(GFL_NET_GetConnectNum() > 1){
 //    GF_ASSERT_MSG(0, "Normalなのに接続！！！！\n");
-    OS_TPrintf("Normalなのに接続！！！！\n");
+    OS_TPrintf("Normal接続\n");
     UnionComm_Req_ShutdownRestarts(unisys); //意図しないタイミングの為、切断する
     return FALSE;
   }
@@ -788,13 +788,14 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
       return FALSE;
     }
     obj_id = MMDL_GetOBJID(target_pc);
-    if(UNION_CHARA_CheckCommPlayer(obj_id) == FALSE){
+    if(UNION_CHARA_CheckCommPlayer(obj_id) == FALSE 
+        || UNION_CHARA_TalkCheck(unisys, obj_id) == FALSE){
       return FALSE;
     }
     
     situ->mycomm.talk_obj_id = obj_id;
     buf_no = UNION_CHARA_GetCharaIndex_to_ParentNo(obj_id);
-    OS_TPrintf("ターゲット発見! buf_no = %d, gx=%d, gz=%d\n", buf_no, check_gx, check_gz);
+    OS_TPrintf("ターゲット発見 buf_no = %d, gx=%d, gz=%d\n", buf_no, check_gx, check_gz);
     UnionMySituation_SetParam(unisys, 
       UNION_MYSITU_PARAM_IDX_TALK_PC, &unisys->receive_beacon[buf_no]);
     if(UNION_CHARA_CheckCharaIndex(obj_id) == UNION_CHARA_INDEX_PARENT){
@@ -865,7 +866,7 @@ static BOOL OneselfSeq_ForceExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *si
     }
     break;
   case 2:
-    if(NetErr_App_CheckError() == TRUE){
+    if(NetErr_App_CheckError() != NET_ERR_CHECK_NONE){
       GAMESYSTEM_SetFieldCommErrorReq(unisys->uniparent->gsys, TRUE);
       return FALSE;
     }
@@ -2699,7 +2700,7 @@ static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     }
     break;
   case _SEQ_SHUTDOWN_START:
-    if(NetErr_App_CheckError() == TRUE){
+    if(NetErr_App_CheckError() != NET_ERR_CHECK_NONE){
       GAMESYSTEM_SetFieldCommErrorReq(unisys->uniparent->gsys, TRUE);
       return FALSE;
     }

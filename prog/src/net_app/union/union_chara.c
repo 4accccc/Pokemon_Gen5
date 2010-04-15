@@ -279,6 +279,41 @@ BOOL UNION_CHARA_CheckCommPlayer(u16 chara_index)
 
 //==================================================================
 /**
+ * 話しかけられる状態かチェックする
+ *
+ * @param   chara_index		
+ *
+ * @retval  BOOL		TRUE:話しかけ可能　FALSE:不可
+ */
+//==================================================================
+BOOL UNION_CHARA_TalkCheck(UNION_SYSTEM_PTR unisys, u16 chara_index)
+{
+  UNION_CHARACTER *unichara;
+  int i;
+  
+  unichara = unisys->character;
+  for(i = 0; i < UNION_CHARACTER_MAX; i++){
+    if(unichara->occ == TRUE && unichara->parent_pc != NULL){ //NULLチェックは念のため
+      if(((unichara->parent_pc->buffer_no << 8) | (unichara->child_no + UNION_CHARINDEX_OFFSET)) == chara_index){
+        if(unichara->event_status == BPC_EVENT_STATUS_LEAVE 
+            || unichara->event_status == BPC_EVENT_STATUS_ENTER
+            || unichara->next_event_status == BPC_EVENT_STATUS_LEAVE 
+            || unichara->next_event_status == BPC_EVENT_STATUS_ENTER){
+          return FALSE;
+        }
+        return TRUE;
+      }
+      else{
+        OS_TPrintf("chara_index = %d, buf_no=%d, child_no=%d\n", chara_index, unichara->parent_pc->buffer_no, unichara->child_no);
+      }
+    }
+    unichara++;
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
  * ユニオンキャラクタのMMDL*を取得する
  *
  * @param   unisys		

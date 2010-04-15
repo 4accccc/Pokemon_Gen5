@@ -61,6 +61,7 @@
 #include "event_trainer_eye.h"
 #include "fieldmap/zone_id.h"
 #include "net_app/union/union_main.h"
+#include "net_app/union/union_chara.h"
 #include "event_comm_error.h"
 
 #include "../../../resource/fldmapdata/script/bg_attr_def.h" //SCRID_BG_MSG_～
@@ -835,10 +836,12 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
         if ( SCRIPT_IsValidScriptID( scr_id ) == TRUE )
         {
           MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
-          FIELD_PLAYER_ForceStop( req.field_player );
-          //*eff_delete_flag = TRUE;  //エフェクトエンカウント消去リクエスト
-          return EVENT_FieldTalk( gsys, fieldWork,
-            scr_id, fmmdl_player, fmmdl_talk, req.heapID );
+          if(UNION_CHARA_CheckCommPlayer(MMDL_GetOBJID(fmmdl_talk)) == FALSE){
+            FIELD_PLAYER_ForceStop( req.field_player );
+            //*eff_delete_flag = TRUE;  //エフェクトエンカウント消去リクエスト
+            return EVENT_FieldTalk( gsys, fieldWork,
+              scr_id, fmmdl_player, fmmdl_talk, req.heapID );
+          }
         }
       }
     }
