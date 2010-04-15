@@ -1981,7 +1981,7 @@ static void PutMsgToSCU( BTLV_CORE* wk, const STRBUF* buf, u16 wait )
 {
   if( !BTL_CLIENT_IsChapterSkipMode(wk->myClient) )
   {
-    BTLV_SCU_StartMsg( wk->scrnU, buf, wait );
+    BTLV_SCU_StartMsg( wk->scrnU, buf, wait, NULL );
   }
 }
 static void PutMsgToSCUatOnce( BTLV_CORE* wk, const STRBUF* buf )

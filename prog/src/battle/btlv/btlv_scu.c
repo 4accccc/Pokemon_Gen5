@@ -769,7 +769,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
     {
       u16 strID = GetWildSingleEncountStrID( wk );
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 1, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -802,7 +802,7 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
       subwk->pokeID = BPP_GetID( subwk->pp );
 
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -917,7 +917,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
       bbgp_make( wk, &bbgp, subwk->clientID, BTLV_BALL_GAUGE_TYPE_ENEMY );
       BTLV_EFFECT_SetBallGauge( &bbgp );
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_Encount_NPC1, 1, subwk->clientID );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -934,7 +934,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
         ( !BTLV_EFFECT_CheckExecute() ) )
     {
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutSingle_NPC, 2, 1, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -976,7 +976,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
       subwk->pokeID = BPP_GetID( subwk->pp );
 
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -1107,7 +1107,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
     if( !BTLV_EFFECT_CheckExecute() )
     {
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_Encount_Wild2, 2, subwk->pokeID[0], subwk->pokeID[1] );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -1145,7 +1145,7 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
       }
 
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutDouble, 2, subwk->pokeID[0], subwk->pokeID[1] );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -1475,7 +1475,7 @@ static BOOL btlinEffSub_OpponentTrainerIn1( BTLV_SCU* wk, int* seq, u8 clientID 
       BTLV_EFFECT_SetBallGauge( &bbgp );
 
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 1, clientID );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -1554,7 +1554,7 @@ static BOOL btlinEffSub_OpponentTrainerIn2( BTLV_SCU* wk, int* seq, u8 clientID_
 //      BTLV_EFFECT_AddByPos( subwk->vpos_2, BTLEFF_SINGLE_TRAINER_ENCOUNT_2 );
 
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 2, clientID_1, clientID_2 );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -1610,7 +1610,7 @@ static BOOL btlinEff_OpponentPokeInSingle( BTLV_SCU* wk, int* seq )
 
       strID = btlfinEffsub_getOpponentPokeInStrID( wk, 1 );
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 2, subwk->clientID, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -1698,7 +1698,7 @@ static BOOL btlinEffSub_OpponentPokeIn_Solo( BTLV_SCU* wk, int* seq, u8 clientID
 
       strID = btlfinEffsub_getOpponentPokeInStrID( wk, subwk->aliveCnt );
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 3, subwk->clientID, subwk->pokeID[0], subwk->pokeID[1] );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -1767,7 +1767,7 @@ static BOOL btlinEffSub_OpponentPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_
 
       strID = btlfinEffsub_getOpponentPokeInStrID( wk, 1 );
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 2, clientID_1, subwk->pokeID[0] );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -1787,7 +1787,7 @@ static BOOL btlinEffSub_OpponentPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_
     {
       u16 strID = btlfinEffsub_getOpponentPokeInStrID( wk, 1 );
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 2, clientID_2, subwk->pokeID[1] );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
 
 //      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[1]), subwk->vpos[1] );
 //      BTLV_EFFECT_AddByPos( subwk->vpos[1], BTLEFF_SINGLE_TRAINER_ENCOUNT_3 );
@@ -1863,7 +1863,7 @@ static BOOL btlinEff_OpponentPokeInTriple( BTLV_SCU* wk, int* seq )
 
       strID = btlfinEffsub_getOpponentPokeInStrID( wk, subwk->aliveCnt );
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 4, subwk->clientID, subwk->pokeID[0], subwk->pokeID[1], subwk->pokeID[2] );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -1953,7 +1953,7 @@ static BOOL btlinEff_MyPokeInSingle( BTLV_SCU* wk, int* seq )
       subwk->pokeID = BPP_GetID( subwk->bpp );
 
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutSingle, 1, subwk->pokeID );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -2066,7 +2066,7 @@ static BOOL btlinEffSub_MyPokeIn_Solo( BTLV_SCU* wk, int* seq, u8 clientID )
 
       strID = ( subwk->aliveCnt == 2 )? BTL_STRID_STD_PutDouble : BTL_STRID_STD_PutSingle;
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 2, subwk->pokeID[0], subwk->pokeID[1] );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -2158,7 +2158,7 @@ static BOOL btlinEffSub_MyPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_1, u8 
       strID = (BTL_MAIN_GetCompetitor(wk->mainModule)==BTL_COMPETITOR_COMM)? BTL_STRID_STD_PutSingle_Player : BTL_STRID_STD_PutSingle_NPC;
 
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 2, clientID_2, subwk->pokeID[pokeIdx] );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -2175,7 +2175,7 @@ static BOOL btlinEffSub_MyPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_1, u8 
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
 
       BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutSingle, 1, subwk->pokeID[pokeIdx] );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -2264,7 +2264,7 @@ static BOOL btlinEff_MyPokeInTriple( BTLV_SCU* wk, int* seq )
         strID = ( subwk->aliveCnt == 2 )? BTL_STRID_STD_PutDouble : BTL_STRID_STD_PutSingle;
       }
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 3, subwk->pokeID[0], subwk->pokeID[1], subwk->pokeID[2] );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD );
+      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
       (*seq)++;
     }
     break;
@@ -2386,16 +2386,16 @@ void BTLV_SCU_PrintMsgAtOnce( BTLV_SCU* wk, const STRBUF* str )
  *
  */
 //=============================================================================================
-void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 wait )
+void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 wait, pPrintCallBack callbackFunc )
 {
   GF_ASSERT( wk->printStream == NULL );
 
   GFL_BMP_Clear( wk->bmp, COLIDX_MSGWIN_CLEAR );
   GFL_FONTSYS_SetColor( COLIDX_MSGWIN_LETTER, COLIDX_MSGWIN_SHADOW, COLIDX_MSGWIN_CLEAR );
 
-  wk->printStream = PRINTSYS_PrintStream(
+  wk->printStream = PRINTSYS_PrintStreamCallBack(
         wk->win, 0, 0, str, wk->defaultFont, BTL_MAIN_GetPrintWait(wk->mainModule), wk->tcbl, BTLV_TASKPRI_MAIN_WINDOW,
-        wk->heapID, COLIDX_MSGWIN_CLEAR
+        wk->heapID, COLIDX_MSGWIN_CLEAR, callbackFunc
   );
   PRINTSYS_PrintStreamStop( wk->printStream );
 
@@ -3853,7 +3853,7 @@ static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID, B
 void BTLV_SCU_StartCommWaitInfo( BTLV_SCU* wk )
 {
   BTL_STR_GetUIString( wk->strBufMain, BTLSTR_UI_COMM_WAIT );
-  BTLV_SCU_StartMsg( wk, wk->strBufMain, 0 );
+  BTLV_SCU_StartMsg( wk, wk->strBufMain, 0, NULL );
 }
 
 BOOL BTLV_SCU_WaitCommWaitInfo( BTLV_SCU* wk )

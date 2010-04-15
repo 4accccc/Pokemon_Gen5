@@ -5823,11 +5823,13 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
       PMSND_PauseBGM( TRUE );
       PMSND_PushBGM();
       PMSND_PlayBGM( SEQ_ME_LVUP );
+    }
+    if( BTLV_WaitMsg( wk->viewCore ) ){
       (*seq) = SEQ_OBOETA_ME_WAIT;
     }
     break;
   case SEQ_OBOETA_ME_WAIT:
-    if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlayBGM() ){
+    if( !PMSND_CheckPlayBGM() ){
       PMSND_PopBGM();
       PMSND_PauseBGM( FALSE );
       (*seq) = SEQ_CHECK_ROOT;
@@ -5904,8 +5906,7 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
   case SEQ_WASURE_DECIDE:
     //‹Z–Y‚êˆ—
     if( BTLV_WaitMsg(wk->viewCore) ){
-//      (*seq) = 5;
-      (*seq) = SEQ_CHECK_ROOT;
+      (*seq) = SEQ_OBOETA_MSG_START;
     }
     break;
 

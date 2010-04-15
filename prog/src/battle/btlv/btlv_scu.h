@@ -94,10 +94,12 @@ extern void BTLV_SCU_PrintMsgAtOnce( BTLV_SCU* wk, const STRBUF* str );
  * @param   wk
  * @param   str     表示文字列
  * @param   wait    表示後の待ち方( 0:何もしない / 1～:通常時はキー待ち，通信時は指定フレーム待ち）
+ * @param   callbackFunc    コールバック関数ポインタ（不要ならNULL）
  *
  */
 //=============================================================================================
-extern void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 waitFrames );
+extern void BTLV_SCU_StartMsg( BTLV_SCU* wk, const STRBUF* str, u16 wait, pPrintCallBack callbackFunc );
+
 
 //=============================================================================================
 /**
