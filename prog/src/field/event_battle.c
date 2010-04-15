@@ -69,8 +69,7 @@ typedef void (*TR_BEACON_SET_FUNC)( u16 tr_no );
 typedef enum{
  TR_BEACON_NORMAL,
  TR_BEACON_LEADER,
- TR_BEACON_BIGFOUR,
- TR_BEACON_CHAMPION,
+ TR_BEACON_SPACIAL,
  TR_BEACON_TYPE_MAX,
 }TRAINER_BEACON_TYPE;
 
@@ -85,8 +84,7 @@ typedef enum{
 static const TR_BEACON_SET_FUNC DATA_TrBeaconSetFuncTbl[TR_BEACON_TYPE_MAX][2] = {
  { GAMEBEACON_Set_BattleTrainerStart, GAMEBEACON_Set_BattleTrainerVictory },
  { GAMEBEACON_Set_BattleLeaderStart, GAMEBEACON_Set_BattleLeaderVictory },
- { GAMEBEACON_Set_BattleBigFourStart, GAMEBEACON_Set_BattleBigFourVictory },
- { GAMEBEACON_Set_BattleChampionStart, GAMEBEACON_Set_BattleChampionVictory },
+ { GAMEBEACON_Set_BattleSpTrainerStart, GAMEBEACON_Set_BattleSpTrainerVictory },
 };
 
 //======================================================================
@@ -143,7 +141,7 @@ static void BEW_ReflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata
 static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM* bp);
 static void BEW_Destructor(BATTLE_EVENT_WORK * bew);
 
-static void ReflectBattleResult_Natsuki(BATTLE_EVENT_WORK * bew);
+static void FriendCalc_TrainerBattleStart( GAMEDATA* gdata, FIELDMAP_WORK* fieldWork, u16 tr_id );
 
 
 //======================================================================
@@ -308,7 +306,11 @@ GMEVENT * EVENT_TrainerBattle(
 
   {
     FIELD_ENCOUNT* enc = FIELDMAP_GetEncount(fieldmap);
-    RECORD* record = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData( gsys ) );
+    GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+    RECORD* record = GAMEDATA_GetRecordPtr( gdata );
+
+    //戦闘パラメータ生成前に懐き計算をしてしまう
+    FriendCalc_TrainerBattleStart( gdata, fieldmap, tr_id0 );
 
     bp = BATTLE_PARAM_Create(HEAPID_PROC);
     FIELD_ENCOUNT_SetTrainerBattleParam( enc, bp, rule, partner_id, tr_id0, tr_id1, HEAPID_PROC );
@@ -703,14 +705,11 @@ static GMEVENT_RESULT fieldBattleEvent(
 static u8 btl_trainer_GetBeaconType( u16 tr_id )
 {
   u8 grp = TT_TrainerTypeGrpGet(TT_TrainerDataParaGet( tr_id, ID_TD_tr_type ) );
- 
-  switch( grp ){
-  case TRTYPE_GRP_LEADER:
+
+  if( grp == TRTYPE_GRP_LEADER ){
     return TR_BEACON_LEADER;
-  case TRTYPE_GRP_BIGFOUR:
-    return TR_BEACON_BIGFOUR;
-  case TRTYPE_GRP_CHAMPION:
-    return TR_BEACON_CHAMPION;
+  }else if( grp >= TRTYPE_GRP_BIGFOUR && grp <= TRTYPE_GRP_SAGE ){
+    return TR_BEACON_SPACIAL;
   }
   return TR_BEACON_NORMAL;
 }
@@ -935,9 +934,6 @@ static void BEW_ReflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata
   //ビーコンリクエスト
   BeaconReq_BattleEnd( bew );
 
-  //戦闘後の懐き計算
-  ReflectBattleResult_Natsuki( bew );
-  
   //前作では貯金への反映、サファリボールカウントの反映、
   //いったん取っておいたPokeParamの反映などを行っていた
 }
@@ -976,18 +972,14 @@ static void BEW_Destructor(BATTLE_EVENT_WORK * bew)
 
 //--------------------------------------------------------------
 /**
- * @brief   戦闘結果反映　懐き計算
+ * @brief   トレーナー戦闘開始時　懐き計算
  */
 //--------------------------------------------------------------
-static void ReflectBattleResult_Natsuki(BATTLE_EVENT_WORK * bew)
+static void FriendCalc_TrainerBattleStart( GAMEDATA* gdata, FIELDMAP_WORK* fieldmap, u16 tr_id )
 {
   u8  tr_type;
-  BATTLE_SETUP_PARAM* bp = bew->battle_param;
-
-  if( bp->competitor != BTL_COMPETITOR_TRAINER ){
-    return;
-  }
-  tr_type = TT_TrainerDataParaGet( bp->tr_data[BTL_CLIENT_ENEMY1]->tr_id, ID_TD_tr_type );
+  
+  tr_type = TT_TrainerDataParaGet( tr_id, ID_TD_tr_type );
   {
     //ボス戦だったら懐きアップ
     TRTYPE_GRP_ID grp_id = TT_TrainerTypeGrpGet( tr_type );
@@ -995,7 +987,7 @@ static void ReflectBattleResult_Natsuki(BATTLE_EVENT_WORK * bew)
     if( grp_id == TRTYPE_GRP_LEADER ||
         grp_id == TRTYPE_GRP_BIGFOUR ||
         grp_id == TRTYPE_GRP_CHAMPION ){
-      NATSUKI_CalcBossBattle( GAMEDATA_GetMyPokemon( bew->gamedata ), bp->fieldSituation.zoneID, HEAPID_PROC );
+      NATSUKI_CalcBossBattle( GAMEDATA_GetMyPokemon( gdata ), FIELDMAP_GetZoneID( fieldmap ), HEAPID_PROC );
     }
   }
 }

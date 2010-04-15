@@ -96,8 +96,7 @@ static const BEACON_DETAIL DATA_BeaconDetail[] = {
   { GAMEBEACON_ACTION_BATTLE_SP_POKE_START, msg_beacon_002, 1 },
   { GAMEBEACON_ACTION_BATTLE_TRAINER_START, msg_beacon_003, 2 },
   { GAMEBEACON_ACTION_BATTLE_LEADER_START, msg_beacon_004, 2 },
-  { GAMEBEACON_ACTION_BATTLE_BIGFOUR_START, msg_beacon_005, 2 },
-  { GAMEBEACON_ACTION_BATTLE_CHAMPION_START, msg_beacon_006, 2 },
+  { GAMEBEACON_ACTION_BATTLE_SP_TRAINER_START, msg_beacon_005, 2 },
 };
 
 #define BEACON_DETAIL_PARAM_NUM (NELEMS(DATA_BeaconDetail))
@@ -308,11 +307,8 @@ static void sub_DetailWordset(const GAMEBEACON_INFO *info, WORDSET *wordset )
       WORDSET_RegisterTrTypeName_byTrID( wordset, 0, tr_id );
       WORDSET_RegisterTrainerName( wordset, 1, tr_id );
     }
-    break;
   case GAMEBEACON_DETAILS_NO_BATTLE_JIMLEADER:
-  case GAMEBEACON_DETAILS_NO_BATTLE_BIGFOUR:
-  case GAMEBEACON_DETAILS_NO_BATTLE_CHAMPION:
-    WORDSET_RegisterTrainerName( wordset, 0, GAMEBEACON_Get_Details_BattleTrainer(info) );
+  case GAMEBEACON_DETAILS_NO_BATTLE_SP_TRAINER:
     break;
   default:
     WORDSET_RegisterPlaceName( wordset, 0, ZONEDATA_GetPlaceNameID(GAMEBEACON_Get_ZoneID( info )) );

@@ -98,10 +98,8 @@ void BEACONINFO_Set_BattleTrainerStart(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_BattleTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_BattleLeaderStart(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_BattleLeaderVictory(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_BattleBigFourStart(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_BattleBigFourVictory(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_BattleChampionStart(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_BattleChampionVictory(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_BattleSpTrainerStart(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_BattleSpTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_WildPokemonGet(GAMEBEACON_INFO *info, u16 monsno);
 void BEACONINFO_Set_SpecialPokemonGet(GAMEBEACON_INFO *info, u16 monsno);
 void BEACONINFO_Set_PokemonLevelUp(GAMEBEACON_INFO *info, const STRBUF *nickname);
@@ -149,8 +147,7 @@ void BEACONINFO_Set_Details_BattleWildPoke(GAMEBEACON_INFO *info, u16 monsno);
 void BEACONINFO_Set_Details_BattleSpPoke(GAMEBEACON_INFO *info, u16 monsno);
 void BEACONINFO_Set_Details_BattleTrainer(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_Details_BattleLeader(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_Details_BattleBigFour(GAMEBEACON_INFO *info, u16 tr_no);
-void BEACONINFO_Set_Details_BattleChampion(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_Details_BattleSpTrainer(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_Details_Walk(GAMEBEACON_INFO *info);
 void BEACONINFO_Set_Details_IntroductionPms(GAMEBEACON_INFO *info, const PMS_DATA *pms);
 
@@ -1157,107 +1154,53 @@ void BEACONINFO_Set_BattleLeaderVictory(GAMEBEACON_INFO *info, u16 tr_no)
 
 //==================================================================
 /**
- * 送信ビーコンセット：四天王と対戦を開始しました
+ * 送信ビーコンセット：特別なトレーナーと対戦を開始しました
  * @param   tr_no   トレーナー番号
  */
 //==================================================================
-void GAMEBEACON_Set_BattleBigFourStart(u16 tr_no)
+void GAMEBEACON_Set_BattleSpTrainerStart(u16 tr_no)
 {
-  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_BIGFOUR_START) == FALSE){ return; };
-  BEACONINFO_Set_BattleBigFourStart(&GameBeaconSys->send.info, tr_no);
+  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_SP_TRAINER_START) == FALSE){ return; };
+  BEACONINFO_Set_BattleSpTrainerStart(&GameBeaconSys->send.info, tr_no);
   SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
 /**
- * ビーコンセット：四天王と対戦を開始しました
+ * ビーコンセット：特別なトレーナーと対戦を開始しました
  * @param   tr_no   トレーナー番号
  */
 //==================================================================
-void BEACONINFO_Set_BattleBigFourStart(GAMEBEACON_INFO *info, u16 tr_no)
+void BEACONINFO_Set_BattleSpTrainerStart(GAMEBEACON_INFO *info, u16 tr_no)
 {
-  info->action.action_no = GAMEBEACON_ACTION_BATTLE_BIGFOUR_START;
+  info->action.action_no = GAMEBEACON_ACTION_BATTLE_SP_TRAINER_START;
   info->action.tr_no = tr_no;
 
-  BEACONINFO_Set_Details_BattleBigFour(info, tr_no);
+  BEACONINFO_Set_Details_BattleSpTrainer(info, tr_no);
 }
 
 //==================================================================
 /**
- * 送信ビーコンセット：四天王との対戦に勝利しました
+ * 送信ビーコンセット：特別なトレーナーとの対戦に勝利しました
  * @param   tr_no   トレーナー番号
  */
 //==================================================================
-void GAMEBEACON_Set_BattleBigFourVictory(u16 tr_no)
+void GAMEBEACON_Set_BattleSpTrainerVictory(u16 tr_no)
 {
-  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_BIGFOUR_VICTORY) == FALSE){ return; };
-  BEACONINFO_Set_BattleBigFourVictory(&GameBeaconSys->send.info, tr_no);
+  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_SP_TRAINER_VICTORY) == FALSE){ return; };
+  BEACONINFO_Set_BattleSpTrainerVictory(&GameBeaconSys->send.info, tr_no);
   SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
 /**
- * ビーコンセット：四天王との対戦に勝利しました
+ * ビーコンセット：特別なトレーナーとの対戦に勝利しました
  * @param   tr_no   トレーナー番号
  */
 //==================================================================
-void BEACONINFO_Set_BattleBigFourVictory(GAMEBEACON_INFO *info, u16 tr_no)
+void BEACONINFO_Set_BattleSpTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no)
 {
-  info->action.action_no = GAMEBEACON_ACTION_BATTLE_BIGFOUR_VICTORY;
-  info->action.tr_no = tr_no;
-
-  BEACONINFO_Set_Details_Walk(info);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：チャンピオンと対戦を開始しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void GAMEBEACON_Set_BattleChampionStart(u16 tr_no)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_CHAMPION_START) == FALSE){ return; };
-  BEACONINFO_Set_BattleChampionStart(&GameBeaconSys->send.info, tr_no);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：チャンピオンと対戦を開始しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void BEACONINFO_Set_BattleChampionStart(GAMEBEACON_INFO *info, u16 tr_no)
-{
-  info->action.action_no = GAMEBEACON_ACTION_BATTLE_CHAMPION_START;
-  info->action.tr_no = tr_no;
-
-  BEACONINFO_Set_Details_BattleChampion(info, tr_no);
-}
-
-//==================================================================
-/**
- * 送信ビーコンセット：チャンピオンとの対戦に勝利しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no)
-{
-  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY) == FALSE){ return; };
-  BEACONINFO_Set_BattleChampionVictory(&GameBeaconSys->send.info, tr_no);
-  SendBeacon_SetCommon(&GameBeaconSys->send);
-}
-
-//==================================================================
-/**
- * ビーコンセット：チャンピオンとの対戦に勝利しました
- * @param   tr_no   トレーナー番号
- */
-//==================================================================
-void BEACONINFO_Set_BattleChampionVictory(GAMEBEACON_INFO *info, u16 tr_no)
-{
-  info->action.action_no = GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY;
+  info->action.action_no = GAMEBEACON_ACTION_BATTLE_SP_TRAINER_VICTORY;
   info->action.tr_no = tr_no;
 
   BEACONINFO_Set_Details_Walk(info);
@@ -2489,25 +2432,13 @@ void BEACONINFO_Set_Details_BattleLeader(GAMEBEACON_INFO *info, u16 tr_no)
 
 //--------------------------------------------------------------
 /**
- * 四天王と対戦中
+ * 特別なトレーナーと対戦中
  * @param   tr_no		トレーナー番号
  */
 //--------------------------------------------------------------
-void BEACONINFO_Set_Details_BattleBigFour(GAMEBEACON_INFO *info, u16 tr_no)
+void BEACONINFO_Set_Details_BattleSpTrainer(GAMEBEACON_INFO *info, u16 tr_no)
 {
-  info->details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_BIGFOUR;
-  info->details.battle_trainer = tr_no;
-}
-
-//--------------------------------------------------------------
-/**
- * チャンピオンと対戦中
- * @param   tr_no		トレーナー番号
- */
-//--------------------------------------------------------------
-void BEACONINFO_Set_Details_BattleChampion(GAMEBEACON_INFO *info, u16 tr_no)
-{
-  info->details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_CHAMPION;
+  info->details.details_no = GAMEBEACON_DETAILS_NO_BATTLE_SP_TRAINER;
   info->details.battle_trainer = tr_no;
 }
 

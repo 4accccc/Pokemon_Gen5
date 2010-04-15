@@ -29,8 +29,7 @@ typedef enum{
   GAMEBEACON_DETAILS_NO_BATTLE_SP_POKE,         ///<特別なポケモンと対戦中
   GAMEBEACON_DETAILS_NO_BATTLE_TRAINER,         ///<トレーナーと対戦中
   GAMEBEACON_DETAILS_NO_BATTLE_JIMLEADER,       ///<ジムリーダーと対戦中
-  GAMEBEACON_DETAILS_NO_BATTLE_BIGFOUR,         ///<四天王と対戦中
-  GAMEBEACON_DETAILS_NO_BATTLE_CHAMPION,        ///<チャンピオンと対戦中
+  GAMEBEACON_DETAILS_NO_BATTLE_SP_TRAINER,      ///<特別なトレーナーと対戦中
   GAMEBEACON_DETAILS_NO_WALK,                   ///<移動中
   
   GAMEBEACON_DETAILS_NO_MAX,
@@ -50,10 +49,10 @@ typedef enum{
   GAMEBEACON_ACTION_BATTLE_TRAINER_VICTORY,   ///<トレーナーに勝利しました！            7
   GAMEBEACON_ACTION_BATTLE_LEADER_START,      ///<ジムリーダーと対戦を開始しました！    8
   GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY,    ///<ジムリーダーに勝利しました！          9
-  GAMEBEACON_ACTION_BATTLE_BIGFOUR_START,     ///<四天王と対戦を開始しました！          10
-  GAMEBEACON_ACTION_BATTLE_BIGFOUR_VICTORY,   ///<四天王に勝利しました！                11
-  GAMEBEACON_ACTION_BATTLE_CHAMPION_START,    ///<チャンピオンと対戦を開始しました！    12
-  GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY,  ///<チャンピオンに勝利しました！          13
+  GAMEBEACON_ACTION_BATTLE_SP_TRAINER_START,  ///<特別なトレーナーと対戦を開始しました！      10
+  GAMEBEACON_ACTION_BATTLE_SP_TRAINER_VICTORY,///<特別なトレーナーに勝利しました！            11
+  GAMEBEACON_ACTION_BATTLE_CHAMPION_START,    ///<チャンピオンと対戦を開始しました！(欠番)    12
+  GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY,  ///<チャンピオンに勝利しました！(欠番)          13
   GAMEBEACON_ACTION_POKE_GET,                 ///<ポケモン捕獲                          14
   GAMEBEACON_ACTION_SP_POKE_GET,              ///<特別なポケモン捕獲                    15
   GAMEBEACON_ACTION_POKE_LVUP,                ///<ポケモンレベルアップ                  16
@@ -144,10 +143,8 @@ extern void GAMEBEACON_Set_BattleTrainerStart(u16 tr_no);
 extern void GAMEBEACON_Set_BattleTrainerVictory(u16 tr_no);
 extern void GAMEBEACON_Set_BattleLeaderStart(u16 tr_no);
 extern void GAMEBEACON_Set_BattleLeaderVictory(u16 tr_no);
-extern void GAMEBEACON_Set_BattleBigFourStart(u16 tr_no);
-extern void GAMEBEACON_Set_BattleBigFourVictory(u16 tr_no);
-extern void GAMEBEACON_Set_BattleChampionStart(u16 tr_no);
-extern void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no);
+extern void GAMEBEACON_Set_BattleSpTrainerStart(u16 tr_no);
+extern void GAMEBEACON_Set_BattleSpTrainerVictory(u16 tr_no);
 extern void GAMEBEACON_Set_PokemonGet(u16 monsno);
 extern void GAMEBEACON_Set_WildPokemonGet(u16 monsno);
 extern void GAMEBEACON_Set_SpecialPokemonGet(u16 monsno);
