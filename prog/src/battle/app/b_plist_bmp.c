@@ -718,6 +718,16 @@ static void DelDummyBmpWin( BPLIST_WORK * wk )
   }
 }
 
+static void ClearAddWin( BPLIST_WORK * wk )
+{
+	u32	i;
+
+	for( i=0; i<wk->bmp_add_max; i++ ){
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[i].win), 0 );
+	}
+}
+
+
 //--------------------------------------------------------------------------------------------
 /**
  * 追加BMPウィンドウ削除
@@ -2559,10 +2569,14 @@ static void BPL_ChgPageBmpWrite( BPLIST_WORK * wk )
 {
   wk->putWin = PokeChgPutWin;
 
+/*
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_CHG_NAME].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_CHG_IREKAE].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_CHG_STATUS].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_CHG_WAZACHECK].win), 0 );
+*/
+	ClearAddWin( wk );
+
 
 //  BPL_NamePut(
 //    wk, WIN_CHG_NAME, FONT_TOUCH, wk->dat->sel_poke, P_CHG_NAME_PX, P_CHG_NAME_PY );
@@ -2686,16 +2700,19 @@ static void BPL_IrekaeNamePut( BPLIST_WORK * wk, u32 pos )
 static void BPL_StWazaSelPageBmpWrite( BPLIST_WORK * wk )
 {
   BPL_POKEWAZA * waza;
-  u16 i;
+  u32 i;
 
   wk->putWin = WazaSelPutWin;
 
+/*
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_NAME].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_SKILL1].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_SKILL2].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_SKILL3].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_SKILL4].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_STW_STATUS].win), 0 );
+*/
+	ClearAddWin( wk );
 
   BPL_NamePut( wk, WIN_STW_NAME, wk->dat->sel_poke, STW_NAME_PX, STW_NAME_PY );
 
@@ -2745,6 +2762,7 @@ static void BPL_StMainPageBmpWrite( BPLIST_WORK * wk )
 {
   wk->putWin = StMainPutWin;
 
+/*
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_LV].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_NEXT].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_POW].win), 0 );
@@ -2768,6 +2786,8 @@ static void BPL_StMainPageBmpWrite( BPLIST_WORK * wk )
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPANAME].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_SPAINFO].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P3_ITEMNAME].win), 0 );
+*/
+	ClearAddWin( wk );
 
   BPL_NamePut( wk, WIN_P3_NAME, wk->dat->sel_poke, P3_NAME_PX, P3_NAME_PY );
   BPL_P3_HPPut( wk, wk->dat->sel_poke );
@@ -2806,6 +2826,7 @@ static void BPL_StWazaInfoPageBmpWrite( BPLIST_WORK * wk )
 
   wk->putWin = WazaInfoPutWin;
 
+/*
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_NAME].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_PP].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_HIT].win), 0 );
@@ -2817,6 +2838,8 @@ static void BPL_StWazaInfoPageBmpWrite( BPLIST_WORK * wk )
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_POWNUM].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_BRNAME].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P4_INFO].win), 0 );
+*/
+	ClearAddWin( wk );
 
   waza = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].waza[wk->dat->sel_wp];
 
@@ -2855,12 +2878,15 @@ static void BPL_WazaDelSelPageBmpWrite( BPLIST_WORK * wk )
 
   wk->putWin = WazaDelPutWin;
 
+/*
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P5_NAME].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P5_SKILL1].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P5_SKILL2].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P5_SKILL3].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P5_SKILL4].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P5_SKILL5].win), 0 );
+*/
+	ClearAddWin( wk );
 
   BPL_NamePut( wk, WIN_P5_NAME, wk->dat->sel_poke, P5_NAME_PX, P5_NAME_PY );
 
@@ -2917,6 +2943,7 @@ static void BPL_Page6BmpWrite( BPLIST_WORK * wk )
 {
   wk->putWin = WazaDelInfoPutWin;
 
+/*
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P6_NAME].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P6_PP].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P6_PPNUM].win), 0 );
@@ -2929,6 +2956,8 @@ static void BPL_Page6BmpWrite( BPLIST_WORK * wk )
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P6_BRNAME].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P6_INFO].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P6_WASURERU].win), 0 );
+*/
+	ClearAddWin( wk );
 
   BPL_NamePut( wk, WIN_P6_NAME, wk->dat->sel_poke, P6_NAME_PX, P6_NAME_PY );
   BPL_PPPut( wk, WIN_P6_PP, P6_PP_PX, P6_PP_PY );
@@ -2986,11 +3015,14 @@ static void BPL_PPRcvPageBmpWrite( BPLIST_WORK * wk )
 
   wk->putWin = WazaRcvPutWin;
 
+/*
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P7_NAME].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P7_SKILL1].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P7_SKILL2].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P7_SKILL3].win), 0 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->add_win[WIN_P7_SKILL4].win), 0 );
+*/
+	ClearAddWin( wk );
 
   BPL_NamePut( wk, WIN_P7_NAME, wk->dat->sel_poke, P7_NAME_PX, P7_NAME_PY );
 
