@@ -84,6 +84,24 @@ typedef struct TR_CARD_DATA_tag
   u16 CommBattleLose; //対戦負け数
   u32 Personality;    //性格
   u32 CommTrade;      //交換回数
+  
+  u32 EncountNum;        // 野生エンカウント回数
+  u32 TrainerEncountNum; // トレーナー戦をした回数
+  u32 SuretigaiNum;      // すれ違い通信をした回数
+  u16 FeelingCheckNum;   // フィーリングチェックをした回数
+  u16 MonolithLevel;     // モノリスレベル
+  u16 MusicalNum;        // ミュージカルをした回数
+  u16 PokeshifterHigh;   // ポケシフターのハイスコア
+  u16 TrialHouseHigh;    // トライアウハウスの最高得点
+  u16 TrialHouseRank;    // トライアルハウスのランク
+
+  u16 CgearGetFlag:1;    // Cギアを持っているか
+  u16 PaleceFlag:1;      // パレスに行った事があるか
+  u16 MusicalFlag:1;     // ミュージカルをした事があるか
+  u16 PokeshifterFlag:1; // ポケシフターをした事があるか
+  u16 TrianHouseFlag:1;  // トライアルハウスに参加した事があるか
+  u16 Padding2:11;      
+  
   PMS_DATA Pms;       //トレーナーカード内簡易会話
   
   u8  SignRawData[SIGN_SIZE_X*SIGN_SIZE_Y*8]; //サインデータ

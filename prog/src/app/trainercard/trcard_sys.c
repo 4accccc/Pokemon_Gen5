@@ -29,6 +29,7 @@
 #include "savedata/intrude_save.h"
 #include "savedata/my_pms_data.h"
 #include "savedata/zukan_savedata.h"
+#include "savedata/c_gear_data.h"
 #include "gamesystem/game_beacon.h"
 
 //#include "app/mysign.h"
@@ -434,12 +435,13 @@ static int sub_BadgeWait(TR_CARD_SYS* wk)
 void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , const BOOL isSendData, BOOL edit, HEAPID heapId )
 {
   u8 i,flag;
-  TR_CARD_SV_PTR trc_ptr = TRCSave_GetSaveDataPtr(GAMEDATA_GetSaveControlWork(gameData));
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gameData);
+  TR_CARD_SV_PTR trc_ptr = TRCSave_GetSaveDataPtr(sv);
   MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gameData );
   MISC *misc = GAMEDATA_GetMiscWork( gameData );
-  GMTIME *gameTime = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork(gameData) );
-  RECORD *rec = SaveData_GetRecord( GAMEDATA_GetSaveControlWork(gameData) );
-  const MYPMS_DATA *p_wk = SaveData_GetMyPmsDataConst(GAMEDATA_GetSaveControlWorkConst(gameData));
+  GMTIME *gameTime = SaveData_GetGameTime( sv );
+  RECORD *rec = SaveData_GetRecord( sv );
+  const MYPMS_DATA *p_wk = SaveData_GetMyPmsDataConst(sv);
   ZUKAN_SAVEDATA *zukan = GAMEDATA_GetZukanSave( gameData );
 
   //名前
@@ -482,7 +484,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   //通信用かで分岐
   if( isSendData == TRUE )
   {
-    PLAYTIME *playTime = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(gameData) );
+    PLAYTIME *playTime = SaveData_GetPlayTime( sv );
     cardData->UnionTrNo = MyStatus_GetTrainerView( mystatus );
     cardData->TimeUpdate = FALSE;
     cardData->PlayTime = NULL;
@@ -493,7 +495,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   {
     cardData->UnionTrNo   = MyStatus_GetTrainerView( mystatus );
     cardData->TimeUpdate  = TRUE;
-    cardData->PlayTime    = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(gameData) );
+    cardData->PlayTime    = SaveData_GetPlayTime( sv );
     cardData->Personality = TRCSave_GetPersonarity(  trc_ptr );
     cardData->SignAnimeOn = TRCSave_GetSignAnime(  trc_ptr );
     MYPMS_GetPms( p_wk, MYPMS_PMS_TYPE_INTRODUCTION, &cardData->Pms );
@@ -533,13 +535,64 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
                       RECORD_Get(rec, RECID_COMM_BATTLE)+RECORD_Get(rec, RECID_WIFI_BATTLE);
                       
   // 通信対戦回数
-  cardData->CommBattleNum = RECORD_Get(rec, RECID_BATTLE_COUNT);
+  cardData->CommBattleNum = RECORD_Get(rec, RECID_COMM_BATTLE) + 
+                            RECORD_Get(rec, RECID_WIFI_BATTLE) +
+                            RECORD_Get(rec, RECID_IRC_BATTLE);
   //勝ち数  ワイヤレス+WiFi
   cardData->CommBattleWin = RECORD_Get(rec, RECID_COMM_BTL_WIN)+RECORD_Get(rec, RECID_WIFI_BTL_WIN);
   //負け数  ワイヤレス+WiFi
   cardData->CommBattleLose = RECORD_Get(rec, RECID_COMM_BTL_LOSE)+RECORD_Get(rec, RECID_WIFI_BTL_LOSE);
   //通信交換  ワイヤレス+WiFi
   cardData->CommTrade = RECORD_Get(rec, RECID_COMM_TRADE)+RECORD_Get(rec, RECID_WIFI_TRADE);
+
+  // 野生エンカウント回数
+  cardData->EncountNum        = RECORD_Get(rec, RECID_BTL_ENCOUNT);        
+  // トレーナー戦をした回数
+  cardData->TrainerEncountNum = RECORD_Get(rec, RECID_BTL_TRAINER);
+
+  // すれ違い通信をした回数
+  cardData->SuretigaiNum      = RECORD_Get(rec, RECID_SURECHIGAI_NUM);      
+  // フィーリングチェックをした回数
+  cardData->FeelingCheckNum = RECORD_Get(rec, RECID_AFFINITY_CHECK_NUM);   
+  // モノリスレベル
+  {
+    OCCUPY_INFO *occupy     = GAMEDATA_GetMyOccupyInfo(gameData);
+    int level = OccupyInfo_GetWhiteLevel(occupy) + OccupyInfo_GetBlackLevel(occupy);
+    cardData->MonolithLevel = level;
+  }
+  // ミュージカルをした回数
+  cardData->MusicalNum        = RECORD_Get( rec, RECID_MUSICAL_PLAY_NUM );     
+  // ポケシフターのハイスコア
+  {
+    cardData->PokeshifterHigh = MISC_GetPalparkHighscore(misc);
+  }
+  // トライアウハウスの最高得点
+  cardData->TrialHouseHigh = RECORD_GetThScore(rec);    
+  // トライアルハウスのランク
+  cardData->TrialHouseRank = RECORD_GetThRank(rec);
+
+  // Cギアを持っているか
+  {
+    CGEAR_SAVEDATA *cgear = GAMEDATA_GetCGearSaveData( gameData );
+    cardData->CgearGetFlag  = CGEAR_SV_GetCGearONOFF(cgear);    
+  }
+  
+  // パレスに行った事があるか
+  {
+    INTRUDE_SAVE_WORK *intrude_sv = SaveData_GetIntrude( sv );
+    if(ISC_SAVE_GetPalaceSojournTime(intrude_sv)){
+      cardData->PaleceFlag      = 1;    
+    } 
+  }
+  // ミュージカルをした事があるか
+  if(cardData->MusicalNum){
+    cardData->MusicalFlag   = 1;    
+  }
+
+  // ポケシフターをした事があるか
+  cardData->PokeshifterFlag = 1;    
+  // トライアルハウスに参加した事があるか
+  cardData->TrianHouseFlag  = 1;    
   
   //図鑑処理
   cardData->PokeBookFlg = TRUE;

@@ -21,7 +21,7 @@
 #define TRC_SCREEN_WIDTH  (32)
 //#define TR_CARD_WIN_MAX   (14)
 #define TR_CARD_PARAM_MAX (7)
-#define TR_CPRM_STR_MAX   (17)
+#define TR_CPRM_STR_MAX   (26)
 
 #define TR_CARD_BADGE_LV_MAX  (4)   //バッジの最大レベル
 #define TR_BADGE_NUM_MAX  (16)
