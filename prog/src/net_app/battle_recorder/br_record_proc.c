@@ -154,6 +154,7 @@ static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_
 static void Br_Record_CreateMainDisplayDouble( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 static void Br_Record_AddPokeIcon( BR_RECORD_WORK * p_wk, GFL_CLUNIT *p_clunit, BATTLE_REC_HEADER_PTR p_header, HEAPID heapID );
 static void Br_Record_CreateMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
+static void Br_Record_DeleteMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 static void Br_Record_DeleteMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 //レコードメイン下画面
 static void Br_Record_CreateSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
@@ -434,10 +435,17 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
 static void Br_Record_Seq_FadeInBefore( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   BR_RECORD_WORK	*p_wk	= p_wk_adrs;
-
 	//グラフィック初期化
   Br_Record_CreateSubDisplay( p_wk, p_wk->p_param );
-  Br_Record_CreateMainDisplaySingle( p_wk, p_wk->p_param );
+
+  if( p_wk->is_profile )
+  {
+    Br_Record_CreateMainDisplayProfile( p_wk, p_wk->p_param );
+  }
+  else
+  { 
+    Br_Record_CreateMainDisplaySingle( p_wk, p_wk->p_param );
+  }
 
   BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeIn );
 }
@@ -533,8 +541,7 @@ static void Br_Record_Seq_FadeOutAfter( BR_SEQ_WORK *p_seqwk, int *p_seq, void *
   //グラフィック破棄
   if( p_wk->is_profile )
   { 
-    BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
-    p_wk->p_profile_disp  = NULL;
+    Br_Record_DeleteMainDisplayProfile( p_wk, p_wk->p_param );
   }
   else
   { 
@@ -665,15 +672,14 @@ static void Br_Record_Seq_ChangeDrawUp( BR_SEQ_WORK *p_seqwk, int *p_seq, void *
       p_msg   = BR_RES_GetMsgData( p_wk->p_param->p_res );
       //読み込み変え
       if( p_wk->is_profile )
-      { 
+      {
         Br_Record_DeleteMainDisplay( p_wk, p_wk->p_param );
         BR_MSGWIN_PrintColor( p_wk->p_msgwin_s[BR_RECORD_MSGWINID_S_PROFILE], p_msg, msg_719, p_font, BR_PRINT_COL_NORMAL );
         Br_Record_CreateMainDisplayProfile( p_wk, p_wk->p_param );
       }
       else
       { 
-        BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
-        p_wk->p_profile_disp  = NULL;
+        Br_Record_DeleteMainDisplayProfile( p_wk, p_wk->p_param );
         BR_MSGWIN_PrintColor( p_wk->p_msgwin_s[BR_RECORD_MSGWINID_S_PROFILE], p_msg, msg_718, p_font, BR_PRINT_COL_NORMAL );
         Br_Record_CreateMainDisplaySingle( p_wk, p_wk->p_param );
       }
@@ -903,8 +909,7 @@ static void Br_Record_Seq_VideoDownloadRecPlay( BR_SEQ_WORK *p_seqwk, int *p_seq
     //破棄
     if( p_wk->is_profile )
     { 
-      BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
-      p_wk->p_profile_disp  = NULL;
+      Br_Record_DeleteMainDisplayProfile( p_wk, p_wk->p_param );
     }
     else
     { 
@@ -1165,7 +1170,6 @@ static void Br_Record_Seq_RecPlayBeforeSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
 
   switch( *p_seq )
   { 
-
     //-------------------------------------
     ///	はい、いいえ選択
     //=====================================
@@ -1183,8 +1187,7 @@ static void Br_Record_Seq_RecPlayBeforeSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
     //破棄
     if( p_wk->is_profile )
     { 
-      BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
-      p_wk->p_profile_disp  = NULL;
+      Br_Record_DeleteMainDisplayProfile( p_wk, p_wk->p_param );
     }
     else
     { 
@@ -1612,8 +1615,26 @@ static void Br_Record_AddPokeIcon( BR_RECORD_WORK * p_wk, GFL_CLUNIT *p_clunit, 
 //-----------------------------------------------------------------------------
 static void Br_Record_CreateMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param )
 {
-  p_wk->p_profile_disp  = BR_PROFILE_CreateMainDisplay( p_wk->p_profile, p_param->p_res, p_param->p_unit, p_wk->p_que, p_wk->heapID );
-
+  if( p_wk->p_profile_disp == NULL )
+  { 
+    p_wk->p_profile_disp  = BR_PROFILE_CreateMainDisplay( p_wk->p_profile, p_param->p_res, p_param->p_unit, p_wk->p_que, p_wk->heapID );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	プロフィール画面破棄
+ *
+ *	@param	BR_RECORD_WORK * p_wk ワーク
+ *	@param	p_param								レコードの引数
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_DeleteMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param )
+{ 
+  if( p_wk->p_profile_disp )
+  { 
+    BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
+    p_wk->p_profile_disp  = NULL;
+  }
 }
 //----------------------------------------------------------------------------
 /**

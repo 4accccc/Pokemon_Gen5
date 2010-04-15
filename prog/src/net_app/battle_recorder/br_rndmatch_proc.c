@@ -127,6 +127,8 @@ typedef struct
   BMPOAM_SYS_PTR	  	p_bmpoam;	//BMPOAMシステム
   PRINT_QUE           *p_que;   //プリントキュー
 
+  BR_TEXT_WORK        *p_text;
+
 	BR_BTN_WORK	        *p_btn[ BR_RNDMATCH_BTNID_MAX ];
   BR_MSGWIN_WORK      *p_msgwin_s[ BR_RNDMATCH_MSGWINID_S_MAX ];
   BR_MSGWIN_WORK      *p_msgwin_m[ BR_RNDMATCH_MSGWINID_M_MAX ];
@@ -405,6 +407,11 @@ static GFL_PROC_RESULT BR_RNDMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, void
 
   BR_BALLEFF_Main( p_wk->p_balleff );
 
+  if( p_wk->p_text )
+  { 
+    BR_TEXT_PrintMain( p_wk->p_text );
+  }
+
 	return GFL_PROC_RES_CONTINUE;
 }
 //=============================================================================
@@ -423,42 +430,9 @@ static GFL_PROC_RESULT BR_RNDMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, void
 //-----------------------------------------------------------------------------
 static void Br_RndMatch_CreateMainDisplayNone( BR_RNDMATCH_WORK *p_wk, BR_RNDMATCH_PROC_PARAM *p_param )
 { 
-  static const struct 
-  { 
-    u8 x;
-    u8 y;
-    u8 w;
-    u8 h;
-    u32 msgID;
-  } sc_msgwin_data[BR_RNDMATCH_MSGWINID_M_NONE_MAX]  =
-  { 
-    { 
-      1,
-      19,
-      30,
-      4,
-      msg_805,
-    }
-  };
-  GFL_FONT *p_font;
-  GFL_MSGDATA *p_msg; 
 
-  p_font  = BR_RES_GetFont( p_param->p_res );
-  p_msg   = BR_RES_GetMsgData( p_param->p_res );
-
-
-  //リソース読み込み
-  BR_RES_LoadBG( p_param->p_res, BR_RES_BG_RNDMATCH_M_NONE, p_wk->heapID );
-
-  //メッセージWIN作成
-  {
-    int i;
-    for( i = 0; i < BR_RNDMATCH_MSGWINID_M_NONE_MAX; i++ )
-    { 
-      p_wk->p_msgwin_m[i]  = BR_MSGWIN_Init( BG_FRAME_M_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
-      BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
-    }
-  }
+  p_wk->p_text    = BR_TEXT_Init( p_param->p_res, p_wk->p_que, p_wk->heapID );
+  BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_805 );
 }
 //----------------------------------------------------------------------------
 /**
@@ -495,37 +469,37 @@ static void Br_RndMatch_CreateMainDisplayRnd( BR_RNDMATCH_WORK *p_wk, BR_RNDMATC
     },
 
     { 
-      4,
+      3,
       9,
-      8,
+      11,
       2,
       msg_905,
     },
     { 
-      4,
+      3,
       12,
-      8,
+      11,
       2,
       msg_906,
     },
     { 
-      4,
+      3,
       15,
-      8,
+      11,
       2,
       msg_907,
     },
     { 
-      4,
+      3,
       18,
-      8,
+      11,
       2,
       msg_908,
     },
     { 
-      4,
+      3,
       21,
-      8,
+      11,
       2,
       msg_909,
     },
@@ -688,37 +662,37 @@ static void Br_RndMatch_CreateMainDisplayRate( BR_RNDMATCH_WORK *p_wk, BR_RNDMAT
     },
 
     { 
-      4,
+      3,
       9,
-      8,
+      11,
       2,
       msg_905,
     },
     { 
-      4,
+      3,
       12,
-      8,
+      11,
       2,
       msg_906,
     },
     { 
-      4,
+      3,
       15,
-      8,
+      11,
       2,
       msg_907,
     },
     { 
-      4,
+      3,
       18,
-      8,
+      11,
       2,
       msg_908,
     },
     { 
-      4,
+      3,
       21,
-      8,
+      11,
       2,
       msg_909,
     },
@@ -899,37 +873,37 @@ static void Br_RndMatch_CreateMainDisplayFree( BR_RNDMATCH_WORK *p_wk, BR_RNDMAT
     },
 
     { 
-      4,
+      3,
       9,
-      8,
+      11,
       2,
       msg_905,
     },
     { 
-      4,
+      3,
       12,
-      8,
+      11,
       2,
       msg_906,
     },
     { 
-      4,
+      3,
       15,
-      8,
+      11,
       2,
       msg_907,
     },
     { 
-      4,
+      3,
       18,
-      8,
+      11,
       2,
       msg_908,
     },
     { 
-      4,
+      3,
       21,
-      8,
+      11,
       2,
       msg_909,
     },
@@ -1092,6 +1066,12 @@ static void Br_RndMatch_DeleteMainDisplay( BR_RNDMATCH_WORK *p_wk, BR_RNDMATCH_P
     }
   }
   BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_RNDMATCH_M_RATE );
+
+  if( p_wk->p_text )
+  { 
+    BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
+    p_wk->p_text  = NULL;
+  }
 }
 //----------------------------------------------------------------------------
 /**
