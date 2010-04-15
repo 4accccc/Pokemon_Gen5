@@ -261,6 +261,7 @@ static BOOL AI_ChangeProcSub_CheckTokHikae( BTL_CLIENT* wk, u16 tokusei, u8* ind
 static BOOL AI_ChangeProcSub_HikaeWazaAff( BTL_CLIENT* wk, const BTL_POKEPARAM* target, BtlTypeAff affMin );
 static BOOL AI_ChangeProcSub_HikaePokeAff( BTL_CLIENT* wk, PokeType wazaType, BtlTypeAff affMax, u8* pokeIndex );
 static BOOL AI_ChangeProcSub_CheckWazaAff( BTL_CLIENT* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BtlTypeAff affMin );
+static BtlRotateDir RotAI_CheckRotation( BTL_CLIENT* wk );
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq );
 static u8 calcPuttablePokemons( BTL_CLIENT* wk, u8* list );
 static void sortPuttablePokemonList( BTL_CLIENT* wk, u8* list, u8 numPoke, const BTL_POKEPARAM* target );
@@ -3145,6 +3146,39 @@ static BOOL AI_ChangeProcSub_CheckWazaAff( BTL_CLIENT* wk, const BTL_POKEPARAM* 
   return FALSE;
 }
 
+/**
+ *  ローテーションチェック：
+ */
+static BtlRotateDir RotAI_CheckRotation( BTL_CLIENT* wk )
+{
+  const BTL_POKEPARAM* bpp;
+  BtlRotateDir  dirAry[ BTL_ROTATE_NUM ];
+  u32 i, cnt, r;
+
+  dirAry[ 0 ] = BTL_ROTATEDIR_STAY;
+  cnt = 0;
+
+  i = BTL_MAINUTIL_GetRotateInPosIdx( BTL_ROTATEDIR_R );
+  bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
+  if( !BPP_IsDead(bpp) ){
+    dirAry[ cnt++ ] = BTL_ROTATEDIR_R;
+  }
+
+  i = BTL_MAINUTIL_GetRotateInPosIdx( BTL_ROTATEDIR_L );
+  bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
+  if( !BPP_IsDead(bpp) ){
+    dirAry[ cnt++ ] = BTL_ROTATEDIR_L;
+  }
+
+  if( cnt > 1 )
+  {
+    r = GFL_STD_Rand( &wk->AIRandContext, cnt );
+    return dirAry[ r ];
+  }
+
+  return BTL_ROTATEDIR_STAY;
+}
+
 static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 {
   enum {
@@ -3160,6 +3194,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
   case SEQ_INIT:
     ChangeAI_InitWork( wk );
     wk->procPokeIdx = 0;
+    wk->actionAddCount = 0;
     (*seq) = SEQ_ROOT;
     /* fallthru */
   case SEQ_ROOT:
@@ -3202,6 +3237,21 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
             break;
           }
         }
+
+        // ローテーションランダム決定
+        #ifdef ROTATION_NEW_SYSTEM
+        if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
+        {
+          BtlRotateDir dir = RotAI_CheckRotation( wk );
+          if( dir != BTL_ROTATEDIR_STAY ){
+            u8  pokeIdx = BTL_MAINUTIL_GetRotateInPosIdx( dir );
+
+            BTL_ACTION_SetRotation( wk->procAction, dir );
+            wk->procPoke = BTL_PARTY_GetMemberDataConst( wk->myParty, pokeIdx );
+            wk->procAction++;
+          }
+        }
+        #endif
 
         // アンコール状態
         if( BPP_CheckSick(wk->procPoke, WAZASICK_ENCORE)
@@ -3256,8 +3306,10 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
     wk->procPokeIdx++;
     if( wk->procPokeIdx >= wk->numCoverPos )
     {
+      u32 dataSize = (wk->numCoverPos + wk->actionAddCount) * sizeof(wk->actionParam[0]);
       wk->returnDataPtr = &(wk->actionParam[0]);
-      wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
+      wk->returnDataSize = dataSize;
+      wk->actionAddCount = 0;
       return TRUE;
     }
     break;
@@ -4180,6 +4232,7 @@ static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
 
       if( result == BTL_RESULT_WIN )
       {
+        TAYA_Printf("サブウェイ勝利ＢＧＭを鳴らします\n");
         PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
       }
       if( (result == BTL_RESULT_WIN) || (result == BTL_RESULT_LOSE) ){
@@ -5081,12 +5134,19 @@ static BOOL scProc_ACT_ConfDamage( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+      BTLV_ACT_WazaEffect_Start( wk->viewCore, pos, pos, WAZANO_HATAKU, BTLV_WAZAEFF_TURN_DEFAULT, 1 );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( BTLV_ACT_WazaEffect_Wait(wk->viewCore) )
+    {
+      BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
       BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos );
       (*seq)++;
     }
     break;
-
-  case 1:
+  case 2:
     if( BTLV_ACT_SimpleHPEffect_Wait(wk->viewCore) )
     {
       return TRUE;
