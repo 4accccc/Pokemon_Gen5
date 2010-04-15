@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-04-11T17:57:45"/>
+	<create user="shimoyamada" host="W00184" date="2010-04-15T12:12:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,14 +312,14 @@
 		</language>
 	</columns>
 
-	<dialog left="137" top="327" right="842" bottom="955" maximized="no" rayout="Vertical2">
+	<dialog left="137" top="331" right="841" bottom="955" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="70" top="18" right="543" bottom="416" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="529"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="696"/>
+		<band id="3" index="3" style="0000" width="696"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -475,6 +475,11 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">[1:1C:簡易会話単語:0]　[1:1C:簡易会話単語:1]</language>
 	</row>
 
+	<row id="msg_25">
+		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:0]　のきろく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:0]　の記録</language>
+	</row>
+
 	<row id="msg_100">
 		<language name="JPN" font=" 1:small" width="216">じぶんのきろくをけす</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">自分の記録を消す</language>
@@ -541,8 +546,8 @@
 	</row>
 
 	<row id="msg_209">
-		<language name="JPN" font=" 1:small" width="216">サブウェイ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">サブウェイ</language>
+		<language name="JPN" font=" 1:small" width="216">バトルサブウェイ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">バトルサブウェイ</language>
 	</row>
 
 	<row id="msg_300">
