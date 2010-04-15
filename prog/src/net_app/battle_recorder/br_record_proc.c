@@ -1170,7 +1170,7 @@ static void Br_Record_Seq_RecPlayBeforeSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
     ///	‚Í‚¢A‚¢‚¢‚¦‘I‘ð
     //=====================================
   case SEQ_CHANGE_FADEOUT_START:
-    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
     *p_seq  = SEQ_CHANGE_FADEOUT_WAIT;
     break;
   case SEQ_CHANGE_FADEOUT_WAIT:
@@ -1851,25 +1851,7 @@ static void Br_Record_Save_CreateDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_
   { 
     p_wk->p_text  = BR_TEXT_Init( p_param->p_res, p_wk->p_que, p_wk->heapID );
   }
-
-  { 
-    WORDSET *p_word     = BR_RES_GetWordSet( p_param->p_res );
-    GFL_MSGDATA *p_msg  = BR_RES_GetMsgData( p_param->p_res );
-    STRBUF  *p_src  = GFL_MSG_CreateString( p_msg, msg_info_013 );
-    STRBUF  *p_dst  = GFL_STR_CreateCopyBuffer( p_src, p_wk->heapID );
-
-    WORDSET_RegisterWord( p_word, 0, 
-        p_param->cp_rec_saveinfo->p_name[ p_param->mode ],
-        p_param->cp_rec_saveinfo->sex[ p_param->mode ],
-        TRUE, PM_LANG );
-
-    WORDSET_ExpandStr( p_word, p_dst, p_src );
-
-    BR_TEXT_PrintBuff( p_wk->p_text, p_param->p_res, p_dst );
-
-    GFL_STR_DeleteBuffer( p_dst );
-    GFL_STR_DeleteBuffer( p_src );
-  }
+  BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_info_027 );
 
   //‰º‰æ–Ê‚Íê—pBG
   BR_RES_LoadBG( p_param->p_res, BR_RES_BG_BVDELETE_S, p_wk->heapID );
