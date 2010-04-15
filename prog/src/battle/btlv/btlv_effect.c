@@ -45,9 +45,10 @@
 
 enum
 { 
-  BTLV_EFFECT_FOCUS_OFFSET_X = 0x00006b33,
-  BTLV_EFFECT_FOCUS_OFFSET_Y = 0x00004199,
-  BTLV_EFFECT_FOCUS_OFFSET_Z = 0x000114cd,
+  BTLV_EFFECT_FOCUS_OFFSET_X = 0x00004b33,
+  BTLV_EFFECT_FOCUS_OFFSET_Y = 0x00002299,
+  BTLV_EFFECT_FOCUS_OFFSET_Z = 0x000099cd,
+  BTLV_EFFECT_FOCUS_TARGET_Y = 0x00002000,
 };
 
 volatile  fx32  camera_focus_offset_x = 0x00006b33; //BTLV_EFFECT_FOCUS_OFFSET_X 
@@ -629,25 +630,7 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
   GF_ASSERT( ( position - BTLV_MCSS_POS_MAX ) < BTLV_MCSS_POS_MAX );
   GF_ASSERT( bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] == BTLV_EFFECT_TRAINER_INDEX_NONE );
 
-#if 0
-  if( pos_x == 0 )
-  {
-  }
-  if( pos_y == 0 )
-  {
-  }
-#endif
-  if( position & 1 )
-  {
-    BTLV_MCSS_AddTrainer( bew->bmw, trtype, position );
-    if( ( pos_x != 0 ) || ( pos_y != 0 ) || ( pos_z != 0 ) )
-    {
-      BTLV_MCSS_SetPosition( bew->bmw, position, pos_x, pos_y, pos_z );
-    }
-    //BTLV_MCSS_SetShadowVanishFlag( bew->bmw, position, 1 );
-    bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = position;
-  }
-  else
+  if( ( position & 1 ) == 0 )
   {
     switch( trtype ){
     case TRTYPE_HERO:
@@ -670,10 +653,14 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
       }
       break;
     }
-    pos_x = pos_x >> FX32_SHIFT;
-    pos_y = pos_y >> FX32_SHIFT;
-    bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = BTLV_CLACT_Add( bew->bclw, ARCID_TRBGRA, trtype * 4, pos_x, pos_y );
   }
+  BTLV_MCSS_AddTrainer( bew->bmw, trtype, position );
+  if( ( pos_x != 0 ) || ( pos_y != 0 ) || ( pos_z != 0 ) )
+  {
+    BTLV_MCSS_SetPosition( bew->bmw, position, pos_x, pos_y, pos_z );
+  }
+  //BTLV_MCSS_SetShadowVanishFlag( bew->bmw, position, 1 );
+  bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = position;
 }
 
 //============================================================================================
@@ -689,16 +676,8 @@ void  BTLV_EFFECT_DelTrainer( int position )
   GF_ASSERT( position - BTLV_MCSS_POS_MAX < BTLV_MCSS_POS_MAX );
   GF_ASSERT_MSG( bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] != BTLV_EFFECT_TRAINER_INDEX_NONE, "pos=%d", position );
 
-  if( position & 1 )
-  {
-    BTLV_MCSS_Del( bew->bmw, position );
-    bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
-  }
-  else
-  {
-    BTLV_CLACT_Delete( bew->bclw, bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] );
-    bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
-  }
+  BTLV_MCSS_Del( bew->bmw, position );
+  bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
 }
 
 //============================================================================================
@@ -1118,15 +1097,11 @@ void    BTLV_EFFECT_SetCameraFocus( BtlvMcssPos position, int move_type, int fra
 void    BTLV_EFFECT_GetCameraFocus( BtlvMcssPos position, VecFx32* pos, VecFx32* target )
 { 
   BTLV_MCSS_GetPokeDefaultPos( bew->bmw, target, position );
-#if 0
+
   pos->x = target->x + BTLV_EFFECT_FOCUS_OFFSET_X;
   pos->y = target->y + BTLV_EFFECT_FOCUS_OFFSET_Y;
   pos->z = target->z + BTLV_EFFECT_FOCUS_OFFSET_Z;
-#endif
-  target->y += camera_focus_target_y;
-  pos->x = target->x + camera_focus_offset_x;
-  pos->y = target->y + camera_focus_offset_y;
-  pos->z = target->z + camera_focus_offset_z;
+  target->y += BTLV_EFFECT_FOCUS_TARGET_Y;
 }
 
 //============================================================================================
