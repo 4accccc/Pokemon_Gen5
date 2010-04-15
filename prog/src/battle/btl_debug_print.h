@@ -203,6 +203,7 @@ typedef enum {
   DBGSTR_SVFL_WazaExeStart,
   DBGSTR_SVFL_ActionSortInfo,
   DBGSTR_SVFL_ActionSortRotation,
+  DBGSTR_SVFL_TrainerItemTarget,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,

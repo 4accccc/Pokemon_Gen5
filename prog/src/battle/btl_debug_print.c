@@ -246,6 +246,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_WazaExeStart:        return "ポケ[%d], waza=%dのワザ出し処理開始\n";
   case DBGSTR_SVFL_ActionSortInfo:      return "アクションソート:Client(%d), actionCnt=%d\n";
   case DBGSTR_SVFL_ActionSortRotation:  return ".. rotate action nextPokeIdx = %d\n";
+  case DBGSTR_SVFL_TrainerItemTarget:   return "トレーナーアイテム使用：tgtIdx=%d, tgtPokeID=%d\n";
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";

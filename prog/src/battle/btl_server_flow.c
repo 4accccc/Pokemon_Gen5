@@ -2789,6 +2789,7 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
     BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
     target = BTL_PARTY_GetMemberData( party, targetIdx );
     targetPokeID = BPP_GetID( target );
+    BTL_N_Printf( DBGSTR_SVFL_TrainerItemTarget, targetIdx, targetPokeID );
   }
 
   // ÅõÅõÇÕÅ~Å~ÇégÇ¡ÇΩÅI
@@ -3361,12 +3362,6 @@ static u8 ItemEff_AllPP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID
 }
 static u8 ItemEff_HP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
-  /*
-  if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_DEATH_RCV) ){
-    return ItemEff_Relive( wk, bpp, itemID, itemParam, actParam );
-  }
-  */
-
   if( !BPP_IsHPFull(bpp)
   &&  !BPP_IsDead(bpp)
   ){

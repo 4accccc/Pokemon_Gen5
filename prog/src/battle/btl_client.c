@@ -1948,6 +1948,7 @@ static BOOL selact_Item( BTL_CLIENT* wk, int* seq )
         }
         shooterCost_Save( wk, wk->procPokeIdx, cost );
         BTL_ACTION_SetItemParam( wk->procAction, itemID, targetIdx, wazaIdx );
+        BTLV_ITEMSELECT_ReflectUsedItem( wk->viewCore );
         ClientSubProc_Set( wk, selact_CheckFinish );
       }else{
 //      (*seq)=SEQ_SELECT_ACTION;
@@ -5687,19 +5688,39 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
  */
 static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
 {
+  enum {
+    SEQ_INIT = 0,
+    SEQ_CHECK_ROOT,
+    SEQ_OBOETA_MSG_START,
+    SEQ_OBOETA_MSG_WAIT,
+    SEQ_OBOETA_ME_WAIT,
+
+    SEQ_WASURE_ROOT,
+    SEQ_WASURE_WAIT_MSG_1ST,
+    SEQ_WASURE_YESNO_WAIT,
+
+    SEQ_WASURE_SELECT,
+    SEQ_WASURE_DECIDE,
+
+    SEQ_AKIRAME_ROOT,
+    SEQ_AKIRAME_YESNO_START,
+    SEQ_AKIRAME_YESNO_WAIT,
+    SEQ_AKIRAME_END,
+  };
+
   static int wazaoboe_index;
   static WazaID wazaoboe_no;
 
   u8 pokeID = BPP_GetID( bpp );
 
   switch( *seq ){
-  case 0:
+  case SEQ_INIT:
     wazaoboe_index = 0;
     wazaoboe_no = 0;
-    (*seq) = 4;
+    (*seq) = SEQ_CHECK_ROOT;
     /* fallthru */
 
-  case 4:
+  case SEQ_CHECK_ROOT:
     //‹ZŠo‚¦ƒ`ƒFƒbƒN
     {
       const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
@@ -5715,15 +5736,15 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
       else if( wazaoboe_no & PTL_WAZAOBOE_FULL )
       {
         wazaoboe_no &= ( PTL_WAZAOBOE_FULL ^ 0xffff );
-        (*seq) = 7;
+        (*seq) = SEQ_WASURE_ROOT;
       }
       else
       {
-        (*seq) = 5;
+        (*seq) = SEQ_OBOETA_MSG_START;
       }
     }
     break;
-  case 5:
+  case SEQ_OBOETA_MSG_START:
     {
       BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
       const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
@@ -5732,32 +5753,37 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
       BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
       BTLV_STRPARAM_AddArg( &wk->strParam, wazaoboe_no );
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
-      (*seq)++;
+      (*seq) = SEQ_OBOETA_MSG_WAIT;
     }
     /* fallthru */
-  case 6:
+  case SEQ_OBOETA_MSG_WAIT:
     //‹ZŠo‚¦ˆ—
     if( BTLV_IsJustDoneMsg(wk->viewCore) ){
       PMSND_PauseBGM( TRUE );
       PMSND_PushBGM();
       PMSND_PlayBGM( SEQ_ME_LVUP );
+      (*seq) = SEQ_OBOETA_ME_WAIT;
     }
+    break;
+  case SEQ_OBOETA_ME_WAIT:
     if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlayBGM() ){
       PMSND_PopBGM();
       PMSND_PauseBGM( FALSE );
-      (*seq) = 4;
+      (*seq) = SEQ_CHECK_ROOT;
     }
     break;
-  case 7:
+
+  case SEQ_WASURE_ROOT:
     //‹Z–Y‚êŠm”Fˆ—u››Šo‚¦‚é‚½‚ß‚É‘¼‚ÌƒƒU‚ð–Y‚ê‚³‚¹‚Ü‚·‚©Hv
     BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_05 );
     BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
     BTLV_STRPARAM_AddArg( &wk->strParam, wazaoboe_no );
     BTLV_StartMsg( wk->viewCore, &wk->strParam );
-    (*seq)++;
+    (*seq) = SEQ_WASURE_WAIT_MSG_1ST;
     /* fallthru */
-  case 8:
-    if( BTLV_IsJustDoneMsg(wk->viewCore) ){
+  case SEQ_WASURE_WAIT_MSG_1ST:
+    if( BTLV_IsJustDoneMsg(wk->viewCore) )
+    {
       BTLV_STRPARAM   yesParam;
       BTLV_STRPARAM   noParam;
       BTLV_STRPARAM_Setup( &yesParam, BTL_STRTYPE_YESNO, msgid_yesno_wazawasureru );
@@ -5765,10 +5791,10 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
       BTLV_YESNO_Start( wk->viewCore, &yesParam, &noParam );
     }
     if( BTLV_WaitMsg(wk->viewCore) ){
-      (*seq)++;
+      (*seq) = SEQ_WASURE_YESNO_WAIT;
     }
     break;
-  case 9:
+  case SEQ_WASURE_YESNO_WAIT:
     {
       BtlYesNo result;
 
@@ -5779,20 +5805,16 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
           const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, wk->myID );
           int index = BTL_PARTY_FindMemberByPokeID( party, pokeID );
           BTLV_WAZAWASURE_Start( wk->viewCore, index, wazaoboe_no );
-          (*seq) = 10;
+          (*seq) = SEQ_WASURE_SELECT;
         }
         else
         {
-          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_08 );
-          BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
-          BTLV_STRPARAM_AddArg( &wk->strParam, wazaoboe_no );
-          BTLV_StartMsg( wk->viewCore, &wk->strParam );
-          (*seq) = 100;
+          (*seq) = SEQ_AKIRAME_ROOT;
         }
       }
     }
     break;
-  case 10:
+  case SEQ_WASURE_SELECT:
     //‹Z–Y‚ê‘I‘ðˆ—
     {
       u8 result;
@@ -5801,7 +5823,7 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
       {
         if( result == BPL_SEL_WP_CANCEL )
         {
-          (*seq) = 6;
+          (*seq) = SEQ_WASURE_ROOT;
         }
         else
         {
@@ -5813,18 +5835,28 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
           BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
           BTLV_STRPARAM_AddArg( &wk->strParam, forget_wazano );
           BTLV_StartMsg( wk->viewCore, &wk->strParam );
-          (*seq)++;
+          (*seq) = SEQ_WASURE_DECIDE;
         }
       }
     }
     break;
-  case 11:
+  case SEQ_WASURE_DECIDE:
     //‹Z–Y‚êˆ—
     if( BTLV_WaitMsg(wk->viewCore) ){
-      (*seq) = 5;
+//      (*seq) = 5;
+      (*seq) = SEQ_CHECK_ROOT;
     }
     break;
-  case 100:
+
+  case SEQ_AKIRAME_ROOT:
+    BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_08 );
+    BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
+    BTLV_STRPARAM_AddArg( &wk->strParam, wazaoboe_no );
+    BTLV_StartMsg( wk->viewCore, &wk->strParam );
+    (*seq) = SEQ_AKIRAME_YESNO_START;
+    break;
+
+  case SEQ_AKIRAME_YESNO_START:
     //‹Z–Y‚ê‚ ‚«‚ç‚ßŠm”Fˆ—u‚Å‚Í››‚ðŠo‚¦‚é‚Ì‚ð‚ ‚«‚ç‚ß‚Ü‚·‚©Hv
     if( BTLV_IsJustDoneMsg(wk->viewCore) ){
       BTLV_STRPARAM   yesParam;
@@ -5836,10 +5868,10 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
       BTLV_YESNO_Start( wk->viewCore, &yesParam, &noParam );
     }
     if( BTLV_WaitMsg(wk->viewCore) ){
-      (*seq)++;
+      (*seq) = SEQ_AKIRAME_YESNO_WAIT;
     }
     break;
-  case 101:
+  case SEQ_AKIRAME_YESNO_WAIT:
     {
       BtlYesNo result;
 
@@ -5852,19 +5884,19 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
           BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
           BTLV_STRPARAM_AddArg( &wk->strParam, wazaoboe_no );
           BTLV_StartMsg( wk->viewCore, &wk->strParam );
-          (*seq) = 102;
+          (*seq) = SEQ_AKIRAME_END;
         }
         // ‚ ‚«‚ç‚ß‚È‚¢
         else
         {
-          (*seq) = 7;
+          (*seq) = SEQ_WASURE_ROOT;
         }
       }
     }
     break;
-  case 102:
+  case SEQ_AKIRAME_END:
     if( BTLV_WaitMsg(wk->viewCore) ){
-      (*seq) = 4;
+      (*seq) = SEQ_CHECK_ROOT;
     }
     break;
   }
