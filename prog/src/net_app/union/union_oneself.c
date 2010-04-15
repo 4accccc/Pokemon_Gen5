@@ -1955,10 +1955,11 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
   };
   
   buf_no = UNION_CHARA_GetCharaIndex_to_ParentNo(situ->mycomm.talk_obj_id);
+  play_category = unisys->receive_beacon[buf_no].beacon.play_category;
 
   switch(*seq){
   case LOCALSEQ_INIT:
-    play_category = unisys->receive_beacon[buf_no].beacon.play_category;
+    situ->mycomm.mainmenu_select = unisys->receive_beacon[buf_no].beacon.play_category;
     switch(play_category){
     case UNION_PLAY_CATEGORY_TALK:           //‰ï˜b’†
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
@@ -2048,7 +2049,7 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
       (*seq) = LOCALSEQ_END;
       break;
     default:
-      OS_TPrintf("–¢’m‚Ì—V‚Ñ play_category = %d\n", situ->play_category);
+      OS_TPrintf("–¢’m‚Ì—V‚Ñ play_category = %d\n", play_category);
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_unknown_game);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
       (*seq) = LOCALSEQ_END;
@@ -2582,7 +2583,7 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
       UnionMySituation_SetParam(
         unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, &unisys->receive_beacon[buf_no]);
       situ->mycomm.intrude = TRUE;
-      situ->mycomm.mainmenu_select = unisys->receive_beacon[buf_no].beacon.play_category;
+      //situ->mycomm.mainmenu_select = unisys->receive_beacon[buf_no].beacon.play_category;
       switch(situ->mycomm.mainmenu_select){
       case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER:
         UnionOneself_ReqStatus(unisys, UNION_STATUS_BATTLE_MULTI_FREE_SHOOTER);
