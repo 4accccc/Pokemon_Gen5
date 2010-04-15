@@ -3354,6 +3354,7 @@ void POKEMONTRADE_StartMojiSelect(POKEMON_TRADE_WORK* pWork,int x,int y)
   GFL_CLACT_WK_SetDrawEnable( pWork->mojiIcon, TRUE );
   GFL_CLACT_WK_SetAutoAnmFlag(pWork->mojiIcon ,TRUE );
 //  GFL_CLACT_WK_StartAnm(pWork->mojiIcon  );
+  pWork->mojiIconEnd=FALSE;
 
   {
     GFL_CLWK_ANM_CALLBACK cbwk;

@@ -2242,7 +2242,7 @@ static void _endRequestState(POKEMON_TRADE_WORK* pWork)
 }
 
 
-static void _MoveSearchPoke(POKEMON_TRADE_WORK* pWork,int moji)
+static BOOL _MoveSearchPoke(POKEMON_TRADE_WORK* pWork,int moji)
 {
   int i,j,monsno;
   BOOL bFind = FALSE;
@@ -2266,11 +2266,12 @@ static void _MoveSearchPoke(POKEMON_TRADE_WORK* pWork,int moji)
           pWork->BoxScrollNum = _boxScrollLine2Num(line) - 32;
           pWork->bgscrollRenew = TRUE;
           _scrollMainFunc(pWork,FALSE,TRUE);
-          return;
+          return TRUE;
         }
       }
     }
   }
+  return FALSE;
 }
 
 
@@ -2317,11 +2318,17 @@ static void _loopSearchMojiState(POKEMON_TRADE_WORK* pWork)
     if(ans != GFL_UI_TP_HIT_NONE){
       PMSND_PlaySystemSE(POKETRADESE_LANG_SEARCH);
       pWork->selectMoji = ans + 1;
-      POKEMONTRADE_StartMojiSelect(pWork,tp_mojidata[ans].rect.left,tp_mojidata[ans].rect.top);
-      _MoveSearchPoke(pWork,ans);
-      GXS_SetVisibleWnd( GX_WNDMASK_NONE );
-      _CHANGE_STATE(pWork, _mojiSelectEnd);
-      return;
+      if(_MoveSearchPoke(pWork,ans)){
+        POKEMONTRADE_StartMojiSelect(pWork,tp_mojidata[ans].rect.left,tp_mojidata[ans].rect.top);
+        GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+        _CHANGE_STATE(pWork, _mojiSelectEnd);
+        return;
+      }
+      else{
+        GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_99, pWork->pMessageStrBuf );
+        POKETRADE_MESSAGE_WindowOpenXY(pWork, TRUE, 1,1,29,4);
+        PMSND_PlaySystemSE(POKETRADESE_LANG_CANCEL);
+      }
     }
   }
 

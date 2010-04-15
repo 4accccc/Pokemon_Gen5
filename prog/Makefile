@@ -36,7 +36,11 @@ ifeq	($(USERNAME),HUDSON)	#HUDSONのみ、makeのスレッドを増やす
 	@echo "====== hudson make ! - 6 ====="
 	$(MAKE) -j 6 -f $(MAKE_MAIN)
 else
+ifeq	($(USERNAME),NONE)
+	$(MAKE) -j 6 -f $(MAKE_MAIN)
+else
 	$(MAKE) -j 3 -f $(MAKE_MAIN)
+endif
 endif
 
 
