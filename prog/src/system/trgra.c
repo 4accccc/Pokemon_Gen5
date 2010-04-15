@@ -216,7 +216,7 @@ static  inline  const u8 get_gra_index( int tr_type, int dir )
   //”w–Ê‚ÍŽæ“¾‚·‚é•K—v‚È‚µ
   if( dir & 1 )
   { 
-    return;
+    return tr_type;
   }
   GF_ASSERT( NELEMS( TrTypeGraTable ) > tr_type );
 
