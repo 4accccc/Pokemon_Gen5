@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-04-14T21:16:58"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-15T15:22:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1229,15 +1229,15 @@
 	</row>
 
 	<row id="msg_wifilobby_1016" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
+		<language name="JPN" width="216">かいわを　しゅうりょう　しました</language>
+		<language name="JPN_KANJI" width="216">会話を　終了しました</language>
+	</row>
+
+	<row id="msg_wifilobby_1017" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">ともだちは　いそがしい　ようです
 つうしんを　しゅうりょう　します</language>
 		<language name="JPN_KANJI" width="216">友達は　忙しいようです
 通信を　終了します</language>
-	</row>
-
-	<row id="msg_wifilobby_1017" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
-		<language name="JPN" width="216">かいわを　しゅうりょう　しました</language>
-		<language name="JPN_KANJI" width="216">会話を　終了しました</language>
 	</row>
 
 	<row id="msg_wifilobby_1018" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
