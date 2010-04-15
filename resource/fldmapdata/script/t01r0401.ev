@@ -434,7 +434,8 @@ EVENT_START   ev_t01r0401_hakase2_01
 	
 	_PLAYER_NAME( 0 )
 	_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase2_20 )
-	
+	_MSGWIN_CLOSE()
+		
 	//}ŠÓ•]‰¿ˆ—‚Ö
 	_GLOBAL_CALL		SCRID_ZUKAN_DAUGHTER
 
@@ -454,7 +455,8 @@ EVENT_START   ev_t01r0401_hakase1_01
 		//‘S‘}ŠÓ“üŽèÏ‚Ý‚È‚ç }ŠÓ•]‰¿ˆ—‚Ö
 		_PLAYER_NAME( 0 )
 		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase1_05 )
-
+		_MSGWIN_CLOSE()
+		
 		//}ŠÓ•]‰¿ˆ—‚ðƒR[ƒ‹
 		_GLOBAL_CALL		SCRID_ZUKAN_FATHER
 		
