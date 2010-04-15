@@ -332,6 +332,7 @@ BOOL POKE_GTS_PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork,int index,int boxn
     no = _addPokemon(pWork,0,index,boxno, pp);
   }
   if(no == -1){
+    GFL_HEAP_FreeMemory(pp);
     return TRUE;
   }
   POKETRADE_2D_GTSPokemonIconSet(pWork,0,no,pp,TRUE);
