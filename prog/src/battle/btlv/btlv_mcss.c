@@ -1463,6 +1463,23 @@ void  BTLV_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int positi
 
 //============================================================================================
 /**
+ * @brief アニメーションをセット
+ *
+ * @param[in]   position  ポケモンの立ち位置
+ */
+//============================================================================================
+void  BTLV_MCSS_SetAnime( BTLV_MCSS_WORK* bmw, int position, int anm_no )
+{ 
+  int index = BTLV_MCSS_GetIndex( bmw, position );
+
+  GF_ASSERT( position < BTLV_MCSS_POS_TOTAL );
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss );
+
+  MCSS_SetAnimeIndex( bmw->btlv_mcss[ index ].mcss, anm_no );
+}
+
+//============================================================================================
+/**
  * @brief tr_typeからMCSS_ADD_WORKを生成する
  *
  * @param[in]   pp        POKEMON_PARAM構造体へのポインタ
@@ -2181,13 +2198,20 @@ static  fx32  BTLV_MCSS_GetDefaultScale( BTLV_MCSS_WORK* bmw, BtlvMcssPos positi
   }
   else
   {
-    if( position & 1 )
-    {
-      scale = BTLV_MCSS_ORTHO_SCALE_ENEMY;
+    if( position < BTLV_MCSS_POS_TR_AA )
+    { 
+      if( position & 1 )
+      {
+        scale = BTLV_MCSS_ORTHO_SCALE_ENEMY;
+      }
+      else
+      {
+        scale = BTLV_MCSS_ORTHO_SCALE_MINE;
+      }
     }
     else
-    {
-      scale = BTLV_MCSS_ORTHO_SCALE_MINE;
+    { 
+      scale = BTLV_MCSS_ORTHO_SCALE_ENEMY;
     }
   }
   return scale;

@@ -179,6 +179,8 @@ extern  int             BTLV_MCSS_GetCaptureBall( BTLV_MCSS_WORK *bmw, int posit
 
 extern  void            BTLV_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position );
 
+extern  void            BTLV_MCSS_SetAnime( BTLV_MCSS_WORK* bmw, int position, int anm_no );
+
 #ifdef PM_DEBUG
 extern  void            BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
 extern  void            BTLV_MCSS_SetMcss3vs3( BTLV_MCSS_WORK *bmw, int flag );
