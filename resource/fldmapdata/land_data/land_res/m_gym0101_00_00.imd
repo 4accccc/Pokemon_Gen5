@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2010-04-06T21:28:26" source="m_gym0101_00_01.mb"/>
+	<create user="james_turner" host="W00212" date="2010-04-15T11:53:27" source="untitled"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="james_turner" host="W00212" date="2010-04-06T21:28:26" source="m_gym0101_00_01.mb"/>
+<original_create user="james_turner" host="W00212" date="2010-04-15T11:53:27" source="untitled"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -11497,9 +11497,9 @@
 	<polygon index="18" name="polygon18"
 		vertex_size="8" polygon_size="2"
 		triangle_size="0" quad_size="2"
-		volume_min="-2.752197 0.335205 -2.346680"
-		volume_max="1.024414 0.528564 -2.153320"
-		volume_r="3.655029"
+		volume_min="-2.739014 0.351807 -2.330078"
+		volume_max="0.988525 0.511719 -2.169922"
+		volume_r="3.632080"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -11510,21 +11510,21 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 16.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="0.753906 0.336182 -2.154297"/>
+					<pos_xyz xyz="0.768555 0.354004 -2.172119"/>
 					<tex st="16.000000 16.000000"/>
-					<pos_xy xy="1.024414 0.336182"/>
+					<pos_xy xy="0.988525 0.354004"/>
 					<tex st="16.000000 0.000000"/>
-					<pos_yz yz="0.527344 -2.345703"/>
+					<pos_yz yz="0.509521 -2.327881"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="0.753906 0.527344"/>
+					<pos_xy xy="0.768555 0.509521"/>
 					<tex st="0.000000 16.000000"/>
-					<pos_xyz xyz="-2.752197 0.335205 -2.153320"/>
+					<pos_xyz xyz="-2.739014 0.351807 -2.169922"/>
 					<tex st="16.000000 16.000000"/>
-					<pos_xy xy="-2.478760 0.335205"/>
+					<pos_xy xy="-2.512695 0.351807"/>
 					<tex st="16.000000 0.000000"/>
-					<pos_yz yz="0.528564 -2.346680"/>
+					<pos_yz yz="0.511719 -2.330078"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-2.752197 0.528564"/>
+					<pos_xy xy="-2.739014 0.511719"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
