@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-04-12T22:37:47" source="c03_e00_00.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-04-15T05:24:36" source="c03_e00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-04-12T22:37:47" source="c03_e00_00.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-04-15T05:24:36" source="c03_e00_00.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -601,38 +601,38 @@
 		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3bay_yuka1.tga"
 	>
 		<bitmap size="256">
-			1100 2222 2222 2222 2222 3222 2233 0222
-			1100 2222 2222 2000 2222 3222 2233 0222
-			1000 2222 2222 2000 2332 3222 2233 2222
-			1000 2221 2222 1000 1331 2211 2222 2222
-			1000 2221 2222 1222 1221 2211 2233 2222
-			0000 3321 2222 2222 2222 2211 2233 2222
-			0000 1321 2211 2222 2222 2222 0002 3322
-			1000 1221 2211 2222 2222 2222 0002 3322
-			1000 1221 2211 1222 3332 2222 0002 2222
-			1000 2222 2222 2222 3332 2222 2222 2222
-			1000 2222 2222 2222 3332 2222 2222 2222
+			1100 2222 2222 3222 2233 2222 3332 2222
+			1100 1222 0221 3200 2233 2222 2222 2222
+			1000 1222 0221 4300 2233 2221 2222 2222
+			1000 2221 0222 3300 2222 3222 0233 2222
+			1000 2221 2232 3332 2222 3222 2234 2222
+			0000 2221 2222 2222 2222 3222 2233 2222
+			0000 2221 2222 2222 1112 2222 2222 1122
+			1000 3321 2222 2322 1112 2222 2222 1122
+			1000 3321 2222 2222 1112 1222 2211 2222
+			1000 0022 1222 2221 2222 1222 2211 2223
+			1000 0022 1222 2221 2222 1222 2211 2222
+			2100 2222 2222 2222 3332 2222 2222 2222
+			2100 2222 2122 2222 2222 2222 2122 2222
 			2100 2222 2222 2222 2222 2222 2222 2222
-			2100 2222 2112 2222 0002 2222 2222 1122
-			2100 2222 2112 2222 0001 2222 2222 1122
-			2100 2222 2222 3332 0001 2222 2222 1222
-			2100 2222 2222 3332 2111 2222 2222 2222
-			2100 2222 2333 3332 2222 2222 2002 2222
-			1100 1222 2311 2222 2222 2211 2002 2222
-			1100 1222 2311 2222 2222 2211 2222 2222
-			1000 1221 2211 3322 2223 2222 2222 2233
-			1000 2221 2222 3322 2213 2222 2222 2233
-			1000 2221 2222 3322 2213 2222 2222 2222
-			1000 2221 2222 1222 2211 2222 2222 2222
-			1000 2233 2222 2222 2222 3332 2222 2112
-			1000 2233 1112 2222 2222 3332 2222 2112
-			1100 2222 1112 2222 2222 2222 2222 2222
-			1100 2222 1112 2333 2222 2222 3322 2222
-			2100 2222 3222 2333 2222 2222 3000 2222
-			3100 2223 3222 2333 3222 2233 2000 2222
-			3100 2223 1122 2331 3222 2233 2000 2222
-			1000 2223 1122 2221 3222 2233 2222 3322
-			1000 2222 2222 2222 2222 2222 2222 3322
+			2100 1222 2222 0222 3332 1222 2222 0222
+			2100 2222 2222 2222 3432 2222 2222 2222
+			2100 2222 2222 2222 3332 2222 2222 2222
+			1100 0022 1222 2221 2222 0022 1222 2221
+			1100 0022 1222 2221 2222 0022 1222 2221
+			1000 3321 2222 2222 1112 3322 2222 2222
+			1000 3321 2222 2322 1112 3322 2222 2322
+			1000 2221 2222 2222 1112 2222 2222 2222
+			1000 2221 2222 2222 2222 2222 2222 2222
+			1000 2233 2232 3332 2222 2222 2232 3332
+			1000 2233 0222 3300 2222 2222 0222 3300
+			1100 1222 0221 4300 2233 1221 0221 4300
+			1100 1222 0221 3200 2233 1222 0221 3200
+			2100 2222 2222 3222 2233 2222 3332 2222
+			3100 2223 2122 2222 2222 2222 3332 0002
+			3100 2223 2222 2222 2222 2122 4332 0003
+			1000 1223 2222 0222 3332 2222 3222 0003
+			1000 2222 2222 2222 3432 2222 3222 2233
 		</bitmap>
 	</tex_image>
 	<tex_image index="16" name="c3test_buil3"
@@ -755,134 +755,134 @@
 		path="C:/home/wb_data3d/field/out47/map/tex/1sp/kanban_gf4.tga"
 	>
 		<bitmap size="1024">
-			9999 0009 9999 0009 9999 0009 9999 0009
-			9999 0009 9999 0009 9999 0009 9999 0009
-			9999 0009 9999 0009 9999 0009 9999 0009
-			9999 0009 9999 0009 9999 0009 9999 0009
-			9999 0009 9999 0009 9999 0009 9999 0009
-			9999 0009 9999 0009 9999 0009 9999 0009
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
+			1000 0022 2210 0000 0221 1000 0022 2210
+			0000 2210 0000 0221 1000 0022 2210 0000
+			1000 0022 2210 0000 0221 1000 0022 2210
+			0000 2210 0000 0221 1000 0022 2210 0000
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			ccc0 cccc cccc cccc cccc cccc cccc cccc
-			cccc cccc cccc cccc cccc cccc cccc 0ccc
-			99c0 9999 9999 9999 9999 9999 9999 9999
-			9999 9999 9999 9999 9999 9999 9999 0c99
-			b9c0 bbbb bbbb bbbb bbbb bbbb bbbb bbbb
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 0c9b
-			b9c0 bbbb bbbb bbbb bbbb bbbb bbbb bbbb
-			bb5b bbbb bbbb bb5b bb5b bbb5 bbbb 0c9b
-			b9c0 bbbb bbbb bbbb bbbb bbbb 5b5b b5b5
-			bb55 b555 b55b bbb5 bb5b bbbb bb5b 0c9b
-			b9c0 bbbb bbbb bbbb bbbb bbbb 5b5b b5b5
-			bbb5 5b55 b5b5 bbb5 555b bbb5 bb5b 0c9b
-			b9c0 bbbb bbbb bbbb b0bb bbbb bb5b 5bb5
-			b555 5b55 b5bb bbb5 b5b5 bb5b bbbb 0c9b
-			b9c0 bbbb bbbb bbbb b00b 0bbb b55b bb55
-			b555 b55b b55b bb5b b55b bbb5 bb5b 0c9b
-			b9c0 bbbb bbbb bbbb b00b 00bb bbbb bbbb
-			bbbb bbbb bbbb bbbb 5bbb bbbb bbbb 0c9b
-			b9c0 bbbb bbbb bbbb b77b 007b bbbb bbbb
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 0c9b
-			b9c0 bbbb bbbb bbbb b77b 7077 bbbb bbbb
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 0c9b
-			b9c0 bbbb bbbb bbbb 7777 b777 bbbb bbbb
-			bbbb bbbb bbbb bbbb bbbb b777 bbbb 0c9b
-			b9c0 bbbb bbbb bbbb 7777 b777 bbbb bbbb
-			bbbb bbbb bbbb bbbb 7bbb b777 bbbb 0c9b
-			b9c0 bbbb bbbb 7bbb 0770 b777 bbbb bbbb
-			bbbb bbbb bbbb bbbb 7bbb 7777 bbbb 0c9b
-			b9c0 bbbb bbbb 2bbb 7777 6722 bbb6 bb77
-			bbbb bbbb bbbb bbbb bbbb b7b7 bbbb 0c9b
-			b9c0 bbbb bbbb 7bbb 7777 6722 bbb7 7777
-			bbb7 bbbb bbbb bbbb bbbb bbbb bbbb 0c9b
-			b9c0 bbbb bbbb bbbb 7777 7777 7bb6 7777
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 0c9b
-			b9c0 b77b bbbb 333b 7778 7777 6666 bbb7
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 0c9b
-			b9c0 b77b 33bb 3333 7733 6777 7676 bbb7
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 0c9b
-			b9c0 bbbb 33bb 3333 3333 7773 b677 bbbb
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 0c9b
-			b9c0 bbbb 33bb 3333 3333 7333 bbb7 bbbb
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 0c9b
-			b9c0 bbbb 33bb 3333 3333 3333 bbbb bbbb
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 0c9b
-			b9c0 bbbb 33bb 3333 3333 3333 bb33 bbbb
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 0c9b
-			b9c0 bbbb 3bbb 3333 3333 3333 b333 bbbb
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 0c9b
-			b9c0 bbbb bbbb 3333 3333 3333 b333 bbbb
-			bbbb bbbb bbbb aabb baaa bbbb bbbb 0c9b
-			b9c0 bbbb bbbb 3333 33bb 3333 b333 bbbb
-			bbbb bbbb bbbb 1111 aaaa bbba bbbb 0c9b
-			b9c0 bbbb bbbb b33b 333b 3333 b333 bbbb
-			bbbb bbbb 1bbb 1111 aaaa bbaa bbbb 0c9b
-			b9c0 bbbb bbbb bbbb b333 3333 b333 444b
-			bbbb bbbb 11bb a111 aaaa baaa bbbb 0c9b
-			b9c0 bbbb bbbb 3bbb bb33 3333 b343 4444
-			bbb4 bbbb 11bb a111 11aa b1aa bbbb 0c9b
-			b9c0 bbbb bbbb 3bbb 33b3 3333 4443 4444
-			bbb4 bbbb 111b a111 111a 11aa bbbb 0c9b
-			b9c0 bbbb bbbb bbbb 33bb 3333 4444 4444
-			bbb4 bbbb 111b a111 111a 11aa bbbb 0c9b
-			b9c0 bbbb bbbb bbbb 33bb b333 4444 4444
-			bbb4 bbbb 111b aaaa a11a 11aa bbbb 0c9b
-			b9c0 bbbb bbbb bbbb bbbb bbbb 444b 4444
-			bbbb bbbb aaab aaaa aaaa 11aa bbbb 0c9b
-			b9c0 bbbb bbbb bbbb bbbb 4bbb 4444 b444
-			bbbb bbbb aaab aaaa aaaa 11aa bbbb 0c9b
-			b9c0 bbbb bbbb bbbb bbbb 4bbb 4444 b444
-			bbbb bbbb aaab aaaa aaaa b1aa bbbb 0c9b
-			b9c0 bbbb bbbb bbbb bbbb 4bbb 4444 bb44
-			bbbb bbbb aabb aaaa aaaa b11a bbbb 0c9b
-			b9c0 bbbb bbbb bbbb bbbb bbbb 444b bbbb
-			bbbb bbbb abbb 11aa aaaa bb1a bbbb 0c9b
-			b9c0 bbbb b77b bbbb bbbb bbbb 7bbb bbbb
-			bbbb bbbb bbbb 11ab aaa1 bbba bbbb 0c9b
-			b9c0 bbbb 7777 bbbb bbbb bbbb 77bb bbbb
-			bbbb bbbb bbbb 1bbb bb11 bbbb bbbb 0c9b
-			b9c0 bbbb b77b bbbb bbbb bbbb bbbb bbbb
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 0c9b
-			b9c0 bbbb bbbb bbbb bbbb bbbb bbbb bbbb
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 0c9b
-			b9c0 bbbb bbbb bbbb bbbb bbbb bbbb bbbb
-			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 0c9b
-			99c0 9999 9999 9999 9999 9999 9999 9999
-			9999 9999 9999 9999 9999 9999 9999 0c99
-			ccc0 cccc cccc cccc cccc cccc cccc cccc
-			cccc cccc cccc cccc cccc cccc cccc 0ccc
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 cc00 000c 00cc 0c00 000c c00c
-			c0cc c0cc 00cc 0ccc 0c00 c0c0 0000 0000
-			0000 0000 c0c0 c0cc 0c00 0cc0 c0cc c00c
-			cc00 cc00 0c00 c00c 0cc0 c0c0 0000 0000
-			0000 0000 ccc0 c0c0 0000 0cc0 c0cc c00c
-			c0cc c0cc 00cc 0ccc 0cc0 0cc0 0000 0000
-			0000 0000 ccc0 c00c 0c00 0cc0 0c0c c00c
-			cc00 c000 00c0 c00c 0cc0 c0c0 0000 0000
-			0000 0000 cc00 0000 00cc c00c 0c0c c00c
-			c0cc c00c 0c0c 0ccc c00c c0c0 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			9999 0009 9999 0009 9999 0009 9999 0009
-			9999 0009 9999 0009 9999 0009 9999 0009
-			9999 0009 9999 0009 9999 0009 9999 0009
-			9999 0009 9999 0009 9999 0009 9999 0009
-			9999 0009 9999 0009 9999 0009 9999 0009
-			9999 0009 9999 0009 9999 0009 9999 0009
+			3333 3333 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 3333 3333 3333 3333
+			5553 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 3555
+			6553 6666 6666 6666 6666 6666 6666 6666
+			6666 6666 6666 6666 6666 6666 6666 3566
+			4553 4444 4444 4444 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 4444 3564
+			4553 bbbb bbbb bbbb bbbb bbbb bbbb bbbb
+			bbbb bbbb bbbb bbbb bbbb bbbb bbbb 3564
+			4553 aaab aaab aaaa aaab aaaa aaab 7777
+			aaa9 aaaa aaab aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab aaaa aaab 7777
+			aaa9 aaaa aaab aaaa aaab aaaa baab 3564
+			4553 bbbb bbbb bbbb bbbb bbbb 999b 9999
+			b999 bbbb bbbb bbbb bbbb bbbb bbbb 3564
+			4553 aaab aaab aaaa aaab aaaa 777b 7777
+			a779 aaaa aaab aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab aaaa 777b 7777
+			a779 aaaa aaab aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab aaaa 777b 7777
+			a779 aaaa aaab aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab aaaa 777b aa77
+			aaab aaaa aaab aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 77aa 7778 aa77
+			777b aa77 aaab aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 77aa 7778 aa77
+			777b aa77 aaab aaaa aaab aaaa baab 3564
+			4553 bbbb bbbb bbbb bbbb 88bb b888 bbbb
+			888b bb88 bbbb bbbb bbbb bbbb bbbb 3564
+			4553 aaab aaab aaaa aaab 77aa a778 aaaa
+			777b aa77 aaab aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 77aa a778 77aa
+			7778 7777 aaa8 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 77aa a778 77aa
+			7778 7777 aaa8 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 7777 a778 77aa
+			7778 7777 aaa8 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 7777 a778 77aa
+			7778 7777 a778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 7777 a778 77aa
+			a778 7aaa a778 aaaa aaab aaaa baab 3564
+			4553 bbbb bbbb bbbb bbbb 8888 b888 88bb
+			b888 8bbb b888 bbbb bbbb bbbb bbbb 3564
+			4553 aaab aaab aaaa aaab 7777 a778 77aa
+			a778 7aaa a778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 7777 aaab 7777
+			aaa8 7a77 a778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 7777 aaab 7777
+			aaa8 7a77 a778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 7777 aaab a777
+			aaab 7aaa a778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 7777 aaab a777
+			aaab 7aaa a778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 7777 aaab a777
+			aaab 7aaa a778 aaaa aaab aaaa baab 3564
+			4553 bbbb bbbb bbbb bbbb 8888 bbbb b888
+			bbbb 8bbb b888 bbbb bbbb bbbb bbbb 3564
+			4553 aaab aaab aaaa aaab 7777 aaab a777
+			aaab 7aaa a778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 7777 aaab a777
+			aaab 7aaa a778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 7777 aaab a777
+			aaab 7aaa a778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 7777 aaab a777
+			aaab 7aaa a778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 7777 aaab a777
+			aaab 7aaa a778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 7777 aaab 7777
+			aaa8 7777 a778 aaaa aaab aaaa baab 3564
+			4553 bbbb bbbb bbbb bbbb 8888 bbbb 8888
+			bbb8 8888 b888 bbbb bbbb bbbb bbbb 3564
+			4553 aaab aaab aaaa aaab 7777 aaab 7777
+			7778 7777 a778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 7777 aaab 77aa
+			7778 7777 a778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 7777 aa78 77aa
+			7778 7777 a778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 7777 aa78 77aa
+			7778 7777 a778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 77aa aa78 aaaa
+			777b 7777 aaa8 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 77aa 7778 aaaa
+			777b 7777 aaa8 aaaa aaab aaaa baab 3564
+			4553 bbbb bbbb bbbb bbbb 88bb 8888 bbbb
+			888b 8888 bbb8 bbbb bbbb bbbb bbbb 3564
+			4553 aaab aaab aaaa aaab 77aa 7778 aaaa
+			aaab 7777 aaa8 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab aaaa 7778 aa77
+			aaab 7777 aaa8 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab aaaa 7778 aa77
+			aaab 7777 aaa8 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab aaaa 77ab aa77
+			777b aa77 aaab aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab aaaa 77ab 7777
+			7778 aa77 aaab aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa aaab 77aa 7778 7777
+			7778 7777 aaa8 aaaa aaab aaaa baab 3564
+			4553 bbbb bbbb bbbb bbbb 88bb 8888 8888
+			8888 8888 bbb8 bbbb bbbb bbbb bbbb 3564
+			4553 aaab aaab aaaa 7aab 7777 7778 7777
+			7778 7777 7778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa 7aab 7777 7778 7777
+			7778 7777 7778 aaaa aaab aaaa baab 3564
+			4553 aaab aaab aaaa 7aab 7777 7778 7777
+			7778 7777 7778 aaaa aaab aaaa baab 3564
+			4553 4444 4444 4444 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 4444 3564
+			5553 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 3555
+			5553 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 3555
+			3333 3333 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 3333 3333 3333 3333
 		</bitmap>
 	</tex_image>
 	<tex_image index="22" name="out_dust01"
@@ -1134,7 +1134,7 @@
 		358c 39ad 3dce 41ef 4a10 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="15" name="c3bay_yuka1_pl" color_size="8">
-		358c 39ad 3dce 41ef 7fff 7fff 7fff 7fff
+		358c 39ad 3dce 41ef 4a10 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="16" name="c3test_buil3_pl" color_size="8">
 		7fff 6f7b 6b5a 6739 5ad6 4e73 294a 7fff
@@ -1153,8 +1153,8 @@
 		7fb7 7fdb 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="21" name="kanban_gf4_pl" color_size="16">
-		0000 12c8 15b9 15fb 170f 2108 2192 239f
-		3546 4210 6e05 77bd 7fff 7fff 7fff 7fff
+		0000 14a5 2529 3def 5acb 5ef7 6739 6ee0
+		7f84 7f86 7fe1 7ff3 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="22" name="out_dust01_pl" color_size="8">
 		2108 2529 35ad 3def 4e73 7fff 7fff 7fff
@@ -4615,92 +4615,86 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="34" name="polygon34"
-		vertex_size="18" polygon_size="6"
-		triangle_size="0" quad_size="6"
+		vertex_size="10" polygon_size="4"
+		triangle_size="0" quad_size="4"
 		volume_min="-0.006104 -0.003174 -0.004150"
-		volume_max="-0.004883 0.004150 0.005127"
+		volume_max="-0.006104 0.004395 0.004883"
 		volume_r="0.009033"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">13</mtx_list>
-			<primitive_array size="2">
+			<primitive_array size="1">
 				<primitive index="0" type="quad_strip" vertex_size="10">
 					<mtx idx="0"/>
 					<tex st="-8.000000 8.000000"/>
 					<clr rgb="31 31 31"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_xyz xyz="-0.006104 -0.003174 -0.004150"/>
-					<pos_yz yz="-0.002930 -0.003418"/>
-					<tex st="-8.000000 0.000000"/>
+					<pos_yz yz="-0.002441 -0.003418"/>
+					<tex st="-8.000000 0.750000"/>
 					<clr rgb="21 20 22"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
-					<pos_yz yz="0.004150 -0.004150"/>
-					<pos_yz yz="0.003906 -0.003418"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_yz yz="0.004150 0.005127"/>
-					<pos_yz yz="0.003906 0.004395"/>
+					<pos_yz yz="0.004395 -0.004150"/>
+					<pos_yz yz="0.003662 -0.003418"/>
+					<tex st="0.000000 0.750000"/>
+					<pos_yz yz="0.004395 0.004883"/>
+					<pos_yz yz="0.003662 0.004395"/>
 					<tex st="0.000000 8.000000"/>
 					<clr rgb="31 31 31"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
-					<pos_yz yz="-0.003174 0.005127"/>
-					<pos_yz yz="-0.002930 0.004395"/>
+					<pos_yz yz="-0.003174 0.004883"/>
+					<pos_yz yz="-0.002441 0.004395"/>
 					<tex st="-8.000000 8.000000"/>
 					<pos_yz yz="-0.003174 -0.004150"/>
-					<pos_yz yz="-0.002930 -0.003418"/>
-				</primitive>
-				<primitive index="1" type="quads" vertex_size="8">
-					<tex st="0.000000 0.000000"/>
-					<clr rgb="21 20 22"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_yz yz="0.004150 0.005127"/>
-					<tex st="8.000000 0.000000"/>
-					<pos_xy xy="-0.004883 0.004150"/>
-					<tex st="8.000000 -8.000000"/>
-					<pos_xz xz="-0.004883 -0.004150"/>
-					<tex st="0.000000 -8.000000"/>
-					<pos_xy xy="-0.006104 0.004150"/>
-					<tex st="0.000000 8.000000"/>
-					<clr rgb="31 31 31"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_yz yz="-0.003174 0.005127"/>
-					<tex st="8.000000 8.000000"/>
-					<pos_xy xy="-0.004883 -0.003174"/>
-					<tex st="8.000000 0.000000"/>
-					<clr rgb="21 20 22"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_xy xy="-0.004883 0.004150"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-0.006104 0.004150"/>
+					<pos_yz yz="-0.002441 -0.003418"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
 	<polygon index="35" name="polygon35"
-		vertex_size="4" polygon_size="1"
-		triangle_size="0" quad_size="1"
-		volume_min="-0.006104 -0.002930 -0.003418"
-		volume_max="-0.006104 0.003906 0.004395"
-		volume_r="0.008545"
+		vertex_size="12" polygon_size="3"
+		triangle_size="0" quad_size="3"
+		volume_min="-0.006104 -0.003174 -0.004150"
+		volume_max="-0.002686 0.004395 0.004883"
+		volume_r="0.009033"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">13</mtx_list>
 			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="4">
+				<primitive index="0" type="quads" vertex_size="12">
 					<mtx idx="0"/>
 					<tex st="-64.000000 64.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="-0.006104 -0.002930 -0.003418"/>
+					<pos_xyz xyz="-0.006104 -0.002441 -0.003418"/>
 					<tex st="0.000000 64.000000"/>
 					<pos_xz xz="-0.006104 0.004395"/>
-					<tex st="0.000000 0.000000"/>
+					<tex st="0.000000 6.000000"/>
 					<clr rgb="21 20 22"/>
-					<pos_xy xy="-0.006104 0.003906"/>
-					<tex st="-64.000000 0.000000"/>
+					<pos_xy xy="-0.006104 0.003662"/>
+					<tex st="-64.000000 6.000000"/>
 					<pos_xz xz="-0.006104 -0.003418"/>
+					<tex st="0.000000 0.312500"/>
+					<pos_yz yz="0.004395 0.004883"/>
+					<tex st="0.000000 5.687500"/>
+					<pos_xy xy="-0.003662 0.004395"/>
+					<tex st="64.000000 5.687500"/>
+					<pos_xz xz="-0.003662 -0.004150"/>
+					<tex st="64.000000 0.312500"/>
+					<pos_xy xy="-0.006104 0.004395"/>
+					<tex st="0.000000 0.312500"/>
+					<clr rgb="31 31 31"/>
+					<pos_yz yz="-0.003174 0.004883"/>
+					<tex st="0.000000 5.687500"/>
+					<pos_xy xy="-0.002686 -0.003174"/>
+					<tex st="64.000000 5.687500"/>
+					<clr rgb="21 20 22"/>
+					<pos_xy xy="-0.003662 0.004395"/>
+					<tex st="64.000000 0.312500"/>
+					<pos_xy xy="-0.006104 0.004395"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -9666,7 +9660,7 @@
 		vertex_size="22" polygon_size="7"
 		triangle_size="0" quad_size="7"
 		volume_min="-0.006104 -0.003174 -0.004150"
-		volume_max="-0.004883 0.004150 0.005127"
+		volume_max="-0.002686 0.004395 0.004883"
 		volume_r="0.009033"
 	>
 		<display index="0" material="1" polygon="34" priority="0"/>
