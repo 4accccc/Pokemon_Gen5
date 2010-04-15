@@ -176,7 +176,7 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
     //国コードチェック
     if( dataWork->errorState == DES_NONE )
     {
-      PT_MYSTATUS *myStatus = (PT_MYSTATUS*)dataWork->pMysteryData;
+      PT_MYSTATUS *myStatus = (PT_MYSTATUS*)dataWork->pMyStatus;
       MB_DATA_TPrintf("RegionCode[%d]\n",myStatus->region_code);
       if( myStatus->region_code != PM_LANG )
       {
