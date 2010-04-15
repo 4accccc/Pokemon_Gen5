@@ -46,8 +46,6 @@ ev_zukan_daughter:
           _CALL sub_zukan_setup_local_get
           _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_02a )
           _CALL sub_zuken_local_me_play
-          _DEBUG_PRINT_WK( HYOUKA_COUNT )
-          _DEBUG_PRINT_WK( SCWK_ANSWER )
           _ME_WAIT()
           _AB_KEYWAIT_MARK()
           _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
@@ -56,8 +54,6 @@ ev_zukan_daughter:
           _CALL sub_zukan_setup_local_see
           _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_02 )
           _CALL sub_zuken_local_me_play
-          _DEBUG_PRINT_WK( HYOUKA_COUNT )
-          _DEBUG_PRINT_WK( SCWK_ANSWER )
           _ME_WAIT()
           _AB_KEYWAIT_MARK()
           _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
@@ -270,6 +266,7 @@ ev_zukan_father:
       _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase_02 )
       _CALL   sub_zukan_global_me_play
       _ME_WAIT()
+      _AB_KEYWAIT_MARK()
       _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
@@ -292,12 +289,15 @@ ev_zukan_machine:
   IF $SCWK_ANSWER == TRUE THEN
   //全国図鑑モード＝博士（父）の評価
       _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_GLOBAL, HYOUKA_MSGID, HYOUKA_COUNT )
+
+      _NUMBER( 0, HYOUKA_COUNT, 3 )
       _SYSWIN_MSG( msg_hyouka_hakase_02, POS_DOWN )
       _CALL   sub_zukan_global_me_play
       _ME_WAIT()
+      _AB_KEYWAIT_MARK()
       _SYSWIN_MSG( HYOUKA_MSGID, POS_DOWN )
       _AB_KEYWAIT_MARK()
-      _SYSWIN_CLOSE()
+      _SYSWIN_CLOSE() //@todo 呼び出し元（パソコン）で引き続きシステムMSG表示するので閉じない
   ELSE
   //地方図鑑モード＝博士（娘）の評価
       IF FLAG_ON( FE_ZUKAN_COMPLETE_LOCAL_SEE ) THEN
@@ -324,7 +324,7 @@ ev_zukan_machine:
           _SYSWIN_MSG( msg_hyouka_hakase2_04, POS_DOWN )
           _AB_KEYWAIT_MARK()
       ENDIF
-      _SYSWIN_CLOSE()
+    _SYSWIN_CLOSE() //@todo 呼び出し元（パソコン）で引き続きシステムMSG表示するので閉じない
   ENDIF
 
   _CHG_LOCAL_SCR
