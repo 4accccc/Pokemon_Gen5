@@ -25,6 +25,8 @@
 #include "fldeff_kemuri.h"
 
 #include "include/gamesystem/pm_season.h"
+#include "field/eventdata_system.h"
+#include "field/eventdata_sxy.h"
 
 //======================================================================
 //  define
@@ -355,6 +357,7 @@ static void oze_EndYureJiki( FIELD_PLAYER_GRID *gjiki );
 static BOOL gjiki_GetAttr( FIELD_PLAYER_GRID *gjiki, u16 dir, MAPATTR *attr );
 static GROUND_HEIGHT gjiki_CheckNextHeight(
     FIELD_PLAYER_GRID *gjiki, u16 dir );
+static BOOL gjiki_CheckDirDoor( FIELD_PLAYER_GRID *gjiki, u16 dir );
 
 //======================================================================
 //  グリッド移動 フィールドプレイヤー制御
@@ -2044,7 +2047,10 @@ static void gjiki_SetMove_Hitch(
   FIELD_PLAYER_CORE_SetMoveValue(
       gjiki->player_core, PLAYER_MOVE_VALUE_STOP );
 
-  PMSND_PlaySE( SEQ_SE_WALL_HIT );
+  if( gjiki_CheckDirDoor(gjiki,input->dir) == FALSE ){
+    PMSND_PlaySE( SEQ_SE_WALL_HIT );
+  }
+  
 #ifdef PLAYER_MOVE_TRACK_CHANGE
   FIELD_SOUND_ChangeBGMTrackStill();
 #endif
@@ -2386,7 +2392,11 @@ static void gjikiCycle_SetMove_Hitch(
   gjiki->move_action = JIKI_ACTION_HITCH;
   
   FIELD_PLAYER_CORE_SetMoveValue( gjiki->player_core, PLAYER_MOVE_VALUE_STOP );
-  PMSND_PlaySE( SEQ_SE_WALL_HIT );
+  
+  if( gjiki_CheckDirDoor(gjiki,input->dir) == FALSE ){
+    PMSND_PlaySE( SEQ_SE_WALL_HIT );
+  }
+  
 #ifdef PLAYER_MOVE_TRACK_CHANGE
   FIELD_SOUND_ChangeBGMTrackStill();
 #endif
@@ -2603,7 +2613,10 @@ static void gjikiSwim_SetMove_Hitch(
   
   FIELD_PLAYER_CORE_SetMoveValue(
       gjiki->player_core, PLAYER_MOVE_VALUE_STOP );
-  PMSND_PlaySE( SEQ_SE_WALL_HIT );
+  
+  if( gjiki_CheckDirDoor(gjiki,input->dir) == FALSE ){
+    PMSND_PlaySE( SEQ_SE_WALL_HIT );
+  }
 
 #ifdef PLAYER_MOVE_TRACK_CHANGE
   FIELD_SOUND_ChangeBGMTrackStill();
@@ -3468,4 +3481,31 @@ static GROUND_HEIGHT gjiki_CheckNextHeight(
   }
   
   return( GROUND_HEIGHT_FLAT );
+}
+
+//--------------------------------------------------------------
+/**
+ * 指定方向がドアかどうか
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static BOOL gjiki_CheckDirDoor( FIELD_PLAYER_GRID *gjiki, u16 dir )
+{
+  int idx;
+  VecFx32 pos;
+  MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( gjiki->player_core );
+  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( gjiki->fieldWork );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
+  
+  MMDL_GetVectorPos( mmdl, &pos );
+  MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+	idx = EVENTDATA_SearchConnectIDByPos( evdata, &pos );
+  
+  if( idx == EXIT_ID_NONE ){
+    return( FALSE );
+  }
+  
+  return( TRUE );
 }
