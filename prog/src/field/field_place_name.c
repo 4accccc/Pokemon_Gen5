@@ -177,13 +177,17 @@ struct _FIELD_PLACE_NAME {
 
   u16  lastZoneID; // ç≈å„Ç…ï\é¶ÇµÇΩÉ]Å[ÉìID
   u16  dispZoneID; // éüÇ…ï\é¶Ç∑ÇÈÉ]Å[ÉìID
-  BOOL dispZoneSetFlag; // éüÇ…ï\é¶Ç∑ÇÈÉ]Å[ÉìIDÇ™ÉZÉbÉgÇ≥ÇÍÇΩÇ©Ç«Ç§Ç©
+  BOOL dispFlag; // ï\é¶ÉtÉâÉO
   BOOL forceDispFlag; // ã≠êßï\é¶ÉtÉâÉO
 
   PN_LETTER* letters[ MAX_NAME_LENGTH ];
   u8 setupLetterNum; // ÉZÉbÉgÉAÉbÉvÇ™äÆóπÇµÇΩï∂éöÉIÉuÉWÉFÉNÉgÇÃêî
 	u8 launchLetterNum;// î≠éÀçœÇ›ï∂éöêî
   u8 writeLetterNum; // BG Ç…èëÇ´çûÇÒÇæï∂éöêî
+
+  // BG ÉpÉåÉbÉg
+  void* BGPalBinary; // ÉoÉCÉiÉäÉfÅ[É^
+	NNSG2dPaletteData* BGPalData; // ÉoÉCÉiÉäìWäJÉfÅ[É^
 };
 
 
@@ -194,7 +198,9 @@ struct _FIELD_PLACE_NAME {
 static void SetupBG( FIELD_PLACE_NAME* system );
 static void CleanBG( FIELD_PLACE_NAME* system );
 static void ResetBG( FIELD_PLACE_NAME* system );	
-static void LoadBGPalette( FIELD_PLACE_NAME* system ); // BG ÉpÉåÉbÉgÇì«Ç›çûÇﬁ
+static void LoadBGPaletteData( FIELD_PLACE_NAME* system ); // BG ÉpÉåÉbÉgÉfÅ[É^Çì«Ç›çûÇﬁ
+static void UnloadBGPaletteData( FIELD_PLACE_NAME* system ); // BG ÉpÉåÉbÉgÉfÅ[É^Çâï˙Ç∑ÇÈ
+static void TransBGPalette( FIELD_PLACE_NAME* system ); // BG ÉpÉåÉbÉgÇì]ëóÇ∑ÇÈ
 static void AllocBGNullCharArea( FIELD_PLACE_NAME* system ); // ãÛîíÉLÉÉÉâÉGÉäÉAÇämï€Ç∑ÇÈ
 static void FreeBGNullCharaArea( FIELD_PLACE_NAME* system ); // ãÛîíÉLÉÉÉâÉGÉäÉAÇâï˙Ç∑ÇÈ
 static void RecoverBlankBand( FIELD_PLACE_NAME* system ); // ë—Çï∂éöÇ™èëÇ´çûÇ‹ÇÍÇƒÇ¢Ç»Ç¢èÛë‘Ç…ïúãAÇ∑ÇÈ
@@ -206,21 +212,16 @@ static void DeleteBmpOamSystem( FIELD_PLACE_NAME* system ); // BMPOAM ÉVÉXÉeÉÄÇ
 static void CreateClactUnit( FIELD_PLACE_NAME* system ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉgÇê∂ê¨Ç∑ÇÈ
 static void DeleteClactUnit( FIELD_PLACE_NAME* system ); // ÉZÉãÉAÉNÉ^Å[ÉÜÉjÉbÉgÇîjä¸Ç∑ÇÈ
 // ï∂éöÉIÉuÉWÉFÉNÉg
-static void SetupLetter( FIELD_PLACE_NAME* system ); // ï∂éöÉIÉuÉWÉFÉNÉgÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
-static BOOL CheckLetterSetupFinished( const FIELD_PLACE_NAME* system ); // ï∂éöÉIÉuÉWÉFÉNÉgÇÃÉZÉbÉgÉAÉbÉvÇ™äÆóπÇµÇΩÇ©Ç«Ç§Ç©ÇÉ`ÉFÉbÉNÇ∑ÇÈ
+static void SetupLetter_init( FIELD_PLACE_NAME* system ); // ï∂éöÉIÉuÉWÉFÉNÉgÇÃÉZÉbÉgÉAÉbÉvÇäJénÇ∑ÇÈ
+static void SetupLetter_main( FIELD_PLACE_NAME* system ); // ï∂éöÉIÉuÉWÉFÉNÉgÇÇPï∂éöÇ∏Ç¬ÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+static BOOL SetupLetter_check( const FIELD_PLACE_NAME* system ); // ï∂éöÉIÉuÉWÉFÉNÉgÇÃÉZÉbÉgÉAÉbÉvÇ™äÆóπÇµÇΩÇ©Ç«Ç§Ç©ÇÉ`ÉFÉbÉNÇ∑ÇÈ
 static void HideLetters( FIELD_PLACE_NAME* system ); // ï∂éöÉIÉuÉWÉFÉNÉgÇîÒï\é¶Ç…Ç∑ÇÈ
 static void LaunchLetter( FIELD_PLACE_NAME* system ); // ï∂éöÉIÉuÉWÉFÉNÉgÇî≠éÀÇ∑ÇÈ
-static void MoveAllCharUnit( FIELD_PLACE_NAME* system ); 
+static void MoveLetters( FIELD_PLACE_NAME* system ); // ï∂éöÉIÉuÉWÉFÉNÉgÇìÆÇ©Ç∑
 // BG, ï∂éöÉÜÉjÉbÉgÇ÷ÇÃèëÇ´çûÇ›
-static void WriteCharUnitIntoBitmapWindow( FIELD_PLACE_NAME* system );
-static BOOL CheckLetterWriteToBitmapFinished( const FIELD_PLACE_NAME* system );
-// ínñºÇÃçXêV
-static void SetForceDispFlag( FIELD_PLACE_NAME* system );
-static void ResetForceDispFlag( FIELD_PLACE_NAME* system );
-static BOOL CheckForceDispFlag( const FIELD_PLACE_NAME* system );
-static BOOL CheckDispStart( const FIELD_PLACE_NAME* system );
-static BOOL CheckPlaceNameIDChange( const FIELD_PLACE_NAME* system );
-static void UpdatePlaceName( FIELD_PLACE_NAME* system ); 
+static void PrintLetter_init( FIELD_PLACE_NAME* system ); // ï∂éöÉIÉuÉWÉFÉNÉgÇÃèëÇ´çûÇ›ÇäJénÇ∑ÇÈ
+static void PrintLetter_main( FIELD_PLACE_NAME* system ); // ï∂éöÉIÉuÉWÉFÉNÉgÇÇPï∂éöÇ∏Ç¬ÉrÉbÉgÉ}ÉbÉvÅEÉEÉBÉìÉhÉEÇ…èëÇ´çûÇﬁ
+static BOOL PrintLetter_check( const FIELD_PLACE_NAME* system ); // ï∂éöÉIÉuÉWÉFÉNÉgÇÃèëÇ´çûÇ›äÆóπÇÉ`ÉFÉbÉNÇ∑ÇÈ
 // èÛë‘ÇÃïœçX
 static void ChangeState( FIELD_PLACE_NAME* system, SYSTEM_STATE next_state );
 static void Cancel( FIELD_PLACE_NAME* system ); 
@@ -286,6 +287,16 @@ static u16 GetDispZoneID( const FIELD_PLACE_NAME* system ); // éüÇ…ï\é¶Ç∑ÇÈÉ]Å[É
 static void SetDispZoneID( FIELD_PLACE_NAME* system, u16 zoneID ); // éüÇ…ï\é¶Ç∑ÇÈÉ]Å[ÉìIDÇê›íËÇ∑ÇÈ
 static const STRBUF* GetPlaceName( const FIELD_PLACE_NAME* system ); // ínñºÉoÉbÉtÉ@ÇéÊìæÇ∑ÇÈ
 static u8 GetPlaceNameLength( const FIELD_PLACE_NAME* system ); // ínñºÇÃï∂éöêîÇéÊìæÇ∑ÇÈ
+// ínñºÇÃçXêV
+static BOOL CheckForceDispFlag( const FIELD_PLACE_NAME* system ); // ã≠êßï\é¶ÉtÉâÉOÇÉ`ÉFÉbÉNÇ∑ÇÈ
+static void SetForceDispFlag( FIELD_PLACE_NAME* system ); // ã≠êßï\é¶ÉtÉâÉOÇóßÇƒÇÈ
+static void ResetForceDispFlag( FIELD_PLACE_NAME* system ); // ã≠êßï\é¶ÉtÉâÉOÇóéÇ∆Ç∑
+static BOOL CheckDispFlag( const FIELD_PLACE_NAME* system ); // ï\é¶ÉtÉâÉOÇÉ`ÉFÉbÉNÇ∑ÇÈ
+static void SetDispFlag( FIELD_PLACE_NAME* system ); // ï\é¶ÉtÉâÉOÇÉZÉbÉgÇ∑ÇÈ
+static void ResetDispFlag( FIELD_PLACE_NAME* system ); // ï\é¶ÉtÉâÉOÇóéÇ∆Ç∑
+static BOOL CheckPlaceNameIDChange( const FIELD_PLACE_NAME* system ); // ínñºÇ™ïœâªÇµÇΩÇ©Ç«Ç§Ç©ÇÉ`ÉFÉbÉNÇ∑ÇÈ
+static void UpdatePlaceName( FIELD_PLACE_NAME* system ); // ï\é¶Ç∑ÇÈínñºÇçXêVÇ∑ÇÈ
+static BOOL CheckIntrudeField( const FIELD_PLACE_NAME* system, u16 zoneID ); // êNì¸êÊÇ©Ç«Ç§Ç©ÇÉ`ÉFÉbÉNÇ∑ÇÈ
 // ÉfÉoÉbÉO
 //#ifdef DEBUG_PRINT_ON
 static void DEBUG_PrintSystemState( const FIELD_PLACE_NAME* system ); // ÉVÉXÉeÉÄèÛë‘ñºÇèoóÕÇ∑ÇÈ
@@ -327,8 +338,10 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heap
 	CreateLetters( system ); // ï∂éöÉIÉuÉWÉFÉNÉgÇê∂ê¨
 
   GFL_BG_SetBGControl( BG_FRAME, &BGCntHeader, GFL_BG_MODE_TEXT ); 
+  LoadBGPaletteData( system );
 
 	ChangeState( system, SYSTEM_STATE_HIDE );
+
 	return system;
 }
 
@@ -341,6 +354,7 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heap
 //------------------------------------------------------------------------------------
 void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
 {
+  UnloadBGPaletteData( system ); 
   DeleteLetters( system ); 
   DeletePlaceNameBuffer( system ); 
   DeleteBmpOamSystem( system ); 
@@ -362,6 +376,7 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
 // Å°ìÆçÏ
 //====================================================================================
 
+#define TEST
 //------------------------------------------------------------------------------------
 /**
  * @brief ínñºï\é¶ÉVÉXÉeÉÄÇÃìÆçÏèàóù
@@ -371,7 +386,17 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
 //------------------------------------------------------------------------------------
 void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system )
 {
+#ifdef TEST
+  OSTick start, end;
+#endif
+
   IncStateCount( system ); // èÛë‘ÉJÉEÉìÉ^ÇçXêV
+
+#ifdef TEST
+  DEBUG_PrintSystemState( system );
+  OS_TFPrintf( 3, "[%d]: ", GetStateSeq(system) );
+  start = OS_GetTick();
+#endif
 
 	// èÛë‘Ç…âûÇ∂ÇΩìÆçÏ
 	switch( GetState(system) ) {
@@ -384,8 +409,15 @@ void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system )
   case SYSTEM_STATE_FADEOUT:      Process_FADEOUT( system );	    break;
 	}
 
-	// ï∂éöÉÜÉjÉbÉgÇìÆÇ©Ç∑
-  MoveAllCharUnit( system );
+	// ï∂éöÉIÉuÉWÉFÉNÉgÇìÆÇ©Ç∑
+  MoveLetters( system );
+
+#ifdef TEST
+  end = OS_GetTick();
+  OS_TFPrintf( 3, "tick = %d, micro sec = %d\n", 
+      (u32)(end - start),
+      (u32)OS_TicksToMicroSeconds( (end - start) ) );
+#endif
 }
 
 //------------------------------------------------------------------------------------
@@ -426,16 +458,14 @@ void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* system, u32 zoneID )
   // É]Å[ÉìÇÃínñºï\é¶ÉtÉâÉOÇ™óßÇ¡ÇƒÇ¢Ç»Ç¢èÍèäÇ≈ÇÕï\é¶ÇµÇ»Ç¢
   if( ZONEDATA_GetPlaceNameFlag( zoneID ) == FALSE ) { return; }
 
+	Cancel( system ); // ï\é¶íÜÇÃÉEÉBÉìÉhÉEÇëﬁèoÇ≥ÇπÇÈ
+
   // èââÒÇÕã≠êßï\é¶
-  if( system->lastZoneID == ZONE_ID_MAX ) {
+  if( GetLastZoneID( system ) == ZONE_ID_MAX ) {
     SetForceDispFlag( system );
   }
-
-	// éwíËÇ≥ÇÍÇΩÉ]Å[ÉìIDÇéüÇ…ï\é¶Ç∑Ç◊Ç´Ç‡ÇÃÇ∆ÇµÇƒãLâØ
-  SetDispZoneID( system, zoneID );
-
-	// ï\é¶íÜÇÃÉEÉBÉìÉhÉEÇëﬁèoÇ≥ÇπÇÈ
-	Cancel( system ); 
+  SetDispFlag( system );
+  SetDispZoneID( system, zoneID ); 
 }
 
 //------------------------------------------------------------------------------------
@@ -448,12 +478,12 @@ void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* system, u32 zoneID )
 //------------------------------------------------------------------------------------
 extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* system, u32 zoneID )
 {
-  // ã≠êßìIÇ…ï\é¶
-  SetDispZoneID( system, zoneID );
-  SetForceDispFlag( system );
+	Cancel( system ); // ï\é¶íÜÇÃÉEÉBÉìÉhÉEÇëﬁèoÇ≥ÇπÇÈ
 
-	// ï\é¶íÜÇÃÉEÉBÉìÉhÉEÇëﬁèoÇ≥ÇπÇÈ
-	Cancel( system ); 
+  // ã≠êßìIÇ…ï\é¶
+  SetForceDispFlag( system ); 
+  SetDispFlag( system );
+  SetDispZoneID( system, zoneID );
 }
 
 //------------------------------------------------------------------------------------
@@ -495,7 +525,7 @@ void FIELD_PLACE_NAME_RecoverBG( FIELD_PLACE_NAME* system )
 //-----------------------------------------------------------------------------------
 static void SetupBG( FIELD_PLACE_NAME* system )
 {
-	LoadBGPalette( system ); 
+	TransBGPalette( system ); 
   AllocBGNullCharArea( system );
   CreateBandBlankBitmap( system );
   CreateBandBitmapWindow( system );
@@ -541,30 +571,58 @@ static void ResetBG( FIELD_PLACE_NAME* sys )
 
 //------------------------------------------------------------------------------------
 /**
- * @brief BGÉpÉåÉbÉgÇì«Ç›çûÇﬁ
+ * @brief BG ÉpÉåÉbÉgÉfÅ[É^Çì«Ç›çûÇﬁ
  *
  * @param system
  */
 //------------------------------------------------------------------------------------
-static void LoadBGPalette( FIELD_PLACE_NAME* system )
+static void LoadBGPaletteData( FIELD_PLACE_NAME* system )
 {
   ARCDATID datID;
-	ARCHANDLE* handle;
+  ARCHANDLE* handle;
   HEAPID heapID;
-	u32 size;
-	void* src;
-	NNSG2dPaletteData* pal;
+  u32 size;
+
+  GF_ASSERT( system->BGPalBinary == NULL );
+  GF_ASSERT( system->BGPalData == NULL );
 
   heapID = GetHeapID( system ); 
-	handle = GetArcHandle( system );
+  handle = GetArcHandle( system );
   datID  = NARC_place_name_place_name_back_NCLR;
 
-	size = GFL_ARC_GetDataSizeByHandle( handle, datID );// ÉfÅ[É^ÉTÉCÉYéÊìæ
-	src = GFL_HEAP_AllocMemory( system->heapID, size );	// ÉfÅ[É^ÉoÉbÉtÉ@ämï€
-	GFL_ARC_LoadDataByHandle( handle, datID, src );			// ÉfÅ[É^éÊìæ
-	NNS_G2dGetUnpackedPaletteData( src, &pal );					// ÉoÉCÉiÉäÇ©ÇÁÉfÅ[É^ÇìWäJ
-	GFL_BG_LoadPalette( BG_FRAME, pal->pRawData, 0x20, BG_PALETTE_NO );	// ÉpÉåÉbÉgÉfÅ[É^ì]ëó
-	GFL_HEAP_FreeMemory( src );											    // ÉfÅ[É^ÉoÉbÉtÉ@âï˙
+  size = GFL_ARC_GetDataSizeByHandle( handle, datID ); // ÉfÅ[É^ÉTÉCÉYéÊìæ
+  system->BGPalBinary = GFL_HEAP_AllocMemory( heapID, size );	// ÉfÅ[É^ÉoÉbÉtÉ@ämï€
+  GFL_ARC_LoadDataByHandle( handle, datID, system->BGPalBinary ); // ÉfÅ[É^éÊìæ
+  NNS_G2dGetUnpackedPaletteData( system->BGPalBinary, &system->BGPalData ); // ÉoÉCÉiÉäÇìWäJ
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief BG ÉpÉåÉbÉgÉfÅ[É^Çâï˙Ç∑ÇÈ
+ *
+ * @param system
+ */
+//------------------------------------------------------------------------------------
+static void UnloadBGPaletteData( FIELD_PLACE_NAME* system )
+{
+  if( system->BGPalBinary ) {
+    GFL_HEAP_FreeMemory( system->BGPalBinary );
+    system->BGPalBinary = NULL;
+    system->BGPalData = NULL;
+  }
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief BG ÉpÉåÉbÉgÇì]ëóÇ∑ÇÈ
+ *
+ * @param system
+ */
+//------------------------------------------------------------------------------------
+static void TransBGPalette( FIELD_PLACE_NAME* system )
+{
+	GFL_BG_LoadPalette( 
+      BG_FRAME, system->BGPalData->pRawData, 0x20, BG_PALETTE_NO );
 }
 
 //------------------------------------------------------------------------------------
@@ -614,10 +672,8 @@ static void RecoverBlankBand( FIELD_PLACE_NAME* system )
 	GFL_BMP_DATA* src = system->bmpOrg;
 	GFL_BMP_DATA* dest = GFL_BMPWIN_GetBmp( system->bmpWin );
 
-	// ï∂éöÇ™èëÇ´çûÇ‹ÇÍÇƒÇ¢Ç»Ç¢èÛë‘ÇÉRÉsÅ[ÇµÇƒ, VRAMÇ…ì]ëó
+	// ï∂éöÇ™èëÇ´çûÇ‹ÇÍÇƒÇ¢Ç»Ç¢èÛë‘ÇÉRÉsÅ[
 	GFL_BMP_Copy( src, dest );	
-	//GFL_BMPWIN_MakeTransWindow( system->bmpWin );
-	//GFL_BMPWIN_TransVramCharacter( system->bmpWin );
 }
 
 //-----------------------------------------------------------------------------------
@@ -795,12 +851,24 @@ static void CloseDataHandle( FIELD_PLACE_NAME* system )
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief ï∂éöÉIÉuÉWÉFÉNÉgÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+ * @brief ï∂éöÉIÉuÉWÉFÉNÉgÇÃÉZÉbÉgÉAÉbÉvÇäJénÇ∑ÇÈ
  *
  * @param system
  */
 //-----------------------------------------------------------------------------------
-static void SetupLetter( FIELD_PLACE_NAME* system )
+static void SetupLetter_init( FIELD_PLACE_NAME* system )
+{
+  system->setupLetterNum = 0;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief ï∂éöÉIÉuÉWÉFÉNÉgÇÇPï∂éöÇ∏Ç¬ÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void SetupLetter_main( FIELD_PLACE_NAME* system )
 {
   int i, idx;
   STRCODE code[ MAX_NAME_LENGTH ];
@@ -825,7 +893,7 @@ static void SetupLetter( FIELD_PLACE_NAME* system )
   system->setupLetterNum++;
 
 #ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: SetupLetter[%d]\n", idx );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: SetupLetter_main[%d]\n", idx );
 #endif
 }
 
@@ -839,7 +907,7 @@ static void SetupLetter( FIELD_PLACE_NAME* system )
  *         ÇªÇ§Ç≈Ç»ÇØÇÍÇŒ FALSE
  */
 //-----------------------------------------------------------------------------------
-static BOOL CheckLetterSetupFinished( const FIELD_PLACE_NAME* system )
+static BOOL SetupLetter_check( const FIELD_PLACE_NAME* system )
 {
   if( GetPlaceNameLength(system) <= system->setupLetterNum ) {
     return TRUE;
@@ -892,18 +960,19 @@ static void LaunchLetter( FIELD_PLACE_NAME* system )
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief ëSï∂éöÉÜÉjÉbÉgÇìÆÇ©Ç∑
+ * @brief Ç∑Ç◊ÇƒÇÃï∂éöÉIÉuÉWÉFÉNÉgÇìÆÇ©Ç∑
  *
- * @param sys ìÆçÏëŒè€ÉVÉXÉeÉÄ
+ * @param system 
  */
 //-----------------------------------------------------------------------------------
-static void MoveAllCharUnit( FIELD_PLACE_NAME* sys )
+static void MoveLetters( FIELD_PLACE_NAME* system )
 {
   int i;
+  int len = GetPlaceNameLength( system );
 
-	for( i=0; i<sys->nameLen; i++ )
+	for( i=0; i<len; i++ )
 	{
-    PN_LETTER_Main( sys->letters[i] );
+    PN_LETTER_Main( system->letters[i] );
 	}
 } 
 
@@ -949,35 +1018,45 @@ static void DeleteBmpOamSystem( FIELD_PLACE_NAME* system )
 
 //-----------------------------------------------------------------------------------
 /**
- * @brief ï\é¶íÜÇÃï∂éöÉÜÉjÉbÉgÇÉrÉbÉgÉ}ÉbÉvÅEÉEÉBÉìÉhÉEÇ…èëÇ´çûÇﬁ
+ * @brief ï∂éöÉIÉuÉWÉFÉNÉgÇÃèëÇ´çûÇ›ÇäJénÇ∑ÇÈ
  *
- * @param sys ëÄçÏëŒè€ÉVÉXÉeÉÄ
+ * @param system
  */
 //-----------------------------------------------------------------------------------
-static void WriteCharUnitIntoBitmapWindow( FIELD_PLACE_NAME* sys )
+static void PrintLetter_init( FIELD_PLACE_NAME* system )
+{
+  system->writeLetterNum = 0;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief ï∂éöÉIÉuÉWÉFÉNÉgÇÇPï∂éöÇ∏Ç¬ÉrÉbÉgÉ}ÉbÉvÅEÉEÉBÉìÉhÉEÇ…èëÇ´çûÇﬁ
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void PrintLetter_main( FIELD_PLACE_NAME* system )
 {
   int idx;
 	u16 dx, dy;
   u16 width, height;
   PN_LETTER* letter;
-	const GFL_BMP_DATA* p_src_bmp = NULL;
-	GFL_BMP_DATA* p_dst_bmp = GFL_BMPWIN_GetBmp( sys->bmpWin );
+	const GFL_BMP_DATA* sourceBMP = NULL;
+	GFL_BMP_DATA* destBMP = NULL;
 
-  idx = sys->writeLetterNum;
-  GF_ASSERT( idx < GetPlaceNameLength(sys) );
+  idx = system->writeLetterNum;
+  GF_ASSERT( idx < GetPlaceNameLength(system) );
 
-  letter = sys->letters[idx];
-  p_src_bmp = PN_LETTER_GetBitmap( letter );
-  dx = PN_LETTER_GetLeft( letter ) - ( BMPWIN_POS_X_CHAR * CHAR_SIZE );
-  dy = PN_LETTER_GetTop( letter )  - ( BMPWIN_POS_Y_CHAR * CHAR_SIZE );
-  width = PN_LETTER_GetWidth( letter );
-  height = PN_LETTER_GetHeight( letter );
-  GFL_BMP_Print( p_src_bmp, p_dst_bmp, 0, 0, dx, dy, width, height, 0 );
+  letter    = system->letters[idx];
+  sourceBMP = PN_LETTER_GetBitmap( letter );
+	destBMP   = GFL_BMPWIN_GetBmp( system->bmpWin );
+  dx        = PN_LETTER_GetLeft( letter ) - ( BMPWIN_POS_X_CHAR * CHAR_SIZE );
+  dy        = PN_LETTER_GetTop( letter )  - ( BMPWIN_POS_Y_CHAR * CHAR_SIZE );
+  width     = PN_LETTER_GetWidth( letter );
+  height    = PN_LETTER_GetHeight( letter );
 
-  sys->writeLetterNum++;
-
-	// çXêVÇ≥ÇÍÇΩÉLÉÉÉâÉfÅ[É^ÇVRAMÇ…ì]ëó
-	//GFL_BMPWIN_TransVramCharacter( sys->bmpWin );
+  GFL_BMP_Print( sourceBMP, destBMP, 0, 0, dx, dy, width, height, 0 );
+  system->writeLetterNum++;
 }
 
 //-----------------------------------------------------------------------------------
@@ -990,9 +1069,12 @@ static void WriteCharUnitIntoBitmapWindow( FIELD_PLACE_NAME* sys )
  *         ÇªÇ§Ç≈Ç»ÇØÇÍÇŒ FALSE
  */
 //-----------------------------------------------------------------------------------
-static BOOL CheckLetterWriteToBitmapFinished( const FIELD_PLACE_NAME* system )
+static BOOL PrintLetter_check( const FIELD_PLACE_NAME* system )
 {
-  if( GetPlaceNameLength(system) <= system->writeLetterNum ) {
+  int len = GetPlaceNameLength( system ); 
+  int num = system->writeLetterNum;
+
+  if( len <= num ) {
     return TRUE;
   }
   else {
@@ -1026,6 +1108,45 @@ static void ResetForceDispFlag( FIELD_PLACE_NAME* system )
 
 //-----------------------------------------------------------------------------------
 /**
+ * @brief ï\é¶ÉtÉâÉOÇÉ`ÉFÉbÉNÇ∑ÇÈ
+ *
+ * @param system
+ *
+ * @return ã≠êßï\é¶ÉtÉâÉOÇ™óßÇ¡ÇƒÇ¢ÇÈèÍçá TRUE
+ *         ÇªÇ§Ç≈Ç»ÇØÇÍÇŒ FALSE
+ */
+//-----------------------------------------------------------------------------------
+static BOOL CheckDispFlag( const FIELD_PLACE_NAME* system )
+{
+  return system->dispFlag;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief ï\é¶ÉtÉâÉOÇóßÇƒÇÈ
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void SetDispFlag( FIELD_PLACE_NAME* system )
+{
+  system->dispFlag = TRUE;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief ï\é¶ÉtÉâÉOÇóéÇ∆Ç∑
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void ResetDispFlag( FIELD_PLACE_NAME* system )
+{
+  system->dispFlag = FALSE;
+}
+
+//-----------------------------------------------------------------------------------
+/**
  * @brief ã≠êßï\é¶ÉtÉâÉOÇÉ`ÉFÉbÉNÇ∑ÇÈ
  *
  * @param system
@@ -1037,31 +1158,6 @@ static void ResetForceDispFlag( FIELD_PLACE_NAME* system )
 static BOOL CheckForceDispFlag( const FIELD_PLACE_NAME* system )
 {
   return system->forceDispFlag;
-}
-
-//-----------------------------------------------------------------------------------
-/**
- * @brief ínñºÇÃçXêVÇÉ`ÉFÉbÉNÇ∑ÇÈ
- *
- * @param system
- *
- * @return ínñºÇÃï\é¶ÇäJénÇ∑ÇÈèÍçá TRUE
- *         ÇªÇ§Ç≈Ç»ÇØÇÍÇŒ FALSE
- */
-//-----------------------------------------------------------------------------------
-static BOOL CheckDispStart( const FIELD_PLACE_NAME* system )
-{
-  // ã≠êßï\é¶
-  if( CheckForceDispFlag(system) ) { return TRUE; }
-
-  // êVÇµÇ¢É]Å[ÉìÇ™í ímÇ≥ÇÍÇΩ
-  if( system->dispZoneSetFlag ) {
-    if( system->lastZoneID != system->dispZoneID ) {
-      return TRUE;
-    }
-  }
-
-  return FALSE;
 }
 
 //-----------------------------------------------------------------------------------
@@ -1079,9 +1175,6 @@ static BOOL CheckPlaceNameIDChange( const FIELD_PLACE_NAME* system )
   u32 lastID = ZONEDATA_GetPlaceNameID( system->lastZoneID );
   u32 dispID = ZONEDATA_GetPlaceNameID( system->dispZoneID );
 
-  OS_Printf( "lastZoneID = %d, lastID = %d\n", system->lastZoneID, lastID );
-  OS_Printf( "dispZoneID = %d, dispID = %d\n", system->dispZoneID, dispID );
-
   // ínñºÇ…ïœâªÇ™Ç»Ç¢
   if( lastID == dispID ) {
     return FALSE;
@@ -1095,71 +1188,87 @@ static BOOL CheckPlaceNameIDChange( const FIELD_PLACE_NAME* system )
 /**
  * @brief ï\é¶Ç∑ÇÈínñºÇçXêVÇ∑ÇÈ
  *
- * @param sys çXêVÇ∑ÇÈÉVÉXÉeÉÄ
+ * @param system
  */
 //-----------------------------------------------------------------------------------
-static void UpdatePlaceName( FIELD_PLACE_NAME* sys )
+static void UpdatePlaceName( FIELD_PLACE_NAME* system )
 {
-	u16 str_id;
-  BOOL intrudeFlag = FALSE;
-  INTRUDE_COMM_SYS_PTR intrudeComm;
-  u8 intrudeNetID;
+  u16 zoneID;
+	u16 strID;
   
 	// É]Å[ÉìIDÇ©ÇÁínñºï∂éöóÒÇéÊìæÇ∑ÇÈ
-	str_id = ZONEDATA_GetPlaceNameID( GetDispZoneID(sys) );
+  zoneID = GetDispZoneID(system);
+	strID = ZONEDATA_GetPlaceNameID( zoneID );
 
   // ÉGÉâÅ[âÒî
-	if( (str_id < 0) || (msg_place_name_max <= str_id) ){ str_id = 0; } 
-	if( str_id == 0 ) 
-  { //ÅuÇ»ÇºÇÃÇŒÇµÇÂÅvÇ»ÇÁï\é¶ÇµÇ»Ç¢
-    OBATA_Printf( "ÅuÇ»ÇºÇÃÇŒÇµÇÂÅvÇåüèo( zone id = %d )\n", GetDispZoneID(sys) );
-    FIELD_PLACE_NAME_Hide( sys );
-  }
+	if( (strID < 0) || (msg_place_name_max <= strID) ){ strID = 0; } 
 
-  // êNì¸êÊÇ©Ç«Ç§Ç©ÇîªíË
-  {
-    GAME_COMM_SYS_PTR gameComm;
-    FIELD_STATUS* fieldStatus;
-    int myNetID;
-
-    gameComm = GAMESYSTEM_GetGameCommSysPtr( sys->gameSystem );
-    intrudeComm = Intrude_Check_CommConnect( gameComm );
-    fieldStatus = GAMEDATA_GetFieldStatus( sys->gameData );
-    myNetID = GAMEDATA_GetIntrudeMyID( sys->gameData );
-
-    if( intrudeComm ) {
-      intrudeNetID = Intrude_GetPalaceArea( intrudeComm );
-
-      // ëºêlÇÃÉtÉBÅ[ÉãÉhÇ…Ç¢ÇÈ
-      if( FIELD_STATUS_GetMapMode( fieldStatus ) == MAPMODE_INTRUDE ) { 
-        intrudeFlag = TRUE;
-      }
-      // ëºêlÇÃÉpÉåÉXÇ…Ç¢ÇÈ
-      else if( ZONEDATA_IsPalace( GetDispZoneID(sys) ) && (myNetID != intrudeNetID) ) {
-        intrudeFlag = TRUE;
-      }
-    }
-    else {
-      intrudeFlag = FALSE;
-    }
+  //ÅuÇ»ÇºÇÃÇŒÇµÇÂÅvÇ»ÇÁï\é¶ÇµÇ»Ç¢
+	if( strID == 0 ) { 
+    OS_Printf( "ÅuÇ»ÇºÇÃÇŒÇµÇÂÅvÇåüèo ( zoneID = %d )\n", zoneID );
+    FIELD_PLACE_NAME_Hide( system );
+    return;
   }
 
   // êNì¸êÊÇ…Ç¢ÇÈ
-  if( intrudeFlag ) {
+  if( CheckIntrudeField( system, zoneID ) ) {
     // êNì¸êÊÇÃÉvÉåÉCÉÑÅ[ñºÇìWäJ
-    STRBUF* strbuf = GFL_MSG_CreateString( sys->msg, MAPNAME_INTRUDE );
+    GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( system->gameSystem );
+    INTRUDE_COMM_SYS_PTR intrudeComm= Intrude_Check_CommConnect( gameComm );
+    u8 intrudeNetID = Intrude_GetPalaceArea( intrudeComm );
     MYSTATUS* status = Intrude_GetMyStatus( intrudeComm, intrudeNetID );
-    GFL_MSG_GetString( sys->msg,	str_id, sys->nameBuf );
-    WORDSET_RegisterPlayerName( sys->wordset, 0, status );
-    WORDSET_RegisterPlaceName( sys->wordset, 1, str_id );
-    WORDSET_ExpandStr( sys->wordset, sys->nameBuf, strbuf );
+    STRBUF* strbuf = GFL_MSG_CreateString( system->msg, MAPNAME_INTRUDE );
+    GFL_MSG_GetString( system->msg,	strID, system->nameBuf );
+    WORDSET_RegisterPlayerName( system->wordset, 0, status );
+    WORDSET_RegisterPlaceName( system->wordset, 1, strID );
+    WORDSET_ExpandStr( system->wordset, system->nameBuf, strbuf );
     GFL_STR_DeleteBuffer( strbuf );
   }
   // é©ï™ÇÃÉtÉBÅ[ÉãÉhÇ…Ç¢ÇÈ
   else {
-    GFL_MSG_GetString( sys->msg,	str_id, sys->nameBuf );
+    GFL_MSG_GetString( system->msg,	strID, system->nameBuf );
   }
-  sys->nameLen = GFL_STR_GetBufferLength( sys->nameBuf );
+  system->nameLen = GFL_STR_GetBufferLength( system->nameBuf );
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief êNì¸êÊÇ©Ç«Ç§Ç©ÇÉ`ÉFÉbÉNÇ∑ÇÈ
+ *
+ * @param system
+ * @param zoneID
+ *
+ * @return éwíËÇµÇΩÉ]Å[ÉìÇ™êNì¸êÊÇ»ÇÁ TRUE
+ *         ÇªÇ§Ç≈Ç»ÇØÇÍÇŒ FALSE
+ */
+//-----------------------------------------------------------------------------------
+static BOOL CheckIntrudeField( const FIELD_PLACE_NAME* system, u16 zoneID )
+{
+  GAME_COMM_SYS_PTR gameComm;
+  INTRUDE_COMM_SYS_PTR intrudeComm;
+  FIELD_STATUS* fieldStatus;
+  int myNetID;
+  u8 intrudeNetID;
+
+  gameComm = GAMESYSTEM_GetGameCommSysPtr( system->gameSystem );
+  intrudeComm = Intrude_Check_CommConnect( gameComm );
+  fieldStatus = GAMEDATA_GetFieldStatus( system->gameData );
+  myNetID = GAMEDATA_GetIntrudeMyID( system->gameData );
+
+  if( intrudeComm ) {
+    intrudeNetID = Intrude_GetPalaceArea( intrudeComm );
+
+    // ëºêlÇÃÉtÉBÅ[ÉãÉhÇ…Ç¢ÇÈ
+    if( FIELD_STATUS_GetMapMode( fieldStatus ) == MAPMODE_INTRUDE ) { 
+      return TRUE;
+    }
+    // ëºêlÇÃÉpÉåÉXÇ…Ç¢ÇÈ
+    else if( ZONEDATA_IsPalace( zoneID ) && (myNetID != intrudeNetID) ) {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
 }
 
 //-----------------------------------------------------------------------------------
@@ -1244,32 +1353,26 @@ static void Cancel( FIELD_PLACE_NAME* sys )
 //-----------------------------------------------------------------------------------
 static void Process_HIDE( FIELD_PLACE_NAME* system )
 {
-  switch( GetStateSeq(system) ) {
-  case 0:
-    if( CheckDispStart( system ) ) {
-      system->dispZoneSetFlag = FALSE;
-      IncStateSeq( system );
-    }
-    break;
+  BOOL start = FALSE;
 
-  case 1:
-    if( CheckForceDispFlag(system) ) {
-      IncStateSeq( system );
-    }
-    else if( CheckPlaceNameIDChange( system ) ) {
-      IncStateSeq( system );
-    }
-    else {
-      ResetStateSeq( system );
-    }
-    break;
-
-  case 2:
-    // ï\é¶äJén
+  // ã≠êßï\é¶
+  if( CheckForceDispFlag(system) ) {
+    start = TRUE; 
     ResetForceDispFlag( system );
-    SetLastZoneID( system, GetDispZoneID(system) );
+  } 
+  // ï\é¶ÉäÉNÉGÉXÉgóL
+  else if( CheckDispFlag(system) ) { 
+    // ínñºÇ™ïœâª
+    if( CheckPlaceNameIDChange(system) ) {
+      start = TRUE;
+      SetLastZoneID( system, GetDispZoneID(system) );
+    }
+    ResetDispFlag( system );
+  }
+
+  // ï\é¶äJén
+  if( start ) {
     ChangeState( system, SYSTEM_STATE_SETUP );
-    break;
   }
 }
 
@@ -1284,63 +1387,42 @@ static void Process_SETUP( FIELD_PLACE_NAME* system )
 {
   switch( GetStateSeq(system) ) {
   case 0:
-    system->setupLetterNum = 0;
     UpdatePlaceName( system );
     IncStateSeq( system );
     break;
 
   case 1:
     GFL_BG_ClearCharacter( BG_FRAME );
-    IncStateSeq( system );
-    break; 
-  case 2:
     GFL_BG_ClearScreen( BG_FRAME );
-    IncStateSeq( system );
-    break;
-  case 3:
     FreeBGNullCharaArea( system ); 
     DeleteBandBitmapWindow( system );
     DeleteBandBlankBitmap( system );
+    TransBGPalette( system ); 
+    AllocBGNullCharArea( system );
+    IncStateSeq( system );
+    break; 
+
+  case 2:
+    CreateBandBlankBitmap( system );
+    IncStateSeq( system );
+    break; 
+
+  case 3:
+    CreateBandBitmapWindow( system );
+    RecoverBlankBand( system );
+    GFL_BMPWIN_MakeTransWindow( system->bmpWin ); 
+    GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
+    GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF ); 
+    G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, ALPHA_VALUE_1, ALPHA_VALUE_2 );
+    SetupLetter_init( system );
     IncStateSeq( system );
     break; 
 
   case 4:
-    LoadBGPalette( system ); 
-    IncStateSeq( system );
-    break; 
-  case 5:
-    AllocBGNullCharArea( system );
-    IncStateSeq( system );
-    break; 
-  case 6:
-    CreateBandBlankBitmap( system );
-    IncStateSeq( system );
-    break; 
-  case 7:
-    CreateBandBitmapWindow( system );
-    IncStateSeq( system );
-    break; 
-  case 8:
-    RecoverBlankBand( system );
-    IncStateSeq( system );
-    break;
-  case 9:
-    GFL_BMPWIN_MakeTransWindow( system->bmpWin ); 
-    IncStateSeq( system );
-    break; 
-
-  case 10:
-    GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
-    GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF ); 
-    G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, ALPHA_VALUE_1, ALPHA_VALUE_2 );
-    IncStateSeq( system );
-    break; 
-
-  case 11:
-    SetupLetter( system ); // ï∂éöÉIÉuÉWÉFÉNÉgÇÉZÉbÉgÉAÉbÉv
+    SetupLetter_main( system ); // ï∂éöÉIÉuÉWÉFÉNÉgÇÉZÉbÉgÉAÉbÉv
 
     // ëSÇƒÇÃï∂éöÉIÉuÉWÉFÉNÉgÇÃÉZÉbÉgÉAÉbÉvÇ™äÆóπ
-    if( CheckLetterSetupFinished(system) ) {
+    if( SetupLetter_check(system) ) {
       ChangeState( system, SYSTEM_STATE_FADEIN );
     }
     break;
@@ -1441,15 +1523,15 @@ static void Process_WAIT_FADEOUT( FIELD_PLACE_NAME* sys )
       }
     }
     if( moveFinish ) {
-      sys->writeLetterNum = 0;
+      PrintLetter_init( sys );
       IncStateSeq( sys );
     }
     break;
 
   case 1:
-    WriteCharUnitIntoBitmapWindow( sys );
+    PrintLetter_main( sys );
     // ëSÇƒÇÃï∂éöÇÃèëÇ´çûÇ›äÆóπ
-    if( CheckLetterWriteToBitmapFinished(sys) ) {
+    if( PrintLetter_check(sys) ) {
       IncStateSeq( sys );
     }
     break;
@@ -1618,7 +1700,7 @@ static void InitPNSystem( FIELD_PLACE_NAME* system, GAMESYS_WORK* gameSystem )
   system->gameData = GAMESYSTEM_GetGameData( gameSystem );
   system->nullCharPos = AREAMAN_POS_NOTFOUND;
   system->forceDispFlag = FALSE;
-  system->dispZoneSetFlag = FALSE;
+  system->dispFlag = FALSE;
   system->lastZoneID = ZONE_ID_MAX;
   system->dispZoneID = ZONE_ID_MAX;
 
@@ -2117,7 +2199,6 @@ static u16 GetDispZoneID( const FIELD_PLACE_NAME* system )
 static void SetDispZoneID( FIELD_PLACE_NAME* system, u16 zoneID )
 {
   system->dispZoneID = zoneID;
-  system->dispZoneSetFlag = TRUE;
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: SetDispZoneID (%d)\n", zoneID );
