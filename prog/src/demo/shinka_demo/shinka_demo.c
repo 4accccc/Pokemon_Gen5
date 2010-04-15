@@ -1349,7 +1349,7 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
     SHINKADEMO_GRAPHIC_2D_Draw( work->graphic );
     // 3D描画
     SHINKADEMO_GRAPHIC_3D_StartDraw( work->graphic );
-#if 0
+#if 0 
     // 半透明ポケモンより手前にエフェクトと背景がある場合
     SHINKADEMO_VIEW_Draw( work->view );
     // 進化デモのパーティクルと背景
