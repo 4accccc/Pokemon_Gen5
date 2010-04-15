@@ -23,7 +23,7 @@
 // ƒƒ‚ƒŠ‚ÌŽc—Ê•\Ž¦ˆ— 1:ON  0:OFF
 #if GFL_NET_DEBUG
 
-#define NET_MEMORY_DEBUG  (1)
+#define NET_MEMORY_DEBUG  (0)
 
 #else // GFL_NET_DEBUG
 
