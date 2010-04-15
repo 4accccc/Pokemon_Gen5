@@ -909,6 +909,7 @@ u16 GAMEBEACON_Get_Action_Monsno(const GAMEBEACON_INFO *info)
   case GAMEBEACON_ACTION_POKE_GET:
   case GAMEBEACON_ACTION_SP_POKE_GET:
   case GAMEBEACON_ACTION_POKE_EVOLUTION:
+  case GAMEBEACON_ACTION_EGG_HATCH:
     return info->action.monsno;
   }
   GF_ASSERT_MSG(0,"ano = %d\n",info->action.action_no);
