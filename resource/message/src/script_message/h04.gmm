@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-15T11:47:57"/>
+	<create user="matsumiya" host="W00224" date="2010-04-15T13:08:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1527" top="308" right="2232" bottom="936" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="167" right="1985" bottom="795" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -772,10 +772,10 @@
 パン屋</attribute>
 		<language name="JPN" width="256">いらっしゃいませ！▼
 しょうぶの　ごよやく
-ありがとうございまーす！</language>
+ありがとう　ございまーす！▼</language>
 		<language name="JPN_KANJI" width="256">いらっしゃいませ！▼
 勝負の　ご予約
-ありがとうございまーす！</language>
+ありがとう　ございまーす！▼</language>
 	</row>
 
 	<row id="msg_h04_waitress_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -862,13 +862,13 @@
 あなたには　おきゃくさんから
 ちゅうもんを　とってきてほしいわ▼
 わたしが　そのとおりに
-サンドイッチを　つくってくるから</language>
+サンドイッチを　つくってくるから▼</language>
 		<language name="JPN_KANJI" width="256">この　お店は
 特別な　サンドイッチ屋さん　なの▼
 あなたには　お客さんから
 注文を　取って来てほしいわ▼
 私が　その通りに
-サンドイッチを　作ってくるから</language>
+サンドイッチを　作ってくるから▼</language>
 	</row>
 
 	<row id="msg_h04_waitress_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -878,11 +878,11 @@
 		<attribute name="キャラ指定">BAKER
 パン屋</attribute>
 		<language name="JPN" width="256">そのサンドイッチを　ちゅうもんをした
-おきゃくさんに　はこんでほしいの▽
-まちがえて　はこばないようにね</language>
+おきゃくさんに　はこんでほしいの▼
+まちがえて　はこばないようにね▼</language>
 		<language name="JPN_KANJI" width="256">そのサンドイッチを　注文をした
-お客さんに　運んで欲しいの▽
-間違えて　運ばないようにね</language>
+お客さんに　運んで欲しいの▼
+間違えて　運ばないようにね▼</language>
 	</row>
 
 	<row id="msg_h04_waitress_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -917,9 +917,9 @@
 		<attribute name="キャラ指定">BAKER
 パン屋</attribute>
 		<language name="JPN" width="256">さすがね！ありがとう！
-じゃあ　つくるから　まっていてね</language>
+じゃあ　つくるから　まっていてね▼</language>
 		<language name="JPN_KANJI" width="256">さすがね！　ありがとう！
-じゃあ　つくるから　待っていてね</language>
+じゃあ　つくるから　待っていてね▼</language>
 	</row>
 
 	<row id="msg_h04_waitress_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -956,11 +956,11 @@
 		<language name="JPN" width="256">さて……
 あなたの　はたらきぶりは……▼
 かんぺきね！　おきゃくさんも
-まんぞく　しているみたい</language>
+まんぞく　しているみたい▼</language>
 		<language name="JPN_KANJI" width="256">さて……
 あなたの　働きぶりは……▼
 いうことなしね！　お客さんも
-満足しているみたい</language>
+満足しているみたい▼</language>
 	</row>
 
 	<row id="msg_h04_waitress_15" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -971,11 +971,11 @@
 		<language name="JPN" width="256">さて……
 あなたの　はたらきぶりは……▼
 まだまだ　ってところね
-でも　すぐに　なれるとおもうわ</language>
+でも　すぐに　なれるとおもうわ▼</language>
 		<language name="JPN_KANJI" width="256">さて……
 あなたの　働きぶりは……▼
 まだまだ　ってところね
-でも　すぐに慣れると　思うわ</language>
+でも　すぐに慣れると　思うわ▼</language>
 	</row>
 
 	<row id="msg_h04_waitress_16 " back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -985,9 +985,9 @@
 		<attribute name="キャラ指定">BAKER
 パン屋</attribute>
 		<language name="JPN" width="256">これは　おれいよ
-すごく　がんばっていたわね！</language>
+すごく　がんばっていたわね！▼</language>
 		<language name="JPN_KANJI" width="256">これは　お礼よ
-すごく　頑張っていたわね！</language>
+すごく　頑張っていたわね！▼</language>
 	</row>
 
 	<row id="msg_h04_waitress_17" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1051,9 +1051,9 @@
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
 		<language name="JPN" width="256">うちの　ポケモンが　すきな
-[1:09:どうぐ名:0]の　トッピングを　ください！</language>
+[1:09:どうぐ名:0]の　トッピングを　ください！▼</language>
 		<language name="JPN_KANJI" width="256">うちの　ポケモンが　好きな
-[1:09:どうぐ名:0]の　トッピングを　ください！</language>
+[1:09:どうぐ名:0]の　トッピングを　ください！▼</language>
 	</row>
 
 	<row id="msg_h04_man1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1097,9 +1097,9 @@
 		<attribute name="キャラ指定">MAN3
 太った兄さん</attribute>
 		<language name="JPN" width="256">きょうは　がっつりと　たべたいから
-[1:09:どうぐ名:0]おおもりに　しようかなっ！</language>
+[1:09:どうぐ名:0]おおもりに　しようかなっ！▼</language>
 		<language name="JPN_KANJI" width="256">今日は　がっつりと　食べたいから
-[1:09:どうぐ名:0]大盛りに　しようかなっ！</language>
+[1:09:どうぐ名:0]大盛りに　しようかなっ！▼</language>
 	</row>
 
 	<row id="msg_h04_man3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1141,9 +1141,9 @@
 		<attribute name="キャラ指定">WOMAN1
 女性</attribute>
 		<language name="JPN" width="256">わたしの　ポケモンは　グルメよ
-[1:09:どうぐ名:0]を　おねがい　できる？</language>
+[1:09:どうぐ名:0]を　おねがい　できる？▼</language>
 		<language name="JPN_KANJI" width="256">わたしの　ポケモンは　グルメよ
-[1:09:どうぐ名:0]を　お願いできる？</language>
+[1:09:どうぐ名:0]を　お願いできる？▼</language>
 	</row>
 
 	<row id="msg_h04_woman1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1189,9 +1189,9 @@
 		<attribute name="キャラ指定">GIRL2
 活発少女</attribute>
 		<language name="JPN" width="256">わたしも　ポケモンちゃんも
-[1:09:どうぐ名:0]のきぶん！　おねがいね！</language>
+[1:09:どうぐ名:0]のきぶん！　おねがいね！▼</language>
 		<language name="JPN_KANJI" width="256">わたしも　ポケモンちゃんも
-[1:09:どうぐ名:0]の気分！　お願いね！</language>
+[1:09:どうぐ名:0]の気分！　お願いね！▼</language>
 	</row>
 
 	<row id="msg_h04_girl2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
