@@ -1169,7 +1169,7 @@ int GAMEDATA_GetIntrudeMyID(const GAMEDATA *gamedata)
 void GAMEDATA_SetIntrudeMyID(GAMEDATA *gamedata, int intrude_my_id)
 {
   gamedata->intrude_my_id = intrude_my_id;
-  OS_TPrintf("©•ª‚ÌN“üMyNetID=%d\n", intrude_my_id);
+  OS_TPrintf("Intrude MyNetID=%d\n", intrude_my_id);
 }
 
 //==================================================================

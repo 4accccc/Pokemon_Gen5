@@ -525,10 +525,6 @@ BOOL GAMESYSTEM_CommBootAlways( GAMESYS_WORK *gsys )
       GameCommSys_Boot( gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH, gsys );
       return TRUE;
     }
-    else
-    {
-      OS_TPrintf("!!!起動不可の状態でビーコンサーチを起動しようとした!!!\n");
-    }
   }
   return FALSE;
 }
