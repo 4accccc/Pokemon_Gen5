@@ -3737,6 +3737,7 @@ static int WifiP2PMatch_VCTConnectEndWait( WIFIP2PMATCH_WORK *wk, int seq )
       GFL_NET_StateWifiMatchEnd(TRUE);
       wk->preConnect = -1;
       wk->timer = _RECONECTING_WAIT_TIME;
+      EndMessageWindowOff(wk);
       _CHANGESTATE(wk,WIFIP2PMATCH_RECONECTING_WAIT);
     }
     else
@@ -3746,12 +3747,9 @@ static int WifiP2PMatch_VCTConnectEndWait( WIFIP2PMATCH_WORK *wk, int seq )
   }
   else
   {  // Ç¢Ç¢Ç¶ÇëIëÇµÇΩèÍçá
-
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1015, FALSE);
-
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT);
   }
-  EndMessageWindowOff(wk);
   return seq;
 }
 
