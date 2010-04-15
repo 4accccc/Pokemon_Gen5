@@ -8,7 +8,7 @@
  *  モジュール名：CHIHOU_ZUKAN_AWARD
  */
 //============================================================================
-#define DEBUG_TEXT_MOVE  // これが定義されているとき、テキストを動かせる
+//#define DEBUG_TEXT_MOVE  // これが定義されているとき、テキストを動かせる
 
 
 #define HEAPID_CHIHOU_ZUKAN_AWARD (HEAPID_AWARD)
