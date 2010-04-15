@@ -31,6 +31,8 @@ use File::Basename;
     	system $cmd;
     	$cmd = "rm " . $r2;
     	system $cmd;
+    	$cmd = "rm " . $file_name . ".NCLR";
+    	system $cmd;
 	}
 	else{
 		$file_name = basename( @ARGV[0], '.ncg' );

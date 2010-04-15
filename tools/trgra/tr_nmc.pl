@@ -27,6 +27,8 @@ use File::Basename;
 	$filename = basename( $filename, '.nmc' );
 	$cmd = "rm " . $filename . ".NCGR";
 	system $cmd;
+	$cmd = "rm " . $filename . ".NCLR";
+	system $cmd;
 
     &NANR_Comp;
 
