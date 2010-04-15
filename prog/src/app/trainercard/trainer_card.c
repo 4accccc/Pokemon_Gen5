@@ -661,7 +661,7 @@ GFL_PROC_RESULT TrCardProc_End( GFL_PROC * proc, int * seq , void *pwk, void *my
       u8 *SignBuf;
       // サイン書き出しバッファポインタ取得
       SignBuf = (u8*)TRCSave_GetSignDataPtr(GAMEDATA_GetTrainerCardPtr(wk->tcp->gameData));
-      MI_CpuCopyFast( wk->TrCardData->SignRawData, SignBuf, SIGN_SIZE_X*SIGN_SIZE_Y*8);
+      MI_CpuCopy8( wk->TrCardData->SignRawData, SignBuf, SIGN_SIZE_X*SIGN_SIZE_Y*8);
     }
   }
   // 編集可能だった場合はユニオン見た目と性格を変更する
@@ -1067,7 +1067,7 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
 //    TRC_BG_BADGE_BACK, 0, 0, 0, wk->heapId );
 
   //サイン展開
-  DecodeSignData(wk->TrCardData->SignRawData, wk->TrSignData);
+  DecodeSignData( wk->TrCardData->SignRawData, wk->TrSignData );
 
   // タッチバー準備
   GFL_ARC_UTIL_TransVramBgCharacter( APP_COMMON_GetArcId(),
@@ -2789,7 +2789,7 @@ static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, in
 //    OS_Printf("sx=%d, sy=%d, px=%d, py=%d\n", sx,sy,px,py);
 
     // BG1面用BMP（お絵かき画像）ウインドウ確保
-    DrawPoint_to_Line(win, sign_brush[sign_mode][all->brush], px, py, &sx, &sy, 0, old->on);
+    DrawPoint_to_Line(win, sign_brush[sign_mode][all->brush], px-2, py-2, &sx, &sy, 0, old->on);
     flag = 1;
     
   }
