@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T11:01:37"/>
+	<create user="matsumiya" host="W00224" date="2010-04-15T15:33:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="22" top="242" right="727" bottom="854" maximized="no" rayout="Vertical2">
+	<dialog left="1641" top="295" right="2346" bottom="907" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -453,8 +453,8 @@
 		<comment>ロトム：フォルムチェンジ処理
 ・選択肢</comment>
 		<attribute name="キャラ指定">メニュー</attribute>
-		<language name="JPN" width="256">そうじき</language>
-		<language name="JPN_KANJI" width="256">そうじき</language>
+		<language name="JPN" width="256">れいぞうこ</language>
+		<language name="JPN_KANJI" width="256">れいぞうこ</language>
 	</row>
 
 	<row id="msg_rotom_window_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
