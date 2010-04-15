@@ -10912,6 +10912,22 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief レコード参照
+ *
+ * @param id    対象レコードＩＤ    RECID_～　savedata/record.h参照
+ * @param val   取得値
+ */
+//--------------------------------------------------------------
+#define _GET_RECORD( id, val ) _ASM_GET_RECORD id, val
+
+  .macro _ASM_GET_RECORD id, val
+  .short EV_SEQ_GET_RECORD
+  .short \id
+  .short \val
+  .endm
+  
+//--------------------------------------------------------------
+/**
  * @brief D12ギミックバニッシュ   ビクティイベント専用
  *
  */
