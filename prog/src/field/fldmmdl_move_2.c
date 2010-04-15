@@ -1435,8 +1435,13 @@ static int AlongWallMove_CmdSet( MMDL * mmdl, MV_ALONGW_WORK *work )
 static int AlongWallMove_CmdWait( MMDL * mmdl, MV_ALONGW_WORK *work )
 {
   if( MMDL_ActionLocalAcmd(mmdl) == TRUE ){
+#if 0 //‚±‚ê‚Å‚Í‰i‹v“®ì‚Æ‚È‚é
     work->seq_no = 0;
     return( TRUE );
+#else
+    MMDL_OffMoveBitMove( mmdl );
+    work->seq_no = 0;
+#endif
   }
   
   return( FALSE );
