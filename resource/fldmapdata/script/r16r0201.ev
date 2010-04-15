@@ -227,6 +227,9 @@ zoroaaku_core:
   _SYSWIN_MSG(msg_r16r0201_narrator_01, POS_DOWN)
   _SYSWIN_CLOSE()
 
+  //ゾロアークの変装がばれたフラグＯＮ
+  _FLAG_SET( FE_R16R0201_POKE23_ENC )
+
   //戦闘
   {
     DEFINE_LOCAL flag
