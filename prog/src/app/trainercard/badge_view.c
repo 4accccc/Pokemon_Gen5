@@ -82,6 +82,7 @@ enum{
 
 // バッジのパレットを汚す為のパレットデータ数
 #define BADGE_POLISH_PAL_NUM    ( 3 )
+#define LEADER_PAL_NUM          ( 3 )
 #define BADGE_KIRAKIRA_NUM      ( 3 )
 
 //--------------------------------------------------------------------------------------------
@@ -90,25 +91,25 @@ enum{
 
 // ジムリーダースライド情報
 typedef struct{
-  u16 on;        // 現在のタッチ状況
-  u16 old_on;    // １フレーム前のタッチ状況
-  int x, old_x, old2_x;  // X座標、１フレム前のX座標
-  int start_x;
-  int enable;
+  u16 on;        ///< 現在のタッチ状況
+  u16 old_on;    ///< １フレーム前のタッチ状況
+  int x, old_x, old2_x;  ///< X座標、１フレーム前のX座標
+  int start_x;   ///< 回転開始時座標 
+  int enable;    ///< 
 }SLIDE_WORK;
 
 // バッジ磨き情報
 typedef struct{
-  u32 polish[BADGE_NUM];     // 磨き情報
-  u8  grade[BADGE_NUM];      // 磨きフラグ
-  u8  old_grade[BADGE_NUM];  // 磨きフラグ過去
+  u32 polish[BADGE_NUM];     ///< 磨き情報
+  u8  grade[BADGE_NUM];      ///< 磨きフラグ
+  u8  old_grade[BADGE_NUM];  ///< 磨きフラグ過去
 }BADGE_POLISH;
 
 // バッジ磨き判定用ワーク
 typedef struct {
-  s8 OldDirX;
-  s8 OldDirY;
-  s8 DirX;
+  s8 OldDirX;   
+  s8 OldDirY;   
+  s8 DirX;      
   s8 DirY;
   u8 Snd;
   int BeforeX;
@@ -118,50 +119,50 @@ typedef struct {
   
 
 typedef struct {
-  ARCHANDLE     *g_handle;  // グラフィックデータファイルハンドル
+  ARCHANDLE     *g_handle;  ///< グラフィックデータファイルハンドル
   
-  GFL_FONT      *font;                // フォントデータ
+  GFL_FONT      *font;      ///< フォントデータ
   GFL_BMPWIN    *InfoWin;
   PRINT_UTIL    printUtil;
   PRINT_QUE     *printQue;
   PRINT_STREAM  *printStream;
   GFL_TCBLSYS   *pMsgTcblSys;
 
-  GFL_MSGDATA   *mman;    // メッセージデータマネージャ
-  WORDSET       *wset;    // 単語セット
-  STRBUF        *expbuf;  // メッセージ展開領域
+  GFL_MSGDATA   *mman;    ///< メッセージデータマネージャ
+  WORDSET       *wset;    ///< 単語セット
+  STRBUF        *expbuf;  ///< メッセージ展開領域
   STRBUF        *strbuf[BV_STR_MAX];
 
-  GFL_CLUNIT    *clUnit;            // セルアクターユニット
-  GFL_CLWK      *clwk[BV_OBJ_MAX];  // セルアクターワーク
-  u32           clres[BV_RES_MAX];  // セルアクターリソース用インデックス
+  GFL_CLUNIT    *clUnit;            ///< セルアクターユニット
+  GFL_CLWK      *clwk[BV_OBJ_MAX];  ///< セルアクターワーク
+  u32           clres[BV_RES_MAX];  ///< セルアクターリソース用インデックス
 
-  GFL_TCB       *VblankTcb;         // 登録したVblankFuncのポインタ
+  GFL_TCB       *VblankTcb;         ///< 登録したVblankFuncのポインタ
 
   // 3D全体
   GFL_G3D_UTIL  *g3dUtil;
-  u16           unit_idx;           // GFL_G3D_UTILが割り振る番号
-  u16           obj_prop_tbl_idx;   // obj_prop_tblのインデックス
-  u16           obj_prop_num;
+  u16           unit_idx;           ///< GFL_G3D_UTILが割り振る番号
   GFL_G3D_LIGHTSET *light3d;
   GFL_G3D_CAMERA   *camera;
   
-  TRCARD_CALL_PARAM *param;         // 呼び出しパラメータ
-  int seq,next_seq;                 // サブシーケンス制御用ワーク
-  u16 page,page_max;                // 現在の表示ページ
+  TRCARD_CALL_PARAM *param;         ///< 呼び出しパラメータ
+  int seq,next_seq;                 ///< サブシーケンス制御用ワーク
+  u16 page,page_max;                ///< 現在の表示ページ
 
-  int trainer_num;                  // バトルサブウェイデータに存在していた人数
-  int scrol_bg;                     // BGスクロール用のワーク
+  int trainer_num;                  ///< バトルサブウェイデータに存在していた人数
+  int scrol_bg;                     ///< BGスクロール用のワーク
 
-  SLIDE_WORK  slide;      // ジムリーダー操作用のワーク
-  int         old_animeFrame;   // ジムリーダーアニメフレーム位置
-  int         animeFrame;   // ジムリーダーアニメフレーム位置
-  int         animeSpeed;   // ジムリーダーパネルの足し込むスピード
-  int         targetSet;    // 移動先を指定しているか？
-  int         targetFrame;  // 移動先フレーム
+  SLIDE_WORK  slide;          ///< ジムリーダー操作用のワーク
+  int         old_animeFrame; ///< ジムリーダーアニメフレーム位置
+  int         animeFrame;     ///< ジムリーダーアニメフレーム位置
+  int         animeSpeed;     ///< ジムリーダーパネルの足し込むスピード
+  int         targetSet;      ///< 移動先を指定しているか？
+  int         targetFrame;    ///< 移動先フレーム
 
-  void              *badgePalBuf[BADGE_POLISH_PAL_NUM];   // バッジOBJパレットデータ保存用ワーク
-  NNSG2dPaletteData *badgePal[BADGE_POLISH_PAL_NUM];
+  void              *badgePalBuf[BADGE_POLISH_PAL_NUM]; ///< バッジOBJパレットデータ保存用ワーク
+  NNSG2dPaletteData *badgePal[BADGE_POLISH_PAL_NUM];    ///< バッジ用パレットデータ
+  void              *leaderPalBuf[LEADER_PAL_NUM];      ///< ジムリーダー顔グラパレットデータ保存用ワーク
+  NNSG2dPaletteData *leaderPal[LEADER_PAL_NUM];          ///< ジムリーダー顔グラパレットデータ
 
   u8          badgeflag[BADGE_NUM];
 
@@ -715,13 +716,19 @@ static void BgGraphicInit(BADGEVIEW_WORK *wk)
   BmpWinFrame_CgxSet( GFL_BG_FRAME0_S, SYSTEMWIN_FRM_CGX_OFFSET, MENU_TYPE_SYSTEM, HEAPID_TR_CARD);
 
 
-  // OBJパレット保持
+  // バッジOBJ転送用パレット保持
   for(i=0;i<BADGE_POLISH_PAL_NUM;i++){
     wk->badgePalBuf[i] = GFL_ARCHDL_UTIL_LoadPalette( handle, NARC_trainer_case_badge_obj03_NCLR-i, 
                                                       &wk->badgePal[i], HEAPID_TR_CARD );
   }
 
+  for(i=0;i<LEADER_PAL_NUM;i++){
+    wk->leaderPalBuf[i] = GFL_ARCHDL_UTIL_LoadPalette( handle, NARC_trainer_case_gym_leaders2_NCLR-i, 
+                                                       &wk->leaderPal[i], HEAPID_TR_CARD );
+  }
+
 }
+
 
 
 //----------------------------------------------------------------------------------
@@ -735,6 +742,10 @@ static void BgGraphicExit( BADGEVIEW_WORK *wk )
 {
   int i;
   
+  // リーダー顔グラ用パレットデータ解放
+  for(i=0;i<LEADER_PAL_NUM;i++){
+    GFL_HEAP_FreeMemory(  wk->leaderPalBuf[i] );
+  }
   // OBJパレット解放
   for(i=0;i<BADGE_POLISH_PAL_NUM;i++){
    GFL_HEAP_FreeMemory( wk->badgePalBuf[i] );
@@ -1708,7 +1719,9 @@ static void SlideFunc( BADGEVIEW_WORK *wk, int trg, int flag, int x )
 
 }
 
-
+// -----------------------------------------
+// タッチ座標定義
+// -----------------------------------------
 #define BADGE_TP_X    (  0 )
 #define BADGE_TP_Y    ( 88 )
 #define BADGE_TP_W    ( 32 )
@@ -1858,7 +1871,7 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg )
   
   OS_Printf("trg=%d\n",trg);
   switch(trg){
-  case TOUCH_BADGE_0:
+  case TOUCH_BADGE_0: // バッジにタッチ
   case TOUCH_BADGE_1:
   case TOUCH_BADGE_2:
   case TOUCH_BADGE_3:
@@ -1875,7 +1888,7 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg )
       wk->animeSpeed  = 40000;
     }
     break;
-  case TOUCH_GYM_READER_0:
+  case TOUCH_GYM_READER_0:  // ジムリーダーにタッチ
   case TOUCH_GYM_READER_1:
   case TOUCH_GYM_READER_2:
   case TOUCH_GYM_READER_3:
@@ -1891,7 +1904,7 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg )
       InfoWinPut( wk );
     }
     break;
-  case TOUCH_CHANGE_CARD:
+  case TOUCH_CHANGE_CARD:   // カード画面に移動
     wk->seq      = SUBSEQ_ICON_WAIT;
     wk->next_seq = trg;
     GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_CARD], 12 );
@@ -1904,12 +1917,12 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg )
       GAMEDATA_SetShortCut( wk->param->gameData, SHORTCUT_ID_TRCARD_BADGE, flag );
     }
     break;
-  case TOUCH_END:
+  case TOUCH_END:           // トレーナーカード終了→直接フィールドへ
     wk->seq = SUBSEQ_ICON_WAIT;
     wk->next_seq = trg;
     GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_END], 8 );
     break;
-  case TOUCH_RETURN:
+  case TOUCH_RETURN:        // トレーナーカード終了→メニューへ
     wk->seq = SUBSEQ_ICON_WAIT;
     wk->next_seq = trg;
     GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_RETURN], 9 );
@@ -2232,6 +2245,40 @@ static void _trans_badge_pal( BADGEVIEW_WORK *wk, int no, int grade )
 }
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief ジムリーダーの顔のパレットを書き換える
+ *
+ * @param   wk    
+ * @param   no    
+ * @param   grade   
+ */
+//----------------------------------------------------------------------------------
+static void _trans_gymleader_pal( BADGEVIEW_WORK *wk, int no, int grade )
+{
+  const GFL_G3D_RES  *mdl_res;
+  NNSG3dResTex *tex;
+  NNSG3dResDictPlttData *texpal;
+  u16 *pal;
+  
+  // 2以上のグレードは2にする
+  if( grade > 2 ){
+    grade = 2;
+  }
+  pal = wk->leaderPal[grade]->pRawData; //パレットデータ取得
+  
+  // モデルリソース取得
+  mdl_res = GFL_G3D_UTIL_GetResHandle( wk->g3dUtil, 0 );
+  // テクスチャリソース取得
+  tex     = GFL_G3D_GetResTex( mdl_res );       
+  // テクスチャからパレット位置取得
+  texpal  = NNS_G3dGetPlttDataByIdx( tex, no );
+
+  // パレット転送(転送位置はテクスチャパレット＋オフセットで確定させる）
+  NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT, 
+                                      tex->plttInfo.vramKey+(texpal->offset<<3), &pal[no*16], 32);
+
+}
 
 //----------------------------------------------------------------------------------
 /**
@@ -2295,6 +2342,7 @@ static void Trans_BadgePalette( BADGEVIEW_WORK *wk )
       // 変更が掛かっていた場合はパレット転送キラキラOBJ表示制御を行う
       if(wk->badge.grade[i]!=wk->badge.old_grade[i]){
         _trans_badge_pal( wk, i, wk->badge.grade[i] );
+        _trans_gymleader_pal( wk, i, wk->badge.grade[i] );
         _set_clact_visible( wk, i, wk->badge.grade[i] );
       }
       wk->badge.old_grade[i] = wk->badge.grade[i];
