@@ -73,6 +73,7 @@ static void Snd_BgmFadeIn( int a, int b, int c){}
 */
 //=============================================================================
 //#define MIC_FORMAT_PCM16  //  定義を外すと8bit
+//#define TWL_FREQENCY      // DSiの時のサンプリング周波数を調査する処理が有効になる
 
 //=============================================================================
 /**
@@ -161,13 +162,13 @@ enum {
 //=====================================
 #define MIC_SAMPLING_RATE   (8000)
 #define MIC_SAMPLING_TIME   (32) // msec
-#define MIC_SAMPLING_LENGTH   (MIC_SAMPLING_RATE * MIC_SAMPLING_TIME / 1000)
+#define MIC_SAMPLING_LENGTH (MIC_SAMPLING_RATE * MIC_SAMPLING_TIME / 1000)
 
 #ifdef MIC_FORMAT_PCM16
 #define MIC_SAMPLING_TYPE   MIC_SAMPLING_TYPE_12BIT
 typedef u16 MIC_BUF_SIZE;
 #else
-#define MIC_SAMPLING_TYPE   MIC_SAMPLING_TYPE_8BIT
+#define MIC_SAMPLING_TYPE    MIC_SAMPLING_TYPE_8BIT; //MIC_SAMPLING_TYPE_SIGNED_8BIT;
 typedef u8 MIC_BUF_SIZE;
 #endif  // MIC_FORMAT_PCM16
 
@@ -409,7 +410,9 @@ static void SEQFUNC_End( MICTEST_SEQ_WORK *p_seq_wk, u32 *p_seq );
 //=====================================
 static int GetHitTrg( void ); //  Trg検知（座標テーブル内包）
 static BOOL IsProcEndTrg( void );
-
+#ifdef TWL_FREQENCY
+static SNDEXFrequency GetI2SFrequency(void);
+#endif
 
 //=============================================================================
 /**
@@ -513,7 +516,7 @@ static GFL_PROC_RESULT MicTestProc_Init( GFL_PROC *proc,int *seq, void *pwk, voi
   MICTEST_MAIN_WORK *p_wk;
 
   //ヒープ作成
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MICTEST, 0x30000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MICTEST, 0x70000 );
   
   p_wk = GFL_PROC_AllocWork( proc,sizeof(MICTEST_MAIN_WORK),HEAPID_MICTEST );
   MI_CpuClear8( p_wk, sizeof(MICTEST_MAIN_WORK) );
@@ -1519,13 +1522,13 @@ static void MicTest_MIC_Init( MICTEST_MIC_WORK *p_mic, u32 heap_id, MICCallback 
     p_mic->p_buf_adrs   = p_buf;
 
     //  マイクパラム初期化
-    p_mic->param.type = MIC_SAMPLING_TYPE;
+    p_mic->param.type   = MIC_SAMPLING_TYPE;
     p_mic->param.buffer = (void*)MATH_ROUNDUP32( (int)p_buf );
-    p_mic->param.size = sizeof(MIC_BUF_SIZE)*MIC_SAMPLING_LENGTH;
-    p_mic->param.rate = NNS_SND_STRM_TIMER_CLOCK / MIC_SAMPLING_RATE * 64;
-    p_mic->param.loop_enable  = TRUE;
-    p_mic->param.full_callback  = MicCallback;
-    p_mic->param.full_arg   = p_mic_arg;
+    p_mic->param.size   = sizeof(MIC_BUF_SIZE)*MIC_SAMPLING_LENGTH;
+    p_mic->param.rate   = MIC_SAMPLING_RATE_8180; //NNS_SND_STRM_TIMER_CLOCK / MIC_SAMPLING_RATE * 64;
+    p_mic->param.loop_enable   = TRUE;
+    p_mic->param.full_callback = MicCallback;
+    p_mic->param.full_arg      = p_mic_arg;
   }
 
   p_mic->pre_mic_use  = SND_MIC_IsAmpOnWaitFlag();
@@ -1616,8 +1619,16 @@ static void MicTest_MIC_StartSampling( MICTEST_MIC_WORK *p_mic )
 {
   if( p_mic->mic_use_flag == FALSE )
   { 
-    SND_MIC_StartAutoSampling( &p_mic->param );
-    p_mic->is_start = TRUE;
+//    SND_MIC_StartAutoSampling( &p_mic->param );
+      MICResult   result;
+#ifdef TWL_FREQENCY
+      if(OS_IsRunOnTwl()){
+        OS_Printf("SNDEX Frequency=%d\n", GetI2SFrequency());
+      }
+#endif
+      result=MIC_StartLimitedSampling( &p_mic->param );
+      OS_Printf("mic start result=%d\n", result);
+      p_mic->is_start = TRUE;
   }
   else
   { 
@@ -1636,7 +1647,8 @@ static void MicTest_MIC_StartSampling( MICTEST_MIC_WORK *p_mic )
 //-----------------------------------------------------------------------------
 static void MicTest_MIC_StopSampling( MICTEST_MIC_WORK *p_mic )
 {
-  SND_MIC_StopAutoSampling();
+//  SND_MIC_StopAutoSampling();
+  MIC_StopLimitedSampling();
   p_mic->is_start = FALSE;
 }
 
@@ -1697,7 +1709,7 @@ static void ChangeObjAnmMicCallback( MICResult result, void *p_arg )
     //  減衰値より現在の入力が多いなら減衰値に現在の値をセット
     if( p_mic->prev_volume < now_volume)  {
       anm_seq = GetMicLevelToAnmSeqNum( now_volume );
-    //  OS_Printf("VOLUME=%d GAGE=%d\n", now_volume, anm_seq );
+      OS_Printf("VOLUME=%d GAGE=%d\n", now_volume, anm_seq );
       p_mic->prev_volume  = now_volume;
       p_mic->anm_set_flg  = TRUE;
     } else {
@@ -1976,3 +1988,52 @@ static BOOL IsProcEndTrg()
 {
   return  GetHitTrg() == 0 || GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL;
 }
+
+
+#ifdef TWL_FREQENCY
+#define     RETRY_MAX_COUNT     8
+
+/*---------------------------------------------------------------------------*
+  Name:         GetI2SFrequency
+
+  Description:  I2S 動作周波数を取得する。
+
+  Arguments:    None.
+
+  Returns:      SDNEXFrequency  -   I2S 動作周波数を返す。
+ *---------------------------------------------------------------------------*/
+static SNDEXFrequency GetI2SFrequency(void)
+{
+    SNDEXResult     result;
+    SNDEXFrequency  freq;
+    s32             retry   =   0;
+
+    while (TRUE)
+    {
+        result  =   SNDEX_GetI2SFrequency(&freq);
+        switch (result)
+        {
+        case SNDEX_RESULT_SUCCESS:          // 成功
+            return freq;
+        case SNDEX_RESULT_EXCLUSIVE:        // 排他エラー
+        case SNDEX_RESULT_PXI_SEND_ERROR:   // PXI キューが一杯
+            if (++ retry <= RETRY_MAX_COUNT)
+            {
+                OS_Sleep(1);
+                continue;
+            }
+            OS_TWarning("Retry count overflow.\n");
+            break;
+        case SNDEX_RESULT_BEFORE_INIT:      // 初期化前
+        case SNDEX_RESULT_ILLEGAL_STATE:    // 状態異常
+            OS_TWarning("Illegal state to get I2S frequency.\n");
+            break;
+        case SNDEX_RESULT_FATAL_ERROR:      // 致命的なエラー
+        default:
+            OS_Panic("Fatal error (%d).\n", result);
+            /* never return */
+        }
+    }
+    return SNDEX_FREQUENCY_32730;
+}
+#endif
