@@ -346,6 +346,21 @@ static void make_PokePara(
     GFL_STR_SetStringCode( nick_name, src->nickname );
 #else
     {
+      int i;
+      u16 eomCode = GFL_STR_GetEOMCode();
+      STRCODE code[MONS_NAME_SIZE+EOM_SIZE];
+      const STRCODE *sz = src->nickname;
+      
+      for( i = 0; i < (MONS_NAME_SIZE+EOM_SIZE); i++ ){
+        code[i] = sz[i];
+      }
+      
+      code[i-1] = eomCode;
+      GFL_STR_SetStringCode( nick_name, code );
+    }
+    
+    /*
+    {
       u16 eomCode = GFL_STR_GetEOMCode();
       DEBUG_STRBUF *d_strbuf = (DEBUG_STRBUF*)nick_name;
       const STRCODE *sz = src->nickname;
@@ -370,7 +385,9 @@ static void make_PokePara(
       
       d_strbuf->buffer[d_strbuf->strlen] = eomCode;
     }
+    */
 #endif
+
     PP_Put( dest, ID_PARA_nickname, (u32)nick_name );
     GFL_STR_DeleteBuffer( nick_name );
   }

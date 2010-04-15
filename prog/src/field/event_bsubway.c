@@ -861,8 +861,8 @@ static GMEVENT_RESULT ev_MsgWifiHomeNPC(
   case 1:
     if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
       FLDTALKMSGWIN_StartClose( work->balloonWin );
+      (*seq)++;
     }
-    (*seq)++;
     break;
   case 2:
     if( FLDTALKMSGWIN_WaitClose(work->balloonWin) == TRUE ){
