@@ -46,11 +46,27 @@
 #define LIFT_UP_LENGTH (0x0115 << FX32_SHIFT)
 
 
+/*
 static const FCAM_PARAM endParam = 
 {
-  0x2d8e, 0x0000, 0x009a << FX32_SHIFT,
-  { 0x001f8 << FX32_SHIFT, 0x00070 << FX32_SHIFT, 0x002df << FX32_SHIFT },
-  { 0, 0, 0 }
+  0x2125, 0x0000, 0x016e << FX32_SHIFT,
+  { 0x001f8 << FX32_SHIFT, 0xfffe9 << FX32_SHIFT, 0x00287 << FX32_SHIFT },
+  { 0x00000 << FX32_SHIFT, 0x0009d << FX32_SHIFT, 0x00090 << FX32_SHIFT }
+};
+*/
+/*
+static const FCAM_PARAM endParam = 
+{
+  0x2125, 0x0000, 0x016e << FX32_SHIFT,
+  { 0x001f8 << FX32_SHIFT, 0xfffe6 << FX32_SHIFT, 0x00290 << FX32_SHIFT },
+  { 0x00000 << FX32_SHIFT, 0x0009d << FX32_SHIFT, 0x00090 << FX32_SHIFT }
+};
+*/
+static const FCAM_PARAM endParam = 
+{
+  0x1d7d, 0x0000, 0x016c << FX32_SHIFT,
+  { 0x001f8 << FX32_SHIFT, 0xfffc0 << FX32_SHIFT, 0x00264 << FX32_SHIFT },
+  { 0x00000 << FX32_SHIFT, 0x0009d << FX32_SHIFT, 0x00090 << FX32_SHIFT }
 };
 
 
