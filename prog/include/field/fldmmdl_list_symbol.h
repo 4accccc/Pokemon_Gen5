@@ -104,6 +104,7 @@
 #define TEXSIZE_1024x256 61
 #define TEXSIZE_1024x512 62
 #define TEXSIZE_1024x1024 63
+#define TEXSIZE_MAX 64
 
 //ANMID アニメIDで指定するシンボルです。
 #define ANMID_NON 0 //アニメ無し
