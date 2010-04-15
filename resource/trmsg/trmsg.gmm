@@ -13336,63 +13336,103 @@
 	</row>
 
 	<row id="TRID_MINI_12_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">いつも　おなじ　あいてとの
+ポケモンしょうぶも　あきちゃったし▽
+あなたと　おてあわせ　したいな！▼</language>
+		<language name="JPN_KANJI" width="216">いつも　同じ　相手との
+ポケモン勝負も　飽きちゃったし▽
+あなたと　お手合わせ　したいな！▼</language>
 	</row>
 
 	<row id="TRID_MINI_12_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">へえ！　おどろき！
+いまのわざ　みたことないよ！</language>
+		<language name="JPN_KANJI" width="216">へえ！　おどろき！
+いまの技　みたことないよ！</language>
 	</row>
 
 	<row id="TRID_MINI_12_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">ミノムッチって　ポケモン
+しんかするときの　ばしょで▽
+いろんな　すがたに　かわるの！▽
+すごくない？　すごくない？</language>
+		<language name="JPN_KANJI" width="216">ミノムッチって　ポケモン
+進化するときの　場所で▽
+いろんな　姿に　変わるの！▽
+すごくない？　すごくない？</language>
 	</row>
 
 	<row id="TRID_MINI_13_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">きゃっ！！▼
+ちょっとー　いきなり　うしろから
+おどろかさないでよっ！！▼</language>
+		<language name="JPN_KANJI" width="216">きゃっ！！▼
+ちょっとー　いきなり　後ろから
+おどろかさないでよっ！！▼</language>
 	</row>
 
 	<row id="TRID_MINI_13_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">もお　まけちゃったじゃん
+ちょっと　かなしーじゃん</language>
+		<language name="JPN_KANJI" width="216">もお　負けちゃったじゃん
+ちょっと　悲しーじゃん</language>
 	</row>
 
 	<row id="TRID_MINI_13_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">かべに　いろいろ　かいていたの▼
+あー　ぜったいに　みせないから！
+……あたしだけの　ヒミツだもん！</language>
+		<language name="JPN_KANJI" width="216">壁に　いろいろ　書いていたの▼
+あー　絶対に　みせないから！
+……あたしだけの　ヒミツだもん！</language>
 	</row>
 
 	<row id="TRID_TANPAN_16_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">どっちの　ポケモンが
+つよいか　くらべよーぜ！▼</language>
+		<language name="JPN_KANJI" width="216">どっちの　ポケモンが
+強いか　比べよーぜ！▼</language>
 	</row>
 
 	<row id="TRID_TANPAN_16_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">まいった！
+おまえの　ポケモン　すげー！</language>
+		<language name="JPN_KANJI" width="216">まいった！
+おまえの　ポケモン　すげー！</language>
 	</row>
 
 	<row id="TRID_TANPAN_16_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">たんパンだと　よく　すりむくけど
+ぜんぜん　へいき　だよ！▼
+すりむいた　ところは
+ポケモンが　なめてくれるもん！</language>
+		<language name="JPN_KANJI" width="216">たんパンだと　よく　すりむくけど
+ぜんぜん　平気だよ！▼
+すりむいた　ところは
+ポケモンが　なめてくれるもん！</language>
 	</row>
 
 	<row id="TRID_TANPAN_17_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">ここは　オレたちの　あそびば！▼
+だって　ツチノカミさまが
+みまもって　くれるんだもん！▼</language>
+		<language name="JPN_KANJI" width="216">ここは　オレたちの　遊び場！▼
+だって　ツチノカミさまが
+見守って　くれるんだもん！▼</language>
 	</row>
 
 	<row id="TRID_TANPAN_17_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">わはは！　おまえの
+ポケモン　たのしそうだな！</language>
+		<language name="JPN_KANJI" width="216">わはは！　おまえの
+ポケモン　楽しそうだな！</language>
 	</row>
 
 	<row id="TRID_TANPAN_17_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">ツチノカミさま　かあ……
+やさしくて　つよい　ポケモンかな？</language>
+		<language name="JPN_KANJI" width="216">ツチノカミさま　かあ……
+優しくて　強い　ポケモンかな？</language>
 	</row>
 
 	<row id="TRID_SWIMMERM_03_TRMSG_FIGHT_START">
@@ -13560,10 +13600,12 @@
 	<row id="TRID_BACKPACKERM_16_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">ぼくたちは　これからも　あるく！
 みちが　つづくかぎり……▽
-ポケモンが　いるかぎり　ね！</language>
+ポケモンが　いるかぎり　ね！▼
+……ここは　いきどまり　っぽいけど</language>
 		<language name="JPN_KANJI" width="216">ぼくたちは　これからも　歩く！
 道が　続くかぎり……▽
-ポケモンが　いるかぎり　ね！</language>
+ポケモンが　いるかぎり　ね！▼
+……ここは　行き止まり　っぽいけど</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_13_TRMSG_FIGHT_START">
