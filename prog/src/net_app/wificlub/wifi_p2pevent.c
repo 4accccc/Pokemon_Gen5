@@ -420,6 +420,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     _pokmeonListWorkFree(ep2p);      // 
     BATTLE_PARAM_Delete(ep2p->para);
 
+    GFL_NET_DelCommandTable(GFL_NET_CMD_BATTLE);
     ep2p->seq = P2P_MATCH_BOARD;
 //    GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
     break;
