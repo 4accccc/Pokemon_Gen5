@@ -2539,6 +2539,9 @@ ev_itemget_flditem_true:
   
   //自機元に戻す
   _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
+
+  //MSG キーウェイト
+  _AB_KEYWAIT_MARK()
   
   //自機名、アイテム名
   _PLAYER_NAME( 0 )
@@ -2597,6 +2600,8 @@ ev_itemget_flditem_false:
   //ME待ち
   _ME_WAIT()
 
+  //MSG キーウェイト
+  _AB_KEYWAIT_MARK()
   /*
   _ITEM_NAME( 0, SCWK_TEMP0 )
   _SYSWIN_MSG( msg_item_get_fail_field , POS_DOWN )

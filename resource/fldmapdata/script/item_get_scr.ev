@@ -206,6 +206,7 @@ ev_item_event_field_core:
     _CALL sub_pocket_me_set
     _CALL sub_item_event_get_field_msg
     _ME_WAIT()
+    _AB_KEYWAIT_MARK()
     //入手失敗システムメッセージ
     _CALL   sub_item_event_fail_nowait
   ELSE
@@ -216,6 +217,7 @@ ev_item_event_field_core:
     _ME_WAIT()
     _OBJ_ANIME_WAIT()
     _CALL sub_item_get_player_form_return
+    _AB_KEYWAIT_MARK()
 
     //アイテム追加
     _ADD_ITEM( SCWK_PARAM0,SCWK_PARAM1,SCWK_ANSWER )
@@ -227,7 +229,7 @@ ev_item_event_field_core:
     _GET_POCKET_ID( SCWK_TEMP0, SCWK_ANSWER )
     _POCKET_NAME( 2, SCWK_ANSWER )
 
-    _SYSWIN_MSG(	msg_item_get_pocket_nowait , POS_DOWN )
+    _SYSWIN_MSG(	msg_item_get_pocket_nowait , POS_DEFAULT )
     _LAST_KEYWAIT()
   ENDIF
   _SYSWIN_CLOSE()
@@ -248,7 +250,7 @@ _END
 //--------------------------------------------------------------------
 sub_item_event_fail_keywait:
 {
-  _SYSWIN_MSG(	msg_item_get_fail_keywait , POS_DOWN )
+  _SYSWIN_MSG(	msg_item_get_fail_keywait , POS_DEFAULT )
   _SYSWIN_CLOSE()
 }
 _RET
@@ -266,7 +268,7 @@ _END
 //--------------------------------------------------------------------
 sub_item_event_fail_nowait:
 {
-  _SYSWIN_MSG(	msg_item_get_fail_nowait , POS_DOWN )
+  _SYSWIN_MSG(	msg_item_get_fail_nowait , POS_DEFAULT )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 }
@@ -287,6 +289,7 @@ sub_item_event_keywait:
   _CALL	  sub_pocket_me_set									//MEセット
   _CALL   sub_item_event_get_msg
   _ME_WAIT()
+  _AB_KEYWAIT_MARK()
 	
   _PLAYER_NAME(	0 )
   _ITEM_NAME(	1,SCWK_TEMP0 )
@@ -295,7 +298,7 @@ sub_item_event_keywait:
   _GET_POCKET_ID(	SCWK_TEMP0,SCWK_ANSWER )
   _POCKET_NAME(	2,SCWK_ANSWER )
 
-  _SYSWIN_MSG(	msg_item_get_pocket_keywait , POS_DOWN )
+  _SYSWIN_MSG(	msg_item_get_pocket_keywait , POS_DEFAULT )
   _SYSWIN_CLOSE()
 }
 _RET
@@ -315,6 +318,7 @@ sub_item_event_nowait:
   _CALL		sub_pocket_me_set									//MEセット
   _CALL   sub_item_event_get_msg
   _ME_WAIT()
+  _AB_KEYWAIT_MARK()
 
   _PLAYER_NAME(	0 )
   _ITEM_NAME(	1, SCWK_TEMP0 )
@@ -323,7 +327,7 @@ sub_item_event_nowait:
   _GET_POCKET_ID(	SCWK_TEMP0, SCWK_ANSWER )
   _POCKET_NAME(	2, SCWK_ANSWER )
 
-  _SYSWIN_MSG(	msg_item_get_pocket_nowait , POS_DOWN )
+  _SYSWIN_MSG(	msg_item_get_pocket_nowait , POS_DEFAULT )
   _LAST_KEYWAIT()
 
   _SYSWIN_CLOSE()
@@ -345,19 +349,19 @@ sub_item_event_get_msg:
     _PLAYER_NAME( 0 )
     _ITEM_NAME( 1, SCWK_TEMP0 )
     _ITEM_WAZA_NAME( 2, SCWK_TEMP0 )
-    _SYSWIN_MSG( msg_item_get_04 , POS_DOWN )
+    _SYSWIN_MSG( msg_item_get_04 , POS_DEFAULT )
 
   CASE ITEMPOCKET_EVENT THEN
     //大事なものの場合
     _PLAYER_NAME( 0 )
     _ITEM_NAME( 1, SCWK_TEMP0 )
-    _SYSWIN_MSG( msg_item_get_02 , POS_DOWN )
+    _SYSWIN_MSG( msg_item_get_02 , POS_DEFAULT )
 
   DEFAULT
     //それ以外の場合
     _PLAYER_NAME( 0 )
     _ITEM_NAME( 1, SCWK_TEMP0 )
-    _SYSWIN_MSG( msg_item_get_01 , POS_DOWN )
+    _SYSWIN_MSG( msg_item_get_01 , POS_DEFAULT )
 
   ENDSWITCH
 }
@@ -378,18 +382,18 @@ sub_item_event_get_field_msg:
     _PLAYER_NAME( 0 )
     _ITEM_NAME( 1, SCWK_TEMP0 )
     _ITEM_WAZA_NAME( 2, SCWK_TEMP0 )
-    _SYSWIN_MSG( msg_item_get_field_03 , POS_DOWN )
+    _SYSWIN_MSG( msg_item_get_field_03 , POS_DEFAULT )
 
   CASE ITEMPOCKET_EVENT THEN
     //大事なものの場合
     _PLAYER_NAME( 0 )
     _ITEM_NAME( 1, SCWK_TEMP0 )
-    _SYSWIN_MSG( msg_item_get_field_01 , POS_DOWN )
+    _SYSWIN_MSG( msg_item_get_field_01 , POS_DEFAULT )
   DEFAULT
     //それ以外の場合
     _PLAYER_NAME( 0 )
     _ITEM_NAME( 1, SCWK_TEMP0 )
-    _SYSWIN_MSG( msg_item_get_field_02 , POS_DOWN )
+    _SYSWIN_MSG( msg_item_get_field_02 , POS_DEFAULT )
 
   ENDSWITCH
 }
@@ -500,12 +504,13 @@ EVENT_START ev_item_event_intrude_secret
   _ME_WAIT()
   _OBJ_ANIME_WAIT()
   _CALL sub_item_get_player_form_return
+  _AB_KEYWAIT_MARK()
 
   _ADD_ITEM_CHK( SCWK_PARAM0, 1, i_get)
   _DEBUG_PRINT_WK( i_get )
   IF $i_get == FALSE THEN
     //入手失敗システムメッセージ
-    _SYSWIN_MSG(	msg_intrude_secret_item_fail , POS_DOWN )
+    _SYSWIN_MSG(	msg_intrude_secret_item_fail , POS_DEFAULT )
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
   ELSE
@@ -519,8 +524,8 @@ EVENT_START ev_item_event_intrude_secret
     _GET_POCKET_ID( SCWK_TEMP0, SCWK_ANSWER )
     _POCKET_NAME( 2, SCWK_ANSWER )
 
-    _SYSWIN_MSG(	msg_item_get_pocket_keywait , POS_DOWN )
-    _SYSWIN_MSG( msg_intrude_secret_item_01 , POS_DOWN )
+    _SYSWIN_MSG(	msg_item_get_pocket_keywait , POS_DEFAULT )
+    _SYSWIN_MSG( msg_intrude_secret_item_01 , POS_DEFAULT )
     _LAST_KEYWAIT()
   ENDIF
   _SYSWIN_CLOSE()
