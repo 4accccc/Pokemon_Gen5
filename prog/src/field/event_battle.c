@@ -384,7 +384,8 @@ GMEVENT * EVENT_BSubwayTrainerBattle(
   //エンカウントエフェクトとＢＧＭセット(サブウェイ固有)
   bew->EncEffNo = ENCEFFID_SUBWAY;
   bew->battle_param->musicDefault = SEQ_BGM_VS_SUBWAY_TRAINER;
-  
+  bew->battle_param->musicWin = SEQ_BGM_WIN2;
+ 
   //エフェクトエンカウト　エフェクト復帰キャンセル
   EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
   return event;

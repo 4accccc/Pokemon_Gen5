@@ -26,7 +26,7 @@
 #include "sound/pm_sndsys.h"
 
 #include "fldmmdl.h"
-
+#include "field_encount.h"
 #include "message.naix"
 
 #include "bsubway_scr_def.h"
@@ -473,8 +473,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   
   dst = BATTLE_PARAM_Create( HEAPID_PROC );
   
-  BTL_FIELD_SITUATION_Init( &sit );
-  MI_CpuCopy8( &sit, &dst->fieldSituation, sizeof(BTL_FIELD_SITUATION) );
+  BTL_FIELD_SITUATION_SetFromFieldStatus( &dst->fieldSituation, gdata, GAMESYSTEM_GetFieldMapWork(gsys) );
   
   dst->netHandle = NULL;
   dst->commMode = BTL_COMM_NONE;
