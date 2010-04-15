@@ -1214,6 +1214,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_CreatePokeIcon( biw, bicp );
       BTLV_INPUT_CreateWeatherIcon( biw );
 
+      BTLV_EFFECT_SetCameraFocus( bicp->pos, BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
+
 #ifdef ROTATION_NEW_SYSTEM
       if( ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) || ( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE ) )
 #else
