@@ -1365,7 +1365,6 @@ sub_trainer_talk_after_recover:
 //戦闘後メッセージ：アイテムトレーナー：初回
 sub_trainer_talk_after_item_before:
   _TRAINER_MSG_SET( LWK_TRAINERID, TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE, SCWK_TARGET_OBJID )
-  _AB_KEYWAIT_MARK()
   _BALLOONWIN_CLOSE()
 
   _TRAINER_ITEM_GET( LWK_TRAINERID, SCWK_PARAM0 )
