@@ -5744,6 +5744,20 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
   return FALSE;
 }
 /**
+ *  １、２のポカンSE管理コールバック
+ */
+static BOOL msgPokanCallback( u32 arg )
+{
+  switch( arg ){
+  case 3: PMSND_PlaySE( SEQ_SE_KON ); break;
+  case 5:
+    if( PMSND_CheckPlayingSEIdx(SEQ_SE_KON) ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+/**
  * ワザ覚え処理
  *  （経験値加算処理 scProc_ACT_Exp のサブシーケンス）
  */
@@ -5890,6 +5904,7 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
         }
         else
         {
+          // １、２のポカン
           BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
           const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
           WazaID forget_wazano = PP_Get( pp, ID_PARA_waza1 + result, NULL );
@@ -5897,7 +5912,7 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
           BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_WAZAOBOE, msg_waza_oboe_06 );
           BTLV_STRPARAM_AddArg( &wk->strParam, pokeID );
           BTLV_STRPARAM_AddArg( &wk->strParam, forget_wazano );
-          BTLV_StartMsg( wk->viewCore, &wk->strParam );
+          BTLV_StartMsgCallback( wk->viewCore, &wk->strParam, msgPokanCallback );
           (*seq) = SEQ_WASURE_DECIDE;
         }
       }
