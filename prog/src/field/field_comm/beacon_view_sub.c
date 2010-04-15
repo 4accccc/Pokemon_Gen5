@@ -536,12 +536,12 @@ static void sp_gpower_ConditionCheck( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info,
       ++version_ct; 
     }
   }
-  //自分と異なる性別が20人以上ログにいるか？
-  if( sex_ct > 19 ){
+  //ログにいる自分と異なる性別のプレイヤーが20人か？
+  if( sex_ct == 20 ){
     sp_gpower_RequestSet( wk, SP_GPOWER_REQ_MONEY_UP );
   }
-  //自分と異なるカセットバージョンが20人以上ログにいるか？
-  if( version_ct > 19 ){
+  //ログにいる自分と異なるカセットバージョンのプレイヤーが20人か？
+  if( version_ct == 20 ){
     sp_gpower_RequestSet( wk, SP_GPOWER_REQ_NATSUKI_UP );
   }
 }
