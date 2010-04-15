@@ -76,8 +76,15 @@ static void Snd_BgmFadeIn( int a, int b, int c){}
 //#define TWL_FREQENCY      // DSiの時のサンプリング周波数を調査する処理が有効になる
 
 
+
+//=============================================================================
+// TWLSDKじゃないと存在しない関数があったので動作はしないが定義しておく
+//=============================================================================
 #ifndef SDK_TWL
 #define MIC_SAMPLING_RATE_8180  (8180)
+extern int MIC_StartLimitedSampling( MICAutoParam *param);
+extern void   MIC_StopLimitedSampling(void);
+
 int MIC_StartLimitedSampling( MICAutoParam *param)
 {
   return 1;
