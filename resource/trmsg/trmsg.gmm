@@ -13436,93 +13436,147 @@
 	</row>
 
 	<row id="TRID_SWIMMERM_03_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">ダイビングの　わざが　あれば
+もぐったり　しずんだり　できるのだ！▼</language>
+		<language name="JPN_KANJI" width="216">ダイビングの　技が　あれば
+潜ったり　沈んだり　できるのだ！▼</language>
 	</row>
 
 	<row id="TRID_SWIMMERM_03_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">ぶくぶく
+……しずみゆく　オレ</language>
+		<language name="JPN_KANJI" width="216">ぶくぶく
+……沈みゆく　オレ</language>
 	</row>
 
 	<row id="TRID_SWIMMERM_03_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">おまえの　ポケモン
+ダイビングの　わざは　おぼえたか？▼
+ダイビングは　いいぞお！　すごいぞお！
+なんたって　ダイビング　だからな！</language>
+		<language name="JPN_KANJI" width="216">おまえの　ポケモン
+ダイビングの　技は　覚えたか？▼
+ダイビングは　いいぞお！　すごいぞお！
+なんたって　ダイビング　だからな！</language>
 	</row>
 
 	<row id="TRID_SWIMMERM_04_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">とにかく　およぐのが　だいすきで
+やせいの　ポケモンと　しか▽
+たたかったことが　ないんですよ▼</language>
+		<language name="JPN_KANJI" width="216">とにかく　泳ぐのが　大好きで
+野生の　ポケモンと　しか▽
+戦ったことが　ないんですよ▼</language>
 	</row>
 
 	<row id="TRID_SWIMMERM_04_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">やはり　ジムを　めぐることで
+つよくなって　いくんだねえ！</language>
+		<language name="JPN_KANJI" width="216">やはり　ジムを　巡ることで
+強くなって　いくんだねえ！</language>
 	</row>
 
 	<row id="TRID_SWIMMERM_04_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">よし！　せかいかっこくの
+ポケモンジムに　ちょうせんだ！▼
+みずタイプの　ジムが　あるのは
+カントーとか　ホウエンに　シンオウか</language>
+		<language name="JPN_KANJI" width="216">よし！　世界各国の
+ポケモンジムに　挑戦だ！▼
+みずタイプの　ジムが　あるのは
+カントーとか　ホウエンに　シンオウか</language>
 	</row>
 
 	<row id="TRID_SWIMMERM_05_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">どんなときでも　およいでいる
+オレと　オレの　ポケモン！▽
+もちろん　およぎながら　しょうぶ！▼</language>
+		<language name="JPN_KANJI" width="216">どんなときでも　泳いでいる
+オレと　オレの　ポケモン！▽
+もちろん　泳ぎながら　勝負！▼</language>
 	</row>
 
 	<row id="TRID_SWIMMERM_05_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">……まけたが　およぎながら
+たたかった　オレ　すごい！</language>
+		<language name="JPN_KANJI" width="216">……負けたが　泳ぎながら
+戦った　オレ　すごい！</language>
 	</row>
 
 	<row id="TRID_SWIMMERM_05_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">サザナミの　うみの　そこには
+しんでんが　しずんでいるってな！</language>
+		<language name="JPN_KANJI" width="216">サザナミの　海底には
+神殿が　沈んでいるってな！</language>
 	</row>
 
 	<row id="TRID_SWIMMERW_03_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">ポケモンと　ポケモンが
+わざを　くりだす　ようすは▽
+まさに　アバンチュール！▼</language>
+		<language name="JPN_KANJI" width="216">ポケモンと　ポケモンが
+技を　繰りだす　様子は▽
+まさに　アバンチュール！▼</language>
 	</row>
 
 	<row id="TRID_SWIMMERW_03_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">……アバンチュールは
+もう　おわったのね</language>
+		<language name="JPN_KANJI" width="216">……アバンチュールは
+もう　終わったのね</language>
 	</row>
 
 	<row id="TRID_SWIMMERW_03_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">あたし　バカンスしてるの
+そう　いちねんじゅう　ずっとね……</language>
+		<language name="JPN_KANJI" width="216">あたし　バカンスしてるの
+そう　一年中　ずっとね……</language>
 	</row>
 
 	<row id="TRID_SWIMMERW_04_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">あら？　あなたも　シロナさんの
+みずぎすがたを　みにきたの？▼</language>
+		<language name="JPN_KANJI" width="216">あら？　あなたも　シロナさんの
+水着姿を　みにきたの？▼</language>
 	</row>
 
 	<row id="TRID_SWIMMERW_04_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">あなたも　ポケモンに　のらずに
+みずぎになれば　いいのに！</language>
+		<language name="JPN_KANJI" width="216">あなたも　ポケモンに　乗らずに
+水着になれば　いいのに！</language>
 	</row>
 
 	<row id="TRID_SWIMMERW_04_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">……シロナさんは　だれもいないときに
+こっそり　およいでいるって　ウワサよ▼
+あと　すごいって　ウワサ
+とにかく　すごかったらしいわ！</language>
+		<language name="JPN_KANJI" width="216">……シロナさんは　だれもいないときに
+こっそり　泳いでいるって　ウワサよ▼
+あと　すごいって　ウワサ
+とにかく　すごかったらしいわ！</language>
 	</row>
 
 	<row id="TRID_SWIMMERW_05_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">サザナミタウンの　うみは
+なみが　おだやかで　いいかんじ！▼</language>
+		<language name="JPN_KANJI" width="216">サザナミタウンの　海は
+波が　穏やかで　いい感じ！▼</language>
 	</row>
 
 	<row id="TRID_SWIMMERW_05_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">あなたの　たたかいかたは
+あらあらしくて　すごいかんじ！</language>
+		<language name="JPN_KANJI" width="216">あなたの　戦い方は
+荒々しくて　すごい感じ！</language>
 	</row>
 
 	<row id="TRID_SWIMMERW_05_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">ぷかぷか　ながされ　いいかんじ！
+ポケモンと　いっしょで　いいかんじ！</language>
+		<language name="JPN_KANJI" width="216">ぷかぷか　流され　いい感じ！
+ポケモンと　一緒で　いい感じ！</language>
 	</row>
 
 	<row id="TRID_SCHOOLG_08_TRMSG_FIGHT_START">
@@ -13600,12 +13654,10 @@
 	<row id="TRID_BACKPACKERM_16_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">ぼくたちは　これからも　あるく！
 みちが　つづくかぎり……▽
-ポケモンが　いるかぎり　ね！▼
-……ここは　いきどまり　っぽいけど</language>
+ポケモンが　いるかぎり　ね！</language>
 		<language name="JPN_KANJI" width="216">ぼくたちは　これからも　歩く！
 道が　続くかぎり……▽
-ポケモンが　いるかぎり　ね！▼
-……ここは　行き止まり　っぽいけど</language>
+ポケモンが　いるかぎり　ね！</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_13_TRMSG_FIGHT_START">
