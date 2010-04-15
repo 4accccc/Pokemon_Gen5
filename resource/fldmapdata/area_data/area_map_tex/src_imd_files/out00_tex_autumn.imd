@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-04-14T16:16:30"/>
+	<create user="fuchino" host="W00152" date="2010-04-15T12:49:33"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -1953,21 +1953,17 @@
 		</bitmap>
 	</tex_image>
 	<tex_image index="56" name="sea_grass"
-		width="16" height="16" original_width="16" original_height="16"
+		width="16" height="8" original_width="16" original_height="8"
 		format="palette16"
 		color0_mode="color"
 		palette_name="sea_grass_pl"
 		path="C:/home/wb_data3d/field/out00/chip/tex_autumn/sea_grass.tga"
 	>
-		<bitmap size="64">
-			1111 1111 1111 1111 1111 1101 1111 1111
-			0011 1100 0001 1110 0111 1010 1100 1111
-			1111 0111 1111 1111 1122 1111 1111 2221
-			2233 1112 2211 3322 3333 2222 3222 3333
-			3334 3333 3333 5433 4445 3334 3333 5544
-			5555 4444 4444 5555 6555 5556 5555 5555
-			6655 5555 5555 5555 5655 5555 5555 5555
-			5565 5555 5555 5555 5556 5555 5555 5555
+		<bitmap size="32">
+			3213 4223 3333 4224 5555 2442 3200 5555
+			5666 3555 5533 6665 6666 5566 6555 6666
+			6777 6666 6666 7776 7888 6677 7666 8887
+			8888 7778 8777 8888 8888 8888 8888 8888
 		</bitmap>
 	</tex_image>
 	<tex_image index="57" name="sea_mizu1"
@@ -2360,8 +2356,9 @@
 		7c1f 6f36 7bdd 6af4 6ad2 628e 779a 6739
 		4a95 4e95 5f19 6b5b 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="56" name="sea_grass_pl" color_size="8">
-		3f6e 478f 5777 5f5c 637d 6bbf 77df 7fff
+	<tex_palette index="56" name="sea_grass_pl" color_size="16">
+		3ef8 3f18 4318 4739 473a 4f5b 5f5c 637d
+		6bbf 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="57" name="sea_mizu1_pl" color_size="4">
 		69c3 5d82 61a3 7fff
