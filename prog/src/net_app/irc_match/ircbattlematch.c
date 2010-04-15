@@ -2108,6 +2108,8 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
       clactSafeRemove(pWork,CELL_IRWAVE1);
       clactSafeRemove(pWork,CELL_IRWAVE2);
       pWork->ircmatchflg=FALSE;
+      GFL_CLACT_WK_SetAutoAnmFlag(pWork->curIcon[CELL_IRDS1],FALSE);
+      GFL_CLACT_WK_SetAutoAnmFlag(pWork->curIcon[CELL_IRDS3],FALSE);
       
       //アニメ終了コールバック登録
     /*  
