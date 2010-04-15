@@ -51,7 +51,7 @@
 #define CTVT_COMM_SHARE_DRAW_BUFF (0)
 
 //ビーコンのデータの生存時間(呼び出し時間
-#define CTVT_COMM_BEACON_CALL_TIME (15*60)
+#define CTVT_COMM_BEACON_CALL_TIME (CTVT_CALL_TIME)
 
 //======================================================================
 //	enum

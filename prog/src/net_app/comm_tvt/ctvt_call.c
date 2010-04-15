@@ -75,7 +75,7 @@
 #define CTVT_CALL_MSG_SE_CNT (120)
 
 //接続時タイムアウト
-#define CTVT_CALL_JOIN_TIMEOUT (15*60)
+#define CTVT_CALL_JOIN_TIMEOUT (CTVT_CALL_TIME)
 
 //======================================================================
 //	enum
