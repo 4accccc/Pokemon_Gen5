@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-15T16:06:18"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-15T16:35:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1330,7 +1330,7 @@
 対戦を　申し込んできました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_wifilobby_1033" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
+	<row id="msg_wifilobby_1033" back-color="#8080ff,,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">いまは　おはなしできないみたい</language>
 		<language name="JPN_KANJI" width="216">今はお話できないみたい</language>
 	</row>
