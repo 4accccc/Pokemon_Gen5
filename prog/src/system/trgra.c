@@ -48,7 +48,7 @@ enum{
  *					プロトタイプ宣言
 */
 //=============================================================================
-static  inline  const u8 get_gra_index( int tr_type );
+static  inline  const u8 get_gra_index( int tr_type, int dir );
 
 //=============================================================================
 /**
@@ -58,26 +58,36 @@ static  inline  const u8 get_gra_index( int tr_type );
 //----------------------------------------------------------------------------
 /**
  *	@brief	POKEGRAのアーカイブID
+ *
+ *	@param[in]  dir 向き
  *		
  *	@return	アーカイブID
  */
 //-----------------------------------------------------------------------------
-ARCID TRGRA_GetArcID( void )
+ARCID TRGRA_GetArcID( int dir )
 {	
-	return ARCID_TRFGRA;
+  if( dir )
+  { 
+	  return ARCID_TRBGRA;
+  }
+  else
+  { 
+	  return ARCID_TRFGRA;
+  }
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief
  *
- *  @param	tr_type  トレーナータイプ
+ *  @param[in]	tr_type   トレーナータイプ
+ *	@param[in]  dir       向き
  *
  *	@return	キャラアーカイブインデックス
  */
 //-----------------------------------------------------------------------------
-ARCDATID TRGRA_GetCgrArcIndex( int tr_type )
+ARCDATID TRGRA_GetCgrArcIndex( int tr_type, int dir )
 {	
-	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type );	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type, dir );	//トレーナータイプからファイルのオフセットを計算
 
 	return file_start + TRGRA_NCGR;
 }
@@ -86,14 +96,15 @@ ARCDATID TRGRA_GetCgrArcIndex( int tr_type )
 /**
  *	@brief	
  *
- *  @param	tr_type  トレーナータイプ
+ *  @param[in]	tr_type   トレーナータイプ
+ *	@param[in]  dir       向き
  *
  *	@return	キャラビットマップアーカイブインデックス
  */
 //-----------------------------------------------------------------------------
-ARCDATID TRGRA_GetCbrArcIndex( int tr_type )
+ARCDATID TRGRA_GetCbrArcIndex( int tr_type, int dir )
 {	
-	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type );	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type, dir );	//トレーナータイプからファイルのオフセットを計算
 
 	return file_start + TRGRA_NCBR;
 }
@@ -102,14 +113,15 @@ ARCDATID TRGRA_GetCbrArcIndex( int tr_type )
 /**
  *	@brief
  *
- *  @param	tr_type  トレーナータイプ
+ *  @param[in]	tr_type   トレーナータイプ
+ *	@param[in]  dir       向き
  *
  *	@return	ﾊﾟﾚｯﾄアーカイブインデックス
  */
 //-----------------------------------------------------------------------------
-ARCDATID TRGRA_GetPalArcIndex( int tr_type )
+ARCDATID TRGRA_GetPalArcIndex( int tr_type, int dir )
 {	
-	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type );	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type, dir );	//トレーナータイプからファイルのオフセットを計算
 
 	return file_start + TRGRA_NCLR;
 }
@@ -118,14 +130,15 @@ ARCDATID TRGRA_GetPalArcIndex( int tr_type )
 /**
  *	@brief
  *
- *  @param	tr_type  トレーナータイプ
+ *  @param[in]	tr_type   トレーナータイプ
+ *	@param[in]  dir       向き
  *
  *	@return	セルアーカイブインデックス
  */
 //-----------------------------------------------------------------------------
-ARCDATID TRGRA_GetCelArcIndex( int tr_type )
+ARCDATID TRGRA_GetCelArcIndex( int tr_type, int dir )
 {	
-	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type );	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type, dir );	//トレーナータイプからファイルのオフセットを計算
 
 	return file_start + TRGRA_NCER;
 }
@@ -134,14 +147,15 @@ ARCDATID TRGRA_GetCelArcIndex( int tr_type )
 /**
  *	@brief
  *
- *  @param	tr_type  トレーナータイプ
+ *  @param[in]	tr_type   トレーナータイプ
+ *	@param[in]  dir       向き
  *
  *	@return	セルアニメアーカイブインデックス
  */
 //-----------------------------------------------------------------------------
-ARCDATID TRGRA_GetAnmArcIndex( int tr_type )
+ARCDATID TRGRA_GetAnmArcIndex( int tr_type, int dir )
 {	
-	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type );	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type, dir );	//トレーナータイプからファイルのオフセットを計算
 
 	return file_start + TRGRA_NANR;
 }
@@ -150,14 +164,15 @@ ARCDATID TRGRA_GetAnmArcIndex( int tr_type )
 /**
  *	@brief
  *
- *  @param	tr_type  トレーナータイプ
+ *  @param[in]	tr_type   トレーナータイプ
+ *	@param[in]  dir       向き
  *
  *	@return	マルチセルアーカイブインデックス
  */
 //-----------------------------------------------------------------------------
-ARCDATID TRGRA_GetMCelArcIndex( int tr_type )
+ARCDATID TRGRA_GetMCelArcIndex( int tr_type, int dir )
 {	
-	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type );	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type, dir );	//トレーナータイプからファイルのオフセットを計算
 
 	return file_start + TRGRA_NMCR;
 }
@@ -166,14 +181,15 @@ ARCDATID TRGRA_GetMCelArcIndex( int tr_type )
 /**
  *	@brief
  *
- *  @param	tr_type  トレーナータイプ
+ *  @param[in]	tr_type   トレーナータイプ
+ *	@param[in]  dir       向き
  *
  *	@return	マルチセルアニメアーカイブインデックス
  */
 //-----------------------------------------------------------------------------
-ARCDATID TRGRA_GetMAnmArcIndex( int tr_type )
+ARCDATID TRGRA_GetMAnmArcIndex( int tr_type, int dir )
 {	
-	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type );	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type, dir );	//トレーナータイプからファイルのオフセットを計算
 
 	return file_start + TRGRA_NMAR;
 }
@@ -182,20 +198,26 @@ ARCDATID TRGRA_GetMAnmArcIndex( int tr_type )
 /**
  *	@brief
  *
- *  @param	tr_type  トレーナータイプ
+ *  @param[in]	tr_type   トレーナータイプ
+ *	@param[in]  dir       向き
  *
  *	@return	アーカイブインデックス
  */
 //-----------------------------------------------------------------------------
-ARCDATID TRGRA_GetNcecArcIndex( int tr_type )
+ARCDATID TRGRA_GetNcecArcIndex( int tr_type, int dir )
 {	
-	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type );	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type, dir );	//トレーナータイプからファイルのオフセットを計算
 
 	return file_start + TRGRA_NCEC;
 }
 
-static  inline  const u8 get_gra_index( int tr_type )
+static  inline  const u8 get_gra_index( int tr_type, int dir )
 { 
+  //背面は取得する必要なし
+  if( dir & 1 )
+  { 
+    return;
+  }
   GF_ASSERT( NELEMS( TrTypeGraTable ) > tr_type );
 
   if( NELEMS( TrTypeGraTable ) < tr_type )

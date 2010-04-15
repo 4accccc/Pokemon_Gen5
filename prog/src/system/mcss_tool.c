@@ -111,14 +111,14 @@ void	MCSS_TOOL_MakeMAWParam( int	mons_no, int form_no, int sex, int rare, BOOL e
 //============================================================================================
 void	MCSS_TOOL_MakeMAWTrainer( int	tr_type, MCSS_ADD_WORK *maw, int dir )
 {
-	maw->arcID = TRGRA_GetArcID();
-	maw->ncbr = TRGRA_GetCbrArcIndex( tr_type );
-	maw->nclr = TRGRA_GetPalArcIndex( tr_type );
-	maw->ncer = TRGRA_GetCelArcIndex( tr_type );
-	maw->nanr = TRGRA_GetAnmArcIndex( tr_type );
-	maw->nmcr = TRGRA_GetMCelArcIndex( tr_type );
-	maw->nmar = TRGRA_GetMAnmArcIndex( tr_type );
-	maw->ncec = TRGRA_GetNcecArcIndex( tr_type );
+	maw->arcID = TRGRA_GetArcID( dir );
+	maw->ncbr = TRGRA_GetCbrArcIndex( tr_type, dir );
+	maw->nclr = TRGRA_GetPalArcIndex( tr_type, dir );
+	maw->ncer = TRGRA_GetCelArcIndex( tr_type, dir );
+	maw->nanr = TRGRA_GetAnmArcIndex( tr_type, dir );
+	maw->nmcr = TRGRA_GetMCelArcIndex( tr_type, dir );
+	maw->nmar = TRGRA_GetMAnmArcIndex( tr_type, dir );
+	maw->ncec = TRGRA_GetNcecArcIndex( tr_type, dir );
 }
 
 //----------------------------------------------------------------------------

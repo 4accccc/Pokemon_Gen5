@@ -29,6 +29,9 @@
  *					定数宣言
 */
 //=============================================================================
+
+#define TR_DIR_FRONT  ( 0 )   //基本正面しか取らない
+
 //=============================================================================
 /**
  *					プロトタイプ
@@ -57,12 +60,12 @@ static void* TR2DGRA_LoadCharacter( NNSG2dCharacterData **ncg_data, int trtype, 
 	void *p_buf;
 
 	//リソース受け取り
-	cgr	= TRGRA_GetCgrArcIndex( trtype );
+	cgr	= TRGRA_GetCgrArcIndex( trtype, TR_DIR_FRONT );
 	//リソースはOBJとして作っているので、LoadOBJじゃないと読み込めない
 #ifdef	TRGRA_LZ
-	p_buf = GFL_ARC_UTIL_LoadOBJCharacter( TRGRA_GetArcID(), cgr, TRUE, ncg_data, heapID );
+	p_buf = GFL_ARC_UTIL_LoadOBJCharacter( TRGRA_GetArcID( TR_DIR_FRONT ), cgr, TRUE, ncg_data, heapID );
 #else	// TRGRA_LZ
-	p_buf = GFL_ARC_UTIL_LoadOBJCharacter( TRGRA_GetArcID(), cgr, FALSE, ncg_data, heapID );
+	p_buf = GFL_ARC_UTIL_LoadOBJCharacter( TRGRA_GetArcID( TR_DIR_FRONT ), cgr, FALSE, ncg_data, heapID );
 #endif	// TRGRA_LZ
 
 	return p_buf;
@@ -103,8 +106,8 @@ void TR2DGRA_BG_TransResource( int trtype, u32 frm, u32 chr_offs, u32 plt_offs, 
 	
 	//リソース受け取り
 	{	
-		arc	= TRGRA_GetArcID();
-		plt	= TRGRA_GetPalArcIndex( trtype );
+		arc	= TRGRA_GetArcID( TR_DIR_FRONT );
+		plt	= TRGRA_GetPalArcIndex( trtype, TR_DIR_FRONT );
 	}
 
 	//リソース読み込み
@@ -159,8 +162,8 @@ GFL_ARCUTIL_TRANSINFO TR2DGRA_BG_TransResourceByAreaMan( int trtype, u32 frm, u3
 	
 	//リソース受け取り
 	{	
-		arc	= TRGRA_GetArcID();
-		plt	= TRGRA_GetPalArcIndex( trtype );
+		arc	= TRGRA_GetArcID( TR_DIR_FRONT );
+		plt	= TRGRA_GetPalArcIndex( trtype, TR_DIR_FRONT );
 	}
 
 	//リソース読み込み
@@ -269,7 +272,7 @@ void TR2DGRA_BG_WriteScreen( u32 frm, u32 chr_offs, u32 pal_offs, u16 x, u16 y )
 //-----------------------------------------------------------------------------
 ARCHANDLE *TR2DGRA_OpenHandle( HEAPID heapID )
 {	
-	return GFL_ARC_OpenDataHandle( TRGRA_GetArcID(), heapID );
+	return GFL_ARC_OpenDataHandle( TRGRA_GetArcID( TR_DIR_FRONT ), heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -287,7 +290,7 @@ ARCHANDLE *TR2DGRA_OpenHandle( HEAPID heapID )
 u32 TR2DGRA_OBJ_PLTT_Register( ARCHANDLE *p_handle, int trtype, CLSYS_DRAW_TYPE vramType, u16 byteOffs, HEAPID heapID )
 {	
 	u32 plt;
-	plt	= TRGRA_GetPalArcIndex( trtype );
+	plt	= TRGRA_GetPalArcIndex( trtype, TR_DIR_FRONT );
 
 	//読み込み
 	return GFL_CLGRP_PLTT_RegisterEx( p_handle, plt, vramType, byteOffs, 0, TRGRA_TRAINER_PLT_NUM, heapID );
@@ -307,7 +310,7 @@ u32 TR2DGRA_OBJ_PLTT_Register( ARCHANDLE *p_handle, int trtype, CLSYS_DRAW_TYPE 
 u32 TR2DGRA_OBJ_CGR_Register( ARCHANDLE *p_handle, int trtype, CLSYS_DRAW_TYPE vramType, HEAPID heapID )
 {	
 	u32 cgr;
-	cgr	= TRGRA_GetCgrArcIndex( trtype );
+	cgr	= TRGRA_GetCgrArcIndex( trtype, TR_DIR_FRONT );
 	//読み込み
 #ifdef	TRGRA_LZ
 	return GFL_CLGRP_CGR_Register( p_handle, cgr, TRUE, vramType, heapID );
@@ -365,7 +368,7 @@ void TR2DGRA_OBJ_RES_Replace( ARCHANDLE *p_handle, int trtype, int cgr_idx, int 
     u32* pltt_buf;
     NNSG2dPaletteData* pltt_res;
 
-	  pltt	= TRGRA_GetPalArcIndex( trtype );
+	  pltt	= TRGRA_GetPalArcIndex( trtype, TR_DIR_FRONT );
     pltt_buf = GFL_ARC_LoadDataAllocByHandle( p_handle, pltt, heapID );
     NNS_G2dGetUnpackedPaletteData( pltt_buf, &pltt_res );
     GFL_CLGRP_PLTT_Replace( pltt_idx, pltt_res, TRGRA_TRAINER_PLT_NUM );
@@ -375,7 +378,7 @@ void TR2DGRA_OBJ_RES_Replace( ARCHANDLE *p_handle, int trtype, int cgr_idx, int 
   {
     NNSG2dCharacterData* cgr_res;
     u32* cgr_buf;
-	  u32 cgr	= TRGRA_GetCgrArcIndex( trtype );
+	  u32 cgr	= TRGRA_GetCgrArcIndex( trtype, TR_DIR_FRONT );
 
 #ifdef	TRGRA_LZ
 		cgr_buf = GFL_ARCHDL_UTIL_LoadOBJCharacter( p_handle, cgr, TRUE, &cgr_res, heapID );
