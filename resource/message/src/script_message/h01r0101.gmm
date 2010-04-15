@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-15T17:50:54"/>
+	<create user="matsumiya" host="W00224" date="2010-04-15T18:50:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -311,9 +311,11 @@
 		<attribute name="キャラ指定">MOUNTAIN
 山男</attribute>
 		<language name="JPN" width="256">しょうぶに　ひつよう　なのは
-せんてひっしょう　だな！▼</language>
+せんてひっしょう　だな！▽
+ということで　これを！！▼</language>
 		<language name="JPN_KANJI" width="256">勝負に　必要なのは
-先手必勝　だな！▼</language>
+先手必勝　だな！▽
+ということで　これを！！▼</language>
 	</row>
 
 	<row id="msg_h01r0101_mountain_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -321,13 +323,13 @@
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">MOUNTAIN
 山男</attribute>
-		<language name="JPN" width="256">しょじ　していれば
+		<language name="JPN" width="256">ポケモンに　もたせておけば
 あいてより　はやく　わざをだせる▼
 かもしれない　どうぐ▼
 それが　いま　わたした
 せんせいのツメ　だよ！</language>
-		<language name="JPN_KANJI" width="256">所持していれば
-相手より　早く　技をだせる▼
+		<language name="JPN_KANJI" width="256">ポケモンに　所持させれば
+相手より　速く　技をだせる▼
 かもしれない　道具▼
 それが　今　渡した
 せんせいのツメ　だよ！</language>
