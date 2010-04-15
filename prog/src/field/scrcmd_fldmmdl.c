@@ -372,6 +372,9 @@ VMCMD_RESULT EvCmdObjAddEvent( VMHANDLE *core, void *wk )
 		const MMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
 		MMDL *mmdl = MMDLSYS_AddMMdlHeaderID(
         mmdlsys, header, zone_id, count, evwork, id );
+    if( mmdl != NULL ){ //í«â¡Ç≥ÇÍÇΩOBJÇÕë¶É|Å[ÉYÇ≥ÇπÇÈ
+      MMDL_OnMoveBitMoveProcPause( mmdl );
+    }
     GF_ASSERT( mmdl != NULL );
   }else{
     GF_ASSERT( 0 );
