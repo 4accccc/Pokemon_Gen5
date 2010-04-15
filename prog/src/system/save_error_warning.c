@@ -94,7 +94,6 @@ void SaveErrorCall_Save(GFL_SAVEERROR_DISABLE err_disable)
 //--------------------------------------------------------------
 static void Local_WarningDispMain(u32 msg_id)
 {
-  return;
   SaveControl_SystemExit(); //画面描画用のヒープ確保の為、セーブシステムを破棄する
   Local_WarningDispInit(msg_id);
   while(1){}  //無限ループ
