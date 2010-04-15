@@ -866,7 +866,6 @@ static GMEVENT_RESULT ev_MsgWifiHomeNPC(
     break;
   case 2:
     if( FLDTALKMSGWIN_WaitClose(work->balloonWin) == TRUE ){
-      FLDTALKMSGWIN_Delete( work->balloonWin );
       GFL_STR_DeleteBuffer( work->strBuf );
       return( GMEVENT_RES_FINISH );
     }
