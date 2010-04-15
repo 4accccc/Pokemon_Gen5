@@ -747,29 +747,29 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
       NARC_mb_capture_gra_cap_obj_timeup_nsbtx ,
       NARC_mb_capture_gra_cap_obj_highscore_nsbtx ,
       };
-    static const u32 resSizeArr[MCBR_MAX] = {
-      GFL_BBD_TEXSIZDEF_32x32 ,
-      GFL_BBD_TEXSIZDEF_256x32 ,
-      GFL_BBD_TEXSIZDEF_256x32 ,
-      GFL_BBD_TEXSIZDEF_128x32 ,
-      GFL_BBD_TEXSIZDEF_128x32 ,
-      GFL_BBD_TEXSIZDEF_128x32 ,
-      GFL_BBD_TEXSIZDEF_32x32 ,
-      GFL_BBD_TEXSIZDEF_128x32 ,
-      GFL_BBD_TEXSIZDEF_64x32 ,
-      GFL_BBD_TEXSIZDEF_256x32 ,
-      GFL_BBD_TEXSIZDEF_256x32 ,
-      GFL_BBD_TEXSIZDEF_256x32 ,
-      GFL_BBD_TEXSIZDEF_256x32 ,
-      GFL_BBD_TEXSIZDEF_128x32 ,
-      GFL_BBD_TEXSIZDEF_256x32 ,  //ボーナス煙
-      GFL_BBD_TEXSIZDEF_128x32 ,
+    static const GFL_BBD_TEXSIZ resSizeArr[MCBR_MAX] = {
+      GFL_BBD_TEXSIZ_32x32 ,
+      GFL_BBD_TEXSIZ_256x32 ,
+      GFL_BBD_TEXSIZ_256x32 ,
+      GFL_BBD_TEXSIZ_128x32 ,
+      GFL_BBD_TEXSIZ_128x32 ,
+      GFL_BBD_TEXSIZ_128x32 ,
+      GFL_BBD_TEXSIZ_32x32 ,
+      GFL_BBD_TEXSIZ_128x32 ,
+      GFL_BBD_TEXSIZ_64x32 ,
+      GFL_BBD_TEXSIZ_256x32 ,
+      GFL_BBD_TEXSIZ_256x32 ,
+      GFL_BBD_TEXSIZ_256x32 ,
+      GFL_BBD_TEXSIZ_256x32 ,
+      GFL_BBD_TEXSIZ_128x32 ,
+      GFL_BBD_TEXSIZ_256x32 ,  //ボーナス煙
+      GFL_BBD_TEXSIZ_128x32 ,
       //その他
-      GFL_BBD_TEXSIZDEF_128x128 ,
-      GFL_BBD_TEXSIZDEF_128x32 ,
-      GFL_BBD_TEXSIZDEF_128x32 ,
-      GFL_BBD_TEXSIZDEF_128x32 ,
-      GFL_BBD_TEXSIZDEF_128x32 ,
+      GFL_BBD_TEXSIZ_128x128 ,
+      GFL_BBD_TEXSIZ_128x32 ,
+      GFL_BBD_TEXSIZ_128x32 ,
+      GFL_BBD_TEXSIZ_128x32 ,
+      GFL_BBD_TEXSIZ_128x32 ,
       
       };
     u8 i;
@@ -803,7 +803,7 @@ static void MB_CAPTURE_LoadResource( MB_CAPTURE_WORK *work )
     work->bbdResBgMask = GFL_BBD_AddResource( work->bbdSys , 
                                          res , 
                                          GFL_BBD_TEXFMT_PAL16 ,
-                                         GFL_BBD_TEXSIZDEF_256x32 ,
+                                         GFL_BBD_TEXSIZ_256x32 ,
                                          128 , 32 );
   }
 }
@@ -964,7 +964,7 @@ static void MB_CAPTURE_InitUpper( MB_CAPTURE_WORK *work )
   work->resIdxTarget = GFL_BBD_AddResource( work->bbdSys , 
                                        res , 
                                        GFL_BBD_TEXFMT_PAL16 ,
-                                       GFL_BBD_TEXSIZDEF_256x32 ,
+                                       GFL_BBD_TEXSIZ_256x32 ,
                                        32 , 32 );
   GFL_BBD_CutResourceData( work->bbdSys , work->resIdxTarget );
   

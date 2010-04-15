@@ -120,7 +120,7 @@ MB_CAP_POKE* MB_CAP_POKE_CreateObject( MB_CAPTURE_WORK *capWork , MB_CAP_POKE_IN
   pokeWork->resIdx = GFL_BBD_AddResource( bbdSys , 
                                        res , 
                                        GFL_BBD_TEXFMT_PAL16 ,
-                                       GFL_BBD_TEXSIZDEF_32x64 ,
+                                       GFL_BBD_TEXSIZ_32x64 ,
                                        32 , 32 );
   GFL_BBD_CutResourceData( bbdSys , pokeWork->resIdx );
   
