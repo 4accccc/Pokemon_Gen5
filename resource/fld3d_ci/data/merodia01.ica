@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ica version="1.6.0">
+
+<head>
+	<create user="unno" host="W00199" date="2010-04-15T13:25:08" source="merodia01_01.mb"/>
+	<title>Character Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<node_anm_info
+	frame_size="30"
+	scaling_rule="standard"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tool_end_frame="30"
+	interpolation="frame"
+	compress_node="merge" node_size="1 1"
+	frame_step_mode="1"
+	tolerance_scale="0.100000"
+	tolerance_rotate="0.100000"
+	tolerance_translate="0.010000"
+/>
+
+<node_scale_data size="30">
+	1.366699 1.733398 2.100098 2.466553 2.833252 3.199951 3.566650 3.933350 4.300049 4.666748
+	5.033447 5.399902 5.766602 6.133301 6.500000 6.866699 7.233398 7.600098 7.966553 8.333252
+	8.699951 9.066650 9.433350 9.800049 10.166748 10.533447 10.899902 11.266602 11.633301 12.000000
+</node_scale_data>
+
+<node_rotate_data size="1">
+	0.000000
+</node_rotate_data>
+
+<node_translate_data size="1">
+	0.000000
+</node_translate_data>
+
+<node_anm_array size="1">
+	<node_anm index="0">
+		<scale_x frame_step="1" data_size="30" data_head="0"/>
+		<scale_y frame_step="1" data_size="30" data_head="0"/>
+		<scale_z frame_step="1" data_size="30" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="1" data_head="0"/>
+		<translate_z frame_step="1" data_size="1" data_head="0"/>
+	</node_anm>
+</node_anm_array>
+
+</body>
+
+</ica>

@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-04-13T23:04:56
+	Update:2010-04-15T13:25:49
  *****************************************************************************/
 
 #ifndef NARC_FLD3D_CI_SETUP_NAIX_
@@ -30,7 +30,8 @@ enum {
 	NARC_fld3d_ci_setup_ci_16_bin = 16,
 	NARC_fld3d_ci_setup_ci_17_bin = 17,
 	NARC_fld3d_ci_setup_ci_18_bin = 18,
-	NARC_fld3d_ci_setup_ci_19_bin = 19
+	NARC_fld3d_ci_setup_ci_19_bin = 19,
+	NARC_fld3d_ci_setup_ci_20_bin = 20
 };
 
 /* NARC_FLD3D_CI_SETUP_NAIX_ */

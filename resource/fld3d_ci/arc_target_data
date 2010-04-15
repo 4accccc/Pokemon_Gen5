@@ -97,4 +97,6 @@ ARC_TARGET_DATA = \
 	fly_in2.nsbmd \
 	fly_in2.nsbca \
 	fly_in2.nsbma \
-	fly_in2.nsbtp
+	fly_in2.nsbtp \
+	merodia01.nsbmd \
+	merodia01.nsbca
