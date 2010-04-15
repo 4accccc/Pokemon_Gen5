@@ -369,11 +369,19 @@ static void SEQFUNC_FadeOut( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
 		SEQ_FADEIN_WAIT,
 		SEQ_EXIT,
 	};	
+  BATTLE_CHAMPIONSHIP_WORK *p_wk = p_wk_adrs;
 
 	switch( *p_seq )
 	{	
 	case SEQ_FADEIN_START:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+    if( p_wk->p_param->ret == BATTLE_CHAMPIONSHIP_CORE_RET_TITLE )
+    { 
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 0 );
+    }
+    else
+    { 
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+    }
 		*p_seq	= SEQ_FADEIN_WAIT;
 		break;
 

@@ -127,7 +127,7 @@ static void Util_List_Delete( DIGITALCARD_CHECK_WORK *p_wk );
 static u32 Util_List_Main( DIGITALCARD_CHECK_WORK *p_wk );
 
 //テキスト
-static void Util_Text_Print( DIGITALCARD_CHECK_WORK *p_wk, u32 strID );
+static void Util_Text_Print( DIGITALCARD_CHECK_WORK *p_wk, u32 strID, WBM_TEXT_TYPE type );
 static BOOL Util_Text_IsEnd( DIGITALCARD_CHECK_WORK *p_wk );
 static void Util_Text_SetVisible( DIGITALCARD_CHECK_WORK *p_wk, BOOL is_visible );
 
@@ -326,7 +326,7 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 
   case SEQ_START_MSG_SIGNUP:
     Util_Text_SetVisible( p_wk, TRUE );
-    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_00 );
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_00, WBM_TEXT_TYPE_STREAM );
     *p_seq  = SEQ_WAIT_MSG;
     break;
 
@@ -432,7 +432,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   case SEQ_START_MSG_ENTRY:
     Util_Text_SetVisible( p_wk, TRUE );
-    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_01 );
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_01, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_UNREGISTER );
     break;
@@ -461,7 +461,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_START_MSG_CONFIRM1:
-    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_02 );
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_02, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_CONFIRM1 );
     break;
@@ -487,7 +487,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     break;
   case SEQ_START_MSG_CONFIRM2:
-    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_03 );
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_03, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_CONFIRM2 );
     break;
@@ -503,7 +503,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         Util_List_Delete( p_wk );
         if( select == 0 )   //はい
         { 
-          *p_seq  = SEQ_RETIRE;
+          *p_seq  = SEQ_START_MSG_UNREGISTER;
         }
         else if( select == 1 )  //いいえ
         { 
@@ -514,7 +514,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;    
 
   case SEQ_START_MSG_UNREGISTER:
-    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_04 );
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_04, WBM_TEXT_TYPE_WAIT );
     *p_seq  = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_RETIRE );
     break;
@@ -554,7 +554,7 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     break;
   case SEQ_START_MSG_UNLOCK:
-    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_05 );
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_05, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_WAIT_MOVEOUT_PLAYERINFO );
     break;
@@ -628,7 +628,7 @@ static void DC_SEQFUNC_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 
   case SEQ_START_MSG_CUPEND:
     Util_Text_SetVisible( p_wk, TRUE );
-    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_06 );
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_06, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
     break;
 
@@ -719,7 +719,7 @@ static void DC_SEQFUNC_Retire( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 
   case SEQ_START_MSG_RETIRE:
     Util_Text_SetVisible( p_wk, TRUE );
-    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_07 );
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_07, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
     break;
 
@@ -810,7 +810,7 @@ static void DC_SEQFUNC_ChangeDS( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
   case SEQ_START_MSG_RETIRE:
     Util_Text_SetVisible( p_wk, TRUE );
-    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_09 );
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_09, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
     break;
 
@@ -875,7 +875,7 @@ static void DC_SEQFUNC_NoData( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   { 
   case SEQ_START_MSG_NODATA:
     Util_Text_SetVisible( p_wk, TRUE );
-    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_08 );
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_08, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
     break;
 
@@ -1184,9 +1184,9 @@ static u32 Util_List_Main( DIGITALCARD_CHECK_WORK *p_wk )
  *	@param	strID                       文字ID
  */
 //-----------------------------------------------------------------------------
-static void Util_Text_Print( DIGITALCARD_CHECK_WORK *p_wk, u32 strID )
+static void Util_Text_Print( DIGITALCARD_CHECK_WORK *p_wk, u32 strID, WBM_TEXT_TYPE type )
 { 
-  WBM_TEXT_Print( p_wk->param.p_text, p_wk->p_msg, strID, WBM_TEXT_TYPE_STREAM );
+  WBM_TEXT_Print( p_wk->param.p_text, p_wk->p_msg, strID, type );
 }
 //----------------------------------------------------------------------------
 /**

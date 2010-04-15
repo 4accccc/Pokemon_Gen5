@@ -501,12 +501,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 {
 	enum
 	{	
-		WBM_SYS_SEQ_INIT,
-		WBM_SYS_SEQ_FADEIN,
-		WBM_SYS_SEQ_FADEIN_WAIT,
 		WBM_SYS_SEQ_MAIN,
-		WBM_SYS_SEQ_FADEOUT,
-		WBM_SYS_SEQ_FADEOUT_WAIT,
 		WBM_SYS_SEQ_EXIT,
 	};
 
@@ -517,22 +512,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
   //シーケンス
 	switch( *p_seq )
 	{	
-	case WBM_SYS_SEQ_INIT:
-		*p_seq	= WBM_SYS_SEQ_MAIN;
-		break;
-
-	case WBM_SYS_SEQ_FADEIN:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
-		*p_seq	= WBM_SYS_SEQ_FADEIN_WAIT;
-		break;
-
-	case WBM_SYS_SEQ_FADEIN_WAIT:
-		if( !GFL_FADE_CheckFade() )
-		{	
-			*p_seq	= WBM_SYS_SEQ_MAIN;
-		}
-		break;
-
 	case WBM_SYS_SEQ_MAIN:
 		{
       //サブプロックのループ
@@ -547,9 +526,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
         p_wk->server_time--;
       }
 
-      //このローカルPROC内でPROC遷移するため、エラーシステムを自分で動かす
-      //->gamesystem_main上のLOCAL_PROCで動くのですべてで動かす必要がある
-      //if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_MAINMENU )
+      //gamesystem_main上のLOCAL_PROCで動くものしか検知してくれないので、
+      //自分で動かす必要がある
       { 
         const GFL_PROC_MAIN_STATUS  status  = WBM_SYS_SUBPROC_GetStatus( p_wk->p_subproc );
         if( status == GFL_PROC_MAIN_CHANGE || status == GFL_PROC_MAIN_NULL )
@@ -557,26 +535,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
           NetErr_DispCall(FALSE);
         }
       }
-		}
-		break;
-
-	case WBM_SYS_SEQ_FADEOUT:
-
-    if( p_wk->param.mode != WIFIBATTLEMATCH_MODE_RANDOM )
-    { 
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 0 );
-    }
-    else
-    { 
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
-    }
-		*p_seq	= WBM_SYS_SEQ_FADEOUT_WAIT;
-		break;
-
-	case WBM_SYS_SEQ_FADEOUT_WAIT:
-		if( !GFL_FADE_CheckFade() )
-		{	
-			*p_seq	= WBM_SYS_SEQ_EXIT;
 		}
 		break;
 
@@ -614,8 +572,9 @@ static void *BC_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, 
 
   switch( WBM_SYS_SUBPROC_GetPreProcID( p_subproc ) )
   { 
+  case SUBPROCID_LOGIN:
   case SUBPROCID_LOGOUT:
-    //ログアウトから着ていたら、WIFI大会（ランダムマッチはここへこないので）
+    //ログイン、ログアウトから着ていたら、WIFI大会（ランダムマッチはここへこないので）
     p_param->mode       = BATTLE_CHAMPIONSHIP_CORE_MODE_WIFI_MENU;
     break;
 
@@ -1400,7 +1359,16 @@ static BOOL LOGIN_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs,
     break;
 
   case WIFILOGIN_RESULT_CANCEL:
-    WBM_SYS_SUBPROC_End( p_subproc );
+    if( p_wk->type == WIFIBATTLEMATCH_TYPE_WIFICUP )
+    { 
+      //WIFI大会ならばメニューへ戻る
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
+    }
+    else
+    { 
+      //ランダムマッチならば終了
+      WBM_SYS_SUBPROC_End( p_subproc );
+    }
     break;
   }
 

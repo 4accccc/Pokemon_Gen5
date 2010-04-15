@@ -1384,6 +1384,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_WAIT_DRAW_OTHERCARD,
     SEQ_WAIT_SYNC,
     SEQ_START_MSG_WAIT,
+    SEQ_START_MSG_WAIT_OTHER,
     SEQ_START_TIMING,
     SEQ_WAIT_TIMING,
 
@@ -1560,9 +1561,15 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
     UTIL_TEXT_Print( p_wk, LIVE_STR_20, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_TIMING );
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_MSG_WAIT_OTHER );
 		break;
     
+  case SEQ_START_MSG_WAIT_OTHER:
+    UTIL_TEXT_Print( p_wk, LIVE_STR_28, WBM_TEXT_TYPE_WAIT );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_TIMING );
+    break;
+
   case SEQ_START_TIMING:
     GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),71, WB_NET_IRC_BATTLE );
     *p_seq  = SEQ_WAIT_TIMING;
