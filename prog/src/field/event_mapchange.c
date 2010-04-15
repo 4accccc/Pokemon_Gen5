@@ -800,7 +800,6 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     if( (work->seasonUpdateEnable) && (work->seasonUpdateOccur) )
     {
       PMSEASON_SetSeasonID( gameData, work->nextSeason );
-      OBATA_Printf( "update season %d ==> %d\n", work->prevSeason, work->nextSeason );
       //季節ポケモンフォルムチェンジ条件を満たしたので、手持ちの季節ポケモンをフォルムチェンジさせる
       {
         u8 season;

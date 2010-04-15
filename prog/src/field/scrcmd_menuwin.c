@@ -770,7 +770,6 @@ VMCMD_RESULT EvCmdGoldWinClose( VMHANDLE *core, void *wk )
     FLDMSGWIN_Delete( msg_win );
     FIELDMAP_SetGoldMsgWin( fieldmap, NULL );
   }
-  OBATA_Printf( "EvCmdGoldWinClose\n" );
   return VMCMD_RESULT_CONTINUE;
 }
 

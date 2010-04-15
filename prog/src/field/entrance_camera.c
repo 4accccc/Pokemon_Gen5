@@ -12,18 +12,10 @@
 #include "field_camera_anime.h"
 #include "field_rail.h"
 #include "fieldmap.h"
-#include "field_task.h"  
-#include "field_task_manager.h"
-#include "field_task_camera_zoom.h"
-#include "field_task_camera_rot.h"
-#include "field_task_target_offset.h"
-#include "field_task_target_pos.h"
 
-#include "field/eventdata_type.h"
 #include "field/field_const.h"     // for FIELD_CONST_xxxx
 #include "field/eventdata_type.h"  // for EXIT_TYPE_xxxx
 #include "arc/arc_def.h"           // for ARCID_xxxx
-#include "../../resource/fldmapdata/entrance_camera/entrance_camera.naix"  // for NARC_xxxx
 
 
 

@@ -10,6 +10,7 @@
 #include "elboard_spnews_data.h"
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
 
+//#define DEBUG_MODE
 
 //--------------------------------------------------------------------------------------
 /**
@@ -27,7 +28,7 @@ BOOL ELBOARD_SPNEWS_DATA_Load( ELBOARD_SPNEWS_DATA* buf, ARCID arc_id, ARCDATID 
   // 構造体へダイレクトに放り込む
   GFL_ARC_LoadDataOfs( buf, arc_id, dat_id, 0, sizeof(ELBOARD_SPNEWS_DATA) );
 
-  // DEBUG:
+#ifdef DEBUG_MODE
   OBATA_Printf( "---------------------------------- ELBOARD_SPNEWS_DATA_Load\n" );
   OBATA_Printf( "version     = %d\n", buf->version );
   OBATA_Printf( "flag        = %d\n", buf->flag );
@@ -39,6 +40,8 @@ BOOL ELBOARD_SPNEWS_DATA_Load( ELBOARD_SPNEWS_DATA* buf, ARCID arc_id, ARCDATID 
   OBATA_Printf( "zoneID_3    = %d\n", buf->zoneID_3 );
   OBATA_Printf( "zoneID_4    = %d\n", buf->zoneID_4 );
   OBATA_Printf( "-----------------------------------------------------------\n" );
+#endif
+
   return TRUE;
 }
 

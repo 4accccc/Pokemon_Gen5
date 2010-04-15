@@ -23,7 +23,6 @@
 #include "poke_tool/poke_memo.h"
 
 #include "arc/arc_def.h"  // for ARCID_PMSTBL
-#include "arc/kowaza.naix"
 #include "gamesystem/game_data.h"
 #include "savedata/mystatus.h"
 
@@ -1502,7 +1501,5 @@ void POKEMON_EGG_Birth( POKEMON_PARAM* egg, const MYSTATUS* owner, HEAPID heap_i
   {
     u32 id = MyStatus_GetID( owner );
     PP_Put( egg, ID_PARA_id_no, id );
-    OBATA_Printf( "id = %d\n", id );
-    OBATA_Printf( "id = %d\n", PP_Get(egg,ID_PARA_id_no,NULL) );
   } 
 }

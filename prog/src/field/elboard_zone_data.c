@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "elboard_zone_data.h"
 
+//#define DEBUG_MODE
 
 //-----------------------------------------------------------------------------------
 /**
@@ -28,7 +29,7 @@ BOOL ELBOARD_ZONE_DATA_Load( ELBOARD_ZONE_DATA* buf, ARCID arc_id, ARCDATID dat_
   // 構造体へダイレクトに放り込む
   GFL_ARC_LoadDataOfs( buf, arc_id, dat_id, 0, sizeof(ELBOARD_ZONE_DATA) );
 
-  // DEBUG:
+#ifdef DEBUG_MODE
   OBATA_Printf( "------------------------------------ ELBOARD_ZONE_DATA_Load\n" );
   OBATA_Printf( "zoneID = %d\n", buf->zoneID );
   OBATA_Printf( "version = %d\n", buf->version );
@@ -61,5 +62,7 @@ BOOL ELBOARD_ZONE_DATA_Load( ELBOARD_ZONE_DATA* buf, ARCID arc_id, ARCDATID dat_
   OBATA_Printf( "zoneID_weather_4 = %d\n", buf->zoneID_weather_4 ); 
   OBATA_Printf( "monitorAnimeIndex = %d\n", buf->monitorAnimeIndex ); 
   OBATA_Printf( "-----------------------------------------------------------\n" );
+#endif
+
   return TRUE;
 }

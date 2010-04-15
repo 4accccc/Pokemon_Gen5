@@ -425,27 +425,22 @@ static void LoadGraphicData( u8 season, HEAPID heap_id )
   // データIDを決定
   switch( season ) {
   default:
-    OBATA_Printf( "EVENT-SEASON-DISPLAY: 想定外の季節IDが指定されました。\n" );
   case PMSEASON_SPRING:
-    OBATA_Printf( "EVENT-SEASON-DISPLAY: load graphic data (spring)\n" );
     datid_pltt = NARC_season_display_spring_nclr;
     datid_char = NARC_season_display_spring_ncgr;
     datid_scrn = NARC_season_display_spring_nscr;
     break;
   case PMSEASON_SUMMER:
-    OBATA_Printf( "EVENT-SEASON-DISPLAY: load graphic data (summer)\n" );
     datid_pltt = NARC_season_display_summer_nclr;
     datid_char = NARC_season_display_summer_ncgr;
     datid_scrn = NARC_season_display_summer_nscr;
     break;
   case PMSEASON_AUTUMN:
-    OBATA_Printf( "EVENT-SEASON-DISPLAY: load graphic data (autumn)\n" );
     datid_pltt = NARC_season_display_autumn_nclr;
     datid_char = NARC_season_display_autumn_ncgr;
     datid_scrn = NARC_season_display_autumn_nscr;
     break;
   case PMSEASON_WINTER:
-    OBATA_Printf( "EVENT-SEASON-DISPLAY: load graphic data (winter)\n" );
     datid_pltt = NARC_season_display_winter_nclr;
     datid_char = NARC_season_display_winter_ncgr;
     datid_scrn = NARC_season_display_winter_nscr;
@@ -696,17 +691,6 @@ static void SetSeq( EVENT_WORK* work, int* seq, int next )
   // シーケンス変更
   *seq = next;
   work->count = 0;
-
-  // DEBUG:
-  OBATA_Printf( "EVENT-SEASON-DISPLAY: seq ==> " );
-  switch( next ) {
-  case SEQ_INIT:    OBATA_Printf( "INIT\n" );    break;
-  case SEQ_PREPARE: OBATA_Printf( "PREPARE\n" ); break;
-  case SEQ_FADEIN:  OBATA_Printf( "FADEIN\n" );  break;
-  case SEQ_WAIT:    OBATA_Printf( "WAIT\n" );    break;
-  case SEQ_FADEOUT: OBATA_Printf( "FADEOUT\n" ); break;
-  case SEQ_EXIT:    OBATA_Printf( "EXIT\n" );    break;
-  }
 }
 
 //------------------------------------------------------------------------------

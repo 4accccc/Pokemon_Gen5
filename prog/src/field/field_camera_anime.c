@@ -19,13 +19,6 @@
 
 
 //=============================================================================
-// ■定数
-//=============================================================================
-#define DEBUG_PRINT_ENABLE    // デバッグ出力スイッチ
-#define DEBUG_PRINT_TARGET (3)// デバッグ出力先
-
-
-//=============================================================================
 // ■カメラ操作ワーク
 //=============================================================================
 struct _FCAM_ANIME_WORK {
@@ -242,10 +235,6 @@ static FCAM_ANIME_WORK* CreateWork( HEAPID heapID )
 
   work = GFL_HEAP_AllocMemory( heapID, sizeof(FCAM_ANIME_WORK) );
 
-#ifdef DEBUG_PRINT_ENABLE
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "FCAM-ANIME: CreateWork\n" );
-#endif
-
   return work;
 }
 
@@ -259,10 +248,6 @@ static FCAM_ANIME_WORK* CreateWork( HEAPID heapID )
 static void DeleteWork( FCAM_ANIME_WORK* work )
 {
   GFL_HEAP_FreeMemory( work );
-
-#ifdef DEBUG_PRINT_ENABLE
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "FCAM-ANIME: DeleteWork\n" );
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -283,10 +268,6 @@ static void InitWork( FCAM_ANIME_WORK* work, FIELDMAP_WORK* fieldmap )
   work->pAnimeData = NULL;
   work->recoveryValidFlag = FALSE;
   work->initialCameraAreaFlag = FALSE;
-
-#ifdef DEBUG_PRINT_ENABLE
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "FCAM-ANIME: InitWork\n" );
-#endif
 }
 
 //-----------------------------------------------------------------------------

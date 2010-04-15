@@ -33,6 +33,7 @@ BOOL DebugBGInitEnd = FALSE;    //BG初期化監視フラグ
 #define BG_FRAME_CROSS_FADE ( FLDBG_MFRM_EFF1 ) 
 
 
+
 //============================================================================================
 // ■関数インデックス
 //============================================================================================
@@ -449,10 +450,6 @@ static FIELD_FADE_TYPE GetFadeOutType_byMapChangeType( MC_TYPE prevMapChangeType
     /* OTHER   */{ FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK },
   };
 
-  // DEBUG:
-  OS_TFPrintf( 0, "MapChangeType%d ==> MapChangeType%d = FadeOutType%d\n", 
-               prevMapChangeType, nextMapChangeType, fadeType[ prevMapChangeType ][ nextMapChangeType ] );
-
   return fadeType[ prevMapChangeType ][ nextMapChangeType ];
 }
 
@@ -479,10 +476,6 @@ static FIELD_FADE_TYPE GetFadeInType_byMapChangeType( MC_TYPE prevMapChangeType,
     /* BRIDGE  */{ FIELD_FADE_PLAYER_DIR, FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_CROSS,      FIELD_FADE_BLACK },
     /* OTHER   */{ FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK },
   };
-
-  // DEBUG:
-  OS_TFPrintf( 0, "MapChangeType%d ==> MapChangeType%d = FadeInType%d\n", 
-               prevMapChangeType, nextMapChangeType, fadeType[ prevMapChangeType ][ nextMapChangeType ] );
 
   return fadeType[ prevMapChangeType ][ nextMapChangeType ];
 }
