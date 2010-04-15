@@ -110,6 +110,12 @@ SCRCMD_WORK * SCRCMD_WORK_Create(
 //--------------------------------------------------------------
 void SCRCMD_WORK_Delete( SCRCMD_WORK *work )
 {
+  if( work->backup_work != NULL )
+  {
+    GF_ASSERT( 0 );
+    GFL_HEAP_FreeMemory( work->backup_work );
+  }
+
 	if( work->msgData != NULL ){
 		GFL_MSG_Delete( work->msgData );
 	}

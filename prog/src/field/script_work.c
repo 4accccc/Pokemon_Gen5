@@ -550,6 +550,7 @@ void * SCRIPT_BackupUserWork( SCRIPT_WORK * sc )
 void SCRIPT_RestoreUserWork( SCRIPT_WORK * sc, void *backup_work )
 {
   GFL_STD_MemCopy16( backup_work, getTempWork( sc, USERWK_AREA_START ), sizeof(u16) * USERWK_SIZE );
+  GFL_HEAP_FreeMemory( backup_work );
 }
 
 //----------------------------------------------------------------------------
