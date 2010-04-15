@@ -1186,7 +1186,10 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_DeletePokeIcon( biw );
       BTLV_INPUT_DeleteWeatherIcon( biw );
 
-      BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+      if( biw->main_loop_tcb_flag == TRUE )
+      { 
+        BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+      }
 
       if( ( biw->scr_type == BTLV_INPUT_SCRTYPE_COMMAND ) || ( biw->scr_type == BTLV_INPUT_SCRTYPE_YES_NO ) )
       {
