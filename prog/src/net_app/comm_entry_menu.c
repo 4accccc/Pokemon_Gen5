@@ -700,7 +700,7 @@ static BOOL _Update_Child(COMM_ENTRY_MENU_PTR em)
     break;
   case _SEQ_GAME_CANCEL_WAIT:
     if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE){
-      em->seq = _SEQ_INIT_TALK;
+      em->seq = _SEQ_CANCEL_INIT;
     }
     break;
   

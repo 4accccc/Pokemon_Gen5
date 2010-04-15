@@ -381,7 +381,7 @@ BOOL MUS_COMM_ExitGameComm(int *seq, void *pwk, void *pWork)
     }
     break;
   case 2:
-    if( work->mode == MCM_CHILD )
+    if( GFL_NET_IsParentMachine() == FALSE )
     {
       if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
       {
