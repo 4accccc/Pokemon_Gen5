@@ -96,10 +96,11 @@ static const INTRO_CMD_DATA c_intro_scene_02[] =
   { INTRO_CMD_TYPE_MCSS_CHECK_ANIME, { 0 }, },      // 博士のアニメ終了待ち
 
   { INTRO_CMD_TYPE_MCSS_SET_ANIME, { 0, 2 }, },     // 博士をボールを投げるアニメに変更
-  { INTRO_CMD_TYPE_WAIT, 54 },                      // ウェイト
-  { INTRO_CMD_TYPE_SE, { SEQ_SE_NAGERU } },         // ボール投げる音
-  { INTRO_CMD_TYPE_MCSS_CHECK_ANIME, { 0 }, },      // 博士のアニメ終了待ち
+//  { INTRO_CMD_TYPE_WAIT, 146 },                      // ウェイト
+  { INTRO_CMD_TYPE_WAIT, 142 },                      // ウェイト
   { INTRO_CMD_TYPE_MCSS_SET_ANIME, { 0, 1 }, },     // 博士を停止アニメに変更
+  { INTRO_CMD_TYPE_SE, { SEQ_SE_NAGERU } },         // ボール投げる音
+//  { INTRO_CMD_TYPE_MCSS_CHECK_ANIME, { 0 }, },      // 博士のアニメ終了待ち
 
   { INTRO_CMD_TYPE_SE, { SEQ_SE_BOWA2 }, CMD_READ_NEXT }, // ボールから出てくる音
   { INTRO_CMD_TYPE_MCSS_SET_VISIBLE, { 1, TRUE }, CMD_READ_NEXT }, // ポケモン表示
