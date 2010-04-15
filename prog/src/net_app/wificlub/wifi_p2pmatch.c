@@ -106,8 +106,7 @@ typedef struct{
 
 
 static void Snd_PlayerSetInitialVolume(int a,int b){}
-static void* TimeWaitIconAdd(GFL_BMPWIN* a,int cgx){ return NULL; }
-static void TimeWaitIconTaskDel(void* c){}
+//static void TimeWaitIconTaskDel(void* c){}
 static void Snd_DataSetByScene( int a, int b, int c ){}
 static void Snd_SceneSet( int a ){}
 static int Snd_NowBgmNoGet(void){ return 0;}
@@ -1002,7 +1001,8 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _DirectConnectWait,//WIFIP2PMATCH_MODE_CONNECTWAIT,
   _DirectConnectWait2,//  WIFIP2PMATCH_MODE_CONNECTWAIT2,
   _playerDirectWaitSendCommand, // WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND
-
+  _playerDirectBattleGo3KeyWait, // WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO3_KEYWAIT
+  _playerDirectEndKeyWait,  //WIFIP2PMATCH_PLAYERDIRECT_END_KEYWAIT
 };
 
 #define _MAXNUM   (2)         // 最大接続人数
@@ -2522,8 +2522,6 @@ static int _retry( WIFIP2PMATCH_WORK *wk, int seq )
     GFL_NET_StateWifiEnterLogin();
     //        wk->pMatch = GFL_NET_StateWifiEnterLogin(wk->pSaveData,sizeof(TEST_MATCH_WORK));
     WifiP2PMatchMessagePrint(wk, dwc_message_0008, TRUE);
-    GF_ASSERT( wk->timeWaitWork == NULL );
-    wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
     _CHANGESTATE(wk,WIFIP2PMATCH_CONNECTING_INIT);
   }
   return seq;
@@ -2547,8 +2545,6 @@ static int WifiP2PMatch_Connecting( WIFIP2PMATCH_WORK *wk, int seq )
   if( GFL_NET_DWC_GetSaving()) {
     _CHANGESTATE(wk,WIFIP2PMATCH_FIRST_SAVING);
     WifiP2PMatchMessagePrint(wk, dwc_message_0015, TRUE);
-    GF_ASSERT( wk->timeWaitWork == NULL );
-    wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
   }
 
   if(GFL_NET_StateIsWifiLoginState()){
@@ -3409,7 +3405,8 @@ static int _callGameInit( WIFIP2PMATCH_WORK *wk, int seq )
       
       _friendNameExpand(wk, n);
       WifiP2PMatchMessagePrint(wk,msg_wifilobby_082, FALSE);
-      wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
+      WifiP2PMatchMessage_TimeIconStart(wk);
+
       wk->cancelEnableTimer = _CANCELENABLE_TIMER;
       _CHANGESTATE(wk, WIFIP2PMATCH_MODE_MATCH_LOOP);
       {
@@ -4438,8 +4435,8 @@ static BOOL _playerDirectConnectStart( WIFIP2PMATCH_WORK *wk )
         _myStatusChange(wk, WIFI_STATUS_CALL, gamemode);  // 呼びかけ待機中になる
         _friendNameExpand(wk, friendNo - 1);
         WifiP2PMatchMessagePrint(wk,msg_wifilobby_014, FALSE);
-        GF_ASSERT( wk->timeWaitWork == NULL );
-        wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
+        WifiP2PMatchMessage_TimeIconStart(wk);
+        
         wk->DirectMacSet = friendNo;
 
         _CHANGESTATE(wk,  WIFIP2PMATCH_MODE_CONNECTWAIT);
@@ -4838,8 +4835,7 @@ static int _childModeConnect( WIFIP2PMATCH_WORK *wk, int seq )
       _myStatusChange(wk, WIFI_STATUS_RECRUIT, gamemode);  // 接続待機中になる
       _friendNameExpand(wk, friendNo - 1);
       WifiP2PMatchMessagePrint(wk,msg_wifilobby_014, FALSE);
-      GF_ASSERT( wk->timeWaitWork == NULL );
-      wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
+      WifiP2PMatchMessage_TimeIconStart(wk);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MATCH_LOOP);
     }
     else{
@@ -5633,8 +5629,7 @@ static int _nextBattleWait( WIFIP2PMATCH_WORK *wk, int seq )
     }else if(ret == 0){ // はいを選択した場合
       //EndMessageWindowOff(wk);
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
-      GF_ASSERT( wk->timeWaitWork == NULL );
-      wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
+      WifiP2PMatchMessage_TimeIconStart(wk);
       wk->bRetryBattle = TRUE;
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_YESNO);
       wk->timer = 30;

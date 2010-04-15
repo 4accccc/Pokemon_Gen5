@@ -1070,14 +1070,24 @@ static int _playerDirectBattleGO3( WIFIP2PMATCH_WORK *wk, int seq )
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
     }
     else{
-      wk->command = WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED;
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_1010, FALSE);
-      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
+      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO3_KEYWAIT);
     }
   }
   EndMessageWindowOff(wk);
   return seq;
 }
+
+
+// WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO3_KEYWAIT
+static int _playerDirectBattleGo3KeyWait( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if(GFL_UI_KEY_GetTrg()){
+    wk->command = WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED;
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
+  }
+}
+
 
 //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO4
 static int _playerDirectBattleGO4( WIFIP2PMATCH_WORK *wk, int seq )
@@ -1437,12 +1447,26 @@ static int _playerDirectEnd( WIFIP2PMATCH_WORK *wk, int seq )
   else{
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1016, FALSE);
   }
-  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END_KEYWAIT);
   return seq;
 }
 
 
+//------------------------------------------------------------------
+/**
+ * @brief   指定モード終了 WIFIP2PMATCH_PLAYERDIRECT_END_KEYWAIT
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
 
+static int _playerDirectEndKeyWait( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if(!GFL_UI_KEY_GetTrg()){
+    return seq;
+  }
+  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
+}
 
 //------------------------------------------------------------------
 /**

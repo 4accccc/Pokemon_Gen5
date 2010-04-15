@@ -31,6 +31,7 @@
 
 #include "wifi_p2pmatchroom.h"
 #include "ui/touchbar.h"
+#include "system/time_icon.h"
 
 
 #define WIFIP2PMATCH_MEMBER_MAX  (WIFILIST_FRIEND_MAX)
@@ -59,7 +60,6 @@
 
 //上がめんぽけもんアイコンパレット
 #define _OBJPLT_POKEICON_OFFSET (11*32)
-
 
 
 
@@ -231,7 +231,8 @@ enum{
   WIFIP2PMATCH_MODE_CONNECTWAIT,
   WIFIP2PMATCH_MODE_CONNECTWAIT2,
   WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND,
-
+  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO3_KEYWAIT,
+  WIFIP2PMATCH_PLAYERDIRECT_END_KEYWAIT,
 };
 
 
@@ -406,6 +407,7 @@ struct _WIFIP2PMATCH_WORK{
   STRBUF			*TitleString;							// タイトルメッセージ用
 //  STRBUF			*MenuString[4];							// メニューメッセージ用
   STRBUF*         pTemp;        // 入力登録時の一時バッファ
+  TIMEICON_WORK* pTimeIcon;
   
   int				MsgIndex;								// 終了検出用ワーク
   BMPMENU_WORK* pYesNoWork;
@@ -501,6 +503,7 @@ extern void WifiP2PMatchRecvDirectMode(const int netID, const int size, const vo
 extern void WifiP2PMatchRecvBattleRegulation(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 extern void WifiP2PMatchRecvPokeParty(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 extern u8* WifiP2PMatchGetPokePartyWork(int netID, void* pWk, int size);
+extern void WifiP2PMatchMessage_TimeIconStart(WIFIP2PMATCH_WORK* wk);
 
 
 

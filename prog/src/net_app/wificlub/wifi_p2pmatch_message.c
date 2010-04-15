@@ -10,7 +10,7 @@
 #include "net_app/union/union_beacon_tool.h"
 #include "system/tr2dgra.h"
 #include "pokeicon/pokeicon.h"
-
+#include "system/time_icon.h"
 
 
 #define _TOUCHBAR_BG_PALPOS (12)     //タッチバーの色   （１）本
@@ -163,12 +163,11 @@ static GFL_BMPWIN* _BmpWinDel(GFL_BMPWIN* pBmpWin)
 //------------------------------------------------------------------
 static void _timeWaitIconDel(WIFIP2PMATCH_WORK *wk)
 {
-  if(wk->timeWaitWork){
-    TimeWaitIconTaskDel(wk->timeWaitWork);  // タイマー止め
-    wk->timeWaitWork = NULL;
-    wk->MsgWin = _BmpWinDel(wk->MsgWin);
-
+  if(wk->pTimeIcon){
+    TILEICON_Exit(wk->pTimeIcon);
+    wk->pTimeIcon=NULL;
   }
+//  wk->MsgWin = _BmpWinDel(wk->MsgWin);
 }
 
 
@@ -181,6 +180,8 @@ static void _timeWaitIconDel(WIFIP2PMATCH_WORK *wk)
 //------------------------------------------------------------------
 static void EndMessageWindowOff( WIFIP2PMATCH_WORK *wk )
 {
+
+
   _timeWaitIconDel(wk);
   if(!PRINTSYS_QUE_IsFinished(wk->SysMsgQue)){
     PRINTSYS_QUE_Clear(wk->SysMsgQue);
@@ -969,7 +970,7 @@ static void InitMessageWork( WIFIP2PMATCH_WORK *wk )
   wk->TitleString = GFL_STR_CreateBuffer( TITLE_MESSAGE_BUF_NUM, HEAPID_WIFIP2PMATCH );
   wk->SysMsgQue = PRINTSYS_QUE_Create( HEAPID_WIFIP2PMATCH );
   wk->SysMenuQue = PRINTSYS_QUE_Create( HEAPID_WIFIP2PMATCH );
-  wk->pMsgTcblSys = GFL_TCBL_Init( HEAPID_WIFIP2PMATCH , HEAPID_WIFIP2PMATCH , 1 , 0 );
+  wk->pMsgTcblSys = GFL_TCBL_Init( HEAPID_WIFIP2PMATCH , HEAPID_WIFIP2PMATCH , 2 , 0 );
 
 
 }
@@ -1743,5 +1744,25 @@ static void _Menu_RegulationDelete(WIFIP2PMATCH_WORK* wk)
   PokeRegulation_DeletePrintMsg(wk->rpm);
   wk->rpm = NULL;
   wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   タイムアイコンを出す
+ * @param   POKEMON_TRADE_WORK
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+
+void WifiP2PMatchMessage_TimeIconStart(WIFIP2PMATCH_WORK* wk)
+{
+  if(wk->pTimeIcon){
+    TILEICON_Exit(wk->pTimeIcon);
+    wk->pTimeIcon=NULL;
+  }
+  wk->pTimeIcon =
+    TIMEICON_CreateTcbl(wk->pMsgTcblSys, wk->MsgWin,
+                        15, TIMEICON_DEFAULT_WAIT, HEAPID_WIFIP2PMATCH);
 }
 
