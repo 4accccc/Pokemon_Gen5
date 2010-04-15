@@ -13486,63 +13486,109 @@
 	</row>
 
 	<row id="TRID_SCHOOLG_08_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">たっくさん　どくしょを　して
+わかったのは　よのなか　まだまだ▽
+なぞ　ばかりって　ことです！▼</language>
+		<language name="JPN_KANJI" width="216">たっくさん　読書を　して
+わかったのは　世の中　まだまだ▽
+なぞ　ばかりって　ことです！▼</language>
 	</row>
 
 	<row id="TRID_SCHOOLG_08_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">どうしたら　もっと　ポケモンと
+なかよくなれるのかも　なぞ　ですわ</language>
+		<language name="JPN_KANJI" width="216">どうしたら　もっと　ポケモンと
+仲良くなれるのかも　なぞ　ですわ</language>
 	</row>
 
 	<row id="TRID_SCHOOLG_08_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">さいきん　よんでいるのは
+アララギはかせの　ほん▼
+ポケモンの　きげんって
+いまだに　なぞ　なんだって</language>
+		<language name="JPN_KANJI" width="216">最近　読んでいるのは
+アララギ博士の　著書▼
+ポケモンの　起源って
+いまだに　なぞ　なんだって</language>
 	</row>
 
 	<row id="TRID_SCIENTISTW_09_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">ビレッジブリッジに　ついて
+けんきゅう　しているけれど……▽
+いきぬきも　だいじ　よね！▼</language>
+		<language name="JPN_KANJI" width="216">ビレッジブリッジに　ついて
+研究しているけれど……▽
+息抜きも　大事よね！▼</language>
 	</row>
 
 	<row id="TRID_SCIENTISTW_09_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">あなたと　ポケモン！
+みごとに　ささえあっているわね！</language>
+		<language name="JPN_KANJI" width="216">あなたと　ポケモン！
+みごとに　支えあっているわね！</language>
 	</row>
 
 	<row id="TRID_SCIENTISTW_09_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">ビレッジブリッジは
+かずおおくの　レンガが　ささえあい▽
+くずれないように　している▼
+そうして　ひゃくねん　いじょうも
+この　かたちを　たもっているの</language>
+		<language name="JPN_KANJI" width="216">ビレッジブリッジは
+数多くの　レンガが　支えあい▽
+崩れないように　している▼
+そうして　百年以上も
+この形状を　保っているの</language>
 	</row>
 
 	<row id="TRID_BACKPACKERM_16_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">ぼくは　たびをして　わかったよ
+みんな　ポケモンが　だいすきって！▽
+きっと　きみも　そうなんだろ？▼</language>
+		<language name="JPN_KANJI" width="216">ぼくは　旅をして　わかったよ
+みんな　ポケモンが　大好きって！▽
+きっと　きみも　そうなんだろ？▼</language>
 	</row>
 
 	<row id="TRID_BACKPACKERM_16_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">まけたけれど
+ぼくたちの　たびは　まだつづく！</language>
+		<language name="JPN_KANJI" width="216">負けたけれど
+ぼくたちの　旅は　まだ続く！</language>
 	</row>
 
 	<row id="TRID_BACKPACKERM_16_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">ぼくたちは　これからも　あるく！
+みちが　つづくかぎり……▽
+ポケモンが　いるかぎり　ね！</language>
+		<language name="JPN_KANJI" width="216">ぼくたちは　これからも　歩く！
+道が　続くかぎり……▽
+ポケモンが　いるかぎり　ね！</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_13_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">この　あいさつは
+あなたで　１００にんめ！▼
+ポケモン　しよう！▼</language>
+		<language name="JPN_KANJI" width="216">この　あいさつは
+あなたで　１００人目！▼
+ポケモン　しよう！▼</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_13_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">ありがとう！　これで　あなたとは
+もう　ともだち　だよね！</language>
+		<language name="JPN_KANJI" width="216">ありがとう！　これで　あなたとは
+もう　友達　だよね！</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_13_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">せかいの　どこででも
+だれとでも　ポケモン　しよう！　で▽
+あいさつ　できれば　ステキよね！</language>
+		<language name="JPN_KANJI" width="216">世界の　どこででも
+だれとでも　ポケモン　しよう！　で▽
+あいさつ　できれば　ステキよね！</language>
 	</row>
 
 	<flowchart-group-list>
