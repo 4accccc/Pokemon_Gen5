@@ -272,13 +272,26 @@ _TALK_OBJ_START()
 		
 		//========================================/
 	ELSE
-	
-		//【仮】ゲームシンクを利用したフラグがない
 		
-		//gamesyncでねかせた　ポケモンを　おこしたら
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_13 )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
+		DEFINE_LOCAL	LWK_RECORD
+	
+		_GET_RECORD( RECID_PDW_SLEEP_POKEMON, LWK_RECORD )
+		
+		IF $LWK_RECORD == 0 THEN
+		
+			//gamesyncでねかせた　ポケモンを　おこしたら
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_13 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ELSE
+		
+			//gamesyncでねかせた　ポケモンを　おこしたら
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_14 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ENDIF
 		
 	ENDIF
 
