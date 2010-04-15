@@ -1836,12 +1836,12 @@ static void _changeWaitState(POKEMON_TRADE_WORK* pWork)
     _CHANGE_STATE(pWork, POKEMONTRADE_changeTimingDemoStart);
     return;
   }
-  else if((pWork->changeFactor[myID]==POKETRADE_FACTOR_SINGLE_NG) &&
-          (pWork->changeFactor[targetID]==POKETRADE_FACTOR_SINGLE_NG)){
-    pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;
-    _CHANGE_STATE(pWork, POKEMONTRADE_PROC_FadeoutStart);
-    return;
-  }
+ // else if((pWork->changeFactor[myID]==POKETRADE_FACTOR_SINGLE_NG) &&
+  //        (pWork->changeFactor[targetID]==POKETRADE_FACTOR_SINGLE_NG)){
+  //  pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;
+  //  _CHANGE_STATE(pWork, POKEMONTRADE_PROC_FadeoutStart);
+   // return;
+//  }
   else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_EGG){
     msgno = POKETRADE_STR_97;
   }
