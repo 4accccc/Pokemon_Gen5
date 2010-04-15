@@ -476,7 +476,7 @@ static void CursorResLoad( BBAG_WORK * wk )
 	// パレット
   wk->palRes[BBAG_PALRES_CURSOR] = GFL_CLGRP_PLTT_RegisterEx(
 																		ah, NARC_battgra_wb_battle_w_obj_NCLR,
-																		CLSYS_DRAW_SUB, BBAG_PALRES_CURSOR*0x20, 1, 1, wk->dat->heap );
+																		CLSYS_DRAW_SUB, BBAG_PALRES_CURSOR*0x20, 4, 1, wk->dat->heap );
 	// セル・アニメ
   wk->celRes[BBAG_CELRES_CURSOR] = GFL_CLGRP_CELLANIM_Register(
 																		ah,
@@ -491,7 +491,7 @@ static void CursorResLoad( BBAG_WORK * wk )
 
 		buf = GFL_ARCHDL_UTIL_LoadPalette( ah, NARC_battgra_wb_battle_w_obj_NCLR, &dat, wk->dat->heap );
 		PaletteWorkSet(
-			wk->pfd, &(((u16*)(dat->pRawData))[16]), FADE_SUB_OBJ, BBAG_PALRES_CURSOR*16, 0x20 );
+			wk->pfd, &(((u16*)(dat->pRawData))[16*4]), FADE_SUB_OBJ, BBAG_PALRES_CURSOR*16, 0x20 );
 	
 		GFL_HEAP_FreeMemory( buf );
 	}

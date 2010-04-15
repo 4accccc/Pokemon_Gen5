@@ -665,12 +665,13 @@ static void BPL_ButtonScreenMake( BPLIST_WORK * wk, u16 * buf, u8 id, u8 anm, u8
 			}
 		}
 		break;
-
+/*
 	case BPL_BUTTON_WAZADEL5:	// ‹Z–Y‚ê‚T
 		for( i=0; i<sx*sy; i++ ){
 			buf[i] = ( buf[i] & 0xfff ) | WAZA_COL_DEL;
 		}
 		break;
+*/
 
 /*
 	case BPL_BUTTON_STATUS1:	// ‹­‚³‚ðŒ©‚éi¶”z’uj
