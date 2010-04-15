@@ -249,6 +249,14 @@ static BOOL check_TrainerType(u8 tr_type)
 //======================================================================
 //  バトルサブウェイ関連
 //======================================================================
+typedef struct
+{
+  u16  size;      ///< 配列サイズ
+  u16  strlen;    ///< 文字列長（EOMを含まない）
+  u32  magicNumber; ///< 正常に初期化済みであることをチェックするためのナンバー
+  STRCODE  buffer[1]; ///< 配列本体
+}DEBUG_STRBUF;
+
 //--------------------------------------------------------------
 /**
  *  @brief バトルサブウェイ用ポケモンデータからPOKEMON_PARAMを生成
@@ -334,7 +342,35 @@ static void make_PokePara(
     STRBUF *nick_name;
     nick_name = GFL_STR_CreateBuffer(
         MONS_NAME_SIZE+EOM_SIZE, HEAPID_PROC );
+#if 0
     GFL_STR_SetStringCode( nick_name, src->nickname );
+#else
+    {
+      u16 eomCode = GFL_STR_GetEOMCode();
+      DEBUG_STRBUF *d_strbuf = (DEBUG_STRBUF*)nick_name;
+      const STRCODE *sz = src->nickname;
+      
+      OS_TPrintf( " SetStringCode ... " );
+      d_strbuf->strlen = 0;
+      
+      while( *sz != eomCode )
+      {
+        if( d_strbuf->strlen >= (d_strbuf->size-1) )
+        {
+          GF_ASSERT_MSG( 0, "STRBUF overflow: busize=%d, EOMCode=%04x",
+              d_strbuf->size, eomCode );
+          break;
+        }
+        
+        OS_TPrintf("%04x,", *sz);
+        d_strbuf->buffer[ d_strbuf->strlen++ ] = *sz++;
+      }
+      
+      OS_TPrintf( "\n" );
+      
+      d_strbuf->buffer[d_strbuf->strlen] = eomCode;
+    }
+#endif
     PP_Put( dest, ID_PARA_nickname, (u32)nick_name );
     GFL_STR_DeleteBuffer( nick_name );
   }
@@ -1056,7 +1092,7 @@ static BSUBWAY_TRAINER_ROM_DATA * alloc_TrainerRomData(
   trd = get_TrainerRomData(tr_no,heapID);
   
   //トレーナーIDをセット
-  tr_data->bt_trd.player_id=tr_no;
+  tr_data->bt_trd.player_id = tr_no + 1; //1 origin
   
   //トレーナー出現メッセージ
   tr_data->bt_trd.appear_word[0] = 0xFFFF;
