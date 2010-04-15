@@ -104,6 +104,8 @@ EVENT_START ev_vending_machine01
             //抽選する
             _GET_RND( ans, 32 )
             IF $ans == 0 THEN //あたり
+              //タグ０番にアイテムセット
+              _ITEM_NAME( 0, item )
               //「あたり！もう一本」
               _SYSWIN_MSG( msg_vender_03 , POS_DOWN )
               _SYSWIN_CLOSE()
