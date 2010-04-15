@@ -12965,10 +12965,12 @@ static u8 scproc_HandEx_recoverHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
 
   u8 result = 0;
 
-  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
+/// 道具使用による実行もあるので、場にいなくても有効
+//  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
   {
-    BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
     BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+    BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+
 
     if( !BPP_IsDead(pp_target)
     &&  !BPP_IsHPFull(pp_target)
@@ -13074,7 +13076,8 @@ static u8 scproc_HandEx_recoverPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
   const BTL_HANDEX_PARAM_PP* param = (BTL_HANDEX_PARAM_PP*)param_header;
   BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
 
-  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
+/// 道具使用による実行もあるので、場にいなくても有効
+//  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
   {
     BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
 
