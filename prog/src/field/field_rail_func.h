@@ -191,6 +191,14 @@ extern void FIELD_RAIL_CAMERAFUNC_FixAngleLineWay_XYZ( const FIELD_RAIL_MAN * ma
 //  進行方向に対するアングルを固定＋ライン中心をターゲット
 extern void FIELD_RAIL_CAMERAFUNC_FixAngleLineWay_Center( const FIELD_RAIL_MAN * man );
 
+
+//------------------------------------------------------------------
+//  スクロールストップ　FIXアングル
+//------------------------------------------------------------------
+extern void FIELD_RAIL_CAMERAFUNC_StopScrollFixAngle_StartPoint( const FIELD_RAIL_MAN * man );
+extern void FIELD_RAIL_CAMERAFUNC_StopScrollFixAngle_EndPoint( const FIELD_RAIL_MAN * man );
+
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif

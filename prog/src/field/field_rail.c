@@ -1962,6 +1962,26 @@ void FIELD_RAIL_GetLineCenterPos( const FIELD_RAIL_WORK* rail, VecFx32* pos )
   ((FIELD_RAIL_WORK*)rail)->width_ofs = width_ofs;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ラインオフすの位置を取得
+ *
+ *	@param	rail
+ *	@param	pos 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_GetLineLineOfsPos( const FIELD_RAIL_WORK* rail, s32 ofs, VecFx32* pos )
+{
+  s32 line_ofs;
+  // 本当はいけないが、ワークを書き換える。
+  // 確実に最後はもとに戻す。
+  line_ofs = rail->line_ofs;
+  ((FIELD_RAIL_WORK*)rail)->line_ofs = ofs;
+  getRailPosition( rail, pos );
+  ((FIELD_RAIL_WORK*)rail)->line_ofs = line_ofs;
+}
+
+
 
 
 

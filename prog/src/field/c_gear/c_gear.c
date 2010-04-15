@@ -3773,6 +3773,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
     pWork->bAction = bAction;
   }
 
+  // スリープ時は強制停止
   if( SleepMode_IsSleep( pWork ) ){
     FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
     FSND_StopTVTRingTone( fsnd );
@@ -3783,18 +3784,16 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
     // トランシーバー反応処理
     if( !pWork->beacon_bit ){
       u32 bit = WIH_DWC_GetAllBeaconTypeBit(GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(pWork->pGameSys)));
+      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
 
       // トランシーバー再生処理
       if(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR){ // トランシーバー
-        if(SleepMode_IsSleep( pWork ) == FALSE){
-          FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
-          //OS_TPrintf("よびだし\n");
-          FSND_RequestTVTRingTone( fsnd);
-        }
-      }
+        //OS_TPrintf("よびだし\n");
+        FSND_RequestTVTRingTone( fsnd);
+
       // トランシーバー停止処理
-      if(!(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR)){
-        FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
+      }else if(!(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR)){
+
         FSND_StopTVTRingTone( fsnd );
       }
     }

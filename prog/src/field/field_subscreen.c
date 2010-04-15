@@ -1287,6 +1287,10 @@ static void init_touchcamera_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSC
     PAD_BUTTON_SELECT,
     GFL_DISPUT_BGID_S0, GFL_DISPUT_PALID_15,
   };
+  
+  // Overlay
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_camera) );
+  
   pWork->gflCamAdjust = GFL_CAMADJUST_Create(&camAdjustData, pWork->heapID);
 
 }
@@ -1304,6 +1308,9 @@ static void exit_touchcamera_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 {
   GFL_CAMADJUST_Delete( pWork->gflCamAdjust );
   pWork->gflCamAdjust = NULL;
+
+  // Overlay
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_camera) );
 }
 
 //=============================================================================

@@ -65,6 +65,9 @@ static void updateCircleCamera( const FIELD_RAIL_MAN * man, u16 pitch, fx32 len,
 // 平面とチェックポジションの判定
 static BOOL is_Hit3DPosPlane( const RAIL_POINT * cp_point_s, const RAIL_POINT * cp_point_e, const VecFx32* cp_pos, VecFx32* p_cross, fx32* dis_bcos, VecFx32* gaiseki );
 
+// カメラスクロール停止処理
+static void cameraScrollStop( const FIELD_RAIL_MAN * man, const FIELD_RAIL_WORK* work, const RAIL_POINT * cp_point );
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void debugPrintWholeVector(const char * before, const VecFx32 * vec, const char * after)
@@ -1345,6 +1348,57 @@ void FIELD_RAIL_CAMERAFUNC_FixAngleLineWay_Center( const FIELD_RAIL_MAN * man )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラスクロール停止
+ *
+ *	@param	man 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_CAMERAFUNC_StopScrollFixAngle_StartPoint( const FIELD_RAIL_MAN * man )
+{
+	const FIELD_RAIL_WORK* work = FIELD_RAIL_MAN_GetBindWork( man );
+  const RAIL_POINT* point;
+  u32 type;
+
+
+	type = FIELD_RAIL_GetType( work );
+  GF_ASSERT( type == FIELD_RAIL_TYPE_LINE );
+
+  point = FIELD_RAIL_GetPointStart( work );
+
+  if( type == FIELD_RAIL_TYPE_LINE )
+
+  // 常に始点のカメラ
+  cameraScrollStop( man, work, point );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラスクロール停止
+ *
+ *	@param	man 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_CAMERAFUNC_StopScrollFixAngle_EndPoint( const FIELD_RAIL_MAN * man )
+{
+	const FIELD_RAIL_WORK* work = FIELD_RAIL_MAN_GetBindWork( man );
+  const RAIL_POINT* point;
+  u32 type;
+
+
+	type = FIELD_RAIL_GetType( work );
+  GF_ASSERT( type == FIELD_RAIL_TYPE_LINE );
+
+  point = FIELD_RAIL_GetPointEnd( work );
+
+  if( type == FIELD_RAIL_TYPE_LINE )
+
+  // 常に始点のカメラ
+  cameraScrollStop( man, work, point );
+}
+
+
 
 // 
 //----------------------------------------------------------------------------
@@ -1454,3 +1508,53 @@ static BOOL is_Hit3DPosPlane( const RAIL_POINT * cp_point_s, const RAIL_POINT * 
 
   return TRUE;
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラスクロール停止処理
+ *
+ *	@param	man
+ *	@param	cp_stoppoint 
+ */
+//-----------------------------------------------------------------------------
+static void cameraScrollStop( const FIELD_RAIL_MAN * man, const FIELD_RAIL_WORK* work, const RAIL_POINT * cp_point )
+{
+  VecFx32 pos;
+  const RAIL_CAMERA_SET * cs;
+	const RAIL_CAMERAFUNC_FIXANGLE_WORK* cs_work;
+  FIELD_CAMERA* p_camera;
+  s32 ofs;
+
+  if( FIELD_RAIL_GetPointStart( work ) == cp_point ){
+  
+    ofs = 0;
+  }else{
+
+    ofs = FIELD_RAIL_GetLineOfsMax( work );
+  }
+  
+  // 座標を求める
+  // これをターゲットとする。
+  FIELD_RAIL_GetLineLineOfsPos( work, ofs, &pos );
+
+  // 始点の情報取得
+  cs = FIELD_RAIL_POINT_GetCameraSet( work, cp_point );
+  cs_work = (const RAIL_CAMERAFUNC_FIXANGLE_WORK*)cs->work;
+
+  p_camera = FIELD_RAIL_MAN_GetCamera(man);
+  
+	// 座標直指定モード
+	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+	// デフォルトターゲットを参照しない
+	FIELD_CAMERA_FreeTarget( p_camera );
+
+  // 座標とアングルを設定
+  FIELD_CAMERA_SetTargetPos( p_camera, &pos );
+  FIELD_CAMERA_SetAnglePitch( p_camera, cs_work->pitch );
+  FIELD_CAMERA_SetAngleYaw( p_camera, cs_work->yaw );
+  FIELD_CAMERA_SetAngleLen( p_camera, cs_work->len );
+}
+

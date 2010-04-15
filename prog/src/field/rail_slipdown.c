@@ -339,6 +339,7 @@ static void RailSlipDown_Update( GFL_TCB* p_tcb, void* p_work )
 
       p_slipdown->count = 0;
 
+
       if( p_slipdown->p_player ){
         // カメラトレースOFF
         FIELD_CAMERA_StopTraceRequest( p_slipdown->p_camera );
@@ -407,6 +408,9 @@ static void RailSlipDown_Update( GFL_TCB* p_tcb, void* p_work )
   case EV_RAILSLIPDOWN_SLIPDOWN_START: // ずり落ち
       PMSND_PlaySE( RAILSLIPDOWN_SE );
       p_slipdown->seq = EV_RAILSLIPDOWN_SLIPDOWN_WAIT;
+      // 影を消す。
+      MMDL_OnMoveBit( p_slipdown->p_mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
+      
   case EV_RAILSLIPDOWN_SLIPDOWN_WAIT:
     {
       VecFx32 pos;
@@ -503,6 +507,7 @@ static void RailSlipDown_Update( GFL_TCB* p_tcb, void* p_work )
     }
 
     // 動作復帰
+    MMDL_OffMoveBit( p_slipdown->p_mmdl, MMDL_MOVEBIT_SHADOW_VANISH ); // 影復帰
     MMDL_SetStatusBitHeightGetOFF( p_slipdown->p_mmdl, FALSE );  // 高さ取得OFF
     MMDL_SetStatusBitAttrGetOFF( p_slipdown->p_mmdl, FALSE );    // アトリビュート取得OFF
     MMDL_SetStatusBitFellowHit( p_slipdown->p_mmdl, TRUE );    // 他のオブジェとの判定 ON

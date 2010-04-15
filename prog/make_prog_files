@@ -713,7 +713,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_beacon.c \
         field/party_select_list.c \
         field/field_bbd_color.c \
-        test/camera_adjust_view.c \
 				field/event_comm_talk.c \
 				field/event_comm_talked.c \
 				field/event_gpower.c \
@@ -1642,6 +1641,11 @@ SRCS_OVERLAY_DEBUG_BEACON = field/event_debug_beacon.c
 #DEBUG_JUMPライブラリ
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_JUMP   = field/event_debug_menu_jump.c
+
+
+#DEBUG_CAMERAライブラリ
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_DEBUG_CAMERA   = test/camera_adjust_view.c
 
 #DEBUG_SYMBOL_MENU
 #===> GROUP_OVERLAY_GIMMICK

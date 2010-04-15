@@ -9,6 +9,9 @@
 #ifndef __DEBUG_CAMADJUST_H__
 #define __DEBUG_CAMADJUST_H__
 
+
+FS_EXTERN_OVERLAY(debug_camera);
+
 //
 //	使用の際にはgraphicフォルダ内のcamera_adjust_view.narcをルートに配置してください
 //	（"camera_adjust_view.narc"パス指定で取得できる場所）
