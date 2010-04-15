@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-07T22:29:56"/>
+	<create user="matsumiya" host="W00224" date="2010-04-15T19:10:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1382" top="163" right="2087" bottom="791" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="167" right="1985" bottom="795" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -387,7 +387,7 @@
 		<language name="JPN_KANJI" width="256">……ポケモンを　とられて　大変で
 不安で　どうしようも　なかったけど▼
 それでも　いえるよ
-旅に　でて　よかったよ！▼▼
+旅に　でて　よかったよ！▼
 それに　ポケモンと　いることが
 すごく　大事だって　わかったし！▼
 じゃ　また　どこかで　会おうね
