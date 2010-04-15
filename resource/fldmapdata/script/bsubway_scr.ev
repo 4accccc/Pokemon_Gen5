@@ -201,7 +201,7 @@ _RET
 sub_bsw_receipt_guide_wifi:
 {
   //アップロードしていないデータがあるか？
-  _BSUBWAY_TOOL( BSWTOOL_WIFI_GET_UPLOAD_FLAG, 0, BSW_NULL, ret )
+  _BSUBWAY_TOOL( BSWTOOL_WIFI_GET_UPLOAD_FLAG, BSW_NULL, BSW_NULL, ret )
   
   IF $ret == TRUE THEN //未アップロードデータあり
     $SCWK_TEMP0 = msg_bsw_scr_50 //アップロードするか？

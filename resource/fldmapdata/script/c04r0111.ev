@@ -594,11 +594,15 @@ EVENT_START ev_c04r0111_home
         _MSGWIN_CLOSE()
         
         IF $SCWK_ANSWER == SCR_YES THEN //送る
-          _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
-          _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, ret )
-        ELSE //送らない
-          //未ダウンロードフラグセット
-          _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 1, BSW_NULL, ret )
+          _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, ret )
+          
+          IF $ret == TRUE THEN
+            _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, BSW_NULL )
+          ELSE //送れなかった
+            _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 1, BSW_NULL, BSW_NULL )
+          ENDIF
+        ELSE //送らない 未ダウンロードフラグセット
+          _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 1, BSW_NULL, BSW_NULL )
         ENDIF
       ENDIF
     ENDIF
