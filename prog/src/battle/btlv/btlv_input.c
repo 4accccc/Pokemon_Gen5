@@ -1546,7 +1546,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
     {
       //カメラワークエフェクト
       BTLV_EFFECT_Stop();
-      BTLV_INPUT_SetFocus( biw );
+      //BTLV_INPUT_SetFocus( biw );
       biw->camera_work_wait = 0;
     }
   }
@@ -1683,7 +1683,7 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
     {
       //カメラワークエフェクト
       BTLV_EFFECT_Stop();
-      BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+      //BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
       biw->camera_work_wait = 0;
     }
   }
