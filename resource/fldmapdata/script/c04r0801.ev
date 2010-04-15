@@ -31,12 +31,12 @@ _EVENT_DATA_END
 EVENT_START	ev_c04r0801_trainerw_01
 	_TALK_OBJ_START()
 	
-	//【仮】16番道路ゾロアークイベント前後でメッセージ分岐
-	IF FLAG_OFF( FH_01 ) THEN
-		//イベント前
+	//16番道路ゾロアークイベント前後でメッセージ分岐
+	IF FLAG_OFF( FE_R16R0201_POKE23_ENC ) THEN
+		//イベント前：ゾロアークの正体がばれていない
 		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0801_elitew_01 )
 	ELSE
-		//イベント後
+		//イベント後：ゾロアークの正体がばれた後
 		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0801_elitew_02 )
 	ENDIF
 

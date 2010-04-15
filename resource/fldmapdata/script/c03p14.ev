@@ -79,36 +79,45 @@ EVENT_END
 
 //「はい」を選択
 ev_select_yes:
-	//【仮】交換した国数のチェックが未実装
-	//IF $SCWK_ANSWER == VAL THEN (テンプレ）ENDIF
+	//交換した国数をチェック（自分以外の国と交換したことがあるか）
+	_UN_GET_COUNTRY_NUM( TRUE, SCWK_ANSWER )
+	IF $SCWK_ANSWER == 0 THEN
+		//海外の人と交換したことがない
+		_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_02, C03P14_RECEPT_01, POS_DOWN )
+		_MSGWIN_CLOSE()
 
-	//お一人様ごあんなーい！
-	_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_03, C03P14_RECEPT_01, POS_DOWN )
-	_MSGWIN_CLOSE()
-	
-	//主人公：船へ
-	_PLAYER_DIR_GET( SCWK_ANSWER )
-	IF $SCWK_ANSWER == DIR_UP THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01u )
-	ELSIF $SCWK_ANSWER == DIR_DOWN THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01d )
-	ELSIF $SCWK_ANSWER == DIR_LEFT THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01l )
 	ELSE
-		//現状の配置だと右向きで話しかけられないけど念のため用意しておきます
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01r )
+		//海外の人と交換したことがある
+
+		//お一人様ごあんなーい！
+		_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_03, C03P14_RECEPT_01, POS_DOWN )
+		_MSGWIN_CLOSE()
+		
+		//主人公：船へ
+		_PLAYER_DIR_GET( SCWK_ANSWER )
+		IF $SCWK_ANSWER == DIR_UP THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01u )
+		ELSIF $SCWK_ANSWER == DIR_DOWN THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01d )
+		ELSIF $SCWK_ANSWER == DIR_LEFT THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01l )
+		ELSE
+			//現状の配置だと右向きで話しかけられないけど念のため用意しておきます
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01r )
+		ENDIF
+		_OBJ_ANIME_WAIT()
+		
+		//３Ｄデモコール
+		_DEMO_FADEOUT_BLACK_CALL_SINGLE()
+		_CALL_3D_DEMO( DEMO3D_ID_G_SHIP_PORT )
+		
+		//予約スクリプト：マップ遷移後、船から下りるスクリプトを起動
+		_RESERVE_SCRIPT( SCRID_RESERVE_C11_RECEPT_END )
+		
+		//マップ遷移
+		_MAP_CHANGE_NO_FADE( ZONE_ID_C11, 407, 0, 762, DIR_LEFT )
+		
 	ENDIF
-	_OBJ_ANIME_WAIT()
-	
-	//３Ｄデモコール
-  _DEMO_FADEOUT_BLACK_CALL_SINGLE()
-	_CALL_3D_DEMO( DEMO3D_ID_G_SHIP_PORT )
-	
-	//予約スクリプト：マップ遷移後、船から下りるスクリプトを起動
-	_RESERVE_SCRIPT( SCRID_RESERVE_C11_RECEPT_END )
-	
-	//マップ遷移
-	_MAP_CHANGE_NO_FADE( ZONE_ID_C11, 407, 0, 762, DIR_LEFT )
 	
 _RET
 
