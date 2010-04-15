@@ -821,6 +821,14 @@ static void _modeDifferDSWait5(WIFILOGIN_WORK* pWork)
   if(WIFILOGIN_MESSAGE_YesNoIsFinish(pWork->pSelectWork)){
     int selectno = WIFILOGIN_MESSAGE_YesNoGetCursorPos(pWork->pSelectWork);
 
+    WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+    if( pWork->dbw->bg == WIFILOGIN_BG_NORMAL )
+    {
+      WIFILOGIN_MESSAGE_TitleDisp(pWork->pMessageWork, dwc_title_0000);
+    }
+    WIFILOGIN_MESSAGE_YesNoEnd(pWork->pSelectWork);
+    pWork->pSelectWork=NULL;
+
     if(selectno==0){
 
       REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( GAMEDATA_GetSaveControlWork(pWork->gamedata) );
@@ -848,13 +856,6 @@ static void _modeDifferDSWait5(WIFILOGIN_WORK* pWork)
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
       _CHANGE_STATE(pWork,_modeFadeStart);
     }
-    WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
-    if( pWork->dbw->bg == WIFILOGIN_BG_NORMAL )
-    {
-      WIFILOGIN_MESSAGE_TitleDisp(pWork->pMessageWork, dwc_title_0000);
-    }
-    WIFILOGIN_MESSAGE_YesNoEnd(pWork->pSelectWork);
-    pWork->pSelectWork=NULL;
   }
 }
 
