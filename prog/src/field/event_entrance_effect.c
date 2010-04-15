@@ -381,9 +381,10 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
       FinishCurrentSeq( work );
     }
     break; 
+  }
 
-  // イベント終了
-  case SEQ_DOOROUT_END:
+  // 1フレーム短縮するため, イベントの終了をココで判定する
+  if( GetCurrentSeq( work ) == SEQ_DOOROUT_END ) {
     if( FIELD_TASK_MAN_IsAllTaskEnd( task_man ) ) {
       ENTRANCE_CAMERA_Recover( work->ECamWork );
       ENTRANCE_CAMERA_DeleteWork( work->ECamWork );
@@ -726,7 +727,8 @@ static BOOL CheckDoorAnimeFinish( const FIELD_DOOR_ANIME_WORK* work )
   if( FIELD_BMODEL_WaitCurrentAnime( work->doorBM ) == FALSE ) { return FALSE; }
 
   // SE 再生中
-  if( FIELD_BMODEL_CheckCurrentSE( work->doorBM ) == TRUE ) { return FALSE; } 
+  // 100415 ドアから出たときに待たされてしまうため, コメントアウト
+  //if( FIELD_BMODEL_CheckCurrentSE( work->doorBM ) == TRUE ) { return FALSE; } 
 
   // アニメ終了
   return TRUE;
