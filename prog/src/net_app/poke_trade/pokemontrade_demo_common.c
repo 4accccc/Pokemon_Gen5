@@ -331,14 +331,14 @@ static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork)
   // ポケモン中央に移動開始
   {
     VecFx32 pos={_POKEMON_PLAYER_CENTER_POSX,_POKEMON_PLAYER_CENTER_POSY, _POKEMON_PLAYER_CENTER_POSZ};
-    pWork->pMoveMcss[0] = _pokeMoveCreate(pWork->pokeMcss[0], ANMCNTC(_POKEMON_CENTER_TIME), &pos, pWork->heapID);
+    pWork->pMoveMcss[0] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[0], ANMCNTC(_POKEMON_CENTER_TIME), &pos, pWork->heapID);
   }
   {
     VecFx32 pos={_POKEMON_FRIEND_CENTER_POSX,_POKEMON_FRIEND_CENTER_POSY, _POKEMON_FRIEND_CENTER_POSZ};
-    pWork->pMoveMcss[1] = _pokeMoveCreate(pWork->pokeMcss[1], ANMCNTC(_POKEMON_CENTER_TIME*2), &pos, pWork->heapID);
+    pWork->pMoveMcss[1] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[1], ANMCNTC(_POKEMON_CENTER_TIME*2), &pos, pWork->heapID);
   }
 
-  MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, _McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);
+  MCSS_SetAnimCtrlCallBack(pWork->pokeMcss[0], (u32)pWork, POKEMONTRADE_McssAnmStop, NNS_G2D_ANMCALLBACKTYPE_LAST_FRM);
 
   MCSS_SetPaletteFade( pWork->pokeMcss[1], 0, 16, ANMCNTC(_POKEMON_CENTER_TIME/3)/16, 0 );
   POKETRADE_MESSAGE_WindowClose(pWork);
@@ -357,8 +357,8 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
 
   {  // フェード中
     _setFadeMask(pWork->pD2Fade);
-    _pokeMoveFunc(pWork->pMoveMcss[0]);
-    _pokeMoveFunc(pWork->pMoveMcss[1]);
+    POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[0]);
+    POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[1]);
   }
 
   if(pWork->anmCount > ANMCNTC(_POKEMON_CENTER_TIME)){  //フェード完了
@@ -396,10 +396,10 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
         
         MCSS_GetPosition(pWork->pokeMcss[0], &apos);
         if(pWork->bByebyeNoJump){
-          pWork->pMoveMcss[0] = _pokeTblMoveCreate(pWork->pokeMcss[0], elementof(_noJumpTbl), &apos, _noJumpTbl,  pWork->heapID);
+          pWork->pMoveMcss[0] = POKEMONTRADE_pokeTblMoveCreate(pWork->pokeMcss[0], elementof(_noJumpTbl), &apos, _noJumpTbl,  pWork->heapID);
         }
         else{
-          pWork->pMoveMcss[0] = _pokeTblMoveCreate(pWork->pokeMcss[0], elementof(_shortJumpTbl), &apos, _shortJumpTbl,  pWork->heapID);
+          pWork->pMoveMcss[0] = POKEMONTRADE_pokeTblMoveCreate(pWork->pokeMcss[0], elementof(_shortJumpTbl), &apos, _shortJumpTbl,  pWork->heapID);
         }
 
         pp = IRC_POKEMONTRADE_GetRecvPP(pWork,POKEMONTRADEPROC_IsTriSelect(pWork));
@@ -412,10 +412,10 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
         VecFx32 apos;
         MCSS_GetPosition(pWork->pokeMcss[0], &apos);
         if(pWork->bByebyeNoJump){
-          pWork->pMoveMcss[0] = _pokeTblMoveCreate(pWork->pokeMcss[0], elementof(_noJumpTbl), &apos, _noJumpTbl,  pWork->heapID);
+          pWork->pMoveMcss[0] = POKEMONTRADE_pokeTblMoveCreate(pWork->pokeMcss[0], elementof(_noJumpTbl), &apos, _noJumpTbl,  pWork->heapID);
         }
         else{
-          pWork->pMoveMcss[0] = _pokeTblMoveCreate(pWork->pokeMcss[0], elementof(_triJumpTbl), &apos, _triJumpTbl,  pWork->heapID);
+          pWork->pMoveMcss[0] = POKEMONTRADE_pokeTblMoveCreate(pWork->pokeMcss[0], elementof(_triJumpTbl), &apos, _triJumpTbl,  pWork->heapID);
         }
       }
     }
@@ -486,7 +486,7 @@ static void _changeDemo_ModelTrade2_jump(POKEMON_TRADE_WORK* pWork)
     }
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade2);
   }
-  _pokeMoveFunc(pWork->pMoveMcss[0]);
+  POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[0]);
 }
 
 

@@ -1341,7 +1341,7 @@ static u32 MCVSys_StatusMsgIdGet( u32 status, u32 gamemode, int* col )
   }
 
   {//WIFI_GAME_eéQè∆
-    u32 message[]={msg_wifilobby_046,msg_wifilobby_046,msg_wifilobby_1014,msg_wifilobby_027, msg_wifilobby_076,
+    u32 message[]={msg_wifilobby_046,msg_wifilobby_046,msg_wifilobby_046,msg_wifilobby_1014,msg_wifilobby_027, msg_wifilobby_076,
       msg_wifilobby_025, msg_wifilobby_1034,msg_wifilobby_1034,msg_wifilobby_1035,msg_wifilobby_1035,
       msg_wifilobby_1036,msg_wifilobby_1036,msg_wifilobby_1037,msg_wifilobby_1037,msg_wifilobby_056};
 

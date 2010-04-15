@@ -940,13 +940,9 @@ static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
     if(POKEMONTRADE_IsInPokemonRecvPoke(IRC_POKEMONTRADE_GetRecvPP(pWork, 0))){
       POKE_MAIN_Pokemonset(pWork, 0, IRC_POKEMONTRADE_GetRecvPP(pWork, 0));
     }
-    OS_TPrintf("pokemonselectno %d\n",pWork->pokemonselectno);
-    if(pWork->pokemonselectno/GTS_NEGO_POKESLT_MAX){
-      _CHANGE_STATE(pWork, _menuFriendPokemonStart); //ŒðŠ·ŠÜ‚Ü‚È‚¢
-    }
-    else{
-      _CHANGE_STATE(pWork, _menuMyPokemonMenu); //ŒðŠ·ŠÜ‚Þ
-    }
+
+    _select6PokeSubMask(pWork);
+    _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
   }
 }
 

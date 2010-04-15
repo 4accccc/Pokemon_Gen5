@@ -1033,6 +1033,7 @@ extern void POKEMONTRADE_StartMojiSelect(POKEMON_TRADE_WORK* pWork,int x,int y);
 extern void POKEMONTRADE_EndMojiSelect(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADE_CheckMojiSelect(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE2D_ChangePokemonPalette(POKEMON_TRADE_WORK* pWork, BOOL bGray);
+extern void POKEMONTRADE_McssAnmStop( u32 data, fx32 currentFrame );
 
 
 
@@ -1040,3 +1041,9 @@ extern void POKEMONTRADE2D_ChangePokemonPalette(POKEMON_TRADE_WORK* pWork, BOOL 
 extern APP_TASKMENU_WIN_WORK* POKEMONTRADE_MESSAGE_CancelButtonStart(POKEMON_TRADE_WORK* pWork,int msgno);
 extern void POKEMONTRADE_MESSAGE_CancelButtonDelete(POKEMON_TRADE_WORK* pWork,int bar,int change);
 extern BOOL POKEMONTRADE_MESSAGE_ButtonCheck(POKEMON_TRADE_WORK* pWork);
+
+extern void POKEMONTRADE_pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove);
+extern _POKEMCSS_MOVE_WORK* POKEMONTRADE_pokeTblMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, VecFx32* pTbl, HEAPID heapID);
+extern _POKEMCSS_MOVE_WORK* POKEMONTRADE_pokeMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, HEAPID heapID);
+extern void POKEMONTRADE_pokeMoveRenew(_POKEMCSS_MOVE_WORK* pPoke,int time, const VecFx32* pPos);
+

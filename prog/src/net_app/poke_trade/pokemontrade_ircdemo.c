@@ -57,7 +57,7 @@ static void _changeDemo_ModelTrade20(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade2_jump(POKEMON_TRADE_WORK* pWork);
 
 
-#include "pokemontrade_mcss.c"
+//#include "pokemontrade_mcss.c"
 #include "pokemontrade_fade.c"
 #include "pokemontrade_demo_common.c"
 
@@ -213,7 +213,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.x = _IR_POKEMON_PLAYER_UP_POSX;
       apos.y = _IR_POKEMON_PLAYER_UP_POSY;
       apos.z = _IR_POKEMON_PLAYER_UP_POSZ;
-      pWork->pMoveMcss[0] = _pokeMoveCreate(pWork->pokeMcss[2], ANMCNTC(_IR_POKE_APPEAR_TIME), &apos, pWork->heapID);
+      pWork->pMoveMcss[0] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[2], ANMCNTC(_IR_POKE_APPEAR_TIME), &apos, pWork->heapID);
       //MCSS_SetAnmStopFlag(pWork->pokeMcss[2]);
 
       MCSS_GetScale( pWork->pokeMcss[2], &apos );
@@ -238,7 +238,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.x = _IR_POKEMON_FRIEND_DOWN_POSX;
       apos.y = _IR_POKEMON_FRIEND_DOWN_POSY;
       apos.z = _IR_POKEMON_FRIEND_DOWN_POSZ;
-      pWork->pMoveMcss[1] = _pokeMoveCreate(pWork->pokeMcss[3], ANMCNTC(_IR_POKE_APPEAR_TIME), &apos , pWork->heapID);
+      pWork->pMoveMcss[1] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[3], ANMCNTC(_IR_POKE_APPEAR_TIME), &apos , pWork->heapID);
       //MCSS_SetAnmStopFlag(pWork->pokeMcss[3]);
       MCSS_GetScale( pWork->pokeMcss[3], &apos );
       pWork->pPokemonTradeDemo->PushPos.x = apos.x;
@@ -276,10 +276,10 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       MCSS_GetPosition(pWork->pokeMcss[3], &apos);
 
       if(pWork->bEncountNoJump){
-        pWork->pMoveMcss[3] = _pokeTblMoveCreate(pWork->pokeMcss[3], elementof(_noJumpTbl), &apos, _noJumpTbl,  pWork->heapID);
+        pWork->pMoveMcss[3] = POKEMONTRADE_pokeTblMoveCreate(pWork->pokeMcss[3], elementof(_noJumpTbl), &apos, _noJumpTbl,  pWork->heapID);
       }
       else{
-        pWork->pMoveMcss[3] = _pokeTblMoveCreate(pWork->pokeMcss[3], elementof(_triJumpTbl), &apos, _triJumpTbl,  pWork->heapID);
+        pWork->pMoveMcss[3] = POKEMONTRADE_pokeTblMoveCreate(pWork->pokeMcss[3], elementof(_triJumpTbl), &apos, _triJumpTbl,  pWork->heapID);
       }
     }
     else{// ˆê’v‚µ‚Ä‚¢‚é‚Ì‚ÅƒWƒƒƒ“ƒv
@@ -290,10 +290,10 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       MCSS_SetVanishFlag(pWork->pokeMcss[3]);
 
       if(pWork->bEncountNoJump){
-        pWork->pMoveMcss[3] = _pokeTblMoveCreate(pWork->pokeMcss[1], elementof(_noJumpTbl), &apos, _noJumpTbl,  pWork->heapID);
+        pWork->pMoveMcss[3] = POKEMONTRADE_pokeTblMoveCreate(pWork->pokeMcss[1], elementof(_noJumpTbl), &apos, _noJumpTbl,  pWork->heapID);
       }
       else{
-        pWork->pMoveMcss[3] = _pokeTblMoveCreate(pWork->pokeMcss[1], elementof(_shortJumpTbl), &apos, _shortJumpTbl,  pWork->heapID);
+        pWork->pMoveMcss[3] = POKEMONTRADE_pokeTblMoveCreate(pWork->pokeMcss[1], elementof(_shortJumpTbl), &apos, _shortJumpTbl,  pWork->heapID);
       }
     }
     
@@ -342,10 +342,10 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     IRC_POKETRADEDEMO_RemoveModel( pWork);
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade20);
   }
-  _pokeMoveFunc(pWork->pMoveMcss[0]);
-  _pokeMoveFunc(pWork->pMoveMcss[1]);
-  _pokeMoveFunc(pWork->pMoveMcss[2]);
-  _pokeMoveFunc(pWork->pMoveMcss[3]);
+  POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[0]);
+  POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[1]);
+  POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[2]);
+  POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[3]);
 }
 
 

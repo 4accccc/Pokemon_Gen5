@@ -1,3 +1,45 @@
+//=============================================================================
+/**
+ * @file	  pokemontrade_demo_gts.c
+ * @bfief	  ポケモン交換アニメーション  上に行く部分
+ * @author  ohno_katsumi@gamefreak.co.jp
+ * @date	  09/09/27
+ */
+//=============================================================================
+
+#include <gflib.h>
+
+
+#include "arc_def.h"
+#include "net/network_define.h"
+#include "system\wipe.h"
+
+#include "net_app/pokemontrade.h"
+#include "system/main.h"
+
+#include "poke_icon.naix"
+#include "pokeicon/pokeicon.h"
+
+#include "ircbattle.naix"
+#include "trade.naix"
+
+
+
+#include "poke_tool/poke_tool_def.h"
+#include "box_m_obj_NANR_LBLDEFS.h"
+#include "p_st_obj_d_NANR_LBLDEFS.h"
+#include "poke_tool/status_rcv.h"
+#include "tradedemo.naix"
+
+#include "pokemontrade_local.h"
+//#include "app/mailtool.h"
+
+#include "spahead.h"
+
+#include "sound/pm_voice.h"
+
+#include "pokemontrade_demo.cdat"
+
 
 
 //-------------------------------------------------
@@ -9,7 +51,7 @@
  */
 //-------------------------------------------------
 
-static void _pokeMoveRenew(_POKEMCSS_MOVE_WORK* pPoke,int time, const VecFx32* pPos)
+void POKEMONTRADE_pokeMoveRenew(_POKEMCSS_MOVE_WORK* pPoke,int time, const VecFx32* pPos)
 {
   {
     VecFx32 apos;
@@ -31,12 +73,12 @@ static void _pokeMoveRenew(_POKEMCSS_MOVE_WORK* pPoke,int time, const VecFx32* p
  */
 //-------------------------------------------------
 
-static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, HEAPID heapID)
+_POKEMCSS_MOVE_WORK* POKEMONTRADE_pokeMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, HEAPID heapID)
 {
   _POKEMCSS_MOVE_WORK* pPoke = GFL_HEAP_AllocClearMemory(heapID, sizeof(_POKEMCSS_MOVE_WORK));
 
   pPoke->pMcss = pokeMcss;
-  _pokeMoveRenew(pPoke,time,pPos);
+  POKEMONTRADE_pokeMoveRenew(pPoke,time,pPos);
   pPoke->percent=0.0f;
   return pPoke;
 
@@ -52,12 +94,12 @@ static _POKEMCSS_MOVE_WORK* _pokeMoveCreate(MCSS_WORK* pokeMcss, int time, const
  */
 //-------------------------------------------------
 
-static _POKEMCSS_MOVE_WORK* _pokeTblMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, VecFx32* pTbl, HEAPID heapID)
+_POKEMCSS_MOVE_WORK* POKEMONTRADE_pokeTblMoveCreate(MCSS_WORK* pokeMcss, int time, const VecFx32* pPos, VecFx32* pTbl, HEAPID heapID)
 {
   _POKEMCSS_MOVE_WORK* pPoke = GFL_HEAP_AllocClearMemory(heapID, sizeof(_POKEMCSS_MOVE_WORK));
 
   pPoke->pMcss = pokeMcss;
-  _pokeMoveRenew(pPoke,time,pPos);
+  POKEMONTRADE_pokeMoveRenew(pPoke,time,pPos);
   pPoke->percent=0.0f;
   pPoke->MoveTbl = pTbl;
   return pPoke;
@@ -118,7 +160,7 @@ static void _pokeMoveTblFunc(_POKEMCSS_MOVE_WORK* pMove)
  */
 //-------------------------------------------------
 
-static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
+void POKEMONTRADE_pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
 {
   if(!pMove){
     return;
@@ -153,7 +195,7 @@ static void _pokeMoveFunc(_POKEMCSS_MOVE_WORK* pMove)
 }
 
 //MCSS終了の為のコールバック
-static void _McssAnmStop( u32 data, fx32 currentFrame )
+void POKEMONTRADE_McssAnmStop( u32 data, fx32 currentFrame )
 {
   POKEMON_TRADE_WORK* pWork = (POKEMON_TRADE_WORK*)data;
 

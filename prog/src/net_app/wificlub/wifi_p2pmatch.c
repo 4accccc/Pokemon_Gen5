@@ -7119,9 +7119,9 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
   if(wk->clactSet){
     GFL_CLACT_SYS_Main();
   }
-  if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
-    WIFI_MCR_Draw( &wk->matchroom );
-  }
+//  if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
+//    WIFI_MCR_Draw( &wk->matchroom );
+//  }
 
   if(wk->SysMsgQue){
     u8 defL, defS, defB;
