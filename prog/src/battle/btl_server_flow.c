@@ -1043,7 +1043,6 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_AC
       if( action->gen.cmd != BTL_ACTION_ROTATION ){ continue; }
       if( action->change.depleteFlag ){ continue; }
 
-      TAYA_Printf( "空き埋めローテーション発動：ClientID=%d\n", wk->actOrder[i].clientID );
       ActOrder_Proc( wk, &wk->actOrder[i], FALSE );
     }
   }
@@ -7987,7 +7986,7 @@ static BOOL scproc_ChangeWeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u
   if( BTL_FIELD_GetWeather() == weather ){
     return FALSE;
   }
-  else
+  else if( weather<BTL_WEATHER_MAX )
   {
 //    BOOL result = scEvent_CheckChangeWeather( wk, weather, &turn );
     BTL_FIELD_SetWeather( weather, turn );

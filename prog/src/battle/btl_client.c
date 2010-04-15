@@ -4019,6 +4019,7 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
     SEQ_WIN_WAIT_TR1_OUT,
     SEQ_WIN_WAIT_TR2_IN,
     SEQ_WIN_WAIT_TR2_MSG,
+    SEQ_WIN_GET_MONEY,
 
     SEQ_LOSE_START,
     SEQ_LOSE_WAIT_MSG1,
@@ -4084,7 +4085,7 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
       }
       else
       {
-        (*seq) = SEQ_END;
+        (*seq) = SEQ_WIN_GET_MONEY;
       }
     }
     break;
@@ -4106,6 +4107,11 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
     break;
   case SEQ_WIN_WAIT_TR2_MSG:
     if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      (*seq) = SEQ_WIN_GET_MONEY;
+    }
+    break;
+  case SEQ_WIN_GET_MONEY:
     {
       u32 getMoney = BTL_MAIN_FixBonusMoney( wk->mainModule );
       if( getMoney )
