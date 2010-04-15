@@ -142,8 +142,8 @@ ev_t04pc0101_poketrade_01:
 			//コイキングを入手
 			_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_129, 0, 5 )
 			
-			//【仮】コイキングの素早さの個体値をMAXに操作
-			//_SET_TEMOTI_POKE_PARAM( LWK_POKE_COUNT , SCR_POKEPARA_AGI_RND , 31)
+			//コイキングの素早さの個体値をMAXに操作
+			_SET_PARTY_POKE_PARAM( LWK_POKE_COUNT , SCR_POKEPARA_AGI_RND , 31)
 			
 			//名前をつけますか？
 			_SYSWIN_MSG(msg_t04pc0101_middleman_04, POS_DEFAULT )
