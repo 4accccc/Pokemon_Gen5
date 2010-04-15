@@ -227,13 +227,14 @@ static void InitSystemCore( HEAPID heapID )
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
     G3X_AlphaBlend( TRUE );
 //    G3X_AlphaTest( TRUE, 31 );    //alpha0でワイヤーフレームにならないようにする
-    G3X_EdgeMarking( TRUE );
+    G3X_EdgeMarking( FALSE );
     G3X_AntiAlias( FALSE );
     G3X_SetFog( FALSE, 0, 0, 0 );
     G2_SetBG0Priority( 1 );
   }
   //ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）soga
   {
+#if 0
     G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 |
                  GX_WND_PLANEMASK_BG1 |
                  GX_WND_PLANEMASK_BG2 |
@@ -243,6 +244,7 @@ static void InitSystemCore( HEAPID heapID )
     G2_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, TRUE );
     G2_SetWnd0Position( 1, 0, 255, 192 );
     GX_SetVisibleWnd( GX_WNDMASK_W0 );
+#endif
     G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
                       GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
                       GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
