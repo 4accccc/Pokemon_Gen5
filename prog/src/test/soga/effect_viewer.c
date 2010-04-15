@@ -652,7 +652,7 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
       else if( evw->trg == PAD_BUTTON_B ){
         BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, NULL, evw->viewer_mode );
       }
-#if 0
+#if 1
       else if( cont == PAD_BUTTON_Y ){
         BTLV_EFFVM_PARAM param;
 
@@ -782,6 +782,7 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
     }
     else if( ( trg == PAD_BUTTON_X ) && ( evw->bgm_flag ) )
     { 
+      PMSND_FadeOutBGM( 8 );
       evw->bgm_fade_flag = 1;
     }
     else if( tp )
@@ -1701,13 +1702,14 @@ static  void  pinch_bgm_check( EFFECT_VIEWER_WORK* evw )
       if( evw->pinch_bgm_flag )
       {
         PMSND_PopBGM();
+        PMSND_PauseBGM( FALSE );
         PMSND_FadeInBGM( 24 );
       }
       else
       {
+        PMSND_PauseBGM( TRUE );
         PMSND_PushBGM();
         PMSND_PlayBGM( SEQ_BGM_BATTLEPINCH );
-        PMSND_FadeInBGM( 8 );
       }
       evw->pinch_bgm_flag ^= 1;
     }
