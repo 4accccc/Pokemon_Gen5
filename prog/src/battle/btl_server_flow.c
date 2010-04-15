@@ -8000,6 +8000,7 @@ static BOOL scproc_ChangeWeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u
     }
     return TRUE;
   }
+  return FALSE;
 }
 //----------------------------------------------------------------------------------
 /**
