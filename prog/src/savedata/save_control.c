@@ -162,23 +162,19 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
     }
 		break;
 	case LOAD_RESULT_BREAK:			///<破壊、復旧不能
-		OS_TPrintf("LOAD:データ破壊\n");
 		ctrl->first_status |= FST_NORMAL_BREAK_BIT;
 		//break;
 		/* FALL THROUGH */
 	case LOAD_RESULT_NULL:		///<データなし
 	case LOAD_RESULT_ERROR:			///<機器故障(Flashが無い)などで読み取り不能
 		//新規 or データ破壊なのでクリアする
-		OS_TPrintf("LOAD:データが存在しない\n");
 		GFL_SAVEDATA_Clear(ctrl->sv_normal);
 		break;
 	default:
-		GF_ASSERT("LOAD:例外エラー！");
+		GF_ASSERT(0); //LOAD:例外エラー！
 		break;
 	}
 
-	OS_TPrintf("first_status = %d\n", ctrl->first_status);
-	
 #if 0	//※check
 #ifdef	PM_DEBUG
 	{
