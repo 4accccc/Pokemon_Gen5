@@ -45,14 +45,22 @@ ev_zukan_daughter:
       //地方図鑑・見たをコンプリート→捕まえた数
           _CALL sub_zukan_setup_local_get
           _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_02a )
-          _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
+          _CALL sub_zuken_local_me_play
+          _DEBUG_PRINT_WK( HYOUKA_COUNT )
+          _DEBUG_PRINT_WK( SCWK_ANSWER )
+          _ME_WAIT()
           _AB_KEYWAIT_MARK()
+          _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
       ELSE
       //地方図鑑・見た数
           _CALL sub_zukan_setup_local_see
           _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_02 )
-          _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
+          _CALL sub_zuken_local_me_play
+          _DEBUG_PRINT_WK( HYOUKA_COUNT )
+          _DEBUG_PRINT_WK( SCWK_ANSWER )
+          _ME_WAIT()
           _AB_KEYWAIT_MARK()
+          _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
       ENDIF
 
       //アイテムをもらえるか？チェック
@@ -101,6 +109,52 @@ sub_zukan_setup_local_get:
     _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET, HYOUKA_MSGID, HYOUKA_COUNT )
 
     _NUMBER( 0, HYOUKA_COUNT, 3 )
+    _RET
+
+//--------------------------------------------------------------------
+//地方図鑑：ME再生
+//  IN  HYOUKA_COUNT
+//--------------------------------------------------------------------
+sub_zuken_local_me_play:
+    IF $HYOUKA_COUNT <= 24 THEN
+        _ME_PLAY( SEQ_ME_HYOUKA1 )
+    ELSIF $HYOUKA_COUNT <= 59 THEN
+        _ME_PLAY( SEQ_ME_HYOUKA2 )
+    ELSIF $HYOUKA_COUNT <= 114 THEN
+        _ME_PLAY( SEQ_ME_HYOUKA3 )
+    ELSIF $HYOUKA_COUNT <= 134 THEN
+        _ME_PLAY( SEQ_ME_HYOUKA4 )
+    ELSIF $HYOUKA_COUNT <= 149 THEN
+        _ME_PLAY( SEQ_ME_HYOUKA5 )
+    ELSIF $HYOUKA_COUNT <= 150 THEN
+        _ME_PLAY( SEQ_ME_HYOUKA6 )
+    ELSE
+        //ありえない？
+        _ME_PLAY( SEQ_ME_HYOUKA6 )
+    ENDIF
+    _RET
+
+//--------------------------------------------------------------------
+//全国図鑑：ME再生
+//  IN  HYOUKA_COUNT
+//--------------------------------------------------------------------
+sub_zukan_global_me_play:
+    IF $HYOUKA_COUNT <= 159 THEN
+        _ME_PLAY( SEQ_ME_HYOUKA1 )
+    ELSIF $HYOUKA_COUNT <= 349 THEN
+        _ME_PLAY( SEQ_ME_HYOUKA2 )
+    ELSIF $HYOUKA_COUNT <= 449 THEN
+        _ME_PLAY( SEQ_ME_HYOUKA3 )
+    ELSIF $HYOUKA_COUNT <= 549 THEN
+        _ME_PLAY( SEQ_ME_HYOUKA4 )
+    ELSIF $HYOUKA_COUNT <= 633 THEN
+        _ME_PLAY( SEQ_ME_HYOUKA5 )
+    ELSIF $HYOUKA_COUNT <= 634 THEN
+        _ME_PLAY( SEQ_ME_HYOUKA6 )
+    ELSE
+        //ありえない？
+        _ME_PLAY( SEQ_ME_HYOUKA6 )
+    ENDIF
     _RET
 
 //--------------------------------------------------------------------
@@ -214,6 +268,8 @@ ev_zukan_father:
 
       _NUMBER( 0, HYOUKA_COUNT, 3 )
       _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase_02 )
+      _CALL   sub_zukan_global_me_play
+      _ME_WAIT()
       _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
@@ -237,6 +293,8 @@ ev_zukan_machine:
   //全国図鑑モード＝博士（父）の評価
       _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_GLOBAL, HYOUKA_MSGID, HYOUKA_COUNT )
       _SYSWIN_MSG( msg_hyouka_hakase_02, POS_DOWN )
+      _CALL   sub_zukan_global_me_play
+      _ME_WAIT()
       _SYSWIN_MSG( HYOUKA_MSGID, POS_DOWN )
       _AB_KEYWAIT_MARK()
       _SYSWIN_CLOSE()
@@ -246,14 +304,18 @@ ev_zukan_machine:
       //地方図鑑・見たをコンプリート→捕まえた数
           _CALL sub_zukan_setup_local_get
           _SYSWIN_MSG( msg_hyouka_hakase2_02a, POS_DOWN )
-          _SYSWIN_MSG( HYOUKA_MSGID, POS_DOWN )
+          _CALL sub_zuken_local_me_play
+          _ME_WAIT()
           _AB_KEYWAIT_MARK()
+          _SYSWIN_MSG( HYOUKA_MSGID, POS_DOWN )
       ELSE
       //地方図鑑・見た数
           _CALL sub_zukan_setup_local_see
           _SYSWIN_MSG( msg_hyouka_hakase2_02, POS_DOWN )
-          _SYSWIN_MSG( HYOUKA_MSGID, POS_DOWN )
+          _CALL sub_zuken_local_me_play
+          _ME_WAIT()
           _AB_KEYWAIT_MARK()
+          _SYSWIN_MSG( HYOUKA_MSGID, POS_DOWN )
       ENDIF
       //アイテムをもらえるか？チェック
       _CALL sub_zukan_present_check
