@@ -371,7 +371,9 @@ int GAMEBEACON_InfoTblRing_SetBeacon(GAMEBEACON_INFO_TBL *infotbl, const GAMEBEA
 
   //リングトップを更新
   infotbl->ring_top =  log_no;
-  infotbl->entry_num++;
+  if( infotbl->entry_num < GAMEBEACON_INFO_TBL_MAX ){
+    infotbl->entry_num++;
+  }
   return 0;
 }
 
@@ -909,7 +911,7 @@ u16 GAMEBEACON_Get_Action_Monsno(const GAMEBEACON_INFO *info)
   case GAMEBEACON_ACTION_POKE_EVOLUTION:
     return info->action.monsno;
   }
-  GF_ASSERT(0);
+  GF_ASSERT_MSG(0,"ano = %d\n",info->action.action_no);
   return info->action.monsno;
 }
 
