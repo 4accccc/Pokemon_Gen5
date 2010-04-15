@@ -44,7 +44,7 @@
 //=============================================================================
 enum
 { 
-  CGX_BMPWIN_FRAME_POS = 1,
+  CGX_BMPWIN_FRAME_POS = 7,
   CGX_BMPWIN_FRAME_TALK_POS = CGX_BMPWIN_FRAME_POS + MENU_WIN_CGX_SIZ,
   STRBUF_SIZE = 1600,
 };

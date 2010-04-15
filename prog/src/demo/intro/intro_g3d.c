@@ -66,11 +66,16 @@ static const VecFx32 sc_camera_target = { 0x0, FX32_CONST(5.1), FX32_CONST(0.5) 
 #endif
 
 // カメラ設定
+#define CAMERA_POS_Z	( FX32_CONST(32.728027f) )
+/*
 #define CAMERA_POS_Z ( 0x21ccf) // 目的地トして使う
-
 static const VecFx32 sc_camera_pos = { 0x0, 0x70c2, 0x21ccf }; 
 static const VecFx32 sc_camera_up =  { 0x0, 0x4272, 0x9f0 }; 
 static const VecFx32 sc_camera_target = { 0x0, 0x519a, 0x800 }; 
+*/
+static const VecFx32 sc_camera_pos = { 0x0, FX32_CONST(7.996582f), CAMERA_POS_Z }; 
+static const VecFx32 sc_camera_up =  { 0x0, FX32_CONST(1), 0x0 }; 
+static const VecFx32 sc_camera_target = { 0x0, FX32_CONST(4.541260f), FX32_CONST(-0.790039f) }; 
 
 
 //=============================================================================
@@ -87,8 +92,8 @@ struct _INTRO_G3D_WORK {
   GFL_G3D_CAMERA* camera;
   u16           unit_idx[ UNIT_MAX ];
   BOOL          is_draw;
-  BOOL          is_man;
   BOOL          is_load;
+  u32	is_mode;
   u32 seq;
   u32 start_seq;
   u32 cnt;
@@ -131,9 +136,10 @@ INTRO_G3D_WORK* INTRO_G3D_Create( INTRO_GRAPHIC_WORK* graphic , HEAPID heap_id )
 
   // 専用カメラを用意
   wk->camera = GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
-									FX_SinIdx( 26/2 *PERSPWAY_COEFFICIENT ),
-									FX_CosIdx( 26/2 *PERSPWAY_COEFFICIENT ),
-									defaultCameraAspect, 0,
+									FX_SinIdx( 30/2 *PERSPWAY_COEFFICIENT ),
+									FX_CosIdx( 30/2 *PERSPWAY_COEFFICIENT ),
+//									defaultCameraAspect, 0,
+									FX32_CONST(1.333333f), 0,
 									defaultCameraNear, defaultCameraFar, 0,
 									&sc_camera_pos, &sc_camera_up, &sc_camera_target, heap_id );
   
@@ -269,6 +275,8 @@ BOOL INTRO_G3D_SelectStart( INTRO_G3D_WORK* wk )
   switch( wk->start_seq )
   {
   case 0:
+		// デフォルト位置のフレーム
+		INTRO_G3D_SelectSet( wk, INTRO_3D_SEL_SEX_DEF_FRAME );
     // カメラを離す
     GFL_G3D_CAMERA_GetPos( wk->camera, &pos );
     pos.z = 0x200000;
@@ -281,7 +289,7 @@ BOOL INTRO_G3D_SelectStart( INTRO_G3D_WORK* wk )
   case 1:
     // 拡大
     GFL_G3D_CAMERA_GetPos( wk->camera, &pos );
-    
+
     val = MATH_IAbs( pos.z - CAMERA_POS_Z ) / 4;
 
     // 誤差修正
@@ -329,19 +337,33 @@ void INTRO_G3D_SelectVisible( INTRO_G3D_WORK* wk, BOOL is_visible )
  *	@retval
  */
 //-----------------------------------------------------------------------------
-void INTRO_G3D_SelectDecideStart( INTRO_G3D_WORK* wk, BOOL is_man )
+void INTRO_G3D_SelectDecideStart( INTRO_G3D_WORK* wk, u32 is_mode )
 {
-  wk->is_man = is_man;
+  wk->is_mode = is_mode;
   wk->seq = 0;
 
-  if( wk->is_man )
-  {
-    wk->cnt = 19;
-  }
-  else
-  {
-    wk->cnt = 21;
-  }
+	switch( wk->is_mode ){
+	case INTRO_3D_SEL_SEX_MODE_MOVE_DEFAULT:
+		wk->cnt = INTRO_3D_SEL_SEX_DEF_FRAME;
+		wk->is_mode = INTRO_3D_SEL_SEX_MODE_MOVE_MALE;
+		break;
+
+	case INTRO_3D_SEL_SEX_MODE_MOVE_MALE:
+		wk->cnt = INTRO_3D_SEL_SEX_MOVE_FEMALE_FRAME;
+		break;
+
+	case INTRO_3D_SEL_SEX_MODE_MOVE_FEMALE:
+		wk->cnt = INTRO_3D_SEL_SEX_MOVE_MALE_FRAME;
+		break;
+
+	case INTRO_3D_SEL_SEX_MODE_ENTER_MALE:
+		wk->cnt = INTRO_3D_SEL_SEX_MOVE_MALE_FRAME;
+		break;
+
+	case INTRO_3D_SEL_SEX_MODE_ENTER_FEMALE:
+		wk->cnt = INTRO_3D_SEL_SEX_MOVE_FEMALE_FRAME;
+		break;
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -355,7 +377,33 @@ void INTRO_G3D_SelectDecideStart( INTRO_G3D_WORK* wk, BOOL is_man )
 //-----------------------------------------------------------------------------
 BOOL INTRO_G3D_SelectDecideWait( INTRO_G3D_WORK* wk )
 {
-  if( wk->is_man )
+	switch( wk->is_mode ){
+	case INTRO_3D_SEL_SEX_MODE_MOVE_MALE:
+    wk->cnt--;
+		INTRO_G3D_SelectSet( wk, wk->cnt );
+    if( wk->cnt == INTRO_3D_SEL_SEX_MOVE_MALE_FRAME ){ return TRUE; }
+		break;
+
+	case INTRO_3D_SEL_SEX_MODE_MOVE_FEMALE:
+    wk->cnt++;
+		INTRO_G3D_SelectSet( wk, wk->cnt );
+    if( wk->cnt == INTRO_3D_SEL_SEX_MOVE_FEMALE_FRAME ){ return TRUE; }
+		break;
+
+	case INTRO_3D_SEL_SEX_MODE_ENTER_MALE:
+    wk->cnt--;
+		INTRO_G3D_SelectSet( wk, wk->cnt );
+    if( wk->cnt == INTRO_3D_SEL_SEX_ENTER_MALE_FRAME ){ return TRUE; }
+		break;
+
+	case INTRO_3D_SEL_SEX_MODE_ENTER_FEMALE:
+    wk->cnt++;
+		INTRO_G3D_SelectSet( wk, wk->cnt );
+    if( wk->cnt == INTRO_3D_SEL_SEX_ENTER_FEMALE_FRAME ){ return TRUE; }
+		break;
+	}
+/*
+  if( wk->is_mode )
   {
     wk->cnt--;
     INTRO_G3D_SelectSet( wk, wk->cnt );
@@ -365,9 +413,10 @@ BOOL INTRO_G3D_SelectDecideWait( INTRO_G3D_WORK* wk )
   {
     wk->cnt++;
     INTRO_G3D_SelectSet( wk, wk->cnt );
-    if( wk->cnt >= 50 ){ return TRUE; }
+    if( wk->cnt >= 120 ){ return TRUE; }
   }
-  
+*/
+
   return FALSE;
 }
 
@@ -382,7 +431,7 @@ BOOL INTRO_G3D_SelectDecideWait( INTRO_G3D_WORK* wk )
 //-----------------------------------------------------------------------------
 BOOL INTRO_G3D_SelectDecideReturn( INTRO_G3D_WORK* wk )
 {
-  if( wk->is_man )
+  if( wk->is_mode == INTRO_3D_SEL_SEX_MODE_ENTER_MALE )
   {
     wk->cnt++;
     INTRO_G3D_SelectSet( wk, wk->cnt );
@@ -393,8 +442,8 @@ BOOL INTRO_G3D_SelectDecideReturn( INTRO_G3D_WORK* wk )
     INTRO_G3D_SelectSet( wk, wk->cnt );
   }
 
-  if( wk->cnt == 20 ){ return TRUE; }
-  
+  if( wk->cnt == INTRO_3D_SEL_SEX_DEF_FRAME ){ return TRUE; }
+
   return FALSE;
 
 }

@@ -1320,61 +1320,52 @@ static BOOL CMD_G3D_SELECT_SEX_INIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat,
  */
 //-----------------------------------------------------------------------------
 static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
-{ 
+{
   switch( sdat->seq )
   {
   case 0 :
-    INTRO_G3D_SelectSet( wk->g3d, 19 ); // デフォルトフレーム指定
-    sdat->seq++;
+//    INTRO_G3D_SelectSet( wk->g3d, INTRO_3D_SEL_SEX_DEF_FRAME ); // デフォルトフレーム指定
+		INTRO_G3D_SelectDecideStart( wk->g3d, INTRO_3D_SEL_SEX_MODE_MOVE_DEFAULT );
+    sdat->seq = 4;
     break;
+
   case 1 :
-    // キー入力 →
-    if( (GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT) )
-    {
-      if(sdat->cnt!=1){
-        PMSND_PlaySE( SEQ_SE_SELECT1 );
-      }
-      sdat->cnt = 1;  //おんなのこ
-      INTRO_G3D_SelectSet( wk->g3d, 21 );
-    }
-    // キー入力 ←
-    else if( (GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT) )
-    {
-      if(sdat->cnt!=0){
-        PMSND_PlaySE( SEQ_SE_SELECT1 );
-      }
-      sdat->cnt = 0;  //おとこのこ
-      INTRO_G3D_SelectSet( wk->g3d, 19 );
-    }
-    // 決定
-    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    {
-      PMSND_PlaySE( SEQ_SE_DECIDE2 );
-      sdat->seq++;
+		// キー入力 →
+		if( (GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT) ){
+			if( sdat->cnt != 1 ){
+				PMSND_PlaySE( SEQ_SE_SELECT1 );
+				INTRO_G3D_SelectDecideStart( wk->g3d, INTRO_3D_SEL_SEX_MODE_MOVE_FEMALE );
+				sdat->cnt = 1;
+				sdat->seq = 4;
+			}
+		// キー入力 ←
+    }else if( (GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT) ){
+			if( sdat->cnt != 0 ){
+				PMSND_PlaySE( SEQ_SE_SELECT1 );
+				INTRO_G3D_SelectDecideStart( wk->g3d, INTRO_3D_SEL_SEX_MODE_MOVE_MALE );
+				sdat->cnt = 0;
+				sdat->seq = 4;
+			}
+		// 決定
+		}else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+			PMSND_PlaySE( SEQ_SE_DECIDE2 );
+			sdat->seq++;
 		}
-    break;
+		break;
 
   case 2 :
     // 性別決定
-    {
-      BOOL is_woman = sdat->cnt;
-      MYSTATUS* mystatus;
+		{
+			MYSTATUS* mystatus = wk->init_param->mystatus;
 
-      mystatus = wk->init_param->mystatus;
-
-      if( is_woman == FALSE )
-      {
-        MyStatus_SetMySex( mystatus , PTL_SEX_MALE );
-      }
-      else
-      { 
-        MyStatus_SetMySex( mystatus , PTL_SEX_FEMALE );
-      }
-    
-      // 決定演出開始
-      INTRO_G3D_SelectDecideStart( wk->g3d, !is_woman );
-
-      sdat->seq++;
+			if( sdat->cnt == 0 ){
+				MyStatus_SetMySex( mystatus , PTL_SEX_MALE );
+				INTRO_G3D_SelectDecideStart( wk->g3d, INTRO_3D_SEL_SEX_MODE_ENTER_MALE );
+			}else{ 
+				MyStatus_SetMySex( mystatus , PTL_SEX_FEMALE );
+				INTRO_G3D_SelectDecideStart( wk->g3d, INTRO_3D_SEL_SEX_MODE_ENTER_FEMALE );
+			}
+			sdat->seq++;
     }
     break;
 
@@ -1383,6 +1374,13 @@ static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat,
     if( INTRO_G3D_SelectDecideWait( wk->g3d ) )
     {
       return TRUE;
+    }
+    break;
+
+	case 4:
+    if( INTRO_G3D_SelectDecideWait( wk->g3d ) )
+    {
+      sdat->seq = 1;
     }
     break;
   
