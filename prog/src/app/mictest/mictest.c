@@ -75,6 +75,19 @@ static void Snd_BgmFadeIn( int a, int b, int c){}
 //#define MIC_FORMAT_PCM16  //  定義を外すと8bit
 //#define TWL_FREQENCY      // DSiの時のサンプリング周波数を調査する処理が有効になる
 
+
+#ifndef SDK_TWL
+#define MIC_SAMPLING_RATE_8180  (8180)
+int MIC_StartLimitedSampling( MICAutoParam *param)
+{
+  return 1;
+}
+void   MIC_StopLimitedSampling(void)
+{
+  return;
+}
+#endif
+
 //=============================================================================
 /**
  *          定数宣言
