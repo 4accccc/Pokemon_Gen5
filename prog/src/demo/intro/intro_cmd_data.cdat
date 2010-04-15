@@ -111,7 +111,7 @@ static const INTRO_CMD_DATA c_intro_scene_02[] =
 
   { INTRO_CMD_TYPE_POKEMON_APPER, MONSNO_541 }, // ポケモン出現演出 //@TODO コマンドの中が鳴き声だけ
 
-  { INTRO_CMD_TYPE_MCSS_SET_ANIME, {1,0}, CMD_READ_NEXT }, // 通常アニメ
+//  { INTRO_CMD_TYPE_MCSS_SET_ANIME, {1,0}, CMD_READ_NEXT }, // 通常アニメ
 
   { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_03, 0, 1 } }, // そう！　この　せかいには
   { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_04, 0, 1 } }, // ふしぎな　ちからを　ひめている
@@ -126,7 +126,9 @@ static const INTRO_CMD_DATA c_intro_scene_03[] =
 {
   { INTRO_CMD_TYPE_MCSS_FADE_REQ, {1, FALSE }, }, // ポケモン非表示 
 
+  { INTRO_CMD_TYPE_MCSS_RESET_ANIME_FLAG, { 0 }, }, // 博士のアニメチェックフラグをリセット
   { INTRO_CMD_TYPE_MCSS_MOVE, { 0, -FX32_CONST(0.2), FX32_CONST(0) }, },      // 博士移動
+  { INTRO_CMD_TYPE_MCSS_SET_ANIME, { 0, 1 }, },     // 博士を停止アニメに変更
 
   { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_05, 0, 1 } }, // さて　わたしの　はなしは
 

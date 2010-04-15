@@ -253,6 +253,7 @@ void INTRO_MCSS_SetAnimeIndex( INTRO_MCSS_WORK* wk, u8 id, int anm_idx )
   GF_ASSERT( wk->mcss_work[id] );
 
   MCSS_SetAnimeIndex( wk->mcss_work[id], anm_idx );
+	MCSS_ResetAnmStopFlag( wk->mcss_work[id] );
 
 	wk->animeFlag[id] = FALSE;
 	MCSS_SetAnimCtrlCallBack( wk->mcss_work[id], (u32)&wk->animeFlag[id], McssCallBackFrame, 0 );
@@ -425,8 +426,9 @@ BOOL INTRO_MCSS_MoveX( INTRO_MCSS_WORK * wk, u8 id, fx32 mx, fx32 px )
 	if( wk->animeFlag[id] == TRUE ){
 		// 止めちゃうと目パチが動かなくなるので、停止アニメに切り替える
 		// アニメは強制的に停止状態にしておく
-		INTRO_MCSS_SetAnimeIndex( wk, id, 1 );
-		wk->animeFlag[id] = TRUE;
+//		INTRO_MCSS_SetAnimeIndex( wk, id, 1 );
+//		wk->animeFlag[id] = TRUE;
+		MCSS_SetAnmStopFlag( wk->mcss_work[id] );
 	}
 
 	return flg;
