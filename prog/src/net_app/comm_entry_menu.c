@@ -306,7 +306,7 @@ static const FLDMENUFUNC_HEADER ParentSearchMenuListHeader = {
   16,                     //文字サイズY(ドット
 	1,                      //表示座標X キャラ単位
 	1,                      //表示座標Y キャラ単位
-	20,                     //表示サイズX キャラ単位
+	22,                     //表示サイズX キャラ単位
 	10,                     //表示サイズY キャラ単位
 };
 
@@ -2047,7 +2047,7 @@ static void _ParentSearchList_DeleteParent(COMM_ENTRY_MENU_PTR em, int parent_no
 static void _ParentSearchList_SetListString(COMM_ENTRY_MENU_PTR em)
 {
 	int i;
-  STRBUF *strbuf_expand, *strbuf_src, *strbuf_eom;
+  STRBUF *strbuf_expand, *strbuf_src, *strbuf_src_hit, *strbuf_eom;
   STRCODE str_eom = GFL_STR_GetEOMCode();
   
   if(em->parentsearch.list_strbuf_create == TRUE){
@@ -2055,10 +2055,12 @@ static void _ParentSearchList_SetListString(COMM_ENTRY_MENU_PTR em)
   }
   
   strbuf_src = GFL_STR_CreateBuffer(64, em->heap_id);
+  strbuf_src_hit = GFL_STR_CreateBuffer(64, em->heap_id);
   strbuf_expand = GFL_STR_CreateBuffer(64, em->heap_id);
   strbuf_eom = GFL_STR_CreateBuffer(4, em->heap_id);
 	
   GFL_MSG_GetString( em->msgdata, msg_connect_search_000, strbuf_src );
+  GFL_MSG_GetString( em->msgdata, msg_connect_search_001, strbuf_src_hit );
 	for( i = 0; i < PARENT_LIST_MAX; i++ ){
     WORDSET_RegisterNumber( em->wordset, 0, i, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
     if(em->parentsearch.parentuser[i].occ == TRUE){
@@ -2066,17 +2068,19 @@ static void _ParentSearchList_SetListString(COMM_ENTRY_MENU_PTR em)
       WORDSET_RegisterNumber( em->wordset, 2, 
         MyStatus_GetID_Low(&em->parentsearch.parentuser[i].mystatus), 
         5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+      WORDSET_ExpandStr( em->wordset, strbuf_expand, strbuf_src_hit );
     }
     else{
     	GFL_STR_SetStringCode(strbuf_eom, &str_eom);
     	WORDSET_RegisterWord( em->wordset, 1, strbuf_eom, 0, TRUE, PM_LANG );
     	WORDSET_RegisterWord( em->wordset, 2, strbuf_eom, 0, TRUE, PM_LANG );
+      WORDSET_ExpandStr( em->wordset, strbuf_expand, strbuf_src );
     }
-    WORDSET_ExpandStr( em->wordset, strbuf_expand, strbuf_src );
     FLDMENUFUNC_AddStringListData( em->parentsearch.fldmenu_listdata,
   		strbuf_expand, i, em->heap_id );
 	}
 	
+	GFL_STR_DeleteBuffer(strbuf_src_hit);
 	GFL_STR_DeleteBuffer(strbuf_src);
 	GFL_STR_DeleteBuffer(strbuf_expand);
 	GFL_STR_DeleteBuffer(strbuf_eom);

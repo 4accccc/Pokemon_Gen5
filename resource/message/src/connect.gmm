@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-23T13:08:06"/>
+	<create user="matsuda" host="W00142" date="2010-04-15T16:46:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -311,7 +311,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="132"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -342,15 +342,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="352" top="159" right="1057" bottom="787" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -568,9 +568,15 @@
 	</row>
 
 	<row id="msg_connect_search_000">
-		<comment>親探索：メニューリスト</comment>
-		<language name="JPN">[2:01:２桁:0]:[1:00:トレーナー名:1]　ＩＤ[2:04:５桁:2]</language>
-		<language name="JPN_KANJI">[2:01:２桁:0]:[1:00:トレーナー名:1]　ＩＤ[2:04:５桁:2]</language>
+		<comment>親探索：メニューリスト(親機がいない場合)</comment>
+		<language name="JPN">[2:01:２桁:0]:</language>
+		<language name="JPN_KANJI">[2:01:２桁:0]:</language>
+	</row>
+
+	<row id="msg_connect_search_001">
+		<comment>親探索：メニューリスト(親機がいる場合)</comment>
+		<language name="JPN">[2:01:２桁:0]:[1:00:トレーナー名:1][BD:05:X指定:106]ＩＤ：[2:04:５桁:2]</language>
+		<language name="JPN_KANJI">[2:01:２桁:0]:[1:00:トレーナー名:1][BD:05:X指定:106]ＩＤ：[2:04:５桁:2]</language>
 	</row>
 
 	<row id="msg_child_00">
