@@ -1825,9 +1825,7 @@ SRCS_OVERLAY_BATTLE_RECORDER_CORE	=	net_app/battle_recorder/br_core.c \
 #フィールド～ミュージカルショットのラインが一番高くなってしまったので、
 #ミュージカルショットに依存していない箇所を、ミュージカルショットと並列におくためです
 #===> SRCS_OVERLAY_BATTLE
-#===> SRCS_OVERLAY_BATTLE_BAG
-#===> SRCS_OVERLAY_BATTLE_PLIST
-#===> SRCS_OVERLAY_VS_MULTI_LIST
+#===> SRCS_OVERLAY_BATTLE_VIEW
 #===> SRCS_OVERLAY_BATTLE_RECORDER_CORE
 SRCS_OVERLAY_BATTLE_RECORDER  = net_app/battle_recorder/br_main.c
 
