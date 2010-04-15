@@ -83,7 +83,7 @@ typedef struct {
   COMM_BTL_DEMO_TYPE type;    ///< [IN] 通信バトルデモ 起動タイプ(※このパラメータはevent_battle_call.c内で設定します。)
   int battle_mode;            ///< [IN] BATTLE_MODE_xxx
   int fight_count;            ///< [IN] 連勝数
-  RECORD *record;             ///< レコードデータ
+  RECORD *record;             ///< [IN] レコードデータ
 } COMM_BTL_DEMO_PARAM;
 
 //=============================================================================
