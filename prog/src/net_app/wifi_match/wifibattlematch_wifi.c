@@ -843,6 +843,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     SEQ_WAIT_WRITE_SAKE_DELETE_POKE,
 
     //大会発見
+    SEQ_START_MSG_CUPDATA,
     SEQ_START_DOWNLOAD_REG,
     SEQ_WAIT_DOWNLOAD_REG,
     SEQ_WAIT_DOWNLOAD_REG_SUCCESS,
@@ -948,7 +949,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       ret = WIFIBATTLEMATCH_NET_WaitSendGpfData( p_wk->p_net );
       if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_SUCCESS )
       { 
-        *p_seq  = SEQ_START_DOWNLOAD_REG;
+        *p_seq  = SEQ_START_MSG_CUPDATA;
       }
     }
     break;
@@ -1001,7 +1002,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     else
     { 
       //大会発見
-      *p_seq  = SEQ_START_DOWNLOAD_REG;
+      *p_seq  = SEQ_START_MSG_CUPDATA;
     }
     break;
 
@@ -1064,6 +1065,11 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     //-------------------------------------
     ///	大会が見つかったので、ダウンロード開始
     //=====================================
+  case SEQ_START_MSG_CUPDATA:
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_36, WBM_TEXT_TYPE_WAIT );
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_DOWNLOAD_REG );
+    *p_seq  = SEQ_WAIT_MSG;
+    break;
   case SEQ_START_DOWNLOAD_REG:
     WIFIBATTLEMATCH_NET_StartDownloadDigCard( p_wk->p_net, p_wk->p_param->p_gpf_data->WifiMatchUpID );
     *p_seq  = SEQ_WAIT_DOWNLOAD_REG;
