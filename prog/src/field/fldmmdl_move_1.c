@@ -605,6 +605,31 @@ static int SubMoveSpinStop_Move( MMDL * mmdl )
  * @retval BOOL TRUE=‰Ÿ‚³‚ê‚Ä‚¢‚é
  */
 //--------------------------------------------------------------
+#if 0
+static BOOL checkDashButton( const MMDL *mmdl )
+{
+  MMDL *jiki = MMDLSYS_SearchMMdlPlayer( MMDL_GetMMdlSys(mmdl) );
+  
+  if( mmdl == NULL ){
+    u16 code = MMDL_GetAcmdCode( mmdl );
+    
+    switch( code ){
+    case AC_DASH_U_4F:
+    case AC_DASH_D_4F:
+    case AC_DASH_L_4F:
+    case AC_DASH_R_4F:
+    case AC_DASH_U_6F:
+    case AC_DASH_D_6F:
+    case AC_DASH_L_6F:
+    case AC_DASH_R_6F:
+      return( TRUE );
+    }
+  }
+  
+  return( FALSE );
+}
+#endif
+
 static BOOL checkDashButton( void )
 {
   if( (GFL_UI_KEY_GetCont() & BTN_DASH) ){

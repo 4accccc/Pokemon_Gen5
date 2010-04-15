@@ -311,6 +311,7 @@ static u16 get_DashAlterNextDir( u16 mv_code, u16 dir );
 static void MvRndWorkInit( MMDL * mmdl, int ac, int id, int check );
 
 static BOOL checkDashButtonCont( void );
+static BOOL checkDashMove( const MMDL *mmdl );
 static BOOL checkDashButtonTrg( void );
 static int TblNumGet( const int *tbl, int end );
 static int TblRndGet( const int *tbl, int end );
@@ -2342,6 +2343,30 @@ static BOOL checkDashButtonCont( void )
   return( FALSE );
 }
 
+
+static BOOL checkDashMove( const MMDL *mmdl )
+{
+  MMDL *jiki = MMDLSYS_SearchMMdlPlayer( MMDL_GetMMdlSys(mmdl) );
+  
+  if( jiki != NULL ){
+    u16 code = MMDL_GetAcmdCode( jiki );
+    
+    switch( code ){
+    case AC_DASH_U_4F:
+    case AC_DASH_D_4F:
+    case AC_DASH_L_4F:
+    case AC_DASH_R_4F:
+    case AC_DASH_U_6F:
+    case AC_DASH_D_6F:
+    case AC_DASH_L_6F:
+    case AC_DASH_R_6F:
+      return( TRUE );
+    }
+  }
+  
+  return( FALSE );
+}
+
 //--------------------------------------------------------------
 /**
  * ダッシュボタンが押されたか
@@ -2443,7 +2468,7 @@ static int TrJikiDashSearch( MMDL * mmdl )
     return( DIR_NOT );
   }
 #else
-  if( checkDashButtonCont() == FALSE ){
+  if( checkDashMove(mmdl) == FALSE ){ //ダッシュしていない
     return( DIR_NOT );
   }
 #endif
@@ -2584,7 +2609,7 @@ static BOOL checkEvTypeDashReact( const MMDL *mmdl, u8 *count )
       return( FALSE );
     }
       
-    if( checkDashButtonCont() == FALSE ){
+    if( checkDashButtonTrg() == FALSE ){
       return( FALSE );
     }
       
