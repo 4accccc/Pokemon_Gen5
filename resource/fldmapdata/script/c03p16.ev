@@ -177,7 +177,18 @@ _TALK_OBJ_START()
 						_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_06 , C03P16_CABINGUIDE_01, POS_DL )
 						_LAST_KEYWAIT()
 						_MSGWIN_CLOSE()
-				
+					
+					DEFAULT	//Ｂボタン
+
+						_GOLD_WIN_CLOSE()
+						//ループ終了
+						$LWK_MENU_WHILE = 1
+					
+						//かしこまりました
+						_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_06 , C03P16_CABINGUIDE_01, POS_DL )
+						_LAST_KEYWAIT()
+						_MSGWIN_CLOSE()
+
 					ENDSWITCH
 
 				ENDWHILE
