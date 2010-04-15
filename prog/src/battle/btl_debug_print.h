@@ -28,6 +28,7 @@ typedef enum {
   DBGSTR_ADAPTER_Create,
   DBGSTR_ADAPTER_RECVED_A_CLIENT,
   DBGSTR_MAIN_PokeConGetByPos,
+  DBGSTR_MAIN_CheckHPByLvup,
 
   DBGSTR_CLIENT_RETURN_CMD_START,
   DBGSTR_CLIENT_RETURN_CMD_DONE,
@@ -91,6 +92,7 @@ typedef enum {
   DBGSTR_CLIENT_AI_PutPokeStart,
   DBGSTR_CLIENT_AI_PutPokeDecide,
   DBGSTR_CLIENT_CoverRotateDecide,
+  DBGSTR_CLIENT_HPCheckByLvup,
 
   DBGSTR_BPP_NemuriWakeCheck,
 

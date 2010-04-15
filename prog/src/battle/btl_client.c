@@ -5591,10 +5591,10 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
 
   switch( *seq ){
   case SEQ_INIT:
-      addExp = args[1];
-      subSeq = 0;
-      (*seq) = SEQ_ADD_ROOT;
-      /* fallthru */
+    addExp = args[1];
+    subSeq = 0;
+    (*seq) = SEQ_ADD_ROOT;
+    /* fallthru */
   case SEQ_ADD_ROOT:
     if( addExp )
     {
@@ -5633,7 +5633,9 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
 
   // レベルアップ処理ルート
   case SEQ_LVUP_ROOT:
+    BTL_N_Printf( DBGSTR_CLIENT_HPCheckByLvup, __LINE__, BPP_GetValue(bpp,BPP_HP));
     BPP_ReflectByPP( bpp );
+    BTL_N_Printf( DBGSTR_CLIENT_HPCheckByLvup, __LINE__, BPP_GetValue(bpp,BPP_HP));
     BTL_MAIN_ClientPokemonReflectToServer( wk->mainModule, pokeID );
     {
        // 場に出ているならゲージ演出

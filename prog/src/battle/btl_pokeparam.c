@@ -265,6 +265,10 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
   u16 monsno = bpp->coreParam.monsno;
   int i;
 
+  // 2010.4.15 HP”½‰f
+  bpp->coreParam.hp = PP_Get( srcPP, ID_PARA_hp, 0 );
+  bpp->coreParam.hpMax = PP_Get( srcPP, ID_PARA_hpmax, 0 );
+
   // Šî–{ƒpƒ‰ƒƒ^‰Šú‰»
   setupBySrcDataBase( bpp, srcPP );
 

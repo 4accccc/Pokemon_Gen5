@@ -4482,6 +4482,7 @@ void BTL_MAIN_ClientPokemonReflectToServer( BTL_MAIN_MODULE* wk, u8 pokeID )
   {
     BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( &wk->pokeconForServer, pokeID );
     BPP_ReflectByPP( bpp );
+    BTL_N_Printf( DBGSTR_MAIN_CheckHPByLvup, __LINE__, BPP_GetValue(bpp,BPP_HP));
     BTL_SERVER_NotifyPokemonLevelUp( wk->server, bpp );
   }
 }
