@@ -134,36 +134,38 @@ static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey4Mine[] = {
   { { 4,  4,  4,  4,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  4 },  //1
 };
 
-static const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey4Data[ 2 ][ 14 ] = {
+static const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey4Data[ 2 ][ WAZA_TARGET_MAX + 1 ] = {
   { 
     PokeSeleMenuKey4Normal_L,  ///< Ž©•ªˆÈŠO‚P‘Ìi‘I‘ðj
-    PokeSeleMenuKey4NoMine_L,  ///< Ž©•ªˆÈŠO‘S‚Ä
-    PokeSeleMenuKey4EnemySel,  ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
-    PokeSeleMenuKey4Enemy,     ///< ‘ŠŽè‘¤‘S‚Ä
-    PokeSeleMenuKey4Mine_L,    ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
     PokeSeleMenuKey4MineSel,   ///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
     PokeSeleMenuKey4Mine_R,    ///< Ž©•ªˆÈŠO‚Ì–¡•û‚P‘Ìi‘I‘ðj
+    PokeSeleMenuKey4EnemySel,  ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
+    PokeSeleMenuKey4NoMine_L,  ///< Ž©•ªˆÈŠO‘S‚Ä
+    PokeSeleMenuKey4Enemy,     ///< ‘ŠŽè‘¤‘S‚Ä
+    PokeSeleMenuKey4Mine,      ///< –¡•û‘¤‘Sƒ|ƒP
     PokeSeleMenuKey4Mine_L,    ///< Ž©•ª‚Ì‚Ý
     PokeSeleMenuKey4All,       ///< ê‚Éo‚Ä‚¢‚éƒ|ƒPƒ‚ƒ“‘S‚Ä
-    PokeSeleMenuKey4Mine,      ///< Ž©•ª‘¤w‰c
-    PokeSeleMenuKey4Enemy,     ///< “G‘¤w‰c
+    PokeSeleMenuKey4Mine_L,    ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
     PokeSeleMenuKey4All,       ///< ê‘S‘Ìi“VŒó‚È‚Çj
+    PokeSeleMenuKey4Enemy,     ///< “G‘¤w‰c
+    PokeSeleMenuKey4Mine,      ///< Ž©•ª‘¤w‰c
     PokeSeleMenuKey4Mine_L,    ///< ‚ä‚Ñ‚ð‚Ó‚é‚È‚Ç“ÁŽêŒ^
     PokeSeleMenuKey4Normal_L,  ///< Ž©•ªˆÈŠO‚P‘Ìi‰“‹——£j
   },
   { 
     PokeSeleMenuKey4Normal_R,  ///< Ž©•ªˆÈŠO‚P‘Ìi‘I‘ðj
-    PokeSeleMenuKey4NoMine_R,  ///< Ž©•ªˆÈŠO‘S‚Ä
-    PokeSeleMenuKey4EnemySel,  ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
-    PokeSeleMenuKey4Enemy,     ///< ‘ŠŽè‘¤‘S‚Ä
-    PokeSeleMenuKey4Mine_R,    ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
     PokeSeleMenuKey4MineSel,   ///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
     PokeSeleMenuKey4Mine_L,    ///< Ž©•ªˆÈŠO‚Ì–¡•û‚P‘Ìi‘I‘ðj
+    PokeSeleMenuKey4EnemySel,  ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
+    PokeSeleMenuKey4NoMine_R,  ///< Ž©•ªˆÈŠO‘S‚Ä
+    PokeSeleMenuKey4Enemy,     ///< ‘ŠŽè‘¤‘S‚Ä
+    PokeSeleMenuKey4Mine,      ///< –¡•û‘¤‘Sƒ|ƒP
     PokeSeleMenuKey4Mine_R,    ///< Ž©•ª‚Ì‚Ý
     PokeSeleMenuKey4All,       ///< ê‚Éo‚Ä‚¢‚éƒ|ƒPƒ‚ƒ“‘S‚Ä
-    PokeSeleMenuKey4Mine,      ///< Ž©•ª‘¤w‰c
-    PokeSeleMenuKey4Enemy,     ///< “G‘¤w‰c
+    PokeSeleMenuKey4Mine_R,    ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
     PokeSeleMenuKey4All,       ///< ê‘S‘Ìi“VŒó‚È‚Çj
+    PokeSeleMenuKey4Enemy,     ///< “G‘¤w‰c
+    PokeSeleMenuKey4Mine,      ///< Ž©•ª‘¤w‰c
     PokeSeleMenuKey4Mine_R,    ///< ‚ä‚Ñ‚ð‚Ó‚é‚È‚Ç“ÁŽêŒ^
     PokeSeleMenuKey4Normal_R,  ///< Ž©•ªˆÈŠO‚P‘Ìi‰“‹——£j
   },
@@ -416,52 +418,55 @@ static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Long_R[] = {
   { { 6,  6,  6,  6,  -1, -1 }, -1, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //5
 };
 
-static const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey6Data[ 3 ][ 14 ] = { 
+static const BTLV_INPUT_KEYTBL  *PokeSeleMenuKey6Data[ 3 ][ WAZA_TARGET_MAX + 1 ] = { 
   { 
     PokeSeleMenuKey6Normal_L,   ///< Ž©•ªˆÈŠO‚P‘Ìi‘I‘ðj
-    PokeSeleMenuKey6NoMine_L,   ///< Ž©•ªˆÈŠO‘S‚Ä
-    PokeSeleMenuKey6EnemySel_L, ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
-    PokeSeleMenuKey6Enemy_L,    ///< ‘ŠŽè‘¤‘S‚Ä
-    PokeSeleMenuKey6Mine_L,     ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
     PokeSeleMenuKey6MineSel,    ///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
     PokeSeleMenuKey6Pair_L,     ///< Ž©•ªˆÈŠO‚Ì–¡•û‚P‘Ìi‘I‘ðj
+    PokeSeleMenuKey6EnemySel_L, ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
+    PokeSeleMenuKey6NoMine_L,   ///< Ž©•ªˆÈŠO‘S‚Ä
+    PokeSeleMenuKey6Enemy_L,    ///< ‘ŠŽè‘¤‘S‚Ä
+    PokeSeleMenuKey6Mine,       ///< –¡•û‘¤‘Sƒ|ƒP
     PokeSeleMenuKey6Mine_L,     ///< Ž©•ª‚Ì‚Ý
     PokeSeleMenuKey6All,        ///< ê‚Éo‚Ä‚¢‚éƒ|ƒPƒ‚ƒ“‘S‚Ä
-    PokeSeleMenuKey6Mine,       ///< Ž©•ª‘¤w‰c
-    PokeSeleMenuKey6Enemy_C,    ///< “G‘¤w‰c
+    PokeSeleMenuKey6Mine_L,     ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
     PokeSeleMenuKey6All,        ///< ê‘S‘Ìi“VŒó‚È‚Çj
+    PokeSeleMenuKey6Enemy_C,    ///< “G‘¤w‰c
+    PokeSeleMenuKey6Mine,       ///< Ž©•ª‘¤w‰c
     PokeSeleMenuKey6Mine_L,     ///< ‚ä‚Ñ‚ð‚Ó‚é‚È‚Ç“ÁŽêŒ^
     PokeSeleMenuKey6Long_L,     ///< Ž©•ªˆÈŠO‚P‘Ìi‰“‹——£j
   },
   { 
     PokeSeleMenuKey6Normal_C,   ///< Ž©•ªˆÈŠO‚P‘Ìi‘I‘ðj
-    PokeSeleMenuKey6NoMine_C,   ///< Ž©•ªˆÈŠO‘S‚Ä
-    PokeSeleMenuKey6EnemySel_C, ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
-    PokeSeleMenuKey6Enemy_C,    ///< ‘ŠŽè‘¤‘S‚Ä
-    PokeSeleMenuKey6Mine_C,     ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
     PokeSeleMenuKey6MineSel,    ///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
     PokeSeleMenuKey6Pair_C,     ///< Ž©•ªˆÈŠO‚Ì–¡•û‚P‘Ìi‘I‘ðj
+    PokeSeleMenuKey6EnemySel_C, ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
+    PokeSeleMenuKey6NoMine_C,   ///< Ž©•ªˆÈŠO‘S‚Ä
+    PokeSeleMenuKey6Enemy_C,    ///< ‘ŠŽè‘¤‘S‚Ä
+    PokeSeleMenuKey6Mine,       ///< –¡•û‘¤‘Sƒ|ƒP
     PokeSeleMenuKey6Mine_C,     ///< Ž©•ª‚Ì‚Ý
     PokeSeleMenuKey6All,        ///< ê‚Éo‚Ä‚¢‚éƒ|ƒPƒ‚ƒ“‘S‚Ä
-    PokeSeleMenuKey6Mine,       ///< Ž©•ª‘¤w‰c
-    PokeSeleMenuKey6Enemy_C,    ///< “G‘¤w‰c
+    PokeSeleMenuKey6Mine_C,     ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
     PokeSeleMenuKey6All,        ///< ê‘S‘Ìi“VŒó‚È‚Çj
+    PokeSeleMenuKey6Enemy_C,    ///< “G‘¤w‰c
+    PokeSeleMenuKey6Mine,       ///< Ž©•ª‘¤w‰c
     PokeSeleMenuKey6Mine_C,     ///< ‚ä‚Ñ‚ð‚Ó‚é‚È‚Ç“ÁŽêŒ^
     PokeSeleMenuKey6Normal_C,   ///< Ž©•ªˆÈŠO‚P‘Ìi‰“‹——£j
   },
   { 
     PokeSeleMenuKey6Normal_R,   ///< Ž©•ªˆÈŠO‚P‘Ìi‘I‘ðj
-    PokeSeleMenuKey6NoMine_R,   ///< Ž©•ªˆÈŠO‘S‚Ä
-    PokeSeleMenuKey6EnemySel_R, ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
-    PokeSeleMenuKey6Enemy_R,    ///< ‘ŠŽè‘¤‘S‚Ä
-    PokeSeleMenuKey6Mine_R,     ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
     PokeSeleMenuKey6MineSel,    ///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
     PokeSeleMenuKey6Pair_R,     ///< Ž©•ªˆÈŠO‚Ì–¡•û‚P‘Ìi‘I‘ðj
+    PokeSeleMenuKey6EnemySel_R, ///< ‘ŠŽè‘¤‚P‘Ìi‘I‘ðj
+    PokeSeleMenuKey6NoMine_R,   ///< Ž©•ªˆÈŠO‘S‚Ä
+    PokeSeleMenuKey6Enemy_R,    ///< ‘ŠŽè‘¤‘S‚Ä
+    PokeSeleMenuKey6Mine,       ///< –¡•û‘¤‘Sƒ|ƒP
     PokeSeleMenuKey6Mine_R,     ///< Ž©•ª‚Ì‚Ý
     PokeSeleMenuKey6All,        ///< ê‚Éo‚Ä‚¢‚éƒ|ƒPƒ‚ƒ“‘S‚Ä
-    PokeSeleMenuKey6Mine,       ///< Ž©•ª‘¤w‰c
-    PokeSeleMenuKey6Enemy_C,    ///< “G‘¤w‰c
+    PokeSeleMenuKey6Mine_R,     ///< ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€
     PokeSeleMenuKey6All,        ///< ê‘S‘Ìi“VŒó‚È‚Çj
+    PokeSeleMenuKey6Enemy_C,    ///< “G‘¤w‰c
+    PokeSeleMenuKey6Mine,       ///< Ž©•ª‘¤w‰c
     PokeSeleMenuKey6Mine_R,     ///< ‚ä‚Ñ‚ð‚Ó‚é‚È‚Ç“ÁŽêŒ^
     PokeSeleMenuKey6Long_R,     ///< Ž©•ªˆÈŠO‚P‘Ìi‰“‹——£j
   },
