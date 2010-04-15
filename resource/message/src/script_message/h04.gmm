@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-10T19:27:31"/>
+	<create user="matsumiya" host="W00224" date="2010-04-15T11:47:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="139" right="2004" bottom="767" maximized="no" rayout="Vertical2">
+	<dialog left="1527" top="308" right="2232" bottom="936" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -437,12 +437,16 @@
 落ちていったのを　みたよ！</language>
 	</row>
 
-	<row id="msg_h04_boy1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_h04_boy1_02" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・通常時</comment>
 		<attribute name="キャラ指定">BOY1</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ぼくも　ポケモンしょうぶ　しようかな？▼
+ブリッジの　まわりに
+ポケモントレーナーも　いることだし</language>
+		<language name="JPN_KANJI" width="256">ぼくも　ポケモン勝負　しようかな？▼
+ブリッジの　周りに
+ポケモントレーナーも　いることだし</language>
 	</row>
 
 	<row id="msg_h04_oldman1_01" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
@@ -462,12 +466,18 @@
 キャモメに　渡して　あげなされ▼</language>
 	</row>
 
-	<row id="msg_h04_oldman1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_h04_oldman1_02" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・通常時</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ひるは　のんびり　にっこうよく
+よるは　しんみり　げっこうよく▼
+ひかりが　からだに　しみこんで
+ハッピー　ハッピー　ソー　ハッピー</language>
+		<language name="JPN_KANJI" width="256">昼は　のんびり　日光浴
+夜は　しんみり　月光浴▼
+光が　からだに　染みこんで
+ハッピー　ハッピー　ソー　ハッピー</language>
 	</row>
 
 	<row id="msg_h04_backpackerw_01" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
@@ -491,12 +501,14 @@
 今度は　落とさないように　ってね！</language>
 	</row>
 
-	<row id="msg_h04_backpackerw_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_h04_backpackerw_02" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・通常時</comment>
 		<attribute name="キャラ指定">BACKPACKERW</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">クチベタな　わたしは　メールで
+たびで　かんじた　きもちを　かくの</language>
+		<language name="JPN_KANJI" width="256">クチベタな　わたしは　メールで
+旅で　感じた　気持ちを　書くの</language>
 	</row>
 
 	<row id="msg_h04_whistle_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -845,14 +857,14 @@
 →waitress_08</comment>
 		<attribute name="キャラ指定">BAKER
 パン屋</attribute>
-		<language name="JPN" width="256">この　おみせは　ポケモンと　
-たべられる　サンドイッチやさんなの▼
+		<language name="JPN" width="256">この　おみせは
+とくべつな　サンドイッチやさん　なの▼
 あなたには　おきゃくさんから
 ちゅうもんを　とってきてほしいわ▼
 わたしが　そのとおりに
 サンドイッチを　つくってくるから</language>
-		<language name="JPN_KANJI" width="256">この　お店は　ポケモンと　
-食べられる　サンドイッチ屋さんなの▼
+		<language name="JPN_KANJI" width="256">この　お店は
+特別な　サンドイッチ屋さん　なの▼
 あなたには　お客さんから
 注文を　取って来てほしいわ▼
 私が　その通りに
@@ -1150,10 +1162,12 @@
 </comment>
 		<attribute name="キャラ指定">WOMAN1
 女性</attribute>
-		<language name="JPN" width="256">パクッ　……このあじっ！
-まさか　このレベルに　であえるなんて</language>
-		<language name="JPN_KANJI" width="256">パクッ　……この味っ！
-まさか　このレベルに　出会えるなんて</language>
+		<language name="JPN" width="256">パクッ▼
+……この　あじっ！　まさか
+この　レベルに　であえるなんて</language>
+		<language name="JPN_KANJI" width="256">パクッ▼
+……この　味っ！　まさか
+この　レベルに　であえるなんて</language>
 	</row>
 
 	<row id="msg_h04_woman1_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1161,10 +1175,12 @@
 </comment>
 		<attribute name="キャラ指定">WOMAN1
 女性</attribute>
-		<language name="JPN" width="256">パクッ　……？
-おいしいけど　オーダーと　ちがうわよ</language>
-		<language name="JPN_KANJI" width="256">パクッ　……？
-美味しいけど　オーダーと　違うわよ</language>
+		<language name="JPN" width="256">パクッ▼
+……？　おいしいけど
+オーダーと　ちがうわよ</language>
+		<language name="JPN_KANJI" width="256">パクッ▼
+……？　おいしいけど
+オーダーと　ちがうわよ</language>
 	</row>
 
 	<row id="msg_h04_girl2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1277,11 +1293,11 @@
 
 	<row id="msg_h04_system_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・ウェイトレスにサンドイッチを渡された状態で客に話しかけたとき
-・タグに数字をセット
+・タグに道具名をセット
 ・プレーンウィンで表示</comment>
-		<language name="JPN" width="256">この　おきゃくさんに　[2:00:１桁:0]つめの
+		<language name="JPN" width="256">この　おきゃくさんに　[1:09:どうぐ名:0]の
 サンドイッチを　わたしますか？</language>
-		<language name="JPN_KANJI" width="256">この　お客さんに　[2:00:１桁:0]つ目の
+		<language name="JPN_KANJI" width="256">この　お客さんに　[1:09:どうぐ名:0]の
 サンドイッチを　渡しますか？</language>
 	</row>
 
