@@ -115,6 +115,8 @@ MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID )
 	mcss_sys->mcss_max		= max;
 	mcss_sys->heapID		= heapID;
 
+	mcss_sys->mcAnimRate = FX32_ONE;
+
 	mcss_sys->mcss =GFL_HEAP_AllocClearMemory( heapID, sizeof(MCSS_WORK *) * max );
 
 #ifdef USE_RENDER
@@ -340,6 +342,8 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 			if( mcss_sys->mcss_ortho_mode == 0 ){
 				anim_pos.x = MCSS_CONST( anim_SRT_mc.px );
 				anim_pos.y = MCSS_CONST( -anim_SRT_mc.py );
+				anim_pos.x = FX_Mul( anim_pos.x,mcss_sys->mcAnimRate );
+				anim_pos.y = FX_Mul( anim_pos.y,mcss_sys->mcAnimRate );
 			}
 			else{
       	MtxFx44	mtx;
@@ -1419,6 +1423,30 @@ void	MCSS_SetMosaic( MCSS_SYS_WORK *mcss_sys, MCSS_WORK* mcss, int mosaic )
   mcss->mosaic = mosaic;
   MCSS_FreeResource( mcss );
   MCSS_LoadResource( mcss_sys, mcss->index, &mcss->maw );
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief マルチセルアニメレート
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+fx32	MCSS_GetMultiCellAnimeRate( MCSS_SYS_WORK *mcss_sys )
+{ 
+  return mcss_sys->mcAnimRate;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief マルチセルアニメレート
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetMultiCellAnimeRate( MCSS_SYS_WORK *mcss_sys, const fx32 rate )
+{ 
+  mcss_sys->mcAnimRate = rate;
 }
 
 //--------------------------------------------------------------------------

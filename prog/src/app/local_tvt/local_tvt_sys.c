@@ -732,7 +732,7 @@ static void LOCAL_TVT_MSG_DispMessage( LOCAL_TVT_WORK *work , const u16 msgId )
     
     if( work->wordSet != NULL )
     {
-      STRBUF *msgWorkStr = GFL_STR_CreateBuffer( 128 , work->heapId );
+      STRBUF *msgWorkStr = GFL_STR_CreateBuffer( 1024 , work->heapId );
       WORDSET_ExpandStr( work->wordSet , msgWorkStr , work->msgStr );
       GFL_STR_DeleteBuffer( work->msgStr );
       work->msgStr = msgWorkStr;
@@ -892,7 +892,7 @@ static GFL_PROC_RESULT LOCAL_TVT_ProcInit( GFL_PROC * proc, int * seq , void *pw
     initWork->scriptId = 1;
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
     {
-      initWork->scriptId = 4;
+      initWork->scriptId = 5;
     }
   }
   else

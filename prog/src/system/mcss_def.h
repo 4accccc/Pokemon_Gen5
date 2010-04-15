@@ -126,5 +126,7 @@ struct _MCSS_SYS_WORK
   MCSS_CALLBACK_FUNC*     load_resource_callback;   //LoadResourceの前に呼ばれるコールバック（キャラデータ操作に使用）
   u32                     callback_work;        //コールバック関数を呼ぶ時の引数のポインタ
 	int											heapID;								//使用するヒープID
+	
+	fx32                    mcAnimRate; //マルチセルアニメ倍率
 };
 
