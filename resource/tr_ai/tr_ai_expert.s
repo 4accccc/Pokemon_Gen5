@@ -454,6 +454,7 @@ ExpertAI_10_end:
 	AIEND
 
 //---------------------------------------------------------------------------
+ExpertAI_322:			// 	とぐろをまく
 ExpertAI_208:	// ビルドアップ
 ExpertAI_11:	// 防御力アップ
 	IF_PARA_UNDER	CHECK_ATTACK,PARA_DEF,9,ExpertAI_11_1
@@ -531,6 +532,8 @@ ExpertAI_12_end:
 	AIEND
 	
 //---------------------------------------------------------------------------
+ExpertAI_328:			// 	コットンガード
+ExpertAI_321:			// 	ほたるび
 ExpertAI_13:	// 特攻アップ
 	IF_PARA_UNDER	CHECK_ATTACK,PARA_SPEPOW,9,ExpertAI_13_1
 	IF_RND_UNDER	100,ExpertAI_13_2
@@ -825,11 +828,11 @@ ExpertAI_19_end:
 //---------------------------------------------------------------------------
 ExpertAI_70:	// 追加素早さダウン
 	CHECK_WAZA_AISYOU	AISYOU_0BAI,ExpertAI_70_end		//2008.6.21追加
-	CHECK_WAZA_AISYOU	AISYOU_1_4BAI,ExpertAI_70_end	//2008.6.21追加
-	CHECK_WAZA_AISYOU	AISYOU_1_2BAI,ExpertAI_70_end	//2008.6.21追加
 	IF_WAZANO	WAZANO_KOGOERUKAZE,ExpertAI_20	// 100%追加
 	IF_WAZANO	WAZANO_GANSEKIHUUZI,ExpertAI_20	// 100%追加
 	IF_WAZANO	WAZANO_MADDOSYOTTO,ExpertAI_20	// 100%追加
+	CHECK_WAZA_AISYOU	AISYOU_1_4BAI,ExpertAI_70_end	//2008.6.21追加
+	CHECK_WAZA_AISYOU	AISYOU_1_2BAI,ExpertAI_70_end	//2008.6.21追加
 	AIEND
 
 ExpertAI_70_end:
@@ -1030,6 +1033,7 @@ ExpertAI_26_1:
 	AIEND
 
 //---------------------------------------------------------------------------
+ExpertAI_313:			// 	ともえなげ
 ExpertAI_28:	//ふきとばし
 
 	CHECK_SLOWSTART_TURN	CHECK_DEFENCE	//スロースタート
@@ -2165,6 +2169,8 @@ ExpertAI_39:	// かまいたち
 ExpertAI_75:	// ゴッドバード
 ExpertAI_145:	// ロケットずつき
 ExpertAI_151:	// ソーラービーム
+ExpertAI_331:	// 	フリーズボルト
+ExpertAI_332:	// 	コールドフレア
 	CHECK_WAZA_AISYOU	AISYOU_0BAI,ExpertAI_151_ng1
 	CHECK_WAZA_AISYOU	AISYOU_1_4BAI,ExpertAI_151_ng1
 	CHECK_WAZA_AISYOU	AISYOU_1_2BAI,ExpertAI_151_ng1
@@ -2246,6 +2252,7 @@ ExpertAI_155_1_item:
 	INCDEC	+1
 	JUMP		ExpertAI_155_end
 
+ExpertAI_311:			// 	フリーフォール
 ExpertAI_155_1_noitem:
 	IF_FIRST	IF_FIRST_ATTACK,ExpertAI_155_1_IBAN_PASS
 	IF_HP_OVER	CHECK_ATTACK,24,ExpertAI_155_1_IBAN_PASS
@@ -4744,75 +4751,292 @@ ExpertAI_297:			// 	イカサマ
 	AIEND
 
 ExpertAI_299:			// 	なかまづくり
+	IF_RND_UNDER	128,ExpertAI_299_end
+	INCDEC		1
+ExpertAI_299_end:
 	AIEND
-
 
 ExpertAI_300:			// 	おさきにどうぞ
 	AIEND
+
 ExpertAI_301:			// 	りんしょう
 	AIEND
+
 ExpertAI_302:			// 	エコーボイス
 	AIEND
+
 ExpertAI_303:			// 	なしくずし
+	CHECK_WAZA_AISYOU	AISYOU_0BAI,ExpertAI_303_end
+	CHECK_WAZA_AISYOU	AISYOU_1_4BAI,ExpertAI_303_end
+	CHECK_WAZA_AISYOU	AISYOU_1_2BAI,ExpertAI_303_end
+
+	IF_PARA_UNDER	CHECK_ATTACK,PARA_DEF,9,ExpertAI_303_end
+	IF_PARA_UNDER	CHECK_ATTACK,PARA_SPEDEF,9,ExpertAI_303_end
+
+	IF_RND_UNDER	128,ExpertAI_303_end
+  INCDEC 1
+ExpertAI_303_end:
 	AIEND
+
 ExpertAI_304:			// 	クリアスモッグ
+	IF_PARA_OVER	CHECK_DEFENCE,PARA_POW,8,ExpertAI_304_ok
+	IF_PARA_OVER	CHECK_DEFENCE,PARA_DEF,8,ExpertAI_304_ok
+	IF_PARA_OVER	CHECK_DEFENCE,PARA_SPEPOW,8,ExpertAI_304_ok
+	IF_PARA_OVER	CHECK_DEFENCE,PARA_SPEDEF,8,ExpertAI_304_ok
+	IF_PARA_OVER	CHECK_DEFENCE,PARA_AVOID,8,ExpertAI_304_ok
+
+	IF_RND_UNDER	50,ExpertAI_304_end
+	INCDEC		-1
+	JUMP		ExpertAI_304_end	
+
+ExpertAI_304_ok:	
+	IF_RND_UNDER	50,ExpertAI_304_end
+
+	INCDEC		1
+ExpertAI_304_end:	
+
 	AIEND
+
 ExpertAI_305:			// 	アシストパワー
+	CHECK_WAZA_AISYOU	AISYOU_0BAI,ExpertAI_303_end
+	CHECK_WAZA_AISYOU	AISYOU_1_4BAI,ExpertAI_303_end
+	CHECK_WAZA_AISYOU	AISYOU_1_2BAI,ExpertAI_303_end
+
+	IF_PARA_OVER	CHECK_ATTACK,PARA_POW,8,ExpertAI_305_next
+	IF_PARA_OVER	CHECK_ATTACK,PARA_DEF,8,ExpertAI_305_next
+	IF_PARA_OVER	CHECK_ATTACK,PARA_SPEPOW,8,ExpertAI_305_next
+	IF_PARA_OVER	CHECK_ATTACK,PARA_SPEDEF,8,ExpertAI_305_next
+	IF_PARA_OVER	CHECK_ATTACK,PARA_AVOID,8,ExpertAI_305_next
+	JUMP		ExpertAI_305_end	
+
+ExpertAI_305_next:			
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,109,ExpertAI_305_ok		//  のろい 
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,206,ExpertAI_305_ok		//  コスモパワー 
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,208,ExpertAI_305_ok		//  ビルドアップ 
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,211,ExpertAI_305_ok		//  めいそう 
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,212,ExpertAI_305_ok		//  りゅうのまい 
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,226,ExpertAI_305_ok		//  つぼをつく 
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,277,ExpertAI_305_ok		//  つめとぎ 
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,290,ExpertAI_305_ok		//  ちょうのまい
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,308,ExpertAI_305_ok		//  からをやぶる
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,316,ExpertAI_305_ok		//  せいちょう
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,322,ExpertAI_305_ok		//  とぐろをまく
+
+	IF_PARA_OVER	CHECK_ATTACK,PARA_POW,10,ExpertAI_305_ok
+	IF_PARA_OVER	CHECK_ATTACK,PARA_DEF,10,ExpertAI_305_ok
+	IF_PARA_OVER	CHECK_ATTACK,PARA_SPEPOW,10,ExpertAI_305_ok
+	IF_PARA_OVER	CHECK_ATTACK,PARA_SPEDEF,10,ExpertAI_305_ok
+	IF_PARA_OVER	CHECK_ATTACK,PARA_AVOID,10,ExpertAI_305_ok
+
+	JUMP		ExpertAI_305_end	
+
+ExpertAI_305_ok:
+	IF_RND_UNDER	50,ExpertAI_305_end
+	INCDEC		1
+ExpertAI_305_end:
 	AIEND
+
 ExpertAI_306:			// 	ファストガード
+	CHECK_NEKODAMASI	CHECK_DEFENCE
+	IF_EQUAL	0,ExpertAI_306_ok
+
+	INCDEC		-1
+
+ExpertAI_306_ok:
+	IF_RND_UNDER	128,ExpertAI_306_end
+	INCDEC		1
+ExpertAI_306_end:	
 	AIEND
+
 ExpertAI_307:			// 	サイドチェンジ
 	AIEND
+
 ExpertAI_308:			// 	からをやぶる
+	IF_PARA_UNDER	CHECK_ATTACK,PARA_DEF,6,ExpertAI_308_ng
+	IF_PARA_UNDER	CHECK_ATTACK,PARA_SPEDEF,6,ExpertAI_308_ng
+
+	JUMP	ExpertAI_308_end
+
+ExpertAI_308_ng:
+	INCDEC		-1
+ExpertAI_308_end:
 	AIEND
+
 ExpertAI_309:			// 	いやしのはどう
 	AIEND
+
 ExpertAI_310:			// 	たたりめ
 	AIEND
-ExpertAI_311:			// 	フリーフォール
-	AIEND
+
 ExpertAI_312:			// 	ギアチェンジ
+	IF_FIRST	IF_FIRST_DEFENCE,ExpertAI_312_ok
+
+	IF_HP_OVER	CHECK_ATTACK,50,ExpertAI_312_end	
+
+	IF_RND_UNDER	50,ExpertAI_312_end
+	INCDEC		-1
+	JUMP		ExpertAI_312_end
+	
+ExpertAI_312_ok:
+	IF_RND_UNDER	50,ExpertAI_312_end
+
+	INCDEC		1
+ExpertAI_312_end:
 	AIEND
-ExpertAI_313:			// 	ともえなげ
-	AIEND
+
 ExpertAI_314:			// 	やきつくす
+	CHECK_TURN
+	IFN_EQUAL	0,ExpertAI_314_end
+
+	IF_RND_UNDER	50,ExpertAI_314_end
+	INCDEC		1
+ExpertAI_314_end:
 	AIEND
+
 ExpertAI_315:			// 	さきおくり
 	AIEND
+
 ExpertAI_316:			// 	せいちょう
+	IF_HP_OVER	CHECK_ATTACK,70,ExpertAI_316_end	
+
+	IF_RND_UNDER	50,ExpertAI_316_end
+	INCDEC		-1
+ExpertAI_316_end:
 	AIEND
+
+
 ExpertAI_317:			// 	アクロバット
+	CHECK_WAZA_AISYOU	AISYOU_0BAI,ExpertAI_317_ng
+	CHECK_WAZA_AISYOU	AISYOU_1_4BAI,ExpertAI_317_ng
+	CHECK_WAZA_AISYOU	AISYOU_1_2BAI,ExpertAI_317_ng
+
+	IF_HAVE_ITEM	CHECK_ATTACK,0,ExpertAI_317_ok  //　なにも持ってない
+
+ExpertAI_317_ng:
+	IF_RND_UNDER	50,ExpertAI_317_end
+	INCDEC		-1
+	JUMP		ExpertAI_317_end
+
+ExpertAI_317_ok:
+	IF_RND_UNDER	50,ExpertAI_317_end
+	INCDEC		1
+ExpertAI_317_end:
 	AIEND
+
+
 ExpertAI_318:			// 	ミラータイプ
+	CHECK_TYPE	CHECK_ATTACK_TYPE1
+	IF_TABLE_JUMP	ExpertAI_318_ok_Table,ExpertAI_318_ok
+	IF_TABLE_JUMP	ExpertAI_318_ng_Table,ExpertAI_318_ng
+	CHECK_TYPE	CHECK_ATTACK_TYPE2
+	IF_TABLE_JUMP	ExpertAI_318_ok_Table,ExpertAI_318_ok
+	IF_TABLE_JUMP	ExpertAI_318_ng_Table,ExpertAI_318_ng
+
+	JUMP	ExpertAI_318_end
+
+ExpertAI_318_ng:
+	IF_RND_UNDER	50,ExpertAI_318_end
+	INCDEC		-1
+	JUMP	ExpertAI_318_end
+
+ExpertAI_318_ok:
+	IF_RND_UNDER	50,ExpertAI_318_end
+	INCDEC		1
+ExpertAI_318_end:
 	AIEND
+
+
+ExpertAI_318_ok_Table:
+	.long	POKETYPE_HONOO
+	.long	POKETYPE_MIZU
+	.long	POKETYPE_KUSA
+	.long	POKETYPE_DENKI
+	.long	POKETYPE_KOORI
+	.long	POKETYPE_DOKU
+	.long	POKETYPE_SP
+	.long	POKETYPE_AKU
+	.long	POKETYPE_HAGANE
+	.long	0xffffffff
+
+ExpertAI_318_ng_Table:
+	.long	POKETYPE_GHOST
+	.long	POKETYPE_DRAGON
+	.long	0xffffffff
+
 ExpertAI_319:			// 	かたきうち
 	AIEND
+
 ExpertAI_320:			// 	いのちがけ
+	IF_MIGAWARI	  CHECK_DEFENCE,ExpertAI_320_ng		// みがわり中
+//  todo
+// IF_HAVE_BATSUGUN ExpertAI_320_ng
+
+	IF_HP_UNDER	CHECK_DEFENCE,40,ExpertAI_320_ng
+	IF_HP_OVER	CHECK_ATTACK,40,ExpertAI_320_end
+
+	IF_RND_UNDER	50,ExpertAI_320_end
+
+ExpertAI_320_ng:
+	INCDEC		-2
+ExpertAI_320_end:
 	AIEND
-ExpertAI_321:			// 	ほたるび
-	AIEND
-ExpertAI_322:			// 	とぐろをまく
-	AIEND
+
 ExpertAI_323:			// 	ギフトパス
 	AIEND
+
 ExpertAI_324:			// 	みずのちかい
 	AIEND
 ExpertAI_325:			// 	ほのおのちかい
 	AIEND
 ExpertAI_326:			// 	くさのちかい
 	AIEND
+
 ExpertAI_327:			// 	ふるいたてる
+	IF_PARA_UNDER	CHECK_ATTACK,PARA_POW,9,ExpertAI_327_1
+	IF_RND_UNDER	100,ExpertAI_327_3
+	INCDEC		-1
+	JUMP		ExpertAI_327_3
+
+ExpertAI_327_1:
+	IF_PARA_UNDER	CHECK_ATTACK,PARA_SPEPOW,9,ExpertAI_327_2
+	IF_RND_UNDER	100,ExpertAI_327_3
+	INCDEC		-1
+	JUMP		ExpertAI_327_3
+
+ExpertAI_327_2:
+	IFN_HP_EQUAL	CHECK_ATTACK,100,ExpertAI_327_4
+
+	IF_HAVE_WAZA_SEQNO	CHECK_ATTACK,127,ExpertAI_327_3		// バトンタッチ系
+
+	IF_RND_UNDER	128,ExpertAI_327_4
+
+ExpertAI_327_3:
+	INCDEC		2
+ExpertAI_327_4:
+	IF_HP_OVER	CHECK_ATTACK,70,ExpertAI_327_end
+	IF_HP_UNDER	CHECK_ATTACK,40,ExpertAI_327_5
+
+	IF_RND_UNDER	40,ExpertAI_327_end
+ExpertAI_327_5:
+	INCDEC		-2
+ExpertAI_327_end:
 	AIEND
-ExpertAI_328:			// 	コットンガード
-	AIEND
+
 ExpertAI_329:	// 	いにしえのうた
 	AIEND
+
 ExpertAI_330:	// 	こごえるせかい
+  IF_FIRST	IF_FIRST_DEFENCE,ExpertAI_330_1
+	INCDEC		-1
+	JUMP		ExpertAI_330_end
+
+ExpertAI_330_1:
+	IF_RND_UNDER	70,ExpertAI_330_end
+
+	INCDEC		2
+ExpertAI_330_end:
 	AIEND
-ExpertAI_331:	// 	フリーズボルト
-	AIEND
-ExpertAI_332:	// 	コールドフレア
-	AIEND
+
 ExpertAI_333:	// 	どなりつける
 	AIEND
 

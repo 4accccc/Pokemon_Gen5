@@ -1720,6 +1720,8 @@ BasicAI_300:			// 	おさきにどうぞ
 	AIEND
 
 BasicAI_301:			// 	りんしょう
+	CHECK_BTL_RULE
+	IF_EQUAL		BTL_RULE_SINGLE, AI_DEC10
 	AIEND
 
 BasicAI_302:			// 	エコーボイス
@@ -1813,6 +1815,8 @@ BasicAI_323:			// 	ギフトパス
 	CHECK_SOUBI_ITEM	CHECK_DEFENCE
 	IFN_EQUAL	0,AI_DEC10
 
+	CHECK_BTL_RULE
+	IF_EQUAL		BTL_RULE_SINGLE, AI_DEC10
 	AIEND
 
 BasicAI_324:			// 	みずのちかい
