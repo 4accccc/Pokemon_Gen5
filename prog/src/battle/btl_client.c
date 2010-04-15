@@ -1650,7 +1650,6 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
   case 8:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      BTLV_EFFECT_DelTrainer( BTLV_MCSS_POS_TR_BB );
       (*seq) = 0;
     }
     break;
