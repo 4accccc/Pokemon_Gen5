@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-15T11:36:39"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-15T11:37:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="48" top="-6" right="753" bottom="614" maximized="no" rayout="Vertical2">
+	<dialog left="48" top="0" right="753" bottom="614" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="809" top="4" right="1282" bottom="402" visible="yes"/>
+		<tag-palette left="807" top="4" right="1280" bottom="402" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -474,12 +474,12 @@
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">ふるくて　かちのある　ものを
 アンティークと　よぶそうじゃ▼
-はしも　ワシも　いわば
-アンティーク　じゃよ　ヒッヒッヒ</language>
+ビレッジブリッジも　ワシも　いわば
+アンティーク　じゃよ　ハッハッハ</language>
 		<language name="JPN_KANJI" width="256">古くて　価値のある　ものを
 アンティークと　呼ぶそうじゃ▼
 ビレッジブリッジも　ワシも　いわば
-アンティーク　じゃよ　ヒッヒッヒ</language>
+アンティーク　じゃよ　ハッハッハ</language>
 	</row>
 
 	<row id="msg_h04_backpackerw_01" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
