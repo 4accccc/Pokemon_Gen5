@@ -1009,7 +1009,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   fldmapMain_UpdateMoveZone( fieldWork );
   SET_CHECK("update_top:map main func");
   //マップ別 登録処理
-  if( GAMESYSTEM_GetEvent(gsys) == NULL) {
+  if( GAMESYSTEM_IsEventExists(gsys) == FALSE ) {
     //登録テーブルごとに個別のメイン処理を呼び出し
     fieldWork->func_tbl->main_func( fieldWork, &fieldWork->now_pos ); 
     //時間イベントのアップデート処理を呼び出し
@@ -3582,10 +3582,7 @@ BOOL FIELDMAP_CheckCanSoundPlay( const FIELDMAP_WORK* fieldWork )
 //-----------------------------------------------------------------------------
 BOOL FIELDMAP_CheckDoEvent( const FIELDMAP_WORK* fieldWork )
 {
-  if( GAMESYSTEM_GetEvent(fieldWork->gsys) == NULL) {
-    return FALSE;
-  }
-  return TRUE;
+  return GAMESYSTEM_IsEventExists(fieldWork->gsys);
 }
 
 //----------------------------------------------------------------------------

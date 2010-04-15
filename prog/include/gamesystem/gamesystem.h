@@ -86,7 +86,7 @@ extern void GAMESYSTEM_CallFieldProc(GAMESYS_WORK * gsys);
  * @return	GMEVENT			イベントへのポインタ
  */
 //------------------------------------------------------------------
-extern GMEVENT * GAMESYSTEM_GetEvent(GAMESYS_WORK * gsys);
+extern GMEVENT * GAMESYSTEM_GetEvent(const GAMESYS_WORK * gsys);
 
 //------------------------------------------------------------------
 /**
@@ -96,6 +96,16 @@ extern GMEVENT * GAMESYSTEM_GetEvent(GAMESYS_WORK * gsys);
  */
 //------------------------------------------------------------------
 extern void GAMESYSTEM_SetEvent(GAMESYS_WORK * gsys, GMEVENT * event);
+
+//------------------------------------------------------------------
+/**
+ * @brief	イベント起動中かどうかを返す
+ * @param	gsys	ゲーム制御ワークへのポインタ
+ * @retval	TRUE    起動中
+ * @retval	FALSE   なし
+ */
+//------------------------------------------------------------------
+extern BOOL GAMESYSTEM_IsEventExists(const GAMESYS_WORK * gsys);
 
 //------------------------------------------------------------------
 /**

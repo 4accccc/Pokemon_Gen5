@@ -55,7 +55,7 @@ typedef GMEVENT* (*GMEVENT_CREATE_CB_FUNC)( GAMESYS_WORK* gsys, void* work );
 //=============================================================================
 
 extern BOOL GAMESYSTEM_EVENT_Main(GAMESYS_WORK * gsys);
-extern BOOL GAMESYSTEM_EVENT_IsExists(GAMESYS_WORK * gsys);
+extern BOOL GAMESYSTEM_EVENT_IsExists(const GAMESYS_WORK * gsys);
 extern BOOL GAMESYSTEM_EVENT_CheckSet(GAMESYS_WORK * gsys, EVCHECK_FUNC ev_check, void * context);
 
 //ñ{ëÃÇÕgamesystem/gamesystem.cÇ…Ç†ÇÈÇÃÇ≈íçà”ÅI

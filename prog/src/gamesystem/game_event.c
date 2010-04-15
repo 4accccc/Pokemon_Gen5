@@ -144,9 +144,13 @@ BOOL GAMESYSTEM_EVENT_Main(GAMESYS_WORK * gsys)
  * @retval	FALSE	ƒCƒxƒ“ƒg‚È‚µ
  */
 //------------------------------------------------------------------
-BOOL GAMESYSTEM_EVENT_IsExists(GAMESYS_WORK * gsys)
+BOOL GAMESYSTEM_EVENT_IsExists(const GAMESYS_WORK * gsys)
 {
-	return (GAMESYSTEM_GetEvent(gsys) != NULL);
+	if ( GAMESYSTEM_GetEvent(gsys) != NULL )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------

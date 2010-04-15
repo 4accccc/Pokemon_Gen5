@@ -82,6 +82,8 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys);
 static void GameSystem_End(GAMESYS_WORK * gsys);
 static u32 GAMESYS_WORK_GetSize(void);
 
+static void GameSystem_UpdateDoEvent( GAMESYS_WORK * gsys );
+
 
 //============================================================================================
 /**
@@ -202,7 +204,8 @@ struct _GAMESYS_WORK {
 	ISS_SYS * iss_sys;		// ISSシステム
 	
 	u8 field_comm_error_req;      ///<TRUE:フィールドでの通信エラー画面表示リクエスト
-	u8 padding[3];
+  u8 do_event;    ///< イベント動作チェック
+	u8 padding[2];
 };
 
 //------------------------------------------------------------------
@@ -261,6 +264,8 @@ static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK *
 static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 {
 	//Game Server Proccess
+
+  GameSystem_UpdateDoEvent( gsys ); // 今フレームのイベント動作フラグ更新
 
 	if(GAMEDATA_IsFrameSpritMode(gsys->gamedata)) //フレーム分割状態にいる場合
 	{
@@ -333,6 +338,15 @@ void GAMESYSTEM_EVENT_EntryCheckFunc(GAMESYS_WORK * gsys, EVCHECK_FUNC evcheck_f
 	gsys->evcheck_context = context;
 }
 
+
+//------------------------------------------------------------------
+// イベント起動フラグの更新
+//------------------------------------------------------------------
+static void GameSystem_UpdateDoEvent( GAMESYS_WORK * gsys )
+{
+  gsys->do_event = GAMESYSTEM_EVENT_IsExists(gsys);
+}
+
 //============================================================================================
 //
 //		外部インターフェイス関数
@@ -359,6 +373,25 @@ void GAMESYSTEM_CallProc(GAMESYS_WORK * gsys,
 void GAMESYSTEM_CallFieldProc(GAMESYS_WORK * gsys)
 {
 	GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(fieldmap), &FieldProcData, gsys);
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief	イベント起動中かどうかを返す
+ * @param	gsys	ゲーム制御ワークへのポインタ
+ * @retval	TRUE    起動中
+ * @retval	FALSE   なし
+ */
+//------------------------------------------------------------------
+BOOL GAMESYSTEM_IsEventExists(const GAMESYS_WORK * gsys)
+{
+  // このフレームの始まりから終わりの間に１回でもイベントの状態があれば
+  // TRUEを返します。
+  if( GAMESYSTEM_EVENT_IsExists(gsys) ){
+    return TRUE;
+  }
+  return gsys->do_event;
 }
 
 //------------------------------------------------------------------
@@ -394,7 +427,7 @@ HEAPID GAMESYSTEM_GetHeapID(GAMESYS_WORK * gsys)
 //------------------------------------------------------------------
 //	イベント取得
 //------------------------------------------------------------------
-GMEVENT * GAMESYSTEM_GetEvent(GAMESYS_WORK * gsys)
+GMEVENT * GAMESYSTEM_GetEvent(const GAMESYS_WORK * gsys)
 {
 	return gsys->event;
 }

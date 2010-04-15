@@ -370,7 +370,7 @@ void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork )
   switch( pWork->state )
   {
   case FSS_UPDATE:
-    funcTable[pWork->mode].update_func(pWork,(NULL==GAMESYSTEM_GetEvent(FIELDMAP_GetGameSysWork(pWork->fieldmap))));
+    funcTable[pWork->mode].update_func(pWork,!(FIELDMAP_CheckDoEvent(pWork->fieldmap)));
     break;
 
   //モードを切り替えるときのフェード処理
@@ -424,7 +424,7 @@ void FIELD_SUBSCREEN_Main( FIELD_SUBSCREEN_WORK* pWork )
     {
       pWork->state = FSS_UPDATE;
     }
-    funcTable[pWork->mode].update_func(pWork,(NULL==GAMESYSTEM_GetEvent(FIELDMAP_GetGameSysWork(pWork->fieldmap))));
+    funcTable[pWork->mode].update_func( pWork, !(FIELDMAP_CheckDoEvent(pWork->fieldmap)) );
     break;
   }
 }
@@ -442,7 +442,7 @@ void FIELD_SUBSCREEN_Draw( FIELD_SUBSCREEN_WORK* pWork )
   case FSS_UPDATE:
     if( funcTable[pWork->mode].draw_func != NULL )
     {
-      funcTable[pWork->mode].draw_func(pWork, (NULL==GAMESYSTEM_GetEvent(FIELDMAP_GetGameSysWork(pWork->fieldmap))));
+      funcTable[pWork->mode].draw_func(pWork, !(FIELDMAP_CheckDoEvent(pWork->fieldmap)));
     }
     break;
 
