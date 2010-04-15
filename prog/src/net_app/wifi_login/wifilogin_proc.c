@@ -925,11 +925,13 @@ static void _profileIDCheck(WIFILOGIN_WORK* pWork)
   { 
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0021);
+    pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
     _CHANGE_STATE(pWork,_exitEnd2);
   }
   else if(!DS_SYSTEM_IsAgreeEULA()){  ///EULAåüç∏
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0018);
+    pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
     _CHANGE_STATE(pWork,_exitEnd2);
   }
   //ã≠êßÉZÅ[Éuñ≥Çµ
