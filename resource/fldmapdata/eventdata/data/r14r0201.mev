@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/15 2:35:39
+#save date:2010/04/15 12:55:57
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r14r0201.wms
 #SECTION START:OBJ_EVENT
@@ -164,7 +164,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-520 64 -56
+552 64 -88
 #event number: 5
 #type
 1
@@ -319,7 +319,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-552 32 -344
+568 32 -312
 #event number: 10
 #type
 1
@@ -359,7 +359,7 @@ TR_TANPAN_16
 #OBJ CODE Number
 BOY2
 #MOVE CODE Number
-MV_RTRD         
+MV_RTDRLU       
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -367,7 +367,7 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_TANPAN_16
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 1
 #Parameter 1 Number
@@ -375,13 +375,13 @@ DIR_RIGHT
 #Parameter 2 Number
 0
 #Move Limit X Number
-6
+8
 #Move Limit Z Number
-2
+5
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-280 32 -328
+248 32 -312
 #event number: 12
 #type
 1
@@ -421,7 +421,7 @@ TR_MINI_12
 #OBJ CODE Number
 GIRL2
 #MOVE CODE Number
-MV_RND_ULR
+MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -443,7 +443,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 48 -328
+-40 48 -312
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
