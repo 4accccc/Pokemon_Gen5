@@ -912,6 +912,7 @@ static void SEQFUNC_InitIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       belivery_irc_init.heapID       = p_wk->heapID;
       belivery_irc_init.data[0].LangCode     = CasetteLanguage;
       belivery_irc_init.dataNum = 1;
+      belivery_irc_init.data[0].version = 1<<GET_VERSION();     // 受け取るバージョンのビット
       p_wk->p_irc  = DELIVERY_IRC_Init( &belivery_irc_init );
       DELIVERY_IRC_RecvStart( p_wk->p_irc );
     }

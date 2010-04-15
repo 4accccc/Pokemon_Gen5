@@ -539,6 +539,7 @@ void LIVEBATTLEMATCH_IRC_StartRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk, RE
   init.ConfusionID  = 0;
   init.heapID = p_wk->heapID;
   init.data[0].LangCode = CasetteLanguage;
+  init.data[0].version = 1<<GET_VERSION();     // 受け取るバージョンのビット
   init.dataNum  = 1;
 
   GF_ASSERT( p_wk->p_delivery == NULL );
