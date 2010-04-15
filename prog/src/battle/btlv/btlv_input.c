@@ -564,6 +564,7 @@ struct _BTLV_INPUT_WORK
   u8                    *cursor_mode;
 
   int                   camera_work_wait;   //カメラワークウェイト
+  BtlvMcssPos           focus_pos;          //フォーカスをあわせるポケモンの位置
 
   //ローテーション用POKEMON_PARAM
 #ifdef ROTATION_NEW_SYSTEM
@@ -724,6 +725,7 @@ static  inline  void  SePlayCancel( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw );
+static  inline  void  BTLV_INPUT_SetFocus( BTLV_INPUT_WORK* biw );
 
 static  void  BTLV_INPUT_VBlank( GFL_TCB *tcb, void *work );
 
@@ -1184,6 +1186,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_DeletePokeIcon( biw );
       BTLV_INPUT_DeleteWeatherIcon( biw );
 
+      BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+
       if( ( biw->scr_type == BTLV_INPUT_SCRTYPE_COMMAND ) || ( biw->scr_type == BTLV_INPUT_SCRTYPE_YES_NO ) )
       {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformCommand2Standby, ttw, 1 );
@@ -1200,6 +1204,16 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_COMMAND_PARAM* bicp = ( BTLV_INPUT_COMMAND_PARAM * )param;
       int i;
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( biw->heapID, sizeof( TCB_TRANSFORM_WORK ) );
+
+      biw->focus_pos = bicp->pos;
+
+      BTLV_INPUT_SetFocus( biw );
+
+      if( bicp->pos >= BTLV_MCSS_POS_A )
+      { 
+        bicp->pos = ( bicp->pos - BTLV_MCSS_POS_A ) / 2;
+      }
+
       biw->tcb_execute_flag = 1;
       biw->center_button_type = bicp->center_button_type;
       ttw->biw = biw;
@@ -1214,7 +1228,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       BTLV_INPUT_CreatePokeIcon( biw, bicp );
       BTLV_INPUT_CreateWeatherIcon( biw );
 
-      BTLV_EFFECT_SetCameraFocus( bicp->pos, BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
 
 #ifdef ROTATION_NEW_SYSTEM
       if( ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) || ( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE ) )
@@ -1530,7 +1543,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
     {
       //カメラワークエフェクト
       BTLV_EFFECT_Stop();
-      BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+      BTLV_INPUT_SetFocus( biw );
       biw->camera_work_wait = 0;
     }
   }
@@ -4462,3 +4475,10 @@ static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw )
   }
 }
 
+//=============================================================================================
+//  カメラフォーカス
+//=============================================================================================
+static  inline  void  BTLV_INPUT_SetFocus( BTLV_INPUT_WORK* biw )
+{ 
+  BTLV_EFFECT_SetCameraFocus( biw->focus_pos, BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
+}

@@ -534,7 +534,7 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
           bicp.form_no[ 1 ] = BPP_GetValue( bpp, BPP_FORM );
           bicp.sex[ 1 ]     = BPP_GetValue( bpp, BPP_SEX );
         }
-        bicp.pos = ( bicp.pos - BTLV_MCSS_POS_A ) / 2;
+        //bicp.pos = ( bicp.pos - BTLV_MCSS_POS_A ) / 2;
         break;
 
       default:
