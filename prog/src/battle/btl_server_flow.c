@@ -9527,7 +9527,7 @@ static void scPut_WazaDamagePlural( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     if( aff[i] > BTL_TYPEAFF_100 ){
       ++affGoodCnt;
     }
-    if( aff[i] > BTL_TYPEAFF_100 ){
+    if( aff[i] < BTL_TYPEAFF_100 ){
       ++affBadCnt;
     }
   }
