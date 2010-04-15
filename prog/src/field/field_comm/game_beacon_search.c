@@ -306,7 +306,7 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
       }
       break;
     default:
-      OS_TPrintf("フィールドから繋ぐgsidでは無い為、無視 gsid = %d\n", target->gsid);
+      //フィールドから繋ぐgsidでは無い為、無視
       target->gsid = 0;
       break;
     }
