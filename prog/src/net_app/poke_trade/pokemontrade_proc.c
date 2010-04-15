@@ -1433,7 +1433,7 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
   POKETRADE_MESSAGE_WindowOpen(pWork);
   pWork->changeFactor[0] = POKETRADE_FACTOR_NONE;
   pWork->changeFactor[1] = POKETRADE_FACTOR_NONE;
-  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID);
+//  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID);
   _CHANGE_STATE(pWork, _endCancelState);
 }
 
@@ -1872,7 +1872,7 @@ static void _changeWaitState(POKEMON_TRADE_WORK* pWork)
   pWork->changeFactor[1] = POKETRADE_FACTOR_NONE;
   
   
-  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID);
+ // GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID);
   _CHANGE_STATE(pWork, _endCancelState);
 }
 
@@ -2100,6 +2100,7 @@ static void _endCancelState(POKEMON_TRADE_WORK* pWork)
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
     POKETRADE_MESSAGE_WindowClear(pWork);
     if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID);
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_51, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
       POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
