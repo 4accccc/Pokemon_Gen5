@@ -3137,7 +3137,21 @@ ExpertAI_223:	// フェイント
 	JUMP	ExpertAI_223_end
 
 ExpertAI_223_mamoru:
+	CHECK_TOKUSEI	CHECK_ATTACK
+	IFN_EQUAL	TOKUSYU_KONZYOU,ExpertAI_223_konjopass
 
+	IF_HAVE_ITEM	CHECK_ATTACK,ITEM_KAENDAMA,ExpertAI_223_konjo
+	IF_HAVE_ITEM	CHECK_ATTACK,ITEM_DOKUDOKUDAMA,ExpertAI_223_konjo
+
+	JUMP  ExpertAI_223_konjopass
+
+ExpertAI_223_konjo:
+	CHECK_TURN
+	IFN_EQUAL	0,ExpertAI_223_konjopass
+
+	INCDEC	2                                           //　こんじょうで　かえんだま　どくどくだまを持っている。
+
+ExpertAI_223_konjopass:
 	IF_DOKUDOKU   CHECK_ATTACK,                       ExpertAI_223_ok1		// どくどく
 	IF_WAZASICK		CHECK_ATTACK,WAZASICK_NOROI,        ExpertAI_223_ok1		// のろい
 	IF_WAZASICK	  CHECK_ATTACK,WAZASICK_HOROBINOUTA,  ExpertAI_223_ok1		// ほろび
