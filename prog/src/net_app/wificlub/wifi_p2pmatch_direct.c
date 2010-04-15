@@ -483,6 +483,7 @@ static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
   case WIFIP2PMATCH_PLAYERDIRECT_VCT:
     {
       _vctcheckCommon(wk);
+      WifiP2PMatchMessagePrint(wk, msg_wifilobby_1015, FALSE);
       _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_VCT);  // VCT’†‚É‚È‚é
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT);
     }
@@ -1086,6 +1087,7 @@ static int _playerDirectBattleGo3KeyWait( WIFIP2PMATCH_WORK *wk, int seq )
     wk->command = WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED;
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
   }
+  return seq;
 }
 
 
@@ -1466,6 +1468,7 @@ static int _playerDirectEndKeyWait( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   }
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
+  return seq;
 }
 
 //------------------------------------------------------------------

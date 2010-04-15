@@ -3727,10 +3727,12 @@ static int WifiP2PMatch_VCTConnectEndWait( WIFIP2PMATCH_WORK *wk, int seq )
   }
   else if(ret == 0)
   { // ‚Í‚¢‚ð‘I‘ð‚µ‚½ê‡
-
-    if(!GFL_NET_StateIsWifiError()){
+    if(wk->pParentWork->btalk){
+      EndMessageWindowOff(wk);
+      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1);
+    }
+    else if(!GFL_NET_StateIsWifiError()){
       _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
-      //GFL_NET_StateWifiBattleMatchEnd();
       GFL_NET_StateWifiMatchEnd(TRUE);
       wk->preConnect = -1;
       wk->timer = _RECONECTING_WAIT_TIME;
