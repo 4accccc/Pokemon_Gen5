@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/15 0:43:57
+#save date:2010/04/15 10:26:51
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d08r0701.wms
 #SECTION START:OBJ_EVENT
@@ -45,37 +45,6 @@ EVENTDATA_POSTYPE_RAIL
 #type
 1
 #ID name
-D08R0701_FLD_ITEM_02
-#OBJ CODE Number
-MONSTERBALL
-#MOVE CODE Number
-MV_RAIL_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_FLD_ITEM_173
-#Event Script Name
-SCRID_FLD_ITEM_173
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-33 10 -3
-#event number: 2
-#type
-1
-#ID name
 D08R0701_FLD_ITEM_03
 #OBJ CODE Number
 MONSTERBALL
@@ -103,6 +72,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_RAIL
 #position
 15 2 3
+#event number: 2
+#type
+1
+#ID name
+D08R0701_FLD_ITEM_02
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_173
+#Event Script Name
+SCRID_FLD_ITEM_173
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+33 10 -3
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

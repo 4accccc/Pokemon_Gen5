@@ -11,8 +11,8 @@
 #define ZONE_D08R0701_EVC_H
 
 #define D08R0701_FLD_ITEM_01               0
-#define D08R0701_FLD_ITEM_02               1
-#define D08R0701_FLD_ITEM_03               2
+#define D08R0701_FLD_ITEM_03               1
+#define D08R0701_FLD_ITEM_02               2
 
 #endif //ZONE_D08R0701_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d08r0701.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
