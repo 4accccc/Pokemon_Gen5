@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-15T11:37:55"/>
+	<create user="matsumiya" host="W00224" date="2010-04-10T19:27:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,16 +263,16 @@
 		</language>
 	</columns>
 
-	<dialog left="48" top="0" right="753" bottom="614" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="139" right="2004" bottom="767" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="4" right="1280" bottom="402" visible="yes"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -437,18 +437,12 @@
 落ちていったのを　みたよ！</language>
 	</row>
 
-	<row id="msg_h04_boy1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_h04_boy1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・通常時</comment>
 		<attribute name="キャラ指定">BOY1</attribute>
-		<language name="JPN" width="256">ドラムかんの　なかに
-ぼくの　オヤツを　かくしてたのに▼
-ポケモンに　たべられちゃうんだよな
-かくしばしょ　かえようかな</language>
-		<language name="JPN_KANJI" width="256">ドラムかんの　なかに
-ぼくの　オヤツを　かくしてたのに▼
-ポケモンに　たべられちゃうんだよな
-かくしばしょ　かえようかな</language>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_h04_oldman1_01" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
@@ -468,18 +462,12 @@
 キャモメに　渡して　あげなされ▼</language>
 	</row>
 
-	<row id="msg_h04_oldman1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_h04_oldman1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・通常時</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">ふるくて　かちのある　ものを
-アンティークと　よぶそうじゃ▼
-ビレッジブリッジも　ワシも　いわば
-アンティーク　じゃよ　ハッハッハ</language>
-		<language name="JPN_KANJI" width="256">古くて　価値のある　ものを
-アンティークと　呼ぶそうじゃ▼
-ビレッジブリッジも　ワシも　いわば
-アンティーク　じゃよ　ハッハッハ</language>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_h04_backpackerw_01" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
@@ -503,18 +491,12 @@
 今度は　落とさないように　ってね！</language>
 	</row>
 
-	<row id="msg_h04_backpackerw_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_h04_backpackerw_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・通常時</comment>
 		<attribute name="キャラ指定">BACKPACKERW</attribute>
-		<language name="JPN" width="256">クチベタな　わたしは　メールで
-たびで　かんじた　きもちを　かくの▼
-そうね……　ここの　はしは
-ドッシリ　かまえた　ヒヒダルマね</language>
-		<language name="JPN_KANJI" width="256">クチベタな　わたしは　メールで
-旅で　感じた　気持ちを　書くの▼
-そうね……　ここの　橋は
-ドッシリ　構えた　ヒヒダルマね</language>
+		<language name="JPN" width="256">かりメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_h04_whistle_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
