@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T15:07:01"/>
+	<create user="matsumiya" host="W00224" date="2010-04-15T17:50:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="167" right="1985" bottom="795" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -310,10 +310,10 @@
 　No217「せんせいのツメ」</comment>
 		<attribute name="キャラ指定">MOUNTAIN
 山男</attribute>
-		<language name="JPN" width="256">しょうぶに　ひつようなのは
-せんてひっしょう　だよね！▼</language>
+		<language name="JPN" width="256">しょうぶに　ひつよう　なのは
+せんてひっしょう　だな！▼</language>
 		<language name="JPN_KANJI" width="256">勝負に　必要なのは
-先手必勝　だよね！▼</language>
+先手必勝　だな！▼</language>
 	</row>
 
 	<row id="msg_h01r0101_mountain_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -325,12 +325,12 @@
 あいてより　はやく　わざをだせる▼
 かもしれない　どうぐ▼
 それが　いま　わたした
-せんせいのツメ　よ！</language>
+せんせいのツメ　だよ！</language>
 		<language name="JPN_KANJI" width="256">所持していれば
 相手より　早く　技をだせる▼
 かもしれない　道具▼
 それが　今　渡した
-せんせいのツメ　よ！</language>
+せんせいのツメ　だよ！</language>
 	</row>
 
 	<row id="msg_h01r0101_ol_01">
