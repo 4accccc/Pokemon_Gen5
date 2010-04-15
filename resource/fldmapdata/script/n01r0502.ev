@@ -528,7 +528,7 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 		IF $LWK_ROM == VERSION_WHITE THEN
 			
 			//戦闘呼び出し　全滅処理が未定
-			_TRAINER_BTL_SET( TRID_BOSS_1_06, 0 )
+			_TRAINER_BTL_SET( TRID_BOSS_2_06, 0 )
 			//敗戦チェック
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		
@@ -547,7 +547,7 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 		
 		ELSE
 			//戦闘呼び出し　全滅処理が未定
-			_TRAINER_BTL_SET( TRID_BOSS_1_07, 0 )
+			_TRAINER_BTL_SET( TRID_BOSS_2_07, 0 )
 			//敗戦チェック
 			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		

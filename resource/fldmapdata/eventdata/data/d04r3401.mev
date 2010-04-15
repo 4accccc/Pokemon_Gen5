@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/28 16:21:39
+#save date:2010/04/15 11:13:48
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d04r3401.wms
 #SECTION START:OBJ_EVENT
@@ -50,7 +50,7 @@ DOOR_ID_D03R0101_D04R3401_EXIT01
 #Door Direction
 EXIT_DIR_UP
 #Door Type
-EXIT_TYPE_MAT
+EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
