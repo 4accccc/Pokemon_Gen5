@@ -423,9 +423,21 @@ download:
         $loop = TRUE
         _RET
       ENDIF
-      
-      //「ダウンロードしました」
-      _BALLOONWIN_OBJMSG_POS(msg_trialhouse_025, SCWK_TARGET_OBJID, POS_DL )
+
+      {
+        DEFINE_LOCAL download_data
+        DEFINE_LOCAL dl_data_msg
+        //ダウンロードデータのタイプを取得　シングル　or ダブル　or データなし
+        _TH_GET_DL_DATA_TYPE( download_data )
+        IF $download_data == 1 THEN      //シングル
+          $dl_data_msg = msg_trialhouse_025    //「シングルダウンロードした」
+        ELSE //ダブル
+          $dl_data_msg = msg_trialhouse_025_01    //「ダブルダウンロードした」
+        ENDIF
+
+        //「ダウンロードしました」
+        _BALLOONWIN_OBJMSG_POS(dl_data_msg, SCWK_TARGET_OBJID, POS_DL )
+      }
       //「今すぐ挑戦？」
       _BALLOONWIN_OBJMSG_POS(msg_trialhouse_026, SCWK_TARGET_OBJID, POS_DL )
       _YES_NO_WIN( SCWK_ANSWER )
