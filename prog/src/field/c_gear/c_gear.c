@@ -700,6 +700,8 @@ struct _C_GEAR_WORK {
   u8 sleep_mode;  // イベント中のスリープモード
   u8 high_sleep_mode;  // Highスリープモード
   u8 sleep_color_req;
+
+  u8 tvt_snd;    // 
 };
 
 
@@ -773,6 +775,7 @@ static void _PanelPaletteChangeNormal(C_GEAR_WORK* pWork, int change_panel);
 static void _PanelPaletteChangeCore( C_GEAR_WORK* pWork, int change_panel, int mod, int mod_max );
 static BOOL _PanelPaletteIsEnd(const C_GEAR_WORK* cpWork );
 static void _PanelPaletteUpdate( C_GEAR_WORK* pWork );
+static void _PanelPalette_EXEnd( C_GEAR_WORK* pWork );
 static u32 _PanelPaletteColorSetUp( C_GEAR_WORK* pWork );
 static BOOL _PanelPaletteIsBeaconChange( GAME_COMM_SYS_PTR game_comm, u32 last_bit, u32 bit, u32* change_beacon );
 
@@ -1368,6 +1371,23 @@ static void _PanelPaletteUpdate( C_GEAR_WORK* pWork )
       pWork->plt_anime.last_bit = bit;
     }
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  強制的に終了にする。
+ *
+ *	@param	pWork 
+ */
+//-----------------------------------------------------------------------------
+static void _PanelPalette_EXEnd( C_GEAR_WORK* pWork )
+{
+  int  i;
+  for(i = 0 ; i < _CGEAR_NET_CHANGEPAL_MAX; i++)
+  {
+    _PanelPaletteChangeCore( pWork, i, 0, _CGEAR_NET_CHANGEPAL_ANM_NORMAL_MOD_MAX );
+  }
+  pWork->plt_anime.plt_count = _CGEAR_NET_CHANGEPAL_ANM_COUNT_MAX[pWork->plt_anime.plt_anmtype] - 1; // 一度リセットカウントを入れるため
 }
 
 
@@ -3777,24 +3797,31 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
   if( SleepMode_IsSleep( pWork ) ){
     FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
     FSND_StopTVTRingTone( fsnd );
+    pWork->tvt_snd = FALSE;
   }
 
   if( !SleepMode_IsSleep( pWork ) )
   {
-    // トランシーバー反応処理
-    if( !pWork->beacon_bit ){
+    if( !Intrude_CheckPalaceConnect(GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys)) ){ // 進入チェック
+      // トランシーバー反応処理
       u32 bit = WIH_DWC_GetAllBeaconTypeBit(GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(pWork->pGameSys)));
       FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
 
       // トランシーバー再生処理
       if(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR){ // トランシーバー
-        //OS_TPrintf("よびだし\n");
+        if( pWork->tvt_snd == FALSE ){
+          //OS_TPrintf("よびだし\n");
+          pWork->tvt_snd = TRUE;
+          // 強制的にアニメーションをリセット
+          _PanelPalette_EXEnd( pWork );
+        }
         FSND_RequestTVTRingTone( fsnd);
 
       // トランシーバー停止処理
       }else if(!(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR)){
 
         FSND_StopTVTRingTone( fsnd );
+        pWork->tvt_snd = FALSE;
       }
     }
   }
