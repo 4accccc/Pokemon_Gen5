@@ -2920,7 +2920,7 @@ static void Escape_GetSPEscapeLocation( const GAMEDATA* gamedata, LOCATION* loc_
   loc_now = GAMEDATA_GetStartLocation( gamedata );
 
   // ¡‚ªŠC’ê_“a‚È‚çA“ÁŽêÚ‘±‚ðÝ’è
-  if( ZONEDATA_IsSeaTempleDungeon( loc_now->zone_id ) ){
+  if( ZONEDATA_IsSeaTemple( loc_now->zone_id ) ){
     *loc_req      = *(GAMEDATA_GetSpecialLocation( gamedata ));
       
   }

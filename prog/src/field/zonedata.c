@@ -1014,6 +1014,28 @@ u8 ZONEDATA_GetMapChangeType(u16 zone_id)
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  海底か？
+ */
+//-----------------------------------------------------------------------------
+BOOL ZONEDATA_IsSeaTemple( u16 zone_id )
+{
+  switch( zone_id ){
+  case ZONE_ID_D20R0101:
+  case ZONE_ID_D20R0201:
+  case ZONE_ID_D20R0301:
+  case ZONE_ID_D20R0401:
+  case ZONE_ID_D20R0501:
+  case ZONE_ID_D20R0601:
+  case ZONE_ID_D20R0701:
+  case ZONE_ID_D20R0801:
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
 //------------------------------------------------------------------
 // 海底神殿　ダンジョンマップか？
 //------------------------------------------------------------------
