@@ -51,7 +51,8 @@ enum {
   REPORT_SEQ_RESULT_OK_BAR_WAIT,      // セーブ成功バー待ち
   REPORT_SEQ_RESULT_OK_WAIT,          // セーブ成功メッセージ待ち
   REPORT_SEQ_RESULT_SE_WAIT,          // ＳＥ待ち
-  REPORT_SEQ_RESULT_NG_WAIT,          // セーブ失敗メッセージ待ち
+  REPORT_SEQ_RESULT_NG_WAIT,          // セーブ失敗アニメ待ち
+	REPORT_SEQ_RESULT_NG_MSG_WAIT,			// セーブ失敗メッセージ待ち
   REPORT_SEQ_RESULT_NG_TRG_WAIT,      // セーブ失敗メッセージ後のキー待ち
   REPORT_SEQ_END_TRG_WAIT,            // セーブ後のキー待ち
 
@@ -186,11 +187,11 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
       // 通信中でセーブできない
       if( GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(wk->gsys)) == GAME_COMM_NO_INVASION ){
         SetReportMsg( wk, msg_common_report_13 );
-        *seq = REPORT_SEQ_RESULT_NG_WAIT;
+        *seq = REPORT_SEQ_RESULT_NG_MSG_WAIT;
       // 違うセーブデータがある
       }else if( SaveControl_IsOverwritingOtherData(wk->sv) == TRUE ){
         SetReportMsg( wk, msg_common_report_08 );
-        *seq = REPORT_SEQ_RESULT_NG_WAIT;
+        *seq = REPORT_SEQ_RESULT_NG_MSG_WAIT;
 /*
       // セーブデータがある
       }else if( SaveData_GetExistFlag(wk->sv) == TRUE ){
@@ -234,6 +235,10 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 
   case REPORT_SEQ_SAVE_SIZE_CHECK:        // セーブサイズ取得
     GAMEDATA_PlayTimeSetSaveTime( GAMESYSTEM_GetGameData(wk->gsys) );
+		{	// レコードデータ＋
+			RECORD * rec = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData(wk->gsys) );
+			RECORD_Inc( rec, RECID_REPORT_COUNT );
+		}
     FIELD_SUBSCREEN_SetReportSize( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
     if( FIELD_SUBSCREEN_CheckReportType(FIELDMAP_GetFieldSubscreenWork(wk->fieldWork)) == TRUE ){
         MsgPrint( wk, msg_common_report_09 );
@@ -256,10 +261,6 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 	case REPORT_SEQ_SAVE_INIT:							// セーブ初期設定
 		if( CheckPlayerAnime( wk ) == FALSE ){
 			break;
-		}
-		{	// レコードデータ＋
-			RECORD * rec = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData(wk->gsys) );
-			RECORD_Inc( rec, RECID_REPORT_COUNT );
 		}
 		wk->local->timeIcon = TIMEICON_Create(
 														GFUser_VIntr_GetTCBSYS(),
@@ -349,10 +350,12 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
     }
     break;
 
-  case REPORT_SEQ_RESULT_NG_WAIT:   // セーブ失敗メッセージ待ち
+  case REPORT_SEQ_RESULT_NG_WAIT:			  // セーブ失敗アニメ待ち
     if( CheckPlayerAnime( wk ) == FALSE ){
       break;
     }
+		*seq = REPORT_SEQ_RESULT_NG_MSG_WAIT;
+  case REPORT_SEQ_RESULT_NG_MSG_WAIT:   // セーブ失敗メッセージ待ち
     if( MainReportMsg( wk ) == FALSE ){
       *seq = REPORT_SEQ_RESULT_NG_TRG_WAIT;
     }
