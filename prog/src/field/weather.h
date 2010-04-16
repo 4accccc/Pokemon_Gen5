@@ -65,6 +65,7 @@ extern FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_L
 extern void FIELD_WEATHER_Exit( FIELD_WEATHER* p_sys );
 extern void FIELD_WEATHER_Main( FIELD_WEATHER* p_sys, HEAPID heapID );
 extern void FIELD_WEATHER_3DWrite( FIELD_WEATHER* p_sys );
+extern BOOL FIELD_WEATHER_IsLoading( const FIELD_WEATHER* cp_sys );
 
 //-------------------------------------
 ///	天気システム	管理

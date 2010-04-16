@@ -74,6 +74,9 @@ FS_EXTERN_OVERLAY( dpw_common );
 
 #include "battle/bsubway_battle_data.h"
 
+
+//#define DOWNLOAD_PRINT  // だうんろーど情報を出力
+
 #else
 
 #define WIFI_BSUBWAY_Printf( ... )  ((void)0)
@@ -815,6 +818,12 @@ static GFL_PROC_RESULT WiFiBsubway_ProcEnd( GFL_PROC * p_proc, int * p_seq, void
   // DPW_COMMON
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( dpw_common ) );
 
+  
+  // DEBUG出力ON
+#ifdef PM_DEBUG
+  //GFL_NET_DebugPrintOff();
+#endif
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -947,6 +956,27 @@ static BOOL ROOM_DATA_LoadRoomDataWait( WIFI_BSUBWAY_ROOM* p_wk, WIFI_BSUBWAY_ER
     if( !ERROR_DATA_IsError( p_error ) ){
       // 完了
       p_wk->in_roomdata = TRUE;
+
+#ifdef DOWNLOAD_PRINT
+      {
+        int i;
+        int size;
+        u8* p_buff;
+
+        
+        size = sizeof(Dpw_Bt_Room);
+
+        p_buff = (u8*)&p_wk->bt_roomdata;
+        for( i=0; i<size; i++ ){
+          if( (i % 4) == 0 ){
+            OS_Printf( "\n" );
+          }
+          // binaryデータの出力
+          OS_Printf( "%02x ", p_buff[i] );
+        }
+      }
+#endif  // DOWNLOAD_PRINT
+      
       return TRUE;
     }
   }

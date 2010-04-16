@@ -83,6 +83,18 @@ enum{
 #define WEATHER_OBJ_MAXTURN_Y	((192) + (64))
 
 
+//-------------------------------------
+///	ループサウンド状態
+//=====================================
+enum{
+  WEATHER_SND_LOOP_PLAY_NONE,
+  WEATHER_SND_LOOP_PLAY_NORMAL,   // 通常
+  WEATHER_SND_LOOP_PLAY_RESERVE,  // 予約
+
+  WEATHER_SND_LOOP_PLAY_MAX,  // システムで使用
+};
+
+
 //-----------------------------------------------------------------------------
 /**
  *					構造体宣言
@@ -297,6 +309,7 @@ static GFL_CLWK* WEATHER_OBJ_WK_GetClWk( const WEATHER_OBJ_WORK* cp_wk );
 //=====================================
 static void WEATHER_SND_LOOP_Play( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p_sound, int snd_no );
 static void WEATHER_SND_LOOP_Stop( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p_sound );
+static void WEATHER_SND_LOOP_Update( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p_sound );
 
 
 //-------------------------------------
@@ -432,37 +445,26 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 				p_wk->seq = WEATHER_TASK_SEQ_CALL_NOFADE;
 			}
 		}
+    WEATHER_SND_LOOP_Update( &p_wk->snd_loop, p_wk->p_sound );
 		break;
 
 	// 管理関数  フェードイン	呼び出し
 	case WEATHER_TASK_SEQ_CALL_FADEIN:
 
-    // BGM 読み込み中は、この処理を行わない
-    if( PMSND_IsLoading() )
-    {
-      TOMOYA_Printf( "Weather BGM wait...\n" );
-      break;
-    }
-    
 		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_fadein, heapID ) ){
 			p_wk->seq = WEATHER_TASK_SEQ_CALL_MAIN;
 		}
 		WEATHER_TASK_WK_MainObjList( p_wk );
+    WEATHER_SND_LOOP_Update( &p_wk->snd_loop, p_wk->p_sound );
 		break;
 
 	// 管理関数	 フェードなし	呼び出し
 	case WEATHER_TASK_SEQ_CALL_NOFADE:		
 
-    // BGM 読み込み中は、この処理を行わない
-    if( PMSND_IsLoading() )
-    {
-      TOMOYA_Printf( "Weather BGM wait...\n" );
-      break;
-    }
-    
 		if( WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_nofade, heapID ) ){
 			p_wk->seq = WEATHER_TASK_SEQ_CALL_MAIN;
 		}
+    WEATHER_SND_LOOP_Update( &p_wk->snd_loop, p_wk->p_sound );
 		break;
 
 	// 管理関数　メイン			呼び出し
@@ -470,6 +472,7 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 		// *外部的なリクエストで、終了する
 		WEATHER_TASK_WK_CallFunc( p_wk, p_wk->cp_data->p_f_main, heapID );
 		WEATHER_TASK_WK_MainObjList( p_wk );
+    WEATHER_SND_LOOP_Update( &p_wk->snd_loop, p_wk->p_sound );
 		break;
 
 	// 管理関数　フェードアウト 呼び出し
@@ -478,6 +481,7 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 			p_wk->seq = WEATHER_TASK_SEQ_CALL_FADEOUT;
 		}
 		WEATHER_TASK_WK_MainObjList( p_wk );
+    WEATHER_SND_LOOP_Update( &p_wk->snd_loop, p_wk->p_sound );
 		break;
 
 	// 管理関数　フェードアウト 呼び出し
@@ -486,6 +490,7 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
 			p_wk->seq = WEATHER_TASK_SEQ_CALL_DEST;
 		}
 		WEATHER_TASK_WK_MainObjList( p_wk );
+    WEATHER_SND_LOOP_Update( &p_wk->snd_loop, p_wk->p_sound );
 		break;
 
 	// 管理関数　破棄			呼び出し
@@ -1411,6 +1416,15 @@ void WEATHER_TASK_GetScrollDist( WEATHER_TASK* p_wk, int* p_x, int* p_y )
 	dist_x = (now_mat.x - p_wk->scroll.last_target.x);
 	dist_y = (now_mat.z - p_wk->scroll.last_target.z);
 
+  // あまりにも動きが激しいフレームは無視する。
+  if( (MATH_ABS(dist_x) > 1000*FX32_ONE) || (MATH_ABS(dist_y) > 100*FX32_ONE) ){
+		p_wk->scroll.last_target = now_mat;
+    //TOMOYA_Printf( "move  %d %d\n", MATH_ABS(dist_x>>FX32_SHIFT), MATH_ABS(dist_y>>FX32_SHIFT) );
+		*p_x = 0;
+		*p_y = 0;
+    return;
+  }
+
 	
 	// 今のカメラの2dで1の３ｄの値を求める
 	camera_dist = VEC_Distance( &now_mat, &now_camera_pos );
@@ -1545,7 +1559,11 @@ void WEATHER_TASK_StopLoopSnd( WEATHER_TASK* p_wk )
 //-----------------------------------------------------------------------------
 void WEATHER_TASK_PlaySnd( WEATHER_TASK* p_wk, int snd_no )
 {
-  FSND_PlayEnvSE( p_wk->p_sound, snd_no );
+  // BGM 読み込み中は、この処理を行わない
+  if( !PMSND_IsLoading() )
+  {
+    FSND_PlayEnvSE( p_wk->p_sound, snd_no );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1559,7 +1577,11 @@ void WEATHER_TASK_PlaySnd( WEATHER_TASK* p_wk, int snd_no )
 //-----------------------------------------------------------------------------
 void WEATHER_TASK_PlaySndVol( WEATHER_TASK* p_wk, int snd_no, u32 vol )
 {
-  FSND_PlayEnvSEVol( p_wk->p_sound, snd_no, vol );
+  // BGM 読み込み中は、この処理を行わない
+  if( !PMSND_IsLoading() )
+  {
+    FSND_PlayEnvSEVol( p_wk->p_sound, snd_no, vol );
+  }
 }
 
 
@@ -1846,7 +1868,7 @@ static WEATHER_TASK_INFO WEATHER_TASK_WK_GetInfo( const WEATHER_TASK* cp_wk )
 		WEATHER_TASK_INFO_LOADING,	// WEATHER_TASK_SEQ_INIT_DIV_CREATE,	// 分割読み込み 構築
 		WEATHER_TASK_INFO_FADEIN,	// WEATHER_TASK_SEQ_CALL_INIT,			// 管理関数　初期化	　		呼び出し
 		WEATHER_TASK_INFO_FADEIN,	// WEATHER_TASK_SEQ_CALL_FADEIN,		// 管理関数  フェードイン	呼び出し
-		WEATHER_TASK_INFO_FADEIN,	// WEATHER_TASK_SEQ_CALL_NOFADE,		// 管理関数	 フェードなし	呼び出し
+		WEATHER_TASK_INFO_LOADING,	// WEATHER_TASK_SEQ_CALL_NOFADE,		// 管理関数	 フェードなし	呼び出し
 		WEATHER_TASK_INFO_MAIN,		// WEATHER_TASK_SEQ_CALL_MAIN,			// 管理関数　メイン			呼び出し
 		WEATHER_TASK_INFO_FADEOUT,	// WEATHER_TASK_SEQ_CALL_FADEOUT_INIT,		// 管理関数　フェードアウト 呼び出し
 		WEATHER_TASK_INFO_FADEOUT,	// WEATHER_TASK_SEQ_CALL_FADEOUT,		// 管理関数　フェードアウト 呼び出し
@@ -2547,14 +2569,21 @@ static GFL_CLWK* WEATHER_OBJ_WK_GetClWk( const WEATHER_OBJ_WORK* cp_wk )
 //-----------------------------------------------------------------------------
 static void WEATHER_SND_LOOP_Play( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p_sound, int snd_no )
 {
-	if( p_wk->play ){
-		WEATHER_SND_LOOP_Stop( p_wk, p_sound );
-	}
+	WEATHER_SND_LOOP_Stop( p_wk, p_sound );
 
-	p_wk->play		= TRUE;
-	p_wk->snd_no	= snd_no;
+  if( !PMSND_IsLoading() )
+  {
+    p_wk->play		= WEATHER_SND_LOOP_PLAY_NORMAL;
+    p_wk->snd_no	= snd_no;
 
-  FSND_PlayEnvSE( p_sound, p_wk->snd_no );
+    FSND_PlayEnvSE( p_sound, p_wk->snd_no );
+  }
+  else
+  {
+    // リクエスト形式
+    p_wk->play		= WEATHER_SND_LOOP_PLAY_RESERVE;
+    p_wk->snd_no	= snd_no;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -2566,11 +2595,30 @@ static void WEATHER_SND_LOOP_Play( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p_s
 //-----------------------------------------------------------------------------
 static void WEATHER_SND_LOOP_Stop( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p_sound )
 {
-  if(p_wk->play)
+  if(p_wk->play == WEATHER_SND_LOOP_PLAY_NORMAL)
   {
-    p_wk->play = FALSE;
+    p_wk->play = WEATHER_SND_LOOP_PLAY_NONE;
 
     FSND_StopEnvSE( p_sound, p_wk->snd_no );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リクエストプレイを反映
+ *
+ *	@param	p_wk      ワーク
+ *	@param	p_sound   サウンドシステム
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_SND_LOOP_Update( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p_sound )
+{
+  if(p_wk->play == WEATHER_SND_LOOP_PLAY_RESERVE){
+    if( !PMSND_IsLoading() )
+    {
+      p_wk->play		= WEATHER_SND_LOOP_PLAY_NORMAL;
+      FSND_PlayEnvSE( p_sound, p_wk->snd_no );
+    }
   }
 }
 

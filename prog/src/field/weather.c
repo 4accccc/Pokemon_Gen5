@@ -463,6 +463,31 @@ void FIELD_WEATHER_3DWrite( FIELD_WEATHER* p_sys )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  準備中か？チェック
+ *
+ *	@param	cp_sys システム
+ *
+ *	@retval TRUE   準備中
+ *	@retval FALSE  動作中
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_WEATHER_IsLoading( const FIELD_WEATHER* cp_sys )
+{
+  int i;
+  int info;
+	if( cp_sys ){
+    for( i=0; i<FIELD_WEATHER_WORK_NUM; i++ ){
+      info = WEATHER_TASK_GetInfo( cp_sys->p_task[i] );
+      if( (info == WEATHER_TASK_INFO_LOADING) ){
+        return TRUE;
+      }
+    }
+	}
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	天気フェードインなし設定
  *
  *	@param	p_sys			システムワーク

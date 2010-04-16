@@ -2174,6 +2174,11 @@ BOOL MMDL_UpdateCurrentHeight( MMDL * mmdl )
   
   MMDL_GetVectorPos( mmdl, &vec_pos );
   vec_pos_h = vec_pos;
+
+  // ÉåÅ[ÉãìÆçÏíÜÇÕçsÇÌÇ»Ç¢ÅB
+  if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_RAIL_MOVE) ){
+    return FALSE;
+  }
   
   if( MMDL_CheckStatusBitHeightGetOFF(mmdl) == TRUE ){
     MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_HEIGHT_GET_ERROR );

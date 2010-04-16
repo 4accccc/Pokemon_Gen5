@@ -944,12 +944,10 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     }
   }
 
-  /*
   // 天気待ち
   while( FIELD_WEATHER_IsLoading(fieldWork->weather_sys)  ){
 	  FIELD_WEATHER_Main( fieldWork->weather_sys, HEAPID_FIELD_PRBUF );
   }
-  */
   
   { //フィールド初期化スクリプトの呼び出し
     FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
@@ -1006,6 +1004,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   {
     //描画部分は行う
     DrawTop(fieldWork);
+    GFL_CLACT_SYS_Main(); // CLSYSメイン
+    //↑ 2010.03.05　CLSYSメインをテイルからトップへ移動。この移動で、2Ｄ描画と3Ｄ描画に１シンクのずれが生じます。saito
     return MAINSEQ_RESULT_CONTINUE;
   }
 

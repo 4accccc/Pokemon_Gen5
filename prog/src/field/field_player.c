@@ -961,8 +961,8 @@ void FIELD_PLAYER_GetDirPos(
     // now_posからwayに１グリッド分進んだ先が次のポジション
     grid_size = FIELD_RAIL_MAN_GetRailGridSize( p_railman );
     pos->x = now_pos.x + FX_Mul( way.x, grid_size );
-    pos->y = now_pos.y + FX_Mul( way.x, grid_size );
-    pos->z = now_pos.z + FX_Mul( way.x, grid_size );
+    pos->y = now_pos.y + FX_Mul( way.y, grid_size );
+    pos->z = now_pos.z + FX_Mul( way.z, grid_size );
   }
 }
 

@@ -224,6 +224,8 @@ static void mapCtrlHybrid_Create( FIELDMAP_WORK* p_fieldmap, VecFx32* p_pos, u16
     MMDL* p_mmdl = FIELD_PLAYER_GetMMdl( p_wk->p_player );
     FIELDMAP_SetNowPosTarget( p_fieldmap, MMDL_GetVectorPosAddress( p_mmdl ) );
   }
+
+  FIELD_PLAYER_GetPos( p_wk->p_player, p_pos );
 }
 
 //----------------------------------------------------------------------------
@@ -574,8 +576,10 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
   
   p_mmdl = FIELD_PLAYER_GetMMdl( p_wk->p_player );
 
-  // アニメーションの停止
-  MMDL_FreeAcmd( p_mmdl );
+  if( MMDL_CheckMoveBitAcmd( p_mmdl ) ){
+    // アニメーションの停止
+    MMDL_FreeAcmd( p_mmdl );
+  }
   
   if( type == FLDMAP_BASESYS_GRID )
   {

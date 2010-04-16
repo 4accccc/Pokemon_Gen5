@@ -478,6 +478,7 @@ void FIELD_PLAYER_NOGRID_Restart( FIELD_PLAYER_NOGRID* p_player, const RAIL_LOCA
   // 動作コードをレール動作に変更
   if( MMDL_GetMoveCode( p_player->p_mmdl ) != MV_RAIL_DMY )
   {
+    data_MMdlHeader.obj_code = MMDL_GetOBJCode( p_player->p_mmdl );
     MMDL_ChangeMoveParam( p_player->p_mmdl, &data_MMdlHeader );
   }
 

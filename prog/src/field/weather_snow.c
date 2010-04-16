@@ -966,6 +966,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_Init( WEATHER_TASK* p_wk, WEATHER_T
 		WEATHER_SNOW_OBJ_Add );
 	
 	p_local_wk->work[1] = 0;							// 雪が１回下まで行ったかのフラグ
+	p_local_wk->work[2] = 0;							// 自動破棄フラグ
 	
 	// フォグの設定
 	WEATHER_TASK_FogSet( p_wk, WEATHER_FOG_SLOPE_DEFAULT, WEATHER_FOG_DEPTH_DEFAULT_START, fog_cont );
@@ -1054,7 +1055,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_NoFade( WEATHER_TASK* p_wk, WEATHER
 		WEATHER_SNOW_ADD,
 		WEATHER_SNOW_OBJ_Add );
 	
-	p_local_wk->work[1] = 0;							// 雪が１回下まで行ったかのフラグ
+	p_local_wk->work[1] = 1;							// 雪が１回下まで行ったかのフラグ
 	p_local_wk->work[2] = 0;							// 自動破棄フラグ
 	
 	// フォグの設定
@@ -1252,6 +1253,8 @@ static void WEATHER_SNOW_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 	p_local_wk[4] += WEATHER_SNOW_ADD_TMG_Y_KETA;
 	p_local_wk[5] = (p_local_wk[5] + 1) % NELEMS(sc_SNOW_OBJ_MOVE_X);
 
+  //TOMOYA_Printf( "move  %d %d\n", pos.x, pos.y );
+
 	// 破棄ゾーンにいたら破棄  
 	if(((pos.y < -284) && (pos.y > -296)) ||
 		((pos.y > 212) && (pos.y < 232))){
@@ -1322,6 +1325,8 @@ static void WEATHER_SNOW_OBJ_Add( WEATHER_TASK* p_wk, int num, HEAPID heapID )
 			pos.y = ( -8 - GFUser_GetPublicRand(20));
 		}
 		WEATHER_OBJ_WORK_SetPos( p_addobj, &pos );
+
+    //TOMOYA_Printf( "snow  adds \n" );
 	}
 
 }

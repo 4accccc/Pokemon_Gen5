@@ -805,6 +805,10 @@ BOOL FIELD_PLAYER_CORE_CheckAnimeEnd( const FIELD_PLAYER_CORE *player_core )
   u32 actID;
   u16 comm;
 
+  if( (MMDL_CheckDrawPause(player_core->fldmmdl) == TRUE) && //描画ポーズON
+      (MMDL_BLACTCONT_CheckUpdateBBD(player_core->fldmmdl) == TRUE) ){ //アクター更新済み
+    return TRUE;
+  }
   
   actID = MMDL_CallDrawGetProc( player_core->fldmmdl, 0 );
   if( actID != MMDL_BLACTID_NULL ){
