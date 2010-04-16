@@ -202,7 +202,7 @@ enum {
   FIELD_G3D_BBDACT_ACTMAX	    =   128,
 
   FIELD_G3D_SUBBBDACT_RESMAX  =   32,
-  FIELD_G3D_SUBBBDACT_ACTMAX  =   32,
+  FIELD_G3D_SUBBBDACT_ACTMAX  =   64,
   
   ///<セルアクターリソース最大
   FIELD_CLSYS_RESOUCE_MAX		  =   64,
@@ -943,6 +943,13 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       return MAINSEQ_RESULT_CONTINUE;
     }
   }
+
+  /*
+  // 天気待ち
+  while( FIELD_WEATHER_IsLoading(fieldWork->weather_sys)  ){
+	  FIELD_WEATHER_Main( fieldWork->weather_sys, HEAPID_FIELD_PRBUF );
+  }
+  */
   
   { //フィールド初期化スクリプトの呼び出し
     FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
