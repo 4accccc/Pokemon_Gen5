@@ -39,8 +39,9 @@ enum BAG_NEXTPROC_ENUM
   BAG_NEXTPROC_AMAIMITU,      // あまいミツ
   BAG_NEXTPROC_TURIZAO,       // つりざお
   BAG_NEXTPROC_BATTLERECORDER,// バトルレコーダー
+  BAG_NEXTPROC_MAILSET,       // メール作成
   BAG_NEXTPROC_MAILVIEW,      // メール閲覧
-  BAG_NEXTPROC_DOWSINGMACHINE,      // ダウジングマシン
+  BAG_NEXTPROC_DOWSINGMACHINE,// ダウジングマシン
 };
 
 
@@ -49,16 +50,16 @@ enum BAG_NEXTPROC_ENUM
 //   且つ、bag_param.hのBAG_SetItemUseCheck関数で道具使用・不使用の状態を格納する必要あり
 // ※登録できるIDは32個まで(ITEMCHECK_WORK)
 typedef enum {
-  ITEMCHECK_CYCLE=0, // 自転車(乗っていない時はTRUEで乗れる、乗っている時はTRUEで降りれる)
-  ITEMCHECK_TOWNMAP,      // タウンマップ
-  ITEMCHECK_WIFINOTE,     // ともだち手帳
-  ITEMCHECK_ANANUKENOHIMO,// あなぬけのヒモ
-  ITEMCHECK_AMAIMITU,     // あまいミツ
-  ITEMCHECK_TURIZAO,      // つりざお
-  ITEMCHECK_BATTLE_RECORDER,  // バトルレコーダー
-  ITEMCHECK_MAIL,         // メール
-  ITEMCHECK_SPLAY,        // スプレー
-  ITEMCHECK_DOWSINGMACHINE,  // ダウジングマシン
+  ITEMCHECK_CYCLE=0,        // 自転車(乗っていない時はTRUEで乗れる、乗っている時はTRUEで降りれる)
+  ITEMCHECK_TOWNMAP,        // タウンマップ
+  ITEMCHECK_WIFINOTE,       // ともだち手帳
+  ITEMCHECK_ANANUKENOHIMO,  // あなぬけのヒモ
+  ITEMCHECK_AMAIMITU,       // あまいミツ
+  ITEMCHECK_TURIZAO,        // つりざお
+  ITEMCHECK_BATTLE_RECORDER,// バトルレコーダー
+  ITEMCHECK_MAIL,           // メール
+  ITEMCHECK_SPLAY,          // スプレー
+  ITEMCHECK_DOWSINGMACHINE, // ダウジングマシン
   ITEMCHECK_MAX,
 
 } ITEMCHECK_ENABLE ;

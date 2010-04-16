@@ -1422,7 +1422,9 @@ static RETURNFUNC_RESULT FMenuReturnProc_Bag(PROCLINK_WORK* wk,void* param_adrs)
   case BAG_NEXTPROC_MAILVIEW:
     wk->next_type = EVENT_PROCLINK_CALL_MAIL;
     return RETURNFUNC_RESULT_NEXT;
-
+  case BAG_NEXTPROC_MAILSET:
+    wk->next_type = EVENT_PROCLINK_CALL_MAIL;
+    return RETURNFUNC_RESULT_NEXT;
   case BAG_NEXTPROC_DOWSINGMACHINE:
     return RETURNFUNC_RESULT_DOWSINGMACHINE;
     
@@ -1799,9 +1801,21 @@ static void * FMenuCallProc_Mail(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CAL
   }else{
     BAG_PARAM* pBag = (BAG_PARAM*)pre_param_adrs;
     MORI_Printf("proclink mail design no =%d\ item = %dn",ITEM_GetMailDesign( pBag->ret_item ), pBag->ret_item);
-    wk->mode = PROCLINK_MODE_LIST_TO_MAIL_VIEW;
-    OS_TPrintf("メールデザイン見るだけ\n");
-    mailParam = MailSys_GetWorkViewPrev( gmData, ITEM_GetMailDesign(pBag->ret_item), HEAPID_PROC );
+    
+    if( pBag->mode == BAG_MODE_POKELIST ){
+      wk->mode = PROCLINK_MODE_BAG_TO_MAIL_CREATE;
+      OS_TPrintf("メール作成\n");
+      mailParam = MAILSYS_GetWorkCreate( gmData, 
+                                         MAILBLOCK_TEMOTI, 
+                                         pBag->ret_item,
+                                         ITEM_GetMailDesign( pBag->ret_item ) ,
+                                         HEAPID_PROC );
+      wk->item_no = pBag->ret_item;
+    }else{
+      wk->mode = PROCLINK_MODE_LIST_TO_MAIL_VIEW;
+      OS_TPrintf("メールデザイン見るだけ\n");
+      mailParam = MailSys_GetWorkViewPrev( gmData, ITEM_GetMailDesign(pBag->ret_item), HEAPID_PROC );
+    }
   }
 
   return mailParam;
@@ -1845,16 +1859,35 @@ static RETURNFUNC_RESULT FMenuReturnProc_Mail(PROCLINK_WORK* wk,void* param_adrs
     {
       wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
     }
-    // ワーク解放
-//    MailSys_ReleaseCallWork( mailParam);
 
     //オーバーレイ開放！
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
     return RETURNFUNC_RESULT_NEXT;
+  }else if(wk->pre_type==EVENT_PROCLINK_CALL_BAG){
+    if(wk->mode == PROCLINK_MODE_BAG_TO_MAIL_CREATE){
+      const BOOL isCreate = MailSys_IsDataCreate( mailParam );
+      if( isCreate == TRUE )
+      {
+        const POKEPARTY *party = GAMEDATA_GetMyPokemon( gmData );
+        MailSys_PushDataToSavePoke( mailParam , PokeParty_GetMemberPointer(party,wk->sel_poke) );
+        wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
+      }
+      else
+      {
+        wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
+      }
+    }
+    else
+    {
+      wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
+    }
+
+    //オーバーレイ開放！
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
+    return RETURNFUNC_RESULT_NEXT;
+
   }
 
-  // ワーク解放
-//  MailSys_ReleaseCallWork( mailParam);
   wk->next_type = EVENT_PROCLINK_CALL_BAG;
   //オーバーレイ開放！！！
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
