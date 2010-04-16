@@ -809,6 +809,7 @@ u32 BmpYesNoSelectMainOutControl( BMPMENU_WORK * mw, u8 prm, HEAPID heap )
 //--------------------------------------------------------------------------------------------
 void BmpMenu_YesNoMenuExit( BMPMENU_WORK * mw )
 {
+  PRINTSYS_QUE_Clear( mw->hed.print_que );
   PRINTSYS_QUE_Delete( mw->hed.print_que );
   GFL_HEAP_FreeMemory( mw->hed.print_util );
 

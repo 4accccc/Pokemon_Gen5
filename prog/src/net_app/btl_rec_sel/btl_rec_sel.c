@@ -724,6 +724,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcExit( GFL_PROC* proc, int* seq, void* pwk
 
   // グラフィック、フォントなど
   {
+    PRINTSYS_QUE_Clear( work->print_que );  // これをやっておかないと、PRINTSYS_QUE_Delete時にque->runningJobが残っていてエラーになることがある。
     PRINTSYS_QUE_Delete( work->print_que );
     GFL_FONT_Delete( work->font );
     BTL_REC_SEL_GRAPHIC_Exit( work->graphic );
