@@ -4403,7 +4403,7 @@ static GMEVENT_RESULT EVENT_ButtonEffectWait( GMEVENT *event, int *seq, void *wk
 
   case FIELD_SUBSCREEN_ACTION_CGEAR_HELP:
   case FIELD_SUBSCREEN_ACTION_CGEAR_POWER:
-    result = _modeSelectAnimWait( p_wk->pWork );
+    result = _CursorSelectAnimeWait( p_wk->pWork );
     break;
   }
 
