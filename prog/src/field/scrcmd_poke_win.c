@@ -54,7 +54,7 @@ typedef struct POKE_WIN_WORK_tag{
 }POKE_WIN_WORK;
 
 static void PutPokeWin( POKE_WIN_WORK * wk );
-static void DelPokeWin( POKE_WIN_WORK * wk );
+static void ClearPokeWin( POKE_WIN_WORK * wk );
 static void InitPokeObj( POKE_WIN_WORK * wk,
     const int inMonsNo, const int inFormNo, const int inSex, const BOOL inRare, const int inRnd );
 static void DelPokeObj( POKE_WIN_WORK * wk );
@@ -118,10 +118,10 @@ static void PutPokeWin( POKE_WIN_WORK * wk )
  * @retval  none
  */
 //--------------------------------------------------------------
-static void DelPokeWin( POKE_WIN_WORK * wk )
+static void ClearPokeWin( POKE_WIN_WORK * wk )
 {
 	BmpWinFrame_Clear( wk->PokeWin, WINDOW_TRANS_ON_V );
-	GFL_BMPWIN_Delete( wk->PokeWin );
+//	GFL_BMPWIN_Delete( wk->PokeWin );
 }
 
 //--------------------------------------------------------------
@@ -196,11 +196,19 @@ static GMEVENT_RESULT PokeWinEvt( GMEVENT* event, int* seq, void* work )
 {
   POKE_WIN_WORK *evt_wk = (POKE_WIN_WORK*)work;
 
-  if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
-  {
-    //âï˙èàóù
-    DelPokeObj( evt_wk );
-    DelPokeWin( evt_wk );
+  switch(*seq){
+  case 0:
+    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+    {
+      //âï˙èàóù
+      DelPokeObj( evt_wk );
+      ClearPokeWin( evt_wk );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    //ÇaÇlÇoâï˙
+    GFL_BMPWIN_Delete( evt_wk->PokeWin );
     //èIóπ
     return GMEVENT_RES_FINISH;
   }
