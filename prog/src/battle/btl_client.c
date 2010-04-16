@@ -3248,6 +3248,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
 
             BTL_ACTION_SetRotation( wk->procAction, dir );
             wk->procPoke = BTL_PARTY_GetMemberDataConst( wk->myParty, pokeIdx );
+            wk->actionAddCount = 1;
             wk->procAction++;
           }
         }
@@ -5754,11 +5755,14 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL msgPokanCallback( u32 arg )
 {
   switch( arg ){
-  case 3: PMSND_PlaySE( SEQ_SE_KON ); break;
+  case 3: PMSND_PlaySE( SEQ_SE_KON ); OS_TPrintf("cb arg=3, pokan!\n"); break;
   case 5:
     if( PMSND_CheckPlayingSEIdx(SEQ_SE_KON) ){
+      OS_TPrintf("cb arg=5, ....wait\n");
       return TRUE;
     }
+    OS_TPrintf("cb arg=5, ....done\n");
+    break;
   }
   return FALSE;
 }
