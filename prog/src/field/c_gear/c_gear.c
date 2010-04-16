@@ -3350,6 +3350,11 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 
       _gearCrossObjMain(pWork);
     }
+  }else{
+
+    // CGEAR以外でイベントが発生
+    // ボタンのリクエストクリア
+    pWork->createEvent = FIELD_SUBSCREEN_ACTION_NONE;
   }
   
  
