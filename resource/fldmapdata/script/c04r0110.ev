@@ -388,7 +388,7 @@ sub_train_battle:
   _TEMOTI_POKEMON_KAIFUKU()
   
   //‘ÎíŒ‹‰Ê
-  IF $win_lose == 0 THEN //•‰‚¯
+  IF $win_lose != SCR_BATTLE_RESULT_WIN THEN //•‰‚¯
     _CALL sub_common_retmap_lose_retire
   ELSE //Ÿ‚¿
     _CALL sub_train_battle_win

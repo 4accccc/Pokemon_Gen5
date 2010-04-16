@@ -916,21 +916,25 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //戦闘結果取得
   case BSWSUB_GET_BATTLE_RESULT:
     {
-      #ifndef DEBUG_BSW_BTL_SKIP
       BtlResult res = GAMEDATA_GetLastBattleResult( gdata );
+      BtlCompetitor cp = BTL_COMPETITOR_SUBWAY;
       
-      if( FIELD_BATTLE_IsLoseResult(res,BTL_COMPETITOR_TRAINER) == TRUE ){
-        *ret_wk = SCR_BATTLE_RESULT_LOSE;
+      if( play_mode == BSWAY_MODE_COMM_MULTI ||
+          play_mode == BSWAY_MODE_S_COMM_MULTI ){
+        res = bsw_scr->btl_setup_param->result;
+        
+        if( res == BTL_RESULT_WIN ){
+          *ret_wk = SCR_BATTLE_RESULT_WIN;
+        }else{
+          *ret_wk = SCR_BATTLE_RESULT_LOSE;
+        }
       }else{
-        *ret_wk = SCR_BATTLE_RESULT_WIN;
+        if( FIELD_BATTLE_IsLoseResult(res,cp) == TRUE ){
+          *ret_wk = SCR_BATTLE_RESULT_LOSE;
+        }else{
+          *ret_wk = SCR_BATTLE_RESULT_WIN;
+        }
       }
-      #else
-      *ret_wk = SCR_BATTLE_RESULT_WIN;
-      #endif
-      
-      #ifdef DEBUG_BSW_FORCE_BTL_WIN
-      *ret_wk = SCR_BATTLE_RESULT_WIN;
-      #endif
     }
     break;
   //ホームに着いた際に行うワークセット

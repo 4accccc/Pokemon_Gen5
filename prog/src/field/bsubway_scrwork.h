@@ -78,6 +78,8 @@ struct _TAG_BSUBWAY_SCRWORK
   u8 padding_bit:6; ///<余り
   u8 padding[2]; //余り
   
+  BtlResult comm_btl_result; ///< 勝敗結果
+  
   u16 pare_poke[2];  ///<通信マルチパートナーが持つポケモンNo
   
   u16 pare_stage_no; ///<通信マルチパートナーの周回数
