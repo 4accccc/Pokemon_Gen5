@@ -423,7 +423,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
   case _WAIT_NET_END:
     if(GFL_NET_IsExit()){
-      _battleParaFree(dbw);
+//      _battleParaFree(dbw);
       (*seq) ++;
     }
     break;
@@ -443,6 +443,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq) ++;
     break;
   case _FIELD_END:
+    _battleParaFree(dbw);
     return GMEVENT_RES_FINISH;
 
   //相性チェックはプロセス移動
