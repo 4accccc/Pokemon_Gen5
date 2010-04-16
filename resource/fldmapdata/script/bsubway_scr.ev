@@ -663,7 +663,7 @@ sub_receipt_challenge_multi_comm:
   ENDIF
   
   _MSGWIN_CLOSE()
-
+  
   //フィールド通信切断
   _FIELD_COMM_EXIT_EVENT_CALL( ret )
   
@@ -689,8 +689,6 @@ sub_receipt_challenge_multi_comm:
     _CALL sub_bsw_common_exit
     _RET
   ENDIF
-  
-  _MSGWIN_CLOSE()
   
   IF $irc == TRUE THEN //IRC通信
     //irc接続
