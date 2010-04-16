@@ -1118,7 +1118,7 @@ EVENT_START   ev_pos_c02_stone_01
 	
 	_TIME_WAIT(24)
 	_BALLOONWIN_OBJMSG_POS(msg_c02_hakase1_stone_02, C02_HAKASE1_01,POS_UL) 
-    _BALLOONWIN_CLOSE()
+//   _BALLOONWIN_CLOSE()
     
 	//おのおの喋る
 	_TIME_WAIT( 10 )
@@ -1129,9 +1129,8 @@ EVENT_START   ev_pos_c02_stone_01
 	_SUBWIN_MSG(msg_c02_white_sub_01 , 22 , 14 , 3 )
 	
 	//20フレーム待機した後ウィンドウを消す
-	_TIME_WAIT( 36 )
+	_TIME_WAIT( 40 )
 	_BALLOONWIN_CLOSE()
-	_TIME_WAIT(4)
 	_SUBWIN_CLOSE( 1 )
 	_TIME_WAIT(4)
 	_SUBWIN_CLOSE( 2 )
