@@ -4948,6 +4948,10 @@ static BOOL scProc_ACT_WazaEffectEx( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ) {
   case 0:
+    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
+      return TRUE;
+    }
+
     {
       u8 turnType = args[3];
       if( BTL_MAIN_IsWazaEffectEnable(wk->mainModule) )
@@ -5132,11 +5136,12 @@ static BOOL scProc_ACT_ConfDamage( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ) {
   case 0:
+    if( !BTL_CLIENT_IsChapterSkipMode(wk) )
     {
       BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
       BTLV_ACT_WazaEffect_Start( wk->viewCore, pos, pos, WAZANO_HATAKU, BTLV_WAZAEFF_TURN_DEFAULT, 1 );
-      (*seq)++;
     }
+    (*seq)++;
     break;
   case 1:
     if( BTLV_ACT_WazaEffect_Wait(wk->viewCore) )
