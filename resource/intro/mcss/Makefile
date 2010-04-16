@@ -53,7 +53,7 @@ mcobjects = $(subst .nmc,.NMAR,$(mcsources))
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
-.SUFFIXES: .NMCR .nmc .NCLR .ncl .NCBR .ncg .NCEC .nce
+.SUFFIXES: .NMCR .nmc .NCBR .ncg .NCEC .nce .NCLR .ncl
 
 .ncg.NCBR:
 	perl $(SCRIPT_DIR)tr_ncgc.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
@@ -79,7 +79,7 @@ endif
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバート処理
 
-do-build:	subdir $(maobjects) $(mcobjects) $(lobjects) $(gobjects) $(eobjects) $(aobjects)
+do-build:	subdir $(maobjects) $(mcobjects) $(gobjects) $(eobjects) $(aobjects) $(lobjects)
 
 else
 
