@@ -31,6 +31,7 @@
 #include "msg/msg_trainercard.h"
 
 #include "trcard_sys.h"
+#include "trcard_snd_def.h"
 
 #include "badge_view_def.h"       // 各種定義等
 
@@ -1907,6 +1908,7 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg )
   case TOUCH_CHANGE_CARD:   // カード画面に移動
     wk->seq      = SUBSEQ_ICON_WAIT;
     wk->next_seq = trg;
+    PMSND_PlaySE( SND_TRCARD_DECIDE );
     GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_CARD], 12 );
     break;
   case TOUCH_BOOKMARK:
@@ -1915,14 +1917,17 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int trg )
       flag ^= 1;
       GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_BOOKMARK], 6+flag );
       GAMEDATA_SetShortCut( wk->param->gameData, SHORTCUT_ID_TRCARD_BADGE, flag );
+      PMSND_PlaySE( SND_TRCARD_BOOKMARK );
     }
     break;
   case TOUCH_END:           // トレーナーカード終了→直接フィールドへ
+    PMSND_PlaySE( SND_TRCARD_END );
     wk->seq = SUBSEQ_ICON_WAIT;
     wk->next_seq = trg;
     GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_END], 8 );
     break;
   case TOUCH_RETURN:        // トレーナーカード終了→メニューへ
+    PMSND_PlaySE( SND_TRCARD_CANCEL );
     wk->seq = SUBSEQ_ICON_WAIT;
     wk->next_seq = trg;
     GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_RETURN], 9 );

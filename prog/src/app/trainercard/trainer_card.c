@@ -1758,7 +1758,7 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
   switch(hitNo){
   case 0:     // 戻る
     SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK, 9, TRUE);
-    PMSND_PlaySE( SND_TRCARD_DECIDE );
+    PMSND_PlaySE( SND_TRCARD_CANCEL );
     return TRC_KEY_REQ_RETURN_BUTTON;
     break;
   case 1:     // 終了
@@ -1784,6 +1784,7 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
       }
     }else{  
       // バッジ画面へ
+      PMSND_PlaySE( SND_TRCARD_DECIDE );
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE, ANMS_BADGE_G, TRUE);
       return TRC_KEY_REQ_BADGE_CALL;
     }
@@ -2764,32 +2765,38 @@ static void Stock_OldTouch( TOUCH_INFO *all, TOUCH_INFO *stock )
 /**
  * @brief 取得したしたタッチパネルの結果データを下に描画する
  *
- * @param   win   
- * @param   all   
- * @param   old   
+ * @param   win   書き込むBMPWIN
+ * @param   all   タッチ頂点格納配列
+ * @param   old   1sync前のタッチ頂点格納配列
  * @param   draw    メモリ上で行ったCGX変更を転送するか？(0:しない  1:する）
- * @param   SignData    
- * @param   sign_mode   
+ * @param   SignData    メモリ上のサインデータ
+ * @param   sign_mode   拡大モードかどうか（0:通常  1:拡大モード）
  */
 //----------------------------------------------------------------------------------
 static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int draw, u8 *SignData, u8 sign_mode )
 {
-  int px,py,i,r,flag=0, sx, sy;
+  int px,py,i,r,flag=0, sx, sy, centerling;
 
 //  OS_Printf("id0=%d,id1=%d,id2=%d,id3=%d,id4=%d\n",all[0].size,all[1].size,all[2].size,all[3].size,all[4].size);
+  if(sign_mode==0){
+    centerling = 4;
+  }else{
+    centerling = 2;
+  }
+
 
   if(all->on!=0){
     if(old->on){
-      sx = old->x-OEKAKI_BOARD_POSX*8;
-      sy = old->y-OEKAKI_BOARD_POSY*8;
+      sx = old->x-OEKAKI_BOARD_POSX*8-centerling;
+      sy = old->y-OEKAKI_BOARD_POSY*8-2;
     }
-    px = all->x - OEKAKI_BOARD_POSX*8;
-    py = all->y - OEKAKI_BOARD_POSY*8;
+    px = all->x - OEKAKI_BOARD_POSX*8-centerling;
+    py = all->y - OEKAKI_BOARD_POSY*8-2;
       
 //    OS_Printf("sx=%d, sy=%d, px=%d, py=%d\n", sx,sy,px,py);
 
     // BG1面用BMP（お絵かき画像）ウインドウ確保
-    DrawPoint_to_Line(win, sign_brush[sign_mode][all->brush], px-2, py-2, &sx, &sy, 0, old->on);
+    DrawPoint_to_Line(win, sign_brush[sign_mode][all->brush], px, py, &sx, &sy, 0, old->on);
     flag = 1;
     
   }
