@@ -2108,9 +2108,10 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
       clactSafeRemove(pWork,CELL_IRWAVE1);
       clactSafeRemove(pWork,CELL_IRWAVE2);
       pWork->ircmatchflg=FALSE;
-      GFL_CLACT_WK_SetAutoAnmFlag(pWork->curIcon[CELL_IRDS1],FALSE);
-      GFL_CLACT_WK_SetAutoAnmFlag(pWork->curIcon[CELL_IRDS3],FALSE);
-      
+      if(pWork->curIcon[CELL_IRDS1]){
+        GFL_CLACT_WK_SetAutoAnmFlag(pWork->curIcon[CELL_IRDS1],FALSE);
+        GFL_CLACT_WK_SetAutoAnmFlag(pWork->curIcon[CELL_IRDS3],FALSE);
+      }
       //アニメ終了コールバック登録
     /*  
       if(pWork->curIcon[CELL_IRDS1]){
@@ -2138,10 +2139,10 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
     _CLACT_AddPos(pWork,0, 2,CELL_IRDS3);
     pWork->ircmatchanimCount++;
     if(pWork->ircmatchanimCount > 30){;
-      
-      GFL_CLACT_WK_SetDrawEnable(pWork->curIcon[CELL_IRDS1],FALSE);
-      GFL_CLACT_WK_SetDrawEnable(pWork->curIcon[CELL_IRDS3],FALSE);
-
+      if(pWork->curIcon[CELL_IRDS1]){
+        GFL_CLACT_WK_SetDrawEnable(pWork->curIcon[CELL_IRDS1],FALSE);
+        GFL_CLACT_WK_SetDrawEnable(pWork->curIcon[CELL_IRDS3],FALSE);
+      }
       pWork->ircmatchanim=FALSE;
     }
   }
