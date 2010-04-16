@@ -10,8 +10,9 @@
 #include <gflib.h>
 #include <isdbglib.h>
 
-#include "waza_tool\wazadata.h"
+#include "system\ds_system.h"
 #include "gamesystem\game_beacon.h"
+#include "waza_tool\wazadata.h"
 #include "sound\pm_sndsys.h"
 
 #include "btl_common.h"
