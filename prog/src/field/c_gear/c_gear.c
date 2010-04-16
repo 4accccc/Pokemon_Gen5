@@ -588,6 +588,15 @@ static const GFL_REND_SURFACE_INIT sc_REND_SURFACE_INIT[ CGEAR_REND_MAX ] = {
 typedef void (StateFunc)(C_GEAR_WORK* pState);
 typedef BOOL (TouchFunc)(int no, C_GEAR_WORK* pState);
 
+
+//-------------------------------------
+///	演出待ちイベントワーク
+//=====================================
+typedef struct {
+  C_GEAR_WORK* pWork;
+  u32 createEvent;
+} EV_CGEAR_EFFECTWAIT;
+
 //-------------------------------------
 ///	パネル　マーク　アニメ
 //=====================================
@@ -797,12 +806,12 @@ static int _PanelMark_GetPatternIndex( const C_GEAR_WORK* cpWork, u32 col_type, 
 
 // 選択アニメ
 static void _modeSelectAnimInit(C_GEAR_WORK* pWork);
-static void _modeSelectAnimWait(C_GEAR_WORK* pWork);
+static BOOL _modeSelectAnimWait(C_GEAR_WORK* pWork);
 static void _selectAnimInit(C_GEAR_WORK* pWork,int x,int y);
 
 // カーソル選択アニメ
-static void _CursorSelectAnimeWait( C_GEAR_WORK* pWork );
-static void _PalAnimeSelectAnimeWait( C_GEAR_WORK* pWork );
+static BOOL _CursorSelectAnimeWait( C_GEAR_WORK* pWork );
+static BOOL _PalAnimeSelectAnimeWait( C_GEAR_WORK* pWork );
 
 // イベント待ち
 static void _modeEventWait( C_GEAR_WORK* pWork );
@@ -827,6 +836,11 @@ static void _BUTTONPAL_Init( C_GEAR_WORK* pWork, BUTTON_PAL_FADE* p_fwk );
 static void _BUTTONPAL_Exit( BUTTON_PAL_FADE* p_fwk );
 static void _BUTTONPAL_Start( BUTTON_PAL_FADE* p_fwk, u32 msk );
 static BOOL _BUTTONPAL_Update( BUTTON_PAL_FADE* p_fwk );
+
+
+// CGEAR演出イベント
+static GMEVENT* EVENT_ButtonEffectWaitCall( C_GEAR_WORK* pWork, u32 createEvent );
+static GMEVENT_RESULT EVENT_ButtonEffectWait( GMEVENT *event, int *seq, void *wk );
 
 #ifdef _NET_DEBUG
 #define   _CHANGE_STATE(pWork, state)  _changeStateDebug(pWork ,state, __LINE__)
@@ -970,7 +984,7 @@ static BOOL _selectAnimeWait( const C_GEAR_WORK* cpWork,int x,int y )
 }
 
 
-static void _modeSelectAnimWait(C_GEAR_WORK* pWork)
+static BOOL _modeSelectAnimWait(C_GEAR_WORK* pWork)
 {
   int x;
   int y,i;
@@ -1001,24 +1015,7 @@ static void _modeSelectAnimWait(C_GEAR_WORK* pWork)
   // イベントへジャンプ
   pWork->select_count ++;
   if( pWork->select_count >= _SELECT_ANIME_WAIT ){
-    
-    switch(pWork->select_type){
-    case CGEAR_PANELTYPE_IR:
-      pWork->createEvent = FIELD_SUBSCREEN_ACTION_IRC;
-//          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_IRC);
-      break;
-    case CGEAR_PANELTYPE_WIRELESS:
-      pWork->createEvent = FIELD_SUBSCREEN_ACTION_WIRELESS;
-//          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_WIRELESS);
-      break;
-    case CGEAR_PANELTYPE_WIFI:
-      pWork->createEvent = FIELD_SUBSCREEN_ACTION_GSYNC;
-//          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_GSYNC);
-      break;
-    }
-
-    _CHANGE_STATE(pWork,_modeEventWait);
-    return ;
+    return TRUE;
   }
 
 
@@ -1052,6 +1049,7 @@ static void _modeSelectAnimWait(C_GEAR_WORK* pWork)
     }
   }
 
+  return FALSE;
 }
 
 
@@ -1085,7 +1083,6 @@ static void _modeSelectAnimInit(C_GEAR_WORK* pWork)
   }
   pWork->typeAnim[pWork->touchx][pWork->touchy] = _SELECTANIM_STANDBY;
   _modeSelectAnimWait(pWork);
-  _CHANGE_STATE(pWork, _modeSelectAnimWait);
 }
 
 //------------------------------------------------------------------------------
@@ -2495,21 +2492,13 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
     _editMarkONOFF(pWork, pWork->bPanelEdit);
     break;
   case TOUCH_LABEL_HELP:
-    PMSND_PlaySystemSE( SEQ_SE_MSCL_07 );
-    pWork->select_cursor = _CLACT_HELP;
-    _CHANGE_STATE( pWork, _CursorSelectAnimeWait );
+    pWork->createEvent = FIELD_SUBSCREEN_ACTION_CGEAR_HELP;
     break;
   case TOUCH_LABEL_CROSS:
-    PMSND_PlaySE( SEQ_SE_MSCL_07 );
-    //  こっちはパレットアニメ
-    pWork->select_cursor = TOUCH_LABEL_CROSS; 
-    _CHANGE_STATE( pWork, _PalAnimeSelectAnimeWait );
+    pWork->createEvent = FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW;
     break;
   case TOUCH_LABEL_RADAR:
-    PMSND_PlaySE( SEQ_SE_MSCL_07 );
-    //  こっちはパレットアニメ
-    pWork->select_cursor = TOUCH_LABEL_RADAR; 
-    _CHANGE_STATE( pWork, _PalAnimeSelectAnimeWait );
+    pWork->createEvent = FIELD_SUBSCREEN_ACTION_SCANRADAR;
     break;
 
   case TOUCH_LABEL_LOGO:
@@ -2534,9 +2523,7 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
     break;
 
   case TOUCH_LABEL_POWER:
-    PMSND_PlaySystemSE( SEQ_SE_MSCL_07 );
-    pWork->select_cursor = _CLACT_POWER;
-    _CHANGE_STATE( pWork, _CursorSelectAnimeWait );
+    pWork->createEvent = FIELD_SUBSCREEN_ACTION_CGEAR_POWER;
     break;
   }
 }
@@ -2653,10 +2640,16 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       if( !SleepMode_IsSleep( pWork ) ){  //通信ONなら
         u32 type = _cgearSave_GetPanelType(pWork,pWork->touchx,pWork->touchy);
         
-        if( (type == CGEAR_PANELTYPE_IR) || (type == CGEAR_PANELTYPE_WIFI) ||
-            (type == CGEAR_PANELTYPE_WIRELESS) ){
-          PMSND_PlaySystemSE( GEAR_SE_DECIDE_ );
-          _CHANGE_STATE(pWork,_modeSelectAnimInit);
+        switch( type ){
+        case CGEAR_PANELTYPE_IR:
+          pWork->createEvent = FIELD_SUBSCREEN_ACTION_IRC;
+          break;
+        case CGEAR_PANELTYPE_WIFI:
+          pWork->createEvent = FIELD_SUBSCREEN_ACTION_GSYNC;
+          break;
+        case CGEAR_PANELTYPE_WIRELESS:
+          pWork->createEvent = FIELD_SUBSCREEN_ACTION_WIRELESS;
+          break;
         }
       }
     }
@@ -3910,37 +3903,29 @@ GMEVENT* CGEAR_EventCheck(C_GEAR_WORK* pWork, BOOL bEvReqOK, FIELD_SUBSCREEN_WOR
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(pWork->pGameSys);
 
   if(bEvReqOK == FALSE || fieldWork == NULL){
-    pWork->createEvent=FIELD_SUBSCREEN_ACTION_NONE;
     return NULL;
   }
+
   switch(pWork->createEvent){
   case FIELD_SUBSCREEN_ACTION_GSYNC:
-    event = EVENT_GSync(pWork->pGameSys, fieldWork, NULL, TRUE);
-    break;
   case FIELD_SUBSCREEN_ACTION_IRC:
-    event = EVENT_IrcBattle(pWork->pGameSys, fieldWork, NULL, TRUE);
-    break;
   case FIELD_SUBSCREEN_ACTION_WIRELESS:
-    event = EVENT_CG_Wireless(pWork->pGameSys, fieldWork, NULL, TRUE);
+    PMSND_PlaySystemSE( GEAR_SE_DECIDE_ );
+    event = EVENT_ButtonEffectWaitCall( pWork, pWork->createEvent );
     break;
+    
   case FIELD_SUBSCREEN_ACTION_SCANRADAR:
-    event = EVENT_ResearchRadar( pWork->pGameSys, fieldWork );
-    break;
   case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
-    event = EVENT_ChangeSubScreen(pWork->pGameSys, fieldWork, FIELD_SUBSCREEN_BEACON_VIEW);
-    break;
   case FIELD_SUBSCREEN_ACTION_CGEAR_HELP:
-    {
-      CG_HELP_INIT_WORK *initWork = GFL_HEAP_AllocClearMemory( HEAPID_PROC,sizeof(CG_HELP_INIT_WORK) );
-      initWork->myStatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(pWork->pGameSys));
-      event = EVENT_FieldSubProc_Callback(pWork->pGameSys, fieldWork, FS_OVERLAY_ID(cg_help),&CGearHelp_ProcData,initWork,NULL,initWork);
-    }
-    break;
-
-
   case FIELD_SUBSCREEN_ACTION_CGEAR_POWER:
-    event = EVENT_CGearPower(pWork->pGameSys);
+    PMSND_PlaySE( SEQ_SE_MSCL_07 );
+    event = EVENT_ButtonEffectWaitCall( pWork, pWork->createEvent );
     break;
+  }
+  if( event ){
+    pWork->createEvent = FIELD_SUBSCREEN_ACTION_NONE;
+    // イベント待ちにする。
+    _CHANGE_STATE(pWork,_modeEventWait);
   }
   return event;
 }
@@ -4081,7 +4066,7 @@ static BOOL _IsEffectSkip( const C_GEAR_WORK* cpWork )
  *	@param	pWork 
  */
 //-----------------------------------------------------------------------------
-static void _CursorSelectAnimeWait( C_GEAR_WORK* pWork )
+static BOOL _CursorSelectAnimeWait( C_GEAR_WORK* pWork )
 {
   switch( pWork->state_seq ){
   case 0:
@@ -4094,27 +4079,14 @@ static void _CursorSelectAnimeWait( C_GEAR_WORK* pWork )
   case 1:
     if( GFL_CLACT_WK_CheckAnmActive( pWork->cellCursor[ pWork->select_cursor ] ) == FALSE ){
 
-      
-      switch( pWork->select_cursor ){
-      case _CLACT_HELP:
-        pWork->createEvent = FIELD_SUBSCREEN_ACTION_CGEAR_HELP;
-        break;
-      case _CLACT_POWER:
-        pWork->createEvent = FIELD_SUBSCREEN_ACTION_CGEAR_POWER;
-        break;
-
-      default:
-        // 選択カーソル不明
-        GF_ASSERT(0);
-        break;
-      }
-      _CHANGE_STATE(pWork,_modeEventWait);
+      return TRUE;
     }
     break;
 
   default:
     break;
   }
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -4124,7 +4096,7 @@ static void _CursorSelectAnimeWait( C_GEAR_WORK* pWork )
  *	@param	pWork 
  */
 //-----------------------------------------------------------------------------
-static void _PalAnimeSelectAnimeWait( C_GEAR_WORK* pWork )
+static BOOL _PalAnimeSelectAnimeWait( C_GEAR_WORK* pWork )
 {
   switch( pWork->state_seq ){
   case 0:
@@ -4146,26 +4118,14 @@ static void _PalAnimeSelectAnimeWait( C_GEAR_WORK* pWork )
   case 1:
     if( _BUTTONPAL_Update( &pWork->button_palfade ) ){
 
-      
-      switch( pWork->select_cursor ){
-      case TOUCH_LABEL_CROSS:
-        pWork->createEvent = FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW;
-        break;
-      case TOUCH_LABEL_RADAR:
-        pWork->createEvent = FIELD_SUBSCREEN_ACTION_SCANRADAR;
-        break;
-      default:
-        // 選択カーソル不明
-        GF_ASSERT(0);
-        break;
-      }
-      _CHANGE_STATE(pWork,_modeEventWait);
+      return TRUE;
     }
     break;
 
   default:
     break;
   }
+  return FALSE;
 }
 
 
@@ -4376,5 +4336,118 @@ static BOOL _BUTTONPAL_Update( BUTTON_PAL_FADE* p_fwk )
 
 
 
+
+// CGEAR演出イベント
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CGEAR演出待ちイベント生成
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT* EVENT_ButtonEffectWaitCall( C_GEAR_WORK* pWork, u32 createEvent )
+{
+  EV_CGEAR_EFFECTWAIT* p_wk;
+  GMEVENT * event;
+  
+  event = GMEVENT_Create(pWork->pGameSys, NULL, EVENT_ButtonEffectWait, sizeof(EV_CGEAR_EFFECTWAIT));
+  
+  p_wk = GMEVENT_GetEventWork(event);
+  
+  p_wk->pWork = pWork;
+  p_wk->createEvent = createEvent;
+
+  // Effect初期化
+  switch(p_wk->createEvent){
+  case FIELD_SUBSCREEN_ACTION_GSYNC:
+  case FIELD_SUBSCREEN_ACTION_IRC:
+  case FIELD_SUBSCREEN_ACTION_WIRELESS:
+    _modeSelectAnimInit( p_wk->pWork );
+    break;
+  case FIELD_SUBSCREEN_ACTION_SCANRADAR:
+    pWork->select_cursor = TOUCH_LABEL_RADAR; 
+    break;
+
+  case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
+    pWork->select_cursor = TOUCH_LABEL_CROSS; 
+    break;
+
+  case FIELD_SUBSCREEN_ACTION_CGEAR_HELP:
+    pWork->select_cursor = _CLACT_HELP;
+    break;
+  case FIELD_SUBSCREEN_ACTION_CGEAR_POWER:
+    pWork->select_cursor = _CLACT_POWER;
+    break;
+  }
+  
+  return event;
+}
+
+static GMEVENT_RESULT EVENT_ButtonEffectWait( GMEVENT *event, int *seq, void *wk )
+{
+  EV_CGEAR_EFFECTWAIT* p_wk = wk;
+  C_GEAR_WORK* pWork = p_wk->pWork;
+  BOOL result = FALSE;
+  GMEVENT* p_cevent;
+  FIELDMAP_WORK* fieldWork = GAMESYSTEM_GetFieldMapWork( pWork->pGameSys );
+
+  // Effect完了待ち
+  switch(p_wk->createEvent){
+  case FIELD_SUBSCREEN_ACTION_GSYNC:
+  case FIELD_SUBSCREEN_ACTION_IRC:
+  case FIELD_SUBSCREEN_ACTION_WIRELESS:
+    result = _modeSelectAnimWait( p_wk->pWork );
+    break;
+  case FIELD_SUBSCREEN_ACTION_SCANRADAR:
+  case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
+    result = _PalAnimeSelectAnimeWait( p_wk->pWork );
+    break;
+
+  case FIELD_SUBSCREEN_ACTION_CGEAR_HELP:
+  case FIELD_SUBSCREEN_ACTION_CGEAR_POWER:
+    result = _modeSelectAnimWait( p_wk->pWork );
+    break;
+  }
+
+  if( result == FALSE ){
+    return GMEVENT_RES_CONTINUE;
+  }
+
+
+  // アニメ完了後別イベントへ
+  switch(p_wk->createEvent){
+  case FIELD_SUBSCREEN_ACTION_GSYNC:
+    p_cevent = EVENT_GSync(pWork->pGameSys, fieldWork, NULL, TRUE);
+    break;
+  case FIELD_SUBSCREEN_ACTION_IRC:
+    p_cevent = EVENT_IrcBattle(pWork->pGameSys, fieldWork, NULL, TRUE);
+    break;
+  case FIELD_SUBSCREEN_ACTION_WIRELESS:
+    p_cevent= EVENT_CG_Wireless(pWork->pGameSys, fieldWork, NULL, TRUE);
+    break;
+  case FIELD_SUBSCREEN_ACTION_SCANRADAR:
+    p_cevent= EVENT_ResearchRadar( pWork->pGameSys, fieldWork );
+    break;
+  case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
+    p_cevent= EVENT_ChangeSubScreen(pWork->pGameSys, fieldWork, FIELD_SUBSCREEN_BEACON_VIEW);
+    break;
+  case FIELD_SUBSCREEN_ACTION_CGEAR_HELP:
+    {
+      CG_HELP_INIT_WORK *initWork = GFL_HEAP_AllocClearMemory( HEAPID_PROC,sizeof(CG_HELP_INIT_WORK) );
+      initWork->myStatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(pWork->pGameSys));
+      p_cevent= EVENT_FieldSubProc_Callback(pWork->pGameSys, fieldWork, FS_OVERLAY_ID(cg_help),&CGearHelp_ProcData,initWork,NULL,initWork);
+    }
+    break;
+
+
+  case FIELD_SUBSCREEN_ACTION_CGEAR_POWER:
+    p_cevent= EVENT_CGearPower(pWork->pGameSys);
+    break;
+  }
+
+  // イベント変更
+  GMEVENT_ChangeEvent( event, p_cevent );
+ 
+
+  return GMEVENT_RES_CONTINUE;
+}
 
 
