@@ -1224,6 +1224,9 @@ extern void MMDL_BLACTCONT_DeleteOBJCodeRes( MMDLSYS *mmdlsys, u16 code );
 extern const MMDL_BBDACT_ANMTBL * MMDL_BLACTCONT_GetObjAnimeTable(
   const MMDLSYS *mmdlsys, u16 code );
 
+extern void MMDL_BLACTCONT_ChangeOBJCodeWithDummy(
+    MMDL *mmdl, u16 next_code );
+
 #ifdef DEBUG_MMDL_RESOURCE_MEMORY_SIZE
 extern u32 DEBUG_MMDL_GetUseResourceMemorySize( void );
 #endif

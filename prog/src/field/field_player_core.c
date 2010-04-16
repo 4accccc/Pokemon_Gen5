@@ -96,6 +96,8 @@ struct _FIELD_PLAYER_CORE
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
+static void fldplayer_ChangeOBJCode(
+    FIELD_PLAYER_CORE *player_core, u16 code );
 static void fldplayer_ChangeMoveForm(
     FIELD_PLAYER_CORE *player_core, PLAYER_MOVE_FORM form );
 
@@ -378,7 +380,7 @@ void FIELD_PLAYER_CORE_SetDir( FIELD_PLAYER_CORE *player_core, u16 dir )
 //--------------------------------------------------------------
 void FIELD_PLAYER_CORE_ChangeOBJCode( FIELD_PLAYER_CORE *player_core, u16 code )
 {
-  MMDL_ChangeOBJCode( player_core->fldmmdl, code );
+  fldplayer_ChangeOBJCode( player_core, code );
   PLAYERWORK_SetOBJCodeFix( player_core->playerWork, code );
 }
 
@@ -671,7 +673,7 @@ void FIELD_PLAYER_CORE_ChangeDrawForm(
   u16 code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, form );
   
   if( MMDL_GetOBJCode(mmdl) != code ){
-    MMDL_ChangeOBJCode( mmdl, code );
+    fldplayer_ChangeOBJCode( player_core, code );
   }
 
   player_core->draw_form_wait = 0;
@@ -818,8 +820,6 @@ BOOL FIELD_PLAYER_CORE_CheckAnimeEnd( const FIELD_PLAYER_CORE *player_core )
   return FALSE;
 }
 
-
-
 //======================================================================
 //  移動チェック
 //======================================================================
@@ -910,13 +910,27 @@ FLDEFF_TASK * FIELD_PLAYER_CORE_GetEffectTaskWork(
 }
 
 
-
-
-//-----------------------------------------------------------------------------
+//======================================================================
+//  private関数
+//======================================================================
+//--------------------------------------------------------------
 /**
- *      private関数
+ * 自機、動作モデルのOBJコードを変更する
+ * @param player_core FIELD_PLAYER＿CORE
+ * @param code OBJコード
+ * @retval nothing
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
+static void fldplayer_ChangeOBJCode(
+    FIELD_PLAYER_CORE *player_core, u16 code )
+{
+  MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( player_core );
+#if 0
+  MMDL_ChangeOBJCode( mmdl, code );
+#else
+  MMDL_BLACTCONT_ChangeOBJCodeWithDummy( mmdl, code );
+#endif
+}
 
 //--------------------------------------------------------------
 /**
@@ -934,14 +948,10 @@ static void fldplayer_ChangeMoveForm(
   u16 code = FIELD_PLAYER_GetMoveFormToOBJCode( sex, form );
   
   if( MMDL_GetOBJCode(mmdl) != code ){
-    MMDL_ChangeOBJCode( mmdl, code );
+    fldplayer_ChangeOBJCode( player_core, code );
   }
   FIELD_PLAYER_CORE_SetMoveForm( player_core, form );
 }
-
-
-
-
 
 //-------------------------------------
 ///	キー入力処理
@@ -1048,7 +1058,6 @@ static u16 getKeyDirZ( u16 key_prs )
   return( DIR_NOT );
 }
 
-
 //-------------------------------------
 ///	Req系
 //=====================================
@@ -1072,7 +1081,7 @@ static void gjikiReq_SetNormal( FIELD_PLAYER_CORE *player_core )
   code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_NORMAL );
   
   if( MMDL_GetOBJCode(mmdl) != code ){
-    MMDL_ChangeOBJCode( mmdl, code );
+    fldplayer_ChangeOBJCode( player_core, code );
   }
   
   FIELD_PLAYER_CORE_SetMoveForm( player_core, PLAYER_MOVE_FORM_NORMAL );
@@ -1106,7 +1115,7 @@ static void gjikiReq_SetCycle( FIELD_PLAYER_CORE *player_core )
   code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_CYCLE );
   
   if( MMDL_GetOBJCode(mmdl) != code ){
-    MMDL_ChangeOBJCode( mmdl, code );
+    fldplayer_ChangeOBJCode( player_core, code );
   }
    
   FIELD_PLAYER_CORE_SetMoveForm( player_core, PLAYER_MOVE_FORM_CYCLE );
@@ -1131,7 +1140,7 @@ static void gjikiReq_SetSwim( FIELD_PLAYER_CORE *player_core )
   code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_SWIM );
 
   if( MMDL_GetOBJCode(mmdl) != code ){
-    MMDL_ChangeOBJCode( mmdl, code );
+    fldplayer_ChangeOBJCode( player_core, code );
   }
   
   if(FIELD_PLAYER_CORE_GetMoveForm( player_core ) != PLAYER_MOVE_FORM_SWIM ){
@@ -1237,7 +1246,7 @@ static void gjikiReq_SetDiving( FIELD_PLAYER_CORE *player_core )
     code = FIELD_PLAYER_GetDrawFormToOBJCode( sex, PLAYER_DRAW_FORM_DIVING );
 
     if( MMDL_GetOBJCode(mmdl) != code ){
-      MMDL_ChangeOBJCode( mmdl, code );
+      fldplayer_ChangeOBJCode( player_core, code );
     }
     
     if(FIELD_PLAYER_CORE_GetMoveForm( player_core ) != PLAYER_MOVE_FORM_DIVING ){
