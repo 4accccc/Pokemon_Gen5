@@ -71,8 +71,8 @@ GMEVENT * EVENT_FieldCommErrorProc(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap
     }
   }
   else{ //侵入以外では通常通りエラー画面を表示
-   	return GMEVENT_Create( gsys, NULL, _EventCommErrorExit, 0 );
-  }
+    NetErr_App_ReqErrorDisp();
+    return EVENT_FieldSubProc(gsys, fieldmap, FS_OVERLAY_ID(fieldmap), &FieldCommErrorProc, gsys);  }
 }
 
 //--------------------------------------------------------------

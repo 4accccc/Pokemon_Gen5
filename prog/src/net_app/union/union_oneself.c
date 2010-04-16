@@ -713,6 +713,29 @@ static BOOL _UnionCheckError_ForceExit(UNION_SYSTEM_PTR unisys)
   return FALSE;
 }
 
+//--------------------------------------------------------------
+/**
+ * コロシアム用：通信エラー状態かを監視して、エラーならば強制終了にシーケンスを切り替える
+ *
+ * @param   unisys		
+ *
+ * @retval  BOOL		TRUE:強制終了にシーケンスを切り替えた
+ *
+ * コロシアム用。
+ * 基本的には各シーケンスの頭にこれを仕込んでおく。
+ * それだとワークの解放や状態などで出来ないシーケンスの箇所は
+ * 安全なタイミングでこれを呼ぶ
+ */
+//--------------------------------------------------------------
+static BOOL _UnionCheckError_ColosseumForceExit(UNION_SYSTEM_PTR unisys)
+{
+  if(_UnionCheckError_ForceExit(unisys) == TRUE){
+    UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_LEAVE);
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //==============================================================================
 //  
 //==============================================================================
@@ -2880,8 +2903,21 @@ static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
+  enum{
+    _SEQ_INIT,
+    _SEQ_INIT_TALK_WAIT,
+    _SEQ_WARP_BEFORE_TIMING,
+    _SEQ_WARP_BEFORE_TIMING_WAIT,
+    _SEQ_WARP_SUBPROC,
+    _SEQ_WARP_SUBPROC_WAIT,
+  };
+
+  if(*seq < _SEQ_WARP_SUBPROC && _UnionCheckError_ForceExit(unisys) == TRUE){ //コロシアムに遷移前なので_UnionCheckError_ForceExitでチェックする。※コロシアム用のは使用しないこと！
+    return TRUE;
+  }
+  
   switch(*seq){
-  case 0:
+  case _SEQ_INIT:
     //通信プレイヤー制御システムの生成
     GF_ASSERT(unisys->colosseum_sys == NULL);
     unisys->colosseum_sys = Colosseum_InitSystem(unisys->uniparent->game_data, 
@@ -2892,25 +2928,25 @@ static BOOL OneselfSeq_ColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
 
     (*seq)++;
     break;
-  case 1:
+  case _SEQ_INIT_TALK_WAIT:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       (*seq)++;
     }
     break;
-  case 2:
+  case _SEQ_WARP_BEFORE_TIMING:
     GFL_NET_HANDLE_TimeSyncStart(
       GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE, WB_NET_UNION);
     OS_TPrintf("コロシアム遷移前の同期取り開始\n");
     (*seq)++;
     break;
-  case 3:
+  case _SEQ_WARP_BEFORE_TIMING_WAIT:
     if(GFL_NET_HANDLE_IsTimeSync(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("コロシアム遷移前の同期取り成功\n");
       (*seq)++;
     }
     break;
-  case 4:
+  case _SEQ_WARP_SUBPROC:
     {
       int subproc_id;
       subproc_id = UNION_SUBPROC_ID_COLOSSEUM_WARP_START 
@@ -2919,7 +2955,7 @@ static BOOL OneselfSeq_ColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
     }
     (*seq)++;
     break;
-  case 5:
+  case _SEQ_WARP_SUBPROC_WAIT:
     if(UnionSubProc_IsExits(unisys) == FALSE){
       OS_TPrintf("コロシアム遷移のサブPROC終了\n");
 
@@ -2947,8 +2983,21 @@ static BOOL OneselfSeq_ColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
 //--------------------------------------------------------------
 static BOOL OneselfSeq_MultiColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
+  enum{
+    _SEQ_INIT,
+    _SEQ_INIT_TALK_WAIT,
+    _SEQ_WARP_BEFORE_TIMING,
+    _SEQ_WARP_BEFORE_TIMING_WAIT,
+    _SEQ_WARP_SUBPROC,
+    _SEQ_WARP_SUBPROC_WAIT,
+  };
+
+  if(*seq < _SEQ_WARP_SUBPROC && _UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+
   switch(*seq){
-  case 0:
+  case _SEQ_INIT:
     OS_TPrintf("マルチ対戦\n");
     if(situ->mycomm.intrude == FALSE){
       UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
@@ -2960,12 +3009,12 @@ static BOOL OneselfSeq_MultiColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
     }
     (*seq)++;
     break;
-  case 1:
+  case _SEQ_INIT_TALK_WAIT:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       (*seq)++;
     }
     break;
-  case 2:
+  case _SEQ_WARP_BEFORE_TIMING:
     if(situ->mycomm.intrude == FALSE){  //乱入の場合は同期取りなし
       GFL_NET_HANDLE_TimeSyncStart(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE, WB_NET_UNION);
@@ -2973,7 +3022,7 @@ static BOOL OneselfSeq_MultiColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
     }
     (*seq)++;
     break;
-  case 3:
+  case _SEQ_WARP_BEFORE_TIMING_WAIT:
     if(situ->mycomm.intrude == FALSE){  //乱入の場合は同期取りなし
       if(GFL_NET_HANDLE_IsTimeSync(
           GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_PROC_BEFORE, WB_NET_UNION) == TRUE){
@@ -2985,7 +3034,7 @@ static BOOL OneselfSeq_MultiColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
       (*seq)++;
     }
     break;
-  case 4:
+  case _SEQ_WARP_SUBPROC:
     {
       int subproc_id;
       subproc_id = UNION_SUBPROC_ID_COLOSSEUM_WARP_START 
@@ -2994,7 +3043,7 @@ static BOOL OneselfSeq_MultiColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
     }
     (*seq)++;
     break;
-  case 5:
+  case _SEQ_WARP_SUBPROC_WAIT:
     if(UnionSubProc_IsExits(unisys) == FALSE){
       OS_TPrintf("コロシアム遷移のサブPROC終了\n");
 
@@ -3032,6 +3081,13 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
   int i;
   
   GF_ASSERT(clsys != NULL);
+
+  if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    if(clsys->entry_menu != NULL){
+      CommEntryMenu_Exit(clsys->entry_menu);
+    }
+    return TRUE;
+  }
   
   switch(*seq){
   case 0:
@@ -3192,11 +3248,9 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
     }
     break;
   case 300:
-    OS_TPrintf("aaa 300\n");
     clsys->mine.entry_answer = COMM_ENTRY_ANSWER_REFUSE;
     UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_LEAVE);
     _PlayerMinePause(unisys, fieldWork, TRUE);
-    OS_TPrintf("aaa 300end\n");
     return TRUE;
   }
   
@@ -3221,6 +3275,10 @@ static BOOL OneselfSeq_ColosseumFirstDataSharingUpdate(UNION_SYSTEM_PTR unisys, 
   int my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
   GF_ASSERT(clsys != NULL);
+
+  if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    return TRUE;
+  }
   
   switch(*seq){
   case 0:
@@ -3358,6 +3416,10 @@ static BOOL OneselfSeq_ColosseumNormal(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
   s16 check_gx, check_gy, check_gz;
   u32 out_index;
   
+  if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+
   switch(*seq){
   case 0:
     {
@@ -3415,6 +3477,10 @@ static BOOL OneselfSeq_ColosseumStandPosition(UNION_SYSTEM_PTR unisys, UNION_MY_
 {
   COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
   
+  if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+
   switch(*seq){
   case 0:
 //    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_012);
@@ -3500,6 +3566,10 @@ static BOOL OneselfSeq_ColosseumStandingBack(UNION_SYSTEM_PTR unisys, UNION_MY_S
   int stand_pos;
   u16 anm_code;
   
+  if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+
   switch(*seq){
   case 0:
     Colosseum_Mine_SetStandingPostion(clsys, COLOSSEUM_STANDING_POSITION_NULL);
@@ -3570,6 +3640,12 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
     _REG_FAIL_PRINT_KEY_WAIT,
   };
   
+#if 0 //通信しているものがないのでチェックしない
+  if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+#endif
+
   if(UnionMsg_TalkStream_Check(unisys) == FALSE){
     return FALSE;
   }
@@ -3745,6 +3821,10 @@ static BOOL OneselfSeq_ColosseumPokelistReady(UNION_SYSTEM_PTR unisys, UNION_MY_
 {
   COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
   
+  if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+
   if(clsys->all_battle_ready == TRUE){
     UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_POKELIST_BEFORE_DATA_SHARE);
     clsys->all_battle_ready = FALSE;
@@ -3845,6 +3925,10 @@ static BOOL OneselfSeq_ColosseumPokelistBeforeDataShare(UNION_SYSTEM_PTR unisys,
   COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
   int my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   
+  if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+
   switch(*seq){
   case 0:
     //自分の受信バッファに送信データとなるPOKEPARTYをセット
@@ -3954,9 +4038,20 @@ static BOOL OneselfSeq_ColosseumPokelistBattle(UNION_SYSTEM_PTR unisys, UNION_MY
   PLIST_DATA *plist;
   UNION_SUBPROC_PARENT_POKELIST *parent_list;
   int my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  enum{
+    _SEQ_INIT,
+    _SEQ_INIT_TALK_WAIT,
+    _SEQ_INIT_TIMING_WAIT,
+    _SEQ_SUBPROC_CALL,
+    _SEQ_SUBPROC_WAIT,
+  };
   
+  if(*seq < _SEQ_SUBPROC_CALL && _UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+
   switch(*seq){
-  case 0: //「参加するポケモンを選んでください」
+  case _SEQ_INIT: //「参加するポケモンを選んでください」
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       u32 msg_id;
       switch(situ->mycomm.mainmenu_select){
@@ -3997,14 +4092,14 @@ static BOOL OneselfSeq_ColosseumPokelistBattle(UNION_SYSTEM_PTR unisys, UNION_MY
       (*seq)++;
     }
     break;
-  case 1:
+  case _SEQ_INIT_TALK_WAIT:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       GFL_NET_HANDLE_TimeSyncStart(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_POKELIST_BEFORE, WB_NET_UNION);
       (*seq)++;
     }
     break;
-  case 2:
+  case _SEQ_INIT_TIMING_WAIT:
     if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), 
         UNION_TIMING_COLOSSEUM_POKELIST_BEFORE, WB_NET_UNION) == TRUE){
       UnionMsg_AllDel(unisys);
@@ -4012,7 +4107,7 @@ static BOOL OneselfSeq_ColosseumPokelistBattle(UNION_SYSTEM_PTR unisys, UNION_MY
     }
     break;
   
-  case 3: //ポケモンリスト画面呼び出し
+  case _SEQ_SUBPROC_CALL: //ポケモンリスト画面呼び出し
     parent_list = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(UNION_SUBPROC_PARENT_POKELIST));
 
     plist = &parent_list->plist;
@@ -4067,7 +4162,7 @@ static BOOL OneselfSeq_ColosseumPokelistBattle(UNION_SYSTEM_PTR unisys, UNION_MY
 
     (*seq)++;
     break;
-  case 4:
+  case _SEQ_SUBPROC_WAIT:
     if(UnionSubProc_IsExits(unisys) == TRUE){
       break;
     }
@@ -4106,6 +4201,7 @@ static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
     LEAVE_SEQ_MSG_WAIT,
     LEAVE_SEQ_TIMING_START,
     LEAVE_SEQ_TIMING_WAIT,
+    LEAVE_SEQ_SHUTDOWN_INIT,
     LEAVE_SEQ_SHUTDOWN,
     LEAVE_SEQ_SHUTDOWN_WAIT,
     LEAVE_SEQ_WARP_UNION,
@@ -4113,12 +4209,19 @@ static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
     LEAVE_SEQ_BEACON_RESTART,
   };
   
+  if(*seq < LEAVE_SEQ_SHUTDOWN && NetErr_App_CheckError() != NET_ERR_CHECK_NONE){
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      _PlayerMinePause(unisys, fieldWork, TRUE);
+      *seq = LEAVE_SEQ_SHUTDOWN;
+    }
+  }
+
   switch(*seq){
   case LEAVE_SEQ_INIT:
     _PlayerMinePause(unisys, fieldWork, TRUE);
     if(clsys->mine.entry_answer == COMM_ENTRY_ANSWER_REFUSE){
       if(UnionMsg_TalkStream_Check(unisys) == TRUE){
-        *seq = LEAVE_SEQ_SHUTDOWN;
+        *seq = LEAVE_SEQ_SHUTDOWN_INIT;
       }
     }
     else{
@@ -4158,11 +4261,20 @@ static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
       (*seq)++;
     }
     break;
-  case LEAVE_SEQ_SHUTDOWN:
+  case LEAVE_SEQ_SHUTDOWN_INIT:
     //親機は最後まで待つ
     if(GFL_NET_IsParentMachine() && (GFL_NET_SystemGetConnectNum()>1) ){
       break;
     }
+    (*seq)++;
+    break;
+  case LEAVE_SEQ_SHUTDOWN:
+    if(NetErr_App_CheckError() != NET_ERR_CHECK_NONE){
+      UnionMsg_AllDel(unisys);
+      GAMESYSTEM_SetFieldCommErrorReq(unisys->uniparent->gsys, TRUE);
+      return FALSE;
+    }
+
     UnionComm_Req_Shutdown(unisys);
     (*seq)++;
     break;
@@ -4213,6 +4325,12 @@ static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
 static BOOL OneselfSeq_ColosseumTrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
   COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+
+#if 0 //通信しないのでチェックしない
+  if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    return TRUE;
+  }
+#endif
 
   switch(*seq){
   case 0:
