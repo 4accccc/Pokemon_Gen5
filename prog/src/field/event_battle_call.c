@@ -248,13 +248,24 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
       case BTL_RESULT_DRAW :
         bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_DRAW;
         break;
+      case BTL_RESULT_COMM_ERROR:
+        //OS_Printf( "event_battle_call.c : BTL_RESULT_COMM_ERROR\n" );
+        //bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_DRAW;  //通信エラーでもすすめるように  // 通信エラーのときは後の処理を飛ばすことにした。
+        break;
       default : 
         GF_ASSERT(0);
         bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_DRAW;  //アサートしてもすすめるように
       }
 
-      GFL_PROC_LOCAL_CallProc(work->procsys_up, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, bcw->demo_prm);
-      (*seq) = SEQ_WAIT_END_DEMO;
+      if( bcw->btl_setup_prm->result == BTL_RESULT_COMM_ERROR )  // 通信エラーのときは後の処理を飛ばして終了し、コロシアムでエラーメッセージを出してもらう
+      {
+        (*seq) = SEQ_BGM_POP;
+      }
+      else
+      {
+        GFL_PROC_LOCAL_CallProc(work->procsys_up, FS_OVERLAY_ID( comm_btl_demo ), &CommBtlDemoProcData, bcw->demo_prm);
+        (*seq) = SEQ_WAIT_END_DEMO;
+      }
     }
     break;
   case SEQ_WAIT_END_DEMO:
