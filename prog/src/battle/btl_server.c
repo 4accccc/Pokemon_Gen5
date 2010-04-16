@@ -10,7 +10,6 @@
 #include <gflib.h>
 #include <isdbglib.h>
 
-#include "system\ds_system.h"
 #include "gamesystem\game_beacon.h"
 #include "waza_tool\wazadata.h"
 #include "sound\pm_sndsys.h"
@@ -1263,8 +1262,8 @@ static void print_client_action( const BTL_SVCL_ACTION* clientAction )
 static void print_que_info( BTL_SERVER_CMD_QUE* que, const char* caption )
 {
   #ifdef PM_DEBUG
-  // いわゆる赤箱上でないと文字列モジュールが正しく動かない？ので…
-  if( DS_SYSTEM_IsRunOnTwl() )
+  // いわゆる赤箱上でないと文字列モジュールが正しく動かないので…
+  if( OS_GetConsoleType() == OS_CONSOLE_TWLDEBUGGER )
   {
     OS_TPrintf("  * %s : %d bytes\n", caption, que->writePtr );
     {
