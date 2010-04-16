@@ -1262,61 +1262,65 @@ static void print_client_action( const BTL_SVCL_ACTION* clientAction )
 static void print_que_info( BTL_SERVER_CMD_QUE* que, const char* caption )
 {
   #ifdef PM_DEBUG
-  OS_TPrintf("  * %s : %d bytes\n", caption, que->writePtr );
+  // いわゆる赤箱上でないと文字列モジュールが正しく動かない？ので…
+  if( DS_SYSTEM_IsRunOnTwl() )
   {
-    static int args[ BTL_SERVERCMD_ARG_MAX ];
-    ServerCmd  cmd;
-    int i;
-
-    for(i=0; i<que->writePtr; ++i)
+    OS_TPrintf("  * %s : %d bytes\n", caption, que->writePtr );
     {
-      OS_TPrintf("%02x,", que->buffer[i] );
-      if( (i+1)%16==0 ){ OS_TPrintf("\n"); }
-    }
-    OS_TPrintf("\n");
+      static int args[ BTL_SERVERCMD_ARG_MAX ];
+      ServerCmd  cmd;
+      int i;
 
-    que->readPtr = 0;
-
-    do {
-      const char* scname;
-      for(i=0; i<NELEMS(args); ++i){
-        args[ i ] = -1;
-      }
-
-      cmd = SCQUE_Read( que, args );
-      scname = BTL_DEBUGPRINT_GetServerCmdName(cmd);
-      if( scname == NULL ){
-        OS_TPrintf(" UnKnown Command [%d]  \n", cmd );
-        return;
-      }
-      OS_TPrintf(" cmd=%04x ", cmd);
-      OS_TPrintf( scname );
-      OS_TPrintf(" args=" );
-      for(i=0; i<NELEMS(args); ++i){
-        OS_TPrintf(" %d,", args[i]);
-      }
-      // 追加引数のあるコマンド処理
+      for(i=0; i<que->writePtr; ++i)
       {
-        u32 j, exArgCnt = 0;
-        switch( cmd ){
-        case SC_ACT_WAZA_DMG_PLURAL:  exArgCnt = args[0]; break;
-        case SC_ACT_WEATHER_DMG:      exArgCnt = args[1]; break;
-        }
-        if( exArgCnt )
-        {
-          OS_TPrintf("\n   ExArg=");
-          for(j=0; j<exArgCnt; ++j){
-            OS_TPrintf("%d, ", SCQUE_READ_ArgOnly(que) );
-          }
-          OS_TPrintf("\n");
-        }
+        OS_TPrintf("%02x,", que->buffer[i] );
+        if( (i+1)%16==0 ){ OS_TPrintf("\n"); }
       }
-      OS_TPrintf( "\n" );
+      OS_TPrintf("\n");
 
-    } while( !SCQUE_IsFinishRead(que) );
+      que->readPtr = 0;
 
+      do {
+        const char* scname;
+        for(i=0; i<NELEMS(args); ++i){
+          args[ i ] = -1;
+        }
+
+        cmd = SCQUE_Read( que, args );
+        scname = BTL_DEBUGPRINT_GetServerCmdName(cmd);
+        if( scname == NULL ){
+          OS_TPrintf(" UnKnown Command [%d]  \n", cmd );
+          return;
+        }
+        OS_TPrintf(" cmd=%04x ", cmd);
+        OS_TPrintf( scname );
+        OS_TPrintf(" args=" );
+        for(i=0; i<NELEMS(args); ++i){
+          OS_TPrintf(" %d,", args[i]);
+        }
+        // 追加引数のあるコマンド処理
+        {
+          u32 j, exArgCnt = 0;
+          switch( cmd ){
+          case SC_ACT_WAZA_DMG_PLURAL:  exArgCnt = args[0]; break;
+          case SC_ACT_WEATHER_DMG:      exArgCnt = args[1]; break;
+          }
+          if( exArgCnt )
+          {
+            OS_TPrintf("\n   ExArg=");
+            for(j=0; j<exArgCnt; ++j){
+              OS_TPrintf("%d, ", SCQUE_READ_ArgOnly(que) );
+            }
+            OS_TPrintf("\n");
+          }
+        }
+        OS_TPrintf( "\n" );
+
+      } while( !SCQUE_IsFinishRead(que) );
+
+    }
+    #endif
   }
-  #endif
 }
 
 BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, BtlRecTiming timingCode, const void* recvedCmd, u32 cmdSize )
