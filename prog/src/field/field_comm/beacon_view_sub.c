@@ -250,7 +250,7 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
   if( !new_f ){
     pp = panel_GetPanelFromDataIndex( wk, idx );
     if(pp == NULL){
-      return FALSE;
+      return TRUE;  //描画中のパネルでない時は、ポップアップのみ
     }
     //ターゲットパネル書換え
     panel_Draw( wk, pp, wk->tmpInfo );
