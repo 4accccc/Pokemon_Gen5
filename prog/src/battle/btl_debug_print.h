@@ -206,6 +206,8 @@ typedef enum {
   DBGSTR_SVFL_ActionSortInfo,
   DBGSTR_SVFL_ActionSortRotation,
   DBGSTR_SVFL_TrainerItemTarget,
+  DBGSTR_SVFL_DoubleTargetIntr,
+  DBGSTR_SVFL_DoubleTargetRegister,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,

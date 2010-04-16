@@ -249,6 +249,10 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_ActionSortInfo:      return "アクションソート:Client(%d), actionCnt=%d\n";
   case DBGSTR_SVFL_ActionSortRotation:  return ".. rotate action nextPokeIdx = %d\n";
   case DBGSTR_SVFL_TrainerItemTarget:   return "トレーナーアイテム使用：tgtIdx=%d, tgtPokeID=%d\n";
+  case DBGSTR_SVFL_DoubleTargetIntr:    return "ダブル敵１体ターゲット…割り込みポケ=%d\n";
+  case DBGSTR_SVFL_DoubleTargetRegister:return "ダブル敵１体ターゲット…確定ポケ=%d\n";
+
+
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";

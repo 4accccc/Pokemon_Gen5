@@ -4329,7 +4329,7 @@ static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
 
   case WAZA_TARGET_UNKNOWN:
     {
-      // @@@ ココは割り込みのターゲットイベントとは処理を別ける必要があると思う。いずれやる。
+      // @@@ ココは割り込みのターゲットイベントとは処理を別ける必要があるか
       u8 pokeID = scEvent_GetWazaTargetIntr( wk, attacker, wazaParam );
       if( pokeID != BTL_POKEID_NULL ){
         bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
@@ -4346,8 +4346,10 @@ static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
   {
     u8 atkPokeID, targetPokeID;
     if( intrPokeID != BTL_POKEID_NULL ){
+      BTL_N_Printf( DBGSTR_SVFL_DoubleTargetIntr, intrPokeID );
       bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, intrPokeID );
     }
+    BTL_N_Printf( DBGSTR_SVFL_DoubleTargetRegister, BPP_GetID(bpp) );
     BTL_POKESET_Add( rec, bpp );
     return 1;
   }
