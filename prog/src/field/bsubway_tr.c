@@ -483,6 +483,8 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   dst->fRecordPlay = FALSE;
   dst->competitor = BTL_COMPETITOR_SUBWAY;
   
+  dst->commNetIDBit = 0xffff;
+  
   dst->party[BTL_CLIENT_PLAYER] = NULL;
   dst->party[BTL_CLIENT_ENEMY1] = NULL;
   dst->party[BTL_CLIENT_PARTNER] = NULL;
