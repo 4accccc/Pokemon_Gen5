@@ -901,20 +901,22 @@ static VMCMD_RESULT EvCmdChangeCommonScr( VMHANDLE *core, void *wk )
 
   scr_id = VMGetU16(core);
 
-  SCRCMD_WORK_BackupUserWork( wk );
   if ( SCRCMD_WORK_GetSpScriptFlag( work ) == FALSE )
   { //通常スクリプト→仮想マシン追加
     VMHANDLE_ID vm_id;
     vm_id = SCRIPT_AddVMachine( sc, getZoneID(work), scr_id );
     //監視VMIDを保持
     SCRCMD_WORK_SetWaitVMID( work, vm_id );
+    SCRCMD_WORK_BackupUserWork( wk );
 
     VMCMD_SetWait( core, EvChangeCommonScrWait );
     return VMCMD_RESULT_SUSPEND;
   }
   else
   { //特殊スクリプト→その場呼び出し
+    SCRCMD_WORK_BackupUserWork( wk );
     SCRIPT_CallSpecialScript( gsys, sc, SCRCMD_WORK_GetHeapID(work), scr_id );
+    SCRCMD_WORK_RestoreUserWork( wk );
     return VMCMD_RESULT_CONTINUE;
   }
 
