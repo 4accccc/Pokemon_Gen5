@@ -321,6 +321,24 @@ u16 FIELD_PLAYER_GetKeyDir( const FIELD_PLAYER* fld_player, int key )
   return FIELD_PLAYER_CORE_GetKeyDir( fld_player->corewk, key );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  壁ヒット状態チェック
+ *
+ *	@param	fld_player 
+ *
+ *	@retval TRUE  壁ヒット状態
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_PLAYER_IsHitch( const FIELD_PLAYER* fld_player )
+{
+  if( FIELDMAP_GetBaseSystemType(fld_player->fieldWork) == FLDMAP_BASESYS_GRID ){
+    return FIELD_PLAYER_GRID_CheckHitch( fld_player->gridwk );
+  }else{
+    return FIELD_PLAYER_NOGRID_IsHitch( fld_player->nogridwk );
+  }
+}
+
 
 //--------------------------------------------------------------
 /**

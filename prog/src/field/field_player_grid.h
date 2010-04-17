@@ -74,6 +74,7 @@ extern BOOL FIELD_PLAYER_GRID_CheckStartMove(
 extern void FIELD_PLAYER_GRID_ForceStop( FIELD_PLAYER_GRID *gjiki );
 extern BOOL FIELD_PLAYER_GRID_SetMoveStop( FIELD_PLAYER_GRID *gjiki );
 
+
 /* FIELD_PLAYER_CORE‚Ö
 extern void FIELD_PLAYER_GRID_SetEffectTaskWork(
     FIELD_PLAYER_GRID *gjiki, FLDEFF_TASK *task );
@@ -97,6 +98,8 @@ extern MMDL * FIELD_PLAYER_GRID_GetMMdl( FIELD_PLAYER_GRID *gjiki );
 extern void FIELD_PLAYER_GRID_CheckSpecialDrawForm( FIELD_PLAYER_GRID *gjiki, BOOL menu_open_flag );
 extern BOOL FIELD_PLAYER_GRID_CheckNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki );
 extern void FIELD_PLAYER_GRID_SetNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki, BOOL flag );
+
+extern BOOL FIELD_PLAYER_GRID_CheckHitch( const FIELD_PLAYER_GRID *gjiki );
 
 
 //======================================================================

@@ -143,6 +143,9 @@ extern PLAYER_MOVE_VALUE FIELD_PLAYER_GetDirMoveValue(
 // キー入力方向
 extern u16 FIELD_PLAYER_GetKeyDir( const FIELD_PLAYER* fld_player, int key );
 
+// 壁ヒットチェック
+extern BOOL FIELD_PLAYER_IsHitch( const FIELD_PLAYER* fld_player );
+
 // 波乗り
 extern void FIELD_PLAYER_SetNaminori( FIELD_PLAYER * fld_player );
 extern void FIELD_PLAYER_SetNaminoriEnd( FIELD_PLAYER * fld_player );

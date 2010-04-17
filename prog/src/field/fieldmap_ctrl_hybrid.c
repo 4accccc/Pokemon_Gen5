@@ -43,8 +43,6 @@ struct _FIELDMAP_CTRL_HYBRID
   FLDMAP_BASESYS_TYPE base_type;
 
   FIELD_PLAYER*         p_player;
-
-  PLAYER_MOVE_VALUE last_move;
 };
 
 
@@ -54,7 +52,6 @@ struct _FIELDMAP_CTRL_HYBRID
 */
 //-----------------------------------------------------------------------------
 
-static u16 mapCtrlHybrid_getKeyDir( const FIELDMAP_CTRL_HYBRID* cp_wk, u32 key_cont );
 
 static void mapCtrlHybrid_Create(
 	FIELDMAP_WORK* p_fieldmap, VecFx32* p_pos, u16 dir );
@@ -151,8 +148,6 @@ void FIELDMAP_CTRL_HYBRID_ChangeBaseSystem( FIELDMAP_CTRL_HYBRID* p_wk, FIELDMAP
       mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk, dir, &pos );
     }
   }
-
-  p_wk->last_move = PLAYER_MOVE_VALUE_STOP;
 }
 
 
@@ -310,18 +305,13 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
   
   mmdl = FIELD_PLAYER_GetMMdl( p_wk->p_player );
 
-  if(p_wk->last_move != PLAYER_MOVE_VALUE_WALK)
-  {
-    dir = mapCtrlHybrid_getKeyDir( p_wk, key_cont );
-  }
-  else
-  {
-    dir = MMDL_GetDirMove( mmdl );
-  }
+  dir = FIELD_PLAYER_GetKeyDir( p_wk->p_player, key_cont );
+
   
   // 移動完了しているか？
   // 1つ前が動いたか、今から動こうとして、乗り換えの上にいたら乗り換え
-  if( (MMDL_CheckPossibleAcmd(mmdl) == TRUE) && (dir != DIR_NOT) )
+  if( ((MMDL_CheckPossibleAcmd(mmdl) == TRUE) || (FIELD_PLAYER_IsHitch( p_wk->p_player ) == TRUE)) && 
+      (dir != DIR_NOT) )
   {
 
     // 足元がHYBRID、1つ前が移動不可能？
@@ -346,22 +336,14 @@ static void mapCtrlHybrid_Main_Grid( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
           FIELD_PLAYER_MoveGrid( p_wk->p_player, 0, 0, dmy );
 
           // 描画方向を求める
-          if(p_wk->last_move != PLAYER_MOVE_VALUE_WALK){
-            set_dir = dir;
-          }else{
-            set_dir = MMDL_GetDirDisp( mmdl );
-          }
+          set_dir = dir;
           
           mapCtrlHybrid_ChangeGridToRail( p_fieldmap, p_wk, set_dir, &location );
-          p_wk->last_move = PLAYER_MOVE_VALUE_STOP;
           return ;
         }
       }
     }
   }
-  
-  // 1つ前の状態を取得
-  p_wk->last_move = FIELD_PLAYER_GetMoveValue( p_wk->p_player );
   
   if( FIELD_PLAYER_CheckPossibleDash(p_wk->p_player) == TRUE ){
     mbit |= PLAYER_MOVEBIT_DASH;
@@ -388,17 +370,14 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
   
   mmdl = FIELD_PLAYER_GetMMdl( p_wk->p_player );
 
-  if(p_wk->last_move != PLAYER_MOVE_VALUE_WALK){
-    dir = mapCtrlHybrid_getKeyDir( p_wk, key_cont );
-  }else{
-    dir = MMDL_GetDirMove( mmdl );
-  }
+  dir = FIELD_PLAYER_GetKeyDir( p_wk->p_player, key_cont );
 
 
 
   // 移動完了しているか？
   // 1つ前が動いたか、今から動こうとして、乗り換えの上にいたら乗り換え
-  if( (MMDL_CheckPossibleAcmd(mmdl) == TRUE) && (dir != DIR_NOT) )
+  if( ((MMDL_CheckPossibleAcmd(mmdl) == TRUE) || (FIELD_PLAYER_IsHitch( p_wk->p_player ) == TRUE)) && 
+      (dir != DIR_NOT) )
   {
     
     // 足元がHYBRID、1つ前が移動不可能？
@@ -421,24 +400,14 @@ static void mapCtrlHybrid_Main_Rail( FIELDMAP_WORK* p_fieldmap, FIELDMAP_CTRL_HY
           // 動作チェンジ
           FIELD_PLAYER_MoveNoGrid( p_wk->p_player, 0, 0 );
 
-          // 描画方向を求める
-          if(p_wk->last_move != PLAYER_MOVE_VALUE_WALK){
-            set_dir = dir;
-          }else{
-            set_dir = MMDL_GetDirDisp( mmdl );
-          }
+          set_dir = dir;
           
           mapCtrlHybrid_ChangeRailToGrid( p_fieldmap, p_wk, set_dir, &pos );
-          p_wk->last_move = PLAYER_MOVE_VALUE_STOP;
           return ;
         }
       }
     }
   }
-
-  // 1つ前の状態を取得
-  p_wk->last_move = FIELD_PLAYER_GetMoveValue( p_wk->p_player );
-
 
   FIELD_PLAYER_MoveNoGrid( p_wk->p_player, key_trg, key_cont );
 }
@@ -644,31 +613,4 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
   p_wk->base_type = type;
 }
 
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  キー入力による方向を取得
- *
- *	@param	cp_wk       ワーク
- *	@param	key_cont    キー
- *
- *	@return 方向
- */
-//-----------------------------------------------------------------------------
-static u16 mapCtrlHybrid_getKeyDir( const FIELDMAP_CTRL_HYBRID* cp_wk, u32 key_cont )
-{
-  u16 dir = DIR_NOT;
-
-	if( (key_cont&PAD_KEY_UP) ){
-		dir = DIR_UP;
-	}else if( (key_cont&PAD_KEY_DOWN) ){
-		dir = DIR_DOWN;
-	}else if( (key_cont&PAD_KEY_LEFT) ){
-		dir = DIR_LEFT;
-	}else if( (key_cont&PAD_KEY_RIGHT) ){
-		dir = DIR_RIGHT;
-	}
-	
-  return dir;
-}
 

@@ -23,6 +23,10 @@
 
 #include "field_player_nogrid.h"
 
+#include "include/gamesystem/pm_season.h"
+#include "field/eventdata_system.h"
+#include "field/eventdata_sxy.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -387,6 +391,12 @@ static void playerSwim_SetMove_Turn(
 static void playerSwim_SetMove_Hitch(
 	FIELD_PLAYER_NOGRID *p_player, MMDL *mmdl,
 	u32 key_trg, u32 key_cont, u16 dir, BOOL debug_flag );
+
+
+
+
+// snd
+static BOOL player_CheckDirDoor( FIELD_PLAYER_NOGRID *p_player, u16 dir );
 
 
 //----------------------------------------------------------------------------
@@ -1475,7 +1485,10 @@ static void player_SetMove_Hitch(
 	p_player->move_state = PLAYER_MOVE_HITCH;
 	
   FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_STOP );
-  PMSND_PlaySE( SEQ_SE_WALL_HIT );
+
+  if( (player_CheckDirDoor(p_player,dir) == FALSE) ){
+    PMSND_PlaySE( SEQ_SE_WALL_HIT );
+  }
 }
 
 //--------------------------------------------------------------
@@ -1905,7 +1918,9 @@ static void playerCycle_SetMove_Hitch(
 	p_player->move_state = PLAYER_MOVE_HITCH;
 	
   FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_STOP );
-  PMSND_PlaySE( SEQ_SE_WALL_HIT );
+  if( (player_CheckDirDoor(p_player,dir) == FALSE) ){
+    PMSND_PlaySE( SEQ_SE_WALL_HIT );
+  }
 }
 
 //--------------------------------------------------------------
@@ -2042,7 +2057,9 @@ static void playerSwim_SetMove_Hitch(
   p_player->move_state = PLAYER_MOVE_HITCH;
   
   FIELD_PLAYER_CORE_SetMoveValue( p_player->p_player_core, PLAYER_MOVE_VALUE_STOP );
-  PMSND_PlaySE( SEQ_SE_WALL_HIT );
+  if( (player_CheckDirDoor(p_player,dir) == FALSE) ){
+    PMSND_PlaySE( SEQ_SE_WALL_HIT );
+  }
 }
 
 // PLAYER_SET
@@ -3012,6 +3029,38 @@ static BOOL nogrid_AutoUp_IsAutoMove( const AUTO_UP_WORK* wk )
   return wk->auto_up_flag;
 }
 
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Dir方向がドアかチェック
+ *
+ *	@param	p_player    プレイヤー
+ *	@param	dir         ほうこう
+ *
+ *	@retval TRUE  ドア
+ *	@retval FALSE じゃない
+ */
+//-----------------------------------------------------------------------------
+static BOOL player_CheckDirDoor( FIELD_PLAYER_NOGRID *p_player, u16 dir )
+{
+  int idx;
+  RAIL_LOCATION location;
+  MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( p_player->p_player_core );
+  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( p_player->p_fieldwork );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+	EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
+  
+  MMDL_GetRailDirLocation( mmdl, dir, &location );
+	idx = EVENTDATA_SearchConnectIDByRailLocation( evdata, &location );
+  
+  if( idx == EXIT_ID_NONE ){
+    return( FALSE );
+  }
+  return( TRUE );
+}
 
 
 

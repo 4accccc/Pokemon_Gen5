@@ -3426,6 +3426,23 @@ void FIELD_PLAYER_GRID_SetNaminoriEventEnd( FIELD_PLAYER_GRID *gjiki, BOOL flag 
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ヒッチチェック
+ *
+ *	@param	gjiki 
+ *
+ *	@retval TRUE  壁ヒット状態
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_PLAYER_GRID_CheckHitch( const FIELD_PLAYER_GRID *gjiki )
+{
+  if( gjiki->move_action == JIKI_ACTION_HITCH ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //======================================================================
 //  parts
 //======================================================================
