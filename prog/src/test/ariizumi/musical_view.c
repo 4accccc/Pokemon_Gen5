@@ -45,6 +45,10 @@
 #pragma mark [>define
 #define MUS_VIEW_PAL_FONT (0x0E)
 
+#define MUS_VIEW_BG_MAIN (GFL_BG_FRAME1_M)
+#define MUS_VIEW_BG_SUB  (GFL_BG_FRAME1_S)
+#define MUS_VIEW_BG_STR  (GFL_BG_FRAME2_S)
+
 //======================================================================
 //  enum
 //======================================================================
@@ -64,6 +68,7 @@ typedef struct
   GFL_FONT      *fontHandle;
   PRINT_QUE     *printQue;
   GFL_MSGDATA   *msgHandle;
+  GFL_BMPWIN    *strWin;
 
   MUS_POKE_DRAW_SYSTEM *pokeSys;
   MUS_POKE_DRAW_WORK   *pokeWork;
@@ -72,8 +77,11 @@ typedef struct
   MUS_ITEM_DRAW_WORK  *itemWork[MUS_POKE_EQUIP_MAX];
   GFL_G3D_RES     *itemRes[MUS_POKE_EQUIP_MAX];
 
+  BOOL  updateWin;
   BOOL  isUseMcs;
   BOOL  isRefresh;
+  BOOL  isRefreshName;
+  u16   isDispBit;
   
   u16 monsno;
   u16 sex;
@@ -89,9 +97,14 @@ typedef struct
 //======================================================================
 #pragma mark [>prot
 static void MUSICAL_VIEW_InitGraphic( MUS_VIEW_LOCAL_WORK *work );
+static void MUSICAL_VIEW_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
 static void MUSICAL_VIEW_LoadPoke( MUS_VIEW_LOCAL_WORK *work );
 static void MUSICAL_VIEW_UnLoadPoke( MUS_VIEW_LOCAL_WORK *work );
 static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work );
+static void MUSICAL_VIEW_UpdatePoke( MUS_VIEW_LOCAL_WORK *work );
+static void MUSICAL_VIEW_ChangeEquip( MUS_VIEW_LOCAL_WORK *work , const u8 no );
+static void MUSICAL_VIEW_UpdateNumberFunc( const s32 num , const u8 digit , const u8 x , const u8 y );
+static void MUSICAL_VIEW_DrawEquipPos( MUS_VIEW_LOCAL_WORK *work );
 
 static GFL_PROC_RESULT MusicalViewProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
 static GFL_PROC_RESULT MusicalViewProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk );
@@ -138,8 +151,40 @@ static void MUSICAL_VIEW_InitGraphic( MUS_VIEW_LOCAL_WORK *work )
         GX_DISPMODE_GRAPHICS, GX_BGMODE_3, GX_BGMODE_0, GX_BG0_AS_3D,
     };
 
+    static const GFL_BG_BGCNT_HEADER bgHeader = {
+      0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x08000,0x08000,
+      GX_BG_EXTPLTT_23, 3, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+    static const GFL_BG_BGCNT_HEADER bgHeader2 = {
+      0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x10000,0x08000,
+      GX_BG_EXTPLTT_23, 2, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+    
     GFL_BG_SetBGMode( &sys_data );
-    GFL_BG_SetBGControl3D( 1 );
+    GFL_BG_SetBGControl3D( 0 );
+
+    MUSICAL_VIEW_SetupBgFunc( &bgHeader , MUS_VIEW_BG_MAIN , GFL_BG_MODE_TEXT );
+    MUSICAL_VIEW_SetupBgFunc( &bgHeader , MUS_VIEW_BG_SUB  , GFL_BG_MODE_TEXT );
+    MUSICAL_VIEW_SetupBgFunc( &bgHeader2, MUS_VIEW_BG_STR  , GFL_BG_MODE_TEXT );
+    
+    //BG
+    GFL_ARC_UTIL_TransVramPalette( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_editor_NCLR , 
+                      PALTYPE_SUB_BG , 0 , sizeof(u16)*16*2 , work->heapId );
+    GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_editor_NCGR ,
+                      MUS_VIEW_BG_SUB , 0 , 0, FALSE , work->heapId );
+    GFL_ARC_UTIL_TransVramScreen( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_view_NSCR , 
+                      MUS_VIEW_BG_SUB ,  0 , 0, FALSE , work->heapId );
+    GFL_ARC_UTIL_TransVramPalette( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_editor_NCLR , 
+                      PALTYPE_MAIN_BG , 0 , sizeof(u16)*16*2 , work->heapId );
+    GFL_ARC_UTIL_TransVramBgCharacter( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_editor2_NCGR ,
+                      MUS_VIEW_BG_MAIN , 0 , 0, FALSE , work->heapId );
+    GFL_ARC_UTIL_TransVramScreen( ARCID_MUSICAL_DEBUG , NARC_mus_debug_musical_view2_NSCR , 
+                      MUS_VIEW_BG_MAIN ,  0 , 0, FALSE , work->heapId );
+
   }
   
   { //3D系の設定
@@ -192,13 +237,32 @@ static void MUSICAL_VIEW_InitGraphic( MUS_VIEW_LOCAL_WORK *work )
     GFL_BBD_SetScale( work->bbdSys , &scale );
   }
   
-  //フォント読み込み
+  //フォント読み込み(デバッグでSmallフォント
   work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_small_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  GFL_FONTSYS_SetColor( 1 , 2 , 0 );
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , MUS_VIEW_PAL_FONT*0x20, 16*2, work->heapId );
+  
+  work->strWin = GFL_BMPWIN_Create( MUS_VIEW_BG_STR , 1 , 3 , 9 , 3 , MUS_VIEW_PAL_FONT , GFL_BMP_CHRAREA_GET_B );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->strWin ) , 0 );
+  GFL_BMPWIN_TransVramCharacter( work->strWin );
+  GFL_BMPWIN_MakeScreen( work->strWin );
+  GFL_BG_LoadScreenV_Req( MUS_VIEW_BG_STR );  
+  work->isRefreshName = TRUE;
 
   //システム
   work->pokeSys = MUS_POKE_DRAW_InitSystem( work->heapId );
   work->itemDrawSys = MUS_ITEM_DRAW_InitSystem( work->bbdSys , MUS_POKE_EQUIP_MAX , work->heapId );
+}
+
+//--------------------------------------------------------------------------
+//  Bg初期化 機能部
+//--------------------------------------------------------------------------
+static void MUSICAL_VIEW_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode )
+{
+  GFL_BG_SetBGControl( bgPlane, bgCont, mode );
+  GFL_BG_SetVisible( bgPlane, VISIBLE_ON );
+  GFL_BG_ClearFrame( bgPlane );
+  GFL_BG_LoadScreenReq( bgPlane );
 }
 
 static void MUSICAL_VIEW_LoadPoke( MUS_VIEW_LOCAL_WORK *work )
@@ -239,7 +303,7 @@ static void MUSICAL_VIEW_LoadPoke( MUS_VIEW_LOCAL_WORK *work )
   }
   MUS_POKE_DRAW_StartAnime( work->pokeWork );
   MUS_POKE_DRAW_StartAnime( work->pokeWorkBack );
-
+  
 }
 
 static void MUSICAL_VIEW_UnLoadPoke( MUS_VIEW_LOCAL_WORK *work )
@@ -277,15 +341,400 @@ static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work )
     work->isRefresh = TRUE;
   }
   
-  if( work->isUseMcs == TRUE )
   {
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    static const GFL_UI_TP_HITTBL hitTbl[] =
     {
-//      void* buf = MUS_MCSS_DebugLoadFile( 0 , 0 , work->heapId );
-//      GFL_HEAP_FreeMemory( buf );
+      //上矢印
+      {  8 , 24 ,  8 , 24 },
+      {  8 , 24 , 24 , 40 },
+      {  8 , 24 , 40 , 56 },
+      //下矢印
+      { 48 , 64 ,  8 , 24 },
+      { 48 , 64 , 24 , 40 },
+      { 48 , 64 , 40 , 56 },
+      //フォルム変更
+      {  8 , 24 , 64 , 80 },
+      { 48 , 64 , 64 , 80 },
+      //特殊ボタン
+      { 72 , 88 ,  8 , 24 },
+      { 72 , 88 , 32 , 48 },
+      { 72 , 88 , 56 , 72 },
+      { 72 , 88 , 80 , 96 },
+      //装備変更
+      {  8 , 24 ,168 ,186 },
+      {  8 , 24 ,186 ,202 },
+      {  8 , 24 ,202 ,218 },
+      {  8 , 24 ,218 ,234 },
+      {  8 , 24 ,234 ,250 },
+
+      { GFL_UI_TP_HIT_END ,0,0,0},
+    };
+    const int ret = GFL_UI_TP_HitTrg( hitTbl );
+    
+    switch( ret )
+    {
+    case 0:case 1:case 2:case 3:case 4:case 5:
+      {
+        //monsno操作
+        const int arr[6] = {-100,-10,-1,100,10,1};
+        const int val = arr[ret];
+        if( work->monsno + val <= 0 )
+        {
+          work->monsno = MONSNO_MAX;
+        }
+        else
+        if( work->monsno + val >= MONSNO_MAX )
+        {
+          work->monsno = 1;
+        }
+        else
+        {
+          work->monsno += val;
+        }
+      }
+      work->isRefreshName = TRUE;
+      break;
+    case 6:
+      if( work->form == 0 )
+      {
+        work->form = 28;
+      }
+      else
+      {
+        work->form--;
+      }
+      work->isRefreshName = TRUE;
+      break;
+    case 7:
+      if( work->form == 28 )
+      {
+        work->form = 0;
+      }
+      else
+      {
+        work->form++;
+      }
+      work->isRefreshName = TRUE;
+      break;
+
+    case 8:
+      work->sex = (work->sex==0?1:0);
+      work->isRefreshName = TRUE;
+      break;
+    case 9:
+      work->rare = (work->rare==0?1:0);
+      work->isRefreshName = TRUE;
+      break;
+    case 10:
+      work->isRefresh = TRUE;
+      break;
+    case 11:
+      if( work->isDispBit != 0 )
+      {
+        work->isDispBit = 0;
+      }
+      else
+      {
+        work->isDispBit = 0xFFFF;
+      }
+      break;
+
+    case 12:
+    case 13:
+    case 14:
+    case 15:
+    case 16:
+      MUSICAL_VIEW_ChangeEquip( work , ret-12);
+      work->isRefresh = TRUE;
+      break;
     }
   }
+
 }
+
+static void MUSICAL_VIEW_UpdatePoke( MUS_VIEW_LOCAL_WORK *work )
+{
+  int ePos;
+  VecFx32 pos;
+  for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
+  {
+    MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->pokeWork , ePos );
+    u8 scrPosX = (ePos%2==0?10:26);
+    u8 scrPosY = 12 + (ePos/2)*2;
+    if( equipData->isEnable == TRUE )
+    {
+      const u16 itemRot = equipData->itemRot;
+      const u16 rotZ = 0x10000-equipData->rot;
+
+      MtxFx33 rotWork;
+      VecFx32 rotOfs;
+      VecFx32 ofs;
+      MTX_RotZ33( &rotWork , -FX_SinIdx( rotZ ) , FX_CosIdx( rotZ ) );
+      MTX_MultVec33( &equipData->ofs , &rotWork , &ofs );
+      
+      {
+        MTX_MultVec33( &equipData->rotOfs , &rotWork , &rotOfs );
+        VEC_Subtract( &equipData->rotOfs , &rotOfs , &rotOfs );
+      }
+
+      MUSICAL_VIEW_UpdateNumberFunc( F32_CONST(equipData->pos.x+ofs.x+rotOfs.x) , 3 ,scrPosX   , scrPosY );
+      MUSICAL_VIEW_UpdateNumberFunc( F32_CONST(equipData->pos.y+ofs.y+rotOfs.y) , 3 ,scrPosX+4 , scrPosY );
+      if( work->itemWork[ePos] != NULL )
+      { 
+        GFL_POINT itemOfs;
+        pos.x = (equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
+        pos.y = (equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
+        if( MUS_ITEM_DRAW_IsBackItem( work->itemWork[ePos] ) == TRUE )
+        {
+          pos.z = FX32_CONST(0.0f); //後ろ！
+        }
+        else
+        {
+          pos.z = FX32_CONST(60.0f);  //とりあえずポケの前に出す
+        }
+
+        MUS_ITEM_DRAW_SetPosition(  work->itemDrawSys , 
+                      work->itemWork[ePos] ,
+                      &pos );
+        MUS_ITEM_DRAW_SetRotation(  work->itemDrawSys , 
+                      work->itemWork[ePos] ,
+                      itemRot-rotZ );
+      }
+    }
+    else
+    {
+      u16 chrNo[3] = {0x0e,0x0f,0x10};
+      GFL_BG_WriteScreen( MUS_VIEW_BG_SUB , &chrNo , scrPosX-2,scrPosY,3,1);
+      GFL_BG_WriteScreen( MUS_VIEW_BG_SUB , &chrNo , scrPosX+2,scrPosY,3,1);
+    }
+    {
+      VecFx32 *shadowOfs = MUS_POKE_DRAW_GetShadowOfs( work->pokeWork );
+      VecFx32 *rotOfs = MUS_POKE_DRAW_GetRotateOfs( work->pokeWork );
+      MUSICAL_VIEW_UpdateNumberFunc( F32_CONST(shadowOfs->x) , 3 ,10 , 22 );
+      MUSICAL_VIEW_UpdateNumberFunc( F32_CONST(shadowOfs->y) , 3 ,14 , 22 );
+      MUSICAL_VIEW_UpdateNumberFunc( F32_CONST(rotOfs->x) , 3 ,26 , 22 );
+      MUSICAL_VIEW_UpdateNumberFunc( F32_CONST(rotOfs->y) , 3 ,30 , 22 );
+    }
+
+    
+    //デバッグ用に一回見たらFALSEに
+    equipData->isEnable = FALSE;
+  }
+  GFL_BG_LoadScreenV_Req( MUS_VIEW_BG_SUB );  
+
+  if( work->isRefresh == TRUE )
+  {
+    work->musPoke->mcssParam.monsno = work->monsno;
+    work->musPoke->mcssParam.sex    = work->sex;
+    work->musPoke->mcssParam.form = work->form;
+    work->musPoke->mcssParam.rare   = work->rare;
+    
+    MUSICAL_VIEW_UnLoadPoke( work );
+    MUSICAL_VIEW_LoadPoke( work );
+    work->isRefresh = FALSE;
+  }
+  if( work->isRefreshName == TRUE )
+  {
+    STRCODE code[4];
+    STRBUF *str = GFL_STR_CreateBuffer( 32 , work->heapId );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->strWin ) , 0 );
+    
+    //名前
+    GFL_MSG_GetString( GlobalMsg_PokeName , work->monsno , str );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->strWin) , 0 , 4 , str , work->fontHandle );
+    
+    //番号
+    code[0] = work->monsno/100 + L'0';
+    code[1] = (work->monsno%100)/10  + L'0';
+    code[2] = (work->monsno%10)   + L'0';
+    code[3] = GFL_STR_GetEOMCode();
+    GFL_STR_SetStringCode( str , code );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->strWin) , 0 , 12 , str , work->fontHandle );
+
+    //性別
+    if( work->sex == 0 )
+    {
+      code[0] = L'♂';
+    }
+    else
+    {
+      code[0] = L'♀';
+    }
+    code[1] = GFL_STR_GetEOMCode();
+    GFL_STR_SetStringCode( str , code );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->strWin) , 24 , 12 , str , work->fontHandle );
+    
+    //レア
+    if( work->rare == 1 )
+    {
+      code[0] = L'R';
+      code[1] = GFL_STR_GetEOMCode();
+      GFL_STR_SetStringCode( str , code );
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->strWin) , 32 , 12 , str , work->fontHandle );
+    }
+
+    //フォルム
+    code[0] = work->form/10 + L'0';
+    code[1] = (work->form%10)  + L'0';
+    code[2] = GFL_STR_GetEOMCode();
+    GFL_STR_SetStringCode( str , code );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->strWin) , 56 , 8 , str , work->fontHandle );
+    
+    GFL_BMPWIN_TransVramCharacter( work->strWin );
+    GFL_STR_DeleteBuffer( str );
+
+    work->isRefreshName = FALSE;
+  }
+
+
+}
+
+static void MUSICAL_VIEW_ChangeEquip( MUS_VIEW_LOCAL_WORK *work , const u8 no )
+{
+  static const u16 itemArr[5][9] =
+  {
+    {MUSICAL_ITEM_INVALID,MUSICAL_ITEM_INVALID,MUSICAL_ITEM_INVALID,MUSICAL_ITEM_INVALID,MUSICAL_ITEM_INVALID,MUSICAL_ITEM_INVALID,MUSICAL_ITEM_INVALID,MUSICAL_ITEM_INVALID,MUSICAL_ITEM_INVALID},
+    {10,16,59,8,MUSICAL_ITEM_INVALID,66,15,63,68},
+    {37,0,38,8,MUSICAL_ITEM_INVALID,13,36,26,28},
+    {10,97,71,54,MUSICAL_ITEM_INVALID,4,82,32,72},
+    {MUSICAL_ITEM_INVALID,MUSICAL_ITEM_INVALID,11,69,MUSICAL_ITEM_INVALID,47,89,MUSICAL_ITEM_INVALID,84},
+  };
+  u8 ePos;
+  
+  for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
+  {
+    work->musPoke->equip[ePos].itemNo = itemArr[no][ePos];
+    work->musPoke->equip[ePos].priority = ePos;
+  }
+
+}
+
+static void MUSICAL_VIEW_UpdateNumberFunc( const s32 num , const u8 digit , const u8 x , const u8 y )
+{
+  const BOOL isMinus = (num<0?TRUE:FALSE);
+  u32 tempNum = MATH_ABS(num);
+  u16 nowDigit = 0;
+  
+  while( tempNum != 0 || nowDigit == 0 )
+  {
+    u16 chrNo = tempNum%10 + 0x02;
+    GFL_BG_WriteScreen( MUS_VIEW_BG_SUB , &chrNo , x-nowDigit,y,1,1);
+    nowDigit++;
+    tempNum/=10;
+  }
+  if( isMinus == TRUE )
+  {
+    u16 chrNo = 0x0C;
+    GFL_BG_WriteScreen( MUS_VIEW_BG_SUB , &chrNo , x-nowDigit,y,1,1);
+    nowDigit++;
+  }
+  while( nowDigit < digit )
+  {
+    u16 chrNo = 0x01;
+    GFL_BG_WriteScreen( MUS_VIEW_BG_SUB , &chrNo , x-nowDigit,y,1,1);
+    nowDigit++;
+  }
+}
+
+static void MUSICAL_VIEW_DrawEquipPos( MUS_VIEW_LOCAL_WORK *work )
+{
+  int ePos;
+  VecFx32 pos;
+  MtxFx33       mtxBillboard;
+  VecFx16       vecN;
+  G3_PushMtx();
+  G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
+  //カメラ設定取得
+  {
+    VecFx32   vecNtmp;
+    MtxFx43   mtxCamera, mtxCameraInv;
+    static const VecFx32 cam_pos = MUSICAL_CAMERA_POS;
+    static const VecFx32 cam_target = MUSICAL_CAMERA_TRG;
+    static const VecFx32 cam_up = MUSICAL_CAMERA_UP;
+  
+    G3_LookAt( &cam_pos, &cam_up, &cam_target, &mtxCamera );  //mtxCameraには行列計算結果が返る
+    MTX_Inverse43( &mtxCamera, &mtxCameraInv );     //カメラ逆行列取得
+    MTX_Copy43To33( &mtxCameraInv, &mtxBillboard );   //カメラ逆行列から回転行列を取り出す
+
+    VEC_Subtract( &cam_pos, &cam_target, &vecNtmp );
+    VEC_Normalize( &vecNtmp, &vecNtmp );
+    VEC_Fx16Set( &vecN, vecNtmp.x, vecNtmp.y, vecNtmp.z );
+  }
+  G3_PolygonAttr(GX_LIGHTMASK_NONE,       // no lights
+           GX_POLYGONMODE_MODULATE,     // modulation mode
+           GX_CULL_NONE,          // cull back
+           63,                // polygon ID(0 - 63)
+           0,                 // alpha(0 - 31)
+           0                  // OR of GXPolygonAttrMisc's value
+           );
+
+
+  for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
+  {
+    if( work->isDispBit & (1<<ePos) )
+    {
+      MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->pokeWork , ePos );
+      if( equipData->isEnable == TRUE )
+      {
+        const u16 itemRot = equipData->itemRot;
+        const u16 rotZ = 0x10000-equipData->rot;
+
+        MtxFx33 rotWork;
+        VecFx32 rotOfs;
+        VecFx32 ofs;
+
+        G3_PushMtx();
+
+
+        MTX_RotZ33( &rotWork , -FX_SinIdx( rotZ ) , FX_CosIdx( rotZ ) );
+        MTX_MultVec33( &equipData->ofs , &rotWork , &ofs );
+        MTX_MultVec33( &equipData->rotOfs , &rotWork , &rotOfs );
+        VEC_Subtract( &equipData->rotOfs , &rotOfs , &rotOfs );
+
+        pos.x = MUSICAL_POS_X_FX(equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
+        pos.y = MUSICAL_POS_Y_FX(equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
+        pos.z = FX32_CONST(120.0f); //とりあえずポケの前に出す
+
+        G3_Translate( pos.x, pos.y, pos.z );
+        G3_RotZ( -FX_SinIdx( itemRot-rotZ ), FX_CosIdx( itemRot-rotZ ) );
+        G3_Scale( FX32_CONST(0.25f), FX32_CONST(0.25f), pos.z );
+        {
+          const fx32 size = FX32_ONE;
+          G3_Begin(GX_BEGIN_QUADS);
+          G3_Color( GX_RGB( 0, 0, 0 ) );
+  /*  
+          //矩形        
+          G3_Vtx( -size, size, 0 );
+          G3_Vtx(  size, size, 0 );
+          G3_Vtx(  size,-size, 0 );
+          G3_Vtx( -size,-size, 0 );
+  */
+          //十字
+          G3_Vtx( -size, 0, 0 );
+          G3_Vtx(  size, 0, 0 );
+          G3_Vtx(  size, 0, 0 );
+          G3_Vtx( -size, 0, 0 );
+          G3_Vtx( 0, size, 0 );
+          G3_Vtx( 0, size, 0 );
+          G3_Vtx( 0,-size, 0 );
+          G3_Vtx( 0,-size, 0 );
+          G3_End();
+        }
+  /*
+        MUS_ITEM_DRAW_SetPosition(  work->itemDrawSys , 
+                      work->itemWork[ePos] ,
+                      &pos );
+        MUS_ITEM_DRAW_SetRotation(  work->itemDrawSys , 
+                      work->itemWork[ePos] ,
+                      itemRot-rotZ );
+  */
+        G3_PopMtx(1);
+      }
+    }
+  } 
+  G3_PopMtx(1);
+}
+
 
 //--------------------------------------------------------------
 //  proc 周り
@@ -343,18 +792,8 @@ static GFL_PROC_RESULT MusicalViewProc_Main( GFL_PROC * proc, int * seq , void *
   MUS_VIEW_LOCAL_WORK *work = mywk;
 
   MUSICAL_VIEW_UpdateUI( work );
+  MUSICAL_VIEW_UpdatePoke( work );
   
-  if( work->isRefresh == TRUE )
-  {
-    GFL_HEAP_FreeMemory(work->musPoke);
-    work->musPoke = MUSICAL_SYSTEM_InitMusPokeParam( work->monsno , work->sex , work->form , work->rare , work->heapId );
-    
-    MUSICAL_VIEW_UnLoadPoke( work );
-    MUSICAL_VIEW_LoadPoke( work );
-    work->isRefresh = FALSE;
-  }
-
-
   MUS_POKE_DRAW_UpdateSystem( work->pokeSys );
   MUS_ITEM_DRAW_UpdateSystem( work->itemDrawSys ); 
   
@@ -365,12 +804,11 @@ static GFL_PROC_RESULT MusicalViewProc_Main( GFL_PROC * proc, int * seq , void *
     {
       MUS_POKE_DRAW_DrawSystem( work->pokeSys ); 
       GFL_BBD_Draw( work->bbdSys , work->camera , NULL );
-      /*
-      if( work->isDrawEPos == TRUE )
+
+      if( work->isDispBit != 0 )
       {
-        MusicalSetting_DrawEquipPos( work );
+        MUSICAL_VIEW_DrawEquipPos( work );
       }
-      */
     }
     GFL_G3D_DRAW_End();
   }

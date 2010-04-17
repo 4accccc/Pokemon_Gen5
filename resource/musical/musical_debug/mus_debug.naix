@@ -13,8 +13,11 @@
 enum {
 	NARC_mus_debug_musical_editor_NCLR = 0,
 	NARC_mus_debug_musical_editor_NCGR = 1,
-	NARC_mus_debug_musical_editor_poke_NSCR = 2,
-	NARC_mus_debug_musical_setting_NSCR = 3
+	NARC_mus_debug_musical_editor2_NCGR = 2,
+	NARC_mus_debug_musical_editor_poke_NSCR = 3,
+	NARC_mus_debug_musical_setting_NSCR = 4,
+	NARC_mus_debug_musical_view_NSCR = 5,
+	NARC_mus_debug_musical_view2_NSCR = 6
 };
 
 /* NARC_MUS_DEBUG_NAIX_ */
