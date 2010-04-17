@@ -289,6 +289,7 @@ static const ITEM_ST DebugItem[] = {
   {ITEM_SENSEINOTUME, 5}, // せんせいのツメ
   { ITEM_KODAWARIHATIMAKI,  5},  // こだわりハチマキ
   {ITEM_OMAMORIKOBAN, 5}, // おまもりこばん
+  {ITEM_DAUZINGUMASIN, 1}, // ダウジングマシン
 
   { ITEM_WAZAMASIN01,  328},		// わざマシン０１
   {  ITEM_WAZAMASIN02	, 329 },		// わざマシン０２
