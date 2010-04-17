@@ -8330,9 +8330,9 @@
 		<language name="JPN" width="256">LBDEMO-08</language>
 		<language name="JPN_KANJI" width="256">LBDEMO-08</language>
 	</row>
-	<row id="msg_seq_se_dmy_314">
-		<language name="JPN" width="256">DMY-314</language>
-		<language name="JPN_KANJI" width="256">DMY-314</language>
+	<row id="msg_seq_se_lbdemo_09">
+		<language name="JPN" width="256">LBDEMO-09</language>
+		<language name="JPN_KANJI" width="256">LBDEMO-09</language>
 	</row>
 	<row id="msg_seq_se_dmy_315">
 		<language name="JPN" width="256">DMY-315</language>
