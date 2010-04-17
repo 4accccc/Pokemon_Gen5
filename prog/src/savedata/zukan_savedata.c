@@ -49,8 +49,8 @@ static const u16 FormTable[][2] =
 	{ MONSNO_POWARUN, FORM_MAX_POWARUN },					// ポワルン ※特殊
 	{ MONSNO_THERIMU, FORM_MAX_THERIMU },					// チェリム ※特殊
 
-	{ MONSNO_BANBIINA, FORM_MAX_BANBIINA },				// バンビーナ ※新規
-	{ MONSNO_SIKIZIKA, FORM_MAX_SIKIZIKA },				// シキジカ ※新規
+	{ MONSNO_511, FORMNO_511_MAX },				          // シキジカ ※新規
+	{ MONSNO_527, FORMNO_527_MAX },				          // アントレス ※新規
 	{ MONSNO_MERODHIA, FORM_MAX_MERODHIA },				// メロディア ※新規
 	{ MONSNO_HIHIDARUMA, FORM_MAX_HIHIDARUMA },		// ヒヒダルマ ※新規
 	{ MONSNO_BASURAO, FORM_MAX_BASURAO },					// バスラオ ※新規
