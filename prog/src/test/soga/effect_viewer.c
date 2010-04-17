@@ -313,7 +313,7 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
     u16 tr_type[] = { 
       TRTYPE_HERO, TRTYPE_HERO, 0xffff, 0xffff,
     };
-    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, &bfs, FALSE, tr_type, NULL, evw->heapID );
+    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, &bfs, FALSE, tr_type, NULL, NULL, evw->heapID );
 
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, evw->heapID );
     ZONEDATA_Open( evw->heapID );

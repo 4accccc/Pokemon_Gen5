@@ -64,11 +64,12 @@ volatile  fx32  camera_focus_target_y = 0x00001000; //BTLV_EFFECT_FOCUS_OFFSET_Z
 
 struct _BTLV_EFFECT_SETUP_PARAM
 {
-  BtlRule             rule;
-  BTL_FIELD_SITUATION bfs;
-  u16                 tr_type[ 4 ];
-  BOOL                multi;
-  const BTLV_SCU*     scu;
+  BtlRule                 rule;
+  BTL_FIELD_SITUATION     bfs;
+  u16                     tr_type[ 4 ];
+  BOOL                    multi;
+  const BTLV_SCU*         scu;
+  const BTL_MAIN_MODULE*  mainModule;
 };
 
 struct _BTLV_EFFECT_WORK
@@ -144,15 +145,16 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
  * @param[in] heapID      ƒq[ƒvID
  */
 //============================================================================================
-BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, const BTL_FIELD_SITUATION* bfs, BOOL multi, u16* tr_type, const BTLV_SCU* scu, HEAPID heapID )
+BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, const BTL_FIELD_SITUATION* bfs, BOOL multi, u16* tr_type, const BTL_MAIN_MODULE* mainModule, const BTLV_SCU* scu, HEAPID heapID )
 {
   BTLV_EFFECT_SETUP_PARAM* besp = GFL_HEAP_AllocMemory( heapID, sizeof( BTLV_EFFECT_SETUP_PARAM ) );
   int i;
 
-  besp->rule  = rule;
-  besp->bfs   = *bfs;
-  besp->multi = multi;
-  besp->scu   = scu;
+  besp->rule        = rule;
+  besp->bfs         = *bfs;
+  besp->multi       = multi;
+  besp->scu         = scu;
+  besp->mainModule  = mainModule;
 
   for( i = 0 ; i < 4 ; i++ )
   {
@@ -192,7 +194,7 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParamBtl( const BTL_MAIN_MODULE* 
 
 
   return BTLV_EFFECT_MakeSetUpParam( BTL_MAIN_GetRule( mainModule ), BTL_MAIN_GetFieldSituation( mainModule ),
-                                     BTL_MAIN_IsMultiMode( mainModule ), tr_type, viewSCU, heapID );
+                                     BTL_MAIN_IsMultiMode( mainModule ), tr_type, mainModule, viewSCU, heapID );
 }
 
 //============================================================================================
@@ -1237,6 +1239,18 @@ int BTLV_EFFECT_GetTrType( int pos )
 {
   GF_ASSERT( pos < 4 );
   return bew->besp.tr_type[ pos ];
+}
+
+//============================================================================================
+/**
+ * @brief  mainModule‚ðŽæ“¾
+ *
+ * @retval mainModule
+ */
+//============================================================================================
+const BTL_MAIN_MODULE* BTLV_EFFECT_GetMainModule( void )
+{
+  return bew->besp.mainModule;
 }
 
 //============================================================================================
