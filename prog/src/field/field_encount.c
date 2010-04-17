@@ -696,7 +696,7 @@ void FIELD_ENCOUNT_SetTrainerBattleParam(
   {
     BtlBgAttr attr = TT_TrainerTypeBtlBgAttrGet(TT_TrainerDataParaGet( tr_id0, ID_TD_tr_type ));
     if(attr != BATTLE_BG_ATTR_MAX){
-      bp->fieldSituation.bgAttr = attr;
+      sit.bgAttr = attr;
     }
   }
 
