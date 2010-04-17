@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T15:50:23"/>
+	<create user="matsushima" host="W00181" date="2010-04-16T17:07:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1403" top="192" right="2108" bottom="812" maximized="no" rayout="Vertical2">
+	<dialog left="1281" top="253" right="1986" bottom="873" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="796" top="425" right="1269" bottom="823" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -301,21 +301,42 @@
 		<language name="JPN_KANJI" width="256">…　…　…　…</language>
 	</row>
 
-	<row id="msg_c03r0401_girl1_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>●ゾロアイベント発生前
-・話し掛けると主人公を向いて、セリフ。
-・ポジション（GRIDX = 5/GRIDZ = 6）
+	<row id="msg_c03r0401_girl1_01_1" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>●ゾロアイベント発生前（主人公＝男）
+・話し掛けるとセレビィチェック
 
-・セレビィチェック
 ●手持ちにセレビィがいる場合
 　→msg_c03r0401_girl1_06
-●手持ちにセレビィがいない場合
-　→msg_c03r0401_girl1_02</comment>
+
+・主人公を向いて、セリフ。
+・セリフのあと、主人公がオートで移動。
+</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ひとりで　さみしそうだったから
-いっしょに　いて　あげるの！[BE:01:ページ切り替え（クリア）]</language>
+えほんを　よんであげてたの！[BE:00:ページ切り替え（行送り）]
+おにいちゃんにも　きかせてあげるね！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">一人で　さみしそうだったから
-一緒に　いて　あげるの！[BE:01:ページ切り替え（クリア）]</language>
+絵本を　読んであげてたの！[BE:00:ページ切り替え（行送り）]
+お兄ちゃんにも　聞かせてあげるね！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_01_2" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●ゾロアイベント発生前（主人公＝女）
+・話し掛けるとセレビィチェック
+
+●手持ちにセレビィがいる場合
+　→msg_c03r0401_girl1_06
+
+・主人公を向いて、セリフ。
+・セリフのあと、主人公がオートで移動。
+</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">ひとりで　さみしそうだったから
+えほんを　よんであげてたの！[BE:00:ページ切り替え（行送り）]
+おねえちゃんにも　きかせてあげるね！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">一人で　さみしそうだったから
+絵本を　読んであげてたの！[BE:00:ページ切り替え（行送り）]
+お姉ちゃんにも　聞かせてあげるね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -361,6 +382,8 @@ msg_c03r0401_girl1_04</comment>
 	</row>
 
 	<row id="msg_c03r0401_girl1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>●ゾロアイベント発生前
+・男の子（ゾロア）に向いてからセリフ。</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ばかされたら　こわいけど
 あたし　ゾロアって　すきよ！[BE:00:ページ切り替え（行送り）]
