@@ -11,7 +11,9 @@
 
 //--------------------------------------------------------------
 /**
- *  戦闘背景指定タイプID（@todo IDのみ先行定義　091028時点で指定しても意味無し）
+ *  戦闘背景指定タイプID
+ *
+ *  resource/batt_bg_tbl/wb_battle_bg.xlsの行項目と手動で一致させる必要があります
  */
 //--------------------------------------------------------------
 typedef enum {
@@ -26,12 +28,19 @@ typedef enum {
   BATTLE_BG_TYPE_SEA,           ///< 海
   BATTLE_BG_TYPE_ROOM,          ///< 室内
   BATTLE_BG_TYPE_SAND,          ///< 砂漠
+  BATTLE_BG_TYPE_BIGFOUR_GHOST,   ///< 四天王部屋(ゴースト)
+  BATTLE_BG_TYPE_BIGFOUR_KAKUTOU, ///< 四天王部屋(格闘)
+  BATTLE_BG_TYPE_BIGFOUR_EVIL,    ///< 四天王部屋(悪)
+  BATTLE_BG_TYPE_BIGFOUR_ESPER,   ///< 四天王部屋(エスパー)
+  BATTLE_BG_TYPE_N_CASTLE,        ///< Nの城(謁見の間)
+  BATTLE_BG_TYPE_CHAMPIOPN,       ///< チャンピオン部屋
+  BATTLE_BG_TYPE_RYUURASEN7,      ///< リュウラセンの塔7F
    
   BATTLE_BG_TYPE_MAX,
 
   //後で消す予定貴人許
-  BATTLE_BG_TYPE_SNOW,
-  BATTLE_BG_TYPE_ROCK,
+//  BATTLE_BG_TYPE_SNOW,
+//  BATTLE_BG_TYPE_ROCK,
 }BtlBgType;
 
 //--------------------------------------------------------------
@@ -58,13 +67,7 @@ typedef enum {
   BATTLE_BG_ATTR_ICE,	      ///<	氷上
   BATTLE_BG_ATTR_E_INDOOR,	///<	室内エンカウント
   BATTLE_BG_ATTR_PALACE,	  ///<	パレス
-  BATTLE_BG_ATTR_BIGFOUR1,	///<	四天王１(ゴースト)
-  BATTLE_BG_ATTR_BIGFOUR2,	///<	四天王２(格闘)
-  BATTLE_BG_ATTR_BIGFOUR3,	///<	四天王３(悪)
-  BATTLE_BG_ATTR_BIGFOUR4,	///<	四天王４(エスパー)
-  BATTLE_BG_ATTR_BOSS,	    ///<	Ｎラストバトル専用
   BATTLE_BG_ATTR_SAGE,	    ///<	ゲーチス
-  BATTLE_BG_ATTR_CHAMPION,	///<	チャンピオン
 
   BATTLE_BG_ATTR_MAX,
 }BtlBgAttr;
