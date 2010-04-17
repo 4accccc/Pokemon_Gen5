@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-29T17:43:49"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-04-08T14:55:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -207,6 +207,11 @@
 				<comment language="japanese">おとこのひと、女の子等</comment>
 				<comment language="english">おとこのひと、女の子等</comment>
 			</tag>
+			<tag entry="52" japanese="DS本体名" english="DS本体名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">DS本体のユーザー名</comment>
+				<comment language="english">DS本体のユーザー名</comment>
+			</tag>
 		</group>
 
 		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
@@ -236,6 +241,9 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="９桁" english="９桁" view="EP" width="72" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 		</group>
@@ -354,7 +362,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1409" top="308" right="2114" bottom="936" maximized="no" rayout="Vertical2">
+	<dialog left="-126" top="112" right="579" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -383,655 +391,818 @@
 
 
 	<row id="TOKUSEI_000">
-		<language name="JPN" width="216">−</language>
+		<language name="JPN" width="216">－</language>
+		<language name="JPN_KANJI" width="216">－</language>
 	</row>
 
 	<row id="TOKUSEI_001">
 		<language name="JPN" width="216">あくしゅう</language>
+		<language name="JPN_KANJI" width="216">あくしゅう</language>
 	</row>
 
 	<row id="TOKUSEI_002">
 		<language name="JPN" width="216">あめふらし</language>
+		<language name="JPN_KANJI" width="216">あめふらし</language>
 	</row>
 
 	<row id="TOKUSEI_003">
 		<language name="JPN" width="216">かそく</language>
+		<language name="JPN_KANJI" width="216">かそく</language>
 	</row>
 
 	<row id="TOKUSEI_004">
 		<language name="JPN" width="216">カブトアーマー</language>
+		<language name="JPN_KANJI" width="216">カブトアーマー</language>
 	</row>
 
 	<row id="TOKUSEI_005">
 		<language name="JPN" width="216">がんじょう</language>
+		<language name="JPN_KANJI" width="216">がんじょう</language>
 	</row>
 
 	<row id="TOKUSEI_006">
 		<language name="JPN" width="216">しめりけ</language>
+		<language name="JPN_KANJI" width="216">しめりけ</language>
 	</row>
 
 	<row id="TOKUSEI_007">
 		<language name="JPN" width="216">じゅうなん</language>
+		<language name="JPN_KANJI" width="216">じゅうなん</language>
 	</row>
 
 	<row id="TOKUSEI_008">
 		<language name="JPN" width="216">すながくれ</language>
+		<language name="JPN_KANJI" width="216">すながくれ</language>
 	</row>
 
 	<row id="TOKUSEI_009">
 		<language name="JPN" width="216">せいでんき</language>
+		<language name="JPN_KANJI" width="216">せいでんき</language>
 	</row>
 
 	<row id="TOKUSEI_010">
 		<language name="JPN" width="216">ちくでん</language>
+		<language name="JPN_KANJI" width="216">ちくでん</language>
 	</row>
 
 	<row id="TOKUSEI_011">
 		<language name="JPN" width="216">ちょすい</language>
+		<language name="JPN_KANJI" width="216">ちょすい</language>
 	</row>
 
 	<row id="TOKUSEI_012">
 		<language name="JPN" width="216">どんかん</language>
+		<language name="JPN_KANJI" width="216">どんかん</language>
 	</row>
 
 	<row id="TOKUSEI_013">
 		<language name="JPN" width="216">ノーてんき</language>
+		<language name="JPN_KANJI" width="216">ノーてんき</language>
 	</row>
 
 	<row id="TOKUSEI_014">
 		<language name="JPN" width="216">ふくがん</language>
+		<language name="JPN_KANJI" width="216">ふくがん</language>
 	</row>
 
 	<row id="TOKUSEI_015">
 		<language name="JPN" width="216">ふみん</language>
+		<language name="JPN_KANJI" width="216">ふみん</language>
 	</row>
 
 	<row id="TOKUSEI_016">
 		<language name="JPN" width="216">へんしょく</language>
+		<language name="JPN_KANJI" width="216">へんしょく</language>
 	</row>
 
 	<row id="TOKUSEI_017">
 		<language name="JPN" width="216">めんえき</language>
+		<language name="JPN_KANJI" width="216">めんえき</language>
 	</row>
 
 	<row id="TOKUSEI_018">
 		<language name="JPN" width="216">もらいび</language>
+		<language name="JPN_KANJI" width="216">もらいび</language>
 	</row>
 
 	<row id="TOKUSEI_019">
 		<language name="JPN" width="216">りんぷん</language>
+		<language name="JPN_KANJI" width="216">りんぷん</language>
 	</row>
 
 	<row id="TOKUSEI_020">
 		<language name="JPN" width="216">マイペース</language>
+		<language name="JPN_KANJI" width="216">マイペース</language>
 	</row>
 
 	<row id="TOKUSEI_021">
 		<language name="JPN" width="216">きゅうばん</language>
+		<language name="JPN_KANJI" width="216">きゅうばん</language>
 	</row>
 
 	<row id="TOKUSEI_022">
 		<language name="JPN" width="216">いかく</language>
+		<language name="JPN_KANJI" width="216">いかく</language>
 	</row>
 
 	<row id="TOKUSEI_023">
 		<language name="JPN" width="216">かげふみ</language>
+		<language name="JPN_KANJI" width="216">かげふみ</language>
 	</row>
 
 	<row id="TOKUSEI_024">
 		<language name="JPN" width="216">さめはだ</language>
+		<language name="JPN_KANJI" width="216">さめはだ</language>
 	</row>
 
 	<row id="TOKUSEI_025">
 		<language name="JPN" width="216">ふしぎなまもり</language>
+		<language name="JPN_KANJI" width="216">ふしぎなまもり</language>
 	</row>
 
 	<row id="TOKUSEI_026">
 		<language name="JPN" width="216">ふゆう</language>
+		<language name="JPN_KANJI" width="216">ふゆう</language>
 	</row>
 
 	<row id="TOKUSEI_027">
 		<language name="JPN" width="216">ほうし</language>
+		<language name="JPN_KANJI" width="216">ほうし</language>
 	</row>
 
 	<row id="TOKUSEI_028">
 		<language name="JPN" width="216">シンクロ</language>
+		<language name="JPN_KANJI" width="216">シンクロ</language>
 	</row>
 
 	<row id="TOKUSEI_029">
 		<language name="JPN" width="216">クリアボディ</language>
+		<language name="JPN_KANJI" width="216">クリアボディ</language>
 	</row>
 
 	<row id="TOKUSEI_030">
 		<language name="JPN" width="216">しぜんかいふく</language>
+		<language name="JPN_KANJI" width="216">しぜんかいふく</language>
 	</row>
 
 	<row id="TOKUSEI_031">
 		<language name="JPN" width="216">ひらいしん</language>
+		<language name="JPN_KANJI" width="216">ひらいしん</language>
 	</row>
 
 	<row id="TOKUSEI_032">
 		<language name="JPN" width="216">てんのめぐみ</language>
+		<language name="JPN_KANJI" width="216">てんのめぐみ</language>
 	</row>
 
 	<row id="TOKUSEI_033">
 		<language name="JPN" width="216">すいすい</language>
+		<language name="JPN_KANJI" width="216">すいすい</language>
 	</row>
 
 	<row id="TOKUSEI_034">
 		<language name="JPN" width="216">ようりょくそ</language>
+		<language name="JPN_KANJI" width="216">ようりょくそ</language>
 	</row>
 
 	<row id="TOKUSEI_035">
 		<language name="JPN" width="216">はっこう</language>
+		<language name="JPN_KANJI" width="216">はっこう</language>
 	</row>
 
 	<row id="TOKUSEI_036">
 		<language name="JPN" width="216">トレース</language>
+		<language name="JPN_KANJI" width="216">トレース</language>
 	</row>
 
 	<row id="TOKUSEI_037">
 		<language name="JPN" width="216">ちからもち</language>
+		<language name="JPN_KANJI" width="216">ちからもち</language>
 	</row>
 
 	<row id="TOKUSEI_038">
 		<language name="JPN" width="216">どくのトゲ</language>
+		<language name="JPN_KANJI" width="216">どくのトゲ</language>
 	</row>
 
 	<row id="TOKUSEI_039">
 		<language name="JPN" width="216">せいしんりょく</language>
+		<language name="JPN_KANJI" width="216">せいしんりょく</language>
 	</row>
 
 	<row id="TOKUSEI_040">
 		<language name="JPN" width="216">マグマのよろい</language>
+		<language name="JPN_KANJI" width="216">マグマのよろい</language>
 	</row>
 
 	<row id="TOKUSEI_041">
 		<language name="JPN" width="216">みずのベール</language>
+		<language name="JPN_KANJI" width="216">みずのベール</language>
 	</row>
 
 	<row id="TOKUSEI_042">
 		<language name="JPN" width="216">じりょく</language>
+		<language name="JPN_KANJI" width="216">じりょく</language>
 	</row>
 
 	<row id="TOKUSEI_043">
 		<language name="JPN" width="216">ぼうおん</language>
+		<language name="JPN_KANJI" width="216">ぼうおん</language>
 	</row>
 
 	<row id="TOKUSEI_044">
 		<language name="JPN" width="216">あめうけざら</language>
+		<language name="JPN_KANJI" width="216">あめうけざら</language>
 	</row>
 
 	<row id="TOKUSEI_045">
 		<language name="JPN" width="216">すなおこし</language>
+		<language name="JPN_KANJI" width="216">すなおこし</language>
 	</row>
 
 	<row id="TOKUSEI_046">
 		<language name="JPN" width="216">プレッシャー</language>
+		<language name="JPN_KANJI" width="216">プレッシャー</language>
 	</row>
 
 	<row id="TOKUSEI_047">
 		<language name="JPN" width="216">あついしぼう</language>
+		<language name="JPN_KANJI" width="216">あついしぼう</language>
 	</row>
 
 	<row id="TOKUSEI_048">
 		<language name="JPN" width="216">はやおき</language>
+		<language name="JPN_KANJI" width="216">はやおき</language>
 	</row>
 
 	<row id="TOKUSEI_049">
 		<language name="JPN" width="216">ほのおのからだ</language>
+		<language name="JPN_KANJI" width="216">ほのおのからだ</language>
 	</row>
 
 	<row id="TOKUSEI_050">
 		<language name="JPN" width="216">にげあし</language>
+		<language name="JPN_KANJI" width="216">にげあし</language>
 	</row>
 
 	<row id="TOKUSEI_051">
 		<language name="JPN" width="216">するどいめ</language>
+		<language name="JPN_KANJI" width="216">するどいめ</language>
 	</row>
 
 	<row id="TOKUSEI_052">
 		<language name="JPN" width="216">かいりきバサミ</language>
+		<language name="JPN_KANJI" width="216">かいりきバサミ</language>
 	</row>
 
 	<row id="TOKUSEI_053">
 		<language name="JPN" width="216">ものひろい</language>
+		<language name="JPN_KANJI" width="216">ものひろい</language>
 	</row>
 
 	<row id="TOKUSEI_054">
 		<language name="JPN" width="216">なまけ</language>
+		<language name="JPN_KANJI" width="216">なまけ</language>
 	</row>
 
 	<row id="TOKUSEI_055">
 		<language name="JPN" width="216">はりきり</language>
+		<language name="JPN_KANJI" width="216">はりきり</language>
 	</row>
 
 	<row id="TOKUSEI_056">
 		<language name="JPN" width="216">メロメロボディ</language>
+		<language name="JPN_KANJI" width="216">メロメロボディ</language>
 	</row>
 
 	<row id="TOKUSEI_057">
 		<language name="JPN" width="216">プラス</language>
+		<language name="JPN_KANJI" width="216">プラス</language>
 	</row>
 
 	<row id="TOKUSEI_058">
 		<language name="JPN" width="216">マイナス</language>
+		<language name="JPN_KANJI" width="216">マイナス</language>
 	</row>
 
 	<row id="TOKUSEI_059">
 		<language name="JPN" width="216">てんきや</language>
+		<language name="JPN_KANJI" width="216">てんきや</language>
 	</row>
 
 	<row id="TOKUSEI_060">
 		<language name="JPN" width="216">ねんちゃく</language>
+		<language name="JPN_KANJI" width="216">ねんちゃく</language>
 	</row>
 
 	<row id="TOKUSEI_061">
 		<language name="JPN" width="216">だっぴ</language>
+		<language name="JPN_KANJI" width="216">だっぴ</language>
 	</row>
 
 	<row id="TOKUSEI_062">
 		<language name="JPN" width="216">こんじょう</language>
+		<language name="JPN_KANJI" width="216">こんじょう</language>
 	</row>
 
 	<row id="TOKUSEI_063">
 		<language name="JPN" width="216">ふしぎなうろこ</language>
+		<language name="JPN_KANJI" width="216">ふしぎなうろこ</language>
 	</row>
 
 	<row id="TOKUSEI_064">
 		<language name="JPN" width="216">ヘドロえき</language>
+		<language name="JPN_KANJI" width="216">ヘドロえき</language>
 	</row>
 
 	<row id="TOKUSEI_065">
 		<language name="JPN" width="216">しんりょく</language>
+		<language name="JPN_KANJI" width="216">しんりょく</language>
 	</row>
 
 	<row id="TOKUSEI_066">
 		<language name="JPN" width="216">もうか</language>
+		<language name="JPN_KANJI" width="216">もうか</language>
 	</row>
 
 	<row id="TOKUSEI_067">
 		<language name="JPN" width="216">げきりゅう</language>
+		<language name="JPN_KANJI" width="216">げきりゅう</language>
 	</row>
 
 	<row id="TOKUSEI_068">
 		<language name="JPN" width="216">むしのしらせ</language>
+		<language name="JPN_KANJI" width="216">むしのしらせ</language>
 	</row>
 
 	<row id="TOKUSEI_069">
 		<language name="JPN" width="216">いしあたま</language>
+		<language name="JPN_KANJI" width="216">いしあたま</language>
 	</row>
 
 	<row id="TOKUSEI_070">
 		<language name="JPN" width="216">ひでり</language>
+		<language name="JPN_KANJI" width="216">ひでり</language>
 	</row>
 
 	<row id="TOKUSEI_071">
 		<language name="JPN" width="216">ありじごく</language>
+		<language name="JPN_KANJI" width="216">ありじごく</language>
 	</row>
 
 	<row id="TOKUSEI_072">
 		<language name="JPN" width="216">やるき</language>
+		<language name="JPN_KANJI" width="216">やるき</language>
 	</row>
 
 	<row id="TOKUSEI_073">
 		<language name="JPN" width="216">しろいけむり</language>
+		<language name="JPN_KANJI" width="216">しろいけむり</language>
 	</row>
 
 	<row id="TOKUSEI_074">
 		<language name="JPN" width="216">ヨガパワー</language>
+		<language name="JPN_KANJI" width="216">ヨガパワー</language>
 	</row>
 
 	<row id="TOKUSEI_075">
 		<language name="JPN" width="216">シェルアーマー</language>
+		<language name="JPN_KANJI" width="216">シェルアーマー</language>
 	</row>
 
 	<row id="TOKUSEI_076">
 		<language name="JPN" width="216">エアロック</language>
+		<language name="JPN_KANJI" width="216">エアロック</language>
 	</row>
 
 	<row id="TOKUSEI_077">
 		<language name="JPN" width="216">ちどりあし</language>
+		<language name="JPN_KANJI" width="216">ちどりあし</language>
 	</row>
 
 	<row id="TOKUSEI_078">
 		<language name="JPN" width="216">でんきエンジン</language>
+		<language name="JPN_KANJI" width="216">でんきエンジン</language>
 	</row>
 
 	<row id="TOKUSEI_079">
 		<language name="JPN" width="216">とうそうしん</language>
+		<language name="JPN_KANJI" width="216">とうそうしん</language>
 	</row>
 
 	<row id="TOKUSEI_080">
 		<language name="JPN" width="216">ふくつのこころ</language>
+		<language name="JPN_KANJI" width="216">ふくつのこころ</language>
 	</row>
 
 	<row id="TOKUSEI_081">
 		<language name="JPN" width="216">ゆきがくれ</language>
+		<language name="JPN_KANJI" width="216">ゆきがくれ</language>
 	</row>
 
 	<row id="TOKUSEI_082">
 		<language name="JPN" width="216">くいしんぼう</language>
+		<language name="JPN_KANJI" width="216">くいしんぼう</language>
 	</row>
 
 	<row id="TOKUSEI_083">
 		<language name="JPN" width="216">いかりのつぼ</language>
+		<language name="JPN_KANJI" width="216">いかりのつぼ</language>
 	</row>
 
 	<row id="TOKUSEI_084">
 		<language name="JPN" width="216">かるわざ</language>
+		<language name="JPN_KANJI" width="216">かるわざ</language>
 	</row>
 
 	<row id="TOKUSEI_085">
 		<language name="JPN" width="216">たいねつ</language>
+		<language name="JPN_KANJI" width="216">たいねつ</language>
 	</row>
 
 	<row id="TOKUSEI_086">
 		<language name="JPN" width="216">たんじゅん</language>
+		<language name="JPN_KANJI" width="216">たんじゅん</language>
 	</row>
 
 	<row id="TOKUSEI_087">
 		<language name="JPN" width="216">かんそうはだ</language>
+		<language name="JPN_KANJI" width="216">かんそうはだ</language>
 	</row>
 
 	<row id="TOKUSEI_088">
 		<language name="JPN" width="216">ダウンロード</language>
+		<language name="JPN_KANJI" width="216">ダウンロード</language>
 	</row>
 
 	<row id="TOKUSEI_089">
 		<language name="JPN" width="216">てつのこぶし</language>
+		<language name="JPN_KANJI" width="216">てつのこぶし</language>
 	</row>
 
 	<row id="TOKUSEI_090">
 		<language name="JPN" width="216">ポイズンヒール</language>
+		<language name="JPN_KANJI" width="216">ポイズンヒール</language>
 	</row>
 
 	<row id="TOKUSEI_091">
 		<language name="JPN" width="216">てきおうりょく</language>
+		<language name="JPN_KANJI" width="216">てきおうりょく</language>
 	</row>
 
 	<row id="TOKUSEI_092">
 		<language name="JPN" width="216">スキルリンク</language>
+		<language name="JPN_KANJI" width="216">スキルリンク</language>
 	</row>
 
 	<row id="TOKUSEI_093">
 		<language name="JPN" width="216">うるおいボディ</language>
+		<language name="JPN_KANJI" width="216">うるおいボディ</language>
 	</row>
 
 	<row id="TOKUSEI_094">
 		<language name="JPN" width="216">サンパワー</language>
+		<language name="JPN_KANJI" width="216">サンパワー</language>
 	</row>
 
 	<row id="TOKUSEI_095">
 		<language name="JPN" width="216">はやあし</language>
+		<language name="JPN_KANJI" width="216">はやあし</language>
 	</row>
 
 	<row id="TOKUSEI_096">
 		<language name="JPN" width="216">ノーマルスキン</language>
+		<language name="JPN_KANJI" width="216">ノーマルスキン</language>
 	</row>
 
 	<row id="TOKUSEI_097">
 		<language name="JPN" width="216">スナイパー</language>
+		<language name="JPN_KANJI" width="216">スナイパー</language>
 	</row>
 
 	<row id="TOKUSEI_098">
 		<language name="JPN" width="216">マジックガード</language>
+		<language name="JPN_KANJI" width="216">マジックガード</language>
 	</row>
 
 	<row id="TOKUSEI_099">
 		<language name="JPN" width="216">ノーガード</language>
+		<language name="JPN_KANJI" width="216">ノーガード</language>
 	</row>
 
 	<row id="TOKUSEI_100">
 		<language name="JPN" width="216">あとだし</language>
+		<language name="JPN_KANJI" width="216">あとだし</language>
 	</row>
 
 	<row id="TOKUSEI_101">
 		<language name="JPN" width="216">テクニシャン</language>
+		<language name="JPN_KANJI" width="216">テクニシャン</language>
 	</row>
 
 	<row id="TOKUSEI_102">
 		<language name="JPN" width="216">リーフガード</language>
+		<language name="JPN_KANJI" width="216">リーフガード</language>
 	</row>
 
 	<row id="TOKUSEI_103">
 		<language name="JPN" width="216">ぶきよう</language>
+		<language name="JPN_KANJI" width="216">ぶきよう</language>
 	</row>
 
 	<row id="TOKUSEI_104">
 		<language name="JPN" width="216">かたやぶり</language>
+		<language name="JPN_KANJI" width="216">かたやぶり</language>
 	</row>
 
 	<row id="TOKUSEI_105">
 		<language name="JPN" width="216">きょううん</language>
+		<language name="JPN_KANJI" width="216">きょううん</language>
 	</row>
 
 	<row id="TOKUSEI_106">
 		<language name="JPN" width="216">ゆうばく</language>
+		<language name="JPN_KANJI" width="216">ゆうばく</language>
 	</row>
 
 	<row id="TOKUSEI_107">
 		<language name="JPN" width="216">きけんよち</language>
+		<language name="JPN_KANJI" width="216">きけんよち</language>
 	</row>
 
 	<row id="TOKUSEI_108">
 		<language name="JPN" width="216">よちむ</language>
+		<language name="JPN_KANJI" width="216">よちむ</language>
 	</row>
 
 	<row id="TOKUSEI_109">
 		<language name="JPN" width="216">てんねん</language>
+		<language name="JPN_KANJI" width="216">てんねん</language>
 	</row>
 
 	<row id="TOKUSEI_110">
 		<language name="JPN" width="216">いろめがね</language>
+		<language name="JPN_KANJI" width="216">いろめがね</language>
 	</row>
 
 	<row id="TOKUSEI_111">
 		<language name="JPN" width="216">フィルター</language>
+		<language name="JPN_KANJI" width="216">フィルター</language>
 	</row>
 
 	<row id="TOKUSEI_112">
 		<language name="JPN" width="216">スロースタート</language>
+		<language name="JPN_KANJI" width="216">スロースタート</language>
 	</row>
 
 	<row id="TOKUSEI_113">
 		<language name="JPN" width="216">きもったま</language>
+		<language name="JPN_KANJI" width="216">きもったま</language>
 	</row>
 
 	<row id="TOKUSEI_114">
 		<language name="JPN" width="216">よびみず</language>
+		<language name="JPN_KANJI" width="216">よびみず</language>
 	</row>
 
 	<row id="TOKUSEI_115">
 		<language name="JPN" width="216">アイスボディ</language>
+		<language name="JPN_KANJI" width="216">アイスボディ</language>
 	</row>
 
 	<row id="TOKUSEI_116">
 		<language name="JPN" width="216">ハードロック</language>
+		<language name="JPN_KANJI" width="216">ハードロック</language>
 	</row>
 
 	<row id="TOKUSEI_117">
 		<language name="JPN" width="216">ゆきふらし</language>
+		<language name="JPN_KANJI" width="216">ゆきふらし</language>
 	</row>
 
 	<row id="TOKUSEI_118">
 		<language name="JPN" width="216">みつあつめ</language>
+		<language name="JPN_KANJI" width="216">みつあつめ</language>
 	</row>
 
 	<row id="TOKUSEI_119">
 		<language name="JPN" width="216">おみとおし</language>
+		<language name="JPN_KANJI" width="216">おみとおし</language>
 	</row>
 
 	<row id="TOKUSEI_120">
 		<language name="JPN" width="216">すてみ</language>
+		<language name="JPN_KANJI" width="216">すてみ</language>
 	</row>
 
 	<row id="TOKUSEI_121">
 		<language name="JPN" width="216">マルチタイプ</language>
+		<language name="JPN_KANJI" width="216">マルチタイプ</language>
 	</row>
 
 	<row id="TOKUSEI_122">
 		<language name="JPN" width="216">フラワーギフト</language>
+		<language name="JPN_KANJI" width="216">フラワーギフト</language>
 	</row>
 
 	<row id="TOKUSEI_123">
 		<language name="JPN" width="216">ナイトメア</language>
+		<language name="JPN_KANJI" width="216">ナイトメア</language>
 	</row>
 
 	<row id="TOKUSEI_124">
 		<language name="JPN" width="216">わるいてぐせ</language>
+		<language name="JPN_KANJI" width="216">わるいてぐせ</language>
 	</row>
 
 	<row id="TOKUSEI_125">
 		<language name="JPN" width="216">ちからづく</language>
+		<language name="JPN_KANJI" width="216">ちからづく</language>
 	</row>
 
 	<row id="TOKUSEI_126">
 		<language name="JPN" width="216">あまのじゃく</language>
+		<language name="JPN_KANJI" width="216">あまのじゃく</language>
 	</row>
 
 	<row id="TOKUSEI_127">
 		<language name="JPN" width="216">きんちょうかん</language>
+		<language name="JPN_KANJI" width="216">きんちょうかん</language>
 	</row>
 
 	<row id="TOKUSEI_128">
 		<language name="JPN" width="216">まけんき</language>
+		<language name="JPN_KANJI" width="216">まけんき</language>
 	</row>
 
 	<row id="TOKUSEI_129">
 		<language name="JPN" width="216">よわき</language>
+		<language name="JPN_KANJI" width="216">よわき</language>
 	</row>
 
 	<row id="TOKUSEI_130">
 		<language name="JPN" width="216">のろわれボディ</language>
+		<language name="JPN_KANJI" width="216">のろわれボディ</language>
 	</row>
 
 	<row id="TOKUSEI_131">
 		<language name="JPN" width="216">いやしのこころ</language>
+		<language name="JPN_KANJI" width="216">いやしのこころ</language>
 	</row>
 
 	<row id="TOKUSEI_132">
 		<language name="JPN" width="216">フレンドガード</language>
+		<language name="JPN_KANJI" width="216">フレンドガード</language>
 	</row>
 
 	<row id="TOKUSEI_133">
 		<language name="JPN" width="216">くだけるよろい</language>
+		<language name="JPN_KANJI" width="216">くだけるよろい</language>
 	</row>
 
 	<row id="TOKUSEI_134">
 		<language name="JPN" width="216">ヘヴィメタル</language>
+		<language name="JPN_KANJI" width="216">ヘヴィメタル</language>
 	</row>
 
 	<row id="TOKUSEI_135">
 		<language name="JPN" width="216">ライトメタル</language>
+		<language name="JPN_KANJI" width="216">ライトメタル</language>
 	</row>
 
 	<row id="TOKUSEI_136">
 		<language name="JPN" width="216">マルチスケイル</language>
+		<language name="JPN_KANJI" width="216">マルチスケイル</language>
 	</row>
 
 	<row id="TOKUSEI_137">
 		<language name="JPN" width="216">どくぼうそう</language>
+		<language name="JPN_KANJI" width="216">どくぼうそう</language>
 	</row>
 
 	<row id="TOKUSEI_138">
 		<language name="JPN" width="216">ねつぼうそう</language>
+		<language name="JPN_KANJI" width="216">ねつぼうそう</language>
 	</row>
 
 	<row id="TOKUSEI_139">
 		<language name="JPN" width="216">しゅうかく</language>
+		<language name="JPN_KANJI" width="216">しゅうかく</language>
 	</row>
 
 	<row id="TOKUSEI_140">
 		<language name="JPN" width="216">テレパシー</language>
+		<language name="JPN_KANJI" width="216">テレパシー</language>
 	</row>
 
 	<row id="TOKUSEI_141">
 		<language name="JPN" width="216">ムラっけ</language>
+		<language name="JPN_KANJI" width="216">ムラっけ</language>
 	</row>
 
 	<row id="TOKUSEI_142">
 		<language name="JPN" width="216">ぼうじん</language>
+		<language name="JPN_KANJI" width="216">ぼうじん</language>
 	</row>
 
 	<row id="TOKUSEI_143">
 		<language name="JPN" width="216">どくしゅ</language>
+		<language name="JPN_KANJI" width="216">どくしゅ</language>
 	</row>
 
 	<row id="TOKUSEI_144">
 		<language name="JPN" width="216">さいせいりょく</language>
+		<language name="JPN_KANJI" width="216">さいせいりょく</language>
 	</row>
 
 	<row id="TOKUSEI_145">
 		<language name="JPN" width="216">はとむね</language>
+		<language name="JPN_KANJI" width="216">はとむね</language>
 	</row>
 
 	<row id="TOKUSEI_146">
 		<language name="JPN" width="216">すなかき</language>
+		<language name="JPN_KANJI" width="216">すなかき</language>
 	</row>
 
 	<row id="TOKUSEI_147">
 		<language name="JPN" width="216">ミラクルスキン</language>
+		<language name="JPN_KANJI" width="216">ミラクルスキン</language>
 	</row>
 
 	<row id="TOKUSEI_148">
 		<language name="JPN" width="216">アナライズ</language>
+		<language name="JPN_KANJI" width="216">アナライズ</language>
 	</row>
 
 	<row id="TOKUSEI_149">
 		<language name="JPN" width="216">イリュージョン</language>
+		<language name="JPN_KANJI" width="216">イリュージョン</language>
 	</row>
 
 	<row id="TOKUSEI_150">
 		<language name="JPN" width="216">かわりもの</language>
+		<language name="JPN_KANJI" width="216">かわりもの</language>
 	</row>
 
 	<row id="TOKUSEI_151">
 		<language name="JPN" width="216">すりぬけ</language>
+		<language name="JPN_KANJI" width="216">すりぬけ</language>
 	</row>
 
 	<row id="TOKUSEI_152">
 		<language name="JPN" width="216">ミイラ</language>
+		<language name="JPN_KANJI" width="216">ミイラ</language>
 	</row>
 
 	<row id="TOKUSEI_153">
 		<language name="JPN" width="216">じしんかじょう</language>
+		<language name="JPN_KANJI" width="216">じしんかじょう</language>
 	</row>
 
 	<row id="TOKUSEI_154">
 		<language name="JPN" width="216">せいぎのこころ</language>
+		<language name="JPN_KANJI" width="216">せいぎのこころ</language>
 	</row>
 
 	<row id="TOKUSEI_155">
 		<language name="JPN" width="216">びびり</language>
+		<language name="JPN_KANJI" width="216">びびり</language>
 	</row>
 
 	<row id="TOKUSEI_156">
 		<language name="JPN" width="216">マジックミラー</language>
+		<language name="JPN_KANJI" width="216">マジックミラー</language>
 	</row>
 
 	<row id="TOKUSEI_157">
 		<language name="JPN" width="216">そうしょく</language>
+		<language name="JPN_KANJI" width="216">そうしょく</language>
 	</row>
 
 	<row id="TOKUSEI_158">
 		<language name="JPN" width="216">いたずらごころ</language>
+		<language name="JPN_KANJI" width="216">いたずらごころ</language>
 	</row>
 
 	<row id="TOKUSEI_159">
 		<language name="JPN" width="216">すなのちから</language>
+		<language name="JPN_KANJI" width="216">すなのちから</language>
 	</row>
 
 	<row id="TOKUSEI_160">
 		<language name="JPN" width="216">てつのトゲ</language>
+		<language name="JPN_KANJI" width="216">てつのトゲ</language>
 	</row>
 
 	<row id="TOKUSEI_161">
 		<language name="JPN" width="216">ダルマモード</language>
+		<language name="JPN_KANJI" width="216">ダルマモード</language>
 	</row>
 
 	<row id="TOKUSEI_162">
 		<language name="JPN" width="216">しょうりのほし</language>
+		<language name="JPN_KANJI" width="216">しょうりのほし</language>
 	</row>
 
 	<flowchart-group-list>
