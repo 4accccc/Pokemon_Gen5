@@ -2814,6 +2814,7 @@ static GMEVENT_RESULT EVENT_MapChangePalace( GMEVENT* event, int* seq, void* wk 
       mc_work->loc_req = work->Loc;
 //      LOCATION_SetDirect( &(mc_work->loc_req), work->ZoneID, work->Dir, work->Pos.x, work->Pos.y, work->Pos.z ); 
       mc_work->exit_type          = EXIT_TYPE_NONE;
+      //季節更新禁止
       mc_work->seasonUpdateEnable = FALSE;
       //イベントコール
       GMEVENT_CallEvent( event, call_event );
