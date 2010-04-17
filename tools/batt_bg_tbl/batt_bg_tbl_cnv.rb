@@ -358,7 +358,7 @@ end
       end
     end
   }
-
+  
   #背景ＢＧファイルテーブル生成
   fp_bg.printf( "\t.text\n\n" )
   fp_bg.print( "\t.include ../../resource/battle/battgra_wb_def.h\n\n" )
@@ -400,7 +400,9 @@ end
     for j in 0..(attribute.size-1)
       attr_bg = zone_spec.get_zone_spec_index( i ).get_attr_bg( j )
       if bg_hash[ attr_bg ] == nil
-        write_data = [ 0 ].pack("C")
+        printf( "ゾーン別指定[%s]\nアトリビュート[%s]\n背景データに不明な指定[%s]があります\n", zone_spec.get_zone_spec_index( i ).get_zone_spec_name, attribute[ j ], attr_bg )
+        exit( -1 )
+        #write_data = [ 0 ].pack("C")
       else
         write_data = [ bg_hash[ attr_bg ] ].pack("C")
       end
@@ -409,7 +411,9 @@ end
     for j in 0..(attribute.size-1)
       attr_stage = zone_spec.get_zone_spec_index( i ).get_attr_stage( j )
       if stage_hash[ attr_stage ] == nil
-        write_data = [ 0 ].pack("C")
+        printf( "ゾーン別指定[%s]アトリビュート[%s]のお盆に不明な指定[%s]があります\n", zone_spec.get_zone_spec_index( i ).get_zone_spec_name, attribute[ j ], attr_stage )
+        exit( -1 )
+        #write_data = [ 0 ].pack("C")
       else
         write_data = [ stage_hash[ attr_stage ] ].pack("C")
       end
