@@ -20,6 +20,7 @@
 #include "poke_tool/poke_regulation.h"
 
 #include "gamesystem/btl_setup.h"
+#include "field/seasonpoke_form.h"
 
 //------------------------------------------------------------
 //------------------------------------------------------------
@@ -233,7 +234,7 @@ static void BSP_TRAINER_DATA_Delete( BSP_TRAINER_DATA* tr_data )
 /*
  *  @brief  トレーナーパラメータセット
  */
-static void setup_trainer_param( BATTLE_SETUP_PARAM* dst, BTL_CLIENT_ID client, POKEPARTY** party, TrainerID tr_id, HEAPID heapID )
+static void setup_trainer_param( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_CLIENT_ID client, POKEPARTY** party, TrainerID tr_id, HEAPID heapID )
 {
   *party = PokeParty_AllocPartyWork( heapID );
   dst->tr_data[client] = BSP_TRAINER_DATA_Create( heapID );
@@ -242,6 +243,8 @@ static void setup_trainer_param( BATTLE_SETUP_PARAM* dst, BTL_CLIENT_ID client, 
   {
     TT_EncountTrainerPersonalDataMake( tr_id, dst->tr_data[client], heapID );
     TT_EncountTrainerPokeDataMake( tr_id, *party, heapID );
+    //四季変化するポケモンのフォルム変更
+    SEASONPOKE_FORM_ChangeForm( *party, GAMEDATA_GetSeasonID( gameData ) );
   }
 
   {
@@ -526,7 +529,7 @@ void BTL_SETUP_Single_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_SINGLE, sit, heapID );
 
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], trID, heapID );
+  setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], trID, heapID );
 }
 
 //=============================================================================================
@@ -548,7 +551,7 @@ void BTL_SETUP_Double_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_DOUBLE, sit, heapID );
 
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], trID, heapID );
+  setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], trID, heapID );
 }
 //=============================================================================================
 /**
@@ -568,7 +571,7 @@ void BTL_SETUP_Triple_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID )
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_TRIPLE, sit, heapID );
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], trID, heapID );
+  setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], trID, heapID );
 }
 
 //=============================================================================================
@@ -589,7 +592,7 @@ void BTL_SETUP_Rotation_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   BTL_FIELD_SITUATION* sit, TrainerID trID, HEAPID heapID )
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_ROTATION, sit, heapID );
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], trID, heapID );
+  setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], trID, heapID );
 }
 
 //=============================================================================================
@@ -612,8 +615,8 @@ void BTL_SETUP_Tag_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_DOUBLE, sit, heapID );
 
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id0, heapID );
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY2, &dst->party[ BTL_CLIENT_ENEMY2 ], tr_id1, heapID );
+  setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id0, heapID );
+  setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY2, &dst->party[ BTL_CLIENT_ENEMY2 ], tr_id1, heapID );
   dst->multiMode = BTL_MULTIMODE_P_AA;
 }
 
@@ -637,9 +640,9 @@ void BTL_SETUP_AIMulti_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_DOUBLE, sit, heapID );
 
-  setup_trainer_param( dst, BTL_CLIENT_PARTNER, &dst->party[ BTL_CLIENT_PARTNER ], partner, heapID );
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id0, heapID );
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY2, &dst->party[ BTL_CLIENT_ENEMY2 ], tr_id1, heapID );
+  setup_trainer_param( dst, gameData, BTL_CLIENT_PARTNER, &dst->party[ BTL_CLIENT_PARTNER ], partner, heapID );
+  setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id0, heapID );
+  setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY2, &dst->party[ BTL_CLIENT_ENEMY2 ], tr_id1, heapID );
   dst->multiMode = BTL_MULTIMODE_PA_AA;
 }
 
@@ -733,8 +736,8 @@ void BTL_SETUP_AIMulti_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 
   setup_common_CommTrainer( dst, gameData, BTL_RULE_DOUBLE, BTL_MULTIMODE_PP_AA,
       netHandle, commMode, commPos, heapID );
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id1, heapID );
-  setup_trainer_param( dst, BTL_CLIENT_ENEMY2, &dst->party[ BTL_CLIENT_ENEMY2 ], tr_id2, heapID );
+  setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id1, heapID );
+  setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY2, &dst->party[ BTL_CLIENT_ENEMY2 ], tr_id2, heapID );
 }
 
 //=============================================================================================
