@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-05T17:00:08"/>
+	<create user="matsumiya" host="W00224" date="2010-04-17T13:33:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1381" top="332" right="2086" bottom="952" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="178" right="1999" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -365,21 +365,23 @@
 		<language name="JPN" width="256">ハンサム『ありがとう！▼
 さて　[1:00:トレーナー名:0]……
 きみに　つたえることが　ある▼
-Ｎらしき　じんぶつが
+ここより　はるか　とおくで
+Ｎらしき　じんぶつが▽
 ドラゴンポケモンと　いるのを▽
 みたという　じょうほうが　あった▼
 わたしは　じょうほうが　ただしいか
 たしかめに　いくつもりだよ▽
-では　また　いつかあおう！▼</language>
+では　また　いつか　あおう！▼</language>
 		<language name="JPN_KANJI" width="256">ハンサム『ありがとう！▼
 さて　[1:00:トレーナー名:0]……
 きみに　伝えることが　ある▼
+ここより　はるか　遠方で
 Ｎらしき　人物が
 ドラゴンポケモンと　いるのを▽
 みたという　情報が　あった▼
 わたしは　情報の　真偽を
 確かめに　いくつもりだよ▽
-では　また　いつか会おう！▼</language>
+では　また　いつか　会おう！▼</language>
 	</row>
 
 	<row id="msg_r14_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
