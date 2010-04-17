@@ -25,6 +25,7 @@
 #include "arc/arc_def.h"  // for ARCID_PMSTBL
 #include "gamesystem/game_data.h"
 #include "savedata/mystatus.h"
+#include "savedata/perapvoice.h"
 
 
 //========================================================================================
@@ -46,12 +47,13 @@
 //========================================================================================
 // ■育て屋さんワーク
 //========================================================================================
-struct _SODATEYA
-{
-  HEAPID           heapID; // ヒープID
-  FIELDMAP_WORK* fieldmap; // フィールドマップ
-  SODATEYA_WORK*     work; // 管理ワーク
-  u16         layEggCount; // 産卵カウンタ
+struct _SODATEYA {
+
+  HEAPID         heapID;      // ヒープID
+  FIELDMAP_WORK* fieldmap;    // フィールドマップ
+  SODATEYA_WORK* work;        // 管理ワーク
+  u16            layEggCount; // 産卵カウンタ
+
 };
 
 
@@ -65,30 +67,21 @@ static u32 LoveCheck( const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2 );
 static u32 CalcLoveLv_normal( const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2 );
 static BOOL LayEggCheck( SODATEYA* sodateya );
 static void CreateEgg( SODATEYA* sodateya, POKEMON_PARAM* egg );
-static void EggCordinate_monsno( 
-    const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
-static void EggCordinate_seikaku(
-    const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
-static void EggCordinate_special_ability(
-    HEAPID heap_id, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
-static void EggCordinate_ability_rand(
-    const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
-static void EggCordinate_rare(
-    const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
+static void EggCordinate_monsno( const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
+static void EggCordinate_seikaku( const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
+static void EggCordinate_special_ability( HEAPID heap_id, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
+static void EggCordinate_ability_rand( const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
+static void EggCordinate_rare( const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
 static void EggCordinate_waza_default( POKEMON_PARAM* egg );
-static void EggCordinate_waza_egg( 
-    HEAPID heap_id, const POKEMON_PARAM* father, POKEMON_PARAM* egg );
-static void EggCordinate_waza_parent(
-    const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
-static void EggCordinate_waza_machine(
-    HEAPID heap_id, const POKEMON_PARAM* father, POKEMON_PARAM* egg );
-static void EggCordinate_pityuu(
-    const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
-static void EggCordinate_karanakusi(
-    const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
+static void EggCordinate_waza_egg( HEAPID heap_id, const POKEMON_PARAM* father, POKEMON_PARAM* egg );
+static void EggCordinate_waza_parent( const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
+static void EggCordinate_waza_machine( HEAPID heap_id, const POKEMON_PARAM* father, POKEMON_PARAM* egg );
+static void EggCordinate_pityuu( const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
+static void EggCordinate_karanakusi( const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
 static void EggCordinate_finish( POKEMON_PARAM* egg, SODATEYA* sodateya );
 static BOOL IsWazaMachineAbleToUse( HEAPID heap_id, u16 monsno, u16 formno, u16 itemno );
 static u16 GetSeedMonsNo( u16 monsno );
+static void DeletePerapVoice( FIELDMAP_WORK* fieldmap, POKEPARTY* party );
 
 
 //========================================================================================
@@ -165,6 +158,9 @@ void SODATEYA_TakePokemon( SODATEYA* sodateya, POKEPARTY* party, int pos )
   poke = PokeParty_GetMemberPointer( party, pos );
   SODATEYA_WORK_SetPokemon( sodateya->work, index, poke );
   PokeParty_Delete( party, pos );
+
+  // ぺラップ録音データを削除
+  DeletePerapVoice( sodateya->fieldmap, party );
 }
 
 //----------------------------------------------------------------------------------------
@@ -1502,4 +1498,28 @@ void POKEMON_EGG_Birth( POKEMON_PARAM* egg, const MYSTATUS* owner, HEAPID heap_i
     u32 id = MyStatus_GetID( owner );
     PP_Put( egg, ID_PARA_id_no, id );
   } 
+}
+
+//========================================================================================
+// ■ポケモン個別処理
+//========================================================================================
+
+//---------------------------------------------------------------------------------------- 
+/**
+ * @brief ぺラップの「おしゃべり」データを削除する
+ *
+ * @param sodateya
+ */
+//---------------------------------------------------------------------------------------- 
+static void DeletePerapVoice( FIELDMAP_WORK* fieldmap, POKEPARTY* party )
+{
+  GAMESYS_WORK* gameSystem;
+  GAMEDATA* gameData;
+  PERAPVOICE* perapVoice;
+
+  gameSystem = FIELDMAP_GetGameSysWork( fieldmap );
+  gameData = GAMESYSTEM_GetGameData( gameSystem );
+  perapVoice = GAMEDATA_GetPerapVoice( gameData );
+
+  PERAPVOICE_CheckPerapInPokeParty( perapVoice, party );
 }
