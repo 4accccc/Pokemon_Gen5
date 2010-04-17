@@ -30,8 +30,14 @@
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
+#include "item/itemsym.h"
+#include "poke_tool/tokusyu_def.h"
+#include "system/gfl_use.h"
+
 // local includes --------------------
 #include "event_battle_return.h"
+
+#include "monohiroi_tbl.cdat"
 
 // オーバーレイ
 FS_EXTERN_OVERLAY(zukan_toroku);
@@ -73,6 +79,7 @@ static GFL_PROC_RESULT BtlRet_ProcQuit( GFL_PROC * proc, int * seq, void * pwk, 
 static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 
 static void check_lvup_poke( BTLRET_WORK* wk, BTLRET_PARAM* param );
+static void monohiroi_mitsuatsume_check( POKEPARTY* ppt );
 
 /*--------------------------------------------------------------------------*/
 /* Proc Table                                                               */
@@ -179,6 +186,12 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         //ポケルス感染＆伝染チェック
         POKERUS_CheckCatchPokerus( party );
         POKERUS_CheckContagion( party );
+
+        //ものひろい＆あまいみつチェック（勝利時のみ）
+        if( param->btlResult->result == BTL_RESULT_WIN )
+        { 
+          monohiroi_mitsuatsume_check( party );
+        }
 
         // おこづかい増やす
         if( param->btlResult->getMoney > 0 ){
@@ -461,3 +474,77 @@ static void check_lvup_poke( BTLRET_WORK* wk, BTLRET_PARAM* param )
   }
 }
 
+//============================================================================================
+/**
+ *	特性ものひろい、みつあつめのチェック
+ *
+ *	@param[in]  ppt POKEPARTY構造体
+ */
+//============================================================================================
+static  void  monohiroi_mitsuatsume_check( POKEPARTY* ppt )
+{
+	int	rnd;
+	int	i,j,k;
+	u16 monsno;
+	u16 itemno;
+	u8	speabi;
+	u8	LvOffset;
+	POKEMON_PARAM	*pp;
+
+	for( i = 0 ; i < PokeParty_GetPokeCount( ppt ) ; i++ )
+  {
+		pp = PokeParty_GetMemberPointer( ppt, i );
+		monsno = PP_Get( pp, ID_PARA_monsno_egg, NULL );
+		itemno = PP_Get( pp, ID_PARA_item, NULL );
+		speabi = PP_Get( pp, ID_PARA_speabino, NULL );
+		//ものひろいチェック
+		if( ( speabi == TOKUSYU_MONOHIROI ) &&
+        ( monsno != 0 ) &&
+        ( monsno != MONSNO_TAMAGO ) &&
+        ( itemno == 0) &&
+        ( GFUser_GetPublicRand( 10 ) == 0 ) )
+    {
+			rnd = GFUser_GetPublicRand( 100 );
+			LvOffset = ( PP_Get( pp, ID_PARA_level, NULL ) - 1 ) / 10;
+			if( LvOffset >= 10 )
+      {
+				LvOffset = 9; //レベルが100を超えなければありえないが、念のため
+			}
+			for( j = 0 ; j < 9 ; j++ )
+      {
+				if( ItemProb[ j ] > rnd )
+        {
+					PP_Put( pp, ID_PARA_item, MonohiroiTable1[ LvOffset + j ] );
+					break;
+				}
+				else if( ( rnd >= 98 ) && ( rnd <= 99 ) )
+        {
+					PP_Put( pp, ID_PARA_item, MonohiroiTable2[ LvOffset + ( 99 - rnd ) ] );
+					break;
+				}
+			}
+		}
+		//みつあつめチェック
+		if( ( speabi == TOKUSYU_MITUATUME ) &&
+        ( monsno != 0 ) &&
+        ( monsno != MONSNO_TAMAGO ) &&
+        ( itemno == 0 ) )
+    {
+			j = 0;
+			k = 10;
+			LvOffset = PP_Get( pp, ID_PARA_level, NULL );
+			while( LvOffset > k )
+      {
+				j++;
+				k += 10;
+			}
+			//テーブルオーバーを監視するためにアサートをかます
+			GF_ASSERT( j < 10 );
+			if( GFUser_GetPublicRand( 100 ) < MitsuatsumeProb[ j ] )
+      {
+				j = ITEM_AMAIMITU;
+				PP_Put( pp, ID_PARA_item, j );
+			}
+		}
+	}
+}
