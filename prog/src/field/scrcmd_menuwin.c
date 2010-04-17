@@ -965,11 +965,11 @@ static void balloonWin_GetOffsetPos(
     x = 1;
     break;
   case SCRCMD_MSGWIN_DOWNLEFT: //ウィンドウ下　吹き出し向き左
-    x = 2;
-    break;
-  case SCRCMD_MSGWIN_UPRIGHT: //ウィンドウ上　吹き出し向き右
     x = 1;
     y = 1;
+    break;
+  case SCRCMD_MSGWIN_UPRIGHT: //ウィンドウ上　吹き出し向き右
+    x = 2;
     break;
   case SCRCMD_MSGWIN_DOWNRIGHT: //ウィンドウ下　吹き出し向き右
     x = 2;
