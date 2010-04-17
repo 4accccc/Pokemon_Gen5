@@ -80,7 +80,6 @@ typedef struct {
   FIELDMAP_WORK * fieldmap;        //<<<ƒtƒB[ƒ‹ƒhƒ}ƒbƒv‚Ö‚Ìƒ|ƒCƒ“ƒ^
   FIELD_SOUND *   fieldSound;      //<<<ƒtƒB[ƒ‹ƒhƒTƒEƒ“ƒh‚Ö‚Ìƒ|ƒCƒ“ƒ^
   LOCATION        loc_req;         //<<<ŽŸ‚Ìƒ}ƒbƒv‚ðŽw‚·ƒƒP[ƒVƒ‡ƒ“Žw’è ( BGMƒtƒF[ƒhˆ—‚ÌŒW” )
-  VecFx32         doorPos;         //<<<ƒhƒA‚ðŒŸõ‚·‚éêŠ
   BOOL            cameraAnimeFlag; //<<<ƒJƒƒ‰ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì—L–³
   BOOL            seasonDispFlag;  //<<<Žl‹G•\Ž¦‚ðs‚¤‚©‚Ç‚¤‚©
   u8              startSeason;     //<<<Å‰‚É•\Ž¦‚·‚é‹Gß ( Žl‹G•\Ž¦‚ðs‚¤ê‡‚Ì‚Ý—LŒø )
@@ -91,6 +90,7 @@ typedef struct {
   EXIT_TYPE       exitType;        //<<<o“ü‚èŒûƒ^ƒCƒv
   u16             count;           //<<<ƒJƒEƒ“ƒ^
   u8              playerDir;       //<<<Ž©‹@‚ÌŒü‚«
+  VecFx32         doorSearchPos;   //<<<ƒhƒAŒŸõˆÊ’u
   FIELD_BMODEL *  doorBM;          //<<<ƒhƒA‚Ì”z’uƒ‚ƒfƒ‹
   u8              seq[ MAX_SEQ_LENGTH ]; //<<<ƒV[ƒPƒ“ƒX
   u8              seqPos;                //<<<Œ»Ý‚ÌƒV[ƒPƒ“ƒXˆÊ’u
@@ -108,7 +108,10 @@ static void SetupDoorInEventSeq( FIELD_DOOR_ANIME_WORK* work ); // ƒhƒA‚É“ü‚éƒCƒ
 static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * wk); // ƒhƒA‚É“ü‚éƒCƒxƒ“ƒgˆ—ŠÖ”
 
 static u8 GetPlayerDir( FIELDMAP_WORK* fieldmap ); // Ž©‹@‚ÌŒü‚«‚ðŽæ“¾‚·‚é
-static void GetPlayerFrontPos( FIELDMAP_WORK * fieldmap, VecFx32 * pos ); // ˆê•à‘Oi‚µ‚½ˆÊ’u‚ÌÀ•W‚ðŽæ“¾‚·‚é
+static void GetPlayerPos( FIELDMAP_WORK* fieldmap, VecFx32* dest ); // Ž©‹@‚ÌÀ•W‚ðŽæ“¾‚·‚é
+static void GetPlayerFrontPos( FIELDMAP_WORK* fieldmap, VecFx32* dest ); // ˆê•àæ‚ÌÀ•W‚ðŽæ“¾‚·‚é
+static void GetPlayerFrontPos_GRID( FIELDMAP_WORK* fieldmap, VecFx32* dest ); // ˆê•àæ‚ÌÀ•W‚ðŽæ“¾‚·‚é ( ƒOƒŠƒbƒhƒ}ƒbƒv—p )
+static void GetPlayerFrontPos_RAIL( FIELDMAP_WORK* fieldmap, VecFx32* dest ); // ˆê•àæ‚ÌÀ•W‚ðŽæ“¾‚·‚é ( ƒŒ[ƒ‹ƒ}ƒbƒv—p )
 static u8 GetCurrentSeq( const FIELD_DOOR_ANIME_WORK* work ); // Œ»Ý‚ÌƒV[ƒPƒ“ƒX‚ðŽæ“¾‚·‚é
 static u8 GetNextSeq( const FIELD_DOOR_ANIME_WORK* work ); // ŽŸ‚ÌƒV[ƒPƒ“ƒX‚ðŽæ“¾‚·‚é
 static void FinishCurrentSeq( FIELD_DOOR_ANIME_WORK* work ); // Œ»Ý‚ÌƒV[ƒPƒ“ƒX‚ðI—¹‚·‚é
@@ -120,6 +123,20 @@ static void StartDoorOpen( const FIELD_DOOR_ANIME_WORK* work ); // ƒhƒAƒI[ƒvƒ“‚
 static void StartDoorClose( const FIELD_DOOR_ANIME_WORK* work ); // ƒhƒAƒNƒ[ƒY‚ðŠJŽn‚·‚é
 static void StartFadeInEvent( GMEVENT* event, const FIELD_DOOR_ANIME_WORK* work ); // ‰æ–Ê‚ÌƒtƒF[ƒhƒCƒ“ƒCƒxƒ“ƒg‚ðŒÄ‚Ño‚·
 static void StartFadeOutEvent( GMEVENT* event, const FIELD_DOOR_ANIME_WORK* work ); // ‰æ–Ê‚ÌƒtƒF[ƒhƒAƒEƒgƒCƒxƒ“ƒg‚ðŒÄ‚Ño‚·
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief Ž©‹@‚Ìˆê•àæ‚ÌÀ•W‚ðŽæ“¾‚·‚é
+ *
+ * @param fieldmap
+ * @param dest Žæ“¾‚µ‚½À•W‚ÌŠi”[æ
+ */
+//--------------------------------------------------------------------------------------------
+void EVENT_ENTRANCE_EFFECT_GetPlayerFrontPos( FIELDMAP_WORK* fieldmap, VecFx32* dest ) 
+{
+  GetPlayerFrontPos( fieldmap, dest );
+}
 
 
 //--------------------------------------------------------------------------------------------
@@ -153,11 +170,10 @@ GMEVENT * EVENT_FieldDoorOutAnime ( GAMESYS_WORK * gameSystem, FIELDMAP_WORK * f
 
   // ƒCƒxƒ“ƒgƒ[ƒN‚ð‰Šú‰»
   work = GMEVENT_GetEventWork( event );
-  work->gameSystem = gameSystem;
-  work->gameData   = GAMESYSTEM_GetGameData( gameSystem );
-  work->fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
-  work->fieldSound = GAMEDATA_GetFieldSound( work->gameData );
-  GetPlayerFrontPos(fieldmap, &work->doorPos);
+  work->gameSystem      = gameSystem;
+  work->gameData        = GAMESYSTEM_GetGameData( gameSystem );
+  work->fieldmap        = GAMESYSTEM_GetFieldMapWork( gameSystem );
+  work->fieldSound      = GAMEDATA_GetFieldSound( work->gameData );
   work->cameraAnimeFlag = cameraAnimeFlag;
   work->seasonDispFlag  = seasonDispFlag;
   work->startSeason     = startSeason;
@@ -176,6 +192,7 @@ GMEVENT * EVENT_FieldDoorOutAnime ( GAMESYS_WORK * gameSystem, FIELDMAP_WORK * f
   work->ECamParam.oneStep   = ECAM_ONESTEP_ON;
 
   // ƒhƒA‚ðŒŸõ
+  GetPlayerPos( fieldmap, &work->doorSearchPos );
   SearchDoorBM( work );
 
   // ƒV[ƒPƒ“ƒX‚Ì—¬‚ê‚ðŒˆ’è
@@ -424,12 +441,11 @@ GMEVENT* EVENT_FieldDoorInAnime (
 
   // ƒCƒxƒ“ƒgƒ[ƒN‚ð‰Šú‰»
   work = GMEVENT_GetEventWork( event );
-  work->gameSystem = gameSystem;
-  work->gameData   = GAMESYSTEM_GetGameData( gameSystem );
-  work->fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
-  work->fieldSound = GAMEDATA_GetFieldSound( work->gameData );
-  work->loc_req    = *loc;
-  GetPlayerFrontPos(fieldmap, &work->doorPos);
+  work->gameSystem      = gameSystem;
+  work->gameData        = GAMESYSTEM_GetGameData( gameSystem );
+  work->fieldmap        = GAMESYSTEM_GetFieldMapWork( gameSystem );
+  work->fieldSound      = GAMEDATA_GetFieldSound( work->gameData );
+  work->loc_req         = *loc;
   work->cameraAnimeFlag = cameraAnimeFlag;
   work->seasonDispFlag  = seasonDispFlag;
   work->fadeType        = fadeType;
@@ -446,6 +462,7 @@ GMEVENT* EVENT_FieldDoorInAnime (
   work->ECamParam.oneStep   = ECAM_ONESTEP_ON;
 
   // ƒhƒA‚ðŒŸõ
+  GetPlayerFrontPos( fieldmap, &work->doorSearchPos );
   SearchDoorBM( work );
 
   // ƒV[ƒPƒ“ƒX‚Ì—¬‚ê‚ðŒˆ’è
@@ -604,24 +621,107 @@ static u8 GetPlayerDir( FIELDMAP_WORK* fieldmap )
   return FIELD_PLAYER_GetDir( player );
 }
 
-//--------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 /**
- * @brief Ž©‹@‚Ìˆê•àæ‚ÌÀ•W‚ðŽæ“¾‚·‚é
+ * @brief Ž©‹@‚ÌÀ•W‚ðŽæ“¾‚·‚é
  *
  * @param fieldmap
- * @param pos Žæ“¾‚µ‚½À•W‚ÌŠi”[æ
+ * @param dest Žæ“¾‚µ‚½À•W‚ÌŠi”[æ
  */
-//--------------------------------------------------------------------------------------------
-static void GetPlayerFrontPos(FIELDMAP_WORK * fieldmap, VecFx32 * pos)
+//-----------------------------------------------------------------------------
+static void GetPlayerPos( FIELDMAP_WORK* fieldmap, VecFx32* dest )
 {
-  FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldmap);
-  MMDL *         fmmdl  = FIELD_PLAYER_GetMMdl( player );
-  u16 dir;
+  FIELD_PLAYER* player;
 
-  dir = MMDL_GetDirDisp( fmmdl );
+  player = FIELDMAP_GetFieldPlayer( fieldmap );
+  FIELD_PLAYER_GetPos( player, dest );
+}
 
-  FIELD_PLAYER_GetDirPos( player, dir, pos );
-} 
+//-----------------------------------------------------------------------------
+/**
+ * @brief ˆê•àæ‚ÌÀ•W‚ðŽæ“¾‚·‚é
+ *
+ * @param fieldmap
+ * @param dest Žæ“¾‚µ‚½À•W‚ÌŠi”[æ
+ */
+//----------------------------------------------------------------------------- 
+static void GetPlayerFrontPos( FIELDMAP_WORK* fieldmap, VecFx32* dest )
+{
+  if( FIELDMAP_GetBaseSystemType( fieldmap ) == FLDMAP_BASESYS_RAIL ) {
+    GetPlayerFrontPos_RAIL( fieldmap, dest );
+  }
+  else {
+    GetPlayerFrontPos_GRID( fieldmap, dest );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief ˆê•àæ‚ÌÀ•W‚ðŽæ“¾‚·‚é ( ƒOƒŠƒbƒhƒ}ƒbƒv—p )
+ *
+ * @param fieldmap
+ * @param dest Žæ“¾‚µ‚½À•W‚ÌŠi”[æ
+ */
+//----------------------------------------------------------------------------- 
+static void GetPlayerFrontPos_GRID( FIELDMAP_WORK* fieldmap, VecFx32* dest )
+{
+  FIELD_PLAYER* player;
+  u16 playerDir;
+  VecFx32 now_pos, way_vec, step_pos;
+
+  // Ž©‹@ƒf[ƒ^‚ðŽæ“¾
+  player = FIELDMAP_GetFieldPlayer( fieldmap );
+  playerDir = FIELD_PLAYER_GetDir( player );
+
+  // ˆê•à‘Oi‚µ‚½À•W‚ðŽZo
+  FIELD_PLAYER_GetPos( player, &now_pos );
+  FIELD_PLAYER_GetDirWay( player, playerDir, &way_vec );
+  VEC_MultAdd( FIELD_CONST_GRID_FX32_SIZE, &way_vec, &now_pos, &step_pos );
+
+  // y À•W‚ð•â³
+  {
+    MMDL* mmdl;
+    fx32 height;
+
+    mmdl = FIELD_PLAYER_GetMMdl( player );
+    MMDL_GetMapPosHeight( mmdl, &step_pos, &height );
+    step_pos.y = height;
+  }
+
+  // À•W‚ð•Ô‚·
+  *dest = step_pos;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief ˆê•àæ‚ÌÀ•W‚ðŽæ“¾‚·‚é ( ƒŒ[ƒ‹ƒ}ƒbƒv—p )
+ *
+ * @param fieldmap
+ * @param dest Žæ“¾‚µ‚½À•W‚ÌŠi”[æ
+ */
+//----------------------------------------------------------------------------- 
+static void GetPlayerFrontPos_RAIL( FIELDMAP_WORK* fieldmap, VecFx32* dest )
+{
+  FIELD_PLAYER* player;
+  u16 playerDir;
+  RAIL_LOCATION location;
+  FLDNOGRID_MAPPER* NGMapper;
+  const FIELD_RAIL_MAN* railMan;
+  VecFx32 step_pos;
+
+  // Ž©‹@ƒf[ƒ^‚ðŽæ“¾
+  player = FIELDMAP_GetFieldPlayer( fieldmap );
+  playerDir = FIELD_PLAYER_GetDir( player );
+
+  // ˆê•àæ‚ÌÀ•W‚ðŽæ“¾
+  NGMapper = FIELDMAP_GetFldNoGridMapper( fieldmap );
+  railMan = FLDNOGRID_MAPPER_GetRailMan( NGMapper );
+  FIELD_PLAYER_GetDirNoGridLocation( player, playerDir, &location );
+  FIELD_RAIL_MAN_GetLocationPosition( railMan, &location, &step_pos );
+
+  // À•W‚ð•Ô‚·
+  *dest = step_pos;
+}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -686,9 +786,10 @@ static void SearchDoorBM( FIELD_DOOR_ANIME_WORK* work )
 
   GF_ASSERT( work->doorBM == NULL );
 
+  // ƒhƒA‚ðŒŸõ
   fldmapper = FIELDMAP_GetFieldG3Dmapper( work->fieldmap );
   BModelMan = FLDMAPPER_GetBuildModelManager( fldmapper );
-  work->doorBM = FIELD_BMODEL_Create_Search( BModelMan, BM_SEARCH_ID_DOOR, &work->doorPos );
+  work->doorBM = FIELD_BMODEL_Create_Search( BModelMan, BM_SEARCH_ID_DOOR, &work->doorSearchPos );
 }
 
 //--------------------------------------------------------------------------------------------

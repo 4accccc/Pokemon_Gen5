@@ -9,6 +9,7 @@
 #include <gflib.h>
 #include "entrance_camera.h"
 
+#include "event_entrance_effect.h" // for EVENT_ENTRANCE_EFFECT_GetPlayerFrontPos
 #include "field_camera_anime.h"
 #include "field_rail.h"
 #include "fieldmap.h"
@@ -124,11 +125,6 @@ static void ECamSetup_SP_OUT( ECAM_WORK* work ); // 特殊出入口から出る演出をセッ
 static void LoadSpData( ECAM_LOAD_DATA* dest, EXIT_TYPE exitType ); // 特殊出入り口のカメラ動作データを読み込む
 // カメラの準備・復帰
 static void SetupCameraTargetPos( FIELD_CAMERA* camera, const VecFx32* targetPos ); // ターゲット座標を変更し, カメラに反映させる
-// 自機
-static void GetOneStepAfterPos( const ECAM_WORK* work, VecFx32* dest ); // 一歩先の座標を取得する
-static void GetOneStepAfterPos_GRID( const ECAM_WORK* work, VecFx32* dest ); // 一歩先の座標を取得する ( グリッドマップ用 )
-static void GetOneStepAfterPos_RAIL( const ECAM_WORK* work, VecFx32* dest ); // 一歩先の座標を取得する ( レールマップ用 )
-static u16 GetPlayerDir( const ECAM_WORK* work ); // 自機の向きを取得する
 // アクセッサ
 static FIELDMAP_WORK* GetFieldmap( const ECAM_WORK* work ); // フィールドマップを取得する
 static FIELD_CAMERA* GetCamera( const ECAM_WORK* work ); // カメラを取得する
@@ -430,7 +426,7 @@ static void ECamSetup_IN( ECAM_WORK* work )
 
   // 自機の最終座標を決定
   if( CheckOneStep(work) ) {
-    GetOneStepAfterPos( work, &endPos );
+    EVENT_ENTRANCE_EFFECT_GetPlayerFrontPos( work->fieldmap, &endPos );
   }
   else {
     FIELD_PLAYER_GetPos( player, &endPos );
@@ -514,7 +510,7 @@ static void ECamSetup_OUT( ECAM_WORK* work )
 
   // 開始時のターゲット座標
   if( CheckOneStep(work) ) {
-    GetOneStepAfterPos( work, &stepPos );
+    EVENT_ENTRANCE_EFFECT_GetPlayerFrontPos( work->fieldmap, &stepPos );
   }
   else {
     FIELD_PLAYER_GetPos( player, &stepPos );
@@ -602,7 +598,7 @@ static void ECamSetup_SP_IN( ECAM_WORK* work )
 
   // 一歩移動後の座標
   if( CheckOneStep(work) ) {
-    GetOneStepAfterPos( work, &stepPos );
+    EVENT_ENTRANCE_EFFECT_GetPlayerFrontPos( work->fieldmap, &stepPos );
   }
   else {
     FIELD_PLAYER_GetPos( player, &stepPos );
@@ -667,7 +663,7 @@ static void ECamSetup_SP_OUT( ECAM_WORK* work )
 
   // 開始時のターゲット座標
   if( CheckOneStep(work) ) {
-    GetOneStepAfterPos( work, &stepPos );
+    EVENT_ENTRANCE_EFFECT_GetPlayerFrontPos( work->fieldmap, &stepPos );
   }
   else {
     FIELD_PLAYER_GetPos( player, &stepPos );
@@ -766,107 +762,6 @@ static void SetupCameraTargetPos( FIELD_CAMERA* camera, const VecFx32* targetPos
   FIELD_CAMERA_SetTargetPos( camera, targetPos ); // 一時的にターゲット座標を設定
   FIELD_CAMERA_Main( camera, 0 ); // ターゲットの変更をカメラに反映させる
   FIELD_CAMERA_BindDefaultTarget( camera ); // ターゲットを元に戻す
-}
-
-//-----------------------------------------------------------------------------
-/**
- * @brief 一歩先の座標を取得する
- *
- * @param work
- * @param dest 取得した座標の格納先
- */
-//----------------------------------------------------------------------------- 
-static void GetOneStepAfterPos( const ECAM_WORK* work, VecFx32* dest )
-{
-  if( FIELDMAP_GetBaseSystemType( work->fieldmap ) == FLDMAP_BASESYS_RAIL ) {
-    GetOneStepAfterPos_RAIL( work, dest );
-  }
-  else {
-    GetOneStepAfterPos_GRID( work, dest );
-  }
-}
-
-//-----------------------------------------------------------------------------
-/**
- * @brief 一歩先の座標を取得する ( グリッドマップ用 )
- *
- * @param work
- * @param dest 取得した座標の格納先
- */
-//----------------------------------------------------------------------------- 
-static void GetOneStepAfterPos_GRID( const ECAM_WORK* work, VecFx32* dest )
-{
-  FIELD_PLAYER* player;
-  u16 playerDir;
-  VecFx32 now_pos, way_vec, step_pos;
-
-  // 自機データを取得
-  player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-  playerDir = FIELD_PLAYER_GetDir( player );
-
-  // 一歩前進した座標を算出
-  FIELD_PLAYER_GetPos( player, &now_pos );
-  FIELD_PLAYER_GetDirWay( player, playerDir, &way_vec );
-  VEC_MultAdd( FIELD_CONST_GRID_FX32_SIZE, &way_vec, &now_pos, &step_pos );
-
-  // y 座標を補正
-  {
-    MMDL* mmdl;
-    fx32 height;
-
-    mmdl = FIELD_PLAYER_GetMMdl( player );
-    MMDL_GetMapPosHeight( mmdl, &step_pos, &height );
-    step_pos.y = height;
-  }
-
-  // 座標を返す
-  *dest = step_pos;
-}
-
-//-----------------------------------------------------------------------------
-/**
- * @brief 一歩先の座標を取得する ( レールマップ用 )
- *
- * @param work
- * @param dest 取得した座標の格納先
- */
-//----------------------------------------------------------------------------- 
-static void GetOneStepAfterPos_RAIL( const ECAM_WORK* work, VecFx32* dest )
-{
-  FIELD_PLAYER* player;
-  u16 playerDir;
-  RAIL_LOCATION location;
-  FLDNOGRID_MAPPER* NGMapper;
-  const FIELD_RAIL_MAN* railMan;
-  VecFx32 step_pos;
-
-  // 自機データを取得
-  player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-  playerDir = FIELD_PLAYER_GetDir( player );
-
-  // 一歩先の座標を取得
-  NGMapper = FIELDMAP_GetFldNoGridMapper( work->fieldmap );
-  railMan = FLDNOGRID_MAPPER_GetRailMan( NGMapper );
-  FIELD_PLAYER_GetDirNoGridLocation( player, playerDir, &location );
-  FIELD_RAIL_MAN_GetLocationPosition( railMan, &location, &step_pos );
-
-  // 座標を返す
-  *dest = step_pos;
-}
-
-//----------------------------------------------------------------------------- 
-/**
- * @brief 自機の向きを取得する
- *
- * @param work
- */
-//----------------------------------------------------------------------------- 
-static u16 GetPlayerDir( const ECAM_WORK* work )
-{
-  FIELD_PLAYER* player;
-
-  player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-  return FIELD_PLAYER_GetDir( player );
 }
 
 //----------------------------------------------------------------------------- 

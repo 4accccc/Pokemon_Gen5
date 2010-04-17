@@ -26,3 +26,6 @@ extern GMEVENT * EVENT_FieldDoorOutAnime ( GAMESYS_WORK * gsys,
                                            u8 end_season,
                                            FIELD_FADE_TYPE fadeType,
                                            EXIT_TYPE exitType );
+
+// é©ã@ÇÃàÍï‡êÊÇÃç¿ïWÇéÊìæÇ∑ÇÈ
+extern void EVENT_ENTRANCE_EFFECT_GetPlayerFrontPos( FIELDMAP_WORK* fieldmap, VecFx32* dest );
