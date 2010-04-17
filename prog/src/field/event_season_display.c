@@ -22,6 +22,7 @@ extern void FIELDMAP_InitBGMode( void );
 extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
 
 
+
 //==============================================================================
 // ■BG
 //==============================================================================
@@ -32,7 +33,7 @@ extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
 #define BG_PRIORITY_FIELD  (1)                       // フィールド表示面の表示優先順位
 #define BG_PRIORITY_SEASON (0)                       // 季節表示面の表示優先順位
 #define ALPHA_MASK_SEASON  (GX_BLEND_PLANEMASK_BG3)  // αブレンディング第一対象面(季節表示)
-#define ALPHA_MASK_FIELD   (GX_BLEND_PLANEMASK_BG0)  // αブレンディング第二対象面(フィールド)
+#define ALPHA_MASK_FIELD   (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ)  // αブレンディング第二対象面(フィールド)
 #define ALPHA_MAX          (16)                      // α最大値
 #define ALPHA_MIN          (0)                       // α最小値
 #define BRIGHT_MAX         (0)                       // 輝度最大値
