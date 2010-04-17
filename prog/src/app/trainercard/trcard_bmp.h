@@ -17,7 +17,7 @@
 //=====================================
 typedef enum {
   TR_ID_DIGIT = 5,    // トレーナーＩＤの桁数
-  MONEY_DIGIT = 6,
+  MONEY_DIGIT = 7,
   MONS_NUM_DIGIT = 3,
   SCORE_DIGIT = 9,
   TIME_H_DIGIT = 3,

@@ -1131,7 +1131,7 @@ static int init_work( SHOP_BUY_APP_WORK *wk, int type )
 #ifdef SHOP_DEBUG_COMMAND
 
   if(GFL_UI_KEY_GetCont()&PAD_BUTTON_L){
-    MISC_SetGold(wk->misc , 999999);
+    MISC_SetGold(wk->misc , 9999999);
     BSUBWAY_SCOREDATA_SetBattlePoint( wk->BpData, 5000 );
   }else if(GFL_UI_KEY_GetCont()&PAD_BUTTON_X){
     type = SCR_SHOPID_BP_ITEM;
@@ -1560,7 +1560,7 @@ static void print_mygold( SHOP_BUY_APP_WORK *wk )
     expand = GFL_STR_CreateBuffer( SHOP_MYGOLD_STR_MAX, wk->heapId );
   
     // Žc‹àŽæ“¾
-    WORDSET_RegisterNumber( wk->wordSet, 0, MISC_GetGold(wk->misc), 6, 
+    WORDSET_RegisterNumber( wk->wordSet, 0, MISC_GetGold(wk->misc), 7, 
                             STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
   }
 

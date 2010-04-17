@@ -15,9 +15,9 @@
 #define WINDOW0_WIN_CHR     (20)
 
 // ？？？？？？円
-#define WINDOW1_WIN_X     (2)
+#define WINDOW1_WIN_X     (1)
 #define WINDOW1_WIN_Y     (3)
-#define WINDOW1_WIN_W     (8)
+#define WINDOW1_WIN_W     (9)
 #define WINDOW1_WIN_H     (2)
 #define WINDOW1_WIN_PAL     (11)
 #define WINDOW1_WIN_CHR     (38)
