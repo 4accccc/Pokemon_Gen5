@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T16:25:09"/>
+	<create user="matsumiya" host="W00224" date="2010-04-17T13:50:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,7 +274,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="150"/>
+		<id position="0" width="177"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -307,14 +307,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1295" top="207" right="2000" bottom="835" maximized="no" rayout="Vertical2">
+	<dialog left="1772" top="250" right="2475" bottom="866" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="695"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -340,7 +340,7 @@
 		<comment>♂
 ・続けてblack_06
 ・ちなみにプラズマ団員は８人配置</comment>
-		<attribute name="キャラ指定">SAGE１
+		<attribute name="キャラ指定">SAGE7
 七賢人その７</attribute>
 		<language name="JPN" width="256">？？？『おまえたち▼
 もっと　ワタシを　くるめ
@@ -368,7 +368,7 @@
 	<row id="msg_d05r0201_sage2_02">
 		<comment>♂
 ・続けてhakaim_01</comment>
-		<attribute name="キャラ指定">SAGE１
+		<attribute name="キャラ指定">SAGE7
 七賢人その７</attribute>
 		<language name="JPN" width="256">？？？『いま　あずかっているのは
 おうの　ともだちである　ポケモン[BE:01:ページ切り替え（クリア）]
@@ -665,25 +665,120 @@
 外に　でるよ▼</language>
 	</row>
 
-	<row id="msg_d05r0201_sage1_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+	<row id="msg_d05r0201_sage1_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
 		<comment>♂
 ・GRIDX=4、GRIDZ=9
-・アイテム入手処理
-　No328「つめとぎ」</comment>
-		<attribute name="キャラ指定">SAGE１
-七賢人その１</attribute>
-		<language name="JPN" width="256">？？？『であったとき▼</language>
-		<language name="JPN_KANJI" width="256">？？？『であったとき▼</language>
+・続けてsage1_end_01a</comment>
+		<attribute name="キャラ指定">SAGE7
+七賢人その７</attribute>
+		<language name="JPN" width="256">？？？『……また　ここに　きたのか？
+ものずきな　トレーナーよ▼
+その　こうきしんに　おうじて
+すこし　かたってやると　するか▼</language>
+		<language name="JPN_KANJI" width="256">？？？『……また　ここに　来たのか？
+物好きな　トレーナーよ▼
+その好奇心に　応じて
+すこし　語ってやると　するか▼</language>
 	</row>
 
-	<row id="msg_d05r0201_sage1_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+	<row id="msg_d05r0201_sage1_end_01a" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+		<comment>♂
+・続けてsage1_end_01b
+※寒いのでウロウロしながら</comment>
+		<attribute name="キャラ指定">SAGE7
+七賢人その７</attribute>
+		<language name="JPN" width="256">……いきを　している
+しんぞうが　うごいている▼
+……それは　いのち　として
+ただ　そんざい　しているだけのこと▼
+ワタシは　それだけでは
+いきていると　かんじられぬ▼</language>
+		<language name="JPN_KANJI" width="256">……呼吸を　している
+心臓が　鼓動を　刻んでいる▼
+それは生命として
+ただ存在している　それだけのこと▼
+ワタシは　それだけでは
+生きているの　感覚を　得られぬ▼</language>
+	</row>
+
+	<row id="msg_d05r0201_sage1_end_01b" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+		<comment>♂
+・続けてsage1_end_01c
+※寒いのでウロウロしながら</comment>
+		<attribute name="キャラ指定">SAGE7
+七賢人その７</attribute>
+		<language name="JPN" width="256">たのしくても　くるしくても
+いきている　ことを▽
+かんじることは　だいじなのだ▼
+ゲーチスさまは
+いきている　という　かんかく▼
+それを　あたえてくださった……
+なにを　したかったか　どうでもいい▼</language>
+		<language name="JPN_KANJI" width="256">楽しくても　苦しくても
+生きている　という▽
+実感は　重要なのだ▼
+ゲーチス様は　生きているという実感
+それを　与えてくださった……▽
+なにを　したかったか　どうでもいい▼</language>
+	</row>
+
+	<row id="msg_d05r0201_sage1_end_01c" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+		<comment>♂
+・続けてsage1_end_01d
+※寒いのでウロウロしながら</comment>
+		<attribute name="キャラ指定">SAGE7
+七賢人その７</attribute>
+		<language name="JPN" width="256">ワタシは　ここで　ふるえている
+くるしいが　いきておる▼</language>
+		<language name="JPN_KANJI" width="256">ワタシは　ここで　震えている
+苦しいが　生きておる▼</language>
+	</row>
+
+	<row id="msg_d05r0201_sage1_end_01d" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+		<comment>♂
+・アイテム入手処理
+　No328「つめとぎ」
+※寒いのでウロウロしながら</comment>
+		<attribute name="キャラ指定">SAGE7
+七賢人その７</attribute>
+		<language name="JPN" width="256">……ポケモンも　ひとも　よりそいあい
+たよりあうことで　いきている……▽
+そう　かんじているのかも　しれぬ▼
+ならば　ポケモンを
+ときはなつ　ひつようは　ないのか……？▼
+オマエに　かたることで
+これから　かんがえるべき▽
+もんだいが　みえてきた……▼
+おれいといっては　なんだが
+コレを　くれてやろう▼</language>
+		<language name="JPN_KANJI" width="256">……ポケモンも　人も　寄り添いあい
+頼りあうことで　生きている……▽
+そう　感じているのかも　しれぬ▼
+ならば　ポケモンを
+解き放つ　必要は　ないのか……？▼
+オマエに　語ることで
+これから　考えるべき▽
+問題が　表層化してきた……▼
+礼といっては　なんだが
+コレを　くれてやろう▼</language>
+	</row>
+
+	<row id="msg_d05r0201_sage1_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
 		<comment>♂
 ・アイテム入手後自動で表示
 ・続けてicpo_end_01</comment>
-		<attribute name="キャラ指定">SAGE１
-七賢人その１</attribute>
-		<language name="JPN" width="256">？？？『アイテムをくれたあと▼</language>
-		<language name="JPN_KANJI" width="256">？？？『アイテムをくれたあと▼</language>
+		<attribute name="キャラ指定">SAGE7
+七賢人その７</attribute>
+		<language name="JPN" width="256">？？？『Ｎさまは　いわれた……
+ポケモンを　かんぜんに　したいと▼
+いまの　ひとと　ポケモンの
+かんけいでも　ポケモンは▽
+かんぜんを　めざせるのかもな……▼</language>
+		<language name="JPN_KANJI" width="256">？？？『Ｎさまは　いわれた……
+ポケモンを　完全に　したいと▼
+現状の　人と　ポケモンの　関係でも
+ポケモンは　完全な▽
+存在を　めざせるのかもな……▼</language>
 	</row>
 
 	<row id="msg_d05r0201_icpo_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -702,15 +797,23 @@
 いろいろ　教えてもらおう！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_sage1_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+	<row id="msg_d05r0201_sage1_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
 		<comment>♂
 ・続けて七賢人
 　6人と会っていない→icpo_end_02
 　6人と会っている→icpo_end_03</comment>
-		<attribute name="キャラ指定">SAGE１
-七賢人その１</attribute>
-		<language name="JPN" width="256">？？？『かまわんよ▼</language>
-		<language name="JPN_KANJI" width="256">？？？『かまわんよ▼</language>
+		<attribute name="キャラ指定">SAGE7
+七賢人その７</attribute>
+		<language name="JPN" width="256">？？？『ココは　さむすぎて
+もう　ふるえるのは　あきた▼
+かんがえる　じかんを　くれるなら
+はなせることは　はなしてやろう▽
+だから　つれてゆけ▼</language>
+		<language name="JPN_KANJI" width="256">？？？『ココは　寒すぎて
+もう　震えるのは　あきた▼
+考える　時間を　くれるなら
+話せることは　話してやろう▽
+だから　連れてゆけ▼</language>
 	</row>
 
 	<row id="msg_d05r0201_icpo_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -723,7 +826,7 @@
 		<language name="JPN_KANJI" width="256">ハンサム『ありがとう▼</language>
 	</row>
 
-	<row id="msg_d05r0201_icpo_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d05r0201_icpo_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・6人の七賢人とであったとき
 ・メッセージ表示後
@@ -733,21 +836,23 @@
 		<language name="JPN" width="256">ハンサム『ありがとう！▼
 さて　[1:00:トレーナー名:0]……
 きみに　つたえることが　ある▼
-Ｎらしき　じんぶつが
+ここより　はるか　とおくで
+Ｎらしき　じんぶつが▽
 ドラゴンポケモンと　いるのを▽
 みたという　じょうほうが　あった▼
 わたしは　じょうほうが　ただしいか
 たしかめに　いくつもりだよ▽
-では　また　いつかあおう！▼</language>
+では　また　いつか　あおう！▼</language>
 		<language name="JPN_KANJI" width="256">ハンサム『ありがとう！▼
 さて　[1:00:トレーナー名:0]……
 きみに　伝えることが　ある▼
+ここより　はるか　遠方で
 Ｎらしき　人物が
 ドラゴンポケモンと　いるのを▽
 みたという　情報が　あった▼
 わたしは　情報の　真偽を
 確かめに　いくつもりだよ▽
-では　また　いつか会おう！▼</language>
+では　また　いつか　会おう！▼</language>
 	</row>
 
 	<flowchart-group-list>
