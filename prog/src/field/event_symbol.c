@@ -31,6 +31,7 @@
 
 #include "field/field_const.h"
 #include "symbol_map.h"
+#include "item/itemsym.h"
 
 
 //==============================================================================
@@ -244,6 +245,9 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
     { // サブプロセス呼び出しイベント
       GMEVENT* ev_sub;
       SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
+
+      //ドリームボールをバッグに加える
+      MYITEM_AddItem( GAMEDATA_GetMyItem(gamedata), ITEM_DORIIMUBOORU, 1, esb->heap_id );
       
       GFL_OVERLAY_Load( FS_OVERLAY_ID(pdc) );
       esb->pdc_setup = PDC_MakeSetUpParam( esb->pp, &esb->bfs, 
@@ -275,6 +279,9 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
         esb->pdcret = PDCRET_AllocParam( gamedata, pdc_result, esb->pp, esb->heap_id );
         GMEVENT_CallProc( event, NO_OVERLAY_ID, &PDCRET_ProcData, esb->pdcret );
       }
+      
+      //ドリームボールをアイテムから外す
+      MYITEM_SubItem( GAMEDATA_GetMyItem(gamedata), ITEM_DORIIMUBOORU, 1, esb->heap_id );
     }
     (*seq)++;
     break;
