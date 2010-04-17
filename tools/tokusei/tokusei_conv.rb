@@ -63,10 +63,10 @@ end
   #GMM
   tokuname_gmm = GMM::new
   tokuname_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "tokusei.gmm" )
-  tokuname_gmm.make_row_index( "TOKUSEI_", 0, "|" )
+  tokuname_gmm.make_row_index_kanji_hyphen( "TOKUSEI_", 0, 1, 0 )
   tokuinfo_gmm = GMM::new
   tokuinfo_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "tokuseiinfo.gmm" )
-  tokuinfo_gmm.make_row_index_kanji( "TOKUSEIINFO_", 0, "|\r|", "|\r|" )
+  tokuinfo_gmm.make_row_index_kanji_hyphen( "TOKUSEIINFO_", 0, 2, 1 )
 
   cnt = 1
 
@@ -82,7 +82,7 @@ end
     end
     fp_tokuno.printf( "( %d )\t\t//%s\n", cnt, split_data[ PARA::NAME ] )
     fp_hash.printf("\t\t\"%s\"=>%d,\n", split_data[ PARA::NAME ], cnt )
-    tokuname_gmm.make_row_index( "TOKUSEI_", cnt, split_data[ PARA::NAME ] )
+    tokuname_gmm.make_row_index_kanji( "TOKUSEI_", cnt, split_data[ PARA::NAME ], split_data[ PARA::NAME ] )
     if split_data[ PARA::INFO1 ] == nil
       info1 = ""
     else
