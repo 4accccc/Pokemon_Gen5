@@ -142,6 +142,88 @@ class GMM
 
   #===========================================================================
   #
+  # rowデータを作成（ハイフンのみ）
+  # ハイフンのunicode変換がうまくいかないので、文字コード直書きしています
+  #
+  # @param[in]  label   ラベル名
+  # @param[in]  cnt     labelにくっつける連番
+  # @param[in]  value   ハイフンの数
+  # @param[in]  cr_cnt  ハイフンをいくつ書いたら改行を差し込むか
+  #
+  #===========================================================================
+  def make_row_index_hyphen( label, cnt, value, cr_cnt )
+    cr = 0
+
+    label = sprintf( "%s%03d", label, cnt )
+    @fp_gmm_w.printf( "\t<row id=\"%s\">\r\n", label )
+
+    @fp_gmm_w.printf( "\t\t<language name=\"JPN\" width=\"%d\">", @width_value )
+    data = [ 0xff0d ].pack( "s" )
+    for i in 1..value
+	    data.size.times{ |c|
+          @fp_gmm_w.printf( "%c",data[ c ] )
+	    }
+      cr += 1
+      if cr == cr_cnt
+        cr = 0
+        @fp_gmm_w.printf( "\r" )
+      end
+    end
+    @fp_gmm_w.printf( "</language>\r\n" )
+
+    @fp_gmm_w.print "\t</row>\r\n\r\n"
+  end
+
+  #===========================================================================
+  #
+  # rowデータを作成（ハイフンのみ）
+  # ハイフンのunicode変換がうまくいかないので、文字コード直書きしています
+  #
+  # @param[in]  label ラベル名
+  # @param[in]  cnt   labelにくっつける連番
+  # @param[in]  value ハイフンの数
+  # @param[in]  cr_cnt  ハイフンをいくつ書いたら改行を差し込むか
+  #
+  #===========================================================================
+  def make_row_index_kanji_hyphen( label, cnt, value, cr_cnt )
+    cr = 0
+
+    label = sprintf( "%s%03d", label, cnt )
+    @fp_gmm_w.printf( "\t<row id=\"%s\">\r\n", label )
+
+    @fp_gmm_w.printf( "\t\t<language name=\"JPN\" width=\"%d\">", @width_value )
+    data = [ 0xef, 0xbc, 0x8d ].pack( "c3" )
+    for i in 1..value
+	    data.size.times{ |c|
+          @fp_gmm_w.printf( "%c",data[ c ] )
+	    }
+      cr += 1
+      if cr == cr_cnt && i != value
+        cr = 0
+        @fp_gmm_w.printf( "\r" )
+      end
+    end
+    @fp_gmm_w.printf( "</language>\r\n" )
+
+    cr = 0
+    @fp_gmm_w.printf( "\t\t<language name=\"JPN_KANJI\" width=\"%d\">", @width_value )
+    for i in 1..value
+	    data.size.times{ |c|
+          @fp_gmm_w.printf( "%c",data[ c ] )
+	    }
+      cr += 1
+      if cr == cr_cnt && i != value
+        cr = 0
+        @fp_gmm_w.printf( "\r" )
+      end
+    end
+    @fp_gmm_w.printf( "</language>\r\n" )
+
+    @fp_gmm_w.print "\t</row>\r\n\r\n"
+  end
+
+  #===========================================================================
+  #
   # gmmのフッタを作成
   #
   #===========================================================================
