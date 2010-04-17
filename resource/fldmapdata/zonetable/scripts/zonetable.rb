@@ -14,7 +14,7 @@
 $KCODE="SJIS"
 
 # $zone_spec‚Ì’è‹`
-require "../../batt_bg_tbl/zone_spec.rb"
+require "../../../tools/hash/zone_spec.rb"
 
 class ZoneIDError < Exception; end
 #------------------------------------------------
