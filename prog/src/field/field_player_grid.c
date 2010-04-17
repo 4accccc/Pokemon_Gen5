@@ -669,7 +669,7 @@ static BOOL gjiki_PlaySECore(
     }
     
     if( se == SEQ_SE_DUMMY ){
-      if( next == TRUE ){ //ˆÚ“®æSEÄ¶–³‚µ
+      if( next == TRUE ){     //ˆÚ“®æSEÄ¶–³‚µ
         gjiki->dash_play_se_count = 0;
       }
     }else{
