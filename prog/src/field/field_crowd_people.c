@@ -1043,8 +1043,8 @@ static void FIELD_CROWD_PEOPLE_WK_SetUpNasty( FIELD_CROWD_PEOPLE_WK* p_wk )
   MMDL_SetStatusBitAttrGetOFF( p_wk->p_mmdl, TRUE );    // アトリビュート取得OFF
   MMDL_SetStatusBitFellowHit( p_wk->p_mmdl, TRUE );    // 他のオブジェとの判定 ON
 
-  // イベント起動なし
-  MMDL_SetEventID( p_wk->p_mmdl, p_wk->event_id );
+  // 最初は、イベント起動なし
+  MMDL_SetEventID( p_wk->p_mmdl, SCRID_DUMMY );
 }
 
 //----------------------------------------------------------------------------
@@ -1202,7 +1202,10 @@ static void FIELD_CROWD_PEOPLE_WK_MainNasty( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSY
     // 主人公とぶつかるかチェック
     if( FIELD_CROWD_PEOPLE_WK_IsFrontPlayer( p_wk, FIELD_PLAYER_GetMMdl(cp_player), FIELD_CROWD_PEOPLE_WK_PLAYER_HIT_NASTY_GRID ) )
     {
-      // ぶつかるなら何もしない
+      // ぶつかるときにしか話しかけられない。
+      // イベント起動あり。
+      MMDL_SetEventID( p_wk->p_mmdl, p_wk->event_id );
+
       break;
     }
     else
@@ -1210,6 +1213,10 @@ static void FIELD_CROWD_PEOPLE_WK_MainNasty( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSY
       // そのまま進む
       MMDL_SetAcmd( p_wk->p_mmdl, p_wk->move_acmd + p_wk->move_dir );
       p_wk->move_grid --; // 移動距離減算
+
+      // 移動中は、イベント起動なし
+      MMDL_SetEventID( p_wk->p_mmdl, SCRID_DUMMY );
+
     }
     p_wk->seq = FIELD_CROWD_PEOPLE_SEQ_NASTY_WALKWAIT;
     break;
