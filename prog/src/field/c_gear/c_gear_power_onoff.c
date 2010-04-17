@@ -270,7 +270,8 @@ static BOOL PowerOnOff_PrintStreamUpdate( CGEAR_POWER_ONOFF* p_sys, GFL_BMPWIN* 
 // ボタン
 static void PowerOnOff_CreateYesNo( CGEAR_POWER_ONOFF* p_sys, HEAPID heapID );
 static void PowerOnOff_DeleteYesNo( CGEAR_POWER_ONOFF* p_sys );
-static BOOL PowerOnOff_UpdateYesNo( CGEAR_POWER_ONOFF* p_sys );
+static void PowerOnOff_UpdateYesNo( CGEAR_POWER_ONOFF* p_sys );
+static BOOL PowerOnOff_IsYesNoEnd( const CGEAR_POWER_ONOFF* cp_sys );
 static u32 PowerOnOff_GetYesNo( const CGEAR_POWER_ONOFF* p_sys );
 
 // それぞれのメインシーケンス
@@ -365,6 +366,9 @@ void CGEAR_POWER_ONOFF_Main( CGEAR_POWER_ONOFF* p_sys, BOOL active )
   {
     FIELD_SUBSCREEN_SetAction( p_sys->p_subscreen, FIELD_SUBSCREEN_ACTION_CGEAR_POWER_EXIT );
   }
+
+  // キューメイン
+  PRINTSYS_QUE_Main( p_sys->p_printQue );
 }
 
 
@@ -437,6 +441,7 @@ static void PowerOnOff_ExitGraphic( CGEAR_POWER_ONOFF* p_sys )
 
 
   // プリントキュー
+  PRINTSYS_QUE_Clear( p_sys->p_printQue );
   PRINTSYS_QUE_Delete( p_sys->p_printQue );
 
   // メッセージ
@@ -761,15 +766,13 @@ static void PowerOnOff_DeleteYesNo( CGEAR_POWER_ONOFF* p_sys )
  *	@brief  ボタン結果まち
  *
  *	@param	p_sys 
- *
- *	@retval TRUE  完了
- *	@retval FALSE 途中
  */
 //-----------------------------------------------------------------------------
-static BOOL PowerOnOff_UpdateYesNo( CGEAR_POWER_ONOFF* p_sys )
+static void PowerOnOff_UpdateYesNo( CGEAR_POWER_ONOFF* p_sys )
 {
-  APP_TASKMENU_UpdateMenu( p_sys->p_yesno );
-  return APP_TASKMENU_IsFinish( p_sys->p_yesno );
+  if( p_sys->p_yesno ){
+    APP_TASKMENU_UpdateMenu( p_sys->p_yesno );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -784,6 +787,21 @@ static BOOL PowerOnOff_UpdateYesNo( CGEAR_POWER_ONOFF* p_sys )
 static u32 PowerOnOff_GetYesNo( const CGEAR_POWER_ONOFF* p_sys )
 {
   return APP_TASKMENU_GetCursorPos( p_sys->p_yesno );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  はい　いいえ　処理の完了待ち
+ *
+ *	@param	cp_sys 
+ *
+ *	@retval TRUE    はい
+ *	@retval FALSE   いいえ
+ */
+//-----------------------------------------------------------------------------
+static BOOL PowerOnOff_IsYesNoEnd( const CGEAR_POWER_ONOFF* cp_sys )
+{
+  return APP_TASKMENU_IsFinish( cp_sys->p_yesno );
 }
 
 
@@ -817,7 +835,7 @@ static BOOL PowerOnOff_UpdateOn( CGEAR_POWER_ONOFF* p_sys )
     break;
 
   case SEQ_ON_YESNO_WAIT:
-    if( PowerOnOff_UpdateYesNo( p_sys ) ){
+    if( PowerOnOff_IsYesNoEnd( p_sys ) ){
       if( PowerOnOff_GetYesNo( p_sys ) == YESNO_LIST_YES ){
         // オン
         GAMESYSTEM_SetAlwaysNetFlag( p_sys->p_gamesys, TRUE );
@@ -853,6 +871,8 @@ static BOOL PowerOnOff_UpdateOn( CGEAR_POWER_ONOFF* p_sys )
 
   }
 
+  PowerOnOff_UpdateYesNo( p_sys );
+
   return FALSE;
 }
 
@@ -880,7 +900,7 @@ static BOOL PowerOnOff_UpdateOff( CGEAR_POWER_ONOFF* p_sys )
     break;
 
   case SEQ_OFF_YESNO_WAIT:
-    if( PowerOnOff_UpdateYesNo( p_sys ) ){
+    if( PowerOnOff_IsYesNoEnd( p_sys ) ){
       if( PowerOnOff_GetYesNo( p_sys ) == YESNO_LIST_YES ){
         // オフ
         if( GameCommSys_BootCheck( p_sys->p_gamecomm ) != GAME_COMM_NO_NULL ){
@@ -909,6 +929,8 @@ static BOOL PowerOnOff_UpdateOff( CGEAR_POWER_ONOFF* p_sys )
   case SEQ_OFF_END:
     return TRUE;
   }
+
+  PowerOnOff_UpdateYesNo( p_sys );
 
   return FALSE;
 }

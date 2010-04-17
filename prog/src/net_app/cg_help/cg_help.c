@@ -261,6 +261,10 @@ static const BOOL CG_HELP_Main( CG_HELP_WORK *work )
   }
 
   GFL_BG_SetScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_DEC, 1 );
+
+  // QUEƒƒCƒ“
+  PRINTSYS_QUE_Main( work->printQue );
+  
   
   //OBJ‚ÌXV
   GFL_CLACT_SYS_Main();
