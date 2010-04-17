@@ -60,7 +60,7 @@
 #include "app/mailtool.h"
 
 #include "spahead.h"
-
+#include "savedata/perapvoice.h"
 
 static void _changeDemo_ModelTrade20(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork);
@@ -150,9 +150,11 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
 
 
   
-  if((pWork->type == POKEMONTRADE_TYPE_GTSDOWN) ||
-     (pWork->type == POKEMONTRADE_TYPE_GTSMID)){
+  if(pWork->type == POKEMONTRADE_TYPE_GTSDOWN){
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_20, pWork->pMessageStrBufEx );
+  }
+  else if(pWork->type == POKEMONTRADE_TYPE_GTSMID){
+    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_23, pWork->pMessageStrBufEx );
   }
   else if(pWork->bEncountMessageEach){
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_30, pWork->pMessageStrBufEx );
@@ -486,10 +488,44 @@ static void _removeCallback(void* pW)
                     BOXTRAYDAT_GetTrayData(pWork->pBox, pWork->pParentWork->selectBoxno),
                     BOXTRAYDAT_GetTotalSize());
   }
+  if(pWork->aBackup.bVoice){
+    PERAPVOICE_SetExistFlag(GAMEDATA_GetPerapVoice(pWork->pGameData));
+  }
   GFL_STD_MemClear(&pWork->aBackup,sizeof(SAVEREV_BACKUP));
  // OS_TPrintf("巻き戻し\n");
 }
 
+
+//交換専用ぺラップボイス処理
+static BOOL _deletePerapVoice(POKEMON_TRADE_WORK* pWork, const POKEPARTY * party,int changepos)
+{
+  int num, count=0,i;
+  PERAPVOICE* pVoice = GAMEDATA_GetPerapVoice(pWork->pGameData);
+
+  if(!PERAPVOICE_GetExistFlag(pVoice)){
+    NET_PRINT("こえない\n");
+    return FALSE;
+  }
+  // 手持ちパーティにペラップがいるかチェックする
+  num = PokeParty_GetPokeCount(party);
+  for(i=0;i<num;i++){
+    if(PP_Get( PokeParty_GetMemberPointer(party,i), ID_PARA_monsno, NULL)==MONSNO_PERAPPU){
+      count++;
+    }
+  }
+  if(count != 1){  //一匹でなければ平気
+    NET_PRINT("一匹でなければ平気\n");
+    return FALSE;
+  }
+  //交換する場所がぺラップかどうか
+  if(PP_Get( PokeParty_GetMemberPointer(party,changepos), ID_PARA_monsno, NULL)==MONSNO_PERAPPU){
+    PERAPVOICE_ClearExistFlag(pVoice); //消す
+    NET_PRINT("けした\n");
+    return TRUE;
+  }
+  NET_PRINT("ぺラップの交換で無い\n");
+  return FALSE;
+}
 
 
 
@@ -503,7 +539,7 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
 //ネゴシエーション履歴をもどす
   //ポケモンを戻す
 
-  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+  if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
     ///---バックアップ
     pWork->aBackup.pMail = MAIL_BackupMailBlock(pWork->pGameData, pWork->heapID);
     pWork->aBackup.pRecord = RECORD_BackupBlock(pWork->pGameData, pWork->heapID);
@@ -514,11 +550,17 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
     if(pWork->pParentWork->selectBoxno == BOXDAT_GetTrayMax(pWork->pBox)){ //てもちの交換の場合
       pWork->aBackup.pPokeParty = PokeParty_AllocPartyWork( pWork->heapID );
       PokeParty_Copy(pWork->pMyParty, pWork->aBackup.pPokeParty);
+      pWork->aBackup.bVoice = _deletePerapVoice(pWork, pWork->pMyParty,pWork->pParentWork->selectIndex);
     }
     else{
       pWork->aBackup.pBoxTray = GFL_HEAP_AllocMemory(pWork->heapID,BOXDAT_GetOneBoxDataSize());
       GFL_STD_MemCopy(BOXTRAYDAT_GetTrayData(pWork->pBox, pWork->pParentWork->selectBoxno),
                       pWork->aBackup.pBoxTray,BOXDAT_GetOneBoxDataSize());
+    }
+  }
+  else{
+    if(pWork->pParentWork->selectBoxno == BOXDAT_GetTrayMax(pWork->pBox)){ //てもちの交換の場合
+      _deletePerapVoice(pWork, pWork->pMyParty,pWork->pParentWork->selectIndex);
     }
   }
   //---
@@ -556,8 +598,6 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
       break;
     }
 
-    //国連
-    
     
     //ずかん
     ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave( pWork->pGameData ), pp );

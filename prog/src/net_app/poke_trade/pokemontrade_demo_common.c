@@ -1,5 +1,5 @@
 #include "msg/msg_poke_trade.h"
-
+#include "sound/pm_wb_voice.h"
 
 
 
@@ -118,30 +118,56 @@ static void _jumpSeStrat(int count)
  */
 //------------------------------------------------------------------
 
-static void _apperFlgCheck(POKEMON_TRADE_WORK* pWork, u8* msg,u8* nojump,MYSTATUS* pMystatus)
+static void _apperFlgCheck(POKEMON_TRADE_WORK* pWork, u8* msg,u8* nojump,MYSTATUS* pMystatus, BOOL bBye)
 {
-  POKEMON_PARAM* pp= IRC_POKEMONTRADE_GetRecvPP(pWork, POKEMONTRADEPROC_IsTriSelect(pWork));
-  int id = PP_Get(pp,ID_PARA_id_no,NULL);
-  int monsno = PP_Get(pp,ID_PARA_monsno_egg,NULL);
-  int frm = PP_Get( pp, ID_PARA_form_no, NULL );
-  BOOL nojimpflg;
-
+#if 1
+  int select;
+  if(bBye){ //帰るほう
+    if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+      select = 1;
+    }
+    else{
+      select = 0;
+    }
+  }
+  else{//おくるほう
+    if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+      select = 0;
+    }
+    else{
+      select = 1;
+    }
+  }
+#endif
+  
   {
-    POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle(monsno, frm, pWork->heapID);
-    nojimpflg = POKE_PERSONAL_GetParam(ppd, POKEPER_ID_no_jump);
-    POKE_PERSONAL_CloseHandle(ppd);
-  }
-  if( PP_Get(pp,ID_PARA_tamago_flag,NULL) ){
-    *nojump = TRUE;
-  }
-  else if(nojimpflg){
-    *nojump = TRUE;
-  }
-  if(MyStatus_GetID(pMystatus) != id){
-    *msg = FALSE;
-  }
-  else{
-    *msg = TRUE;
+    POKEMON_PARAM* pp= IRC_POKEMONTRADE_GetRecvPP(pWork, POKEMONTRADEPROC_IsTriSelect(pWork));
+    u32 id = PP_Get(pp,ID_PARA_id_no,NULL);
+    int monsno = PP_Get(pp,ID_PARA_monsno_egg,NULL);
+    int frm = PP_Get( pp, ID_PARA_form_no, NULL );
+    BOOL nojimpflg;
+
+    {
+      POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle(monsno, frm, pWork->heapID);
+      nojimpflg = POKE_PERSONAL_GetParam(ppd, POKEPER_ID_no_jump);
+      POKE_PERSONAL_CloseHandle(ppd);
+    }
+    if( PP_Get(pp,ID_PARA_tamago_flag,NULL) ){
+      *nojump = TRUE;
+    }
+    else if(nojimpflg){
+      *nojump = TRUE;
+    }
+    else{
+      *nojump = FALSE;
+    }
+    NET_PRINT("Status %d Pokemon %d\n", MyStatus_GetID(pMystatus), id);
+    if(MyStatus_GetID(pMystatus) != id){
+      *msg = FALSE;
+    }
+    else{
+      *msg = TRUE;
+    }
   }
 }
 
@@ -278,8 +304,10 @@ static void _changeDemo_ModelT1(POKEMON_TRADE_WORK* pWork)
 
   ///フラグ設定
   {
-    _apperFlgCheck(pWork, &pWork->bByebyeMessageEach, &pWork->bByebyeNoJump, pWork->pFriend);
-    _apperFlgCheck(pWork, &pWork->bEncountMessageEach, &pWork->bEncountNoJump, pWork->pMy);
+    _apperFlgCheck(pWork, &pWork->bByebyeMessageEach, &pWork->bByebyeNoJump, pWork->pFriend, TRUE);
+    NET_PRINT("さよならメッセージ %d\n",pWork->bByebyeMessageEach);
+    _apperFlgCheck(pWork, &pWork->bEncountMessageEach, &pWork->bEncountNoJump, pWork->pMy, FALSE);
+    NET_PRINT("おかえりメッセージ %d\n",pWork->bEncountMessageEach);
   }
 
   IRC_POKETRADEDEMO_RemoveModel(pWork);
@@ -376,7 +404,9 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
       if(! PP_Get(pp,ID_PARA_tamago_flag,NULL) ){
         int monsno = PP_Get(pp,ID_PARA_monsno_egg,NULL);
         int formno = PP_Get(pp,ID_PARA_form_no,NULL);
-        PMVOICE_Play( monsno, formno, 64, FALSE, 0, 0, FALSE, 0 );
+        PMV_REF pmvRef;
+        PMV_MakeRefDataMine( &pmvRef );
+        PMVOICE_Play( monsno, formno, 64, FALSE, 0, 0, FALSE, (u32)&pmvRef );
       }
       if(pWork->pMoveMcss[0]){
         GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
@@ -427,9 +457,11 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
 
 static void _byebyeMessage(POKEMON_TRADE_WORK* pWork)
 {
-  if((pWork->type == POKEMONTRADE_TYPE_GTSUP) ||
-     (pWork->type == POKEMONTRADE_TYPE_GTSMID)){
+  if(pWork->type == POKEMONTRADE_TYPE_GTSUP){
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_19, pWork->pMessageStrBufEx );
+  }
+  else if(pWork->type == POKEMONTRADE_TYPE_GTSMID){
+    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_22, pWork->pMessageStrBufEx );
   }
   else if(pWork->bByebyeMessageEach){
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_29, pWork->pMessageStrBufEx );

@@ -1403,7 +1403,7 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
   }
   if((pWork->changeFactor[myID]==POKETRADE_FACTOR_SINGLECHANGE) &&
      (pWork->changeFactor[targetID]==POKETRADE_FACTOR_SINGLECHANGE)){
-    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_13, pWork->pMessageStrBufEx );
+    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_20, pWork->pMessageStrBufEx );
     for(i=0;i<2;i++){
       POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, i);
       WORDSET_RegisterPokeNickName( pWork->pWordSet, i,  pp );

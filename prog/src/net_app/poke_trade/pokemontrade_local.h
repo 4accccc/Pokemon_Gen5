@@ -481,15 +481,17 @@ typedef struct
 } PENMOVE_WORK;
 
 
+/// 巻き戻しようバックアップ構造体
 typedef struct
 {
-  MAIL_BLOCK* pMail;
+  MAIL_BLOCK* pMail;     
   RECORD* pRecord;
   WIFI_HISTORY* pWifiHis;
   ZUKAN_SAVEDATA* pZukan;
   WIFI_NEGOTIATION_SAVEDATA* pNego;
   POKEPARTY* pPokeParty;
   BOX_TRAY_DATA* pBoxTray;
+  BOOL bVoice;
 } SAVEREV_BACKUP;
 
 

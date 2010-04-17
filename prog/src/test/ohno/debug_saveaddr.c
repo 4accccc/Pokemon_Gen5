@@ -136,6 +136,78 @@ static void _changeStateDebug(SAVEADDR_WORK* pWork,StateFunc state, int line)
 
 
 
+#if 0    //図鑑のバイナリデータを作る
+
+#include "include/savedata/zukan_wp_savedata.h"
+#include "zukan_gra.naix"
+
+// セーブデータ
+typedef struct  {
+	// カスタムグラフィックキャラ
+	u8	customChar[ZUKANWP_SAVEDATA_CHAR_SIZE];
+	// カスタムグラフィックパレット
+	u16	customPalette[ZUKANWP_SAVEDATA_PAL_SIZE];
+	// データ有無フラグ
+	BOOL	flg;
+} TESTZUKAN_DATA;
+
+
+
+static void _dataPrint(u8* pU8, int size)
+{
+  int i;
+
+  for(i=0;i<size;i++){
+    OS_TPrintf("0x%x ",pU8[i]);
+    if((i%16)==15){
+      OS_TPrintf("\n");
+    }
+  }
+}
+
+
+
+static BOOL zukandummydata( SAVEADDR_WORK *pWork )
+{
+  int size,i;
+  u16 crc=0;
+  ARCHANDLE* p_handle;
+  NNSG2dCharacterData* charData;
+  NNSG2dPaletteData* palData;
+  NNSG2dScreenData* pScrData;
+  void* pArc;
+  u8* pPic = GFL_HEAP_AllocMemory(HEAPID_PROC,SAVESIZE_EXTRA_ZUKAN_WALLPAPER);
+
+  p_handle = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_PROC );
+
+  pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_zukan_gra_top_zkn_top_dummy_NCGR, FALSE, HEAPID_PROC);
+  if( NNS_G2dGetUnpackedBGCharacterData( pArc, &charData ) ){
+    _dataPrint(charData->pRawData, ZUKANWP_SAVEDATA_CHAR_SIZE);
+    GFL_STD_MemCopy(charData->pRawData, pPic, ZUKANWP_SAVEDATA_CHAR_SIZE);
+  }
+  GFL_HEAP_FreeMemory(pArc);
+
+  pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_zukan_gra_top_zkn_top_bg_NCLR, FALSE, HEAPID_PROC);
+  if( NNS_G2dGetUnpackedPaletteData( pArc, &palData ) ){
+    _dataPrint(palData->pRawData, 32*16);
+    GFL_STD_MemCopy(charData->pRawData, &pPic[ZUKANWP_SAVEDATA_CHAR_SIZE], 32*16);
+  }
+  GFL_HEAP_FreeMemory(pArc);
+
+  GFL_ARC_CloseDataHandle( p_handle );
+
+  size = ZUKANWP_SAVEDATA_CHAR_SIZE+ZUKANWP_SAVEDATA_PAL_SIZE*2;
+  crc = GFL_STD_CrcCalc( pPic, size );
+
+  OS_TPrintf("-----%x \n",crc);
+
+  GFL_HEAP_FreeMemory(pPic);
+
+  return( FALSE );
+}
+
+
+#endif
 //------------------------------------------------------------------------------
 /**
  * @brief   セーブデータのアドレス
