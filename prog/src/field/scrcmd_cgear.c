@@ -48,11 +48,12 @@
 #define BMPWIN_POS_Y  (1)
 #define BMPWIN_POS_SIZX  (30)
 #define BMPWIN_POS_SIZY  (10)
-#define BMPWIN_PAL  (11)
+#define BMPWIN_CHARPOS  (64)  // スクリプトでのメニュー表示処理とかぶらないように、独自に設定
+#define BMPWIN_PAL  (14)
 
 #define FRAME_PAL  (13)
 
-#define USE_FRAME ( GFL_BG_FRAME1_M )
+#define USE_FRAME ( GFL_BG_FRAME2_M )
 
 //-----------------------------------------------------------------------------
 /**
@@ -81,14 +82,14 @@ VMCMD_RESULT EvCmdCallCGearCommentPut( VMHANDLE *core, void *wk )
   
   if( on_flag ){
 
-    FLDMSGBG_TransResource( USE_FRAME, heapID );
+    //FLDMSGBG_TransResource( USE_FRAME, heapID );
 
     // ON
     p_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_cg_power_dat, heapID );
 
 
-    p_bmp = GFL_BMPWIN_Create( USE_FRAME, BMPWIN_POS_X, BMPWIN_POS_Y, 
-        BMPWIN_POS_SIZX, BMPWIN_POS_SIZY, BMPWIN_PAL , GFL_BMP_CHRAREA_GET_B );
+    p_bmp = GFL_BMPWIN_CreateFixPos( USE_FRAME, BMPWIN_POS_X, BMPWIN_POS_Y, 
+        BMPWIN_POS_SIZX, BMPWIN_POS_SIZY, BMPWIN_PAL , BMPWIN_CHARPOS );
 
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_bmp ), 15 );
     GFL_BMPWIN_MakeScreen( p_bmp );
