@@ -42,6 +42,7 @@
 #include "savedata/dreamworld_data.h"  //DREAMWORLD_SAVEDATA
 #include "savedata/dendou_save.h"      // DENDOU_RECORD
 #include "savedata/perapvoice.h"       // PERAPVOICE
+#include "savedata/playtime.h"         // PLAYTIME
 
 #include "field/bsubway_scr_proc.h"
 
@@ -781,6 +782,18 @@ extern void GAMEDATA_PlayTimeCountUp(GAMEDATA *gamedata, u32 value);
  */
 //==================================================================
 extern void GAMEDATA_PlayTimeSetSaveTime(GAMEDATA *gamedata);
+
+
+//==================================================================
+/**
+ * PLAYTIME éÊìæ 
+ *
+ * @param   gamedata    
+ *
+ * @return PLAYTIME (GAMEDATAê∂ê¨éûÇ…allocÇµÇΩÉèÅ[ÉN)
+ */
+//==================================================================
+extern PLAYTIME* GAMEDATA_GetPlayTimeWork(GAMEDATA *gamedata);
 
 
 

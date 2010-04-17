@@ -1954,6 +1954,19 @@ void GAMEDATA_PlayTimeSetSaveTime(GAMEDATA *gamedata)
   PLAYTIME_SetSaveTime( gamedata->playtime );
 }
 
+//==================================================================
+/**
+ * PLAYTIME Žæ“¾ 
+ *
+ * @param   gamedata    
+ *
+ * @return PLAYTIME (GAMEDATA¶¬Žž‚Éalloc‚µ‚½ƒ[ƒN)
+ */
+//==================================================================
+extern PLAYTIME* GAMEDATA_GetPlayTimeWork(GAMEDATA *gamedata)
+{
+  return gamedata->playtime;
+}
 
 
 //----------------------------------------------------------------------------
