@@ -553,7 +553,7 @@ static void _sub_BGResInit( BEACON_DETAIL_WORK* wk, HEAPID heapID )
 
   //ウィンドウカラー再転送用パレット
   wk->resPlttPanel.buf = GFL_ARC_LoadDataAllocByHandle( wk->handle, 
-                              NARC_beacon_status_bstatus_panel_nclr, wk->heapID );
+                              NARC_beacon_status_bdetail_panel_nclr, wk->heapID );
 
   NNS_G2dGetUnpackedPaletteData( wk->resPlttPanel.buf, &wk->resPlttPanel.p_pltt );
   wk->resPlttPanel.dat = (u16*)wk->resPlttPanel.p_pltt->pRawData;

@@ -467,7 +467,7 @@ static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u1
     sub_PlttVramTrans( pal, FADE_SUB_BG, 16*idx+0x01, 2);
 
     col_idx = sub_WinFrameColorGet( info );
-    sub_PlttVramTrans( &wk->resPlttPanel.dat[3*col_idx], FADE_SUB_BG, 16*idx+0x0B, 1);
+    sub_PlttVramTrans( &wk->resPlttPanel.dat[col_idx*16], FADE_SUB_BG, 16*idx+0x0A, 2);
   }
 
   //ƒvƒŒƒCƒ„[–¼
