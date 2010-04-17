@@ -1136,7 +1136,7 @@ static void DeleteResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *ioDat)
 //--------------------------------------------------------------------------------------------
 static void Generate(FLD3D_CI_PTR ptr, const u32 inResNo)
 {
-///  GFL_PTC_SetCameraType(sys->PrtclPtr, GFL_G3D_PRJORTH);
+  GFL_PTC_SetCameraType(ptr->PrtclPtr, GFL_G3D_PRJORTH);
 	GFL_PTC_CreateEmitterCallback(ptr->PrtclPtr, inResNo,
 									ParticleCallBack, NULL);                 
 }
