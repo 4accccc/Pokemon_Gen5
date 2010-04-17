@@ -32,6 +32,7 @@
 #include "field/event_intrude_subscreen.h"
 #include "field/scrcmd_intrude.h"
 #include "intrude_field.h"
+#include "system/palanm.h"
 
 
 //==============================================================================
@@ -111,7 +112,11 @@ enum{
 enum{
   INTSUB_ACTOR_PAL_BASE_START = 1,    ///<プレイヤー毎に変わるパレット開始位置
   
-  INTSUB_ACTOR_PAL_MAX = 7,
+  INTSUB_ACTOR_PAL_TOUCH_NORMAL = 6,  ///<タッチ出来る街：ノーマル
+  INTSUB_ACTOR_PAL_TOUCH_DECIDE = 7,  ///<タッチ出来る街：決定時
+  INTSUB_ACTOR_PAL_TOUCH_MINE = 8,    ///<タッチ出来る街：自分がいる場所
+  
+  INTSUB_ACTOR_PAL_MAX = 9,
   
   INTSUB_ACTOR_PAL_FONT = 0xd,
 };
@@ -270,6 +275,26 @@ enum{
   _EVENT_REQ_NO_MISSION_ENTRY,    ///<ミッションに参加
 };
 
+//--------------------------------------------------------------
+//  タッチエフェクト
+//--------------------------------------------------------------
+///決定時のパレットフラッシュウェイト
+#define TOWN_DECIDE_PAL_FLASH_WAIT    (2)
+///決定時のパレットフラッシュタイマーMAX値
+#define TOWN_DECIDE_PAL_FLASH_TIMER_MAX     (TOWN_DECIDE_PAL_FLASH_WAIT * 5)
+
+///プレイヤーがいる街のフェード速度(下位8ビット小数)
+#define PLAYER_TOWN_FADE_EVY_ADD      (0x100)
+
+///プレイヤーが居る街のパレットアニメ：開始カラー位置
+#define PLAYER_PALANM_START_COLOR     (1)
+///プレイヤーが居る街のパレットアニメ：終了カラー位置
+#define PLAYER_PALANM_END_COLOR       (4)
+///プレイヤーが居る街のパレットアニメ：カラー数
+#define PLAYER_PALANM_COLOR_NUM       (PLAYER_PALANM_END_COLOR - PLAYER_PALANM_START_COLOR + 1)
+///プレイヤーが居る街のパレットアニメ：バッファサイズ
+#define PLAYER_PALANM_BUFFER_SIZE     (PLAYER_PALANM_COLOR_NUM * sizeof(u16))
+
 
 //==============================================================================
 //  構造体定義
@@ -299,6 +324,7 @@ typedef struct _INTRUDE_SUBDISP{
   WORDSET *wordset;
   PRINT_QUE *print_que;
 	GFL_MSGDATA *msgdata;
+	GFL_TCB *vintr_tcb;               ///<VBlankTCBへのポインタ
 	
 	STRBUF *strbuf_temp;
 	STRBUF *strbuf_info;
@@ -334,7 +360,19 @@ typedef struct _INTRUDE_SUBDISP{
   
   u16 warp_zone_id;
   u8 event_req;           ///< _EVENT_REQ_NO_xxx
-  u8 padding;
+  u8 decide_town_tblno;      ///<タッチで決定した街のテーブル番号
+  
+  u8 decide_pal_occ;
+  u8 decide_pal_timer;     ///<タッチした時のパレットアニメ用タイマー
+  s16 player_pal_evy;     ///<
+  s8 player_pal_dir;      ///<
+  u8 player_pal_tblno;    ///<自分がいる所の街のテーブル番号
+  u8 player_pal_trans_req;  ///<TRUE:パレット転送リクエスト
+  u8 vblank_trans;
+
+  u16 player_pal_src[PLAYER_PALANM_COLOR_NUM];        ///<変化元
+  u16 player_pal_next_src[PLAYER_PALANM_COLOR_NUM];   ///<変化後
+  u16 player_pal_buffer[PLAYER_PALANM_COLOR_NUM];     ///<転送バッファ
 }INTRUDE_SUBDISP;
 
 
@@ -377,6 +415,10 @@ static void _IntSub_BGBarUpdate(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_BGColorUpdate(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_CommParamInit(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm);
 static void _IntSub_CommParamUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm);
+static void _SetPalFlash_DecideTown(INTRUDE_SUBDISP_PTR intsub);
+static BOOL _CheckPalFlash_DecideTown(INTRUDE_SUBDISP_PTR intsub);
+static void _VblankFunc(GFL_TCB *tcb, void *work);
+static void _SetPalFade_PlayerTown(INTRUDE_SUBDISP_PTR intsub, int town_tblno);
 
 
 //==============================================================================
@@ -441,7 +483,8 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   intsub->now_bg_pal = 0xff;  //初回に必ず更新がかかるように0xff
   
   intsub->my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-
+  intsub->player_pal_tblno = PALACE_TOWN_DATA_NULL;
+  
   _IntSub_CommParamInit(intsub, Intrude_Check_CommConnect(game_comm));
   
   handle = GFL_ARC_OpenDataHandle(ARCID_PALACE, HEAPID_FIELDMAP);
@@ -455,6 +498,17 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   
   GFL_ARC_CloseDataHandle(handle);
 
+  //OBJWINDOW(通信アイコン) の中だけBlendで輝度が落ちないようにする
+  GFL_NET_WirelessIconOBJWinON();
+  G2S_SetWndOBJInsidePlane(GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 |
+      GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ, FALSE);
+  G2S_SetWndOutsidePlane(GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 |
+      GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ, TRUE);
+	GXS_SetVisibleWnd(GX_WNDMASK_OW);
+
+	//VブランクTCB登録
+	intsub->vintr_tcb = GFUser_VIntr_CreateTCB(_VblankFunc, intsub, 10);
+
   return intsub;
 }
 
@@ -467,6 +521,8 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
 //==================================================================
 void INTRUDE_SUBDISP_Exit(INTRUDE_SUBDISP_PTR intsub)
 {
+	GFL_TCB_DeleteTask(intsub->vintr_tcb);
+
   _IntSub_BmpOamDelete(intsub);
   _IntSub_Delete_EntryButton(intsub);
   _IntSub_ActorDelete(intsub);
@@ -476,6 +532,10 @@ void INTRUDE_SUBDISP_Exit(INTRUDE_SUBDISP_PTR intsub)
   _IntSub_SystemExit(intsub);
 
   GFL_HEAP_FreeMemory(intsub);
+
+  //OBJWINDOW(通信アイコン)をOFF
+  GFL_NET_WirelessIconOBJWinOFF();
+	GXS_SetVisibleWnd(GX_WNDMASK_NONE);
 }
 
 //==================================================================
@@ -509,8 +569,25 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
     }
   }
   
-  //タッチ判定チェック
-  _IntSub_TouchUpdate(intcomm, intsub);
+  if(bActive == FALSE){
+    if(_CheckPalFlash_DecideTown(intsub) == TRUE){  //決定アニメしている時は暗くしない
+    	G2S_BlendNone();
+    }
+    else{
+      G2S_SetBlendBrightness(GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 |
+        GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ |
+        GX_BLEND_PLANEMASK_BD, -FIELD_NONE_ACTIVE_EVY);
+      return;
+    }
+  }
+  else{
+  	G2S_BlendNone();
+  }
+
+  if(bActive == TRUE){
+    //タッチ判定チェック
+    _IntSub_TouchUpdate(intcomm, intsub);
+  }
   
   //WFBCへのワープチェック
   if(intcomm != NULL){
@@ -610,6 +687,7 @@ GMEVENT* INTRUDE_SUBDISP_EventCheck(INTRUDE_SUBDISP_PTR intsub, BOOL bEvReqOK, F
   switch(intsub->event_req){
   case _EVENT_REQ_NO_TOWN_WARP:
     PMSND_PlaySE( SEQ_SE_FLD_102 );
+    _SetPalFlash_DecideTown(intsub);
     event = EVENT_IntrudeTownWarp(intsub->gsys, fieldWork, intsub->warp_zone_id);
     break;
   case _EVENT_REQ_NO_PLAYER_WARP:
@@ -628,6 +706,29 @@ GMEVENT* INTRUDE_SUBDISP_EventCheck(INTRUDE_SUBDISP_PTR intsub, BOOL bEvReqOK, F
   return NULL;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   VブランクTCB
+ *
+ * @param   tcb			
+ * @param   work		
+ */
+//--------------------------------------------------------------
+static void _VblankFunc(GFL_TCB *tcb, void *work)
+{
+  INTRUDE_SUBDISP_PTR intsub = work;
+  
+  intsub->vblank_trans ^= 1;
+  if(intsub->vblank_trans){ //フィールドの1/30に合わせるように転送も2回に1回
+    if(intsub->player_pal_trans_req){
+      DC_FlushRange( (void*)intsub->player_pal_buffer, PLAYER_PALANM_BUFFER_SIZE );
+      GXS_LoadOBJPltt((const void *)intsub->player_pal_buffer, 
+        INTSUB_ACTOR_PAL_TOUCH_MINE * 0x20 + PLAYER_PALANM_START_COLOR * 2, 
+        PLAYER_PALANM_BUFFER_SIZE );
+      intsub->player_pal_trans_req = FALSE;
+    }
+  }
+}
 
 //==============================================================================
 //  
@@ -857,6 +958,11 @@ static void _IntSub_ActorResouceLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *hand
       INTSUB_ACTOR_PAL_FONT * 0x20, HEAPID_FIELDMAP );
     GFL_ARC_CloseDataHandle(font_pal_handle);
   }
+
+  //VRAMからパレットアニメ対象のデータをバッファへコピー
+  GFL_STD_MemCopy16((void*)(HW_DB_OBJ_PLTT + INTSUB_ACTOR_PAL_TOUCH_DECIDE * 0x20 + PLAYER_PALANM_START_COLOR * 2), intsub->player_pal_src, PLAYER_PALANM_BUFFER_SIZE);
+  GFL_STD_MemCopy16(intsub->player_pal_src, intsub->player_pal_buffer, PLAYER_PALANM_BUFFER_SIZE);
+  GFL_STD_MemCopy16((void*)(HW_DB_OBJ_PLTT + INTSUB_ACTOR_PAL_TOUCH_MINE * 0x20 + PLAYER_PALANM_START_COLOR * 2), intsub->player_pal_next_src, PLAYER_PALANM_BUFFER_SIZE);
 }
 
 //--------------------------------------------------------------
@@ -1235,6 +1341,54 @@ static void _IntSub_ActorUpdate_TouchTown(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INF
       INTSUB_ACTOR_PAL_BASE_START + intsub->comm.now_palace_area, CLWK_PLTTOFFS_MODE_PLTT_TOP);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE_EFF], TRUE);
   }
+  
+  //決定した街を光らす
+  if(intsub->decide_pal_occ == TRUE){
+    if(intsub->decide_pal_timer % TOWN_DECIDE_PAL_FLASH_WAIT == 0){
+      int pal_offset;
+      if((intsub->decide_pal_timer / TOWN_DECIDE_PAL_FLASH_WAIT) & 1){
+        pal_offset = INTSUB_ACTOR_PAL_TOUCH_NORMAL;
+      }
+      else{
+        pal_offset = INTSUB_ACTOR_PAL_TOUCH_DECIDE;
+      }
+      if(intsub->decide_town_tblno != PALACE_TOWN_DATA_PALACE){
+        GFL_CLACT_WK_SetPlttOffs(
+          intsub->act[INTSUB_ACTOR_TOUCH_TOWN_0 + intsub->decide_town_tblno], 
+          pal_offset, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+      }
+      else{
+        GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], 
+          pal_offset, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+      }
+    }
+    if(intsub->decide_pal_timer < TOWN_DECIDE_PAL_FLASH_TIMER_MAX){
+      intsub->decide_pal_timer++;
+    }
+  }
+  //自分がいる街を光らす
+  else if(intsub->player_pal_tblno != PALACE_TOWN_DATA_NULL){
+    int color_offset;
+    if(intsub->player_pal_dir == DIR_UP){
+      intsub->player_pal_evy += PLAYER_TOWN_FADE_EVY_ADD;
+      if(intsub->player_pal_evy >= (17<<8)){
+        intsub->player_pal_evy = (16<<8) - (intsub->player_pal_evy - (16<<8));
+        intsub->player_pal_dir = DIR_DOWN;
+      }
+    }
+    else{
+      intsub->player_pal_evy -= PLAYER_TOWN_FADE_EVY_ADD;
+      if(intsub->player_pal_evy < 0){
+        intsub->player_pal_evy = (1<<8) - intsub->player_pal_evy;
+        intsub->player_pal_dir = DIR_UP;
+      }
+    }
+    for(color_offset = 0; color_offset < PLAYER_PALANM_COLOR_NUM; color_offset++){
+      SoftFade(&intsub->player_pal_src[color_offset], &intsub->player_pal_buffer[color_offset], 1, 
+        intsub->player_pal_evy >> 8, intsub->player_pal_next_src[color_offset]);
+    }
+    intsub->player_pal_trans_req = TRUE;
+  }
 }
 
 //--------------------------------------------------------------
@@ -1388,22 +1542,36 @@ static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO 
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   GFL_CLWK *act;
   GFL_CLACTPOS pos;
-  int my_net_id;
+  int my_net_id, player_town_tblno;
   
   my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
+  player_town_tblno = PALACE_TOWN_DATA_NULL;
+  
   if(ZONEDATA_IsPalace(my_zone_id) == TRUE){
     pos.x = PALACE_CURSOR_POS_X + WearOffset[intsub->my_net_id][0];
     pos.y = PALACE_CURSOR_POS_Y + WearOffset[intsub->my_net_id][1];
+    player_town_tblno = PALACE_TOWN_DATA_PALACE;
   }
   else{
     const PALACE_ZONE_SETTING *zonesetting = IntrudeField_GetZoneSettingData(my_zone_id);
     if(zonesetting != NULL){
       pos.x = zonesetting->sub_x + WearOffset[intsub->my_net_id][0];
       pos.y = zonesetting->sub_y + WearOffset[intsub->my_net_id][1];
+      {
+        int i;
+        for(i = 0; i < PALACE_TOWN_DATA_MAX; i++){
+          if(PalaceTownData[i].front_zone_id == zonesetting->zone_id
+              || PalaceTownData[i].reverse_zone_id == zonesetting->zone_id){
+            player_town_tblno = i;
+            break;
+          }
+        }
+      }
     }
     else{
       pos.x = NOTHING_ZONE_SUB_POS_X - 8;
       pos.y = NOTHING_ZONE_SUB_POS_Y + NOTHING_ZONE_SUB_POS_Y_SPACE * intsub->my_net_id;
+      player_town_tblno = PALACE_TOWN_DATA_NULL;
     }
   }
   act = intsub->act[INTSUB_ACTOR_CUR_L];
@@ -1411,6 +1579,8 @@ static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO 
     INTSUB_ACTOR_PAL_BASE_START + intsub->my_net_id, CLWK_PLTTOFFS_MODE_PLTT_TOP);
   GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
   GFL_CLACT_WK_SetDrawEnable(act, TRUE);
+  
+  _SetPalFade_PlayerTown(intsub, player_town_tblno);
 }
 
 //--------------------------------------------------------------
@@ -1690,29 +1860,33 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
     return;
   }
   
+#ifdef PM_DEBUG
   //プレイヤーアイコンタッチ判定
-  my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
-  for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
-    if(net_id != my_net_id && (intsub->comm.recv_profile & (1 << net_id))){
-      act = intsub->act[INTSUB_ACTOR_CUR_S_0 + net_id];
-      if(GFL_CLACT_WK_GetDrawEnable(act) == TRUE){
-        GFL_CLACT_WK_GetPos( act, &pos, CLSYS_DRAW_SUB );
-        if(x - TOUCH_RANGE_PLAYER_ICON_X <= pos.x && x + TOUCH_RANGE_PLAYER_ICON_X >= pos.x
-            && y - TOUCH_RANGE_PLAYER_ICON_Y <= pos.y && y + TOUCH_RANGE_PLAYER_ICON_Y >= pos.y){
-          if(intcomm != NULL && ZONEDATA_IsWfbc(intcomm->intrude_status[net_id].zone_id) == TRUE){
-            intsub->wfbc_go = TRUE;
-            intsub->wfbc_seq = 0;
+  if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
+    my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
+    for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
+      if(net_id != my_net_id && (intsub->comm.recv_profile & (1 << net_id))){
+        act = intsub->act[INTSUB_ACTOR_CUR_S_0 + net_id];
+        if(GFL_CLACT_WK_GetDrawEnable(act) == TRUE){
+          GFL_CLACT_WK_GetPos( act, &pos, CLSYS_DRAW_SUB );
+          if(x - TOUCH_RANGE_PLAYER_ICON_X <= pos.x && x + TOUCH_RANGE_PLAYER_ICON_X >= pos.x
+              && y - TOUCH_RANGE_PLAYER_ICON_Y <= pos.y && y + TOUCH_RANGE_PLAYER_ICON_Y >= pos.y){
+            if(intcomm!= NULL && ZONEDATA_IsWfbc(intcomm->intrude_status[net_id].zone_id) == TRUE){
+              intsub->wfbc_go = TRUE;
+              intsub->wfbc_seq = 0;
+            }
+            else{
+              Intrude_SetWarpPlayerNetID(game_comm, net_id);
+              intsub->event_req = _EVENT_REQ_NO_PLAYER_WARP;
+            }
+            return;
           }
-          else{
-            Intrude_SetWarpPlayerNetID(game_comm, net_id);
-            intsub->event_req = _EVENT_REQ_NO_PLAYER_WARP;
-          }
-          return;
         }
       }
     }
   }
-  
+#endif
+
   //街タッチ判定
   if(intsub->comm.now_palace_area != GAMEDATA_GetIntrudeMyID(gamedata)){
     for(i = 0; i < PALACE_TOWN_DATA_MAX; i++){
@@ -1728,6 +1902,7 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
           intsub->warp_zone_id = zonesetting->warp_zone_id;
           intsub->event_req = _EVENT_REQ_NO_TOWN_WARP;
         }
+        intsub->decide_town_tblno = i;
         return;
       }
     }
@@ -1739,6 +1914,7 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
   if(_CheckRectHit(x, y, &rect) == TRUE){
     intsub->warp_zone_id = ZONE_ID_PALACE01;
     intsub->event_req = _EVENT_REQ_NO_TOWN_WARP;
+    intsub->decide_town_tblno = PALACE_TOWN_DATA_PALACE;
     return;
   }
   
@@ -1880,3 +2056,81 @@ static void _IntSub_CommParamUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS
     comm->p_md = MISSION_GetRecvData(&intcomm->mission);
   }
 }
+
+//--------------------------------------------------------------
+/**
+ * 街タッチの決定パレットアニメを発動
+ *
+ * @param   intsub		
+ */
+//--------------------------------------------------------------
+static void _SetPalFlash_DecideTown(INTRUDE_SUBDISP_PTR intsub)
+{
+  int i;
+  
+  intsub->decide_pal_timer = 0;
+  intsub->decide_pal_occ = TRUE;
+  
+  //全てのタッチアクターをノーマル色にする
+  for(i = 0; i < INTSUB_ACTOR_TOUCH_TOWN_MAX - INTSUB_ACTOR_TOUCH_TOWN_0; i++){
+    GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_TOWN_0 + i], 
+      INTSUB_ACTOR_PAL_TOUCH_NORMAL, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+  }
+  GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], 
+    INTSUB_ACTOR_PAL_TOUCH_NORMAL, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+}
+
+//--------------------------------------------------------------
+/**
+ * 街タッチの決定パレットアニメが動作中かを調べる
+ * @param   intsub		
+ * @retval  BOOL		  TRUE:動作中　FALSE:動作していない
+ */
+//--------------------------------------------------------------
+static BOOL _CheckPalFlash_DecideTown(INTRUDE_SUBDISP_PTR intsub)
+{
+  if(intsub->decide_pal_occ == TRUE && intsub->decide_pal_timer < TOWN_DECIDE_PAL_FLASH_TIMER_MAX){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 自分がいる街に対してパレットアニメリクエストをかける
+ *
+ * @param   intsub		
+ * @param   town_tblno		
+ */
+//--------------------------------------------------------------
+static void _SetPalFade_PlayerTown(INTRUDE_SUBDISP_PTR intsub, int town_tblno)
+{
+  if(intsub->player_pal_tblno == town_tblno || intsub->decide_pal_occ == TRUE){
+    return;
+  }
+  
+  //今まで光っていた箇所をノーマル色にする
+  if(intsub->player_pal_tblno < PALACE_TOWN_DATA_MAX){
+    GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_TOWN_0 + intsub->player_pal_tblno], 
+      INTSUB_ACTOR_PAL_TOUCH_NORMAL, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+  }
+  else if(intsub->player_pal_tblno == PALACE_TOWN_DATA_PALACE){
+    GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], 
+      INTSUB_ACTOR_PAL_TOUCH_NORMAL, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+  }
+  
+  //次に光らせる箇所を専用のパレットに変える
+  if(town_tblno < PALACE_TOWN_DATA_MAX){
+    GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_TOWN_0 + town_tblno], 
+      INTSUB_ACTOR_PAL_TOUCH_MINE, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+  }
+  else if(town_tblno == PALACE_TOWN_DATA_PALACE){
+    GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], 
+      INTSUB_ACTOR_PAL_TOUCH_MINE, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+  }
+  
+  intsub->player_pal_tblno = town_tblno;
+  intsub->player_pal_evy = 0;
+  intsub->player_pal_dir = DIR_UP;
+}
+

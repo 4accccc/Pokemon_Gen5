@@ -1074,38 +1074,49 @@ static GMEVENT_RESULT EVENT_MapChangePalace_to_Palace( GMEVENT* event, int* seq,
   GAMEDATA*        gameData   = work->gameData;
   FIELDMAP_WORK*   fieldmap   = work->fieldmap;
   FIELD_SOUND*    fieldSound = GAMEDATA_GetFieldSound( gameData );
-
+  enum{
+    _SEQ_OBJPAUSE,
+    _SEQ_FIELD_CLOSE = 8, //下画面の演出を見せる為、直前のシーケンスから間を空ける
+    _SEQ_BGM_CHANGE,
+    _SEQ_MAPCHG_CORE,
+    _SEQ_FIELD_OPEN,
+    _SEQ_FINISH,
+  };
+  
   switch( *seq )
   {
-  case 0:
+  case _SEQ_OBJPAUSE:
     // 動作モデル停止
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
     (*seq)++;
     break;
-  case 1:
+  case _SEQ_FIELD_CLOSE:
     // 画面フェードアウト ( クロスフェード )
     GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Cross( gameSystem, fieldmap ) );
     (*seq)++;
     break;
-  case 2:
+  case _SEQ_BGM_CHANGE:
     // BGM変更
     FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound );
     (*seq)++;
     break;
-  case 3:
+  case _SEQ_MAPCHG_CORE:
     // マップチェンジ コア イベント
     GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, work->mapchange_type ) );
     (*seq)++;
     break;
-  case 4:
+  case _SEQ_FIELD_OPEN:
     // 画面フェードイン ( クロスフェード )
     GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Cross( gameSystem, fieldmap ) );
     (*seq)++;
     break;
-  case 5:
+  case _SEQ_FINISH:
     FIELD_PLACE_NAME_Display( FIELDMAP_GetPlaceNameSys(fieldmap), work->loc_req.zone_id );
     return GMEVENT_RES_FINISH; 
+  default:
+    (*seq)++;
+    break;
   }
   return GMEVENT_RES_CONTINUE;
 }
