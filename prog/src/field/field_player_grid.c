@@ -668,32 +668,11 @@ static BOOL gjiki_PlaySECore(
       }
     }
     
-#if 0 //bug in
-    if( se != SEQ_SE_DUMMY ){
-      if( dash_flag != 0 ){ //dashŒn”»’è
-        if( gjiki->dash_play_se != se ){
-          gjiki->dash_play_se_count = 0;
-        }
-        
-        //‚±‚ÌˆÊ’u‚¾‚Æˆá‚¤SE‚ª—ˆ‚½Û‚Å‚à
-        //ˆÈ‰º‚ÌðŒ‚ð–ž‚½‚³‚È‚¢ê‡‚Í–Â‚ç‚³‚¸I‚í‚Á‚Ä‚µ‚Ü‚¤
-        gjiki->dash_play_se = se;
-        
-        if( gjiki->dash_play_se_count != 0 &&
-            gjiki->dash_play_se_count < dash_count ){
-          se = SEQ_SE_DUMMY;
-          init_flag = FALSE; //Ä¶SE‚Í‚ ‚é‚ªðŒ–ž‚½‚³‚¸
-        }
-        
-        if( gjiki->dash_play_se_count >= dash_count ){
-          gjiki->dash_play_se_count = 0;
-        }
-        
-        gjiki->dash_play_se_count++;
+    if( se == SEQ_SE_DUMMY ){
+      if( next == TRUE ){ //ˆÚ“®æSEÄ¶–³‚µ
+        gjiki->dash_play_se_count = 0;
       }
-    }
-#else
-    if( se != SEQ_SE_DUMMY ){
+    }else{
       if( dash_flag != 0 ){ //dashŒn”»’è
         if( gjiki->dash_play_se != se ){
           gjiki->dash_play_se_count = 0;
@@ -713,8 +692,7 @@ static BOOL gjiki_PlaySECore(
         gjiki->dash_play_se_count++;
       }
     }
-#endif
-
+    
     if( se != SEQ_SE_DUMMY ){
       PMSND_PlaySE( se );
       return( TRUE );
