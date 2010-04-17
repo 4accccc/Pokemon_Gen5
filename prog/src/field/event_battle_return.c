@@ -148,6 +148,14 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
   GFL_PROC_MAIN_STATUS  local_proc_status   =  GFL_PROC_LOCAL_Main( wk->local_procsys );
   if( local_proc_status == GFL_PROC_MAIN_VALID ) return GFL_PROC_RES_CONTINUE;
 
+#ifdef PM_DEBUG
+  //バトルサブウェイでのデバッグをしやすくするために強制逃げるを勝ち扱いにする
+  if( ( param->btlResult->result == BTL_RESULT_RUN ) && ( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) )
+  {
+    param->btlResult->result = BTL_RESULT_WIN;
+  }
+#endif
+
   switch( *seq ){
   case 0:
     {
