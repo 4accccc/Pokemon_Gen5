@@ -369,6 +369,10 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
 	if(pGF->ProductOrDevelopment != pNetWL->mineDebugNo){
   #ifndef DEBUG_ONLY_FOR_tomoya_takahashi
 		return FALSE;   //ƒpƒŒƒX‚Ìˆ×
+	#else
+  	if(pGF->ProductOrDevelopment == 3){ //’N‚Æ‚àŒq‚ª‚éó‘Ô‚Å‚ ‚Á‚Ä‚àmatsuda‚Æ‚ÍÚ‘±‚µ‚È‚¢
+      return FALSE;
+    }
   #endif //DEBUG_ONLY_FOR_tomoya_takahashi
 	}
 #else
