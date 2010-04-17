@@ -1,0 +1,5 @@
+DATA_LIST = \
+    zoroa_kemu.nsbmd \
+    zoroa_kemu.nsbca \
+    zoroa_kemu.nsbma \
+    zoroa_kemu.nsbtp

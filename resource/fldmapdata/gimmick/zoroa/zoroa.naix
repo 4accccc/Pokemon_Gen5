@@ -1,0 +1,21 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: zoroa.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+	Update:2010-04-17T21:23:03
+ *****************************************************************************/
+
+#ifndef NARC_ZOROA_NAIX_
+#define NARC_ZOROA_NAIX_
+
+enum {
+	NARC_zoroa_zoroa_kemu_nsbmd = 0,
+	NARC_zoroa_zoroa_kemu_nsbca = 1,
+	NARC_zoroa_zoroa_kemu_nsbma = 2,
+	NARC_zoroa_zoroa_kemu_nsbtp = 3
+};
+
+/* NARC_ZOROA_NAIX_ */
+#endif
