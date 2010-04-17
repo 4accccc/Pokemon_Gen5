@@ -11,6 +11,8 @@
 #include "pleasure_boat_ptr.h"
 #include "gamesystem/gamesystem.h"    //for GMEVENT
 
+#define WHISTLE_MARGINE (45)
+
 extern PL_BOAT_WORK_PTR PL_BOAT_Init(void);
 extern void PL_BOAT_End(PL_BOAT_WORK_PTR *work);
 extern void PL_BOAT_Main(PL_BOAT_WORK_PTR work);

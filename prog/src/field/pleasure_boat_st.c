@@ -159,7 +159,7 @@ int PL_BOAT_GetTime(PL_BOAT_WORK_PTR work)
 
 //--------------------------------------------------------------
 /**
- * @brief　時間セット
+ * @brief　時間セット 汽笛の回数も計算する
  * @note    アプリから戻ってくるときに呼ぶ
  * @param   work      PL_BOAT_WORK_PTR
  * @param   inTime    経過時間(シンク)
@@ -168,6 +168,18 @@ int PL_BOAT_GetTime(PL_BOAT_WORK_PTR work)
 //--------------------------------------------------------------
 void PL_BOAT_SetTime(PL_BOAT_WORK_PTR work, const int inTime)
 {
+  int w_count;
   work->Time = inTime;
+  //汽笛回数を計算
+  w_count = work->Time / (WHISTLE_MARGINE*30);
+
+  if ( work->WhistleCount > w_count )
+  {
+    GF_ASSERT_MSG(0,"whistle count error %d > %d",work->WhistleCount, w_count);
+  }
+  else
+  {
+    work->WhistleCount = w_count;
+  }
 }
 

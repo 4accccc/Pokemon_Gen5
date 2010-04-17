@@ -18,8 +18,6 @@
 
 #include "pl_boat_setup.h"
 
-#define WHISTLE_MARGINE (45)
-
 #define PL_BOAT_MODE_TIME (180*30)    //180•b
 
 #define WHISTLE_COUNT_MAX (4)

@@ -598,7 +598,7 @@
 
   DEF_CMD( EvCmdMapFadeCheck, EV_SEQ_MAP_FADE_CHECK )
   DEF_CMD( EvCmdMapFade_BlackIn_Force, EV_SEQ_MAP_FADE_BLACK_IN_FORCE )
-  DEF_CMD( EvCmdMapFade_InitBG, EV_SEQ_MAP_FADE_INIT_BG )
+  NO_CMD()  //  DEF_CMD( EvCmdMapFade_InitBG, EV_SEQ_MAP_FADE_INIT_BG ) 未使用になったので削除
   DEF_CMD( EvCmdMapFade_SeasonIn_Force, EV_SEQ_MAP_FADE_SEASON_IN_FORCE )
 
   // 遅いマップフェード

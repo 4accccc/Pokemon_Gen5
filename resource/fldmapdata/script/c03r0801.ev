@@ -718,23 +718,26 @@ EVENT_START		ev_pos_c03r0801_move_01
   _PL_BOAT_CALL_DEMO(SCWK_ANSWER)
 
   _FIELD_OPEN()
+  //船内に戻ってくる
+  _MAP_FADE_BLACK_IN()
+  //甲板から戻ってくるアニメ
+ 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_out )
+ 	_OBJ_ANIME_WAIT()
+  _MAP_FADE_END_CHECK()
 
-  IF $SCWK_ANSWER == PL_BOAT_DEMO_FINISHED  THEN
+  IF $SCWK_ANSWER == PL_BOAT_DEMO_FINISHED  THEN    //デモ完全終了
+    //強制的に汽笛鳴る
+    _SE_PLAY( SEQ_SE_FLD_78 )
+    _SE_WAIT()
+    //「終了ですよ」
+	  _SYSWIN_MSG( msg_c03r0801_sys_02 , POS_DOWN )
+	  _SYSWIN_CLOSE()
     //遊覧船内ゲーム終了
 	  _PL_BOAT_GAME_END()
     //ＢＧ初期化処理
-	  _MAP_FADE_INT_BG()
+//	  _MAP_FADE_INT_BG()  デモ終了でも一度船内に戻ってくるので、不要になった　100415
     //遊覧船終了
     _CALL pl_boat_end
-  ELSE
-    //船内に戻ってくる
-    _MAP_FADE_BLACK_IN()
-
-    //甲板から戻ってくるアニメとか
-  	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_out )
-  	_OBJ_ANIME_WAIT()
-
-    _MAP_FADE_END_CHECK()
   ENDIF
 
 EVENT_END
