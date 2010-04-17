@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2010-04-17T18:16:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="177"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="296"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1332" top="248" right="2037" bottom="875" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,11 +292,165 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d04r2201_sage4_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+		<comment>♂
+・GRIDX=6、GRIDZ=2、上向き
+・続けてsage4_end_02</comment>
+		<attribute name="キャラ指定">七賢人その４</attribute>
+		<language name="JPN" width="256">？？？『……いまひとたび
+この　こだいのしろに　いる▽
+ポケモンの　ドラーを　つかまえ▽
+ゲーチスさまに　けんじょうする▼
+その　つもりであったが
+ダークトリニティどもが　いうには▽
+ゲーチスさまは　どこかに▽
+いかれたと　いうではないか……▼</language>
+		<language name="JPN_KANJI" width="256">？？？『……今ひとたび
+この古代の城に　いる▽
+ポケモンの　ドラーを　捕まえ▽
+ゲーチスさまに　献上する▼
+その　つもりであったが
+ダークトリニティどもが　いうには▽
+ゲーチスさまは　どこかに▽
+いかれたと　いうではないか……▼</language>
+	</row>
+
+	<row id="msg_d04r2201_sage4_end_02" text-color="#0000ff,,,#000000,,#000000,,,,,,,,,,,,,">
+		<comment>♂
+・何かアニメ
+・続けてsage4_end_03</comment>
+		<attribute name="キャラ指定">七賢人その４</attribute>
+		<language name="JPN" width="256">しちけんじん……▼
+ななにん　そろってこそ
+かんぜんで　ある……▼
+あの　ことばの　しんい
+いまは　わからぬ▼
+りようされたとしても　いいが
+もう　ゆめは　みれぬな▼</language>
+		<language name="JPN_KANJI" width="256">七賢人……▼
+７人　そろってこそ
+完全で　ある……▼
+あの言葉の　真意
+いまは　わからぬ▼
+利用されたとしても　いいが
+もう　夢は　みれぬな▼</language>
+	</row>
+
+	<row id="msg_d04r2201_sage4_end_03" text-color="#0000ff,,,#000000,,#000000,,,,,,,,,,,,,">
+		<comment>♂
+・アイテム入手処理
+　No331「めいそう」</comment>
+		<attribute name="キャラ指定">七賢人その４</attribute>
+		<language name="JPN" width="256">もう　これも　いらぬ▼
+ゲーチスさまに　いただいたが
+わたしには　つかう　あてもない▼</language>
+		<language name="JPN_KANJI" width="256">もう　これも　いらぬ▼
+ゲーチスさまに　いただいたが
+わたしには　使う　あてもない▼</language>
+	</row>
+
+	<row id="msg_d04r2201_sage4_end_04" text-color="#0000ff,,,#000000,,#000000,,,,,,,,,,,,,">
+		<comment>♂
+・アイテム入手後自動で表示
+・続けてicpo_end_01</comment>
+		<attribute name="キャラ指定">七賢人その４</attribute>
+		<language name="JPN" width="256">？？？『この　こだいのしろも
+われわれの　しろも　くずれゆく……▼
+ただ　ちがうのは
+こだいのしろは　くにのあと……▼
+われらの　しろは
+なにも　のこせなかった……▼</language>
+		<language name="JPN_KANJI" width="256">？？？『この　古代の城も
+われわれの　城も　くずれゆく……▼
+ただ　違うのは
+古代の城は　国のあと……▼
+われらの　城は
+なにも　残せなかった……▼</language>
+	</row>
+
+	<row id="msg_d04r2201_icpo_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・隣接してメッセージ
+・続けてsage4_end_03</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『さてと……
+プラズマだんに　ついて▼
+こくさいけいさつの　わたしに
+いろいろ　おしえてもらおう！▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『さてと……
+プラズマ団に　ついて▼
+国際警察の　わたしに
+いろいろ　教えてもらおう！▼</language>
+	</row>
+
+	<row id="msg_d04r2201_sage4_end_05" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+		<comment>♂
+・続けて七賢人
+　6人と会っていない→icpo_end_02
+　6人と会っている→icpo_end_03</comment>
+		<attribute name="キャラ指定">七賢人その４</attribute>
+		<language name="JPN" width="256">？？？『……りょうかいした▼
+だが　われわれは　ゲーチスさまも
+Ｎさまのことも　よくしらぬぞ▼
+ほんとうの　おやこか　どうかも
+さだかでは　ないのだ……▼</language>
+		<language name="JPN_KANJI" width="256">？？？『……了解した▼
+だが　われわれは　ゲーチスさまも
+Ｎさまのことも　よく知らぬぞ▼
+本当の　親子か　どうかも
+定かでは　ないのだ……▼</language>
+	</row>
+
+	<row id="msg_d04r2201_icpo_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　画面暗転して七賢人とハンサムを削除</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『ありがとう▼
+これで　ゲーチスを　のぞき
+のこる　しちけんじんは▽
+あと　[2:00:１桁:0]にんか……▼
+かれらが　なにを　かんがえ
+のぞんでいたか　しりたいものだ……▽
+では　また　あおう！▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『ありがとう！▼
+これで　ゲーチスを除き
+残る　七賢人は▽
+あと　[2:00:１桁:0]人か……▼
+彼らが　なにを　考え
+望んでいたか　知りたいものだ……▽
+では　また　会おう！▼</language>
+	</row>
+
+	<row id="msg_d04r2201_icpo_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・6人の七賢人とであったとき
+・メッセージ歩湯事後
+　画面暗転して七賢人とハンサムを削除</comment>
+		<attribute name="キャラ指定">ICPO
+ハンサム</attribute>
+		<language name="JPN" width="256">ハンサム『ありがとう！▼
+さて　[1:00:トレーナー名:0]……
+きみに　つたえることが　ある▼
+ここより　はるか　とおいところで
+Ｎらしき　じんぶつが▽
+ドラゴンポケモンと　いるのを▽
+みたという　じょうほうが　あった▼
+わたしは　じょうほうが　ただしいか
+たしかめに　いくつもりだよ▽
+では　また　いつか　あおう！▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『ありがとう！▼
+さて　[1:00:トレーナー名:0]……
+きみに　伝えることが　ある▼
+ここより　はるか　遠方で
+Ｎらしき　人物が
+ドラゴンポケモンと　いるのを▽
+みたという　情報が　あった▼
+わたしは　情報の　真偽を
+確かめに　いくつもりだよ▽
+では　また　いつか　会おう！▼</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-17T13:50:23"/>
+	<create user="matsumiya" host="W00224" date="2010-04-17T17:57:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,14 +307,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1772" top="250" right="2475" bottom="866" maximized="no" rayout="Vertical2">
+	<dialog left="1332" top="247" right="2037" bottom="875" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="528"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="541"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="695"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -822,8 +822,20 @@
 　画面暗転して七賢人とハンサムを削除</comment>
 		<attribute name="キャラ指定">ICPO
 ハンサム</attribute>
-		<language name="JPN" width="256">ハンサム『ありがとう▼</language>
-		<language name="JPN_KANJI" width="256">ハンサム『ありがとう▼</language>
+		<language name="JPN" width="256">ハンサム『ありがとう▼
+これで　ゲーチスを　のぞき
+のこる　しちけんじんは▽
+あと　[2:00:１桁:0]にんか……▼
+かれらが　なにを　かんがえ
+のぞんでいたか　しりたいものだ……▽
+では　また　あおう！▼</language>
+		<language name="JPN_KANJI" width="256">ハンサム『ありがとう！▼
+これで　ゲーチスを除き
+残る　七賢人は▽
+あと　[2:00:１桁:0]人か……▼
+彼らが　なにを　考え
+望んでいたか　知りたいものだ……▽
+では　また　会おう！▼</language>
 	</row>
 
 	<row id="msg_d05r0201_icpo_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -836,7 +848,7 @@
 		<language name="JPN" width="256">ハンサム『ありがとう！▼
 さて　[1:00:トレーナー名:0]……
 きみに　つたえることが　ある▼
-ここより　はるか　とおくで
+ここより　はるか　とおいところで
 Ｎらしき　じんぶつが▽
 ドラゴンポケモンと　いるのを▽
 みたという　じょうほうが　あった▼

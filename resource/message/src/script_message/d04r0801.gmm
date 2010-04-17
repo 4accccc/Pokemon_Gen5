@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-14T16:55:58"/>
+	<create user="matsumiya" host="W00224" date="2010-04-17T18:24:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="251"/>
+		<comment position="4" width="265"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1351" top="290" right="2056" bottom="910" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,39 @@
 	</lock>
 
 
-	<row id="msg_d04r0801_sage4_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+	<row id="msg_d04r0801_hakaim_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
+		<comment>♂
+・d04r0701から来ると
+　！マーク表示後、隣接してメッセージ表示
+・表示後、トレーナー戦闘に</comment>
+		<attribute name="キャラ指定">HAKAIM
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『ちくしょー！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『ちくしょー！▼</language>
+	</row>
+
+	<row id="msg_d04r0801_hakaim_02" text-color="#000000,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘後自動で表示
+　以降、繰り返し
+・d04r2201の七賢人退場とあわせて削除</comment>
+		<attribute name="キャラ指定">HAKAIM
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『この　こだいのしろで
+？？？さまが　ポケモンを　さがしている▼
+それを　ジャマさせないよう
+みはっていたのに……▽
+よわい　オレの　バカバカバカバカ！▼
+もうひとつ　おまけに　バカ！</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『この古代の城で
+？？？さまが　ポケモンを　探している▼
+それを　ジャマさせないよう
+見張っていたのに……▽
+弱い　オレの　バカバカバカバカ！▼
+もうひとつ　おまけに　バカ！</language>
+	</row>
+
+	<row id="msg_d04r0801_sage4_end_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・GRIDX=6、GRIDZ=8
 ・アイテム入手処理
@@ -302,7 +334,7 @@
 		<language name="JPN_KANJI" width="256">？？？『であったとき▼</language>
 	</row>
 
-	<row id="msg_d04r0801_sage4_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+	<row id="msg_d04r0801_sage4_end_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・アイテム入手後自動で表示
 ・続けてicpo_end_01</comment>
@@ -311,7 +343,7 @@
 		<language name="JPN_KANJI" width="256">？？？『アイテムをくれたあと▼</language>
 	</row>
 
-	<row id="msg_d04r0801_icpo_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d04r0801_icpo_end_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・隣接してメッセージ
 ・続けてsage4_end_03</comment>
@@ -327,7 +359,7 @@
 いろいろ　教えてもらおう！▼</language>
 	</row>
 
-	<row id="msg_d04r0801_sage4_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+	<row id="msg_d04r0801_sage4_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・続けて七賢人
 　6人と会っていない→icpo_end_02
@@ -337,7 +369,7 @@
 		<language name="JPN_KANJI" width="256">？？？『かまわんよ▼</language>
 	</row>
 
-	<row id="msg_d04r0801_icpo_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d04r0801_icpo_end_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後
 　画面暗転して七賢人とハンサムを削除</comment>
@@ -347,7 +379,7 @@
 		<language name="JPN_KANJI" width="256">ハンサム『ありがとう▼</language>
 	</row>
 
-	<row id="msg_d04r0801_icpo_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d04r0801_icpo_end_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・6人の七賢人とであったとき
 ・メッセージ歩湯事後
