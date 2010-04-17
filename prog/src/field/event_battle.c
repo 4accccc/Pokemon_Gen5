@@ -458,7 +458,7 @@ GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, 
     POKEPARTY* partyEnemy = PokeParty_AllocPartyWork( tmpHeapID );
     POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( tmpHeapID, POKETOOL_GetWorkSize() );
 
-    PP_Setup( pp, MONSNO_TIRAAMHI, 5, 0 );
+    PP_Setup( pp, MONSNO_TIRAAMHI, 7, 0 );
     PP_Put( pp, ID_PARA_waza1, WAZANO_HATAKU );
     PP_Put( pp, ID_PARA_waza2, WAZANO_NAKIGOE );
     PP_Put( pp, ID_PARA_waza3, WAZANO_NULL );
