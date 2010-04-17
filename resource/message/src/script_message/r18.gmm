@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-17T13:33:13"/>
+	<create user="matsumiya" host="W00224" date="2010-04-17T15:59:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="178" right="1998" bottom="805" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="542"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="696"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -295,11 +295,77 @@
 	<row id="msg_r18_sage6_end_01">
 		<comment>♂
 ・GRIDX=616、GRIDZ=53
+・続けてsage6_end_01a</comment>
+		<attribute name="キャラ指定">七賢人その６</attribute>
+		<language name="JPN" width="256">？？？『ここは　しおの　においがする▼
+わたしが　うまれた　くにと　おなじ
+しおの　においがする　ばしょ……▼</language>
+		<language name="JPN_KANJI" width="256">？？？『ここは　潮の　においがする▼
+わたしが　生まれた　国と　同じ
+潮の　においがする　場所……▼</language>
+	</row>
+
+	<row id="msg_r18_sage6_end_01a">
+		<comment>♂
+・続けてsage6_end_01b</comment>
+		<attribute name="キャラ指定">七賢人その６</attribute>
+		<language name="JPN" width="256">……ゲーチスさまは
+せかいかくちを　たびし▽
+あらゆる　ちしきを　あつめ▽
+なかまに　さがしておられた▼
+であったときから　わたしの
+のぞみを　りかい　なされていた▼</language>
+		<language name="JPN_KANJI" width="256">……ゲーチスさまは
+世界各地を　放浪し▽
+あらゆる　知識を　集め▽
+同士を　探しておられた▼
+出会ったときから　わたしの
+望みを　理解なされていた▼</language>
+	</row>
+
+	<row id="msg_r18_sage6_end_01b">
+		<comment>♂
+・続けてsage6_end_01c</comment>
+		<attribute name="キャラ指定">七賢人その６</attribute>
+		<language name="JPN" width="256">あいての　こころが　わかる
+のぞみが　わかる▼
+それは　だれかと　いきていくために
+ひつような　ちから……▼
+Ｎさまは　ポケモンの　こころが
+わかる　ちからに　すぐれた　おかた▼
+はんめん　ひとの　きもちや　こころを
+りかいする　ちからは　まだまだ▽
+そだって　おられなかったのだろう……▼</language>
+		<language name="JPN_KANJI" width="256">相手の　心が　理解できる
+望みが　理解できる▼
+それは　だれかと　生きていくために
+必要な　能力……▼
+Ｎさまは　ポケモンの　心が　わかる
+力に　優れた　お方▼
+反面　人の　気持ちや　心を
+理解する　力は　まだまだ▽
+未成育だったのだろう……▼</language>
+	</row>
+
+	<row id="msg_r18_sage6_end_01c">
+		<comment>♂
 ・アイテム入手処理
 　No359「かげぶんしん」</comment>
 		<attribute name="キャラ指定">七賢人その６</attribute>
-		<language name="JPN" width="256">？？？『であったとき▼</language>
-		<language name="JPN_KANJI" width="256">？？？『であったとき▼</language>
+		<language name="JPN" width="256">だが　それも　ゲーチスさまの
+かんぜんなる　けいかくの　いちぶ……▼
+ゲーチスさまの　なにが　しんじつで
+なにが　ウソか　わからないがね……▼
+……これは　ゲーチスさまに
+いただいた　ものだが　もう　いらない▽
+おまえが　うまく　つかうとよい▼</language>
+		<language name="JPN_KANJI" width="256">だが　それも　ゲーチスさまの
+完全なる　計画の　一部……▼
+ゲーチスさまの　なにが　真実で
+なにが　虚構か　わからないがね……▼
+……これは　ゲーチスさまに
+いただいた　ものだが　もう　いらない▽
+おまえが　うまく　使うとよい▼</language>
 	</row>
 
 	<row id="msg_r18_sage6_end_02">
@@ -307,8 +373,18 @@
 ・アイテム入手後自動で表示
 ・続けてicpo_end_01</comment>
 		<attribute name="キャラ指定">七賢人その６</attribute>
-		<language name="JPN" width="256">？？？『アイテムをくれたあと▼</language>
-		<language name="JPN_KANJI" width="256">？？？『アイテムをくれたあと▼</language>
+		<language name="JPN" width="256">？？？『……Ｎさまが　いつか
+ポケモンだけでなく　ひとの　きもちも▽
+りかいできるように　なられたら……▼
+われわれも　もういちど　つどいたい……▼
+そして　ゲーチスさまと
+むきあってほしいと　つよく　のぞむ▼</language>
+		<language name="JPN_KANJI" width="256">？？？『……Ｎさまが　いつか
+ポケモンだけでなく　人の　気持ちも▽
+理解できるように　なられたら……▼
+われわれも　もういちど　集いたい……▼
+そして　ゲーチスさまと
+向き合ってほしいと　強く　望む▼</language>
 	</row>
 
 	<row id="msg_r18_icpo_end_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -333,7 +409,7 @@
 　6人と会っていない→icpo_end_02
 　6人と会っている→icpo_end_03</comment>
 		<attribute name="キャラ指定">七賢人その６</attribute>
-		<language name="JPN" width="256">？？？『かまわんよ▼</language>
+		<language name="JPN" width="256">？？？『それが　おまえの　のぞみか▼</language>
 		<language name="JPN_KANJI" width="256">？？？『かまわんよ▼</language>
 	</row>
 
@@ -379,18 +455,19 @@
 	<row id="msg_r18_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
-		<language name="JPN" width="256">１８ばんすいどう</language>
-		<language name="JPN_KANJI" width="256">１８番水道</language>
+		<language name="JPN" width="256">１８ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">１８番道路</language>
 	</row>
 
 	<row id="msg_r18_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
-		<language name="JPN" width="256">１８ばんすいどう</language>
-		<language name="JPN_KANJI" width="256">１８番水道</language>
+		<language name="JPN" width="256">１８ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">１８番道路</language>
 	</row>
 
-	<row id="msg_r18_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r18_sign3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>仮メッセージ</comment>
 		<attribute name="キャラ指定">看板：お得な掲示板</attribute>
 		<language name="JPN" width="256">おとくな　けいじばん</language>
 		<language name="JPN_KANJI" width="256">お得な　掲示板</language>
