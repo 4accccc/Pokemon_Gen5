@@ -58,6 +58,7 @@ extern void RECORD_1day_Update( RECORD *rec );
 #ifdef PM_DEBUG
 //スコアのセット
 extern void RECORD_Score_DebugSet(RECORD * rec, const u32 inScore);
+extern void RECORD_DebugSet( RECORD *rec );
 #endif
 
 
@@ -195,26 +196,14 @@ extern void RECORD_Score_DebugSet(RECORD * rec, const u32 inScore);
 #define RECID_MUSICAL_COMM_WINNER_NUM  (SMALL_REC_START+46)  ///< @ミュージカル通信勝利回数
 #define RECID_MUSICAL_TOTAL_POINT      (SMALL_REC_START+47)  ///< @ミュージカル通算取得得点
 #define RECID_PDW_SLEEP_POKEMON        (SMALL_REC_START+48)  ///< @PDWでポケモンを寝かせた回数
-#define RECID_RENSHOU_SINGLE           (SMALL_REC_START+49)   ///< @タワー:シングルバトル連勝数（未使用）
-#define RECID_RENSHOU_SINGLE_CNT       (SMALL_REC_START+50)  ///< @タワー:シングルバトル連勝数（未使用）
-#define RECID_RENSHOU_S_SINGLE         (SMALL_REC_START+51)   ///< @タワー:スーパーシングルバトル連勝数（未使用）
-#define RECID_RENSHOU_S_SINGLE_CNT     (SMALL_REC_START+52)  ///< @タワー:スーパーシングルバトル連勝数（未使用）
-#define RECID_RENSHOU_DOUBLE           (SMALL_REC_START+53)  ///< @タワー:ダブルバトル連勝数（未使用）
-#define RECID_RENSHOU_DOUBLE_CNT       (SMALL_REC_START+54)  ///< @タワー:ダブルバトル連勝数（未使用）
-#define RECID_RENSHOU_S_DOUBLE         (SMALL_REC_START+55)  ///< @タワー:スーパーダブルバトル連勝数（未使用）
-#define RECID_RENSHOU_S_DOUBLE_CNT     (SMALL_REC_START+56)  ///< @タワー:スーパーダブルバトル連勝数（未使用）
-#define RECID_RENSHOU_MULTI            (SMALL_REC_START+57)  ///< @タワー:マルチバトル連勝数（未使用）
-#define RECID_RENSHOU_MULTI_CNT        (SMALL_REC_START+58)  ///< @タワー:マルチバトル連勝数（未使用）
-#define RECID_RENSHOU_S_MULTI          (SMALL_REC_START+59)  ///< @タワー:スーパーマルチバトル連勝数（未使用）
-#define RECID_RENSHOU_S_MULTI_CNT      (SMALL_REC_START+60)  ///< @タワー:スーパーマルチバトル連勝数（未使用）
-#define RECID_RENSHOU_WIFI             (SMALL_REC_START+61)  ///< @タワー:Wi-Fiバトル最大連勝数（未使用）
-#define RECID_RENSHOU_WIFI_CNT         (SMALL_REC_START+62)  ///< @タワー:Wi-Fiバトル連勝数（未使用）
-#define RECID_SURECHIGAI_THANKS        (SMALL_REC_START+63)  ///< @すれちがい通信でお礼を受けた回数
-#define RECID_TRIALHOUSE_RANK          (SMALL_REC_START+64)  ///< @トライアルハウス最高ランク
-#define RECID_TRIALHOUSE_SCORE         (SMALL_REC_START+65)  ///< @トライアルハウス最高スコア
+#define RECID_POKESHIFTER_COUNT        (SMALL_REC_START+49)  ///< @ポケシフターをした回数
+#define RECID_TRIALHOUSE_COUNT         (SMALL_REC_START+50)  ///< @トライアルハウスをした回数
+#define RECID_SURECHIGAI_THANKS        (SMALL_REC_START+51)  ///< @すれちがい通信でお礼を受けた回数
+#define RECID_TRIALHOUSE_RANK          (SMALL_REC_START+52)  ///< @トライアルハウス最高ランク
+#define RECID_TRIALHOUSE_SCORE         (SMALL_REC_START+53)  ///< @トライアルハウス最高スコア
 
 
-#define SMALL_REC_NUM ( 96 )  // 66+30 30箇所分余り    
+#define SMALL_REC_NUM ( 96 )  // 54+42 42箇所分余り    
 #define SMALL_REC_MAX (SMALL_REC_NUM+LARGE_REC_MAX)
 
 
