@@ -15,3 +15,6 @@ fly_out.spa
 
 plasma.spa
 	plasma.spr
+
+rival.spa
+	rival.spr
