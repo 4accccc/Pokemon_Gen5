@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T16:18:29"/>
+	<create user="matsumiya" host="W00224" date="2010-04-17T14:34:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1295" top="207" right="2000" bottom="835" maximized="no" rayout="Vertical2">
+	<dialog left="1294" top="178" right="1999" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="141" right="1280" bottom="539" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -955,7 +955,8 @@
 	<row id="msg_d01r0101_white_10" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてinventor_04</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『あっ　マコモさん▼
 あのですね　ムンナがいて……
 でも　プラズマだんが　ムンナを……▼
@@ -1026,7 +1027,8 @@
 	<row id="msg_d01r0101_white_11" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後、主人公フリーに</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『ふええ　なんだか
 すっごく　ドタバタしちゃったねえ▼
 [1:00:トレーナー名:0]は
@@ -1045,7 +1047,8 @@
 		<comment>♀
 ・white_11表示以降繰り返し
 ・r03でのプラズマ団イベント発生でここから削除</comment>
-		<attribute name="キャラ指定">友達♀</attribute>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
 		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]は
 マコモさんの　いえに　いってみたら？▼
 あたし？　あたしはね
@@ -1056,24 +1059,98 @@
 さっきの　ポケモン　探すんだから！</language>
 	</row>
 
-	<row id="msg_d01r0101_sage5_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,#000000,,,#000000,,#0000ff,#000000,,,#000000,,">
+	<row id="msg_d01r0101_sage5_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♂
 ・GRIDX=55、GRIDZ=53
 ・pos（GRIDX=51、GRIDZ=53）を踏むと隣接してメッセージ表示
+・続けてsage5_end_01a</comment>
+		<attribute name="キャラ指定">七賢人その５</attribute>
+		<language name="JPN" width="256">？？？『しょあ！！▼</language>
+		<language name="JPN_KANJI" width="256">？？？『しょあ！！▼</language>
+	</row>
+
+	<row id="msg_d01r0101_sage5_end_01a" text-color="#0000ff,,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
+		<comment>♂
+・続けてsage5_end_01b</comment>
+		<attribute name="キャラ指定">七賢人その５</attribute>
+		<language name="JPN" width="256">おどろきましたか！？▼
+われらの　しろを　ほうかいさせた
+ポケモントレーナーよ▼
+あなたには
+おどろかさましたよ！▼</language>
+		<language name="JPN_KANJI" width="256">驚きましたか！？▼
+われらの　城を　崩壊させた
+ポケモントレーナーよ▼
+あなたには
+驚かさましたよ！▼</language>
+	</row>
+
+	<row id="msg_d01r0101_sage5_end_01b" text-color="#0000ff,,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
+		<comment>♂
+・続けてsage5_end_01c</comment>
+		<attribute name="キャラ指定">七賢人その５</attribute>
+		<language name="JPN" width="256">おどろけば　ポケモンも　ひとも
+こころに　スキが　できます▼
+そうすれば　ほんらい　もっている
+ちからも　だせないものです▼
+われわれは　しろを　しゅつげんさせ
+でんせつの　ポケモンを　みせつけ▽
+ひとびとを　おどろかせる……▼
+そのスキに　プラズマだんの　すごさを
+あたらしい　せかいの　すばらしさを▼
+ひとびとの　こころに
+ふかくふかく　きざもうとしたのです▼</language>
+		<language name="JPN_KANJI" width="256">驚けば　ポケモンも　人も
+心に　スキが　できます▼
+そうすれば　本来　持っている
+力も　だせないものです▼
+われわれは　城を　出現させ
+伝説の　ポケモンを　みせつけ▽
+人々を　驚かせる▼
+そのスキに　プラズマ団の　すごさを
+新しい　世界の　すばらしさを▼
+大衆の　心に　深く深く
+刻み込み　操ろうと　したのです▼</language>
+	</row>
+
+	<row id="msg_d01r0101_sage5_end_01c" text-color="#0000ff,,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
+		<comment>♂
 ・アイテム入手処理
 　No402「つるぎのまい」</comment>
 		<attribute name="キャラ指定">七賢人その５</attribute>
-		<language name="JPN" width="256">？？？『であったとき▼</language>
-		<language name="JPN_KANJI" width="256">？？？『であったとき▼</language>
+		<language name="JPN" width="256">ですが　あなたや　ジムリーダーの
+つよき　こころを　みているかぎり▼
+その　さくせんも
+どこまで　ききめが　あったか……？▼
+……その　こころの　つよさこそが
+ポケモンを　つぎの　ステージに▽
+みちびくために　ひつようなのか……？▼
+フム……　くだらない　はなしを
+きかせて　わるかったですね▽
+これでも　もっていきなさい▼</language>
+		<language name="JPN_KANJI" width="256">ですが　あなたや　ジムリーダーの
+強き　心を　みているかぎり▼
+その作戦も
+どこまで　効果が　あったか……？▼
+……その　心の　強さこそが
+ポケモンを　次の　ステージに▽
+導くために　必要なのか……？▼
+フム……　くだらない　話を
+きかせて　悪かったですね▽
+これでも　もっていきなさい▼</language>
 	</row>
 
-	<row id="msg_d01r0101_sage5_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,#000000,,,#000000,,#0000ff,#000000,,,#000000,,">
+	<row id="msg_d01r0101_sage5_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♂
 ・アイテム入手後自動で表示
 ・続けてicpo_end_01</comment>
 		<attribute name="キャラ指定">七賢人その５</attribute>
-		<language name="JPN" width="256">？？？『アイテムをくれたあと▼</language>
-		<language name="JPN_KANJI" width="256">？？？『アイテムをくれたあと▼</language>
+		<language name="JPN" width="256">？？？『Ｎさまの　ゆめ……
+それを　おわらせたのは　あなたです▽
+それを　わすれぬようにしてください▼</language>
+		<language name="JPN_KANJI" width="256">？？？『Ｎさまの　夢……
+それを　終わらせたのは　あなたです▽
+それを　忘れぬようにしてください▼</language>
 	</row>
 
 	<row id="msg_d01r0101_icpo_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,#000000,,,#000000,,#0000ff,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1092,14 +1169,21 @@
 いろいろ　教えてもらおう！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_sage5_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,#000000,,,#000000,,#0000ff,#000000,,,#000000,,">
+	<row id="msg_d01r0101_sage5_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♂
 ・続けて七賢人
 　6人と会っていない→icpo_end_02
 　6人と会っている→icpo_end_03</comment>
 		<attribute name="キャラ指定">七賢人その５</attribute>
-		<language name="JPN" width="256">？？？『かまわんよ▼</language>
-		<language name="JPN_KANJI" width="256">？？？『かまわんよ▼</language>
+		<language name="JPN" width="256">？？？『……ここに　あらわれる
+ムシャーナの　ゆめのけむり▼
+それで　みる　ゆめは　まぼろし
+かなえてこそ　ほんものの　ゆめ……▼</language>
+		<language name="JPN_KANJI" width="256">？？？『……ここに　出現するという
+ムシャーナの　ゆめのけむり▼
+それで　みる　夢は　幻……
+自分の力で　かなえてこそ▽
+本物の　夢……▼</language>
 	</row>
 
 	<row id="msg_d01r0101_icpo_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,#000000,,,#000000,,#0000ff,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
