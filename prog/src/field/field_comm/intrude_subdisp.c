@@ -1317,16 +1317,24 @@ static void _IntSub_ActorUpdate_TouchTown(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INF
   int i;
   
   if(intsub->comm.now_palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
+    BOOL palace_enable;
     //自分のエリアの為、パレス島しかタッチ出来ない
     for(i = 0; i <= INTSUB_ACTOR_TOUCH_TOWN_MAX - INTSUB_ACTOR_TOUCH_TOWN_0; i++){
       GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_TOWN_0 + i], FALSE);
       GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_TOWN_EFF_0 + i], FALSE);
     }
-    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], TRUE);
+    //自分のエリアの場合はパレスは表フィールドにいないとタッチできない
+    if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
+      palace_enable = TRUE;
+    }
+    else{
+      palace_enable = FALSE;
+    }
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], palace_enable);
     
     GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_PALACE_EFF], 
       INTSUB_ACTOR_PAL_BASE_START + intsub->comm.now_palace_area, CLWK_PLTTOFFS_MODE_PLTT_TOP);
-    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE_EFF], TRUE);
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE_EFF], palace_enable);
   }
   else{
     for(i = 0; i <= INTSUB_ACTOR_TOUCH_TOWN_MAX - INTSUB_ACTOR_TOUCH_TOWN_0; i++){
@@ -1593,7 +1601,10 @@ static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO 
 //--------------------------------------------------------------
 static void _IntSub_ActorUpdate_EntryButton(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy)
 {
-  if(intsub->back_exit == FALSE && intsub->comm.recv_num <= 1){
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
+
+  if(intsub->back_exit == FALSE && intsub->comm.recv_num <= 1 
+      && GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
     GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], TRUE);
     BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_ENTRY], FALSE);
     BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_BACK], TRUE);
@@ -1909,13 +1920,16 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
   }
 
   //パレス島タッチ判定
-  _SetRect(PALACE_ICON_POS_X, PALACE_ICON_POS_Y, 
-    PALACE_ICON_HITRANGE_HALF, PALACE_ICON_HITRANGE_HALF, &rect);
-  if(_CheckRectHit(x, y, &rect) == TRUE){
-    intsub->warp_zone_id = ZONE_ID_PALACE01;
-    intsub->event_req = _EVENT_REQ_NO_TOWN_WARP;
-    intsub->decide_town_tblno = PALACE_TOWN_DATA_PALACE;
-    return;
+  if(intsub->comm.now_palace_area != GAMEDATA_GetIntrudeMyID(gamedata)
+      || GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
+    _SetRect(PALACE_ICON_POS_X, PALACE_ICON_POS_Y, 
+      PALACE_ICON_HITRANGE_HALF, PALACE_ICON_HITRANGE_HALF, &rect);
+    if(_CheckRectHit(x, y, &rect) == TRUE){
+      intsub->warp_zone_id = ZONE_ID_PALACE01;
+      intsub->event_req = _EVENT_REQ_NO_TOWN_WARP;
+      intsub->decide_town_tblno = PALACE_TOWN_DATA_PALACE;
+      return;
+    }
   }
   
   ///参加ボタンタッチ判定
