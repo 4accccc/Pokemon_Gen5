@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-17T13:33:20"/>
+	<create user="matsumiya" host="W00224" date="2010-04-17T16:36:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -295,27 +295,116 @@
 	<row id="msg_r14_sage2_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
 		<comment>♂
 ・GRIDX=714、GRIDZ=343
+・続けて条件に応じて分岐</comment>
+		<attribute name="キャラ指定">SAGE２
+七賢人その２</attribute>
+		<language name="JPN" width="256">？？？『リュウラセンのとうに　きた
+つよき　ポケモントレーナーよ▼</language>
+		<language name="JPN_KANJI" width="256">？？？『リュウラセンの塔に　来た
+強き　ポケモントレーナーよ▼</language>
+	</row>
+
+	<row id="msg_r14_sage2_end_01a" text-color="#0000ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・WHITE＋パッケージポケモン捕獲していない
+・続けてsage2_end_01e</comment>
+		<attribute name="キャラ指定">SAGE２
+七賢人その２</attribute>
+		<language name="JPN" width="256">そなたは　あの　シンと
+こころを　かよいあわせているか？▼</language>
+		<language name="JPN_KANJI" width="256">そなたは　あの
+シンと　心を　通い合わせているか？▼</language>
+	</row>
+
+	<row id="msg_r14_sage2_end_01b" text-color="#0000ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・WHITE＋パッケージポケモン捕獲している
+・続けてsage2_end_01e</comment>
+		<attribute name="キャラ指定">SAGE２
+七賢人その２</attribute>
+		<language name="JPN" width="256">そなたは　あの
+シンを　トモダチと　せぬのか？▼</language>
+		<language name="JPN_KANJI" width="256">そなたは　あの
+シンを　トモダチと　せぬのか？▼</language>
+	</row>
+
+	<row id="msg_r14_sage2_end_01c" text-color="#0000ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・BLACK＋パッケージポケモン捕獲していない
+・続けてsage2_end_01e</comment>
+		<attribute name="キャラ指定">SAGE２
+七賢人その２</attribute>
+		<language name="JPN" width="256">そなたは　あの　ムと
+こころを　かよいあわせているか？▼</language>
+		<language name="JPN_KANJI" width="256">そなたは　あの
+ムと　心を　通い合わせているか？▼</language>
+	</row>
+
+	<row id="msg_r14_sage2_end_01d" text-color="#0000ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・BLACK＋パッケージポケモン捕獲している
+・続けてsage2_end_01e</comment>
+		<attribute name="キャラ指定">SAGE２
+七賢人その２</attribute>
+		<language name="JPN" width="256">そなたは　あの
+ムを　トモダチと　せぬのか？▼</language>
+		<language name="JPN_KANJI" width="256">そなたは　あの
+ムを　トモダチと　せぬのか？▼</language>
+	</row>
+
+	<row id="msg_r14_sage2_end_01e" text-color="#0000ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
 ・アイテム入手処理
 　No335「ビルドアップ」</comment>
 		<attribute name="キャラ指定">SAGE２
 七賢人その２</attribute>
-		<language name="JPN" width="256">？？？『であったとき▼</language>
-		<language name="JPN_KANJI" width="256">？？？『海内存知己　天涯若比隣▼
-この世界の　中に　自分を
+		<language name="JPN" width="256">この　せかいに　じぶんを
+りかいしてくれる　ものがいれば▼
+てんのはて　ちのはてと
+はなれていようとも▽
+となりに　いるようなものである……▽
+そういう　ことばが　ある▼
+Ｎさまと　ポケモンのように
+そなたも　そなたの　ポケモンと▽
+りかいしあうのだ▼
+そのために　これを▼</language>
+		<language name="JPN_KANJI" width="256">海内存知己　天涯若比隣
+という　言葉が　ある▼
+この世界に　自分を
 理解してくれる　者がいれば▼
 天の果て　地の果てと
 離れていようとも▽
-隣に　いるようなものである▼</language>
+隣に　いるようなものである　だな▼
+Ｎさまと　ポケモンのように
+そなたも　そなたの　ポケモンと▽
+理解しあうのだ▼
+そのために　これを▼</language>
 	</row>
 
-	<row id="msg_r14_sage2_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+	<row id="msg_r14_sage2_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
 		<comment>♂
 ・アイテム入手後自動で表示
 ・続けてicpo_end_01</comment>
 		<attribute name="キャラ指定">SAGE２
 七賢人その２</attribute>
-		<language name="JPN" width="256">？？？『アイテムをくれたあと▼</language>
-		<language name="JPN_KANJI" width="256">？？？『アイテムをくれたあと▼</language>
+		<language name="JPN" width="256">？？？『……イッシュ　でんせつは
+ポケモンと　ひとの　ちからを　あわせ▽
+あたらしい　せかいを　つくった！▼
+ただ　それだけの　シンプルで
+ゆえに　ちからづよい　メッセージだな▼
+せかいを　かえるのが　えいゆうなら
+ひとは　だれでも　えいゆうに　なれる▼
+それぞれを　かえれば
+せかいは　かわるのだからな▼</language>
+		<language name="JPN_KANJI" width="256">？？？『……イッシュの　建国伝説は
+ポケモンと　人の力を　合わせて▽
+世界を　変えた！▼
+ただ　それだけの　シンプルで
+ゆえに　力強い　メッセージだな▼
+世界を　変えるのが　英雄なら
+ひとは　だれでも　英雄に　なれる▼
+それぞれを　変えれば
+おのずと　世界は　変わるのだからな▼</language>
 	</row>
 
 	<row id="msg_r14_icpo_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -334,15 +423,21 @@
 いろいろ　教えてもらおう！▼</language>
 	</row>
 
-	<row id="msg_r14_sage2_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+	<row id="msg_r14_sage2_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
 		<comment>♂
 ・続けて七賢人
 　6人と会っていない→icpo_end_02
 　6人と会っている→icpo_end_03</comment>
 		<attribute name="キャラ指定">SAGE２
 七賢人その２</attribute>
-		<language name="JPN" width="256">？？？『かまわんよ▼</language>
-		<language name="JPN_KANJI" width="256">？？？『かまわんよ▼</language>
+		<language name="JPN" width="256">？？？『かまわんよ▼
+プラズマだんは　わたしを　かえたが
+せかいは　かえられなかった……▽
+そなたたちが　どうするか　たのしみだ▼</language>
+		<language name="JPN_KANJI" width="256">？？？『かまわんよ▼
+プラズマ団は　わたしを　変えたが
+世界は　変えられなかった……▽
+そなたたちが　どうするか　たのしみだ▼</language>
 	</row>
 
 	<row id="msg_r14_icpo_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
