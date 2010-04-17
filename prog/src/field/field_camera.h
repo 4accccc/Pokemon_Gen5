@@ -476,6 +476,7 @@ extern void FIELD_CAMERA_GetInitialParameter( const FIELD_CAMERA* camera, FLD_CA
 //  カメラ　デバック表示関数
 //------------------------------------------------------------------
 extern void FIELD_CAMERA_DEBUG_Draw( const FIELD_CAMERA* camera);
+extern void FIELD_CAMERA_DEUBG_PrintParameter( const FIELD_CAMERA* camera );
 
 
 

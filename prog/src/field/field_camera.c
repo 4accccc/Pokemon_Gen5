@@ -1846,6 +1846,24 @@ void FIELD_CAMERA_DEBUG_Draw( const FIELD_CAMERA* camera)
   }
 }
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief カメラパラメータ出力
+ *
+ * @param camera
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_DEUBG_PrintParameter( const FIELD_CAMERA* camera )
+{
+  OS_Printf( "FIELD-CAMERA: pitch  = 0x%x\n", camera->angle_pitch );
+  OS_Printf( "FIELD-CAMERA: yaw    = 0x%x\n", camera->angle_yaw );
+  OS_Printf( "FIELD-CAMERA: len    = 0x%x\n", FX_Whole( camera->angle_len ) );
+  OS_Printf( "FIELD-CAMERA: target = 0x%x, 0x%x, 0x%x\n",
+      FX_Whole(camera->target.x), FX_Whole(camera->target.y), FX_Whole(camera->target.z) );
+  OS_Printf( "FIELD-CAMERA: offset = 0x%x, 0x%x, 0x%x\n",
+      FX_Whole(camera->target_offset.x), FX_Whole(camera->target_offset.y), FX_Whole(camera->target_offset.z) );
+}
+
 
 //----------------------------------------------------------------------------
 /**
