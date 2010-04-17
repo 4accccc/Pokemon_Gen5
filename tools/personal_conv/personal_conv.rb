@@ -620,7 +620,7 @@ end
   fp_icon_attr.print( ".\\\n" )
   fp_icon_attr.print( "\"poke_icon_000_m.NCGR\"\n" )
 
-  gmm.make_row_index_kanji( "MONSNAME_", 0, "Å[Å[Å[Å[Å[", "Å[Å[Å[Å[Å[" )
+  gmm.make_row_index_kanji_hyphen( "MONSNAME_", 0, 5, 0 )
 
   pokelist << "Å|Å|Å|Å|Å|\t999\tÉmÅ[É}Éã\tÉmÅ[É}Éã\tÅ|\tÅ|\n"
 
