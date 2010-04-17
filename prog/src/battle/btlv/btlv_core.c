@@ -595,7 +595,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     if( BTLV_SCU_WaitWazaEffect( core->scrnU ) )
     {
       const BTL_POKEPARAM*  pp  = get_btl_pokeparam( core, BTLV_MCSS_POS_BB );
-      int value = BPP_GetValue( pp, BPP_HP ) - 5;
+      int value = BPP_GetValue( pp, BPP_MAX_HP ) / 6;
 
       BTLV_EFFECT_CalcGaugeHP( BTLV_MCSS_POS_BB, value );
       BTLV_EFFECT_Damage( BTLV_MCSS_POS_BB, WAZANO_HATAKU );
