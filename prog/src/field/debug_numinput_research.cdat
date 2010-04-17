@@ -1,8 +1,8 @@
 /*
-  @file debug_numinput.cdat
-  @brief  数値入力デバッグメニュー　パラメータリスト定義ファイル
-  @author Miyuki Iwasawa
-  @date   09.11.26
+  @file   debug_numinput_research.cdat
+  @brief  すれ違い調査関連の数値入力デバッグメニュー　パラメータリスト定義ファイル
+  @author obata
+  @date   2010.04.17
 */
 
 #ifdef PM_DEBUG

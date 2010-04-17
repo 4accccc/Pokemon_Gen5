@@ -123,12 +123,48 @@ static const DEBUG_NUMINPUT_LIST DNI_MusicalList[] = {
 
 //////////////////////////////////////////////////////
 ///サウンド関連
-static const DEBUG_NUMINPUT_PARAM soundLoadBlockSize = {
+static const DEBUG_NUMINPUT_PARAM DNP_SoundLoadBlockSize = {
  0, 0xffff, DebugGetSoundLoadBlockSize, DebugSetSoundLoadBlockSize,
 };
 static const DEBUG_NUMINPUT_LIST DNI_SoundList[] = {
   //gmm_id, param, dni_param
-  { dni_sound_01, 0, &soundLoadBlockSize },
+  { dni_sound_01, 0, &DNP_SoundLoadBlockSize },
+};
+
+//////////////////////////////////////////////////////
+///自機関連
+static const DEBUG_NUMINPUT_PARAM DNP_TrainerID_high = {
+ 0x00000000, 0x0000ffff, DebugGetMyTrainerID_high, DebugSetMyTrainerID_high,
+};
+static const DEBUG_NUMINPUT_PARAM DNP_TrainerID_low = {
+ 0x00000000, 0x0000ffff, DebugGetMyTrainerID_low, DebugSetMyTrainerID_low,
+};
+static const DEBUG_NUMINPUT_PARAM DNP_TrainerID_full = {
+ 0x00000000, 0xffffffff, DebugGetMyTrainerID_full, DebugSetMyTrainerID_full,
+};
+static const DEBUG_NUMINPUT_LIST DNI_PlayerList[] = {
+  //gmm_id, param, dni_param
+  { dni_player_01, 0, &DNP_TrainerID_high },
+  { dni_player_02, 0, &DNP_TrainerID_low },
+  { dni_player_03, 0, &DNP_TrainerID_full },
+};
+
+//////////////////////////////////////////////////////
+///プレイ時間関連
+static const DEBUG_NUMINPUT_PARAM DNP_PlayTimeHour = {
+ 0, PTIME_HOUR_MAX, DebugGetPlayTimeHour, DebugSetPlayTimeHour,
+};
+static const DEBUG_NUMINPUT_PARAM DNP_PlayTimeMinute = {
+ 0, PTIME_MINUTE_MAX, DebugGetPlayTimeMinute, DebugSetPlayTimeMinute,
+};
+static const DEBUG_NUMINPUT_PARAM DNP_PlayTimeSecond = {
+ 0, PTIME_SECOND_MAX, DebugGetPlayTimeSecond, DebugSetPlayTimeSecond,
+};
+static const DEBUG_NUMINPUT_LIST DNI_PlayTimeList[] = {
+  //gmm_id, param, dni_param
+  { dni_playtime_01, 0, &DNP_PlayTimeHour },
+  { dni_playtime_02, 0, &DNP_PlayTimeMinute },
+  { dni_playtime_03, 0, &DNP_PlayTimeSecond },
 };
 
 #endif  //PM_DEBUG

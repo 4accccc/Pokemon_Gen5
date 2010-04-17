@@ -47,6 +47,8 @@
 #include "savedata/intrude_save.h"
 #include "net/net_whpipe.h"
 
+#include "savedata/playtime.h"
+
 //======================================================================
 //======================================================================
 ///項目選択用データの定義
@@ -130,6 +132,18 @@ static u32 DebugGetMusSumPoint(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 par
 static void DebugSetMusSumPoint(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetSoundLoadBlockSize(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetSoundLoadBlockSize(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetMyTrainerID_high(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetMyTrainerID_high(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetMyTrainerID_low(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetMyTrainerID_low(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetMyTrainerID_full(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetMyTrainerID_full(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPlayTimeHour(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetPlayTimeHour(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPlayTimeMinute(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetPlayTimeMinute(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPlayTimeSecond(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetPlayTimeSecond(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 
 #include "debug_numinput.cdat"
 
@@ -193,6 +207,12 @@ static  const DEBUG_NUMINPUT_INITIALIZER DATA_Musical = {
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_Sound = { 
   D_NINPUT_DATA_LIST,   NELEMS( DNI_SoundList ), DNI_SoundList, };
 
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_Player = { 
+  D_NINPUT_DATA_LIST,   NELEMS( DNI_PlayerList ), DNI_PlayerList, };
+
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_PlayTime = { 
+  D_NINPUT_DATA_LIST,   NELEMS( DNI_PlayTimeList ), DNI_PlayTimeList, };
+
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
 {
@@ -235,6 +255,8 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_palace_level, (void*)&DATA_PalaceLevel },
   { dni_mus_01, (void*)&DATA_Musical },
   { dni_sound_00, (void*)&DATA_Sound },
+  { dni_player_00, (void*)&DATA_Player },
+  { dni_playtime_00, (void*)&DATA_PlayTime },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
@@ -1037,6 +1059,95 @@ static void DebugSetSoundLoadBlockSize(GAMESYS_WORK * gsys, GAMEDATA * gamedata,
 {
   BGM_BLOCKLOAD_SIZE = value;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief 自機関連
+ */
+//--------------------------------------------------------------
+static u32 DebugGetMyTrainerID_high(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  MYSTATUS* mystatus = GAMEDATA_GetMyStatus( gamedata );
+  u32 id = MyStatus_GetID( mystatus );
+  u32 high_id = id & 0xffff0000; // 下位16bitをマスク
+  return (high_id >> 16);
+}
+static void DebugSetMyTrainerID_high(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  MYSTATUS* mystatus = GAMEDATA_GetMyStatus( gamedata );
+  u32 id = MyStatus_GetID( mystatus );
+  u32 low_id = id & 0x0000ffff; // 上位16bitをマスク
+  u32 new_id = (value << 16) | low_id;  // 上位16bitを更新
+  MyStatus_SetID( mystatus, new_id );
+}
+static u32 DebugGetMyTrainerID_low(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  MYSTATUS* mystatus = GAMEDATA_GetMyStatus( gamedata );
+  u32 id = MyStatus_GetID( mystatus );
+  u32 low_id = id & 0x0000ffff; // 上位16bitをマスク
+  return low_id;
+}
+static void DebugSetMyTrainerID_low(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  MYSTATUS* mystatus = GAMEDATA_GetMyStatus( gamedata );
+  u32 id = MyStatus_GetID( mystatus );
+  u32 high_id = id & 0xffff0000; // 下位16bitをマスク
+  u32 new_id = high_id | value;  // 下位16bitを更新
+  MyStatus_SetID( mystatus, new_id );
+}
+static u32 DebugGetMyTrainerID_full(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  MYSTATUS* mystatus = GAMEDATA_GetMyStatus( gamedata );
+  return MyStatus_GetID( mystatus );
+}
+static void DebugSetMyTrainerID_full(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  MYSTATUS* mystatus = GAMEDATA_GetMyStatus( gamedata );
+  MyStatus_SetID( mystatus, value );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief プレイ時間
+ */
+//--------------------------------------------------------------
+static u32 DebugGetPlayTimeHour(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  PLAYTIME* time = GAMEDATA_GetPlayTimeWork( gamedata );
+  return PLAYTIME_GetHour( time );
+}
+static void DebugSetPlayTimeHour(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  PLAYTIME* time = GAMEDATA_GetPlayTimeWork( gamedata );
+  u8 min = PLAYTIME_GetMinute( time );
+  u8 sec = PLAYTIME_GetSecond( time );
+  PLAYTIME_Set( time, value, min, sec );
+}
+static u32 DebugGetPlayTimeMinute(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  PLAYTIME* time = GAMEDATA_GetPlayTimeWork( gamedata );
+  return PLAYTIME_GetMinute( time );
+}
+static void DebugSetPlayTimeMinute(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  PLAYTIME* time = GAMEDATA_GetPlayTimeWork( gamedata );
+  u16 hour = PLAYTIME_GetHour( time );
+  u8 sec = PLAYTIME_GetSecond( time );
+  PLAYTIME_Set( time, hour, value, sec );
+}
+static u32 DebugGetPlayTimeSecond(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  PLAYTIME* time = GAMEDATA_GetPlayTimeWork( gamedata );
+  return PLAYTIME_GetSecond( time );
+}
+static void DebugSetPlayTimeSecond(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  PLAYTIME* time = GAMEDATA_GetPlayTimeWork( gamedata );
+  u16 hour = PLAYTIME_GetHour( time );
+  u8 min = PLAYTIME_GetMinute( time );
+  PLAYTIME_Set( time, hour, min, value );
+}
+
 
 #endif  //PM_DEBUG
 
