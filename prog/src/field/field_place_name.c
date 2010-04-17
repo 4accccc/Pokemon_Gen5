@@ -19,7 +19,7 @@
 #include "field_comm/intrude_work.h"
 #include "field_comm/intrude_main.h"
 
-#include "pm_define.h"
+#include "buflen.h"
 #include "field_oam_pal.h"  // for FLDOAM_PALNO_PLACENAME
 
 #include "arc/arc_def.h"
@@ -35,36 +35,28 @@
 //=================================================================================== 
 //#define DEBUG_PRINT_ON // デバッグ出力スイッチ
 #define DEBUG_PRINT_TARGET (3) // デバッグ出力先
+
 #define MAX_STATE_COUNT ( 0xffff ) // 状態カウンタ最大値
-
-// 最大文字数
-#define MAX_NAME_LENGTH (BUFLEN_PLACE_NAME - BUFLEN_EOM_SIZE)
-
-// 1キャラ = 8ドット
-#define CHAR_SIZE (8) 
-
-// 無効ゾーンID
-#define INVALID_ZONE_ID (0xffffffff)
+#define MAX_NAME_LENGTH (BUFLEN_PLACE_NAME - BUFLEN_EOM_SIZE) // 最大文字数
 
 //-----------
 // 表示設定
 //-----------
-#define BG_PALETTE_NO       (0)					// BGパレット番号
-#define BG_FRAME            (GFL_BG_FRAME3_M)	// 使用するBGフレーム
-#define BG_FRAME_PRIORITY   (1)					// BGフレームのプライオリティ
+#define BG_PALETTE_NO          (0) // BGパレット番号
+#define BG_FRAME (GFL_BG_FRAME3_M) // 使用するBGフレーム
+#define BG_FRAME_PRIORITY      (1) // BGフレームのプライオリティ
 
 #define	COLOR_NO_LETTER     (1) // 文字本体のカラー番号
 #define	COLOR_NO_SHADOW     (2) // 影部分のカラー番号
 #define	COLOR_NO_BACKGROUND (0) // 背景部のカラー番号
 
-#define ALPHA_PLANE_1 (GX_BLEND_PLANEMASK_BG3)	// αブレンドの第1対象面
-#define ALPHA_PLANE_2 (GX_BLEND_PLANEMASK_BG0)	// αブレンドの第2対象面
-#define ALPHA_VALUE_1 (16)						// 第1対象面のαブレンディング係数
-#define ALPHA_VALUE_2 ( 4)						// 第1対象面のαブレンディング係数
+#define ALPHA_PLANE_1 (GX_BLEND_PLANEMASK_BG3) // αブレンドの第1対象面
+#define ALPHA_PLANE_2 (GX_BLEND_PLANEMASK_BG0) // αブレンドの第2対象面
+#define ALPHA_VALUE_1                     (16) // 第1対象面のαブレンディング係数
+#define ALPHA_VALUE_2                      (4) // 第2対象面のαブレンディング係数
 
-#define Y_CENTER_POS ( CHAR_SIZE * 2 - 1 )		// 背景帯の中心y座標
-
-#define LAUNCH_INTERVAL (3)	// 文字発射間隔[単位：フレーム]
+#define CHAR_SIZE                    (8) // 1キャラ = 8ドット
+#define Y_CENTER_POS (CHAR_SIZE * 2 - 1) // 背景帯の中心y座標
 
 //-----
 // BG 
@@ -77,23 +69,28 @@
 #define BMPWIN_POS_X_CHAR  ( 0)								// ウィンドウのx座標(キャラクタ単位)
 #define BMPWIN_POS_Y_CHAR  ( 1)								// ウィンドウのy座標(キャラクタ単位)
 
-// パレットリソース
-typedef enum {
-	PLTT_RES_CHAR_UNIT,	// 文字ユニットで使用するパレット
-	PLTT_RES_NUM        // 総数
-} PLTT_RES_INDEX;
-
-// セルアクター・ユニット
-typedef enum {
-	CLUNIT_CHAR_UNIT, // 文字ユニット
-	CLUNIT_NUM,       // 総数
-} CLUNIT_INDEX;
+//-----------
+// 動作設定
+//-----------
+#define LAUNCH_INTERVAL (3)	// 文字オブジェクトの発射間隔[frame]
 
 // 各状態の動作設定
 #define PROCESS_TIME_FADEIN  (10)
 #define PROCESS_TIME_WAIT_LAUNCH   (10)
 #define PROCESS_TIME_WAIT_FADEOUT   (30)
 #define PROCESS_TIME_FADEOUT (20)
+
+// パレットリソース
+typedef enum {
+	PLTT_RES_LETTER,	// 文字オブジェクトで使用するパレット
+	PLTT_RES_NUM      // 総数
+} PLTT_RES_INDEX;
+
+// セルアクターユニット
+typedef enum {
+	CLUNIT_LETTER, // 文字オブジェクト
+	CLUNIT_NUM,    // 総数
+} CLUNIT_INDEX;
 
 // システムの状態
 typedef enum {
@@ -105,25 +102,24 @@ typedef enum {
 	SYSTEM_STATE_WAIT_FADEOUT, // フェードアウト待ち
 	SYSTEM_STATE_FADEOUT,	     // フェード・アウト
 	SYSTEM_STATE_NUM,          // 総数
-  SYSTEM_STATE_MAX = SYSTEM_STATE_NUM - 1
-} SYSTEM_STATE;
+} SYSTEM_STATE; 
 
-
+// 文字オブジェクトのセットアップパラメータ
 static const PN_LETTER_SETUP_PARAM LetterSetupParam = 
 {
-  256,                               // 座標
+  256,                       // 座標
   Y_CENTER_POS - ( 13 / 2 ), // 
-  -20,                               // 速度
-  0,                                 // 
-  24,                                // 目標位置
+  -20,                       // 速度
+  0,                         // 
+  24,                        // 目標位置
   Y_CENTER_POS - ( 13 / 2 ), // 
-  0,                                 // 目標位置での速度
-  0,                                 // 
-
-  0, // フォント
-  0, // 文字
+  0,                         // 目標位置での速度
+  0,                         // 
+  NULL,                      // フォント
+  0,                         // 文字コード
 };
 
+// BG コントロール
 GFL_BG_BGCNT_HEADER BGCntHeader = 
 {
   0, 0,					          // 初期表示位置
@@ -153,7 +149,7 @@ struct _FIELD_PLACE_NAME {
   WORDSET*      wordset;
 	HEAPID        heapID;
   ARCHANDLE*    arcHandle;
-	GFL_MSGDATA*  msg;
+	GFL_MSGDATA*  message;
   GFL_FONT*     font;
 
 	// 地名
@@ -166,20 +162,22 @@ struct _FIELD_PLACE_NAME {
   u32           nullCharPos; // NULLキャラクタのキャラNo.
 
 	// OBJ
-	u32            resPltt[PLTT_RES_NUM];  // パレットリソース
-	BMPOAM_SYS_PTR bmpOamSys;              // BMPOAMシステム
-	GFL_CLUNIT*    clunit[CLUNIT_NUM];     // セルアクターユニット
+	u32            resPltt[ PLTT_RES_NUM ]; // パレットリソース
+	BMPOAM_SYS_PTR bmpOamSys;               // BMPOAMシステム
+	GFL_CLUNIT*    clunit[ CLUNIT_NUM ];    // セルアクターユニット
 
-	// 動作に使用するデータ
-	SYSTEM_STATE state;	// システム状態
-  u8  stateSeq;       // 状態内シーケンス
-	u16	stateCount;		  // 状態カウンタ
+  // システム状態
+	SYSTEM_STATE state;	
+  u8  stateSeq;   // 状態内シーケンス
+	u16	stateCount;	// 状態カウンタ
 
-  u16  lastZoneID; // 最後に表示したゾーンID
-  u16  dispZoneID; // 次に表示するゾーンID
-  BOOL dispFlag; // 表示フラグ
+  // 表示するゾーン
+  u16  lastZoneID;    // 最後に表示したゾーンID
+  u16  dispZoneID;    // 次に表示するゾーンID
+  BOOL dispFlag;      // 表示フラグ
   BOOL forceDispFlag; // 強制表示フラグ
 
+  // 文字オブジェクト
   PN_LETTER* letters[ MAX_NAME_LENGTH ];
   u8 setupLetterNum; // セットアップが完了した文字オブジェクトの数
 	u8 launchLetterNum;// 発射済み文字数
@@ -496,6 +494,10 @@ extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* system, u32 zoneID 
 void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* system )
 {
 	ChangeState( system, SYSTEM_STATE_HIDE );
+
+  // 全ての表示リクエストを無効化
+  ResetDispFlag( system );
+  ResetForceDispFlag( system );
 }
 
 //------------------------------------------------------------------------------------
@@ -691,7 +693,7 @@ static void LoadOBJResource( FIELD_PLACE_NAME* system )
   heapID = GetHeapID( system );
 	handle = GetArcHandle( system );
 
-	system->resPltt[ PLTT_RES_CHAR_UNIT ] = 
+	system->resPltt[ PLTT_RES_LETTER ] = 
 		GFL_CLGRP_PLTT_RegisterEx( 
 				handle, NARC_place_name_place_name_string_NCLR,
 				CLSYS_DRAW_MAIN, FLDOAM_PALNO_PLACENAME * 32, 0, 1, heapID );
@@ -734,11 +736,11 @@ static void CreateClactUnit( FIELD_PLACE_NAME* system )
   HEAPID heapID;
 
   heapID = GetHeapID( system );
-	system->clunit[ CLUNIT_CHAR_UNIT ] = 
+	system->clunit[ CLUNIT_LETTER ] = 
 		GFL_CLACT_UNIT_Create( MAX_NAME_LENGTH, BG_FRAME_PRIORITY, heapID );
 
 	// 初期設定
-	GFL_CLACT_UNIT_SetDrawEnable( system->clunit[ CLUNIT_CHAR_UNIT ], TRUE );
+	GFL_CLACT_UNIT_SetDrawEnable( system->clunit[ CLUNIT_LETTER ], TRUE );
   
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreateClactUnit\n" );
@@ -780,7 +782,7 @@ static void CreateLetters( FIELD_PLACE_NAME* system )
 	for( i=0; i<MAX_NAME_LENGTH; i++ )
 	{
     system->letters[i] = PN_LETTER_Create( 
-        system->heapID, system->bmpOamSys, system->resPltt[ PLTT_RES_CHAR_UNIT ] );
+        system->heapID, system->bmpOamSys, system->resPltt[ PLTT_RES_LETTER ] );
 	} 
 
 #ifdef DEBUG_PRINT_ON
@@ -990,7 +992,7 @@ static void CreateBmpOamSystem( FIELD_PLACE_NAME* system )
   GF_ASSERT( system->bmpOamSys == NULL );
 
   heapID = GetHeapID( system );
-	system->bmpOamSys = BmpOam_Init( heapID, system->clunit[ CLUNIT_CHAR_UNIT ] );
+	system->bmpOamSys = BmpOam_Init( heapID, system->clunit[ CLUNIT_LETTER ] );
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "FIELD-PLACE-NAME: CreateBmpOamSystem\n" );
@@ -1217,8 +1219,8 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* system )
     INTRUDE_COMM_SYS_PTR intrudeComm= Intrude_Check_CommConnect( gameComm );
     u8 intrudeNetID = Intrude_GetPalaceArea( intrudeComm );
     MYSTATUS* status = Intrude_GetMyStatus( intrudeComm, intrudeNetID );
-    STRBUF* strbuf = GFL_MSG_CreateString( system->msg, MAPNAME_INTRUDE );
-    GFL_MSG_GetString( system->msg,	strID, system->nameBuf );
+    STRBUF* strbuf = GFL_MSG_CreateString( system->message, MAPNAME_INTRUDE );
+    GFL_MSG_GetString( system->message,	strID, system->nameBuf );
     WORDSET_RegisterPlayerName( system->wordset, 0, status );
     WORDSET_RegisterPlaceName( system->wordset, 1, strID );
     WORDSET_ExpandStr( system->wordset, system->nameBuf, strbuf );
@@ -1226,7 +1228,7 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* system )
   }
   // 自分のフィールドにいる
   else {
-    GFL_MSG_GetString( system->msg,	strID, system->nameBuf );
+    GFL_MSG_GetString( system->message,	strID, system->nameBuf );
   }
   system->nameLen = GFL_STR_GetBufferLength( system->nameBuf );
 }
@@ -1441,7 +1443,7 @@ static void Process_FADEIN( FIELD_PLACE_NAME* system )
   switch( GetStateSeq(system) ) {
   case 0:
     Draw_FADEIN( system ); // α値を初期化
-    GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON );	// BGを表示
+    GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON ); // BGを表示
     IncStateSeq( system );
     break;
 
@@ -1458,15 +1460,15 @@ static void Process_FADEIN( FIELD_PLACE_NAME* system )
 /**
  * @brief 発射待ち状態時の動作
  *
- * @param sys 動かすシステム
+ * @param system
  */
 //-----------------------------------------------------------------------------------
-static void Process_WAIT_LAUNCH( FIELD_PLACE_NAME* sys )
+static void Process_WAIT_LAUNCH( FIELD_PLACE_NAME* system )
 {
 	// 一定時間が経過したら, 次の状態へ
-	if( PROCESS_TIME_WAIT_LAUNCH < sys->stateCount )
+	if( PROCESS_TIME_WAIT_LAUNCH < system->stateCount )
 	{
-		ChangeState( sys, SYSTEM_STATE_LAUNCH );
+		ChangeState( system, SYSTEM_STATE_LAUNCH );
 	}
 }
 
@@ -1556,15 +1558,16 @@ static void Process_WAIT_FADEOUT( FIELD_PLACE_NAME* sys )
 /**
  * @brief フェード・アウト状態時の動作
  *
- * @param sys 動かすシステム
+ * @param system
  */
 //-----------------------------------------------------------------------------------
-static void Process_FADEOUT( FIELD_PLACE_NAME* sys )
+static void Process_FADEOUT( FIELD_PLACE_NAME* system )
 {
 	// 一定時間が経過したら, 次の状態へ
-	if( PROCESS_TIME_FADEOUT < sys->stateCount )
-	{
-		ChangeState( sys, SYSTEM_STATE_HIDE );
+	if( PROCESS_TIME_FADEOUT < system->stateCount ) {
+		ChangeState( system, SYSTEM_STATE_HIDE );
+    GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF );	// BGを非表示にする
+    HideLetters( system ); // 文字オブジェクトを非表示にする
 	}
 }
 
@@ -1757,10 +1760,10 @@ static void CreateMessageData( FIELD_PLACE_NAME* system )
 {
   HEAPID heapID;
 
-  GF_ASSERT( system->msg == NULL );
+  GF_ASSERT( system->message == NULL );
 
   heapID = GetHeapID( system ); 
-	system->msg = GFL_MSG_Create( 
+	system->message = GFL_MSG_Create( 
       GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_place_name_dat, heapID );
 
 #ifdef DEBUG_PRINT_ON
@@ -1869,9 +1872,9 @@ static void DeleteWordset( FIELD_PLACE_NAME* system )
 //-----------------------------------------------------------------------------------
 static void DeleteMessageData( FIELD_PLACE_NAME* system )
 {
-  if( system->msg ) {
-    GFL_MSG_Delete( system->msg );
-    system->msg = NULL;
+  if( system->message ) {
+    GFL_MSG_Delete( system->message );
+    system->message = NULL;
   }
 
 #ifdef DEBUG_PRINT_ON
@@ -1989,7 +1992,7 @@ static GFL_FONT* GetFont( const FIELD_PLACE_NAME* system )
 //-----------------------------------------------------------------------------------
 static GFL_MSGDATA* GetMessageData( const FIELD_PLACE_NAME* system )
 {
-  return system->msg;
+  return system->message;
 }
 
 //-----------------------------------------------------------------------------------
