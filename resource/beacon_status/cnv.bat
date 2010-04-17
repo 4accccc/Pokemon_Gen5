@@ -40,6 +40,7 @@ g2dcvtr bstatus_icon11.nce -br
 g2dcvtr bstatus_icon12.nce -br
 
 g2dcvtr bstatus_panel.ncl
+g2dcvtr bdetail_panel.ncl
 
 echo narcì¬
 nnsarc -c -l -n -i beacon_status -S arc_list.txt >arc_result.txt

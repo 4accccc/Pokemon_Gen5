@@ -27,6 +27,7 @@
 "bdetail_obj.ncer"
 "bdetail_obj.nanr"
 "bdetail_bgu.nclr"
+"bdetail_panel.nclr"
 "bdetail_bgu_lz.ncgr"
 "bdetail_bgd_lz.ncgr"
 "bdetail_bgu01_lz.nscr"
