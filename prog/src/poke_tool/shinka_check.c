@@ -303,8 +303,10 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u32 param
 			      break;
 		      }
           //お互いのポケモンがカブリン、カッチュなら進化（名称変更の可能性があるので、注意！）
-          if( ( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_571 ) &&
-              ( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_561 ) )
+          if( ( ( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_571 ) && 
+                ( PP_Get( pp_e, ID_PARA_monsno, NULL ) == MONSNO_561 ) ) ||
+              ( ( PP_Get( pp_e, ID_PARA_monsno, NULL ) == MONSNO_571 ) && 
+                ( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_561 ) ) )
           { 
 					  ret = pst->psd[ i ].ShinkaMons;
           }
