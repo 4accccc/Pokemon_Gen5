@@ -376,7 +376,7 @@ GMEVENT *ENCEFF_CI_CreatePlasma(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, co
 GMEVENT *ENCEFF_CI_CreatePackage(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_PLASMA, inIsFadeWhite );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_PACKAGE, inIsFadeWhite );
   return( event );
 }
 
@@ -392,7 +392,7 @@ GMEVENT *ENCEFF_CI_CreatePackage(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, c
 GMEVENT *ENCEFF_CI_CreateMovePoke(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_PLASMA, inIsFadeWhite );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_MOVEPOKE, inIsFadeWhite );
   return( event );
 }
 
@@ -408,7 +408,7 @@ GMEVENT *ENCEFF_CI_CreateMovePoke(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, 
 GMEVENT *ENCEFF_CI_CreateThree(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_PLASMA, inIsFadeWhite );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_THREE, inIsFadeWhite );
   return( event );
 }
 
@@ -424,7 +424,7 @@ GMEVENT *ENCEFF_CI_CreateThree(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, con
 GMEVENT *ENCEFF_CI_CreateZoroark(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_PLASMA, inIsFadeWhite );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_ZOROARK, inIsFadeWhite );
   return( event );
 }
 
