@@ -3,7 +3,6 @@
 #define ZONE_C04R0201_EVD_H
 
 #define DOOR_ID_C04R0201_C04_EXIT01       0
-#define DOOR_ID_C04R0201_C04R0203_EXIT01  1
 
 #endif //ZONE_C04R0201_EVD_H
 //このファイルは../data/c04r0201.mevから自動生成されました
@@ -33,6 +32,7 @@
 #define C04R0201_FAN_09                   20
 #define C04R0201_FAN_10                   21
 #define C04R0201_GIRL4_01                 22
+#define C04R0201_POLICEMAN_01             23
 
 #endif //ZONE_C04R0201_EVC_H
 //このファイルは../data/c04r0201.mevから自動生成されました
