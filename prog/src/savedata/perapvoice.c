@@ -11,8 +11,7 @@
 #include "savedata/save_tbl.h"
 #include "savedata/perapvoice.h"
 #include "perapvoice_local.h"
-
-
+#include "poke_tool/monsno_def.h"
 
 //============================================================================================
 //============================================================================================
@@ -79,7 +78,7 @@ PERAPVOICE * PERAPVOICE_AllocWork(HEAPID heapID)
 //----------------------------------------------------------
 PERAPVOICE * SaveData_GetPerapVoice(SAVE_CONTROL_WORK * sv)
 {
-  OS_Printf("1:perapvoice adr=%08x\n",(u32)SaveControl_DataPtrGet(sv, GMDATA_ID_PERAPVOICE));
+//  OS_Printf("1:perapvoice adr=%08x\n",(u32)SaveControl_DataPtrGet(sv, GMDATA_ID_PERAPVOICE));
   return (PERAPVOICE*)SaveControl_DataPtrGet(sv, GMDATA_ID_PERAPVOICE);
 }
 
@@ -163,29 +162,27 @@ const void * PERAPVOICE_GetVoiceData(const PERAPVOICE * pv)
 //==============================================================================
 void PERAPVOICE_ExpandVoiceData( s8 *des, const s8 *src )
 {
-  int i,count=0;
+  int i,j,count=0;
   s8 tmp;
   u8 dat;
 
-  OS_Printf("src=%08x, des=%08x\n", src, des);
+//  OS_Printf("src=%08x, des=%08x\n", src, des);
 
   // 4bit1kbyteを8bit8kbyteに伸ばす
   for(i=0;i<PERAPVOICE_LENGTH;i++){
     dat = src[i]&0x0f;        // 下位データを取り出して
     tmp = dat-8;              // 8引いて-8～7のデータにして
     tmp = tmp*16;             // 16掛けて-128～127のデータにする
-    des[count+0]   = tmp;  // 4回同じデータを格納
-    des[count+1]   = tmp;
-    des[count+2]   = tmp;
-    des[count+3]   = tmp;
+    for(j=0;j<4;j++){
+      des[count+j]   = tmp;  // 4回同じデータを格納
+    }
 
     dat = src[i]>>4;          // 上位のデータを取り出して
     tmp = dat-8;              // 上と同じ計算を繰り返す
     tmp = tmp*16;
-    des[count+4]   = tmp;
-    des[count+5]   = tmp;
-    des[count+6]   = tmp;
-    des[count+7]   = tmp;
+    for(j=4;j<8;j++){
+      des[count+j]   = tmp;   // 4回同じデータを格納
+    }
 
     count += 8;
   }
@@ -241,4 +238,31 @@ void PERAPVOICE_SetVoiceData(PERAPVOICE * pv, const s8 * src)
 void PERAPVOICE_CopyData(PERAPVOICE * des, const PERAPVOICE * src)
 {
   GFL_STD_MemCopy(src, des, sizeof(PERAPVOICE));
+}
+
+
+//=============================================================================================
+/**
+ * @brief ペラップの声データを削除するかPOKEPARTYをチェックして削除
+ *
+ * @param   pv      ペラップボイスのセーブデータポインタ
+ * @param   party   POKEPARTYのポインタ（手持ちのみでOK、バトルボックスはチェックの必要なし)
+ */
+//=============================================================================================
+void PERAPVOICE_CheckPerapInPokeParty( PERAPVOICE *pv, POKEPARTY *party )
+{
+  int i,num;
+  GF_ASSERT( pv );
+  GF_ASSERT( party );
+
+  // 手持ちパーティにペラップがいるかチェックする
+  num = PokeParty_GetPokeCount(party);
+  for(i=0;i<num;i++){
+    if(PP_Get( PokeParty_GetMemberPointer(party,i), ID_PARA_monsno, NULL)==MONSNO_PERAPPU){
+      return;
+    }
+  }
+
+  // ペラップが手持ちにいなかったら声データ削除
+  PERAPVOICE_ClearExistFlag( pv );
 }

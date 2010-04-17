@@ -41,6 +41,7 @@
 #include "gamesystem/comm_player_support.h"
 #include "savedata/dreamworld_data.h"  //DREAMWORLD_SAVEDATA
 #include "savedata/dendou_save.h"      // DENDOU_RECORD
+#include "savedata/perapvoice.h"       // PERAPVOICE
 
 #include "field/bsubway_scr_proc.h"
 
@@ -124,7 +125,7 @@ extern void GAMEDATA_SaveAsyncCancel(GAMEDATA *gamedata);
  * @brief   外部セーブの分割セーブ開始
  *
  * @param   gamedata    ゲームデータへのポインタ
- * @param   extra_id		外部セーブデータ番号
+ * @param   extra_id    外部セーブデータ番号
  *
  * @retval  none
  */
@@ -136,7 +137,7 @@ extern void GAMEDATA_ExtraSaveAsyncStart(GAMEDATA *gamedata, SAVE_EXTRA_ID extra
  * @brief   外部セーブの分割セーブを実行
  *
  * @param   gamedata    ゲームデータへのポインタ
- * @param   extra_id		外部セーブデータ番号
+ * @param   extra_id    外部セーブデータ番号
  *
  * @retval  セーブ結果
  */
@@ -726,6 +727,18 @@ extern MUSICAL_SCRIPT_WORK* GAMEDATA_GetMusicalScrWork(GAMEDATA * gamedata);
  */
 //----------------------------------------------------------
 extern DREAMWORLD_SAVEDATA* GAMEDATA_GetDreamWorkdSaveWork(GAMEDATA * gamedata);
+
+
+//=============================================================================================
+/**
+ * @brief ペラップ録音データのポインタを取得
+ *
+ * @param   gamedata    GAMEDATAへのポインタ
+ *
+ * @retval  extern PERAPVOICE *   ペラップ録音データへのポインタ
+ */
+//=============================================================================================
+extern PERAPVOICE *GAMEDATA_GetPerapVoice( GAMEDATA *gamedata );
 
 //==================================================================
 /**

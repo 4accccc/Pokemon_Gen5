@@ -1592,7 +1592,7 @@ void GAMEDATA_ExtraSaveAsyncStart(GAMEDATA *gamedata, SAVE_EXTRA_ID extra_id)
  * @brief   外部セーブの分割セーブを実行
  *
  * @param   gamedata    ゲームデータへのポインタ
- * @param   extra_id		外部セーブデータ番号
+ * @param   extra_id    外部セーブデータ番号
  *
  * @retval  セーブ結果
  */
@@ -1885,6 +1885,21 @@ MUSICAL_SCRIPT_WORK* GAMEDATA_GetMusicalScrWork(GAMEDATA * gamedata)
 DREAMWORLD_SAVEDATA* GAMEDATA_GetDreamWorkdSaveWork(GAMEDATA * gamedata)
 {
   return DREAMWORLD_SV_GetDreamWorldSaveData( gamedata->sv_control_ptr );
+}
+
+
+//==================================================================
+/**
+ * @brief ペラップ録音データのポインタを取得
+ *
+ * @param   gamedata    GAMEDATAへのポインタ
+ *
+ * @retval  extern PERAPVOICE *   ペラップ録音データへのポインタ
+ */
+//==================================================================
+PERAPVOICE *GAMEDATA_GetPerapVoice( GAMEDATA *gamedata )
+{
+  return SaveData_GetPerapVoice( gamedata->sv_control_ptr );
 }
 
 //==================================================================
