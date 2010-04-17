@@ -286,17 +286,17 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT * event, int 
   // BGM 操作
   case 1:  
     { 
-      BGM_INFO_SYS* bgm_info = GAMEDATA_GetBGMInfoSys( gameData );
+      BGM_INFO_SYS* BGMInfo = GAMEDATA_GetBGMInfoSys( gameData );
       u8 season = GAMEDATA_GetSeasonID( gameData );
-      u16 zone_id = FIELDMAP_GetZoneID( fieldmap );
-      u32 bgm_now = ZONEDATA_GetBGMID( zone_id, season );
-      u8 iss_type_now = BGM_INFO_GetIssType( bgm_info, bgm_now ); 
-      // 現在のBGMがダンジョンISS
-      if( iss_type_now == ISS_TYPE_DUNGEON ) {
+      u16 zoneID = FIELDMAP_GetZoneID( fieldmap );
+      u32 nowBGM = FSND_GetFieldBGM( gameData, work->location.zone_id );
+      u32 prevBGM = FSND_GetFieldBGM( gameData, work->prevZoneID );
+      u8 nowIssType = BGM_INFO_GetIssType( BGMInfo, nowBGM ); 
+      u8 prevIssType = BGM_INFO_GetIssType( BGMInfo, prevBGM ); 
+      // 現在のBGMがダンジョンISS && 前のBGMもダンジョンISS ==> BGMフェードアウト
+      if( ( nowIssType == ISS_TYPE_DUNGEON ) && ( prevIssType == ISS_TYPE_DUNGEON ) ) {
         // フェードイン
-        FIELD_SOUND* fieldSound = GAMEDATA_GetFieldSound( gameData );
-        GMEVENT* fadeInEvent = EVENT_FSND_FadeInBGM( gameSystem, FSND_FADE_FAST );
-        GMEVENT_CallEvent( event, fadeInEvent );
+        GMEVENT_CallEvent( event, EVENT_FSND_FadeInBGM( gameSystem, FSND_FADE_FAST ) );
       }
       else {
         FSND_PlayStartBGM( fieldSound );
