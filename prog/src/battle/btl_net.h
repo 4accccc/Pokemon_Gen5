@@ -10,6 +10,7 @@
 #ifndef __BTL_NET_H__
 #define __BTL_NET_H__
 
+#include "savedata\perapvoice.h"
 #include "poke_tool/pokeparty.h"
 #include "battle/battle.h"
 
@@ -24,6 +25,7 @@ typedef enum {
 
   BTL_NET_TIMING_INITIALIZE,
   BTL_NET_TIMING_NOTIFY_PARTY_DATA,
+  BTL_NET_TIMING_NOTIFY_PERAPP_VOICE,
   BTL_NET_TIMING_NOTIFY_PLAYER_DATA,
   BTL_NET_TIMING_SETUP_END,
 
@@ -111,6 +113,11 @@ extern BOOL BTL_NET_IsRecved_AI_TrainerData( void );
 extern BTLNET_AIDATA_CONTAINER*  BTL_NET_AIDC_Create( u32 size, HEAPID heapID );
 extern void BTL_NET_AIDC_Delete( BTLNET_AIDATA_CONTAINER* container );
 extern void BTL_NET_AIDC_SetData( BTLNET_AIDATA_CONTAINER* container, const void* src, u8 clientID );
+
+extern BOOL BTL_NET_StartNotifyPerappVoice( const PERAPVOICE* pvoice );
+extern BOOL BTL_NET_IsCompletePerappVoice( void );
+extern const void* BTL_NET_GetPerappVoiceRaw( u8 clientID );
+extern void BTL_NET_QuitNotifyPerappVoice( void );
 
 
 #endif

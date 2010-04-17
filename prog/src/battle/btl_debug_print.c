@@ -76,6 +76,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_MAIN_GetFrontPokeDataResult:   return "    クライアント[%d]の %d 番目のポケを返す\n";
   case DBGSTR_MAIN_CommError:                return "通信エラーによる終了\n";
   case DBGSTR_MAIN_CheckHPByLvup:            return "PPLVUP Main line:%d, HP=%d\n";
+  case DBGSTR_MAIN_PerappVoiceAdded:         return "ClientID=%d のペラップデータ構築\n";
+  case DBGSTR_MAIN_PerappVoiceComplete:      return "ペラップボイス相互受信完了\n";
 
   case DBGSTR_CLIENT_RETURN_CMD_START:       return "ID[%d], 返信開始へ\n";
   case DBGSTR_CLIENT_RETURN_CMD_DONE:        return "ID[%d], %d byte 返信しました\n";
@@ -155,6 +157,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_NET_RecvedServerParam:    return "netID=%d, サーバパラメータ受信しました。\n";
   case DBGSTR_NET_RecvedPartyData:      return "netID=%d, clientID=%d のパーティデータ受信完了, pData=%p, buf=%p\n";
   case DBGSTR_NET_PartyDataComplete:    return "パーティデータ相互受信完了  member=%d\n";
+  case DBGSTR_NET_PerappVoiceComplete:  return "ペラップボイス相互受信完了  member=%d\n";
   case DBGSTR_NET_SendCmdDone:          return "マシン(%d) に %d bytes 送信完了\n";
   case DBGSTR_NET_RecvedAllClientsData: return "全クライアントからのデータ返ってきた\n";
   case DBGSTR_NET_ReturnToServerTrying: return "Try Return to Server %d byte ...";
@@ -251,8 +254,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_TrainerItemTarget:   return "トレーナーアイテム使用：tgtIdx=%d, tgtPokeID=%d\n";
   case DBGSTR_SVFL_DoubleTargetIntr:    return "ダブル敵１体ターゲット…割り込みポケ=%d\n";
   case DBGSTR_SVFL_DoubleTargetRegister:return "ダブル敵１体ターゲット…確定ポケ=%d\n";
-
-
+  case DBGSTR_SVFL_DeadAlready:         return "ポケ(%d)既に死んでるので死亡コマンドを打ちません\n";
+  case DBGSTR_SVFL_DeadDiffLevelCheck:  return "ポケ死亡、自分lv=%d, 敵Lv=%d\n";
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";

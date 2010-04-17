@@ -118,7 +118,7 @@ extern BtlResult BTL_MAIN_ChecBattleResult( BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_NotifyCmdCheckError( BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_RECORDDATA_Inc( const BTL_MAIN_MODULE* wk, int recID );
 extern void BTL_MAIN_RECORDDATA_Add( const BTL_MAIN_MODULE* wk, int recID, u32 value );
-
+extern void BTL_MAIN_ReflectNatsukiDead( const BTL_MAIN_MODULE* wk, BTL_POKEPARAM* bpp, BOOL fLargeDiffLevel );
 
 /*------------------------------------------------------------------------------*/
 /* 通信・CONFIG等のシステム情報                                                 */

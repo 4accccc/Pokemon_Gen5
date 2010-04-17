@@ -12,6 +12,7 @@
 #include "system/main.h"
 #include "tr_tool/trtype_def.h"
 #include "tr_tool/tr_tool.h"
+#include "poke_tool/natsuki.h"
 #include "gamesystem/msgspeed.h"
 #include "gamesystem/g_power.h"
 
@@ -119,6 +120,7 @@ struct _BTL_MAIN_MODULE {
   POKEMON_PARAM*        ppIllusionZoroArc;
   BTLNET_AIDATA_CONTAINER*  AIDataContainer;
   BTL_RECREADER         recReader;
+  PERAPVOICE*           perappVoice[ BTL_CLIENT_MAX ];
 
   GFL_STD_RandContext   randomContext;
   BTLNET_SERVER_NOTIFY_PARAM  serverNotifyParam;
@@ -178,6 +180,7 @@ static BOOL setup_comm_rotation( int* seq, void* work );
 static BOOL setup_comm_triple( int* seq, void* work );
 static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq );
+static BOOL setupseq_comm_notify_perap_voice( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int* seq );
@@ -249,7 +252,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       BTL_MAIN_MODULE* wk;
       BATTLE_SETUP_PARAM* setup_param = pwk;
 
-      GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_SYSTEM, 0x28000 );
+      GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_SYSTEM, 0x2a000 );
       GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_NET,     0x8000 );
       GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_VIEW,   0xa0000 );
 
@@ -536,6 +539,13 @@ static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const
       }
     }
   }
+
+  {
+    PERAPVOICE* pVoice = SaveData_GetPerapVoice( GAMEDATA_GetSaveControlWork(sp->gameData) );
+    wk->perappVoice[ BTL_CLIENT_PLAYER ] = PERAPVOICE_AllocWork( wk->heapID );
+    PERAPVOICE_CopyData( wk->perappVoice[ BTL_CLIENT_PLAYER ], pVoice );
+  }
+
   BTL_N_Printf( DBGSTR_DEBUGFLAG_BIT, sp->DebugFlagBit );
 }
 
@@ -1024,6 +1034,7 @@ static BOOL setup_comm_single( int* seq, void* work )
     setupseq_comm_determine_server,
     setupseq_comm_notify_party_data,
     setupseq_comm_notify_player_data,
+    setupseq_comm_notify_perap_voice,
     setupseq_comm_create_server_client_single,
     setupseq_comm_start_server,
   };
@@ -1063,6 +1074,7 @@ static BOOL setup_comm_double( int* seq, void* work )
     setupseq_comm_determine_server,
     setupseq_comm_notify_party_data,
     setupseq_comm_notify_player_data,
+    setupseq_comm_notify_perap_voice,
     setupseq_comm_create_server_client_double,
     setupseq_comm_start_server,
   };
@@ -1121,6 +1133,7 @@ static BOOL setup_comm_rotation( int* seq, void* work )
     setupseq_comm_determine_server,
     setupseq_comm_notify_party_data,
     setupseq_comm_notify_player_data,
+    setupseq_comm_notify_perap_voice,
     setupseq_comm_create_server_client_rotation,
     setupseq_comm_start_server,
   };
@@ -1162,6 +1175,7 @@ static BOOL setup_comm_triple( int* seq, void* work )
     setupseq_comm_determine_server,
     setupseq_comm_notify_party_data,
     setupseq_comm_notify_player_data,
+    setupseq_comm_notify_perap_voice,
     setupseq_comm_create_server_client_triple,
     setupseq_comm_start_server,
   };
@@ -1515,6 +1529,66 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
   case 10:
     BTL_NET_EndNotifyPlayerData();
     (*seq)++;
+    break;
+  default:
+    return TRUE;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * 通信対戦セットアップシーケンス：各クライアントのペラップボイスを相互受信
+ *
+ * @param   wk
+ * @param   seq
+ *
+ * @retval  BOOL    終了時にTRUEを返す
+ */
+//----------------------------------------------------------------------------------
+static BOOL setupseq_comm_notify_perap_voice( BTL_MAIN_MODULE* wk, int* seq )
+{
+  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+
+  switch( *seq ){
+  case 0:
+    BTL_NET_TimingSyncStart( BTL_NET_TIMING_NOTIFY_PERAPP_VOICE );
+    (*seq)++;
+    break;
+  case 1:
+    if( BTL_NET_IsTimingSync(BTL_NET_TIMING_NOTIFY_PERAPP_VOICE) ){
+      (*seq)++;
+    }
+    break;
+  case 2:
+    {
+      PERAPVOICE* pVoice = SaveData_GetPerapVoice( GAMEDATA_GetSaveControlWork(sp->gameData) );
+      if( BTL_NET_StartNotifyPerappVoice(pVoice) ){
+        (*seq)++;
+      }
+    }
+    break;
+  case 3:
+    // ペラップ相互受信を完了
+    if( BTL_NET_IsCompletePerappVoice() )
+    {
+      u32 i;
+
+      BTL_N_Printf( DBGSTR_MAIN_PerappVoiceComplete );
+      for(i=0; i<BTL_CLIENT_MAX; ++i)
+      {
+        if( BTL_MAIN_IsExistClient(wk, i)
+        &&  !BTL_MAIN_IsClientNPC(wk, i)
+        ){
+          const void* voiceRaw = BTL_NET_GetPerappVoiceRaw( i );
+          if( voiceRaw ){
+            wk->perappVoice[ i ] = PERAPVOICE_AllocWork( wk->heapID );
+            PERAPVOICE_SetVoiceData( wk->perappVoice[ i ], (const s8*)voiceRaw );
+            BTL_N_Printf( DBGSTR_MAIN_PerappVoiceAdded, i );
+          }
+        }
+      }
+      (*seq)++;
+    }
     break;
   default:
     return TRUE;
@@ -3419,6 +3493,29 @@ u32 BTL_MAIN_FixLoseMoney( BTL_MAIN_MODULE* wk )
   }
   return loseMoney;
 }
+//=============================================================================================
+/**
+ * プレイヤーポケモンが死んだ時のなつき度反映
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   fLargeDiffLevel
+ */
+//=============================================================================================
+void BTL_MAIN_ReflectNatsukiDead( const BTL_MAIN_MODULE* wk, BTL_POKEPARAM* bpp, BOOL fLargeDiffLevel )
+{
+  if( (wk->setupParam->competitor == BTL_COMPETITOR_WILD)
+  ||  (wk->setupParam->competitor == BTL_COMPETITOR_TRAINER)
+  ){
+    if( wk->setupParam->fRecordPlay == FALSE)
+    {
+      const BTL_FIELD_SITUATION* sit = BTL_MAIN_GetFieldSituation( wk );
+      u32 calcID = (fLargeDiffLevel)? CALC_NATSUKI_LEVEL30_HINSHI : CALC_NATSUKI_HINSHI;
+      POKEMON_PARAM* pp = (POKEMON_PARAM*)BPP_GetSrcData(bpp);
+      NATSUKI_Calc( pp, calcID, sit->zoneID, GFL_HEAP_LOWID(wk->heapID) );
+    }
+  }
+}
 
 //=============================================================================================
 /**
@@ -4158,6 +4255,9 @@ static void trainerParam_Init( BTL_MAIN_MODULE* wk )
     wk->trainerParam[i].trainerID = TRID_NULL;
     wk->trainerParam[i].ai_bit = 0;
   }
+  for(i=0; i<NELEMS(wk->perappVoice); ++i){
+    wk->perappVoice[i] = NULL;
+  }
 }
 static void trainerParam_Clear( BTL_MAIN_MODULE* wk )
 {
@@ -4167,6 +4267,13 @@ static void trainerParam_Clear( BTL_MAIN_MODULE* wk )
     if( wk->trainerParam[i].playerStatus ){
       GFL_HEAP_FreeMemory( wk->trainerParam[i].playerStatus );
       GFL_HEAP_FreeMemory( wk->trainerParam[i].name );
+    }
+  }
+  for(i=0; i<NELEMS(wk->perappVoice); ++i)
+  {
+    if( wk->perappVoice[i] != NULL ){
+      GFL_HEAP_FreeMemory( wk->perappVoice[i] );
+      wk->perappVoice[i] = NULL;
     }
   }
 }
@@ -4482,6 +4589,13 @@ void BTL_MAIN_ClientPokemonReflectToServer( BTL_MAIN_MODULE* wk, u8 pokeID )
   {
     BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( &wk->pokeconForServer, pokeID );
     BPP_ReflectByPP( bpp );
+
+    // レベルアップでなつき度上昇
+    {
+      const BTL_FIELD_SITUATION* sit = BTL_MAIN_GetFieldSituation( wk );
+      NATSUKI_Calc( (POKEMON_PARAM*)BPP_GetSrcData(bpp), CALC_NATSUKI_LEVELUP, sit->zoneID, GFL_HEAP_LOWID(wk->heapID) );
+    }
+
     BTL_N_Printf( DBGSTR_MAIN_CheckHPByLvup, __LINE__, BPP_GetValue(bpp,BPP_HP));
     BTL_SERVER_NotifyPokemonLevelUp( wk->server, bpp );
   }
@@ -4498,14 +4612,31 @@ void BTL_MAIN_ClientPokemonReflectToServer( BTL_MAIN_MODULE* wk, u8 pokeID )
 //----------------------------------------------------------------------------------
 static void reflectPartyData( BTL_MAIN_MODULE* wk )
 {
-  // 野生or通常トレーナー戦：経験値・レベルアップ反映のため
-  if( (wk->setupParam->competitor != BTL_COMPETITOR_COMM)
-  &&  (wk->setupParam->competitor != BTL_COMPETITOR_SUBWAY)
+  // 録画再生時は何もしない
+  if( wk->setupParam->fRecordPlay ){
+    return;
+  }
+
+  // 野生or通常トレーナー戦：経験値・レベルアップ・なつき度を反映
+  if( (wk->setupParam->competitor == BTL_COMPETITOR_WILD)
+  ||  (wk->setupParam->competitor == BTL_COMPETITOR_TRAINER)
   ){
     POKEPARTY* srcParty;
 
     srcParty_RefrectBtlPartyStartOrder( wk, wk->myClientID );
     srcParty = srcParty_Get( wk, wk->myClientID );
+
+    // ジムリーダー、四天王、チャンピオンならなつき度アップ
+    if( wk->setupParam->competitor == BTL_COMPETITOR_TRAINER )
+    {
+      u32 trType = BTL_MAIN_GetClientTrainerType( wk, BTL_CLIENT_ENEMY1 );
+      if( BTL_CALC_IsTrTypeBoss(trType) )
+      {
+        const BTL_FIELD_SITUATION* sit = BTL_MAIN_GetFieldSituation( wk );
+        NATSUKI_CalcBossBattle( srcParty, sit->zoneID, GFL_HEAP_LOWID(wk->heapID) );
+      }
+    }
+
     BTL_Printf("%p の結果を %p に書き戻し\nsrc_member..\n", srcParty, wk->setupParam->party[ BTL_CLIENT_PLAYER ]);
     PokeParty_Copy( srcParty, wk->setupParam->party[ BTL_CLIENT_PLAYER ] );
     {
@@ -4518,7 +4649,7 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
     }
   }
 
-  // 野生戦：捕獲ポケモン情報のため
+  // 野生戦：捕獲ポケモン情報
   if( wk->setupParam->competitor == BTL_COMPETITOR_WILD )
   {
     u8 clientID = BTL_MAIN_GetOpponentClientID( wk, wk->myClientID, 0 );

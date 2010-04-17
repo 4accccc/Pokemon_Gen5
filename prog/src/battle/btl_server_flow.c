@@ -585,6 +585,7 @@ static void scproc_turncheck_weather( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet 
 static int scEvent_CheckWeatherReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlWeather weather, u32 damage );
 static void scPut_WeatherDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWeather weather, int damage );
 static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke );
+static u32 checkExistEnemyMaxLevel( BTL_SVFLOW_WORK* wk );
 static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* poke );
 static void CurePokeDependSick_CallBack( void* wk_ptr, BTL_POKEPARAM* bpp, WazaSick sickID, u8 dependPokeID );
 static void scproc_CheckExpGet( BTL_SVFLOW_WORK* wk );
@@ -8732,13 +8733,23 @@ static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
       BTL_DEADREC_Add( &wk->deadRec, pokeID );
 
       // @@@ みがわり出てたら画面から消すコマンド生成？
-
       SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Dead, pokeID );
       SCQUE_PUT_ACT_Dead( wk->que, pokeID );
 
       BPP_Clear_ForDead( poke );
       scproc_ClearPokeDependEffect( wk, poke );
 
+      // プレイヤーのポケモンが死んだ時になつき度計算
+      if( BTL_MAINUTIL_PokeIDtoClientID(pokeID) == BTL_MAIN_GetPlayerClientID(wk->mainModule) )
+      {
+        int deadPokeLv = BPP_GetValue( poke, BPP_LEVEL );
+        int enemyMaxLv = checkExistEnemyMaxLevel( wk );
+        BOOL fLargeDiffLevel = ( (deadPokeLv + 30) <= enemyMaxLv );
+
+        BTL_N_Printf( DBGSTR_SVFL_DeadDiffLevelCheck, deadPokeLv, enemyMaxLv);
+
+        BTL_MAIN_ReflectNatsukiDead( wk->mainModule, poke, fLargeDiffLevel );
+      }
 
       // 経験値取得 -> 退場の順にしないと経験値計算でおかしくなります
 //      scproc_GetExp( wk, poke );
@@ -8762,11 +8773,47 @@ static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
   }
   else
   {
-    OS_TPrintf("ポケ(%d)既に死んでるので死亡コマンドを打ちません\n", pokeID);
+    BTL_N_Printf( DBGSTR_SVFL_DeadAlready, pokeID);
   }
 
   return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * 相手サイドの場に出ているポケモンの内、最大レベルを取得
+ *
+ * @param   wk
+ */
+//----------------------------------------------------------------------------------
+static u32 checkExistEnemyMaxLevel( BTL_SVFLOW_WORK* wk )
+{
+  u32 maxLv = 1;
+  u32 posEnd = BTL_MAIN_GetEnablePosEnd( wk->mainModule );
+  u8  playerClientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+  u8  clientID;
+  u32 pos;
+
+  for(pos=0; pos<=posEnd; ++pos)
+  {
+    clientID = BTL_MAIN_BtlPosToClientID( wk->mainModule, pos );
+
+    if( !BTL_MAINUTIL_IsFriendClientID(playerClientID, clientID) )
+    {
+      u8 pokeID = BTL_POSPOKE_GetExistPokeID( &wk->pospokeWork, pos );
+      if( pokeID != BTL_POKEID_NULL )
+      {
+        const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+        u32 lv = BPP_GetValue( bpp, BPP_LEVEL );
+        if( lv > maxLv ){
+          maxLv = lv;
+        }
+      }
+    }
+  }
+
+  return maxLv;
+}
+
 //--------------------------------------------------------------------------
 /**
  * 特定ポケモン依存の状態異常・サイドエフェクト等、各種ハンドラをクリアする

@@ -812,6 +812,9 @@ u8 BTL_RULE_HandPokeIndex( BtlRule rule, u8 numCoverPos )
 //=============================================================================================
 // トレーナータイプ判別処理
 //=============================================================================================
+/**
+ *  トレーナータイプがジムリーダーに該当するか判定
+ */
 BOOL BTL_CALC_IsTrtypeGymLeader( u16 trType )
 {
   static const u16 typeTbl[] = {
@@ -835,7 +838,9 @@ BOOL BTL_CALC_IsTrtypeGymLeader( u16 trType )
   }
   return FALSE;
 }
-
+/**
+ *  トレーナータイプが四天王に該当するか判定
+ */
 BOOL BTL_CALC_IsTrtypeBig4( u16 trType )
 {
   static const u16 typeTbl[] = {
@@ -852,6 +857,23 @@ BOOL BTL_CALC_IsTrtypeBig4( u16 trType )
   }
   return FALSE;
 }
+/**
+ *  トレーナータイプがボス戦（なつき度上昇）に該当するか判定
+ */
+BOOL BTL_CALC_IsTrTypeBoss( u16 trType )
+{
+  if( BTL_CALC_IsTrtypeGymLeader(trType) ){
+    return TRUE;
+  }
+  if( BTL_CALC_IsTrtypeBig4(trType) ){
+    return TRUE;
+  }
+  if( trType == TRTYPE_CHAMPION ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //=============================================================================================
 // 賞金計算
 //=============================================================================================

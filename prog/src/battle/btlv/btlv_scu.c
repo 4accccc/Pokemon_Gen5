@@ -379,14 +379,12 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
   GFL_BG_FillCharacter( BGFRAME_MAIN_MESSAGE, 0x00, 1, 0 );
   winfrm_charpos = transWinFrameCgx( wk, ARCID_BATTGRA, NARC_battgra_wb_msgwin_frm_NCGR, BGFRAME_MAIN_MESSAGE );
 
-//  GFL_BG_FillScreen( BGFRAME_TOKWIN_FRIEND, 0x0000, 0, 0, 64, 32, GFL_BG_SCRWRT_PALIN );
-//  GFL_BG_FillScreen( BGFRAME_TOKWIN_ENEMY,  0x0000, 0, 0, 64, 32, GFL_BG_SCRWRT_PALIN );
-//  GFL_ARC_UTIL_TransVramBgCharacterAreaMan( ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCGR, BGFRAME_TOKWIN_FRIEND,
-//                              0, FALSE, wk->heapID );
-  GFL_ARC_UTIL_TransVramBgCharacter( ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCGR, BGFRAME_TOKWIN_FRIEND,
-                              0, 0, FALSE, wk->heapID );
+//  GFL_ARC_UTIL_TransVramBgCharacter( ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCGR, BGFRAME_TOKWIN_FRIEND,
+//                              0, 0, FALSE, wk->heapID );
 
-  wk->tokwin_CharPos = transWinFrameCgx( wk, ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCGR, BGFRAME_TOKWIN_FRIEND );
+
+
+  wk->tokwin_CharPos = transWinFrameCgx( wk, ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCGR, BGFRAME_TOKWIN_ENEMY );
 
   GFL_ARC_UTIL_TransVramScreen( ARCID_BATTGRA, NARC_battgra_wb_tokusei_w01_NSCR, BGFRAME_TOKWIN_FRIEND,
           0, 0, FALSE, wk->heapID );
@@ -404,6 +402,8 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
 
 
   wk->lvupWin_frameCharPos = transWinFrameCgx( wk, ARCID_BATTGRA, NARC_battgra_wb_lvup_w_NCGR, BGFRAME_TOKWIN_ENEMY );
+
+  OS_TPrintf("tokwinCharPos=%d, lvupWinCharPos=%d\n", wk->tokwin_CharPos, wk->lvupWin_frameCharPos );
 
   wk->lvupWin = GFL_BMPWIN_Create( BGFRAME_TOKWIN_ENEMY, LVUPWIN_ORG_X, LVUPWIN_ORG_Y+32, LVUPWIN_WIDTH, LVUPWIN_HEIGHT,
         PALIDX_LVUPWIN, GFL_BMP_CHRAREA_GET_F );
@@ -482,10 +482,15 @@ void BTLV_SCU_RestoreDefaultScreen( const BTLV_SCU* wk )
 {
   ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID(wk->heapID) );
 
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_battgra_wb_tokusei_w_NCGR, BGFRAME_TOKWIN_ENEMY,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_battgra_wb_tokusei_w_NCGR, BGFRAME_TOKWIN_ENEMY,
               wk->tokwin_CharPos, 0, FALSE, wk->heapID );
+
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_battgra_wb_lvup_w_NCGR, BGFRAME_TOKWIN_ENEMY,
+              wk->lvupWin_frameCharPos, 0, FALSE, wk->heapID );
+
   GFL_ARC_CloseDataHandle( handle );
 
+  GFL_BG_ClearScreen( BGFRAME_TOKWIN_ENEMY );
 
   GFL_ARC_UTIL_TransVramScreen( ARCID_BATTGRA, NARC_battgra_wb_tokusei_w02_NSCR, BGFRAME_TOKWIN_ENEMY,
           0, 0, FALSE, wk->heapID );

@@ -27,12 +27,15 @@ enum {
   NETID_NULL = 40,  ///< GFL/Net系のNetIDとしてあり得ない値
 
   NETID_VT_AI = 3,  ///< 通信タッグでAIに与える仮想netID
+
+  PERAPP_DISABLE_DATA_SIZE = 4,   ///< ペラップボイスが非録音状態であることを通知するためのデータサイズ
 };
 
 enum {
   CMD_NOTIFY_SERVER_VER = GFL_NET_CMD_BATTLE,
   CMD_NOTIFY_SERVER_PARAM,
   CMD_NOTIFY_PARTY_DATA,
+  CMD_NOTIFY_PERAPP_VOICE,
   CMD_NOTIFY_AI_PARTY_DATA,
   CMD_NOTIFY_PLAYER_DATA,
   CMD_NOTIFY_AI_TRAINER_DATA,
@@ -125,7 +128,7 @@ typedef struct {
   u32   tmpExBufferUsedSize;
 
   // 常駐送信バッファ
-  TMP_SEND_BUFFER sendBuf[ BTL_NET_CONNECT_MACHINE_MAX ];
+  TMP_SEND_BUFFER sendBuf;
 
   SVVER_WORK    svverWork;
 
@@ -138,11 +141,15 @@ static SYSWORK* Sys;
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+static inline u32 netIDBitToConnectNum( u16 netIDBit );
 static void recv_serverVer( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
+static BOOL IsBattleConnectNetID( int netID );
 static u8 clientIDtoNetID( u8 clientID );
 static void recv_serverParam( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_partyData( int netID, void* pWork, int size );
 static void recv_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
+static u8* getbuf_perappVoice( int netID, void* pWork, int size );
+static void recv_perappVoice( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_AI_partyData( int netID, void* pWork, int size );
 static void recv_AI_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_playerData( int netID, void* pWork, int size );
@@ -154,6 +161,7 @@ static u8* getbuf_clientData( int netID, void* pWork, int size );
 static void recv_clientData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static void recv_serverCmd( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static u8* getbuf_serverCmd( int netID, void* pWork, int size );
+static void recvBuf_ClearAll( void );
 static inline void recvBuf_clear( RECV_BUFFER* buf );
 static inline BOOL recvBuf_isEmpty( const RECV_BUFFER* buf );
 static inline u8* recvBuf_getBufAdrs( RECV_BUFFER* buf );
@@ -167,6 +175,7 @@ const NetRecvFuncTable BtlRecvFuncTable[] = {
     { recv_serverVer,       NULL                  },
     { recv_serverParam,     NULL                  },
     { recv_partyData,       getbuf_partyData      },
+    { recv_perappVoice,     getbuf_perappVoice    },
     { recv_AI_partyData,    getbuf_AI_partyData   },
     { recv_playerData,      getbuf_playerData     },
     { recv_AI_trainerData,  getbuf_AI_trainerData },
@@ -274,7 +283,7 @@ BOOL BTL_NET_CheckError( void )
 BOOL BTL_NET_DetermineServer( u8 clientID )
 {
   BOOL result;
-  TMP_SEND_BUFFER* tsb = &Sys->sendBuf[0];
+  TMP_SEND_BUFFER* tsb = &Sys->sendBuf;
   tsb->val16[0] = BTL_NET_SERVER_VERSION;
   tsb->val16[1] = clientID;
   return GFL_NET_SendData( Sys->netHandle, CMD_NOTIFY_SERVER_VER, sizeof(*tsb), tsb );
@@ -326,8 +335,10 @@ static void recv_serverVer( const int netID, const int size, const void* pData, 
     }
   }
 }
-
-static BOOL is_battle_conneter( int netID )
+/**
+ *  バトルに接続している netID か判定
+ */
+static BOOL IsBattleConnectNetID( int netID )
 {
   SVVER_WORK* swk = (SVVER_WORK*)(&Sys->svverWork);
   return swk->recvTable[netID].recvedFlag;
@@ -419,8 +430,9 @@ BOOL BTL_NET_IsServerParamReceived( BTLNET_SERVER_NOTIFY_PARAM* dst )
   }
   return FALSE;
 }
-
-
+/*----------------------------------------------------------------------------------------------------*/
+/* パーティデータ                                                                                     */
+/*----------------------------------------------------------------------------------------------------*/
 // パーティデータを連絡する（全マシン相互）
 BOOL BTL_NET_StartNotifyPartyData( const POKEPARTY* party )
 {
@@ -449,20 +461,7 @@ static void recv_partyData( const int netID, const int size, const void* pData, 
   Sys->tmpLargeBufUsedSize[ netID ] = size;
   BTL_N_PrintfEx( PRINT_FLG, DBGSTR_NET_RecvedPartyData,
       netID, Sys->clientID[netID], pData, Sys->tmpRecvBuf[netID] );
-
-  // このブロックはただのデバッグ出力です
-  {
-    POKEPARTY* party = (POKEPARTY*)( pData );
-    POKEMON_PARAM* pp;
-
-    u32 i, monsno, max = PokeParty_GetPokeCount( party );
-    for(i=0; i<max; ++i){
-      pp = PokeParty_GetMemberPointer( party, i );
-      monsno = PP_Get( pp, ID_PARA_monsno, NULL );
-    }
-  }
 }
-
 // パーティデータの相互受信が完了したか？
 BOOL BTL_NET_IsCompleteNotifyPartyData( void )
 {
@@ -470,7 +469,7 @@ BOOL BTL_NET_IsCompleteNotifyPartyData( void )
 
   for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
   {
-    if( is_battle_conneter(i) && (Sys->tmpLargeBufUsedSize[i] == 0) )
+    if( IsBattleConnectNetID(i) && (Sys->tmpLargeBufUsedSize[i] == 0) )
     {
       return FALSE;
     }
@@ -479,6 +478,112 @@ BOOL BTL_NET_IsCompleteNotifyPartyData( void )
   return TRUE;
 }
 
+/*----------------------------------------------------------------------------------------------------*/
+/* ペラップボイス                                                                                     */
+/*----------------------------------------------------------------------------------------------------*/
+// ペラップボイス送信開始（全マシン相互）
+BOOL BTL_NET_StartNotifyPerappVoice( const PERAPVOICE* pvoice )
+{
+  u32 size;
+  const void* data;
+
+  if( PERAPVOICE_GetExistFlag(pvoice) ){
+    size = PERAPVOICE_DATA_LENGTH;
+    data = PERAPVOICE_GetVoiceData( pvoice );
+  }else{
+    size = PERAPP_DISABLE_DATA_SIZE;
+    data = &(Sys->sendBuf);
+    Sys->sendBuf.val32 = 0;
+  }
+
+  return GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_PARTY_DATA,
+        size,
+        data,
+        FALSE,  // 優先度を高くする
+        TRUE,   // 同一コマンドがキューに無い場合のみ送信する
+        TRUE    // GFL_NETライブラリの外で保持するバッファを使用
+  );
+}
+
+
+static u8* getbuf_perappVoice( int netID, void* pWork, int size )
+{
+  GF_ASSERT(Sys->tmpRecvBuf[ netID ] == NULL);
+
+  recvBuf_ClearAll();
+
+  if( size == PERAPP_DISABLE_DATA_SIZE )
+  {
+    OS_TPrintf("netID=%d, ペラップボイスなし\n", netID);
+    return recvBuf_getBufAdrs( &Sys->recvClient[ netID ] );
+  }
+  else
+  {
+    OS_TPrintf("netID=%d, ペラップボイスあり\n", netID);
+    Sys->tmpRecvBuf[ netID ] = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(Sys->heapID), size );
+    return Sys->tmpRecvBuf[ netID ];
+  }
+}
+
+static void recv_perappVoice( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
+{
+  if( size == PERAPP_DISABLE_DATA_SIZE )
+  {
+    recvBuf_setRecvedSize( &Sys->recvClient[netID], size );
+  }
+  else
+  {
+    Sys->tmpLargeBufUsedSize[ netID ] = size;
+  }
+}
+/**
+ *  ペラップボイスの相互受信が完了したか？
+ */
+BOOL BTL_NET_IsCompletePerappVoice( void )
+{
+  int i;
+
+  for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
+  {
+    if( IsBattleConnectNetID(i) )
+    {
+      if( recvBuf_isEmpty(&Sys->recvClient[i])
+      &&  (Sys->tmpLargeBufUsedSize[i] == 0)
+      ){
+        return FALSE;
+      }
+    }
+  }
+  BTL_N_Printf( DBGSTR_NET_PartyDataComplete, Sys->memberCount );
+  return TRUE;
+}
+/**
+ *  受信したペラップボイスを取得（空データだった場合、NULL）
+ */
+const void* BTL_NET_GetPerappVoiceRaw( u8 clientID )
+{
+  u8 netID = clientIDtoNetID( clientID );
+  if( netID != NETID_NULL )
+  {
+    if( Sys->tmpLargeBufUsedSize[netID] != 0 ){
+      return Sys->tmpRecvBuf[netID];
+    }
+  }
+  return NULL;
+}
+/**
+ *  ペラップボイス相互受信シーケンス終了
+ */
+void BTL_NET_QuitNotifyPerappVoice( void )
+{
+  recvBuf_ClearAll();
+  clearAllTmpBuffer();
+}
+
+
+/*----------------------------------------------------------------------------------------------------*/
+/* 通信タッグ用AIのパーティデータ                                                                     */
+/*----------------------------------------------------------------------------------------------------*/
 
 // 通信タッグ用のAIパーティデータを送信（サーバ→全マシン）
 BOOL BTL_NET_StartNotify_AI_PartyData( const BTLNET_AIDATA_CONTAINER* container )
@@ -606,7 +711,7 @@ BOOL BTL_NET_IsCompleteNotifyPlayerData( void )
 
   for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
   {
-    if( is_battle_conneter(i) && (Sys->tmpLargeBufUsedSize[i] == 0) )
+    if( IsBattleConnectNetID(i) && (Sys->tmpLargeBufUsedSize[i] == 0) )
     {
       return FALSE;
     }
@@ -812,7 +917,7 @@ BOOL BTL_NET_CheckReturnFromClient( void )
 
   for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
   {
-    if( is_battle_conneter(i)
+    if( IsBattleConnectNetID(i)
     &&  recvBuf_isEmpty(&Sys->recvClient[i])
     ){
       return FALSE;
@@ -849,16 +954,9 @@ static void recv_clientData( const int netID, const int size, const void* pData,
   BTL_N_PrintfEx( PRINT_FLG, DBGSTR_NET_RecvedClientData, netID, size);
 }
 
-
-
 void BTL_NET_ClearRecvData( void )
 {
-  int i;
-
-  for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
-  {
-    recvBuf_clear( &Sys->recvClient[i] );
-  }
+  recvBuf_ClearAll();
 }
 
 
@@ -912,6 +1010,20 @@ static u8* getbuf_serverCmd( int netID, void* pWork, int size )
   return recvBuf_getBufAdrs( &Sys->recvServer );
 }
 
+
+/**
+ *  すべての受信バッファを初期化
+ */
+
+static void recvBuf_ClearAll( void )
+{
+  int i;
+
+  for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
+  {
+    recvBuf_clear( &Sys->recvClient[i] );
+  }
+}
 
 /**
  *  受信バッファ：初期化

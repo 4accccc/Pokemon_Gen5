@@ -29,6 +29,8 @@ typedef enum {
   DBGSTR_ADAPTER_RECVED_A_CLIENT,
   DBGSTR_MAIN_PokeConGetByPos,
   DBGSTR_MAIN_CheckHPByLvup,
+  DBGSTR_MAIN_PerappVoiceAdded,
+  DBGSTR_MAIN_PerappVoiceComplete,
 
   DBGSTR_CLIENT_RETURN_CMD_START,
   DBGSTR_CLIENT_RETURN_CMD_DONE,
@@ -112,6 +114,7 @@ typedef enum {
   DBGSTR_NET_RecvedServerParam,
   DBGSTR_NET_RecvedPartyData,
   DBGSTR_NET_PartyDataComplete,
+  DBGSTR_NET_PerappVoiceComplete,
   DBGSTR_NET_SendCmdDone,
   DBGSTR_NET_RecvedAllClientsData,
   DBGSTR_NET_ReturnToServerTrying,
@@ -208,6 +211,8 @@ typedef enum {
   DBGSTR_SVFL_TrainerItemTarget,
   DBGSTR_SVFL_DoubleTargetIntr,
   DBGSTR_SVFL_DoubleTargetRegister,
+  DBGSTR_SVFL_DeadAlready,
+  DBGSTR_SVFL_DeadDiffLevelCheck,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,
