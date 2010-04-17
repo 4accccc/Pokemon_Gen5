@@ -21,6 +21,9 @@ NARC_NAME = "pokegra_mus.narc"
 
 #リストファイル
 NARC_LIST = "pokegra_wb.scr"
+DEBUG_STR_FILE = "pokegura_mus_path.cdat"
+
+$isRefresh = false
 
 #ファイル更新日比較
 #file1の方が新しければ1を返す
@@ -41,28 +44,10 @@ def CompFileDate( file1 , file2 )
   retVal
 end
 
-#"program files"等の空白が入るファイル名を使えるように変換する
-#http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/32740
-MAX_PATH_SIZE = 513
-def get_short_path_name lfn
-  old_name = File.basename(lfn)
-  require 'Win32API'
-  buff = 0.chr * MAX_PATH_SIZE
-  len = Win32API.new( 'kernel32' , 'GetShortPathName' , %w(P P N) , "N" ).
-        Call( lfn , buff, buff.size)
-  return nil if len==0
-  ret = buff.split(0.chr)[0].tr('\\','/')[0,len]
-  name = File.basename(ret)
-  dir  = ret[0,ret.size - name.size]
-  if name.size > old_name.size
-    name = name[0,old_name.size]
-  end
-  return dir+name
-end
-alias sfn get_short_path_name
-
-
-def convGraFile( mainFolder , subFolder )
+#---------------------------------------------------------
+#1個の変換(親フォルダと子フォルダ
+#---------------------------------------------------------
+def convGraFileFunc( mainFolder , subFolder )
   searchName = POKEGURA_DATA_DIR + mainFolder + subFolder + "/*.*"
 
   print(subFolder + " " + searchName + "\n")
@@ -78,7 +63,7 @@ def convGraFile( mainFolder , subFolder )
         system( "perl " + PERL_TOOL_DIR + "ncl.pl " + fileName + " " + TEMP_DIR )
         system( "cp " + TEMP_DIR + "*.NCLR" + " " + OUTPUT_DIR )
         system( "rm " + TEMP_DIR + "*.*" )
-        isRefresh = TRUE
+        $isRefresh = TRUE
       end
 
     #ncg
@@ -88,14 +73,14 @@ def convGraFile( mainFolder , subFolder )
         system( "perl " + PERL_TOOL_DIR + "comp/ncg.pl " + fileName + " " + TEMP_DIR )
         system( "cp " + TEMP_DIR + "*.NCGR" + " " + OUTPUT_DIR )
         system( "rm " + TEMP_DIR + "*.*" )
-        isRefresh = TRUE
+        $isRefresh = TRUE
       end
       convFile = OUTPUT_DIR + File::basename( fileName , '.*' ) + '.NCBR'
       if( CompFileDate( fileName , convFile ) == 1 )
         system( "perl " + PERL_TOOL_DIR + "comp/ncgc.pl " + fileName + " " + TEMP_DIR )
         system( "cp " + TEMP_DIR + "*.NCBR" + " " + OUTPUT_DIR )
         system( "rm " + TEMP_DIR + "*.*" )
-        isRefresh = TRUE
+        $isRefresh = TRUE
       end
 
     #nce
@@ -105,7 +90,7 @@ def convGraFile( mainFolder , subFolder )
         system( "perl " + PERL_TOOL_DIR + "nce_mus.pl " + fileName + " " + TEMP_DIR )
         system( "cp " + TEMP_DIR + "*.NCEC" + " " + OUTPUT_DIR )
         system( "rm " + TEMP_DIR + "*.*" )
-        isRefresh = TRUE
+        $isRefresh = TRUE
       end
 
     #nce
@@ -118,30 +103,19 @@ def convGraFile( mainFolder , subFolder )
         system( "cp " + TEMP_DIR + "*.NANR" + " " + OUTPUT_DIR )
         system( "cp " + TEMP_DIR + "*.NMAR" + " " + OUTPUT_DIR )
         system( "rm " + TEMP_DIR + "*.*" )
-        isRefresh = TRUE
+        $isRefresh = TRUE
       end
 
     end
   }
 end
+
 #---------------------------------------------------------
-#メイン
+#1個の変換(定義名より
 #---------------------------------------------------------
+def convGraFile( str )
 
-print("ミュージカル用ポケモングラフィック変換\n")
-unless FileTest.exist?(OUTPUT_DIR)
-  FileUtils.mkdir_p(OUTPUT_DIR)
-end
-unless FileTest.exist?(TEMP_DIR)
-  FileUtils.mkdir_p(TEMP_DIR)
-end
-
-data_idx = 0
-
-isRefresh = FALSE
-
-while POKEGURA_CONV_LIST[data_idx] != "end"
-  noStr = POKEGURA_CONV_LIST[data_idx][0..2]
+  noStr = str[0..2]
   dataNo = noStr.to_i
   countryName = ""
   
@@ -156,34 +130,72 @@ while POKEGURA_CONV_LIST[data_idx] != "end"
   else
     countryName = "5_issyu/"
   end
-  
-  convGraFile( countryName , noStr )
 
-  data_idx = data_idx+1
+  convGraFileFunc( countryName , noStr )
+end
 
-  #isRefresh = TRUE
-end #while
-
-convGraFile( "" , "egg" )
-convGraFile( "" , "migawari" )
-
-
-if( isRefresh == TRUE || FileTest.exist?(NARC_NAME) == FALSE )
-  
-  #リストの作成
+#---------------------------------------------------------
+#通常変換
+#---------------------------------------------------------
+def convAll()
   data_idx = 0
-  outFile = File.open( NARC_LIST, "w" );
 
-  #通常リスト
   while POKEGURA_CONV_LIST[data_idx] != "end"
-    len = POKEGURA_CONV_LIST[data_idx].length
-    noStr = POKEGURA_CONV_LIST[data_idx][0..2]
-    formStr = ""
-    if( len > 3 )
-      formStr = POKEGURA_CONV_LIST[data_idx][3..(len-1)]
-    end
-    #print(noStr + " " + formStr + "\n")
+    
+    convGraFile( POKEGURA_CONV_LIST[data_idx] )
+    data_idx = data_idx+1
 
+    #isRefresh = TRUE
+  end #while
+
+  convGraFileFunc( "" , "egg" )
+  convGraFileFunc( "" , "migawari" )
+
+  print($isRefresh.to_s + "\n")
+
+  
+  if( $isRefresh == TRUE || FileTest.exist?(NARC_NAME) == FALSE )
+    
+    #リストの作成
+    data_idx = 0
+    outFile = File.open( NARC_LIST, "w" );
+
+    #通常リスト
+    while POKEGURA_CONV_LIST[data_idx] != "end"
+      len = POKEGURA_CONV_LIST[data_idx].length
+      noStr = POKEGURA_CONV_LIST[data_idx][0..2]
+      formStr = ""
+      if( len > 3 )
+        formStr = POKEGURA_CONV_LIST[data_idx][3..(len-1)]
+      end
+      #print(noStr + " " + formStr + "\n")
+
+      outFile.write( "\"data/pfwb_" + noStr + formStr + "_m.NCGR\"\n" )
+      outFile.write( "\"data/pfwb_" + noStr + formStr + "_f.NCGR\"\n" )
+      outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
+      outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
+      outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCER\"\n" )
+      outFile.write( "\"data/pfwb_" + noStr + formStr + ".NANR\"\n" )
+      outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMCR\"\n" )
+      outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMAR\"\n" )
+      outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCEC\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + formStr + "_m.NCGR\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + formStr + "_f.NCGR\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCER\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + formStr + ".NANR\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMCR\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMAR\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCEC\"\n" )
+      outFile.write( "\"data/pmwb_" + noStr + formStr + "_n.NCLR\"\n" )
+      outFile.write( "\"data/pmwb_" + noStr + formStr + "_r.NCLR\"\n" )
+      data_idx = data_idx+1
+    end #while
+
+    #タマゴ追加
+    noStr = "egg"
+    formStr = "_normal"
     outFile.write( "\"data/pfwb_" + noStr + formStr + "_m.NCGR\"\n" )
     outFile.write( "\"data/pfwb_" + noStr + formStr + "_f.NCGR\"\n" )
     outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
@@ -204,54 +216,159 @@ if( isRefresh == TRUE || FileTest.exist?(NARC_NAME) == FALSE )
     outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCEC\"\n" )
     outFile.write( "\"data/pmwb_" + noStr + formStr + "_n.NCLR\"\n" )
     outFile.write( "\"data/pmwb_" + noStr + formStr + "_r.NCLR\"\n" )
+    formStr = "_manafi"
+    outFile.write( "\"data/pfwb_" + noStr + formStr + "_m.NCGR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + "_f.NCGR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCER\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NANR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMCR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMAR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCEC\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + "_m.NCGR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + "_f.NCGR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCER\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NANR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMCR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMAR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCEC\"\n" )
+    outFile.write( "\"data/pmwb_" + noStr + formStr + "_n.NCLR\"\n" )
+    outFile.write( "\"data/pmwb_" + noStr + formStr + "_r.NCLR\"\n" )
+
+    #アナザーフォルム
+    data_idx = 0
+    while POKEGURA_CONV_LIST_ANOTHER[data_idx] != "end"
+      len = POKEGURA_CONV_LIST_ANOTHER[data_idx].length
+      noStr = POKEGURA_CONV_LIST_ANOTHER[data_idx][0..2]
+      formStr = ""
+      if( len > 3 )
+        formStr = POKEGURA_CONV_LIST_ANOTHER[data_idx][3..(len-1)]
+      end
+      #print(noStr + " " + formStr + "\n")
+
+      outFile.write( "\"data/pfwb_" + noStr + formStr + "_m.NCGR\"\n" )
+      outFile.write( "\"data/pfwb_" + noStr + formStr + "_f.NCGR\"\n" )
+      outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
+      outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
+      outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCER\"\n" )
+      outFile.write( "\"data/pfwb_" + noStr + formStr + ".NANR\"\n" )
+      outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMCR\"\n" )
+      outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMAR\"\n" )
+      outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCEC\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + formStr + "_m.NCGR\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + formStr + "_f.NCGR\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCER\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + formStr + ".NANR\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMCR\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMAR\"\n" )
+      outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCEC\"\n" )
+      outFile.write( "\"data/pmwb_" + noStr + formStr + "_n.NCLR\"\n" )
+      outFile.write( "\"data/pmwb_" + noStr + formStr + "_r.NCLR\"\n" )
+      data_idx = data_idx+1
+    end #while
+    #身代わり追加
+    noStr = "migawari"
+    formStr = ""
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCGR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCER\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NANR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMCR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMAR\"\n" )
+    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCEC\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCGR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCER\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NANR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMCR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMAR\"\n" )
+    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCEC\"\n" )
+    outFile.write( "\"data/pmwb_" + noStr + formStr + ".NCLR\"\n" )
+
+    #アナザーフォルム(パレットのみ)
+    data_idx = 0
+    while POKEGURA_CONV_LIST_ANOTHER_PLTT[data_idx] != "end"
+      len = POKEGURA_CONV_LIST_ANOTHER_PLTT[data_idx].length
+      noStr = POKEGURA_CONV_LIST_ANOTHER_PLTT[data_idx][0..2]
+      formStr = ""
+      if( len > 3 )
+        formStr = POKEGURA_CONV_LIST_ANOTHER_PLTT[data_idx][3..(len-1)]
+      end
+      #print(noStr + " " + formStr + "\n")
+
+      outFile.write( "\"data/pmwb_" + noStr + formStr + "_n.NCLR\"\n" )
+      outFile.write( "\"data/pmwb_" + noStr + formStr + "_r.NCLR\"\n" )
+      data_idx = data_idx+1
+    end #while
+
+    outFile.close
+    
+    
+    system( NARC_CONVERT + " " + NARC_NAME + " " + NARC_CONVERT_OPT )
+  end
+end
+#---------------------------------------------------------
+#デバッグ用スクリプト出力
+#---------------------------------------------------------
+def convDebStrFuncOne( file , path )
+  file.write( "  \"" + path + "\",\n")
+end
+
+def convDebStrFunc( file , main , sub )
+    convDebStrFuncOne( file , "pfwb_" + main + sub + "_m.NCGR" )
+    convDebStrFuncOne( file , "pfwb_" + main + sub + "_f.NCGR" )
+    convDebStrFuncOne( file , "pfwb_" + main + "c" + sub + "_m.NCBR" )
+    convDebStrFuncOne( file , "pfwb_" + main + "c" + sub + "_f.NCBR" )
+    convDebStrFuncOne( file , "pfwb_" + main + sub + ".NCER" )
+    convDebStrFuncOne( file , "pfwb_" + main + sub + ".NANR" )
+    convDebStrFuncOne( file , "pfwb_" + main + sub + ".NMCR" )
+    convDebStrFuncOne( file , "pfwb_" + main + sub + ".NMAR" )
+    convDebStrFuncOne( file , "pfwb_" + main + sub + ".NCEC" )
+    convDebStrFuncOne( file , "pbwb_" + main + sub + "_m.NCGR" )
+    convDebStrFuncOne( file , "pbwb_" + main + sub + "_f.NCGR" )
+    convDebStrFuncOne( file , "pbwb_" + main + "c" + sub + "_m.NCBR" )
+    convDebStrFuncOne( file , "pbwb_" + main + "c" + sub + "_f.NCBR" )
+    convDebStrFuncOne( file , "pbwb_" + main + sub + ".NCER" )
+    convDebStrFuncOne( file , "pbwb_" + main + sub + ".NANR" )
+    convDebStrFuncOne( file , "pbwb_" + main + sub + ".NMCR" )
+    convDebStrFuncOne( file , "pbwb_" + main + sub + ".NMAR" )
+    convDebStrFuncOne( file , "pbwb_" + main + sub + ".NCEC" )
+    convDebStrFuncOne( file , "pmwb_" + main + sub + "_n.NCLR" )
+    convDebStrFuncOne( file , "pmwb_" + main + sub + "_r.NCLR" )
+end
+
+def convDebStr()
+  outFile = File.open( DEBUG_STR_FILE, "w" );
+  
+  print( "--------------\n" )
+  print( File.dirname(File.expand_path(__FILE__)).to_s + "\n" )
+  print( "--------------\n" )
+  
+  base_dir = File.dirname(File.expand_path(__FILE__)).sub(/^\/cygdrive\/c\//, "c:\/")
+
+  outFile.write( "//このファイルはpokegra_conv.rbから生成されています。\n" )
+  outFile.write( "static const char pogeguraMusPathName[] = \"" + base_dir + "/data/\";\n")
+  outFile.write( "\n")
+  outFile.write( "\n")
+  outFile.write( "static const char *pogeguraMusFileName[] = \n{\n")
+  #子ファイル名列挙
+  data_idx = 0
+  while POKEGURA_CONV_LIST[data_idx] != "end"
+    len = POKEGURA_CONV_LIST[data_idx].length
+    noStr = POKEGURA_CONV_LIST[data_idx][0..2]
+    formStr = ""
+    if( len > 3 )
+      formStr = POKEGURA_CONV_LIST[data_idx][3..(len-1)]
+    end
+    convDebStrFunc( outFile , noStr , formStr )
     data_idx = data_idx+1
   end #while
-
   #タマゴ追加
-  noStr = "egg"
-  formStr = "_normal"
-  outFile.write( "\"data/pfwb_" + noStr + formStr + "_m.NCGR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + "_f.NCGR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCER\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NANR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMCR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMAR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCEC\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + "_m.NCGR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + "_f.NCGR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCER\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NANR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMCR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMAR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCEC\"\n" )
-  outFile.write( "\"data/pmwb_" + noStr + formStr + "_n.NCLR\"\n" )
-  outFile.write( "\"data/pmwb_" + noStr + formStr + "_r.NCLR\"\n" )
-  formStr = "_manafi"
-  outFile.write( "\"data/pfwb_" + noStr + formStr + "_m.NCGR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + "_f.NCGR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCER\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NANR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMCR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMAR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCEC\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + "_m.NCGR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + "_f.NCGR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCER\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NANR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMCR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMAR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCEC\"\n" )
-  outFile.write( "\"data/pmwb_" + noStr + formStr + "_n.NCLR\"\n" )
-  outFile.write( "\"data/pmwb_" + noStr + formStr + "_r.NCLR\"\n" )
-
+  convDebStrFunc( outFile , "egg" , "_normal" )
+  convDebStrFunc( outFile , "egg" , "_manafi" )
   #アナザーフォルム
   data_idx = 0
   while POKEGURA_CONV_LIST_ANOTHER[data_idx] != "end"
@@ -262,45 +379,24 @@ if( isRefresh == TRUE || FileTest.exist?(NARC_NAME) == FALSE )
       formStr = POKEGURA_CONV_LIST_ANOTHER[data_idx][3..(len-1)]
     end
     #print(noStr + " " + formStr + "\n")
-
-    outFile.write( "\"data/pfwb_" + noStr + formStr + "_m.NCGR\"\n" )
-    outFile.write( "\"data/pfwb_" + noStr + formStr + "_f.NCGR\"\n" )
-    outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
-    outFile.write( "\"data/pfwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
-    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCER\"\n" )
-    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NANR\"\n" )
-    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMCR\"\n" )
-    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMAR\"\n" )
-    outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCEC\"\n" )
-    outFile.write( "\"data/pbwb_" + noStr + formStr + "_m.NCGR\"\n" )
-    outFile.write( "\"data/pbwb_" + noStr + formStr + "_f.NCGR\"\n" )
-    outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_m.NCBR\"\n" )
-    outFile.write( "\"data/pbwb_" + noStr + "c" + formStr + "_f.NCBR\"\n" )
-    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCER\"\n" )
-    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NANR\"\n" )
-    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMCR\"\n" )
-    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMAR\"\n" )
-    outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCEC\"\n" )
-    outFile.write( "\"data/pmwb_" + noStr + formStr + "_n.NCLR\"\n" )
-    outFile.write( "\"data/pmwb_" + noStr + formStr + "_r.NCLR\"\n" )
+    convDebStrFunc( outFile , noStr , formStr )
     data_idx = data_idx+1
   end #while
-  #身代わり追加
-  noStr = "migawari"
-  formStr = ""
-  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCGR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCER\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NANR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMCR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NMAR\"\n" )
-  outFile.write( "\"data/pfwb_" + noStr + formStr + ".NCEC\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCGR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCER\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NANR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMCR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NMAR\"\n" )
-  outFile.write( "\"data/pbwb_" + noStr + formStr + ".NCEC\"\n" )
-  outFile.write( "\"data/pmwb_" + noStr + formStr + ".NCLR\"\n" )
+  #身代わり
+  main = "migawari"
+  convDebStrFuncOne( outFile , "pfwb_" + main + ".NCGR" )
+  convDebStrFuncOne( outFile , "pfwb_" + main + ".NCER" )
+  convDebStrFuncOne( outFile , "pfwb_" + main + ".NANR" )
+  convDebStrFuncOne( outFile , "pfwb_" + main + ".NMCR" )
+  convDebStrFuncOne( outFile , "pfwb_" + main + ".NMAR" )
+  convDebStrFuncOne( outFile , "pfwb_" + main + ".NCEC" )
+  convDebStrFuncOne( outFile , "pbwb_" + main + ".NCGR" )
+  convDebStrFuncOne( outFile , "pbwb_" + main + ".NCER" )
+  convDebStrFuncOne( outFile , "pbwb_" + main + ".NANR" )
+  convDebStrFuncOne( outFile , "pbwb_" + main + ".NMCR" )
+  convDebStrFuncOne( outFile , "pbwb_" + main + ".NMAR" )
+  convDebStrFuncOne( outFile , "pbwb_" + main + ".NCEC" )
+  convDebStrFuncOne( outFile , "pmwb_" + main + ".NCLR" )
 
   #アナザーフォルム(パレットのみ)
   data_idx = 0
@@ -312,16 +408,58 @@ if( isRefresh == TRUE || FileTest.exist?(NARC_NAME) == FALSE )
       formStr = POKEGURA_CONV_LIST_ANOTHER_PLTT[data_idx][3..(len-1)]
     end
     #print(noStr + " " + formStr + "\n")
-
-    outFile.write( "\"data/pmwb_" + noStr + formStr + "_n.NCLR\"\n" )
-    outFile.write( "\"data/pmwb_" + noStr + formStr + "_r.NCLR\"\n" )
+    convDebStrFuncOne( outFile , "pmwb_" + noStr + formStr + "_n.NCLR" )
+    convDebStrFuncOne( outFile , "pmwb_" + noStr + formStr + "_r.NCLR" )
     data_idx = data_idx+1
-  end #while
+  end #while    
 
+  outFile.write( "};\n")
   outFile.close
-  
-  
-  system( NARC_CONVERT + " " + NARC_NAME + " " + NARC_CONVERT_OPT )
+
+end
+#---------------------------------------------------------
+#メイン
+#---------------------------------------------------------
+unless FileTest.exist?(OUTPUT_DIR)
+  FileUtils.mkdir_p(OUTPUT_DIR)
+end
+unless FileTest.exist?(TEMP_DIR)
+  FileUtils.mkdir_p(TEMP_DIR)
 end
 
+  $isRefresh = FALSE
+  
+if( ARGV[0].to_s == "-s" )
+  print("ミュージカル用ポケモングラフィック変換(単発[" + ARGV[1].to_s + "])\n")
+  
+  if( ARGV[1].to_s == "" )
+    print("番号がありません\n")
+    exit
+  end
+  
+  if( ARGV[1].to_i > 657   )
+    print("番号が大きいです\n")
+    exit
+  end
 
+  if( ARGV[1].to_i == 0   )
+    print("番号が不正です\n")
+    exit
+  end
+  
+  dataName = sprintf("%03d" , ARGV[1].to_s)
+  
+  convGraFile( dataName )
+  
+  if( $isRefresh == TRUE )
+    print("変換完了\n")
+  else
+    print("更新がありませんでした。\n")
+  end
+  
+elsif( ARGV[0].to_s == "-d" )
+  convDebStr()
+else
+  print("ミュージカル用ポケモングラフィック変換\n")
+  convAll()
+end

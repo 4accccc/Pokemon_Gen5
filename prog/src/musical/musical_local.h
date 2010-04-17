@@ -16,8 +16,9 @@
 #define MUS_PROGRAM_LOCAL_NUM (4)
 
 //ミュージカルデバッグ用
+#if PM_DEBUG
 #define USE_MUSICAL_EDIT (1)
-
+#endif
 //ミュージカルポケモンの装備箇所(パレット対応
 typedef enum
 {

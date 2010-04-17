@@ -11,7 +11,6 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/pokegra.h"
-#include "musical_mcss.h"
 
 #include "arc_def.h"
 #include "poke_tool/poke_tool.h"
@@ -170,6 +169,11 @@ void MUS_POKE_DRAW_Del( MUS_POKE_DRAW_SYSTEM* work , MUS_POKE_DRAW_WORK *drawWor
 	drawWork->enable = FALSE;
 }
 
+MUS_MCSS_SYS_WORK* MUS_POKE_DRAW_GetMcssSys( MUS_POKE_DRAW_SYSTEM *work )
+{
+  return work->mcssSys;
+}
+
 void MUS_POKE_DRAW_SetPosition( MUS_POKE_DRAW_WORK *drawWork , VecFx32 *pos )
 {
 	MUS_MCSS_SetPosition( drawWork->mcss , pos );
@@ -294,7 +298,6 @@ VecFx32 *MUS_POKE_DRAW_GetRotateOfs( MUS_POKE_DRAW_WORK *drawWork )
 {
 	return &drawWork->rotateOfs;
 }
-
 
 static void MUS_POKE_MCSS_CallBack( const u8 pltNo , MUS_MCSS_CELL_DATA *cellData , void* work )
 {

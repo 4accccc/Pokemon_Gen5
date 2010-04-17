@@ -45,6 +45,7 @@ static BOOL TESTMODE_ITEM_SelectFuncShot( TESTMODE_WORK *work , const int idx )
 #include "app/p_status.h"
 #include "app/local_tvt_sys.h"
 #include "test/ariizumi/musical_editor.h"
+#include "test/ariizumi/musical_view.h"
 #include "test/ariizumi/debug_ariizumi.h"
 #include "multiboot/mb_parent_sys.h"
 #include "multiboot/mb_select_sys.h"
@@ -65,6 +66,7 @@ static BOOL TESTMODE_ITEM_SelectDebPokeList( TESTMODE_WORK *work , const int idx
 static BOOL TESTMODE_ITEM_SelectDebPokeStatus( TESTMODE_WORK *work , const int idx );
 #if USE_MUSICAL_EDIT
 static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectMusicalView( TESTMODE_WORK *work , const int idx );
 #endif //USE_MUSICAL_EDIT
 
 static BOOL TESTMODE_ITEM_SelectDebDebugAriizumi( TESTMODE_WORK *work , const int idx );
@@ -83,6 +85,7 @@ static TESTMODE_MENU_LIST menuAriizumi[] =
 	{L"ミュージカル"		,TESTMODE_ITEM_ChangeMusicalMenu },
 #if USE_MUSICAL_EDIT
 	{L"ミュージカルデバッグ"	,TESTMODE_ITEM_SelectMusicalEditor },
+	{L"ミュージカルビュワー"			,TESTMODE_ITEM_SelectMusicalView },
 #endif //USE_MUSICAL_EDIT
 	{L"テスト"	      ,TESTMODE_ITEM_SelectDebDebugAriizumi },
 	{L"友達手帳"			,TESTMODE_ITEM_SelectDebWifiNote },
@@ -135,7 +138,12 @@ static BOOL TESTMODE_ITEM_SelectDebPokeStatus( TESTMODE_WORK *work , const int i
 #if USE_MUSICAL_EDIT
 static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int idx )
 {
-	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(musical), &MusicalEdit_ProcData, NULL);
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(ariizumi_debug), &MusicalEdit_ProcData, NULL);
+	return TRUE;
+}
+static BOOL TESTMODE_ITEM_SelectMusicalView( TESTMODE_WORK *work , const int idx )
+{
+	TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(ariizumi_debug), &MusicalView_ProcData, NULL);
 	return TRUE;
 }
 #endif //USE_MUSICAL_EDIT

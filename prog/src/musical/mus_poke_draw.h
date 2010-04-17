@@ -10,6 +10,7 @@
 #define MUS_POKE_DRAW_H__
 
 #include "musical/musical_system.h"
+#include "musical/musical_mcss.h"
 #include "mus_poke_data.h"
 
 //======================================================================
@@ -55,6 +56,7 @@ void MUS_POKE_DRAW_DrawSystem( MUS_POKE_DRAW_SYSTEM* work );
 //ポケモンの追加・削除
 MUS_POKE_DRAW_WORK* MUS_POKE_DRAW_Add( MUS_POKE_DRAW_SYSTEM* work , MUSICAL_POKE_PARAM *musPoke , const BOOL useBack );
 void MUS_POKE_DRAW_Del( MUS_POKE_DRAW_SYSTEM* work , MUS_POKE_DRAW_WORK *drawWork );
+MUS_MCSS_SYS_WORK* MUS_POKE_DRAW_GetMcssSys( MUS_POKE_DRAW_SYSTEM *work );
 
 //各パラメータの調整
 void MUS_POKE_DRAW_SetPosition( MUS_POKE_DRAW_WORK *drawWork , VecFx32 *pos );

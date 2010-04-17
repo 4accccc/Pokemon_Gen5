@@ -17,8 +17,9 @@
 #include "musical_mcss.h"	//内部でUSE_RENDERを参照しているのでここより上に移動は不可
 #include "musical_mcss_def.h"
 #include "musical_local.h"
-#include "test/ariizumi/ari_debug.h"
 #include "musical/musical_camera_def.h"
+#include "test/ariizumi/ari_debug.h"
+#include "test/ariizumi/mus_mcss_debug.h"
 
 #define	MUS_MCSS_DEFAULT_SHIFT		( FX32_SHIFT - 4 )		//ポリゴン１辺の基準の長さにするシフト値
 #define	MUS_MCSS_DEFAULT_LINE		( 1 << MUS_MCSS_DEFAULT_SHIFT )	//ポリゴン１辺の基準の長さ
@@ -164,6 +165,9 @@ MUS_MCSS_SYS_WORK*	MUS_MCSS_Init( int max, HEAPID heapID )
 	}
 #endif //USE_SHADOW
 	
+#if PM_DEBUG
+	mcss_sys->debugLoad = FALSE;
+#endif
 	return mcss_sys;
 }
 
@@ -1025,13 +1029,25 @@ static	void	MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS_M
 
 	// セルデータ、セルアニメーション、マルチセルデータ、
 	// マルチセルアニメーションをロード。
-	mcss->mcss_ncer_buf = GFL_ARC_UTIL_LoadCellBank(		maw->arcID, maw->ncer, FALSE, &mcss->mcss_ncer, mcss->heapID );
+#if PM_DEBUG
+  if( mcss_sys->debugLoad == TRUE )
+  {
+  	mcss->mcss_ncer_buf = MUS_MCSS_DebugLoadFile( maw->ncer, MMFT_NCER , FALSE , &mcss->mcss_ncer , mcss->heapID );
+  	mcss->mcss_nanr_buf = MUS_MCSS_DebugLoadFile( maw->nanr, MMFT_NANR , TRUE  , &mcss->mcss_nanr , mcss->heapID );
+  	mcss->mcss_nmcr_buf = MUS_MCSS_DebugLoadFile( maw->nmcr, MMFT_NMCR , FALSE , &mcss->mcss_nmcr , mcss->heapID );
+  	mcss->mcss_nmar_buf = MUS_MCSS_DebugLoadFile( maw->nmar, MMFT_NMAR , FALSE , &mcss->mcss_nmar , mcss->heapID );
+  }
+  else
+#endif
+  {
+  	mcss->mcss_ncer_buf = GFL_ARC_UTIL_LoadCellBank(		maw->arcID, maw->ncer, FALSE, &mcss->mcss_ncer, mcss->heapID );
+  	mcss->mcss_nanr_buf = GFL_ARC_UTIL_LoadAnimeBank(		maw->arcID, maw->nanr, TRUE, &mcss->mcss_nanr, mcss->heapID );
+  	mcss->mcss_nmcr_buf = GFL_ARC_UTIL_LoadMultiCellBank(	maw->arcID, maw->nmcr, FALSE, &mcss->mcss_nmcr, mcss->heapID );
+  	mcss->mcss_nmar_buf = GFL_ARC_UTIL_LoadMultiAnimeBank(	maw->arcID, maw->nmar, FALSE, &mcss->mcss_nmar, mcss->heapID );
+	}
 	GF_ASSERT( mcss->mcss_ncer_buf != NULL );
-	mcss->mcss_nanr_buf = GFL_ARC_UTIL_LoadAnimeBank(		maw->arcID, maw->nanr, TRUE, &mcss->mcss_nanr, mcss->heapID );
 	GF_ASSERT( mcss->mcss_nanr_buf != NULL );
-	mcss->mcss_nmcr_buf = GFL_ARC_UTIL_LoadMultiCellBank(	maw->arcID, maw->nmcr, FALSE, &mcss->mcss_nmcr, mcss->heapID );
 	GF_ASSERT( mcss->mcss_nmcr_buf != NULL );
-	mcss->mcss_nmar_buf = GFL_ARC_UTIL_LoadMultiAnimeBank(	maw->arcID, maw->nmar, FALSE, &mcss->mcss_nmar, mcss->heapID );
 	GF_ASSERT( mcss->mcss_nmar_buf != NULL );
 
 	//
@@ -1052,7 +1068,16 @@ static	void	MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS_M
 	}
 
 	//1枚の板ポリで表示するための情報の読み込み（独自フォーマット）
-	mcss->mcss_ncec = GFL_ARC_LoadDataAlloc( maw->arcID, maw->ncec, mcss->heapID );
+#if PM_DEBUG
+  if( mcss_sys->debugLoad == TRUE )
+  {
+    mcss->mcss_ncec = MUS_MCSS_DebugLoadFile( maw->ncec, MMFT_NCEC , FALSE , NULL , mcss->heapID );
+  }
+  else
+#endif
+  {
+  	mcss->mcss_ncec = GFL_ARC_LoadDataAlloc( maw->arcID, maw->ncec, mcss->heapID );
+  }
 	mcss->musInfo  = (MUS_MCSS_NCEC_MUS*)&mcss->mcss_ncec->ncec[mcss->mcss_ncec->cells];
 	{
 #if 0 & DEB_ARI
@@ -1081,13 +1106,31 @@ static	void	MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS_M
 			tlw->mcss	 = mcss;
 			// load character data for 3D (software sprite)
 			{
-				tlw->pBufChar = GFL_ARC_UTIL_LoadBGCharacter( maw->arcID, maw->ncbr, TRUE, &tlw->pCharData, mcss->heapID );
+#if PM_DEBUG
+        if( mcss_sys->debugLoad == TRUE )
+        {
+          tlw->pBufChar = MUS_MCSS_DebugLoadFile( maw->ncbr, MMFT_NCBR , TRUE , &tlw->pCharData, mcss->heapID );
+        }
+        else
+#endif  
+        {
+				  tlw->pBufChar = GFL_ARC_UTIL_LoadBGCharacter( maw->arcID, maw->ncbr, TRUE, &tlw->pCharData, mcss->heapID );
+				}
 				GF_ASSERT( tlw->pBufChar != NULL);
 			}
 
 		// load palette data
 			{
-				tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( maw->arcID, maw->nclr, &tlw->pPlttData, mcss->heapID );
+#if PM_DEBUG
+        if( mcss_sys->debugLoad == TRUE )
+        {
+          tlw->pBufPltt = MUS_MCSS_DebugLoadFile( maw->nclr, MMFT_NCLR , FALSE , &tlw->pPlttData, mcss->heapID );
+        }
+        else
+#endif  
+				{
+          tlw->pBufPltt = GFL_ARC_UTIL_LoadPalette( maw->arcID, maw->nclr, &tlw->pPlttData, mcss->heapID );
+        }
 				GF_ASSERT( tlw->pBufPltt != NULL);
 			}
 			
@@ -1278,3 +1321,9 @@ static	void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 *
     *p_w	+= cp_m->_33;//	W=1なので足すだけ
 }
 
+#if PM_DEBUG
+void MUS_MCSS_SetDebugLoadFlg(  MUS_MCSS_SYS_WORK *mcss_sys , const BOOL flg )
+{
+  mcss_sys->debugLoad = flg;
+}
+#endif

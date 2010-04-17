@@ -1042,7 +1042,11 @@ SRCS_OVERLAY_SOUND_DEBUG  = sound/snd_test2.c
 
 # 有泉デバッグ
 #===> GROUP_OVERLAY_UNION_INTRUDE
-SRCS_OVERLAY_ARIIZUMI_DEBUG = test/ariizumi/debug_ariizumi.c
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_DEV_WIFI
+SRCS_OVERLAY_ARIIZUMI_DEBUG = test/ariizumi/debug_ariizumi.c \
+							test/ariizumi/musical_editor.c \
+							test/ariizumi/musical_view.c 
 
 # 田谷デバッグ
 #===> GROUP_OVERLAY_UNION_INTRUDE
@@ -1525,8 +1529,7 @@ SRCS_OVERLAY_MUSICAL = musical/mus_poke_data.c \
         musical/stage/script/script_command.c \
         musical/stage/script/script_table.c \
 		musical/comm/mus_comm_lobby.c \
-		musical/comm/mus_comm_func.c \
-        test/ariizumi/musical_editor.c
+		musical/comm/mus_comm_func.c 
 
 # ミュージカルドレスアップ
 #===> SRCS_OVERLAY_DEV_WIFI
@@ -1611,7 +1614,8 @@ SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c \
 											 debug/mcs_resident.c \
                        debug/mcs_readfile.c \
 				               field/rail_editor.c \
-                       field/script_debugger_core.c
+                       field/script_debugger_core.c \
+                       test/ariizumi/mus_mcss_debug.c
 
 #===> SRCS_OVERLAY_MCS_LIB
 SRCS_OVERLAY_BATTLE_PRINT = battle/btl_debug_print.c
