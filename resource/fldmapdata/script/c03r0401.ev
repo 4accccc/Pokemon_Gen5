@@ -420,6 +420,29 @@ EVENT_START	ev_c03r0401_girl1_01
         _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_01 )
         _BALLOONWIN_CLOSE()
 
+        //話が始まるまでのＯＢＪアニメ
+        {
+          DEFINE_LOCAL player_dir
+          //女の子、男の子向きあう
+          _OBJ_ANIME( C03R0401_GIRL1_01, anm_girl_to_boy )
+          _OBJ_ANIME( C03R0401_BOY1_01, anm_boy_to_girl )
+          _OBJ_ANIME_WAIT()
+          
+          //自機の向きを取得
+          _PLAYER_DIR_GET(player_dir)
+          //自機の向きでアニメ分岐
+          SWITCH $player_dir
+          CASE DIR_LEFT THEN
+            //自機回り込み
+            _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_girl_right )
+            _OBJ_ANIME_WAIT()
+          CASE DIR_DOWN THEN
+            //自機回り込み
+            _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_girl_up )
+            _OBJ_ANIME_WAIT()  
+          ENDSWITCH
+        }
+
         //「話のつづき」
         _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_02 )
         _BALLOONWIN_CLOSE()
