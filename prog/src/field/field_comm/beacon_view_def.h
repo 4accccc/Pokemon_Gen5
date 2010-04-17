@@ -79,11 +79,21 @@ typedef enum{
 
 #define BG_PALANM_AREA    (FONT_PAL+1)  //フォントパレット用領域までパレットアニメ影響下に置く
 
+///アクターパレット展開位置
 #define ACT_PAL_FONT      (3)
 #define ACT_PAL_PANEL     (4)   //5本占有
 #define ACT_PAL_UNION     (9)   //5本占有
 #define ACT_PAL_WMI       (14)  //通信アイコン占有領域
 #define ACT_PAL_LOCALIZE  (15)  //ローカライズ用空きパレット
+
+///アクターパネル色リロードパレット展開位置
+#define ACT_PANEL_PAL_FRM_V_BLACK (0) //フレーム色(ブラックバージョン)
+#define ACT_PANEL_PAL_FRM_V_WHITE (1) //フレーム色(ホワイトバージョン)
+#define ACT_PANEL_PAL_FRM_V_ELSE  (2) //フレーム色(その他バージョン)
+#define ACT_PANEL_PAL_RANK_MARK   (3) //ランクマークOn/Off切り替え用
+
+///パネルアクター　ランクマーク色転送カラーオフセット
+#define ACT_PANEL_COL_OFS_RANK    (8)
 
 ///フォントカラー
 #define	FCOL_FNTOAM   ( PRINTSYS_MACRO_LSB(1,2,0) )	 ///<OAMフォント黒抜
@@ -143,6 +153,14 @@ typedef enum{
  MENU_ST_ANM,
  MENU_ST_OFF,
 }MENU_STATE;
+
+///////////////////////////////////////////////////
+//パネル表示コード
+typedef enum{
+  PANEL_DRAW_UPDATE,
+  PANEL_DRAW_NEW,
+  PANEL_DRAW_INI,
+}PANEL_DRAW_TYPE;
 
 ///////////////////////////////////////////////////
 //SE関連
@@ -286,7 +304,6 @@ enum{
 ///ノーマルOBJ アニメID
 enum{
  ACTANM_PANEL,
- ACTANM_RANK,
  ACTANM_POWER_ON,
  ACTANM_POWER_ANM,
  ACTANM_POWER_OFF,

@@ -94,7 +94,6 @@ typedef struct _PANEL_WORK{
   GFL_CLWK* cPanel;
   GFL_CLWK* cUnion;
   GFL_CLWK* cIcon;
-  GFL_CLWK* cRank;
   FONT_OAM  msgOam;
 	STRBUF* str;
 	STRBUF* name;
@@ -152,10 +151,11 @@ typedef struct _BEACON_VIEW{
   int       sub_seq;
   int       event_id;
 
-  int       io_interval;
+  int       io_interval;      ///<スタックチェックインターバルカウンタ
   u8        menu_active;
-  u8        msg_spd;
-  u8        gpower_check_req;
+  u8        msg_spd;          ///<メッセージスピード
+  u8        gpower_check_req; ///<発動中のGパワー確認イベントリクエストフラグ
+  u8        init_f;           ///<初期化中フラグ
   LOG_CTRL  ctrl;
 
   u8        sp_gpower_req_ct;

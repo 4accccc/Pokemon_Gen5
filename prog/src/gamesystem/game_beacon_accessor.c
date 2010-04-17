@@ -1345,7 +1345,7 @@ static BOOL errchk_action_waza(const GAMEBEACON_INFO* info )
 static BOOL errchk_action_victory(const GAMEBEACON_INFO* info )
 {
   if( info->action.victory_count > 6 ){
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"%d\n",info->action.victory_count);
     return TRUE;
   }
   return FALSE;

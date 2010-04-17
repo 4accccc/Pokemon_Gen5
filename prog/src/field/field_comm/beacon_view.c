@@ -141,7 +141,9 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
   _sub_BmpWinCreate(wk);
  
   //初期描画
+  wk->init_f = TRUE;
   BeaconView_InitialDraw( wk );
+  wk->init_f = FALSE;
 
   return wk;
 }
@@ -203,7 +205,7 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
     {
       OSTick tick = OS_GetTick()-s_tick;
       if( tick > 100 ){
-        IWASAWA_Printf("BeaconView Passive Tick = %d\n", OS_GetTick()-s_tick);
+//        IWASAWA_Printf("BeaconView Passive Tick = %d\n", OS_GetTick()-s_tick);
       }
     }
 #endif
@@ -212,6 +214,7 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
   if(!bActive){
     return;
   }
+  GFL_TCBL_Main( wk->pTcbSys );
   
   switch( wk->seq ){
   case SEQ_MAIN:
@@ -244,7 +247,7 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
 #ifdef PM_DEBUG
   {
     OSTick tick = OS_GetTick()-s_tick;
-    if( tick > 100 ){
+    if( tick > 1000 ){
       IWASAWA_Printf("BeaconView seq = %d tick = %d\n", before_seq, tick );
     }
   }
@@ -268,18 +271,18 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
   s_tick = OS_GetTick();
 #endif
 
-  GFL_TCBL_Main( wk->pTcbSys );
+  PRINTSYS_QUE_Main( wk->printQue );
   
+  //スタックテーブル更新
+  GAMEBEACON_Stack_Update( wk->infoStack );
+
 #ifdef PM_DEBUG
   e_tick = OS_GetTick();
   t_tick = e_tick-s_tick;
-  if( t_tick > 100 ){
+  if( t_tick > 1000 ){
     IWASAWA_Printf("BeaconView Draw tick %d\n",  t_tick );
   }
 #endif
-
-  //スタックテーブル更新
-  GAMEBEACON_Stack_Update( wk->infoStack );
   
 #ifdef DEBUG_ONLY_FOR_iwasawa
   BEACON_VIEW_TouchUpdata( wk );
@@ -305,8 +308,6 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
   case EV_RETURN_CGEAR:
     BEACON_STATUS_SetViewTopOffset( wk->b_status, 0 );
     event = EVENT_ChangeSubScreen( wk->gsys, wk->fieldWork, FIELD_SUBSCREEN_NORMAL);
-//    FIELD_SUBSCREEN_SetAction( wk->subscreen , FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR );
-//
     break;
   case EV_CALL_DETAIL_VIEW:
     event = EVENT_BeaconDetail( wk->gsys, wk->fieldWork, wk->ctrl.target+wk->ctrl.view_top );
@@ -503,13 +504,14 @@ static void BEACON_VIEW_TouchUpdata(BEACON_VIEW_PTR wk)
     OS_TPrintf("ランダム ビーコンセット\n");
     DEBUG_GAMEBEACON_Set_Random();
 //    GAMEBEACON_Set_GPower( 1 );
-//    GAMEBEACON_Set_EncountDown();
     break;
   case 1: //おめでとう
-//    OS_TPrintf("おめでとう ビーコンセット\n");
-//    GAMEBEACON_Set_Thankyou( wk->gdata, 0x12345678 );
+    OS_TPrintf("ビーコンセット\n");
+//    GAMEBEACON_Set_SpecialPokemonGet( 1 );
+//    GAMEBEACON_Set_BattleSpTrainerVictory(u16 tr_no);
+    GAMEBEACON_Set_Subway();
 
-//    GAMEBEACON_Set_Congratulations();
+//    GAMEBEACON_Set_Thankyou( wk->gdata, 0x12345678 );
     break;
   case 2: //戻る
 //    FIELD_SUBSCREEN_SetAction( wk->subscreen , FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR);
@@ -616,6 +618,9 @@ static void _sub_SystemSetup(BEACON_VIEW_PTR wk)
   PaletteFadeWorkAllocSet( wk->pfd, FADE_SUB_OBJ, 0x200, wk->heap_sID );
 
 	wk->printQue = PRINTSYS_QUE_Create( wk->heap_sID );
+  PRINTSYS_QUE_ForceCommMode( wk->printQue, TRUE );
+  PRINTSYS_QUE_SetLimitTick( wk->printQue, 2000 );
+
   wk->fontHandle = FLDMSGBG_GetFontHandle( FIELDMAP_GetFldMsgBG(wk->fieldWork));
 
   GFL_FONTSYS_SetDefaultColor();
@@ -648,7 +653,6 @@ static void _sub_SystemExit(BEACON_VIEW_PTR wk)
 	WORDSET_Delete(wk->wordset);
   
   GFL_FONTSYS_SetDefaultColor();
-//  GFL_FONT_Delete(wk->fontHandle);
   PRINTSYS_QUE_Delete(wk->printQue);
  
   PaletteFadeWorkAllocFree( wk->pfd, FADE_SUB_OBJ );
@@ -706,13 +710,6 @@ static void _sub_BGLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle )
 	G2S_BlendNone();
   
   //パレット転送
-/*
-  GFL_ARCHDL_UTIL_TransVramPalette(handle, NARC_beacon_status_bstatus_bg_nclr, 
-    PALTYPE_SUB_BG, 0, 0x20 * FONT_PAL, wk->tmpHeapID);
-  //フォントパレット転送
-  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-    0x20*FONT_PAL, 0x20, wk->tmpHeapID);
-*/  
   PaletteWorkSet_ArcHandle( wk->pfd, handle, NARC_beacon_status_bstatus_bg_nclr,
       wk->tmpHeapID, FADE_SUB_BG, 0x20*FONT_PAL, 0 );
   PaletteWorkSet_Arc( wk->pfd, ARCID_FONT, NARC_font_default_nclr,
@@ -1186,14 +1183,6 @@ static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
     pp->px, pp->py, ACTANM_PANEL, OBJ_BG_PRI, OBJ_SPRI_PANEL+idx);
   GFL_CLACT_WK_SetPlttOffs( pp->cPanel, idx, CLWK_PLTTOFFS_MODE_OAM_COLOR );
   
-  //ランクアクター
-  pp->cRank = obj_ObjAdd( wk,
-    wk->objResNormal.res[OBJ_RES_CGR].tbl[0],
-    wk->objResNormal.res[OBJ_RES_PLTT].tbl[0],
-    wk->objResNormal.res[OBJ_RES_CELLANIM].tbl[0],
-    pp->px+ACT_RANK_OX, pp->py+ACT_RANK_OY, ACTANM_RANK, OBJ_BG_PRI, OBJ_SPRI_RANK+idx);
-  GFL_CLACT_WK_SetAutoAnmFlag( pp->cRank, FALSE );
-
   //Unionオブジェアクター
   pp->cUnion = obj_ObjAdd( wk,
     wk->objResUnion.res[OBJ_RES_CGR].tbl[idx],
@@ -1230,7 +1219,6 @@ static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
 
 	BmpOam_ActorSetDrawEnable( pp->msgOam.oam, FALSE );
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, FALSE );
-  GFL_CLACT_WK_SetDrawEnable( pp->cRank, FALSE );
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, FALSE );
   GFL_CLACT_WK_SetDrawEnable( pp->cIcon, FALSE );
 }
@@ -1253,8 +1241,6 @@ static void act_PanelObjDel( BEACON_VIEW_PTR wk, u8 idx )
   GFL_CLACT_WK_Remove( pp->cIcon );
   GFL_CLACT_WK_SetDrawEnable( pp->cUnion, FALSE );
   GFL_CLACT_WK_Remove( pp->cUnion );
-  GFL_CLACT_WK_SetDrawEnable( pp->cRank, FALSE );
-  GFL_CLACT_WK_Remove( pp->cRank );
   GFL_CLACT_WK_SetDrawEnable( pp->cPanel, FALSE );
   GFL_CLACT_WK_Remove( pp->cPanel );
  
