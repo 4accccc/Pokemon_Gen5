@@ -117,9 +117,12 @@ static int  CalcTrackPan     ( const ISS_3DS_UNIT* unit, const VecFx32* observer
 // マスターボリューム
 static void FadePracticalMasterVolume( ISS_3DS_SYS* system );
 static u8   AdjustByMasterVolume     ( const ISS_3DS_SYS* system, u8 volume );
+
+#ifdef DEBUG_PRINT_ON
 // デバッグ
 static void DebugPrint_unit( const ISS_3DS_UNIT* unit );
 static void DebugPrint_systemData( const ISS_3DS_SYS* system );
+#endif
 
 
 //===============================================================================
@@ -904,6 +907,7 @@ static u8 AdjustByMasterVolume( const ISS_3DS_SYS* system, u8 volume )
   return v;
 }
 
+#ifdef DEBUG_PRINT_ON
 //-------------------------------------------------------------------------------
 /**
  * @brief ユニットのパラメータを出力する
@@ -931,7 +935,7 @@ static void DebugPrint_unit( const ISS_3DS_UNIT* unit )
   // 操作トラックマスク
   OS_TFPrintf( PRINT_TARGET, "ISS-B-UNIT: trackBit = %x\n", unit->trackBit );
 } 
-
+#endif 
 
 #ifdef DEBUG_PRINT_ON
 //-------------------------------------------------------------------------------

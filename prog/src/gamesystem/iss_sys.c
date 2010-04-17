@@ -13,12 +13,14 @@
 #include "iss_zone_sys.h"
 #include "iss_switch_sys.h"
 #include "iss_3ds_sys.h"
-#include "../field/field_sound.h"
+
 #include "sound/bgm_info.h"
-#include "../../../resource/sound/bgm_info/iss_type.h"
+#include "sound/pm_sndsys.h" 
 #include "gamesystem/playerwork.h"
 #include "gamesystem/game_data.h"
-#include "sound/pm_sndsys.h" 
+
+#include "../field/field_sound.h"
+#include "../../../resource/sound/bgm_info/iss_type.h"
 
 
 //=============================================================================
