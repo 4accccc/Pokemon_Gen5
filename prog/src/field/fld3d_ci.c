@@ -167,6 +167,7 @@ typedef struct {
   RES_SETUP_DAT SetupDat;
   BOOL ObjPause;
   BOOL MainHook;
+  BOOL IsWhiteOut;
 }FLD3D_CI_EVENT_WORK;
 
 #ifdef PM_DEBUG
@@ -237,6 +238,7 @@ static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexN
 
 static BOOL FlySkyMainFunc(GMEVENT* event, FLD3D_CI_PTR ptr);
 static void ChangeCapDatCol(void);
+static void InitCutinEvtWork(FLD3D_CI_PTR ptr, FLD3D_CI_EVENT_WORK *work);
 
 #define DEF_CAM_NEAR	( 1 << FX32_SHIFT )
 #define DEF_CAM_FAR	( 1024 << FX32_SHIFT )
@@ -413,7 +415,7 @@ void FLD3D_CI_CallEncCutIn( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr )
 {
   GMEVENT * event;
   int no = ENC_CUTIN_RIVAL;
-  event = FLD3D_CI_CreateEncCutInEvt(gsys, ptr, no);
+  event = FLD3D_CI_CreateEncCutInEvt(gsys, ptr, no, FALSE);
 
   GAMESYSTEM_SetEvent(gsys, event);
 }
@@ -451,12 +453,8 @@ GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 
   //イベント作成
   {
     event = GMEVENT_Create( gsys, NULL, CutInEvt, size );
-
     work = GMEVENT_GetEventWork(event);
-    MI_CpuClear8( work, size );
-    work->CiPtr = ptr;
-    work->ObjPause = TRUE;
-    work->MainHook = TRUE;
+    InitCutinEvtWork(ptr, work);
   }
   return event;
 }
@@ -540,12 +538,14 @@ GMEVENT *FLD3D_CI_CreatePokeCutInEvtTemoti( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr
  *
  * @param   gsys        ゲームシステムポインタ
  * @param   ptr         カットイン管理ポインタ
- * @apram   inEncCutinNo
+ * @apram   inEncCutinNo    エンカウントカットインナンバー
+ * @param   inIsWhiteFade   カットイン終了時のフェードはホワイトアウトか？  TRUEで白　FALSEで黒
  *
  * @return	event       イベントポインタ
  */
 //--------------------------------------------------------------------------------------------
-GMEVENT *FLD3D_CI_CreateEncCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const int inEncCutinNo )
+GMEVENT *FLD3D_CI_CreateEncCutInEvt(  GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
+                                      const int inEncCutinNo, const BOOL inWhiteFade )
 {
   GMEVENT * event;
   const ENC_CUTIN_DAT *dat;
@@ -556,11 +556,14 @@ GMEVENT *FLD3D_CI_CreateEncCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const
   dat = ENC_CUTIN_NO_GetDat(inEncCutinNo);
 
   event = FLD3D_CI_CreateCutInEvt(gsys, ptr, dat->CutinNo);
-  //OBJのポーズとポーズ解除を行わない
+  //OBJのポーズとポーズ解除を行わないフェードアウトは引数指定
   {
     FLD3D_CI_EVENT_WORK *work;
     work = GMEVENT_GetEventWork(event);
+    InitCutinEvtWork(ptr, work);
     work->ObjPause = FALSE;
+    work->MainHook = FALSE;
+    work->IsWhiteOut = inWhiteFade;
   }
 
   //コールバックセット
@@ -2110,16 +2113,25 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
 //-----------------------------------------------------------------------------
 static BOOL EncFadeMain(GMEVENT* event, FLD3D_CI_PTR ptr)
 {
+
   switch(ptr->SubSeq){
   case 0:
     if (ptr->PtclEnd&&ptr->MdlAnm1End&&ptr->MdlAnm2End) ptr->SubSeq++;
     break;
   case 1:
-    //ブラックアウトアウト開始
-    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, -1 );  //両画面フェードアウト
+    {
+      int mode;
+      FLD3D_CI_EVENT_WORK *work;
+      work = GMEVENT_GetEventWork(event);
+      if ( work->IsWhiteOut ) mode = GFL_FADE_MASTER_BRIGHT_WHITEOUT;   //白フェード
+      else mode = GFL_FADE_MASTER_BRIGHT_BLACKOUT;                      //黒フェード
+      
+      //フェード開始
+      GFL_FADE_SetMasterBrightReq(mode, 0, 16, -1 );  //両画面フェードアウト
+    }
     ptr->SubSeq++;
   case 2:
-    //ブラックアウトアウト待ち
+    //フェードアウトアウト待ち
     if ( GFL_FADE_CheckFade() != FALSE ) break;
     return TRUE;
   }
@@ -2413,4 +2425,29 @@ static void ChangeCapDatCol(void)
   }
   //割り当て復帰
   GX_SetBankForBG(bg);
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * カットインイベントワーク初期化
+ *
+ * @param   ptr       カットインポインタ
+ * @param   work      対象ワーク
+ * @return	none
+ *
+ * @note　　初期化設定：1　ポインタセット
+ * @note    初期化設定：2　ＯＢＪポーズする
+ * @note    初期化設定：3　メインフックする
+ * @note    初期化設定：4　カットイン終了時にフェードアウトする場合、フェードはブラックアウト(フェードしないときは、ここを見ない)
+ */
+//--------------------------------------------------------------------------------------------
+static void InitCutinEvtWork(FLD3D_CI_PTR ptr, FLD3D_CI_EVENT_WORK *work)
+{
+  int size;
+  size = sizeof(FLD3D_CI_EVENT_WORK);
+  MI_CpuClear8( work, size );
+  work->CiPtr = ptr;
+  work->ObjPause = TRUE;
+  work->MainHook = TRUE;
+  work->IsWhiteOut = FALSE;
 }

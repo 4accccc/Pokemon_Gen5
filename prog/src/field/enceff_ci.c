@@ -20,11 +20,12 @@
 //--------------------------------------------------------------
 typedef struct
 {
-  int count;
+  int Count;
   int Type;
+  BOOL IsWhiteFade;
 }ENCEFF_CI_WORK;
 
-static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const int inType );
+static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const int inType, const BOOL inIsFadeWhite );
 static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk );
 
 //--------------------------------------------------------------
@@ -39,7 +40,7 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk );
 GMEVENT *ENCEFF_CI_CreateRival(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_RIVAL );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_RIVAL, inIsFadeWhite );
   return( event );
 }
 
@@ -55,7 +56,7 @@ GMEVENT *ENCEFF_CI_CreateRival(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, con
 GMEVENT *ENCEFF_CI_CreateSupport(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_SUPPORT );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_SUPPORT, inIsFadeWhite );
   return( event );
 }
 
@@ -71,7 +72,7 @@ GMEVENT *ENCEFF_CI_CreateSupport(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, c
 GMEVENT *ENCEFF_CI_CreateGym01A(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM1A );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM1A, inIsFadeWhite );
   return( event );
 }
 
@@ -87,7 +88,7 @@ GMEVENT *ENCEFF_CI_CreateGym01A(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, co
 GMEVENT *ENCEFF_CI_CreateGym01B(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM1B );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM1B, inIsFadeWhite );
   return( event );
 }
 
@@ -103,7 +104,7 @@ GMEVENT *ENCEFF_CI_CreateGym01B(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, co
 GMEVENT *ENCEFF_CI_CreateGym01C(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM1C );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM1C, inIsFadeWhite );
   return( event );
 }
 
@@ -119,7 +120,7 @@ GMEVENT *ENCEFF_CI_CreateGym01C(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, co
 GMEVENT *ENCEFF_CI_CreateGym02(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM2 );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM2, inIsFadeWhite );
   return( event );
 }
 
@@ -135,7 +136,7 @@ GMEVENT *ENCEFF_CI_CreateGym02(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, con
 GMEVENT *ENCEFF_CI_CreateGym03(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM3 );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM3, inIsFadeWhite );
   return( event );
 }
 
@@ -151,7 +152,7 @@ GMEVENT *ENCEFF_CI_CreateGym03(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, con
 GMEVENT *ENCEFF_CI_CreateGym04(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM4 );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM4, inIsFadeWhite );
   return( event );
 }
 
@@ -167,7 +168,7 @@ GMEVENT *ENCEFF_CI_CreateGym04(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, con
 GMEVENT *ENCEFF_CI_CreateGym05(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM5 );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM5, inIsFadeWhite );
   return( event );
 }
 
@@ -183,7 +184,7 @@ GMEVENT *ENCEFF_CI_CreateGym05(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, con
 GMEVENT *ENCEFF_CI_CreateGym06(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM6 );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM6, inIsFadeWhite );
   return( event );
 }
 
@@ -199,7 +200,7 @@ GMEVENT *ENCEFF_CI_CreateGym06(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, con
 GMEVENT *ENCEFF_CI_CreateGym07(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM7 );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM7, inIsFadeWhite );
   return( event );
 }
 
@@ -215,7 +216,7 @@ GMEVENT *ENCEFF_CI_CreateGym07(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, con
 GMEVENT *ENCEFF_CI_CreateGym08A(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM8A );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM8A, inIsFadeWhite );
   return( event );
 }
 
@@ -231,7 +232,7 @@ GMEVENT *ENCEFF_CI_CreateGym08A(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, co
 GMEVENT *ENCEFF_CI_CreateGym08B(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM8B );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM8B, inIsFadeWhite );
   return( event );
 }
 
@@ -247,7 +248,7 @@ GMEVENT *ENCEFF_CI_CreateGym08B(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, co
 GMEVENT *ENCEFF_CI_CreateBigFour1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BIGFOUR1 );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BIGFOUR1, inIsFadeWhite );
   return( event );
 }
 
@@ -263,7 +264,7 @@ GMEVENT *ENCEFF_CI_CreateBigFour1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, 
 GMEVENT *ENCEFF_CI_CreateBigFour2(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BIGFOUR2 );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BIGFOUR2, inIsFadeWhite );
   return( event );
 }
 
@@ -279,7 +280,7 @@ GMEVENT *ENCEFF_CI_CreateBigFour2(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, 
 GMEVENT *ENCEFF_CI_CreateBigFour3(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BIGFOUR3 );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BIGFOUR3, inIsFadeWhite );
   return( event );
 }
 
@@ -295,7 +296,7 @@ GMEVENT *ENCEFF_CI_CreateBigFour3(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, 
 GMEVENT *ENCEFF_CI_CreateBigFour4(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BIGFOUR4 );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BIGFOUR4, inIsFadeWhite );
   return( event );
 }
 
@@ -311,7 +312,7 @@ GMEVENT *ENCEFF_CI_CreateBigFour4(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, 
 GMEVENT *ENCEFF_CI_CreateChamp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_CHAMP );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_CHAMP, inIsFadeWhite );
   return( event );
 }
 
@@ -327,7 +328,7 @@ GMEVENT *ENCEFF_CI_CreateChamp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, con
 GMEVENT *ENCEFF_CI_CreateBoss(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BOSS );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BOSS, inIsFadeWhite );
   return( event );
 }
 
@@ -343,7 +344,7 @@ GMEVENT *ENCEFF_CI_CreateBoss(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, cons
 GMEVENT *ENCEFF_CI_CreateSage(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_SAGE );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_SAGE, inIsFadeWhite );
   return( event );
 }
 
@@ -359,7 +360,71 @@ GMEVENT *ENCEFF_CI_CreateSage(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, cons
 GMEVENT *ENCEFF_CI_CreatePlasma(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_PLASMA );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_PLASMA, inIsFadeWhite );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreatePackage(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_PLASMA, inIsFadeWhite );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateMovePoke(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_PLASMA, inIsFadeWhite );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateThree(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_PLASMA, inIsFadeWhite );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateZoroark(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_PLASMA, inIsFadeWhite );
   return( event );
 }
 
@@ -373,7 +438,7 @@ GMEVENT *ENCEFF_CI_CreatePlasma(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, co
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const int inType )
+static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const int inType, const BOOL inIsFadeWhite )
 {
   ENCEFF_CNT_PTR cnt_ptr;
   GMEVENT *event;
@@ -389,7 +454,9 @@ static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, 
     cnt_ptr = FIELDMAP_GetEncEffCntPtr(fieldmap);
   }
   work = ENCEFF_AllocUserWork(cnt_ptr, size, HEAPID_FLD3DCUTIN);
+  work->Count = 0;
   work->Type = inType;
+  work->IsWhiteFade = inIsFadeWhite;
 
   event = GMEVENT_Create( gsys, NULL, ev_encEffectFunc, 0 );
 
@@ -434,9 +501,9 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
     break;
   case 2:
     if( GFL_FADE_CheckFade() == FALSE ){
-      work->count++;
+      work->Count++;
       
-      if( work->count < 3 ){
+      if( work->Count < 3 ){
         GFL_FADE_SetMasterBrightReq(
           GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, FLASH_SPEED );
         (*seq) = 1;
@@ -447,7 +514,7 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
         FLD3D_CI_PTR cutin_ptr;
         cutin_ptr = FIELDMAP_GetFld3dCiPtr(fieldmap);
         //カットインイベントコール
-        call_event = FLD3D_CI_CreateEncCutInEvt( gsys, cutin_ptr, work->Type );
+        call_event = FLD3D_CI_CreateEncCutInEvt( gsys, cutin_ptr, work->Type, work->IsWhiteFade );
         //イベントコール
         GMEVENT_CallEvent( event, call_event );
 				(*seq)++;
