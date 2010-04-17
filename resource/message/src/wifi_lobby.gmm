@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-15T16:35:18"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-16T18:46:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,7 +337,7 @@
 		</language>
 	</columns>
 
-	<dialog left="455" top="161" right="1160" bottom="789" maximized="no" rayout="Vertical2">
+	<dialog left="455" top="161" right="1160" bottom="786" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -701,7 +701,7 @@
 申し込んで　きました！</language>
 	</row>
 
-	<row id="msg_wifilobby_044">
+	<row id="msg_wifilobby_044" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>対戦終了後、同じ相手と続けて
 対戦するかどうかを確認するときのメッセージ</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんと　もういちど
@@ -710,7 +710,7 @@
 もう一度　対戦しますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_045">
+	<row id="msg_wifilobby_045" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんと　もういちど
 こうかんを　しますか？</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんと
@@ -1099,58 +1099,58 @@
 
 	<row id="msg_wifilobby_1001" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">シングルバトルの
-せいげんなしを　しますか？[BE:01:ページ切り替え（クリア）]</language>
+せいげんなしを　しますか？</language>
 		<language name="JPN_KANJI" width="216">シングルバトルの
-制限なしを　しますか？[BE:01:ページ切り替え（クリア）]</language>
+制限なしを　しますか？</language>
 	</row>
 
 	<row id="msg_wifilobby_1002" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">ダブルバトルの
-せいげんなしを　しますか？[BE:01:ページ切り替え（クリア）]</language>
+せいげんなしを　しますか？</language>
 		<language name="JPN_KANJI" width="216">ダブルバトルの
-制限なしを　しますか？[BE:01:ページ切り替え（クリア）]</language>
+制限なしを　しますか？</language>
 	</row>
 
 	<row id="msg_wifilobby_1003" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">トリプルバトルの
-せいげんなしをしますか？[BE:01:ページ切り替え（クリア）]</language>
+せいげんなしをしますか？</language>
 		<language name="JPN_KANJI" width="216">トリプルバトルの
-制限なしを　しますか？[BE:01:ページ切り替え（クリア）]</language>
+制限なしを　しますか？</language>
 	</row>
 
 	<row id="msg_wifilobby_1004" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">ローテーションバトルの
-せいげんなしを　しますか？[BE:01:ページ切り替え（クリア）]</language>
+せいげんなしを　しますか？</language>
 		<language name="JPN_KANJI" width="216">ローテーションバトルの
-制限なしを　しますか？[BE:01:ページ切り替え（クリア）]</language>
+制限なしを　しますか？</language>
 	</row>
 
 	<row id="msg_wifilobby_1005" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">シングルバトルの
-フラットルールを　しますか？[BE:01:ページ切り替え（クリア）]</language>
+フラットルールを　しますか？</language>
 		<language name="JPN_KANJI" width="216">シングルバトルの
-フラットルールを　しますか？[BE:01:ページ切り替え（クリア）]</language>
+フラットルールを　しますか？</language>
 	</row>
 
 	<row id="msg_wifilobby_1006" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">ダブルバトルの
-フラットルールを　しますか？[BE:01:ページ切り替え（クリア）]</language>
+フラットルールを　しますか？</language>
 		<language name="JPN_KANJI" width="216">ダブルバトルの
-フラットルールを　しますか？[BE:01:ページ切り替え（クリア）]</language>
+フラットルールを　しますか？</language>
 	</row>
 
 	<row id="msg_wifilobby_1007" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">トリプルバトルの
-フラットルールを　しますか？[BE:01:ページ切り替え（クリア）]</language>
+フラットルールを　しますか？</language>
 		<language name="JPN_KANJI" width="216">トリプルバトルの
-フラットルールを　しますか？[BE:01:ページ切り替え（クリア）]</language>
+フラットルールを　しますか？</language>
 	</row>
 
 	<row id="msg_wifilobby_1008" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">ローテーションバトルの
-フラットルールを　しますか？[BE:01:ページ切り替え（クリア）]</language>
+フラットルールを　しますか？</language>
 		<language name="JPN_KANJI" width="216">ローテーションバトルの
-フラットルールを　しますか？[BE:01:ページ切り替え（クリア）]</language>
+フラットルールを　しますか？</language>
 	</row>
 
 	<row id="msg_wifilobby_1009" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
@@ -1167,9 +1167,9 @@
 
 	<row id="msg_wifilobby_1038" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">ともだちの　つごうが
-わるい　ようです[BE:01:ページ切り替え（クリア）]</language>
+わるい　ようです</language>
 		<language name="JPN_KANJI" width="216">友達の　都合が
-悪いようです[BE:01:ページ切り替え（クリア）]</language>
+悪いようです</language>
 	</row>
 
 	<row id="msg_wifilobby_1039" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
@@ -1229,17 +1229,15 @@
 	</row>
 
 	<row id="msg_wifilobby_1016" back-color="#8080ff,,,,,,,#808080,,,#808080,,,,,,,">
-		<language name="JPN" width="216">つごうが　わるくなったので
-かいわを　しゅうりょう　します</language>
-		<language name="JPN_KANJI" width="216">都合が　悪くなったので
-会話を　終了します</language>
+		<language name="JPN" width="216">かいわを　しゅうりょう　しました</language>
+		<language name="JPN_KANJI" width="216">会話を　終了しました</language>
 	</row>
 
 	<row id="msg_wifilobby_1017" back-color="#8080ff,,,,,,,#808080,,,#808080,,,,,,,">
-		<language name="JPN" width="216">つごうが　わるくなったので
-かいわを　しゅうりょう　します</language>
-		<language name="JPN_KANJI" width="216">都合が　悪くなったので
-会話を　終了します</language>
+		<language name="JPN" width="216">ともだちは　いそがしい　ようです
+つうしんを　しゅうりょう　します</language>
+		<language name="JPN_KANJI" width="216">友達は　忙しいようです
+通信を　終了します</language>
 	</row>
 
 	<row id="msg_wifilobby_1018" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
