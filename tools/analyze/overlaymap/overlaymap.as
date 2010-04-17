@@ -62,11 +62,11 @@
 	button "window off",*window_off
 
 	
-
-	sdim overlayname,64,200		;オーバーレイ領域の名前
-	dim  overlayinfo,200,5		;テキスト情報から取り込んだ数値
-	dim  overlaylink,200,100	;オーバーレイ開始アドレスと別オーバーレイの配置状態の関係を格納
-	dim  overlaylinkcount,200	;そのオーバーレイが参照されている回数
+	OVERLAY_MAX = 400
+	sdim overlayname,64,OVERLAY_MAX		;オーバーレイ領域の名前
+	dim  overlayinfo,OVERLAY_MAX,5		;テキスト情報から取り込んだ数値
+	dim  overlaylink,OVERLAY_MAX,100	;オーバーレイ開始アドレスと別オーバーレイの配置状態の関係を格納
+	dim  overlaylinkcount,OVERLAY_MAX	;そのオーバーレイが参照されている回数
 	dim  stack,500			;
 	sdim temp,  512
 	sdim temp2, 256
@@ -231,7 +231,7 @@
 *initwork
 
 	;参照情報初期化
-	repeat 100
+	repeat OVERLAY_MAX
 		linkp = cnt
 		repeat 100
 			overlaylink.linkp.cnt = -1
