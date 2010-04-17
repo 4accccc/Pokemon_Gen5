@@ -51,7 +51,35 @@ typedef struct
 }SCRCMD_MENU_WORK;
 
 //--------------------------------------------------------------
-///	SCRCMD_WORK
+/**
+ * @brief スクリプトコマンド用ワーク（各仮想マシン共通）
+ */
+//--------------------------------------------------------------
+struct _SCRCMD_GLOBAL_WORK {
+
+	SCRIPT_WORK *script_work;
+	GAMESYS_WORK *gsys;
+	GAMEDATA *gamedata;
+	MMDLSYS *mmdlsys;
+	
+  GFL_TCB *tcb_callproc;
+	GFL_TCB *tcb_anm_tbl[SCRCMD_ACMD_MAX];
+  
+  SCRCMD_MENU_WORK menuWork;
+  SCRCMD_BALLOONWIN_WORK balloonWinWork;
+  
+  void *msgWin;           ///<メニュー系流用メッセージウィンドウ
+  void *timeIcon;         ///<メニュー系流用メッセージウィンドウタイムアイコン
+
+  u8 before_win_pos_type;
+  u8 win_pos_type;
+  u8 padding[2]; //余り
+};
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド用ワーク（各仮想マシン個別）
+ */
 //--------------------------------------------------------------
 struct _TAG_SCRCMD_WORK
 {
@@ -60,18 +88,11 @@ struct _TAG_SCRCMD_WORK
 	
 	GFL_MSGDATA *msgData;
   
-  GFL_TCB *tcb_callproc;
-	GFL_TCB *tcb_anm_tbl[SCRCMD_ACMD_MAX];
-  
-  SCRCMD_MENU_WORK menuWork;
-  SCRCMD_BALLOONWIN_WORK balloonWinWork;
-  
   void * backup_work;
   
-  u8 before_win_pos_type;
-  u8 win_pos_type;
   u8 wait_vm_id;
-  u8 padding[2]; //余り
+
+  SCRCMD_GLOBAL * gwork;
 };
 
 //======================================================================
@@ -82,6 +103,27 @@ static void	BmpMenu_CallbackFunc(BMPMENULIST_WORK * wk,u32 param,u8 mode);
 //======================================================================
 //	SCRCMD_WORK 初期化、削除
 //======================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+SCRCMD_GLOBAL * SCRCMD_GLOBAL_Create( SCRIPT_WORK * sc, HEAPID heapID )
+{
+  SCRCMD_GLOBAL * gwork;
+  gwork = GFL_HEAP_AllocClearMemory( heapID, sizeof(SCRCMD_GLOBAL) );
+  gwork->script_work = sc;
+  gwork->gsys = SCRIPT_GetGameSysWork( gwork->script_work );
+  gwork->gamedata = GAMESYSTEM_GetGameData( gwork->gsys );
+  gwork->mmdlsys = GAMEDATA_GetMMdlSys( gwork->gamedata );
+
+  gwork->before_win_pos_type = SCRCMD_MSGWIN_MAX;
+  return gwork;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+void SCRCMD_GLOBAL_Delete( SCRCMD_GLOBAL * gwork )
+{
+  GFL_HEAP_FreeMemory( gwork );
+}
+
 //--------------------------------------------------------------
 /**
  * SCRCMD_WORK 作成
@@ -97,7 +139,7 @@ SCRCMD_WORK * SCRCMD_WORK_Create(
 	work = GFL_HEAP_AllocClearMemoryLo( heapID, sizeof(SCRCMD_WORK) );
 	work->heapID = heapID;
 	work->head = *head;
-  work->before_win_pos_type = SCRCMD_MSGWIN_MAX;
+  work->gwork = SCRIPT_GetScrCmdGlobal( head->script_work );
 	return( work );
 }
 
@@ -167,7 +209,7 @@ BOOL SCRCMD_WORK_GetSpScriptFlag( const SCRCMD_WORK *work )
 //--------------------------------------------------------------
 GAMESYS_WORK * SCRCMD_WORK_GetGameSysWork( SCRCMD_WORK *work )
 {
-	return( work->head.gsys );
+  return work->gwork->gsys;
 }
 
 //--------------------------------------------------------------
@@ -179,7 +221,7 @@ GAMESYS_WORK * SCRCMD_WORK_GetGameSysWork( SCRCMD_WORK *work )
 //--------------------------------------------------------------
 GAMEDATA * SCRCMD_WORK_GetGameData( SCRCMD_WORK *work )
 {
-	return( work->head.gdata );
+  return work->gwork->gamedata;
 }
 
 //--------------------------------------------------------------
@@ -191,7 +233,7 @@ GAMEDATA * SCRCMD_WORK_GetGameData( SCRCMD_WORK *work )
 //--------------------------------------------------------------
 MMDLSYS * SCRCMD_WORK_GetMMdlSys( SCRCMD_WORK *work )
 {
-	return( work->head.mmdlsys );
+  return work->gwork->mmdlsys;
 }
 
 //--------------------------------------------------------------
@@ -203,7 +245,7 @@ MMDLSYS * SCRCMD_WORK_GetMMdlSys( SCRCMD_WORK *work )
 //--------------------------------------------------------------
 SCRIPT_WORK * SCRCMD_WORK_GetScriptWork( SCRCMD_WORK *work )
 {
-	return( work->head.script_work );
+  return work->gwork->script_work;
 }
 
 //--------------------------------------------------------------
@@ -218,7 +260,6 @@ FLDMSGBG * SCRCMD_WORK_GetFldMsgBG( SCRCMD_WORK *work )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   SCRIPT_FLDPARAM * fld_param = SCRIPT_GetFieldParam( sc );
   return fld_param->msgBG;
-	//return( work->head.fldMsgBG );
 }
 
 //--------------------------------------------------------------
@@ -255,13 +296,7 @@ GFL_MSGDATA * SCRCMD_WORK_GetMsgData( SCRCMD_WORK *work )
 //--------------------------------------------------------------
 void SCRCMD_WORK_SetMsgWinPtr( SCRCMD_WORK *work, void *msgWin )
 {
-#if 0
-	work->msgWin = msgWin;
-#else
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  OS_Printf( "SC = 0x%x WORK = 0x%x\n", (u32)sc, (u32)work );
-  SCRIPT_SetMsgWinPointer( sc, msgWin );
-#endif
+	work->gwork->msgWin = msgWin;
 }
 
 //--------------------------------------------------------------
@@ -273,12 +308,7 @@ void SCRCMD_WORK_SetMsgWinPtr( SCRCMD_WORK *work, void *msgWin )
 //--------------------------------------------------------------
 void * SCRCMD_WORK_GetMsgWinPtr( SCRCMD_WORK *work )
 {
-#if 0
-	return( work->msgWin );
-#else
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  return SCRIPT_GetMsgWinPointer( sc  );
-#endif
+	return work->gwork->msgWin;
 }
 
 //----------------------------------------------------------------------------
@@ -291,8 +321,7 @@ void * SCRCMD_WORK_GetMsgWinPtr( SCRCMD_WORK *work )
 //-----------------------------------------------------------------------------
 void SCRCMD_WORK_SetTimeIconPtr( SCRCMD_WORK *work, void *timeIcon )
 {
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCRIPT_SetTimeIconPointer( sc, timeIcon );
+  work->gwork->timeIcon = timeIcon;
 }
 //----------------------------------------------------------------------------
 /**
@@ -305,8 +334,7 @@ void SCRCMD_WORK_SetTimeIconPtr( SCRCMD_WORK *work, void *timeIcon )
 //-----------------------------------------------------------------------------
 void * SCRCMD_WORK_GetTimeIconPtr( SCRCMD_WORK *work )
 {
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  return SCRIPT_GetTimeIconPointer( sc );
+  return work->gwork->timeIcon;
 }
 
 
@@ -318,7 +346,7 @@ void * SCRCMD_WORK_GetTimeIconPtr( SCRCMD_WORK *work )
 //--------------------------------------------------------------
 SCRCMD_BALLOONWIN_WORK * SCRCMD_WORK_GetBalloonWinWork( SCRCMD_WORK *work )
 {
-  return( &work->balloonWinWork );
+  return( &work->gwork->balloonWinWork );
 }
 
 //--------------------------------------------------------------
@@ -331,7 +359,7 @@ SCRCMD_BALLOONWIN_WORK * SCRCMD_WORK_GetBalloonWinWork( SCRCMD_WORK *work )
 //--------------------------------------------------------------
 void SCRCMD_WORK_SetCallProcTCB( SCRCMD_WORK *work, GFL_TCB *tcb )
 {
-  work->tcb_callproc = tcb;
+  work->gwork->tcb_callproc = tcb;
 }
 
 //--------------------------------------------------------------
@@ -344,7 +372,7 @@ void SCRCMD_WORK_SetCallProcTCB( SCRCMD_WORK *work, GFL_TCB *tcb )
 //--------------------------------------------------------------
 GFL_TCB * SCRCMD_WORK_GetCallProcTCB( SCRCMD_WORK *work )
 {
-  return( work->tcb_callproc );
+  return( work->gwork->tcb_callproc );
 }
 
 //--------------------------------------------------------------
@@ -357,7 +385,7 @@ GFL_TCB * SCRCMD_WORK_GetCallProcTCB( SCRCMD_WORK *work )
 //--------------------------------------------------------------
 u8 SCRCMD_WORK_GetBeforeWindowPosType( const SCRCMD_WORK *work )
 {
-  return( work->before_win_pos_type );
+  return( work->gwork->before_win_pos_type );
 }
 
 //--------------------------------------------------------------
@@ -369,7 +397,7 @@ u8 SCRCMD_WORK_GetBeforeWindowPosType( const SCRCMD_WORK *work )
 //--------------------------------------------------------------
 void SCRCMD_WORK_SetBeforeWindowPosType( SCRCMD_WORK *work, u8 type )
 {
-  work->before_win_pos_type = type;
+  work->gwork->before_win_pos_type = type;
 }
 
 //--------------------------------------------------------------
@@ -382,7 +410,7 @@ void SCRCMD_WORK_SetBeforeWindowPosType( SCRCMD_WORK *work, u8 type )
 //--------------------------------------------------------------
 u8 SCRCMD_WORK_GetWindowPosType( const SCRCMD_WORK *work )
 {
-  return( work->win_pos_type );
+  return( work->gwork->win_pos_type );
 }
 
 //--------------------------------------------------------------
@@ -394,7 +422,7 @@ u8 SCRCMD_WORK_GetWindowPosType( const SCRCMD_WORK *work )
 //--------------------------------------------------------------
 void SCRCMD_WORK_SetWindowPosType( SCRCMD_WORK *work, u8 type )
 {
-  work->win_pos_type = type;
+  work->gwork->win_pos_type = type;
 }
 
 
@@ -413,8 +441,8 @@ void SCRCMD_WORK_SetMMdlAnmTCB( SCRCMD_WORK *work, GFL_TCB *tcb )
 {
 	int i;
 	for( i = 0; i < SCRCMD_ACMD_MAX; i++ ){
-		if( work->tcb_anm_tbl[i] == NULL ){
-			work->tcb_anm_tbl[i] = tcb;
+		if( work->gwork->tcb_anm_tbl[i] == NULL ){
+			work->gwork->tcb_anm_tbl[i] = tcb;
 			return;
 		}
 	}
@@ -433,10 +461,10 @@ BOOL SCRCMD_WORK_CheckMMdlAnmTCB( SCRCMD_WORK *work )
 	BOOL flag = FALSE;
 	int i;
 	for( i = 0; i < SCRCMD_ACMD_MAX; i++ ){
-		if( work->tcb_anm_tbl[i] != NULL ){
-			if( MMDL_CheckEndAcmdList(work->tcb_anm_tbl[i]) == TRUE ){
-				MMDL_EndAcmdList( work->tcb_anm_tbl[i] );
-				work->tcb_anm_tbl[i] = NULL;
+		if( work->gwork->tcb_anm_tbl[i] != NULL ){
+			if( MMDL_CheckEndAcmdList(work->gwork->tcb_anm_tbl[i]) == TRUE ){
+				MMDL_EndAcmdList( work->gwork->tcb_anm_tbl[i] );
+				work->gwork->tcb_anm_tbl[i] = NULL;
 			}else{
 				flag = TRUE;
 			}
@@ -485,7 +513,7 @@ void SCRCMD_WORK_InitMenuWork( SCRCMD_WORK *work,
   u16 x, u16 y, u16 cursor, u16 cancel, SCR_MENU_JUSTIFY lr_just, u16 *ret,
   WORDSET *wordset, GFL_MSGDATA *msgData )
 {
-  SCRCMD_MENU_WORK *menuWork = &work->menuWork;
+  SCRCMD_MENU_WORK *menuWork = &work->gwork->menuWork;
 	MI_CpuClear8( menuWork, sizeof(SCRCMD_MENU_WORK) );
   
   menuWork->x = x;
@@ -521,7 +549,7 @@ void SCRCMD_WORK_AddMenuList(
     SCRCMD_WORK *work, u32 msg_id, u32 ex_msg_id, u32 param,
     STRBUF *msgbuf, STRBUF *tmpbuf )
 {
-  SCRCMD_MENU_WORK *menuWork = &work->menuWork;
+  SCRCMD_MENU_WORK *menuWork = &work->gwork->menuWork;
   
   if(ex_msg_id != SCR_BMPMENU_EXMSG_NULL){
     u32  num = BmpMenuWork_GetListMax( (BMP_MENULIST_DATA*)menuWork->listData );
@@ -576,7 +604,7 @@ static const FLDMENUFUNC_HEADER data_MenuHeader =
 void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work )
 {
   u32 sx,sy,count;
-  SCRCMD_MENU_WORK *menuWork = &work->menuWork;
+  SCRCMD_MENU_WORK *menuWork = &work->gwork->menuWork;
   FLDMENUFUNC_HEADER menuH = data_MenuHeader;
   FLDMSGBG *fmb = SCRCMD_WORK_GetFldMsgBG( work );
   
@@ -658,7 +686,7 @@ static void CleanUpMenuWork( SCRCMD_MENU_WORK* menuWork )
 BOOL SCRCMD_WORK_ProcMenu( SCRCMD_WORK *work )
 {
   u32 ret;
-  SCRCMD_MENU_WORK *menuWork = &work->menuWork;
+  SCRCMD_MENU_WORK *menuWork = &work->gwork->menuWork;
   
   ret = FLDMENUFUNC_ProcMenu( menuWork->menuFunc );
 
@@ -692,7 +720,7 @@ BOOL SCRCMD_WORK_ProcMenu( SCRCMD_WORK *work )
 BOOL SCRCMD_WORK_ProcMenu_Breakable( SCRCMD_WORK *work )
 {
   u32 ret;
-  SCRCMD_MENU_WORK *menuWork = &work->menuWork;
+  SCRCMD_MENU_WORK *menuWork = &work->gwork->menuWork;
 
   // 通常のメニュー処理
   ret = SCRCMD_WORK_ProcMenu( work );
@@ -710,14 +738,16 @@ BOOL SCRCMD_WORK_ProcMenu_Breakable( SCRCMD_WORK *work )
   return ret;
 }
 
+//--------------------------------------------------------------
 /*
  *  @brief  メニューコールバック
  */
+//--------------------------------------------------------------
 static void	BmpMenu_CallbackFunc(BMPMENULIST_WORK * wk,u32 param,u8 mode)
 {
   u16 cursor = 0;
   SCRCMD_WORK* work = (SCRCMD_WORK*)BmpMenuList_GetWorkPtr(wk);
-  SCRCMD_MENU_WORK* menu = &work->menuWork;
+  SCRCMD_MENU_WORK* menu = &work->gwork->menuWork;
 
   BmpMenuList_DirectPosGet( wk, &cursor );
 

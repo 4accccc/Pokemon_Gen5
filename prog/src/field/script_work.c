@@ -29,6 +29,7 @@
 #include "musical/musical_event.h"  //MUSICAL_EVENT_WORK
 
 #include "script_trainer.h" //SCRIPT_GetTrainerHitData
+#include "scrcmd_work.h"
 
 //============================================================================================
 //  define
@@ -96,16 +97,10 @@ struct _TAG_SCRIPT_WORK
 	STRBUF* tmp_buf;				//テンポラリバッファポインタ
 
 
-  void *msgWin;           //メニュー系流用メッセージウィンドウ
-  void *timeIcon;         //メニュー系流用メッセージウィンドウタイムアイコン
-
-
   void *mw;				//ビットマップメニューワーク
 
 	void * subproc_work; //サブプロセスとのやりとりに使用するワークへの*
 
-	u8 anm_count;			//アニメーションしている数
-	
   u8 sound_se_flag;   ///< サウンドSE再生チェックフラグ
 
 	//トレーナー視線情報
@@ -120,6 +115,7 @@ struct _TAG_SCRIPT_WORK
   // 再戦トレーナーテンポラリ
   void* rebattle_trainer;
 
+  void* scrcmd_global;
 };
 
 //============================================================================================
@@ -185,6 +181,8 @@ SCRIPT_WORK * SCRIPTWORK_Create( HEAPID main_heapID,
   sc->msg_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, main_heapID );
   sc->tmp_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, main_heapID );
 
+  sc->scrcmd_global = SCRCMD_GLOBAL_Create( sc, main_heapID );
+
   //フィールドパラメータ生成
 	initFldParam( &sc->fld_param, gsys );
 
@@ -205,6 +203,8 @@ void SCRIPTWORK_Delete( SCRIPT_WORK * sc )
   WORDSET_Delete( sc->wordset );
   GFL_STR_DeleteBuffer( sc->msg_buf );
   GFL_STR_DeleteBuffer( sc->tmp_buf );
+
+  SCRCMD_GLOBAL_Delete( sc->scrcmd_global );
 
   GFL_HEAP_FreeMemory( sc );
 }
@@ -244,55 +244,13 @@ SCRIPT_FLDPARAM * SCRIPT_GetFieldParam( SCRIPT_WORK * sc )
 
 //--------------------------------------------------------------
 /**
- * スクリプト制御ワークのメッセージウィンドウポインタ取得
- * @param	sc		    SCRIPT型のポインタ
- * @param	msgWin		取得するメンバID(script.h参照)
- * @return	"アドレス"
+ * @brief スクリプトコマンド用ワークへのポインタ取得
  */
 //--------------------------------------------------------------
-void * SCRIPT_GetMsgWinPointer( SCRIPT_WORK *sc )
+void * SCRIPT_GetScrCmdGlobal( SCRIPT_WORK * sc )
 {
-  return sc->msgWin;
-}
-
-//--------------------------------------------------------------
-/**
- * スクリプト制御ワークのメッセージウィンドウポインタセット
- * @param	sc		    SCRIPT型のポインタ
- * @param	msgWin		取得するメンバID(script.h参照)
- * @return	"アドレス"
- */
-//--------------------------------------------------------------
-void SCRIPT_SetMsgWinPointer( SCRIPT_WORK *sc, void* msgWin )
-{
-  sc->msgWin = msgWin;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  スクリプト制御ワークのタイムアイコンポインタを取得
- *
- *	@param	sc  SCRIPT型のポインタ
- *  
- *	@return タイムアイコンポインタ
- */
-//-----------------------------------------------------------------------------
-void * SCRIPT_GetTimeIconPointer( SCRIPT_WORK *sc )
-{
-  return sc->timeIcon;
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  スクリプト制御ワークのタイムアイコンポインタ設定
- *
- *	@param	sc        SCRIPT型のポインタ
- *	@param	timeIcon  タイムアイコンポインタ
- */
-//-----------------------------------------------------------------------------
-void SCRIPT_SetTimeIconPointer( SCRIPT_WORK *sc, void* timeIcon )
-{
-  sc->timeIcon = timeIcon;
+  GF_ASSERT( sc->magic_no );
+  return sc->scrcmd_global;
 }
 
 //--------------------------------------------------------------
@@ -334,15 +292,6 @@ STRBUF * SCRIPT_GetMsgTempBuffer( SCRIPT_WORK * sc )
 u8 * SCRIPT_GetSoundSeFlag( SCRIPT_WORK * sc )
 {
   return &sc->sound_se_flag;
-}
-//--------------------------------------------------------------
-/**
- * @brief スクリプト変数：アニメカウントの取得
- */
-//--------------------------------------------------------------
-u8 * SCRIPT_GetAnimeCount( SCRIPT_WORK * sc )
-{
-  return &sc->anm_count;
 }
 //--------------------------------------------------------------
 /**

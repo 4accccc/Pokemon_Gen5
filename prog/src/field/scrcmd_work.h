@@ -42,6 +42,8 @@ typedef enum
 //--------------------------------------------------------------
 typedef struct _TAG_SCRCMD_WORK SCRCMD_WORK;
 
+typedef struct _SCRCMD_GLOBAL_WORK SCRCMD_GLOBAL;
+
 //--------------------------------------------------------------
 ///	SCRCMD_WORK_HEADER スクリプトコマンドで参照するワークを集めたヘッダー
 //--------------------------------------------------------------
@@ -56,8 +58,6 @@ typedef struct
 	GAMEDATA *gdata;
 	MMDLSYS *mmdlsys;
 	
-  FLDMSGBG *fldMsgBG;
-  FIELDMAP_WORK *fieldMap;
 }SCRCMD_WORK_HEADER;
 
 //--------------------------------------------------------------
@@ -82,14 +82,19 @@ typedef struct
 //======================================================================
 //	proto
 //======================================================================
-//初期化、削除
-extern SCRCMD_WORK * SCRCMD_WORK_Create(
-	const SCRCMD_WORK_HEADER *head, HEAPID heapID );
+//スクリプトワーク（共通部分）初期化
+extern SCRCMD_GLOBAL * SCRCMD_GLOBAL_Create( SCRIPT_WORK * sc, HEAPID heapID );
+//スクリプトワーク（共通部分）削除
+extern void SCRCMD_GLOBAL_Delete( SCRCMD_GLOBAL * gwork );
+
+//スクリプトワーク（VM個別部分）初期化
+extern SCRCMD_WORK * SCRCMD_WORK_Create( const SCRCMD_WORK_HEADER *head, HEAPID heapID );
+//スクリプトワーク（VM個別部分）削除
 extern void SCRCMD_WORK_Delete( SCRCMD_WORK *work );
 
 //参照、取得
 extern HEAPID SCRCMD_WORK_GetHeapID( SCRCMD_WORK *work );
-//extern HEAPID SCRCMD_WORK_GetTempHeapID( SCRCMD_WORK *work );
+
 extern u16 SCRCMD_WORK_GetZoneID( SCRCMD_WORK *work );
 extern u16 SCRCMD_WORK_GetScriptID( SCRCMD_WORK *work );
 extern BOOL SCRCMD_WORK_GetSpScriptFlag( const SCRCMD_WORK *work );

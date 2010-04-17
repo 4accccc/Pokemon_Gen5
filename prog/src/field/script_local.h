@@ -132,20 +132,17 @@ extern BOOL SCRIPT_GetVMExists( SCRIPT_WORK *sc, VMHANDLE_ID vm_id );
 extern GMEVENT * SCRIPT_GetEvent( SCRIPT_WORK * sc );
 extern GAMESYS_WORK * SCRIPT_GetGameSysWork( SCRIPT_WORK * sc );
 extern SCRIPT_FLDPARAM * SCRIPT_GetFieldParam( SCRIPT_WORK * sc );
-extern void * SCRIPT_GetMsgWinPointer( SCRIPT_WORK *sc );
-extern void SCRIPT_SetMsgWinPointer( SCRIPT_WORK *sc, void* msgWin );
-extern void * SCRIPT_GetTimeIconPointer( SCRIPT_WORK *sc );
-extern void SCRIPT_SetTimeIconPointer( SCRIPT_WORK *sc, void* timeIcon );
 extern WORDSET * SCRIPT_GetWordSet( SCRIPT_WORK * sc );
 extern STRBUF * SCRIPT_GetMsgBuffer( SCRIPT_WORK * sc );
 extern STRBUF * SCRIPT_GetMsgTempBuffer( SCRIPT_WORK * sc );
 
 extern u8 * SCRIPT_GetSoundSeFlag( SCRIPT_WORK * sc );
-extern u8 * SCRIPT_GetAnimeCount( SCRIPT_WORK * sc );
 extern void SCRIPT_SetFLDMENUFUNC( SCRIPT_WORK * sc, void * mw );
 extern void * SCRIPT_GetFLDMENUFUNC( SCRIPT_WORK * sc );
 extern MMDL * SCRIPT_GetTargetObj( SCRIPT_WORK * sc );
 extern void SCRIPT_SetTargetObj( SCRIPT_WORK * sc, MMDL * obj );
+
+extern void * SCRIPT_GetScrCmdGlobal( SCRIPT_WORK * sc );
 
 //======================================================================
 //	

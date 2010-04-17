@@ -128,7 +128,6 @@ static MMDL * FieldObjPtrGetByObjId( SCRCMD_WORK *work, u16 obj_id )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk )
 {
-  u8 *num;
   VM_CODE *p;
   GFL_TCB *anm_tcb;
   MMDL *fmmdl; //対象のフィールドOBJのポインタ
@@ -149,10 +148,6 @@ VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk )
   //アニメーションコマンドリストセット
   p = (VM_CODE*)(core->adrs+pos);
   anm_tcb = MMDL_SetAcmdList( fmmdl, (MMDL_ACMD_LIST*)p );
-  
-  //アニメーションの数を足す
-  num = SCRIPT_GetAnimeCount( sc );
-  (*num)++;
   
   //TCBセット
   SCRCMD_WORK_SetMMdlAnmTCB( work, anm_tcb );
