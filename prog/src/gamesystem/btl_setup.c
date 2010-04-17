@@ -249,19 +249,21 @@ static void setup_trainer_param( BATTLE_SETUP_PARAM* dst, BTL_CLIENT_ID client, 
 
     switch( grp ){
     case TRTYPE_GRP_LEADER:
+    case TRTYPE_GRP_BIGFOUR:
       dst->musicWin = SEQ_BGM_WIN3;
       break;
-    case TRTYPE_GRP_PLASMA_BOSS:
     case TRTYPE_GRP_LAST_BOSS:
-    case TRTYPE_GRP_PLASMA:
     case TRTYPE_GRP_SAGE:
       dst->musicWin = SEQ_BGM_WIN4;
       break;
-    case TRTYPE_GRP_BIGFOUR:
     case TRTYPE_GRP_BCHAMP:
     case TRTYPE_GRP_CHAMPION:
       dst->musicWin = SEQ_BGM_WIN5;
-    break;
+      break;
+    case TRTYPE_GRP_PLASMA:
+    case TRTYPE_GRP_PLASMA_BOSS:
+      dst->musicWin = SEQ_BGM_WIN6;
+      break;
     }
   }
 }
