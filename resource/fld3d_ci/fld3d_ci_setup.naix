@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-04-17T16:18:28
+	Update:2010-04-17T16:47:59
  *****************************************************************************/
 
 #ifndef NARC_FLD3D_CI_SETUP_NAIX_
@@ -31,7 +31,28 @@ enum {
 	NARC_fld3d_ci_setup_ci_17_bin = 17,
 	NARC_fld3d_ci_setup_ci_18_bin = 18,
 	NARC_fld3d_ci_setup_ci_19_bin = 19,
-	NARC_fld3d_ci_setup_ci_20_bin = 20
+	NARC_fld3d_ci_setup_ci_20_bin = 20,
+	NARC_fld3d_ci_setup_ci_21_bin = 21,
+	NARC_fld3d_ci_setup_ci_22_bin = 22,
+	NARC_fld3d_ci_setup_ci_23_bin = 23,
+	NARC_fld3d_ci_setup_ci_24_bin = 24,
+	NARC_fld3d_ci_setup_ci_25_bin = 25,
+	NARC_fld3d_ci_setup_ci_26_bin = 26,
+	NARC_fld3d_ci_setup_ci_27_bin = 27,
+	NARC_fld3d_ci_setup_ci_28_bin = 28,
+	NARC_fld3d_ci_setup_ci_29_bin = 29,
+	NARC_fld3d_ci_setup_ci_30_bin = 30,
+	NARC_fld3d_ci_setup_ci_31_bin = 31,
+	NARC_fld3d_ci_setup_ci_32_bin = 32,
+	NARC_fld3d_ci_setup_ci_33_bin = 33,
+	NARC_fld3d_ci_setup_ci_34_bin = 34,
+	NARC_fld3d_ci_setup_ci_35_bin = 35,
+	NARC_fld3d_ci_setup_ci_36_bin = 36,
+	NARC_fld3d_ci_setup_ci_37_bin = 37,
+	NARC_fld3d_ci_setup_ci_38_bin = 38,
+	NARC_fld3d_ci_setup_ci_39_bin = 39,
+	NARC_fld3d_ci_setup_ci_40_bin = 40,
+	NARC_fld3d_ci_setup_ci_41_bin = 41
 };
 
 /* NARC_FLD3D_CI_SETUP_NAIX_ */
