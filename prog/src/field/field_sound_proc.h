@@ -8,6 +8,7 @@
 //======================================================================
 #pragma once
 #include <gflib.h>
+#include "gamesystem/gamedata_def.h"
 
 //======================================================================
 //  define
@@ -22,5 +23,5 @@ typedef struct _FIELD_SOUND FIELD_SOUND;
 //======================================================================
 //  extern
 //======================================================================
-extern FIELD_SOUND * FIELD_SOUND_Create( HEAPID heapID );
+extern FIELD_SOUND * FIELD_SOUND_Create( GAMEDATA* gameData, HEAPID heapID );
 extern void FIELD_SOUND_Delete( FIELD_SOUND *fsnd );

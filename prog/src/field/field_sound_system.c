@@ -6,11 +6,14 @@
  * @date   2009.12.25
  */
 ///////////////////////////////////////////////////////////////////////////////////
+#include <gflib.h>
+#include "gamesystem/gamedata_def.h"
+#include "gamesystem/game_data.h"
+#include "field_sound_proc.h"
 #include "field_sound_system.h"
 #include "sound/pm_sndsys.h"
 #include "player_volume_fader.h"
-#include "ringtone_sys.h"
-
+#include "ringtone_sys.h" 
 #include "field_envse_data.h"
 
 
@@ -20,7 +23,7 @@
 //#define DEBUG_PRINT_ON         // デバッグ出力スイッチ
 #define PRINT_NO            (1)  // printf出力先コンソール番号
 
-#define DEBUG_DIV_LOAD_COUNT_ON // 分割読み込み回数カウントスイッチ
+//#define DEBUG_DIV_LOAD_COUNT_ON // 分割読み込み回数カウントスイッチ
 #ifdef DEBUG_DIV_LOAD_COUNT_ON
 static int DivLoadCount = 0;
 #endif
@@ -128,6 +131,8 @@ typedef struct {
 //================================================================================= 
 struct _FIELD_SOUND {
 
+  GAMEDATA* gameData;
+
   // 内部状態
   FSND_STATE state;  // 現在の状態
 
@@ -233,9 +238,12 @@ static void FadeInBGM ( FIELD_SOUND* fieldSound );
 static void FadeOutBGM( FIELD_SOUND* fieldSound );
 static void PushBGM( FIELD_SOUND* fieldSound );
 static void PopBGM ( FIELD_SOUND* fieldSound );
-static void DivLoadBGM_start( FIELD_SOUND* fieldSound );
+static BOOL DivLoadBGM_start( FIELD_SOUND* fieldSound );
 static BOOL DivLoadBGM_load ( FIELD_SOUND* fieldSound );
 static void ForcePlayBGM( FIELD_SOUND* fieldSound );
+
+// セーブ中かどうか
+static BOOL CheckSaveNow( const FIELD_SOUND* fieldSound );
 
 // デバッグ
 static void DebugPrint_RequestQueue( const FIELD_SOUND* fieldSound );
@@ -299,12 +307,13 @@ static void (*MainFunc[ FSND_STATE_NUM ])( FIELD_SOUND* fsnd ) =
 /**
  * @brief フィールドサウンド作成
  *
+ * @param gameData
  * @param heapID ヒープID
  *
  * @return 作成したフィールドサウンド
  */
 //---------------------------------------------------------------------------------
-FIELD_SOUND* FIELD_SOUND_Create( HEAPID heapID )
+FIELD_SOUND* FIELD_SOUND_Create( GAMEDATA* gameData, HEAPID heapID )
 {
   FIELD_SOUND* fieldSound;
 
@@ -313,6 +322,7 @@ FIELD_SOUND* FIELD_SOUND_Create( HEAPID heapID )
 
   // 初期化
   InitFieldSoundSystem( fieldSound );
+  fieldSound->gameData = gameData;
   fieldSound->playerVolumeFader = PLAYER_VOLUME_FADER_Create( heapID, PLAYER_BGM );
   fieldSound->ringToneSys = RINGTONE_SYS_Create( heapID, fieldSound->playerVolumeFader );
 
@@ -883,6 +893,7 @@ static void InitFieldSoundSystem( FIELD_SOUND* fieldSound )
 {
   int i;
 
+  fieldSound->gameData     = NULL;
   fieldSound->state        = FSND_STATE_STOP;
   fieldSound->request      = FSND_BGM_REQUEST_NONE;
   fieldSound->currentBGM   = BGM_NONE;
@@ -1462,11 +1473,10 @@ static void RequestCheck_STOP( FIELD_SOUND* fieldSound )
     ChangeState( fieldSound, FSND_STATE_POP_in );
     break;
   case FSND_BGM_REQUEST_CHANGE:  
-    DivLoadBGM_start( fieldSound );
-    ChangeState( fieldSound, FSND_STATE_CHANGE_load );
+    ChangeState( fieldSound, FSND_STATE_CHANGE_out );
     break;
   case FSND_BGM_REQUEST_STAND_BY:  
-    ChangeState( fieldSound, FSND_STATE_STAND_BY_load );
+    ChangeState( fieldSound, FSND_STATE_STAND_BY_out );
     break;
   case FSND_BGM_REQUEST_FORCE_PLAY:
     ForcePlayBGM( fieldSound );
@@ -1921,8 +1931,10 @@ static void Main_CHANGE_out( FIELD_SOUND* fieldSound )
 {
   if( PMSND_CheckFadeOnBGM() == FALSE )
   {
-    DivLoadBGM_start( fieldSound );
-    ChangeState( fieldSound, FSND_STATE_CHANGE_load );
+    if( CheckSaveNow( fieldSound ) == FALSE ) {
+      DivLoadBGM_start( fieldSound );
+      ChangeState( fieldSound, FSND_STATE_CHANGE_load );
+    }
   }
 }
 
@@ -1945,8 +1957,7 @@ static void Main_CHANGE_load( FIELD_SOUND* fieldSound )
         (fieldSound->requestBGM != fieldSound->currentBGM) )
     { 
       // 再ロード開始
-      DivLoadBGM_start( fieldSound );
-      ChangeState( fieldSound, FSND_STATE_CHANGE_load );
+      ChangeState( fieldSound, FSND_STATE_CHANGE_out );
     }
     else
     { 
@@ -1992,8 +2003,10 @@ static void Main_CHANGE_PUSH_out( FIELD_SOUND* fieldSound )
 {
   if( PMSND_CheckFadeOnBGM() == FALSE )
   {
-    DivLoadBGM_start( fieldSound );
-    ChangeState( fieldSound, FSND_STATE_CHANGE_PUSH_load );
+    if( CheckSaveNow( fieldSound ) == FALSE ) {
+      DivLoadBGM_start( fieldSound );
+      ChangeState( fieldSound, FSND_STATE_CHANGE_PUSH_load );
+    }
   }
 }
 
@@ -2028,8 +2041,10 @@ static void Main_STAND_BY_out( FIELD_SOUND* fieldSound )
 {
   if( PMSND_CheckFadeOnBGM() == FALSE )
   {
-    DivLoadBGM_start( fieldSound );
-    ChangeState( fieldSound, FSND_STATE_STAND_BY_load );
+    if( CheckSaveNow( fieldSound ) == FALSE ) {
+      DivLoadBGM_start( fieldSound );
+      ChangeState( fieldSound, FSND_STATE_STAND_BY_load );
+    }
   }
 }
 
@@ -2332,9 +2347,12 @@ static void PopBGM( FIELD_SOUND* fieldSound )
  * @brief BGMの分割ロードを開始する
  *
  * @param fieldSound
+ *
+ * @return 分割ロードを開始した場合 TRUE
+ *         そうでなければ FALSE
  */
 //---------------------------------------------------------------------------------
-static void DivLoadBGM_start( FIELD_SOUND* fieldSound )
+static BOOL DivLoadBGM_start( FIELD_SOUND* fieldSound )
 {
   // 読み込むBGMが予約されていない
   if( fieldSound->requestBGM == BGM_NONE )
@@ -2343,7 +2361,7 @@ static void DivLoadBGM_start( FIELD_SOUND* fieldSound )
     OS_TFPrintf( PRINT_NO, "FIELD-SOUND: Can't start load BGM (Don't know target BGM)\n" );
 #endif
     GF_ASSERT(0);
-    return;
+    return FALSE;
   }
 
   // 分割ロード開始
@@ -2361,6 +2379,8 @@ static void DivLoadBGM_start( FIELD_SOUND* fieldSound )
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_NO, "FIELD-SOUND: div load BGM(%d) start\n", fieldSound->loadBGM );
 #endif
+
+  return TRUE;
 }
 
 //---------------------------------------------------------------------------------
@@ -2442,6 +2462,21 @@ static void ForcePlayBGM( FIELD_SOUND* fieldSound )
   OS_TFPrintf( PRINT_NO, "FIELD-SOUND: force play BGM(%d) finish\n", fieldSound->currentBGM );
 #endif
 } 
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief セーブ中かどうかを判定する
+ *
+ * @param fieldSound
+ *
+ * @return セーブ中なら TRUE
+ *         そうでなければ FALSE
+ */
+//---------------------------------------------------------------------------------
+static BOOL CheckSaveNow( const FIELD_SOUND* fieldSound )
+{
+  return GAMEDATA_GetIsSave( fieldSound->gameData );
+}
 
 //---------------------------------------------------------------------------------
 /**

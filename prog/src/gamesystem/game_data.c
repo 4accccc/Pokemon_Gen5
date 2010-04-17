@@ -212,7 +212,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   gd->mmdlsys = MMDLSYS_CreateSystem( heapID, MMDL_MDL_MAX, SaveControl_DataPtrGet(gd->sv_control_ptr,GMDATA_ID_ROCKPOS) );
   
   //フィールドサウンド管理
-  gd->field_sound = FIELD_SOUND_Create( heapID );
+  gd->field_sound = FIELD_SOUND_Create( gd, heapID );
 
   gd->fldstatus = FIELD_STATUS_Create( heapID );
 
