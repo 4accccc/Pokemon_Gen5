@@ -403,7 +403,7 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
 	if(pGF->connectNum >= pInit->maxConnectNum){
 		return FALSE;   // Ú‘±l”‚¢‚Á‚Ï‚¢‚Ìê‡E‚í‚È‚¢
 	}
-	NET_PRINT("_scanCheckok\n");
+//	NET_PRINT("_scanCheckok\n");
 	return TRUE;
 }
 

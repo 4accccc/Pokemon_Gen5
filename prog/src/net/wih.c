@@ -1165,7 +1165,7 @@ static BOOL WH_StateInStartParentMP(void)
 	{
 		int recvS = WM_GetMPReceiveBufferSize();
 		int sendS = WM_GetMPSendBufferSize();
-		NET_PRINT("WH_StateInStartParentMP  %d %d\n",recvS,sendS);
+//		NET_PRINT("WH_StateInStartParentMP  %d %d\n",recvS,sendS);
 	}
 
 	if(_pWmInfo->sRecvBuffer!=NULL){
