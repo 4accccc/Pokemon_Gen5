@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-04-02T20:48:08"/>
+	<create user="ohmori" host="W00223" date="2010-04-15T12:39:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -604,9 +604,9 @@
 タグ0：メッセージの主になるプレイヤー
 タグ1：タグ0のターゲットになるプレイヤー</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　[1:00:トレーナー名:1]の
-ハイリンクから　パワーをもらった</language>
+ハイリンクから　デルパワーをもらった</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　[1:00:トレーナー名:1]の
-ハイリンクから　パワーをもらった</language>
+ハイリンクから　デルパワーをもらった</language>
 	</row>
 
 	<row id="msg_invasion_info_010" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -614,23 +614,43 @@
 タグ0：メッセージの主になるプレイヤー
 タグ1：タグ0のターゲットになるプレイヤー</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　じぶんの
-ハイリンクから　パワーをもらった</language>
+ハイリンクから　デルパワーをもらった</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　じぶんの
-ハイリンクから　パワーをもらった</language>
+ハイリンクから　デルパワーをもらった</language>
 	</row>
 
-	<row id="msg_invasion_info_011" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<comment>状況メッセージ（未使用）</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]は
-ふしぎなコインを　ひろった</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
-ふしぎなコインを　ひろった</language>
+	<row id="msg_invasion_info_011" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ
+タグ0：メッセージの主になるプレイヤー
+タグ1：タグ0のターゲットになるプレイヤー</comment>
+		<language name="JPN" width="256">このばしょには
+[1:00:トレーナー名:0]が　います</language>
+		<language name="JPN_KANJI" width="256">このばしょには
+[1:00:トレーナー名:0]が　います</language>
+	</row>
+
+	<row id="msg_invasion_info_012" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ
+タグ0,1：近くに居るプレイヤー</comment>
+		<language name="JPN" width="256">ちかくに　[1:00:トレーナー名:0]の
+ハイリンクが　あります</language>
+		<language name="JPN_KANJI" width="256">ちかくに　[1:00:トレーナー名:0]の
+ハイリンクが　あります</language>
+	</row>
+
+	<row id="msg_invasion_info_013" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ
+タグ0,1：近くに居るプレイヤー</comment>
+		<language name="JPN" width="256">ちかくに　[1:00:トレーナー名:0]と　[1:00:トレーナー名:0]の
+ハイリンクが　あります</language>
+		<language name="JPN_KANJI" width="256">ちかくに　[1:00:トレーナー名:0]と　[1:00:トレーナー名:0]の
+ハイリンクが　あります</language>
 	</row>
 
 	<row id="msg_invasion_info_m01" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
-		<language name="JPN" width="256">サポート　ミッション　じっしちゅう</language>
-		<language name="JPN_KANJI" width="256">サポート　ミッション　じっしちゅう</language>
+		<language name="JPN" width="256">バトル　ミッション　じっしちゅう</language>
+		<language name="JPN_KANJI" width="256">バトル　ミッション　じっしちゅう</language>
 	</row>
 
 	<row id="msg_invasion_info_m02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -641,14 +661,14 @@
 
 	<row id="msg_invasion_info_m03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
-		<language name="JPN" width="256">バトル　ミッション　じっしちゅう</language>
-		<language name="JPN_KANJI" width="256">バトル　ミッション　じっしちゅう</language>
+		<language name="JPN" width="256">サポート　ミッション　じっしちゅう</language>
+		<language name="JPN_KANJI" width="256">サポート　ミッション　じっしちゅう</language>
 	</row>
 
 	<row id="msg_invasion_info_m04" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
-		<language name="JPN" width="256">サポート　ミッション　じっしちゅう</language>
-		<language name="JPN_KANJI" width="256">サポート　ミッション　じっしちゅう</language>
+		<language name="JPN" width="256">アイテム　ミッション　じっしちゅう</language>
+		<language name="JPN_KANJI" width="256">アイテム　ミッション　じっしちゅう</language>
 	</row>
 
 	<row id="msg_invasion_info_m05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -659,8 +679,8 @@
 
 	<row id="msg_invasion_info_m06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状況メッセージ：ミッション系統説明</comment>
-		<language name="JPN" width="256">アイテム　ミッション　じっしちゅう</language>
-		<language name="JPN_KANJI" width="256">アイテム　ミッション　じっしちゅう</language>
+		<language name="JPN" width="256">サポート　ミッション　じっしちゅう</language>
+		<language name="JPN_KANJI" width="256">サポート　ミッション　じっしちゅう</language>
 	</row>
 
 	<row id="msg_invasion_mission_000" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
@@ -699,8 +719,8 @@
 
 	<row id="msg_invasion_title_000" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
 		<comment>タイトルメッセージ</comment>
-		<language name="JPN" width="256">ちゅうしんを　タッチすると　ハイリンクにいけます</language>
-		<language name="JPN_KANJI" width="256">ちゅうしんを　タッチすると　ハイリンクにいけます</language>
+		<language name="JPN" width="256">タッチすると　ハイリンクにいけます</language>
+		<language name="JPN_KANJI" width="256">タッチすると　ハイリンクにいけます</language>
 	</row>
 
 	<row id="msg_invasion_title_001" back-color="#ffff80,,,,,,#ffff00,,,,,,,,,,,">
@@ -824,9 +844,13 @@
 
 	<row id="plc_connect_07" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>通信接続メッセージ：ハイリンク終了</comment>
-		<language name="JPN" width="256">もといた　ばしょに
+		<language name="JPN" width="256">ここからは　もとのせかいに
+もどることが　できます▼
+もといた　ばしょに
 もどりますか？</language>
-		<language name="JPN_KANJI" width="256">もといた　ばしょに
+		<language name="JPN_KANJI" width="256">ここからは　もとのせかいに
+もどることが　できます▼
+もといた　ばしょに
 もどりますか？</language>
 	</row>
 
@@ -842,7 +866,7 @@
 		<language name="JPN_KANJI" width="256">ふしぎなちからで　もどされた</language>
 	</row>
 
-	<row id="plc_connect_10" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
+	<row id="plc_connect_10" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<comment>看板メッセージ(接続とは関係なし)
 </comment>
 		<language name="JPN" width="256">したがめんを　タッチすることで
