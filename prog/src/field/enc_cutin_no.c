@@ -35,10 +35,11 @@ static const ENC_CUTIN_DAT EncCutinDat[] =
   {FLDCIID_PLASMA02, NARC_enc_ci_face_enc_boss_lz_bin, NARC_enc_ci_face_enc_boss_nclr, SPTR_BOSS, GRA_TRANS_ENEMY}, //ボス
   {FLDCIID_PLASMA02, NARC_enc_ci_face_enc_sage_lz_bin, NARC_enc_ci_face_enc_sage_nclr, SPTR_SAGE, GRA_TRANS_ENEMY}, //セージ
   {FLDCIID_PLASMA01, 0, 0, 0, GRA_TRANS_NONE}, //プラズマ団
-  {FLDCIID_PLASMA01, 0, 0, 0, GRA_TRANS_NONE}, //パッケージ
-  {FLDCIID_PLASMA01, 0, 0, 0, GRA_TRANS_NONE}, //移動ポケ
-  {FLDCIID_PLASMA01, 0, 0, 0, GRA_TRANS_NONE}, //三銃士
-  {FLDCIID_PLASMA01, 0, 0, 0, GRA_TRANS_NONE}, //ゾロアーク
+  {FLDCIID_SHIN_MU, 0, 0, 0, GRA_TRANS_NONE}, //パッケージ
+  {FLDCIID_IDOU, 0, 0, 0, GRA_TRANS_NONE}, //移動ポケ
+  {FLDCIID_3JUUSHI, 0, 0, 0, GRA_TRANS_NONE}, //三銃士
+  {FLDCIID_DOUKUTSU, 0, 0, 0, GRA_TRANS_NONE}, //トレーナー洞窟
+  {FLDCIID_SABAKU, 0, 0, 0, GRA_TRANS_NONE}, //トレーナー砂漠
 };
 
 const ENC_CUTIN_DAT *ENC_CUTIN_NO_GetDat(const int inEncCutinNo)

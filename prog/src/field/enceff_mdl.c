@@ -154,24 +154,6 @@ GMEVENT *ENCEFF_MDL_Create6(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const 
 
 //--------------------------------------------------------------
 /**
- * イベント作成
- * @param gsys  GAMESYS_WORK
- * @param fieldWork FIELDMAP_WORK
- * @retval GMEVENT*
- */
-//--------------------------------------------------------------
-GMEVENT *ENCEFF_MDL_Create7(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
-{
-  GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork,
-                           NARC_texViewTest_effect1_nsbmd,
-                           NARC_texViewTest_effect1_nsbca,
-                           inIsFadeWhite );
-  return( event );
-}
-
-//--------------------------------------------------------------
-/**
  * イベント作成共通
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK

@@ -47,10 +47,10 @@ static const ENCEFF_TBL EncEffTbl[] = {
   {ENCEFF_MDL_Create1, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), TRUE},     //野生　通常
   {ENCEFF_MDL_Create2, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), TRUE},     //野生　強
   {ENCEFF_WAV_Create, ENCEFF_WAV_Draw, FS_OVERLAY_ID(enceff_wav), TRUE},      //野生　水上 釣り
-  {ENCEFF_MDL_Create3, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), FALSE},     //野生　屋内
-  {ENCEFF_MDL_Create4, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), TRUE},     //野生　砂地
-  {ENCEFF_MDL_Create5, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), TRUE},     //トレーナー　通常
-  {ENCEFF_MDL_Create6, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), TRUE},      //トレーナー　水上
+  {ENCEFF_CI_CreateCave, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},     //野生　屋内
+  {ENCEFF_CI_CreateDesert, NULL, FS_OVERLAY_ID(enceff_ci), TRUE},     //野生　砂地
+  {ENCEFF_MDL_Create3, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), TRUE},     //トレーナー　通常
+  {ENCEFF_MDL_Create4, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), TRUE},      //トレーナー　水上
   {ENCEFF_PNL1_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl1), FALSE},    //トレーナー　屋内
   {ENCEFF_PNL3_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl3), TRUE},    //トレーナー　砂地
 
@@ -78,10 +78,11 @@ static const ENCEFF_TBL EncEffTbl[] = {
   {ENCEFF_CI_CreateSage, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //ゲーツィス
   {ENCEFF_CI_CreatePlasma, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //プラズマ団
 
-  {ENCEFF_MDL_Create7, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), TRUE},    //エフェクト
+  {ENCEFF_MDL_Create5, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), TRUE},    //エフェクト
   {ENCEFF_CI_CreatePackage, NULL, FS_OVERLAY_ID(enceff_ci), TRUE},    //パッケージポケ
   {ENCEFF_CI_CreateMovePoke, NULL, FS_OVERLAY_ID(enceff_ci), TRUE},    //移動ポケ
   {ENCEFF_CI_CreateThree, NULL, FS_OVERLAY_ID(enceff_ci), TRUE},    //三銃士ポケ
+  {ENCEFF_MDL_Create6, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), TRUE},    //ゾロアーク
 
   {ENCEFF_WAV_Create2, ENCEFF_WAV_Draw, FS_OVERLAY_ID(enceff_wav), FALSE},    //パレスワープ（エンカウントには使用しない）
 

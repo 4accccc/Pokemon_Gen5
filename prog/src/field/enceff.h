@@ -52,8 +52,8 @@ extern GMEVENT *ENCEFF_CI_CreatePlasma(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 extern GMEVENT *ENCEFF_CI_CreatePackage(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
 extern GMEVENT *ENCEFF_CI_CreateMovePoke(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
 extern GMEVENT *ENCEFF_CI_CreateThree(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
-extern GMEVENT *ENCEFF_CI_CreateZoroark(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
-
+extern GMEVENT *ENCEFF_CI_CreateCave(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
+extern GMEVENT *ENCEFF_CI_CreateDesert(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
 
 extern GMEVENT *ENCEFF_MDL_Create1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
 extern GMEVENT *ENCEFF_MDL_Create2(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
@@ -61,7 +61,6 @@ extern GMEVENT *ENCEFF_MDL_Create3(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 extern GMEVENT *ENCEFF_MDL_Create4(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
 extern GMEVENT *ENCEFF_MDL_Create5(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
 extern GMEVENT *ENCEFF_MDL_Create6(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
-extern GMEVENT *ENCEFF_MDL_Create7(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite);
 
 extern void ENCEFF_MDL_Draw(ENCEFF_CNT_PTR ptr);
 

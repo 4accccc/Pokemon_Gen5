@@ -421,10 +421,26 @@ GMEVENT *ENCEFF_CI_CreateThree(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, con
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateZoroark(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
+GMEVENT *ENCEFF_CI_CreateCave(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
-  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_ZOROARK, inIsFadeWhite );
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_CAVE, inIsFadeWhite );
+  return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント作成
+ * @param gsys  GAMESYS_WORK
+ * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT *ENCEFF_CI_CreateDesert(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
+{
+  GMEVENT *event;
+  event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_DESERT, inIsFadeWhite );
   return( event );
 }
 
