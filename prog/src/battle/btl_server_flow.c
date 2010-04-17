@@ -2448,7 +2448,7 @@ static BOOL scproc_NigeruCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   BOOL fSkipNigeruCalc = scEvent_SkipNigeruCalc( wk, bpp );
 
   #ifdef PM_DEBUG
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+  if( ( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) || ( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) ){
     return TRUE;
   }
   #endif
