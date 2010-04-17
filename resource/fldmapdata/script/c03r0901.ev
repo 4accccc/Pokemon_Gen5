@@ -90,7 +90,8 @@ EVENT_START		ev_c03r0901_musician_01
       
       _END_EVENT_BGM()
 
-      //エフェクト再生
+      //カットンエフェクト再生
+      _CALL_FLD3D_CUTIN( FLDCIID_MERODIA )
 
       //メロディアきめポーズを通常に戻す（アニメ更新）
       _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_merodhia_normal )
