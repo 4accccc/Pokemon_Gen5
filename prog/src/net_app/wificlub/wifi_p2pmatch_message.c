@@ -180,8 +180,7 @@ static void _timeWaitIconDel(WIFIP2PMATCH_WORK *wk)
 //------------------------------------------------------------------
 static void EndMessageWindowOff( WIFIP2PMATCH_WORK *wk )
 {
-
-
+//  WifiP2PMatchMessage_CursorEnd(wk);
   _timeWaitIconDel(wk);
   if(!PRINTSYS_QUE_IsFinished(wk->SysMsgQue)){
     PRINTSYS_QUE_Clear(wk->SysMsgQue);
@@ -199,8 +198,13 @@ static void EndMessageWindowOff( WIFIP2PMATCH_WORK *wk )
 
 static BOOL WifiP2PMatchMessageEndCheck(WIFIP2PMATCH_WORK* wk)
 {
+  int state;
+  
   if(wk->pStream){
-    int state = PRINTSYS_PrintStreamGetState( wk->pStream );
+    if(wk->MsgWin){
+      APP_KEYCURSOR_Main( wk->pKeyCursor, wk->pStream, wk->MsgWin );
+    }
+    state = PRINTSYS_PrintStreamGetState( wk->pStream );
     switch(state){
     case PRINTSTREAM_STATE_DONE:
       PRINTSYS_PrintStreamDelete( wk->pStream );
@@ -239,6 +243,7 @@ static void WifiP2PMatchMessagePrintS( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bS
 
   // TimeWaitIcon”jŠü
   _timeWaitIconDel( wk );
+  //WifiP2PMatchMessage_CursorEnd(wk);
 
   wk->MsgWin = _BmpWinDel(wk->MsgWin);
 
@@ -383,6 +388,7 @@ static void WifiP2PMatchFriendListBmpIconWrite(  GFL_BMPWIN* p_bmp, WIFIP2PMATCH
 static void _systemMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno )
 {
   _timeWaitIconDel(wk);
+  //WifiP2PMatchMessage_CursorEnd(wk);
   wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
   wk->MsgWin = _BmpWinDel(wk->MsgWin);
 
@@ -971,6 +977,7 @@ static void InitMessageWork( WIFIP2PMATCH_WORK *wk )
   wk->SysMsgQue = PRINTSYS_QUE_Create( HEAPID_WIFIP2PMATCH );
   wk->SysMenuQue = PRINTSYS_QUE_Create( HEAPID_WIFIP2PMATCH );
   wk->pMsgTcblSys = GFL_TCBL_Init( HEAPID_WIFIP2PMATCH , HEAPID_WIFIP2PMATCH , 2 , 0 );
+  wk->pKeyCursor = APP_KEYCURSOR_Create( 15, TRUE, FALSE, HEAPID_WIFIP2PMATCH );
 
 
 }
@@ -992,6 +999,7 @@ static void FreeMessageWork( WIFIP2PMATCH_WORK *wk )
   _TouchResExit(wk);
   _TrainerOAMFree(wk);
 
+  APP_KEYCURSOR_Delete( wk->pKeyCursor );
 
   GFL_STR_DeleteBuffer( wk->TitleString );
   GFL_STR_DeleteBuffer( wk->TalkString );

@@ -45,6 +45,7 @@ static int _playerDirectInit1Next( WIFIP2PMATCH_WORK *wk, int seq )
   else{
     _friendNameExpand(wk,  wk->friendNo - 1);
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
+    WifiP2PMatchMessage_TimeIconStart(wk);
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
   }
   return seq;
@@ -161,6 +162,7 @@ static int _playerDirectInit5( WIFIP2PMATCH_WORK *wk, int seq )
   }
   else{
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
+    WifiP2PMatchMessage_TimeIconStart(wk);
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
   }
   return seq;
@@ -296,6 +298,8 @@ static int _playerDirectSubMain( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUB1);
   }
   else{
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
+    WifiP2PMatchMessage_TimeIconStart(wk);
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
   }
   return seq;
@@ -385,13 +389,61 @@ static int _playerDirectSub2( WIFIP2PMATCH_WORK *wk, int seq )
   }
   else if(ret == 0){ // はいを選択した場合
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUBSTARTCALL);
+    EndMessageWindowOff(wk);
   }
   else{  // いいえを選択した場合
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_ENDCALL2);
+//    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1010, FALSE);
+
+    wk->command = WIFIP2PMATCH_PLAYERDIRECT_SUB_FAILED;
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
+
+//    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUB3);    //@todo
   }
-  EndMessageWindowOff(wk);
 
  // _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+  return seq;
+}
+
+
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   子機がいいえをした場合  WIFIP2PMATCH_PLAYERDIRECT_SUB_FAILED
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectSubFailed( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if(GFL_NET_IsParentMachine()){
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1038, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+  }
+  else{
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1010, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUB3);
+  }
+  return seq;
+}
+
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   子機が何をするか選択 WIFIP2PMATCH_PLAYERDIRECT_SUB3
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectSub3( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if(GFL_UI_KEY_GetTrg()){
+    wk->command = WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1;
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
+  }
   return seq;
 }
 
@@ -1063,20 +1115,21 @@ static int _playerDirectBattleGO3( WIFIP2PMATCH_WORK *wk, int seq )
   }
   else if(ret == 0){ // はいを選択した場合
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO4);
+    EndMessageWindowOff(wk);
   }
   else{  // いいえを選択した場合
-
     if(wk->pParentWork->btalk==FALSE){
       wk->command = WIFIP2PMATCH_PLAYERDIRECT_END;
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_071, FALSE);
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
     }
     else{
-      WifiP2PMatchMessagePrint(wk, msg_wifilobby_1010, FALSE);
-      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO3_KEYWAIT);
+  //    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1010, FALSE);
+   //   _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO3_KEYWAIT);
+      wk->command = WIFIP2PMATCH_PLAYERDIRECT_SUB_FAILED;
+      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
     }
   }
-  EndMessageWindowOff(wk);
   return seq;
 }
 
@@ -1450,7 +1503,9 @@ static int _playerDirectEnd( WIFIP2PMATCH_WORK *wk, int seq )
   else{
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1016, FALSE);
   }
-  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END_KEYWAIT);
+//    WifiP2PMatchMessage_CursorStart(wk);
+ // _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END_KEYWAIT);
+  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
   return seq;
 }
 
@@ -1465,9 +1520,13 @@ static int _playerDirectEnd( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectEndKeyWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  if(!GFL_UI_KEY_GetTrg()){
-    return seq;
-  }
+//  if(!WifiP2PMatchMessageEndCheck(wk)){
+  //  return seq;
+//  }
+//  if(!GFL_UI_KEY_GetTrg()){
+  //  return seq;
+//  }
+//  WifiP2PMatchMessage_CursorEnd(wk);
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
   return seq;
 }
@@ -1491,11 +1550,28 @@ static int _playerDirectEnd2( WIFIP2PMATCH_WORK *wk, int seq )
   else{
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1010, FALSE);
   }
-  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END3);
   return seq;
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief   指定モード終了3 WIFIP2PMATCH_PLAYERDIRECT_END3
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
 
+static int _playerDirectEnd3( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if(!WifiP2PMatchMessageEndCheck(wk)){
+    return seq;
+  }
+  if(GFL_UI_KEY_GetTrg()){
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
+  }
+  return seq;
+}
 
 //------------------------------------------------------------------
 /**

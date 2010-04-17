@@ -1003,6 +1003,10 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectWaitSendCommand, // WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND
   _playerDirectBattleGo3KeyWait, // WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO3_KEYWAIT
   _playerDirectEndKeyWait,  //WIFIP2PMATCH_PLAYERDIRECT_END_KEYWAIT
+  _playerDirectEnd3, //WIFIP2PMATCH_PLAYERDIRECT_END3
+  _playerDirectSub3, //WIFIP2PMATCH_PLAYERDIRECT_SUB3
+  _playerDirectSubFailed, //WIFIP2PMATCH_PLAYERDIRECT_SUB_FAILED
+
 };
 
 #define _MAXNUM   (2)         // Å‘åÚ‘±l”
@@ -7131,7 +7135,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
   if(wk->SysMenuQue){
     PRINTSYS_QUE_Main(wk->SysMenuQue);
   }
-
+  
 
   if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
     if(GFL_NET_DWC_ERROR_RESULT_RETURN_PROC==GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE)){

@@ -25,6 +25,7 @@
 #include "system/bmp_menulist.h"
 
 #include "net_app/connect_anm.h"
+#include "app/app_keycursor.h"
 
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_regulation.h"
@@ -233,6 +234,9 @@ enum{
   WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND,
   WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO3_KEYWAIT,
   WIFIP2PMATCH_PLAYERDIRECT_END_KEYWAIT,
+  WIFIP2PMATCH_PLAYERDIRECT_END3,
+  WIFIP2PMATCH_PLAYERDIRECT_SUB3,
+  WIFIP2PMATCH_PLAYERDIRECT_SUB_FAILED,
 };
 
 
@@ -470,7 +474,8 @@ struct _WIFIP2PMATCH_WORK{
   u32 bgchrSubBack;
   TOUCHBAR_WORK* pTouchWork;
 
-
+  APP_KEYCURSOR_WORK* pKeyCursor;
+  
 	BOOL friend_request_wait;	// 友達募集中にTRUEになるフラグ
 	
 	CONNECT_BG_PALANM cbp;		// Wifi接続画面のBGパレットアニメ制御構造体
@@ -504,7 +509,6 @@ extern void WifiP2PMatchRecvBattleRegulation(const int netID, const int size, co
 extern void WifiP2PMatchRecvPokeParty(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 extern u8* WifiP2PMatchGetPokePartyWork(int netID, void* pWk, int size);
 extern void WifiP2PMatchMessage_TimeIconStart(WIFIP2PMATCH_WORK* wk);
-
 
 
 
