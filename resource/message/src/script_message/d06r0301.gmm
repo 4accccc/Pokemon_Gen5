@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T17:42:48"/>
+	<create user="matsumiya" host="W00224" date="2010-04-17T17:24:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="35" top="189" right="740" bottom="809" maximized="no" rayout="Vertical2">
+	<dialog left="1423" top="281" right="2128" bottom="901" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,25 +292,118 @@
 	</lock>
 
 
-	<row id="msg_d06r0301_sage3_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+	<row id="msg_d06r0301_sage3_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
 		<comment>♂
 ・GRIDX=4、GRIDZ=31
+・メッセージ表示後
+　したっぱ♂×１
+　したっぱ♀×１登場
+・続けてhakaim1_end_01</comment>
+		<attribute name="キャラ指定">SAGE3
+七賢人その３</attribute>
+		<language name="JPN" width="256">？？？『ヒウンで　みたときは
+きにもとめなかった　そんざいが▼
+ここ　でんきいしのほらあな　では
+ゲーチスさまに　ためされた……▼
+……さて　もういちど
+おまえが　なにものか　ためそう▼
+おまえたち　でてくるのだ！▼</language>
+		<language name="JPN_KANJI" width="256">？？？『ヒウンで　みたときは
+気にも　とめなかった　存在が▼
+ここ　電気石の洞穴　では
+ゲーチスさまに　試された……▼
+……さて　もう一度
+おまえが　何者か　試そう▼
+おまえたち　でてくるのだ！▼</language>
+	</row>
+
+	<row id="msg_d06r0301_hakaim1_end_01" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・メッセージ表示後、戦闘に</comment>
+		<attribute name="キャラ指定">HAKAIM
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『？？？さま
+わたしが　こいつを　たおしましょう！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『？？？さま
+わたしが　こいつを　倒しましょう！▼</language>
+	</row>
+
+	<row id="msg_d06r0301_hakaim1_end_02" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・プラズマ団♂に勝利して
+　フィールドに戻ると自動で表示
+・続けてhakaiw1_end_01</comment>
+		<attribute name="キャラ指定">HAKAIM
+プラズマ団♂</attribute>
+		<language name="JPN" width="256">プラズマだん『こいつ　ほんものだ！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『こいつ　本物だ！▼</language>
+	</row>
+
+	<row id="msg_d06r0301_hakaiw1_end_01" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・メッセージ表示後、戦闘に</comment>
+		<attribute name="キャラ指定">HAKAIW
+プラズマ団♀</attribute>
+		<language name="JPN" width="256">プラズマだん『あなたの　せいで
+もとプラズマだんに　なったのよ？▼
+もと　って　いまいちでしょ？
+どうしてくれるのよ？▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『あなたの　せいで
+元プラズマ団に　なったのよ？▼
+元　って　いまいちでしょ？
+どうしてくれるのよ？▼</language>
+	</row>
+
+	<row id="msg_d06r0301_hakaiw1_end_02" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・戦闘後、フィールドに復帰すると自動で表示
+・続けてsage3_end_01a</comment>
+		<attribute name="キャラ指定">HAKAIW
+プラズマ団♀</attribute>
+		<language name="JPN" width="256">プラズマだん『もとプラズマだんが
+ふつうの　ポケモントレーナーになる▽
+いまが　その　しゅんかん　だったのね▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『もとプラズマ団が
+普通の　ポケモントレーナーになる▽
+いまが　その　瞬間だったのね▼</language>
+	</row>
+
+	<row id="msg_d06r0301_sage3_end_01a" text-color="#0000ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
 ・アイテム入手処理
 　No396「ロックカット」</comment>
 		<attribute name="キャラ指定">SAGE3
 七賢人その３</attribute>
-		<language name="JPN" width="256">？？？『であったとき▼</language>
-		<language name="JPN_KANJI" width="256">？？？『であったとき▼</language>
+		<language name="JPN" width="256">？？？『われら　プラズマだんの
+ポケモンも　トレーナーのために▽
+たたかっているのだな▼
+あたりまえ　すぎて
+みおとしていたこと……　それを▽
+おしえてくれて　かんしゃする▼
+これを　うけとれ▼</language>
+		<language name="JPN_KANJI" width="256">？？？『われら　プラズマ団の
+ポケモンも　トレーナーのために▽
+体を張って　戦っているのだな▼
+当然すぎて
+見落としていたこと……　それを▽
+教えてくれて　感謝する▼
+これを　受け取れ▼</language>
 	</row>
 
-	<row id="msg_d06r0301_sage3_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+	<row id="msg_d06r0301_sage3_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
 		<comment>♂
 ・アイテム入手後自動で表示
 ・続けてicpo_end_01</comment>
 		<attribute name="キャラ指定">SAGE3
 七賢人その３</attribute>
-		<language name="JPN" width="256">？？？『アイテムをくれたあと▼</language>
-		<language name="JPN_KANJI" width="256">？？？『アイテムをくれたあと▼</language>
+		<language name="JPN" width="256">？？？『……いまなら
+Ｎさまも　ポケモンが　キズついても▽
+トレーナーのため　ちからを　ふるう▽
+その　いみを　おわかりであろうか……？▼</language>
+		<language name="JPN_KANJI" width="256">？？？『……いまなら
+Ｎさまも　ポケモンが　キズついても▽
+トレーナーのため　力を　奮う▽
+その意味を　おわかりであろうか……？▼</language>
 	</row>
 
 	<row id="msg_d06r0301_icpo_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -329,15 +422,25 @@
 いろいろ　教えてもらおう！▼</language>
 	</row>
 
-	<row id="msg_d06r0301_sage3_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+	<row id="msg_d06r0301_sage3_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
 		<comment>♂
 ・続けて七賢人
 　6人と会っていない→icpo_end_02
 　6人と会っている→icpo_end_03</comment>
 		<attribute name="キャラ指定">SAGE3
 七賢人その３</attribute>
-		<language name="JPN" width="256">？？？『かまわんよ▼</language>
-		<language name="JPN_KANJI" width="256">？？？『かまわんよ▼</language>
+		<language name="JPN" width="256">？？？『……プラズマだんを　やめ
+ポケモンと　むきあおうと　する▽
+したっぱどもは　ゆるせよ▼
+ただし！
+ポケモンと　むきあわぬ　ものは▽
+わたしも　ゆるさんよ▼</language>
+		<language name="JPN_KANJI" width="256">？？？『……プラズマ団を　去り
+ポケモンと　向き合おうと　する▽
+したっぱどもは　許せよ▼
+ただし！
+ポケモンと　向き合わぬ　ものは▽
+わたしも　ゆるさんよ▼</language>
 	</row>
 
 	<row id="msg_d06r0301_icpo_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -360,21 +463,23 @@
 		<language name="JPN" width="256">ハンサム『ありがとう！▼
 さて　[1:00:トレーナー名:0]……
 きみに　つたえることが　ある▼
-Ｎらしき　じんぶつが
+ここより　はるか　とおくで
+Ｎらしき　じんぶつが▽
 ドラゴンポケモンと　いるのを▽
 みたという　じょうほうが　あった▼
 わたしは　じょうほうが　ただしいか
 たしかめに　いくつもりだよ▽
-では　また　いつかあおう！▼</language>
+では　また　いつか　あおう！▼</language>
 		<language name="JPN_KANJI" width="256">ハンサム『ありがとう！▼
 さて　[1:00:トレーナー名:0]……
 きみに　伝えることが　ある▼
+ここより　はるか　遠方で
 Ｎらしき　人物が
 ドラゴンポケモンと　いるのを▽
 みたという　情報が　あった▼
 わたしは　情報の　真偽を
 確かめに　いくつもりだよ▽
-では　また　いつか会おう！▼</language>
+では　また　いつか　会おう！▼</language>
 	</row>
 
 	<flowchart-group-list>
