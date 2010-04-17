@@ -48,7 +48,8 @@
 #define SE_BAND_Z_MAX ( SE_BAND_Z_MAX_GRID * FIELD_CONST_GRID_FX32_SIZE )   //SEの聞こえる幅Ｚ最大値
 #define SE_RANGE_X ( SE_RANGE_X_GRID * FIELD_CONST_GRID_FX32_SIZE )      //SEの聞こえる距離
 
-
+#define TRAILER1_WAIT (30)
+#define TRAILER2_WAIT (0)
 
 //==========================================================================================
 // ■ギミックワーク
@@ -194,45 +195,62 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   GMK_OBJ *gmkobj;
 
   gmkobj = &work->GmkObj[0];
-  gmkobj->Frame++;
-  frame = &gmkobj->Frame;
-  { // トレーラー1(前)
-    GFL_G3D_OBJSTATUS* status;
-    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_HEAD );
-    status->trans.x = TRAILER_LEFT_X + TRAILER_SPEED * (*frame);
-    if ( status->trans.x >= TRAILER_RIGHT_X)
-    {
-      (*frame) = 0;
-      work->GmkObj[0].SeFlg = FALSE;
-    }
-    tr1_x = status->trans.x;
+  if (gmkobj->Wait)
+  {
+    gmkobj->Wait--;
   }
-  { // トレーラー1(後)
-    GFL_G3D_OBJSTATUS* status;
-    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_TAIL );
-    status->trans.x = TRAILER_TAIL_LEFT_X + TRAILER_SPEED * (*frame);
-    if ( status->trans.x >= TRAILER_RIGHT_X) (*frame) = 0;
+  else
+  {
+    gmkobj->Frame++;
+    frame = &gmkobj->Frame;
+    { // トレーラー1(前)左から右に移動
+      GFL_G3D_OBJSTATUS* status;
+      status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_HEAD );
+      status->trans.x = TRAILER_LEFT_X + TRAILER_SPEED * (*frame);
+      if ( status->trans.x >= TRAILER_RIGHT_X)
+      {
+        (*frame) = 0;
+        work->GmkObj[0].SeFlg = FALSE;
+        //次の発射までウェイト
+        gmkobj->Wait = TRAILER1_WAIT;
+      }
+      tr1_x = status->trans.x;
+    }
+    { // トレーラー1(後)左から右に移動
+      GFL_G3D_OBJSTATUS* status;
+      status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_1_TAIL );
+      status->trans.x = TRAILER_TAIL_LEFT_X + TRAILER_SPEED * (*frame);
+      if ( status->trans.x >= TRAILER_RIGHT_X) (*frame) = 0;
+    }
   }
 
   gmkobj = &work->GmkObj[1];
-  gmkobj->Frame++;
-  frame = &gmkobj->Frame;
-  { // トレーラー2(前)
-    GFL_G3D_OBJSTATUS* status;
-    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_HEAD );
-    status->trans.x = TRAILER_RIGHT_X - TRAILER_SPEED * (*frame);
-    if ( status->trans.x <= TRAILER_LEFT_X)
-    {
-      (*frame) = 0;
-      work->GmkObj[1].SeFlg = FALSE;
-    }
-    tr2_x = status->trans.x;
+  if (gmkobj->Wait)
+  {
+    gmkobj->Wait--;
   }
-  { // トレーラー2(後)
-    GFL_G3D_OBJSTATUS* status;
-    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_TAIL );
-    status->trans.x = TRAILER_TAIL_RIGHT_X - TRAILER_SPEED * (*frame);
-    if ( status->trans.x <= TRAILER_LEFT_X) (*frame) = 0;
+  else{
+    gmkobj->Frame++;
+    frame = &gmkobj->Frame;
+    { // トレーラー2(前)右から左に移動
+      GFL_G3D_OBJSTATUS* status;
+      status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_HEAD );
+      status->trans.x = TRAILER_RIGHT_X - TRAILER_SPEED * (*frame);
+      if ( status->trans.x <= TRAILER_LEFT_X)
+      {
+        (*frame) = 0;
+        work->GmkObj[1].SeFlg = FALSE;
+        //次の発射までウェイト
+        gmkobj->Wait = TRAILER2_WAIT;
+      }
+      tr2_x = status->trans.x;
+    }
+    { // トレーラー2(後)右から左に移動
+      GFL_G3D_OBJSTATUS* status;
+      status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_TRAILER_2_TAIL );
+      status->trans.x = TRAILER_TAIL_RIGHT_X - TRAILER_SPEED * (*frame);
+      if ( status->trans.x <= TRAILER_LEFT_X) (*frame) = 0;
+    }
   }
 
   //自機の位置座表を取得
@@ -249,7 +267,7 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
     fx32 diff;
     FIELD_SOUND *fs = GAMEDATA_GetFieldSound( gdata );
     diff = pos.x - tr1_x;
-    //一台目のトレーラーが自機よりも右にいて、なおかつ、ＳＥ再生距離にいてまだＳＥならしてないか？
+    //一台目のトレーラーが自機よりも左にいて、なおかつ、ＳＥ再生距離にいてまだＳＥならしてないか？
     if( (0 <= diff)&&(diff <= SE_RANGE_X)&&(!work->GmkObj[0].SeFlg) )   //YES
     {
       //プレーヤー空きチェック
@@ -261,7 +279,7 @@ void R04D03_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
       }
     }
     diff = tr2_x - pos.x;
-    //二台目のトレーラーが自機よりも左にいて、なおかつ、ＳＥ再生距離にいてまだＳＥならしてないか？
+    //二台目のトレーラーが自機よりも右にいて、なおかつ、ＳＥ再生距離にいてまだＳＥならしてないか？
     if( (0 <= diff)&&(diff <= SE_RANGE_X)&&(!work->GmkObj[1].SeFlg) )   //YES
     {
       //プレーヤー空きチェック
