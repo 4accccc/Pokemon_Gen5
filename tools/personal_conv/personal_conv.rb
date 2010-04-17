@@ -926,6 +926,10 @@ end
           write_lst_file( fp_lst, split_data[ PARA::GRA_NO ].to_i, form_name )
         end
       }
+      str = label.make_label( "FORMNO_", split_data[ PARA::POKENAME ] )
+      str_num = "FORMNO_" + split_data[ PARA::GRA_NO ]
+      fp_monsno.printf( "#define\t\t%s_MAX\t\t\t\t( %d )\n", str, max )
+      fp_monsnum.printf( "#define\t\t%s_MAX\t\t\t\t( %d )\n", str_num, max )
       fp_monsno.print( "\n" )
       fp_monsnum.print( "\n" )
     end
