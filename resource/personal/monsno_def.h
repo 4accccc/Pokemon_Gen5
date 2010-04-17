@@ -570,8 +570,8 @@
 #define		MONSNO_MARAKATTI		( 556 )
 #define		MONSNO_ISIZUMAI			( 557 )
 #define		MONSNO_IWAPARESU		( 558 )
-#define		MONSNO_SUNDOMEE			( 559 )
-#define		MONSNO_HURUKONGU		( 560 )
+#define		MONSNO_ZURUGGU			( 559 )
+#define		MONSNO_ZURUZUKIN		( 560 )
 #define		MONSNO_SINBORAA			( 561 )
 #define		MONSNO_DESUMASU			( 562 )
 #define		MONSNO_DESUKAAN			( 563 )
@@ -596,8 +596,8 @@
 #define		MONSNO_TURURI				( 582 )
 #define		MONSNO_TURUTTO			( 583 )
 #define		MONSNO_TURUTURUDA		( 584 )
-#define		MONSNO_BANBIINA			( 585 )
-#define		MONSNO_SIKIZIKA			( 586 )
+#define		MONSNO_SIKIZIKA			( 585 )
+#define		MONSNO_ANTORESU			( 586 )
 #define		MONSNO_EMONGA				( 587 )
 #define		MONSNO_KABURUMO			( 588 )
 #define		MONSNO_SYUBARUGO		( 589 )
@@ -632,7 +632,7 @@
 #define		MONSNO_MAGGYO				( 618 )
 #define		MONSNO_GURAPPU			( 619 )
 #define		MONSNO_GURAPPAA			( 620 )
-#define		MONSNO_OOROTTI			( 621 )
+#define		MONSNO_KURIMUGAN		( 621 )
 #define		MONSNO_GOBITTO			( 622 )
 #define		MONSNO_GORUUGU			( 623 )
 #define		MONSNO_ZURURU				( 624 )
@@ -644,9 +644,9 @@
 #define		MONSNO_AUTORON			( 630 )
 #define		MONSNO_KUITARAN			( 631 )
 #define		MONSNO_AIANTO				( 632 )
-#define		MONSNO_DORAKKO			( 633 )
-#define		MONSNO_DORAAGO			( 634 )
-#define		MONSNO_DORAGOON			( 635 )
+#define		MONSNO_MONOZU				( 633 )
+#define		MONSNO_ZIHEDDO			( 634 )
+#define		MONSNO_SAZANDORA		( 635 )
 #define		MONSNO_RAA					( 636 )
 #define		MONSNO_DORAA				( 637 )
 #define		MONSNO_ATOSU				( 638 )
@@ -696,40 +696,48 @@
 #define		FORMNO_ANNOON_UNZ				( 25 )
 #define		FORMNO_ANNOON_EXC				( 26 )
 #define		FORMNO_ANNOON_QUE				( 27 )
+#define		FORMNO_ANNOON_MAX				( 28 )
 
 //ポワルン
 #define		FORMNO_POWARUN_NORMAL				( 0 )
 #define		FORMNO_POWARUN_SUN				( 1 )
 #define		FORMNO_POWARUN_RAIN				( 2 )
 #define		FORMNO_POWARUN_SNOW				( 3 )
+#define		FORMNO_POWARUN_MAX				( 4 )
 
 //デオキシス
 #define		FORMNO_DEOKISISU_NORMAL				( 0 )
 #define		FORMNO_DEOKISISU_ATTACK				( 1 )
 #define		FORMNO_DEOKISISU_DEFENCE				( 2 )
 #define		FORMNO_DEOKISISU_SPEED				( 3 )
+#define		FORMNO_DEOKISISU_MAX				( 4 )
 
 //ミノムッチ
 #define		FORMNO_MINOMUTTI_KUSA				( 0 )
 #define		FORMNO_MINOMUTTI_SUNA				( 1 )
 #define		FORMNO_MINOMUTTI_GOMI				( 2 )
+#define		FORMNO_MINOMUTTI_MAX				( 3 )
 
 //ミノマダム
 #define		FORMNO_MINOMADAMU_KUSA				( 0 )
 #define		FORMNO_MINOMADAMU_JIMEN				( 1 )
 #define		FORMNO_MINOMADAMU_HAGANE				( 2 )
+#define		FORMNO_MINOMADAMU_MAX				( 3 )
 
 //チェリム
 #define		FORMNO_THERIMU_NEGA				( 0 )
 #define		FORMNO_THERIMU_POSI				( 1 )
+#define		FORMNO_THERIMU_MAX				( 2 )
 
 //カラナクシ
 #define		FORMNO_KARANAKUSI_WEST				( 0 )
 #define		FORMNO_KARANAKUSI_EAST				( 1 )
+#define		FORMNO_KARANAKUSI_MAX				( 2 )
 
 //トリトドン
 #define		FORMNO_TORITODON_WEST				( 0 )
 #define		FORMNO_TORITODON_EAST				( 1 )
+#define		FORMNO_TORITODON_MAX				( 2 )
 
 //ロトム
 #define		FORMNO_ROTOMU_NORMAL				( 0 )
@@ -738,14 +746,17 @@
 #define		FORMNO_ROTOMU_COLD				( 3 )
 #define		FORMNO_ROTOMU_FAN				( 4 )
 #define		FORMNO_ROTOMU_CUT				( 5 )
+#define		FORMNO_ROTOMU_MAX				( 6 )
 
 //ギラティナ
 #define		FORMNO_GIRATHINA_ANOTHER				( 0 )
 #define		FORMNO_GIRATHINA_ORIGIN				( 1 )
+#define		FORMNO_GIRATHINA_MAX				( 2 )
 
 //シェイミ
 #define		FORMNO_SHEIMI_LAND				( 0 )
 #define		FORMNO_SHEIMI_SKY				( 1 )
+#define		FORMNO_SHEIMI_MAX				( 2 )
 
 //アルセウス
 #define		FORMNO_ARUSEUSU_NORMAL				( 0 )
@@ -765,35 +776,42 @@
 #define		FORMNO_ARUSEUSU_KOORI				( 14 )
 #define		FORMNO_ARUSEUSU_DRAGON				( 15 )
 #define		FORMNO_ARUSEUSU_AKU				( 16 )
+#define		FORMNO_ARUSEUSU_MAX				( 17 )
 
 //バスラオ
 #define		FORMNO_BASURAO_BLACK				( 0 )
 #define		FORMNO_BASURAO_WHITE				( 1 )
+#define		FORMNO_BASURAO_MAX				( 2 )
 
 //ヒヒダルマ
 #define		FORMNO_HIHIDARUMA_ACTION				( 0 )
 #define		FORMNO_HIHIDARUMA_MEDITATION				( 1 )
-
-//バンビーナ
-#define		FORMNO_BANBIINA_SPRING				( 0 )
-#define		FORMNO_BANBIINA_SUMMER				( 1 )
-#define		FORMNO_BANBIINA_AUTUMN				( 2 )
-#define		FORMNO_BANBIINA_WINTER				( 3 )
+#define		FORMNO_HIHIDARUMA_MAX				( 2 )
 
 //シキジカ
 #define		FORMNO_SIKIZIKA_SPRING				( 0 )
 #define		FORMNO_SIKIZIKA_SUMMER				( 1 )
 #define		FORMNO_SIKIZIKA_AUTUMN				( 2 )
 #define		FORMNO_SIKIZIKA_WINTER				( 3 )
+#define		FORMNO_SIKIZIKA_MAX				( 4 )
+
+//アントレス
+#define		FORMNO_ANTORESU_SPRING				( 0 )
+#define		FORMNO_ANTORESU_SUMMER				( 1 )
+#define		FORMNO_ANTORESU_AUTUMN				( 2 )
+#define		FORMNO_ANTORESU_WINTER				( 3 )
+#define		FORMNO_ANTORESU_MAX				( 4 )
 
 //ライ
 #define		FORMNO_RAI_A				( 0 )
 #define		FORMNO_RAI_B				( 1 )
 #define		FORMNO_RAI_C				( 2 )
+#define		FORMNO_RAI_MAX				( 3 )
 
 //メロディア
 #define		FORMNO_MERODHIA_VOICE				( 0 )
 #define		FORMNO_MERODHIA_STEP				( 1 )
+#define		FORMNO_MERODHIA_MAX				( 2 )
 
 //インセクタ
 #define		FORMNO_INSEKUTA_NORMAL				( 0 )
@@ -801,6 +819,7 @@
 #define		FORMNO_INSEKUTA_INAZUMA				( 2 )
 #define		FORMNO_INSEKUTA_BLAZE				( 3 )
 #define		FORMNO_INSEKUTA_FREEZE				( 4 )
+#define		FORMNO_INSEKUTA_MAX				( 5 )
 
 //フォルム違いトータル
 #define OTHER_FORM_MAX  ( 62 )

@@ -567,8 +567,8 @@
 #define		MONSNO_523		( 556 )		//マラカッチ
 #define		MONSNO_568		( 557 )		//イシズマイ
 #define		MONSNO_569		( 558 )		//イワパレス
-#define		MONSNO_637		( 559 )		//スンドメー
-#define		MONSNO_638		( 560 )		//フルコング
+#define		MONSNO_637		( 559 )		//ズルッグ
+#define		MONSNO_638		( 560 )		//ズルズキン
 #define		MONSNO_539		( 561 )		//シンボラー
 #define		MONSNO_526		( 562 )		//デスマス
 #define		MONSNO_510		( 563 )		//デスカーン
@@ -593,8 +593,8 @@
 #define		MONSNO_611		( 582 )		//ツルリ
 #define		MONSNO_612		( 583 )		//ツルット
 #define		MONSNO_613		( 584 )		//ツルツルダ
-#define		MONSNO_511		( 585 )		//バンビーナ
-#define		MONSNO_527		( 586 )		//シキジカ
+#define		MONSNO_511		( 585 )		//シキジカ
+#define		MONSNO_527		( 586 )		//アントレス
 #define		MONSNO_560		( 587 )		//エモンガ
 #define		MONSNO_571		( 588 )		//カブルモ
 #define		MONSNO_572		( 589 )		//シュバルゴ
@@ -629,7 +629,7 @@
 #define		MONSNO_589		( 618 )		//マッギョ
 #define		MONSNO_630		( 619 )		//グラップ
 #define		MONSNO_631		( 620 )		//グラッパー
-#define		MONSNO_629		( 621 )		//オーロッチ
+#define		MONSNO_629		( 621 )		//クリムガン
 #define		MONSNO_604		( 622 )		//ゴビット
 #define		MONSNO_605		( 623 )		//ゴルーグ
 #define		MONSNO_634		( 624 )		//ズルル
@@ -641,9 +641,9 @@
 #define		MONSNO_633		( 630 )		//アウトロン
 #define		MONSNO_636		( 631 )		//クイタラン
 #define		MONSNO_639		( 632 )		//アイアント
-#define		MONSNO_640		( 633 )		//ドラッコ
-#define		MONSNO_641		( 634 )		//ドラーゴ
-#define		MONSNO_642		( 635 )		//ドラゴーン
+#define		MONSNO_640		( 633 )		//モノズ
+#define		MONSNO_641		( 634 )		//ジヘッド
+#define		MONSNO_642		( 635 )		//サザンドラ
 #define		MONSNO_643		( 636 )		//ラー
 #define		MONSNO_644		( 637 )		//ドラー
 #define		MONSNO_645		( 638 )		//アトス
@@ -688,40 +688,48 @@
 #define		FORMNO_201_UNZ				( 25 )
 #define		FORMNO_201_EXC				( 26 )
 #define		FORMNO_201_QUE				( 27 )
+#define		FORMNO_201_MAX				( 28 )
 
 //ポワルン
 #define		FORMNO_351_NORMAL				( 0 )
 #define		FORMNO_351_SUN				( 1 )
 #define		FORMNO_351_RAIN				( 2 )
 #define		FORMNO_351_SNOW				( 3 )
+#define		FORMNO_351_MAX				( 4 )
 
 //デオキシス
 #define		FORMNO_386_NORMAL				( 0 )
 #define		FORMNO_386_ATTACK				( 1 )
 #define		FORMNO_386_DEFENCE				( 2 )
 #define		FORMNO_386_SPEED				( 3 )
+#define		FORMNO_386_MAX				( 4 )
 
 //ミノムッチ
 #define		FORMNO_412_KUSA				( 0 )
 #define		FORMNO_412_SUNA				( 1 )
 #define		FORMNO_412_GOMI				( 2 )
+#define		FORMNO_412_MAX				( 3 )
 
 //ミノマダム
 #define		FORMNO_413_KUSA				( 0 )
 #define		FORMNO_413_JIMEN				( 1 )
 #define		FORMNO_413_HAGANE				( 2 )
+#define		FORMNO_413_MAX				( 3 )
 
 //チェリム
 #define		FORMNO_421_NEGA				( 0 )
 #define		FORMNO_421_POSI				( 1 )
+#define		FORMNO_421_MAX				( 2 )
 
 //カラナクシ
 #define		FORMNO_422_WEST				( 0 )
 #define		FORMNO_422_EAST				( 1 )
+#define		FORMNO_422_MAX				( 2 )
 
 //トリトドン
 #define		FORMNO_423_WEST				( 0 )
 #define		FORMNO_423_EAST				( 1 )
+#define		FORMNO_423_MAX				( 2 )
 
 //ロトム
 #define		FORMNO_479_NORMAL				( 0 )
@@ -730,14 +738,17 @@
 #define		FORMNO_479_COLD				( 3 )
 #define		FORMNO_479_FAN				( 4 )
 #define		FORMNO_479_CUT				( 5 )
+#define		FORMNO_479_MAX				( 6 )
 
 //ギラティナ
 #define		FORMNO_487_ANOTHER				( 0 )
 #define		FORMNO_487_ORIGIN				( 1 )
+#define		FORMNO_487_MAX				( 2 )
 
 //シェイミ
 #define		FORMNO_492_LAND				( 0 )
 #define		FORMNO_492_SKY				( 1 )
+#define		FORMNO_492_MAX				( 2 )
 
 //アルセウス
 #define		FORMNO_493_NORMAL				( 0 )
@@ -757,35 +768,42 @@
 #define		FORMNO_493_KOORI				( 14 )
 #define		FORMNO_493_DRAGON				( 15 )
 #define		FORMNO_493_AKU				( 16 )
+#define		FORMNO_493_MAX				( 17 )
 
 //バスラオ
 #define		FORMNO_603_BLACK				( 0 )
 #define		FORMNO_603_WHITE				( 1 )
+#define		FORMNO_603_MAX				( 2 )
 
 //ヒヒダルマ
 #define		FORMNO_503_ACTION				( 0 )
 #define		FORMNO_503_MEDITATION				( 1 )
+#define		FORMNO_503_MAX				( 2 )
 
-//バンビーナ
+//シキジカ
 #define		FORMNO_511_SPRING				( 0 )
 #define		FORMNO_511_SUMMER				( 1 )
 #define		FORMNO_511_AUTUMN				( 2 )
 #define		FORMNO_511_WINTER				( 3 )
+#define		FORMNO_511_MAX				( 4 )
 
-//シキジカ
+//アントレス
 #define		FORMNO_527_SPRING				( 0 )
 #define		FORMNO_527_SUMMER				( 1 )
 #define		FORMNO_527_AUTUMN				( 2 )
 #define		FORMNO_527_WINTER				( 3 )
+#define		FORMNO_527_MAX				( 4 )
 
 //ライ
 #define		FORMNO_653_A				( 0 )
 #define		FORMNO_653_B				( 1 )
 #define		FORMNO_653_C				( 2 )
+#define		FORMNO_653_MAX				( 3 )
 
 //メロディア
 #define		FORMNO_655_VOICE				( 0 )
 #define		FORMNO_655_STEP				( 1 )
+#define		FORMNO_655_MAX				( 2 )
 
 //インセクタ
 #define		FORMNO_656_NORMAL				( 0 )
@@ -793,4 +811,5 @@
 #define		FORMNO_656_INAZUMA				( 2 )
 #define		FORMNO_656_BLAZE				( 3 )
 #define		FORMNO_656_FREEZE				( 4 )
+#define		FORMNO_656_MAX				( 5 )
 
