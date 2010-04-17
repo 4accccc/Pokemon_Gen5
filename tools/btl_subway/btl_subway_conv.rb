@@ -74,7 +74,7 @@ end
   td_data = []
   gmm = GMM::new
   gmm.open_gmm( ARGV[ ARGV_GMM_FILE ] , "bst_name.gmm" )
-  gmm.make_row_index( "BST_NAME_", 0, "ーーーーー" )
+  gmm.make_row_index_hyphen( "BST_NAME_", 0, 5, 0 )
 
   cnt = 0
   open( ARGV[ ARGV_PD_FILE ] ) {|fp_r|
