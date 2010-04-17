@@ -1,5 +1,4 @@
 #! ruby -Ks
-
   require File.dirname(__FILE__) + '/../label_make/label_make'
   require File.dirname(__FILE__) + '/../gmm_make/gmm_make'
   require File.dirname(__FILE__) + '/../constant'
@@ -126,10 +125,10 @@ end
   #GMM
   wazaname_gmm = GMM::new
   wazaname_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "wazaname.gmm" )
-  wazaname_gmm.make_row_index_kanji( "WAZANAME_", 0, "―――――", "―――――" )
+  wazaname_gmm.make_row_index_kanji_hyphen( "WAZANAME_", 0, 5, 0 )
   wazainfo_gmm = GMM::new
   wazainfo_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "wazainfo.gmm" )
-  wazainfo_gmm.make_row_index_kanji( "WAZAINFO_", 0, "―\r―\r―\r―\r―", "―\r―\r―\r―\r―" )
+  wazainfo_gmm.make_row_index_kanji_hyphen( "WAZAINFO_", 0, 5, 1 )
   atkmsg_gmm = GMM::new
   atkmsg_gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "btl_attack.gmm" )
   atkmsg_gmm.make_row_index_kanji( "ATKMSG_M_", 0, "！", "！" )
