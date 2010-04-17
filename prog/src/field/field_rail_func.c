@@ -887,6 +887,26 @@ void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man)
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  トレース無しオフセットカメラ
+ *
+ *	@param	man
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_CAMERAFUNC_OfsNotTraceAngleCamera(const FIELD_RAIL_MAN* man)
+{
+	FIELD_CAMERA* cam = FIELD_RAIL_MAN_GetCamera( man );
+  VecFx32 pos;
+
+  FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(man);
+  //トレーナーとのバインドをきり、自分で設定
+  FIELD_CAMERA_FreeTarget( cam );
+
+  FIELD_RAIL_MAN_GetBindWorkPos( man, &pos );
+  FIELD_CAMERA_SetTargetPos( cam, &pos );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  すべて決めうちのカメラ
  *
  *	@param	man
