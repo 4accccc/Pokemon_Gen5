@@ -583,7 +583,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_debug_menu.c \
         field/event_debug_menu_script.c \
         field/event_debug_menu_musical.c \
-        field/event_debug_menu_make_egg.c \
 				field/fieldmap_ctrl_grid.c \
 				field/field_player.c \
 				field/field_player_core.c \
@@ -700,7 +699,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_autoway.c \
         field/event_current.c \
         field/fldeff_d06denki.c \
-        field/event_debug_season_display.c \
         field/event_debug_demo3d.c \
         field/land_data_patch.c \
         field/fldeff_iaigiri.c \
@@ -1625,8 +1623,12 @@ SRCS_OVERLAY_SOUNDVIEW = sound/snd_viewer.c
 
 #D_NUMINPUTライブラリ
 #===> GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_D_NUMINPUT = field/event_debug_numinput.c \
-                          field/debug_numinput_research.c
+SRCS_OVERLAY_D_NUMINPUT = field/event_debug_numinput.c
+
+#D_NUMINPUT_RESEARCH
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_D_NUMINPUT_RESEARCH = field/event_debug_numinput_research.c \
+                                   field/debug_numinput_research.c
 
 #D_IWASAWAライブラリ
 #===> GROUP_OVERLAY_GIMMICK
@@ -1644,7 +1646,6 @@ SRCS_OVERLAY_DEBUG_BEACON = field/event_debug_beacon.c
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_JUMP   = field/event_debug_menu_jump.c
 
-
 #DEBUG_CAMERAライブラリ
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_CAMERA   = test/camera_adjust_view.c
@@ -1652,6 +1653,10 @@ SRCS_OVERLAY_DEBUG_CAMERA   = test/camera_adjust_view.c
 #DEBUG_SYMBOL_MENU
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_SYMBOL = field/event_debug_menu_symbol.c
+
+#DEBUG_MAKE_EGG
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_DEBUG_MAKE_EGG = field/event_debug_menu_make_egg.c
 
 #マイクテスト
 #===> GROUP_OVERLAY_UNION_INTRUDE

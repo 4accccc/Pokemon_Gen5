@@ -1,7 +1,15 @@
-
+////////////////////////////////////////////////////////////////
+/**
+ * @brief  デバッグメニュー「タマゴ作成」
+ * @file   event_debug_menu_make_egg.c
+ * @author obata
+ * @date   2010.04.16
+ */
+////////////////////////////////////////////////////////////////
 #include <gflib.h> 
 #include "event_debug_menu_make_egg.h"
 
+#include "fieldmap.h"
 #include "field/field_msgbg.h"
 #include "print/global_msg.h"
 #include "event_debug_local.h"
@@ -60,10 +68,10 @@ static const DEBUG_MENU_INITIALIZER menuInitializer =
 };
 
 //--------------------------------------------------------------
-/// タマゴ作成処理ワーク
+/// タマゴ作成イベントワーク
 //--------------------------------------------------------------
-typedef struct
-{
+typedef struct {
+
   HEAPID         heapID;
   GAMESYS_WORK*  gameSystem;
   GAMEDATA*      gameData;
@@ -89,12 +97,12 @@ static GMEVENT_RESULT debugMenuMakeEggEvent( GMEVENT *event, int *seq, void *wk 
 {
   EVENT_WORK* work = wk;
   
-  switch( *seq )
-  {
+  switch( *seq ) {
   case 0:
     work->menuFunc = DEBUGFLDMENU_Init( work->fieldmap, work->heapID,  &menuInitializer );
     (*seq)++;
     break;
+
   case 1:
     work->select = FLDMENUFUNC_ProcMenu( work->menuFunc );
 
@@ -104,30 +112,30 @@ static GMEVENT_RESULT debugMenuMakeEggEvent( GMEVENT *event, int *seq, void *wk 
       (*seq)++; 
     }
     break; 
+
   case 2: 
     // タマゴ作成
     {
       POKEMON_PARAM* egg = NULL;
 
       // 作成
-      if( work->select == STR_NEWBORN )
-      { //「うまれたて」
+      if( work->select == STR_NEWBORN ) { 
+        //「うまれたて」
         egg = CreateEgg( work->gameData, work->heapID, 1 );
       }
-      else if( work->select == STR_OLDBORN )
-      { //「もうすぐ孵化」
+      else if( work->select == STR_OLDBORN ) { 
+        //「もうすぐ孵化」
         egg = CreateEgg( work->gameData, work->heapID, 1 );
         PP_Put( egg, ID_PARA_friend, 0 );  // 孵化歩数
       }
-      else if( work->select == STR_ILLEGAL_EGG )
-      { //「だめタマゴ」
+      else if( work->select == STR_ILLEGAL_EGG ) { 
+        //「だめタマゴ」
         egg = CreateEgg( work->gameData, work->heapID, 1 );
         PP_Put( egg, ID_PARA_fusei_tamago_flag, TRUE );  // 駄目タマゴフラグ
       }
 
       // 手持ちに追加
-      if( egg )
-      {
+      if( egg ) {
         POKEPARTY* party = GAMEDATA_GetMyPokemon( work->gameData );
         PokeParty_Add( party, egg ); 
         GFL_HEAP_FreeMemory( egg );
@@ -145,24 +153,25 @@ static GMEVENT_RESULT debugMenuMakeEggEvent( GMEVENT *event, int *seq, void *wk 
  * @brief タマゴ作成イベント生成
  *
  * @parma gameSystem
- * @param heapID
+ * @param wk FIELDMAP_WORKへのポインタ
  */
 //--------------------------------------------------------------
-GMEVENT* DEBUG_EVENT_FLDMENU_MakeEgg( GAMESYS_WORK* gameSystem, HEAPID heapID )
+GMEVENT* DEBUG_EVENT_FLDMENU_MakeEgg( GAMESYS_WORK* gameSystem, void* wk )
 {
-  GMEVENT* newEvent;
+  GMEVENT* event;
   EVENT_WORK* work;
+  FIELDMAP_WORK* fieldmap = (FIELDMAP_WORK*)wk;
   
-  newEvent = GMEVENT_Create(
+  event = GMEVENT_Create(
       gameSystem, NULL, debugMenuMakeEggEvent, sizeof(EVENT_WORK) );
 
-  work = GMEVENT_GetEventWork( newEvent );
+  work = GMEVENT_GetEventWork( event );
 	work->gameSystem = gameSystem;
   work->gameData   = GAMESYSTEM_GetGameData( gameSystem ); 
-	work->heapID     = heapID;
-	work->fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
+	work->heapID     = FIELDMAP_GetHeapID( fieldmap );
+	work->fieldmap   = fieldmap;
 
-  return newEvent;
+  return event;
 }
 
 //--------------------------------------------------------------

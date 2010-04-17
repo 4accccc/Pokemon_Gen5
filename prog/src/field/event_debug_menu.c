@@ -47,6 +47,7 @@
 #include "field_event_check.h"
 #include "event_debug_item.h" //EVENT_DebugItemMake
 #include "event_debug_numinput.h"
+#include "event_debug_numinput_research.h"
 #include "savedata/box_savedata.h"  //デバッグアイテム生成用
 #include  "item/itemsym.h"  //ITEM_DATA_MAX
 #include  "item/item.h"  //ITEM_CheckEnable
@@ -81,7 +82,6 @@
 
 #include "event_debug_local.h"
 
-#include "event_debug_season_display.h" // for DEBUG_EVENT_FLDMENU_SeasonDispSelect
 #include "event_debug_demo3d.h" // for DEBUG_EVENT_FLDMENU_Demo3DSelect
 #include "event_debug_menu_make_egg.h"  // for DEBUG_EVENT_FLDMENU_MakeEgg
 
@@ -208,6 +208,7 @@ static BOOL debugMenuCallProc_GDS( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_UITemplate( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Jump( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_NumInput( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_ResearchNumInput( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_Kairiki( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk );
@@ -222,7 +223,6 @@ static BOOL debugMenuCallProc_WazaOshie( DEBUG_MENU_EVENT_WORK *p_wk );
 
 static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk );
 
-static BOOL debugMenuCallProc_SeasonDisplay( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugSake( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugAtlas( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Geonet( DEBUG_MENU_EVENT_WORK * p_wk );
@@ -310,6 +310,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
 
   { DEBUG_FIELD_TITLE_01, (void*)BMPMENULIST_LABEL },       //○システム
   { DEBUG_FIELD_NUMINPUT, debugMenuCallProc_NumInput },     //数値入力
+  { DEBUG_FIELD_RESEARCH, debugMenuCallProc_ResearchNumInput },//すれ違い調査
   { DEBUG_FIELD_STR04, debugMenuCallProc_GameEnd },         //ゲーム終了
   { DEBUG_FIELD_STR60, debugMenuCallProc_ForceSave },       //強制セーブ
   { DEBUG_FIELD_STR53, debugMenuCallProc_UseMemoryDump },   //メモリ状況
@@ -358,7 +359,6 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR48, debugMenuCallProc_GDS },               //GDS
   { DEBUG_FIELD_STR50, debugMenuCallProc_WazaOshie },         //技教え
   { DEBUG_FIELD_STR56, debugMenuCallProc_WifiBattleMatch },   //WIFI世界対戦
-  { DEBUG_FIELD_SEASON_DISPLAY, debugMenuCallProc_SeasonDisplay },//季節表示
   { DEBUG_FIELD_STR59, debugMenuCallProc_BattleRecorder },        //バトルレコーダー
   { DEBUG_FIELD_BSW_00, debugMenuCallProc_BSubway },                //バトルサブウェイ
   { DEBUG_FIELD_ZUKAN_04, debugMenuCallProc_Zukan },            //ずかん
@@ -805,11 +805,12 @@ static BOOL debugMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk )
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_MakeEgg( DEBUG_MENU_EVENT_WORK *wk )
 {
-  GMEVENT*      parentEvent = wk->gmEvent;
-  GAMESYS_WORK* gameSystem  = wk->gmSys;
-  HEAPID        heapID      = wk->heapID;
+  GMEVENT* event;
+  
+  event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID( debug_make_egg ), DEBUG_EVENT_FLDMENU_MakeEgg, wk->fieldWork );
 
-  GMEVENT_ChangeEvent( parentEvent, DEBUG_EVENT_FLDMENU_MakeEgg( gameSystem, heapID ) );
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
   return TRUE;
 }
 
@@ -1122,6 +1123,28 @@ static BOOL debugMenuCallProc_NumInput( DEBUG_MENU_EVENT_WORK *wk )
 
   event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
     FS_OVERLAY_ID( d_numinput ), DEBUG_EVENT_FLDMENU_NumInput, wk );
+
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+
+  return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し 数値入力
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_ResearchNumInput( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  GMEVENT *event;
+
+  event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+    FS_OVERLAY_ID( d_numinput_research ), DEBUG_EVENT_FLDMENU_ResearchNumInput, wk );
 
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 
@@ -4373,22 +4396,6 @@ static BOOL debugMenuCallProc_FadeSpeedChange( DEBUG_MENU_EVENT_WORK * wk )
   }
 
   return FALSE;
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  季節表示
- */
-//-----------------------------------------------------------------------------
-static BOOL debugMenuCallProc_SeasonDisplay( DEBUG_MENU_EVENT_WORK *wk )
-{
-  GMEVENT*         parent = wk->gmEvent;
-  GAMESYS_WORK*      gsys = wk->gmSys;
-  FIELDMAP_WORK* fieldmap = wk->fieldWork;
-  HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
-
-  GMEVENT_ChangeEvent( parent, DEBUG_EVENT_FLDMENU_SeasonDispSelect( gsys, heap_id ) );
-  return TRUE;
 }
 
 //----------------------------------------------------------------------------
