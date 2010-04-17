@@ -224,6 +224,9 @@ charange:
     _RET
   ENDIF
 
+  //トライアルハウス参加レコード加算
+  _ADD_RECORD( RECID_TRIALHOUSE_COUNT, 1 )
+
   //「でははじめるよ」
   _BALLOONWIN_OBJMSG_POS(msg_trialhouse_013, SCWK_TARGET_OBJID, POS_DL )
   _BALLOONWIN_CLOSE()   //アニメにつづくのでクローズ
