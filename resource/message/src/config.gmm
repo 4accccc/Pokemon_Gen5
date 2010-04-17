@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-12T21:15:10"/>
+	<create user="matsumiya" host="W00224" date="2010-04-17T13:07:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="206" top="65" right="911" bottom="693" maximized="no" rayout="Vertical2">
+	<dialog left="1476" top="208" right="2181" bottom="836" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="787" top="36" right="1260" bottom="434" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -540,7 +540,7 @@
 ※WBで追加</comment>
 		<language name="JPN" width="216" line="2">いつも　むせんで　つうしんするか
 オン／オフが　えらべます</language>
-		<language name="JPN_KANJI" width="216" line="2">いつも　無線で　通信するか
+		<language name="JPN_KANJI" width="216" line="2">常時　無線で　通信するか
 ＯＮ／ＯＦＦが　選べます</language>
 	</row>
 
