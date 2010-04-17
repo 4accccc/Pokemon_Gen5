@@ -51,7 +51,7 @@
 #define POKE_VOICE_WAIT (5)
 #define VOICE_VOL_OFS (8)
 
-#define CUTIN_WHITE_FADE_SPD (0)
+#define CUTIN_WHITE_FADE_SPD (-1)
 
 #define ENC_CUTIN_MDL_Z_OFS (700)
 
@@ -798,6 +798,12 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
 
       //戻ってきた場所はおそらく3Ｄクリアカラーが見えない場所のはずなので
       //3Ｄ面オフの処理とクリアカラーのアルファセットの処理を行わない
+
+      //自機描画するために空を飛ぶインのときはここでメインフック解除
+      if ( evt_work->MainHook )
+      {
+        FIELDMAP_SetMainFuncHookFlg(fieldmap, FALSE);
+      }
     }
     else
     {
@@ -806,6 +812,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       //クリアカラーのアルファを元に戻す
       G3X_SetClearColor(GX_RGB(0,0,0),31,0x7fff,0,FALSE);
     }
+
     (*seq)++;
     break;
   case 8:
@@ -859,12 +866,11 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     PopPriority(ptr);
     //表示状態の復帰
     PopDisp(ptr);
-
     //メインフック解除
     if ( evt_work->MainHook )
     {
       FIELDMAP_SetMainFuncHookFlg(fieldmap, FALSE);
-    }
+    }    
     //ＯＢＪのポーズ解除
     if (evt_work->ObjPause)
     {
