@@ -25,6 +25,7 @@
 #include "eventwork.h"  // for EVENTWORK_
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  // for SYS_FLAG_BIGFOUR_xxxx
 #include "sound/pm_sndsys.h" // for PMSND_xxxx
+#include "event_camera_shake.h"
 #include "event_league_front02.h"
 
 
@@ -242,12 +243,29 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       // 自機をリフトに合わせる
       if( !anime_end ){ SetPlayerOnLift( work ); }
 
-      // アニメ終了判定
+      // アニメ終了
       if( anime_end ) { 
+        ICA_ANIME_Delete( work->liftAnime );
         PMSND_StopSE(); // エレベータ稼動音を停止
         PMSND_PlaySE( SEQ_SE_FLD_94 ); // エレベータ到着音
         StopLiftOnAnime( work ); // リフトのアニメーションを停止
-        ICA_ANIME_Delete( work->liftAnime );
+        StartLiftOffAnime( work ); // 終了アニメ開始
+        // カメラ振動イベントをコール
+        {
+          CAM_SHAKE_PARAM shakeParam;
+          shakeParam.Width           = 1;
+          shakeParam.Height          = 3;
+          shakeParam.Sync            = 3;
+          shakeParam.Time            = 8;
+          shakeParam.TimeMax         = 8;
+          shakeParam.NowSync         = 0;
+          shakeParam.SubW            = 0;
+          shakeParam.SubH            = 0;
+          shakeParam.SubStartTime    = 0;
+          shakeParam.SubMargineCount = 0;
+          shakeParam.SubMargine      = 0;
+          GMEVENT_CallEvent( event, EVENT_ShakeCamera( work->gsys, &shakeParam ) );
+        }
         (*seq)++;
       } 
     }
@@ -268,8 +286,6 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       pos.y = height;
       FIELD_PLAYER_SetPos( player, &pos );
     }
-    // アニメ開始
-    StartLiftOffAnime( work );
     (*seq)++;
     break;
 
