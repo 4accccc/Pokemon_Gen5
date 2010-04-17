@@ -178,6 +178,7 @@ sub_bsw_receipt_guide:
   _CALL sub_receipt_msg_greet
   
   IF $SCWK_ANSWER == FALSE THEN //事前チェックで不可
+    _CALL sub_bsw_common_exit
     _RET
   ENDIF
 

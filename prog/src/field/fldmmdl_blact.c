@@ -2216,10 +2216,12 @@ void MMDL_BLACTCONT_ChangeOBJCodeWithDummy( MMDL *mmdl, u16 next_code )
   }
     
   if( i >= DMYACT_MAX ){ //ダミー満杯。アサートを出し登録はせず終わる
+    GF_ASSERT( 0 && "MMDL BLACT DUMMY MAX" );
     MMDL_ChangeOBJCode( mmdl, next_code );
     return;
   }
   
+  //ダミー登録
   pDmyAct->mmdl = mmdl;
   pDmyAct->dmy_act_id = actID;
   pDmyAct->dmy_obj_code = MMDL_GetOBJCode( mmdl );

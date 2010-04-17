@@ -915,25 +915,18 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //戦闘結果取得
   case BSWSUB_GET_BATTLE_RESULT:
-    {
-      BtlResult res = GAMEDATA_GetLastBattleResult( gdata );
+    if( bsw_scr->btl_setup_param == NULL ){
+      GF_ASSERT( 0 );
+      *ret_wk = SCR_BATTLE_RESULT_WIN;
+    }else{
+//    BtlResult res = GAMEDATA_GetLastBattleResult( gdata );
+      BtlResult res = bsw_scr->btl_setup_param->result;
       BtlCompetitor cp = BTL_COMPETITOR_SUBWAY;
       
-      if( play_mode == BSWAY_MODE_COMM_MULTI ||
-          play_mode == BSWAY_MODE_S_COMM_MULTI ){
-        res = bsw_scr->btl_setup_param->result;
-        
-        if( res == BTL_RESULT_WIN ){
-          *ret_wk = SCR_BATTLE_RESULT_WIN;
-        }else{
-          *ret_wk = SCR_BATTLE_RESULT_LOSE;
-        }
+      if( res == BTL_RESULT_WIN ){
+        *ret_wk = SCR_BATTLE_RESULT_WIN;
       }else{
-        if( FIELD_BATTLE_IsLoseResult(res,cp) == TRUE ){
-          *ret_wk = SCR_BATTLE_RESULT_LOSE;
-        }else{
-          *ret_wk = SCR_BATTLE_RESULT_WIN;
-        }
+        *ret_wk = SCR_BATTLE_RESULT_LOSE;
       }
     }
     break;
@@ -1119,6 +1112,11 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       BSUBWAY_SCOREDATA_ResetRenshou( scoreData, play_mode );
       BSUBWAY_PLAYDATA_ResetRoundNo( playData );
       BSUBWAY_SCOREDATA_ResetStageNo( scoreData, play_mode );
+    }
+    break;
+  //電車のゆれを止める
+  case BSWSUB_STOP_SHAKE_TRAIN:
+    {
     }
     break;
   //----ワーク依存　通信関連
