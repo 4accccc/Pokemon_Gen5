@@ -253,11 +253,11 @@ EVENT_START ev_sodateya_grandma
 
     // 選択結果で分岐
     SWITCH $menu_select
-    CASE msg_sodateya_menu_02 THEN       //『あずける』
+    CASE msg_sodateya_menu_02 THEN //『あずける』
       _CALL sodateya_adopt_pokemon
-    CASE msg_sodateya_menu_03 THEN       //『ひきとる』
+    CASE msg_sodateya_menu_03 THEN //『ひきとる』
       _CALL player_take_back_pokemon
-    CASE msg_sodateya_menu_04 THEN       //『やめる』
+    CASE msg_sodateya_menu_04, EV_WIN_B_CANCEL THEN //『やめる』or『Bキャンセル』
       //「そうかい またおいで」
       _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_03, SCWK_TARGET_OBJID, POS_DOWN )
       _LAST_KEYWAIT()
@@ -481,7 +481,7 @@ take_back_pokemon_core:
    _NUMBER( 1, charge, 4 )
    _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_13, SCWK_TARGET_OBJID, POS_DOWN ) 
    _YES_NO_WIN( ask_retval )
-   _BALLOONWIN_CLOSE() 
+   //_BALLOONWIN_CLOSE() 
 
    // 『いいえ』を選択
    IF $ask_retval == 1 THEN
@@ -506,6 +506,7 @@ take_back_pokemon_core:
        _SE_PLAY( SEQ_SE_SYS_22 )
        _SE_WAIT()
        _GOLD_WIN_CLOSE() // 所持金ウィンドウ消去
+       _BALLOONWIN_CLOSE() // 吹出しウィンドウ消去
 
        //引き取りアニメ演出
        _OBJ_ANIME( R03R0201_SODATEYA_GRANDMA, anime_grandma_take_back )
