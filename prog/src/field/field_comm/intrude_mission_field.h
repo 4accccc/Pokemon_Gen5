@@ -18,6 +18,7 @@ typedef enum{
   MISSION_STATUS_NOT_ENTRY, ///<ミッションは実施されているが参加していない
   MISSION_STATUS_READY,     ///<ミッション開始待ち
   MISSION_STATUS_EXE,       ///<ミッション中
+  MISSION_STATUS_RESULT,    ///<結果が届いている or 結果表示中
 }MISSION_STATUS;
 
 

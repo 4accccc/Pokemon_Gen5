@@ -32,6 +32,12 @@
 MISSION_STATUS MISSION_FIELD_CheckStatus(MISSION_SYSTEM *mission)
 {
   const MISSION_DATA *md;
+  BOOL recv_result;
+  
+  recv_result = MISSION_CheckRecvResult(mission);
+  if(recv_result == TRUE){
+    return MISSION_STATUS_RESULT;
+  }
   
   md = MISSION_GetRecvData(mission);
   if(md == NULL){

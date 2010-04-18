@@ -192,8 +192,8 @@ enum{
 };
 
 enum{
-  TOUCH_RANGE_PLAYER_ICON_X = 8,    ///<相手プレイヤーアイコンのタッチ範囲X(半径)
-  TOUCH_RANGE_PLAYER_ICON_Y = 8,    ///<相手プレイヤーアイコンのタッチ範囲Y(半径)
+  TOUCH_RANGE_PLAYER_ICON_X = 12,    ///<相手プレイヤーアイコンのタッチ範囲X(半径)
+  TOUCH_RANGE_PLAYER_ICON_Y = 12,    ///<相手プレイヤーアイコンのタッチ範囲Y(半径)
 };
 
 //--------------------------------------------------------------
@@ -229,7 +229,7 @@ enum{
 //  
 //--------------------------------------------------------------
 ///街アイコンのタッチ判定の矩形ハーフサイズ
-#define TOWN_ICON_HITRANGE_HALF   (8)
+#define TOWN_ICON_HITRANGE_HALF   (12)
 
 enum{
   BG_BAR_TYPE_SINGLE,   ///<一人用のBGスクリーン(palace_bar.nsc)
@@ -294,6 +294,17 @@ enum{
 #define PLAYER_PALANM_COLOR_NUM       (PLAYER_PALANM_END_COLOR - PLAYER_PALANM_START_COLOR + 1)
 ///プレイヤーが居る街のパレットアニメ：バッファサイズ
 #define PLAYER_PALANM_BUFFER_SIZE     (PLAYER_PALANM_COLOR_NUM * sizeof(u16))
+
+//--------------------------------------------------------------
+//  [TIME]スクリーン
+//--------------------------------------------------------------
+///[TIME]が書かれているスクリーン位置
+#define BG_TIME_SCRN_POS_X      (0x14)
+#define BG_TIME_SCRN_POS_Y      (0x16)
+#define BG_TIME_SCRN_SIZE_X     (12)
+#define BG_TIME_SCRN_SIZE_Y     (2)
+///[TIME]が書かれているスクリーンをクリアする時のスクリーンコード
+#define BG_TIME_SCRN_CLEAR_CODE   (0x3001)
 
 
 //==============================================================================
@@ -373,6 +384,8 @@ typedef struct _INTRUDE_SUBDISP{
   u16 player_pal_src[PLAYER_PALANM_COLOR_NUM];        ///<変化元
   u16 player_pal_next_src[PLAYER_PALANM_COLOR_NUM];   ///<変化後
   u16 player_pal_buffer[PLAYER_PALANM_COLOR_NUM];     ///<転送バッファ
+
+  u16 scrnbuf_time[BG_TIME_SCRN_SIZE_X * BG_TIME_SCRN_SIZE_Y];  ///< [TIME]が書かれているスクリーンデータを退避するワーク
 }INTRUDE_SUBDISP;
 
 
@@ -419,6 +432,9 @@ static void _SetPalFlash_DecideTown(INTRUDE_SUBDISP_PTR intsub);
 static BOOL _CheckPalFlash_DecideTown(INTRUDE_SUBDISP_PTR intsub);
 static void _VblankFunc(GFL_TCB *tcb, void *work);
 static void _SetPalFade_PlayerTown(INTRUDE_SUBDISP_PTR intsub, int town_tblno);
+static BOOL _TimeNum_CheckEnable(INTRUDE_SUBDISP_PTR intsub);
+static void _TimeScrn_Clear(void);
+static void _TimeScrn_Recover(INTRUDE_SUBDISP_PTR intsub);
 
 
 //==============================================================================
@@ -827,6 +843,19 @@ static void _IntSub_BGLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
   GFL_ARCHDL_UTIL_TransVramScreen(
     handle, NARC_palace_palace_bar_lz_NSCR, INTRUDE_FRAME_S_BAR, 0, 
     0x800, TRUE, HEAPID_FIELDMAP);
+  //[TIME]のスクリーンをバッファに読み込む
+  {
+    NNSG2dScreenData *scrnData;
+    void *load_data;
+    load_data = GFL_ARCHDL_UTIL_LoadScreen(
+      handle, NARC_palace_palace_time_lz_NSCR, TRUE, &scrnData, HEAPID_FIELDMAP);
+    GFL_STD_MemCopy16(scrnData->rawData, intsub->scrnbuf_time, 
+      BG_TIME_SCRN_SIZE_X * BG_TIME_SCRN_SIZE_Y * sizeof(u16));
+    GFL_HEAP_FreeMemory(load_data);
+  }
+  if(_TimeNum_CheckEnable(intsub) == TRUE){
+    _TimeScrn_Recover(intsub);
+  }
   
   //パレット転送
   GFL_ARCHDL_UTIL_TransVramPalette(handle, NARC_palace_palace_bg_NCLR, PALTYPE_SUB_BG, 0, 
@@ -1205,6 +1234,7 @@ static void _IntSub_ActorCreate_WarpNG(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *ha
 static void _IntSub_ActorCreate_LvNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
 {
   int i;
+  BOOL time_enable = FALSE;
   GFL_CLWK_DATA head = {
   	0, 0,                       //X, Y座標
   	PALACE_ACT_ANMSEQ_LV_NUM,   //アニメーションシーケンス
@@ -1221,13 +1251,15 @@ static void _IntSub_ActorCreate_LvNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *han
   };
   
   GF_ASSERT(NELEMS(LvNumPos) == (INTSUB_ACTOR_LV_NUM_KETA_MAX - INTSUB_ACTOR_LV_NUM_KETA_0 + 1));
+
+  time_enable = _TimeNum_CheckEnable(intsub);
   for(i = INTSUB_ACTOR_LV_NUM_KETA_0; i <= INTSUB_ACTOR_LV_NUM_KETA_MAX; i++){
     head.pos_x = LvNumPos[i - INTSUB_ACTOR_LV_NUM_KETA_0].x;
     head.pos_y = LvNumPos[i - INTSUB_ACTOR_LV_NUM_KETA_0].y;
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
       &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
-    GFL_CLACT_WK_SetDrawEnable(intsub->act[i], TRUE);
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[i], time_enable);
   }
 }
 
@@ -1248,6 +1280,7 @@ static void _IntSub_ActorCreate_EntryButton(INTRUDE_SUBDISP_PTR intsub, ARCHANDL
   	BGPRI_ACTOR_COMMON,         //BGプライオリティ
   };
   int i;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   
   intsub->act[INTSUB_ACTOR_ENTRY] = GFL_CLACT_WK_Create(intsub->clunit, 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
@@ -1279,6 +1312,11 @@ static void _IntSub_ActorCreate_EntryButton(INTRUDE_SUBDISP_PTR intsub, ARCHANDL
     PRINTSYS_PrintQueColor( intsub->print_que, intsub->entrymsg_bmp[i], 0, 0, entry_str, 
       intsub->font_handle, PRINTSYS_MACRO_LSB(15,2,0) );
     GFL_STR_DeleteBuffer(entry_str);
+  }
+
+  if(intsub->back_exit == FALSE && GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], TRUE);
+    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_BACK], TRUE);
   }
 }
 
@@ -1603,31 +1641,23 @@ static void _IntSub_ActorUpdate_EntryButton(INTRUDE_SUBDISP_PTR intsub, OCCUPY_I
 {
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
 
-  if(intsub->back_exit == FALSE && intsub->comm.recv_num <= 1 
-      && GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
-    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], TRUE);
-    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_ENTRY], FALSE);
-    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_BACK], TRUE);
-    return;
-  }
-  else{
-    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_BACK], FALSE);
-  }
-  
-  switch(intsub->comm.m_status){
-  case MISSION_STATUS_NULL:
-  case MISSION_STATUS_READY:
-  case MISSION_STATUS_EXE:
-    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], FALSE);
-    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_ENTRY], FALSE);
-    break;
-  case MISSION_STATUS_NOT_ENTRY:
-    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], TRUE);
-    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_ENTRY], TRUE);
-    break;
-  default:
-    GF_ASSERT(0);
-    return;
+  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
+    switch(intsub->comm.m_status){
+    case MISSION_STATUS_NULL:
+    case MISSION_STATUS_READY:
+    case MISSION_STATUS_EXE:
+    case MISSION_STATUS_RESULT:
+      GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], FALSE);
+      BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_ENTRY], FALSE);
+      break;
+    case MISSION_STATUS_NOT_ENTRY:
+      GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], TRUE);
+      BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_ENTRY], TRUE);
+      break;
+    default:
+      GF_ASSERT(0);
+      return;
+    }
   }
 }
 
@@ -1645,6 +1675,26 @@ static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *a
   int i, level;
   OCCUPY_INFO *my_occupy;
   GFL_CLWK *act;
+
+  if(_TimeNum_CheckEnable(intsub) == FALSE){
+    //ミッションをやっていないのに数字が表示されているなら非表示にする
+    if(GFL_CLACT_WK_GetDrawEnable(intsub->act[INTSUB_ACTOR_LV_NUM_KETA_0]) == TRUE){
+      for(i = INTSUB_ACTOR_LV_NUM_KETA_0; i <= INTSUB_ACTOR_LV_NUM_KETA_MAX; i++){
+        GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);
+      }
+      _TimeScrn_Clear();
+    }
+    return;
+  }
+  else{
+    //ミッション中に数字が表示されていないなら表示
+    if(GFL_CLACT_WK_GetDrawEnable(intsub->act[INTSUB_ACTOR_LV_NUM_KETA_0]) == FALSE){
+      for(i = INTSUB_ACTOR_LV_NUM_KETA_0; i <= INTSUB_ACTOR_LV_NUM_KETA_MAX; i++){
+        GFL_CLACT_WK_SetDrawEnable(intsub->act[i], TRUE);
+      }
+      _TimeScrn_Recover(intsub);
+    }
+  }
   
   my_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
 //  level = my_occupy->intrude_level;
@@ -1743,6 +1793,8 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub)
       GFL_MSG_GetString(intsub->msgdata, 
         msg_invasion_info_m01 + intsub->comm.p_md->cdata.type, intsub->strbuf_info );
       break;
+    case MISSION_STATUS_RESULT:   //結果受信
+      return;   //特に表示するものはない
     default:
       GF_ASSERT_MSG(0, "m_status=%d\n", intsub->comm.m_status);
       return;
@@ -1961,12 +2013,15 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
 //--------------------------------------------------------------
 static void _IntSub_BGBarUpdate(INTRUDE_SUBDISP_PTR intsub)
 {
+  BOOL scrn_load = FALSE;
+  
   if(intsub->bar_type == BG_BAR_TYPE_SINGLE){
     if(intsub->comm.recv_num > 1){
       GFL_ARC_UTIL_TransVramScreen(
         ARCID_PALACE, NARC_palace_palace_bar2_lz_NSCR, INTRUDE_FRAME_S_BAR, 0, 
         0x800, TRUE, HEAPID_FIELDMAP);
       intsub->bar_type = BG_BAR_TYPE_COMM;
+      scrn_load++;
     }
   }
   else{ //BG_BAR_TYPE_COMM
@@ -1975,7 +2030,12 @@ static void _IntSub_BGBarUpdate(INTRUDE_SUBDISP_PTR intsub)
         ARCID_PALACE, NARC_palace_palace_bar_lz_NSCR, INTRUDE_FRAME_S_BAR, 0, 
         0x800, TRUE, HEAPID_FIELDMAP);
       intsub->bar_type = BG_BAR_TYPE_SINGLE;
+      scrn_load++;
     }
+  }
+
+  if(scrn_load && _TimeNum_CheckEnable(intsub) == TRUE){
+    _TimeScrn_Recover(intsub);
   }
 }
 
@@ -2148,3 +2208,51 @@ static void _SetPalFade_PlayerTown(INTRUDE_SUBDISP_PTR intsub, int town_tblno)
   intsub->player_pal_dir = DIR_UP;
 }
 
+//--------------------------------------------------------------
+/**
+ * [TIME]の文字を表示する必要がある状態かを調べる
+ *
+ * @param   intsub		
+ *
+ * @retval  BOOL		  TRUE:表示する必要がある
+ */
+//--------------------------------------------------------------
+static BOOL _TimeNum_CheckEnable(INTRUDE_SUBDISP_PTR intsub)
+{
+  switch(intsub->comm.m_status){
+  case MISSION_STATUS_READY:     //ミッション開始待ち
+  case MISSION_STATUS_EXE:       //ミッション中
+  case MISSION_STATUS_RESULT:    //結果が届いている or 結果表示中
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * [TIME]が書かれているスクリーンをクリアする
+ *
+ * @param   none		
+ */
+//--------------------------------------------------------------
+static void _TimeScrn_Clear(void)
+{
+  GFL_BG_FillScreen( INTRUDE_FRAME_S_BAR, BG_TIME_SCRN_CLEAR_CODE, 
+    BG_TIME_SCRN_POS_X, BG_TIME_SCRN_POS_Y, BG_TIME_SCRN_SIZE_X, BG_TIME_SCRN_SIZE_Y, 
+    GFL_BG_SCRWRT_PALIN );
+  GFL_BG_LoadScreenV_Req(INTRUDE_FRAME_S_BAR);
+}
+//--------------------------------------------------------------
+/**
+ * [TIME]が書かれているスクリーンに復帰する
+ *
+ * @param   intsub		
+ */
+//--------------------------------------------------------------
+static void _TimeScrn_Recover(INTRUDE_SUBDISP_PTR intsub)
+{
+  GFL_BG_WriteScreenExpand( INTRUDE_FRAME_S_BAR, BG_TIME_SCRN_POS_X, BG_TIME_SCRN_POS_Y, 
+    BG_TIME_SCRN_SIZE_X, BG_TIME_SCRN_SIZE_Y,
+    intsub->scrnbuf_time, 0, 0, BG_TIME_SCRN_SIZE_X, BG_TIME_SCRN_SIZE_Y);
+  GFL_BG_LoadScreenV_Req(INTRUDE_FRAME_S_BAR);
+}
