@@ -17,7 +17,7 @@
 
 
 
-#if 0
+#if DEBUG_ONLY_FOR_ohno
 
 #define IRC_PRINT(...)  (void) ((OS_TPrintf(__VA_ARGS__)))
 
@@ -282,9 +282,9 @@ void GFL_NET_IRC_Send(u8 *buf, u8 size, u8 command)
     {
       int i;
       for(i = 0; i < size; i++){
-        //				IRC_PRINT("%d, ", buf[i]);
+        IRC_PRINT("0x%2x, ", buf[i]);
       }
-      //			IRC_PRINT("\n");
+      IRC_PRINT("\n");
     }
   }
 #endif
@@ -370,6 +370,13 @@ static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id)
 
   if(command != GF_NET_COMMAND_CONTINUE){
     IRC_PRINT("IRC受信コールバック呼び出し, size=%d, command=%d, send_value=%d, receive_value=%d\n", size,command,send_value,receive_value);
+    {
+      int i;
+      for(i = 0; i < size; i++){
+        IRC_PRINT("0x%2x, ", data[i]);
+      }
+      IRC_PRINT("\n");
+    }
   }
 
   NetIrcSys.send_turn = TRUE;
@@ -409,21 +416,6 @@ static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id)
     break;
   }
 
-  if(NetIrcSys.last_value == send_value){
-    //最後に受け取ったvalue値と同じvalue値の場合、同じデータが2度送られてきているので無視する
-    //※再接続した時にこのケースが発生する。
-    IRC_PRINT("赤外線：同一valueを受信\n");
-    return;
-  }
-#if 0
-  NetIrcSys.last_value = send_value;
-
-  send_id = IRC_TargetIDGet();
-  if(NetIrcSys.recieve_func != NULL){
-    u16* x = (u16*)data;
-    NetIrcSys.recieve_func(send_id, &x[1], size-2);
-  }
-#else
   send_id = IRC_TargetIDGet();
   if(NetIrcSys.recieve_func != NULL){
     u16* x = (u16*)data;
@@ -431,93 +423,16 @@ static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id)
       return; //データが壊れているなら受け取らない
     }
   }
-  NetIrcSys.last_value = send_value;
-#endif
-}
-#if 0
-//--------------------------------------------------------------
-/**
- * @brief   IRC受信時に呼ばれるコールバック
- *
- * @param   data
- * @param   size
- * @param   command
- * @param   value
- */
-//--------------------------------------------------------------
-static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id)
-{
-  int send_id;
-  int send_value, receive_value;
-  u8 value;
-
-  //	size -= IRC_HEADER_SIZE;
-
-  value = data[1];
-
-
-  send_value = value & 0xf;
-  receive_value = value >> 4;
-
-  //OS_TPrintf("%x value \n",value);
-
-
-  if(command != GF_NET_COMMAND_CONTINUE){
-    IRC_PRINT("IRC受信コールバック呼び出し, size=%d, command=%d, send_value=%d, receive_value=%d\n", size,command,send_value,receive_value);
-  }
-
-  NetIrcSys.send_turn = TRUE;
-
-  //-- 赤外線ライブラリ内部で使用しているシステムコマンド --//
-  if(command >= 0xf0){
-    if(command == 0xf4){
-      IRC_PRINT("IRC切断コマンドを受信\n");
-    }
-    return;	//赤外線ライブラリ内部で使用しているシステムコマンドの為、ここでは無視
-  }
-
-  if(NetIrcSys.send_action == TRUE && NetIrcSys.retry_send_reserve == 0){
-    //何らかの返事が向こうから返ってきているなら先ほど送信したデータは向こうに渡ったという事
-    //但しライブラリ内部のシステムコマンドは切断コマンドだったりするので、
-    //システムコマンドの返事は無視する
-    IRC_PRINT("action返事受信 my_value = %d, receive_value=%d\n", NetIrcSys.my_value, receive_value);
-    if(receive_value == NetIrcSys.my_value){
-      if(NetIrcSys.my_value < SEND_CHECK_VALUE_RANGE){
-        NetIrcSys.my_value++;
-      }
-      else{
-        NetIrcSys.my_value = 0;
-      }
-      NetIrcSys.send_action = 0;
-    }
-    else{
-      NetIrcSys.retry_send_reserve = TRUE;	//再度送信予約
-    }
-  }
-
-  //赤外線専用のシステムコマンド解釈
-  switch(command){
-  case GF_NET_COMMAND_CONTINUE:
-    return;		//通信継続の為の延命コマンドの為、ここで終了
-  default:
-    break;
-  }
 
   if(NetIrcSys.last_value == send_value){
     //最後に受け取ったvalue値と同じvalue値の場合、同じデータが2度送られてきているので無視する
     //※再接続した時にこのケースが発生する。
-    IRC_PRINT("赤外線：同一valueを受信\n");
+    IRC_PRINT("赤外線：同一valueを受信 %d\n",send_value);
     return;
   }
+  IRC_PRINT("受信成功 %d\n",send_value);
   NetIrcSys.last_value = send_value;
-
-  send_id = IRC_TargetIDGet();
-  if(NetIrcSys.recieve_func != NULL){
-    u16* x = (u16*)data;
-    NetIrcSys.recieve_func(send_id, &x[1], size-2);
-  }
 }
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -529,7 +444,7 @@ static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id)
 static int IRC_TargetIDGet(void)
 {
   if(GFL_NET_IRC_IsSender() == TRUE){
-    return 1;	//自分が親なら子からしかデータが来ないので2固定
+    return 1;	//自分が親なら子からしかデータが来ないので1固定
   }
 
   //自分が子なら、親からしか来ないのでGFL_NET_NO_PARENTMACHINE固定
@@ -574,11 +489,11 @@ BOOL GFL_NET_IRC_ErrorCheck(void)
     return FALSE;	//システムの初期化自体されていないのでエラー検知以前の問題
   }
   if(NetIrcSys.err_code != IRC_ERRCODE_NULL){
-    IRC_PRINT("赤外線エラー：err_code = %d\n", NetIrcSys.err_code);
+//    IRC_PRINT("赤外線エラー：err_code = %d\n", NetIrcSys.err_code);
     return TRUE;
   }
   if(NetIrcSys.connect == TRUE && GFL_NET_IRC_IsConnect() == FALSE){
-    IRC_PRINT("赤外線エラー：GFL_NET_IRC_IsConnect\n");
+//    IRC_PRINT("赤外線エラー：GFL_NET_IRC_IsConnect\n");
     return TRUE;
   }
   return FALSE;	//エラーなし
@@ -633,7 +548,7 @@ BOOL GFL_NET_IRC_IsConnect(void)
     {
       return TRUE;
     }
-    IRC_PRINT("接続チェック：ターゲットユニットナンバーが違う\n");
+//    IRC_PRINT("接続チェック：ターゲットユニットナンバーが違う\n");
     return FALSE;	//切断した直後に接続されるとこの状況がありえる
   }
   if((NetIrcSys.retry_time < NetIrcSys.timeout) || (NetIrcSys.retry_time == 0 && NetIrcSys.timeout == 0)){
@@ -718,13 +633,13 @@ void GFL_NET_IRC_Move(void)
         IRC_Move();
         if(nis->retry_time < nis->timeout){
           if(nis->isSender == TRUE && nis->retry_time % NET_IRC_CONNECT_REQ_WAIT == 0){
-            IRC_PRINT("赤外線：再接続Connect実行\n");
+//            IRC_PRINT("赤外線：再接続Connect実行\n");
             IRC_Connect();
           }
           nis->retry_time++;
         }
         else{	//再接続の時間切れ
-          IRC_PRINT("赤外線：再接続の時間切れ\n");
+//          IRC_PRINT("赤外線：再接続の時間切れ\n");
           nis->connect = FALSE;
           nis->err_code = IRC_ERRCODE_SHUTDOWN;
           GFI_NET_HANDLE_Delete(1-GFL_NET_IRC_System_GetCurrentAid());  // ハンドル削除
@@ -736,12 +651,12 @@ void GFL_NET_IRC_Move(void)
       //繋がっている
       if(IRC_IsConnect() == FALSE){
         if(nis->timeout > 0){
-          IRC_PRINT("赤外線：切断した。再接続します\n");
+//          IRC_PRINT("赤外線：切断した。再接続します\n");
           IRC_Shutdown();
           nis->retry_time = 1;	//再接続へ
         }
         else{	//再接続なし
-          IRC_PRINT("赤外線：切断した。再接続はしません\n");
+//          IRC_PRINT("赤外線：切断した。再接続はしません\n");
           nis->connect = FALSE;
           nis->err_code = IRC_ERRCODE_SHUTDOWN;
           nis->retry_time = 0xffff;

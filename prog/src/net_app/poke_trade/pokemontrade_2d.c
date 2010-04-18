@@ -2261,7 +2261,7 @@ void IRC_POKETRADE_PokerusIconDisp(POKEMON_TRADE_WORK* pWork,int side,int bMain,
 
     if(bMain){
       pIM->clwk_poke_item =
-        UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit,22 * 8,13 * 8,type,pWork->heapID );
+        UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit,29 * 8,13 * 8,type,pWork->heapID );
     }
     else{
       pIM->clwk_poke_item =
@@ -2333,7 +2333,7 @@ void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* 
     UI_EASY_CLWK_LoadResource( &pIM->clres_poke_item, &prm, pWork->cellUnit, pWork->heapID );
 
     pIM->clwk_poke_item =
-      UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit, markpos[i]*8 , 10 * 8, type, pWork->heapID );
+      UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit, markpos[i]*8 , (12 * 8)+5, type, pWork->heapID );
   }
 
 }

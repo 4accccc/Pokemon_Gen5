@@ -521,6 +521,25 @@ static void _pokeNickNameMsgDisp(POKEMON_PARAM* pp,GFL_BMP_DATA* pWin,int x,int 
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   ポケモン種族名をWINDOWに表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _pokeKindNameMsgDisp(POKEMON_PARAM* pp,GFL_BMP_DATA* pWin,int x,int y,BOOL bEgg,POKEMON_TRADE_WORK* pWork)
+{
+  if(bEgg){
+    return;
+  }
+  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_33, pWork->pExStrBuf );
+  WORDSET_RegisterPokeMonsName( pWork->pWordSet, 0,  pp );
+  WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
+  PRINTSYS_Print( pWin, x, y, pWork->pStrBuf, pWork->pFontHandle);
+}
+
+
+//------------------------------------------------------------------------------
+/**
  * @brief   ポケモンＬＶをWINDOWに表示
  * @retval  none
  */
@@ -764,8 +783,8 @@ void POKETRADE_MESSAGE_CreatePokemonParamDisp(POKEMON_TRADE_WORK* pWork,POKEMON_
   IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,0); //上のステータス文章+OAMを消す
   IRCPOKEMONTRADE_ResetPokemonStatusMessage(pWork,1); //上のステータス文章+OAMを消す
 
-  POKETRADE_MESSAGE_ChangePokemonStatusDisp(pWork, pp, 0, FALSE);
   IRC_POKETRADE_SetMainStatusBG(pWork);  // 背景BGと
+  POKETRADE_MESSAGE_ChangePokemonStatusDisp(pWork, pp, 0, FALSE);
 
   if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
     IRC_POKETRADE_SetSubStatusIcon(pWork);  //選択アイコン
@@ -882,8 +901,8 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
 
   {//自分の位置調整
     VecFx32 apos;
-    apos.x = _MCSS_POS_X(51);
-    apos.y = _MCSS_POS_Y(16);
+    apos.x = _MCSS_POS_X(62);
+    apos.y = _MCSS_POS_Y(4);
     apos.z = _MCSS_POS_Z(0);
     MCSS_SetPosition( pWork->pokeMcss[mcssno] ,&apos );
     MCSS_ResetVanishFlag(pWork->pokeMcss[mcssno]);
@@ -900,38 +919,39 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
   GFL_FONTSYS_SetColor( 0xf, 0x2, 0 );
   pWork->MyInfoWin =
     GFL_BMPWIN_Create(GFL_BG_FRAME3_M,
-                      1, 1, 31 , 24, _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+                      1, 0, 31 , 24, _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
 
   _pokeNickNameMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 16, 0,bEgg,pWork);//ニックネーム
-  _pokeLvMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 8*12 , 2,pWork);
-  _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 10*8, 0, pWork, FALSE);
+  _pokeKindNameMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 16, 8*2,bEgg,pWork);//ニックネーム
+  _pokeLvMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 8*12 , 8,pWork);
+  _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 10*8, 8, pWork, FALSE);
 
-  _pokeHPSPEEDMsgDisp(pp,pWork->MyInfoWin, 0 ,3*8,pWork);
+  _pokeHPSPEEDMsgDisp(pp,pWork->MyInfoWin, 0 ,4*8,pWork);
 
   for(i=0;i<3;i++){//せいかく-もちもの
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_37+i, pWork->pStrBuf );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0, 16*8+16*i, pWork->pStrBuf, pWork->pFontHandle);
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0, 17*8+16*i, pWork->pStrBuf, pWork->pFontHandle);
   }
-  _pokeHpHpmaxMsgDisp(pp, pWork->MyInfoWin, 8*7, 3*8, pWork);  //HP HPMax
+  _pokeHpHpmaxMsgDisp(pp, pWork->MyInfoWin, 8*7, 4*8, pWork);  //HP HPMax
 
-  _pokeATTACKSPEEDNumMsgDisp(pp, pWork->MyInfoWin, 8*9, 5*8, pWork);
+  _pokeATTACKSPEEDNumMsgDisp(pp, pWork->MyInfoWin, 8*9, 6*8, pWork);
 
 
-  _pokePersonalMsgDisp(pp, pWork->MyInfoWin, 7*8, 16*8, pWork);  //性格
-  _pokeAttributeMsgDisp(pp, pWork->MyInfoWin, 7*8, 18*8, pWork);  //特性
-  _pokePocketItemMsgDisp(pp,pWork->MyInfoWin, 7*8, 20*8,pWork);  //もちもの
-  _pokeTechniqueMsgDisp(pp, pWork->MyInfoWin, 19*8, 12*8, pWork);  //わざ
-  _pokeTechniqueListMsgDisp(pp, pWork->MyInfoWin, 19*8,14*8, pWork); //わざリスト
+  _pokePersonalMsgDisp(pp, pWork->MyInfoWin, 7*8, 17*8, pWork);  //性格
+  _pokeAttributeMsgDisp(pp, pWork->MyInfoWin, 7*8, 19*8, pWork);  //特性
+  _pokePocketItemMsgDisp(pp,pWork->MyInfoWin, 7*8, 21*8,pWork);  //もちもの
+  _pokeTechniqueMsgDisp(pp, pWork->MyInfoWin, 19*8, 14*8+1, pWork);  //わざ
+  _pokeTechniqueListMsgDisp(pp, pWork->MyInfoWin, 19*8,16*8, pWork); //わざリスト
 
   UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[UI_BALL_SUBSTATUS], pp, pWork->cellUnit,
                                   16, 16, CLSYS_DRAW_MAIN, pWork->heapID,PLTID_OBJ_BALLICON_M );
 
   UITemplate_TYPEICON_CreateCLWK(&pWork->aTypeIcon[0], pp, 0, pWork->cellUnit,
-                                 25*8, 12*8, CLSYS_DRAW_MAIN, pWork->heapID );
+                                 22*8, 12*8, CLSYS_DRAW_MAIN, pWork->heapID );
 
   if( PP_Get(pp, ID_PARA_type1, NULL) != PP_Get(pp, ID_PARA_type2, NULL)){
     UITemplate_TYPEICON_CreateCLWK(&pWork->aTypeIcon[1], pp, 1, pWork->cellUnit,
-                                   29*8, 12*8, CLSYS_DRAW_MAIN, pWork->heapID );
+                                   26*8, 12*8, CLSYS_DRAW_MAIN, pWork->heapID );
   }
   IRC_POKETRADE_PokeStatusIconDisp(pWork,pp);  //●▲■
   IRC_POKETRADE_PokerusIconDisp(pWork, 0,TRUE, pp);

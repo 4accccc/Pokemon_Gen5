@@ -1288,17 +1288,20 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
 // ポケモンのステータス表示
 static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork)
 {
-  POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, pWork->pokemonselectno);
-
-  pWork->pokemonselectno = 0; // 自分のから表示
-  POKETRADE_MESSAGE_CreatePokemonParamDisp(pWork,pp);
-
-  pWork->padMode = FALSE;
-  _PokemonIconRenew(pWork);
-  
-  _CHANGE_STATE(pWork, _pokemonStatusWait);
-
+  if(WIPE_SYS_EndCheck()){
+    POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, pWork->pokemonselectno);
+    pWork->pokemonselectno = 0; // 自分のから表示
+    POKETRADE_MESSAGE_CreatePokemonParamDisp(pWork,pp);
+    pWork->padMode = FALSE;
+    _PokemonIconRenew(pWork);
+    WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN ,
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+    
+    _CHANGE_STATE(pWork, _pokemonStatusWait);
+  }
 }
+
+
 
 
 //交換選択待ち
@@ -1314,6 +1317,8 @@ static void _changePokemonSendData(POKEMON_TRADE_WORK* pWork)
       _CHANGE_STATE(pWork,POKETRE_MAIN_ChangePokemonSendDataNetwork);
       break;
     case 1:  //つよさをみる
+      WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
+                      WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
       _CHANGE_STATE(pWork, _pokemonStatusStart);
       break;
     case 2:  //もどる
@@ -1378,6 +1383,12 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
   int myID = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   int targetID = 1 - myID;
 
+  if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    myID=0;
+    targetID=1;
+  }
+
+  
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }

@@ -1759,7 +1759,7 @@ BOOL WH_EndScan(void)
 
 
     //WM_EndScan(WH_StateOutEndScan);
-    NET_PRINT("----%d ForceStop\n",_pWmInfo->startScan);
+//    NET_PRINT("----%d ForceStop\n",_pWmInfo->startScan);
     
 //    _pWmInfo->startScan = -1;
 //    return FALSE;
