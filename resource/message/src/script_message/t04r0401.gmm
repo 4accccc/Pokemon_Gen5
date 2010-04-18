@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-03T22:02:29"/>
+	<create user="matsumiya" host="W00224" date="2010-04-18T19:19:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="204"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="335"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1545" top="251" right="2237" bottom="863" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="517"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="530"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="684"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,40 +292,767 @@
 	</lock>
 
 
-	<row id="msg_t04r0401_shirona_01">
-		<comment>♀
-・春
-・夏</comment>
-		<attribute name="キャラ指定">シロナ</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_t04r0401_shirona_first_01" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀：シロナ初回イベント
+・シロナのみ配置
+・室内に入ると、シロナに！マーク後メッセージ表示
+・続けてshirona_first_02</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">？？？『あら……？▼</language>
+		<language name="JPN_KANJI" width="256">？？？『あら……？▼</language>
 	</row>
 
-	<row id="msg_t04r0401_shirona_02">
-		<comment>♀
-・春
-・夏</comment>
-		<attribute name="キャラ指定">シロナ</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_t04r0401_shirona_first_02" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀：シロナ初回イベント
+・主人公に近づき、メッセージ表示
+・続けてshirona_first_03
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">にてる……▼
+こんな　ところで
+あの　ポケモントレーナーと　おなじ▽
+ひとみの　トレーナーと　であうなんて▼
+きみの　なまえは……？▼
+……　……　……
+……　……　……▼
+そう　[1:00:トレーナー名:0]　って　いうの
+おぼえておくわね！▼
+あたしは　シロナ▼
+ポケモンの　しんわを　しらべてる
+ものずきな　ポケモントレーナーよ▼</language>
+		<language name="JPN_KANJI" width="256">似てる……▼
+遠い　異国で
+あの　ポケモントレーナーと　同じ▽
+ひとみの　トレーナーと　出会うなんて▼
+きみの　名前は……？▼
+……　……　……
+……　……　……▼
+そう　[1:00:トレーナー名:0]　って　いうの
+覚えておくわね！▼
+あたしは　シロナ▼
+ポケモンの　神話を　調べてる
+物好きな　ポケモントレーナーよ▼</language>
 	</row>
 
-	<row id="msg_t04r0401_shirona_03">
-		<comment>♀
-・春
-・夏</comment>
-		<attribute name="キャラ指定">シロナ</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_t04r0401_shirona_first_03" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀：シロナ初回イベント
+・横を向いてメッセージ表示
+・続けてshirona_first_01</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">サザナミタウン　には
+かいていいせきが　あるでしょ▼
+それで　しりあいの　べっそうを
+つかわせて　もらっているの▼</language>
+		<language name="JPN_KANJI" width="256">サザナミタウン　には
+海底遺跡が　あるでしょ▼
+それで　知り合いの　別荘を
+使わせて　もらっているの▼</language>
 	</row>
 
-	<row id="msg_t04r0401_shirona_04">
+	<row id="msg_t04r0401_shirona_first_04" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀：シロナ初回イベント
+・主人公と向き合いメッセージ表示
+・はい/いいえ
+　はい→shirona_first_05
+　いいえ→shirona_first_06</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">さて　ポケモントレーナーどうし
+ふかく　しりあうために▼
+おたがいの　ポケモンを
+てあわせ　させたいのだけど……▽
+おあいて　してくださるかしら？</language>
+		<language name="JPN_KANJI" width="256">さて　ポケモントレーナーどうし
+深く　知り合うために▼
+お互いの　ポケモンを
+手合わせ　させたいのだけど……▽
+お相手して　くださるかしら？</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_first_05" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀：シロナ初回イベント
+・はい選択時
+　メッセージ後、トレーナー戦闘に
+　dpchampion_01</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">ポケモンを　くりだす　まえから
+あたしの　むねが　たかなる……▼
+ボールの　なかの　ポケモンたちの
+うれしそうな　かんじ　つたわってくる▼
+あなた　なにもの　かしら？▼</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　繰りだす　前から
+あたしの　胸が　高鳴る……▼
+ボールの　中の　ポケモンたちの
+うれしそうな　感じ　伝わってくる▼
+あなた　何者かしら？▼</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_first_06" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀：シロナ初回イベント
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">うふふ
+れいせいな　はんだん……　ね▼
+じゅんびが　できたら
+はなしかけてくれると　うれしいな！</language>
+		<language name="JPN_KANJI" width="256">うふふ
+冷静な　判断……　ね▼
+準備が　できたら
+話しかけてくれると　うれしいな！</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_first_07" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀：シロナ初回イベント
+・shirona_first_06表示後に再度会話
+・はい/いいえ
+　はい→shirona_first_01
+　いいえ→shirona_first_01</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『あら？
+じゅんびは　できたの▼
+おたがいの　ポケモンを
+てあわせ　させたいのだけど……▽
+おあいて　してくださるかしら？</language>
+		<language name="JPN_KANJI" width="256">シロナ『あら？
+準備は　できたの？▼
+お互いの　ポケモンを
+手合わせ　させたいのだけど……▽
+お相手して　くださるかしら？</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_first_08" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀：シロナ初回イベント
+・戦闘後、フィールドに復帰すると自動で表示</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『おみごと　です
+すばらしい　たたかい　だったわ▼
+……やっぱり　にてる▼
+ギラティナと　むかいあった
+あの　トレーナーに……▼
+ううん
+こっちの　はなし▼
+こちらにはね
+はると　なつに　くるの▼
+シンオウでも　しらべること　とか
+いろいろ　あるから　ね▼
+また　あいにきてくれると　うれしいな
+ステキな　ポケモントレーナーさん！</language>
+		<language name="JPN_KANJI" width="256">シロナ『おみごと　です
+すばらしい　戦い　だったわ▼
+……やっぱり　似てる▼
+ギラティナと　向かいあった
+あの　トレーナーに……▼
+ううん
+こっちの　話▼
+こちらにはね
+春と　夏に　来るの▼
+シンオウでも　調べること　とか
+いろいろ　あるから　ね▼
+また　会いに来てくれると　うれしいな
+ステキな　ポケモントレーナーさん！</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_first_09" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
+		<comment>♀：シロナ初回イベント
+・shirona_first_08表示後、外に出るまで
+※戦闘するまで
+　別荘イベントは発動しない
+※それまで入室ごとにshirona_first_07表示</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『こちらにはね
+はると　なつに　くるの▼
+シンオウでも　しらべること　とか
+いろいろ　あるから　ね▼
+また　あいにきてくれると　うれしいな
+ステキな　ポケモントレーナーさん！</language>
+		<language name="JPN_KANJI" width="256">シロナ『こちらにはね
+春と　夏に　来るの▼
+シンオウでも　調べること　とか
+いろいろ　あるから　ね▼
+また　会いに来てくれると　うれしいな
+ステキな　ポケモントレーナーさん！</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_spring_01_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
-・春
-・夏</comment>
-		<attribute name="キャラ指定">シロナ</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+・春イベント：パターン1
+・はい/いいえ選択肢表示
+・はい→spring_01_02
+　いいえ→spring_01_03</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『あら　きてくれたのね！▼
+さっそく　なんだけど
+あたしの　ポケモンたちが▼
+きみの　ポケモンと
+しょうぶ　したがってるんだけど……▽
+おあいて　してくれるかな？</language>
+		<language name="JPN_KANJI" width="256">シロナ『あら　来てくれたのね！▼
+さっそく　なんだけど
+あたしの　ポケモンたちが▼
+きみの　ポケモンと
+勝負したがってるんだけど……▽
+お相手して　くれるかな？</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_spring_01_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・春イベント：パターン1
+・はい選択時
+　メッセージ後、トレーナー戦闘に
+　dpchampion_01</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『ありがとう！
+ぜんりょくで　きみと　むきあいます！▼</language>
+		<language name="JPN_KANJI" width="256">シロナ『ありがとう！
+全力で　きみと　向き合います！▼</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_spring_01_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・春イベント：パターン1
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『あら　ざんねんね……▼
+サザナミタウンって
+なつは　バカンスきぶんで▽
+しょうぶのこと　わすれちゃうけど▼
+はるは　きぶんを　もりあげたくて
+しょうぶ　したくなるのよね</language>
+		<language name="JPN_KANJI" width="256">シロナ『あら　残念ね……▼
+サザナミタウンって
+夏は　バカンス気分で▽
+勝負のこと　忘れちゃうけど▼
+春は　気分を　盛り上げたくて
+勝負したくなるのよね</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_spring_01_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・春イベント：パターン1
+・いいえ選択後、再度会話
+・はい/いいえ選択肢表示
+・はい→spring_01_02
+　いいえ→spring_01_03</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『あたしの　ポケモンたちが▼
+きみの　ポケモンと
+しょうぶ　したがってるんだけど……▽
+おあいて　してくれるかな？</language>
+		<language name="JPN_KANJI" width="256">シロナ『あたしの　ポケモンたちが▼
+きみの　ポケモンと
+勝負したがってるんだけど……▽
+お相手して　くれるかな？</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_spring_01_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・春イベント：パターン1
+・戦闘後</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『なんだか　おもいだしちゃった▼
+もっともっと　いろんな　ところで
+いろんな　ひと　いろんな　ポケモンに▽
+であってほしい　って▼
+あなたに　そっくりの　トレーナーに
+つたえたことが　あるの▼
+あたしも　とおく　イッシュまで　きて
+ほんとうに　よかったと　おもってるの▼
+だって　キミに　あえて
+あたしの　せかいは　ひろがったから！</language>
+		<language name="JPN_KANJI" width="256">シロナ『なんだか　思い出しちゃった▼
+もっともっと　いろんな所で
+いろんな　人　いろんな　ポケモンに▽
+出会ってほしい　って▼
+きみに　そっくりの　トレーナーに
+伝えたことが　あるの▼
+あたしも　とおく　イッシュまで　きて
+本当に　よかったと　思ってるの▼
+だって　キミに　会えて
+あたしの　世界は　広がったから！</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_spring_02_01" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♀
+・春イベント：パターン2
+・はい/いいえ選択肢表示
+・はい→spring_02_02
+　いいえ→spring_02_03</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『……ポケモンも　ひとも
+その　いのちを　かがやかせるには▼
+ぜんしんぜんれいで
+つよい　あいてに　いどむことなの▼
+だから　あたしも　きみと
+たたかいたいけど　いいかしら？</language>
+		<language name="JPN_KANJI" width="256">シロナ『……ポケモンも　人も
+その命を　輝かせるには▼
+全身全霊で
+強い　相手に　挑むことなの▼
+だから　あたしも　きみと
+戦いたいけど　いいかしら？</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_spring_02_02" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♀
+・春イベント：パターン2
+・はい選択時
+　メッセージ後、トレーナー戦闘に
+　dpchampion_01</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『おたがいの　いとおしい
+ポケモンを　つうじて▽
+きみのこと　もっと　しるつもりよ！▼</language>
+		<language name="JPN_KANJI" width="256">シロナ『お互いの　愛おしい
+ポケモンを　通じて▽
+きみのこと　もっと　知るつもりよ！▼</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_spring_02_03" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♀
+・春イベント：パターン2
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『……ちょっと　がっかり▼
+キミとなら　これまでよりも
+たかい　ステージでの▽
+たたかいが　できそうなのに！▼
+そう　もっともっと
+いのちを　かがやかせられるはず……</language>
+		<language name="JPN_KANJI" width="256">シロナ『……ちょっと　がっかり▼
+キミとなら　これまでよりも
+高い　ステージでの▽
+戦いが　できそうなのに！▼
+そう　もっともっと
+命を　輝かせられるはず……</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_spring_02_04" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♀
+・春イベント：パターン2
+・いいえ選択後、再度会話
+・はい/いいえ選択肢表示
+・はい→spring_02_02
+　いいえ→spring_02_03</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『どうかしら？▼
+いのちを　かがやかせるため
+あたしも　きみと　ぜんりょくで▽
+たたかいたいけど　いいかしら？</language>
+		<language name="JPN_KANJI" width="256">シロナ『どうかしら？▼
+命を　輝かせるため
+あたしも　きみと　全力で▽
+戦いたいけど　いいかしら？</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_spring_02_05" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♀
+・春イベント：パターン2
+・戦闘後</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『あいてが　トレーナーなら 
+しょうぶすれば　どんなひとか　わかる▼
+どんな　ポケモンに
+どんな　わざを　おぼえさせているのか▽
+どうぐは　なにを　もたせているのか▽
+そのとき　ことばは　いらないの……▼
+だから　きみ！　あたしのことを
+もっと　しりたければ▽
+ぜひ　シンオウちほうに　きてね！</language>
+		<language name="JPN_KANJI" width="256">シロナ『相手が　トレーナーなら 
+勝負すれば　どんなひとか　わかる▼
+どんな　ポケモンに
+どんな　技を　覚えさせているのか▽
+道具は　なにを　持たせているのか▽
+そのとき　言葉は　いらないの……▼
+だから　きみ！　あたしのことを
+もっと　知りたければ▽
+ぜひ　シンオウ地方に　来てね！</language>
+	</row>
+
+	<row id="msg_t04r0401_bigfour4_spring_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・ランダムメッセージその１
+・その日固定</comment>
+		<attribute name="キャラ指定">BIGFOUR4
+カトレア</attribute>
+		<language name="JPN" width="256">カトレア『かりメッセージ　その１</language>
+		<language name="JPN_KANJI" width="256">カトレア『仮メッセージ　その１</language>
+	</row>
+
+	<row id="msg_t04r0401_bigfour4_spring_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・ランダムメッセージその２
+・その日固定</comment>
+		<attribute name="キャラ指定">BIGFOUR4
+カトレア</attribute>
+		<language name="JPN" width="256">カトレア『かりメッセージ　その２</language>
+		<language name="JPN_KANJI" width="256">カトレア『仮メッセージ　その２</language>
+	</row>
+
+	<row id="msg_t04r0401_bigfour4_spring_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・ランダムメッセージその３
+・その日固定</comment>
+		<attribute name="キャラ指定">BIGFOUR4
+カトレア</attribute>
+		<language name="JPN" width="256">カトレア『かりメッセージ　その３</language>
+		<language name="JPN_KANJI" width="256">カトレア『仮メッセージ　その３</language>
+	</row>
+
+	<row id="msg_t04r0401_bigfour4_spring_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・ランダムメッセージその４
+・その日固定</comment>
+		<attribute name="キャラ指定">BIGFOUR4
+カトレア</attribute>
+		<language name="JPN" width="256">カトレア『かりメッセージ　その４</language>
+		<language name="JPN_KANJI" width="256">カトレア『仮メッセージ　その４</language>
+	</row>
+
+	<row id="msg_t04r0401_bigfour4_spring_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・ランダムメッセージその５
+・その日固定</comment>
+		<attribute name="キャラ指定">BIGFOUR4
+カトレア</attribute>
+		<language name="JPN" width="256">カトレア『かりメッセージ　その５</language>
+		<language name="JPN_KANJI" width="256">カトレア『仮メッセージ　その５</language>
+	</row>
+
+	<row id="msg_t04r0401_bigfour1_spring_01" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその１
+・その日固定</comment>
+		<attribute name="キャラ指定">BIGFOUR1
+シキミ</attribute>
+		<language name="JPN" width="256">シキミ『かりメッセージ　その１</language>
+		<language name="JPN_KANJI" width="256">シキミ『仮メッセージ　その１</language>
+	</row>
+
+	<row id="msg_t04r0401_bigfour1_spring_02" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその２
+・その日固定</comment>
+		<attribute name="キャラ指定">BIGFOUR1
+シキミ</attribute>
+		<language name="JPN" width="256">シキミ『かりメッセージ　その２</language>
+		<language name="JPN_KANJI" width="256">シキミ『仮メッセージ　その２</language>
+	</row>
+
+	<row id="msg_t04r0401_bigfour1_spring_03" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその３
+・その日固定</comment>
+		<attribute name="キャラ指定">BIGFOUR1
+シキミ</attribute>
+		<language name="JPN" width="256">シキミ『かりメッセージ　その３</language>
+		<language name="JPN_KANJI" width="256">シキミ『仮メッセージ　その３</language>
+	</row>
+
+	<row id="msg_t04r0401_bigfour1_spring_04" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその４
+・その日固定</comment>
+		<attribute name="キャラ指定">BIGFOUR1
+シキミ</attribute>
+		<language name="JPN" width="256">シキミ『かりメッセージ　その４</language>
+		<language name="JPN_KANJI" width="256">シキミ『仮メッセージ　その４</language>
+	</row>
+
+	<row id="msg_t04r0401_bigfour1_spring_05" back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその５
+・その日固定</comment>
+		<attribute name="キャラ指定">BIGFOUR1
+シキミ</attribute>
+		<language name="JPN" width="256">シキミ『かりメッセージ　その５</language>
+		<language name="JPN_KANJI" width="256">シキミ『仮メッセージ　その５</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_summer_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ランダムメッセージその１
+・その日固定</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『かりメッセージ　その１</language>
+		<language name="JPN_KANJI" width="256">シロナ『仮メッセージ　その１</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_summer_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ランダムメッセージその２
+・その日固定</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『かりメッセージ　その２</language>
+		<language name="JPN_KANJI" width="256">シロナ『仮メッセージ　その２</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_summer_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ランダムメッセージその３
+・その日固定</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『かりメッセージ　その３</language>
+		<language name="JPN_KANJI" width="256">シロナ『仮メッセージ　その３</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_summer_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ランダムメッセージその４
+・その日固定</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『いまよりも
+つよくなるために　ひつようなこと？▼
+それは　ずっとずっと 
+ポケモンを　すきで　いることかな▼
+じぶんが　そうだったから
+こんなことしか　いえないけど……</language>
+		<language name="JPN_KANJI" width="256">シロナ『今よりも
+強くなるために　必要なこと？▼
+それは　ずっとずっと 
+ポケモンを　好きで　いることかな▼
+自分が　そうだったから
+こんなことしか　いえないけど……</language>
+	</row>
+
+	<row id="msg_t04r0401_shirona_summer_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ランダムメッセージその５
+・その日固定</comment>
+		<attribute name="キャラ指定">SHIRONA
+シロナ</attribute>
+		<language name="JPN" width="256">シロナ『……うーん▼
+むずかしいわね▼
+あれこれ　よくばっちゃって
+たくさんの　みずぎを　もってきたら▽
+どれに　するか　えらべないの……</language>
+		<language name="JPN_KANJI" width="256">シロナ『……うーん▼
+難しいわね▼
+あれこれ　よくばっちゃって
+たくさんの　水着を　持ってきたら▽
+どれに　するか　選べないの……</language>
+	</row>
+
+	<row id="msg_t04r0401_leader8w_summer_01" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその１
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER8W
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『かりメッセージ　その１</language>
+		<language name="JPN_KANJI" width="256">アイリス『仮メッセージ　その１</language>
+	</row>
+
+	<row id="msg_t04r0401_leader8w_summer_02" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその２
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER8W
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『かりメッセージ　その２</language>
+		<language name="JPN_KANJI" width="256">アイリス『仮メッセージ　その２</language>
+	</row>
+
+	<row id="msg_t04r0401_leader8w_summer_03" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその３
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER8W
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『かりメッセージ　その３</language>
+		<language name="JPN_KANJI" width="256">アイリス『仮メッセージ　その３</language>
+	</row>
+
+	<row id="msg_t04r0401_leader8w_summer_04" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその４
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER8W
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『かりメッセージ　その４</language>
+		<language name="JPN_KANJI" width="256">アイリス『仮メッセージ　その４</language>
+	</row>
+
+	<row id="msg_t04r0401_leader8w_summer_05" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその５
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER8W
+アイリス</attribute>
+		<language name="JPN" width="256">アイリス『かりメッセージ　その５</language>
+		<language name="JPN_KANJI" width="256">アイリス『仮メッセージ　その５</language>
+	</row>
+
+	<row id="msg_t04r0401_leader6_summer_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ランダムメッセージその１
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER6
+フウロ</attribute>
+		<language name="JPN" width="256">フウロ『かりメッセージ　その１</language>
+		<language name="JPN_KANJI" width="256">フウロ『仮メッセージ　その１</language>
+	</row>
+
+	<row id="msg_t04r0401_leader6_summer_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ランダムメッセージその２
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER6
+フウロ</attribute>
+		<language name="JPN" width="256">フウロ『かりメッセージ　その２</language>
+		<language name="JPN_KANJI" width="256">フウロ『仮メッセージ　その２</language>
+	</row>
+
+	<row id="msg_t04r0401_leader6_summer_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ランダムメッセージその３
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER6
+フウロ</attribute>
+		<language name="JPN" width="256">フウロ『かりメッセージ　その３</language>
+		<language name="JPN_KANJI" width="256">フウロ『仮メッセージ　その３</language>
+	</row>
+
+	<row id="msg_t04r0401_leader6_summer_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ランダムメッセージその４
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER6
+フウロ</attribute>
+		<language name="JPN" width="256">フウロ『かりメッセージ　その４</language>
+		<language name="JPN_KANJI" width="256">フウロ『仮メッセージ　その４</language>
+	</row>
+
+	<row id="msg_t04r0401_leader6_summer_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ランダムメッセージその５
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER6
+フウロ</attribute>
+		<language name="JPN" width="256">フウロ『かりメッセージ　その５</language>
+		<language name="JPN_KANJI" width="256">フウロ『仮メッセージ　その５</language>
+	</row>
+
+	<row id="msg_t04r0401_leader4_summer_01" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその１
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">カミツレ『かりメッセージ　その１</language>
+		<language name="JPN_KANJI" width="256">カミツレ『仮メッセージ　その１</language>
+	</row>
+
+	<row id="msg_t04r0401_leader4_summer_02" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその２
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">カミツレ『かりメッセージ　その２</language>
+		<language name="JPN_KANJI" width="256">カミツレ『仮メッセージ　その２</language>
+	</row>
+
+	<row id="msg_t04r0401_leader4_summer_03" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその３
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">カミツレ『かりメッセージ　その３</language>
+		<language name="JPN_KANJI" width="256">カミツレ『仮メッセージ　その３</language>
+	</row>
+
+	<row id="msg_t04r0401_leader4_summer_04" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその４
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">カミツレ『かりメッセージ　その４</language>
+		<language name="JPN_KANJI" width="256">カミツレ『仮メッセージ　その４</language>
+	</row>
+
+	<row id="msg_t04r0401_leader4_summer_05" back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+		<comment>♀
+・ランダムメッセージその５
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER4
+カミツレ</attribute>
+		<language name="JPN" width="256">カミツレ『かりメッセージ　その５</language>
+		<language name="JPN_KANJI" width="256">カミツレ『仮メッセージ　その５</language>
+	</row>
+
+	<row id="msg_t04r0401_leader2_summer_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ランダムメッセージその１
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER2
+アロエ</attribute>
+		<language name="JPN" width="256">アロエ『かりメッセージ　その１</language>
+		<language name="JPN_KANJI" width="256">アロエ『仮メッセージ　その１</language>
+	</row>
+
+	<row id="msg_t04r0401_leader2_summer_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ランダムメッセージその２
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER2
+アロエ</attribute>
+		<language name="JPN" width="256">アロエ『かりメッセージ　その２</language>
+		<language name="JPN_KANJI" width="256">アロエ『仮メッセージ　その２</language>
+	</row>
+
+	<row id="msg_t04r0401_leader2_summer_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ランダムメッセージその３
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER2
+アロエ</attribute>
+		<language name="JPN" width="256">アロエ『かりメッセージ　その３</language>
+		<language name="JPN_KANJI" width="256">アロエ『仮メッセージ　その３</language>
+	</row>
+
+	<row id="msg_t04r0401_leader2_summer_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ランダムメッセージその４
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER2
+アロエ</attribute>
+		<language name="JPN" width="256">アロエ『かりメッセージ　その４</language>
+		<language name="JPN_KANJI" width="256">アロエ『仮メッセージ　その４</language>
+	</row>
+
+	<row id="msg_t04r0401_leader2_summer_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・ランダムメッセージその５
+・その日固定</comment>
+		<attribute name="キャラ指定">LEADER2
+アロエ</attribute>
+		<language name="JPN" width="256">アロエ『かりメッセージ　その５</language>
+		<language name="JPN_KANJI" width="256">アロエ『仮メッセージ　その５</language>
 	</row>
 
 	<flowchart-group-list>
