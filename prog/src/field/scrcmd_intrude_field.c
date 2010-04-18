@@ -55,6 +55,11 @@ typedef struct{
   INTRUDE_EVENT_MSGWORK iem;
 }EVENT_MISSION_START_WAIT;
 
+///ミッションリスト受信制御構造体
+typedef struct{
+  INTRUDE_EVENT_MSGWORK iem;
+}EVENT_MISSION_CHOICE_LIST;
+
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -107,8 +112,11 @@ VMCMD_RESULT EvCmdIntrudeMissionChoiceListReq( VMHANDLE *core, void *wk )
 static GMEVENT * EVENT_Intrude_MissionChoiceListReq(GAMESYS_WORK * gsys)
 {
   GMEVENT *event;
+  EVENT_MISSION_CHOICE_LIST *emcl;
   
-  event = GMEVENT_Create( gsys, NULL, _event_MissionChoiceListReq, 0 );
+  event = GMEVENT_Create( gsys, NULL, _event_MissionChoiceListReq, sizeof(EVENT_MISSION_CHOICE_LIST) );
+  emcl = GMEVENT_GetEventWork(event);
+  
   return event;
 }
 
@@ -131,6 +139,7 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
 {
   GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
   GAME_COMM_SYS_PTR game_comm= GAMESYSTEM_GetGameCommSysPtr(gsys);
+  EVENT_MISSION_CHOICE_LIST *emcl = work;
   INTRUDE_COMM_SYS_PTR intcomm;
   enum{
     SEQ_INIT,
@@ -138,18 +147,24 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
     SEQ_LIST_RECEIVE_WAIT,
     SEQ_MONOLITH_STATUS_REQ,
     SEQ_MONOLITH_STATUS_RECEIVE_WAIT,
+    SEQ_MSG_WAIT,
+    SEQ_MSG_LAST_KEY_WAIT,
   };
   
   intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL){
+  if(intcomm == NULL && (*seq) > SEQ_INIT && (*seq) < SEQ_MSG_WAIT){
     OS_TPrintf("intcomm=NULL!! ミッション選択候補リストは取得できない\n");
-    return GMEVENT_RES_FINISH;
+    *seq = SEQ_MSG_WAIT;
   }
   
   switch( *seq ){
   case SEQ_INIT:
     MISSION_Init_List(&intcomm->mission); //手元のリストは初期化
     IntrudeField_MonolithStatus_Init(&intcomm->monolith_status);
+
+	  IntrudeEventPrint_SetupMainMenu(&talk->ccew.iem, gsys);
+    IntrudeEventPrint_Print(&emsw->iem, msg_invasion_mission_sys005, 0, 0);
+
     if(GFL_NET_GetConnectNum() <= 1){
       OS_TPrintf("ミッションリスト：一人のため、受信はしない\n");
       return GMEVENT_RES_FINISH;  //自分一人の時はこのままFINISH
@@ -174,6 +189,18 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
     break;
   case SEQ_MONOLITH_STATUS_RECEIVE_WAIT:
     if(IntrudeField_MonolithStatus_CheckOcc(&intcomm->monolith_status) == TRUE){
+      return GMEVENT_RES_FINISH;
+    }
+    break;
+  
+  case SEQ_MSG_WAIT:
+    if(IntrudeEventPrint_WaitStream(&emcl->iem) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_MSG_LAST_KEY_WAIT:
+    if(IntrudeEventPrint_LastKeyWait(&emcl->iem) == TRUE){
+      IntrudeEventPrint_ExitFieldMsg(&emsw->iem);
       return GMEVENT_RES_FINISH;
     }
     break;

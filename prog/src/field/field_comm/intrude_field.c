@@ -1260,7 +1260,7 @@ GMEVENT * IntrudeField_CheckSecretItemEvent(GAMESYS_WORK *gsys, INTRUDE_COMM_SYS
     	MMDL_GRIDPOS grid_pos;
     	
       MMDL_GetGridPos( fmmdl, &grid_pos );
-      if(IntrudeSecretItemPosDataTbl[d_item->secret_pos_tblno].zone_id == zone_id
+      if(IntrudeSecretItemReverseZoneTbl[d_item->secret_pos_tblno] == zone_id
           && IntrudeSecretItemPosDataTbl[d_item->secret_pos_tblno].grid_x == grid_pos.gx
           && IntrudeSecretItemPosDataTbl[d_item->secret_pos_tblno].grid_y == grid_pos.gy
           && IntrudeSecretItemPosDataTbl[d_item->secret_pos_tblno].grid_z == grid_pos.gz){

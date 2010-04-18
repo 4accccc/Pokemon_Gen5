@@ -30,9 +30,10 @@ class SECRET_DATA
     @grid_y = "0"              #グリッドY
     @grid_z = "0"              #グリッドZ
     @zone_id = "0"             #ゾーンID
+    @reverse_zone_id = "0"     #裏ゾーンID
   end
 
-  attr_accessor :no, :grid_x, :grid_y, :grid_z, :zone_id;
+  attr_accessor :no, :grid_x, :grid_y, :grid_z, :zone_id, :reverse_zone_id;
 end
 
 
@@ -83,6 +84,8 @@ def CsvConvFileCheck()
     cell += 1;
     SecretData[s].zone_id = line[cell];
     cell += 1;
+    SecretData[s].reverse_zone_id = line[cell];
+    cell += 1;
 
     s += 1;
     $secret_data_max = s;
@@ -123,6 +126,17 @@ def DataFileOutput()
       file.printf("\t{%s, %s, %s, %s},\t\t//%d\n", SecretData[i].grid_x, SecretData[i].grid_y, SecretData[i].grid_z, SecretData[i].zone_id, i);
     end
     
+    file.printf("};\n");
+
+
+    file.printf("\n\n///侵入隠しアイテム配置データの裏フィールドゾーンIDテーブル\n");
+    file.printf("//  ※IntrudeSecretItemPosDataTbl[3].zone_idの裏フィールドのゾーンIDはIntrudeSecretItemReverseZoneTbl[3]、となる\n");
+    file.printf("const u16 IntrudeSecretItemReverseZoneTbl[] = {\n");
+
+    for i in 0..SecretData.size-1
+      file.printf("\t%s,\t\t//%d\n", SecretData[i].reverse_zone_id, i);
+    end
+
     file.printf("};\n");
   }
 

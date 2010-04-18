@@ -578,9 +578,10 @@ static void GameCommSub_SeqSet(GAME_COMM_SUB_WORK *sub_work, u8 seq)
  * @param   comm_net_id		    このステータス対象のnetID
  * @param   zone_id		        comm_net_idのプレイヤーが今いるゾーンID
  * @param   invasion_netid		comm_net_idのプレイヤーが侵入しているROMのnetID
+ * @param   first_status      TRUE:初めてセットするステータス　FALSE:2回目以降
  */
 //==================================================================
-void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZONEID zone_id, u8 invasion_netid)
+void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZONEID zone_id, u8 invasion_netid, BOOL first_status)
 {
   GAME_COMM_PLAYER_STATUS *player_status = &gcsp->player_status[comm_net_id];
   ZONEID old, now;
@@ -600,7 +601,9 @@ void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZON
   if(player_status->invasion_netid != invasion_netid){
     player_status->old_invasion_netid = player_status->invasion_netid;
     player_status->invasion_netid = invasion_netid;
-    GameCommInfo_MessageEntry_IntrudePalace(gcsp, comm_net_id, invasion_netid);
+    if(first_status == FALSE){
+      GameCommInfo_MessageEntry_IntrudePalace(gcsp, comm_net_id, invasion_netid);
+    }
   }
 }
 

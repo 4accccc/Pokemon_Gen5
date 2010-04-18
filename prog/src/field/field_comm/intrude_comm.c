@@ -414,7 +414,7 @@ void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork
   //マップ切り替えで通信プレイヤーの位置反映の貯め、Statusの更新を行う
   for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
     if(net_id != my_net_id && (intcomm->recv_profile & (1 << net_id))){
-      Intrude_SetPlayerStatus(intcomm, net_id, &intcomm->intrude_status[net_id]);
+      Intrude_SetPlayerStatus(intcomm, net_id, &intcomm->intrude_status[net_id], FALSE);
     }
   }
 }

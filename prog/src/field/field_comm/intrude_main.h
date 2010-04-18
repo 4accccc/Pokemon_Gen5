@@ -88,7 +88,7 @@ extern BOOL Intrude_SetSendStatus(INTRUDE_COMM_SYS_PTR intcomm);
 extern void Intrude_SetProfile(
   INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_PROFILE *profile);
 extern void Intrude_SetPlayerStatus(
-  INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_STATUS *sta);
+  INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_STATUS *sta, BOOL first_status);
 extern void Intrude_InitTalkWork(INTRUDE_COMM_SYS_PTR intcomm, int talk_netid);
 extern BOOL Intrude_SetTalkReq(INTRUDE_COMM_SYS_PTR intcomm, int net_id);
 extern void Intrude_SetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int net_id, INTRUDE_TALK_STATUS talk_status);

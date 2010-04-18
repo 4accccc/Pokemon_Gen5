@@ -531,7 +531,7 @@ void Intrude_SetProfile(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_
   occupy = GAMEDATA_GetOccupyInfo(gamedata, net_id);
   GFL_STD_MemCopy(&profile->occupy, occupy, sizeof(OCCUPY_INFO));
   
-  Intrude_SetPlayerStatus(intcomm, net_id, &profile->status);
+  Intrude_SetPlayerStatus(intcomm, net_id, &profile->status, TRUE);
   
   intcomm->recv_profile |= 1 << net_id;
   OS_TPrintf("プロフィール受信　net_id=%d, recv_bit=%d\n", net_id, intcomm->recv_profile);
@@ -548,9 +548,10 @@ void Intrude_SetProfile(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_
  * @param   intcomm		
  * @param   net_id		
  * @param   sta		
+ * @param   first_status      TRUE:初めてセットするステータス　FALSE:2回目以降
  */
 //==================================================================
-void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_STATUS *sta)
+void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_STATUS *sta, BOOL first_status)
 {
   INTRUDE_STATUS *target_status;
   
@@ -559,7 +560,7 @@ void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INT
 
   //プレイヤーステータスにデータセット　※game_commに持たせているのを変えるかも
   GameCommStatus_SetPlayerStatus(intcomm->game_comm, net_id, target_status->zone_id,
-    target_status->palace_area);
+    target_status->palace_area, first_status);
 
   //座標変換
   if(net_id != GFL_NET_SystemGetCurrentID()){
