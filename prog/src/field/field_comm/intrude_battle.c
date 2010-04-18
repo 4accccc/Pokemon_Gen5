@@ -18,6 +18,7 @@
 #include "intrude_work.h"
 #include "sound/pm_sndsys.h"
 #include "field/intrude_snd_def.h"
+#include "poke_tool/pokeparty.h"
 
 
 //==============================================================================
@@ -28,6 +29,7 @@ typedef struct{
   BATTLE_SETUP_PARAM para;
   u32 work;
   GFL_PROCSYS *procsys;
+  POKEPARTY *pokeparty;
 }INTRUDE_BATTLE_SYS;
 
 
@@ -62,11 +64,23 @@ const GFL_PROC_DATA IntrudeBattleProcData = {
 static GFL_PROC_RESULT IntrudeBattleProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
   INTRUDE_BATTLE_SYS *ibs;
+  INTRUDE_BATTLE_PARENT *ibp = pwk;
+  int i, party_max;
+  POKEMON_PARAM *pp;
   
   ibs = GFL_PROC_AllocWork(proc, sizeof(INTRUDE_BATTLE_SYS), HEAPID_PROC);
   GFL_STD_MemClear(ibs, sizeof(INTRUDE_BATTLE_SYS));
 
   ibs->procsys = GFL_PROC_LOCAL_boot( HEAPID_PROC );
+
+  //手持ちからフラットレベルのPOKEPARTYを作成
+  ibs->pokeparty = PokeParty_AllocPartyWork( HEAPID_PROC );
+  PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(ibp->gsys)), ibs->pokeparty);
+  party_max = PokeParty_GetPokeCount(ibs->pokeparty);
+  for(i = 0; i < party_max; i++){
+    pp = PokeParty_GetMemberPointer( ibs->pokeparty, i );
+    POKETOOL_MakeLevelRevise(pp, ibp->flat_level);
+  }
   
   return GFL_PROC_RES_FINISH;
 }
@@ -97,6 +111,7 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
   switch(*seq){
   case 0:
     BTL_SETUP_Single_Comm(&ibs->para, gamedata, GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, HEAPID_PROC );
+    BATTLE_PARAM_SetPokeParty( &ibs->para, ibs->pokeparty, BTL_CLIENT_PLAYER );
     if(GFL_NET_SystemGetCurrentID() < ibp->target_netid){
       ibs->para.commPos = 0;
     }
@@ -169,7 +184,8 @@ static GFL_PROC_RESULT IntrudeBattleProc_End( GFL_PROC * proc, int * seq, void *
   INTRUDE_BATTLE_SYS *ibs = mywk;
 
   GFL_PROC_LOCAL_Exit( ibs->procsys );
-
+  GFL_HEAP_FreeMemory(ibs->pokeparty);
+  
   GFL_PROC_FreeWork(proc);
   return GFL_PROC_RES_FINISH;
 }

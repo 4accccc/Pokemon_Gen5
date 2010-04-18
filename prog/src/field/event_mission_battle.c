@@ -408,6 +408,7 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     SEQ_BATTLE_AFTER,
     SEQ_BATTLE_AFTER_NEXT,
     SEQ_BATTLE_NG,
+    SEQ_BATTLE_NG_MSG,
     SEQ_TALK_CANCEL,   //‰ï˜bƒLƒƒƒ“ƒZƒ‹
     SEQ_LAST_MSG_WAIT,
     SEQ_MSG_END_BUTTON_WAIT,
@@ -522,6 +523,12 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     break;
 
   case SEQ_BATTLE_NG:
+    if(IntrudeSend_TalkAnswer(
+        intcomm, intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_NG) == TRUE){
+      *seq = SEQ_BATTLE_NG_MSG;
+    }
+    break;
+  case SEQ_BATTLE_NG_MSG:
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
       MissionBattleMsgID.target_battle_ng[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
     (*seq) = SEQ_LAST_MSG_WAIT;
