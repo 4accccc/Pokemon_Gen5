@@ -64,28 +64,6 @@ extern void GFL_NET_SystemDump_Debug(u8* adr, int length, char* pInfoStr);
 // デバッグ用決まり文句----------------------
 #define GFL_IRC_DEBUG   (0)   ///< ユーザーインターフェイスデバッグ用 0:無効 1:有効
 
-#ifndef IRC_PRINT
-#if GFL_IRC_DEBUG
-#define IRC_PRINT(...) \
-  if(GFL_NET_DebugGetPrintOn()) (void) ((OS_TPrintf(__VA_ARGS__)))
-#else   //GFL_IRC_DEBUG
-#define IRC_PRINT(...)           ((void) 0)
-#endif  // GFL_IRC_DEBUG
-#endif
-
-#ifndef LOBBY_PRINT
-#if GFL_LOBBY_DEBUG
-#define LOBBY_PRINT(...) \
-  if(GFL_NET_DebugGetPrintOn()) (void) ((OS_TPrintf(__VA_ARGS__)))
-#else   //GFL_LOBBY_DEBUG
-#define LOBBY_PRINT(...)           ((void) 0)
-#endif  // GFL_LOBBY_DEBUG
-#endif
-
-#ifdef PM_DEBUG
-#define COMMST_DEBUG_WFLBY_START	//デバッグ：広場入室部屋任意に指定可
-#endif
-
 
 /// @brief ネットワーク単体のハンドル
 typedef struct _GFL_NETHANDLE GFL_NETHANDLE;
@@ -1250,6 +1228,7 @@ extern BOOL GFL_NET_IsWifiConnect(void);
  */
 //----------------------------------------------------------------
 extern void GFL_NET_DebugPrintOn(void);
+extern void GFL_NET_DebugPrintOff(void);
 #endif
 
 
