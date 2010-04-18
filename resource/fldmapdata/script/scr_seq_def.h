@@ -8503,13 +8503,13 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
- * 侵入コマンド　ミニモノリス設置
+ * 侵入コマンド　パレス島の通信相手の動作モデル登録
  */
 //--------------------------------------------------------------
-#define _INTRUDE_MINIMONO_SETTING() _ASM_INTRUDE_MINIMONO_SETTING
+#define _INTRUDE_PALACE_MMDL_SETTING() _ASM_INTRUDE_PALACE_MMDL_SETTING
 
-  .macro  _ASM_INTRUDE_MINIMONO_SETTING
-  .short  EV_SEQ_INTRUDE_MINIMONO_SETTING
+  .macro  _ASM_INTRUDE_PALACE_MMDL_SETTING
+  .short  EV_SEQ_INTRUDE_PALACE_MMDL_SETTING
   .endm
 
 //--------------------------------------------------------------

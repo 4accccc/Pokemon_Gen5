@@ -36,10 +36,12 @@
 #include "msg/msg_invasion.h"
 #include "fieldmap/map_matrix.naix"  //MATRIX_ID
 
-#include "intrude_minimono.h"   //DEBUG_INTRUDE_Pokemon_Add
 #include "field/event_intrude.h"
 #include "savedata/symbol_save.h"
 #include "field/event_symbol.h"
+
+#include "field/fldmmdl.h"
+#include "../../../resource/fldmapdata/script/palace01_def.h"  //SCRID_～
 
 
 
@@ -1341,6 +1343,96 @@ void IntrudeField_MonolithStatus_Init(MONOLITH_STATUS *monost)
 BOOL IntrudeField_MonolithStatus_CheckOcc(const MONOLITH_STATUS *monost)
 {
   return monost->occ;
+}
+
+//--------------------------------------------------------------
+// 通信相手のパレスにいる爺さんや4姉妹の動作モデルヘッダー
+//--------------------------------------------------------------
+static const MMDL_HEADER data_MMdlHeader =
+{
+	100,	          ///<識別ID  fldmmdl_code.h
+	                //  スクリプト上でX番の動作モデルをアニメ、といった判別に使用。
+	                //  evファイル上で被らなければよい。
+	OLDMAN1,      	///<表示するOBJコード fldmmdl_code.h
+	MV_DOWN,	      ///<動作コード    
+	EV_TYPE_NORMAL,	///<イベントタイプ
+	0,	            ///<イベントフラグ  タイプ毎に使用されるフラグ。外側から取得する
+	SCRID_PALACE01_OLDMAN1_01,///<イベントID 話しかけた時に起動するスクリプトID(*.ev の _EVENT_DATAの番号)
+	DIR_DOWN,	      ///<指定方向  グリッド移動ならばDIR系 ノングリッドの場合は違う値
+	0,	            ///<指定パラメタ 0  タイプ毎に使用されるパラメタ。外側から取得する
+	0,            	///<指定パラメタ 1
+	0,	            ///<指定パラメタ 2
+	MOVE_LIMIT_NOT,	///<X方向移動制限
+	MOVE_LIMIT_NOT,	///<Z方向移動制限
+  MMDL_HEADER_POSTYPE_GRID,
+  {0},            ///<ポジションバッファ ※check　グリッドマップの場合はここはMMDL_HEADER_GRIDPOS
+};
+
+
+//--------------------------------------------------------------
+/**
+ * 動作モデルをAdd
+ *
+ * @param   fieldWork		
+ * @param   grid_x		グリッド座標X
+ * @param   grid_z		グリッド座標Z
+ * @param   fx_y		  Y座標(fx32)
+ * @param   objcode		  OBJCODE
+ * @param   event_id		イベントID
+ * @param   id		      識別ID
+ */
+//--------------------------------------------------------------
+static void IntrudeField_AddMMdl(FIELDMAP_WORK *fieldWork, u16 grid_x, u16 grid_z, fx32 fx_y, u16 objcode, u16 event_id, u16 id_offset)
+{
+  MMDL_HEADER head;
+  MMDL_HEADER_GRIDPOS *grid_pos;
+  MMDLSYS *mmdl_sys;
+  ZONEID zone_id;
+  
+  mmdl_sys = FIELDMAP_GetMMdlSys( fieldWork );
+  zone_id = FIELDMAP_GetZoneID( fieldWork );
+  
+  head = data_MMdlHeader;
+  head.id += id_offset;
+  head.obj_code = objcode;
+  head.event_id = event_id;
+  grid_pos = (MMDL_HEADER_GRIDPOS *)head.pos_buf;
+  
+  grid_pos->gx = grid_x;
+  grid_pos->gz = grid_z;
+  grid_pos->y = fx_y;
+  
+  MMDLSYS_AddMMdl(mmdl_sys, &head, zone_id);
+}
+
+//==================================================================
+/**
+ * 通信相手のパレスにいる爺さんや4姉妹の動作モデルをまとめて全てAdd
+ *
+ * @param   fieldWork		
+ */
+//==================================================================
+void IntrudeField_PalaceMMdlAllAdd(FIELDMAP_WORK *fieldWork)
+{
+  int i, comm_no;
+  static const struct{
+    u16 objcode;
+    u16 grid_x;
+    u16 grid_z;
+    u16 event_id;
+  }PalaceMmdlData[] = {
+    {OLDMAN1, 29, 30, SCRID_PALACE01_OLDMAN1_01},
+//    {GIRL4, 14, 29, SCRID_PALACE01_GIRL4_01},
+//    {GIRL4, 48, 29, SCRID_PALACE01_GIRL4_02},
+  };
+  
+  for(comm_no = 1; comm_no < FIELD_COMM_MEMBER_MAX; comm_no++){
+    for(i = 0; i < NELEMS(PalaceMmdlData); i++){
+      IntrudeField_AddMMdl(fieldWork, 
+        PalaceMmdlData[i].grid_x + PALACE_MAP_LEN_GRID * comm_no, PalaceMmdlData[i].grid_z, 
+        0x2001f, PalaceMmdlData[i].objcode, PalaceMmdlData[i].event_id, i);
+    }
+  }
 }
 
 

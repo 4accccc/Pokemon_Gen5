@@ -9,7 +9,6 @@
 #include <gflib.h>
 #include "field/fieldmap.h"
 #include "field/fldmmdl.h"
-#include "intrude_minimono.h"
 #include "field/field_const.h"
 #include "intrude_work.h"
 #include "intrude_main.h"

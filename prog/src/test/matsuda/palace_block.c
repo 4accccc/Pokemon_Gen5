@@ -105,7 +105,11 @@ enum{
 
 //読み込む3Dリソース
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
+#if 0 //2010.04.17(土)  不要なグラフィックデータを消した為、使用していたここも削除
 	{ ARCID_PALACE, NARC_palace_cube_nsbmd, GFL_G3D_UTIL_RESARC },
+#else
+  0
+#endif
 };
 
 //3Dオブジェクト設定テーブル

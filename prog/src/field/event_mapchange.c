@@ -2637,6 +2637,17 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
     GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NOGEAR);
     break;
   default:
+    //裏フィールドにいるのに下画面が侵入になっていない場合は侵入にする
+    if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE 
+        && GAMEDATA_GetSubScreenMode(gamedata) != FIELD_SUBSCREEN_INTRUDE){
+      GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_INTRUDE);
+    }
+    //表フィールドにいるのに下画面が侵入になっている時はNORMALにする
+    else if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE 
+        && GAMEDATA_GetSubScreenMode(gamedata) == FIELD_SUBSCREEN_INTRUDE){
+      GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NORMAL);
+    }
+    
     {// 進入かライブチャットかダウジングはそのまま その他の画面は切り替え
       u8 mode = GAMEDATA_GetSubScreenMode(gamedata);
       if((mode != FIELD_SUBSCREEN_INTRUDE) && (mode != FIELD_SUBSCREEN_BEACON_VIEW)

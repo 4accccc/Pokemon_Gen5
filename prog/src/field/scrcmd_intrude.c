@@ -28,7 +28,6 @@
 #include "field_comm\intrude_types.h"
 #include "field_comm\intrude_work.h"
 #include "field_comm\intrude_comm_command.h"
-#include "field/field_comm/intrude_minimono.h"
 #include "field/field_comm/intrude_monolith.h"
 #include "field/field_comm/intrude_mission.h"
 #include "field/field_comm/intrude_message.h"
@@ -66,7 +65,7 @@ static GMEVENT_RESULT _event_IntrudeMissionStart( GMEVENT * event, int * seq, vo
 
 //==================================================================
 /**
- * ミニモノリスセッティング
+ * パレス島の通信相手側にいるNPC動作モデルを登録
  *
  * @param   core		仮想マシン制御構造体へのポインタ
  * @param   wk		
@@ -74,15 +73,14 @@ static GMEVENT_RESULT _event_IntrudeMissionStart( GMEVENT * event, int * seq, vo
  * @retval  VMCMD_RESULT		
  */
 //==================================================================
-VMCMD_RESULT EvCmdIntrudeMinimonoSetting( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdIntrudePalaceMmdlSetting( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   
-  return VMCMD_RESULT_CONTINUE;
-  MINIMONO_AddPosRand(game_comm, fieldWork);
+  IntrudeField_PalaceMMdlAllAdd(fieldWork);
   
   return VMCMD_RESULT_CONTINUE;
 }

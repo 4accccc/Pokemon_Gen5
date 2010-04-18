@@ -500,7 +500,7 @@
   DEF_CMD( EvCmdSelectMusicalPoke, EV_SEQ_SELECT_MUSICAL_POKE )
 
   //êNì¸ä÷òA
-  DEF_CMD( EvCmdIntrudeMinimonoSetting, EV_SEQ_INTRUDE_MINIMONO_SETTING )
+  DEF_CMD( EvCmdIntrudePalaceMmdlSetting, EV_SEQ_INTRUDE_PALACE_MMDL_SETTING )
   DEF_CMD( EvCmdIntrudeMissionStart, EV_SEQ_INTRUDE_MISSION_START )
   DEF_CMD( EvCmdIntrudeConnectMapSetting, EV_SEQ_INTRUDE_CONNECT_MAP_SETTING )
   DEF_CMD( EvCmdCallMonolithProc, EV_SEQ_CALL_MONOLITH_PROC )

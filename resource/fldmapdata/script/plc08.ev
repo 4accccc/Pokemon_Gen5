@@ -37,7 +37,7 @@ _EVENT_DATA_END
 /**************************************************************/
 INIT_EVENT_START	ev_init_plc08
   //ƒ~ƒjƒ‚ƒmƒŠƒX“o˜^
-  _INTRUDE_MINIMONO_SETTING()
+  //_INTRUDE_MINIMONO_SETTING()
 INIT_EVENT_END
 
 /**************************************************************/

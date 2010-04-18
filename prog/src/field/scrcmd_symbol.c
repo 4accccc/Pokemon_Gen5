@@ -31,7 +31,6 @@
 #include "symbol_map.h"
 #include "symbol_pokemon.h"
 
-#include "field_comm/intrude_minimono.h"
 #include "field/intrude_symbol.h"
 #include "field_comm/intrude_work.h"    //Intrude_Check_CommConnect
 

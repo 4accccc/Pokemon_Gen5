@@ -67,6 +67,7 @@ extern BOOL IntrudeField_GetPalaceTownZoneID(u16 zone_id, VecFx32 *vec);
 extern const PALACE_ZONE_SETTING * IntrudeField_GetZoneSettingData(u16 zone_id);
 extern void IntrudeField_MonolithStatus_Init(MONOLITH_STATUS *monost);
 extern BOOL IntrudeField_MonolithStatus_CheckOcc(const MONOLITH_STATUS *monost);
+extern void IntrudeField_PalaceMMdlAllAdd(FIELDMAP_WORK *fieldWork);
 
 
 //--------------------------------------------------------------

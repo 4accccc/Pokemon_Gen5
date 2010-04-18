@@ -26,6 +26,7 @@
 
 void PalaceDraw_LoadTex(u32 destAddress, u32 destPlttAddress)
 {
+#if 0 //2010.04.17(土)  不要なグラフィックデータを消した為、使用していたここも削除
 //	ARCHANDLE *hdl;
 	int i;
 	void *tex, *pltt;
@@ -59,6 +60,7 @@ void PalaceDraw_LoadTex(u32 destAddress, u32 destPlttAddress)
 	GFL_HEAP_FreeMemory(tex);
 	GFL_HEAP_FreeMemory(pltt);
 //	GFL_ARC_CloseDataHandle(hdl);
+#endif
 }
 
 
