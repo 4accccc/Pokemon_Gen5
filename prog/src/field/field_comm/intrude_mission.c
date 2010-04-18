@@ -684,7 +684,6 @@ static void MISSION_SetMissionFail(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM 
   result->mission_fail = TRUE;
   mission->result_send_req = TRUE;
   mission->send_mission_start = _SEND_MISSION_START_NULL;
-  MISSION_ClearMissionEntry(intcomm, mission);
   OS_TPrintf("ミッション失敗をセット\n");
 }
 
