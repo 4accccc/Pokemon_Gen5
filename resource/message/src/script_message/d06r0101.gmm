@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T18:27:04"/>
+	<create user="matsumiya" host="W00224" date="2010-04-18T19:53:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1287" top="191" right="1992" bottom="819" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -364,7 +364,8 @@
 ・pos（GRIDX=6~8、GRIDZ=55）を踏むと
 　主人公の上下にダークトリニティ出現
 ・続けてninja_01a</comment>
-		<attribute name="キャラ指定">ダークトリニティ</attribute>
+		<attribute name="キャラ指定">ＮＩＮＪＡ
+ダークトリニティ</attribute>
 		<language name="JPN" width="256">……　……　……▼
 ……　……　こい▼</language>
 		<language name="JPN_KANJI" width="256">……　……　……▼
@@ -379,7 +380,8 @@
 ・上記座標で、主人公を上向き＆Nは下向き
 ・メッセージ表示、ダークトリニティ削除
 ・続けてboss_10</comment>
-		<attribute name="キャラ指定">ダークトリニティ</attribute>
+		<attribute name="キャラ指定">ＮＩＮＪＡ
+ダークトリニティ</attribute>
 		<language name="JPN" width="256">……　……　……▼
 Ｎさま　つれてきました▼</language>
 		<language name="JPN_KANJI" width="256">……　……　……▼
@@ -745,7 +747,8 @@
 　主人公を囲むようにダークトリニティ3人出現
 ・そのままGRIDX=58、GRIDZ=41~42まで連れ歩き
 　（移動速度はやい：要調整）</comment>
-		<attribute name="キャラ指定">ダークトリニティ</attribute>
+		<attribute name="キャラ指定">ＮＩＮＪＡ
+ダークトリニティ</attribute>
 		<language name="JPN" width="256">……　……　……▼
 ……　……　こい▼</language>
 		<language name="JPN_KANJI" width="256">……　……　……▼
@@ -756,7 +759,8 @@
 		<comment>♂
 ・上記の所定位置につくと
 　メッセージ表示後に3人を削除</comment>
-		<attribute name="キャラ指定">ダークトリニティ</attribute>
+		<attribute name="キャラ指定">ＮＩＮＪＡ
+ダークトリニティ</attribute>
 		<language name="JPN" width="256">……　……　……▼
 ……　……　このさきに
 したに　おりる　かいだんが　ある▼

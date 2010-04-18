@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-13T11:51:22"/>
+	<create user="matsumiya" host="W00224" date="2010-04-18T20:08:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="656" top="277" right="1156" bottom="1078" maximized="no" rayout="Vertical2">
+	<dialog left="1471" top="12" right="2188" bottom="759" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1268" top="743" right="1741" bottom="1141" visible="yes"/>
-		<band id="0" index="1" style="0000" width="492"/>
+		<tag-palette left="807" top="626" right="1280" bottom="1024" visible="yes"/>
+		<band id="0" index="1" style="0000" width="542"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="492"/>
-		<band id="4" index="0" style="0000" width="591"/>
+		<band id="3" index="4" style="0000" width="382"/>
+		<band id="4" index="0" style="0000" width="709"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -291,6 +291,159 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_h03_ninja_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>♂
+・このイベントが終わるまで
+　暴走族イベントは発生しない
+・pos起動
+　GRIDZ=50を踏むと
+　ダークトリニティ３人出現しメッセージ表示
+・表示後、主人公を誘導する
+・続けてninja_02</comment>
+		<attribute name="キャラ指定">ＮＩＮＪＡ
+ダークトリニティ</attribute>
+		<language name="JPN" width="256">……　……　……▼
+……　……　こい▼</language>
+		<language name="JPN_KANJI" width="256">……　……　……▼
+……　……　来い▼</language>
+	</row>
+
+	<row id="msg_h03_ninja_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>♂
+・GRIDX=15、GRIDZ=42まで誘導
+・ダークトリニティ３人はゲーチスの
+　後ろの列に移動すると
+・続けて
+　sage1_01w　か
+　sage1_01b</comment>
+		<attribute name="キャラ指定">ＮＩＮＪＡ
+ダークトリニティ</attribute>
+		<language name="JPN" width="256">……　……　……▼
+ゲーチスさま　つれてきました▼</language>
+		<language name="JPN_KANJI" width="256">……　……　……▼
+ゲーチスさま　連れてきました▼</language>
+	</row>
+
+	<row id="msg_h03_sage1_01w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・WHITEver
+・GRIDX=15、GRIDZ=40で待機
+・続けてsage1_02</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『みごと
+ダークストーンを　てにしたようですね▼
+どうです？
+あなたも　えいゆうに　なりませんか？▼</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『みごと
+ダークストーンを　手にしたようですね▼
+どうです？
+あなたも　英雄に　なりませんか？▼</language>
+	</row>
+
+	<row id="msg_h03_sage1_01b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・BLACKver
+・続けてsage1_02</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『みごと
+ライトストーンを　てにしたようですね▼
+どうです？
+あなたも　えいゆうに　なりませんか？▼</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『みごと
+ライトストーンを　手にしたようですね▼
+どうです？
+あなたも　英雄に　なりませんか？▼</language>
+	</row>
+
+	<row id="msg_h03_sage1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・右へ２歩移動、下向きでメッセージ表示
+・続けてsage1_03</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">いいですか？▼
+１００にんの　うち
+たった　ひとりが▽
+あなたを　えいゆう　といっても▽
+だれも　きにしない　しんじない▼</language>
+		<language name="JPN_KANJI" width="256">いいですか？▼
+１００人の　うち
+たった　１人が▽
+あなたを　英雄といっても▽
+だれも　気にしない　信じない▼</language>
+	</row>
+
+	<row id="msg_h03_sage1_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・左へ４歩移動、下向きでメッセージ表示
+・続けてsage1_04</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">……ですが▼
+１００００にん　のうち
+１００にんが　そろって▽
+あなたを　えいゆう　といえば▽
+まわりも　きにして　あなたをみます▼
+それが　２００にん……
+５００にん……　１０００にんと▽
+ふえていけば　むし　できなくなる▼</language>
+		<language name="JPN_KANJI" width="256">……ですが▼
+１００００人　のうち
+１００人が　そろって▽
+あなたを　英雄といえば▽
+周りも　気にして　あなたをみます▼
+それが　２００人……
+５００人……　１０００人と▽
+増えていけば　無視できなくなる▼</language>
+	</row>
+
+	<row id="msg_h03_sage1_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・右へ２歩移動、下向きでメッセージ表示
+・続けてsage1_05</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">さすれば　あなたを　えいゆうと
+しんじる　にんげんも　でましょう！▼
+これが！　せかいを　あやつる
+シンプルな　ほうほう　なのです！▼</language>
+		<language name="JPN_KANJI" width="256">さすれば　あなたを　英雄と
+信じる　人間も　でましょう！▼
+これが！　世界を　操る
+シンプルな　方法なのです！▼</language>
+	</row>
+
+	<row id="msg_h03_sage1_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・メッセージ表示後、r09方面に移動
+・画面外に消えると
+　ダークトリニティの動作モデル、芝居後に削除
+・すべてが消えると
+　主人公操作可能に</comment>
+		<attribute name="キャラ指定">七賢人
+ゲーチス</attribute>
+		<language name="JPN" width="256">イッシュの　でんせつが
+しんじつだろうが　ウソだろうが▽
+ワタクシには　かんけい　ないのです▼
+ワタクシが　でんせつを
+しんじつ　にすれば　いいだけのこと！▼
+もちろん　Ｎさまは
+ほんものの　えいゆうに　なられる▽
+おかた　ですがね……▼
+では　ワタクシは　いきますよ▼</language>
+		<language name="JPN_KANJI" width="256">イッシュの　伝説が
+真実だろうが　ウソだろうが▽
+ワタクシには　関係ないのです▼
+ワタクシが　伝説を
+真実にすれば　いいだけのこと！▼
+もちろん　Ｎさまは
+本物の　英雄に　なられる▽
+お方　ですがね……▼
+では　ワタクシは　いきますよ▼</language>
+	</row>
 
 	<row id="msg_h03_fighterw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
