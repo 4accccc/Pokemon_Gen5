@@ -57,7 +57,9 @@ typedef struct{
 
 ///ミッションリスト受信制御構造体
 typedef struct{
-  INTRUDE_EVENT_MSGWORK iem;
+  GFL_MSGDATA *msgData;
+  FLDMSGWIN *msgWin;
+  WORDSET *wordset;
 }EVENT_MISSION_CHOICE_LIST;
 
 
@@ -141,6 +143,7 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
   GAME_COMM_SYS_PTR game_comm= GAMESYSTEM_GetGameCommSysPtr(gsys);
   EVENT_MISSION_CHOICE_LIST *emcl = work;
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   INTRUDE_COMM_SYS_PTR intcomm;
   enum{
     SEQ_INIT,
@@ -170,16 +173,28 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
       MISSION_Init_List(&intcomm->mission); //手元のリストは初期化
       IntrudeField_MonolithStatus_Init(&intcomm->monolith_status);
     }
-
-	  IntrudeEventPrint_SetupFieldMsg(&emcl->iem, gsys);
+    
+    {
+      FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
+      emcl->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
+      emcl->msgWin = FLDMSGWIN_AddTalkWin( msgBG, emcl->msgData );
+      emcl->wordset = WORDSET_Create(HEAPID_PROC);
+    }
 
 	  if(intcomm == NULL || Intrude_GetPalaceArea(intcomm) == GAMEDATA_GetIntrudeMyID(gamedata)){
-      IntrudeEventPrint_Print(&emcl->iem, plc_mono_01, 0, 0);
+      FLDMSGWIN_Print( emcl->msgWin, 0, 0, plc_mono_01 );
     }
     else{
+      STRBUF *expand_buf = GFL_STR_CreateBuffer(256, HEAPID_FIELDMAP);
+      STRBUF *src_buf = GFL_MSG_CreateString( emcl->msgData, plc_mono_02 );
+      
       WORDSET_RegisterPlayerName( 
-        emcl->iem.wordset, 0, Intrude_GetMyStatus( intcomm, Intrude_GetPalaceArea(intcomm) ) );
-      IntrudeEventPrint_Print(&emcl->iem, plc_mono_02, 0, 0);
+        emcl->wordset, 0, Intrude_GetMyStatus( intcomm, Intrude_GetPalaceArea(intcomm) ) );
+      WORDSET_ExpandStr(emcl->wordset, expand_buf, src_buf);
+      FLDMSGWIN_PrintStrBuf( emcl->msgWin, 0, 0, expand_buf );
+      
+      GFL_STR_DeleteBuffer(src_buf);
+      GFL_STR_DeleteBuffer(expand_buf);
     }
 
     if(GFL_NET_GetConnectNum() <= 1){
@@ -212,13 +227,15 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
     break;
   
   case SEQ_MSG_WAIT:
-    if(IntrudeEventPrint_WaitStream(&emcl->iem) == TRUE){
+    if( FLDMSGWIN_CheckPrintTrans(emcl->msgWin) == TRUE ){
       (*seq)++;
     }
     break;
   case SEQ_MSG_LAST_KEY_WAIT:
-    if(IntrudeEventPrint_LastKeyWait() == TRUE){
-      IntrudeEventPrint_ExitFieldMsg(&emcl->iem);
+    if( GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY ){
+      WORDSET_Delete(emcl->wordset);
+      FLDMSGWIN_Delete( emcl->msgWin );
+      GFL_MSG_Delete( emcl->msgData );
       (*seq)++;
     }
     break;
