@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-17T18:49:37"/>
+	<create user="matsumiya" host="W00224" date="2010-04-18T14:24:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -373,6 +373,32 @@
 		<comment>♀
 ・戦闘後、フィールドに復帰して自動で表示
 ・続けてwhite_01</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">チェレン『……すごいね　きみは▼
+すなおに　そう　おもうよ▼
+……さあ　ポケモンを
+げんきに　してあげないとね▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……すごいね　きみは▼
+すなおに　そう　おもうよ▼
+……さあ　ポケモンを
+元気に　してあげないとね▼</language>
+	</row>
+
+	<row id="msg_r10_black_04a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・システムウインドウ
+・回復処理
+・続けてblack_04b</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">チェレンは　ベルの　ポケモンを
+かいふく　させた！▼</language>
+		<language name="JPN_KANJI" width="256">チェレンは　ベルの　ポケモンを
+回復させた！▼</language>
+	</row>
+
+	<row id="msg_r10_black_04b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……いまの　ぼくでは
