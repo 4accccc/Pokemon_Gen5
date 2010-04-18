@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T22:30:35"/>
+	<create user="matsumiya" host="W00224" date="2010-04-18T14:53:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1287" top="150" right="1992" bottom="778" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -369,6 +369,22 @@
 おはなしできて　たのしかったわ！</language>
 		<language name="JPN_KANJI" width="256">階上で　いろんな　人と
 談笑できて　楽しかったわ！</language>
+	</row>
+
+	<row id="msg_c03r1301_sunglasses1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・GRIDX=3、GRIDZ=3</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
+		<language name="JPN" width="256">どこから　きたの？▼
+……　……　……
+……　……　……▼
+へえ！　カノコタウンねえ
+いい　ところ　じゃん！</language>
+		<language name="JPN_KANJI" width="256">どこから　来たの？▼
+……　……　……
+……　……　……▼
+へえ！　カノコタウンねえ
+いい　ところ　じゃん！</language>
 	</row>
 
 	<flowchart-group-list>

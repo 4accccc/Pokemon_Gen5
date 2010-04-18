@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T16:17:11"/>
+	<create user="matsumiya" host="W00224" date="2010-04-18T15:12:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1287" top="150" right="1992" bottom="778" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -345,6 +345,21 @@
 ジムバッジを　みて[BE:01:ページ切り替え（クリア）]
 この　勝負のことを
 思い出して　ほしいっすね</language>
+	</row>
+
+	<row id="msg_c03r0501_infomationw_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・GRIDX=4、GRIDZ=13、右向き</comment>
+		<attribute name="キャラ指定">INFOMATIONW
+受付</attribute>
+		<language name="JPN" width="256">ようこそ　いらっしゃいませ！
+ホドモエ　ポケモンジムへ！▼
+こちらの　ジムは　リフトで
+いどう　してくださいませ！</language>
+		<language name="JPN_KANJI" width="256">ようこそ　いらっしゃいませ！
+ホドモエ　ポケモンジムへ！▼
+こちらの　ジムは　リフトで
+移動してくださいませ！</language>
 	</row>
 
 	<row id="msg_c05gym0201_swicth_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">

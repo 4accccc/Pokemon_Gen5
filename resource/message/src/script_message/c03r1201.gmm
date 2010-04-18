@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T15:54:12"/>
+	<create user="matsumiya" host="W00224" date="2010-04-18T14:50:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="37" top="167" right="742" bottom="795" maximized="no" rayout="Vertical2">
+	<dialog left="1556" top="303" right="2261" bottom="931" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -366,7 +366,7 @@
 不思議なかたまり　なのです</language>
 	</row>
 
-	<row id="msg_c03r1201_businessman1_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_c03r1201_businessman1_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -379,15 +379,24 @@
 なかなか　難しいなあ</language>
 	</row>
 
-	<row id="msg_c03r1201_businessman2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+	<row id="msg_c03r1201_businessman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+		<language name="JPN" width="256">トレーナーの　かわりに
+ポケモンを　そだてる　サービスは▽
+いけると　おもいませんか？▼
+なに？　３ばんどうろに
+そだてやさんが　あるんだって！？</language>
+		<language name="JPN_KANJI" width="256">トレーナーの　代わりに
+ポケモンを　育てる　サービスは▽
+いけると　思いませんか？▼
+なに？　３番道路に
+育て屋さんが　あるんだって！？</language>
 	</row>
 
-	<row id="msg_c03r1201_man1_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_c03r1201_man1_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MAN1</attribute>
@@ -399,7 +408,7 @@
 不思議な力を　備えているんだ</language>
 	</row>
 
-	<row id="msg_c03r1201_woman1_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_c03r1201_woman1_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
@@ -418,6 +427,16 @@
 ミネズミ</attribute>
 		<language name="JPN" width="256">きりっ！！</language>
 		<language name="JPN_KANJI" width="256">きりっ！！</language>
+	</row>
+
+	<row id="msg_c03r1201_olidman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・カウンター内をうろうろさせる</comment>
+		<attribute name="キャラ指定">OLDMAN1</attribute>
+		<language name="JPN" width="256">ううむ！　いい！
+アーティの　えは　いい！！</language>
+		<language name="JPN_KANJI" width="256">ううむ！　いい！
+アーティの　絵画は　いい！！</language>
 	</row>
 
 	<flowchart-group-list>
