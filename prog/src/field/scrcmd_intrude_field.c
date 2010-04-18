@@ -138,6 +138,7 @@ static GMEVENT * EVENT_Intrude_MissionChoiceListReq(GAMESYS_WORK * gsys)
 static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, void * work )
 {
   GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
   GAME_COMM_SYS_PTR game_comm= GAMESYSTEM_GetGameCommSysPtr(gsys);
   EVENT_MISSION_CHOICE_LIST *emcl = work;
   INTRUDE_COMM_SYS_PTR intcomm;
@@ -149,6 +150,7 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
     SEQ_MONOLITH_STATUS_RECEIVE_WAIT,
     SEQ_MSG_WAIT,
     SEQ_MSG_LAST_KEY_WAIT,
+    SEQ_FINISH,
   };
   
   intcomm = Intrude_Check_CommConnect(game_comm);
@@ -159,15 +161,31 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
   
   switch( *seq ){
   case SEQ_INIT:
-    MISSION_Init_List(&intcomm->mission); //手元のリストは初期化
-    IntrudeField_MonolithStatus_Init(&intcomm->monolith_status);
+	  if(NetErr_App_CheckError()){
+      *seq = SEQ_FINISH;  //エラーが発生している時はメッセージを出さずに終了
+      break;
+    }
 
-	  IntrudeEventPrint_SetupMainMenu(&talk->ccew.iem, gsys);
-    IntrudeEventPrint_Print(&emsw->iem, msg_invasion_mission_sys005, 0, 0);
+    if(intcomm != NULL){
+      MISSION_Init_List(&intcomm->mission); //手元のリストは初期化
+      IntrudeField_MonolithStatus_Init(&intcomm->monolith_status);
+    }
+
+	  IntrudeEventPrint_SetupFieldMsg(&emcl->iem, gsys);
+
+	  if(intcomm == NULL || Intrude_GetPalaceArea(intcomm) == GAMEDATA_GetIntrudeMyID(gamedata)){
+      IntrudeEventPrint_Print(&emcl->iem, plc_mono_01, 0, 0);
+    }
+    else{
+      WORDSET_RegisterPlayerName( 
+        emcl->iem.wordset, 0, Intrude_GetMyStatus( intcomm, Intrude_GetPalaceArea(intcomm) ) );
+      IntrudeEventPrint_Print(&emcl->iem, plc_mono_02, 0, 0);
+    }
 
     if(GFL_NET_GetConnectNum() <= 1){
       OS_TPrintf("ミッションリスト：一人のため、受信はしない\n");
-      return GMEVENT_RES_FINISH;  //自分一人の時はこのままFINISH
+      *seq = SEQ_MSG_WAIT;
+      break;
     }
     (*seq)++;
     //break;
@@ -189,7 +207,7 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
     break;
   case SEQ_MONOLITH_STATUS_RECEIVE_WAIT:
     if(IntrudeField_MonolithStatus_CheckOcc(&intcomm->monolith_status) == TRUE){
-      return GMEVENT_RES_FINISH;
+      *seq = SEQ_MSG_WAIT;
     }
     break;
   
@@ -199,11 +217,13 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
     }
     break;
   case SEQ_MSG_LAST_KEY_WAIT:
-    if(IntrudeEventPrint_LastKeyWait(&emcl->iem) == TRUE){
-      IntrudeEventPrint_ExitFieldMsg(&emsw->iem);
-      return GMEVENT_RES_FINISH;
+    if(IntrudeEventPrint_LastKeyWait() == TRUE){
+      IntrudeEventPrint_ExitFieldMsg(&emcl->iem);
+      (*seq)++;
     }
     break;
+  case SEQ_FINISH:
+    return GMEVENT_RES_FINISH;
   }
 
   return GMEVENT_RES_CONTINUE;
