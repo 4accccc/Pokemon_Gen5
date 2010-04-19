@@ -23,6 +23,7 @@
 #include "app/dendou_pc.h"
 #include "demo/command_demo.h"
 #include "demo/dendou_demo.h"
+#include "demo/staff_roll.h"
 #include "../../battle/app/vs_multi_list.h"
 
 #include "arc_def.h"  //ARCID_MESSAGE
@@ -35,7 +36,7 @@
 //============================================================================================
 //  定数定義
 //============================================================================================
-#define TOP_MENU_SIZ  ( 15 )
+#define TOP_MENU_SIZ  ( 16 )
 
 typedef struct {
   u32 main_seq;
@@ -93,6 +94,8 @@ enum {
 
   MAIN_SEQ_DENDOU_PC,
   MAIN_SEQ_DENDOU_DEMO,
+
+  MAIN_SEQ_STAFF_ROLL,
 
   MAIN_SEQ_POKEICON,
 
@@ -312,7 +315,7 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     if( wk->vsl_data.ptPP != NULL ){
       GFL_HEAP_FreeMemory( wk->vsl_data.ptPP );
     }
-    OS_Printf( "nakahiroデバッグ処理終了しました\n" );
+//    OS_Printf( "nakahiroデバッグ処理終了しました\n" );
     return GFL_PROC_RES_FINISH;
 
 
@@ -493,6 +496,11 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		wk->ddemo_data.mystatus = GAMEDATA_GetMyStatus( wk->gamedata );
 		wk->ddemo_data.ptime    = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(wk->gamedata) );
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(dendou_demo), &DENDOUDEMO_ProcData, &wk->ddemo_data );
+    wk->main_seq = MAIN_SEQ_END;
+		break;
+
+	case MAIN_SEQ_STAFF_ROLL:
+    GFL_PROC_SysCallProc( FS_OVERLAY_ID(staff_roll), &STAFFROLL_ProcData, NULL );
     wk->main_seq = MAIN_SEQ_END;
 		break;
 

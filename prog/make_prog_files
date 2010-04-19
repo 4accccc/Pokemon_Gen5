@@ -1791,6 +1791,13 @@ SRCS_OVERLAY_DENDOU_DEMO =  demo/dendou_demo/dendou_demo.c \
 							demo/dendou_demo/ddemo_seq.c \
 							demo/dendou_demo/ddemo_obj.c
 
+# スタッフロール
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> GROUP_OVERLAY_UNION_INTRUDE
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_STAFF_ROLL =   demo/staff_roll/staff_roll.c \
+							demo/staff_roll/staff_roll_main.c
+
 #バトルレコーダーバトル＋ブラウザ部分
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
