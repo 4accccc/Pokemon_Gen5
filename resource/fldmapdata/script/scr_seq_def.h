@@ -4468,6 +4468,34 @@
     .short  EV_SEQ_REBOOT_BEACON_SEARCH
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _DISABLE_NETWORK_IN_IMPORTANT_EVENT
+ * @brief 重要イベント中の通信遮断処理
+ */
+//--------------------------------------------------------------
+#define _DISABLE_NETWORK_IN_IMPORTANT_EVENT() \
+    _ASM_DISABLE_NETWORK_IN_IMPORTANT_EVENT
+
+    .macro  _ASM_DISABLE_NETWORK_IN_IMPORTANT_EVENT
+    .short  EV_SEQ_DISABLE_FIELD_COMM
+    .endm
+
+
+//--------------------------------------------------------------
+/**
+ * @def _ENABLE_NETWORK_IN_IMPORTANT_EVENT
+ * @brief 重要イベント中の通信遮断からの復帰処理
+ */
+//--------------------------------------------------------------
+#define _ENABLE_NETWORK_IN_IMPORTANT_EVENT()  \
+    _ASM_ENABLE_NETWORK_IN_IMPORTANT_EVENT
+
+    .macro  _ASM_ENABLE_NETWORK_IN_IMPORTANT_EVENT
+    .short  EV_SEQ_ENABLE_FIELD_COMM
+    .endm
+
+
 //======================================================================
 //  プログラム管理データの取得・セット
 //======================================================================
