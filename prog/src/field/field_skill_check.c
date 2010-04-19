@@ -82,70 +82,15 @@ const u16 FIELD_SKILL_CHECK_GetUseSkillBit( GAMEDATA *gameData )
 //--------------------------------------------------------------
 const FIELD_SKILL_CHECK_RET FIELD_SKILL_CHECK_CheckForgetSkill( GAMEDATA *gameData , const u16 wazaNo , HEAPID heapId )
 {
-  const u16 useSkillBit = FIELD_SKILL_CHECK_GetUseSkillBit( gameData );
-  MYITEM_PTR myItem = GAMEDATA_GetMyItem( gameData );
   switch( wazaNo )
   {
   case WAZANO_IAIGIRI:
-    if( MYITEM_CheckItem( myItem , ITEM_WAZAMASIN94 , 1 , heapId ) == FALSE )
-    {
-      return FSCR_NO_MACHINE;
-    }
-    break;
   case WAZANO_KAIRIKI:
-    if( MYITEM_CheckItem( myItem , ITEM_WAZAMASIN95 , 1 , heapId ) == FALSE )
-    {
-      return FSCR_NO_MACHINE;
-    }
-    if( useSkillBit & FSCB_KAIRIKI )
-    {
-      return FSCR_USE_SKILL;
-    }
-    break;
   case WAZANO_NAMINORI:
-    if( MYITEM_CheckItem( myItem , ITEM_WAZAMASIN96 , 1 , heapId ) == FALSE )
-    {
-      return FSCR_NO_MACHINE;
-    }
-    if( (useSkillBit & FSCB_NAMINORI) ||
-        (useSkillBit & FSCB_DIVING))
-    {
-      return FSCR_USE_SKILL;
-    }
-    break;
   case WAZANO_SORAWOTOBU:
-    if( MYITEM_CheckItem( myItem , ITEM_WAZAMASIN97 , 1 , heapId ) == FALSE )
-    {
-      return FSCR_NO_MACHINE;
-    }
-    break;
   case WAZANO_DAIBINGU:
-    if( MYITEM_CheckItem( myItem , ITEM_WAZAMASIN98 , 1 , heapId ) == FALSE )
-    {
-      return FSCR_NO_MACHINE;
-    }
-    if( (useSkillBit & FSCB_DIVING) )
-    {
-      return FSCR_USE_SKILL;
-    }
-    break;
   case WAZANO_TAKINOBORI:
-    if( MYITEM_CheckItem( myItem , ITEM_WAZAMASIN99 , 1 , heapId ) == FALSE )
-    {
-      return FSCR_NO_MACHINE;
-    }
-    break;
-  case WAZANO_IWAKUDAKI:
-    if( MYITEM_CheckItem( myItem , ITEM_WAZAMASIN100 , 1 , heapId ) == FALSE )
-    {
-      return FSCR_NO_MACHINE;
-    }
-    break;
-  case WAZANO_HURASSYU:
-    if( useSkillBit & FSCB_FLASH )
-    {
-      return FSCR_USE_SKILL;
-    }
+    return FSCR_HIDEN;
     break;
   }
   
@@ -166,9 +111,7 @@ const BOOL FIELD_SKILL_CHECK_CanTradePoke( POKEMON_PASO_PARAM *ppp , HEAPID heap
         wazaNo == WAZANO_NAMINORI ||
         wazaNo == WAZANO_SORAWOTOBU ||
         wazaNo == WAZANO_DAIBINGU ||
-        wazaNo == WAZANO_TAKINOBORI ||
-        wazaNo == WAZANO_IWAKUDAKI ||
-        wazaNo == WAZANO_HURASSYU )
+        wazaNo == WAZANO_TAKINOBORI )
     {
       return FALSE;
     }

@@ -1972,6 +1972,12 @@ static void PSTATUS_SKILL_DispForgetError( PSTATUS_WORK *work , PSTATUS_SKILL_WO
   skillWork->isUpdateStrForgetError = TRUE;
   
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(skillWork->upBmpWin[PSBT_FORGET_ERROR]) , 0 );
+  if( skillRet == FSCR_HIDEN )
+  {
+    PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_FORGET_ERROR] , mes_status_06_30 ,
+                             0 , 0 , PSTATUS_STR_COL_WHITE );
+  }
+  /*
   if( skillRet == FSCR_NO_MACHINE )
   {
     PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_FORGET_ERROR] , mes_status_06_30 ,
@@ -1982,7 +1988,7 @@ static void PSTATUS_SKILL_DispForgetError( PSTATUS_WORK *work , PSTATUS_SKILL_WO
     PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_FORGET_ERROR] , mes_status_06_31 ,
                              0 , 0 , PSTATUS_STR_COL_WHITE );
   }
-  
+  */
   PMSND_PlaySystemSE(PSTATUS_SND_ERROR);
 }
 //--------------------------------------------------------------
