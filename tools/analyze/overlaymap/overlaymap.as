@@ -73,7 +73,7 @@
 	sdim temp3, 512
 	sdim temp4, 256
 	sdim mapfile, 1000000		;マップファイルの読み込みバッファ
-	sdim xmapfile,15000000
+	sdim xmapfile,20000000
 	sdim dotbuf,  1000000		; Graphviz用生成バッファ
 	sdim filename, 512
 
@@ -378,6 +378,7 @@
 		}
 	loop
 	if hitflag=0{
+		title ""+temp
 		dialog "下から500行探したけどみつからなかったよ",0
 		goto *main
 	}
