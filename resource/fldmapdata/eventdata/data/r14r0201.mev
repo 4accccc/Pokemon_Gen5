@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/19 12:10:15
+#save date:2010/04/19 20:51:28
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r14r0201.wms
 #SECTION START:OBJ_EVENT
@@ -543,7 +543,7 @@ WK_SCENE_R14R0201_LEG
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-88 80 -40
+88 72 -40
 #size
 3 1
 #Map Event List Data End
