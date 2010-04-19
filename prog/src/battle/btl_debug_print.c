@@ -168,7 +168,12 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_NET_RecvAITrainerData:    return "AIトレーナーデータ受信完了, trID=%d\n";
   case DBGSTR_NET_AIPartyInfo:          return "Client(%d)=AIパーティと判断する (pokeCnt=%d)\n  monsno=";
   case DBGSTR_NET_CreateAIPartyRecvBuffer: return "AIパーティデータ受信バッファを生成\n";
-  case DBGSTR_NET_RecvedAIPartyData:     return "AIパーティデータ受信 clientID=%d\n";
+  case DBGSTR_NET_RecvedAIPartyData:       return "AIパーティデータ受信 clientID=%d\n";
+  case DBGSTR_NET_PrappVoiceGetBufDisable:  return "ペラップボイス受信バッファ構築（無効データ）netID=%d\n";
+  case DBGSTR_NET_PrappVoiceGetBufEnable:   return "ペラップボイス受信バッファ構築（有効データ）netID=%d\n";
+  case DBGSTR_NET_PerappVoiceRecvedEnable:  return "ペラップボイス受信完了（有効データ）netID=%d, size=%d\n";
+  case DBGSTR_NET_PerappVoiceRecvedDisable: return "ペラップボイス受信完了（無効データ）netID=%d, empty=%d\n";
+  case DBGSTR_NET_PerappVoiceCheckRaw:      return "ペラップボイス受信チェック: ClientID:%d = netID:%d\n";
 
   case DBGSTR_CALCDMG_WazaParam:        return "ワザ情報：ID=%d, Type=%d\n";
   case DBGSTR_CALCDMG_BaseDamage:       return "基礎ダメージ値 (%d)\n";

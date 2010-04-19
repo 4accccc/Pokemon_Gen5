@@ -1348,7 +1348,6 @@ void  BTLV_MCSS_OverwriteMAW( BTLV_MCSS_WORK *bmw, BtlvMcssPos pos, MCSS_ADD_WOR
 //============================================================================================
 void  BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position )
 {
-  PMV_REF pmvRef;
   int pan;
   int index = BTLV_MCSS_GetIndex( bmw, position );
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
@@ -1394,18 +1393,19 @@ void  BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position )
   }
 
 
-  // @todo ペラップ声未対応  taya
-  if( ( position & 1 ) == 0 )
+  // ペラップボイス情報をmainModuleから取得
   {
-    PMV_MakeRefDataMine( &pmvRef );
-  }
-  else
-  {
-    PMV_MakeRefDataMine( &pmvRef );
-  }
+    const BTL_MAIN_MODULE* mainModule = BTLV_EFFECT_GetMainModule();
+    PMV_REF  refBody;
+    PMV_REF* pRef = &refBody;
 
-  PMVOICE_Play( bmw->btlv_mcss[ index ].param.mons_no, bmw->btlv_mcss[ index ].param.form_no,
-                pan, FALSE, 0, 0, FALSE, (u32)&pmvRef );
+    if( !BTL_MAIN_SetPmvRef(mainModule, position, &refBody) ){
+      pRef = NULL;
+    }
+
+    PMVOICE_Play( bmw->btlv_mcss[ index ].param.mons_no, bmw->btlv_mcss[ index ].param.form_no,
+                  pan, FALSE, 0, 0, FALSE, (u32)pRef );
+  }
 }
 
 //============================================================================================
@@ -1469,7 +1469,7 @@ void  BTLV_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int positi
  */
 //============================================================================================
 void  BTLV_MCSS_SetAnime( BTLV_MCSS_WORK* bmw, int position, int anm_no )
-{ 
+{
   int index = BTLV_MCSS_GetIndex( bmw, position );
 
   GF_ASSERT( position < BTLV_MCSS_POS_TOTAL );
@@ -2199,7 +2199,7 @@ static  fx32  BTLV_MCSS_GetDefaultScale( BTLV_MCSS_WORK* bmw, BtlvMcssPos positi
   else
   {
     if( position < BTLV_MCSS_POS_TR_AA )
-    { 
+    {
       if( position & 1 )
       {
         scale = BTLV_MCSS_ORTHO_SCALE_ENEMY;
@@ -2210,7 +2210,7 @@ static  fx32  BTLV_MCSS_GetDefaultScale( BTLV_MCSS_WORK* bmw, BtlvMcssPos positi
       }
     }
     else
-    { 
+    {
       scale = BTLV_MCSS_ORTHO_SCALE_ENEMY;
     }
   }

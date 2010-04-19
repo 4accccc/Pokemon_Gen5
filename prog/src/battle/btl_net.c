@@ -481,22 +481,33 @@ BOOL BTL_NET_IsCompleteNotifyPartyData( void )
 /*----------------------------------------------------------------------------------------------------*/
 /* ペラップボイス                                                                                     */
 /*----------------------------------------------------------------------------------------------------*/
-// ペラップボイス送信開始（全マシン相互）
+
+/**
+ *  ペラップボイス送受信用意
+ */
+void BTL_NET_SetupPerappVoice( void )
+{
+  recvBuf_ClearAll();
+  clearAllTmpBuffer();
+}
+/**
+ * ペラップボイス送信開始（全マシン相互）
+ */
 BOOL BTL_NET_StartNotifyPerappVoice( const PERAPVOICE* pvoice )
 {
   u32 size;
   const void* data;
 
   if( PERAPVOICE_GetExistFlag(pvoice) ){
-    size = PERAPVOICE_DATA_LENGTH;
-    data = PERAPVOICE_GetVoiceData( pvoice );
+    size = PERAPVOICE_GetWorkSize();
+    data = (const void*)pvoice;
   }else{
     size = PERAPP_DISABLE_DATA_SIZE;
     data = &(Sys->sendBuf);
     Sys->sendBuf.val32 = 0;
   }
 
-  return GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_PARTY_DATA,
+  return GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_PERAPP_VOICE,
         size,
         data,
         FALSE,  // 優先度を高くする
@@ -510,16 +521,14 @@ static u8* getbuf_perappVoice( int netID, void* pWork, int size )
 {
   GF_ASSERT(Sys->tmpRecvBuf[ netID ] == NULL);
 
-  recvBuf_ClearAll();
-
   if( size == PERAPP_DISABLE_DATA_SIZE )
   {
-    OS_TPrintf("netID=%d, ペラップボイスなし\n", netID);
+    BTL_N_Printf( DBGSTR_NET_PrappVoiceGetBufDisable, netID );
     return recvBuf_getBufAdrs( &Sys->recvClient[ netID ] );
   }
   else
   {
-    OS_TPrintf("netID=%d, ペラップボイスあり\n", netID);
+    BTL_N_Printf( DBGSTR_NET_PrappVoiceGetBufEnable, netID );
     Sys->tmpRecvBuf[ netID ] = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(Sys->heapID), size );
     return Sys->tmpRecvBuf[ netID ];
   }
@@ -530,10 +539,12 @@ static void recv_perappVoice( const int netID, const int size, const void* pData
   if( size == PERAPP_DISABLE_DATA_SIZE )
   {
     recvBuf_setRecvedSize( &Sys->recvClient[netID], size );
+    BTL_N_Printf( DBGSTR_NET_PerappVoiceRecvedDisable,  netID, recvBuf_isEmpty(&Sys->recvClient[netID]) );
   }
   else
   {
     Sys->tmpLargeBufUsedSize[ netID ] = size;
+    BTL_N_Printf( DBGSTR_NET_PerappVoiceRecvedEnable, netID, size );
   }
 }
 /**
@@ -547,14 +558,16 @@ BOOL BTL_NET_IsCompletePerappVoice( void )
   {
     if( IsBattleConnectNetID(i) )
     {
-      if( recvBuf_isEmpty(&Sys->recvClient[i])
-      &&  (Sys->tmpLargeBufUsedSize[i] == 0)
-      ){
-        return FALSE;
+      if( recvBuf_isEmpty(&Sys->recvClient[i]) )
+      {
+        if( Sys->tmpLargeBufUsedSize[i] == 0 )
+        {
+          return FALSE;
+        }
       }
     }
   }
-  BTL_N_Printf( DBGSTR_NET_PartyDataComplete, Sys->memberCount );
+  BTL_N_Printf( DBGSTR_NET_PerappVoiceComplete, Sys->memberCount );
   return TRUE;
 }
 /**
@@ -563,6 +576,9 @@ BOOL BTL_NET_IsCompletePerappVoice( void )
 const void* BTL_NET_GetPerappVoiceRaw( u8 clientID )
 {
   u8 netID = clientIDtoNetID( clientID );
+
+  BTL_N_Printf( DBGSTR_NET_PerappVoiceCheckRaw, clientID, netID );
+
   if( netID != NETID_NULL )
   {
     if( Sys->tmpLargeBufUsedSize[netID] != 0 ){

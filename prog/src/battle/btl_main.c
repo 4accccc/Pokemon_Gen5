@@ -1551,6 +1551,7 @@ static BOOL setupseq_comm_notify_perap_voice( BTL_MAIN_MODULE* wk, int* seq )
 
   switch( *seq ){
   case 0:
+    BTL_NET_SetupPerappVoice();
     BTL_NET_TimingSyncStart( BTL_NET_TIMING_NOTIFY_PERAPP_VOICE );
     (*seq)++;
     break;
@@ -1582,11 +1583,13 @@ static BOOL setupseq_comm_notify_perap_voice( BTL_MAIN_MODULE* wk, int* seq )
           const void* voiceRaw = BTL_NET_GetPerappVoiceRaw( i );
           if( voiceRaw ){
             wk->perappVoice[ i ] = PERAPVOICE_AllocWork( wk->heapID );
-            PERAPVOICE_SetVoiceData( wk->perappVoice[ i ], (const s8*)voiceRaw );
+            GFL_STD_MemCopy( voiceRaw, (void*)(wk->perappVoice[i]), PERAPVOICE_GetWorkSize() );
             BTL_N_Printf( DBGSTR_MAIN_PerappVoiceAdded, i );
           }
         }
       }
+
+      BTL_NET_QuitNotifyPerappVoice();
       (*seq)++;
     }
     break;
@@ -3821,6 +3824,29 @@ BOOL BTL_MAIN_CheckFrontPoke( BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pok
   }
   return FALSE;
 }
+//=============================================================================================
+/**
+ * ポケモンボイスパラメータを設定
+ *
+ * @param   wk
+ * @param   pRef
+ *
+ * @retval  BOOL    正しく設定できた場合（ペラップ録音データがある場合）TRUE
+ */
+//=============================================================================================
+BOOL BTL_MAIN_SetPmvRef( const BTL_MAIN_MODULE* wk, BtlvMcssPos vpos, PMV_REF* pRef )
+{
+  BtlPokePos pos = BTL_MAIN_ViewPosToBtlPos( wk, vpos );
+  u8 clientID = BTL_MAIN_BtlPosToClientID( wk, pos );
+
+  if( wk->perappVoice[ clientID ] ){
+    pRef->perapVoice = wk->perappVoice[ clientID ];
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
 
 //=============================================================================================
 /**

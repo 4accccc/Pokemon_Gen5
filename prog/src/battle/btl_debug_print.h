@@ -126,6 +126,11 @@ typedef enum {
   DBGSTR_NET_AIPartyInfo,
   DBGSTR_NET_CreateAIPartyRecvBuffer,
   DBGSTR_NET_RecvedAIPartyData,
+  DBGSTR_NET_PrappVoiceGetBufDisable,
+  DBGSTR_NET_PrappVoiceGetBufEnable,
+  DBGSTR_NET_PerappVoiceCheckRaw,
+  DBGSTR_NET_PerappVoiceRecvedEnable,
+  DBGSTR_NET_PerappVoiceRecvedDisable,
 
   DBGSTR_CALCDMG_BaseDamage,
   DBGSTR_CALCDMG_WazaParam,

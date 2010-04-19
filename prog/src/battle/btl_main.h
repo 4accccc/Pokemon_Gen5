@@ -3,6 +3,7 @@
 
 #include "savedata/perapvoice.h"
 #include "savedata/record.h"
+#include "sound/pm_wb_voice.h"
 
 #include "btl_main_def.h"
 
@@ -10,7 +11,7 @@
 
 #include "btl_common.h"
 #include "btl_pokeparam.h"
-
+#include "btlv/btlv_mcss.h"
 
 /*------------------------------------------------------------------------------*/
 /* ÉãÅ[ÉãÇ»Ç«äÓñ{èÓïÒ                                                           */
@@ -70,6 +71,8 @@ extern u8 BTL_MAIN_GetFriendCleintID( const BTL_MAIN_MODULE* wk );
 extern u8 BTL_MAIN_GetEnemyClientID( const BTL_MAIN_MODULE* wk, u8 idx );
 extern BtlSide BTL_MAIN_GetPlayerSide( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAINUTIL_IsFriendClientID( u8 clientID_1, u8 clientID_2 );
+
+extern BOOL BTL_MAIN_SetPmvRef( const BTL_MAIN_MODULE* wk, BtlvMcssPos vpos, PMV_REF* pRef );
 
 //-------------------------------------------------------------------------------
 /**
@@ -176,6 +179,7 @@ extern u8 BTL_POKECON_GetClientAlivePokeCount( const BTL_POKE_CONTAINER* pokeCon
 
 extern BtlPokePos BTL_MAIN_ViewPosToBtlPos( const BTL_MAIN_MODULE* wk, u8 vpos );
 extern BOOL BTL_MAIN_CheckFrontPoke( BTL_MAIN_MODULE* wk, const BTL_POKE_CONTAINER* pokeCon, u8 pokeID );
+
 
 
 //-------------------------------------------------------------------------------

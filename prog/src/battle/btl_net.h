@@ -114,6 +114,7 @@ extern BTLNET_AIDATA_CONTAINER*  BTL_NET_AIDC_Create( u32 size, HEAPID heapID );
 extern void BTL_NET_AIDC_Delete( BTLNET_AIDATA_CONTAINER* container );
 extern void BTL_NET_AIDC_SetData( BTLNET_AIDATA_CONTAINER* container, const void* src, u8 clientID );
 
+extern void BTL_NET_SetupPerappVoice( void );
 extern BOOL BTL_NET_StartNotifyPerappVoice( const PERAPVOICE* pvoice );
 extern BOOL BTL_NET_IsCompletePerappVoice( void );
 extern const void* BTL_NET_GetPerappVoiceRaw( u8 clientID );
