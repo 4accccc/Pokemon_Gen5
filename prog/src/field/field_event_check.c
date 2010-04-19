@@ -2639,21 +2639,6 @@ static GMEVENT * getRailChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * f
 //--------------------------------------------------------------
 static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player, const EV_REQUEST * req )
 {
-  RAIL_LOCATION now;
-  RAIL_LOCATION old;
-  const MMDL* cp_mmdl = FIELD_PLAYER_GetMMdl( cp_player );
-
-  
-  MMDL_GetRailLocation( cp_mmdl, &now );
-  MMDL_GetOldRailLocation( cp_mmdl, &old );
-
-  if( GFL_STD_MemComp( &now, &old, sizeof(RAIL_LOCATION) ) == 0 )
-  {
-    return FALSE;
-  }
-  return TRUE;
-
-  /* @todo 4.15 Rom焼きご　対処　レールの出入り口にアトリビュートを置いてもらう。
   const MMDL* cp_mmdl = FIELD_PLAYER_GetMMdl( cp_player );
   
   if( MMDL_HitCheckRailMoveDir( cp_mmdl, req->player_dir ) & (MMDL_MOVEHITBIT_ATTR|MMDL_MOVEHITBIT_LIM) )
@@ -2661,7 +2646,6 @@ static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player, const EV_REQUEST 
     return FALSE;
   }
   return TRUE;
-  //*/
 }
 
 //--------------------------------------------------------------
