@@ -40,6 +40,7 @@ SUBDIRS	=	wmi \
 			field_weather \
 			field_weather_light \
 			field_light \
+			battle\
 			fldmapdata/zonetable/zoneindex \
 			zukan_data \
 			research_radar \
@@ -49,7 +50,6 @@ SUBDIRS	=	wmi \
 			encount \
 			rebattle_trainer \
 			fld3d_ci \
-			battle\
 			fldmapdata\
 			pokegra\
 			net_err\
