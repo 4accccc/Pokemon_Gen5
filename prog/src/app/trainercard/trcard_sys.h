@@ -185,6 +185,8 @@ typedef struct TR_CARD_WORK_tag
   TOUCH_INFO      OldTouch;       // 前回からのポイント履歴
   u8  pen;                        // サインの色(0:黒 1:白）
   u8  card_list_col;              // カード裏面のリスト描画色を黄色にする（0:黒 1:黄色）
+  u8  scroll_se_wait;             // 裏面スクロールのSE用ウェイト
+  u8  sign_se_wait;
 
 }TR_CARD_WORK;
 

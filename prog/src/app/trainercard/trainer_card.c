@@ -291,12 +291,12 @@ static void Stock_TouchPoint( TR_CARD_WORK *wk, int scale_mode );
 static void _BmpWinPrint_Rap(     GFL_BMPWIN * win, void * src,
       int src_x, int src_y, int src_dx, int src_dy,
       int win_x, int win_y, int win_dx, int win_dy );
-static void DrawPoint_to_Line(  GFL_BMPWIN *win, 
+static int DrawPoint_to_Line(  GFL_BMPWIN *win, 
   const u8 *brush, 
   int px, int py, int *sx, int *sy, 
   int count, int flag );
 static void Stock_OldTouch( TOUCH_INFO *all, TOUCH_INFO *stock );
-static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int draw, u8 *SignData, u8 sign_mode );
+static  int DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int draw, u8 *SignData, u8 sign_mode );
 //============================================================================================
 //  グローバル変数
 //============================================================================================
@@ -524,13 +524,20 @@ static void _add_UnionTrNo( TR_CARD_DATA *trCard )
 
 }
 
-static void _scruch_sound_func( TR_CARD_WORK *wk )
+
+#define SIGN_SE_LINES_LIMIT   ( 5 )
+
+static void _sign_se( TR_CARD_WORK *wk, int lines )
 {
-#if 0
-      if (wk->TrCardData->BrushValid){
-        ClearScruchSnd(&wk->ScruchSnd);
-      }
-#endif
+  //OS_Printf("lines=%d, sewait=%d\n", lines, wk->sign_se_wait);
+  if(wk->sign_se_wait!=0){
+    wk->sign_se_wait--;
+  }else{
+    if(lines>SIGN_SE_LINES_LIMIT){
+      wk->sign_se_wait=5;
+      PMSND_PlaySE(SND_TRCARD_SIGN);
+    }
+  }
 }
 
 
@@ -566,9 +573,9 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
       UpdateTextBlink(wk);
 
       if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
-        _scruch_sound_func(wk);
-        DrawBrushLine( (GFL_BMPWIN*)wk->TrSignData, &wk->AllTouchResult, 
-                       &wk->OldTouch, 1, wk->TrSignData, wk->ScaleMode );
+        int line = DrawBrushLine( (GFL_BMPWIN*)wk->TrSignData, &wk->AllTouchResult, 
+                                   &wk->OldTouch, 1, wk->TrSignData, wk->ScaleMode );
+        _sign_se(wk, line);
       }
     }
     break;
@@ -1924,13 +1931,18 @@ static void normal_sign_func( TR_CARD_WORK *wk )
     if(wk->old_scrol_point!=wk->scrol_point){
       wk->card_list_col = 1;
       TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 1, 1 );
+      if(++wk->scroll_se_wait>5){
+        wk->scroll_se_wait =0;
+        PMSND_PlaySE(SND_TRCARD_SLIDE);
+      }
     }
     wk->old_scrol_point=wk->scrol_point;
   }else{
     if(wk->card_list_col==1){
       TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 1, 0 );
       wk->card_list_col = 0;
-    }  
+      wk->scroll_se_wait = 0;
+    }
   }
 }
 
@@ -2688,10 +2700,10 @@ static void _BmpWinPrint_Rap(
  * @param   count   
  * @param   flag    
  *
- * @retval  none    
+ * @retval  lines 
  */
 //------------------------------------------------------------------
-static void DrawPoint_to_Line( 
+static int DrawPoint_to_Line( 
   GFL_BMPWIN *win, 
   const u8 *brush, 
   int px, int py, int *sx, int *sy, 
@@ -2702,11 +2714,12 @@ static void DrawPoint_to_Line(
   int y1 = *sy;
   int x2 = px;
   int y2 = py;
+  int lines = 0;
 
   // 初回は原点保存のみ
   if(count==0 && flag == 0){
     *sx = px;   *sy = py;
-    return;
+    return lines;
   }
   
 
@@ -2718,12 +2731,14 @@ static void DrawPoint_to_Line(
     } else step = (y1 < y2) ? 1: -1;
 
     _BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
+    lines++;
     s = dx >> 1;
     while (++x1 <= x2) {
       if ((s -= dy) < 0) {
         s += dx;  y1 += step;
       };
-    _BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
+      _BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
+      lines++;
     }
   } else {
     if (y1 > y2) {
@@ -2731,18 +2746,21 @@ static void DrawPoint_to_Line(
       s = y1;  y1 = y2;  y2 = s;  x1 = x2;
     } else step = (x1 < x2) ? 1 : -1;
     _BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
+    lines++;
     s = dy >> 1;
     while (++y1 <= y2) {
       if ((s -= dx) < 0) {
         s += dy;  x1 += step;
       }
       _BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
+      lines++;
     }
   }
   
   
   *sx = px;     *sy = py;
 
+  return lines;
 }
 
 static void Stock_OldTouch( TOUCH_INFO *all, TOUCH_INFO *stock )
@@ -2771,13 +2789,16 @@ static void Stock_OldTouch( TOUCH_INFO *all, TOUCH_INFO *stock )
  * @param   draw    メモリ上で行ったCGX変更を転送するか？(0:しない  1:する）
  * @param   SignData    メモリ上のサインデータ
  * @param   sign_mode   拡大モードかどうか（0:通常  1:拡大モード）
+ *
+ * @retval  line        ドットをうった回数
  */
 //----------------------------------------------------------------------------------
-static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int draw, u8 *SignData, u8 sign_mode )
+static int DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int draw, u8 *SignData, u8 sign_mode )
 {
   int px,py,i,r,flag=0, sx, sy, centerling;
+  int line = 0;
 
-//  OS_Printf("id0=%d,id1=%d,id2=%d,id3=%d,id4=%d\n",all[0].size,all[1].size,all[2].size,all[3].size,all[4].size);
+  //OS_Printf("id0=%d,id1=%d,id2=%d,id3=%d,id4=%d\n",all[0].size,all[1].size,all[2].size,all[3].size,all[4].size);
   if(sign_mode==0){
     centerling = 4;
   }else{
@@ -2793,10 +2814,11 @@ static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, in
     px = all->x - OEKAKI_BOARD_POSX*8-centerling;
     py = all->y - OEKAKI_BOARD_POSY*8-2;
       
-//    OS_Printf("sx=%d, sy=%d, px=%d, py=%d\n", sx,sy,px,py);
+    //OS_Printf("sx=%d, sy=%d, px=%d, py=%d\n", sx,sy,px,py);
 
     // BG1面用BMP（お絵かき画像）ウインドウ確保
-    DrawPoint_to_Line(win, sign_brush[sign_mode][all->brush], px, py, &sx, &sy, 0, old->on);
+    line = DrawPoint_to_Line(win, sign_brush[sign_mode][all->brush], px, py, &sx, &sy, 0, old->on);
+    
     flag = 1;
     
   }
@@ -2805,8 +2827,7 @@ static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, in
     // サイングラフィックデータをVRAMに転送
     GFL_BG_LoadCharacter( TRC_BG_SIGN, SignData, SIGN_BYTE_SIZE, SIGN_CGX );
     
-//    OS_Printf("write board %d times\n",debug_count++);
-    //GF_BGL_BmpWinOn( win );
+    //OS_Printf("write board %d times\n",debug_count++);
     
   }
   
@@ -2816,5 +2837,6 @@ static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, in
     all->on = 0;    // 一度描画したら座標情報は捨てる
 //  }
   
+  return line;
 }
 
