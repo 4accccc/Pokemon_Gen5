@@ -51,8 +51,7 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		//マップ遷移後のフェード明け
 		_MAP_FADE_BLACK_IN()
 		_MAP_FADE_END_CHECK()
-		
-		_TIME_WAIT(16)
+				
 		_PLAYER_NAME(0)
 		//博士が喋る
 		//博士（父）：『まさか……	
@@ -66,6 +65,7 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		
 		//サポートが喋る
 		//サポート：『……そんなに
+		//サポートの特殊な振り向きをつくるためのウェイト
 		_OBJ_ANIME(D08_SUPPORT_01,anm_turn_s2)
 		_TIME_WAIT(4)
 		_BALLOONWIN_OBJMSG_POS(msg_d08_white_05, D08_SUPPORT_01,POS_DL)
@@ -84,6 +84,7 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		_OBJ_ANIME_WAIT()
 		
 		//主人公、博士、サポート、ライバル、チャンピオンを振り向く
+		//振り向きに差をつけるためのウェイト
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_common_turn_d)
 		_TIME_WAIT(2)
 		_OBJ_ANIME( D08_RIVEL_01,anm_common_turn_d)
@@ -98,7 +99,6 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		//博士が喋る
 		//博士（父）：……アデクではないか
 		_OBJ_ANIME( D08_HAKASE1_01,anm_common_turn_d)
-		_TIME_WAIT(4)
 		_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_07, D08_HAKASE1_01,POS_UR)
 		_BALLOONWIN_CLOSE()
 		_OBJ_ANIME_WAIT()
@@ -113,7 +113,6 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		_BALLOONWIN_OBJMSG_WB( msg_d08_hakase1_08w, msg_d08_hakase1_08b, D08_HAKASE1_01, POS_UR )
 		_BALLOONWIN_CLOSE()
 		
-		_TIME_WAIT(16)
 		//チャンピオンが喋る
 		//チャンピオン：……たしかに
 		_BALLOONWIN_OBJMSG_WB( msg_d08_champion_03w, msg_d08_champion_03b, D08_CHAMPION_01, POS_DR )
@@ -133,13 +132,11 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		_BALLOONWIN_OBJMSG_POS(msg_d08_champion_04, D08_CHAMPION_01,POS_DR)
 		_BALLOONWIN_CLOSE()
 		
-		_TIME_WAIT(8)
 		//博士が喋る
 		//博士（父）：そうか
 		_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_09, D08_HAKASE1_01,POS_UR)
 		_BALLOONWIN_CLOSE()
 		
-		_TIME_WAIT(8)
 		//ハチクが喋る
 		//ハチク：……では
 		_OBJ_ANIME(D08_LEADER7_01,anm_common_turn_r)
@@ -149,8 +146,8 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		_OBJ_ANIME(D08_HAKASE1_01,anm_common_turn_l)
 		_OBJ_ANIME_WAIT()
 
-		_TIME_WAIT(8)	
 		//ハチクと博士が塔内に移動
+		//振り向きに差をつけるためのウェイト
 		_OBJ_ANIME( D08_LEADER7_01,anm_leader7_saru_01)
 		_OBJ_ANIME( D08_HAKASE1_01,anm_hakase1_saru_01)
 		_TIME_WAIT(16)
@@ -163,6 +160,7 @@ EVENT_START	ev_reserve_d08_hakase1_01
 
 		//ライバルが喋る
 		//ライバル：すこしわかった
+		//ライバルとサポート主人公の動きをつくる為のウェイト
 		_OBJ_ANIME(D08_RIVEL_01,anm_turn_s1)
 		_TIME_WAIT(40)
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
@@ -171,24 +169,25 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		_BALLOONWIN_OBJMSG_POS(msg_d08_black_04, D08_RIVEL_01,POS_UR)
 		_OBJ_ANIME_WAIT()
 		_BALLOONWIN_CLOSE()
-
+		
+		//振り向きに差をつけるためのウェイト
 		_TIME_WAIT(4)		
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_d)
 		_TIME_WAIT(4)
 		_OBJ_ANIME_WAIT()
 		_OBJ_ANIME(D08_SUPPORT_01,anm_common_turn_d)
 		
-		_TIME_WAIT(8)
 		//ライバルとチャンピオンがに画面下に移動
+		//ライバルとチャンピオンの動きに差をつけるためのウェイト
 		_OBJ_ANIME( D08_RIVEL_01,anm_rivel_saru_02)
 		_TIME_WAIT(24)
 		_OBJ_ANIME( D08_CHAMPION_01,anm_champion_saru_01)
 		_OBJ_ANIME_WAIT()
 		
+		//振り向きに差をつけるためのウェイト
 		_TIME_WAIT(16)
 		_OBJ_ANIME(D08_SUPPORT_01,anm_common_turn_r)
-		_OBJ_ANIME_WAIT()
-	
+		_OBJ_ANIME_WAIT()	
 		_TIME_WAIT(8)
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)
 		_OBJ_ANIME_WAIT()
@@ -350,24 +349,18 @@ EVENT_START    ev_pos_d08_hakase1_01
 	
 	//プレイヤーの名前を格納
 	_PLAYER_NAME(0)
-/*
-	//サポートがやって来る
-	_OBJ_ANIME( D08_SUPPORT_01,anm_support_come_01)
-	_OBJ_ANIME_WAIT()
-*/	
 	_PLAINWIN_MSG_DOWN(msg_d08_white_00_00)
 	_MSGWIN_CLOSE()
 	 
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
 	_OBJ_ANIME_WAIT()
 	
+	//主人公と博士の振り向きに差をつける	
 	//主人公が振り向く
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_d)
 	_TIME_WAIT(8)
 	_OBJ_ANIME(D08_HAKASE1_01,anm_common_turn_d)
 	_OBJ_ANIME_WAIT()
-	
-	_TIME_WAIT(8)
 	
 	//主人公が移動する
 	//座標による分岐
@@ -384,18 +377,20 @@ EVENT_START    ev_pos_d08_hakase1_01
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come182 )
 	ENDSWITCH	
 		
-	_TIME_WAIT(8)
 	//サポートがやって来る
 	_OBJ_ANIME( D08_SUPPORT_01,anm_support_come_02)
 	_OBJ_ANIME_WAIT()
 	
+	//振り向きに差をつけるためのウェイト
 	_OBJ_ANIME(D08_SUPPORT_01,anm_common_turn_r)
 	_TIME_WAIT(4)
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)
 	_OBJ_ANIME_WAIT()
 	
+	//サポートと主人公があいさつをする時間
 	_TIME_WAIT(10)
-	
+
+	//振り向きに差をつけるためのウェイト
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
 	_TIME_WAIT(4)
 	_OBJ_ANIME(D08_SUPPORT_01,anm_common_turn_u)
@@ -408,7 +403,6 @@ EVENT_START    ev_pos_d08_hakase1_01
 	_CAMERA_MOVE( 9694,0,970795,11894784,196655,9535488,16 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
-	_TIME_WAIT(4)
 	//博士が喋る
 	//博士（父）：おお　[1:00:トレーナー名:0]か！
 	_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_02, D08_HAKASE1_01,POS_UR)
@@ -426,12 +420,10 @@ EVENT_START    ev_pos_d08_hakase1_01
 	_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_03, D08_HAKASE1_01,POS_UR)
 	_BALLOONWIN_CLOSE()
 	
-	_TIME_WAIT(8)
 	//博士が振り向く
 	_OBJ_ANIME( D08_HAKASE1_01,anm_common_turn_u)
 	_OBJ_ANIME_WAIT()
 	
-	_TIME_WAIT(20)
 	//サポートが喋る
 	//サポート：……アララギはかせ
 	_BALLOONWIN_OBJMSG_POS(msg_d08_white_00_02, D08_SUPPORT_01,POS_DL)
@@ -441,7 +433,6 @@ EVENT_START    ev_pos_d08_hakase1_01
 	_OBJ_ANIME( D08_HAKASE1_01,anm_common_turn_d)
 	_OBJ_ANIME_WAIT()
 	
-	_TIME_WAIT(8)
 	//博士が喋る
 	//博士（父）：ふぁはは！
 	_BALLOONWIN_OBJMSG_WB(msg_d08_hakase1_00_04w,msg_d08_hakase1_00_04b,D08_HAKASE1_01,POS_UR)
@@ -454,84 +445,41 @@ EVENT_START    ev_pos_d08_hakase1_01
 	//サポートが喋る
 	//サポート：だいじょうぶ！
 	_OBJ_ANIME( D08_SUPPORT_01,anm_common_turn_u)
-	_TIME_WAIT(4)
 	_BALLOONWIN_OBJMSG_POS(msg_d08_white_00_03, D08_SUPPORT_01,POS_DL)
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_CLOSE()
 	
-	_TIME_WAIT(24)
+
 	//博士が喋る
 	//博士（父）：そうかい　ありがとうよ！
+	_TIME_WAIT(24)
 	_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_06, D08_HAKASE1_01,POS_UR)
 	_MSGWIN_CLOSE()
 	
-	_TIME_WAIT(8)
 	//サポートが振り向く
 	_OBJ_ANIME(D08_SUPPORT_01,anm_common_turn_r)
 	_OBJ_ANIME_WAIT()
 
-/*
-	_YES_NO_WIN(SCWK_ANSWER)
+	_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_09, D08_HAKASE1_01,POS_UR)
 	_BALLOONWIN_CLOSE()
-	
-	IF $SCWK_ANSWER == SCR_YES THEN
-		_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_09, D08_HAKASE1_01,POS_UR)
-		_BALLOONWIN_CLOSE()
 		
-		_TIME_WAIT(8)
-		_OBJ_ANIME(D08_HAKASE1_01,anm_hakase1_idou_01)
-		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(16)
-		_OBJ_ANIME(D08_HAKASE1_01,anm_common_turn_d)
-		_OBJ_ANIME_WAIT()
-		_ITEM_EVENT_KEYWAIT(ITEM_MORINOYOUKAN,1)
+	_OBJ_ANIME(D08_HAKASE1_01,anm_hakase1_idou_01)
+	_OBJ_ANIME_WAIT()
+	_ITEM_EVENT_KEYWAIT(ITEM_MORINOYOUKAN,1)
 		
-		_TIME_WAIT(20)
-		_OBJ_ANIME(D08_HAKASE1_01,anm_hakase1_idou_02)
-		_TIME_WAIT(16)
-		_OBJ_ANIME(D08_SUPPORT_01,anm_common_turn_u)		
-		_OBJ_ANIME_WAIT()
+	_OBJ_ANIME(D08_HAKASE1_01,anm_hakase1_idou_02)
+	//サポートの振り向きと博士の動きを合わせるためのウェイト
+	_TIME_WAIT(16)
+	_OBJ_ANIME(D08_SUPPORT_01,anm_common_turn_u)		
+	_OBJ_ANIME_WAIT()
 		
-		_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_10, D08_HAKASE1_01,POS_UR)
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+	_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_10, D08_HAKASE1_01,POS_UR)
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
 		
-		//もりのヨウカン入手フラグをON
-		_FLAG_SET(FE_D08_ITEMGET_01)
+	//もりのヨウカン入手フラグをON
+	_FLAG_SET(FE_D08_ITEMGET_01)
 
-*/		
-
-		_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_09, D08_HAKASE1_01,POS_UR)
-		_BALLOONWIN_CLOSE()
-		
-		_TIME_WAIT(8)
-		_OBJ_ANIME(D08_HAKASE1_01,anm_hakase1_idou_01)
-		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(16)
-		_OBJ_ANIME(D08_HAKASE1_01,anm_common_turn_d)
-		_OBJ_ANIME_WAIT()
-		_ITEM_EVENT_KEYWAIT(ITEM_MORINOYOUKAN,1)
-		
-		_TIME_WAIT(20)
-		_OBJ_ANIME(D08_HAKASE1_01,anm_hakase1_idou_02)
-		_TIME_WAIT(16)
-		_OBJ_ANIME(D08_SUPPORT_01,anm_common_turn_u)		
-		_OBJ_ANIME_WAIT()
-		
-		_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_10, D08_HAKASE1_01,POS_UR)
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-		
-		//もりのヨウカン入手フラグをON
-		_FLAG_SET(FE_D08_ITEMGET_01)
-
-/*
-	ELSE
-		_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_07, D08_HAKASE1_01,POS_UR)
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
-	ENDIF
-*/
 	//自機にカメラを戻す
 	_CAMERA_RECV_MOVE( 12 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
@@ -556,7 +504,7 @@ EVENT_START    ev_pos_d08_hakase1_01
 	$WK_SCENE_D08_LEGEND = 2
 
 	//セッカシティのサポートがうろうろする動きを無効にする
-	$WK_SCENE_C07 = 4
+	$WK_SCENE_C07 = 5
 		
 	//========================================//
 		
@@ -656,34 +604,6 @@ EVENT_START    ev_d08_hakase1_01
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 			
-/*
-		IF FLAG_ON(FE_D08_ITEMGET_01) THEN
-			_BALLOONWIN_TALKOBJ_MSG(msg_d08_hakase1_00_10)
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-		ELSE
-			_BALLOONWIN_TALKOBJ_MSG(msg_d08_hakase1_00_08)
-			_YES_NO_WIN(SCWK_ANSWER)
-			_BALLOONWIN_CLOSE()
-	
-			IF $SCWK_ANSWER == SCR_YES THEN
-				_BALLOONWIN_OBJMSG(msg_d08_hakase1_00_09, D08_HAKASE1_01)
-				_BALLOONWIN_CLOSE()
-				_ITEM_EVENT_KEYWAIT(ITEM_MORINOYOUKAN,1)
-				_FLAG_SET(FE_D08_ITEMGET_01)
-				
-				_TIME_WAIT(8)
-				_BALLOONWIN_OBJMSG(msg_d08_hakase1_00_10, D08_HAKASE1_01)
-				_LAST_KEYWAIT()
-				_BALLOONWIN_CLOSE()
-			
-			ELSE
-				_BALLOONWIN_OBJMSG(msg_d08_hakase1_00_07, D08_HAKASE1_01)
-				_LAST_KEYWAIT()
-				_BALLOONWIN_CLOSE()
-			ENDIF
-		ENDIF		
-*/
 	ENDIF
 EVENT_END
 

@@ -59,7 +59,6 @@ EVENT_START   ev_pos_r08_support_01
     _OBJ_ANIME_WAIT()
 	
 	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
-	_TIME_WAIT(8)
 	 
   	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01)	
 	_OBJ_ANIME_WAIT()
@@ -68,17 +67,10 @@ EVENT_START   ev_pos_r08_support_01
 	//ねえねえ！　ポケモンしょうぶしようよ
 	_BALLOONWIN_OBJMSG_POS( msg_r08_white_02, MMDL_ID_EVENTOBJ_00, POS_DL )
 	_MSGWIN_CLOSE()
-
-	//足踏み
-	_TIME_WAIT(8)
-	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_common_turn_r)
-    _OBJ_ANIME_WAIT()
 	
-	_TIME_WAIT(8)
 	//サポートとのバトル処理
 	_CALL		ev_support_btl
 	
-	_TIME_WAIT(8)
 	//ふわあ　やっぱり
 	_BALLOONWIN_OBJMSG_POS( msg_r08_white_03, MMDL_ID_EVENTOBJ_00, POS_DL )
 	_MSGWIN_CLOSE()
@@ -107,7 +99,6 @@ EVENT_START   ev_pos_r08_support_01
 	_BALLOONWIN_OBJMSG_POS( msg_r08_white_05, MMDL_ID_EVENTOBJ_00, POS_DL )
 	_MSGWIN_CLOSE()
 	
-	_TIME_WAIT(20)
 	//サポート退場処理
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_back_01)
     _OBJ_ANIME_WAIT()
@@ -178,53 +169,6 @@ _ANIME_LABEL	anm_support_come_03
 	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
-/*
-_ANIME_LABEL	anm_support_come_01_x784
-
-	_ANIME_DATA AC_WALK_R_8F,7
-	_ANIME_DATA AC_WALK_U_8F,2
-//	_ANIME_DATA AC_WALK_L_8F,1
-//	_ANIME_DATA AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_support_come_01_x785
-
-	_ANIME_DATA AC_WALK_R_8F,8
-	_ANIME_DATA AC_WALK_U_8F,2
-//	_ANIME_DATA AC_WALK_L_8F,1
-//	_ANIME_DATA AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_support_come_01_x786
-
-	_ANIME_DATA AC_WALK_R_8F,9
-	_ANIME_DATA AC_WALK_U_8F,2
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_support_come_01_x787
-
-	_ANIME_DATA AC_WALK_R_8F,10
-	_ANIME_DATA AC_WALK_U_8F,2
-//	_ANIME_DATA AC_WALK_R_8F,1
-//	_ANIME_DATA AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_support_come_01_x788
-
-	_ANIME_DATA AC_WALK_R_8F,11
-	_ANIME_DATA AC_WALK_U_8F,2
-//	_ANIME_DATA AC_WALK_R_8F,2
-//	_ANIME_DATA AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-		
-_ANIME_LABEL	anm_support_come_01_x789
-
-	_ANIME_DATA AC_WALK_R_8F,12
-	_ANIME_DATA AC_WALK_U_8F,2
-//	_ANIME_DATA AC_WALK_R_8F,3
-//	_ANIME_DATA AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-*/
 //--------------------------------------------------------------------
 // サポート：退場する                    
 //--------------------------------------------------------------------
@@ -232,39 +176,6 @@ _ANIME_LABEL	anm_support_back_01
 
 	_ANIME_DATA AC_WALK_L_8F,8
 	_ANIME_DATA	ACMD_END,0
-
-/*	
-_ANIME_LABEL	anm_support_back_01_x784
-
-	_ANIME_DATA AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_support_back_01_x785
-
-	_ANIME_DATA AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-	
-
-_ANIME_LABEL	anm_support_back_01_x786
-
-	_ANIME_DATA AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-	
-_ANIME_LABEL	anm_support_back_01_x787
-
-	_ANIME_DATA AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-	
-_ANIME_LABEL	anm_support_back_01_x788
-
-	_ANIME_DATA AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_support_back_01_x789
-
-	_ANIME_DATA AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-*/	
 
 //--------------------------------------------------------------------
 // サポート：専用アニメ                    

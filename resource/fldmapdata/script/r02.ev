@@ -57,16 +57,13 @@ EVENT_START   ev_r02_boy1_01
 
 			_OBJ_ANIME( R02_BOY1_01,test01anime )
 			_TIME_WAIT(4)
-//			_CAMERA_MOVE( 9685,0,970737,49512448,0,42242048,16 )	//一番最後の引数は移動にかかるフレーム数
 			_CAMERA_MOVE( 9685,0,970770,49512448,0,42135552,16 )	//一番最後の引数は移動にかかるフレーム数			
 			
 			_BALLOONWIN_CLOSE()
 			//段差を降りるアニメ+段差を降りるSE
-//			_SE_PLAY( SEQ_SE_DANSA )
 			_TIME_WAIT(4)
 			_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_d_q)
 			_OBJ_ANIME_WAIT()
-//			_SE_WAIT()
 			_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 			
 			_BALLOONWIN_OBJMSG_POS( msg_r02_boy2a_03 , R02_BOY1_01, POS_DL )
@@ -137,13 +134,13 @@ EVENT_START   ev_pos_r02_support_01
     CASE 786 THEN
  		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01_x786)	
 		_TIME_WAIT(60)
-    CASE 787THEN
+    CASE 787 THEN
  		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01_x787)	
 		_TIME_WAIT(70)
-    CASE 788THEN
+    CASE 788 THEN
  		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01_x788)
 		_TIME_WAIT(82)
-    CASE 789THEN
+    CASE 789 THEN
  		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01_x789)	
 		_TIME_WAIT(94)
     DEFAULT  
@@ -160,7 +157,7 @@ EVENT_START   ev_pos_r02_support_01
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_common_turn_u)
     _OBJ_ANIME_WAIT()
 	
-	_TIME_WAIT(8)
+
 	//サポートとのバトル処理
 	_CALL		ev_support_btl
 	
@@ -170,7 +167,7 @@ EVENT_START   ev_pos_r02_support_01
 	_BALLOONWIN_OBJMSG_POS( msg_r02_white_03, MMDL_ID_EVENTOBJ_00, POS_DL )
 	_MSGWIN_CLOSE()
 	
-	_TIME_WAIT(8)
+
 	
 	//サポート退場処理
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_back_01)
@@ -230,16 +227,12 @@ _ANIME_LABEL	anm_support_come_01_x784
 
 	_ANIME_DATA AC_WALK_R_8F,7
 	_ANIME_DATA AC_WALK_U_8F,2
-//	_ANIME_DATA AC_WALK_L_8F,1
-//	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_support_come_01_x785
 
 	_ANIME_DATA AC_WALK_R_8F,8
 	_ANIME_DATA AC_WALK_U_8F,2
-//	_ANIME_DATA AC_WALK_L_8F,1
-//	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_support_come_01_x786
@@ -252,24 +245,18 @@ _ANIME_LABEL	anm_support_come_01_x787
 
 	_ANIME_DATA AC_WALK_R_8F,10
 	_ANIME_DATA AC_WALK_U_8F,2
-//	_ANIME_DATA AC_WALK_R_8F,1
-//	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_support_come_01_x788
 
 	_ANIME_DATA AC_WALK_R_8F,11
 	_ANIME_DATA AC_WALK_U_8F,2
-//	_ANIME_DATA AC_WALK_R_8F,2
-//	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 		
 _ANIME_LABEL	anm_support_come_01_x789
 
 	_ANIME_DATA AC_WALK_R_8F,12
 	_ANIME_DATA AC_WALK_U_8F,2
-//	_ANIME_DATA AC_WALK_R_8F,3
-//	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -402,7 +389,7 @@ EVENT_START   ev_pos_r02_mama_01
 	//プレイヤーの名前を取得
 	_PLAYER_NAME(0)
 	
-	_TIME_WAIT(8)
+
 	//TVT着信音を再生
 	_ME_PLAY( SEQ_ME_CALL )
 	_ME_WAIT()
@@ -423,7 +410,7 @@ EVENT_START   ev_pos_r02_mama_01
 		_OBJ_ADD_EX(756, 648,DIR_LEFT,MMDL_ID_EVENTOBJ_00,MAMA,MV_DMY)
     CASE 649 THEN
 		_OBJ_ADD_EX(756, 649,DIR_LEFT,MMDL_ID_EVENTOBJ_00,MAMA,MV_DMY)
-    CASE 650THEN
+    CASE 650 THEN
 		_OBJ_ADD_EX(756, 650,DIR_LEFT,MMDL_ID_EVENTOBJ_00,MAMA,MV_DMY)
     DEFAULT  
     ENDSWITCH
@@ -434,10 +421,8 @@ EVENT_START   ev_pos_r02_mama_01
 	//BGMの再生
 	_START_EVENT_BGM(SEQ_BGM_E_TSURETEKE1 )
 
-	_TIME_WAIT(24)
 	//ママが主人公を呼ぶ
 	_BALLOONWIN_OBJMSG_POS( msg_r02_mama_01, MMDL_ID_EVENTOBJ_00,POS_DEFAULT)
-	_MSGWIN_CLOSE()
 
 	//主人公、ママの方へ振り向く
 	_OBJ_ANIME(  MMDL_ID_PLAYER,anm_player_migi_muku)
@@ -446,16 +431,16 @@ EVENT_START   ev_pos_r02_mama_01
 	//プレイヤーの名前の格納
 	_PLAYER_NAME(0)
 
-	_TIME_WAIT(8)
+
 	//ママ「やっと　おいついた」
 	_BALLOONWIN_OBJMSG( msg_r02_mama_02, MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
 
-	_TIME_WAIT(8)
+
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_mama_kuru_c)
 	_OBJ_ANIME_WAIT()
 	
-	_TIME_WAIT(16)
+
 	//ランニングシューズ入手処理
 	_GET_SHOES()
 	_ME_PLAY( SEQ_ME_KEYITEM )
@@ -463,7 +448,7 @@ EVENT_START   ev_pos_r02_mama_01
 	_ME_WAIT()
 	_SYSWIN_CLOSE()
 
-	_TIME_WAIT(8)
+
 	//ママがランニングシューズの説明
 	_BALLOONWIN_OBJMSG( msg_r02_mama_04, MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
@@ -473,11 +458,11 @@ EVENT_START   ev_pos_r02_mama_01
 	_BALLOONWIN_OBJMSG( msg_r02_mama_05, MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
 
-	_TIME_WAIT(8)
+
 	//ママが帰っていく
 	//ママが主人公の方へ来る
     SWITCH $LWK_PLAYER_POSZ
-    CASE 650THEN
+    CASE 650 THEN
   		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_mama_saru_b)
 		_OBJ_ANIME_WAIT()
     DEFAULT  
@@ -586,8 +571,6 @@ EVENT_START  ev_r02_mama_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r02_mama_01) 
 
 EVENT_END
-
-
 
 /**************************************************************/
 /*  R02 看板1のイベントスクリプト*/

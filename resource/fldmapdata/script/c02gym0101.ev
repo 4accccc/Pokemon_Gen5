@@ -177,9 +177,6 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 //		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_01, C02GYM0101_AD_01,POS_DEFAULT )
 		_PLAINWIN_MSG_UP(msg_c02gym0101_ad_01)
 		_MSGWIN_CLOSE()
-		
-		//副館長：発言を終えるまで、溜める（ホレボレしている）
-//		_TIME_WAIT  (8) 
 
 		//副館長：主人公を向く
 		_OBJ_ANIME( C02GYM0101_AD_01,anm_common_turn_d)
@@ -207,10 +204,6 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 
 		DEFAULT
 		ENDSWITCH
-		
-		//副館長：主人公が動くまで、ウェイトを持たせる
-//		_TIME_WAIT  ( 32 ) 
-//		_OBJ_ANIME_WAIT()
 		
 		//副館長：展示物の方を向く
 		_OBJ_ANIME( C02GYM0101_AD_01,anm_common_turn_u)
@@ -290,7 +283,6 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_06, C02GYM0101_AD_01,POS_UR )
 		_BALLOONWIN_CLOSE()
 		
-//		_TIME_WAIT(8)	
 		_OBJ_ANIME( C02GYM0101_AD_01,anm_common_turn_d)
 		_OBJ_ANIME_WAIT()
 		
@@ -461,7 +453,7 @@ _ANIME_LABEL	anm_player_idou_jimu
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_ad_turn
 	_ANIME_DATA	AC_DIR_D,1
-
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 // 共通アニメ：びっくりする                    
@@ -527,27 +519,22 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	ENDIF
 	_OBJ_ANIME_WAIT()
 	
-//	_TIME_WAIT(8)
 	_CAMERA_START()		//カメラ操作開始
     _CAMERA_PURGE()		//対象物とカメラのバインドを解く
 	_CAMERA_MOVE(9694,0,970795,819200,0,819200,16)
     _CAMERA_WAIT_MOVE()	//カメラ移動待ち
     _CAMERA_END()		//カメラ操作終了
 
-//	_TIME_WAIT(8)
 	//ハカイ団がしゃべる
 	_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_hakaim1_01 , C02GYM0101_HAKAIM_01, POS_UL ) 
 	_MSGWIN_CLOSE()
 
-//	_TIME_WAIT(8)
 	//盗まれる化石を中心としたカメラに移動する
 	_CAMERA_START()		//カメラ操作開始
     _CAMERA_PURGE()		//対象物とカメラのバインドを解く
 	_CAMERA_MOVE(9688,0,970752,819200,32775,1216512,30)
     _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
-	//間を作るためのウェイト
-//	_TIME_WAIT(16)
 	_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_hakaim2_01 , C02GYM0101_HAKAIM_02, POS_DR ) 
 	_MSGWIN_CLOSE()
 	
@@ -584,8 +571,6 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	_OBJ_ANIME(C02GYM0101_HAKAIM_06, anm_common_turn_d )
 	_OBJ_ANIME_WAIT()
 
-	//間を作るためのウェイト	
-//	_TIME_WAIT(8)
     //[100224斉藤マ修正 けむり演出を組み込みました]
     //ホワイトアウト中にＯＢＪを消す---------------------
 	_WHITE_OUT()

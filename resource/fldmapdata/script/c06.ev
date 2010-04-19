@@ -54,7 +54,7 @@ EVENT_START    ev_scene_c06_boss_01
 	//プレイヤーの名前をセット
 	_PLAYER_NAME(1)
 	
-	_TIME_WAIT(8)
+
 	//NのBGM再生
 	_START_EVENT_BGM( SEQ_BGM_E_N )	
 	
@@ -66,39 +66,38 @@ EVENT_START    ev_scene_c06_boss_01
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)
 	_OBJ_ANIME_WAIT()
 	
-	_TIME_WAIT(8)
+
 	//N「……キミの　ポケモンと　はなしをさせてもらうよ
 	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_01, C06_BOSS_01, POS_UL )
 	_MSGWIN_CLOSE()
 
 	//Nが主人公に近づく
 	_OBJ_ANIME(C06_BOSS_01,anm_c06_boss_walk_01)
-//	_TIME_WAIT(16)
-//	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l_s)
 	_OBJ_ANIME_WAIT()
 	
-	_TIME_WAIT(16)
+
 	//N「○○だね……　どんなトレーナか
 	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_02, C06_BOSS_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
+	//ポケモンと会話している時間
 	_TIME_WAIT(32)
 	//N「……そうか　カノコタウンで　うまれそだち
 	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_03, C06_BOSS_01, POS_UL )
-	_MSGWIN_CLOSE()
 
-	_TIME_WAIT(12)
+	//ポケモンと会話している時間
+
 	_MONS_NAME( 1, LWK_POKE_NUM )
 	//N「それにしても　この　○○なぜだか
 	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_04, C06_BOSS_01, POS_UL )
 	_MSGWIN_CLOSE()
 
-	_TIME_WAIT(16)
+
 	//画面下移動する
 	_OBJ_ANIME(C06_BOSS_01,anm_c06_boss_walk_02)
 	_OBJ_ANIME_WAIT()
 	
-	_TIME_WAIT(32)
+
 	//N「ゲーチスは　プラズマだんをつかい
 	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_05, C06_BOSS_01, POS_UL )
 	
@@ -106,34 +105,29 @@ EVENT_START    ev_scene_c06_boss_01
 	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_06, C06_BOSS_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
-	_TIME_WAIT(8)
+
 	//Nが下を向く
 	_OBJ_ANIME(C06_BOSS_01,anm_common_turn_d)
 	_OBJ_ANIME_WAIT()
-	
+
+	//Nの首振りアニメをつくるためのウェイト
 	_TIME_WAIT(24)
 	//N　首振りアニメ
 	_OBJ_ANIME(C06_BOSS_01,anm_boss_senyou)
-	_TIME_WAIT(46)
+	//セリフの……を補完するためのウェイト
+	_TIME_WAIT(32)
 	//N「……ボクの　ゆめは　あらそうことなく
 	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_07, C06_BOSS_01, POS_UL )
 	_MSGWIN_CLOSE()
 	_OBJ_ANIME_WAIT()
-/*	
-	_TIME_WAIT(16)
-	//N　首振りアニメ
-	_OBJ_ANIME(C06_BOSS_01,anm_boss_senyou)
-	_TIME_WAIT(32)
-	_OBJ_ANIME(C06_BOSS_01,anm_boss_turn)
-*/	
-	_TIME_WAIT(16)
+	
 	_OBJ_ANIME(C06_BOSS_01,anm_boss_turn)
 	//N「その　けっか……
 	_BALLOONWIN_OBJMSG_POS( msg_c06_boss_08, C06_BOSS_01, POS_UL )
 	_MSGWIN_CLOSE()
 	_OBJ_ANIME_WAIT()
 	
-	_TIME_WAIT(8)
+
 	//画面右に移動する
 	_OBJ_ANIME(C06_BOSS_01,anm_c06_boss_back)
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_turn)
@@ -323,9 +317,11 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_OBJ_ANIME( C06_LEADER6_01,anm_leader06_kuru_01)
 	_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_01)
 	_OBJ_ANIME_WAIT()
+	
 
 	//博士とジムリーダーが主人公に気づく
 	_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_gyoe)
+	//博士とジムリーダーの動きに差をつける為のウェイト
 	_TIME_WAIT(16)
 	
 	//ジムリーダーが振り向く
@@ -335,7 +331,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 	//博士BGMスタート
 	_START_EVENT_BGM(SEQ_BGM_E_DOCTOR2)
 	
-	_TIME_WAIT(8)
+
 	//博士が主人公に隣接
 	IF $LWK_PLY_X == 100 THEN
 		_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_02_x100)
@@ -355,7 +351,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_01, C06_HAKASE1_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 
-	_TIME_WAIT(16)
+
 	
 	//捕獲数を格納
 	_NUMBER( 0, LWK_HOKAKU_COUNT, 3 ) 
@@ -376,6 +372,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_04, C06_HAKASE1_01,POS_DEFAULT)
 	ENDIF
 	
+	//主人公のポケモン図鑑を見ている時間
 	_TIME_WAIT(24)
 	
 	_OBJ_ANIME( C06_HAKASE1_01,anm_common_turn_d)
@@ -393,6 +390,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_06, C06_HAKASE1_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
+	//図鑑をパワーアップする動きを作るためのウェイト
 	//主人公の図鑑をパワーアップするような動き
 	_OBJ_ANIME( C06_HAKASE1_01,anm_common_turn_d)
 	_OBJ_ANIME_WAIT()
@@ -406,6 +404,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_07, C06_HAKASE1_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
+	//フウロと博士の振り向きに差をつけるためのウェイト
 	//ジムリーダーが主人公に隣接
 	IF $LWK_PLY_X == 100 THEN
 		_OBJ_ANIME( C06_LEADER6_01,anm_leader06_kuru_02_x100)
@@ -455,7 +454,6 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_OBJ_ANIME( C06_LEADER6_01,anm_common_turn_d)
 	_OBJ_ANIME_WAIT()
 	
-	_TIME_WAIT(8)
 	
 	//ジムリーダーフウロが喋る
 	//フウロ:フウロ『わあ！　だったら　ジムに　ちょうせん　するよね！
@@ -490,6 +488,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_11, C06_HAKASE1_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
+	//フウロと博士が去る動きを作るためのウェイト
 	//博士が画面外に移動
 	IF $LWK_PLY_X == 100 THEN
 		_OBJ_ANIME(C06_LEADER6_01,anm_leader06_kuru_03_x100)
@@ -497,14 +496,10 @@ EVENT_START    ev_pos_c06_hakase1_01
 		_OBJ_ANIME_WAIT()
 		_OBJ_ANIME(C06_HAKASE1_01,anm_hakase1_saru_01_x100)
 	ELSIF $LWK_PLY_X == 101 THEN	
-		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(16)
 		_OBJ_ANIME(C06_HAKASE1_01,anm_hakase1_saru_01_x101)
 	ELSIF $LWK_PLY_X == 102 THEN
-		_OBJ_ANIME_WAIT()
 		_OBJ_ANIME(C06_HAKASE1_01,anm_hakase1_saru_01_x102)
 	ELSIF $LWK_PLY_X == 103 THEN
-		_OBJ_ANIME_WAIT()
 		_OBJ_ANIME(C06_HAKASE1_01,anm_hakase1_saru_01_x103)
 	ELSIF $LWK_PLY_X == 104 THEN
 		_OBJ_ANIME(C06_LEADER6_01,anm_leader06_kuru_03_x104)
@@ -526,11 +521,12 @@ EVENT_START    ev_pos_c06_hakase1_01
 	//フウロ:フウロ『……ったく！　あんな　いいかげんな　かんじで
 	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_04, C06_LEADER6_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()	
-	
-	_TIME_WAIT(16)
+
+
 	_OBJ_ANIME(C06_LEADER6_01,anm_leader06_kuru_04)
 	_OBJ_ANIME_WAIT()
 	
+	//フウロと主人公の振り向きに差をつけるためのウェイト
 	//ジムリーダーが主人公を向く
 	//フウロが博士を向く
 	IF $LWK_PLY_X == 100 THEN
@@ -561,7 +557,7 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_06, C06_LEADER6_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()	
 	
-	_TIME_WAIT(8)
+
 	_OBJ_ANIME(C06_LEADER6_01,anm_common_turn_u)
 	_OBJ_ANIME_WAIT()
 
@@ -570,12 +566,13 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_BALLOONWIN_CLOSE()
 
 	//フウロが博士を向く		
-	_TIME_WAIT(12)
+
 	_CALL		ev_leader06_turn_btl
 	
 	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_08, C06_LEADER6_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
+	//主人公の振り向きとフウロの動きを合わせるためのウェイト
 	//ジムリーダーが画面外に移動
 	_OBJ_ANIME( C06_LEADER6_01,anm_leader06_saru_01)
 	_TIME_WAIT(16)

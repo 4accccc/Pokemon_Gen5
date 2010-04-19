@@ -202,7 +202,6 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_CAMERA_MOVE(9694,0,970795,1081344,0,819200,24 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
-	_TIME_WAIT(8)
 	//Nが喋る
 	//どう　せかいを　みちびく
 	IF $LCWK_VERSION == VERSION_WHITE THEN
@@ -212,7 +211,6 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	ENDIF
 	_MSGWIN_CLOSE()
 
-	_TIME_WAIT(8)
 	//Nがパッケージポケモンの方を振り向く
 	_OBJ_ANIME(D08R0901_BOSS_01,anm_common_turn_up)
 	_OBJ_ANIME_WAIT()
@@ -234,7 +232,6 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_OBJ_ANIME(D08R0901_BOSS_01,anm_common_turn_down)
 	_OBJ_ANIME_WAIT()
 	
-	_TIME_WAIT(8)
 	//Nが喋る
 	//ぼくたちを　とめられるのは
 	IF $LCWK_VERSION == VERSION_WHITE THEN
@@ -242,10 +239,7 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	ELSE
 		_PLAINWIN_MSG_DOWN(msg_d08r0901_boss_03b)
 	ENDIF
-	_MSGWIN_CLOSE()
 	
-	
-	_TIME_WAIT(16)
 	//Nが喋る
 	//さて　どうする？
 	IF $LCWK_VERSION == VERSION_WHITE THEN
@@ -256,7 +250,8 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_MSGWIN_CLOSE()
 
 	_OBJ_POS_CHANGE(MMDL_ID_EVENTOBJ_00,28,3,9,DIR_RIGHT)
-
+	
+	//Nとパッケージポケモンの動きを合わせるためのウェイト
 	_TIME_WAIT(20)
 	//Nがマップの上に移動する
 	//パッケージポケモンがNを乗せて飛び去る
@@ -274,7 +269,6 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_turn_s1)
 	_OBJ_ANIME_WAIT()
 
-	_TIME_WAIT(8)
 	//自機にカメラを戻す
 	_CAMERA_RECV_MOVE( 24 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
@@ -290,7 +284,6 @@ EVENT_START    ev_pos_d08R0901_boss_01
 		
 	//========================================//
 	
-	_TIME_WAIT(12)
 	//ハチクとライバルがやってくる		
 	_OBJ_ANIME( D08R0901_RIVEL_01,anm_raival_idou_01)
 	_OBJ_ANIME( D08R0901_LEADER7_01,anm_leader7_idou_01)
@@ -305,7 +298,7 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_BALLOONWIN_OBJMSG_POS( msg_d08r0901_leader7_01, D08R0901_LEADER7_01,POS_DR)
 	_MSGWIN_CLOSE()
 	
-	_TIME_WAIT(16)
+	//ライバルの振り向きを作るためのウェイト
 	_OBJ_ANIME(D08R0901_RIVEL_01,anm_turn_s2)
 	_TIME_WAIT(24)
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_down)
@@ -319,8 +312,8 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_OBJ_ANIME(D08R0901_LEADER7_01,anm_common_turn_up)
 	_OBJ_ANIME_WAIT()
 	
-	_TIME_WAIT(24)
 	//画面暗転処理
+	_TIME_WAIT(24)
 	_MAP_FADE_BLACK_OUT()
 	_MAP_FADE_END_CHECK()
 	
