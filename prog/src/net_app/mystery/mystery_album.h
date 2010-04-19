@@ -77,7 +77,6 @@ extern BOOL MYSTERY_ALBUM_IsEnd( const MYSTERY_ALBUM_WORK *cp_wk );
 //=====================================
 typedef struct 
 {
-  const GIFT_PACK_DATA *cp_data;
   u32 back_frm;
   u32 font_frm;
   u32 back_plt_num;
@@ -98,11 +97,26 @@ typedef struct
 typedef struct _MYSTERY_CARD_WORK MYSTERY_CARD_WORK;
 
 //-------------------------------------
-///	パブリック
+///	リソース（カード複数枚表示切替する際共有するリソース）
 //=====================================
-extern MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMEDATA *p_gamedata, HEAPID heapID );
+typedef struct _MYSTERY_CARD_RES MYSTERY_CARD_RES;
+
+//-------------------------------------
+///	パブリック
+//====================================
+//リソース
+extern MYSTERY_CARD_RES * MYSTERY_CARD_RES_Init( const MYSTERY_CARD_SETUP *cp_setup, HEAPID heapID );
+extern void MYSTERY_CARD_RES_Exit( MYSTERY_CARD_RES *p_res );
+extern void MYSTERY_CARD_RES_PrintMain( MYSTERY_CARD_RES *p_wk );
+extern void MYSTERY_CARD_RES_Clear( MYSTERY_CARD_RES *p_wk );
+//カード
+extern MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const GIFT_PACK_DATA *cp_data, MYSTERY_CARD_RES *p_res, GAMEDATA *p_gamedata, HEAPID heapID );
 extern void MYSTERY_CARD_Exit( MYSTERY_CARD_WORK *p_wk );
 extern void MYSTERY_CARD_Main( MYSTERY_CARD_WORK *p_wk );
-extern void MYSTERY_CARD_LoadResourceBG( const MYSTERY_CARD_SETUP *cp_setup, HEAPID heapID );
 extern void MYSTERY_CARD_StartEffect( MYSTERY_CARD_WORK *p_wk );
+extern void MYSTERY_CARD_EndEffect( MYSTERY_CARD_WORK *p_wk );
 extern BOOL MYSTERY_CARD_IsEndEffect( const MYSTERY_CARD_WORK *cp_wk );
+extern u32 MYSTERY_CARD_GetWorkSize( void );
+
+//trans関数を行なうまで画面反映は行いません
+extern void MYSTERY_CARD_Trans( MYSTERY_CARD_WORK *p_wk );

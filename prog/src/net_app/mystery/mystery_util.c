@@ -20,6 +20,7 @@
 #include "app/app_keycursor.h"
 #include "app/app_printsys_common.h"
 #include "sound/pm_sndsys.h"
+#include "system/time_icon.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -49,11 +50,13 @@ struct _MYSTERY_MSGWIN_WORK
   PRINTSYS_LSB      color;      //文字色
   GFL_POINT         ofs;        //文字描画位置オフセット
   MYSTERY_MSGWIN_POS pos_type;  //描画位置タイプ
+  MYSTERY_MSGWIN_TRANS_MODE mode; //転送モード
 };
 //-------------------------------------
 ///	座標計算
 //=====================================
 static void Mystery_Msgwin_CalcPos( const MYSTERY_MSGWIN_WORK* cp_wk, GFL_FONT *p_font, GFL_POINT *p_pos );
+static void Mystery_Msgwin_CalcPosCore( MYSTERY_MSGWIN_POS type, const GFL_POINT *cp_ofs, GFL_BMP_DATA *p_bmp, STRBUF *p_strbuf, GFL_FONT *p_font, GFL_POINT *p_pos );
 //-------------------------------------
 ///	パブリック
 //=====================================
@@ -73,7 +76,7 @@ static void Mystery_Msgwin_CalcPos( const MYSTERY_MSGWIN_WORK* cp_wk, GFL_FONT *
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-MYSTERY_MSGWIN_WORK * MYSTERY_MSGWIN_Init( u16 frm, u8 x, u8 y, u8 w, u8 h, u8 plt, PRINT_QUE *p_que, HEAPID heapID )
+MYSTERY_MSGWIN_WORK * MYSTERY_MSGWIN_Init( MYSTERY_MSGWIN_TRANS_MODE mode, u16 frm, u8 x, u8 y, u8 w, u8 h, u8 plt, PRINT_QUE *p_que, HEAPID heapID )
 { 
   MYSTERY_MSGWIN_WORK *p_wk;
 
@@ -82,6 +85,7 @@ MYSTERY_MSGWIN_WORK * MYSTERY_MSGWIN_Init( u16 frm, u8 x, u8 y, u8 w, u8 h, u8 p
   p_wk->p_que			= p_que;
   p_wk->frm       = frm;
   p_wk->color     = MYSTERY_MSGWIN_DEFAULT_COLOR;
+  p_wk->mode      = mode;
 
   //バッファ作成
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
@@ -94,7 +98,12 @@ MYSTERY_MSGWIN_WORK * MYSTERY_MSGWIN_Init( u16 frm, u8 x, u8 y, u8 w, u8 h, u8 p
 
 	//転送
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), PRINTSYS_LSB_GetB( p_wk->color ) );
-	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
+  if( p_wk->mode == MYSTERY_MSGWIN_TRANS_MODE_AUTO )
+  { 
+    GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin );
+    GFL_BMPWIN_MakeScreen( p_wk->p_bmpwin );
+    GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame( p_wk->p_bmpwin ) );
+  }
 
   return p_wk;
 }
@@ -107,8 +116,6 @@ MYSTERY_MSGWIN_WORK * MYSTERY_MSGWIN_Init( u16 frm, u8 x, u8 y, u8 w, u8 h, u8 p
 //-----------------------------------------------------------------------------
 void MYSTERY_MSGWIN_Exit( MYSTERY_MSGWIN_WORK* p_wk )
 { 
-  MYSTERY_MSGWIN_Clear( p_wk );
-
   //BMPWIN破棄
 	GFL_BMPWIN_Delete( p_wk->p_bmpwin );
 
@@ -218,9 +225,38 @@ void MYSTERY_MSGWIN_SetPos( MYSTERY_MSGWIN_WORK* p_wk, s16 x, s16 y, MYSTERY_MSG
 //-----------------------------------------------------------------------------
 BOOL MYSTERY_MSGWIN_PrintMain( MYSTERY_MSGWIN_WORK* p_wk )
 { 
-	return PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
+  if( p_wk->mode == MYSTERY_MSGWIN_TRANS_MODE_AUTO )
+  { 
+    return PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
+  }
+  else
+  {
+    if( p_wk->util.transReq )
+    {
+      if( !PRINTSYS_QUE_IsExistTarget(p_wk->p_que, GFL_BMPWIN_GetBmp(p_wk->util.win)) )
+      {
+        p_wk->util.transReq = FALSE;
+      }
+    }
+    return !(p_wk->util.transReq);
+  }
 }
-
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BMPWINメッセージ転送関数
+ *
+ *	@param	MYSTERY_MSGWIN_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_MSGWIN_Trans( MYSTERY_MSGWIN_WORK* p_wk )
+{ 
+  GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin );
+  if( p_wk->mode == MYSTERY_MSGWIN_TRANS_MODE_MANUAL )
+  { 
+    GFL_BMPWIN_MakeScreen( p_wk->p_bmpwin );
+    GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( p_wk->p_bmpwin ) );
+  }
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  描画座標計算
@@ -233,29 +269,45 @@ BOOL MYSTERY_MSGWIN_PrintMain( MYSTERY_MSGWIN_WORK* p_wk )
 //-----------------------------------------------------------------------------
 static void Mystery_Msgwin_CalcPos( const MYSTERY_MSGWIN_WORK* cp_wk, GFL_FONT *p_font, GFL_POINT *p_pos )
 { 
-  switch( cp_wk->pos_type )
+  Mystery_Msgwin_CalcPosCore( cp_wk->pos_type, &cp_wk->ofs, GFL_BMPWIN_GetBmp(cp_wk->p_bmpwin), cp_wk->p_strbuf, p_font, p_pos );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  描画位置計算コア部分
+ *
+ *	@param	MYSTERY_MSGWIN_POS type 位置の種類
+ *	@param  cp_ofs                  位置オフセット
+ *	@param	GFL_BMP_DATA *cp_bmp    BMP
+ *	@param	*p_strbuf               文字列
+ *	@param	*p_font                 フォント
+ *	@param	*p_pos                  座標受け取り
+ */
+//-----------------------------------------------------------------------------
+static void Mystery_Msgwin_CalcPosCore( MYSTERY_MSGWIN_POS type, const GFL_POINT *cp_ofs, GFL_BMP_DATA *p_bmp, STRBUF *p_strbuf, GFL_FONT *p_font, GFL_POINT *p_pos )
+{ 
+  switch( type )
   { 
   case MYSTERY_MSGWIN_POS_ABSOLUTE:     //絶対位置
-    *p_pos  = cp_wk->ofs;
+    *p_pos  = *cp_ofs;
     break;
   case MYSTERY_MSGWIN_POS_WH_CENTER:  //相対座標  幅、高さともに中央
     { 
       u32 x, y;
-      x = GFL_BMPWIN_GetSizeX( cp_wk->p_bmpwin ) * 8 / 2;
-      y = GFL_BMPWIN_GetSizeY( cp_wk->p_bmpwin ) * 8 / 2;
-      x -= PRINTSYS_GetStrWidth( cp_wk->p_strbuf, p_font, 0 ) / 2;
-      y -= PRINTSYS_GetStrHeight( cp_wk->p_strbuf, p_font ) / 2;
-      p_pos->x  = x + cp_wk->ofs.x;
-      p_pos->y  = y + cp_wk->ofs.y;
+      x = GFL_BMP_GetSizeX( p_bmp ) / 2;
+      y = GFL_BMP_GetSizeY( p_bmp ) / 2;
+      x -= PRINTSYS_GetStrWidth( p_strbuf, p_font, 0 ) / 2;
+      y -= PRINTSYS_GetStrHeight( p_strbuf, p_font ) / 2;
+      p_pos->x  = x + cp_ofs->x;
+      p_pos->y  = y + cp_ofs->y;
     }
     break;
   case MYSTERY_MSGWIN_POS_H_CENTER:    //相対座標  高さのみ中央
     { 
       u32 y;
-      y = GFL_BMPWIN_GetSizeY( cp_wk->p_bmpwin ) * 8 / 2;
-      y -= PRINTSYS_GetStrHeight( cp_wk->p_strbuf, p_font ) / 2;
-      p_pos->x  = cp_wk->ofs.x;
-      p_pos->y  = y + cp_wk->ofs.y;
+      y = GFL_BMP_GetSizeY( p_bmp ) / 2;
+      y -= PRINTSYS_GetStrHeight( p_strbuf, p_font ) / 2;
+      p_pos->x  = cp_ofs->x;
+      p_pos->y  = y + cp_ofs->y;
     }
     break;
   }
@@ -290,6 +342,7 @@ struct _MYSTERY_TEXT_WORK
   BOOL              is_end_print;
   APP_KEYCURSOR_WORK* p_keycursor;
   APP_PRINTSYS_COMMON_WORK  common;
+  TIMEICON_WORK     *p_time;
 } ;
 
 //-------------------------------------
@@ -324,9 +377,6 @@ MYSTERY_TEXT_WORK * MYSTERY_TEXT_Init( u16 frm, u8 font_plt, PRINT_QUE *p_que, G
   p_wk->p_que     = p_que;
   p_wk->print_update  = MYSTERY_TEXT_TYPE_NONE;
 
-  APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->common, APP_PRINTSYS_COMMON_TYPE_KEY);
-
-  p_wk->p_keycursor  = APP_KEYCURSOR_Create( p_wk->clear_chr, TRUE, FALSE, heapID );
 
   //バッファ作成
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
@@ -371,8 +421,6 @@ MYSTERY_TEXT_WORK * MYSTERY_TEXT_InitOneLine( u16 frm, u8 font_plt, PRINT_QUE *p
 
   APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->common, APP_PRINTSYS_COMMON_TYPE_KEY);
 
-  p_wk->p_keycursor  = APP_KEYCURSOR_Create( p_wk->clear_chr, TRUE, TRUE, heapID );
-
   //バッファ作成
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
 
@@ -404,6 +452,15 @@ void MYSTERY_TEXT_Exit( MYSTERY_TEXT_WORK* p_wk )
     PRINTSYS_PrintStreamDelete( p_wk->p_stream );
     p_wk->p_stream  = NULL;
   }
+  if( p_wk->p_time )
+  { 
+    TILEICON_Exit( p_wk->p_time );
+    p_wk->p_time  = NULL;
+  }
+  if( p_wk->p_keycursor )
+  { 
+    APP_KEYCURSOR_Delete( p_wk->p_keycursor );
+  }
 
   GFL_TCBL_Exit( p_wk->p_tcbl );
 
@@ -411,8 +468,6 @@ void MYSTERY_TEXT_Exit( MYSTERY_TEXT_WORK* p_wk )
   GFL_BMPWIN_Delete( p_wk->p_bmpwin );
 
   GFL_STR_DeleteBuffer( p_wk->p_strbuf );
-
-  APP_KEYCURSOR_Delete( p_wk->p_keycursor );
 
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -433,6 +488,10 @@ void MYSTERY_TEXT_Main( MYSTERY_TEXT_WORK* p_wk )
   case MYSTERY_TEXT_TYPE_NONE:
     break;
 
+  case MYSTERY_TEXT_TYPE_WAIT:
+    PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
+    break;
+
   case MYSTERY_TEXT_TYPE_QUE:
     p_wk->is_end_print  = PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
     break;
@@ -441,9 +500,12 @@ void MYSTERY_TEXT_Main( MYSTERY_TEXT_WORK* p_wk )
     if( p_wk->p_stream )
     { 
       BOOL is_end;
-      APP_KEYCURSOR_Main( p_wk->p_keycursor, p_wk->p_stream, p_wk->p_bmpwin );
 
-      APP_KEYCURSOR_Main( p_wk->p_keycursor, p_wk->p_stream, p_wk->p_bmpwin );
+      if( p_wk->p_keycursor )
+      { 
+        APP_KEYCURSOR_Main( p_wk->p_keycursor, p_wk->p_stream, p_wk->p_bmpwin );
+      }
+
       is_end  = APP_PRINTSYS_COMMON_PrintStreamFunc( &p_wk->common, p_wk->p_stream );
       if( is_end )
       { 
@@ -513,15 +575,34 @@ static void MYSTERY_TEXT_PrintInner( MYSTERY_TEXT_WORK* p_wk, MYSTERY_TEXT_TYPE 
     p_wk->p_stream  = NULL;
   }
 
+  if( p_wk->p_keycursor )
+  { 
+    APP_KEYCURSOR_Delete( p_wk->p_keycursor );
+    p_wk->p_keycursor = NULL;
+  }
+
+  MYSTERY_TEXT_EndWait( p_wk );
+
   //タイプごとの文字描画
   switch( type )
   { 
+  case MYSTERY_TEXT_TYPE_WAIT:    //待機アイコン
+    p_wk->p_time  = TIMEICON_Create( GFUser_VIntr_GetTCBSYS(), p_wk->p_bmpwin, p_wk->clear_chr,
+        TIMEICON_DEFAULT_WAIT, p_wk->heapID );
+
+    PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );
+    p_wk->print_update  = MYSTERY_TEXT_TYPE_QUE;
+    break;
+
   case MYSTERY_TEXT_TYPE_QUE:     //プリントキューを使う
     PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );
     p_wk->print_update  = MYSTERY_TEXT_TYPE_QUE;
     break;
 
   case MYSTERY_TEXT_TYPE_STREAM:  //ストリームを使う
+
+    APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->common, APP_PRINTSYS_COMMON_TYPE_KEY);
+    p_wk->p_keycursor  = APP_KEYCURSOR_Create( p_wk->clear_chr, TRUE, FALSE, p_wk->heapID );
     p_wk->p_stream  = PRINTSYS_PrintStream( p_wk->p_bmpwin, 0, 0, p_wk->p_strbuf,
         p_wk->p_font, MSGSPEED_GetWait(), p_wk->p_tcbl, 0, p_wk->heapID, p_wk->clear_chr );
     p_wk->print_update  = MYSTERY_TEXT_TYPE_STREAM;
@@ -558,7 +639,26 @@ void MYSTERY_TEXT_WriteWindowFrame( MYSTERY_TEXT_WORK *p_wk, u16 frm_chr, u8 frm
 { 
   BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_ON, frm_chr, frm_plt );
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  テキスト  待機アイコンを消去
+ *
+ *	@param	WBM_TEXT_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_TEXT_EndWait( MYSTERY_TEXT_WORK *p_wk )
+{ 
+  p_wk->is_end_print  = TRUE;
+  if( p_wk->p_time )
+  { 
+    TILEICON_Exit( p_wk->p_time );
+    p_wk->p_time  = NULL;
 
+    //タイムアイコンのあとはスクリーンが壊れているため、再転送
+    GFL_BMPWIN_MakeScreen( p_wk->p_bmpwin );
+    GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(p_wk->p_bmpwin) );
+  }
+}
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *				  リスト
@@ -741,7 +841,8 @@ struct _MYSTERY_MSGWINSET_WORK
 //----------------------------------------------------------------------------
 /**
  *	@brief  BMPWINSET 初期化
- *
+ *  
+ *  @param  mode                                      反映モード
  *	@param	const MYSTERY_MSGWINSET_SETUP_TBL *cp_tbl 設定テーブル
  *	@param	tbl_len                                   テーブル数
  *	@param	frm                                       フレーム
@@ -754,7 +855,7 @@ struct _MYSTERY_MSGWINSET_WORK
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-MYSTERY_MSGWINSET_WORK * MYSTERY_MSGWINSET_Init( const MYSTERY_MSGWINSET_SETUP_TBL *cp_tbl, u32 tbl_len, u16 frm, u8 plt, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, GFL_FONT *p_font, HEAPID heapID )
+MYSTERY_MSGWINSET_WORK * MYSTERY_MSGWINSET_Init( MYSTERY_MSGWIN_TRANS_MODE mode, const MYSTERY_MSGWINSET_SETUP_TBL *cp_tbl, u32 tbl_len, u16 frm, u8 plt, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, GFL_FONT *p_font, HEAPID heapID )
 { 
   MYSTERY_MSGWINSET_WORK *p_wk;
   u32 size;
@@ -774,7 +875,7 @@ MYSTERY_MSGWINSET_WORK * MYSTERY_MSGWINSET_Init( const MYSTERY_MSGWINSET_SETUP_T
     for( i = 0; i < p_wk->tbl_len; i++ )
     { 
       cp_setup  = &cp_tbl[i];
-      p_wk->p_msgwin[i] = MYSTERY_MSGWIN_Init( frm, cp_setup->x, cp_setup->y, 
+      p_wk->p_msgwin[i] = MYSTERY_MSGWIN_Init( mode, frm, cp_setup->x, cp_setup->y, 
           cp_setup->w, cp_setup->h, plt, p_que, heapID );
 
       MYSTERY_MSGWIN_SetPos( p_wk->p_msgwin[i], cp_setup->pos_x, cp_setup->pos_y, cp_setup->pos_type );
@@ -793,7 +894,6 @@ MYSTERY_MSGWINSET_WORK * MYSTERY_MSGWINSET_Init( const MYSTERY_MSGWINSET_SETUP_T
 
   return p_wk;
 }
-
 
 //----------------------------------------------------------------------------
 /**
@@ -890,6 +990,163 @@ BOOL MYSTERY_MSGWINSET_PrintMain( MYSTERY_MSGWINSET_WORK* p_wk )
 
   return ret;
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BMPWINSET MYSTERY_MSGWIN_TRANS_MODE_AUTOモードの場合使用する転送関数
+ *
+ *	@param	MYSTERY_MSGWINSET_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_MSGWINSET_Trans( MYSTERY_MSGWINSET_WORK* p_wk )
+{ 
+  int i;
+  for( i = 0; i < p_wk->tbl_len; i++ )
+  { 
+    MYSTERY_MSGWIN_Trans( p_wk->p_msgwin[i] );
+  }
+}
+//=============================================================================
+/**
+ *    メモリ上に描画しておき、一気に書き込むためのバッファ
+ */
+//=============================================================================
+struct _MYSTERY_MSGWINBUFF_WORK
+{ 
+  HEAPID heapID;
+  MYSTERY_MSGWINSET_WORK  *p_winset;
+  GFL_BMP_DATA  *p_bmp[0];
+};
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バッファの作成
+ *
+ *	@param	MYSTERY_MSGWINSET_WORK *p_wk  ワーク
+ *	@param	heapID                        ヒープID
+ *
+ *	@return バッファ
+ */
+//-----------------------------------------------------------------------------
+MYSTERY_MSGWINBUFF_WORK *MYSTERY_MSGWINSET_CreateBuff( MYSTERY_MSGWINSET_WORK *p_wk, HEAPID heapID )
+{ 
+  u32 size;
+  MYSTERY_MSGWINBUFF_WORK *p_buff;
+
+  size    = sizeof(MYSTERY_MSGWINBUFF_WORK) + sizeof(GFL_BMP_DATA*) * p_wk->tbl_len;
+  p_buff  = GFL_HEAP_AllocMemory( heapID, size );
+  GFL_STD_MemClear( p_buff, size );
+  p_buff->p_winset  = p_wk;
+  p_buff->heapID    = heapID;
+
+  { 
+    int i;
+    GFL_BMP_DATA  *p_src;
+    for( i = 0; i < p_wk->tbl_len; i++ )
+    { 
+      p_src  = GFL_BMPWIN_GetBmp( p_wk->p_msgwin[i]->p_bmpwin );
+      p_buff->p_bmp[i]  = GFL_BMP_Create( GFL_BMP_GetSizeX(p_src)/8, 
+          GFL_BMP_GetSizeY(p_src)/8, GFL_BMP_GetColorFormat(p_src), heapID );
+    }
+  }
+
+  return p_buff;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バッファの破棄
+ *
+ *	@param	MYSTERY_MSGWINBUFF_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_MSGWINSET_DeleteBuff( MYSTERY_MSGWINBUFF_WORK *p_wk )
+{ 
+  int i;
+  for( i = 0; i < p_wk->p_winset->tbl_len; i++ )
+  { 
+    GFL_BMP_Delete( p_wk->p_bmp[i] );
+  }
+
+  GFL_HEAP_FreeMemory( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バッファへの書き込み
+ *
+ *	@param	MYSTERY_MSGWINBUFF_WORK  *p_wk        ワーク
+ *	@param	MYSTERY_MSGWINSET_PRINT_TBL *cp_tbl 書き込みテーブル
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_MSGWINSET_PrintBuff( MYSTERY_MSGWINBUFF_WORK *p_wk, const MYSTERY_MSGWINSET_PRINT_TBL *cp_tbl, PRINT_QUE *p_que )
+{ 
+  //作成  ＆　書き込み
+  { 
+    int i;
+    const MYSTERY_MSGWINSET_PRINT_TBL *cp_print;
+    GFL_POINT ofs;
+    GFL_POINT pos;
+
+    STRBUF  *p_strbuf = GFL_STR_CreateBuffer( 512, p_wk->heapID );
+
+    for( i = 0; i < p_wk->p_winset->tbl_len; i++ )
+    { 
+      cp_print  = &cp_tbl[i];
+
+      if( cp_print->is_print )
+      { 
+        GFL_POINT pos;
+
+        //一端消去
+        GFL_BMP_Clear( p_wk->p_bmp[i], PRINTSYS_LSB_GetB( cp_print->color ) );	
+
+        //位置計算
+        ofs.x = cp_print->pos_x;
+        ofs.y = cp_print->pos_y;
+        Mystery_Msgwin_CalcPosCore( cp_print->pos_type, &ofs, p_wk->p_bmp[i], p_strbuf, p_wk->p_winset->p_font, &pos );
+
+        //文字列作成
+        if( cp_print->p_strbuf )
+        { 
+          GFL_STR_CopyBuffer( p_strbuf, cp_print->p_strbuf );
+        }
+        else
+        { 
+          GFL_MSG_GetString( p_wk->p_winset->p_msg, cp_print->strID, p_strbuf );
+        }
+
+        //文字列描画
+        PRINTSYS_PrintQueColor( p_que, p_wk->p_bmp[i], pos.x, pos.y, p_strbuf, p_wk->p_winset->p_font, cp_print->color );
+      }
+    }
+
+    GFL_HEAP_FreeMemory( p_strbuf );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バッファの設定（転送はTrans関数で行なう）
+ *  
+ *	@param	MYSTERY_MSGWINSET_WORK *p_wk    ワーク
+ *	@param	MYSTERY_MSGWINBUFF_WORK *cp_buff バッファ
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_MSGWINSET_SetBuff( MYSTERY_MSGWINBUFF_WORK *p_wk )
+{ 
+  int i;
+  GFL_BMP_DATA  *p_src_bmp;
+  GFL_BMP_DATA  *p_dst_bmp;
+  u8  *p_src;
+  u8  *p_dst;
+
+
+  for( i = 0; i < p_wk->p_winset->tbl_len; i++ )
+  { 
+    p_src_bmp = p_wk->p_bmp[i];
+    p_dst_bmp = GFL_BMPWIN_GetBmp(p_wk->p_winset->p_msgwin[i]->p_bmpwin);
+    GFL_BMP_Copy( p_src_bmp, p_dst_bmp );
+  }
+}
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -928,7 +1185,7 @@ struct _MYSTERY_MENU_WORK
   u16               color[ MYSTERY_MENU_WINDOW_MAX ];
   u16               color_buff[ MYSTERY_MENU_WINDOW_MAX ];
   u16               change_color;
-  u16               cnt[ MYSTERY_MENU_WINDOW_MAX ];
+  u16               cnt;
   u16               font_plt;
   u16               font_frm;
   u16               bg_frm;
@@ -938,6 +1195,9 @@ struct _MYSTERY_MENU_WORK
   MYSTERY_MENU_CURSOR_CALLBACK callback;
   void              *p_wk_adrs;
   BOOL              is_blink[ MYSTERY_MENU_WINDOW_MAX ];
+  BOOL              is_blink_req[ MYSTERY_MENU_WINDOW_MAX ];
+  BOOL              is_cancel;
+  MYSTERY_MENU_DATA *cp_menu_data;
 };
 //-------------------------------------
 ///	プロトタイプ
@@ -970,6 +1230,12 @@ MYSTERY_MENU_WORK * MYSTERY_MENU_Init( const MYSTERY_MENU_SETUP *cp_setup, HEAPI
   p_wk->p_wk_adrs = cp_setup->p_wk_adrs;
   p_wk->chr_y_ofs = cp_setup->chr_y_ofs;
   p_wk->anm_seq   = cp_setup->anm_seq;
+  p_wk->cp_menu_data  = cp_setup->p_data;
+  if( cp_setup->p_data )
+  { 
+    p_wk->select  = cp_setup->p_data->cursor_pos;
+    p_wk->select  = MATH_CLAMP( p_wk->select, 0, p_wk->list_max-1 );
+  }
 
   //各窓の背景色と決定色をコピー
   { 
@@ -1022,7 +1288,7 @@ MYSTERY_MENU_WORK * MYSTERY_MENU_Init( const MYSTERY_MENU_SETUP *cp_setup, HEAPI
       }
     }
 
-    p_wk->p_winset  = MYSTERY_MSGWINSET_Init( tbl, p_wk->list_max, cp_setup->font_frm, cp_setup->font_plt, cp_setup->p_que, cp_setup->p_msg, cp_setup->p_font, heapID );
+    p_wk->p_winset  = MYSTERY_MSGWINSET_Init( MYSTERY_MSGWIN_TRANS_MODE_AUTO, tbl, p_wk->list_max, cp_setup->font_frm, cp_setup->font_plt, cp_setup->p_que, cp_setup->p_msg, cp_setup->p_font, heapID );
 
     for( i = 0; i < p_wk->list_max; i++ )
     {
@@ -1036,8 +1302,8 @@ MYSTERY_MENU_WORK * MYSTERY_MENU_Init( const MYSTERY_MENU_SETUP *cp_setup, HEAPI
   //カーソル設定
   {
     GFL_CLACTPOS  pos;
-    pos.x = sc_menu_cursor_pos[0].x;
-    pos.y = sc_menu_cursor_pos[0].y + cp_setup->chr_y_ofs * 8;
+    pos.x = sc_menu_cursor_pos[p_wk->select].x;
+    pos.y = sc_menu_cursor_pos[p_wk->select].y + cp_setup->chr_y_ofs * 8;
     GFL_CLACT_WK_SetPos( p_wk->p_cursor, &pos, CLSYS_DEFREND_MAIN );
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_cursor, TRUE );
     GFL_CLACT_WK_SetAnmSeq( p_wk->p_cursor, p_wk->anm_seq );
@@ -1055,8 +1321,16 @@ MYSTERY_MENU_WORK * MYSTERY_MENU_Init( const MYSTERY_MENU_SETUP *cp_setup, HEAPI
 //-----------------------------------------------------------------------------
 void MYSTERY_MENU_Exit( MYSTERY_MENU_WORK *p_wk )
 { 
+  if( p_wk->cp_menu_data ) 
+  { 
+    if( p_wk->select != 3 )
+    { 
+      p_wk->cp_menu_data->cursor_pos  = p_wk->select;
+    }
+  }
 
   GFL_CLACT_WK_SetDrawEnable( p_wk->p_cursor, FALSE );
+  MYSTERY_MSGWINSET_Clear( p_wk->p_winset );
   MYSTERY_MSGWINSET_Exit( p_wk->p_winset );
   GFL_BG_LoadScreenReq( p_wk->font_frm );
   GFL_HEAP_FreeMemory( p_wk );
@@ -1117,6 +1391,10 @@ u32 MYSTERY_MENU_Main( MYSTERY_MENU_WORK *p_wk )
     }
     else
     { 
+      if( p_wk->select != 3 )
+      { 
+        p_wk->cp_menu_data->cursor_pos  = p_wk->select;
+      }
       p_wk->select  = p_wk->list_max-1;
       return p_wk->select;
     }
@@ -1152,37 +1430,33 @@ u32 MYSTERY_MENU_Main( MYSTERY_MENU_WORK *p_wk )
   //背景色の変更
   { 
     int i;
+
+    //パレットアニメ
+    if( p_wk->cnt + 0x400 >= 0x10000 )
+    {
+      p_wk->cnt = p_wk->cnt+0x400-0x10000;
+    }
+    else
+    {
+      p_wk->cnt += 0x400;
+    }
+
     for( i = 0; i < MYSTERY_MENU_WINDOW_MAX; i++ )
     { 
+      //点滅同期
+      if( p_wk->is_blink_req[i] != p_wk->is_blink[i] )
+      { 
+        if( 0x7FFF - 0x200 <= p_wk->cnt && p_wk->cnt <= 0x7FFF + 0x200  )
+        { 
+          p_wk->is_blink[i]  = p_wk->is_blink_req[i];
+        }
+      }
+
+      //点滅処理
       if( p_wk->is_blink[ i ] )
       { 
-        //パレットアニメ
-        if( p_wk->cnt[i] + 0x400 >= 0x10000 )
-        {
-          p_wk->cnt[i] = p_wk->cnt[i]+0x400-0x10000;
-        }
-        else
-        {
-          p_wk->cnt[i] += 0x400;
-        }
-
-        MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_MAIN, &p_wk->color_buff[i], p_wk->cnt[i],
+        MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_MAIN, &p_wk->color_buff[i], p_wk->cnt,
             p_wk->bg_ofs, 0xA+i, p_wk->color[i], p_wk->change_color );
-      }
-      else
-      { 
-        if( p_wk->cnt[i] != 0 )
-        { 
-          p_wk->cnt[i] += 0x400;
-
-          if( 0 < p_wk->cnt[i] && p_wk->cnt[i] < 0x400 )
-          { 
-            p_wk->cnt[i]  = 0;
-          }
-
-          MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_MAIN, &p_wk->color_buff[i], p_wk->cnt[i],
-              p_wk->bg_ofs, 0xA+i, p_wk->color[i], p_wk->change_color );
-        }
       }
     }
   }
@@ -1197,10 +1471,10 @@ u32 MYSTERY_MENU_Main( MYSTERY_MENU_WORK *p_wk )
  *	@param	MYSTERY_MENU_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void MYSTERY_MENU_PrintMain( MYSTERY_MENU_WORK *p_wk )
+BOOL MYSTERY_MENU_PrintMain( MYSTERY_MENU_WORK *p_wk )
 { 
   //文字描画
-  MYSTERY_MSGWINSET_PrintMain( p_wk->p_winset );
+  return MYSTERY_MSGWINSET_PrintMain( p_wk->p_winset );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1214,7 +1488,7 @@ void MYSTERY_MENU_PrintMain( MYSTERY_MENU_WORK *p_wk )
 void MYSTERY_MENU_SetBlink( MYSTERY_MENU_WORK *p_wk, u32 list_num, BOOL is_blink )
 {
   GF_ASSERT( list_num < MYSTERY_MENU_WINDOW_MAX );
-  p_wk->is_blink[ list_num ]  = is_blink;
+  p_wk->is_blink_req[ list_num ]  = is_blink;
 }
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -1648,9 +1922,58 @@ void MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 pl
   const u8 g = start_g + (((end_g-start_g)*cos)>>FX16_SHIFT);
   const u8 b = start_b + (((end_b-start_b)*cos)>>FX16_SHIFT);
 
+
   *p_buff = GX_RGB(r, g, b);
 
-  NNS_GfdRegisterNewVramTransferTask( type,
-      plt_num * 32 + plt_col * 2,
-      p_buff, 2 );
+  { 
+    BOOL ret;
+    ret = NNS_GfdRegisterNewVramTransferTask( type,
+        plt_num * 32 + plt_col * 2,
+        p_buff, 2 );
+
+    GF_ASSERT(ret);
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットフェード１行すべて塗り替える版
+ *
+ *	@param	NNS_GFD_DST_TYPE type 転送先
+ *	@param	*p_buff               バッファ0x10個分
+ *	@param	cnt                   カウント
+ *	@param	plt_num               パレット行
+ *	@param	GXRgb start[]         開始色0x10個分
+ *	@param	end[]                 終了色0x10個分
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_UTIL_MainPltAnmLine( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_num, GXRgb start[], GXRgb end[] )
+{ 
+  int i;
+ //0～１に変換
+  for( i = 0; i < 0x10; i++ )
+  { 
+    const fx16 cos = (FX_CosIdx(cnt)+FX16_ONE)/2;
+    const u8 start_r  = (start[i] & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+    const u8 start_g  = (start[i] & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+    const u8 start_b  = (start[i] & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+    const u8 end_r  = (end[i] & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+    const u8 end_g  = (end[i] & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+    const u8 end_b  = (end[i] & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+
+    const u8 r = start_r + (((end_r-start_r)*cos)>>FX16_SHIFT);
+    const u8 g = start_g + (((end_g-start_g)*cos)>>FX16_SHIFT);
+    const u8 b = start_b + (((end_b-start_b)*cos)>>FX16_SHIFT);
+
+    p_buff[i] = GX_RGB(r, g, b);
+  }
+
+  { 
+    BOOL ret;
+    ret = NNS_GfdRegisterNewVramTransferTask( type,
+        plt_num * 32,
+        p_buff, 32 );
+    GF_ASSERT(ret);
+  }
+
 }

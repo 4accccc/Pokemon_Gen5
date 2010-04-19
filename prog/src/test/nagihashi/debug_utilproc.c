@@ -141,7 +141,7 @@ static GFL_PROC_RESULT DEBUG_NAGI_IRC_REGULATION_PROC_Init( GFL_PROC *p_proc, in
       init.data[i].datasize = sizeof(REGULATION_CARDDATA);
       init.data[i].pData  = (u8*)&p_wk->carddata[i];
       init.data[i].LangCode = Regulation_GetCardParam( &p_wk->carddata[i], REGULATION_CARD_LANGCODE );
-
+      init.data[i].version  = (1<<VERSION_BLACK) | (1<<VERSION_WHITE);
       OS_TPrintf( "lang %d\n", init.data[i].LangCode );
     }
 

@@ -22,6 +22,9 @@
 /**
  *					BMPWINメッセージ描画構造体
  *					  ・文字描画はPRINTQUE
+ *            ・自動転送モードと任意転送モードがある
+ *            ・自動転送モードは作成や書込み後即時反映
+ *            ・任意転送モードはMYSTERY_MSGWIN_Transをするまで画面反映をしない
 */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
@@ -38,13 +41,22 @@ typedef enum
 #define MYSTERY_MSGWIN_WHITE_COLOR    (PRINTSYS_MACRO_LSB( 0xf, 2, 0 ))
 
 //-------------------------------------
+///	書き込みモード
+//=====================================
+typedef enum
+{
+  MYSTERY_MSGWIN_TRANS_MODE_AUTO,  //即時転送
+  MYSTERY_MSGWIN_TRANS_MODE_MANUAL, //任意タイミングで転送関数MYSTERY_MSGWIN_Transを呼ぶことで反映
+} MYSTERY_MSGWIN_TRANS_MODE;
+
+//-------------------------------------
 ///	メッセージウィンドウ
 //=====================================
 typedef struct _MYSTERY_MSGWIN_WORK MYSTERY_MSGWIN_WORK;
 //-------------------------------------
 ///	パブリック
 //=====================================
-extern MYSTERY_MSGWIN_WORK * MYSTERY_MSGWIN_Init( u16 frm, u8 x, u8 y, u8 w, u8 h, u8 plt, PRINT_QUE *p_que, HEAPID heapID );
+extern MYSTERY_MSGWIN_WORK * MYSTERY_MSGWIN_Init( MYSTERY_MSGWIN_TRANS_MODE mode, u16 frm, u8 x, u8 y, u8 w, u8 h, u8 plt, PRINT_QUE *p_que, HEAPID heapID );
 extern void MYSTERY_MSGWIN_Clear( MYSTERY_MSGWIN_WORK* p_wk );
 extern void MYSTERY_MSGWIN_Exit( MYSTERY_MSGWIN_WORK* p_wk );
 extern void MYSTERY_MSGWIN_Print( MYSTERY_MSGWIN_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font );
@@ -52,6 +64,7 @@ extern void MYSTERY_MSGWIN_PrintBuf( MYSTERY_MSGWIN_WORK* p_wk, const STRBUF *cp
 extern void MYSTERY_MSGWIN_SetColor( MYSTERY_MSGWIN_WORK* p_wk, PRINTSYS_LSB color );
 extern void MYSTERY_MSGWIN_SetPos( MYSTERY_MSGWIN_WORK* p_wk, s16 x, s16 y, MYSTERY_MSGWIN_POS type );
 extern BOOL MYSTERY_MSGWIN_PrintMain( MYSTERY_MSGWIN_WORK* p_wk );
+extern void MYSTERY_MSGWIN_Trans( MYSTERY_MSGWIN_WORK* p_wk );
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -65,6 +78,7 @@ typedef enum
 {
   MYSTERY_TEXT_TYPE_QUE,     //プリントキューを使う
   MYSTERY_TEXT_TYPE_STREAM,  //ストリームを使う
+  MYSTERY_TEXT_TYPE_WAIT,   //待機アイコン付き
 
   MYSTERY_TEXT_TYPE_MAX,    //c内部にて使用
 } MYSTERY_TEXT_TYPE;
@@ -86,7 +100,7 @@ extern void MYSTERY_TEXT_PrintBuf( MYSTERY_TEXT_WORK* p_wk, const STRBUF *cp_str
 extern BOOL MYSTERY_TEXT_IsEndPrint( const MYSTERY_TEXT_WORK *cp_wk );
 
 extern void MYSTERY_TEXT_WriteWindowFrame( MYSTERY_TEXT_WORK *p_wk, u16 frm_chr, u8 frm_plt );
-
+extern void MYSTERY_TEXT_EndWait( MYSTERY_TEXT_WORK *p_wk );
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *				  リスト
@@ -167,7 +181,6 @@ typedef struct
   PRINTSYS_LSB  color;
 } MYSTERY_MSGWINSET_PRINT_TBL;
 
-
 //-------------------------------------
 ///	メッセージウィンドウ
 //=====================================
@@ -175,11 +188,25 @@ typedef struct _MYSTERY_MSGWINSET_WORK MYSTERY_MSGWINSET_WORK;
 //-------------------------------------
 ///	パブリック
 //=====================================
-MYSTERY_MSGWINSET_WORK * MYSTERY_MSGWINSET_Init( const MYSTERY_MSGWINSET_SETUP_TBL *cp_tbl, u32 tbl_len, u16 frm, u8 plt, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, GFL_FONT *p_font, HEAPID heapID );
+MYSTERY_MSGWINSET_WORK * MYSTERY_MSGWINSET_Init( MYSTERY_MSGWIN_TRANS_MODE mode, const MYSTERY_MSGWINSET_SETUP_TBL *cp_tbl, u32 tbl_len, u16 frm, u8 plt, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, GFL_FONT *p_font, HEAPID heapID );
 extern void MYSTERY_MSGWINSET_Exit( MYSTERY_MSGWINSET_WORK* p_wk );
 extern void MYSTERY_MSGWINSET_Clear( MYSTERY_MSGWINSET_WORK* p_wk );
 extern BOOL MYSTERY_MSGWINSET_PrintMain( MYSTERY_MSGWINSET_WORK* p_wk );
 extern void MYSTERY_MSGWINSET_Print( MYSTERY_MSGWINSET_WORK* p_wk, const MYSTERY_MSGWINSET_PRINT_TBL *cp_tbl );
+
+extern void MYSTERY_MSGWINSET_Trans( MYSTERY_MSGWINSET_WORK* p_wk );
+
+//-------------------------------------
+/// メモリ上に描画しておき、一気に書き込むためのバッファ
+//=====================================
+typedef struct _MYSTERY_MSGWINBUFF_WORK MYSTERY_MSGWINBUFF_WORK;
+
+extern MYSTERY_MSGWINBUFF_WORK *MYSTERY_MSGWINSET_CreateBuff( MYSTERY_MSGWINSET_WORK *p_wk, HEAPID heapID );
+extern void MYSTERY_MSGWINSET_DeleteBuff( MYSTERY_MSGWINBUFF_WORK *p_wk );
+
+extern void MYSTERY_MSGWINSET_PrintBuff( MYSTERY_MSGWINBUFF_WORK *p_wk, const MYSTERY_MSGWINSET_PRINT_TBL *cp_tbl, PRINT_QUE *p_que );
+extern void MYSTERY_MSGWINSET_SetBuff( MYSTERY_MSGWINBUFF_WORK *p_wk );
+
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -192,6 +219,17 @@ extern void MYSTERY_MSGWINSET_Print( MYSTERY_MSGWINSET_WORK* p_wk, const MYSTERY
 #define MYSTERY_MENU_SELECT_NULL  (BMPMENULIST_NULL)
 #define MYSTERY_MENU_SELECT_CENCEL  (BMPMENULIST_CANCEL)
 #define MYSTERY_MENU_WINDOW_MAX   (4)
+
+
+//-------------------------------------
+///	カーソル保持等MENUが終了しても残しておくデータです
+//  これをワーキングメモリにおいて、
+//  MYSTERY_MENU_SETUPへポインタを渡してください
+//=====================================
+typedef struct 
+{ 
+  u32 cursor_pos;
+} MYSTERY_MENU_DATA;
 
 typedef void (*MYSTERY_MENU_CURSOR_CALLBACK)( void *p_wk_adrs );
 //-------------------------------------
@@ -219,6 +257,8 @@ typedef struct
 
   MYSTERY_MENU_CURSOR_CALLBACK callback;
   void *p_wk_adrs;
+
+  MYSTERY_MENU_DATA *p_data;
 } MYSTERY_MENU_SETUP;
 
 //-------------------------------------
@@ -231,7 +271,7 @@ typedef struct _MYSTERY_MENU_WORK MYSTERY_MENU_WORK;
 extern MYSTERY_MENU_WORK * MYSTERY_MENU_Init( const MYSTERY_MENU_SETUP *cp_setup, HEAPID heapID );
 extern void MYSTERY_MENU_Exit( MYSTERY_MENU_WORK *p_wk );
 extern u32 MYSTERY_MENU_Main( MYSTERY_MENU_WORK *p_wk );
-extern void MYSTERY_MENU_PrintMain( MYSTERY_MENU_WORK *p_wk );
+extern BOOL MYSTERY_MENU_PrintMain( MYSTERY_MENU_WORK *p_wk );
 
 extern void MYSTERY_MENU_SetBlink( MYSTERY_MENU_WORK *p_wk, u32 list_num, BOOL is_blink );
 
@@ -301,3 +341,4 @@ extern BMPOAM_ACT_PTR MYSTERY_MSGOAM_GetBmpOamAct( MYSTERY_MSGOAM_WORK* p_wk );
  */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 extern void MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end );
+extern void MYSTERY_UTIL_MainPltAnmLine( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_num, GXRgb start[], GXRgb end[] );

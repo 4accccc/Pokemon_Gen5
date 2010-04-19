@@ -152,8 +152,6 @@ typedef struct
   u16 plt[0x10];
   u16 plt_src[0x10];
   u16 plt_dst[0x10];
-  u16 start_col;
-  u16 end_col;
 } PLTANM_WORK;
 
 
@@ -168,7 +166,9 @@ struct _MYSTERY_ALBUM_WORK
   MYSTERY_CARD_DATA   data[ MYSTERY_ALBUM_CARD_MAX ];
 
   BOOL                    is_card_update;
-  MYSTERY_CARD_WORK       *p_card;
+  MYSTERY_CARD_WORK       *p_card[ MYSTERY_ALBUM_CARD_MAX ];
+  MYSTERY_CARD_WORK       *p_anm_card;
+  MYSTERY_CARD_RES        *p_card_res;
   MYSTERY_MSGWIN_WORK     *p_page_win;
   MYSTERY_MSGWINSET_WORK  *p_winset;
 
@@ -274,11 +274,10 @@ static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
 
 static void SEQFUNC_DeleteMsg( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
-
 //-------------------------------------
 ///	PLTANM
 //=====================================
-static void PLTANM_Load( PLTANM_WORK *p_wk, ARCHANDLE *p_handle, ARCDATID datID, u8 dst_plt_num, u8 src_plt_num, u8 start_col, u8 end_col, HEAPID heapID );
+static void PLTANM_Load( PLTANM_WORK *p_wk, ARCHANDLE *p_handle, ARCDATID datID, u8 dst_plt_num, u8 src_plt_num, HEAPID heapID );
 static void PLTANM_Main( PLTANM_WORK *p_wk, NNS_GFD_DST_TYPE type, u8 target_plt, u16 cnt );
 
 //=============================================================================
@@ -350,6 +349,8 @@ static const MYSTERY_ALBUM_THUMBNAIL_DATA sc_thumbnail_data[MYSTERY_CURSOR_MAX] 
 #define MYSTERY_ALBUM_CARD_WRITE_SRC_START_Y      2
 #define MYSTERY_ALBUM_CARD_WRITE_SRC_W            32
 
+
+//このあたりはリソースのキャラ番号をいじっています
 //書き込みキャラ取得
 #define MYSTERY_ALBUM_CARD_WRITE_SRC_GET_CHARA(x,y)    (MYSTERY_ALBUM_CARD_WRITE_SRC_START_X +  \
                                                     MYSTERY_ALBUM_CARD_WRITE_SRC_START_Y * \
@@ -399,6 +400,7 @@ static const MYSTERY_ALBUM_THUMBNAIL_DATA sc_thumbnail_data[MYSTERY_CURSOR_MAX] 
 //-----------------------------------------------------------------------------
 MYSTERY_ALBUM_WORK * MYSTERY_ALBUM_Init( const MYSTERY_ALBUM_SETUP *cp_setup, HEAPID heapID )
 { 
+  u32 card_num  = 0;
   MYSTERY_ALBUM_WORK *  p_wk;
 
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(MYSTERY_ALBUM_WORK) );
@@ -419,6 +421,7 @@ MYSTERY_ALBUM_WORK * MYSTERY_ALBUM_Init( const MYSTERY_ALBUM_SETUP *cp_setup, HE
     {
       if( MYSTERYDATA_IsExistsCard( p_wk->setup.p_sv, i) )
       { 
+        card_num++;
         MYSTERYDATA_GetCardData( p_wk->setup.p_sv, i, &data );
         MYSTERY_CARD_DATA_Init( &p_wk->data[i], &data, &p_wk->setup, heapID );
       }
@@ -444,7 +447,7 @@ MYSTERY_ALBUM_WORK * MYSTERY_ALBUM_Init( const MYSTERY_ALBUM_SETUP *cp_setup, HE
 
   //WINSET
   { 
-    const MYSTERY_MSGWINSET_SETUP_TBL c_setup_tbl[] =
+    static const MYSTERY_MSGWINSET_SETUP_TBL c_setup_tbl[] =
     { 
       { 
         1,
@@ -480,35 +483,87 @@ MYSTERY_ALBUM_WORK * MYSTERY_ALBUM_Init( const MYSTERY_ALBUM_SETUP *cp_setup, HE
         PRINTSYS_MACRO_LSB( 0xE, 0xF, 2 )
       },
     };
-    p_wk->p_winset  = MYSTERY_MSGWINSET_Init( c_setup_tbl, NELEMS(c_setup_tbl), MYSTERY_ALBUM_FONT_FRM, MYSTERY_ALBUM_TOP_FONT_PLT, p_wk->setup.p_que, p_wk->setup.p_msg, p_wk->setup.p_font, heapID );
+    static const MYSTERY_MSGWINSET_SETUP_TBL c_setup_nocard_tbl[] =
+    { 
+      { 
+        1,
+        1,
+        30,
+        2,
+        syachi_mystery_album_001,
+        NULL,
+        MYSTERY_MSGWIN_POS_WH_CENTER,
+        0, 0,
+        PRINTSYS_MACRO_LSB( 0xE, 0xF, 0 )
+      },
+      { 
+        0x17,
+        0x14,
+        7,
+        2,
+        syachi_mystery_album_003,
+        NULL,
+        MYSTERY_MSGWIN_POS_WH_CENTER,
+        0, 0,
+        PRINTSYS_MACRO_LSB( 0xE, 0xF, 2 )
+      },
+    };
+
+    const MYSTERY_MSGWINSET_SETUP_TBL *cp_tbl;
+    u32 tbl_max;
+
+    if( card_num > 0 )
+    { 
+      cp_tbl  = c_setup_tbl;
+      tbl_max = NELEMS(c_setup_tbl);
+    }
+    else
+    { 
+      cp_tbl  = c_setup_nocard_tbl;
+      tbl_max = NELEMS(c_setup_nocard_tbl);
+    }
+    p_wk->p_winset  = MYSTERY_MSGWINSET_Init( MYSTERY_MSGWIN_TRANS_MODE_AUTO, cp_tbl, tbl_max, MYSTERY_ALBUM_FONT_FRM, MYSTERY_ALBUM_TOP_FONT_PLT, p_wk->setup.p_que, p_wk->setup.p_msg, p_wk->setup.p_font, heapID );
+  }
+
+
+  //下画面カードのリソース
+  { 
+    MYSTERY_CARD_SETUP setup;
+    GFL_STD_MemClear( &setup, sizeof(MYSTERY_CARD_SETUP) );
+
+    setup.back_frm          = MYSTERY_ALBUM_CARD_FRM_S;
+    setup.font_frm          = MYSTERY_ALBUM_CARD_FONT_S;
+    setup.back_plt_num      = MYSTERY_ALBUM_BG_BACK_S_PLT;
+    setup.font_plt_num      = MYSTERY_ALBUM_BG_FONT_S_PLT;
+    setup.icon_obj_plt_num  = MYSTERY_ALBUM_OBJ_ICON_S_PLT; 
+    setup.silhouette_obj_plt_num  = MYSTERY_ALBUM_OBJ_SILHOUETTE_S_PLT;
+    setup.p_clunit          = p_wk->setup.p_clunit;
+    setup.p_sv              = p_wk->setup.p_sv;
+    setup.p_msg             = p_wk->setup.p_msg; 
+    setup.p_font            = p_wk->setup.p_font; 
+    setup.p_que             = p_wk->setup.p_que; 
+    setup.p_word            = p_wk->setup.p_word;
+
+    p_wk->p_card_res  = MYSTERY_CARD_RES_Init( &setup, heapID );
   }
 
   //下画面カード
   if( Mystery_Album_GetDataNum(p_wk) != 0 )
   {
-    const u32 card_index = Mystery_Album_GetNowCardIndex( p_wk );
-    const MYSTERY_CARD_DATA *p_data = &p_wk->data[ card_index ];
+    int i;
+    const MYSTERY_CARD_DATA *p_data;
 
+    for( i = 0; i < MYSTERY_ALBUM_CARD_MAX; i++ )
     { 
-      MYSTERY_CARD_SETUP setup;
-      GFL_STD_MemClear( &setup, sizeof(MYSTERY_CARD_SETUP) );
-
-      setup.cp_data            = MYSTERY_CARD_DATA_GetGiftBackData( p_data );
-      setup.back_frm          = MYSTERY_ALBUM_CARD_FRM_S;
-      setup.font_frm          = MYSTERY_ALBUM_CARD_FONT_S;
-      setup.back_plt_num      = MYSTERY_ALBUM_BG_BACK_S_PLT;
-      setup.font_plt_num      = MYSTERY_ALBUM_BG_FONT_S_PLT;
-      setup.icon_obj_plt_num  = MYSTERY_ALBUM_OBJ_ICON_S_PLT; 
-      setup.silhouette_obj_plt_num  = MYSTERY_ALBUM_OBJ_SILHOUETTE_S_PLT;
-      setup.p_clunit          = p_wk->setup.p_clunit;
-      setup.p_sv              = p_wk->setup.p_sv;
-      setup.p_msg             = p_wk->setup.p_msg; 
-      setup.p_font            = p_wk->setup.p_font; 
-      setup.p_que             = p_wk->setup.p_que; 
-      setup.p_word            = p_wk->setup.p_word;
-      MYSTERY_CARD_LoadResourceBG( &setup, p_wk->heapID );
-      p_wk->p_card  = MYSTERY_CARD_Init( &setup, cp_setup->p_gamedata,heapID );
+      p_data = &p_wk->data[ i ];
+      if( MYSTERY_CARD_DATA_IsExist( p_data ) )
+      { 
+        p_wk->p_card[i]  = MYSTERY_CARD_Init( MYSTERY_CARD_DATA_GetGiftBackData( p_data ),
+            p_wk->p_card_res, cp_setup->p_gamedata, heapID );
+      }
     }
+    MYSTERY_CARD_Trans( p_wk->p_card[0] );
+    GFL_HEAP_CheckHeapSafe( HEAPID_MYSTERYGIFT );
   }
 
   GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, 0 );
@@ -525,12 +580,17 @@ MYSTERY_ALBUM_WORK * MYSTERY_ALBUM_Init( const MYSTERY_ALBUM_SETUP *cp_setup, HE
 //-----------------------------------------------------------------------------
 void MYSTERY_ALBUM_Exit( MYSTERY_ALBUM_WORK *p_wk )
 { 
-  if( p_wk->p_card )
+  int i;
+  for( i = 0; i < MYSTERY_ALBUM_CARD_MAX; i++ )
   { 
-    MYSTERY_CARD_Exit( p_wk->p_card );
-    p_wk->p_card  = NULL;
+    if( p_wk->p_card[i] )
+    { 
+      MYSTERY_CARD_Exit( p_wk->p_card[i] );
+      p_wk->p_card[i]  = NULL;
+    }
   }
-  GFL_DISP_GXS_SetVisibleControl( GX_BLEND_PLANEMASK_OBJ, TRUE );
+
+  MYSTERY_CARD_RES_Exit( p_wk->p_card_res );
 
   if( p_wk->p_text )
   { 
@@ -541,6 +601,7 @@ void MYSTERY_ALBUM_Exit( MYSTERY_ALBUM_WORK *p_wk )
   GFL_BG_SetScroll( MYSTERY_ALBUM_BACK_FRM, GFL_BG_SCROLL_X_SET, 0 );
   GFL_BG_SetScroll( MYSTERY_ALBUM_CARD_FRM, GFL_BG_SCROLL_X_SET, 0 );
 
+  MYSTERY_MSGWINSET_Clear( p_wk->p_winset );
   MYSTERY_MSGWINSET_Exit( p_wk->p_winset );
 
   Mystery_Album_DeleteDisplay( p_wk, TRUE );
@@ -559,11 +620,7 @@ void MYSTERY_ALBUM_Exit( MYSTERY_ALBUM_WORK *p_wk )
   GFL_BG_ClearScreen( MYSTERY_ALBUM_CARD_FRM_S );
   GFL_BG_LoadScreenV_Req( MYSTERY_ALBUM_CARD_FONT_S );
   GFL_BG_LoadScreenV_Req( MYSTERY_ALBUM_CARD_FRM_S );
-/*
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-  GFL_BG_SetVisible( MYSTERY_ALBUM_CARD_FRM_S, TRUE );
-  GFL_BG_SetVisible( MYSTERY_ALBUM_CARD_FONT_S, TRUE );
-*/
+
   MYSTERY_SEQ_Exit( p_wk->p_seq );
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -578,19 +635,17 @@ void MYSTERY_ALBUM_Main( MYSTERY_ALBUM_WORK *p_wk )
 { 
   //メイン処理
   MYSTERY_SEQ_Main( p_wk->p_seq );
-
+  MYSTERY_CARD_RES_PrintMain( p_wk->p_card_res );
   //下画面カード読み替え処理
   if( p_wk->is_card_update )
   { 
+    BOOL is_exist = FALSE;
     MYSTERY_CARD_DATA *p_data;
 
-    //破棄
-    if( p_wk->p_card )
+    if( p_wk->p_anm_card )
     { 
-      MYSTERY_CARD_Exit( p_wk->p_card );
-      p_wk->p_card  = NULL;
-
-      GFL_DISP_GXS_SetVisibleControl( GX_BLEND_PLANEMASK_OBJ, FALSE );
+      MYSTERY_CARD_EndEffect( p_wk->p_anm_card );
+      p_wk->p_anm_card  = NULL;
     }
 
     //作成
@@ -599,36 +654,15 @@ void MYSTERY_ALBUM_Main( MYSTERY_ALBUM_WORK *p_wk )
       p_data = &p_wk->data[ Mystery_Album_GetNowCardIndex( p_wk ) ];
       if( MYSTERY_CARD_DATA_IsExist( p_data ) )
       { 
-        if( p_wk->p_card == NULL )
-        { 
-          MYSTERY_CARD_SETUP setup;
-          GFL_STD_MemClear( &setup, sizeof(MYSTERY_CARD_SETUP) );
-
-          setup.cp_data            = MYSTERY_CARD_DATA_GetGiftBackData( p_data );
-          setup.back_frm          = MYSTERY_ALBUM_CARD_FRM_S;
-          setup.font_frm          = MYSTERY_ALBUM_CARD_FONT_S;
-          setup.back_plt_num      = MYSTERY_ALBUM_BG_BACK_S_PLT;
-          setup.font_plt_num      = MYSTERY_ALBUM_BG_FONT_S_PLT;
-          setup.icon_obj_plt_num  = MYSTERY_ALBUM_OBJ_ICON_S_PLT; 
-          setup.silhouette_obj_plt_num  = MYSTERY_ALBUM_OBJ_SILHOUETTE_S_PLT;
-          setup.p_clunit          = p_wk->setup.p_clunit;
-          setup.p_sv              = p_wk->setup.p_sv;
-          setup.p_msg             = p_wk->setup.p_msg; 
-          setup.p_font            = p_wk->setup.p_font; 
-          setup.p_que             = p_wk->setup.p_que; 
-          setup.p_word            = p_wk->setup.p_word;
-          p_wk->p_card  = MYSTERY_CARD_Init( &setup, p_wk->setup.p_gamedata, p_wk->heapID );
-        }
+        is_exist  = TRUE;
+        MYSTERY_CARD_Trans( p_wk->p_card[ Mystery_Album_GetNowCardIndex( p_wk ) ] );
       }
     }
 
     //作成できなかったらスクリーンクリア
-    if( p_wk->p_card == NULL )
+    if( is_exist == FALSE )
     { 
-      GFL_BG_ClearScreen( MYSTERY_ALBUM_CARD_FRM_S );
-      GFL_BG_ClearScreen( MYSTERY_ALBUM_CARD_FONT_S );
-      GFL_BG_LoadScreenReq( MYSTERY_ALBUM_CARD_FRM_S );
-      GFL_BG_LoadScreenReq( MYSTERY_ALBUM_CARD_FONT_S );
+      MYSTERY_CARD_RES_Clear( p_wk->p_card_res );
     }
 
     p_wk->is_card_update  = FALSE;
@@ -669,9 +703,19 @@ void MYSTERY_ALBUM_PrintMain( MYSTERY_ALBUM_WORK *p_wk )
     MYSTERY_MSGWIN_PrintMain( p_wk->p_page_win );
   }
 
-  if( p_wk->p_card )
+
   { 
-    MYSTERY_CARD_Main( p_wk->p_card );
+    int i;
+    for( i = 0; i < MYSTERY_ALBUM_CARD_MAX; i++ )
+    { 
+      if( p_wk->p_card[i] )
+      { 
+        if( p_wk->p_card[i] )
+        { 
+          MYSTERY_CARD_Main( p_wk->p_card[i] );
+        }
+      }
+    }
   }
 }
 //----------------------------------------------------------------------------
@@ -788,7 +832,7 @@ static void Mystery_Album_InitDisplay( MYSTERY_ALBUM_WORK *p_wk, HEAPID heapID )
   }
 
   //ページ作成( 0/3 )
-  p_wk->p_page_win  = MYSTERY_MSGWIN_Init( MYSTERY_ALBUM_FONT_FRM, 13, 22, 6, 2, MYSTERY_ALBUM_TOP_FONT_PLT, p_wk->setup.p_que, heapID );
+  p_wk->p_page_win  = MYSTERY_MSGWIN_Init( MYSTERY_MSGWIN_TRANS_MODE_AUTO, MYSTERY_ALBUM_FONT_FRM, 13, 22, 6, 2, MYSTERY_ALBUM_TOP_FONT_PLT, p_wk->setup.p_que, heapID );
 
   //カーソル作成
   { 
@@ -802,8 +846,8 @@ static void Mystery_Album_InitDisplay( MYSTERY_ALBUM_WORK *p_wk, HEAPID heapID )
               NARC_mystery_album_cursor_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
 
       //カーソルのパレットフェード用にパレットをメモリ読み込み
-      PLTANM_Load( &p_wk->pltanm[0], p_handle, NARC_mystery_album_cursor_NCLR, 0, 1, 0, 0xF, heapID );
-      PLTANM_Load( &p_wk->pltanm[1], p_handle, NARC_mystery_album_cursor_NCLR, 2, 3, 0, 0xF, heapID );
+      PLTANM_Load( &p_wk->pltanm[0], p_handle, NARC_mystery_album_cursor_NCLR, 0, 1, heapID );
+      PLTANM_Load( &p_wk->pltanm[1], p_handle, NARC_mystery_album_cursor_NCLR, 2, 3, heapID );
 
       GFL_ARC_CloseDataHandle( p_handle );
     }
@@ -1432,6 +1476,20 @@ static void Mystery_Album_SwapCard( MYSTERY_ALBUM_WORK *p_wk, u32 card_index1, u
     }   
   }
 
+  //下画面カード移動
+  {
+    MYSTERY_CARD_Exit( p_wk->p_card[card_index1] );
+    MYSTERY_CARD_Exit( p_wk->p_card[card_index2] );
+
+    p_wk->p_card[card_index1]  = MYSTERY_CARD_Init( 
+        MYSTERY_CARD_DATA_GetGiftBackData( &p_wk->data[card_index1] ),
+            p_wk->p_card_res, p_wk->setup.p_gamedata, p_wk->heapID );
+
+    p_wk->p_card[card_index2]  = MYSTERY_CARD_Init( 
+        MYSTERY_CARD_DATA_GetGiftBackData( &p_wk->data[card_index2] ),
+            p_wk->p_card_res, p_wk->setup.p_gamedata, p_wk->heapID );
+  }
+
   p_wk->is_change = TRUE;
 }
 
@@ -1905,9 +1963,11 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       //タッチ入力
       if( GFL_UI_TP_GetTrg() )
       { 
-        if( p_wk->p_card )
+        u16 idx = Mystery_Album_GetNowCardIndex( p_wk );
+        p_wk->p_anm_card  = p_wk->p_card[ idx ];
+        if( p_wk->p_anm_card )
         { 
-          MYSTERY_CARD_StartEffect( p_wk->p_card );
+          MYSTERY_CARD_StartEffect( p_wk->p_anm_card );
         }
       }
 
@@ -2286,6 +2346,7 @@ static void SEQFUNC_SelectList( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     { 
       u32 ret;
       ret = MYSTERY_LIST_Main( p_wk->p_list );
+      p_wk->plt_cnt = 0x7FFF;
       if( ret != MYSTERY_LIST_SELECT_NULL )
       { 
         if( ret == 0 )
@@ -2468,6 +2529,7 @@ static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     { 
       u32 ret;
       ret = MYSTERY_LIST_Main( p_wk->p_list );
+      p_wk->plt_cnt = 0x7FFF;
       if( ret != MYSTERY_LIST_SELECT_NULL )
       { 
         MYSTERY_LIST_Exit( p_wk->p_list );
@@ -2840,6 +2902,7 @@ static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     { 
       u32 ret;
       ret = MYSTERY_LIST_Main( p_wk->p_list );
+      p_wk->plt_cnt = 0x7FFF;
       if( ret != MYSTERY_LIST_SELECT_NULL )
       { 
         MYSTERY_LIST_Exit( p_wk->p_list );
@@ -2881,7 +2944,7 @@ static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
       p_wk->p_text  = MYSTERY_TEXT_Init( MYSTERY_ALBUM_LIST_FRM, MYSTERY_ALBUM_FONT_PLT, p_wk->setup.p_que, p_wk->setup.p_font, HEAPID_MYSTERYGIFT );
       MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, 1, MYSTERY_ALBUM_BG_FRM_S_PLT ); 
     }
-    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_016, MYSTERY_TEXT_TYPE_QUE );
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_016, MYSTERY_TEXT_TYPE_WAIT );
     *p_seq  = SEQ_SAVE_MSG_WAIT;
     break;
 
@@ -2896,9 +2959,9 @@ static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     { 
       BOOL is_ok  = TRUE;
 
-      if( p_wk->p_card )
+      if( p_wk->p_anm_card )
       { 
-        if( !MYSTERY_CARD_IsEndEffect(p_wk->p_card) )
+        if( !MYSTERY_CARD_IsEndEffect(p_wk->p_anm_card) )
         { 
           is_ok = FALSE;
         }
@@ -3012,15 +3075,13 @@ static void SEQFUNC_DeleteMsg( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
  *	@param	heapID            ヒープID
  */
 //-----------------------------------------------------------------------------
-static void PLTANM_Load( PLTANM_WORK *p_wk, ARCHANDLE *p_handle, ARCDATID datID, u8 dst_plt_num, u8 src_plt_num, u8 start_col, u8 end_col, HEAPID heapID )
+static void PLTANM_Load( PLTANM_WORK *p_wk, ARCHANDLE *p_handle, ARCDATID datID, u8 dst_plt_num, u8 src_plt_num, HEAPID heapID )
 { 
   void *p_buff;
   NNSG2dPaletteData *p_plt;
   const u16 *cp_plt_adrs;
 
   GFL_STD_MemClear( p_wk, sizeof(PLTANM_WORK) );
-  p_wk->start_col = start_col;
-  p_wk->end_col   = end_col;
 
   //もとのパレットから色情報を保存
   p_buff  = GFL_ARCHDL_UTIL_LoadPalette( p_handle, datID, &p_plt, heapID );
@@ -3043,11 +3104,7 @@ static void PLTANM_Load( PLTANM_WORK *p_wk, ARCHANDLE *p_handle, ARCDATID datID,
 //-----------------------------------------------------------------------------
 static void PLTANM_Main( PLTANM_WORK *p_wk, NNS_GFD_DST_TYPE type, u8 target_plt, u16 cnt )
 { 
-  int i;
-  for( i = p_wk->start_col; i <= p_wk->end_col; i++ )
-  { 
-    MYSTERY_UTIL_MainPltAnm( type, &p_wk->plt[i], cnt, target_plt, i, p_wk->plt_src[i], p_wk->plt_dst[i] );
-  }
+  MYSTERY_UTIL_MainPltAnmLine( type, p_wk->plt, cnt, target_plt, p_wk->plt_src, p_wk->plt_dst );
 }
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
@@ -3067,18 +3124,40 @@ static void PLTANM_Main( PLTANM_WORK *p_wk, NNS_GFD_DST_TYPE type, u8 target_plt
 
 #define MYSTERY_CARD_EFFECT_START_SEQ    (1)
 
+#define MYSTERY_CARD_SILHOUETTE_POS_X (184)
+#define MYSTERY_CARD_SILHOUETTE_POS_Y (112)
+
 //=============================================================================
 /**
  *          構造体
  */
 //=============================================================================
 //-------------------------------------
-///	カードワーク
+///	ポケモンが揺れ動く
 //=====================================
-struct _MYSTERY_CARD_WORK
+typedef struct 
 { 
-  MYSTERY_CARD_DATA       data;
+  u16 now_angle;
+  u16 init_angle;  //初期の回転角度
+  u16 next_angle; //次の回転角度
+  s8  next_dir;   //次の回転方向
+  u8  seq;        //シーケンス
+  u16 cnt;        //回数
+  u16 max_cnt;    //最大
+  u32 sync;       //シンク
+  u32 next_sync;   //次動作するシンク
+  GFL_POINT init_pos; //初期座標
+  GFL_POINT next_pos; //次の座標
+  GFL_POINT now_pos; //現在座標
+} MOVE_SHAKE_WORK;
+
+//-------------------------------------
+///	カードリソースワーク
+//=====================================
+struct _MYSTERY_CARD_RES
+{
   MYSTERY_MSGWINSET_WORK  *p_winset;
+
   u32 res_icon_plt;
   u32 res_icon_cgx;
   u32 res_icon_cel;
@@ -3087,13 +3166,6 @@ struct _MYSTERY_CARD_WORK
   u32 res_silhouette_cel;
   GFL_CLWK  *p_icon;
   GFL_CLWK  *p_silhouette;
-
-  u16 seq;
-  u16 cnt;
-
-  u16 mons_no;
-  u16 form_no;
-  u32 voice_player;
 
   //シルエット用ポケモンパレット
   u16 plt[0x10];
@@ -3106,9 +3178,44 @@ struct _MYSTERY_CARD_WORK
   u16 back_frm;
   u16 font_frm;
 
-  u16 draw_sync;
 
-	GFL_TCB	  *p_vblank_task;
+  CLSYS_DRAW_TYPE draw_type;
+  PALTYPE         paltype;
+
+  MYSTERY_CARD_SETUP  setup;
+} ;
+
+
+//-------------------------------------
+///	カードワーク
+//=====================================
+struct _MYSTERY_CARD_WORK
+{ 
+  MYSTERY_CARD_DATA       data;
+
+  u16 seq;
+  u16 cnt;
+
+  u16 mons_no;
+  u16 form_no;
+  u32 voice_player;
+
+  MOVE_SHAKE_WORK move_shake;
+  
+  HEAPID  heapID;
+  MYSTERY_CARD_RES  *p_res;
+  const GIFT_PACK_DATA *cp_data;
+  GAMEDATA *p_gamedata;
+  GFL_TCB *p_trans_task;
+  BOOL    is_task_end;
+
+  //シルエットメインメモリ読み込み用
+  void *p_chr_buff;
+  NNSG2dCharacterData *p_chr_data;
+  void *p_plt_buff;
+  NNSG2dPaletteData *p_plt_data;
+
+  MYSTERY_MSGWINBUFF_WORK  *p_winbuff;
 };
 
 //=============================================================================
@@ -3116,92 +3223,50 @@ struct _MYSTERY_CARD_WORK
  *          プロトタイプ
  */
 //=============================================================================
+static void MYSTERY_CARD_LoadResourceBG( const MYSTERY_CARD_SETUP *cp_setup, const MYSTERY_CARD_DATA *cp_data, HEAPID heapID );
+static void MYSTERY_CARD_LoadResourceOBJ( MYSTERY_CARD_WORK *p_wk, MYSTERY_CARD_RES *p_res, HEAPID heapID );
+//シルエット動作関数
+static void MOVE_SHAKE_Init( MOVE_SHAKE_WORK *p_wk, u16 init_angle, s16 x, s16 y );
+static BOOL MOVE_SHAKE_Main( MOVE_SHAKE_WORK *p_wk, u16 *p_angle, GFL_POINT *p_pos );
 //=============================================================================
 /**
- *          データ
- */
-//=============================================================================
-//=============================================================================
-/**
- *          パブリック
+ *          リソース
  */
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  カード  作成
+ *	@brief  リソース作成
  *
- *	@param	const GIFT_PACK_DATA *cp_data カードに表示するデータ
- *	@param	heapID                        ヒープID 
+ *	@param	const MYSTERY_CARD_SETUP *cp_setup  設定
+ *	@param	heapID  ヒープID
  *
- *	@return ワーク
+ *	@return リソースワーク
  */
 //-----------------------------------------------------------------------------
-MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMEDATA *p_gamedata, HEAPID heapID )
+MYSTERY_CARD_RES * MYSTERY_CARD_RES_Init( const MYSTERY_CARD_SETUP *cp_setup, HEAPID heapID )
 { 
-  CLSYS_DRAW_TYPE draw_type;
-  PALTYPE         paltype;
-
-  MYSTERY_CARD_WORK * p_wk;
-  p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(MYSTERY_CARD_WORK) );
-  GFL_STD_MemClear( p_wk, sizeof(MYSTERY_CARD_WORK) );
-  p_wk->plt_num = cp_setup->silhouette_obj_plt_num;
+  MYSTERY_CARD_RES *p_wk;
+  p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(MYSTERY_CARD_RES) );
+  p_wk->plt_num   = cp_setup->silhouette_obj_plt_num;
   p_wk->back_frm  = cp_setup->back_frm;
   p_wk->font_frm  = cp_setup->font_frm;
+  p_wk->setup     = *cp_setup;
 
   //描画先をチェック
   if( cp_setup->back_frm < GFL_BG_FRAME0_S )
   { 
-    paltype   = PALTYPE_MAIN_BG;
-    draw_type = CLSYS_DRAW_MAIN;
+    p_wk->paltype   = PALTYPE_MAIN_BG;
+    p_wk->draw_type = CLSYS_DRAW_MAIN;
     p_wk->is_main = TRUE;
   }
   else
   { 
-    paltype   = PALTYPE_SUB_BG;
-    draw_type = CLSYS_DRAW_SUB;
+    p_wk->paltype   = PALTYPE_SUB_BG;
+    p_wk->draw_type = CLSYS_DRAW_SUB;
     p_wk->is_main = FALSE;
   }
 
-  //リソース取得のためにデータ作成
-  { 
-    MYSTERY_ALBUM_SETUP setup;
-    GFL_STD_MemClear( &setup, sizeof(MYSTERY_LIST_SETUP) );
-    setup.mode  = MYSTERY_ALBUM_MODE_VIEW;
-    setup.p_clunit  = cp_setup->p_clunit;
-    setup.p_sv      = cp_setup->p_sv;
-    setup.p_font    = cp_setup->p_font;
-    setup.p_que     = cp_setup->p_que;
-    setup.p_word    = cp_setup->p_word;
-    setup.p_msg     = cp_setup->p_msg;
-    setup.p_gamedata  = p_gamedata;
- 
-    MYSTERY_CARD_DATA_Init( &p_wk->data, cp_setup->cp_data, &setup, heapID );
-  }
-
-  //BG読み込み追加
-  {
-    //上画面ならばもらったとき。下画面ならばアルバムの中
-    const u16 load_scr  = cp_setup->back_frm > GFL_BG_FRAME3_M ?
-      NARC_mystery_fushigi_card_album_NSCR: NARC_mystery_fushigi_card_view_NSCR;
-
-    //もらったものならば、ハンコ付き。もらっていないならばハンコなし
-    const u16 src_ofs = MYSTERY_CARD_DATA_GetCardPltOfs( &p_wk->data );
-
-    ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );
-    //BG
-		GFL_ARCHDL_UTIL_TransVramPaletteEx( p_handle, NARC_mystery_fushigi_card_NCLR,
-				paltype, src_ofs*0x20, cp_setup->back_plt_num*0x20, 0x20, heapID );
-		GFL_ARCHDL_UTIL_TransVramScreen( p_handle, load_scr,
-				cp_setup->back_frm, 0, 0, FALSE, heapID );
-    GFL_BG_ChangeScreenPalette( cp_setup->back_frm, 0, 0,34,24, cp_setup->back_plt_num );
-
-    //背面はすぐに表示（パレット変更してるのを適応させるため）
-    GFL_BG_LoadScreenReq( cp_setup->back_frm );
-
-    GFL_ARC_CloseDataHandle( p_handle ); 
-  }
-
-  //文章作成
+  //BMPWIN作成
   {
     MYSTERY_MSGWINSET_SETUP_TBL tbl[] =
     { 
@@ -3211,7 +3276,7 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
         2,
         10,
         2,
-        syachi_mystery_album_006,
+        0,
         NULL,
         MYSTERY_MSGWIN_POS_ABSOLUTE,
         0, 0,
@@ -3247,7 +3312,7 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
         20,
         14,
         2,
-        syachi_mystery_album_007,
+        0,
         NULL,
         MYSTERY_MSGWIN_POS_ABSOLUTE,
         0, 0,
@@ -3266,36 +3331,237 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
         MYSTERY_MSGWIN_WHITE_COLOR
       }
     };
+
+    p_wk->p_winset  = MYSTERY_MSGWINSET_Init( MYSTERY_MSGWIN_TRANS_MODE_MANUAL, tbl, NELEMS(tbl), p_wk->setup.font_frm, p_wk->setup.font_plt_num, p_wk->setup.p_que, p_wk->setup.p_msg, p_wk->setup.p_font, heapID );
+
+  }
+
+  //アイコン作成
+  { 
+    //リソース読み込み
+    { 
+      ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );
+
+      //仮でプレゼントボックスを作る
+      p_wk->res_icon_plt	= GFL_CLGRP_PLTT_Register( p_handle, 
+            NARC_mystery_fushigi_box_NCLR, p_wk->draw_type, cp_setup->icon_obj_plt_num*0x20,heapID );
+
+      p_wk->res_icon_cel	= GFL_CLGRP_CELLANIM_Register( p_handle,
+          NARC_mystery_fushigi_box_NCER, NARC_mystery_fushigi_box_NANR, heapID );
+      p_wk->res_icon_cgx	= GFL_CLGRP_CGR_Register( p_handle,
+          NARC_mystery_fushigi_box_NCGR, FALSE, p_wk->draw_type, heapID );
+
+      GFL_ARC_CloseDataHandle( p_handle );
+    }
+    //CLWK作成
+    { 
+      GFL_CLWK_DATA cldata;
+      GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+      cldata.pos_x  = 216;
+      cldata.pos_y  = 22;
+
+      p_wk->p_icon    = GFL_CLACT_WK_Create( cp_setup->p_clunit, 
+          p_wk->res_icon_cgx, p_wk->res_icon_plt, p_wk->res_icon_cel,
+          &cldata, p_wk->draw_type, heapID );
+      GFL_CLACT_WK_SetObjMode( p_wk->p_icon, GX_OAM_MODE_NORMAL );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon, FALSE );
+    }
+  }
+
+  //シルエット作成
+  { 
+    { 
+      ARCHANDLE *p_handle = POKE2DGRA_OpenHandle( heapID );
+
+      //仮でフシギダネを作る
+      p_wk->res_silhouette_plt  = POKE2DGRA_OBJ_PLTT_Register( p_handle, 1, 0, 0, 0, POKEGRA_DIR_FRONT, 0, p_wk->draw_type, cp_setup->silhouette_obj_plt_num*0x20, heapID );
+      p_wk->res_silhouette_cel	= POKE2DGRA_OBJ_CELLANM_Register( 1, 0, 0, 0, POKEGRA_DIR_FRONT, 0, APP_COMMON_MAPPING_128K, p_wk->draw_type, heapID );
+      p_wk->res_silhouette_cgx	= POKE2DGRA_OBJ_CGR_Register( p_handle, 1, 0, 0, 0, POKEGRA_DIR_FRONT, 0, POKEGRA_DIR_FRONT, p_wk->draw_type, heapID );
+
+      GFL_ARC_CloseDataHandle( p_handle );
+    }
+    { 
+      GFL_CLWK_DATA cldata;
+      GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+      cldata.pos_x  = MYSTERY_CARD_SILHOUETTE_POS_X;
+      cldata.pos_y  = MYSTERY_CARD_SILHOUETTE_POS_Y;
+      cldata.bgpri  = cp_setup->back_frm % GFL_BG_FRAME0_S;
+      p_wk->silhouette_bg_pri = cldata.bgpri;
+      p_wk->font_bg_pri = cp_setup->font_frm % GFL_BG_FRAME0_S;
+      p_wk->p_silhouette   = GFL_CLACT_WK_Create( cp_setup->p_clunit, 
+          p_wk->res_silhouette_cgx, p_wk->res_silhouette_plt, p_wk->res_silhouette_cel,
+          &cldata, p_wk->draw_type, heapID );
+      GFL_CLACT_WK_SetAffineParam( p_wk->p_silhouette, CLSYS_AFFINETYPE_DOUBLE );
+      GFL_CLACT_WK_SetObjMode( p_wk->p_silhouette, GX_OAM_MODE_XLU );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_silhouette, FALSE );
+    }
+  }
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リソース破棄
+ *
+ *	@param	MYSTERY_CARD_RES *p_res ワーク
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_CARD_RES_Exit( MYSTERY_CARD_RES *p_wk )
+{ 
+  //シルエット破棄
+  { 
+    GFL_CLACT_WK_Remove( p_wk->p_silhouette );
+    GFL_CLGRP_CGR_Release( p_wk->res_silhouette_cgx );
+    GFL_CLGRP_CELLANIM_Release( p_wk->res_silhouette_cel );
+    GFL_CLGRP_PLTT_Release( p_wk->res_silhouette_plt );
+  }
+
+  //アイコン破棄
+  { 
+    GFL_CLACT_WK_Remove( p_wk->p_icon );
+    GFL_CLGRP_CGR_Release( p_wk->res_icon_cgx );
+    GFL_CLGRP_CELLANIM_Release( p_wk->res_icon_cel );
+    GFL_CLGRP_PLTT_Release( p_wk->res_icon_plt ); 
+  }
+
+  MYSTERY_MSGWINSET_Exit( p_wk->p_winset );
+
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  文字描画
+ *
+ *	@param	MYSTERY_CARD_RES *p_wk  ワーク
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_CARD_RES_PrintMain( MYSTERY_CARD_RES *p_wk )
+{ 
+  MYSTERY_MSGWINSET_PrintMain( p_wk->p_winset );
+}
+//=============================================================================
+/**
+ *          パブリック
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カード  作成
+ *
+ *	@param	const GIFT_PACK_DATA *cp_data カードに表示するデータ
+ *	@param	heapID                        ヒープID 
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const GIFT_PACK_DATA *cp_data, MYSTERY_CARD_RES *p_res, GAMEDATA *p_gamedata, HEAPID heapID )
+{ 
+
+  MYSTERY_CARD_WORK * p_wk;
+  p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(MYSTERY_CARD_WORK) );
+  GFL_STD_MemClear( p_wk, sizeof(MYSTERY_CARD_WORK) );
+  p_wk->heapID    = heapID;
+  p_wk->cp_data   = cp_data;
+  p_wk->p_res     = p_res;
+  p_wk->p_gamedata= p_gamedata;
+
+  //リソース取得のためにデータ作成
+  { 
+    MYSTERY_ALBUM_SETUP setup;
+    GFL_STD_MemClear( &setup, sizeof(MYSTERY_LIST_SETUP) );
+    setup.mode  = MYSTERY_ALBUM_MODE_VIEW;
+    setup.p_clunit  = p_res->setup.p_clunit;
+    setup.p_sv      = p_res->setup.p_sv;
+    setup.p_font    = p_res->setup.p_font;
+    setup.p_que     = p_res->setup.p_que;
+    setup.p_word    = p_res->setup.p_word;
+    setup.p_msg     = p_res->setup.p_msg;
+    setup.p_gamedata  = p_gamedata;
+ 
+    MYSTERY_CARD_DATA_Init( &p_wk->data, cp_data, &setup, heapID );
+  }
+
+//文章作成
+  {
+    MYSTERY_MSGWINSET_PRINT_TBL tbl[] =
+    { 
+      //不思議カード
+      { 
+        TRUE,
+        syachi_mystery_album_006,
+        NULL,
+        MYSTERY_MSGWIN_POS_ABSOLUTE,
+        0, 0,
+        MYSTERY_MSGWIN_WHITE_COLOR
+      },
+      //イベント名
+      { 
+        TRUE,
+        0,
+        NULL,
+        MYSTERY_MSGWIN_POS_ABSOLUTE,
+        0, 0,
+        MYSTERY_MSGWIN_DEFAULT_COLOR
+      },
+      //本文
+      { 
+        TRUE,
+        0,
+        NULL,
+        MYSTERY_MSGWIN_POS_ABSOLUTE,
+        0, 0,
+        MYSTERY_MSGWIN_DEFAULT_COLOR
+      },
+      //もらったひづけ
+      { 
+        TRUE,
+        syachi_mystery_album_007,
+        NULL,
+        MYSTERY_MSGWIN_POS_ABSOLUTE,
+        0, 0,
+        MYSTERY_MSGWIN_WHITE_COLOR
+      },
+      //日付
+      { 
+        TRUE,
+        0,
+        NULL,
+        MYSTERY_MSGWIN_POS_ABSOLUTE,
+        0, 0,
+        MYSTERY_MSGWIN_WHITE_COLOR
+      }
+    };
     STRBUF  *p_wordbuf;
     s32 y,m,d;
 
-    tbl[1].p_strbuf = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TITLE_MAX+1, heapID );
-    GFL_STR_SetStringCodeOrderLength( tbl[1].p_strbuf, cp_setup->cp_data->event_name, GIFT_DATA_CARD_TITLE_MAX );
+    tbl[1].p_strbuf = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TITLE_MAX+1, GFL_HEAP_LOWID(heapID) );
+    GFL_STR_SetStringCodeOrderLength( tbl[1].p_strbuf, p_wk->cp_data->event_name, GIFT_DATA_CARD_TITLE_MAX );
 
     { 
       u16 strID;
-      if( cp_setup->cp_data->have )
+      if( p_wk->cp_data->have )
       { 
-        strID = syachi_mystery_card_txt_00_02 + cp_setup->cp_data->card_message;
+        strID = syachi_mystery_card_txt_00_02 + p_wk->cp_data->card_message;
       }
       else
       { 
-        strID = syachi_mystery_card_txt_00_01 + cp_setup->cp_data->card_message;
+        strID = syachi_mystery_card_txt_00_01 + p_wk->cp_data->card_message;
       }
-        tbl[2].p_strbuf = GFL_MSG_CreateString( cp_setup->p_msg, strID );
+        tbl[2].p_strbuf = GFL_MSG_CreateString( p_res->setup.p_msg, strID );
     }
-    tbl[4].p_strbuf = GFL_MSG_CreateString( cp_setup->p_msg, syachi_mystery_album_008 );
+    tbl[4].p_strbuf = GFL_MSG_CreateString( p_res->setup.p_msg, syachi_mystery_album_008 );
 
-    y = MYSTERYDATA_GetYear( cp_setup->cp_data->recv_date );
-    m = MYSTERYDATA_GetMonth( cp_setup->cp_data->recv_date );
-    d = MYSTERYDATA_GetDay( cp_setup->cp_data->recv_date );
-    p_wordbuf = GFL_MSG_CreateString( cp_setup->p_msg, syachi_mystery_album_008 );
-    WORDSET_RegisterNumber( cp_setup->p_word, 0, y, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( cp_setup->p_word, 1, m, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( cp_setup->p_word, 2, d, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
-    WORDSET_ExpandStr( cp_setup->p_word, tbl[4].p_strbuf, p_wordbuf );
+    y = MYSTERYDATA_GetYear( p_wk->cp_data->recv_date );
+    m = MYSTERYDATA_GetMonth( p_wk->cp_data->recv_date );
+    d = MYSTERYDATA_GetDay( p_wk->cp_data->recv_date );
+    p_wordbuf = GFL_MSG_CreateString( p_res->setup.p_msg, syachi_mystery_album_008 );
+    WORDSET_RegisterNumber( p_res->setup.p_word, 0, y, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( p_res->setup.p_word, 1, m, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( p_res->setup.p_word, 2, d, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+    WORDSET_ExpandStr( p_res->setup.p_word, tbl[4].p_strbuf, p_wordbuf );
 
-    p_wk->p_winset  = MYSTERY_MSGWINSET_Init( tbl, NELEMS(tbl), cp_setup->font_frm, cp_setup->font_plt_num, cp_setup->p_que, cp_setup->p_msg, cp_setup->p_font, heapID );
+    p_wk->p_winbuff  =  MYSTERY_MSGWINSET_CreateBuff( p_res->p_winset, heapID );
+    MYSTERY_MSGWINSET_PrintBuff( p_wk->p_winbuff, tbl, p_res->setup.p_que );
 
     GFL_STR_DeleteBuffer( tbl[1].p_strbuf );
     GFL_STR_DeleteBuffer( tbl[2].p_strbuf );
@@ -3304,152 +3570,41 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
   }
 
 
-  //アイコン作成
-  { 
-    { 
-      ARCHANDLE	*	p_handle	= MYSTERY_CARD_DATA_GetArcHandle( &p_wk->data, heapID );
-
-      if( MYSTERY_CARD_DATA_GetType(&p_wk->data) != MYSTERYGIFT_TYPE_POKEMON )
-      { 
-        p_wk->res_icon_plt	= GFL_CLGRP_PLTT_RegisterEx( p_handle, 
-            MYSTERY_CARD_DATA_GetResPlt(&p_wk->data), draw_type, cp_setup->icon_obj_plt_num*0x20, 0,3,heapID );
-      }
-      else
-      { 
-
-        p_wk->res_icon_plt = GFL_CLGRP_PLTT_RegisterComp( p_handle, 
-            MYSTERY_CARD_DATA_GetResPlt(&p_wk->data), draw_type, cp_setup->icon_obj_plt_num*0x20, heapID );
-      }
-      p_wk->res_icon_cel	= GFL_CLGRP_CELLANIM_Register( p_handle,
-          MYSTERY_CARD_DATA_GetResCel(&p_wk->data), MYSTERY_CARD_DATA_GetResAnm(&p_wk->data), heapID );
-      p_wk->res_icon_cgx	= GFL_CLGRP_CGR_Register( p_handle,
-          MYSTERY_CARD_DATA_GetResCgx(&p_wk->data), FALSE, draw_type, heapID );
-
-      GFL_ARC_CloseDataHandle( p_handle );
-    }
-    { 
-      GFL_CLWK_DATA cldata;
-      GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-      cldata.pos_x  = 216;
-      cldata.pos_y  = 22;
-
-      //アイテムアイコンのリソースだけ、ずれているため
-      if(MYSTERY_CARD_DATA_GetType(&p_wk->data) == MYSTERYGIFT_TYPE_ITEM )
-      { 
-        cldata.pos_x   += 4;
-        cldata.pos_y   += 8;
-      }
-
-      p_wk->p_icon    = GFL_CLACT_WK_Create( cp_setup->p_clunit, 
-          p_wk->res_icon_cgx, p_wk->res_icon_plt, p_wk->res_icon_cel,
-          &cldata, draw_type, heapID );
-      GFL_CLACT_WK_SetPlttOffs( p_wk->p_icon,
-              MYSTERY_CARD_DATA_GetPltOfs( &p_wk->data ), CLWK_PLTTOFFS_MODE_OAM_COLOR );
-      GFL_CLACT_WK_SetObjMode( p_wk->p_icon, GX_OAM_MODE_NORMAL );
-      GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon, FALSE );
-
-    }
-  }
-
+  //シルエットがある場合事前にメモリ転送
   //シルエット作成
   if( MYSTERY_CARD_DATA_GetType(&p_wk->data) == MYSTERYGIFT_TYPE_POKEMON )
   { 
     { 
-      const GIFT_PRESENT_POKEMON  *cp_pokemon = &cp_setup->cp_data->data.pokemon;
-      POKEMON_PARAM* p_pp = Mystery_CreatePokemon( cp_setup->cp_data, GFL_HEAP_LOWID(heapID), p_gamedata );
-      ARCHANDLE *p_handle = POKE2DGRA_OpenHandle( heapID );
+      const GIFT_PRESENT_POKEMON  *cp_pokemon = &p_wk->cp_data->data.pokemon;
+      POKEMON_PARAM* p_pp = Mystery_CreatePokemon( p_wk->cp_data, GFL_HEAP_LOWID(heapID), p_wk->p_gamedata );
+      ARCHANDLE *p_handle = POKE2DGRA_OpenHandle( GFL_HEAP_LOWID(heapID) );
 
-      p_wk->res_silhouette_plt  = POKE2DGRA_OBJ_PLTT_Register( p_handle, cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare, POKEGRA_DIR_FRONT, cp_pokemon->egg, draw_type, cp_setup->silhouette_obj_plt_num*0x20, heapID );
-      p_wk->res_silhouette_cel	= POKE2DGRA_OBJ_CELLANM_Register( cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare, POKEGRA_DIR_FRONT, cp_pokemon->egg, APP_COMMON_MAPPING_128K, draw_type, heapID );
-      p_wk->res_silhouette_cgx	= POKE2DGRA_OBJ_CGR_RegisterPPP( p_handle, PP_GetPPPPointerConst(p_pp), POKEGRA_DIR_FRONT, draw_type, heapID );
 
       p_wk->mons_no = cp_pokemon->mons_no;
       p_wk->form_no = cp_pokemon->form_no;
-      
-      //カーソルのパレットフェード用にパレットをメモリ読み込み
+
+      //パレット転送
       { 
-        u16 plt_arcID;
-        void *p_buff;
-        NNSG2dPaletteData *p_plt;
-        const u16 *cp_plt_adrs;
+	      u16 plt	= POKEGRA_GetPalArcIndex( 
+            PP_Get( p_pp, ID_PARA_monsno, NULL ),
+            PP_Get( p_pp, ID_PARA_form_no, NULL ), 
+            PP_Get( p_pp, ID_PARA_sex, NULL ),
+            PP_CheckRare( p_pp ), 
+            POKEGRA_DIR_FRONT,
+            PP_Get( p_pp, ID_PARA_tamago_flag, NULL ) 
+            );
+        p_wk->p_plt_buff  = GFL_ARCHDL_UTIL_LoadPalette( p_handle, plt, &p_wk->p_plt_data, p_wk->heapID );
+      }
 
-        plt_arcID	= POKEGRA_GetPalArcIndex( cp_pokemon->mons_no, cp_pokemon->form_no, cp_pokemon->sex, cp_pokemon->rare, POKEGRA_DIR_FRONT, cp_pokemon->egg );
-
-        //もとのパレットから色情報を保存
-        p_buff  = GFL_ARCHDL_UTIL_LoadPalette( p_handle, plt_arcID, &p_plt, heapID );
-        cp_plt_adrs = p_plt->pRawData;
-        GFL_STD_MemCopy( cp_plt_adrs, p_wk->plt_pokemon, sizeof(u16) * 0x10 );
-        GFL_STD_MemFill16( p_wk->plt_silhouette, GX_RGB( 0, 0, 0), 0x10 );
-        //パレット破棄
-        GFL_HEAP_FreeMemory( p_buff );
+      //キャラ転送
+      { 
+        p_wk->p_chr_buff  = POKE2DGRA_LoadCharacterPPP( &p_wk->p_chr_data, PP_GetPPPPointerConst(p_pp), POKEGRA_DIR_FRONT, p_wk->heapID );
       }
 
       GFL_HEAP_FreeMemory( p_pp );
       GFL_ARC_CloseDataHandle( p_handle );
     }
-    { 
-      GFL_CLWK_DATA cldata;
-      GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-      cldata.pos_x  = 184;
-      cldata.pos_y  = 112;
-      cldata.bgpri  = cp_setup->back_frm % GFL_BG_FRAME0_S;
-      p_wk->silhouette_bg_pri = cldata.bgpri;
-      p_wk->font_bg_pri = cp_setup->font_frm % GFL_BG_FRAME0_S;
-      p_wk->p_silhouette   = GFL_CLACT_WK_Create( cp_setup->p_clunit, 
-          p_wk->res_silhouette_cgx, p_wk->res_silhouette_plt, p_wk->res_silhouette_cel,
-          &cldata, draw_type, heapID );
-      GFL_CLACT_WK_SetObjMode( p_wk->p_silhouette, GX_OAM_MODE_XLU );
-      GFL_CLACT_WK_SetDrawEnable( p_wk->p_silhouette, FALSE );
-    }
-
-
-    { 
-      int i;
-      u16 *p_plt_addr;
-      
-      if( cp_setup->back_frm < GFL_BG_FRAME0_S )
-      { 
-        p_plt_addr  = (u16*)(HW_OBJ_PLTT + GFL_CLGRP_PLTT_GetAddr( p_wk->res_silhouette_plt, draw_type ));
-      }
-      else
-      { 
-        p_plt_addr  = (u16*)(HW_DB_OBJ_PLTT + GFL_CLGRP_PLTT_GetAddr( p_wk->res_silhouette_plt, draw_type ));
-      }
-
-      for( i = 0; i < 0x10; i++ )
-      { 
-        p_plt_addr[i] = p_wk->plt_silhouette[i];
-      }
-    }
-
-    if( cp_setup->back_frm < GFL_BG_FRAME0_S )
-    { 
-      u8 back_frm = cp_setup->back_frm - GFL_BG_FRAME0_M;
-      u8 font_frm = cp_setup->font_frm - GFL_BG_FRAME0_M;
-      G2_SetBlendAlpha(
-          GX_BLEND_PLANEMASK_NONE,
-          (1 << back_frm) | (1 << font_frm),
-          MYSTERY_CARD_SILHOUETTE_EV1,
-          MYSTERY_CARD_SILHOUETTE_EV2
-          );
-    }
-    else
-    { 
-      u8 back_frm = cp_setup->back_frm - GFL_BG_FRAME0_S;
-      u8 font_frm = cp_setup->font_frm - GFL_BG_FRAME0_S;
-      G2S_SetBlendAlpha(
-          GX_BLEND_PLANEMASK_NONE,
-          (1 << back_frm) | (1 << font_frm),
-          MYSTERY_CARD_SILHOUETTE_EV1,
-          MYSTERY_CARD_SILHOUETTE_EV2
-          );
-    }
   }
-
-  //文字転送完了とともにフォント面、OBJを表示させる
-  GFL_BG_SetVisible( cp_setup->font_frm, FALSE );
-
-  p_wk->draw_sync = 0;
 
   return p_wk;
 }
@@ -3462,40 +3617,22 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const MYSTERY_CARD_SETUP *cp_setup, GAMED
 //-----------------------------------------------------------------------------
 void MYSTERY_CARD_Exit( MYSTERY_CARD_WORK *p_wk )
 { 
-
-  //シルエット
-  if( p_wk->p_silhouette )
+  if( p_wk->p_trans_task )
   { 
-#if 0
-    //アルファ無効
-    if( p_wk->is_main )
-    { 
-      G2_BlendNone();
-    }
-    else
-    { 
-      G2S_BlendNone();
-    }
-#endif
-
-    //シルエット破棄
-    { 
-      GFL_CLACT_WK_Remove( p_wk->p_silhouette );
-      GFL_CLGRP_CGR_Release( p_wk->res_silhouette_cgx );
-      GFL_CLGRP_CELLANIM_Release( p_wk->res_silhouette_cel );
-      GFL_CLGRP_PLTT_Release( p_wk->res_silhouette_plt );
-    }
+    GFL_TCB_DeleteTask( p_wk->p_trans_task );
+    p_wk->p_trans_task  = NULL;
   }
 
-  //アイコン破棄
+  if( p_wk->p_plt_buff )
   { 
-    GFL_CLACT_WK_Remove( p_wk->p_icon );
-    GFL_CLGRP_CGR_Release( p_wk->res_icon_cgx );
-    GFL_CLGRP_CELLANIM_Release( p_wk->res_icon_cel );
-    GFL_CLGRP_PLTT_Release( p_wk->res_icon_plt ); 
+    GFL_HEAP_FreeMemory( p_wk->p_plt_buff );
+  }
+  if( p_wk->p_chr_buff )
+  { 
+    GFL_HEAP_FreeMemory( p_wk->p_chr_buff );
   }
 
-  MYSTERY_MSGWINSET_Exit( p_wk->p_winset );
+  MYSTERY_MSGWINSET_DeleteBuff( p_wk->p_winbuff );
   MYSTERY_CARD_DATA_Exit( &p_wk->data );
 
   GFL_HEAP_FreeMemory( p_wk );
@@ -3521,27 +3658,12 @@ void MYSTERY_CARD_Main( MYSTERY_CARD_WORK *p_wk )
     SEQ_EXIT,
   };
 
-  MYSTERY_MSGWINSET_PrintMain( p_wk->p_winset );
-
-  if( p_wk->draw_sync++ == 1 )
-  { 
-    GFL_DISP_GXS_SetVisibleControl( GX_BLEND_PLANEMASK_OBJ, TRUE );
-    GFL_BG_LoadScreenReq( p_wk->font_frm );
-    GFL_BG_LoadScreenReq( p_wk->back_frm );
-    GFL_BG_SetVisible( p_wk->font_frm, TRUE );
-    GFL_BG_SetVisible( p_wk->back_frm, TRUE );
-    if( p_wk->p_silhouette )
-    { 
-      GFL_CLACT_WK_SetDrawEnable( p_wk->p_silhouette, TRUE );
-    }
-    GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon, TRUE );
-  }
-
+  MYSTERY_CARD_RES  *p_res  = p_wk->p_res;
 
   { 
     NNS_GFD_DST_TYPE  gfd_type;
     void (*ChangeBlendAlpha)( int, int );
-    if( p_wk->is_main )
+    if( p_res->is_main )
     { 
       gfd_type  = NNS_GFD_DST_2D_OBJ_PLTT_MAIN;
       ChangeBlendAlpha  = G2_ChangeBlendAlpha;
@@ -3555,7 +3677,7 @@ void MYSTERY_CARD_Main( MYSTERY_CARD_WORK *p_wk )
 	  switch( p_wk->seq )
 	  { 
 	  case SEQ_INIT:
-	    GFL_CLACT_WK_SetBgPri( p_wk->p_silhouette, p_wk->font_bg_pri );
+	    GFL_CLACT_WK_SetBgPri( p_res->p_silhouette, p_res->font_bg_pri );
 	    p_wk->seq = SEQ_START_FADEIN;
 	    break;
 	  case SEQ_START_FADEIN:
@@ -3563,10 +3685,14 @@ void MYSTERY_CARD_Main( MYSTERY_CARD_WORK *p_wk )
 	    { 
 	      int i;
 	      u16 fade = 0 + 0xFFFF/2 * p_wk->cnt / MYSTERY_CARD_EFFECT_SYNC;
+#if 0
 	      for( i = 0; i < 0x10; i++ )
 	      { 
 	        MYSTERY_UTIL_MainPltAnm( gfd_type, &p_wk->plt[i], fade, p_wk->plt_num, i, p_wk->plt_pokemon[i], p_wk->plt_silhouette[i] );
 	      }
+#else
+        MYSTERY_UTIL_MainPltAnmLine( gfd_type, p_res->plt, fade, p_res->plt_num, p_res->plt_pokemon, p_res->plt_silhouette );
+#endif
 	
 	    }
 	    //アルファフェード
@@ -3588,24 +3714,47 @@ void MYSTERY_CARD_Main( MYSTERY_CARD_WORK *p_wk )
 	    break;
 	  case SEQ_START_VOICE:
 	    p_wk->voice_player  = PMV_PlayVoice( p_wk->mons_no, p_wk->form_no );
+      { 
+        GFL_CLACTPOS  pos;
+        GFL_CLACT_WK_GetPos( p_res->p_silhouette, &pos, p_res->draw_type );
+        MOVE_SHAKE_Init( &p_wk->move_shake, GFL_CLACT_WK_GetRotation( p_res->p_silhouette ), pos.x, pos.y );
+      }
 	    p_wk->seq = SEQ_WAIT_VOICE;
 	    break;
 	  case SEQ_WAIT_VOICE:
-	    if( !PMVOICE_CheckPlay( p_wk->voice_player ) )
-	    { 
-	      p_wk->seq = SEQ_START_FADEOUT;
-	    }
+      {
+        BOOL ret = TRUE;
+        u16 angle;
+        GFL_POINT     pos;
+        GFL_CLACTPOS  clpos;
+
+        ret &= MOVE_SHAKE_Main( &p_wk->move_shake, &angle, &pos );
+        GFL_CLACT_WK_SetRotation( p_res->p_silhouette, angle );
+        clpos.x = pos.x;
+        clpos.y = pos.y;
+        GFL_CLACT_WK_SetPos( p_res->p_silhouette, &clpos, p_res->draw_type );
+
+        ret &= !PMVOICE_CheckPlay( p_wk->voice_player );
+
+        if( ret )
+        { 
+          p_wk->seq = SEQ_START_FADEOUT;
+        }
+      }
 	    break;
 	  case SEQ_START_FADEOUT:
 	    //パレットフェード
 	    { 
 	      int i;
 	      u16 fade = 0xFFFF/2 - 0xFFFF/2 * p_wk->cnt / MYSTERY_CARD_EFFECT_SYNC;
+#if 0
 	      for( i = 0; i < 0x10; i++ )
 	      { 
 	        MYSTERY_UTIL_MainPltAnm( gfd_type, &p_wk->plt[i], fade, p_wk->plt_num, i, p_wk->plt_pokemon[i], p_wk->plt_silhouette[i] );
 	      }
-	
+#else
+        MYSTERY_UTIL_MainPltAnmLine( gfd_type, p_res->plt, fade, p_res->plt_num, p_res->plt_pokemon, p_res->plt_silhouette );
+#endif
 	    }
 	    //アルファフェード
 	    { 
@@ -3625,7 +3774,7 @@ void MYSTERY_CARD_Main( MYSTERY_CARD_WORK *p_wk )
 	    p_wk->seq = SEQ_EXIT;
 	    break;
 	  case SEQ_EXIT:
-	    GFL_CLACT_WK_SetBgPri( p_wk->p_silhouette, p_wk->silhouette_bg_pri );
+	    GFL_CLACT_WK_SetBgPri( p_res->p_silhouette, p_res->silhouette_bg_pri );
 	    p_wk->seq = 0;
 	    break;
 	  }
@@ -3638,7 +3787,7 @@ void MYSTERY_CARD_Main( MYSTERY_CARD_WORK *p_wk )
  *	@param	const MYSTERY_CARD_SETUP *cp_setup 設定
  */
 //-----------------------------------------------------------------------------
-void MYSTERY_CARD_LoadResourceBG( const MYSTERY_CARD_SETUP *cp_setup, HEAPID heapID )
+static void MYSTERY_CARD_LoadResourceBG( const MYSTERY_CARD_SETUP *cp_setup, const MYSTERY_CARD_DATA *cp_data, HEAPID heapID )
 { 
   PALTYPE         paltype;
 
@@ -3658,7 +3807,7 @@ void MYSTERY_CARD_LoadResourceBG( const MYSTERY_CARD_SETUP *cp_setup, HEAPID hea
     const u16 load_scr  = cp_setup->back_frm > GFL_BG_FRAME3_M ?
       NARC_mystery_fushigi_card_album_NSCR: NARC_mystery_fushigi_card_view_NSCR;
 
-    const u16 src_ofs = 0;
+    const u16 src_ofs = MYSTERY_CARD_DATA_GetCardPltOfs( cp_data );
 
     ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );
     //BG
@@ -3670,7 +3819,161 @@ void MYSTERY_CARD_LoadResourceBG( const MYSTERY_CARD_SETUP *cp_setup, HEAPID hea
         cp_setup->back_frm, 0, 0, FALSE, heapID );
     GFL_BG_ChangeScreenPalette( cp_setup->back_frm, 0, 0,34,24, cp_setup->back_plt_num );
 
+    GFL_BG_LoadScreenReq( cp_setup->back_frm );
+
     GFL_ARC_CloseDataHandle( p_handle ); 
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  OBJ読み込み
+ *
+ *	@param	MYSTERY_CARD_WORK *p_wk ワーク
+ *	@param	*p_res                  リソース
+ *	@param	heapID                  ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void MYSTERY_CARD_LoadResourceOBJ( MYSTERY_CARD_WORK *p_wk, MYSTERY_CARD_RES *p_res, HEAPID heapID )
+{ 
+  //アイコン作成
+  { 
+    { 
+      ARCHANDLE	*	p_handle	= MYSTERY_CARD_DATA_GetArcHandle( &p_wk->data, heapID );
+
+      //パレット転送
+      { 
+        void *p_plt_buff;
+        NNSG2dPaletteData *p_plt_data;
+
+        p_plt_buff  = GFL_ARCHDL_UTIL_LoadPalette( p_handle, MYSTERY_CARD_DATA_GetResPlt(&p_wk->data), &p_plt_data, p_wk->heapID );
+
+        NAGI_Printf( "size %d\n", p_plt_data->szByte );
+        {
+          int i;
+          u16 plt;
+          for( i = 0; i < 0x10; i++ )
+          { 
+            plt = ((u16*)p_plt_data->pRawData)[i];
+            NAGI_Printf( "color %d \n", plt );
+          }
+        }
+#if 0
+        GFL_CLGRP_PLTT_Replace( p_res->res_icon_plt, p_plt_data->pRawData, 3 );
+#else
+      { 
+        u32 plt_adrs  = p_res->setup.icon_obj_plt_num * 0x20;
+        if( p_res->draw_type == CLSYS_DRAW_MAIN )
+        { 
+          plt_adrs  += HW_OBJ_PLTT;
+        }
+        else
+        { 
+          plt_adrs  += HW_DB_OBJ_PLTT;
+        }
+        GFL_STD_MemCopy( p_plt_data->pRawData, (void*)plt_adrs, 0x20*3 );
+      }
+#endif
+
+        GFL_HEAP_FreeMemory( p_plt_buff );
+      }
+
+      //キャラ転送
+      { 
+        void *p_chr_buff;
+        NNSG2dCharacterData *p_chr_data;
+
+        p_chr_buff  = GFL_ARCHDL_UTIL_LoadOBJCharacter( p_handle, MYSTERY_CARD_DATA_GetResCgx(&p_wk->data), 0, &p_chr_data, p_wk->heapID );
+        GFL_CLGRP_CGR_ReplaceEx( p_res->res_icon_cgx, p_chr_data->pRawData, 32*4*4, 0, p_res->draw_type );
+
+        GFL_HEAP_FreeMemory( p_chr_buff );
+      }
+
+      GFL_ARC_CloseDataHandle( p_handle );
+    }
+
+    //CLWK設定
+    { 
+      GFL_CLACTPOS pos;
+      pos.x  = 216;
+      pos.y  = 22;
+
+      //アイテムアイコンのリソースだけ、ずれているため
+      if(MYSTERY_CARD_DATA_GetType(&p_wk->data) == MYSTERYGIFT_TYPE_ITEM )
+      { 
+        pos.x   += 4;
+        pos.y   += 8;
+      }
+      GFL_CLACT_WK_SetPlttOffs( p_res->p_icon,
+              MYSTERY_CARD_DATA_GetPltOfs( &p_wk->data ), CLWK_PLTTOFFS_MODE_OAM_COLOR );
+      GFL_CLACT_WK_SetPos( p_res->p_icon, &pos, p_res->draw_type );
+      GFL_CLACT_WK_SetDrawEnable( p_res->p_icon, TRUE );
+    }
+  }
+
+  //シルエット作成
+  if( MYSTERY_CARD_DATA_GetType(&p_wk->data) == MYSTERYGIFT_TYPE_POKEMON )
+  { 
+    GFL_CLGRP_PLTT_Replace( p_res->res_silhouette_plt, p_wk->p_plt_data->pRawData, 1 );
+
+    //ついでにフェード用に色を保存
+    GFL_STD_MemCopy( p_wk->p_plt_data->pRawData, p_res->plt_pokemon, sizeof(u16) * 0x10 );
+    GFL_STD_MemFill16( p_res->plt_silhouette, GX_RGB( 0, 0, 0), sizeof(u16) * 0x10 );
+
+    //キャラ転送
+    GFL_CLGRP_CGR_ReplaceEx( p_res->res_silhouette_cgx, p_wk->p_chr_data->pRawData, 32*12*12, 0, p_res->draw_type );
+
+    //CLWK設定
+    { 
+      GFL_CLACT_WK_SetRotation( p_res->p_silhouette, 0 );
+      GFL_CLACT_WK_SetDrawEnable( p_res->p_silhouette, TRUE );
+    }
+
+    //パレットフェード設定
+    { 
+      int i;
+      u16 *p_plt_addr;
+      
+      if( p_res->setup.back_frm < GFL_BG_FRAME0_S )
+      { 
+        p_plt_addr  = (u16*)(HW_OBJ_PLTT + GFL_CLGRP_PLTT_GetAddr( p_res->res_silhouette_plt, p_res->draw_type ));
+      }
+      else
+      { 
+        p_plt_addr  = (u16*)(HW_DB_OBJ_PLTT + GFL_CLGRP_PLTT_GetAddr( p_res->res_silhouette_plt, p_res->draw_type ));
+      }
+
+      for( i = 0; i < 0x10; i++ )
+      { 
+        p_plt_addr[i] = p_res->plt_silhouette[i];
+      }
+    }
+
+    if( p_res->setup.back_frm < GFL_BG_FRAME0_S )
+    { 
+      u8 back_frm = p_res->setup.back_frm - GFL_BG_FRAME0_M;
+      u8 font_frm = p_res->setup.font_frm - GFL_BG_FRAME0_M;
+      G2_SetBlendAlpha(
+          GX_BLEND_PLANEMASK_NONE,
+          (1 << back_frm) | (1 << font_frm),
+          MYSTERY_CARD_SILHOUETTE_EV1,
+          MYSTERY_CARD_SILHOUETTE_EV2
+          );
+    }
+    else
+    { 
+      u8 back_frm = p_res->setup.back_frm - GFL_BG_FRAME0_S;
+      u8 font_frm = p_res->setup.font_frm - GFL_BG_FRAME0_S;
+      G2S_SetBlendAlpha(
+          GX_BLEND_PLANEMASK_NONE,
+          (1 << back_frm) | (1 << font_frm),
+          MYSTERY_CARD_SILHOUETTE_EV1,
+          MYSTERY_CARD_SILHOUETTE_EV2
+          );
+    }
+  }
+  else
+  { 
+    GFL_CLACT_WK_SetDrawEnable( p_res->p_silhouette, FALSE );
   }
 }
 //----------------------------------------------------------------------------
@@ -3693,7 +3996,47 @@ void MYSTERY_CARD_StartEffect( MYSTERY_CARD_WORK *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  エフェクト終了街
+ *	@brief  エフェクト終了
+ *
+ *	@param	MYSTERY_CARD_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_CARD_EndEffect( MYSTERY_CARD_WORK *p_wk )
+{ 
+  if( MYSTERY_CARD_DATA_GetType(&p_wk->data) == MYSTERYGIFT_TYPE_POKEMON )
+  { 
+    int i;
+    u16 *p_plt_addr;
+    void (*ChangeBlendAlpha)( int, int );
+
+    p_wk->seq     = 0;
+    p_wk->cnt     = 0;
+
+    GFL_CLACT_WK_SetBgPri( p_wk->p_res->p_silhouette, p_wk->p_res->silhouette_bg_pri );
+
+    if( p_wk->p_res->is_main )
+    { 
+      p_plt_addr  = (u16*)(HW_OBJ_PLTT + GFL_CLGRP_PLTT_GetAddr( p_wk->p_res->res_silhouette_plt, p_wk->p_res->draw_type ));
+      ChangeBlendAlpha  = G2_ChangeBlendAlpha;
+    }
+    else
+    { 
+      p_plt_addr  = (u16*)(HW_DB_OBJ_PLTT + GFL_CLGRP_PLTT_GetAddr( p_wk->p_res->res_silhouette_plt, p_wk->p_res->draw_type ));
+      ChangeBlendAlpha  = G2S_ChangeBlendAlpha;
+    }
+
+    ChangeBlendAlpha( 
+        MYSTERY_CARD_SILHOUETTE_EV1,
+        MYSTERY_CARD_SILHOUETTE_EV2
+        );
+
+    GFL_STD_MemFill16( p_wk->p_res->plt_silhouette, GX_RGB( 0, 0, 0), sizeof(u16) * 0x10 );
+    GFL_STD_MemCopy16( p_wk->p_res->plt_silhouette, p_plt_addr, sizeof(u16) * 0x10 );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  エフェクト終了待ち
  *
  *	@param	const MYSTERY_CARD_WORK *cp_wk ワーク
  *	@retval TRUEエフェクト終了  FALSEエフェクト動作中
@@ -3702,4 +4045,236 @@ void MYSTERY_CARD_StartEffect( MYSTERY_CARD_WORK *p_wk )
 BOOL MYSTERY_CARD_IsEndEffect( const MYSTERY_CARD_WORK *cp_wk )
 { 
   return cp_wk->seq == 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ワークサイズを取得
+ *
+ *	@return ワークサイズ
+ */
+//-----------------------------------------------------------------------------
+u32 MYSTERY_CARD_GetWorkSize( void )
+{ 
+  return sizeof(MYSTERY_CARD_WORK);
+}
+
+static void MYSTERY_CARD_TransTask( GFL_TCB *p_tcb, void *p_wk_adrs )
+{ 
+  MYSTERY_CARD_WORK *p_wk = p_wk_adrs;
+
+  if( p_wk->is_task_end == FALSE )
+  {
+    p_wk->is_task_end = TRUE;
+
+    //BG転送
+    MYSTERY_CARD_LoadResourceBG( &p_wk->p_res->setup, &p_wk->data, p_wk->heapID );
+
+    //OBJ反映
+    MYSTERY_CARD_LoadResourceOBJ( p_wk, p_wk->p_res, p_wk->heapID );
+
+    //BMPWIN転送
+    MYSTERY_MSGWINSET_SetBuff( p_wk->p_winbuff );
+    MYSTERY_MSGWINSET_Trans( p_wk->p_res->p_winset );
+
+    GFL_BG_SetVisible( p_wk->p_res->font_frm, TRUE );
+    GFL_BG_SetVisible( p_wk->p_res->back_frm, TRUE );
+
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  画面反映
+ *
+ *	@param	MYSTERY_CARD_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_CARD_Trans( MYSTERY_CARD_WORK *p_wk )
+{ 
+  if( p_wk->p_trans_task == NULL )
+  { 
+    p_wk->p_trans_task  = GFUser_VIntr_CreateTCB( MYSTERY_CARD_TransTask, p_wk, 0 );
+  }
+  else
+  { 
+    p_wk->is_task_end = FALSE;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  画面クリア
+ *
+ *	@param	MYSTERY_CARD_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_CARD_RES_Clear( MYSTERY_CARD_RES *p_wk )
+{ 
+  GFL_BG_ClearScreen( MYSTERY_ALBUM_CARD_FRM_S );
+  GFL_BG_ClearScreen( MYSTERY_ALBUM_CARD_FONT_S );
+  GFL_BG_LoadScreenReq( MYSTERY_ALBUM_CARD_FRM_S );
+  GFL_BG_LoadScreenReq( MYSTERY_ALBUM_CARD_FONT_S );
+  GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon, FALSE );
+  GFL_CLACT_WK_SetDrawEnable( p_wk->p_silhouette, FALSE );
+
+}
+
+//=============================================================================
+/**
+ *      PRIVATE
+ */
+//=============================================================================
+#define MOVE_SHAKE_ROTATE_NUM (3)
+static const u16 sc_next_angle[ MOVE_SHAKE_ROTATE_NUM ] =
+{ 
+  0xFFFF*(0+20)/360, 0xFFFF*(360-20)/360,0xFFFF*360/360,
+};
+static const s8 sc_next_dir[ MOVE_SHAKE_ROTATE_NUM ] =
+{ 
+  1,-1, 1,
+};
+static const s8 sc_next_sync[ MOVE_SHAKE_ROTATE_NUM ] =
+{ 
+  30,60,30,
+};
+static const GFL_POINT sc_next_pos[ MOVE_SHAKE_ROTATE_NUM ] =
+{ 
+  { 
+    MYSTERY_CARD_SILHOUETTE_POS_X + 8,
+    MYSTERY_CARD_SILHOUETTE_POS_Y,
+  },
+  { 
+    MYSTERY_CARD_SILHOUETTE_POS_X - 8,
+    MYSTERY_CARD_SILHOUETTE_POS_Y,
+  },
+  { 
+    MYSTERY_CARD_SILHOUETTE_POS_X,
+    MYSTERY_CARD_SILHOUETTE_POS_Y,
+  },
+};
+//----------------------------------------------------------------------------
+/**
+ *	@brief  初期化
+ *
+ *	@param	MOVE_SHAKE_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void MOVE_SHAKE_Init( MOVE_SHAKE_WORK *p_wk, u16 init_angle, s16 x, s16 y )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(MOVE_SHAKE_WORK) );
+  p_wk->max_cnt     = MOVE_SHAKE_ROTATE_NUM;
+  p_wk->init_angle  = init_angle;
+  p_wk->next_angle  = init_angle;
+  p_wk->init_pos.x  = x;
+  p_wk->init_pos.y  = y;
+  p_wk->next_pos    = p_wk->init_pos;
+
+  p_wk->now_angle = p_wk->init_angle;
+  p_wk->now_pos   = p_wk->init_pos;
+
+  NAGI_Printf( "init 0x%x\n", init_angle );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メイン処理
+ *
+ *	@param	MOVE_SHAKE_WORK *p_wk ワーク
+ *	@param  p_angle 回転受け取り
+ *	@param  p_pos   座標受け取り
+ *
+ *	@return TRUEで  FALSEで
+ */
+//-----------------------------------------------------------------------------
+static BOOL MOVE_SHAKE_Main( MOVE_SHAKE_WORK *p_wk, u16 *p_angle, GFL_POINT *p_pos )
+{ 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_MAIN,
+    SEQ_CHECK,
+    SEQ_END,
+  };
+  BOOL ret  =FALSE;
+
+  switch( p_wk->seq )
+  { 
+  case SEQ_INIT:
+    p_wk->init_angle  = p_wk->next_angle;
+    p_wk->next_angle  = sc_next_angle[ p_wk->cnt ];
+    p_wk->next_dir    = sc_next_dir[ p_wk->cnt ];
+    p_wk->next_sync   = sc_next_sync[ p_wk->cnt ];
+
+    p_wk->init_pos    = p_wk->next_pos;
+    p_wk->next_pos    = sc_next_pos[ p_wk->cnt ];
+    p_wk->sync        = 0;
+
+    if( p_wk->next_dir > 0 )
+    { 
+      p_wk->init_angle  = p_wk->init_angle == 0xFFFF? 0: p_wk->init_angle;
+      p_wk->next_angle  = p_wk->next_angle == 0x0? 0xFFFF: p_wk->next_angle;
+    }
+    else
+    { 
+      p_wk->init_angle  = p_wk->init_angle == 0 ? 0xFFFF: p_wk->init_angle;
+      p_wk->next_angle  = p_wk->next_angle == 0xFFFF ? 0x0: p_wk->next_angle;
+    }
+
+    p_wk->seq++;
+    break;
+  case SEQ_MAIN:
+    {
+      s8 dir    = p_wk->init_angle < p_wk->next_angle ? 1: -1;
+      u16 diff  = p_wk->next_angle - p_wk->init_angle;
+      s32  pos_dir;
+
+      if( p_wk->next_dir != dir )
+      { 
+        diff = 0xFFFF - diff;
+      }
+
+      //回転動作
+      p_wk->now_angle = p_wk->init_angle + 
+        p_wk->next_dir * ( diff * p_wk->sync / p_wk->next_sync);
+
+      pos_dir = p_wk->next_pos.x - p_wk->init_pos.x;
+      pos_dir = MATH_IAbs(pos_dir) / pos_dir;
+
+      //座標動作
+      p_wk->now_pos.x = p_wk->init_pos.x + pos_dir * ((MATH_IAbs( p_wk->next_pos.x - p_wk->init_pos.x ) * p_wk->sync) / p_wk->next_sync);
+      p_wk->now_pos.y = p_wk->init_pos.y + pos_dir * ((MATH_IAbs( p_wk->next_pos.y - p_wk->init_pos.y ) * p_wk->sync) / p_wk->next_sync);
+
+      if( p_wk->sync++ >= p_wk->next_sync )
+      { 
+        p_wk->now_angle = p_wk->next_angle;
+        p_wk->now_pos   = p_wk->next_pos;
+
+        p_wk->seq++;
+      }
+    }
+    break;
+  case SEQ_CHECK:
+    if( ++p_wk->cnt < p_wk->max_cnt )
+    { 
+      p_wk->seq = SEQ_INIT;
+    }
+    else
+    { 
+      p_wk->seq++;
+    }
+    break;
+
+  case SEQ_END:
+    ret = TRUE;
+  }
+
+  if( p_angle )
+  { 
+    *p_angle  = p_wk->now_angle;
+  }
+
+  if( p_pos )
+  { 
+    *p_pos  = p_wk->now_pos;
+  }
+
+  return ret;
 }

@@ -67,7 +67,15 @@ FS_EXTERN_OVERLAY(dpw_common);
 #ifdef PM_DEBUG
 //#define MYSTERY_SAVEDATA_CLEAR
 #define MYSTERY_MOVIE_DEMO  //Rボタン押せば強制映画デモ
+
+#define MYSTERY_PRINT_ON
 #endif //PM_DEBUG
+
+#ifdef MYSTERY_PRINT_ON
+#define MYSTERY_Printf(...)  NAGI_Printf( __VA_ARGS__ )
+#else
+#define MYSTERY_Printf(...)  /*  */
+#endif
 
 //=============================================================================
 /**
@@ -226,6 +234,19 @@ typedef enum
   MYSTERY_DEMO_TYPE_FINISH, //受信終了時
 } MYSTERY_DEMO_TYPE;
 
+//-------------------------------------
+///	メニューの数
+//=====================================
+typedef enum
+{ 
+  UTIL_MENU_TYPE_TOP,
+  UTIL_MENU_TYPE_NETMODE,
+  UTIL_MENU_TYPE_GIFT,
+  UTIL_MENU_TYPE_INFO,
+
+  UTIL_MENU_TYPE_MAX,
+}UTIL_MENU_TYPE;
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -340,6 +361,7 @@ typedef struct
 { 
   //カード画面
   MYSTERY_CARD_WORK         *p_card;
+  MYSTERY_CARD_RES          *p_card_res;
 
   //アルバム
   MYSTERY_ALBUM_WORK        *p_album;
@@ -357,6 +379,7 @@ typedef struct
 
   //メニュー
   MYSTERY_MENU_WORK         *p_menu;
+  MYSTERY_MENU_DATA         menu_data[ UTIL_MENU_TYPE_MAX ];
 
   //テキスト
   MYSTERY_TEXT_WORK         *p_text;
@@ -488,14 +511,6 @@ typedef enum
 }UTIL_LIST_TYPE;
 static void UTIL_CreateList( MYSTERY_WORK *p_wk, UTIL_LIST_TYPE type, HEAPID heapID );
 static void UTIL_DeleteList( MYSTERY_WORK *p_wk );
-//メニュー
-typedef enum
-{ 
-  UTIL_MENU_TYPE_TOP,
-  UTIL_MENU_TYPE_NETMODE,
-  UTIL_MENU_TYPE_GIFT,
-  UTIL_MENU_TYPE_INFO,
-}UTIL_MENU_TYPE;
 static void UTIL_CreateMenu( MYSTERY_WORK *p_wk, UTIL_MENU_TYPE type, HEAPID heapID );
 static void UTIL_DeleteMenu( MYSTERY_WORK *p_wk );
 static u32 UTIL_MainMenu( MYSTERY_WORK *p_wk );
@@ -571,7 +586,7 @@ static GFL_PROC_RESULT MYSTERY_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
   GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
 
   //ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MYSTERYGIFT, 0x40000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MYSTERYGIFT, 0xA0000 );
 
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(MYSTERY_WORK), HEAPID_MYSTERYGIFT );
@@ -610,15 +625,15 @@ static GFL_PROC_RESULT MYSTERY_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
     { 
       int i;
       const u8  *cp_data = (const u8*)&p_wk->data;
-      NAGI_Printf( "size == %d\n",sizeof(DOWNLOAD_GIFT_DATA) );
-      NAGI_Printf( "adrs == 0x%x\n",&p_wk->data );
-      NAGI_Printf( "!!!!!!!!!!!!-- binary start --!!!!!!!!!!!!!!!\n\n" );
+      MYSTERY_Printf( "size == %d\n",sizeof(DOWNLOAD_GIFT_DATA) );
+      MYSTERY_Printf( "adrs == 0x%x\n",&p_wk->data );
+      MYSTERY_Printf( "!!!!!!!!!!!!-- binary start --!!!!!!!!!!!!!!!\n\n" );
       for( i = 0; i < sizeof(DOWNLOAD_GIFT_DATA); i++ )
       { 
-        NAGI_Printf( "%x", cp_data[i] );
+        MYSTERY_Printf( "%x", cp_data[i] );
       }
-      NAGI_Printf( "\n" );
-      NAGI_Printf( "!!!!!!!!!!!!-- binary end --!!!!!!!!!!!!!!!\n\n" );
+      MYSTERY_Printf( "\n" );
+      MYSTERY_Printf( "!!!!!!!!!!!!-- binary end --!!!!!!!!!!!!!!!\n\n" );
     }
 #endif
   }
@@ -1880,13 +1895,13 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           DEB_STR_CONV_StrcodeToSjis( p_wk->data.data.event_name, title_buff, GIFT_DATA_CARD_TITLE_MAX );
           DEB_STR_CONV_StrcodeToSjis( p_wk->data.event_text, text_buff, GIFT_DATA_CARD_TEXT_MAX );
 
-          NAGI_Printf( "取得しました\n" );
-          NAGI_Printf( "TITLE: %s\n", title_buff );
-          NAGI_Printf( "TEXT : %s\n", text_buff );
-          NAGI_Printf( "EV_ID: %d\n", p_wk->data.data.event_id );
-          NAGI_Printf( "TYPE : %d\n",   p_wk->data.data.gift_type );
-          NAGI_Printf( "ONLYONE : %d\n",   p_wk->data.data.only_one_flag );
-          NAGI_Printf( "不正 : %d\n", dirty );
+          MYSTERY_Printf( "取得しました\n" );
+          MYSTERY_Printf( "TITLE: %s\n", title_buff );
+          MYSTERY_Printf( "TEXT : %s\n", text_buff );
+          MYSTERY_Printf( "EV_ID: %d\n", p_wk->data.data.event_id );
+          MYSTERY_Printf( "TYPE : %d\n",   p_wk->data.data.gift_type );
+          MYSTERY_Printf( "ONLYONE : %d\n",   p_wk->data.data.only_one_flag );
+          MYSTERY_Printf( "不正 : %d\n", dirty );
           }
 #endif //PM_DEBUG
 
@@ -1903,7 +1918,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
         }
         else
         { 
-          NAGI_Printf( "取得できなかった\n" );
+          MYSTERY_Printf( "取得できなかった\n" );
           *p_seq = SEQ_NO_GIFT_INIT;
         }
       }
@@ -1916,7 +1931,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     case MYSTERY_NET_ERROR_REPAIR_DISCONNECT:  //切断する
       MYSTERY_NET_ClearError( p_wk->p_net );
 
-      NAGI_Printf( "取得できなかった\n" );
+      MYSTERY_Printf( "取得できなかった\n" );
       MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
       break;
     }
@@ -1963,10 +1978,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     break;
 
   case SEQ_NO_GIFT_WAIT:
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
-    { 
-      MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_DisConnectReturn );
-    }
+    MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_DisConnectReturn );
     break;
 
   case SEQ_SELECT_GIFT_MSG:
@@ -2029,10 +2041,10 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           UTIL_DeleteMenu(p_wk);
 
           //すでに受け取っていたら、受け取れない
-          OS_TPrintf( "受信可能？ ONLY_ONE%d RECV%d\n", p_wk->data.data.only_one_flag, MYSTERYDATA_IsEventRecvFlag( p_wk->p_sv, p_wk->data.data.event_id ) );
+          MYSTERY_Printf( "受信可能？ ONLY_ONE%d RECV%d\n", p_wk->data.data.only_one_flag, MYSTERYDATA_IsEventRecvFlag( p_wk->p_sv, p_wk->data.data.event_id ) );
           if( p_wk->data.data.only_one_flag && MYSTERYDATA_IsEventRecvFlag( p_wk->p_sv, p_wk->data.data.event_id ) )
           { 
-            NAGI_Printf( "すでに受け取っていました\n" );
+            MYSTERY_Printf( "すでに受け取っていました\n" );
             *p_seq = SEQ_RE_RECV_MSG;
           }
           else
@@ -2175,7 +2187,7 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       MYSTERY_DEMO_Init( &p_wk->demo, p_unit, &p_wk->data, p_wk->p_gamedata, &p_wk->obj, &p_wk->bg, &p_wk->effect, HEAPID_MYSTERYGIFT );
       MYSTERY_DEMO_Start( &p_wk->demo, MYSTERY_DEMO_TYPE_RECV );
 
-      MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_014, MYSTERY_TEXT_TYPE_QUE );
+      MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_014, MYSTERY_TEXT_TYPE_WAIT );
       *p_seq  = SEQ_INIT_ONE_WAIT;
     }
     break;
@@ -2265,7 +2277,6 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         MYSTERY_CARD_SETUP setup;
         GFL_STD_MemClear( &setup, sizeof(MYSTERY_CARD_SETUP) );
 
-        setup.cp_data   = &p_wk->data.data;
         setup.back_frm = BG_FRAME_M_BACK1;
         setup.font_frm = BG_FRAME_M_LIST;
         setup.back_plt_num  = PLT_BG_CARD_M;
@@ -2278,8 +2289,13 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         setup.p_font    = p_wk->p_font; 
         setup.p_que     = p_wk->p_que; 
         setup.p_word    = p_wk->p_word;
-        MYSTERY_CARD_LoadResourceBG( &setup, HEAPID_MYSTERYGIFT );
-        p_wk->p_card  = MYSTERY_CARD_Init( &setup, p_wk->p_gamedata, HEAPID_MYSTERYGIFT );
+
+        p_wk->p_card_res  = MYSTERY_CARD_RES_Init( &setup, HEAPID_MYSTERYGIFT );
+      }
+
+      { 
+        p_wk->p_card  = MYSTERY_CARD_Init( &p_wk->data.data, p_wk->p_card_res, p_wk->p_gamedata, HEAPID_MYSTERYGIFT );
+        MYSTERY_CARD_Trans( p_wk->p_card );
       }
     }
     *p_seq  = SEQ_START_CARD_EFFECT;
@@ -2859,6 +2875,7 @@ static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
   if( p_wk->p_card )
   { 
     MYSTERY_CARD_Exit( p_wk->p_card );
+    MYSTERY_CARD_RES_Exit( p_wk->p_card_res );
   }
 
   //終了
@@ -3010,6 +3027,7 @@ static void UTIL_CreateMenu( MYSTERY_WORK *p_wk, UTIL_MENU_TYPE type, HEAPID hea
     setup.p_wk_adrs = p_wk;
     setup.chr_y_ofs = 0;
     setup.anm_seq = 0;
+    setup.p_data  = &p_wk->menu_data[ type ];
 
 
     switch( type )
@@ -3179,7 +3197,7 @@ static void UTIL_CreateGuideText( MYSTERY_WORK *p_wk, HEAPID heapID )
     tbl[1].p_strbuf = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TEXT_MAX+1, heapID );
     GFL_STR_SetStringCodeOrderLength( tbl[1].p_strbuf, p_wk->data.event_text, GIFT_DATA_CARD_TEXT_MAX ); 
 
-    p_wk->p_winset_s  = MYSTERY_MSGWINSET_Init( tbl, NELEMS(tbl), BG_FRAME_S_TEXT, PLT_BG_FONT_S, p_wk->p_que, p_wk->p_msg, p_wk->p_font, heapID );
+    p_wk->p_winset_s  = MYSTERY_MSGWINSET_Init( MYSTERY_MSGWIN_TRANS_MODE_AUTO, tbl, NELEMS(tbl), BG_FRAME_S_TEXT, PLT_BG_FONT_S, p_wk->p_que, p_wk->p_msg, p_wk->p_font, heapID );
 
     GFL_STR_DeleteBuffer( tbl[0].p_strbuf );
     GFL_STR_DeleteBuffer( tbl[1].p_strbuf );
@@ -3551,12 +3569,16 @@ static void Mystery_Demo_NormalMain( MYSTERY_DEMO_WORK *p_wk )
     { 
       int i;
       p_wk->plt_cnt = 0 + 0x7FFF * p_wk->sync / MYSTERY_DEMO_STAGE_FADE_SYNC;
-
+#if 0
       for( i = 0; i < 0x10; i++ )
       { 
         MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_MAIN, &p_wk->plt[i], p_wk->plt_cnt, PLT_BG_BACK_M, i, p_wk->plt_src[i], p_wk->plt_dst[i] );
         MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_SUB, &p_wk->plt_sub[i], p_wk->plt_cnt, PLT_BG_BACK_S, i, p_wk->plt_src[i], p_wk->plt_dst[i] );
       }
+#else
+      MYSTERY_UTIL_MainPltAnmLine( NNS_GFD_DST_2D_BG_PLTT_MAIN, p_wk->plt, p_wk->plt_cnt, PLT_BG_BACK_M, p_wk->plt_src, p_wk->plt_dst );
+      MYSTERY_UTIL_MainPltAnmLine( NNS_GFD_DST_2D_BG_PLTT_SUB, p_wk->plt_sub, p_wk->plt_cnt, PLT_BG_BACK_S, p_wk->plt_src, p_wk->plt_dst );
+#endif
     }
     //終了チェック
     if( p_wk->sync++ > MYSTERY_DEMO_STAGE_FADE_SYNC )
@@ -3682,11 +3704,16 @@ static void Mystery_Demo_MovieMain( MYSTERY_DEMO_WORK *p_wk )
       int i;
       p_wk->plt_cnt = 0 + 0x7FFF * p_wk->sync / MYSTERY_DEMO_STAGE_FADE_SYNC;
 
+#if 0
       for( i = 0; i < 0x10; i++ )
       { 
         MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_MAIN, &p_wk->plt[i], p_wk->plt_cnt, PLT_BG_BACK_M, i, p_wk->plt_src[i], p_wk->plt_dst[i] );
         MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_SUB, &p_wk->plt_sub[i], p_wk->plt_cnt, PLT_BG_BACK_S, i, p_wk->plt_src[i], p_wk->plt_dst[i] );
       }
+#else
+      MYSTERY_UTIL_MainPltAnmLine( NNS_GFD_DST_2D_BG_PLTT_MAIN, p_wk->plt, p_wk->plt_cnt, PLT_BG_BACK_M, p_wk->plt_src, p_wk->plt_dst );
+      MYSTERY_UTIL_MainPltAnmLine( NNS_GFD_DST_2D_BG_PLTT_SUB, p_wk->plt_sub, p_wk->plt_cnt, PLT_BG_BACK_S, p_wk->plt_src, p_wk->plt_dst );
+#endif
     }
     //終了チェック
     if( p_wk->sync++ > MYSTERY_DEMO_STAGE_FADE_SYNC )
@@ -3784,10 +3811,14 @@ static void Mystery_Demo_MovieMain( MYSTERY_DEMO_WORK *p_wk )
       int i;
       p_wk->plt_cnt = 0 + 0x7FFF * p_wk->sync / MYSTERY_DEMO_POKE_FADE_SYNC2;
 
+#if 0
       for( i = 0; i < 0x10; i++ )
       { 
         MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_OBJ_PLTT_MAIN, &p_wk->plt_poke[i], p_wk->plt_cnt, PLT_OBJ_GIFT_M, i, p_wk->plt_poke_dst[i], p_wk->plt_poke_src[i] );
       }
+#else
+      MYSTERY_UTIL_MainPltAnmLine( NNS_GFD_DST_2D_OBJ_PLTT_MAIN, p_wk->plt_poke, p_wk->plt_cnt, PLT_OBJ_GIFT_M, p_wk->plt_poke_dst, p_wk->plt_poke_src );
+#endif
 
       //終了チェック
       if( p_wk->sync++ > MYSTERY_DEMO_POKE_FADE_SYNC2 )
@@ -3869,12 +3900,16 @@ static void Mystery_Demo_FinishMain( MYSTERY_DEMO_WORK *p_wk )
     { 
       int i;
       p_wk->plt_cnt = 0 + 0x7FFF * p_wk->sync / MYSTERY_DEMO_FINISH_FADE_SYNC;
-
+#if 0
       for( i = 0; i < 0x10; i++ )
       { 
         MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_MAIN, &p_wk->plt[i], p_wk->plt_cnt, PLT_BG_BACK_M, i, p_wk->plt_dst[i], p_wk->plt_src[i] );
         MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_SUB, &p_wk->plt_sub[i], p_wk->plt_cnt, PLT_BG_BACK_S, i, p_wk->plt_dst[i], p_wk->plt_src[i] );
       }
+#else
+      MYSTERY_UTIL_MainPltAnmLine( NNS_GFD_DST_2D_BG_PLTT_MAIN, p_wk->plt, p_wk->plt_cnt, PLT_BG_BACK_M, p_wk->plt_dst, p_wk->plt_src );
+      MYSTERY_UTIL_MainPltAnmLine( NNS_GFD_DST_2D_BG_PLTT_SUB, p_wk->plt_sub, p_wk->plt_cnt, PLT_BG_BACK_S, p_wk->plt_dst, p_wk->plt_src );
+#endif
     }
     //終了チェック
     if( p_wk->sync++ > MYSTERY_DEMO_FINISH_FADE_SYNC )

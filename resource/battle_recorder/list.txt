@@ -41,8 +41,6 @@
 "batt_rec_browse_bg0d.NSCR"
 "batt_rec_bpfont.NCER"
 "batt_rec_bpfont.NANR"
-"batt_rec_bpfont.NCLR"
-"batt_rec_bpfont2.NCLR"
 
 "batt_rec_bg1uc_data.NSCR"
 "batt_rec_bg1ub_data.NSCR"
