@@ -34,7 +34,7 @@
 #ifdef PM_DEBUG
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_morimoto
 #define POINT_VIEW
-#define AI_SEQ_PRINT
+//#define AI_SEQ_PRINT
 #endif
 #endif
 
@@ -42,6 +42,7 @@
 //
 //=========================================================================
 #define TR_AI_WAZATBL_MAX ( 48 )
+#define TR_AI_SEQ_COUNT   ( 128 ) //命令をいくつ実行したら、制御を返すかを指定
 
 //=========================================================================
 //  AI用の構造体宣言
@@ -93,6 +94,9 @@ typedef struct{
   const BTL_POKEPARAM*      def_bpp;
 
   VMCMD_RESULT  vmcmd_result;   //スクリプト制御ワーク
+
+  int           calc_count;
+  u32           common_rnd;     //連動ランダム
 
 #if 0
   u8  AI_ITEM_TYPE[2];
@@ -289,6 +293,11 @@ static  VMCMD_RESULT  AI_IFN_HINSHI( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_GET_TOKUSEI( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IF_MIGAWARI( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_CHECK_MONSNO( VMHANDLE* vmh, void* context_work );
+static  VMCMD_RESULT  AI_IF_COMMONRND_UNDER( VMHANDLE* vmh, void* context_work );
+static  VMCMD_RESULT  AI_IF_COMMONRND_OVER( VMHANDLE* vmh, void* context_work );
+static  VMCMD_RESULT  AI_IF_COMMONRND_EQUAL( VMHANDLE* vmh, void* context_work );
+static  VMCMD_RESULT  AI_IFN_COMMONRND_EQUAL( VMHANDLE* vmh, void* context_work );
+static	VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work );
 
 static  void  ai_if_rnd( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
 static  void  ai_if_hp( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
@@ -307,6 +316,7 @@ static  void  ai_if_have_waza( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond )
 static  void  ai_if_have_waza_seqno( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
 static  void  ai_if_chouhatsu( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
 static  void  ai_if_hinshi( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
+static  void  ai_if_commonrnd( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
 static  BOOL  branch_act( VMHANDLE* vmh, BranchCond cond, int src, int dst, int adrs );
 static  BtlPokePos get_poke_pos( TR_AI_WORK* taw, int side );
 static  int   get_tokusei( TR_AI_WORK* taw, int side, BtlPokePos pos );
@@ -317,6 +327,7 @@ static  void  waza_no_stock( TR_AI_WORK* taw );
 static  int   get_waza_param_index( TR_AI_WORK* taw, WazaID waza_no );
 static  int   get_waza_param( TR_AI_WORK* taw, WazaID waza_no, WazaDataParam param );
 static  BOOL  get_waza_flag( TR_AI_WORK* taw, WazaID waza_no, WazaFlag flag );
+static  u32   get_max_damage( TR_AI_WORK* taw, const BTL_POKEPARAM* atk_bpp, const BTL_POKEPARAM* def_bpp, BOOL loss_flag );
 
 //============================================================================================
 /**
@@ -435,6 +446,11 @@ static const VMCMD_FUNC tr_ai_command_table[]={
   AI_GET_TOKUSEI,
   AI_IF_MIGAWARI,
   AI_CHECK_MONSNO,
+	AI_IF_COMMONRND_UNDER,
+	AI_IF_COMMONRND_OVER,
+	AI_IF_COMMONRND_EQUAL,
+	AI_IFN_COMMONRND_EQUAL,
+  AI_TABLE_JUMP,
 };
 
 enum{
@@ -493,8 +509,8 @@ VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, BTL_SVFLOW_WORK* svfWork, const
   taw->svfWork = svfWork;
   taw->pokeCon = pokeCon;
 
-  taw->rule        = BTL_MAIN_GetRule( wk );
-  taw->competitor  = BTL_MAIN_GetCompetitor( wk );
+  taw->rule       = BTL_MAIN_GetRule( wk );
+  taw->competitor = BTL_MAIN_GetCompetitor( wk );
 
   vmh = VM_Create( heapID, &vm_init );
   VM_Init( vmh, taw );
@@ -576,6 +592,7 @@ void  TR_AI_Start( VMHANDLE* vmh, u8* unselect, BtlPokePos pos )
   taw->ai_no = 0;
   taw->atk_btl_poke_pos = pos;
   taw->ai_bit = taw->ai_bit_temp;
+  taw->calc_count = TR_AI_SEQ_COUNT;
 
   //繰り出せない技のポイントは０にして除外
   for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
@@ -590,6 +607,9 @@ void  TR_AI_Start( VMHANDLE* vmh, u8* unselect, BtlPokePos pos )
     }
     taw->damage_loss[ i ] = 100 - GFL_STD_MtRand( 16 );
   }
+
+  //連動ランダム初期化
+  taw->common_rnd = GFL_STD_MtRand( 256 );
 }
 
 //============================================================================================
@@ -651,6 +671,7 @@ static  BOOL  waza_ai_single( VMHANDLE* vmh, TR_AI_WORK* taw )
       {
         taw->seq_no = AI_SEQ_THINK_INIT;
       }
+      taw->status_flag &= AI_STATUSFLAG_CONTINUE_OFF;
       tr_ai_sequence( vmh, taw );
       if( taw->status_flag & AI_STATUSFLAG_CONTINUE )
       { 
@@ -776,6 +797,7 @@ static  BOOL  waza_ai_plural( VMHANDLE* vmh, TR_AI_WORK* taw )
         {
 					taw->seq_no = AI_SEQ_THINK_INIT;
 				}
+        taw->status_flag &= AI_STATUSFLAG_CONTINUE_OFF;
 				tr_ai_sequence( vmh, taw );
 				if( taw->status_flag & AI_STATUSFLAG_CONTINUE )
         { 
@@ -902,7 +924,7 @@ static  BOOL  waza_ai_plural( VMHANDLE* vmh, TR_AI_WORK* taw )
 //============================================================================================
 static  void  tr_ai_sequence( VMHANDLE* vmh, TR_AI_WORK* taw )
 {
-  while( taw->seq_no != AI_SEQ_END )
+  while( ( taw->seq_no != AI_SEQ_END ) && ( ( taw->status_flag & AI_STATUSFLAG_CONTINUE ) == 0 ) )
   {
     switch( taw->seq_no ){
     case AI_SEQ_THINK_INIT:
@@ -941,7 +963,17 @@ static  void  tr_ai_sequence( VMHANDLE* vmh, TR_AI_WORK* taw )
         if( taw->status_flag & AI_STATUSFLAG_END )
         {
           GFL_HEAP_FreeMemory( taw->sequence );
+          taw->status_flag &= AI_STATUSFLAG_CONTINUE_OFF;
           taw->sequence = NULL;
+        }
+        else
+        { 
+          if( --taw->calc_count == 0 )
+          { 
+            taw->calc_count = TR_AI_SEQ_COUNT;
+            taw->status_flag |= AI_STATUSFLAG_CONTINUE;
+            break;
+          }
         }
       }
       else{
@@ -1673,7 +1705,7 @@ static  VMCMD_RESULT  AI_CHECK_IRYOKU( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_COMP_POWER( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
-  int loss_flag = ( int )VMGetU32( vmh );
+  BOOL  loss_flag = ( int )VMGetU32( vmh );
 
 #ifdef AI_SEQ_PRINT
   OS_TPrintf("AI_COMP_POWER\n");
@@ -1685,7 +1717,7 @@ static  VMCMD_RESULT  AI_COMP_POWER( VMHANDLE* vmh, void* context_work )
     u8  atkPokeID = BPP_GetID( taw->atk_bpp );
     u8  defPokeID = BPP_GetID( taw->def_bpp );
 
-    u32 src_dmg = BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, taw->waza_no, TRUE, FALSE );
+    u32 src_dmg = BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, taw->waza_no, TRUE, loss_flag );
 
     if( src_dmg == 0 )
     {
@@ -1702,7 +1734,7 @@ static  VMCMD_RESULT  AI_COMP_POWER( VMHANDLE* vmh, void* context_work )
         WazaID waza_no = BPP_WAZA_GetID( taw->atk_bpp, i );
         if( i == taw->waza_pos ) continue;
 
-        dmg = BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, waza_no, TRUE, FALSE );
+        dmg = BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, waza_no, TRUE, loss_flag );
         if( dmg > src_dmg )
         {
           taw->calc_work = COMP_POWER_NOTOP;
@@ -3018,13 +3050,39 @@ static  VMCMD_RESULT  AI_CHECK_SLOWSTART_TURN( VMHANDLE* vmh, void* context_work
 static  VMCMD_RESULT  AI_IF_BENCH_DAMAGE_MAX( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+  BOOL  loss_flag = ( int )VMGetU32( vmh );
+  int   adrs = ( int )VMGetU32( vmh );
 
 #ifdef AI_SEQ_PRINT
   OS_TPrintf("AI_IF_BENCH_DAMAGE_MAX\n");
 #endif
 
-  //@todo
-  GF_ASSERT_MSG( 0, "未作成" );
+  {
+    int i, j;
+    u32 max_dmg = 0, dmg;
+    u8  clientID = BTL_MAIN_BtlPosToClientID( taw->wk, taw->atk_btl_poke_pos );
+    const BTL_PARTY*  pty = BTL_POKECON_GetPartyDataConst( taw->pokeCon, clientID );
+    //前衛の数
+    u8  front_count = BTL_MAIN_GetClientCoverPosCount( taw->wk, clientID );
+
+    max_dmg = get_max_damage( taw, taw->atk_bpp, taw->def_bpp, loss_flag );
+
+    for( i = front_count ; i < BTL_PARTY_GetMemberCount( pty ) ; i++ )
+    {
+      const BTL_POKEPARAM* bpp = get_bpp_from_party( pty, i );
+      u8  atkPokeID = BPP_GetID( bpp );
+  
+      if( !BPP_IsDead( bpp ) )
+      {
+        dmg = get_max_damage( taw, bpp, taw->def_bpp, loss_flag );
+        if( dmg > max_dmg )
+        {
+          VMCMD_Jump( vmh, vmh->adrs + adrs );
+          break;
+        }
+      }
+    }
+  }
 
   return taw->vmcmd_result;
 }
@@ -3035,13 +3093,24 @@ static  VMCMD_RESULT  AI_IF_BENCH_DAMAGE_MAX( VMHANDLE* vmh, void* context_work 
 static  VMCMD_RESULT  AI_IF_HAVE_BATSUGUN( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+  int   adrs = ( int )VMGetU32( vmh );
+  int   i;
 
 #ifdef AI_SEQ_PRINT
   OS_TPrintf("AI_IF_HAVE_BATSUGUN\n");
 #endif
 
-  //@todo
-  GF_ASSERT_MSG( 0, "未作成" );
+  for( i = 0 ; i < BPP_WAZA_GetCount( taw->atk_bpp ) ; i++ )
+  {
+    WazaID waza_no = BPP_WAZA_GetID( taw->atk_bpp, i );
+    BtlTypeAff  aisyou = BTL_SVFTOOL_SimulationAffinity(
+            taw->svfWork, BPP_GetID(taw->atk_bpp), BPP_GetID(taw->def_bpp), waza_no );
+    if( ( aisyou == BTL_TYPEAFF_200 ) || ( aisyou == BTL_TYPEAFF_400 ) )
+    {
+      VMCMD_Jump( vmh, vmh->adrs + adrs );
+     break;
+    }
+  }
 
   return taw->vmcmd_result;
 }
@@ -3052,13 +3121,26 @@ static  VMCMD_RESULT  AI_IF_HAVE_BATSUGUN( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IF_LAST_WAZA_DAMAGE_CHECK( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+  int side = ( int )VMGetU32( vmh );
+  BOOL  loss_flag = ( int )VMGetU32( vmh );
+  int   adrs = ( int )VMGetU32( vmh );
+  BtlPokePos  pos = get_poke_pos( taw, side );
+  const BTL_POKEPARAM* bpp = get_bpp( taw, pos );
 
 #ifdef AI_SEQ_PRINT
   OS_TPrintf("AI_IF_LAST_WAZA_DAMAGE_CHECK\n");
 #endif
 
-  //@todo
-  GF_ASSERT_MSG( 0, "未作成" );
+  { 
+    u32 dmg = get_max_damage( taw, taw->atk_bpp, taw->def_bpp, loss_flag );
+    WazaID waza_no = BPP_GetPrevWazaID( bpp );
+    u8  atkPokeID = BPP_GetID( bpp );
+    u8  defPokeID = BPP_GetID( taw->def_bpp );
+    if( dmg < BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, waza_no, TRUE, loss_flag ) )
+    { 
+      VMCMD_Jump( vmh, vmh->adrs + adrs );
+    }
+  }
 
   return taw->vmcmd_result;
 }
@@ -3165,13 +3247,56 @@ static  VMCMD_RESULT  AI_IF_CHECK_STATUS_EQUAL( VMHANDLE* vmh, void* context_wor
 static  VMCMD_RESULT  AI_COMP_POWER_WITH_PARTNER( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+  BOOL  loss_flag = ( int )VMGetU32( vmh );
 
 #ifdef AI_SEQ_PRINT
   OS_TPrintf("AI_COMP_POWER_WITH_PARTNER\n");
 #endif
 
-  //@todo
-  GF_ASSERT_MSG( 0, "未作成" );
+  u8  clientID = BTL_MAIN_BtlPosToClientID( taw->wk, taw->atk_btl_poke_pos );
+  const BTL_PARTY*  pty = BTL_POKECON_GetPartyDataConst( taw->pokeCon, clientID );
+  //前衛の数
+  u8  front_count = BTL_MAIN_GetClientCoverPosCount( taw->wk, clientID );
+  int cnt;
+  int idx = BTL_PARTY_FindMember( pty, taw->atk_bpp );
+  u8  atkPokeID = BPP_GetID( taw->atk_bpp );
+  u8  defPokeID = BPP_GetID( taw->def_bpp );
+  u32 src_dmg = BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, taw->waza_no, TRUE, loss_flag );
+
+  if( ( idx < 0 ) || ( src_dmg == 0 ) )
+  { 
+    taw->calc_work = COMP_POWER_NONE;
+    return taw->vmcmd_result;
+  }
+
+  for( cnt = 0 ; cnt < front_count ; cnt++ )
+  {
+    int i;
+    const BTL_POKEPARAM* bpp = get_bpp_from_party( pty, cnt );
+    atkPokeID = BPP_GetID( bpp );
+
+    if( !BPP_IsFightEnable( bpp ) ) continue;
+    if( cnt == idx ) continue;
+
+    {
+      u32 dmg;
+  
+      taw->calc_work = COMP_POWER_TOP;
+  
+      for( i = 0 ; i < BPP_WAZA_GetCount( bpp ) ; i++ )
+      {
+        WazaID waza_no = BPP_WAZA_GetID( bpp, i );
+        if( i == taw->waza_pos ) continue;
+
+        dmg = BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, waza_no, TRUE, loss_flag );
+        if( dmg > src_dmg )
+        {
+          taw->calc_work = COMP_POWER_NOTOP;
+          break;
+        }
+      }
+    }
+  }
 
   return taw->vmcmd_result;
 }
@@ -3224,13 +3349,14 @@ static  void  ai_if_hinshi( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond )
 static  VMCMD_RESULT  AI_GET_TOKUSEI( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+  int side = ( int )VMGetU32( vmh );
+  BtlPokePos  pos = get_poke_pos( taw, side );
 
 #ifdef AI_SEQ_PRINT
   OS_TPrintf("AI_GET_TOKUSEI\n");
 #endif
 
-  //@todo
-  GF_ASSERT_MSG( 0, "未作成" );
+  taw->calc_work = BPP_GetValue( get_bpp( taw, pos ), BPP_TOKUSEI_EFFECTIVE );
 
   return taw->vmcmd_result;
 }
@@ -3271,6 +3397,100 @@ static  VMCMD_RESULT  AI_CHECK_MONSNO( VMHANDLE* vmh, void* context_work )
 #endif
 
   taw->calc_work = BPP_GetMonsNo( get_bpp( taw, pos ) );
+
+  return taw->vmcmd_result;
+}
+
+//------------------------------------------------------------
+//  連動ランダム分岐
+//------------------------------------------------------------
+static  VMCMD_RESULT  AI_IF_COMMONRND_UNDER( VMHANDLE* vmh, void* context_work )
+{
+  TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_COMMONRND_UNDER\n");
+#endif
+
+  ai_if_commonrnd( vmh, taw, COND_UNDER );
+
+  return taw->vmcmd_result;
+}
+static  VMCMD_RESULT  AI_IF_COMMONRND_OVER( VMHANDLE* vmh, void* context_work )
+{
+  TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_COMMONRND_OVER\n");
+#endif
+
+  ai_if_commonrnd( vmh, taw, COND_OVER );
+
+  return taw->vmcmd_result;
+}
+static  VMCMD_RESULT  AI_IF_COMMONRND_EQUAL( VMHANDLE* vmh, void* context_work )
+{
+  TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_COMMONRND_EQUAL\n");
+#endif
+
+  ai_if_commonrnd( vmh, taw, COND_EQUAL );
+
+  return taw->vmcmd_result;
+}
+static  VMCMD_RESULT  AI_IFN_COMMONRND_EQUAL( VMHANDLE* vmh, void* context_work )
+{
+  TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IFN_COMMONRND_EQUAL\n");
+#endif
+
+  ai_if_commonrnd( vmh, taw, COND_NOTEQUAL );
+
+  return taw->vmcmd_result;
+}
+//------------------------------------------------------------
+//  連動ランダム分岐メイン
+//------------------------------------------------------------
+static  void  ai_if_commonrnd( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond )
+{
+  int value = ( int )VMGetU32( vmh );
+  int adrs  = ( int )VMGetU32( vmh );
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("value:%d adrs:%d rnd:%d\n",value,adrs,rnd);
+#endif
+
+  branch_act( vmh, cond, taw->common_rnd, value, adrs );
+}
+
+//------------------------------------------------------------
+//  テーブルジャンプ
+//------------------------------------------------------------
+static	VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
+{ 
+  TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+  int label = ( int )VMGetU32( vmh );
+  int *tbl_adrs = (int*)(vmh->adrs + ( int )VMGetU32( vmh ));
+  int ofs;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_TABLE_JUMP\n");
+#endif
+
+  switch( label ){ 
+  case TABLE_JUMP_WAZASEQNO:
+    ofs = get_waza_param( taw, taw->waza_no, WAZAPARAM_AI_SEQNO );
+    break;
+  default:
+    //未定義のラベルです
+    GF_ASSERT( 0 );
+    break;
+  }
+  VMCMD_Jump( vmh, vmh->adrs + tbl_adrs[ ofs ] );
 
   return taw->vmcmd_result;
 }
@@ -3569,829 +3789,28 @@ static  BOOL  get_waza_flag( TR_AI_WORK* taw, WazaID waza_no, WazaFlag flag )
   return WAZADATA_PTR_GetFlag( taw->wd[ index ], flag );
 }
 
-#if 0
-//--------------------------------------------------------------------------------------------
-//  入れ替えAI
-//--------------------------------------------------------------------------------------------
 //============================================================================================
 /**
- *	ほろびのうたカウンタチェック
- *
- * @param[in]	sp			サーバワーク構造体
- * @param[in]	client_no	チェックするClientNo
- *
- * @retval	FALSE:いれかえない　TRUE:いれかえる
+ *  手持ちの技から最大ダメージを算出
  */
 //============================================================================================
-static	BOOL	ClientAIHorobinoutaCheck(SERVER_PARAM *sp,int client_no)
-{
-	if((sp->psp[client_no].waza_kouka&WAZAKOUKA_HOROBINOUTA)&&
-	   (sp->psp[client_no].wkw.horobinouta_count==0)){
-		sp->ai_reshuffle_sel_mons_no[client_no]=6;
-		return TRUE;
-	}
-	return FALSE;
+static  u32 get_max_damage( TR_AI_WORK* taw, const BTL_POKEPARAM* atk_bpp, const BTL_POKEPARAM* def_bpp, BOOL loss_flag )
+{ 
+  int i, j;
+  u32 max_dmg = 0, dmg;
+  u8  atkPokeID = BPP_GetID( atk_bpp );
+  u8  defPokeID = BPP_GetID( def_bpp );
+
+  for( i = 0 ; i < BPP_WAZA_GetCount( atk_bpp ) ; i++ )
+  {
+    WazaID waza_no = BPP_WAZA_GetID( atk_bpp, i );
+
+    dmg = BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, waza_no, TRUE, loss_flag );
+    if( dmg > max_dmg )
+    {
+      max_dmg = dmg;
+    }
+  }
+  return max_dmg;
 }
 
-//============================================================================================
-/**
- *	ふしぎなまもりチェック
- *
- * @param[in]	bw			戦闘システムワーク構造体
- * @param[in]	sp			サーバワーク構造体
- * @param[in]	client_no	チェックするClientNo
- *
- * @retval	FALSE:いれかえない　TRUE:いれかえる
- */
-//============================================================================================
-static	BOOL	ClientAIHusiginamamoriCheck(BATTLE_WORK *bw,SERVER_PARAM *sp,int client_no)
-{
-	int	i,j;
-	u16	wazano;
-	int	type;
-	u32	flag;
-	POKEMON_PARAM	*pp;
-
-	//2vs2はチェックしない
-	if(BattleWorkFightTypeGet(bw)&FIGHT_TYPE_2vs2){
-		return FALSE;
-	}
-
-	if(sp->psp[client_no^1].speabino==TOKUSYU_HUSIGINAMAMORI){
-		for(i=0;i<4;i++){
-			wazano=sp->psp[client_no].waza[i];
-			type=AIWazaTypeGet(bw,sp,client_no,wazano);
-			if(wazano){
-				flag=0;
-				ST_ServerTypeCheck(bw,sp,wazano,type,client_no,client_no^1,0,&flag);
-				if(flag&WAZA_STATUS_FLAG_BATSUGUN){
-					return FALSE;
-				}
-			}
-		}
-		for(i=0;i<BattleWorkPokeCountGet(bw,client_no);i++){
-			pp=BattleWorkPokemonParamGet(bw,client_no,i);
-			if((PokeParaGet(pp,ID_PARA_hp,NULL)!=0)&&
-			   (PokeParaGet(pp,ID_PARA_monsno_egg,NULL)!=0)&&
-			   (PokeParaGet(pp,ID_PARA_monsno_egg,NULL)!=MONSNO_TAMAGO)&&
-			   (i!=sp->sel_mons_no[client_no])){
-				for(j=0;j<WAZA_TEMOTI_MAX;j++){
-					wazano=PokeParaGet(pp,ID_PARA_waza1+j,NULL);
-					type=AIWazaTypeGetPP(bw,sp,pp,wazano);
-					if(wazano){
-						flag=0;
-						ST_AITypeCheck(sp,wazano,type,
-									   PokeParaGet(pp,ID_PARA_speabino,NULL),
-									   ST_ServerTokuseiGet(sp,client_no^1),
-									   ST_ServerSoubiEqpGet(sp,client_no^1),
-									   ST_ServerPokemonServerParamGet(sp,client_no^1,ID_PSP_type1,NULL),
-									   ST_ServerPokemonServerParamGet(sp,client_no^1,ID_PSP_type2,NULL),
-									   &flag);
-						if(flag&WAZA_STATUS_FLAG_BATSUGUN){
-							if((BattleWorkRandGet(bw)%3)<2){
-								sp->ai_reshuffle_sel_mons_no[client_no]=i;
-								return TRUE;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	return FALSE;
-}
-
-//============================================================================================
-/**
- *	今出ているポケモンが効果なしの技しか持っていない場合の交代チェック
- *
- * @param[in]	bw			戦闘システムワーク構造体
- * @param[in]	sp			サーバワーク構造体
- * @param[in]	client_no	チェックするClientNo
- *
- * @retval	FALSE:いれかえない　TRUE:いれかえる
- */
-//============================================================================================
-static	BOOL	ClientAIKoukanaiCheck(BATTLE_WORK *bw,SERVER_PARAM *sp,int client_no)
-{
-	int	i,j;
-	u8	cl1,cl2;
-	u8	no1,no2;
-	u16	wazano;
-	int	type;
-	u32	flag;
-	int	start_no,end_no;
-	int	waza_cnt;
-	POKEMON_PARAM	*pp;
-
-	if(BattleWorkFightTypeGet(bw)&FIGHT_TYPE_2vs2){
-		cl1=CLIENT_NO_MINE;
-		cl2=CLIENT_NO_MINE2;
-	}
-	else{
-		cl1=CLIENT_NO_MINE;
-		cl2=CLIENT_NO_MINE;
-	}
-
-	waza_cnt=0;
-	for(i=0;i<WAZA_TEMOTI_MAX;i++){
-		wazano=sp->psp[client_no].waza[i];
-		type=AIWazaTypeGet(bw,sp,client_no,wazano);
-		if((wazano)&&(sp->AIWT.wtd[wazano].damage)){
-			waza_cnt++;
-			flag=0;
-			if(sp->psp[cl1].hp){
-				ST_ServerTypeCheck(bw,sp,wazano,type,client_no,cl1,0,&flag);
-			}
-			if((flag&WAZA_STATUS_FLAG_KOUKANAI)==0){
-				return FALSE;
-			}
-			flag=0;
-			if(sp->psp[cl2].hp){
-				ST_ServerTypeCheck(bw,sp,wazano,type,client_no,cl2,0,&flag);
-			}
-			if((flag&WAZA_STATUS_FLAG_KOUKANAI)==0){
-				return FALSE;
-			}
-		}
-	}
-	//攻撃技を2つ以上持っていない場合は、いれかえない（ねばり系のポケモンと判断）
-	if(waza_cnt<2){
-		return FALSE;
-	}
-
-	no1=client_no;
-	if((BattleWorkFightTypeGet(bw)&FIGHT_TYPE_TAG)||
-	   (BattleWorkFightTypeGet(bw)&FIGHT_TYPE_MULTI)){
-		no2=no1;
-	}
-	else{
-		no2=BattleWorkPartnerClientNoGet(bw,client_no);
-	}
-
-	start_no=0;
-	end_no=BattleWorkPokeCountGet(bw,client_no);
-
-	//抜群チェック
-	for(i=start_no;i<end_no;i++){
-		pp=BattleWorkPokemonParamGet(bw,client_no,i);
-		if((PokeParaGet(pp,ID_PARA_hp,NULL)!=0)&&
-		   (PokeParaGet(pp,ID_PARA_monsno_egg,NULL)!=0)&&
-		   (PokeParaGet(pp,ID_PARA_monsno_egg,NULL)!=MONSNO_TAMAGO)&&
-		   (i!=sp->sel_mons_no[no1])&&(i!=sp->sel_mons_no[no2])&&
-		   (i!=sp->ai_reshuffle_sel_mons_no[no1])&&
-		   (i!=sp->ai_reshuffle_sel_mons_no[no2])){
-			for(j=0;j<WAZA_TEMOTI_MAX;j++){
-				wazano=PokeParaGet(pp,ID_PARA_waza1+j,NULL);
-				type=AIWazaTypeGetPP(bw,sp,pp,wazano);
-				if((wazano)&&(sp->AIWT.wtd[wazano].damage)){
-					flag=0;
-					if(sp->psp[cl1].hp){
-						ST_AITypeCheck(sp,wazano,type,
-									   PokeParaGet(pp,ID_PARA_speabino,NULL),
-									   ST_ServerTokuseiGet(sp,cl1),
-									   ST_ServerSoubiEqpGet(sp,cl1),
-									   ST_ServerPokemonServerParamGet(sp,cl1,ID_PSP_type1,NULL),
-									   ST_ServerPokemonServerParamGet(sp,cl1,ID_PSP_type2,NULL),
-									   &flag);
-					}
-					if(flag&WAZA_STATUS_FLAG_BATSUGUN){
-						if((BattleWorkRandGet(bw)%3)<2){
-							sp->ai_reshuffle_sel_mons_no[client_no]=i;
-							return TRUE;
-						}
-
-					}
-					flag=0;
-					if(sp->psp[cl2].hp){
-						ST_AITypeCheck(sp,wazano,type,
-									   PokeParaGet(pp,ID_PARA_speabino,NULL),
-									   ST_ServerTokuseiGet(sp,cl2),
-									   ST_ServerSoubiEqpGet(sp,cl2),
-									   ST_ServerPokemonServerParamGet(sp,cl2,ID_PSP_type1,NULL),
-									   ST_ServerPokemonServerParamGet(sp,cl2,ID_PSP_type2,NULL),
-									   &flag);
-					}
-					if(flag&WAZA_STATUS_FLAG_BATSUGUN){
-						if((BattleWorkRandGet(bw)%3)<2){
-							sp->ai_reshuffle_sel_mons_no[client_no]=i;
-							return TRUE;
-						}
-
-					}
-				}
-			}
-		}
-	}
-	//等倍チェック
-	for(i=start_no;i<end_no;i++){
-		pp=BattleWorkPokemonParamGet(bw,client_no,i);
-		if((PokeParaGet(pp,ID_PARA_hp,NULL)!=0)&&
-		   (PokeParaGet(pp,ID_PARA_monsno_egg,NULL)!=0)&&
-		   (PokeParaGet(pp,ID_PARA_monsno_egg,NULL)!=MONSNO_TAMAGO)&&
-		   (i!=sp->sel_mons_no[no1])&&(i!=sp->sel_mons_no[no2])&&
-		   (i!=sp->ai_reshuffle_sel_mons_no[no1])&&
-		   (i!=sp->ai_reshuffle_sel_mons_no[no2])){
-			for(j=0;j<WAZA_TEMOTI_MAX;j++){
-				wazano=PokeParaGet(pp,ID_PARA_waza1+j,NULL);
-				type=AIWazaTypeGetPP(bw,sp,pp,wazano);
-				if((wazano)&&(sp->AIWT.wtd[wazano].damage)){
-					flag=0;
-					if(sp->psp[cl1].hp){
-						ST_AITypeCheck(sp,wazano,type,
-									   PokeParaGet(pp,ID_PARA_speabino,NULL),
-									   ST_ServerTokuseiGet(sp,cl1),
-									   ST_ServerSoubiEqpGet(sp,cl1),
-									   ST_ServerPokemonServerParamGet(sp,cl1,ID_PSP_type1,NULL),
-									   ST_ServerPokemonServerParamGet(sp,cl1,ID_PSP_type2,NULL),
-									   &flag);
-					}
-					if(flag==0){
-						if((BattleWorkRandGet(bw)%2)==0){
-							sp->ai_reshuffle_sel_mons_no[client_no]=i;
-							return TRUE;
-						}
-
-					}
-					flag=0;
-					if(sp->psp[cl2].hp){
-						ST_AITypeCheck(sp,wazano,type,
-									   PokeParaGet(pp,ID_PARA_speabino,NULL),
-									   ST_ServerTokuseiGet(sp,cl2),
-									   ST_ServerSoubiEqpGet(sp,cl2),
-									   ST_ServerPokemonServerParamGet(sp,cl2,ID_PSP_type1,NULL),
-									   ST_ServerPokemonServerParamGet(sp,cl2,ID_PSP_type2,NULL),
-									   &flag);
-					}
-					if(flag==0){
-						if((BattleWorkRandGet(bw)%2)==0){
-							sp->ai_reshuffle_sel_mons_no[client_no]=i;
-							return TRUE;
-						}
-
-					}
-				}
-			}
-		}
-	}
-	return FALSE;
-}
-
-//============================================================================================
-/**
- *	今出ているポケモンが効果抜群の技を持っている場合は交代しないチェック
- *
- * @param[in]	bw			戦闘システムワーク構造体
- * @param[in]	sp			サーバワーク構造体
- * @param[in]	client_no	チェックするClientNo
- * @param[in]	chkflag		1のとき持っているかしかチェックしない
- *
- * @retval	FALSE:いれかえない　TRUE:いれかえる
- */
-//============================================================================================
-static	BOOL	ClientAIBatsugunCheck(BATTLE_WORK *bw,SERVER_PARAM *sp,int client_no,u8 chkflag)
-{
-	int	i;
-	u32	flag;
-	u8	clientno;
-	u8	clienttype;
-	u16	wazano;
-	int	type;
-
-	clienttype=BattleWorkClientTypeGet(bw,client_no)^1;
-	clientno=BattleWorkClientNoGet(bw,clienttype);
-
-	if((sp->no_reshuffle_client&No2Bit(clientno))==0){
-		for(i=0;i<4;i++){
-			wazano=sp->psp[client_no].waza[i];
-			type=AIWazaTypeGet(bw,sp,client_no,wazano);
-			if(wazano){
-				flag=0;
-				ST_ServerTypeCheck(bw,sp,wazano,type,client_no,clientno,0,&flag);
-				if(flag&WAZA_STATUS_FLAG_BATSUGUN){
-					if(chkflag){
-						return TRUE;
-					}
-					else{
-						if(BattleWorkRandGet(bw)%10!=0){
-							return TRUE;
-						}
-					}
-				}
-			}
-		}
-	}
-	if((BattleWorkFightTypeGet(bw)&FIGHT_TYPE_2vs2)==0){
-		return FALSE;
-	}
-	clientno=BattleWorkPartnerClientNoGet(bw,clientno);
-	if((sp->no_reshuffle_client&No2Bit(clientno))==0){
-		for(i=0;i<4;i++){
-			wazano=sp->psp[client_no].waza[i];
-			type=AIWazaTypeGet(bw,sp,client_no,wazano);
-			if(wazano){
-				flag=0;
-				ST_ServerTypeCheck(bw,sp,wazano,type,client_no,clientno,0,&flag);
-				if(flag&WAZA_STATUS_FLAG_BATSUGUN){
-					if(chkflag){
-						return TRUE;
-					}
-					else{
-						if(BattleWorkRandGet(bw)%10!=0){
-							return TRUE;
-						}
-					}
-				}
-			}
-		}
-	}
-	return FALSE;
-}
-
-//============================================================================================
-/**
- *	ダメージ技に対してHP回復する特性をもっているポケモンのチェック
- *
- * @param[in]	bw			戦闘システムワーク構造体
- * @param[in]	sp			サーバワーク構造体
- * @param[in]	client_no	チェックするClientNo
- *
- * @retval	FALSE:いれかえない　TRUE:いれかえる
- */
-//============================================================================================
-static	BOOL	ClientAIHPRecoverTokusyuCheck(BATTLE_WORK *bw,SERVER_PARAM *sp,int client_no)
-{
-	int	i;
-	u8	no1,no2;
-	u8	wazatype;
-	u8	speabino;
-	u8	chkspeabino;
-	int	start_no,end_no;
-	POKEMON_PARAM	*pp;
-
-	if((ClientAIBatsugunCheck(bw,sp,client_no,1))&&(BattleWorkRandGet(bw)%3!=0)){
-		return FALSE;
-	}
-
-	if(sp->waza_no_hit[client_no]==0){
-		return FALSE;
-	}
-//	if(WT_WazaDataParaGet(sp->waza_no_hit[client_no],ID_WTD_damage)==0){
-	if(sp->AIWT.wtd[sp->waza_no_hit[client_no]].damage==0){
-		return FALSE;
-	}
-
-//	wazatype=WT_WazaDataParaGet(sp->waza_no_hit[client_no],ID_WTD_wazatype);
-	wazatype=sp->AIWT.wtd[sp->waza_no_hit[client_no]].wazatype;
-
-	if(wazatype==FIRE_TYPE){
-		chkspeabino=TOKUSYU_MORAIBI;
-	}
-	else if(wazatype==WATER_TYPE){
-		chkspeabino=TOKUSYU_TYOSUI;
-	}
-	else if(wazatype==ELECTRIC_TYPE){
-		chkspeabino=TOKUSYU_TIKUDEN;
-	}
-	else{
-		return FALSE;
-	}
-
-	if(ST_ServerTokuseiGet(sp,client_no)==chkspeabino){
-		return FALSE;
-	}
-
-	no1=client_no;
-	if((BattleWorkFightTypeGet(bw)&FIGHT_TYPE_TAG)||
-	   (BattleWorkFightTypeGet(bw)&FIGHT_TYPE_MULTI)){
-		no2=no1;
-	}
-	else{
-		no2=BattleWorkPartnerClientNoGet(bw,client_no);
-	}
-
-	start_no=0;
-	end_no=BattleWorkPokeCountGet(bw,client_no);
-
-	for(i=start_no;i<end_no;i++){
-		pp=BattleWorkPokemonParamGet(bw,client_no,i);
-		if((PokeParaGet(pp,ID_PARA_hp,NULL)!=0)&&
-		   (PokeParaGet(pp,ID_PARA_monsno_egg,NULL)!=0)&&
-		   (PokeParaGet(pp,ID_PARA_monsno_egg,NULL)!=MONSNO_TAMAGO)&&
-		   (i!=sp->sel_mons_no[no1])&&(i!=sp->sel_mons_no[no2])&&
-		   (i!=sp->ai_reshuffle_sel_mons_no[no1])&&
-		   (i!=sp->ai_reshuffle_sel_mons_no[no2])){
-			speabino=PokeParaGet(pp,ID_PARA_speabino,NULL);
-			if((chkspeabino==speabino)&&(BattleWorkRandGet(bw)&1)){
-				sp->ai_reshuffle_sel_mons_no[client_no]=i;
-				return TRUE;
-			}
-		}
-	}
-	return FALSE;
-}
-
-//============================================================================================
-/**
- *	技効果チェック
- *
- * @param[in]	bw			戦闘システムワーク構造体
- * @param[in]	sp			サーバワーク構造体
- * @param[in]	client_no	チェックするClientNo
- * @param[in]	wazakouka	チェックする技効果
- * @param[in]	kakuritu	いれかえる確率
- *
- * @retval	FALSE:いれかえない　TRUE:いれかえる
- */
-//============================================================================================
-static	BOOL	ClientAIWazaKoukaCheck(BATTLE_WORK *bw,SERVER_PARAM *sp,int client_no,u32 wazakouka,u8 kakuritu)
-{
-	int	i,j;
-	u8	no1,no2;
-	u16	wazano;
-	int	type;
-	u32	flag;
-	int	start_no,end_no;
-	POKEMON_PARAM	*pp;
-
-	if((sp->waza_no_hit[client_no]==0)||
-	   (sp->waza_no_hit_client[client_no]==NONE_CLIENT_NO)){
-		return FALSE;
-	}
-//	if(WT_WazaDataParaGet(sp->waza_no_hit[client_no],ID_WTD_damage)==0){
-	if(sp->AIWT.wtd[sp->waza_no_hit[client_no]].damage==0){
-		return FALSE;
-	}
-
-	no1=client_no;
-	if((BattleWorkFightTypeGet(bw)&FIGHT_TYPE_TAG)||
-	   (BattleWorkFightTypeGet(bw)&FIGHT_TYPE_MULTI)){
-		no2=no1;
-	}
-	else{
-		no2=BattleWorkPartnerClientNoGet(bw,client_no);
-	}
-
-	start_no=0;
-	end_no=BattleWorkPokeCountGet(bw,client_no);
-
-	for(i=start_no;i<end_no;i++){
-		pp=BattleWorkPokemonParamGet(bw,client_no,i);
-		if((PokeParaGet(pp,ID_PARA_hp,NULL)!=0)&&
-		   (PokeParaGet(pp,ID_PARA_monsno_egg,NULL)!=0)&&
-		   (PokeParaGet(pp,ID_PARA_monsno_egg,NULL)!=MONSNO_TAMAGO)&&
-		   (i!=sp->sel_mons_no[no1])&&(i!=sp->sel_mons_no[no2])&&
-		   (i!=sp->ai_reshuffle_sel_mons_no[no1])&&
-		   (i!=sp->ai_reshuffle_sel_mons_no[no2])){
-			flag=0;
-			type=AIWazaTypeGet(bw,sp,sp->waza_no_hit_client[client_no],sp->waza_no_hit[client_no]);
-			ST_AITypeCheck(sp,sp->waza_no_hit[client_no],type,
-						   ST_ServerTokuseiGet(sp,sp->waza_no_hit_client[client_no]),
-						   PokeParaGet(pp,ID_PARA_speabino,NULL),
-						   ST_ItemParamGet(sp,PokeParaGet(pp,ID_PARA_item,NULL),ITEM_PRM_EQUIP),
-						   PokeParaGet(pp,ID_PARA_type1,NULL),
-						   PokeParaGet(pp,ID_PARA_type2,NULL),
-						   &flag);
-			if(flag&wazakouka){
-				for(j=0;j<WAZA_TEMOTI_MAX;j++){
-					wazano=PokeParaGet(pp,ID_PARA_waza1+j,NULL);
-					type=AIWazaTypeGetPP(bw,sp,pp,wazano);
-					if(wazano){
-						flag=0;
-						ST_AITypeCheck(sp,wazano,type,
-									   PokeParaGet(pp,ID_PARA_speabino,NULL),
-									   ST_ServerTokuseiGet(sp,sp->waza_no_hit_client[client_no]),
-									   ST_ServerSoubiEqpGet(sp,sp->waza_no_hit_client[client_no]),
-									   ST_ServerPokemonServerParamGet(sp,sp->waza_no_hit_client[client_no],ID_PSP_type1,NULL),
-									   ST_ServerPokemonServerParamGet(sp,sp->waza_no_hit_client[client_no],ID_PSP_type2,NULL),
-									   &flag);
-						if(flag&WAZA_STATUS_FLAG_BATSUGUN){
-							if((BattleWorkRandGet(bw)%kakuritu)==0){
-								sp->ai_reshuffle_sel_mons_no[client_no]=i;
-								return TRUE;
-							}
-
-						}
-					}
-				}
-			}
-		}
-	}
-	return FALSE;
-}
-
-//============================================================================================
-/**
- *	今出ているポケモンが眠っていてしぜんかいふくを持っている場合のチェック
- *
- * @param[in]	bw			戦闘システムワーク構造体
- * @param[in]	sp			サーバワーク構造体
- * @param[in]	client_no	チェックするClientNo
- *
- * @retval	FALSE:いれかえない　TRUE:いれかえる
- */
-//============================================================================================
-static	BOOL	ClientAIShizenkaifukuCheck(BATTLE_WORK *bw,SERVER_PARAM *sp,int client_no)
-{
-	if(((sp->psp[client_no].condition&CONDITION_NEMURI)==0)||
-		(ST_ServerTokuseiGet(sp,client_no)!=TOKUSYU_SIZENKAIHUKU)||
-		(sp->psp[client_no].hp<(sp->psp[client_no].hpmax/2))){
-		return FALSE;
-	}
-
-	if(sp->waza_no_hit[client_no]==0){
-		if(BattleWorkRandGet(bw)&1){
-			sp->ai_reshuffle_sel_mons_no[client_no]=6;
-			return TRUE;
-		}
-	}
-//	if(WT_WazaDataParaGet(sp->waza_no_hit[client_no],ID_WTD_damage)==0){
-	if(sp->AIWT.wtd[sp->waza_no_hit[client_no]].damage==0){
-		if(BattleWorkRandGet(bw)&1){
-			sp->ai_reshuffle_sel_mons_no[client_no]=6;
-			return 1;
-		}
-	}
-
-	if(ClientAIWazaKoukaCheck(bw,sp,client_no,WAZA_STATUS_FLAG_KOUKANAI,1)){
-		return TRUE;
-	}
-	if(ClientAIWazaKoukaCheck(bw,sp,client_no,WAZA_STATUS_FLAG_IMAHITOTSU,1)){
-		return TRUE;
-	}
-
-	if(BattleWorkRandGet(bw)&1){
-		sp->ai_reshuffle_sel_mons_no[client_no]=6;
-		return TRUE;
-	}
-	return FALSE;
-}
-
-//============================================================================================
-/**
- *	今出ているポケモンのステータスアップトータルが4以上は交代しないチェック
- *
- * @param[in]	bw			戦闘システムワーク構造体
- * @param[in]	sp			サーバワーク構造体
- * @param[in]	client_no	チェックするClientNo
- *
- * @retval	FALSE:4未満　TRUE:4以上
- */
-//============================================================================================
-static	BOOL	ClientAIStatusUpCheck(BATTLE_WORK *bw,SERVER_PARAM *sp,int client_no)
-{
-	int	i;
-	u8	cnt;
-
-	cnt=0;
-
-	for(i=COND_HP;i<COND_MAX;i++){
-		if(sp->psp[client_no].abiritycnt[i]>6)
-			cnt+=sp->psp[client_no].abiritycnt[i]-6;
-	}
-
-	return (cnt>=4);
-}
-
-//============================================================================================
-/**
- *	ポケモン入れ替えAI
- *
- * @param[in]	bw			戦闘システムワーク構造体
- * @param[in]	sp			サーバワーク構造体
- * @param[in]	client_no	チェックするClientNo
- *
- * @retval	FALSE:いれかえない　TRUE:いれかえる
- */
-//============================================================================================
-static	BOOL	ClientAIPokeReshuffleAI(BATTLE_WORK *bw,SERVER_PARAM *sp,int client_no)
-{
-	int	i;
-	int	cnt;
-	u8	no1,no2,selected;
-	int	start_no,end_no;
-	POKEMON_PARAM	*pp;
-
-	if((sp->psp[client_no].condition2&(CONDITION2_SHIME|CONDITION2_KUROIMANAZASHI))||
-	   (sp->psp[client_no].waza_kouka&WAZAKOUKA_NEWOHARU)||
-	   (ST_ServerTokuseiCheck(bw,sp,STC_HAVE_ENEMY_SIDE,client_no,TOKUSYU_KAGEHUMI))||
-	   (ST_ServerTokuseiCheck(bw,sp,STC_HAVE_ENEMY_SIDE,client_no,TOKUSYU_ARIZIGOKU))||
-	  ((ST_ServerTokuseiCheck(bw,sp,STC_HAVE_ALL_NOMINE,client_no,TOKUSYU_ZIRYOKU)&&
-	  ((ST_ServerPokemonServerParamGet(sp,client_no,ID_PSP_type1,NULL)==METAL_TYPE)||
-	  ((ST_ServerPokemonServerParamGet(sp,client_no,ID_PSP_type2,NULL)==METAL_TYPE)))))){
-		return FALSE;
-	}
-
-	cnt=0;
-
-	no1=client_no;
-	if((BattleWorkFightTypeGet(bw)&FIGHT_TYPE_TAG)||
-	   (BattleWorkFightTypeGet(bw)&FIGHT_TYPE_MULTI)){
-		no2=no1;
-	}
-	else{
-		no2=BattleWorkPartnerClientNoGet(bw,client_no);
-	}
-
-	start_no=0;
-	end_no=BattleWorkPokeCountGet(bw,client_no);
-
-	for(i=start_no;i<end_no;i++){
-		pp=BattleWorkPokemonParamGet(bw,client_no,i);
-		if((PokeParaGet(pp,ID_PARA_hp,NULL)!=0)&&
-		   (PokeParaGet(pp,ID_PARA_monsno_egg,NULL)!=0)&&
-		   (PokeParaGet(pp,ID_PARA_monsno_egg,NULL)!=MONSNO_TAMAGO)&&
-		   (i!=sp->sel_mons_no[no1])&&(i!=sp->sel_mons_no[no2])&&
-		   (i!=sp->ai_reshuffle_sel_mons_no[no1])&&
-		   (i!=sp->ai_reshuffle_sel_mons_no[no2])){
-			cnt++;
-		}
-	}
-	if(cnt){
-		if(ClientAIHorobinoutaCheck(sp,client_no)){
-			return TRUE;
-		}
-		if(ClientAIHusiginamamoriCheck(bw,sp,client_no)){
-			return TRUE;
-		}
-		if(ClientAIKoukanaiCheck(bw,sp,client_no)){
-			return TRUE;
-		}
-		if(ClientAIHPRecoverTokusyuCheck(bw,sp,client_no)){
-			return TRUE;
-		}
-		if(ClientAIShizenkaifukuCheck(bw,sp,client_no)){
-			return TRUE;
-		}
-		if(ClientAIBatsugunCheck(bw,sp,client_no,0)){
-			return FALSE;
-		}
-		if(ClientAIStatusUpCheck(bw,sp,client_no)){
-			return FALSE;
-		}
-		if(ClientAIWazaKoukaCheck(bw,sp,client_no,WAZA_STATUS_FLAG_KOUKANAI,2)){
-			return TRUE;
-		}
-		if(ClientAIWazaKoukaCheck(bw,sp,client_no,WAZA_STATUS_FLAG_IMAHITOTSU,3)){
-			return TRUE;
-		}
-	}
-
-	return FALSE;
-}
-
-//============================================================================================
-/**
- *	ポケモン選択AI
- *
- * @param[in]	bw			戦闘システムワーク構造体
- * @param[in]	client_no	選択するClientNo
- *
- * @retval	選択したポケモンのポジション
- */
-//============================================================================================
-int	ClientAIPokeSelectAI(BATTLE_WORK *bw,int client_no)
-{
-	int	i,j;
-	u8	clientno;
-	u8	psp_type1;
-	u8	psp_type2;
-	u8	type1;
-	u8	type2;
-	u16	monsno;
-	u16	wazano;
-	int	type;
-	u8	checkbit;
-	u8	damage;
-	u8	damagetmp;
-	u8	topselmons=6;
-	u8	no1,no2;
-	u32	flag;
-	int	start_no,end_no;
-	POKEMON_PARAM	*pp;
-	SERVER_PARAM	*sp;
-
-	sp=bw->server_param;
-
-	no1=client_no;
-	if((BattleWorkFightTypeGet(bw)&FIGHT_TYPE_TAG)||
-	   (BattleWorkFightTypeGet(bw)&FIGHT_TYPE_MULTI)){
-		no2=no1;
-	}
-	else{
-		no2=BattleWorkPartnerClientNoGet(bw,client_no);
-	}
-	clientno=ST_ServerDirClientGet(bw,sp,client_no);
-
-	start_no=0;
-	end_no=BattleWorkPokeCountGet(bw,client_no);
-
-	checkbit=0;
-	while(checkbit!=0x3f){
-		damagetmp=0;
-		topselmons=6;
-		for(i=start_no;i<end_no;i++){
-			pp=BattleWorkPokemonParamGet(bw,client_no,i);
-			monsno=PokeParaGet(pp,ID_PARA_monsno_egg,NULL);
-			if((monsno!=0)&&
-			   (monsno!=MONSNO_TAMAGO)&&
-			   (PokeParaGet(pp,ID_PARA_hp,NULL))&&
-			  ((checkbit&No2Bit(i))==0)&&
-			   (sp->sel_mons_no[no1]!=i)&&
-			   (sp->sel_mons_no[no2]!=i)&&
-			   (i!=sp->ai_reshuffle_sel_mons_no[no1])&&
-			   (i!=sp->ai_reshuffle_sel_mons_no[no2])){
-				psp_type1=ST_ServerPokemonServerParamGet(sp,clientno,ID_PSP_type1,NULL);
-				psp_type2=ST_ServerPokemonServerParamGet(sp,clientno,ID_PSP_type2,NULL);
-				type1=PokeParaGet(pp,ID_PARA_type1,NULL);
-				type2=PokeParaGet(pp,ID_PARA_type2,NULL);
-				damage=ST_ServerTypeCheckTablePowerGet(type1,psp_type1,psp_type2);
-				damage+=ST_ServerTypeCheckTablePowerGet(type2,psp_type1,psp_type2);
-				if(damagetmp<damage){
-					damagetmp=damage;
-					topselmons=i;
-				}
-			}
-			else{
-				checkbit|=No2Bit(i);
-			}
-		}
-		if(topselmons!=6){
-			pp=BattleWorkPokemonParamGet(bw,client_no,topselmons);
-			for(i=0;i<WAZA_TEMOTI_MAX;i++){
-				wazano=PokeParaGet(pp,ID_PARA_waza1+i,NULL);
-				type=AIWazaTypeGetPP(bw,sp,pp,wazano);
-				if(wazano){
-					flag=0;
-					ST_AITypeCheck(sp,wazano,type,
-								   PokeParaGet(pp,ID_PARA_speabino,NULL),
-								   ST_ServerTokuseiGet(sp,clientno),
-								   ST_ServerSoubiEqpGet(sp,clientno),
-								   ST_ServerPokemonServerParamGet(sp,clientno,ID_PSP_type1,NULL),
-								   ST_ServerPokemonServerParamGet(sp,clientno,ID_PSP_type2,NULL),
-								   &flag);
-					if(flag&WAZA_STATUS_FLAG_BATSUGUN){
-						break;
-					}
-				}
-			}
-			if(i==WAZA_TEMOTI_MAX){
-				checkbit|=No2Bit(topselmons);
-			}
-			else{
-				return topselmons;
-			}
-		}
-		else{
-			checkbit=0x3f;
-		}
-	}
-
-	damagetmp=0;
-	topselmons=6;
-
-	for(i=start_no;i<end_no;i++){
-		pp=BattleWorkPokemonParamGet(bw,client_no,i);
-		monsno=PokeParaGet(pp,ID_PARA_monsno_egg,NULL);
-		if((monsno!=0)&&
-		   (monsno!=MONSNO_TAMAGO)&&
-		   (PokeParaGet(pp,ID_PARA_hp,NULL))&&
-		   (sp->sel_mons_no[no1]!=i)&&(sp->sel_mons_no[no2]!=i)&&
-		   (i!=sp->ai_reshuffle_sel_mons_no[no1])&&
-		   (i!=sp->ai_reshuffle_sel_mons_no[no2])){
-			for(j=0;j<WAZA_TEMOTI_MAX;j++){
-				wazano=PokeParaGet(pp,ID_PARA_waza1+j,NULL);
-				type=AIWazaTypeGetPP(bw,sp,pp,wazano);
-				if((wazano)&&(sp->AIWT.wtd[wazano].damage!=1)){
-					damage=ST_WazaDamageCalc(bw,sp,
-											 wazano,
-											 sp->side_condition[BattleWorkMineEnemyCheck(bw,clientno)],
-											 sp->field_condition,
-											 0,
-											 0,
-											 client_no,
-											 clientno,
-											 1);
-					flag=0;
-					damage=ST_ServerTypeCheck(bw,sp,
-											  wazano,
-											  type,
-											  client_no,
-											  clientno,
-											  damage,
-											  &flag);
-					if(flag&(WAZA_STATUS_FLAG_KOUKANAI|WAZA_STATUS_FLAG_JIMEN_NOHIT|
-							 WAZA_STATUS_FLAG_DENZIHUYUU_NOHIT|WAZA_STATUS_FLAG_BATSUGUN_NOHIT)){
-						damage=0;
-					}
-				}
-				if(damagetmp<damage){
-					damagetmp=damage;
-					topselmons=i;
-				}
-			}
-		}
-	}
-	return topselmons;
-}
-#endif

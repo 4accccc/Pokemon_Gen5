@@ -13,8 +13,8 @@
 //#define	AIWT2				((AIWorkTbl2 *)&UserWork[0x16a00])
 //#define	AI_PUSH_ADRS		((PushAdrs *)&UserWork[0x16c00])	//4バイト*8+1
 
-#define	LOSS_CALC_OFF	(0)		//ダメージロス計算のぶれなし
-#define	LOSS_CALC_ON	(1)		//ダメージロス計算のぶれあり
+#define	LOSS_CALC_OFF	( 0 )		//ダメージロス計算のぶれなし
+#define	LOSS_CALC_ON	( 1 )		//ダメージロス計算のぶれあり
 
 //=========================================================================
 //	AI_STATUSFLAG宣言
@@ -108,3 +108,7 @@
 
 // AI_IF_TABLE_JUMP, AI_IFN_TABLE_JUMPで使用するテーブルの終端
 #define TR_AI_TABLE_END ( 0xffffffff )
+
+//  AI_TABLE_JUMPで使用するインデックス用ワーク
+#define TABLE_JUMP_WAZASEQNO  ( 0 )   //技のシーケンスナンバーでジャンプ
+
