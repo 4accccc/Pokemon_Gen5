@@ -168,6 +168,7 @@ typedef enum
 	MMDLSYS_STABIT_DRAW_PROC_STOP = (1<<2),///<•`‰æˆ—’âŽ~
 	MMDLSYS_STABIT_SHADOW_JOIN_NOT = (1<<3),///<‰e‚ð•t‚¯‚È‚¢
 	MMDLSYS_STABIT_MOVE_INIT_COMP = (1<<4),///<“®ìˆ—‰Šú‰»Š®—¹
+  MMDLSYS_STABIT_PAUSE_ALL = (1<<5), ///<‘S‘Ìƒ|[ƒY’†
 }MMDLSYS_STABIT;
 
 //--------------------------------------------------------------
@@ -913,7 +914,6 @@ extern void MMDLSYS_StopProc( MMDLSYS *mmdlsys );
 extern void MMDLSYS_PlayProc( MMDLSYS *mmdlsys );
 extern void MMDLSYS_PauseMoveProc( MMDLSYS *mmdlsys );
 extern void MMDLSYS_ClearPauseMoveProc( MMDLSYS *mmdlsys );
-extern BOOL MMDLSYS_GetPauseMoveFlag( MMDLSYS* mmdlsys );
 
 extern u32 MMDL_CheckMMdlSysStatusBit(
 	const MMDL *mmdl, MMDLSYS_STABIT bit );

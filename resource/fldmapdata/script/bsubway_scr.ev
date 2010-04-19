@@ -219,6 +219,7 @@ sub_bsw_receipt_guide_wifi:
   _CALL sub_receipt_msg_greet
   
   IF $SCWK_ANSWER == FALSE THEN //事前チェックで不可
+    _CALL sub_bsw_common_exit
     _RET
   ENDIF
   
@@ -274,6 +275,10 @@ sub_bsw_receipt_guide_wifi_upload:
       _CALL sub_bsw_common_bwin_receipt
       _AB_KEYWAIT()
     ELSE
+      //メッセージウィンドウ閉じる
+      _MSGWIN_CLOSE()
+      
+      //アップロード
       _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, ret )
       _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, ret )
     ENDIF
@@ -293,6 +298,9 @@ sub_receipt_rekidai_download:
   _YES_NO_WIN( ret )
   
   IF $ret == SCR_YES THEN
+    //メッセージ閉じる
+    _MSGWIN_CLOSE()
+    
     //フィールド通信切断
     _FIELD_COMM_EXIT_EVENT_CALL( ret )
     
@@ -309,7 +317,9 @@ sub_receipt_rekidai_download:
       _CALL sub_bsw_common_bwin_receipt
       _AB_KEYWAIT()
     ELSE
+      //歴代データダウンロード
       _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_SCDATA, BSW_NULL, BSW_NULL, ret )
+      
       //○○の歴代情報をダウンロードしました
       _BSUBWAY_TOOL(BSWTOOL_WIFI_GET_DL_SCDATA_RANK, BSW_NULL, BSW_NULL, ret )
       _NUMBER( 0, ret, 2 )

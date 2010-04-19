@@ -61,6 +61,7 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/battlematch_savedata.c \
         savedata/dendou_save.c \
 				savedata/etc_save.c \
+        field/fldmmdl_save.c
 
 
 #通信の常駐
@@ -98,7 +99,6 @@ SRCS  +=    $(SOUNDSRC) \
         field/areadata.c \
         field/location.c \
         field/eventwork.c \
-        field/fldmmdl.c \
         field/field_location.c \
         field/field_status.c \
         field/event_fieldmap_control.c \
@@ -224,7 +224,6 @@ SRCS  +=    $(SOUNDSRC) \
 				poke_tool/poke_memo.c \
 				field/field_skill_check.c \
         system/save_error_warning.c
-
 
 #================================================
 # ここから下はオーバーレイプログラム定義
@@ -437,7 +436,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/event_league_front02.c \
         field/event_bsubway.c \
         field/scrcmd_d12_gmk.c \
-        field/field_gimmick_d12_st.c
+        field/field_gimmick_d12_st.c \
+        field/fldmmdl.c
 
 
 #侵入システムでほぼ常駐に置かなければいけないもの(ユニオンの常駐物と並列化)

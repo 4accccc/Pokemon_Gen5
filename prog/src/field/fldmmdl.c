@@ -6,6 +6,7 @@
  * @date  05.07.13
  */
 //======================================================================
+#define MMDL_SYSTEM_FILE
 #include "fldmmdl.h"
 #include "fldmmdl_procdraw.h"
 
@@ -18,20 +19,14 @@
 //OBJCHRWORK0
 #include "../../../resource/fldmapdata/flagwork/work_define.h"
 
+#include "fldmmdl_work.h"
+
 //======================================================================
 //  define
 //======================================================================
 //--------------------------------------------------------------
 //  debug
 //--------------------------------------------------------------
-
-//--------------------------------------------------------------
-//  MMDL 動作、描画関数ワークサイズ (byte size)
-//--------------------------------------------------------------
-#define MMDL_MOVE_WORK_SIZE    (16)  ///<動作関数用ワークサイズ
-#define MMDL_MOVE_SUB_WORK_SIZE  (16)  ///<動作サブ関数用ワークサイズ
-#define MMDL_MOVE_CMD_WORK_SIZE  (16)  ///<動作コマンド用ワークサイズ
-#define MMDL_DRAW_WORK_SIZE    (32)  ///<描画関数用ワークサイズ
 
 //--------------------------------------------------------------
 /// 同一XZ座標に配置可能な動作オブジェレイヤー数
@@ -64,175 +59,12 @@ enum
 //  struct
 //======================================================================
 //--------------------------------------------------------------
-///  MMDLSYS構造体
-//--------------------------------------------------------------
-struct _TAG_MMDLSYS
-{
-  u32 status_bit;          ///<ステータスビット
-  u16 mmdl_max;          ///<MMDL最大数
-  HEAPID sysHeapID;        ///<システム用 ヒープID
-  MMDL *pMMdlBuf;      ///<MMDLワーク *
-  
-  HEAPID heapID;          ///<ヒープID
-  s16 mmdl_count;        ///<フィールド動作モデル現在数
-  u16 tcb_pri;          ///<TCBプライオリティ
-  u16 all_pause_f;      ///<全体ポーズフラグ
-  const FLDMAPPER *pG3DMapper;  ///<FLDMAPPER
-  FLDNOGRID_MAPPER *pNOGRIDMapper;  ///<FLDNOGRID_MAPPER
-  
-  void *pTCBSysWork;        ///<TCBワーク
-  GFL_TCBSYS *pTCBSys;      ///<TCBSYS*
-  
-  MMDL_BLACTCONT *pBlActCont;  ///<MMDL_BLACTCONT
-  MMDL_G3DOBJCONT *pObjCont; ///<MMDL_G3DOBJCONT
-
-  u8 *pOBJCodeParamBuf;      ///<OBJCODE_PARAMバッファ
-  const OBJCODE_PARAM *pOBJCodeParamTbl; ///<OBJCODE_PARAM
-  
-  void *fieldMapWork; ///<FIELDMAP_WORK <-各ワーク単位での接続が良い。
-  GAMEDATA *gdata;
-
-  MMDL_ROCKPOS *rockpos; ///<かいりき岩座標 セーブデータポインタ
-  
-  const u16 *targetCameraAngleYaw; //グローバルで参照するカメラ
-  
-  ARCHANDLE *arcH_res; ///<動作モデルリソースアーカイブハンドル
-};
-
-#define MMDLSYS_SIZE (sizeof(MMDLSYS)) ///<MMDLSYSサイズ
-
-//--------------------------------------------------------------
-///  MMDL構造体
-//--------------------------------------------------------------
-struct _TAG_MMDL
-{
-  u32 status_bit;        ///<ステータスビット
-  u32 move_bit;        ///<動作ビット
-  
-  u16 obj_id;          ///<OBJ ID
-  u16 zone_id;        ///<ゾーン ID
-  u16 obj_code;        ///<OBJコード
-  u16 move_code;        ///<動作コード
-  u16 event_type;        ///<イベントタイプ
-  u16 event_flag;        ///<イベントフラグ
-  u16 event_id;        ///<イベントID
-  u16 dir_head;        ///<MMDL_H指定方向
-  u16 dir_disp;        ///<現在向いている方向
-  u16 dir_move;        ///<現在動いている方向
-  u16 dir_disp_old;      ///<過去の動いていた方向
-  u16 dir_move_old;      ///<過去の動いていた方向
-  
-  u16 param0;          ///<ヘッダ指定パラメタ
-  u16 param1;          ///<ヘッダ指定パラメタ
-  u16 param2;          ///<ヘッダ指定パラメタ
-  
-  u16 acmd_code;        ///<アニメーションコマンドコード
-  u16 acmd_seq;        ///<アニメーションコマンドシーケンス
-  u16 draw_status;      ///<描画ステータス
-  s16 move_limit_x;      ///<X方向移動制限
-  s16 move_limit_z;      ///<Z方向移動制限
-  s16 gx_init;        ///<初期グリッドX
-  s16 gy_init;        ///<初期グリッドY
-  s16 gz_init;        ///<初期グリッドZ
-  s16 gx_old;          ///<過去グリッドX
-  s16 gy_old;          ///<過去グリッドY
-  s16 gz_old;          ///<過去グリッドZ
-  s16 gx_now;          ///<現在グリッドX
-  s16 gy_now;          ///<現在グリッドY
-  s16 gz_now;          ///<現在グリッドZ
-  VecFx32 vec_pos_now;    ///<現在実数座標
-  VecFx32 vec_draw_offs;    ///<表示座標オフセット
-  VecFx32 vec_draw_offs_outside;  ///<外部指定表示座標オフセット
-  VecFx32 vec_attr_offs;    ///<アトリビュートによる座標オフセット
-  u32 now_attr;        ///<現在のマップアトリビュート
-  u32 old_attr;        ///<過去のマップアトリビュート
-  
-  u8 gx_size; ///<グリッドX方向サイズ
-  u8 gz_size; ///<グリッドZ方向サイズ
-  s8 offset_x; ///<オフセットX
-  s8 offset_y; ///<オフセットY
-  
-  s8 offset_z; ///<オフセットZ
-  u8 padding[3]; ///<4byte余り
-  
-  GFL_TCB *pTCB;        ///<動作関数TCB*
-  MMDLSYS *pMMdlSys;///<MMDLSYS*
-  
-  const MMDL_MOVE_PROC_LIST *move_proc_list; ///<動作関数リスト
-  const MMDL_DRAW_PROC_LIST *draw_proc_list; ///<描画関数リスト
-  
-  u8 move_proc_work[MMDL_MOVE_WORK_SIZE];///動作関数用ワーク
-  u8 move_sub_proc_work[MMDL_MOVE_SUB_WORK_SIZE];///動作サブ関数用ワーク
-  u8 move_cmd_proc_work[MMDL_MOVE_CMD_WORK_SIZE];///動作コマンド用ワーク
-  u8 draw_proc_work[MMDL_DRAW_WORK_SIZE];///描画関数用ワーク
-};
-
-#define MMDL_SIZE (sizeof(MMDL)) ///<MMDLサイズ 224
-
-//--------------------------------------------------------------
 ///  MMDLポインタ配列
 //--------------------------------------------------------------
 typedef struct{
   int count;  //格納された有効なポインタ数
   MMDL* mmdl_parray[MMDL_POST_LAYER_MAX];
 }MMDL_PARRAY;
-
-//--------------------------------------------------------------
-///  MMDL_SAVEWORK構造体 size 80
-//--------------------------------------------------------------
-typedef struct
-{
-  u32 status_bit;      ///<ステータスビット
-  
-#if 0 //wb フラグ整理 動作ビットはクリアされる様にした
-  u32 move_bit;        ///<動作ビット
-#else
-  //拡張性を考慮しデータ領域自体は残しておく。早速使う
-  u8 gx_size;
-  u8 gz_size;
-  u8 padding[2];
-#endif
-  
-  u8 obj_id;        ///<OBJ ID
-  u8 move_code;       ///<動作コード
-  s8 move_limit_x;    ///<X方向移動制限
-  s8 move_limit_z;    ///<Z方向移動制限
-  
-  s8 dir_head;      ///<MMDL_H指定方向
-  s8 dir_disp;      ///<現在向いている方向
-  s8 dir_move;      ///<現在動いている方向
-  u8 dummy;        ///<ダミー
-  
-  u16 zone_id;      ///<ゾーン ID
-  u16 obj_code;      ///<OBJコード
-  u16 event_type;      ///<イベントタイプ
-  u16 event_flag;      ///<イベントフラグ
-  u16 event_id;      ///<イベントID
-  
-  u16 param0;        ///<ヘッダ指定パラメタ
-  u16 param1;        ///<ヘッダ指定パラメタ
-  u16 param2;        ///<ヘッダ指定パラメタ
-  
-  s16 gx_init;      ///<初期グリッドX
-  s16 gy_init;      ///<初期グリッドY
-  s16 gz_init;      ///<初期グリッドZ
-  s16 gx_now;        ///<現在グリッドX
-  s16 gy_now;        ///<現在グリッドY
-  s16 gz_now;        ///<現在グリッドZ
-  
-  fx32 fx32_y;      ///<fx32型の高さ値
-  
-  u8 move_proc_work[MMDL_MOVE_WORK_SIZE];///<動作関数用ワーク
-  u8 move_sub_proc_work[MMDL_MOVE_SUB_WORK_SIZE];///<動作サブ関数用ワーク
-}MMDL_SAVEWORK;
-
-//--------------------------------------------------------------
-///  MMDL_SAVEDATA構造体
-//--------------------------------------------------------------
-struct _TAG_MMDL_SAVEDATA
-{
-  MMDL_SAVEWORK SaveWorkBuf[MMDL_SAVEMMDL_MAX];
-};
 
 //--------------------------------------------------------------
 /// MMDL_ROCKPOS
@@ -270,12 +102,6 @@ static void mmdlsys_CheckSetInitDrawWork( MMDLSYS *fos );
 //MMDL 動作関数
 static void mmdl_TCB_MoveProc( GFL_TCB * tcb, void *work );
 static void mmdl_TCB_DrawProc( MMDL * mmdl );
-
-//MMDL_SAVEDATA
-static void mmdl_SaveData_SaveMMdl(
-  const MMDL *mmdl, MMDL_SAVEWORK *save );
-static void mmdl_SaveData_LoadMMdl(
-  MMDL *mmdl, const MMDL_SAVEWORK *save, MMDLSYS *fos );
 
 //MMDLSYS 設定、参照
 static void mmdlsys_OnStatusBit(
@@ -1099,213 +925,6 @@ void MMDLSYS_Pop( MMDLSYS *mmdlsys )
 
     { //リカバリー
       mmdl_InitDrawEffectFlag( mmdl );
-    }
-  }
-}
-
-//======================================================================
-//  MMDL_SAVEDATA
-//======================================================================
-//--------------------------------------------------------------
-/**
- * MMDL_SAVEDATA セーブデータ バッファサイズ取得
- * @param  nothing
- * @retval  u32  サイズ
- */
-//--------------------------------------------------------------
-u32 MMDL_SAVEDATA_GetWorkSize( void )
-{
-  return( sizeof(MMDL_SAVEDATA) );
-}
-
-//--------------------------------------------------------------
-/**
- * MMDL_SAVEDATA セーブデータ バッファ初期化
- * @param  p  MMDL_SAVEDATA
- * @retval  nothing
- */
-//--------------------------------------------------------------
-void MMDL_SAVEDATA_Init( void *p )
-{
-  MI_CpuClear8( p, MMDL_SAVEDATA_GetWorkSize() );
-}
-
-//--------------------------------------------------------------
-/**
- * MMDL_SAVEDATA 動作モデルセーブ
- * @param  mmdlsys セーブするMMDLSYS
- * @param  savedata LDMMDL_SAVEDATA
- * @retval  nothing
- */
-//--------------------------------------------------------------
-void MMDL_SAVEDATA_Save(
-  MMDLSYS *mmdlsys, MMDL_SAVEDATA *savedata )
-{
-  u32 no = 0;
-  MMDL *mmdl;
-  MMDL_SAVEWORK *save;
-  //セーブ前にバッファをクリア
-  MMDL_SAVEDATA_Init(savedata);
-  save = savedata->SaveWorkBuf;
-  
-  while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
-    if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_NOT_SAVE) == 0 ){
-      mmdl_SaveData_SaveMMdl( mmdl, save );
-      save++;
-    }
-  }
-}
-
-//--------------------------------------------------------------
-/**
- * MMDL_SAVEDATA 動作モデルロード
- * @param  mmdlsys  MMDLSYS
- * @param  save  ロードするMMDL_SAVEWORK
- * @retval  nothing
- */
-//--------------------------------------------------------------
-void MMDL_SAVEDATA_Load(
-  MMDLSYS *mmdlsys, MMDL_SAVEDATA *savedata )
-{
-  u32 no = 0;
-  MMDL *mmdl;
-  MMDL_SAVEWORK *save = savedata->SaveWorkBuf;
-  
-  while( no < MMDL_SAVEMMDL_MAX ){
-    if( (save->status_bit&MMDL_STABIT_USE) ){
-      mmdl = mmdlsys_SearchSpaceMMdl( mmdlsys );
-      mmdl_SaveData_LoadMMdl( mmdl, save, mmdlsys );
-    }
-    save++;
-    no++;
-  }
-
-  mmdlsys->mmdl_count = no;
-}
-
-//--------------------------------------------------------------
-/**
- * MMDL_SAVEDATA 動作モデル　セーブ
- * @param  fldmmdl    セーブするMMDL*
- * @param  save MMDL_SAVEWORK
- * @retval  nothing
- */
-//--------------------------------------------------------------
-static void mmdl_SaveData_SaveMMdl(
-  const MMDL *mmdl, MMDL_SAVEWORK *save )
-{
-  save->status_bit = MMDL_GetStatusBit( mmdl );
-//save->move_bit = MMDL_GetMoveBit( mmdl );
-  save->gx_size = mmdl->gx_size;
-  save->gz_size = mmdl->gz_size;
-  save->obj_id = MMDL_GetOBJID( mmdl );
-  save->zone_id = MMDL_GetZoneID( mmdl );
-  save->obj_code = MMDL_GetOBJCode( mmdl );
-  save->move_code = MMDL_GetMoveCode( mmdl );
-  save->event_type = MMDL_GetEventType( mmdl );
-  save->event_flag = MMDL_GetEventFlag( mmdl );
-  save->event_id = MMDL_GetEventID( mmdl );
-  save->dir_head = MMDL_GetDirHeader( mmdl );
-  save->dir_disp = MMDL_GetDirDisp( mmdl );
-  save->dir_move = MMDL_GetDirMove( mmdl );
-  save->param0 = MMDL_GetParam( mmdl, MMDL_PARAM_0 );
-  save->param1 = MMDL_GetParam( mmdl, MMDL_PARAM_1 );
-  save->param2 = MMDL_GetParam( mmdl, MMDL_PARAM_2 );
-  save->move_limit_x = MMDL_GetMoveLimitX( mmdl );
-  save->move_limit_z = MMDL_GetMoveLimitZ( mmdl );
-  save->gx_init = MMDL_GetInitGridPosX( mmdl );
-  save->gy_init = MMDL_GetInitGridPosY( mmdl );
-  save->gz_init = MMDL_GetInitGridPosZ( mmdl );
-  save->gx_now = MMDL_GetGridPosX( mmdl );
-  save->gy_now = MMDL_GetGridPosY( mmdl );
-  save->gz_now = MMDL_GetGridPosZ( mmdl );
-  save->fx32_y = MMDL_GetVectorPosY( mmdl );
-  
-  MI_CpuCopy8( MMDL_GetMoveProcWork((MMDL*)mmdl),
-    save->move_proc_work, MMDL_MOVE_WORK_SIZE );
-  MI_CpuCopy8( MMDL_GetMoveSubProcWork((MMDL*)mmdl),
-    save->move_sub_proc_work, MMDL_MOVE_SUB_WORK_SIZE );
-}
-
-//--------------------------------------------------------------
-/**
- * MMDL_SAVEDATA 動作モデル　ロード
- * @param  fldmmdl    セーブするMMDL*
- * @param  save MMDL_SAVEWORK
- * @retval  nothing
- */
-//--------------------------------------------------------------
-static void mmdl_SaveData_LoadMMdl(
-  MMDL *mmdl, const MMDL_SAVEWORK *save, MMDLSYS *fos )
-{
-  mmdl_ClearWork( mmdl );
-
-  mmdl->status_bit = save->status_bit;
-//  mmdl->move_bit = save->move_bit;
-  mmdl->gx_size = save->gx_size;
-  mmdl->gz_size = save->gz_size;
-  MMDL_SetOBJID( mmdl, save->obj_id );
-  MMDL_SetZoneID( mmdl, save->zone_id );
-  MMDL_SetOBJCode( mmdl, save->obj_code ); 
-  MMDL_SetMoveCode( mmdl, save->move_code );
-  MMDL_SetEventType( mmdl, save->event_type );
-  MMDL_SetEventFlag( mmdl, save->event_flag );
-  MMDL_SetEventID( mmdl, save->event_id );
-  mmdl->dir_head = save->dir_head;
-  MMDL_SetForceDirDisp( mmdl, save->dir_disp );
-  MMDL_SetDirMove( mmdl, save->dir_move );
-  MMDL_SetParam( mmdl, save->param0, MMDL_PARAM_0 );
-  MMDL_SetParam( mmdl, save->param1, MMDL_PARAM_1 );
-  MMDL_SetParam( mmdl, save->param2, MMDL_PARAM_2 );
-  MMDL_SetMoveLimitX( mmdl, save->move_limit_x );
-  MMDL_SetMoveLimitZ( mmdl, save->move_limit_z );
-  MMDL_SetInitGridPosX( mmdl, save->gx_init );
-  MMDL_SetInitGridPosY( mmdl, save->gy_init );
-  MMDL_SetInitGridPosZ( mmdl, save->gz_init );
-  MMDL_SetGridPosX( mmdl, save->gx_now );
-  MMDL_SetGridPosY( mmdl, save->gy_now );
-  MMDL_SetGridPosZ( mmdl, save->gz_now );
-  
-  MI_CpuCopy8( save->move_proc_work,
-    MMDL_GetMoveProcWork((MMDL*)mmdl), MMDL_MOVE_WORK_SIZE );
-  MI_CpuCopy8( save->move_sub_proc_work,
-    MMDL_GetMoveSubProcWork((MMDL*)mmdl), MMDL_MOVE_SUB_WORK_SIZE );
-  
-  mmdl->pMMdlSys = fos;
-  
-  { //座標復帰
-    s16 grid;
-    VecFx32 pos = {0,0,0};
-    
-    grid = MMDL_GetGridPosX( mmdl );
-    MMDL_SetOldGridPosX( mmdl, grid );
-    pos.x = GRID_SIZE_FX32( grid ) + MMDL_VEC_X_GRID_OFFS_FX32;
-    
-    grid = MMDL_GetGridPosY( mmdl );
-    MMDL_SetOldGridPosY( mmdl, grid );
-    pos.y = save->fx32_y; //セーブ時の高さを信用する
-  
-    grid = MMDL_GetGridPosZ( mmdl );
-    MMDL_SetOldGridPosZ( mmdl, grid );
-    pos.z = GRID_SIZE_FX32( grid ) + MMDL_VEC_Z_GRID_OFFS_FX32;
-    
-    MMDL_SetVectorPos( mmdl, &pos );
-    
-    { //管理表指定オフセット座標設定
-      const OBJCODE_PARAM *param;
-      param = MMDLSYS_GetOBJCodeParam( fos, MMDL_GetOBJCode(mmdl) );
-      mmdl->offset_x = param->offs_x; //オフセット
-      mmdl->offset_y = param->offs_y;
-      mmdl->offset_z = param->offs_z;
-    }
-  }
-  
-  { //ステータスビット復帰
-    MMDL_OnStatusBit( mmdl, MMDL_STABIT_USE );
-    MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_ATTR_GET_ERROR ); //Attribute再取得
-    
-    if( MMDL_CheckStatusBit(mmdl,MMDL_STABIT_MOVEPROC_INIT) ){
-      MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_NEED_MOVEPROC_RECOVER );
     }
   }
 }
@@ -3289,7 +2908,7 @@ void MMDLSYS_PauseMoveProc( MMDLSYS *mmdlsys )
     }
   }
   
-  mmdlsys->all_pause_f = TRUE;
+  mmdlsys_OnStatusBit( mmdlsys, MMDLSYS_STABIT_PAUSE_ALL );
 }
 
 //--------------------------------------------------------------
@@ -3307,17 +2926,9 @@ void MMDLSYS_ClearPauseMoveProc( MMDLSYS *mmdlsys )
   while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
     MMDL_OffMoveBitMoveProcPause( mmdl );
   }
-  mmdlsys->all_pause_f = FALSE;
+  
+  mmdlsys_OffStatusBit( mmdlsys, MMDLSYS_STABIT_PAUSE_ALL );
 }
-
-/**
- * @brief 全体ポーズフラグを取得 
- */
-BOOL MMDLSYS_GetPauseMoveFlag( MMDLSYS* mmdlsys )
-{
-  return mmdlsys->all_pause_f;
-}
-
 
 //======================================================================
 //  MMDL ステータスビット関連
