@@ -806,7 +806,7 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
         POKEPARTY *party;
         season = GAMEDATA_GetSeasonID(gameData);
         party = GAMEDATA_GetMyPokemon(gameData);
-        SEASONPOKE_FORM_ChangeForm(party, season);
+        SEASONPOKE_FORM_ChangeForm(gameData, party, season);
       }
     }
 

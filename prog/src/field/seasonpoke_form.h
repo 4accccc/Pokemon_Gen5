@@ -9,6 +9,7 @@
 
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/pokeparty.h"
+#include "gamesystem/gamedata_def.h"
 
-extern void SEASONPOKE_FORM_ChangeForm(POKEPARTY *ppt, const u8 inSeason);
+extern void SEASONPOKE_FORM_ChangeForm(GAMEDATA * gdata, POKEPARTY *ppt, const u8 inSeason);
 

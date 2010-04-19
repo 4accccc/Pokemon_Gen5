@@ -244,7 +244,7 @@ static void setup_trainer_param( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BT
     TT_EncountTrainerPersonalDataMake( tr_id, dst->tr_data[client], heapID );
     TT_EncountTrainerPokeDataMake( tr_id, *party, heapID );
     //四季変化するポケモンのフォルム変更
-    SEASONPOKE_FORM_ChangeForm( *party, GAMEDATA_GetSeasonID( gameData ) );
+    SEASONPOKE_FORM_ChangeForm(gameData, *party, GAMEDATA_GetSeasonID( gameData ) );
   }
 
   {
