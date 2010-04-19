@@ -248,6 +248,10 @@ static GFL_PROC_RESULT Subway_Map_ProcInit( GFL_PROC* proc, int* seq, void* pwk,
   // フェードイン(黒→見える)
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
 
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
+  GFL_NET_ReloadIcon();
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -257,6 +261,9 @@ static GFL_PROC_RESULT Subway_Map_ProcInit( GFL_PROC* proc, int* seq, void* pwk,
 static GFL_PROC_RESULT Subway_Map_ProcExit( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
   SUBWAY_MAP_WORK*     work     = (SUBWAY_MAP_WORK*)mywk;
+
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_DefaultLCD();
 
   // サブBG
   APP_NOGEAR_SUBSCREEN_Exit();
@@ -269,6 +276,7 @@ static GFL_PROC_RESULT Subway_Map_ProcExit( GFL_PROC* proc, int* seq, void* pwk,
 
   // グラフィック、フォントなど
   {
+    PRINTSYS_QUE_Clear( work->print_que );
     PRINTSYS_QUE_Delete( work->print_que );
     GFL_FONT_Delete( work->font );
     SUBWAY_MAP_GRAPHIC_Exit( work->graphic );

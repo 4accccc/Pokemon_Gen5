@@ -450,6 +450,7 @@ static GFL_PROC_RESULT Th_Award_ProcExit( GFL_PROC* proc, int* seq, void* pwk, v
 
   // グラフィック、フォントなど
   {
+    PRINTSYS_QUE_Clear( work->print_que );
     PRINTSYS_QUE_Delete( work->print_que );
     GFL_FONT_Delete( work->font );
     TH_AWARD_GRAPHIC_Exit( work->graphic );

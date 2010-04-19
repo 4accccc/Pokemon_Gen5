@@ -9,6 +9,7 @@
  */
 //============================================================================
 //#define DEBUG_TEXT_MOVE  // これが定義されているとき、テキストを動かせる
+//#define USE_OBJ_GF  // これが定義されているとき、OBJ_GFを使う
 
 
 #define HEAPID_CHIHOU_ZUKAN_AWARD (HEAPID_AWARD)
@@ -147,25 +148,33 @@ enum
   OBJ_BALL_RES_NCG,
   OBJ_BALL_RES_NCL,
   OBJ_BALL_RES_NCE,
+#ifdef USE_OBJ_GF
   OBJ_GF_RES_NCG,
   OBJ_GF_RES_NCL,
   OBJ_GF_RES_NCE,
+#endif
   OBJ_RES_MAX,
 };
 // CELL
 enum
 {
   OBJ_BALL_CELL,
+#ifdef USE_OBJ_GF
   OBJ_GF_CELL,
+#endif
   OBJ_CELL_MAX,
 };
 #define OBJ_BALL_CELL_ANMSEQ  (1)
+#ifdef USE_OBJ_GF
 #define OBJ_GF_CELL_ANMSEQ    (0)
+#endif
 static const GFL_CLWK_DATA obj_cell_data[OBJ_CELL_MAX] =
 {
   // pos_x, pos_y, anmseq,               softpri, bgpri
   {   15,    13,   OBJ_BALL_CELL_ANMSEQ, 0,       BG_FRAME_PRI_M_FRONT },
+#ifdef USE_OBJ_GF
   {  175,   136,   OBJ_GF_CELL_ANMSEQ,   0,       BG_FRAME_PRI_M_FRONT },
+#endif
 };
 
 
@@ -380,6 +389,10 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcInit( GFL_PROC* proc, int* seq, vo
   // フェードイン(黒→見える)
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
 
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
+  GFL_NET_ReloadIcon();
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -389,6 +402,9 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcInit( GFL_PROC* proc, int* seq, vo
 static GFL_PROC_RESULT Chihou_Zukan_Award_ProcExit( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
   CHIHOU_ZUKAN_AWARD_WORK*     work     = (CHIHOU_ZUKAN_AWARD_WORK*)mywk;
+
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_DefaultLCD();
 
   // サブBG
   APP_NOGEAR_SUBSCREEN_Exit();
@@ -403,6 +419,7 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcExit( GFL_PROC* proc, int* seq, vo
 
   // グラフィック、フォントなど
   {
+    PRINTSYS_QUE_Clear( work->print_que );
     PRINTSYS_QUE_Delete( work->print_que );
     GFL_FONT_Delete( work->font );
     CHIHOU_ZUKAN_AWARD_GRAPHIC_Exit( work->graphic );
@@ -490,7 +507,11 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, vo
 #ifdef DEBUG_TEXT_MOVE
   {
     static int target = 0;
+#ifdef USE_OBJ_GF
     static const int target_max = 5;
+#else
+    static const int target_max = 4;
+#endif
 
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
     {
@@ -513,7 +534,9 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, vo
         if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
         {
           if( obj_cell_idx == OBJ_BALL_CELL )    OS_Printf( "Monster Ball (%d, %d)\n", pos.x, pos.y );
+#ifdef USE_OBJ_GF
           else if( obj_cell_idx == OBJ_GF_CELL ) OS_Printf( "Logo (%d, %d)\n", pos.x, pos.y );
+#endif
         }
         else if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
         {
@@ -891,6 +914,7 @@ static void Chihou_Zukan_Award_ObjInit( CHIHOU_ZUKAN_AWARD_WORK* work )
       NARC_shoujou_shoujou_obj_NANR,
       work->heap_id );
 
+#ifdef USE_OBJ_GF
   // GF
   work->obj_res[OBJ_GF_RES_NCL] = GFL_CLGRP_PLTT_RegisterEx(
       handle,
@@ -911,6 +935,7 @@ static void Chihou_Zukan_Award_ObjInit( CHIHOU_ZUKAN_AWARD_WORK* work )
       NARC_shoujou_shoujou_logo_NCER,
       NARC_shoujou_shoujou_logo_NANR,
       work->heap_id );
+#endif
 
   GFL_ARC_CloseDataHandle( handle );
 
@@ -927,6 +952,7 @@ static void Chihou_Zukan_Award_ObjInit( CHIHOU_ZUKAN_AWARD_WORK* work )
   GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_BALL_CELL], TRUE );
   GFL_CLACT_WK_SetAutoAnmFlag( work->obj_clwk[OBJ_BALL_CELL], TRUE );
 
+#ifdef USE_OBJ_GF
   // GF
   work->obj_clwk[OBJ_GF_CELL] = GFL_CLACT_WK_Create(
       CHIHOU_ZUKAN_AWARD_GRAPHIC_GetClunit( work->graphic ),
@@ -938,6 +964,7 @@ static void Chihou_Zukan_Award_ObjInit( CHIHOU_ZUKAN_AWARD_WORK* work )
       work->heap_id );
   GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_GF_CELL], FALSE );
   GFL_CLACT_WK_SetAutoAnmFlag( work->obj_clwk[OBJ_GF_CELL], TRUE );
+#endif
 }
 static void Chihou_Zukan_Award_ObjExit( CHIHOU_ZUKAN_AWARD_WORK* work )
 {
@@ -949,10 +976,12 @@ static void Chihou_Zukan_Award_ObjExit( CHIHOU_ZUKAN_AWARD_WORK* work )
   }
 
   // リソース破棄
+#ifdef USE_OBJ_GF
   // GF
   GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_GF_RES_NCE] );
   GFL_CLGRP_CGR_Release( work->obj_res[OBJ_GF_RES_NCG] );
   GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_GF_RES_NCL] );
+#endif
   // BALL
   GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_BALL_RES_NCE] );
   GFL_CLGRP_CGR_Release( work->obj_res[OBJ_BALL_RES_NCG] );
