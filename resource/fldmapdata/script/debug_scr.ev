@@ -357,7 +357,11 @@ EVENT_START   ev_debug_ando
 			//R03のお礼イベントを起動
 			//$WK_SCENE_R03_PLASMA = 0
 			
-			_TRAINER_FLAG_RESET( TRID_VETERANM_04 )
+			//_TRAINER_FLAG_RESET( TRID_VETERANM_04 )
+			
+			//$WK_SCENE_D01R0101_POKE = 4
+			
+			$WK_SCENE_D07_RIVAL_01 = 1
 	
 			//C03R0301
 			//会長を非表示
@@ -1206,6 +1210,9 @@ ev_event_jump:
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_10, 10 )	//自宅２Fゲーム開始イベント
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_12, 20 )	//C04 サポート父イベント
 	_BMPMENU_MAKE_LIST( msg_debug_09, 30 )	//復帰チャンピオン戦
+	_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 40 )	//カザカミ・ライカミイベント
+	_BMPMENU_MAKE_LIST( msg_debug_mizu_04, 50 )	//ツチノカミイベント
+	_BMPMENU_MAKE_LIST( msg_debug_mizu_05, 60 )	//カザカミ・ライカミ手持ちに追加
 	_BMPMENU_MAKE_LIST( msg_debug_00, 0 )	//やめる
 	//メニュー表示
 	_BMPMENU_START()
@@ -1238,6 +1245,29 @@ ev_event_jump:
 		//復帰チャンピオン戦を有効
 		$WK_SCENE_C09R0501 = 2
 		_MAP_CHANGE( ZONE_ID_C09R0501, 16, 20, DIR_UP )
+		
+	ELSIF $LWK_EVTJUMP == 40 THEN
+		//R07カザカミ・ライカミ登場イベント起動
+		$WK_SCENE_R07_MOVEPOKE = 2
+		//R07天気を晴れに
+		_FLAG_RESET(SYS_FLAG_WEATHER_R07)
+		//おばあちゃん家に移動
+		_MAP_CHANGE( ZONE_ID_R07R0301, 6, 8, DIR_DOWN )
+	
+	ELSIF $LWK_EVTJUMP == 50 THEN
+		//ツチノカミ寸劇を終了しておく
+		$WK_SCENE_R14R0201_LEG = 2
+		//イベント初期化
+		_FLAG_RESET( FE_R14R0201_LEG_GET )
+		_FLAG_RESET( FE_R14R0201_LEG_MEET )
+		_FLAG_SET( FV_R14R0201_LEG )
+		//神社前に移動
+		_MAP_CHANGE( ZONE_ID_R14R0201, 22, 17, DIR_UP )
+	
+	ELSIF $LWK_EVTJUMP == 60 THEN
+		//カザカミ・ライカミを手持ちに追加
+		_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_648, 0, 50 )
+		_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_649, 0, 50 )
 	ENDIF
 	}
 	

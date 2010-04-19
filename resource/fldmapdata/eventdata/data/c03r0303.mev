@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/12 14:22:12
+#save date:2010/04/16 12:49:47
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r0303.wms
 #SECTION START:OBJ_EVENT
@@ -59,7 +59,7 @@ SCRID_TRID_BUSINESS1_03
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-2
+3
 #Parameter 1 Number
 0
 #Parameter 2 Number

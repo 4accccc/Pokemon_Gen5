@@ -87,6 +87,7 @@ EVENT_START		ev_c03r1001_woman3_01
 					//指定されたポケモンのなつき度加算（30）
 					_ADD_TEMOTI_NATSUKI (LWK_CHOICE , 30)
 					_BALLOONWIN_OBJMSG( msg_c03r1001_woman3_05 , C03R1001_WOMAN3_01 )
+					_LAST_KEYWAIT()
 					_BALLOONWIN_CLOSE()
 				
 				//25%以下
@@ -95,6 +96,7 @@ EVENT_START		ev_c03r1001_woman3_01
 					//指定されたポケモンのなつき度加算（10）
 					_ADD_TEMOTI_NATSUKI (LWK_CHOICE , 10)
 					_BALLOONWIN_OBJMSG( msg_c03r1001_woman3_06 , C03R1001_WOMAN3_01 )
+					_LAST_KEYWAIT()
 					_BALLOONWIN_CLOSE()
 				
 				//70%以下
@@ -103,6 +105,7 @@ EVENT_START		ev_c03r1001_woman3_01
 					//指定されたポケモンのなつき度加算（5）
 					_ADD_TEMOTI_NATSUKI (LWK_CHOICE , 5)
 					_BALLOONWIN_OBJMSG( msg_c03r1001_woman3_07 , C03R1001_WOMAN3_01 )
+					_LAST_KEYWAIT()
 					_BALLOONWIN_CLOSE()
 				
 				ENDIF
@@ -118,6 +121,7 @@ EVENT_START		ev_c03r1001_woman3_01
 			ELSE
 			
 				_BALLOONWIN_OBJMSG( msg_c03r1001_woman3_02 , C03R1001_WOMAN3_01 )
+				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			
 			ENDIF
@@ -126,6 +130,7 @@ EVENT_START		ev_c03r1001_woman3_01
 		ELSE
 		
 			_BALLOONWIN_OBJMSG( msg_c03r1001_woman3_02 , C03R1001_WOMAN3_01 )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 		
 		ENDIF
@@ -134,6 +139,7 @@ EVENT_START		ev_c03r1001_woman3_01
 	ELSE
 		
 		_BALLOONWIN_OBJMSG( msg_c03r1001_woman3_08 , C03R1001_WOMAN3_01 )
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	
 	ENDIF
