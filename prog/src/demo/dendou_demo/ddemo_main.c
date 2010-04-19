@@ -107,12 +107,7 @@ static const u32 TypeArcTbl[] = {
 
 // プリセットＳＥテーブル
 static const u32 SndTbl[] = {
-//	SEQ_SE_DDEMO_02A,
-//	SEQ_SE_DDEMO_02B,
 	SEQ_SE_ROTATION_B,
-//	SEQ_SE_DDEMO_01,
-//	SEQ_SE_DDEMO_03,
-//	SEQ_SE_DDEMO_04,
 };
 
 
@@ -283,26 +278,6 @@ void DDEMOMAIN_LoadScene2BgGraphic(void)
 		ah, NARC_dendou_demo_gra_bg_ball_NSCR, GFL_BG_FRAME3_M, 0, 0, FALSE, HEAPID_DENDOU_DEMO );
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_dendou_demo_gra_bg_ball_NSCR, GFL_BG_FRAME3_S, 0, 0, FALSE, HEAPID_DENDOU_DEMO );
-/*
-	{
-		void * buf;
-		NNSG2dScreenData * scrn;
-		u16 * dat;
-		u32	i, j;
-
-		buf = GFL_ARCHDL_UTIL_LoadScreen( ah, NARC_dendou_demo_gra_bg_ball_NSCR, FALSE, &scrn, HEAPID_DENDOU_DEMO );
-		dat = (u16 *)scrn->rawData;
-		for( i=0; i<64; i++ ){
-			for( j=0; j<64; j++ ){
-				OS_Printf( "%d, ", dat[i*64+j] );
-			}
-			OS_Printf( "\n" );
-		}
-		GFL_HEAP_FreeMemory( buf );
-	}
-*/
-
-
 
 	GFL_ARC_CloseDataHandle( ah );
 }
@@ -340,10 +315,7 @@ void DDEMOMAIN_InitMsg( DDEMOMAIN_WORK * wk )
 							ARCID_FONT, NARC_font_num_gftr,
 							GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_DENDOU_DEMO );
 	wk->wset = WORDSET_Create( HEAPID_DENDOU_DEMO );
-//	wk->que  = PRINTSYS_QUE_Create( HEAPID_DENDOU_DEMO );
 	wk->exp  = GFL_STR_CreateBuffer( EXP_BUF_SIZE, HEAPID_DENDOU_DEMO );
-
-//  PRINTSYS_QUE_ForceCommMode( wk->que, TRUE );      // テスト
 }
 
 //--------------------------------------------------------------------------------------------
@@ -358,7 +330,6 @@ void DDEMOMAIN_InitMsg( DDEMOMAIN_WORK * wk )
 void DDEMOMAIN_ExitMsg( DDEMOMAIN_WORK * wk )
 {
 	GFL_STR_DeleteBuffer( wk->exp );
-//	PRINTSYS_QUE_Delete( wk->que );
 	WORDSET_Delete( wk->wset );
 	GFL_FONT_Delete( wk->nfnt );
 	GFL_FONT_Delete( wk->font );
@@ -665,59 +636,19 @@ void DDEMOMAIN_Init3D( DDEMOMAIN_WORK * wk )
 //	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
 }
 
-/*
-void TITLE3D_Load( TITLE_WORK * wk )
-{
-	// OBJ追加
-	wk->local->g3d_obj_id = GFL_G3D_SCENEOBJ_Add( wk->local->g3d_scene, ObjData, NELEMS(ObjData) );
-	TITLE3D_JewelBoxAnmChange( wk, JEWELBOX_ANM_STOP );
-
-
-	ParticleCreate( wk );
-
-}
-*/
-
 void DDEMOMAIN_Exit3D( DDEMOMAIN_WORK * wk )
 {
-/*
-	GFL_G3D_LIGHT_Delete( wk->g3d_light );
-	GFL_G3D_CAMERA_Delete( wk->g3d_camera[1] );
-	GFL_G3D_CAMERA_Delete( wk->g3d_camera[0] );
-*/
-//	GFL_G3D_SCENEOBJ_Remove( wk->local->g3d_scene, wk->local->g3d_obj_id, NELEMS(ObjData) );
-
-
-
-//	GFL_G3D_SCENE_Delete( wk->g3d_scene );
 	GFL_G3D_UTIL_Delete( wk->g3d_util );
-
 	GFL_G3D_Exit();
 }
 
 void DDEMOMAIN_Main3D( DDEMOMAIN_WORK * wk )
 {
-/*
-	GFL_G3D_SCENE_Main( wk->g3d_scene );
-	if( GFL_G3D_DOUBLE3D_GetFlip() == TRUE ){
-//		GFL_G3D_CAMERA_Switching( wk->g3d_camera[0] );
-//		GFL_G3D_SCENE_SetDrawParticleSW( wk->g3d_scene, TRUE );
-//		CreateParticleCamera( wk, TRUE );
-	}else{
-//		GFL_G3D_CAMERA_Switching( wk->g3d_camera[1] );
-//		GFL_G3D_SCENE_SetDrawParticleSW( wk->g3d_scene, FALSE );
-//		CreateParticleCamera( wk, FALSE );
-	}
-	GFL_G3D_SCENE_Draw( wk->g3d_scene );
-*/
-
 	GFL_G3D_DRAW_Start();
-//	GFL_G3D_CAMERA_Switching( wk->mcssCamera );
 	GFL_G3D_DRAW_SetLookAt();
 
 	MCSS_Main( wk->mcss );
 	MCSS_Draw( wk->mcss );
-//	GFL_PTC_Main();
 
 	GFL_G3D_DRAW_End();
 }
@@ -784,6 +715,7 @@ void DDEMOMAIN_CreateTypeParticle( DDEMOMAIN_WORK * wk )
 	res = GFL_PTC_LoadArcResource( ARCID_DENDOU_DEMO_GRA, TypeArcTbl[wk->type], HEAPID_DENDOU_DEMO );
 	GFL_PTC_SetResource( wk->ptc, res, TRUE, NULL );
 
+/*
 	{	// 初期カメラを保存
 		GFL_G3D_CAMERA * cmr = GFL_PTC_GetCameraPtr( wk->ptc );
 		GFL_G3D_CAMERA_GetfovySin( cmr, &wk->ptcTypeCamera[0] );
@@ -792,6 +724,7 @@ void DDEMOMAIN_CreateTypeParticle( DDEMOMAIN_WORK * wk )
 		GFL_G3D_CAMERA_GetNear( cmr, &wk->ptcTypeCamera[3] );
 		GFL_G3D_CAMERA_GetFar( cmr, &wk->ptcTypeCamera[4] );
 	}
+*/
 }
 
 void DDEMOMAIN_DeleteTypeParticle( DDEMOMAIN_WORK * wk )

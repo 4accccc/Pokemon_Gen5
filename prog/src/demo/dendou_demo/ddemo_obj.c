@@ -547,15 +547,16 @@ void DDEMOOBJ_PrintPokeInfo( DDEMOMAIN_WORK * wk )
 
 	// Lv
 	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_03 );
-	x   = PRINTSYS_GetStrWidth( str, wk->nfnt, 0 );
-	PrintFontOam( wk, DDEMOOBJ_FOAM_INFO, wk->nfnt, str, 16*8, 4 );
+	x   = PRINTSYS_GetStrWidth( str, wk->font, 0 );
+	PrintFontOam( wk, DDEMOOBJ_FOAM_INFO, wk->font, str, 14*8, 0 );
 	GFL_STR_DeleteBuffer( str );
 
 	// レベル
 	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_04 );
-	WORDSET_RegisterNumber( wk->wset, 0, 999, 0, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterNumber(
+		wk->wset, 0, PPP_Get(ppp,ID_PARA_get_level,NULL), 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	WORDSET_ExpandStr( wk->wset, wk->exp, str );
-	PrintFontOam( wk, DDEMOOBJ_FOAM_INFO, wk->font, wk->exp, 16*8+x, 0 );
+	PrintFontOam( wk, DDEMOOBJ_FOAM_INFO, wk->font, wk->exp, 14*8+x, 0 );
 	GFL_STR_DeleteBuffer( str );
 
 	PPP_FastModeOff( ppp, fast );
@@ -617,7 +618,7 @@ static void InitScene2FontOam( DDEMOMAIN_WORK * wk )
 	WORDSET_RegisterNumber(
 		wk->wset, 0, MyStatus_GetID_Low(wk->dat->mystatus), 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	WORDSET_ExpandStr( wk->wset, wk->exp, str );
-	PrintFontOam( wk, DDEMOOBJ_FOAM_PLAYER, wk->font, wk->exp, 96, 0 );
+	PrintFontOam( wk, DDEMOOBJ_FOAM_PLAYER, wk->font, wk->exp, 92, 0 );
 	GFL_STR_DeleteBuffer( str );
 	// プレイタイム
 	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_08 );
@@ -626,7 +627,7 @@ static void InitScene2FontOam( DDEMOMAIN_WORK * wk )
 	WORDSET_RegisterNumber(
 		wk->wset, 1, PLAYTIME_GetMinute(wk->dat->ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	WORDSET_ExpandStr( wk->wset, wk->exp, str );
-	PrintFontOam( wk, DDEMOOBJ_FOAM_PLAYER, wk->font, wk->exp, 184, 0 );
+	PrintFontOam( wk, DDEMOOBJ_FOAM_PLAYER, wk->font, wk->exp, 200, 0 );
 	GFL_STR_DeleteBuffer( str );
 }
 

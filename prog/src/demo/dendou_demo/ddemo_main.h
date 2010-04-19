@@ -39,23 +39,20 @@ typedef struct {
 
 	SOUNDMAN_PRESET_HANDLE * sndHandle;
 
+	// ３Ｄ関連
 	GFL_G3D_UTIL * g3d_util;
 	GFL_G3D_SCENE * g3d_scene;
-//	GFL_G3D_CAMERA * g3d_camera[2];
-//	GFL_G3D_LIGHTSET * g3d_light;
-//	u32	g3d_obj_id;
-//	u32	box_anm;
-//	BOOL	double3dFlag;
+	// MCSS
 	MCSS_SYS_WORK * mcss;
 	MCSS_WORK * mcssWork;
 	GFL_G3D_CAMERA * mcssCamera;
 	BOOL	mcssAnmEndFlg;
-
+	// パーティクル
 	GFL_PTC_PTR	ptc;											// パーティクル
 	GFL_PTC_PTR	ptcName;									// パーティクル
 	u8	ptcWork[PARTICLE_LIB_HEAP_SIZE];	// パーティクルで使用するワーク
 	u8	ptcNameWork[PARTICLE_LIB_HEAP_SIZE];	// パーティクルで使用するワーク
-	fx32	ptcTypeCamera[5];
+//	fx32	ptcTypeCamera[5];
 	fx32	ptcNameCamera[5];
 
 	GFL_FONT * font;						// 通常フォント
@@ -63,7 +60,6 @@ typedef struct {
 	GFL_MSGDATA * mman;					// メッセージデータマネージャ
 	WORDSET * wset;							// 単語セット
 	STRBUF * exp;								// メッセージ展開領域
-//	PRINT_QUE * que;						// プリントキュー
 
 	// OBJ
 	GFL_CLUNIT * clunit;
