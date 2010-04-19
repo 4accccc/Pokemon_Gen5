@@ -466,6 +466,13 @@ static void APP_TASKMENU_ResetPallet( u16 *transBuf, u8 bgFrame , u8 pltNo )
 void APP_TASKMENU_SetDisableKey( APP_TASKMENU_WORK *work , const BOOL flg )
 {
   work->disableKey = flg;
+
+  //もしキーを聞かなくする場合は強制タッチモード
+  if( flg == TRUE )
+  { 
+    GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+    APP_TASKMENU_SetActiveItem( work->menuWin[work->cursorPos], work->res, FALSE );
+  }
 }
 
 #pragma mark [>main func
