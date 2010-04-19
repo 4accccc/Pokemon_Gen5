@@ -298,6 +298,7 @@ static  VMCMD_RESULT  AI_IF_COMMONRND_OVER( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IF_COMMONRND_EQUAL( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IFN_COMMONRND_EQUAL( VMHANDLE* vmh, void* context_work );
 static	VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work );
+static	VMCMD_RESULT  AI_IF_MIRAIYOCHI( VMHANDLE* vmh, void* context_work );
 
 static  void  ai_if_rnd( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
 static  void  ai_if_hp( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
@@ -451,6 +452,7 @@ static const VMCMD_FUNC tr_ai_command_table[]={
 	AI_IF_COMMONRND_EQUAL,
 	AI_IFN_COMMONRND_EQUAL,
   AI_TABLE_JUMP,
+  AI_IF_MIRAIYOCHI,
 };
 
 enum{
@@ -3490,7 +3492,32 @@ static	VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
     GF_ASSERT( 0 );
     break;
   }
+
   VMCMD_Jump( vmh, vmh->adrs + tbl_adrs[ ofs ] );
+
+  return taw->vmcmd_result;
+}
+
+//------------------------------------------------------------
+//	みらいよち中かチェックして分岐
+//------------------------------------------------------------
+static	VMCMD_RESULT  AI_IF_MIRAIYOCHI( VMHANDLE* vmh, void* context_work )
+{ 
+  TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+  int side = ( int )VMGetU32( vmh );
+  int adrs = ( int )VMGetU32( vmh );
+  BtlPokePos  pos = get_poke_pos( taw, side );
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_MIRAIYOCHI\n");
+#endif
+
+  /*
+  if( なにがしかの関数でみらいよち中かをチェック )
+  { 
+    VMCMD_Jump( vmh, vmh->adrs + adrs );
+  }
+  */
 
   return taw->vmcmd_result;
 }
