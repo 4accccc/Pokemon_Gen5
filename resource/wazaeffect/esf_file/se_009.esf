@@ -14,6 +14,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_008_ring.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_009_ring.spa
 #001
 %00
+カメラ移動	追従	初期位置	10	0	8
+エフェクト終了待ち	すべて
 パーティクルデータロード	be_se_009_ring
 制御モード変更	継続
 SE再生	SEQ_SE_BE_SE_09	SE1	攻撃側	0:0:80	0:0:0
