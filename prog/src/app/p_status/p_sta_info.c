@@ -561,11 +561,11 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
   u32 seikaku = PPP_Get( ppp , ID_PARA_seikaku , NULL );
   u32 natuki = PPP_Get( ppp , ID_PARA_friend , NULL );
   u32 year1   = PPP_Get( ppp , ID_PARA_get_year , NULL );
-  u32 month1  = PPP_Get( ppp , ID_PARA_get_month , NULL )+1;
-  u32 day1    = PPP_Get( ppp , ID_PARA_get_day , NULL )+1;
+  u32 month1  = PPP_Get( ppp , ID_PARA_get_month , NULL );
+  u32 day1    = PPP_Get( ppp , ID_PARA_get_day , NULL );
   u32 year2   = PPP_Get( ppp , ID_PARA_birth_year , NULL );
-  u32 month2  = PPP_Get( ppp , ID_PARA_birth_month , NULL )+1;
-  u32 day2    = PPP_Get( ppp , ID_PARA_birth_day , NULL )+1;
+  u32 month2  = PPP_Get( ppp , ID_PARA_birth_month , NULL );
+  u32 day2    = PPP_Get( ppp , ID_PARA_birth_day , NULL );
   u32 level   = PPP_Get( ppp , ID_PARA_get_level , NULL );
   u32 isEvent = PPP_Get( ppp , ID_PARA_event_get_flag , NULL );
   u32 rom = PPP_Get( ppp , ID_PARA_get_cassette , NULL );
