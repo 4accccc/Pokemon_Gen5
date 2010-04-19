@@ -1159,7 +1159,7 @@ u32 BOX2UI_PartyOutMain( BOX2_SYS_WORK * syswk )
 	now = CURSORMOVE_PosGet( syswk->app->cmwk );
 	ret = CURSORMOVE_MainCont( syswk->app->cmwk );
 
-	if( ret < NELEMS(PartyOutMainCursorMoveData) ){
+//	if( ret < NELEMS(PartyOutMainCursorMoveData) ){
 		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
 			if( ret >= BOX2UI_PTOUT_MAIN_AZUKERU && ret <= BOX2UI_PTOUT_MAIN_CLOSE ){
 				CURSORMOVE_PosSet( syswk->app->cmwk, now );
@@ -1185,8 +1185,8 @@ u32 BOX2UI_PartyOutMain( BOX2_SYS_WORK * syswk )
 				return CURSORMOVE_NONE;
 			}
 		}
-		return ret;
-	}
+//		return ret;
+//	}
 
 /*
 	if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == TRUE ){
@@ -1336,7 +1336,7 @@ u32 BOX2UI_PartyInMain( BOX2_SYS_WORK * syswk )
 	now = CURSORMOVE_PosGet( syswk->app->cmwk );
 	ret = CURSORMOVE_MainCont( syswk->app->cmwk );
 
-	if( ret < NELEMS(PartyInMainCursorMoveData) ){
+//	if( ret < NELEMS(PartyInMainCursorMoveData) ){
 		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
 			if( ret >= BOX2UI_PTIN_MAIN_TSURETEIKU && ret <= BOX2UI_PTIN_MAIN_CLOSE ){
 				CURSORMOVE_PosSet( syswk->app->cmwk, now );
@@ -1363,8 +1363,8 @@ u32 BOX2UI_PartyInMain( BOX2_SYS_WORK * syswk )
 				return CURSORMOVE_NONE;
 			}
 		}
-		return ret;
-	}
+//		return ret;
+//	}
 
 /*
 	if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == TRUE ){
