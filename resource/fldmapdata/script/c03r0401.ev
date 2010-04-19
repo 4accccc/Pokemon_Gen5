@@ -193,9 +193,12 @@ _RET
 change_zoroa:
   //ゾロア出す
   _FLAG_RESET( FV_C03R0401_POKE22_01 )
+  //ＳＥ
+  _SE_PLAY( SEQ_SE_FLD_158 )
   _CHG_ZOROA( C03R0401_BOY1_01, C03R0401_POKE22_01 )
   //男の子を消す
   _FLAG_SET( FV_C03R0401_BOY1_01 )
+  _SE_WAIT()
 _RET
 
 add_zoroa:
