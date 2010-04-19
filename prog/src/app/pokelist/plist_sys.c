@@ -3934,6 +3934,8 @@ static void PLIST_MSGCB_TakeMail_ConfirmCB( PLIST_WORK *work , const int retVal 
   if( retVal == PMIT_YES )
   {
     //‚Í‚¢¨Á‚·
+    const u32 haveItemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
+    PLIST_AddBagItem( work , haveItemNo );
     PP_Put( work->selectPokePara , ID_PARA_item , 0 );
     PLIST_PLATE_ReDrawParam( work , work->plateWork[work->pokeCursor] );
     PLIST_MessageWaitInit( work , mes_pokelist_04_05 , TRUE , PLIST_MSGCB_ReturnSelectCommon );

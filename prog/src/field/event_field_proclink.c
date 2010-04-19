@@ -863,9 +863,14 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
   else
   if( pre == EVENT_PROCLINK_CALL_MAIL )
   {
-    //メールを持たせる処理(書かなかった場合はメールのTermで分岐してる
+    MAIL_PARAM *mailParam  = (MAIL_PARAM*)pre_param_adrs;
+    BOOL isCreate;
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
+    isCreate = MailSys_IsDataCreate( mailParam );
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
     if( wk->mode == PROCLINK_MODE_LIST_TO_MAIL_CREATE )
     {
+      //メールを持たせる処理(書かなかった場合はメールのTermで分岐してる
       plistData->mode = PL_MODE_MAILSET;
       plistData->ret_sel = wk->sel_poke;
       plistData->item = wk->item_no;
@@ -873,9 +878,17 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
     else
     if( wk->mode == PROCLINK_MODE_BAG_TO_MAIL_CREATE )
     {
-      plistData->mode    = PL_MODE_MAILSET_BAG;
-      plistData->ret_sel = wk->sel_poke;
-      plistData->item    = wk->item_no;
+      if( isCreate == TRUE )
+      {
+        plistData->mode    = PL_MODE_MAILSET_BAG;
+        plistData->ret_sel = wk->sel_poke;
+        plistData->item    = wk->item_no;
+      }
+      else
+      {
+        plistData->mode = PL_MODE_FIELD;
+        plistData->ret_sel = wk->sel_poke;
+      }
     }
     else
     {
@@ -905,6 +918,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeList(PROCLINK_WORK* wk,void* param_
   const PLIST_DATA *plData = param_adrs;
   
   wk->param->select_poke  = plData->ret_sel;
+  wk->sel_poke = plData->ret_sel;
 
   //Yボタンメニューから着ていたら、
   //戻りモードを無視して戻る
