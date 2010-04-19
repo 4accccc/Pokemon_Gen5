@@ -42,11 +42,9 @@ _EVENT_DATA_END
 /************************************************************/
 INIT_EVENT_START	ev_init_c07
 	
-
-	//イベント開始時に
+	//リュウラセンイベント開始時に
 	IF $WK_SCENE_C07 == 3 THEN
-		//サポートのMOVE CODEを変更
-		_MOVE_CODE_CHANGE( C07_SUPPORT_01,MV_RT2 )
+		_MOVE_CODE_CHANGE( C07_SUPPORT_01,MV_UP )
 	ENDIF
 
 INIT_EVENT_END
@@ -125,7 +123,7 @@ EVENT_START   ev_scene_c07_hakase1_01
 	_FLAG_SET( FV_C07_HAKASE1 )
 	
 	//C07到着イベントPOSを無効に
-	$WK_SCENE_C07 = 1
+	$WK_SCENE_C07 = 2
 	
 	//======================================//
 	
@@ -341,7 +339,7 @@ EVENT_START   ev_scene_c07_leader7_01
 	//======================================//
 	
 	//D08イベント開始
-	$WK_SCENE_C07 = 3
+	$WK_SCENE_C07 = 4
 	
 	//C07ハチク非表示
 	_FLAG_SET( FV_C07_READER7 )

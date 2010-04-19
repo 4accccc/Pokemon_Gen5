@@ -53,9 +53,10 @@ EVENT_START   ev_pos_d07r0401_rival_01
 	
 	//階段ＳＥ
 	_SE_PLAY(SEQ_SE_KAIDAN)
-	_SE_WAIT()
 	//後続プラズマ団表示
 	_OBJ_ADD_EX( 61, 14, DIR_LEFT, MMDL_ID_EVENTOBJ_00, HAKAIM, MV_DMY )
+	//SE待ち
+	_SE_WAIT()
 	
 	//プラズマ団（２）、プラズマ団（１）に隣接
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00 , anm_pls_plasma02_come_01 )
@@ -92,6 +93,9 @@ EVENT_START   ev_pos_d07r0401_rival_01
 	
 	_OBJ_DEL(D07R0401_HAKAIM_01)
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	//時間の経過を見せるためにタイムウエイト
+	_TIME_WAIT(16)
 
 	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
@@ -121,6 +125,9 @@ EVENT_START   ev_pos_d07r0401_rival_01
 	
 	//プラズマ団を非表示に
 	_FLAG_SET(FV_D07R0401PLASMA_01)
+	
+	//C07到着イベントを有効に
+	$WK_SCENE_C07 = 1
 
 	//========================================//
 EVENT_END
