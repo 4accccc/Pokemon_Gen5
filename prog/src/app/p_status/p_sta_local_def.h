@@ -72,6 +72,7 @@
 
 #pragma mark[>define OBJ
 #define PSTATUS_OBJPLT_ICON (0x0) //未定(3?
+#define PSTATUS_OBJPLT_IJYOU (0x3)  //1本
 #define PSTATUS_OBJPLT_POKERUSU (0x4)  //1本
 #define PSTATUS_OBJPLT_MARK (0x5)  //1本
 #define PSTATUS_OBJPLT_BALL (0x6)  //1本

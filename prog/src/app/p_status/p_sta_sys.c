@@ -803,7 +803,7 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
     //ó‘ÔˆÙí
     work->cellRes[SCR_PLT_ST_IJYOU] = GFL_CLGRP_PLTT_RegisterEx( archandleCommon , 
           APP_COMMON_GetStatusIconPltArcIdx() , CLSYS_DRAW_MAIN , 
-          PSTATUS_OBJPLT_MARK*32 , 0 , 1 , work->heapId  );
+          PSTATUS_OBJPLT_IJYOU*32 , 0 , 1 , work->heapId  );
     work->cellRes[SCR_NCG_ST_IJYOU] = GFL_CLGRP_CGR_Register( archandleCommon , 
           APP_COMMON_GetStatusIconCharArcIdx() , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
     work->cellRes[SCR_ANM_ST_IJYOU] = GFL_CLGRP_CELLANIM_Register( archandleCommon , 

@@ -614,7 +614,8 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
       GFL_CLACT_WK_SetDrawEnable( subWork->clwkMark[SSMT_MARK_POKERUS] , FALSE );
     }
     //ƒŒƒA
-    if( PPP_CheckRare( ppp ) == TRUE )
+    if( PPP_CheckRare( ppp ) == TRUE &&
+        work->isEgg == FALSE )
     {
       GFL_CLACT_WK_SetDrawEnable( subWork->clwkMark[SSMT_MARK_RARE] , TRUE );
     }
@@ -753,6 +754,7 @@ void PSTATUS_SUB_DrawStr( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const
   }
   
   //«•Ê
+  if( work->isEgg == FALSE )
   {
     STRBUF *srcStr;
     u32 sex = PPP_Get( ppp , ID_PARA_sex , NULL );
@@ -775,6 +777,7 @@ void PSTATUS_SUB_DrawStr( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const
   }
 
   //ƒŒƒxƒ‹
+  if( work->isEgg == FALSE )
   {
     WORDSET *wordSet = WORDSET_Create( work->heapId );
     STRBUF *srcStr;

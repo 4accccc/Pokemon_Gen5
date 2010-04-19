@@ -142,6 +142,8 @@ struct _PSTATUS_INFO_WORK
 
   NNSG2dScreenData *scrDataDown;
   void *scrResDown;
+  NNSG2dScreenData *scrDataDownEgg;
+  void *scrResDownEgg;
   NNSG2dScreenData *scrDataUp;
   void *scrResUp;
   NNSG2dScreenData *scrDataUpTitle;
@@ -220,6 +222,8 @@ void PSTATUS_INFO_LoadResource( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork
   //書き換え用スクリーン読み込み
   infoWork->scrResDown = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_info_d_NSCR ,
                     FALSE , &infoWork->scrDataDown , work->heapId );
+  infoWork->scrResDownEgg = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_skill_d_NSCR ,
+                    FALSE , &infoWork->scrDataDownEgg , work->heapId );
   infoWork->scrResUp = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_info_u_NSCR ,
                     FALSE , &infoWork->scrDataUp , work->heapId );
   infoWork->scrResUpTitle = GFL_ARCHDL_UTIL_LoadScreen( archandle , NARC_p_status_gra_p_st_infotitle_u_NSCR ,
@@ -253,6 +257,7 @@ void PSTATUS_INFO_ReleaseResource( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoW
 
 
   GFL_HEAP_FreeMemory( infoWork->scrResDown );
+  GFL_HEAP_FreeMemory( infoWork->scrResDownEgg );
   GFL_HEAP_FreeMemory( infoWork->scrResUp );
   GFL_HEAP_FreeMemory( infoWork->scrResUpTitle );
 }
@@ -293,11 +298,20 @@ void PSTATUS_INFO_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWo
   const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
 
   //Window下地の張替え
-  GFL_BG_WriteScreenExpand( PSTATUS_BG_PLATE , 
-//                    0 , 0 , PSTATUS_MAIN_PAGE_WIDTH , 24 ,
-                    0 , 0 , 32 , 24 ,
-                    infoWork->scrDataDown->rawData ,
-                    0 , 0 , 32 , 32 );
+  if( work->isEgg == FALSE )
+  {
+    GFL_BG_WriteScreenExpand( PSTATUS_BG_PLATE , 
+                      0 , 0 , 32 , 24 ,
+                      infoWork->scrDataDown->rawData ,
+                      0 , 0 , 32 , 32 );
+  }
+  else
+  {
+    GFL_BG_WriteScreenExpand( PSTATUS_BG_PLATE , 
+                      0 , 0 , 32 , 24 ,
+                      infoWork->scrDataDownEgg->rawData ,
+                      0 , 0 , 32 , 32 );
+  }
   GFL_BG_LoadScreenV_Req( PSTATUS_BG_PLATE );
 
   GFL_BG_LoadScreenBuffer( PSTATUS_BG_SUB_PLATE, 
@@ -320,6 +334,7 @@ void PSTATUS_INFO_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWo
   GFL_BMPWIN_MakeTransWindow_VBlank( infoWork->bmpWinUp );
 
   //タイプアイコン
+  if( work->isEgg == FALSE )
   {
     const u32 type1 = PPP_Get( ppp, ID_PARA_type1, NULL );
     const u32 type2 = PPP_Get( ppp, ID_PARA_type2, NULL );
@@ -356,6 +371,11 @@ void PSTATUS_INFO_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWo
     {
       GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[1] , FALSE );
     }
+  }
+  else
+  {
+    GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[0] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[1] , FALSE );
   }
   
   //バーアイコン処理
@@ -401,149 +421,156 @@ void PSTATUS_INFO_ClearPage_Trans( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoW
 //--------------------------------------------------------------
 static void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const POKEMON_PASO_PARAM *ppp )
 {
-  //図鑑
-  PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_ZUKAN] , mes_status_02_02 ,
-                            PSTATUS_INFO_STR_ZUKAN_X , PSTATUS_INFO_STR_ZUKAN_Y , PSTATUS_STR_COL_TITLE );
+  if( work->isEgg == FALSE )
   {
-    WORDSET *wordSet = WORDSET_Create( work->heapId );
-    u32 no = PPP_Get( ppp , ID_PARA_monsno , NULL );
-    if( work->psData->zukan_mode == FALSE )
+    //図鑑
+    PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_ZUKAN] , mes_status_02_02 ,
+                              PSTATUS_INFO_STR_ZUKAN_X , PSTATUS_INFO_STR_ZUKAN_Y , PSTATUS_STR_COL_TITLE );
     {
-      no = infoWork->localZukanNoList[no];
-    }
-    
-    if( no == POKEPER_CHIHOU_NO_NONE )
-    {
-      PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_ZUKAN] , wordSet , mes_status_02_16 , 
-                                     PSTATUS_INFO_STR_ZUKAN_VAL_X , PSTATUS_INFO_STR_ZUKAN_VAL_Y , PSTATUS_STR_COL_VALUE );
-    }
-    else
-    {
-      WORDSET_RegisterNumber( wordSet , 0 , no , 3 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
-      PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_ZUKAN] , wordSet , mes_status_02_03 , 
-                                     PSTATUS_INFO_STR_ZUKAN_VAL_X , PSTATUS_INFO_STR_ZUKAN_VAL_Y , PSTATUS_STR_COL_VALUE );
-    }
-    WORDSET_Delete( wordSet );
-  }
-
-  //名前
-  PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_NAME] , mes_status_02_04 ,
-                            PSTATUS_INFO_STR_NAME_X , PSTATUS_INFO_STR_NAME_Y , PSTATUS_STR_COL_TITLE );
-  {
-    STRBUF *srcStr;
-    if( work->isEgg == FALSE )
-    {
+      WORDSET *wordSet = WORDSET_Create( work->heapId );
       u32 no = PPP_Get( ppp , ID_PARA_monsno , NULL );
-      srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName , no ); 
-    }
-    else
-    {
-      srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName , MONSNO_TAMAGO ); 
-    }
-    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( infoWork->bmpWin[SIB_NAME] ) , 
-            PSTATUS_INFO_STR_NAME_VAL_X , PSTATUS_INFO_STR_NAME_VAL_Y , 
-            srcStr , work->fontHandle , PSTATUS_STR_COL_VALUE );
-    GFL_STR_DeleteBuffer( srcStr );
-  }
-
-  //タイプ
-  PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_TYPE] , mes_status_02_06 ,
-                            PSTATUS_INFO_STR_TYPE_X , PSTATUS_INFO_STR_TYPE_Y , PSTATUS_STR_COL_TITLE );
-
-  //親
-  PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_PARENT] , mes_status_02_07 ,
-                            PSTATUS_INFO_STR_PARENT_X , PSTATUS_INFO_STR_PARENT_Y , PSTATUS_STR_COL_TITLE );
-  {
-    STRBUF *parentName  = GFL_STR_CreateBuffer( 32, work->heapId );
-    WORDSET *wordSet = WORDSET_Create( work->heapId );
-    const u32 sex = PPP_Get( ppp , ID_PARA_oyasex , parentName );
-    PRINTSYS_LSB col = PSTATUS_STR_COL_VALUE;
-    if( sex == PTL_SEX_MALE )
-    {
-      col = PSTATUS_STR_COL_BLUE;
-    }
-    else if( sex == PTL_SEX_FEMALE )
-    {
-      col = PSTATUS_STR_COL_RED;
-    }
-
-    PPP_Get( ppp , ID_PARA_oyaname , parentName );
-    WORDSET_RegisterWord( wordSet , 0 , parentName , 0,TRUE,PM_LANG );
-    PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_PARENT] , wordSet , mes_status_02_08 , 
-                                   PSTATUS_INFO_STR_PARENT_VAL_X , PSTATUS_INFO_STR_PARENT_VAL_Y , col );
-    WORDSET_Delete( wordSet );
-    GFL_STR_DeleteBuffer( parentName );
-  }
-  
-  //ID
-  PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_ID] , mes_status_02_09 ,
-                            PSTATUS_INFO_STR_ID_X , PSTATUS_INFO_STR_ID_Y , PSTATUS_STR_COL_TITLE );
-  {
-    WORDSET *wordSet = WORDSET_Create( work->heapId );
-    u32 id = PPP_Get( ppp , ID_PARA_id_no , NULL )&0x0000FFFF;
-    WORDSET_RegisterNumber( wordSet , 0 , id , 5 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
-    PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_ID] , wordSet , mes_status_02_10 , 
-                                   PSTATUS_INFO_STR_ID_VAL_X , PSTATUS_INFO_STR_ID_VAL_Y , PSTATUS_STR_COL_VALUE );
-    WORDSET_Delete( wordSet );
-  }
-
-  //経験値
-  {
-    const u32 lv = PPP_Get( ppp, ID_PARA_level, NULL );
-    const u32 exp = PPP_Get( ppp , ID_PARA_exp , NULL );
-    const u32 nextLvExp = POKETOOL_GetMinExp(PPP_Get( ppp, ID_PARA_monsno, NULL ),
-                                    PPP_Get( ppp, ID_PARA_form_no, NULL ),
-                                    lv+1) ;
-    const u32 nowLvExp = POKETOOL_GetMinExp(PPP_Get( ppp, ID_PARA_monsno, NULL ),
-                                    PPP_Get( ppp, ID_PARA_form_no, NULL ),
-                                    lv) ;
-    u32 minExp = nextLvExp - exp;
-    if( lv == 100 )
-    {
-      minExp = 0;
-    }
-    //現在の経験値
-    PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_NOWEXP] , mes_status_02_11 ,
-                              PSTATUS_INFO_STR_NOWEXP_X , PSTATUS_INFO_STR_NOWEXP_Y , PSTATUS_STR_COL_TITLE );
-    {
-      WORDSET *wordSet = WORDSET_Create( work->heapId );
-      WORDSET_RegisterNumber( wordSet , 0 , exp , 7 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-      PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_NOWEXP_NUM] , wordSet , mes_status_02_12 , 
-                                     PSTATUS_INFO_STR_NOWEXP_VAL_X , PSTATUS_INFO_STR_NOWEXP_VAL_Y , PSTATUS_STR_COL_VALUE );
+      if( work->psData->zukan_mode == FALSE )
+      {
+        no = infoWork->localZukanNoList[no];
+      }
+      
+      if( no == POKEPER_CHIHOU_NO_NONE )
+      {
+        PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_ZUKAN] , wordSet , mes_status_02_16 , 
+                                       PSTATUS_INFO_STR_ZUKAN_VAL_X , PSTATUS_INFO_STR_ZUKAN_VAL_Y , PSTATUS_STR_COL_VALUE );
+      }
+      else
+      {
+        WORDSET_RegisterNumber( wordSet , 0 , no , 3 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
+        PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_ZUKAN] , wordSet , mes_status_02_03 , 
+                                       PSTATUS_INFO_STR_ZUKAN_VAL_X , PSTATUS_INFO_STR_ZUKAN_VAL_Y , PSTATUS_STR_COL_VALUE );
+      }
       WORDSET_Delete( wordSet );
     }
 
-    //次までの経験値
-    PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_NEXTEXP] , mes_status_02_13 ,
-                              PSTATUS_INFO_STR_NEXTEXP_X , PSTATUS_INFO_STR_NEXTEXP_Y , PSTATUS_STR_COL_TITLE );
-    PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_NEXTEXP_NUM] , mes_status_02_14 ,
-                              PSTATUS_INFO_STR_NEXTEXP_ATO_X , PSTATUS_INFO_STR_NEXTEXP_ATO_Y , PSTATUS_STR_COL_VALUE );
+    //名前
+    PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_NAME] , mes_status_02_04 ,
+                              PSTATUS_INFO_STR_NAME_X , PSTATUS_INFO_STR_NAME_Y , PSTATUS_STR_COL_TITLE );
     {
+      STRBUF *srcStr;
+      if( work->isEgg == FALSE )
+      {
+        u32 no = PPP_Get( ppp , ID_PARA_monsno , NULL );
+        srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName , no ); 
+      }
+      else
+      {
+        srcStr = GFL_MSG_CreateString( GlobalMsg_PokeName , MONSNO_TAMAGO ); 
+      }
+      PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( infoWork->bmpWin[SIB_NAME] ) , 
+              PSTATUS_INFO_STR_NAME_VAL_X , PSTATUS_INFO_STR_NAME_VAL_Y , 
+              srcStr , work->fontHandle , PSTATUS_STR_COL_VALUE );
+      GFL_STR_DeleteBuffer( srcStr );
+    }
+
+    //タイプ
+    PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_TYPE] , mes_status_02_06 ,
+                              PSTATUS_INFO_STR_TYPE_X , PSTATUS_INFO_STR_TYPE_Y , PSTATUS_STR_COL_TITLE );
+
+    //親
+    PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_PARENT] , mes_status_02_07 ,
+                              PSTATUS_INFO_STR_PARENT_X , PSTATUS_INFO_STR_PARENT_Y , PSTATUS_STR_COL_TITLE );
+    {
+      STRBUF *parentName  = GFL_STR_CreateBuffer( 32, work->heapId );
       WORDSET *wordSet = WORDSET_Create( work->heapId );
-      WORDSET_RegisterNumber( wordSet , 0 , minExp , 6 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-      PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_NEXTEXP_NUM] , wordSet , mes_status_02_15 , 
-                                     PSTATUS_INFO_STR_NEXTEXP_VAL_X , PSTATUS_INFO_STR_NEXTEXP_VAL_Y , PSTATUS_STR_COL_VALUE );
+      const u32 sex = PPP_Get( ppp , ID_PARA_oyasex , parentName );
+      PRINTSYS_LSB col = PSTATUS_STR_COL_VALUE;
+      if( sex == PTL_SEX_MALE )
+      {
+        col = PSTATUS_STR_COL_BLUE;
+      }
+      else if( sex == PTL_SEX_FEMALE )
+      {
+        col = PSTATUS_STR_COL_RED;
+      }
+
+      PPP_Get( ppp , ID_PARA_oyaname , parentName );
+      WORDSET_RegisterWord( wordSet , 0 , parentName , 0,TRUE,PM_LANG );
+      PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_PARENT] , wordSet , mes_status_02_08 , 
+                                     PSTATUS_INFO_STR_PARENT_VAL_X , PSTATUS_INFO_STR_PARENT_VAL_Y , col );
       WORDSET_Delete( wordSet );
+      GFL_STR_DeleteBuffer( parentName );
     }
     
-    //経験値バー
-    if( lv != 100 )
+    //ID
+    PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_ID] , mes_status_02_09 ,
+                              PSTATUS_INFO_STR_ID_X , PSTATUS_INFO_STR_ID_Y , PSTATUS_STR_COL_TITLE );
     {
-      const u32 modLvExp = (nextLvExp-nowLvExp);
-      u32 len = PSTATUS_INFO_EXPBAR_WIDTH * (modLvExp-minExp) / modLvExp;
-      if( (modLvExp-minExp) != 0 && len == 0 )
-      {
-        len = 1;
-      }
-      if( len == PSTATUS_INFO_EXPBAR_WIDTH )
-      {
-        len--;
-      }
-      GFL_BMP_Fill( GFL_BMPWIN_GetBmp(infoWork->bmpWin[SIB_EXP_BAR]) , 
-                    PSTATUS_INFO_EXPBAR_LEFT , PSTATUS_INFO_EXPBAR_TOP ,
-                    len , PSTATUS_INFO_EXPBAR_HEIGHT , PSTATUS_INFO_EXPBAR_COL );
-
+      WORDSET *wordSet = WORDSET_Create( work->heapId );
+      u32 id = PPP_Get( ppp , ID_PARA_id_no , NULL )&0x0000FFFF;
+      WORDSET_RegisterNumber( wordSet , 0 , id , 5 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
+      PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_ID] , wordSet , mes_status_02_10 , 
+                                     PSTATUS_INFO_STR_ID_VAL_X , PSTATUS_INFO_STR_ID_VAL_Y , PSTATUS_STR_COL_VALUE );
+      WORDSET_Delete( wordSet );
     }
+
+    //経験値
+    {
+      const u32 lv = PPP_Get( ppp, ID_PARA_level, NULL );
+      const u32 exp = PPP_Get( ppp , ID_PARA_exp , NULL );
+      const u32 nextLvExp = POKETOOL_GetMinExp(PPP_Get( ppp, ID_PARA_monsno, NULL ),
+                                      PPP_Get( ppp, ID_PARA_form_no, NULL ),
+                                      lv+1) ;
+      const u32 nowLvExp = POKETOOL_GetMinExp(PPP_Get( ppp, ID_PARA_monsno, NULL ),
+                                      PPP_Get( ppp, ID_PARA_form_no, NULL ),
+                                      lv) ;
+      u32 minExp = nextLvExp - exp;
+      if( lv == 100 )
+      {
+        minExp = 0;
+      }
+      //現在の経験値
+      PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_NOWEXP] , mes_status_02_11 ,
+                                PSTATUS_INFO_STR_NOWEXP_X , PSTATUS_INFO_STR_NOWEXP_Y , PSTATUS_STR_COL_TITLE );
+      {
+        WORDSET *wordSet = WORDSET_Create( work->heapId );
+        WORDSET_RegisterNumber( wordSet , 0 , exp , 7 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+        PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_NOWEXP_NUM] , wordSet , mes_status_02_12 , 
+                                       PSTATUS_INFO_STR_NOWEXP_VAL_X , PSTATUS_INFO_STR_NOWEXP_VAL_Y , PSTATUS_STR_COL_VALUE );
+        WORDSET_Delete( wordSet );
+      }
+
+      //次までの経験値
+      PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_NEXTEXP] , mes_status_02_13 ,
+                                PSTATUS_INFO_STR_NEXTEXP_X , PSTATUS_INFO_STR_NEXTEXP_Y , PSTATUS_STR_COL_TITLE );
+      PSTATUS_UTIL_DrawStrFunc( work , infoWork->bmpWin[SIB_NEXTEXP_NUM] , mes_status_02_14 ,
+                                PSTATUS_INFO_STR_NEXTEXP_ATO_X , PSTATUS_INFO_STR_NEXTEXP_ATO_Y , PSTATUS_STR_COL_VALUE );
+      {
+        WORDSET *wordSet = WORDSET_Create( work->heapId );
+        WORDSET_RegisterNumber( wordSet , 0 , minExp , 6 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+        PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_NEXTEXP_NUM] , wordSet , mes_status_02_15 , 
+                                       PSTATUS_INFO_STR_NEXTEXP_VAL_X , PSTATUS_INFO_STR_NEXTEXP_VAL_Y , PSTATUS_STR_COL_VALUE );
+        WORDSET_Delete( wordSet );
+      }
+      
+      //経験値バー
+      if( lv != 100 )
+      {
+        const u32 modLvExp = (nextLvExp-nowLvExp);
+        u32 len = PSTATUS_INFO_EXPBAR_WIDTH * (modLvExp-minExp) / modLvExp;
+        if( (modLvExp-minExp) != 0 && len == 0 )
+        {
+          len = 1;
+        }
+        if( len == PSTATUS_INFO_EXPBAR_WIDTH )
+        {
+          len--;
+        }
+        GFL_BMP_Fill( GFL_BMPWIN_GetBmp(infoWork->bmpWin[SIB_EXP_BAR]) , 
+                      PSTATUS_INFO_EXPBAR_LEFT , PSTATUS_INFO_EXPBAR_TOP ,
+                      len , PSTATUS_INFO_EXPBAR_HEIGHT , PSTATUS_INFO_EXPBAR_COL );
+
+      }
+    }
+  }
+  else
+  {
+    
   }
 
 

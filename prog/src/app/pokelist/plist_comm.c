@@ -167,5 +167,10 @@ const BOOL PLIST_COMM_CheckTimming( PLIST_DATA *work , const u8 timmingNo )
   {
     return TRUE;
   }
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+  {
+    //ÉGÉâÅ[î≤ÇØ
+    return TRUE;
+  }
   return FALSE;
 }
