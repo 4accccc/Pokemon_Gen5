@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c03r0501_mountain_01
 _EVENT_DATA		ev_c03r0501_poke_01
+_EVENT_DATA		ev_c03r0501_informationw_01
 _EVENT_DATA		ev_c03r0501_middlewoman2_01
 _EVENT_DATA_END
 
@@ -43,6 +44,13 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c03r0501_poke_01
 	_EASY_TALK_POKEVOICE( MONSNO_PIKATYUU, msg_c03r0501_poke_01 )
+EVENT_END
+
+/**************************************************************/
+/*			INFORMATIONW		C03R0501					  */
+/**************************************************************/
+EVENT_START		ev_c03r0501_informationw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0501_infomationw_01 )
 EVENT_END
 
 /**************************************************************/
