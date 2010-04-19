@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T22:45:38"/>
+	<create user="matsumiya" host="W00224" date="2010-04-19T20:22:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -429,7 +429,7 @@
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]だいじょうぶ▼
 ポケモンを　すくうために
-あつまった　ひとは……▽
+あつまった　ひとも……▽
 ボクが　まもるよ▼
 ボクが　かれと　たたかうあいだに
 キミたちは　ここから　にげたまえ▼
@@ -437,7 +437,7 @@
 ボクの　かんがえ　わかるかい？[BE:09:速度コントロール:0]</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]問題ない▼
 ポケモンを　救うために
-集った　人々は……▽
+集った　人々も……▽
 ボクが　守るよ▼
 ボクが　彼と　戦うあいだに
 キミたちは　この場を　離れたまえ▼

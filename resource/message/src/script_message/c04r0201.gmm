@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-04-17T17:18:43"/>
+	<create user="matsumiya" host="W00224" date="2010-04-19T20:23:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,14 +349,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1057" top="443" right="1557" bottom="1062" maximized="no" rayout="Vertical2">
+	<dialog left="1344" top="221" right="2031" bottom="802" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="3" right="1280" bottom="401" visible="yes"/>
 		<band id="0" index="1" style="0000" width="492"/>
-		<band id="1" index="2" style="0000" width="231"/>
+		<band id="1" index="2" style="0000" width="185"/>
 		<band id="2" index="3" style="0000" width="259"/>
-		<band id="3" index="4" style="0000" width="492"/>
-		<band id="4" index="0" style="0000" width="591"/>
+		<band id="3" index="4" style="0000" width="418"/>
+		<band id="4" index="0" style="0000" width="679"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -552,7 +552,7 @@
 		<language name="JPN_KANJI" width="256">ドレスアップさえ　できれば　だれでも
 ミュージカルに　参加できます！▼
 きみたちも　ミュージカルに
-ぜひ　参加　してくださいませ！▼
+ぜひ　参加して　くださいませ！▼
 ミュージカルに　ついての　説明は
 受付でも　聞けますよ▼
 では　舞台で　会える　日を
