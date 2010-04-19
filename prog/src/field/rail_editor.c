@@ -27,6 +27,7 @@
 #include "arc/debug/rail_editor.naix"
 
 #include "field/fieldmap.h"
+#include "field/field_camera_debug.h"
 #include "event_fieldmap_control.h"
 
 #include "fieldmap_func.h"

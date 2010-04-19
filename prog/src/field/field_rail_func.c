@@ -545,7 +545,7 @@ BOOL FIELD_RAIL_LINE_HIT_LOCATION_FUNC_StraitLine( u32 rail_index, const FIELD_R
     }
     p_location->line_grid = FIELD_RAIL_TOOL_GetOfsToGrid_Round(front_ofs);
 
-    TOMOYA_Printf( "line ofs to grid ofs[%d]  grid[%d]\n", front_ofs, p_location->line_grid );
+    //TOMOYA_Printf( "line ofs to grid ofs[%d]  grid[%d]\n", front_ofs, p_location->line_grid );
 
 
 

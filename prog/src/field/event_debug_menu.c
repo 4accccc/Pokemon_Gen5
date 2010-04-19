@@ -114,6 +114,8 @@
 
 #include "test/performance.h"
 
+#include "field_camera_debug.h"
+
 #include "../../../resource/fld3d_ci/fldci_id_def.h"  // for FLDCIID_MAX
 
 FS_EXTERN_OVERLAY( d_iwasawa );
@@ -3901,6 +3903,10 @@ static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk )
   p_work->p_camera  = FIELDMAP_GetFieldCamera( p_fieldWork );
   p_work->heapID    = heapID;
 
+
+  // DEBUG_ CAMERA
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_camera) );
+
   FIELD_CAMERA_DEBUG_InitControl( p_work->p_camera, heapID );
 
   // レールカメラ反映の停止
@@ -3996,6 +4002,10 @@ static GMEVENT_RESULT debugMenuDelicateCamera( GMEVENT *p_event, int *p_seq, voi
     // インフォーバーの表示
     FIELDMAP_SetFieldSubscreenWork(p_work->p_field,
         FIELD_SUBSCREEN_Init( p_work->heapID, p_work->p_field, FIELD_SUBSCREEN_NORMAL ));
+
+
+    // DEBUG_ CAMERA
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_camera) );
     return ( GMEVENT_RES_FINISH );
   }
 

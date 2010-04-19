@@ -20,6 +20,12 @@
 
 #include "field/field_rail_loader.h"
 
+#ifdef PM_DEBUG
+
+//#define DEBUG_LOADDATA_PRINT  
+
+#endif
+
 //-----------------------------------------------------------------------------
 /**
  *					’è”éŒ¾
@@ -123,7 +129,7 @@ static void SettingClear( RAIL_SETTING* p_setting )
 	p_setting->line_hit_location_func = sp_RAIL_LINE_HIT_LOCATION_FUNC;
 
 }
-#ifdef PM_DEBUG
+#ifdef DEBUG_LOADDATA_PRINT
 static void PrintPoint( const RAIL_POINT* cp_point )
 {
 	int i;
@@ -263,7 +269,7 @@ void FIELD_RAIL_LOADER_Load( FIELD_RAIL_LOADER* p_sys, u32 datano, u32 heapID )
 
 
 
-#ifdef PM_DEBUG
+#ifdef DEBUG_LOADDATA_PRINT
 	{
 		int i;
 		

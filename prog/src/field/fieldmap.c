@@ -133,6 +133,8 @@
 
 #ifdef PM_DEBUG
 
+#include "field_camera_debug.h"
+
 //#define DEBUG_FIELDMAP_SETUP_SPEED_CHECK  //setupでの処理負荷を表示
 //#define DEBUG_FIELDMAP_INOUT_SPEED_CHECK  //FIELDMAP出入での処理負荷を表示
 //#define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK    // フィールドマップ描画にかかる処理時間を求める
@@ -3324,7 +3326,9 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
 #ifdef PM_DEBUG
   // デバックカメラ表示
   // (WIPE用)
-  FIELD_CAMERA_DEBUG_Draw( fieldWork->camera_control );
+  if( FIELD_CAMERA_DEBUG_IsWipeDraw( fieldWork->camera_control ) ){
+    FIELD_CAMERA_DEBUG_Draw( fieldWork->camera_control );
+  }
 #endif
   SET_CHECK("update_tail:proj calc");
 

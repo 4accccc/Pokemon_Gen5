@@ -449,18 +449,21 @@ extern BOOL FIELD_CAMERA_CheckTraceSys(FIELD_CAMERA * camera_ptr);
  */
 extern void FIELD_CAMERA_StopTraceNow(FIELD_CAMERA * camera_ptr);  
 
+
 #ifdef  PM_DEBUG
+
+// デバックバインド定義
 typedef enum{
   FIELD_CAMERA_DEBUG_BIND_NONE,
   FIELD_CAMERA_DEBUG_BIND_CAMERA_POS,
   FIELD_CAMERA_DEBUG_BIND_TARGET_POS,
 } FIELD_CAMERA_DEBUG_BIND_TYPE;
+
+
 //------------------------------------------------------------------
-//  デバッグ用：下画面操作とのバインド
+//  WIPEを表示するひつようがあるか？
 //------------------------------------------------------------------
-extern void FIELD_CAMERA_DEBUG_BindSubScreen(FIELD_CAMERA * camera, void * param, FIELD_CAMERA_DEBUG_BIND_TYPE type, HEAPID heapID );
-extern void FIELD_CAMERA_DEBUG_ReleaseSubScreen(FIELD_CAMERA * camera);
-extern void FIELD_CAMERA_DEBUG_GetBindSubScreenTarget( const FIELD_CAMERA * camera, VecFx32* p_target );
+extern BOOL FIELD_CAMERA_DEBUG_IsWipeDraw( const FIELD_CAMERA* camera);
 
 
 //------------------------------------------------------------------
@@ -471,38 +474,9 @@ extern const VecFx32* FIELD_CAMERA_DEBUG_GetDefaultTarget( const FIELD_CAMERA* c
 
 extern void FIELD_CAMERA_GetInitialParameter( const FIELD_CAMERA* camera, FLD_CAMERA_PARAM * result);
 
-
-//------------------------------------------------------------------
-//  カメラ　デバック表示関数
-//------------------------------------------------------------------
-extern void FIELD_CAMERA_DEBUG_Draw( const FIELD_CAMERA* camera);
-extern void FIELD_CAMERA_DEUBG_PrintParameter( const FIELD_CAMERA* camera );
-
-
-
-
-//------------------------------------------------------------------
-//  デバッグカメラ詳細操作
-/*
- *  NONE：ターゲット、カメラ平行移動
- *	B：カメラ公転（ターゲット座標が変わる）
- *	Y：カメラ自転（カメラ座標が変わる）
- *	A：パース操作
- *	X：ターゲットカメラバインドのON・OFF
- *	
- *	START：バッファリングモード変更
- *
- *	戻り値　TRUE  変更あり    FALSE　変更なし
- */
-//------------------------------------------------------------------
-extern void FIELD_CAMERA_DEBUG_InitControl( FIELD_CAMERA* camera, HEAPID heapID );
-extern void FIELD_CAMERA_DEBUG_ExitControl( FIELD_CAMERA* camera );
-extern BOOL FIELD_CAMERA_DEBUG_Control( FIELD_CAMERA* camera, int trg, int cont, int repeat );
-extern void FIELD_CAMERA_DEBUG_DrawInfo( FIELD_CAMERA* camera, GFL_BMPWIN* p_win, fx32 map_size_x, fx32 map_size_z );
-extern void FIELD_CAMERA_DEBUG_DrawControlHelp( FIELD_CAMERA* camera, GFL_BMPWIN* p_win );
-
 // 線形カメラ用のパラメータをカメラワークに設定
 // デバック操作中のパラメータの値が消えるので注意
 extern void FIELD_CAMERA_DEBUG_SetUpLinerCameraInfoData( FIELD_CAMERA* camera );
+
 #endif
 

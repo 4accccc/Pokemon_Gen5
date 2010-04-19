@@ -821,7 +821,7 @@ static GFL_PROC_RESULT WiFiBsubway_ProcEnd( GFL_PROC * p_proc, int * p_seq, void
   
   // DEBUGèoóÕON
 #ifdef PM_DEBUG
-  //GFL_NET_DebugPrintOff();
+  GFL_NET_DebugPrintOff();
 #endif
 
   return GFL_PROC_RES_FINISH;

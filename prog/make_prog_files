@@ -150,7 +150,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/brightness.c \
         app/trainercard/trcard_sys.c \
         app/pms_input/pmsi_param.c \
-        sound/snd_viewer_mcs.c \
         system/laster.c \
         system/pms_data.c \
         system/pms_word.c \
@@ -1616,7 +1615,9 @@ SRCS_OVERLAY_MCS_LIB = debug/gf_mcs.c \
                        debug/mcs_readfile.c \
 				               field/rail_editor.c \
                        field/script_debugger_core.c \
-                       test/ariizumi/mus_mcss_debug.c
+                       test/ariizumi/mus_mcss_debug.c \
+                       sound/snd_viewer_mcs.c
+
 
 #===> SRCS_OVERLAY_MCS_LIB
 SRCS_OVERLAY_BATTLE_PRINT = battle/btl_debug_print.c
@@ -1653,7 +1654,8 @@ SRCS_OVERLAY_DEBUG_JUMP   = field/event_debug_menu_jump.c
 
 #DEBUG_CAMERAƒ‰ƒCƒuƒ‰ƒŠ
 #===> GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_DEBUG_CAMERA   = test/camera_adjust_view.c
+SRCS_OVERLAY_DEBUG_CAMERA   = test/camera_adjust_view.c \
+                              field/field_camera_debug.c
 
 #DEBUG_SYMBOL_MENU
 #===> GROUP_OVERLAY_GIMMICK
