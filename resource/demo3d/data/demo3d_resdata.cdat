@@ -12,8 +12,8 @@
 #include "g_ship_port.cdat"
 #include "intro_town.cdat"
 #include "n_castle.cdat"
-#include "n_final_b.cdat"
-#include "n_final_w.cdat"
+#include "ending_b.cdat"
+#include "ending_w.cdat"
 #include "n_legend_born_b.cdat"
 #include "n_legend_born_w.cdat"
 #include "n_legend_come_b.cdat"
@@ -32,8 +32,8 @@ static const DEMO3D_SETUP_DATA c_demo3d_setup_data[ DEMO3D_ID_MAX ] = {
  { &data_g_ship_port_scene, demo3d_cmd_g_ship_port_data, demo3d_cmd_g_ship_port_end_data, res_g_ship_port_scene_unit, NELEMS(res_g_ship_port_scene_unit) },
  { &data_intro_town_scene, demo3d_cmd_intro_town_data, demo3d_cmd_intro_town_end_data, res_intro_town_scene_unit, NELEMS(res_intro_town_scene_unit) },
  { &data_n_castle_scene, demo3d_cmd_n_castle_data, demo3d_cmd_n_castle_end_data, res_n_castle_scene_unit, NELEMS(res_n_castle_scene_unit) },
- { &data_n_final_b_scene, demo3d_cmd_n_final_b_data, demo3d_cmd_n_final_b_end_data, res_n_final_b_scene_unit, NELEMS(res_n_final_b_scene_unit) },
- { &data_n_final_w_scene, demo3d_cmd_n_final_w_data, demo3d_cmd_n_final_w_end_data, res_n_final_w_scene_unit, NELEMS(res_n_final_w_scene_unit) },
+ { &data_ending_b_scene, demo3d_cmd_ending_b_data, demo3d_cmd_ending_b_end_data, res_ending_b_scene_unit, NELEMS(res_ending_b_scene_unit) },
+ { &data_ending_w_scene, demo3d_cmd_ending_w_data, demo3d_cmd_ending_w_end_data, res_ending_w_scene_unit, NELEMS(res_ending_w_scene_unit) },
  { &data_n_legend_born_b_scene, demo3d_cmd_n_legend_born_b_data, demo3d_cmd_n_legend_born_b_end_data, res_n_legend_born_b_scene_unit, NELEMS(res_n_legend_born_b_scene_unit) },
  { &data_n_legend_born_w_scene, demo3d_cmd_n_legend_born_w_data, demo3d_cmd_n_legend_born_w_end_data, res_n_legend_born_w_scene_unit, NELEMS(res_n_legend_born_w_scene_unit) },
  { &data_n_legend_come_b_scene, demo3d_cmd_n_legend_come_b_data, demo3d_cmd_n_legend_come_b_end_data, res_n_legend_come_b_scene_unit, NELEMS(res_n_legend_come_b_scene_unit) },

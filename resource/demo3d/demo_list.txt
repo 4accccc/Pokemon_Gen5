@@ -6,8 +6,8 @@ DEMO_LIST =	c_cruiser.xls \
 			      g_ship_port.xls \
 			      intro_town.xls \
 			      n_castle.xls \
-			      n_final_b.xls \
-			      n_final_w.xls \
+			      ending_b.xls \
+			      ending_w.xls \
 			      n_legend_born_b.xls \
 			      n_legend_born_w.xls \
 			      n_legend_come_b.xls \
