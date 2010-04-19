@@ -191,6 +191,9 @@ EVENT_START		ev_pos_c03p07_rival_01
 	//C03P15のワークに１追加
 	$WK_SCENE_C03P15 = 1
 	
+	//4番道路にライバル出現
+	_FLAG_RESET(FV_R04_RIVAL_01)
+	
 	//========================================/
 
 EVENT_END

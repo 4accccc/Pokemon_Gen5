@@ -274,6 +274,9 @@ init_flags:
 	//C06　ジムクリアまでNを非表示
 	_FLAG_SET(FV_C06_BOSS)
 	
+	//R04　ジム前イベントをするまでライバル非表示
+	_FLAG_SET(FV_R04_RIVAL_01)
+	
 }
 _RET
 
