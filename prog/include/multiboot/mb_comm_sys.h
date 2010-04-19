@@ -158,7 +158,7 @@ extern void MB_COMM_SetScore( MB_COMM_WORK* commWork , const u16 score );
 
 extern const BOOL MB_COMM_IsPostPoke( MB_COMM_WORK* commWork );
 extern const u8 MB_COMM_GetPostPokeNum( MB_COMM_WORK* commWork );
-extern const POKEMON_PASO_PARAM* MB_COMM_GetPostPokeData( MB_COMM_WORK* commWork , const u8 idx );
+extern POKEMON_PASO_PARAM* MB_COMM_GetPostPokeData( MB_COMM_WORK* commWork , const u8 idx );
 extern const u16 MB_COMM_GetScore( MB_COMM_WORK* commWork );
 extern const BOOL MB_COMM_IsPost_PostPoke( MB_COMM_WORK* commWork );
 

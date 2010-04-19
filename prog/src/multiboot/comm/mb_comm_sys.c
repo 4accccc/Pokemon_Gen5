@@ -655,7 +655,7 @@ const u8 MB_COMM_GetPostPokeNum( MB_COMM_WORK* commWork )
 //--------------------------------------------------------------
 // ŽóMƒ|ƒPƒ‚ƒ“Žæ“¾
 //--------------------------------------------------------------
-const POKEMON_PASO_PARAM* MB_COMM_GetPostPokeData( MB_COMM_WORK* commWork , const u8 idx )
+POKEMON_PASO_PARAM* MB_COMM_GetPostPokeData( MB_COMM_WORK* commWork , const u8 idx )
 {
   MB_COMM_PPP_PACK_HEADER *packHeader = commWork->pppPackData;
   return (POKEMON_PASO_PARAM*)((u32)commWork->pppPackData + POKETOOL_GetPPPWorkSize()*idx + sizeof(MB_COMM_PPP_PACK_HEADER));

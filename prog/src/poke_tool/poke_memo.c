@@ -100,7 +100,8 @@ void POKE_MEMO_SetTrainerMemoPPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_SET_
     break;
 
   case POKE_MEMO_POKE_SHIFTER: //ポケシフター(過去作転送
-    POKE_MEMO_SetTrainerMemoPokeShifter( ppp );
+    GF_ASSERT_MSG(FALSE,"専用関数使って！\n")
+    //POKE_MEMO_SetTrainerMemoPokeShifter( ppp );
     break;
 
   case POKE_MEMO_DISTRIBUTION: //配布
@@ -146,6 +147,16 @@ void POKE_MEMO_SetTrainerMemoPokeShifter( POKEMON_PASO_PARAM *ppp )
   {
     PPP_Put( ppp, ID_PARA_birth_place, POKE_MEMO_PLACE_ENRAISUI_BEFORE );
   }
+}
+
+void POKE_MEMO_SetTrainerMemoPokeShifterAfterTrans( POKEMON_PASO_PARAM *ppp )
+{
+  //ポケシフターからデータ到着後にRTCから時間をセットする
+  RTCDate date;
+  GFL_RTC_GetDate( &date );
+  PPP_Put( ppp , ID_PARA_birth_year  , date.year );
+  PPP_Put( ppp , ID_PARA_birth_month , date.month );
+  PPP_Put( ppp , ID_PARA_birth_day   , date.day );
 }
 
 void POKE_MEMO_SetTrainerMemoPokeDistribution( POKEMON_PASO_PARAM *ppp , const u32 place , const u32 year , const u32 month , const u32 day )

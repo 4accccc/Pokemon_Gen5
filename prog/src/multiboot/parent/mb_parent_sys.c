@@ -18,6 +18,7 @@
 #include "net/network_define.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
+#include "poke_tool/poke_memo.h"
 #include "system/wipe.h"
 #include "savedata/misc.h"
 #include "app/app_menu_common.h"
@@ -1686,23 +1687,27 @@ static void MB_PARENT_SaveInitPoke( MB_PARENT_WORK *work )
   const u8 pokeNum = MB_COMM_GetPostPokeNum( work->commWork );
   for( i=0;i<pokeNum;i++ )
   {
-    const POKEMON_PASO_PARAM *ppp = MB_COMM_GetPostPokeData( work->commWork , i );
-    const BOOL ret = BOXDAT_PutPokemon( boxMng , ppp );
-    POKEMON_PARAM *pp = PP_CreateByPPP( ppp , work->heapId );
-    ZUKANSAVE_SetPokeGet( zukan_savedata , pp );
-    GFL_HEAP_FreeMemory( pp );
-    
-    GF_ASSERT_MSG( ret == TRUE , "Multiboot parent Box is full!!\n");
-#if DEB_ARI
+    POKEMON_PASO_PARAM *ppp = MB_COMM_GetPostPokeData( work->commWork , i );
+    //e‹@‚ÌŽžŠÔ‚ÅÄÝ’è‚·‚é
+    POKE_MEMO_SetTrainerMemoPokeShifterAfterTrans( ppp );
     {
-      char name[32];
-      STRBUF *nameStr = GFL_STR_CreateBuffer( 32 , work->heapId );
-      PPP_Get( ppp , ID_PARA_nickname , nameStr );
-      DEB_STR_CONV_StrBufferToSjis( nameStr , name , 32 );
-      MB_TPrintf("[%d][%s]\n",i,name);
-      GFL_STR_DeleteBuffer( nameStr );
-    }
+      const BOOL ret = BOXDAT_PutPokemon( boxMng , ppp );
+      POKEMON_PARAM *pp = PP_CreateByPPP( ppp , work->heapId );
+      ZUKANSAVE_SetPokeGet( zukan_savedata , pp );
+      GFL_HEAP_FreeMemory( pp );
+      
+      GF_ASSERT_MSG( ret == TRUE , "Multiboot parent Box is full!!\n");
+#if DEB_ARI
+      {
+        char name[32];
+        STRBUF *nameStr = GFL_STR_CreateBuffer( 32 , work->heapId );
+        PPP_Get( ppp , ID_PARA_nickname , nameStr );
+        DEB_STR_CONV_StrBufferToSjis( nameStr , name , 32 );
+        MB_TPrintf("[%d][%s]\n",i,name);
+        GFL_STR_DeleteBuffer( nameStr );
+      }
 #endif
+    }
   }
 }
 

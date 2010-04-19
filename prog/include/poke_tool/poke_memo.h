@@ -68,8 +68,9 @@ extern void POKE_MEMO_SetTrainerMemoPP( POKEMON_PARAM *pp , const POKE_MEMO_SET_
                                   const MYSTATUS* my, const u32 place , const HEAPID heapId );
 extern void POKE_MEMO_SetTrainerMemoPPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_SET_TYPE type ,
                                   const MYSTATUS* my, const u32 place , const HEAPID heapId );
-//余計な関数呼ばないために独立
+//余計な関数呼ばないために独立(到着後に親機の時間で再設定
 extern void POKE_MEMO_SetTrainerMemoPokeShifter( POKEMON_PASO_PARAM *ppp );
+extern void POKE_MEMO_SetTrainerMemoPokeShifterAfterTrans( POKEMON_PASO_PARAM *ppp );
 //日付設定のため独立
 extern void POKE_MEMO_SetTrainerMemoPokeDistribution( POKEMON_PASO_PARAM *ppp , const u32 place , const u32 year , const u32 month , const u32 day );
 
