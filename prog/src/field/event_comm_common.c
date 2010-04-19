@@ -38,6 +38,7 @@
 #include "event_mission_help.h"
 #include "event_mission_shop.h"
 #include "event_mission_secretitem.h"
+#include "event_comm_notarget.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
@@ -76,38 +77,38 @@ static INTRUDE_TALK_TYPE _IntrudeTalkTypeJudge(EVENT_COMM_COMMON *talk, INTRUDE_
 ///話しかけた：イベント切り替えテーブル
 static const EVENT_COMM_FUNC EventCommFuncTalkTbl[] = {
   EVENTCHANGE_CommMissionBattle_MtoT_Talk,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_T
-  EVENTCHANGE_CommMissionNormal_Talk,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_M
-  EVENTCHANGE_CommMissionNormal_Talk,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_N
+  EVENTCHANGE_CommMissionEtc_MtoM_Talk,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_M
+  EVENTCHANGE_CommMissionEtc_MtoN_M,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_N
   EVENTCHANGE_CommMissionBattle_TtoM_Talk,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_T_to_M
   EVENTCHANGE_CommMissionNormal_Talk,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_T_to_N
 
   EVENTCHANGE_CommMissionTalked_MtoT_Talk,  //INTRUDE_TALK_TYPE_MISSION_SKILL_M_to_T
-  EVENTCHANGE_CommMissionNormal_Talk,  //INTRUDE_TALK_TYPE_MISSION_SKILL_M_to_M
-  EVENTCHANGE_CommMissionNormal_Talk,  //INTRUDE_TALK_TYPE_MISSION_SKILL_M_to_N
+  EVENTCHANGE_CommMissionEtc_MtoM_Talk,  //INTRUDE_TALK_TYPE_MISSION_SKILL_M_to_M
+  EVENTCHANGE_CommMissionEtc_MtoN_M,  //INTRUDE_TALK_TYPE_MISSION_SKILL_M_to_N
   EVENTCHANGE_CommMissionTalked_TtoM_Talk,  //INTRUDE_TALK_TYPE_MISSION_SKILL_T_to_M
   EVENTCHANGE_CommMissionNormal_Talk,  //INTRUDE_TALK_TYPE_MISSION_SKILL_T_to_N
 
   EVENTCHANGE_CommMissionTalk_MtoT_Talk,  //INTRUDE_TALK_TYPE_MISSION_BASIC_M_to_T
-  EVENTCHANGE_CommMissionNormal_Talk,  //INTRUDE_TALK_TYPE_MISSION_BASIC_M_to_M
-  EVENTCHANGE_CommMissionNormal_Talk,  //INTRUDE_TALK_TYPE_MISSION_BASIC_M_to_N
+  EVENTCHANGE_CommMissionEtc_MtoM_Talk,  //INTRUDE_TALK_TYPE_MISSION_BASIC_M_to_M
+  EVENTCHANGE_CommMissionEtc_MtoN_M,  //INTRUDE_TALK_TYPE_MISSION_BASIC_M_to_N
   EVENTCHANGE_CommMissionTalk_TtoM_Talk,  //INTRUDE_TALK_TYPE_MISSION_BASIC_T_to_M
   EVENTCHANGE_CommMissionNormal_Talk,  //INTRUDE_TALK_TYPE_MISSION_BASIC_T_to_N
 
   EVENTCHANGE_CommMissionShop_MtoT_Talk,//INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_M_to_T
-  EVENTCHANGE_CommMissionNormal_Talk,   //INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_M_to_M
-  EVENTCHANGE_CommMissionNormal_Talk,   //INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_M_to_N
+  EVENTCHANGE_CommMissionEtc_MtoM_Talk,   //INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_M_to_M
+  EVENTCHANGE_CommMissionEtc_MtoN_M,   //INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_M_to_N
   EVENTCHANGE_CommMissionShop_TtoM_Talk,//INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_T_to_M
   EVENTCHANGE_CommMissionNormal_Talk,   //INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_T_to_N
 
   EVENTCHANGE_CommMissionItem_MtoT_Talk,  //INTRUDE_TALK_TYPE_MISSION_ITEM_M_to_T
-  EVENTCHANGE_CommMissionNormal_Talk,  //INTRUDE_TALK_TYPE_MISSION_ITEM_M_to_M
-  EVENTCHANGE_CommMissionNormal_Talk,  //INTRUDE_TALK_TYPE_MISSION_ITEM_M_to_N
+  EVENTCHANGE_CommMissionEtc_MtoM_Talk,  //INTRUDE_TALK_TYPE_MISSION_ITEM_M_to_M
+  EVENTCHANGE_CommMissionEtc_MtoN_M,  //INTRUDE_TALK_TYPE_MISSION_ITEM_M_to_N
   EVENTCHANGE_CommMissionItem_TtoM_Talk,  //INTRUDE_TALK_TYPE_MISSION_ITEM_T_to_M
   EVENTCHANGE_CommMissionNormal_Talk,  //INTRUDE_TALK_TYPE_MISSION_ITEM_T_to_N
 
   EVENTCHANGE_CommMissionHelp_MtoT_Talk,  //INTRUDE_TALK_TYPE_MISSION_PERSONALITY_M_to_T
-  EVENTCHANGE_CommMissionNormal_Talk,  //INTRUDE_TALK_TYPE_MISSION_PERSONALITY_M_to_M
-  EVENTCHANGE_CommMissionNormal_Talk,  //INTRUDE_TALK_TYPE_MISSION_PERSONALITY_M_to_N
+  EVENTCHANGE_CommMissionEtc_MtoM_Talk,  //INTRUDE_TALK_TYPE_MISSION_PERSONALITY_M_to_M
+  EVENTCHANGE_CommMissionEtc_MtoN_M,  //INTRUDE_TALK_TYPE_MISSION_PERSONALITY_M_to_N
   EVENTCHANGE_CommMissionHelp_TtoM_Talk,  //INTRUDE_TALK_TYPE_MISSION_PERSONALITY_T_to_M
   EVENTCHANGE_CommMissionNormal_Talk,  //INTRUDE_TALK_TYPE_MISSION_PERSONALITY_T_to_N
 };
@@ -115,38 +116,38 @@ static const EVENT_COMM_FUNC EventCommFuncTalkTbl[] = {
 ///話しかけられた：イベント切り替えテーブル
 static const EVENT_COMM_FUNC EventCommFuncTalkedTbl[] = {
   EVENTCHANGE_CommMissionBattle_TtoM_Talked,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_T
-  EVENTCHANGE_CommMissionNormal_Talked,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_M
-  EVENTCHANGE_CommMissionNormal_Talked,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_N
+  EVENTCHANGE_CommMissionEtc_MtoM_Talked,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_M
+  EVENTCHANGE_CommMissionEtc_MtoN_M,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_M_to_N
   EVENTCHANGE_CommMissionBattle_MtoT_Talked,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_T_to_M
   EVENTCHANGE_CommMissionNormal_Talked,  //INTRUDE_TALK_TYPE_MISSION_VICTORY_T_to_N
 
   EVENTCHANGE_CommMissionTalked_TtoM_Talked,  //INTRUDE_TALK_TYPE_MISSION_SKILL_M_to_T
-  EVENTCHANGE_CommMissionNormal_Talked,  //INTRUDE_TALK_TYPE_MISSION_SKILL_M_to_M
-  EVENTCHANGE_CommMissionNormal_Talked,  //INTRUDE_TALK_TYPE_MISSION_SKILL_M_to_N
+  EVENTCHANGE_CommMissionEtc_MtoM_Talked,  //INTRUDE_TALK_TYPE_MISSION_SKILL_M_to_M
+  EVENTCHANGE_CommMissionEtc_MtoN_M,  //INTRUDE_TALK_TYPE_MISSION_SKILL_M_to_N
   EVENTCHANGE_CommMissionTalked_MtoT_Talked,  //INTRUDE_TALK_TYPE_MISSION_SKILL_T_to_M
   EVENTCHANGE_CommMissionNormal_Talked,  //INTRUDE_TALK_TYPE_MISSION_SKILL_T_to_N
 
   EVENTCHANGE_CommMissionTalk_TtoM_Talked,  //INTRUDE_TALK_TYPE_MISSION_BASIC_M_to_T
-  EVENTCHANGE_CommMissionNormal_Talked,  //INTRUDE_TALK_TYPE_MISSION_BASIC_M_to_M
-  EVENTCHANGE_CommMissionNormal_Talked,  //INTRUDE_TALK_TYPE_MISSION_BASIC_M_to_N
+  EVENTCHANGE_CommMissionEtc_MtoM_Talked,  //INTRUDE_TALK_TYPE_MISSION_BASIC_M_to_M
+  EVENTCHANGE_CommMissionEtc_MtoN_M,  //INTRUDE_TALK_TYPE_MISSION_BASIC_M_to_N
   EVENTCHANGE_CommMissionTalk_MtoT_Talked,  //INTRUDE_TALK_TYPE_MISSION_BASIC_T_to_M
   EVENTCHANGE_CommMissionNormal_Talked,  //INTRUDE_TALK_TYPE_MISSION_BASIC_T_to_N
 
   EVENTCHANGE_CommMissionShop_TtoM_Talked,//INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_M_to_T
-  EVENTCHANGE_CommMissionNormal_Talked,   //INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_M_to_M
-  EVENTCHANGE_CommMissionNormal_Talked,   //INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_M_to_N
+  EVENTCHANGE_CommMissionEtc_MtoM_Talked,   //INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_M_to_M
+  EVENTCHANGE_CommMissionEtc_MtoN_M,   //INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_M_to_N
   EVENTCHANGE_CommMissionShop_MtoT_Talked,//INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_T_to_M
   EVENTCHANGE_CommMissionNormal_Talked,   //INTRUDE_TALK_TYPE_MISSION_ATTRIBUTE_T_to_N
 
   EVENTCHANGE_CommMissionItem_TtoM_Talked,  //INTRUDE_TALK_TYPE_MISSION_ITEM_M_to_T
-  EVENTCHANGE_CommMissionNormal_Talked,  //INTRUDE_TALK_TYPE_MISSION_ITEM_M_to_M
-  EVENTCHANGE_CommMissionNormal_Talked,  //INTRUDE_TALK_TYPE_MISSION_ITEM_M_to_N
+  EVENTCHANGE_CommMissionEtc_MtoM_Talked,  //INTRUDE_TALK_TYPE_MISSION_ITEM_M_to_M
+  EVENTCHANGE_CommMissionEtc_MtoN_M,  //INTRUDE_TALK_TYPE_MISSION_ITEM_M_to_N
   EVENTCHANGE_CommMissionItem_MtoT_Talked,  //INTRUDE_TALK_TYPE_MISSION_ITEM_T_to_M
   EVENTCHANGE_CommMissionNormal_Talked,  //INTRUDE_TALK_TYPE_MISSION_ITEM_T_to_N
 
   EVENTCHANGE_CommMissionHelp_TtoM_Talked,  //INTRUDE_TALK_TYPE_MISSION_PERSONALITY_M_to_T
-  EVENTCHANGE_CommMissionNormal_Talked,  //INTRUDE_TALK_TYPE_MISSION_PERSONALITY_M_to_M
-  EVENTCHANGE_CommMissionNormal_Talked,  //INTRUDE_TALK_TYPE_MISSION_PERSONALITY_M_to_N
+  EVENTCHANGE_CommMissionEtc_MtoM_Talked,  //INTRUDE_TALK_TYPE_MISSION_PERSONALITY_M_to_M
+  EVENTCHANGE_CommMissionEtc_MtoN_M,  //INTRUDE_TALK_TYPE_MISSION_PERSONALITY_M_to_N
   EVENTCHANGE_CommMissionHelp_MtoT_Talked,  //INTRUDE_TALK_TYPE_MISSION_PERSONALITY_T_to_M
   EVENTCHANGE_CommMissionNormal_Talked,  //INTRUDE_TALK_TYPE_MISSION_PERSONALITY_T_to_N
 };
@@ -301,7 +302,7 @@ static GMEVENT_RESULT EventCommCommonTalk( GMEVENT *event, int *seq, void *wk )
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == FALSE){
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
-    if((*seq) < SEQ_TALK_OK){
+    if((*seq) <= SEQ_TALK_OK){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_FINISH;
     }
@@ -311,8 +312,8 @@ static GMEVENT_RESULT EventCommCommonTalk( GMEVENT *event, int *seq, void *wk )
 	case SEQ_INIT:
 	  {
       MISSION_TYPE mission_type = MISSION_GetMissionType(&intcomm->mission);
-      if(mission_type == MISSION_TYPE_PERSONALITY
-          && intcomm->intrude_status[talk->ccew.talk_netid].action_status==INTRUDE_ACTION_BATTLE){
+      if(intcomm->intrude_status[talk->ccew.talk_netid].action_status != INTRUDE_ACTION_FIELD){
+        //話しかけられる状態ではないため、相手との会話の成立を確認せずに専用イベントを起動
         COMMTALK_COMMON_EVENT_WORK *temp_ccew;
         
         //EventChangeでワークが解放されるので、引き渡す為、テンポラリにコピーする
@@ -320,8 +321,19 @@ static GMEVENT_RESULT EventCommCommonTalk( GMEVENT *event, int *seq, void *wk )
           GFL_HEAP_LOWID(talk->ccew.heapID), sizeof(COMMTALK_COMMON_EVENT_WORK));
         GFL_STD_MemCopy(&talk->ccew, temp_ccew, sizeof(COMMTALK_COMMON_EVENT_WORK));
 
-        //戦闘手助け　相手との会話の成立を確認せずに専用イベントを起動
-        EVENTCHANGE_CommMissionHelp_TtoM_Battle(event, temp_ccew);
+        if(intcomm->intrude_status[talk->ccew.talk_netid].action_status == INTRUDE_ACTION_BATTLE){
+          if(mission_type == MISSION_TYPE_PERSONALITY){
+            //戦闘手助け
+            EVENTCHANGE_CommMissionHelp_TtoM_Battle(event, temp_ccew);
+          }
+          else{
+            //戦闘中だから話しかけられない
+            EVENTCHANGE_CommMissionEtc_MtoT_Battle_Talk(event, temp_ccew);
+          }
+        }
+        else{ //戦闘以外の話しかけられる状態ではない
+          EVENTCHANGE_CommMissionEtc_MtoT_NotTalk_Talk(event, temp_ccew);
+        }
 
         GFL_HEAP_FreeMemory(temp_ccew);
         break;
@@ -437,8 +449,10 @@ static void _EventChangeTalk(GMEVENT *event, EVENT_COMM_COMMON *talk, INTRUDE_CO
     EVENTCHANGE_CommMissionNormal_Talk(event, temp_ccew);
   }
   else if(talk->ccew.intrude_talk_type == INTRUDE_TALK_TYPE_MISSION_N_to_M){  //共通：傍観者＞ミッション実施者
+    EVENTCHANGE_CommMissionEtc_MtoN_N(event, temp_ccew);
   }
   else if(talk->ccew.intrude_talk_type == INTRUDE_TALK_TYPE_MISSION_N_to_T){  //共通：傍観者＞ターゲット
+    EVENTCHANGE_CommMissionNormal_Talk(event, temp_ccew);
   }
   else if(talk->ccew.intrude_talk_type >= INTRUDE_TALK_TYPE_MISSION_OFFSET_START){
     GF_ASSERT(EventCommFuncTalkTbl[talk->ccew.intrude_talk_type - INTRUDE_TALK_TYPE_MISSION_VICTORY_START] != NULL);
@@ -447,6 +461,7 @@ static void _EventChangeTalk(GMEVENT *event, EVENT_COMM_COMMON *talk, INTRUDE_CO
   else{
     GF_ASSERT(0);
     //通常会話を起動しておく
+    EVENTCHANGE_CommMissionNormal_Talk(event, temp_ccew);
   }
 
 
@@ -477,8 +492,10 @@ static void _EventChangeTalked(GMEVENT *event, EVENT_COMM_COMMON *talk, INTRUDE_
     EVENTCHANGE_CommMissionNormal_Talked(event, temp_ccew);
   }
   else if(talk->ccew.intrude_talk_type == INTRUDE_TALK_TYPE_MISSION_N_to_M){  //共通：傍観者＞ミッション実施者
+    EVENTCHANGE_CommMissionEtc_MtoN_N(event, temp_ccew);
   }
   else if(talk->ccew.intrude_talk_type == INTRUDE_TALK_TYPE_MISSION_N_to_T){  //共通：傍観者＞ターゲット
+    EVENTCHANGE_CommMissionNormal_Talked(event, temp_ccew);
   }
   else if(talk->ccew.intrude_talk_type >= INTRUDE_TALK_TYPE_MISSION_OFFSET_START){
     GF_ASSERT(EventCommFuncTalkedTbl[talk->ccew.intrude_talk_type - INTRUDE_TALK_TYPE_MISSION_VICTORY_START] != NULL);
@@ -487,6 +504,7 @@ static void _EventChangeTalked(GMEVENT *event, EVENT_COMM_COMMON *talk, INTRUDE_
   else{
     GF_ASSERT(0);
     //通常会話を起動しておく
+    EVENTCHANGE_CommMissionNormal_Talked(event, temp_ccew);
   }
 
 
