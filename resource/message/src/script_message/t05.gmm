@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T18:17:52"/>
+	<create user="matsumiya" host="W00224" date="2010-04-19T19:05:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="139" right="2004" bottom="767" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="117" right="2004" bottom="745" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="103" right="1280" bottom="501" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -746,7 +746,7 @@ Wi-Fi</comment>
 		<language name="JPN" width="256">よし　それじゃあ
 でんしゃに　のってくれ▼</language>
 		<language name="JPN_KANJI" width="256">よし　それじゃあ
-電車に　のってくれ▼</language>
+電車に　乗ってくれ▼</language>
 	</row>
 
 	<row id="msg_t05_recept_03">
@@ -884,10 +884,10 @@ Wi-Fi</comment>
 		<comment>♂ ボロ市
 いいえ</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
-		<language name="JPN" width="256">わるい　はなしじゃ
-ないと　おもうんだけどな</language>
-		<language name="JPN_KANJI" width="256">わるい　はなしじゃ
-ないと　おもうんだけどな</language>
+		<language name="JPN" width="256">わるい　はなし　じゃないと
+おもうんだけどな</language>
+		<language name="JPN_KANJI" width="256">悪い話じゃないと
+思うんだけどな</language>
 	</row>
 
 	<row id="msg_t05_businessman_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1023,12 +1023,12 @@ Wi-Fi</comment>
 見物人
 週末のみ表示</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
-		<language name="JPN" width="256">だれかが　もっていたどうぐ
-そのどうぐから　もちぬしの▽
-おもいを　かんじることがあるの</language>
-		<language name="JPN_KANJI" width="256">だれかが　もっていたどうぐ
-そのどうぐから　もちぬしの▽
-おもいを　かんじることがあるの</language>
+		<language name="JPN" width="256">だれかが　もっていた　どうぐ
+その　どうぐから　もちぬしの▽
+おもいを　かんじること　があるの</language>
+		<language name="JPN_KANJI" width="256">だれかが　持っていた　道具
+その道具から　持ち主の▽
+想いを　感じることが　あるの</language>
 	</row>
 
 	<row id="msg_t05_boy3_01">
@@ -1040,8 +1040,8 @@ Wi-Fi</comment>
 え　おかあさん？
 どこかで　こうしょうしてるよ</language>
 		<language name="JPN_KANJI" width="256">電車　カッケー！▼
-え　おかあさん？
-どこかで　こうしょうしてるよ</language>
+え　お母さん？
+どこかで　交渉してるよ</language>
 	</row>
 
 	<row id="msg_t05_oldman1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1064,7 +1064,7 @@ Wi-Fi</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">きょうも　おおにぎわい
 きみも　ぶつぶつこうかん　かい？</language>
-		<language name="JPN_KANJI" width="256">きょうも　おおにぎわい
+		<language name="JPN_KANJI" width="256">今日も　おおにぎわい
 きみも　ぶつぶつ交換　かい？</language>
 	</row>
 
@@ -1086,8 +1086,8 @@ Wi-Fi</comment>
 		<attribute name="キャラ指定">RAILMAN</attribute>
 		<language name="JPN" width="256">ひとが　たくさん　いるとさ
 でんしゃも　うれしそうな　きがするよ</language>
-		<language name="JPN_KANJI" width="256">ひとが　たくさん　いるとさ
-電車も　うれしそうな　きがするよ</language>
+		<language name="JPN_KANJI" width="256">人が　たくさん　いるとさ
+電車も　うれしそうな　気がするよ</language>
 	</row>
 
 	<row id="msg_t05_boy4_01">
