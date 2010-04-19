@@ -89,6 +89,7 @@ typedef enum {
   RES_ELBOARD_NSBTA_5_FAST, // ニュース・スクロール・アニメーション5 ( 速 )
   RES_ELBOARD_NSBTA_6_FAST, // ニュース・スクロール・アニメーション6 ( 速 )
   RES_ELBOARD_NSBTA_7_FAST, // ニュース・スクロール・アニメーション7 ( 速 )
+  RES_MONITOR_NSBTP_BROKEN, // モニター・テクスチャパターン・アニメーション ( モニタ情報<故障> )
   RES_MONITOR_NSBTP_C01,    // モニター・テクスチャパターン・アニメーション ( モニタ情報C01 )
   RES_MONITOR_NSBTP_C02,    // モニター・テクスチャパターン・アニメーション ( モニタ情報C02 )
   RES_MONITOR_NSBTP_C03,    // モニター・テクスチャパターン・アニメーション ( モニタ情報C03 )
@@ -121,6 +122,7 @@ static const GFL_G3D_UTIL_RES res_table[ RES_NUM ] =
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_fast_5_nsbta, GFL_G3D_UTIL_RESARC }, // ニュース・スクロール・アニメーション5 ( 速 )
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_fast_6_nsbta, GFL_G3D_UTIL_RESARC }, // ニュース・スクロール・アニメーション6 ( 速 )
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_fast_7_nsbta, GFL_G3D_UTIL_RESARC }, // ニュース・スクロール・アニメーション7 ( 速 )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv00_nsbtp, GFL_G3D_UTIL_RESARC },   // モニター・テクスチャパターン・アニメーション ( モニタ情報<故障> )
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv01_nsbtp, GFL_G3D_UTIL_RESARC },   // モニター・テクスチャパターン・アニメーション ( モニタ情報C01 )
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv02_nsbtp, GFL_G3D_UTIL_RESARC },   // モニター・テクスチャパターン・アニメーション ( モニタ情報C02 )
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv03_nsbtp, GFL_G3D_UTIL_RESARC },   // モニター・テクスチャパターン・アニメーション ( モニタ情報C03 )
@@ -156,6 +158,7 @@ typedef enum {
   ANM_MONITOR_WF,           // モニター・テクスチャ・アニメーション ( モニタ情報WF )
   ANM_MONITOR_BC,           // モニター・テクスチャ・アニメーション ( モニタ情報BC )
   ANM_MONITOR_D03,          // モニター・テクスチャ・アニメーション ( モニタ情報D03 )
+  ANM_MONITOR_BROKEN,       // モニター・テクスチャ・アニメーション ( モニタ情報<故障> )
   ANM_NUM                   // 総数
 } ANM_INDEX;
 static const GFL_G3D_UTIL_ANM anm_table[ ANM_NUM ] = 
@@ -180,6 +183,7 @@ static const GFL_G3D_UTIL_ANM anm_table[ ANM_NUM ] =
   { RES_MONITOR_NSBTP_WF, 0 },    // モニター・テクスチャ・アニメーション ( モニタ情報WF )
   { RES_MONITOR_NSBTP_BC, 0 },    // モニター・テクスチャ・アニメーション ( モニタ情報BC )
   { RES_MONITOR_NSBTP_D03, 0 },   // モニター・テクスチャ・アニメーション ( モニタ情報D03 )
+  { RES_MONITOR_NSBTP_BROKEN, 0 },// モニター・テクスチャ・アニメーション ( モニタ情報<故障> )
 };
 static const GFL_G3D_UTIL_ANM anm_table_fast[ ANM_NUM ] = 
 {
@@ -203,6 +207,7 @@ static const GFL_G3D_UTIL_ANM anm_table_fast[ ANM_NUM ] =
   { RES_MONITOR_NSBTP_WF, 0 },     // モニター・テクスチャ・アニメーション ( モニタ情報WF )
   { RES_MONITOR_NSBTP_BC, 0 },     // モニター・テクスチャ・アニメーション ( モニタ情報BC )
   { RES_MONITOR_NSBTP_D03, 0 },    // モニター・テクスチャ・アニメーション ( モニタ情報D03 )
+  { RES_MONITOR_NSBTP_BROKEN, 0 },    // モニター・テクスチャ・アニメーション ( モニタ情報<故障> )
 };
 
 // オブジェクトインデックス
@@ -353,37 +358,39 @@ static const u16 RareWeatherCheckZoneID[] =
 //==========================================================================================
 // アニメーション番号
 typedef enum {
-  MONITOR_ANIME_C01,  // ( モニタ情報C01 )
-  MONITOR_ANIME_C02,  // ( モニタ情報C02 )
-  MONITOR_ANIME_C03,  // ( モニタ情報C03 )
-  MONITOR_ANIME_C04,  // ( モニタ情報C04 )
-  MONITOR_ANIME_C05,  // ( モニタ情報C05 )
-  MONITOR_ANIME_C08W, // ( モニタ情報C08W )
-  MONITOR_ANIME_C08B, // ( モニタ情報C08B )
-  MONITOR_ANIME_TG,   // ( モニタ情報TG )
-  MONITOR_ANIME_ST,   // ( モニタ情報ST )
-  MONITOR_ANIME_WF,   // ( モニタ情報WF )
-  MONITOR_ANIME_BC,   // ( モニタ情報BC )
-  MONITOR_ANIME_D03,  // ( モニタ情報D03 )
-  MONITOR_ANIME_NUM,  // 総数
+  MONITOR_ANIME_C01,    // ( モニタ情報C01 )
+  MONITOR_ANIME_C02,    // ( モニタ情報C02 )
+  MONITOR_ANIME_C03,    // ( モニタ情報C03 )
+  MONITOR_ANIME_C04,    // ( モニタ情報C04 )
+  MONITOR_ANIME_C05,    // ( モニタ情報C05 )
+  MONITOR_ANIME_C08W,   // ( モニタ情報C08W )
+  MONITOR_ANIME_C08B,   // ( モニタ情報C08B )
+  MONITOR_ANIME_TG,     // ( モニタ情報TG )
+  MONITOR_ANIME_ST,     // ( モニタ情報ST )
+  MONITOR_ANIME_WF,     // ( モニタ情報WF )
+  MONITOR_ANIME_BC,     // ( モニタ情報BC )
+  MONITOR_ANIME_D03,    // ( モニタ情報D03 )
+  MONITOR_ANIME_BROKEN, // ( モニタ情報<故障> )
+  MONITOR_ANIME_NUM,    // 総数
   MONITOR_ANIME_MAX = MONITOR_ANIME_NUM - 1
 } MONITOR_ANIME_INDEX;
 
 // 実アニメーション番号
 static u16 monitor_anime[ MONITOR_ANIME_NUM ] = 
 { 
-  ANM_MONITOR_C01,  // ( モニタ情報C01 )
-  ANM_MONITOR_C02,  // ( モニタ情報C02 )
-  ANM_MONITOR_C03,  // ( モニタ情報C03 )
-  ANM_MONITOR_C04,  // ( モニタ情報C04 )
-  ANM_MONITOR_C05,  // ( モニタ情報C05 )
-  ANM_MONITOR_C08W, // ( モニタ情報C08W )
-  ANM_MONITOR_C08B, // ( モニタ情報C08B )
-  ANM_MONITOR_TG,   // ( モニタ情報TG )
-  ANM_MONITOR_ST,   // ( モニタ情報ST )
-  ANM_MONITOR_WF,   // ( モニタ情報WF )
-  ANM_MONITOR_BC,   // ( モニタ情報BC )
-  ANM_MONITOR_D03,  // ( モニタ情報D03 )
+  ANM_MONITOR_C01,    // ( モニタ情報C01 )
+  ANM_MONITOR_C02,    // ( モニタ情報C02 )
+  ANM_MONITOR_C03,    // ( モニタ情報C03 )
+  ANM_MONITOR_C04,    // ( モニタ情報C04 )
+  ANM_MONITOR_C05,    // ( モニタ情報C05 )
+  ANM_MONITOR_C08W,   // ( モニタ情報C08W )
+  ANM_MONITOR_C08B,   // ( モニタ情報C08B )
+  ANM_MONITOR_TG,     // ( モニタ情報TG )
+  ANM_MONITOR_ST,     // ( モニタ情報ST )
+  ANM_MONITOR_WF,     // ( モニタ情報WF )
+  ANM_MONITOR_BC,     // ( モニタ情報BC )
+  ANM_MONITOR_D03,    // ( モニタ情報D03 )
+  ANM_MONITOR_BROKEN, // ( モニタ情報<故障> )
 };
 
 
@@ -1496,8 +1503,9 @@ static void SetupElboardNews_Normal( GATEWORK* work )
     GF_ASSERT(0);
     return;
   }
-  // データを持っていない
-  if( !work->gateData ){ return; }
+
+  if( !work->gateData ){ return; } // データを持っていない
+  if( !work->gateData->newsDispValidFlag ) { return; } // ニュース表示フラグがOFF
 
   // ニュースを追加
   AddNews_DATE( work );        // 日付
@@ -1525,8 +1533,8 @@ static void SetupElboardNews_Champion( GATEWORK* work )
     return;
   }
 
-  // データを持っていない
-  if( !work->gateData ){ return; }
+  if( !work->gateData ){ return; } // データを持っていない
+  if( !work->gateData->newsDispValidFlag ) { return; } // ニュース表示フラグがOFF
 
   // ニュースを追加
   AddNews_DATE( work );        // 日付
@@ -1552,8 +1560,9 @@ static void SetupElboardNews_Special( GATEWORK* work )
     return;
   }
 
-  // データを持っていない
-  if( !work->spNewsData ){ return; }
+  if( !work->spNewsData ){ return; } // データを持っていない
+  if( !work->gateData ){ return; } // データを持っていない
+  if( !work->gateData->newsDispValidFlag ) { return; } // ニュース表示フラグがOFF
 
   // ニュースを追加
   AddNews_DATE( work );        // 日付

@@ -17,25 +17,25 @@ def GetMonitorAnimeNo( no_str )
 
   # ハッシュテーブル作成
   hash_table = Hash::new
-  hash_table["C01"]   = 0
-  hash_table["C02"]   = 1
-  hash_table["C03"]   = 2
-  hash_table["C04"]   = 3
-  hash_table["C05"]   = 4
-  hash_table["C08_W"] = 5
-  hash_table["C08_B"] = 6
-  hash_table["TG"]    = 7
-  hash_table["ST"]    = 8
-  hash_table["WF"]    = 9
-  hash_table["BC"]    = 10
-  hash_table["D03"]   = 11 
-  hash_table["C06"]   = 0 #dummy
-  hash_table["C07"]   = 0 #dummy
-  hash_table["D08"]   = 0 #dummy
-  hash_table["D10"]   = 0 #dummy
-  hash_table["D12"]   = 0 #dummy
-  hash_table["D13"]   = 0 #dummy
-  hash_table["T02"]   = 0 #dummy
+  hash_table["C01"]    = 0
+  hash_table["C02"]    = 1
+  hash_table["C03"]    = 2
+  hash_table["C04"]    = 3
+  hash_table["C05"]    = 4
+  hash_table["C08_W"]  = 5
+  hash_table["C08_B"]  = 6
+  hash_table["TG"]     = 7
+  hash_table["ST"]     = 8
+  hash_table["WF"]     = 9
+  hash_table["BC"]     = 10
+  hash_table["D03"]    = 11 
+  hash_table["BROKEN"] = 12
+  hash_table["C07"]    = 0 #dummy
+  hash_table["D08"]    = 0 #dummy
+  hash_table["D10"]    = 0 #dummy
+  hash_table["D12"]    = 0 #dummy
+  hash_table["D13"]    = 0 #dummy
+  hash_table["T02"]    = 0 #dummy
 
   # 存在しないキーが指定されたらコンバートを止める
   if hash_table.has_key?(no_str) != true then
@@ -46,6 +46,23 @@ def GetMonitorAnimeNo( no_str )
   return hash_table[no_str]
 end
 
+#-------------------------------------------------------------------------------------
+# @brief ニュース表示有効フラグの値を取得する
+# @param str 有効かどうかを表す『掲示板ニュース表示』列の文字列
+# @return 指定した文字列に対応する値
+#-------------------------------------------------------------------------------------
+def GetNewsDispValidFlag( str )
+  hash = Hash.new
+  hash[ "×" ] = 0
+  hash[ "○" ] = 1
+
+  # 存在しないキーが指定された
+  if hash.has_key?( str ) == false then
+    abort( "掲示板ニュース表示：#{str} は対応していません" )
+  end
+
+  return hash[ str ]
+end
 
 #-------------------------------------------------------------------------------------
 # @brief main 指定したファイルをコンバートする
@@ -86,6 +103,7 @@ ROW_WEATHER_ZONE_2     = 26  # 天気を表示する場所2
 ROW_WEATHER_ZONE_3     = 27  # 天気を表示する場所3
 ROW_WEATHER_ZONE_4     = 28  # 天気を表示する場所4
 ROW_MONITOR_ANIME_NO   = 29  # モニター・アニメーション番号
+ROW_NEWS_VALID_FLAG    = 30  # 掲示板ニュース表示
                      
 # 出力ファイル名のリスト
 bin_file_list = Array.new
@@ -131,6 +149,7 @@ file.close
   out_data << GetZoneID("ZONE_ID_"+in_data[ROW_WEATHER_ZONE_3])
   out_data << GetZoneID("ZONE_ID_"+in_data[ROW_WEATHER_ZONE_4])
   out_data << GetMonitorAnimeNo(in_data[ROW_MONITOR_ANIME_NO])
+  out_data << GetNewsDispValidFlag(in_data[ROW_NEWS_VALID_FLAG])
   # バイナリデータを出力
   filename = ARGV[1] + "/elboard_zone_data_" + 
              in_data[ROW_ZONE_ID].downcase + "_" + 

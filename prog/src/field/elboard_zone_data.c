@@ -11,7 +11,7 @@
 #include <gflib.h>
 #include "elboard_zone_data.h"
 
-//#define DEBUG_MODE
+#define DEBUG_MODE
 
 //-----------------------------------------------------------------------------------
 /**
@@ -61,6 +61,7 @@ BOOL ELBOARD_ZONE_DATA_Load( ELBOARD_ZONE_DATA* buf, ARCID arc_id, ARCDATID dat_
   OBATA_Printf( "zoneID_weather_3 = %d\n", buf->zoneID_weather_3 ); 
   OBATA_Printf( "zoneID_weather_4 = %d\n", buf->zoneID_weather_4 ); 
   OBATA_Printf( "monitorAnimeIndex = %d\n", buf->monitorAnimeIndex ); 
+  OBATA_Printf( "newsDispValidFlag = %d\n", buf->newsDispValidFlag ); 
   OBATA_Printf( "-----------------------------------------------------------\n" );
 #endif
 

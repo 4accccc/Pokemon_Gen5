@@ -58,6 +58,7 @@ CONVERTDATA_GATE   = $(GRAPHIC_BIN)/gelboard01.nsbmd \
 							       $(GRAPHIC_BIN)/gelboard01_fast_5.nsbta \
 							       $(GRAPHIC_BIN)/gelboard01_fast_6.nsbta \
 							       $(GRAPHIC_BIN)/gelboard01_fast_7.nsbta \
+							       $(GRAPHIC_BIN)/gelboard01_tv00.nsbtp \
 							       $(GRAPHIC_BIN)/gelboard01_tv01.nsbtp \
 							       $(GRAPHIC_BIN)/gelboard01_tv02.nsbtp \
 							       $(GRAPHIC_BIN)/gelboard01_tv03.nsbtp \
@@ -113,6 +114,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_fast_5.ita -o $(GRAPHIC_BIN)/gelboard01_fast_5.nsbta
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_fast_6.ita -o $(GRAPHIC_BIN)/gelboard01_fast_6.nsbta
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_fast_7.ita -o $(GRAPHIC_BIN)/gelboard01_fast_7.nsbta
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv00.itp -o $(GRAPHIC_BIN)/gelboard01_tv00.nsbtp
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv01.itp -o $(GRAPHIC_BIN)/gelboard01_tv01.nsbtp
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv02.itp -o $(GRAPHIC_BIN)/gelboard01_tv02.nsbtp
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv03.itp -o $(GRAPHIC_BIN)/gelboard01_tv03.nsbtp
