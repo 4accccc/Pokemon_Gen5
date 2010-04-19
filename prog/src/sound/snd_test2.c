@@ -661,27 +661,6 @@ static BOOL SoundTest(SOUNDTEST_WORK* sw)
 			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){ PlayExBGM(sw); }
 			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){ StopExBGM(sw); }
 			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
-				u32		mask;
-
-				switch(sw->debugWork[0]){
-				case 0:
-					mask = PMSND_MASKPL_ALL;
-					break;
-				case 1:
-					mask = PMSND_MASKPL_BGM;
-					break;
-				case 2:
-					mask = PMSND_MASKPL_ALLSE;
-					break;
-
-				}
-				sw->debugWork[0]++;
-				if(sw->debugWork[0] >= 3){ sw->debugWork[0] = 0; }
-
-				PMSND_AllPlayerVolumeEnable( FALSE, mask ); 
-			}
-			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R ){
-				PMSND_AllPlayerVolumeEnable( TRUE, PMSND_MASKPL_ALL ); 
 			}
     }
     {
