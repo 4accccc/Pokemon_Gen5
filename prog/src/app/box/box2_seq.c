@@ -5195,14 +5195,16 @@ static int MainSeq_ItemBoxPartyIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 		return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 	}
 
+/*
 	// 移動元と移動先のトレイが違う
 	if( syswk->get_tray != BOX2MAIN_GETPOS_NONE && syswk->get_tray != syswk->tray ){
-		BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, FALSE );
+//		BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, FALSE );
 		syswk->get_pos = mvwk->put_pos;
 		ItemMoveWorkFree( syswk );
 //		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
 		return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 	}
+*/
 
 	BOX2OBJ_ItemIconChange( syswk->app, syswk->app->get_item );
 	BOX2OBJ_ItemIconAffineSet( syswk->app, TRUE );
@@ -5416,13 +5418,15 @@ static int MainSeq_ItemKeyGetChangeCkack( BOX2_SYS_WORK * syswk )
 	}
 
 	// 移動元と移動先のトレイが違う
+/*
 	if( syswk->get_tray != BOX2MAIN_GETPOS_NONE && syswk->get_tray != syswk->tray ){
-		BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, FALSE );
+//		BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, FALSE );
 //		syswk->get_pos = mvwk->put_pos;
 //		ItemMoveWorkFree( syswk );
 //		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
 		return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 	}
+*/
 
 	ItemMoveWorkAlloc( syswk );
 	{

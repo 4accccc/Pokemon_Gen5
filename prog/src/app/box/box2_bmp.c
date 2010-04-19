@@ -318,8 +318,8 @@ enum {
 };
 */
 
-#define	POKE_NOMARK_PY	( 3 )		//「No.」表示Y座標
-#define	POKE_LVMARK_PY	( 3 )		// レベル表示Ｙ座標
+#define	POKE_NOMARK_PY	( 0 )		//「No.」表示Y座標
+#define	POKE_LVMARK_PY	( 0 )		// レベル表示Ｙ座標
 
 #define	TITLE_STR_PY	( 8 )	// タイトル表示Y座標
 
@@ -808,8 +808,8 @@ static void PokeLvPut( BOX2_APP_WORK * appwk, BOX2_POKEINFO_DATA * info, u32 win
 		u32	npx;
 
 		ExStrPrint(
-			appwk, winID, appwk->mman, mes_box_subst_01_13, 0, POKE_LVMARK_PY, appwk->nfnt, FCOL_N_BLACK );
-		npx = PRINTSYS_GetStrWidth( appwk->exp, appwk->nfnt, 0 );
+			appwk, winID, appwk->mman, mes_box_subst_01_13, 0, POKE_LVMARK_PY, appwk->font, FCOL_N_BLACK );
+		npx = PRINTSYS_GetStrWidth( appwk->exp, appwk->font, 0 );
 		WORDSET_RegisterNumber(
 			appwk->wset, 0, info->lv, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 		ExStrPrint(
@@ -886,8 +886,8 @@ static void PokeNumberPut( BOX2_SYS_WORK * syswk, BOX2_POKEINFO_DATA * info, u32
 
 			ExStrPrint(
 				syswk->app, winID, syswk->app->mman,
-				mes_box_subst_01_14, 0, POKE_NOMARK_PY, syswk->app->nfnt, FCOL_N_BLACK );
-			npx = PRINTSYS_GetStrWidth( syswk->app->exp, syswk->app->nfnt, 0 );
+				mes_box_subst_01_14, 0, POKE_NOMARK_PY, syswk->app->font, FCOL_N_BLACK );
+			npx = PRINTSYS_GetStrWidth( syswk->app->exp, syswk->app->font, 0 );
 			WORDSET_RegisterNumber(
 				syswk->app->wset, 0, num, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 			ExStrPrint(

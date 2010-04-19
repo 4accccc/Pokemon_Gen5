@@ -3266,6 +3266,50 @@ static void ItemIconMoveMakeCore( BOX2_SYS_WORK * syswk, u32 set_pos, u32 put_po
   mvwk->now_y = npy << 8;
 }
 
+static void ItemIconMoveMakeTrayArrow( BOX2_SYS_WORK * syswk, u32 mode )
+{
+	BOX2MAIN_ITEMMOVE_WORK * mvwk;
+	s16	npx, npy;
+	s16	mpx, mpy;
+
+	mvwk = syswk->app->vfunk.work;
+
+	BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_ITEMICON, &npx, &npy, CLSYS_DEFREND_MAIN );
+
+//	BOX2OBJ_PokeIconDefaultPosGet( put_pos, &mpx, &mpy, mode );
+	if( syswk->tray > syswk->get_tray ){
+		// 左矢印
+		BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_L_ARROW, &mpx, &mpy, CLSYS_DEFREND_MAIN );
+	}else{
+		// 右矢印
+		BOX2OBJ_GetPos( syswk->app, BOX2OBJ_ID_R_ARROW, &mpx, &mpy, CLSYS_DEFREND_MAIN );
+	}
+
+	mvwk->put_pos = BOX2MAIN_GETPOS_NONE;
+//	mvwk->set_pos = set_pos;
+	mvwk->set_pos = BOX2MAIN_GETPOS_NONE;
+	mvwk->cnt = 0;
+	mvwk->mv_mode = mode;
+
+	if( npx > mpx ){
+		mvwk->mv_x = 1;
+		mvwk->mx = ( ( npx - mpx ) << 8 ) / ITEMICON_MOVE_CNT;
+	}else{
+		mvwk->mv_x = 0;
+		mvwk->mx = ( ( mpx - npx ) << 8 ) / ITEMICON_MOVE_CNT;
+	}
+	if( npy > mpy ){
+		mvwk->mv_y = 1;
+		mvwk->my = ( ( npy - mpy ) << 8 ) / ITEMICON_MOVE_CNT;
+	}else{
+		mvwk->mv_y = 0;
+		mvwk->my = ( ( mpy - npy ) << 8 ) / ITEMICON_MOVE_CNT;
+	}
+
+	mvwk->now_x = npx << 8;
+	mvwk->now_y = npy << 8;
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  * アイテムアイコン動作データ作成（タッチ）
@@ -3317,15 +3361,17 @@ static BOOL ItemIconMoveMainCore( BOX2_SYS_WORK * syswk, BOOL flg )
 
   mvwk = syswk->app->vfunk.work;
 
-  if( mvwk->cnt == ITEMICON_MOVE_CNT ){
-    if( flg == TRUE ){
-      BOX2OBJ_ItemIconPokePut( syswk->app, mvwk->put_pos, mvwk->mv_mode );
-    }else{
-      BOX2OBJ_ItemIconPokePutHand( syswk->app, mvwk->put_pos, mvwk->mv_mode );
-    }
-    BOX2OBJ_ItemIconCursorMove( syswk->app );
-    return FALSE;
-  }
+	if( mvwk->cnt == ITEMICON_MOVE_CNT ){
+		if( mvwk->put_pos != BOX2MAIN_GETPOS_NONE ){
+			if( flg == TRUE ){
+				BOX2OBJ_ItemIconPokePut( syswk->app, mvwk->put_pos, mvwk->mv_mode );
+			}else{
+				BOX2OBJ_ItemIconPokePutHand( syswk->app, mvwk->put_pos, mvwk->mv_mode );
+			}
+		}
+		BOX2OBJ_ItemIconCursorMove( syswk->app );
+		return FALSE;
+	}
 
   if( mvwk->mv_x == 0 ){
     mvwk->now_x += mvwk->mx;
@@ -6678,17 +6724,27 @@ int BOX2MAIN_VFuncItemIconChgTouch( BOX2_SYS_WORK * syswk )
       set_pos = syswk->get_pos;
       syswk->get_pos = mvwk->put_pos;
 
-      ItemIconMoveMake( syswk, set_pos, put_pos, BOX2MAIN_POKEMOVE_MODE_ALL );
-    }
-    vf->seq = 3;
-    break;
+			// 移動元と移動先のトレイが違う
+			if( syswk->get_tray != BOX2MAIN_GETPOS_NONE && syswk->get_tray != syswk->tray ){
+				ItemIconMoveMakeTrayArrow( syswk, BOX2MAIN_POKEMOVE_MODE_ALL );
+			}else{
+				ItemIconMoveMake( syswk, set_pos, put_pos, BOX2MAIN_POKEMOVE_MODE_ALL );
+			}
+		}
+		vf->seq = 3;
+		break;
 
-  case 3:
-    if( ItemIconMoveMain( syswk ) == FALSE ){
-      PMSND_PlaySE( SE_BOX2_POKE_PUT );
-      vf->seq = 4;
-    }
-    break;
+	case 3:
+		if( ItemIconMoveMain( syswk ) == FALSE ){
+			// 移動元と移動先のトレイが違う
+			if( syswk->get_tray != BOX2MAIN_GETPOS_NONE && syswk->get_tray != syswk->tray ){
+				vf->seq = 5;
+			}else{
+				PMSND_PlaySE( SE_BOX2_POKE_PUT );
+				vf->seq = 4;
+			}
+		}
+		break;
 
   case 4:
     BOX2OBJ_ItemIconAffineSet( syswk->app, TRUE );
