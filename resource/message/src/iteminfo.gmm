@@ -3943,30 +3943,30 @@
 	</row>
 
 	<row id="ITEMINFO_424">
-		<language name="JPN" width="256">はげしく　うずまく　みずの　なかに
-あいてを　とじこめて　こうげきする。
-うずのうえを　とおることも　できる。</language>
-		<language name="JPN_KANJI" width="256">はげしく　うずまく　みずの　なかに
-相手を　とじこめて　攻撃する。
-渦の上を　通ることも　できる。</language>
-	</row>
-
-	<row id="ITEMINFO_425">
-		<language name="JPN" width="256">いわを　くだくような　パンチで
-こうげきする。　ひびわれた　いわを
-こわすことも　できる。</language>
-		<language name="JPN_KANJI" width="256">いわを　くだくような　パンチで
-攻撃する。　ひびわれた　いわを
-壊すことも　できる。</language>
-	</row>
-
-	<row id="ITEMINFO_426">
 		<language name="JPN" width="256">たきを　さかのぼるような　すさまじい
 いきおいで　とっしん　こうげきする。
 たきを　のぼることも　できる。</language>
 		<language name="JPN_KANJI" width="256">たきを　さかのぼるような　すさまじい
 いきおいで　とっしん　攻撃する。
 たきを　のぼることも　できる。</language>
+	</row>
+
+	<row id="ITEMINFO_425">
+		<language name="JPN" width="256">１ターンめで　もぐり　２ターンめに
+うきあがって　こうげきする。うみの
+なかに　もぐる　ことも　できる。</language>
+		<language name="JPN_KANJI" width="256">１ターンめで　もぐり　２ターンめに
+うきあがって　攻撃する。海の
+中に　もぐることも　できる。</language>
+	</row>
+
+	<row id="ITEMINFO_426">
+		<language name="JPN" width="256">はげしく　うずまく　みずの　なかに
+あいてを　とじこめて　こうげきする。
+うずのうえを　とおることも　できる。</language>
+		<language name="JPN_KANJI" width="256">はげしく　うずまく　みずの　なかに
+相手を　とじこめて　攻撃する。
+渦の上を　通ることも　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_427">
@@ -5698,20 +5698,20 @@
 	</row>
 
 	<row id="ITEMINFO_619">
-		<language name="JPN" width="256">カマや　ツメなどの　するどいもので
-きりつけて　こうげきする。
-ほそいきを　きることも　できる。</language>
-		<language name="JPN_KANJI" width="256">カマや　ツメなどの　するどいもので
-きりつけて　攻撃する。
-細い木を　きることも　できる。</language>
+		<language name="JPN" width="256">いわを　くだくような　パンチで
+こうげきする。　ひびわれた　いわを
+こわすことも　できる。</language>
+		<language name="JPN_KANJI" width="256">いわを　くだくような　パンチで
+攻撃する。　ひびわれた　いわを
+壊すことも　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_620">
-		<language name="JPN" width="256">こんしんの　ちからで　こうげきする。
-おもいいわを　おすことも　できる。
+		<language name="JPN" width="256">まくしたてる　ように　どなりつけて
+あいての　とくこうを　さげる。
 </language>
-		<language name="JPN_KANJI" width="256">こんしんの　ちからで　攻撃する。
-重い岩を　押すことも　できる。
+		<language name="JPN_KANJI" width="256">まくしたてる　ように　どなりつけて
+相手の　特攻を　さげる。
 </language>
 	</row>
 
