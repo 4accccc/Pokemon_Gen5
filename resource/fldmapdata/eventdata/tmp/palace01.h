@@ -12,6 +12,8 @@
 #define PALACE01_GIRL4_01                  1
 #define PALACE01_GIRL4_02                  2
 #define PALACE01_POSTMAN_01                3
+#define PALACE01_GIRL4_04                  4
+#define PALACE01_GIRL4_03                  5
 
 #endif //ZONE_PALACE01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/palace01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

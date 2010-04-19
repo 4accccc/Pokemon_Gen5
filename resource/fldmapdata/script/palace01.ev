@@ -25,9 +25,12 @@ _EVENT_DATA    ev_recover_palace01
 _EVENT_DATA    ev_scene_change_palace01
 _EVENT_DATA    ev_palace01_monolith
 _EVENT_DATA    ev_palace01_oldman1_01		//パレスじいさん
-_EVENT_DATA    ev_palace01_girl4_01			//パレス双子（左）
-_EVENT_DATA    ev_palace01_girl4_02			//パレス双子（右）
+_EVENT_DATA    ev_palace01_girl4_01			//パレス４姉妹（左の橋）
+_EVENT_DATA    ev_palace01_girl4_02			//パレス４姉妹（右の橋）
 _EVENT_DATA    ev_scene_palace01_1stguide	//パレス初回誘導イベント
+_EVENT_DATA    ev_palace01_oldman1_02		//侵入先のパレスじいさん
+_EVENT_DATA    ev_palace01_girl4_03			//パレス４姉妹
+_EVENT_DATA    ev_palace01_girl4_04			//パレス４姉妹
 _EVENT_DATA_END
 
 
@@ -346,5 +349,133 @@ EVENT_START ev_palace01_girl4_02
 	_MSGWIN_CLOSE()
 	
 EVENT_END
+
+
+/**************************************************************/
+/*  パレス４姉妹 [100419斉藤マ]                               */
+/**************************************************************/
+EVENT_START ev_palace01_girl4_03
+	_TALK_OBJ_START()
+	
+	//私たちはパレスを見守るもの
+	_BALLOONWIN_OBJMSG_POS( plc_girl4_03_01, PALACE01_GIRL4_03, POS_DOWN )
+	
+	{
+	DEFINE_LOCAL  lwk_loop
+	DEFINE_LOCAL  lwk_bmpans
+	
+	//パレス質問メニュー（やめる選択までループ）
+	WHILE $lwk_loop != 555
+		
+		//パレスについて知りたい？
+		_BALLOONWIN_OBJMSG_POS( plc_girl4_03_02, PALACE01_GIRL4_03, POS_DOWN )
+		
+		//メニュー作成
+		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, lwk_bmpans )
+		//リスト追加
+		_BMPMENU_MAKE_LIST( plc_girl4_03_06, 0 )	//ハイリンクの森とは
+		_BMPMENU_MAKE_LIST( plc_girl4_03_07, 1 )	//森の広場　森の奥とは
+		_BMPMENU_MAKE_LIST( plc_girl4_03_08, 10 )	//やめる
+		//メニュー表示
+		_BMPMENU_START()
+		
+		SWITCH $lwk_bmpans
+		CASE 0 THEN
+			//ハイリンクの森とは
+			_BALLOONWIN_OBJMSG_POS( plc_girl4_03_03, PALACE01_GIRL4_03, POS_DOWN )
+		CASE 1 THEN
+			//夢で出会ったポケモンは…
+			_BALLOONWIN_OBJMSG_POS( plc_girl4_03_04, PALACE01_GIRL4_03, POS_DOWN )
+		DEFAULT
+			//やめる
+			$lwk_loop = 555
+		ENDSWITCH
+	
+	ENDWHILE
+	
+	}
+	
+	//終了メッセージ
+	_BALLOONWIN_OBJMSG_POS( plc_girl4_03_05 ,PALACE01_GIRL4_03, POS_DOWN )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+
+
+/**************************************************************/
+/*  パレス４姉妹 ワープポイント手前 [100419斉藤マ]            */
+/**************************************************************/
+EVENT_START ev_palace01_girl4_04
+	_EASY_BALLOONWIN_TALKOBJ_MSG( plc_girl4_04_01 )
+EVENT_END
+
+/**************************************************************/
+/*  パレス裏おやじ [100419斉藤マ]                             */
+/**************************************************************/
+//進入先でのチュートリアルおやじ
+//OBJ_IDはプログラム配置のため固定で OBJID_PALACE_OLDMAN を指定
+EVENT_START ev_palace01_oldman1_02
+	_TALK_OBJ_START()
+	
+	//初回会話分岐
+	IF FLAG_OFF( FE_PALACE01_OLDMANTALK2 ) THEN
+		//初回時
+		
+		_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_01, OBJID_PALACE_OLDMAN, POS_DOWN )
+		
+		//初回会話フラグをセット
+		//========================================//
+		_FLAG_SET( FE_PALACE01_OLDMANTALK2 )
+		//========================================//
+		
+	ELSE
+		//２回目以降
+		
+		_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_04, OBJID_PALACE_OLDMAN, POS_DOWN )
+		
+	ENDIF
+	
+	{
+	DEFINE_LOCAL  lwk_loop
+	DEFINE_LOCAL  lwk_bmpans
+	
+	//パレス質問メニュー（やめる選択までループ）
+	WHILE $lwk_loop != 555
+		
+		_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_02, OBJID_PALACE_OLDMAN, POS_DOWN )
+		
+		//選択肢表示
+		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, lwk_bmpans )
+		//リスト追加
+		_BMPMENU_MAKE_LIST( plc_oldman1_02_07, 0 )	//他人の世界とは
+		_BMPMENU_MAKE_LIST( plc_oldman1_02_08, 1 )	//ワープとは
+		_BMPMENU_MAKE_LIST( plc_oldman1_02_09, 10 )	//やめる
+		//メニュー表示
+		_BMPMENU_START()
+		
+		SWITCH $lwk_bmpans
+		CASE 0 THEN
+			//他人の世界とは
+			_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_05, OBJID_PALACE_OLDMAN, POS_DOWN )
+		CASE 1 THEN
+			//ワープとは
+			_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_06, OBJID_PALACE_OLDMAN, POS_DOWN )
+		DEFAULT
+			//やめる
+			$lwk_loop = 555
+		ENDSWITCH
+	
+	ENDWHILE
+	}
+	
+	//終了メッセージ
+	_BALLOONWIN_OBJMSG_POS( plc_oldman1_02_03, OBJID_PALACE_OLDMAN, POS_DOWN )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+
+
 
 
