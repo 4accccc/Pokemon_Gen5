@@ -26,7 +26,6 @@
 #define STONE_ANM_NUM  (4)
 
 #define FLASH_FRAME_FX32  ( 80*FX32_ONE )
-#define END_FRAME_FX32  ( 480*FX32_ONE )
 #define LOOP_START_FRAME_FX32 ( 450*FX32_ONE )
 
 typedef struct LEG_GMK_WK_tag
@@ -268,15 +267,21 @@ static GMEVENT_RESULT StoneEvt( GMEVENT* event, int* seq, void* work )
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
 //  SPPOKE_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
   int obj;
-  fx32 frm;
+  fx32 frm, last_frm;
   
   obj = OBJ_STONE;
 
   //現在フレームを取得
   frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, LEGEND_UNIT_IDX, obj, 0 );
-  NOZOMU_Printf( "frm = %x::%d\n",frm, frm/FX32_ONE );
+  {
+    EXP_OBJ_ANM_CNT_PTR anm;
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, LEGEND_UNIT_IDX, OBJ_STONE, 0);
+    last_frm = FLD_EXP_OBJ_GetAnimeLastFrame(anm );
+  }
+
+  NOZOMU_Printf( "frm = %x::%d  last= %x::%d\n",frm, frm/FX32_ONE, last_frm, last_frm/FX32_ONE );
   //終了していいフレームか？
-  if (frm >= END_FRAME_FX32)
+  if (frm >= last_frm)
   {
     LEG_GMK_WK *gmk_wk;
     NOZOMU_Printf("アニメ終了\n");
