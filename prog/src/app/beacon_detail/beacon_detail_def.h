@@ -98,6 +98,9 @@ enum
 
 #define UNION_CHAR_MAX  (16)
 
+///WordSet
+#define WORDSET_BDETAIL_BUFLEN  (WORDSET_COUNTRY_BUFLEN)
+
 ///////////////////////////////////////////////////
 //SEŠÖ˜A
 

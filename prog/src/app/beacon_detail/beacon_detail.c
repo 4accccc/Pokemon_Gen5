@@ -461,7 +461,7 @@ static void _sub_SystemSetup( BEACON_DETAIL_WORK* wk)
 	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 												GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
-  wk->wset = WORDSET_Create( wk->heapID);
+  wk->wset = WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, WORDSET_BDETAIL_BUFLEN, wk->heapID );
 	
   //メッセージデータ
 	wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
