@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-04-19T15:54:42"/>
+	<create user="obata_toshihiro" host="W00209" date="2010-04-19T22:59:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,14 +365,14 @@
 		</language>
 	</columns>
 
-	<dialog left="174" top="160" right="879" bottom="780" maximized="no" rayout="Vertical2">
+	<dialog left="412" top="190" right="1117" bottom="810" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="412" top="136" right="940" bottom="658" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -409,6 +409,11 @@
 		<language name="JPN_KANJI" width="240">通信</language>
 	</row>
 
+	<row id="dni_record_palace" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="240">パレス</language>
+		<language name="JPN_KANJI" width="240">パレス</language>
+	</row>
+
 	<row id="dni_record_battle" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<language name="JPN" width="240">バトル</language>
 		<language name="JPN_KANJI" width="240">バトル</language>
@@ -422,6 +427,11 @@
 	<row id="dni_record_musical" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<language name="JPN" width="240">ミュージカル</language>
 		<language name="JPN_KANJI" width="240">ミュージカル</language>
+	</row>
+
+	<row id="dni_record_bsubway" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="240">バトルサブウェイ</language>
+		<language name="JPN_KANJI" width="240">バトルサブウェイ</language>
 	</row>
 
 	<row id="dni_record_00" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
@@ -897,6 +907,121 @@
 	<row id="dni_record_94" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<language name="JPN" width="240">トライアルハウス最高スコア</language>
 		<language name="JPN_KANJI" width="240">トライアルハウス最高スコア</language>
+	</row>
+
+	<row id="dni_record_95" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">歩数</language>
+		<language name="JPN_KANJI" width="240">歩数</language>
+	</row>
+
+	<row id="dni_record_96" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">パルゲート最高得点</language>
+		<language name="JPN_KANJI" width="240">パルゲート最高得点</language>
+	</row>
+
+	<row id="dni_record_97" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">海底遺跡内の歩数カウント</language>
+		<language name="JPN_KANJI" width="240">海底遺跡内の歩数カウント</language>
+	</row>
+
+	<row id="dni_record_98" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">パレス滞在時間&lt;年&gt;</language>
+		<language name="JPN_KANJI" width="240">パレス滞在時間&lt;年&gt;</language>
+	</row>
+
+	<row id="dni_record_99" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">パレス滞在時間&lt;月&gt;</language>
+		<language name="JPN_KANJI" width="240">パレス滞在時間&lt;月&gt;</language>
+	</row>
+
+	<row id="dni_record_100" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">パレス滞在時間&lt;日&gt;</language>
+		<language name="JPN_KANJI" width="240">パレス滞在時間&lt;日&gt;</language>
+	</row>
+
+	<row id="dni_record_101" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">パレス滞在時間&lt;時間&gt;</language>
+		<language name="JPN_KANJI" width="240">パレス滞在時間&lt;時間&gt;</language>
+	</row>
+
+	<row id="dni_record_102" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">パレス滞在時間&lt;分&gt;</language>
+		<language name="JPN_KANJI" width="240">パレス滞在時間&lt;分&gt;</language>
+	</row>
+
+	<row id="dni_record_103" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">パレス滞在時間&lt;秒&gt;</language>
+		<language name="JPN_KANJI" width="240">パレス滞在時間&lt;秒&gt;</language>
+	</row>
+
+	<row id="dni_record_104" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">シングルトレイン最高連勝数</language>
+		<language name="JPN_KANJI" width="240">シングルトレイン最高連勝数</language>
+	</row>
+
+	<row id="dni_record_105" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">シングルトレイン現在連勝数</language>
+		<language name="JPN_KANJI" width="240">シングルトレイン現在連勝数</language>
+	</row>
+
+	<row id="dni_record_106" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Sシングルトレイン最高連勝数</language>
+		<language name="JPN_KANJI" width="240">Sシングルトレイン最高連勝数</language>
+	</row>
+
+	<row id="dni_record_107" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Sシングルトレイン現在連勝数</language>
+		<language name="JPN_KANJI" width="240">Sシングルトレイン現在連勝数</language>
+	</row>
+
+	<row id="dni_record_108" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ダブルトレイン最高連勝数</language>
+		<language name="JPN_KANJI" width="240">ダブルトレイン最高連勝数</language>
+	</row>
+
+	<row id="dni_record_109" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ダブルトレイン現在連勝数</language>
+		<language name="JPN_KANJI" width="240">ダブルトレイン現在連勝数</language>
+	</row>
+
+	<row id="dni_record_110" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Sダブルトレイン最高連勝数</language>
+		<language name="JPN_KANJI" width="240">Sダブルトレイン最高連勝数</language>
+	</row>
+
+	<row id="dni_record_111" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Sダブルトレイン現在連勝数</language>
+		<language name="JPN_KANJI" width="240">Sダブルトレイン現在連勝数</language>
+	</row>
+
+	<row id="dni_record_112" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">マルチトレイン最大連勝数</language>
+		<language name="JPN_KANJI" width="240">マルチトレイン最大連勝数</language>
+	</row>
+
+	<row id="dni_record_113" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">マルチトレイン現在連勝数</language>
+		<language name="JPN_KANJI" width="240">マルチトレイン現在連勝数</language>
+	</row>
+
+	<row id="dni_record_114" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Sマルチトレイン最大連勝数</language>
+		<language name="JPN_KANJI" width="240">Sマルチトレイン最大連勝数</language>
+	</row>
+
+	<row id="dni_record_115" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">Sマルチトレイン現在連勝数</language>
+		<language name="JPN_KANJI" width="240">Sマルチトレイン現在連勝数</language>
+	</row>
+
+	<row id="dni_record_116" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">WiFiトレイン最大連勝数</language>
+		<language name="JPN_KANJI" width="240">WiFiトレイン最大連勝数</language>
+	</row>
+
+	<row id="dni_record_117" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">WiFiトレイン現在連勝数</language>
+		<language name="JPN_KANJI" width="240">WiFiトレイン現在連勝数</language>
 	</row>
 
 	<flowchart-group-list>

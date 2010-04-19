@@ -13,9 +13,15 @@ static const DEBUG_NUMINPUT_PARAM DNP_Record_1 = { 0, 999999999, DebugGetRecord,
 static const DEBUG_NUMINPUT_PARAM DNP_Record_2 = { 0,   9995959, DebugGetRecord, DebugSetRecord, };
 static const DEBUG_NUMINPUT_PARAM DNP_Record_3 = { 0,    999999, DebugGetRecord, DebugSetRecord, };
 static const DEBUG_NUMINPUT_PARAM DNP_Record_4 = { 0,      9999, DebugGetRecord, DebugSetRecord, };
+static const DEBUG_NUMINPUT_PARAM DNP_Record_Palpark = { 0, 999, DebugGetPalparkHighScore, DebugSetPalparkHighScore, };
+static const DEBUG_NUMINPUT_PARAM DNP_Record_SeaTemple = { 0, 9999, DebugGetSeaTempleStepCount, DebugSetSeaTempleStepCount, };
+static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime = { 0, 9999, DebugGetPalaceTime, DebugSetPalaceTime, };
+static const DEBUG_NUMINPUT_PARAM DNP_Record_BSubway = { 0, 9999, DebugGetBSubway, DebugSetBSubway, };
 
+// フィールド関連レコード
 static const DEBUG_NUMINPUT_LIST DNI_RecordList_Field[] = {
   //gmm_id, param, dni_param
+  { dni_record_95, RECID_WALK_COUNT,               &DNP_Record_1 }, 
   { dni_record_00, RECID_REPORT_COUNT,             &DNP_Record_1 }, 
   { dni_record_01, RECID_CLEAR_TIME,               &DNP_Record_1 }, 
   { dni_record_02, RECID_RIDE_CYCLE,               &DNP_Record_1 },
@@ -32,8 +38,6 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_Field[] = {
   { dni_record_28, RECID_MAIL_WRITE,               &DNP_Record_1 }, 
   { dni_record_29, RECID_NICKNAME,                 &DNP_Record_1 }, 
   { dni_record_30, RECID_PREMIUM_BALL,             &DNP_Record_1 }, 
-  { dni_record_39, RECID_PALACE_TIME,              &DNP_Record_1 }, 
-  { dni_record_40, RECID_PALACE_MISSION,           &DNP_Record_1 }, 
   { dni_record_41, RECID_DENDOU_CNT,               &DNP_Record_1 },
   { dni_record_42, RECID_RECOVERY_HOME,            &DNP_Record_1 }, 
   { dni_record_50, RECID_FISHING_FAILURE,          &DNP_Record_1 },
@@ -54,8 +58,10 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_Field[] = {
   { dni_record_91, RECID_TRIALHOUSE_COUNT,         &DNP_Record_1 }, 
   { dni_record_93, RECID_TRIALHOUSE_RANK,          &DNP_Record_1 }, 
   { dni_record_94, RECID_TRIALHOUSE_SCORE,         &DNP_Record_1 },
+  { dni_record_96, 0,                              &DNP_Record_Palpark },
+  { dni_record_97, 0,                              &DNP_Record_SeaTemple },
 };
-// 通信関連
+// 通信関連レコード
 static const DEBUG_NUMINPUT_LIST DNI_RecordList_Comm[] = { 
   //gmm_id, param, dni_param
   { dni_record_11, RECID_COMM_TRADE,        &DNP_Record_1 },
@@ -75,7 +81,19 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_Comm[] = {
   { dni_record_60, RECID_GURUGURU_COUNT,    &DNP_Record_1 }, 
   { dni_record_92, RECID_SURECHIGAI_THANKS, &DNP_Record_1 },
 };
-// バトル関連
+// パレス関連レコード
+static const DEBUG_NUMINPUT_LIST DNI_RecordList_Palace[] = { 
+  //gmm_id, param, dni_param
+  { dni_record_39,  RECID_PALACE_TIME,    &DNP_Record_1 }, 
+  { dni_record_40,  RECID_PALACE_MISSION, &DNP_Record_1 }, 
+  { dni_record_98,  0,                    &DNP_Record_PalaceTime }, 
+  { dni_record_99,  1,                    &DNP_Record_PalaceTime }, 
+  { dni_record_100, 2,                    &DNP_Record_PalaceTime }, 
+  { dni_record_101, 3,                    &DNP_Record_PalaceTime }, 
+  { dni_record_102, 4,                    &DNP_Record_PalaceTime }, 
+  { dni_record_103, 5,                    &DNP_Record_PalaceTime }, 
+};
+// バトル関連レコード
 static const DEBUG_NUMINPUT_LIST DNI_RecordList_Battle[] = {
   //gmm_id, param, dni_param
   { dni_record_03, RECID_BATTLE_COUNT,       &DNP_Record_1 }, 
@@ -119,7 +137,7 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_Random[] = {
   { dni_record_79, RECID_RANDOM_RATE_SHOOTER_WIN,  &DNP_Record_1 }, 
   { dni_record_80, RECID_RANDOM_RATE_SHOOTER_LOSE, &DNP_Record_1 },
 };
-// ミュージカル関連
+// ミュージカル関連レコード
 static const DEBUG_NUMINPUT_LIST DNI_RecordList_Musical[] = {
   //gmm_id, param, dni_param
   { dni_record_84, RECID_MUSICAL_PLAY_NUM,         &DNP_Record_1 }, 
@@ -127,6 +145,24 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_Musical[] = {
   { dni_record_86, RECID_MUSICAL_COMM_NUM,         &DNP_Record_1 },
   { dni_record_87, RECID_MUSICAL_COMM_WINNER_NUM,  &DNP_Record_1 }, 
   { dni_record_88, RECID_MUSICAL_TOTAL_POINT,      &DNP_Record_1 }, 
+};
+// バトルサブウェイ関連レコード
+static const DEBUG_NUMINPUT_LIST DNI_RecordList_BSubway[] = {
+  //gmm_id, param, dni_param
+  { dni_record_104,  0, &DNP_Record_BSubway }, 
+  { dni_record_105,  1, &DNP_Record_BSubway }, 
+  { dni_record_106,  2, &DNP_Record_BSubway }, 
+  { dni_record_107,  3, &DNP_Record_BSubway }, 
+  { dni_record_108,  4, &DNP_Record_BSubway }, 
+  { dni_record_109,  5, &DNP_Record_BSubway }, 
+  { dni_record_110,  6, &DNP_Record_BSubway }, 
+  { dni_record_111,  7, &DNP_Record_BSubway }, 
+  { dni_record_112,  8, &DNP_Record_BSubway }, 
+  { dni_record_113,  9, &DNP_Record_BSubway }, 
+  { dni_record_114, 10, &DNP_Record_BSubway }, 
+  { dni_record_115, 11, &DNP_Record_BSubway }, 
+  { dni_record_116, 12, &DNP_Record_BSubway }, 
+  { dni_record_117, 13, &DNP_Record_BSubway }, 
 };
 
 #endif  //PM_DEBUG 

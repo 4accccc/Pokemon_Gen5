@@ -18,10 +18,15 @@
 #include "system/main.h"
 #include "field/field_msgbg.h"
 #include "print/wordset.h"
+#include "savedata/misc.h"
+#include "savedata/situation.h"
+#include "savedata/intrude_save.h"
+#include "savedata/bsubway_savedata.h"
 
 #include "arc_def.h"
 #include "message.naix"
 #include "msg/msg_d_numinput_record.h"
+
 
 //======================================================================
 //======================================================================
@@ -76,6 +81,14 @@ static GMEVENT * DEBUG_EVENT_FLDMENU_FlagWork(
 
 static u32 DebugGetRecord(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetRecord(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPalparkHighScore( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetPalparkHighScore(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetSeaTempleStepCount( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetSeaTempleStepCount(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPalaceTime( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetPalaceTime(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value);
+static u32 DebugGetBSubway( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
+static void DebugSetBSubway(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value);
 
 #include "debug_numinput_record.cdat"
 
@@ -83,12 +96,16 @@ static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Field = {
   NELEMS( DNI_RecordList_Field ), DNI_RecordList_Field, };
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Comm = {
   NELEMS( DNI_RecordList_Comm ), DNI_RecordList_Comm, };
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Palace = {
+  NELEMS( DNI_RecordList_Palace ), DNI_RecordList_Palace, };
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Battle = {
   NELEMS( DNI_RecordList_Battle ), DNI_RecordList_Battle, };
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Random = {
   NELEMS( DNI_RecordList_Random ), DNI_RecordList_Random, };
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Musical = {
   NELEMS( DNI_RecordList_Musical ), DNI_RecordList_Musical, };
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_BSubway = {
+  NELEMS( DNI_RecordList_BSubway ), DNI_RecordList_BSubway, };
 
 
 /// 数値入力　メニューヘッダー
@@ -118,9 +135,11 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
 {
   { dni_record_field, (void*)&DATA_Record_Field },
   { dni_record_comm, (void*)&DATA_Record_Comm },
+  { dni_record_palace, (void*)&DATA_Record_Palace },
   { dni_record_battle, (void*)&DATA_Record_Battle },
   { dni_record_random, (void*)&DATA_Record_Random },
   { dni_record_musical, (void*)&DATA_Record_Musical },
+  { dni_record_bsubway, (void*)&DATA_Record_BSubway },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
@@ -601,15 +620,158 @@ static GMEVENT * DEBUG_EVENT_FLDMENU_FlagWork(
  * @param param レコードID
  */
 //--------------------------------------------------------------
-static u32 DebugGetRecord(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+static u32 DebugGetRecord(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param)
 {
-  RECORD* record = GAMEDATA_GetRecordPtr( gamedata );
+  RECORD* record = GAMEDATA_GetRecordPtr( gdata );
   return RECORD_Get( record, param );
 }
-static void DebugSetRecord(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+static void DebugSetRecord(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value)
 {
-  RECORD* record = GAMEDATA_GetRecordPtr( gamedata );
+  RECORD* record = GAMEDATA_GetRecordPtr( gdata );
   RECORD_Set( record, param, value );
 }
 
-#endif  //PM_DEBUG
+//--------------------------------------------------------------
+/**
+ * @brief パルゲート最高得点
+ */
+//--------------------------------------------------------------
+static u32 DebugGetPalparkHighScore( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  MISC* misc = GAMEDATA_GetMiscWork( gdata );
+  return MISC_GetPalparkHighscore( misc );
+}
+static void DebugSetPalparkHighScore(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value)
+{
+  MISC* misc = GAMEDATA_GetMiscWork( gdata );
+  MISC_SetPalparkHighscore( misc, value );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 海底遺跡内の歩数カウント
+ */
+//--------------------------------------------------------------
+static u32 DebugGetSeaTempleStepCount( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gdata );
+  SITUATION* situation = SaveData_GetSituation( save );
+  return Situation_GetSeaTempleStepCount( situation );
+}
+static void DebugSetSeaTempleStepCount(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value)
+{
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gdata );
+  SITUATION* situation = SaveData_GetSituation( save );
+  Situation_SetSeaTempleStepCount( situation, value );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief パレス滞在時間
+ */
+//--------------------------------------------------------------
+static u32 DebugGetPalaceTime( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  u32 value;
+  RTCDate date;
+  RTCTime time;
+  s64 total_sec;
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gdata );
+  INTRUDE_SAVE_WORK* intrude = SaveData_GetIntrude( save );
+
+  total_sec = ISC_SAVE_GetPalaceSojournTime( intrude ); 
+  RTC_ConvertSecondToDateTime( &date, &time, total_sec );
+
+  switch( param ) {
+  case 0: value = date.year;   break;
+  case 1: value = date.month;  break;
+  case 2: value = date.day;    break;
+  case 3: value = time.hour;   break;
+  case 4: value = time.minute; break;
+  case 5: value = time.second; break;
+  default: GF_ASSERT(0); break;
+  }
+  return value;
+}
+
+static void DebugSetPalaceTime(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value)
+{
+  RTCDate date;
+  RTCTime time;
+  s64 total_sec;
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gdata );
+  INTRUDE_SAVE_WORK* intrude = SaveData_GetIntrude( save );
+
+  total_sec = ISC_SAVE_GetPalaceSojournTime( intrude ); // 秒を取得
+  RTC_ConvertSecondToDateTime( &date, &time, total_sec ); // 日時に変換
+
+  // データを上書き
+  switch( param ) {
+  case 0: date.year   = value; break;
+  case 1: date.month  = value; break;
+  case 2: date.day    = value; break;
+  case 3: time.hour   = value; break;
+  case 4: time.minute = value; break;
+  case 5: time.second = value; break;
+  default: GF_ASSERT(0); break;
+  }
+
+  total_sec = RTC_ConvertDateTimeToSecond( &date, &time ); // 秒に戻す
+  ISC_SAVE_SetPalaceSojournTime( intrude, total_sec ); 
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief バトルサブウェイ
+ */
+//--------------------------------------------------------------
+static u32 DebugGetBSubway( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
+{
+  u32 value;
+  BSUBWAY_SCOREDATA* score = GAMEDATA_GetBSubwayScoreData( gdata );
+
+  switch( param ) {
+  case  0: value = BSUBWAY_SCOREDATA_GetRenshou( score, BSWAY_PLAYMODE_SINGLE ); break;
+  case  1: value = BSUBWAY_SCOREDATA_GetRenshouMax( score, BSWAY_PLAYMODE_SINGLE ); break;
+  case  2: value = BSUBWAY_SCOREDATA_GetRenshou( score, BSWAY_PLAYMODE_S_SINGLE ); break;
+  case  3: value = BSUBWAY_SCOREDATA_GetRenshouMax( score, BSWAY_PLAYMODE_S_SINGLE ); break;
+  case  4: value = BSUBWAY_SCOREDATA_GetRenshou( score, BSWAY_PLAYMODE_DOUBLE ); break;
+  case  5: value = BSUBWAY_SCOREDATA_GetRenshouMax( score, BSWAY_PLAYMODE_DOUBLE ); break;
+  case  6: value = BSUBWAY_SCOREDATA_GetRenshou( score, BSWAY_PLAYMODE_S_DOUBLE ); break;
+  case  7: value = BSUBWAY_SCOREDATA_GetRenshouMax( score, BSWAY_PLAYMODE_S_DOUBLE ); break;
+  case  8: value = BSUBWAY_SCOREDATA_GetRenshou( score, BSWAY_PLAYMODE_MULTI ); break;
+  case  9: value = BSUBWAY_SCOREDATA_GetRenshouMax( score, BSWAY_PLAYMODE_MULTI ); break;
+  case 10: value = BSUBWAY_SCOREDATA_GetRenshou( score, BSWAY_PLAYMODE_S_MULTI ); break;
+  case 11: value = BSUBWAY_SCOREDATA_GetRenshouMax( score, BSWAY_PLAYMODE_S_MULTI ); break;
+  case 12: value = BSUBWAY_SCOREDATA_GetRenshou( score, BSWAY_PLAYMODE_WIFI ); break;
+  case 13: value = BSUBWAY_SCOREDATA_GetRenshouMax( score, BSWAY_PLAYMODE_WIFI ); break;
+  default: GF_ASSERT(0);
+  }
+  return value;
+}
+
+static void DebugSetBSubway(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value)
+{
+  BSUBWAY_SCOREDATA* score = GAMEDATA_GetBSubwayScoreData( gdata );
+
+  switch( param ) {
+  case  0: BSUBWAY_SCOREDATA_SetRenshou( score, BSWAY_PLAYMODE_SINGLE, value ); break;
+  case  1: BSUBWAY_SCOREDATA_SetRenshouMax( score, BSWAY_PLAYMODE_SINGLE, value ); break;
+  case  2: BSUBWAY_SCOREDATA_SetRenshou( score, BSWAY_PLAYMODE_S_SINGLE, value ); break;
+  case  3: BSUBWAY_SCOREDATA_SetRenshouMax( score, BSWAY_PLAYMODE_S_SINGLE, value ); break;
+  case  4: BSUBWAY_SCOREDATA_SetRenshou( score, BSWAY_PLAYMODE_DOUBLE, value ); break;
+  case  5: BSUBWAY_SCOREDATA_SetRenshouMax( score, BSWAY_PLAYMODE_DOUBLE, value ); break;
+  case  6: BSUBWAY_SCOREDATA_SetRenshou( score, BSWAY_PLAYMODE_S_DOUBLE, value ); break;
+  case  7: BSUBWAY_SCOREDATA_SetRenshouMax( score, BSWAY_PLAYMODE_S_DOUBLE, value ); break;
+  case  8: BSUBWAY_SCOREDATA_SetRenshou( score, BSWAY_PLAYMODE_MULTI, value ); break;
+  case  9: BSUBWAY_SCOREDATA_SetRenshouMax( score, BSWAY_PLAYMODE_MULTI, value ); break;
+  case 10: BSUBWAY_SCOREDATA_SetRenshou( score, BSWAY_PLAYMODE_S_MULTI, value ); break;
+  case 11: BSUBWAY_SCOREDATA_SetRenshouMax( score, BSWAY_PLAYMODE_S_MULTI, value ); break;
+  case 12: BSUBWAY_SCOREDATA_SetRenshou( score, BSWAY_PLAYMODE_WIFI, value ); break;
+  case 13: BSUBWAY_SCOREDATA_SetRenshouMax( score, BSWAY_PLAYMODE_WIFI, value ); break;
+  default: GF_ASSERT(0);
+  }
+}
+
+
+#endif  // PM_DEBUG
