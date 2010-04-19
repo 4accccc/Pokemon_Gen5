@@ -601,7 +601,7 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
       {
         GFL_CLACT_WK_SetAnmSeq( subWork->clwkMark[SSMT_BOX_DISC+i] , i*2 );
       }
-      bitMask = bitMask<1;
+      bitMask = bitMask<<1;
     }
     
     //ƒ|ƒPƒ‹ƒXR‘Ì

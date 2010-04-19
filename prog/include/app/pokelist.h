@@ -208,7 +208,7 @@ typedef struct
   //通信処理用
   u16 time_limit;   //制限時間(秒)
   u8  comm_state;   //通信状態
-
+  u8  isNetErr;
   
   //通信時相手見せ系
   PL_COMM_TYPE comm_type;

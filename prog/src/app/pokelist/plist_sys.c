@@ -251,6 +251,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   work->demoType = PDT_NONE;
   work->isCallForceExit = FALSE;
   work->isComm = FALSE;
+  work->plData->isNetErr = FALSE;
   work->reqPlaySe = FALSE;
   work->canSelectEgg = TRUE;
 
@@ -1577,6 +1578,11 @@ static void PLIST_InitMode_Select( PLIST_WORK *work )
 //--------------------------------------------------------------------------
 static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
 {
+  if( work->plData->isNetErr == TRUE )
+  {
+    work->mainSeq = PSMS_FADEOUT;
+    return;
+  }
   switch( work->plData->mode )
   {
   case PL_MODE_FIELD:
@@ -2377,6 +2383,10 @@ static void PLIST_SelectPokeMain( PLIST_WORK *work )
   {
     work->subSeq = PSSS_TERM;
   }
+  if( work->plData->isNetErr == TRUE )
+  {
+    work->subSeq = PSSS_TERM;
+  }
 }
 
 //--------------------------------------------------------------------------
@@ -2843,6 +2853,10 @@ static void PLIST_SelectMenu( PLIST_WORK *work )
         work->menuRet = ret;
         work->subSeq = PSSS_TERM;
       }
+      if( work->plData->isNetErr == TRUE )
+      {
+        work->subSeq = PSSS_TERM;
+      }
     }
     break;
     
@@ -2916,6 +2930,11 @@ static void PLIST_SelectMenuTerm( PLIST_WORK *work )
 //--------------------------------------------------------------
 static void PLIST_SelectMenuExit( PLIST_WORK *work )
 {
+  if( work->plData->isNetErr == TRUE )
+  {
+    work->mainSeq = PSMS_FADEOUT;
+    return;
+  }
   switch( work->menuRet )
   {
   case PMIT_CLOSE:

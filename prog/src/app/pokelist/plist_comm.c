@@ -97,6 +97,13 @@ void PLIST_COMM_UpdateComm( PLIST_DATA *work )
   case PCS_UPDATE:
     break;
   }
+
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE &&
+      work->isNetErr == FALSE )
+  {
+    work->isNetErr = TRUE;
+  }
+
 }
 
 
@@ -167,9 +174,8 @@ const BOOL PLIST_COMM_CheckTimming( PLIST_DATA *work , const u8 timmingNo )
   {
     return TRUE;
   }
-  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+  if( work->isNetErr == TRUE )
   {
-    //ƒGƒ‰[”²‚¯
     return TRUE;
   }
   return FALSE;
