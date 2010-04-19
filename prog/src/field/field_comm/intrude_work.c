@@ -336,12 +336,10 @@ u8 Intrude_GetSeasonID(GAME_COMM_SYS_PTR game_comm)
   }
   
   palace_area = Intrude_GetPalaceArea(intcomm);
-#if 0
-  //※check まだ未作成
-  return intcomm->intrude_status[palace_area].season_id;
-#else
-  return GAMEDATA_GetSeasonID(gamedata);
-#endif
+  if(palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
+    return GAMEDATA_GetSeasonID(gamedata);
+  }
+  return intcomm->intrude_status[palace_area].season;
 }
 
 //==================================================================
@@ -391,24 +389,37 @@ BOOL Intrude_CheckNextPalaceAreaMine(GAME_COMM_SYS_PTR game_comm, const GAMEDATA
  * @param   game_comm		
  * @param   gamedata		
  *
- * @retval  BOOL		    TRUE:グレースケールにする必要がある
- * @retval  BOOL		    FALSE:通常のまま
+ * @retval  GRAYSCALE_TYPE	グレースケールタイプ
  */
 //==================================================================
-BOOL Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, GAMEDATA *gamedata)
+GRAYSCALE_TYPE Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, GAMEDATA *gamedata)
 {
-  u8 invasion_netid;
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  u8 invasion_netid, pm_version;
   
   if (FIELD_STATUS_GetMapMode( GAMEDATA_GetFieldStatus( gamedata) ) != MAPMODE_INTRUDE ) {
-    return FALSE;
+    return GRAYSCALE_TYPE_NULL;
   }
   
-  invasion_netid = GameCommStatus_GetPlayerStatus_InvasionNetID(game_comm, GAMEDATA_GetIntrudeMyID(gamedata));
+  if(intcomm != NULL){  //intcommがある場合はintcommから持ってくる
+    invasion_netid = Intrude_GetPalaceArea(intcomm);
+  }
+  else{
+    invasion_netid = GameCommStatus_GetPlayerStatus_InvasionNetID(game_comm, GAMEDATA_GetIntrudeMyID(gamedata));
+  }
+  
   if(invasion_netid == GAMEDATA_GetIntrudeMyID(gamedata)){
-    return FALSE;
+    return GRAYSCALE_TYPE_NULL;
   }
   
-  return TRUE;
+  pm_version = GameCommStatus_GetPlayerStatus_RomVersion(game_comm, invasion_netid);
+  switch(pm_version){
+  case VERSION_WHITE:
+    return GRAYSCALE_TYPE_WHITE;
+  case VERSION_BLACK:
+    return GRAYSCALE_TYPE_BLACK;
+  }
+  return GRAYSCALE_TYPE_NEXT;
 }
 
 //==================================================================

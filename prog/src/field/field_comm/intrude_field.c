@@ -97,7 +97,7 @@ typedef struct{
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
-static GMEVENT * DEBUG_EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+static GMEVENT * EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
 		u16 zone_id, const VecFx32 * pos, INTRUDE_COMM_SYS_PTR intcomm );
 static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*work);
 static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm);
@@ -599,7 +599,7 @@ GMEVENT * Intrude_CheckPosEvent(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys,
 //          && GFL_NET_IsParentMachine() == TRUE
           && intcomm->intrude_status_mine.palace_area == GFL_NET_SystemGetCurrentID()){
         //親が通信状態で自分の街に入る場合は切断
-        return DEBUG_EVENT_ChangeMapPosCommEnd(gameSys, fieldWork, ZONE_ID_T01, &pos, intcomm);
+        return EVENT_ChangeMapPosCommEnd(gameSys, fieldWork, ZONE_ID_T01, &pos, intcomm);
       }
       return EVENT_ChangeMapFromPalace(gameSys);
       //return EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_T01, &pos, 0, FALSE);
@@ -680,7 +680,7 @@ GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, F
 
 //==================================================================
 /**
- * ※デバッグ用　通信を終了させてからマップ移動
+ * 通信を終了させてからマップ移動
  *
  * @param   gsys		
  * @param   fieldmap		
@@ -691,7 +691,7 @@ GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, F
  * @retval  GMEVENT *		
  */
 //==================================================================
-static GMEVENT * DEBUG_EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
+static GMEVENT * EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
 		u16 zone_id, const VecFx32 * pos, INTRUDE_COMM_SYS_PTR intcomm )
 {
   DEBUG_SIOEND_WARP *dsw;

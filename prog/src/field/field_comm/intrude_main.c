@@ -560,7 +560,7 @@ void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INT
 
   //プレイヤーステータスにデータセット　※game_commに持たせているのを変えるかも
   GameCommStatus_SetPlayerStatus(intcomm->game_comm, net_id, target_status->zone_id,
-    target_status->palace_area, first_status);
+    target_status->palace_area, target_status->pm_version, first_status);
 
   //座標変換
   if(net_id != GFL_NET_SystemGetCurrentID()){

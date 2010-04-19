@@ -225,6 +225,8 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
           MyStatus_Copy(GAMEDATA_GetMyStatus(gamedata), net_myst);
         }
         intcomm->intrude_status_mine.palace_area = GFL_NET_SystemGetCurrentID();
+        intcomm->intrude_status_mine.pm_version = PM_VERSION;
+        intcomm->intrude_status_mine.season = GAMEDATA_GetSeasonID(gamedata);
         OS_TPrintf("ネゴシエーション送信\n");
         (*seq)++;
       }

@@ -1365,12 +1365,12 @@ void PaletteGrayScaleFlip(u16* pal, int pal_size)
  *
  */
 //--------------------------------------------------------------
-void PaletteGrayScalePlaceWhite(u16* pal, int pal_size)
+void PaletteGrayScalePalaceWhite(u16* pal, int pal_size)
 {
   int i, r, g, b;
   u32 c;
 
-  static u8 whiteRate[32] = 
+  static const u8 whiteRate[32] = 
   {
     18,18,18,18,19,19,20,20,
     21,21,22,22,23,23,24,24,
@@ -1401,12 +1401,12 @@ void PaletteGrayScalePlaceWhite(u16* pal, int pal_size)
  *
  */
 //--------------------------------------------------------------
-void PaletteGrayScalePlaceBlack(u16* pal, int pal_size)
+void PaletteGrayScalePalaceBlack(u16* pal, int pal_size)
 {
   int i, r, g, b;
   u32 c;
 
-  static u8 blackRate[32] = 
+  static const u8 blackRate[32] = 
   {
      0, 0, 0, 0, 0, 0, 0, 0,
      0, 0, 0, 0, 1, 1, 2, 2,

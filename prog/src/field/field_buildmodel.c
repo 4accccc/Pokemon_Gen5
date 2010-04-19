@@ -37,6 +37,9 @@
 #include "sound/pm_sndsys.h"  //PMSND_
 #include "sound/wb_sound_data.sadl" //SE指定
 
+#include "field/field_comm/intrude_work.h"
+
+
 #define BMODEL_TEXSET (1)
 
 //============================================================================================
@@ -318,7 +321,7 @@ static void loadEntryToBMIDTable(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id
 static u8 BMIDtoEntryNo(const FIELD_BMODEL_MAN * man, BMODEL_ID id);
 
 #ifdef BMODEL_TEXSET
-static void loadBMTextureSet(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id, BOOL gray_scale);
+static void loadBMTextureSet(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id, GRAYSCALE_TYPE gray_scale);
 static void freeBMTextureSet(FIELD_BMODEL_MAN * man);
 #endif
 
@@ -338,13 +341,13 @@ static void DEBUG_BMANIME_dump(const FIELD_BMANIME_DATA * data);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 
-static void createAllResource(FIELD_BMODEL_MAN * man, BOOL gray_scale);
+static void createAllResource(FIELD_BMODEL_MAN * man, GRAYSCALE_TYPE gray_scale);
 static void deleteAllResource(FIELD_BMODEL_MAN * man);
 
 static void createFullTimeObjHandle(FIELD_BMODEL_MAN * man, FLD_G3D_MAP_GLOBALOBJ * g3dMapObj);
 static void deleteFullTimeObjHandle(FIELD_BMODEL_MAN * man, FLD_G3D_MAP_GLOBALOBJ * g3dMapObj);
 
-static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, BMODEL_ID bm_id, BOOL gray_scale);
+static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, BMODEL_ID bm_id, GRAYSCALE_TYPE gray_scale);
 static void OBJRES_finalize( OBJ_RES * objRes );
 #ifndef BMODEL_TEXSET
 static GFL_G3D_RES* OBJRES_getResTex(const OBJ_RES * resTex);
@@ -499,7 +502,7 @@ void FIELD_BMODEL_MAN_Draw(FIELD_BMODEL_MAN * man)
  * @param man 配置モデルマネジャーへのポインタ
  */
 //------------------------------------------------------------------
-void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * areadata, BOOL gray_scale)
+void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * areadata, int gray_scale)
 {	
 	u16 area_id = ZONEDATA_GetAreaID(zoneid);
 	u16 bmlist_index = calcArcIndex(area_id);
@@ -846,12 +849,12 @@ static u16 calcArcIndex(u16 area_id)
  * @param file_id  エリアIDから変換したファイル指定ID
  */
 //------------------------------------------------------------------
-static void loadBMTextureSet(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id, BOOL gray_scale)
+static void loadBMTextureSet(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id, GRAYSCALE_TYPE gray_scale)
 {
   man->g3DresTex = GFL_G3D_CreateResourceArc( arc_id, file_id );
   
-  if( gray_scale ){
-    FLDMAPPER_Field_Grayscale( man->g3DresTex );
+  if( gray_scale != GRAYSCALE_TYPE_NULL ){
+    FLDMAPPER_Field_Grayscale( man->g3DresTex, gray_scale );
   }
   if(	!GFL_G3D_TransVramTextureAndFreeImageEntity( man->g3DresTex )){
     GF_ASSERT(0);
@@ -1097,7 +1100,7 @@ static u8   TIMEANIME_CTRL_getIndex( const TIMEANIME_CTRL * tmanm_ctrl )
 //------------------------------------------------------------------
 //配置モデルマネジャーからの内容で生成
 //------------------------------------------------------------------
-static void createAllResource(FIELD_BMODEL_MAN * man, BOOL gray_scale)
+static void createAllResource(FIELD_BMODEL_MAN * man, GRAYSCALE_TYPE gray_scale)
 { 
   u32 entryCount = man->entryCount;
 
@@ -1222,7 +1225,7 @@ static GFL_G3D_RES* OBJRES_getResTex(const OBJ_RES * objRes)
 //------------------------------------------------------------------
 // オブジェクトリソースを作成
 //------------------------------------------------------------------
-static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, BMODEL_ID bm_id, BOOL gray_scale)
+static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, BMODEL_ID bm_id, GRAYSCALE_TYPE gray_scale)
 {
 	GFL_G3D_RES* resTex;
 
@@ -1241,8 +1244,8 @@ static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, BMODEL_
   resTex = objRes->g3DresMdl;
   if (GFL_G3D_CheckResourceType( resTex, GFL_G3D_RES_CHKTYPE_TEX ) == TRUE)
   {
-    if( gray_scale ){
-  	  FLDMAPPER_Field_Grayscale( resTex );
+    if( gray_scale != GRAYSCALE_TYPE_NULL ){
+  	  FLDMAPPER_Field_Grayscale( resTex, gray_scale );
     }
 	  GFL_G3D_TransVramTexture( resTex );
   } else {

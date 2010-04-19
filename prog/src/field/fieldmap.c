@@ -697,7 +697,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     SET_CHECK("setup: bmodel load");  //デバッグ：処理負荷計測
       //ここで配置モデルリストをセットする
       {
-        BOOL gray_scale;
+        GRAYSCALE_TYPE gray_scale;
         GAME_COMM_SYS_PTR game_comm;
         game_comm = GAMESYSTEM_GetGameCommSysPtr( fieldWork->gsys );
         gray_scale  = Intrude_CheckGrayScaleMap( game_comm, fieldWork->gamedata );
@@ -719,7 +719,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     
     //マップデータ登録
     {
-      BOOL gray_scale;
+      GRAYSCALE_TYPE gray_scale;
       GAME_COMM_SYS_PTR game_comm;
       game_comm = GAMESYSTEM_GetGameCommSysPtr( fieldWork->gsys );
       gray_scale  = Intrude_CheckGrayScaleMap( game_comm, fieldWork->gamedata );

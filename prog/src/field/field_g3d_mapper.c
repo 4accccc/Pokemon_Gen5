@@ -42,6 +42,7 @@
 #include "field_g3d_map.h"
 
 #include "system/palanm.h"
+#include "field/field_comm/intrude_work.h"
 
 
 //============================================================================================
@@ -821,7 +822,7 @@ void FLDMAPPER_ReleaseData( FLDMAPPER* g3Dmapper )
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-BOOL FLDMAPPER_Field_Grayscale(GFL_G3D_RES *g3Dres)
+BOOL FLDMAPPER_Field_Grayscale(GFL_G3D_RES *g3Dres, int gray_scale)
 {
 	NNSG3dResFileHeader*	header;
 	NNSG3dResTex*			texture;
@@ -834,7 +835,17 @@ BOOL FLDMAPPER_Field_Grayscale(GFL_G3D_RES *g3Dres)
 	if( texture ){
     sz = (u32)texture->plttInfo.sizePltt << 3;
     pData = (u8*)texture + texture->plttInfo.ofsPlttData;
-    PaletteGrayScale(pData, sz / sizeof(u16));
+    switch(gray_scale){
+    case GRAYSCALE_TYPE_WHITE:
+      PaletteGrayScalePalaceWhite(pData, sz / sizeof(u16));
+      break;
+    case GRAYSCALE_TYPE_BLACK:
+      PaletteGrayScalePalaceBlack(pData, sz / sizeof(u16));
+      break;
+    default:
+      PaletteGrayScale(pData, sz / sizeof(u16));
+      break;
+    }
 		return TRUE;
 	}
 	return FALSE;
@@ -867,8 +878,8 @@ static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDAT
       buffer = GFL_ARC_LoadDataAlloc( gtexData->arcID, gtexData->datID,
           GFL_HEAP_LOWID(g3Dmapper->heapID) );
       GFL_G3D_CreateResourceAuto( g3Dmapper->globalTexture, buffer );
-      if( gray_scale ){
-        FLDMAPPER_Field_Grayscale(g3Dmapper->globalTexture);
+      if( gray_scale != GRAYSCALE_TYPE_NULL ){
+        FLDMAPPER_Field_Grayscale(g3Dmapper->globalTexture, gray_scale);
       }
       GFL_G3D_TransVramTexture( g3Dmapper->globalTexture );
       
@@ -888,8 +899,8 @@ static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDAT
 #else
 			const FLDMAPPER_RESIST_TEX* gtexData = &resistData->gtexData;
 			g3Dmapper->globalTexture = GFL_G3D_CreateResourceArc( gtexData->arcID, gtexData->datID );
-      if( gray_scale ){
-        FLDMAPPER_Field_Grayscale(g3Dmapper->globalTexture);
+      if( gray_scale != GRAYSCALE_TYPE_NULL ){
+        FLDMAPPER_Field_Grayscale(g3Dmapper->globalTexture, gray_scale);
       }
 			GFL_G3D_TransVramTexture( g3Dmapper->globalTexture );
 #endif

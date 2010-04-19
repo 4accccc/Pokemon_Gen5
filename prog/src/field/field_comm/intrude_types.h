@@ -163,8 +163,8 @@ typedef struct{
   u8 disguise_type:4; ///<変装タイプ(TALK_TYPE_xxx)
   u8 disguise_sex:1;  ///<変装中の性別
   u8 mission_entry:1; ///<TRUE:ミッションに参加している
-  u8        :2;
-  u8 padding;
+  u8 season:2;        ///<四季(PMSEASON)
+  u8 pm_version;      ///<PM_VERSION
 }INTRUDE_STATUS;
 
 ///プロフィールデータ(送信のみに使用。受信は各々のバッファに分かれる)
