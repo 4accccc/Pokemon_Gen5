@@ -43,6 +43,16 @@ typedef enum
 } WIFILOGIN_BG;
 
 //-------------------------------------
+///	WIFILOGIN_BGM設定
+//=====================================
+typedef enum
+{
+  WIFILOGIN_BGM_NORMAL,     //通常用（内部でSEQ_BGM_WIFI_ACCESSを呼びます）
+  WIFILOGIN_BGM_NONE,       //BGM操作を行わない
+} WIFILOGIN_BGM;
+
+
+//-------------------------------------
 ///	WIFILOGIN起動モード
 //=====================================
 typedef enum
@@ -63,6 +73,7 @@ typedef struct
   NetworkServiceID_e nsid;    //[in ]ネットワークサービスID
   DWCSvlResult* pSvl;         //[in ]任天堂SVL認証構造体 DWCSvlResultは自前で確保してください
   WIFILOGIN_MODE    mode;     //[in ]起動モード
+  WIFILOGIN_BGM     bgm;      //[in ]BGM設定
   WIFILOGIN_RESULT  result;   //[out]終了方法
 } WIFILOGIN_PARAM;
 

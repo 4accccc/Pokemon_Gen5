@@ -165,7 +165,11 @@ static GFL_PROC_RESULT WIFILOGOUT_PROC_Init
   if( p_param->bg == WIFILOGIN_BG_NORMAL )
   { 
     WIFILOGIN_MESSAGE_TitleDisp( p_wk->p_message, dwc_title_0001);
-    PMSND_PlayBGM( SEQ_BGM_WIFI_ACCESS );
+
+    if( p_param->bgm == WIFILOGIN_BGM_NORMAL )
+    { 
+      PMSND_PlayBGM( SEQ_BGM_WIFI_ACCESS );
+    }
   }
 
   GFL_NET_ReloadIcon();

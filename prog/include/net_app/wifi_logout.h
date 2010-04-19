@@ -33,6 +33,7 @@ typedef struct
   GAMEDATA            *gamedata;//[in ]ゲームデータ
   WIFILOGIN_BG        bg;       //[in ]使用する背景 WIFILOGINと同じモジュールを使っているため
   WIFILOGIN_DISPLAY   display;  //[in ]どちらの画面を使うか WIFILOGINと同じモジュールを使っているため
+  WIFILOGIN_BGM       bgm;      //[in ]BGM設定
 } WIFILOGOUT_PARAM;
 
 //=============================================================================
