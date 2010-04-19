@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T15:02:09"/>
+	<create user="matsumiya" host="W00224" date="2010-04-19T18:09:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="105" right="1999" bottom="733" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="117" right="2004" bottom="745" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -502,6 +502,8 @@
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……ムは
 はんのう　しないんだね▼
+まだ　キミを
+えいゆうと　みとめていないのか▼
 ……ボクは　すこしだけ
 キミのことを　きにいっていたのかも▼
 なんども　たたかう　うちに
@@ -509,6 +511,8 @@
 トレーナーかも　とかんじたからね▼[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……ムは
 反応しないんだね▼
+まだ　キミを
+英雄と　認めていないのか▼
 ……ボクは　すこしだけ
 キミのことを　気に入っていたのかも▼
 何度も　戦う　うちに
@@ -525,6 +529,8 @@
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……シンは
 はんのう　しないんだね▼
+まだ　キミを
+えいゆうと　みとめていないのか▼
 ……ボクは　すこしだけ
 キミのことを　きにいっていたのかも▼
 なんども　たたかう　うちに
@@ -532,6 +538,8 @@
 トレーナーかも　とかんじたからね▼[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……シンは
 反応しないんだね▼
+まだ　キミを
+英雄と　認めていないのか▼
 ……ボクは　すこしだけ
 キミのことを　気に入っていたのかも▼
 何度も　戦う　うちに
