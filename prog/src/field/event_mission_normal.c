@@ -62,7 +62,6 @@ typedef struct
 //  プロトタイプ宣言
 //==============================================================================
 static GMEVENT_RESULT CommMissionNormal_Talk( GMEVENT *event, int *seq, void *wk );
-static GMEVENT_RESULT CommMissionNormal_Talked( GMEVENT *event, int *seq, void *wk );
 
 
 //==============================================================================
@@ -97,161 +96,51 @@ static GMEVENT_RESULT CommMissionNormal_Talk( GMEVENT *event, int *seq, void *wk
 {
 	EVENT_MISSION_NORMAL *talk = wk;
 	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+	GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
 	INTRUDE_COMM_SYS_PTR intcomm;
   enum{
-    SEQ_MENU_INIT,
-    SEQ_MENU_WAIT,
-    SEQ_MENU_SELECT_SEND,
-    SEQ_MENU_SELECT_ANSWER_WAIT,
-    SEQ_TALK_NG,
-    SEQ_TALK_NG_MSGWAIT,
-    SEQ_TALK_NG_LAST,
-    SEQ_BATTLE_START,
-    SEQ_ITEM_INIT,
-    SEQ_ITEM_MSG_WAIT,
-    SEQ_ITEM_LAST_WAIT,
-    SEQ_TALK_CANCEL,
+    SEQ_MSG_INIT,
+    SEQ_MSG_WAIT,
+    SEQ_LAST_KEY,
     SEQ_FINISH,
   };
-	
+
   intcomm = Intrude_Check_CommConnect(game_comm);
   if(intcomm == NULL){
-  #if 0 //※check　後で作成
-    if((*seq) < SEQ_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_talk_cancel);
-      *seq = SEQ_MSG_WAIT;
-      talk->error = TRUE;
-    }
-  #endif
+    //intcommに依存していないので現状エラーチェックする必要は無い
   }
-
+	
 	switch( *seq ){
-	case SEQ_MENU_INIT:
-	  IntrudeEventPrint_SetupMainMenu(&talk->ccew.iem, gsys);
-	  (*seq)++;
-	  break;
-	case SEQ_MENU_WAIT:
-	  {
-      u32 menu_ret = IntrudeEventPrint_SelectMenu(&talk->ccew.iem);
-      switch(menu_ret){
-      case FLDMENUFUNC_NULL:
-        break;
-      case FLDMENUFUNC_CANCEL:
-      case INTRUDE_TALK_STATUS_CANCEL:
-        talk->answer_status = INTRUDE_TALK_STATUS_CANCEL;
-        IntrudeEventPrint_ExitMenu(&talk->ccew.iem);
-        (*seq)++;
-        break;
-      default:
-        talk->answer_status = menu_ret;
-        IntrudeEventPrint_ExitMenu(&talk->ccew.iem);
-        IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_talk_battle_002);
-        (*seq)++;
-        break;
-      }
-    }
-    break;
-  case SEQ_MENU_SELECT_SEND:  //メニュー選択結果を送信
-    if(IntrudeSend_TalkAnswer(
-        intcomm, intcomm->talk.talk_netid, talk->answer_status) == TRUE){
-      if(talk->answer_status == INTRUDE_TALK_STATUS_CANCEL){
-        *seq = SEQ_TALK_CANCEL;
+  case SEQ_MSG_INIT:
+    {
+      //intcommに依存しないで済むようにGAMEDATAから直接引っ張る
+      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gamedata, talk->ccew.talk_netid);
+      u32 msg_id;
+      
+      WORDSET_RegisterPlayerName( talk->ccew.iem.wordset, 0, target_myst );
+      if(MyStatus_GetMySex(target_myst) == PM_MALE){
+        msg_id = msg_intrude_normal_talk_m;
       }
       else{
-        (*seq)++;
+        msg_id = msg_intrude_normal_talk_w;
       }
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_id);
     }
-	  break;
-	case SEQ_MENU_SELECT_ANSWER_WAIT: //メニュー選択結果の返事待ち
-    if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
-      INTRUDE_TALK_STATUS talk_status = Intrude_GetTalkAnswer(intcomm);
-      OS_TPrintf("menu_answer status = %d\n", talk_status);
-      switch(talk_status){
-      case INTRUDE_TALK_STATUS_OK:
-        switch(talk->answer_status){
-        case INTRUDE_TALK_STATUS_BATTLE:
-          *seq = SEQ_BATTLE_START;
-          break;
-        case INTRUDE_TALK_STATUS_ITEM:
-          *seq = SEQ_ITEM_INIT;
-          break;
-        default:
-          GF_ASSERT(0);
-          break;
-        }
-        break;
-      case INTRUDE_TALK_STATUS_NG:
-      case INTRUDE_TALK_STATUS_CANCEL:
-        *seq = SEQ_TALK_NG;
-        break;
-      default:  //まだ返事が来ていない
-        if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
-          if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid) == TRUE){
-            *seq = SEQ_TALK_CANCEL;
-          }
-        }
-        break;
-      }
-    }
-		break;
-	  
-  case SEQ_TALK_NG:   //断られた
-    IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_002);
 		(*seq)++;
-    break;
-  case SEQ_TALK_NG_MSGWAIT:
+		break;
+  case SEQ_MSG_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
 			(*seq)++;
 		}
 		break;
-	case SEQ_TALK_NG_LAST:
+  case SEQ_LAST_KEY:
     if(IntrudeEventPrint_LastKeyWait() == TRUE){
-			(*seq) = SEQ_FINISH;
-		}
-	  break;
-	
-	case SEQ_BATTLE_START:
-    IntrudeEventPrint_ExitFieldMsg(&talk->ccew.iem);
-    {
-      GMEVENT *child_event;
-      
-      talk->ibp.gsys = gsys;
-      talk->ibp.target_netid = talk->ccew.talk_netid;
-      child_event = EVENT_FieldSubProc(
-        gsys, talk->ccew.fieldWork, NO_OVERLAY_ID, &IntrudeBattleProcData, &talk->ibp);
-      GMEVENT_CallEvent(event, child_event);
-    }
-	  *seq = SEQ_FINISH;
-	  break;
-	
-	case SEQ_ITEM_INIT:
-    {
-      GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
-      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gamedata, talk->ccew.talk_netid);
-
-      WORDSET_RegisterPlayerName( talk->ccew.iem.wordset, 0, target_myst );
-      WORDSET_RegisterItemName( talk->ccew.iem.wordset, 1, ITEM_KIZUGUSURI );
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_talk_item_002);
-    }
-    *seq = SEQ_ITEM_MSG_WAIT;
-    break;
-  case SEQ_ITEM_MSG_WAIT:
-    if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
       (*seq)++;
     }
     break;
-  case SEQ_ITEM_LAST_WAIT:
-    if(IntrudeEventPrint_LastKeyWait() == TRUE){
-      *seq = SEQ_FINISH;
-    }
-    break;
 	  
-	case SEQ_TALK_CANCEL:   //会話キャンセル
-	  *seq = SEQ_FINISH;
-	  break;
-	  
-	case SEQ_FINISH:   //終了処理
+	case SEQ_FINISH:
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
 		return( GMEVENT_RES_FINISH );
 	}
@@ -273,174 +162,6 @@ static GMEVENT_RESULT CommMissionNormal_Talk( GMEVENT *event, int *seq, void *wk
 //==================================================================
 void EVENTCHANGE_CommMissionNormal_Talked(GMEVENT *event, const COMMTALK_COMMON_EVENT_WORK *ccew)
 {
-  EVENT_MISSION_NORMAL *talk;
-  
-  GMEVENT_Change(event, CommMissionNormal_Talked, sizeof(EVENT_MISSION_NORMAL));
-	talk = GMEVENT_GetEventWork( event );
-  GFL_STD_MemCopy(ccew, &talk->ccew, sizeof(COMMTALK_COMMON_EVENT_WORK));
-}
-
-//--------------------------------------------------------------
-/**
- * フィールド話し掛けイベント
- * @param	event	GMEVENT
- * @param	seq		シーケンス
- * @param	wk		event talk
- */
-//--------------------------------------------------------------
-static GMEVENT_RESULT CommMissionNormal_Talked( GMEVENT *event, int *seq, void *wk )
-{
-	EVENT_MISSION_NORMAL *talk = wk;
-	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
-	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-	INTRUDE_COMM_SYS_PTR intcomm;
-  enum{
-    SEQ_MSG_INIT,
-    SEQ_MSG_WAIT,
-    SEQ_SELECT_WAIT,
-    SEQ_BATTLE_YESNO_INIT,
-    SEQ_BATTLE_YESNO_MSGWAIT,
-    SEQ_BATTLE_YESNO_SELECT,
-    SEQ_BATTLE_YES,
-    SEQ_BATTLE_START,
-    SEQ_ITEM_YESNO_INIT,
-    SEQ_ITEM_MSG_WAIT,
-    SEQ_ITEM_LAST_WAIT,
-    SEQ_NG,
-    SEQ_TALK_CANCEL,
-    SEQ_FINISH,
-  };
-
-  intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL){
-  #if 0 //※check　後で作成
-    if((*seq) < SEQ_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_talk_cancel);
-      *seq = SEQ_MSG_WAIT;
-      talk->error = TRUE;
-    }
-  #endif
-  }
-	
-	switch( *seq ){
-  case SEQ_MSG_INIT:
-    IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_001);
-		(*seq)++;
-		break;
-  case SEQ_MSG_WAIT:
-    if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
-			(*seq)++;
-		}
-		break;
-	case SEQ_SELECT_WAIT:   //相手の選択待ち
-    {
-      INTRUDE_TALK_STATUS talk_status = Intrude_GetTalkAnswer(intcomm);
-      switch(talk_status){
-      case INTRUDE_TALK_STATUS_BATTLE:
-        *seq = SEQ_BATTLE_YESNO_INIT;
-        break;
-      case INTRUDE_TALK_STATUS_ITEM:
-        *seq = SEQ_ITEM_YESNO_INIT;
-        break;
-      case INTRUDE_TALK_STATUS_CANCEL:
-        *seq = SEQ_TALK_CANCEL;
-        break;
-      default:  //まだ返事が来ていない
-        if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
-          if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid) == TRUE){
-            *seq = SEQ_TALK_CANCEL;
-          }
-        }
-        break;
-      }
-    }
-	  break;
-	case SEQ_BATTLE_YESNO_INIT:
-    IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_talk_battle_001);
-	  (*seq)++;
-	  break;
-	case SEQ_BATTLE_YESNO_MSGWAIT:
-    if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
-      IntrudeEventPrint_SetupYesNo(&talk->ccew.iem, gsys);
-      (*seq)++;
-    }
-    break;
-  case SEQ_BATTLE_YESNO_SELECT:
-    {
-      FLDMENUFUNC_YESNO yesno = IntrudeEventPrint_SelectYesNo(&talk->ccew.iem);
-      switch(yesno){
-      case FLDMENUFUNC_YESNO_YES:
-        IntrudeEventPrint_ExitMenu(&talk->ccew.iem);
-        *seq = SEQ_BATTLE_YES;
-        break;
-      case FLDMENUFUNC_YESNO_NO:
-        IntrudeEventPrint_ExitMenu(&talk->ccew.iem);
-        *seq = SEQ_NG;
-        break;
-      }
-    }
-    break;
-  case SEQ_BATTLE_YES:
-    if(IntrudeSend_TalkAnswer(
-        intcomm, intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_OK) == TRUE){
-      *seq = SEQ_BATTLE_START;
-    }
-    break;
-  case SEQ_BATTLE_START:
-    IntrudeEventPrint_ExitFieldMsg(&talk->ccew.iem);
-    {
-      GMEVENT *child_event;
-      
-      talk->ibp.gsys = gsys;
-      talk->ibp.target_netid = talk->ccew.talk_netid;
-      child_event = EVENT_FieldSubProc(
-        gsys, talk->ccew.fieldWork, NO_OVERLAY_ID, &IntrudeBattleProcData, &talk->ibp);
-      GMEVENT_CallEvent(event, child_event);
-    }
-	  *seq = SEQ_FINISH;
-    break;
-    
-  case SEQ_ITEM_YESNO_INIT:
-    {
-      GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
-      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gamedata, talk->ccew.talk_netid);
-      MYITEM_PTR myitem = GAMEDATA_GetMyItem( gamedata );
-
-      MYITEM_AddItem( myitem, ITEM_KIZUGUSURI, 1, HEAPID_PROC );
-
-      WORDSET_RegisterPlayerName( talk->ccew.iem.wordset, 0, target_myst );
-      WORDSET_RegisterItemName( talk->ccew.iem.wordset, 1, ITEM_KIZUGUSURI );
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_talk_item_001);
-    }
-    *seq = SEQ_ITEM_MSG_WAIT;
-    break;
-  case SEQ_ITEM_MSG_WAIT:
-    if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
-      (*seq)++;
-    }
-    break;
-  case SEQ_ITEM_LAST_WAIT:
-    if(IntrudeEventPrint_LastKeyWait() == TRUE){
-      *seq = SEQ_FINISH;
-    }
-    break;
-  
-  case SEQ_NG:
-    if(IntrudeSend_TalkAnswer(
-        intcomm, intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_NG) == TRUE){
-      *seq = SEQ_FINISH;
-    }
-    break;
-	
-	case SEQ_TALK_CANCEL:
-	  *seq = SEQ_FINISH;
-	  break;
-	  
-	case SEQ_FINISH:
-  	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
-		return( GMEVENT_RES_FINISH );
-	}
-	
-	return( GMEVENT_RES_CONTINUE );
+  EVENTCHANGE_CommMissionNormal_Talk(event, ccew);
 }
 
