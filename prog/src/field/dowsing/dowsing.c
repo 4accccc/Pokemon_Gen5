@@ -8,7 +8,7 @@
  *  モジュール名：DOWSING
  */
 //============================================================================
-#define DEBUG_KAWADA
+//#define DEBUG_KAWADA
 
 
 // インクルード
@@ -1079,7 +1079,11 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
             if( prev_x != curr_x || prev_z != curr_z )
             {
               // 違うアイテムを見付けたとき
-              different_item = TRUE;
+              if( work->rod_prev != work->rod_curr )
+              {
+                // 違うアイテムを見付けても、ロッドが動いていなかったらアイテム発見音は鳴らさない。
+                different_item = TRUE;
+              }
               break;
             }
           }
@@ -1494,6 +1498,7 @@ static void Dowsing_TouchbarInit( DOWSING_WORK* work )
                               CLSYS_DEFREND_SUB,
                               work->heap_id );
     GFL_CLACT_WK_SetAutoAnmFlag( work->touchbar_clwk, TRUE );
+    GFL_CLACT_WK_SetAutoAnmSpeed( work->touchbar_clwk, FX32_CONST(2) );  // フィールドなので2倍のスピードで再生する
     GFL_CLACT_WK_SetAnmSeq( work->touchbar_clwk, APP_COMMON_BARICON_EXIT );  // active
 
     // ハンドルクローズ
