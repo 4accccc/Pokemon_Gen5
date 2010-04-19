@@ -18,6 +18,7 @@
 #define C01GYM0101_CURTAIN_03              6
 #define TR_WAITER_01                       7
 #define TR_WAITRESS_01                     8
+#define C01GYM0101_WAITRESS_01             9
 
 #endif //ZONE_C01GYM0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c01gym0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

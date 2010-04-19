@@ -35,6 +35,7 @@ _EVENT_DATA		ev_pos_c01gym0101_button_honoo_03
 _EVENT_DATA		ev_pos_c01gym0101_button_mizu_03
 _EVENT_DATA		ev_zone_c01gym0101
 _EVENT_DATA		ev_init_c01gym0101
+_EVENT_DATA		ev_c01gym0101_waitress_01
 _EVENT_DATA_END
 
 /************************************************************/
@@ -1303,5 +1304,12 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_03
 		
 		ENDIF
 
+EVENT_END
+
+/**************************************************************/
+/* 			ウエートレス									  */
+/**************************************************************/
+EVENT_START		ev_c01gym0101_waitress_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_waitress_01 )
 EVENT_END
 
