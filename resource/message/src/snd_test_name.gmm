@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-04-08T14:55:42"/>
+	<create user="taya" host="W00146" date="2010-04-17T17:42:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -246,6 +246,9 @@
 			<tag entry="08" japanese="９桁" english="９桁" view="EP" width="72" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="09" japanese="10桁" english="10桁" view="EP" width="80" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
 		</group>
 
 		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
@@ -362,13 +365,13 @@
 		</language>
 	</columns>
 
-	<dialog left="-126" top="112" right="579" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="0" top="112" right="579" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="571"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="404"/>
+		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -8350,33 +8353,33 @@
 		<language name="JPN" width="256">FLD-156</language>
 		<language name="JPN_KANJI" width="256">FLD-156</language>
 	</row>
-	<row id="msg_seq_se_dmy_319">
-		<language name="JPN" width="256">DMY-319</language>
-		<language name="JPN_KANJI" width="256">DMY-319</language>
+	<row id="msg_seq_se_fld_157">
+		<language name="JPN" width="256">FLD-157</language>
+		<language name="JPN_KANJI" width="256">FLD-157</language>
 	</row>
-	<row id="msg_seq_se_dmy_320">
-		<language name="JPN" width="256">DMY-320</language>
-		<language name="JPN_KANJI" width="256">DMY-320</language>
+	<row id="msg_seq_se_fld_158">
+		<language name="JPN" width="256">FLD-158</language>
+		<language name="JPN_KANJI" width="256">FLD-158</language>
 	</row>
-	<row id="msg_seq_se_dmy_321">
-		<language name="JPN" width="256">DMY-321</language>
-		<language name="JPN_KANJI" width="256">DMY-321</language>
+	<row id="msg_seq_se_fld_159">
+		<language name="JPN" width="256">FLD-159</language>
+		<language name="JPN_KANJI" width="256">FLD-159</language>
 	</row>
-	<row id="msg_seq_se_dmy_322">
-		<language name="JPN" width="256">DMY-322</language>
-		<language name="JPN_KANJI" width="256">DMY-322</language>
+	<row id="msg_seq_se_fld_160">
+		<language name="JPN" width="256">FLD-160</language>
+		<language name="JPN_KANJI" width="256">FLD-160</language>
 	</row>
-	<row id="msg_seq_se_dmy_323">
-		<language name="JPN" width="256">DMY-323</language>
-		<language name="JPN_KANJI" width="256">DMY-323</language>
+	<row id="msg_seq_se_fld_161">
+		<language name="JPN" width="256">FLD-161</language>
+		<language name="JPN_KANJI" width="256">FLD-161</language>
 	</row>
-	<row id="msg_seq_se_dmy_324">
-		<language name="JPN" width="256">DMY-324</language>
-		<language name="JPN_KANJI" width="256">DMY-324</language>
+	<row id="msg_seq_se_fld_162">
+		<language name="JPN" width="256">FLD-162</language>
+		<language name="JPN_KANJI" width="256">FLD-162</language>
 	</row>
-	<row id="msg_seq_se_dmy_325">
-		<language name="JPN" width="256">DMY-325</language>
-		<language name="JPN_KANJI" width="256">DMY-325</language>
+	<row id="msg_seq_se_fld_163">
+		<language name="JPN" width="256">FLD-163</language>
+		<language name="JPN_KANJI" width="256">FLD-163</language>
 	</row>
 	<row id="msg_seq_se_dmy_326">
 		<language name="JPN" width="256">DMY-326</language>
