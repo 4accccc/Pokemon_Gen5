@@ -55,6 +55,7 @@ EVENT_END
 /* 			PAINTING1	C03R0201								  */
 /**************************************************************/
 EVENT_START		ev_bg_c03r0201_painting1_01
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN( msg_c03r0201_painting1_01)
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
@@ -64,6 +65,7 @@ EVENT_END
 /* 			PAINTING2	C03R0201								  */
 /**************************************************************/
 EVENT_START		ev_bg_c03r0201_painting2_01
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN( msg_c03r0201_painting2_01)
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
@@ -73,6 +75,7 @@ EVENT_END
 /* 			PAINTING3	C03R0201								  */
 /**************************************************************/
 EVENT_START		ev_bg_c03r0201_painting3_01
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN( msg_c03r0201_painting3_01)
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
@@ -82,6 +85,7 @@ EVENT_END
 /* 			PAINTING4	C03R0201								  */
 /**************************************************************/
 EVENT_START		ev_bg_c03r0201_painting4_01
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN( msg_c03r0201_painting4_01)
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
@@ -91,6 +95,7 @@ EVENT_END
 /* 			PAINTING5	C03R0201								  */
 /**************************************************************/
 EVENT_START		ev_bg_c03r0201_painting5_01
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN( msg_c03r0201_painting5_01)
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
@@ -100,6 +105,7 @@ EVENT_END
 /* 			PAINTING6	C03R0201								  */
 /**************************************************************/
 EVENT_START		ev_bg_c03r0201_painting6_01
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN( msg_c03r0201_painting6_01)
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()

@@ -474,11 +474,13 @@ EVENT_START   ev_bg_r14r0201_leg_01
 		IF FLAG_OFF( FE_R14R0201_LEG_GET ) && FLAG_OFF( FE_R14R0201_LEG_MEET ) THEN
 			_CALL ev_r14r0201_tuchi_come
 		ELSE
+			_TALK_START_SE_PLAY()
 			_PLAINWIN_MSG_DOWN( msg_r14r0201_narration_01)
 			_LAST_KEYWAIT()
 			_PLAINWIN_CLOSE()
 		ENDIF
 	ELSE
+		_TALK_START_SE_PLAY()
 		_PLAINWIN_MSG_DOWN( msg_r14r0201_narration_01)
 		_LAST_KEYWAIT()
 		_PLAINWIN_CLOSE()
@@ -496,6 +498,7 @@ ev_r14r0201_tuchi_come:
 	_OBJ_ADD( R14R0201_POKE9_01 )
 	
 	//Ç”ÇÈÇ—ÇΩ ÇøÇ¢Ç≥Ç» ÇŸÇ±ÇÁÇ™Ç†ÇÈÅc
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN( msg_r14r0201_narration_01)
 	_PLAINWIN_CLOSE()
 	
