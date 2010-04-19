@@ -407,6 +407,7 @@ _RET
 //======================================================================
 // サブルーチン：『ひきとる』コア部
 //
+// 手持ちがいっぱいの場合    : retval_take_back_core = 3
 // ポケモンを引き取った場合  : retval_take_back_core = 2
 // ポケモンを引き取らない場合: retval_take_back_core = 1
 // お金が足りない場合        : retval_take_back_core = 0
@@ -414,14 +415,14 @@ _RET
 take_back_pokemon_core:
 {
   // ローカルワークの定義
-  DEFINE_LOCAL select_sodateya_pos   // 引き取るポケモンの育て屋内インデックス
-  DEFINE_LOCAL now_level             // 現在のレベル
-  DEFINE_LOCAL grow_level            // 育ったレベル
-  DEFINE_LOCAL charge                // 引き取り料金
-  DEFINE_LOCAL have_gold             // 所持金が足りるかどうか
-  DEFINE_LOCAL monsno                // 種族番号
-  DEFINE_LOCAL formno                // 形状番号
-  DEFINE_LOCAL sex                   // 性別
+  DEFINE_LOCAL select_sodateya_pos // 引き取るポケモンの育て屋内インデックス
+  DEFINE_LOCAL now_level           // 現在のレベル
+  DEFINE_LOCAL grow_level          // 育ったレベル
+  DEFINE_LOCAL charge              // 引き取り料金
+  DEFINE_LOCAL have_gold           // 所持金が足りるかどうか
+  DEFINE_LOCAL monsno              // 種族番号
+  DEFINE_LOCAL formno              // 形状番号
+  DEFINE_LOCAL sex                 // 性別
 
   // メニュー表示
   _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, select_sodateya_pos )
@@ -456,89 +457,92 @@ take_back_pokemon_core:
   _BMPMENU_MAKE_LIST( msg_sodateya_menu_04, 2 )
   _BMPMENU_START()
 
-  //------------------------------------
-  // 引き取る場合(『ポケモン名』を選択)
-  //------------------------------------
-  IF $select_sodateya_pos < 2 THEN
-
-   // 選択ポケモンのLvUp判定
-   _GET_SODATEYA_POKE_GROWUP_LV( grow_level, select_sodateya_pos )
-   _GET_SODATEYA_POKE_CHARGE( charge, select_sodateya_pos )
-
-   // Lv上がる場合 ==> メッセージ表示
-   IF $grow_level > 0 THEN
-     //「○○くらい育っておるぞ」
-     _SODATEYA_NICK_NAME( 0, select_sodateya_pos )
-     _NUMBER( 1, grow_level, 2 )
-     _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_12, SCWK_TARGET_OBJID, POS_DOWN )
-   ENDIF
-
-   // 所持金表示
-   _GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
-
-   // 質問「引き取るかい?」
-   _SODATEYA_NICK_NAME( 0, select_sodateya_pos )
-   _NUMBER( 1, charge, 4 )
-   _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_13, SCWK_TARGET_OBJID, POS_DOWN ) 
-   _YES_NO_WIN( ask_retval )
-   //_BALLOONWIN_CLOSE() 
-
-   // 『いいえ』を選択
-   IF $ask_retval == 1 THEN
-     _GOLD_WIN_CLOSE() // 所持金ウィンドウ消去
-     $retval_take_back_core = 1
-   // 『はい』を選択
-   ELSE
-     // 所持金チェック
-     _CHECK_GOLD( have_gold, charge )
-
-     // 所持金が足りない場合 ==> 受け取れず終了
-     IF $have_gold == FALSE THEN
-       _GOLD_WIN_CLOSE() // 所持金ウィンドウ消去
-       $retval_take_back_core = 0
-     // 所持金が足りる場合
-     ELSE
-       // お金を払う
-       _SUBTRACT_GOLD( charge )
-       _GOLD_WIN_UPDATE()
-
-       // 支払いSE
-       _SE_PLAY( SEQ_SE_SYS_22 )
-       _SE_WAIT()
-       _GOLD_WIN_CLOSE() // 所持金ウィンドウ消去
-       _BALLOONWIN_CLOSE() // 吹出しウィンドウ消去
-
-       //引き取りアニメ演出
-       _OBJ_ANIME( R03R0201_SODATEYA_GRANDMA, anime_grandma_take_back )
-       _OBJ_ANIME_WAIT()
-
-       // 鳴き声SE
-       _GET_SODATEYA_POKE_MONSNO( monsno, select_sodateya_pos )
-       _GET_SODATEYA_POKE_FORMNO( formno, select_sodateya_pos )
-       _VOICE_PLAY( monsno, formno )
-
-       //「[ニックネーム]を引き取った！」
-       _SODATEYA_NICK_NAME( 0, select_sodateya_pos )
-       _PLAYER_NAME( 1 )
-       _SYSWIN_MSG( msg_sodateya_oldwoman_15, POS_DOWN )
-       _SYSWIN_CLOSE()
-
-       // 手持ちポケモンに移動
-       _POKE_FROM_SODATEYA( select_sodateya_pos )
-
-        $retval_take_back_core = 2
-      ENDIF
-    ENDIF
   //-----------------------------------
   // 引き取らない場合(『やめる』を選択)
   //-----------------------------------
-  ELSE
+  IF ($select_sodateya_pos == 2) || ($select_sodateya_pos == EV_WIN_B_CANCEL) THEN
     $retval_take_back_core = 1
+    _RET
+  ENDIF 
+
+  //------------------------------------
+  // 引き取る場合(『ポケモン名』を選択)
+  //------------------------------------
+  // 選択ポケモンのLvUp判定
+  _GET_SODATEYA_POKE_GROWUP_LV( grow_level, select_sodateya_pos )
+  _GET_SODATEYA_POKE_CHARGE( charge, select_sodateya_pos )
+
+  // Lv上がる場合
+  IF $grow_level > 0 THEN
+    //「○○くらい育っておるぞ」
+    _SODATEYA_NICK_NAME( 0, select_sodateya_pos )
+    _NUMBER( 1, grow_level, 2 )
+    _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_12, SCWK_TARGET_OBJID, POS_DOWN )
   ENDIF
 
-  // 現在の状態を更新
-  _CALL get_sodateya_state
-  _CALL get_party_state
+  _GOLD_WIN_OPEN( MENU_X1, MENU_Y1 ) // 所持金表示
+
+  // 質問「引き取るかい?」
+  _SODATEYA_NICK_NAME( 0, select_sodateya_pos )
+  _NUMBER( 1, charge, 4 )
+  _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_13, SCWK_TARGET_OBJID, POS_DOWN ) 
+  _YES_NO_WIN( ask_retval )
+
+  //『いいえ』を選択
+  IF $ask_retval == 1 THEN
+    _GOLD_WIN_CLOSE() // 所持金ウィンドウ消去
+    $retval_take_back_core = 1
+    _RET
+  ENDIF
+
+  // 『はい』を選択
+  _CHECK_GOLD( have_gold, charge ) // 所持金チェック
+
+  // 所持金が足りない場合 ==> 受け取れず終了
+  IF $have_gold == FALSE THEN
+    _GOLD_WIN_CLOSE() // 所持金ウィンドウ消去
+    $retval_take_back_core = 0
+    _RET
+  ENDIF
+
+  // 所持金が足りる場合
+  _GET_PARTY_POKE_COUNT( SCWK_ANSWER, POKECOUNT_MODE_EMPTY ) // 手持ちチェック
+
+  // 手持ちがいっぱいの場合 ==> 受け取れず終了
+  IF $SCWK_ANSWER == 0 THEN
+    _GOLD_WIN_CLOSE() // 所持金ウィンドウ消去
+    $retval_take_back_core = 3
+    _RET
+  ENDIF
+
+  // 手持ちに空きがある場合
+
+  // お金を払う
+  _SUBTRACT_GOLD( charge )  // 所持金を減らす
+  _GOLD_WIN_UPDATE()        // 所持金ウィンドウを更新
+  _SE_PLAY( SEQ_SE_SYS_22 ) // 支払いSE
+  _SE_WAIT()                //
+  _GOLD_WIN_CLOSE()         // 所持金ウィンドウ消去
+  _BALLOONWIN_CLOSE()       // 吹出しウィンドウ消去
+
+  //引き取りアニメ演出
+  _OBJ_ANIME( R03R0201_SODATEYA_GRANDMA, anime_grandma_take_back )
+  _OBJ_ANIME_WAIT()
+
+  // 鳴き声SE
+  _GET_SODATEYA_POKE_MONSNO( monsno, select_sodateya_pos )
+  _GET_SODATEYA_POKE_FORMNO( formno, select_sodateya_pos )
+  _VOICE_PLAY( monsno, formno )
+
+  //「[ニックネーム]を引き取った！」
+  _SODATEYA_NICK_NAME( 0, select_sodateya_pos )
+  _PLAYER_NAME( 1 )
+  _SYSWIN_MSG( msg_sodateya_oldwoman_15, POS_DOWN )
+  _SYSWIN_CLOSE()
+
+  // 手持ちポケモンに移動
+  _POKE_FROM_SODATEYA( select_sodateya_pos ) 
+  $retval_take_back_core = 2
 }
 _RET
 
@@ -570,12 +574,21 @@ player_take_back_pokemon:
   WHILE $loop == TRUE
     // コア処理
     _CALL take_back_pokemon_core 
+
+    // 現在の状態を更新
+    _CALL get_sodateya_state
+    _CALL get_party_state
     
     // コア処理の結果で分岐
     SWITCH $retval_take_back_core
     CASE 0 THEN // お金が足りなかった場合 ==> 終了
       //「お金が足りないよ」
       _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_14, SCWK_TARGET_OBJID, POS_DOWN )
+      _LAST_KEYWAIT()
+      $loop = FALSE
+    CASE 3 THEN // 手持ちがいっぱいな場合 ==> 終了
+      //「手持ちがいっぱいだよ」
+      _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldman_09, SCWK_TARGET_OBJID, POS_DOWN )
       _LAST_KEYWAIT()
       $loop = FALSE
     CASE 1 THEN // 引き取らなかった場合 ==> 終了
