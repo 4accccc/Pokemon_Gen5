@@ -1788,10 +1788,12 @@ static BOOL PokeIconObjMove( BOX2_SYS_WORK * syswk )
         BOX2OBJ_PokeIconDefaultPosGet( dat[i].mv_pos, &px, &py, syswk->move_mode );
       }else if( dat[i].mv_pos < BOX2OBJ_POKEICON_PUT_MAX ){
         BOX2OBJ_PokeIconDefaultPosGet( dat[i].mv_pos, &px, &py, syswk->move_mode );
+/*
         if( BOX2BGWFRM_CheckPartyPokeFrameRight(syswk->app->wfrm) == FALSE &&
             BOX2BGWFRM_CheckPartyPokeFrameLeft(syswk->app->wfrm) == FALSE ){
           py += 192;
         }
+*/
       }else{
         if( dat[i].df_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
           BOX2OBJ_PokeIconDefaultPosGet( BOX2OBJ_POKEICON_MAX-1, &px, &py, syswk->move_mode );
@@ -1799,10 +1801,12 @@ static BOOL PokeIconObjMove( BOX2_SYS_WORK * syswk )
           BOX2OBJ_PokeIconDefaultPosGet( dat[i].df_pos, &px, &py, syswk->move_mode );
         }
         BOX2OBJ_Vanish( syswk->app, mvID, FALSE );
+				OS_Printf( "”ñ•\Ž¦‚P\n" );
       }
       BOX2OBJ_SetPos( syswk->app, mvID, px, py, CLSYS_DEFREND_MAIN );
       if( dat[i].flg == 2 ){
         BOX2OBJ_Vanish( syswk->app, mvID, FALSE );
+				OS_Printf( "”ñ•\Ž¦‚Q\n" );
       }
     }
     BOX2OBJ_ChgPokeCursorPriority( syswk, syswk->get_pos );
