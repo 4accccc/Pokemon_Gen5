@@ -1871,7 +1871,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     }
 
     //‚³‚ª‚µ‚Ä‚¢‚Ü‚·
-    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_010, MYSTERY_TEXT_TYPE_STREAM );
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_010, MYSTERY_TEXT_TYPE_WAIT );
     p_wk->cnt = 0;
     *p_seq  = SEQ_SEARCH;
     break;
@@ -2084,7 +2084,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           //‚Í‚¢
           UTIL_DeleteMenu(p_wk);
           UTIL_DeleteGuideText( p_wk );
-          MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_StartSelect );
+          MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_DisConnectReturn );
         }
         else if( ret == 1 )
         { 
@@ -3233,6 +3233,7 @@ static void UTIL_DeleteGuideText( MYSTERY_WORK *p_wk )
   { 
     G2S_BlendNone();
 
+   MYSTERY_MSGWINSET_Clear( p_wk->p_winset_s );
    MYSTERY_MSGWINSET_Exit( p_wk->p_winset_s );
    p_wk->p_winset_s = NULL;
 
