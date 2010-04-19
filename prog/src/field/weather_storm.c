@@ -62,8 +62,8 @@
 #define	WEATHER_STORM_FOG_TIMING_END	(90)							// に１回フォグテーブルを操作
 #define WEATHER_STORM_FOG_START			(1)							// このカウント動いてからフォグテーブルを操作
 #define WEATHER_STORM_FOG_START_END		(31)						// このカウント動いてからフォグテーブルを操作
-#define WEATHER_STORM_FOG_OFS	( 30 )
-#define WEATHER_STORM_FOG_SLOPE	( 9 )
+#define WEATHER_STORM_FOG_OFS	( 32606 )
+#define WEATHER_STORM_FOG_SLOPE	( 8 )
 
 
 /*== BG ==*/
@@ -141,13 +141,21 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_STORM = {
 	//	グラフィック情報
 	ARCID_FIELD_WEATHER,			// アークID
 	TRUE,		// OAMを使用するか？
-	WEATHER_TASK_3DBG_USE_FRONT,		// BGを使用するか？
+	WEATHER_TASK_3DBG_USE_NONE,		// BGを使用するか？
 	NARC_field_weather_storm_NCGR,			// OAM CG
 	NARC_field_weather_storm_NCLR,			// OAM PLTT
 	NARC_field_weather_storm_NCER,			// OAM CELL
 	NARC_field_weather_storm_NANR,			// OAM CELLANM
   {
     {
+      0,		// BGTEX
+      0,		// GXTexSizeS
+      0,		// GXTexSizeT
+      0,		// GXTexRepeat
+      0,		// GXTexFlip
+      0,		// GXTexFmt
+      0,		// GXTexPlttColor0
+      /*
       NARC_field_weather_storm_nsbtx,		// BGTEX
       GX_TEXSIZE_S32,		// GXTexSizeS
       GX_TEXSIZE_T32,		// GXTexSizeT
@@ -155,6 +163,7 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_STORM = {
       GX_TEXFLIP_NONE,		// GXTexFlip
       GX_TEXFMT_PLTT4,		// GXTexFmt
       GX_TEXPLTTCOLOR0_TRNS,		// GXTexPlttColor0
+      */
     },
     {
       0,		// BGTEX
@@ -253,7 +262,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeIn( WEATHER_TASK* p_wk, WEATHE
 		if( p_local_wk->work[0] == 0 ){
 			WEATHER_TASK_FogFadeIn_Init( p_wk,
 			WEATHER_STORM_FOG_SLOPE, 
-			WEATHER_FOG_DEPTH_DEFAULT + WEATHER_STORM_FOG_OFS, 
+			WEATHER_STORM_FOG_OFS, 
 			WEATHER_STORM_FOG_TIMING,
 			fog_cont );
 
@@ -267,7 +276,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeIn( WEATHER_TASK* p_wk, WEATHE
 		// タイミングが最小になったらメインへ
 		if( fog_result && result ){		// フェードリザルトが完了ならばメインへ
 			// BGON
-			WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
+			//WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
 
 			// シーケンス変更
 			return WEATHER_TASK_FUNC_RESULT_FINISH;
@@ -307,14 +316,14 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_NoFade( WEATHER_TASK* p_wk, WEATHE
 
 
 	// フォグの設定
-	WEATHER_TASK_FogSet( p_wk, WEATHER_STORM_FOG_SLOPE, WEATHER_FOG_DEPTH_DEFAULT + WEATHER_STORM_FOG_OFS, fog_cont );
+	WEATHER_TASK_FogSet( p_wk, WEATHER_STORM_FOG_SLOPE, WEATHER_STORM_FOG_OFS, fog_cont );
 
 	// オブジェクトを散らばす
 	WEATHER_TASK_DustObj( p_wk, WEATHER_STORM_OBJ_Add, WEATHER_STORM_NOFADE_OBJ_START_NUM, WEATHER_STORM_NOFADE_OBJ_START_DUST_NUM, WEATHER_STORM_NOFADE_OBJ_START_DUST_MOVE, heapID );
 
 	
 	// BGON
-	WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
+	// WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
 
 
   // ライト変更
@@ -381,7 +390,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_InitFadeOut( WEATHER_TASK* p_wk, W
 
 
 	// BGON
-	WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE, WEATHER_TASK_3DBG_FRONT );
+	//WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE, WEATHER_TASK_3DBG_FRONT );
 
 
   // SE
