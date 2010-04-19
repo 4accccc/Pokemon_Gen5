@@ -308,6 +308,9 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //テーブルジャンプ
   DEF_CMD   AI_TABLE_JUMP
 
+//みらいよち中かチェックして分岐
+	DEF_CMD		AI_IF_MIRAIYOCHI
+
 //------------------------------------------------------------
 //
 //	ランダム分岐
@@ -1509,6 +1512,20 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 	.macro  TABLE_JUMP  label, adrs
 	.short	AI_TABLE_JUMP
 	.long		\label
+	.long		(\adrs-.)-4
+	.endm
+
+//------------------------------------------------------------
+//
+//	みらいよち中かチェックして分岐
+//
+//	side:どちらにかかっているか
+//	adrs:飛び先
+//
+//------------------------------------------------------------
+	.macro  IF_MIRAIYOCHI side, adrs
+	.short	AI_IF_MIRAIYOCHI
+	.long		\side
 	.long		(\adrs-.)-4
 	.endm
 
