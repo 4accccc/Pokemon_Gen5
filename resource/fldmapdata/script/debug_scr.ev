@@ -1213,6 +1213,7 @@ ev_event_jump:
 	_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 40 )	//カザカミ・ライカミイベント
 	_BMPMENU_MAKE_LIST( msg_debug_mizu_04, 50 )	//ツチノカミイベント
 	_BMPMENU_MAKE_LIST( msg_debug_mizu_05, 60 )	//カザカミ・ライカミ手持ちに追加
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_11, 70)	//Ｃギア入手イベント
 	_BMPMENU_MAKE_LIST( msg_debug_00, 0 )	//やめる
 	//メニュー表示
 	_BMPMENU_START()
@@ -1268,6 +1269,15 @@ ev_event_jump:
 		//カザカミ・ライカミを手持ちに追加
 		_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_648, 0, 50 )
 		_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_649, 0, 50 )
+		
+	ELSIF $LWK_EVTJUMP == 70 THEN
+		
+		//ワーク追加
+		$WK_SCENE_C01R0102 = 1
+		$WK_SCENE_D01R0101_POKE = 4
+		
+		_MAP_CHANGE( ZONE_ID_C01R0102, 10, 8, DIR_RIGHT )
+		
 	ENDIF
 	}
 	

@@ -499,6 +499,9 @@ EVENT_START		ev_pos_c03p07_plazma_01
 		_FLAG_SET( FV_C03P07_SUPPORT_LEADER8 )
 		_FLAG_SET( FV_C03P07_PLASMA_LEADER3 )
 		
+		//C03P15からアイリス・サポート削除
+		_FLAG_SET( FV_C03P15_SUPPORT_LEADER8 )
+		
 		//========================================/
 		
 	ENDIF

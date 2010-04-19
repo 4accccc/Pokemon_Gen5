@@ -36,12 +36,99 @@ _EVENT_DATA		ev_pos_c01gym0101_button_mizu_03
 _EVENT_DATA		ev_zone_c01gym0101
 _EVENT_DATA		ev_init_c01gym0101
 _EVENT_DATA		ev_c01gym0101_waitress_01
+_EVENT_DATA		ev_recover_c01gym0101
 _EVENT_DATA_END
 
 /************************************************************/
 /*					FIELD_INIT_LABEL						*/
 /************************************************************/
 INIT_EVENT_START	ev_init_c01gym0101
+
+	//分岐：ジムバッジ取得しているか、いないか
+	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
+	
+	//ジムバッジを取得していない場合
+	IF $SCWK_TEMP0 == 0 THEN
+
+		//ジムリーダー演出イベント後ならば
+		IF $WK_SCENE_C01GYM0101 == 4 THEN
+
+			//くさタイプ選択の場合
+			IF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_KUSA THEN
+		
+				//ポッドの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1A_01, 12, 1, 3, DIR_DOWN )
+				//コーンの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 14, 1, 2, DIR_DOWN )
+				//デントの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1C_01, 10, 1, 2, DIR_DOWN )
+
+			//ほのおタイプ選択の場合
+			ELSIF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_HONOO THEN
+
+				//ポッドの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1A_01, 10, 1, 2, DIR_DOWN )
+				//コーンの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 12, 1, 3, DIR_DOWN )
+				//デントの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1C_01, 14, 1, 2, DIR_DOWN )
+
+			//みずタイプ選択の場合
+			ELSE
+		
+				//ポッドの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1A_01, 14, 1, 2, DIR_DOWN )
+				//コーンの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 10, 1, 2, DIR_DOWN )
+				//デントの位置を変更する
+				_OBJ_POS_CHANGE( C01GYM0101_LEADER1C_01, 12, 1, 3, DIR_DOWN )
+
+			ENDIF
+
+		ELSE
+		
+		ENDIF
+
+	//ジムバッジを取得している場合
+	ELSE
+	
+		//コーンの位置を変更する
+		_OBJ_POS_CHANGE( C01GYM0101_LEADER1A_01, 14, 1, 2, DIR_DOWN )
+		//ポッドの位置を変更する
+		_OBJ_POS_CHANGE( C01GYM0101_LEADER1B_01, 10, 1, 2, DIR_DOWN )
+		//デントの位置を変更する
+		_OBJ_POS_CHANGE( C01GYM0101_LEADER1C_01, 12, 1, 3, DIR_DOWN )
+	
+	ENDIF
+
+	SWITCH	$WK_SCENE_C01GYM0101
+	CASE 0 THEN
+	
+	CASE 1 THEN
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
+	CASE 2 THEN
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_02,24,0,34, DIR_DOWN )
+	CASE 3 THEN
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_02,24,0,34, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_03,24,0,34, DIR_DOWN )
+	CASE 4 THEN
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_02,24,0,34, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_03,24,0,34, DIR_DOWN )
+	DEFAULT
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_02,24,0,34, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_03,24,0,34, DIR_DOWN )
+	ENDSWITCH
+	
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_RECOVER_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_c01gym0101
 
 	//分岐：ジムバッジ取得しているか、いないか
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
