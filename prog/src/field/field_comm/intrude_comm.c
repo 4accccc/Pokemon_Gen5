@@ -255,6 +255,16 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
     break;
 
   case 3: //通常更新
+    //表フィールドにいて季節が変わっていれば切断する
+    if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE 
+        && intcomm->intrude_status_mine.season != GAMEDATA_GetSeasonID(gamedata)
+        && GAMESYSTEM_CheckFieldMapWork(invalid_parent->gsys) == TRUE){
+      OS_TPrintf("季節が変わったため切断します\n");
+      GameCommSys_ExitReq(intcomm->game_comm);
+      *seq = 200; //一応何も動作しないシーケンス番号にしておく
+      break;
+    }
+
     Intrude_Main(intcomm);
     
     //自分一人になった場合、通信終了へ遷移するまでのタイムアウト
