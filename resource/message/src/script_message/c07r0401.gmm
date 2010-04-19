@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-15T13:13:57"/>
+	<create user="matsumiya" host="W00224" date="2010-04-19T21:12:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -469,8 +469,8 @@
 紳士</attribute>
 		<language name="JPN" width="256">それは　すばらしい　あいじょうを
 みせてくれた　おれい　だよ！</language>
-		<language name="JPN_KANJI" width="256">それは　すばらしい　あいじょうを
-みせてくれた　おれい　だよ！</language>
+		<language name="JPN_KANJI" width="256">それは　すばらしい　愛情を
+みせてくれた　お礼だよ！</language>
 	</row>
 
 	<row id="msg_c07r0401_gentleman_14">
