@@ -278,10 +278,12 @@ FLDEFF_TASK * FLDEFF_NAMIPOKE_SetMMdl( FLDEFF_CTRL *fectrl,
     // GRID—p
     task = FLDEFF_CTRL_AddTask(
         fectrl, &DATA_namipokeTaskHeader, &head.pos, joint, &head, 0 );
+    //TOMOYA_Printf( "namipoke grid setup\n" );
   }else{
     // RIIL—p
     task = FLDEFF_CTRL_AddTask(
         fectrl, &DATA_RAIL_namipokeTaskHeader, &head.pos, joint, &head, 0 );
+    //TOMOYA_Printf( "namipoke rail setup\n" );
   }
   return( task );
 }

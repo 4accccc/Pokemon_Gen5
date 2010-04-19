@@ -188,28 +188,43 @@ static void mapCtrlHybrid_Create( FIELDMAP_WORK* p_fieldmap, VecFx32* p_pos, u16
   {
     p_wk->p_player = FIELDMAP_GetFieldPlayer( p_fieldmap );
     
-    // レールプレイヤー生成
-    FIELD_PLAYER_SetUpNoGrid( p_wk->p_player, heapID );
-    
-    // グリッドプレイヤー生成
-    FIELD_PLAYER_SetUpGrid( p_wk->p_player, heapID );
-
     // 初期動作をどちらにするかPLAYER_WORKから取得
     base_type = PLAYERWORK_getPosType( cp_playerwk );
     p_wk->base_type = FLDMAP_BASESYS_MAX;
-
-    // モデルの向きをDIRにする
-    FIELD_PLAYER_SetDir( p_wk->p_player, dir );
 
 
     // base_typeに移動システムを遷移
     if( base_type == FLDMAP_BASESYS_GRID )
     {
+      //TOMOYA_Printf( "grid pos type\n" );
+
+      // FLDEFF再設定などを正しく動かすために、セットアップ順番を気にする必要がある。
+      // グリッドプレイヤー生成
+      FIELD_PLAYER_SetUpGrid( p_wk->p_player, heapID );
+
+      // レールプレイヤー生成
+      FIELD_PLAYER_SetUpNoGrid( p_wk->p_player, heapID );
+
+      // モデルの向きをDIRにする
+      FIELD_PLAYER_SetDir( p_wk->p_player, dir );
+      
       mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, base_type, p_pos, dir );
     }
     else
     {
       const RAIL_LOCATION* cp_location = PLAYERWORK_getRailPosition( cp_playerwk );
+      //TOMOYA_Printf( "rail pos type\n" );
+
+      // FLDEFF再設定などを正しく動かすために、セットアップ順番を気にする必要がある。
+      // レールプレイヤー生成
+      FIELD_PLAYER_SetUpNoGrid( p_wk->p_player, heapID );
+      
+      // グリッドプレイヤー生成
+      FIELD_PLAYER_SetUpGrid( p_wk->p_player, heapID );
+
+      // モデルの向きをDIRにする
+      FIELD_PLAYER_SetDir( p_wk->p_player, dir );
+
       mapCtrlHybrid_ChangeBaseSystem( p_fieldmap, p_wk, base_type, cp_location, dir );
     }
   }
