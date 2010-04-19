@@ -1266,7 +1266,6 @@ static void panel_RankSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* 
   u8 num;
   u16 pal;
   pp->rank = GAMEBEACON_Get_ResearchTeamRank(info);
-  pp->rank = 5; //GFUser_GetPublicRand0(6); 
   if(pp->rank == 0){
     pal = ACT_PANEL_PAL_RANK_MARK*16;
     num = RESEARCH_TEAM_RANK_5;
