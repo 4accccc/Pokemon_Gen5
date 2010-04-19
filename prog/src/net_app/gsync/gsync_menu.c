@@ -208,6 +208,7 @@ static void _infoMessageDispClear(GAMESYNC_MENU* pWork);
 static void _infoMessageEnd(GAMESYNC_MENU* pWork);
 static BOOL _infoMessageEndCheck(GAMESYNC_MENU* pWork);
 static void _infoMessageDisp(GAMESYNC_MENU* pWork);
+static void _infoMessageDispHeight(GAMESYNC_MENU* pWork,int height,BOOL bStream);
 
 
 
@@ -785,17 +786,14 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
 
   switch( bttnid ){
   case _SELECTMODE_GSYNC:
-#if DEBUG_ONLY_FOR_ohno
-    pWork->bit=GAME_COMM_SBIT_WIFI_ALL;  //どんな状態でも起動
-#endif
     if(GAME_COMM_SBIT_WIFI_ALL & pWork->bit){
       PMSND_PlaySystemSE(_SE_DESIDE);
       _CHANGE_STATE(pWork,_modeAppWinFlash);
       pWork->selectType = GAMESYNC_RETURNMODE_SYNC;
     }
-    else{
-      PMSND_PlaySystemSE(_SE_CANCEL);
-    }
+//    else{
+//      PMSND_PlaySystemSE(_SE_CANCEL);
+//    }
     break;
   case _SELECTMODE_UTIL:
     if( !OS_IsRunOnTwl() ){//DSIは呼ぶことが出来ない
@@ -805,7 +803,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
     }
     else{
       GFL_MSG_GetString( pWork->pMsgWiFiData, dwc_message_0017, pWork->pStrBuf );
-      _infoMessageDisp(pWork);
+      _infoMessageDispHeight(pWork,10, FALSE);
 
       _CHANGE_STATE(pWork,_hitAnyKey);
     }
@@ -992,6 +990,7 @@ static BOOL _infoMessageEndCheck(GAMESYNC_MENU* pWork)
   return TRUE;// 終わっている
 }
 
+
 //------------------------------------------------------------------------------
 /**
  * @brief   説明ウインドウ表示
@@ -999,7 +998,7 @@ static BOOL _infoMessageEndCheck(GAMESYNC_MENU* pWork)
  */
 //------------------------------------------------------------------------------
 
-static void _infoMessageDisp(GAMESYNC_MENU* pWork)
+static void _infoMessageDispHeight(GAMESYNC_MENU* pWork,int height,BOOL bStream)
 {
   GFL_BMPWIN* pwin;
 
@@ -1007,7 +1006,7 @@ static void _infoMessageDisp(GAMESYNC_MENU* pWork)
   if(pWork->infoDispWin==NULL){
     pWork->infoDispWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME1_S ,
-      1 , 3, 30 ,4 ,
+      1 , 3, 30 , height ,
       _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->infoDispWin;
@@ -1015,8 +1014,13 @@ static void _infoMessageDisp(GAMESYNC_MENU* pWork)
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
   GFL_FONTSYS_SetColor(1, 2, 15);
 
-  pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBuf, pWork->pFontHandle,
-                                        MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
+  if(bStream){
+    pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBuf, pWork->pFontHandle,
+                                          MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
+  }
+  else{
+    PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pStrBuf, pWork->pFontHandle);
+  }
 
   BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
 
@@ -1025,6 +1029,11 @@ static void _infoMessageDisp(GAMESYNC_MENU* pWork)
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
 }
 
+
+static void _infoMessageDisp(GAMESYNC_MENU* pWork)
+{
+  _infoMessageDispHeight( pWork,4,TRUE);
+}
 
 
 //------------------------------------------------------------------------------
