@@ -74,6 +74,31 @@ typedef enum
 }
 BTN_PAL_ANM;
 
+// ボタンのパレットアニメーションの再生テーブル
+typedef struct
+{
+  u16 frame;
+  u16 no;
+}
+BTN_PAL_ANM_INFO;
+
+#define BTN_PAL_ANM_INFO_TBL_FIRST_FRAME  (1)  // 選ばれたときに始まるフレーム番号
+#define BTN_PAL_ANM_INFO_TBL_FIRST_IDX    (1)  // 選ばれたときに始まるインデックス番号
+
+static const BTN_PAL_ANM_INFO btn_pal_anm_info_tbl[] =
+{
+  {                                  0,   BTN_PAL_ANM_0 },  // 今までパレットがBTN_PAL_ANM_0だったので、選ばれたらすぐに次のパレットの色にする
+  {   BTN_PAL_ANM_INFO_TBL_FIRST_FRAME,   BTN_PAL_ANM_1 },  // BTN_PAL_ANM_INFO_TBL_FIRST_IDX
+  {                                  2,   BTN_PAL_ANM_2 },
+  {                                  4,   BTN_PAL_ANM_1 },
+  {                                  5,   BTN_PAL_ANM_0 },
+  {                                  7,   BTN_PAL_ANM_1 },
+  {                                  8,   BTN_PAL_ANM_2 },
+  {                                 10,   BTN_PAL_ANM_1 },
+  {                                 11,   BTN_PAL_ANM_0 },
+  {                                 13,   BTN_PAL_ANM_0 },  // 終了なので、上と同じパレット
+};
+
 // ステップ
 typedef enum
 {
@@ -84,6 +109,7 @@ typedef enum
   STEP_BEFORE_CLOSE,     // 閉じる前
 }
 STEP;
+
 
 //=============================================================================
 /**
@@ -123,20 +149,24 @@ struct _YESNO_MENU_WORK
   u8                     mes_bg_pal;
 
   CLSYS_DRAW_TYPE        cursor_obj_draw_type;
-  u8                     cursor_obj_pal;         // cursor_obj_palとcursor_obj_pal+1の2本を使用する
+  u8                     cursor_obj_pal;         // cursor_obj_palからcursor_obj_pal+4の5本を使用する(実際に使われているのは4番のパレットだけだが)
 
-  BOOL                   key;                    // キー操作のときTRUE  // タッチで選択したらFALSEにする
+  //BOOL                   key;                    // キー操作のときTRUE  // タッチで選択したらFALSEにする
+                         // GFL_UI_CheckTouchOrKeyを使うことにしたので、使用しない
 
   u16                    btn_pal_col[BTN_PAL_ANM_MAX][0x10];
   GFL_ARCUTIL_TRANSINFO  btn_transinfo;
   
   GFL_BMPWIN*            mes_yes_bmpwin;
   GFL_BMPWIN*            mes_no_bmpwin;
+  BOOL                   mes_yes_finish;  // 転送済みのときTRUE
+  BOOL                   mes_no_finish;   // 転送済みのときTRUE
 
   STEP                   step;
   YESNO_MENU_SEL         sel;                    // 最後の選択結果
   CURSOR_SET             cursor_set;
   u8                     btn_pal_anm;            // BTN_PAL_ANM  // 決定したボタンのパレットアニメーション
+  u16                    btn_pal_anm_info_tbl_idx;  // ボタンのパレットアニメーションの再生テーブル
   u16                    count;                  // 決定してから数フレーム待つ際のカウント
 };
 
@@ -167,11 +197,11 @@ YESNO_MENU_WORK* YESNO_MENU_CreateRes(
                           u8             bg_frame,           // bg_frameとbg_frame+1の2個を使用する
                           u8             bg_frame_prio,      // bg_frame_prioとbg_frame_prio+1に設定する
                           u8             bg_pal,             // bg_palからbg_pal+2の3本を使用する
-                          u8             obj_pal,            // obj_palとobj_pal+1の2本を使用する
+                          u8             obj_pal,            // obj_palからobj_pal+4の5本を使用する(実際に使われているのは4番のパレットだけだが)
                           GFL_CLUNIT*    clunit,
                           GFL_FONT*      font,
                           PRINT_QUE*     print_que,
-                          BOOL           key )               // キー操作のときTRUE
+                          BOOL           key )               // キー操作のときTRUE  // GFL_UI_CheckTouchOrKeyを使うことにしたので、使用しない
 {
   YESNO_MENU_WORK* work;
 
@@ -205,10 +235,10 @@ YESNO_MENU_WORK* YESNO_MENU_CreateRes(
     GF_ASSERT_MSG( work->mes_bg_pal<16, "YESNO_MENU : BGパレットの設定が間違っています。\n" );
 
     work->cursor_obj_draw_type  = (bg_frame<=GFL_BG_FRAME3_M)?(CLSYS_DRAW_MAIN):(CLSYS_DRAW_SUB);
-    work->cursor_obj_pal        = obj_pal;  // cursor_obj_palとcursor_obj_pal+1の2本を使用する
-    GF_ASSERT_MSG( work->cursor_obj_pal+1<16, "YESNO_MENU : OBJパレットの設定が間違っています。\n" );
+    work->cursor_obj_pal        = obj_pal;  // cursor_obj_palからcursor_obj_pal+4の5本を使用する(実際に使われているのは4番のパレットだけだが)
+    GF_ASSERT_MSG( work->cursor_obj_pal+4<16 -1, "YESNO_MENU : OBJパレットの設定が間違っています。\n" );
 
-    work->key                   = key;
+    //work->key                   = key;
   }
 
   // クリア
@@ -319,8 +349,8 @@ YESNO_MENU_WORK* YESNO_MENU_CreateRes(
     param.cell_id         = NARC_battgra_wb_battle_w_cursor_NCER;
     param.anm_id          = NARC_battgra_wb_battle_w_cursor_NANR;
     param.pltt_line       = work->cursor_obj_pal;
-    param.pltt_src_ofs    = 0;  // 空いているところはパレット番号0で描かれており、カーソルはパレット番号1で描かれているので、
-    param.pltt_src_num    = 2;  // パレットは2本必要でなる。
+    param.pltt_src_ofs    = 0;  //パレット4番1本だけに変更にな   //0;  // 空いているところはパレット番号0で描かれており、カーソルはパレット番号1で描かれているので、
+    param.pltt_src_num    = 5;  //ったが、0番から4番の5本読む。  //2;  // パレットは2本必要でなる。
   
     UI_EASY_CLWK_LoadResource( &(work->cursor_set.res), &param, work->clunit, work->heap_id );
 
@@ -452,15 +482,34 @@ void YESNO_MENU_OpenMenu( YESNO_MENU_WORK* work, STRBUF* yes, STRBUF* no )
                             (u16)( (32*8 - no_width) / 2 ), 16,
                             no, work->font, lsb );
 
+    // 転送フラグ
+    work->mes_yes_finish = FALSE;
+    work->mes_no_finish  = FALSE;
+
     // 表示
     GFL_BG_SetVisible( work->mes_bg_frame, VISIBLE_ON );
 
-    // 転送
-    GFL_BMPWIN_MakeTransWindow_VBlank(work->mes_yes_bmpwin);
-    GFL_BMPWIN_MakeTransWindow_VBlank(work->mes_no_bmpwin);
+    // 転送(ここでは転送できない可能性あり)
+    if(!(work->mes_yes_finish) )
+    {
+      if( !PRINTSYS_QUE_IsExistTarget( work->print_que, GFL_BMPWIN_GetBmp(work->mes_yes_bmpwin) ) )
+      {
+        GFL_BMPWIN_MakeTransWindow_VBlank(work->mes_yes_bmpwin);
+        work->mes_yes_finish = TRUE;
+      }
+    }
+    if(!(work->mes_no_finish) )
+    {
+      if( !PRINTSYS_QUE_IsExistTarget( work->print_que, GFL_BMPWIN_GetBmp(work->mes_no_bmpwin) ) )
+      {
+        GFL_BMPWIN_MakeTransWindow_VBlank(work->mes_no_bmpwin);
+        work->mes_no_finish = TRUE;
+      }
+    }
   }
 
-  if( work->key )
+  //if( work->key )
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
   {
 #ifndef NO_USE_OBJ
     // cursor_obj
@@ -555,7 +604,8 @@ void YESNO_MENU_Main( YESNO_MENU_WORK* work )
       // キー操作
       if( !decide )
       {
-        if( work->key )
+        //if( work->key )
+        if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
         {
           if( key_trg )
           {
@@ -645,7 +695,8 @@ void YESNO_MENU_Main( YESNO_MENU_WORK* work )
             }
 
             decide = TRUE;
-            work->key = FALSE;  // タッチで終了
+            //work->key = FALSE;  // タッチで終了
+            GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
           }
         }
       }
@@ -653,7 +704,8 @@ void YESNO_MENU_Main( YESNO_MENU_WORK* work )
       // 初めてのキー操作
       if( !decide )
       {
-        if( !(work->key) )
+        //if( !(work->key) )
+        if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
         {
           if( key_trg )
           {
@@ -669,7 +721,8 @@ void YESNO_MENU_Main( YESNO_MENU_WORK* work )
             }
 #endif
 
-            work->key = TRUE;
+            //work->key = TRUE;
+            GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
           }
         }
       }
@@ -677,31 +730,39 @@ void YESNO_MENU_Main( YESNO_MENU_WORK* work )
       // 決定したか？
       if( decide )
       {
+#ifndef NO_USE_OBJ
+        // 決定したらカーソルは消す
+        // cursor_obj
+        {
+          u8 i;
+          for( i=0; i<CURSOR_NUM; i++ )
+          {
+            GFL_CLACT_WK_SetDrawEnable( work->cursor_set.clwk[i], FALSE );
+            GFL_CLACT_WK_SetAutoAnmFlag( work->cursor_set.clwk[i], FALSE );
+          }
+        }
+#endif
+
         // 次へ
         work->step = STEP_AFTER_DECIDE;
 
-        work->btn_pal_anm = BTN_PAL_ANM_START;
-        work->btn_pal_anm += 1;
-        work->count = 0;
-
-        btn_pal_anm_update = TRUE;
+        work->btn_pal_anm = BTN_PAL_ANM_0;//BTN_PAL_ANM_START;
+        work->count = BTN_PAL_ANM_INFO_TBL_FIRST_FRAME;  // 今までパレットがBTN_PAL_ANM_0だったので、選ばれたらすぐに次のパレットの色にする
+        work->btn_pal_anm_info_tbl_idx = BTN_PAL_ANM_INFO_TBL_FIRST_IDX;
       }
     }
     break;
   case STEP_AFTER_DECIDE:
     {
-      if( work->count < 30 )
+      if( work->btn_pal_anm_info_tbl_idx < sizeof(btn_pal_anm_info_tbl)/sizeof(btn_pal_anm_info_tbl[0]) )
       {
-        work->count++;
-
-        if( work->btn_pal_anm < BTN_PAL_ANM_MAX )
+        if( work->count == btn_pal_anm_info_tbl[work->btn_pal_anm_info_tbl_idx].frame )
         {
-          work->btn_pal_anm += 1;
-          if( work->btn_pal_anm <= BTN_PAL_ANM_END )
-          {
-            btn_pal_anm_update = TRUE;
-          }
+          work->btn_pal_anm = btn_pal_anm_info_tbl[work->btn_pal_anm_info_tbl_idx].no;
+          btn_pal_anm_update = TRUE;
+          work->btn_pal_anm_info_tbl_idx++;
         }
+        work->count++;
       }
       else
       {
@@ -715,6 +776,28 @@ void YESNO_MENU_Main( YESNO_MENU_WORK* work )
       // 何もしない
     }
     break;
+  }
+
+  // テキスト
+  if( work->step != STEP_BEFORE_OPEN )
+  {
+    // 転送
+    if(!(work->mes_yes_finish) )
+    {
+      if( !PRINTSYS_QUE_IsExistTarget( work->print_que, GFL_BMPWIN_GetBmp(work->mes_yes_bmpwin) ) )
+      {
+        GFL_BMPWIN_MakeTransWindow_VBlank(work->mes_yes_bmpwin);
+        work->mes_yes_finish = TRUE;
+      }
+    }
+    if(!(work->mes_no_finish) )
+    {
+      if( !PRINTSYS_QUE_IsExistTarget( work->print_que, GFL_BMPWIN_GetBmp(work->mes_no_bmpwin) ) )
+      {
+        GFL_BMPWIN_MakeTransWindow_VBlank(work->mes_no_bmpwin);
+        work->mes_no_finish = TRUE;
+      }
+    }
   }
 
   // 更新
@@ -757,7 +840,8 @@ YESNO_MENU_SEL YESNO_MENU_GetSelect( YESNO_MENU_WORK* work )
 //-----------------------------------------------------------------------------
 BOOL YESNO_MENU_IsKey( YESNO_MENU_WORK* work )  // キー操作で選択したときTRUEを返す
 {
-  return work->key;
+  //return work->key;
+  return ( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY );
 }
 
 //=============================================================================
