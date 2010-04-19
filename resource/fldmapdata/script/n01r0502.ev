@@ -599,7 +599,7 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 	_MSGWIN_CLOSE()
 
 	//ダーク（ライト）ストーンの演出
-
+  _START_LEG_GMK()
 	//～～～ストーンが　はげしく　かがやきだす……！
 {
 	DEFINE_LOCAL	LWK_ROM
