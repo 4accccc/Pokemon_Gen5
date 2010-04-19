@@ -101,6 +101,7 @@
 #include "scrcmd_d12_gmk.h"
 #include "scrcmd_tv.h"
 #include "scrcmd_cgear.h"
+#include "scrcmd_zoroa.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

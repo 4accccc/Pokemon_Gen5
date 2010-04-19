@@ -15,18 +15,26 @@
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 
 #include "arc/fieldmap/sppoke.naix"
+#include "arc/fieldmap/zoroa.naix"
 
 #include "sound/pm_sndsys.h"
 #include "sp_poke_gimmick_se_def.h"
+
+#include "../../../resource/fldmapdata/gimmick/zoroa/zoroa_gmk_timing_def.h" //for ZOROA_CHG_FRAME
+#include "field/eventdata_sxy.h"  //for  EVENTDATA_GetNpcData
 
 #define SPPOKE_GMK_ASSIGN_ID    (1)
 #define SPPOKE_UNIT_IDX    (0)                      //特殊ポケイベントユニットインデックス
 #define SPPOKE_TRIO_UNIT_IDX    (SPPOKE_UNIT_IDX)   //三銃士イベントユニットインデックス
 #define SPPOKE_MERO_UNIT_IDX    (SPPOKE_UNIT_IDX)   //メロディアイベントユニットインデックス
+#define ZOROA_UNIT_IDX    (SPPOKE_UNIT_IDX)   //ゾロアイベントユニットインデックス
 #define BALL_ANM_NUM  (3)
+#define SMOKE_ANM_NUM  (3)
 
 #define BALL_OUT_TIMMING  (5)
 #define BALL_IN_TIMMING (34)
+
+#define ZOROA_CHG_FRAME_FX32 (ZOROA_CHG_FRAME * FX32_ONE)
 
 typedef struct SPPOKE_GMK_WK_tag
 {
@@ -40,9 +48,15 @@ typedef struct SPPOKE_GMK_WK_tag
   void *Work;
 }SPPOKE_GMK_WK;
 
+typedef struct SMOKE_GMK_WK_tag
+{
+  u16 BeforeObj;
+  u16 AfterObj;
+}SMOKE_GMK_WK;
+
 //==============================================================================================
 /**
- @note    ※三銃士とメロディアでボールリソースは共有するので、リソース番号は一致するようにする
+ @note    ※三銃士とメロディアとゾロアでボールリソースは共有するので、リソース番号は一致するようにする
 */
 //==============================================================================================
 
@@ -57,6 +71,11 @@ enum {
   RES_ID_BALL_IN_ANM1,
   RES_ID_BALL_IN_ANM2,
   RES_ID_BALL_IN_ANM3,
+
+  RES_ID_SMOKE_MDL,
+  RES_ID_SMOKE_ANM1,
+  RES_ID_SMOKE_ANM2,
+  RES_ID_SMOKE_ANM3,
 };
 
 
@@ -64,6 +83,7 @@ enum {
 enum {
   OBJ_BALL_OUT = 0,
   OBJ_BALL_IN,
+  OBJ_SMOKE,
 };
 
 //==========================================================================
@@ -85,6 +105,14 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_ball_in[] = {
   { RES_ID_BALL_IN_ANM2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
   { RES_ID_BALL_IN_ANM3,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
 };
+
+//3Dアニメ　煙
+static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_smoke[] = {
+  { RES_ID_SMOKE_ANM1,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_SMOKE_ANM2,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+  { RES_ID_SMOKE_ANM3,0 }, //アニメリソースID, アニメデータID(リソース内部INDEX)
+};
+
 
 //==========================================================================
 /**
@@ -175,10 +203,71 @@ static const GFL_G3D_UTIL_SETUP SetupMero = {
 	NELEMS(g3Dutil_objTbl_mero),		//オブジェクト数
 };
 
+//==========================================================================
+/**
+ ゾロア関連リソース
+*/
+//==========================================================================
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl_zoroa[] = {
+	{ ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールアウト
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールイン
+
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールアウトアニメ
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールインアニメ
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_in_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
+
+  { ARCID_ZOROA_GMK, NARC_zoroa_zoroa_kemu_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD 煙
+  { ARCID_ZOROA_GMK, NARC_zoroa_zoroa_kemu_nsbca, GFL_G3D_UTIL_RESARC }, //ICA 煙アニメ
+  { ARCID_ZOROA_GMK, NARC_zoroa_zoroa_kemu_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_ZOROA_GMK, NARC_zoroa_zoroa_kemu_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
+
+};
+
+//3Dオブジェクト設定テーブル
+static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl_zoroa[] = {
+  //出現モンスターボール
+  {
+		RES_ID_BALL_OUT_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_BALL_OUT_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_ball_out,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_ball_out),	//アニメリソース数
+	},
+  //格納モンスターボール
+  {
+		RES_ID_BALL_IN_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_BALL_IN_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_ball_in,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_ball_in),	//アニメリソース数
+	},
+  //煙
+  {
+		RES_ID_SMOKE_MDL, 	//モデルリソースID
+		0, 							  //モデルデータID(リソース内部INDEX)
+		RES_ID_SMOKE_MDL, 	//テクスチャリソースID
+		g3Dutil_anmTbl_smoke,			//アニメテーブル(複数指定のため)
+		NELEMS(g3Dutil_anmTbl_smoke),	//アニメリソース数
+	},
+
+};
+
+static const GFL_G3D_UTIL_SETUP SetupZoroa = {
+  g3Dutil_resTbl_zoroa,				//リソーステーブル
+	NELEMS(g3Dutil_resTbl_zoroa),		//リソース数
+	g3Dutil_objTbl_zoroa,				//オブジェクト設定テーブル
+	NELEMS(g3Dutil_objTbl_zoroa),		//オブジェクト数
+};
 
 static GMEVENT_RESULT BallMoveEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT WaitPokeAppFrmEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT WaitBallAnmEvt( GMEVENT* event, int* seq, void* work );
+
+static GMEVENT_RESULT SmokeMoveEvt( GMEVENT* event, int* seq, void* work );
+
 
 //============================================================================================================
 //三銃士関連
@@ -282,7 +371,7 @@ void SPPOKE_GMK_SetupMerodhia(FIELDMAP_WORK *fieldWork)
   //メロディアイベント用ワークのアロケーション
   ;
   //必要なリソースの用意
-  FLD_EXP_OBJ_AddUnit(ptr, &SetupTrio, SPPOKE_MERO_UNIT_IDX );
+  FLD_EXP_OBJ_AddUnit(ptr, &SetupMero, SPPOKE_MERO_UNIT_IDX );
   
   //ボール初期化
   //アニメの状態を初期化
@@ -334,6 +423,103 @@ void SPPOKE_GMK_EndMerodhia(FIELDMAP_WORK *fieldWork)
  */
 //--------------------------------------------------------------
 void SPPOKE_GMK_MoveMerodhia(FIELDMAP_WORK *fieldWork)
+{
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  //アニメーション再生
+  FLD_EXP_OBJ_PlayAnime( ptr );
+}
+
+//--------------------------------------------------------------
+/**
+ * セットアップ関数
+ * @param	      fieldWork   フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+void SPPOKE_GMK_SetupZoroa(FIELDMAP_WORK *fieldWork)
+{
+  int i;
+  HEAPID heap_id;
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+
+  heap_id = FIELDMAP_GetHeapID(fieldWork);
+
+  //汎用ワーク確保
+  GMK_TMP_WK_AllocWork
+      (fieldWork, SPPOKE_GMK_ASSIGN_ID, GFL_HEAP_LOWID(heap_id), sizeof(SPPOKE_GMK_WK));
+  //ゾロアイベント用ワークのアロケーション
+  {
+    SPPOKE_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
+    gmk_wk->Work = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heap_id), sizeof(SMOKE_GMK_WK) );
+  }
+
+  //必要なリソースの用意
+  FLD_EXP_OBJ_AddUnit(ptr, &SetupZoroa, ZOROA_UNIT_IDX );
+  
+  //ボール初期化
+  //アニメの状態を初期化
+  for (i=0;i<BALL_ANM_NUM;i++)
+  {
+    EXP_OBJ_ANM_CNT_PTR anm;
+    //1回再生設定
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, ZOROA_UNIT_IDX, OBJ_BALL_OUT, i);
+    FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+    //アニメ停止
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+    //無効化
+    FLD_EXP_OBJ_ValidCntAnm(ptr, ZOROA_UNIT_IDX, OBJ_BALL_OUT, i, FALSE);
+
+    //1回再生設定
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, ZOROA_UNIT_IDX, OBJ_BALL_IN, i);
+    FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+    //アニメ停止
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+    //無効化
+    FLD_EXP_OBJ_ValidCntAnm(ptr, ZOROA_UNIT_IDX, OBJ_BALL_IN, i, FALSE);
+  }
+  //煙
+  for (i=0;i<SMOKE_ANM_NUM;i++){
+    EXP_OBJ_ANM_CNT_PTR anm;
+    //1回再生設定
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, ZOROA_UNIT_IDX, OBJ_SMOKE, i);
+    FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+    //アニメ停止
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
+    //無効化
+    FLD_EXP_OBJ_ValidCntAnm(ptr, ZOROA_UNIT_IDX, OBJ_SMOKE, i, FALSE);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 解放関数
+ * @param	    fieldWork   フィールドワークポインタ
+ * @return    none
+ */
+//--------------------------------------------------------------
+void SPPOKE_GMK_EndZoroa(FIELDMAP_WORK *fieldWork)
+{
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  //ゾロアイベント用ワーク解放
+  {
+    SPPOKE_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
+    GFL_HEAP_FreeMemory( gmk_wk->Work );
+  }
+
+  //汎用ワーク解放
+  GMK_TMP_WK_FreeWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
+  //ＯＢＪ解放
+  FLD_EXP_OBJ_DelUnit( ptr, ZOROA_UNIT_IDX );
+}
+
+//--------------------------------------------------------------
+/**
+ * 動作関数
+ * @param	      fieldWork   フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+void SPPOKE_GMK_MoveZoroa(FIELDMAP_WORK *fieldWork)
 {
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   //アニメーション再生
@@ -632,4 +818,124 @@ static GMEVENT_RESULT WaitBallAnmEvt( GMEVENT* event, int* seq, void* work )
   return GMEVENT_RES_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * 煙りアニメイベント作成
+ * @param	      fieldWork   フィールドワークポインタ
+ * @return      none
+ */
+//--------------------------------------------------------------
+GMEVENT *SPPOKE_GMK_SmokeAnm( GAMESYS_WORK *gsys, const VecFx32 *inPos, const int inBefore, const int inAfter)
+{
+  int i;
+  int obj;
+  GMEVENT *event;
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  SPPOKE_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+
+  {
+    SMOKE_GMK_WK *wk = (SMOKE_GMK_WK*)gmk_wk->Work;
+    wk->BeforeObj = inBefore;
+    wk->AfterObj = inAfter;
+  }
+
+  obj = OBJ_SMOKE;
+  //スタート座標に表示状態でボール配置
+  {
+     GFL_G3D_OBJSTATUS *status;
+     status = FLD_EXP_OBJ_GetUnitObjStatus(ptr, ZOROA_UNIT_IDX, obj);
+     status->trans = *inPos;
+  }
+
+  //煙を表示状態にする
+  FLD_EXP_OBJ_SetVanish(ptr, ZOROA_UNIT_IDX, obj, FALSE);
+  //アニメの状態を初期化
+  for (i=0;i<BALL_ANM_NUM;i++)
+  {
+    EXP_OBJ_ANM_CNT_PTR anm;
+    anm = FLD_EXP_OBJ_GetAnmCnt( ptr, ZOROA_UNIT_IDX, obj, i);
+    //アニメ停止解除
+    FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
+    //無効化解除
+    FLD_EXP_OBJ_ValidCntAnm(ptr, ZOROA_UNIT_IDX, obj, i, TRUE);
+    //頭だし
+    FLD_EXP_OBJ_SetObjAnmFrm(ptr, ZOROA_UNIT_IDX, obj, i, 0 );
+  }
+
+  //イベント作成
+  event = GMEVENT_Create( gsys, NULL, SmokeMoveEvt, 0 );
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * 煙アニメイベント
+ * @param       event             イベントポインタ
+ * @param       seq               シーケンサ
+ * @param       work              ワークポインタ
+ * @return      GMEVENT_RESULT    イベント結果
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT SmokeMoveEvt( GMEVENT* event, int* seq, void* work )
+{
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  SPPOKE_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
+  int obj = OBJ_SMOKE;
+  EXP_OBJ_ANM_CNT_PTR anm;
+  fx32 frame;
+
+  //フレーム取得
+  frame = FLD_EXP_OBJ_GetObjAnmFrm( ptr, ZOROA_UNIT_IDX, OBJ_SMOKE, 0 );
+
+  //フレーム待ち
+  if (frame == ZOROA_CHG_FRAME_FX32)
+  {
+    //@note 注意：以下の処理はスクリプトコマンド EvCmdObjDel, EvCmdObjAddEventと同じ処理を行うものです。
+    //@note EvCmdObjDel, EvCmdObjAddEventの実装が変化する場合は注意が必要です。
+    u16 before, after;
+    MMDL *mmdl;
+    MMDLSYS *mmdlsys;
+    {
+      SMOKE_GMK_WK *wk = (SMOKE_GMK_WK*)gmk_wk->Work;
+      before = wk->BeforeObj;
+      after = wk->AfterObj;
+    }
+    mmdlsys = FIELDMAP_GetMMdlSys( fieldWork );
+    //ＯＢＪ消す
+    mmdl = MMDLSYS_SearchOBJID( mmdlsys, before );
+    GF_ASSERT_MSG( mmdl != NULL,"OBJ DEL %d 対象のOBJが居ません\n", before );
+    MMDL_Delete( mmdl );
+    //ＯＢＪ出す
+    {
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
+      EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( gdata );
+      u16 count = EVENTDATA_GetNpcCount( evdata );
+      PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+      int zone_id = PLAYERWORK_getZoneID( player );
+      if( count )
+      {
+        EVENTWORK *evwork =  GAMEDATA_GetEventWork( gdata );
+        const MMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
+        mmdl = MMDLSYS_AddMMdlHeaderID(
+            mmdlsys, header, zone_id, count, evwork, after );
+        if( mmdl != NULL ){ //追加されたOBJは即ポーズさせる
+          MMDL_OnMoveBitMoveProcPause( mmdl );
+        }
+        GF_ASSERT( mmdl != NULL );
+      }
+      else GF_ASSERT( 0 );
+    }
+  }
+
+  //０番目にアニメで終了判定する
+  anm = FLD_EXP_OBJ_GetAnmCnt( ptr, ZOROA_UNIT_IDX, obj, 0);
+  if ( FLD_EXP_OBJ_ChkAnmEnd(anm) )
+  {
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
 

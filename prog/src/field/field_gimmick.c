@@ -73,7 +73,7 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(field_gym_insect),
   FS_OVERLAY_ID(field_gym_ground),
   FS_OVERLAY_ID(field_gym_ground_ent),
-  FS_OVERLAY_ID(field_gym_ice),
+  FS_OVERLAY_ID(field_gym_ice),                         //10
   FS_OVERLAY_ID(field_gym_dragon),
   FS_OVERLAY_ID(field_gimmick_h03),
   FS_OVERLAY_ID(field_gimmick_gate),  // C04R0601
@@ -83,7 +83,7 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(field_gimmick_gate),  // C04R0701
   FS_OVERLAY_ID(field_gimmick_gate),  // C04R0801
   FS_OVERLAY_ID(field_gimmick_gate),  // C02R0701
-  FS_OVERLAY_ID(field_gimmick_gate),  // R14R0101
+  FS_OVERLAY_ID(field_gimmick_gate),  // R14R0101         //20
   FS_OVERLAY_ID(field_gimmick_gate),  // C08R0501
   FS_OVERLAY_ID(field_gimmick_gate),  // C08R0701
   FS_OVERLAY_ID(field_gimmick_gate),  // H01R0101
@@ -93,7 +93,7 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(field_gimmick_d06),   // D06_GIMMICK_Setup,
   FS_OVERLAY_ID(field_gimmick_d06),   // D06_GIMMICK_Setup,
   FS_OVERLAY_ID(field_gimmick_lfront01),//LEAGUE_FRONT_01_GIMMICK_Setup,
-  FS_OVERLAY_ID(field_gimmick_lfront02),//LEAGUE_FRONT_02_GIMMICK_Setup,
+  FS_OVERLAY_ID(field_gimmick_lfront02),//LEAGUE_FRONT_02_GIMMICK_Setup,    //30
   FS_OVERLAY_ID(field_gimmick_gate),  // D03R0201
   FS_OVERLAY_ID(field_gimmick_bgate),
   FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01002
@@ -103,7 +103,7 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01006
   FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01007
   FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01008
-  FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01010
+  FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01010              //40
   FS_OVERLAY_ID(field_gimmick_bsubway),//C04R01011
   FS_OVERLAY_ID(field_gimmick_gate),  // R01R0101
   FS_OVERLAY_ID(field_gimmick_gate),  // R15R0101
@@ -111,8 +111,9 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(field_gimmick_gate),  // R12R0101
   FS_OVERLAY_ID(field_gimmick_r04d03),  // R04 and D03
   FS_OVERLAY_ID(sppoke_gimmick),  // R08R0101
+  FS_OVERLAY_ID(sppoke_gimmick),  // C03R0401
   FS_OVERLAY_ID(sppoke_gimmick),  // C03R0901
-  FS_OVERLAY_ID(palace_gimmick),  //
+  FS_OVERLAY_ID(palace_gimmick),  //                          //50
   FS_OVERLAY_ID(palace_map_gimmick),  //
   FS_OVERLAY_ID(field_gimmick_bsubway),//C04R0109
   FS_OVERLAY_ID(field_gimmick_d12), //D12
@@ -167,6 +168,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_Setup,  // R12R0101
   R04D03_GIMMICK_Setup,    //R04 and D03
   SPPOKE_GMK_SetupTrio,    //R08R0101
+  SPPOKE_GMK_SetupZoroa,    //C03R0401
   SPPOKE_GMK_SetupMerodhia,    //C03R0901
   PALACE_GMK_Setup,    //
   PALACE_MAP_GMK_Setup,    //パレスゾーンのマップ
@@ -223,6 +225,7 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_End,  // R12R0101
   R04D03_GIMMICK_End,    //R04 and D03
   SPPOKE_GMK_EndTrio,     //R08R0101
+  SPPOKE_GMK_EndZoroa,    //C03R0401
   SPPOKE_GMK_EndMerodhia,    //C03R0901
   PALACE_GMK_End,    //
   PALACE_MAP_GMK_End,    //パレスゾーンのマップ
@@ -279,6 +282,7 @@ const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_Move,  // R12R0101
   R04D03_GIMMICK_Move,    //R04 and D03
   SPPOKE_GMK_MoveTrio,    //R08R0101
+  SPPOKE_GMK_MoveZoroa,    //C03R0401
   SPPOKE_GMK_MoveMerodhia,    //C03R0901
   PALACE_GMK_Move,    //
   PALACE_MAP_GMK_Move,    //パレスゾーンのマップ

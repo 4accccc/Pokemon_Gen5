@@ -824,10 +824,12 @@
   // テレビ番組抽選
   DEF_CMD( EvCmdTV_GetMsg, EV_SEQ_TV_GET_MSG )
 
+  //ゾロア変身解除
+  DEF_CMD( EvCmdChangeZoroa, EV_SEQ_CHG_ZOROA )
 
   END_CMD
-
   //スクリプトコマンドテーブル終了
+  
 
 
 

@@ -10963,3 +10963,18 @@
   .short EV_SEQ_TV_GET_MSG
   .short \msg
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ƒ]ƒƒA•Ïg‰ğœ
+ * @param   before      ‰ğœ‘O‚n‚a‚i
+ * @param   after       ‰ğœŒã‚n‚a‚i
+ */
+//--------------------------------------------------------------
+#define _CHG_ZOROA( before, after ) _ASM_CHG_ZOROA before, after
+
+  .macro _ASM_CHG_ZOROA before, after
+  .short EV_SEQ_CHG_ZOROA
+  .short \before
+  .short \after
+  .endm  

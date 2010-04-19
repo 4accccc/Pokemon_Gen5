@@ -191,20 +191,11 @@ _RET
 
 //ゾロアに戻る
 change_zoroa:
-  _OBJ_ANIME( C03R0401_BOY1_01, anm_round )
-  _OBJ_ANIME_WAIT()
-  //ホワイトアウト
-  _WHITE_OUT()
-  _DISP_FADE_END_CHECK()
-  //男の子を消す
-  _FLAG_SET( FV_C03R0401_BOY1_01 )
-  _OBJ_DEL(C03R0401_BOY1_01)
   //ゾロア出す
   _FLAG_RESET( FV_C03R0401_POKE22_01 )
-  _OBJ_ADD(C03R0401_POKE22_01)
-  //ホワイトイン
-  _WHITE_IN()
-  _DISP_FADE_END_CHECK()
+  _CHG_ZOROA( C03R0401_BOY1_01, C03R0401_POKE22_01 )
+  //男の子を消す
+  _FLAG_SET( FV_C03R0401_BOY1_01 )
 _RET
 
 add_zoroa:
