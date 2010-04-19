@@ -22,9 +22,10 @@
 
 #include "system/ds_system.h"
 
-
 #include "local_tvt_local_def.h"
 #include "local_tvt_chara.h"
+
+#include "test/ariizumi/ari_debug.h"
 
 //======================================================================
 //	define
@@ -65,18 +66,18 @@ typedef enum
 #pragma mark [> proto
 
 static const GFL_DISP_VRAM vramBank = {
-  GX_VRAM_BG_256_AB,       // メイン2DエンジンのBG
+  GX_VRAM_BG_256_AD,       // メイン2DエンジンのBG
   GX_VRAM_BGEXTPLTT_23_G,     // メイン2DエンジンのBG拡張パレット
   GX_VRAM_SUB_BG_128_C,     // サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
-  GX_VRAM_OBJ_16_F ,       // メイン2DエンジンのOBJ
+  GX_VRAM_OBJ_128_B ,       // メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
   GX_VRAM_SUB_OBJ_NONE,     // サブ2DエンジンのOBJ
   GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
   GX_VRAM_TEX_NONE,        // テクスチャイメージスロット
   GX_VRAM_TEXPLTT_NONE,     // テクスチャパレットスロット
-  GX_OBJVRAMMODE_CHAR_1D_32K,
-  GX_OBJVRAMMODE_CHAR_1D_32K
+  GX_OBJVRAMMODE_CHAR_1D_128K,
+  GX_OBJVRAMMODE_CHAR_1D_128K
 };
 
 static void LOCAL_TVT_Init( LOCAL_TVT_WORK *work );
@@ -110,7 +111,7 @@ static void LOCAL_TVT_Init( LOCAL_TVT_WORK *work )
   u8 i;
   LOCAL_TVT_InitGraphic( work );
 
-  OS_TPrintf("[%d]\n",DS_SYSTEM_IsRestrictUGC());
+  ARI_TPrintf("[%d]\n",DS_SYSTEM_IsRestrictUGC());
  
   work->arcHandle = GFL_ARC_OpenDataHandle( ARCID_LOCAL_TVT , work->heapId );
 
@@ -153,13 +154,6 @@ static void LOCAL_TVT_Term( LOCAL_TVT_WORK *work )
 
   LOCAL_TVT_MSG_TermMessage( work );
 
-  GFL_CLACT_WK_Remove( work->clwkRecIcon );
-  GFL_CLGRP_PLTT_Release( work->cellRes[LTCR_PLT] );
-  GFL_CLGRP_CGR_Release( work->cellRes[LTCR_NCG] );
-  GFL_CLGRP_CELLANIM_Release( work->cellRes[LTCR_ANM] );
-  GFL_CLACT_UNIT_Delete( work->cellUnit );
-
-
   for( i=0 ; i<work->mode ; i++ )
   {
     if( work->charaWork[i] != NULL )
@@ -168,6 +162,12 @@ static void LOCAL_TVT_Term( LOCAL_TVT_WORK *work )
     }
   }
   
+  GFL_CLACT_WK_Remove( work->clwkRecIcon );
+  GFL_CLGRP_PLTT_Release( work->cellRes[LTCR_PLT] );
+  GFL_CLGRP_CGR_Release( work->cellRes[LTCR_NCG] );
+  GFL_CLGRP_CELLANIM_Release( work->cellRes[LTCR_ANM] );
+  GFL_CLACT_UNIT_Delete( work->cellUnit );
+
   GFL_ARC_CloseDataHandle( work->arcHandle );
   
   LOCAL_TVT_TermGraphic( work );
@@ -407,7 +407,7 @@ static void LOCAL_TVT_InitGraphic( LOCAL_TVT_WORK *work )
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
     //GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
 
-    work->cellUnit  = GFL_CLACT_UNIT_Create( 4 , 0, work->heapId );
+    work->cellUnit  = GFL_CLACT_UNIT_Create( 16 , 0, work->heapId );
     GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
   }
 }
@@ -441,7 +441,7 @@ static void LOCAL_TVT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlan
 //--------------------------------------------------------------
 static void LOCAL_TVT_LoadScript( LOCAL_TVT_WORK *work )
 {
-  OS_TPrintf("Load local tvt script[%d]\n",work->initWork->scriptId);
+  ARI_TPrintf("Load local tvt script[%d]\n",work->initWork->scriptId);
   
   work->scriptRes = GFL_ARCHDL_UTIL_Load( work->arcHandle , 
                                           NARC_local_tvt_tvt_script_01_bin + (work->initWork->scriptId-1) ,
@@ -454,7 +454,7 @@ static void LOCAL_TVT_LoadScript( LOCAL_TVT_WORK *work )
     u8 i;
     for( i=0;i<4;i++ )
     {
-      OS_TPrintf("[%d][%d:%d]\n",i,work->scriptHead->chara[i],work->scriptHead->back[i]);
+      ARI_TPrintf("[%d][%d:%d]\n",i,work->scriptHead->chara[i],work->scriptHead->back[i]);
     }
   }
   */
@@ -624,6 +624,14 @@ static void LOCAL_TVT_MSG_UpdateMessage( LOCAL_TVT_WORK *work )
   if( work->printHandle != NULL  )
   {
     APP_KEYCURSOR_Main( work->cursorWork , work->printHandle , work->msgWin );
+    if( PRINTSYS_PrintStreamGetState( work->printHandle ) != PRINTSTREAM_STATE_RUNNING )
+    {
+      LOCAL_TVT_CHARA_SetLipSync( work->charaWork[work->talkCharaNo] , FALSE );
+    }
+    else
+    {
+      LOCAL_TVT_CHARA_SetLipSync( work->charaWork[work->talkCharaNo] , TRUE );
+    }
     if( APP_PRINTSYS_COMMON_PrintStreamFunc( &work->streamMng , work->printHandle ) == TRUE )
     {
       PRINTSYS_PrintStreamDelete( work->printHandle );
@@ -715,7 +723,7 @@ static void LOCAL_TVT_MSG_DispMessage( LOCAL_TVT_WORK *work , const u16 msgId )
 {
   if( work->printHandle != NULL )
   {
-    OS_TPrintf( "Message is not finish!!\n" );
+    ARI_TPrintf( "Message is not finish!!\n" );
     PRINTSYS_PrintStreamDelete( work->printHandle );
     work->printHandle = NULL;
   }
@@ -800,8 +808,9 @@ static void LTVT_SCRIPT_DispMessageInit( LOCAL_TVT_WORK *work )
   const u8 comNo = work->scriptData[work->scriptIdx].comNo;
   const u8 charaNo = work->scriptData[work->scriptIdx].charaNo;
   const u8 option = work->scriptData[work->scriptIdx].option;
-  OS_TPrintf("CommandInit DispMessage[%d][%d]\n",charaNo,option);
+  ARI_TPrintf("CommandInit DispMessage[%d][%d]\n",charaNo,option);
   
+  work->talkCharaNo = charaNo;
   LOCAL_TVT_DispRecIcon( work , charaNo );
   if( charaNo < 2 )
   {
@@ -821,7 +830,6 @@ static void LTVT_SCRIPT_DispMessageInit( LOCAL_TVT_WORK *work )
   WORDSET_RegisterPlayerName( work->wordSet , 0 , GAMEDATA_GetMyStatus(work->initWork->gameData) );
   
   LOCAL_TVT_MSG_DispMessage( work , option );
-  
 }
 
 static const BOOL LTVT_SCRIPT_DispMessageMain( LOCAL_TVT_WORK *work )
@@ -843,7 +851,7 @@ static void LTVT_SCRIPT_WaitInit( LOCAL_TVT_WORK *work )
   const u8 comNo = work->scriptData[work->scriptIdx].comNo;
   const u8 charaNo = work->scriptData[work->scriptIdx].charaNo;
   const u8 option = work->scriptData[work->scriptIdx].option;
-  OS_TPrintf("CommandInit Wait[%d][%d]\n",charaNo,option);
+  ARI_TPrintf("CommandInit Wait[%d][%d]\n",charaNo,option);
   
   work->waitCnt = 0;
 }

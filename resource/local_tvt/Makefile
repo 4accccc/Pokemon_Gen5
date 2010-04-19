@@ -50,13 +50,13 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g2dcvtr $< -pcm
 
 .ncg.NCGR:
-	g2dcvtr $< -bg
+	g2dcvtr $< -bg -pcm
 
 .nsc.NSCR:
 	g2dcvtr $<
 
 .nce.NCER:
-	g2dcvtr $<
+	g2dcvtr $< -pcm
 
 endif
 

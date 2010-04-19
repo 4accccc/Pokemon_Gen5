@@ -17,6 +17,8 @@
 #include "local_tvt_local_def.h"
 #include "local_tvt_chara.h"
 
+#include "test/ariizumi/ari_debug.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -27,6 +29,7 @@
 #define LTVT_CHARA_NAME_WIDTH (16-4)
 #define LTVT_CHARA_NAME_HEIGHT (2)
 
+#define LTVT_CHARA_EYE_BLINK_CNT (150)
 //======================================================================
 //	enum
 //======================================================================
@@ -66,17 +69,22 @@ struct _LOCAL_TVT_CHARA
   BOOL isUpdateQue;
   GFL_BMPWIN  *nameWin;
 
+  u32 cellRes[3];
+  GFL_CLWK *clwkEye;
+  GFL_CLWK *clwkMouth;
+  
+  u16 eyeBlinkCnt;
+  BOOL isLipSync;
 };
 
-static const u8 charaResList[LTCT_MAX][2] = {
-    { NARC_local_tvt_chara_player_m_NCLR , NARC_local_tvt_chara_player_m_1_NCGR },
-    { NARC_local_tvt_chara_rival_NCLR    , NARC_local_tvt_chara_rival_1_NCGR },
-    { NARC_local_tvt_chara_support_NCLR  , NARC_local_tvt_chara_support_1_NCGR },
-    { NARC_local_tvt_chara_doctor_d_NCLR , NARC_local_tvt_chara_doctor_d_1_NCGR },
-    { NARC_local_tvt_chara_mother_NCLR , NARC_local_tvt_chara_mother_1_NCGR },
-    
+static const u8 charaResList[LTCT_MAX][3] = {
+    { NARC_local_tvt_chara_player_m_NCLR , NARC_local_tvt_chara_player_m_1_NCGR , NARC_local_tvt_obj_player_m_NCLR },
+    { NARC_local_tvt_chara_rival_NCLR    , NARC_local_tvt_chara_rival_1_NCGR    , NARC_local_tvt_obj_rival_NCLR },
+    { NARC_local_tvt_chara_support_NCLR  , NARC_local_tvt_chara_support_1_NCGR  , NARC_local_tvt_obj_support_NCLR },
+    { NARC_local_tvt_chara_doctor_d_NCLR , NARC_local_tvt_chara_doctor_d_1_NCGR , NARC_local_tvt_obj_doctor_d_NCLR },
+    { NARC_local_tvt_chara_mother_NCLR   , NARC_local_tvt_chara_mother_1_NCGR   , NARC_local_tvt_obj_mother_NCLR },
     //主人公分岐用・主人公(女)素材
-    { NARC_local_tvt_chara_player_f_NCLR , NARC_local_tvt_chara_player_f_1_NCGR },
+    { NARC_local_tvt_chara_player_f_NCLR , NARC_local_tvt_chara_player_f_1_NCGR , NARC_local_tvt_obj_player_m_NCLR },
 };
 
 
@@ -117,8 +125,10 @@ LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_WORK *work , const u8 charaIdx 
     charaWork->charaAnmIdx = 0;
     charaWork->bgAnmIdx = 0;
     charaWork->isUpdateQue = FALSE;
+    charaWork->isLipSync = FALSE;
+    charaWork->eyeBlinkCnt = GFUser_GetPublicRand0(LTVT_CHARA_EYE_BLINK_CNT/2);
 
-    OS_TPrintf("[%d][%d:%d]\n",charaWork->charaIdx,charaWork->charaType,charaWork->bgType);
+    ARI_TPrintf("[%d][%d:%d]\n",charaWork->charaIdx,charaWork->charaType,charaWork->bgType);
     
     LOCAL_TVT_CHARA_LoadCharaResource( work , charaWork );
     LOCAL_TVT_CHARA_LoadCommonResource( work , charaWork );
@@ -140,6 +150,12 @@ LOCAL_TVT_CHARA* LOCAL_TVT_CHARA_Init( LOCAL_TVT_WORK *work , const u8 charaIdx 
 //--------------------------------------------------------------
 void LOCAL_TVT_CHARA_Term( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
 {
+  GFL_CLACT_WK_Remove( charaWork->clwkEye );
+  GFL_CLACT_WK_Remove( charaWork->clwkMouth );
+  GFL_CLGRP_PLTT_Release( charaWork->cellRes[0] );
+  GFL_CLGRP_CGR_Release( charaWork->cellRes[1] );
+  GFL_CLGRP_CELLANIM_Release( charaWork->cellRes[2] );
+
   GFL_BMPWIN_Delete( charaWork->nameWin );
   if( charaWork->resData != NULL )
   {
@@ -218,6 +234,33 @@ void LOCAL_TVT_CHARA_Main( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork )
   {
     GFL_BMPWIN_TransVramCharacter( charaWork->nameWin );
     charaWork->isUpdateQue = FALSE;
+  }
+  
+  //目パチ
+  {
+    charaWork->eyeBlinkCnt += GFUser_GetPublicRand(2)+1;
+    if( charaWork->eyeBlinkCnt >= LTVT_CHARA_EYE_BLINK_CNT )
+    {
+      GFL_CLACT_WK_StartAnm( charaWork->clwkEye );
+      GFL_CLACT_WK_ResetAnm( charaWork->clwkEye );
+      charaWork->eyeBlinkCnt = 0;
+    }
+  }
+  //口パク
+  if( charaWork->isLipSync == TRUE )
+  {
+    if( GFL_CLACT_WK_CheckAnmActive( charaWork->clwkMouth ) == FALSE )
+    {
+      GFL_CLACT_WK_StartAnm( charaWork->clwkMouth );
+    }
+  }
+  else
+  {
+    if( GFL_CLACT_WK_CheckAnmActive( charaWork->clwkMouth ) == TRUE &&
+        GFL_CLACT_WK_GetAnmIndex( charaWork->clwkMouth ) == 0 )
+    {
+      GFL_CLACT_WK_StopAnm( charaWork->clwkMouth );
+    }
   }
 }
 
@@ -316,11 +359,49 @@ static void LOCAL_TVT_CHARA_LoadCharaResource( LOCAL_TVT_WORK *work , LOCAL_TVT_
                                     LTVT_VRAM_ADR_BG + charSize * charaWork->charaIdx ,
                                     charSize );
   GFL_HEAP_FreeMemory( charaWork->resData );
+
+  //目パチ口パク素材
+  charaWork->cellRes[0] = GFL_CLGRP_PLTT_RegisterComp( work->arcHandle , 
+        charaResList[charaWork->charaType][2] , CLSYS_DRAW_MAIN , 
+        (LTVT_PLT_OBJ_CHARA+charaWork->charaIdx)*32 , work->heapId  );
+  charaWork->cellRes[1] = GFL_CLGRP_CGR_Register( work->arcHandle , 
+        charaResList[charaWork->charaType][2]+1 , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
+  charaWork->cellRes[2] = GFL_CLGRP_CELLANIM_Register( work->arcHandle , 
+        charaResList[charaWork->charaType][2]+2 , 
+        charaResList[charaWork->charaType][2]+3, work->heapId  );
+  
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.softpri = 10;
+    cellInitData.bgpri = 1;
+    cellInitData.pos_x = 64 + (charaWork->charaIdx%2)*128;
+    cellInitData.pos_y = 48 + (charaWork->charaIdx/2)*96;
+    cellInitData.anmseq = 0;
+
+    charaWork->clwkEye = GFL_CLACT_WK_Create( work->cellUnit ,
+              charaWork->cellRes[1],
+              charaWork->cellRes[0],
+              charaWork->cellRes[2],
+              &cellInitData ,CLSYS_DRAW_MAIN , work->heapId );
+    GFL_CLACT_WK_SetDrawEnable( charaWork->clwkEye , TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( charaWork->clwkEye , TRUE );
+    GFL_CLACT_WK_StopAnm( charaWork->clwkEye );
+
+    cellInitData.anmseq = 1;
+    charaWork->clwkMouth = GFL_CLACT_WK_Create( work->cellUnit ,
+              charaWork->cellRes[1],
+              charaWork->cellRes[0],
+              charaWork->cellRes[2],
+              &cellInitData ,CLSYS_DRAW_MAIN , work->heapId );
+    GFL_CLACT_WK_SetDrawEnable( charaWork->clwkMouth , TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( charaWork->clwkMouth , TRUE );
+    GFL_CLACT_WK_StopAnm( charaWork->clwkMouth );
+  }
 }
 
 static void LOCAL_TVT_CHARA_LoadNcgResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork , ARCDATID datId )
 {
-  //OS_TPrintf("[%d]L\n",charaWork->charaIdx);
+  //ARI_TPrintf("[%d]L\n",charaWork->charaIdx);
   charaWork->resData = GFL_ARCHDL_UTIL_LoadBGCharacter( work->arcHandle , 
                                    datId ,
                                    FALSE ,
@@ -337,7 +418,7 @@ static void LOCAL_TVT_CHARA_LoadNcgResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CH
 static void LOCAL_TVT_CHARA_TransNcgResource( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWork ,
                                                    const u32 topOfs , const u32 transOfs , const u32 transSize )
 {
-  //OS_TPrintf("[%d]T\n",charaWork->charaIdx);
+  //ARI_TPrintf("[%d]T\n",charaWork->charaIdx);
   GFL_STD_MemCopy32( (void*)((u32)charaWork->charaData->pRawData + topOfs) , (void*)(HW_BG_VRAM + transOfs ) , transSize );
 
 }
@@ -421,4 +502,9 @@ void LOCAL_TVT_CHARA_RedrawName( LOCAL_TVT_WORK *work , LOCAL_TVT_CHARA *charaWo
 const u8 LOCAL_TVT_CHARA_GetNameLen( LOCAL_TVT_CHARA *charaWork )
 {
   return charaWork->nameLen;
+}
+
+void LOCAL_TVT_CHARA_SetLipSync( LOCAL_TVT_CHARA *charaWork , const BOOL flg )
+{
+  charaWork->isLipSync = flg;
 }

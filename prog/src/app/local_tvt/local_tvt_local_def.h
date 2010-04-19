@@ -39,6 +39,7 @@
 #define LTVT_PLT_MAIN_WINFRAME (13)
 
 #define LTVT_PLT_OBJ_MAIN     (0)
+#define LTVT_PLT_OBJ_CHARA     (4)  //1*4ñ{
 
 //ägí£BGÇÕñ Ç≤Ç∆Ç…éùÇ¬ÇÃÇ≈óºï˚0Ç©ÇÁÇ≈OK
 #define LTVT_PLT_CHARA (0)
@@ -135,6 +136,7 @@ struct _LOCAL_TVT_WORK
   PRINT_QUE       *printQue;
   APP_KEYCURSOR_WORK *cursorWork;
   APP_PRINTSYS_COMMON_WORK streamMng;
+  u8  talkCharaNo;
 
   u8 scriptIdx;
   u16 waitCnt;
