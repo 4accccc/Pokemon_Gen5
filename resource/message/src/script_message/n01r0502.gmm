@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-19T18:09:13"/>
+	<create user="matsumiya" host="W00224" date="2010-04-19T18:38:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -572,12 +572,12 @@
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]キミに　できることは　２つ！▼
 かちめのない　たたかいを　いどむか▼
 それとも　ここを　たちさり
-ポケモンが　ひとから　はなれゆく▽
+ポケモンが　ひとから　ときはなたれた▽
 あたらしい　せかいを　みまもるか▼[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]キミに　できることは　２つ！▼
 勝算のない　戦いを　挑むか▼
 それとも　ここを　立ち去り
-ポケモンが　人から　離れゆく▽
+ポケモンが　人から　解き放たれた▽
 新しい　世界を　見守るか▼[BE:09:速度コントロール:0]▼</language>
 	</row>
 
@@ -606,12 +606,12 @@
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]キミに　できることは　２つ！▼
 かちめのない　たたかいを　いどむか▼
 それとも　ここを　たちさり
-ポケモンが　ひとから　はなれゆく▽
+ポケモンが　ひとから　ときはなたれた▽
 あたらしい　せかいを　みまもるか▼[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]キミに　できることは　２つ！▼
 勝算のない　戦いを　挑むか▼
 それとも　ここを　立ち去り
-ポケモンが　人から　離れゆく▽
+ポケモンが　人から　解き放たれた▽
 新しい　世界を　見守るか▼[BE:09:速度コントロール:0]▼</language>
 	</row>
 
@@ -759,7 +759,8 @@
 いっぴきの　ポケモンだった▼
 せいはんたいの　そんざい　にして
 まったく　おなじもの▼
-シンも　ムも　えいゆうの　もとに
+シンも　ムも　えいゆうと
+みとめた　じんぶつの　もとに▽
 あらわれる　ポケモン……▼
 ……そうか
 やはり　キミも[BE:09:速度コントロール:0]▼</language>
@@ -768,7 +769,8 @@
 一匹の　ポケモンだった▼
 正反対の　存在にして
 まったく　同じもの▼
-シンも　ムも　英雄の　元に
+シンも　ムも　英雄と
+認めた　人物の　もとに▽
 あらわれる　ポケモン……▼
 ……そうか
 やはり　キミも[BE:09:速度コントロール:0]▼</language>
@@ -784,7 +786,8 @@
 いっぴきの　ポケモンだった▼
 せいはんたいの　そんざい　にして
 まったく　おなじもの▼
-ムも　シンも　えいゆうの　もとに
+ムも　シンも　えいゆうと
+みとめた　じんぶつの　もとに▽
 あらわれる　ポケモン……▼
 ……そうか
 やはり　キミも[BE:09:速度コントロール:0]▼</language>
@@ -793,7 +796,8 @@
 一匹の　ポケモンだった▼
 正反対の　存在にして
 まったく　同じもの▼
-シンも　ムも　英雄の　元に
+ムも　シンも　英雄と
+認めた　人物の　もとに▽
 あらわれる　ポケモン……▼
 ……そうか
 やはり　キミも[BE:09:速度コントロール:0]▼</language>
@@ -809,16 +813,18 @@
 なんと　いっているか▽
 おしえてあげるよ▼
 「キミと　たたかいたい」そうだ▼
-どれほどの　ちからを　もっているか
-たしかめたいんだろうね▼
+シンに　かった
+キミが　りそうを　もとめたいのか▽
+たしかめる　つもり　なんだね▼
 ボクも　キミのちからを　しりたい……
 さあ　どうぞ！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]その　ポケモンが
 なんと　いっているか▽
 教えてあげるよ▼
 「キミと　戦いたい」そうだ▼
-どれほどの　力を　持っているか
-確かめたいんだろうね▼
+シンに　勝利した
+キミが　理想を　求めたいのか▽
+確かめる　つもり　なんだね▼
 ボクも　キミの　力を　知りたい……
 さあ　どうぞ！[BE:09:速度コントロール:0]▼</language>
 	</row>
@@ -833,16 +839,18 @@
 なんと　いっているか▽
 おしえてあげるよ▼
 「キミと　たたかいたい」そうだ▼
-どれほどの　ちからを　もっているか
-たしかめたいんだろうね▼
+ムに　かった
+キミが　しんじつを　もとめたいのか▽
+たしかめる　つもり　なんだね▼
 ボクも　キミのちからを　しりたい……
 さあ　どうぞ！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]その　ポケモンが
 なんと　いっているか▽
 教えてあげるよ▼
 「キミと　戦いたい」そうだ▼
-どれほどの　力を　持っているか
-確かめたいんだろうね▼
+ムに　勝利した
+キミが　真実を　求めたいのか▽
+確かめる　つもり　なんだね▼
 ボクも　キミの　力を　知りたい……
 さあ　どうぞ！[BE:09:速度コントロール:0]▼</language>
 	</row>
@@ -1059,63 +1067,63 @@
 世界を　変えるための　数式……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_n01r0502_boss_04" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_n01r0502_boss_05" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_06" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_n01r0502_boss_06" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_07" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_n01r0502_boss_07" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_08" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_n01r0502_boss_08" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_09" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_n01r0502_boss_09" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_10" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_n01r0502_boss_10" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_11" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_n01r0502_boss_11" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_12" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+	<row id="msg_n01r0502_boss_12" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">no data</language>
@@ -1140,18 +1148,14 @@
 ふがいない　息子め▼</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・所定のpos（詳細未定）で停止しメッセージ表示
-・続けてsage1_03</comment>
+	<row id="msg_n01r0502_sage1_02" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">ゲーチス</attribute>
-		<language name="JPN" width="256">そなたに　この　ぎょくざは
-『やはり　ふさわしくない』ようだ▼</language>
-		<language name="JPN_KANJI" width="256">そなたに　この　玉座は
-『やはり　ふさわしくない』ようだ▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_02w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_sage1_02w" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・WHITEver
 ・所定のpos（詳細未定）で停止しメッセージ表示
@@ -1175,7 +1179,7 @@
 その点は　よくやってくれました▼</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_02b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_sage1_02b" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・所定のpos（詳細未定）で停止しメッセージ表示
@@ -1216,7 +1220,7 @@
 つぶしあうことを　目論んだのです▼</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0502_sage1_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・主人公のほうを向いてメッセージ表示
 ・続けてsage1_05</comment>
@@ -1237,7 +1241,7 @@
 共倒れ　だったのですから▼</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0502_sage1_05" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてblack_01</comment>
 		<attribute name="キャラ指定">ゲーチス</attribute>
@@ -1251,7 +1255,7 @@
 不要な存在は　排除しましょう▼</language>
 	</row>
 
-	<row id="msg_n01r0502_black_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_n01r0502_black_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・0＝主人公名前
 ・sage1_04表示後、チャンピオンを連れ添って
@@ -1267,7 +1271,7 @@
 ポケモンを　解放することじゃ……▼</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0502_sage1_06" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後に動作モデルの芝居（予定）
 ・続けてchampion_01</comment>
@@ -1302,7 +1306,7 @@
 ポケモンを　奪っていたのです！▼</language>
 	</row>
 
-	<row id="msg_n01r0502_champion_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_champion_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♂
 ・続けてsage1_07</comment>
 		<attribute name="キャラ指定">CHAMPION
@@ -1313,7 +1317,7 @@
 そんな　くだらぬ　考えで！▼</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0502_sage1_07" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・左右に数歩往復してから
 　画面下向きでメッセージ表示
@@ -1347,7 +1351,7 @@
 瞬間の　顔が　みたいのだ！▼</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0502_sage1_08" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・戦闘後、フィールドに復帰すると
 　自動で表示
@@ -1367,57 +1371,28 @@
 真実の　英雄なんだぞおッ！？▼</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_08w" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・WHITEver
-・メッセージ表示後、戦闘に
-・ここでの戦闘に敗北した場合
-　このメッセージから再開（暫定）</comment>
+	<row id="msg_n01r0502_sage1_08w" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">ゲーチス</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]……
-まずは　きみ　からですね▼
-シンや　ムと
-たたかうような　わるい　ヤツは▽
-うちはたさねば　なりません▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]……
-まずは　きみ　からですね▼
-シンや　ムと
-戦うような　悪い　ヤツは▽
-討ち果たさねば　なりません▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_08b" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・BLACKver
-・メッセージ表示後、戦闘に
-・ここでの戦闘に敗北した場合
-　このメッセージから再開（暫定）</comment>
+	<row id="msg_n01r0502_sage1_08b" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">ゲーチス</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]……
-まずは　きみ　からですね▼
-ムや　シンと
-たたかうような　わるい　ヤツは▽
-うちはたさねば　なりません▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]……
-まずは　きみ　からですね▼
-ムや　シンと
-戦うような　悪い　ヤツは▽
-討ち果たさねば　なりません▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_09" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・戦闘後、フィールドに復帰すると
-　自動で表示
-・続けてblack_02</comment>
+	<row id="msg_n01r0502_sage1_09" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">ゲーチス</attribute>
-		<language name="JPN" width="256">ゲーチス『なぜ　なぜ　なぜだあ？
-なぜ　わるいヤツが　のさばるのだあ！？▼</language>
-		<language name="JPN_KANJI" width="256">ゲーチス『なぜ　なぜ　なぜだあ？
-なぜ　わるいヤツが　のさばるのだあ！？▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_n01r0502_black_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_black_02" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ゲーチスに隣接してからメッセージ表示
 　ライバルとゲーチス退場（このときゲーチスのアニメなし）
@@ -1490,17 +1465,14 @@
 		<language name="JPN_KANJI" width="256">……エールワ</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_10" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示後
-　ライバルとゲーチス退場（このときゲーチスのアニメなし）
-・画面外に消えると続けてboss_13</comment>
+	<row id="msg_n01r0502_sage1_10" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">ゲーチス</attribute>
-		<language name="JPN" width="256">ゲーチス『むぎゃっ！！▼</language>
-		<language name="JPN_KANJI" width="256">ゲーチス『むぎゃっ！！▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_13" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_n01r0502_boss_13" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・続けて
 　champion_02w　か
@@ -1522,17 +1494,14 @@
 キミたちを　巻き込んで　しまった[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_n01r0502_champion_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・続けてboss_14</comment>
+	<row id="msg_n01r0502_champion_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『……どうして
-かくちを　たびしていたのだ？▼</language>
-		<language name="JPN_KANJI" width="256">アデク『……どうして
-各地を　旅していたのだ？▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_n01r0502_champion_02w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_champion_02w" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♂
 ・続けてboss_14</comment>
 		<attribute name="キャラ指定">CHAMPION
@@ -1553,7 +1522,7 @@
 出会うことが　できたではないか！▼</language>
 	</row>
 
-	<row id="msg_n01r0502_champion_02b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_champion_02b" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♂
 ・続けてboss_14</comment>
 		<attribute name="キャラ指定">CHAMPION
@@ -1648,7 +1617,7 @@
 ボクが　決めることさ……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_17" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_n01r0502_boss_17" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・カットイン
 ・続けてboss_last_01~04表示
@@ -1658,7 +1627,7 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！！▼</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・WHITEver
 ・msg_d06r0101_boss_01で
@@ -1677,7 +1646,7 @@
 [1:00:トレーナー名:0]！　キミなら　できる！！[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・WHITEver
 ・msg_d06r0101_boss_01で
@@ -1693,7 +1662,7 @@
 夢を　実現するんだ！！[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・msg_d06r0101_boss_01で
@@ -1712,7 +1681,7 @@
 [1:00:トレーナー名:0]！　キミなら　できる！！[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・msg_d06r0101_boss_01で
@@ -1728,11 +1697,8 @@
 夢を　実現するんだ！！[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・カットイン終了し
-　城の外に飛びだす
-・続けてエンディングに</comment>
+	<row id="msg_n01r0502_boss_last_05" text-color="#000000,,,#ffffff,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">キミの　しんじつを
 せかいに　しらせろ！</language>
@@ -1740,51 +1706,36 @@
 世界に　知らせろ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・カットイン終了し
-　城の外に飛びだす
-・続けてエンディングに</comment>
+	<row id="msg_n01r0502_boss_last_06" text-color="#000000,,,#ffffff,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">りそうを　みつけだせ！</language>
 		<language name="JPN_KANJI" width="256">理想を　みつけだせ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・カットイン終了し
-　城の外に飛びだす
-・続けてエンディングに</comment>
+	<row id="msg_n01r0502_boss_last_07" text-color="#000000,,,#ffffff,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">りそうを　たいせつにするんだ！</language>
 		<language name="JPN_KANJI" width="256">理想を　大切にするんだ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・カットイン終了し
-　城の外に飛びだす
-・続けてエンディングに</comment>
+	<row id="msg_n01r0502_boss_last_08" text-color="#000000,,,#ffffff,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">りそうの　ゆめを　かなえろ！</language>
 		<language name="JPN_KANJI" width="256">理想の　夢を　かなえろ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・カットイン終了し
-　城の外に飛びだす
-・続けてエンディングに</comment>
+	<row id="msg_n01r0502_boss_last_09" text-color="#000000,,,#ffffff,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">キミの　りそうを　おいもとめろ！</language>
 		<language name="JPN_KANJI" width="256">キミの　理想を　追い求めろ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_10" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・カットイン終了し
-　城の外に飛びだす
-・続けてエンディングに</comment>
+	<row id="msg_n01r0502_boss_last_10" text-color="#000000,,,#ffffff,,#000000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">キミの　りそうを
 せかいと　わかちあえ！</language>
