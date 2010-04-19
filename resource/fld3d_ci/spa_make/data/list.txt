@@ -18,3 +18,10 @@ plasma.spa
 
 rival.spa
 	rival.spr
+
+plasma_blue.spa
+	plasma_blue.spr
+
+merodia.spa
+	merodia_star.spr
+	merodia_onpu.spr

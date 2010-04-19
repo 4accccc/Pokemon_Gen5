@@ -92,6 +92,7 @@ ARC_TARGET_DATA = \
 	plasma_ci01b.nsbma \
 	plasma_ci01b.nsbta \
 	plasma_ci01b.nsbva \
+	plasma_blue.spa \
 	plasma_ci02.nsbmd \
 	plasma_ci02.nsbca \
 	plasma_ci02.nsbma \
@@ -108,5 +109,6 @@ ARC_TARGET_DATA = \
 	fly_in2.nsbca \
 	fly_in2.nsbma \
 	fly_in2.nsbtp \
+	merodia.spa \
 	merodia01.nsbmd \
 	merodia01.nsbca

@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2009-10-21T12:03:37" source="cut_get2.mb"/>
+	<create user="unno" host="W00199" date="2010-04-19T19:24:25" source="cut_get2_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2009-10-21T12:03:37" source="cut_get2.mb"/>
+<original_create user="unno" host="W00199" date="2010-04-19T19:24:25" source="cut_get2_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -20,7 +20,7 @@
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="none" node_size="1 1"
+	compress_node="none" node_size="2 2"
 	compress_material="off" material_size="2 2"
 	output_texture="used"
 	force_full_weight="off"
@@ -35,7 +35,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="get_bg2"
-		path="C:/0_WB/cut_in/mb/souceimages/cut_get1_back2.tga"
+		path="C:/0_WB/cut_in/mb/item_get2/souceimages/cut_get1_back2.tga"
 	>
 		<bitmap size="4096">
 			8b8b 8b8b 8e8e 8e8e 908e 9090 8f8f 938f
@@ -556,7 +556,7 @@
 		width="8" height="8" original_width="8" original_height="8"
 		format="a5i3"
 		palette_name="cutget2_bg2"
-		path="C:/0_WB/cut_in/mb/souceimages/cut_get1_back2_a.tga"
+		path="C:/0_WB/cut_in/mb/item_get2/souceimages/cut_get1_back2_a.tga"
 	>
 		<bitmap size="32">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -646,7 +646,7 @@
 </material_array>
 
 <matrix_array size="1">
-	<matrix index="0" mtx_weight="1" node_idx="0"/>
+	<matrix index="0" mtx_weight="1" node_idx="1"/>
 </matrix_array>
 
 <polygon_array size="2">
@@ -714,9 +714,23 @@
 	</polygon>
 </polygon_array>
 
-<node_array size="1">
-	<node index="0" name="pCube1" kind="mesh"
+<node_array size="2">
+	<node index="0" name="bg_ica_ita" kind="null"
 		parent="-1"
+		child="1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="off"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="1" name="pCube1" kind="mesh"
+		parent="0"
 		child="-1"
 		brother_next="-1"
 		brother_prev="-1"
