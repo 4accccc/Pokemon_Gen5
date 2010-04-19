@@ -108,6 +108,7 @@ typedef struct
   GFL_MSGDATA     *msgHandle;
   PRINT_QUE       *printQue;
   APP_TASKMENU_RES  *takmenures;
+  APP_TASKMENU_WIN_WORK *backButton;
   APP_TASKMENU_WIN_WORK *nextButton;
   APP_TASKMENU_WIN_WORK *endButton;
   
@@ -236,36 +237,9 @@ static const BOOL CG_HELP_Main( CG_HELP_WORK *work )
     break;
   }
   
-
-  if( work->isUpdateMsg == TRUE &&
-      PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )
-  {
-    if( APP_TASKMENU_WIN_IsFinish( work->nextButton ) == TRUE ||
-        work->page == 0 )
-    {
-      GFL_BMPWIN_TransVramCharacter( work->msgWin );
-      GFL_BMPWIN_TransVramCharacter( work->infoWin );
-      work->isUpdateMsg = FALSE;
-      CG_HELP_DispPageIcon( work , work->page );
-      if( work->page == CG_HELP_PAGE_MAX-1 )
-      {
-        APP_TASKMENU_WIN_Delete( work->nextButton );
-        GFL_BG_LoadScreenV_Req(CG_HELP_FRAME_ICON);
-        work->nextButton = NULL;
-      }
-      else
-      {
-        APP_TASKMENU_WIN_ResetDecide( work->nextButton );
-      }
-    }
-  }
-
-  GFL_BG_SetScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_DEC, 1 );
-
   // QUEメイン
   PRINTSYS_QUE_Main( work->printQue );
-  
-  
+
   //OBJの更新
   GFL_CLACT_SYS_Main();
   
@@ -273,7 +247,50 @@ static const BOOL CG_HELP_Main( CG_HELP_WORK *work )
   {
     APP_TASKMENU_WIN_Update( work->nextButton );
   }
+  if( work->backButton != NULL )
+  {
+    APP_TASKMENU_WIN_Update( work->backButton );
+  }
   APP_TASKMENU_WIN_Update( work->endButton );
+
+  //APPTASKMENUより後に！
+  if( work->isUpdateMsg == TRUE &&
+      PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )
+  {
+    if( APP_TASKMENU_WIN_IsFinish( work->nextButton ) == TRUE ||
+        APP_TASKMENU_WIN_IsFinish( work->backButton ) == TRUE ||
+        work->page == 0 )
+    {
+      GFL_BMPWIN_TransVramCharacter( work->msgWin );
+      GFL_BMPWIN_TransVramCharacter( work->infoWin );
+      work->isUpdateMsg = FALSE;
+      CG_HELP_DispPageIcon( work , work->page );
+
+      if( work->page == CG_HELP_PAGE_MAX-1 )
+      {
+        APP_TASKMENU_WIN_ResetDecide( work->nextButton );
+        APP_TASKMENU_WIN_Hide( work->nextButton );
+      }
+      else
+      {
+        APP_TASKMENU_WIN_Show( work->nextButton );
+        APP_TASKMENU_WIN_ResetDecide( work->nextButton );
+      }
+      if( work->page == 0 )
+      {
+        APP_TASKMENU_WIN_ResetDecide( work->backButton );
+        APP_TASKMENU_WIN_Hide( work->backButton );
+      }
+      else
+      {
+        APP_TASKMENU_WIN_Show( work->backButton );
+        APP_TASKMENU_WIN_ResetDecide( work->backButton );
+      }
+    }
+  }
+
+  GFL_BG_SetScroll( GFL_BG_FRAME3_S, GFL_BG_SCROLL_Y_DEC, 1 );
+  
   return FALSE;
 }
 
@@ -504,14 +521,21 @@ static void CG_HELP_InitMessage( CG_HELP_WORK *work )
     initWork.msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
     initWork.type = APP_TASKMENU_WIN_TYPE_NORMAL;
     work->nextButton = APP_TASKMENU_WIN_Create( work->takmenures , &initWork ,
-                                        32-(APP_TASKMENU_PLATE_WIDTH*2) , 21 , APP_TASKMENU_PLATE_WIDTH , work->heapId );
+                                        11 , 21 , 11 , work->heapId );
+    GFL_STR_DeleteBuffer( initWork.str );
+
+    initWork.str = GFL_MSG_CreateString( work->msgHandle , CG_HELP_SYS_03 );
+    work->backButton =  APP_TASKMENU_WIN_Create( work->takmenures , &initWork ,
+                                         0 , 21 , 11 , work->heapId );
     GFL_STR_DeleteBuffer( initWork.str );
 
     initWork.str = GFL_MSG_CreateString( work->msgHandle , CG_HELP_SYS_02 );
     initWork.type = APP_TASKMENU_WIN_TYPE_RETURN;
     work->endButton =  APP_TASKMENU_WIN_Create( work->takmenures , &initWork ,
-                                        32-APP_TASKMENU_PLATE_WIDTH , 21 , APP_TASKMENU_PLATE_WIDTH , work->heapId );
+                                        22 , 21 , 10 , work->heapId );
     GFL_STR_DeleteBuffer( initWork.str );
+
+    APP_TASKMENU_WIN_Hide( work->backButton );
   }
   
   *(u16*)(HW_DB_BG_PLTT+CG_HELP_PLT_MAIN_FONT*32+2) = 0;
@@ -522,6 +546,10 @@ static void CG_HELP_TermMessage( CG_HELP_WORK *work )
   if( work->nextButton != NULL )
   {
     APP_TASKMENU_WIN_Delete( work->nextButton );
+  }
+  if( work->backButton != NULL )
+  {
+    APP_TASKMENU_WIN_Delete( work->backButton );
   }
   APP_TASKMENU_WIN_Delete( work->endButton );
   APP_TASKMENU_RES_Delete( work->takmenures );
@@ -540,11 +568,15 @@ static void CG_HELP_UpdateUI( CG_HELP_WORK *work )
   {
     { 21*8 , 
       192 , 
-      (32-(APP_TASKMENU_PLATE_WIDTH*2))*8 , 
-      (32-(APP_TASKMENU_PLATE_WIDTH  ))*8 } ,
+       0*8 , 
+      11*8 } ,
     { 21*8 , 
       192 , 
-      (32-APP_TASKMENU_PLATE_WIDTH)*8 , 
+      11*8 , 
+      22*8 } ,
+    { 21*8 , 
+      192 , 
+      22*8 , 
       255 } ,
     { GFL_UI_TP_HIT_END ,0,0,0 },
   };
@@ -553,6 +585,15 @@ static void CG_HELP_UpdateUI( CG_HELP_WORK *work )
   switch( ret )
   {
   case 0:
+    if( work->page > 0 )
+    {
+      work->page--;
+      CG_HELP_DispPage( work , work->page );
+      APP_TASKMENU_WIN_SetDecide( work->backButton , TRUE );
+      PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
+    }
+    break;
+  case 1:
     if( work->page < CG_HELP_PAGE_MAX-1 )
     {
       work->page++;
@@ -561,7 +602,7 @@ static void CG_HELP_UpdateUI( CG_HELP_WORK *work )
       PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
     }
     break;
-  case 1:
+  case 2:
     APP_TASKMENU_WIN_SetDecide( work->endButton , TRUE );
     work->state = CHS_FADEOUT;
     PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );

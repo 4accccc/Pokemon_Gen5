@@ -708,7 +708,7 @@ void APP_TASKMENU_RES_Delete( APP_TASKMENU_RES *wk )
 //-----------------------------------------------------------------------------
 APP_TASKMENU_WIN_WORK * APP_TASKMENU_WIN_Create( const APP_TASKMENU_RES *res, const APP_TASKMENU_ITEMWORK *item, u8 x, u8 y, u8 w, HEAPID heapID )
 {	
-	return APP_TASKMENU_WIN_CreateEx( res, item, x, y, w, APP_TASKMENU_PLATE_HEIGHT, 1, heapID );
+	return APP_TASKMENU_WIN_CreateEx( res, item, x, y, w, APP_TASKMENU_PLATE_HEIGHT, 0, heapID );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1028,4 +1028,30 @@ static void APP_TASKMENU_TransFrame( GFL_BMPWIN *bmpwin, const APP_TASKMENU_RES 
 		}
 	}
 
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	非表示
+ *
+ *	@param	APP_TASKMENU_WIN_WORK *wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+void APP_TASKMENU_WIN_Hide( APP_TASKMENU_WIN_WORK *wk )
+{
+	GFL_BMPWIN_ClearScreen( wk->bmpwin );
+  GFL_BG_LoadScreenV_Req(wk->res->frame);
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	表示
+ *
+ *	@param	APP_TASKMENU_WIN_WORK *wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+void APP_TASKMENU_WIN_Show( APP_TASKMENU_WIN_WORK *wk )
+{
+	GFL_BMPWIN_MakeScreen( wk->bmpwin );
+  GFL_BG_LoadScreenV_Req(wk->res->frame);
 }
