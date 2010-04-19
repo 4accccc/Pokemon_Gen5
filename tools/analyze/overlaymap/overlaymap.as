@@ -73,7 +73,7 @@
 	sdim temp3, 512
 	sdim temp4, 256
 	sdim mapfile, 1000000		;マップファイルの読み込みバッファ
-	sdim xmapfile,20000000
+	sdim xmapfile,20000000		; この配列はexist関数呼び出し後に再度サイズ変更がかかる
 	sdim dotbuf,  1000000		; Graphviz用生成バッファ
 	sdim filename, 512
 
@@ -347,6 +347,7 @@
 
 	filename = refstr
 *readfile
+	sdim xmapfile,strsize
 	bload filename, xmapfile
 ;	dialog "ファイルサイズ"+strsize,0
 
