@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-04-10T11:51:55"/>
+	<create user="ohno" host="W00141" date="2010-04-18T17:52:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -557,6 +557,13 @@
 	<row id="GTSNEGO_046" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">すんでいる　ばしょ</language>
 		<language name="JPN_KANJI" width="256">住んでいる場所</language>
+	</row>
+
+	<row id="GTSNEGO_047" back-color="#ffff00,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">Ｗｉ－Ｆｉコネクション　から
+せつだん　しても　よろしいですか？</language>
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉコネクション　から
+切断しても　よろしいですか？</language>
 	</row>
 
 	<flowchart-group-list>
