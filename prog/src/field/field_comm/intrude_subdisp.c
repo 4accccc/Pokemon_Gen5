@@ -711,7 +711,7 @@ GMEVENT* INTRUDE_SUBDISP_EventCheck(INTRUDE_SUBDISP_PTR intsub, BOOL bEvReqOK, F
     event = EVENT_IntrudePlayerWarp(intsub->gsys, fieldWork, Intrude_GetWarpPlayerNetID(game_comm));
     break;
   case _EVENT_REQ_NO_MISSION_ENTRY:
-    event = EVENT_Intrude_MissionStartWait(intsub->gsys);
+    event = EVENT_Intrude_MissionStartWait_Warp(intsub->gsys);
     break;
   }
   if(event != NULL){

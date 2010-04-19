@@ -1165,6 +1165,23 @@ BOOL MISSION_CheckMissionTargetNetID(MISSION_SYSTEM *mission, int net_id)
   return FALSE;
 }
 
+//==================================================================
+/**
+ * ミッションターゲットのNetIDを取得
+ *
+ * @param   mission		
+ *
+ * @retval  NetID     ターゲットのNetID(ミッション未発動 or エラー時は自分のNetID)
+ */
+//==================================================================
+NetID MISSION_GetMissionTargetNetID(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
+{
+  if(MISSION_RecvCheck(mission) == FALSE){ //ミッションが発動していない
+    return GAMEDATA_GetIntrudeMyID(GameCommSys_GetGameData(intcomm->game_comm));
+  }
+  return mission->data.target_info.net_id;
+}
+
 //--------------------------------------------------------------
 /**
  * 生のSTRCODEをWORDSETする

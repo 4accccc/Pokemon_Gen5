@@ -146,6 +146,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     SEQ_LEVELUP_MSG_WAIT,
     SEQ_POINT_GET_MSG_END_BUTTON_WAIT,
     SEQ_MISSION_FAIL,    //ミッション失敗
+    SEQ_PALACE_WARP,
     SEQ_DISGUISE_START,  //変装戻す
     SEQ_DISGUISE_MAIN,
     SEQ_END,
@@ -229,7 +230,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
   case SEQ_POINT_GET_MSG_END_BUTTON_WAIT:
     if(IntrudeEventPrint_LastKeyWait() == TRUE){
       GameCommInfo_MessageEntry_MissionSuccess(game_comm);
-      (*seq) = SEQ_DISGUISE_START;
+      (*seq) = SEQ_PALACE_WARP;
     }
     break;
 
@@ -237,8 +238,15 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     if( PMSND_CheckPlayBGM() == FALSE ){
       GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_FAST));
       GameCommInfo_MessageEntry_MissionFail(game_comm);
-      *seq = SEQ_DISGUISE_START;
+      *seq = SEQ_PALACE_WARP;
     }
+    break;
+    
+  case SEQ_PALACE_WARP:
+    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
+
+    GMEVENT_CallEvent(event, EVENT_IntrudeWarpPalace(gsys));
+    (*seq) = SEQ_DISGUISE_START;
     break;
     
   case SEQ_DISGUISE_START:  //変装戻す
@@ -253,8 +261,6 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     break;
 
   case SEQ_END:
-    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
-
   #if 0
     //※check　ミッションが一つしかないので、ここで全回復
     if(intcomm->mission.data.target_info.net_id == GAMEDATA_GetIntrudeMyID(gdata)){

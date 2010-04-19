@@ -29,6 +29,7 @@ extern VMCMD_RESULT EvCmdIntrudeMissionStartWait( VMHANDLE *core, void *wk );
 
 //-- イベント単体抜き出し
 extern GMEVENT * EVENT_Intrude_MissionStartWait(GAMESYS_WORK * gsys);
+extern GMEVENT * EVENT_Intrude_MissionStartWait_Warp(GAMESYS_WORK * gsys);
 
 
 #endif	/* __ASM_NO_DEF_ */

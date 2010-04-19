@@ -75,6 +75,8 @@ static GMEVENT_RESULT _event_PalaceInDisguise( GMEVENT * event, int * seq, void 
 static GMEVENT_RESULT _event_MissionStartWait( GMEVENT * event, int * seq, void * work );
 static void _event_MissionStartWait_Destructor(EVENT_MISSION_START_WAIT *emsw);
 
+static GMEVENT_RESULT _event_MissionStartWaitWarp( GMEVENT * event, int * seq, void * work );
+
 
 
 
@@ -550,3 +552,80 @@ static void _event_MissionStartWait_Destructor(EVENT_MISSION_START_WAIT *emsw)
 {
   IntrudeEventPrint_ExitFieldMsg(&emsw->iem);
 }
+
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * ミッション途中参加：ミッション起動しているパレスへワープし、開始まで待機
+ *
+ * @param   gsys		
+ *
+ * @retval  GMEVENT *		
+ */
+//--------------------------------------------------------------
+GMEVENT * EVENT_Intrude_MissionStartWait_Warp(GAMESYS_WORK * gsys)
+{
+  GMEVENT *event;
+  
+  event = GMEVENT_Create( gsys, NULL, _event_MissionStartWaitWarp, 0 );
+  
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント処理関数：ミッションエントリー後、開始まで待機
+ *
+ * @param   event		
+ * @param   seq		
+ * @param   work		
+ *
+ * @retval  GMEVENT_RESULT		
+ * 
+ * 以下の処理を行います。
+ * １．ミッションが開始されるまで待つ
+ * ２．変身イベントへ移行
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT _event_MissionStartWaitWarp( GMEVENT * event, int * seq, void * work )
+{
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+  INTRUDE_COMM_SYS_PTR intcomm;
+  enum{
+    SEQ_WARP,
+    SEQ_MISSION_START_WAIT,
+    SEQ_FINISH,
+  };
+  
+  intcomm = Intrude_Check_CommConnect(game_comm);
+  
+  switch( *seq ){
+  case SEQ_WARP:
+    {
+      NetID warp_netid;
+      if(intcomm == NULL){
+        warp_netid = GAMEDATA_GetIntrudeMyID(gamedata);
+      }
+      else{
+        warp_netid = MISSION_GetMissionTargetNetID(intcomm, &intcomm->mission);
+      }
+      GMEVENT_CallEvent(event, EVENT_IntrudeWarpPalace_NetID(gsys, warp_netid));
+    }
+    (*seq)++;
+    break;
+  case SEQ_MISSION_START_WAIT:
+    GMEVENT_CallEvent(event, EVENT_Intrude_MissionStartWait(gsys));
+    (*seq)++;
+    break;
+  case SEQ_FINISH:
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}
+

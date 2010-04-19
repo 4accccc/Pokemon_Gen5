@@ -575,16 +575,17 @@ FIRST_TALK_RET EVENT_INTRUDE_FirstTalkSeq(INTRUDE_COMM_SYS_PTR intcomm, COMMTALK
 
 //==================================================================
 /**
- * 自分のパレスへワープする
+ * 現在自分がいるROMのパレスへワープする
  *
  * @param   gsys		
  *
  * @retval  GMEVENT *		
  *
  * エラー時の戻りとしても使用出来るようにintcommに依存していない
+ * エラー時は自分のパレスへワープする
  */
 //==================================================================
-GMEVENT * EVENT_IntrudeWarpMyPalace(GAMESYS_WORK *gsys)
+GMEVENT * EVENT_IntrudeWarpPalace(GAMESYS_WORK *gsys)
 {
   GMEVENT * event;
   VecFx32 pos;
@@ -592,6 +593,55 @@ GMEVENT * EVENT_IntrudeWarpMyPalace(GAMESYS_WORK *gsys)
   IntrudeField_GetPalaceTownZoneID(ZONE_ID_PALACE01, &pos);
   event = EVENT_ChangeMapPalace_to_Palace( gsys, ZONE_ID_PALACE01, &pos );
   return event;
+}
+
+//==================================================================
+/**
+ * 自分のパレスへワープする
+ *
+ * @param   gsys		
+ *
+ * @retval  GMEVENT *		
+ *
+ * エラー時の戻りとしても使用出来るようにintcommに依存していない
+ * エラー時は自分のパレスへワープする
+ */
+//==================================================================
+GMEVENT * EVENT_IntrudeWarpPalace_Mine(GAMESYS_WORK *gsys)
+{
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+  INTRUDE_COMM_SYS_PTR intcomm;
+  
+  intcomm = Intrude_Check_CommConnect(game_comm);
+  if(intcomm != NULL){
+    intcomm->intrude_status_mine.palace_area = GAMEDATA_GetIntrudeMyID(gamedata);
+  }
+  return EVENT_IntrudeWarpPalace(gsys);
+}
+
+//==================================================================
+/**
+ * 指定したpalace_areaのパレスへワープする
+ *
+ * @param   gsys		
+ *
+ * @retval  GMEVENT *		
+ *
+ * エラー時の戻りとしても使用出来るようにintcommに依存していない
+ * エラー時は自分のパレスへワープする
+ */
+//==================================================================
+GMEVENT * EVENT_IntrudeWarpPalace_NetID(GAMESYS_WORK *gsys, int net_id)
+{
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  INTRUDE_COMM_SYS_PTR intcomm;
+  
+  intcomm = Intrude_Check_CommConnect(game_comm);
+  if(intcomm != NULL){
+    intcomm->intrude_status_mine.palace_area = net_id;
+  }
+  return EVENT_IntrudeWarpPalace(gsys);
 }
 
 #if 0

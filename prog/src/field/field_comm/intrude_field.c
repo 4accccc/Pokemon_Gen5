@@ -42,6 +42,7 @@
 
 #include "field/fldmmdl.h"
 #include "../../../resource/fldmapdata/script/palace01_def.h"  //SCRID_Å`
+#include "field/script_def.h"
 
 
 
@@ -1382,7 +1383,7 @@ static const MMDL_HEADER data_MMdlHeader =
  * @param   id		      éØï ID
  */
 //--------------------------------------------------------------
-static void IntrudeField_AddMMdl(FIELDMAP_WORK *fieldWork, u16 grid_x, u16 grid_z, fx32 fx_y, u16 objcode, u16 event_id, u16 id_offset)
+static void IntrudeField_AddMMdl(FIELDMAP_WORK *fieldWork, u16 grid_x, u16 grid_z, fx32 fx_y, u16 objcode, u16 event_id, u16 id)
 {
   MMDL_HEADER head;
   MMDL_HEADER_GRIDPOS *grid_pos;
@@ -1393,7 +1394,7 @@ static void IntrudeField_AddMMdl(FIELDMAP_WORK *fieldWork, u16 grid_x, u16 grid_
   zone_id = FIELDMAP_GetZoneID( fieldWork );
   
   head = data_MMdlHeader;
-  head.id += id_offset;
+  head.id = id;
   head.obj_code = objcode;
   head.event_id = event_id;
   grid_pos = (MMDL_HEADER_GRIDPOS *)head.pos_buf;
@@ -1420,8 +1421,9 @@ void IntrudeField_PalaceMMdlAllAdd(FIELDMAP_WORK *fieldWork)
     u16 grid_x;
     u16 grid_z;
     u16 event_id;
+    u16 obj_id;
   }PalaceMmdlData[] = {
-    {OLDMAN1, 29, 30, SCRID_PALACE01_OLDMAN1_01},
+    {OLDMAN1, 29, 30, SCRID_PALACE01_OLDMAN1_01, OBJID_PALACE_OLDMAN},
 //    {GIRL4, 14, 29, SCRID_PALACE01_GIRL4_01},
 //    {GIRL4, 48, 29, SCRID_PALACE01_GIRL4_02},
   };
@@ -1430,7 +1432,7 @@ void IntrudeField_PalaceMMdlAllAdd(FIELDMAP_WORK *fieldWork)
     for(i = 0; i < NELEMS(PalaceMmdlData); i++){
       IntrudeField_AddMMdl(fieldWork, 
         PalaceMmdlData[i].grid_x + PALACE_MAP_LEN_GRID * comm_no, PalaceMmdlData[i].grid_z, 
-        0x2001f, PalaceMmdlData[i].objcode, PalaceMmdlData[i].event_id, i);
+        0x2001f, PalaceMmdlData[i].objcode, PalaceMmdlData[i].event_id, PalaceMmdlData[i].obj_id);
     }
   }
 }

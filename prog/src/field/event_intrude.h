@@ -77,4 +77,6 @@ extern FIRST_TALK_RET EVENT_INTRUDE_FirstTalkSeq(INTRUDE_COMM_SYS_PTR intcomm, C
 //--------------------------------------------------------------
 //  
 //--------------------------------------------------------------
-extern GMEVENT * EVENT_IntrudeWarpMyPalace(GAMESYS_WORK *gsys);
+extern GMEVENT * EVENT_IntrudeWarpPalace(GAMESYS_WORK *gsys);
+extern GMEVENT * EVENT_IntrudeWarpPalace_Mine(GAMESYS_WORK *gsys);
+extern GMEVENT * EVENT_IntrudeWarpPalace_NetID(GAMESYS_WORK *gsys, int net_id);
