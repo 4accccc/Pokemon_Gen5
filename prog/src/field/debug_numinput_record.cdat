@@ -15,7 +15,11 @@ static const DEBUG_NUMINPUT_PARAM DNP_Record_3 = { 0,    999999, DebugGetRecord,
 static const DEBUG_NUMINPUT_PARAM DNP_Record_4 = { 0,      9999, DebugGetRecord, DebugSetRecord, };
 static const DEBUG_NUMINPUT_PARAM DNP_Record_Palpark = { 0, 999, DebugGetPalparkHighScore, DebugSetPalparkHighScore, };
 static const DEBUG_NUMINPUT_PARAM DNP_Record_SeaTemple = { 0, 9999, DebugGetSeaTempleStepCount, DebugSetSeaTempleStepCount, };
-static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime = { 0, 9999, DebugGetPalaceTime, DebugSetPalaceTime, };
+static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Year = { 0, 999, DebugGetPalaceTime, DebugSetPalaceTime, };
+static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Month = { 0, 11, DebugGetPalaceTime, DebugSetPalaceTime, };
+static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Day = { 0, 30, DebugGetPalaceTime, DebugSetPalaceTime, };
+static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Hour = { 0, 23, DebugGetPalaceTime, DebugSetPalaceTime, };
+static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Minute = { 0, 59, DebugGetPalaceTime, DebugSetPalaceTime, };
 static const DEBUG_NUMINPUT_PARAM DNP_Record_BSubway = { 0, 9999, DebugGetBSubway, DebugSetBSubway, };
 
 // フィールド関連レコード
@@ -86,12 +90,12 @@ static const DEBUG_NUMINPUT_LIST DNI_RecordList_Palace[] = {
   //gmm_id, param, dni_param
   { dni_record_39,  RECID_PALACE_TIME,    &DNP_Record_1 }, 
   { dni_record_40,  RECID_PALACE_MISSION, &DNP_Record_1 }, 
-  { dni_record_98,  0,                    &DNP_Record_PalaceTime }, 
-  { dni_record_99,  1,                    &DNP_Record_PalaceTime }, 
-  { dni_record_100, 2,                    &DNP_Record_PalaceTime }, 
-  { dni_record_101, 3,                    &DNP_Record_PalaceTime }, 
-  { dni_record_102, 4,                    &DNP_Record_PalaceTime }, 
-  { dni_record_103, 5,                    &DNP_Record_PalaceTime }, 
+  { dni_record_98,  0,                    &DNP_Record_PalaceTime_Year }, 
+  { dni_record_99,  1,                    &DNP_Record_PalaceTime_Month }, 
+  { dni_record_100, 2,                    &DNP_Record_PalaceTime_Day }, 
+  { dni_record_101, 3,                    &DNP_Record_PalaceTime_Hour }, 
+  { dni_record_102, 4,                    &DNP_Record_PalaceTime_Minute }, 
+  { dni_record_103, 5,                    &DNP_Record_PalaceTime_Minute }, 
 };
 // バトル関連レコード
 static const DEBUG_NUMINPUT_LIST DNI_RecordList_Battle[] = {

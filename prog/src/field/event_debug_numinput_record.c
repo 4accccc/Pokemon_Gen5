@@ -684,8 +684,8 @@ static u32 DebugGetPalaceTime( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param )
 
   switch( param ) {
   case 0: value = date.year;   break;
-  case 1: value = date.month;  break;
-  case 2: value = date.day;    break;
+  case 1: value = 1 - date.month;  break; // 日付を経過月数に変換
+  case 2: value = 1 - date.day;    break; // 日付を経過日数に変換
   case 3: value = time.hour;   break;
   case 4: value = time.minute; break;
   case 5: value = time.second; break;
@@ -708,8 +708,8 @@ static void DebugSetPalaceTime(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param,
   // データを上書き
   switch( param ) {
   case 0: date.year   = value; break;
-  case 1: date.month  = value; break;
-  case 2: date.day    = value; break;
+  case 1: date.month  = 1 + value; break; // 経過月数を日付に変換
+  case 2: date.day    = 1 + value; break; // 経過日数を日付に変換
   case 3: time.hour   = value; break;
   case 4: time.minute = value; break;
   case 5: time.second = value; break;
