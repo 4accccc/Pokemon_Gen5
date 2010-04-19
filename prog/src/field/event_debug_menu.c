@@ -48,6 +48,7 @@
 #include "event_debug_item.h" //EVENT_DebugItemMake
 #include "event_debug_numinput.h"
 #include "event_debug_numinput_research.h"
+#include "event_debug_numinput_record.h"
 #include "savedata/box_savedata.h"  //デバッグアイテム生成用
 #include  "item/itemsym.h"  //ITEM_DATA_MAX
 #include  "item/item.h"  //ITEM_CheckEnable
@@ -211,6 +212,7 @@ static BOOL debugMenuCallProc_UITemplate( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Jump( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_NumInput( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ResearchNumInput( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_RecordNumInput( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_Kairiki( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk );
@@ -313,6 +315,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_TITLE_01, (void*)BMPMENULIST_LABEL },       //○システム
   { DEBUG_FIELD_NUMINPUT, debugMenuCallProc_NumInput },     //数値入力
   { DEBUG_FIELD_RESEARCH, debugMenuCallProc_ResearchNumInput },//すれ違い調査
+  { DEBUG_FIELD_RECORD, debugMenuCallProc_RecordNumInput },//レコード改ざん
   { DEBUG_FIELD_STR04, debugMenuCallProc_GameEnd },         //ゲーム終了
   { DEBUG_FIELD_STR60, debugMenuCallProc_ForceSave },       //強制セーブ
   { DEBUG_FIELD_STR53, debugMenuCallProc_UseMemoryDump },   //メモリ状況
@@ -1147,6 +1150,28 @@ static BOOL debugMenuCallProc_ResearchNumInput( DEBUG_MENU_EVENT_WORK *wk )
 
   event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
     FS_OVERLAY_ID( d_numinput_research ), DEBUG_EVENT_FLDMENU_ResearchNumInput, wk );
+
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+
+  return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し レコード改ざん
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_RecordNumInput( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  GMEVENT *event;
+
+  event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+    FS_OVERLAY_ID( d_numinput_record ), DEBUG_EVENT_FLDMENU_RecordNumInput, wk );
 
   GMEVENT_ChangeEvent( wk->gmEvent, event );
 

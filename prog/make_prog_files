@@ -1642,6 +1642,10 @@ SRCS_OVERLAY_D_NUMINPUT = field/event_debug_numinput.c
 SRCS_OVERLAY_D_NUMINPUT_RESEARCH = field/event_debug_numinput_research.c \
                                    field/debug_numinput_research.c
 
+#D_NUMINPUT_RESEARCH
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_D_NUMINPUT_RECORD = field/event_debug_numinput_record.c
+
 #D_IWASAWAƒ‰ƒCƒuƒ‰ƒŠ
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_D_IWASAWA = field/event_debug_mvpoke.c
