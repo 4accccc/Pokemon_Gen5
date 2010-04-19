@@ -42,17 +42,17 @@
 //-------------------------------------
 //	雪管理関数定数
 //=====================================
-#define	WEATHER_SNOW_TIMING_MIN		(32)				// 雪を出すタイミング最小
-#define WEATHER_SNOW_TIMING_MAX		(36)				// 雪を出すタイミング最大
-#define WEATHER_SNOW_TIMING_ADD		(5)					// タイミングを減らす数
+#define	WEATHER_SNOW_TIMING_MIN		(16)				// 雪を出すタイミング最小
+#define WEATHER_SNOW_TIMING_MAX		(18)				// 雪を出すタイミング最大
+#define WEATHER_SNOW_TIMING_ADD		(3)					// タイミングを減らす数
 #define	WEATHER_SNOW_ADD_TIMING		(1)					// １度のオブジェ登録数を増やすタイミング
 #define	WEATHER_SNOW_ADD			(0)					// オブジェ登録数を足す値
 #define WEATHER_SNOW_MAIN			(1)					// メインではこれだけ登録
 
 /*== フェード無し開始の時 ==*/
 #define WEATHER_SNOW_NOFADE_OBJ_START_NUM	( 20 )				// 開始時の散布するオブジェクトの数
-#define	WEATHER_SNOW_NOFADE_OBJ_START_DUST_NUM	( 2 )			// 何個ずつずらすか
-#define	WEATHER_SNOW_NOFADE_OBJ_START_DUST_MOVE	( 24 )			// ずらして動作させる値
+#define	WEATHER_SNOW_NOFADE_OBJ_START_DUST_NUM	( 1 )			// 何個ずつずらすか
+#define	WEATHER_SNOW_NOFADE_OBJ_START_DUST_MOVE	( 18 )			// ずらして動作させる値
 
 /*== フォグ ==*/
 #define	WEATHER_SNOW_FOG_TIMING		(90)							// に１回フォグテーブルを操作
@@ -1285,9 +1285,9 @@ static void WEATHER_SNOW_OBJ_Add( WEATHER_TASK* p_wk, int num, HEAPID heapID )
 
 	p_local_wk = WEATHER_TASK_GetWorkData( p_wk );
 	
-	if(p_local_wk->work[1] == 1){
+	/*if(p_local_wk->work[1] == 1){
 		num *= 2;
-	}
+	}*/
 	
 	// num分オブジェクトを登録
 	for(i=0;i<num;i++){

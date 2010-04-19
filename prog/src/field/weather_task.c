@@ -1976,7 +1976,7 @@ static void WEATHER_TASK_WK_PopObjList( WEATHER_TASK* p_wk, WEATHER_OBJ_WORK* p_
 	// •`‰æOFF
 	GFL_CLACT_WK_SetDrawEnable( p_obj->p_clwk, FALSE );
 
-//  TOMOYA_Printf( "weather active obj %d\n", p_wk->active_objnum );
+  //TOMOYA_Printf( "weather active obj %d\n", p_wk->active_objnum );
 
 }
 
