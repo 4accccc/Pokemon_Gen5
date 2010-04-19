@@ -67,9 +67,9 @@ static void clear(VMHANDLE * core)
 	core->routine = NULL;
 	//スタッククリア
 	core->stackcount = 0;
-	GFL_STD_MemFill(core->stack, sizeof(VM_VALUE) * core->init_value.stack_size, 0);
+	GFL_STD_MemFill(core->stack, 0, sizeof(VM_VALUE) * core->init_value.stack_size);
 	//レジスタクリア
-	GFL_STD_MemFill(core->vm_register, sizeof(VM_VALUE) * core->init_value.reg_size, 0);
+	GFL_STD_MemFill(core->vm_register, 0, sizeof(VM_VALUE) * core->init_value.reg_size);
 }
 
 //============================================================================================
@@ -91,7 +91,7 @@ VMHANDLE * VM_Create(HEAPID heapID, const VM_INITIALIZER * init)
 		+ sizeof(u32) * init->reg_size
 		+ sizeof(u32) * init->stack_size;
 	core = GFL_HEAP_AllocMemory(heapID, size);
-	GFL_STD_MemFill(core, size, 0);
+	GFL_STD_MemFill(core, 0, size);
 	core->init_value = * init;
 	ptr = (u8*)core;
 	core->vm_register = (u32 *)(ptr + sizeof(VMHANDLE));
