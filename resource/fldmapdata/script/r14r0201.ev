@@ -507,6 +507,12 @@ ev_r14r0201_tuchi_come:
 	_PLAINWIN_MSG_DOWN( msg_r14r0201_narration_03)
 	_PLAINWIN_CLOSE()
 	
+	//カメラ操作 社中心に
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	_CAMERA_MOVE( 9688,0,970752,1474560,327759,884736,32 )
+	_CAMERA_WAIT_MOVE()
+	
 	//演出アニメ作成
 	_EV_MOVEPOKE_CREATE( R14R0201_POKE9_01 )
 	
@@ -516,7 +522,8 @@ ev_r14r0201_tuchi_come:
 	
 	//どぅるるるる！
 	_VOICE_PLAY( MONSNO_652, 0 )
-	_GIZAWIN_OBJMSG_POS( msg_r14r0201_tsutinokami_01 , R14R0201_POKE9_01, POS_DOWN )
+	_GIZAWIN_OBJMSG_POS( msg_r14r0201_tsutinokami_01 , R14R0201_POKE9_01, POS_UP )
+	_GIZAWIN_CLOSE ( )
 	
 	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r14r0210_player_back_01 )
 	_OBJ_ANIME_WAIT()
@@ -525,6 +532,12 @@ ev_r14r0201_tuchi_come:
 	_EV_MOVEPOKE_START_ANIME( SCR_EV_MOVEPOKE_ANIME_TUCHI_OUTSIDE )
 	_EV_MOVEPOKE_CHECK_ANIME_END()
 	
+	//自機にカメラを戻す
+	_CAMERA_DEF_MOVE (48) 
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()
+	_CAMERA_END()
+
 	//========================================/
 				
 	$WK_SCENE_R14R0201_LEG = 3

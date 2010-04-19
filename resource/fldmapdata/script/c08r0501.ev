@@ -51,7 +51,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c08r0501_man3_01
 	//C08ゲーヂス演説イベント前
-	IF $WK_SCENE_C08 == 0THEN
+	IF $WK_SCENE_C08 == 0 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0501_man3_01 )
 	
 	//C08ゲーヂス演説イベント後
