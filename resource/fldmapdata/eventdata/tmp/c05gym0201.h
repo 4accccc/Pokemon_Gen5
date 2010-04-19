@@ -11,6 +11,7 @@
 
 #define C05GYM0201_STARTLIFT_01            0
 #define C05GYM0201_SUNGLASSES_01           1
+#define C05GYM0201_INFORMATIONW_01         2
 
 #endif //ZONE_C05GYM0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c05gym0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

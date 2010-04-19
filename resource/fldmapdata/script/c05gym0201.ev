@@ -25,6 +25,7 @@ _EVENT_DATA    ev_reserve_c05gym0201_gymback_01
 _EVENT_DATA    ev_c05gym0201_sunglasses_01
 _EVENT_DATA    ev_bg_c05gym0201_statue_01
 _EVENT_DATA    ev_bg_c05gym0201_lift_01
+_EVENT_DATA    ev_c05gym0201_informationw_01
 _EVENT_DATA_END
 
 
@@ -164,6 +165,14 @@ EVENT_START	ev_bg_c05gym0201_lift_01
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
+EVENT_END
+
+
+/**************************************************************/
+/* 						Žó•t								  */
+/**************************************************************/
+EVENT_START		ev_c05gym0201_informationw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0501_infomationw_01 )
 EVENT_END
 
 
