@@ -22,6 +22,7 @@
 _EVENT_DATA    ev_c03r1001_woman3_01
 _EVENT_DATA    ev_c03r1001_mountain_01
 _EVENT_DATA    ev_c03r1001_poke_01
+_EVENT_DATA    ev_c03r1001_man3_01
 _EVENT_DATA_END
 
 //------------------------------íçà”--------------------------------//
@@ -158,4 +159,11 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c03r1001_poke_01
 	_EASY_TALK_POKEVOICE( MONSNO_533, msg_c03r1001_poke_01 )
+EVENT_END
+
+/**************************************************************/
+/* 			MAN		C03R1001								  */
+/**************************************************************/
+EVENT_START		ev_c03r1001_man3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1001_man3_01 )
 EVENT_END

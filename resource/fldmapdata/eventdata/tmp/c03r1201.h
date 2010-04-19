@@ -15,6 +15,7 @@
 #define C03R1201_MAN1_01                   3
 #define C03R1201_POKEMON_01                4
 #define C03R1201_WOMAN1_01                 5
+#define C03R1201_OLDMAN1_01                6
 
 #endif //ZONE_C03R1201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r1201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

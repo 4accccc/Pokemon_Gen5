@@ -12,6 +12,7 @@
 #define C03R1301_SUNGLASSES_01             0
 #define C03R1301_BOY4_01                   1
 #define C03R1301_LADY_01                   2
+#define C03R1301_SUNGLASSES_03             3
 
 #endif //ZONE_C03R1301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r1301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
