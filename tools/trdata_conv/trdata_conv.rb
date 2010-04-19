@@ -150,6 +150,7 @@ class TR
     GENDER
     LABEL
     STR_HASH
+    NAME
   ]
 end
 
@@ -477,6 +478,7 @@ end
     end
 
 		str = "TRTYPE_" + split_data[ PARA::TR_ID ][ 0..split_data[ PARA::TR_ID ].size - 4 ].upcase
+		name = split_data[ PARA::TR_ID ][ 0..split_data[ PARA::TR_ID ].size - 4 ].upcase
 
     flag = 0
     cnt = 0
@@ -489,7 +491,7 @@ end
     }
 		if flag == 0
       label = split_data[ PARA::TR_ID ][ 0..(split_data[ PARA::TR_ID ].index("_")-1) ]
-      trainer[ cnt ] = [ str, split_data[ PARA::TR_TYPE ], gender[ split_data[ PARA::GENDER ] ], label, split_data[ PARA::TR_TYPE ] ]
+      trainer[ cnt ] = [ str, split_data[ PARA::TR_TYPE ], gender[ split_data[ PARA::GENDER ] ], label, split_data[ PARA::TR_TYPE ], name ]
       tr_type[ str ] = cnt + 2
     end
 
@@ -596,7 +598,11 @@ end
     if find != 0
       trainer.size.times { |k|
         if str == trainer[ k ][ TR::STR_HASH ]
-          if trainer[ k ][ TR::TRTYPE ].index(/M[0-9]/) != nil
+          #_（アンダーバー）が2個ある場合は、LABELを（）付きで連結
+          if trainer[ k ][ TR::TRTYPE ].scan("_").size == 2
+            p trainer[ k ][ TR::TRTYPE ]
+            trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + "（%s）" % [ trainer[ k ][ TR::NAME ].upcase ]
+          elsif trainer[ k ][ TR::TRTYPE ].index(/M[0-9]/) != nil
             trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + "♂"
           elsif trainer[ k ][ TR::TRTYPE ].index(/W[0-9]/) != nil
             trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + "♀"
