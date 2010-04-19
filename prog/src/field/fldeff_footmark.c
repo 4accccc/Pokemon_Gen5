@@ -194,10 +194,11 @@ static void fmark_InitResource( FLDEFF_FOOTMARK *fmark )
   
     rnd = GFL_G3D_RENDER_GetRenderObj( fmark->g3d_rnd[i] );
     pMdl = NNS_G3dRenderObjGetResMdl( rnd );
+#if 0
     NNS_G3dMdlUseGlbDiff( pMdl );
     NNS_G3dMdlUseGlbAmb( pMdl );
     NNS_G3dMdlUseGlbSpec( pMdl );
-    
+#endif    
     fmark->g3d_obj[i] = 
       GFL_G3D_OBJECT_Create( fmark->g3d_rnd[i], NULL, 0 );
   }
