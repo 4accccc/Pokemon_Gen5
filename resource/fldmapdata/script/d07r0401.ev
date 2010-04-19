@@ -88,16 +88,13 @@ EVENT_START   ev_pos_d07r0401_rival_01
 	_BALLOONWIN_CLOSE()
 	
 	//画面暗転・プラズマ団OB削除
-	_BLACK_OUT()
+	_BLACK_OUT_SLOW()
 	_DISP_FADE_END_CHECK()
 	
 	_OBJ_DEL(D07R0401_HAKAIM_01)
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 	
-	//時間の経過を見せるためにタイムウエイト
-	_TIME_WAIT(16)
-
-	_BLACK_IN()
+	_BLACK_IN_SLOW()
 	_DISP_FADE_END_CHECK()
 	
 	//ライバル：…あいつら

@@ -310,7 +310,7 @@ EVENT_START   ev_pos_c08_champions_01
 	_BALLOONWIN_CLOSE()
 	
 	//画面暗転・プラズマ団OB削除
-	_BLACK_OUT()
+	_BLACK_OUT_SLOW()
 	
 	//群集散ってゆくアニメーション
 	_OBJ_ANIME( C08_CROWD_01, anm_c08_croud_goodbye_01 )
@@ -347,7 +347,7 @@ EVENT_START   ev_pos_c08_champions_01
 	_OBJ_DEL( C08_HAKAIM_04 )
 	_OBJ_DEL( C08_HAKAIM_05 )
 	
-	_BLACK_IN()
+	_BLACK_IN_SLOW()
 	_DISP_FADE_END_CHECK()
 	
 	//アイリスとジャガ、向き合う
