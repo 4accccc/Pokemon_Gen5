@@ -253,17 +253,17 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
         // カメラ振動イベントをコール
         {
           CAM_SHAKE_PARAM shakeParam;
-          shakeParam.Width           = 1;
-          shakeParam.Height          = 3;
+          shakeParam.Width           = 2;
+          shakeParam.Height          = 0;
           shakeParam.Sync            = 3;
-          shakeParam.Time            = 8;
-          shakeParam.TimeMax         = 8;
+          shakeParam.Time            = 2;
+          shakeParam.TimeMax         = 2;
           shakeParam.NowSync         = 0;
           shakeParam.SubW            = 0;
-          shakeParam.SubH            = 0;
+          shakeParam.SubH            = 1;
           shakeParam.SubStartTime    = 0;
           shakeParam.SubMargineCount = 0;
-          shakeParam.SubMargine      = 0;
+          shakeParam.SubMargine      = 2;
           GMEVENT_CallEvent( event, EVENT_ShakeCamera( work->gsys, &shakeParam ) );
         }
         (*seq)++;
