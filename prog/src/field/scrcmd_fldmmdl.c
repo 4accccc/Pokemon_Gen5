@@ -339,8 +339,11 @@ VMCMD_RESULT EvCmdObjDel( VMHANDLE *core, void *wk )
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   u16 id = SCRCMD_GetVMWorkValue( core, work );
   MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
-  GF_ASSERT( mmdl != NULL && "OBJ DEL 対象のOBJが居ません\n" );
-  MMDL_Delete( mmdl );
+  if ( mmdl == NULL ) {
+    GF_ASSERT_MSG( 0, "OBJ DEL 対象のOBJ(%d)が居ません\n", id );
+  } else {
+    MMDL_Delete( mmdl );
+  }
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -423,9 +426,11 @@ VMCMD_RESULT EvCmdObjPosChange( VMHANDLE *core, void *wk )
   
 	//対象のフィールドOBJのポインタ取得
 	mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
-  GF_ASSERT( mmdl != NULL && "ERROR OBJ ID" );
-  
-  MMDL_InitGridPosition( mmdl, x, y, z, dir );
+  if ( mmdl == NULL ) {
+    GF_ASSERT_MSG( 0, "ERROR OBJ ID(%d)", obj_id);
+  } else {
+    MMDL_InitGridPosition( mmdl, x, y, z, dir );
+  }
 	return VMCMD_RESULT_CONTINUE;
 }
 
