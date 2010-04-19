@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T12:19:49"/>
+	<create user="matsumiya" host="W00224" date="2010-04-19T19:29:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="117" right="2004" bottom="745" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -674,7 +674,7 @@ msg_r06r0101_assistantm3_07の
 		<language name="JPN_KANJI" width="256">きょん……</language>
 	</row>
 
-	<row id="msg_r06r0101_assistantw1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r06r0101_assistantw1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 
 
@@ -684,9 +684,8 @@ GRID X=7 Y=３に配置</comment>
 		<language name="JPN" width="256">となりの　ケースの　なかの
 おんどや　しつどを　きかいで▽
 コントロールしてるの</language>
-		<language name="JPN_KANJI" width="256">となりの　ケースの　なかの
-おんどや　しつどを　きかいで▽
-コントロールしてるの</language>
+		<language name="JPN_KANJI" width="256">隣の　ケース内の　温度や　湿度を
+機械で　コントロールしてるの</language>
 	</row>
 
 	<row id="msg_r06r0101_planter_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
