@@ -51,7 +51,7 @@ static GFL_PROC_RESULT ZukanTopProc_Init( GFL_PROC * proc, int * seq, void * pwk
 {
 	ZKNTOPMAIN_WORK * wk;
 
-	OS_Printf( "↓↓↓↓↓　図鑑トップ処理開始　↓↓↓↓↓\n" );
+//	OS_Printf( "↓↓↓↓↓　図鑑トップ処理開始　↓↓↓↓↓\n" );
 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ZUKAN_TOP, 0x60000 );
 
@@ -100,7 +100,7 @@ static GFL_PROC_RESULT ZukanTopProc_End( GFL_PROC * proc, int * seq, void * pwk,
 	GFL_PROC_FreeWork( proc );
 	GFL_HEAP_DeleteHeap( HEAPID_ZUKAN_TOP );
 
-	OS_Printf( "↑↑↑↑↑　図鑑トップ処理終了　↑↑↑↑↑\n" );
+//	OS_Printf( "↑↑↑↑↑　図鑑トップ処理終了　↑↑↑↑↑\n" );
 
 	return GFL_PROC_RES_FINISH;
 }

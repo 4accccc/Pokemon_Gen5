@@ -56,7 +56,7 @@ static GFL_PROC_RESULT Box2Proc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 {
 	BOX2_SYS_WORK * syswk;
 
-	OS_Printf( "↓↓↓↓↓　ボックス処理開始　↓↓↓↓↓\n" );
+//	OS_Printf( "↓↓↓↓↓　ボックス処理開始　↓↓↓↓↓\n" );
 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BOX_SYS, 0x10000 );
 
@@ -164,7 +164,7 @@ static GFL_PROC_RESULT Box2Proc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	GFL_PROC_FreeWork( proc );
 	GFL_HEAP_DeleteHeap( HEAPID_BOX_SYS );
 
-	OS_Printf( "↑↑↑↑↑　ボックス処理終了　↑↑↑↑↑\n" );
+//	OS_Printf( "↑↑↑↑↑　ボックス処理終了　↑↑↑↑↑\n" );
 
 	return GFL_PROC_RES_FINISH;
 }

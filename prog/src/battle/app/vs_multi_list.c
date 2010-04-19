@@ -427,7 +427,7 @@ static GFL_PROC_RESULT VSMListProc_Init( GFL_PROC * proc, int * seq, void * pwk,
 {
 	VSMLIST_WORK * wk;
 
-	OS_Printf( "↓↓↓↓↓　マルチバトル開始前ポケモンリスト処理開始　↓↓↓↓↓\n" );
+//	OS_Printf( "↓↓↓↓↓　マルチバトル開始前ポケモンリスト処理開始　↓↓↓↓↓\n" );
 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_VS_MULTI_LIST, 0x18000 );
 
@@ -483,7 +483,7 @@ static GFL_PROC_RESULT VSMListProc_End( GFL_PROC * proc, int * seq, void * pwk, 
 	GFL_PROC_FreeWork( proc );
 	GFL_HEAP_DeleteHeap( HEAPID_VS_MULTI_LIST );
 
-	OS_Printf( "↑↑↑↑↑　マルチバトル開始前ポケモンリスト処理終了　↑↑↑↑↑\n" );
+//	OS_Printf( "↑↑↑↑↑　マルチバトル開始前ポケモンリスト処理終了　↑↑↑↑↑\n" );
 
 	return GFL_PROC_RES_FINISH;
 }

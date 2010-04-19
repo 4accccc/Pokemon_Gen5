@@ -93,7 +93,7 @@ void BOXDAT_Init( BOX_SAVEDATA* boxdat )
 //------------------------------------------------------------------
 u32 BOXDAT_GetTotalSize( void )
 {
-	OS_Printf("ボックスデータサイズ%x\n",sizeof( BOX_SAVEDATA ));
+//	OS_Printf("ボックスデータサイズ%x\n",sizeof( BOX_SAVEDATA ));
 	return sizeof( BOX_SAVEDATA );
 }
 

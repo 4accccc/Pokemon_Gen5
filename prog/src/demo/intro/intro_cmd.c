@@ -644,7 +644,7 @@ static BOOL CMD_BRIGHTNESS_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int
 //-----------------------------------------------------------------------------
 static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
-  OS_Printf( "play bgm =%d fadeInFrame=%d, fadeOutFrame=%d \n", param[0], param[1], param[2] );
+//  OS_Printf( "play bgm =%d fadeInFrame=%d, fadeOutFrame=%d \n", param[0], param[1], param[2] );
 
 	if( PMSND_CheckPlayBGM() == TRUE ){
 	  PMSND_PlayNextBGM( param[0], param[1], param[2] );
@@ -664,7 +664,7 @@ static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 static BOOL CMD_BGM_CHANGE_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
   u32 check = PMSND_CheckPlayBGM();
-  OS_Printf("BGM check=%d\n", check);
+//  OS_Printf("BGM check=%d\n", check);
 
   if(check==0){
     return FALSE;

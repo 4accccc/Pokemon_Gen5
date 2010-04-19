@@ -52,7 +52,7 @@ static GFL_PROC_RESULT ZukanListProc_Init( GFL_PROC * proc, int * seq, void * pw
 {
 	ZKNLISTMAIN_WORK * wk;
 
-	OS_Printf( "↓↓↓↓↓　図鑑リスト処理開始　↓↓↓↓↓\n" );
+//	OS_Printf( "↓↓↓↓↓　図鑑リスト処理開始　↓↓↓↓↓\n" );
 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ZUKAN_LIST, 0x60000 );
 
@@ -101,7 +101,7 @@ static GFL_PROC_RESULT ZukanListProc_End( GFL_PROC * proc, int * seq, void * pwk
 	GFL_PROC_FreeWork( proc );
 	GFL_HEAP_DeleteHeap( HEAPID_ZUKAN_LIST );
 
-	OS_Printf( "↑↑↑↑↑　図鑑リスト処理終了　↑↑↑↑↑\n" );
+//	OS_Printf( "↑↑↑↑↑　図鑑リスト処理終了　↑↑↑↑↑\n" );
 
 	return GFL_PROC_RES_FINISH;
 }

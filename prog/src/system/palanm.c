@@ -141,7 +141,7 @@ void PaletteFadeWorkAllocSet(PALETTE_FADE_PTR pfd, FADEREQ req, u32 siz, HEAPID 
 
   def_wk   = GFL_HEAP_AllocMemory( heap, siz );
   trans_wk = GFL_HEAP_AllocMemory( heap, siz );
-
+/*
 #ifdef  OSP_ERR_PALANMWK_GET  // パレットフェードのワーク取得失敗
   if( def_wk == NULL ){
     OS_Printf( "ERROR : PaletteFadeWorkAlloc ( %d ) - def_wk\n", req );
@@ -150,7 +150,7 @@ void PaletteFadeWorkAllocSet(PALETTE_FADE_PTR pfd, FADEREQ req, u32 siz, HEAPID 
     OS_Printf( "ERROR : PaletteFadeWorkAlloc ( %d ) - trans_wk\n", req );
   }
 #endif  // OSP_ERR_PALANMWK_GET
-
+*/
   PaletteFadeWorkAdrSet(pfd, req, def_wk, trans_wk, siz );
 }
 
@@ -187,11 +187,13 @@ void PaletteFadeWorkAllocFree(PALETTE_FADE_PTR pfd, FADEREQ req)
 //--------------------------------------------------------------------------------------------
 void PaletteWorkSet(PALETTE_FADE_PTR pfd, const void * dat, FADEREQ req, u16 pos, u16 siz )
 {
+/*
 #ifdef  OSP_ERR_PALANM_SIZ_OVER   // サイズオーバー
   if( (pos*2+siz) > pfd->dat[req].siz ){
     OS_Printf( "ERROR : PaletteWorkSet - SizeOver ( %d )\n", req );
   }
 #endif  // OSP_ERR_PALANM_SIZ_OVER
+*/
   MI_CpuCopy16( dat, (void *)&pfd->dat[req].def_wk[pos], (u32)siz );
   MI_CpuCopy16( dat, (void *)&pfd->dat[req].trans_wk[pos], (u32)siz );
 }

@@ -1517,7 +1517,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
     pWork->ret_code2 = pWork->submenuList[selectno];
-    OS_Printf("ret_code2 %d %d\n", pWork->ret_code2,selectno);
+//    OS_Printf("ret_code2 %d %d\n", pWork->ret_code2,selectno);
 
     switch(pWork->ret_code2){
      // ------------つかう--------------
@@ -1555,7 +1555,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       break;
     // ----------おりる---------------
     case BAG_MENU_ORIRU:
-      OS_Printf("おりるを選択された\n");
+//      OS_Printf("おりるを選択された\n");
       ITEMDISP_ChangeRetButtonActive( pWork, FALSE );   // 戻るボタンをパッシブへ
       if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_CYCLE)){
         pWork->ret_code = BAG_NEXTPROC_DROPCYCLE;  //おりる
@@ -3348,17 +3348,17 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
   // やめる
   tbl[BAG_MENU_CANCEL] = BAG_MENU_YAMERU;
 
-  OS_Printf("pocket=%d\n",   pocket);
-  OS_Printf("tbl[BAG_MENU_USE]=%d\n",   tbl[BAG_MENU_USE]);
-  OS_Printf("tbl[BAG_MENU_GIVE]=%d\n",  tbl[BAG_MENU_GIVE]);
-  OS_Printf("tbl[BAG_MENU_SUB]=%d\n",   tbl[BAG_MENU_SUB]);
+//  OS_Printf("pocket=%d\n",   pocket);
+//  OS_Printf("tbl[BAG_MENU_USE]=%d\n",   tbl[BAG_MENU_USE]);
+//  OS_Printf("tbl[BAG_MENU_GIVE]=%d\n",  tbl[BAG_MENU_GIVE]);
+//  OS_Printf("tbl[BAG_MENU_SUB]=%d\n",   tbl[BAG_MENU_SUB]);
 
 #if 0
   for(i=0;i<BAG_MENUTBL_MAX;i++){
     if(tbl[i]!=255){
       pWork->menu_func[i] = MenuFuncTbl[tbl[i]];
     }
-    OS_Printf("menu_func[%d]=%08x\n", i,pWork->menu_func[i]);
+//    OS_Printf("menu_func[%d]=%08x\n", i,pWork->menu_func[i]);
   }
 #endif
 

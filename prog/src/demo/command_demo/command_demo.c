@@ -83,24 +83,9 @@ static GFL_PROC_RESULT CommDemoProc_Init( GFL_PROC * proc, int * seq, void * pwk
 
 	return PROC_RES_FINISH;
 */
-
-/*
-	BOX2_SYS_WORK * syswk;
-
-	OS_Printf( "↓↓↓↓↓　ボックス処理開始　↓↓↓↓↓\n" );
-
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BOX_SYS, 0x10000 );
-
-	syswk = GFL_PROC_AllocWork( proc, sizeof(BOX2_SYS_WORK), HEAPID_BOX_SYS );
-	GFL_STD_MemClear( syswk, sizeof(BOX2_SYS_WORK) );
-
-	syswk->dat      = pwk;
-	syswk->tray     = BOXDAT_GetCureentTrayNumber( syswk->dat->sv_box );
-	syswk->next_seq = BOX2SEQ_MAINSEQ_START;
-*/
 	CDEMO_WORK * wk;
 
-	OS_Printf( "↓↓↓↓↓　コマンドデモ処理開始　↓↓↓↓↓\n" );
+//	OS_Printf( "↓↓↓↓↓　コマンドデモ処理開始　↓↓↓↓↓\n" );
 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_COMMAND_DEMO, 0x80000 );
 
@@ -168,7 +153,7 @@ static GFL_PROC_RESULT CommDemoProc_End( GFL_PROC * proc, int * seq, void * pwk,
 	GFL_PROC_FreeWork( proc );
 	GFL_HEAP_DeleteHeap( HEAPID_COMMAND_DEMO );
 
-	OS_Printf( "↑↑↑↑↑　コマンドデモ処理終了　↑↑↑↑↑\n" );
+//	OS_Printf( "↑↑↑↑↑　コマンドデモ処理終了　↑↑↑↑↑\n" );
 
 	return GFL_PROC_RES_FINISH;
 }

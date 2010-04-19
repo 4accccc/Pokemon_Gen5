@@ -1320,6 +1320,7 @@ static void DebugCameraSubDistance( LEGEND_DEMO_WORK * wk )
 // 情報表示
 static void DebugCameraInfoPut( LEGEND_DEMO_WORK * wk )
 {
+/*
 	CAMERA_ANGLE	angle;
 	VecFx32	target;
 
@@ -1337,28 +1338,6 @@ static void DebugCameraInfoPut( LEGEND_DEMO_WORK * wk )
 	OS_Printf( "　　　　注視点 : 0x%x, 0x%x, 0x%x\n", target.x, target.y, target.z );
 //	OS_Printf( "↓
 	OS_Printf( "■□□□□□□□□□□□□□□□□□□□□□□□□□■\n" );
-
-/*
-	CAMERA_ANGLE angle;
-	u16 angle_x;
-
-	angle = GFC_GetCameraAngle(camera_ptr);
-	//仰角⇒地面からの傾きに変換
-	angle_x = -angle.x;
-
-	OS_Printf("距離：%x\n",GFC_GetCameraDistance(camera_ptr));
-	OS_Printf("アングル：%x,%x,%x\n",angle.x,angle.y,angle.z);
-	OS_Printf("パース：%x\n",GFC_GetCameraPerspWay(camera_ptr));
-	OS_Printf("ニア・ファー：%d_%d\n",
-			GFC_GetCameraNear(camera_ptr)/FX32_ONE, GFC_GetCameraFar(camera_ptr)/FX32_ONE);
-	{
-		//バインドターゲットとの差分
-		VecFx32 look_at = GFC_GetLookTarget(camera_ptr);
-		const VecFx32 *bind = GFC_GetBindTargetVecPtr(camera_ptr);
-
-		OS_Printf("オフセット：%x,%x,%x\n",
-				look_at.x-bind->x, look_at.y-bind->y, look_at.z-bind->z);
-	}
 */
 }
 

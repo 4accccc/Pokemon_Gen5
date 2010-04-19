@@ -52,7 +52,7 @@ static GFL_PROC_RESULT ZukanSearchProc_Init( GFL_PROC * proc, int * seq, void * 
 {
 	ZKNSEARCHMAIN_WORK * wk;
 
-	OS_Printf( "↓↓↓↓↓　図鑑検索処理開始　↓↓↓↓↓\n" );
+//	OS_Printf( "↓↓↓↓↓　図鑑検索処理開始　↓↓↓↓↓\n" );
 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_ZUKAN_SEARCH, 0x60000 );
 
@@ -101,7 +101,7 @@ static GFL_PROC_RESULT ZukanSearchProc_End( GFL_PROC * proc, int * seq, void * p
 	GFL_PROC_FreeWork( proc );
 	GFL_HEAP_DeleteHeap( HEAPID_ZUKAN_SEARCH );
 
-	OS_Printf( "↑↑↑↑↑　図鑑検索処理終了　↑↑↑↑↑\n" );
+//	OS_Printf( "↑↑↑↑↑　図鑑検索処理終了　↑↑↑↑↑\n" );
 
 	return GFL_PROC_RES_FINISH;
 }
