@@ -189,8 +189,7 @@ typedef enum
 //=====================================
 #define MYSTERY_DEMO_GIFT_X             (128)
 #define MYSTERY_DEMO_MOVE_GIFT_START_Y  (-96)
-#define MYSTERY_DEMO_MOVE_GIFT_END_Y    (100)
-#define MYSTERY_DEMO_MOVE_GIFT_DIFF_Y   (MYSTERY_DEMO_MOVE_GIFT_END_Y-MYSTERY_DEMO_MOVE_GIFT_START_Y)
+#define MYSTERY_DEMO_MOVE_GIFT_END_Y    (130)
 #define MYSTERY_DEMO_MOVE_GIFT_SYNC     (60)
 #define MYSTERY_DEMO_INIT_WAIT_SYNC     (180)
 #define MYSTERY_DEMO_END_WAIT_SYNC      (60)
@@ -352,6 +351,8 @@ struct _MYSTERY_DEMO_WORK
 
   const DOWNLOAD_GIFT_DATA *cp_data;
   MYSTERY_PTC_WORK  ptc;
+
+  s32               leg_pos;
 } ;
 
 //-------------------------------------
@@ -546,6 +547,10 @@ static void Mystery_Effect_DemoMain( MYSTERY_EFFECT_WORK *p_wk );
 static void MYSTERY_BTN_Init( MYSTERY_BTN_WORK *p_wk, const OBJ_WORK *cp_obj, GFL_CLUNIT *p_clunit, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font, HEAPID heapID );
 static void MYSTERY_BTN_Exit( MYSTERY_BTN_WORK *p_wk );
 static void MYSTERY_BTN_PrintMain( MYSTERY_BTN_WORK *p_wk );
+//-------------------------------------
+///	その他
+//=====================================
+static u32 Mystery_GetLegPos( const POKEMON_PASO_PARAM* cp_ppp, HEAPID heapID );
 
 //=============================================================================
 /**
@@ -1222,16 +1227,6 @@ static void SEQFUNC_Start( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   MYSTERY_WORK  *p_wk     = p_wk_adrs;  
   
   MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_001, MYSTERY_TEXT_TYPE_QUE );
-
-  //アルファ設定
-  { 
-    G2_SetBlendAlpha(
-        GX_BLEND_PLANEMASK_BG2,
-        GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ,
-        MYSTERY_MENU_ALPHA_EV1,
-          MYSTERY_MENU_ALPHA_EV2
-        );
-  }
 
   UTIL_CreateMenu( p_wk, UTIL_MENU_TYPE_TOP, HEAPID_MYSTERYGIFT ); 
 
@@ -3114,6 +3109,14 @@ static void UTIL_CreateMenu( MYSTERY_WORK *p_wk, UTIL_MENU_TYPE type, HEAPID hea
       }
     }
 
+    { 
+      G2_SetBlendAlpha(
+          GX_BLEND_PLANEMASK_BG2,
+          GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ,
+          MYSTERY_MENU_ALPHA_EV1,
+          MYSTERY_MENU_ALPHA_EV2
+          );
+    }
     //フェード最初から
     OBJ_PltFade_Reset( &p_wk->obj );
   }
@@ -3263,6 +3266,7 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
   p_wk->p_bg      = p_bg;
   p_wk->heapID    = heapID;
   p_wk->cp_data   = cp_data;
+  p_wk->leg_pos   = 0;
 
   { 
     static const u16 sc_type_to_back_fade[] =
@@ -3344,6 +3348,11 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
         GFL_STD_MemFill16( (void*)plt_addr, GX_RGB(31,31,31), sizeof(u16)*0x10 );
         GFL_STD_MemCopy( (void*)plt_addr, p_wk->plt_poke_src, sizeof(u16)*0x10 );
       }
+
+      //足元座標を保存
+      //(中心からのオフセット)
+      p_wk->leg_pos = Mystery_GetLegPos( PP_GetPPPPointerConst(p_pp), heapID ) - 48;
+      p_wk->leg_pos = MATH_CLAMP( p_wk->leg_pos, 0, 48 );
  
       GFL_ARC_CloseDataHandle( p_handle );
       GFL_HEAP_FreeMemory( p_pp );
@@ -3600,9 +3609,11 @@ static void Mystery_Demo_NormalMain( MYSTERY_DEMO_WORK *p_wk )
 
   case SEQ_MOVE:
     { 
+      const s32 move_diff_y = MYSTERY_DEMO_MOVE_GIFT_END_Y - p_wk->leg_pos -MYSTERY_DEMO_MOVE_GIFT_START_Y;
       s16 pos;
 
-      pos = MYSTERY_DEMO_MOVE_GIFT_START_Y + MYSTERY_DEMO_MOVE_GIFT_DIFF_Y * p_wk->sync / MYSTERY_DEMO_MOVE_GIFT_SYNC;
+
+      pos = MYSTERY_DEMO_MOVE_GIFT_START_Y + move_diff_y * p_wk->sync / MYSTERY_DEMO_MOVE_GIFT_SYNC;
       GFL_CLACT_WK_SetTypePos( p_wk->p_clwk, pos, CLSYS_DEFREND_MAIN, CLSYS_MAT_Y );
 
       if( 0 - 6*8 <= pos && pos <= 192 )
@@ -3765,7 +3776,7 @@ static void Mystery_Demo_MovieMain( MYSTERY_DEMO_WORK *p_wk )
       { 
         GFL_CLACTPOS  pos;
         pos.x = MYSTERY_DEMO_GIFT_X;
-        pos.y = MYSTERY_DEMO_MOVE_GIFT_END_Y;
+        pos.y = MYSTERY_DEMO_MOVE_GIFT_END_Y - p_wk->leg_pos;
         GFL_CLACT_WK_SetPos( p_wk->p_clwk, &pos, CLSYS_DRAW_MAIN );
       }
       GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, TRUE );
@@ -4197,4 +4208,68 @@ static void MYSTERY_BTN_Exit( MYSTERY_BTN_WORK *p_wk )
 static void MYSTERY_BTN_PrintMain( MYSTERY_BTN_WORK *p_wk )
 {
   MYSTERY_MSGOAM_PrintMain( p_wk->p_msgoam );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモンの足元座標を取得
+ *
+ *	@param	const POKEMON_PASO_PARAM* cp_ppp  ポケモン
+ *
+ *	@return 足元座標(ドット単位）
+ */
+//-----------------------------------------------------------------------------
+static u32 Mystery_GetLegPos( const POKEMON_PASO_PARAM* cp_ppp, HEAPID heapID )
+{ 
+  u32 temp;
+  u32 pos = 48;  //中心にしておく
+
+  void *p_chr_buff;
+  NNSG2dCharacterData *p_chr_data;
+  
+
+  p_chr_buff  =  POKE2DGRA_LoadCharacterPPP( &p_chr_data, cp_ppp, POKEGRA_DIR_FRONT, GFL_HEAP_LOWID(heapID) );
+  POKEGRA_SortBGCharacter( p_chr_data, GFL_HEAP_LOWID(heapID) );
+
+  //足元サーチ
+  { 
+    int i, j, k;
+    u32  chara_adrs;
+    u32 *p_chara_y;
+
+    BOOL exits  = FALSE;
+
+    for( i = POKEGRA_POKEMON_CHARA_HEIGHT-1; i >= 0; i-- )
+    { 
+      for( j = 0; j < POKEGRA_POKEMON_CHARA_WIDTH; j++ )
+      { 
+        chara_adrs = ((u32)p_chr_data->pRawData + ((i * POKEGRA_POKEMON_CHARA_WIDTH + j ) * GFL_BG_1CHRDATASIZ));
+
+        //Yを知れればよいのでYしか検知しない
+        for( k = GFL_BG_1CHRDOTSIZ-1; k >= 0; k-- )
+        { 
+          p_chara_y = (u32*)(chara_adrs + k * 4);
+          if( *p_chara_y != 0 )
+          { 
+            NAGI_Printf( "足元キャラx=%d y=%d doty=%d\n", j, i, k );
+            temp = i*8+k;
+            if( pos < temp )
+            { 
+              pos = temp;
+            }
+            exits = TRUE;
+          }
+        }
+      }
+
+      //横軸を全てチェックし終わったら終了
+      if( exits )
+      { 
+        break;
+      }
+    }
+  }
+
+  GFL_HEAP_FreeMemory( p_chr_buff );
+
+  return pos;
 }

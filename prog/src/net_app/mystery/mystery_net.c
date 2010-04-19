@@ -375,6 +375,10 @@ void MYSTERY_NET_ChangeStateReq( MYSTERY_NET_WORK *p_wk, MYSTERY_NET_STATE state
   case MYSTERY_NET_STATE_END_IRC_DOWNLOAD:
     SEQ_SetNext( &p_wk->seq, SEQFUNC_ExitIrcDownload );
     break;
+    
+  case MYSTERY_NET_STATE_WAIT:
+    SEQ_SetNext( &p_wk->seq, SEQFUNC_Wait );
+    break;
   }
 }
 
@@ -530,6 +534,7 @@ void MYSTERY_NET_ClearError( MYSTERY_NET_WORK *p_wk )
   }
 
   MYSTERY_NET_ChangeStateReq( p_wk, MYSTERY_NET_STATE_WAIT );
+  NetErr_ErrWorkInit();
 }
 
 //----------------------------------------------------------------------------
@@ -545,24 +550,31 @@ static MYSTERY_NET_ERROR_REPAIR_TYPE Mystery_Net_Wifi_GetErrorRepairType( const 
 { 
   MYSTERY_NET_ERROR_REPAIR_TYPE repair  = MYSTERY_NET_ERROR_REPAIR_NONE;
 
-  //下記関数はdev_wifilibのオーバーレイにあるので、GFL_NETが解放されるとよばれなくなる
-  switch( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE) )
+  if( NetErr_App_CheckError() )
   { 
-  case GFL_NET_DWC_ERROR_RESULT_NONE:
-    repair  = MYSTERY_NET_ERROR_REPAIR_NONE;
-    break;
+    const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
 
-  case GFL_NET_DWC_ERROR_RESULT_PRINT_MSG:
-    repair  = MYSTERY_NET_ERROR_REPAIR_RETURN;
-    break;
+    switch( cp_error->errorType )
+    { 
+    case DWC_ETYPE_LIGHT:
+    case DWC_ETYPE_SHOW_ERROR:
+    case DWC_ETYPE_SHUTDOWN_FM:
+    case DWC_ETYPE_SHUTDOWN_GHTTP:
+    case DWC_ETYPE_SHUTDOWN_ND:
+    case DWC_ETYPE_DISCONNECT:
+      GFL_NET_StateClearWifiError();
+      DWC_ClearError();
+      NetErr_ExitNetSystem();
+      NetErr_DispCallPushPop();
+      repair  = MYSTERY_NET_ERROR_REPAIR_RETURN;
+      break;
 
-  case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC:
-    repair  = MYSTERY_NET_ERROR_REPAIR_DISCONNECT;
-    break;
-
-  case GFL_NET_DWC_ERROR_RESULT_FATAL:
-    repair  = MYSTERY_NET_ERROR_REPAIR_FATAL;
-    break;
+    case DWC_ETYPE_FATAL:
+      GFL_NET_StateClearWifiError();
+      NetErr_DispCallFatal();
+      repair  = MYSTERY_NET_ERROR_REPAIR_FATAL;
+      break;
+    }
   }
 
   return repair;
