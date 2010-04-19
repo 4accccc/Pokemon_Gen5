@@ -724,7 +724,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   {
     // ˆê”Ê
     // ƒAƒCƒeƒ€–¼
-    GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
+    GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR005, pWork->pStrBuf );
     ITEMMENU_WordsetItemName( pWork, 0, item->id);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);

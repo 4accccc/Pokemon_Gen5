@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-05T17:32:09"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-04-16T18:28:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1379,8 +1379,9 @@ const u8 str_konanoryou[]
 	</row>
 
 	<row id="MSG_ITEM_STR001" back-color=",,,,,,,#ffff00,,,#ffff00,,,,,,,">
-		<language name="JPN" width="160">[BD:02:Ｘセンタリング][1:09:どうぐ名:0]</language>
-		<language name="JPN_KANJI" width="160">[BD:02:Ｘセンタリング][1:09:どうぐ名:0]</language>
+		<comment>リスト用</comment>
+		<language name="JPN" width="160">[1:09:どうぐ名:0]</language>
+		<language name="JPN_KANJI" width="160">[1:09:どうぐ名:0]</language>
 	</row>
 
 	<row id="MSG_ITEM_STR002" back-color=",,,,,,,#ffff00,,,#ffff00,,,,,,,">
@@ -1396,6 +1397,12 @@ const u8 str_konanoryou[]
 	<row id="MSG_ITEM_STR004" back-color=",,,,,,,#ffff00,,,#ffff00,,,,,,,">
 		<language name="JPN" width="160">いいえ</language>
 		<language name="JPN_KANJI" width="160">いいえ</language>
+	</row>
+
+	<row id="MSG_ITEM_STR005" back-color=",,,,,,,#ffff00,,,#ffff00,,,,,,,">
+		<comment>上画面用</comment>
+		<language name="JPN" width="160">[BD:02:Ｘセンタリング][1:09:どうぐ名:0]</language>
+		<language name="JPN_KANJI" width="160">[BD:02:Ｘセンタリング][1:09:どうぐ名:0]</language>
 	</row>
 
 	<row id="msg_bag_item_none" back-color=",,,,,,,#ffff00,,,#ffff00,,,,,,,">
