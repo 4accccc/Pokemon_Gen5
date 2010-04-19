@@ -190,7 +190,7 @@ GTSNEGO_MESSAGE_WORK* GTSNEGO_MESSAGE_Init(HEAPID id,int msg_dat)
 
 #if DEBUG_ONLY_FOR_ohno
   DEBUGWIN_InitProc( GFL_BG_FRAME1_M , pWork->pFontHandle );
-  DEBUG_PAUSE_SetEnable( TRUE );
+//  DEBUG_PAUSE_SetEnable( TRUE );
 #endif
   
   return pWork;

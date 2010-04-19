@@ -184,6 +184,8 @@ extern BOOL GTSNEGO_DISP_CrossIconFlashEnd(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_ResetDispSet(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_FriendSelectFree2(GTSNEGO_DISP_WORK* pWork);
+extern void GTSNEGO_DISP_PanelScrollAdjust(GTSNEGO_DISP_WORK* pWork,BOOL bDown);
+extern void GTSNEGO_DISP_PanelScrollCancel(GTSNEGO_DISP_WORK* pWork);
 
 extern void GTSNEGO_DISP_DeleteTouchWork(GTSNEGO_DISP_WORK* pWork);
 

@@ -1071,8 +1071,6 @@ void GTSNEGO_DISP_FriendSelectFree2(GTSNEGO_DISP_WORK* pWork)
 
 
 
-
-
 //----------------------------------------------------------------------------
 /**
  *	@brief	下キーが押された時の処理
@@ -1083,15 +1081,16 @@ void GTSNEGO_DISP_FriendSelectFree2(GTSNEGO_DISP_WORK* pWork)
 
 BOOL GTSNEGO_DISP_FriendListDownChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR* pCur)
 {
-  BOOL bChange = FALSE;
+  BOOL bChange = 0;
 
-  if(pCur->curpos < 2){
+  if((pCur->curpos < 2) && ( pCur->curpos < (pCur->listmax-1) )){
     pCur->curpos++;
+    bChange = 1;
   }
   else if((pCur->curpos==2) && ((pCur->oamlistpos+3) < pCur->listmax)){
     //カーソルはそのままでリストが移動
     pCur->oamlistpos++;
-    bChange = TRUE;
+    bChange = 2;
   }
   return bChange;
 }
@@ -1215,6 +1214,21 @@ void GTSNEGO_DISP_PanelScrollStart(GTSNEGO_DISP_WORK* pWork,int scrollType)
   }
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	キャンセル処理
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+
+void GTSNEGO_DISP_PanelScrollCancel(GTSNEGO_DISP_WORK* pWork)
+{
+  pWork->bgscrollType = PANEL_NONESCROLL_;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	下に１つスクロールする処理開始
@@ -1256,6 +1270,19 @@ int GTSNEGO_DISP_PanelScrollMain(GTSNEGO_DISP_WORK* pWork,int* EndTrg)
   return pWork->bgscrollType;
 }
 
+
+void GTSNEGO_DISP_PanelScrollAdjust(GTSNEGO_DISP_WORK* pWork,BOOL bDown)
+{
+  int i,k=1;
+
+  if(bDown){
+    k=-1;
+  }
+  
+  for(i=0;i<GTSNEGO_WINDOW_MAXNUM;i++){
+    GTSNEGO_DISP_UnionWkScroll(pWork,i,48*k);
+  }
+}
 
 
 
@@ -1417,7 +1444,8 @@ void GTSNEGO_DISP_UnionListUp(GTSNEGO_DISP_WORK* pWork,MYSTATUS* pMy)
       GFL_CLACT_WK_Remove(pWork->unionOAM[endmark]);
     }
     for(i = endmark ; i > 0; i--){  //場所スライド
-      pWork->unionOAM[i] =pWork->unionOAM[i-1];
+      OS_TPrintf("Uplist %d\n",i);
+      pWork->unionOAM[i] = pWork->unionOAM[i-1];
     }
     pWork->unionOAM[0] = NULL;
     GTSNEGO_DISP_UnionListDisp(pWork, pMy, 0 );

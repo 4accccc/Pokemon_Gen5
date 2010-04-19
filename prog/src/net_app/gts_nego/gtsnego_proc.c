@@ -20,6 +20,7 @@
 #include "infowin/infowin.h"
 #include "system/main.h"
 #include "system/wipe.h"
+#include "system/debug_print.h"
 #include "gamesystem/msgspeed.h" // MSGSPEED_GetWait
 #include "msg/msg_namein.h"   //デフォルト名取
 
@@ -288,7 +289,7 @@ static void _recvInfomationData(const int netID, const int size, const void* pDa
     return;//自分のは今は受け取らない
   }
   GFL_STD_MemCopy(pData,&pEv->aUser[1],sizeof(EVENT_GTSNEGO_USER_DATA));
-  NET_PRINT("GTStype %d %d\n",pEv->aUser[1].selectType ,pEv->aUser[1].selectLV);
+  OHNO_Printf("GTStype %d %d\n",pEv->aUser[1].selectType ,pEv->aUser[1].selectLV);
 }
 
 //------------------------------------------------------------------------------
@@ -688,7 +689,7 @@ static void _timingCheck( GTSNEGO_WORK *pWork )
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO2, WB_NET_GTSNEGO)){
     EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
 
-    NET_PRINT("GTStype %d %d\n",pEv->aUser[0].selectType ,pEv->aUser[0].selectLV);
+    OHNO_Printf("GTStype %d %d\n",pEv->aUser[0].selectType ,pEv->aUser[0].selectLV);
 
     if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_INFOSEND, sizeof(EVENT_GTSNEGO_USER_DATA),&pEv->aUser[0])){
       _CHANGE_STATE(pWork,_pmssendCheck);
@@ -724,7 +725,7 @@ static void _friendGreeState( GTSNEGO_WORK *pWork )
     EVENT_GTSNEGO_WORK *pParent = pWork->dbw;
     pParent->aUser[0].selectLV = pWork->chageLevel;
     pParent->aUser[0].selectType = pWork->myChageType;
-    OS_TPrintf("myChageType %d %d\n",pWork->chageLevel,pWork->myChageType);
+    OHNO_Printf("myChageType %d %d\n",pWork->chageLevel,pWork->myChageType);
 
     WIFI_NEGOTIATION_SV_GetMsg(GAMEDATA_GetWifiNegotiation(pWork->pGameData),&pWork->myMatchData.pms);
     pWork->myMatchData.num = WIFI_NEGOTIATION_SV_GetChangeCount(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
@@ -864,7 +865,7 @@ static int _evalcallback(int index, void* param)
       }
     }
   }
-  OS_TPrintf("評価コールバック %d %d %d %d %d\n",value,pWork->changeMode,targetlv,targetmy,targetfriend);
+  OHNO_Printf("評価コールバック %d %d %d %d %d\n",value,pWork->changeMode,targetlv,targetmy,targetfriend);
   return value;
 }
 
@@ -910,7 +911,7 @@ static void _matchKeyMake( GTSNEGO_WORK *pWork )
     pMatchKey->keyID  = DWC_AddMatchKeyInt(pMatchKey->keyID, pMatchKey->keyStr, &pMatchKey->ivalue);
 #if PM_DEBUG
     if (pMatchKey->keyID == 0){
-      NET_PRINT("AddMatchKey failed %d.\n",i);
+      OHNO_Printf("AddMatchKey failed %d.\n",i);
     }
 #endif
   }
@@ -1136,11 +1137,46 @@ MYSTATUS* GTSNEGO_GetMyStatus( GAMEDATA* pGameData, int index)
   int i, j, count;
   MYSTATUS* pMyStatus;
 
+  count = WIFI_NEGOTIATION_SV_GetCount(GAMEDATA_GetWifiNegotiation(pGameData));
   if((index >= WIFI_NEGOTIATION_DATAMAX) || (index < 0)){
     return NULL;
   }
-  
+
+  j = count - 1 - index;
+  if(j<0){
+    j+=WIFI_NEGOTIATION_DATAMAX;
+  }
+  j = j % WIFI_NEGOTIATION_DATAMAX;
+  pMyStatus = WIFI_NEGOTIATION_SV_GetMyStatus(GAMEDATA_GetWifiNegotiation(pGameData), j);
+  return pMyStatus;
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	順番にMYSTATUSを得る  アイコンだけ特殊になっている
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+MYSTATUS* GTSNEGO_GetMyStatusIconOnly( GAMEDATA* pGameData, int index)
+{
+  int i, j, count;
+  MYSTATUS* pMyStatus;
+
   count = WIFI_NEGOTIATION_SV_GetCount(GAMEDATA_GetWifiNegotiation(pGameData));
+//  if((index >= WIFI_NEGOTIATION_DATAMAX) || (index < 0)){
+//    return NULL;
+//  }
+  if(index < 0){
+    index = 0;
+  }
+  if(index >= count){
+    index = count-1;
+  }
+  
 
   j = count - 1 - index;
   if(j<0){
@@ -1305,6 +1341,53 @@ static void _friendSelectBack( GTSNEGO_WORK *pWork )
 }
 
 
+
+static BOOL _upScrollFunc(GTSNEGO_WORK *pWork)
+{
+  BOOL bHit=FALSE;
+  
+  if( GTSNEGO_DISP_FriendListUpChk(pWork->pDispWork, &pWork->scrollPanelCursor) ){
+    GTSNEGO_DISP_PanelScrollStart(pWork->pDispWork,PANEL_UPSCROLL_);
+    if(pWork->scrollPanelCursor.oamlistpos - 1 >= 0){
+      GTSNEGO_MESSAGE_FriendListUpStart(pWork->pMessageWork, pWork->pGameData,
+                                        pWork->scrollPanelCursor.oamlistpos-1 );
+     }
+    bHit=TRUE;
+  }
+  else if(pWork->key3 != _CROSSCUR_TYPE_FRIEND1){
+    pWork->key3--;
+    bHit=TRUE;
+  }
+  else{
+    //ループする？
+  }
+  return bHit;
+}
+
+static int _downScrollFunc(GTSNEGO_WORK *pWork)
+{
+  int retcode = GTSNEGO_DISP_FriendListDownChk(pWork->pDispWork, &pWork->scrollPanelCursor);
+  
+  switch( retcode ){
+  case 0:
+    break;
+  case 1:
+    // カーソルだけ動く
+    if(pWork->key3 != _CROSSCUR_TYPE_FRIEND3){
+      pWork->key3++;
+    }
+    break;
+  case 2:
+    // 文字全体のスクロール
+    GTSNEGO_DISP_PanelScrollStart(pWork->pDispWork,PANEL_DOWNSCROLL_);
+    GTSNEGO_MESSAGE_FriendListDownStart(pWork->pMessageWork, pWork->pGameData,
+                                        pWork->scrollPanelCursor.oamlistpos + 2);
+    break;
+  }
+  return retcode;
+}
+
+
 //------------------------------------------------------------------
 /**
  * $brief   交換相手選択待ち
@@ -1340,59 +1423,91 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
     GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
     GTSNEGO_MESSAGE_FriendListUpEnd(pWork->pMessageWork);
 
-    OS_TPrintf("GTSNEGO_DISP_UnionListUp %d\n",pWork->scrollPanelCursor.oamlistpos-2);
+    OHNO_Printf("GTSNEGO_DISP_UnionListUp %d\n",pWork->scrollPanelCursor.oamlistpos-2);
 
-    
-    GTSNEGO_DISP_UnionListUp(pWork->pDispWork, GTSNEGO_GetMyStatus(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos-2));
+    GTSNEGO_DISP_UnionListUp(pWork->pDispWork, GTSNEGO_GetMyStatusIconOnly(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos-2));
   }
   else if( PANEL_DOWNSCROLL_ == scrollType){
     GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
     GTSNEGO_MESSAGE_FriendListDownEnd(pWork->pMessageWork);
-    OS_TPrintf("GTSNEGO_DISP_UnionListDown %d\n",pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3));
+    OHNO_Printf("GTSNEGO_DISP_UnionListDown %d\n",pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3));
 
-    GTSNEGO_DISP_UnionListDown(pWork->pDispWork, GTSNEGO_GetMyStatus(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3)));
+    GTSNEGO_DISP_UnionListDown(pWork->pDispWork, GTSNEGO_GetMyStatusIconOnly(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3)));
   }
   if(ret != PANEL_NONESCROLL_){
     return;
   }
 
+
+  if(GFL_UI_KEY_GetRepeat() == PAD_BUTTON_R){
+    int i,ret;
+    bHit = FALSE;
+    for(i = 0; i < 3; i++){
+      ret = _downScrollFunc(pWork);
+      bHit |= ret;
+      GTSNEGO_DISP_PanelScrollCancel(pWork->pDispWork);
+      if(ret == 0){
+        break;
+      }
+
+//      if((ret == 2) && (i<2)){
+        GTSNEGO_DISP_PanelScrollAdjust(pWork->pDispWork,TRUE);
+        GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
+        GTSNEGO_MESSAGE_FriendListDownEnd(pWork->pMessageWork);
+
+      OHNO_Printf("PAD_BUTTON_R %d\n",pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3));
+
+      GTSNEGO_DISP_UnionListDown(pWork->pDispWork, GTSNEGO_GetMyStatusIconOnly(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3)));
+      //  bHit = FALSE;
+//      }
+      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
+
+    }
+  }
+  if(GFL_UI_KEY_GetRepeat() == PAD_BUTTON_L){
+    int i,ret;
+    bHit = FALSE;
+    for(i = 0; i < 3; i++){
+      ret = _upScrollFunc(pWork);
+      bHit |= ret;
+      GTSNEGO_DISP_PanelScrollCancel(pWork->pDispWork);
+      if(ret == 0){
+        break;
+      }
+
+  //    if(i<2){
+      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
+      {
+      //  bHit = FALSE;
+        GTSNEGO_DISP_PanelScrollAdjust(pWork->pDispWork,FALSE);
+        GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
+        GTSNEGO_MESSAGE_FriendListUpEnd(pWork->pMessageWork);
+        OHNO_Printf("PAD_BUTTON_L %d\n",pWork->scrollPanelCursor.oamlistpos-2);
+        GTSNEGO_DISP_UnionListUp(pWork->pDispWork, GTSNEGO_GetMyStatusIconOnly(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos-2));
+      }
+    }
+  }
+
   if(GFL_UI_KEY_GetRepeat() == PAD_KEY_UP){
-    bHit=TRUE;
-    PMSND_PlaySystemSE(_SE_CUR);
     if(!pWork->keyMode){
       pWork->keyMode=TRUE;
+      bHit=TRUE;
     }
     else{
-      if( GTSNEGO_DISP_FriendListUpChk(pWork->pDispWork, &pWork->scrollPanelCursor)){
-        GTSNEGO_DISP_PanelScrollStart(pWork->pDispWork,PANEL_UPSCROLL_);
-        if(pWork->scrollPanelCursor.oamlistpos - 1 >= 0){
-          GTSNEGO_MESSAGE_FriendListUpStart(pWork->pMessageWork, pWork->pGameData,
-                                              pWork->scrollPanelCursor.oamlistpos-1 );
-        }
-      }
-      else if(pWork->key3 != _CROSSCUR_TYPE_FRIEND1){
-        pWork->key3--;
-      }
+      bHit = _upScrollFunc(pWork);
     }
   }
   if(GFL_UI_KEY_GetRepeat() == PAD_KEY_DOWN){
     bHit=TRUE;
-    PMSND_PlaySystemSE(_SE_CUR);
     if(!pWork->keyMode){
       pWork->keyMode=TRUE;
     }
     else{
-      if( GTSNEGO_DISP_FriendListDownChk(pWork->pDispWork, &pWork->scrollPanelCursor)){
-        GTSNEGO_DISP_PanelScrollStart(pWork->pDispWork,PANEL_DOWNSCROLL_);
-        GTSNEGO_MESSAGE_FriendListDownStart(pWork->pMessageWork, pWork->pGameData,
-                                            pWork->scrollPanelCursor.oamlistpos + 2);
-      }
-      else if(pWork->key3 != _CROSSCUR_TYPE_FRIEND3){
-        pWork->key3++;
-      }
+      bHit = _downScrollFunc(pWork);
     }
   }
   if(bHit){
+    PMSND_PlaySystemSE(_SE_CUR);
     GTSNEGO_DISP_ScrollChipDisp(pWork->pDispWork,pWork->scrollPanelCursor.oamlistpos + pWork->key3 - _CROSSCUR_TYPE_FRIEND1,
                                 pWork->scrollPanelCursor.listmax );
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
@@ -1404,7 +1519,7 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
     GTSNEGO_DISP_CrossIconFlash(pWork->pDispWork , pWork->key3);
 
     pWork->selectFriendIndex = pWork->scrollPanelCursor.oamlistpos + pWork->key3  - _CROSSCUR_TYPE_FRIEND1;
-    OS_TPrintf("選んだ番号 %d\n", pWork->selectFriendIndex);
+    OHNO_Printf("選んだ番号 %d\n", pWork->selectFriendIndex);
     _CHANGE_STATE(pWork,_friendSelectDecide);
     return;
   }
@@ -1413,15 +1528,23 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
   {  //TPで誰を選んだのか
     int trgindex=GFL_UI_TP_HitTrg(_tp_data2);
     switch(trgindex){
-    case 0:
-    case 1:
     case 2:
+      if(pWork->scrollPanelCursor.listmax < 3){
+        break;
+      }
+      //break throw
+    case 1:
+      if(pWork->scrollPanelCursor.listmax < 2){
+        break;
+      }
+      //break throw
+    case 0:
       pWork->key3 = trgindex  + _CROSSCUR_TYPE_FRIEND1;
       GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
       GTSNEGO_DISP_CrossIconFlash(pWork->pDispWork , pWork->key3);
 
       pWork->selectFriendIndex = pWork->scrollPanelCursor.oamlistpos + pWork->key3  - _CROSSCUR_TYPE_FRIEND1;
-      OS_TPrintf("選んだ番号 %d\n", pWork->selectFriendIndex);
+      OHNO_Printf("選んだ番号 %d\n", pWork->selectFriendIndex);
 //      pWork->selectFriendIndex = trgindex;
       PMSND_PlaySystemSE(_SE_DECIDE);
       _CHANGE_STATE(pWork,_friendSelectDecide);
