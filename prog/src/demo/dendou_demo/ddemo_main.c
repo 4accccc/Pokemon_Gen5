@@ -350,7 +350,7 @@ void DDEMOMAIN_InitSound( DDEMOMAIN_WORK * wk )
 
 void DDEMOMAIN_ExitSound( DDEMOMAIN_WORK * wk )
 {
-	PMSND_StopBGM();
+//	PMSND_StopBGM();
 	SOUNDMAN_ReleasePresetData( wk->sndHandle );
 }
 

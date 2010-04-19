@@ -51,7 +51,7 @@ static GFL_PROC_RESULT DendouDemoProc_Init( GFL_PROC * proc, int * seq, void * p
 {
 	DDEMOMAIN_WORK * wk;
 
-//	OS_Printf( "↓↓↓↓↓　殿堂入りＰＣ処理開始　↓↓↓↓↓\n" );
+//	OS_Printf( "↓↓↓↓↓　殿堂入りデモ処理開始　↓↓↓↓↓\n" );
 
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_DENDOU_DEMO, 0x60000 );
 
@@ -100,7 +100,7 @@ static GFL_PROC_RESULT DendouDemoProc_End( GFL_PROC * proc, int * seq, void * pw
 	GFL_PROC_FreeWork( proc );
 	GFL_HEAP_DeleteHeap( HEAPID_DENDOU_DEMO );
 
-//	OS_Printf( "↑↑↑↑↑　殿堂入りＰＣ処理終了　↑↑↑↑↑\n" );
+//	OS_Printf( "↑↑↑↑↑　殿堂入りデモ処理終了　↑↑↑↑↑\n" );
 
 	return GFL_PROC_RES_FINISH;
 }
