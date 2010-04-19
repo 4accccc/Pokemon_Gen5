@@ -31,6 +31,7 @@
 
 #include "net_app/gtsnego.h"
 #include "net_app/wifi_login.h"
+#include "net_app/wifi_logout.h"
 
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_tool.h"
@@ -57,6 +58,7 @@ enum _EVENT_GTSNEGO {
   _CALL_MAIL,
   _WAIT_MAIL,
   _WAIT_NET_END,
+  _WAIT_NET_END2,
   _FIELD_OPEN,
   _FIELD_FADEIN,
   _FIELD_END
@@ -74,6 +76,8 @@ typedef struct
   EVENT_GTSNEGO_WORK  gts;
   POKEMONTRADE_PARAM aPokeTr;
   WIFILOGIN_PARAM     login;
+  WIFILOGOUT_PARAM   logout;
+  
   BOOL bFieldEnd;
 #if PM_DEBUG
   BOOL is_debug;
@@ -211,7 +215,11 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     }
     break;
   case _WAIT_NET_END:
-    if(GFL_NET_IsExit()){
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogout_ProcData, &dbw->logout);
+    (*seq)++;
+    break;
+  case _WAIT_NET_END2:
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
       (*seq) ++;
     }
     break;
@@ -274,8 +282,11 @@ static EVENT_GTSNEGO_LINK_WORK* wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK
   { 
     GFL_STD_MemClear( &dbw->login, sizeof(WIFILOGIN_PARAM) );
     dbw->login.gamedata = GAMESYSTEM_GetGameData(gsys);
-    dbw->login.display = WIFILOGIN_BG_NORMAL;
+    dbw->login.bg = WIFILOGIN_BG_NORMAL;
     dbw->login.display = WIFILOGIN_DISPLAY_UP;
+    dbw->logout.gamedata = GAMESYSTEM_GetGameData(gsys);
+    dbw->logout.bg = WIFILOGIN_BG_NORMAL;
+    dbw->logout.display = WIFILOGIN_DISPLAY_UP;
   }
   return dbw;
 }

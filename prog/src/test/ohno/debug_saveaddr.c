@@ -176,7 +176,7 @@ static BOOL zukandummydata( SAVEADDR_WORK *pWork )
   NNSG2dPaletteData* palData;
   NNSG2dScreenData* pScrData;
   void* pArc;
-  u8* pPic = GFL_HEAP_AllocMemory(GFL_HEAPID_APP,sizeof(TESTZUKAN_DATA));
+  u8* pPic = GFL_HEAP_AllocMemory(GFL_HEAPID_APP,ZUKANWP_SAVEDATA_CHAR_SIZE+ZUKANWP_SAVEDATA_PAL_SIZE*2);
 
   p_handle = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, GFL_HEAPID_APP );
 
@@ -190,7 +190,7 @@ static BOOL zukandummydata( SAVEADDR_WORK *pWork )
   pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_zukan_gra_top_zkn_top_bg_NCLR, FALSE, GFL_HEAPID_APP);
   if( NNS_G2dGetUnpackedPaletteData( pArc, &palData ) ){
     _dataPrint(palData->pRawData, ZUKANWP_SAVEDATA_PAL_SIZE*2);
-    GFL_STD_MemCopy(charData->pRawData, &pPic[ZUKANWP_SAVEDATA_CHAR_SIZE], ZUKANWP_SAVEDATA_PAL_SIZE*2);
+    GFL_STD_MemCopy(palData->pRawData, &pPic[ZUKANWP_SAVEDATA_CHAR_SIZE], ZUKANWP_SAVEDATA_PAL_SIZE*2);
   }
   GFL_HEAP_FreeMemory(pArc);
 

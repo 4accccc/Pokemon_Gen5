@@ -46,6 +46,8 @@
 #include "gtsnego.naix"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 #include "gtsnego_local.h"
+#include "system/net_err.h"
+#include "net/dwc_error.h"
 
 
 #define _NO2   (2)
@@ -1621,6 +1623,36 @@ static void _modeSelectMenuFlash(GTSNEGO_WORK* pWork)
   }
 }
 
+static void _messageEndCheck2(GTSNEGO_WORK* pWork)
+{
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    GTSNEGO_MESSAGE_AppMenuClose(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+    switch(selectno){
+    case 0:
+      pWork->dbw->result = FALSE;
+      _CHANGE_STATE(pWork,_messageEnd);
+      break;
+    case 1:
+      TOUCHBAR_SetVisible(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TOUCHBAR_ICON_RETURN, TRUE);
+      G2S_BlendNone();
+      _CHANGE_STATE(pWork,_modeSelectMenuWait);
+      break;
+    }
+  }
+}
+
+static void _messageEndCheck(GTSNEGO_WORK* pWork)
+{
+  if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+  TOUCHBAR_SetVisible(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TOUCHBAR_ICON_RETURN, FALSE);
+  pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
+  _CHANGE_STATE(pWork,_messageEndCheck2);
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   モードセレクト画面待機
@@ -1678,8 +1710,10 @@ static void _modeSelectMenuWait(GTSNEGO_WORK* pWork)
   switch( TOUCHBAR_GetTrg(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork))){
   case TOUCHBAR_ICON_RETURN:
     pWork->timer=1;
-    GFL_NET_Exit(NULL);
-    _CHANGE_STATE(pWork, _messageEnd);
+//    GFL_NET_Exit(NULL);
+//    _CHANGE_STATE(pWork, _messageEnd);
+    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_047);
+    _CHANGE_STATE(pWork, _messageEndCheck);
     break;
   default:
     break;
@@ -1757,6 +1791,14 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
   GTSNEGO_DISP_Main(pWork->pDispWork);
   GTSNEGO_MESSAGE_Main(pWork->pMessageWork);
 
+  if(GFL_NET_IsInit()){
+    if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+      GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE);
+      retCode = GFL_PROC_RES_FINISH;
+      WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+      WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+    }
+  }
 
   //INFOWIN_Update();
 

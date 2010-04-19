@@ -390,8 +390,10 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
     }
   }
 	if(pGF->GGID != ggid){
+#ifdef DEBUG_WH_BEACON_PRINT_ON
 		NET_PRINT("beacon不一致\n");
-		return FALSE;
+#endif
+    return FALSE;
 	}
 	if(pInit->beaconCompFunc){
 		if(FALSE == pInit->beaconCompFunc(serviceNo, pGF->serviceNo)){
@@ -399,7 +401,9 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
 		}
 	}
 	else{
+#ifdef DEBUG_WH_BEACON_PRINT_ON
 		NET_PRINT("ServiceID CMP %d %d",serviceNo, pGF->serviceNo);
+#endif
 		if(serviceNo != pGF->serviceNo){
 			return FALSE;   // サービスが異なる場合は拾わない
 		}
@@ -445,7 +449,9 @@ static BOOL _scanCallback(WMBssDesc *bssdesc)
 		}
 		if (0==GFL_STD_MemComp(pNetWL->sBssDesc[i].bssid, bssdesc->bssid, WM_SIZE_BSSID)) {
 			// もう一度拾った場合にタイマー加算
+#ifdef DEBUG_WH_BEACON_PRINT_ON
 			NET_PRINT("もう一度拾った場合にタイマー加算\n");
+#endif
 			pNetWL->bconUnCatchTime[i] = DEFAULT_TIMEOUT_FRAME;
 			// 新しい親情報を保存しておく。
 			MI_CpuCopy8( bssdesc, &pNetWL->sBssDesc[i], sizeof(WMBssDesc));
@@ -568,8 +574,10 @@ BOOL GFL_NET_WLChildInit(BOOL bBconInit)
 	}
 
 	if(bBconInit){
+#ifdef DEBUG_WH_BEACON_PRINT_ON
 		NET_PRINT("ビーコンの初期化\n");
-		GFL_NET_WLChildBconDataInit(); // データの初期化
+#endif
+    GFL_NET_WLChildBconDataInit(); // データの初期化
 	}
 	//if(!pNetWL->bSetReceiver )
 	{
@@ -582,7 +590,9 @@ BOOL GFL_NET_WLChildInit(BOOL bBconInit)
 			return TRUE;
 		}
 	}
+#ifdef DEBUG_WH_BEACON_PRINT_ON
 	NET_PRINT("IDLE状態ではないため初期化に失敗しました\n");
+#endif
 	return FALSE;
 }
 
@@ -895,7 +905,9 @@ static void _WLParentBconCheck(void)
 		if(pNetWL->bconUnCatchTime[id] > 0){
 			pNetWL->bconUnCatchTime[id]--;
 			if(pNetWL->bconUnCatchTime[id] == 0){
+#ifdef DEBUG_WH_BEACON_PRINT_ON
 				NET_PRINT("親機反応なし %d\n", id);
+#endif
 				pNetWL->bScanCallBack = TRUE;   // データを変更したのでTRUE
 			}
 		}
@@ -927,7 +939,9 @@ void NET_WHPIPE_BeaconSetInfo( void )
     GFLNetInitializeStruct* pInit = GFL_NET_GetNETInitStruct();
 
     if(pInit->beaconGetSizeFunc==NULL){
+#ifdef DEBUG_WH_BEACON_PRINT_ON
       NET_PRINT("beaconGetSizeFunc none");
+#endif
       return;
     }
     {
@@ -1026,8 +1040,10 @@ static void _stateProcess(u16 bitmap)
 	switch (state) {
 	case WH_SYSSTATE_STOP:
 		if(pNetWL->disconnectType == _DISCONNECT_END){
+#ifdef DEBUG_WH_BEACON_PRINT_ON
 			NET_PRINT("WHEnd を呼んで終了しました\n");
-			_commEnd();  // ワークから何から全て開放
+#endif
+      _commEnd();  // ワークから何から全て開放
 			return;
 		}
 		if(pNetWL->disconnectType == _DISCONNECT_SECRET){
@@ -1715,8 +1731,10 @@ static void _parentMeasurechanneling(GFL_NETWL* pNetWL)
 		channel = WH_GetMeasureChannel();
 		if(pNetWL->keepChannel == 0xff){
 			pNetWL->keepChannel = channel;
+#ifdef DEBUG_WH_BEACON_PRINT_ON
 			NET_PRINT("channelChange %d\n",channel);
-		}
+#endif
+    }
 		else{
 			channel = pNetWL->keepChannel;
 		}
