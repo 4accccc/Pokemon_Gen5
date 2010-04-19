@@ -2471,8 +2471,7 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
 
   // 起動してないなら、電源いがい触れない。
   if( pWork->power_flag == FALSE ){
-    if( (bttnid != TOUCH_LABEL_LOGO) && 
-        (bttnid != TOUCH_LABEL_POWER) &&
+    if( (bttnid != TOUCH_LABEL_POWER) &&
         (bttnid != TOUCH_LABEL_ALL) ){
       return ;
     }
