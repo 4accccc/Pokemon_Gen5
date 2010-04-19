@@ -1304,8 +1304,8 @@ static void _polygondraw(POKEMON_TRADE_WORK *pWork)
   // Set up a camera matrix
   //---------------------------------------------------------------------------
   {
-    static VecFx32 Eye = { 0, 0x180, 0x3000 };   // Eye position
-    static VecFx32 at = { 0, 0x980, 0 };  // Viewpoint
+    static VecFx32 Eye = { 0, 0x100, 0x3000 };   // Eye position
+    static VecFx32 at = { 0, 0xaa0, 0 };  // Viewpoint
     static const VecFx32 vUp = { 0, FX32_ONE, 0 };   // Up
 
     G3_LookAt(&Eye, &vUp, &at, NULL);
@@ -1338,7 +1338,22 @@ static void _polygondraw(POKEMON_TRADE_WORK *pWork)
       TOMOYA_Printf( "at.y 0x%x\n", at.y );
     }
 
+
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
+      at.y += 0x10;
+      OHNO_Printf( "at.y 0x%x\n", at.y );
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
+      at.y -= 0x10;
+      OHNO_Printf( "at.y 0x%x\n", at.y );
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
+      Eye.y += 0x10;
+      OHNO_Printf( "Eye.y 0x%x\n", Eye.y );
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
+      Eye.y -= 0x10;
+      OHNO_Printf( "Eye.y 0x%x\n", Eye.y );
+    }
 #endif
+
   }
 
   //---------------------------------------------------------------------------
