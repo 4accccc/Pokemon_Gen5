@@ -1,0 +1,132 @@
+/*
+  @file   debug_numinput_record.cdat
+  @brief  数値入力デバッグメニュー　パラメータリスト定義ファイル
+  @author obata
+  @date   2010.04.19
+*/
+
+#ifdef PM_DEBUG
+
+//////////////////////////////////////////////////////
+///レコード関連
+static const DEBUG_NUMINPUT_PARAM DNP_Record_1 = { 0, 999999999, DebugGetRecord, DebugSetRecord, };
+static const DEBUG_NUMINPUT_PARAM DNP_Record_2 = { 0,   9995959, DebugGetRecord, DebugSetRecord, };
+static const DEBUG_NUMINPUT_PARAM DNP_Record_3 = { 0,    999999, DebugGetRecord, DebugSetRecord, };
+static const DEBUG_NUMINPUT_PARAM DNP_Record_4 = { 0,      9999, DebugGetRecord, DebugSetRecord, };
+
+static const DEBUG_NUMINPUT_LIST DNI_RecordList_Field[] = {
+  //gmm_id, param, dni_param
+  { dni_record_00, RECID_REPORT_COUNT,             &DNP_Record_1 }, 
+  { dni_record_01, RECID_CLEAR_TIME,               &DNP_Record_1 }, 
+  { dni_record_02, RECID_RIDE_CYCLE,               &DNP_Record_1 },
+  { dni_record_06, RECID_CAPTURE_POKE,             &DNP_Record_1 }, 
+  { dni_record_07, RECID_FISHING_SUCCESS,          &DNP_Record_1 }, 
+  { dni_record_08, RECID_TAMAGO_HATCHING,          &DNP_Record_1 },
+  { dni_record_09, RECID_POKE_EVOLUTION,           &DNP_Record_1 }, 
+  { dni_record_10, RECID_RECOVERY_PC,              &DNP_Record_1 }, 
+  { dni_record_20, RECID_SHOPPING_CNT,             &DNP_Record_1 },
+  { dni_record_21, RECID_SHOPPING_MONEY,           &DNP_Record_1 }, 
+  { dni_record_22, RECID_WATCH_TV,                 &DNP_Record_1 }, 
+  { dni_record_23, RECID_SODATEYA_CNT,             &DNP_Record_1 },
+  { dni_record_27, RECID_GTS_PUT,                  &DNP_Record_1 }, 
+  { dni_record_28, RECID_MAIL_WRITE,               &DNP_Record_1 }, 
+  { dni_record_29, RECID_NICKNAME,                 &DNP_Record_1 }, 
+  { dni_record_30, RECID_PREMIUM_BALL,             &DNP_Record_1 }, 
+  { dni_record_39, RECID_PALACE_TIME,              &DNP_Record_1 }, 
+  { dni_record_40, RECID_PALACE_MISSION,           &DNP_Record_1 }, 
+  { dni_record_41, RECID_DENDOU_CNT,               &DNP_Record_1 },
+  { dni_record_42, RECID_RECOVERY_HOME,            &DNP_Record_1 }, 
+  { dni_record_50, RECID_FISHING_FAILURE,          &DNP_Record_1 },
+  { dni_record_51, RECID_DAYMAX_KILL,              &DNP_Record_1 }, 
+  { dni_record_52, RECID_DAYCNT_KILL,              &DNP_Record_1 }, 
+  { dni_record_53, RECID_DAYMAX_CAPTURE,           &DNP_Record_1 },
+  { dni_record_54, RECID_DAYCNT_CAPTURE,           &DNP_Record_1 }, 
+  { dni_record_55, RECID_DAYMAX_TRAINER_BATTLE,    &DNP_Record_1 }, 
+  { dni_record_56, RECID_DAYCNT_TRAINER_BATTLE,    &DNP_Record_1 },
+  { dni_record_57, RECID_DAYMAX_EVOLUTION,         &DNP_Record_1 }, 
+  { dni_record_58, RECID_DAYCNT_EVOLUTION,         &DNP_Record_1 }, 
+  { dni_record_59, RECID_FOSSIL_RESTORE,           &DNP_Record_1 },
+  { dni_record_81, RECID_USE_SHOOTER_COUNT,        &DNP_Record_1 }, 
+  { dni_record_82, RECID_EFFECT_ENCOUNT_NUM,       &DNP_Record_1 }, 
+  { dni_record_83, RECID_AFFINITY_CHECK_NUM,       &DNP_Record_1 },
+  { dni_record_89, RECID_PDW_SLEEP_POKEMON,        &DNP_Record_1 },
+  { dni_record_90, RECID_POKESHIFTER_COUNT,        &DNP_Record_1 }, 
+  { dni_record_91, RECID_TRIALHOUSE_COUNT,         &DNP_Record_1 }, 
+  { dni_record_93, RECID_TRIALHOUSE_RANK,          &DNP_Record_1 }, 
+  { dni_record_94, RECID_TRIALHOUSE_SCORE,         &DNP_Record_1 },
+};
+// 通信関連
+static const DEBUG_NUMINPUT_LIST DNI_RecordList_Comm[] = { 
+  //gmm_id, param, dni_param
+  { dni_record_11, RECID_COMM_TRADE,        &DNP_Record_1 },
+  { dni_record_12, RECID_COMM_BATTLE,       &DNP_Record_1 }, 
+  { dni_record_13, RECID_COMM_BTL_WIN,      &DNP_Record_1 }, 
+  { dni_record_14, RECID_COMM_BTL_LOSE,     &DNP_Record_1 },
+  { dni_record_15, RECID_WIFI_TRADE,        &DNP_Record_1 }, 
+  { dni_record_16, RECID_WIFI_BATTLE,       &DNP_Record_1 }, 
+  { dni_record_17, RECID_WIFI_BTL_WIN,      &DNP_Record_1 },
+  { dni_record_18, RECID_WIFI_BTL_LOSE,     &DNP_Record_1 }, 
+  { dni_record_19, RECID_WIFI_BTL_DRAW,     &DNP_Record_1 }, 
+  { dni_record_34, RECID_SURECHIGAI_NUM,    &DNP_Record_1 }, 
+  { dni_record_35, RECID_IRC_TRADE,         &DNP_Record_1 },
+  { dni_record_36, RECID_IRC_BATTLE,        &DNP_Record_1 }, 
+  { dni_record_37, RECID_IRC_BTL_WIN,       &DNP_Record_1 }, 
+  { dni_record_38, RECID_IRC_BTL_LOSE,      &DNP_Record_1 },
+  { dni_record_60, RECID_GURUGURU_COUNT,    &DNP_Record_1 }, 
+  { dni_record_92, RECID_SURECHIGAI_THANKS, &DNP_Record_1 },
+};
+// バトル関連
+static const DEBUG_NUMINPUT_LIST DNI_RecordList_Battle[] = {
+  //gmm_id, param, dni_param
+  { dni_record_03, RECID_BATTLE_COUNT,       &DNP_Record_1 }, 
+  { dni_record_04, RECID_BTL_ENCOUNT,        &DNP_Record_1 }, 
+  { dni_record_05, RECID_BTL_TRAINER,        &DNP_Record_1 },
+  { dni_record_24, RECID_KILL_POKE,          &DNP_Record_1 }, 
+  { dni_record_25, RECID_DAYMAX_EXP,         &DNP_Record_1 }, 
+  { dni_record_26, RECID_DAYCNT_EXP,         &DNP_Record_1 },
+  { dni_record_31, RECID_LEADERHOUSE_BATTLE, &DNP_Record_1 }, 
+  { dni_record_32, RECID_WIN_BP,             &DNP_Record_1 },
+  { dni_record_33, RECID_USE_BP,             &DNP_Record_1 }, 
+  { dni_record_43, RECID_WAZA_HANERU,        &DNP_Record_1 }, 
+  { dni_record_44, RECID_WAZA_WARUAGAKI,     &DNP_Record_1 }, 
+  { dni_record_45, RECID_WAZA_MUKOU,         &DNP_Record_1 }, 
+  { dni_record_46, RECID_TEMOTI_KIZETU,      &DNP_Record_1 }, 
+  { dni_record_47, RECID_TEMOTI_MAKIZOE,     &DNP_Record_1 },
+  { dni_record_48, RECID_NIGERU_SIPPAI,      &DNP_Record_1 }, 
+  { dni_record_49, RECID_NIGERARETA,         &DNP_Record_1 }, 
+};
+// ランダムマッチ関連
+static const DEBUG_NUMINPUT_LIST DNI_RecordList_Random[] = {
+  //gmm_id, param, dni_param
+  { dni_record_61, RECID_RANDOM_FREE_SINGLE_WIN,   &DNP_Record_1 }, 
+  { dni_record_62, RECID_RANDOM_FREE_SINGLE_LOSE,  &DNP_Record_1 },
+  { dni_record_63, RECID_RANDOM_FREE_DOUBLE_WIN,   &DNP_Record_1 }, 
+  { dni_record_64, RECID_RANDOM_FREE_DOUBLE_LOSE,  &DNP_Record_1 }, 
+  { dni_record_65, RECID_RANDOM_FREE_ROTATE_WIN,   &DNP_Record_1 },
+  { dni_record_66, RECID_RANDOM_FREE_ROTATE_LOSE,  &DNP_Record_1 }, 
+  { dni_record_67, RECID_RANDOM_FREE_TRIPLE_WIN,   &DNP_Record_1 }, 
+  { dni_record_68, RECID_RANDOM_FREE_TRIPLE_LOSE,  &DNP_Record_1 },
+  { dni_record_69, RECID_RANDOM_FREE_SHOOTER_WIN,  &DNP_Record_1 }, 
+  { dni_record_70, RECID_RANDOM_FREE_SHOOTER_LOSE, &DNP_Record_1 }, 
+  { dni_record_71, RECID_RANDOM_RATE_SINGLE_WIN,   &DNP_Record_1 },
+  { dni_record_72, RECID_RANDOM_RATE_SINGLE_LOSE,  &DNP_Record_1 }, 
+  { dni_record_73, RECID_RANDOM_RATE_DOUBLE_WIN,   &DNP_Record_1 }, 
+  { dni_record_74, RECID_RANDOM_RATE_DOUBLE_LOSE,  &DNP_Record_1 },
+  { dni_record_75, RECID_RANDOM_RATE_ROTATE_WIN,   &DNP_Record_1 }, 
+  { dni_record_76, RECID_RANDOM_RATE_ROTATE_LOSE,  &DNP_Record_1 }, 
+  { dni_record_77, RECID_RANDOM_RATE_TRIPLE_WIN,   &DNP_Record_1 },
+  { dni_record_78, RECID_RANDOM_RATE_TRIPLE_LOSE,  &DNP_Record_1 }, 
+  { dni_record_79, RECID_RANDOM_RATE_SHOOTER_WIN,  &DNP_Record_1 }, 
+  { dni_record_80, RECID_RANDOM_RATE_SHOOTER_LOSE, &DNP_Record_1 },
+};
+// ミュージカル関連
+static const DEBUG_NUMINPUT_LIST DNI_RecordList_Musical[] = {
+  //gmm_id, param, dni_param
+  { dni_record_84, RECID_MUSICAL_PLAY_NUM,         &DNP_Record_1 }, 
+  { dni_record_85, RECID_MUSICAL_WINNER_NUM,       &DNP_Record_1 }, 
+  { dni_record_86, RECID_MUSICAL_COMM_NUM,         &DNP_Record_1 },
+  { dni_record_87, RECID_MUSICAL_COMM_WINNER_NUM,  &DNP_Record_1 }, 
+  { dni_record_88, RECID_MUSICAL_TOTAL_POINT,      &DNP_Record_1 }, 
+};
+
+#endif  //PM_DEBUG 

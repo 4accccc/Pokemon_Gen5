@@ -1,0 +1,907 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet type="text/xsl" href="" ?>
+
+<gmml version="4.5">
+
+<head>
+	<create user="obata_toshihiro" host="W00209" date="2010-04-19T15:54:42"/>
+	<generator name="MessageEditor" version="4.9.2.5"/>
+</head>
+
+<body language="japanese">
+	<color>
+		<list entry="0" r="00" g="00" b="00" a="FF"/>
+		<list entry="1" r="FF" g="00" b="00" a="FF"/>
+		<list entry="2" r="00" g="00" b="FF" a="FF"/>
+		<list entry="3" r="00" g="8C" b="00" a="FF"/>
+	</color>
+
+	<tag-table>
+		<group entry="0" japanese="タググループ" english="タググループ">
+		</group>
+
+		<group entry="1" japanese="ポケモンＷＢ（単語）" english="PokemonDP" color="#c0c0c0">
+			<tag entry="00" japanese="トレーナー名" english="トレーナー名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="ポケモン種族名" english="ポケモン種族名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+				<comment language="english">ポケモンの名前。
+ピカチュウとかフシギダネとか。</comment>
+			</tag>
+			<tag entry="02" japanese="ポケモンニックネーム" english="ポケモンニックネーム" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンのニックネーム</comment>
+				<comment language="english">ポケモンのニックネーム</comment>
+			</tag>
+			<tag entry="03" japanese="ポケモンタイプ" english="ポケモンタイプ" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">みず、くさ、ほのお…とか。</comment>
+				<comment language="english">みず、くさ、ほのお…とか。</comment>
+			</tag>
+			<tag entry="04" japanese="ポケモン分類" english="ポケモン分類" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「DNAポケモン」など。</comment>
+				<comment language="english">「DNAポケモン」など。</comment>
+			</tag>
+			<tag entry="05" japanese="マップ名" english="マップ名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="06" japanese="とくせい名" english="とくせい名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="わざ名" english="わざ名" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="せいかく" english="せいかく" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="どうぐ名" english="どうぐ名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="10" japanese="グッズ名" english="グッズ名" view="EP" length="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
+			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+				<comment language="english">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
+			</tag>
+			<tag entry="14" japanese="トレーナー種別名" english="トレーナー種別名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
+				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
+			</tag>
+			<tag entry="15" japanese="趣味（調査レーダー）" english="趣味（調査レーダー）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="16" japanese="Gパワー名称" english="Gパワー名称" view="EP" width="156" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">Gパワーの名称です</comment>
+				<comment language="english">Gパワーの名称です</comment>
+			</tag>
+			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンの特殊状態です。</comment>
+				<comment language="english">ポケモンの特殊状態です。</comment>
+			</tag>
+			<tag entry="18" japanese="バッグのポケット名" english="バッグのポケット名" view="EP" width="132" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="19" japanese="アンケート回答" english="アンケート回答" view="EP" width="108" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">対戦のレギュレーション名</comment>
+				<comment language="english">対戦のレギュレーション名</comment>
+			</tag>
+			<tag entry="28" japanese="簡易会話単語" english="簡易会話単語" view="EP" width="84" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="31" japanese="アクセサリー名" english="アクセサリー名" view="EP" width="96" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ポケモンにつけるアクセサリー</comment>
+				<comment language="english">ポケモンにつけるアクセサリー</comment>
+			</tag>
+			<tag entry="32" japanese="ジム名" english="ジム名" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="33" japanese="時間帯" english="時間帯" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ぼうけんノートなどで使う</comment>
+				<comment language="english">ぼうけんノートなどで使う</comment>
+			</tag>
+			<tag entry="34" japanese="ミュージカル演目名" english="ミュージカル演目名" view="EP" width="234" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ミュージカルの演目名</comment>
+				<comment language="english">ミュージカルの演目名</comment>
+			</tag>
+			<tag entry="35" japanese="ミュージカルコンディション" english="ミュージカルコンディション" view="EP" width="65" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
+				<comment language="english">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
+			</tag>
+			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる国名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる国名</comment>
+			</tag>
+			<tag entry="37" japanese="地域名" english="地域名" view="EP" width="216" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">プレイヤーが入力する、自分が住んでいる地域名</comment>
+				<comment language="english">プレイヤーが入力する、自分が住んでいる地域名</comment>
+			</tag>
+			<tag entry="39" japanese="リボンの名前" english="リボンの名前" view="EP" width="168" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">リボンの名前</comment>
+				<comment language="english">リボンの名前</comment>
+			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+			<tag entry="49" japanese="ミュージカルグッズ部位" english="ミュージカルグッズ部位" view="EP" width="39" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="50" japanese="PDW家具名" english="PDW家具名" view="EP" width="169" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="51" japanese="ミュージカル客層" english="ミュージカル客層" view="EP" width="78" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">おとこのひと、女の子等</comment>
+				<comment language="english">おとこのひと、女の子等</comment>
+			</tag>
+			<tag entry="52" japanese="DS本体名" english="DS本体名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">DS本体のユーザー名</comment>
+				<comment language="english">DS本体のユーザー名</comment>
+			</tag>
+		</group>
+
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
+			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="01" japanese="２桁" english="２桁" view="EP" width="16" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="02" japanese="３桁" english="３桁" view="EP" width="24" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="03" japanese="４桁" english="４桁" view="EP" width="32" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="04" japanese="５桁" english="５桁" view="EP" width="40" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="05" japanese="６桁" english="６桁" view="EP" width="48" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">
+</comment>
+				<comment language="english">
+</comment>
+			</tag>
+			<tag entry="06" japanese="７桁" english="７桁" view="EP" width="56" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="08" japanese="９桁" english="９桁" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="10桁" english="10桁" view="EP" width="80" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+		</group>
+
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
+			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
+				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
+				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
+				<parameter number="2" japanese="背景色番号" english="背景色番号" type="int8"/>
+				<comment language="japanese">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+				<comment language="english">システムのカラータグより細かい設定が可能な低レベル版。
+ほとんどの場合、システムタグを使えば問題ないと思います。</comment>
+			</tag>
+			<tag entry="01" japanese="カラー変更リセット" english="カラー変更リセット" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="Ｘセンタリング" english="Ｘセンタリング" view="EP" length="0" line="1"/>
+			<tag entry="03" japanese="Ｘ右寄せ" english="Ｘ右寄せ" view="EP" length="0" line="1">
+				<parameter number="0" japanese="右スペース" english="右スペース" type="int8"/>
+				<comment language="japanese">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+				<comment language="english">当該行の文字列を
+ウィンドウ内で右寄せします。</comment>
+			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+			<tag entry="05" japanese="X指定" english="X指定" view="EP" length="0" line="1">
+				<parameter number="0" japanese="Ｘ座標" english="Ｘ座標" type="int16"/>
+				<comment language="japanese">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+				<comment language="english">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+			</tag>
+		</group>
+
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
+			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
+			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
+			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="03" japanese="ウェイト変更（継続）" english="ウェイト変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="フレーム数" english="フレーム数" type="int16"/>
+			</tag>
+			<tag entry="04" japanese="ウェイトリセット" english="ウェイトリセット" view="EP" length="0" line="1"/>
+			<tag entry="05" japanese="コールバック引数変更（単発）" english="コールバック引数変更（単発）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="06" japanese="コールバック引数変更（継続）" english="コールバック引数変更（継続）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="引数" english="引数" type="int16"/>
+			</tag>
+			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
+			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+			</tag>
+		</group>
+
+		<group entry="254" japanese="文字列展開" english="Word">
+		</group>
+
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
+		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
+		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
+		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
+		<set japanese="200%" english="200%" value="FF:01:サイズ:200"/>
+		<set japanese="150%" english="150%" value="FF:01:サイズ:150"/>
+		<set japanese="100%" english="100%" value="FF:01:サイズ:100"/>
+		<set japanese="75%" english="75%" value="FF:01:サイズ:75"/>
+		<set japanese="50%" english="50%" value="FF:01:サイズ:50"/>
+		<set japanese="カラーデフォルト" english="Black" value="FF:00:色:0"/>
+		<set japanese="カラー１" english="Red" value="FF:00:色:1"/>
+		<set japanese="カラー２" english="Green" value="FF:00:色:2"/>
+		<set japanese="カラー３" english="Blue" value="FF:00:色:3"/>
+	</tag-table>
+
+	<columns>
+		<id position="0" width="237"/>
+		<group default=" 0:デフォルト" position="-1" width="100">
+			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
+		</group>
+		<number position="-1" width="100"/>
+		<comment position="3" width="215"/>
+		<erase position="-1" width="100"/>
+		<language japanese="JPN" english="JPN">
+			<message position="1" width="191"/>
+			<font default=" 0:large" position="4" width="109">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="6" width="70"/>
+			<line position="-1" width="100"/>
+		</language>
+		<language japanese="JPN_KANJI" english="JPN_KANJI">
+			<message position="2" width="221"/>
+			<font default=" 0:large" position="5" width="106">
+				<list entry="0" file="W:\font\large.nftr"/>
+				<list entry="1" file="W:\font\small.nftr"/>
+			</font>
+			<size position="-1" width="100"/>
+			<space position="-1" width="100"/>
+			<width position="7" width="75"/>
+			<line position="-1" width="100"/>
+		</language>
+	</columns>
+
+	<dialog left="174" top="160" right="879" bottom="780" maximized="no" rayout="Vertical2">
+		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
+		<tag-palette left="412" top="136" right="940" bottom="658" visible="no"/>
+		<band id="0" index="0" style="0000" width="530"/>
+		<band id="1" index="1" style="0000" width="165"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
+	</dialog>
+
+	<output default="デフォルト">
+		<target japanese="デフォルト" english="default" endian="big" encoding="Shift_JIS" letter-list-encoding="Shift_JIS" header-file-encoding="Shift_JIS" language="JPN">
+			<struct name="JMSMesgEntry" id="" message="mesgOffset">
+			</struct>
+			<entry sort="id" id-block="no" flowlabel-block="no"/>
+			<header divide="no" id-prefix="JMS_" query-prefix="JMS_QUERY_" flownode-prefix="JMS_FLOWNODE_" id="" struct="" query=""/>
+		</target>
+	</output>
+
+
+	<lock>
+		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
+	</lock>
+
+
+	<row id="dni_number_string" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>数値表示用</comment>
+		<language name="JPN" width="240">[2:09:10桁:0]</language>
+		<language name="JPN_KANJI" width="240">[2:09:10桁:0]</language>
+	</row>
+
+	<row id="dni_record_field" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="240">フィールド</language>
+		<language name="JPN_KANJI" width="240">フィールド</language>
+	</row>
+
+	<row id="dni_record_comm" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="240">通信</language>
+		<language name="JPN_KANJI" width="240">通信</language>
+	</row>
+
+	<row id="dni_record_battle" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="240">バトル</language>
+		<language name="JPN_KANJI" width="240">バトル</language>
+	</row>
+
+	<row id="dni_record_random" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="240">ランダムマッチ</language>
+		<language name="JPN_KANJI" width="240">ランダムマッチ</language>
+	</row>
+
+	<row id="dni_record_musical" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="240">ミュージカル</language>
+		<language name="JPN_KANJI" width="240">ミュージカル</language>
+	</row>
+
+	<row id="dni_record_00" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">レポート回数</language>
+		<language name="JPN_KANJI" width="240">レポート回数</language>
+	</row>
+
+	<row id="dni_record_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">クリアタイム</language>
+		<language name="JPN_KANJI" width="240">クリアタイム</language>
+	</row>
+
+	<row id="dni_record_02" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">自転車に乗った回数</language>
+		<language name="JPN_KANJI" width="240">自転車に乗った回数</language>
+	</row>
+
+	<row id="dni_record_03" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">全戦闘回数</language>
+		<language name="JPN_KANJI" width="240">全戦闘回数</language>
+	</row>
+
+	<row id="dni_record_04" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">エンカウント戦闘回数</language>
+		<language name="JPN_KANJI" width="240">エンカウント戦闘回数</language>
+	</row>
+
+	<row id="dni_record_05" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">トレーナー戦闘回数</language>
+		<language name="JPN_KANJI" width="240">トレーナー戦闘回数</language>
+	</row>
+
+	<row id="dni_record_06" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">捕獲したポケモンの数</language>
+		<language name="JPN_KANJI" width="240">捕獲したポケモンの数</language>
+	</row>
+
+	<row id="dni_record_07" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">釣りあげたポケモンの回数</language>
+		<language name="JPN_KANJI" width="240">釣りあげたポケモンの回数</language>
+	</row>
+
+	<row id="dni_record_08" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">タマゴをかえした回数</language>
+		<language name="JPN_KANJI" width="240">タマゴをかえした回数</language>
+	</row>
+
+	<row id="dni_record_09" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">進化させたポケモンの引数</language>
+		<language name="JPN_KANJI" width="240">進化させたポケモンの引数</language>
+	</row>
+
+	<row id="dni_record_10" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ポケセンで休んだ回数</language>
+		<language name="JPN_KANJI" width="240">ポケセンで休んだ回数</language>
+	</row>
+
+	<row id="dni_record_11" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ワイヤレス通信交換をした回数</language>
+		<language name="JPN_KANJI" width="240">ワイヤレス通信交換をした回数</language>
+	</row>
+
+	<row id="dni_record_12" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ワイヤレス通信対戦をした回数</language>
+		<language name="JPN_KANJI" width="240">ワイヤレス通信対戦をした回数</language>
+	</row>
+
+	<row id="dni_record_13" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ワイヤレス通信対戦の勝利数</language>
+		<language name="JPN_KANJI" width="240">ワイヤレス通信対戦の勝利数</language>
+	</row>
+
+	<row id="dni_record_14" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ワイヤレス通信対戦の敗北数</language>
+		<language name="JPN_KANJI" width="240">ワイヤレス通信対戦の敗北数</language>
+	</row>
+
+	<row id="dni_record_15" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">WiFi通信交換をした回数</language>
+		<language name="JPN_KANJI" width="240">WiFi通信交換をした回数</language>
+	</row>
+
+	<row id="dni_record_16" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">WiFi通信対戦をした回数</language>
+		<language name="JPN_KANJI" width="240">WiFi通信対戦をした回数</language>
+	</row>
+
+	<row id="dni_record_17" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">WiFi通信対戦の勝利数</language>
+		<language name="JPN_KANJI" width="240">WiFi通信対戦の勝利数</language>
+	</row>
+
+	<row id="dni_record_18" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">WiFi通信対戦の敗北数</language>
+		<language name="JPN_KANJI" width="240">WiFi通信対戦の敗北数</language>
+	</row>
+
+	<row id="dni_record_19" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">WiFi通信対戦の引き分け数</language>
+		<language name="JPN_KANJI" width="240">WiFi通信対戦の引き分け数</language>
+	</row>
+
+	<row id="dni_record_20" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">買い物をした回数</language>
+		<language name="JPN_KANJI" width="240">買い物をした回数</language>
+	</row>
+
+	<row id="dni_record_21" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">買い物をした合計金額</language>
+		<language name="JPN_KANJI" width="240">買い物をした合計金額</language>
+	</row>
+
+	<row id="dni_record_22" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">テレビを見た回数</language>
+		<language name="JPN_KANJI" width="240">テレビを見た回数</language>
+	</row>
+
+	<row id="dni_record_23" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">育て屋にポケモンを預けた回数</language>
+		<language name="JPN_KANJI" width="240">育て屋にポケモンを預けた回数</language>
+	</row>
+
+	<row id="dni_record_24" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">倒したポケモンの数</language>
+		<language name="JPN_KANJI" width="240">倒したポケモンの数</language>
+	</row>
+
+	<row id="dni_record_25" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">1日に稼いだ経験値最大値</language>
+		<language name="JPN_KANJI" width="240">1日に稼いだ経験値最大値</language>
+	</row>
+
+	<row id="dni_record_26" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">1日に稼いだ経験値</language>
+		<language name="JPN_KANJI" width="240">1日に稼いだ経験値</language>
+	</row>
+
+	<row id="dni_record_27" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">GTSにポケモンを預けた回数</language>
+		<language name="JPN_KANJI" width="240">GTSにポケモンを預けた回数</language>
+	</row>
+
+	<row id="dni_record_28" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">メールを書いた回数</language>
+		<language name="JPN_KANJI" width="240">メールを書いた回数</language>
+	</row>
+
+	<row id="dni_record_29" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ポケモンにニックネームを付けた回数</language>
+		<language name="JPN_KANJI" width="240">ポケモンにニックネームを付けた回数</language>
+	</row>
+
+	<row id="dni_record_30" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">もらったプレミアボールの数</language>
+		<language name="JPN_KANJI" width="240">もらったプレミアボールの数</language>
+	</row>
+
+	<row id="dni_record_31" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">リーダーハウスで戦った回数</language>
+		<language name="JPN_KANJI" width="240">リーダーハウスで戦った回数</language>
+	</row>
+
+	<row id="dni_record_32" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">勝ち取ったBP</language>
+		<language name="JPN_KANJI" width="240">勝ち取ったBP</language>
+	</row>
+
+	<row id="dni_record_33" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">使ったBP </language>
+		<language name="JPN_KANJI" width="240">使ったBP </language>
+	</row>
+
+	<row id="dni_record_34" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">すれちがい通信をした回数</language>
+		<language name="JPN_KANJI" width="240">すれちがい通信をした回数</language>
+	</row>
+
+	<row id="dni_record_35" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">赤外線通信交換をした回数</language>
+		<language name="JPN_KANJI" width="240">赤外線通信交換をした回数</language>
+	</row>
+
+	<row id="dni_record_36" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">赤外線通信対戦をした回数</language>
+		<language name="JPN_KANJI" width="240">赤外線通信対戦をした回数</language>
+	</row>
+
+	<row id="dni_record_37" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">赤外線通信対戦の勝利数</language>
+		<language name="JPN_KANJI" width="240">赤外線通信対戦の勝利数</language>
+	</row>
+
+	<row id="dni_record_38" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">赤外線通信対戦の敗北数</language>
+		<language name="JPN_KANJI" width="240">赤外線通信対戦の敗北数</language>
+	</row>
+
+	<row id="dni_record_39" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">パレス訪問時間合計</language>
+		<language name="JPN_KANJI" width="240">パレス訪問時間合計</language>
+	</row>
+
+	<row id="dni_record_40" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">パレスクリアしたミッションの数</language>
+		<language name="JPN_KANJI" width="240">パレスクリアしたミッションの数</language>
+	</row>
+
+	<row id="dni_record_41" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">殿堂入りした回数</language>
+		<language name="JPN_KANJI" width="240">殿堂入りした回数</language>
+	</row>
+
+	<row id="dni_record_42" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">自分の家で休んだ回数</language>
+		<language name="JPN_KANJI" width="240">自分の家で休んだ回数</language>
+	</row>
+
+	<row id="dni_record_43" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">「はねる」を使った回数</language>
+		<language name="JPN_KANJI" width="240">「はねる」を使った回数</language>
+	</row>
+
+	<row id="dni_record_44" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">「わるあがき」を使った回数</language>
+		<language name="JPN_KANJI" width="240">「わるあがき」を使った回数</language>
+	</row>
+
+	<row id="dni_record_45" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">無効果わざを出した回数</language>
+		<language name="JPN_KANJI" width="240">無効果わざを出した回数</language>
+	</row>
+
+	<row id="dni_record_46" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">気絶させた手持ちの引数</language>
+		<language name="JPN_KANJI" width="240">気絶させた手持ちの引数</language>
+	</row>
+
+	<row id="dni_record_47" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">味方にダメージを与えた回数</language>
+		<language name="JPN_KANJI" width="240">味方にダメージを与えた回数</language>
+	</row>
+
+	<row id="dni_record_48" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">逃げそこなった回数</language>
+		<language name="JPN_KANJI" width="240">逃げそこなった回数</language>
+	</row>
+
+	<row id="dni_record_49" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">逃げられたポケモンの数</language>
+		<language name="JPN_KANJI" width="240">逃げられたポケモンの数</language>
+	</row>
+
+	<row id="dni_record_50" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">つり損なった回数</language>
+		<language name="JPN_KANJI" width="240">つり損なった回数</language>
+	</row>
+
+	<row id="dni_record_51" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">1日に倒したポケモンの最高数</language>
+		<language name="JPN_KANJI" width="240">1日に倒したポケモンの最高数</language>
+	</row>
+
+	<row id="dni_record_52" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">1日に倒したポケモンの数</language>
+		<language name="JPN_KANJI" width="240">1日に倒したポケモンの数</language>
+	</row>
+
+	<row id="dni_record_53" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">1日に捕獲したポケモンの最高数</language>
+		<language name="JPN_KANJI" width="240">1日に捕獲したポケモンの最高数</language>
+	</row>
+
+	<row id="dni_record_54" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">1日に捕獲したポケモンの数</language>
+		<language name="JPN_KANJI" width="240">1日に捕獲したポケモンの数</language>
+	</row>
+
+	<row id="dni_record_55" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">1日にトレーナー戦した最高回数</language>
+		<language name="JPN_KANJI" width="240">1日にトレーナー戦した最高回数</language>
+	</row>
+
+	<row id="dni_record_56" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">1日にトレーナー戦した回数</language>
+		<language name="JPN_KANJI" width="240">1日にトレーナー戦した回数</language>
+	</row>
+
+	<row id="dni_record_57" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">1日にポケモン進化させた最高回数</language>
+		<language name="JPN_KANJI" width="240">1日にポケモン進化させた最高回数</language>
+	</row>
+
+	<row id="dni_record_58" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">1日にポケモン進化させた回数</language>
+		<language name="JPN_KANJI" width="240">1日にポケモン進化させた回数</language>
+	</row>
+
+	<row id="dni_record_59" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ポケモンの化石を復元した回数</language>
+		<language name="JPN_KANJI" width="240">ポケモンの化石を復元した回数</language>
+	</row>
+
+	<row id="dni_record_60" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ぐるぐる交換をした回数</language>
+		<language name="JPN_KANJI" width="240">ぐるぐる交換をした回数</language>
+	</row>
+
+	<row id="dni_record_61" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムフリーシングル勝利数</language>
+		<language name="JPN_KANJI" width="240">ランダムフリーシングル勝利数</language>
+	</row>
+
+	<row id="dni_record_62" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムフリーシングル敗北数</language>
+		<language name="JPN_KANJI" width="240">ランダムフリーシングル敗北数</language>
+	</row>
+
+	<row id="dni_record_63" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムフリーダブル勝利数</language>
+		<language name="JPN_KANJI" width="240">ランダムフリーダブル勝利数</language>
+	</row>
+
+	<row id="dni_record_64" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムフリーダブル敗北数</language>
+		<language name="JPN_KANJI" width="240">ランダムフリーダブル敗北数</language>
+	</row>
+
+	<row id="dni_record_65" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムフリーローテーション勝利数</language>
+		<language name="JPN_KANJI" width="240">ランダムフリーローテーション勝利数</language>
+	</row>
+
+	<row id="dni_record_66" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムフリーローテーション敗北数</language>
+		<language name="JPN_KANJI" width="240">ランダムフリーローテーション敗北数</language>
+	</row>
+
+	<row id="dni_record_67" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムフリートリプル勝利数</language>
+		<language name="JPN_KANJI" width="240">ランダムフリートリプル勝利数</language>
+	</row>
+
+	<row id="dni_record_68" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムフリートリプル敗北数</language>
+		<language name="JPN_KANJI" width="240">ランダムフリートリプル敗北数</language>
+	</row>
+
+	<row id="dni_record_69" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムフリーシューター勝利数</language>
+		<language name="JPN_KANJI" width="240">ランダムフリーシューター勝利数</language>
+	</row>
+
+	<row id="dni_record_70" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムフリーシューター敗北数</language>
+		<language name="JPN_KANJI" width="240">ランダムフリーシューター敗北数</language>
+	</row>
+
+	<row id="dni_record_71" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムレートシングル勝利数</language>
+		<language name="JPN_KANJI" width="240">ランダムレートシングル勝利数</language>
+	</row>
+
+	<row id="dni_record_72" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムレートシングル敗北数</language>
+		<language name="JPN_KANJI" width="240">ランダムレートシングル敗北数</language>
+	</row>
+
+	<row id="dni_record_73" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムレートダブル勝利数</language>
+		<language name="JPN_KANJI" width="240">ランダムレートダブル勝利数</language>
+	</row>
+
+	<row id="dni_record_74" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムレートダブル敗北数</language>
+		<language name="JPN_KANJI" width="240">ランダムレートダブル敗北数</language>
+	</row>
+
+	<row id="dni_record_75" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムレートローテーション勝利数</language>
+		<language name="JPN_KANJI" width="240">ランダムレートローテーション勝利数</language>
+	</row>
+
+	<row id="dni_record_76" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムレートローテーション敗北数</language>
+		<language name="JPN_KANJI" width="240">ランダムレートローテーション敗北数</language>
+	</row>
+
+	<row id="dni_record_77" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムレートトリプル勝利数</language>
+		<language name="JPN_KANJI" width="240">ランダムレートトリプル勝利数</language>
+	</row>
+
+	<row id="dni_record_78" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムレートトリプル敗北数</language>
+		<language name="JPN_KANJI" width="240">ランダムレートトリプル敗北数</language>
+	</row>
+
+	<row id="dni_record_79" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムレートシューター勝利数</language>
+		<language name="JPN_KANJI" width="240">ランダムレートシューター勝利数</language>
+	</row>
+
+	<row id="dni_record_80" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ランダムレートシューター敗北数</language>
+		<language name="JPN_KANJI" width="240">ランダムレートシューター敗北数</language>
+	</row>
+
+	<row id="dni_record_81" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">シューター使用回数</language>
+		<language name="JPN_KANJI" width="240">シューター使用回数</language>
+	</row>
+
+	<row id="dni_record_82" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">エフェクトエンカウントをした回数</language>
+		<language name="JPN_KANJI" width="240">エフェクトエンカウントをした回数</language>
+	</row>
+
+	<row id="dni_record_83" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">相性チェックをした回数</language>
+		<language name="JPN_KANJI" width="240">相性チェックをした回数</language>
+	</row>
+
+	<row id="dni_record_84" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ミュージカル参加回数</language>
+		<language name="JPN_KANJI" width="240">ミュージカル参加回数</language>
+	</row>
+
+	<row id="dni_record_85" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ミュージカル勝利回数</language>
+		<language name="JPN_KANJI" width="240">ミュージカル勝利回数</language>
+	</row>
+
+	<row id="dni_record_86" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ミュージカル通信参加回数</language>
+		<language name="JPN_KANJI" width="240">ミュージカル通信参加回数</language>
+	</row>
+
+	<row id="dni_record_87" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ミュージカル通信勝利回数</language>
+		<language name="JPN_KANJI" width="240">ミュージカル通信勝利回数</language>
+	</row>
+
+	<row id="dni_record_88" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ミュージカル通算取得得点</language>
+		<language name="JPN_KANJI" width="240">ミュージカル通算取得得点</language>
+	</row>
+
+	<row id="dni_record_89" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">PDWでポケモンを寝かせた回数</language>
+		<language name="JPN_KANJI" width="240">PDWでポケモンを寝かせた回数</language>
+	</row>
+
+	<row id="dni_record_90" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">ポケシフターをした回数</language>
+		<language name="JPN_KANJI" width="240">ポケシフターをした回数</language>
+	</row>
+
+	<row id="dni_record_91" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">トライアルハウスをした回数</language>
+		<language name="JPN_KANJI" width="240">トライアルハウスをした回数</language>
+	</row>
+
+	<row id="dni_record_92" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">すれちがい通信でお礼を受けた回数</language>
+		<language name="JPN_KANJI" width="240">すれちがい通信でお礼を受けた回数</language>
+	</row>
+
+	<row id="dni_record_93" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">トライアルハウス最高ランク</language>
+		<language name="JPN_KANJI" width="240">トライアルハウス最高ランク</language>
+	</row>
+
+	<row id="dni_record_94" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="240">トライアルハウス最高スコア</language>
+		<language name="JPN_KANJI" width="240">トライアルハウス最高スコア</language>
+	</row>
+
+	<flowchart-group-list>
+		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
+	</flowchart-group-list>
+</body>
+
+</gmml>
