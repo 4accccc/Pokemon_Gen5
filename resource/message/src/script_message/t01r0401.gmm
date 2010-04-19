@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T21:04:19"/>
+	<create user="matsumiya" host="W00224" date="2010-04-19T18:58:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="105" right="1999" bottom="733" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="117" right="2004" bottom="745" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -678,62 +678,27 @@
 多くの　ポケモンが　いるぞ！</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・c06イベント後に登場
-・全国図鑑開放条件を満たしているとき
-　続けてhakase1_03</comment>
+	<row id="msg_t01r0401_hakase1_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">HAKASE
 博士（父）</attribute>
-		<language name="JPN" width="256">アララギパパ『よお　[1:00:トレーナー名:0]！▼
-そろそろ　おまえの　ポケモンずかんを
-ぜんこくずかんに▽
-パワーアップせねば　ならん！▼
-いやなに　おまえさんの
-こうどうはんいも　ひろがるだろう？▼
-となれば　とうぜん　であう
-ポケモンも　ふえるからなあ▼
-ちょいと　ずかんを　かしとくれ！▼</language>
-		<language name="JPN_KANJI" width="256">アララギパパ『よお　[1:00:トレーナー名:0]！▼
-そろそろ　おまえの　ポケモン図鑑を
-全国図鑑に▽
-パワーアップせねば　ならん！▼
-いやなに　おまえさんの
-行動範囲も　広がるだろう？▼
-となれば　当然　出会う
-ポケモンも　増えるからなあ▼
-ちょいと　図鑑を　貸しとくれ！▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>システム
-・全国図鑑機能を拡張
-・0＝プレイヤー名
-・続けてhakase1_04</comment>
+	<row id="msg_t01r0401_hakase1_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンずかんが
-ぜんこくばんに　バージョンアップした！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモン図鑑が
-全国版に　バージョンアップした！▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase1_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・一度、イベント終了</comment>
+	<row id="msg_t01r0401_hakase1_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">HAKASE
 博士（父）</attribute>
-		<language name="JPN" width="256">アララギパパ『あらよっと！▼
-これで　おまえさんの　ポケモンずかんを
-ぜんこくずかんにも　きりかえられる▼
-ぜんこくずかんの　かんせいは
-ちょいと　たいへんかも　しれぬが▽
-まあ　がんばって　みなさいよ！▼</language>
-		<language name="JPN_KANJI" width="256">アララギパパ『あらよっと！▼
-これで　おまえさんの　ポケモン図鑑を
-全国図鑑にも　切り替えられる▼
-全国図鑑の　完成は
-ちょいと　大変かも　しれぬが▽
-まあ　がんばって　みなさいよ！▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase1_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
