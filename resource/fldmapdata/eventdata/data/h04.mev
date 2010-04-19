@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/15 11:29:52
+#save date:2010/04/19 12:25:27
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h04.wms
 #SECTION START:OBJ_EVENT
@@ -262,192 +262,6 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-H04_GUITAR_01
-#OBJ CODE Number
-GUITAR
-#MOVE CODE Number
-MV_RAIL_DIR_RND_ALL
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_H04_GUITAR_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-7 8 -3
-#event number: 9
-#type
-1
-#ID name
-H04_LEADSINGER_01
-#OBJ CODE Number
-MIDDLEMAN1
-#MOVE CODE Number
-MV_RAIL_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_H04_LEADSINGER_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-7 9 -3
-#event number: 10
-#type
-1
-#ID name
-H04_VOICE_01
-#OBJ CODE Number
-MIDDLEMAN2
-#MOVE CODE Number
-MV_RAIL_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_H04_VOICE_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-7 10 -3
-#event number: 11
-#type
-1
-#ID name
-H04_GRASSSOUND_01
-#OBJ CODE Number
-GRASSSOUND
-#MOVE CODE Number
-MV_RAIL_DIR_RND_ALL
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_H04_GRASSSOUND_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-7 11 -3
-#event number: 12
-#type
-1
-#ID name
-H04_GIRL1_01
-#OBJ CODE Number
-GIRL1
-#MOVE CODE Number
-MV_RAIL_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_H04_GIRL1_01
-#Direction Type Number
-DIR_RIGHT
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-8 15 -4
-#event number: 13
-#type
-1
-#ID name
-H04_POKE100_01
-#OBJ CODE Number
-TPOKE_0305
-#MOVE CODE Number
-MV_RAIL_DIR_RND_ULR
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-FV_H04_POKE_01
-#Event Script Name
-SCRID_H04_POKE100_01
-#Direction Type Number
-DIR_UP
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-8 16 -4
-#event number: 14
-#type
-1
-#ID name
 H04_OLDMAN1_01
 #OBJ CODE Number
 OLDMAN1
@@ -475,7 +289,7 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 72 0 40
-#event number: 15
+#event number: 9
 #type
 1
 #ID name
@@ -506,7 +320,7 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 232 0 -488
-#event number: 16
+#event number: 10
 #type
 1
 #ID name
@@ -537,7 +351,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 1000 0 56
-#event number: 17
+#event number: 11
 #type
 1
 #ID name
@@ -568,7 +382,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 264 0 -72
-#event number: 18
+#event number: 12
 #type
 1
 #ID name
@@ -599,7 +413,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 392 0 56
-#event number: 19
+#event number: 13
 #type
 1
 #ID name
@@ -630,7 +444,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 456 0 -440
-#event number: 20
+#event number: 14
 #type
 1
 #ID name
@@ -661,7 +475,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 -8 0 -504
-#event number: 21
+#event number: 15
 #type
 1
 #ID name
@@ -692,7 +506,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 728 0 -392
-#event number: 22
+#event number: 16
 #type
 1
 #ID name
@@ -723,6 +537,192 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 984 0 -504
+#event number: 17
+#type
+1
+#ID name
+H04_GUITAR_01
+#OBJ CODE Number
+GUITAR
+#MOVE CODE Number
+MV_RAIL_DIR_RND_ALL
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_GUITAR_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+14 7 -4
+#event number: 18
+#type
+1
+#ID name
+H04_LEADSINGER_01
+#OBJ CODE Number
+MIDDLEMAN1
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_LEADSINGER_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+14 8 -4
+#event number: 19
+#type
+1
+#ID name
+H04_VOICE_01
+#OBJ CODE Number
+MIDDLEMAN2
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_VOICE_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+14 9 -4
+#event number: 20
+#type
+1
+#ID name
+H04_GRASSSOUND_01
+#OBJ CODE Number
+GRASSSOUND
+#MOVE CODE Number
+MV_RAIL_DIR_RND_ALL
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_GRASSSOUND_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+14 10 -4
+#event number: 21
+#type
+1
+#ID name
+H04_GIRL1_01
+#OBJ CODE Number
+GIRL1
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_GIRL1_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+8 6 -4
+#event number: 22
+#type
+1
+#ID name
+H04_POKE100_01
+#OBJ CODE Number
+TPOKE_0305
+#MOVE CODE Number
+MV_RAIL_DIR_RND_ULR
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_H04_POKE_01
+#Event Script Name
+SCRID_H04_POKE100_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+8 7 -4
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

@@ -24,21 +24,21 @@
 #define H04_GIRL2_01                       5
 #define H04_WOMAN1_01                      6
 #define H04_MAN3_01                        7
-#define H04_GUITAR_01                      8
-#define H04_LEADSINGER_01                  9
-#define H04_VOICE_01                      10
-#define H04_GRASSSOUND_01                 11
-#define H04_GIRL1_01                      12
-#define H04_POKE100_01                    13
-#define H04_OLDMAN1_01                    14
-#define H04_BOY1_01                       15
-#define H04_BACKPACKERW_01                16
-#define H04_MONSTERBALL_01                17
-#define H04_FLD_ITEM_01                   18
-#define H04_FLD_ITEM_03                   19
-#define TR_SCHOOLG_08                     20
-#define TR_SCIENTISTW_09                  21
-#define H04_BAKER_01                      22
+#define H04_OLDMAN1_01                     8
+#define H04_BOY1_01                        9
+#define H04_BACKPACKERW_01                10
+#define H04_MONSTERBALL_01                11
+#define H04_FLD_ITEM_01                   12
+#define H04_FLD_ITEM_03                   13
+#define TR_SCHOOLG_08                     14
+#define TR_SCIENTISTW_09                  15
+#define H04_BAKER_01                      16
+#define H04_GUITAR_01                     17
+#define H04_LEADSINGER_01                 18
+#define H04_VOICE_01                      19
+#define H04_GRASSSOUND_01                 20
+#define H04_GIRL1_01                      21
+#define H04_POKE100_01                    22
 
 #endif //ZONE_H04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
