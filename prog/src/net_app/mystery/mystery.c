@@ -189,7 +189,7 @@ typedef enum
 //=====================================
 #define MYSTERY_DEMO_GIFT_X             (128)
 #define MYSTERY_DEMO_MOVE_GIFT_START_Y  (-96)
-#define MYSTERY_DEMO_MOVE_GIFT_END_Y    (130)
+#define MYSTERY_DEMO_MOVE_GIFT_END_Y    (118)
 #define MYSTERY_DEMO_MOVE_GIFT_SYNC     (60)
 #define MYSTERY_DEMO_INIT_WAIT_SYNC     (180)
 #define MYSTERY_DEMO_END_WAIT_SYNC      (60)
