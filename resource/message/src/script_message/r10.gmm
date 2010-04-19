@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-18T14:24:10"/>
+	<create user="matsumiya" host="W00224" date="2010-04-19T19:39:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1287" top="150" right="1992" bottom="778" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -334,17 +334,15 @@
 さいあくの　ばあい
 きみが　プラズマだんの　ボス▽
 Ｎと　たたかうんだね……▼
-だから　たしかめたい！▼
-きみが　Ｎと　たたかえるほどの
-トレーナーか　どうかを！▼</language>
+だから　たしかめたい！
+きみが　どれだけ　つよいかを！▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『アデクさんなら
 大丈夫と　信じているけど▼
 最悪の　場合
 きみが　プラズマ団の　ボス▽
 Ｎと　戦うんだね……▼
-だから　確かめたい！▼
-きみが　Ｎと　戦えるほどの
-トレーナーか　どうかを！▼</language>
+だから　確かめたい！
+きみが　どれだけ　強いかを！▼</language>
 	</row>
 
 	<row id="msg_r10_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -357,16 +355,14 @@
 さいあくの　ばあい
 きみが　プラズマだんの　ボス▽
 Ｎと　たたかうのは　しっているよ▼
-だから　たしかめたい！▼
-きみが　Ｎと　たたかえるほどの
-トレーナーか　どうかを！▼</language>
+だから　たしかめたい！
+きみが　どれだけ　つよいかを！▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『隠さなくても　いい▼
 最悪の　場合
 きみが　プラズマ団の　ボス▽
 Ｎと　戦うのは　知っているよ▼
-だから　確かめたい！▼
-きみが　Ｎと　戦えるほどの
-トレーナーか　どうかを！▼</language>
+だから　確かめたい！
+きみが　どれだけ　強いかを！▼</language>
 	</row>
 
 	<row id="msg_r10_black_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -380,7 +376,7 @@
 ……さあ　ポケモンを
 げんきに　してあげないとね▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……すごいね　きみは▼
-すなおに　そう　おもうよ▼
+すなおに　そう　思うよ▼
 ……さあ　ポケモンを
 元気に　してあげないとね▼</language>
 	</row>
@@ -497,8 +493,8 @@
 ちがうわけだし　それぞれの▽
 できることを　すれば　いいんだよね▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……そういうことか▼
-……たしかに　ぼくたちは　みんな
-ちがうわけだし　それぞれの▽
+……確かに　ぼくたちは　みんな
+違うわけだし　それぞれの▽
 できることを　すれば　いいんだよね▼</language>
 	</row>
 
