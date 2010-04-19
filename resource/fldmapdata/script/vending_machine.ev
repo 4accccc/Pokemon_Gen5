@@ -89,7 +89,7 @@ EVENT_START ev_vending_machine01
           //代金減算
           _SUBTRACT_GOLD( gold )
           //所持金表示更新
-          _GOLD_WIN_UPDATE(MENU_X1, MENU_Y1)
+          _GOLD_WIN_UPDATE()
           //タグ０番にアイテムセット
           _ITEM_NAME( 0, item )
           //「○○がでてきた！」

@@ -129,7 +129,7 @@ ev_t04pc0101_poketrade_01:
 			
 			//所持金を減らして表示ウィンドウから減算
 			_SUBTRACT_GOLD( 500 )
-			_GOLD_WIN_UPDATE( MENU_X1, MENU_Y1 )
+      _GOLD_WIN_UPDATE()
 			//プレイヤー名はコイキングを買った！
 			_PLAINWIN_MSG_DOWN( msg_t04pc0101_middleman_03 )
 			

@@ -1254,18 +1254,14 @@
 /**
  *  @def _GOLD_WIN_UPDATE
  *  @brief 所持金ウィンドウを更新する
- *  @param x 表示x位置(キャラ単位)
- *  @param y 表示x位置(キャラ単位)
  *  @param none
  */
 //--------------------------------------------------------------
-#define _GOLD_WIN_UPDATE( x, y ) \
-    _ASM_GOLD_WIN_UPDATE x, y
+#define _GOLD_WIN_UPDATE() \
+    _ASM_GOLD_WIN_UPDATE
 
-  .macro _ASM_GOLD_WIN_UPDATE x, y
+  .macro _ASM_GOLD_WIN_UPDATE
   .short EV_SEQ_GOLD_WIN_UPDATE
-  .short \x
-  .short \y
   .endm
 
 //======================================================================
