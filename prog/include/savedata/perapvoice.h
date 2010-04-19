@@ -41,6 +41,7 @@ extern PERAPVOICE * PERAPVOICE_AllocWork(HEAPID heapID);
 //---------------------------------------------------------------------------
 
 extern PERAPVOICE * SaveData_GetPerapVoice(SAVE_CONTROL_WORK * sv);
+extern int PERAPVOICE_GetWorkSize(void);
 extern BOOL PERAPVOICE_GetExistFlag(const PERAPVOICE * pv);
 extern void PERAPVOICE_ClearExistFlag( PERAPVOICE * pv );
 extern void PERAPVOICE_SetExistFlag( PERAPVOICE * pv );  //åä∑éûÇÃä™Ç´ñﬂÇµêÍóp
