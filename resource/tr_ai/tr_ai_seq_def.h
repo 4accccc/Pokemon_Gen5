@@ -299,6 +299,15 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //ポケモンナンバーのチェック
 	DEF_CMD		AI_CHECK_MONSNO
 
+//連動ランダム分岐
+	DEF_CMD		AI_IF_COMMONRND_UNDER
+	DEF_CMD		AI_IF_COMMONRND_OVER
+	DEF_CMD		AI_IF_COMMONRND_EQUAL
+	DEF_CMD		AI_IFN_COMMONRND_EQUAL
+
+//テーブルジャンプ
+  DEF_CMD   AI_TABLE_JUMP
+
 //------------------------------------------------------------
 //
 //	ランダム分岐
@@ -1454,6 +1463,53 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
   .macro    CHECK_MONSNO  side
 	.short		AI_CHECK_MONSNO
 	.long		  \side
+	.endm
+
+//------------------------------------------------------------
+//
+//	連動ランダム分岐
+//
+//	value:比較する値
+//	adrs:飛び先
+//
+//------------------------------------------------------------
+
+	.macro	IF_COMMONRND_UNDER		value,adrs
+	.short	AI_IF_COMMONRND_UNDER
+	.long		\value
+	.long		(\adrs-.)-4
+	.endm
+
+	.macro	IF_COMMONRND_OVER			value,adrs
+	.short	AI_IF_COMMONRND_OVER
+	.long		\value
+	.long		(\adrs-.)-4
+	.endm
+
+	.macro	IF_COMMONRND_EQUAL		value,adrs
+	.short	AI_IF_COMMONRND_EQUAL
+	.long		\value
+	.long		(\adrs-.)-4
+	.endm
+
+	.macro	IFN_COMMONRND_EQUAL		value,adrs
+	.short	AI_IFN_COMMONRND_EQUAL
+	.long		\value
+	.long		(\adrs-.)-4
+	.endm
+
+//------------------------------------------------------------
+//
+//	テーブルジャンプ
+//
+//	label:インデックスラベル
+//	adrs:テーブルアドレス
+//
+//------------------------------------------------------------
+	.macro  TABLE_JUMP  label, adrs
+	.short	AI_TABLE_JUMP
+	.long		\label
+	.long		(\adrs-.)-4
 	.endm
 
 //------------------------------------------------------------

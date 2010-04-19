@@ -89,7 +89,7 @@ wazadata_def.h: ../../prog/include/waza_tool/wazadata.h
 poketype_def.h: ../../prog/include/poke_tool/poketype.h
 	ruby ../../tools/enum2def.rb ../../prog/include/poke_tool/poketype.h
 
-%.bin: %.s *.h
+%.bin: %.s *.h ..\..\prog\src\battle\tr_ai\tr_ai_def.h
 	$(MWAS) $< -o $*.o
 	$(MWLD) -dis -o $*.elf $*.o
 	$(ELF2BINDIR)elf2bin $*.elf
