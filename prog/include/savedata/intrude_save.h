@@ -142,3 +142,4 @@ extern void ISC_SAVE_GetDistributionGPower_Array(INTRUDE_SAVE_WORK *intsave, u8 
 //--------------------------------------------------------------
 extern u32 ISC_SAVE_GetMissionClearCount(INTRUDE_SAVE_WORK *intsave);
 extern s64 ISC_SAVE_GetPalaceSojournTime(INTRUDE_SAVE_WORK *intsave);
+extern void ISC_SAVE_SetPalaceSojournTime(INTRUDE_SAVE_WORK *intsave, s64 second);

@@ -348,3 +348,16 @@ s64 ISC_SAVE_GetPalaceSojournTime(INTRUDE_SAVE_WORK *intsave)
   return intsave->palace_sojourn_time;
 }
 
+//==================================================================
+/**
+ * パレス滞在時間をセット
+ *
+ * @param   intsave		
+ * @param   second  滞在時間(秒) ※RTC_ConvertDateTimeToSecondと同様の秒です
+ */
+//==================================================================
+void ISC_SAVE_SetPalaceSojournTime(INTRUDE_SAVE_WORK *intsave, s64 second)
+{
+  intsave->palace_sojourn_time = second;
+}
+
