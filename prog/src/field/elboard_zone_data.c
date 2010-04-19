@@ -11,7 +11,7 @@
 #include <gflib.h>
 #include "elboard_zone_data.h"
 
-#define DEBUG_MODE
+//#define DEBUG_MODE
 
 //-----------------------------------------------------------------------------------
 /**
