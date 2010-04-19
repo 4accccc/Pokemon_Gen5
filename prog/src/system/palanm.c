@@ -1297,14 +1297,6 @@ void ColorConceChangePfd(PALETTE_FADE_PTR pfd, FADEREQ req, u16 fade_bit, u8 evy
 #define RGBtoY(r,g,b) (((r)*76 + (g)*151 + (b)*29) >> 8)
 #define COL_FIL(c, p) ((u16)((p)*(c))>>8)
 
-static u8 whiteRate[32] = 
-{
-   0, 1, 2, 3, 4, 5, 6, 7,
-   8, 9,10,11,12,13,14,15,
-  16,17,18,19,20,21,22,23,
-  24,25,26,27,28,29,30,31,
-};
-
 //--------------------------------------------------------------
 /**
  * @brief グレースケール化
@@ -1328,8 +1320,6 @@ void PaletteGrayScale(u16* pal, int pal_size)
     b = ((*pal) >> 10) & 0x1f;
 
     c = RGBtoY(r,g,b);
-    
-    c = whiteRate[c];
     
     *pal = (u16)((c<<10)|(c<<5)|c);
     pal++;
@@ -1364,6 +1354,78 @@ void PaletteGrayScaleFlip(u16* pal, int pal_size)
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief グレースケール化(パレス白用)
+ *
+ * @param pal       変更対象パレットデータ
+ * @param pal_size    変更サイズ(何色変更するか)
+ *
+ * @retval  none
+ *
+ */
+//--------------------------------------------------------------
+void PaletteGrayScalePlaceWhite(u16* pal, int pal_size)
+{
+  int i, r, g, b;
+  u32 c;
+
+  static u8 whiteRate[32] = 
+  {
+    18,18,18,18,19,19,20,20,
+    21,21,22,22,23,23,24,24,
+    25,25,26,26,27,27,28,28,
+    29,29,30,30,31,31,31,31,
+  };
+
+  for(i = 0; i < pal_size; i++)
+  {
+    r = (*pal) & 0x1f;
+    g = ((*pal) >> 5) & 0x1f;
+    b = ((*pal) >> 10) & 0x1f;
+
+    c = whiteRate[RGBtoY(r,g,b)];
+    
+    *pal = (u16)((c<<10)|(c<<5)|c);
+    pal++;
+  }
+}
+//--------------------------------------------------------------
+/**
+ * @brief グレースケール化(パレス黒用)
+ *
+ * @param pal       変更対象パレットデータ
+ * @param pal_size    変更サイズ(何色変更するか)
+ *
+ * @retval  none
+ *
+ */
+//--------------------------------------------------------------
+void PaletteGrayScalePlaceBlack(u16* pal, int pal_size)
+{
+  int i, r, g, b;
+  u32 c;
+
+  static u8 blackRate[32] = 
+  {
+     0, 0, 0, 0, 0, 0, 0, 0,
+     0, 0, 0, 0, 1, 1, 2, 2,
+     3, 3, 4, 4, 5, 5, 6, 6,
+     7, 7, 8, 8, 9, 9,10,10,
+  };
+
+  for(i = 0; i < pal_size; i++)
+  {
+    r = (*pal) & 0x1f;
+    g = ((*pal) >> 5) & 0x1f;
+    b = ((*pal) >> 10) & 0x1f;
+
+    c = blackRate[RGBtoY(r,g,b)];
+    
+    *pal = (u16)((c<<10)|(c<<5)|c);
+    pal++;
+  }
+}
 
 //--------------------------------------------------------------
 /**
