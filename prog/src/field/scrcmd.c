@@ -102,6 +102,7 @@
 #include "scrcmd_tv.h"
 #include "scrcmd_cgear.h"
 #include "scrcmd_zoroa.h"
+#include "scrcmd_leg_gmk.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

@@ -750,7 +750,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_record.c \
         field/scrcmd_tv.c \
         field/event_camera_shake.c \
-        field/scrcmd_zoroa.c
+        field/scrcmd_zoroa.c \
+        field/scrcmd_leg_gmk.c
 
 # ユニオンルームでのミニゲーム制御	OVERLAY_FIELDMAPと並列の位置に配置
 #===> GROUP_OVERLAY_UNION_INTRUDE
@@ -949,6 +950,10 @@ SRCS_OVERLAY_FIELD_GIMMICK_D12 = field/field_gimmick_d12.c
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_FIELD_D09_SLIPDOWN = field/rail_slipdown.c
+
+#===> GROUP_OVERLAY_SUBSCREEN
+#GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_LEGEND_GIMMICK = field/legend_gmk.c
 
 # マッパーサンプル
 #===> GROUP_OVERLAY_UNION_INTRUDE

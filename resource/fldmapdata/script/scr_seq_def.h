@@ -10977,4 +10977,15 @@
   .short EV_SEQ_CHG_ZOROA
   .short \before
   .short \after
-  .endm  
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 伝説ポケギミック開始
+ */
+//--------------------------------------------------------------
+#define _START_LEG_GMK() _ASM_START_LEG_GMK
+
+  .macro _ASM_START_LEG_GMK
+  .short EV_SEQ_START_LEG_GMK
+  .endm

@@ -297,3 +297,4 @@
   ARCID_DENDOU_DEMO_GRA "dendou_demo_gra.narc" # 殿堂入りデモ画面
   ARCID_GMK_D12 "fieldmap/gmk_d12.narc" # D12ギミックアーカイブ
   ARCID_ZOROA_GMK "fieldmap/zoroa.narc" # ゾロアギミックアーカイブ
+  ARCID_LEGEND_GMK "fieldmap/legend_gmk.narc" # 伝説ポケギミックアーカイブ

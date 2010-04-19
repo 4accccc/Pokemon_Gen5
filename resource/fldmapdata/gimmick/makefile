@@ -20,7 +20,8 @@ SUBDIRS	=	gym_denki \
 					league_front \
 					sppoke \
 					d12 \
-					zoroa
+					zoroa \
+					regend
 
 .PHONY:	do-build clean
 

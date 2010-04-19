@@ -827,6 +827,9 @@
   //ゾロア変身解除
   DEF_CMD( EvCmdChangeZoroa, EV_SEQ_CHG_ZOROA )
 
+  //伝説ポケギミック
+  DEF_CMD( EvCmdStartLegGmk, EV_SEQ_START_LEG_GMK )
+
   END_CMD
   //スクリプトコマンドテーブル終了
   
