@@ -27,6 +27,7 @@
 #include "script.h"       //SCRIPT_CallScript
 #include "event_gamestart.h"
 
+#include "demo/dendou_demo.h"
 #include "demo/demo3d.h"  //Demo3DProcData etc.
 #include "app/local_tvt_sys.h"  //LocalTvt_ProcData etc.
 
@@ -48,6 +49,7 @@ typedef struct {
   BOOL saveSuccessFlag;
   const MYSTATUS * mystatus;
 
+  DENDOUDEMO_PARAM dendouDemoParam;
   GAMECLEAR_MSG_PARAM para_child;
 }GAMECLEAR_WORK;
 
@@ -61,6 +63,8 @@ enum {
   GMCLEAR_SEQ_COMM_END_WAIT,    // 通信終了待ち
   GMCLEAR_SEQ_FIELD_CLOSE_WAIT, // フィールドマップ終了待ち
 	GMCLEAR_SEQ_DENDOU_DEMO,	    // 殿堂入りデモ
+  GMCLEAR_SEQ_DENDOU_DEMO_WAIT, // 殿堂入りデモ終了待ち
+	GMCLEAR_SEQ_CLEAR_SCRIPT,	    // ゲームクリアスクリプト処理
 	GMCLEAR_SEQ_SAVE_MESSAGE,	    // セーブ中メッセージ表示
 	GMCLEAR_SEQ_END,				      // 終了
 };
@@ -85,6 +89,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
 {
   GAMECLEAR_WORK * gcwk = work;
   GMEVENT * call_event;
+  GAMESYS_WORK * gsys = gcwk->gsys;
   GAMEDATA * gamedata = gcwk->gamedata;
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gamedata );
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gcwk->gsys );
@@ -99,7 +104,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
   case GMCLEAR_SEQ_FADEOUT:
     //フィールドマップをフェードアウト
     GMEVENT_CallEvent( event, 
-        EVENT_FieldFadeOut_Black( gcwk->gsys, fieldmap, FIELD_FADE_WAIT ) );
+        EVENT_FieldFadeOut_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
 
     //通信が動いている場合は終了させる
     if(GameCommSys_BootCheck(gameComm) != GAME_COMM_NO_NULL){
@@ -119,12 +124,25 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
   case GMCLEAR_SEQ_FIELD_CLOSE_WAIT:
     //フィールドマップを終了待ち
     GMEVENT_CallEvent( event, 
-        EVENT_FieldClose_FieldProcOnly( gcwk->gsys, fieldmap ) );
+        EVENT_FieldClose_FieldProcOnly( gsys, fieldmap ) );
 		(*seq) ++;
     break;
 
-	case GMCLEAR_SEQ_DENDOU_DEMO:
-    SCRIPT_CallGameClearScript( gcwk->gsys, HEAPID_PROC ); 
+  case GMCLEAR_SEQ_DENDOU_DEMO:
+    // 殿堂入りデモ呼び出し
+		GAMESYSTEM_CallProc( gsys, 
+        FS_OVERLAY_ID(dendou_demo), &DENDOUDEMO_ProcData, &gcwk->dendouDemoParam );
+		(*seq) ++;
+		break;
+
+	case GMCLEAR_SEQ_DENDOU_DEMO_WAIT:  
+    // 殿堂入りデモ終了待ち
+		if( GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL ) { break; }
+		(*seq) ++;
+		break;
+
+	case GMCLEAR_SEQ_CLEAR_SCRIPT:
+    SCRIPT_CallGameClearScript( gsys, HEAPID_PROC ); 
 		(*seq) ++;
 		break;
 
@@ -172,6 +190,11 @@ GMEVENT * EVENT_GameClear( GAMESYS_WORK * gsys, GAMECLEAR_MODE mode )
 
   //移動ポケモン復活チェック
   MP_RecoverMovePoke( gamedata );
+
+  // 殿堂入りデモパラメータを設定
+  gcwk->dendouDemoParam.party    = GAMEDATA_GetMyPokemon( gamedata );
+  gcwk->dendouDemoParam.mystatus = GAMEDATA_GetMyStatus( gamedata );
+  gcwk->dendouDemoParam.ptime    = GAMEDATA_GetPlayTimeWork( gamedata );
 
   return event;
 } 

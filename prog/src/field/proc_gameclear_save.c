@@ -214,6 +214,7 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
 	case 1:
     {
       G2_BlendNone();
+      GX_SetVisiblePlane( GX_PLANEMASK_BG0 );
       GFL_FADE_SetMasterBrightReq(
           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0 );
     }
