@@ -19,18 +19,22 @@
 #include "sound/pm_sndsys.h"
 //#include "sp_poke_gimmick_se_def.h"
 
-//#include "../../../resource/fldmapdata/gimmick/zoroa/zoroa_gmk_timing_def.h" //for ZOROA_CHG_FRAME
+#include "../../../resource/fldmapdata/gimmick/legend/leg_gmk_timing_def.h"
 
 #define LEGEND_GMK_ASSIGN_ID    (1)
 #define LEGEND_UNIT_IDX    (0)                      //ユニットインデックス
 #define STONE_ANM_NUM  (4)
 
-#define FLASH_FRAME_FX32  ( 80*FX32_ONE )
-#define LOOP_START_FRAME_FX32 ( 450*FX32_ONE )
+#define FLASH_FRAME_FX32  ( FLASH_FRAME*FX32_ONE )
+#define LOOP_START_FRAME_FX32 ( LOOP_START_FRAME*FX32_ONE )
+
+#define FADE_SPEED    (0)
 
 typedef struct LEG_GMK_WK_tag
 {
   BOOL OneLoop;   //アニメが１順したか
+  u32 Fade;
+  int Count;
 }LEG_GMK_WK;
 
 static GMEVENT_RESULT StoneEvt( GMEVENT* event, int* seq, void* work );
@@ -70,7 +74,7 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl[] = {
 */
 //==========================================================================
 
-static const GFL_G3D_UTIL_RES g3Dutil_resTbl_white[] = {
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl_black[] = {
 	{ ARCID_LEGEND_GMK, NARC_legend_gmk_shin_mu_p_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
 
   { ARCID_LEGEND_GMK, NARC_legend_gmk_shin_mu_p_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
@@ -79,7 +83,7 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl_white[] = {
   { ARCID_LEGEND_GMK, NARC_legend_gmk_shin_p_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
 };
 
-static const GFL_G3D_UTIL_RES g3Dutil_resTbl_black[] = {
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl_white[] = {
 	{ ARCID_LEGEND_GMK, NARC_legend_gmk_shin_mu_p_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD
 
   { ARCID_LEGEND_GMK, NARC_legend_gmk_shin_mu_p_nsbca, GFL_G3D_UTIL_RESARC }, //ICA
@@ -130,10 +134,19 @@ void LEGEND_GMK_Setup(FIELDMAP_WORK *fieldWork)
   gmk_wk = GMK_TMP_WK_AllocWork
       (fieldWork, LEGEND_GMK_ASSIGN_ID, FIELDMAP_GetHeapID(fieldWork), sizeof(LEG_GMK_WK));
   gmk_wk->OneLoop = FALSE;
+  gmk_wk->Count = 0;
   
   //必要なリソースの用意(バージョン分岐)
-  if (1) FLD_EXP_OBJ_AddUnit(ptr, &SetupWhite, LEGEND_UNIT_IDX );
-  else FLD_EXP_OBJ_AddUnit(ptr, &SetupBlack, LEGEND_UNIT_IDX );
+  if ( GET_VERSION() == VERSION_WHITE )
+  {
+    FLD_EXP_OBJ_AddUnit(ptr, &SetupWhite, LEGEND_UNIT_IDX );
+    gmk_wk->Fade = GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN;
+  }
+  else
+  {
+    FLD_EXP_OBJ_AddUnit(ptr, &SetupBlack, LEGEND_UNIT_IDX );
+    gmk_wk->Fade = GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN;
+  }
   
   //3ＤＯＢＪ初期化
   //アニメの状態を初期化
@@ -141,7 +154,8 @@ void LEGEND_GMK_Setup(FIELDMAP_WORK *fieldWork)
   {
     EXP_OBJ_ANM_CNT_PTR anm;
     anm = FLD_EXP_OBJ_GetAnmCnt( ptr, LEGEND_UNIT_IDX, OBJ_STONE, i);
-    FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 0);
+    //ループ再生
+    FLD_EXP_OBJ_ChgAnmLoopFlg(anm, 1);
     //アニメ停止
     FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
     //無効化
@@ -196,7 +210,11 @@ void LEGEND_GMK_Move(FIELDMAP_WORK *fieldWork)
       frm = FLD_EXP_OBJ_GetObjAnmFrm(ptr, LEGEND_UNIT_IDX, obj, 0 );
       if ( frm == 0 )
       {
-        FLD_EXP_OBJ_SetObjAnmFrm(ptr, LEGEND_UNIT_IDX, obj, 0, LOOP_START_FRAME_FX32 );
+        int i;
+        for (i=0;i<STONE_ANM_NUM;i++)
+        {
+          FLD_EXP_OBJ_SetObjAnmFrm(ptr, LEGEND_UNIT_IDX, obj, i, LOOP_START_FRAME_FX32 );
+        }
       }
     }
   }
@@ -215,7 +233,6 @@ GMEVENT *LEGEND_GMK_Start( GAMESYS_WORK *gsys )
   int obj;
   GMEVENT *event;
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-//  SPPOKE_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   
   obj = OBJ_STONE;
@@ -265,10 +282,11 @@ static GMEVENT_RESULT StoneEvt( GMEVENT* event, int* seq, void* work )
   GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
-//  SPPOKE_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
   int obj;
   fx32 frm, last_frm;
-  
+  LEG_GMK_WK *gmk_wk;
+
+  gmk_wk = GMK_TMP_WK_GetWork(fieldWork, LEGEND_GMK_ASSIGN_ID);
   obj = OBJ_STONE;
 
   //現在フレームを取得
@@ -278,8 +296,42 @@ static GMEVENT_RESULT StoneEvt( GMEVENT* event, int* seq, void* work )
     anm = FLD_EXP_OBJ_GetAnmCnt( ptr, LEGEND_UNIT_IDX, OBJ_STONE, 0);
     last_frm = FLD_EXP_OBJ_GetAnimeLastFrame(anm );
   }
-
   NOZOMU_Printf( "frm = %x::%d  last= %x::%d\n",frm, frm/FX32_ONE, last_frm, last_frm/FX32_ONE );
+
+  switch(*seq){
+  case 0:
+    if ( frm == FLASH_FRAME_FX32 )
+    {
+      //フェードアウト開始
+      GFL_FADE_SetMasterBrightReq( gmk_wk->Fade, 0, 16, FADE_SPEED );
+      gmk_wk->Count = FADE_WAIT;
+      (*seq)++;
+    }
+    break;
+  case 1:
+    //フェードアウト完了待ち
+    if ( GFL_FADE_CheckFade() == FALSE )
+    {
+      if ( gmk_wk->Count <=0 )
+      {
+        //フェードイン開始
+        GFL_FADE_SetMasterBrightReq( gmk_wk->Fade, 16, 0, FADE_SPEED );
+        (*seq)++;
+      }
+      else gmk_wk->Count--;
+    }
+    break;
+  case 2:
+    //フェードイン完了待ち
+    if ( GFL_FADE_CheckFade() == FALSE )
+    {
+      (*seq)++;
+    }
+    break;
+  default:
+    ;
+  }
+
   //終了していいフレームか？
   if (frm >= last_frm)
   {
