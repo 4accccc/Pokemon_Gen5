@@ -792,6 +792,7 @@ EVENT_END
 
 EVENT_START		 ev_bg_c02gym0101_plate_01
 	
+	_TALK_START_SE_PLAY()
 	//盗難イベント中かどうかによって、メッセージ変更
 	IF FLAG_ON(FE_MUSEUM_TOUNAN )	THEN
 		_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_01a)
@@ -806,7 +807,7 @@ EVENT_END
 /*     展示物の解説プレート2               　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0101_plate_02
-
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_02)
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()	
@@ -816,7 +817,7 @@ EVENT_END
 /*     展示物の解説プレート3               　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0101_plate_03
-
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_03)
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
@@ -826,7 +827,7 @@ EVENT_END
 /*     展示物の解説プレート4               　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0101_plate_04
-
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_04)
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
@@ -836,7 +837,7 @@ EVENT_END
 /*     展示物の解説プレート5               　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0101_plate_05
-
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_05)
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
@@ -846,7 +847,7 @@ EVENT_END
 /*     展示物の解説プレート6               　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0101_plate_06
-
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_06)
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
@@ -856,7 +857,7 @@ EVENT_END
 /*     展示物の解説プレート7               　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0101_plate_07
-
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN(msg_c02gym0101_plate_07)
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()

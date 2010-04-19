@@ -736,7 +736,7 @@ EVENT_END
 /*     本棚ジャンル1               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_01
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_01)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_01)
 	
@@ -760,8 +760,7 @@ EVENT_END
 /*     本棚ジャンル2               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_02
-	
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_01)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_01)
 	
@@ -785,7 +784,7 @@ EVENT_END
 /*     本棚ジャンル3               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_03
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_01)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_02)
 	
@@ -828,7 +827,7 @@ EVENT_END
 /*     本棚ジャンル4              　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_04
-
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_01)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_02)
 	
@@ -871,7 +870,7 @@ EVENT_END
 /*     本棚ジャンル5               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_05
-
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_05)
 	
@@ -920,7 +919,7 @@ EVENT_END
 /*     本棚ジャンル6              　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_06
-
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_05)
 	
@@ -970,7 +969,7 @@ EVENT_END
 /*     本棚ジャンル7               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_07
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_06)
 	
@@ -994,7 +993,7 @@ EVENT_END
 /*     本棚ジャンル8               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_08
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_06)
 	
@@ -1018,7 +1017,7 @@ EVENT_END
 /*     本棚ジャンル9               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_09
-
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_03)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_09)
 	
@@ -1041,7 +1040,7 @@ EVENT_END
 /*     本棚ジャンル10               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_10
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_03)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_09)
 	
@@ -1065,7 +1064,7 @@ EVENT_END
 /*     本棚ジャンル11               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_11
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_03)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_10)
 	
@@ -1102,7 +1101,7 @@ EVENT_END
 /*     本棚ジャンル12               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_12
-
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_03)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_10)
 	
@@ -1139,7 +1138,7 @@ EVENT_END
 /*     本棚ジャンル 13              　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_13
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_01)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_03)
 	
@@ -1162,8 +1161,7 @@ EVENT_END
 /*     本棚ジャンル14               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_14
-	
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_01)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_03)
 	
@@ -1186,7 +1184,7 @@ EVENT_END
 /*     本棚ジャンル15               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_15
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_01)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_04)
 	
@@ -1209,8 +1207,7 @@ EVENT_END
 /*     本棚ジャンル16               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_16
-
-
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_01)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_04)
 	
@@ -1233,7 +1230,7 @@ EVENT_END
 /*     本棚ジャンル17               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_17	
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_07)
 	
@@ -1258,7 +1255,7 @@ EVENT_END
 //なぞなぞのある本棚前の、ストッパーを動かす本棚
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_18
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_07)
 	
@@ -1282,7 +1279,7 @@ EVENT_END
 //	隠し扉が動く本がある本棚
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_19
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_08)
 	
@@ -1345,7 +1342,7 @@ _ANIME_LABEL	anm_book_open
 /*     本棚ジャンル20               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_20
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_02)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_08)
 	
@@ -1367,7 +1364,7 @@ EVENT_END
 /*     本棚ジャンル21              　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_21
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_03)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_11)
 	
@@ -1390,7 +1387,7 @@ EVENT_END
 /*     本棚ジャンル22               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_22
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_03)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_11)
 	
@@ -1414,7 +1411,7 @@ EVENT_END
 /*     本棚ジャンル23              　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_23
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_03)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_12)
 	
@@ -1453,7 +1450,7 @@ EVENT_END
 /*     本棚ジャンル24               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_category_24
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_category_03)
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_headline_12)
 	

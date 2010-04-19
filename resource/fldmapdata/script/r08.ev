@@ -63,7 +63,6 @@ EVENT_START   ev_pos_r08_support_01
   	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01)	
 	_OBJ_ANIME_WAIT()
     
-    _TIME_WAIT(16)
 	//ねえねえ！　ポケモンしょうぶしようよ
 	_BALLOONWIN_OBJMSG_POS( msg_r08_white_02, MMDL_ID_EVENTOBJ_00, POS_DL )
 	_MSGWIN_CLOSE()
@@ -75,7 +74,6 @@ EVENT_START   ev_pos_r08_support_01
 	_BALLOONWIN_OBJMSG_POS( msg_r08_white_03, MMDL_ID_EVENTOBJ_00, POS_DL )
 	_MSGWIN_CLOSE()
 	
-	_TIME_WAIT(8)
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_02)
 	_OBJ_ANIME_WAIT()
 	

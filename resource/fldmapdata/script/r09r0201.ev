@@ -50,7 +50,7 @@ _EVENT_DATA_END
 /*  R09R0201　スタチュー用スクリプト                      */
 /**************************************************************/
 EVENT_START   ev_bg_r09r0201_statue_01
-  
+ 	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN ( msg_r09r0201_statue_01)
 	_LAST_KEYWAIT()	
 	_MSGWIN_CLOSE()

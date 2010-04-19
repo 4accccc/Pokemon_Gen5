@@ -164,7 +164,9 @@ ev_c02gym_tounan:
 	_OBJ_ADD_EX( 5, 19, DIR_DOWN, MMDL_ID_EVENTOBJ_00, ASSISTANTM, MV_DMY )
 
 	//ママー
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe_s)
 	_PLAINWIN_MSG_DOWN(msg_c02gym0202_ad_01)
+	_OBJ_ANIME_WAIT()
 	_MSGWIN_CLOSE()
 
 	_START_EVENT_BGM(SEQ_BGM_E_TROUBLE)
@@ -324,6 +326,15 @@ _ANIME_LABEL	anm_common_gyoe
 
 	_ANIME_DATA AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：びっくりする（初期ウェイトあり）                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe_s
+	
+	_ANIME_DATA AC_WAIT_4F,1
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
 // 共通アニメ：右振り向き                   
@@ -361,7 +372,7 @@ _ANIME_LABEL	anm_common_turn_u
 /*     						本棚 				              */
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0202_book_01
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0202_bookrack1_01)
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
@@ -371,7 +382,7 @@ EVENT_END
 /*     						ケース 				              */
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0202_case_01
-	
+	_TALK_START_SE_PLAY()
 	_PLAINWIN_MSG_DOWN   ( msg_c02gym0202_case1_01)
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()

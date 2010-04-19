@@ -41,7 +41,7 @@ EVENT_START    ev_pos_d08r0401_rivel_01
 	//カメラが、ライバルまで移動する
 	_CAMERA_START()		//カメラ操作開始
     _CAMERA_PURGE()		//対象物とカメラのバインドを解く
-	_CAMERA_MOVE(9688,0,970752,303104,114688,872448,72)
+	_CAMERA_MOVE(9688,0,970752,303104,114688,872448,56)
     _CAMERA_WAIT_MOVE()	//カメラ移動待ち
  	
  
@@ -54,7 +54,7 @@ EVENT_START    ev_pos_d08r0401_rivel_01
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_rivel_saru_01)
 	
 	//カメラが戻る
-   	_CAMERA_RECV_MOVE( 88 )
+   	_CAMERA_RECV_MOVE( 72 )
     _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド
 	_CAMERA_END()		//カメラ操作終了

@@ -91,6 +91,10 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		_TIME_WAIT(4)
 		_OBJ_ANIME( D08_SUPPORT_01,anm_common_turn_d)
 		_OBJ_ANIME_WAIT()
+		_TIME_WAIT(8)
+		
+		//チャンピオンの音楽をかける
+		_START_EVENT_BGM(SEQ_BGM_E_CHAMPION)
 		
 		//チャンピオンがやってくる
 		_OBJ_ANIME( D08_CHAMPION_01,anm_champion_kuru_01)
@@ -156,7 +160,13 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		_OBJ_ANIME(D08_RIVEL_01,anm_common_turn_u)
 		_TIME_WAIT(4)
 		_OBJ_ANIME(D08_SUPPORT_01,anm_common_turn_u)
-		_OBJ_ANIME_WAIT()	
+		
+		//階段ＳＥ
+		_OBJ_ANIME_WAIT()
+		_OBJ_DEL( D08_HAKASE1_01 )		
+		_OBJ_DEL( D08_LEADER7_01 )
+		_SE_PLAY(SEQ_SE_KAIDAN)
+		_SE_WAIT()	
 
 		//ライバルが喋る
 		//ライバル：すこしわかった
@@ -191,21 +201,22 @@ EVENT_START	ev_reserve_d08_hakase1_01
 		_TIME_WAIT(8)
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)
 		_OBJ_ANIME_WAIT()
-	
+		
 		//サポートが喋る
 		//サポート：たいへんな　ことに　なっちゃったね
 		_BALLOONWIN_OBJMSG_POS(msg_d08_white_07, D08_SUPPORT_01,POS_UL)
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
+
+		//BGM終了
+		_END_EVENT_BGM()
 		
 	//============フラグワーク操作=============//
 	
 	//ライバル、ジムリーダー7、チャンピオン、博士（父）を消す
 	_OBJ_DEL( D08_RIVEL_01 )
-	_OBJ_DEL( D08_LEADER7_01 )
 	_OBJ_DEL( D08_CHAMPION_01 )
-	_OBJ_DEL( D08_HAKASE1_01 )
-	
+
 	//ライバル、ジムリーダー7、チャンピオン、博士（父）のフラグを落とす
 	_FLAG_SET(FV_D08_HAKASE1_01)
 	_FLAG_SET(FV_D08_RIVAL_01)
@@ -290,7 +301,7 @@ _ANIME_LABEL	anm_turn_s2
 _ANIME_LABEL	anm_hakase1_saru_01
 
 	_ANIME_DATA AC_WALK_L_8F,1
-	_ANIME_DATA AC_WALK_U_8F,6
+	_ANIME_DATA AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -298,7 +309,7 @@ _ANIME_LABEL	anm_hakase1_saru_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader7_saru_01
 
-	_ANIME_DATA AC_WALK_U_8F,9
+	_ANIME_DATA AC_WALK_U_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------

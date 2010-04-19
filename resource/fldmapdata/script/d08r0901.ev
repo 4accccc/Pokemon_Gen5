@@ -232,6 +232,9 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_OBJ_ANIME(D08R0901_BOSS_01,anm_common_turn_down)
 	_OBJ_ANIME_WAIT()
 	
+	//パッケージポケモンを、飛行の初期値（画面右）に移動
+	_OBJ_POS_CHANGE(MMDL_ID_EVENTOBJ_00,28,3,9,DIR_RIGHT)
+	
 	//Nが喋る
 	//ぼくたちを　とめられるのは
 	IF $LCWK_VERSION == VERSION_WHITE THEN
@@ -248,8 +251,6 @@ EVENT_START    ev_pos_d08R0901_boss_01
 		_PLAINWIN_MSG_DOWN(msg_d08r0901_boss_04b)
 	ENDIF
 	_MSGWIN_CLOSE()
-
-	_OBJ_POS_CHANGE(MMDL_ID_EVENTOBJ_00,28,3,9,DIR_RIGHT)
 	
 	//Nとパッケージポケモンの動きを合わせるためのウェイト
 	_TIME_WAIT(20)
