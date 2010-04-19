@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-13T14:34:27" source="map_outsea.mb"/>
+	<create user="fuchino" host="W00152" date="2010-04-19T14:59:28" source="map_outsea.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="nakatsui" host="DB5YGPBX" date="2010-04-13T14:34:27" source="map_outsea.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-04-19T14:59:28" source="map_outsea.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -18,10 +18,10 @@
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
-	tool_start_frame="0"
+	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="none" node_size="1 1"
-	compress_material="off" material_size="2 2"
+	compress_node="merge" node_size="1 1"
+	compress_material="on" material_size="2 2"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -65,13 +65,13 @@
 </tex_palette_array>
 
 <material_array size="2">
-	<material index="0" name="sea_mizu1_lm1"
+	<material index="0" name="sea_mizu1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="16"
+		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="3"
+		polygon_id="0"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -89,13 +89,13 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="1" name="sea_mizu1_lm2"
+	<material index="1" name="sea_mizu1_1"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
-		alpha="31"
+		alpha="16"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="3"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -123,9 +123,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 0.000000 -4.000000"
-		volume_max="4.000000 0.000000 4.000000"
-		volume_r="5.656738"
+		volume_min="-4.000000 -0.625000 -4.000000"
+		volume_max="4.000000 -0.625000 4.000000"
+		volume_r="5.691162"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -136,13 +136,13 @@
 					<mtx idx="0"/>
 					<tex st="128.000000 -96.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-4.000000 0.000000 4.000000"/>
+					<pos_s xyz="-4.000000 -0.625000 4.000000"/>
 					<tex st="-128.000000 -96.000000"/>
-					<pos_xy xy="4.000000 0.000000"/>
+					<pos_xy xy="4.000000 -0.625000"/>
 					<tex st="-128.000000 160.000000"/>
 					<pos_xz xz="4.000000 -4.000000"/>
 					<tex st="128.000000 160.000000"/>
-					<pos_xy xy="-4.000000 0.000000"/>
+					<pos_xy xy="-4.000000 -0.625000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -150,9 +150,9 @@
 	<polygon index="1" name="polygon1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 0.203125 -4.000000"
-		volume_max="4.000000 0.203125 4.000000"
-		volume_r="5.660400"
+		volume_min="-4.000000 -0.421875 -4.000000"
+		volume_max="4.000000 -0.421875 4.000000"
+		volume_r="5.672607"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -163,13 +163,13 @@
 					<mtx idx="0"/>
 					<tex st="128.000000 -96.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="4.000000 0.203125 -4.000000"/>
+					<pos_s xyz="4.000000 -0.421875 -4.000000"/>
 					<tex st="-128.000000 -96.000000"/>
-					<pos_xy xy="-4.000000 0.203125"/>
+					<pos_xy xy="-4.000000 -0.421875"/>
 					<tex st="-128.000000 160.000000"/>
 					<pos_xz xz="-4.000000 4.000000"/>
 					<tex st="128.000000 160.000000"/>
-					<pos_xy xy="4.000000 0.203125"/>
+					<pos_xy xy="4.000000 -0.421875"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -177,7 +177,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="a" kind="mesh"
+	<node index="0" name="polySurface1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -186,17 +186,17 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 -40.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="2"
 		vertex_size="8" polygon_size="2"
 		triangle_size="0" quad_size="2"
-		volume_min="-4.000000 0.000000 -4.000000"
-		volume_max="4.000000 0.203125 4.000000"
-		volume_r="5.660400"
+		volume_min="-4.000000 -0.625000 -4.000000"
+		volume_max="4.000000 -0.421875 4.000000"
+		volume_r="5.691162"
 	>
-		<display index="0" material="0" polygon="1" priority="0"/>
-		<display index="1" material="1" polygon="0" priority="0"/>
+		<display index="0" material="0" polygon="0" priority="0"/>
+		<display index="1" material="1" polygon="1" priority="0"/>
 	</node>
 </node_array>
 

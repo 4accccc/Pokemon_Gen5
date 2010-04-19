@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-04-08T20:55:45" source="champion_00_01.mb"/>
+	<create user="fuchino" host="W00152" date="2010-04-16T16:29:53" source="champion_00_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2010-04-08T20:55:45" source="champion_00_01.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-04-16T16:29:53" source="champion_00_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -2077,7 +2077,7 @@
 					<tex st="-112.000000 0.000000"/>
 					<pos_xz xz="-2.073486 1.056152"/>
 					<tex st="-112.000000 16.000000"/>
-					<pos_xz xz="-1.710449 0.395264"/>
+					<pos_xz xz="-1.698242 0.366455"/>
 					<tex st="-16.000000 16.000000"/>
 					<pos_xz xz="-1.951172 0.836182"/>
 					<tex st="0.000000 0.000000"/>
@@ -2087,7 +2087,7 @@
 					<tex st="-80.000000 16.000000"/>
 					<pos_xz xz="-1.231201 1.139648"/>
 					<tex st="16.000000 16.000000"/>
-					<pos_xz xz="-1.037109 0.678711"/>
+					<pos_xz xz="-1.025146 0.649902"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xz xz="-1.119141 0.712158"/>
 					<tex st="-96.000000 0.000000"/>
@@ -2097,9 +2097,9 @@
 					<tex st="-96.000000 0.000000"/>
 					<pos_xz xz="-1.119141 0.712158"/>
 					<tex st="-112.000000 16.000000"/>
-					<pos_xz xz="-1.037109 0.678711"/>
+					<pos_xz xz="-1.025146 0.649902"/>
 					<tex st="16.000000 16.000000"/>
-					<pos_xz xz="-1.710449 0.395264"/>
+					<pos_xz xz="-1.698242 0.366455"/>
 					<tex st="-48.000000 16.000000"/>
 					<pos_xyz xyz="-0.495605 0.632813 0.019287"/>
 					<tex st="16.000000 16.000000"/>
@@ -3084,7 +3084,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface4" kind="mesh"
+	<node index="0" name="polySurface5" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
