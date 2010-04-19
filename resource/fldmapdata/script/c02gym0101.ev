@@ -168,7 +168,6 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 
 	//博物館案内イベント
 
-
 		DEFINE_LOCAL  POSX   /* ローカル変数定義 */
 		DEFINE_LOCAL  POSZ    /* {}で囲う場合は連続して書かなければならない */
 
@@ -180,14 +179,10 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		_MSGWIN_CLOSE()
 		
 		//副館長：発言を終えるまで、溜める（ホレボレしている）
-		_TIME_WAIT  (8) 
+//		_TIME_WAIT  (8) 
 
 		//副館長：主人公を向く
 		_OBJ_ANIME( C02GYM0101_AD_01,anm_common_turn_d)
-		_OBJ_ANIME_WAIT()
-		
-		//副館長：発言までに、ウェイトを持たせる
-		_TIME_WAIT  ( 32 ) 
 		_OBJ_ANIME_WAIT()
 		
 		//どうも　わたくし　副館長の　？？？　です　せっかく　いたしたのです～
@@ -214,8 +209,8 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		ENDSWITCH
 		
 		//副館長：主人公が動くまで、ウェイトを持たせる
-		_TIME_WAIT  ( 32 ) 
-		_OBJ_ANIME_WAIT()
+//		_TIME_WAIT  ( 32 ) 
+//		_OBJ_ANIME_WAIT()
 		
 		//副館長：展示物の方を向く
 		_OBJ_ANIME( C02GYM0101_AD_01,anm_common_turn_u)
@@ -261,8 +256,6 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		
 		//副館長：隕石の説明
 		//この　石は　すごいですよ
-//		_BALLOONWIN_OBJMSG( msg_c02gym0101_ad_04, C02GYM0101_AD_01 )
-//		_PLAINWIN_MSG_UP( msg_c02gym0101_ad_04)
 		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_04, C02GYM0101_AD_01,POS_UR )
 		_MSGWIN_CLOSE()
 		
@@ -275,8 +268,6 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		
 		//副館長：石の説明
 		//ああ　こちらは　ただの　ふるいいし　です
-//		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_05, C02GYM0101_AD_01,POS_DEFAULT )
-//		_PLAINWIN_MSG_UP( msg_c02gym0101_ad_05)
 		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_05, C02GYM0101_AD_01,POS_UR )
 		_MSGWIN_CLOSE()
 		
@@ -299,7 +290,7 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_06, C02GYM0101_AD_01,POS_UR )
 		_BALLOONWIN_CLOSE()
 		
-		_TIME_WAIT(8)	
+//		_TIME_WAIT(8)	
 		_OBJ_ANIME( C02GYM0101_AD_01,anm_common_turn_d)
 		_OBJ_ANIME_WAIT()
 		
@@ -536,21 +527,19 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	ENDIF
 	_OBJ_ANIME_WAIT()
 	
-	_TIME_WAIT(8)
+//	_TIME_WAIT(8)
 	_CAMERA_START()		//カメラ操作開始
     _CAMERA_PURGE()		//対象物とカメラのバインドを解く
-	_CAMERA_MOVE(9694,0,970795,819200,0,819200,8)
+	_CAMERA_MOVE(9694,0,970795,819200,0,819200,16)
     _CAMERA_WAIT_MOVE()	//カメラ移動待ち
     _CAMERA_END()		//カメラ操作終了
 
-	_TIME_WAIT(8)
+//	_TIME_WAIT(8)
 	//ハカイ団がしゃべる
-//	_OBJ_ANIME( C02GYM0101_HAKAIM_01, anm_common_turn_u )
-//	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_hakaim1_01 , C02GYM0101_HAKAIM_01, POS_UL ) 
 	_MSGWIN_CLOSE()
 
-	_TIME_WAIT(8)
+//	_TIME_WAIT(8)
 	//盗まれる化石を中心としたカメラに移動する
 	_CAMERA_START()		//カメラ操作開始
     _CAMERA_PURGE()		//対象物とカメラのバインドを解く
@@ -558,16 +547,13 @@ EVENT_START		ev_pos_c02gym0101_leader_01
     _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//間を作るためのウェイト
-	_TIME_WAIT(16)
-	
-	//ハカイ団がしゃべる
-//	_OBJ_ANIME( C02GYM0101_HAKAIM_02, anm_common_turn_u )
-//	_OBJ_ANIME_WAIT()
+//	_TIME_WAIT(16)
 	_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_hakaim2_01 , C02GYM0101_HAKAIM_02, POS_DR ) 
 	_MSGWIN_CLOSE()
 	
 	//ハカイ団がしゃべる
 	_OBJ_ANIME( C02GYM0101_HAKAIM_01, anm_common_turn_d )
+	//振り向きに差を出す為のウェイト
 	_TIME_WAIT(2)
 	_OBJ_ANIME( C02GYM0101_HAKAIM_02, anm_common_turn_d )
 	_OBJ_ANIME_WAIT()	
@@ -588,6 +574,7 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	_SUBWIN_CLOSE( 2 )
 	
 	//煙幕を巻くようなアニメ
+	//それぞれの動きに差を出すためのウェイト
 	_OBJ_ANIME(C02GYM0101_HAKAIM_03, anm_common_turn_d)
 	_TIME_WAIT(4)
 	_OBJ_ANIME(C02GYM0101_HAKAIM_05, anm_common_turn_d )
@@ -598,8 +585,7 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	_OBJ_ANIME_WAIT()
 
 	//間を作るためのウェイト	
-	_TIME_WAIT(8)
-	
+//	_TIME_WAIT(8)
     //[100224斉藤マ修正 けむり演出を組み込みました]
     //ホワイトアウト中にＯＢＪを消す---------------------
 	_WHITE_OUT()
@@ -615,9 +601,6 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	
 	_FLAG_SET( FV_MUSEUM_TOUNAN )  //博物館内の骨がなくなる
 	_OBJ_DEL( C02GYM0101_BONE_01 )
-	
-//	_FLAG_SET( FV_MUSEUM_STONE )	//博物館内の石がなくなる
-//	_OBJ_DEL( C02GYM0101_BLACKSTONE_01 )
 	
 	//煙のSEを鳴らす
 	_SE_PLAY( SEQ_SE_FLD_143 )
@@ -636,12 +619,9 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	//けむりが晴れるの待ち
 	_BMODEL_ANIME_WAIT( BM_ANIME_ID1 )
 	_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
-	
-	//間をおくためのウェイト
-	//骨が消えて、びっくりする
-//	_TIME_WAIT(32)
-	
-	_TIME_WAIT  ( 40 )
+
+	//骨が無くなったのを、プレイヤーが確認する為のウェイト
+	_TIME_WAIT  ( 32 )
    	_CAMERA_RECV_MOVE( 40 )
     _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
