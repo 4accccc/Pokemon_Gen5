@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T15:33:22"/>
+	<create user="matsumiya" host="W00224" date="2010-04-19T19:59:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c03p15_leader3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_leader3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・c03p15にマップ切り替えするとイベント発動
 ・メッセージ表示後、主人公
@@ -304,7 +304,7 @@
 		<language name="JPN_KANJI" width="256">アーティ『こっち　こっち！▼</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_leader3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・続けてwhite_01</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -315,7 +315,7 @@
 このコの　ポケモンを　奪ったって▼</language>
 	</row>
 
-	<row id="msg_c03p15_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>♀
 ・続けてleader8w_01
 ・0＝主人公名前
@@ -330,7 +330,7 @@
 プラズマ団に　とられちゃったあ</language>
 	</row>
 
-	<row id="msg_c03p15_leader8w_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_leader8w_01" back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♀
 ・続けてleader3_03</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -347,7 +347,7 @@
 ひとばかりで　みうしなっちゃったの▼</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_leader3_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・続けてleader8w_02</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -358,7 +358,7 @@
 きみは　できることを　したんだから▼</language>
 	</row>
 
-	<row id="msg_c03p15_leader8w_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_leader8w_02" back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♀
 ・続けてwhite_02</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -379,7 +379,7 @@
 ささえあうのが　いちばん　だもん！▼</language>
 	</row>
 
-	<row id="msg_c03p15_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>♀
 ・続けてleader3_04</comment>
 		<attribute name="キャラ指定">友達♀
@@ -388,7 +388,7 @@
 		<language name="JPN_KANJI" width="256">ベル『……アイリスちゃん▼</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_leader3_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・続けてウインドウを閉じずに
 　leader3_05か
@@ -401,7 +401,7 @@
 ボクたちが　ポケモンを　とりかえす▼</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_leader3_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・主人公性別：♂
 ・続けてleader3_07</comment>
@@ -411,7 +411,7 @@
 		<language name="JPN_KANJI" width="256">ね　[1:00:トレーナー名:0]くん▼</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_leader3_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・主人公性別：♀
 ・続けてleader3_07</comment>
@@ -421,7 +421,7 @@
 		<language name="JPN_KANJI" width="256">ね　[1:00:トレーナー名:0]くん▼</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_leader3_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・メッセージ表示後
 　下記のプラズマ団♀が出現する
@@ -436,7 +436,7 @@
 まさに　雲をつかむ　話▼</language>
 	</row>
 
-	<row id="msg_c03p15_hakaiw_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#ffffff,,,#ffffff,,#80ffff,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_hakaiw_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#ffffff,,,#ffffff,,#80ffff,#ffffff,,,#ffffff,,">
 		<comment>♀
 ・数歩移動し！マーク表示後に
 　メッセージ表示
@@ -455,7 +455,7 @@
 って　逃げなきゃだわ……！！▼</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_leader3_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・主人公性別：♂
 ・メッセージ表示後、アーティも
@@ -473,7 +473,7 @@
 きみは　そのコの　そばにいて▼</language>
 	</row>
 
-	<row id="msg_c03p15_leader3_09" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_leader3_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#ffffff,,,#ffffff,,#80ff80,#ffffff,,,#ffffff,,">
 		<comment>♂
 ・主人公性別：♂
 ・メッセージ表示後、アーティも
@@ -491,7 +491,7 @@
 きみは　そのコの　そばにいて▼</language>
 	</row>
 
-	<row id="msg_c03p15_leader8w_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_leader8w_03" back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♀
 ・主人公性別：♂
 ・c03p07でプラズマ団に勝利するまで繰り返し</comment>
@@ -507,7 +507,7 @@
 わるいやつを　おいかけて！</language>
 	</row>
 
-	<row id="msg_c03p15_leader8w_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_leader8w_04" back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
 		<comment>♀
 ・主人公性別：♀
 ・c03p07でプラズマ団に勝利するまで繰り返し</comment>
@@ -523,7 +523,7 @@
 わるいやつを　おいかけて！</language>
 	</row>
 
-	<row id="msg_c03p15_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
+	<row id="msg_c03p15_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>♀
 ・c03p07でプラズマ団に勝利するまで繰り返し</comment>
 		<attribute name="キャラ指定">友達♀

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T15:28:34"/>
+	<create user="matsumiya" host="W00224" date="2010-04-19T19:57:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -338,14 +338,14 @@
 チャンピオンを　たおすよ▼
 そうすれば　だれもが
 ぼくを　つよい　トレーナーとして▽
-みとめてくれるだろう……▼</language>
+みとめてくれる……▼</language>
 		<language name="JPN_KANJI" width="256">このまま　イッシュ地方の
 ジムリーダー　全員に　勝利し▼
 そして　ポケモンリーグに　向かい
 チャンピオンを　倒すよ▼
 そうすれば　だれもが
 ぼくを　強い　トレーナーとして▽
-認めて　くれるだろう……▼</language>
+認めてくれる……▼</language>
 	</row>
 
 	<row id="msg_c03p07_leader3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -481,7 +481,7 @@
 あっちの　強いそうな　ヤツにむかえ▼</language>
 	</row>
 
-	<row id="msg_c03p07_hakaim2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p07_hakaim2_01" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・hakaim_02でいいえ選択後にはなしかけ</comment>
 		<attribute name="キャラ指定">プラズマ団♂</attribute>
@@ -491,7 +491,7 @@
 ポケモンの　気持ちを　考えろ！</language>
 	</row>
 
-	<row id="msg_c03p07_hakaiw_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p07_hakaiw_01" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・hakaim_02でいいえ選択後にはなしかけ</comment>
 		<attribute name="キャラ指定">プラズマ団♀</attribute>
@@ -649,7 +649,7 @@ TVトランシーバー</attribute>
 確認しておかないとね</language>
 	</row>
 
-	<row id="msg_c03p07_businessman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c03p07_businessman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -666,7 +666,7 @@ TVトランシーバー</attribute>
 だれにでも　できることだよね</language>
 	</row>
 
-	<row id="msg_c03p07_businessman2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c03p07_businessman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
@@ -677,7 +677,7 @@ TVトランシーバー</attribute>
 モンスターボールが　入ってます！</language>
 	</row>
 
-	<row id="msg_c03p07_ol_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c03p07_ol_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">OL
