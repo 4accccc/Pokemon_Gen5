@@ -740,8 +740,15 @@ static void _modeSuccessMessage(IRC_BATTLE_MATCH* pWork)
   }
   PMSND_PlaySystemSE(SEQ_SE_FLD_124);
   _friendNumWindowCreate(IRCBTL_STR_35, pWork);
-  _CHANGE_STATE(pWork,_modeSuccessMessageKeyWait);
-  
+
+  if(GFL_NET_IsParentMachine()){
+    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL)){
+      _CHANGE_STATE(pWork,_modeSuccessMessageKeyWait);
+    }
+  }
+  else{
+    _CHANGE_STATE(pWork,_modeSuccessMessageKeyWait);
+  }
 }
 
 static int _searchPokeParty(IRC_BATTLE_MATCH* pWork)
