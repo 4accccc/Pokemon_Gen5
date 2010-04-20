@@ -35,6 +35,7 @@ typedef struct LEG_GMK_WK_tag
   BOOL OneLoop;   //ƒAƒjƒ‚ª‚P‡‚µ‚½‚©
   u32 Fade;
   int Count;
+  BOOL Se0;
   BOOL Se1;
   BOOL Se2;
 }LEG_GMK_WK;
@@ -300,7 +301,11 @@ static GMEVENT_RESULT StoneEvt( GMEVENT* event, int* seq, void* work )
   }
   NOZOMU_Printf( "frm = %x::%d  last= %x::%d\n",frm, frm/FX32_ONE, last_frm, last_frm/FX32_ONE );
 
-  if ( (frm >= LEG_SE1_FRM)&&(!gmk_wk->Se1) ){
+  if ( (frm >= LEG_SE0_FRM)&&(!gmk_wk->Se0) ){
+    //PMSND_PlaySE( LEG_GMK_ENERGY );
+    gmk_wk->Se0 = TRUE;
+  }
+  else if ( (frm >= LEG_SE1_FRM)&&(!gmk_wk->Se1) ){
     PMSND_PlaySE( LEG_GMK_ENERGY );
     gmk_wk->Se1 = TRUE;
   }
