@@ -18,6 +18,8 @@
 #include "field/intrude_comm.h"
 #include "field_comm/intrude_work.h"
 #include "field_comm/intrude_main.h"
+#include "savedata/situation.h"
+#include "savedata/save_control.h"
 
 #include "buflen.h"
 #include "field_oam_pal.h"  // for FLDOAM_PALNO_PLACENAME
@@ -33,7 +35,7 @@
 //===================================================================================
 // ■ 定数・マクロ
 //=================================================================================== 
-//#define DEBUG_PRINT_ON // デバッグ出力スイッチ
+#define DEBUG_PRINT_ON // デバッグ出力スイッチ
 #define DEBUG_PRINT_TARGET (3) // デバッグ出力先
 
 #define MAX_STATE_COUNT ( 0xffff ) // 状態カウンタ最大値
@@ -279,6 +281,8 @@ static u8 GetStateSeq( const FIELD_PLACE_NAME* system ); // 状態内シーケンスを取
 static void ResetStateSeq( FIELD_PLACE_NAME* system ); // 状態内シーケンスをリセットする
 static void IncStateSeq( FIELD_PLACE_NAME* system ); // 状態内シーケンスをインクリメントする
 // 地名
+static void LoadLastZoneID( FIELD_PLACE_NAME* system ); // 最後に表示したゾーンIDを読み込む
+static void SaveLastZoneID( const FIELD_PLACE_NAME* system ); // 最後に表示したゾーンIDを記録する
 static u16 GetLastZoneID( const FIELD_PLACE_NAME* system ); // 最後に表示したゾーンIDを取得する
 static void SetLastZoneID( FIELD_PLACE_NAME* system, u16 zoneID ); // 最後に表示したゾーンIDを設定する
 static u16 GetDispZoneID( const FIELD_PLACE_NAME* system ); // 次に表示するゾーンIDを取得する
@@ -322,6 +326,7 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heap
 
 	system = CreatePNSystem( heapID );
   InitPNSystem( system, gameSystem );
+  LoadLastZoneID( system ); // 最後に表示した場所を取得
   OpenDataHandle( system );
   CreateWordset( system );
   CreateMessageData( system );
@@ -340,6 +345,7 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heap
 
 	ChangeState( system, SYSTEM_STATE_HIDE );
 
+
 	return system;
 }
 
@@ -352,6 +358,8 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heap
 //------------------------------------------------------------------------------------
 void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
 {
+  SaveLastZoneID( system ); // 最後に表示した場所を記憶
+
   UnloadBGPaletteData( system ); 
   DeleteLetters( system ); 
   DeletePlaceNameBuffer( system ); 
@@ -365,6 +373,7 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
   CloseDataHandle( system );
 
 	GFL_BG_FreeBGControl( BG_FRAME ); 
+
 
   DeletePNSystem( system );
 } 
@@ -1367,13 +1376,13 @@ static void Process_HIDE( FIELD_PLACE_NAME* system )
     // 地名が変化
     if( CheckPlaceNameIDChange(system) ) {
       start = TRUE;
-      SetLastZoneID( system, GetDispZoneID(system) );
     }
     ResetDispFlag( system );
   }
 
   // 表示開始
   if( start ) {
+    SetLastZoneID( system, GetDispZoneID(system) );
     ChangeState( system, SYSTEM_STATE_SETUP );
   }
 }
@@ -2145,6 +2154,54 @@ static void ResetStateSeq( FIELD_PLACE_NAME* system )
 static void IncStateSeq( FIELD_PLACE_NAME* system )
 {
   system->stateSeq++;
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 最後に表示したゾーンIDを読み込む
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void LoadLastZoneID( FIELD_PLACE_NAME* system )
+{
+  GAMEDATA* gameData;
+  SAVE_CONTROL_WORK* save;
+  SITUATION* situation;
+
+  gameData  = GAMESYSTEM_GetGameData( system->gameSystem );
+  save      = GAMEDATA_GetSaveControlWork( gameData );
+  situation = SaveData_GetSituation( save );
+  system->lastZoneID = Situation_GetPlaceNameLastDispID( situation );
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, 
+      "FIELD-PLACE-NAME: LoadLastZoneID (%d)\n", system->lastZoneID );
+#endif
+}
+
+//-----------------------------------------------------------------------------------
+/**
+ * @brief 最後に表示したゾーンIDを記録する
+ *
+ * @param system
+ */
+//-----------------------------------------------------------------------------------
+static void SaveLastZoneID( const FIELD_PLACE_NAME* system )
+{
+  GAMEDATA* gameData;
+  SAVE_CONTROL_WORK* save;
+  SITUATION* situation;
+
+  gameData  = GAMESYSTEM_GetGameData( system->gameSystem );
+  save      = GAMEDATA_GetSaveControlWork( gameData );
+  situation = SaveData_GetSituation( save );
+  Situation_SetPlaceNameLastDispID( situation, system->lastZoneID );
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( DEBUG_PRINT_TARGET, 
+      "FIELD-PLACE-NAME: SaveLastZoneID (%d)\n", system->lastZoneID );
+#endif
 }
 
 //-----------------------------------------------------------------------------------
