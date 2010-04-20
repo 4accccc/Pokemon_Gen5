@@ -225,6 +225,7 @@ static const BOOL MB_CAP_BALL_CheckHitObj_ShotFinish( MB_CAPTURE_WORK *capWork ,
           else
           if( pokeState == MCPS_HIDE && isHitPoke == TRUE )
           {
+            MB_CAP_POKE_ResetHideTime( capWork , pokeWork );
             PMSND_PlaySE( MB_SND_BALL_HIT_WOOD );
             isHitAnyPoke = TRUE;
             isBlockAnyPoke = TRUE;

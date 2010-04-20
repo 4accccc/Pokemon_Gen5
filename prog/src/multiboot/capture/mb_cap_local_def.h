@@ -121,34 +121,51 @@ extern u16 MB_CAP_TARGET_RAND_DOWN;
 #define MB_CAP_YELLOW_TIME (60*60)
 #define MB_CAP_RED_TIME    (20*60)
 
-#define MB_CAP_BONUSTIME    (8*60)
+#define MB_CAP_BONUSTIME      (8*60)
+#define MB_CAP_BONUSTIME_MISS (2*60)  //誰も居なかった時
 
 
 //------------------------------------------------------
 //ポケモン関係
 //------------------------------------------------------
+#define MB_CAP_POKE_ACT_RATE (20) //基本速度を20として速度微調整用(Run時のみ)
 //====================================
 #if MB_CAP_DEB  
 
 extern int MB_CAP_POKE_HIDE_LOOK_TIME;
 extern int MB_CAP_POKE_HIDE_HIDE_TIME;
+extern int MB_CAP_POKE_HIDE_LOOK_TIME_H;
+extern int MB_CAP_POKE_HIDE_HIDE_TIME_H;
 extern int MB_CAP_POKE_RUN_LOOK_TIME;
 extern int MB_CAP_POKE_RUN_HIDE_TIME;
 extern int MB_CAP_POKE_DOWN_TIME;
-
+extern u16 MB_CAP_POKE_RATE1;
+extern u16 MB_CAP_POKE_RATE2;
+extern u16 MB_CAP_POKE_RATE3;
+extern u16 MB_CAP_POKE_RATE4;
+extern u16 MB_CAP_POKE_RATE5;
+extern u16 MB_CAP_POKE_RATE6;
 #else //MB_CAP_DEB
 
 #define MB_CAP_POKE_HIDE_LOOK_TIME (60*2)
 #define MB_CAP_POKE_HIDE_HIDE_TIME (60)
+#define MB_CAP_POKE_HIDE_LOOK_TIME_H (60)
+#define MB_CAP_POKE_HIDE_HIDE_TIME_H (60*2)
 #define MB_CAP_POKE_RUN_LOOK_TIME (80)
 #define MB_CAP_POKE_RUN_HIDE_TIME (40)
 #define MB_CAP_POKE_DOWN_TIME (60*3)
-
+#define MB_CAP_POKE_RATE1 (33)
+#define MB_CAP_POKE_RATE2 (25)
+#define MB_CAP_POKE_RATE3 (22)
+#define MB_CAP_POKE_RATE4 (21)
+#define MB_CAP_POKE_RATE5 (20)
+#define MB_CAP_POKE_RATE6 (20)
 #endif  //MB_CAP_DEB
 //====================================
 
 #define MB_CAP_POKE_JUMP_HEIGHT (24)
 #define MB_CAP_POKE_HIDE_TOTAL_TIME (MB_CAP_POKE_HIDE_LOOK_TIME*2+MB_CAP_POKE_HIDE_HIDE_TIME*2)
+#define MB_CAP_POKE_HIDE_TOTAL_TIME_H (MB_CAP_POKE_HIDE_LOOK_TIME_H*2+MB_CAP_POKE_HIDE_HIDE_TIME_H*2)
 
 //------------------------------------------------------
 //エフェクト
@@ -273,6 +290,7 @@ extern const u16 MB_CAPTURE_GetScore( MB_CAPTURE_WORK *work );
 extern void MB_CAPTURE_AddScore( MB_CAPTURE_WORK *work , const u16 addScore , const BOOL isAddTime );
 extern void MB_CAPTURE_HitStarFunc( MB_CAPTURE_WORK *work , MB_CAP_OBJ *starWork );
 extern POKEMON_PASO_PARAM* MB_CAPTURE_GetPPP( MB_CAPTURE_WORK *work , const u8 idx );
+extern const u8 MB_CAPTURE_GetLeastPoke( MB_CAPTURE_WORK *work );
 
 extern void MB_CAPTURE_GetPokeFunc( MB_CAPTURE_WORK *work , MB_CAP_BALL *ballWork , const u8 pokeIdx );
 extern MB_CAP_EFFECT* MB_CAPTURE_CreateEffect( MB_CAPTURE_WORK *work , VecFx32 *pos , const MB_CAP_EFFECT_TYPE type );

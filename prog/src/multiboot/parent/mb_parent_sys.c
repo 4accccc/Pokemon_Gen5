@@ -1701,9 +1701,10 @@ static void MB_PARENT_SaveInitPoke( MB_PARENT_WORK *work )
       {
         char name[32];
         STRBUF *nameStr = GFL_STR_CreateBuffer( 32 , work->heapId );
+        u8 nickName = PPP_Get( ppp , ID_PARA_nickname_flag , NULL );
         PPP_Get( ppp , ID_PARA_nickname , nameStr );
         DEB_STR_CONV_StrBufferToSjis( nameStr , name , 32 );
-        MB_TPrintf("[%d][%s]\n",i,name);
+        MB_TPrintf("[%d][%s][%d]\n",i,name,nickName);
         GFL_STR_DeleteBuffer( nameStr );
       }
 #endif

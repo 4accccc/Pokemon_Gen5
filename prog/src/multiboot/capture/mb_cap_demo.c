@@ -522,8 +522,13 @@ const BOOL MC_CAP_DEMO_FinishDemoMain( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *d
     
   case CDF_MSG_WAIT:
     {
-      const u8 cntMax = 120;
+      const u16 cntMax = 240;
       demoWork->cnt++;
+      if( GFL_UI_TP_GetTrg() == TRUE )
+      {
+        demoWork->cnt = cntMax;
+      }
+
       if( demoWork->cnt < cntMax )
       {
         VecFx32 pos = { MB_CAP_MSG_POS_X ,
@@ -601,8 +606,13 @@ const BOOL MC_CAP_DEMO_FinishDemoMain( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *d
 
   case CDF_SCORE_WAIT:
     {
-      const u8 cntMax = 90;
+      const u16 cntMax = 180;
       demoWork->cnt++;
+      if( GFL_UI_TP_GetTrg() == TRUE )
+      {
+        demoWork->cnt = cntMax;
+      }
+
       if( demoWork->cnt < cntMax )
       {
         VecFx32 pos = { MB_CAP_MSG_POS_X ,

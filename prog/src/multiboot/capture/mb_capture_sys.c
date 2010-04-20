@@ -409,6 +409,21 @@ static const BOOL MB_CAPTURE_Main( MB_CAPTURE_WORK *work )
           }
         }
       }
+      {
+        //初期移動ポケ設定
+        BOOL isLoop = TRUE;
+        while( isLoop == TRUE )
+        {
+          const u8 moveTrg1 = GFUser_GetPublicRand0( MB_CAP_POKE_NUM );
+          const u8 moveTrg2 = GFUser_GetPublicRand0( MB_CAP_POKE_NUM );
+          if( moveTrg1 != moveTrg2 )
+          {
+            MB_CAP_POKE_SetRunStart( work , work->pokeWork[moveTrg1] );
+            MB_CAP_POKE_SetRunStart( work , work->pokeWork[moveTrg2] );
+            isLoop = FALSE;
+          }
+        }
+      }
       work->state = MSS_GAME_MAIN;
     }
     break;
@@ -928,6 +943,7 @@ static void MB_CAPTURE_InitPoke( MB_CAPTURE_WORK *work )
   
   for( i=0;i<MB_CAP_POKE_NUM;i++ )
   {
+    MB_TPrintf("Poke[%d][%3d]\n",i,PPP_Get(work->initWork->ppp[i],ID_PARA_monsno,NULL) );
     initWork.ppp = work->initWork->ppp[i];
     work->pokeWork[i] = MB_CAP_POKE_CreateObject( work , &initWork );
   }
@@ -1387,6 +1403,7 @@ static void MB_CAPTURE_UpdateTime( MB_CAPTURE_WORK *work )
 void MB_CAPTURE_HitStarFunc( MB_CAPTURE_WORK *work , MB_CAP_OBJ *starWork )
 {
   u8 i;
+  u8 setNum = 0;
   work->bonusTime = MB_CAP_BONUSTIME;
   MB_CAP_OBJ_SetEnable( work , starWork , FALSE );
   work->isUpdateStar = FALSE;
@@ -1400,12 +1417,14 @@ void MB_CAPTURE_HitStarFunc( MB_CAPTURE_WORK *work , MB_CAP_OBJ *starWork )
         pokeState == MCPS_RUN_HIDE ||
         pokeState == MCPS_RUN_LOOK )
     {
+      setNum++;
       MB_CAP_POKE_SetSleep( work , work->pokeWork[i] );
     }
     else
     if( pokeState == MCPS_DOWN_MOVE ||
         pokeState == MCPS_DOWN_WAIT )
     {
+      setNum++;
       MB_CAP_POKE_SetDownToSleep( work , work->pokeWork[i] );
     }
   }
@@ -1415,7 +1434,13 @@ void MB_CAPTURE_HitStarFunc( MB_CAPTURE_WORK *work , MB_CAP_OBJ *starWork )
     G3X_SetFog( TRUE , GX_FOGBLEND_COLOR_ALPHA , GX_FOGSLOPE_0x8000 , 0 );
     G3X_SetFogTable( fogTable );
   }
-  
+  //誰も居なかった時は短く
+  if( setNum == 0 )
+  {
+    MB_TPrintf("Bonus is not target!!\n");
+    work->bonusTime = MB_CAP_BONUSTIME_MISS;
+  }
+
   {
     BOOL flg = FALSE;
     GFL_BBD_SetObjectDrawEnable( work->bbdSys , work->bbdObjBgMask[0] , &flg );
@@ -1649,6 +1674,23 @@ POKEMON_PASO_PARAM* MB_CAPTURE_GetPPP( MB_CAPTURE_WORK *work , const u8 idx )
   return work->initWork->ppp[idx];
 }
 
+//--------------------------------------------------------------
+//  残り数
+//--------------------------------------------------------------
+const u8 MB_CAPTURE_GetLeastPoke( MB_CAPTURE_WORK *work )
+{
+  u8 i;
+  u8 least = 0;
+  for( i=0;i<MB_CAP_POKE_NUM;i++ )
+  {
+    if( MB_CAP_POKE_GetState( work->pokeWork[i] ) != MCPS_CAPTURE )
+    {
+      least++;
+    }
+  }
+  return least;
+}
+
 #pragma mark [>outer func
 //--------------------------------------------------------------
 //  便利関数
@@ -1710,6 +1752,7 @@ PRINT_QUE* MB_CAPTURE_GetPrintQue( MB_CAPTURE_WORK *work )
 #define MB_CAP_DEBUG_GROUP_BALL (51)
 #define MB_CAP_DEBUG_GROUP_POKE (52)
 #define MB_CAP_DEBUG_GROUP_BGM  (53)
+#define MB_CAP_DEBUG_GROUP_RATE (54)
 
 int MB_CAP_UPPER_BALL_POS_BASE_Y = 256;
 fx32 MB_CAP_BALL_SHOT_SPEED = FX32_CONST(4.8f);
@@ -1720,9 +1763,17 @@ u16 MB_CAP_TARGET_RAND_DOWN = 10;
 
 int MB_CAP_POKE_HIDE_LOOK_TIME = (120);
 int MB_CAP_POKE_HIDE_HIDE_TIME = (60);
+int MB_CAP_POKE_HIDE_LOOK_TIME_H = (60);
+int MB_CAP_POKE_HIDE_HIDE_TIME_H = (120);
 int MB_CAP_POKE_RUN_LOOK_TIME = (80);
 int MB_CAP_POKE_RUN_HIDE_TIME = (40);
 int MB_CAP_POKE_DOWN_TIME = (60*3);
+u16 MB_CAP_POKE_RATE1 = 33;
+u16 MB_CAP_POKE_RATE2 = 25;
+u16 MB_CAP_POKE_RATE3 = 22;
+u16 MB_CAP_POKE_RATE4 = 21;
+u16 MB_CAP_POKE_RATE5 = 20;
+u16 MB_CAP_POKE_RATE6 = 20;
 
 int BgmTemp = 256;
 int BgmPitch = 0;
@@ -1751,6 +1802,10 @@ static void MCD_U_PokeHideTime( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_D_PokeHideTime( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_U_PokeLookTime( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_D_PokeLookTime( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_PokeHideTime_Hard( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_PokeHideTime_Hard( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_PokeLookTime_Hard( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_PokeLookTime_Hard( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_U_PokeRunHideTime( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_D_PokeRunHideTime( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_U_PokeRunLookTime( void* userWork , DEBUGWIN_ITEM* item );
@@ -1761,6 +1816,18 @@ static void MCD_U_BgmTempo( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_D_BgmTempo( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_U_BgmPitch( void* userWork , DEBUGWIN_ITEM* item );
 static void MCD_D_BgmPitch( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_PokeMoveRate1( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_PokeMoveRate1( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_PokeMoveRate2( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_PokeMoveRate2( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_PokeMoveRate3( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_PokeMoveRate3( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_PokeMoveRate4( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_PokeMoveRate4( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_PokeMoveRate5( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_PokeMoveRate5( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_U_PokeMoveRate6( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_PokeMoveRate6( void* userWork , DEBUGWIN_ITEM* item );
 
 static void MB_CAPTURE_InitDebug( MB_CAPTURE_WORK *work )
 {
@@ -1772,6 +1839,7 @@ static void MB_CAPTURE_InitDebug( MB_CAPTURE_WORK *work )
   DEBUGWIN_AddGroupToGroup( MB_CAP_DEBUG_GROUP_BALL , "BALL" , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
   DEBUGWIN_AddGroupToGroup( MB_CAP_DEBUG_GROUP_POKE , "POKE" , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
   DEBUGWIN_AddGroupToGroup( MB_CAP_DEBUG_GROUP_BGM  , "BGM" , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
+  DEBUGWIN_AddGroupToGroup( MB_CAP_DEBUG_GROUP_RATE , "MOVE_RATE" , MB_CAP_DEBUG_GROUP_POKE , work->heapId );
 
   DEBUGWIN_AddItemToGroupEx( MCD_U_GameTime ,MCD_D_GameTime , (void*)work , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MCD_U_GameTimeFreeze ,MCD_D_GameTimeFreeze , (void*)work , MB_CAP_DEBUG_GROUP_TOP , work->heapId );
@@ -1786,12 +1854,21 @@ static void MB_CAPTURE_InitDebug( MB_CAPTURE_WORK *work )
 
   DEBUGWIN_AddItemToGroupEx( MCD_U_PokeHideTime   ,MCD_D_PokeHideTime   , (void*)work , MB_CAP_DEBUG_GROUP_POKE , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MCD_U_PokeLookTime   ,MCD_D_PokeLookTime   , (void*)work , MB_CAP_DEBUG_GROUP_POKE , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_PokeHideTime_Hard   ,MCD_D_PokeHideTime_Hard   , (void*)work , MB_CAP_DEBUG_GROUP_POKE , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_PokeLookTime_Hard   ,MCD_D_PokeLookTime_Hard   , (void*)work , MB_CAP_DEBUG_GROUP_POKE , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MCD_U_PokeRunHideTime   ,MCD_D_PokeRunHideTime   , (void*)work , MB_CAP_DEBUG_GROUP_POKE , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MCD_U_PokeRunLookTime   ,MCD_D_PokeRunLookTime   , (void*)work , MB_CAP_DEBUG_GROUP_POKE , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MCD_U_PokeDownTime   ,MCD_D_PokeDownTime   , (void*)work , MB_CAP_DEBUG_GROUP_POKE , work->heapId );
 
   DEBUGWIN_AddItemToGroupEx( MCD_U_BgmTempo   ,MCD_D_BgmTempo   , (void*)work , MB_CAP_DEBUG_GROUP_BGM , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MCD_U_BgmPitch   ,MCD_D_BgmPitch   , (void*)work , MB_CAP_DEBUG_GROUP_BGM , work->heapId );
+
+  DEBUGWIN_AddItemToGroupEx( MCD_U_PokeMoveRate1   ,MCD_D_PokeMoveRate1   , (void*)work , MB_CAP_DEBUG_GROUP_RATE , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_PokeMoveRate2   ,MCD_D_PokeMoveRate2   , (void*)work , MB_CAP_DEBUG_GROUP_RATE , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_PokeMoveRate3   ,MCD_D_PokeMoveRate3   , (void*)work , MB_CAP_DEBUG_GROUP_RATE , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_PokeMoveRate4   ,MCD_D_PokeMoveRate4   , (void*)work , MB_CAP_DEBUG_GROUP_RATE , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_PokeMoveRate5   ,MCD_D_PokeMoveRate5   , (void*)work , MB_CAP_DEBUG_GROUP_RATE , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_PokeMoveRate6   ,MCD_D_PokeMoveRate6   , (void*)work , MB_CAP_DEBUG_GROUP_RATE , work->heapId );
 }
 
 static void MB_CAPTURE_TermDebug( MB_CAPTURE_WORK *work )
@@ -2065,6 +2142,35 @@ static void MCD_D_PokeLookTime( void* userWork , DEBUGWIN_ITEM* item )
 {
   DEBUGWIN_ITEM_SetNameV( item , "Stay LookTime[%d]",MB_CAP_POKE_HIDE_LOOK_TIME );
 }
+//-----------------------------
+static void MCD_U_PokeHideTime_Hard( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_int( &MB_CAP_POKE_HIDE_HIDE_TIME_H );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_PokeHideTime_Hard( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetNameV( item , "Stay HideTimeH[%d]",MB_CAP_POKE_HIDE_HIDE_TIME_H );
+}
+
+static void MCD_U_PokeLookTime_Hard( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_int( &MB_CAP_POKE_HIDE_LOOK_TIME_H );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_PokeLookTime_Hard( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetNameV( item , "Stay LookTimeH[%d]",MB_CAP_POKE_HIDE_LOOK_TIME_H );
+}
+//-----------------------------
 
 static void MCD_U_PokeRunHideTime( void* userWork , DEBUGWIN_ITEM* item )
 {
@@ -2138,5 +2244,83 @@ static void MCD_D_BgmPitch( void* userWork , DEBUGWIN_ITEM* item )
   DEBUGWIN_ITEM_SetNameV( item , "Pitch[%d]",BgmPitch );
 }
 
+//-----------------------------
+static void MCD_U_PokeMoveRate1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_u16( &MB_CAP_POKE_RATE1 );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void MCD_D_PokeMoveRate1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetNameV( item , "MoveRate1[%d]",MB_CAP_POKE_RATE1 );
+}
+
+static void MCD_U_PokeMoveRate2( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_u16( &MB_CAP_POKE_RATE2 );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void MCD_D_PokeMoveRate2( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetNameV( item , "MoveRate2[%d]",MB_CAP_POKE_RATE2 );
+}
+
+static void MCD_U_PokeMoveRate3( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_u16( &MB_CAP_POKE_RATE3 );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void MCD_D_PokeMoveRate3( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetNameV( item , "MoveRate3[%d]",MB_CAP_POKE_RATE3 );
+}
+
+static void MCD_U_PokeMoveRate4( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_u16( &MB_CAP_POKE_RATE4 );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void MCD_D_PokeMoveRate4( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetNameV( item , "MoveRate4[%d]",MB_CAP_POKE_RATE4 );
+}
+
+static void MCD_U_PokeMoveRate5( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_u16( &MB_CAP_POKE_RATE5 );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void MCD_D_PokeMoveRate5( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetNameV( item , "MoveRate5[%d]",MB_CAP_POKE_RATE5 );
+}
+
+static void MCD_U_PokeMoveRate6( void* userWork , DEBUGWIN_ITEM* item )
+{
+  const BOOL ret = MB_CAPTURE_Debug_UpdateValue_u16( &MB_CAP_POKE_RATE6 );
+  if( ret == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void MCD_D_PokeMoveRate6( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetNameV( item , "MoveRate6[%d]",MB_CAP_POKE_RATE6 );
+}
 
 #endif  //MB_CAP_DEB
