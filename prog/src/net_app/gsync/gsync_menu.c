@@ -746,6 +746,7 @@ static void _hitAnyKey(GAMESYNC_MENU* pWork)
   }
 	if(GFL_UI_TP_GetTrg()){
     _infoMessageEnd(pWork);
+    PMSND_PlaySystemSE(_SE_DESIDE);
 //    APP_TASKMENU_WIN_Delete( pWork->pAppWin );
 //    pWork->pAppWin = NULL;
 		_CHANGE_STATE(pWork, _modeSelectMenuInit); //–ß‚é
@@ -802,6 +803,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
       _CHANGE_STATE(pWork,_modeAppWinFlash);
     }
     else{
+      PMSND_PlaySystemSE(_SE_DESIDE);
       GFL_MSG_GetString( pWork->pMsgWiFiData, dwc_message_0017, pWork->pStrBuf );
       _infoMessageDispHeight(pWork,10, FALSE);
 
