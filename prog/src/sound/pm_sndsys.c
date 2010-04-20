@@ -180,8 +180,9 @@ void  PMSND_Init( void )
   PMSND_InitCore( TRUE );
 
   // サウンド拡張機能初期化（主にマイクサンプリングのノイズフィルターで使用）
+#ifdef SDK_TWL
   SNDEX_Init();
-
+#endif
 }
 
 void  PMSND_InitMultiBoot( void* sndData )
