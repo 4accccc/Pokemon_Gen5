@@ -544,7 +544,8 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
 static int get_item_max( int item )
 {
   // ‹Zƒ}ƒVƒ“‚Í99ŒÂ‚Ü‚Å‚µ‚©Ž‚Ä‚È‚¢
-  if(item>=ITEM_WAZAMASIN01 && item < ITEM_HIDENMASIN01){
+//  if(item>=ITEM_WAZAMASIN01 && item < ITEM_HIDENMASIN01){
+	if( ITEM_CheckWazaMachine( item ) == TRUE ){
     return 99;
   }
   

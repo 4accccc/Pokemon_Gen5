@@ -561,7 +561,7 @@ BOOL ITEM_CheckHidenWaza( u16 waza )
 u8 ITEM_GetWazaMashineNo( u16 item )
 {
   if( ITEM_CheckWazaMachine( item ) == FALSE ){
-    return 0;
+    return 0xff;
   }
 
   if( item >= ITEM_WAZAMASIN93 ){

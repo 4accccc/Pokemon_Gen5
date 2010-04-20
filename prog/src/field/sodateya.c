@@ -1396,7 +1396,8 @@ static BOOL IsWazaMachineAbleToUse( HEAPID heap_id, u16 monsno, u16 formno, u16 
     return FALSE;
   } 
   // 技マシン以外のアイテムが指定された場合
-  if( (itemno < ITEM_WAZAMASIN01 ) || (ITEM_HIDENMASIN08 < itemno ) )
+//  if( (itemno < ITEM_WAZAMASIN01 ) || (ITEM_HIDENMASIN08 < itemno ) )
+	if( ITEM_CheckWazaMachine( itemno ) == FALSE )
   {
     OBATA_Printf( "IsWazaMachineAbleToUse: 技マシン以外のアイテムが指定されました。\n" );
     return FALSE;

@@ -226,10 +226,13 @@ VMCMD_RESULT EvCmdGetItemType(VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 static u16 WazaMachineItemNoCheck( u16 itemno )
 {
+/*
 	//技マシンかチェック
 	if( (itemno >= ITEM_WAZAMASIN01) && (itemno <= ITEM_HIDENMASIN08) ){
 		return TRUE;
 	}
 	return FALSE;
+*/
+	return ITEM_CheckWazaMachine( itemno );
 }
 
