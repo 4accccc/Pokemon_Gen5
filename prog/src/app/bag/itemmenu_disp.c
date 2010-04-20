@@ -943,12 +943,28 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
     GFL_ARC_CloseDataHandle( p_handle );
   }
 
+	// 技マシンのデフォルト文字列描画
+  // タイプ
+  GFL_MSG_GetString( pWork->MsgManager, mes_bag_107, pWork->pStrBuf );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winWaza), 8, 4, pWork->pStrBuf, pWork->fontHandle );
+  // ぶんるい
+  GFL_MSG_GetString( pWork->MsgManager, mes_bag_098, pWork->pStrBuf );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winWaza), 8, 24, pWork->pStrBuf, pWork->fontHandle );
+  // 威力
+  GFL_MSG_GetString( pWork->MsgManager, mes_bag_096, pWork->pStrBuf );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winWaza), 8*14, 4, pWork->pStrBuf, pWork->fontHandle );
+  // 命中
+  GFL_MSG_GetString( pWork->MsgManager, mes_bag_097, pWork->pStrBuf );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winWaza), 8*14, 24, pWork->pStrBuf, pWork->fontHandle );
+  // PP
+  GFL_MSG_GetString( pWork->MsgManager, mes_bag_095, pWork->pStrBuf );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winWaza), 26*8, 4, pWork->pStrBuf, pWork->fontHandle );
+
   // キー操作時のみ、上画面を更新
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
   {
     ITEMDISP_upMessageRewrite(pWork);
   }
-
 }
 
 //-----------------------------------------------------------------------------
@@ -1790,10 +1806,9 @@ void ITEMDISP_ItemInfoWindowChange(FIELD_ITEMMENU_WORK *pWork,int pocketno )
  * @retval  none
  */
 //------------------------------------------------------------------------------
-
+/*
 static void _wazaKindDisp( FIELD_ITEMMENU_WORK *pWork ,int wazaNo)
 {
-/*
   {
     NNSG2dImageProxy imageProxy;
     const int type = WAZADATA_GetDamageType( wazaNo );
@@ -1804,14 +1819,8 @@ static void _wazaKindDisp( FIELD_ITEMMENU_WORK *pWork ,int wazaNo)
                               CLWK_PLTTOFFS_MODE_PLTT_TOP );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, TRUE );
   }
-*/
-	u32	i;
-
-	for( i=0; i<WAZA_KIND_MAX; i++ ){
-		GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind[i], FALSE );
-	}
-	GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind[WAZADATA_GetDamageType(wazaNo)], TRUE );
 }
+*/
 
 //------------------------------------------------------------------------------
 /**
@@ -1819,9 +1828,9 @@ static void _wazaKindDisp( FIELD_ITEMMENU_WORK *pWork ,int wazaNo)
  * @retval  none
  */
 //------------------------------------------------------------------------------
+/*
 static void _wazaTypeDisp( FIELD_ITEMMENU_WORK *pWork ,int wazaNo)
 {
-/*
   {
     NNSG2dImageProxy imageProxy;
     int type1 = WAZADATA_GetType(wazaNo);
@@ -1832,14 +1841,8 @@ static void _wazaTypeDisp( FIELD_ITEMMENU_WORK *pWork ,int wazaNo)
                               CLWK_PLTTOFFS_MODE_PLTT_TOP );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType , TRUE );
   }
-*/
-	u32	i;
-
-	for( i=0;i<WAZA_TYPE_MAX;i++ ){
-		GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[i], FALSE );
-	}
-	GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[WAZADATA_GetType(wazaNo)], TRUE );
 }
+*/
 
 //------------------------------------------------------------------------------
 /**
@@ -1856,8 +1859,17 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   int ppnum;
   int pow;
   int hit;
+	u32	i;
 
   GFL_BG_LoadScreenV_Req( ITEMWIN_FRAME );
+
+	// アイコンを全て非表示に
+	for( i=0; i<WAZA_KIND_MAX; i++ ){
+		GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind[i], FALSE );
+	}
+	for( i=0; i<WAZA_TYPE_MAX; i++ ){
+		GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[i], FALSE );
+	}
   
   item = ITEMMENU_GetItem( pWork,ITEMMENU_GetItemIndex(pWork) );
   wazano = ITEM_GetWazaNo( item->id );
@@ -1865,45 +1877,30 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   // アイテムがない／ダミー／非わざマシン
   if((item==NULL) || (item->id==ITEM_DUMMY_DATA) || wazano==WAZANO_NULL )
   {
-		u32	i;
     // わざマシン用の表示を非表示にして抜ける
-    GFL_BMPWIN_ClearScreen(pwin);
-
-		for( i=0; i<WAZA_KIND_MAX; i++ ){
-			GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind[i], FALSE );
-		}
-		for( i=0; i<WAZA_TYPE_MAX; i++ ){
-			GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[i], FALSE );
-		}
-
-    return;
+		GFL_BMPWIN_ClearScreen(pwin);
+		return;
   }
   
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0 );
   GFL_BMPWIN_MakeScreen(pwin);
 
   ppnum = WAZADATA_GetMaxPP(wazano, 0);
   pow = WAZADATA_GetParam( wazano, WAZAPARAM_POWER );
   hit = WAZADATA_GetParam( wazano, WAZAPARAM_HITPER );
 
-  _wazaKindDisp(pWork,wazano);
-  _wazaTypeDisp(pWork,wazano);
+//  _wazaKindDisp(pWork,wazano);
+//  _wazaTypeDisp(pWork,wazano);
+	GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind[WAZADATA_GetDamageType(wazano)], TRUE );
+	GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[WAZADATA_GetType(wazano)], TRUE );
 
   // カラー指定
   GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
 
-  //タイプ
-  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_107, pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8, 4, pWork->pStrBuf, pWork->fontHandle);
+	// パラメータ部分だけクリア
+	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(pwin), 22*8, 0, 4*8, 5*8, 0 );
+	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(pwin), 29*8, 0, 3*8, 3*8, 0 );
 
-  //ぶんるい
-  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_098, pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8, 24, pWork->pStrBuf, pWork->fontHandle);
-
-  //威力
-  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_096, pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8*14, 4, pWork->pStrBuf, pWork->fontHandle);
-
+	// 威力
   if(pow==0){
     GFL_MSG_GetString(  pWork->MsgManager, msg_bag_023, pWork->pStrBuf );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 4, pWork->pStrBuf, pWork->fontHandle);
@@ -1915,10 +1912,8 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 4, pWork->pExpStrBuf, pWork->fontHandle);
   }
-  //命中
-  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_097, pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8*14, 24, pWork->pStrBuf, pWork->fontHandle);
 
+	// 命中
   if(hit==0){
     GFL_MSG_GetString(  pWork->MsgManager, msg_bag_023, pWork->pStrBuf );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 24, pWork->pStrBuf, pWork->fontHandle);
@@ -1930,9 +1925,6 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 24, pWork->pExpStrBuf, pWork->fontHandle);
   }
-  //PP
-  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_095, pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 26*8, 4, pWork->pStrBuf, pWork->fontHandle);
 
   //PPの桁数
   GFL_MSG_GetString(  pWork->MsgManager, mes_bag_099, pWork->pStrBuf );
@@ -1942,7 +1934,6 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
 
   // キャラクタ転送
   GFL_BMPWIN_TransVramCharacter(pwin);
-
 }
 
 
