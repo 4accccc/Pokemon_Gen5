@@ -518,14 +518,16 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk )
 	enum{
     _SEQ_INIT,
     _SEQ_REQ_WAIT,
+    _SEQ_FADEOUT,
     _SEQ_CHANGE_MAP,
+    _SEQ_FADEIN,
     _SEQ_FINISH,
   };
   
 	switch( *seq ){
 	case _SEQ_INIT:
   	if(esmw->my_palace == TRUE){
-      *seq = _SEQ_CHANGE_MAP;
+      *seq = _SEQ_FADEOUT;
     }
     else{
   	  GMEVENT_CallEvent(event, 
@@ -542,12 +544,20 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk )
     }
     (*seq)++;
     break;
+  case _SEQ_FADEOUT:
+    GMEVENT_CallEvent( event, EVENT_FieldFadeOut_PlayerDir( gsys, esmw->fieldWork ) );
+    (*seq)++;
+    break;
   case _SEQ_CHANGE_MAP:
     esmw->warp_zone_id = SYMBOLMAP_GetZoneID( gsys, esmw->symbol_map_id );
     GAMEDATA_SetSymbolMapID(gamedata, esmw->symbol_map_id);
     GMEVENT_CallEvent(event, 
-      EVENT_ChangeMapPos(gsys, esmw->fieldWork, esmw->warp_zone_id, 
-      &esmw->warp_pos, esmw->warp_dir, FALSE));
+      EVENT_ChangeMapPosNoFade(
+        gsys, esmw->fieldWork, esmw->warp_zone_id, &esmw->warp_pos, esmw->warp_dir));
+    (*seq)++;
+    break;
+  case _SEQ_FADEIN:
+    GMEVENT_CallEvent( event, EVENT_FieldFadeIn_PlayerDir( gsys, esmw->fieldWork ) );
     (*seq)++;
     break;
   case _SEQ_FINISH:

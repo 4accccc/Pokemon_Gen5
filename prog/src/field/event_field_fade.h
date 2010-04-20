@@ -115,22 +115,22 @@ extern GMEVENT* EVENT_FieldFadeOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fie
         EVENT_FieldFadeOut( gsys, fieldmap, FIELD_FADE_BLACK, wait )
 // ホールアウト
 #define EVENT_FieldFadeOut_Hole( gsys, fieldmap ) \
-        EVENT_FieldFadeOut( gsys, fieldamp, FIELD_FADE_HOLE, 0 )
+        EVENT_FieldFadeOut( gsys, fieldmap, FIELD_FADE_HOLE, 0 )
 // シャッターアウト(↓)
 #define EVENT_FieldFadeOut_ShutterDown( gsys, fieldmap ) \
-        EVENT_FieldFadeOut( gsys, fieldamp, FIELD_FADE_SHUTTER_DOWN, 0 )
+        EVENT_FieldFadeOut( gsys, fieldmap, FIELD_FADE_SHUTTER_DOWN, 0 )
 // シャッターアウト(↑)
 #define EVENT_FieldFadeOut_ShutterUp( gsys, fieldmap ) \
-        EVENT_FieldFadeOut( gsys, fieldamp, FIELD_FADE_SHUTTER_UP, 0 )
+        EVENT_FieldFadeOut( gsys, fieldmap, FIELD_FADE_SHUTTER_UP, 0 )
 // スライドアウト(→)
 #define EVENT_FieldFadeOut_SlideRight( gsys, fieldmap ) \
-        EVENT_FieldFadeOut( gsys, fieldamp, FIELD_FADE_SLIDE_RIGHT, 0 )
+        EVENT_FieldFadeOut( gsys, fieldmap, FIELD_FADE_SLIDE_RIGHT, 0 )
 // スライドアウト(←)
 #define EVENT_FieldFadeOut_SlideLeft( gsys, fieldmap ) \
-        EVENT_FieldFadeOut( gsys, fieldamp, FIELD_FADE_SLIDE_LEFT, 0 )
+        EVENT_FieldFadeOut( gsys, fieldmap, FIELD_FADE_SLIDE_LEFT, 0 )
 // 自機の向きに依存したフェード
 #define EVENT_FieldFadeOut_PlayerDir( gsys, fieldmap ) \
-        EVENT_FieldFadeOut( gsys, fieldamp, FIELD_FADE_PLAYER_DIR, 0 )
+        EVENT_FieldFadeOut( gsys, fieldmap, FIELD_FADE_PLAYER_DIR, 0 )
 
 
 //----------------------------------------------------------------------------------
@@ -170,19 +170,19 @@ extern GMEVENT* EVENT_FieldFadeIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fiel
         EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_BLACK, wait, FALSE, 0, 0 )
 // シャッターイン(↓)
 #define EVENT_FieldFadeIn_ShutterDown( gsys, fieldmap ) \
-        EVENT_FieldFadeIn( gsys, fieldamp, FIELD_FADE_SHUTTER_DOWN, 0 )
+        EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_SHUTTER_DOWN, 0, 0, 0, 0 )
 // シャッターイン(↑)
 #define EVENT_FieldFadeIn_ShutterUp( gsys, fieldmap ) \
-        EVENT_FieldFadeIn( gsys, fieldamp, FIELD_FADE_SHUTTER_UP, 0 )
+        EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_SHUTTER_UP, 0, 0, 0, 0 )
 // スライドイン(→)
 #define EVENT_FieldFadeIn_SlideRight( gsys, fieldmap ) \
-        EVENT_FieldFadeIn( gsys, fieldamp, FIELD_FADE_SLIDE_RIGHT, 0 )
+        EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_SLIDE_RIGHT, 0, 0, 0, 0 )
 // スライドイン(←)
 #define EVENT_FieldFadeIn_SlideLeft( gsys, fieldmap ) \
-        EVENT_FieldFadeIn( gsys, fieldamp, FIELD_FADE_SLIDE_LEFT, 0 )
+        EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_SLIDE_LEFT, 0, 0, 0, 0 )
 // 自機の向きに依存したフェード
 #define EVENT_FieldFadeIn_PlayerDir( gsys, fieldmap ) \
-        EVENT_FieldFadeIn( gsys, fieldamp, FIELD_FADE_PLAYER_DIR, 0 )
+        EVENT_FieldFadeIn( gsys, fieldmap, FIELD_FADE_PLAYER_DIR, 0, 0, 0, 0 )
 
 
 //==================================================================================
