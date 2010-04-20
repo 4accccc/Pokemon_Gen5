@@ -14,6 +14,7 @@
 #include "gamesystem/g_power.h"
 #include "system/palanm.h"
 #include "system/gfl_use.h"
+#include "system/bmp_oam.h"
 #include "savedata/intrude_save.h"
 #include "savedata/misc.h"
 #include "savedata/myitem_savedata.h"
@@ -62,9 +63,10 @@ typedef struct _RES2D_PLTT{
 
 // Bmpウィンドウ
 typedef struct{
-  GFL_BMPWIN *win;
+  GFL_BMPWIN*   win;
   GFL_BMP_DATA* bmp;
-  PRINT_UTIL putil;
+  PRINT_UTIL  putil;
+  u8          frm;
 }BMP_WIN;
 
 // OAMフォントワーク

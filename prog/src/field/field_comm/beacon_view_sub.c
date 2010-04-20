@@ -153,16 +153,6 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
   POINT tp;
   BOOL my_power;
 
-#ifdef PM_DEBUG
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
-    wk->deb_stack_check_throw = 1;
-    OS_Printf("StackCheckThrow = %d\n",wk->deb_stack_check_throw );
-  }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-    wk->deb_stack_check_throw = 0;
-    OS_Printf("StackCheckThrow = %d\n",wk->deb_stack_check_throw );
-  }
-#endif
-
   if( !GFL_UI_TP_GetPointTrg( (u32*)&tp.x, (u32*)&tp.y )){
     return SEQ_MAIN;
   }

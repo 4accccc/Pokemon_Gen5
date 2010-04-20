@@ -32,6 +32,10 @@
 #include "beacon_view_local.h"
 #include "beacon_view_sub.h"
 
+#ifdef PM_DEBUG
+#include "field/event_debug_livecomm.h"
+#endif  //PM_DEBUG
+
 //==============================================================================
 //  定数定義
 //==============================================================================
@@ -51,7 +55,7 @@ static int seq_ThankYou( BEACON_VIEW_PTR wk );
 static int seq_ReturnCGear( BEACON_VIEW_PTR wk );
 static int seq_CallDetailView( BEACON_VIEW_PTR wk );
 
-static void BEACON_VIEW_TouchUpdata(BEACON_VIEW_PTR view);
+static void debug_InputCheck(BEACON_VIEW_PTR view);
 static void _sub_DataSetup(BEACON_VIEW_PTR wk);
 static void _sub_DataExit(BEACON_VIEW_PTR wk);
 static void _sub_SystemSetup(BEACON_VIEW_PTR view);
@@ -279,13 +283,13 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
 #ifdef PM_DEBUG
   e_tick = OS_GetTick();
   t_tick = e_tick-s_tick;
-  if( t_tick > 1000 ){
+  if( t_tick > 3000 ){
     IWASAWA_Printf("BeaconView Draw tick %d\n",  t_tick );
   }
 #endif
   
-#ifdef DEBUG_ONLY_FOR_iwasawa
-  BEACON_VIEW_TouchUpdata( wk );
+#ifdef PM_DEBUG
+  debug_InputCheck( wk );
 #endif
 }
 
@@ -322,6 +326,14 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
   case EV_CALL_TALKMSG_INPUT:
     event = EVENT_FreeWordInput( wk->gsys, wk->fieldWork, NULL, NAMEIN_FREE_WORD, NULL );
     break;
+
+#ifdef PM_DEBUG
+  case EV_DEBUG_MENU_CALL:
+    event = GMEVENT_CreateOverlayEventCall( wk->gsys,
+              FS_OVERLAY_ID( d_livecomm ), DEBUG_EVENT_LiveComm, wk );
+    break;
+#endif  //PM_DEBUG
+
   default:
     return NULL;
   }
@@ -485,7 +497,7 @@ static int seq_CallDetailView( BEACON_VIEW_PTR wk )
   return SEQ_END;
 }
 
-
+#ifdef PM_DEBUG
 //--------------------------------------------------------------
 /**
  * タッチ判定
@@ -493,12 +505,34 @@ static int seq_CallDetailView( BEACON_VIEW_PTR wk )
  * @param   wk		
  */
 //--------------------------------------------------------------
-static void BEACON_VIEW_TouchUpdata(BEACON_VIEW_PTR wk)
+static void debug_InputCheck(BEACON_VIEW_PTR wk)
 {
   u32 tp_x, tp_y;
-  
+  int trg =  GFL_UI_KEY_GetTrg();
+  int cont =  GFL_UI_KEY_GetCont();
   int tp_ret = GFL_UI_TP_HitTrg(TouchRect);
-  
+
+  if( wk->event_id != EV_NONE ){
+    return;
+  }
+#ifdef PM_DEBUG
+  if( ( cont & (PAD_BUTTON_R|PAD_BUTTON_START)) == (PAD_BUTTON_R|PAD_BUTTON_START)){
+    event_Request( wk, EV_DEBUG_MENU_CALL);
+    return;
+  }
+  if( trg & PAD_BUTTON_START ){
+    wk->deb_stack_check_throw = 1;
+    OS_Printf("StackCheckThrow = %d\n",wk->deb_stack_check_throw );
+    return;
+  }
+  if( trg & PAD_BUTTON_SELECT ){
+    wk->deb_stack_check_throw = 0;
+    OS_Printf("StackCheckThrow = %d\n",wk->deb_stack_check_throw );
+    return;
+  }
+#endif
+
+#ifdef DEBUG_ONLY_FOR_iwasawa
   switch(tp_ret){
   case 0: //
     OS_TPrintf("ランダム ビーコンセット\n");
@@ -514,10 +548,12 @@ static void BEACON_VIEW_TouchUpdata(BEACON_VIEW_PTR wk)
 //    GAMEBEACON_Set_Thankyou( wk->gdata, 0x12345678 );
     break;
   case 2: //戻る
-//    FIELD_SUBSCREEN_SetAction( wk->subscreen , FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR);
     break;
   }
+#endif
 }
+
+#endif  //PM_DEBUG
 
 //==============================================================================
 //  

@@ -1651,6 +1651,10 @@ SRCS_OVERLAY_D_NUMINPUT_RECORD = field/event_debug_numinput_record.c
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_D_IWASAWA = field/event_debug_mvpoke.c
 
+#D_LIVECOMMライブラリ
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_D_LIVECOMM = field/event_debug_livecomm.c
+
 #DEBUG_ITEMライブラリ
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_ITEM = field/event_debug_item.c

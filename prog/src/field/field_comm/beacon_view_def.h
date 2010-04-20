@@ -39,6 +39,10 @@ typedef enum{
  EV_GPOWER_USE,
  EV_GPOWER_CHECK,
  EV_CALL_TALKMSG_INPUT,
+
+#ifdef PM_DEBUG
+ EV_DEBUG_MENU_CALL,
+#endif  //PM_DEBUG
 }BEACON_DETAIL_EVENT;
 
 ///スペシャルGパワーリクエストID
