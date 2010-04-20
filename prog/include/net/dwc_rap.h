@@ -478,6 +478,12 @@ extern BOOL GFL_NET_DWC_IsDisconnect(void);
 //------------------------------------------------------------------------------
 extern void GFL_NET_DWC_SetNoChildErrorCheck(BOOL bOn);
 
+//------------------------------------------------------------------
+/**
+ * @brief   WIFIVCT用ラップＢＧＭボリューム変更
+ */ 
+//------------------------------------------------------------------
+extern void GFL_NET_DWC_PMSND_ChangeBGMVolume( u16 trackBit, int volume );
 
 //#include <ppwlobby/ppw_lobby.h>
 
