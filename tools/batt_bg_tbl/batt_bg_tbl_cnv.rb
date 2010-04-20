@@ -359,6 +359,7 @@ end
     end
   }
   
+  
   #îwåiÇaÇfÉtÉ@ÉCÉãÉeÅ[ÉuÉãê∂ê¨
   fp_bg.printf( "\t.text\n\n" )
   fp_bg.print( "\t.include ../../resource/battle/battgra_wb_def.h\n\n" )
@@ -461,7 +462,17 @@ end
   fp_header.printf( "}BATT_BG_TBL_STAGE_TABLE;\n\n" )
   fp_header.printf( "typedef struct\n{\n" )
   fp_header.printf( "\tARCDATID file[BATT_BG_TBL_FILE_MAX ][ BATT_BG_TBL_SEASON_MAX ];\n" )
-  fp_header.printf( "}BATT_BG_TBL_BG_TABLE;\n" )
+  fp_header.printf( "}BATT_BG_TBL_BG_TABLE;\n\n" )
+
+  fp_header.printf( "enum{\n" )
+  stage.size.times{ |i|
+    if i == 0
+      fp_header.printf( "\tBATT_BG_OBONID_%02d = 0,\t\t//%s\n", i, stage[ i ].get_table_name )
+    else
+      fp_header.printf( "\tBATT_BG_OBONID_%02d,\t\t\t\t//%s\n", i, stage[ i ].get_table_name )
+    end
+  }
+  fp_header.printf( "};\n\n" )
 
   fp_r.close
   fp_spec.close
