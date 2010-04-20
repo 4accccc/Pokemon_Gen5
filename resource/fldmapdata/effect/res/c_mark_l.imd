@@ -3,15 +3,15 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00106" date="2006-05-11T21:15:44" source="c_mark_l.mb"/>
+	<create user="fuchino" host="W00152" date="2010-04-20T21:38:29" source="c_mark_l.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20051121"/>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00106" date="2006-05-11T21:15:44" source="c_mark_l.mb"/>
-<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20051121"/>
+<original_create user="fuchino" host="W00152" date="2010-04-20T21:38:29" source="c_mark_l.mb"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
 	pos_scale="1"
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="2" xyz="-2.250000 0.750000 -2.250000" whd="4.500000 0.000000 4.500000"/>
+<box_test pos_scale="2" xyz="-2.250000 0.750000 -3.250000" whd="4.500000 0.000000 4.500000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="c_mark_l"
@@ -35,7 +35,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="c_mark_l_pl"
-		path="C:/mayadata/hero_eff/tex/c_mark_l.tga"
+		path="C:/home/wb_data3d/wb_hero_effect/hero_eff/tex/c_mark_l.tga"
 	>
 		<bitmap size="32">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -48,7 +48,7 @@
 
 <tex_palette_array size="1">
 	<tex_palette index="0" name="c_mark_l_pl" color_size="4">
-		6bbe 637d 573c 7fff
+		6bbe 42d8 42b7 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -66,7 +66,7 @@
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="25 25 25"
+		ambient="31 31 31"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -87,9 +87,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.500000 1.500000 -4.500000"
-		volume_max="4.500000 1.500000 4.500000"
-		volume_r="6.538330"
+		volume_min="-4.500000 1.500000 -6.500000"
+		volume_max="4.500000 1.500000 2.500000"
+		volume_r="8.046631"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -100,11 +100,11 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 0.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-4.500000 1.500000 4.500000"/>
+					<pos_s xyz="-4.500000 1.500000 2.500000"/>
 					<tex st="16.000000 0.000000"/>
 					<pos_xy xy="4.500000 1.500000"/>
 					<tex st="16.000000 -16.000000"/>
-					<pos_xz xz="4.500000 -4.500000"/>
+					<pos_xz xz="4.500000 -6.500000"/>
 					<tex st="0.000000 -16.000000"/>
 					<pos_xy xy="-4.500000 1.500000"/>
 				</primitive>
@@ -128,9 +128,9 @@
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.500000 1.500000 -4.500000"
-		volume_max="4.500000 1.500000 4.500000"
-		volume_r="6.538330"
+		volume_min="-4.500000 1.500000 -6.500000"
+		volume_max="4.500000 1.500000 2.500000"
+		volume_r="8.046631"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>

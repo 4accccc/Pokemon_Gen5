@@ -3,15 +3,15 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00106" date="2006-07-12T02:22:39" source="f_mark_d.mb"/>
+	<create user="fuchino" host="W00152" date="2010-04-20T16:53:27" source="f_mark_d.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20051121"/>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00106" date="2006-07-12T02:22:39" source="f_mark_d.mb"/>
-<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20051121"/>
+<original_create user="fuchino" host="W00152" date="2010-04-20T16:53:27" source="f_mark_d.mb"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
 	pos_scale="1"
@@ -35,12 +35,12 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="f_mark_d_pl"
-		path="C:/mayadata/hero_eff/tex/f_mark_d.tga"
+		path="C:/home/wb_data3d/wb_hero_effect/hero_eff/tex/f_mark_d.tga"
 	>
 		<bitmap size="32">
-			0000 0190 0000 0290 0000 06a0 0000 06a0
-			0000 06a0 0640 06a0 0680 0190 0a90 0000
-			0a90 0000 0a90 0000 0a90 0000 0640 0000
+			0000 0260 0000 0160 0000 0950 0000 0950
+			0000 0950 0980 0950 0940 0260 0560 0000
+			0560 0000 0560 0000 0560 0000 0980 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
@@ -48,7 +48,7 @@
 
 <tex_palette_array size="1">
 	<tex_palette index="0" name="f_mark_d_pl" color_size="4">
-		6bbe 637d 573c 7fff
+		6bbe 3e96 42b7 7fff
 	</tex_palette>
 </tex_palette_array>
 
