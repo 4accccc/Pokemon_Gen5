@@ -910,9 +910,10 @@ extern VMCMD_RESULT EvCmdPartyPokeEggBirth( VMHANDLE *core, void *wk )
   for( i=0; i<poke_count; i++ )
   {
     POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, i );
-    u32      tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
+    u32     tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
+    u32     fusei_tamago_flag = PP_Get( param, ID_PARA_fusei_tamago_flag, NULL );
 
-    if( tamago_flag )
+    if( tamago_flag && !fusei_tamago_flag )
     {
       // ›z‰»ƒCƒxƒ“ƒg
       SCRIPT_CallEvent( scw, EVENT_EggBirth( gsys, fieldmap, param ) );

@@ -109,6 +109,8 @@ static GMEVENT_RESULT EggBirthEvent( GMEVENT* event, int* seq, void* wk )
 	case SEQ_FADE_IN:
     GMEVENT_CallEvent(event, 
         EVENT_FieldFadeIn_Black( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
+
+    GAMEBEACON_Set_EggHatch( PP_Get( work->egg, ID_PARA_monsno, NULL ) );
     *seq = SEQ_END;
 		break;
 
@@ -142,8 +144,6 @@ GMEVENT* EVENT_EggBirth( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, POKE
 	work->fieldmap   = fieldmap;
   work->gameData   = GAMESYSTEM_GetGameData( gameSystem );
   work->egg        = egg;
-
-  GAMEBEACON_Set_EggHatch( PP_Get( egg, ID_PARA_monsno, NULL ) );
 
 	return event;
 }
