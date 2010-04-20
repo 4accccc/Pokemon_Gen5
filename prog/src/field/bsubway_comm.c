@@ -392,7 +392,7 @@ void BSUBWAY_SCRWORK_CommSendPlayerData(
   //‚±‚±‚ÍBTWR_MODE_COMM_MULTIê—p
   OS_Printf( "bsw_scr->play_mode = %d\n", bsw_scr->play_mode );
   
-  bsw_scr->send_buf[3] = BSUBWAY_SCOREDATA_GetStageNo(
+  bsw_scr->send_buf[3] = BSUBWAY_SCOREDATA_GetStageNo_Org0(
       bsw_scr->scoreData, bsw_scr->play_mode );
 }
 

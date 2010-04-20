@@ -72,11 +72,11 @@ struct _BSUBWAY_SCOREDATA
   
   u32  flags;
   
-  //連勝記録
+  //連勝記録 0 origin
   u16 renshou[BSWAY_PLAYMODE_MAX];
   u16 renshou_max[BSWAY_PLAYMODE_MAX];
   
-  //ステージ数記録
+  //ステージ数記録 1 origin 0 = error
   u16 stage[BSWAY_PLAYMODE_MAX];
   
   //WiFiチャレンジデータ
@@ -527,16 +527,46 @@ void BSUBWAY_SCOREDATA_SetRenshou(
 
 //--------------------------------------------------------------
 /**
- * スコアデータ　ステージ数リセット
+ * スコアデータ　ステージ数をエラーに
  * @param bsw_play BSUBWAY_SCOREDATA
  * @retval nothing
  */
 //--------------------------------------------------------------
-void BSUBWAY_SCOREDATA_ResetStageNo(
+void BSUBWAY_SCOREDATA_ErrorStageNo(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
   bsw_score->stage[mode] = 0;
 }
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ　ステージ数初期化
+ * @param bsw_play BSUBWAY_SCOREDATA
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCOREDATA_InitStageNo(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
+{
+  bsw_score->stage[mode] = 1;
+}
+
+//--------------------------------------------------------------
+/**
+ * スコアデータ　ステージ数があるかチェック
+ * @param bsw_play BSUBWAY_SCOREDATA
+ * @retval BOOL
+ */
+//--------------------------------------------------------------
+BOOL BSUBWAY_SCOREDATA_CheckExistStageNo(
+    const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
+{
+  if( bsw_score->stage[mode] == 0 ){
+    return( FALSE );
+  }
+  return( TRUE );
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -548,7 +578,7 @@ void BSUBWAY_SCOREDATA_ResetStageNo(
 void BSUBWAY_SCOREDATA_IncStageNo(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
-  if( bsw_score->stage[mode] < 0xffff ){
+  if( bsw_score->stage[mode] < (0xffff-1) ){ //-1=エラー判定用
     bsw_score->stage[mode]++;
   }
 }
@@ -560,24 +590,36 @@ void BSUBWAY_SCOREDATA_IncStageNo(
  * @retval nothing
  */
 //--------------------------------------------------------------
-void BSUBWAY_SCOREDATA_SetStageNo(
+void BSUBWAY_SCOREDATA_SetStageNo_Org1(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 stage )
 {
+  if( stage == 0 ){
+    GF_ASSERT( 0 );
+    stage = 1;
+  }
   bsw_score->stage[mode] = stage;
 }
-
 //--------------------------------------------------------------
 /**
- * スコアデータ　ステージ数取得
+ * スコアデータ　ステージ数取得 0origin
  * @param bsw_play BSUBWAY_SCOREDATA
  * @retval nothing
  */
 //--------------------------------------------------------------
-u16 BSUBWAY_SCOREDATA_GetStageNo(
+u16 BSUBWAY_SCOREDATA_GetStageNo_Org0(
     const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
-  return( bsw_score->stage[mode] );
+  u16 stage = bsw_score->stage[mode];
+  stage--;
+  
+  if( (s16)stage < 0 ){
+    GF_ASSERT( 0 );
+    stage = 0;
+  }
+  
+  return( stage );
 }
+
 
 //--------------------------------------------------------------
 /**

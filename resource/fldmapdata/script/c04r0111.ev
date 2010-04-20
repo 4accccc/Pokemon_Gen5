@@ -160,9 +160,9 @@ sub_challenge_continue:
 {
   DEFINE_LOCAL play_mode
    
-  _BALLOONWIN_TALKOBJ_MSG( msg_c04r0111_02 ) //ご案内する前にレポート
-  _AB_KEYWAIT()
-  _MSGWIN_CLOSE()
+//  _BALLOONWIN_TALKOBJ_MSG( msg_c04r0111_02 ) //ご案内する前にレポート
+//  _AB_KEYWAIT()
+//  _MSGWIN_CLOSE()
   
   //受付をエラー状態に
   $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
@@ -183,7 +183,9 @@ sub_challenge_continue:
   _BSUBWAY_TOOL( BSWSUB_LOAD_POKEMON_MEMBER, BSW_NULL, BSW_NULL, BSW_NULL)
   
   //レポート
+  _SYSWIN_MSG( msg_c04r0111_02, POS_DOWN ) //ご案内する前にレポート
   _REPORT_CALL( SCWK_ANSWER )
+  _MSGWIN_CLOSE()
   
   //電車発車デモ
   _CALL sub_demo_train_starting
@@ -610,9 +612,9 @@ EVENT_START ev_c04r0111_home
     ENDIF
   ENDIF
   
-  //終点であれば連勝数、ステージNoをクリア
+  //終点であればラウンド数、ステージNoをリセット
   IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_TERMINUS THEN
-    _BSUBWAY_TOOL( BSWSUB_CLEAR_STAGE_ROUND, BSW_NULL, BSW_NULL, BSW_NULL )
+    _BSUBWAY_TOOL( BSWSUB_RESET_STAGE_ROUND, BSW_NULL, BSW_NULL, BSW_NULL )
   ENDIF
   
   //ゲーム情報をセーブデータに反映

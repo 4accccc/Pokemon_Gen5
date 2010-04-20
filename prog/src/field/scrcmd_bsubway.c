@@ -548,7 +548,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //ステージ数取得
   case BSWTOOL_GET_STAGE_NO:
-    *ret_wk = BSUBWAY_SCOREDATA_GetStageNo( scoreData, param0 );
+    *ret_wk = BSUBWAY_SCOREDATA_GetStageNo_Org0( scoreData, param0 );
     break;
   //パートナーOBJコード取得
   case BSWTOOL_GET_OBJCODE_PARTNER:
@@ -637,6 +637,12 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     }
     KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
+  //ステージ数が存在するかチェック
+  case BSWTOOL_CHK_EXIST_STAGE:
+    {
+      *ret_wk = BSUBWAY_SCOREDATA_CheckExistStageNo( scoreData, param0 );
+    }
+    break;
   //----TOOL Wifi関連
   //Wifiアップロードフラグをセット
   case BSWTOOL_WIFI_SET_UPLOAD_FLAG:
@@ -1112,12 +1118,13 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     }
     KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
-  //連勝、ステージ数のみクリア
-  case BSWSUB_CLEAR_STAGE_ROUND:
+  //ステージ数、ラウンド数をリセット
+  case BSWSUB_RESET_STAGE_ROUND:
     {
-      BSUBWAY_SCOREDATA_ResetRenshou( scoreData, play_mode );
+      //ラウンドリセット
       BSUBWAY_PLAYDATA_ResetRoundNo( playData );
-      BSUBWAY_SCOREDATA_ResetStageNo( scoreData, play_mode );
+      //ステージ数をエラーに
+      BSUBWAY_SCOREDATA_ErrorStageNo( scoreData, play_mode );
     }
     break;
   //電車のゆれを止める
@@ -1464,7 +1471,7 @@ static void bsway_SetHomeNPC(
   }else{
     const HOME_NPC_DATA *data = data_HomeNpcTbl;
     BSUBWAY_SCOREDATA *bsw_score = bsw_scr->scoreData;
-    u16 stage = BSUBWAY_SCOREDATA_GetStageNo( bsw_score, mode );
+    u16 stage = BSUBWAY_SCOREDATA_GetStageNo_Org0( bsw_score, mode );
 
     switch( mode ){
     case BSWAY_MODE_S_SINGLE:
@@ -1963,7 +1970,8 @@ void BSUBWAY_SCRWORK_DebugFight7( GAMESYS_WORK *gsys )
   GF_ASSERT( bsw_scr != NULL );
   
   BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, 6 );
-  BSUBWAY_SCOREDATA_SetStageNo( bsw_scr->scoreData, bsw_scr->play_mode, 0 );
+  BSUBWAY_SCOREDATA_SetStageNo_Org1(
+      bsw_scr->scoreData, bsw_scr->play_mode, 1 );
   BSUBWAY_SCOREDATA_SetRenshou( bsw_scr->scoreData, bsw_scr->play_mode, 6 );
   
   //対戦トレーナー抽選
@@ -1982,7 +1990,8 @@ void BSUBWAY_SCRWORK_DebugFight21( GAMESYS_WORK *gsys )
   GF_ASSERT( bsw_scr != NULL );
   
   BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, 6 );
-  BSUBWAY_SCOREDATA_SetStageNo( bsw_scr->scoreData, bsw_scr->play_mode, 2 );
+  BSUBWAY_SCOREDATA_SetStageNo_Org1(
+      bsw_scr->scoreData, bsw_scr->play_mode, 3 );
   BSUBWAY_SCOREDATA_SetRenshou( bsw_scr->scoreData, bsw_scr->play_mode, (7*2+6) );
   
   //対戦トレーナー抽選
@@ -2001,7 +2010,8 @@ void BSUBWAY_SCRWORK_DebugFight48( GAMESYS_WORK *gsys )
   GF_ASSERT( bsw_scr != NULL );
   
   BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, 6 );
-  BSUBWAY_SCOREDATA_SetStageNo( bsw_scr->scoreData, bsw_scr->play_mode, 6 );
+  BSUBWAY_SCOREDATA_SetStageNo_Org1(
+      bsw_scr->scoreData, bsw_scr->play_mode, 7 );
   BSUBWAY_SCOREDATA_SetRenshou( bsw_scr->scoreData, bsw_scr->play_mode, (7*6+6) );
   
   //対戦トレーナー抽選

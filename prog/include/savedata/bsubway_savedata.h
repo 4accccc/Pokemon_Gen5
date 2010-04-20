@@ -255,10 +255,19 @@ extern void BSUBWAY_SCOREDATA_UpdateRenshouMax(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count );
 extern void BSUBWAY_SCOREDATA_SetRenshou(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count );
-extern void BSUBWAY_SCOREDATA_ResetStageNo( BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
-extern void BSUBWAY_SCOREDATA_IncStageNo( BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
-extern void BSUBWAY_SCOREDATA_SetStageNo( BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 stage );
-extern u16 BSUBWAY_SCOREDATA_GetStageNo( const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
+
+extern void BSUBWAY_SCOREDATA_ErrorStageNo(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
+extern void BSUBWAY_SCOREDATA_InitStageNo(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
+extern BOOL BSUBWAY_SCOREDATA_CheckExistStageNo(
+    const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
+extern void BSUBWAY_SCOREDATA_IncStageNo(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
+extern void BSUBWAY_SCOREDATA_SetStageNo_Org1(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 stage );
+extern u16 BSUBWAY_SCOREDATA_GetStageNo_Org0(
+    const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
 
 #if 0
 extern void BSUBWAY_SCOREDATA_IncStageCount(

@@ -1151,10 +1151,10 @@ ev_bsw_game_after:
   //プレイモード取得
   _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
-  //連勝中であれば　続きありのメッセージ
-  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, SCWK_ANSWER )
+  //ステージ数があれば　続きありのメッセージ
+  _BSUBWAY_TOOL( BSWTOOL_CHK_EXIST_STAGE, play_mode, BSW_NULL, SCWK_ANSWER )
   
-  IF $SCWK_ANSWER != 0 THEN
+  IF $SCWK_ANSWER == TRUE THEN
     $SCWK_TEMP0 = msg_bsw_scr_35
     _CALL sub_bsw_common_bwin_receipt
     _AB_KEYWAIT()
@@ -2159,14 +2159,18 @@ sub_bsw_common_renshou_msg:
   DEFINE_LOCAL count
   
   _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, count )
+  _BSUBWAY_TOOL( BSWTOOL_CHK_EXIST_STAGE, play_mode, BSW_NULL, ret )
   
-  IF $count != 0 THEN
-    _PLAYER_NAME( 0 )
-    _NUMBER( 1, count, 3 )
-    $SCWK_TEMP0 = msg_bsw_scr_08
-    _CALL sub_bsw_common_bwin_receipt
-    _AB_KEYWAIT()
+  IF $ret == TRUE THEN
+    _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, count )
+
+    IF $count != 0 THEN
+      _PLAYER_NAME( 0 )
+      _NUMBER( 1, count, 3 )
+      $SCWK_TEMP0 = msg_bsw_scr_08
+      _CALL sub_bsw_common_bwin_receipt
+      _AB_KEYWAIT()
+    ENDIF
   ENDIF
 }
 _RET

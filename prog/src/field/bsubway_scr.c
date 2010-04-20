@@ -125,6 +125,8 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     
     BSUBWAY_PLAYDATA_Init( bsw_scr->playData ); //プレイデータ初期化
     BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
+    BSUBWAY_SCOREDATA_ResetRenshou( bsw_scr->scoreData, bsw_scr->play_mode );
+    BSUBWAY_SCOREDATA_InitStageNo( bsw_scr->scoreData, bsw_scr->play_mode );
     
     buf8 = bsw_scr->play_mode; //プレイモード
     
@@ -361,6 +363,9 @@ void BSUBWAY_SCRWORK_SaveGameClearPlayData( BSUBWAY_SCRWORK *bsw_scr )
   //ラウンド数リセット
   BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
   
+  //ステージ数をエラーに
+  BSUBWAY_SCOREDATA_ErrorStageNo( bsw_scr->scoreData, bsw_scr->play_mode );
+
   //選んだポケモンNo
   BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
       BSWAY_PLAYDATA_ID_pokeno, bsw_scr->member );
@@ -417,7 +422,9 @@ u16 BSUBWAY_SCRWORK_SetNGScore( GAMESYS_WORK *gsys )
   
   //現在の周回数リセット
   BSUBWAY_PLAYDATA_ResetRoundNo( playData );
-  BSUBWAY_SCOREDATA_ResetStageNo( scoreData, play_mode );
+  
+  //ステージ数をエラーに
+  BSUBWAY_SCOREDATA_ErrorStageNo( scoreData, play_mode );
   
   //レコード挑戦中フラグを落とす
 #if 0 //wb null
@@ -453,7 +460,9 @@ void BSUBWAY_SCRWORK_SetLoseScore(
   
   //周回数リセット
   BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
-  BSUBWAY_SCOREDATA_ResetStageNo( bsw_scr->scoreData, play_mode );
+  
+  //ステージ数をエラーに
+  BSUBWAY_SCOREDATA_ErrorStageNo( bsw_scr->scoreData, play_mode );
   
   { //勝ち負け共通データ作成
     SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( bsw_scr->gdata );
@@ -649,7 +658,7 @@ u16  BSUBWAY_SCRWORK_AddBattlePoint( BSUBWAY_SCRWORK *bsw_scr )
   }else{ //周回数ごと
     u16 type;
     BOOL super = FALSE;
-    s16 stage = BSUBWAY_SCOREDATA_GetStageNo(
+    u16 stage = BSUBWAY_SCOREDATA_GetStageNo_Org0(
         bsw_scr->scoreData, bsw_scr->play_mode );
     
     switch( bsw_scr->play_mode ){
@@ -691,7 +700,7 @@ u16  BSUBWAY_SCRWORK_AddBattlePoint( BSUBWAY_SCRWORK *bsw_scr )
 
     stage--;
     
-    if( stage < 0 ){
+    if( (s16)stage < 0 ){
       stage = 0;
     }else if( stage >= 10 ){
       stage = 9;
@@ -730,7 +739,7 @@ void BSUBWAY_SCRWORK_SetBtlTrainerNo( BSUBWAY_SCRWORK *bsw_scr )
   u16 no,stage,round;
   
   play_mode = bsw_scr->play_mode;
-  stage = BSUBWAY_SCOREDATA_GetStageNo( bsw_scr->scoreData, play_mode );
+  stage = BSUBWAY_SCOREDATA_GetStageNo_Org0( bsw_scr->scoreData, play_mode );
   
   if( play_mode == BSWAY_MODE_MULTI ||
       play_mode == BSWAY_MODE_COMM_MULTI ||
