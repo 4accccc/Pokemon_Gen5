@@ -30,11 +30,11 @@ struct _SITUATION {
   u8  fs_flash;           ///<フラッシュフラグ          
   u8  season_id;          ///<季節
   u8  weather_id;         ///<天気
-  u8  pad[3];             ///<padding
+  u8  pad;                ///<padding
+  u16 placeNameLastDispID; ///<地名を最後に表示した場所のゾーンID
   u32 egg_step_count;     ///<タマゴ孵化カウンタ
   u16 friendly_step_count;  ///<なつき度上昇用カウンタ
   u16 sea_temple_count;   ///<海底神殿歩行カウンタ
-  u16 placeNameLastDispID; ///<地名を最後に表示した場所のゾーンID
 
 	//PLAYER_WORKからセーブに必要なものだけを抜粋
 	PLAYERWORK_SAVE plsv;
