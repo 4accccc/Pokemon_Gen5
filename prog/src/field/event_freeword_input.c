@@ -93,7 +93,7 @@ GMEVENT* EVENT_FreeWordInput( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, GMEVE
     GFL_STR_SetStringCode( wk->param.strbuf, MISC_CrossComm_GetThankyouMessage( wk->misc ) );
     break;
   case NAMEIN_FREE_WORD:  //すれ違いフリーワード
-    GFL_STR_CopyBuffer( wk->param.strbuf, BEACON_STATUS_GetFreeWordBuffer( wk->b_status ));
+    //初期は空文字
     break;
   default:
     GF_ASSERT(0);
@@ -133,19 +133,6 @@ static GMEVENT_RESULT FreeWordInputEvent(GMEVENT * event, int * seq, void *work)
 //-----------------------------------------------------------
 static void sub_ResultGet( EVWORK_FWORD_INPUT* wk, NAMEIN_PARAM* param )
 {
-  if( wk->mode == NAMEIN_FREE_WORD ){
-    //すれ違いフリーワードは、元の文字列と変わっていなくてもキャンセル扱いにしない
-    int strlen =  GFL_STR_GetBufferLength( param->strbuf );
-    if( strlen > 0 ){
-      GFL_STR_CopyBuffer( BEACON_STATUS_GetFreeWordBuffer( wk->b_status ), wk->param.strbuf );
-      GAMEBEACON_Set_FreeWord( wk->gdata, param->strbuf );
-    }
-    if(wk->ret_wk != NULL){
-      *wk->ret_wk = (strlen > 0);
-    }
-    return;
-  }
-
   if( wk->ret_wk != NULL ){
     *wk->ret_wk = ( param->cancel == FALSE );
   }
@@ -159,6 +146,10 @@ static void sub_ResultGet( EVWORK_FWORD_INPUT* wk, NAMEIN_PARAM* param )
     break;
   case NAMEIN_THANKS_WORD:   // すれちがいお礼言葉
     MISC_CrossComm_SetThankyouMessage( wk->misc, param->strbuf );
+    break;
+  case NAMEIN_FREE_WORD:  //すれ違いフリーワード
+    GFL_STR_CopyBuffer( BEACON_STATUS_GetFreeWordBuffer( wk->b_status ), wk->param.strbuf );
+    GAMEBEACON_Set_FreeWord( wk->gdata, param->strbuf );
     break;
   default:
     GF_ASSERT(0);
