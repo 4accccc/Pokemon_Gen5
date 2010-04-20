@@ -28,7 +28,7 @@ static u8 _getColorIndex(POKEMON_PASO_PARAM * ppp,HEAPID heapID)
 	POKEMON_PERSONAL_DATA * ppd;
 	BOOL fast;
   u32	mons;
-  u16	color=0xf;
+  u16	color=0x0;
 
   {
     fast = PPP_FastModeOn( ppp );
@@ -97,7 +97,7 @@ static void PokemonTrade_PartyPokeDotPut( POKEMON_TRADE_WORK* pWork, POKEPARTY* 
       ppp = PP_GetPPPPointer( PokeParty_GetMemberPointer( pParty , i ) );
       buf[i] = _getColorIndex(ppp,pWork->heapID);
     }else{
-      buf[i] = 0xf;
+      buf[i] = 0x0;
     }
   }
 }

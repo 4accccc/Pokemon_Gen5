@@ -1121,7 +1121,7 @@ static void _panelLoad(POKEMON_TRADE_WORK *pWork,int num)
   {
     int i,index;
     for(i=0;i < num;i++){
-      GFL_STD_MemFill(tempBuff, (0xf|(0xf<<4)), myTexSize);
+      GFL_STD_MemFill(tempBuff, (0x0|(0x0<<4)), myTexSize);
 
       if( i==0 ){
         _printColorPokeParty( tempBuff, &pWork->FriendPokemonCol[1][BOX_POKESET_MAX], 2 );
@@ -1421,19 +1421,21 @@ static void _polygondraw(POKEMON_TRADE_WORK *pWork)
 
 static void _paletteLoad(POKEMON_TRADE_WORK *pWork)
 {
-#if 0
+#if 1
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BOX2_GRA, pWork->heapID );
   NNSG2dPaletteData* pPal;
   void* pData = GFL_ARCHDL_UTIL_LoadPalette(p_handle, NARC_box_gra_box_tray_NCLR,
                                             &pPal, pWork->heapID );
-  u8* paldata = pPal->pRawData;
+  u16* paldata = pPal->pRawData;
 
   GX_BeginLoadTexPltt();             // map the texture palette slots onto LCDC address space
-  GX_LoadTexPltt(&paldata[64], // a pointer to the texture data on the main memory(4 bytes aligned)
+
+  paldata[16*2]=0x14a5;  //ŠG‚Ì’¼’l
+  GX_LoadTexPltt(&paldata[16*2], // a pointer to the texture data on the main memory(4 bytes aligned)
                  myTexPlttAddr,  // an offset address in the texture palette slots
                  32);            // the size of the texture palette(s)(in bytes)
   GX_EndLoadTexPltt();               // restore the texture palette slots
-  GFL_STD_MemCopy(&paldata[64], pWork->palette3d, 32);
+  GFL_STD_MemCopy(&paldata[32], pWork->palette3d, 32);
 
   GFL_HEAP_FreeMemory(pData);
   GFL_ARC_CloseDataHandle( p_handle );

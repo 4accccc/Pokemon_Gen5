@@ -530,7 +530,7 @@ static void _pokeKindNameMsgDisp(POKEMON_PARAM* pp,GFL_BMP_DATA* pWin,int x,int 
   if(bEgg){
     return;
   }
-  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_33, pWork->pExStrBuf );
+  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_100, pWork->pExStrBuf );
   WORDSET_RegisterPokeMonsName( pWork->pWordSet, 0,  pp );
   WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
   PRINTSYS_Print( pWin, x, y, pWork->pStrBuf, pWork->pFontHandle);
@@ -922,8 +922,8 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
 
   _pokeNickNameMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 16, 0,bEgg,pWork);//ニックネーム
   _pokeKindNameMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 16, 8*2,bEgg,pWork);//ニックネーム
-  _pokeLvMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 8*12 , 8,pWork);
-  _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 10*8, 8, pWork, FALSE);
+  _pokeLvMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 8*12 , 0,pWork);
+  _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 10*8, 0, pWork, FALSE);
 
   _pokeHPSPEEDMsgDisp(pp,pWork->MyInfoWin, 0 ,4*8,pWork);
 

@@ -3776,8 +3776,6 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
   }
 
 
-  OS_TPrintf("select %d %d \n",pWork->selectIndex,pWork->selectBoxno);
-  
   if(state != NULL){
     state(pWork);
     pWork->anmCount++;
