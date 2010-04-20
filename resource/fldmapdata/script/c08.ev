@@ -113,22 +113,22 @@ EVENT_START   ev_pos_c08_champions_01
 	//プレイヤー座標に応じて主人公に隣接
 	SWITCH $POSZ
 	CASE 173 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_champion_z173 )
+		_OBJ_ANIME( C08_CHAMPION_01,anm_c08_champion_to_player_z173 )
 		_OBJ_ANIME_WAIT()
 	CASE 174 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_champion_z174 )
+		_OBJ_ANIME( C08_CHAMPION_01,anm_c08_champion_to_player_z174 )
 	_OBJ_ANIME_WAIT()
 	CASE 175 THEN  //目の前に立った時
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_champion_z175 )
+		_OBJ_ANIME( C08_CHAMPION_01,anm_c08_champion_to_player_z175 )
 		 _OBJ_ANIME_WAIT()
 	CASE 176 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_champion_z176 )
+		_OBJ_ANIME( C08_CHAMPION_01,anm_c08_champion_to_player_z176 )
 		_OBJ_ANIME_WAIT()
 	CASE 177 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_champion_z177 )
+		_OBJ_ANIME( C08_CHAMPION_01,anm_c08_champion_to_player_z177 )
 		_OBJ_ANIME_WAIT()
 	DEFAULT  //目の前に立ったケースと同じ処理を行う
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_champion_z175 )
+		_OBJ_ANIME( C08_CHAMPION_01,anm_c08_champion_to_player_z175 )
 		_OBJ_ANIME_WAIT()
 	ENDSWITCH
 	
@@ -138,9 +138,35 @@ EVENT_START   ev_pos_c08_champions_01
 	_BALLOONWIN_CLOSE()
 
 	//チャンピオン誘導アニメーション
-	_OBJ_ANIME( C08_CHAMPION_01, anm_c08_player_to_crowd_01 )
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_crowd_01 )
+		SWITCH $POSZ
+	CASE 173 THEN
+		_OBJ_ANIME( C08_CHAMPION_01, anm_c08_player_to_crowd_01z173 )
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_crowd_01z173 )
+		_OBJ_ANIME_WAIT()
+	CASE 174 THEN
+		_OBJ_ANIME( C08_CHAMPION_01, anm_c08_player_to_crowd_01z174 )
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_crowd_01z174 )
+		_OBJ_ANIME_WAIT()
 	_OBJ_ANIME_WAIT()
+	CASE 175 THEN  //目の前に立った時
+		_OBJ_ANIME( C08_CHAMPION_01, anm_c08_player_to_crowd_01z175 )
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_crowd_01z175 )
+		_OBJ_ANIME_WAIT()
+	CASE 176 THEN
+		_OBJ_ANIME( C08_CHAMPION_01, anm_c08_player_to_crowd_01z176 )
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_crowd_01z176 )
+		_OBJ_ANIME_WAIT()
+	CASE 177 THEN
+		_OBJ_ANIME( C08_CHAMPION_01, anm_c08_player_to_crowd_01z177 )
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_crowd_01z177 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //目の前に立ったケースと同じ処理を行う
+		_OBJ_ANIME( C08_CHAMPION_01, anm_c08_player_to_crowd_01z175 )
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_crowd_01z175 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	
 	
 	//上を向いてゲーヂスにコメント
 	_BALLOONWIN_OBJMSG( msg_c08_champion_02 , C08_CHAMPION_01 )
@@ -541,6 +567,7 @@ EVENT_START   ev_pos_c08_champions_01
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_leadersb_look_a_01 )
 	_OBJ_ANIME_WAIT()
 	
+	
 	//======================================//
 	
 	//演説イベントOBJ非表示
@@ -556,62 +583,107 @@ EVENT_START   ev_pos_c08_champions_01
 	_FLAG_RESET(FV_C02GYM0202_LEADER2)
 	
 	//======================================//
-
+	
 EVENT_END
 
 //--------------------------------------------------------------
-//	ゲーヂス演説イベント：チャンピオン隣接
+//	ゲーヂス演説イベント：チャンピオン気づく
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c08_champion_come_01
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：チャンピオン、主人公に隣接z173
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_champion_to_player_z173
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	ゲーヂス演説イベント：主人公、z座標に応じてチャンピオンに隣接z173
+//	ゲーヂス演説イベント：チャンピオン、主人公に隣接z174
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_c08_player_to_champion_z173
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_STAY_WALK_R_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ゲーヂス演説イベント：主人公、z座標に応じてチャンピオンに隣接z174
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_c08_player_to_champion_z174
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_STAY_WALK_R_8F,0
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ゲーヂス演説イベント：主人公、z座標に応じてチャンピオンに隣接z175
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_c08_player_to_champion_z175
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	ゲーヂス演説イベント：主人公、z座標に応じてチャンピオンに隣接z176
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_c08_player_to_champion_z176
+_ANIME_LABEL	anm_c08_champion_to_player_z174
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	ゲーヂス演説イベント：主人公、z座標に応じてチャンピオンに隣接z177
+//	ゲーヂス演説イベント：チャンピオン、主人公に隣接z175
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_c08_player_to_champion_z177
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+_ANIME_LABEL	anm_c08_champion_to_player_z175
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：チャンピオン、主人公に隣接z176
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_champion_to_player_z176
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：チャンピオン、主人公に隣接z177
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_champion_to_player_z177
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	ゲーヂス演説イベント：群集の後ろにつく
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_c08_player_to_crowd_01
+_ANIME_LABEL	anm_c08_player_to_crowd_01z173
+	_ANIME_DATA	AC_WALK_R_8F,5
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：群集の後ろにつく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_crowd_01z174
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：群集の後ろにつく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_crowd_01z175
 	_ANIME_DATA	AC_WALK_R_8F,6
 	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：群集の後ろにつく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_crowd_01z176
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：群集の後ろにつく
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_crowd_01z177
+	_ANIME_DATA	AC_WALK_R_8F,6
+	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,4
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
@@ -928,7 +1000,7 @@ EVENT_START   ev_pos_c08_leaderb_lead_01
 	_OBJ_ANIME_WAIT()
 	
 	//アイリス：もーすぐ だよ！
-	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_07 , C08_LEADER8B_01 , POS_DR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_07 , C08_LEADER8B_01 , POS_DEFAULT )
 	_BALLOONWIN_CLOSE()
 	
 	//アイリス上に進む
@@ -949,7 +1021,7 @@ EVENT_END
 EVENT_START   ev_pos_c08_leaderb_lead_02
 	
 	//アイリス：ここ だよ！
-	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_08 , C08_LEADER8B_01 , POS_DR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_08 , C08_LEADER8B_01 , POS_DEFAULT )
 	_BALLOONWIN_CLOSE()
 	
 	//アイリス上に進む
