@@ -44,6 +44,25 @@ enum {
 #define	SBG_PAL_FONT	( 15 )
 
 
+
+typedef struct {
+	u32	msgIdx;
+	u16	wait;
+	u8	label;
+	u8	color;
+	u8	font;
+}ITEMLIST_DATA;
+
+enum {
+	ITEMLIST_LABEL_NONE = 0,
+	ITEMLIST_LABEL_STR_PUT,
+	ITEMLIST_LABEL_SCROLL_START,
+	ITEMLIST_LABEL_SCROLL_END,
+
+	ITEMLIST_LABEL_MAX,
+};
+
+
 //============================================================================================
 //============================================================================================
 static int MainSeq_Init( SRMAIN_WORK * wk );

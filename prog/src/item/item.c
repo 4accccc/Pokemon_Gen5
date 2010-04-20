@@ -495,8 +495,8 @@ static s32 ItemParamRcvGet( ITEMPARAM_RCV * rcv, u16 param )
 //--------------------------------------------------------------------------------------------
 BOOL ITEM_CheckWazaMachine( u16 item )
 {
-  if( ( item >= ITEM_WAZAMASIN01 && item <= ITEM_HIDENMASIN08 ) ||
-      ( item >= ITEM_WAZAMASIN93 && item <= ITEM_WAZAMASIN101 ) ){
+  if( ( item >= ITEM_WAZAMASIN01 && item <= ITEM_HIDENMASIN06 ) ||
+      ( item >= ITEM_WAZAMASIN93 && item <= ITEM_WAZAMASIN95 ) ){
     return TRUE;
   }
   return FALSE;
@@ -581,15 +581,14 @@ u8 ITEM_GetWazaMashineNo( u16 item )
  * @return  秘伝マシン番号
  */
 //--------------------------------------------------------------------------------------------
-/*
 u8 ITEM_GetHidenMashineNo( u16 item )
 {
-  if( item >= ITEM_HIDENMASIN01 && item <= ITEM_HIDENMASIN08 ){
+  if( item >= ITEM_HIDENMASIN01 && item <= ITEM_HIDENMASIN06 ){
     return ( item - ITEM_HIDENMASIN01 );
   }
   return 0xff;
 }
-*/
+
 
 //============================================================================================
 //  メールチェック

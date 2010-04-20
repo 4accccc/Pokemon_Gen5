@@ -56,7 +56,7 @@
 #elif DEBUG_ONLY_FOR_taya
 #define _DEBUG_ALONETEST (9)
 #elif DEBUG_ONLY_FOR_hiro_nakamura
-#define _DEBUG_ALONETEST (10)
+#define _DEBUG_ALONETEST (102)
 #elif DEBUG_ONLY_FOR_mituhara
 #define _DEBUG_ALONETEST (11)
 #elif DEBUG_ONLY_FOR_watanabe
