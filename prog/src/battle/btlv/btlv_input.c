@@ -457,7 +457,7 @@ static  const GFL_CLWK_DATA obj_param =
 
 enum
 {
-  FINGER_CURSOR_LOOP  = 3,
+  FINGER_CURSOR_LOOP  = 2,
   FINGER_CURSOR_FRAME = 7,
   FINGER_CURSOR_WAIT  = 16,
 };
@@ -1690,6 +1690,24 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
   return ( hit != GFL_UI_TP_HIT_NONE );
 }
 #endif
+
+//============================================================================================
+/**
+ *  @brief  下画面が変形中かどうかチェック
+ *
+ *  @param[in]  biw  下画面管理構造体
+ *
+ *  @retval TRUE:変形中 FALSE:変形終了
+ */
+//============================================================================================
+BOOL  BTLV_INPUT_CheckExecute( BTLV_INPUT_WORK* biw )
+{ 
+  if( ( biw->tcb_execute_flag ) || ( PaletteFadeCheck( biw->pfd ) ) || ( biw->button_reaction ) )
+  { 
+    return TRUE;
+  }
+  return FALSE;
+}
 
 //============================================================================================
 /**

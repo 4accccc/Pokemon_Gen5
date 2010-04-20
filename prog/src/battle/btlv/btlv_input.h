@@ -208,4 +208,5 @@ extern  int               BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTL
                                                  const BTLV_INPUT_KEYTBL* key_tbl );
 extern  BOOL              BTLV_INPUT_CheckInputDemo( BTLV_INPUT_WORK* biw );
 extern  BOOL              BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int* select );
+extern  BOOL              BTLV_INPUT_CheckExecute( BTLV_INPUT_WORK* biw );
 
