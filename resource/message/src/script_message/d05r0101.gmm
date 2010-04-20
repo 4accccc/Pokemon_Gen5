@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T23:06:25"/>
+	<create user="matsumiya" host="W00224" date="2010-04-20T20:44:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -336,9 +336,10 @@
 	</lock>
 
 
-	<row id="msg_d05r0101_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_d05r0101_black_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
-・コンテナに入ってすぐ
+・コンテナに入ると
+　チェレンも後ろからやってきて
 ・メッセージ表示後、「？」マーク表示して
 　次のメッセージ表示</comment>
 		<attribute name="キャラ指定">友達♂
@@ -347,59 +348,56 @@
 チャンピオンが　いっていた
 トレーナーにとって▽
 つよい　いがいに▽
-だいじなことって　あると　おもうか？▼</language>
+だいじな　ことって　あるのかい？▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……それにしても▼
 チャンピオンが　いっていた
 トレーナーにとって▽
 強い　以外に▽
-大事なことって　あると　思うか？▼</language>
+大事なことって　あるのかい？▼</language>
 	</row>
 
-	<row id="msg_d05r0101_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_d05r0101_black_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後、
-　ライバルだけ、コンテナの奥へ移動</comment>
+　主人公がd05r0201の手前に移動するまで
+　このメッセージ繰り返し</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">……かんがえても
 わかるわけ　ないか▼
 ……さっさと
-なかを　しらべて　しまおう▼</language>
+なかを　しらべて　しまおう</language>
 		<language name="JPN_KANJI" width="256">……考えても
 わかるわけ　ないか▼
 ……さっさと
-中を　探索してしまおう▼</language>
+中を　探索してしまおう</language>
 	</row>
 
-	<row id="msg_d05r0101_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_d05r0101_black_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
-・POSを踏むと、コンテナ奥を見たまま
-　このメッセージ表示
-・はい/いいえ
+・posを踏むと、ライバル登場してメッセージ表示
+・はい/いいえの選択肢表示
 ・はい→black_04
-　いいえ→black_05</comment>
+　いいえ→black_05
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『……？
-この　おくにも　だれか　いる[BE:01:ページ切り替え（クリア）]
-ひょっとしたら　プラズマだん　かな
-じゅんびは　いいよね？　[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="256">チェレン『……？
-この奥にも　だれか　いる[BE:01:ページ切り替え（クリア）]
-ひょっとしたら　プラズマ団かな
-準備は　いいよね？　[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="256">チェレン『……？▼
+[1:00:トレーナー名:0]
+なかに　だれか　いるのかい？▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……？▼
+[1:00:トレーナー名:0]
+その中に　だれか　いるのかい？▼</language>
 	</row>
 
-	<row id="msg_d05r0101_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_d05r0101_black_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
 		<comment>♂
 ・はい選択時
-・メッセージ表示後、ライバル先導で
-　プラズマ団の手前まで移動
-・続けてsage2_01</comment>
+・主人公フリームーブ</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">じゃ　行こうか[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">じゃ　行こうか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">じゃ　行こうか</language>
+		<language name="JPN_KANJI" width="256">じゃ　行こうか</language>
 	</row>
 
 	<row id="msg_d05r0101_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
@@ -408,10 +406,21 @@
 ・再度話しかけたときはblack_03から</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">……じゅんびして　きなよ
-ここで　まっているから</language>
-		<language name="JPN_KANJI" width="256">……準備して　きなよ
-ここで　待っているから</language>
+		<language name="JPN" width="256">だけど　れいとうコンテナで
+さがしていないのは　そこだけ　だよね？</language>
+		<language name="JPN_KANJI" width="256">だけど　冷凍コンテナで
+探していないのは　そこだけ　だよね？</language>
+	</row>
+
+	<row id="msg_d05r0101_black_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・はい選択後、d05r0201にはいるまで繰り返し</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">どうしたの？
+なかを　しらべないのかい</language>
+		<language name="JPN_KANJI" width="256">どうしたの？
+中を　調べないのかい</language>
 	</row>
 
 	<row id="msg_d05r0101_workman2_01">
@@ -427,12 +436,6 @@
 	</row>
 
 	<row id="msg_d05r0101_sage2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d05r0101_black_06" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>削除ラベル</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T17:53:37"/>
+	<create user="matsumiya" host="W00224" date="2010-04-20T20:44:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,17 +292,33 @@
 	</lock>
 
 
-	<row id="msg_d04r0601_rival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d04r0601_rival_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・d08イベント後、ココに配置
-・0＝主人公名前
-・pos（詳細未定）を踏むとイベント発動
-　ライバルのメッセージ表示後
-　主人公がライバルの隣まで移動</comment>
+・このマップに来るとイベント起動
+・ライバルが落ちてくるので主人公が1歩動く
+　ライバル着地してメッセージ表示
+・続けてchampion_00</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『……[1:00:トレーナー名:0]　こっちだよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『……[1:00:トレーナー名:0]　こっちだよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『……やっと　おいついた▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……やっと　追いついた▼</language>
+	</row>
+
+	<row id="msg_d04r0601_champion_00" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　主人公先導で、ライバルと所定位置まで移動
+・続けて
+　sage1_01w　か
+　sage1_01b</comment>
+		<attribute name="キャラ指定">CHAMPION
+アデク</attribute>
+		<language name="JPN" width="256">アデク『……おまえたち
+こっちに……▽
+わしの　そばに　くるんだ▼</language>
+		<language name="JPN_KANJI" width="256">アデク『……おまえたち
+こっちに……▽
+わしの　そばに　来るんだ▼</language>
 	</row>
 
 	<row id="msg_d04r0601_sage1_01w" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
