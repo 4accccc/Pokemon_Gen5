@@ -182,7 +182,7 @@ enum{
 #define TP_MOVELEFT_X  (      0 )
 #define TP_MOVELEFT_Y  (      0 )
 #define TP_MOVELEFT_W  (     24 )
-#define TP_MOVELEFT_H  (     24 )
+#define TP_MOVELEFT_H  ( 192-24 )
 
 
 // ¶‚ÖˆÚ“®iŠg‘åŽžj
@@ -1611,12 +1611,12 @@ static BOOL CardScaling( TR_CARD_WORK *wk )
     return TRUE;
     break;
 
-  // Šg‘åó‘Ô‚ÌÛ‚É”½‘Î‘¤‚ÌŠg‘å–Ê‚ÉˆÚ“®‚·‚éˆ—
+  // Šg‘åó‘Ô‚ÌÛ‚É¶‘¤‚ÌŠg‘å–Ê‚ÉˆÚ“®‚·‚éˆ—
   case CARDSCALE_MOVE_LEFT_START:
     wk->sub_seq = CARDSCALE_MOVE_LEFT_CALC;
     break;
   case CARDSCALE_MOVE_LEFT_CALC:
-    wk->CardCenterX-=2;
+    wk->CardCenterX-=8;
     if( wk->CardCenterX < TRCARD_LEFT_SCALE_CENTER_POSX){
       wk->CardCenterX = TRCARD_LEFT_SCALE_CENTER_POSX;
       wk->sub_seq = CARDSCALE_MOVE_LEFT_END;
@@ -1625,7 +1625,24 @@ static BOOL CardScaling( TR_CARD_WORK *wk )
   case CARDSCALE_MOVE_LEFT_END:
     wk->ScaleSide ^= 1;
     _blend_win_set(wk->ScaleSide);
-    wk->ScaleMode = 0;
+    return TRUE;
+    break;
+
+  // Šg‘åó‘Ô‚ÌÛ‚É‰E‘¤‚ÌŠg‘å–Ê‚ÉˆÚ“®‚·‚éˆ—
+  case CARDSCALE_MOVE_RIGHT_START:
+    wk->sub_seq = CARDSCALE_MOVE_RIGHT_CALC;
+    break;
+  case CARDSCALE_MOVE_RIGHT_CALC:
+    wk->CardCenterX+=8;
+    if( wk->CardCenterX > TRCARD_RIGHT_SCALE_CENTER_POSX){
+      wk->CardCenterX = TRCARD_RIGHT_SCALE_CENTER_POSX;
+      wk->sub_seq = CARDSCALE_MOVE_RIGHT_END;
+    }
+    break;
+  case CARDSCALE_MOVE_RIGHT_END:
+    wk->ScaleSide ^= 1;
+    _blend_win_set(wk->ScaleSide);
+    return TRUE;
     break;
 
   }
@@ -1980,10 +1997,19 @@ static int large_touch_func( TR_CARD_WORK *wk, int hitNo )
     PMSND_PlaySE( SND_TRCARD_BOOKMARK );
     SetBookMark( wk );
     break;
-  case 9:     // ‰E‚ÖˆÚ“®
-//    CARDSCALE_MOVE_LEFT_START
+  case 10:     // ‰E‚ÖˆÚ“®
+    if(wk->ScaleSide==0){
+      PMSND_PlaySE( SND_TRCARD_ANIME );
+      wk->sub_seq = CARDSCALE_MOVE_RIGHT_START;
+      return TRC_KEY_REQ_SCALE_BUTTON;
+    }
     break;
-  case 10:    // ¶‚ÖˆÚ“®
+  case 11:    // ¶‚ÖˆÚ“®
+    if(wk->ScaleSide==1){
+      PMSND_PlaySE( SND_TRCARD_ANIME );
+      wk->sub_seq = CARDSCALE_MOVE_LEFT_START;
+      return TRC_KEY_REQ_SCALE_BUTTON;
+    }
     break;
   }
   return TRC_KEY_REQ_NONE;
@@ -2044,39 +2070,6 @@ static void normal_sign_func( TR_CARD_WORK *wk )
   }
 }
 
-//----------------------------------------------------------------------------------
-/**
- * @brief ƒTƒCƒ“‚ðŠg‘å‚µ‚Ä•`‚­
- *
- * @param   wk    
- */
-//----------------------------------------------------------------------------------
-static void large_sign_func( TR_CARD_WORK *wk )
-{
-  // ƒTƒCƒ“¸–§”Å
-  static const GFL_UI_TP_HITTBL PaintL_TpRect[] = {
-    { TP_PAINTL_Y, TP_PAINTL_Y+TP_PAINTL_H, TP_PAINTL_X, TP_PAINTL_X+TP_PAINTL_W }, // ƒTƒCƒ“–Ê
-    { GFL_UI_TP_HIT_END, 0, 0, 0 },
-  };
-
-    u32 x,y;
-    if(GFL_UI_TP_HitCont(PaintL_TpRect)==0){
-      if(GFL_UI_TP_GetCont()){
-        GFL_UI_TP_GetPointCont( &x, &y );
-      }
-      // ”ÍˆÍŠOƒ`ƒFƒbƒN
-      if(wk->scrol_point<-(SCORE_LINE_MAX-4)*16){
-        wk->scrol_point = -(SCORE_LINE_MAX-4)*16;
-      }else if(wk->scrol_point>0){
-        wk->scrol_point = 0;
-      }
-      if(wk->old_scrol_point!=wk->scrol_point){
-        TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 1, 1 );
-      }
-      wk->old_scrol_point=wk->scrol_point;
-    }
-  
-}
 
 //----------------------------------------------------------------------------------
 /**
