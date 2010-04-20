@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-16T18:46:33"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-20T11:31:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,9 +337,9 @@
 		</language>
 	</columns>
 
-	<dialog left="455" top="161" right="1160" bottom="786" maximized="no" rayout="Vertical2">
+	<dialog left="92" top="163" right="797" bottom="788" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="821" top="127" right="1294" bottom="525" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -775,13 +775,13 @@
 	</row>
 
 	<row id="msg_wifilobby_054">
-		<language name="JPN" width="216">ボイスチャットを　オンにしました▼</language>
-		<language name="JPN_KANJI" width="216">ボイスチャットを　ＯＮにしました▼</language>
+		<language name="JPN" width="216">ボイスチャットを　オンにしました</language>
+		<language name="JPN_KANJI" width="216">ボイスチャットを　ＯＮにしました</language>
 	</row>
 
 	<row id="msg_wifilobby_055">
-		<language name="JPN" width="216">ボイスチャットを　オフにしました▼</language>
-		<language name="JPN_KANJI" width="216">ボイスチャットを　ＯＦＦにしました▼</language>
+		<language name="JPN" width="216">ボイスチャットを　オフにしました</language>
+		<language name="JPN_KANJI" width="216">ボイスチャットを　ＯＦＦにしました</language>
 	</row>
 
 	<row id="msg_wifilobby_056">
@@ -869,22 +869,22 @@
 
 	<row id="msg_wifilobby_069">
 		<language name="JPN" width="216">この　ともだちと　あそぶ　あいだは
-ボイスチャットが　オンに　なります▼
+ボイスチャットが　オンに　なります[BE:01:ページ切り替え（クリア）]
 この　ともだちの　ぼしゅうに
 おうぼ　しますか？</language>
 		<language name="JPN_KANJI" width="216">この友達と　遊ぶあいだは
-ボイスチャットが　ＯＮに　なります▼
+ボイスチャットが　ＯＮに　なります[BE:01:ページ切り替え（クリア）]
 この友達の　募集に
 応募しますか？</language>
 	</row>
 
 	<row id="msg_wifilobby_070">
 		<language name="JPN" width="216">この　ともだちと　あそぶ　あいだは
-ボイスチャットが　オフに　なります▼
+ボイスチャットが　オフに　なります[BE:01:ページ切り替え（クリア）]
 この　ともだちの　ぼしゅうに
 おうぼ　しますか？</language>
 		<language name="JPN_KANJI" width="216">この友達と　遊ぶあいだは
-ボイスチャットが　ＯＦＦに　なります▼
+ボイスチャットが　ＯＦＦに　なります[BE:01:ページ切り替え（クリア）]
 この友達の　募集に
 応募しますか？</language>
 	</row>
@@ -915,14 +915,14 @@
 しばらく　お待ちください</language>
 	</row>
 
-	<row id="msg_wifilobby_074">
+	<row id="msg_wifilobby_074" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="216">たいせんや　こうかんの　ときの
 ＢＧＭを　オフに　しました▼</language>
 		<language name="JPN_KANJI" width="216">対戦や　交換の　ときの
 ＢＧＭを　ＯＦＦに　しました▼</language>
 	</row>
 
-	<row id="msg_wifilobby_075">
+	<row id="msg_wifilobby_075" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<language name="JPN" width="216">たいせんや　こうかんの　ときの
 ＢＧＭを　オンに　しました▼</language>
 		<language name="JPN_KANJI" width="216">対戦や　交換の　ときの
@@ -1092,9 +1092,9 @@
 
 	<row id="msg_wifilobby_100" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">じょうけんを　みたして　いないので
-たいせん　できません▼</language>
+たいせん　できません</language>
 		<language name="JPN_KANJI" width="216">条件を　満たしていないので
-対戦できません▼</language>
+対戦できません</language>
 	</row>
 
 	<row id="msg_wifilobby_1001" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
@@ -1323,9 +1323,9 @@
 
 	<row id="msg_wifilobby_1032" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
-たいせんを　もうしこんできました[BE:01:ページ切り替え（クリア）]</language>
+たいせんを　もうしこんできました</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
-対戦を　申し込んできました[BE:01:ページ切り替え（クリア）]</language>
+対戦を　申し込んできました</language>
 	</row>
 
 	<row id="msg_wifilobby_1033" back-color="#8080ff,,,,,,,#808080,,,#808080,,,,,,,">
