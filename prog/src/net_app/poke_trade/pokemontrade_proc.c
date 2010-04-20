@@ -1098,10 +1098,10 @@ BOOL POKEMONTRADE_IsEggAndLastBattlePokemonChange(POKEMON_TRADE_WORK* pWork)
 
 static BOOL POKEMONTRADE_IsWazaPokemon(POKEMON_TRADE_WORK* pWork)
 {
-  POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0); //自分のポケモン
-  int waza[4];
-  int i;
   BOOL flg = FALSE;
+  POKEMON_PASO_PARAM* ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox,
+                                                               pWork->selectBoxno,
+                                                               pWork->selectIndex,pWork);
 
   if(pWork->type != POKEMONTRADE_TYPE_IRC){
     return FALSE;
@@ -1109,7 +1109,7 @@ static BOOL POKEMONTRADE_IsWazaPokemon(POKEMON_TRADE_WORK* pWork)
   if(pWork->selectBoxno != pWork->BOX_TRAY_MAX){
     return FALSE;
   }
-  flg = FIELD_SKILL_CHECK_CanTradePoke( PP_GetPPPPointer( pp ),0 );
+  flg = FIELD_SKILL_CHECK_CanTradePoke( ppp,0 );
 
   return !flg;
 }
@@ -1139,10 +1139,10 @@ void POKETRE_MAIN_ChangePokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
       u8 cmd = POKETRADE_FACTOR_EGG;
       bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd);
     }
-    else if(POKEMONTRADE_IsWazaPokemon(pWork)){
-      u8 cmd = POKETRADE_FACTOR_WAZA;
-      bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd);
-    }
+//    else if(POKEMONTRADE_IsWazaPokemon(pWork)){
+//      u8 cmd = POKETRADE_FACTOR_WAZA;
+//      bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd);
+//    }
     else if(POKEMONTRADE_IsMailPokemon(pWork)){
       u8 cmd = POKETRADE_FACTOR_MAIL;
       bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd);
@@ -1602,6 +1602,29 @@ static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
 
 
 
+//ひでんわざ検査に引っかかった
+static void _notWazaChangePoke2(POKEMON_TRADE_WORK* pWork)
+{
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
+  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+    POKETRADE_MESSAGE_WindowClear(pWork);
+    _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
+  }
+}
+
+
+
+//ひでんわざ検査に引っかかった
+static void _notWazaChangePoke(POKEMON_TRADE_WORK* pWork)
+{
+  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_03, pWork->pMessageStrBuf );
+  POKETRADE_MESSAGE_WindowOpen(pWork);
+  _CHANGE_STATE(pWork,_notWazaChangePoke2);
+}
+
+
 //自分画面にステータス表示 相手に見せるかどうか待ち
 static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
 {
@@ -1696,7 +1719,14 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
     if(selectno==0){         //相手に見せる
       pWork->selectIndex = pWork->underSelectIndex;
       pWork->selectBoxno = pWork->underSelectBoxno;
-      if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
+
+      if(POKEMONTRADE_IsWazaPokemon(pWork)){// 交換できない技もち
+        POKE_GTS_VisibleFaceIcon(pWork,TRUE);
+        pWork->selectIndex = -1;
+        pWork->selectBoxno = -1;
+        _CHANGE_STATE(pWork,_notWazaChangePoke);
+      }
+      else if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
         POKMEONTRADE2D_IconGray(pWork, pWork->pSelectCLWK, TRUE);
         _CHANGE_STATE(pWork, _changeMenuOpen);
       }
@@ -2945,34 +2975,33 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
   }
 
 
-  if( !GFL_UI_TP_GetCont() ){ //離した
+  if( !GFL_UI_TP_GetCont() ){ //離した  なげる
     if(pWork->touchON && pWork->bUpVec && pWork->pCatchCLWK){
-      TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, TRUE);
-      TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, TRUE);
       pWork->touchON = FALSE;
       pWork->bUpVec = FALSE;
-      PMSND_PlaySystemSE(POKETRADESE_UPPOKE);
       pWork->underSelectBoxno  = pWork->workBoxno;
       pWork->underSelectIndex = pWork->workPokeIndex;
       pWork->selectIndex = pWork->underSelectIndex;
       pWork->selectBoxno = pWork->underSelectBoxno;
-   //   if(!POKEMONTRADEPROC_IsTriSelect(pWork)){        // 選択したポケモンを投げるところ
+      if(POKEMONTRADE_IsWazaPokemon(pWork)){// 交換できない技もち
+//        POKE_GTS_VisibleFaceIcon(pWork,TRUE);
+        _CatchPokemonRelease(pWork);
+        pWork->underSelectIndex = -1;
+        pWork->underSelectBoxno = -1;
+        pWork->selectIndex = -1;
+        pWork->selectBoxno = -1;
+        _CHANGE_STATE(pWork,_notWazaChangePoke);
+      }
+      else{
         pWork->pCatchCLWK = NULL;
+        TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, TRUE);
+        TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, TRUE);
+//        PMSND_PlaySystemSE(POKETRADESE_UPPOKE);
         POKEMONTRADE_StartSucked(pWork);
         PMSND_PlaySE( POKETRADESE_THROW );
         _CHANGE_STATE(pWork, _POKE_SetAndSendData);
-        return;
-  //    }
-//      else if((POKEMONTRADEPROC_IsTriSelect(pWork)) &&  //GTSの場合 選択してあるポケモンだと動作が違う
-  //            (-1 != POKE_GTS_IsSelect(pWork,pWork->underSelectBoxno,pWork->underSelectIndex ))){
-    //    _CHANGE_STATE(pWork, POKE_GTS_DeletePokemonState);
-      //  return;
-//      }
-  //    else if(POKE_GTS_PokemonsetAndSendData(pWork,pWork->selectIndex,pWork->selectBoxno)){  //記録
-    //    _CatchPokemonPositionRewind(pWork);
-//      }
-  //    pWork->underSelectIndex = -1;
-    //  pWork->underSelectBoxno = -1;
+      }
+      return;
     }
     else if(pWork->touchON && pWork->pCatchCLWK && pWork->bStatusDisp){
       bDecided = TRUE;

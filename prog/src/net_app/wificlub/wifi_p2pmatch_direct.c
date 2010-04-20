@@ -423,6 +423,7 @@ static int _playerDirectSubFailed( WIFIP2PMATCH_WORK *wk, int seq )
   }
   else{
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1010, FALSE);
+    wk->timer = 120;
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUB3);
   }
   return seq;
@@ -440,7 +441,9 @@ static int _playerDirectSubFailed( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectSub3( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  if(GFL_UI_KEY_GetTrg()){
+  wk->timer--;
+
+  if( wk->timer < 0){
     wk->command = WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1;
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
   }
@@ -945,7 +948,14 @@ static int _playerDirectBattleDecide( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE5);
   }
   _friendNameExpand(wk,  wk->friendNo - 1);
-  WifiP2PMatchMessagePrint(wk, msg_wifilobby_014, FALSE);
+  if(wk->pParentWork->btalk){
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_014, FALSE);
+    WifiP2PMatchMessage_TimeIconStart(wk);
+  }
+  else{
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
+    WifiP2PMatchMessage_TimeIconStart(wk);
+  }
 
 //  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
   return seq;
@@ -1069,12 +1079,12 @@ static int _playerDirectBattleGO_12( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectBattleGO_13( WIFIP2PMATCH_WORK *wk, int seq )
 {
-//  if(GFL_UI_KEY_GetTrg()){
+  if(GFL_UI_KEY_GetTrg()){
     _Menu_RegulationDelete(wk);
  //   _Menu_RegulationDelete(wk->SysMsgWin);
 //    wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO_14);
- // }
+  }
   return seq;
 }
 
@@ -1503,9 +1513,7 @@ static int _playerDirectEnd( WIFIP2PMATCH_WORK *wk, int seq )
   else{
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1016, FALSE);
   }
-//    WifiP2PMatchMessage_CursorStart(wk);
- // _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END_KEYWAIT);
-  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END3);
   return seq;
 }
 
@@ -1568,7 +1576,7 @@ static int _playerDirectEnd3( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   }
   if(GFL_UI_KEY_GetTrg()){
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT2);
   }
   return seq;
 }

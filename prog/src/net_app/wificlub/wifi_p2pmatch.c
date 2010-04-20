@@ -819,6 +819,7 @@ static int _parentModeSelectMenuInit2( WIFIP2PMATCH_WORK *wk, int seq );
 static int _parentModeCallMenuSendD( WIFIP2PMATCH_WORK *wk, int seq );
 static int _DirectConnectWait( WIFIP2PMATCH_WORK *wk, int seq  );
 static int _DirectConnectWait2( WIFIP2PMATCH_WORK *wk, int seq  );
+static int WifiP2PMatch_Disconnect2(WIFIP2PMATCH_WORK *wk, int seq);
 
 
 
@@ -1006,6 +1007,8 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectEnd3, //WIFIP2PMATCH_PLAYERDIRECT_END3
   _playerDirectSub3, //WIFIP2PMATCH_PLAYERDIRECT_SUB3
   _playerDirectSubFailed, //WIFIP2PMATCH_PLAYERDIRECT_SUB_FAILED
+  WifiP2PMatch_Disconnect2, //WIFIP2PMATCH_MODE_DISCONNECT2
+
 
 };
 
@@ -3828,6 +3831,42 @@ static int WifiP2PMatch_BattleDisconnect(WIFIP2PMATCH_WORK *wk, int seq)
   return seq;
 }
 
+
+
+
+//WIFIP2PMATCH_MODE_DISCONNECT2
+static int WifiP2PMatch_Disconnect2(WIFIP2PMATCH_WORK *wk, int seq)
+{
+
+  // 話しかけている友達ナンバー取得
+  WIFI_MCR_NpcPauseOff( &wk->matchroom, MCRSYS_GetMoveObjWork( wk, WIFI_MCR_PlayerSelect( &wk->matchroom ) ) );
+
+  EndMessageWindowOff(wk);
+  _myStatusChange(wk,  WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
+
+  GFL_NET_StateWifiMatchEnd(TRUE);
+  // 通信状態を元に戻す
+  _GFL_NET_InitAndStruct(wk,FALSE);
+
+  if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == FALSE ){
+    _CHANGESTATE(wk,WifiP2PMatchFriendListStart(wk,FALSE));
+  }
+  else{
+    // VCHATをオリジナルに戻す
+    _myVChatStatusOrgSet( wk );
+    _userDataInfoDisp(wk);
+
+    wk->preConnect = -1;
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+    // 主人公の動作を許可
+    FriendRequestWaitOff( wk );
+  }
+  return seq;
+}
+
+
+
+
 //WIFIP2PMATCH_MODE_DISCONNECT
 static int WifiP2PMatch_Disconnect(WIFIP2PMATCH_WORK *wk, int seq)
 {
@@ -3883,6 +3922,10 @@ static int WifiP2PMatch_Disconnect(WIFIP2PMATCH_WORK *wk, int seq)
   }
   return seq;
 }
+
+
+
+
 
 static int WifiP2PMatch_BattleConnectInit( WIFIP2PMATCH_WORK *wk, int seq )    // WIFIP2PMATCH_MODE_BATTLE_CONNECT_INIT
 {
