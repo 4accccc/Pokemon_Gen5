@@ -190,7 +190,7 @@ EVENT_START		ev_bg_d20r0501_bg19_01
 		_SYSWIN_CLOSE()
 
 		//âÊñ ÇóhÇÁÇ∑ÉfÉÇÇì¸ÇÍÇÈ
-		_SHAKE_CAMERA(0,1,3,6,0,0,0,0)
+		_SHAKE_CAMERA(0,1,3,6,1,0,1,5)
 
 		_SE_PLAY( SEQ_SE_FLD_126 )
 
@@ -214,7 +214,8 @@ EVENT_END
 //		ÉAÉjÉÅ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_left_move
-	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_L_32F,1
+	_ANIME_DATA	AC_WALK_L_16F,2
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/

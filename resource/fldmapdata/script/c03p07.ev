@@ -324,7 +324,7 @@ EVENT_START		ev_pos_c03p07_plazma_01
 	_CAMERA_START()		//カメラ操作開始
     _CAMERA_PURGE()		//対象物とカメラのバインドを解く
 	
-	_CAMERA_MOVE( 6917,0,835568,753664,0,2195456,40 )
+	_CAMERA_MOVE( 6917,0,802816,753664,0,2195456,40 )
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	_OBJ_ANIME( C03P07_LEADER3_01, anm_stay_d )

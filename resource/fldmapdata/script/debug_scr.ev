@@ -433,7 +433,8 @@ EVENT_START   ev_debug_suginaka
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_07, 3 )	//Ｎ戦前
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_10, 4 )	//ゲーチス戦前
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_09, 5 )	//D02プラズマ団
-		_BMPMENU_MAKE_LIST( msg_debug_00, 6 )	//やめる
+		_BMPMENU_MAKE_LIST( msg_debug_suginaka_12, 6 )	//C03のゲーチスイベント
+		_BMPMENU_MAKE_LIST( msg_debug_00, 100 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
 	
@@ -537,6 +538,27 @@ EVENT_START   ev_debug_suginaka
 
 			//マップチェンジ
 			_MAP_CHANGE( ZONE_ID_D02, 593, 584, DIR_LEFT )
+
+		ELSIF $SCWK_ANSWER == 6 THEN
+		
+			//プラズマ団イベント終了
+			$WK_SCENE_C03P07 = 3
+		
+			//ビル内にゲーチスその他出現＆イベント開始
+			$WK_SCENE_C03R1101 = 1
+			_FLAG_RESET( FV_C03R1101_PLASMA )
+		
+			//C03P07のイベント関連OBJフラグセット
+			_FLAG_SET( FV_C03P07_SUPPORT_LEADER8 )
+			_FLAG_SET( FV_C03P07_PLASMA_LEADER3 )
+		
+			//C03P15からアイリス・サポート削除
+			_FLAG_SET( FV_C03P15_SUPPORT_LEADER8 )
+
+			$SCWK_TEMP0 = 428
+
+			//マップチェンジ
+			_MAP_CHANGE( ZONE_ID_C03P07, 9, 33, DIR_LEFT )
 
 		ELSE
 

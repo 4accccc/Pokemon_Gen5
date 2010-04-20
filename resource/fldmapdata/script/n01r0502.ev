@@ -525,47 +525,46 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 {
 	DEFINE_LOCAL	LWK_ROM
 	_GET_ROM_VERSION( LWK_ROM )
-		IF $LWK_ROM == VERSION_WHITE THEN
+	IF $LWK_ROM == VERSION_WHITE THEN
 			
-			//戦闘呼び出し　全滅処理が未定
-			_TRAINER_BTL_SET( TRID_BOSS_2_06, 0 )
-			//敗戦チェック
-			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		//戦闘呼び出し　全滅処理が未定
+		_TRAINER_BTL_SET( TRID_BOSS_2_06, 0 )
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		
-			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
 		
-				//可変OBJの確定
-				$OBJCHRWORK0 = SHIN_A	//シン
-				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-		
-			ELSE
-		
-				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-		
-			ENDIF
+			//可変OBJの確定
+			$OBJCHRWORK0 = SHIN_A	//シン
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 		
 		ELSE
-			//戦闘呼び出し　全滅処理が未定
-			_TRAINER_BTL_SET( TRID_BOSS_2_07, 0 )
-			//敗戦チェック
-			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		
-			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		
-				//可変OBJの確定
-				$OBJCHRWORK0 = MU_A		//ム
-				_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-		
-			ELSE
-		
-				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-		
-			ENDIF
-			
 		ENDIF
-			_VOICE_WAIT()
+		
+	ELSE
+		//戦闘呼び出し　全滅処理が未定
+		_TRAINER_BTL_SET( TRID_BOSS_2_07, 0 )
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
+		
+			//可変OBJの確定
+			$OBJCHRWORK0 = MU_A		//ム
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		
+		ELSE
+		
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	
+		ENDIF
+			
+	ENDIF
 }
 
 	//Ｎ後ずさり
