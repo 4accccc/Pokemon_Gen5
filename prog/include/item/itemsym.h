@@ -418,8 +418,6 @@
 #define ITEM_HIDENMASIN04		( 423 )		// ひでんマシン０４
 #define ITEM_HIDENMASIN05		( 424 )		// ひでんマシン０５
 #define ITEM_HIDENMASIN06		( 425 )		// ひでんマシン０６
-#define ITEM_HIDENMASIN07		( 426 )		// ひでんマシン０７
-#define ITEM_HIDENMASIN08		( 427 )		// ひでんマシン０８
 #define ITEM_TANKENSETTO		( 428 )		// たんけんセット
 #define ITEM_TAKARABUKURO		( 429 )		// たからぶくろ
 #define ITEM_RUURUBUKKU		( 430 )		// ルールブック
@@ -613,19 +611,13 @@
 #define ITEM_WAZAMASIN93		( 618 )		// わざマシン９３
 #define ITEM_WAZAMASIN94		( 619 )		// わざマシン９４
 #define ITEM_WAZAMASIN95		( 620 )		// わざマシン９５
-#define ITEM_WAZAMASIN96		( 621 )		// わざマシン９６
-#define ITEM_WAZAMASIN97		( 622 )		// わざマシン９７
-#define ITEM_WAZAMASIN98		( 623 )		// わざマシン９８
-#define ITEM_WAZAMASIN99		( 624 )		// わざマシン９９
-#define ITEM_WAZAMASIN100		( 625 )		// わざマシン１００
-#define ITEM_WAZAMASIN101		( 626 )		// わざマシン１０１
-#define ITEM_RAIBUKYASUTAA		( 627 )		// ライブキャスター
-#define ITEM_GODDOSUTOON		( 628 )		// ゴッドストーン
-#define ITEM_HAITATUBUTU1		( 629 )		// はいたつぶつ１
-#define ITEM_HAITATUBUTU2		( 630 )		// はいたつぶつ２
-#define ITEM_HAITATUBUTU3		( 631 )		// はいたつぶつ３
+#define ITEM_RAIBUKYASUTAA		( 621 )		// ライブキャスター
+#define ITEM_GODDOSUTOON		( 622 )		// ゴッドストーン
+#define ITEM_HAITATUBUTU1		( 623 )		// はいたつぶつ１
+#define ITEM_HAITATUBUTU2		( 624 )		// はいたつぶつ２
+#define ITEM_HAITATUBUTU3		( 625 )		// はいたつぶつ３
 
-#define ITEM_DATA_MAX		( 631 )		// アイテム最大数
+#define ITEM_DATA_MAX		( 625 )		// アイテム最大数
 
 #define ITEM_MAIL_MAX	( 12 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数

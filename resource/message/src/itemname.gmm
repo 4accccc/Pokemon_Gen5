@@ -2261,13 +2261,13 @@
 	</row>
 
 	<row id="ITEMNAME_426">
-		<language name="JPN" width="256">ひでんマシン０７</language>
-		<language name="JPN_KANJI" width="256">ひでんマシン０７</language>
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="ITEMNAME_427">
-		<language name="JPN" width="256">ひでんマシン０８</language>
-		<language name="JPN_KANJI" width="256">ひでんマシン０８</language>
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="ITEMNAME_428">
@@ -3236,58 +3236,58 @@
 	</row>
 
 	<row id="ITEMNAME_621">
-		<language name="JPN" width="256">わざマシン９６</language>
-		<language name="JPN_KANJI" width="256">わざマシン９６</language>
-	</row>
-
-	<row id="ITEMNAME_622">
-		<language name="JPN" width="256">わざマシン９７</language>
-		<language name="JPN_KANJI" width="256">わざマシン９７</language>
-	</row>
-
-	<row id="ITEMNAME_623">
-		<language name="JPN" width="256">わざマシン９８</language>
-		<language name="JPN_KANJI" width="256">わざマシン９８</language>
-	</row>
-
-	<row id="ITEMNAME_624">
-		<language name="JPN" width="256">わざマシン９９</language>
-		<language name="JPN_KANJI" width="256">わざマシン９９</language>
-	</row>
-
-	<row id="ITEMNAME_625">
-		<language name="JPN" width="256">わざマシン１００</language>
-		<language name="JPN_KANJI" width="256">わざマシン１００</language>
-	</row>
-
-	<row id="ITEMNAME_626">
-		<language name="JPN" width="256">わざマシン１０１</language>
-		<language name="JPN_KANJI" width="256">わざマシン１０１</language>
-	</row>
-
-	<row id="ITEMNAME_627">
 		<language name="JPN" width="256">ライブキャスター</language>
 		<language name="JPN_KANJI" width="256">ライブキャスター</language>
 	</row>
 
-	<row id="ITEMNAME_628">
+	<row id="ITEMNAME_622">
 		<language name="JPN" width="256">ゴッドストーン</language>
 		<language name="JPN_KANJI" width="256">ゴッドストーン</language>
 	</row>
 
-	<row id="ITEMNAME_629">
+	<row id="ITEMNAME_623">
 		<language name="JPN" width="256">はいたつぶつ１</language>
 		<language name="JPN_KANJI" width="256">はいたつぶつ１</language>
 	</row>
 
-	<row id="ITEMNAME_630">
+	<row id="ITEMNAME_624">
 		<language name="JPN" width="256">はいたつぶつ２</language>
 		<language name="JPN_KANJI" width="256">はいたつぶつ２</language>
 	</row>
 
-	<row id="ITEMNAME_631">
+	<row id="ITEMNAME_625">
 		<language name="JPN" width="256">はいたつぶつ３</language>
 		<language name="JPN_KANJI" width="256">はいたつぶつ３</language>
+	</row>
+
+	<row id="ITEMNAME_626">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_627">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_628">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_629">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_630">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_631">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="ITEMNAME_632">

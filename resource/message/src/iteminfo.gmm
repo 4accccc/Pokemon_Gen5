@@ -3961,21 +3961,21 @@
 	</row>
 
 	<row id="ITEMINFO_426">
-		<language name="JPN" width="256">はげしく　うずまく　みずの　なかに
-あいてを　とじこめて　こうげきする。
-うずのうえを　とおることも　できる。</language>
-		<language name="JPN_KANJI" width="256">はげしく　うずまく　みずの　なかに
-相手を　とじこめて　攻撃する。
-渦の上を　通ることも　できる。</language>
+		<language name="JPN" width="256">ー
+ー
+ー</language>
+		<language name="JPN_KANJI" width="256">ー
+ー
+ー</language>
 	</row>
 
 	<row id="ITEMINFO_427">
-		<language name="JPN" width="256">とっしん　こうげきで　こんらん
-させることが　ある。　ごつごつした
-いわを　のぼることも　できる。</language>
-		<language name="JPN_KANJI" width="256">とっしん　攻撃で　こんらん
-させることが　ある。　ごつごつした
-いわを　のぼることも　できる。</language>
+		<language name="JPN" width="256">ー
+ー
+ー</language>
+		<language name="JPN_KANJI" width="256">ー
+ー
+ー</language>
 	</row>
 
 	<row id="ITEMINFO_428">
@@ -5716,60 +5716,6 @@
 	</row>
 
 	<row id="ITEMINFO_621">
-		<language name="JPN" width="256">おおきな　なみを　おこして
-すべての　ポケモンを　こうげきする。
-みずのうえを　すすむことも　できる。</language>
-		<language name="JPN_KANJI" width="256">おおきな　なみを　おこして
-すべての　ポケモンを　攻撃する。
-水の上を　進むことも　できる。</language>
-	</row>
-
-	<row id="ITEMINFO_622">
-		<language name="JPN" width="256">１ターンめで　そらへ　とびあがって
-２ターンめで　こうげきする。
-しっているまちに　いどうも　できる。</language>
-		<language name="JPN_KANJI" width="256">１ターンめで　そらへ　とびあがって
-２ターンめで　攻撃する。
-知っている街に　移動も　できる。</language>
-	</row>
-
-	<row id="ITEMINFO_623">
-		<language name="JPN" width="256">１ターンめで　もぐり　２ターンめに
-うきあがって　こうげきする。うみの
-なかに　もぐる　ことも　できる。</language>
-		<language name="JPN_KANJI" width="256">１ターンめで　もぐり　２ターンめに
-うきあがって　攻撃する。海の
-中に　もぐることも　できる。</language>
-	</row>
-
-	<row id="ITEMINFO_624">
-		<language name="JPN" width="256">たきを　さかのぼるような　すさまじい
-いきおいで　とっしん　こうげきする。
-たきを　のぼることも　できる。</language>
-		<language name="JPN_KANJI" width="256">たきを　さかのぼるような　すさまじい
-いきおいで　とっしん　攻撃する。
-たきを　のぼることも　できる。</language>
-	</row>
-
-	<row id="ITEMINFO_625">
-		<language name="JPN" width="256">いわを　くだくような　パンチで
-こうげきする。　ひびわれた　いわを
-こわすことも　できる。</language>
-		<language name="JPN_KANJI" width="256">いわを　くだくような　パンチで
-攻撃する。　ひびわれた　いわを
-壊すことも　できる。</language>
-	</row>
-
-	<row id="ITEMINFO_626">
-		<language name="JPN" width="256">まくしたてる　ように　どなりつけて
-あいての　とくこうを　さげる。
-</language>
-		<language name="JPN_KANJI" width="256">まくしたてる　ように　どなりつけて
-相手の　特攻を　さげる。
-</language>
-	</row>
-
-	<row id="ITEMINFO_627">
 		<language name="JPN" width="256">さいだい　４にんで　つうわができる
 テレビきのうつきの
 さいしんがた　トランシーバー。</language>
@@ -5778,7 +5724,7 @@
 最新型トランシーバー。</language>
 	</row>
 
-	<row id="ITEMINFO_628">
+	<row id="ITEMINFO_622">
 		<language name="JPN" width="256">まぼろしの　いし。
 
 </language>
@@ -5787,31 +5733,85 @@
 </language>
 	</row>
 
-	<row id="ITEMINFO_629">
+	<row id="ITEMINFO_623">
 		<language name="JPN" width="256">キャモメが　はいたつ　している
 たいせつな　てがみ。
 </language>
 		<language name="JPN_KANJI" width="256">キャモメが　配達している
 たいせつな　手紙。
 </language>
+	</row>
+
+	<row id="ITEMINFO_624">
+		<language name="JPN" width="256">キャモメが　はいたつ　している
+たいせつな　てがみ。
+</language>
+		<language name="JPN_KANJI" width="256">キャモメが　配達している
+たいせつな　手紙。
+</language>
+	</row>
+
+	<row id="ITEMINFO_625">
+		<language name="JPN" width="256">キャモメが　はいたつ　している
+たいせつな　てがみ。
+</language>
+		<language name="JPN_KANJI" width="256">キャモメが　配達している
+たいせつな　手紙。
+</language>
+	</row>
+
+	<row id="ITEMINFO_626">
+		<language name="JPN" width="256">ー
+ー
+ー</language>
+		<language name="JPN_KANJI" width="256">ー
+ー
+ー</language>
+	</row>
+
+	<row id="ITEMINFO_627">
+		<language name="JPN" width="256">ー
+ー
+ー</language>
+		<language name="JPN_KANJI" width="256">ー
+ー
+ー</language>
+	</row>
+
+	<row id="ITEMINFO_628">
+		<language name="JPN" width="256">ー
+ー
+ー</language>
+		<language name="JPN_KANJI" width="256">ー
+ー
+ー</language>
+	</row>
+
+	<row id="ITEMINFO_629">
+		<language name="JPN" width="256">ー
+ー
+ー</language>
+		<language name="JPN_KANJI" width="256">ー
+ー
+ー</language>
 	</row>
 
 	<row id="ITEMINFO_630">
-		<language name="JPN" width="256">キャモメが　はいたつ　している
-たいせつな　てがみ。
-</language>
-		<language name="JPN_KANJI" width="256">キャモメが　配達している
-たいせつな　手紙。
-</language>
+		<language name="JPN" width="256">ー
+ー
+ー</language>
+		<language name="JPN_KANJI" width="256">ー
+ー
+ー</language>
 	</row>
 
 	<row id="ITEMINFO_631">
-		<language name="JPN" width="256">キャモメが　はいたつ　している
-たいせつな　てがみ。
-</language>
-		<language name="JPN_KANJI" width="256">キャモメが　配達している
-たいせつな　手紙。
-</language>
+		<language name="JPN" width="256">ー
+ー
+ー</language>
+		<language name="JPN_KANJI" width="256">ー
+ー
+ー</language>
 	</row>
 
 	<row id="ITEMINFO_632">

@@ -104,15 +104,7 @@ static const u16 MachineNo[] = {
 	WAZANO_KAIRIKI,		// 096: かいりき
 	WAZANO_TAKINOBORI,		// 097: たきのぼり
 	WAZANO_DAIBINGU,		// 098: ダイビング
-	WAZANO_UZUSIO,		// 099: うずしお
-	WAZANO_ROKKUKURAIMU,		// 100: ロッククライム
-	WAZANO_WAIRUDOBORUTO,		// 101: ワイルドボルト
-	WAZANO_IWAKUDAKI,		// 102: いわくだき
-	WAZANO_BAAKUAUTO,		// 103: バークアウト
-	WAZANO_NAMINORI,		// 104: なみのり
-	WAZANO_SORAWOTOBU,		// 105: そらをとぶ
-	WAZANO_DAIBINGU,		// 106: ダイビング
-	WAZANO_TAKINOBORI,		// 107: たきのぼり
-	WAZANO_IWAKUDAKI,		// 108: いわくだき
-	WAZANO_BAAKUAUTO,		// 109: バークアウト
+	WAZANO_WAIRUDOBORUTO,		// 099: ワイルドボルト
+	WAZANO_IWAKUDAKI,		// 100: いわくだき
+	WAZANO_BAAKUAUTO,		// 101: バークアウト
 };
