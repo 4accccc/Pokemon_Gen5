@@ -69,7 +69,6 @@ EVENT_START   ev_pos_r10_rival_01
 	//ライバル：アテグさん…チャンピオンリーグに向かったんだって？
 	_BALLOONWIN_OBJMSG_POS( msg_r10_black_01 , R10_RIVAL_01 , POS_UL )
 	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
 	
 	//はい
 	IF $SCWK_ANSWER == SCR_YES THEN
@@ -82,8 +81,91 @@ EVENT_START   ev_pos_r10_rival_01
 	_BALLOONWIN_CLOSE()
 	ENDIF
 	
-	//ライバル：ぼくは つよくなりたかったくせに
+	//ライバル隣接
+	_OBJ_ANIME( R10_RIVAL_01 , anm_r10_rival_restore_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//【仮】戦闘処理
+	_BLACK_OUT() 
+	_DISP_FADE_END_CHECK()
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+	
+	/*
+		//ライバルと戦闘（持ちタイプで分岐）
+	
+	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+		//最初の３匹で草タイプを選択した時の処理
+		_TRAINER_BTL_SET( TRID_RIVAL_19, 0 )
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_OBJ_ADD(D07_CHAMPION_01)
+			_TRAINER_WIN()
+		ELSE
+			//======================================//
+			//D07OBJ配置初期化
+			_FLAG_SET(FV_D07_RIVAL_01)
+			//======================================//
+			_TRAINER_LOSE()
+		ENDIF
+
+	ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN	
+		//最初の３匹で炎タイプを選択した時の処理
+		_TRAINER_BTL_SET( TRID_RIVAL_20, 0 )
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_OBJ_ADD(D07_CHAMPION_01)
+			_TRAINER_WIN()
+		ELSE
+			//======================================//
+			//D07OBJ配置初期化
+			_FLAG_SET(FV_D07_RIVAL_01)
+			//======================================//
+			_TRAINER_LOSE()
+		ENDIF
+		
+	ELSE
+		//最初の３匹で水タイプを選択した時の処理
+		_TRAINER_BTL_SET( TRID_RIVAL_21, 0 )
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_OBJ_ADD(D07_CHAMPION_01)
+			_TRAINER_WIN()
+		ELSE
+			//======================================//
+			//D07OBJ配置初期化
+			_FLAG_SET(FV_D07_RIVAL_01)
+			//======================================//
+			_TRAINER_LOSE()
+		ENDIF
+		
+	ENDIF
+	*/
+	
+	//ライバル：…すごいねきみは
 	_BALLOONWIN_OBJMSG_POS( msg_r10_black_04 , R10_RIVAL_01 , POS_UL )
+	_BALLOONWIN_CLOSE()
+	
+	//ライバルその場歩き
+	_OBJ_ANIME( R10_RIVAL_01 , anm_r10_rival_restore_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//システムメッセージ：回復させた
+	_SE_PLAY( SEQ_SE_RECOVERY )
+	_SYSWIN_MSG( msg_r10_black_04a, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	_SE_WAIT()
+	
+	//ライバル戻る
+	_OBJ_ANIME( R10_RIVAL_01 , anm_r10_rival_restore_03 )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：…すごいねきみは
+	_BALLOONWIN_OBJMSG_POS( msg_r10_black_04b , R10_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//サポート：こんなことしかできないけれど
@@ -189,6 +271,7 @@ _ANIME_LABEL	anm_r10_support_come
 //	R10ライバル心配イベント：プレイヤー振り向くz117
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r10_player_turn_z117
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_STAY_WALK_L_8F,0
@@ -198,17 +281,41 @@ _ANIME_LABEL	anm_r10_player_turn_z117
 //	R10ライバル心配イベント：プレイヤー振り向くz118
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r10_player_turn_z118
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	R10ライバル心配イベント：プレイヤー振り向くz119
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r10_player_turn_z119
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：ライバル隣接して回復してくれる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_rival_restore_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：ライバル隣接して回復してくれる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_rival_restore_02
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：ライバル隣接して回復してくれる（戻る）
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_rival_restore_03
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -223,10 +330,9 @@ _ANIME_LABEL	anm_r10_support_gift_01
 //	R10ライバル心配イベント：サポート隣接してアイテムくれる02
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r10_support_gift_02
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------

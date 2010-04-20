@@ -92,6 +92,7 @@ EVENT_START   ev_pos_c08r0601_informationw_02
 	
 	//INFO‚¨Žo‚³‚ñŒÄ‚Ñ‚Æ‚ß
 	_BALLOONWIN_OBJMSG( msg_c08r0601_infomationw_03 , C08R0601_INFORMATIONW_01 )
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
 	//========================================//

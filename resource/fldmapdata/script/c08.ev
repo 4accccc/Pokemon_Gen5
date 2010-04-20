@@ -1091,7 +1091,6 @@ EVENT_START   ev_scene_c08_gymclear_01
 
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
-	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 	//カメラ操作
@@ -1106,11 +1105,11 @@ EVENT_START   ev_scene_c08_gymclear_01
 	_BALLOONWIN_OBJMSG_WB( msg_c08_hakase2_00w , msg_c08_hakase2_00b , MMDL_ID_EVENTOBJ_00 , POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_c08_player_to_hakase2_01 )
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c08_hakase2_to_player_01 )
 	_OBJ_ANIME_WAIT()
 	
 	//自機にカメラを戻す
-	_CAMERA_DEF_MOVE (8) 
+	_CAMERA_DEF_MOVE (16) 
 	_CAMERA_WAIT_MOVE()
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
@@ -1129,11 +1128,27 @@ EVENT_START   ev_scene_c08_gymclear_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_c08_player_look_hakase2_r )
 	_OBJ_ANIME_WAIT()
 	
-	//連れ歩き開始
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c08_hakase2_lead_02 )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_c08_hakase2_lead_02 )
-	_OBJ_ANIME_WAIT()
+	{
 	
+	//バージョンチェック
+	DEFINE_LOCAL LCW_VERSION
+	_GET_ROM_VERSION ( LCW_VERSION ) 
+	
+	//whiteVER
+	IF $LCW_VERSION == VERSION_WHITE THEN
+		//連れ歩き開始
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c08_hakase2_lead_02w )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_c08_hakase2_lead_02w )
+		_OBJ_ANIME_WAIT()
+		
+	//blackVER
+	ELSE
+		//連れ歩き開始
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c08_hakase2_lead_02b )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_c08_hakase2_lead_02b )
+		_OBJ_ANIME_WAIT()
+	ENDIF
+	}
 	//アララギ娘：あのゲートをくぐり
 	_BALLOONWIN_OBJMSG(msg_c08_hakase2_03,MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
@@ -1196,10 +1211,10 @@ _ANIME_LABEL	anm_c08_hakase2_gyoe
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	アララギ娘誘導イベント：主人公二歩前へ
+//	アララギ娘誘導イベント：アララギ娘二歩前へ
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_c08_player_to_hakase2_01
-	_ANIME_DATA	AC_WALK_D_8F,2
+_ANIME_LABEL	anm_c08_hakase2_to_player_01
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -1221,9 +1236,18 @@ _ANIME_LABEL	anm_c08_player_look_hakase2_r
 //--------------------------------------------------------------
 //	アララギ娘誘導イベント：連れ歩き開始
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_c08_hakase2_lead_02
+_ANIME_LABEL	anm_c08_hakase2_lead_02w
+	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	AC_WALK_R_8F,25
 	_ANIME_DATA	AC_WALK_U_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	アララギ娘誘導イベント：連れ歩き開始
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_hakase2_lead_02b
+	_ANIME_DATA	AC_WALK_R_8F,25
+	_ANIME_DATA	AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
