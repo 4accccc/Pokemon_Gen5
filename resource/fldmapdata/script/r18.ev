@@ -27,9 +27,26 @@ _EVENT_DATA_END
 /*					クリア後：七賢人						*/
 /************************************************************/
 EVENT_START	ev_r18_sage6_01
-	_TALK_OBJ_START()
+	{
+	DEFINE_LOCAL	lwk_ply_dir
+	_PLAYER_DIR_GET( lwk_ply_dir )
 	
+	_TALK_START_TURN_NOT()
+	
+	//ここは潮のにおいがする…
 	_BALLOONWIN_OBJMSG( msg_r18_sage6_end_01, R18_SAGE6_01 )
+	_MSGWIN_CLOSE()
+	
+	_TURN_HERO_SITE()
+	
+	//…ゲーチスさまは
+	_BALLOONWIN_OBJMSG( msg_r18_sage6_end_01a, R18_SAGE6_01 )
+	
+	//あいてのこころが
+	_BALLOONWIN_OBJMSG( msg_r18_sage6_end_01b, R18_SAGE6_01 )
+	
+	//だがそれもゲーチスさまの
+	_BALLOONWIN_OBJMSG( msg_r18_sage6_end_01c, R18_SAGE6_01 )
 	_MSGWIN_CLOSE()
 	
 	//わざマシン（かげぶんしん）入手
@@ -40,10 +57,6 @@ EVENT_START	ev_r18_sage6_01
 	
 	//イベントBGM開始
 	_START_EVENT_BGM( SEQ_BGM_E_HANDSOME )
-	
-	{
-	DEFINE_LOCAL	lwk_ply_dir
-	_PLAYER_DIR_GET( lwk_ply_dir )
 	
 	//ハンサム出現（話しかけ位置で分岐）
 	IF $lwk_ply_dir == DIR_DOWN || $lwk_ply_dir == DIR_UP THEN
@@ -110,6 +123,9 @@ EVENT_START	ev_r18_sage6_01
 		_BALLOONWIN_OBJMSG( msg_r18_icpo_end_03, MMDL_ID_EVENTOBJ_00 )
 	ELSE
 		//探していない
+		$SCWK_TEMP0 = 5
+		$SCWK_TEMP0 -= $WK_SCENE_AFTER_SAGE
+		_NUMBER( 0, SCWK_TEMP0, 1 )
 		_BALLOONWIN_OBJMSG( msg_r18_icpo_end_02, MMDL_ID_EVENTOBJ_00 )
 	ENDIF
 	_MSGWIN_CLOSE()
@@ -117,17 +133,15 @@ EVENT_START	ev_r18_sage6_01
 	_END_EVENT_BGM()		//イベントBGM停止
 	
 	//画面暗転----------------------------
-	_BLACK_OUT()
+	_BLACK_OUT_SLOW()
 	_DISP_FADE_END_CHECK()
 
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 	_OBJ_DEL( R18_SAGE6_01 )
 	
-	_BLACK_IN()
+	_BLACK_IN_SLOW()
 	_DISP_FADE_END_CHECK()
 	//暗転復帰---------------------------
-	
-	}
 	
 	//========================================//
 	//クリア後七賢人用ワークを加算
@@ -138,6 +152,7 @@ EVENT_START	ev_r18_sage6_01
 	
 	//========================================//
 	
+	}
 EVENT_END
 
 //--------------------------------------------------------------------
