@@ -83,7 +83,6 @@ EVENT_START   ev_scene_c07_hakase1_01
 	ENDIF
 	
 	//リュウラセンの塔を知っているか？
-	_TALK_OBJ_START()
 	_BALLOONWIN_OBJMSG_POS( msg_c07_hakase1_04 , C07_HAKASE1_01 ,POS_DOWN  )
 	_YES_NO_WIN( SCWK_ANSWER )
 	
