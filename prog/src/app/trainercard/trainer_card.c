@@ -172,6 +172,21 @@ enum{
 #define TP_PMS_W  (  223 )
 #define TP_PMS_H  (   31 )
 
+// 右へ移動（拡大時）
+#define TP_MOVERIGHT_X  ( 255-24 )
+#define TP_MOVERIGHT_Y  (      0 )
+#define TP_MOVERIGHT_W  (     24 )
+#define TP_MOVERIGHT_H  ( 192-24 )
+
+// 左へ移動（拡大時）
+#define TP_MOVELEFT_X  (      0 )
+#define TP_MOVELEFT_Y  (      0 )
+#define TP_MOVELEFT_W  (     24 )
+#define TP_MOVELEFT_H  (     24 )
+
+
+// 左へ移動（拡大時）
+
 //============================================
 // 結構広いタッチ範囲定義
 //============================================
@@ -272,7 +287,6 @@ static void DispTrainer(TR_CARD_WORK *wk);
 static void ClearTrainer(TR_CARD_WORK *wk);
 
 static void ResetAffinePlane(void);
-static const u8 GetBadgeLevel(const int inCount);
 
 static void DecodeSignData(const u8 *inRawData, u8 *outData);
 static void EncodeSignData( const u8 *inBmpData, u8 *outData );
@@ -1473,7 +1487,67 @@ static BOOL CardRev( TR_CARD_WORK *wk )
   return rc;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief ハードウェアウインドウと半透明を設定する
+ *
+ * @param   side    
+ */
+//----------------------------------------------------------------------------------
+static void _blend_win_set( int side )
+{
+  // 半透明とウインドウ設定OFF
+  if(side<0){
+    G2S_BlendNone();
+    GXS_SetVisibleWnd(GX_WNDMASK_NONE);
+  // 右側をウインドウ設定
+  }else if(side==0){
+    // 輝度ダウン
+    G2S_SetBlendBrightness(
+      GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3, -8);
+  
+    // ウインドウの設定
+    G2S_SetWnd0Position( 256-32, 0, 256, 192-24);
+    G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG2|GX_WND_PLANEMASK_BG3|
+                            GX_WND_PLANEMASK_OBJ, 1 );
+    G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0|GX_WND_PLANEMASK_BG1|
+                            GX_WND_PLANEMASK_BG2|GX_WND_PLANEMASK_BG3|
+                            GX_WND_PLANEMASK_OBJ,0 );
+    GXS_SetVisibleWnd(GX_WNDMASK_W0);
 
+  // 左側をウインドウ設定
+  }else if(side==1){
+    // 輝度ダウン
+    G2S_SetBlendBrightness(
+      GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3, -8);
+  
+    // ウインドウの設定
+    G2S_SetWnd0Position( 0, 0, 32, 192-24);
+    G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG2|GX_WND_PLANEMASK_BG3|
+                            GX_WND_PLANEMASK_OBJ, 1 );
+    G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0|GX_WND_PLANEMASK_BG1|
+                            GX_WND_PLANEMASK_BG2|GX_WND_PLANEMASK_BG3|
+                            GX_WND_PLANEMASK_OBJ,0 );
+    GXS_SetVisibleWnd(GX_WNDMASK_W0);
+  
+  }
+}
+
+
+enum{
+  CARDSCALE_WIDE_START=0,
+  CARDSCALE_WIDE_CALC,
+  CARDSCALE_WIDE_END,
+  CARDSCALE_SMALL_START,
+  CARDSCALE_SMALL_CALC,
+  CARDSCALE_SMALL_END,
+  CARDSCALE_MOVE_LEFT_START,
+  CARDSCALE_MOVE_LEFT_CALC,
+  CARDSCALE_MOVE_LEFT_END,
+  CARDSCALE_MOVE_RIGHT_START,
+  CARDSCALE_MOVE_RIGHT_CALC,
+  CARDSCALE_MOVE_RIGHT_END,
+};
 
 //----------------------------------------------------------------------------------
 /**
@@ -1489,7 +1563,7 @@ static BOOL CardScaling( TR_CARD_WORK *wk )
   switch(wk->sub_seq){
 
   // 拡大画面へ移行
-  case 0:
+  case CARDSCALE_WIDE_START:
     if(wk->ScaleSide==0){
       wk->CardCenterX = TRCARD_LEFT_SCALE_CENTER_POSX;
       wk->CardCenterY = TRCARD_SCALE_CENTER_POSY;
@@ -1499,7 +1573,7 @@ static BOOL CardScaling( TR_CARD_WORK *wk )
     }
     wk->sub_seq = 1;
     break;
-  case 1:
+  case CARDSCALE_WIDE_CALC:
     wk->CardScaleX+=0x100;
     wk->CardScaleY+=0x100;
     if(wk->CardScaleX >= 0x2000){
@@ -1508,17 +1582,18 @@ static BOOL CardScaling( TR_CARD_WORK *wk )
       wk->sub_seq = 2;
     }
     break;
-  case 2:
+  case CARDSCALE_WIDE_END:
     wk->ScaleMode = 1;
     DispTouchBarObj( wk, wk->is_back ); // タッチバーOBJ周りの再描画
+    _blend_win_set(wk->ScaleSide);
     return TRUE;
     break;
 
   // 通常画面へ移行
-  case 3:
+  case CARDSCALE_SMALL_START:
     wk->sub_seq = 4;
     break;
-  case 4:
+  case CARDSCALE_SMALL_CALC:
     wk->CardScaleX-=0x100;
     wk->CardScaleY-=0x100;
     if(wk->CardScaleX <= 0x1000){
@@ -1527,12 +1602,30 @@ static BOOL CardScaling( TR_CARD_WORK *wk )
       wk->sub_seq = 5;
     }
     break;
-  case 5:
+  case CARDSCALE_SMALL_END:
     wk->CardCenterX = TRCARD_CENTER_POSX;
     wk->CardCenterY = TRCARD_CENTER_POSY;
     wk->ScaleMode = 0;
     DispTouchBarObj( wk, wk->is_back ); // タッチバーOBJ周りの再描画
+    _blend_win_set(-1);
     return TRUE;
+    break;
+
+  // 拡大状態の際に反対側の拡大面に移動する処理
+  case CARDSCALE_MOVE_LEFT_START:
+    wk->sub_seq = CARDSCALE_MOVE_LEFT_CALC;
+    break;
+  case CARDSCALE_MOVE_LEFT_CALC:
+    wk->CardCenterX-=2;
+    if( wk->CardCenterX < TRCARD_LEFT_SCALE_CENTER_POSX){
+      wk->CardCenterX = TRCARD_LEFT_SCALE_CENTER_POSX;
+      wk->sub_seq = CARDSCALE_MOVE_LEFT_END;
+    }
+    break;
+  case CARDSCALE_MOVE_LEFT_END:
+    wk->ScaleSide ^= 1;
+    _blend_win_set(wk->ScaleSide);
+    wk->ScaleMode = 0;
     break;
 
   }
@@ -1887,6 +1980,11 @@ static int large_touch_func( TR_CARD_WORK *wk, int hitNo )
     PMSND_PlaySE( SND_TRCARD_BOOKMARK );
     SetBookMark( wk );
     break;
+  case 9:     // 右へ移動
+//    CARDSCALE_MOVE_LEFT_START
+    break;
+  case 10:    // 左へ移動
+    break;
   }
   return TRC_KEY_REQ_NONE;
 }
@@ -2002,11 +2100,13 @@ static int CheckTouch(TR_CARD_WORK* wk)
     { TP_BADGE_Y,    TP_BADGE_Y+TP_BADGE_H,      TP_BADGE_X,    TP_BADGE_X+TP_BADGE_W },   // バッジ画面ボタン
     { TP_LOUPE_Y,    TP_LOUPE_Y+TP_LOUPE_H,      TP_LOUPE_X,    TP_LOUPE_X+TP_LOUPE_W },   // 精密描画ボタン
     { TP_PEN_Y,      TP_PEN_Y+TP_PEN_H,          TP_PEN_X,      TP_PEN_X+TP_PEN_W },       // ペン先ボタン
-    { TP_BOOKMARK_Y, TP_BOOKMARK_Y+TP_BOOKMARK_H,TP_BOOKMARK_X, TP_BOOKMARK_X+TP_BOOKMARK_W },   // ブックマークボタン
-    { TP_TRTYPE_Y, TP_TRTYPE_Y+TP_TRTYPE_H,TP_TRTYPE_X, TP_TRTYPE_X+TP_TRTYPE_W },          // トレーナータイプ
-    { TP_PERSONAL_Y, TP_PERSONAL_Y+TP_PERSONAL_H,TP_PERSONAL_X, TP_PERSONAL_X+TP_PERSONAL_W },   // 性格
-    { TP_PMS_Y,      TP_PMS_Y+TP_PMS_H,          TP_PMS_X,      TP_PMS_X+TP_PMS_W },        // 簡易会話
-    {GFL_UI_TP_HIT_END,0,0,0}
+    { TP_BOOKMARK_Y, TP_BOOKMARK_Y+TP_BOOKMARK_H,TP_BOOKMARK_X, TP_BOOKMARK_X+TP_BOOKMARK_W },    //ブックマークボタン
+    { TP_TRTYPE_Y, TP_TRTYPE_Y+TP_TRTYPE_H,TP_TRTYPE_X, TP_TRTYPE_X+TP_TRTYPE_W },                //トレーナータイプ
+    { TP_PERSONAL_Y, TP_PERSONAL_Y+TP_PERSONAL_H,TP_PERSONAL_X, TP_PERSONAL_X+TP_PERSONAL_W },    //性格
+    { TP_PMS_Y,      TP_PMS_Y+TP_PMS_H,          TP_PMS_X,      TP_PMS_X+TP_PMS_W },              //簡易会話
+    { TP_MOVERIGHT_Y,TP_MOVERIGHT_Y+TP_MOVERIGHT_H ,TP_MOVERIGHT_X,TP_MOVERIGHT_X+TP_MOVERIGHT_W},//右へ移動(拡大時）
+    { TP_MOVELEFT_Y,TP_MOVELEFT_Y+TP_MOVELEFT_H ,TP_MOVELEFT_X,TP_MOVELEFT_X+TP_MOVELEFT_W},      //左へ移動(拡大時）
+    { GFL_UI_TP_HIT_END, 0, 0, 0 },
   };
   static const GFL_UI_TP_HITTBL Btn_TpRectComm[] = {
     { TP_RETURN_Y,   TP_RETURN_Y+TP_RETURN_H,    TP_RETURN_X,   TP_RETURN_X+TP_RETURN_W }, // 戻る
@@ -2273,34 +2373,6 @@ static void ClearTrainer(TR_CARD_WORK *wk)
   GFL_BG_FillScreen(TRC_BG_TRAINER, 0, 20, 6, 6, 9, GFL_BG_SCRWRT_PALNL);
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * バッジレベル取得
- *
- * @param inCount     磨き回数
- *
- * @return  u8        レベル
- */
-//--------------------------------------------------------------------------------------------
-static const u8 GetBadgeLevel(const int inCount)
-{
-  u8 lv;
-  if ((0<=inCount)&&(inCount<COUNT_LV0)){
-    lv = 0;
-  }else if(inCount<COUNT_LV1){
-    lv =1;
-  }else if (inCount<COUNT_LV2){
-    lv = 2;
-  }else if (inCount<COUNT_LV3){
-    lv = 3;
-  }else if (inCount<COUNT_LV4){
-    lv = 4;
-  }else{
-    GF_ASSERT(0&&"BadgeLevelOver");
-    lv = 0;
-  }
-  return lv;
-}
 
 //--------------------------------------------------------------------------------------------
 /**
