@@ -20,6 +20,7 @@
 #include "poke_tool/poke_memo.h"
 
 #include "system/gfl_use.h"
+#include "print/global_msg.h"
 
 #include "net_app/gts_tool.h"
 
@@ -182,6 +183,13 @@ static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, 
 
   if(pGift->egg){       //タマゴかどうか TRUE＝たまご
     PP_Put(pp, ID_PARA_tamago_flag, TRUE);
+
+    //タマゴの場合、ニックネームに「タマゴ」と入れる
+    {
+      STRBUF  *p_strbuf = GFL_MSG_CreateString( GlobalMsg_PokeName, MONSNO_TAMAGO );
+      PP_Put(pp, ID_PARA_nickname, (u32)p_strbuf );
+      GFL_STR_DeleteBuffer( p_strbuf );
+    }
   }
 
   //配布ポケモンフラグ＋トレーナーメモ

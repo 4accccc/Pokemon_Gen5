@@ -992,6 +992,18 @@ BOOL MYSTERY_MSGWINSET_PrintMain( MYSTERY_MSGWINSET_WORK* p_wk )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  個別消去
+ *
+ *	@param	MYSTERY_MSGWINSET_WORK* p_wk  ワーク
+ *	@param	idx                           インデックス
+ */
+//-----------------------------------------------------------------------------
+void MYSTERY_MSGWINSET_ClearOne( MYSTERY_MSGWINSET_WORK* p_wk, u16 idx )
+{ 
+  MYSTERY_MSGWIN_Clear( p_wk->p_msgwin[idx] );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  BMPWINSET MYSTERY_MSGWIN_TRANS_MODE_AUTOモードの場合使用する転送関数
  *
  *	@param	MYSTERY_MSGWINSET_WORK* p_wk ワーク

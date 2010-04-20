@@ -2263,6 +2263,8 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
         GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[0], FALSE );
         GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[1], FALSE );
 
+        p_wk->plt_cnt = 0;
+
         p_wk->is_card_update  = TRUE;
         *p_seq  = SEQ_SCROLL;
       }
@@ -2626,6 +2628,13 @@ static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     break;
 
   case SEQ_EFFECT_WAIT:
+    //ˆê‚Â‚à‚È‚­‚È‚Á‚½‚çA:®—‚·‚é‚ðÁ‚·
+    if( MYSTERYDATA_IsExistsCardAll(p_wk->setup.p_sv) == FALSE )
+    { 
+      MYSTERY_MSGWINSET_ClearOne( p_wk->p_winset, 1 );
+    }
+    GFL_BG_LoadScreenReq( MYSTERY_ALBUM_FONT_FRM );
+
     GX_SetVisibleWnd( GX_WNDMASK_NONE );
     *p_seq  = SEQ_MSG_INIT;
     break;
