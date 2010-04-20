@@ -67,6 +67,7 @@
 #include "../../../resource/fldmapdata/script/bg_attr_def.h" //SCRID_BG_MSG_～
 #include "../../../resource/fldmapdata/script/hiden_def.h"
 #include "../../../resource/fldmapdata/script/tv_scr_def.h"  //for SCRID_TV
+#include "../../../resource/fldmapdata/script/debug_scr_def.h"  //for SCRID_DEBUG_
 
 #include "field_gimmick.h"   //for FLDGMK_GimmickCodeCheck
 #include "field_gimmick_def.h"  //for FLD_GIMMICK_GYM_～
@@ -126,6 +127,8 @@ extern BOOL MapFadeReqFlg;    //マップフェードリクエストフラグ  宣言元　script.c
 
 //======================================================================
 //======================================================================
+//#define DEBUG_SPEED_CHECK_ENABLE
+#include "debug_speed_check.h"
 
 //======================================================================
 //======================================================================
@@ -282,11 +285,14 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 	GMEVENT *event;
 	FIELDMAP_WORK *fieldWork = work;
 
+  INIT_CHECK();
   *eff_delete_flag = FALSE;  //まずはリクエストなし
   *menu_open_flag = FALSE;
 
   //リクエスト更新
   setupRequest( &req, gsys, fieldWork );
+
+  SET_CHECK("ev_check:setupRequest");
 
 //☆☆☆デバッグ用チェックを最優先とする
 #ifdef  PM_DEBUG
@@ -295,6 +301,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     return event;
   }
 #endif //PM_DEBUG
+
+  SET_CHECK("ev_check:debug_key_event");
 	
 //☆☆☆特殊スクリプト起動チェックがここに入る
 #ifdef  PM_DEBUG
@@ -321,6 +329,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     if (event != NULL) return event;
   }
 
+  SET_CHECK("ev_check:special event");
+
 
 //☆☆☆トレーナー視線チェックがここに入る
 #ifdef  PM_DEBUG
@@ -334,6 +344,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       return event;
     }
   }
+
+  SET_CHECK("ev_check:trainer eye");
 
 //☆☆☆一歩移動チェックがここから
   //座標イベントチェック
@@ -361,6 +373,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   if ( event != NULL) {
     return event;
   }
+  SET_CHECK("ev_check:move event");
 
 //☆☆☆ステップチェック（一歩移動or振り向き）がここから
   if (req.stepRequest )
@@ -389,6 +402,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       return enc_event;
     }
   }
+  SET_CHECK("ev_check:step event");
 
 
   //看板イベントチェック
@@ -435,6 +449,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       return event;
     }
   }
+  SET_CHECK("ev_check:player event");
   
 //☆☆☆会話チェック
 
@@ -476,6 +491,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       }
     }
   }
+  SET_CHECK("ev_check:game_comm");
 
 	//フィールド話し掛けチェック
   if( req.talkRequest )
@@ -560,6 +576,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     }
 
   }
+  SET_CHECK("ev_check:talk event");
 
 
   { //波乗りテスト
@@ -582,6 +599,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       #endif
     }
   }
+
+  SET_CHECK("ev_check:naminori");
   
 //☆☆☆押し込み操作チェック（マットでのマップ遷移など）
 	//キー入力接続チェック
@@ -599,6 +618,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       return event;
     }
   }
+  SET_CHECK("ev_check:push event");
   
 //☆☆☆自機位置に関係ないキー入力イベントチェック
   //便利ボタンチェック
@@ -641,6 +661,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   	  return EVENT_FieldMapMenu( gsys, fieldWork, req.heapID );
 		}
 	}
+  SET_CHECK("ev_check:menu");
 	
 	//新サブスクリーンからのイベント起動チェック
 	if(WIPE_SYS_EndCheck()){
@@ -659,6 +680,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 	if( event != NULL ){
 		return event;
 	}
+  SET_CHECK("ev_check:subscreen");
 
   //Gパワー効果終了チェック
   event = CheckGPowerEffectEnd( gsys );
@@ -672,6 +694,17 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   if(event != NULL){
     return event;
   }
+  SET_CHECK("ev_check:gpower & intrude");
+#ifdef  DEBUG_SPEED_CHECK_ENABLE
+  if ( (req.key_trg & PAD_BUTTON_R) || (req.key_cont & PAD_BUTTON_L) )
+  {
+    OSTick end_tick;
+    TAIL_CHECK(&end_tick);
+    OS_TPrintf("ev_check:total:%08x", end_tick);
+    OS_TPrintf("(%d msec)\n", OS_TicksToMicroSeconds(end_tick) );
+    PUT_CHECK();
+  }
+#endif
 
 	return NULL;
 }
