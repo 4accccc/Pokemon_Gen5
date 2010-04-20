@@ -67,7 +67,7 @@ static void SetBGMParam( const BGM_PARAM* param, u8 season )
 	NNS_SndPlayerSetTrackPitch( 
       PMSND_GetBGMhandlePointer(), PITCH_TRACK_MASK, param->pitch[season] ); 
   // リバーブ
-#if 0 2010.04.20 リバーブは使用しない!!
+#if 0 // 2010.04.20 リバーブは使用しない!!
   if( param->reverb[season] == 0 )
   {
     PMSND_DisableCaptureReverb();
