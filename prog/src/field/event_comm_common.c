@@ -415,18 +415,16 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
     break;
   case SEQ_PLAYER_DIR_CHANGE: //˜b‚µ‚©‚¯‘ŠŽè‚ÉU‚èŒü‚­
     if(MMDL_CheckPossibleAcmd(talk->ccew.fmmdl_player) == TRUE){
-      VecFx32 player_pos, target_pos;
-      u16 anmcmd;
+      u16 target_dir, anmcmd;
       
-      MMDL_GetVectorPos( talk->ccew.fmmdl_player, &player_pos );
-      target_pos = intcomm->intrude_status[talk->ccew.talk_netid].player_pack.pos;
-      if(target_pos.x > player_pos.x){
+      target_dir = intcomm->intrude_status[talk->ccew.talk_netid].player_pack.dir;
+      if(target_dir == DIR_LEFT){
         anmcmd = AC_DIR_R;
       }
-      else if(target_pos.x < player_pos.x){
+      else if(target_dir == DIR_RIGHT){
         anmcmd = AC_DIR_L;
       }
-      else if(target_pos.z < player_pos.z){
+      else if(target_dir == DIR_DOWN){
         anmcmd = AC_DIR_U;
       }
       else{
