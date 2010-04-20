@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-17T13:16:50"/>
+	<create user="matsumiya" host="W00224" date="2010-04-20T22:58:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="178" right="1999" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -927,6 +927,340 @@
 		<language name="JPN_KANJI" width="256">橋って　すごいよな！[BE:01:ページ切り替え（クリア）]
 だって　橋は　世界を
 つなぐ　シンボル　なんだから！</language>
+	</row>
+
+	<row id="msg_c05_badrider_01w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・WHITEver
+・トリプルバトルチュートリアル
+・はい/いいえ選択時
+　はい→badrider_02
+　いいえ→badrider_03</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+ほれた　おんなの　きをひきたくて
+あたらしい　スタイルの▽
+ポケモンしょうぶを　まなんだのさ▼
+そのなも　トリプルバトル！
+どんな　しょうぶか　しりたいか？</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+ほれた　女の　気をひきたくて
+新しい　スタイルの▽
+ポケモン勝負を　学んだのさ▼
+その名も　トリプルバトル！
+どんな　勝負か　知りたいか？</language>
+	</row>
+
+	<row id="msg_c05_badrider_02w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・WHITEver
+・いいえ選択時
+　再度会話はbadrider_01から</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">……まいったぜ！　あいての
+きをひくのは　ほんと　むずかしいな</language>
+		<language name="JPN_KANJI" width="256">……まいったぜ！　相手の
+気をひくのは　ほんと　難しいな</language>
+	</row>
+
+	<row id="msg_c05_badrider_03w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・WHITEver
+・メッセージ表示後にアニメ(どこかに行って戻る）
+・続けてbadrider_04</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">トリプルバトルとは
+ポケモンを　３びきずつ　だして▽
+たたかう　ポケモンしょうぶ　さ！▼
+ルールは　かんたん！▼
+あいての　ポケモンを
+すべて　ひんしに　するだけ……▼
+ざっと　いじょうが
+トリプルバトルの　あらましさ▼</language>
+		<language name="JPN_KANJI" width="256">トリプルバトルとは
+ポケモンを　３匹ずつ　だして▽
+戦う　ポケモン勝負　さ！▼
+ルールは　簡単！▼
+相手の　ポケモンを
+すべて　ひんしに　するだけ……▼
+ざっと　以上が
+トリプルバトルの　あらましさ▼</language>
+	</row>
+
+	<row id="msg_c05_badrider_04w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・WHITEver
+・はい/いいえ選択肢表示
+・はい→badrider_05
+　はい、だけど戦闘可能ポケモン2匹以下→badrider_06
+　いいえ→badrider_07</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+どうだ！　おまえも　トレーナーなら
+やらないか　トリプルバトルを？</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+どうだ！　おまえも　トレーナーなら
+やらないか　トリプルバトルを？</language>
+	</row>
+
+	<row id="msg_c05_badrider_05w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・WHITEver
+・はい選択時
+　メッセージ表示後、トレーナー戦闘へ</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">いい　こころがけ　だな▼
+だけど　オレは　こいする　おとこ
+そのなも　チャールズ▼
+いつだって　フルスロットルだぜ！▼</language>
+		<language name="JPN_KANJI" width="256">いい　こころがけ　だな▼
+だけど　オレは　恋する男
+その名も　チャールズ▼
+いつだって　フルスロットルだぜ！▼</language>
+	</row>
+
+	<row id="msg_c05_badrider_06w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・WHITEver
+・はい、だけど戦えるポケモンが２匹以下</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">もえあがった　きもちに
+みずを　さして　すまない……▼
+トリプルバトルには
+たたかえる　ポケモンが▽
+３びき　ひつよう　なんだよ</language>
+		<language name="JPN_KANJI" width="256">燃えあがった　気持ちに
+水を　さして　すまないな……▼
+トリプルバトルには
+戦える　ポケモンが▽
+３匹　必要なんだよ</language>
+	</row>
+
+	<row id="msg_c05_badrider_07w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・WHITEver
+・いいえ選択時
+　再度会話はbadrider_04から</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+そんなオレから　アドバイス……▼
+チャレンジこそが　じんせい　なんだぜ</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+そんなオレから　アドバイス……▼
+チャレンジこそが　人生なんだぜ</language>
+	</row>
+
+	<row id="msg_c05_badrider_08w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・WHITEver
+・トレーナー戦闘後、フィールド復帰時で自動表示</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">……ふっ　ざまあねえな
+おしえるつもりが　おそわるとはな▼
+それにしても　おまえには
+みどころが　ある▼
+じぶんの　ポケモンへの　りかいがなきゃ
+トリプルバトルは　かてないからな▼
+もっと　トリプルバトルが　したけりゃ
+ソウリュウシティに　いきな……</language>
+		<language name="JPN_KANJI" width="256">……ふっ　ざまあねえな
+教えるつもりが　教わるとはな▼
+それにしても　おまえには
+見所が　ある▼
+じぶんの　ポケモンへの　理解がなきゃ
+トリプルバトルは　勝てないからな▼
+もっと　トリプルバトルが　したけりゃ
+ソウリュウシティに　行きな……</language>
+	</row>
+
+	<row id="msg_c05_badrider_09w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・WHITEver
+・c08r0201でトリプルバトル後</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+バイクにのって　かぜになるのが
+にあう　ツミな　おとこさ</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+バイクにのって　かぜになるのが
+にあう　ツミな　おとこさ</language>
+	</row>
+
+	<row id="msg_c05_badrider_01b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂
+・BLACKver
+・トリプルバトルチュートリアル
+・はい/いいえ選択時
+　はい→badrider_02
+　いいえ→badrider_03</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+ほれた　おんなの　きをひきたくて
+あたらしい　スタイルの▽
+ポケモンしょうぶを　まなんだのさ▼
+そのなも　ローテーションバトル！
+どんな　しょうぶか　しりたいか？</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+ほれた　女の　気をひきたくて
+新しい　スタイルの▽
+ポケモン勝負を　学んだのさ▼
+その名も　ローテーションバトル！
+どんな　勝負か　知りたいか？</language>
+	</row>
+
+	<row id="msg_c05_badrider_02b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂
+・BLACKver
+・いいえ選択時
+　再度会話はbadrider_01から</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">……まいったぜ！　あいての
+きをひくのは　ほんと　むずかしいな</language>
+		<language name="JPN_KANJI" width="256">……まいったぜ！　相手の
+気をひくのは　ほんと　難しいな</language>
+	</row>
+
+	<row id="msg_c05_badrider_03b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂
+・BLACKver
+・メッセージ表示後にアニメ(どこかに行って戻る）
+・続けてbadrider_04</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">ローテーションバトルとは
+ポケモンを　３びきずつ　だして▽
+たたかう　ポケモンしょうぶ　さ！▼
+そして　だした　ポケモンは
+まえに２ひき！　うしろに１ひきの▽
+ポジションで　セットされる▼
+この　ポジションは　１ターンごとに
+かわるというのが　ポイント……▼
+ざっと　いじょうが
+ローテーションバトルの　あらましさ▼</language>
+		<language name="JPN_KANJI" width="256">ローテーションバトルとは
+ポケモンを　３匹ずつ　だして▽
+戦う　ポケモン勝負　さ！▼
+そして　だした　ポケモンは
+前衛に２匹！　後衛に１匹の▽
+ポジションで　セットされる▼
+この　ポジションは　１ターンごとに
+換わるというのが　ポイント……▼
+ざっと　以上が
+ローテーションバトルの　あらましさ▼</language>
+	</row>
+
+	<row id="msg_c05_badrider_04b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂
+・BLACKver
+・はい/いいえ選択肢表示
+・はい→badrider_05
+　はい、だけど戦闘可能ポケモン2匹以下→badrider_06
+　いいえ→badrider_07</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+どうだ！　おまえも　トレーナーなら
+やらないか　ローテーションバトルを？</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+どうだ！　おまえも　トレーナーなら
+やらないか　ローテーションバトルを？</language>
+	</row>
+
+	<row id="msg_c05_badrider_05b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂
+・BLACKver
+・はい選択時
+　メッセージ表示後、トレーナー戦闘へ</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">いい　こころがけ　だな▼
+だけど　オレは　こいする　おとこ
+そのなも　チャールズ▼
+いつだって　フルスロットルだぜ！▼</language>
+		<language name="JPN_KANJI" width="256">いい　こころがけ　だな▼
+だけど　オレは　恋する男
+その名も　チャールズ▼
+いつだって　フルスロットルだぜ！▼</language>
+	</row>
+
+	<row id="msg_c05_badrider_06b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂
+・BLACKver
+・はい、だけど戦えるポケモンが２匹以下</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">もえあがった　きもちに
+みずを　さして　すまない……▼
+ローテーションバトルには
+たたかえる　ポケモンが▽
+３びき　ひつよう　なんだよ</language>
+		<language name="JPN_KANJI" width="256">燃えあがった　気持ちに
+水を　さして　すまないな……▼
+ローテーションバトルには
+戦える　ポケモンが▽
+３匹　必要なんだよ</language>
+	</row>
+
+	<row id="msg_c05_badrider_07b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂
+・BLACKver
+・いいえ選択時
+　再度会話はbadrider_04から</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+そんなオレから　アドバイス……▼
+チャレンジこそが　じんせい　なんだぜ</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+そんなオレから　アドバイス……▼
+チャレンジこそが　人生なんだぜ</language>
+	</row>
+
+	<row id="msg_c05_badrider_08b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂
+・BLACKver
+・トレーナー戦闘後、フィールド復帰時で自動表示</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">……ふっ　ざまあねえな
+おしえるつもりが　おそわるとはな▼
+それにしても　おまえには
+みどころが　ある▼
+じぶんの　ポケモンへの　りかいがなきゃ
+ローテーションバトルは　かてないからな▼
+ローテーションバトルが　したけりゃ
+ソウリュウシティに　いきな……</language>
+		<language name="JPN_KANJI" width="256">……ふっ　ざまあねえな
+教えるつもりが　教わるとはな▼
+それにしても　おまえには
+見所が　ある▼
+じぶんの　ポケモンへの　理解がなきゃ
+ローテーションバトルは　勝てないからな▼
+ローテーションバトルが　したけりゃ
+ソウリュウシティに　行きな……</language>
+	</row>
+
+	<row id="msg_c05_badrider_09b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,#80ff80,,,,,,,,,,,,,">
+		<comment>♂
+・BLACKver
+・c08r0201でトリプルバトル後</comment>
+		<attribute name="キャラクター">BADRIDER</attribute>
+		<language name="JPN" width="256">オレは……　こいする　おとこ
+そのなも　チャールズ▼
+バイクにのって　かぜになるのが
+にあう　ツミな　おとこさ</language>
+		<language name="JPN_KANJI" width="256">オレは……　恋する男
+その名も　チャールズ▼
+バイクにのって　かぜになるのが
+にあう　ツミな　おとこさ</language>
 	</row>
 
 	<row id="msg_c05_sign1_01" text-color="#000000,,,,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
