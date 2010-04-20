@@ -52,6 +52,20 @@ enum{
 ///フォントBGパレット展開位置
 #define _FONT_BG_PALNO      (14)
 
+///レンダラー設定
+enum{
+  INTSUB_CLACT_REND_SUB,
+  INTSUB_CLACT_REND_MAX,
+};
+static const GFL_REND_SURFACE_INIT INTSUB_CLACT_REND[INTSUB_CLACT_REND_MAX] = {
+  {
+    0, 0,
+    256, 192,
+    CLSYS_DRAW_SUB,
+    CLSYS_REND_CULLING_TYPE_NONE,
+  },
+};
+
 ///アクターIndex
 enum{
   INTSUB_ACTOR_TOUCH_TOWN_0,
@@ -344,6 +358,7 @@ typedef struct _INTRUDE_SUBDISP{
 	PRINT_UTIL printutil_title;  ///<タイトルメッセージ
 	
 	GFL_CLUNIT *clunit;
+	GFL_CLSYS_REND *clrend;
   GFL_CLWK *act[INTSUB_ACTOR_MAX];
 
   BMPOAM_SYS_PTR bmpoam_sys;
@@ -760,6 +775,9 @@ static void _IntSub_SystemSetup(INTRUDE_SUBDISP_PTR intsub)
 {
   intsub->clunit = GFL_CLACT_UNIT_Create(
     INTSUB_ACTOR_MAX + INTSUB_ACTOR_BMPOAM_NUM, 5, HEAPID_FIELD_SUBSCREEN);
+  intsub->clrend = GFL_CLACT_USERREND_Create( INTSUB_CLACT_REND, INTSUB_CLACT_REND_MAX, HEAPID_FIELD_SUBSCREEN );
+  GFL_CLACT_UNIT_SetUserRend( intsub->clunit, intsub->clrend );
+
   intsub->bmpoam_sys = BmpOam_Init(HEAPID_FIELD_SUBSCREEN, intsub->clunit);
 
 	intsub->tcbl_sys = GFL_TCBL_Init(HEAPID_FIELD_SUBSCREEN, HEAPID_FIELD_SUBSCREEN, 4, 32);
@@ -796,6 +814,7 @@ static void _IntSub_SystemExit(INTRUDE_SUBDISP_PTR intsub)
 	GFL_TCBL_Exit(intsub->tcbl_sys);
 
   BmpOam_Exit(intsub->bmpoam_sys);
+  GFL_CLACT_USERREND_Delete( intsub->clrend );
   GFL_CLACT_UNIT_Delete(intsub->clunit);
 }
 
@@ -931,7 +950,7 @@ static void _IntSub_BmpOamCreate(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
     0,      //pal_offset(pltt_indexのパレット内でのオフセット)
     SOFTPRI_INFOMSG,
     BGPRI_ACTOR_COMMON,
-    CLSYS_DEFREND_SUB,
+    INTSUB_CLACT_REND_SUB,
     CLSYS_DRAW_SUB,
   };
 
@@ -1076,14 +1095,14 @@ static void _IntSub_ActorCreate_TouchTown(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE 
 
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-      &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
+      &head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
 
     eff_head.pos_x = head.pos_x;
     eff_head.pos_y = head.pos_y;
     intsub->act[effno] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-      &eff_head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
+      &eff_head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
     GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[effno], TRUE);  //オートアニメON
     GFL_CLACT_WK_SetDrawEnable(intsub->act[effno], FALSE);  //表示OFF
     effno++;
@@ -1095,7 +1114,7 @@ static void _IntSub_ActorCreate_TouchTown(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE 
   head.pos_y = PALACE_ICON_POS_Y;
   intsub->act[INTSUB_ACTOR_TOUCH_PALACE] = GFL_CLACT_WK_Create(intsub->clunit, 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-    &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
+    &head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], FALSE);  //表示OFF
   //タッチパレス島エフェクト
   eff_head.anmseq = PALACE_ACT_ANMSEQ_TOUCH_PALACE_EFF;
@@ -1103,7 +1122,7 @@ static void _IntSub_ActorCreate_TouchTown(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE 
   eff_head.pos_y = PALACE_ICON_POS_Y;
   intsub->act[INTSUB_ACTOR_TOUCH_PALACE_EFF] = GFL_CLACT_WK_Create(intsub->clunit, 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-    &eff_head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
+    &eff_head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
   GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[INTSUB_ACTOR_TOUCH_PALACE_EFF], TRUE);  //オートアニメON
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_PALACE_EFF], FALSE);  //表示OFF
 }
@@ -1129,7 +1148,7 @@ static void _IntSub_ActorCreate_Area(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *hand
   for(i = INTSUB_ACTOR_AREA_0; i <= INTSUB_ACTOR_AREA_MAX; i++){
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-      &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
+      &head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
     GFL_CLACT_WK_SetPlttOffs(intsub->act[i], 
       INTSUB_ACTOR_PAL_BASE_START + i-INTSUB_ACTOR_AREA_0, CLWK_PLTTOFFS_MODE_PLTT_TOP);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
@@ -1157,7 +1176,7 @@ static void _IntSub_ActorCreate_CursorS(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *h
   for(i = INTSUB_ACTOR_CUR_S_0; i <= INTSUB_ACTOR_CUR_S_MAX; i++){
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-      &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
+      &head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
     GFL_CLACT_WK_SetPlttOffs(intsub->act[i], 
       INTSUB_ACTOR_PAL_BASE_START + i-INTSUB_ACTOR_CUR_S_0, CLWK_PLTTOFFS_MODE_PLTT_TOP);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
@@ -1188,7 +1207,7 @@ static void _IntSub_ActorCreate_CursorL(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *h
   }
   intsub->act[INTSUB_ACTOR_CUR_L] = GFL_CLACT_WK_Create(intsub->clunit, 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-    &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
+    &head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
   GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_CUR_L], 
     INTSUB_ACTOR_PAL_BASE_START + intsub->my_net_id, CLWK_PLTTOFFS_MODE_PLTT_TOP);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_CUR_L], FALSE);  //表示OFF
@@ -1216,7 +1235,7 @@ static void _IntSub_ActorCreate_WarpNG(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *ha
   for(i = INTSUB_ACTOR_WARP_NG_0; i <= INTSUB_ACTOR_WARP_NG_MAX; i++){
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-      &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
+      &head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
     GFL_CLACT_WK_SetPlttOffs(intsub->act[i], 
       INTSUB_ACTOR_PAL_BASE_START + i-INTSUB_ACTOR_WARP_NG_0, CLWK_PLTTOFFS_MODE_PLTT_TOP);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
@@ -1258,7 +1277,7 @@ static void _IntSub_ActorCreate_LvNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *han
     head.pos_y = LvNumPos[i - INTSUB_ACTOR_LV_NUM_KETA_0].y;
     intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
       intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-      &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
+      &head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
     GFL_CLACT_WK_SetDrawEnable(intsub->act[i], time_enable);
   }
 }
@@ -1284,7 +1303,7 @@ static void _IntSub_ActorCreate_EntryButton(INTRUDE_SUBDISP_PTR intsub, ARCHANDL
   
   intsub->act[INTSUB_ACTOR_ENTRY] = GFL_CLACT_WK_Create(intsub->clunit, 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-    &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
+    &head, INTSUB_CLACT_REND_SUB, HEAPID_FIELD_SUBSCREEN);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], FALSE);  //表示OFF
 
   for(i = 0; i < ENTRY_BUTTON_MSG_PATERN_MAX; i++){//「さんか」BMPOAM
@@ -1295,7 +1314,7 @@ static void _IntSub_ActorCreate_EntryButton(INTRUDE_SUBDISP_PTR intsub, ARCHANDL
       0,      //pal_offset(pltt_indexのパレット内でのオフセット)
       SOFTPRI_ENTRY_BUTTON_MSG,
       BGPRI_ACTOR_COMMON,
-      CLSYS_DEFREND_SUB,
+      INTSUB_CLACT_REND_SUB,
       CLSYS_DRAW_SUB,
     };
     STRBUF *entry_str;
@@ -1479,7 +1498,7 @@ static void _IntSub_ActorUpdate_Area(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *ar
     GF_ASSERT(actno < NELEMS(pos_tbl));
     pos.x = pos_tbl[actno];
     act = intsub->act[INTSUB_ACTOR_AREA_0 + actno];
-    GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
+    GFL_CLACT_WK_SetPos(act, &pos, INTSUB_CLACT_REND_SUB);
     GFL_CLACT_WK_SetPlttOffs(act, 
       INTSUB_ACTOR_PAL_BASE_START + pal_tbl[i], CLWK_PLTTOFFS_MODE_PLTT_TOP);
     GFL_CLACT_WK_SetDrawEnable(act, TRUE);
@@ -1548,18 +1567,18 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
           pos.y = NOTHING_ZONE_SUB_POS_Y + NOTHING_ZONE_SUB_POS_Y_SPACE * net_id;;
           pos_hate = pos;
           pos_hate.x = NOTHING_ZONE_SUB_POS_X;
-          GFL_CLACT_WK_SetPos(act_hate, &pos_hate, CLSYS_DEFREND_SUB);
+          GFL_CLACT_WK_SetPos(act_hate, &pos_hate, INTSUB_CLACT_REND_SUB);
           GFL_CLACT_WK_SetDrawEnable(act_hate, TRUE);
         }
       }
-      GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
+      GFL_CLACT_WK_SetPos(act, &pos, INTSUB_CLACT_REND_SUB);
     }
     else{ //このプレイヤーがいるパレスエリアを指す
       int s;
       GFL_CLACT_WK_SetDrawEnable(act_hate, FALSE);
       for(s = 0; s < FIELD_COMM_MEMBER_MAX; s++){
         if(GFL_CLACT_WK_GetPlttOffs(intsub->act[INTSUB_ACTOR_AREA_0 + s]) == INTSUB_ACTOR_PAL_BASE_START + net_id){
-          GFL_CLACT_WK_GetPos( intsub->act[INTSUB_ACTOR_AREA_0 + s], &pos, CLSYS_DRAW_SUB );
+          GFL_CLACT_WK_GetPos( intsub->act[INTSUB_ACTOR_AREA_0 + s], &pos, INTSUB_CLACT_REND_SUB );
           break;
         }
       }
@@ -1569,7 +1588,7 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
       }
       pos.x += WearOffset[net_id][0];
       pos.y += WearOffset[net_id][1];
-      GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
+      GFL_CLACT_WK_SetPos(act, &pos, INTSUB_CLACT_REND_SUB);
     }
     GFL_CLACT_WK_SetDrawEnable(act, TRUE);
   }
@@ -1623,7 +1642,7 @@ static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO 
   act = intsub->act[INTSUB_ACTOR_CUR_L];
   GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_CUR_L], 
     INTSUB_ACTOR_PAL_BASE_START + intsub->my_net_id, CLWK_PLTTOFFS_MODE_PLTT_TOP);
-  GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
+  GFL_CLACT_WK_SetPos(act, &pos, INTSUB_CLACT_REND_SUB);
   GFL_CLACT_WK_SetDrawEnable(act, TRUE);
   
   _SetPalFade_PlayerTown(intsub, player_town_tblno);
@@ -1931,7 +1950,7 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
       if(net_id != my_net_id && (intsub->comm.recv_profile & (1 << net_id))){
         act = intsub->act[INTSUB_ACTOR_CUR_S_0 + net_id];
         if(GFL_CLACT_WK_GetDrawEnable(act) == TRUE){
-          GFL_CLACT_WK_GetPos( act, &pos, CLSYS_DRAW_SUB );
+          GFL_CLACT_WK_GetPos( act, &pos, INTSUB_CLACT_REND_SUB );
           if(x - TOUCH_RANGE_PLAYER_ICON_X <= pos.x && x + TOUCH_RANGE_PLAYER_ICON_X >= pos.x
               && y - TOUCH_RANGE_PLAYER_ICON_Y <= pos.y && y + TOUCH_RANGE_PLAYER_ICON_Y >= pos.y){
             if(intcomm!= NULL && ZONEDATA_IsWfbc(intcomm->intrude_status[net_id].zone_id) == TRUE){
