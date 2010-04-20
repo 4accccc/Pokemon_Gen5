@@ -123,6 +123,7 @@ static void StartDoorOpen( const FIELD_DOOR_ANIME_WORK* work ); // ƒhƒAƒI[ƒvƒ“‚
 static void StartDoorClose( const FIELD_DOOR_ANIME_WORK* work ); // ƒhƒAƒNƒ[ƒY‚ðŠJŽn‚·‚é
 static void StartFadeInEvent( GMEVENT* event, const FIELD_DOOR_ANIME_WORK* work ); // ‰æ–Ê‚ÌƒtƒF[ƒhƒCƒ“ƒCƒxƒ“ƒg‚ðŒÄ‚Ño‚·
 static void StartFadeOutEvent( GMEVENT* event, const FIELD_DOOR_ANIME_WORK* work ); // ‰æ–Ê‚ÌƒtƒF[ƒhƒAƒEƒgƒCƒxƒ“ƒg‚ðŒÄ‚Ño‚·
+static BOOL CheckMapChangeSE( const FIELD_DOOR_ANIME_WORK* work ); // ƒ}ƒbƒvƒ`ƒFƒ“ƒWSE‚ÌÄ¶‚ðƒ`ƒFƒbƒN‚·‚é
 
 
 //--------------------------------------------------------------------------------------------
@@ -588,6 +589,9 @@ static GMEVENT_RESULT ExitEvent_DoorIn( GMEVENT * event, int *seq, void * wk )
 
     // ‰æ–ÊƒtƒF[ƒhŠJŽn
   case SEQ_DOORIN_FADEOUT:
+    if( CheckMapChangeSE(work) ) {
+      PMSND_PlaySE( SEQ_SE_KAIDAN );
+    }
     StartFadeOutEvent( event, work );
     *seq = GetNextSeq( work );
     FinishCurrentSeq( work );
@@ -957,4 +961,25 @@ static void StartFadeOutEvent( GMEVENT* event, const FIELD_DOOR_ANIME_WORK* work
   }
 
   GMEVENT_CallEvent( event, fadeEvent );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief ƒ}ƒbƒvƒ`ƒFƒ“ƒWSE‚ÌÄ¶‚ðƒ`ƒFƒbƒN‚·‚é
+ *
+ * @param work
+ *
+ * @return SE‚ðÄ¶‚·‚éê‡ TRUE
+ *         Ä¶‚µ‚È‚¢ê‡ FALSE
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL CheckMapChangeSE( const FIELD_DOOR_ANIME_WORK* work )
+{
+  // ƒhƒA‚ª‚ ‚éê‡‚ÍÄ¶‚µ‚È‚¢
+  if( CheckDoorExist(work) ) { return FALSE; }
+
+  // ƒNƒƒXƒtƒF[ƒh‚Ìê‡‚ÍÄ¶‚µ‚È‚¢
+  if( work->fadeType == FIELD_FADE_CROSS ) { return FALSE; }
+
+  return TRUE;
 }
