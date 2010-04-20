@@ -1134,7 +1134,7 @@ static void ExitGetDemoCursor( BBAG_WORK * wk )
 
 static void SetGetDemoCursor( BBAG_WORK * wk, int px, int py )
 {
-	BTLV_FINGER_CURSOR_Create( wk->getdemoCursor, px, py, 3, 6, 20 );
+	BTLV_FINGER_CURSOR_Create( wk->getdemoCursor, px, py, 2, 6, 20 );
 }
 
 static void DelGetDemoCursor( BBAG_WORK * wk )
