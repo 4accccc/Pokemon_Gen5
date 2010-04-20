@@ -398,12 +398,8 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
   }
   PPP_Put( ppp, ID_PARA_id_no, (int)id );
 
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning CasetteLanguage Nothing
-#endif
-
 //国コード
-//  PPP_Put( ppp, ID_PARA_country_code, ( u8 * )&CasetteLanguage );
+  PPP_Put( ppp, ID_PARA_country_code, CasetteLanguage );
 
 //ポケモンナンバーセット
   PPP_Put( ppp, ID_PARA_monsno, mons_no );
@@ -423,10 +419,7 @@ void  PPP_SetupEx( POKEMON_PASO_PARAM *ppp, u16 mons_no, u16 level, u64 id, PtlS
 //捕獲データセット
   PPP_Put( ppp, ID_PARA_get_level, level );
 
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning CasetteVersion Nothing
-#endif
-//  PPP_Put( ppp, ID_PARA_get_cassette, ( u8 * )&CasetteVersion );
+  PPP_Put( ppp, ID_PARA_get_cassette, CasetteVersion );
   //デフォルトはモンスターボールにしておく
   PPP_Put( ppp, ID_PARA_get_ball, ITEM_MONSUTAABOORU );
 
@@ -3347,6 +3340,14 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
     case ID_PARA_nickname_raw:
       STRTOOL_Copy( (const STRCODE*)arg, ppp3->nickname, NELEMS(ppp3->nickname) );
       ppp2->nickname_flag = pppAct_check_nickname( ppp );
+      break;
+
+      //現状ポケシフター経由で手に入れたポケモンのニックネームの文字コード変換時使用に限定
+    case ID_PARA_nickname_only:            //ニックネーム（nickname_flagの立ち下げを行わない※許可制）
+      GFL_STR_GetStringCode( (STRBUF*)arg, ppp3->nickname, NELEMS(ppp3->nickname) );
+      break;
+    case ID_PARA_nickname_raw_only:        //ニックネーム（nickname_flagの立ち下げを行わない　STRCODE配列使用 ※許可制）
+      STRTOOL_Copy( (const STRCODE*)arg, ppp3->nickname, NELEMS(ppp3->nickname) );
       break;
 
     case ID_PARA_pref_code:
