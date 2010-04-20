@@ -5240,15 +5240,6 @@
 
 	<row id="ITEMINFO_568">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
-ポケモン　１ひきの　すばやさの
-きそポイントを　ちょっと　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
-ポケモン　１匹の　すばやさの
-基礎ポイントを　ちょっと　あげる。</language>
-	</row>
-
-	<row id="ITEMINFO_569">
-		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　とくこうの
 きそポイントを　ちょっと　あげる。</language>
 		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
@@ -5256,12 +5247,21 @@
 基礎ポイントを　ちょっと　あげる。</language>
 	</row>
 
-	<row id="ITEMINFO_570">
+	<row id="ITEMINFO_569">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　とくぼうの
 きそポイントを　ちょっと　あげる。</language>
 		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
 ポケモン　１匹の　特防の
+基礎ポイントを　ちょっと　あげる。</language>
+	</row>
+
+	<row id="ITEMINFO_570">
+		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
+ポケモン　１ひきの　すばやさの
+きそポイントを　ちょっと　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
+ポケモン　１匹の　すばやさの
 基礎ポイントを　ちょっと　あげる。</language>
 	</row>
 
