@@ -13,14 +13,14 @@
 #ifndef ZONE_C09P01_EVC_H
 #define ZONE_C09P01_EVC_H
 
-#define C09P01_TEST_ELV                    0
-#define C09P01_VETERANM_01                 1
-#define C09P01_VETERANW_01                 2
+#define C09P01_VETERANM_01                 0
+#define C09P01_VETERANW_01                 1
 
 #endif //ZONE_C09P01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c09p01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_C09P01_EVB_H
 #define ZONE_C09P01_EVB_H
 
+#define BG_C09P01_ELEVATOR_01             0
 
 #endif //ZONE_C09P01_EVB_H

@@ -15,5 +15,6 @@
 #ifndef ZONE_C09P02_EVB_H
 #define ZONE_C09P02_EVB_H
 
+#define BG_C09P02_ELEVATOR_01             0
 
 #endif //ZONE_C09P02_EVB_H
