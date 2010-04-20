@@ -8786,7 +8786,21 @@
   .macro  _ASM_CALL_NPCFLY_CUTIN obj_id
   .short  EV_SEQ_CALL_NPCFLY_CUTIN
   .short  \obj_id
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * アイテムカットイン
+ * @param item_no        対象アイテムナンバー
+ */
+//--------------------------------------------------------------
+#define _CALL_ITEM_CUTIN(item_no) _ASM_CALL_ITEM_CUTIN item_no
+
+  .macro  _ASM_CALL_ITEM_CUTIN item_no
+  .short  EV_SEQ_CALL_ITEM_CUTIN
+  .short  \item_no
   .endm  
+  
   
 //======================================================================
 // 四天王関連
