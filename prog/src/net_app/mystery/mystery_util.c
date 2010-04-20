@@ -1002,6 +1002,7 @@ void MYSTERY_MSGWINSET_ClearOne( MYSTERY_MSGWINSET_WORK* p_wk, u16 idx )
 { 
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_msgwin[idx]->p_bmpwin),
       PRINTSYS_LSB_GetB( p_wk->p_msgwin[idx]->color ) );
+  GFL_BMPWIN_TransVramCharacter( p_wk->p_msgwin[idx]->p_bmpwin );
 }
 //----------------------------------------------------------------------------
 /**

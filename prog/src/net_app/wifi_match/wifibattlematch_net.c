@@ -61,7 +61,7 @@
 #define DEBUG_NET_Printf(...)  /*  */
 #endif  //DEBUG_DEBUG_NET_Printf_ON
 
-#define SC_DIVIDE_SESSION
+//#define SC_DIVIDE_SESSION
 
 //-------------------------------------
 ///	マクロスイッチ

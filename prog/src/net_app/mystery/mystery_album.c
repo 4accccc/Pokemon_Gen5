@@ -2632,7 +2632,6 @@ static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     if( MYSTERYDATA_IsExistsCardAll(p_wk->setup.p_sv) == FALSE )
     { 
       MYSTERY_MSGWINSET_ClearOne( p_wk->p_winset, 1 );
-      GFL_BG_LoadScreenReq( MYSTERY_ALBUM_FONT_FRM );
     }
 
     GX_SetVisibleWnd( GX_WNDMASK_NONE );
@@ -4230,32 +4229,28 @@ static const s8 sc_next_dir[ MOVE_SHAKE_ROTATE_NUM ] =
 };
 static const s8 sc_next_sync[ MOVE_SHAKE_ROTATE_NUM ] =
 { 
-  2,4,4,3,3,2,2,1,1,1,10,
+  2,3,3,2,2,1,1,1,0,0,10,
 };
 static const GFL_POINT sc_next_pos[ MOVE_SHAKE_ROTATE_NUM ] =
 { 
   { 
-    MYSTERY_CARD_SILHOUETTE_POS_X + 8,
+    MYSTERY_CARD_SILHOUETTE_POS_X + 5,
     MYSTERY_CARD_SILHOUETTE_POS_Y,
   },
   { 
-    MYSTERY_CARD_SILHOUETTE_POS_X - 8,
+    MYSTERY_CARD_SILHOUETTE_POS_X - 5,
     MYSTERY_CARD_SILHOUETTE_POS_Y,
   },
   { 
-    MYSTERY_CARD_SILHOUETTE_POS_X + 6,
+    MYSTERY_CARD_SILHOUETTE_POS_X + 3,
     MYSTERY_CARD_SILHOUETTE_POS_Y,
   },
   { 
-    MYSTERY_CARD_SILHOUETTE_POS_X - 6,
+    MYSTERY_CARD_SILHOUETTE_POS_X - 3,
     MYSTERY_CARD_SILHOUETTE_POS_Y,
   },
   { 
-    MYSTERY_CARD_SILHOUETTE_POS_X + 4,
-    MYSTERY_CARD_SILHOUETTE_POS_Y,
-  },
-  { 
-    MYSTERY_CARD_SILHOUETTE_POS_X - 4,
+    MYSTERY_CARD_SILHOUETTE_POS_X + 2,
     MYSTERY_CARD_SILHOUETTE_POS_Y,
   },
   { 
@@ -4263,7 +4258,11 @@ static const GFL_POINT sc_next_pos[ MOVE_SHAKE_ROTATE_NUM ] =
     MYSTERY_CARD_SILHOUETTE_POS_Y,
   },
   { 
-    MYSTERY_CARD_SILHOUETTE_POS_X + 2,
+    MYSTERY_CARD_SILHOUETTE_POS_X - 1,
+    MYSTERY_CARD_SILHOUETTE_POS_Y,
+  },
+  { 
+    MYSTERY_CARD_SILHOUETTE_POS_X + 1,
     MYSTERY_CARD_SILHOUETTE_POS_Y,
   },
   { 

@@ -74,8 +74,11 @@ FS_EXTERN_OVERLAY(dpw_common);
 #endif //PM_DEBUG
 
 #ifndef SAKE_REPORT_NONE
-//#define SAKE_REPORT_HEAP_DIVIDE   //レポート用ヒープを切り分ける
+#define SAKE_REPORT_HEAP_DIVIDE   //レポート用ヒープを切り分ける
 #endif 
+
+//#define SAKE_REPORT_BATTLE_AFTER  //試合前にレポートのためのやりとりをする
+                                  //wifibattlematch_net.cのSC_DIVIDE_SESSION定義も有効にしないといけません
 
 
 #define DEBUG_WIFICUP_Printf(...)  OS_TFPrintf( 2, __VA_ARGS__ );
@@ -200,6 +203,8 @@ typedef struct
   REGULATION_CARDDATA         *p_reg;
   REGULATION_CARDDATA         recv_card;
 
+  BOOL is_wificup_end;
+
 } WIFIBATTLEMATCH_WIFI_WORK;
 
 //=============================================================================
@@ -250,7 +255,8 @@ static void WbmWifiSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 //プレイヤー情報
 static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk );
 static void Util_PlayerInfo_Delete( WIFIBATTLEMATCH_WIFI_WORK *p_wk );
-static BOOL Util_PlayerInfo_Move( WIFIBATTLEMATCH_WIFI_WORK *p_wk );
+static BOOL Util_PlayerInfo_MoveIn( WIFIBATTLEMATCH_WIFI_WORK *p_wk );
+static BOOL Util_PlayerInfo_MoveOut( WIFIBATTLEMATCH_WIFI_WORK *p_wk );
 static void Util_PlayerInfo_CreateStay( WIFIBATTLEMATCH_WIFI_WORK *p_wk );
 static void Util_PlayerInfo_RenewalData( WIFIBATTLEMATCH_WIFI_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_TYPE type );
 //対戦相手情報
@@ -497,7 +503,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_WIFI_PROC_Main( GFL_PROC *p_proc, int *p_
     break;
 
   case SEQ_FADEOUT_START:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
     *p_seq  = SEQ_FADEOUT_WAIT;
     break;
 
@@ -874,6 +880,9 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     SEQ_START_BOX_LOCK_CANCEL_YESNO,
     SEQ_SELECT_BOX_LOCK_CANCEL_YESNO,
 
+    SEQ_START_MOVEOUT_CARD,
+    SEQ_WAIT_MOVEOUT_CARD,
+
     SEQ_START_UPDATE_MSG,
     SEQ_START_SAVE_UPDATE,
     SEQ_WAIT_SAVE_UPDATE,
@@ -1173,7 +1182,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_WAIT_MOVEIN_CARD:
-    if( Util_PlayerInfo_Move( p_wk ) )
+    if( Util_PlayerInfo_MoveIn( p_wk ) )
     { 
       *p_seq  = SEQ_CHECK_LOCK;
     }
@@ -1215,7 +1224,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         switch( select )
         { 
         case 0: //はい
-          *p_seq  = SEQ_START_UPDATE_MSG;
+          *p_seq  = SEQ_START_MOVEOUT_CARD;
           break;
         case 1: //いいえ
           *p_seq  = SEQ_START_BOX_REWRITE_CANCEL_MSG;
@@ -1276,7 +1285,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         switch( select )
         { 
         case 0: //はい
-          *p_seq  = SEQ_START_UPDATE_MSG;
+          *p_seq  = SEQ_START_MOVEOUT_CARD;
           break;
         case 1: //いいえ
           *p_seq  = SEQ_START_BOX_LOCK_CANCEL_MSG;
@@ -1314,6 +1323,18 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         }
       }
     }
+    break;
+
+  case SEQ_START_MOVEOUT_CARD:
+    if( Util_PlayerInfo_MoveOut(p_wk) )
+    { 
+      *p_seq  = SEQ_WAIT_MOVEOUT_CARD;
+    }
+    break;
+
+  case SEQ_WAIT_MOVEOUT_CARD:
+    Util_PlayerInfo_Delete( p_wk );
+    *p_seq  = SEQ_START_UPDATE_MSG;
     break;
 
   //更新処理
@@ -1572,7 +1593,7 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_WAIT_DRAW_PLAYERINFO:
     {
       BOOL ret = TRUE;
-      ret &= Util_PlayerInfo_Move( p_wk );
+      ret &= Util_PlayerInfo_MoveIn( p_wk );
       ret &= Util_BtlBox_MoveIn( p_wk );
       if( ret )
       { 
@@ -1987,7 +2008,7 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     break;
 
   case SEQ_WAIT_DRAW_PLAYERINFO:
-    if( Util_PlayerInfo_Move( p_wk ) )
+    if( Util_PlayerInfo_MoveIn( p_wk ) )
     { 
       *p_seq  = SEQ_START_CUP_MSG;
     }
@@ -2577,15 +2598,19 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_START_SESSION:
+#ifdef SAKE_REPORT_BATTLE_AFTER
 #ifdef SAKE_REPORT_HEAP_DIVIDE
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_WIFI_RATE_HEAP_SIZE );
     DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_GS, WBM_WIFI_RATE_HEAP_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
 #endif //SAKE_REPORT_HEAP_DIVIDE
+
     WIFIBATTLEMATCH_SC_StartSession( p_wk->p_net ) ;
+#endif  //SAKE_REPORT_BATTLE_AFTER
     *p_seq  = SEQ_WAIT_SESSION;
     break;
 
   case SEQ_WAIT_SESSION:
+#ifdef SAKE_REPORT_BATTLE_AFTER
     if( WIFIBATTLEMATCH_SC_ProcessSession( p_wk->p_net ) )
     { 
 #ifdef SAKE_REPORT_HEAP_DIVIDE
@@ -2595,6 +2620,9 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
       *p_seq  = SEQ_END_MATCHING;
     }
+#else
+    *p_seq  = SEQ_END_MATCHING;
+#endif  //SAKE_REPORT_BATTLE_AFTER
     break;
 
   case SEQ_END_MATCHING:
@@ -2895,6 +2923,7 @@ static void WbmWifiSeq_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       WBM_WIFI_SUBSEQ_RET ret = Util_SubSeq_Main( p_wk );
       if( ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMESAFE )
       { 
+        p_wk->is_wificup_end  = TRUE;
         WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
       }
       else if( ret == WBM_WIFI_SUBSEQ_CUPDATE_RET_TIMEOVER )
@@ -2973,6 +3002,7 @@ static void WbmWifiSeq_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
         switch( select )
         { 
         case 0:
+          p_wk->is_wificup_end  = FALSE;
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Matching );
           break;
         case 1:
@@ -3174,6 +3204,12 @@ static void WbmWifiSeq_DisConnextEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
 { 
   WIFIBATTLEMATCH_WIFI_WORK	  *p_wk	    = p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_wk->p_param;
+
+  if( p_wk->is_wificup_end )
+  { 
+    p_param->result = WIFIBATTLEMATCH_CORE_RESULT_END_WIFICUP;
+  }
+
   WBM_SEQ_End( p_seqwk );
 }
 //----------------------------------------------------------------------------
@@ -3773,11 +3809,24 @@ static void Util_PlayerInfo_Delete( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
  *	@return TRUEで完了  FALSEで処理中
  */
 //-----------------------------------------------------------------------------
-static BOOL Util_PlayerInfo_Move( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
+static BOOL Util_PlayerInfo_MoveIn( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
 { 
   return PLAYERINFO_MoveMain( p_wk->p_playerinfo );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自分のカードをスライドアウト
+ *
+ *	@param	WIFIBATTLEMATCH_WIFI_WORK *p_wk   ワーク
+ *
+ *	@return TRUEで完了  FALSEで処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL Util_PlayerInfo_MoveOut( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
+{ 
+  return PLAYERINFO_MoveOutMain( p_wk->p_playerinfo );
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  自分のカード作成  すでにスライドインしている版
@@ -3789,7 +3838,7 @@ static void Util_PlayerInfo_CreateStay( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
 { 
   Util_PlayerInfo_Create( p_wk );
 
-  while( !Util_PlayerInfo_Move( p_wk ) )
+  while( !Util_PlayerInfo_MoveIn( p_wk ) )
   { 
 
   }

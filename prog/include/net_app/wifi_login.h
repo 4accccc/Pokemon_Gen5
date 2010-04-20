@@ -51,7 +51,6 @@ typedef enum
   WIFILOGIN_BGM_NONE,       //BGM操作を行わない
 } WIFILOGIN_BGM;
 
-
 //-------------------------------------
 ///	WIFILOGIN起動モード
 //=====================================
@@ -61,6 +60,22 @@ typedef enum
   WIFILOGIN_MODE_ERROR,       //エラーで再びきたときの起動
   WIFILOGIN_MODE_NOTSAVE,     //初回WIFIでもセーブへ移行しない(不思議な贈り物でしか使わないはずです)
 } WIFILOGIN_MODE;
+
+//-------------------------------------
+///	WIFILOGIN_FADE設定
+//    以下の値をマスクとしてOR指定してください
+//    ->現在はWIFILOGOUTだけです
+//=====================================
+typedef enum
+{
+  WIFILOGIN_FADE_DEFAULT,     //  ブラックインブラックアウト
+  WIFILOGIN_FADE_BLACK_IN   = 1<<1,
+  WIFILOGIN_FADE_BLACK_OUT  = 1<<2,
+  WIFILOGIN_FADE_WHITE_IN   = 1<<3,
+  WIFILOGIN_FADE_WHITE_OUT  = 1<<4,
+  WIFILOGIN_FADE_BLACK      = WIFILOGIN_FADE_BLACK_IN|WIFILOGIN_FADE_BLACK_OUT,
+  WIFILOGIN_FADE_WHITE      = WIFILOGIN_FADE_WHITE_IN|WIFILOGIN_FADE_WHITE_OUT,
+} WIFILOGIN_FADE;
 
 //-------------------------------------
 ///	WIFILOGINに渡す引数

@@ -154,6 +154,12 @@ static GFL_PROC_RESULT WIFILOGOUT_PROC_Init
   p_wk->p_param = p_param;
   p_wk->heapID  = HEAPID_WIFILOGOUT;
 
+  //デフォルト設定
+  if( p_wk->p_param->fade == WIFILOGIN_FADE_DEFAULT )
+  { 
+    p_wk->p_param->fade = WIFILOGIN_FADE_BLACK;
+  }
+
   //モジュール作成
   p_wk->p_display = WIFILOGIN_DISP_Init( p_wk->heapID, p_param->bg,p_param->display );
   p_wk->p_message = WIFILOGIN_MESSAGE_Init( p_wk->heapID, NARC_message_wifi_system_dat, p_param->display );
@@ -334,8 +340,18 @@ static BOOL SEQ_Main( WIFILOGOUT_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void SEQFUNCTION_StartFadeIn( WIFILOGOUT_WORK *p_wk )
 { 
+  int fade;
+  if( p_wk->p_param->fade & WIFILOGIN_FADE_WHITE_IN )
+  { 
+    fade  = WIPE_FADE_WHITE;
+  }
+  else
+  { 
+    fade  = WIPE_FADE_BLACK;
+  }
+
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
-      WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , p_wk->heapID );
+      fade, WIPE_DEF_DIV , WIPE_DEF_SYNC , p_wk->heapID );
   SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_WaitFadeIn );
 }
 
@@ -458,9 +474,19 @@ static void SEQFUNCTION_WaitEndMessage( WIFILOGOUT_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 static void SEQFUNCTION_StartFadeOut( WIFILOGOUT_WORK *p_wk )
-{ 
+{   
+  int fade;
+  if( p_wk->p_param->fade & WIFILOGIN_FADE_WHITE_OUT )
+  { 
+    fade  = WIPE_FADE_WHITE;
+  }
+  else
+  { 
+    fade  = WIPE_FADE_BLACK;
+  }
+
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-      WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , p_wk->heapID );
+      fade, WIPE_DEF_DIV , WIPE_DEF_SYNC , p_wk->heapID );
   SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_WaitFadeOut );
 }
 

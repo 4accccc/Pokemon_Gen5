@@ -690,9 +690,10 @@ BOOL PMSDAT_IsValid( const PMS_DATA *pms, HEAPID heapID )
         { 
           PMS_DECO_ID deco_id = PMSW_GetDecoID( pms->word[i]);
           //デコメならばデコメIDがあっているか
-          if( deco_id >= PMS_DECOID_MAX )
+          if( !(PMS_DECOID_ORG <= deco_id && deco_id < PMS_DECOID_MAX) )
           { 
             is_valid  = FALSE;
+            break;
           }
         }
         else
@@ -703,6 +704,7 @@ BOOL PMSDAT_IsValid( const PMS_DATA *pms, HEAPID heapID )
           if( !GetWordSorceID( pms->word[i], &fileID, &wordID ) )
           {
             is_valid  = FALSE;
+            break;
           }
         }
       }
