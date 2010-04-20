@@ -1963,7 +1963,7 @@ void GAMEDATA_PlayTimeSetSaveTime(GAMEDATA *gamedata)
  * @return PLAYTIME (GAMEDATA¶¬Žž‚Éalloc‚µ‚½ƒ[ƒN)
  */
 //==================================================================
-extern PLAYTIME* GAMEDATA_GetPlayTimeWork(GAMEDATA *gamedata)
+PLAYTIME* GAMEDATA_GetPlayTimeWork(GAMEDATA *gamedata)
 {
   return gamedata->playtime;
 }
