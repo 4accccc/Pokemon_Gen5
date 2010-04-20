@@ -152,8 +152,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_reserve_d03r0101_event_01
 
-	_BLACK_IN()
-	_DISP_FADE_END_CHECK()
+	_MAP_FADE_BLACK_IN_SLOW()
+	_MAP_FADE_END_CHECK()
 
 	//……はああ！　なんていうか　やるせねーな
 	_BALLOONWIN_OBJMSG( msg_d03r0101_rival_03 , D03R0101_RIVAL_02 )

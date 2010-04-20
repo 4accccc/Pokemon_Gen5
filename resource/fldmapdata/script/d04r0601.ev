@@ -51,6 +51,13 @@ EVENT_START		ev_reserve_d04r0601_event_01
 
 	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
 
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	
+	//カメラ操作　ゲーチスの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,1015808,98327,1212416,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()
+
 	//おそろいの　ようですね　わざわざ　こんなところまで
 	_BALLOONWIN_OBJMSG_WB( msg_d04r0601_sage1_01w, msg_d04r0601_sage1_01b, D04R0601_SAGE1_01, POS_DEFAULT )
 	_BALLOONWIN_CLOSE()
@@ -73,7 +80,6 @@ EVENT_START		ev_reserve_d04r0601_event_01
 
 	//おやおや　これは
 	_BALLOONWIN_OBJMSG( msg_d04r0601_sage1_03 , D04R0601_SAGE1_01 )
-	_BALLOONWIN_CLOSE()
 
 	//われらが　プラズマだんの　おうは
 	_BALLOONWIN_OBJMSG_WB( msg_d04r0601_sage1_03w, msg_d04r0601_sage1_03b, D04R0601_SAGE1_01, POS_DEFAULT )
@@ -105,11 +111,20 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_miru )
 	_OBJ_ANIME_WAIT()
 
+	_TIME_WAIT( 30 )
+
+	//階段ＳＥ
+	_SE_PLAY(SEQ_SE_KAIDAN)
+	_SE_WAIT()
+
 	//ゲーチスOBJを消す
 	_OBJ_DEL( D04R0601_SAGE1_01 )
 
 	//BGM終了
 	_END_EVENT_BGM()
+
+	_CAMERA_MOVE( 9688,0,970752,950272,98327,1212416,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()
 
 	//ライバル：アデクのほうをみる
 	_OBJ_ANIME( D04R0601_RIVAL_01, anm_stay_up )
@@ -125,7 +140,7 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	_OBJ_ANIME_WAIT()
 
 	//きゃつは　つよい……　ストーンを　さがしていた
-	_BALLOONWIN_OBJMSG_WB( msg_d04r0601_champion_03w, msg_d04r0601_champion_03b, D04R0601_CHAMPION_01, POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_WB( msg_d04r0601_champion_03w, msg_d04r0601_champion_03b, D04R0601_CHAMPION_01, POS_UP )
 	_BALLOONWIN_CLOSE()
 	
 	//……じいさん　ここに　いても　なにもないんだろ
@@ -133,12 +148,11 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	_BALLOONWIN_CLOSE()
 	
 	//……ああ　そうだな
-	_BALLOONWIN_OBJMSG( msg_d04r0601_champion_04 , D04R0601_CHAMPION_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_d04r0601_champion_04 , D04R0601_CHAMPION_01 , POS_UP )
 	_BALLOONWIN_CLOSE()
 
 	//画面暗転処理
-	_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
+	_MAP_FADE_BLACK_OUT_SLOW()
 		
 	//========================================/
 	
@@ -154,11 +168,19 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	
 	//========================================/
 
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 1 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+
+	_MAP_FADE_END_CHECK()
+
 	//予約スクリプト
 	_RESERVE_SCRIPT( SCRID_RESERVE_D03R0101_EVENT_01 )
 
 	//マップチェンジ
-	_MAP_CHANGE( ZONE_ID_D03R0101, 61, 32, DIR_DOWN )
+	_MAP_CHANGE_NO_FADE( ZONE_ID_D03R0101, 61, 0, 32, DIR_DOWN )
 
 EVENT_END
 
