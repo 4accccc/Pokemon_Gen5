@@ -458,6 +458,7 @@ static GMEVENT_RESULT ContinueMapInEvent(GMEVENT * event, int *seq, void *work)
   FIELDMAP_WORK * fieldmap;
   switch (*seq) {
   case 0:
+    FIELD_STATUS_SetContinueFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
     if ( cmw->sp_exit_flag )
     { //特殊接続リクエスト：いきなり別マップに遷移する
       const LOCATION * spLoc = GAMEDATA_GetSpecialLocation( gamedata );
@@ -469,7 +470,6 @@ static GMEVENT_RESULT ContinueMapInEvent(GMEVENT * event, int *seq, void *work)
     }
     else
     {
-      FIELD_STATUS_SetContinueFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
       MAPCHG_setupMapTools( gsys, &cmw->loc_req ); //新しいマップモードなど機能指定を行う
       EVTIME_Update( gamedata ); //イベント時間更新
       FIELD_FLAGCONT_INIT_Continue( gamedata, cmw->loc_req.zone_id ); //コンティニューによるフラグ落とし処理
