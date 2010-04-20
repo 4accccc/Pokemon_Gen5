@@ -104,6 +104,7 @@ void SND_MIC_Init( HEAPID heap_id )
   //内部フラグでチェックされています
   MIC_Init();               //MIC_API初期化
 
+#ifdef SDK_TWL
   // ノイズフィルター有効に
   {
     static SNDEXIirFilterParam FilterParam =
@@ -119,7 +120,7 @@ void SND_MIC_Init( HEAPID heap_id )
     }
     
   }
-  
+#endif
 
   sp_SndMic = wk;
 }
