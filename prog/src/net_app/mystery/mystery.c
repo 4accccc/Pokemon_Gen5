@@ -2048,6 +2048,13 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           }
           else
           { 
+            //受信時間を設定
+            { 
+              RTCDate date;
+              GFL_RTC_GetDate( &date );
+              p_wk->data.data.recv_date = MYSTERYDATA_PackDate( &date );
+            }
+
             //受信データをセーブデータに設定
             MYSTERYDATA_SetCardData( p_wk->p_sv, &p_wk->data.data);
             MYSTERYDATA_SetEventRecvFlag(p_wk->p_sv, p_wk->data.data.event_id);

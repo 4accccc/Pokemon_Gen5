@@ -2632,8 +2632,8 @@ static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     if( MYSTERYDATA_IsExistsCardAll(p_wk->setup.p_sv) == FALSE )
     { 
       MYSTERY_MSGWINSET_ClearOne( p_wk->p_winset, 1 );
+      GFL_BG_LoadScreenReq( MYSTERY_ALBUM_FONT_FRM );
     }
-    GFL_BG_LoadScreenReq( MYSTERY_ALBUM_FONT_FRM );
 
     GX_SetVisibleWnd( GX_WNDMASK_NONE );
     *p_seq  = SEQ_MSG_INIT;
@@ -3224,6 +3224,7 @@ struct _MYSTERY_CARD_WORK
   u16 seq;
   u16 cnt;
 
+  BOOL is_egg;
   u16 mons_no;
   u16 form_no;
   u32 voice_player;
@@ -3610,6 +3611,7 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const GIFT_PACK_DATA *cp_data, MYSTERY_CA
 
       p_wk->mons_no = cp_pokemon->mons_no;
       p_wk->form_no = cp_pokemon->form_no;
+      p_wk->is_egg  = cp_pokemon->egg;
 
       //ƒpƒŒƒbƒg“]‘—
       { 
@@ -3743,7 +3745,10 @@ void MYSTERY_CARD_Main( MYSTERY_CARD_WORK *p_wk )
 	    p_wk->seq = SEQ_START_VOICE;
 	    break;
 	  case SEQ_START_VOICE:
-	    p_wk->voice_player  = PMV_PlayVoice( p_wk->mons_no, p_wk->form_no );
+      if( p_wk->is_egg == FALSE )
+      { 
+        p_wk->voice_player  = PMV_PlayVoice( p_wk->mons_no, p_wk->form_no );
+      }
       { 
         GFL_CLACTPOS  pos;
         GFL_CLACT_WK_GetPos( p_res->p_silhouette, &pos, p_res->draw_type );
@@ -3759,12 +3764,15 @@ void MYSTERY_CARD_Main( MYSTERY_CARD_WORK *p_wk )
         GFL_CLACTPOS  clpos;
 
         ret &= MOVE_SHAKE_Main( &p_wk->move_shake, &angle, &pos );
-        GFL_CLACT_WK_SetRotation( p_res->p_silhouette, angle );
+//        GFL_CLACT_WK_SetRotation( p_res->p_silhouette, angle );
         clpos.x = pos.x;
         clpos.y = pos.y;
         GFL_CLACT_WK_SetPos( p_res->p_silhouette, &clpos, p_res->draw_type );
 
-        ret &= !PMVOICE_CheckPlay( p_wk->voice_player );
+        if( p_wk->is_egg == FALSE )
+        { 
+          ret &= !PMVOICE_CheckPlay( p_wk->voice_player );
+        }
 
         if( ret )
         { 
@@ -3961,6 +3969,7 @@ static void MYSTERY_CARD_LoadResourceOBJ( MYSTERY_CARD_WORK *p_wk, MYSTERY_CARD_
 
       p_wk->mons_no = cp_pokemon->mons_no;
       p_wk->form_no = cp_pokemon->form_no;
+      p_wk->is_egg  = cp_pokemon->egg;
 
       //ƒpƒŒƒbƒg“]‘—
       { 
@@ -4201,7 +4210,10 @@ void MYSTERY_CARD_RES_Clear( MYSTERY_CARD_RES *p_wk )
  *      PRIVATE
  */
 //=============================================================================
-#define MOVE_SHAKE_ROTATE_NUM (3)
+
+
+#define MOVE_SHAKE_ROTATE_NUM (5)
+
 static const u16 sc_next_angle[ MOVE_SHAKE_ROTATE_NUM ] =
 { 
   0xFFFF*(0+10)/360, 0xFFFF*(360-10)/360,0xFFFF*360/360,
@@ -4212,10 +4224,18 @@ static const s8 sc_next_dir[ MOVE_SHAKE_ROTATE_NUM ] =
 };
 static const s8 sc_next_sync[ MOVE_SHAKE_ROTATE_NUM ] =
 { 
-  30,60,30,
+  5,10,5,5, 2,
 };
 static const GFL_POINT sc_next_pos[ MOVE_SHAKE_ROTATE_NUM ] =
 { 
+  { 
+    MYSTERY_CARD_SILHOUETTE_POS_X + 8,
+    MYSTERY_CARD_SILHOUETTE_POS_Y,
+  },
+  { 
+    MYSTERY_CARD_SILHOUETTE_POS_X - 8,
+    MYSTERY_CARD_SILHOUETTE_POS_Y,
+  },
   { 
     MYSTERY_CARD_SILHOUETTE_POS_X + 4,
     MYSTERY_CARD_SILHOUETTE_POS_Y,
@@ -4229,6 +4249,7 @@ static const GFL_POINT sc_next_pos[ MOVE_SHAKE_ROTATE_NUM ] =
     MYSTERY_CARD_SILHOUETTE_POS_Y,
   },
 };
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  ‰Šú‰»
@@ -4265,6 +4286,7 @@ static void MOVE_SHAKE_Init( MOVE_SHAKE_WORK *p_wk, u16 init_angle, s16 x, s16 y
 //-----------------------------------------------------------------------------
 static BOOL MOVE_SHAKE_Main( MOVE_SHAKE_WORK *p_wk, u16 *p_angle, GFL_POINT *p_pos )
 { 
+
   enum
   { 
     SEQ_INIT,
@@ -4311,8 +4333,8 @@ static BOOL MOVE_SHAKE_Main( MOVE_SHAKE_WORK *p_wk, u16 *p_angle, GFL_POINT *p_p
       }
 
       //‰ñ“]“®ì
-      p_wk->now_angle = p_wk->init_angle + 
-        p_wk->next_dir * ( diff * p_wk->sync / p_wk->next_sync);
+//      p_wk->now_angle = p_wk->init_angle + 
+//        p_wk->next_dir * ( diff * p_wk->sync / p_wk->next_sync);
 
       pos_dir = p_wk->next_pos.x - p_wk->init_pos.x;
       pos_dir = MATH_IAbs(pos_dir) / pos_dir;

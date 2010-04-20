@@ -210,7 +210,7 @@ static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, 
       place = pGift->birth_place;
     }
 
-    POKE_MEMO_SetTrainerMemoPokeDistribution( PP_GetPPPPointer(pp) , place , year , month , day );
+    POKE_MEMO_SetTrainerMemoPokeDistribution( PP_GetPPPPointer(pp) , place , year-2000, month , day );
   }
 
   PP_Renew( pp );

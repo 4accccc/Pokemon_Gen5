@@ -277,20 +277,21 @@ extern void MYSTERYDATA_SetEventRecvFlag(MYSTERY_DATA * fd, u32 eventno);
 extern BOOL MYSTERYDATA_CheckCrc( const DOWNLOAD_GIFT_DATA * fd );
 
 //------------------------------------------------------------------
-/// 受信日時　年月日受け取り
+/// 受信日時　年月日
 //------------------------------------------------------------------
-inline s32 MYSTERYDATA_GetYear( s32 recv_date )
-{ 
-  return (recv_date >> MYSTERYGIFT_DATE_SHIFT_YEAR) & MYSTERYGIFT_DATE_MASK_YEAR;
-}
-inline s32 MYSTERYDATA_GetMonth( s32 recv_date )
-{ 
-  return (recv_date >> MYSTERYGIFT_DATE_SHIFT_MONTH) & MYSTERYGIFT_DATE_MASK_MONTH;
-}
-inline s32 MYSTERYDATA_GetDay( s32 recv_date )
-{ 
-  return (recv_date >> MYSTERYGIFT_DATE_SHIFT_DAY) & MYSTERYGIFT_DATE_MASK_DAY;
-}
+#define MYSTERYDATA_GetYear( recv_date )  \
+  (((recv_date) >> MYSTERYGIFT_DATE_SHIFT_YEAR) & MYSTERYGIFT_DATE_MASK_YEAR)
+
+#define MYSTERYDATA_GetMonth( recv_date ) \
+  (((recv_date) >> MYSTERYGIFT_DATE_SHIFT_MONTH) & MYSTERYGIFT_DATE_MASK_MONTH)
+
+#define MYSTERYDATA_GetDay( recv_date ) \
+  (((recv_date) >> MYSTERYGIFT_DATE_SHIFT_DAY) & MYSTERYGIFT_DATE_MASK_DAY)
+
+#define MYSTERYDATA_PackDate( cp_date ) \
+  ((((2000 + (cp_date)->year) & MYSTERYGIFT_DATE_MASK_YEAR ) << MYSTERYGIFT_DATE_SHIFT_YEAR) | \
+   (((cp_date)->month & MYSTERYGIFT_DATE_MASK_MONTH) << MYSTERYGIFT_DATE_SHIFT_MONTH) | \
+   (((cp_date)->day & MYSTERYGIFT_DATE_MASK_DAY ) << MYSTERYGIFT_DATE_SHIFT_DAY)) \
 
 //------------------------------------------------------------------
 //	 指定のカードを入れ替える
