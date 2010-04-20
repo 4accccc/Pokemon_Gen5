@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T16:15:25"/>
+	<create user="matsumiya" host="W00224" date="2010-04-20T22:02:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1295" top="207" right="2000" bottom="835" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="145" right="2004" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -552,13 +552,19 @@
 ポケモンを　かんぜんに　するため
 ひとびとから　ときはなつか！▼
 それとも　ポケモンと　ひとは
-ともに　いるべきなのか……[BE:09:速度コントロール:0]▼</language>
+ともに　いるべきなのか……▼
+ボクと　キミ
+どちらの　おもいが　つよいか……▽
+それで　きまる！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]キミも　城に　来るんだ▼
 そこで　すべてを　決めよう▼
 ポケモンを　完全に　するため
 人々から　解き放つか！▼
 それとも　ポケモンと　人は
-共に　いるべきなのか……[BE:09:速度コントロール:0]▼</language>
+共に　いるべきなのか……▼
+ボクと　キミ
+どちらの　想いが　強いか……▽
+それで　決まる！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -606,21 +612,28 @@
 
 	<row id="msg_c09r0501_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
+・続けてblack_03a</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">チェレン『……じぶんの　やることが
+わかったから　つよくなれたんです▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……自分の　やることが
+わかったから　強くなれたんです▼</language>
+	</row>
+
+	<row id="msg_c09r0501_black_03a" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
 ・主人公を見てメッセージ表示
 ・主人公、操作可能に</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『……じぶんの　やることが
-わかったから　つよくなれたんです▼
-[1:00:トレーナー名:0]！
+		<language name="JPN" width="256">[1:00:トレーナー名:0]！
 Ｎに　つたえてよ▼
 ポケモンと　いることで
 つよくなれる　にんげんが　いること▼
 ポケモンも　ぼくと　いっしょに
 まなび　つよくなれたってこと　を▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……自分の　やることが
-わかったから　強くなれたんです▼
-[1:00:トレーナー名:0]！
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！
 Ｎに　伝えてよ▼
 ポケモンと　いることで
 強くなれる　人間が　いること▼
@@ -670,7 +683,7 @@
 ポケモンとの　きずなを
 みせてやるはず　だったがな……▼
 あいつの　信念も
-また　本物だった　ということか▼か▼
+また　本物だった　ということか▼
 心しろよ
 いつだって　世界を　変えるのは▽
 夢を　本気で　追い求める　ヤツだ▼
