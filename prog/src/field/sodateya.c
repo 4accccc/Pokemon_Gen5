@@ -1236,7 +1236,7 @@ static void EggCordinate_waza_machine(
     wazano = PP_Get( father, id_para[i], NULL );
 
     // 同技の技マシンが存在するかどうかチェック
-    for( itemno=ITEM_WAZAMASIN01; itemno<=ITEM_WAZAMASIN101; itemno++ )
+    for( itemno=ITEM_WAZAMASIN01; itemno<=ITEM_DATA_MAX; itemno++ )
     {
       // 技マシンがあり, タマゴポケモンに使用できるなら, 習得する
       if( (wazano == ITEM_GetWazaNo( itemno )) &&
