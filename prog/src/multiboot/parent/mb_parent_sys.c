@@ -2169,7 +2169,7 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
         MYITEM_PTR myItem = GAMEDATA_GetMyItem( work->initWork->gameData );
         if( ret == MMYR_RET1 &&
            (MYITEM_CheckItem( myItem , ITEM_ROKKUKAPUSERU , 1 , work->heapId ) == TRUE ||
-            MYITEM_CheckItem( myItem , ITEM_WAZAMASIN101 , 1 , work->heapId ) == TRUE) )
+            MYITEM_CheckItem( myItem , ITEM_WAZAMASIN95 , 1 , work->heapId ) == TRUE) )
         {
           //Ç‡Ç§éùÇ¡ÇƒÇÈ
           work->yesNoRet = MMYR_RET2; //ã≠êßÇ¢Ç¢Ç¶
