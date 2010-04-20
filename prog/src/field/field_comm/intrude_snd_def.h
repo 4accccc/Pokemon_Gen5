@@ -12,3 +12,5 @@
 ///誰かのハイルツリーと接続した時に鳴らす音
 #define INTSE_PALACE_CONNECT    (SEQ_SE_FLD_40)
 
+///ミッションの時間が残りわずかな時のカウントダウン
+#define INTSE_MISSION_COUNTDOWN   (SEQ_SE_DECIDE5)

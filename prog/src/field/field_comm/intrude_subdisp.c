@@ -33,6 +33,7 @@
 #include "field/scrcmd_intrude.h"
 #include "intrude_field.h"
 #include "system/palanm.h"
+#include "intrude_snd_def.h"
 
 
 //==============================================================================
@@ -419,6 +420,8 @@ typedef struct _INTRUDE_SUBDISP{
   u8 print_touch_player;  ///< 通信相手のアイコンをタッチした場合、その人物のNetID
   u8 mission_target_focus_netid;    ///<ミッションターゲットでフォーカス対象のプレイヤーNetID
   u8 mission_target_focus_wait;     ///<ミッションターゲットフォーカスアニメウェイト
+  
+  s16 print_time;         ///<表示されている時間
   u8 padding[2];
 }INTRUDE_SUBDISP;
 
@@ -537,6 +540,7 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   intsub->player_pal_tblno = PALACE_TOWN_DATA_NULL;
   intsub->print_touch_player = INTRUDE_NETID_NULL;
   intsub->mission_target_focus_netid = INTRUDE_NETID_NULL;
+  intsub->print_time = -1;
   
   _IntSub_CommParamInit(intsub, Intrude_Check_CommConnect(game_comm));
   
@@ -1807,11 +1811,18 @@ static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *a
   my_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
 //  level = my_occupy->intrude_level;
   level = intsub->comm.m_timer;
+  if(intsub->print_time != -1 && intsub->print_time != level && level <= 5
+      && intsub->comm.m_status == MISSION_STATUS_EXE){
+    PMSND_PlaySE( INTSE_MISSION_COUNTDOWN );
+  }
   
-  for(i = 0; i <= INTSUB_ACTOR_LV_NUM_KETA_MAX - INTSUB_ACTOR_LV_NUM_KETA_0; i++){
-    act = intsub->act[INTSUB_ACTOR_LV_NUM_KETA_0 + i];
-    GFL_CLACT_WK_SetAnmIndex(act, level % 10);
-    level /= 10;
+  if(intsub->print_time != level){
+    intsub->print_time = level;
+    for(i = 0; i <= INTSUB_ACTOR_LV_NUM_KETA_MAX - INTSUB_ACTOR_LV_NUM_KETA_0; i++){
+      act = intsub->act[INTSUB_ACTOR_LV_NUM_KETA_0 + i];
+      GFL_CLACT_WK_SetAnmIndex(act, level % 10);
+      level /= 10;
+    }
   }
 }
 
