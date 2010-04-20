@@ -352,7 +352,9 @@ struct _MYSTERY_DEMO_WORK
   const DOWNLOAD_GIFT_DATA *cp_data;
   MYSTERY_PTC_WORK  ptc;
 
-  s32               leg_pos;
+  s16               leg_pos;
+  s16               x_ofs;
+
 } ;
 
 //-------------------------------------
@@ -1900,9 +1902,11 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
           }
 #endif //PM_DEBUG
 
-          //不正が０かつ、取得できるバージョンならばOK
+          //CRCがあっていて、不正が０かつ、取得できるバージョンならばOK
           //バージョンが０ならば制限なし、それ以外は自分のバージョンマスクで見る
-          if( dirty == 0 && ( p_wk->data.version == 0 || (p_wk->data.version & (1<<GET_VERSION())) ) )
+          if( MYSTERYDATA_CheckCrc( &p_wk->data ) &&
+              dirty == 0 && 
+              ( p_wk->data.version == 0 || (p_wk->data.version & (1<<GET_VERSION())) ) )
           { 
             *p_seq  = SEQ_SELECT_GIFT_MSG;
           }
@@ -2378,7 +2382,7 @@ static void SEQFUNC_CardAlbum( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
   switch( *p_seq )
   { 
   case SEQ_START_FADEOUT_INIT:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, -1 );
     MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_INIT );
     *p_seq  = SEQ_WAIT_FADE;
     break;
@@ -2405,7 +2409,7 @@ static void SEQFUNC_CardAlbum( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     }
     break;
   case SEQ_START_FADEIN_INIT:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, -1 );
     MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_MAIN );
     *p_seq  = SEQ_WAIT_FADE;
     break;
@@ -2498,7 +2502,7 @@ static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   switch( *p_seq )
   { 
   case SEQ_START_FADEOUT_INIT:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, -1 );
     MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_INIT );
     *p_seq  = SEQ_WAIT_FADE;
     break;
@@ -2525,7 +2529,7 @@ static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     }
     break;
   case SEQ_START_FADEIN_INIT:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
+		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, -1 );
     MYSTERY_SEQ_SetReservSeq( p_seqwk, SEQ_MAIN );
     *p_seq  = SEQ_WAIT_FADE;
     break;
@@ -2662,6 +2666,7 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     p_wk->p_wifilogin_param->bg           = WIFILOGIN_BG_NORMAL;
     p_wk->p_wifilogin_param->display      = WIFILOGIN_DISPLAY_UP;
     p_wk->p_wifilogin_param->pSvl         = NULL;
+    p_wk->p_wifilogin_param->bgm           = WIFILOGIN_BGM_NORMAL;
     if( MYSTERY_DATA_TYPE_OUTSIDE == MYSTERY_DATA_GetDataType( p_wk->p_sv ) )
     { 
       //管理外セーブならば、WIFILOGINはセーブへ行かない
@@ -2812,6 +2817,8 @@ static void SEQFUNC_DisConnectReturn( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, voi
 { 
   enum
   { 
+    SEQ_START_MSG_DISCONNECT, 
+
     SEQ_INIT,
     SEQ_WAIT,
     SEQ_END,
@@ -2820,6 +2827,11 @@ static void SEQFUNC_DisConnectReturn( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, voi
 
   switch( *p_seq )
   { 
+  case SEQ_START_MSG_DISCONNECT:
+    MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_026, MYSTERY_TEXT_TYPE_WAIT );
+    *p_seq  = SEQ_INIT;
+    break;
+
   case SEQ_INIT:
     switch( p_wk->mode )
     { 
@@ -3267,6 +3279,7 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
   p_wk->heapID    = heapID;
   p_wk->cp_data   = cp_data;
   p_wk->leg_pos   = 0;
+  p_wk->x_ofs     = 0;
 
   { 
     static const u16 sc_type_to_back_fade[] =
@@ -3374,11 +3387,11 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
           ITEM_GetIndex( cp_item->itemNo, ITEM_GET_ICON_CGX ), FALSE, CLSYS_DRAW_MAIN, heapID );
 
       GFL_ARC_CloseDataHandle( p_handle );
+      p_wk->x_ofs = 4;
+      p_wk->leg_pos = 8;
     }
     break;
 
-  default:
-    GF_ASSERT( 0 );
   case MYSTERYGIFT_TYPE_POWER:
     {	
       ARCHANDLE	*	p_handle	= GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );
@@ -3393,9 +3406,12 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
           NARC_mystery_fushigi_box_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
 
       GFL_ARC_CloseDataHandle( p_handle );
+      p_wk->leg_pos = 8;
     }
     break;
-
+  default:
+    GF_ASSERT( 0 );
+    break;
   }
 
 	//CLWK登録
@@ -3403,7 +3419,7 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
 		int i;
 		GFL_CLWK_DATA	cldata;
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-    cldata.pos_x  = MYSTERY_DEMO_GIFT_X;
+    cldata.pos_x  = MYSTERY_DEMO_GIFT_X + p_wk->x_ofs;
     cldata.pos_y  = MYSTERY_DEMO_MOVE_GIFT_START_Y;
     cldata.bgpri  = BG_FRAME_M_BACK1;
 

@@ -165,8 +165,6 @@ void DEBUG_MYSTERY_SetDownLoadData( DOWNLOAD_GIFT_DATA *p_data, u32 version, u8 
   p_data->LangCode  = langCode;
   p_data->movie_flag  = 0;
   p_data->version = version;
-  p_data->dummy[0]  = 0;
-  p_data->dummy[1]  = 0;
 
   GFL_STD_MemClear( p_data->event_text, sizeof(STRCODE)*(GIFT_DATA_CARD_TEXT_MAX+EOM_SIZE) );
   p_data->event_text[0] = L'ƒf';
@@ -186,4 +184,5 @@ void DEBUG_MYSTERY_SetDownLoadData( DOWNLOAD_GIFT_DATA *p_data, u32 version, u8 
   p_data->event_text[14] = L'‚Å';
   p_data->event_text[15] = L'‚·';
   p_data->event_text[16] = GFL_STR_GetEOMCode();
+  p_data->crc  = GFL_STD_CrcCalc( p_data, sizeof(DOWNLOAD_GIFT_DATA) - 2 );
 }

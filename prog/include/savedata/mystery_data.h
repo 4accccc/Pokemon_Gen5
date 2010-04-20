@@ -172,8 +172,8 @@ typedef struct{
   u8 padding:6;
   u8 padding2;
   u32 dummy[4];            //予備データ16byte
-  u16 crc;             //CRCデータ
-  u16 encryption;             //暗号複合キー
+  u16 crc;             //CRCデータ（現状、以下のDOWNLOAD_GIFT_DATAのものを使用しております）
+  u16 encryption;             //暗号複合キー(現状未使用)
 } GIFT_PACK_DATA;
 
 
@@ -184,11 +184,9 @@ typedef struct{
   STRCODE event_text[GIFT_DATA_CARD_TEXT_MAX+EOM_SIZE];	// 説明テキスト
   u8 movie_flag;         //映画配信かどうか
   u8 LangCode;          //言語コード
-  u8 dummy[2];          //パディング
+  u8 dummy[2];          //ダミー
+  u16 crc;              //CRCデータ
 } DOWNLOAD_GIFT_DATA;
-
-
-
 
 //------------------------------------------------------------------
 /**
@@ -272,6 +270,11 @@ extern BOOL MYSTERYDATA_IsEventRecvFlag(MYSTERY_DATA * fd, u32 eventno);
 /// 指定のイベントもらったよフラグを立てる
 //------------------------------------------------------------------
 extern void MYSTERYDATA_SetEventRecvFlag(MYSTERY_DATA * fd, u32 eventno);
+
+//------------------------------------------------------------------
+/// CRCをチェックする
+//------------------------------------------------------------------
+extern BOOL MYSTERYDATA_CheckCrc( const DOWNLOAD_GIFT_DATA * fd );
 
 //------------------------------------------------------------------
 /// 受信日時　年月日受け取り

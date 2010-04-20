@@ -735,6 +735,7 @@ static void _fushigiDataSet(DEBUG_OHNO_CONTROL * pDOC)
     pDOC->aInit.data[i].version   = sc_version_tbl[ i ];
     pDG = (DOWNLOAD_GIFT_DATA* )pDOC->aInit.data[i].pData;
 
+    GFL_STD_MemClear( pDG, sizeof(DOWNLOAD_GIFT_DATA) );
     DEBUG_MYSTERY_SetGiftItemData(&pDG->data, ITEM_RIBATHITIKETTO );
     DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, MYSTERY_DATA_EVENT_LIBERTY, TRUE );
     pDG->LangCode = pDOC->aInit.data[i].LangCode;
@@ -754,6 +755,7 @@ static void _fushigiDataSet(DEBUG_OHNO_CONTROL * pDOC)
     pDG->event_text[12] = L'る';
     pDG->event_text[13] = L'よ';
     pDG->event_text[14] = 0xffff;
+    pDG->crc  = GFL_STD_CrcCalc( pDOC->aInit.data[i].pData, sizeof(DOWNLOAD_GIFT_DATA) - 2 );
 
     {
       int k,j;
@@ -1064,7 +1066,7 @@ static void _fushigiDataIRCSet(DEBUG_OHNO_CONTROL * pDOC)
     LANG_ENGLISH,
     LANG_FRANCE,
     LANG_ITALY,
-    LANG_GERMANY,
+    LANG_JAPAN,
     LANG_SPAIN,
     LANG_KOREA,
   };
@@ -1098,6 +1100,7 @@ static void _fushigiDataIRCSet(DEBUG_OHNO_CONTROL * pDOC)
 
     pDG = (DOWNLOAD_GIFT_DATA* )pDOC->aIRCInit.data[i].pData;
 
+    GFL_STD_MemClear( pDG, sizeof(DOWNLOAD_GIFT_DATA) );
     DEBUG_MYSTERY_SetGiftPokeData(&pDG->data);
     DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 12, FALSE );
     pDG->version = sc_version_tbl[i];
@@ -1106,6 +1109,7 @@ static void _fushigiDataIRCSet(DEBUG_OHNO_CONTROL * pDOC)
     pDG->event_text[1] = L'ば';
     pDG->event_text[2] = L'ぐ';
     pDG->event_text[3] = 0xffff;
+    pDG->crc  = GFL_STD_CrcCalc( pDOC->aIRCInit.data[i].pData, sizeof(DOWNLOAD_GIFT_DATA) - 2 );
 
     OS_TPrintf("%dつ目スタート：言語＝%d バージョン0x%x\n", i, pDOC->aIRCInit.data[i].LangCode, pDOC->aIRCInit.data[i].version);
     {

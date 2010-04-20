@@ -457,6 +457,32 @@ void MYSTERYDATA_SetEventRecvFlag(MYSTERY_DATA * fd, u32 num)
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  CRCが正しいかチェックする(複合化してあること)
+ *
+ *	@param	const DOWNLOAD_GIFT_DATA * fd ふしぎセーブへのポインタ
+ *
+ *	@return TRUEならば正しい  FALSEならば間違っている
+ */
+//-----------------------------------------------------------------------------
+BOOL MYSTERYDATA_CheckCrc( const DOWNLOAD_GIFT_DATA * fd )
+{ 
+  OS_TPrintf( "CRCチェック buffer[0x%x]== calc[0x%x]\n", fd->crc, GFL_STD_CrcCalc( fd, sizeof(DOWNLOAD_GIFT_DATA) - 2 ));
+  {
+    int k,j;
+    u8  *p_temp = (u8*)fd;
+    for(j=0;j<sizeof(DOWNLOAD_GIFT_DATA);){
+      for(k=0;k<16;k++){
+          OS_TPrintf("%x ", p_temp[j]);
+          j++;
+      }
+      OS_TPrintf("\n");
+    }
+  }
+  return fd->crc == GFL_STD_CrcCalc( fd, sizeof(DOWNLOAD_GIFT_DATA) - 2 );
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  カードデータを入れ替える 暗号複合済み
  *
  *	@param	MYSTERY_DATA * fd ふしぎセーブデータへのポインタ

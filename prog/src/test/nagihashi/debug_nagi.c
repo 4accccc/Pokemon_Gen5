@@ -1373,7 +1373,8 @@ static void LISTDATA_CallBtlRecorder( DEBUG_NAGI_MAIN_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void LISTDATA_CallWifiLogout( DEBUG_NAGI_MAIN_WORK *p_wk )
 { 
-  p_wk->wifilogout_param.bg = WIFILOGIN_BG_NORMAL;
+  p_wk->wifilogout_param.bg   = WIFILOGIN_BG_NORMAL;
+  p_wk->wifilogout_param.bgm  = WIFILOGIN_BGM_NONE;
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
   { 
     p_wk->wifilogout_param.bg = WIFILOGIN_BG_DREAM_WORLD;

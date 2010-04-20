@@ -51,6 +51,9 @@
 #define DEBUG_SAVE  //STARTを押すとセーブして終了
 #define DEBUG_DELETE  //SELECTを押すと強制消してセーブして終了
 #endif //PM_DEBUG
+
+#define MEMORY_LOAD_SILHOUETTE
+
 //=============================================================================
 /**
  *          定数
@@ -1959,6 +1962,7 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     { 
       const int key = GFL_UI_KEY_GetRepeat();
       BOOL is_update  = FALSE;
+      s8  scroll  = 0;  //1だと右へ-1だと左へ
 
       //タッチ入力
       if( GFL_UI_TP_GetTrg() )
@@ -1972,7 +1976,15 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       }
 
       //キー入力
-      if( key & PAD_KEY_UP )
+      if( key == PAD_BUTTON_L )
+      { 
+        scroll  = -1;
+      }
+      else if( key == PAD_BUTTON_R )
+      {          
+        scroll  = 1; 
+      }
+      else if( key & PAD_KEY_UP )
       { 
         PMSND_PlaySE( MYSTERY_SE_SELCT );
         switch( p_wk->cursor )
@@ -2078,28 +2090,7 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
         if( (p_wk->cursor == MYSTERY_CURSOR_LEFT_UP
           || p_wk->cursor == MYSTERY_CURSOR_LEFT_DOWN) )
         { 
-          u32 next_page;
-
-          if( p_wk->now_page != 0 )
-          { 
-            next_page = p_wk->now_page-1;
-          }
-          else
-          { 
-            next_page  = page_max-1;
-          }
-
-          PMSND_PlaySE( MYSTERY_SE_PAGE );
-          Mystery_Album_StartScrollPage( p_wk, TRUE );
-          Mystery_Album_DeleteDisplay( p_wk, FALSE );
-          Mystery_Album_CreateDisplay( p_wk, FALSE, TRUE, next_page, p_wk->heapID );
-
-          p_wk->now_page  = next_page;
-
-          GFL_CLACT_WK_SetDrawEnable( p_wk->p_cursor, FALSE );
-          GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[0], FALSE );
-          GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[1], FALSE );
-          *p_seq  = SEQ_SCROLL;
+          scroll  = -1;
         }
         else if( p_wk->cursor != MYSTERY_CURSOR_RETURN )
         { 
@@ -2127,27 +2118,7 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
         if( (p_wk->cursor == MYSTERY_CURSOR_RIGHT_UP
           || p_wk->cursor == MYSTERY_CURSOR_RIGHT_DOWN) )
         { 
-          u32 next_page;
-
-          if( p_wk->now_page < page_max-1 )
-          { 
-            next_page = p_wk->now_page+1;
-          }
-          else
-          { 
-            next_page  = 0;
-          }
-
-          PMSND_PlaySE( MYSTERY_SE_PAGE );
-          Mystery_Album_StartScrollPage( p_wk, FALSE );
-          Mystery_Album_DeleteDisplay( p_wk, FALSE );
-          Mystery_Album_CreateDisplay( p_wk, FALSE, FALSE, next_page, p_wk->heapID );
-
-          p_wk->now_page  = next_page;
-          GFL_CLACT_WK_SetDrawEnable( p_wk->p_cursor, FALSE );
-          GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[0], FALSE );
-          GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[1], FALSE );
-          *p_seq  = SEQ_SCROLL;
+          scroll  = 1;
         }
         else if( p_wk->cursor != MYSTERY_CURSOR_RETURN )
         { 
@@ -2247,6 +2218,54 @@ static void SEQFUNC_MoveCursor( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
         MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_End );
       }
 #endif //DEBUG_DELETE
+
+      //スクロール
+      if( scroll != 0 )
+      { 
+        const int page_max  = Mystery_Album_GetPageMax( p_wk );
+        u32 next_page;
+        BOOL is_left;
+
+        if( scroll < 0 )
+        { 
+          if( p_wk->now_page != 0 )
+          { 
+            next_page = p_wk->now_page-1;
+          }
+          else
+          { 
+            next_page  = page_max-1;
+          }
+          is_left = TRUE;
+        }
+        else if( scroll > 0 )
+        { 
+          if( p_wk->now_page < page_max-1 )
+          { 
+            next_page = p_wk->now_page+1;
+          }
+          else
+          { 
+            next_page  = 0;
+          }
+
+          is_left = FALSE;
+        }
+
+        PMSND_PlaySE( MYSTERY_SE_PAGE );
+        Mystery_Album_StartScrollPage( p_wk, is_left );
+        Mystery_Album_DeleteDisplay( p_wk, FALSE );
+        Mystery_Album_CreateDisplay( p_wk, FALSE, is_left, next_page, p_wk->heapID );
+
+        p_wk->now_page  = next_page;
+
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_cursor, FALSE );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[0], FALSE );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_allow[1], FALSE );
+
+        p_wk->is_card_update  = TRUE;
+        *p_seq  = SEQ_SCROLL;
+      }
 
       //カーソルの移動
       if( is_update )
@@ -3569,7 +3588,7 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const GIFT_PACK_DATA *cp_data, MYSTERY_CA
     GFL_STR_DeleteBuffer( p_wordbuf );
   }
 
-
+#ifdef MEMORY_LOAD_SILHOUETTE
   //シルエットがある場合事前にメモリ転送
   //シルエット作成
   if( MYSTERY_CARD_DATA_GetType(&p_wk->data) == MYSTERYGIFT_TYPE_POKEMON )
@@ -3605,6 +3624,7 @@ MYSTERY_CARD_WORK * MYSTERY_CARD_Init( const GIFT_PACK_DATA *cp_data, MYSTERY_CA
       GFL_ARC_CloseDataHandle( p_handle );
     }
   }
+#endif //MEMORY_LOAD_SILHOUETTE
 
   return p_wk;
 }
@@ -3622,7 +3642,7 @@ void MYSTERY_CARD_Exit( MYSTERY_CARD_WORK *p_wk )
     GFL_TCB_DeleteTask( p_wk->p_trans_task );
     p_wk->p_trans_task  = NULL;
   }
-
+#ifdef MEMORY_LOAD_SILHOUETTE
   if( p_wk->p_plt_buff )
   { 
     GFL_HEAP_FreeMemory( p_wk->p_plt_buff );
@@ -3631,6 +3651,7 @@ void MYSTERY_CARD_Exit( MYSTERY_CARD_WORK *p_wk )
   { 
     GFL_HEAP_FreeMemory( p_wk->p_chr_buff );
   }
+#endif //MEMORY_LOAD_SILHOUETTE
 
   MYSTERY_MSGWINSET_DeleteBuff( p_wk->p_winbuff );
   MYSTERY_CARD_DATA_Exit( &p_wk->data );
@@ -3913,6 +3934,7 @@ static void MYSTERY_CARD_LoadResourceOBJ( MYSTERY_CARD_WORK *p_wk, MYSTERY_CARD_
   //シルエット作成
   if( MYSTERY_CARD_DATA_GetType(&p_wk->data) == MYSTERYGIFT_TYPE_POKEMON )
   { 
+#ifdef MEMORY_LOAD_SILHOUETTE
     GFL_CLGRP_PLTT_Replace( p_res->res_silhouette_plt, p_wk->p_plt_data->pRawData, 1 );
 
     //ついでにフェード用に色を保存
@@ -3921,6 +3943,54 @@ static void MYSTERY_CARD_LoadResourceOBJ( MYSTERY_CARD_WORK *p_wk, MYSTERY_CARD_
 
     //キャラ転送
     GFL_CLGRP_CGR_ReplaceEx( p_res->res_silhouette_cgx, p_wk->p_chr_data->pRawData, 32*12*12, 0, p_res->draw_type );
+
+#else //MEMORY_LOAD_SILHOUETTE
+    { 
+      const GIFT_PRESENT_POKEMON  *cp_pokemon = &p_wk->cp_data->data.pokemon;
+      POKEMON_PARAM* p_pp = Mystery_CreatePokemon( p_wk->cp_data, GFL_HEAP_LOWID(heapID), p_wk->p_gamedata );
+      ARCHANDLE *p_handle = POKE2DGRA_OpenHandle( GFL_HEAP_LOWID(heapID) );
+
+      p_wk->mons_no = cp_pokemon->mons_no;
+      p_wk->form_no = cp_pokemon->form_no;
+
+      //パレット転送
+      { 
+
+        void *p_plt_buff;
+        NNSG2dPaletteData *p_plt_data;
+
+	      u16 plt	= POKEGRA_GetPalArcIndex( 
+            PP_Get( p_pp, ID_PARA_monsno, NULL ),
+            PP_Get( p_pp, ID_PARA_form_no, NULL ), 
+            PP_Get( p_pp, ID_PARA_sex, NULL ),
+            PP_CheckRare( p_pp ), 
+            POKEGRA_DIR_FRONT,
+            PP_Get( p_pp, ID_PARA_tamago_flag, NULL ) 
+            );
+        p_plt_buff  = GFL_ARCHDL_UTIL_LoadPalette( p_handle, plt, &p_plt_data, heapID );
+        GFL_CLGRP_PLTT_Replace( p_res->res_silhouette_plt, p_plt_data->pRawData, 1 );
+
+        //ついでにフェード用に色を保存
+        GFL_STD_MemCopy( p_plt_data->pRawData, p_res->plt_pokemon, sizeof(u16) * 0x10 );
+        GFL_STD_MemFill16( p_res->plt_silhouette, GX_RGB( 0, 0, 0), sizeof(u16) * 0x10 );
+
+        GFL_HEAP_FreeMemory( p_plt_buff );
+      }
+
+      //キャラ転送
+      { 
+        void *p_chr_buff;
+        NNSG2dCharacterData *p_chr_data;
+        p_chr_buff  = POKE2DGRA_LoadCharacterPPP( &p_chr_data, PP_GetPPPPointerConst(p_pp), POKEGRA_DIR_FRONT, heapID );
+        GFL_CLGRP_CGR_ReplaceEx( p_res->res_silhouette_cgx, p_chr_data->pRawData, 32*12*12, 0, p_res->draw_type );
+
+        GFL_HEAP_FreeMemory( p_chr_buff );
+      }
+
+      GFL_HEAP_FreeMemory( p_pp );
+      GFL_ARC_CloseDataHandle( p_handle );
+    }
+#endif //MEMORY_LOAD_SILHOUETTE
 
     //CLWK設定
     { 
@@ -4125,7 +4195,7 @@ void MYSTERY_CARD_RES_Clear( MYSTERY_CARD_RES *p_wk )
 #define MOVE_SHAKE_ROTATE_NUM (3)
 static const u16 sc_next_angle[ MOVE_SHAKE_ROTATE_NUM ] =
 { 
-  0xFFFF*(0+20)/360, 0xFFFF*(360-20)/360,0xFFFF*360/360,
+  0xFFFF*(0+10)/360, 0xFFFF*(360-10)/360,0xFFFF*360/360,
 };
 static const s8 sc_next_dir[ MOVE_SHAKE_ROTATE_NUM ] =
 { 
@@ -4138,11 +4208,11 @@ static const s8 sc_next_sync[ MOVE_SHAKE_ROTATE_NUM ] =
 static const GFL_POINT sc_next_pos[ MOVE_SHAKE_ROTATE_NUM ] =
 { 
   { 
-    MYSTERY_CARD_SILHOUETTE_POS_X + 8,
+    MYSTERY_CARD_SILHOUETTE_POS_X + 4,
     MYSTERY_CARD_SILHOUETTE_POS_Y,
   },
   { 
-    MYSTERY_CARD_SILHOUETTE_POS_X - 8,
+    MYSTERY_CARD_SILHOUETTE_POS_X - 4,
     MYSTERY_CARD_SILHOUETTE_POS_Y,
   },
   { 

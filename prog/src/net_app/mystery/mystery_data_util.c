@@ -71,8 +71,6 @@ u32 MYSTERYDATA_ModifyDownloadData( DOWNLOAD_GIFT_DATA *p_data, GAMEDATA *p_game
     if( is_darty )
     { 
       dirty++;
-      p_data->event_text[0] = L'　';
-      p_data->event_text[1] = GFL_STR_GetEOMCode();
       OS_TPrintf( "DOWNLOAD_GIFT_DATA:説明テキストが不正のため空文字にしました\n" );
     }
   }
@@ -112,8 +110,6 @@ u32 MYSTERYDATA_ModifyGiftData( GIFT_PACK_DATA *p_data, GAMEDATA *p_gamedata, HE
     if( is_darty )
     { 
       dirty++;
-      p_data->event_name[0] = L'　';
-      p_data->event_name[1] = GFL_STR_GetEOMCode();
       OS_TPrintf( "GIFT_PACK_DATA:イベントタイトルが不正でした\n" );
     }
   }
@@ -157,7 +153,7 @@ u32 MYSTERYDATA_ModifyGiftData( GIFT_PACK_DATA *p_data, GAMEDATA *p_gamedata, HE
     case MYSTERYGIFT_TYPE_ITEM:
       { 
         u16 itemNo  = Mystery_CreateItem( p_data );
-        if( itemNo == ITEM_DUMMY_DATA )
+        if( !(ITEM_DUMMY_DATA < itemNo && itemNo <=ITEM_DATA_MAX) )
         {   
           dirty++;
           OS_TPrintf( "GIFT_PACK_DATA:アイテムNOが不正でした\n" );
@@ -167,7 +163,7 @@ u32 MYSTERYDATA_ModifyGiftData( GIFT_PACK_DATA *p_data, GAMEDATA *p_gamedata, HE
     case MYSTERYGIFT_TYPE_POWER:
       { 
         u16 gpower  = Mystery_CreateGPower( p_data );
-        if( gpower == GPOWER_ID_NULL )
+        if( !(GPOWER_ID_DISTRIBUTION_START <= gpower && gpower <= GPOWER_ID_DISTRIBUTION_END) )
         { 
           dirty++;
           OS_TPrintf( "GIFT_PACK_DATA:Gパワーが不正でした\n" ); 
