@@ -394,7 +394,7 @@ static void _Write_MissionExplain(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *se
   str_type = GFL_MSG_CreateString(setup->mm_mission_mono, msg_mistype_000 + cdata->type);
   str_explain = GFL_MSG_CreateString(setup->mm_mission_mono, explain_msgid);
   
-  MISSIONDATA_Wordset(appwk->parent->intcomm, cdata, target, setup->wordset, HEAPID_MONOLITH);
+  MISSIONDATA_Wordset(cdata, target, setup->wordset, HEAPID_MONOLITH);
   WORDSET_ExpandStr(setup->wordset, expand_explain, str_explain );
 
   PRINT_UTIL_Print(&mmw->print_util[BMPWIN_TYPE], setup->printQue, 

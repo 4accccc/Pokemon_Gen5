@@ -389,6 +389,8 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
 	INTRUDE_COMM_SYS_PTR intcomm;
 	enum{
     SEQ_INIT,
+    SEQ_PLAYER_DIR_CHANGE,
+    SEQ_PLAYER_DIR_CHANGE_WAIT,
     SEQ_ANSWER_SEND_WAIT,
     SEQ_FINISH,
   };
@@ -411,6 +413,34 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
       (*seq)++;
     }
     break;
+  case SEQ_PLAYER_DIR_CHANGE: //話しかけ相手に振り向く
+    if(MMDL_CheckPossibleAcmd(talk->ccew.fmmdl_player) == TRUE){
+      VecFx32 player_pos, target_pos;
+      u16 anmcmd;
+      
+      MMDL_GetVectorPos( talk->ccew.fmmdl_player, &player_pos );
+      target_pos = intcomm->intrude_status[talk->ccew.talk_netid].player_pack.pos;
+      if(target_pos.x > player_pos.x){
+        anmcmd = AC_DIR_R;
+      }
+      else if(target_pos.x < player_pos.x){
+        anmcmd = AC_DIR_L;
+      }
+      else if(target_pos.z < player_pos.z){
+        anmcmd = AC_DIR_U;
+      }
+      else{
+        anmcmd = AC_DIR_D;
+      }
+      MMDL_SetAcmd(talk->ccew.fmmdl_player, anmcmd);
+      (*seq)++;
+    }
+    break;
+  case SEQ_PLAYER_DIR_CHANGE_WAIT: //振り向き終了待ち
+    if(MMDL_EndAcmd(talk->ccew.fmmdl_player) == TRUE){ //アニメコマンド終了待ち
+	    (*seq)++;
+  	}
+	  break;
   case SEQ_ANSWER_SEND_WAIT:   //各イベントへ枝分かれ
     _EventChangeTalked(event, talk, intcomm);
   	return GMEVENT_RES_CONTINUE;

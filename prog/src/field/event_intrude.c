@@ -170,7 +170,7 @@ static GMEVENT_RESULT DisguiseEvent( GMEVENT *event, int *seq, void *wk )
     
     IntrudeEventPrint_SetupExtraMsgWin(&dis_wk->iem, gsys, 1, 1, 32-2, 16);
     
-    MISSIONDATA_Wordset(intcomm, &dis_wk->mdata.cdata, &dis_wk->mdata.target_info, 
+    MISSIONDATA_Wordset(&dis_wk->mdata.cdata, &dis_wk->mdata.target_info, 
       dis_wk->iem.wordset, dis_wk->heapID);
     {
       u16 explain_msgid, title_msgid;

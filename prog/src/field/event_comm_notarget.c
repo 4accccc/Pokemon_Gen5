@@ -218,17 +218,16 @@ static void _CommonEventChangeSet(GMEVENT *event, const COMMTALK_COMMON_EVENT_WO
   
   GMEVENT_Change(event, CommMissionEtc_CommonEvent, sizeof(EVENT_MISSION_NOTARGET));
 	talk = GMEVENT_GetEventWork( event );
+  GFL_STD_MemCopy(ccew, &talk->ccew, sizeof(COMMTALK_COMMON_EVENT_WORK));
 	
   if(intcomm != NULL){  //このタイミングでintcommがNULLの場合は無いが一応
-  	talk->msg_id = msg_tbl[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)];
+  	talk->msg_id = msg_tbl[MISSION_FIELD_GetTalkType(intcomm, ccew->talk_netid)];
     WORDSET_RegisterPlayerName( //イベント中にintcommに依存しなくて良いようにここでセット
-      talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+      ccew->iem.wordset, 0, Intrude_GetMyStatus(intcomm, ccew->talk_netid) );
   }
   else{
     GF_ASSERT(0);
   }
-  
-  GFL_STD_MemCopy(ccew, &talk->ccew, sizeof(COMMTALK_COMMON_EVENT_WORK));
 }
 
 //--------------------------------------------------------------

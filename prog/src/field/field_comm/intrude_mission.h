@@ -53,7 +53,7 @@ extern void MISSION_ClearRecvEntryAnswer(MISSION_SYSTEM *mission);
 extern void MISSION_SetMissionList(MISSION_SYSTEM *mission, const MISSION_CHOICE_LIST *list, NetID net_id);
 extern BOOL MISSION_CheckMissionTargetNetID(MISSION_SYSTEM *mission, int net_id);
 extern NetID MISSION_GetMissionTargetNetID(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
-extern void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_CONV_DATA *cdata, const MISSION_TARGET_INFO *target, WORDSET *wordset, HEAPID temp_heap_id);
+extern void MISSIONDATA_Wordset(const MISSION_CONV_DATA *cdata, const MISSION_TARGET_INFO *target, WORDSET *wordset, HEAPID temp_heap_id);
 extern s32 MISSION_GetMissionTimer(MISSION_SYSTEM *mission);
 extern void MISSION_LIST_Create(OCCUPY_INFO *occupy);
 extern void MISSION_LIST_Create_Type(OCCUPY_INFO *occupy, MISSION_TYPE mission_type);

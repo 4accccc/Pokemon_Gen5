@@ -517,7 +517,7 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Battle( GMEVENT *event, int *seq, voi
 
 	switch( *seq ){
   case SEQ_INIT:
-    MISSIONDATA_Wordset(intcomm, &talk->ccew.mdata.cdata, &talk->ccew.mdata.target_info, 
+    MISSIONDATA_Wordset(&talk->ccew.mdata.cdata, &talk->ccew.mdata.target_info, 
       talk->ccew.iem.wordset, talk->ccew.heapID);
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
       MissionHelpMsgID.battle_m_to_t[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);

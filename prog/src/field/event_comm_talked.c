@@ -356,8 +356,7 @@ static GMEVENT_RESULT CommWasTalkedToMission( GMEVENT *event, int *seq, void *wk
 	
 	switch( *seq ){
   case SEQ_MSG_INIT:
-    MISSIONDATA_Wordset(intcomm,
-       &intcomm->recv_talk_first_attack.mdata.cdata, 
+    MISSIONDATA_Wordset(&intcomm->recv_talk_first_attack.mdata.cdata, 
        &intcomm->recv_talk_first_attack.mdata.target_info, 
        talk->iem.wordset, talk->heapID);
     IntrudeEventPrint_StartStream(&talk->iem, MissionItemMsgID[0] + 1);

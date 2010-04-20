@@ -1213,7 +1213,7 @@ static void _Wordset_Strcode(WORDSET *wordset, u32 bufID, const STRCODE *code, i
  * @param   temp_heap_id		テンポラリで使用するヒープID
  */
 //==================================================================
-void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_CONV_DATA *cdata, const MISSION_TARGET_INFO *target, WORDSET *wordset, HEAPID temp_heap_id)
+void MISSIONDATA_Wordset(const MISSION_CONV_DATA *cdata, const MISSION_TARGET_INFO *target, WORDSET *wordset, HEAPID temp_heap_id)
 {
   switch(cdata->type){
   case MISSION_TYPE_VICTORY:     //勝利(LV)

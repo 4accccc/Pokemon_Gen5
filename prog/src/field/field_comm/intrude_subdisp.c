@@ -349,6 +349,7 @@ typedef struct _INTRUDE_SUBDISP{
   WORDSET *wordset;
   PRINT_QUE *print_que;
 	GFL_MSGDATA *msgdata;
+	GFL_MSGDATA *msgdata_mission;
 	GFL_TCB *vintr_tcb;               ///<VBlankTCBへのポインタ
 	
 	STRBUF *strbuf_temp;
@@ -382,7 +383,7 @@ typedef struct _INTRUDE_SUBDISP{
   u8 title_print_type;    ///<_TITLE_PRINT_xxx
   u8 infomsg_trans_req;
   u8 print_mission_status;  ///<現在表示しているミッション状況
-  u8 back_exit;           ///< TRUE:「もどる」ボタンを押して下画面終了モードになっている
+  u8 print_mission_exe_flag;  ///<ミッション実行状況のメッセージ振り分けフラグ
   
   u16 warp_zone_id;
   u8 event_req;           ///< _EVENT_REQ_NO_xxx
@@ -401,6 +402,10 @@ typedef struct _INTRUDE_SUBDISP{
   u16 player_pal_buffer[PLAYER_PALANM_COLOR_NUM];     ///<転送バッファ
 
   u16 scrnbuf_time[BG_TIME_SCRN_SIZE_X * BG_TIME_SCRN_SIZE_Y];  ///< [TIME]が書かれているスクリーンデータを退避するワーク
+
+  u8 back_exit;           ///< TRUE:「もどる」ボタンを押して下画面終了モードになっている
+  u8 print_touch_player;  ///< 通信相手のアイコンをタッチした場合、その人物のNetID
+  u8 padding[2];
 }INTRUDE_SUBDISP;
 
 
@@ -435,7 +440,7 @@ static void _IntSub_ActorUpdate_EntryButton(INTRUDE_SUBDISP_PTR intsub, OCCUPY_I
 static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy);
 static OCCUPY_INFO * _IntSub_GetArreaOccupy(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_TitleMsgUpdate(INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id);
-static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub);
+static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm);
 static void _SetRect(int x, int y, int half_size_x, int half_size_y, GFL_RECT *rect);
 static BOOL _CheckRectHit(int x, int y, const GFL_RECT *rect);
 static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
@@ -515,6 +520,7 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   
   intsub->my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   intsub->player_pal_tblno = PALACE_TOWN_DATA_NULL;
+  intsub->print_touch_player = INTRUDE_NETID_NULL;
   
   _IntSub_CommParamInit(intsub, Intrude_Check_CommConnect(game_comm));
   
@@ -679,7 +685,7 @@ void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
   
   //インフォメーションメッセージ
   _IntSub_TitleMsgUpdate(intsub, my_zone_id);
-  _IntSub_InfoMsgUpdate(intsub);
+  _IntSub_InfoMsgUpdate(intsub, intcomm);
   
   //アクター更新
   _IntSub_ActorUpdate_TouchTown(intsub, area_occupy);
@@ -787,6 +793,8 @@ static void _IntSub_SystemSetup(INTRUDE_SUBDISP_PTR intsub)
   intsub->print_que = PRINTSYS_QUE_Create( HEAPID_FIELD_SUBSCREEN );
   intsub->msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
     NARC_message_invasion_dat, HEAPID_FIELD_SUBSCREEN );
+  intsub->msgdata_mission = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+    NARC_message_mission_dat, HEAPID_FIELD_SUBSCREEN );
   
   intsub->strbuf_temp = GFL_STR_CreateBuffer(128, HEAPID_FIELD_SUBSCREEN);
   intsub->strbuf_info = GFL_STR_CreateBuffer(128, HEAPID_FIELD_SUBSCREEN);
@@ -807,6 +815,7 @@ static void _IntSub_SystemExit(INTRUDE_SUBDISP_PTR intsub)
   GFL_STR_DeleteBuffer(intsub->strbuf_title);
   
   GFL_MSG_Delete(intsub->msgdata);
+  GFL_MSG_Delete(intsub->msgdata_mission);
   PRINTSYS_QUE_Clear(intsub->print_que);
   PRINTSYS_QUE_Delete(intsub->print_que);
   WORDSET_Delete(intsub->wordset);
@@ -1779,7 +1788,7 @@ static void _IntSub_TitleMsgUpdate(INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id
  * @param   intsub		
  */
 //--------------------------------------------------------------
-static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub)
+static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm)
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
   GAME_COMM_INFO_MESSAGE infomsg;
@@ -1797,8 +1806,19 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub)
     return;
   }
   
-  if(intsub->comm.m_status != MISSION_STATUS_NULL && intsub->comm.p_md != NULL
-      && intsub->print_mission_status != intsub->comm.m_status){
+  if(intcomm != NULL && intsub->print_touch_player != INTRUDE_NETID_NULL 
+      && Intrude_GetMyStatus(intcomm, intsub->print_touch_player) != NULL){
+    MYSTATUS *myst = Intrude_GetMyStatus(intcomm, intsub->print_touch_player);
+    
+    intsub->print_mission_status = MISSION_STATUS_NULL;
+    GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_011, intsub->strbuf_temp );
+    WORDSET_RegisterPlayerName( intsub->wordset, 0, myst );
+    WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
+    intsub->print_touch_player = INTRUDE_NETID_NULL;
+    msg_on = TRUE;
+  }
+  else if(intsub->comm.m_status != MISSION_STATUS_NULL && intsub->comm.p_md != NULL
+      && (intsub->comm.m_status == MISSION_STATUS_EXE || intsub->print_mission_status != intsub->comm.m_status)){
     //ミッション発動中の場合はミッション関連のメッセージを優先して表示
     //ミッションは状況を示すメッセージの為、キューに貯めずに現在の状態をそのまま表示
     switch(intsub->comm.m_status){
@@ -1809,14 +1829,27 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub)
       GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_005, intsub->strbuf_info );
       break;
     case MISSION_STATUS_EXE:       //ミッション中
-      GFL_MSG_GetString(intsub->msgdata, 
-        msg_invasion_info_m01 + intsub->comm.p_md->cdata.type, intsub->strbuf_info );
+      if(intsub->print_mission_exe_flag == 0){
+        GFL_MSG_GetString(intsub->msgdata, 
+          msg_invasion_info_m01 + intsub->comm.p_md->cdata.type, intsub->strbuf_info );
+      }
+      else{
+        GFL_MSG_GetString(intsub->msgdata_mission, 
+          intsub->comm.p_md->cdata.msg_id_contents, intsub->strbuf_temp );
+        MISSIONDATA_Wordset(&intsub->comm.p_md->cdata, 
+          &intsub->comm.p_md->target_info, intsub->wordset, HEAPID_FIELD_SUBSCREEN);
+        WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
+      }
+      intsub->print_mission_exe_flag ^= 1;
       break;
     case MISSION_STATUS_RESULT:   //結果受信
       return;   //特に表示するものはない
     default:
       GF_ASSERT_MSG(0, "m_status=%d\n", intsub->comm.m_status);
       return;
+    }
+    if(intsub->comm.m_status != MISSION_STATUS_EXE){
+      intsub->print_mission_exe_flag = 0;
     }
     intsub->print_mission_status = intsub->comm.m_status;
     msg_on = TRUE;
@@ -1833,6 +1866,7 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub)
     WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
     msg_on = TRUE;
   }
+  intsub->print_touch_player = INTRUDE_NETID_NULL;
   
   if(msg_on == TRUE){
     GFL_BMP_Clear( intsub->infomsg_bmp, 0 );
@@ -1942,17 +1976,17 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
     return;
   }
   
-#ifdef PM_DEBUG
   //プレイヤーアイコンタッチ判定
-  if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
-    my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
-    for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
-      if(net_id != my_net_id && (intsub->comm.recv_profile & (1 << net_id))){
-        act = intsub->act[INTSUB_ACTOR_CUR_S_0 + net_id];
-        if(GFL_CLACT_WK_GetDrawEnable(act) == TRUE){
-          GFL_CLACT_WK_GetPos( act, &pos, INTSUB_CLACT_REND_SUB );
-          if(x - TOUCH_RANGE_PLAYER_ICON_X <= pos.x && x + TOUCH_RANGE_PLAYER_ICON_X >= pos.x
-              && y - TOUCH_RANGE_PLAYER_ICON_Y <= pos.y && y + TOUCH_RANGE_PLAYER_ICON_Y >= pos.y){
+  my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
+  for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
+    if(net_id != my_net_id && (intsub->comm.recv_profile & (1 << net_id))){
+      act = intsub->act[INTSUB_ACTOR_CUR_S_0 + net_id];
+      if(GFL_CLACT_WK_GetDrawEnable(act) == TRUE){
+        GFL_CLACT_WK_GetPos( act, &pos, INTSUB_CLACT_REND_SUB );
+        if(x - TOUCH_RANGE_PLAYER_ICON_X <= pos.x && x + TOUCH_RANGE_PLAYER_ICON_X >= pos.x
+            && y - TOUCH_RANGE_PLAYER_ICON_Y <= pos.y && y + TOUCH_RANGE_PLAYER_ICON_Y >= pos.y){
+        #ifdef PM_DEBUG
+          if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
             if(intcomm!= NULL && ZONEDATA_IsWfbc(intcomm->intrude_status[net_id].zone_id) == TRUE){
               intsub->wfbc_go = TRUE;
               intsub->wfbc_seq = 0;
@@ -1963,11 +1997,16 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
             }
             return;
           }
+          else
+        #endif
+          {
+            intsub->print_touch_player = net_id;
+            return;
+          }
         }
       }
     }
   }
-#endif
 
   //街タッチ判定
   if(intsub->comm.now_palace_area != GAMEDATA_GetIntrudeMyID(gamedata)){

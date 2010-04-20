@@ -159,6 +159,8 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
 
 	switch( *seq ){
   case SEQ_INIT:
+    MISSIONDATA_Wordset(&talk->mresult.mission_data.cdata, 
+      &talk->mresult.mission_data.target_info, talk->iem.wordset, talk->heapID);
     IntrudeEventPrint_SetupExtraMsgWin(&talk->iem, gsys, 1, 4, 32-2, 16);
     IntrudeEventPrint_PrintExtraMsgWin_MissionMono(&talk->iem, talk->title_msgid, 8, 0);
     IntrudeEventPrint_PrintExtraMsgWin_MissionMono(&talk->iem, talk->explain_msgid, 8, 16);
