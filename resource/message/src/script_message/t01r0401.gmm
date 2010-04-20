@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-19T18:58:43"/>
+	<create user="matsumiya" host="W00224" date="2010-04-20T20:22:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="117" right="2004" bottom="745" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="145" right="2004" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -410,11 +410,9 @@
 ・続けてhakase2_07表示</comment>
 		<attribute name="キャラ指定">HAKASE2
 アララギ博士娘</attribute>
-		<language name="JPN" width="256">アララギ『なるほどなるほど▼
-[1:02:ポケモンニックネーム:0]と　いうんだ
+		<language name="JPN" width="256">アララギ『[1:02:ポケモンニックネーム:0]と　いうんだ
 すっごく　いい　なまえ　よね！▼</language>
-		<language name="JPN_KANJI" width="256">アララギ『なるほどなるほど▼
-[1:02:ポケモンニックネーム:0]と　いうんだ
+		<language name="JPN_KANJI" width="256">アララギ『[1:02:ポケモンニックネーム:0]と　いうんだ
 すっごく　いい名前　よね！▼</language>
 	</row>
 
@@ -428,8 +426,7 @@
 		<language name="JPN" width="256">アララギ『なるほどなるほど
 ニックネームは　つけないんだ▽
 ま　それも　ありだよね▼</language>
-		<language name="JPN_KANJI" width="256">アララギ『なるほどなるほど
-ニックネームは　つけないんだ▽
+		<language name="JPN_KANJI" width="256">アララギ『ニックネームは　つけないんだ
 ま　それも　ありだよね▼</language>
 	</row>
 
@@ -627,21 +624,44 @@
 探しても　いいんだよね？▼</language>
 	</row>
 
-	<row id="msg_t01r0401_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0401_black_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・メッセージ表示後、友達♂♀退場
-　画面外に消えると、操作可能に</comment>
+・メッセージ表示後、主人公フリームーブ</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『ああ▼
 ずかんを　かんせい　させながらなら
-すきなように　たびすれば　いい▼
-というわけで　ぼくたちも
-１ばんどうろに　いくと　しよう▼</language>
+すきなように　たびすれば　いい</language>
 		<language name="JPN_KANJI" width="256">チェレン『ああ▼
 図鑑を　完成させながらなら
-好きなように　旅すれば　いい▼
-というわけで　ぼくたちも
-１番道路に　行くと　しよう▼</language>
+好きなように　旅すれば　いい</language>
+	</row>
+
+	<row id="msg_t01r0401_white_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・研究所をでるまで繰り返し
+・0＝主人公名前
+・1＝主人公が選んだポケモン</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『なんだか　ドキドキしてきた▼
+ねえ　[1:00:トレーナー名:0]は
+[1:01:ポケモン種族名:1]と　なにするの？</language>
+		<language name="JPN_KANJI" width="256">ベル『なんだか　ドキドキしてきた▼
+ねえ　[1:00:トレーナー名:0]は
+[1:01:ポケモン種族名:1]と　なにするの？</language>
+	</row>
+
+	<row id="msg_t01r0401_black_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・研究所をでるまで繰り返し</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『……ようやく
+ポケモントレーナーに　なれたんだ▼
+ほかの　トレーナーと
+たたかって　つよくなるよ　ぼくは</language>
+		<language name="JPN_KANJI" width="256">チェレン『……ようやく
+ポケモントレーナーに　なれたんだ▼
+他の　トレーナーとの
+実戦を重ねて　強くなるよ　ぼくは</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_20">
