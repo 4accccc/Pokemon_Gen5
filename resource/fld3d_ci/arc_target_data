@@ -1,20 +1,20 @@
 ARC_TARGET_DATA = \
 	get2.spa \
-	cut_get2_bg.nsbmd \
-	cut_get2_item.nsbmd \
-	cut_get2_bg.nsbca \
-	cut_get2_bg.nsbta \
-	cut_get2_item.nsbta \
-	cut_get2_item.nsbma \
-	cut_get2_item.nsbca \
+	get2_bg.nsbmd \
+	get2_661.nsbmd \
+	get2_bg.nsbca \
+	get2_bg.nsbta \
+	get2_item.nsbta \
+	get2_item.nsbma \
+	get2_item.nsbca \
 	get1.spa \
-	cut_get1_bg.nsbmd \
-	cut_get1_item.nsbmd \
-	cut_get1_bg.nsbca \
-	cut_get1_bg.nsbma \
-	cut_get1_item.nsbta \
-	cut_get1_item.nsbca \
-	cut_get1_item.nsbma \
+	get1_bg.nsbmd \
+	get1_482.nsbmd \
+	get1_bg.nsbca \
+	get1_bg.nsbma \
+	get1_item.nsbta \
+	get1_item.nsbca \
+	get1_item.nsbma \
 	gym1.spa \
 	gymbadge1.nsbmd \
 	gymbadge1.nsbca \
@@ -107,4 +107,17 @@ ARC_TARGET_DATA = \
 	fly_in2.nsbtp \
 	merodia.spa \
 	merodia01.nsbmd \
-	merodia01.nsbca
+	merodia01.nsbca \
+	get2_662.nsbmd \
+	get2_664.nsbmd \
+	get2_602.nsbmd \
+	get1_361.nsbmd \
+	get1_264.nsbmd \
+	get1_360.nsbmd \
+	get1_601.nsbmd \
+	get1_773.nsbmd \
+	get1_663.nsbmd \
+	get1_659.nsbmd \
+	get1_665.nsbmd \
+	get1_660.nsbmd \
+	get1_757.nsbmd

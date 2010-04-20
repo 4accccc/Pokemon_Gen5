@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="unno" host="W00199" date="2010-04-20T17:38:55" source="cut_get1.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<original_create user="unno" host="W00199" date="2010-04-20T17:38:55" source="cut_get1.mb"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+
+<model_info
+	pos_scale="2"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="0"
+	tex_matrix_mode="maya"
+	compress_node="none" node_size="1 1"
+	compress_material="off" material_size="1 1"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="1" xyz="-1.600098 -1.600098 -6.000000" whd="3.199951 3.199951 0.000000"/>
+
+<tex_image_array size="1">
+	<tex_image index="0" name="ci_item_360"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="ci_item_360"
+		path="C:/0_WB/cut_in/mb/item_get1/souceimages/ncg/ci_item_360.tga"
+	>
+		<bitmap size="1024">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 b000 000b 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 b000 9b0b 00b9 0000 0bb0
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 bbb0 8bbb adb7 0bdd 8800 b87b
+			bbbb 000b 0000 0000 0000 0000 0000 0000
+			0000 0000 7db0 8777 87b7 bb7d aa8b 7b7b
+			8777 000b 0000 0000 0000 0000 0000 0000
+			0000 0000 ddb0 bddd 9bd7 aab9 b99b db7d
+			8ddd 000b 0000 0000 0000 0000 0000 0000
+			0000 0000 bb00 bbbb bb7b 999b bbbb bbb7
+			0bbb 0000 b888 000b 0000 0000 0000 0000
+			0000 0000 0000 4b00 bbbb b999 44b0 00bb
+			0000 88bb 7777 0bb7 0000 0000 0000 0000
+			0000 0000 b000 6abb b0b6 bbbb 6b00 bba6
+			b00b 7777 ddd7 b88d 0000 0000 0000 0000
+			0000 0000 ab00 bb9a 000b b77b bb00 a9bb
+			cbba d777 8555 b888 0000 0000 0000 0000
+			0000 0000 bb00 00bb 6000 6666 0006 bb00
+			5bbb c555 5cbb bc88 0000 0000 0000 0000
+			0000 0000 0000 0000 2b00 4422 00b6 0000
+			b000 bbbb cbbb 0bcc 0000 0000 0000 0000
+			0000 0000 0000 0000 2b00 4422 00b4 0000
+			0000 b000 b0b9 00bb 0000 0000 0000 0000
+			0000 0000 0000 0000 2b00 4422 0b64 0000
+			0000 7000 00b9 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 b000 bbbb 0b44 0000
+			0000 b000 00b9 b000 bbbb 00bb 0000 0000
+			0000 0000 0000 0000 b000 6877 b644 0000
+			0000 b000 00bb 9b00 9999 0b99 0000 0000
+			0000 0000 0000 0000 8880 b888 b44b 0000
+			0000 9b00 00b9 8b00 bbbb b9ab 0000 0000
+			0000 0000 0000 0000 aaa8 9aaa 64b9 000b
+			0000 6666 00b6 88b0 000b b9ab 0000 0000
+			0000 0000 0000 0000 9998 9999 44b9 000b
+			6666 4224 00b4 b8b0 b000 0baa 0000 0000
+			0000 0000 0000 0000 8980 999b 446b 6666
+			2224 4442 80b4 bbb8 b00b 0b9a 0000 0000
+			0000 0000 0000 0000 b880 88b0 44bb 2224
+			4442 4444 78b4 7777 9bbd 00ba 0000 0000
+			0000 0000 0000 0000 b980 77b0 46bb 4444
+			6444 bbbb 778b 7777 abd7 00b9 0000 0000
+			0000 0000 0000 0000 bbb0 9abb 4b0b 4444
+			bbb6 ccb0 777b bbbb a9bc 000b 0000 0000
+			0000 0000 0000 8000 88d8 9ab8 6b0b b644
+			000b bbbb bd7b b77b 9abb 000b 0000 0000
+			0000 0000 0000 7800 88d7 99b8 b0bb b444
+			bbbb ccc5 bbbb bb7b bab0 000b 0000 0000
+			0000 0000 0000 7780 bb8d 99bb bb8b 6446
+			c55b cc5c 444b 88b6 b99b 00b8 0000 0000
+			0000 0000 0000 d778 89bb 99b0 0b8b 444b
+			bbbb ccc5 bbbb ab66 cba8 00b8 0000 0000
+			0000 0000 0000 b778 8980 b8b0 b8cc 446b
+			00b6 bbbb 00bb b66b cb9a 00bc 0000 0000
+			0000 0000 8000 bd77 8980 b9b0 b8cc 44b0
+			00b4 88b0 bb6b 66ba b08b 0b8c 0000 0000
+			0000 0000 8000 0b77 8880 b9b8 bcc8 46b0
+			bb64 88bb b6bb 6b8a b0b6 0b8c 0000 0000
+			0000 0000 7800 0bd7 aa80 b9b9 8cc8 4b0b
+			b644 88bd bbdb 6bbb b0bb 0b8c 0000 0000
+			0000 0000 7800 0bd7 aa80 b9b9 8cc8 6b0b
+			bbb4 bbbb 4bbb 2222 b0b6 0b85 0000 0000
+			0000 0000 7800 00bd 89a8 b888 ccb0 bb0b
+			b6b6 22ba 2222 bbb6 b08b 0b85 0000 0000
+			0000 0000 db00 00b8 88a8 8778 ccb0 7b0b
+			bbbb bbba bbbb 88ab b089 0b85 0000 0000
+			0000 0000 8b00 00b8 78a8 8778 ccb0 7b0b
+			bb0b 88b9 dddb aa98 5b08 0bb5 0000 0000
+			0000 0000 8b00 00b8 88a8 8778 ccb0 db0b
+			abb7 88bb bbb8 888b 5b00 00bc 0000 0000
+			0000 0000 8b00 00b8 0898 8880 c5b0 b00b
+			ab7d 8bbb 00b8 0000 5cb0 00b8 0000 0000
+			0000 0000 8b00 00b8 8a98 8998 c5b0 000b
+			9bbb 8b0b 0b88 0000 55b0 000b 0000 0000
+			0000 0000 8b00 00b8 a980 089a c5cb 000b
+			bb00 bbbb b8bb b000 85cb 000b 0000 0000
+			0000 0000 8b00 0088 8800 0088 b55b 000b
+			7b00 7777 88b7 cbbb b8cc 0000 0000 0000
+			0000 0000 8b00 0b88 0000 b000 bc5c 0000
+			ddb0 dddd 88bb 8888 0b88 0000 0000 0000
+			0000 0000 b000 0b88 0000 b000 b85c 0000
+			bbb0 bbbb 8bbd 8888 00bb 0000 0000 0000
+			0000 0000 b000 b888 0000 cb00 bbc5 0000
+			eeb0 deee b00b bbbb 0000 0000 0000 0000
+			0000 0000 0000 888b 000b 5cbb 0b8c 0000
+			bbb0 bbbb 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 888b bbb8 cccc 00b8 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 88b0 cc88 b8cc 000b 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 bb00 8888 bbb8 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 bbbb 00bb 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="1">
+	<tex_palette index="0" name="ci_item_360" color_size="16">
+		6a30 7bde 18df 56f5 0437 171d 000f 318c
+		18c6 4210 56b5 0000 1234 2108 1e3f 0000
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="1">
+	<material index="0" name="lambert3"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="0"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="37"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="-180.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="tex"
+	/>
+</material_array>
+
+<matrix_array size="1">
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
+</matrix_array>
+
+<polygon_array size="1">
+	<polygon index="0" name="polygon0"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 -4.000000 0.000000"
+		volume_max="4.000000 4.000000 0.000000"
+		volume_r="5.656738"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 64.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_s xyz="-4.000000 -4.000000 0.000000"/>
+					<tex st="64.000000 64.000000"/>
+					<pos_xy xy="4.000000 -4.000000"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_xy xy="4.000000 4.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-4.000000 4.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="1">
+	<node index="0" name="item_ita_ica_ima" kind="mesh"
+		parent="-1"
+		child="-1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="on"
+		scale="0.199951 0.199951 0.199951"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 -12.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 -4.000000 0.000000"
+		volume_max="4.000000 4.000000 0.000000"
+		volume_r="5.656738"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="4" polygon_size="1"
+	triangle_size="0" quad_size="1"/>
+
+</body>
+
+</imd>

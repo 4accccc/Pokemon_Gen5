@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2009-10-20T18:19:03" source="cut_get1.mb"/>
+	<create user="unno" host="W00199" date="2010-04-20T17:35:08" source="cut_get1.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2009-10-20T18:19:03" source="cut_get1.mb"/>
+<original_create user="unno" host="W00199" date="2010-04-20T17:35:08" source="cut_get1.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -34,7 +34,7 @@
 		width="64" height="64" original_width="64" original_height="64"
 		format="a3i5"
 		palette_name="cut1_bg"
-		path="C:/0_WB/cut_in/mb/souceimages/cut_get1_back1.tga"
+		path="C:/0_WB/cut_in/mb/item_get1/souceimages/cut_get1_back1.tga"
 	>
 		<bitmap size="2048">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -677,7 +677,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="pCylinder1" kind="mesh"
+	<node index="0" name="bg_ica_ima" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
