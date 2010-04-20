@@ -363,10 +363,17 @@
 #define SCR_POSTMAN_REQ_RECEIVE (4) ///<受け取り処理
 #define SCR_POSTMAN_REQ_OBJID   (5) ///<配達員のOBJIDを取得
 #define SCR_POSTMAN_REQ_OBJSTAT (6) ///<配達員OBJの状態取得
+#define SCR_POSTMAN_REQ_TYPE    (7) ///<受け取る贈り物のタイプ
 
 
 #define SCR_POSTMAN_OBJ_NONE    (0) ///<配達員OBJ:存在しない
 #define SCR_POSTMAN_OBJ_EXISTS  (1) ///<配達員OBJ:存在する
+
+#define SCR_POSTMAN_TYPE_POKEMON        (1) ///<贈り物の種類：ポケモン
+#define SCR_POSTMAN_TYPE_TAMAGO         (2) ///<贈り物の種類：タマゴ
+#define SCR_POSTMAN_TYPE_NORMAL_ITEM    (3) ///<贈り物の種類：アイテム
+#define SCR_POSTMAN_TYPE_LIBERTY_TICKET (4) ///<贈り物の種類：大事なアイテム（リバティチケット）
+#define SCR_POSTMAN_TYPE_GPOWER         (5) ///<贈り物の種類：Gパワー
 
 //--------------------------------------------------------------
 //  PDW配達員

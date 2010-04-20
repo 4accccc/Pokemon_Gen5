@@ -47,16 +47,11 @@
 //======================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-enum {
-  ///ビクティ配布カードのID
-  MYSTERY_DATA_ID_LIBERTY_TICKET  = 2046,
-};
-//--------------------------------------------------------------
-//--------------------------------------------------------------
 typedef BOOL (* MP_FUNC_ADD_CHECK)( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
 typedef void (* MP_FUNC_ADD)( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
 typedef u16 (* MP_FUNC_SUCCESS_MSG)( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );
 typedef u16 (* MP_FUNC_FAILURE_MSG)( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work );
+typedef u16 (* MP_FUNC_GET_TYPE)( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
 
 //--------------------------------------------------------------
 /**
@@ -66,6 +61,7 @@ typedef struct {
   int gift_type;
   MP_FUNC_ADD_CHECK add_check_func;
   MP_FUNC_ADD       add_func;
+  MP_FUNC_GET_TYPE    get_type;
   MP_FUNC_SUCCESS_MSG set_success_words;
   MP_FUNC_FAILURE_MSG set_failure_words;
 }POSTMAN_FUNC_TABLE;
@@ -88,6 +84,8 @@ static BOOL MP_Command_AddCheck(
 static u16 MP_Command_SuccessMsg( u8 gift_type, GIFT_PACK_DATA *gpd, SCRCMD_WORK * work );
 static u16 MP_Command_FailureMsg( u8 gift_type, GIFT_PACK_DATA *gpd, SCRCMD_WORK * work );
 static BOOL MP_Command_Receive(
+    u8 gift_type, SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
+static u16 MP_Command_GetType(
     u8 gift_type, SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd );
 static u16 MP_Command_ObjStatus( FIELDMAP_WORK * fieldmap );
 static u16 MP_Command_ObjID( FIELDMAP_WORK * fieldmap, GAMEDATA * gamedata );
@@ -177,6 +175,12 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
       *ret_wk = MP_Command_ObjStatus( fieldmap );
     }
     break;
+  case SCR_POSTMAN_REQ_TYPE:
+    {
+      *ret_wk = MP_Command_GetType( gift_type, work, gamedata, gpd );
+    }
+    break;
+
   default:
     GF_ASSERT( 0 );
   }
@@ -260,6 +264,21 @@ static BOOL MP_Command_Receive(
     return TRUE;
   }
   return FALSE;
+}
+
+//--------------------------------------------------------------
+/// スクリプトコマンド：贈り物の分類取得
+//--------------------------------------------------------------
+static u16 MP_Command_GetType(
+    u8 gift_type, SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
+{
+  MP_FUNC_GET_TYPE func;
+  func = PostmanFuncTable[gift_type].get_type;
+  if ( gpd != NULL && func )
+  {
+    return func( work, gamedata, gpd );
+  }
+  return 0;
 }
 
 //--------------------------------------------------------------
@@ -350,7 +369,7 @@ static int searchEventDataPostmanObj( GAMEDATA * gamedata )
 static BOOL isLibertyTicketCard( const GIFT_PACK_DATA * gpd, u8 gift_type )
 {
   if ( gift_type != MYSTERYGIFT_TYPE_ITEM ) return FALSE;
-  if ( gpd->event_id != MYSTERY_DATA_ID_LIBERTY_TICKET ) return FALSE;
+  if ( gpd->event_id != MYSTERY_DATA_EVENT_LIBERTY ) return FALSE;
   if ( gpd->data.item.itemNo != ITEM_RIBATHITIKETTO	) return FALSE;
   return TRUE;
 }
@@ -390,6 +409,23 @@ static void PFuncAddPokemon( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_
   PokeParty_Add( party, pp );
    //一応図鑑登録
   ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave( gamedata ), pp );
+  GFL_HEAP_FreeMemory( pp );
+}
+
+//--------------------------------------------------------------
+/// ポケモンのタイプ取得
+//--------------------------------------------------------------
+static u16 PFuncGetTypePokemon(SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
+{
+  POKEMON_PARAM * pp = createPokemon( work, gpd );
+  BOOL tamago_flag = PP_Get( pp, ID_PARA_tamago_flag, NULL );
+
+  GFL_HEAP_FreeMemory( pp );
+  if ( tamago_flag == TRUE ) {
+    return SCR_POSTMAN_TYPE_TAMAGO;
+  } else {
+    return SCR_POSTMAN_TYPE_POKEMON;
+  }
 }
 
 //--------------------------------------------------------------
@@ -406,6 +442,7 @@ static u16  PFuncSetSuccessPokemonWords( WORDSET * wordset, GIFT_PACK_DATA * gpd
   } else {
     WORDSET_RegisterPokeMonsName( wordset, 1, pp );
   }
+  GFL_HEAP_FreeMemory( pp );
   return msg_postman_06;
 }
 
@@ -443,6 +480,17 @@ static void PFuncAddItem( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DAT
 
   result = MYITEM_AddItem( myitem, item_no, 1, heapID );
   GF_ASSERT( result );
+}
+//--------------------------------------------------------------
+/// アイテムのタイプ取得
+//--------------------------------------------------------------
+static u16 PFuncGetTypeItem(SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
+{
+  if (isLibertyTicketCard( gpd, gpd->gift_type ) == TRUE ) {
+    return SCR_POSTMAN_TYPE_LIBERTY_TICKET;
+  } else {
+    return SCR_POSTMAN_TYPE_NORMAL_ITEM;
+  }
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -487,6 +535,14 @@ static void PFuncAddGPower( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_D
 }
 
 //--------------------------------------------------------------
+/// GPower取得
+//--------------------------------------------------------------
+static u16 PFuncGetTypeGPower(SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
+{
+  return SCR_POSTMAN_TYPE_GPOWER;
+}
+
+//--------------------------------------------------------------
 /// GPower取得：成功メッセージ
 //--------------------------------------------------------------
 static u16  PFuncSetSuccessGPowerWords( WORDSET * wordset, GIFT_PACK_DATA * gpd, SCRCMD_WORK * work )
@@ -524,11 +580,13 @@ static const POSTMAN_FUNC_TABLE PostmanFuncTable[ MYSTERYGIFT_TYPE_MAX ] = {
     NULL,
     NULL,
     NULL,
+    NULL,
   },
   { 
     MYSTERYGIFT_TYPE_POKEMON,
     PFuncCheckPokemon,
     PFuncAddPokemon,
+    PFuncGetTypePokemon,
     PFuncSetSuccessPokemonWords,  //msg_postman_06
     PFuncSetFailurePokemonWords,  //msg_postman_07
   },
@@ -536,6 +594,7 @@ static const POSTMAN_FUNC_TABLE PostmanFuncTable[ MYSTERYGIFT_TYPE_MAX ] = {
     MYSTERYGIFT_TYPE_ITEM,
     PFuncCheckItem,
     PFuncAddItem,
+    PFuncGetTypeItem,
     PFuncSetSuccessItemWords, //msg_postman_08
     PFuncSetFailureItemWords, //msg_postman_09
   },
@@ -543,6 +602,7 @@ static const POSTMAN_FUNC_TABLE PostmanFuncTable[ MYSTERYGIFT_TYPE_MAX ] = {
     MYSTERYGIFT_TYPE_POWER,
     PFuncCheckGPower,
     PFuncAddGPower,
+    PFuncGetTypeGPower,
     PFuncSetSuccessGPowerWords, //msg_postman_10
     PFuncSetFailureGPowerWords, //msg_postman_11
   },

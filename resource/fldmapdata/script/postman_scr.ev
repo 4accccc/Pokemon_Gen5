@@ -27,6 +27,7 @@ DEFINE_LOCAL  PLAYERX
 DEFINE_LOCAL  PLAYERZ
 DEFINE_LOCAL  POSTMANX
 DEFINE_LOCAL  POSTMANZ
+DEFINE_LOCAL  POSTMAN_MSGID
 
 /********************************************************************/
 /*						FIELD_INIT_LABEL                                      */
@@ -130,29 +131,69 @@ sub_postman_main:
 
   IF $SCWK_ANSWER == TRUE THEN
       //「受け取った！」
-      _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OK_MSG, SCWK_ANSWER )
-      _SYSWIN_MSG( SCWK_ANSWER , POS_DOWN )
-      _ME_PLAY( SEQ_ME_LVUP )
-      _AB_KEYWAIT()
-      _ME_WAIT()
-      _SYSWIN_CLOSE()
-
-      //受け取り処理を実行
-      _POSTMAN_REQUEST( SCR_POSTMAN_REQ_RECEIVE, SCWK_ANSWER )
+      _CALL sub_postman_receive
 
       _BALLOONWIN_TALKOBJ_MSG( msg_postman_05 ) //またのごりようをおまちしております
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
   ELSE
       //「受け取れなかった！」
-      _POSTMAN_REQUEST( SCR_POSTMAN_REQ_NG_MSG, SCWK_ANSWER )
-      _SYSWIN_MSG( SCWK_ANSWER , POS_DOWN )
+      _POSTMAN_REQUEST( SCR_POSTMAN_REQ_NG_MSG, POSTMAN_MSGID )
+      _SYSWIN_MSG( POSTMAN_MSGID , POS_DOWN )
       _LAST_KEYWAIT()
       _SYSWIN_CLOSE()
   ENDIF
 
   _RET
 
+/********************************************************************/
+//サブルーチン：取得したものによってMEや演出、MSGの分岐
+/********************************************************************/
+sub_postman_receive:
+//      _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OK_MSG, POSTMAN_MSGID )
+//      _SYSWIN_MSG( POSTMAN_MSGID , POS_DOWN )
+//      _ME_PLAY( SEQ_ME_LVUP )
+//      _AB_KEYWAIT()
+//      _ME_WAIT()
+  _POSTMAN_REQUEST( SCR_POSTMAN_REQ_OK_MSG, POSTMAN_MSGID )
+  _POSTMAN_REQUEST( SCR_POSTMAN_REQ_TYPE, SCWK_ANSWER )
+
+  SWITCH $SCWK_ANSWER
+  CASE  SCR_POSTMAN_TYPE_POKEMON        THEN
+    _ME_PLAY( SEQ_ME_POKEGET )
+    _SYSWIN_MSG( POSTMAN_MSGID, POS_DEFAULT )
+    _ME_WAIT()
+
+  CASE  SCR_POSTMAN_TYPE_TAMAGO         THEN
+    _ME_PLAY( SEQ_ME_TAMAGO_GET )
+    _SYSWIN_MSG( POSTMAN_MSGID, POS_DEFAULT )
+    _ME_WAIT()
+
+  CASE  SCR_POSTMAN_TYPE_NORMAL_ITEM    THEN
+    _GLOBAL_CALL  SCRID_POCKET_ME_SET
+    _SYSWIN_MSG( POSTMAN_MSGID, POS_DEFAULT )
+    _ME_WAIT()
+
+  CASE  SCR_POSTMAN_TYPE_LIBERTY_TICKET THEN
+    _ME_PLAY( SEQ_ME_KEYITEM )
+    _CALL_FLD3D_CUTIN( FLDCIID_GET2_14 )
+    _SYSWIN_MSG( POSTMAN_MSGID, POS_DEFAULT )
+    _ME_WAIT()
+
+  CASE  SCR_POSTMAN_TYPE_GPOWER         THEN
+    _SE_PLAY( SEQ_SE_FLD_133 )
+    _SYSWIN_MSG( POSTMAN_MSGID, POS_DEFAULT )
+    _SE_WAIT()
+
+  ENDSWITCH
+
+  _AB_KEYWAIT_MARK()
+  _SYSWIN_CLOSE()
+
+  //受け取り処理を実行
+  _POSTMAN_REQUEST( SCR_POSTMAN_REQ_RECEIVE, SCWK_ANSWER )
+
+  _RET
 
 
 
