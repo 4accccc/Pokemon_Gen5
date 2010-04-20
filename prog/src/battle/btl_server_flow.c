@@ -3257,6 +3257,8 @@ static u8 ItemEff_Relive( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Relive );
     HANDEX_STR_AddArg( &param->exStr, pokeID );
 
+    TAYA_Printf("ポケモン(ID:%d)生き返る -> HP=%d\n", pokeID, param->recoverHP);
+
     // 当ターンに生き返ったポケモンを記録
     relivePokeRec_Add( wk, pokeID );
     return TRUE;
@@ -14089,6 +14091,8 @@ static u8 scproc_HandEx_relive( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
 {
   BTL_HANDEX_PARAM_RELIVE* param = (BTL_HANDEX_PARAM_RELIVE*)param_header;
   BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
+
+  BTL_N_Printf( DBGSTR_SVFL_HandExRelive, param->pokeID, param->recoverHP );
   BPP_HpPlus( target, param->recoverHP );
   SCQUE_PUT_OP_HpPlus( wk->que, param->pokeID, param->recoverHP );
   wk->pokeDeadFlag[param->pokeID] = FALSE;

@@ -865,8 +865,10 @@ void BTL_STR_MakeStringSubway( STRBUF* dst, u16 subwayTRID, BtlResult playerResu
 
     if( playerResult == BTL_RESULT_LOSE ){
       strID += 1;
+      OS_TPrintf("プレイヤーが負けた, strID=%d\n", strID);
     }else{
       strID += 2;
+      OS_TPrintf("プレイヤーが勝った, strID=%d\n", strID);
     }
 
     GFL_MSG_GetString( SysWork.msg[MSGSRC_SUBWAY], strID, dst );

@@ -95,6 +95,8 @@ typedef enum {
   DBGSTR_CLIENT_AI_PutPokeDecide,
   DBGSTR_CLIENT_CoverRotateDecide,
   DBGSTR_CLIENT_HPCheckByLvup,
+  DBGSTR_CLIENT_OP_HPPlus,
+  DBGSTR_CLIENT_OP_MemberIn,
 
   DBGSTR_BPP_NemuriWakeCheck,
 
@@ -218,6 +220,7 @@ typedef enum {
   DBGSTR_SVFL_DoubleTargetRegister,
   DBGSTR_SVFL_DeadAlready,
   DBGSTR_SVFL_DeadDiffLevelCheck,
+  DBGSTR_SVFL_HandExRelive,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,

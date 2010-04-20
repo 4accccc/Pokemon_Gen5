@@ -143,6 +143,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_AI_PutPokeDecide:     return "  -> %d番目を新たに出す\n";
   case DBGSTR_CLIENT_CoverRotateDecide:    return "空きを埋めるローテーション確定 ClientID=%d, dir=%d\n";
   case DBGSTR_CLIENT_HPCheckByLvup:        return "PPLVUP Client line:%d, HP=%d\n";
+  case DBGSTR_CLIENT_OP_HPPlus:            return "ポケモンHP回復 : bpp=%p, pokeID=%d, AddHP=%d, ResultHP=%d\n";
+  case DBGSTR_CLIENT_OP_MemberIn:          return "メンバー入場 : pos %d<->%d  inPokeID=%d, inPokeHP=%d\n";
 
   case DBGSTR_BPP_NemuriWakeCheck:        return "ポケ[%d]のねむりターン最大値=%d, 経過ターン=%d\n";
 
@@ -261,6 +263,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_DoubleTargetRegister:return "ダブル敵１体ターゲット…確定ポケ=%d\n";
   case DBGSTR_SVFL_DeadAlready:         return "ポケ(%d)既に死んでるので死亡コマンドを打ちません\n";
   case DBGSTR_SVFL_DeadDiffLevelCheck:  return "ポケ死亡、自分lv=%d, 敵Lv=%d\n";
+  case DBGSTR_SVFL_HandExRelive:        return "HandEx : ポケ生き返り pokeID=%d, HP=%d\n";
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";

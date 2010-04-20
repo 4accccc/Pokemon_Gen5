@@ -1478,8 +1478,11 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     wk->actionAddCount = 0;
     BTL_ACTION_SetNULL( wk->procAction );
 
+    TAYA_Printf("selactRoot : procPokeIdx=%d, procPokeID=%d, pokeHP=%d, isDead=%d, bpp=%p\n",
+          wk->procPokeIdx, BPP_GetID(wk->procPoke), BPP_GetValue(wk->procPoke,BPP_HP), BPP_IsDead(wk->procPoke), wk->procPoke);
+
     if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
-      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_SelectActionSkip, wk->procPokeIdx );
+      BTL_N_Printf( DBGSTR_CLIENT_SelectActionSkip, wk->procPokeIdx );
       ClientSubProc_Set( wk, selact_CheckFinish );
     }
     else{
@@ -2155,6 +2158,7 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
       // 死んでる状態のアクション内容セット
       BTL_ACTION_SetNULL( action );
     }
+    TAYA_Printf("pokeID=%d, 死んでるのでアクション選択できません\n", BPP_GetID(bpp));
     return TRUE;
   }
   // アクション選択できない（攻撃の反動など）場合はスキップ
@@ -3721,7 +3725,9 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
 
     if( wk->myChangePokeCnt )
     {
-      u8 numPuttable = calcPuttablePokemons( wk, NULL );
+      u8 puttableList[ BTL_PARTY_MEMBER_MAX ];
+      u8 numPuttable = calcPuttablePokemons( wk, puttableList );
+
       // 控えに出せるポケモンが居る
       if( numPuttable )
       {
@@ -3733,6 +3739,22 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
         {
           numSelect = numPuttable;
         }
+
+        // 新ローテーションの場合、先頭が空いている＆繰り出せる控え１体の時に自動決定
+        #ifdef ROTATION_NEW_SYSTEM
+        if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
+        {
+          const BTL_POKEPARAM* topPoke = BTL_PARTY_GetMemberDataConst( wk->myParty, 0 );
+          if( (numPuttable == 1) && BPP_IsDead(topPoke) )
+          {
+            BTL_ACTION_SetChangeParam( &(wk->actionParam[0]), 0, puttableList[0] );
+            wk->returnDataPtr = &(wk->actionParam[0]);
+            wk->returnDataSize = sizeof(wk->actionParam[0]);
+            return TRUE;
+          }
+        }
+        #endif
+
 
         BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, wk->myChangePokePos[0], &clientID, &outPokeIdx );
 
@@ -3747,14 +3769,18 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
       else
       {
         #ifdef ROTATION_NEW_SYSTEM
+        // 新ローテーションの場合、強制的に生きているポケモンを前に出す回転を行う
         if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
         {
-          // 新ローテーションの場合、強制的に生きているポケモンを前に出す回転を行う
-          u32 sendDataSize = SetCoverRotateAction( wk, &(wk->actionParam[0]) );
-          if( sendDataSize ){
-            wk->returnDataSize = sendDataSize;
-            wk->returnDataPtr = &(wk->actionParam[0]);
-            return TRUE;
+          const BTL_POKEPARAM* topPoke = BTL_PARTY_GetMemberDataConst( wk->myParty, 0 );
+          if( BPP_IsDead(topPoke) )
+          {
+            u32 sendDataSize = SetCoverRotateAction( wk, &(wk->actionParam[0]) );
+            if( sendDataSize ){
+              wk->returnDataSize = sendDataSize;
+              wk->returnDataPtr = &(wk->actionParam[0]);
+              return TRUE;
+            }
           }
         }
         #endif
@@ -3766,24 +3792,9 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
         return TRUE;
       }
     }
-    // 自分は空きが出来ていない
+    // 自分は空きが出来ていないので何も選ぶ必要がない
     else
     {
-      // 新ローテーションの場合、後衛が空いている場合も選択
-      #ifdef ROTATION_NEW_SYSTEM
-      if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
-      {
-
-        u32 sendDataSize = SetCoverRotateAction( wk, &(wk->actionParam[0]) );
-        if( sendDataSize ){
-          wk->returnDataSize = sendDataSize;
-          wk->returnDataPtr = &(wk->actionParam[0]);
-          return TRUE;
-        }
-        #endif
-      }
-
-      // 何も選ぶ必要がない
       BTL_N_Printf( DBGSTR_CLIENT_NotDeadMember, wk->myID);
       BTL_ACTION_SetNULL( &wk->actionParam[0] );
       wk->returnDataPtr = &(wk->actionParam[0]);
@@ -6448,8 +6459,9 @@ static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args )
 
 static BOOL scProc_OP_HpPlus( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  BPP_HpPlus( pp, args[1] );
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BPP_HpPlus( bpp, args[1] );
+  BTL_N_Printf( DBGSTR_CLIENT_OP_HPPlus, bpp, args[0], args[1], BPP_GetValue(bpp, BPP_HP) );
   return TRUE;
 }
 static BOOL scProc_OP_PPMinus( BTL_CLIENT* wk, int* seq, const int* args )
@@ -6554,10 +6566,10 @@ static BOOL scProc_OP_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
     if( posIdx != memberIdx ){
       BTL_PARTY_SwapMembers( party, posIdx, memberIdx );
     }
-    BTL_Printf("メンバーイン 位置 %d <- %d にいたポケ\n", posIdx, memberIdx);
     bpp = BTL_PARTY_GetMemberData( party, posIdx );
     BPP_SetAppearTurn( bpp, args[3] );
     BPP_Clear_ForIn( bpp );
+    BTL_N_Printf( DBGSTR_CLIENT_OP_MemberIn, posIdx, memberIdx, BPP_GetID(bpp), BPP_GetValue(bpp,BPP_HP));
   }
   return TRUE;
 }

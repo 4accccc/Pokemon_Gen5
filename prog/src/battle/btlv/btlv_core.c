@@ -1031,7 +1031,7 @@ void BTLV_UI_Restart( BTLV_CORE* core )
  *
  * @param   wk
  * @param   param
- * @param   outMemberIndex
+ * @param   outMemberIndex  リスト画面表示時、何番目を選択した状態で始めるか
  * @param   fCantEsc
  * @param   result
  */

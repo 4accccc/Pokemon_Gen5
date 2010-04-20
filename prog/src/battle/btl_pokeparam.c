@@ -161,7 +161,7 @@ struct _BTL_POKEPARAM {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP );
+static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL fReflectHP );
 static void setupBySrcDataBase( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP );
 static void clearUsedWazaFlag( BTL_POKEPARAM* bpp );
 static void clearCounter( BTL_POKEPARAM* bpp );
@@ -213,7 +213,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->coreParam.fFakeEnable = NULL;
   bpp->coreParam.defaultFormNo = PP_Get( pp, ID_PARA_form_no, NULL );
 
-  setupBySrcData( bpp, pp );
+  setupBySrcData( bpp, pp, TRUE );
 
   BTL_Printf("setup pokeID=%d, monsno=%d, ppSrc=%p\n", pokeID, bpp->coreParam.monsno, pp );
 
@@ -260,14 +260,16 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
  * @param   srcPP
  */
 //----------------------------------------------------------------------------------
-static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
+static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL fReflectHP )
 {
   u16 monsno = bpp->coreParam.monsno;
   int i;
 
-  // 2010.4.15 HP反映
-  bpp->coreParam.hp = PP_Get( srcPP, ID_PARA_hp, 0 );
-  bpp->coreParam.hpMax = PP_Get( srcPP, ID_PARA_hpmax, 0 );
+  // 2010.4.15 HP反映（レベルアップ＆死亡でHPが残ってしまう問題に対処）
+  if( fReflectHP ){
+    bpp->coreParam.hp = PP_Get( srcPP, ID_PARA_hp, 0 );
+    bpp->coreParam.hpMax = PP_Get( srcPP, ID_PARA_hpmax, 0 );
+  }
 
   // 基本パラメタ初期化
   setupBySrcDataBase( bpp, srcPP );
@@ -2040,7 +2042,7 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
 //=============================================================================================
 void BPP_Clear_ForIn( BTL_POKEPARAM* bpp )
 {
-  setupBySrcData( bpp, bpp->coreParam.ppSrc );
+  setupBySrcData( bpp, bpp->coreParam.ppSrc, FALSE );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
 
   clearWazaSickWork( bpp, FALSE );
@@ -2626,7 +2628,7 @@ void BPP_ReflectToPP( BTL_POKEPARAM* bpp )
 //=============================================================================================
 void BPP_ReflectByPP( BTL_POKEPARAM* bpp )
 {
-  setupBySrcData( bpp, bpp->coreParam.ppSrc );
+  setupBySrcData( bpp, bpp->coreParam.ppSrc, TRUE );
 }
 //=============================================================================================
 /**
