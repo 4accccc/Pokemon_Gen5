@@ -15,7 +15,6 @@
 #include "gdb/dwc_gdb.h"
 #include "net/network_define.h"
 #include "savedata/wifilist.h"
-#include "sound/pm_sndsys.h"
 
 #if GFL_NET_WIFI
 
@@ -3058,22 +3057,6 @@ BOOL GFL_NET_DWC_IsDisconnect(void)
 void GFL_NET_DWC_SetNoChildErrorCheck(BOOL bOn)
 {
   _dWork->bAutoDisconnect = bOn;
-}
-
-
-//------------------------------------------------------------------
-/**
- * @brief   WIFIVCT用ラップＢＧＭボリューム変更
- */ 
-//------------------------------------------------------------------
-void GFL_NET_DWC_PMSND_ChangeBGMVolume( u16 trackBit, int volume )
-{
-  if(GFL_NET_IsWifiConnect()){  //WIFI接続時
-    if(GFL_NET_DWC_IsVChat()){
-      return;
-    }
-  }
-  PMSND_ChangeBGMVolume( trackBit, volume );
 }
 
 

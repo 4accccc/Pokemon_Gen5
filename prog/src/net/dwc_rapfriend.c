@@ -8,13 +8,14 @@
 //=============================================================================
 
 #include <nitro.h>
-#include <nnsys.h>
 #include "gflib.h"
 
 #if GFL_NET_WIFI
 
+#include "net/dwc_rap.h"
 #include "dwc_rapfriend.h"
 #include "savedata/wifilist.h"
+#include "sound/pm_sndsys.h"
 
 
 
@@ -259,5 +260,20 @@ BOOL GFL_NET_DWC_FriendDataAdd(GAMEDATA* pGameData, MYSTATUS* pMyStatus,DWCFrien
   return FALSE;
 }
 
+
+//------------------------------------------------------------------
+/**
+ * @brief   WIFIVCT用ラップＢＧＭボリューム変更
+ */ 
+//------------------------------------------------------------------
+void GFL_NET_DWC_PMSND_ChangeBGMVolume( u16 trackBit, int volume )
+{
+  if(GFL_NET_IsWifiConnect()){  //WIFI接続時
+    if(GFL_NET_DWC_IsVChat()){
+      return;
+    }
+  }
+  PMSND_ChangeBGMVolume( trackBit, volume );
+}
 
 #endif //GFL_NET_WIFI
