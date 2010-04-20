@@ -830,6 +830,9 @@
   //伝説ポケギミック
   DEF_CMD( EvCmdStartLegGmk, EV_SEQ_START_LEG_GMK )
 
+  //アイテムカットイン
+  DEF_CMD( EvCmdFldCi_CallItemCutin, EV_SEQ_CALL_ITEM_CUTIN )
+
   END_CMD
   //スクリプトコマンドテーブル終了
   
