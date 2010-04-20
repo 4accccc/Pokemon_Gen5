@@ -15,11 +15,14 @@
 //--------------------------------------------------------------
 // スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA ev_fld_item_124
+_EVENT_DATA ev_fld_item_37
 _EVENT_DATA ev_fld_item_0
 _EVENT_DATA ev_fld_item_1
 _EVENT_DATA ev_fld_item_2
 _EVENT_DATA ev_fld_item_3
 _EVENT_DATA ev_fld_item_4
+_EVENT_DATA ev_fld_item_8
 _EVENT_DATA ev_fld_item_5
 _EVENT_DATA ev_fld_item_6
 _EVENT_DATA ev_fld_item_7
@@ -320,6 +323,20 @@ _EVENT_DATA ev_fld_item2
 _EVENT_DATA_END
 
 //--------------------------------------------------------------
+// MAP=r02 X=743 Y=720 ITEM=ピーピーエイダー FLAG=124
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_124
+  _FLD_ITEM_EVENT ITEM_PIIPIIEIDAA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r02 X=759 Y=759 ITEM=しんじゅ FLAG=37
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_37
+  _FLD_ITEM_EVENT ITEM_SINZYU,1
+EVENT_END
+
+//--------------------------------------------------------------
 // MAP=r02 X=794 Y=632 ITEM=モンスターボール FLAG=0
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_0
@@ -352,6 +369,13 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_4
   _FLD_ITEM_EVENT ITEM_KAIHUKUNOKUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r02 X= Y= ITEM=キズぐすり FLAG=8
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_8
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
