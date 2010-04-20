@@ -1752,10 +1752,10 @@ sub_receipt_demo_start_train:
   //電車移動
   _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, BTRAIN_ANIME_TYPE_START_HOME, BSW_NULL, BSW_NULL )
   _SE_PLAY( SEQ_SE_BDEMO_01 ) //電車扉音
-  _TIME_WAIT( 35 )
+  _TIME_WAIT( 20 )
   _SE_PLAY( SEQ_SE_BDEMO_02 ) //電車発射音
   
-  _TIME_WAIT( 15 ) //アニメを少し見せてフェードアウト
+  _TIME_WAIT( 30 ) //アニメを少し見せてフェードアウト
 }
 _RET
 

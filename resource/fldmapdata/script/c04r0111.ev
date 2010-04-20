@@ -699,7 +699,7 @@ sub_demo_train_arrival:
   
   _SE_PLAY( SEQ_SE_BDEMO_03 ) //電車到着音
   _TIME_WAIT( 70 ) //アニメを待つ
-  _SE_PLAY( SEQ_SE_BDEMO_01 ) //電車扉音
+  _SE_PLAY( SEQ_SE_BDEMO_01 ) //電車扉開閉音
   
   //自機登場アニメ
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_demo_train_arrival_jiki )
@@ -725,9 +725,9 @@ sub_demo_train_arrival:
     _TIME_WAIT( 30 ) //ちょっと待つ
     _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, BTRAIN_ANIME_TYPE_START_GEAR, BTRAIN_POS_RECEIPT, BSW_NULL )
     _SE_PLAY( SEQ_SE_BDEMO_01 ) //電車扉音
-    _TIME_WAIT( 40 )
+    _TIME_WAIT( 20 )
     _SE_PLAY( SEQ_SE_BDEMO_02 ) //電車発射音
-    _TIME_WAIT( 40 ) //ちょっと待つ
+    _TIME_WAIT( 30 ) //ちょっと待つ
     
     //ブラックアウト
     _BLACK_OUT()
@@ -808,7 +808,9 @@ sub_demo_train_starting:
     _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, 2, BTRAIN_POS_HOME, BSW_NULL )
     _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_VANISH, FALSE, BSW_NULL, BSW_NULL )
     _SE_PLAY( SEQ_SE_BDEMO_04 ) //電車到着音
-    _TIME_WAIT( 100 ) //アニメを待つ
+    _TIME_WAIT( 70 ) //アニメを待つ
+    _SE_PLAY( SEQ_SE_BDEMO_01 ) //電車扉開閉音
+    _TIME_WAIT( 20 ) //アニメを待つ
   ENDIF
   
   //フェードインチェック
@@ -828,9 +830,9 @@ sub_demo_train_starting:
   //電車発車
   _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, BTRAIN_ANIME_TYPE_START_HOME, BTRAIN_POS_HOME, BSW_NULL )
   _SE_PLAY( SEQ_SE_BDEMO_01 ) //電車扉音
-  _TIME_WAIT( 35 )
+  _TIME_WAIT( 30 )
   _SE_PLAY( SEQ_SE_BDEMO_02 ) //電車発射音
-  _TIME_WAIT( 25 ) //アニメを少し見せる
+  _TIME_WAIT( 30 ) //アニメを少し見せる
   
   //マップフェードアウト
   _MAP_FADE_BLACK_OUT()
