@@ -27,12 +27,17 @@ def SetData( index, column, data_ary )
   se_ary = Array.new
   frm_ary = Array.new
   ok = false
+  frm_tmp = 0
 
   column.each_with_index{ | code, idx |
     if idx % 2 == 0 then
       se_ary << code.to_s
     else
       frm_ary << code.to_i
+      if frm_tmp >= code.to_i then
+        printf("CUTIN FRM ERROR :: ƒtƒŒ[ƒ€w’è‚ª‚¨‚©‚µ‚¢  %d\n",index)
+        exit(-1)
+      end
     end
   }
 
