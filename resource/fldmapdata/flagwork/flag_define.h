@@ -2395,7 +2395,7 @@
 #define SYS_FLAG_CHAMPION_WIN             2427 /* 0x097b 殿堂入りフラグ（チャンピオンに勝利） */
 #define SYS_FLAG_BGM_CHAMP                2428 /* 0x097c BGM変更フラグ：Nの城登場後、チャンピオン部屋のBGMを変更する */
 #define SYS_FLAG_BGM_C07HAKASE1           2429 /* 0x097d BGM変更フラグ：C07のアララギ父イベント起動時にBGMを変更する */
-		/* not used  2430(0x097e) */
+#define SYS_FLAG_BGM_LABO_01              2430 /* 0x097e BGM変更フラグ：図鑑入手イベント中だけ研究所のＢＧＭを変更する */
 		/* not used  2431(0x097f) */
 		/* not used  2432(0x0980) */
 		/* not used  2433(0x0981) */

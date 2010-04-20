@@ -277,6 +277,9 @@ init_flags:
 	//R04　ジム前イベントをするまでライバル非表示
 	_FLAG_SET(FV_R04_RIVAL_01)
 	
+	//T01研究所 図鑑入手イベント中だけ博士(娘)のテーマをゾーン曲にする
+	_FLAG_SET( SYS_FLAG_BGM_LABO_01 )
+
 }
 _RET
 

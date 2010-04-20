@@ -204,9 +204,17 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 
 	//博士：消す
 	_OBJ_DEL( T01R0401_HAKASE2_01 )
-
 	//階段SE
 	_SE_PLAY( SEQ_SE_KAIDAN )
+
+	//========================================//
+	//ＢＧＭ設定の変更
+	_FLAG_RESET( SYS_FLAG_BGM_LABO_01 )
+	//========================================//
+
+	//通常のゾーン曲に戻す
+	_BGM_NOW_MAP_RECOVER()
+
 	_SE_WAIT()
 
 	//頼まれたから　冒険しても　いいんだよね？
