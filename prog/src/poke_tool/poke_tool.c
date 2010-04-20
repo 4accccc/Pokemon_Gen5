@@ -504,7 +504,10 @@ void PPP_ChangeMonsNo( POKEMON_PASO_PARAM* ppp, u16 next_monsno )
     if( old_monsno != next_monsno )
     {
       u16 form_no = PPP_Get( ppp, ID_PARA_form_no, NULL );
-      BOOL chg_nickname = pppAct_check_nickname( ppp );
+      //海外版から持ってきたポケモンが進化したときにデフォルト名にならないので、
+      //ニックネームフラグで判断するように変更
+      //BOOL chg_nickname = pppAct_check_nickname( ppp );
+      BOOL chg_nickname = PPP_Get( ppp, ID_PARA_nickname_flag, NULL );
 
       PPP_Put( ppp, ID_PARA_monsno, next_monsno );
       change_monsno_sub_tokusei( ppp, next_monsno, old_monsno );
