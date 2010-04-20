@@ -63,12 +63,23 @@ DEFINE_LOCAL  LWK_POKERUS_STATUS
 DEFINE_LOCAL  LWK_TRAINER_CARD_STATUS
 DEFINE_LOCAL  LWK_RECOVER_YESNO
 
+DEFINE_LOCAL  LWK_MONTH
+DEFINE_LOCAL  LWK_DAY
+DEFINE_LOCAL  LWK_BIRTH_MONTH
+DEFINE_LOCAL  LWK_BIRTH_DAY
+
 EVENT_START   ev_heal_p01
   _TALK_OBJ_START()
 
   _GET_TRAINER_CARD_RANK( LWK_TRAINER_CARD_STATUS )
+  _GET_BIRTHDAY( LWK_BIRTH_MONTH, LWK_BIRTH_DAY )
+  _GET_DATE( LWK_MONTH, LWK_DAY )
 
-  IF $LWK_TRAINER_CARD_STATUS < 4 THEN
+  IF $LWK_MONTH == $LWK_BIRTH_MONTH && $LWK_DAY == $LWK_BIRTH_DAY THEN
+  //誕生日の場合
+    _CALL sub_heal_birthday
+
+  ELSIF $LWK_TRAINER_CARD_STATUS < 4 THEN
   //普通のトレーナーカードの場合
     _CALL sub_heal_greeting   //時間帯で挨拶分岐
 
@@ -208,6 +219,19 @@ _RET
 _ANIME_LABEL  anm_heal_p01_gyoe
   _ANIME_DATA AC_MARK_GYOE,1
   _ANIME_DATA ACMD_END, 0
+
+/**************************************************************/
+//サブルーチン：誕生日のときのあいさつ
+/**************************************************************/
+sub_heal_birthday:
+  _BALLOONWIN_TALKOBJ_MSG( msg_pc_heal_birthday_01 )
+  _YES_NO_WIN( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_YES THEN
+    _BALLOONWIN_TALKOBJ_MSG( msg_pc_heal_birthday_02 )
+  ELSE
+    _BALLOONWIN_TALKOBJ_MSG( msg_pc_heal_birthday_03 )
+  ENDIF
+_RET
 
 /**************************************************************/
 //サブルーチン：回復アニメ
