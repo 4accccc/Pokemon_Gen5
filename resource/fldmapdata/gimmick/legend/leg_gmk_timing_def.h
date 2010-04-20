@@ -8,11 +8,11 @@
 #pragma once
 
 //↓プログラムで使用します
-#define FLASH_FRAME  ( 80 )           //輝度変更開始フレーム
+#define FLASH_FRAME  ( 116 )           //輝度変更開始フレーム
 #define LOOP_START_FRAME ( 450 )      //ループ先頭フレーム
-#define FADE_WAIT    (0)              //輝度ウェイト
+#define FADE_WAIT    (15)              //輝度ウェイト
 
 #define LEG_SE0_FRM  (0)              //ＳＥ1つ目
-#define LEG_SE1_FRM  (0)              //ＳＥ2つ目
+#define LEG_SE1_FRM  (15)              //ＳＥ2つ目
 #define LEG_SE2_FRM  (450)            //ＳＥ3つ目
   
