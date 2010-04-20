@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-19T20:07:20"/>
+	<create user="matsumiya" host="W00224" date="2010-04-20T15:25:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="145" right="2004" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -580,7 +580,7 @@
 意見に　免じ　ひきあげましょう▼</language>
 	</row>
 
-	<row id="msg_c03r1101_sage1_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03r1101_sage1_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・したっぱの手前にムンナ出現
 　ムンナ、ベルの元に駆け寄る感じで移動
@@ -593,7 +593,7 @@
 ポケモンは　返してやろう▼</language>
 	</row>
 
-	<row id="msg_c03r1101_white_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1101_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ムンナがベルのそばに来て消えるとメッセージ表示
 ・続けてleader8w_02</comment>
@@ -622,14 +622,13 @@
 
 	<row id="msg_c03r1101_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・続けてsage1_07
-・0＝サポートの選んだ最初のポケモン</comment>
+・続けてsage1_07</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『で　でもお
-[1:01:ポケモン種族名:0]が　ぶじで　うれしくて▼</language>
+ムンナが　ぶじで　うれしくて▼</language>
 		<language name="JPN_KANJI" width="256">ベル『で　でもお
-[1:01:ポケモン種族名:0]が　無事で　うれしくて▼</language>
+ムンナが　無事で　うれしくて▼</language>
 	</row>
 
 	<row id="msg_c03r1101_sage1_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
