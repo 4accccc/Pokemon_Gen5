@@ -1326,7 +1326,7 @@ void BTL_SVFLOW_CreateRotationCommand( BTL_SVFLOW_WORK* wk, u8 clientID, BtlRota
  *
  * @param   wk
  *
- * @retval  BOOL  誰かが死んで交換する必要ある場合はTRUE
+ * @retval  BOOL  誰かが死んでいて交換する必要ある場合はTRUE
  */
 //----------------------------------------------------------------------------------
 static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
@@ -1335,7 +1335,6 @@ static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
   u8 empty_pos_cnt, clientID, i;
   u8 result = FALSE;
 
-  SVCL_WORK* clwk;
   for(clientID=0; clientID<BTL_CLIENT_MAX; ++clientID)
   {
     empty_pos_cnt = BTL_POSPOKE_GetClientEmptyPos( &wk->pospokeWork, clientID, posAry );
@@ -1351,6 +1350,28 @@ static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
       BTL_N_PrintfSimple( DBGSTR_LF );
       result = TRUE;
     }
+
+    // 新ローテーションの時、後衛の位置も空いていたら送る
+    #ifdef ROTATION_NEW_SYSTEM
+    if( (BTL_MAIN_IsExistClient(wk->mainModule, clientID))
+    &&  (BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION)
+    ){
+      const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID );
+      u32 p;
+
+      for(p=BTL_ROTATION_FRONTPOS_NUM; p<BTL_ROTATE_NUM; ++p)
+      {
+        const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( party, p );
+        if( BPP_IsDead(bpp) )
+        {
+          BtlSide side = BTL_MAIN_GetClientSide( wk->mainModule, clientID );
+          BtlPokePos pos = BTL_MAINUTIL_GetSidePos( side, p );
+          BTL_SERVER_RequestChangePokemon( wk->server, pos );
+          result = TRUE;
+        }
+      }
+    }
+    #endif
   }
   return result;
 }
@@ -2919,13 +2940,14 @@ static void scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
       fSuccess = CalcCapturePokemon( wk, bpp, targetPoke, itemID, &yure_cnt, &fCritical );
 //      OS_TPrintf("捕獲 .. critical=%d\n", fCritical);
 
-      if( fSuccess ){
+      if( fSuccess )
+      {
         wk->flowResult = SVFLOW_RESULT_POKE_GET;
         wk->getPokePos = targetPos;
         fZukanRegister = !BTL_MAIN_IsZukanRegistered( wk->mainModule, targetPoke );
         BPP_SetCaptureBallID( targetPoke, itemID );
-        BTL_SERVER_NotifyPokemonCapture( wk->server, targetPoke );
-      }else{
+      }
+      else{
         fZukanRegister = FALSE;
       }
 

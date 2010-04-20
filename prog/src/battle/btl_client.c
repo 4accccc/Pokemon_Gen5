@@ -3472,7 +3472,7 @@ static void storePokeSelResult( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res
     {
       selIdx = res->selIdx[i];
       outIdx = res->outPokeIdx[i];
-//      BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, wk->myChangePokePos[i], &clientID, &posIdx );
+
       BTL_N_Printf( DBGSTR_CLIENT_PokeChangeIdx, outIdx, selIdx );
       BTL_ACTION_SetChangeParam( &wk->actionParam[i], outIdx, selIdx );
     }
@@ -3722,6 +3722,7 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
     if( wk->myChangePokeCnt )
     {
       u8 numPuttable = calcPuttablePokemons( wk, NULL );
+      // 控えに出せるポケモンが居る
       if( numPuttable )
       {
         u8 numSelect = wk->myChangePokeCnt;
@@ -3742,6 +3743,7 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
         CmdLimit_Start( wk );
         (*seq)++;
       }
+      // 控えに出せるポケモンがもう居ない
       else
       {
         #ifdef ROTATION_NEW_SYSTEM
@@ -3764,9 +3766,24 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode )
         return TRUE;
       }
     }
-    // 自分は空きが出来ていないので何も選ぶ必要がない
+    // 自分は空きが出来ていない
     else
     {
+      // 新ローテーションの場合、後衛が空いている場合も選択
+      #ifdef ROTATION_NEW_SYSTEM
+      if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
+      {
+
+        u32 sendDataSize = SetCoverRotateAction( wk, &(wk->actionParam[0]) );
+        if( sendDataSize ){
+          wk->returnDataSize = sendDataSize;
+          wk->returnDataPtr = &(wk->actionParam[0]);
+          return TRUE;
+        }
+        #endif
+      }
+
+      // 何も選ぶ必要がない
       BTL_N_Printf( DBGSTR_CLIENT_NotDeadMember, wk->myID);
       BTL_ACTION_SetNULL( &wk->actionParam[0] );
       wk->returnDataPtr = &(wk->actionParam[0]);
@@ -4126,6 +4143,7 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
 
       if( resultCode == BTL_RESULT_WIN )
       {
+        PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
         MsgWinningTrainerStart( wk );
         (*seq) = SEQ_WIN_START;
       }
@@ -4268,7 +4286,6 @@ static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
 
       if( result == BTL_RESULT_WIN )
       {
-        TAYA_Printf("サブウェイ勝利ＢＧＭを鳴らします\n");
         PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
       }
       if( (result == BTL_RESULT_WIN) || (result == BTL_RESULT_LOSE) ){
@@ -6106,7 +6123,11 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
   case 2:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
-      if( args[2] ){
+      if( args[2] )
+      {
+        const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, args[0] );
+        BTL_MAIN_NotifyPokemonGetToGameSystem( wk->mainModule, bpp );
+
         PMSND_PlayBGM( SEQ_ME_POKEGET );
         (*seq)++;
       }else{

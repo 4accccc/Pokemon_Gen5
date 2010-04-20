@@ -2090,11 +2090,7 @@ BtlPokePos BTL_MAIN_GetEnablePosEnd( const BTL_MAIN_MODULE* wk )
     return BTL_POS_2ND_2;
 
   case BTL_RULE_ROTATION:
-    #ifdef ROTATION_NEW_SYSTEM
-    return BTL_POS_2ND_0;
-    #else
-    return BTL_POS_2ND_1;
-    #endif
+    return BTL_POS_2ND_2;
 
   default:
     GF_ASSERT(0);
@@ -4627,6 +4623,21 @@ void BTL_MAIN_ClientPokemonReflectToServer( BTL_MAIN_MODULE* wk, u8 pokeID )
   }
 }
 
+//=============================================================================================
+/**
+ * ポケモン捕獲通知をクライアントから受け取り、ゲームシステム（レコード、ビーコン）に通知
+ *
+ * @param   wk
+ * @param   bpp
+ */
+//=============================================================================================
+void BTL_MAIN_NotifyPokemonGetToGameSystem( BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp )
+{
+  if( wk->server )
+  {
+    BTL_SERVER_NotifyPokemonCapture( wk->server, bpp );
+  }
+}
 
 
 //----------------------------------------------------------------------------------
