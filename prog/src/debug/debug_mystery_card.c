@@ -52,9 +52,10 @@ void DEBUG_MYSTERY_SetGiftPokeData( GIFT_PACK_DATA *p_data )
   //ポケモン作成
   { 
     GIFT_PRESENT_POKEMON  *p_poke = &p_data->data.pokemon;
-    p_poke->mons_no = MONSNO_KORATTA;
+    p_poke->mons_no = 1;
     p_poke->form_no = 0;
     p_poke->waza1   = 1;
+	p_poke->egg		= 1;
     p_poke->oyaname[0]  = L'デ';
     p_poke->oyaname[1]  = L'バ';
     p_poke->oyaname[2]  = L'ッ';
@@ -82,7 +83,7 @@ void DEBUG_MYSTERY_SetGiftItemData( GIFT_PACK_DATA *p_data, u16 itemno )
   //道具作成
   { 
     GIFT_PRESENT_ITEM  *p_item = &p_data->data.item;
-    p_item->itemNo    = itemno;
+    p_item->itemNo    = 341;
     p_item->movieflag = FALSE;
   }
   p_data->gift_type     = MYSTERYGIFT_TYPE_ITEM;
