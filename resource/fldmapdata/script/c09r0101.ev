@@ -204,6 +204,20 @@ EVENT_START	ev_c09r0101_bigfour1_01
 			ENDSWITCH
 			_MSGWIN_CLOSE()
 			
+			//========================================//
+			
+			//戦闘終了後にワープのアニメを再生させるため、マップ構築前に勝利フラグをたてておく
+			//負けた場合はC09でリセットされるので問題なし
+			
+			//四天王（シキミ）勝利フラグをセット
+			_FLAG_SET( SYS_FLAG_BIGFOUR_GHOSTWIN )
+			
+			//ワープPOS有効
+			$LOCALWORK10 = 555
+			
+			//========================================//
+			
+			
 			//トレーナー戦呼び出し
 			_TRAINER_BTL_SET( TRID_BIGFOUR1_02, 0 )
 			//敗戦チェック
@@ -213,13 +227,6 @@ EVENT_START	ev_c09r0101_bigfour1_01
 			ELSE
 				_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 			ENDIF
-			
-			//========================================//
-			
-			//四天王（シキミ）勝利フラグをセット
-			_FLAG_SET( SYS_FLAG_BIGFOUR_GHOSTWIN )
-			
-			//========================================//
 			
 			//戦闘後メッセージ
 			IF FLAG_ON( SYS_FLAG_BIGFOUR_GHOSTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_FIGHTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_ESPWIN ) THEN
@@ -276,7 +283,7 @@ EVENT_END
 EVENT_START	ev_pos_c09r0101_warp_01
 	
 	//マップチェンジ
-	_MAP_CHANGE_WARP( ZONE_ID_C09P01, 31, 47, DIR_UP )
+	_MAP_CHANGE_WARP( ZONE_ID_C09P01, 31, 48, DIR_UP )
 	
 EVENT_END
 
