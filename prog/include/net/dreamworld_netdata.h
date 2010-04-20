@@ -65,7 +65,7 @@ typedef struct {
   u16 findPokemonTecnique; ///< であったポケモンに覚えさせる技
   u8 findPokemonForm;      ///< であったポケモンのフォルム番号
   u8 findPokemonSex;       ///< であったポケモン性別    0=MALE 1=FEMALE 2=NEUTER 3=RANDOM
-  u8 sleepPokemonState;  ///< 寝ているポケモンの状態
+  u8 sleepPokemonState;  ///< 寝ているポケモンの状態 // DREAM_WORLD_SERVER_PLAY_TYPEと同じ
   u8 musicalNo;      ///< ミュージカル演目 webで選択した番号  無い場合 0xff
   u8 cgearNo;        ///< CGEAR画像   webで選択した番号  無い場合 0xff
   u8 zukanNo;        ///< 図鑑画像    webで選択した番号  無い場合 0xff
@@ -119,7 +119,7 @@ typedef enum
 typedef struct {
   u32 WifiMatchUpID;   ///< 世界対戦の開催ID
   u8 GPFEntryFlg;      ///< GPFから書き込んだらDREAM_WORLD_ENTRYFLAG_GPF_WRITE DSから書き込んだらDREAM_WORLD_ENTRYFLAG_DS_WRITE
-  u8 WifiMatchUpState; ///< 世界対戦の進行状況
+  u8 WifiMatchUpState; ///< 世界対戦の進行状況  //DREAM_WORLD_MATCHUP_TYPE
   u8 signin;        ///<	大好きクラブで登録が終わったかどうか  登録済みなら 1
   u8 dummy;
 } DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA;

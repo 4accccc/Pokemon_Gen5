@@ -2090,7 +2090,7 @@ void IRC_POKETRADE_InitSubMojiBG(POKEMON_TRADE_WORK* pWork)
       GFL_BMPWIN_Create(GFL_BG_FRAME2_S, mojitbl[i].x, mojitbl[i].y, 2, 2, _BUTTON_MSG_PAL,  GFL_BMP_CHRAREA_GET_B );
     GF_ASSERT(pWork->SerchMojiWin[i]);
     GFL_MSG_GetString(  pWork->pMsgData, POKETRADE_STR_53+i, pWork->pStrBuf );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->SerchMojiWin[i]), 1, 0, pWork->pStrBuf, pWork->pFontHandle);
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->SerchMojiWin[i]), 0, 0, pWork->pStrBuf, pWork->pFontHandle);
     GFL_BMPWIN_MakeScreen(pWork->SerchMojiWin[i]);
     GFL_BMPWIN_TransVramCharacter(pWork->SerchMojiWin[i]);
   }

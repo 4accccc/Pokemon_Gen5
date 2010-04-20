@@ -161,8 +161,7 @@ static void UITemplate_BALLICON_CreateCLWK( _BALL_ICON_WORK* wk,
   UI_EASY_CLWK_RES_PARAM prm;
   BALL_ID ballID;
 
-  // @todo アイテム＞ボール変換ルーチン待ち
-  ballID = BALLID_MASUTAABOORU;  // num=	PP_Get(pp, ID_PARA_item, NULL);
+  ballID = PP_Get(pp, ID_PARA_get_ball, NULL);
 
   UITemplate_BALLICON_DeleteCLWK(wk);
 

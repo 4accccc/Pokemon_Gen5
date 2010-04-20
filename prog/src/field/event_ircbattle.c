@@ -37,6 +37,7 @@
 
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_tool.h"
+#include "poke_tool/status_rcv.h"
 #include "savedata/battle_box_save.h"
 #include "field/event_battle_call.h"
 
@@ -287,6 +288,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       GF_ASSERT(0);
       break;
     }
+    STATUS_RCV_PokeParty_RecoverAll(dbw->pParty);  //全回復
     BATTLE_PARAM_SetPokeParty( dbw->para, dbw->pParty, BTL_CLIENT_PLAYER );
     BTL_SETUP_AllocRecBuffer( dbw->para, GFL_HEAPID_APP); //録画バッファ確保
 //    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM( gsys, dbw->para->musicDefault, FSND_FADE_FAST, FSND_FADE_NONE ) );

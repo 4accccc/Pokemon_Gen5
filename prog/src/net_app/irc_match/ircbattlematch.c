@@ -1631,6 +1631,21 @@ static void _ircInitWait(IRC_BATTLE_MATCH* pWork)
   }
 }
 
+
+static void _ircExitWaitNO(IRC_BATTLE_MATCH* pWork)
+{
+  _buttonWindowDelete(pWork);
+
+  _firstConnectMessage(pWork);
+
+  _ReturnButtonStart(pWork);
+  pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
+  pWork->touch = &_cancelButtonCallback;
+
+  _CHANGE_STATE(pWork,_ircMatchWait);
+
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ＩＲＣ接続待機
@@ -1644,6 +1659,7 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
     pWork->pAppTask=NULL;
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
     if(selectno == 0)
     { // はいを選択した場合
       pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
@@ -1654,15 +1670,7 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
     }
     else
     {  // いいえを選択した場合
-      _buttonWindowDelete(pWork);
-
-      _firstConnectMessage(pWork);
-
-      _ReturnButtonStart(pWork);
-      pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
-      pWork->touch = &_cancelButtonCallback;
-
-      _CHANGE_STATE(pWork,_ircMatchWait);
+      _CHANGE_STATE(pWork,_ircExitWaitNO);
     }
   }
 }
@@ -1785,27 +1793,9 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 }
 
 
-//------------------------------------------------------------------------------
-/**
- * @brief   モードセレクト画面タッチ処理
- * @retval  none
- */
-//------------------------------------------------------------------------------
-
-static void _modeAppWinFlash(IRC_BATTLE_MATCH* pWork)
+static void ircExitStart(IRC_BATTLE_MATCH* pWork)
 {
-  if(APP_TASKMENU_WIN_IsFinish(pWork->pAppWin)){
     int aMsgBuff[]={IRCBTL_STR_16};
-    _buttonWindowDelete(pWork);
-
-    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
-    pWork->pAppWin = NULL;
-    if(pWork->pAppWinLeader){
-      APP_TASKMENU_WIN_Delete(pWork->pAppWinLeader);
-      pWork->pAppWinLeader = NULL;
-    }
-
-    
     GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
                                   0x20*12, 0x20, pWork->heapID);
     _msgWindowCreate(aMsgBuff, pWork);
@@ -1820,6 +1810,29 @@ static void _modeAppWinFlash(IRC_BATTLE_MATCH* pWork)
     pWork->pButton = NULL;
 
     _CHANGE_STATE(pWork,_ircExitWait);
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   モードセレクト画面タッチ処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeAppWinFlash(IRC_BATTLE_MATCH* pWork)
+{
+  if(APP_TASKMENU_WIN_IsFinish(pWork->pAppWin)){
+    _buttonWindowDelete(pWork);
+
+    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+    pWork->pAppWin = NULL;
+    if(pWork->pAppWinLeader){
+      APP_TASKMENU_WIN_Delete(pWork->pAppWinLeader);
+      pWork->pAppWinLeader = NULL;
+    }
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+    _CHANGE_STATE(pWork,ircExitStart);
+    
   }
 }
 

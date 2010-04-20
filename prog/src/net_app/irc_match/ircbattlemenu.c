@@ -192,6 +192,7 @@ struct _IRC_BATTLE_MENU {
   GFL_BUTTON_MAN* pButton;
   GFL_MSGDATA *pMsgData;  //
   GFL_FONT* pFontHandle;
+  GAMEDATA* pGameData;
 	STRBUF*  pExpStrBuf;
   STRBUF* pStrBuf;
   u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
@@ -256,6 +257,8 @@ static void _CreateButtonObj4(IRC_BATTLE_MENU* pWork);
 static void _CreateButtonObj2(IRC_BATTLE_MENU* pWork);
 static void _CreateButtonObj3(IRC_BATTLE_MENU* pWork);
 static void _CreateButtonObj(IRC_BATTLE_MENU* pWork);
+static BOOL _infoMessageEndCheck(IRC_BATTLE_MENU* pWork);
+static void _infoMessageDisp(IRC_BATTLE_MENU* pWork);
 
 
 
@@ -858,6 +861,17 @@ static void _modeButtonFlash(IRC_BATTLE_MENU* pWork)
 }
 
 
+static void _modeKeyWait(IRC_BATTLE_MENU* pWork)
+{
+  if(!_infoMessageEndCheck(pWork)){
+    return;
+  }
+  if(GFL_UI_TP_GetTrg()){
+    _infoMessageEnd(pWork);
+    _CHANGE_STATE(pWork,_modeSelectMenuWait);
+  }
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   モードセレクト画面タッチ処理
@@ -879,7 +893,16 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
     break;
   case _SELECTMODE_POKE_CHANGE:
   case _SELECTMODE_POKE_CHANGE2:
-		PMSND_PlaySystemSE(_SE_DESIDE);
+    {
+      POKEPARTY* party = GAMEDATA_GetMyPokemon(pWork->pGameData);
+      if(PokeParty_GetPokeCount(party) < 2 && 0 == BOXDAT_GetPokeExistCountTotal(GAMEDATA_GetBoxManager(pWork->pGameData))){
+        GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_45, pWork->pStrBuf );
+        _infoMessageDisp(pWork);
+        _CHANGE_STATE(pWork,_modeKeyWait);
+        break;
+      }
+    }
+    PMSND_PlaySystemSE(_SE_DESIDE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_TRADE;
     _CHANGE_STATE(pWork,_modeButtonFlash);
     ret = TRUE;
@@ -1768,7 +1791,7 @@ static void _modeReporting(IRC_BATTLE_MENU* pWork)
     return;
   }
   {
-    SAVE_RESULT svr = GAMEDATA_SaveAsyncMain(GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pWork->dbw)));
+    SAVE_RESULT svr = GAMEDATA_SaveAsyncMain(pWork->pGameData);
     
     if(svr == SAVE_RESULT_OK){
 
@@ -1801,7 +1824,7 @@ static void _modeReportWait2(IRC_BATTLE_MENU* pWork)
     if(selectno==0){
       GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_29, pWork->pStrBuf );
       _infoMessageDisp(pWork);
-      GAMEDATA_SaveAsyncStart(GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pWork->dbw)));
+      GAMEDATA_SaveAsyncStart(pWork->pGameData);
       _CHANGE_STATE(pWork,_modeReporting);
     }
     else{
@@ -1910,7 +1933,6 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
     
     pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 1 , 0 );
     pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
-
     pWork->pAppTaskRes =
       APP_TASKMENU_RES_Create( GFL_BG_FRAME1_S, _SUBLIST_NORMAL_PAL,
                                pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID  );
@@ -1925,6 +1947,7 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 		_CHANGE_STATE(pWork,_modeSelectMenuInit);
     pWork->dbw = pwk;
+    pWork->pGameData = GAMESYSTEM_GetGameData(IrcBattle_GetGAMESYS_WORK(pWork->dbw));
 
     G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0 , 15, 4 );
 

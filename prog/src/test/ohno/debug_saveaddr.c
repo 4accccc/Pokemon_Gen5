@@ -250,7 +250,7 @@ static void _keyWait(SAVEADDR_WORK* pWork)
     u8* pAddr;
     u8* topAddr = (u8*)SaveControl_GetSaveWorkAdrs(pWork->pSaveData, &size);
 
-    zukandummydata(pWork);
+    //zukandummydata(pWork);
     
     OS_TPrintf("SAVESIZE ,%x\n", size);
 
@@ -379,7 +379,7 @@ static void _keyWait(SAVEADDR_WORK* pWork)
         MYSTATUS* pMys = &pHis->aUnitedPeople[i].aMyStatus;
         pAddr = (u8*)&pMys->profileID;
         OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "GTS_GSID",(u32)pAddr-(u32)topAddr,sizeof(pMys->profileID));
-        OS_TPrintf(" id %d \n",pMys->profileID);
+    //    OS_TPrintf(" id %d \n",pMys->profileID);
       }
       
       pAddr = (u8*)&pHis->myCountryCount;
@@ -417,7 +417,7 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       pAddr = (u8*)pMyItem;
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","MYBAG_START", (u32)pAddr-(u32)topAddr, sizeof(ITEM_ST));
 
-      OS_TPrintf("\"%s\",\"0\",\"%d\"\n","BAG_NUM", (u32)BAG_TOTAL_NUM );
+      OS_TPrintf("\"%s\",\"0\",\"%d\"\n","ITEMST_TOTAL_NUM", (u32)BAG_TOTAL_NUM );
       OS_TPrintf("\"%s\",\"0\",\"%d\"\n","ITEM_MAX", (u32)ITEM_DATA_MAX);
 
       pAddr = (u8*)&pMyItem->MyNutsItem[0];

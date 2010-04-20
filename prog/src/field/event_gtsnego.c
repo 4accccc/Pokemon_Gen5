@@ -127,12 +127,10 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
       if( dbw->login.result == WIFILOGIN_RESULT_LOGIN )
       { 
         (*seq) ++;
-        NAGI_Printf( "ログインした\n" );
       }
       else
       { 
         (*seq)  = _WAIT_NET_END;
-        NAGI_Printf( "ログインしなかった\n" );
       }
     }
     break;
