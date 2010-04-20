@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-04-19T22:59:09"/>
+	<create user="obata_toshihiro" host="W00209" date="2010-04-20T11:25:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -434,6 +434,11 @@
 		<language name="JPN_KANJI" width="240">バトルサブウェイ</language>
 	</row>
 
+	<row id="dni_record_day" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="240">1日に～</language>
+		<language name="JPN_KANJI" width="240">1日に～</language>
+	</row>
+
 	<row id="dni_record_00" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
 		<language name="JPN" width="240">レポート回数</language>
 		<language name="JPN_KANJI" width="240">レポート回数</language>
@@ -480,8 +485,8 @@
 	</row>
 
 	<row id="dni_record_09" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">進化させたポケモンの引数</language>
-		<language name="JPN_KANJI" width="240">進化させたポケモンの引数</language>
+		<language name="JPN" width="240">進化させたポケモンの数</language>
+		<language name="JPN_KANJI" width="240">進化させたポケモンの数</language>
 	</row>
 
 	<row id="dni_record_10" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
@@ -540,8 +545,8 @@
 	</row>
 
 	<row id="dni_record_21" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">買い物をした合計金額</language>
-		<language name="JPN_KANJI" width="240">買い物をした合計金額</language>
+		<language name="JPN" width="240">買い物で使った合計金額</language>
+		<language name="JPN_KANJI" width="240">買い物で使った合計金額</language>
 	</row>
 
 	<row id="dni_record_22" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
@@ -685,8 +690,8 @@
 	</row>
 
 	<row id="dni_record_50" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="240">つり損なった回数</language>
-		<language name="JPN_KANJI" width="240">つり損なった回数</language>
+		<language name="JPN" width="240">釣り損なった回数</language>
+		<language name="JPN_KANJI" width="240">釣り損なった回数</language>
 	</row>
 
 	<row id="dni_record_51" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
