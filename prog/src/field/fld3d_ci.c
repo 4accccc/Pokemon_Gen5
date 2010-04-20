@@ -54,12 +54,20 @@
 #define CUTIN_WHITE_FADE_SPD (-1)
 
 #define ENC_CUTIN_MDL_Z_OFS (700)
-
+#if 0
 #define FLYSKY_SE_FRAME (24)      //空を飛ぶＳＥ再生タイミング
 #define CHAMP_FLYSKY_SE_FRAME (24)      //チャンピオン空を飛ぶＳＥ再生タイミング
+#endif
+#define CI_SE_NONE   (0xffffffff)
 
 typedef GMEVENT_RESULT (*SETUP_CALLBACK)( GMEVENT* event, int* seq, void* work );
 typedef BOOL (*MAIN_SEQ_FUNC)( GMEVENT* event, FLD3D_CI_PTR ptr );
+
+typedef struct CI_SE_TBL_tag
+{
+  u32 Se;
+  u32 Frame;
+}CI_SE_TBL;
 
 typedef struct NPC_FLY_WORK_tag
 {
@@ -129,7 +137,8 @@ typedef struct FLD3D_CI_tag
   SETUP_CALLBACK SetupCallBack;
   MAIN_SEQ_FUNC MainSeqFunc;
   int SubSeq;
-  int FrameCount;
+  u16 FrameCount;
+  u16 SeTblIdx;
 }FLD3D_CI;
 
 //バイナリデータフォーマット
@@ -179,6 +188,10 @@ typedef struct {
   FLDNOGRID_MAPPER* mapper;
   const VecFx32 *Watch;
 }FLYSKY_EFF_WORK;
+
+#define DEBUG_COUNT (15)
+int DbgCount = 0;
+BOOL DbgSlowMode = FALSE;
 #endif
 
 static void SetupResource(GMEVENT* event, FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCutInNo);
@@ -236,14 +249,18 @@ static GMEVENT_RESULT EncEffGraTransEvt( GMEVENT* event, int* seq, void* work );
 
 static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexName, const char* inPltName, const int inMsgIdx );
 
-static BOOL FlySkyMainFunc(GMEVENT* event, FLD3D_CI_PTR ptr);
+//static BOOL FlySkyMainFunc(GMEVENT* event, FLD3D_CI_PTR ptr);
 static void ChangeCapDatCol(void);
 static void InitCutinEvtWork(FLD3D_CI_PTR ptr, FLD3D_CI_EVENT_WORK *work);
+
+static void PlaySE(FLD3D_CI_PTR ptr);
 
 #define DEF_CAM_NEAR	( 1 << FX32_SHIFT )
 #define DEF_CAM_FAR	( 1024 << FX32_SHIFT )
 
 FS_EXTERN_OVERLAY(enc_cutin_no);
+
+#include "../../../resource/fld3d_ci_se/ci_se_tbl.cdat"
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -258,6 +275,8 @@ FS_EXTERN_OVERLAY(enc_cutin_no);
 FLD3D_CI_PTR FLD3D_CI_Init(const HEAPID inHeapID, FLD_PRTCL_SYS_PTR inPrtclSysPtr)
 {
   FLD3D_CI_PTR ptr;
+
+  GF_ASSERT_MSG(FLDCIID_MAX == CI_SE_TBL_MAX,"ci_def error");
   
   GF_ASSERT(inPrtclSysPtr != NULL);
 
@@ -443,6 +462,7 @@ GMEVENT *FLD3D_CI_CreateCutInEvt(GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, const u8 
   ptr->PartGene = 0;
   ptr->SubSeq = 0;
   ptr->FrameCount = 0;
+  ptr->SeTblIdx = 0;
   ptr->CutInNo = inCutInNo;
   //セットアップ後コールバックなしでセットする
   ptr->SetupCallBack = NULL;
@@ -632,7 +652,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       fade_event = GMEVENT_Create(gsys, event, WhiteOutEvt, 0);
       GMEVENT_CallEvent(event, fade_event);
     }
-
+#if 0
     if ( IsFlySkyOut(ptr->CutInNo) )
     {
 //      GMEVENT* fade_event;
@@ -650,6 +670,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       GMEVENT_CallEvent(event, fade_event);
 */      
     }
+#endif    
     (*seq)++;
     break;
   case 1:   //そらを飛ぶカットインシーケンス
@@ -670,7 +691,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       u16 id = fly_work->ObjID;
       MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
       if ( mmdl != NULL ) MMDL_Delete( mmdl );
-      else GF_ASSERT_MSG( 0,"OBJ DEL 対象のOBJが居ません  %d\n",id );
+//      else GF_ASSERT_MSG( 0,"OBJ DEL 対象のOBJが居ません  %d\n",id );
       break;
     }
     //no break
@@ -756,6 +777,33 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
   case 6:
     {
       BOOL rc1,rc2,rc3,main_rc;
+      rc1 = FALSE;
+      rc2 = FALSE;
+      rc3 = FALSE;
+#ifdef PM_DEBUG
+      if ( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ) DbgSlowMode = TRUE;
+      else DbgSlowMode = FALSE;
+
+      if ( DbgSlowMode )
+      {
+        if (DbgCount) DbgCount--;
+      }
+      else DbgCount = 0;
+
+      if (DbgCount <= 0)
+      {
+        //フレームカウント
+        ptr->FrameCount++;
+        //パーティクル再生
+        rc1 = PlayParticle(ptr);
+        //3Ｄモデル1アニメ再生
+        rc2 = PlayMdlAnm1(ptr);
+        //3Ｄモデル2アニメ再生
+        rc3 = PlayMdlAnm2(ptr);
+        DbgCount = DEBUG_COUNT;
+        OS_Printf("cutin_frame %d\n", ptr->FrameCount);
+      }
+#else
       //フレームカウント
       ptr->FrameCount++;
       //パーティクル再生
@@ -764,12 +812,14 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       rc2 = PlayMdlAnm1(ptr);
       //3Ｄモデル2アニメ再生
       rc3 = PlayMdlAnm2(ptr);
+#endif  //PM_DEBUG      
 
       ptr->PtclEnd = rc1;
       ptr->MdlAnm1End = rc2;
       ptr->MdlAnm2End = rc3;
 
-      NOZOMU_Printf("cutin_frame %d\n", ptr->FrameCount);
+      //ＳＥ再生
+      PlaySE(ptr);
 
       main_rc = FALSE;
       if (ptr->MainSeqFunc != NULL) main_rc = ptr->MainSeqFunc(event, ptr);
@@ -2357,7 +2407,7 @@ GMEVENT *FLD3D_CI_CreateNpcFlyCutInEvt( GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr, co
 
   return event;
 }
-
+#if 0
 //--------------------------------------------------------------------------------------------
 /**
  * そらをとぶカットイン中関数
@@ -2383,7 +2433,7 @@ static BOOL FlySkyMainFunc(GMEVENT* event, FLD3D_CI_PTR ptr)
 
   return FALSE;
 }
-
+#endif
 //--------------------------------------------------------------------------------------------
 /**
  * キャプチャ画像輝度落としのためのカラー変更
@@ -2451,3 +2501,31 @@ static void InitCutinEvtWork(FLD3D_CI_PTR ptr, FLD3D_CI_EVENT_WORK *work)
   work->MainHook = TRUE;
   work->IsWhiteOut = FALSE;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ＳＥ再生
+ *
+ * @param   ptr       カットインポインタ
+ * @return none
+ */
+//--------------------------------------------------------------------------------------------
+static void PlaySE(FLD3D_CI_PTR ptr)
+{
+  u32 se;
+  const CI_SE_TBL * tbl = SeTbl[ptr->CutInNo];
+  se = tbl[ptr->SeTblIdx].Se;
+  if (se != CI_SE_NONE)
+  {
+    //フレーム監視
+    GF_ASSERT(tbl[ptr->SeTblIdx].Frame != 0);
+    if ( tbl[ptr->SeTblIdx].Frame == ptr->FrameCount )
+    {
+      //SE再生
+      PMSND_PlaySE( se );
+      //インデックスインクリメント
+      ptr->SeTblIdx++;
+    }
+  }
+}
+
