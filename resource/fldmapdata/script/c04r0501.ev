@@ -30,7 +30,7 @@ _EVENT_DATA_END
 /************************************************************/
 //‚©‚¢‚è‚«“üŽèƒCƒxƒ“ƒg
 EVENT_START	ev_c04r0501_TRAINERM_01
-	_EASY_TALK_ITEM_EVENT( ITEM_WAZAMASIN95, 1, FE_C04R0501_ITEMGET_01, msg_c04r0501_trainerm_01, msg_c04r0501_trainerm_02, msg_c04r0501_trainerm_02)
+	_EASY_TALK_ITEM_EVENT( ITEM_HIDENMASIN04, 1, FE_C04R0501_ITEMGET_01, msg_c04r0501_trainerm_01, msg_c04r0501_trainerm_02, msg_c04r0501_trainerm_02)
 EVENT_END
 
 

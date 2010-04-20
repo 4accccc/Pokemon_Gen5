@@ -157,8 +157,8 @@ EVENT_START	ev_c03r0502_mrlock_01
       //「あきましたよ」
       _BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_mrlock_03 )
       _BALLOONWIN_CLOSE()
-      //アイテム取得  技マシン101
-      _ITEM_EVENT_KEYWAIT(ITEM_WAZAMASIN101, 1)
+      //アイテム取得  技マシン95（バークアウト）
+      _ITEM_EVENT_KEYWAIT(ITEM_WAZAMASIN95, 1)
       //「おやおや」
       _BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_mrlock_04 )
       _BALLOONWIN_CLOSE()

@@ -163,5 +163,5 @@ EVENT_END
 /*	D02			‚¢‚í‚­‚¾‚«“üŽè								  */
 /**************************************************************/
 EVENT_START		ev_d02_fighterw_01
-	_EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN100, 1, FE_D02_ITEMGET_01, msg_d02_fighterw_01,msg_d02_fighterw_02, msg_d02_fighterw_02 )
+	_EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN94, 1, FE_D02_ITEMGET_01, msg_d02_fighterw_01,msg_d02_fighterw_02, msg_d02_fighterw_02 )
 EVENT_END
