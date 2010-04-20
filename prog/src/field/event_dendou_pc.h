@@ -14,6 +14,7 @@
  * @brief 殿堂入り確認画面呼び出しイベントを生成する
  *
  * @param gameSystem
+ * @param call_mode 呼び出しタイプ
  */
 //-------------------------------------------------------------------------------------
-extern GMEVENT* EVENT_DendouCall( GAMESYS_WORK* gameSystem );
+extern GMEVENT* EVENT_DendouCall( GAMESYS_WORK* gameSystem, u16 call_mode );

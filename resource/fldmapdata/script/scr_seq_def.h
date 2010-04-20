@@ -7394,13 +7394,16 @@
 //--------------------------------------------------------------
 /**
  * @brief 殿堂入り画面を呼び出す
+ *
+ * @param type 呼び出しタイプ ( DENDOU_PC_xxxx )
  */
 //--------------------------------------------------------------
-#define _CALL_DENDOU_PC_PROC() \
-    _ASM_CALL_DENDOU_PC_PROC
+#define _CALL_DENDOU_PC_PROC( type ) \
+    _ASM_CALL_DENDOU_PC_PROC type
 
-  .macro  _ASM_CALL_DENDOU_PC_PROC
+  .macro  _ASM_CALL_DENDOU_PC_PROC type
   .short  EV_SEQ_CALL_DENDOU_PC_PROC
+  .short  \type
   .endm
 
 //--------------------------------------------------------------

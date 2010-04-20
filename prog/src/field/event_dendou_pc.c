@@ -40,9 +40,10 @@ typedef struct {
  * @brief 殿堂入り確認画面呼び出しイベントを生成する
  *
  * @param gameSystem
+ * @param call_mode 呼び出しモード
  */
 //-------------------------------------------------------------------------------------
-GMEVENT* EVENT_DendouCall( GAMESYS_WORK* gameSystem )
+GMEVENT* EVENT_DendouCall( GAMESYS_WORK* gameSystem, u16 call_mode )
 {
   GMEVENT* event;
   EVENT_WORK* work;
@@ -56,7 +57,9 @@ GMEVENT* EVENT_DendouCall( GAMESYS_WORK* gameSystem )
   work->gameSystem = gameSystem;
   work->fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
 
+  // プロックパラメータを設定
   work->dendouParam.gamedata = GAMESYSTEM_GetGameData( gameSystem );
+  work->dendouParam.callMode = call_mode;
 
   // 作成したイベントを返す
   return event;

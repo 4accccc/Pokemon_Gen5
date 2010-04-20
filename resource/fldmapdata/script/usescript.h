@@ -232,4 +232,10 @@
 #define BALLOONWIN_TYPE_NORMAL (0)
 #define BALLOONWIN_TYPE_GIZA   (1)
 
+//======================================================================
+// パソコンの殿堂入り画面呼び出し
+//======================================================================
+#define SCRCMD_DENDOU_PC_FIRST  (0) //「はじめてクリア」
+#define SCRCMD_DENDOU_PC_DENDOU (1) //「殿堂入り」
+
 #endif //__USESCRIPT_H__

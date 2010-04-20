@@ -36,7 +36,7 @@
 
 #include "scrcmd_proc.h"
 #include "scrcmd_proc_fld.h"
-//#include "../../../resource/fldmapdata/script/usescript.h"
+#include "../../../resource/fldmapdata/script/usescript.h"
 
 #include "event_gameclear.h"  //EVENT_GameClear
 #include "app/box2.h"
@@ -48,6 +48,7 @@
 #include "net_app/wifi_earth.h" // Earth_Demo_proc_data
 
 #include "app/name_input.h"
+#include "app/dendou_pc.h"
 
 static void callback_BoxProc( void* work );
 static void CallBackFunc_byHelloMsgIn( void* wk );
@@ -296,9 +297,18 @@ VMCMD_RESULT EvCmdCallDendouProc( VMHANDLE *core, void *wk )
   GAMEDATA*          gdata = GAMESYSTEM_GetGameData( gsys );
   SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
   FIELDMAP_WORK*     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  u16                id = SCRCMD_GetVMWorkValue( core, work ); // コマンド第一引数
   GMEVENT*           event = NULL;
+  u16 call_mode;
+
+  // 呼び出しタイプを決定
+  switch( id ) {
+  default: GF_ASSERT(0);
+  case SCRCMD_DENDOU_PC_FIRST:  call_mode = DENDOUPC_CALL_CLEAR;  break;
+  case SCRCMD_DENDOU_PC_DENDOU: call_mode = DENDOUPC_CALL_DENDOU; break;
+  }
 
   // イベントを呼び出す
-  SCRIPT_CallEvent( scw, EVENT_DendouCall( gsys ) );
+  SCRIPT_CallEvent( scw, EVENT_DendouCall( gsys, call_mode ) );
   return VMCMD_RESULT_SUSPEND;
 }
