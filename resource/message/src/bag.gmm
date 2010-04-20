@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-04-16T18:28:48"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-04-20T17:27:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -806,15 +806,15 @@ const u8 msg_coincase[]
 	<row id="msg_bag_063">
 		<comment>バッグ / アイテム関連
 const u8 msg_waza_machine00[]</comment>
-		<language name="JPN" font=" 1:small">わざマシンを　きどうした！\[190:05:コールバック引数変更（単発）:3\]\[190:05:コールバック引数変更（単発）:4\]</language>
-		<language name="JPN_KANJI" font=" 1:small">わざマシンを　きどうした！\[190:05:コールバック引数変更（単発）:3\]\[190:05:コールバック引数変更（単発）:4\]</language>
+		<language name="JPN" font=" 1:small">わざマシンを　きどうした！</language>
+		<language name="JPN_KANJI" font=" 1:small">わざマシンを　きどうした！</language>
 	</row>
 
-	<row id="msg_bag_064" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+	<row id="msg_bag_064">
 		<comment>バッグ / アイテム関連
 const u8 msg_waza_machine01[]</comment>
-		<language name="JPN" font=" 1:small">ひでんマシンを　きどうした！\[190:05:コールバック引数変更（単発）:3\]\[190:05:コールバック引数変更（単発）:4\]</language>
-		<language name="JPN_KANJI" font=" 1:small">ひでんマシンを　きどうした！\[190:05:コールバック引数変更（単発）:3\]\[190:05:コールバック引数変更（単発）:4\]</language>
+		<language name="JPN" font=" 1:small">ひでんマシンを　きどうした！</language>
+		<language name="JPN_KANJI" font=" 1:small">ひでんマシンを　きどうした！</language>
 	</row>
 
 	<row id="msg_bag_065">
@@ -900,8 +900,8 @@ const u8 str_konanoryou[]
 		<comment>const u8 str_bag_NoXX[]
 ０＝数字（ナンバー、２桁）
 １＝わざ名</comment>
-		<language name="JPN" font=" 1:small">[BD:02:Ｘセンタリング]Ｎｏ．[2:02:３桁:0]　[1:07:わざ名:1]</language>
-		<language name="JPN_KANJI" font=" 1:small">[BD:02:Ｘセンタリング]Ｎｏ．[2:02:３桁:0]　[1:07:わざ名:1]</language>
+		<language name="JPN" font=" 1:small">[BD:02:Ｘセンタリング]Ｎｏ．[2:01:２桁:0]　[1:07:わざ名:1]</language>
+		<language name="JPN_KANJI" font=" 1:small">[BD:02:Ｘセンタリング]Ｎｏ．[2:01:２桁:0]　[1:07:わざ名:1]</language>
 	</row>
 
 	<row id="msg_bag_087">
@@ -918,8 +918,8 @@ const u8 str_konanoryou[]
 		<comment>const u8 str_bag_XX[]
 ０＝数字（ナンバー、２桁）
 １＝ひでん名</comment>
-		<language name="JPN" font=" 1:small">[2:02:３桁:0][1:07:わざ名:1]</language>
-		<language name="JPN_KANJI" font=" 1:small">[2:02:３桁:0][1:07:わざ名:1]</language>
+		<language name="JPN" font=" 1:small">ひでん[2:00:１桁:0]　[1:07:わざ名:1]</language>
+		<language name="JPN_KANJI" font=" 1:small">ひでん[2:00:１桁:0]　[1:07:わざ名:1]</language>
 	</row>
 
 	<row id="msg_bag_089" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
@@ -1432,6 +1432,11 @@ const u8 str_konanoryou[]
 一括表示</comment>
 		<language name="JPN">もちものを　せいり　しました！</language>
 		<language name="JPN_KANJI">持ち物を　整理しました！</language>
+	</row>
+
+	<row id="mes_bag_114" back-color=",,,,,,,#ffff00,,,#ffff00,,,,,,,">
+		<language name="JPN">[1:12:バッグのポケット名:0]</language>
+		<language name="JPN_KANJI">[1:12:バッグのポケット名:0]</language>
 	</row>
 
 	<flowchart-group-list>

@@ -57,15 +57,22 @@ enum
   SE_BAG_BAG_GRA      = SEQ_SE_SELECT4,  ///< バッグの絵をタッチしたとき
 };
 
+#define MSG_SKIP_BTN (PAD_BUTTON_A|PAD_BUTTON_B)	// メッセージ送りボタン
+
 #define ITEMMENU_SCROLLBAR_ENABLE_NUM (7) // スクロールバーが有効になるアイテム数
 
+#define	WAZA_KIND_MAX		( 3 )							// 技の分類数
+#define	WAZA_TYPE_MAX		( POKETYPE_MAX )	// 技のタイプ数
+
 #define ITEM_LIST_NUM (8)
-#define _CELLUNIT_NUM (34)
+#define _CELLUNIT_NUM (32+WAZA_KIND_MAX+WAZA_TYPE_MAX)
+//#define _CELLUNIT_NUM (34)
 
 #define _SCROLL_TOP_Y  (24+2)  //スクロールバーの最初の位置
 #define _SCROLL_BOTTOM_Y  (8*18-2)  //スクロールバーの最後の位置
 
 #define _SUBMENU_LISTMAX (8)
+
 
 // 数値入力
 enum
@@ -172,9 +179,9 @@ struct _FIELD_ITEMMENU_PARAM {
   BOOL stream_clear_flg;
   APP_KEYCURSOR_WORK *MsgCursorWork;///< メッセージキー待ちカーソル表示ワーク
   GFL_MSGDATA* MsgManager;          ///< 名前入力メッセージデータマネージャー
-  GFL_MSGDATA* MsgManagerItemInfo;  ///< 名前入力メッセージデータマネージャー
-  GFL_MSGDATA* MsgManagerPocket;
-  GFL_MSGDATA* MsgManagerItemName;
+//  GFL_MSGDATA* MsgManagerItemInfo;  ///< 名前入力メッセージデータマネージャー
+//  GFL_MSGDATA* MsgManagerPocket;
+//  GFL_MSGDATA* MsgManagerItemName;
   WORDSET*    WordSet;              ///< メッセージ展開用ワークマネージャー
   STRBUF*     pStrBuf;
   STRBUF*     pExpStrBuf;
@@ -186,7 +193,7 @@ struct _FIELD_ITEMMENU_PARAM {
   u32 objRes[3];          ///< CLACTリソース
   u32 cellRes[SCR_MAX];   ///< アイテムカーソル
 
-  u32 commonCellTypeNcg[POKETYPE_MAX];
+  u32 commonCellTypeNcg[WAZA_TYPE_MAX];
   u32 commonCell[5];
 
   u32 listRes[ITEM_LIST_NUM];  //アイテムリスト
@@ -203,8 +210,8 @@ struct _FIELD_ITEMMENU_PARAM {
   GFL_CLWK  *clwkCur;
   GFL_CLWK  *clwkScroll;
   GFL_CLWK  *clwkBag[BAG_POKE_MAX];
-  GFL_CLWK  *clwkWazaKind;
-  GFL_CLWK  *clwkWazaType;
+  GFL_CLWK  *clwkWazaKind[WAZA_KIND_MAX];
+  GFL_CLWK  *clwkWazaType[WAZA_TYPE_MAX];
   GFL_CLWK  *clwkBarIcon[ BAR_ICON_MAX ];
   GFL_CLWK  *clwkSort;
   GFL_TCBLSYS *pMsgTcblSys;

@@ -97,7 +97,6 @@ enum
   PALOFS_NUM_FRAME = 3,   ///< 数値入力フレーム
 };
 
-#define MSG_SKIP_BTN (PAD_BUTTON_A|PAD_BUTTON_B)
 
 #define ITEMWIN_FRAME (GFL_BG_FRAME1_S)
 #define ITEMREPORT_FRAME (GFL_BG_FRAME2_S)
@@ -272,18 +271,18 @@ static const GFL_CLSYS_INIT fldmapdata_CLSYS_Init =
 };
 
 static GFL_DISP_VRAM _defVBTbl = {
-  GX_VRAM_BG_128_A,       // メイン2DエンジンのBG
-  GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
-  GX_VRAM_SUB_BG_128_C,     // サブ2DエンジンのBG
+  GX_VRAM_BG_128_A,							// メイン2DエンジンのBG
+  GX_VRAM_BGEXTPLTT_NONE,				// メイン2DエンジンのBG拡張パレット
+  GX_VRAM_SUB_BG_128_C,				  // サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
-  GX_VRAM_OBJ_128_B,        // メイン2DエンジンのOBJ
-  GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
-  GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
+  GX_VRAM_OBJ_128_B,					  // メイン2DエンジンのOBJ
+  GX_VRAM_OBJEXTPLTT_NONE,		  // メイン2DエンジンのOBJ拡張パレット
+  GX_VRAM_SUB_OBJ_128_D,		    // サブ2DエンジンのOBJ
   GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
-  GX_VRAM_TEX_NONE,       // テクスチャイメージスロット
-  GX_VRAM_TEXPLTT_NONE,     // テクスチャパレットスロット
+  GX_VRAM_TEX_NONE,						  // テクスチャイメージスロット
+  GX_VRAM_TEXPLTT_NONE,					// テクスチャパレットスロット
   GX_OBJVRAMMODE_CHAR_1D_128K,
-  GX_OBJVRAMMODE_CHAR_1D_32K,
+  GX_OBJVRAMMODE_CHAR_1D_128K,
 };
 
 
@@ -509,7 +508,7 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
   ITEMDISP_InitTaskBar(pWork);
 
   {
-    u8 i;
+    u32 i;
     ARCHANDLE *archandleCommon = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , pWork->heapID );
 
     //タイプアイコン
@@ -517,20 +516,21 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
                                                                           APP_COMMON_GetPokeTypePltArcIdx() , CLSYS_DRAW_SUB ,
                                                                           _OBJPLT_SUB_POKE_TYPE*32 , 0 , APP_COMMON_POKETYPE_PLT_NUM , pWork->heapID  );
     pWork->commonCell[SCR_ANM_SUB_POKE_TYPE] = GFL_CLGRP_CELLANIM_Register( archandleCommon ,
-                                                                            APP_COMMON_GetPokeTypeCellArcIdx(APP_COMMON_MAPPING_32K) ,
-                                                                            APP_COMMON_GetPokeTypeAnimeArcIdx(APP_COMMON_MAPPING_32K), pWork->heapID  );
+                                                                            APP_COMMON_GetPokeTypeCellArcIdx(APP_COMMON_MAPPING_128K) ,
+                                                                            APP_COMMON_GetPokeTypeAnimeArcIdx(APP_COMMON_MAPPING_128K), pWork->heapID  );
     //技タイプ
-    pWork->commonCell[SCR_NCG_SKILL_TYPE_HENKA] = GFL_CLGRP_CGR_Register( archandleCommon ,
-                                                                          NARC_app_menu_common_p_st_bunrui_henka_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID  );
-    pWork->commonCell[SCR_NCG_SKILL_TYPE_BUTURI] = GFL_CLGRP_CGR_Register( archandleCommon ,
-                                                                           NARC_app_menu_common_p_st_bunrui_buturi_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID  );
-    pWork->commonCell[SCR_NCG_SKILL_TYPE_TOKUSHU] = GFL_CLGRP_CGR_Register( archandleCommon ,
-                                                                            NARC_app_menu_common_p_st_bunrui_tokusyu_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID  );
+		for( i=0; i<WAZA_KIND_MAX; i++ ){
+			pWork->commonCell[SCR_NCG_SKILL_TYPE_HENKA+i] = GFL_CLGRP_CGR_Register(
+																												archandleCommon,
+																												APP_COMMON_GetWazaKindCharArcIdx(i),
+																												FALSE, CLSYS_DRAW_SUB, pWork->heapID );
+		}
     //属性
-    for( i=0;i<POKETYPE_MAX;i++ )
-    {
-      pWork->commonCellTypeNcg[i] = GFL_CLGRP_CGR_Register( archandleCommon ,
-                                                            APP_COMMON_GetPokeTypeCharArcIdx(i) , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+    for( i=0;i<WAZA_TYPE_MAX; i++ ){
+      pWork->commonCellTypeNcg[i] = GFL_CLGRP_CGR_Register(
+																			archandleCommon,
+																			APP_COMMON_GetPokeTypeCharArcIdx(i),
+																			FALSE, CLSYS_DRAW_SUB, pWork->heapID );
     }
 
     GFL_ARC_CloseDataHandle(archandleCommon);
@@ -538,16 +538,26 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
   //技のアイコン
   {
     GFL_CLWK_DATA cellInitData1,cellInitData2;
+		u32	i;
+
     cellInitData1.pos_x = 10*8;
     cellInitData1.pos_y = 22*8+8;
     cellInitData1.softpri = 1;
     cellInitData1.bgpri = 1;
     cellInitData1.anmseq = 0;
 
-    pWork->clwkWazaKind = GFL_CLACT_WK_Create(
-      pWork->cellUnit ,
-      pWork->commonCell[SCR_NCG_SKILL_TYPE_HENKA], pWork->commonCell[SCR_PLT_SUB_POKE_TYPE],  pWork->commonCell[SCR_ANM_SUB_POKE_TYPE],
-      &cellInitData1 ,CLSYS_DEFREND_SUB , pWork->heapID );
+		// 分類
+		for( i=0; i<WAZA_KIND_MAX; i++ ){
+	    pWork->clwkWazaKind[i] = GFL_CLACT_WK_Create(
+																pWork->cellUnit,
+																pWork->commonCell[SCR_NCG_SKILL_TYPE_HENKA+i],
+																pWork->commonCell[SCR_PLT_SUB_POKE_TYPE],
+																pWork->commonCell[SCR_ANM_SUB_POKE_TYPE],
+																&cellInitData1 ,CLSYS_DEFREND_SUB , pWork->heapID );
+			GFL_CLACT_WK_SetPlttOffs(
+				pWork->clwkWazaKind[i], APP_COMMON_GetWazaKindPltOffset(i), CLWK_PLTTOFFS_MODE_PLTT_TOP );
+	    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind[i], FALSE );
+		}
 
     cellInitData2.pos_x = 10*8;
     cellInitData2.pos_y = 19*8+12;
@@ -555,13 +565,17 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
     cellInitData2.bgpri = 1;
     cellInitData2.anmseq = 0;
 
-    pWork->clwkWazaType = GFL_CLACT_WK_Create(
-      pWork->cellUnit ,
-      pWork->commonCell[SCR_NCG_SKILL_TYPE_HENKA], pWork->commonCell[SCR_PLT_SUB_POKE_TYPE],  pWork->commonCell[SCR_ANM_SUB_POKE_TYPE],
-      &cellInitData2 ,CLSYS_DEFREND_SUB , pWork->heapID );
-
-    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind , FALSE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType , FALSE );
+		for( i=0;i<WAZA_TYPE_MAX;i++ ){
+	    pWork->clwkWazaType[i] = GFL_CLACT_WK_Create(
+																pWork->cellUnit,
+																pWork->commonCellTypeNcg[i],
+																pWork->commonCell[SCR_PLT_SUB_POKE_TYPE],
+																pWork->commonCell[SCR_ANM_SUB_POKE_TYPE],
+																&cellInitData2, CLSYS_DEFREND_SUB, pWork->heapID );
+			GFL_CLACT_WK_SetPlttOffs(
+				pWork->clwkWazaType[i], APP_COMMON_GetPokeTypePltOffset(i), CLWK_PLTTOFFS_MODE_PLTT_TOP );
+			GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[i], FALSE );
+		}
   }
 
   // ソートボタン リソースロード
@@ -720,7 +734,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   // わざマシンNOを取得
   wazano = ITEM_GetWazaNo( item->id );
 
-  if(wazano == 0)
+  if(wazano == WAZANO_NULL)
   {
     // 一般
     // アイテム名
@@ -740,16 +754,23 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   else
   {
     // わざマシン名
-    GFL_MSG_GetString( pWork->MsgManager, msg_bag_086, pWork->pStrBuf );
-    WORDSET_RegisterNumber(pWork->WordSet, 0, ITEM_GetWazaMashineNo(item->id)+1,
-                           3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+		u8	hiden = ITEM_GetHidenMashineNo( item->id );
+		if( hiden == 0xff ){
+	    GFL_MSG_GetString( pWork->MsgManager, msg_bag_086, pWork->pStrBuf );
+	    WORDSET_RegisterNumber(
+				pWork->WordSet, 0, ITEM_GetWazaMashineNo(item->id)+1, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+		}else{
+	    GFL_MSG_GetString( pWork->MsgManager, msg_bag_088, pWork->pStrBuf );
+	    WORDSET_RegisterNumber( pWork->WordSet, 0, hiden+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+		}
     WORDSET_RegisterWazaName(pWork->WordSet, 1, wazano);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
   }
 
   // アイテムの説明文
-  GFL_MSG_GetString(  pWork->MsgManagerItemInfo, item->id, pWork->pStrBuf );
+//  GFL_MSG_GetString(  pWork->MsgManagerItemInfo, item->id, pWork->pStrBuf );
+	ITEM_GetInfo( pWork->pStrBuf, item->id, pWork->heapID );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemReport), 0, 4, pWork->pStrBuf, pWork->fontHandle);
 
   // キャラ転送
@@ -771,6 +792,8 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 //-----------------------------------------------------------------------------
 void ITEMDISP_upMessageClean(FIELD_ITEMMENU_WORK* pWork)
 {
+	u32	i;
+
   // 上画面表示OFF
 	ITEMDISP_ItemInfoVanishSet( pWork, FALSE );
     
@@ -778,8 +801,12 @@ void ITEMDISP_upMessageClean(FIELD_ITEMMENU_WORK* pWork)
   GFL_BMPWIN_ClearScreen(pWork->winWaza);
 
   // ワザマシン用アイコンも非表示
-  GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, FALSE );
-  GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType, FALSE );
+	for( i=0; i<WAZA_KIND_MAX; i++ ){
+		GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind[i], FALSE );
+	}
+	for( i=0; i<WAZA_TYPE_MAX; i++ ){
+		GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[i], FALSE );
+	}
 }
 
 
@@ -1308,9 +1335,17 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 					GFL_FONTSYS_SetColor( 4, 3, 13 );
 				}
 			}
+
       GFL_BMP_Clear(pWork->listBmp[i], 13 );
       GFL_MSG_GetString( pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
-      ITEMMENU_WordsetItemName( pWork, 0, item->id);
+			{
+				u16	wazano = ITEM_GetWazaNo( item->id );
+				if( wazano == WAZANO_NULL ){
+		      ITEMMENU_WordsetItemName( pWork, 0, item->id );
+				}else{
+					WORDSET_RegisterWazaName( pWork->WordSet, 0, wazano );
+				}
+			}
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
       PRINTSYS_Print( pWork->listBmp[i], 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
 
@@ -1323,6 +1358,12 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 			// 装備
 			}else if( type == ITEMTYPE_EQUIP ){
 				pWork->nListEnable[i] = 6;
+			// 秘伝マシン
+			}else if( ITEM_GetHidenMashineNo( item->id ) != 0xff ){
+				pWork->nListEnable[i] = 8;
+			// 技マシン
+			}else if( ITEM_GetWazaMashineNo( item->id ) != 0xff ){
+				pWork->nListEnable[i] = 7;
 			// 登録できない
 			}else if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) == 0 ){
 				pWork->nListEnable[i] = 3;
@@ -1430,6 +1471,10 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
         GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i], TRUE );
 			//「どうぐ」ポケット
 			}else if( pWork->pocketno == BAG_POKE_NORMAL && pWork->nListEnable[i] >= 4 ){
+        GFL_CLACT_WK_SetAnmSeq( pWork->listMarkCell[i], pWork->nListEnable[i]-1 );
+        GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i], TRUE );
+			//「わざマシン」ポケット
+			}else if( pWork->pocketno == BAG_POKE_WAZA && pWork->nListEnable[i] >= 7 ){
         GFL_CLACT_WK_SetAnmSeq( pWork->listMarkCell[i], pWork->nListEnable[i]-1 );
         GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i], TRUE );
 			}else{
@@ -1748,6 +1793,7 @@ void ITEMDISP_ItemInfoWindowChange(FIELD_ITEMMENU_WORK *pWork,int pocketno )
 
 static void _wazaKindDisp( FIELD_ITEMMENU_WORK *pWork ,int wazaNo)
 {
+/*
   {
     NNSG2dImageProxy imageProxy;
     const int type = WAZADATA_GetDamageType( wazaNo );
@@ -1758,7 +1804,15 @@ static void _wazaKindDisp( FIELD_ITEMMENU_WORK *pWork ,int wazaNo)
                               CLWK_PLTTOFFS_MODE_PLTT_TOP );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, TRUE );
   }
+*/
+	u32	i;
+
+	for( i=0; i<WAZA_KIND_MAX; i++ ){
+		GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind[i], FALSE );
+	}
+	GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind[WAZADATA_GetDamageType(wazaNo)], TRUE );
 }
+
 //------------------------------------------------------------------------------
 /**
  * @brief   技タイプのアイコン表示
@@ -1767,6 +1821,7 @@ static void _wazaKindDisp( FIELD_ITEMMENU_WORK *pWork ,int wazaNo)
 //------------------------------------------------------------------------------
 static void _wazaTypeDisp( FIELD_ITEMMENU_WORK *pWork ,int wazaNo)
 {
+/*
   {
     NNSG2dImageProxy imageProxy;
     int type1 = WAZADATA_GetType(wazaNo);
@@ -1777,6 +1832,13 @@ static void _wazaTypeDisp( FIELD_ITEMMENU_WORK *pWork ,int wazaNo)
                               CLWK_PLTTOFFS_MODE_PLTT_TOP );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType , TRUE );
   }
+*/
+	u32	i;
+
+	for( i=0;i<WAZA_TYPE_MAX;i++ ){
+		GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[i], FALSE );
+	}
+	GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[WAZADATA_GetType(wazaNo)], TRUE );
 }
 
 //------------------------------------------------------------------------------
@@ -1801,13 +1863,18 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   wazano = ITEM_GetWazaNo( item->id );
 
   // アイテムがない／ダミー／非わざマシン
-  if((item==NULL) || (item->id==ITEM_DUMMY_DATA) || wazano==0 )
+  if((item==NULL) || (item->id==ITEM_DUMMY_DATA) || wazano==WAZANO_NULL )
   {
+		u32	i;
     // わざマシン用の表示を非表示にして抜ける
     GFL_BMPWIN_ClearScreen(pwin);
 
-    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind, FALSE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType, FALSE );
+		for( i=0; i<WAZA_KIND_MAX; i++ ){
+			GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind[i], FALSE );
+		}
+		for( i=0; i<WAZA_TYPE_MAX; i++ ){
+			GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[i], FALSE );
+		}
 
     return;
   }
@@ -2051,13 +2118,16 @@ void ITEMDISP_PocketMessage(FIELD_ITEMMENU_WORK* pWork,int newpocket)
 {
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->pocketNameWin), 0 );
   GFL_FONTSYS_SetColor( _POCKETNAME_FONT_PAL_L, _POCKETNAME_FONT_PAL_S, _POCKETNAME_FONT_PAL_B );
-  GFL_MSG_GetString(pWork->MsgManagerPocket, msg_pocket_001+newpocket, pWork->pStrBuf );
+//  GFL_MSG_GetString(pWork->MsgManagerPocket, msg_pocket_001+newpocket, pWork->pStrBuf );
+	GFL_MSG_GetString(  pWork->MsgManager, mes_bag_114, pWork->pStrBuf );
+	WORDSET_RegisterItemPocketName( pWork->WordSet, 0, newpocket );
+	WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf );
 
   {  //センタリング
-    u32 dot =PRINTSYS_GetStrWidth(pWork->pStrBuf, pWork->fontHandle, 0);
+    u32 dot =PRINTSYS_GetStrWidth(pWork->pExpStrBuf, pWork->fontHandle, 0);
     HOSAKA_Printf("dot=%d \n", dot);
     dot = (_POCKETNAME_DISP_SIZEX*8 - dot )/2;
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->pocketNameWin), dot, 4, pWork->pStrBuf, pWork->fontHandle);
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->pocketNameWin), dot, 4, pWork->pExpStrBuf, pWork->fontHandle);
   }
 
   GFL_BMPWIN_MakeTransWindow_VBlank( pWork->pocketNameWin );

@@ -10,7 +10,7 @@
 #include "arc_def.h"
 #include "item_data.naix"
 #include "item_icon.naix"
-#include "agb_itemsym.h"
+//#include "agb_itemsym.h"
 #include "item/item.h"
 #include "item/shooter_item.h"
 #include "waza_tool/wazano_def.h"
@@ -23,8 +23,8 @@
 //============================================================================================
 //  定数定義
 //============================================================================================
-#define NORMAL_WAZAMACHINE_MAX  ( 101 )   // 通常の技マシン数
-#define HIDENWAZA_MAX           ( 8 )     // 秘伝技数
+#define NORMAL_WAZAMACHINE_MAX  ( 95 )   // 通常の技マシン数
+#define HIDENWAZA_MAX           ( 6 )     // 秘伝技数
 #define HIDENWAZA_START_POS     ( 92 )    // 秘伝マシン開始位置
 
 

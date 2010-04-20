@@ -78,12 +78,12 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
   { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, _BAR_CELL_CURSOR_EXIT, _BAR_CELL_CURSOR_EXIT+TOUCHBAR_ICON_WIDTH-1 },  //x
   { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, _BAR_CELL_CURSOR_RETURN, _BAR_CELL_CURSOR_RETURN+TOUCHBAR_ICON_WIDTH-1 },  //リターン
 
-  { 1*_1CHAR+4,   4*_1CHAR+3,  18*_1CHAR, 30*_1CHAR-1 },  //アイテム一覧エリア1
-  { 4*_1CHAR+4,   7*_1CHAR+3,  18*_1CHAR, 30*_1CHAR-1 },  //アイテム一覧エリア2
-  { 7*_1CHAR+4,  11*_1CHAR+3,  18*_1CHAR, 30*_1CHAR-1 },  //アイテム一覧エリア3
-  {11*_1CHAR+4,  14*_1CHAR+3,  18*_1CHAR, 30*_1CHAR-1 },  //アイテム一覧エリア4
-  {14*_1CHAR+4,  17*_1CHAR+3,  18*_1CHAR, 30*_1CHAR-1 },  //アイテム一覧エリア5
-  {17*_1CHAR+4,  20*_1CHAR+3,  18*_1CHAR, 30*_1CHAR-1 },  //アイテム一覧エリア6
+  { 1*_1CHAR+4,   4*_1CHAR+3,  18*_1CHAR, 28*_1CHAR-1 },  //アイテム一覧エリア1
+  { 4*_1CHAR+4,   7*_1CHAR+3,  18*_1CHAR, 28*_1CHAR-1 },  //アイテム一覧エリア2
+  { 7*_1CHAR+4,  11*_1CHAR+3,  18*_1CHAR, 28*_1CHAR-1 },  //アイテム一覧エリア3
+  {11*_1CHAR+4,  14*_1CHAR+3,  18*_1CHAR, 28*_1CHAR-1 },  //アイテム一覧エリア4
+  {14*_1CHAR+4,  17*_1CHAR+3,  18*_1CHAR, 28*_1CHAR-1 },  //アイテム一覧エリア5
+  {17*_1CHAR+4,  20*_1CHAR+3,  18*_1CHAR, 28*_1CHAR-1 },  //アイテム一覧エリア6
 
   { 1*_1CHAR+4,   4*_1CHAR+3,  15*_1CHAR, 18*_1CHAR-1 },  //だいじなものチェックエリア1
   { 4*_1CHAR+4,   7*_1CHAR+3,  15*_1CHAR, 18*_1CHAR-1 },  //だいじなものチェックエリア2
@@ -400,8 +400,9 @@ int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork)
 //-----------------------------------------------------------------------------
 void ITEMMENU_WordsetItemName( FIELD_ITEMMENU_WORK* pWork, u32 bufID, u32 itemID )
 {
-    GFL_MSG_GetString( pWork->MsgManagerItemName, itemID, pWork->pItemNameBuf );
-    WORDSET_RegisterWord( pWork->WordSet, bufID, pWork->pItemNameBuf, 0, TRUE, PM_LANG );
+//    GFL_MSG_GetString( pWork->MsgManagerItemName, itemID, pWork->pItemNameBuf );
+//    WORDSET_RegisterWord( pWork->WordSet, bufID, pWork->pItemNameBuf, 0, TRUE, PM_LANG );
+	WORDSET_RegisterItemName( pWork->WordSet, bufID, itemID );
 }
 
 
@@ -623,13 +624,14 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
 
   if( length >= ITEMMENU_SCROLLBAR_ENABLE_NUM && GFL_UI_TP_GetPointCont(&x, &y) == TRUE ){
     // 範囲判定
-    if( (x >= (32*8)) || (x <= (30*8)) ){
+    if( (x >= (32*8)) || (x < (28*8)) ){
       return FALSE;
     }
     // 初回チェック
     if( pWork->scrollMode == FALSE ){
       if( GFL_UI_TP_GetTrg() == TRUE ){
-        if( y < _SCROLL_TOP_Y || y > _SCROLL_BOTTOM_Y ){
+//        if( y < _SCROLL_TOP_Y || y > _SCROLL_BOTTOM_Y ){
+        if( y < 16 || y >= 176 ){
           return FALSE;
         }
         pWork->scrollMode = TRUE;
@@ -1922,6 +1924,32 @@ static void _itemTecniqueUseWait(FIELD_ITEMMENU_WORK* pWork)
 
 }
 
+static void _itemTecniqueUseWaitSE(FIELD_ITEMMENU_WORK* pWork)
+{
+	if( PMSND_CheckPlaySE() == TRUE ){
+		return;
+	}
+
+	if( ( GFL_UI_KEY_GetTrg() & MSG_SKIP_BTN ) || GFL_UI_TP_GetTrg() ){
+		GFL_MSG_GetString( pWork->MsgManager, msg_bag_065, pWork->pStrBuf );
+		WORDSET_RegisterWazaName(pWork->WordSet, 0, ITEM_GetWazaNo( pWork->ret_item ));
+		WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+		ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
+		_CHANGE_STATE(pWork,_itemTecniqueUseWait);
+	}
+}
+
+static void _itemTecniqueUseStartSE(FIELD_ITEMMENU_WORK* pWork)
+{
+  if( !ITEMDISP_MessageEndCheck(pWork) ){
+    return;
+  }
+
+	// 起動後のＳＥ
+  PMSND_PlaySE( SE_BAG_WAZA );
+  _CHANGE_STATE( pWork, _itemTecniqueUseWaitSE );
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   技マシン起動
@@ -1931,13 +1959,21 @@ static void _itemTecniqueUseWait(FIELD_ITEMMENU_WORK* pWork)
 
 static void _itemTecniqueUseInit(FIELD_ITEMMENU_WORK* pWork)
 {
-  PMSND_PlaySE( SE_BAG_WAZA );
-
+/*
   GFL_MSG_GetString( pWork->MsgManager, msg_bag_065, pWork->pStrBuf );
   WORDSET_RegisterWazaName(pWork->WordSet, 0, ITEM_GetWazaNo( pWork->ret_item ));
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
   ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
   _CHANGE_STATE(pWork,_itemTecniqueUseWait);
+*/
+	// 起動した
+	if( ITEM_GetHidenMashineNo( pWork->ret_item ) == 0xff ){
+		GFL_MSG_GetString( pWork->MsgManager, msg_bag_063, pWork->pExpStrBuf );
+	}else{
+		GFL_MSG_GetString( pWork->MsgManager, msg_bag_064, pWork->pExpStrBuf );
+	}
+	ITEMDISP_ItemInfoWindowDispEx( pWork, TRUE );
+	_CHANGE_STATE( pWork, _itemTecniqueUseStartSE );
 }
 
 //=============================================================================
@@ -3718,14 +3754,18 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   pWork->MsgManager = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
                                       NARC_message_bag_dat, pWork->heapID );
 
+/*
   pWork->MsgManagerItemInfo = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
                                               NARC_message_iteminfo_dat, pWork->heapID );
-
+*/
+/*
   pWork->MsgManagerPocket = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
                                             NARC_message_itempocket_dat, pWork->heapID );
-  
+*/
+/*  
   pWork->MsgManagerItemName = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE,
                                             NARC_message_itemname_dat, pWork->heapID );
+*/
 
 
   pWork->pStrBuf = GFL_STR_CreateBuffer(200,pWork->heapID);
@@ -3854,9 +3894,9 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 
 
   GFL_MSG_Delete(pWork->MsgManager);
-  GFL_MSG_Delete(pWork->MsgManagerItemInfo);
-  GFL_MSG_Delete(pWork->MsgManagerPocket);
-  GFL_MSG_Delete(pWork->MsgManagerItemName);
+//  GFL_MSG_Delete(pWork->MsgManagerItemInfo);
+//  GFL_MSG_Delete(pWork->MsgManagerPocket);
+//  GFL_MSG_Delete(pWork->MsgManagerItemName);
 
   GFL_STR_DeleteBuffer(pWork->pStrBuf);
   GFL_STR_DeleteBuffer(pWork->pExpStrBuf);
