@@ -1,0 +1,13 @@
+//============================================================================================
+/**
+ * @file  straw_poke_form.h
+ * @bfief 蓑ポケモン（ミノムッチ）フォールムチェンジ
+ * @author  Saito
+ */
+//============================================================================================
+#pragma once
+
+#include "poke_tool/poke_tool.h"
+#include "gamesystem/gamedata_def.h"
+
+extern void SEASONPOKE_FORM_ChangeForm(GAMEDATA * gdata, POKEMON_PARAM *pp, const u8 inEnvor);
