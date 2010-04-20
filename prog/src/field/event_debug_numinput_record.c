@@ -79,34 +79,27 @@ static GMEVENT_RESULT dninput_MainEvent( GMEVENT * event, int *seq, void * work)
 static GMEVENT * DEBUG_EVENT_FLDMENU_FlagWork(
     GAMESYS_WORK * gsys, const DEBUG_NUMINPUT_INITIALIZER * init );
 
-static u32 DebugGetRecord(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
-static void DebugSetRecord(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetRecord(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param );
+static void DebugSetRecord(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value );
 static u32 DebugGetPalparkHighScore( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
-static void DebugSetPalparkHighScore(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static void DebugSetPalparkHighScore(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value );
 static u32 DebugGetSeaTempleStepCount( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
-static void DebugSetSeaTempleStepCount(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static void DebugSetSeaTempleStepCount(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value );
 static u32 DebugGetPalaceTime( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
-static void DebugSetPalaceTime(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value);
+static void DebugSetPalaceTime(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
 static u32 DebugGetBSubway( GAMESYS_WORK* gsys, GAMEDATA* gdata, u32 param );
-static void DebugSetBSubway(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value);
+static void DebugSetBSubway(GAMESYS_WORK * gsys, GAMEDATA * gdata, u32 param, u32 value );
 
 #include "debug_numinput_record.cdat"
 
-static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Field = {
-  NELEMS( DNI_RecordList_Field ), DNI_RecordList_Field, };
-static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Comm = {
-  NELEMS( DNI_RecordList_Comm ), DNI_RecordList_Comm, };
-static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Palace = {
-  NELEMS( DNI_RecordList_Palace ), DNI_RecordList_Palace, };
-static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Battle = {
-  NELEMS( DNI_RecordList_Battle ), DNI_RecordList_Battle, };
-static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Random = {
-  NELEMS( DNI_RecordList_Random ), DNI_RecordList_Random, };
-static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Musical = {
-  NELEMS( DNI_RecordList_Musical ), DNI_RecordList_Musical, };
-static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_BSubway = {
-  NELEMS( DNI_RecordList_BSubway ), DNI_RecordList_BSubway, };
-
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Field   = { NELEMS( DNI_RecordList_Field ), DNI_RecordList_Field, };
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Comm    = { NELEMS( DNI_RecordList_Comm ), DNI_RecordList_Comm, };
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Palace  = { NELEMS( DNI_RecordList_Palace ), DNI_RecordList_Palace, };
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Battle  = { NELEMS( DNI_RecordList_Battle ), DNI_RecordList_Battle, };
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Random  = { NELEMS( DNI_RecordList_Random ), DNI_RecordList_Random, };
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Musical = { NELEMS( DNI_RecordList_Musical ), DNI_RecordList_Musical, };
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_BSubway = { NELEMS( DNI_RecordList_BSubway ), DNI_RecordList_BSubway, };
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_Record_Day     = { NELEMS( DNI_RecordList_Day ), DNI_RecordList_Day, }; 
 
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
@@ -140,6 +133,7 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_record_random, (void*)&DATA_Record_Random },
   { dni_record_musical, (void*)&DATA_Record_Musical },
   { dni_record_bsubway, (void*)&DATA_Record_BSubway },
+  { dni_record_day, (void*)&DATA_Record_Day },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {

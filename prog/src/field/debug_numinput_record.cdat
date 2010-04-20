@@ -9,10 +9,12 @@
 
 //////////////////////////////////////////////////////
 ///レコード関連
-static const DEBUG_NUMINPUT_PARAM DNP_Record_1 = { 0, 999999999, DebugGetRecord, DebugSetRecord, };
-static const DEBUG_NUMINPUT_PARAM DNP_Record_2 = { 0,   9995959, DebugGetRecord, DebugSetRecord, };
-static const DEBUG_NUMINPUT_PARAM DNP_Record_3 = { 0,    999999, DebugGetRecord, DebugSetRecord, };
-static const DEBUG_NUMINPUT_PARAM DNP_Record_4 = { 0,      9999, DebugGetRecord, DebugSetRecord, };
+static const DEBUG_NUMINPUT_PARAM DNP_Record_1 = { 0, 999999999, DebugGetRecord, DebugSetRecord, }; // 汎用レコード ( MAX 999,999,999 )
+static const DEBUG_NUMINPUT_PARAM DNP_Record_2 = { 0,   9995959, DebugGetRecord, DebugSetRecord, }; // 汎用レコード ( MAX 999,59,59 )
+static const DEBUG_NUMINPUT_PARAM DNP_Record_3 = { 0,    999999, DebugGetRecord, DebugSetRecord, }; // 汎用レコード ( MAX 999,999 )
+static const DEBUG_NUMINPUT_PARAM DNP_Record_4 = { 0,      9999, DebugGetRecord, DebugSetRecord, }; // 汎用レコード ( MAX 9,999 )
+static const DEBUG_NUMINPUT_PARAM DNP_Record_5 = { 0,     99999, DebugGetRecord, DebugSetRecord, }; // 汎用レコード ( MAX 99,999 )
+static const DEBUG_NUMINPUT_PARAM DNP_Record_6 = { 0,     65535, DebugGetRecord, DebugSetRecord, }; // 汎用レコード ( MAX 65,535 )
 static const DEBUG_NUMINPUT_PARAM DNP_Record_Palpark = { 0, 999, DebugGetPalparkHighScore, DebugSetPalparkHighScore, };
 static const DEBUG_NUMINPUT_PARAM DNP_Record_SeaTemple = { 0, 9999, DebugGetSeaTempleStepCount, DebugSetSeaTempleStepCount, };
 static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Year = { 0, 999, DebugGetPalaceTime, DebugSetPalaceTime, };
@@ -22,151 +24,171 @@ static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Hour = { 0, 23, DebugGet
 static const DEBUG_NUMINPUT_PARAM DNP_Record_PalaceTime_Minute = { 0, 59, DebugGetPalaceTime, DebugSetPalaceTime, };
 static const DEBUG_NUMINPUT_PARAM DNP_Record_BSubway = { 0, 9999, DebugGetBSubway, DebugSetBSubway, };
 
+//-------------------------
 // フィールド関連レコード
+//-------------------------
 static const DEBUG_NUMINPUT_LIST DNI_RecordList_Field[] = {
   //gmm_id, param, dni_param
-  { dni_record_95, RECID_WALK_COUNT,               &DNP_Record_1 }, 
-  { dni_record_00, RECID_REPORT_COUNT,             &DNP_Record_1 }, 
-  { dni_record_01, RECID_CLEAR_TIME,               &DNP_Record_1 }, 
-  { dni_record_02, RECID_RIDE_CYCLE,               &DNP_Record_1 },
-  { dni_record_06, RECID_CAPTURE_POKE,             &DNP_Record_1 }, 
-  { dni_record_07, RECID_FISHING_SUCCESS,          &DNP_Record_1 }, 
-  { dni_record_08, RECID_TAMAGO_HATCHING,          &DNP_Record_1 },
-  { dni_record_09, RECID_POKE_EVOLUTION,           &DNP_Record_1 }, 
-  { dni_record_10, RECID_RECOVERY_PC,              &DNP_Record_1 }, 
-  { dni_record_20, RECID_SHOPPING_CNT,             &DNP_Record_1 },
-  { dni_record_21, RECID_SHOPPING_MONEY,           &DNP_Record_1 }, 
-  { dni_record_22, RECID_WATCH_TV,                 &DNP_Record_1 }, 
-  { dni_record_23, RECID_SODATEYA_CNT,             &DNP_Record_1 },
-  { dni_record_27, RECID_GTS_PUT,                  &DNP_Record_1 }, 
-  { dni_record_28, RECID_MAIL_WRITE,               &DNP_Record_1 }, 
-  { dni_record_29, RECID_NICKNAME,                 &DNP_Record_1 }, 
-  { dni_record_30, RECID_PREMIUM_BALL,             &DNP_Record_1 }, 
-  { dni_record_41, RECID_DENDOU_CNT,               &DNP_Record_1 },
-  { dni_record_42, RECID_RECOVERY_HOME,            &DNP_Record_1 }, 
-  { dni_record_50, RECID_FISHING_FAILURE,          &DNP_Record_1 },
-  { dni_record_51, RECID_DAYMAX_KILL,              &DNP_Record_1 }, 
-  { dni_record_52, RECID_DAYCNT_KILL,              &DNP_Record_1 }, 
-  { dni_record_53, RECID_DAYMAX_CAPTURE,           &DNP_Record_1 },
-  { dni_record_54, RECID_DAYCNT_CAPTURE,           &DNP_Record_1 }, 
-  { dni_record_55, RECID_DAYMAX_TRAINER_BATTLE,    &DNP_Record_1 }, 
-  { dni_record_56, RECID_DAYCNT_TRAINER_BATTLE,    &DNP_Record_1 },
-  { dni_record_57, RECID_DAYMAX_EVOLUTION,         &DNP_Record_1 }, 
-  { dni_record_58, RECID_DAYCNT_EVOLUTION,         &DNP_Record_1 }, 
-  { dni_record_59, RECID_FOSSIL_RESTORE,           &DNP_Record_1 },
-  { dni_record_81, RECID_USE_SHOOTER_COUNT,        &DNP_Record_1 }, 
-  { dni_record_82, RECID_EFFECT_ENCOUNT_NUM,       &DNP_Record_1 }, 
-  { dni_record_83, RECID_AFFINITY_CHECK_NUM,       &DNP_Record_1 },
-  { dni_record_89, RECID_PDW_SLEEP_POKEMON,        &DNP_Record_1 },
-  { dni_record_90, RECID_POKESHIFTER_COUNT,        &DNP_Record_1 }, 
-  { dni_record_91, RECID_TRIALHOUSE_COUNT,         &DNP_Record_1 }, 
-  { dni_record_93, RECID_TRIALHOUSE_RANK,          &DNP_Record_1 }, 
-  { dni_record_94, RECID_TRIALHOUSE_SCORE,         &DNP_Record_1 },
-  { dni_record_96, 0,                              &DNP_Record_Palpark },
-  { dni_record_97, 0,                              &DNP_Record_SeaTemple },
+  { dni_record_95, RECID_WALK_COUNT,          &DNP_Record_1 },         // 歩数
+  { dni_record_00, RECID_REPORT_COUNT,        &DNP_Record_1 },         // レポート回数
+  { dni_record_01, RECID_CLEAR_TIME,          &DNP_Record_2 },         // クリアタイム
+  { dni_record_02, RECID_RIDE_CYCLE,          &DNP_Record_1 },         // 自転車に乗った回数
+  { dni_record_06, RECID_CAPTURE_POKE,        &DNP_Record_3 },         // 捕獲したポケモンの数
+  { dni_record_07, RECID_FISHING_SUCCESS,     &DNP_Record_3 },         // 釣り上げたポケモンの数
+  { dni_record_08, RECID_TAMAGO_HATCHING,     &DNP_Record_3 },         // タマゴを孵した回数
+  { dni_record_09, RECID_POKE_EVOLUTION,      &DNP_Record_1 },         // 進化させたポケモンの数
+  { dni_record_10, RECID_RECOVERY_PC,         &DNP_Record_1 },         // ポケセンで休んだ回数
+  { dni_record_20, RECID_SHOPPING_CNT,        &DNP_Record_1 },         // 買い物をした回数
+  { dni_record_21, RECID_SHOPPING_MONEY,      &DNP_Record_1 },         // 買い物で使った合計金額
+  { dni_record_22, RECID_WATCH_TV,            &DNP_Record_1 },         // テレビを見た回数
+  { dni_record_23, RECID_SODATEYA_CNT,        &DNP_Record_1 },         // 育て屋にポケモンを預けた回数 
+  { dni_record_28, RECID_MAIL_WRITE,          &DNP_Record_3 },         // メールを書いた回数
+  { dni_record_29, RECID_NICKNAME,            &DNP_Record_3 },         // ポケモンにニックネームを付けた回数
+  { dni_record_30, RECID_PREMIUM_BALL,        &DNP_Record_3 },         // もらったプレミアボールの数
+  { dni_record_41, RECID_DENDOU_CNT,          &DNP_Record_4 },         // 殿堂入りした回数
+  { dni_record_42, RECID_RECOVERY_HOME,       &DNP_Record_4 },         // 自分の家で休んだ回数
+  { dni_record_50, RECID_FISHING_FAILURE,     &DNP_Record_4 },         // 釣り損なった回数
+  { dni_record_59, RECID_FOSSIL_RESTORE,      &DNP_Record_4 },         // ポケモンの化石を復元した回数
+  { dni_record_82, RECID_EFFECT_ENCOUNT_NUM,  &DNP_Record_4 },         // エフェクトエンカウントした回数
+  { dni_record_83, RECID_AFFINITY_CHECK_NUM,  &DNP_Record_4 },         // 相性チェックをした回数
+  { dni_record_89, RECID_PDW_SLEEP_POKEMON,   &DNP_Record_4 },         // PDWでポケモンを寝かせた回数
+  { dni_record_90, RECID_POKESHIFTER_COUNT,   &DNP_Record_1 },         // ポケシフターをした回数
+  { dni_record_91, RECID_TRIALHOUSE_COUNT,    &DNP_Record_1 },         // トライアルハウスをした回数
+  { dni_record_93, RECID_TRIALHOUSE_RANK,     &DNP_Record_1 },         // トライアルハウス最高ランク
+  { dni_record_94, RECID_TRIALHOUSE_SCORE,    &DNP_Record_1 },         // トライアルハウス最高スコア
+  { dni_record_96, 0,                         &DNP_Record_Palpark },   // パルゲート最高得点
+  { dni_record_97, 0,                         &DNP_Record_SeaTemple }, // 海底遺跡内の歩数カウント
 };
+//-------------------------
 // 通信関連レコード
+//-------------------------
 static const DEBUG_NUMINPUT_LIST DNI_RecordList_Comm[] = { 
   //gmm_id, param, dni_param
-  { dni_record_11, RECID_COMM_TRADE,        &DNP_Record_1 },
-  { dni_record_12, RECID_COMM_BATTLE,       &DNP_Record_1 }, 
-  { dni_record_13, RECID_COMM_BTL_WIN,      &DNP_Record_1 }, 
-  { dni_record_14, RECID_COMM_BTL_LOSE,     &DNP_Record_1 },
-  { dni_record_15, RECID_WIFI_TRADE,        &DNP_Record_1 }, 
-  { dni_record_16, RECID_WIFI_BATTLE,       &DNP_Record_1 }, 
-  { dni_record_17, RECID_WIFI_BTL_WIN,      &DNP_Record_1 },
-  { dni_record_18, RECID_WIFI_BTL_LOSE,     &DNP_Record_1 }, 
-  { dni_record_19, RECID_WIFI_BTL_DRAW,     &DNP_Record_1 }, 
-  { dni_record_34, RECID_SURECHIGAI_NUM,    &DNP_Record_1 }, 
-  { dni_record_35, RECID_IRC_TRADE,         &DNP_Record_1 },
-  { dni_record_36, RECID_IRC_BATTLE,        &DNP_Record_1 }, 
-  { dni_record_37, RECID_IRC_BTL_WIN,       &DNP_Record_1 }, 
-  { dni_record_38, RECID_IRC_BTL_LOSE,      &DNP_Record_1 },
-  { dni_record_60, RECID_GURUGURU_COUNT,    &DNP_Record_1 }, 
-  { dni_record_92, RECID_SURECHIGAI_THANKS, &DNP_Record_1 },
+  { dni_record_11, RECID_COMM_TRADE,        &DNP_Record_1 }, // ワイヤレス交換をした回数
+  { dni_record_12, RECID_COMM_BATTLE,       &DNP_Record_1 }, // ワイヤレス通信対戦をした回数
+  { dni_record_13, RECID_COMM_BTL_WIN,      &DNP_Record_1 }, // ワイヤレス通信対戦の勝利数
+  { dni_record_14, RECID_COMM_BTL_LOSE,     &DNP_Record_1 }, // ワイヤレス通信対戦の敗北数
+  { dni_record_15, RECID_WIFI_TRADE,        &DNP_Record_1 }, // WiFi通信交換をした回数
+  { dni_record_16, RECID_WIFI_BATTLE,       &DNP_Record_1 }, // WiFi通信対戦をした回数
+  { dni_record_17, RECID_WIFI_BTL_WIN,      &DNP_Record_1 }, // WiFi通信対戦の勝利数
+  { dni_record_18, RECID_WIFI_BTL_LOSE,     &DNP_Record_1 }, // WiFi通信対戦の敗北数
+  { dni_record_19, RECID_WIFI_BTL_DRAW,     &DNP_Record_1 }, // WiFi通信対戦の引き分け数
+  { dni_record_27, RECID_GTS_PUT,           &DNP_Record_3 }, // GTSにポケモンを預けた回数
+  { dni_record_35, RECID_IRC_TRADE,         &DNP_Record_1 }, // 赤外線通信交換をした回数
+  { dni_record_36, RECID_IRC_BATTLE,        &DNP_Record_1 }, // 赤外線通信対戦をした回数
+  { dni_record_37, RECID_IRC_BTL_WIN,       &DNP_Record_1 }, // 赤外線通信対戦の勝利数
+  { dni_record_38, RECID_IRC_BTL_LOSE,      &DNP_Record_1 }, // 赤外線通信対戦の敗北数
+  { dni_record_60, RECID_GURUGURU_COUNT,    &DNP_Record_4 }, // ぐるぐる交換をした回数
+  { dni_record_34, RECID_SURECHIGAI_NUM,    &DNP_Record_1 }, // すれちがい通信をした回数
+  { dni_record_92, RECID_SURECHIGAI_THANKS, &DNP_Record_4 }, // すれちがい通信でお礼を受けた回数
 };
+//-------------------------
 // パレス関連レコード
+//-------------------------
 static const DEBUG_NUMINPUT_LIST DNI_RecordList_Palace[] = { 
   //gmm_id, param, dni_param
-  { dni_record_39,  RECID_PALACE_TIME,    &DNP_Record_1 }, 
-  { dni_record_40,  RECID_PALACE_MISSION, &DNP_Record_1 }, 
-  { dni_record_98,  0,                    &DNP_Record_PalaceTime_Year }, 
-  { dni_record_99,  1,                    &DNP_Record_PalaceTime_Month }, 
-  { dni_record_100, 2,                    &DNP_Record_PalaceTime_Day }, 
-  { dni_record_101, 3,                    &DNP_Record_PalaceTime_Hour }, 
-  { dni_record_102, 4,                    &DNP_Record_PalaceTime_Minute }, 
-  { dni_record_103, 5,                    &DNP_Record_PalaceTime_Minute }, 
+  { dni_record_39,  RECID_PALACE_TIME,    &DNP_Record_2 },                 // パレス訪問時間合計
+  { dni_record_40,  RECID_PALACE_MISSION, &DNP_Record_5 },                 // パレスクリアしたミッションの数
+  { dni_record_98,  0,                    &DNP_Record_PalaceTime_Year },   // パレス滞在時間<年>
+  { dni_record_99,  1,                    &DNP_Record_PalaceTime_Month },  // パレス滞在時間<月>
+  { dni_record_100, 2,                    &DNP_Record_PalaceTime_Day },    // パレス滞在時間<日>
+  { dni_record_101, 3,                    &DNP_Record_PalaceTime_Hour },   // パレス滞在時間<時間>
+  { dni_record_102, 4,                    &DNP_Record_PalaceTime_Minute }, // パレス滞在時間<分>
+  { dni_record_103, 5,                    &DNP_Record_PalaceTime_Minute }, // パレス滞在時間<秒>
 };
+//-------------------------
 // バトル関連レコード
+//-------------------------
 static const DEBUG_NUMINPUT_LIST DNI_RecordList_Battle[] = {
   //gmm_id, param, dni_param
-  { dni_record_03, RECID_BATTLE_COUNT,       &DNP_Record_1 }, 
-  { dni_record_04, RECID_BTL_ENCOUNT,        &DNP_Record_1 }, 
-  { dni_record_05, RECID_BTL_TRAINER,        &DNP_Record_1 },
-  { dni_record_24, RECID_KILL_POKE,          &DNP_Record_1 }, 
-  { dni_record_25, RECID_DAYMAX_EXP,         &DNP_Record_1 }, 
-  { dni_record_26, RECID_DAYCNT_EXP,         &DNP_Record_1 },
-  { dni_record_31, RECID_LEADERHOUSE_BATTLE, &DNP_Record_1 }, 
-  { dni_record_32, RECID_WIN_BP,             &DNP_Record_1 },
-  { dni_record_33, RECID_USE_BP,             &DNP_Record_1 }, 
-  { dni_record_43, RECID_WAZA_HANERU,        &DNP_Record_1 }, 
-  { dni_record_44, RECID_WAZA_WARUAGAKI,     &DNP_Record_1 }, 
-  { dni_record_45, RECID_WAZA_MUKOU,         &DNP_Record_1 }, 
-  { dni_record_46, RECID_TEMOTI_KIZETU,      &DNP_Record_1 }, 
-  { dni_record_47, RECID_TEMOTI_MAKIZOE,     &DNP_Record_1 },
-  { dni_record_48, RECID_NIGERU_SIPPAI,      &DNP_Record_1 }, 
-  { dni_record_49, RECID_NIGERARETA,         &DNP_Record_1 }, 
+  { dni_record_03, RECID_BATTLE_COUNT,       &DNP_Record_1 }, // 全戦闘回数
+  { dni_record_04, RECID_BTL_ENCOUNT,        &DNP_Record_1 }, // エンカウント戦闘回数
+  { dni_record_05, RECID_BTL_TRAINER,        &DNP_Record_1 }, // トレーナー戦闘回数
+  { dni_record_24, RECID_KILL_POKE,          &DNP_Record_1 }, // 倒したポケモンの数
+  { dni_record_31, RECID_LEADERHOUSE_BATTLE, &DNP_Record_1 }, // リーダーハウスで戦った回数
+  { dni_record_32, RECID_WIN_BP,             &DNP_Record_1 }, // 勝ち取ったBP
+  { dni_record_33, RECID_USE_BP,             &DNP_Record_1 }, // 使ったBP 
+  { dni_record_43, RECID_WAZA_HANERU,        &DNP_Record_4 }, //「はねる」を使った回数
+  { dni_record_44, RECID_WAZA_WARUAGAKI,     &DNP_Record_4 }, //「わるあがき」を使った回数
+  { dni_record_45, RECID_WAZA_MUKOU,         &DNP_Record_4 }, // 無効果わざを出した回数
+  { dni_record_46, RECID_TEMOTI_KIZETU,      &DNP_Record_4 }, // 気絶させた手持ちの引数
+  { dni_record_47, RECID_TEMOTI_MAKIZOE,     &DNP_Record_4 }, // 味方にダメージを与えた回数
+  { dni_record_48, RECID_NIGERU_SIPPAI,      &DNP_Record_4 }, // 逃げそこなった回数
+  { dni_record_49, RECID_NIGERARETA,         &DNP_Record_4 }, // 逃げられたポケモンの数
+  { dni_record_81, RECID_USE_SHOOTER_COUNT,  &DNP_Record_4 }, // シューター使用回数
 };
+//-------------------------
 // ランダムマッチ関連
+//-------------------------
 static const DEBUG_NUMINPUT_LIST DNI_RecordList_Random[] = {
   //gmm_id, param, dni_param
-  { dni_record_61, RECID_RANDOM_FREE_SINGLE_WIN,   &DNP_Record_1 }, 
-  { dni_record_62, RECID_RANDOM_FREE_SINGLE_LOSE,  &DNP_Record_1 },
-  { dni_record_63, RECID_RANDOM_FREE_DOUBLE_WIN,   &DNP_Record_1 }, 
-  { dni_record_64, RECID_RANDOM_FREE_DOUBLE_LOSE,  &DNP_Record_1 }, 
-  { dni_record_65, RECID_RANDOM_FREE_ROTATE_WIN,   &DNP_Record_1 },
-  { dni_record_66, RECID_RANDOM_FREE_ROTATE_LOSE,  &DNP_Record_1 }, 
-  { dni_record_67, RECID_RANDOM_FREE_TRIPLE_WIN,   &DNP_Record_1 }, 
-  { dni_record_68, RECID_RANDOM_FREE_TRIPLE_LOSE,  &DNP_Record_1 },
-  { dni_record_69, RECID_RANDOM_FREE_SHOOTER_WIN,  &DNP_Record_1 }, 
-  { dni_record_70, RECID_RANDOM_FREE_SHOOTER_LOSE, &DNP_Record_1 }, 
-  { dni_record_71, RECID_RANDOM_RATE_SINGLE_WIN,   &DNP_Record_1 },
-  { dni_record_72, RECID_RANDOM_RATE_SINGLE_LOSE,  &DNP_Record_1 }, 
-  { dni_record_73, RECID_RANDOM_RATE_DOUBLE_WIN,   &DNP_Record_1 }, 
-  { dni_record_74, RECID_RANDOM_RATE_DOUBLE_LOSE,  &DNP_Record_1 },
-  { dni_record_75, RECID_RANDOM_RATE_ROTATE_WIN,   &DNP_Record_1 }, 
-  { dni_record_76, RECID_RANDOM_RATE_ROTATE_LOSE,  &DNP_Record_1 }, 
-  { dni_record_77, RECID_RANDOM_RATE_TRIPLE_WIN,   &DNP_Record_1 },
-  { dni_record_78, RECID_RANDOM_RATE_TRIPLE_LOSE,  &DNP_Record_1 }, 
-  { dni_record_79, RECID_RANDOM_RATE_SHOOTER_WIN,  &DNP_Record_1 }, 
-  { dni_record_80, RECID_RANDOM_RATE_SHOOTER_LOSE, &DNP_Record_1 },
+  { dni_record_61, RECID_RANDOM_FREE_SINGLE_WIN,   &DNP_Record_6 }, // ランダムフリーシングル勝利数
+  { dni_record_62, RECID_RANDOM_FREE_SINGLE_LOSE,  &DNP_Record_6 }, // ランダムフリーシングル敗北数
+  { dni_record_63, RECID_RANDOM_FREE_DOUBLE_WIN,   &DNP_Record_6 }, // ランダムフリーダブル勝利数
+  { dni_record_64, RECID_RANDOM_FREE_DOUBLE_LOSE,  &DNP_Record_6 }, // ランダムフリーダブル敗北数
+  { dni_record_65, RECID_RANDOM_FREE_ROTATE_WIN,   &DNP_Record_6 }, // ランダムフリーローテーション勝利数
+  { dni_record_66, RECID_RANDOM_FREE_ROTATE_LOSE,  &DNP_Record_6 }, // ランダムフリーローテーション敗北数
+  { dni_record_67, RECID_RANDOM_FREE_TRIPLE_WIN,   &DNP_Record_6 }, // ランダムフリートリプル勝利数
+  { dni_record_68, RECID_RANDOM_FREE_TRIPLE_LOSE,  &DNP_Record_6 }, // ランダムフリートリプル敗北数
+  { dni_record_69, RECID_RANDOM_FREE_SHOOTER_WIN,  &DNP_Record_6 }, // ランダムフリーシューター勝利数
+  { dni_record_70, RECID_RANDOM_FREE_SHOOTER_LOSE, &DNP_Record_6 }, // ランダムフリーシューター敗北数
+  { dni_record_71, RECID_RANDOM_RATE_SINGLE_WIN,   &DNP_Record_6 }, // ランダムレートシングル勝利数
+  { dni_record_72, RECID_RANDOM_RATE_SINGLE_LOSE,  &DNP_Record_6 }, // ランダムレートシングル敗北数
+  { dni_record_73, RECID_RANDOM_RATE_DOUBLE_WIN,   &DNP_Record_6 }, // ランダムレートダブル勝利数
+  { dni_record_74, RECID_RANDOM_RATE_DOUBLE_LOSE,  &DNP_Record_6 }, // ランダムレートダブル敗北数
+  { dni_record_75, RECID_RANDOM_RATE_ROTATE_WIN,   &DNP_Record_6 }, // ランダムレートローテーション勝利数
+  { dni_record_76, RECID_RANDOM_RATE_ROTATE_LOSE,  &DNP_Record_6 }, // ランダムレートローテーション敗北数
+  { dni_record_77, RECID_RANDOM_RATE_TRIPLE_WIN,   &DNP_Record_6 }, // ランダムレートトリプル勝利数
+  { dni_record_78, RECID_RANDOM_RATE_TRIPLE_LOSE,  &DNP_Record_6 }, // ランダムレートトリプル敗北数
+  { dni_record_79, RECID_RANDOM_RATE_SHOOTER_WIN,  &DNP_Record_6 }, // ランダムレートシューター勝利数
+  { dni_record_80, RECID_RANDOM_RATE_SHOOTER_LOSE, &DNP_Record_6 }, // ランダムレートシューター敗北数
 };
+//-------------------------
 // ミュージカル関連レコード
+//-------------------------
 static const DEBUG_NUMINPUT_LIST DNI_RecordList_Musical[] = {
   //gmm_id, param, dni_param
-  { dni_record_84, RECID_MUSICAL_PLAY_NUM,         &DNP_Record_1 }, 
-  { dni_record_85, RECID_MUSICAL_WINNER_NUM,       &DNP_Record_1 }, 
-  { dni_record_86, RECID_MUSICAL_COMM_NUM,         &DNP_Record_1 },
-  { dni_record_87, RECID_MUSICAL_COMM_WINNER_NUM,  &DNP_Record_1 }, 
-  { dni_record_88, RECID_MUSICAL_TOTAL_POINT,      &DNP_Record_1 }, 
+  { dni_record_84, RECID_MUSICAL_PLAY_NUM,         &DNP_Record_4 }, // ミュージカル参加回数
+  { dni_record_85, RECID_MUSICAL_WINNER_NUM,       &DNP_Record_4 }, // ミュージカル勝利回数
+  { dni_record_86, RECID_MUSICAL_COMM_NUM,         &DNP_Record_4 }, // ミュージカル通信参加回数
+  { dni_record_87, RECID_MUSICAL_COMM_WINNER_NUM,  &DNP_Record_4 }, // ミュージカル通信勝利回数
+  { dni_record_88, RECID_MUSICAL_TOTAL_POINT,      &DNP_Record_4 }, // ミュージカル通算取得得点
 };
+//-------------------------------
 // バトルサブウェイ関連レコード
+//-------------------------------
 static const DEBUG_NUMINPUT_LIST DNI_RecordList_BSubway[] = {
   //gmm_id, param, dni_param
-  { dni_record_104,  0, &DNP_Record_BSubway }, 
-  { dni_record_105,  1, &DNP_Record_BSubway }, 
-  { dni_record_106,  2, &DNP_Record_BSubway }, 
-  { dni_record_107,  3, &DNP_Record_BSubway }, 
-  { dni_record_108,  4, &DNP_Record_BSubway }, 
-  { dni_record_109,  5, &DNP_Record_BSubway }, 
-  { dni_record_110,  6, &DNP_Record_BSubway }, 
-  { dni_record_111,  7, &DNP_Record_BSubway }, 
-  { dni_record_112,  8, &DNP_Record_BSubway }, 
-  { dni_record_113,  9, &DNP_Record_BSubway }, 
-  { dni_record_114, 10, &DNP_Record_BSubway }, 
-  { dni_record_115, 11, &DNP_Record_BSubway }, 
-  { dni_record_116, 12, &DNP_Record_BSubway }, 
-  { dni_record_117, 13, &DNP_Record_BSubway }, 
+  { dni_record_104,  0, &DNP_Record_BSubway }, // シングルトレイン最高連勝数
+  { dni_record_105,  1, &DNP_Record_BSubway }, // シングルトレイン現在連勝数
+  { dni_record_106,  2, &DNP_Record_BSubway }, // Sシングルトレイン最高連勝数
+  { dni_record_107,  3, &DNP_Record_BSubway }, // Sシングルトレイン現在連勝数
+  { dni_record_108,  4, &DNP_Record_BSubway }, // ダブルトレイン最高連勝数
+  { dni_record_109,  5, &DNP_Record_BSubway }, // ダブルトレイン現在連勝数
+  { dni_record_110,  6, &DNP_Record_BSubway }, // Sダブルトレイン最高連勝数
+  { dni_record_111,  7, &DNP_Record_BSubway }, // Sダブルトレイン現在連勝数
+  { dni_record_112,  8, &DNP_Record_BSubway }, // マルチトレイン最大連勝数
+  { dni_record_113,  9, &DNP_Record_BSubway }, // マルチトレイン現在連勝数
+  { dni_record_114, 10, &DNP_Record_BSubway }, // Sマルチトレイン最大連勝数
+  { dni_record_115, 11, &DNP_Record_BSubway }, // Sマルチトレイン現在連勝数
+  { dni_record_116, 12, &DNP_Record_BSubway }, // WiFiトレイン最大連勝数
+  { dni_record_117, 13, &DNP_Record_BSubway }, // WiFiトレイン現在連勝数
+};
+//-------------------------
+// 一日データ関連レコード
+//-------------------------
+static const DEBUG_NUMINPUT_LIST DNI_RecordList_Day[] = {
+  //gmm_id, param, dni_param
+  { dni_record_25, RECID_DAYMAX_EXP,             &DNP_Record_1 }, // 1日に稼いだ経験値最大値
+  { dni_record_26, RECID_DAYCNT_EXP,             &DNP_Record_1 }, // 1日に稼いだ経験値
+  { dni_record_51, RECID_DAYMAX_KILL,            &DNP_Record_4 }, // 1日に倒したポケモンの最高数
+  { dni_record_52, RECID_DAYCNT_KILL,            &DNP_Record_4 }, // 1日に倒したポケモンの数
+  { dni_record_53, RECID_DAYMAX_CAPTURE,         &DNP_Record_4 }, // 1日に捕獲したポケモンの最高数
+  { dni_record_54, RECID_DAYCNT_CAPTURE,         &DNP_Record_4 }, // 1日に捕獲したポケモンの数
+  { dni_record_55, RECID_DAYMAX_TRAINER_BATTLE,  &DNP_Record_4 }, // 1日にトレーナー戦した最高回数
+  { dni_record_56, RECID_DAYCNT_TRAINER_BATTLE,  &DNP_Record_4 }, // 1日にトレーナー戦した数
+  { dni_record_57, RECID_DAYMAX_EVOLUTION,       &DNP_Record_4 }, // 1日にポケモンを進化させた最高回数
+  { dni_record_58, RECID_DAYCNT_EVOLUTION,       &DNP_Record_4 }, // 1日にポケモンを進化させた回数
 };
 
 #endif  //PM_DEBUG 
