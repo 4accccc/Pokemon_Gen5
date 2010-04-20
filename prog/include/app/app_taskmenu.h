@@ -1,11 +1,11 @@
 //======================================================================
 /**
- * @file	bmp_taskmenu.h
- * @brief	タスクバー用 共通メニュー
- * @author	ariizumi
- * @data	09/07/27
+ * @file    app_taskmenu.h
+ * @brief   タスクバー用 共通メニュー
+ * @author  ariizumi
+ * @data    09/07/27
  *
- * モジュール名：BMP_TASKMENU
+ * モジュール名：APP_TASKMENU
  */
 //======================================================================
 
@@ -17,23 +17,23 @@
 #define APP_TASKMENU_ANM_INTERVAL (4)
 
 //デフォルト幅
-#define APP_TASKMENU_PLATE_WIDTH (13)	
+#define APP_TASKMENU_PLATE_WIDTH (13) 
 #define APP_TASKMENU_PLATE_HEIGHT (3)
 //デフォルト幅(はい・いいえ用
-#define APP_TASKMENU_PLATE_WIDTH_YN_WIN (8)	
+#define APP_TASKMENU_PLATE_WIDTH_YN_WIN (8) 
 #define APP_TASKMENU_PLATE_HEIGHT_YN_WIN (APP_TASKMENU_PLATE_HEIGHT)
 
 //デフォルト文字色カラー
-#define APP_TASKMENU_ITEM_MSGCOLOR	(PRINTSYS_MACRO_LSB(0xe,0xf,0x3))
+#define APP_TASKMENU_ITEM_MSGCOLOR  (PRINTSYS_MACRO_LSB(0xe,0xf,0x3))
 
 //プレートのアニメ。sin使うので0～0xFFFFのループ
 #define APP_TASKMENU_ANIME_VALUE (0x400)
 
 //単発まどの種類
 typedef enum
-{	
-	APP_TASKMENU_WIN_TYPE_NORMAL,	//通常の何も無し窓
-	APP_TASKMENU_WIN_TYPE_RETURN,	//もどる記号が入った窓（←┘）←こんなの
+{ 
+  APP_TASKMENU_WIN_TYPE_NORMAL, //通常の何も無し窓
+  APP_TASKMENU_WIN_TYPE_RETURN, //もどる記号が入った窓（←┘）←こんなの
 }APP_TASKMENU_WIN_TYPE;
 
 //タスクメニュー用リソース保持ワーク
@@ -56,8 +56,8 @@ typedef enum
 //タスクメニュー 初期化ワーク １項目
 typedef struct
 {
-  STRBUF  *str;											//メニューに表示する文字列
-  PRINTSYS_LSB msgColor;						//文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
+  STRBUF  *str;                     //メニューに表示する文字列
+  PRINTSYS_LSB msgColor;            //文字色。デフォルトでよいならばAPP_TASKMENU_ITEM_MSGCOLOR
   APP_TASKMENU_WIN_TYPE type;       //戻るマークの表示
 }APP_TASKMENU_ITEMWORK;
 
@@ -74,11 +74,11 @@ typedef struct
   u8  charPosX; //ウィンドウ開始位置(キャラ単位
   u8  charPosY;
 
-	//幅	（以前は幅のパラメータはありませんでした。
-	//			以前との互換性のため、0が渡ると内部で、デフォルト値にします。
-	//			互換性のためだけですので、0は今後渡さないようにしてください）
-	u8	w;	//キャラ単位
-	u8	h;	//キャラ単位
+  //幅  （以前は幅のパラメータはありませんでした。
+  //      以前との互換性のため、0が渡ると内部で、デフォルト値にします。
+  //      互換性のためだけですので、0は今後渡さないようにしてください）
+  u8  w;  //キャラ単位
+  u8  h;  //キャラ単位
 }APP_TASKMENU_INITWORK;
 //※APP_TASKMENU_INITWORKはOpenMenu後開放しても問題ありません。
 

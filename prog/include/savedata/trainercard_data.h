@@ -1,8 +1,8 @@
 //=============================================================================
 /**
- * @file  trainerbadge_data.h
- * @bfief トレーナーカード用セーブデータアクセス関連
- * @author  Akito Mori
+ * @file   trainercard_data.h
+ * @bfief  トレーナーカード用セーブデータアクセス関連
+ * @author Akito Mori
  *
  *
  */

@@ -1,7 +1,7 @@
 //============================================================================
 /**
  *
- *  @file   comm_battle_demo.h
+ *  @file   comm_btl_demo.h
  *  @brief  通信バトルデモ 
  *  @author hosaka genya
  *  @data   2010.01.20
