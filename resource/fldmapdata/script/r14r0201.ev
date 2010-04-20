@@ -257,7 +257,10 @@ _ANIME_LABEL	 anm_r14r0210_girl1_look_d
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_r14r0210_boy2_playtag_01_01
-	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	AC_WALK_D_4F,2
 	_ANIME_DATA	AC_WALK_L_4F,1
 	_ANIME_DATA	AC_WALK_D_4F,2
@@ -270,7 +273,10 @@ _ANIME_LABEL	 anm_r14r0210_boy2_playtag_01_01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_r14r0210_boy2_playtag_01_02
-	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	AC_WALK_D_4F,2
 	_ANIME_DATA	AC_WALK_R_4F,1
 	_ANIME_DATA	AC_WALK_D_4F,2
