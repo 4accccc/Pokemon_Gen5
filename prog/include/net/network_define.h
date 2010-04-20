@@ -80,10 +80,11 @@ IRAJ
 
 //DWC_Init～で仕様する、GameCode
 #ifdef VERSION_BLACK
+#define GF_DWC_GAMECODE		('IRBJ')
+#define GF_DWC_ND_LOGIN		"IRBJ"
+#else //defined(VERSION_WHITE)
 #define GF_DWC_GAMECODE		('IRAJ')
 #define GF_DWC_ND_LOGIN		"IRAJ"
-#elif defined(VERSION_WHITE)
-#define GF_DWC_GAMECODE		('IRBJ')
 #endif
 
 //DWC_Init～で仕様する、GameName
