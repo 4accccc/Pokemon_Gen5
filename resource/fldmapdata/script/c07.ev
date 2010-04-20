@@ -122,10 +122,16 @@ EVENT_START   ev_scene_c07_hakase1_01
 	//アララギ父非表示
 	_FLAG_SET( FV_C07_HAKASE1 )
 	
+	//ゾーンBGM変更フラグをリセット
+	_FLAG_RESET( SYS_FLAG_BGM_C07HAKASE1 )
+	
 	//C07到着イベントPOSを無効に
 	$WK_SCENE_C07 = 2
 	
 	//======================================//
+	
+	//フィールド通常曲に戻す
+	_BGM_NOW_MAP_RECOVER()
 	
 EVENT_END
 

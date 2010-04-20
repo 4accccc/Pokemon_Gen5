@@ -125,6 +125,9 @@ EVENT_START   ev_pos_d07r0401_rival_01
 	
 	//C07到着イベントを有効に
 	$WK_SCENE_C07 = 1
+	
+	//ゾーンBGM変更フラグをセット
+	_FLAG_SET( SYS_FLAG_BGM_C07HAKASE1 )
 
 	//========================================//
 EVENT_END

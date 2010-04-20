@@ -2394,7 +2394,7 @@
 #define SYS_FLAG_ELBOARD_CHAMPWIN         2426 /* 0x097a 電光掲示板用フラグ：臨時ニュースチャンピオンに勝利 */
 #define SYS_FLAG_CHAMPION_WIN             2427 /* 0x097b 殿堂入りフラグ（チャンピオンに勝利） */
 #define SYS_FLAG_BGM_CHAMP                2428 /* 0x097c BGM変更フラグ：Nの城登場後、チャンピオン部屋のBGMを変更する */
-		/* not used  2429(0x097d) */
+#define SYS_FLAG_BGM_C07HAKASE1           2429 /* 0x097d BGM変更フラグ：C07のアララギ父イベント起動時にBGMを変更する */
 		/* not used  2430(0x097e) */
 		/* not used  2431(0x097f) */
 		/* not used  2432(0x0980) */
