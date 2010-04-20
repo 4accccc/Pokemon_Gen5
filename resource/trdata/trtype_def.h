@@ -57,7 +57,7 @@
 #define	TRTYPE_WORKER1    ( 44 )    //さぎょういん1
 #define	TRTYPE_BASKET    ( 45 )    //バスケせんしゅ
 #define	TRTYPE_SCIENTISTW    ( 46 )    //けんきゅういん♀
-#define	TRTYPE_BOSS_1    ( 47 )    //プラズマだん11
+#define	TRTYPE_BOSS_1    ( 47 )    //プラズマだん（BOSS_1）
 #define	TRTYPE_OL    ( 48 )    //ＯＬ
 #define	TRTYPE_ELITEW    ( 49 )    //エリートトレーナー♀
 #define	TRTYPE_ELITEM    ( 50 )    //エリートトレーナー♂
@@ -92,7 +92,7 @@
 #define	TRTYPE_BIGFOUR3    ( 79 )    //してんのう3
 #define	TRTYPE_BIGFOUR2    ( 80 )    //してんのう2
 #define	TRTYPE_BIGFOUR4    ( 81 )    //してんのう4
-#define	TRTYPE_SAGE1    ( 82 )    //プラズマだん11
+#define	TRTYPE_SAGE1    ( 82 )    //プラズマだん1
 #define	TRTYPE_RAIL    ( 83 )    //てつどういん
 #define	TRTYPE_SWIMMERM    ( 84 )    //かいパンやろう
 #define	TRTYPE_SWIMMERW    ( 85 )    //ビキニのおねえさん
@@ -103,13 +103,13 @@
 #define	TRTYPE_CYCLINGM    ( 90 )    //サイクリング♂
 #define	TRTYPE_CYCLINGW    ( 91 )    //サイクリング♀
 #define	TRTYPE_BADRIDER_01    ( 92 )    //バイクずき
-#define	TRTYPE_SCHOOLB_1    ( 93 )    //ブルジョワールけ11111
-#define	TRTYPE_VETERANW_1    ( 94 )    //ブルジョワールけ11111
-#define	TRTYPE_MADAM_1    ( 95 )    //ブルジョワールけ11111
-#define	TRTYPE_GENTLE_1    ( 96 )    //ブルジョワールけ11111
+#define	TRTYPE_SCHOOLB_1    ( 93 )    //ブルジョワールけ（SCHOOLB_1）
+#define	TRTYPE_VETERANW_1    ( 94 )    //ブルジョワールけ（VETERANW_1）
+#define	TRTYPE_MADAM_1    ( 95 )    //ブルジョワールけ（MADAM_1）
+#define	TRTYPE_GENTLE_1    ( 96 )    //ブルジョワールけ（GENTLE_1）
 #define	TRTYPE_VETERANM_1    ( 97 )    //ゲームフリーク
-#define	TRTYPE_PRINCESS_1    ( 98 )    //ブルジョワールけ11111
-#define	TRTYPE_PRINCE_1    ( 99 )    //ブルジョワールけ11111
+#define	TRTYPE_PRINCESS_1    ( 98 )    //ブルジョワールけ（PRINCESS_1）
+#define	TRTYPE_PRINCE_1    ( 99 )    //ブルジョワールけ（PRINCE_1）
 #define	TRTYPE_DPCHAMPION    ( 100 )    //ポケモントレーナー（DPCHAMPION）
-#define	TRTYPE_BOSS_2    ( 101 )    //プラズマだん2
+#define	TRTYPE_BOSS_2    ( 101 )    //プラズマだん（BOSS_2）
 #define	TRTYPE_MAX	( 102 )

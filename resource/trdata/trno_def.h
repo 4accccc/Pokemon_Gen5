@@ -598,7 +598,22 @@
 #define	TRID_PARASOL_08   ( 585 ) 
 #define	TRID_BOSS_2_06   ( 586 ) 
 #define	TRID_BOSS_2_07   ( 587 ) 
-#define TRID_MAX  ( 588 )
+#define	TRID_RIVAL_22   ( 588 ) 
+#define	TRID_RIVAL_23   ( 589 ) 
+#define	TRID_RIVAL_24   ( 590 ) 
+#define	TRID_RIVAL_25   ( 591 ) 
+#define	TRID_RIVAL_26   ( 592 ) 
+#define	TRID_RIVAL_27   ( 593 ) 
+#define	TRID_SUPPORT_16   ( 594 ) 
+#define	TRID_SUPPORT_17   ( 595 ) 
+#define	TRID_SUPPORT_18   ( 596 ) 
+#define	TRID_HAKAIW1_11   ( 597 ) 
+#define	TRID_HAKAIM1_33   ( 598 ) 
+#define	TRID_HAKAIM1_34   ( 599 ) 
+#define	TRID_DANCER_04   ( 600 ) 
+#define	TRID_DANCER_05   ( 601 ) 
+#define	TRID_DANCER_06   ( 602 ) 
+#define TRID_MAX  ( 603 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
