@@ -21,6 +21,7 @@
 #include "font/font.naix"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/pokerus.h"
+#include "waza_tool/wazano_def.h"
 #include "item/item.h"
 
 #include "msg/msg_boxmenu.h"
@@ -323,6 +324,12 @@ static const AREA_CHECK BoxMoveTrayArea[BOX2OBJ_TRAYICON_MAX] =
 {
   {  31,  54, 15, 38 }, {  65,  88, 15, 38 }, {  99, 122, 15, 38 },
   { 133, 156, 15, 38 }, { 167, 190, 15, 38 }, { 201, 224, 15, 38 },
+};
+
+// 逃がすときにチェックする技
+static const u16 PokeFreeCheckWazaTable[] = {
+	WAZANO_NAMINORI,
+	WAZANO_SORAWOTOBU,
 };
 
 
@@ -3053,7 +3060,6 @@ static void PokeIconBufPosChange( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA 
 //--------------------------------------------------------------------------------------------
 static u32 PokeFreeWazaCheck( u16 waza )
 {
-/*
   u32 i;
 
   for( i=0; i<NELEMS(PokeFreeCheckWazaTable); i++ ){
@@ -3061,7 +3067,6 @@ static u32 PokeFreeWazaCheck( u16 waza )
       return i;
     }
   }
-*/
   return 0xffffffff;
 }
 
