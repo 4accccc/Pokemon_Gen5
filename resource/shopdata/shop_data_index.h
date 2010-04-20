@@ -29,6 +29,11 @@
 #define SHOP_MALL2    ( 17 )  // ショッピングモール２Ｆ右
 #define SHOP_MALL3    ( 18 )  // ショッピングモール２Ｆ左
 #define SHOP_MALL4    ( 19 )  // ショッピングモール３Ｆ左
+#define SHOP_WAZA1    ( 20 )  // ワザマシン売り１
+#define SHOP_WAZA2    ( 21 )  // ワザマシン売り２
+#define SHOP_WAZA3    ( 22 )  // ワザマシン売り３
+#define SHOP_WAZA4    ( 23 )  // ワザマシン売り４
+#define SHOP_WAZA5    ( 24 )  // ワザマシン売り５
 
 
 #endif

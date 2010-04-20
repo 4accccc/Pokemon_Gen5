@@ -391,6 +391,46 @@ static const u16 shop_mall4[] = {
 };
 #define SHOP_MALL4_MAX	(NELEMS(shop_mall4))
 
+// ワザマシン売り１
+static const u16 shop_waza1[] = {
+		ITEM_WAZAMASIN21,
+		ITEM_WAZAMASIN27,
+		ITEM_WAZAMASIN73,
+		ITEM_WAZAMASIN74,
+};
+#define SHOP_WAZA1_MAX	(NELEMS(shop_waza1))
+
+// ワザマシン売り２
+static const u16 shop_waza2[] = {
+		ITEM_WAZAMASIN16,
+		ITEM_WAZAMASIN20,
+		ITEM_WAZAMASIN33,
+};
+#define SHOP_WAZA2_MAX	(NELEMS(shop_waza2))
+
+// ワザマシン売り３
+static const u16 shop_waza3[] = {
+		ITEM_WAZAMASIN07,
+		ITEM_WAZAMASIN11,
+		ITEM_WAZAMASIN18,
+		ITEM_WAZAMASIN37,
+};
+#define SHOP_WAZA3_MAX	(NELEMS(shop_waza3))
+
+// ワザマシン売り４
+static const u16 shop_waza4[] = {
+		ITEM_WAZAMASIN14,
+		ITEM_WAZAMASIN38,
+};
+#define SHOP_WAZA4_MAX	(NELEMS(shop_waza4))
+
+// ワザマシン売り５
+static const u16 shop_waza5[] = {
+		ITEM_WAZAMASIN15,
+		ITEM_WAZAMASIN68,
+};
+#define SHOP_WAZA5_MAX	(NELEMS(shop_waza5))
+
 
 
 // 一括アクセス用配列定義
@@ -421,6 +461,11 @@ static const u16 *shop_data_table[]={
 	shop_mall2,
 	shop_mall3,
 	shop_mall4,
+	shop_waza1,
+	shop_waza2,
+	shop_waza3,
+	shop_waza4,
+	shop_waza5,
 };
 
 
@@ -452,4 +497,9 @@ static const u8 shop_itemnum_table[]={
 	SHOP_MALL2_MAX,
 	SHOP_MALL3_MAX,
 	SHOP_MALL4_MAX,
+	SHOP_WAZA1_MAX,
+	SHOP_WAZA2_MAX,
+	SHOP_WAZA3_MAX,
+	SHOP_WAZA4_MAX,
+	SHOP_WAZA5_MAX,
 };
