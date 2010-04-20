@@ -439,6 +439,10 @@ enum{
   ID_PARA_type1,                //ポケモンのタイプ１を取得（アウス、マルチタイプチェックもあり）
   ID_PARA_type2,                //ポケモンのタイプ２を取得（アウス、マルチタイプチェックもあり）
 
+  //現状ポケシフター経由で手に入れたポケモンのニックネームの文字コード変換時使用に限定
+  ID_PARA_nickname_only,            //ニックネーム（nickname_flagの立ち下げを行わない※許可制）
+  ID_PARA_nickname_raw_only,        //ニックネーム（nickname_flagの立ち下げを行わない　STRCODE配列使用 ※許可制）
+
   ID_PARA_end                 //パラメータを追加するときは、ここから上に追加
 };
 
