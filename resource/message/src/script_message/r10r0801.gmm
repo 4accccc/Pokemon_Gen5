@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-29T16:16:29"/>
+	<create user="matsumiya" host="W00224" date="2010-04-20T18:17:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1459" top="239" right="2164" bottom="859" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -318,9 +318,13 @@
 		<comment>♂
 ・ゲートオープン後</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
-		<language name="JPN" width="256">レジェンドバッジを　もつ　ものよ！
+		<language name="JPN" width="256">レジェンドバッジを　もつ　ものよ！▼
+このさきの　チャンピオンロードを
+とっぱし　ポケモンリーグに　むかい▽
 そなたの　そんざいかんを　しめせ！</language>
-		<language name="JPN_KANJI" width="256">レジェンドバッジを　持つ　者よ！
+		<language name="JPN_KANJI" width="256">レジェンドバッジを　持つ　者よ！▼
+この先の　チャンピオンロードを
+突破し　ポケモンリーグに　向かい▽
 そなたの　存在感を　示せ！</language>
 	</row>
 

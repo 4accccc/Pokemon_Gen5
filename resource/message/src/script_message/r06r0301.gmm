@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-13T17:16:23"/>
+	<create user="matsumiya" host="W00224" date="2010-04-20T18:48:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1287" top="191" right="1992" bottom="819" maximized="no" rayout="Vertical2">
+	<dialog left="1299" top="145" right="2004" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -296,36 +296,28 @@
 		<comment>♂
 ・WHITEver</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">おいしい　やさいを　たべたいなら
-しぜんで　そだてるのが　いちばんさ▼
-さまざまに　かわる　てんこうのなか
-たえて　そだてば　うまくなるよ▼
-ときどき　ポケモンに　たべられるのが
-その　しょうこ　ってもんだよ</language>
-		<language name="JPN_KANJI" width="256">おいしい　野菜を　食べたいなら
-自然で　育てるのが　一番さ▼
-さまざまに　変わる　天候のなか
-耐えて　育てば　うまくなるよ▼
-ときどき　ポケモンに　食べられるのが
-その　証拠って　もんだよ</language>
+		<language name="JPN" width="256">そろそろ　７ばんどうろの
+タワーオブヘブンに　いく　きせつかな▼
+わしの　チュリネのため
+かねを　ならしてやらんとのう……</language>
+		<language name="JPN_KANJI" width="256">そろそろ　７番道路の
+タワーオブヘブンに　行く　季節かな▼
+わしの　チュリネのため
+鐘を　鳴らしてやらんとのう……</language>
 	</row>
 
 	<row id="msg_r06r0301_oldman1b_01">
 		<comment>♂
 ・BLACKver</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">おんしつを　つかって
-やさいを　そだてるのが　いちばんさ▼
-おんどや　えいようも
-すべて　システムで　かんりしてね▼
-いっさいの　むだなく　そだった
-やさいは　とびっきり　おいしいよ</language>
-		<language name="JPN_KANJI" width="256">温室を　使って
-野菜を　育てるのが　一番さ▼
-温度　湿度や　栄養も
-すべて　システムで　管理してね▼
-一切の　むだなく　育った
-野菜は　とびっきり　美味しいよ</language>
+		<language name="JPN" width="256">そろそろ　７ばんどうろの
+タワーオブヘブンに　いく　きせつかな▼
+わしの　モンメンのため
+かねを　ならしてやらんとのう……</language>
+		<language name="JPN_KANJI" width="256">そろそろ　７番道路の
+タワーオブヘブンに　行く　季節かな▼
+わしの　モンメンのため
+鐘を　鳴らしてやらんとのう……</language>
 	</row>
 
 	<row id="msg_r06r0301_babygirl1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
