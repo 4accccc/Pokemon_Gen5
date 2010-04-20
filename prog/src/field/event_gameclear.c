@@ -14,28 +14,26 @@
 //============================================================================================
 #include <gflib.h>
 
+#include "system/main.h"  // for HEAPID_xxxx
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_data.h"
 #include "gamesystem/game_event.h"
+#include "sound/pm_sndsys.h"    // for PMSND_xxxx
+#include "app/local_tvt_sys.h"  // for LocalTvt_ProcData etc.  
+#include "demo/demo3d.h"        // for Demo3DProcData etc.
+#include "demo/demo3d_demoid.h" // for DEMO3D_ID_xxxx
+#include "demo/dendou_demo.h"
 
-#include "event_gameclear.h"  //GAMECLEAR_MODE
+#include "script.h"           // for SCRIPT_CallGameClearScript
+#include "event_gameclear.h"  // for GAMECLEAR_MODE
 #include "event_field_fade.h"
 #include "event_fieldmap_control_local.h"
-
-#include "system/main.h"  //HEAPID_～
-
-#include "script.h"       //SCRIPT_CallScript
 #include "event_gamestart.h"
-
-#include "demo/dendou_demo.h"
-#include "demo/demo3d.h"  //Demo3DProcData etc.
-#include "app/local_tvt_sys.h"  //LocalTvt_ProcData etc.
-
-#include "sound/pm_sndsys.h"  //PMSND_
-
-#include "move_pokemon.h"
-
+#include "event_demo3d.h"
+#include "move_pokemon.h" 
 #include "proc_gameclear_save.h"
+
+
 
 
 //==============================================================================================
@@ -47,10 +45,9 @@ typedef struct {
   GAMEDATA* gamedata;
   GAMECLEAR_MODE clear_mode;
   BOOL saveSuccessFlag;
-  const MYSTATUS * mystatus;
-
-  DENDOUDEMO_PARAM dendouDemoParam;
+  const MYSTATUS * mystatus; 
   GAMECLEAR_MSG_PARAM para_child;
+  DENDOUDEMO_PARAM dendouDemoParam; // 殿堂入りデモ・パラメータ
 }GAMECLEAR_WORK;
 
 
@@ -64,6 +61,7 @@ enum {
   GMCLEAR_SEQ_FIELD_CLOSE_WAIT, // フィールドマップ終了待ち
 	GMCLEAR_SEQ_DENDOU_DEMO,	    // 殿堂入りデモ
   GMCLEAR_SEQ_DENDOU_DEMO_WAIT, // 殿堂入りデモ終了待ち
+  GMCLEAR_SEQ_ENDING_DEMO,      // エンディングデモ
 	GMCLEAR_SEQ_CLEAR_SCRIPT,	    // ゲームクリアスクリプト処理
 	GMCLEAR_SEQ_SAVE_MESSAGE,	    // セーブ中メッセージ表示
 	GMCLEAR_SEQ_END,				      // 終了
@@ -72,6 +70,8 @@ enum {
 
 //============================================================================================
 //============================================================================================
+static u16 GetEndingDemoID( void ); // エンディングの3DデモIDを取得する
+
 
 //============================================================================================
 //============================================================================================
@@ -101,8 +101,8 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
 		(*seq) ++;
 		break;
 
+  // フィールドマップをフェードアウト
   case GMCLEAR_SEQ_FADEOUT:
-    //フィールドマップをフェードアウト
     GMEVENT_CallEvent( event, 
         EVENT_FieldFadeOut_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
 
@@ -113,40 +113,46 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
 		(*seq) ++;
     break;
 
+  // 通信終了待ち
   case GMCLEAR_SEQ_COMM_END_WAIT:
-    //通信終了待ち
     if( GameCommSys_BootCheck(gameComm) != GAME_COMM_NO_NULL ) {
       break;
     }
 		(*seq) ++;
     break;
 
+  // フィールドマップを終了待ち
   case GMCLEAR_SEQ_FIELD_CLOSE_WAIT:
-    //フィールドマップを終了待ち
-    GMEVENT_CallEvent( event, 
-        EVENT_FieldClose_FieldProcOnly( gsys, fieldmap ) );
+    GMEVENT_CallEvent( event, EVENT_FieldClose_FieldProcOnly( gsys, fieldmap ) );
     
-    // 初回は殿堂入りデモをスキップ
-    if( gcwk->clear_mode == GAMECLEAR_MODE_DENDOU ) {
-      *seq = GMCLEAR_SEQ_DENDOU_DEMO;
+    // 初回はエンディングへ
+    if( gcwk->clear_mode == GAMECLEAR_MODE_FIRST ) {
+      *seq = GMCLEAR_SEQ_ENDING_DEMO;
     }
+    // 2回目以降は殿堂入りデモへ
     else {
-      *seq = GMCLEAR_SEQ_CLEAR_SCRIPT;
+      *seq = GMCLEAR_SEQ_DENDOU_DEMO;
     }
     break;
 
+  // 殿堂入りデモ呼び出し
   case GMCLEAR_SEQ_DENDOU_DEMO:
-    // 殿堂入りデモ呼び出し
     GAMESYSTEM_CallProc( gsys, 
         FS_OVERLAY_ID(dendou_demo), &DENDOUDEMO_ProcData, &gcwk->dendouDemoParam );
 		(*seq) ++;
+		break; 
+  // 殿堂入りデモ終了待ち
+	case GMCLEAR_SEQ_DENDOU_DEMO_WAIT:  
+		if( GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL ) { break; }
+    *seq = GMCLEAR_SEQ_CLEAR_SCRIPT;
 		break;
 
-	case GMCLEAR_SEQ_DENDOU_DEMO_WAIT:  
-    // 殿堂入りデモ終了待ち
-		if( GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL ) { break; }
-		(*seq) ++;
-		break;
+  // エンディングデモ
+  case GMCLEAR_SEQ_ENDING_DEMO:
+    GMEVENT_CallEvent( event, 
+        EVENT_CallDemo3D( gsys, event,  GetEndingDemoID(), 0, FALSE ) );
+    *seq = GMCLEAR_SEQ_CLEAR_SCRIPT;
+    break;
 
 	case GMCLEAR_SEQ_CLEAR_SCRIPT:
     SCRIPT_CallGameClearScript( gsys, HEAPID_PROC ); 
@@ -205,3 +211,28 @@ GMEVENT * EVENT_GameClear( GAMESYS_WORK * gsys, GAMECLEAR_MODE mode )
 
   return event;
 } 
+
+
+
+//==============================================================================================
+//==============================================================================================
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief エンディングの3DデモIDを取得する
+ * 
+ * @return エンディングのデモID
+ */
+//-----------------------------------------------------------------------------
+static u16 GetEndingDemoID( void )
+{
+  u16 demo_id;
+
+  switch( GetVersion() ) {
+  default: GF_ASSERT(0);
+  case VERSION_WHITE: demo_id = DEMO3D_ID_ENDING_W; break;
+  case VERSION_BLACK: demo_id = DEMO3D_ID_ENDING_B; break;
+  }
+
+  return demo_id;
+}
