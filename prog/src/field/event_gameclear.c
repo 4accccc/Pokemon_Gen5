@@ -125,12 +125,19 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
     //フィールドマップを終了待ち
     GMEVENT_CallEvent( event, 
         EVENT_FieldClose_FieldProcOnly( gsys, fieldmap ) );
-		(*seq) ++;
+    
+    // 初回は殿堂入りデモをスキップ
+    if( gcwk->clear_mode == GAMECLEAR_MODE_DENDOU ) {
+      *seq = GMCLEAR_SEQ_DENDOU_DEMO;
+    }
+    else {
+      *seq = GMCLEAR_SEQ_CLEAR_SCRIPT;
+    }
     break;
 
   case GMCLEAR_SEQ_DENDOU_DEMO:
     // 殿堂入りデモ呼び出し
-		GAMESYSTEM_CallProc( gsys, 
+    GAMESYSTEM_CallProc( gsys, 
         FS_OVERLAY_ID(dendou_demo), &DENDOUDEMO_ProcData, &gcwk->dendouDemoParam );
 		(*seq) ++;
 		break;
