@@ -17,7 +17,8 @@
 #include "msg/msg_beacon_status.h"
 
 struct _TAG_BEACON_STATUS{
-  u8  view_top_ofs; ///<ビューリストのトップのデータオフセット
+  u8  view_top_ofs;     ///<ビューリストのトップのデータオフセット
+  u16 ret_fword_input;  ///<フリーワード入力があったかの結果を受けるワーク(u16の必要がある)
   GAMEBEACON_INFO_TBL view_log; 
 
   STRBUF* str_fword;  //フリーワード
@@ -94,5 +95,13 @@ void BEACON_STATUS_SetViewTopOffset( BEACON_STATUS* wk, u8 ofs )
 STRBUF* BEACON_STATUS_GetFreeWordBuffer( BEACON_STATUS* wk )
 {
   return wk->str_fword; 
+}
+
+/*
+ *  @brief  フリーワードバッファの入力フラグアドレスを取得
+ */
+u16* BEACON_STATUS_GetFreeWordInputResultPointer( BEACON_STATUS* wk )
+{
+  return &wk->ret_fword_input; 
 }
 

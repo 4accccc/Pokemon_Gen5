@@ -184,11 +184,33 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
 }
 
 /*
- *  @brief  特殊Gパワー発動チェック 
+ *  @brief  特殊ポップアップ起動チェック 
+ */
+BOOL BeaconView_CheckSpecialPopup( BEACON_VIEW_PTR wk )
+{
+  u16* ret_fword_input =  BEACON_STATUS_GetFreeWordInputResultPointer( wk->b_status );
+
+  //一言メッセージ入力があったかチェック
+  if( (*ret_fword_input) == FALSE ){
+    return FALSE;
+  }
+  *ret_fword_input = FALSE; //フラグリセット
+
+  WORDSET_RegisterWord( wk->wordset, 0,
+    BEACON_STATUS_GetFreeWordBuffer( wk->b_status ), wk->my_data.sex, TRUE, PM_LANG );
+  effReq_PopupMsgSys( wk, msg_sys_free_word_send );
+  return TRUE;
+}
+
+/*
+ *  @brief  特殊Gパワーポップアップ起動チェック 
  */
 BOOL BeaconView_CheckSpecialGPower( BEACON_VIEW_PTR wk )
 {
-  GPOWER_ID power = sp_gpower_RequestGet( wk );
+  GPOWER_ID power;
+
+  //特殊Gパワーリクエストチェック
+  power = sp_gpower_RequestGet( wk );
 
   if( power == GPOWER_ID_NULL ){
     return FALSE;

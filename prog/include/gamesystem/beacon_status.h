@@ -52,3 +52,8 @@ extern void BEACON_STATUS_SetViewTopOffset( BEACON_STATUS* wk, u8 ofs );
  */
 extern STRBUF* BEACON_STATUS_GetFreeWordBuffer( BEACON_STATUS* wk );
 
+/*
+ *  @brief  フリーワードバッファの入力フラグアドレスを取得
+ */
+extern u16* BEACON_STATUS_GetFreeWordInputResultPointer( BEACON_STATUS* wk );
+

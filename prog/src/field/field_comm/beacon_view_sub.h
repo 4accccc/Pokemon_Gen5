@@ -23,7 +23,12 @@ extern int BeaconView_CheckInput( BEACON_VIEW_PTR wk );
 extern int BeaconView_CheckInputThanks( BEACON_VIEW_PTR wk );
 
 /*
- *  @brief  特殊Gパワー発動チェック 
+ *  @brief  特殊ポップアップ起動チェック 
+ */
+extern BOOL BeaconView_CheckSpecialPopup( BEACON_VIEW_PTR wk );
+
+/*
+ *  @brief  特殊Gパワー発動ポップアップ起動チェック 
  */
 extern BOOL BeaconView_CheckSpecialGPower( BEACON_VIEW_PTR wk );
 

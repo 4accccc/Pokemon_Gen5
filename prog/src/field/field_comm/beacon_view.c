@@ -168,6 +168,9 @@ void BEACON_VIEW_Exit(BEACON_VIEW_PTR wk)
   }
   //今生きている全てのタスクを削除
   GFL_TCBL_DeleteAll( wk->pTcbSys );
+  
+  //通信アイコン位置指定解除
+  GFL_NET_WirelessIconEasy_DefaultLCD();
 
   _sub_BmpWinDelete( wk );
   _sub_ActorDelete( wk );
@@ -178,6 +181,7 @@ void BEACON_VIEW_Exit(BEACON_VIEW_PTR wk)
   _sub_DataExit(wk);
   
   GFL_ARC_CloseDataHandle(wk->arc_handle);
+
 
   GFL_HEAP_FreeMemory( wk );
 }
@@ -269,9 +273,6 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
 {
 #ifdef PM_DEBUG
   OSTick s_tick,e_tick,t_tick;  // = OS_GetTick();
-#endif
-  
-#ifdef PM_DEBUG
   s_tick = OS_GetTick();
 #endif
 
@@ -286,9 +287,6 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
   if( t_tick > 3000 ){
     IWASAWA_Printf("BeaconView Draw tick %d\n",  t_tick );
   }
-#endif
-  
-#ifdef PM_DEBUG
   debug_InputCheck( wk );
 #endif
 }
@@ -324,10 +322,12 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
     event = EVENT_GPowerEnableListCheck( wk->gsys, wk->fieldWork );
     break;
   case EV_CALL_TALKMSG_INPUT:
-    event = EVENT_FreeWordInput( wk->gsys, wk->fieldWork, NULL, NAMEIN_FREE_WORD, NULL );
+    event = EVENT_FreeWordInput( wk->gsys, wk->fieldWork, NULL,
+              NAMEIN_FREE_WORD, BEACON_STATUS_GetFreeWordInputResultPointer( wk->b_status ) );
     break;
 
 #ifdef PM_DEBUG
+  //デバッグメニューコールリクエスト
   case EV_DEBUG_MENU_CALL:
     event = GMEVENT_CreateOverlayEventCall( wk->gsys,
               FS_OVERLAY_ID( d_livecomm ), DEBUG_EVENT_LiveComm, wk );
@@ -376,6 +376,12 @@ static void event_RequestReset( BEACON_VIEW_PTR wk )
 static int seq_Main( BEACON_VIEW_PTR wk )
 {
   int ret;
+  
+  //特殊ポップアップ起動チェック
+  if( BeaconView_CheckSpecialPopup( wk ) ){
+    wk->io_interval = 30*3; //インターバルを設定
+    return SEQ_VIEW_UPDATE;
+  }
 
   //メイン入力チェック
   ret = BeaconView_CheckInput( wk );
@@ -388,7 +394,7 @@ static int seq_Main( BEACON_VIEW_PTR wk )
     return SEQ_MAIN;
   }
  
-  //特殊Gパワーチェック
+  //特殊Gパワー起動チェック
   if( BeaconView_CheckSpecialGPower( wk ) == FALSE ){
     //スタックチェック
     if( BeaconView_CheckStack( wk ) == FALSE ){
@@ -570,6 +576,7 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   SAVE_CONTROL_WORK* save;
 
   wk->b_status = GAMEDATA_GetBeaconStatus( wk->gdata );
+
   wk->infoLog = BEACON_STATUS_GetInfoTbl( wk->b_status );
 
   wk->ctrl.max = GAMEBEACON_InfoTblRing_GetEntryNum( wk->infoLog );
@@ -615,6 +622,7 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
 
   //Gパワーデータ取得
   wk->gpower_data = GPOWER_PowerData_LoadAlloc( wk->heap_sID );
+
 }
 
 //--------------------------------------------------------------

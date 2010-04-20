@@ -155,9 +155,9 @@ typedef struct _BEACON_VIEW{
 
   int       io_interval;      ///<スタックチェックインターバルカウンタ
   u8        menu_active;
-  u8        msg_spd;          ///<メッセージスピード
-  u8        gpower_check_req; ///<発動中のGパワー確認イベントリクエストフラグ
-  u8        init_f;           ///<初期化中フラグ
+  u8        msg_spd;            ///<メッセージスピード
+  u8        gpower_check_req;   ///<発動中のGパワー確認イベントリクエストフラグ
+  u8        init_f;             ///<初期化中フラグ
   LOG_CTRL  ctrl;
 
   u8        sp_gpower_req_ct;
