@@ -297,7 +297,7 @@ ev_zukan_machine:
       _AB_KEYWAIT_MARK()
       _SYSWIN_MSG( HYOUKA_MSGID, POS_DOWN )
       _AB_KEYWAIT_MARK()
-      _SYSWIN_CLOSE() //@todo 呼び出し元（パソコン）で引き続きシステムMSG表示するので閉じない
+      //_SYSWIN_CLOSE() 呼び出し元（パソコン）で引き続きシステムMSG表示するので閉じない
   ELSE
   //地方図鑑モード＝博士（娘）の評価
       IF FLAG_ON( FE_ZUKAN_COMPLETE_LOCAL_SEE ) THEN
@@ -324,7 +324,7 @@ ev_zukan_machine:
           _SYSWIN_MSG( msg_hyouka_hakase2_04, POS_DOWN )
           _AB_KEYWAIT_MARK()
       ENDIF
-    _SYSWIN_CLOSE() //@todo 呼び出し元（パソコン）で引き続きシステムMSG表示するので閉じない
+    //_SYSWIN_CLOSE() 呼び出し元（パソコン）で引き続きシステムMSG表示するので閉じない
   ENDIF
 
   _CHG_LOCAL_SCR
