@@ -70,6 +70,7 @@
 "btl_sel_normal_l.NSCR"
 "btl_sel_normal_r.NSCR"
 "gauge.NCLR"
+"gauge_dark.NCLR"
 "gauge_parts.NCGR"
 "gauge_1vs1_e.NCGR"
 "gauge_1vs1_e.NCER"
