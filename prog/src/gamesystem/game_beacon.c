@@ -100,6 +100,8 @@ void BEACONINFO_Set_BattleLeaderStart(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_BattleLeaderVictory(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_BattleSpTrainerStart(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_BattleSpTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_BattleChampionStart(GAMEBEACON_INFO *info, u16 tr_no);
+void BEACONINFO_Set_BattleChampionVictory(GAMEBEACON_INFO *info, u16 tr_no);
 void BEACONINFO_Set_WildPokemonGet(GAMEBEACON_INFO *info, u16 monsno);
 void BEACONINFO_Set_SpecialPokemonGet(GAMEBEACON_INFO *info, u16 monsno);
 void BEACONINFO_Set_PokemonLevelUp(GAMEBEACON_INFO *info, const STRBUF *nickname);
@@ -1201,6 +1203,60 @@ void GAMEBEACON_Set_BattleSpTrainerVictory(u16 tr_no)
 void BEACONINFO_Set_BattleSpTrainerVictory(GAMEBEACON_INFO *info, u16 tr_no)
 {
   info->action.action_no = GAMEBEACON_ACTION_BATTLE_SP_TRAINER_VICTORY;
+  info->action.tr_no = tr_no;
+
+  BEACONINFO_Set_Details_Walk(info);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：チャンピオンと対戦を開始しました
+ * @param   tr_no   トレーナー番号
+ */
+//==================================================================
+void GAMEBEACON_Set_BattleChampionStart(u16 tr_no)
+{
+  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_CHAMPION_START) == FALSE){ return; };
+  BEACONINFO_Set_BattleChampionStart(&GameBeaconSys->send.info, tr_no);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：チャンピオンと対戦を開始しました
+ * @param   tr_no   トレーナー番号
+ */
+//==================================================================
+void BEACONINFO_Set_BattleChampionStart(GAMEBEACON_INFO *info, u16 tr_no)
+{
+  info->action.action_no = GAMEBEACON_ACTION_BATTLE_CHAMPION_START;
+  info->action.tr_no = tr_no;
+
+  BEACONINFO_Set_Details_BattleSpTrainer(info, tr_no);
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：チャンピオンとの対戦に勝利しました
+ * @param   tr_no   トレーナー番号
+ */
+//==================================================================
+void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no)
+{
+  if(_CheckPriority(GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY) == FALSE){ return; };
+  BEACONINFO_Set_BattleChampionVictory(&GameBeaconSys->send.info, tr_no);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：チャンピオンとの対戦に勝利しました
+ * @param   tr_no   トレーナー番号
+ */
+//==================================================================
+void BEACONINFO_Set_BattleChampionVictory(GAMEBEACON_INFO *info, u16 tr_no)
+{
+  info->action.action_no = GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY;
   info->action.tr_no = tr_no;
 
   BEACONINFO_Set_Details_Walk(info);

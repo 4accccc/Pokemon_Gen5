@@ -145,6 +145,8 @@ extern void GAMEBEACON_Set_BattleLeaderStart(u16 tr_no);
 extern void GAMEBEACON_Set_BattleLeaderVictory(u16 tr_no);
 extern void GAMEBEACON_Set_BattleSpTrainerStart(u16 tr_no);
 extern void GAMEBEACON_Set_BattleSpTrainerVictory(u16 tr_no);
+extern void GAMEBEACON_Set_BattleChampionStart(u16 tr_no);
+extern void GAMEBEACON_Set_BattleChampionVictory(u16 tr_no);
 extern void GAMEBEACON_Set_PokemonGet(u16 monsno);
 extern void GAMEBEACON_Set_WildPokemonGet(u16 monsno);
 extern void GAMEBEACON_Set_SpecialPokemonGet(u16 monsno);
