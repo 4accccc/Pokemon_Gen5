@@ -3276,21 +3276,19 @@ static BOOL NaminoriEnd_CheckMMdl( const EV_REQUEST* req, FIELDMAP_WORK* fieldWo
   gx = MMDL_GetGridPosX( jiki );
   gz = MMDL_GetGridPosZ( jiki );
 
-  // 2歩先の位置を算出
+  // 2歩先までチェックする
   for( i=0; i<2; i++ )
   {
     gx += MMDL_TOOL_GetDirAddValueGridX( dir );
     gz += MMDL_TOOL_GetDirAddValueGridZ( dir );
+
+    // 動作モデルを検索
+    mmdl = MMDLSYS_SearchGridPos( FIELDMAP_GetMMdlSys(fieldWork), gx, gz, FALSE );
+
+    // 動作モデルを発見
+    if( mmdl ) { return FALSE; }
   }
 
-  // 動作モデルを検索
-  mmdl = MMDLSYS_SearchGridPos( FIELDMAP_GetMMdlSys(fieldWork), gx, gz, FALSE );
-
-  if( mmdl ) {
-    return FALSE;
-  }
-  else {
-    return TRUE;
-  }
+  return TRUE; 
 }
 
