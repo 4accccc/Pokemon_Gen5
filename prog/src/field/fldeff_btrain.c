@@ -59,6 +59,10 @@ typedef struct
   
   GFL_G3D_OBJ *obj;
   GFL_G3D_ANM *anm[FLDEFF_BTRAIN_ANIME_TYPE_MAX];
+  
+#ifdef DEBUG_ONLY_FOR_kagaya
+  int debugAnimeFrame;
+#endif
 }TASKWORK_BTRAIN;
 
 //======================================================================
@@ -245,6 +249,10 @@ void FLDEFF_BTRAIN_SetAnime(
   
   work->anm_type = type;
   work->anm_end = FALSE;
+  
+#ifdef DEBUG_ONLY_FOR_kagaya
+  work->debugAnimeFrame = 0;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -369,6 +377,14 @@ static void btrainTask_Update( FLDEFF_TASK *task, void *wk )
           work->obj,work->anm_type,FX32_ONE) == FALSE ){
       work->anm_end = TRUE;
     }
+
+#ifdef DEBUG_ONLY_FOR_kagaya    
+    if( work->anm_end == FALSE ){
+      work->debugAnimeFrame++;
+      KAGAYA_Printf( "バトルトレイン　アニメ %d, フレーム %d\n",
+          work->anm_type, work->debugAnimeFrame );
+    }
+#endif
   }
 }
 

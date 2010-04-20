@@ -110,6 +110,7 @@ EVENT_START ev_c04r0111_receipt_talk
     
     SWITCH $SCWK_ANSWER
     CASE 0 THEN //続けて挑戦
+      _MSGWIN_CLOSE()
       _CALL sub_challenge_continue_mode
     CASE 1 THEN //ライモン戻り
       _CALL sub_mapchg_receipt
@@ -697,7 +698,7 @@ sub_demo_train_arrival:
   _MAP_FADE_END_CHECK()
   
   _SE_PLAY( SEQ_SE_BDEMO_03 ) //電車到着音
-  _TIME_WAIT( 100 ) //アニメを待つ
+  _TIME_WAIT( 70 ) //アニメを待つ
   _SE_PLAY( SEQ_SE_BDEMO_01 ) //電車扉音
   
   //自機登場アニメ
@@ -724,9 +725,9 @@ sub_demo_train_arrival:
     _TIME_WAIT( 30 ) //ちょっと待つ
     _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, BTRAIN_ANIME_TYPE_START_GEAR, BTRAIN_POS_RECEIPT, BSW_NULL )
     _SE_PLAY( SEQ_SE_BDEMO_01 ) //電車扉音
-    _TIME_WAIT( 10 )
+    _TIME_WAIT( 40 )
     _SE_PLAY( SEQ_SE_BDEMO_02 ) //電車発射音
-    _TIME_WAIT( 30 ) //ちょっと待つ
+    _TIME_WAIT( 40 ) //ちょっと待つ
     
     //ブラックアウト
     _BLACK_OUT()
