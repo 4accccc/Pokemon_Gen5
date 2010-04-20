@@ -19,10 +19,17 @@
 typedef struct {
 	// [ in ]
 	GAMEDATA * gamedata;		// ゲームデータ
+	u16	callMode;						// 呼び出しモード
 
 	// [ out ]
-	u32	retMode;						// 終了モード
+	u16	retMode;						// 終了モード
 }DENDOUPC_PARAM;
+
+// 呼び出しモード
+enum {
+	DENDOUPC_CALL_CLEAR = 0,		// 初回クリア
+	DENDOUPC_CALL_DENDOU,				// 殿堂入り
+};
 
 // 終了モード
 enum {

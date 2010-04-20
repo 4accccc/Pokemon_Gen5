@@ -408,7 +408,7 @@ void DPCMAIN_CreatePokeData( DPCMAIN_WORK * wk )
 	u16	i, j;
 
 	// 文字列バッファ確保
-	for( i=0; i<DENDOU_RECORD_MAX+1; i++ ){
+	for( i=0; i<DENDOU_RECORD_MAX; i++ ){
 		for( j=0; j<6; j++ ){
 			wk->party[i].dat[j].nickname = GFL_STR_CreateBuffer( NAME_BUF_SIZE, HEAPID_DENDOU_PC );
 			wk->party[i].dat[j].oyaname  = GFL_STR_CreateBuffer( NAME_BUF_SIZE, HEAPID_DENDOU_PC );
@@ -416,56 +416,58 @@ void DPCMAIN_CreatePokeData( DPCMAIN_WORK * wk )
 	}
 
 	// 初回データ
-	rec = GAMEDATA_GetDendouRecord( wk->dat->gamedata );
-	wk->party[0].pokeMax = DendouRecord_GetPokemonCount( rec );
-	DendouRecord_GetDate( rec, &wk->party[0].date );
-	for( i=0; i<wk->party[0].pokeMax; i++ ){
-		DendouRecord_GetPokemonData( rec, i, &wk->party[0].dat[i] );
-	}
-	wk->pageMax = 1;
-
-	// 外部セーブデータ
-	sv = GAMEDATA_GetSaveControlWork( wk->dat->gamedata );
-	if( SaveControl_Extra_Load( sv, SAVE_EXTRA_ID_DENDOU, HEAPID_DENDOU_PC ) == LOAD_RESULT_OK ){
-		ex_rec = SaveControl_Extra_DataPtrGet( sv, SAVE_EXTRA_ID_DENDOU, 0 );
-		if( ex_rec != NULL ){
-			for( i=0; i<DENDOU_RECORD_MAX; i++ ){
-				wk->party[i+1].pokeMax = DendouData_GetPokemonCount( ex_rec, i );
-				wk->party[i+1].recNo   = DendouData_GetRecordNumber( ex_rec, i );
-				DendouData_GetDate( ex_rec, i, &wk->party[i+1].date );
-				if( wk->party[i+1].pokeMax != 0 ){
-					for( j=0; j<wk->party[i+1].pokeMax; j++ ){
-						DendouData_GetPokemonData( ex_rec, i, j, &wk->party[i+1].dat[j] );
+	if( wk->dat->callMode == DENDOUPC_CALL_CLEAR ){
+		rec = GAMEDATA_GetDendouRecord( wk->dat->gamedata );
+		wk->party[0].pokeMax = DendouRecord_GetPokemonCount( rec );
+		DendouRecord_GetDate( rec, &wk->party[0].date );
+		for( i=0; i<wk->party[0].pokeMax; i++ ){
+			DendouRecord_GetPokemonData( rec, i, &wk->party[0].dat[i] );
+		}
+		wk->pageMax = 1;
+	// 殿堂入りデータ（外部セーブデータ）
+	}else{
+		sv = GAMEDATA_GetSaveControlWork( wk->dat->gamedata );
+		if( SaveControl_Extra_Load( sv, SAVE_EXTRA_ID_DENDOU, HEAPID_DENDOU_PC ) == LOAD_RESULT_OK ){
+			ex_rec = SaveControl_Extra_DataPtrGet( sv, SAVE_EXTRA_ID_DENDOU, 0 );
+			if( ex_rec != NULL ){
+				for( i=0; i<DENDOU_RECORD_MAX; i++ ){
+					wk->party[i+1].pokeMax = DendouData_GetPokemonCount( ex_rec, i );
+					wk->party[i+1].recNo   = DendouData_GetRecordNumber( ex_rec, i );
+					DendouData_GetDate( ex_rec, i, &wk->party[i+1].date );
+					if( wk->party[i+1].pokeMax != 0 ){
+						for( j=0; j<wk->party[i+1].pokeMax; j++ ){
+							DendouData_GetPokemonData( ex_rec, i, j, &wk->party[i+1].dat[j] );
+						}
+						wk->pageMax++;
 					}
-					wk->pageMax++;
 				}
 			}
 		}
-	}
-	SaveControl_Extra_Unload( sv, SAVE_EXTRA_ID_DENDOU );
+		SaveControl_Extra_Unload( sv, SAVE_EXTRA_ID_DENDOU );
 
 // 仮処理
-#if 1
-	{
-		u32	k;
-		for( k=5; k>=1; k-- ){
-			wk->party[wk->pageMax].pokeMax = k;
-			for( i=0; i<wk->party[wk->pageMax].pokeMax; i++ ){
-				wk->party[wk->pageMax].dat[i].personalRandom = wk->party[0].dat[i].personalRandom;
-				wk->party[wk->pageMax].dat[i].idNumber = wk->party[0].dat[i].idNumber;
-				wk->party[wk->pageMax].dat[i].monsno = MONSNO_HINOARASI + k*i;
-				wk->party[wk->pageMax].dat[i].level = wk->party[0].dat[i].level;
-				wk->party[wk->pageMax].dat[i].formNumber = 0;
-				wk->party[wk->pageMax].dat[i].sex = wk->party[0].dat[i].sex;
-				for( j=0; j<4; j++ ){
-					wk->party[wk->pageMax].dat[i].waza[j] = wk->party[0].dat[i].waza[j];
+#if 0
+		{
+			u32	k;
+			for( k=5; k>=1; k-- ){
+				wk->party[wk->pageMax].pokeMax = k;
+				for( i=0; i<wk->party[wk->pageMax].pokeMax; i++ ){
+					wk->party[wk->pageMax].dat[i].personalRandom = wk->party[0].dat[i].personalRandom;
+					wk->party[wk->pageMax].dat[i].idNumber = wk->party[0].dat[i].idNumber;
+					wk->party[wk->pageMax].dat[i].monsno = MONSNO_HINOARASI + k*i;
+					wk->party[wk->pageMax].dat[i].level = wk->party[0].dat[i].level;
+					wk->party[wk->pageMax].dat[i].formNumber = 0;
+					wk->party[wk->pageMax].dat[i].sex = wk->party[0].dat[i].sex;
+					for( j=0; j<4; j++ ){
+						wk->party[wk->pageMax].dat[i].waza[j] = wk->party[0].dat[i].waza[j];
+					}
 				}
+				wk->pageMax++;
 			}
-			wk->pageMax++;
 		}
-	}
 #endif
 
+	}
 }
 
 void DPCMAIN_ExitPokeData( DPCMAIN_WORK * wk )
@@ -473,7 +475,7 @@ void DPCMAIN_ExitPokeData( DPCMAIN_WORK * wk )
 	u16	i, j;
 
 	// 文字列バッファ削除
-	for( i=0; i<DENDOU_RECORD_MAX+1; i++ ){
+	for( i=0; i<DENDOU_RECORD_MAX; i++ ){
 		for( j=0; j<6; j++ ){
 			GFL_STR_DeleteBuffer( wk->party[i].dat[j].nickname );
 			GFL_STR_DeleteBuffer( wk->party[i].dat[j].oyaname );

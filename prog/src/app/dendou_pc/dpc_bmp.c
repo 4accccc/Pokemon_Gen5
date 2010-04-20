@@ -137,18 +137,16 @@ void DPCBMP_PutTitle( DPCMAIN_WORK * wk )
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[DPCBMP_WINID_TITLE].win), 0 );
 
-	if( wk->page == 0 ){
+	// ‰‰ñƒNƒŠƒA
+	if( wk->dat->callMode == DENDOUPC_CALL_CLEAR ){
 		str = GFL_MSG_CreateString( wk->mman, mes_pc_dendou_01_01 );
 		PRINTTOOL_PrintColor(
 			&wk->win[DPCBMP_WINID_TITLE], wk->que, 0, 0, str, wk->font, FCOL_MP03WN, PRINTTOOL_MODE_LEFT );
 		GFL_STR_DeleteBuffer( str );
+	// “a“°“ü‚è
 	}else{
 		str = GFL_MSG_CreateString( wk->mman, mes_pc_dendou_01_02 );
-#if 0
 		WORDSET_RegisterNumber( wk->wset, 0, pt->recNo, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-#else
-		WORDSET_RegisterNumber( wk->wset, 0, 1, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-#endif
 		WORDSET_ExpandStr( wk->wset, wk->exp, str );
 		PRINTTOOL_PrintColor(
 			&wk->win[DPCBMP_WINID_TITLE], wk->que, 0, 0, wk->exp, wk->font, FCOL_MP03WN, PRINTTOOL_MODE_LEFT );
