@@ -19,6 +19,7 @@
 typedef struct
 {
   FIELDMAP_WORK* fieldmap; // 動作対象のフィールドマップ
+  MMDL*          mmdl;      // 操作対象の動作モデル
   u16            frame;     // 動作フレーム数
   u16            endFrame;  // 最終フレーム数
   u8             rotateNum; // 回転回数
@@ -59,13 +60,48 @@ FIELD_TASK* FIELD_TASK_PlayerRotate( FIELDMAP_WORK* fieldmap, int frame, int rot
 
   // 生成
   task = FIELD_TASK_Create( heap_id, sizeof(TASK_WORK), RotatePlayer );
+
   // 初期化
   work = FIELD_TASK_GetWork( task );
   work->fieldmap  = fieldmap;
+  work->mmdl      = FIELD_PLAYER_GetMMdl( player ); 
   work->frame     = 0;
   work->endFrame  = frame;
   work->rotateNum = rot_num;
   work->initDir   = FIELD_PLAYER_GetDir( player );
+
+  return task;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 自機の等速回転タスクを作成する
+ *
+ * @param fieldmap タスクを追加するフィールドマップ
+ * @param frame    動作フレーム数
+ * @param rot_num  回転回数
+ * @param mmdl     操作対象の動作モデル
+ */
+//------------------------------------------------------------------------------------------
+FIELD_TASK* FIELD_TASK_PlayerRotateEX( FIELDMAP_WORK* fieldmap, int frame, int rot_num, MMDL* mmdl )
+{
+  FIELD_TASK* task;
+  TASK_WORK* work;
+  HEAPID heap_id;
+
+  heap_id = FIELDMAP_GetHeapID( fieldmap );
+
+  // 生成
+  task = FIELD_TASK_Create( heap_id, sizeof(TASK_WORK), RotatePlayer );
+
+  // 初期化
+  work = FIELD_TASK_GetWork( task );
+  work->fieldmap  = fieldmap;
+  work->mmdl      = mmdl;
+  work->frame     = 0;
+  work->endFrame  = frame;
+  work->rotateNum = rot_num;
+  work->initDir   = MMDL_GetDirDisp( mmdl );
 
   return task;
 }
@@ -94,6 +130,7 @@ FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedUp( FIELDMAP_WORK* fieldmap, int frame,
   // 初期化
   work = FIELD_TASK_GetWork( task );
   work->fieldmap  = fieldmap;
+  work->mmdl      = FIELD_PLAYER_GetMMdl( player ); 
   work->frame     = 0;
   work->endFrame  = frame;
   work->rotateNum = rot_num;
@@ -126,6 +163,7 @@ FIELD_TASK* FIELD_TASK_PlayerRotate_SpeedDown( FIELDMAP_WORK* fieldmap, int fram
   // 初期化
   work = FIELD_TASK_GetWork( task );
   work->fieldmap  = fieldmap;
+  work->mmdl      = FIELD_PLAYER_GetMMdl( player ); 
   work->frame     = 0;
   work->endFrame  = frame;
   work->rotateNum = rot_num;
@@ -244,10 +282,9 @@ static u16 CalcPlayerDir_SpeedDown( float frame, float max_frame, float rotate_n
 //------------------------------------------------------------------------------------------
 static FIELD_TASK_RETVAL RotatePlayer( void *wk )
 {
-  TASK_WORK*      work = wk;
-  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-  MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player ); 
-  u16          anm_cmd = CalcPlayerDir( work->frame, work->endFrame, work->rotateNum );
+  TASK_WORK* work    = wk;
+  MMDL*      mmdl    = work->mmdl;
+  u16        anm_cmd = CalcPlayerDir( work->frame, work->endFrame, work->rotateNum );
 
   // 動作モデルの向きを更新
   MMDL_SetAcmd( mmdl, anm_cmd );
@@ -277,10 +314,9 @@ static FIELD_TASK_RETVAL RotatePlayer( void *wk )
 //------------------------------------------------------------------------------------------
 static FIELD_TASK_RETVAL RotatePlayer_SpeedUp( void *wk )
 {
-  TASK_WORK*      work = wk;
-  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-  MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player ); 
-  u16          anm_cmd = CalcPlayerDir_SpeedUp( work->frame, work->endFrame, work->rotateNum );
+  TASK_WORK* work    = wk;
+  MMDL*      mmdl    = work->mmdl;
+  u16        anm_cmd = CalcPlayerDir_SpeedUp( work->frame, work->endFrame, work->rotateNum );
 
   // 動作モデルの向きを更新
   MMDL_SetAcmd( mmdl, anm_cmd );
@@ -310,10 +346,9 @@ static FIELD_TASK_RETVAL RotatePlayer_SpeedUp( void *wk )
 //------------------------------------------------------------------------------------------
 static FIELD_TASK_RETVAL RotatePlayer_SpeedDown( void *wk )
 {
-  TASK_WORK*      work = wk;
-  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-  MMDL*           mmdl = FIELD_PLAYER_GetMMdl( player ); 
-  u16          anm_cmd = CalcPlayerDir_SpeedDown( work->frame, work->endFrame, work->rotateNum );
+  TASK_WORK* work    = wk;
+  MMDL*      mmdl    = work->mmdl;
+  u16        anm_cmd = CalcPlayerDir_SpeedDown( work->frame, work->endFrame, work->rotateNum );
 
   // 動作モデルの向きを更新
   MMDL_SetAcmd( mmdl, anm_cmd );

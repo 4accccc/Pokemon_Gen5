@@ -20,3 +20,4 @@
  */
 //------------------------------------------------------------------------------------------
 extern FIELD_TASK* FIELD_TASK_TransDrawOffset( FIELDMAP_WORK* fieldmap, int frame, const VecFx32* vec ); 
+extern FIELD_TASK* FIELD_TASK_TransDrawOffsetEX( FIELDMAP_WORK* fieldmap, int frame, const VecFx32* vec, MMDL* mmdl ); 

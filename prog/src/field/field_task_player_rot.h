@@ -18,6 +18,7 @@
  */
 //------------------------------------------------------------------------------------------
 extern FIELD_TASK* FIELD_TASK_PlayerRotate( FIELDMAP_WORK* fieldmap, int frame, int rot_num );
+extern FIELD_TASK* FIELD_TASK_PlayerRotateEX( FIELDMAP_WORK* fieldmap, int frame, int rot_num, MMDL* mmdl );
 
 //------------------------------------------------------------------------------------------
 /**
