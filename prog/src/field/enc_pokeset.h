@@ -12,10 +12,14 @@
 
 #define FLD_ENCPOKE_NUM_MAX (2) ///<一度にエンカウントするポケモン数max
 
+///ENC_POKE_PARAMの値指定
 #define POKE_RARE_SEL_DEF   (0)     //通常レア抽選
 #define POKE_RARE_SEL_MUST  (1)     //必ずレア
 #define POKE_RARE_SEL_NOT   (2)     //必ずレアではない
 
+#define POKE_SEX_SEL_DEFAULT  (0)   //指定無し
+#define POKE_SEX_SEL_MALE     (1)   //オス固定
+#define POKE_SEX_SEL_FEMALE   (2)   //メス固定
 
 ///ランダムポケモン抽選タイプ
 typedef enum{

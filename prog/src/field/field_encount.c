@@ -263,10 +263,10 @@ void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv,
 
     //性別指定
     if ( flags & SCR_WILD_BTL_FLAG_MALE ){
-      poke->fixsex = PTL_SEX_MALE;        //必ずオス（性別固定ポケモン以外）
+      poke->fixsex = POKE_SEX_SEL_MALE;        //必ずオス（性別固定ポケモン以外）
     }else if ( flags & SCR_WILD_BTL_FLAG_FEMALE ){
-       poke->fixsex = PTL_SEX_FEMALE;        //必ずメス（性別固定ポケモン以外）
-    }else poke->fixsex = PTL_SEX_UNKNOWN; //指定無し
+      poke->fixsex = POKE_SEX_SEL_FEMALE;        //必ずメス（性別固定ポケモン以外）
+    }
   }
 
   //バトルパラメータセット
