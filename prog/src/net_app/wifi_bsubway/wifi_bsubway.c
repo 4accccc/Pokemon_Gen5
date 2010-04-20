@@ -29,6 +29,9 @@
 #include "system/time_icon.h"
 
 
+#include "sound/pm_sndsys.h"
+
+
 #include "savedata/wifilist.h"
 #include "savedata/wifihistory.h"
 #include "savedata/mystatus.h"
@@ -93,6 +96,9 @@ FS_EXTERN_OVERLAY( dpw_common );
 //=====================================
 enum {
 
+  BSUBWAY_SEQ_BGMOUT,        // BGM変更処理
+  BSUBWAY_SEQ_BGMCHANGE,        // BGM変更処理
+  
   BSUBWAY_SEQ_LOGIN,        // Login処理
   BSUBWAY_SEQ_LOGIN_WAIT,   // Login処理
   
@@ -108,6 +114,9 @@ enum {
   BSUBWAY_SEQ_END_WAIT,   // 終了ウエイト
 
   BSUBWAY_SEQ_LOGOUT,     // Logout処理
+
+  BSUBWAY_SEQ_BGMFADE,      // BGMFADE
+  BSUBWAY_SEQ_BGMFADE_WAIT, // BGMFADE WAIT
 
   BSUBWAY_SEQ_ALL_END,   // 終了
 
@@ -645,6 +654,22 @@ static GFL_PROC_RESULT WiFiBsubway_ProcMain( GFL_PROC * p_proc, int * p_seq, voi
   
   // メイン処理
   switch( (*p_seq) ){
+  case BSUBWAY_SEQ_BGMOUT:        // BGM変更処理
+    // BGM
+    PMSND_FadeOutBGM( PMSND_FADE_FAST );
+    (*p_seq)++;
+    break;
+
+  case BSUBWAY_SEQ_BGMCHANGE:        // BGM変更処理
+    if( PMSND_CheckFadeOnBGM() == FALSE ){
+      PMSND_PauseBGM( TRUE );
+      PMSND_PushBGM();
+      PMSND_PlayBGM( SEQ_BGM_WIFI_ACCESS );
+      PMSND_FadeInBGM( PMSND_FADE_FAST );
+      (*p_seq)++;
+    }
+    break;
+    
   // Login処理
   case BSUBWAY_SEQ_LOGIN:        
     LOGIN_StartProc( p_wk );
@@ -659,7 +684,7 @@ static GFL_PROC_RESULT WiFiBsubway_ProcMain( GFL_PROC * p_proc, int * p_seq, voi
         (*p_seq)++;
       }else{
         p_wk->p_param->result = WIFI_BSUBWAY_RESULT_CANCEL; //CANCEL！
-        (*p_seq) = BSUBWAY_SEQ_ALL_END;
+        (*p_seq) = BSUBWAY_SEQ_BGMFADE;
       }
     }
     break;
@@ -746,6 +771,17 @@ static GFL_PROC_RESULT WiFiBsubway_ProcMain( GFL_PROC * p_proc, int * p_seq, voi
     (*p_seq)++;
     break;
 
+  case BSUBWAY_SEQ_BGMFADE:      // BGMFADE
+    PMSND_FadeOutBGM( PMSND_FADE_FAST );
+    (*p_seq)++;
+    break;
+    
+  case BSUBWAY_SEQ_BGMFADE_WAIT: // BGMFADE WAIT
+    if( PMSND_CheckFadeOnBGM() == FALSE ){
+      (*p_seq)++;
+    }
+    break;
+
   // 終了
   case BSUBWAY_SEQ_ALL_END:   
     return GFL_PROC_RES_FINISH;
@@ -818,6 +854,10 @@ static GFL_PROC_RESULT WiFiBsubway_ProcEnd( GFL_PROC * p_proc, int * p_seq, void
   // DPW_COMMON
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( dpw_common ) );
 
+  //BGM復元
+  PMSND_PopBGM();
+  PMSND_PauseBGM( FALSE );
+  PMSND_FadeInBGM( PMSND_FADE_NORMAL );
   
   // DEBUG出力ON
 #ifdef PM_DEBUG
@@ -1886,6 +1926,7 @@ static void LOGIN_StartProc( WIFI_BSUBWAY* p_wk )
 {
   p_wk->login.gamedata  = p_wk->p_gamedata;
   p_wk->login.bg        = WIFILOGIN_BG_NORMAL;
+  p_wk->login.bgm       = WIFILOGIN_BGM_NONE;
   p_wk->login.display   = WIFILOGIN_DISPLAY_UP;
   p_wk->login.nsid      = WB_NET_BSUBWAY;
   p_wk->login.pSvl      = &p_wk->svl_result;
@@ -1940,6 +1981,7 @@ static void LOGOUT_StartProc( WIFI_BSUBWAY* p_wk )
   p_wk->logout.gamedata  = p_wk->p_gamedata;
   p_wk->logout.bg        = WIFILOGIN_BG_NORMAL;
   p_wk->logout.display   = WIFILOGIN_DISPLAY_UP;
+  p_wk->logout.bgm       = WIFILOGIN_BGM_NONE;
 
   // プロックコール
   GAMESYSTEM_CallProc( p_wk->p_param->p_gamesystem, FS_OVERLAY_ID(wifi_login), &WiFiLogout_ProcData, &p_wk->logout );
@@ -2927,7 +2969,7 @@ static BOOL VIEW_PrintMain( WIFI_BSUBWAY_VIEW* p_wk )
     return TRUE;
   }else if ( state == PRINTSTREAM_STATE_PAUSE )
   {
-    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
+    if( (GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE) || GFL_UI_TP_GetTrg() ){
       PRINTSYS_PrintStreamReleasePause( p_wk->p_msg_stream );
     }
   }
