@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-15T19:52:03"/>
+	<create user="matsumiya" host="W00224" date="2010-04-20T15:44:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1119,7 +1119,7 @@
 レポートを　送信することが　できる▼</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_pc_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>解説文
 ・続けてpc_02表示</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
@@ -1139,7 +1139,7 @@
 ポケモンを　起こすと▽
 その　あいだに　みた　夢は▼
 イッシュ地方の　中心に　ある
-[FF:00:色:1]ハイリンク[FF:00:色:0]という　空間で
+[FF:00:色:1]ハイリンク[FF:00:色:0]という　空間で▽
 現実と　なっている　様子……▼</language>
 	</row>
 
