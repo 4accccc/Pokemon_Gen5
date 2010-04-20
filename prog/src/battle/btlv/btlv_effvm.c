@@ -13,6 +13,8 @@
 #include "sound/pm_sndsys.h"
 #include "item/item.h"
 
+#include "net/dwc_rap.h"
+
 #include "btlv_scu.h"
 #include "btlv_effect.h"
 
@@ -5426,7 +5428,8 @@ static  void  TCB_EFFVM_ChangeVolume( GFL_TCB* tcb, void* work )
   BOOL  ret;
 
   BTLV_EFFTOOL_CheckMove( &becv->start_vol, &becv->vec_vol, &becv->end_vol, &ret );
-  PMSND_ChangeBGMVolume( 0xffff, becv->start_vol >> FX32_SHIFT );
+  //PMSND_ChangeBGMVolume( 0xffff, becv->start_vol >> FX32_SHIFT );
+  GFL_NET_DWC_PMSND_ChangeBGMVolume( 0xffff, becv->start_vol >> FX32_SHIFT );
 
   if( ret )
   {
