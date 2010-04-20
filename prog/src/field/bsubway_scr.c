@@ -363,9 +363,6 @@ void BSUBWAY_SCRWORK_SaveGameClearPlayData( BSUBWAY_SCRWORK *bsw_scr )
   //ラウンド数リセット
   BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
   
-  //ステージ数をエラーに
-  BSUBWAY_SCOREDATA_ErrorStageNo( bsw_scr->scoreData, bsw_scr->play_mode );
-
   //選んだポケモンNo
   BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
       BSWAY_PLAYDATA_ID_pokeno, bsw_scr->member );
