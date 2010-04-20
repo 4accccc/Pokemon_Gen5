@@ -1880,6 +1880,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_Mail(PROCLINK_WORK* wk,void* param_adrs
   }else if(wk->pre_type==EVENT_PROCLINK_CALL_BAG){
     if(wk->mode == PROCLINK_MODE_BAG_TO_MAIL_CREATE){
       const BOOL isCreate = MailSys_IsDataCreate( mailParam );
+      OS_Printf("mail Create=%d\n", isCreate);
       if( isCreate == TRUE )
       {
         const POKEPARTY *party = GAMEDATA_GetMyPokemon( gmData );

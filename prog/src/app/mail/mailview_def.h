@@ -1,10 +1,13 @@
+//=================================================================
 /**
-  @file mailview.dat
-  @brier  メール描画　リテラル定義
-  @author Miyuki Iwasawa
-  @date 06.02.10
+  @file   mailview_def.h
+  @brier  メール描画 リテラル定義
+  @author Akito Mori
+  @date   10.02.10
 */
-
+//=================================================================
+#ifndef __MAILVIEW_DEF_H__
+#define __MAILVIEW_DEF_H__
 //=======================================
 ///アルファ値設定
 //=======================================
@@ -123,3 +126,5 @@ enum{
 #define ICONVIEW_WIDTH  (40)  ///<アイコンを並べる間隔
 #define ICONVIEW_PX   (16*8)  ///<アイコン表示の右端座標
 #define ICONVIEW_PY   (160) ///<アイコン表示のY座標
+
+#endif // __MAILVIEW_DEF_H__
