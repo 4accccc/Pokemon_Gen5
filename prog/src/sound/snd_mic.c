@@ -1,10 +1,10 @@
 //=============================================================================
 /**
  *
- *	@file		snd_mic.c
- *	@brief  マイク関連モジュール
- *	@author	hosaka genya (GSから移植)
- *	@data		2009.09.10
+ *  @file   snd_mic.c
+ *  @brief  マイク関連モジュール
+ *  @author hosaka genya (GSから移植)
+ *  @data   2009.09.10
  *
  */
 //=============================================================================
@@ -14,22 +14,22 @@
 
 //=============================================================================
 /**
- *								定数定義
+ *                定数定義
  */
 //=============================================================================
 #define SOUND_MIC_WAIT (3*30) ///< AMPをONにしてからマイクが使用可能になるまで
 
-#define SWAVE_BUFFER_SIZE		(2000)						//2k * 8bit
+#define SWAVE_BUFFER_SIZE   (8180)            //DSiサンプリングレート * 8bit
 
 // ペラップ
-#define PERAP_SAMPLING_RATE		(2000)									//サンプリングレート
-#define PERAP_SAMPLING_TIME		(1)										//サンプリングする時間
-#define PERAP_SAMPLING_SIZE		(PERAP_SAMPLING_RATE * PERAP_SAMPLING_TIME)	//必要なデータ量
+#define PERAP_SAMPLING_RATE   (8180)                  //サンプリングレート
+#define PERAP_SAMPLING_TIME   (1)                   //サンプリングする時間
+#define PERAP_SAMPLING_SIZE   (PERAP_SAMPLING_RATE * PERAP_SAMPLING_TIME) //必要なデータ量
 
 
 //=============================================================================
 /**
- *								構造体定義
+ *                構造体定義
  */
 //=============================================================================
 //--------------------------------------------------------------
@@ -39,7 +39,7 @@ typedef struct {
   // オートサンプリング用
   MICAutoParam  AutoParamBuff;
   BOOL          isAutoSampStart;
-	u32           amp_init_flag:1;		// Amp設定フラグ
+  u32           amp_init_flag:1;    // Amp設定フラグ
   u32           amp_wait_cnt:31;
   // ペラップ波形保存ワーク
   void*         p_PerapBuff;
@@ -50,7 +50,7 @@ static SND_MIC_WORK* sp_SndMic = NULL;
 
 //=============================================================================
 /**
- *							プロトタイプ宣言
+ *              プロトタイプ宣言
  */
 //=============================================================================
 static void MicCallback( MICResult /*result*/, void* /*arg*/ );
@@ -58,59 +58,79 @@ static void* Snd_GetWaveBufAdrs( void );
 
 //=============================================================================
 /**
- *								外部公開関数
+ *                外部公開関数
  */
 //=============================================================================
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  マイクモジュール 初期化
+ *  @brief  マイクモジュール 初期化
  *
- *	@param	HEAPID heap_id  ヒープID
+ *  @param  HEAPID heap_id  ヒープID
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void SND_MIC_Init( HEAPID heap_id )
 {
   SND_MIC_WORK* wk;
+  u32 result;
+
 
   wk = GFL_HEAP_AllocMemory( heap_id, sizeof( SND_MIC_WORK ) );
   GFL_STD_MemClear( wk, sizeof(SND_MIC_WORK) );
   
-  //	ペラップバッファ作成
-	{	
-		u32 size  = sizeof(u8)*SWAVE_BUFFER_SIZE + 32;	//	後にバッファアドレスを32バイトアラインするため+32
-		u8 *p_buf	= GFL_HEAP_AllocMemory( heap_id, size );
-		MI_CpuClear8( p_buf, size );
-		wk->p_PerapBuff = p_buf;
+  //  ペラップバッファ作成
+  { 
+    u32 size  = sizeof(u8)*SWAVE_BUFFER_SIZE + 32;  //  後にバッファアドレスを32バイトアラインするため+32
+    u8 *p_buf = GFL_HEAP_AllocMemory( heap_id, size );
+    MI_CpuClear8( p_buf, size );
+    wk->p_PerapBuff = p_buf;
   }
 
   {
-    //MIC_Init関数の初期化は、2回目以降の呼び出しは無効になるように、
-    //内部フラグでチェックされています
-    MIC_Init();								//MIC_API初期化
       
     //OS_Init()を呼ぶ場合は、その中から呼ばれますので必要ありません。
-    //PM_Init();							//PMICマネージャ初期化(OS_INIT内でも呼ばれている)
+    //PM_Init();              //PMICマネージャ初期化(OS_INIT内でも呼ばれている)
     
-    (void)PM_SetAmp( PM_AMP_ON );			//プログラマブルゲインアンプのスイッチON
-    (void)PM_SetAmpGain( PM_AMPGAIN_80 );	//プログラマブルゲインアンプのゲインを設定
+    result = PM_SetAmp( PM_AMP_ON );     //プログラマブルゲインアンプのスイッチON
+    result = PM_SetAmpGain( PM_AMPGAIN_80 ); //プログラマブルゲインアンプのゲインを設定
     
     //AMP初期化
-    wk->amp_init_flag	= 1;
+    wk->amp_init_flag = 1;
   }
+
+  //MIC_Init関数の初期化は、2回目以降の呼び出しは無効になるように、
+  //内部フラグでチェックされています
+  MIC_Init();               //MIC_API初期化
+
+  // ノイズフィルター有効に
+  {
+    static SNDEXIirFilterParam FilterParam =
+      { 0x7E46, 0x81BA, 0x7E46, 0x7E43, 0x836E};     // 低周波成分を減衰させる
+    const u32 ret = SNDEX_SetIirFilter(SNDEX_IIR_FILTER_ADC_1, &FilterParam);
+    if ( ret == SNDEX_RESULT_SUCCESS)
+    {
+      OS_TPrintf("マイクのフィルターを設定しました。\n");
+    }
+    else
+    {
+      OS_TPrintf("マイクのフィルターの設定に失敗。\n");
+    }
+    
+  }
+  
 
   sp_SndMic = wk;
 }
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  マイクモジュール 開放
+ *  @brief  マイクモジュール 開放
  *
- *	@param	void 
+ *  @param  void 
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 void SND_MIC_Exit( void )
@@ -123,11 +143,11 @@ void SND_MIC_Exit( void )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  マイクモジュール 主処理
+ *  @brief  マイクモジュール 主処理
  *
- *	@param	void 
+ *  @param  void 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 void SND_MIC_Main( void )
@@ -136,91 +156,91 @@ void SND_MIC_Main( void )
 
   GF_ASSERT( sp_SndMic );
 
-	//3秒調べるためのカウント
-	if( wk->amp_init_flag ) {
-		if( !SND_MIC_IsAmpOnWaitFlag() ) {	
-			wk->amp_wait_cnt++;
-		}
-	}
+  //3秒調べるためのカウント
+  if( wk->amp_init_flag ) {
+    if( !SND_MIC_IsAmpOnWaitFlag() ) {  
+      wk->amp_wait_cnt++;
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	AMPをONにしてからのカウントをクリアーします
- *					基本的にこの関数は一部からしか使われないはずです
+ *  @brief  AMPをONにしてからのカウントをクリアーします
+ *          基本的にこの関数は一部からしか使われないはずです
  *
  */
 //-----------------------------------------------------------------------------
 void SND_MIC_ClearAmpOnWait( void )
-{	
+{ 
   GF_ASSERT( sp_SndMic );
 
-	sp_SndMic->amp_wait_cnt	= 0;
+  sp_SndMic->amp_wait_cnt = 0;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	AMPをONにしてから3秒待ったかどうかのフラグ取得
- *					マイクはこれがONにならないと使用してはいけない（任天堂規約）
+ *  @brief  AMPをONにしてから3秒待ったかどうかのフラグ取得
+ *          マイクはこれがONにならないと使用してはいけない（任天堂規約）
  *
- *	@retval	TRUEならば使用許可
- *	@retval	FALSEならば使用不許可
+ *  @retval TRUEならば使用許可
+ *  @retval FALSEならば使用不許可
  */
 //-----------------------------------------------------------------------------
 BOOL SND_MIC_IsAmpOnWaitFlag( void )
-{	
+{ 
   GF_ASSERT( sp_SndMic );
 
-	//3秒以上たったかどうか
+  //3秒以上たったかどうか
   return sp_SndMic->amp_wait_cnt > SOUND_MIC_WAIT;
 }
 
 //--------------------------------------------------------------
 /**
- * @brief	録音開始
+ * @brief 録音開始
  *
- * @param	p		MICAutoParam型のアドレス
+ * @param p   MICAutoParam型のアドレス
  *
- * @retval	"MIC_RESULT_SUCCESS		処理が正常に完了"
- * @retval	"それ以外				何らかの原因で失敗"
+ * @retval  "MIC_RESULT_SUCCESS   処理が正常に完了"
+ * @retval  "それ以外       何らかの原因で失敗"
  */
 //--------------------------------------------------------------
 MICResult SND_MIC_StartAutoSampling( MICAutoParam* p )
 {
-	MICResult ret;
+  MICResult ret;
   
   GF_ASSERT( sp_SndMic );
 
 #ifdef SDK_TWL
-	ret = MIC_StartLimitedSampling( p );
+  ret = MIC_StartLimitedSampling( p );
 #else
-	ret = MIC_StartAutoSampling( p );
-#endif	// SDK_TWL
+  ret = MIC_StartAutoSampling( p );
+#endif  // SDK_TWL
 
-	if( ret != MIC_RESULT_SUCCESS ){
-		OS_Printf( "StartMicAutoSamoling Failed ret=%d \n", ret );
-	}
+  if( ret != MIC_RESULT_SUCCESS ){
+    OS_Printf( "StartMicAutoSamoling Failed ret=%d \n", ret );
+  }
 
   // オートサンプリング開始
   sp_SndMic->isAutoSampStart = TRUE;
   sp_SndMic->AutoParamBuff  = *p;
 
-	return ret;
+  return ret;
 }
 
 //--------------------------------------------------------------
 /**
- * @brief	録音停止
+ * @brief 録音停止
  *
- * @param	none
+ * @param none
  *
- * @retval	"MIC_RESULT_SUCCESS		処理が正常に完了"
- * @retval	"それ以外				何らかの原因で失敗"
+ * @retval  "MIC_RESULT_SUCCESS   処理が正常に完了"
+ * @retval  "それ以外       何らかの原因で失敗"
  */
 //--------------------------------------------------------------
 MICResult SND_MIC_StopAutoSampling(void)
 {
-	MICResult ret;
+  MICResult ret;
   
   GF_ASSERT( sp_SndMic );
 
@@ -228,21 +248,21 @@ MICResult SND_MIC_StopAutoSampling(void)
   sp_SndMic->isAutoSampStart = FALSE;
 
 #ifdef SDK_TWL
-	ret = MIC_StopLimitedSampling();
+  ret = MIC_StopLimitedSampling();
 #else
-	ret = MIC_StopAutoSampling();
-#endif	// SDK_TWL
+  ret = MIC_StopAutoSampling();
+#endif  // SDK_TWL
 
-	if( ret != MIC_RESULT_SUCCESS ){
-		OS_Printf( "MicStopAutoSampling Failed ret=%d \n", ret );
-	}
+  if( ret != MIC_RESULT_SUCCESS ){
+    OS_Printf( "MicStopAutoSampling Failed ret=%d \n", ret );
+  }
 
-	return ret;
+  return ret;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief    マイクスリープ起動処理
+ *  @brief    マイクスリープ起動処理
  */
 //-----------------------------------------------------------------------------
 void SND_MIC_StopSleep(void)
@@ -251,19 +271,19 @@ void SND_MIC_StopSleep(void)
   
   if( sp_SndMic->isAutoSampStart )
   {
-	  MICResult ret;
+    MICResult ret;
 #ifdef SDK_TWL
-		ret = MIC_StopLimitedSampling();
+    ret = MIC_StopLimitedSampling();
 #else
-	  ret = MIC_StopAutoSampling();
-#endif	// SDK_TWL
+    ret = MIC_StopAutoSampling();
+#endif  // SDK_TWL
     GF_ASSERT( ret == MIC_RESULT_SUCCESS );
   }
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief    マイクスリープ復帰処理
+ *  @brief    マイクスリープ復帰処理
  */
 //-----------------------------------------------------------------------------
 void SND_MIC_ReStartSleep(void)
@@ -272,12 +292,12 @@ void SND_MIC_ReStartSleep(void)
 
   if( sp_SndMic->isAutoSampStart )
   {
-	  MICResult ret;
+    MICResult ret;
 #ifdef SDK_TWL
-		ret = MIC_StartLimitedSampling( &sp_SndMic->AutoParamBuff );
+    ret = MIC_StartLimitedSampling( &sp_SndMic->AutoParamBuff );
 #else
-	  ret = MIC_StartAutoSampling( &sp_SndMic->AutoParamBuff );
-#endif	// SDK_TWL
+    ret = MIC_StartAutoSampling( &sp_SndMic->AutoParamBuff );
+#endif  // SDK_TWL
     GF_ASSERT( ret == MIC_RESULT_SUCCESS );
   }
 
@@ -286,116 +306,115 @@ void SND_MIC_ReStartSleep(void)
 
 //--------------------------------------------------------------
 /**
- * @brief	手動録音
- * @param	type      サンプリングレートのタイプ
- * @param	heap      記録領域
- * @param	callback  記録した際のコールバック
- * @param	arg       コールバックに渡す引数ポインタ
- * @retval	"MIC_RESULT_SUCCESS		処理が正常に完了"
- * @retval	"それ以外				何らかの原因で失敗"
+ * @brief 手動録音
+ * @param type      サンプリングレートのタイプ
+ * @param heap      記録領域
+ * @param callback  記録した際のコールバック
+ * @param arg       コールバックに渡す引数ポインタ
+ * @retval  "MIC_RESULT_SUCCESS   処理が正常に完了"
+ * @retval  "それ以外       何らかの原因で失敗"
  */
 //--------------------------------------------------------------
 MICResult SND_MIC_ManualSampling(MICSamplingType type ,void* heap,MICCallback callback,void* arg)
 {
-	MICResult ret;
+  MICResult ret;
 
   ret = MIC_DoSamplingAsync( type, heap, callback, arg);
 
-	if( ret != MIC_RESULT_SUCCESS ){
+  if( ret != MIC_RESULT_SUCCESS ){
         OS_Printf( "マイク手動サンプリングが失敗\n" );
-	}
-	return ret;
+  }
+  return ret;
 }
 
 //--------------------------------------------------------------
 /**
- * @brief	ペラップデータ録音開始(サウンドシステムの領域に一時保存する)
+ * @brief ペラップデータ録音開始(サウンドシステムの領域に一時保存する)
  *
- * @param	none
+ * @param none
  *
- * @retval	"MIC_RESULT_SUCCESS		処理が正常に完了"
- * @retval	"それ以外				何らかの原因で失敗"
+ * @retval  "MIC_RESULT_SUCCESS   処理が正常に完了"
+ * @retval  "それ以外       何らかの原因で失敗"
  */
 //--------------------------------------------------------------
 MICResult SND_PERAP_VoiceRecStart( void * cbFunc, void * cbWork )
 {
-	MICAutoParam mic;	//マイクパラメータ
+  MICAutoParam mic; //マイクパラメータ
 
-	//波形再生用チャンネルを確保する
-	//Snd_WaveOutAllocChannel( WAVEOUT_CH_NORMAL );
+  //波形再生用チャンネルを確保する
+  //Snd_WaveOutAllocChannel( WAVEOUT_CH_NORMAL );
 
-	mic.type			= MIC_SAMPLING_TYPE_SIGNED_8BIT;	//サンプリング種別
+  mic.type      = MIC_SAMPLING_TYPE_SIGNED_8BIT;  //サンプリング種別
 
-	//バッファは32バイトアラインされたアドレスでないとダメ！
-	mic.buffer		= Snd_GetWaveBufAdrs();
-	mic.size			= PERAP_SAMPLING_SIZE;
+  //バッファは32バイトアラインされたアドレスでないとダメ！
+  mic.buffer    = Snd_GetWaveBufAdrs();
+  mic.size      = PERAP_SAMPLING_SIZE;
 
-	if( (mic.size&0x1f) != 0 ){
-		mic.size &= 0xffffffe0;
-	}
+  if( (mic.size&0x1f) != 0 ){
+    mic.size &= 0xffffffe0;
+  }
 
-	//代表的なサンプリングレートをARM7のタイマー周期に換算した値の定義
+  //代表的なサンプリングレートをARM7のタイマー周期に換算した値の定義
 #ifdef SDK_TWL
-	mic.rate = MIC_SAMPLING_RATE_8180;
+  mic.rate = MIC_SAMPLING_RATE_8180;
 #else
-	mic.rate			= MIC_SAMPLING_RATE_8K;
-//	mic.rate			= HW_CPU_CLOCK_ARM7 / PERAP_SAMPLING_RATE;
-#endif	// SDK_TWL
+  mic.rate      = MIC_SAMPLING_RATE_8K;
+#endif  // SDK_TWL
 
-	//連続サンプリング時にバッファをループさせるフラグ
-	mic.loop_enable		= FALSE;
+  //連続サンプリング時にバッファをループさせるフラグ
+  mic.loop_enable   = FALSE;
 
-	//バッファが飽和した際に呼び出すコールバック関数へのポインタ
-	mic.full_callback	= cbFunc;
+  //バッファが飽和した際に呼び出すコールバック関数へのポインタ
+  mic.full_callback = cbFunc;
 
-	//バッファが飽和した際に呼び出すコールバック関数へ渡す引数
-	mic.full_arg		= cbWork;
+  //バッファが飽和した際に呼び出すコールバック関数へ渡す引数
+  mic.full_arg    = cbWork;
 
-	return SND_MIC_StartAutoSampling( &mic );		//録音開始
+  return SND_MIC_StartAutoSampling( &mic );   //録音開始
 }
 
 //--------------------------------------------------------------
 /**
- * @brief	ペラップデータ録音停止
+ * @brief ペラップデータ録音停止
  *
- * @param	none
+ * @param none
  *
- * @retval	"MIC_RESULT_SUCCESS		処理が正常に完了"
- * @retval	"それ以外				何らかの原因で失敗"
+ * @retval  "MIC_RESULT_SUCCESS   処理が正常に完了"
+ * @retval  "それ以外       何らかの原因で失敗"
  */
 //--------------------------------------------------------------
 MICResult SND_PERAP_VoiceRecStop( void )
 {
-	return SND_MIC_StopAutoSampling();
+  return SND_MIC_StopAutoSampling();
 }
 
 //--------------------------------------------------------------
 /**
- * @brief	録音したデータをセーブデータにセット
+ * @brief 録音したデータをセーブデータにセット
  *
- * @param	none
+ * @param none
  *
- * @retval	none
+ * @retval  none
  */
 //--------------------------------------------------------------
 void SND_PERAP_VoiceDataSave( PERAPVOICE* perap )
 {
-	PERAPVOICE_SetVoiceData( perap, (const s8*)Snd_GetWaveBufAdrs() );
+  PERAPVOICE_SetVoiceData( perap, (const s8*)Snd_GetWaveBufAdrs() );
 }
 
 //=============================================================================
 /**
- *								static関数
+ *                static関数
  */
 //=============================================================================
 
 //--------------------------------------------------------------
 /**
- * @brief	マイクコールバック関数
+ * @brief マイクコールバック関数
  *
- * @param	none
+ * @param none
  *
- * @retval	none
+ * @retval  none
  */
 //--------------------------------------------------------------
 static void MicCallback( MICResult /*result*/, void* /*arg*/ )
@@ -405,11 +424,11 @@ static void MicCallback( MICResult /*result*/, void* /*arg*/ )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  波形保存バッファへのアクセサ
+ *  @brief  波形保存バッファへのアクセサ
  *
- *	@param	none
+ *  @param  none
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void* Snd_GetWaveBufAdrs( void )
