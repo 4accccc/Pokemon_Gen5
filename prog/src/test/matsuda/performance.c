@@ -933,7 +933,7 @@ void DEBUG_PerformanceEndTick(int id)
   prm->TickTotalTT[prm->Count%2] += sub;
   prm->Count++;
 
-  if (prm->Count > AVE_COUNT)
+  if (prm->Count >= AVE_COUNT)
   {
     OSTick ave;
     OSTick ave_top;
