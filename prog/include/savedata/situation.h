@@ -65,8 +65,10 @@ extern void Situation_GetEggStepCount(SITUATION * st, u32 * count);
 extern u16 Situation_GetFriendlyStepCount( const SITUATION * st );
 extern void Situation_SetFriendlyStepCount( SITUATION * st, u16 step_count );
 
-
 extern void Situation_SetSeaTempleStepCount(SITUATION * st, u32 count);
 extern u16 Situation_GetSeaTempleStepCount(const SITUATION * st);
+
+extern u16 Situation_GetPlaceNameLastDispID( SITUATION* st );
+extern void Situation_SetPlaceNameLastDispID( SITUATION* st, u16 zone_id );
 
 #endif	//__SITUATION_H__

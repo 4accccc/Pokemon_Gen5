@@ -11,6 +11,7 @@
 #include "savedata/situation.h"
 #include "gamesystem/playerwork.h"
 #include "field/field_status_local.h"
+#include "../../../resource/fldmapdata/zonetable/zone_id.h" // for ZONE_ID_xxxx
 
 
 //============================================================================================
@@ -33,6 +34,7 @@ struct _SITUATION {
   u32 egg_step_count;     ///<タマゴ孵化カウンタ
   u16 friendly_step_count;  ///<なつき度上昇用カウンタ
   u16 sea_temple_count;   ///<海底神殿歩行カウンタ
+  u16 placeNameLastDispID; ///<地名を最後に表示した場所のゾーンID
 
 	//PLAYER_WORKからセーブに必要なものだけを抜粋
 	PLAYERWORK_SAVE plsv;
@@ -69,6 +71,8 @@ int Situation_GetWorkSize(void)
 void Situation_Init(SITUATION * st)
 {
 	GFL_STD_MemClear(st, sizeof(SITUATION));
+
+  st->placeNameLastDispID = ZONE_ID_MAX;
 }
 
 //----------------------------------------------------------
@@ -359,6 +363,33 @@ void Situation_SetSeaTempleStepCount(SITUATION * st, u32 count)
 u16 Situation_GetSeaTempleStepCount(const SITUATION * st)
 {
   return st->sea_temple_count;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  最後に地名を表示した場所のゾーンID 取得
+ *
+ *	@param	st  シチュエーションワーク
+ *
+ *	@return u16 最後に地名を表示した場所のゾーンID
+ */
+//-----------------------------------------------------------------------------
+u16 Situation_GetPlaceNameLastDispID( SITUATION* st )
+{
+  return st->placeNameLastDispID;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  最後に地名を表示した場所のゾーンID 設定
+ *
+ *	@param st      シチュエーションワーク
+ *	@param zone_id 最後に地名を表示した場所のゾーンID
+ */
+//-----------------------------------------------------------------------------
+void Situation_SetPlaceNameLastDispID( SITUATION* st, u16 zone_id )
+{ 
+  st->placeNameLastDispID = zone_id;
 }
 
 
