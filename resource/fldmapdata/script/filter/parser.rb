@@ -16,7 +16,7 @@ module PmScript
 
   class Parser < Racc::Parser
 
-module_eval <<'..end sp4.y modeval..idea71f903dc', 'sp4.y', 579
+module_eval <<'..end sp4.y modeval..id70e94306d6', 'sp4.y', 579
 
 def initialize
 end
@@ -94,7 +94,7 @@ def parse( f )
           #スクリプトコマンド定義（＿で開始する）
 					pushq [ :COMMAND, $& ]
 
-				when /\A0x[0-9a-fA-F]+/, /\A\d+/
+				when /\A0x[0-9a-fA-F]+\b/, /\A\d+\b/
           #数値定義（0xで始まる１６進数、あるいは１０進数）
 					pushq [ :NUMBER, $& ]
 
@@ -102,7 +102,7 @@ def parse( f )
           #変数定義（＄で始まる）
 					pushq [ :VARREF, $& ]
 
-				when /\A[a-zA-Z_][a-zA-Z0-9_]*/
+				when /\A[a-zA-Z_][a-zA-Z0-9_]*\b/
           #識別子定義あるいは型定義
 					if RESERVED.has_key? $& then
 						pushq [ RESERVED[$&], $&.intern ]
@@ -133,7 +133,7 @@ def parse( f )
           #演算子、カッコなどの記号
 					pushq [ $&, $& ]
 				else
-					raise RuntimeError, "#{@fname}:#{@nowlineno}: fatal error! \{#{line_org}\}"
+					raise RuntimeError, "\"#{@fname}\":#{@nowlineno}: fatal error! \"#{line_org}\""
 				end
 				line = $'
 				printf( "\#NOW LINE(%4d) %s\n", @nowlineno, line)
@@ -156,6 +156,7 @@ def next_token
 end
 
 def pushq value
+  #STDERR.puts "push \"#{value}\""
 	value << @nowlineno
 	@q.push value
 end
@@ -172,7 +173,7 @@ def on_error( t, v, values )
   end
 
 
-..end sp4.y modeval..idea71f903dc
+..end sp4.y modeval..id70e94306d6
 
 ##### racc 1.4.5 generates ###
 

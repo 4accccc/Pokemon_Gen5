@@ -649,19 +649,19 @@ def parse( f )
           #アセンブララベル定義
 					pushq [ :LABEL, $& ]
 
-				when /\A_[A-Z0-9][a-zA-Z0-9_]*/
+				when /\A_[A-Z0-9][a-zA-Z0-9_]*\b/
           #スクリプトコマンド定義（＿で開始する）
 					pushq [ :COMMAND, $& ]
 
-				when /\A0x[0-9a-fA-F]+/, /\A\d+/
+				when /\A0x[0-9a-fA-F]+\b/, /\A\d+\b/
           #数値定義（0xで始まる１６進数、あるいは１０進数）
 					pushq [ :NUMBER, $& ]
 
-				when /\A\$[a-zA-Z][a-zA-Z0-9_]*/
+				when /\A\$[a-zA-Z][a-zA-Z0-9_]*\b/
           #変数定義（＄で始まる）
 					pushq [ :VARREF, $& ]
 
-				when /\A[a-zA-Z_][a-zA-Z0-9_]*/
+				when /\A[a-zA-Z_][a-zA-Z0-9_]*\b/
           #識別子定義あるいは型定義
 					if RESERVED.has_key? $& then
 						pushq [ RESERVED[$&], $&.intern ]
@@ -671,15 +671,15 @@ def parse( f )
 						pushq [ :IDENT, $& ]
 					end
 
-				when /\A\\[a-zA-Z_][a-zA-Z0-9_]*/
+				when /\A\\[a-zA-Z_][a-zA-Z0-9_]*\b/
           # \から始まる識別子はアセンブラマクロパラメータ
 					pushq [ :MACPARAM, $& ]
 
-				when /\A==/,/\A!=/,/\A\<=/,/\A\>=/,/\A>/,/\A</,/\A\&\&/,/\A\|\|/
+				when /\A==\b/,/\A!=\b/,/\A\<=\b/,/\A\>=\b/,/\A>\b/,/\A<\b/,/\A\&\&\b/,/\A\|\|\b/
           # 比較演算子
 					pushq [ $&, $& ]
 
-        when /\A\+=/, /\A\-=/, /\A\*=/, /\A\/=/, /\A\%=/, /\A\|=/, /\A\&=/
+        when /\A\+=\b/, /\A\-=\b/, /\A\*=\b/, /\A\/=\b/, /\A\%=\b/, /\A\|=\b/, /\A\&=\b/
           # 複合代入演算子
           pushq [ :OP_COMP_ASSIGN, $& ]
 
@@ -688,11 +688,11 @@ def parse( f )
 					pushq [ :COMMENT, $& ]
 					@incomment = true
 
-				when /\A[\+\-\*\/=(){},]/
+				when /\A[\+\-\*\/=(){},]\b/
           #演算子、カッコなどの記号
 					pushq [ $&, $& ]
 				else
-					raise RuntimeError, "#{@fname}:#{@nowlineno}: fatal error! \{#{line_org}\}"
+					raise RuntimeError, "\"#{@fname}\":#{@nowlineno}: fatal error! \"#{line_org}\""
 				end
 				line = $'
 				printf( "\#NOW LINE(%4d) %s\n", @nowlineno, line)
@@ -715,6 +715,7 @@ def next_token
 end
 
 def pushq value
+  #STDERR.puts "push \"#{value}\""
 	value << @nowlineno
 	@q.push value
 end
