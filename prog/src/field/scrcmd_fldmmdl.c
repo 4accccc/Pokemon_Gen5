@@ -27,6 +27,8 @@
 
 #include "fieldmap_ctrl_grid.h"
 
+#include "field_task_manager.h"
+#include "field_task_player_rot.h"
 #include "field_task_player_drawoffset.h"
 
 #include "event_fldmmdl_control.h"
@@ -1234,5 +1236,29 @@ VMCMD_RESULT EvCmdObjRailLocationSet( VMHANDLE *core, void *wk )
 //-----------------------------------------------------------------------------
 VMCMD_RESULT EvCmdObjWarpOut( VMHANDLE *core, void *wk )
 {
+  SCRCMD_WORK*     work     = wk;
+  SCRIPT_WORK*     script   = SCRCMD_WORK_GetScriptWork( work );
+  u16              obj_id   = SCRCMD_GetVMWorkValue( core, work ); // コマンド第一引数: OBJID
+  MMDLSYS*         mmdlsys  = SCRCMD_WORK_GetMMdlSys( work );
+  MMDL*            mmdl     = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
+  SCRIPT_FLDPARAM* fldparam = SCRIPT_GetFieldParam( script );
+  FIELDMAP_WORK*   fieldmap = fldparam->fieldMap;
+  FIELD_TASK_MAN*  taskMan  = FIELDMAP_GetTaskManager( fieldmap );
+
+  VecFx32 vec;
+  FIELD_TASK* moveTask;
+  FIELD_TASK* rotTask; 
+
+  GF_ASSERT( mmdl ); // 引数エラー: 指定されたOBJIDは存在しない
+
+  // タスクを生成
+  VEC_Set( &vec, 0, 150<<FX32_SHIFT, 0 );
+  moveTask = FIELD_TASK_TransDrawOffsetEX( fieldmap, 24, &vec, mmdl );
+  rotTask  = FIELD_TASK_PlayerRotateEX( fieldmap, 24, 3, mmdl );
+
+  // タスクを登録
+  FIELD_TASK_MAN_AddTask( taskMan, rotTask, NULL );
+  FIELD_TASK_MAN_AddTask( taskMan, moveTask, NULL ); 
+
   return VMCMD_RESULT_CONTINUE;
 }
