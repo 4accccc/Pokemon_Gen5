@@ -364,11 +364,9 @@ EVENT_START   ev_pos_d01r0101_support_03
 	_OBJ_ANIME_WAIT()
 	
 	CASE 23 THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d01r0101_player_pos_z23 )
+	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_pos_z23_01)
 	_OBJ_ANIME_WAIT()
-	
-	CASE 24 THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d01r0101_player_pos_z24 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d01r0101_player_pos_z22 )
 	_OBJ_ANIME_WAIT()
 	
     DEFAULT
@@ -467,6 +465,9 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakaim_coming01)
 	_OBJ_ANIME_WAIT()
 	
+	//プラズマ団曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_PLASMA )
+	
 	//プラズマ女：みっけ
 	_BALLOONWIN_OBJMSG_POS(msg_d01r0101_hakaiw_01,D01R0101_HAKAIW_01, POS_UL)
 	_BALLOONWIN_CLOSE()
@@ -512,8 +513,11 @@ EVENT_START   ev_pos_d01r0101_support_04
 	
 	//プラズマ男ムンナを蹴る
 	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakaim_kick_02)
-	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 22 )
 	_SE_PLAY( SEQ_SE_FLD_04 ) 
+	
+	_OBJ_ANIME_WAIT()
 	_SE_WAIT() 
 	
 	//ムンナ：む…にゅ！
@@ -603,8 +607,11 @@ EVENT_START   ev_pos_d01r0101_support_04
 	
 	//プラズマ男ムンナを蹴る
 	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakaim_kick_02)
-	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT( 22 )
 	_SE_PLAY( SEQ_SE_FLD_04 ) 
+	
+	_OBJ_ANIME_WAIT()
 	_SE_WAIT() 
 	
 	//おら！ゆめのけむりだせ！
@@ -620,7 +627,9 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_DISP_FADE_END_CHECK()
 	_WHITE_IN()
 	_DISP_FADE_END_CHECK()
-
+	
+	//七賢人曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
 
 	//======================================//
 	
@@ -702,10 +711,21 @@ EVENT_START   ev_pos_d01r0101_support_04
 	//一瞬間をおく
 	_TIME_WAIT( 16 )
 	
+	//辺りが白くなる
+	_WHITE_OUT() 
+	_DISP_FADE_END_CHECK()
+	
+	//イベント曲停止
+	_END_EVENT_BGM()
+	
 	//ゲーヂスOBJ削除
 	_OBJ_DEL( D01R0101_SAGE1_03 )
 	_OBJ_DEL( D01R0101_HAKAIW_01 )
 	_OBJ_DEL( D01R0101_HAKAIM_01 )
+	
+	_WHITE_IN()
+	_DISP_FADE_END_CHECK()
+	
 	//ムシャーナOBJ作成
 	_OBJ_ADD( D01R0101_POKE_02 )
 	
@@ -1259,23 +1279,15 @@ _ANIME_LABEL	anm_d01r0101_player_retrun02
 //	R01　夢イベント用：プレイヤー、サポートに隣接z22
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d01r0101_player_pos_z22
-	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R01　夢イベント用：プレイヤー、サポートに隣接z23
+//	R01　夢イベント用：サポート、プレイヤーに隣接z23
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_d01r0101_player_pos_z23
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	R01　夢イベント用：プレイヤー、サポートに隣接z24
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_d01r0101_player_pos_z24
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_DIR_L,1
+_ANIME_LABEL	anm_d01r0101_support_pos_z23_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------

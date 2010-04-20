@@ -444,6 +444,15 @@ EVENT_START   ev_scene_r07_movepoke_02
 	_EV_MOVEPOKE_START_ANIME( SCR_EV_MOVEPOKE_ANIME_RAI_KAZA_INSIDE )
 	_EV_MOVEPOKE_CHECK_ANIME_END()
 	
+	//バージョンによって天気を替える
+	//★Blackの場合
+	IF $LCW_VERSION == VERSION_BLACK THEN
+		_WEATHER_CHANGE( WEATHER_NO_KAZAKAMI ) 
+	//★Whiteの場合
+	ELSE
+		_WEATHER_CHANGE( WEATHER_NO_RAIKAMI ) 
+	ENDIF
+	
 	//バージョンによって鳴き声を替える
 	//★Blackの場合
 	IF $LCW_VERSION == VERSION_BLACK THEN
@@ -460,20 +469,11 @@ EVENT_START   ev_scene_r07_movepoke_02
 	ENDIF
 	
 	//ギザウィン表示待ち
-	_TIME_WAIT ( 80 )
+	//_TIME_WAIT ( 80 )
 	_GIZAWIN_CLOSE()
 	
-	//バージョンによって天気を替える
-	//★Blackの場合
-	IF $LCW_VERSION == VERSION_BLACK THEN
-		_WEATHER_CHANGE( WEATHER_NO_KAZAKAMI ) 
-	//★Whiteの場合
-	ELSE
-		_WEATHER_CHANGE( WEATHER_NO_RAIKAMI ) 
-	ENDIF
-	
 	//天気変更待ち
-	_TIME_WAIT ( 200 )
+	_TIME_WAIT ( 160 )
 	_PLAINWIN_MSG_DOWN( msg_r07_narrator_01)
 	_PLAINWIN_CLOSE()
 	

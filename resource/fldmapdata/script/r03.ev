@@ -126,21 +126,25 @@ EVENT_START   ev_pos_r03_futago_01
 		CASE 563 THEN
 		_OBJ_ANIME( R03_FUTAGO_01, anm_babygirl1_trainer_down_z563 )
 		_OBJ_ANIME( R03_FUTAGO_01_2, anm_babygirl1_trainer_down_z563 )
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_stoper_player_look_up)
 		_OBJ_ANIME_WAIT()
 		
 		CASE 564 THEN
 		_OBJ_ANIME( R03_FUTAGO_01, anm_babygirl1_trainer_down_z564 )
 		_OBJ_ANIME( R03_FUTAGO_01_2, anm_babygirl1_trainer_down_z564 )
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_stoper_player_look_up)
 		_OBJ_ANIME_WAIT()
 		
 		CASE 565 THEN
 		_OBJ_ANIME( R03_FUTAGO_01, anm_babygirl1_trainer_down_z565 )
 		_OBJ_ANIME( R03_FUTAGO_01_2, anm_babygirl1_trainer_down_z565 )
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_stoper_player_look_up)
 		_OBJ_ANIME_WAIT()
 		
 	    DEFAULT //ê≥ñ Ç…óßÇ¡ÇΩéûÇ∆ìØÇ∂èàóù
 	    _OBJ_ANIME( R03_FUTAGO_01, anm_babygirl1_trainer_down_z563 )
 		_OBJ_ANIME( R03_FUTAGO_01_2, anm_babygirl1_trainer_down_z563 )
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_stoper_player_look_up)
 		_OBJ_ANIME_WAIT()
 		
 	    ENDSWITCH
@@ -255,7 +259,7 @@ _ANIME_LABEL	 anm_babygirl1_stop_01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_stoper_player_look_up
-	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------

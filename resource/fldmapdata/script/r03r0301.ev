@@ -24,9 +24,12 @@ _EVENT_DATA_END
 
 
 /**************************************************************/
-/*  ポケモン誘拐イベント：POSで先に進むか質問*/
+/*  ポケモン誘拐イベント：POSで開始*/
 /**************************************************************/
 EVENT_START   ev_pos_r03r0301_rival_01
+
+	//プラズマ団曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_PLASMA )
 
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
@@ -240,6 +243,10 @@ EVENT_START   ev_pos_r03r0301_rival_01
 	//暗転プラズマ団OBJ削除
 	_BLACK_OUT_SLOW()
 	_DISP_FADE_END_CHECK()
+	
+	//プラズマ団曲停止
+	_END_EVENT_BGM()
+	
 	_OBJ_DEL( R03R0301_HAKAIM_01 )
 	_OBJ_DEL( R03R0301_HAKAIM_02 )
 	_OBJ_DEL( R03R0301_HAKAIM_03 )
