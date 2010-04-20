@@ -218,7 +218,8 @@
 
 #define BSWTOOL_DEBUG_START_NO (80)
 #define BSWTOOL_DEBUG_CHK_FLAG (BSWTOOL_DEBUG_START_NO+0)
-#define BSWTOOL_DEBUG_END_NO (BSWTOOL_DEBUG_START_NO+1)
+#define BSWTOOL_DEBUG_PRINT_NO (BSWTOOL_DEBUG_START_NO+1)
+#define BSWTOOL_DEBUG_END_NO (BSWTOOL_DEBUG_START_NO+2)
 
 //--------------------------------------------------------------
 /// バトルサブウェイコマンドツールID

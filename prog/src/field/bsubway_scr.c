@@ -69,7 +69,7 @@ void BSUBWAY_SCRWORK_ClearWork( GAMESYS_WORK *gsys )
 /**
  * BSUBWAY_SCRWORK ワークエリアを取得して初期化する
  * @param gsys GAMESYS_WORK*
- * @param init 初期化モード BSWAY_PLAY_NEW:始め、BSWAY_PLAY_CONTINE:続き
+ * @param init 初期化モード BSWAY_PLAY_NEW:始め、BSWAY_PLAY_CONTINUE:続き
  * @param playmode プレイモード指定:BSWAY_MODE_～*
  * @retval BSUBWAY_SCRWORK*
  */
@@ -130,7 +130,7 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     
     BSUBWAY_PLAYDATA_SetData(
         bsw_scr->playData, BSWAY_PLAYDATA_ID_playmode, &buf8 );
-  }else{ //続き
+  }else{ //BSWAY_PLAY_CONTINUE 続き
     bsw_scr->play_mode = (u8)BSUBWAY_PLAYDATA_GetData(
         bsw_scr->playData, BSWAY_PLAYDATA_ID_playmode, NULL );
     
@@ -149,8 +149,9 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     
     //抽選済みのトレーナーNo
     BSUBWAY_PLAYDATA_GetData( bsw_scr->playData,
-        BSWAY_PLAYDATA_ID_trainer, bsw_scr->trainer);
+        BSWAY_PLAYDATA_ID_trainer, bsw_scr->trainer );
     
+    //AIマルチならパートナー復帰
     if( bsw_scr->play_mode == BSWAY_MODE_MULTI ||
         bsw_scr->play_mode == BSWAY_MODE_S_MULTI ){
       bsw_scr->partner = (u8)BSUBWAY_PLAYDATA_GetData(
@@ -172,7 +173,7 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
         }
         
         BSUBWAY_SCRWORK_MakePartnerRomData(
-            bsw_scr, &bsw_scr->five_data[bsw_scr->partner],
+          bsw_scr, &bsw_scr->five_data[bsw_scr->partner],
           start_no + bsw_scr->partner,
           BSUBWAY_PLAYDATA_GetData(bsw_scr->playData,
             BSWAY_PLAYDATA_ID_pare_itemfix, NULL ),
@@ -289,21 +290,22 @@ void BSUBWAY_SCRWORK_SaveRestPlayData( BSUBWAY_SCRWORK *bsw_scr )
   //セーブフラグを有効状態にリセット
   BSUBWAY_PLAYDATA_SetSaveFlag( bsw_scr->playData, TRUE );
   
-  //AIマルチモードならパートナーを覚えておく
-  if( bsw_scr->play_mode == BSWAY_MODE_COMM_MULTI ){
+  if( bsw_scr->play_mode == BSWAY_MODE_MULTI ||
+      bsw_scr->play_mode == BSWAY_MODE_S_MULTI ){
+    //AIマルチモードならパートナーを覚えておく
     buf8[0] = bsw_scr->partner;
     BSUBWAY_PLAYDATA_SetData(
         bsw_scr->playData, BSWAY_PLAYDATA_ID_partner, buf8 );
+    
+    //パートナーのポケモンパラメータを憶えておく
     BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
         BSWAY_PLAYDATA_ID_pare_poke,
         &(bsw_scr->five_poke[bsw_scr->partner]) );
     
     //アイテムが固定だったかどうか憶えておく
-    #if 0 //wb null
     BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
         BSWAY_PLAYDATA_ID_pare_itemfix,
         &(bsw_scr->five_item[bsw_scr->partner]) );
-    #endif
   }
 }
 
@@ -330,6 +332,8 @@ void BSUBWAY_SCRWORK_LoadPokemonMember(
   party = BSUBWAY_SCRWORK_GetPokePartyUse( bsw_scr );
   
   for( i = 0; i < bsw_scr->member_num; i++ ){ //選択ポケモン手持ちNo
+    KAGAYA_Printf( "BSW LOAD POKEMON MEMBER [%d] = %d\n",
+        i, bsw_scr->member[i] );
     pp = PokeParty_GetMemberPointer(
         (POKEPARTY *)party, bsw_scr->member[i] );
     bsw_scr->mem_poke[i] = PP_Get( pp, ID_PARA_monsno, NULL );  
@@ -368,7 +372,8 @@ void BSUBWAY_SCRWORK_SaveGameClearPlayData( BSUBWAY_SCRWORK *bsw_scr )
   //セーブフラグを有効状態にリセット
   BSUBWAY_PLAYDATA_SetSaveFlag( bsw_scr->playData, TRUE );
   
-  if( bsw_scr->play_mode == BSWAY_MODE_MULTI ){
+  if( bsw_scr->play_mode == BSWAY_MODE_MULTI ||
+      bsw_scr->play_mode == BSWAY_MODE_S_MULTI ){
     //AIマルチモードならパートナーを覚えておく
     buf8[0] = bsw_scr->partner;
     BSUBWAY_PLAYDATA_SetData(

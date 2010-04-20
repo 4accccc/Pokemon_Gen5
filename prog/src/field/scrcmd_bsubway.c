@@ -741,6 +741,12 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       }
     }
     break;
+  //DEBUG 数値出力
+  case BSWTOOL_DEBUG_PRINT_NO:
+    {
+      KAGAYA_Printf( "========BSW DEBUG PRINT NO %d=======\n", param0 );
+    }
+    break;
   //----ワーク依存
   //プレイモード別復帰位置セット
   case BSWSUB_SET_PLAY_MODE_LOCATION:
@@ -1670,30 +1676,32 @@ static const VecFx32 data_TrainPosTbl[BTRAIN_POS_MAX] =
 static const u32 data_PlayModeZoneID[BSWAY_MODE_MAX] =
 {
   ZONE_ID_C04R0102,
-  ZONE_ID_C04R0103,
   ZONE_ID_C04R0104,
-  ZONE_ID_C04R0104,
-  ZONE_ID_C04R0105,
   ZONE_ID_C04R0106,
+  ZONE_ID_C04R0106,
+  ZONE_ID_C04R0108,
+  ZONE_ID_C04R0103,
+  ZONE_ID_C04R0105,
   ZONE_ID_C04R0107,
-  ZONE_ID_C04R0108,
-  ZONE_ID_C04R0108,
+  ZONE_ID_C04R0107,
 };
 
 //--------------------------------------------------------------
 /// バトルサブウェイ　モード別受付復帰位置
 //--------------------------------------------------------------
+#define GRID_PLUS_HALF(p) (GRID_SIZE_FX32(p)+GRID_HALF_FX32)
+
 static const VecFx32 data_PlayModeRecoverPos[BSWAY_MODE_MAX] =
 {
-  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
-  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
-  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
-  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
-  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
-  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
-  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
-  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
-  {NUM_FX32(11),NUM_FX32(0),NUM_FX32(15)},
+  {GRID_PLUS_HALF(11),0,GRID_PLUS_HALF(15)},
+  {GRID_PLUS_HALF(11),0,GRID_PLUS_HALF(15)},
+  {GRID_PLUS_HALF(11),0,GRID_PLUS_HALF(15)},
+  {GRID_PLUS_HALF(11),0,GRID_PLUS_HALF(15)},
+  {GRID_PLUS_HALF(11),0,GRID_PLUS_HALF(15)},
+  {GRID_PLUS_HALF(11),0,GRID_PLUS_HALF(15)},
+  {GRID_PLUS_HALF(11),0,GRID_PLUS_HALF(15)},
+  {GRID_PLUS_HALF(11),0,GRID_PLUS_HALF(15)},
+  {GRID_PLUS_HALF(11),0,GRID_PLUS_HALF(15)},
 };
 
 //--------------------------------------------------------------

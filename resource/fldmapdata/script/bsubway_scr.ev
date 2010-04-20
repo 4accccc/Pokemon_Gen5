@@ -48,41 +48,31 @@ DEFINE_LOCAL debug_mode
 //======================================================================
 //--------------------------------------------------------------
 //  受付　初期化
+//  車内、ホームからのコンテニュー復帰も兼ねている
 //--------------------------------------------------------------
 INIT_EVENT_START ev_init_bsw_receipt
 {
-  _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-  _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN, play_mode, BTRAIN_POS_RECEIPT, BSW_NULL )
-  
-  SWITCH $WK_OTHER_BSUBWAY_RECEIPT
-  CASE BSWAY_SCENE_RECEIPT_CANCEL THEN    //キャンセル
-    //デモ用に自機バニッシュ
-  CASE BSWAY_SCENE_RECEIPT_AFTER THEN     //ゲーム後
-    //デモ用に自機バニッシュ
-  CASE BSWAY_SCENE_RECEIPT_ERROR THEN     //エラー
-  ENDSWITCH
-}
-INIT_EVENT_END
-
-//--------------------------------------------------------------
-//  受付　復帰
-//--------------------------------------------------------------
-INIT_EVENT_START ev_recover_bsw_receipt
-{
+  //電車配置
   _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN, play_mode, BTRAIN_POS_RECEIPT, BSW_NULL )
   
   SWITCH $WK_OTHER_BSUBWAY_RECEIPT
   CASE BSWAY_SCENE_RECEIPT_CONTINUE THEN //コンティニュー
-    //プレイモード
+    _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_NO, 0, BSW_NULL, BSW_NULL )
+    
+    //コンテニュー時のプレイモード取得
     _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+    
     //AIマルチならばパートナー追加
     IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
+      _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_NO, 1, BSW_NULL, BSW_NULL )
+
       //セーブデータ有効チェック
       _BSUBWAY_TOOL( BSWTOOL_IS_SAVE_DATA_ENABLE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
       
       //セーブデータ有効ならばパートナー追加
       IF $SCWK_ANSWER == TRUE THEN
+        _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_NO, 2, BSW_NULL, BSW_NULL )
         _CALL sub_bsw_common_add_partner
         
         _CALL sub_bsw_common_get_objid_partner
@@ -115,11 +105,90 @@ INIT_EVENT_START ev_recover_bsw_receipt
       ELSE //エラー
         $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
         _CALL sub_bsw_common_del_partner //パートナーOBJ削除
+        _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_NO, 3, BSW_NULL, BSW_NULL )
       ENDIF
     ENDIF
   CASE BSWAY_SCENE_RECEIPT_ERROR THEN     //エラー
     $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
     _CALL sub_bsw_common_del_partner  //パートナーOBJ削除
+  /*
+  CASE BSWAY_SCENE_RECEIPT_CANCEL THEN    //キャンセル
+  CASE BSWAY_SCENE_RECEIPT_AFTER THEN     //ゲーム後
+  CASE BSWAY_SCENE_RECEIPT_ERROR THEN     //エラー
+  */
+  ENDSWITCH
+}
+INIT_EVENT_END
+
+//--------------------------------------------------------------
+//  受付　復帰
+//--------------------------------------------------------------
+INIT_EVENT_START ev_recover_bsw_receipt
+{
+  //電車セット
+  _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN, play_mode, BTRAIN_POS_RECEIPT, BSW_NULL )
+  
+  SWITCH $WK_OTHER_BSUBWAY_RECEIPT
+  CASE BSWAY_SCENE_RECEIPT_CONTINUE THEN //コンティニュー
+    _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_NO, 0, BSW_NULL, BSW_NULL )
+    
+    //コンテニュー時のプレイモード取得
+    _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+    
+    //AIマルチならばパートナー追加
+    IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
+      _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_NO, 1, BSW_NULL, BSW_NULL )
+
+      //セーブデータ有効チェック
+      _BSUBWAY_TOOL( BSWTOOL_IS_SAVE_DATA_ENABLE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+      
+      //セーブデータ有効ならばパートナー追加
+      IF $SCWK_ANSWER == TRUE THEN
+        _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_NO, 2, BSW_NULL, BSW_NULL )
+        _CALL sub_bsw_common_add_partner
+        
+        _CALL sub_bsw_common_get_objid_partner
+        $objid = $SCWK_ANSWER
+        
+        //自機話し掛け位置取得
+        _CALL sub_bsw_common_check_jiki_talkpos
+
+        //自機の隣に
+        SWITCH $SCWK_TEMP2
+        CASE DIR_UP THEN
+          $SCWK_TEMP0 = 11
+          $SCWK_TEMP1 = 14
+          $SCWK_TEMP2 = DIR_RIGHT
+        CASE DIR_DOWN THEN
+          $SCWK_TEMP0 = 11
+          $SCWK_TEMP1 = 16
+          $SCWK_TEMP2 = DIR_RIGHT
+        CASE DIR_LEFT THEN
+          $SCWK_TEMP0 = 10
+          $SCWK_TEMP1 = 15
+          $SCWK_TEMP2 = DIR_RIGHT
+        DEFAULT
+          $SCWK_TEMP0 = 13
+          $SCWK_TEMP1 = 16
+          $SCWK_TEMP2 = DIR_UP
+        ENDSWITCH
+        
+        _OBJ_POS_CHANGE( objid, SCWK_TEMP0, 0, SCWK_TEMP1, SCWK_TEMP2 )
+      ELSE //エラー
+        $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
+        _CALL sub_bsw_common_del_partner //パートナーOBJ削除
+        _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_NO, 3, BSW_NULL, BSW_NULL )
+      ENDIF
+    ENDIF
+  CASE BSWAY_SCENE_RECEIPT_ERROR THEN     //エラー
+    $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
+    _CALL sub_bsw_common_del_partner  //パートナーOBJ削除
+  /*
+  CASE BSWAY_SCENE_RECEIPT_CANCEL THEN    //キャンセル
+  CASE BSWAY_SCENE_RECEIPT_AFTER THEN     //ゲーム後
+  CASE BSWAY_SCENE_RECEIPT_ERROR THEN     //エラー
+  */
   ENDSWITCH
 }
 INIT_EVENT_END
@@ -985,14 +1054,14 @@ ev_bsw_game_continue:
   //プレイモード取得
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
   
-  //フラグ初期化
+  //フラグ初期化(受付エラー、車内乗車状態に)
   _CALL sub_receipt_flag_set_geton_continue
   
   //現在位置セーブ
   _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //セーブ
-  _SYSWIN_MSG_ALLPUT_DOWN( msg_bsw_scr_33 )
+  _SYSWIN_MSG( msg_bsw_scr_33, POS_DOWN )
   _REPORT_CALL( SCWK_ANSWER )
   _MSGWIN_CLOSE()
   

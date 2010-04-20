@@ -674,11 +674,12 @@ sub_train_battle_win_next_menu:
       IF $SCWK_ANSWER == 0 THEN //はい
         //受付コンテニュー状態に
         $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_CONTINUE
+        //復帰位置を受付に
+        _BSUBWAY_TOOL( BSWSUB_SET_PLAY_MODE_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
         //プレイデータ反映
         _BSUBWAY_TOOL( BSWSUB_SAVE_REST_PLAY_DATA, BSW_NULL, BSW_NULL, BSW_NULL )
         //戦闘後のワーク開放
         _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
-        
         //ワーク開放
         _BSUBWAY_WORK_RELEASE()
         //レポート

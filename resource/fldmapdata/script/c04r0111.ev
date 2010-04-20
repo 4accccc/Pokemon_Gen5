@@ -175,6 +175,7 @@ sub_challenge_continue:
   
   //戻り場所を受付に
   _BSUBWAY_TOOL( BSWSUB_SET_PLAY_MODE_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
+  
   //トレーナー抽選
   _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET, BSW_NULL, BSW_NULL, BSW_NULL )
   
