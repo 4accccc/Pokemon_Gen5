@@ -47,6 +47,16 @@
 
 
 //==============================================================================
+//  定数定義
+//==============================================================================
+///パレス間移動が出来なかった場合のNG種類
+typedef enum{
+  PALACE_NG_TYPE_NOT_CONNECT,   //誰とも繋がっていない
+  PALACE_NG_TYPE_MISSION_PLAY,  //ミッション中
+}PALACE_NG_TYPE;
+
+
+//==============================================================================
 //  構造体定義
 //==============================================================================
 ///通信終了
@@ -79,6 +89,7 @@ typedef struct{
   MMDL *player_mmdl;
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
+  PALACE_NG_TYPE ng_type;
   u16 dir;
 }EVENT_PALACE_NGWIN;
 
@@ -106,7 +117,7 @@ static GMEVENT * EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldma
 static GMEVENT_RESULT EventChildCommEnd(GMEVENT * event, int *seq, void*work);
 static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, GAME_COMM_SYS_PTR game_comm, FIELD_PLAYER *pcActor);
 static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, INTRUDE_COMM_SYS_PTR intcomm);
-static GMEVENT * EVENT_PalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir );
+static GMEVENT * EVENT_PalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir, PALACE_NG_TYPE ng_type);
 static GMEVENT_RESULT _EventPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT * EVENT_PalaceBarrierMove( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir );
 static GMEVENT_RESULT _EventPalaceBarrierMove( GMEVENT *event, int *seq, void *wk );
@@ -285,7 +296,7 @@ BOOL IntrudeField_CheckTalkedTo(INTRUDE_COMM_SYS_PTR intcomm, u32 *hit_netid)
  * @retval  GMEVENT *		
  */
 //--------------------------------------------------------------
-static GMEVENT * EVENT_PalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir )
+static GMEVENT * EVENT_PalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir, PALACE_NG_TYPE ng_type)
 {
   EVENT_PALACE_NGWIN *ngwin;
   GMEVENT * event;
@@ -298,6 +309,7 @@ static GMEVENT * EVENT_PalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork
   ngwin->fieldWork = fieldWork;
   ngwin->player_mmdl = FIELD_PLAYER_GetMMdl(fld_player);
   ngwin->dir = dir;
+  ngwin->ng_type = ng_type;
   
   return event;
 }
@@ -320,10 +332,18 @@ static GMEVENT_RESULT _EventPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk
   switch(*seq){
   case 0:
     {
+      u32 msg_id;
+      
       FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(ngwin->fieldWork);
       ngwin->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
       ngwin->msgWin = FLDMSGWIN_AddTalkWin( msgBG, ngwin->msgData );
-      FLDMSGWIN_Print( ngwin->msgWin, 0, 0, plc_connect_06 );
+      if(ngwin->ng_type == PALACE_NG_TYPE_NOT_CONNECT){
+        msg_id = plc_connect_06;
+      }
+      else{
+        msg_id = plc_connect_03;
+      }
+      FLDMSGWIN_Print( ngwin->msgWin, 0, 0, msg_id );
       (*seq)++;
     }
     break;
@@ -661,7 +681,10 @@ GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, F
   
   if(event_dir != DIR_NOT){
     if(intcomm == NULL || GFL_NET_GetConnectNum() <= 1 || intcomm->member_num < 2){
-      return EVENT_PalaceNGWin(gsys, fieldWork, pcActor, event_dir);
+      return EVENT_PalaceNGWin(gsys, fieldWork, pcActor, event_dir, PALACE_NG_TYPE_NOT_CONNECT);
+    }
+    else if(MISSION_GetMissionPlay(&intcomm->mission) == TRUE){
+      return EVENT_PalaceNGWin(gsys, fieldWork, pcActor, event_dir, PALACE_NG_TYPE_MISSION_PLAY);
     }
     else{
       return EVENT_PalaceBarrierMove(gsys, fieldWork, pcActor, event_dir);

@@ -132,6 +132,8 @@ enum{
   
   INTSUB_ACTOR_PAL_MAX = 9,
   
+  INTSUB_ACTOR_PAL_MISSION_TARGET_PLAYER = 9, //ミッション対象のプレイヤーパレットアニメ
+  
   INTSUB_ACTOR_PAL_FONT = 0xd,
 };
 
@@ -320,6 +322,16 @@ enum{
 ///[TIME]が書かれているスクリーンをクリアする時のスクリーンコード
 #define BG_TIME_SCRN_CLEAR_CODE   (0x3001)
 
+//--------------------------------------------------------------
+//  ミッションフォーカス
+//--------------------------------------------------------------
+///ミッションターゲットになっていてフォーカスされるプレイヤーアイコンのEVY値
+#define MISSION_FOCUS_PLAYER_EVY      (8)
+///ミッションターゲットになっていてフォーカスされるプレイヤーアイコンのカラー
+#define MISSION_FOCUS_PLAYER_COLOR    (0x7fff)
+///ミッションターゲットになっていてフォーカスされるプレイヤーアイコンのアニメ速度
+#define MISSION_FOCUS_PLAYER_ANMWAIT  (15)
+
 
 //==============================================================================
 //  構造体定義
@@ -405,6 +417,8 @@ typedef struct _INTRUDE_SUBDISP{
 
   u8 back_exit;           ///< TRUE:「もどる」ボタンを押して下画面終了モードになっている
   u8 print_touch_player;  ///< 通信相手のアイコンをタッチした場合、その人物のNetID
+  u8 mission_target_focus_netid;    ///<ミッションターゲットでフォーカス対象のプレイヤーNetID
+  u8 mission_target_focus_wait;     ///<ミッションターゲットフォーカスアニメウェイト
   u8 padding[2];
 }INTRUDE_SUBDISP;
 
@@ -420,7 +434,7 @@ static void _IntSub_BmpWinAdd(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_BmpWinDel(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_BmpOamCreate(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_BmpOamDelete(INTRUDE_SUBDISP_PTR intsub);
-static void _IntSub_ActorResouceLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
+static void _IntSub_ActorResourceLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorResourceUnload(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_ActorCreate(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorDelete(INTRUDE_SUBDISP_PTR intsub);
@@ -435,6 +449,7 @@ static void _IntSub_Delete_EntryButton(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_ActorUpdate_TouchTown(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy);
 static void _IntSub_ActorUpdate_Area(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy);
 static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
+static void _IntSub_CursorS_MissionFocus(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy, ZONEID my_zone_id);
 static void _IntSub_ActorUpdate_EntryButton(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy);
 static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy);
@@ -521,6 +536,7 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   intsub->my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   intsub->player_pal_tblno = PALACE_TOWN_DATA_NULL;
   intsub->print_touch_player = INTRUDE_NETID_NULL;
+  intsub->mission_target_focus_netid = INTRUDE_NETID_NULL;
   
   _IntSub_CommParamInit(intsub, Intrude_Check_CommConnect(game_comm));
   
@@ -529,7 +545,7 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   _IntSub_SystemSetup(intsub);
   _IntSub_BGLoad(intsub, handle);
   _IntSub_BmpWinAdd(intsub);
-  _IntSub_ActorResouceLoad(intsub, handle);
+  _IntSub_ActorResourceLoad(intsub, handle);
   _IntSub_ActorCreate(intsub, handle);
   _IntSub_BmpOamCreate(intsub, handle);
   
@@ -992,7 +1008,7 @@ static void _IntSub_BmpOamDelete(INTRUDE_SUBDISP_PTR intsub)
  * @param   handle		
  */
 //--------------------------------------------------------------
-static void _IntSub_ActorResouceLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
+static void _IntSub_ActorResourceLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
 {
   //OBJ共通パレット
   intsub->index_pltt = GFL_CLGRP_PLTT_RegisterEx(
@@ -1536,7 +1552,11 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
   INTRUDE_STATUS *ist;
   
   my_area = intsub->comm.now_palace_area;
-  
+
+  //ミッションターゲットにされているプレイヤーのフォーカス処理
+  _IntSub_CursorS_MissionFocus(intsub);
+
+  //座標移動や表示・非表示設定
   for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
     act = intsub->act[INTSUB_ACTOR_CUR_S_0 + net_id];
     act_hate = intsub->act[INTSUB_ACTOR_WARP_NG_0 + net_id];
@@ -1600,6 +1620,66 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
       GFL_CLACT_WK_SetPos(act, &pos, INTSUB_CLACT_REND_SUB);
     }
     GFL_CLACT_WK_SetDrawEnable(act, TRUE);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * ミッションターゲットにされているプレイヤーアイコンのフォーカス処理
+ *
+ * @param   intsub		
+ */
+//--------------------------------------------------------------
+static void _IntSub_CursorS_MissionFocus(INTRUDE_SUBDISP_PTR intsub)
+{
+  if(intsub->comm.m_status == MISSION_STATUS_EXE && intsub->comm.p_md != NULL){
+    int target_netid = intsub->comm.p_md->target_info.net_id;
+    int pal_offset = -1;
+    
+    if(intsub->mission_target_focus_netid != INTRUDE_NETID_NULL
+        && intsub->mission_target_focus_netid != target_netid){
+      //別のプレイヤーがフォーカスされていた為、そのプレイヤーは元に戻す ※基本的にありえない
+      GFL_CLACT_WK_SetPlttOffs(
+        intsub->act[INTSUB_ACTOR_CUR_S_0 + intsub->mission_target_focus_netid], 
+        INTSUB_ACTOR_PAL_BASE_START + intsub->mission_target_focus_netid, 
+        CLWK_PLTTOFFS_MODE_PLTT_TOP);
+    }
+    if(intsub->mission_target_focus_netid != target_netid){
+      //初セットの為、パレットを専用領域へコピー
+      u16 palbuf[16];
+      
+      GFL_STD_MemCopy16(
+        (void*)(HW_DB_OBJ_PLTT + (INTSUB_ACTOR_PAL_BASE_START + target_netid) * 0x20), 
+        palbuf, 0x20);
+      SoftFade(palbuf, palbuf, 16, MISSION_FOCUS_PLAYER_EVY, MISSION_FOCUS_PLAYER_COLOR);
+      GFL_STD_MemCopy16(
+        palbuf, (void*)(HW_DB_OBJ_PLTT + INTSUB_ACTOR_PAL_MISSION_TARGET_PLAYER * 0x20), 0x20);
+      
+      intsub->mission_target_focus_netid = target_netid;
+    }
+    
+    intsub->mission_target_focus_wait++;
+    if(intsub->mission_target_focus_wait == MISSION_FOCUS_PLAYER_ANMWAIT){
+      pal_offset = INTSUB_ACTOR_PAL_MISSION_TARGET_PLAYER;
+    }
+    else if(intsub->mission_target_focus_wait >= MISSION_FOCUS_PLAYER_ANMWAIT*2){
+      pal_offset = INTSUB_ACTOR_PAL_BASE_START + target_netid;
+      intsub->mission_target_focus_wait = 0;
+    }
+    if(pal_offset != -1){
+      GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_CUR_S_0 + target_netid], 
+        pal_offset, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+    }
+  }
+  else{
+    if(intsub->mission_target_focus_netid != INTRUDE_NETID_NULL){
+      GFL_CLACT_WK_SetPlttOffs(
+        intsub->act[INTSUB_ACTOR_CUR_S_0 + intsub->mission_target_focus_netid], 
+        INTSUB_ACTOR_PAL_BASE_START + intsub->mission_target_focus_netid, 
+        CLWK_PLTTOFFS_MODE_PLTT_TOP);
+      intsub->mission_target_focus_netid = INTRUDE_NETID_NULL;
+      intsub->mission_target_focus_wait = 0;
+    }
   }
 }
 
