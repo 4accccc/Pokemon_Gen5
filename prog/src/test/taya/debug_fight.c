@@ -2064,6 +2064,8 @@ FS_EXTERN_OVERLAY(battle);
     SEQ_SETUP_START,
     SEQ_BTL_START,
     SEQ_BTL_RETURN,
+    SEQ_BTL_EXIT_REQ1,
+    SEQ_BTL_EXIT_REQ2,
     SEQ_NET_EXIT_WAIT,
     SEQ_BTL_SAVING,
     SEQ_BTL_RELEASE,
@@ -2369,16 +2371,39 @@ FS_EXTERN_OVERLAY(battle);
         NetErr_App_ReqErrorDisp();
         NetErr_DispCall(FALSE);
         wk->fNetConnect = FALSE;
+        (*seq) = SEQ_NET_EXIT_WAIT;
       }
-      else if( wk->fNetConnect ){
-        GFL_NET_Exit( btlExitConnectCallback );
+      else if( wk->fNetConnect )
+      {
+        GFL_NET_SetNoChildErrorCheck( FALSE );
+        GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle() , 26 , WB_NET_BATTLE_SERVICEID );
+        (*seq) = SEQ_BTL_EXIT_REQ1;
+      }
+      else
+      {
+        (*seq) = SEQ_NET_EXIT_WAIT;
       }
       changeScene_recover( wk );
       PMSND_StopBGM();
-      (*seq) = SEQ_NET_EXIT_WAIT;
+    }
+    break;
+  
+  case SEQ_BTL_EXIT_REQ1:
+    if( GFL_NET_HANDLE_IsTimeSync( GFL_NET_HANDLE_GetCurrentHandle() , 26 , WB_NET_BATTLE_SERVICEID ) == TRUE )
+    {
+      (*seq) = SEQ_BTL_EXIT_REQ2;
     }
     break;
 
+  case SEQ_BTL_EXIT_REQ2:
+    if( GFL_NET_IsParentMachine() == FALSE || 
+        GFL_NET_GetConnectNum() <= 1 )
+    {
+      GFL_NET_Exit( btlExitConnectCallback );
+      (*seq) = SEQ_NET_EXIT_WAIT;
+    }
+    break;
+    
   case SEQ_NET_EXIT_WAIT:
     if( wk->fNetConnect == FALSE )
     {

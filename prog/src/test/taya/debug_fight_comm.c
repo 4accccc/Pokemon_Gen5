@@ -15,6 +15,7 @@
 #include "net\dwc_raputil.h"
 #include "wmi.naix"
 #include "debug_fight_comm.h"
+#include "system\net_err.h"
 
 typedef BOOL (*NetTestFunc)(void* pCtl);
 
@@ -144,7 +145,7 @@ static BOOL NetTestRecvTiming(void* pCtl)
 
 static BOOL _NetTestChild2(void* pCtl)
 {
-   DEBUG_OHNO_CONTROL* pDOC =  &DebugOhnoControl;
+  DEBUG_OHNO_CONTROL* pDOC =  &DebugOhnoControl;
  
   if(GFL_NET_HANDLE_IsNegotiation( GFL_NET_HANDLE_GetCurrentHandle() ) ){
     if(GFL_NET_HANDLE_IsNegotiation( GFL_NET_GetNetHandle(0) ) ){
@@ -182,6 +183,20 @@ static BOOL _NetTestParent(void* pCtl)
 static BOOL _NetTestChild(void* pCtl)
 {
   DEBUG_OHNO_CONTROL* pDOC =  &DebugOhnoControl;
+
+  if(NetErr_App_CheckError() != NET_ERR_STATUS_NULL)
+  {
+    //ÄÚ‘±
+    GFLNetInitializeStruct pNetInit;
+    void *pWork = GFL_NET_GetWork();
+    GFL_STD_MemCopy( GFL_NET_GetNETInitStruct() , &pNetInit , sizeof(GFLNetInitializeStruct) );
+    
+    NetErr_App_ReqErrorDisp();
+    NetErr_DispCall(FALSE);
+    
+    _CHANGE_STATE( NULL );
+    DFC_NET_Init( &pNetInit , NULL , pWork , pDOC->bParent , pDOC->num );
+  }
 
   
   if(GFL_NET_HANDLE_RequestNegotiation()){
