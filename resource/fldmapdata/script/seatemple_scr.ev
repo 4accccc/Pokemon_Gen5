@@ -62,6 +62,10 @@ EVENT_END
 /*      ‚P‚O‚O•à                                              */
 /**************************************************************/
 EVENT_START ev_seatemple_step_100
+	
+	_SE_PLAY( SEQ_SE_FLD_153 )
+	_SE_WAIT()
+
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step01 )
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
@@ -72,8 +76,11 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_seatemple_step_300
 
+	_SE_PLAY( SEQ_SE_FLD_154 )
+
 	//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é
 	_SHAKE_CAMERA(5,0,3,8,1,0,1,5)
+	_SE_WAIT()
 
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step02 )
 	_LAST_KEYWAIT()
@@ -85,8 +92,11 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_seatemple_step_450
 
+	_SE_PLAY( SEQ_SE_FLD_155 )
+
 	//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é
 	_SHAKE_CAMERA(8,0,3,15,1,0,1,5)
+	_SE_WAIT()
 
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step03 )
 	_LAST_KEYWAIT()
@@ -99,8 +109,11 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_seatemple_step_500
 
+	_SE_PLAY( SEQ_SE_FLD_156 )
+
 	//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é
 	_SHAKE_CAMERA(10,0,3,20,1,0,1,5)
+	_SE_WAIT()
 
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step04 )
 	_LAST_KEYWAIT()

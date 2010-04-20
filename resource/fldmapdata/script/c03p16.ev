@@ -80,9 +80,6 @@ EVENT_START		ev_reserve_c03p16_cabinguide_01
 	//乗船アニメ用ワークを０にする
 	$WK_OTHER_PASSENGERBOAT = 0
 	
-	//乗船フラグをＯＮにする
-	_FLAG_SET( TMFLG_C03P16_CABIN_01 )
-	
 	//========================================/
 
 EVENT_END
@@ -233,7 +230,7 @@ _ANIME_LABEL	anm_cabin_in
 
 _ANIME_LABEL	anm_player_in
 	_ANIME_DATA AC_WAIT_16F,1
-	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,3
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -241,49 +238,58 @@ _ANIME_LABEL	anm_player_in
 //--------------------------------------------------------------------
 
 ev_cabin:
-				//所持金をチェック
-				_CHECK_GOLD( LWK_GOLD_CHK, 1000  )
-				//お金が足りている場合
-				IF $LWK_GOLD_CHK == TRUE THEN
-					
-					_SUBTRACT_GOLD( 1000 )
-					_GOLD_WIN_UPDATE( )
-					// 支払いSE
-					_SE_PLAY( SEQ_SE_SYS_22 )
-					_SE_WAIT()
-					
-					_GOLD_WIN_CLOSE()
-					
-					//まもなく　しゅっこうに　なります
-					_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_05 , C03P16_CABINGUIDE_01, POS_DL )
-					_MSGWIN_CLOSE()
 
-					//乗船アニメ
-					_OBJ_ANIME( C03P16_CABINGUIDE_01, anm_cabin_in )
-					_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in )
-					_OBJ_ANIME_WAIT()
+//所持金をチェック
+_CHECK_GOLD( LWK_GOLD_CHK, 1000  )
+//お金が足りている場合
+IF $LWK_GOLD_CHK == TRUE THEN
+					
+	_SUBTRACT_GOLD( 1000 )
+	_GOLD_WIN_UPDATE( )
+	// 支払いSE
+	_SE_PLAY( SEQ_SE_SYS_22 )
+	_SE_WAIT()
+					
+	_GOLD_WIN_CLOSE()
+					
+	//まもなく　しゅっこうに　なります
+	_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_05 , C03P16_CABINGUIDE_01, POS_DL )
+	_MSGWIN_CLOSE()
 
-          //乗船アニメ用ワークを０にする
-          $WK_OTHER_PASSENGERBOAT = 0
-			
-					//船員のOBJを消す
-					_OBJ_DEL( C03P16_CABINGUIDE_01 )
+	//乗船アニメ
+	_OBJ_ANIME( C03P16_CABINGUIDE_01, anm_cabin_in )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in )
+	_OBJ_ANIME_WAIT()
 
-					//予約スクリプト
-					_RESERVE_SCRIPT( SCRID_RESERVE_C03R0801_CABINGUIDE_01 )
+	//========================================/
 	
-					//マップチェンジ
-					_MAP_CHANGE( ZONE_ID_C03R0801, 29, 29, DIR_UP )
+	//乗船アニメ用ワークを０にする
+	$WK_OTHER_PASSENGERBOAT = 0
+	
+	//乗船フラグをＯＮにする
+	_FLAG_SET( TMFLG_C03P16_CABIN_01 )
+	
+	//========================================/
+			
+	//船員のOBJを消す
+	_OBJ_DEL( C03P16_CABINGUIDE_01 )
 
-				//お金が足りない場合
-				ELSE
+	//予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_C03R0801_CABINGUIDE_01 )
+	
+	//マップチェンジ
+	_MAP_CHANGE( ZONE_ID_C03R0801, 29, 29, DIR_UP )
+
+//お金が足りない場合
+ELSE
+
+	//お金が　足りません
+	_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01c , C03P16_CABINGUIDE_01, POS_DL )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 				
-					//お金が　足りません
-					_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01c , C03P16_CABINGUIDE_01, POS_DL )
-					_LAST_KEYWAIT()
-					_MSGWIN_CLOSE()
-				
-				ENDIF
+ENDIF
+
 _RET
 
 //--------------------------------------------------------------------

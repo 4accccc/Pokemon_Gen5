@@ -423,10 +423,6 @@ EVENT_START   ev_scene_c01_pdwguide_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_yudo )
 	_OBJ_ANIME_WAIT()
 	
-	//階段ＳＥ
-	_SE_PLAY(SEQ_SE_KAIDAN)
-	_SE_WAIT()	
-	
 	//========================================//
 
 	//発明家マコモのバニッシュフラグセット

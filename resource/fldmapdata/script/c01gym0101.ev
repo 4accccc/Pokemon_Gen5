@@ -643,6 +643,11 @@ _ANIME_LABEL	anm_step_d
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
 /**************************************************************/
 /*         ジムリーダーコーン（画面右）  戦闘前             */
 /**************************************************************/
@@ -660,7 +665,12 @@ EVENT_START		ev_c01gym0101_leader1b_01
 		//炎タイプを選択している場合
 		
 		IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
-
+			
+			_CALL ev_move
+			
+			_OBJ_ANIME( C01GYM0101_LEADER1B_01, anm_stay_d )
+			_OBJ_ANIME_WAIT()
+			
 			//よかったね！　３にんの　トップと　たたかう
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1_20b )
 			_BALLOONWIN_CLOSE()
@@ -787,8 +797,9 @@ _ANIME_LABEL	anm_corn_return
 //	デント　持ち場に戻る
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_dento_comeback
-	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
@@ -805,6 +816,11 @@ EVENT_START		ev_c01gym0101_leader1a_01
 
 			//草タイプを選択している場合
 		IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+
+			_CALL ev_move
+			
+			_OBJ_ANIME( C01GYM0101_LEADER1A_01, anm_stay_d )
+			_OBJ_ANIME_WAIT()
 
 			//さんにんの　なかで　いちばん　つよい　オレが
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1_20a )
@@ -935,15 +951,16 @@ _ANIME_LABEL	anm_pod_return
 //	デント　持ち場に戻る
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_dento_podback
-	_ANIME_DATA	AC_WALK_R_8F,2
 	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*         ジムリーダーデント（画面左）  戦闘前	              */
 /**************************************************************/
 EVENT_START		ev_c01gym0101_leader1c_01
-	_TALK_OBJ_START()
+_TALK_OBJ_START()
 
 	//分岐：ジムバッジ取得しているか、いないか
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
@@ -955,7 +972,12 @@ EVENT_START		ev_c01gym0101_leader1c_01
 
 		//水タイプを選択している場合
 		IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_MIZU THEN
-		
+			
+			_CALL ev_move
+			
+			_OBJ_ANIME( C01GYM0101_LEADER1C_01, anm_stay_d )
+			_OBJ_ANIME_WAIT()
+			
 			//はい　ぼくで　よろしければ
 			_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_leader1_20c )
 			_BALLOONWIN_CLOSE()
@@ -1060,6 +1082,51 @@ EVENT_START		ev_c01gym0101_leader1c_01
 	ENDIF
 	
 EVENT_END
+
+/**************************************************************/
+/*		共通処理・戦闘前にジムリーダーの前に移動する		  */
+/**************************************************************/
+
+ev_move:
+
+DEFINE_LOCAL	LWK_DIR
+_PLAYER_DIR_GET( LWK_DIR )
+SWITCH $LWK_DIR
+CASE DIR_LEFT THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_left_come )
+CASE DIR_RIGHT THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_right_come )
+CASE DIR_UP THEN
+
+CASE DIR_DOWN THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_down_come )
+ENDSWITCH
+
+_OBJ_ANIME_WAIT()
+
+_RET
+
+//--------------------------------------------------------------------
+//		ジムリーダー前に移動するアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_left_come
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_right_come
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_down_come
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 
 /**************************************************************/

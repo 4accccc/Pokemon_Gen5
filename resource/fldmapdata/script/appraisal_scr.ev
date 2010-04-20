@@ -47,7 +47,6 @@ _TALK_OBJ_START()
 
 		//ハアイ！　アタイは　しがないメイド！
 		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_01 )
-		_MSGWIN_CLOSE()
 		
 		//========================================/
 		
@@ -130,6 +129,8 @@ _TALK_OBJ_START()
 					_SE_PLAY( SEQ_SE_SYS_22 )
 					_SE_WAIT()
 
+					_TIME_WAIT( 30 )
+
 					_GOLD_WIN_CLOSE()
 
 					//サンキュー！
@@ -179,7 +180,6 @@ _TALK_OBJ_START()
 
 		//ワシ　こうぶつが　だいこうぶつなの
 		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_01 )
-		_MSGWIN_CLOSE()
 		
 		//========================================/
 		
@@ -261,6 +261,8 @@ _TALK_OBJ_START()
 					_GOLD_WIN_UPDATE()
 					_SE_PLAY( SEQ_SE_SYS_22 )
 					_SE_WAIT()
+
+					_TIME_WAIT( 30 )
 
 					_GOLD_WIN_CLOSE()
 
@@ -344,6 +346,8 @@ _TALK_OBJ_START()
 				_SE_PLAY( SEQ_SE_SYS_22 )
 				_SE_WAIT()
 
+				_TIME_WAIT( 30 )
+
 				_GOLD_WIN_CLOSE()
 
 				//いいものが　てにはいったよ！
@@ -388,7 +392,6 @@ ev_fugou:
 
 		//オレ　ごらんのとおりの　リッチな　だいふごう
 		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_01 )
-		_MSGWIN_CLOSE()
 	
 		//========================================/
 		
@@ -467,9 +470,11 @@ ev_fugou:
 					_SUB_ITEM( LWK_ITEM , 1 , LWK_REDUCE )
 
 					_ADD_GOLD( LWK_MONEY )
-          _GOLD_WIN_UPDATE()
+					_GOLD_WIN_UPDATE()
 					_SE_PLAY( SEQ_SE_SYS_22 )
 					_SE_WAIT()
+
+					_TIME_WAIT( 30 )
 
 					_GOLD_WIN_CLOSE()
 
@@ -598,9 +603,11 @@ _TALK_OBJ_START()
 					_SUB_ITEM( LWK_ITEM , 1 , LWK_REDUCE )
 
 					_ADD_GOLD( LWK_MONEY )
-          _GOLD_WIN_UPDATE()
+					_GOLD_WIN_UPDATE()
 					_SE_PLAY( SEQ_SE_SYS_22 )
 					_SE_WAIT()
+
+					_TIME_WAIT( 30 )
 
 					_GOLD_WIN_CLOSE()
 

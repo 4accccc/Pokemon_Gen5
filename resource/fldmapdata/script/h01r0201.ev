@@ -62,7 +62,7 @@ EVENT_START		ev_pos_h01r0201_rival_01
 
 	//階段SE
 	_SE_PLAY( SEQ_SE_KAIDAN )
-	_SE_WAIT()
+
 
 	//ライバル出現
 	_OBJ_ADD_EX( 9,11,DIR_UP,MMDL_ID_EVENTOBJ_00,RIVEL,MV_DMY )
@@ -71,7 +71,8 @@ EVENT_START		ev_pos_h01r0201_rival_01
 	DEFINE_LOCAL	LWK_POSZ
 	
 	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ )
-	
+
+	_SE_WAIT()
 	//座標による分岐
 	
 	SWITCH $LWK_POSX
