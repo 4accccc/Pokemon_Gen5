@@ -673,7 +673,7 @@ static void InitBmp( REPORT_WORK * wk )
 	// ƒvƒŒƒCŽžŠÔ
 	str = GFL_MSG_CreateString( mman, REPORT_STR_09 );
 	{
-		PLAYTIME * ptime = SaveData_GetPlayTime( sv );
+		PLAYTIME * ptime = GAMEDATA_GetPlayTimeWork( gd );
 		WORDSET_RegisterNumber( wset, 0, PLAYTIME_GetHour(ptime), 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 		WORDSET_RegisterNumber( wset, 1, PLAYTIME_GetMinute(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	}
