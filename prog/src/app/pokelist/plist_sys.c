@@ -3518,9 +3518,9 @@ const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const
     if( work->plData->item != 0 )
     {
       const int machineNo = ITEM_GetWazaMashineNo( work->plData->item );
-      if( PP_CheckWazaMachine( pp , machineNo ) == TRUE )
+      if( machineNo != 0xFF &&
+          PP_CheckWazaMachine( pp , machineNo ) == TRUE )
       {
-        //FIXME 正しい技チェック
         if( isEmpty == TRUE )
         {
           return LSCL_OK;
@@ -3534,7 +3534,6 @@ const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const
     }
     else
     {
-      //FIXME 正しい技チェック
       if( isEmpty == TRUE )
       {
         return LSCL_OK;
