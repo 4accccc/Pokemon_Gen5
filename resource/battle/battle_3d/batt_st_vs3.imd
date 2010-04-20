@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="yoshida" host="W00210" date="2010-04-20T13:06:00" source="batt_stage_vs3.mb"/>
+	<create user="yoshida" host="W00210" date="2010-04-20T21:17:58" source="batt_stage_vs3.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="yoshida" host="W00210" date="2010-04-20T13:06:00" source="batt_stage_vs3.mb"/>
+<original_create user="yoshida" host="W00210" date="2010-04-20T21:17:58" source="batt_stage_vs3.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="2" xyz="-2.680664 0.094238 -2.680664" whd="5.361084 0.070557 5.361084"/>
+<box_test pos_scale="2" xyz="-2.680664 0.023193 -2.680664" whd="5.361084 0.042236 5.361084"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="batt_st_vs3"
@@ -420,9 +420,9 @@
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
-		scale="1.000000 1.000000 1.000000"
+		scale="1.000000 0.600098 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="0.000000 -0.133545 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="82" polygon_size="40"

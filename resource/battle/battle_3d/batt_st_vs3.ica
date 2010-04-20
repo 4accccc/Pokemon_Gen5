@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="yoshida" host="W00210" date="2010-04-14T19:28:30" source="batt_stage_vs3.mb"/>
+	<create user="yoshida" host="W00210" date="2010-04-20T21:17:58" source="batt_stage_vs3.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -24,8 +24,8 @@
 	tolerance_translate="0.100000"
 />
 
-<node_scale_data size="1">
-	1.000000
+<node_scale_data size="2">
+	1.000000 0.600098
 </node_scale_data>
 
 <node_rotate_data size="362">
@@ -68,20 +68,20 @@
 	-0.100830 0.000000
 </node_rotate_data>
 
-<node_translate_data size="1">
-	0.000000
+<node_translate_data size="2">
+	0.000000 -0.133545
 </node_translate_data>
 
 <node_anm_array size="1">
 	<node_anm index="0">
 		<scale_x frame_step="1" data_size="1" data_head="0"/>
-		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="1"/>
 		<scale_z frame_step="1" data_size="1" data_head="0"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="361" data_head="1"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
 		<translate_x frame_step="1" data_size="1" data_head="0"/>
-		<translate_y frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="1" data_head="1"/>
 		<translate_z frame_step="1" data_size="1" data_head="0"/>
 	</node_anm>
 </node_anm_array>
