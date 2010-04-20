@@ -128,7 +128,7 @@ struct _WIFILOGIN_MESSAGE_WORK {
 //------------------------------------------------------------------
 static u8 WifiLogin_Message_GetTextFrame( WIFILOGIN_DISPLAY display );
 static u8 WifiLogin_Message_GetSysFrame( WIFILOGIN_DISPLAY display );
-static BMPMENU_WORK * WIFILOGIN_MESSAGE_YesNoWinCreate(WIFILOGIN_MESSAGE_WORK* pWork);
+static BMPMENU_WORK * WIFILOGIN_MESSAGE_YesNoWinCreate(WIFILOGIN_MESSAGE_WORK* pWork, int type );
 
 
 WIFILOGIN_MESSAGE_WORK* WIFILOGIN_MESSAGE_Init(HEAPID id,int msg_dat, WIFILOGIN_DISPLAY display)
@@ -451,7 +451,7 @@ WIFILOGIN_YESNO_WORK* WIFILOGIN_MESSAGE_YesNoStart(WIFILOGIN_MESSAGE_WORK* pWork
     break;
 
   case WIFILOGIN_DISPLAY_UP:
-    yesno_wk->pYesNoWork  = WIFILOGIN_MESSAGE_YesNoWinCreate(pWork);
+    yesno_wk->pYesNoWork  = WIFILOGIN_MESSAGE_YesNoWinCreate(pWork, type);
     yesno_wk->yesno_ret   = BMPMENU_NULL;
     break;
   }
@@ -661,16 +661,28 @@ static u8 WifiLogin_Message_GetSysFrame( WIFILOGIN_DISPLAY display )
 //------------------------------------------------------------------
 #define	FLD_YESNO_WIN_PX	( 24 )
 #define	FLD_YESNO_WIN_PY	( 13 )
+#define	FLD_YESNO_SYS_WIN_PY	( 19 )
 static const BMPWIN_YESNO_DAT _yesNoBmpDat = {
-  GFL_BG_FRAME1_M, FLD_YESNO_WIN_PX, FLD_YESNO_WIN_PY,
+  GFL_BG_FRAME1_M, 0, 0,
   _BUTTON_MSG_PAL, 0
 };
 
-static BMPMENU_WORK * WIFILOGIN_MESSAGE_YesNoWinCreate(WIFILOGIN_MESSAGE_WORK* pWork)
+static BMPMENU_WORK * WIFILOGIN_MESSAGE_YesNoWinCreate(WIFILOGIN_MESSAGE_WORK* pWork, int type )
 {
   BMPWIN_YESNO_DAT  dat = _yesNoBmpDat;
   dat.chrnum  = GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar);
 
-  return BmpMenu_YesNoSelectInit( &_yesNoBmpDat, dat.chrnum,
+  switch(type){
+  case WIFILOGIN_YESNOTYPE_INFO:
+    dat.pos_x = FLD_YESNO_WIN_PX;
+    dat.pos_y = FLD_YESNO_WIN_PY;
+    break;
+  case WIFILOGIN_YESNOTYPE_SYS:
+    dat.pos_x = FLD_YESNO_WIN_PX;
+    dat.pos_y = FLD_YESNO_SYS_WIN_PY;
+    break;
+  }
+
+  return BmpMenu_YesNoSelectInit( &dat, dat.chrnum,
                              _BUTTON_WIN_PAL, 0, pWork->heapID );
 }

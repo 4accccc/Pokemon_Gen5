@@ -525,7 +525,6 @@ static void SEQFUNC_LiveCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
 
       switch( p_wk->p_param->mode )
       { 
-      default:
       case BATTLE_CHAMPIONSHIP_CORE_MODE_LIVE_FLOW_START:
         param.mode  = LIVEBATTLEMATCH_FLOW_MODE_START;
         break;
@@ -538,6 +537,9 @@ static void SEQFUNC_LiveCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
       case BATTLE_CHAMPIONSHIP_CORE_MODE_LIVE_FLOW_MENU:
         param.mode  = LIVEBATTLEMATCH_FLOW_MODE_MENU;
         break;
+      default:
+        GF_ASSERT( 0 );
+        param.mode  = LIVEBATTLEMATCH_FLOW_MODE_START;
       }
 
       p_wk->p_flow  = LIVEBATTLEMATCH_FLOW_Init( &param, HEAPID_BATTLE_CHAMPIONSHIP );

@@ -391,9 +391,11 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
   switch( p_wk->param.mode )
   { 
   case WIFIBATTLEMATCH_MODE_MAINMENU:  //タイトルから進む、メインメニュー
+    p_wk->type  = WIFIBATTLEMATCH_TYPE_WIFICUP; //まだ決まっていないがとりあえずいれておく
     WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_MAINMENU );
     break;
   case WIFIBATTLEMATCH_MODE_RANDOM:    //ポケセンのWIFIカウンターからすすむ、ランダム対戦
+    p_wk->type  = WIFIBATTLEMATCH_TYPE_RNDRATE; //まだ決まっていないがとりあえずいれておく
     WBM_SYS_SUBPROC_CallProc( p_wk->p_subproc, SUBPROCID_LOGIN );
     break;
   default:
@@ -1359,7 +1361,7 @@ static BOOL LOGIN_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs,
     break;
 
   case WIFILOGIN_RESULT_CANCEL:
-    if( p_wk->type == WIFIBATTLEMATCH_TYPE_WIFICUP )
+    if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_MAINMENU )
     { 
       //WIFI大会ならばメニューへ戻る
       WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );

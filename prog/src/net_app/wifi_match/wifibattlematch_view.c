@@ -656,6 +656,26 @@ void PLAYERINFO_WIFI_RenewalData( PLAYERINFO_WORK *p_wk, PLAYERINFO_WIFI_UPDATE_
   PlayerInfo_POKEICON_Delete( p_wk );
   PlayerInfo_POKEICON_Create( p_wk, p_wk->p_unit, p_wk->p_reg_view, p_wk->heapID );
 
+  { 
+    GFL_CLACTPOS  pos;
+    int x = GFL_BG_GetScrollX( p_wk->frm );
+    for( i = 0; i < TEMOTI_POKEMAX; i++ )
+    {
+      pos.y = PLAYERINFO_POKEICON_Y;
+      pos.x = -x + PLAYERINFO_POKEICON_START_X + PLAYERINFO_POKEICON_DIFF_X*i;
+      if( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i] )
+      { 
+        GFL_CLACT_WK_SetPos( p_wk->p_clwk[PLAYERINFO_CLWK_POKEICON_TOP+i], &pos, p_wk->cl_draw_type );
+      }
+      if( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP+i] )
+      { 
+        pos.x += PLAYERINFO_POKEITEM_X_OFS;
+        pos.y += PLAYERINFO_POKEITEM_Y_OFS;
+        GFL_CLACT_WK_SetPos( p_wk->p_clwk[PLAYERINFO_CLWK_ITEM_TOP+i], &pos, p_wk->cl_draw_type );
+      }
+    }
+  }
+
   switch( type )
   { 
   case PLAYERINFO_WIFI_UPDATE_TYPE_LOCK:
@@ -2544,8 +2564,7 @@ static void MatchInfo_Bmpwin_Create( MATCHINFO_WORK * p_wk, const WIFIBATTLEMATC
 				break;
 			case MATCHINFO_BMPWIN_PLACE:
 				GFL_MSG_GetString( p_msg, WIFIMATCH_STR_021, p_src );
-				WORDSET_RegisterLocalPlaceName( p_word, 0, MyStatus_GetMyNation( (MYSTATUS*)cp_data->mystatus ),
-            MyStatus_GetMyArea( (MYSTATUS*)cp_data->mystatus ) );
+				WORDSET_RegisterLocalPlaceName( p_word, 0, MyStatus_GetMyNation( (MYSTATUS*)cp_data->mystatus ), MyStatus_GetMyArea( (MYSTATUS*)cp_data->mystatus ) );
 				WORDSET_ExpandStr( p_word, p_str, p_src );
 				break;
 			case MATCHINFO_BMPWIN_GREET:

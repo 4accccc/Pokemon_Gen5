@@ -74,11 +74,11 @@ FS_EXTERN_OVERLAY(dpw_common);
 #endif //PM_DEBUG
 
 #ifndef SAKE_REPORT_NONE
-#define SAKE_REPORT_HEAP_DIVIDE   //レポート用ヒープを切り分ける
+//#define SAKE_REPORT_HEAP_DIVIDE   //レポート用ヒープを切り分ける
 #endif 
 
 
-#define DEBGU_WIFICUP_Printf(...)  OS_TFPrintf( 2, __VA_ARGS__ );
+#define DEBUG_WIFICUP_Printf(...)  OS_TFPrintf( 2, __VA_ARGS__ );
 
 //=============================================================================
 /**
@@ -561,7 +561,7 @@ static void WbmWifiSeq_Init( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
   WIFIBATTLEMATCH_WIFI_WORK	  *p_wk	    = p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM  *p_param  = p_wk->p_param;
 
-  DEBGU_WIFICUP_Printf( " mode%d ret%d\n", p_param->mode, p_param->retmode );
+  DEBUG_WIFICUP_Printf( " mode%d ret%d\n", p_param->mode, p_param->retmode );
   switch( p_param->mode )
   { 
   case WIFIBATTLEMATCH_CORE_MODE_START:
@@ -854,6 +854,10 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
     //バトルボックスロック確認
     SEQ_CHECK_EXITS_REG,
+
+    SEQ_START_MOVEIN_CARD,
+    SEQ_WAIT_MOVEIN_CARD,
+
     SEQ_CHECK_LOCK,
 
     SEQ_START_BOX_REWRITE_MSG,
@@ -962,7 +966,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     if( p_wk->p_param->p_gpf_data->WifiMatchUpState == Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_STATUS ) )
     { 
       //一致している
-      DEBGU_WIFICUP_Printf( "大会ワーク一致\n" );
+      DEBUG_WIFICUP_Printf( "大会ワーク一致\n" );
       *p_seq  = SEQ_CHECK_STATUS;
     }
     else
@@ -974,12 +978,12 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       if( DREAM_WORLD_MATCHUP_RETIRE == Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_STATUS )
           || DREAM_WORLD_MATCHUP_CHANGE_DS == Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_STATUS ) )
       { 
-        DEBGU_WIFICUP_Printf( "大会ワーク一致してなくやめていた %d\n",  Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_STATUS ));
+        DEBUG_WIFICUP_Printf( "大会ワーク一致してなくやめていた %d\n",  Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_STATUS ));
         *p_seq  = SEQ_START_WRITE_GPF;
       }
       else
       { 
-        DEBGU_WIFICUP_Printf( "大会ワーク一致してない\n" );
+        DEBUG_WIFICUP_Printf( "大会ワーク一致してない\n" );
         *p_seq  = SEQ_CHECK_STATUS;
       }
     }
@@ -1089,7 +1093,7 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       else if( ret == WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_EMPTY )
       { 
         //取得失敗
-        DEBGU_WIFICUP_Printf( "レギュレーションがなかったよ！\n" );
+        DEBUG_WIFICUP_Printf( "レギュレーションがなかったよ！\n" );
         *p_seq  =  SEQ_WAIT_DOWNLOAD_REG_FAILURE;
       }
     }
@@ -1157,6 +1161,19 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       *p_seq  = SEQ_START_UPDATE_MSG;
     }
     else
+    { 
+      //上書き確認のために以前の選手証を出す
+      *p_seq  = SEQ_START_MOVEIN_CARD;
+    }
+    break;
+    
+  case SEQ_START_MOVEIN_CARD:
+    Util_PlayerInfo_Create( p_wk );
+    *p_seq  = SEQ_WAIT_MOVEIN_CARD;
+    break;
+
+  case SEQ_WAIT_MOVEIN_CARD:
+    if( Util_PlayerInfo_Move( p_wk ) )
     { 
       *p_seq  = SEQ_CHECK_LOCK;
     }
@@ -1302,48 +1319,8 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   //更新処理
   case SEQ_START_UPDATE_MSG:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_13, WBM_TEXT_TYPE_WAIT );
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE_UPDATE );
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_SEND_GPF_POKEMON );
     *p_seq  = SEQ_WAIT_MSG;
-    break;
-
-  case SEQ_START_SAVE_UPDATE:
-    { 
-      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
-      BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
-
-      //デジタル選手証上書き
-      GFL_STD_MemCopy( &p_wk->recv_card, p_wk->p_reg, sizeof(REGULATION_CARDDATA) );
-
-      //ロック解除
-      BATTLE_BOX_SAVE_OffLockFlg( p_bbox_save, BATTLE_BOX_LOCK_BIT_WIFI );
-
-      //サインアップ状態へ
-      Regulation_SetCardParam( p_wk->p_reg, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_SIGNUP );
-
-      //成績をクリア
-      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_RATE, 0 );
-      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_WIN, 0 );
-      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_LOSE, 0 );
-
-
-      GAMEDATA_SaveAsyncStart( p_param->p_param->p_game_data );
-      *p_seq  = SEQ_WAIT_SAVE_UPDATE;
-    }
-    break;
-
-  case SEQ_WAIT_SAVE_UPDATE:
-    {
-      SAVE_RESULT ret;
-      ret = GAMEDATA_SaveAsyncMain( p_param->p_param->p_game_data );
-      if( ret == SAVE_RESULT_OK )
-      {
-        *p_seq  = SEQ_SEND_GPF_POKEMON;
-      }
-      else if( ret == SAVE_RESULT_NG )
-      { 
-        *p_seq  = SEQ_START_SAVE_NG_MSG;
-      }
-    }
     break;
 
   case SEQ_SEND_GPF_POKEMON:
@@ -1386,10 +1363,51 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       ret = WIFIBATTLEMATCH_NET_WaitSendGpfData( p_wk->p_net );
       if( ret == WIFIBATTLEMATCH_SEND_GPFDATA_RET_SUCCESS )
       { 
-        *p_seq  = SEQ_REGISTER_EXIT;
+        *p_seq  = SEQ_START_SAVE_UPDATE;
       }
     }
     break;
+
+  case SEQ_START_SAVE_UPDATE:
+    { 
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
+      BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+
+      //デジタル選手証上書き
+      GFL_STD_MemCopy( &p_wk->recv_card, p_wk->p_reg, sizeof(REGULATION_CARDDATA) );
+
+      //ロック解除
+      BATTLE_BOX_SAVE_OffLockFlg( p_bbox_save, BATTLE_BOX_LOCK_BIT_WIFI );
+
+      //サインアップ状態へ
+      Regulation_SetCardParam( p_wk->p_reg, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_SIGNUP );
+
+      //成績をクリア
+      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_RATE, 0 );
+      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_WIN, 0 );
+      RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_LOSE, 0 );
+
+
+      GAMEDATA_SaveAsyncStart( p_param->p_param->p_game_data );
+      *p_seq  = SEQ_WAIT_SAVE_UPDATE;
+    }
+    break;
+
+  case SEQ_WAIT_SAVE_UPDATE:
+    {
+      SAVE_RESULT ret;
+      ret = GAMEDATA_SaveAsyncMain( p_param->p_param->p_game_data );
+      if( ret == SAVE_RESULT_OK )
+      {
+        *p_seq  = SEQ_REGISTER_EXIT;
+      }
+      else if( ret == SAVE_RESULT_NG )
+      { 
+        *p_seq  = SEQ_START_SAVE_NG_MSG;
+      }
+    }
+    break;
+
     
   case SEQ_START_SAVE_NG_MSG:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_14, WBM_TEXT_TYPE_STREAM );
@@ -1682,12 +1700,12 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
       if( POKE_REG_OK == PokeRegulationMatchLookAtPokeParty(p_reg, (POKEPARTY*)p_my_data->pokeparty, &failed_bit) )
       { 
-        DEBGU_WIFICUP_Printf( "バトルボックスのポケモンレギュレーションOK\n" );
+        DEBUG_WIFICUP_Printf( "バトルボックスのポケモンレギュレーションOK\n" );
         *p_seq  = SEQ_WAIT_MOVEOUT_BTLBOX;
       }
       else
       { 
-        DEBGU_WIFICUP_Printf( "バトルボックスのポケモンレギュレーションNG!! 0x%x \n", failed_bit );
+        DEBUG_WIFICUP_Printf( "バトルボックスのポケモンレギュレーションNG!! 0x%x \n", failed_bit );
         *p_seq  = SEQ_START_NG_REG_MSG;
       }
     }
@@ -1747,12 +1765,12 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
         if( p_wk->evilecheck_data.status_code == 0 && ret == poke_max )
         { 
-          DEBGU_WIFICUP_Printf( "不正チェック通過\n" );
+          DEBUG_WIFICUP_Printf( "不正チェック通過\n" );
           *p_seq = SEQ_START_SEND_SAKE_POKE;
         }
         else
         { 
-          DEBGU_WIFICUP_Printf( "不正チェックNG\n" );
+          DEBUG_WIFICUP_Printf( "不正チェックNG\n" );
           *p_seq = SEQ_START_DIRTY_POKE_MSG;
         }
 
@@ -1860,7 +1878,7 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       data.WifiMatchUpState = DREAM_WORLD_MATCHUP_ENTRY;
       p_wk->p_param->p_gpf_data->WifiMatchUpState = DREAM_WORLD_MATCHUP_ENTRY;
       WIFIBATTLEMATCH_NET_StartSendGpfData( p_wk->p_net, &data, HEAPID_WIFIBATTLEMATCH_CORE );
-      DEBGU_WIFICUP_Printf("GPFへ送信 %d\n",DREAM_WORLD_MATCHUP_ENTRY);
+      DEBUG_WIFICUP_Printf("GPFへ送信 %d\n",DREAM_WORLD_MATCHUP_ENTRY);
     }
     *p_seq  = SEQ_WAIT_GPF_CUPSTATUS;
     break;
@@ -2019,7 +2037,8 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_WAIT_SUBSEQ_UNREGISTER:
     { 
       WBM_WIFI_SUBSEQ_RET ret = Util_SubSeq_Main( p_wk );
-      if( ret == WBM_WIFI_SUBSEQ_UNREGISTER_RET_FALSE )
+      if( ret == WBM_WIFI_SUBSEQ_UNREGISTER_RET_FALSE||
+          ret == WBM_WIFI_SUBSEQ_UNREGISTER_RET_NONE )
       { 
         *p_seq  = SEQ_START_DRAW_PLAYERINFO;
       }
@@ -2380,7 +2399,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     WIFIBATTLEMATCH_DATA_DebugPrint( p_param->p_enemy_data );
     if( p_param->p_player_data->wificup_no == p_param->p_enemy_data->wificup_no )
     { 
-      DEBGU_WIFICUP_Printf( "大会が同じ！！\n" );
+      DEBUG_WIFICUP_Printf( "大会が同じ！！\n" );
       *p_seq  = SEQ_CHECK_YOU_REGULATION;
     }
     else
@@ -2388,7 +2407,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       //大会番号がことなっていたらマッチングに戻る
       if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE ) )
       { 
-        DEBGU_WIFICUP_Printf( "大会番号が違うのでマッチングに戻る\n" );
+        DEBUG_WIFICUP_Printf( "大会番号が違うのでマッチングに戻る\n" );
         *p_seq  = SEQ_START_MATCH;
       }
     }
@@ -2401,13 +2420,13 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       //相手のポケモンをレギュレーションチェックにかける
       if( POKE_REG_OK == PokeRegulationMatchLookAtPokeParty(p_reg, p_party, &failed_bit)  )
       {
-        DEBGU_WIFICUP_Printf( "相手のポケモンはレギュレーションOK\n" );
+        DEBUG_WIFICUP_Printf( "相手のポケモンはレギュレーションOK\n" );
         *p_seq = SEQ_START_DOWNLOAD_OTHER_SAKE_POKE;
       }
       else
       { 
         p_wk->other_dirty_cnt++;
-        DEBGU_WIFICUP_Printf( "!!相手のポケモンはレギュレーションNG!! 0x%x\n", failed_bit );
+        DEBUG_WIFICUP_Printf( "!!相手のポケモンはレギュレーションNG!! 0x%x\n", failed_bit );
         *p_seq = SEQ_SEND_DIRTY_CHECK_DATA;
       }
     }
@@ -2445,23 +2464,23 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     //相手のサーバーポケモンと送信されてきたポケモンは同一か。
     if( !Util_ComarepPokeParty( p_wk->p_other_party, (POKEPARTY*)p_wk->p_param->p_enemy_data->pokeparty ) )
     { 
-      DEBGU_WIFICUP_Printf( "!!相手のポケモンとサーバーポケモン違うNG!! \n" );
+      DEBUG_WIFICUP_Printf( "!!相手のポケモンとサーバーポケモン違うNG!! \n" );
       p_wk->other_dirty_cnt++;
     }
     else
     { 
-      DEBGU_WIFICUP_Printf( "!!相手のポケモンとサーバーポケモンが一致!! \n" );
+      DEBUG_WIFICUP_Printf( "!!相手のポケモンとサーバーポケモンが一致!! \n" );
     }
 
     //相手のサーバーポケモンと署名から、正常データであることを証明
     if( !Util_VerifyPokeData( p_wk->p_param->p_enemy_data, (POKEPARTY*)p_wk->p_param->p_enemy_data->pokeparty, HEAPID_WIFIBATTLEMATCH_CORE ) )
     { 
-      DEBGU_WIFICUP_Printf( "!!相手のポケモン署名NG!! \n" );
+      DEBUG_WIFICUP_Printf( "!!相手のポケモン署名NG!! \n" );
       p_wk->other_dirty_cnt++;
     }
     else
     { 
-      DEBGU_WIFICUP_Printf( "!!相手のポケモン署名完全一致!! \n" );
+      DEBUG_WIFICUP_Printf( "!!相手のポケモン署名完全一致!! \n" );
     }
 
     *p_seq  = SEQ_SEND_DIRTY_CHECK_DATA;
@@ -2475,7 +2494,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_RECV_DIRTY_CHECK_DATA:
     if( WIFIBATTLEMATCH_NET_RecvDirtyCnt( p_wk->p_net, &p_wk->my_dirty_cnt ) )
     { 
-      DEBGU_WIFICUP_Printf( "不正カウンタ　自分%d相手%d\n", p_wk->my_dirty_cnt, p_wk->other_dirty_cnt );
+      DEBUG_WIFICUP_Printf( "不正カウンタ　自分%d相手%d\n", p_wk->my_dirty_cnt, p_wk->other_dirty_cnt );
       *p_seq  = SEQ_CHECK_DIRTY;
     }
     break;
@@ -2526,7 +2545,6 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     }
     break;
   case SEQ_START_OK_MATCHING_MSG:
-    PMSND_StopSE();
     PMSND_PlaySE( WBM_SND_SE_MATCHING_OK );
 
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
@@ -2678,7 +2696,7 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     *p_seq  = SEQ_START_NET_MSG;
     break;
   case SEQ_START_NET_MSG:
-    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_34, WBM_TEXT_TYPE_WAIT );
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_18, WBM_TEXT_TYPE_WAIT );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_REPORT_ATLAS );
     break
@@ -3494,7 +3512,7 @@ static void WbmWifiSubSeq_UnRegister( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
   case SEQ_START_SAVE_MSG:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_34, WBM_TEXT_TYPE_WAIT );
-    *p_seq       = SEQ_END;
+    *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_UNLOCK );
     break;
   case SEQ_UNLOCK:
@@ -3530,7 +3548,10 @@ static void WbmWifiSubSeq_UnRegister( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
 
   case SEQ_START_SAVE:
-    { 
+    {
+      //リタイヤ状態にしてセーブ
+      Regulation_SetCardParam( p_wk->p_reg, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_RETIRE );
+
       GAMEDATA_SaveAsyncStart( p_param->p_param->p_game_data );
       *p_seq  = SEQ_WAIT_SAVE;
     }
@@ -3552,8 +3573,8 @@ static void WbmWifiSubSeq_UnRegister( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
   case SEQ_START_UNLOCK_MSG:
     Util_PlayerInfo_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_26, WBM_TEXT_TYPE_STREAM );
-    *p_seq       = SEQ_END;
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_SEND_GPF_CUPSTATUS );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_END );
     break;
   case SEQ_END:
     WBM_SEQ_End( p_seqwk );
@@ -3606,7 +3627,7 @@ static void WbmWifiSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       GFL_STD_MemClear( &p_wk->evilecheck_data, sizeof(WIFIBATTLEMATCH_NET_EVILCHECK_DATA));
       WIFIBATTLEMATCH_NET_StartEvilCheck( p_wk->p_net, p_my_party, WIFIBATTLEMATCH_NET_EVILCHECK_TYPE_PARTY );
       (*p_seq)  = SEQ_WAIT_EVIL_CHECK;
-      DEBGU_WIFICUP_Printf( "EvilCheck Start\n" );
+      DEBUG_WIFICUP_Printf( "EvilCheck Start\n" );
     }
     break;
 
@@ -3616,12 +3637,12 @@ static void WbmWifiSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       ret = WIFIBATTLEMATCH_NET_WaitEvilCheck( p_wk->p_net, &p_wk->evilecheck_data );
       if( ret == WIFIBATTLEMATCH_NET_EVILCHECK_RET_SUCCESS )
       { 
-        DEBGU_WIFICUP_Printf( "EvilCheck Success\n" );
+        DEBUG_WIFICUP_Printf( "EvilCheck Success\n" );
         (*p_seq)  = SEQ_END_CHECK;
       }
       else if( ret == WIFIBATTLEMATCH_NET_EVILCHECK_RET_ERROR )
       { 
-        DEBGU_WIFICUP_Printf( "EvilCheck Error\n" );
+        DEBUG_WIFICUP_Printf( "EvilCheck Error\n" );
         p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_EVILCHECK_RET_NET_ERR;
         *p_seq  = SEQ_END;
       }
@@ -3648,13 +3669,13 @@ static void WbmWifiSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       //署名を保存
       Util_SetMyDataSign( p_my_data, &p_wk->evilecheck_data );
 
-      DEBGU_WIFICUP_Printf( "EvilCheck 成功！！\n" );
+      DEBUG_WIFICUP_Printf( "EvilCheck 成功！！\n" );
       p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_EVILCHECK_RET_SUCCESS;
       *p_seq  = SEQ_END;
     }
     else
     { 
-      DEBGU_WIFICUP_Printf( "EvilCheck 不正！！\n");
+      DEBUG_WIFICUP_Printf( "EvilCheck 不正！！\n");
       p_wk->subseq_ret  = WBM_WIFI_SUBSEQ_EVILCHECK_RET_DARTY;
       *p_seq  = SEQ_END;
     }
@@ -3982,7 +4003,7 @@ static u32 Util_List_Main( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
   }
   else
   { 
-    DEBGU_WIFICUP_Printf( "List not exist !!!\n" );
+    DEBUG_WIFICUP_Printf( "List not exist !!!\n" );
     return WBM_LIST_SELECT_NULL;
   }
 }
@@ -4059,7 +4080,7 @@ static void Util_SetMyDataInfo( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFI
   {
     MYSTATUS  *p_my;
     p_my  = GAMEDATA_GetMyStatus(cp_wk->p_param->p_param->p_game_data);
-    GFL_STD_MemCopy( p_my, p_my_data->mystatus, MyStatus_GetWorkSize() );
+    MyStatus_Copy( p_my, (MYSTATUS*)p_my_data->mystatus );
   }
   { 
     const MYPMS_DATA *cp_mypms;
@@ -4116,7 +4137,7 @@ static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, POKEPARTY *p
   POKEMON_PARAM *p_pp;
   BOOL ret  = TRUE;
 
-  DEBGU_WIFICUP_Printf( "ポケモン署名開始　全部で[%d]匹\n", PokeParty_GetPokeCount( p_party ) );
+  DEBUG_WIFICUP_Printf( "ポケモン署名開始　全部で[%d]匹\n", PokeParty_GetPokeCount( p_party ) );
   OS_TFPrintf( 3, "相手のポケモン署名チェック開始\n" );
 
   p_buff  = NHTTP_RAP_EVILCHECK_CreateVerifyPokeBuffer( POKETOOL_GetWorkSize(), PokeParty_GetPokeCount(p_party), GFL_HEAP_LOWID(heapID) );
@@ -4165,14 +4186,14 @@ static BOOL Util_ComarepPokeParty( const POKEPARTY *cp_pokeparty_1, const POKEPA
 
       if( GFL_STD_MemComp( p_ppp1, p_ppp2, POKETOOL_GetPPPWorkSize() ) != 0 )
       {
-        DEBGU_WIFICUP_Printf( "Cnt%d Failed !!!\n", i );
+        DEBUG_WIFICUP_Printf( "Cnt%d Failed !!!\n", i );
         return FALSE;
       }
     }
     return TRUE;
   }
 
-  DEBGU_WIFICUP_Printf( "%d != %d !!!\n", max1, max2 );
+  DEBUG_WIFICUP_Printf( "%d != %d !!!\n", max1, max2 );
   
   return FALSE;
 }

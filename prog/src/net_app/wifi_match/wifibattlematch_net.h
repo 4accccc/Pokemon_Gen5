@@ -21,6 +21,16 @@
 #include "system/net_err.h"
 #include "net/nhttp_rap_evilcheck.h"
 #include "poke_tool/pokeparty.h"
+
+//-------------------------------------
+///	デバッグ
+//=====================================
+#ifdef PM_DEBUG
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#define SERVER_WAITTIME_OFF
+#endif
+#endif //PM_DEBUG
+
 //=============================================================================
 /**
  *					定数宣言
@@ -82,7 +92,11 @@ typedef enum
 
 
 //サケサーバーのアクセス時間
+#ifdef SERVER_WAITTIME_OFF
+#define WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC (0)
+#else
 #define WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC (60*30)
+#endif
 
 //=============================================================================
 /**

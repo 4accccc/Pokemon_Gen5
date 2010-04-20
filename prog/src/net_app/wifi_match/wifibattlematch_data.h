@@ -212,7 +212,7 @@ static inline u32 WIFIBATTLEMATCH_DATA_ModifiEnemyData( WIFIBATTLEMATCH_ENEMYDAT
     {
       OS_TPrintf( "’nˆæ‚ª•s³‚¾‚Á‚½‚Ì‚ÅA–³—‚â‚è‘‚«Š·‚¦‚Ü‚· %d %d\n", p_mystatus->nation, p_mystatus->area );
       p_mystatus->area  = 0;
-    dirty++;
+      dirty++;
     }
   }
 

@@ -61,7 +61,7 @@
 #define DEBUG_NET_Printf(...)  /*  */
 #endif  //DEBUG_DEBUG_NET_Printf_ON
 
-//#define SC_DIVIDE_SESSION
+#define SC_DIVIDE_SESSION
 
 //-------------------------------------
 ///	マクロスイッチ
@@ -159,7 +159,7 @@ typedef enum
 #define PLAYER_NUM            2          // プレイヤー数
 #define TEAM_NUM              0          // チーム数
 #define CANCELSELECT_TIMEOUT (20*60)     //キャンセルセレクトタイムアウト
-#define ASYNC_TIMEOUT (60*60)     //非同期用タイムアウト
+#define ASYNC_TIMEOUT (120*60)     //非同期用タイムアウト
 
 #define RECV_BUFFER_SIZE  (0x1000)
 
@@ -1381,7 +1381,7 @@ BOOL WIFIBATTLEMATCH_SC_ProcessSession( WIFIBATTLEMATCH_NET_WORK *p_wk )
       }
       break;
 
-    //お互いのCCID（Intention ConnectionID）を交換する  まずは親データを子に送信
+    //お互いのCCIDなどが入ったplayerDataを交換する 
     case SEQ_SEND_CONNECTION:
       if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(), WIFIBATTLEMATCH_NETCMD_SEND_PLAYERDATA, 
             sizeof(DWC_SC_PLAYERDATA), &p_wk->p_data->sc_player[0]) )
@@ -1391,7 +1391,7 @@ BOOL WIFIBATTLEMATCH_SC_ProcessSession( WIFIBATTLEMATCH_NET_WORK *p_wk )
       }
       break;
 
-    //次は子のデータを送信
+    //受信待ち
     case SEQ_RECV_CONNECTION:
       if( p_wk->is_recv[WIFIBATTLEMATCH_NET_RECVFLAG_PLAYER] )
       { 
@@ -1491,6 +1491,11 @@ BOOL WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_NET_WORK *p_wk )
 
   { 
     const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
+    if( cp_error->errorUser == ERRORCODE_TIMEOUT )
+    { 
+      NAGI_Printf( "タイムアウト!!!!\n" );
+    }
+
 
     switch( p_wk->seq )
     { 
@@ -1576,13 +1581,14 @@ BOOL WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_NET_WORK *p_wk )
 
     //認証情報取得
     case WIFIBATTLEMATCH_SC_SEQ_LOGIN:
-      ret = DWC_ScGetLoginCertificate( &p_wk->p_data->sc_player[0].mCertificate );
+/*      ret = DWC_ScGetLoginCertificate( &p_wk->p_data->sc_player[0].mCertificate );
       if( ret != DWC_SC_RESULT_NO_ERROR )
       { 
         WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret );
         return FALSE;
       }
       DEBUG_NET_Printf( "SC:Login\n" );
+      */
 #ifdef SC_DIVIDE_SESSION
       p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_CREATE_REPORT_TIMING_START;
 #else
@@ -1809,7 +1815,7 @@ BOOL WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_NET_WORK *p_wk )
 
     //タイミングまち
     case WIFIBATTLEMATCH_SC_SEQ_CREATE_REPORT_TIMING_WAIT:
-      if( GFL_NET_HANDLE_IsTimeSync( GFL_NET_HANDLE_GetCurrentHandle(), WIFIBATTLEMATCH_SC_REPORT_TIMING, WB_NET_WIFIMATCH ) )
+      if( GFL_NET_HANDLE_IsTimeSync( GFL_NET_HANDLE_GetCurrentHandle(), WIFIBATTLEMATCH_SC_REPORT_TIMING, WB_NET_WIFIMATCH )  || cp_error->errorUser == ERRORCODE_TIMEOUT )
       { 
         p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_CREATE_REPORT;
       }

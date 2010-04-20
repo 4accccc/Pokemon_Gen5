@@ -16,11 +16,11 @@
 #include "system/bmp_winframe.h"
 #include "app/app_keycursor.h"
 #include "app/app_printsys_common.h"
+#include "system/time_icon.h"
 
 //文字表示
 #include "print/printsys.h"
 
-#include "system/time_icon.h"
 
 //自分のモジュール
 #include "wifibattlematch_snd.h"
@@ -46,8 +46,6 @@ struct _WBM_TEXT_WORK
   GFL_FONT          *p_font;
   PRINT_STREAM      *p_stream;
   GFL_TCBLSYS       *p_tcbl;
-  GFL_TCBSYS        *p_tcb;
-  void              *p_tcb_area;
   TIMEICON_WORK     *p_time;
   GFL_BMPWIN*       p_bmpwin;
   STRBUF*           p_strbuf;
@@ -93,7 +91,6 @@ WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, 
   p_wk->print_update  = WBM_TEXT_TYPE_NONE;
   p_wk->heapID    = heapID;
 
-  APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->common, APP_PRINTSYS_COMMON_TYPE_KEY);
 
   //バッファ作成
 	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
@@ -109,8 +106,6 @@ WBM_TEXT_WORK * WBM_TEXT_Init( u16 frm, u16 font_plt, u16 frm_plt, u16 frm_chr, 
 	GFL_BMPWIN_MakeTransWindow( p_wk->p_bmpwin );
 
   p_wk->p_tcbl      = GFL_TCBL_Init( heapID, heapID, 1, 32 );
-  p_wk->p_tcb_area  = GFL_HEAP_AllocMemory( heapID, GFL_TCB_CalcSystemWorkSize( 1 ) );
-  p_wk->p_tcb       = GFL_TCB_Init( 1, p_wk->p_tcb_area );
 
   //フレーム
   BmpWinFrame_Write( p_wk->p_bmpwin, WINDOW_TRANS_ON, frm_chr, frm_plt );
@@ -141,14 +136,8 @@ void WBM_TEXT_Exit( WBM_TEXT_WORK* p_wk )
   { 
     APP_KEYCURSOR_Delete( p_wk->p_keycursor );
   }
-  if( p_wk->p_time )
-  { 
-    TILEICON_Exit( p_wk->p_time );
-    p_wk->p_time  = NULL;
-  }
 
-  GFL_TCB_Exit( p_wk->p_tcb );
-  GFL_HEAP_FreeMemory( p_wk->p_tcb_area );
+
   GFL_TCBL_Exit( p_wk->p_tcbl );
 
   BmpWinFrame_Clear( p_wk->p_bmpwin, WINDOW_TRANS_ON );
@@ -203,7 +192,6 @@ void WBM_TEXT_Main( WBM_TEXT_WORK* p_wk )
   }
 
   GFL_TCBL_Main( p_wk->p_tcbl );
-  GFL_TCB_Main( p_wk->p_tcb );
 }
 //----------------------------------------------------------------------------
 /**
@@ -272,7 +260,7 @@ static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type )
   switch( type )
   { 
   case WBM_TEXT_TYPE_WAIT:
-    p_wk->p_time  = TIMEICON_Create( p_wk->p_tcb, p_wk->p_bmpwin, p_wk->clear_chr,
+    p_wk->p_time  = TIMEICON_Create( GFUser_VIntr_GetTCBSYS(), p_wk->p_bmpwin, p_wk->clear_chr,
         TIMEICON_DEFAULT_WAIT, p_wk->heapID );
     PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );
     p_wk->print_update  = WBM_TEXT_TYPE_QUE;
@@ -285,6 +273,8 @@ static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type )
 
   case WBM_TEXT_TYPE_STREAM:  //ストリームを使う
     GF_ASSERT( p_wk->p_keycursor == NULL );
+
+    APP_PRINTSYS_COMMON_PrintStreamInit( &p_wk->common, APP_PRINTSYS_COMMON_TYPE_KEY);
     //文字送りカーソル作成
     p_wk->p_keycursor  = APP_KEYCURSOR_Create( p_wk->clear_chr, TRUE, FALSE, p_wk->heapID );
     p_wk->p_stream  = PRINTSYS_PrintStream( p_wk->p_bmpwin, 0, 0, p_wk->p_strbuf,
