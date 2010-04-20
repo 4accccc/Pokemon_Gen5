@@ -1096,17 +1096,17 @@ BOOL POKEMONTRADE_IsEggAndLastBattlePokemonChange(POKEMON_TRADE_WORK* pWork)
 
 
 
-static BOOL POKEMONTRADE_IsWazaPokemon(POKEMON_TRADE_WORK* pWork)
+static BOOL POKEMONTRADE_IsWazaPokemon(POKEMON_TRADE_WORK* pWork,int boxno,int index)
 {
   BOOL flg = FALSE;
   POKEMON_PASO_PARAM* ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox,
-                                                               pWork->selectBoxno,
-                                                               pWork->selectIndex,pWork);
+                                                               boxno,
+                                                               index,pWork);
 
   if(pWork->type != POKEMONTRADE_TYPE_IRC){
     return FALSE;
   }
-  if(pWork->selectBoxno != pWork->BOX_TRAY_MAX){
+  if(boxno != pWork->BOX_TRAY_MAX){
     return FALSE;
   }
   flg = FIELD_SKILL_CHECK_CanTradePoke( ppp,0 );
@@ -1139,10 +1139,6 @@ void POKETRE_MAIN_ChangePokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
       u8 cmd = POKETRADE_FACTOR_EGG;
       bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd);
     }
-//    else if(POKEMONTRADE_IsWazaPokemon(pWork)){
-//      u8 cmd = POKETRADE_FACTOR_WAZA;
-//      bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd);
-//    }
     else if(POKEMONTRADE_IsMailPokemon(pWork)){
       u8 cmd = POKETRADE_FACTOR_MAIL;
       bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd);
@@ -1717,20 +1713,19 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
   }
   if(bExit){
     if(selectno==0){         //‘Šè‚ÉŒ©‚¹‚é
-      pWork->selectIndex = pWork->underSelectIndex;
-      pWork->selectBoxno = pWork->underSelectBoxno;
-
-      if(POKEMONTRADE_IsWazaPokemon(pWork)){// ŒğŠ·‚Å‚«‚È‚¢‹Z‚à‚¿
+      if(POKEMONTRADE_IsWazaPokemon(pWork,pWork->underSelectBoxno,pWork->underSelectIndex)){// ŒğŠ·‚Å‚«‚È‚¢‹Z‚à‚¿
         POKE_GTS_VisibleFaceIcon(pWork,TRUE);
-        pWork->selectIndex = -1;
-        pWork->selectBoxno = -1;
         _CHANGE_STATE(pWork,_notWazaChangePoke);
       }
       else if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
+        pWork->selectIndex = pWork->underSelectIndex;
+        pWork->selectBoxno = pWork->underSelectBoxno;
         POKMEONTRADE2D_IconGray(pWork, pWork->pSelectCLWK, TRUE);
         _CHANGE_STATE(pWork, _changeMenuOpen);
       }
       else{
+        pWork->selectIndex = pWork->underSelectIndex;
+        pWork->selectBoxno = pWork->underSelectBoxno;
         POKE_GTS_PokemonsetAndSendData(pWork,pWork->selectIndex,pWork->selectBoxno);  //‹L˜^
         POKE_GTS_VisibleFaceIcon(pWork,TRUE);
         _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);//ƒ^ƒbƒ`‚É–ß‚é
@@ -2979,24 +2974,22 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
     if(pWork->touchON && pWork->bUpVec && pWork->pCatchCLWK){
       pWork->touchON = FALSE;
       pWork->bUpVec = FALSE;
-      pWork->underSelectBoxno  = pWork->workBoxno;
-      pWork->underSelectIndex = pWork->workPokeIndex;
-      pWork->selectIndex = pWork->underSelectIndex;
-      pWork->selectBoxno = pWork->underSelectBoxno;
-      if(POKEMONTRADE_IsWazaPokemon(pWork)){// ŒğŠ·‚Å‚«‚È‚¢‹Z‚à‚¿
-//        POKE_GTS_VisibleFaceIcon(pWork,TRUE);
+      if(POKEMONTRADE_IsWazaPokemon(pWork, pWork->workBoxno, pWork->workPokeIndex)){// ŒğŠ·‚Å‚«‚È‚¢‹Z‚à‚¿
+         pWork->workBoxno = -1;
+         pWork->workPokeIndex = -1;
         _CatchPokemonRelease(pWork);
-        pWork->underSelectIndex = -1;
-        pWork->underSelectBoxno = -1;
-        pWork->selectIndex = -1;
-        pWork->selectBoxno = -1;
+        IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);//Ä•`‰æ
+
         _CHANGE_STATE(pWork,_notWazaChangePoke);
       }
       else{
+        pWork->underSelectBoxno  = pWork->workBoxno;
+        pWork->underSelectIndex = pWork->workPokeIndex;
+        pWork->selectIndex = pWork->underSelectIndex;
+        pWork->selectBoxno = pWork->underSelectBoxno;
         pWork->pCatchCLWK = NULL;
         TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, TRUE);
         TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, TRUE);
-//        PMSND_PlaySystemSE(POKETRADESE_UPPOKE);
         POKEMONTRADE_StartSucked(pWork);
         PMSND_PlaySE( POKETRADESE_THROW );
         _CHANGE_STATE(pWork, _POKE_SetAndSendData);
@@ -3783,6 +3776,8 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
   }
 
 
+  OS_TPrintf("select %d %d \n",pWork->selectIndex,pWork->selectBoxno);
+  
   if(state != NULL){
     state(pWork);
     pWork->anmCount++;

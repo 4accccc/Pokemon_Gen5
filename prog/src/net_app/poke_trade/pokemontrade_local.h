@@ -641,6 +641,8 @@ struct _POKEMON_TRADE_WORK{
   int workBoxno;           // マウス操作でにぎったポケモン
   int selectIndex;  //候補のポケモンIndex   上に表示しているポケモン
   int selectBoxno;  //候補のポケモンBox     上に表示しているポケモン
+  int importanceIndex;  //候補のポケモンIndex   上に表示しているポケモン
+  int importanceBoxno;  //候補のポケモンBox     上に表示しているポケモン
 
   int underSelectIndex;  //まだ相手に見せてないポケモンIndex ステータス表示のポケモン
   int underSelectBoxno;  //まだ相手に見せてないポケモンBox   ステータス表示のポケモン

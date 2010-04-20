@@ -872,7 +872,7 @@ BOOL POKEMONTRADE_IsPokeLanguageMark(int monsno,int moji)
  * @retval  FALSE  ”é“`‹Z‚à‚Á‚Ä‚È‚¢
  */
 //------------------------------------------------------------------------------
-
+#if 0
 static BOOL _hedenWazaCheck(POKEMON_PASO_PARAM* ppp)
 {
   int x;
@@ -885,7 +885,7 @@ static BOOL _hedenWazaCheck(POKEMON_PASO_PARAM* ppp)
   }
   return FALSE;
 }
-
+#endif
 
 void POKMEONTRADE2D_IconGray(POKEMON_TRADE_WORK* pWork, GFL_CLWK* pCL ,BOOL bGray)
 {
@@ -909,7 +909,8 @@ static void _pokeIconPaletteGray(POKEMON_TRADE_WORK* pWork,int line, int i,POKEM
 {
   BOOL bGray = FALSE;
 
-  if((bTemoti && _hedenWazaCheck(ppp))  || ( POKETRADE_NEGO_IsSelect(pWork,line,i)) ){
+  if( POKETRADE_NEGO_IsSelect(pWork,line,i) ){
+//  if((bTemoti && _hedenWazaCheck(ppp))  || ( POKETRADE_NEGO_IsSelect(pWork,line,i)) ){
     bGray=TRUE;
   }
   POKMEONTRADE2D_IconGray(pWork, pWork->pokeIcon[k][i], bGray);
