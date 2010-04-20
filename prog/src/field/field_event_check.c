@@ -261,6 +261,11 @@ static GMEVENT * getRailChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * f
 static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player, const EV_REQUEST * req );
 
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BOOL NaminoriEnd_CheckMMdl( const EV_REQUEST* req, FIELDMAP_WORK* fieldWork );
+
+
 //======================================================================
 //
 //
@@ -3009,8 +3014,9 @@ static GMEVENT * checkEvent_PlayerNaminoriEnd( const EV_REQUEST *req,
         attr_flag = MAPATTR_GetAttrFlag( attr );
         kishi = TRUE;
       }
-      
-      if( (attr_flag&MAPATTR_FLAGBIT_HITCH) == 0 && //進入可能で
+
+      if( NaminoriEnd_CheckMMdl(req, fieldWork) == TRUE &&   //前方に誰もいなくて
+          (attr_flag&MAPATTR_FLAGBIT_HITCH) == 0 && //進入可能で
           (attr_flag&MAPATTR_FLAGBIT_WATER) == 0 ){ //水以外
         GMEVENT *event;
         event = eventSet_NaminoriEnd( req, gsys, fieldWork, dir, kishi );
@@ -3244,5 +3250,57 @@ u32 FIELD_EVENT_CountBattleMember( GAMESYS_WORK *gsys )
   }
   
   return count;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 波乗り終了時のNPC判定
+ *
+ * @param req
+ * @param fieldWork
+ *
+ * @return 自機が降り立つ場所にNPCがいなければ TRUE
+ *         そうでなければ FALSE
+ */
+//--------------------------------------------------------------
+static BOOL NaminoriEnd_CheckMMdl( const EV_REQUEST* req, FIELDMAP_WORK* fieldWork )
+{
+  int i;
+  MMDL *mmdl, *jiki;
+  u16 dir;
+  s16 gx, gy, gz;
+  fx32 y;
+  VecFx32 pos;
+
+  // 自機の位置を取得
+  jiki = FIELD_PLAYER_GetMMdl( req->field_player );
+  dir = req->key_direction; //MMDL_GetDirMove( jiki );
+  gx = MMDL_GetGridPosX( jiki );
+  gz = MMDL_GetGridPosZ( jiki );
+
+  // 2歩先の位置を算出
+  for( i=0; i<2; i++ )
+  {
+    gx += MMDL_TOOL_GetDirAddValueGridX( dir );
+    gz += MMDL_TOOL_GetDirAddValueGridZ( dir );
+  }
+
+  pos.x = GRID_TO_FX32(gx) + FIELD_CONST_GRID_HALF_FX32_SIZE;
+  pos.z = GRID_TO_FX32(gz) + FIELD_CONST_GRID_HALF_FX32_SIZE;
+  y = MMDL_GetMapPosHeight( jiki, &pos, &y );
+
+  OBATA_Printf( "gx = %d, gz = %d\n", gx, gz );
+
+  // 動作モデルを検索
+//  mmdl = MMDLSYS_SearchGridPosEx( FIELDMAP_GetMMdlSys(fieldWork), 
+ //     gx, gz, pos.y, FRONT_TALKOBJ_HEIGHT_DIFF, FALSE );
+  mmdl = MMDLSYS_SearchGridPos( FIELDMAP_GetMMdlSys(fieldWork), gx, gz, FALSE );
+
+  if( mmdl ) {
+    return FALSE;
+  }
+  else {
+    return TRUE;
+  }
 }
 
