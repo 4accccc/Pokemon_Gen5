@@ -39,22 +39,22 @@
 // SE再定義
 enum
 { 
-  SE_BAG_DECIDE       = SEQ_SE_DECIDE1, ///< 決定音
-  SE_BAG_CANCEL       = SEQ_SE_CANCEL1, ///< キャンセル音
-  SE_BAG_CLOSE        = SEQ_SE_CLOSE1,	///< キャンセル音（Ｘボタン）
-  SE_BAG_REGIST_Y     = SEQ_SE_SYS_07,  ///< バッグYボタン登録音
-  SE_BAG_SELL         = SEQ_SE_SYS_22,  ///< 売却音
-  SE_BAG_TRASH        = SEQ_SE_SYS_08,  ///< 捨てる音
-  SE_BAG_CURSOR_MOVE  = SEQ_SE_SELECT1, ///< バッグカーソル移動(上下キー)
-  SE_BAG_POCKET_MOVE  = SEQ_SE_SELECT4, ///< バッグポケット選択(左右キー)
-  SE_BAG_SLIDE        = SEQ_SE_SELECT1, ///< スライドバー
-  SE_BAG_WAZA         = SEQ_SE_PC_LOGIN,  ///< ワザマシン起動音
-  SE_BAG_SORT         = SEQ_SE_SYS_36,    ///< ソート音
-  SE_BAG_SPRAY        = SEQ_SE_DECIDE1,   ///< スプレー使用音
-  SE_BAG_RAITOSUTOON  = SEQ_SE_DECIDE2,   ///< ライトストーン・ダークストーン
-	SE_BAG_SLIDE_IN			= SEQ_SE_SYS_90,		///< 開始時のバッグスライドイン
-	SE_BAG_MESSAGE			= SEQ_SE_MESSAGE,		///< メッセージ送り
-	SE_BAG_BAG_GRA			= SEQ_SE_SELECT4,		///< バッグの絵をタッチしたとき
+  SE_BAG_DECIDE       = SEQ_SE_DECIDE1,  ///< 決定音
+  SE_BAG_CANCEL       = SEQ_SE_CANCEL1,  ///< キャンセル音
+  SE_BAG_CLOSE        = SEQ_SE_CLOSE1,   ///< キャンセル音（Ｘボタン）
+  SE_BAG_REGIST_Y     = SEQ_SE_SYS_07,   ///< バッグYボタン登録音
+  SE_BAG_SELL         = SEQ_SE_SYS_22,   ///< 売却音
+  SE_BAG_TRASH        = SEQ_SE_SYS_08,   ///< 捨てる音
+  SE_BAG_CURSOR_MOVE  = SEQ_SE_SELECT1,  ///< バッグカーソル移動(上下キー)
+  SE_BAG_POCKET_MOVE  = SEQ_SE_SELECT4,  ///< バッグポケット選択(左右キー)
+  SE_BAG_SLIDE        = SEQ_SE_SELECT1,  ///< スライドバー
+  SE_BAG_WAZA         = SEQ_SE_PC_LOGIN, ///< ワザマシン起動音
+  SE_BAG_SORT         = SEQ_SE_SYS_36,   ///< ソート音
+  SE_BAG_SPRAY        = SEQ_SE_SYS_92,   ///< スプレー使用音
+  SE_BAG_RAITOSUTOON  = SEQ_SE_DECIDE2,  ///< ライトストーン・ダークストーン
+  SE_BAG_SLIDE_IN     = SEQ_SE_SYS_90,   ///< 開始時のバッグスライドイン
+  SE_BAG_MESSAGE      = SEQ_SE_MESSAGE,  ///< メッセージ送り
+  SE_BAG_BAG_GRA      = SEQ_SE_SELECT4,  ///< バッグの絵をタッチしたとき
 };
 
 #define ITEMMENU_SCROLLBAR_ENABLE_NUM (7) // スクロールバーが有効になるアイテム数
@@ -169,7 +169,7 @@ struct _FIELD_ITEMMENU_PARAM {
   PRINT_UTIL  SysMsgPrintUtil;      ///< システムウインドウPrintUtil
   PRINT_QUE*  SysMsgQue;
   PRINT_STREAM* pStream;
-	BOOL stream_clear_flg;
+  BOOL stream_clear_flg;
   APP_KEYCURSOR_WORK *MsgCursorWork;///< メッセージキー待ちカーソル表示ワーク
   GFL_MSGDATA* MsgManager;          ///< 名前入力メッセージデータマネージャー
   GFL_MSGDATA* MsgManagerItemInfo;  ///< 名前入力メッセージデータマネージャー
@@ -254,16 +254,16 @@ struct _FIELD_ITEMMENU_PARAM {
 //  BOOL sort_mode;     ///< ソートモード
 
 
-	BLINKPALANM_WORK * blwk;
-	PALETTE_FADE_PTR	pfd;
-	BOOL	active;				///< アクティブ/パッシブ
-	BOOL	scrollMode;		///< スクロール中かどうか
-	BOOL	moveDrag;			///< アイテムをドラッグで移動
-	u16	tmpSeq;					///< 汎用シーケンス
-	u16	tmpCnt;					///< 汎用カウンタ
-	StateFunc * chgState;
-	int	key_repeat_speed;
-	int	key_repeat_wait;
+  BLINKPALANM_WORK * blwk;
+  PALETTE_FADE_PTR  pfd;
+  BOOL  active;       ///< アクティブ/パッシブ
+  BOOL  scrollMode;   ///< スクロール中かどうか
+  BOOL  moveDrag;     ///< アイテムをドラッグで移動
+  u16 tmpSeq;         ///< 汎用シーケンス
+  u16 tmpCnt;         ///< 汎用カウンタ
+  StateFunc * chgState;
+  int key_repeat_speed;
+  int key_repeat_wait;
 };
 
 #define _OBJPLT_SUB_POKE_TYPE (4) //サブ画面技タイプアイコンパレット位置
@@ -280,20 +280,20 @@ struct _FIELD_ITEMMENU_PARAM {
 #define _SUBBUTTON_MSG_PAL   (0)  // メッセージフォント
 #define _BUTTON_WIN_PAL   (13)  // ウインドウ
 
-#define _PAL_WIN01_CELL					(0)     // リストウィンドウ用パレット転送位置
-#define _PAL_WIN01_CELL_NUM			(3)     // リストウィンドウ用パレット転送位置
-#define _PAL_CUR_CELL						(_PAL_WIN01_CELL+_PAL_WIN01_CELL_NUM)	// スライドバーつまみ カーソル用パレット転送位置
-#define _PAL_CUR_CELL_NUM				(1)
-#define _PAL_SORT_CELL					(_PAL_CUR_CELL+_PAL_CUR_CELL_NUM)			// ソートボタンのパレット展開位置
-#define _PAL_SORT_CELL_NUM			(2)																		// ソートボタンのパレット本数
-#define _PAL_BAG_PARTS_CELL			(_PAL_SORT_CELL+_PAL_SORT_CELL_NUM)		// バッグのパーツCELLのパレット展開位置
-#define _PAL_BAG_PARTS_CELL_NUM	(4)						// バッグのパーツCELLのパレット展開位置
-#define _PAL_COMMON_CELL				(_PAL_BAG_PARTS_CELL+_PAL_BAG_PARTS_CELL_NUM)	// 共通パレット展開位置
-#define _PAL_COMMON_CELL_NUM		(APP_COMMON_BARICON_PLT_NUM)
-#define _PAL_MENU_CHECKBOX_CELL			(_PAL_COMMON_CELL+_PAL_COMMON_CELL_NUM)	// チェックボックスのパレット展開位置
-#define _PAL_MENU_CHECKBOX_CELL_NUM	(1)  // チェックボックスのパレット展開位置
+#define _PAL_WIN01_CELL         (0)     // リストウィンドウ用パレット転送位置
+#define _PAL_WIN01_CELL_NUM     (3)     // リストウィンドウ用パレット転送位置
+#define _PAL_CUR_CELL           (_PAL_WIN01_CELL+_PAL_WIN01_CELL_NUM) // スライドバーつまみ カーソル用パレット転送位置
+#define _PAL_CUR_CELL_NUM       (1)
+#define _PAL_SORT_CELL          (_PAL_CUR_CELL+_PAL_CUR_CELL_NUM)     // ソートボタンのパレット展開位置
+#define _PAL_SORT_CELL_NUM      (2)                                   // ソートボタンのパレット本数
+#define _PAL_BAG_PARTS_CELL     (_PAL_SORT_CELL+_PAL_SORT_CELL_NUM)   // バッグのパーツCELLのパレット展開位置
+#define _PAL_BAG_PARTS_CELL_NUM (4)           // バッグのパーツCELLのパレット展開位置
+#define _PAL_COMMON_CELL        (_PAL_BAG_PARTS_CELL+_PAL_BAG_PARTS_CELL_NUM) // 共通パレット展開位置
+#define _PAL_COMMON_CELL_NUM    (APP_COMMON_BARICON_PLT_NUM)
+#define _PAL_MENU_CHECKBOX_CELL     (_PAL_COMMON_CELL+_PAL_COMMON_CELL_NUM) // チェックボックスのパレット展開位置
+#define _PAL_MENU_CHECKBOX_CELL_NUM (1)  // チェックボックスのパレット展開位置
 
-#define	_PAL_FADE_OBJ_BIT				( 0x23cf )	// パレットフェードを適用するOBJビット [ 0010_0011_1100_1111 ]
+#define _PAL_FADE_OBJ_BIT       ( 0x23cf )  // パレットフェードを適用するOBJビット [ 0010_0011_1100_1111 ]
 
 
 
