@@ -4201,7 +4201,13 @@ void MYSTERY_CARD_RES_Clear( MYSTERY_CARD_RES *p_wk )
   GFL_BG_LoadScreenReq( MYSTERY_ALBUM_CARD_FRM_S );
   GFL_BG_LoadScreenReq( MYSTERY_ALBUM_CARD_FONT_S );
   GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon, FALSE );
-  GFL_CLACT_WK_SetDrawEnable( p_wk->p_silhouette, FALSE );
+  { 
+    GFL_CLACTPOS pos;
+    pos.x  = MYSTERY_CARD_SILHOUETTE_POS_X;
+    pos.y  = MYSTERY_CARD_SILHOUETTE_POS_Y;
+    GFL_CLACT_WK_SetPos( p_wk->p_silhouette, &pos, p_wk->draw_type );
+    GFL_CLACT_WK_SetDrawEnable( p_wk->p_silhouette, FALSE );
+  }
 
 }
 
@@ -4212,7 +4218,7 @@ void MYSTERY_CARD_RES_Clear( MYSTERY_CARD_RES *p_wk )
 //=============================================================================
 
 
-#define MOVE_SHAKE_ROTATE_NUM (5)
+#define MOVE_SHAKE_ROTATE_NUM (11)
 
 static const u16 sc_next_angle[ MOVE_SHAKE_ROTATE_NUM ] =
 { 
@@ -4224,7 +4230,7 @@ static const s8 sc_next_dir[ MOVE_SHAKE_ROTATE_NUM ] =
 };
 static const s8 sc_next_sync[ MOVE_SHAKE_ROTATE_NUM ] =
 { 
-  5,10,5,5, 2,
+  2,4,4,3,3,2,2,1,1,1,10,
 };
 static const GFL_POINT sc_next_pos[ MOVE_SHAKE_ROTATE_NUM ] =
 { 
@@ -4237,11 +4243,35 @@ static const GFL_POINT sc_next_pos[ MOVE_SHAKE_ROTATE_NUM ] =
     MYSTERY_CARD_SILHOUETTE_POS_Y,
   },
   { 
+    MYSTERY_CARD_SILHOUETTE_POS_X + 6,
+    MYSTERY_CARD_SILHOUETTE_POS_Y,
+  },
+  { 
+    MYSTERY_CARD_SILHOUETTE_POS_X - 6,
+    MYSTERY_CARD_SILHOUETTE_POS_Y,
+  },
+  { 
     MYSTERY_CARD_SILHOUETTE_POS_X + 4,
     MYSTERY_CARD_SILHOUETTE_POS_Y,
   },
   { 
     MYSTERY_CARD_SILHOUETTE_POS_X - 4,
+    MYSTERY_CARD_SILHOUETTE_POS_Y,
+  },
+  { 
+    MYSTERY_CARD_SILHOUETTE_POS_X - 2,
+    MYSTERY_CARD_SILHOUETTE_POS_Y,
+  },
+  { 
+    MYSTERY_CARD_SILHOUETTE_POS_X + 2,
+    MYSTERY_CARD_SILHOUETTE_POS_Y,
+  },
+  { 
+    MYSTERY_CARD_SILHOUETTE_POS_X - 1,
+    MYSTERY_CARD_SILHOUETTE_POS_Y,
+  },
+  { 
+    MYSTERY_CARD_SILHOUETTE_POS_X,
     MYSTERY_CARD_SILHOUETTE_POS_Y,
   },
   { 
