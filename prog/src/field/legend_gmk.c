@@ -17,7 +17,7 @@
 #include "arc/fieldmap/legend_gmk.naix"
 
 #include "sound/pm_sndsys.h"
-//#include "sp_poke_gimmick_se_def.h"
+#include "legend_gmk_se_def.h"
 
 #include "../../../resource/fldmapdata/gimmick/legend/leg_gmk_timing_def.h"
 
@@ -35,6 +35,8 @@ typedef struct LEG_GMK_WK_tag
   BOOL OneLoop;   //ƒAƒjƒ‚ª‚P‡‚µ‚½‚©
   u32 Fade;
   int Count;
+  BOOL Se1;
+  BOOL Se2;
 }LEG_GMK_WK;
 
 static GMEVENT_RESULT StoneEvt( GMEVENT* event, int* seq, void* work );
@@ -297,6 +299,16 @@ static GMEVENT_RESULT StoneEvt( GMEVENT* event, int* seq, void* work )
     last_frm = FLD_EXP_OBJ_GetAnimeLastFrame(anm );
   }
   NOZOMU_Printf( "frm = %x::%d  last= %x::%d\n",frm, frm/FX32_ONE, last_frm, last_frm/FX32_ONE );
+
+  if ( (frm >= LEG_SE1_FRM)&&(!gmk_wk->Se1) ){
+    PMSND_PlaySE( LEG_GMK_ENERGY );
+    gmk_wk->Se1 = TRUE;
+  }
+  else if ( (frm >= LEG_SE2_FRM)&&(!gmk_wk->Se2) )
+  {
+    PMSND_PlaySE( LEG_GMK_BALL );
+    gmk_wk->Se2 = TRUE;
+  }
 
   switch(*seq){
   case 0:
