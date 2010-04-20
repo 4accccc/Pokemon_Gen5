@@ -19,6 +19,8 @@
 #define TR_RANGERW_10                      7
 #define TR_FISHING_11                      8
 #define TR_RANGERM_10                      9
+#define R01_FLD_ITEM_01                   10
+#define R01_FLD_ITEM_02                   11
 
 #endif //ZONE_R01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -22,6 +22,7 @@
 #define R02_BOY1_01                       10
 #define R02_TREE_01                       11
 #define R02_FLD_ITEM_05                   12
+#define R02_FLD_ITEM_06                   13
 
 #endif //ZONE_R02_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r02.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
