@@ -3269,8 +3269,6 @@ static BOOL NaminoriEnd_CheckMMdl( const EV_REQUEST* req, FIELDMAP_WORK* fieldWo
   MMDL *mmdl, *jiki;
   u16 dir;
   s16 gx, gy, gz;
-  fx32 y;
-  VecFx32 pos;
 
   // é©ã@ÇÃà íuÇéÊìæ
   jiki = FIELD_PLAYER_GetMMdl( req->field_player );
@@ -3285,15 +3283,7 @@ static BOOL NaminoriEnd_CheckMMdl( const EV_REQUEST* req, FIELDMAP_WORK* fieldWo
     gz += MMDL_TOOL_GetDirAddValueGridZ( dir );
   }
 
-  pos.x = GRID_TO_FX32(gx) + FIELD_CONST_GRID_HALF_FX32_SIZE;
-  pos.z = GRID_TO_FX32(gz) + FIELD_CONST_GRID_HALF_FX32_SIZE;
-  y = MMDL_GetMapPosHeight( jiki, &pos, &y );
-
-  OBATA_Printf( "gx = %d, gz = %d\n", gx, gz );
-
   // ìÆçÏÉÇÉfÉãÇåüçı
-//  mmdl = MMDLSYS_SearchGridPosEx( FIELDMAP_GetMMdlSys(fieldWork), 
- //     gx, gz, pos.y, FRONT_TALKOBJ_HEIGHT_DIFF, FALSE );
   mmdl = MMDLSYS_SearchGridPos( FIELDMAP_GetMMdlSys(fieldWork), gx, gz, FALSE );
 
   if( mmdl ) {
