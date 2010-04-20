@@ -49,19 +49,21 @@
 //==============================================================================
 //  構造体定義
 //==============================================================================
-///デバッグ用
+///通信終了
 typedef struct{
   VecFx32 pos;
   INTRUDE_COMM_SYS_PTR intcomm;
   FIELDMAP_WORK *fieldmap;
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
+  FLDMSGWIN_STREAM *msgStream;
+  FLDMENUFUNC *menufunc;
   ZONEID zoneID;
   u16 wait;
   u8 padding[2];
-}DEBUG_SIOEND_WARP;  //DEBUG_SIOEND_MAPCHANGE;
+}EVENT_SIOEND_WARP;
 
-///デバッグ用
+///子機の通信終了
 typedef struct{
   INTRUDE_COMM_SYS_PTR intcomm;
   FIELDMAP_WORK *fieldmap;
@@ -69,7 +71,7 @@ typedef struct{
   FLDMSGWIN *msgWin;
   u16 wait;
   u8 padding[2];
-}DEBUG_SIOEND_CHILD;
+}EVENT_SIOEND_CHILD;
 
 ///NGメッセージイベント用ワーク
 typedef struct{
@@ -99,9 +101,9 @@ typedef struct{
 //==============================================================================
 static GMEVENT * EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
 		u16 zone_id, const VecFx32 * pos, INTRUDE_COMM_SYS_PTR intcomm );
-static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*work);
-static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm);
-static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*work);
+static GMEVENT_RESULT EVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*work);
+static GMEVENT * EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm);
+static GMEVENT_RESULT EventChildCommEnd(GMEVENT * event, int *seq, void*work);
 static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, GAME_COMM_SYS_PTR game_comm, FIELD_PLAYER *pcActor);
 static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, INTRUDE_COMM_SYS_PTR intcomm);
 static GMEVENT * EVENT_PalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir );
@@ -561,7 +563,7 @@ GMEVENT * Intrude_CheckPosEvent(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys,
 
   if(intcomm != NULL && intcomm->comm_status == INTRUDE_COMM_STATUS_UPDATE){
     if(intcomm->exit_recv == TRUE){
-      return DEBUG_EVENT_ChildCommEnd(gameSys, fieldWork, intcomm);
+      return EVENT_ChildCommEnd(gameSys, fieldWork, intcomm);
     }
   }
 
@@ -593,16 +595,7 @@ GMEVENT * Intrude_CheckPosEvent(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys,
       pos.y = 0;
       pos.z = 12120 << FX32_SHIFT;
       
-      if(intcomm != NULL 
-//          && GFL_NET_GetConnectNum() > 1 
-          && GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gameSys)) == GAME_COMM_NO_INVASION
-//          && GFL_NET_IsParentMachine() == TRUE
-          && intcomm->intrude_status_mine.palace_area == GFL_NET_SystemGetCurrentID()){
-        //親が通信状態で自分の街に入る場合は切断
-        return EVENT_ChangeMapPosCommEnd(gameSys, fieldWork, ZONE_ID_T01, &pos, intcomm);
-      }
-      return EVENT_ChangeMapFromPalace(gameSys);
-      //return EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_T01, &pos, 0, FALSE);
+      return EVENT_ChangeMapPosCommEnd(gameSys, fieldWork, ZONE_ID_T01, &pos, intcomm);
     }
   }
   //ビンゴマップへワープ
@@ -694,12 +687,12 @@ GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, F
 static GMEVENT * EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
 		u16 zone_id, const VecFx32 * pos, INTRUDE_COMM_SYS_PTR intcomm )
 {
-  DEBUG_SIOEND_WARP *dsw;
+  EVENT_SIOEND_WARP *dsw;
 	GMEVENT * event;
 
-	event = GMEVENT_Create(gsys, NULL, DebugEVENT_MapChangeCommEnd, sizeof(DEBUG_SIOEND_WARP));
+	event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeCommEnd, sizeof(EVENT_SIOEND_WARP));
 	dsw = GMEVENT_GetEventWork(event);
-	GFL_STD_MemClear(dsw, sizeof(DEBUG_SIOEND_WARP));
+	GFL_STD_MemClear(dsw, sizeof(EVENT_SIOEND_WARP));
 	dsw->fieldmap = fieldmap;
 	dsw->zoneID = zone_id;
 	dsw->pos = *pos;
@@ -709,34 +702,83 @@ static GMEVENT * EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 	return event;
 }
 
-static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*work)
+static GMEVENT_RESULT EVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*work)
 {
-	DEBUG_SIOEND_WARP * dsw = work;
+	EVENT_SIOEND_WARP * dsw = work;
 	GAMESYS_WORK  * gsys = GMEVENT_GetGameSysWork(event);
 	FIELDMAP_WORK * fieldmap = dsw->fieldmap;
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  enum{
+  	SEQ_INIT,
+    SEQ_INIT_PRINT_WAIT,
+  	SEQ_YESNO_WAIT,
+  	SEQ_COMM_EXIT,
+    SEQ_EXIT_PRINT_WAIT,
+    SEQ_COMM_EXIT_WAIT,
+    SEQ_COMM_EXIT_FINISH,
+  	SEQ_MAP_WARP,
+  	SEQ_MAP_WARP_FINISH,
+  	SEQ_EXIT_CANCEL,
+    SEQ_PLAYER_MOVE_UP,
+    SEQ_PLAYER_MOVE_UP_WAIT,
+  };
 	
 	switch (*seq) {
-	case 0:
-    GameCommSys_ExitReq(game_comm); //通信終了リクエスト
+	case SEQ_INIT:
 	  {
       FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(dsw->fieldmap);
       dsw->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
-      dsw->msgWin = FLDMSGWIN_AddTalkWin( msgBG, dsw->msgData );
-      FLDMSGWIN_Print( dsw->msgWin, 0, 0, msg_invasion_test06_01 );
-      GXS_SetMasterBrightness(-16);
+      dsw->msgStream = FLDMSGWIN_STREAM_AddTalkWin(msgBG, dsw->msgData );
+
+      FLDMSGWIN_STREAM_PrintStart(dsw->msgStream, 0, 0, plc_connect_07);
+      (*seq)++;
+    }
+	  break;
+  case SEQ_INIT_PRINT_WAIT:
+    if( FLDMSGWIN_STREAM_Print(dsw->msgStream) == TRUE){
+      FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(dsw->fieldmap);
+      dsw->menufunc = FLDMENUFUNC_AddYesNoMenu(msgBG, FLDMENUFUNC_YESNO_YES);
       (*seq)++;
     }
     break;
-  case 1:
-    if( FLDMSGWIN_CheckPrintTrans(dsw->msgWin) == TRUE ){
+	case SEQ_YESNO_WAIT:
+	  {
+  	  FLDMENUFUNC_YESNO fld_yesno = FLDMENUFUNC_ProcYesNoMenu( dsw->menufunc );
+  	  if(fld_yesno == FLDMENUFUNC_YESNO_NULL){
+        break;
+      }
+      
+      FLDMENUFUNC_DeleteMenu(dsw->menufunc);
+      FLDMSGWIN_STREAM_Delete(dsw->msgStream);
+      dsw->menufunc = NULL;
+      dsw->msgStream = NULL;
+      if(fld_yesno == FLDMENUFUNC_YESNO_YES){
+  	    *seq = SEQ_COMM_EXIT;
+  	  }
+  	  else{
+  	    *seq = SEQ_EXIT_CANCEL;
+  	  }
+  	}
+  	break;
+
+	case SEQ_COMM_EXIT:
+    if(NetErr_App_CheckError() == FALSE 
+        && GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION){
+      GameCommSys_ExitReq(game_comm); //通信終了リクエスト
+      dsw->msgWin = FLDMSGWIN_AddTalkWin( FIELDMAP_GetFldMsgBG(dsw->fieldmap), dsw->msgData );
+      FLDMSGWIN_Print( dsw->msgWin, 0, 0, msg_invasion_test06_01 );
+    }
+    (*seq)++;
+    break;
+  case SEQ_EXIT_PRINT_WAIT:
+    if( dsw->msgWin == NULL || FLDMSGWIN_CheckPrintTrans(dsw->msgWin) == TRUE ){
       (*seq)++;
     } 
     break;
-  case 2:
+  case SEQ_COMM_EXIT_WAIT:
     dsw->wait++;
-    if(dsw->wait > 60){
-      if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL){
+    if(dsw->msgWin == NULL || dsw->wait > 60){
+      if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION){  //通信エラーの場合でも上位でExitReqしているのでNULL待ちでいい。INVASIONじゃない場合はFIELD_BEACONの場合があるのでINVASIONじゃないかどうかでチェック
         GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
         int i;
         PLAYER_WORK *plwork;
@@ -750,27 +792,53 @@ static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, voi
       }
     }
     break;
-  case 3:
-    FLDMSGWIN_Delete( dsw->msgWin );
+  case SEQ_COMM_EXIT_FINISH:
+    if(dsw->msgWin != NULL){
+      FLDMSGWIN_Delete( dsw->msgWin );
+    }
     GFL_MSG_Delete( dsw->msgData );
-    GXS_SetMasterBrightness(0);
     (*seq)++;
     break;
-	case 4:
+	case SEQ_MAP_WARP:
   	GMEVENT_CallEvent(
   	  //event, EVENT_ChangeMapPos(gsys, dsw->fieldmap, dsw->zoneID, &dsw->pos, 0, FALSE));
       event, EVENT_ChangeMapFromPalace(gsys) );
     (*seq)++;
     break;
-	default:
+	case SEQ_MAP_WARP_FINISH:
 		return GMEVENT_RES_FINISH;
+	
+	//ここから下はキャンセルした場合の処理
+	case SEQ_EXIT_CANCEL:
+    GFL_MSG_Delete( dsw->msgData );
+    *seq = SEQ_PLAYER_MOVE_UP;
+    break;
+  case SEQ_PLAYER_MOVE_UP:
+    {
+      FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldmap);
+      MMDL *player_mmdl = FIELD_PLAYER_GetMMdl(player);
+      if(MMDL_CheckPossibleAcmd(player_mmdl) == TRUE){
+        MMDL_SetAcmd(player_mmdl, AC_WALK_U_16F);
+        (*seq)++;
+      }
+    }
+    break;
+  case SEQ_PLAYER_MOVE_UP_WAIT:
+    {
+      FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldmap);
+      MMDL *player_mmdl = FIELD_PLAYER_GetMMdl(player);
+      if(MMDL_EndAcmd(player_mmdl) == TRUE){ //アニメコマンド終了待ち
+  	    return GMEVENT_RES_FINISH;
+  	  }
+  	}
+	  break;
   }
 	return GMEVENT_RES_CONTINUE;
 }
 
 //--------------------------------------------------------------
 /**
- * ※デバッグ用　子機の通信終了
+ * 子機の通信終了
  *
  * @param   gsys		
  * @param   fieldmap		
@@ -778,14 +846,14 @@ static GMEVENT_RESULT DebugEVENT_MapChangeCommEnd(GMEVENT * event, int *seq, voi
  * @retval  GMEVENT *		
  */
 //--------------------------------------------------------------
-static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm)
+static GMEVENT * EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm)
 {
-  DEBUG_SIOEND_CHILD *dsc;
+  EVENT_SIOEND_CHILD *dsc;
 	GMEVENT * event;
 
-	event = GMEVENT_Create(gsys, NULL, DebugEVENT_ChildCommEnd, sizeof(DEBUG_SIOEND_CHILD));
+	event = GMEVENT_Create(gsys, NULL, EventChildCommEnd, sizeof(EVENT_SIOEND_CHILD));
 	dsc = GMEVENT_GetEventWork(event);
-	GFL_STD_MemClear(dsc, sizeof(DEBUG_SIOEND_CHILD));
+	GFL_STD_MemClear(dsc, sizeof(EVENT_SIOEND_CHILD));
 	dsc->fieldmap = fieldmap;
 	dsc->intcomm = intcomm;
 	
@@ -793,9 +861,9 @@ static GMEVENT * DEBUG_EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * f
 	return event;
 }
 
-static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*work)
+static GMEVENT_RESULT EventChildCommEnd(GMEVENT * event, int *seq, void*work)
 {
-  DEBUG_SIOEND_CHILD *dsc = work;
+  EVENT_SIOEND_CHILD *dsc = work;
 	GAMESYS_WORK  * gsys = GMEVENT_GetGameSysWork(event);
 	FIELDMAP_WORK * fieldmap = dsc->fieldmap;
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
@@ -808,7 +876,6 @@ static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*wo
       dsc->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
       dsc->msgWin = FLDMSGWIN_AddTalkWin( msgBG, dsc->msgData );
       FLDMSGWIN_Print( dsc->msgWin, 0, 0, msg_invasion_test06_01 );
-      GXS_SetMasterBrightness(-16);
       (*seq)++;
     }
     break;
@@ -837,7 +904,6 @@ static GMEVENT_RESULT DebugEVENT_ChildCommEnd(GMEVENT * event, int *seq, void*wo
   case 3:
     FLDMSGWIN_Delete( dsc->msgWin );
     GFL_MSG_Delete( dsc->msgData );
-    GXS_SetMasterBrightness(0);
     (*seq)++;
     break;
 	default:
@@ -1423,7 +1489,7 @@ void IntrudeField_PalaceMMdlAllAdd(FIELDMAP_WORK *fieldWork)
     u16 event_id;
     u16 obj_id;
   }PalaceMmdlData[] = {
-    {OLDMAN1, 29, 30, SCRID_PALACE01_OLDMAN1_01, OBJID_PALACE_OLDMAN},
+    {OLDMAN1, 29, 30, SCRID_PALACE01_OLDMAN1_02, OBJID_PALACE_OLDMAN},
 //    {GIRL4, 14, 29, SCRID_PALACE01_GIRL4_01},
 //    {GIRL4, 48, 29, SCRID_PALACE01_GIRL4_02},
   };
