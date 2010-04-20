@@ -57,6 +57,7 @@
 #include "field/field_comm/intrude_field.h" //PALACE_MAP_LEN
 
 #include "net_app/union/union_main.h" // for UNION_CommBoot
+#include "savedata/intrude_save.h"
 
 #include "system/playtime_ctrl.h" // for PLAYTIMECTRL_Start
 #include "savedata/gametime.h"  // for GMTIME
@@ -1902,6 +1903,11 @@ GMEVENT* EVENT_ChangeMapFldToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecF
     LOCATION return_loc;
     setNowLoaction( &return_loc, fieldWork );
     GAMEDATA_SetPalaceReturnLocation(gamedata, &return_loc);
+
+    //パレス滞在時間用に入室時間をPush
+    ISC_SAVE_PalaceSojournParam(
+      SaveData_GetIntrude(GAMEDATA_GetSaveControlWork(gamedata)), 
+      GAMEDATA_GetPlayTimeWork(gamedata), SOJOURN_TIME_PUSH);
   }
 
   {
@@ -1960,7 +1966,14 @@ GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem )
     event = EVENT_ChangeMapPalace( gameSystem, fieldWork, &loc );
   }
 #endif
+
+  //パレス滞在時間を更新
+  ISC_SAVE_PalaceSojournParam(
+    SaveData_GetIntrude(GAMEDATA_GetSaveControlWork(gamedata)), 
+    GAMEDATA_GetPlayTimeWork(gamedata), SOJOURN_TIME_CALC_SET);
+
   GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
+  GAMEDATA_SetIntrudeMyID(gamedata, 0);
 //  PMSND_PlaySE( SEQ_SE_FLD_131 ); //SEの確認用にエフェクトは無いけどあてておく
 
   return event;
@@ -2881,6 +2894,7 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
     {
       GMEVENT* call_event;
       GAMEDATA_SetIntrudeReverseArea(work->gameData, TRUE);
+      GAMEDATA_SetIntrudeMyID(work->gameData, GFL_NET_SystemGetCurrentID());
       call_event = EVENT_ChangeMapPalace( work->gameSystem, work->fieldmap, &work->Loc );
       GMEVENT_ChangeEvent(event, call_event);
     }

@@ -871,23 +871,24 @@ static GMEVENT_RESULT EventChildCommEnd(GMEVENT * event, int *seq, void*work)
 	switch (*seq) {
 	case 0:
     GameCommSys_ExitReq(game_comm); //通信終了リクエスト
-	  {
+	  if(GAMEDATA_GetIntrudeReverseArea(GAMESYSTEM_GetGameData(gsys)) == TRUE){
       FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(dsc->fieldmap);
       dsc->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
       dsc->msgWin = FLDMSGWIN_AddTalkWin( msgBG, dsc->msgData );
       FLDMSGWIN_Print( dsc->msgWin, 0, 0, msg_invasion_test06_01 );
-      (*seq)++;
     }
+    (*seq)++;
     break;
   case 1:
-    if( FLDMSGWIN_CheckPrintTrans(dsc->msgWin) == TRUE ){
+    if( dsc->msgWin == NULL || FLDMSGWIN_CheckPrintTrans(dsc->msgWin) == TRUE ){
       (*seq)++;
     } 
     break;
   case 2:
     dsc->wait++;
-    if(dsc->wait > 60){
+    if(dsc->msgWin == NULL || dsc->wait > 60){
       if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL){
+      #if 0
         GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
         int i;
         PLAYER_WORK *plwork;
@@ -897,13 +898,16 @@ static GMEVENT_RESULT EventChildCommEnd(GMEVENT * event, int *seq, void*work)
           plwork = GAMEDATA_GetPlayerWork( gamedata , i );
           PLAYERWORK_setPosition(plwork, &pos);
         }
+      #endif
         (*seq)++;
       }
     }
     break;
   case 3:
-    FLDMSGWIN_Delete( dsc->msgWin );
-    GFL_MSG_Delete( dsc->msgData );
+    if(dsc->msgWin != NULL){
+      FLDMSGWIN_Delete( dsc->msgWin );
+      GFL_MSG_Delete( dsc->msgData );
+    }
     (*seq)++;
     break;
 	default:
@@ -967,6 +971,12 @@ static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *game
   VecFx32 player_pos;
 
   if(GameCommSys_CheckSystemWaiting(game_comm) == TRUE){
+    return;
+  }
+
+  if(GAMESYSTEM_IsEventExists(gameSys) == TRUE){
+    //橋の上で切断イベントが起動しているとイベント中にも関わらず通信が起動して
+    //いつまでも切断と判定できなかったりする
     return;
   }
   

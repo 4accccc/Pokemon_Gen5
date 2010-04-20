@@ -340,7 +340,7 @@ u32 ISC_SAVE_GetMissionClearCount(INTRUDE_SAVE_WORK *intsave)
  *
  * @param   intsave		
  *
- * @retval  s64		    滞在時間(秒) ※RTC_ConvertDateTimeToSecondと同様の秒です
+ * @retval  s64		    滞在時間(秒)
  */
 //==================================================================
 s64 ISC_SAVE_GetPalaceSojournTime(INTRUDE_SAVE_WORK *intsave)
@@ -353,11 +353,54 @@ s64 ISC_SAVE_GetPalaceSojournTime(INTRUDE_SAVE_WORK *intsave)
  * パレス滞在時間をセット
  *
  * @param   intsave		
- * @param   second  滞在時間(秒) ※RTC_ConvertDateTimeToSecondと同様の秒です
+ * @param   second  滞在時間(秒)
  */
 //==================================================================
 void ISC_SAVE_SetPalaceSojournTime(INTRUDE_SAVE_WORK *intsave, s64 second)
 {
   intsave->palace_sojourn_time = second;
+}
+
+//==================================================================
+/**
+ * パレス滞在時間に対するアクセス色々
+ *
+ * @param   intsave		
+ * @param   playtime		現在のプレイ時間
+ * @param   mode		    SOJOURN_TIME_xxx
+ *
+ * @retval  s64		SOJOURN_TIME_xxxによって変化
+ *
+ * パレス入室時にSOJOURN_TIME_PUSHで入室時間を保存
+ * 
+ * パレス退室時にSOJOURN_TIME_CALC_SETで入室時間と現在時間の差分を見て滞在時間に加算
+ * 
+ * パレス入室中にパレス滞在時間を取得したい場合はSOJOURN_TIME_CALC_GETで
+ * 入室時間からのオフセットを加算した滞在時間を取得
+ */
+//==================================================================
+s64 ISC_SAVE_PalaceSojournParam(INTRUDE_SAVE_WORK *intsave, PLAYTIME *playtime, SOJOURN_TIME_MODE mode)
+{
+  static s64 in_time_sec;   //入室時間Push
+  s64 temp_hour, temp_min, temp_sec, now_sec;
+
+  temp_hour = PLAYTIME_GetHour(playtime);
+  temp_min = PLAYTIME_GetMinute(playtime);
+  temp_sec = PLAYTIME_GetSecond(playtime);
+  now_sec = (temp_hour * 60 * 60) + (temp_min * 60) + temp_sec;
+  
+  switch(mode){
+  case SOJOURN_TIME_PUSH:     //入室時間として現在のプレイ時間をバッファへ保存
+    in_time_sec = now_sec;
+    break;
+  case SOJOURN_TIME_CALC_SET: //入室時間と現在時間の差分を見て滞在時間へ加算
+    OS_TPrintf("パレス滞在時間 + %d秒\n", now_sec - in_time_sec);
+    intsave->palace_sojourn_time += now_sec - in_time_sec;
+    break;
+  case SOJOURN_TIME_CALC_GET: //入室時間と現在時間の差分を見て加算した滞在時間を取得
+    return intsave->palace_sojourn_time + (now_sec - in_time_sec);
+  }
+  
+  return intsave->palace_sojourn_time;
 }
 

@@ -13,6 +13,7 @@
 #include "buflen.h"
 #include "field/gpower_id.h"
 #include "savedata/save_control.h"
+#include "savedata/playtime.h"
 
 
 //==============================================================================
@@ -36,6 +37,14 @@ enum{
 
 ///Gパワー配布受信bitのワーク数
 #define INTRUDE_SAVE_DISTRIBUTION_BIT_WORK_MAX  (2)
+
+///パレス滞在時間アクセスモード
+typedef enum{
+  SOJOURN_TIME_PUSH,
+  SOJOURN_TIME_CALC_SET,
+  SOJOURN_TIME_CALC_GET,
+}SOJOURN_TIME_MODE;
+
 
 //==============================================================================
 //  構造体定義
@@ -143,3 +152,4 @@ extern void ISC_SAVE_GetDistributionGPower_Array(INTRUDE_SAVE_WORK *intsave, u8 
 extern u32 ISC_SAVE_GetMissionClearCount(INTRUDE_SAVE_WORK *intsave);
 extern s64 ISC_SAVE_GetPalaceSojournTime(INTRUDE_SAVE_WORK *intsave);
 extern void ISC_SAVE_SetPalaceSojournTime(INTRUDE_SAVE_WORK *intsave, s64 second);
+extern s64 ISC_SAVE_PalaceSojournParam(INTRUDE_SAVE_WORK *intsave, PLAYTIME *playtime, SOJOURN_TIME_MODE mode);
