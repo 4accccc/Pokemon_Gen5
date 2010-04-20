@@ -623,7 +623,7 @@ static void MB_SELECT_InitGraphic( MB_SELECT_WORK *work )
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
   }
   G2_SetWnd0Position(  0,0,  6,192);
-  G2_SetWnd1Position(163,0,172,192);
+  G2_SetWnd1Position(162,0,172,192);
   G2_SetWnd0InsidePlane(GX_WND_PLANEMASK_BG0|GX_WND_PLANEMASK_BG1|GX_WND_PLANEMASK_BG2|GX_WND_PLANEMASK_BG3,TRUE);
   G2_SetWnd1InsidePlane(GX_WND_PLANEMASK_BG0|GX_WND_PLANEMASK_BG1|GX_WND_PLANEMASK_BG2|GX_WND_PLANEMASK_BG3,TRUE);
   G2_SetWndOutsidePlane(GX_WND_PLANEMASK_BG0|GX_WND_PLANEMASK_BG1|GX_WND_PLANEMASK_BG2|GX_WND_PLANEMASK_BG3|GX_WND_PLANEMASK_OBJ,TRUE);
@@ -1372,7 +1372,7 @@ static void MB_SELECT_UpdateChangePage( MB_SELECT_WORK *work )
         MB_SEL_POKE_SetPos( work , work->boxPoke[idx] , &cellPos );
         
         //ˆ——Ž‚¿‰ñ”ð‚Ì‚½‚ß1ƒtƒŒ[ƒ€‚¸‚Â‚¸‚ç‚µ‚Ä“Ç‚Þ
-        if( cellPos.x == MB_SEL_CHANGE_DISPLEN+20 + iy*MB_SEL_CHANGE_PAGE_SPD )
+        if( cellPos.x == MB_SEL_CHANGE_DISPLEN+16 + iy*MB_SEL_CHANGE_PAGE_SPD )
         {
           u8 i;
           for( i=0;i<MB_CAP_POKE_NUM;i++ )

@@ -17,7 +17,11 @@
  */
 
 #include <gflib.h>
+
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 #include "debug/debug_flg.h"
+#endif //MULTI_BOOT_MAKE
 
 //============================================================================================
 //
@@ -78,6 +82,7 @@ const u8 CasetteLanguage = PM_LANG;
 //---------------------------------------------------------------------------
 const u8 GetVersion( void )
 {
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 #ifdef  PM_DEBUG
   if (DEBUG_FLG_GetFlg( DEBUG_FLG_ReverseVersion ) == TRUE )
   {
@@ -91,6 +96,8 @@ const u8 GetVersion( void )
     }
   }
 #endif  //PM_DEBUG
+#endif MULTI_BOOT_MAKE  //通常時処理
+
   return CasetteVersion;
 }
 

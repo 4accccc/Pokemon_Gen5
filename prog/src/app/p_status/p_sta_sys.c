@@ -2269,6 +2269,8 @@ static void PSTD_U_rom( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTD_D_rom( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTD_U_ribbon( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTD_D_ribbon( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_Nickname( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_Nickname( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTATUS_InitDebug( PSTATUS_WORK *work )
 {
   VEC_Set( &work->shadowScale , PSTATUS_SUB_SHADOW_SCALE_X , PSTATUS_SUB_SHADOW_SCALE_Y , PSTATUS_SUB_SHADOW_SCALE_Z );
@@ -2313,6 +2315,7 @@ static void PSTATUS_InitDebug( PSTATUS_WORK *work )
   DEBUGWIN_AddItemToGroupEx( PSTD_U_parent,PSTD_D_parent, (void*)work , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PSTD_U_egg   ,PSTD_D_egg   , (void*)work , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PSTD_U_rom   ,PSTD_D_rom   , (void*)work , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_Nickname   ,PSTD_D_Nickname   , (void*)work , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroup( "‚µ‚ã‚Æ‚­" , PSTD_U_getPPP ,  (void*)work , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
 
   DEBUGWIN_AddItemToGroupEx( PSTD_U_year1  ,PSTD_D_year1  , (void*)work , MEMOINFO_DEBUG_GROUP_NUMBER , work->heapId );
@@ -2864,6 +2867,18 @@ static void PSTD_D_ribbon( void* userWork , DEBUGWIN_ITEM* item )
 {
   PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
   DEBUGWIN_ITEM_SetNameV( item , "RibbonAll[%s]",(work->isDevRibbon?"ON":"OFF") );  
+}
+
+static void PSTD_U_Nickname( void* userWork , DEBUGWIN_ITEM* item )
+{
+}
+static void PSTD_D_Nickname( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
+  const BOOL isNickName = PPP_Get( ppp , ID_PARA_nickname_flag , NULL );
+  DEBUGWIN_ITEM_SetNameV( item , "NickName[%s]",(isNickName?"ON":"OFF") );  
+
 }
 
 #endif //USE_STATUS_DEBUG

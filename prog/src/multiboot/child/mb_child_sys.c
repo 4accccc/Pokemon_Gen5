@@ -63,6 +63,7 @@ typedef enum
   MCS_CHECK_ROM,
   MCS_SELECT_ROM, //デバッグ用
   MCS_LOAD_DATA,
+  MCS_POKE_CONV,
   MCS_DATA_CONV,
 
   MCS_LOAD_ERROR,
@@ -143,6 +144,7 @@ typedef struct
   MB_CHILD_STATE  state;
   MB_CHILD_SUB_STATE  subState;
   GFL_PROCSYS   *procSys;
+  u16 convCnt;
   u8 captureNum;
   u8 saveWaitCnt;
   u16 timeoutCnt;
@@ -420,13 +422,31 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     {
       if( MB_DATA_GetErrorState( work->dataWork ) == DES_NONE )
       {
-        work->state = MCS_DATA_CONV;
+        work->state = MCS_POKE_CONV;
+        work->convCnt = 0;
       }
       else
       {
         work->state = MCS_LOAD_ERROR;
       }
     }
+    break;
+
+  case MCS_POKE_CONV:
+    {
+      //PPP
+      const u8 i = work->convCnt/MB_POKE_BOX_POKE;
+      const u8 j = work->convCnt%MB_POKE_BOX_POKE;
+      void *pppSrc = MB_DATA_GetBoxPPP(work->dataWork,i,j);
+      MB_UTIL_ConvertPPP( pppSrc , work->boxPoke[i][j] , work->cardType );
+
+      work->convCnt++;
+      if( work->convCnt >= MB_POKE_BOX_TRAY * MB_POKE_BOX_POKE )
+      {
+        work->state = MCS_DATA_CONV;
+      }
+    }
+   
     break;
 
   case MCS_DATA_CONV:
@@ -1049,6 +1069,8 @@ static void MB_CHILD_LoadResource( MB_CHILD_WORK *work )
 static void MB_CHILD_DataConvert( MB_CHILD_WORK *work )
 {
   u8 i,j;
+  /*
+  //処理落ち対策で移動
   //PPP
   for( i=0;i<MB_POKE_BOX_TRAY;i++ )
   {
@@ -1058,6 +1080,7 @@ static void MB_CHILD_DataConvert( MB_CHILD_WORK *work )
       MB_UTIL_ConvertPPP( pppSrc , work->boxPoke[i][j] , work->cardType );
     }
   }
+  */
   //ボックス名
   for( i=0;i<MB_POKE_BOX_TRAY;i++ )
   {

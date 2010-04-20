@@ -57,7 +57,8 @@ void  PPCONV_ConvertPPPFromPokeShifter( POKEMON_PASO_PARAM* ppp )
     STRCODE monsName[MONS_NAME_SIZE+EOM_SIZE];
     PPP_Get( ppp , ID_PARA_nickname_raw , monsName );
     PPCONV_ConvertStr( monsName , monsName , MONS_NAME_SIZE+EOM_SIZE );
-    PPP_Put( ppp , ID_PARA_nickname_raw , (u32)monsName );
+    //過去作転送専用・海外のポケモンはニックネームフラグをそのまま引き継ぐので
+    PPP_Put( ppp , ID_PARA_nickname_raw_only , (u32)monsName );
   }
   //親の名前変換
   {

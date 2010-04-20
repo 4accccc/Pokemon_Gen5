@@ -32,7 +32,7 @@
 #define MB_SEL_PLT_BG_BAR (3)   //1–{
 
 #define MB_SEL_POKE_BOX_TOP  (44)
-#define MB_SEL_POKE_BOX_LEFT (28)
+#define MB_SEL_POKE_BOX_LEFT (24)
 #define MB_SEL_POKE_BOX_WIDTH (24)
 #define MB_SEL_POKE_BOX_HEIGHT (24)
 #define MB_SEL_POKE_BOX_X_NUM  (6)

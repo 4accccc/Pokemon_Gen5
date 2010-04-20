@@ -31,6 +31,7 @@ SRCS	+= \
 		$(PARENT_SRC)/system/debug_print.c \
 		$(PARENT_SRC)/system/time_icon.c \
 		$(PARENT_SRC)/system/palanm.c \
+		$(PARENT_SRC)/system/pm_version.c \
 		$(PARENT_SRC)/waza_tool/waza_tool.c \
 		$(PARENT_SRC)/debug/debug_str_conv.c\
 		$(PARENT_SRC)/multiboot/util/mb_data_main.c \
