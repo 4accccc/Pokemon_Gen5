@@ -352,6 +352,8 @@ sub_item_event_get_msg:
     _SYSWIN_MSG( msg_item_get_04 , POS_DEFAULT )
 
   CASE ITEMPOCKET_EVENT THEN
+    //アイテムカットイン
+    _CALL_ITEM_CUTIN(SCWK_TEMP0)
     //大事なものの場合
     _PLAYER_NAME( 0 )
     _ITEM_NAME( 1, SCWK_TEMP0 )
@@ -385,6 +387,8 @@ sub_item_event_get_field_msg:
     _SYSWIN_MSG( msg_item_get_field_03 , POS_DEFAULT )
 
   CASE ITEMPOCKET_EVENT THEN
+    //アイテムカットイン
+    _CALL_ITEM_CUTIN(SCWK_TEMP0)
     //大事なものの場合
     _PLAYER_NAME( 0 )
     _ITEM_NAME( 1, SCWK_TEMP0 )
