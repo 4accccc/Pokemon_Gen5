@@ -801,7 +801,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
         //3Ｄモデル2アニメ再生
         rc3 = PlayMdlAnm2(ptr);
         DbgCount = DEBUG_COUNT;
-        OS_Printf("cutin_frame %d\n", ptr->FrameCount);
+        if ( DbgSlowMode ) OS_Printf("cutin_frame %d\n", ptr->FrameCount);
       }
 #else
       //フレームカウント
