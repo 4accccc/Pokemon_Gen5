@@ -112,21 +112,35 @@ void BTL_POSPOKE_Rotate( BTL_POSPOKE_WORK* wk, BtlRotateDir dir, u8 clientID, co
   else
   {
     #ifdef ROTATION_NEW_SYSTEM
-
-    u32 i;
+    u8  idx[ BTL_ROTATE_NUM ];
+    u32 i, cnt;
 
     // 該当クライアントの担当位置インデックスを保存
-    for(i=0; i<NELEMS(wk->state); ++i)
+    for(i=cnt=0; i<NELEMS(wk->state); ++i)
     {
-      if( wk->state[i].clientID == clientID ){ break; }
+      if( wk->state[i].clientID == clientID ){
+        idx[  cnt++ ] = i;
+      }
     }
 
-    if( i != NELEMS(wk->state) )
     {
+      u8 inIdx  = BTL_MAINUTIL_GetRotateInPosIdx( dir );
+      u8 outIdx = BTL_MAINUTIL_GetRotateOutPosIdx( dir );
+
+      BTL_POSPOKE_STATE  frontState = wk->state[ idx[0] ];
+
+      wk->state[ idx[inIdx] ]  = wk->state[ idx[outIdx] ];
+      wk->state[ idx[outIdx] ] = frontState;
+
       if( !BPP_IsDead(inPoke) ){
-        BTL_POSPOKE_PokeIn( wk, i, BPP_GetID(inPoke), pokeCon );
+        BTL_POSPOKE_PokeIn( wk, idx[0], BPP_GetID(inPoke), pokeCon );
       }else{
         wk->state[ i ].existPokeID = BTL_POKEID_NULL;
+      }
+
+      for(i=0; i<BTL_ROTATE_NUM; ++i)
+      {
+        TAYA_Printf("RotPokePos : client=%d, posIdx(%d)=%d, exsistPoke=%d\n", clientID, i, idx[i], wk->state[idx[i]].existPokeID);
       }
     }
 

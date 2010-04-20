@@ -1350,28 +1350,6 @@ static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
       BTL_N_PrintfSimple( DBGSTR_LF );
       result = TRUE;
     }
-
-    // 新ローテーションの時、後衛の位置も空いていたら送る
-    #ifdef ROTATION_NEW_SYSTEM
-    if( (BTL_MAIN_IsExistClient(wk->mainModule, clientID))
-    &&  (BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION)
-    ){
-      const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, clientID );
-      u32 p;
-
-      for(p=BTL_ROTATION_FRONTPOS_NUM; p<BTL_ROTATE_NUM; ++p)
-      {
-        const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( party, p );
-        if( BPP_IsDead(bpp) )
-        {
-          BtlSide side = BTL_MAIN_GetClientSide( wk->mainModule, clientID );
-          BtlPokePos pos = BTL_MAINUTIL_GetSidePos( side, p );
-          BTL_SERVER_RequestChangePokemon( wk->server, pos );
-          result = TRUE;
-        }
-      }
-    }
-    #endif
   }
   return result;
 }
@@ -2632,7 +2610,6 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
   u8 pokeID;
 
   clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
-  GF_ASSERT(posIdx < clwk->numCoverPos);
 
   {
     BTL_POKEPARAM* tmpBpp = BTL_PARTY_GetMemberData( clwk->party, nextPokeIdx );
@@ -12860,9 +12837,11 @@ static void relivePokeRec_Add( BTL_SVFLOW_WORK* wk, u8 pokeID )
     }
   }
 
-  if( i < NELEMS(wk->relivedPokeID) ){
+  if( i < NELEMS(wk->relivedPokeID) )
+  {
     wk->relivedPokeID[i] = pokeID;
     wk->numRelivePoke++;
+    TAYA_Printf("ポケモン生き返り記録%d件:ID=%d\n", wk->numRelivePoke, pokeID);
   }
 }
 
@@ -12877,10 +12856,14 @@ static BOOL relivePokeRec_CheckNecessaryPokeIn( BTL_SVFLOW_WORK* wk )
   {
     clientID = BTL_MAINUTIL_PokeIDtoClientID( wk->relivedPokeID[i] );
 
+    TAYA_Printf("ClientID=%d のポケが生き返った..", clientID);
+
     // １個所でも空き位置があれば入場させる必要アリ
     if( BTL_POSPOKE_GetClientEmptyPos(&wk->pospokeWork, clientID, pos) ){
+      TAYA_Printf( "空きがあるので入場させる\n");
       return TRUE;
     }
+    TAYA_Printf( "空きがないので無視する\n");
   }
   return FALSE;
 }

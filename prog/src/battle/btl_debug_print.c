@@ -227,7 +227,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_StartAfterPokeChange:return "ターン途中ポケモン入れ替え後のサーバーコマンド生成\n";
   case DBGSTR_SVFL_PokeChangeRootInfo:  return "クライアント(%d)のポケモン(位置%d) を、%d番目のポケといれかえる\n";
   case DBGSTR_SVFL_UseItemCall:         return "シューター「アイテムコール」使用  対象Poke=%d\n";
-  case DBGSTR_SVFL_ChangePokeReqInfo:   return "クライアント[%d]   空いている位置の数=%d\n";
+  case DBGSTR_SVFL_ChangePokeReqInfo:   return "クライアント[%d]   空いている位置の数=%d, 位置ID= ";
   case DBGSTR_SVFL_TurnStart_Result:    return "【ターン開始コマンド】処理アクション %d / %d\n";
   case DBGSTR_SVFL_ActOrderMainStart:   return "コマンド生成コア 処理アクション開始Index=%d\n";
   case DBGSTR_SVFL_ActOrderMainDropOut: return "Result=%dによる中途サーバ返信\n";
