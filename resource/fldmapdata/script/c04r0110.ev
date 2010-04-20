@@ -389,6 +389,7 @@ sub_train_battle:
   
   //対戦結果
   IF $win_lose != SCR_BATTLE_RESULT_WIN THEN //負け
+    _TIME_WAIT( 60 ) //２秒ほどまってから負け処理へ
     _CALL sub_common_retmap_lose_retire
   ELSE //勝ち
     _CALL sub_train_battle_win
@@ -466,6 +467,9 @@ sub_train_battle_win_clear:
   _TIME_WAIT( 70 )
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
+
+  //電車揺れ停止
+  _BSUBWAY_TOOL( BSWSUB_STOP_SHAKE_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //OBJアニメ待ち
   _OBJ_ANIME_WAIT()
@@ -597,11 +601,13 @@ sub_train_battle_win_next_menu:
   DEFINE_LOCAL play_mode
   DEFINE_LOCAL multi_flag
   DEFINE_LOCAL flag
+  DEFINE_LOCAL rc_flag
   
   //プレイモード取得
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   _BSUBWAY_TOOL( BSWTOOL_CHK_MODE_MULTI, play_mode, BSW_NULL, multi_flag )
   
+  $rc_flag = FALSE
   $loop = 1
   
   WHILE $loop == 1
@@ -612,14 +618,21 @@ sub_train_battle_win_next_menu:
     _NUMBER( 1, SCWK_ANSWER, 1 )
     _SYSWIN_MSG( msg_c04r0110_01 , POS_DOWN )
     
-    
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, SCWK_ANSWER ) //Bキャン無効
-    _BMPMENU_MAKE_LIST( msg_c04r0110_02, 0 )  //つづける
-    _BMPMENU_MAKE_LIST( msg_c04r0110_03, 1 )  //きろくする
-    _BMPMENU_MAKE_LIST( msg_c04r0110_04, 2 )  //やすむ
-    _BMPMENU_MAKE_LIST( msg_c04r0110_05, 3 )  //リタイア
-    _BMPMENU_START()
     
+    IF $rc_flag == FALSE THEN
+      _BMPMENU_MAKE_LIST( msg_c04r0110_02, 0 )  //つづける
+      _BMPMENU_MAKE_LIST( msg_c04r0110_03, 1 )  //きろくする
+      _BMPMENU_MAKE_LIST( msg_c04r0110_04, 2 )  //やすむ
+      _BMPMENU_MAKE_LIST( msg_c04r0110_05, 3 )  //リタイア
+    ELSE
+      _BMPMENU_MAKE_LIST( msg_c04r0110_02, 0 )  //つづける
+      _BMPMENU_MAKE_LIST( msg_c04r0110_04, 2 )  //やすむ
+      _BMPMENU_MAKE_LIST( msg_c04r0110_05, 3 )  //リタイア
+    ENDIF
+
+    _BMPMENU_START()
+
     SWITCH $SCWK_ANSWER
     CASE 0 THEN //続ける
       //ウィンドウ消す
@@ -634,6 +647,9 @@ sub_train_battle_win_next_menu:
       //フェードアウト
       _MAP_FADE_BLACK_OUT()
       _MAP_FADE_END_CHECK()
+      
+      //電車揺れ停止
+      _BSUBWAY_TOOL( BSWSUB_STOP_SHAKE_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
       
       //戦闘後のワーク開放
       _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
@@ -664,6 +680,8 @@ sub_train_battle_win_next_menu:
         _SYSWIN_MSG( msg_c04r0110_14, POS_DOWN )
         _AB_KEYWAIT()
         _SYSWIN_CLOSE()
+        
+        $rc_flag = TRUE
       ENDIF
     CASE 2 THEN //休む
       //休むか
@@ -717,6 +735,7 @@ sub_train_battle_win_next_menu_comm_multi:
   DEFINE_LOCAL play_mode
   DEFINE_LOCAL multi_flag
   DEFINE_LOCAL flag
+  DEFINE_LOCAL rc_flag
   
   //プレイモード取得
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
@@ -725,6 +744,7 @@ sub_train_battle_win_next_menu_comm_multi:
   //メニュー表示前の同期
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_MENU_START, BSW_NULL, BSW_NULL )
   
+  $rc_flag = FALSE
   $loop = 1
   
   WHILE $loop == 1
@@ -736,9 +756,16 @@ sub_train_battle_win_next_menu_comm_multi:
     _SYSWIN_MSG( msg_c04r0110_01 , POS_DOWN )
     
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, SCWK_ANSWER ) //Bキャン無効
-    _BMPMENU_MAKE_LIST( msg_c04r0110_02, 0 )  //つづける
-    _BMPMENU_MAKE_LIST( msg_c04r0110_03, 1 )  //きろくする
-    _BMPMENU_MAKE_LIST( msg_c04r0110_05, 3 )  //リタイア
+    
+    IF $rc_flag == FALSE THEN
+      _BMPMENU_MAKE_LIST( msg_c04r0110_02, 0 )  //つづける
+      _BMPMENU_MAKE_LIST( msg_c04r0110_03, 1 )  //きろくする
+      _BMPMENU_MAKE_LIST( msg_c04r0110_05, 3 )  //リタイア
+    ELSE
+      _BMPMENU_MAKE_LIST( msg_c04r0110_02, 0 )  //つづける
+      _BMPMENU_MAKE_LIST( msg_c04r0110_05, 3 )  //リタイア
+    ENDIF
+    
     _BMPMENU_START()
     _SYSWIN_CLOSE()
     
@@ -777,6 +804,9 @@ sub_train_battle_win_next_menu_comm_multi:
         _MAP_FADE_BLACK_OUT()
         _MAP_FADE_END_CHECK()
         
+        //電車揺れ停止
+        _BSUBWAY_TOOL( BSWSUB_STOP_SHAKE_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
+        
         //戦闘後のワーク開放
         _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
 
@@ -808,6 +838,8 @@ sub_train_battle_win_next_menu_comm_multi:
         _SYSWIN_MSG( msg_c04r0110_14, POS_DOWN )
         _AB_KEYWAIT()
         _SYSWIN_CLOSE()
+        
+        $rc_flag = TRUE
       ENDIF
     DEFAULT //リタイア
       //リタイアするか
@@ -1069,6 +1101,9 @@ sub_common_retmap_lose_retire:
   //マップフェードアウト
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
+  
+  //電車揺れ停止
+  _BSUBWAY_TOOL( BSWSUB_STOP_SHAKE_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //戦闘後のワーク開放
   _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )

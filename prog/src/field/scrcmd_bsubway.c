@@ -1133,8 +1133,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //電車のゆれを止める
   case BSWSUB_STOP_SHAKE_TRAIN:
-    {
-    }
+    BSUBWAY_GIMMICK_StopTrainShake( fieldmap );
     break;
   //----ワーク依存　通信関連
   //通信開始

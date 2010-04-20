@@ -299,6 +299,46 @@ static void delProc_Subway( BSW_GMK *bsw_gmk, FIELDMAP_WORK *fldmap )
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * Ô“à—h‚êˆ—@‚ä‚ê‚ğ’â~
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void BSUBWAY_GIMMICK_StopTrainShake( FIELDMAP_WORK *fieldmap )
+{
+  int no,id;
+  BSW_GMK *bsw_gmk;
+  SUBWAY_WORK *work;
+  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  GIMMICKWORK *gmk_work = GAMEDATA_GetGimmickWork( gdata );
+  u32 zone_id = FIELDMAP_GetZoneID( fieldmap );
+  
+  GF_ASSERT( zone_id == ZONE_ID_C04R0110 );
+
+  if( zone_id == ZONE_ID_C04R0110 ){
+    id = FLD_GIMMICK_C04R0110;
+    bsw_gmk = GIMMICKWORK_Get( gmk_work, id );
+    GF_ASSERT( bsw_gmk != NULL );
+
+    if( bsw_gmk != NULL ){
+      SHAKE_WORK *work = bsw_gmk->bsw_work;
+      GF_ASSERT( work != NULL );
+
+      if( work != NULL ){
+        VecFx32 scroll = {0,0,0};
+        FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
+        
+        work->shake_stop = TRUE;
+        work->shake_y = 0;
+        FLDMAPPER_SetDrawOffset( mapper, &scroll );
+      }
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * Ô“à—h‚êˆ—@‰Šú‰»
  * @param bsw_gmk BSW_GMK*
  * @param fldmap FIELDMAP_WORK
