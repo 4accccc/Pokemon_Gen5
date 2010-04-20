@@ -65,7 +65,8 @@ EVENT_END
 EVENT_START   ev_scene_r09_baseballm_01
 	
 	IF FLAG_OFF(FE_R09_ITEMGET_01) THEN
-		_TIME_WAIT(8)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_move)
+		_OBJ_ANIME_WAIT()
 		_OBJ_ANIME(R09_BASEBALLM_01,anm_common_gyoe)
 		_OBJ_ANIME_WAIT()
 		
@@ -82,11 +83,13 @@ EVENT_START   ev_scene_r09_baseballm_01
 		
 		_TIME_WAIT(8)
 		_OBJ_ANIME(R09_BASEBALLM_01,anm_baseballm_shot_01)
-		_TIME_WAIT(28)
-		
-		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
 		_OBJ_ANIME_WAIT()
 		
+		_OBJ_ADD_EX(337,172,DIR_DOWN,MMDL_ID_EVENTOBJ_00,MONSTERBALL,MV_DMY)
+		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_monsball_shot_01)
+		
+		_TIME_WAIT(8)
+		_OBJ_DEL(MMDL_ID_EVENTOBJ_00)
 		_ITEM_EVENT_KEYWAIT(ITEM_WAZAMASIN56,1)
 		
 		_BALLOONWIN_OBJMSG_POS( msg_r09_badman_02, R09_BASEBALLM_01, POS_DR )
@@ -178,14 +181,27 @@ _ANIME_LABEL	anm_common_turn_u
 
 	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// éÂêlåˆàÍï‡ï‡Ç≠                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move
+	
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
 // Ç»Ç∞Ç¬ÇØÇÈÉAÉjÉÅ                       
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_baseballm_shot_01
 	
-	_ANIME_DATA AC_STAY_WALK_L_8F,1
-	_ANIME_DATA AC_WAIT_8F,1
-	_ANIME_DATA AC_WALK_D_6F,1
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_monsball_shot_01
+	
+	_ANIME_DATA AC_WALK_D_4F,3
+	_ANIME_DATA	ACMD_END,0
+	

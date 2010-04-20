@@ -377,24 +377,41 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_01, D06R0101_HAKASE2_01,POS_DR)
 	_BALLOONWIN_CLOSE()
 	
+	//博士がきょろきょろする
+	_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_right)
+	_OBJ_ANIME_WAIT()
+	_TIME_WAIT(4)
+	_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_left)
+	_OBJ_ANIME_WAIT()
+	_TIME_WAIT(16)
+	_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_up)
+	_OBJ_ANIME_WAIT()
+		
+/*
 	//博士2移動して、きょろきょろする
+	_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_up)
+	_OBJ_ANIME_WAIT()
 	_OBJ_ANIME( D06R0101_HAKASE2_01,anm_hakase2_kyorokyoro_01)
 	//博士の動きとサポートの動きを合わせる為のウェイト
-	_TIME_WAIT(12)
+	_TIME_WAIT(4)
 	_OBJ_ANIME(D06R0101_HEROINE_01,anm_turn_s2)
 	_OBJ_ANIME_WAIT()
+	
+	//あいかわらず
+	_OBJ_ANIME(D06R0101_HAKASE2_01,anm_turn_s4)
+	_TIME_WAIT(4)
+	_OBJ_ANIME(D06R0101_HEROINE_01,anm_turn_s3)
+	_OBJ_ANIME_WAIT()
+*/	
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_02, D06R0101_HAKASE2_01,POS_DR)
+	_BALLOONWIN_CLOSE()
 
+/*
 	//博士2がもとの位置に移動
 	_OBJ_ANIME( D06R0101_HAKASE2_01,anm_hakase2_kuru_02)
 	_OBJ_ANIME( D06R0101_HEROINE_01,anm_common_turn_down)
 	_OBJ_ANIME_WAIT()
-	
-	//博士2が喋る
-	//博士2:あいかわらず　ここ　ポケモン
-	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_02, D06R0101_HAKASE2_01,POS_DR)
-	_BALLOONWIN_CLOSE()
-	
-
+*/
 	//博士2が喋る
 	//博士2:ちょっと　パパに　頼まれて
 	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_03, D06R0101_HAKASE2_01,POS_DR)
@@ -428,14 +445,30 @@ _ANIME_LABEL	anm_turn_s1
 	_ANIME_DATA	ACMD_END,0 
 	
 //--------------------------------------------------------------------
-//サポート:振り向き特殊                         
+//サポート:振り向き特殊1                        
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_turn_s2
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_WAIT_8F,3
 	_ANIME_DATA AC_STAY_WALK_L_8F,1
-	_ANIME_DATA AC_WAIT_16F,1
+//	_ANIME_DATA AC_WAIT_8F,3
+//	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0 
+
+//--------------------------------------------------------------------
+//サポート:振り向き特殊2                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_turn_s3
+	_ANIME_DATA AC_WAIT_32F,1
 	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士:振り向き特殊1                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_turn_s4
+	_ANIME_DATA AC_WAIT_32F,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0 
 
 //--------------------------------------------------------------------
@@ -465,7 +498,7 @@ _ANIME_LABEL	anm_heroine_kuru_01
 	_ANIME_DATA AC_WAIT_4F,5
 	_ANIME_DATA AC_WAIT_16F,1
 	_ANIME_DATA AC_WALK_U_8F,2
-	_ANIME_DATA AC_WAIT_32F,1
+	_ANIME_DATA AC_WAIT_16F,1
 	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0  
 
@@ -488,12 +521,11 @@ _ANIME_LABEL	anm_hakase2_kuru_02
 //博士2:  少し上できょろきょろ                       
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase2_kyorokyoro_01
-	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_WAIT_8F,3
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
-	_ANIME_DATA AC_WAIT_16F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+//	_ANIME_DATA AC_WAIT_8F,3
+//	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/
@@ -544,7 +576,7 @@ EVENT_START    ev_pos_d06r0101_denki_02
 	
 	//ホワイトが喋る
 	//ホワイト:ねえねえ　ポケモンって
-	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_white_04, D06R0101_HEROINE_01,POS_DL)
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_white_04, D06R0101_HEROINE_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
 //===============フラグ操作===============//
@@ -694,10 +726,23 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	_OBJ_POS_CHANGE( D06R0101_HAKASE2_01, 56, 0, 13, DIR_RIGHT )
 	_OBJ_POS_CHANGE( D06R0101_HEROINE_01, 58, 0, 14, DIR_RIGHT )
 
+	IF $LWK_HERO_POSZ == 12 THEN
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_move_a)
+		_OBJ_ANIME_WAIT()
+	
+	ELSIF $LWK_HERO_POSZ == 13 THEN
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_move_b)
+		_OBJ_ANIME_WAIT()
+	
+	ELSIF $LWK_HERO_POSZ == 14 THEN
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_move_c)
+		_OBJ_ANIME_WAIT()
+
+	ENDIF
+	
 	//NのBGM再生
 	_START_EVENT_BGM( SEQ_BGM_E_N )
 	
-
 	//Nが喋る
 	//はい・いいえの選択
 	//Ｎ『……さてと　ポケモンではなく　じぶんの　ちからで
@@ -765,26 +810,16 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	
 	//博士2が喋る
 	//博士2:･･････ホワイティは　みみが　いいのね
-	_BALLOONWIN_OBJMSG( msg_d06r0101_hakase2_09, D06R0101_HAKASE2_01)
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_09, D06R0101_HAKASE2_01,POS_UL)
 	
 
 	_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_right)
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_CLOSE()
 	
-	IF $LWK_HERO_POSZ == 12 THEN
-		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_doku_a)
-		_OBJ_ANIME_WAIT()
-	
-	ELSIF $LWK_HERO_POSZ == 13 THEN
-		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_doku_b)
-		_OBJ_ANIME_WAIT()
-	
-	ELSIF $LWK_HERO_POSZ == 14 THEN
-		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_doku_c)
-		_OBJ_ANIME_WAIT()
-
-	ENDIF
+	//プレイヤーがどく
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_doku_b)
+	_OBJ_ANIME_WAIT()
 	
 	//Nが喋る
 	//Ｎ『……アララギか　はじめまして
@@ -793,7 +828,7 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	
 	//博士2が喋る
 	//博士2:あら……　ずいぶんと　きらわれているのね
-	_BALLOONWIN_OBJMSG( msg_d06r0101_hakase2_10, D06R0101_HAKASE2_01)
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_10, D06R0101_HAKASE2_01,POS_UL)
 	_BALLOONWIN_CLOSE()
 	
 	//Nが喋る
@@ -802,8 +837,15 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	_BALLOONWIN_CLOSE()
 	
 	//Nが画面外に移動
-	_OBJ_ANIME( D06R0101_BOSS_01,anm_boss_saru_03)
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_right)
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( D06R0101_BOSS_01,anm_boss_saru_03)
+	_TIME_WAIT(40)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_up)
+	_TIME_WAIT(4)
+	_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_up)
+	_TIME_WAIT(2)
+	_OBJ_ANIME(D06R0101_HEROINE_01,anm_common_turn_up)
 	_OBJ_ANIME_WAIT()
 	//階段SE
 	_SE_PLAY( SEQ_SE_KAIDAN )
@@ -813,26 +855,25 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	//BGM終了
 	_END_EVENT_BGM()
 	
-	IF $LWK_HERO_POSZ == 12 || $LWK_HERO_POSZ == 13 THEN
-		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou3_a)
-		_OBJ_ANIME_WAIT()
-	
-	ELSIF $LWK_HERO_POSZ == 14 THEN
-		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou3_c)
-		_OBJ_ANIME_WAIT()
-
-	ENDIF
+	//プレイヤーがアララギに近づく
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_idou3_a)
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME(D06R0101_HEROINE_01,anm_common_turn_right)
+	_OBJ_ANIME_WAIT()
 	
 	//博士2が喋る
 	//博士2:……　まあ　いきなり　わかってもらえるとは
-	_BALLOONWIN_OBJMSG( msg_d06r0101_hakase2_11, D06R0101_HAKASE2_01)
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_11, D06R0101_HAKASE2_01,POS_UL)
 	_BALLOONWIN_CLOSE()
 	
 	//話題を大きく切り替えた段落を作るためのウェイト
 	_TIME_WAIT(12)
 	//博士2が喋る
 	//博士2:さてと……　もうすこし　データを　あつめるかなー
-	_BALLOONWIN_OBJMSG( msg_d06r0101_hakase2_12, D06R0101_HAKASE2_01)
+	_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_right)
+	_TIME_WAIT(4)
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_12, D06R0101_HAKASE2_01,POS_UL)
 	_BALLOONWIN_CLOSE()
 	
 	//博士とサポートの動きに差をつけるためのウェイト
@@ -895,22 +936,34 @@ _ANIME_LABEL	anm_player_doku_a
 	_ANIME_DATA AC_STAY_WALK_D_8F,1	
 	_ANIME_DATA	ACMD_END,0
 	
-//--------------------------------------------------------------------
-//主人公:上に退くB                    
-//--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_doku_b
 	_ANIME_DATA AC_WALK_U_8F,1
 	_ANIME_DATA AC_STAY_WALK_D_8F,1	
 	_ANIME_DATA	ACMD_END,0
 	
-
-//--------------------------------------------------------------------
-//主人公:上に退くC                    
-//--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_doku_c
 	_ANIME_DATA AC_STAY_WALK_U_8F,1	
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//主人公:Nに近づく                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_a
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1	
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_player_move_b
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_player_move_c
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1	
+	_ANIME_DATA	ACMD_END,0
+	
 //--------------------------------------------------------------------
 //主人公:移動3A                    
 //--------------------------------------------------------------------

@@ -170,12 +170,17 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 
 		DEFINE_LOCAL  POSX   /* ローカル変数定義 */
 		DEFINE_LOCAL  POSZ    /* {}で囲う場合は連続して書かなければならない */
-
+    
 		_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
     
+		_CAMERA_START()		//カメラ操作開始
+	    _CAMERA_PURGE()		//対象物とカメラのバインドを解く
+		_CAMERA_MOVE(9688,0,970752,819200,0,1409024,32)
+	    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	    _TIME_WAIT(32)
+    
 		//うーむ！　この　骨格標本は　いつみても……　ホレボレしますな
-//		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_01, C02GYM0101_AD_01,POS_DEFAULT )
-		_PLAINWIN_MSG_UP(msg_c02gym0101_ad_01)
+		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_01, C02GYM0101_AD_01,POS_DEFAULT )
 		_MSGWIN_CLOSE()
 
 		//副館長：主人公を向く
@@ -183,8 +188,7 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		_OBJ_ANIME_WAIT()
 		
 		//どうも　わたくし　副館長の　？？？　です　せっかく　いたしたのです～
-//		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_02, C02GYM0101_AD_01,POS_DEFAULT )
-		_PLAINWIN_MSG_UP(msg_c02gym0101_ad_02)
+		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_02, C02GYM0101_AD_01,POS_DEFAULT )
 		_MSGWIN_CLOSE()
 		
 		//副館長：主人公の前まで来る
@@ -231,22 +235,32 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		_TIME_WAIT(2)
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_hone_dai_c)
 		_OBJ_ANIME_WAIT()	
-		
 		DEFAULT
 		ENDSWITCH
 		
+//		没カメラ（カイリューの骨を見せるカメラ）
+//		_CAMERA_MOVE(9685,0,970819,819200,32775,1335296,32)
+//	    _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
 		//副館長：骨（大）の説明
 		//骨格……　大昔の　ポケモン……
 		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_03, C02GYM0101_AD_01,POS_DL )
 		_BALLOONWIN_CLOSE()
-		
+	
+		_TIME_WAIT(8)
+		_CAMERA_DEF_MOVE(1)//引数は移動にかかるフレーム数
+		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+		_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+		_CAMERA_END()		//カメラ操作終了
+
+		_TIME_WAIT(8)
 		//副館長：展示物（隕石）まで移動
 		_OBJ_ANIME( C02GYM0101_AD_01,anm_ad_idou_inseki)	
 		_TIME_WAIT(2)
 		//主人公：展示物（隕石）まで移動
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_idou_inseki)
 		_OBJ_ANIME_WAIT()		
-		
+	
 		//副館長：隕石の説明
 		//この　石は　すごいですよ
 		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_04, C02GYM0101_AD_01,POS_UR )
@@ -290,7 +304,7 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		_LAST_KEYWAIT() 
 		_BALLOONWIN_CLOSE()
 
-		_CAMERA_RECV_MOVE( 32 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+		_CAMERA_DEF_MOVE(32)//引数は移動にかかるフレーム数
 		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 		_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 		_CAMERA_END()		//カメラ操作終了
