@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-19T21:12:08"/>
+	<create user="matsumiya" host="W00224" date="2010-04-20T18:12:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -343,11 +343,11 @@
 		<language name="JPN" width="256">いらっしゃい！[BE:01:ページ切り替え（クリア）]
 そうだ！　だんなの　むかしの
 しごとなかまが　くれた　おみやげが[BE:00:ページ切り替え（行送り）]
-たくさん　あるから　わけてあげる[BE:01:ページ切り替え（クリア）]</language>
+たくさん　あるから　わけてあげる</language>
 		<language name="JPN_KANJI" width="256">いらっしゃい！[BE:01:ページ切り替え（クリア）]
 そうだ！　だんなの　昔の
 仕事仲間が　くれた　お土産が[BE:00:ページ切り替え（行送り）]
-たくさん　あるから　わけてあげる[BE:01:ページ切り替え（クリア）]</language>
+たくさん　あるから　わけてあげる</language>
 	</row>
 
 	<row id="msg_c07r0301_woman3_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">

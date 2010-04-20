@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-19T19:39:59"/>
+	<create user="matsumiya" host="W00224" date="2010-04-20T18:13:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -388,9 +388,9 @@
 ・続けてblack_04b</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレンは　ベルの　ポケモンを
+		<language name="JPN" width="256">チェレンは　[1:00:トレーナー名:0]の　ポケモンを
 かいふく　させた！▼</language>
-		<language name="JPN_KANJI" width="256">チェレンは　ベルの　ポケモンを
+		<language name="JPN_KANJI" width="256">チェレンは　[1:00:トレーナー名:0]の　ポケモンを
 回復させた！▼</language>
 	</row>
 
