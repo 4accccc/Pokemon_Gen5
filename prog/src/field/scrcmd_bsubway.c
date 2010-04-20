@@ -875,8 +875,12 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //トレーナー対戦前メッセージ表示
   case BSWSUB_TRAINER_BEFORE_MSG:
-    SCRIPT_CallEvent(
-        sc, BSUBWAY_EVENT_TrainerBeforeMsg(bsw_scr,gsys,param0) );
+    {
+      u16 tr_idx = param0;
+      u16 obj_id = param1;
+      SCRIPT_CallEvent( sc,
+          BSUBWAY_EVENT_TrainerBeforeMsg(bsw_scr,gsys,tr_idx,obj_id) );
+    }
     KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
   //ゲームクリア時のプレイデータをセーブ

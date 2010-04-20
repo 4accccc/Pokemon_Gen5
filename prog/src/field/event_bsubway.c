@@ -281,8 +281,11 @@ typedef struct
   GAMESYS_WORK *gsys;
   BSUBWAY_SCRWORK *bsw_scr;
   
-  FLDSYSWIN_STREAM *sysWin;
+  VecFx32 balloonWinPos;
+  FLDTALKMSGWIN *balloonWin;
   STRBUF *strBuf;
+  u16 obj_id;
+  u8 padding[2];
 }EVENT_WORK_TRAINER_BEFORE_MSG;
 
 //--------------------------------------------------------------
@@ -303,22 +306,23 @@ static GMEVENT_RESULT ev_TrainerMsgBefore(
   switch( *seq )
   {
   case 0:
-    FLDSYSWIN_STREAM_PrintStrBufStart( work->sysWin, 0, 0, work->strBuf );
-    (*seq)++;
+    if( FLDTALKMSGWIN_Print(work->balloonWin) == TRUE ){
+      (*seq)++;
+    }
     break;
   case 1:
-    if( FLDSYSWIN_STREAM_Print(work->sysWin) == TRUE ){
+    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+      FLDTALKMSGWIN_StartClose( work->balloonWin );
       (*seq)++;
     }
     break;
   case 2:
-    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
-      FLDSYSWIN_STREAM_Delete( work->sysWin );
+    if( FLDTALKMSGWIN_WaitClose(work->balloonWin) == TRUE ){
       GFL_STR_DeleteBuffer( work->strBuf );
       return( GMEVENT_RES_FINISH );
     }
-    break;
   }
+
   return( GMEVENT_RES_CONTINUE );
 }
 
@@ -330,7 +334,7 @@ static GMEVENT_RESULT ev_TrainerMsgBefore(
  */
 //--------------------------------------------------------------
 GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
-    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, int tr_idx )
+    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, int tr_idx, u16 obj_id )
 {
   GMEVENT *event;
   GAMEDATA *gdata;
@@ -348,7 +352,8 @@ GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
   work = GMEVENT_GetEventWork( event );
   work->gsys = gsys;
   work->strBuf = GFL_STR_CreateBuffer( 92, HEAPID_PROC );
-  
+  work->obj_id = obj_id;
+
   if( bsw_scr->tr_data[tr_idx].bt_trd.appear_word[0] == 0xffff ){ //ROM MSG
     u16 msg_no = 0;
     GFL_MSGDATA *msgdata;
@@ -375,7 +380,20 @@ GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
     OS_Printf( "BSW TRAINER BEFORE MSG : IDX = %d, KAIWA MSG\n", tr_idx );
   }
   
-  work->sysWin = FLDSYSWIN_STREAM_Add( msgbg, NULL, 19 );
+  { //mmdl
+    MMDLSYS *mmdlsys = GAMEDATA_GetMMdlSys( gdata );
+    MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, work->obj_id );
+    MMDL_GetVectorPos( mmdl, &work->balloonWinPos );
+  }
+  
+  { //吹き出しウィンドウ
+     work->balloonWin = FLDTALKMSGWIN_AddStrBuf(
+        msgbg,
+        FLDTALKMSGWIN_IDX_LOWER,
+        &work->balloonWinPos,
+        work->strBuf, TALKMSGWIN_TYPE_NORMAL, TAIL_SETPAT_NONE );
+  }
+  
   return( event );
 }
 
@@ -927,7 +945,7 @@ GMEVENT * BSUBWAY_EVENT_MsgWifiHomeNPC(
   { //吹き出しウィンドウ
     work->balloonWin = FLDTALKMSGWIN_AddStrBuf(
         msgbg,
-        FLDTALKMSGWIN_IDX_AUTO,
+        FLDTALKMSGWIN_IDX_LOWER,
         &work->balloonWinPos,
         work->strBuf, TALKMSGWIN_TYPE_NORMAL, TAIL_SETPAT_NONE );
   }

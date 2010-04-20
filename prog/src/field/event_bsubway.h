@@ -33,7 +33,7 @@ extern GMEVENT * BSUBWAY_EVENT_TrainerBattle(
 extern GMEVENT * BSUBWAY_EVENT_CommBattle(
     BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
 extern GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
-    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, int tr_idx );
+    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, int tr_idx, u16 obj_id );
 
 //======================================================================
 //  歴代リーダー情報の表示
