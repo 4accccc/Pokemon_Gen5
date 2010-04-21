@@ -453,7 +453,6 @@ void BSUBWAY_SCRWORK_SetLoseScore(
   //連勝記録更新
   BSUBWAY_SCOREDATA_UpdateRenshouMax( scoreData, play_mode,
       BSUBWAY_SCOREDATA_GetRenshou(scoreData,play_mode) );
-  BSUBWAY_SCOREDATA_ResetRenshou( scoreData, play_mode );
   
   //周回数リセット
   BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
