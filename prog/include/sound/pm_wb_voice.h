@@ -214,6 +214,14 @@ inline u32 PMV_PlayVoice_forMulti_Custom( u32 pokeNo, u32 formNo, u8 pan,
  * @brief	鳴き声ステータス変更関数
  */
 //------------------------------------------------------------------
+inline void	PMV_SetMasterVolume( u8 volume )
+{
+  PMVOICE_SetMasterVolume(volume);
+}
+inline void	PMV_ResetMasterVolume( void )
+{ 
+  PMVOICE_ResetMasterVolume();
+}
 inline void	PMV_SetPan(u32 voicePlayerIdx, u8 pan)
 {
 	PMVOICE_SetPan(voicePlayerIdx, pan);

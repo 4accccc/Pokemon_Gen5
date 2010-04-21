@@ -64,12 +64,13 @@ static  u8 staticWaveData[PMVOICE_WAVESIZE_MAX];
 #define VOICE_PLAYER_NUM (3)
 
 typedef struct {
-	HEAPID			heapID;
-	PMVOICE_PLAYER	voicePlayer[VOICE_PLAYER_NUM];
-	u16				voicePlayerRef;
-	u16				voicePlayerEnableNum;
+	HEAPID			          heapID;
+	PMVOICE_PLAYER	      voicePlayer[VOICE_PLAYER_NUM];
+	u16				            voicePlayerRef;
+	u16				            voicePlayerEnableNum;
 	PMVOICE_CB_GET_WVIDX*	CallBackGetWaveIdx;
 	PMVOICE_CB_GET_WVDAT*	CallBackCustomWave;
+  u8                    masterVolume;
 }PMVOICE_SYS;
 
 //------------------------------------------------------------------
@@ -130,6 +131,7 @@ void	PMVOICE_Init
 	int i;
 
 	pmvSys.heapID = heapID;
+  pmvSys.masterVolume = 127;
 
 	for( i=0; i<VOICE_PLAYER_NUM; i++ ){
 		voicePlayer = &pmvSys.voicePlayer[i];
@@ -286,9 +288,25 @@ void	PMVOICE_PlayerHeapRelease( void )
 	pmvSys.voicePlayerRef = 0;
 }
 
+//============================================================================================
+/**
+ * @brief	マスターボリューム変更
+ */
+//============================================================================================
+void	PMVOICE_SetMasterVolume( u8 volume )
+{
+  pmvSys.masterVolume = volume;
+}
 
+void	PMVOICE_ResetMasterVolume( void )
+{
+  pmvSys.masterVolume = 127;
+}
 
-
+static u8	getVolume( u8 volumeOrg )
+{
+  return volumeOrg * pmvSys.masterVolume / 127;
+}
 
 //============================================================================================
 /**
@@ -411,14 +429,14 @@ static BOOL playWave( PMVOICE_PLAYER* voicePlayer )
 	//OS_Printf("soundData play rate %d, speed %d\n", voicePlayer->waveRate, voicePlayer->speed);
 
 	result = NNS_SndWaveOutStart(	voicePlayer->waveHandle,	// 波形再生ハンドル
-									NNS_SND_WAVE_FORMAT_PCM8,	// 波形データフォーマット
-									voicePlayer->waveDataBegin,		// 波形データアドレス
-									FALSE, 0,									// ループフラグ,開始位置
-									voicePlayer->waveSize,		// 波形データサンプル数
-									voicePlayer->waveRate,		// 波形データサンプリングレート
-									voicePlayer->volume,			// 再生volume
-									voicePlayer->speed,				// 再生speed
-									voicePlayer->pan );				// 再生pan
+									NNS_SND_WAVE_FORMAT_PCM8,	        // 波形データフォーマット
+									voicePlayer->waveDataBegin,		    // 波形データアドレス
+									FALSE, 0,									        // ループフラグ,開始位置
+									voicePlayer->waveSize,		        // 波形データサンプル数
+									voicePlayer->waveRate,		        // 波形データサンプリングレート
+									getVolume(voicePlayer->volume),		// 再生volume
+									voicePlayer->speed,				        // 再生speed
+									voicePlayer->pan );				        // 再生pan
 	if( result == FALSE ){ return FALSE; }
 
 	if( voicePlayer->subWaveUse == TRUE ){
@@ -434,14 +452,14 @@ static BOOL playWave( PMVOICE_PLAYER* voicePlayer )
 		speedSub = voicePlayer->speed + voicePlayer->speedSubDiff;
 
 		result = NNS_SndWaveOutStart(	voicePlayer->waveHandleSub,	// 波形再生ハンドル
-										NNS_SND_WAVE_FORMAT_PCM8,	// 波形データフォーマット
-										voicePlayer->waveDataBegin,		// 波形データアドレス
-										FALSE, 0,									// ループフラグ,開始位置
-										voicePlayer->waveSize,		// 波形データサンプル数
-										voicePlayer->waveRate,		// 波形データサンプリングレート
-										(s8)volumeSub,						// 再生volume
-										speedSub,									// 再生speed
-										voicePlayer->pan );				// 再生pan
+										NNS_SND_WAVE_FORMAT_PCM8,	      // 波形データフォーマット
+										voicePlayer->waveDataBegin,	  	// 波形データアドレス
+										FALSE, 0,									      // ループフラグ,開始位置
+										voicePlayer->waveSize,		      // 波形データサンプル数
+										voicePlayer->waveRate,		      // 波形データサンプリングレート
+										getVolume(volumeSub),						// 再生volume
+										speedSub,									      // 再生speed
+										voicePlayer->pan );				      // 再生pan
 		if( result == FALSE ){ return FALSE; }
 	}
 	voicePlayer->active = TRUE;
