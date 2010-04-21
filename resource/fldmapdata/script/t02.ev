@@ -426,7 +426,7 @@ _ANIME_LABEL	anm_player_left
 EVENT_START   ev_pos_t02_rival_speech1
 
 	//ライバル：自機に気付く
-	_OBJ_ANIME( T02_RIVAL_02, anm_dir_r )
+	_OBJ_ANIME( T02_RIVAL_02, anm_stay_r )
 	_OBJ_ANIME_WAIT()
 
 	//おい　こっち！
@@ -492,11 +492,17 @@ EVENT_END
 t02_speech:
 
 	//ライバル、広場の方へ向く
-	_OBJ_ANIME( T02_RIVAL_02, anm_dir_l )
+	_OBJ_ANIME( T02_RIVAL_02, anm_stay_l )
 	_OBJ_ANIME_WAIT()
 
 	//イベント曲再生
 	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+
+	//カメラ操作　ゲーチスの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,51281920,65551,43024384,60 )	//一番最後の引数は移動にかかるフレーム数
 
 	//ゲーチス入場
 	_OBJ_ANIME( T02_HAKAIM_04, anm_hakaim_in1 )
@@ -506,11 +512,6 @@ t02_speech:
 	_OBJ_ANIME( T02_HAKAIM_04, anm_hakaim_in2 )
 	_OBJ_ANIME_WAIT()
 
-	_CAMERA_START()		//カメラ操作開始
-	_CAMERA_PURGE()		//カメラのバインドを解く
-
-	//カメラ操作　ゲーチスの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,51281920,65551,43024384,30 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//わたくしの　なまえは　ゲーチス
@@ -662,14 +663,29 @@ t02_speech:
 	_BALLOONWIN_OBJMSG_POS( msg_t02_sage4_05 , T02_SAGE_01,POS_UR )
 	_BALLOONWIN_CLOSE()
 
+	_TIME_WAIT( 16 )
+
+	//団員：旗を片付ける[100421斉藤マ]
+	_OBJ_ANIME( T02_HAKAIW_02, anm_hakaiw2_move1 )
+	_OBJ_ANIME( T02_HAKAIW_03, anm_hakaiw3_move1 )
+	_OBJ_ANIME_WAIT()
+
+	_OBJ_DEL( T02_FLAG_01 )
+	_OBJ_DEL( T02_FLAG_02 )
+
+	_OBJ_ANIME( T02_HAKAIW_02, anm_hakaiw2_move2 )
+	_OBJ_ANIME( T02_HAKAIW_03, anm_hakaiw3_move2 )
+
+	_TIME_WAIT( 16 )
+
 	//ゲーチス・団員：ゲートへ移動
-	_OBJ_ANIME( T02_HAKAIW_02, anm_hakaiw2_leave1 )
+//	_OBJ_ANIME( T02_HAKAIW_02, anm_hakaiw2_leave1 )
 	_OBJ_ANIME( T02_HAKAIM_02, anm_hakaim2_leave1 )
 	_OBJ_ANIME( T02_HAKAIM_03, anm_hakaim3_leave1 )
 	_OBJ_ANIME( T02_HAKAIM_04, anm_hakaim4_leave1 )
 	_OBJ_ANIME( T02_HAKAIM_05, anm_hakaim5_leave1 )
 	_OBJ_ANIME( T02_HAKAIM_06, anm_hakaim6_leave1 )
-	_OBJ_ANIME( T02_HAKAIW_03, anm_hakaiw3_leave1 )
+//	_OBJ_ANIME( T02_HAKAIW_03, anm_hakaiw3_leave1 )
 	_OBJ_ANIME_WAIT()
 
 	_OBJ_ANIME( T02_SAGE_01, anm_sage1_leave1 )
@@ -727,7 +743,7 @@ t02_speech:
 	_OBJ_ANIME( T02_BOODLE_08, anm_boodle1_look )
 
 	//Ｎ：右向き 自機・チェレン：群集の方を見る
-	_OBJ_ANIME( T02_N_01, anm_dir_r )
+	_OBJ_ANIME( T02_N_01, anm_stay_r )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
 	_OBJ_ANIME( T02_RIVAL_02, anm_stay_u )
 	_OBJ_ANIME_WAIT()
@@ -767,7 +783,6 @@ t02_speech:
 	_CAMERA_END()		//カメラ操作終了
 
 	_OBJ_ANIME_WAIT()
-	_TIME_WAIT( 10 )
 	
 	//群集消す
 	_OBJ_DEL( T02_BOODLE_01A )
@@ -781,8 +796,6 @@ t02_speech:
 	
 	//Ｎ：下向き
 	_OBJ_ANIME( T02_N_01, anm_dir_d )
-	_OBJ_ANIME_WAIT()
-
 	//ライバル：自機と向き合う
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
 	_OBJ_ANIME( T02_RIVAL_02, anm_dir_r )
@@ -811,7 +824,7 @@ t02_speech:
 	_BALLOONWIN_CLOSE()
 
 	//自機・ライバル：Nの方へ向く
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
 	_OBJ_ANIME( T02_RIVAL_02, anm_stay_u )
 	_OBJ_ANIME_WAIT()
 
@@ -846,19 +859,14 @@ t02_speech:
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-		_CAMERA_START()		//カメラ操作開始
-		_CAMERA_PURGE()		//カメラのバインドを解く
-
-		//カメラ操作　ゲーチスの位置にカメラを合わせる
-		_CAMERA_MOVE( 9688,0,970752,51544064,0,43024384,1 )	//一番最後の引数は移動にかかるフレーム数
-		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+		_CAMERA_END()		//カメラ操作終了
 		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
 	ELSE
 		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 	ENDIF
 
-	_OBJ_ANIME( T02_N_01, anm_n_afterb )
-	_OBJ_ANIME_WAIT()
+//	_OBJ_ANIME( T02_N_01, anm_n_afterb )
+//	_OBJ_ANIME_WAIT()
 
 	//……負けたか　ボクの　友達たち　ありがとう
 	_BALLOONWIN_OBJMSG( msg_t02_boss_04 , T02_N_01 )
@@ -870,7 +878,7 @@ t02_speech:
 	
 	//ライバル：自機の方へ向く
 	_OBJ_ANIME( T02_RIVAL_02, anm_stay_r )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_l )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_l )
 	_OBJ_ANIME_WAIT()
 	
 	//なんか　オレのせいで　変な話に　なっちゃった
@@ -879,7 +887,7 @@ t02_speech:
 
 	//ライバル：２番道路へ移動
 	_OBJ_ANIME( T02_RIVAL_02, anm_rival_leave )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_u )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
 	_OBJ_ANIME_WAIT()
 
 	//Ｎ・ライバルのＯＢＪを消す
@@ -888,12 +896,6 @@ t02_speech:
 
 	//BGM終了
 	_END_EVENT_BGM()
-
-	//自機にカメラを戻す
-	_CAMERA_RECV_MOVE( 20 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-	_CAMERA_END()		//カメラ操作終了
 
 	//============================================//
 	
@@ -910,11 +912,6 @@ t02_speech:
 
 	//町民復活
 	_FLAG_RESET( FV_T02_SPEECH_AFTER )
-	/*
-	_OBJ_ADD( T02_OLDWOMAN1_01 )
-	_OBJ_ADD( T02_OLDMAN1_01 )
-	_OBJ_ADD( T02_WOMAN1_01 )
-	*/
 
 	//============================================//
 _RET
@@ -1024,6 +1021,39 @@ _ANIME_LABEL anm_sage_move3
 _ANIME_LABEL anm_sage_move4
 	_ANIME_DATA		AC_WALK_U_16F,2
 	_ANIME_DATA		AC_STAY_WALK_R_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+//--------------------------------------------------------------
+//	団員　旗を片付ける
+//--------------------------------------------------------------
+_ANIME_LABEL anm_hakaiw2_move1
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_hakaiw2_move2
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WAIT_8F,1
+	
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_hakaiw3_move1
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL anm_hakaiw3_move2
+	_ANIME_DATA		AC_WALK_L_8F,1
+	_ANIME_DATA		AC_WAIT_8F,1
+	
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_ON,1
+	_ANIME_DATA		AC_WALK_R_8F,1
+	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA		ACMD_END,0
 
 //--------------------------------------------------------------
@@ -1234,8 +1264,7 @@ _ANIME_LABEL anm_n_afterb
 //	Ｎ	２番道路へ
 //--------------------------------------------------------------
 _ANIME_LABEL anm_n_leave
-	_ANIME_DATA		AC_WALK_U_8F,8
-	_ANIME_DATA		AC_WALK_L_8F,12
+	_ANIME_DATA		AC_WALK_U_8F,10
 	_ANIME_DATA		ACMD_END,0
 	
 //--------------------------------------------------------------
@@ -1243,7 +1272,6 @@ _ANIME_LABEL anm_n_leave
 //--------------------------------------------------------------
 _ANIME_LABEL anm_rival_leave
 	_ANIME_DATA		AC_WALK_U_8F,10
-	_ANIME_DATA		AC_WALK_L_8F,12
 	_ANIME_DATA		ACMD_END,0
 
 /**************************************************************/
@@ -1265,23 +1293,30 @@ EVENT_END
 /*	七賢者ゲーチス　演説									*/
 /************************************************************/
 EVENT_START   ev_pos_t02_rival_speech2
-
-	//ライバル：自機に気付く
-	_OBJ_ANIME( T02_RIVAL_02, anm_dir_r )
-	_OBJ_ANIME_WAIT()
-
-	//おい　こっち！
-	_PLAYER_NAME(0)
-	_BALLOONWIN_OBJMSG( msg_t02_black_02 , T02_RIVAL_02 )
-	_BALLOONWIN_CLOSE()
-
 	//ローカル変数を定義
 	DEFINE_LOCAL	LWK_SPEECH_X1
 	DEFINE_LOCAL	LWK_SPEECH_Z1
 
 	//主人公位置取得
 	_PLAYER_POS_GET( LWK_SPEECH_X1,LWK_SPEECH_Z1 )
-	
+
+	//ライバル：自機に気付く
+	IF $LWK_SPEECH_Z1 == 658 THEN
+		_OBJ_ANIME( T02_RIVAL_02, anm_stay_r )
+	ELSE
+		_OBJ_ANIME( T02_RIVAL_02, anm_stay_d )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+
+	//おい　こっち！
+	_PLAYER_NAME(0)
+	IF $LWK_SPEECH_Z1 == 661 THEN
+		_PLAINWIN_MSG_UP( msg_t02_black_02 )
+	ELSE
+		_BALLOONWIN_OBJMSG( msg_t02_black_02 , T02_RIVAL_02 )
+	ENDIF
+	_MSGWIN_CLOSE()
+
 	//Z軸が658なら
 	IF $LWK_SPEECH_Z1 == 658 THEN
 
