@@ -3407,6 +3407,9 @@ static void handler_Abareru_turnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
         param->fAlmost = FALSE;
         param->poke_cnt = 1;
         param->pokeID[0] = pokeID;
+        param->poke_cnt = 1;
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_KonranAbare );
+        HANDEX_STR_AddArg( &param->exStr, pokeID );
 
         BTL_HANDLER_Waza_RemoveForce( bpp, BTL_EVENT_FACTOR_GetSubID(myHandle) );
       }
