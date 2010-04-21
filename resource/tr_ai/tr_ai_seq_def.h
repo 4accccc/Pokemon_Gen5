@@ -65,9 +65,9 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 	DEF_CMD		AI_IF_DOKUDOKU      //どくどく状態を調べる
 	DEF_CMD		AI_IFN_DOKUDOKU
 	DEF_CMD		AI_IF_CONTFLG       //技効果の種類を選択して調べる
-	DEF_CMD		AI_IFN_CONTFLG
+	DEF_CMD		AI_IFN_CONTFLG      //0x10
 	DEF_CMD		AI_IF_SIDEEFF
-	DEF_CMD		AI_IFN_SIDEEFF  		//0x10
+	DEF_CMD		AI_IFN_SIDEEFF  		
 
 //計算結果による分岐
 	DEF_CMD		AI_IF_UNDER
@@ -93,7 +93,7 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 	DEF_CMD		AI_CHECK_TURN
 
 //タイプのチェック
-	DEF_CMD		AI_CHECK_TYPE
+	DEF_CMD		AI_CHECK_TYPE       //0x20
 
 //攻撃技かどうかのチェック
 	DEF_CMD		AI_CHECK_IRYOKU
@@ -105,7 +105,7 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 	DEF_CMD		AI_CHECK_LAST_WAZA
 
 //格納された技のタイプチェック
-	DEF_CMD		AI_IF_WAZA_TYPE			//0x20
+	DEF_CMD		AI_IF_WAZA_TYPE	
 	DEF_CMD		AI_IFN_WAZA_TYPE
 
 //どちらが先行かのチェック
@@ -135,12 +135,12 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 	DEF_CMD		AI_CHECK_WEATHER
 
 //技のシーケンスナンバーをチェックして、分岐
-	DEF_CMD		AI_IF_WAZA_SEQNO_JUMP
+	DEF_CMD		AI_IF_WAZA_SEQNO_JUMP   //0x30
 	DEF_CMD		AI_IFN_WAZA_SEQNO_JUMP
 
 //自分や相手のパラメータ変化値を参照して分岐
 	DEF_CMD		AI_IF_PARA_UNDER
-	DEF_CMD		AI_IF_PARA_OVER				//0x30
+	DEF_CMD		AI_IF_PARA_OVER
 	DEF_CMD		AI_IF_PARA_EQUAL
 	DEF_CMD		AI_IFN_PARA_EQUAL
 
@@ -169,7 +169,7 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 	DEF_CMD		AI_SAFARI
 
 //装備アイテムのチェック
-	DEF_CMD		AI_CHECK_SOUBI_ITEM
+	DEF_CMD		AI_CHECK_SOUBI_ITEM   //0x40
 
 //装備効果のチェック
 	DEF_CMD		AI_CHECK_SOUBI_EQUIP
@@ -178,7 +178,7 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 	DEF_CMD		AI_CHECK_POKESEX
 
 //ねこだましカウンタのチェック
-	DEF_CMD		AI_CHECK_NEKODAMASI			//0x40
+	DEF_CMD		AI_CHECK_NEKODAMASI
 
 //たくわえるカウンタのチェック
 	DEF_CMD		AI_CHECK_TAKUWAERU
@@ -1530,9 +1530,17 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 	.endm
 
 //------------------------------------------------------------
+//テーブルアドレスをセット
+//------------------------------------------------------------
+	.macro	TABLE_ADRS		adrs
+\adrs:
+  TABLE_ADRS = \adrs
+	.endm
+
+//------------------------------------------------------------
 //アドレスをオフセットに変換
 //------------------------------------------------------------
 	.macro	ADRS		adrs
-	.long		(\adrs-.)-4
+	.long		(\adrs-TABLE_ADRS)
 	.endm
 
