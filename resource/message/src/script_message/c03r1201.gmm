@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-18T14:50:28"/>
+	<create user="matsumiya" host="W00224" date="2010-04-21T15:47:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1556" top="303" right="2261" bottom="931" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="152" right="1985" bottom="780" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -366,9 +366,8 @@
 不思議なかたまり　なのです</language>
 	</row>
 
-	<row id="msg_c03r1201_businessman1_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c03r1201_businessman1_01" text-color="#000000,,,,,#000000,#000000,,,,,,#000000,,,,,,">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
 		<language name="JPN" width="256">なにか　あたらしい　ビジネス
@@ -379,9 +378,8 @@
 なかなか　難しいなあ</language>
 	</row>
 
-	<row id="msg_c03r1201_businessman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c03r1201_businessman2_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
 		<language name="JPN" width="256">トレーナーの　かわりに
@@ -396,31 +394,29 @@
 育て屋さんが　あるんだって！？</language>
 	</row>
 
-	<row id="msg_c03r1201_man1_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c03r1201_man1_01" text-color="#000000,,,,,#000000,,,,,,,,,,,,,">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">MAN1</attribute>
 		<language name="JPN" width="256">ポケモンは　ふしぎな　いきもの▼
 とくせい　とよばれる
 ふしぎなちからを　もっているんだ</language>
 		<language name="JPN_KANJI" width="256">ポケモンは　不思議な　いきもの▼
-とくせい　と呼ばれる
+特性　と呼ばれる
 不思議な力を　備えているんだ</language>
 	</row>
 
-	<row id="msg_c03r1201_woman1_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c03r1201_woman1_01" text-color="#000000,,,,,#000000,,,,,,,,,,,,,">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">WOMAN1</attribute>
 		<language name="JPN" width="256">ミネズミの　とくせいは　するどいめ！▼
 えんまくや　すなかけの　わざでも
 めいちゅうりつが　さがらないのよ！</language>
-		<language name="JPN_KANJI" width="256">ミネズミの　とくせいは　するどいめ！▼
+		<language name="JPN_KANJI" width="256">ミネズミの　特性は　するどいめ！▼
 えんまくや　すなかけの　技でも
 命中率が　さがらないのよ！</language>
 	</row>
 
-	<row id="msg_c03r1201_pokemon_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_c03r1201_pokemon_01">
 		<comment>ポケモン
 ・メッセージ表示とともに鳴き声再生</comment>
 		<attribute name="キャラ指定">ポケモン
@@ -429,13 +425,13 @@
 		<language name="JPN_KANJI" width="256">きりっ！！</language>
 	</row>
 
-	<row id="msg_c03r1201_olidman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03r1201_olidman1_01">
 		<comment>♂
 ・カウンター内をうろうろさせる</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">ううむ！　いい！
+		<language name="JPN" width="256">ううむ！　いい！　いいよ！
 アーティの　えは　いい！！</language>
-		<language name="JPN_KANJI" width="256">ううむ！　いい！
+		<language name="JPN_KANJI" width="256">ううむ！　いい！　いいよ！
 アーティの　絵画は　いい！！</language>
 	</row>
 
