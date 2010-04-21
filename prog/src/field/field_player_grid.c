@@ -39,6 +39,8 @@
 ///”ö£‚ä‚ç‚ä‚çŒÀŠEƒtƒŒ[ƒ€
 #define OZE_YURE_MAXFRAME (30*2)
 
+#define JIKI_AC_TURN_U (AC_STAY_WALK_U_2F)
+
 //--------------------------------------------------------------
 /// JIKI_MOVEBIT
 //--------------------------------------------------------------
@@ -2012,7 +2014,7 @@ static void gjiki_SetMove_Turn(
   u16 code;
   
   GF_ASSERT( input->dir != DIR_NOT );
-  code = MMDL_ChangeDirAcmdCode( input->dir, AC_STAY_WALK_U_2F );
+  code = MMDL_ChangeDirAcmdCode( input->dir, JIKI_AC_TURN_U );
   
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_TURN;
@@ -2359,7 +2361,7 @@ static void gjikiCycle_SetMove_Turn(
   u16 code;
   
   GF_ASSERT( input->dir != DIR_NOT );
-  code = MMDL_ChangeDirAcmdCode( input->dir, AC_STAY_WALK_U_2F );
+  code = MMDL_ChangeDirAcmdCode( input->dir, JIKI_AC_TURN_U );
   
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_TURN;
@@ -2579,7 +2581,7 @@ static void gjikiSwim_SetMove_Turn(
   u16 code;
   
   GF_ASSERT( input->dir != DIR_NOT );
-  code = MMDL_ChangeDirAcmdCode( input->dir, AC_STAY_WALK_U_2F );
+  code = MMDL_ChangeDirAcmdCode( input->dir, JIKI_AC_TURN_U );
   
   MMDL_SetAcmd( mmdl, code );
   gjiki->move_action = JIKI_ACTION_TURN;
