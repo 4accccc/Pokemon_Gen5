@@ -871,9 +871,6 @@ static void draw_LogNumWindow( BEACON_VIEW_PTR wk )
   WORDSET_RegisterNumber( wk->wordset, 0, wk->ctrl.max, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
   print_GetMsgToBuf( wk, msg_sys_lognum );
   printReq_BmpwinPrint( wk, &wk->win[WIN_LOGNUM], wk->str_expand, 4, 0, FCOL_LOGNUM_BASE, FCOL_LOGNUM, NULL );
-//  GFL_BMP_Clear( wk->win[WIN_LOGNUM].bmp, FCOL_LOGNUM_BASE );
-//  PRINT_UTIL_PrintColor( &wk->win[WIN_LOGNUM].putil, wk->printQue, 4, 0, wk->str_expand, wk->fontHandle, FCOL_LOGNUM );
-//  GFL_BMPWIN_MakeTransWindow( wk->win[WIN_LOGNUM].win );
 }
 
 /*
@@ -884,8 +881,6 @@ static void draw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id )
   WORDSET_RegisterNumber( wk->wordset, 0, wk->log_count, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   print_GetMsgToBuf( wk, msg_id );
   printReq_BmpwinPrint( wk, &wk->win[WIN_MENU], wk->str_expand, 0, 4, 0, FCOL_WHITE_N, NULL );
-//  print_Allput( wk, wk->win[WIN_MENU].bmp, msg_id, 0, 4, 0, FCOL_WHITE_N );
-//  GFL_BMPWIN_MakeTransWindow( wk->win[WIN_MENU].win );
 }
 
 /*
@@ -2421,4 +2416,44 @@ static void tcb_FOamPrint( GFL_TCBL *tcb , void* tcb_wk)
   GFL_TCBL_Delete(tcb);
 }
 
+//============================================================================
+///デバッグ関数
+//============================================================================
+#ifdef PM_DEBUG
+
+void DEBUG_BEACON_VIEW_SuretigaiCountSet( BEACON_VIEW_PTR wk, int value )
+{
+  wk->init_f = TRUE;  //文字列即時反映のため
+
+  //現在のトータルすれ違い人数セット
+  wk->log_count = value;
+  draw_MenuWindow( wk, msg_sys_now_record );
+  
+  wk->init_f = FALSE;
+}
+
+void DEBUG_BEACON_VIEW_MemberListClear( BEACON_VIEW_PTR wk )
+{
+  int i;
+  
+  wk->init_f = TRUE;  //文字列即時反映のため
+
+  for(i = 0;i < PANEL_MAX;i++){
+    panel_Clear( &wk->panel[i] );
+  }
+  wk->ctrl.max = 0;
+  wk->ctrl.view_top = 0;
+  wk->ctrl.view_max = 0;
+  wk->ctrl.target = 0;
+
+  //現在のログ数他クリア
+  draw_LogNumWindow( wk );
+  obj_UpDownViewSet( wk );
+  obj_ThanksViewSet( wk );
+
+  wk->init_f = FALSE;
+}
+
+
+#endif  //PM_DEBUG
 

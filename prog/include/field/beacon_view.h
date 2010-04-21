@@ -26,3 +26,8 @@ extern void BEACON_VIEW_Update(BEACON_VIEW_PTR view, BOOL bActive);
 extern void BEACON_VIEW_Draw(BEACON_VIEW_PTR view);
 extern GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK );
 
+#ifdef PM_DEBUG
+extern void DEBUG_BEACON_VIEW_SuretigaiCountSet( BEACON_VIEW_PTR wk, int value );
+extern void DEBUG_BEACON_VIEW_MemberListClear( BEACON_VIEW_PTR wk );
+#endif  //PM_DEBUG
+

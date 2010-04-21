@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-04-20T12:43:11"/>
+	<create user="iwasawa" host="W00157" date="2010-04-21T16:49:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -339,27 +339,63 @@
 		<language name="JPN_KANJI" width="256">ビーコンリクエスト</language>
 	</row>
 
-	<row id="dlc_menu_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="dlc_menu_02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">スタックかくにん</language>
 		<language name="JPN_KANJI" width="256">スタック確認</language>
 	</row>
 
-	<row id="dlc_menu_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="dlc_menu_03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">すれちがいにんずう　せってい</language>
 		<language name="JPN_KANJI" width="256">すれ違い人数　設定</language>
 	</row>
 
-	<row id="dlc_menu_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">おれいかいすう　せってい</language>
-		<language name="JPN_KANJI" width="256">御礼回数　設定</language>
+	<row id="dlc_menu_04" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">はくしゅかいすう　せってい</language>
+		<language name="JPN_KANJI" width="256">拍手回数　設定</language>
 	</row>
 
-	<row id="dlc_menu_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="dlc_menu_05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">スタッククリア</language>
+		<language name="JPN_KANJI" width="256">スタッククリア</language>
+	</row>
+
+	<row id="dlc_menu_06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">メンバーリストクリア</language>
+		<language name="JPN_KANJI" width="256">メンバーリストクリア</language>
+	</row>
+
+	<row id="dlc_menu_07" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">じゅしんログクリア</language>
+		<language name="JPN_KANJI" width="256">じゅしんログクリア</language>
+	</row>
+
+	<row id="dlc_menu_08" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="dlc_stack_check_param01">
+	<row id="dlc_menu_09" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="dlc_menu_10" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="dlc_menu_11" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="dlc_num_input" back-color="#ff78ff,,,#ff78ff,,#ff78ff,,,,,,#ff78ff,,,,,,">
+		<comment>数値入力</comment>
+		<language name="JPN" width="256">[2:04:５桁:0]</language>
+		<language name="JPN_KANJI" width="256">[2:04:５桁:0]</language>
+	</row>
+
+	<row id="dlc_stack_check_param01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>スタックチェック</comment>
 		<language name="JPN" width="256">[2:01:２桁:0]：[1:00:トレーナー名:1]　id= [2:04:５桁:2]
  no=[2:01:２桁:3]　[1:1C:簡易会話単語:4]</language>
@@ -367,12 +403,13 @@
  no=[2:01:２桁:3]　[1:1C:簡易会話単語:4]</language>
 	</row>
 
-	<row id="dlc_stack_check_param02">
+	<row id="dlc_stack_check_param02" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[2:01:２桁:0]：なし</language>
 		<language name="JPN_KANJI" width="256">[2:01:２桁:0]：なし</language>
 	</row>
 
 	<row id="dlc_action_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>アクション</comment>
 		<language name="JPN" width="256">メンバーエントリー</language>
 		<language name="JPN_KANJI" width="256">メンバーエントリー</language>
 	</row>

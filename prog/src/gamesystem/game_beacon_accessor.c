@@ -433,7 +433,7 @@ GAMEBEACON_INFO * GAMEBEACON_Alloc(HEAPID heap_id)
 
 //==================================================================
 /**
- * GAMEBEACON_INFO_TBL構造体をAllocする
+ * @brief GAMEBEACON_INFO_TBL構造体をAllocする
  *
  * @param   heap_id		
  *
@@ -446,6 +446,16 @@ GAMEBEACON_INFO_TBL * GAMEBEACON_InfoTbl_Alloc(HEAPID heap_id)
   tbl->ring_top = 0; 
   tbl->entry_num = 0;
   return tbl;
+}
+
+//==================================================================
+/**
+ * @brief GAMEBEACON_INFO_TBL構造体を全件クリア
+ */
+//==================================================================
+void GAMEBEACON_InfoTbl_Clear( GAMEBEACON_INFO_TBL* infoTbl )
+{
+  GFL_STD_MemClear( infoTbl, sizeof(GAMEBEACON_INFO_TBL));
 }
 
 
@@ -1368,7 +1378,4 @@ static BOOL errchk_action_gpower(const GAMEBEACON_INFO* info )
   }
   return FALSE;
 }
-
-
-
 

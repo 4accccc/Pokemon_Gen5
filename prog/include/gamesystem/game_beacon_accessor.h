@@ -56,6 +56,7 @@ extern int GAMEBEACON_InfoTblRing_GetEntryNum(GAMEBEACON_INFO_TBL *infotbl );
 
 extern GAMEBEACON_INFO * GAMEBEACON_Alloc(HEAPID heap_id);
 extern GAMEBEACON_INFO_TBL * GAMEBEACON_InfoTbl_Alloc(HEAPID heap_id);
+extern void GAMEBEACON_InfoTbl_Clear( GAMEBEACON_INFO_TBL* infoTbl );
 
 //--------------------------------------------------------------
 //  アクセサ

@@ -45,8 +45,10 @@
 
 #include "savedata/playtime.h"
 
+#include "field/beacon_view.h"
 #include "field/field_comm/beacon_view_local.h"
 #include "event_debug_livecomm.h"
+
 
 typedef struct _DMENU_LIVE_COMM{
   HEAPID  heapID;
@@ -77,8 +79,21 @@ typedef struct _DMENU_LIVE_COMM{
 
   GAMEBEACON_INFO*  tmpInfo;
   u16               tmpTime;
+  BMP_WIN           win_ninput;
 }DMENU_LIVE_COMM;
 
+typedef int (*NINPUT_GET_FUNC)( DMENU_LIVE_COMM* wk, int param );
+typedef void (*NINPUT_SET_FUNC)( DMENU_LIVE_COMM* wk, int param, int value );
+
+/// 数値入力：パラメータ
+typedef struct {
+  int min;  ///<入力最小値
+  int max;  ///<入力最大値
+  int* ret_wk;
+  ///値を取得するための関数
+  NINPUT_SET_FUNC set_func;
+  NINPUT_GET_FUNC get_func;
+}NINPUT_PARAM;
 
 //======================================================================
 //
@@ -96,6 +111,9 @@ enum{
  MENU_STACK_CHECK,
  MENU_SURETIGAI_NUM,
  MENU_THANKS_NUM,
+ MENU_STACK_CLEAR,
+ MENU_MEMBER_CLEAR,
+ MENU_COMM_BUF_CLEAR,
  MENU_EXIT,
 };
 
@@ -114,7 +132,10 @@ static const FLDMENUFUNC_LIST DATA_DebugLiveCommMenuList[] =
   { dlc_menu_02, (void*)MENU_STACK_CHECK },
   { dlc_menu_03, (void*)MENU_SURETIGAI_NUM },
   { dlc_menu_04, (void*)MENU_THANKS_NUM },
-  { dlc_menu_05, (void*)MENU_EXIT },
+  { dlc_menu_05, (void*)MENU_STACK_CLEAR },
+  { dlc_menu_06, (void*)MENU_MEMBER_CLEAR },
+  { dlc_menu_07, (void*)MENU_COMM_BUF_CLEAR },
+  { dlc_menu_08, (void*)MENU_EXIT },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugLiveCommMenuData = {
@@ -142,7 +163,11 @@ static void sub_BmpWinDel( BMP_WIN* bmpwin );
 static void sub_GetMsgToBuf( DMENU_LIVE_COMM* wk, u8 msg_id );
 static inline void sub_FreeWordset( WORDSET* wset, u8 idx, STRBUF* str );
 
-GMEVENT* event_CreateEventStackCheck( GAMESYS_WORK* gsys, DMENU_LIVE_COMM* wk );
+static GMEVENT* event_CreateEventNumInput( DMENU_LIVE_COMM* wk, int key, int min, int max, int* ret_wk, NINPUT_SET_FUNC set_func, NINPUT_GET_FUNC get_func );
+static GMEVENT* event_CreateEventStackCheck( GAMESYS_WORK* gsys, DMENU_LIVE_COMM* wk );
+
+static int ninput_GetMiscCount( DMENU_LIVE_COMM* wk, int param );
+static void ninput_SetMiscCount( DMENU_LIVE_COMM* wk, int param, int value );
 
 //======================================================================
 //
@@ -248,8 +273,26 @@ static GMEVENT_RESULT event_LiveCommMain( GMEVENT * event, int *seq, void * work
         break;
       }
       switch( ret ){
-      case 0:
+      case MENU_BEACON_REQ:
+      case MENU_STACK_CHECK:
         GMEVENT_CallEvent( event, event_CreateEventStackCheck( wk->gsys, wk ) );
+        break;
+      case MENU_SURETIGAI_NUM:
+        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, 0, wk->view_wk->ctrl.max, CROSS_COMM_SURETIGAI_COUNT_MAX,
+            NULL, ninput_SetMiscCount, ninput_GetMiscCount) );
+        break;
+      case MENU_THANKS_NUM:
+        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, 1, 0, CROSS_COMM_THANKS_RECV_COUNT_MAX,
+            NULL, ninput_SetMiscCount, ninput_GetMiscCount) );
+        break;
+      case MENU_STACK_CLEAR:
+        GAMEBEACON_InfoTbl_Clear( wk->view_wk->infoStack );
+        break;
+      case MENU_MEMBER_CLEAR:
+        DEBUG_BEACON_VIEW_MemberListClear( wk->view_wk );
+        break;
+      case MENU_COMM_BUF_CLEAR:
+        DEBUG_RecvBeaconBufferClear();
         break;
       }
 /*
@@ -300,27 +343,205 @@ static void sub_BmpWinDel( BMP_WIN* bmpwin )
   GFL_BMPWIN_Delete( bmpwin->win );
 }
 
+//----------------------------------------------------------
 /*
  *  @brief  文字列整形
  *
  *  指定メッセージを wk->str_expandにつめる
  */
+//----------------------------------------------------------
 static void sub_GetMsgToBuf( DMENU_LIVE_COMM* wk, u8 msg_id )
 {
   GFL_MSG_GetString( wk->msgman, msg_id, wk->str_tmp);
   WORDSET_ExpandStr( wk->wset, wk->str_expand, wk->str_tmp );
 }
 
+//----------------------------------------------------------
 /*
  *  @brief  フリーワード展開
  */
+//----------------------------------------------------------
 static inline void sub_FreeWordset( WORDSET* wset, u8 idx, STRBUF* str )
 {
   WORDSET_RegisterWord( wset, idx, str, PM_NEUTRAL, TRUE, PM_LANG );
 }
 
+//----------------------------------------------------------
+/*
+ *  @brief  数値入力ウィンドウ追加
+ */
+//----------------------------------------------------------
+static void sub_NumInputWinAdd( DMENU_LIVE_COMM* wk )
+{
+  sub_BmpWinAdd( &wk->win_ninput, 1, 23-2, 16, 2);
+}
+//----------------------------------------------------------
+/*
+ *  @brief  数値入力ウィンドウ削除
+ */
+//----------------------------------------------------------
+static void sub_NumInputWinDel( DMENU_LIVE_COMM* wk )
+{
+  sub_BmpWinDel( &wk->win_ninput );
+}
+
 //===================================================================================
-//スタックチェック
+//数値入力イベント
+//===================================================================================
+typedef struct _EVWK_NINPUT{
+  DMENU_LIVE_COMM* dlc_wk;
+
+  u8    decide_f;
+  int   key;
+  int   value;
+
+  NINPUT_PARAM  prm;
+  BMP_WIN win;
+}EVWK_NINPUT;
+
+static GMEVENT_RESULT event_NumInputMain( GMEVENT * event, int *seq, void * work);
+static void ninput_PrintNumWin( DMENU_LIVE_COMM* wk, BMP_WIN* bmpwin, int num );
+
+//--------------------------------------------------------------
+/**
+ * 数値入力イベント生成
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ */
+//--------------------------------------------------------------
+static GMEVENT* event_CreateEventNumInput( DMENU_LIVE_COMM* wk, int key, int min, int max, int* ret_wk, NINPUT_SET_FUNC set_func, NINPUT_GET_FUNC get_func )
+{
+  EVWK_NINPUT* evwk;
+  GMEVENT* event;
+
+  event = GMEVENT_Create( wk->gsys, NULL, event_NumInputMain, sizeof(EVWK_NINPUT) );
+
+  evwk = GMEVENT_GetEventWork( event );
+  evwk->dlc_wk = wk; 
+
+  evwk->prm.min = min;
+  evwk->prm.max = max;
+  evwk->prm.ret_wk = ret_wk;
+  evwk->prm.set_func = set_func;
+  evwk->prm.get_func = get_func;
+ 
+  evwk->key = key;
+
+  if( ret_wk != NULL ){
+    evwk->value = *ret_wk;
+  }else{
+    evwk->value = (get_func)( wk, key );
+  }
+  return event;
+}
+
+//--------------------------------------------------------------
+/*
+ *  @brief  スタックチェックイベント
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT event_NumInputMain( GMEVENT * event, int *seq, void * work)
+{
+  EVWK_NINPUT* evwk = (EVWK_NINPUT*)work;
+  DMENU_LIVE_COMM* wk = evwk->dlc_wk;
+  NINPUT_PARAM* prm = &evwk->prm;
+
+  switch(*seq)
+  {
+  case 0:
+    sub_BmpWinAdd( &evwk->win, 1, 23-2, 16, 2 );
+    ninput_PrintNumWin( wk, &evwk->win, evwk->value );
+    (*seq)++;
+    break;
+  case 1:
+    {
+      int trg = GFL_UI_KEY_GetTrg();
+      int cont = GFL_UI_KEY_GetCont();
+      int diff;
+      int before, after;
+      
+      if( trg & PAD_BUTTON_B ){
+        if( prm->ret_wk != NULL ){
+          *prm->ret_wk = -1;
+        }
+        (*seq)++;
+        break;
+      }
+      if( trg & PAD_BUTTON_A ){
+        if( prm->ret_wk != NULL ){
+          *prm->ret_wk = evwk->value;
+        }else{
+          (prm->set_func)( wk, evwk->key, evwk->value );
+        }
+        (*seq)++;
+        break;
+      }
+      after = before = evwk->value;
+      if( evwk->value < prm->min || evwk->value > prm->max ){
+        break;
+      }
+      diff = 0;
+      if (trg & PAD_KEY_UP){
+        diff = 1;
+      } else if (trg & PAD_KEY_DOWN) {
+        diff = -1;
+      } else if (trg & PAD_KEY_LEFT){
+        diff = -10;
+      } else if (trg & PAD_KEY_RIGHT){
+        diff = 10;
+      }
+      if( cont & PAD_BUTTON_R ){
+        diff *= 10;
+      }else if( cont & PAD_BUTTON_L ){
+        diff *= 100;
+      }
+      if(diff == 0){
+        break;
+      }
+      if( (diff < 0) && ( (after-prm->min) < (diff*-1))){
+        if( before > prm->min ){
+          after = prm->min; //いったんmin
+        }else{
+          after = prm->max; //回り込み
+        }
+      }else if( (diff > 0) && ((prm->max-after) < diff) ){
+        if( before < prm->max ){
+          after = prm->max; //いったんmax
+        }else{
+          after = prm->min; //回り込み
+        }
+      }else{
+        after = before+diff;
+      }
+      if (after != before ) {
+        ninput_PrintNumWin( wk, &evwk->win, after );
+        evwk->value = after;
+      }
+    }
+    break;
+  default:
+    sub_BmpWinDel( &evwk->win );
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/// 数値入力ウィンドウ：表示更新
+//--------------------------------------------------------------
+static void ninput_PrintNumWin( DMENU_LIVE_COMM* wk, BMP_WIN* bmpwin, int num )
+{
+  WORDSET_RegisterNumber(wk->wset, 0, num, 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  sub_GetMsgToBuf( wk, dlc_num_input );
+
+  GFL_BMP_Clear( bmpwin->bmp, FCOL_WIN_BASE );
+	PRINTSYS_PrintColor( bmpwin->bmp, 0, 0, wk->str_expand, wk->fontHandle, FCOL_WIN_W );
+
+  GFL_BMPWIN_TransVramCharacter( bmpwin->win );  //transfer characters
+	GFL_BG_LoadScreenV_Req( bmpwin->frm );  //transfer screen
+}
+
+//===================================================================================
+//スタックチェックイベント
 //===================================================================================
 typedef struct _EVWK_STACK_CHECK{
   DMENU_LIVE_COMM* dlc_wk;
@@ -339,7 +560,7 @@ static void scheck_PageDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 pag
  * @param wk  DEBUG_MENU_EVENT_WORK*
  */
 //--------------------------------------------------------------
-GMEVENT* event_CreateEventStackCheck( GAMESYS_WORK* gsys, DMENU_LIVE_COMM* wk )
+static GMEVENT* event_CreateEventStackCheck( GAMESYS_WORK* gsys, DMENU_LIVE_COMM* wk )
 {
   EVWK_STACK_CHECK* evwk;
   GMEVENT* event;
@@ -447,9 +668,40 @@ static void scheck_PageDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 pag
 }
 
 
+//===========================================================================
+//数値入力ゲッター＆セッター
+//===========================================================================
+//--------------------------------------------------------------
+/*
+ *  @brief  Misc関係　ゲット 
+ */
+//--------------------------------------------------------------
+static int ninput_GetMiscCount( DMENU_LIVE_COMM* wk, int param )
+{
+  switch(param){
+  case 0:
+    return MISC_CrossComm_GetSuretigaiCount( wk->misc_sv );
+  case 1:
+    return MISC_CrossComm_GetThanksRecvCount( wk->misc_sv );
+  }
+  return 0;
+}
 
-
-
+//--------------------------------------------------------------
+/*
+ *  @brief  Misc関係　セット 
+ */
+//--------------------------------------------------------------
+static void ninput_SetMiscCount( DMENU_LIVE_COMM* wk, int param, int value )
+{
+  switch(param){
+  case 0:
+    MISC_CrossComm_SetSuretigaiCount( wk->misc_sv, value );
+    DEBUG_BEACON_VIEW_SuretigaiCountSet( wk->view_wk, value );
+  case 1:
+    MISC_CrossComm_SetThanksRecvCount( wk->misc_sv, value );
+  }
+}
 
 
 
