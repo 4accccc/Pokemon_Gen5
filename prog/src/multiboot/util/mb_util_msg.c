@@ -537,6 +537,10 @@ void MB_MSG_MessageWordsetNumber( MB_MSG_WORK *msgWork , const u32 bufId , const
 {
   WORDSET_RegisterNumber( msgWork->wordSet , bufId , num , keta , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
 }
+void MB_MSG_MessageWordsetNumberZero( MB_MSG_WORK *msgWork , const u32 bufId , const u32 num , const u32 keta )
+{
+  WORDSET_RegisterNumber( msgWork->wordSet , bufId , num , keta , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
+}
 void MB_MSG_MessageWordsetStrBuf( MB_MSG_WORK *msgWork , const u32 bufId , STRBUF *strBuf )
 {
   //DS–{‘Ì–¼—p

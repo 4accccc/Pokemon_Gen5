@@ -1082,6 +1082,7 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
   STRBUF *titleStr;
   STRBUF *infoStr;
   u16 titleLen,infoLen;
+  MYSTATUS *myStatus = GAMEDATA_GetMyStatus(work->initWork->gameData);
   
   work->subState = MPSS_SEND_IMAGE_INIT_COMM;
   work->confirmState = MPCS_NONE;
@@ -1089,13 +1090,22 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
   work->romInfoStr = GFL_HEAP_AllocClearMemory( work->heapId , MB_GAME_INTRO_LENGTH*2 );
 
   //タイトル
-  if( work->mode == MPM_POKE_SHIFTER )
+  MB_MSG_MessageCreateWordset( work->msgWork );
+  MB_MSG_MessageWordsetNumberZero( work->msgWork , 0 , MyStatus_GetID_Low(myStatus) , 5 );
   {
-    titleStr = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_TITLE );
-  }
-  else
-  {
-    titleStr = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_TITLE_MOVIE );
+    STRBUF *workStr;
+
+    if( work->mode == MPM_POKE_SHIFTER )
+    {
+      workStr = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_TITLE );
+    }
+    else
+    {
+      workStr = GFL_MSG_CreateString( MB_MSG_GetMsgHandle(work->msgWork) , MSG_MB_PAERNT_ROM_TITLE_MOVIE );
+    }
+    titleStr = GFL_STR_CreateBuffer( 256 , work->heapId );
+    WORDSET_ExpandStr( MB_MSG_GetWordSet(work->msgWork) , titleStr , workStr );
+    GFL_STR_DeleteBuffer( workStr );
   }
 
   //説明
@@ -1143,6 +1153,25 @@ static void MP_PARENT_SendImage_Init( MB_PARENT_WORK *work )
     if( work->romInfoStr[i] == 0xFFFE )
     {
       work->romInfoStr[i] = 0x000a;
+    }
+  }
+  //全角数字変換
+  for( i=0;i<MB_GAME_NAME_LENGTH;i++ )
+  {
+    if( work->romTitleStr[i] == L'Ｉ' )
+    {
+      work->romTitleStr[i] = L'I';
+    }
+    else
+    if( work->romTitleStr[i] == L'Ｄ' )
+    {
+      work->romTitleStr[i] = L'D';
+    }
+    else
+    if( work->romTitleStr[i] >= L'０' &&
+        work->romTitleStr[i] <= L'９')
+    {
+      work->romTitleStr[i] = work->romTitleStr[i]-L'０'+L'0';
     }
   }
   
@@ -1199,51 +1228,26 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
   case MPSS_SEND_IMAGE_WAIT_SEARCH_CH:
     if( WH_GetSystemState() == WH_SYSSTATE_MEASURECHANNEL )
     {
+      MYSTATUS *myStatus = GAMEDATA_GetMyStatus(work->initWork->gameData);
+      MP_PARENT_SendImage_MBPInit( work );
+
+      MB_MSG_MessageHide( work->msgWork );
+      MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE );
+
+      MB_MSG_MessageCreateWordset( work->msgWork );
+      MB_MSG_MessageWordsetNumberZero( work->msgWork , 0 , MyStatus_GetID_Low(myStatus) , 5 );
+
+      if( work->mode == MPM_POKE_SHIFTER )
       {
-        MP_PARENT_SendImage_MBPInit( work );
-
-        MB_MSG_MessageHide( work->msgWork );
-        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE );
-
-        MB_MSG_MessageCreateWordset( work->msgWork );
-        {
-          //DS本体名の設定(10文字
-      #if (defined(SDK_TWL))
-          OSOwnerInfoEx info;
-          OS_GetOwnerInfoEx( &info );
-      #else
-          OSOwnerInfo info;
-          OS_GetOwnerInfo( &info );
-      #endif    
-          {
-            u8 i;
-            STRBUF *workStr = GFL_STR_CreateBuffer( 16 , work->heapId );
-            //EOMの変換
-            for( i=0;i<11;i++ )
-            {
-              if( info.nickName[i] == 0 )
-              {
-                info.nickName[i] = GFL_STR_GetEOMCode();
-              }
-            }
-            GFL_STR_SetStringCode( workStr , info.nickName );
-            MB_MSG_MessageWordsetStrBuf( work->msgWork , 0 , workStr );
-
-            GFL_STR_DeleteBuffer( workStr );
-          }
-        }
-        if( work->mode == MPM_POKE_SHIFTER )
-        {
-          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 , MSGSPEED_GetWait() );
-        }
-        else
-        {
-          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_01 , MSGSPEED_GetWait() );
-        }
-        MB_MSG_MessageDeleteWordset( work->msgWork );
-
-        work->subState = MPSS_SEND_IMAGE_MBSYS_MAIN;
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 , MSGSPEED_GetWait() );
       }
+      else
+      {
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_01 , MSGSPEED_GetWait() );
+      }
+      MB_MSG_MessageDeleteWordset( work->msgWork );
+
+      work->subState = MPSS_SEND_IMAGE_MBSYS_MAIN;
     }
     break;
   case MPSS_SEND_IMAGE_MBSYS_MAIN:
@@ -1544,6 +1548,7 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
       else
       if( ret == MMYR_RET2 )
       {
+        MYSTATUS *myStatus = GAMEDATA_GetMyStatus(work->initWork->gameData);
         if( work->mode == MPM_POKE_SHIFTER )
         {
           MB_MSG_ClearYesNo( work->msgWork );
@@ -1556,8 +1561,16 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
         
         MB_MSG_MessageCreateWindow( work->msgWork , MMWT_LARGE );
         MB_MSG_MessageCreateWordset( work->msgWork );
-        MB_MSG_MessageWordsetName( work->msgWork , 0 , GAMEDATA_GetMyStatus(work->initWork->gameData) );
-        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 , MSGSPEED_GetWait() );
+        MB_MSG_MessageWordsetNumberZero( work->msgWork , 0 , MyStatus_GetID_Low(myStatus) , 5 );
+
+        if( work->mode == MPM_POKE_SHIFTER )
+        {
+          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_01 , MSGSPEED_GetWait() );
+        }
+        else
+        {
+          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_01 , MSGSPEED_GetWait() );
+        }
         MB_MSG_MessageDeleteWordset( work->msgWork );
         work->confirmState = MPCS_NONE;
       }
@@ -1859,7 +1872,14 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
         MB_MSG_MessageCreateWordset( work->msgWork );
         //ここでの表示は秘伝込み
         MB_MSG_MessageWordsetNumber( work->msgWork , 0 , num+hidenNum , 3 );
-        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_03 , MSGSPEED_GetWait() );
+        if( GET_VERSION() == VERSION_BLACK )
+        {
+          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_03_B , MSGSPEED_GetWait() );
+        }
+        else
+        {
+          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_03_W , MSGSPEED_GetWait() );
+        }
         MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
         MB_MSG_MessageDeleteWordset( work->msgWork );
 
