@@ -581,7 +581,7 @@ static void PSTATUS_InitGraphic( PSTATUS_WORK *work )
                        0,
                        FX32_ONE*256.0f,
                        (FX32_ONE),
-                       (FX32_ONE*400),
+                       (FX32_ONE*500),
                        NULL,
                        &cam_pos,
                        &cam_up,
