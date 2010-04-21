@@ -306,11 +306,15 @@ static GMEVENT_RESULT StoneEvt( GMEVENT* event, int* seq, void* work )
     gmk_wk->Se0 = TRUE;
   }
   else if ( (frm >= LEG_SE1_FRM)&&(!gmk_wk->Se1) ){
+    //‚r‚dÄ¶iƒ‹[ƒv‰¹j
     PMSND_PlaySE( LEG_GMK_ENERGY );
     gmk_wk->Se1 = TRUE;
   }
   else if ( (frm >= LEG_SE2_FRM)&&(!gmk_wk->Se2) )
   {
+    //ƒ‹[ƒv‰¹’âŽ~
+    PMSND_StopSE();
+    //‚r‚dÄ¶
     PMSND_PlaySE( LEG_GMK_BALL );
     gmk_wk->Se2 = TRUE;
   }
