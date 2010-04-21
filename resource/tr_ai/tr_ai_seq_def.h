@@ -311,6 +311,11 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //みらいよち中かチェックして分岐
 	DEF_CMD		AI_IF_MIRAIYOCHI
 
+//攻撃と特攻を比べて分岐
+	DEF_CMD		AI_IF_DMG_PHYSIC_UNDER
+	DEF_CMD		AI_IF_DMG_PHYSIC_OVER
+	DEF_CMD		AI_IF_DMG_PHYSIC_EQUAL
+
 //------------------------------------------------------------
 //
 //	ランダム分岐
@@ -1525,6 +1530,32 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //------------------------------------------------------------
 	.macro  IF_MIRAIYOCHI side, adrs
 	.short	AI_IF_MIRAIYOCHI
+	.long		\side
+	.long		(\adrs-.)-4
+	.endm
+
+//------------------------------------------------------------
+//
+//  攻撃と特攻を比べて分岐
+//
+//	side:比較対象
+//	adrs:飛び先
+//
+//------------------------------------------------------------
+	.macro  IF_DMG_PHYSIC_UNDER side, adrs
+	.short	AI_IF_DMG_PHYSIC_UNDER
+	.long		\side
+	.long		(\adrs-.)-4
+	.endm
+
+	.macro  IF_DMG_PHYSIC_OVER side, adrs
+	.short	AI_IF_DMG_PHYSIC_OVER
+	.long		\side
+	.long		(\adrs-.)-4
+	.endm
+
+	.macro  IF_DMG_PHYSIC_EQUAL  side, adrs
+	.short	AI_IF_DMG_PHYSIC_EQUAL
 	.long		\side
 	.long		(\adrs-.)-4
 	.endm
