@@ -299,6 +299,9 @@ static  VMCMD_RESULT  AI_IF_COMMONRND_EQUAL( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IFN_COMMONRND_EQUAL( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IF_MIRAIYOCHI( VMHANDLE* vmh, void* context_work );
+static  VMCMD_RESULT	AI_IF_DMG_PHYSIC_UNDER( VMHANDLE* vmh, void* context_work );
+static  VMCMD_RESULT  AI_IF_DMG_PHYSIC_OVER( VMHANDLE* vmh, void* context_work );
+static  VMCMD_RESULT	AI_IF_DMG_PHYSIC_EQUAL( VMHANDLE* vmh, void* context_work );
 
 static  void  ai_if_rnd( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
 static  void  ai_if_hp( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
@@ -318,6 +321,7 @@ static  void  ai_if_have_waza_seqno( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond 
 static  void  ai_if_chouhatsu( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
 static  void  ai_if_hinshi( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
 static  void  ai_if_commonrnd( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
+static  void  ai_if_dmg_physic( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
 static  BOOL  branch_act( VMHANDLE* vmh, BranchCond cond, int src, int dst, int adrs );
 static  BtlPokePos get_poke_pos( TR_AI_WORK* taw, int side );
 static  int   get_tokusei( TR_AI_WORK* taw, int side, BtlPokePos pos );
@@ -453,6 +457,9 @@ static const VMCMD_FUNC tr_ai_command_table[]={
   AI_IFN_COMMONRND_EQUAL,
   AI_TABLE_JUMP,
   AI_IF_MIRAIYOCHI,
+	AI_IF_DMG_PHYSIC_UNDER,
+	AI_IF_DMG_PHYSIC_OVER,
+	AI_IF_DMG_PHYSIC_EQUAL,
 };
 
 enum{
@@ -3520,6 +3527,66 @@ static  VMCMD_RESULT  AI_IF_MIRAIYOCHI( VMHANDLE* vmh, void* context_work )
   }
 
   return taw->vmcmd_result;
+}
+
+//------------------------------------------------------------
+//  UŒ‚‚Æ“ÁU‚ğ”ä‚×‚Ä•ªŠò
+//------------------------------------------------------------
+static  VMCMD_RESULT	AI_IF_DMG_PHYSIC_UNDER( VMHANDLE* vmh, void* context_work )
+{
+  TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_DMG_PHYSIC_UNDER\n");
+#endif
+
+  ai_if_dmg_physic( vmh, taw, COND_UNDER );
+
+  return taw->vmcmd_result;
+}
+
+static  VMCMD_RESULT  AI_IF_DMG_PHYSIC_OVER( VMHANDLE* vmh, void* context_work )
+{
+  TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_DMG_PHYSIC_OVER\n");
+#endif
+
+  ai_if_dmg_physic( vmh, taw, COND_OVER );
+
+  return taw->vmcmd_result;
+}
+
+static  VMCMD_RESULT	AI_IF_DMG_PHYSIC_EQUAL( VMHANDLE* vmh, void* context_work )
+{
+  TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_IF_DMG_PHYSIC_EQUAL\n");
+#endif
+
+  ai_if_dmg_physic( vmh, taw, COND_EQUAL );
+
+  return taw->vmcmd_result;
+}
+
+//------------------------------------------------------------
+//  UŒ‚‚Æ“ÁU‚ğ”ä‚×‚Ä•ªŠòƒƒCƒ“
+//------------------------------------------------------------
+static  void  ai_if_dmg_physic( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond )
+{
+  int side  = ( int )VMGetU32( vmh );
+  int adrs  = ( int )VMGetU32( vmh );
+  BtlPokePos  pos = get_poke_pos( taw, side );
+  int pow = BPP_GetValue( get_bpp( taw, pos ), BPP_ATTACK );
+  int spepow = BPP_GetValue( get_bpp( taw, pos ), BPP_SP_ATTACK );
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("pow:%d spepow:%d\n",pow,spepow);
+#endif
+
+  branch_act( vmh, cond, pos, spepow, adrs );
 }
 
 //============================================================================================
