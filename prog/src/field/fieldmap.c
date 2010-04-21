@@ -134,6 +134,7 @@
 #ifdef PM_DEBUG
 
 #include "field_camera_debug.h"
+#include "test/performance.h"
 
 //#define DEBUG_FIELDMAP_SETUP_SPEED_CHECK  //setup‚Å‚Ìˆ—•‰‰×‚ð•\Ž¦
 //#define DEBUG_FIELDMAP_INOUT_SPEED_CHECK  //FIELDMAPo“ü‚Å‚Ìˆ—•‰‰×‚ð•\Ž¦
@@ -1466,6 +1467,9 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
   switch (result) 
   { 
   case MAINSEQ_RESULT_CONTINUE:
+#ifdef PM_DEBUG    
+    DEBUG_PerformanceSetTopFlg(fieldWork->seq_switch);
+#endif    
     fieldWork->seq_switch = !fieldWork->seq_switch;
     break;
   case MAINSEQ_RESULT_NEXTSEQ:

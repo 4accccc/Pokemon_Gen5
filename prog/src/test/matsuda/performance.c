@@ -106,6 +106,7 @@ typedef struct{
   OSTick TickTotalTT[2];
   u16 Count;
   u16 AvePer;
+  int Top;
 }AVERAGE_PRM;
 
 ///パフォーマンスシステム構造体
@@ -930,7 +931,7 @@ void DEBUG_PerformanceEndTick(int id)
 
   sub = prm->TickEnd - prm->TickStart;
   prm->TickTotal += sub;
-  prm->TickTotalTT[prm->Count%2] += sub;
+  prm->TickTotalTT[prm->Top/*prm->Count%2*/] += sub;
   prm->Count++;
 
   if (prm->Count >= AVE_COUNT)
@@ -1060,5 +1061,14 @@ void DEBUG_PerformanceSetAveTest(void)
     OS_Printf("平均負荷チェック終了\n");
   }
 }
+
+void DEBUG_PerformanceSetTopFlg(const u8 inTop)
+{
+  AVERAGE_PRM *prm;
+  prm = &pfm_sys.AvePrm[PERFORMANCE_ID_MAIN];
+
+  prm->Top = inTop;
+}
+
 
 #endif //PM_DEBUG
