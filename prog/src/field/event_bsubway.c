@@ -712,81 +712,66 @@ static GMEVENT * bsw_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_set
  * @retval
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT bsw_CommBattleMain( GMEVENT *event, int *seq, void *wk )
+static GMEVENT_RESULT bsw_CommBattleMain(
+    GMEVENT *event, int *seq, void *wk )
 {
   EVENT_BSW_COMM_BATTLE_WORK *work = wk;
   GAMESYS_WORK *gsys = work->gsys;
+  FIELDMAP_WORK *fieldmap = work->fieldmap;
   
   switch (*seq){
-  case 0:
+  case 0: //NPCポーズ
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll(gsys, work->fieldmap) );
     (*seq)++;
     break;
-  case 1:
-    #if 0
-    {
-      GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeOut_Black(
-          gsys, work->fieldmap, FIELD_FADE_WAIT );
-      GMEVENT_CallEvent(event, fade_event);
-    }
-    #else
-    {
-      FIELDMAP_WORK *fieldmap = work->fieldmap;
-      
-      //エフェクトエンカウト　エフェクト復帰キャンセル
-      EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap) );
-      ENCEFF_SetEncEff(
-        FIELDMAP_GetEncEffCntPtr(work->fieldmap), event, ENCEFFID_SUBWAY );
-    }
-    #endif
+  case 1: //戦闘BGM再生
+    GMEVENT_CallEvent( event, 
+      EVENT_FSND_PushPlayBattleBGM(gsys,work->para->musicDefault) ); 
     (*seq)++;
     break;
-  case 2:
+  case 2: //エンカウントエフェクト
+    EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap) );
+    ENCEFF_SetEncEff(
+        FIELDMAP_GetEncEffCntPtr(work->fieldmap), event, ENCEFFID_SUBWAY );
+    (*seq)++;
+    break;
+  case 3: //フィールドクローズ
     GMEVENT_CallEvent( event, EVENT_FieldClose(gsys,work->fieldmap) );
     (*seq)++;
     break;
-  case 3:
-    GMEVENT_CallEvent( event, 
-      EVENT_FSND_PushPlayNextBGM(gsys,work->para->musicDefault,
-        FSND_FADE_FAST, FSND_FADE_NONE) ); 
-    (*seq)++;
-    break;
-  case 4: //battle main
+  case 4: //戦闘
     GMEVENT_CallEvent( event,
         bsw_CommBattle(gsys,work->para,work->demo_prm) );
     (*seq)++;
     break;
-  case 5:
+  case 5: //フィールド復帰
     #if 0
-    BATTLE_PARAM_Delete( work->para ); //バトルSetupParam解放しません。
+    BATTLE_PARAM_Delete( work->para ); //SETUP_PARAM解放はサブウェイ側で
     #endif
-    
     OS_TPrintf("_FIELD_OPEN\n");
     GMEVENT_CallEvent( event, EVENT_FieldOpen(gsys) );
     (*seq) ++;
     break;
-  case 6:
-    OS_TPrintf("_FIELD_FADEIN\n");
+  case 6: //フェードイン
     {
-      GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn_Black(
+      GMEVENT* fade_event = EVENT_FieldFadeIn_Black(
           gsys, work->fieldmap, FIELD_FADE_WAIT );
       GMEVENT_CallEvent(event, fade_event);
     }
-    (*seq) ++;
+    (*seq)++;
     break;
-  case 7:
-    GMEVENT_CallEvent( event,
-        EVENT_FSND_PopBGM(gsys, FSND_FADE_FAST,FSND_FADE_NORMAL) );
-    (*seq) ++;
+  case 7: //フィールドBGM復帰
+    GMEVENT_CallEvent( event, EVENT_FSND_PopPlayBGM_fromBattle(gsys) );
+    (*seq)++;
     break;
   case 8:
     return GMEVENT_RES_FINISH;
   default:
     GF_ASSERT(0);
+    return GMEVENT_RES_FINISH;
     break;
   }
+  
   return GMEVENT_RES_CONTINUE;
 }
 

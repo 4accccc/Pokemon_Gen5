@@ -389,13 +389,29 @@ _RET
 EVENT_START ev_c04r0111_partner_talk
 { 
   DEFINE_LOCAL sex
+  DEFINE_LOCAL renshou
+  DEFINE_LOCAL play_mode
   
+  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, renshou )
   _GET_MY_SEX( sex )
   
-  $msg_id = msg_c04r0111_23
-  
-  IF $sex == PM_MALE THEN //自機男 パートナー女
-    $msg_id = msg_c04r0111_24
+  IF $sex == PM_FEMALE THEN //自機女 パートナー男
+    $msg_id = msg_c04r0111_23   //1-14
+    
+    IF $renshou >= 49 THEN
+      $msg_id = msg_c04r0111_27 //
+    ELSIF $renshou >= 21 THEN
+      $msg_id = msg_c04r0111_25 //21-42
+    ENDIF
+  ELSE //パートナー女
+    $msg_id = msg_c04r0111_24   //-14
+    
+    IF $renshou >= 49 THEN
+      $msg_id = msg_c04r0111_28 //49-
+    ELSIF $renshou >= 21 THEN
+      $msg_id = msg_c04r0111_26 //-42
+    ENDIF
   ENDIF
   
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_id )

@@ -258,6 +258,9 @@ void BSUBWAY_SCRWORK_ChangeCommMultiMode( BSUBWAY_SCRWORK *bsw_scr )
 
   BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
       BSWAY_PLAYDATA_ID_playmode, buf );
+  
+  BSUBWAY_SCOREDATA_ResetRenshou( bsw_scr->scoreData, bsw_scr->play_mode );
+  BSUBWAY_SCOREDATA_InitStageNo( bsw_scr->scoreData, bsw_scr->play_mode );
 }
 
 //--------------------------------------------------------------
