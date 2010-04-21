@@ -326,12 +326,16 @@ void BSUBWAY_GIMMICK_StopTrainShake( FIELDMAP_WORK *fieldmap )
       GF_ASSERT( work != NULL );
 
       if( work != NULL ){
+#if 0
         VecFx32 scroll = {0,0,0};
         FLDMAPPER *mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
         
         work->shake_stop = TRUE;
         work->shake_y = 0;
         FLDMAPPER_SetDrawOffset( mapper, &scroll );
+#else
+        work->shake_stop = TRUE;
+#endif
       }
     }
   }
@@ -386,6 +390,10 @@ static void moveProc_ShakeTrain( BSW_GMK *bsw_gmk, FIELDMAP_WORK *fldmap )
   
   switch( work->seq_no ){
   case 0: //‰Šú‰»
+    if( work->shake_stop == TRUE ){
+      break;
+    }
+    
     work->wait = wait_tbl[work->wait_seq_no];
     work->wait_seq_no++;
     work->wait_seq_no &= 3;
@@ -399,34 +407,22 @@ static void moveProc_ShakeTrain( BSW_GMK *bsw_gmk, FIELDMAP_WORK *fldmap )
     }
     break;
   case 2: //‚ä‚ê
-    if( work->shake_stop == TRUE ){
-      work->shake_y = 0;
-      work->seq_no++;
-      FLDMAPPER_SetDrawOffset( mapper, &scroll );
-    }else{
-      scroll.y = NUM_FX32( work->shake_y );
-      FLDMAPPER_SetDrawOffset( mapper, &scroll );
+    scroll.y = NUM_FX32( work->shake_y );
+    FLDMAPPER_SetDrawOffset( mapper, &scroll );
 
-      if( work->shake_y == 0 ){
-        work->seq_no = 0;
-      }
-      
-      if( work->shake_y < 0 ){
-        work->shake_y += 2;
-
-        if( work->shake_y > 0 ){
-          work->shake_y = 0;
-        }
-      }
-      
-      work->shake_y = -work->shake_y;
-    } 
-    break;
-  case 3: //‚ä‚ê’â~‘Ò‚¿
-    if( work->shake_stop != TRUE ){
+    if( work->shake_y == 0 ){
       work->seq_no = 0;
     }
-    break;
+      
+    if( work->shake_y < 0 ){
+      work->shake_y += 2;
+
+      if( work->shake_y > 0 ){
+        work->shake_y = 0;
+      }
+    }
+      
+    work->shake_y = -work->shake_y;
   }
 }
 
