@@ -645,11 +645,26 @@ void  PMSND_PauseBGM( BOOL pauseFlag )
 //------------------------------------------------------------------
 void  PMSND_FadeInBGM( u16 frames )
 {
+#if 0
   PMSND_CancelSystemFadeBGM();
   // 現在のvolumeを即時更新
   NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0, 0);
   // 再度目標値を設定
   NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 127, frames);
+
+  bgmFadeCounter = frames;
+#else
+	PMSND_FadeInBGMEx( frames, 127 );
+#endif
+}
+
+void  PMSND_FadeInBGMEx( u16 frames, u8 vol )
+{
+  PMSND_CancelSystemFadeBGM();
+  // 現在のvolumeを即時更新
+  NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0, 0);
+  // 再度目標値を設定
+  NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), vol, frames);
 
   bgmFadeCounter = frames;
 }
