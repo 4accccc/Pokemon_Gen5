@@ -439,6 +439,8 @@ static u16  PFuncSetSuccessPokemonWords( WORDSET * wordset, GIFT_PACK_DATA * gpd
   if ( pp == NULL )
   {
     GF_ASSERT( 0 );
+  } else if ( PP_Get( pp, ID_PARA_tamago_flag, NULL ) == TRUE ) {
+    WORDSET_RegisterPokeMonsNameNo( wordset, 1, MONSNO_TAMAGO );
   } else {
     WORDSET_RegisterPokeMonsName( wordset, 1, pp );
   }
