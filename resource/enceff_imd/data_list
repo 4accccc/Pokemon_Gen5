@@ -1,3 +1,13 @@
 TARGET_DATA = \
+	ee_symbol.nsbca \
+	ee_symbol.nsbmd \
+	ee_trmizu.nsbca \
+	ee_trmizu.nsbmd \
+	ee_yasei1.nsbca \
+	ee_yasei1.nsbmd \
+	ee_yasei2.nsbca \
+	ee_yasei2.nsbmd \
+	ee_zoroark.nsbca \
+	ee_zoroark.nsbmd \
 	effect1.nsbca \
 	effect1.nsbmd
