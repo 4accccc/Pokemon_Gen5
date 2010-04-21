@@ -43,5 +43,6 @@ extern void DEBUG_PerformanceSetStress(void);
 extern void DEBUG_PerformanceStartTick(int id);
 extern void DEBUG_PerformanceEndTick(int id);
 extern void DEBUG_PerformanceSetAveTest(void);
+extern void DEBUG_PerformanceSetTopFlg(const u8 inTop);
 
 #endif //PM_DEBUG
