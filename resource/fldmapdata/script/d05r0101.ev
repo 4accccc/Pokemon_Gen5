@@ -26,6 +26,7 @@ _EVENT_DATA    ev_pos_d05r0101_rival_01
 _EVENT_DATA    ev_d05r0101_workman_01
 _EVENT_DATA    ev_d05r0101_rival_02
 _EVENT_DATA    ev_init_d05r0101
+_EVENT_DATA    ev_d05r0101_rival_01
 _EVENT_DATA_END
 
 
@@ -37,7 +38,9 @@ INIT_EVENT_START	ev_init_d05r0101
 	
 
 	//プラズマ団イベントの進行状況によってチェレンの位置を変更
-	IF $WK_SCENE_D05_PLASMA == 2 THEN
+	IF $WK_SCENE_D05_PLASMA == 1 THEN
+		_OBJ_POS_CHANGE( D05R0101_RIVAL_01, 8, 0, 27, DIR_DOWN )
+	ELSIF $WK_SCENE_D05_PLASMA == 2 THEN
 		_OBJ_POS_CHANGE( D05R0101_RIVAL_02, 8, 0, 9, DIR_LEFT )
 	ENDIF
 
@@ -76,25 +79,14 @@ EVENT_START   ev_scene_d05r0101_01
 	_BALLOONWIN_OBJMSG(msg_d05r0101_black_02,D05R0101_RIVAL_01)
 	_BALLOONWIN_CLOSE()
 	
-	//去るアニメ
-	_OBJ_ANIME(D05R0101_RIVAL_01,anm_d05r0101_rival_02)
-	
 	//自機にカメラを戻す
-	_CAMERA_RECV_MOVE( 20 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_RECV_MOVE( 32 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
 	
-	_OBJ_ANIME_WAIT()
-	
-	//ライバル01消去
-	_OBJ_DEL(D05R0101_RIVAL_01)
-
-	
 	//==================================//
-	//D05R0101ライバル01のバニッシュフラグをセット
-	_FLAG_SET(FV_D05R0101_RIVAL_01)
-
+	
 	//フラグ操作
 	$WK_SCENE_D05_PLASMA = 1
 	
@@ -132,6 +124,10 @@ EVENT_START   ev_pos_d05r0101_rival_01
 	
 	//===========フラグワーク操作===========//
 	
+	//D05R0101ライバル01のバニッシュフラグをセット
+	_FLAG_SET(FV_D05R0101_RIVAL_01)
+	_OBJ_DEL( D05R0101_RIVAL_01 )
+
 	//***フラグ操作:D05R0101のPOSイベントをオフに***
 	$WK_SCENE_D05_PLASMA = 2
 	
@@ -261,6 +257,13 @@ _ANIME_LABEL	anm_d05r0101_rival_01
 _ANIME_LABEL	anm_d05r0101_rival_02
 	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*  D05R0101 RIVAL01の会話のイベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_d05r0101_rival_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d05r0101_black_02)
+EVENT_END
 
 /**************************************************************/
 /*  D05R0101 RIVAL02の会話のイベントスクリプト*/

@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/19 19:43:47
+#save date:2010/04/21 16:59:33
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07.wms
 #SECTION START:OBJ_EVENT
@@ -142,7 +142,7 @@ C07_GIRL2_01
 #OBJ CODE Number
 GIRL2
 #MOVE CODE Number
-MV_RND
+MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -158,13 +158,13 @@ DIR_UP
 #Parameter 2 Number
 0
 #Move Limit X Number
-2
+0
 #Move Limit Z Number
-2
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-56 48 -136
+120 48 -136
 #event number: 5
 #type
 1
@@ -173,7 +173,7 @@ C07_MAN3_01
 #OBJ CODE Number
 MAN3
 #MOVE CODE Number
-MV_RND
+MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -189,9 +189,9 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-1
+0
 #Move Limit Z Number
-1
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -204,15 +204,15 @@ C07_MAN2_01
 #OBJ CODE Number
 MAN2
 #MOVE CODE Number
-MV_RTDL         
+MV_SPIN_L
 #EVENT TYPE Number
-EV_TYPE_TRAINER_SPIN_STOP_L
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
 SCRID_C07_MAN2_01
 #Direction Type Number
-DIR_DOWN
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -235,15 +235,15 @@ C07_WOMAN2_01
 #OBJ CODE Number
 WOMAN2
 #MOVE CODE Number
-MV_RTLU         
+MV_SPIN_L
 #EVENT TYPE Number
-EV_TYPE_TRAINER_SPIN_STOP_L
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
 SCRID_C07_WOMAN2_01
 #Direction Type Number
-DIR_DOWN
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -266,15 +266,15 @@ C07_GIRL2_02
 #OBJ CODE Number
 GIRL2
 #MOVE CODE Number
-MV_RTUR         
+MV_SPIN_L
 #EVENT TYPE Number
-EV_TYPE_TRAINER_SPIN_STOP_L
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
 SCRID_C07_GIRL2_02
 #Direction Type Number
-DIR_DOWN
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -297,15 +297,15 @@ C07_BOY1_01
 #OBJ CODE Number
 BOY1
 #MOVE CODE Number
-MV_RTRD         
+MV_SPIN_L
 #EVENT TYPE Number
-EV_TYPE_TRAINER_SPIN_STOP_L
+EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
 SCRID_C07_BOY1_01
 #Direction Type Number
-DIR_DOWN
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
