@@ -2445,7 +2445,13 @@ static void scproc_MoveCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx1, u8 po
 //-----------------------------------------------------------------------------------
 static BOOL scproc_NigeruCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
-  BOOL fSkipNigeruCalc = scEvent_SkipNigeruCalc( wk, bpp );
+  BOOL fSkipNigeruCalc;
+
+  if( BTL_MAIN_GetEscapeMode(wk->mainModule) == BTL_ESCAPE_MODE_OK ){
+    fSkipNigeruCalc = scEvent_SkipNigeruCalc( wk, bpp );
+  }else{
+    fSkipNigeruCalc = TRUE;
+  }
 
   #ifdef PM_DEBUG
   if( ( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) || ( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) ){
@@ -2501,17 +2507,21 @@ static BOOL scEvent_SkipNigeruCalc( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bp
 }
 static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
-  if( !BPP_IsDead(bpp) )
+  if( BTL_MAIN_GetEscapeMode(wk->mainModule) == BTL_ESCAPE_MODE_OK )
   {
     // 逃げ禁止チェック
-    if( !scEvent_SkipNigeruForbid(wk, bpp) )
+    if( !BPP_IsDead(bpp) )
     {
-      u32 hem_state = Hem_PushState( &wk->HEManager );
-      BOOL fForbid = scEvent_CheckNigeruForbid( wk, bpp );
-      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-      Hem_PopState( &wk->HEManager, hem_state );
-      if( fForbid ){
-        return FALSE;
+
+      if( !scEvent_SkipNigeruForbid(wk, bpp) )
+      {
+        u32 hem_state = Hem_PushState( &wk->HEManager );
+        BOOL fForbid = scEvent_CheckNigeruForbid( wk, bpp );
+        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+        Hem_PopState( &wk->HEManager, hem_state );
+        if( fForbid ){
+          return FALSE;
+        }
       }
     }
   }

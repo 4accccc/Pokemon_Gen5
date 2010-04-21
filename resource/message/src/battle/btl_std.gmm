@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-04-19T21:54:10"/>
+	<create user="taya" host="W00146" date="2010-04-21T18:31:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -927,6 +927,14 @@
 あいてに　せなかを　みせられない！</language>
 		<language name="JPN_KANJI" width="216">ダメだ！　勝負の最中に
 相手に背中を見せられない！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_EscapeCheck">
+		<comment>逃げると負けるけどいいですか？</comment>
+		<language name="JPN" width="216">しょうぶを　あきらめて
+こうさん　しますか？</language>
+		<language name="JPN_KANJI" width="216">勝負を　あきらめて
+降参しますか？</language>
 	</row>
 
 	<row id="BTL_STRID_STD_AffGood">

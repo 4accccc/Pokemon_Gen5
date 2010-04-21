@@ -1980,26 +1980,37 @@ static BOOL selact_Item( BTL_CLIENT* wk, int* seq )
 //----------------------------------------------------------------------
 static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
 {
+  enum {
+    SEQ_INIT = 0,
+    SEQ_WAIT_MSG_RETURN,
+    SEQ_WAIT_MSG_RETURN_END,
+
+    SEQ_WAIT_MSG_CONFIRM,
+    SEQ_WAIT_CONFIRM_YESNO,
+
+    SEQ_RETURN_ESCAPE,
+  };
+
   switch( *seq ){
-  case 0:
+  case SEQ_INIT:
   {
-    // 戦闘モード等による禁止チェック（トレーナー戦など）
+    // 戦闘モード等による禁止チェック
     BtlEscapeMode esc = BTL_MAIN_GetEscapeMode( wk->mainModule );
     switch( esc ){
-    case BTL_ESCAPE_MODE_OK:
+    case BTL_ESCAPE_MODE_OK:  // 素早さなど条件クリアすれば逃げられる（野生）
     default:
       {
         BtlCantEscapeCode  code;
         u16 tokuseiID;
         u8 pokeID;
         code = isForbidEscape( wk, wk->procPoke, &pokeID, &tokuseiID );
-        // とくせい、ワザ効果等による禁止チェック
+
+        // とくせい、ワザ効果等による禁止チェック -> 何もない
         if( code == BTL_CANTESC_NULL )
         {
-          wk->returnDataPtr = &(wk->actionParam[0]);
-          wk->returnDataSize = sizeof(wk->actionParam[0]) * wk->numCoverPos;
-          ClientSubProc_Set( wk, selact_Finish );
+          (*seq) = SEQ_RETURN_ESCAPE;
         }
+        // とくせい、ワザ効果等による禁止チェック -> 引っかかって逃げられない
         else
         {
           if( tokuseiID != POKETOKUSEI_NULL ){
@@ -2010,36 +2021,81 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
             BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_EscapeProhibit );
           }
           selact_startMsg( wk, &wk->strParam );
-          (*seq) = 1;
+          (*seq) = SEQ_WAIT_MSG_RETURN;
         }
       }
       break;
 
-    case BTL_ESCAPE_MODE_NG:
+    case BTL_ESCAPE_MODE_NG:  // 逃げること自体が禁止されている（通常トレーナー戦）
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_EscapeCant );
       selact_startMsg( wk, &wk->strParam );
-      (*seq) = 1;
+      (*seq) = SEQ_WAIT_MSG_RETURN;
       break;
+
+    case BTL_ESCAPE_MODE_CONFIRM: // 逃げると負けになるのを確認させ、確実に逃げられる（通信対戦＆サブウェイ）
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_EscapeCheck );
+      selact_startMsg( wk, &wk->strParam );
+      (*seq) = SEQ_WAIT_MSG_CONFIRM;
     }
   }
   break;
 
-  case 1:
+  case SEQ_WAIT_MSG_RETURN:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
       BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
       BTLV_STRPARAM_SetWait( &wk->strParam, 0 );
       BTLV_PrintMsgAtOnce( wk->viewCore, &wk->strParam );
-      (*seq)++;
+      (*seq) = SEQ_WAIT_MSG_RETURN_END;
     }
     break;
 
-  case 2:
+  case SEQ_WAIT_MSG_RETURN_END:
     if( BTLV_WaitMsg(wk->viewCore) ){
       ClientSubProc_Set( wk, selact_Root );
     }
     break;
+
+  // 逃げると負けるけどいいですか？
+  case SEQ_WAIT_MSG_CONFIRM:
+    BTLV_WaitMsg( wk->viewCore );
+    if( BTLV_IsJustDoneMsg(wk->viewCore) )
+    {
+      BTLV_STRPARAM_Setup( &wk->strParam,    BTL_STRTYPE_UI, BTLMSG_UI_SEL_YES );
+      BTLV_STRPARAM_Setup( &wk->strParamSub, BTL_STRTYPE_UI, BTLMSG_UI_SEL_NO );
+      BTLV_YESNO_Start( wk->viewCore, &wk->strParam, &wk->strParamSub );
+      (*seq) = SEQ_WAIT_CONFIRM_YESNO;
+    }
+    break;
+
+  case SEQ_WAIT_CONFIRM_YESNO:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      BtlYesNo result;
+      if( BTLV_YESNO_Wait(wk->viewCore, &result) )
+      {
+        if( result == BTL_YESNO_YES )
+        {
+          setupPokeSelParam( wk, BPL_MODE_NORMAL, 1, &wk->pokeSelParam, &wk->pokeSelResult );
+          BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, 0, FALSE, &wk->pokeSelResult );
+          (*seq) = SEQ_RETURN_ESCAPE;
+        }
+        else
+        {
+          ClientSubProc_Set( wk, selact_Root );
+        }
+      }
+    }
+    break;
+
+  case SEQ_RETURN_ESCAPE:
+    BTL_ACTION_SetEscapeParam( &(wk->actionParam[0]) );
+    wk->returnDataPtr = &(wk->actionParam[0]);
+    wk->returnDataSize = sizeof(wk->actionParam[0]);
+    ClientSubProc_Set( wk, selact_Finish );
+    break;
+
   }
   return FALSE;
 }

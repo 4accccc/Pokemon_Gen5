@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-03-02T13:44:55"/>
+	<create user="taya" host="W00146" date="2010-04-21T19:18:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -408,6 +408,17 @@
 	<row id="BTLMSG_UI_SEL_IREKAE_NO">
 		<language name="JPN" width="128">そのまま　たたかう</language>
 		<language name="JPN_KANJI" width="128">そのまま　戦う</language>
+	</row>
+
+	<row id="BTLMSG_UI_SEL_YES">
+		<comment>勝負をあきらめますか？　に対して返答</comment>
+		<language name="JPN" width="128">はい</language>
+		<language name="JPN_KANJI" width="128">はい</language>
+	</row>
+
+	<row id="BTLMSG_UI_SEL_NO">
+		<language name="JPN" width="128">いいえ</language>
+		<language name="JPN_KANJI" width="128">いいえ</language>
 	</row>
 
 	<row id="BTLMSG_UI_SEL_WAZA">
