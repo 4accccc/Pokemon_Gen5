@@ -434,18 +434,19 @@ static u16  PFuncSetSuccessPokemonWords( WORDSET * wordset, GIFT_PACK_DATA * gpd
 {
   MYSTATUS * mystatus = GAMEDATA_GetMyStatus( SCRCMD_WORK_GetGameData( work ) );
   POKEMON_PARAM * pp = createPokemon( work, gpd );
+  u16 msg_id = msg_postman_06;
 
   WORDSET_RegisterPlayerName( wordset, 0, mystatus );
-  if ( pp == NULL )
-  {
+  if ( pp == NULL ) {
     GF_ASSERT( 0 );
   } else if ( PP_Get( pp, ID_PARA_tamago_flag, NULL ) == TRUE ) {
-    WORDSET_RegisterPokeMonsNameNo( wordset, 1, MONSNO_TAMAGO );
+    TAMADA_Printf("Mystery Present TAMAGO!");
+    msg_id = msg_postman_12;
   } else {
     WORDSET_RegisterPokeMonsName( wordset, 1, pp );
   }
   GFL_HEAP_FreeMemory( pp );
-  return msg_postman_06;
+  return msg_id;
 }
 
 //--------------------------------------------------------------
@@ -589,7 +590,7 @@ static const POSTMAN_FUNC_TABLE PostmanFuncTable[ MYSTERYGIFT_TYPE_MAX ] = {
     PFuncCheckPokemon,
     PFuncAddPokemon,
     PFuncGetTypePokemon,
-    PFuncSetSuccessPokemonWords,  //msg_postman_06
+    PFuncSetSuccessPokemonWords,  //msg_postman_06 or msg_postman_12
     PFuncSetFailurePokemonWords,  //msg_postman_07
   },
   { 
