@@ -1425,7 +1425,7 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
     pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_08, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
-//    POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
+    POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
     pWork->anmCount=0;
     _CHANGE_STATE(pWork, _preFadeOut);
     return;
