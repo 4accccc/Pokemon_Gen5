@@ -304,9 +304,8 @@ typedef struct {
   u8 LosePokeNum;   //倒されたポケモン数
   u8 UseWazaNum;    //使用した技の数
 
-  // コマンド不正チェックフラグ
-  //子機のみ操作。親機から送られたコマンドを不正と判断したらTRUEにする。（親機は常にFALSE）
-  u8 cmdIllegalFlag;
+  u8 cmdIllegalFlag      : 1;  // コマンド不正チェックフラグ（子機のみ操作。親機は常にFALSE）
+  u8 recPlayCompleteFlag : 1;  // 録画再生モードで最後まで再生できたらTRUE。それ以外はFALSE
 
 }BATTLE_SETUP_PARAM;
 
