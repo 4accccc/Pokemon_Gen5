@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-19T17:57:20"/>
+	<create user="matsumiya" host="W00224" date="2010-04-21T15:27:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="117" right="2004" bottom="745" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="152" right="1985" bottom="780" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -314,20 +314,20 @@
 おかたづけ……▼</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_01a" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_t01r0101_mama_01a" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
 		<comment>♀
 ・続けてblack_02</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ママ『かたづけ？▼
 いいの　いいの！
 あとで　あたしが　やっておくから▼
-それよりも　アララギはかせが
-まっているんじゃないの？▼</language>
+それより　アララギはかせに
+あわなくて　いいの？▼</language>
 		<language name="JPN_KANJI" width="256">ママ『かたづけ？▼
 いいの　いいの！
 あとで　あたしが　やっておくから▼
-それよりも　アララギ博士が
-待っているんじゃないの？▼</language>
+それより　アララギ博士に
+会わなくて　いいの？▼</language>
 	</row>
 
 	<row id="msg_t01r0101_black_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

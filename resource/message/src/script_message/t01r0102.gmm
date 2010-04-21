@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-20T20:08:30"/>
+	<create user="matsumiya" host="W00224" date="2010-04-21T15:28:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="145" right="2004" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="152" right="1985" bottom="780" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="668" top="313" right="1141" bottom="711" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -441,11 +441,11 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">ポケモンは　その　はこのなかで
-ぼくたちを　まっているんだよね▼
+ぼくたちを　まっているんだね▼
 [1:00:トレーナー名:0]
 さっそく　あけてくれるかな</language>
 		<language name="JPN_KANJI" width="256">ポケモンは　その　箱の中に
-ぼくたちを　待っているんだよね▼
+ぼくたちを　待っているんだね▼
 [1:00:トレーナー名:0]
 さっそく　開けてくれるかな</language>
 	</row>
