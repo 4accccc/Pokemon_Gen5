@@ -28,50 +28,51 @@ use constant IDX_INFOMSG2			=> 3;	# 説明文２
 use constant IDX_INFOMSG3			=> 4;	# 説明文３
 use constant IDX_INFOMSG4			=> 5;	# 説明文４
 use constant IDX_INFOMSG5			=> 6;	# 説明文５
-use constant IDX_Type				=> 7;	# タイプ
-use constant IDX_Category			=> 8;	# カテゴリ
-use constant IDX_DamageType			=> 9;	# ダメージタイプ
-use constant IDX_Power				=> 10;	# 威力
-use constant IDX_HitPer				=> 11;	# 命中率
-use constant IDX_BasePP				=> 12;	# 基本PPMax
-use constant IDX_Priority			=> 13;	# 優先度
-use constant IDX_HitCntMax			=> 14;	# 最大ヒット回数
-use constant IDX_HitCntMin			=> 15;	# 最小ヒット回数
-use constant IDX_SickID				=> 16;	# 状態異常効果
-use constant IDX_SickPer			=> 17;	# 状態異常の発生率
-use constant IDX_SickCont			=> 18;	# 状態異常の継続パターン
-use constant IDX_SickTurnMin		=> 19;	# 状態異常の継続ターン数　最小
-use constant IDX_SickTurnMax		=> 20;	# 状態異常の継続ターン数　最大
-use constant IDX_CriticalRank		=> 21;	# クリティカルランク
-use constant IDX_ShrinkPer			=> 22;	# ひるみ確率
-use constant IDX_SeqNo				=> 23;	# AI用シーケンスナンバー
-use constant IDX_DmgRecoverRatio	=> 24;	# ダメージ回復率
-use constant IDX_HPRecoverRatio		=> 25;	# ＨＰ回復率
-use constant IDX_Target				=> 26;	# 効果範囲
-use constant IDX_RankEffType1		=> 27;	# ステータス効果１
-use constant IDX_RankEffType2		=> 28;	# ステータス効果２
-use constant IDX_RankEffType3		=> 29;	# ステータス効果３
-use constant IDX_RankEffValue1		=> 30;	# ステータス効果１の変動値
-use constant IDX_RankEffValue2		=> 31;	# ステータス効果２の変動値
-use constant IDX_RankEffValue3		=> 32;	# ステータス効果３の変動値
-use constant IDX_RankEffPer1		=> 33;	# ステータス効果１の発生率
-use constant IDX_RankEffPer2		=> 34;	# ステータス効果２の発生率
-use constant IDX_RankEffPer3		=> 35;	# ステータス効果３の発生率
-use constant IDX_FLG_Touch			=> 36;	# 【接触ワザ】
-use constant IDX_FLG_Tame			=> 37;	# 【１ターン溜め】
-use constant IDX_FLG_Tire			=> 38;	# 【１ターン反動】
-use constant IDX_FLG_Mamoru			=> 39;	# 【まもる対象】
-use constant IDX_FLG_MagicCoat		=> 30;	# 【マジックコート対象】
-use constant IDX_FLG_Yokodori		=> 41;	# 【よこどり対象】
-use constant IDX_FLG_Oumu			=> 42;	# 【オウムがえし対象】
-use constant IDX_FLG_TetsuNoKobusi	=> 43;	# 【てつのこぶし対象】
-use constant IDX_FLG_Bouon			=> 44;	# 【ぼうおん対象】
-use constant IDX_FLG_Juryoku		=> 45;	# 【重力で失敗する】
-use constant IDX_FLG_KoriMelt		=> 46;	# 【凍り解除】
-use constant IDX_FLG_TripleFar		=> 47;	# 【トリプル遠隔ワザ】
+use constant IDX_INFOMSG6			=> 7;	# 説明文６
+use constant IDX_Type				=> 8;	# タイプ
+use constant IDX_Category			=> 9;	# カテゴリ
+use constant IDX_DamageType			=> 10;	# ダメージタイプ
+use constant IDX_Power				=> 11;	# 威力
+use constant IDX_HitPer				=> 12;	# 命中率
+use constant IDX_BasePP				=> 13;	# 基本PPMax
+use constant IDX_Priority			=> 14;	# 優先度
+use constant IDX_HitCntMax			=> 15;	# 最大ヒット回数
+use constant IDX_HitCntMin			=> 16;	# 最小ヒット回数
+use constant IDX_SickID				=> 17;	# 状態異常効果
+use constant IDX_SickPer			=> 18;	# 状態異常の発生率
+use constant IDX_SickCont			=> 19;	# 状態異常の継続パターン
+use constant IDX_SickTurnMin		=> 20;	# 状態異常の継続ターン数　最小
+use constant IDX_SickTurnMax		=> 21;	# 状態異常の継続ターン数　最大
+use constant IDX_CriticalRank		=> 22;	# クリティカルランク
+use constant IDX_ShrinkPer			=> 23;	# ひるみ確率
+use constant IDX_SeqNo				=> 24;	# AI用シーケンスナンバー
+use constant IDX_DmgRecoverRatio	=> 25;	# ダメージ回復率
+use constant IDX_HPRecoverRatio		=> 26;	# ＨＰ回復率
+use constant IDX_Target				=> 27;	# 効果範囲
+use constant IDX_RankEffType1		=> 28;	# ステータス効果１
+use constant IDX_RankEffType2		=> 29;	# ステータス効果２
+use constant IDX_RankEffType3		=> 30;	# ステータス効果３
+use constant IDX_RankEffValue1		=> 31;	# ステータス効果１の変動値
+use constant IDX_RankEffValue2		=> 32;	# ステータス効果２の変動値
+use constant IDX_RankEffValue3		=> 33;	# ステータス効果３の変動値
+use constant IDX_RankEffPer1		=> 34;	# ステータス効果１の発生率
+use constant IDX_RankEffPer2		=> 35;	# ステータス効果２の発生率
+use constant IDX_RankEffPer3		=> 36;	# ステータス効果３の発生率
+use constant IDX_FLG_Touch			=> 37;	# 【接触ワザ】
+use constant IDX_FLG_Tame			=> 38;	# 【１ターン溜め】
+use constant IDX_FLG_Tire			=> 39;	# 【１ターン反動】
+use constant IDX_FLG_Mamoru			=> 30;	# 【まもる対象】
+use constant IDX_FLG_MagicCoat		=> 41;	# 【マジックコート対象】
+use constant IDX_FLG_Yokodori		=> 42;	# 【よこどり対象】
+use constant IDX_FLG_Oumu			=> 43;	# 【オウムがえし対象】
+use constant IDX_FLG_TetsuNoKobusi	=> 44;	# 【てつのこぶし対象】
+use constant IDX_FLG_Bouon			=> 45;	# 【ぼうおん対象】
+use constant IDX_FLG_Juryoku		=> 46;	# 【重力で失敗する】
+use constant IDX_FLG_KoriMelt		=> 47;	# 【凍り解除】
+use constant IDX_FLG_TripleFar		=> 48;	# 【トリプル遠隔ワザ】
 
-use constant IDX_FLG_End			=> 48;	# フラグ最後（waza.tabにはありません）
-use constant IDX_FLG_Start			=> 36;	# フラグ最初
+use constant IDX_FLG_End			=> 49;	# フラグ最後（waza.tabにはありません）
+use constant IDX_FLG_Start			=> 37;	# フラグ最初
 
 
 #----------------------------------------------------------------------------------
@@ -85,6 +86,7 @@ use constant IDX_FLG_Start			=> 36;	# フラグ最初
 	"説明文３",			IDX_INFOMSG3,
 	"説明文４",			IDX_INFOMSG4,
 	"説明文５",			IDX_INFOMSG5,
+	"説明文６",			IDX_INFOMSG6,
 	"タイプ",			IDX_Type,
 	"カテゴリ",			IDX_Category,
 	"ダメージタイプ",	IDX_DamageType,
