@@ -464,7 +464,7 @@ end
   fp_header.printf( "\tARCDATID file[BATT_BG_TBL_FILE_MAX ][ BATT_BG_TBL_SEASON_MAX ];\n" )
   fp_header.printf( "}BATT_BG_TBL_BG_TABLE;\n\n" )
 
-  fp_header.printf( "enum{\n" )
+  fp_header.printf( "typedef enum{\n" )
   stage.size.times{ |i|
     if i == 0
       fp_header.printf( "\tBATT_BG_OBONID_%02d = 0,\t\t//%s\n", i, stage[ i ].get_table_name )
@@ -472,7 +472,7 @@ end
       fp_header.printf( "\tBATT_BG_OBONID_%02d,\t\t\t\t//%s\n", i, stage[ i ].get_table_name )
     end
   }
-  fp_header.printf( "};\n\n" )
+  fp_header.printf( "}BATT_BG_OBONID;\n\n" )
 
   fp_r.close
   fp_spec.close
