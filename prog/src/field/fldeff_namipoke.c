@@ -23,7 +23,11 @@
 #define NAMIPOKE_SHAKE_VALUE (0x0400) ///<初期揺れ幅
 #define NAMIPOKE_SHAKE_MAX (FX32_ONE*4) ///<揺れ幅最大
 
+#if 0 
 #define NAMIPOKE_RIDE_Y_OFFSET (FX32_ONE*7) ///<運転手表示オフセットY
+#else //100421 new
+#define NAMIPOKE_RIDE_Y_OFFSET( FX32_ONE*1)
+#endif
 #define NAMIPOKE_RIDE_Z_OFFSET (FX32_ONE*4) ///<運転手表示オフセットZ
 
 #define NAMIPOKE_RIDE_RAIL_Y_OFFSET (FX32_ONE*5) ///<運転手表示オフセットY
