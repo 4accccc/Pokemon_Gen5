@@ -55,7 +55,7 @@ void DEBUG_MYSTERY_SetGiftPokeData( GIFT_PACK_DATA *p_data )
     p_poke->mons_no = 1;
     p_poke->form_no = 0;
     p_poke->waza1   = 1;
-	p_poke->egg		= 1;
+    p_poke->egg		= 0;
     p_poke->oyaname[0]  = L'ƒf';
     p_poke->oyaname[1]  = L'ƒo';
     p_poke->oyaname[2]  = L'ƒb';
