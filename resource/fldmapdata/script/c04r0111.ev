@@ -713,8 +713,9 @@ sub_demo_train_arrival:
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
   
+  _TIME_WAIT( 10 ) //マップフェード直後だとマップBGM再生によりSEが鳴らない
   _SE_PLAY( SEQ_SE_BDEMO_03 ) //電車到着音
-  _TIME_WAIT( 70 ) //アニメを待つ
+  _TIME_WAIT( 60 ) //アニメを待つ
   _SE_PLAY( SEQ_SE_BDEMO_01 ) //電車扉開閉音
   
   //自機登場アニメ
