@@ -1581,17 +1581,16 @@ BOOL WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_NET_WORK *p_wk )
 
     //”FØî•ñŽæ“¾
     case WIFIBATTLEMATCH_SC_SEQ_LOGIN:
-/*      ret = DWC_ScGetLoginCertificate( &p_wk->p_data->sc_player[0].mCertificate );
+#ifdef SC_DIVIDE_SESSION
+      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_CREATE_REPORT_TIMING_START;
+#else
+      ret = DWC_ScGetLoginCertificate( &p_wk->p_data->sc_player[0].mCertificate );
       if( ret != DWC_SC_RESULT_NO_ERROR )
       { 
         WIFIBATTLEMATCH_NETERR_SetScError( &p_wk->error, ret );
         return FALSE;
       }
       DEBUG_NET_Printf( "SC:Login\n" );
-      */
-#ifdef SC_DIVIDE_SESSION
-      p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_CREATE_REPORT_TIMING_START;
-#else
       p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SESSION_START;
 #endif 
       break;

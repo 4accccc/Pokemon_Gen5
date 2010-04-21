@@ -98,6 +98,7 @@ typedef struct
 
   //以下PROCのつなぎのために記憶しておくもの
   WIFIBATTLEMATCH_CORE_MODE   core_mode;
+  BOOL  is_wificup_end;
 
   //以下システム層に置いておくデータ
   WIFIBATTLEMATCH_ENEMYDATA   *p_player_data;
@@ -751,7 +752,9 @@ static BOOL WBM_CORE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_ad
     p_wk->is_err_return_login = TRUE;
     WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGIN );
     break;
-
+  case WIFIBATTLEMATCH_CORE_RESULT_END_WIFICUP:
+    p_wk->is_wificup_end  = TRUE;
+    /* fallthor */
   case WIFIBATTLEMATCH_CORE_RESULT_FINISH:
     WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_LOGOUT );
     break;
@@ -1580,6 +1583,11 @@ static void *LOGOUT_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   p_param->bg       = WIFILOGIN_BG_NORMAL;
   p_param->display  = WIFILOGIN_DISPLAY_UP;
 
+  if( p_wk->is_wificup_end )
+  { 
+    p_param->fade = WIFILOGIN_FADE_BLACK_IN | WIFILOGIN_FADE_WHITE_OUT;
+  }
+
   return p_param;
 }
 //----------------------------------------------------------------------------
@@ -1598,7 +1606,14 @@ static BOOL LOGOUT_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
   switch( p_wk->type )
   { 
   case WIFIBATTLEMATCH_TYPE_WIFICUP:
-    WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
+    if( p_wk->is_wificup_end )
+    { 
+      WBM_SYS_SUBPROC_End( p_subproc );
+    }
+    else
+    { 
+      WBM_SYS_SUBPROC_CallProc( p_subproc, SUBPROCID_MAINMENU );
+    }
     break;
   case WIFIBATTLEMATCH_TYPE_LIVECUP:
     GF_ASSERT(0);
