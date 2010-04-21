@@ -860,6 +860,10 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
 
 //  GFL_UI_KEY_SetRepeatSpeed(1, 6);
 
+	if( PRINTSYS_QUE_IsFinished( pWork->SysMsgQue ) == FALSE ){
+    return;
+	}
+
   // スクロール中フラグクリア
   if( GFL_UI_TP_GetCont() == FALSE ){
     pWork->scrollMode = FALSE;
@@ -1718,6 +1722,10 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 {
   u32 ret=0;
 //  BOOL bChange=FALSE;
+
+	if( PRINTSYS_QUE_IsFinished( pWork->SysMsgQue ) == FALSE ){
+    return;
+	}
 
   // スクロール中フラグクリア
   if( GFL_UI_TP_GetCont() == FALSE ){
@@ -3797,7 +3805,8 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   pWork->pExpStrBuf = GFL_STR_CreateBuffer(200,pWork->heapID);
   pWork->pItemNameBuf = GFL_STR_CreateBuffer(64,pWork->heapID);
   pWork->WordSet    = WORDSET_Create( pWork->heapID );
-  pWork->SysMsgQue  = PRINTSYS_QUE_Create( pWork->heapID );
+//  pWork->SysMsgQue  = PRINTSYS_QUE_Create( pWork->heapID );
+	pWork->SysMsgQue  = PRINTSYS_QUE_CreateEx( 1024*4, pWork->heapID );		// デフォルトの４倍
   pWork->MsgCursorWork =  APP_KEYCURSOR_Create( 15, TRUE, TRUE, pWork->heapID );
   pWork->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr ,
                                        GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
@@ -3923,6 +3932,10 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
   if (WIPE_SYS_EndCheck() != TRUE) {
     return GFL_PROC_RES_CONTINUE;
   }
+
+	if( PRINTSYS_QUE_IsFinished( pWork->SysMsgQue ) == FALSE ){
+    return GFL_PROC_RES_CONTINUE;
+	}
 
   // GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0);
   GFL_TCB_DeleteTask( pWork->g3dVintr );
