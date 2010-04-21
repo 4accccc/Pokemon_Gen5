@@ -1619,7 +1619,7 @@ static void _ghttpPokemonListDownload(G_SYNC_WORK* pWork)
     RTCDate date, date2;
     GFDATE_GFDate2RTCDate(gd, &date);
     GFL_RTC_GetDate(&date2);
-    if(GFL_RTC_GetDaysOffset(&date) >= GFL_RTC_GetDaysOffset(&date2)){
+    if(GFL_RTC_GetDaysOffset(&date) >= GFL_RTC_GetDaysOffset(&date2)){  //ˆê“ú‚½‚Á‚Ä‚È‚¢‚ÆŽ¸”s‚Ö
       _CHANGE_STATE(_wakeupActionFailed);
       return;
     }

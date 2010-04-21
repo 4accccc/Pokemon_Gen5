@@ -209,6 +209,7 @@ static void _infoMessageEnd(GAMESYNC_MENU* pWork);
 static BOOL _infoMessageEndCheck(GAMESYNC_MENU* pWork);
 static void _infoMessageDisp(GAMESYNC_MENU* pWork);
 static void _infoMessageDispHeight(GAMESYNC_MENU* pWork,int height,BOOL bStream);
+static void _hitAnyKey(GAMESYNC_MENU* pWork);
 
 
 
@@ -388,6 +389,14 @@ static void _modeAppWinFlashCallback(u32 param, fx32 currentFrame )
 {
   GAMESYNC_MENU* pWork = (GAMESYNC_MENU*)param;
   {
+    if(pWork->selectType == GAMESYNC_RETURNMODE_UTIL){
+      if( OS_IsRunOnTwl() ){//DSIは呼ぶことが出来ない
+        GFL_MSG_GetString( pWork->pMsgWiFiData, dwc_message_0017, pWork->pStrBuf );
+        _infoMessageDispHeight(pWork,10, FALSE);
+        _CHANGE_STATE(pWork,_hitAnyKey);
+        return;
+      }
+    }
 #if DEBUG_ONLY_FOR_ohno
     if(0 ){
 #else
@@ -769,6 +778,7 @@ static void _modeAppWinFlash(GAMESYNC_MENU* pWork)
   cbwk.p_func = _modeAppWinFlashCallback; // コールバック関数
   GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[pWork->bttnid],TRUE);
   GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[pWork->bttnid], &cbwk );
+  GFL_CLACT_WK_ResetAnm( pWork->buttonObj[pWork->bttnid] );
   GFL_CLACT_WK_StartAnm( pWork->buttonObj[pWork->bttnid] );
   
   _CHANGE_STATE(pWork,_modeAppWinFlash2);
@@ -797,18 +807,9 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
 //    }
     break;
   case _SELECTMODE_UTIL:
-    if( !OS_IsRunOnTwl() ){//DSIは呼ぶことが出来ない
-      PMSND_PlaySystemSE(_SE_DESIDE);
-      pWork->selectType = GAMESYNC_RETURNMODE_UTIL;
-      _CHANGE_STATE(pWork,_modeAppWinFlash);
-    }
-    else{
-      PMSND_PlaySystemSE(_SE_DESIDE);
-      GFL_MSG_GetString( pWork->pMsgWiFiData, dwc_message_0017, pWork->pStrBuf );
-      _infoMessageDispHeight(pWork,10, FALSE);
-
-      _CHANGE_STATE(pWork,_hitAnyKey);
-    }
+    PMSND_PlaySystemSE(_SE_DESIDE);
+    pWork->selectType = GAMESYNC_RETURNMODE_UTIL;
+    _CHANGE_STATE(pWork,_modeAppWinFlash);
     break;
   case _SELECTMODE_EXIT:
 		PMSND_PlaySystemSE(_SE_CANCEL);
