@@ -250,7 +250,7 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
     //保存してあるデータを使うときはBRS上に読み込んでいるので、それを使う
     p_wk->p_header  = BattleRec_HeaderPtrGet();
     p_wk->p_profile = BattleRec_GDSProfilePtrGet();
-    p_wk->is_secure = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_SECURE, 0 );
+    p_wk->is_secure = TRUE;//RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_SECURE, 0 );
     p_wk->can_save  = FALSE;
     break;
 
@@ -1368,9 +1368,9 @@ static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_
       msg_rule_000,
     },
     {
-      4,
+      3,
       21,
-      25,
+      26,
       2,
       msg_12,
     },

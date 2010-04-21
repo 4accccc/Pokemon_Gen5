@@ -1040,7 +1040,7 @@ static void Br_BvSave_Save_CreateDisplay( BR_BVSAVE_WORK * p_wk, BR_BVSAVE_PROC_
     if( p_param->cp_rec_saveinfo->is_valid[idx] )
     { 
       //››‚Ì‹L˜^
-      GFL_MSG_GetString( p_msg, msg_09, p_src );
+      GFL_MSG_GetString( p_msg, msg_25, p_src );
 
       //’PŒê“o˜^
       WORDSET_RegisterWord( p_word, 0, 

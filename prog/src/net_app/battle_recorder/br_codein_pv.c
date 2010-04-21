@@ -629,7 +629,7 @@ void CI_pv_ButtonManagerCallBack( u32 button, u32 event, void* work )
 		
 		///< •¶Žš“ü—Í•”•ª‚ª‰Ÿ‚³‚ê‚½
 		if ( button >= eHRT_CODE_0 && button <= eHRT_CODE_11 ){
-#if 0
+
 			CIPV_Printf( "button = %3d\n", button );
 			
 			if ( wk->code[ button ].size == TRUE ){
@@ -644,8 +644,8 @@ void CI_pv_ButtonManagerCallBack( u32 button, u32 event, void* work )
 				wk->state.param		= eSTATE_FOCUS_MOVE;
 				wk->state.target	= wk->code[ button ].group;
 			}
-      PMSND_PlaySE( BR_SND_SE_NG );
-#endif
+      PMSND_PlaySE( BR_SND_SE_OK );
+
 		}
 		///< ‚»‚Ì‘¼‚Ìƒ{ƒ^ƒ“
 		else {
