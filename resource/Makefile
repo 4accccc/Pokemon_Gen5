@@ -165,7 +165,8 @@ SUBDIRS	=	wmi \
 			cross_comm \
 			dendou_pc \
 			btl_subway \
-			dendou_demo
+			dendou_demo \
+			fld3d_ci_se
 
 
 include $(RESOURCE_MACRO)
