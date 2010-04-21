@@ -93,8 +93,8 @@ GMEVENT *ENCEFF_MDL_Create3(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const 
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork,
-                           NARC_enceff_mdl_ee_trmizu_nsbmd,
-                           NARC_enceff_mdl_ee_trmizu_nsbca,
+                           NARC_enceff_mdl_ee_trnor_nsbmd,
+                           NARC_enceff_mdl_ee_trnor_nsbca,
                            inIsFadeWhite );
   return( event );
 }
