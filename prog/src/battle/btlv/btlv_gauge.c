@@ -605,12 +605,26 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
     arcdatid_anm  = ( pos & 1 ) ? NARC_battgra_wb_gauge_1vs1_e_NANR : NARC_battgra_wb_gauge_1vs1_m_NANR;
     break;
   case BTLV_GAUGE_TYPE_3vs3:
+  case BTLV_GAUGE_TYPE_ROTATE:
     arcdatid_char = ( pos & 1 ) ? NARC_battgra_wb_gauge_2vs2_e_NCGR : NARC_battgra_wb_gauge_2vs2_m_NCGR;
     arcdatid_cell = ( pos & 1 ) ? NARC_battgra_wb_gauge_2vs2_e_NCER : NARC_battgra_wb_gauge_2vs2_m_NCER;
     arcdatid_anm  = ( pos & 1 ) ? NARC_battgra_wb_gauge_2vs2_e_NANR : NARC_battgra_wb_gauge_2vs2_m_NANR;
     break;
   case BTLV_GAUGE_TYPE_SAFARI:
     break;
+  }
+
+  if( type == BTLV_GAUGE_TYPE_ROTATE )
+  {
+    int       pltt_id = ( pos < BTLV_MCSS_POS_A ) ? pos : pos - BTLV_MCSS_POS_A;
+    ARCDATID  pltt = ( pos < BTLV_MCSS_POS_C ) ? NARC_battgra_wb_gauge_NCLR : NARC_battgra_wb_gauge_dark_NCLR;
+
+    GFL_CLGRP_PLTT_Release( bgw->plttID[ pltt_id ] );
+
+    bgw->plttID[ pltt_id ] = GFL_CLGRP_PLTT_RegisterEx( bgw->handle, pltt, CLSYS_DRAW_MAIN,
+                                                        BTLV_OBJ_PLTT_HP_GAUGE + 0x20 * pltt_id, 0, 1, bgw->heapID );
+    PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_MAIN_OBJ,
+                             GFL_CLGRP_PLTT_GetAddr( bgw->plttID[ pltt_id ], CLSYS_DRAW_MAIN ) / 2, 0x20 * 1 );
   }
 
   //ƒŠƒ\[ƒX“Ç‚Ýž‚Ý
@@ -664,7 +678,9 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
 
     BTLV_GAUGE_SetStatus( bgw, sick, pos );
 
-    if( ( ( pos & 1 ) == 0 ) && ( bgw->bgcl[ pos ].gauge_type != BTLV_GAUGE_TYPE_3vs3 ) )
+    if( ( ( pos & 1 ) == 0 ) &&
+          ( bgw->bgcl[ pos ].gauge_type != BTLV_GAUGE_TYPE_3vs3 ) &&
+          ( bgw->bgcl[ pos ].gauge_type != BTLV_GAUGE_TYPE_ROTATE ) )
     {
       bgw->bgcl[ pos ].exp_clwk = GFL_CLACT_WK_Create( bgw->clunit,
                                                        bgw->bgcl[ pos ].exp_charID, bgw->plttID[ pltt_id ],
@@ -775,12 +791,27 @@ void  BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, GFL_CLACTPOS* of
     { BTLV_GAUGE_POS_E_X  + MOVE_VALUE, BTLV_GAUGE_POS_E_3vs3_Y },
     { BTLV_GAUGE_POS_F_X  - MOVE_VALUE, BTLV_GAUGE_POS_F_3vs3_Y },
   };
+  GFL_CLACTPOS  gauge_pos_rotate[]={
+    { BTLV_GAUGE_POS_AA_X + MOVE_VALUE, BTLV_GAUGE_POS_AA_Y },
+    { BTLV_GAUGE_POS_BB_X - MOVE_VALUE, BTLV_GAUGE_POS_BB_Y },
+    { BTLV_GAUGE_POS_C_X  + MOVE_VALUE, BTLV_GAUGE_POS_C_3vs3_Y },
+    { BTLV_GAUGE_POS_D_X  - MOVE_VALUE, BTLV_GAUGE_POS_D_3vs3_Y },
+    { BTLV_GAUGE_POS_A_X  + MOVE_VALUE, BTLV_GAUGE_POS_A_3vs3_Y },
+    { BTLV_GAUGE_POS_B_X  - MOVE_VALUE, BTLV_GAUGE_POS_B_3vs3_Y },
+    { BTLV_GAUGE_POS_E_X  + MOVE_VALUE, BTLV_GAUGE_POS_E_3vs3_Y },
+    { BTLV_GAUGE_POS_F_X  - MOVE_VALUE, BTLV_GAUGE_POS_F_3vs3_Y },
+  };
   int pos_x, pos_y;
 
   if( bgw->bgcl[ pos ].gauge_type == BTLV_GAUGE_TYPE_3vs3 )
   {
     pos_x = gauge_pos_3vs3[ pos ].x;
     pos_y = gauge_pos_3vs3[ pos ].y;
+  }
+  else if( bgw->bgcl[ pos ].gauge_type == BTLV_GAUGE_TYPE_ROTATE )
+  {
+    pos_x = gauge_pos_rotate[ pos ].x;
+    pos_y = gauge_pos_rotate[ pos ].y;
   }
   else
   { 

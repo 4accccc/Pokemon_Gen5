@@ -692,8 +692,17 @@ void  BTLV_EFFECT_DelTrainer( int position )
 //============================================================================================
 void  BTLV_EFFECT_SetGauge( const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp, int position )
 {
-  BTLV_GAUGE_TYPE  gaugeType = (bew->besp.rule == BTL_RULE_TRIPLE)? BTLV_GAUGE_TYPE_3vs3 : BTLV_GAUGE_TYPE_1vs1;
-  BTLV_GAUGE_AddPP( bew->bgw, BTL_MAIN_GetZukanSaveData(wk), BPP_GetViewSrcData(bpp), gaugeType, position );
+  switch( bew->besp.rule ){
+  case BTL_RULE_TRIPLE:
+    BTLV_GAUGE_AddPP( bew->bgw, BTL_MAIN_GetZukanSaveData(wk), BPP_GetViewSrcData(bpp), BTLV_GAUGE_TYPE_3vs3, position );
+    break;
+  case BTL_RULE_ROTATION:
+    BTLV_GAUGE_AddPP( bew->bgw, BTL_MAIN_GetZukanSaveData(wk), BPP_GetViewSrcData(bpp), BTLV_GAUGE_TYPE_ROTATE, position );
+    break;
+  default:
+    BTLV_GAUGE_AddPP( bew->bgw, BTL_MAIN_GetZukanSaveData(wk), BPP_GetViewSrcData(bpp), BTLV_GAUGE_TYPE_1vs1, position );
+    break;
+  }
 }
 
 //============================================================================================
@@ -706,13 +715,16 @@ void  BTLV_EFFECT_SetGauge( const BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp,
 //============================================================================================
 void  BTLV_EFFECT_SetGaugePP( const ZUKAN_SAVEDATA* zs, const POKEMON_PARAM* pp, int position )
 {
-  if( bew->besp.rule == BTL_RULE_TRIPLE )
-  {
+  switch( bew->besp.rule ){
+  case BTL_RULE_TRIPLE:
     BTLV_GAUGE_AddPP( bew->bgw, zs, pp, BTLV_GAUGE_TYPE_3vs3, position );
-  }
-  else
-  {
+    break;
+  case BTL_RULE_ROTATION:
+    BTLV_GAUGE_AddPP( bew->bgw, zs, pp, BTLV_GAUGE_TYPE_ROTATE, position );
+    break;
+  default:
     BTLV_GAUGE_AddPP( bew->bgw, zs, pp, BTLV_GAUGE_TYPE_1vs1, position );
+    break;
   }
 }
 
@@ -1132,6 +1144,18 @@ BTLV_MCSS_WORK  *BTLV_EFFECT_GetMcssWork( void )
 
 //============================================================================================
 /**
+ * @brief  エフェクトで使用されているStage管理構造体のポインタを取得
+ *
+ * @retval bmw MCSS管理構造体
+ */
+//============================================================================================
+BTLV_STAGE_WORK  *BTLV_EFFECT_GetStageWork( void )
+{
+  return bew->bsw;
+}
+
+//============================================================================================
+/**
  * @brief  エフェクトで使用されているVMHANDLE管理構造体のポインタを取得
  *
  * @retval vm_core VMHANDLE管理構造体
@@ -1375,7 +1399,6 @@ static  void  TCB_BTLV_EFFECT_Rotation( GFL_TCB *tcb, void *work )
 
   switch( tr->seq_no ){
   case 0:
-    BTLV_STAGE_SetAnmReq( bew->bsw, tr->side, 0, ( ( tr->dir == 0 ) ? -FX32_ONE : FX32_ONE ), 60 );
     BTLV_MCSS_SetRotation( bew->bmw, tr->side, tr->dir );
     tr->seq_no++;
     break;

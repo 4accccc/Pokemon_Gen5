@@ -48,6 +48,9 @@ enum{
 
   SEQ_ANIME_STANDBY = 0,
   SEQ_ANIME_STOP,
+
+  BTLV_MCSS_ROTATION_Z_E = BTLV_STAGE_POS_Z_E + FX32_ONE * 2,
+  BTLV_MCSS_ROTATION_Z_M = BTLV_STAGE_POS_Z_M + FX32_ONE * 2,
 };
 
 //============================================================================================
@@ -101,6 +104,7 @@ typedef struct
 {
   BTLV_MCSS_WORK*   bmw;
   int               position;
+  int               index;
   VecFx32           now_value;
   EFFTOOL_MOVE_WORK emw;
 }BTLV_MCSS_TCB_WORK;
@@ -118,6 +122,9 @@ typedef struct
   int               seq_no;
   int               side;
   int               dir;
+  int               angle[ 3 ];
+  int               frame;
+  int               speed;
 }BTLV_MCSS_ROTATION_WORK;
 
 //============================================================================================
@@ -183,12 +190,12 @@ static  const VecFx32 poke_pos_triple_table[]={
 
 static  const VecFx32 poke_pos_rotate_table[]={
 #ifdef ROTATION_NEW_SYSTEM
-  { 0x00000c00, 0x00000666, 0x00004c00 }, //POS_A
-  { 0x00000bcd, 0x00000666, 0xffff7000 }, //POS_B
-  { 0xffffc000, 0x00000666, 0x00007000 }, //POS_C
-  { 0x00004800, 0x00000666, 0xffff4000 }, //POS_D
-  { 0x00005300, 0x00000666, 0x00006300 }, //POS_E
-  { 0xffffb9cd, 0x00000666, 0xffff4000 }, //POS_F
+  { 0x00000000, 0x00000500, BTLV_MCSS_ROTATION_Z_M + 0xffffb000 }, //POS_A
+  { 0x00000000, 0x00000500, BTLV_MCSS_ROTATION_Z_E + 0x00005000 }, //POS_B
+  { 0xffffbab4, 0x00000500, BTLV_MCSS_ROTATION_Z_M + 0x00002801 }, //POS_C
+  { 0x0000454a, 0x00000500, BTLV_MCSS_ROTATION_Z_E + 0xffffd7ff }, //POS_D
+  { 0x0000454a, 0x00000500, BTLV_MCSS_ROTATION_Z_M + 0x00002801 }, //POS_E
+  { 0xffffbab4, 0x00000500, BTLV_MCSS_ROTATION_Z_E + 0xffffd7ff }, //POS_F
 #else
   { 0xffffe500, 0x00000666, 0x00007000 }, //POS_A
   { 0x000026cd, 0x00000666, 0xffff5a00 }, //POS_B
@@ -861,7 +868,7 @@ void  BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  まばたきるポケモンの立ち位置
- * @param[in] type    まばたきイプ
+ * @param[in] type    まばたきタイプ
  * @param[in] wait    まばたきウエイト
  * @param[in] count   まばたきカウント
  */
@@ -872,10 +879,13 @@ void  BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait
 
   pmtw->bmw           = bmw;
   pmtw->position      = position;
+  pmtw->index         = BTLV_MCSS_GetIndex( bmw, position );
   pmtw->emw.move_type = type;
   pmtw->emw.wait      = 0;
   pmtw->emw.wait_tmp  = wait;
   pmtw->emw.count     = count * 2;  //閉じて開くを1回とカウントするために倍しておく
+
+  GF_ASSERT( bmw->btlv_mcss[ pmtw->index ].mcss != NULL );
 
   switch( type ){
   case BTLEFF_MEPACHI_ON:
@@ -1664,6 +1674,16 @@ static  void  TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work )
     return;
   }
 
+  //インデックスが変わっていたらフリーする（ローテーション対策）
+  if( pmtw->index != BTLV_MCSS_GetIndex( bmw, pmtw->position ) )
+  { 
+    BTLV_MCSS_SetMepachiFlag( pmtw->bmw, pmtw->position, BTLV_MCSS_MEPACHI_OFF );
+    bmw->mcss_tcb_blink_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
+    GFL_HEAP_FreeMemory( work );
+    GFL_TCB_DeleteTask( tcb );
+    return;
+  }
+
   if( pmtw->emw.wait == 0 ){
     pmtw->emw.wait = pmtw->emw.wait_tmp;
     BTLV_MCSS_SetMepachiFlag( pmtw->bmw, pmtw->position, BTLV_MCSS_MEPACHI_FLIP );
@@ -1900,6 +1920,124 @@ static  void  TCB_BTLV_MCSS_StopAnime( GFL_TCB *tcb, void *work )
 //============================================================================================
 static  void  TCB_BTLV_MCSS_Rotation( GFL_TCB *tcb, void *work )
 {
+//円弧で動くバージョン
+  BTLV_MCSS_ROTATION_WORK* bmrw = ( BTLV_MCSS_ROTATION_WORK* )work;
+  int src_pos[ 2 ][ 3 ] = {
+    { BTLV_MCSS_POS_A, BTLV_MCSS_POS_C, BTLV_MCSS_POS_E },
+    { BTLV_MCSS_POS_B, BTLV_MCSS_POS_D, BTLV_MCSS_POS_F },
+  };
+  int src_angle[ 2 ][ 3 ] = { 
+    { 0x8000, 0xd555, 0x2aab },
+    { 0x0000, 0x5555, 0xaaaa },
+  };
+#ifdef ROTATION_NEW_SYSTEM
+  int dst_pos[ 2 ][ 2 ][ 3 ] = {
+    {
+      { BTLV_MCSS_POS_C, BTLV_MCSS_POS_E, BTLV_MCSS_POS_A },
+      { BTLV_MCSS_POS_D, BTLV_MCSS_POS_F, BTLV_MCSS_POS_B },
+    },
+    {
+      { BTLV_MCSS_POS_E, BTLV_MCSS_POS_A, BTLV_MCSS_POS_C },
+      { BTLV_MCSS_POS_F, BTLV_MCSS_POS_B, BTLV_MCSS_POS_D },
+    },
+  };
+#else
+  int dst_pos[ 2 ][ 2 ][ 3 ] = {
+    {
+      { BTLV_MCSS_POS_E, BTLV_MCSS_POS_A, BTLV_MCSS_POS_C },
+      { BTLV_MCSS_POS_F, BTLV_MCSS_POS_B, BTLV_MCSS_POS_D },
+    },
+    {
+      { BTLV_MCSS_POS_C, BTLV_MCSS_POS_E, BTLV_MCSS_POS_A },
+      { BTLV_MCSS_POS_D, BTLV_MCSS_POS_F, BTLV_MCSS_POS_B },
+    },
+  };
+#endif
+
+  switch( bmrw->seq_no ){
+  case 0:
+    {
+      int i;
+      for( i = 0 ; i < 3 ; i++ )
+      {
+        if( bmrw->bmw->btlv_mcss[ src_pos[ bmrw->side ][ i ] ].tcb )
+        {
+          break;
+        }
+      }
+      if( i == 3 )
+      {
+        for( i = 0 ; i < 3 ; i++ )
+        { 
+          bmrw->angle[ i ] = src_angle[ bmrw->side ][ i ];
+        }
+        BTLV_STAGE_SetAnmReq( BTLV_EFFECT_GetStageWork(), bmrw->side, 0, ( ( bmrw->dir == 0 ) ? FX32_ONE : -FX32_ONE ), 60 );
+        bmrw->speed = ( ( bmrw->dir == 0 ) ? ( 0x5555 / 60 ) : ( -0x5555 / 60 ) );
+        bmrw->frame = 60;
+        bmrw->seq_no++;
+      }
+    }
+    break;
+  case 1:
+    {
+      int i;
+
+      for( i = 0 ; i < 3 ; i++ )
+      {
+        VecFx32 pos;
+        if( BTLV_MCSS_CheckExist( bmrw->bmw, src_pos[ bmrw->side ][ i ] ) )
+        {
+          pos.x = FX_Mul( FX_SinIdx( bmrw->angle[ i ] & 0xffff ), FX32_ONE * 5 );
+          pos.y = poke_pos_single_table[ 0 ].y;
+          pos.z = ( bmrw->side == 0 ) ? BTLV_MCSS_ROTATION_Z_M : BTLV_MCSS_ROTATION_Z_E;
+          pos.z += FX_Mul( FX_CosIdx( bmrw->angle[ i ] & 0xffff ), FX32_ONE * 5 );
+          BTLV_MCSS_MovePosition( bmrw->bmw, src_pos[ bmrw->side ][ i ],
+                                  EFFTOOL_CALCTYPE_DIRECT, &pos, 0, 0, 0 );
+        }
+        bmrw->angle[ i ] += bmrw->speed;
+      }
+      if( --bmrw->frame == 0 )
+      { 
+        for( i = 0 ; i < 3 ; i++ )
+        {
+          VecFx32 pos;
+          if( BTLV_MCSS_CheckExist( bmrw->bmw, src_pos[ bmrw->side ][ i ] ) )
+          {
+            //BTLV_MCSS_GetDefaultPos( bmrw->bmw, &pos, dst_pos[ bmrw->dir ][ bmrw->side ][ i ] );
+            BTLV_MCSS_GetDefaultPos( bmrw->bmw, &pos, src_pos[ bmrw->side ][ i ] );
+            BTLV_MCSS_MovePosition( bmrw->bmw, src_pos[ bmrw->side ][ i ],
+                                    EFFTOOL_CALCTYPE_DIRECT, &pos, 0, 0, 0 );
+          }
+        }
+        bmrw->seq_no++;
+      }
+    }
+    break;
+  case 2:
+    {
+      int i;
+      int index[ 3 ];
+
+      for( i = 0 ; i < 3 ; i++ )
+      {
+        index[ i ] = BTLV_MCSS_GetIndex( bmrw->bmw, src_pos[ bmrw->side ][ i ] );
+      }
+      for( i = 0 ; i < 3 ; i++ )
+      {
+        if( index[ i ] != BTLV_MCSS_NO_INDEX )
+        {
+          bmrw->bmw->btlv_mcss[ index[ i ] ].position = dst_pos[ bmrw->dir ][ bmrw->side ][ i ];
+        }
+      }
+
+      bmrw->bmw->mcss_tcb_rotation_execute = 0;
+      GFL_HEAP_FreeMemory( work );
+      GFL_TCB_DeleteTask( tcb );
+    }
+    break;
+  }
+//直線で動くバージョン
+#if 0
   BTLV_MCSS_ROTATION_WORK* bmrw = ( BTLV_MCSS_ROTATION_WORK* )work;
   int src_pos[ 2 ][ 3 ] = {
     { BTLV_MCSS_POS_A, BTLV_MCSS_POS_C, BTLV_MCSS_POS_E },
@@ -1942,6 +2080,7 @@ static  void  TCB_BTLV_MCSS_Rotation( GFL_TCB *tcb, void *work )
       }
       if( i == 3 )
       {
+        BTLV_STAGE_SetAnmReq( BTLV_EFFECT_GetStageWork(), bmrw->side, 0, ( ( bmrw->dir == 0 ) ? FX32_ONE : -FX32_ONE ), 60 );
         bmrw->seq_no++;
       }
     }
@@ -1957,7 +2096,7 @@ static  void  TCB_BTLV_MCSS_Rotation( GFL_TCB *tcb, void *work )
         {
           BTLV_MCSS_GetDefaultPos( bmrw->bmw, &end, dst_pos[ bmrw->dir ][ bmrw->side ][ i ] );
           BTLV_MCSS_MovePosition( bmrw->bmw, src_pos[ bmrw->side ][ i ],
-                                  EFFTOOL_CALCTYPE_INTERPOLATION_DIRECT, &end, 100, 0, 0 );
+                                  EFFTOOL_CALCTYPE_INTERPOLATION_DIRECT, &end, 60, 0, 0 );
         }
       }
     }
@@ -1987,6 +2126,7 @@ static  void  TCB_BTLV_MCSS_Rotation( GFL_TCB *tcb, void *work )
     }
     break;
   }
+#endif
 }
 
 //============================================================================================

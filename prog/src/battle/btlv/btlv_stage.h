@@ -24,6 +24,12 @@ typedef enum
   BTLV_STAGE_VANISH_ON,
 }BTLV_STAGE_VANISH;
 
+enum
+{ 
+  BTLV_STAGE_POS_Z_E = FX32_ONE * -15,
+  BTLV_STAGE_POS_Z_M = FX32_ONE *  10,
+};
+
 typedef struct _BTLV_STAGE_WORK BTLV_STAGE_WORK;
 
 extern  BTLV_STAGE_WORK*  BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID heapID );

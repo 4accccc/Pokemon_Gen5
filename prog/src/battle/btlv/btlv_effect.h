@@ -190,6 +190,7 @@ extern  void              BTLV_EFFECT_SetCameraFocus( BtlvMcssPos position, int 
 extern  void              BTLV_EFFECT_GetCameraFocus( BtlvMcssPos position, VecFx32* pos, VecFx32* target );
 extern  BTLV_CAMERA_WORK* BTLV_EFFECT_GetCameraWork( void );
 extern  BTLV_MCSS_WORK*   BTLV_EFFECT_GetMcssWork( void );
+extern  BTLV_STAGE_WORK*  BTLV_EFFECT_GetStageWork( void );
 extern  VMHANDLE*         BTLV_EFFECT_GetVMHandle( void );
 extern  GFL_TCBSYS*       BTLV_EFFECT_GetTCBSYS( void );
 extern  PALETTE_FADE_PTR  BTLV_EFFECT_GetPfd( void );

@@ -73,8 +73,6 @@ struct _BTLV_STAGE_WORK
  */
 //============================================================================================
 static	const	VecFx32	stage_pos_table[]={
-//  { 0, 0, FX_F32_TO_FX32( 6.845f ) },
-//  { 0, 0, FX_F32_TO_FX32( -12.0f ) },
   { 0, 0, FX_F32_TO_FX32( 5.449f ) },
   { 0, 0, FX_F32_TO_FX32( -13.718f ) },
 };
@@ -241,8 +239,8 @@ BTLV_STAGE_WORK	*BTLV_STAGE_Init( BtlRule rule, int index, u8 season, HEAPID hea
 
   if( rule == BTL_RULE_ROTATION )
   { 
-	  bsw->stage_status[ BTLV_STAGE_MINE ].trans.z = FX32_ONE * 10;
-	  bsw->stage_status[ BTLV_STAGE_ENEMY ].trans.z = FX32_ONE * -15;
+	  bsw->stage_status[ BTLV_STAGE_MINE ].trans.z  = BTLV_STAGE_POS_Z_M;
+	  bsw->stage_status[ BTLV_STAGE_ENEMY ].trans.z = BTLV_STAGE_POS_Z_E;
   }
 
 	//エッジマーキングカラーセット
