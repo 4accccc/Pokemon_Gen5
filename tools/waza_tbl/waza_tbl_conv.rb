@@ -12,6 +12,7 @@ class PARA
     INFO3
     INFO4
     INFO5
+    INFO6
     Type
     Category
     DamageType
@@ -162,9 +163,9 @@ end
     fp_wazano.printf( "( %d )\t\t//%s\n", cnt, split_data[ PARA::WAZANAME ] )
     fp_hash.printf("\t\t\"%s\"=>%d,\n", split_data[ PARA::WAZANAME ], cnt )
     wazaname_gmm.make_row_index_kanji( "WAZANAME_", cnt, split_data[ PARA::WAZANAME ], split_data[ PARA::WAZANAME ] )
-    info = split_data[ PARA::INFO1 ] + "\r\n" + split_data[ PARA::INFO2 ] + "\r\n" + split_data[ PARA::INFO3 ] + "\r\n" + split_data[ PARA::INFO4 ] + "\r\n" + split_data[ PARA::INFO5 ]
-    #@todo 漢字説明文ありなんですが、現状データがないので、同じ文字列で生成
-    wazainfo_gmm.make_row_index_kanji( "WAZAINFO_", cnt, info, info )
+    info = split_data[ PARA::INFO1 ] + "\r\n" + split_data[ PARA::INFO2 ] + "\r\n" + split_data[ PARA::INFO3 ]
+    info_kanji = split_data[ PARA::INFO4 ] + "\r\n" + split_data[ PARA::INFO5 ] + "\r\n" + split_data[ PARA::INFO6 ]
+    wazainfo_gmm.make_row_index_kanji( "WAZAINFO_", cnt, info, info_kanji )
     if atkmsg_table[ split_data[ PARA::ATKMSG ] ] == nil
       p split_data[ PARA::ATKMSG ]
     end
