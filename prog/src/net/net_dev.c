@@ -181,16 +181,22 @@ void NET_DeviceUnload(int deviceNo)
  */
 //------------------------------------------------------------------------------
 
-static u8 bFlip=FALSE;
+static u8 bNotCall;        //通信を呼び出さない場合にTRUE
+static u8 bFlip;  //DS通信の切り替えフラグ
 
 void NET_DEV_Main(void)
 {
   if( WB_NET_PALACE_SERVICEID==GFL_NET_GetGameServiceID() ){
-    if(bFlip==FALSE){
-      bFlip =GFL_NET_Main();
+    if(bNotCall==FALSE){
+      if(bFlip==FALSE){
+        bFlip =GFL_NET_Main();
+      }
+      else{
+        bFlip=FALSE;
+      }
     }
     else{
-      bFlip=FALSE;
+      bNotCall = FALSE;
     }
   }
   else{
@@ -198,4 +204,9 @@ void NET_DEV_Main(void)
   }
 }
 
+
+void NET_DEV_SetSkipNetMain(void)
+{
+  bNotCall = TRUE;
+}
 
