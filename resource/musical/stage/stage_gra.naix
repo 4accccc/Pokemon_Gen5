@@ -161,11 +161,15 @@ enum {
 	NARC_stage_gra_appeal_script_13_bin = 147,
 	NARC_stage_gra_appeal_script_14_bin = 148,
 	NARC_stage_gra_appeal_script_15_bin = 149,
-	NARC_stage_gra_sub_script_00_bin = 150,
-	NARC_stage_gra_sub_script_01_bin = 151,
-	NARC_stage_gra_sub_script_02_bin = 152,
-	NARC_stage_gra_sub_script_03_bin = 153,
-	NARC_stage_gra_sub_script_04_bin = 154
+	NARC_stage_gra_appeal_script_16_bin = 150,
+	NARC_stage_gra_appeal_script_17_bin = 151,
+	NARC_stage_gra_appeal_script_18_bin = 152,
+	NARC_stage_gra_appeal_script_19_bin = 153,
+	NARC_stage_gra_sub_script_00_bin = 154,
+	NARC_stage_gra_sub_script_01_bin = 155,
+	NARC_stage_gra_sub_script_02_bin = 156,
+	NARC_stage_gra_sub_script_03_bin = 157,
+	NARC_stage_gra_sub_script_04_bin = 158
 };
 
 /* NARC_STAGE_GRA_NAIX_ */
