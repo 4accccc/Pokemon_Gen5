@@ -11,7 +11,8 @@
 
 #include "fieldmap.h"
 #include "system/screentex.h"
-#include "arc/texViewTest.naix"
+#include "arc/enceff_mdl.naix"
+
 #include "system/main.h"
 //--------------------------------------------------------------
 /// ENCEFF_MDL_WORK
@@ -46,7 +47,7 @@ static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 
 //--------------------------------------------------------------
 /**
- * イベント作成
+ * イベント作成  通常野生
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
  * @retval GMEVENT*
@@ -56,15 +57,15 @@ GMEVENT *ENCEFF_MDL_Create1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const 
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork,
-                           NARC_texViewTest_effect1_nsbmd,
-                           NARC_texViewTest_effect1_nsbca,
+                           NARC_enceff_mdl_ee_yasei1_nsbmd,
+                           NARC_enceff_mdl_ee_yasei1_nsbca,
                            inIsFadeWhite );
   return( event );
 }
 
 //--------------------------------------------------------------
 /**
- * イベント作成
+ * イベント作成 野生　強
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
  * @retval GMEVENT*
@@ -74,15 +75,15 @@ GMEVENT *ENCEFF_MDL_Create2(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const 
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork,
-                           NARC_texViewTest_effect1_nsbmd,
-                           NARC_texViewTest_effect1_nsbca,
+                           NARC_enceff_mdl_ee_yasei2_nsbmd,
+                           NARC_enceff_mdl_ee_yasei2_nsbca,
                            inIsFadeWhite );
   return( event );
 }
 
 //--------------------------------------------------------------
 /**
- * イベント作成
+ * イベント作成   トレーナー通常
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
  * @retval GMEVENT*
@@ -92,15 +93,15 @@ GMEVENT *ENCEFF_MDL_Create3(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const 
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork,
-                           NARC_texViewTest_effect1_nsbmd,
-                           NARC_texViewTest_effect1_nsbca,
+                           NARC_enceff_mdl_ee_trmizu_nsbmd,
+                           NARC_enceff_mdl_ee_trmizu_nsbca,
                            inIsFadeWhite );
   return( event );
 }
 
 //--------------------------------------------------------------
 /**
- * イベント作成
+ * イベント作成   トレーナー水上
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
  * @retval GMEVENT*
@@ -110,15 +111,15 @@ GMEVENT *ENCEFF_MDL_Create4(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const 
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork,
-                           NARC_texViewTest_effect1_nsbmd,
-                           NARC_texViewTest_effect1_nsbca,
+                           NARC_enceff_mdl_ee_trmizu_nsbmd,
+                           NARC_enceff_mdl_ee_trmizu_nsbca,
                            inIsFadeWhite );
   return( event );
 }
 
 //--------------------------------------------------------------
 /**
- * イベント作成
+ * イベント作成  エフェクト
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
  * @retval GMEVENT*
@@ -128,15 +129,15 @@ GMEVENT *ENCEFF_MDL_Create5(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const 
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork,
-                           NARC_texViewTest_effect1_nsbmd,
-                           NARC_texViewTest_effect1_nsbca,
+                           NARC_enceff_mdl_ee_symbol_nsbmd,
+                           NARC_enceff_mdl_ee_symbol_nsbca,
                            inIsFadeWhite );
   return( event );
 }
 
 //--------------------------------------------------------------
 /**
- * イベント作成
+ * イベント作成   ゾロアーク
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
  * @retval GMEVENT*
@@ -146,8 +147,8 @@ GMEVENT *ENCEFF_MDL_Create6(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const 
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork,
-                           NARC_texViewTest_effect1_nsbmd,
-                           NARC_texViewTest_effect1_nsbca,
+                           NARC_enceff_mdl_ee_zoroark_nsbmd,
+                           NARC_enceff_mdl_ee_zoroark_nsbca,
                            inIsFadeWhite );
   return( event );
 }

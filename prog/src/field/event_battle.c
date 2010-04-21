@@ -30,7 +30,7 @@
 #include "poke_tool/natsuki.h"
 #include "waza_tool/wazano_def.h"
 
-#include "event_encount_effect.h"
+//#include "event_encount_effect.h"
 #include "effect_encount.h"
 #include "field_sound.h"
 #include "event_gameover.h" //EVENT_NormalLose

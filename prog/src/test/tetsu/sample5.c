@@ -152,7 +152,7 @@ const GFL_PROC_DATA DebugWatanabeSample5ProcData = {
  *
  */
 //============================================================================================
-#include "arc/texViewTest.naix"
+//#include "arc/texViewTest.naix"
 
 static const GFL_G3D_OBJSTATUS g3DobjStatus1 = {
 	{ 0, 0, 0 },																				//À•W
@@ -168,6 +168,7 @@ static const u16 backGroundColorTable[] = {
 //============================================================================================
 static BOOL	sample5(Sample5_WORK* sw)
 {
+#if 0  
 	switch(sw->seq){
 
 	case 0:
@@ -307,5 +308,8 @@ static BOOL	sample5(Sample5_WORK* sw)
 		break;
 	}
 	return TRUE;
+#endif
+
+  return FALSE;
 }
 

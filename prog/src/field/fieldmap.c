@@ -464,7 +464,7 @@ static void InitGmkTmpWork(GMK_TMP_WORK *tmpWork);
 static void Draw3DNormalMode_top( FIELDMAP_WORK * fieldWork );
 static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork );
 static void Draw3DCutinMode(FIELDMAP_WORK * fieldWork);
-static void Draw3DScrnTexMode(FIELDMAP_WORK * fieldWork);
+//static void Draw3DScrnTexMode(FIELDMAP_WORK * fieldWork);
 static void DrawEncEff(FIELDMAP_WORK * fieldWork);
 
 static void DrawTop(FIELDMAP_WORK *fieldWork);
@@ -2382,9 +2382,8 @@ static void fldmap_G3D_Draw_top( FIELDMAP_WORK * fieldWork )
 
 
   {
-    static const DRAW3DMODE_FUNC func[] = {
+    static const DRAW3DMODE_FUNC func[DRAW3DMODE_MAX] = {
       Draw3DNormalMode_top,
-      NULL,
       NULL,
       NULL,
     };
@@ -2402,10 +2401,10 @@ static void fldmap_G3D_Draw_tail( FIELDMAP_WORK * fieldWork )
   if ( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) &&
         (GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT) ) return;
   {
-    static const DRAW3DMODE_FUNC func[] = {
+    static const DRAW3DMODE_FUNC func[DRAW3DMODE_MAX] = {
       Draw3DNormalMode_tail,
       Draw3DCutinMode,
-      Draw3DScrnTexMode,
+//      Draw3DScrnTexMode,
       DrawEncEff,
     };
 
@@ -3471,7 +3470,7 @@ static void Draw3DCutinMode(FIELDMAP_WORK * fieldWork)
   FLD_PRTCL_Main();
   FLD3D_CI_Draw( fieldWork->Fld3dCiPtr );
 }
-
+#if 0
 //==================================================================
 /**
  * フィールドスクリーンキャプチャ描画
@@ -3488,7 +3487,7 @@ static void Draw3DScrnTexMode(FIELDMAP_WORK * fieldWork)
 
 	ENCEFF_Draw3D();
 }
-
+#endif
 //==================================================================
 /**
  * エンカウントエフェクト描画
