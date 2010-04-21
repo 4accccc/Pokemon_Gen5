@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-19T21:16:30"/>
+	<create user="matsumiya" host="W00224" date="2010-04-21T13:45:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="152" right="1985" bottom="780" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -293,7 +293,7 @@
 
 
 	<row id="msg_c08_man1_01w">
-		<comment>♂：WhiteVer
+		<comment>♂：WHITEver
 ・続けてman1_02w</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
@@ -314,7 +314,7 @@
 	</row>
 
 	<row id="msg_c08_man1_02w">
-		<comment>♂：WhiteVer
+		<comment>♂：WHITEver
 ・はい/いいえの選択肢表示
 　はい→man1_04w
 　はい、だが条件を満たしていない→man1_05w
@@ -346,7 +346,7 @@
 	</row>
 
 	<row id="msg_c08_man1_03w">
-		<comment>♂：WhiteVer
+		<comment>♂：WHITEver
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
@@ -357,7 +357,7 @@
 	</row>
 
 	<row id="msg_c08_man1_04w">
-		<comment>♂：WhiteVer
+		<comment>♂：WHITEver
 ・はい選択時</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
@@ -368,7 +368,7 @@
 	</row>
 
 	<row id="msg_c08_man1_05w">
-		<comment>♂：WhiteVer
+		<comment>♂：WHITEver
 ・はい選択だが
 　条件を満たしていない時</comment>
 		<attribute name="キャラ指定">MAN1
@@ -384,7 +384,7 @@
 	</row>
 
 	<row id="msg_c08_man1_06w">
-		<comment>♂：WhiteVer
+		<comment>♂：WHITEver
 ・メッセージ表示後、装置に隣接する</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
@@ -406,7 +406,7 @@
 	</row>
 
 	<row id="msg_c08_man1_07w">
-		<comment>♂：WhiteVer
+		<comment>♂：WHITEver
 ・メッセージ表示後、機械のSE停止
 ・続けてman1_08w</comment>
 		<attribute name="キャラ指定">MAN1
@@ -422,7 +422,7 @@
 	</row>
 
 	<row id="msg_c08_man1_08w">
-		<comment>♂：WhiteVer
+		<comment>♂：WHITEver
 ・続けてman1_09w</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
@@ -441,7 +441,7 @@
 	</row>
 
 	<row id="msg_c08_man1_09w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂：WhiteVer
+		<comment>♂：WHITEver
 ・アイテム入手処理
 　No569「じゅうでんち」</comment>
 		<attribute name="キャラ指定">MAN1
@@ -457,7 +457,7 @@
 	</row>
 
 	<row id="msg_c08_man1_10w">
-		<comment>♂：WhiteVer
+		<comment>♂：WHITEver
 ・アイテム入手後
 　以降、繰り返し</comment>
 		<attribute name="キャラ指定">MAN1
@@ -477,7 +477,7 @@
 	</row>
 
 	<row id="msg_c08_babyboy1_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：WhiteVer</comment>
+		<comment>♂：WHITEver</comment>
 		<attribute name="キャラ指定">BABYBOY1</attribute>
 		<language name="JPN" width="256">タイム『ぼくね　ぼくね
 おおきくなったら　なにになろうかな？</language>
@@ -486,7 +486,7 @@
 	</row>
 
 	<row id="msg_c08_man1_01b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂：BlackVer
+		<comment>♂：BLACKver
 ・続けてman1_02b</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
@@ -509,7 +509,7 @@
 	</row>
 
 	<row id="msg_c08_man1_02b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂：BlackVer
+		<comment>♂：BLACKver
 ・はい/いいえの選択肢表示
 　はい→man1_04b
 　はい、だが条件を満たしていない→man1_05b
@@ -541,7 +541,7 @@
 	</row>
 
 	<row id="msg_c08_man1_03b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂：BlackVer
+		<comment>♂：BLACKver
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
@@ -552,7 +552,7 @@
 	</row>
 
 	<row id="msg_c08_man1_04b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂：BlackVer
+		<comment>♂：BLACKver
 ・はい選択時</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
@@ -563,7 +563,7 @@
 	</row>
 
 	<row id="msg_c08_man1_05b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂：BlackVer
+		<comment>♂：BLACKver
 ・はい選択だが
 　条件を満たしていない時</comment>
 		<attribute name="キャラ指定">MAN1
@@ -579,7 +579,7 @@
 	</row>
 
 	<row id="msg_c08_man1_06b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂：BlackVer
+		<comment>♂：BLACKver
 ・メッセージ表示後、装置に隣接する</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
@@ -588,7 +588,7 @@
 	</row>
 
 	<row id="msg_c08_man1_07b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂：BlackVer
+		<comment>♂：BLACKver
 ・メッセージ表示後、機械のSE停止
 ・続けてman1_08w</comment>
 		<attribute name="キャラ指定">MAN1
@@ -604,7 +604,7 @@
 	</row>
 
 	<row id="msg_c08_man1_08b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂：BlackVer
+		<comment>♂：BLACKver
 ・続けてman1_09w</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
@@ -621,7 +621,7 @@
 	</row>
 
 	<row id="msg_c08_man1_09b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂：BlackVer
+		<comment>♂：BLACKver
 ・アイテム入手処理
 　No569「じゅうでんち」</comment>
 		<attribute name="キャラ指定">MAN1
@@ -637,7 +637,7 @@
 	</row>
 
 	<row id="msg_c08_man1_10b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂：BlackVer
+		<comment>♂：BLACKver
 ・アイテム入手後
 　以降、繰り返し</comment>
 		<attribute name="キャラ指定">MAN1
@@ -657,7 +657,7 @@
 	</row>
 
 	<row id="msg_c08_babyboy1_01b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂：BlackVer</comment>
+		<comment>♂：BLACKver</comment>
 		<attribute name="キャラ指定">BABYBOY1</attribute>
 		<language name="JPN" width="256">とうさんは　むかしむかし
 バックおじいちゃんと▽

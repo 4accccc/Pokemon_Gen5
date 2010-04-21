@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-19T18:51:20"/>
+	<create user="matsumiya" host="W00224" date="2010-04-21T13:46:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="117" right="2004" bottom="745" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="152" right="1985" bottom="780" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -322,7 +322,7 @@
 ２度目なら　ごめんなさいね</language>
 	</row>
 
-	<row id="msg_c08r0501_man3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08r0501_man3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・c08での演説イベント前
 ・仮メッセージ</comment>
@@ -349,12 +349,14 @@
 たべているときは　ハッピー！[BE:01:ページ切り替え（クリア）]
 モグモグ
 たべおわると　アンハッピー……[BE:01:ページ切り替え（クリア）]
-くうふくと　こうふくって　にてるよね</language>
+くうふくと　こうふくって
+ことばは　にてるよね</language>
 		<language name="JPN_KANJI" width="256">モグモグ……
 食べているときは　ハッピー！[BE:01:ページ切り替え（クリア）]
 モグモグ
 食べ終わると　アンハッピー……[BE:01:ページ切り替え（クリア）]
-くうふくと　こうふくって　似てるよね</language>
+くうふくと　こうふくって
+言葉は　似てるよね</language>
 	</row>
 
 	<flowchart-group-list>
