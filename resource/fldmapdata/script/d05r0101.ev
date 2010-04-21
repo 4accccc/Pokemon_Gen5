@@ -24,30 +24,52 @@
 _EVENT_DATA    ev_scene_d05r0101_01
 _EVENT_DATA    ev_pos_d05r0101_rival_01
 _EVENT_DATA    ev_d05r0101_workman_01
+_EVENT_DATA    ev_d05r0101_rival_02
+_EVENT_DATA    ev_init_d05r0101
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_d05r0101_flag_change:
-//  _END
 
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_d05r0101
+	
+
+	//プラズマ団イベントの進行状況によってチェレンの位置を変更
+	IF $WK_SCENE_D05_PLASMA == 2 THEN
+		_OBJ_POS_CHANGE( D05R0101_RIVAL_02, 8, 0, 9, DIR_LEFT )
+	ENDIF
+
+INIT_EVENT_END
 /**************************************************************/
 /*初回入室時発動イベント：ライバルと会話                       */
 /**************************************************************/
 EVENT_START   ev_scene_d05r0101_01
 
+	//ライバル待ち
+	_TIME_WAIT( 16 )
+
+	//階段SE再生
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	
+	//ライバル表示
+	_FLAG_RESET( FV_D05R0101_RIVAL_01 )
+	_OBJ_ADD( D05R0101_RIVAL_01 )
+	
+	//階段SE待ち
+	_SE_WAIT()
+	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 
 	//カメラ操作　サポートの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,557056,0,1851392,30 )
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_MOVE( 9688,0,970752,557056,0,1851392,32 )
 
 	//「？」
 	_OBJ_ANIME(D05R0101_RIVAL_01,anm_d05r0101_rival_01)
 	_OBJ_ANIME_WAIT()
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//会話
 	_BALLOONWIN_OBJMSG(msg_d05r0101_black_01,D05R0101_RIVAL_01)
@@ -70,11 +92,15 @@ EVENT_START   ev_scene_d05r0101_01
 
 	
 	//==================================//
-	//バニッシュフラグ操作
+	//D05R0101ライバル01のバニッシュフラグをセット
 	_FLAG_SET(FV_D05R0101_RIVAL_01)
 
 	//フラグ操作
 	$WK_SCENE_D05_PLASMA = 1
+	
+	//D05ライバルのバニッシュフラグをセット
+	_FLAG_SET(FV_D05_RIVAL_01)
+	
 	//==================================//
 
 EVENT_END
@@ -84,7 +110,11 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_pos_d05r0101_rival_01
 
-	_CALL ev_d05r0101_player_to_rival
+	//ライバル登場
+	_FLAG_RESET( FV_D05R0101_RIVAL_02 )
+	_OBJ_ADD( D05R0101_RIVAL_02 )
+
+	_CALL ev_d05r0101_rival_to_player
 	
 	//先に行くか質問
 	_BALLOONWIN_OBJMSG(msg_d05r0101_black_03,D05R0101_RIVAL_02)
@@ -92,33 +122,27 @@ EVENT_START   ev_pos_d05r0101_rival_01
 	_BALLOONWIN_CLOSE()
 	
 	IF $SCWK_ANSWER == SCR_YES THEN
-	_CALL ev_d05r0101_rival_02
-	
+		_BALLOONWIN_OBJMSG(msg_d05r0101_black_04,D05R0101_RIVAL_02)
+		_BALLOONWIN_CLOSE()
 	//いいえ
 	ELSE
-	
-	//主人公の方を見る
-	_OBJ_ANIME(D05R0101_RIVAL_02,anm_d05r0101_rival_step_right)
-	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG(msg_d05r0101_black_05,D05R0101_RIVAL_02)
-	_BALLOONWIN_CLOSE()
-	
-	//主人公戻る
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d05r0101_pos_01)
-	_OBJ_ANIME_WAIT()
-	
-	//ライバル再び部屋のほうを見る
-	_OBJ_ANIME(D05R0101_RIVAL_02,anm_d05r0101_rival_up)
-	_OBJ_ANIME_WAIT()
-	
+		_BALLOONWIN_OBJMSG(msg_d05r0101_black_05,D05R0101_RIVAL_02)
+		_BALLOONWIN_CLOSE()
 	ENDIF
+	
+	//===========フラグワーク操作===========//
+	
+	//***フラグ操作:D05R0101のPOSイベントをオフに***
+	$WK_SCENE_D05_PLASMA = 2
+	
+	//======================================//
 	
 EVENT_END
 
 /**************************************************************/
 /*CALL：主人公の座標を取得してライバルに隣接                   */
 /**************************************************************/
-ev_d05r0101_player_to_rival:
+ev_d05r0101_rival_to_player:
 	{
 	//主人公の座標に応じてアニメーションを変更
 
@@ -130,168 +154,123 @@ ev_d05r0101_player_to_rival:
     //プレイヤーが通る4グリッド分を用意
     SWITCH $LCW_POSZ
 	CASE 8 THEN //デフォルト処理
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_rival_z8 )
-	_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( D05R0101_RIVAL_02, anm_rival_to_player_z8 )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_right )
+		_OBJ_ANIME_WAIT()
 	
 	CASE 9 THEN
-	
+		_OBJ_ANIME( D05R0101_RIVAL_02, anm_rival_to_player_z9 )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_right )
+		_OBJ_ANIME_WAIT()
+		
 	CASE 10 THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_rival_z10 )
-	_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( D05R0101_RIVAL_02, anm_rival_to_player_z10 )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_right )
+		_OBJ_ANIME_WAIT()
 	
 	CASE 11 THEN
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_rival_z11 )
-	_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( D05R0101_RIVAL_02, anm_rival_to_player_z11 )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_right )
+		_OBJ_ANIME_WAIT()
 	
     DEFAULT
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_rival_z8 )
-	_OBJ_ANIME_WAIT()
+    	_OBJ_ANIME( D05R0101_RIVAL_02, anm_rival_to_player_z9 )
+		_OBJ_ANIME_WAIT()
+	    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_look_right )
+		_OBJ_ANIME_WAIT()
 	
     ENDSWITCH
 	
 	}
 _RET
 
-/**************************************************************/
-/*CALL：SAGEとイベント→戦闘                             */
-/**************************************************************/
-ev_d05r0101_rival_02:
+//--------------------------------------------------------------
+//	D05R0101：主人公ライバルのほうに振り向く
+//--------------------------------------------------------------
 
-	//行くぞ
-	_OBJ_ANIME(D05R0101_RIVAL_02,anm_d05r0101_rival_rook_right)
-	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG(msg_d05r0101_black_04,D05R0101_RIVAL_02)
-	_BALLOONWIN_CLOSE()
-
-	//ライバル先に部屋に入る
-	_OBJ_ANIME(D05R0101_RIVAL_02,anm_d05r0101_rival_go_room)
-	_OBJ_ANIME_WAIT()
-	_SE_PLAY(SEQ_SE_KAIDAN)		//階段ＳＥ
-	_SE_WAIT()
-	//ライバルのオブジェを消去
-	_OBJ_DEL(D05R0101_RIVAL_02)
-	
-	//主人公R02へ
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_go_r02 )
-	_OBJ_ANIME_WAIT()
-	
-	//予約スクリプト
-	_RESERVE_SCRIPT( SCRID_RESERVE_D05R0201_VS_PLASMA )
-	
-	//シーン切り替え
-	_MAP_CHANGE( ZONE_ID_D05R0201, 4, 17, DIR_UP )
-	
-	//===========フラグワーク操作===========//
-	
-	//***フラグ操作:D05R0101のPOSイベントをオフに***
-	$WK_SCENE_D05_PLASMA = 2
-	
-	//D05R0101のライバルを非表示にする
-	_FLAG_SET(FV_D05R0101_RIVAL_02)
-	
-	//======================================//
-	
-_RET
+_ANIME_LABEL	anm_player_look_right
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
 //	D05R0101：主人公、ライバルと隣接z8
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_player_to_rival_z8
+_ANIME_LABEL	anm_rival_to_player_z8
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	D05R0101：主人公、ライバルと隣接z9
+//	D05R0101：ライバル、主人公に隣接z9
 //--------------------------------------------------------------
-
-
-//--------------------------------------------------------------
-//	D05R0101：主人公、ライバルと隣接z10
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_player_to_rival_z10
-	_ANIME_DATA	AC_WALK_U_8F,1
+_ANIME_LABEL	anm_rival_to_player_z9
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	D05R0101：主人公、ライバルと隣接z11
+//	D05R0101：ライバル、主人公に隣接z10
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_player_to_rival_z11
-	_ANIME_DATA	AC_WALK_U_8F,2
+_ANIME_LABEL	anm_rival_to_player_z10
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0101：ライバル、主人公に隣接z11
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_rival_to_player_z11
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 //--------------------------------------------------------------
 //	D05R0101：ライバル「？」
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_d05r0101_rival_01
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	AC_MARK_HATENA,0
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	D05R0101：ライバル奥へゆく
+//	D05R0101：ライバル「？」
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_d05r0101_rival_02
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_WALK_U_8F,6
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D05R0101：ライバルいいえで主人公のほうを見る
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d05r0101_rival_step_right
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D05R0101：ライバルいいえで上を再度見る
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d05r0101_rival_up
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------
-//	D05R0101：POSでいいえを選んだので主人公戻される
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d05r0101_pos_01
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D05R0101：ライバルはいで主人公のほうを見る
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d05r0101_rival_rook_right
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D05R0101：ライバル先にR02に入る
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d05r0101_rival_go_room
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	ACMD_END,0
-	
-//--------------------------------------------------------------
-//	D05R0101：主人公もR02へz8
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_player_go_r02
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*  R03 OLDWOMAN1の会話のイベントスクリプト*/
+/*  D05R0101 RIVAL02の会話のイベントスクリプト*/
+/**************************************************************/
+EVENT_START   ev_d05r0101_rival_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d05r0101_black_06)
+EVENT_END
+
+/**************************************************************/
+/*  D05R0101 WORKMAN1の会話のイベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_d05r0101_workman_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_d05r0101_workman2_01)

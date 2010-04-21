@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/07 18:34:43
+#save date:2010/04/21 16:20:21
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d05r0101.wms
 #SECTION START:OBJ_EVENT
@@ -26,7 +26,7 @@ FV_D05R0101_RIVAL_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_DOWN
+DIR_UP
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 0 -184
+-136 0 -248
 #event number: 1
 #type
 1
@@ -55,7 +55,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_D05R0101_RIVAL_02
 #Event Script Name
-SCRID_DUMMY
+SCRID_D05R0101_RIVAL_02
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
@@ -71,7 +71,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 0 104
+-56 0 168
 #event number: 2
 #type
 1

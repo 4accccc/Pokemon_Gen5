@@ -24,13 +24,30 @@ _EVENT_DATA    ev_d05_workman_01
 _EVENT_DATA    ev_d05_workman_02
 _EVENT_DATA    ev_d05_trainerm_01
 _EVENT_DATA    ev_d05_workman_03
+_EVENT_DATA    ev_zone_d05
+_EVENT_DATA    ev_d05_rival_01
 _EVENT_DATA_END
 
+/************************************************************/
+/*					ZONE_CHANGE_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_d05
+
+	//プラズマ団イベントの進行状況によってチェレンの位置を変更
+	IF FLAG_OFF( FV_D05_RIVAL_01 ) THEN
+		_SXY_MOVE_NPC_POS( D05_RIVAL_01, DIR_LEFT, 169, 0, 475 )
+	ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*$WK_SCENE_D05=0 時発動イベント：コンテナにいるよう言われる   */
 /**************************************************************/
 EVENT_START   ev_pos_d05_rival_01
+
+	//ライバル表示
+	_FLAG_RESET( FV_D05_RIVAL_01 )
+	_OBJ_ADD( D05_RIVAL_01 )
 	
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
@@ -47,60 +64,30 @@ EVENT_START   ev_pos_d05_rival_01
 	CASE 474 THEN
 		_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_01_z474 )
 		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_d05_player_look_right )
+		_OBJ_ANIME_WAIT()
 	CASE 475 THEN
 		_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_01_z475 )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_d05_player_look_right )
 		_OBJ_ANIME_WAIT()
 	CASE 476 THEN
 		_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_01_z476 )
 		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_d05_player_look_right )
+		_OBJ_ANIME_WAIT()
 	DEFAULT  //目の前に立ったケースと同じ処理を行う
 		_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_01_z475 )
 		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_d05_player_look_right )
+		_OBJ_ANIME_WAIT()
 	ENDSWITCH
 	
-	//ライバルコンテナ内へ
-	
+	//チェレン：まさかこの中に
 	_BALLOONWIN_OBJMSG( msg_d05_black_01 , D05_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
-	
-	//主人公座標に応じてライバル退場
-	SWITCH $POSZ
-	CASE 474 THEN
-		_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_02_z474 )
-		_OBJ_ANIME_WAIT()
-	CASE 475 THEN
-		_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_02_z475 )
-		_OBJ_ANIME_WAIT()
-	CASE 476 THEN
-		_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_02_z476 )
-		_OBJ_ANIME_WAIT()
-	DEFAULT  //目の前に立ったケースと同じ処理を行う
-		_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_02_z475 )
-		_OBJ_ANIME_WAIT()
-	ENDSWITCH
-	
-	///ドア開ける
-	DEFINE_LOCAL	DOOR_ANIME_ID
-	_BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 164, 472 )
-	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
-	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
-	
-	//入室
-	_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_02_end )
-	_OBJ_ANIME_WAIT()
-	
-	//ライバルOBJ消去
-	_OBJ_DEL(D05_RIVAL_01)
-	
-	//ドア閉じる
-	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
-	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
-	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
 
 	//======================================//	
-	
-	//ライバルのバニッシュフラグをセット
-	_FLAG_SET(FV_D05_RIVAL_01)
 
 	//***フラグ操作・D05／コンテナクリアまで1***
 	$WK_SCENE_D05 = 1
@@ -111,12 +98,20 @@ EVENT_START   ev_pos_d05_rival_01
 EVENT_END
 
 //--------------------------------------------------------------
+//	D05R0101：主人公、ライバルと隣接z8
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05_player_look_right
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
 //	D05：ライバル主人公に隣接
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_d05_rivalpos_01_z474
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -124,7 +119,8 @@ _ANIME_LABEL	anm_d05_rivalpos_01_z474
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_d05_rivalpos_01_z475
-	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,9
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -132,46 +128,18 @@ _ANIME_LABEL	anm_d05_rivalpos_01_z475
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_d05_rivalpos_01_z476
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-
-//--------------------------------------------------------------
-//	D05：ライバルコンテナ内へ入ってゆく
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d05_rivalpos_02_z474
+	_ANIME_DATA	AC_WALK_D_8F,10
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D05：ライバルコンテナ内へ入ってゆく
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d05_rivalpos_02_z475
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D05：ライバルコンテナ内へ入ってゆく
-//--------------------------------------------------------------
-
-_ANIME_LABEL	anm_d05_rivalpos_02_z476
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 
-//--------------------------------------------------------------
-//	D05：ライバルコンテナ内へ入ってゆく
-//--------------------------------------------------------------
+/**************************************************************/
+/*workman02一言メッセージ							          */
+/**************************************************************/
+EVENT_START   ev_d05_rival_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_black_02 )
+EVENT_END
 
-_ANIME_LABEL	anm_d05_rivalpos_02_end
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*workman一言メッセージ：コンテナイベント終了まで表示          */

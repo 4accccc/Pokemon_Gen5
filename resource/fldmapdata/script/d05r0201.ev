@@ -20,7 +20,7 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_reserve_d05r0201_vs_plasma
+_EVENT_DATA    ev_scene_d05r0201_vs_plasma
 _EVENT_DATA    ev_d05r0201_sage_01
 _EVENT_DATA    ev_d05r0201_rival_01
 
@@ -60,10 +60,20 @@ INIT_EVENT_END
 /**************************************************************/
 /*初回入室時発動イベント：プラズマ団と戦闘                     */
 /**************************************************************/
-EVENT_START   ev_reserve_d05r0201_vs_plasma
+EVENT_START   ev_scene_d05r0201_vs_plasma
 
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
+	
+	//階段SE再生
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	
+	//ライバルを表示
+	_FLAG_RESET( FV_D05R0201_RIVAL_01 )
+	_OBJ_ADD( D05R0201_RIVAL_01 )
+	
+	//階段SE待ち
+	_SE_WAIT()
 	
 	//ライバル入室してプラズマ団に気づく
 	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_gyoe)
@@ -135,6 +145,9 @@ EVENT_START   ev_reserve_d05r0201_vs_plasma
 	
 	//***フラグ操作:D05R0201に入室済みとする***
 	$WK_SCENE_D05_PLASMA = 3
+	
+	//D05R0101のライバルを非表示にする
+	_FLAG_SET(FV_D05R0101_RIVAL_02)
 	
 	//=====================================//
 	
@@ -699,6 +712,7 @@ ev_d05r0201_vs_plasma_win:
 	_FLAG_SET(FV_D05R0201_PLASMA)
 	_FLAG_SET(FV_D05R0201_WORKMAN_01)
 	_FLAG_SET( FV_D05R0201_SAGE7 )
+	_FLAG_SET( FV_D05R0201_RIVAL_01 )
 	//D05のworkmanを非表示にする
 	_FLAG_SET( FV_D05_WORKMAN_01 )
 	
