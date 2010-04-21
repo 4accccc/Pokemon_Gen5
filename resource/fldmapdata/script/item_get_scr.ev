@@ -24,6 +24,7 @@ _EVENT_DATA   ev_item_get_player_form_anime_set
 _EVENT_DATA   ev_item_get_player_form_return
 _EVENT_DATA   ev_item_event_hideitem
 _EVENT_DATA   ev_item_event_intrude_secret
+_EVENT_DATA   ev_item_event_prog_call
 _EVENT_DATA_END //終了
 
 
@@ -183,6 +184,19 @@ ev_item_event_hideitem:
   ENDIF
 _CHG_LOCAL_SCR
 _END
+
+//====================================================================
+//	アイテム取得イベント プログラムからコールする場合専用
+//  (フィールドアイテム&LAST_KEYWAIT)
+//
+//	SCWK_PARAM0	アイテムナンバー
+//	SCWK_PARAM1	個数
+//====================================================================
+EVENT_START ev_item_event_prog_call
+{
+  _CALL ev_item_event_field_core
+}
+EVENT_END
 
 //--------------------------------------------------------------------
 //  アイテム取得イベント（共通処理）
