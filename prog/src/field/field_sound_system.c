@@ -168,8 +168,8 @@ struct _FIELD_SOUND {
 // ■非公開関数
 //================================================================================= 
 // システムの初期化
-static void InitFieldSoundSystem( FIELD_SOUND* fieldSound );
-static void ResetFieldSoundSystem( FIELD_SOUND* fieldSound );
+static void InitFieldSoundSystem( FIELD_SOUND* fieldSound, GAMEDATA* gameData );
+static void ResetFieldSoundSystem( FIELD_SOUND* fieldSound, GAMEDATA* gameData );
 
 // リクエストキューの操作
 static void RequestQueueCheck( FIELD_SOUND* fieldSound );
@@ -321,8 +321,7 @@ FIELD_SOUND* FIELD_SOUND_Create( GAMEDATA* gameData, HEAPID heapID )
   fieldSound = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_SOUND) );
 
   // 初期化
-  InitFieldSoundSystem( fieldSound );
-  fieldSound->gameData = gameData;
+  InitFieldSoundSystem( fieldSound, gameData );
   fieldSound->playerVolumeFader = PLAYER_VOLUME_FADER_Create( heapID, PLAYER_BGM );
   fieldSound->ringToneSys = RINGTONE_SYS_Create( heapID, fieldSound->playerVolumeFader );
 
@@ -543,11 +542,12 @@ void FIELD_SOUND_Main( FIELD_SOUND* fieldSound )
  * @brief システムをリセットする
  *
  * @param fieldSound
+ * @param gameData
  */
 //---------------------------------------------------------------------------------
-void FIELD_SOUND_Reset( FIELD_SOUND* fieldSound )
+void FIELD_SOUND_Reset( FIELD_SOUND* fieldSound, GAMEDATA* gameData )
 {
-  ResetFieldSoundSystem( fieldSound );
+  ResetFieldSoundSystem( fieldSound, gameData );
 }
 
 
@@ -887,13 +887,14 @@ static BOOL checkEnableSE( u32 sndIndex )
  * @brief システムの初期化
  *
  * @param fieldSound
+ * @param gameData
  */
 //---------------------------------------------------------------------------------
-static void InitFieldSoundSystem( FIELD_SOUND* fieldSound )
+static void InitFieldSoundSystem( FIELD_SOUND* fieldSound, GAMEDATA* gameData )
 {
   int i;
 
-  fieldSound->gameData     = NULL;
+  fieldSound->gameData     = gameData;
   fieldSound->state        = FSND_STATE_STOP;
   fieldSound->request      = FSND_BGM_REQUEST_NONE;
   fieldSound->currentBGM   = BGM_NONE;
@@ -926,16 +927,17 @@ static void InitFieldSoundSystem( FIELD_SOUND* fieldSound )
  * @brief システムのリセット
  *
  * @param fieldSound
+ * @param gameData
  */
 //---------------------------------------------------------------------------------
-static void ResetFieldSoundSystem( FIELD_SOUND* fieldSound )
+static void ResetFieldSoundSystem( FIELD_SOUND* fieldSound, GAMEDATA* gameData )
 {
   while( fieldSound->pushCount != FSND_PUSHCOUNT_NONE )
   {
     PopBGM( fieldSound );
   }
   PMSND_StopBGM();
-  InitFieldSoundSystem( fieldSound );
+  InitFieldSoundSystem( fieldSound, gameData );
 }
 
 //---------------------------------------------------------------------------------

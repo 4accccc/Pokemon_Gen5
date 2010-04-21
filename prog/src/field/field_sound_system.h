@@ -96,7 +96,7 @@ extern void FIELD_SOUND_RegisterRequest( FIELD_SOUND* fieldSound,
 // Å°ÉVÉXÉeÉÄìÆçÏ
 //=================================================================================
 extern void FIELD_SOUND_Main ( FIELD_SOUND* fieldSound );
-extern void FIELD_SOUND_Reset( FIELD_SOUND* fieldSound );
+extern void FIELD_SOUND_Reset( FIELD_SOUND* fieldSound, GAMEDATA* gameData );
 
 
 //=================================================================================

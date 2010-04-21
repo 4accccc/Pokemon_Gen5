@@ -543,6 +543,7 @@ GMEVENT* EVENT_FSND_ChangeBGM( GAMESYS_WORK* gameSystem, u32 soundIdx,
 static GMEVENT_RESULT ResetBGMEvent( GMEVENT* event, int* seq, void* wk )
 {
   FSND_EVWORK* work       = (FSND_EVWORK*)wk;
+  GAMEDATA*    gameData   = GAMESYSTEM_GetGameData( work->gameSystem );
   FIELD_SOUND* fieldSound = work->fieldSound;
 
   switch( *seq ) {
@@ -559,7 +560,7 @@ static GMEVENT_RESULT ResetBGMEvent( GMEVENT* event, int* seq, void* wk )
 
   // FIELD_SOUNDをリセット
   case 2:
-    FIELD_SOUND_Reset( fieldSound );
+    FIELD_SOUND_Reset( fieldSound, gameData );
     (*seq)++;
     break;
 
@@ -755,6 +756,7 @@ GMEVENT* EVENT_FSND_ResetBGM( GAMESYS_WORK* gameSystem, u16 fadeOutFrame )
 
   // イベントワークを初期化
   work = GMEVENT_GetEventWork( event );
+  work->gameSystem   = gameSystem;
   work->fieldSound   = GAMEDATA_GetFieldSound( gdata );
   work->fadeOutFrame = fadeOutFrame;
 
