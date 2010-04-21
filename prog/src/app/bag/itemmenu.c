@@ -279,6 +279,7 @@ static BMPMENULIST_HEADER _itemMenuListHeader = {
 //-----------------------------------------------------------------------------
 static void _windowCreate(FIELD_ITEMMENU_WORK* pWork)
 {
+	pWork->oamlistpos_old = 0xffff;
   _windowRewrite(pWork);
 }
 
@@ -305,7 +306,9 @@ static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork)
 
   ITEMDISP_CellMessagePrint(pWork);
   BTN_DrawCheckBox( pWork );
-  pWork->bChange = TRUE;
+//  pWork->bChange = TRUE;
+	pWork->bCursorChange = 1;
+//	pWork->bCellChange = 1;
 }
 
 //------------------------------------------------------------------------------
@@ -893,6 +896,7 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
     pWork->moveMode = FALSE;
     KTST_SetDraw( pWork, TRUE );
 //    _CHANGE_STATE( pWork, _itemMoveCancel );
+		pWork->oamlistpos_old = 0xffff;
     _windowRewrite( pWork );
     SetEndButtonAnime( pWork, BAR_ICON_RETURN, _itemMoveCancel );
     _CHANGE_STATE( pWork, _endButtonAnime );
@@ -915,17 +919,20 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
   if( _itemScrollCheck(pWork) ){
     new_pos = ITEMMENU_GetItemIndex( pWork );
     _ItemChange( pWork, now_pos, new_pos );
+		pWork->oamlistpos_old = 0xffff;
     _windowRewrite( pWork );
   // リストタッチ操作
   }else if( _itemMovePositionTouchItem(pWork) ){
     pWork->moveDrag = TRUE;
     ITEMDISP_ScrollCursorChangePos( pWork );
     PMSND_PlaySE( SE_BAG_SLIDE );
+		pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
   // キー操作
   }else if( _keyChangeItemCheck(pWork) ){ 
     ITEMDISP_ScrollCursorChangePos( pWork );
     PMSND_PlaySE( SE_BAG_SLIDE );
+		pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
   }
 }
@@ -1710,7 +1717,7 @@ static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork)
 static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 {
   u32 ret=0;
-  BOOL bChange=FALSE;
+//  BOOL bChange=FALSE;
 
   // スクロール中フラグクリア
   if( GFL_UI_TP_GetCont() == FALSE ){
@@ -1763,6 +1770,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS ){
       SORT_Button( pWork );
       KTST_SetDraw( pWork, TRUE );
+			pWork->oamlistpos_old = 0xffff;
       _windowRewrite(pWork);
       _CHANGE_STATE( pWork, _sortMessageSet );
       return;
@@ -1808,14 +1816,19 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // タッチスクロール
   else if( _itemScrollCheck(pWork) )
   {
-    bChange = TRUE;
+//    bChange = TRUE;
+		pWork->oamlistpos_old = 0xffff;
+    _windowRewrite(pWork);
+		return;
   }
   // キー操作
   else if( _keyMoveCheck(pWork) )
   {
     ITEMDISP_ScrollCursorChangePos( pWork );
     PMSND_PlaySE( SE_BAG_SLIDE );
-    bChange = TRUE;
+//    bChange = TRUE;
+    _windowRewrite(pWork);
+		return;
   }
 
   {
@@ -1852,10 +1865,11 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     }
 */
   }
-
+/*
   if(bChange){
     _windowRewrite(pWork);
   }
+*/
 }
 
 //=============================================================================
@@ -1997,6 +2011,7 @@ static void _itemTrashEndWait(FIELD_ITEMMENU_WORK* pWork)
   {
     // 再描画
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+		pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
 
 //    InputNum_ButtonState( pWork, TRUE );
@@ -2369,6 +2384,7 @@ static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
           ITEMDISP_GoldDispWrite( pWork );
 
           // 再描画
+					pWork->oamlistpos_old = 0xffff;
           _windowRewrite(pWork);
 
           // 「○○○を　わたして XXXXXX円 うけとった」
@@ -2475,7 +2491,9 @@ static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, int sub_num )
       HOSAKA_Printf("pre oamlistpos=%d\n", pWork->oamlistpos);
       // リストを下げる
       pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
-      pWork->bChange = TRUE;
+//      pWork->bChange = TRUE;
+			pWork->bCursorChange = 1;
+//			pWork->bCellChange = 1;
       
       HOSAKA_Printf("oamlistpos=%d\n", pWork->oamlistpos);
     }
@@ -2929,6 +2947,7 @@ static void SORT_Main( FIELD_ITEMMENU_WORK* pWork )
 {
   SORT_Type( pWork );
   // 再描画
+	pWork->oamlistpos_old = 0xffff;
   _windowRewrite( pWork );
 }
 
@@ -3058,6 +3077,7 @@ static void SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos )
 
     PMSND_PlaySE( SE_BAG_REGIST_Y ); // 登録音
 
+		pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
   }
 }
@@ -3552,6 +3572,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS ){
       SORT_Button( pWork );
       KTST_SetDraw( pWork, FALSE );
+			pWork->oamlistpos_old = 0xffff;
       _windowRewrite(pWork);
       _CHANGE_STATE( pWork, _sortMessageSet );
     }
@@ -3559,6 +3580,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
   }else if(BUTTONID_CHECKBOX == bttnid){
     SHORTCUT_SetPocket( pWork );
     KTST_SetDraw( pWork, FALSE );
+		pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
   // 終了ボタン
   }else if(BUTTONID_EXIT == bttnid){
@@ -3599,6 +3621,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 
       // タッチ通知
       KTST_SetDraw( pWork, FALSE ); 
+			pWork->oamlistpos_old = 0xffff;
       _windowRewrite(pWork);
 
       // 上画面表示
@@ -3623,6 +3646,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     SORT_ModeReset( pWork );
 
     KTST_SetDraw( pWork, FALSE );
+		pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
   }
 }
@@ -3652,13 +3676,14 @@ static void _VBlank( GFL_TCB *tcb, void *work )
 
   GFL_CLACT_SYS_VBlankFunc(); //セルアクターVBlank
 
+/*
   // セルリスト更新
   if(pWork->bChange)
   {
     ITEMDISP_CellVramTrans(pWork);
     pWork->bChange = FALSE;
   }
-
+*/
 }
 
 
@@ -3850,11 +3875,33 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
   }
 */
 
+	pWork->oamlistpos_old = pWork->oamlistpos;
+
   state(pWork);
   _dispMain(pWork);
 //  SORT_Draw(pWork);
 
-  PRINTSYS_QUE_Main(pWork->SysMsgQue);
+  // セルリスト更新
+/*
+  if(pWork->bChange)
+  {
+    ITEMDISP_CellVramTrans(pWork);
+    pWork->bChange = FALSE;
+  }
+*/
+	// カーソル位置変更
+	if( pWork->bCursorChange ){
+		ITEMDISP_CangeCursorPos( pWork );
+		pWork->bCursorChange = 0;
+	}
+	// リスト転送
+	if( pWork->bCellChange ){
+		ITEMDISP_CellVramTrans( pWork );
+		pWork->bCellChange = 0;
+	}
+
+//  PRINTSYS_QUE_Main(pWork->SysMsgQue);
+	ITEMDISP_PrintUtilTrans( pWork );
 
   GFL_TCBL_Main( pWork->pMsgTcblSys );
 
@@ -3905,13 +3952,13 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
 
   ITEMDISP_BarMessageDelete( pWork );
 
-  if(pWork->itemInfoDispWin){
+  if(pWork->itemInfoDispWin.win){
 
     GFL_BG_FreeCharacterArea(GFL_BG_FRAME3_M,
                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
                              GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
 
-    GFL_BMPWIN_Delete(pWork->itemInfoDispWin);
+    GFL_BMPWIN_Delete(pWork->itemInfoDispWin.win);
   }
 
   GFL_BG_FillCharacterRelease(GFL_BG_FRAME3_M,1,0);
@@ -4191,6 +4238,7 @@ static void _sortMessageWait( FIELD_ITEMMENU_WORK * wk )
     return;
   }
 
+	wk->oamlistpos_old = 0xffff;
   _windowRewrite( wk );
   ITEMDISP_ListPlateClear( wk );
   GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkScroll, TRUE );
@@ -4224,6 +4272,7 @@ static void _itemPocketChange( FIELD_ITEMMENU_WORK * wk )
   // ソートボタン表示切替
   SORT_ModeReset( wk );
   BTN_DrawCheckBox( wk );
+	wk->oamlistpos_old = 0xffff;
   _windowRewrite( wk );
 
   wk->tmpCnt = 0;

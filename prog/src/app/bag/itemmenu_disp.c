@@ -135,6 +135,9 @@ static void _itemiconDelete( FIELD_ITEMMENU_WORK * pWork );
 static void _itemiconAnim(FIELD_ITEMMENU_WORK* pWork,int itemid);
 static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork );
 
+static void PrintStr( FIELD_ITEMMENU_WORK * wk, PRINT_UTIL * util, const STRBUF * str, u16 x, u16 y, PRINTSYS_LSB color );
+static void PrintScreenTrans( PRINT_UTIL * util );
+
 
 //------------------------------------------------------------------------------
 /**
@@ -688,6 +691,101 @@ void ITEMDISP_ItemInfoVanishSet( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 //------------------------------------------------------------------------------
 void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
+	ITEM_ST * item;
+	int wazano;
+	u32	i;
+
+	// 技マシンのアイコンを全て非表示に
+	for( i=0; i<WAZA_KIND_MAX; i++ ){
+		GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind[i], FALSE );
+	}
+	for( i=0; i<WAZA_TYPE_MAX; i++ ){
+		GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[i], FALSE );
+	}
+
+	item = ITEMMENU_GetItem( pWork, ITEMMENU_GetItemIndex(pWork) );
+
+	if( item == NULL || item->id == ITEM_DUMMY_DATA ){
+		ITEMDISP_ItemInfoVanishSet( pWork, FALSE );
+		return;
+	}
+
+	ITEMDISP_ItemInfoVanishSet( pWork, TRUE );
+
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(pWork->winItemName.win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(pWork->winItemNum.win), 0 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(pWork->winItemReport.win), 0 );
+
+	// わざマシンNOを取得
+	wazano = ITEM_GetWazaNo( item->id );
+
+	// 技マシン以外
+	if( wazano == WAZANO_NULL ){
+    // アイテム名
+    GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR005, pWork->pStrBuf );
+    ITEMMENU_WordsetItemName( pWork, 0, item->id);
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
+		PrintStr( pWork, &pWork->winItemName, pWork->pExpStrBuf, 0, _UP_ITEMNAME_DOTOFS_Y, PRINTSYS_LSB_Make(15,14,0) );
+
+    //「×」
+    GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
+
+    WORDSET_RegisterNumber(pWork->WordSet, 0, item->no,
+                           3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemNum), 0, _UP_ITEMNUM_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
+		PrintStr( pWork, &pWork->winItemNum, pWork->pExpStrBuf, 0, _UP_ITEMNUM_DOTOFS_Y, PRINTSYS_LSB_Make(15,14,0) );
+
+		GFL_BMPWIN_ClearScreen( pWork->winWaza.win );			// 技マシン用の表示データクリア
+
+	// 技マシン
+	}else{
+    // わざマシン名
+		u8	hiden = ITEM_GetHidenMashineNo( item->id );
+		if( hiden == 0xff ){
+	    GFL_MSG_GetString( pWork->MsgManager, msg_bag_086, pWork->pStrBuf );
+	    WORDSET_RegisterNumber(
+				pWork->WordSet, 0, ITEM_GetWazaMashineNo(item->id)+1, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
+		}else{
+	    GFL_MSG_GetString( pWork->MsgManager, msg_bag_088, pWork->pStrBuf );
+	    WORDSET_RegisterNumber( pWork->WordSet, 0, hiden+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+		}
+    WORDSET_RegisterWazaName(pWork->WordSet, 1, wazano);
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
+		PrintStr( pWork, &pWork->winItemName, pWork->pExpStrBuf, 0, _UP_ITEMNAME_DOTOFS_Y, PRINTSYS_LSB_Make(15,14,0) );
+
+	  ITEMDISP_WazaInfoWindowChange( pWork, wazano );
+  }
+
+  // アイテムの説明文
+//  GFL_MSG_GetString(  pWork->MsgManagerItemInfo, item->id, pWork->pStrBuf );
+	ITEM_GetInfo( pWork->pStrBuf, item->id, pWork->heapID );
+//  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemReport), 0, 4, pWork->pStrBuf, pWork->fontHandle);
+	PrintStr( pWork, &pWork->winItemReport, pWork->pStrBuf, 0, 4, PRINTSYS_LSB_Make(15,14,0) );
+
+	PrintScreenTrans( &pWork->winItemName );
+	PrintScreenTrans( &pWork->winItemNum );
+	PrintScreenTrans( &pWork->winItemReport );
+
+  // キャラ転送
+//  GFL_BMPWIN_TransVramCharacter(pWork->winItemName);
+//  GFL_BMPWIN_TransVramCharacter(pWork->winItemNum);
+//  GFL_BMPWIN_TransVramCharacter(pWork->winItemReport);
+
+  // アイテムアイコン アニメーション
+  _itemiconAnim(pWork, item->id);
+
+//  GFL_BG_LoadScreenV_Req( ITEMREPORT_FRAME );
+
+
+
+
+
+
+
+/*
   int length;
   int itemIndex;
   int wazano;
@@ -724,12 +822,12 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 	ITEMDISP_ItemInfoVanishSet( pWork, TRUE );
 
   // メッセージのCGXを消去
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemName), 0 );
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemNum), 0 );
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemReport), 0 );
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemName.win), 0 );
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemNum.win), 0 );
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemReport.win), 0 );
 
   // 文字色設定
-  GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
+//  GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
 
   // わざマシンNOを取得
   wazano = ITEM_GetWazaNo( item->id );
@@ -741,7 +839,8 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
     GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR005, pWork->pStrBuf );
     ITEMMENU_WordsetItemName( pWork, 0, item->id);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
+		PrintStr( pWork, &pWork->winItemName, pWork->pExpStrBuf, 0, _UP_ITEMNAME_DOTOFS_Y, PRINTSYS_LSB_Make(15,14,0) );
 
     //「×」
     GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
@@ -749,7 +848,8 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
     WORDSET_RegisterNumber(pWork->WordSet, 0, item->no,
                            3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemNum), 0, _UP_ITEMNUM_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemNum), 0, _UP_ITEMNUM_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
+		PrintStr( pWork, &pWork->winItemNum, pWork->pExpStrBuf, 0, _UP_ITEMNUM_DOTOFS_Y, PRINTSYS_LSB_Make(15,14,0) );
   }
   else
   {
@@ -765,23 +865,26 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 		}
     WORDSET_RegisterWazaName(pWork->WordSet, 1, wazano);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
+		PrintStr( pWork, &pWork->winItemName, pWork->pExpStrBuf, 0, _UP_ITEMNAME_DOTOFS_Y, PRINTSYS_LSB_Make(15,14,0) );
   }
 
   // アイテムの説明文
 //  GFL_MSG_GetString(  pWork->MsgManagerItemInfo, item->id, pWork->pStrBuf );
 	ITEM_GetInfo( pWork->pStrBuf, item->id, pWork->heapID );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemReport), 0, 4, pWork->pStrBuf, pWork->fontHandle);
+//  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemReport), 0, 4, pWork->pStrBuf, pWork->fontHandle);
+	PrintStr( pWork, &pWork->winItemReport, pWork->pStrBuf, 0, 4, PRINTSYS_LSB_Make(15,14,0) );
 
   // キャラ転送
-  GFL_BMPWIN_TransVramCharacter(pWork->winItemName);
-  GFL_BMPWIN_TransVramCharacter(pWork->winItemNum);
-  GFL_BMPWIN_TransVramCharacter(pWork->winItemReport);
+//  GFL_BMPWIN_TransVramCharacter(pWork->winItemName);
+//  GFL_BMPWIN_TransVramCharacter(pWork->winItemNum);
+//  GFL_BMPWIN_TransVramCharacter(pWork->winItemReport);
 
   // アイテムアイコン アニメーション
   _itemiconAnim(pWork, item->id);
 
   GFL_BG_LoadScreenV_Req( ITEMREPORT_FRAME );
+*/
 }
 
 //-----------------------------------------------------------------------------
@@ -798,7 +901,7 @@ void ITEMDISP_upMessageClean(FIELD_ITEMMENU_WORK* pWork)
 	ITEMDISP_ItemInfoVanishSet( pWork, FALSE );
     
   // わざマシン用の説明文を非表示
-  GFL_BMPWIN_ClearScreen(pWork->winWaza);
+  GFL_BMPWIN_ClearScreen(pWork->winWaza.win);
 
   // ワザマシン用アイコンも非表示
 	for( i=0; i<WAZA_KIND_MAX; i++ ){
@@ -821,21 +924,21 @@ void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork)
 {
   int i;
 
-  GFL_BMPWIN_ClearScreen(pWork->winItemName);
-  GFL_BMPWIN_ClearScreen(pWork->winItemNum);
-  GFL_BMPWIN_ClearScreen(pWork->winItemReport);
+//  GFL_BMPWIN_ClearScreen(pWork->winItemName.win);
+//  GFL_BMPWIN_ClearScreen(pWork->winItemNum.win);
+//  GFL_BMPWIN_ClearScreen(pWork->winItemReport.win);
 
-  GFL_BG_LoadScreenV_Req(ITEMREPORT_FRAME);
+//  GFL_BG_LoadScreenV_Req(ITEMREPORT_FRAME);
 
-  GFL_BMPWIN_Delete(pWork->winItemName);
-  GFL_BMPWIN_Delete(pWork->winItemReport);
-  GFL_BMPWIN_Delete(pWork->winItemNum);
-  GFL_BMPWIN_Delete(pWork->winWaza);
+  GFL_BMPWIN_Delete(pWork->winItemName.win);
+  GFL_BMPWIN_Delete(pWork->winItemReport.win);
+  GFL_BMPWIN_Delete(pWork->winItemNum.win);
+  GFL_BMPWIN_Delete(pWork->winWaza.win);
 
   //@TODO 下画面
-  GFL_BMPWIN_Delete(pWork->winNumFrame);
-  GFL_BMPWIN_Delete(pWork->winSellGold);
-  GFL_BMPWIN_Delete(pWork->winPocketNone);
+  GFL_BMPWIN_Delete(pWork->winNumFrame.win);
+  GFL_BMPWIN_Delete(pWork->winSellGold.win);
+  GFL_BMPWIN_Delete(pWork->winPocketNone.win);
 
   GFL_CLACT_WK_Remove( pWork->clwkScroll );
 
@@ -869,19 +972,21 @@ static void _bmpwinPocketNoneMake(FIELD_ITEMMENU_WORK* pWork )
   GF_ASSERT( pWork->pStrBuf );
 
   GFL_MSG_GetString(  pWork->MsgManager, msg_bag_item_none, pWork->pStrBuf );
-  
+/*
   GFL_FONTSYS_SetColor( 0xf, 0xe, 0 ); // カラー指定
   PRINTSYS_Print( GFL_BMPWIN_GetBmp( pWork->winPocketNone),
       _WIN_POCKETNONE_POSX, _WIN_POCKETNONE_POSY,
       pWork->pStrBuf, pWork->fontHandle );
+*/
+	PrintStr( pWork, &pWork->winPocketNone, pWork->pStrBuf, _WIN_POCKETNONE_POSX, _WIN_POCKETNONE_POSY, PRINTSYS_LSB_Make(15,14,0) );
 
-  GFL_BMPWIN_TransVramCharacter( pWork->winPocketNone );
+//  GFL_BMPWIN_TransVramCharacter( pWork->winPocketNone );
 }
 
 void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
 {
   // 下画面
-  pWork->winPocketNone = GFL_BMPWIN_Create(
+  pWork->winPocketNone.win = GFL_BMPWIN_Create(
       GFL_BG_FRAME3_M,
       _WIN_POCKETNONE_INITX, _WIN_POCKETNONE_INITY,
       _WIN_POCKETNONE_SIZEX, _WIN_POCKETNONE_SIZEY,
@@ -889,49 +994,49 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
 
   // キャラクタを作っておく
   _bmpwinPocketNoneMake( pWork );
-  GFL_BMPWIN_ClearScreen( pWork->winPocketNone );
+  GFL_BMPWIN_ClearScreen( pWork->winPocketNone.win );
 
-  pWork->winNumFrame = GFL_BMPWIN_Create(
+  pWork->winNumFrame.win = GFL_BMPWIN_Create(
       GFL_BG_FRAME3_M,
       _WINNUM_INITX, _WINNUM_INITY,
       _WINNUM_SIZEX, _WINNUM_SIZEY,
       _WINNUM_PAL, GFL_BMP_CHRAREA_GET_B );
 
-  pWork->winSellGold = GFL_BMPWIN_Create(
+  pWork->winSellGold.win = GFL_BMPWIN_Create(
     GFL_BG_FRAME3_M,
     _SELL_GOLD_DISP_INITX, _SELL_GOLD_DISP_INITY,
     _SELL_GOLD_DISP_SIZEX, _SELL_GOLD_DISP_SIZEY,
     _WINNUM_PAL, GFL_BMP_CHRAREA_GET_B );
 
   // 上画面
-  pWork->winWaza= GFL_BMPWIN_Create(
+  pWork->winWaza.win = GFL_BMPWIN_Create(
     ITEMREPORT_FRAME,
     0, 19,
     32, 5,
     _SUBBUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
-  pWork->winItemName = GFL_BMPWIN_Create(
+  pWork->winItemName.win = GFL_BMPWIN_Create(
     ITEMREPORT_FRAME,
     _UP_ITEMNAME_INITX, _UP_ITEMNAME_INITY,
     _UP_ITEMNAME_SIZEX, _UP_ITEMNAME_SIZEY,
     _SUBBUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
-  pWork->winItemNum = GFL_BMPWIN_Create(
+  pWork->winItemNum.win = GFL_BMPWIN_Create(
     ITEMREPORT_FRAME,
     _UP_ITEMNUM_INITX, _UP_ITEMNUM_INITY,
     _UP_ITEMNUM_SIZEX, _UP_ITEMNUM_SIZEY,
     _SUBBUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
-  pWork->winItemReport = GFL_BMPWIN_Create(
+  pWork->winItemReport.win = GFL_BMPWIN_Create(
     ITEMREPORT_FRAME,
     _UP_ITEMREPORT_INITX, _UP_ITEMREPORT_INITY,
     _UP_ITEMREPORT_SIZEX, _UP_ITEMREPORT_SIZEY,
     _SUBBUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
-  GFL_BMPWIN_MakeScreen( pWork->winItemName );
-  GFL_BMPWIN_MakeScreen( pWork->winItemNum );
-  GFL_BMPWIN_MakeScreen( pWork->winItemReport );
-  GFL_BMPWIN_MakeScreen( pWork->winWaza );
+  GFL_BMPWIN_MakeScreen( pWork->winItemName.win );
+  GFL_BMPWIN_MakeScreen( pWork->winItemNum.win );
+  GFL_BMPWIN_MakeScreen( pWork->winItemReport.win );
+  GFL_BMPWIN_MakeScreen( pWork->winWaza.win );
 
   {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_ITEMICON, pWork->heapID );
@@ -946,19 +1051,24 @@ void ITEMDISP_upMessageCreate(FIELD_ITEMMENU_WORK* pWork)
 	// 技マシンのデフォルト文字列描画
   // タイプ
   GFL_MSG_GetString( pWork->MsgManager, mes_bag_107, pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winWaza), 8, 4, pWork->pStrBuf, pWork->fontHandle );
+//  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winWaza), 8, 4, pWork->pStrBuf, pWork->fontHandle );
+	PrintStr( pWork, &pWork->winWaza, pWork->pStrBuf, 8, 4, PRINTSYS_LSB_Make(15,14,0) );
   // ぶんるい
   GFL_MSG_GetString( pWork->MsgManager, mes_bag_098, pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winWaza), 8, 24, pWork->pStrBuf, pWork->fontHandle );
+//  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winWaza), 8, 24, pWork->pStrBuf, pWork->fontHandle );
+	PrintStr( pWork, &pWork->winWaza, pWork->pStrBuf, 8, 24, PRINTSYS_LSB_Make(15,14,0) );
   // 威力
   GFL_MSG_GetString( pWork->MsgManager, mes_bag_096, pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winWaza), 8*14, 4, pWork->pStrBuf, pWork->fontHandle );
+//  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winWaza), 8*14, 4, pWork->pStrBuf, pWork->fontHandle );
+	PrintStr( pWork, &pWork->winWaza, pWork->pStrBuf, 8*14, 4, PRINTSYS_LSB_Make(15,14,0) );
   // 命中
   GFL_MSG_GetString( pWork->MsgManager, mes_bag_097, pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winWaza), 8*14, 24, pWork->pStrBuf, pWork->fontHandle );
+//  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winWaza), 8*14, 24, pWork->pStrBuf, pWork->fontHandle );
+	PrintStr( pWork, &pWork->winWaza, pWork->pStrBuf, 8*14, 24, PRINTSYS_LSB_Make(15,14,0) );
   // PP
   GFL_MSG_GetString( pWork->MsgManager, mes_bag_095, pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winWaza), 26*8, 4, pWork->pStrBuf, pWork->fontHandle );
+//  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winWaza), 26*8, 4, pWork->pStrBuf, pWork->fontHandle );
+	PrintStr( pWork, &pWork->winWaza, pWork->pStrBuf, 26*8, 4, PRINTSYS_LSB_Make(15,14,0) );
 
   // キー操作時のみ、上画面を更新
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY )
@@ -1108,9 +1218,9 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
   // 男女でウィンドウカーソル用パレットを切替
   // OAMリストの項目に使用。
   {
-    u32 sex = MyStatus_GetMySex( pWork->mystatus );
+		u32 sex = MyStatus_GetMySex( pWork->mystatus );
     u32 res_nclr;
-
+/*
      if( sex == PTL_SEX_MALE )
      {
        res_nclr = NARC_bag_bag_win01_d_man_NCLR;
@@ -1119,8 +1229,10 @@ void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork )
      {
        res_nclr = NARC_bag_bag_win01_d_NCLR;
      }
+*/
+		res_nclr = NARC_bag_bag_win01_d_NCLR;
 
-     pWork->cellRes[_PLT_LIST] = GFL_CLGRP_PLTT_RegisterEx(
+    pWork->cellRes[_PLT_LIST] = GFL_CLGRP_PLTT_RegisterEx(
 																	archandle, res_nclr, CLSYS_DRAW_MAIN,
 																	_PAL_WIN01_CELL*0x20, 0, _PAL_WIN01_CELL_NUM, pWork->heapID );
   }
@@ -1253,15 +1365,15 @@ static BOOL CheckFieldWazaMachine( u16 item )
 {
 	if( ITEM_CheckWazaMachine( item ) == TRUE ){
 		switch( ITEM_GetWazaNo(item) ){
-		case WAZANO_ANAWOHORU:		// あなをほる
-		case WAZANO_HURASSYU:			// フラッシュ
+//		case WAZANO_ANAWOHORU:		// あなをほる
+//		case WAZANO_HURASSYU:			// フラッシュ
 		case WAZANO_IAIGIRI:			// いあいぎり
 		case WAZANO_KAIRIKI:			// かいりき
 		case WAZANO_NAMINORI:			// なみのり
 		case WAZANO_SORAWOTOBU:		// そらをとぶ
 		case WAZANO_DAIBINGU:			// ダイビング
 		case WAZANO_TAKINOBORI:		// たきのぼり
-		case WAZANO_IWAKUDAKI:		// いわくだき
+//		case WAZANO_IWAKUDAKI:		// いわくだき
 			return TRUE;
 		}
 	}
@@ -1289,6 +1401,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
   // ポケット内のアイテムが0個の時
   length = ITEMMENU_GetItemPocketNumber( pWork );
 
+/*
   // スクロールバー表示切替
   if( length < ITEMMENU_SCROLLBAR_ENABLE_NUM )
   {
@@ -1303,17 +1416,23 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 //      void* adrs = GFL_BG_GetScreenBufferAdrs( GFL_BG_FRAME0_M );
     }
   }
+*/
 
   if( length == 0 )
   {
     // 「なにもありません」表示
-    GFL_BMPWIN_MakeTransWindow( pWork->winPocketNone );
+//    GFL_BMPWIN_MakeTransWindow( pWork->winPocketNone );
+		PrintScreenTrans( &pWork->winPocketNone );
+		return;
   }
   else
   {
     // 「なにもありません」非表示
-    GFL_BMPWIN_ClearTransWindow( pWork->winPocketNone );
+    GFL_BMPWIN_ClearTransWindow( pWork->winPocketNone.win );
+//		PrintScreenTrans( &pWork->winPocketNone );
   }
+
+	if( pWork->oamlistpos_old == pWork->oamlistpos ){ return; }
 
 	// リスト表示
 	for( i=0; i<ITEM_LIST_NUM; i++ ){
@@ -1331,6 +1450,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
     {
       void * itemdata;
 			s32	type;
+			PRINTSYS_LSB color;
 
       //@TODO ページ切替時にロードするようにすれば、負荷が軽減される
       itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
@@ -1339,16 +1459,20 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 			// 文字色指定。枠の外はグラデ
 			if( color_tbl[i] == 0 ){
 				if( CheckFieldWazaMachine( item->id ) == TRUE ){
-					GFL_FONTSYS_SetColor( 6, 5, 13 );
+//					GFL_FONTSYS_SetColor( 6, 5, 13 );
+					color = PRINTSYS_LSB_Make(6,5,13);
 				}else{
-					GFL_FONTSYS_SetColor( 2, 1, 13 );
+//					GFL_FONTSYS_SetColor( 2, 1, 13 );
+					color = PRINTSYS_LSB_Make(2,1,13);
 				}
 			// 画面端はカラーフェード
 			}else{
 				if( CheckFieldWazaMachine( item->id ) == TRUE ){
-					GFL_FONTSYS_SetColor( 8, 7, 13 );
+//					GFL_FONTSYS_SetColor( 8, 7, 13 );
+					color = PRINTSYS_LSB_Make(8,7,13);
 				}else{
-					GFL_FONTSYS_SetColor( 4, 3, 13 );
+//					GFL_FONTSYS_SetColor( 4, 3, 13 );
+					color = PRINTSYS_LSB_Make(4,3,13);
 				}
 			}
 
@@ -1363,7 +1487,8 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
 				}
 			}
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-      PRINTSYS_Print( pWork->listBmp[i], 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+      PRINTSYS_PrintColor( pWork->listBmp[i], 0, 0, pWork->pExpStrBuf, pWork->fontHandle, color );
+//			PrintStr( pWork, &pWork->listBmp[i], pWork->pExpStrBuf, 0, 0, color );
 
 			// ボール
 			if( type == ITEMTYPE_BALL	){
@@ -1393,7 +1518,97 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
       GFL_HEAP_FreeMemory( itemdata );
     }
   }
+
+	pWork->bCellChange = 1;
 }
+
+/*
+void ITEMDISP_CellMessageScroll( FIELD_ITEMMENU_WORK * wk, int mv )
+{
+	GFL_BMP_DATA * bmp;
+	ITEM_ST * item;
+	u16	ap, wp;
+	u32	i;
+      void * itemdata;
+			s32	type;
+
+	if( mv < 0 ){
+		ap = 0;
+		wp = ITEM_LIST_NUM-1;
+
+		bmp = wk->listBmp[wp];
+
+		for( i=ITEM_LIST_NUM-1; i>0; i-- ){
+			wk->listBmp[i] = wk->listBmp[i-1];
+			wk->nListEnable[i] = wk->nListEnable[i-1];
+		}
+
+		wk->listBmp[ap] = bmp;
+		wk->nListEnable[ap] = 0;
+
+	}else{
+		ap = ITEM_LIST_NUM-1;
+		wp = 0;
+
+		bmp = wk->listBmp[wp];
+
+		for( i=0; i<ITEM_LIST_NUM-1; i++ ){
+			wk->listBmp[i] = wk->listBmp[i+1];
+			wk->nListEnable[i] = wk->nListEnable[i+1];
+		}
+
+		wk->listBmp[ap] = bmp;
+		wk->nListEnable[ap] = 0;
+	}
+
+
+	item = ITEMMENU_GetItem( wk, wk->oamlistpos+ap );
+  itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, wk->heapID );
+	type = ITEM_GetBufParam( itemdata, ITEM_PRM_ITEM_TYPE );
+
+	if( !( item == NULL || item->id == ITEM_DUMMY_DATA ) ){
+//		wk->listBmp[ap] = 
+//					color = PRINTSYS_LSB_Make(2,1,13);
+		GFL_BMP_Clear(wk->listBmp[ap], 13 );
+		GFL_MSG_GetString( wk->MsgManager, MSG_ITEM_STR001, wk->pStrBuf );
+    ITEMMENU_WordsetItemName( wk, 0, item->id );
+		WORDSET_ExpandStr( wk->WordSet, wk->pExpStrBuf, wk->pStrBuf  );
+		PRINTSYS_PrintColor( wk->listBmp[ap], 0, 0, wk->pExpStrBuf, wk->fontHandle, PRINTSYS_LSB_Make(2,1,13) );
+
+
+			// ボール
+			if( type == ITEMTYPE_BALL	){
+				wk->nListEnable[ap] = 4;
+			// メール
+			}else if( type == ITEMTYPE_MAIL ){
+				wk->nListEnable[ap] = 5;
+			// 装備
+			}else if( type == ITEMTYPE_EQUIP ){
+				wk->nListEnable[ap] = 6;
+			// 秘伝マシン
+			}else if( ITEM_GetHidenMashineNo( item->id ) != 0xff ){
+				wk->nListEnable[ap] = 8;
+			// 技マシン
+			}else if( ITEM_GetWazaMashineNo( item->id ) != 0xff ){
+				wk->nListEnable[ap] = 7;
+			// 登録できない
+			}else if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) == 0 ){
+				wk->nListEnable[ap] = 3;
+			// 登録されていない
+			}else if( ITEMMENU_GetPosCnvButtonItem(wk,item->id) == -1 ){
+				wk->nListEnable[ap] = 2;
+			// その他
+			}else{
+				wk->nListEnable[ap] = 1;
+			}
+      GFL_HEAP_FreeMemory( itemdata );
+
+
+	}
+}
+*/
+
+
 
 
 //-----------------------------------------------------------------------------
@@ -1405,9 +1620,8 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
  *  @retval
  */
 //-----------------------------------------------------------------------------
-void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
+void ITEMDISP_CangeCursorPos( FIELD_ITEMMENU_WORK* pWork )
 {
-  int i;
 
 //  u32 dest = GFL_CLGRP_CGR_GetAddr( pWork->listRes[0], CLSYS_DRAW_MAIN);
 
@@ -1452,6 +1666,11 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
     GFL_CLACT_WK_SetAnmIndex( pWork->clwkCur, 0 );
     GFL_CLACT_WK_SetAnmIndex( pWork->clwkScroll, 0 );
   }
+}
+
+void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
+{
+  int i;
 
   // リストOAM生成＆描画
   for(i = 0; i< ITEM_LIST_NUM ; i++)
@@ -1464,20 +1683,14 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
 
     // 転送回数を減らせれば高速化できそうだが……
 #if 1
-    dest_adrs += (8)*32;
-    GX_LoadOBJ(&charbuff[8*32], dest_adrs, (32*4));
-    dest_adrs += (4)*32;
-    GX_LoadOBJ(&charbuff[(20*32)], dest_adrs, (32*4));
-
-    dest_adrs += (12)*32;
-    GX_LoadOBJ(&charbuff[4*32], dest_adrs, (32*4));
-    dest_adrs += (4)*32;
-    GX_LoadOBJ(&charbuff[(16*32)], dest_adrs, (32*4));
-
-    dest_adrs += (12)*32;
-    GX_LoadOBJ(&charbuff[0*32], dest_adrs, (32*4));
-    dest_adrs += (4)*32;
-    GX_LoadOBJ(&charbuff[(12*32)], dest_adrs, (32*4));
+    dest_adrs += (4*32);
+    GX_LoadOBJ( &charbuff[8*32], dest_adrs, (32*4) );
+    dest_adrs += (4*32);
+    GX_LoadOBJ( &charbuff[20*32], dest_adrs, (32*4) );
+    dest_adrs += (16*32);
+    GX_LoadOBJ( &charbuff[0], dest_adrs, (32*8) );
+    dest_adrs += (8*32);
+    GX_LoadOBJ( &charbuff[12*32], dest_adrs, (32*8) );
 #endif
 
     if( pWork->nListEnable[i] != 0 ){
@@ -1731,10 +1944,10 @@ void ITEMDISP_ListPlateClear( FIELD_ITEMMENU_WORK* pWork )
   //  }
 
   //メッセージウインドのクリアも
-  GFL_BMPWIN_ClearScreen(pWork->itemInfoDispWin);
-  BmpWinFrame_Clear(pWork->itemInfoDispWin,WINDOW_TRANS_ON_V);
+//  GFL_BMPWIN_ClearScreen(pWork->itemInfoDispWin.win);
+  BmpWinFrame_Clear(pWork->itemInfoDispWin.win,WINDOW_TRANS_ON_V);
 
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
+//  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
 }
 
 
@@ -1850,10 +2063,67 @@ static void _wazaTypeDisp( FIELD_ITEMMENU_WORK *pWork ,int wazaNo)
  * @retval  none
  */
 //------------------------------------------------------------------------------
-
-void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
+void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork, int wazano )
 {
-  GFL_BMPWIN* pwin = pWork->winWaza;
+  PRINT_UTIL * pwin;
+  int ppnum;
+  int pow;
+  int hit;
+
+	pwin = &pWork->winWaza;
+
+	GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaKind[WAZADATA_GetDamageType(wazano)], TRUE );
+	GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[WAZADATA_GetType(wazano)], TRUE );
+
+  ppnum = WAZADATA_GetMaxPP(wazano, 0 );
+  pow = WAZADATA_GetParam( wazano, WAZAPARAM_POWER );
+  hit = WAZADATA_GetParam( wazano, WAZAPARAM_HITPER );
+
+	// パラメータ部分だけクリア
+	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(pwin->win), 22*8, 0, 4*8, 5*8, 0 );
+	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(pwin->win), 29*8, 0, 3*8, 3*8, 0 );
+
+	// 威力
+  if(pow==0){
+    GFL_MSG_GetString(  pWork->MsgManager, msg_bag_023, pWork->pStrBuf );
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 4, pWork->pStrBuf, pWork->fontHandle);
+		PrintStr( pWork, pwin, pWork->pStrBuf, 22*8, 4, PRINTSYS_LSB_Make(15,14,0) );
+  }
+  else{
+    //いりょくの桁数
+    GFL_MSG_GetString(  pWork->MsgManager, mes_bag_100, pWork->pStrBuf );
+    WORDSET_RegisterNumber(pWork->WordSet, 0, pow, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 4, pWork->pExpStrBuf, pWork->fontHandle);
+		PrintStr( pWork, pwin, pWork->pExpStrBuf, 22*8, 4, PRINTSYS_LSB_Make(15,14,0) );
+  }
+
+	// 命中
+  if(hit==0){
+    GFL_MSG_GetString(  pWork->MsgManager, msg_bag_023, pWork->pStrBuf );
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 24, pWork->pStrBuf, pWork->fontHandle);
+		PrintStr( pWork, pwin, pWork->pStrBuf, 22*8, 24, PRINTSYS_LSB_Make(15,14,0) );
+  }
+  else{
+    //めいちゅうの桁数
+    GFL_MSG_GetString(  pWork->MsgManager, mes_bag_100, pWork->pStrBuf );
+    WORDSET_RegisterNumber(pWork->WordSet, 0, hit, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 24, pWork->pExpStrBuf, pWork->fontHandle);
+		PrintStr( pWork, pwin, pWork->pExpStrBuf, 22*8, 24, PRINTSYS_LSB_Make(15,14,0) );
+  }
+
+  //PPの桁数
+  GFL_MSG_GetString(  pWork->MsgManager, mes_bag_099, pWork->pStrBuf );
+  WORDSET_RegisterNumber(pWork->WordSet, 0, ppnum, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+  WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
+//  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 29*8, 4, pWork->pExpStrBuf, pWork->fontHandle);
+	PrintStr( pWork, pwin, pWork->pExpStrBuf, 29*8, 4, PRINTSYS_LSB_Make(15,14,0) );
+
+	PrintScreenTrans( pwin );
+
+/*
+  PRINT_UTIL * pwin = &pWork->winWaza;
   ITEM_ST * item;
   int wazano;
   int ppnum;
@@ -1878,11 +2148,11 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
   if((item==NULL) || (item->id==ITEM_DUMMY_DATA) || wazano==WAZANO_NULL )
   {
     // わざマシン用の表示を非表示にして抜ける
-		GFL_BMPWIN_ClearScreen(pwin);
+		GFL_BMPWIN_ClearScreen( pwin->win );
 		return;
   }
   
-  GFL_BMPWIN_MakeScreen(pwin);
+//  GFL_BMPWIN_MakeScreen(pwin);
 
   ppnum = WAZADATA_GetMaxPP(wazano, 0);
   pow = WAZADATA_GetParam( wazano, WAZAPARAM_POWER );
@@ -1894,48 +2164,55 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
 	GFL_CLACT_WK_SetDrawEnable( pWork->clwkWazaType[WAZADATA_GetType(wazano)], TRUE );
 
   // カラー指定
-  GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
+//  GFL_FONTSYS_SetColor( 0xf, 0xe, 0 );
 
 	// パラメータ部分だけクリア
-	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(pwin), 22*8, 0, 4*8, 5*8, 0 );
-	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(pwin), 29*8, 0, 3*8, 3*8, 0 );
+	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(pwin->win), 22*8, 0, 4*8, 5*8, 0 );
+	GFL_BMP_Fill( GFL_BMPWIN_GetBmp(pwin->win), 29*8, 0, 3*8, 3*8, 0 );
 
 	// 威力
   if(pow==0){
     GFL_MSG_GetString(  pWork->MsgManager, msg_bag_023, pWork->pStrBuf );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 4, pWork->pStrBuf, pWork->fontHandle);
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 4, pWork->pStrBuf, pWork->fontHandle);
+		PrintStr( pWork, pwin, pWork->pStrBuf, 22*8, 4, PRINTSYS_LSB_Make(15,14,0) );
   }
   else{
     //いりょくの桁数
     GFL_MSG_GetString(  pWork->MsgManager, mes_bag_100, pWork->pStrBuf );
     WORDSET_RegisterNumber(pWork->WordSet, 0, pow, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 4, pWork->pExpStrBuf, pWork->fontHandle);
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 4, pWork->pExpStrBuf, pWork->fontHandle);
+		PrintStr( pWork, pwin, pWork->pExpStrBuf, 22*8, 4, PRINTSYS_LSB_Make(15,14,0) );
   }
 
 	// 命中
   if(hit==0){
     GFL_MSG_GetString(  pWork->MsgManager, msg_bag_023, pWork->pStrBuf );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 24, pWork->pStrBuf, pWork->fontHandle);
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 24, pWork->pStrBuf, pWork->fontHandle);
+		PrintStr( pWork, pwin, pWork->pStrBuf, 22*8, 24, PRINTSYS_LSB_Make(15,14,0) );
   }
   else{
     //めいちゅうの桁数
     GFL_MSG_GetString(  pWork->MsgManager, mes_bag_100, pWork->pStrBuf );
     WORDSET_RegisterNumber(pWork->WordSet, 0, hit, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 24, pWork->pExpStrBuf, pWork->fontHandle);
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 24, pWork->pExpStrBuf, pWork->fontHandle);
+		PrintStr( pWork, pwin, pWork->pExpStrBuf, 22*8, 24, PRINTSYS_LSB_Make(15,14,0) );
   }
 
   //PPの桁数
   GFL_MSG_GetString(  pWork->MsgManager, mes_bag_099, pWork->pStrBuf );
   WORDSET_RegisterNumber(pWork->WordSet, 0, ppnum, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 29*8, 4, pWork->pExpStrBuf, pWork->fontHandle);
+//  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 29*8, 4, pWork->pExpStrBuf, pWork->fontHandle);
+	PrintStr( pWork, pwin, pWork->pExpStrBuf, 29*8, 4, PRINTSYS_LSB_Make(15,14,0) );
+
+	PrintScreenTrans( pwin );
 
   // キャラクタ転送
-  GFL_BMPWIN_TransVramCharacter(pwin);
+//  GFL_BMPWIN_TransVramCharacter(pwin);
+*/
 }
-
 
 
 //-----------------------------------------------------------------------------
@@ -1947,34 +2224,36 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork )
 //-----------------------------------------------------------------------------
 void ITEMDISP_ItemInfoWindowDispEx( FIELD_ITEMMENU_WORK* pWork, BOOL is_stream )
 {
-  GFL_BMPWIN* pwin;
+  PRINT_UTIL * pwin;
 
-  if(pWork->itemInfoDispWin==NULL){
-    pWork->itemInfoDispWin = GFL_BMPWIN_Create(
+  if(pWork->itemInfoDispWin.win==NULL){
+    pWork->itemInfoDispWin.win = GFL_BMPWIN_Create(
       GFL_BG_FRAME3_M ,
       1 , 1, 30 ,4 ,
       _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
-  pwin = pWork->itemInfoDispWin;
+  pwin = &pWork->itemInfoDispWin;
 
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
-  GFL_FONTSYS_SetColor(1, 2, 15);
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin->win), 15);
+//  GFL_FONTSYS_SetColor(1, 2, 15);
 
   if( is_stream == TRUE )
   {
-    pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pExpStrBuf, pWork->fontHandle,
+    pWork->pStream = PRINTSYS_PrintStream(pwin->win ,0,0, pWork->pExpStrBuf, pWork->fontHandle,
                       MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
   }
   else
   {
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+		PrintStr( pWork, pwin, pWork->pExpStrBuf, 0, 0, PRINTSYS_LSB_Make(1,2,15) );
   }
 
-  BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
+  BmpWinFrame_Write( pwin->win, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
 
-  GFL_BMPWIN_TransVramCharacter(pwin);
-  GFL_BMPWIN_MakeScreen(pwin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
+//  GFL_BMPWIN_TransVramCharacter(pwin);
+//  GFL_BMPWIN_MakeScreen(pwin);
+//  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
+	PrintScreenTrans( pwin );
 
 }
 
@@ -2014,7 +2293,7 @@ BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork)
   if(pWork->pStream)
   {
     int state = PRINTSYS_PrintStreamGetState( pWork->pStream );
-    APP_KEYCURSOR_Main( pWork->MsgCursorWork, pWork->pStream, pWork->itemInfoDispWin );
+    APP_KEYCURSOR_Main( pWork->MsgCursorWork, pWork->pStream, pWork->itemInfoDispWin.win );
     switch(state)
     {
     case PRINTSTREAM_STATE_DONE: // 終了
@@ -2060,19 +2339,19 @@ BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork)
 //-----------------------------------------------------------------------------
 void ITEMDISP_BarMessageCreate( FIELD_ITEMMENU_WORK* pWork )
 {
-  pWork->pocketNameWin = GFL_BMPWIN_Create(
+  pWork->pocketNameWin.win = GFL_BMPWIN_Create(
     GFL_BG_FRAME2_M,
     _POCKETNAME_DISP_INITX, _POCKETNAME_DISP_INITY,
     _POCKETNAME_DISP_SIZEX, _POCKETNAME_DISP_SIZEY,
     _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
-  pWork->winGoldCap = GFL_BMPWIN_Create(
+  pWork->winGoldCap.win = GFL_BMPWIN_Create(
     GFL_BG_FRAME2_M,
     _GOLD_CAP_DISP_INITX, _GOLD_CAP_DISP_INITY,
     _GOLD_CAP_DISP_SIZEX, _GOLD_CAP_DISP_SIZEY,
     _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_B );
 
-  pWork->winGold = GFL_BMPWIN_Create(
+  pWork->winGold.win = GFL_BMPWIN_Create(
     GFL_BG_FRAME2_M,
     _GOLD_DISP_INITX, _GOLD_DISP_INITY,
     _GOLD_DISP_SIZEX, _GOLD_DISP_SIZEY,
@@ -2094,9 +2373,9 @@ void ITEMDISP_BarMessageCreate( FIELD_ITEMMENU_WORK* pWork )
 //-----------------------------------------------------------------------------
 void ITEMDISP_BarMessageDelete( FIELD_ITEMMENU_WORK* pWork )
 {
-  GFL_BMPWIN_Delete(pWork->pocketNameWin);
-  GFL_BMPWIN_Delete(pWork->winGold);
-  GFL_BMPWIN_Delete(pWork->winGoldCap);
+  GFL_BMPWIN_Delete(pWork->pocketNameWin.win);
+  GFL_BMPWIN_Delete(pWork->winGold.win);
+  GFL_BMPWIN_Delete(pWork->winGoldCap.win);
 }
 
 //------------------------------------------------------------------------------
@@ -2107,8 +2386,8 @@ void ITEMDISP_BarMessageDelete( FIELD_ITEMMENU_WORK* pWork )
 //------------------------------------------------------------------------------
 void ITEMDISP_PocketMessage(FIELD_ITEMMENU_WORK* pWork,int newpocket)
 {
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->pocketNameWin), 0 );
-  GFL_FONTSYS_SetColor( _POCKETNAME_FONT_PAL_L, _POCKETNAME_FONT_PAL_S, _POCKETNAME_FONT_PAL_B );
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->pocketNameWin.win), 0 );
+//  GFL_FONTSYS_SetColor( _POCKETNAME_FONT_PAL_L, _POCKETNAME_FONT_PAL_S, _POCKETNAME_FONT_PAL_B );
 //  GFL_MSG_GetString(pWork->MsgManagerPocket, msg_pocket_001+newpocket, pWork->pStrBuf );
 	GFL_MSG_GetString(  pWork->MsgManager, mes_bag_114, pWork->pStrBuf );
 	WORDSET_RegisterItemPocketName( pWork->WordSet, 0, newpocket );
@@ -2118,10 +2397,14 @@ void ITEMDISP_PocketMessage(FIELD_ITEMMENU_WORK* pWork,int newpocket)
     u32 dot =PRINTSYS_GetStrWidth(pWork->pExpStrBuf, pWork->fontHandle, 0);
     HOSAKA_Printf("dot=%d \n", dot);
     dot = (_POCKETNAME_DISP_SIZEX*8 - dot )/2;
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->pocketNameWin), dot, 4, pWork->pExpStrBuf, pWork->fontHandle);
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->pocketNameWin), dot, 4, pWork->pExpStrBuf, pWork->fontHandle);
+		PrintStr(
+			pWork, &pWork->pocketNameWin, pWork->pExpStrBuf, dot, 4,
+			PRINTSYS_LSB_Make(_POCKETNAME_FONT_PAL_L,_POCKETNAME_FONT_PAL_S,_POCKETNAME_FONT_PAL_B) );
   }
 
-  GFL_BMPWIN_MakeTransWindow_VBlank( pWork->pocketNameWin );
+//  GFL_BMPWIN_MakeTransWindow_VBlank( pWork->pocketNameWin );
+	PrintScreenTrans( &pWork->pocketNameWin );
 }
 
 //-----------------------------------------------------------------------------
@@ -2135,29 +2418,39 @@ void ITEMDISP_PocketMessage(FIELD_ITEMMENU_WORK* pWork,int newpocket)
 //-----------------------------------------------------------------------------
 void ITEMDISP_GoldDispWrite( FIELD_ITEMMENU_WORK* pWork )
 {
+/*
   GFL_BMP_DATA* bmpGold;
   GFL_BMP_DATA* bmpGoldCap;
 
   bmpGold = GFL_BMPWIN_GetBmp( pWork->winGold );
   bmpGoldCap = GFL_BMPWIN_GetBmp( pWork->winGoldCap );
+*/
 
-  GFL_FONTSYS_SetColor( _POCKETNAME_FONT_PAL_L, _POCKETNAME_FONT_PAL_S, _POCKETNAME_FONT_PAL_B );
+//  GFL_FONTSYS_SetColor( _POCKETNAME_FONT_PAL_L, _POCKETNAME_FONT_PAL_S, _POCKETNAME_FONT_PAL_B );
 
-  GFL_BMP_Clear( bmpGold , 0 );
-  GFL_BMP_Clear( bmpGoldCap , 0 );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(pWork->winGold.win), 0 );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pWork->winGoldCap.win), 0 );
 
   //「おこづかい」
   GFL_MSG_GetString( pWork->MsgManager, mes_shop_097, pWork->pStrBuf );
-  PRINTSYS_Print( bmpGoldCap, 0, 4, pWork->pStrBuf, pWork->fontHandle );
-  GFL_BMPWIN_MakeTransWindow_VBlank( pWork->winGoldCap );
+//  PRINTSYS_Print( bmpGoldCap, 0, 4, pWork->pStrBuf, pWork->fontHandle );
+	PrintStr(
+		pWork, &pWork->winGoldCap, pWork->pStrBuf, 0, 4,
+		PRINTSYS_LSB_Make(_POCKETNAME_FONT_PAL_L,_POCKETNAME_FONT_PAL_S,_POCKETNAME_FONT_PAL_B) );
+//  GFL_BMPWIN_MakeTransWindow_VBlank( pWork->winGoldCap );
+	PrintScreenTrans( &pWork->winGoldCap );
 
   //「円」
   GFL_MSG_GetString( pWork->MsgManager, mes_shop_098, pWork->pStrBuf );
   WORDSET_RegisterNumber(pWork->WordSet, 0, MISC_GetGold( GAMEDATA_GetMiscWork(pWork->gamedata) ),
                           7, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-  PRINTSYS_Print( bmpGold, 0, 4, pWork->pExpStrBuf, pWork->fontHandle );
-  GFL_BMPWIN_MakeTransWindow_VBlank( pWork->winGold );
+//  PRINTSYS_Print( bmpGold, 0, 4, pWork->pExpStrBuf, pWork->fontHandle );
+	PrintStr(
+		pWork, &pWork->winGold, pWork->pExpStrBuf, 0, 4,
+		PRINTSYS_LSB_Make(_POCKETNAME_FONT_PAL_L,_POCKETNAME_FONT_PAL_S,_POCKETNAME_FONT_PAL_B) );
+//  GFL_BMPWIN_MakeTransWindow_VBlank( pWork->winGold );
+	PrintScreenTrans( &pWork->winGold );
 }
 
 //-----------------------------------------------------------------------------
@@ -2176,8 +2469,9 @@ void ITEMDISP_GoldDispIn( FIELD_ITEMMENU_WORK* pWork )
   GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_RIGHT] , FALSE );
 
   // ポケット名非表示
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pWork->pocketNameWin ), 0 );
-  GFL_BMPWIN_TransVramCharacter(pWork->pocketNameWin);
+//  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pWork->pocketNameWin ), 0 );
+//  GFL_BMPWIN_TransVramCharacter(pWork->pocketNameWin);
+	GFL_BMPWIN_ClearScreen( pWork->pocketNameWin.win );
 
   // おこづかい表示
   ITEMDISP_GoldDispWrite( pWork );
@@ -2198,10 +2492,12 @@ void ITEMDISP_GoldDispOut( FIELD_ITEMMENU_WORK* pWork )
   GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_LEFT] , TRUE );
   GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[BAR_ICON_RIGHT] , TRUE );
   // おこづかい非表示
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pWork->winGold ), 0 );
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pWork->winGoldCap ), 0 );
-  GFL_BMPWIN_TransVramCharacter( pWork->winGold );
-  GFL_BMPWIN_TransVramCharacter( pWork->winGoldCap );
+//  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pWork->winGold ), 0 );
+//  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( pWork->winGoldCap ), 0 );
+//  GFL_BMPWIN_TransVramCharacter( pWork->winGold );
+//  GFL_BMPWIN_TransVramCharacter( pWork->winGoldCap );
+	GFL_BMPWIN_ClearScreen( pWork->winGold.win );
+	GFL_BMPWIN_ClearScreen( pWork->winGoldCap.win );
 
   // ポケット名表示
   ITEMDISP_PocketMessage( pWork, pWork->pocketno );
@@ -2315,36 +2611,39 @@ void ITEMDISP_InputNumDisp(FIELD_ITEMMENU_WORK* pWork,int num)
 {
   u8 backColor = 5;
 
-  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winNumFrame), backColor );
-  GFL_FONTSYS_SetColor( 0xf, 0xe, backColor );
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winNumFrame.win), backColor );
+//  GFL_FONTSYS_SetColor( 0xf, 0xe, backColor );
   GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
   WORDSET_RegisterNumber(pWork->WordSet, 0, num,
                          3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
 
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winNumFrame), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
-  GFL_BMPWIN_MakeTransWindow_VBlank(pWork->winNumFrame);
+//  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winNumFrame), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+//  GFL_BMPWIN_MakeTransWindow_VBlank(pWork->winNumFrame.win);
+	PrintStr( pWork, &pWork->winNumFrame, pWork->pExpStrBuf, 0, 0, PRINTSYS_LSB_Make(15,14,backColor) );
+	PrintScreenTrans( &pWork->winNumFrame );
 
   // 売却金額表示
   if( pWork->InputMode == BAG_INPUT_MODE_SELL )
   {
     s32 val;
-    GFL_BMPWIN* win = pWork->winSellGold;
+    PRINT_UTIL * win = &pWork->winSellGold;
 
     // 売値を取得
     val = ITEMMENU_SellPrice( pWork->ret_item, pWork->InputNum, pWork->heapID );
 
-    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(win), backColor );
-    GFL_FONTSYS_SetColor( 0xf, 0xe, backColor );
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(win->win), backColor );
+//    GFL_FONTSYS_SetColor( 0xf, 0xe, backColor );
     GFL_MSG_GetString(  pWork->MsgManager, mes_shop_100, pWork->pStrBuf );
 
     WORDSET_RegisterNumber(pWork->WordSet, 0, val,
                            7, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
 
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
-
-    GFL_BMPWIN_MakeTransWindow_VBlank(win);
+//    PRINTSYS_Print( GFL_BMPWIN_GetBmp(win), 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
+//    GFL_BMPWIN_MakeTransWindow_VBlank(win->win);
+		PrintStr( pWork, win, pWork->pExpStrBuf, 0, 0, PRINTSYS_LSB_Make(15,14,backColor) );
+		PrintScreenTrans( win );
   }
 }
 
@@ -2532,4 +2831,35 @@ BOOL ITEMDISP_InitBagMode( FIELD_ITEMMENU_WORK * wk )
 		GFL_CLACT_WK_SetPos( wk->clwkBag[i], &pos, CLWK_SETSF_NONE );
 	}
 	return TRUE;
+}
+
+
+static void PrintStr(
+							FIELD_ITEMMENU_WORK * wk, PRINT_UTIL * util,
+							const STRBUF * str, u16 x, u16 y, PRINTSYS_LSB color )
+{
+	PRINT_UTIL_PrintColor( util, wk->SysMsgQue, x, y, str, wk->fontHandle, color );
+}
+
+static void PrintScreenTrans( PRINT_UTIL * util )
+{
+	GFL_BMPWIN_MakeScreen( util->win );
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(util->win) );
+}
+
+void ITEMDISP_PrintUtilTrans( FIELD_ITEMMENU_WORK * wk )
+{
+	PRINTSYS_QUE_Main( wk->SysMsgQue );
+
+	PRINT_UTIL_Trans( &wk->winWaza, wk->SysMsgQue );
+	PRINT_UTIL_Trans( &wk->winItemName, wk->SysMsgQue );
+	PRINT_UTIL_Trans( &wk->winItemNum, wk->SysMsgQue );
+	PRINT_UTIL_Trans( &wk->winItemReport, wk->SysMsgQue );
+	PRINT_UTIL_Trans( &wk->winNumFrame, wk->SysMsgQue );
+	PRINT_UTIL_Trans( &wk->winGoldCap, wk->SysMsgQue );
+	PRINT_UTIL_Trans( &wk->winGold, wk->SysMsgQue );
+	PRINT_UTIL_Trans( &wk->winSellGold, wk->SysMsgQue );
+	PRINT_UTIL_Trans( &wk->winPocketNone, wk->SysMsgQue );
+	PRINT_UTIL_Trans( &wk->itemInfoDispWin, wk->SysMsgQue );
+	PRINT_UTIL_Trans( &wk->pocketNameWin, wk->SysMsgQue );
 }

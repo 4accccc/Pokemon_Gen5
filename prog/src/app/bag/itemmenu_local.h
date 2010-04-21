@@ -170,10 +170,15 @@ struct _FIELD_ITEMMENU_PARAM {
   // [PRIVATE]
   ITEM_ST ScrollItem[ BAG_MYITEM_MAX ]; ///< スクロールする為のアイテムリスト
   StateFunc * state;                    ///< ハンドルのプログラム状態
+/*
   GFL_BMPWIN* win;
   GFL_BMPWIN* itemInfoDispWin;
   GFL_BMPWIN* pocketNameWin;
-  PRINT_UTIL  SysMsgPrintUtil;      ///< システムウインドウPrintUtil
+*/
+//	PRINT_UTIL	win;
+  PRINT_UTIL	itemInfoDispWin;
+  PRINT_UTIL	pocketNameWin;
+//  PRINT_UTIL  SysMsgPrintUtil;      ///< システムウインドウPrintUtil
   PRINT_QUE*  SysMsgQue;
   PRINT_STREAM* pStream;
   BOOL stream_clear_flg;
@@ -215,6 +220,7 @@ struct _FIELD_ITEMMENU_PARAM {
   GFL_CLWK  *clwkBarIcon[ BAR_ICON_MAX ];
   GFL_CLWK  *clwkSort;
   GFL_TCBLSYS *pMsgTcblSys;
+/*
   GFL_BMPWIN* winWaza;
   GFL_BMPWIN* winItemName;
   GFL_BMPWIN* winItemNum;
@@ -225,6 +231,17 @@ struct _FIELD_ITEMMENU_PARAM {
   GFL_BMPWIN* winGold;
   GFL_BMPWIN* winSellGold;
   GFL_BMPWIN* winPocketNone; // ポケットが空の時のメッセージ表示
+*/
+  PRINT_UTIL	winWaza;
+  PRINT_UTIL	winItemName;
+  PRINT_UTIL	winItemNum;
+  PRINT_UTIL	winItemReport;
+//  PRINT_UTIL	menuWin[5];
+  PRINT_UTIL	winNumFrame;
+  PRINT_UTIL	winGoldCap;
+  PRINT_UTIL	winGold;
+  PRINT_UTIL	winSellGold;
+  PRINT_UTIL	winPocketNone; // ポケットが空の時のメッセージ表示
 
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
@@ -245,12 +262,15 @@ struct _FIELD_ITEMMENU_PARAM {
   int pocketno;  //今さしているポケット番号
   int curpos;   //今さしているカーソル番号
   int oamlistpos; //OAMLIST の 先頭位置 -1から開始
+  int oamlistpos_old; //OAMLIST の 先頭位置 -1から開始
   int moveMode;  //移動モードになる
   int menuNum;          //サブメニューの項目数
   int subListCursor;  //サブメニューのカーソル位置
   int submenuList[BAG_MENUTBL_MAX];  //サブメニューの項目
   u32 bgchar;
-  BOOL bChange;   ///< CELL更新フラグ
+//  BOOL bChange;   ///< CELL更新フラグ
+	u16	bCellChange;		///< CELL更新フラグ
+	u16	bCursorChange;	///< カーソル位置更新フラグ
 //  BOOL bDispUpReq; ///< 上画面DISP切替(VBLANK中に判定、処理)
   u32 bDispUpReq; ///< 上画面DISP切替(VBLANK中に判定、処理 1=表示, 2=非表示)
 
@@ -400,6 +420,8 @@ extern void _dispMain(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_CellResourceCreate( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork );
+//extern void ITEMDISP_CellMessageScroll( FIELD_ITEMMENU_WORK * wk, int mv );
+extern void ITEMDISP_CangeCursorPos( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_ScrollCursorMove(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_ScrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork);
@@ -416,7 +438,7 @@ extern void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *work , int *menustr,int 
 extern void ITEMDISP_ListPlateClear( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_ListPlateSelectChange( FIELD_ITEMMENU_WORK* pWork , int selectNo);
 extern void ITEMDISP_ItemInfoWindowChange(FIELD_ITEMMENU_WORK *pWork,int pocketno  );
-extern void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork );
+extern void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork, int wazano );
 
 extern void ITEMDISP_ItemInfoWindowDispEx( FIELD_ITEMMENU_WORK *pWork, BOOL is_stream );
 extern void ITEMDISP_ItemInfoWindowDisp( FIELD_ITEMMENU_WORK *pWork );
@@ -446,3 +468,4 @@ extern void ITEMDISP_ChangeRetButtonActive( FIELD_ITEMMENU_WORK * wk, BOOL flg )
 extern void ITEMDISP_ChangeSortButton( FIELD_ITEMMENU_WORK * wk );
 extern void ITEMDISP_ChangeMoveModeButton( FIELD_ITEMMENU_WORK * wk, BOOL flg );
 extern BOOL ITEMDISP_InitBagMode( FIELD_ITEMMENU_WORK * wk );
+extern void ITEMDISP_PrintUtilTrans( FIELD_ITEMMENU_WORK * wk );
