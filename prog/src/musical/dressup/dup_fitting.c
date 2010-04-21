@@ -159,6 +159,7 @@ static const u16 ITEM_SWING_ANGLE_ADD_VALUE = 0x100;
 static const u16 ITEM_SWING_ANGLE_SORT_MAX = 0x3000;  //ソート時のアニメ角度MAX
 static const u16 ITEM_SWING_ANGLE_SORT_ADD_VALUE = 0x200; 
 
+static const fx32 ITEM_DEPTH_OFFSET = FX32_CONST(0.25f);
 //表示順位メモ
 //↑
 //保持アイテム      10
@@ -168,6 +169,7 @@ static const u16 ITEM_SWING_ANGLE_SORT_ADD_VALUE = 0x200;
 //フィールドアイテム  -10～-10-0.1*表示個数
 //ポケモン        -40000  //たぶんmcssで座標変換が入ってる・・・これで一番下に出る
 //↓
+
 
 //スクロール系
 #define DUP_CURTAIN_SCROLL_MAX (128)
@@ -817,11 +819,10 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
 
   //アイテム保持の上段メッセージの更新
   if( work->isUpdateMsg == FALSE &&
-      work->isDemo == FALSE )
+       work->state == DUS_FITTING_MAIN )
   {
-    if( work->dispItemId == MUSICAL_ITEM_INVALID &&
-        work->holdItem != NULL &&
-        DUP_FIT_ITEM_GetItemState(work->holdItem)->itemId != MUSICAL_ITEM_INVALID )
+    if( work->holdItem != NULL &&
+        DUP_FIT_ITEM_GetItemState(work->holdItem)->itemId != work->dispItemId )
     {
       DUP_FIT_DrawMessageItem( work , work->holdItem );
       work->dispItemId = DUP_FIT_ITEM_GetItemState(work->holdItem)->itemId;
@@ -1483,7 +1484,7 @@ static void DUP_FIT_SetupStartItem( FITTING_WORK *work , const u16 itemId )
 
       vecPos.x = FX32_CONST(pos.x);
       vecPos.y = FX32_CONST(pos.y);
-      vecPos.z = FIELD_ITEM_DEPTH - FX32_CONST(0.1f)*DUP_FIT_ITEMGROUP_GetItemNum(work->itemGroupField);
+      vecPos.z = FIELD_ITEM_DEPTH - ITEM_DEPTH_OFFSET*DUP_FIT_ITEMGROUP_GetItemNum(work->itemGroupField);
       
       item = DUP_FIT_ITEM_CreateItem( work->heapId , work->itemDrawSys , itemState , &vecPos );
       DUP_FIT_ITEMGROUP_AddItem( work->itemGroupField,item );
@@ -1694,7 +1695,7 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
   }
   
   //SE処理
-  if( moveAngle > DUP_LIST_ROTATE_SE_SPEED &&
+  if( (moveAngle > DUP_LIST_ROTATE_SE_SPEED||moveAngle < -DUP_LIST_ROTATE_SE_SPEED) &&
       work->listSeWaitCnt == 0 )
   {
     work->listSeWaitCnt = DUP_LIST_ROTATE_SE_WAIT_CNT;
@@ -1743,6 +1744,13 @@ static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 move
         }
         newItemState = work->itemState[newIdx];
         DUP_FIT_ITEM_SetNewItemState( item , newItemState );
+        if( nowItemState->itemId != newItemState->itemId )
+        {
+          if( item == work->holdItem )
+          {
+            work->holdItem = NULL;
+          }
+        }
       }
     }
     
@@ -2342,7 +2350,7 @@ static void DUP_FIT_UpdateTpDropItemToField( FITTING_WORK *work )
     pos.z = depth;
     MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , drawWork , &pos );
     
-    depth -= FX32_CONST(0.1f);
+    depth -= ITEM_DEPTH_OFFSET;
     item = DUP_FIT_ITEM_GetNextItem(item);
   }
   
@@ -2473,7 +2481,20 @@ static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work )
       DUP_FIT_ITEM_SetPosition( equItem , &movePos );
       DUP_FIT_ITEM_SetCount( equItem , ITEM_RETURN_POS_CNT );
 
-
+      //深度の再設定
+      depthOfs = 0;
+      item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupField );
+      while( item != NULL )
+      {
+        VecFx32 pos;
+        MUS_ITEM_DRAW_WORK *drawWork = DUP_FIT_ITEM_GetItemDrawWork( item );
+        MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , drawWork , &pos );
+        pos.z = depthOfs;
+        MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , drawWork , &pos );
+        
+        depthOfs -= ITEM_DEPTH_OFFSET;
+        item = DUP_FIT_ITEM_GetNextItem(item);
+      }
     }
   }
   //リストを付け替えて座標を再設定
@@ -2486,6 +2507,7 @@ static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work )
   
   //深度の再設定
   item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupEquip );
+  depthOfs = 0;
   while( item != NULL )
   {
     VecFx32 pos;
@@ -2506,7 +2528,7 @@ static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work )
     }
     MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , drawWork , &pos );
     
-    depthOfs -= FX32_CONST(0.1f);
+    depthOfs -= ITEM_DEPTH_OFFSET;
     item = DUP_FIT_ITEM_GetNextItem(item);
   }
   
@@ -3196,16 +3218,27 @@ static void DUP_CHECK_UpdateTpMain( FITTING_WORK *work )
   
   if( work->tpIsTrg == TRUE )
   {
+    FIT_ITEM_WORK *nearItem = NULL;
+    u32 minLen = 16*16; //あたり判定(半径16)
     //装備品との当たり判定
     FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupEquip );
     while( item != NULL )
     {
-      if( DUP_FIT_ITEM_CheckHit( item , work->tpx,work->tpy ) == TRUE )
+      GFL_POINT *itemPos = DUP_FIT_ITEM_GetPosition( item );
+      const u16 subX = (itemPos->x - work->tpx)*(itemPos->x - work->tpx);
+      const u16 subY = (itemPos->y - work->tpy)*(itemPos->y - work->tpy);
+      if( minLen > subX+subY )
       {
-        work->holdItem = item;
-        DUP_TPrintf("Equip Item Hold[%d]\n",DUP_FIT_ITEM_GetItemState(item)->itemId);
+        nearItem = item;
+        minLen = subX+subY;
       }
+      DUP_TPrintf("Len[%d][%d]\n",DUP_FIT_ITEM_GetItemState(item)->itemId,subX+subY);
       item = DUP_FIT_ITEM_GetNextItem(item);
+    }
+    if( nearItem != NULL )
+    {
+      work->holdItem = nearItem;
+      DUP_TPrintf("Equip Item Hold[%d]\n",DUP_FIT_ITEM_GetItemState(nearItem)->itemId);
     }
   }
   
