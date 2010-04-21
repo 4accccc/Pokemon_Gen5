@@ -13712,32 +13712,38 @@
 	</row>
 
 	<row id="TRID_HAKAIM1_33_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">プラーズマー！
+おれ　こだいのしろに　ちる……</language>
+		<language name="JPN_KANJI" width="216">プラーズマー！
+おれ　古代の城に　散る……</language>
 	</row>
 
 	<row id="TRID_HAKAIM1_34_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">Ｎさまを　たおした　つよさ
+なるほどな……　ほねみに　しみたぜ</language>
+		<language name="JPN_KANJI" width="216">Ｎさまを　倒した　強さ
+なるほどな……　骨身に　染みたぜ</language>
 	</row>
 
 	<row id="TRID_HAKAIW1_11_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">ポケモンとの　せかいを
+まもった　トレーナーの　つよさね</language>
+		<language name="JPN_KANJI" width="216">ポケモンとの　世界を
+守った　トレーナーの　強さね</language>
 	</row>
 
 	<row id="TRID_RIVAL_22_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">これまでの　たびで　つちかったもの
+		<language name="JPN" width="216">これまでの　たびで　つちかった
 すべてを　きみに　ぶつける！</language>
-		<language name="JPN_KANJI" width="216">これまでの　旅で　培ったもの
+		<language name="JPN_KANJI" width="216">これまでの　旅で　培った
 すべてを　きみに　ぶつける！</language>
 	</row>
 
 	<row id="TRID_RIVAL_22_TRMSG_FIGHT_POKE_LAST">
 		<language name="JPN" width="216">……ぼくも　ポケモンも
-もてるかぎりの　ちからを　ふるう！</language>
+あらんかぎりの　ちからを　ふるう！</language>
 		<language name="JPN_KANJI" width="216">……ぼくも　ポケモンも
-持てる限りの　力を　奮う！</language>
+あらん限りの　力を　奮う！</language>
 	</row>
 
 	<row id="TRID_RIVAL_22_TRMSG_FIGHT_LOSE">
@@ -13746,33 +13752,41 @@
 	</row>
 
 	<row id="TRID_RIVAL_23_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">これまでの　たびで　つちかった
+すべてを　きみに　ぶつける！</language>
+		<language name="JPN_KANJI" width="216">これまでの　旅で　培った
+すべてを　きみに　ぶつける！</language>
 	</row>
 
 	<row id="TRID_RIVAL_23_TRMSG_FIGHT_POKE_LAST">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">……ぼくも　ポケモンも
+あらんかぎりの　ちからを　ふるう！</language>
+		<language name="JPN_KANJI" width="216">……ぼくも　ポケモンも
+あらん限りの　力を　奮う！</language>
 	</row>
 
 	<row id="TRID_RIVAL_23_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">……ありがとう</language>
+		<language name="JPN_KANJI" width="216">……ありがとう</language>
 	</row>
 
 	<row id="TRID_RIVAL_24_TRMSG_FIGHT_FIRST_DAMAGE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">これまでの　たびで　つちかった
+すべてを　きみに　ぶつける！</language>
+		<language name="JPN_KANJI" width="216">これまでの　旅で　培った
+すべてを　きみに　ぶつける！</language>
 	</row>
 
 	<row id="TRID_RIVAL_24_TRMSG_FIGHT_POKE_LAST">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">……ぼくも　ポケモンも
+あらんかぎりの　ちからを　ふるう！</language>
+		<language name="JPN_KANJI" width="216">……ぼくも　ポケモンも
+あらん限りの　力を　奮う！</language>
 	</row>
 
 	<row id="TRID_RIVAL_24_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">かりの　メッセージ</language>
-		<language name="JPN_KANJI" width="216">仮の　メッセージ</language>
+		<language name="JPN" width="216">……ありがとう</language>
+		<language name="JPN_KANJI" width="216">……ありがとう</language>
 	</row>
 
 	<row id="TRID_RIVAL_25_TRMSG_FIGHT_FIRST_DAMAGE">
