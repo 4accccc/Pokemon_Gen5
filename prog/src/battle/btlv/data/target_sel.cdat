@@ -26,18 +26,125 @@ static const BOOL PokeSeleMenuTouch4DataCancel[] = {
   TRUE,   //キャンセル
 };
 
-static const int PokeSeleMenuTouch4DataPltt[] = {
-  1 << 6,  //ターゲットA
-  1 << 6,  //ターゲットB
-  1 << 6,  //ターゲットC
-  1 << 6,  //ターゲットD
+static const int PokeSeleMenuTouch4DataPlttNormal[] = {
+  ( 1 <<  9 ),  //ターゲットA
+  ( 1 <<  8 ),  //ターゲットB
+  ( 1 << 10 ),  //ターゲットC
+  ( 1 <<  7 ),  //ターゲットD
   1 << 4,   //キャンセル
 };
 
-static const BTLV_INPUT_HITTBL PokeSeleMenuTouch4Data = {
+static const int PokeSeleMenuTouch4DataPlttNoMine_L[] = {
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 10 ),  //ターゲットA
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 10 ),  //ターゲットB
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 10 ),  //ターゲットC
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 10 ),  //ターゲットD
+  1 << 4,   //キャンセル
+};
+
+static const int PokeSeleMenuTouch4DataPlttNoMine_R[] = {
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ),  //ターゲットA
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ),  //ターゲットB
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ),  //ターゲットC
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ),  //ターゲットD
+  1 << 4,   //キャンセル
+};
+
+static const int PokeSeleMenuTouch4DataPlttEnemy[] = {
+  ( 1 << 7 ) | ( 1 << 8 ),  //ターゲットA
+  ( 1 << 7 ) | ( 1 << 8 ),  //ターゲットB
+  ( 1 << 7 ) | ( 1 << 8 ),  //ターゲットC
+  ( 1 << 7 ) | ( 1 << 8 ),  //ターゲットD
+  1 << 4,   //キャンセル
+};
+
+static const int PokeSeleMenuTouch4DataPlttMine[] = {
+  ( 1 << 9 ) | ( 1 << 10 ),  //ターゲットA
+  ( 1 << 9 ) | ( 1 << 10 ),  //ターゲットB
+  ( 1 << 9 ) | ( 1 << 10 ),  //ターゲットC
+  ( 1 << 9 ) | ( 1 << 10 ),  //ターゲットD
+  1 << 4,   //キャンセル
+};
+
+static const int PokeSeleMenuTouch4DataPlttAll[] = {
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ) | ( 1 << 10 ),  //ターゲットA
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ) | ( 1 << 10 ),  //ターゲットB
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ) | ( 1 << 10 ),  //ターゲットC
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ) | ( 1 << 10 ),  //ターゲットD
+  1 << 4,   //キャンセル
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch4Normal = {
   PokeSeleMenuTouch4DataHitTbl,
   PokeSeleMenuTouch4DataCancel,
-  PokeSeleMenuTouch4DataPltt,
+  PokeSeleMenuTouch4DataPlttNormal,
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch4NoMine_L = {
+  PokeSeleMenuTouch4DataHitTbl,
+  PokeSeleMenuTouch4DataCancel,
+  PokeSeleMenuTouch4DataPlttNoMine_L,
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch4NoMine_R = {
+  PokeSeleMenuTouch4DataHitTbl,
+  PokeSeleMenuTouch4DataCancel,
+  PokeSeleMenuTouch4DataPlttNoMine_R,
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch4Enemy = {
+  PokeSeleMenuTouch4DataHitTbl,
+  PokeSeleMenuTouch4DataCancel,
+  PokeSeleMenuTouch4DataPlttEnemy,
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch4Mine = {
+  PokeSeleMenuTouch4DataHitTbl,
+  PokeSeleMenuTouch4DataCancel,
+  PokeSeleMenuTouch4DataPlttMine,
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch4All = {
+  PokeSeleMenuTouch4DataHitTbl,
+  PokeSeleMenuTouch4DataCancel,
+  PokeSeleMenuTouch4DataPlttAll,
+};
+
+static const BTLV_INPUT_HITTBL  *PokeSeleMenuTouch4Data[ 2 ][ WAZA_TARGET_MAX + 1 ] = {
+  { 
+    &PokeSeleMenuTouch4Normal,   ///< 自分以外１体（選択）
+    &PokeSeleMenuTouch4Normal,   ///< 自分を含む味方１体（選択）
+    &PokeSeleMenuTouch4Normal,   ///< 自分以外の味方１体（選択）
+    &PokeSeleMenuTouch4Normal,   ///< 相手側１体（選択）
+    &PokeSeleMenuTouch4NoMine_L, ///< 自分以外全て
+    &PokeSeleMenuTouch4Enemy,    ///< 相手側全て
+    &PokeSeleMenuTouch4Mine,     ///< 味方側全ポケ
+    &PokeSeleMenuTouch4Normal,   ///< 自分のみ
+    &PokeSeleMenuTouch4All,      ///< 場に出ているポケモン全て
+    &PokeSeleMenuTouch4Normal,   ///< 相手側１体ランダム
+    &PokeSeleMenuTouch4All,      ///< 場全体（天候など）
+    &PokeSeleMenuTouch4Enemy,    ///< 敵側陣営
+    &PokeSeleMenuTouch4Mine,     ///< 自分側陣営
+    &PokeSeleMenuTouch4Normal,   ///< ゆびをふるなど特殊型
+    &PokeSeleMenuTouch4Normal,   ///< 自分以外１体（遠距離）
+  },
+  { 
+    &PokeSeleMenuTouch4Normal,   ///< 自分以外１体（選択）
+    &PokeSeleMenuTouch4Normal,   ///< 自分を含む味方１体（選択）
+    &PokeSeleMenuTouch4Normal,   ///< 自分以外の味方１体（選択）
+    &PokeSeleMenuTouch4Normal,   ///< 相手側１体（選択）
+    &PokeSeleMenuTouch4NoMine_R, ///< 自分以外全て
+    &PokeSeleMenuTouch4Enemy,    ///< 相手側全て
+    &PokeSeleMenuTouch4Mine,     ///< 味方側全ポケ
+    &PokeSeleMenuTouch4Normal,   ///< 自分のみ
+    &PokeSeleMenuTouch4All,      ///< 場に出ているポケモン全て
+    &PokeSeleMenuTouch4Normal,   ///< 相手側１体ランダム
+    &PokeSeleMenuTouch4All,      ///< 場全体（天候など）
+    &PokeSeleMenuTouch4Enemy,    ///< 敵側陣営
+    &PokeSeleMenuTouch4Mine,     ///< 自分側陣営
+    &PokeSeleMenuTouch4Normal,   ///< ゆびをふるなど特殊型
+    &PokeSeleMenuTouch4Normal,   ///< 自分以外１体（遠距離）
+  },
 };
 
 ///< 自分以外１体（選択）& 自分以外１体（遠距離）
@@ -193,20 +300,202 @@ static const BOOL PokeSeleMenuTouch6DataCancel[] = {
   TRUE,   //キャンセル
 };
 
-static const BOOL PokeSeleMenuTouch6DataPltt[] = {
-  1 << 6,  //ターゲットA
-  1 << 6,  //ターゲットB
-  1 << 6,  //ターゲットC
-  1 << 6,  //ターゲットD
-  1 << 6,  //ターゲットE
-  1 << 6,  //ターゲットF
-  1 << 4,   //キャンセル
+static const BOOL PokeSeleMenuTouch6DataPlttNormal[] = {
+  ( 1 << 10 ),  //ターゲットA
+  ( 1 <<  9 ),  //ターゲットB
+  ( 1 << 11 ),  //ターゲットC
+  ( 1 <<  8 ),  //ターゲットD
+  ( 1 << 12 ),  //ターゲットE
+  ( 1 <<  7 ),  //ターゲットF
+  ( 1 << 4 ),   //キャンセル
 };
 
-static const BTLV_INPUT_HITTBL PokeSeleMenuTouch6Data = {
+static const BOOL PokeSeleMenuTouch6DataPlttNoMine_L[] = {
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 11 ),  //ターゲットA
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 11 ),  //ターゲットB
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 11 ),  //ターゲットC
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 11 ),  //ターゲットD
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 11 ),  //ターゲットE
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 11 ),  //ターゲットF
+  ( 1 << 4 ),   //キャンセル
+};
+
+static const BOOL PokeSeleMenuTouch6DataPlttNoMine_C[] = {
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ) | ( 1 << 10 ) | ( 1 << 12 ),  //ターゲットA
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ) | ( 1 << 10 ) | ( 1 << 12 ),  //ターゲットB
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ) | ( 1 << 10 ) | ( 1 << 12 ),  //ターゲットC
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ) | ( 1 << 10 ) | ( 1 << 12 ),  //ターゲットD
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ) | ( 1 << 10 ) | ( 1 << 12 ),  //ターゲットE
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ) | ( 1 << 10 ) | ( 1 << 12 ),  //ターゲットF
+  ( 1 << 4 ),   //キャンセル
+};
+
+static const BOOL PokeSeleMenuTouch6DataPlttNoMine_R[] = {
+  ( 1 << 9 ) | ( 1 << 8 ) | ( 1 << 11 ),  //ターゲットA
+  ( 1 << 9 ) | ( 1 << 8 ) | ( 1 << 11 ),  //ターゲットB
+  ( 1 << 9 ) | ( 1 << 8 ) | ( 1 << 11 ),  //ターゲットC
+  ( 1 << 9 ) | ( 1 << 8 ) | ( 1 << 11 ),  //ターゲットD
+  ( 1 << 9 ) | ( 1 << 8 ) | ( 1 << 11 ),  //ターゲットE
+  ( 1 << 9 ) | ( 1 << 8 ) | ( 1 << 11 ),  //ターゲットF
+  ( 1 << 4 ),   //キャンセル
+};
+
+static const BOOL PokeSeleMenuTouch6DataPlttEnemy_L[] = {
+  ( 1 << 7 ) | ( 1 << 8 ),  //ターゲットA
+  ( 1 << 7 ) | ( 1 << 8 ),  //ターゲットB
+  ( 1 << 7 ) | ( 1 << 8 ),  //ターゲットC
+  ( 1 << 7 ) | ( 1 << 8 ),  //ターゲットD
+  ( 1 << 7 ) | ( 1 << 8 ),  //ターゲットE
+  ( 1 << 7 ) | ( 1 << 8 ),  //ターゲットF
+  ( 1 << 4 ),   //キャンセル
+};
+
+static const BOOL PokeSeleMenuTouch6DataPlttEnemy_C[] = {
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ),  //ターゲットA
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ),  //ターゲットB
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ),  //ターゲットC
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ),  //ターゲットD
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ),  //ターゲットE
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ),  //ターゲットF
+  ( 1 << 4 ),   //キャンセル
+};
+
+static const BOOL PokeSeleMenuTouch6DataPlttEnemy_R[] = {
+  ( 1 << 9 ) | ( 1 << 8 ),  //ターゲットA
+  ( 1 << 9 ) | ( 1 << 8 ),  //ターゲットB
+  ( 1 << 9 ) | ( 1 << 8 ),  //ターゲットC
+  ( 1 << 9 ) | ( 1 << 8 ),  //ターゲットD
+  ( 1 << 9 ) | ( 1 << 8 ),  //ターゲットE
+  ( 1 << 9 ) | ( 1 << 8 ),  //ターゲットF
+  ( 1 << 4 ),   //キャンセル
+};
+
+static const BOOL PokeSeleMenuTouch6DataPlttMine[] = {
+  ( 1 << 10 ) | ( 1 << 11 ) | ( 1 << 12 ),  //ターゲットA
+  ( 1 << 10 ) | ( 1 << 11 ) | ( 1 << 12 ),  //ターゲットB
+  ( 1 << 10 ) | ( 1 << 11 ) | ( 1 << 12 ),  //ターゲットC
+  ( 1 << 10 ) | ( 1 << 11 ) | ( 1 << 12 ),  //ターゲットD
+  ( 1 << 10 ) | ( 1 << 11 ) | ( 1 << 12 ),  //ターゲットE
+  ( 1 << 10 ) | ( 1 << 11 ) | ( 1 << 12 ),  //ターゲットF
+  ( 1 << 4 ),   //キャンセル
+};
+
+static const BOOL PokeSeleMenuTouch6DataPlttAll[] = {
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ) | ( 1 << 10 ) | ( 1 << 11 ) | ( 1 << 12 ),  //ターゲットA
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ) | ( 1 << 10 ) | ( 1 << 11 ) | ( 1 << 12 ),  //ターゲットB
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ) | ( 1 << 10 ) | ( 1 << 11 ) | ( 1 << 12 ),  //ターゲットC
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ) | ( 1 << 10 ) | ( 1 << 11 ) | ( 1 << 12 ),  //ターゲットD
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ) | ( 1 << 10 ) | ( 1 << 11 ) | ( 1 << 12 ),  //ターゲットE
+  ( 1 << 7 ) | ( 1 << 8 ) | ( 1 << 9 ) | ( 1 << 10 ) | ( 1 << 11 ) | ( 1 << 12 ),  //ターゲットF
+  ( 1 << 4 ),   //キャンセル
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch6DataNormal = {
   PokeSeleMenuTouch6DataHitTbl,
   PokeSeleMenuTouch6DataCancel,
-  PokeSeleMenuTouch6DataPltt,
+  PokeSeleMenuTouch6DataPlttNormal,
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch6DataNoMine_L = {
+  PokeSeleMenuTouch6DataHitTbl,
+  PokeSeleMenuTouch6DataCancel,
+  PokeSeleMenuTouch6DataPlttNoMine_L,
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch6DataNoMine_C = {
+  PokeSeleMenuTouch6DataHitTbl,
+  PokeSeleMenuTouch6DataCancel,
+  PokeSeleMenuTouch6DataPlttNoMine_C,
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch6DataNoMine_R = {
+  PokeSeleMenuTouch6DataHitTbl,
+  PokeSeleMenuTouch6DataCancel,
+  PokeSeleMenuTouch6DataPlttNoMine_R,
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch6DataEnemy_L = {
+  PokeSeleMenuTouch6DataHitTbl,
+  PokeSeleMenuTouch6DataCancel,
+  PokeSeleMenuTouch6DataPlttEnemy_L,
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch6DataEnemy_C = {
+  PokeSeleMenuTouch6DataHitTbl,
+  PokeSeleMenuTouch6DataCancel,
+  PokeSeleMenuTouch6DataPlttEnemy_C,
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch6DataEnemy_R = {
+  PokeSeleMenuTouch6DataHitTbl,
+  PokeSeleMenuTouch6DataCancel,
+  PokeSeleMenuTouch6DataPlttEnemy_R,
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch6DataMine = {
+  PokeSeleMenuTouch6DataHitTbl,
+  PokeSeleMenuTouch6DataCancel,
+  PokeSeleMenuTouch6DataPlttMine,
+};
+
+static const BTLV_INPUT_HITTBL PokeSeleMenuTouch6DataAll = {
+  PokeSeleMenuTouch6DataHitTbl,
+  PokeSeleMenuTouch6DataCancel,
+  PokeSeleMenuTouch6DataPlttAll,
+};
+
+static const BTLV_INPUT_HITTBL  *PokeSeleMenuTouch6Data[ 3 ][ WAZA_TARGET_MAX + 1 ] = {
+  { 
+    &PokeSeleMenuTouch6DataNormal,   ///< 自分以外１体（選択）
+    &PokeSeleMenuTouch6DataNormal,   ///< 自分を含む味方１体（選択）
+    &PokeSeleMenuTouch6DataNormal,   ///< 自分以外の味方１体（選択）
+    &PokeSeleMenuTouch6DataNormal,   ///< 相手側１体（選択）
+    &PokeSeleMenuTouch6DataNoMine_L, ///< 自分以外全て
+    &PokeSeleMenuTouch6DataEnemy_L,  ///< 相手側全て
+    &PokeSeleMenuTouch6DataMine,     ///< 味方側全ポケ
+    &PokeSeleMenuTouch6DataNormal,   ///< 自分のみ
+    &PokeSeleMenuTouch6DataAll,      ///< 場に出ているポケモン全て
+    &PokeSeleMenuTouch6DataNormal,   ///< 相手側１体ランダム
+    &PokeSeleMenuTouch6DataAll,      ///< 場全体（天候など）
+    &PokeSeleMenuTouch6DataEnemy_C,  ///< 敵側陣営
+    &PokeSeleMenuTouch6DataMine,     ///< 自分側陣営
+    &PokeSeleMenuTouch6DataNormal,   ///< ゆびをふるなど特殊型
+    &PokeSeleMenuTouch6DataNormal,   ///< 自分以外１体（遠距離）
+  },
+  {
+    &PokeSeleMenuTouch6DataNormal,   ///< 自分以外１体（選択）
+    &PokeSeleMenuTouch6DataNormal,   ///< 自分を含む味方１体（選択）
+    &PokeSeleMenuTouch6DataNormal,   ///< 自分以外の味方１体（選択）
+    &PokeSeleMenuTouch6DataNormal,   ///< 相手側１体（選択）
+    &PokeSeleMenuTouch6DataNoMine_C, ///< 自分以外全て
+    &PokeSeleMenuTouch6DataEnemy_C,  ///< 相手側全て
+    &PokeSeleMenuTouch6DataMine,     ///< 味方側全ポケ
+    &PokeSeleMenuTouch6DataNormal,   ///< 自分のみ
+    &PokeSeleMenuTouch6DataAll,      ///< 場に出ているポケモン全て
+    &PokeSeleMenuTouch6DataNormal,   ///< 相手側１体ランダム
+    &PokeSeleMenuTouch6DataAll,      ///< 場全体（天候など）
+    &PokeSeleMenuTouch6DataEnemy_C,  ///< 敵側陣営
+    &PokeSeleMenuTouch6DataMine,     ///< 自分側陣営
+    &PokeSeleMenuTouch6DataNormal,   ///< ゆびをふるなど特殊型
+    &PokeSeleMenuTouch6DataNormal,   ///< 自分以外１体（遠距離）
+  },
+  {
+    &PokeSeleMenuTouch6DataNormal,   ///< 自分以外１体（選択）
+    &PokeSeleMenuTouch6DataNormal,   ///< 自分を含む味方１体（選択）
+    &PokeSeleMenuTouch6DataNormal,   ///< 自分以外の味方１体（選択）
+    &PokeSeleMenuTouch6DataNormal,   ///< 相手側１体（選択）
+    &PokeSeleMenuTouch6DataNoMine_R, ///< 自分以外全て
+    &PokeSeleMenuTouch6DataEnemy_R,  ///< 相手側全て
+    &PokeSeleMenuTouch6DataMine,     ///< 味方側全ポケ
+    &PokeSeleMenuTouch6DataNormal,   ///< 自分のみ
+    &PokeSeleMenuTouch6DataAll,      ///< 場に出ているポケモン全て
+    &PokeSeleMenuTouch6DataNormal,   ///< 相手側１体ランダム
+    &PokeSeleMenuTouch6DataAll,      ///< 場全体（天候など）
+    &PokeSeleMenuTouch6DataEnemy_C,  ///< 敵側陣営
+    &PokeSeleMenuTouch6DataMine,     ///< 自分側陣営
+    &PokeSeleMenuTouch6DataNormal,   ///< ゆびをふるなど特殊型
+    &PokeSeleMenuTouch6DataNormal,   ///< 自分以外１体（遠距離）
+  },
 };
 
 ///< 自分以外１体（選択）

@@ -51,7 +51,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-#define DEBUG_OS_PRINT
+//#define DEBUG_OS_PRINT
 #endif
 #endif
 

@@ -1093,12 +1093,12 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 
       if( BTL_MAIN_GetRule( wk->mainModule ) != BTL_RULE_TRIPLE ){
         GF_ASSERT_MSG( ( ( pos > -1 ) && ( pos < 2 ) ), "pos:%d\n", pos );
-        touch_data = &PokeSeleMenuTouch4Data;
+        touch_data = PokeSeleMenuTouch4Data[ pos ][ target ];
         key_data = PokeSeleMenuKey4Data[ pos ][ target ];
         touch_max = 4;
       }else{
         GF_ASSERT_MSG( ( ( pos > -1 ) && ( pos < 3 ) ), "pos:%d\n", pos );
-        touch_data = &PokeSeleMenuTouch6Data;
+        touch_data = PokeSeleMenuTouch6Data[ pos ][ target ];
         key_data = PokeSeleMenuKey6Data[ pos ][ target ];
         touch_max = 6;
       }
@@ -1163,13 +1163,13 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
     break;
 
   case WAZA_TARGET_ENEMY_ALL:           ///< “G‘¤‚Q‘Ì
-  case WAZA_TARGET_ENEMY_RANDOM:        ///< “Gƒ‰ƒ“ƒ_ƒ€
     stw_setConfirmPoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_ENEMY, basePos) );
     break;
   case WAZA_TARGET_OTHER_ALL:           ///< Ž©•ªˆÈŠO‘S•”
     stw_setConfirmPoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_OTHERS, basePos) );
     break;
   case WAZA_TARGET_USER:                ///< Ž©•ª‚P‘Ì‚Ì‚Ý
+  case WAZA_TARGET_ENEMY_RANDOM:        ///< “Gƒ‰ƒ“ƒ_ƒ€
     stw_setConfirmPoke( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_DEFAULT, basePos) );
     break;
 
