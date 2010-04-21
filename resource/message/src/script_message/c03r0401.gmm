@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-04-16T17:07:13"/>
+	<create user="matsushima" host="W00181" date="2010-04-21T15:33:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1281" top="253" right="1986" bottom="873" maximized="no" rayout="Vertical2">
+	<dialog left="1337" top="118" right="2042" bottom="738" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="796" top="425" right="1269" bottom="823" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -314,10 +314,10 @@
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ひとりで　さみしそうだったから
 えほんを　よんであげてたの！[BE:00:ページ切り替え（行送り）]
-おにいちゃんにも　きかせてあげるね！[BE:01:ページ切り替え（クリア）]</language>
+おにいちゃんにも　きかせてあげる！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">一人で　さみしそうだったから
 絵本を　読んであげてたの！[BE:00:ページ切り替え（行送り）]
-お兄ちゃんにも　聞かせてあげるね！[BE:01:ページ切り替え（クリア）]</language>
+お兄ちゃんにも　聞かせてあげる！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_01_2" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -333,10 +333,10 @@
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ひとりで　さみしそうだったから
 えほんを　よんであげてたの！[BE:00:ページ切り替え（行送り）]
-おねえちゃんにも　きかせてあげるね！[BE:01:ページ切り替え（クリア）]</language>
+おねえちゃんにも　きかせてあげる！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">一人で　さみしそうだったから
 絵本を　読んであげてたの！[BE:00:ページ切り替え（行送り）]
-お姉ちゃんにも　聞かせてあげるね！[BE:01:ページ切り替え（クリア）]</language>
+お姉ちゃんにも　聞かせてあげる！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -353,15 +353,11 @@
 		<language name="JPN" width="256">おはなしの　つづきを　してあげるね！[BE:01:ページ切り替え（クリア）]
 …　…　…　…
 ひとりぼっちに　なった　ゾロアは[BE:00:ページ切り替え（行送り）]
-おかあさんを　さがしまわりました…[BE:01:ページ切り替え（クリア）]
-あんた　ゾロアって　みたことある？
-ほら　こんな　ポケモンなのよ！[BE:01:ページ切り替え（クリア）]</language>
+おかあさんを　さがしまわりました…[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">お話の　続きを　してあげるね！[BE:01:ページ切り替え（クリア）]
 …　…　…　…
 ひとりぼっちに　なった　ゾロアは[BE:00:ページ切り替え（行送り）]
-おかあさんを　探しまわりました…[BE:01:ページ切り替え（クリア）]
-あんた　ゾロアって　みたことある？
-ほら　こんな　ポケモンなのよ！[BE:01:ページ切り替え（クリア）]</language>
+おかあさんを　探しまわりました…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -375,22 +371,26 @@
 ・男の子（ゾロア）に向いてから、
 msg_c03r0401_girl1_04</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
-		<language name="JPN" width="256">ゾロアは　ひとを　ばかす　ちからを
-もってるんだって！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ゾロアは　人を　化かす　力を
-持ってるんだって！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">あんた　ゾロアって　みたことある？
+ほら　こんな　ポケモンなのよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">あんた　ゾロアって　みたことある？
+ほら　こんな　ポケモンなのよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●ゾロアイベント発生前
 ・男の子（ゾロア）に向いてからセリフ。</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
-		<language name="JPN" width="256">ばかされたら　こわいけど
+		<language name="JPN" width="256">ゾロアは　ひとを　ばかす　ちからを
+もってるんだって！[BE:01:ページ切り替え（クリア）]
+ばかされたら　こわいけど
 あたし　ゾロアって　すきよ！[BE:00:ページ切り替え（行送り）]
 だって　かわいいんだもん！[BE:01:ページ切り替え（クリア）]
 ……あら？
 あんたが　なんで　あかくなるのよ！</language>
-		<language name="JPN_KANJI" width="256">化かされたら　こわいけど
+		<language name="JPN_KANJI" width="256">ゾロアは　人を　化かす　力を
+持ってるんだって！[BE:01:ページ切り替え（クリア）]
+化かされたら　こわいけど
 あたし　ゾロアって　好きよ！[BE:00:ページ切り替え（行送り）]
 だって　可愛いんだもん！[BE:01:ページ切り替え（クリア）]
 ……あら？
