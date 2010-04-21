@@ -440,9 +440,13 @@ EVENT_START   ev_scene_r07_movepoke_02
 	//演出アニメ作成
 	_EV_MOVEPOKE_CREATE( MMDL_ID_EVENTOBJ_00 )
 	
+	//登場SE再生
+	_SE_PLAY( SEQ_SE_FLD_159 )
+	
 	//登場
 	_EV_MOVEPOKE_START_ANIME( SCR_EV_MOVEPOKE_ANIME_RAI_KAZA_INSIDE )
 	_EV_MOVEPOKE_CHECK_ANIME_END()
+	_SE_WAIT()
 	
 	//バージョンによって天気を替える
 	//★Blackの場合
@@ -469,7 +473,6 @@ EVENT_START   ev_scene_r07_movepoke_02
 	ENDIF
 	
 	//ギザウィン表示待ち
-	//_TIME_WAIT ( 80 )
 	_GIZAWIN_CLOSE()
 	
 	//天気変更待ち
@@ -477,9 +480,13 @@ EVENT_START   ev_scene_r07_movepoke_02
 	_PLAINWIN_MSG_DOWN( msg_r07_narrator_01)
 	_PLAINWIN_CLOSE()
 	
+	//退場SE再生
+	_SE_PLAY( SEQ_SE_FLD_159 )
+	
 	//退場
 	_EV_MOVEPOKE_START_ANIME(  SCR_EV_MOVEPOKE_ANIME_RAI_KAZA_OUTSIDE )
 	_EV_MOVEPOKE_CHECK_ANIME_END()
+	_SE_WAIT()
 	
 	//演出アニメ削除
 	_EV_MOVEPOKE_DELETE( )

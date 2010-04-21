@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_BG_R15R0101_BOARD_01 (1)
+#define SCRID_R15R0101_INFORMATIONW_01 (2)
 
 #endif //_R15R0101_DEF_H_

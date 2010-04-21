@@ -20,6 +20,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_bg_r15r0101_board_01
+_EVENT_DATA    ev_r15r0101_informationw_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -31,3 +32,13 @@ EVENT_START   ev_bg_r15r0101_board_01
 
 EVENT_END
 
+/**************************************************************/
+/* INFORMATIONW_01                                             */
+/**************************************************************/
+EVENT_START   ev_r15r0101_informationw_01
+	//WB分岐メッセージ
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_r15r0101_infomationw_01w , msg_r15r0101_infomationw_01b , R15R0101_INFORMATIONW_01 , POS_DEFAULT)
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+EVENT_END
