@@ -1937,19 +1937,16 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
     break;
   case 7:     // トレーナータイプ
     if(wk->is_back==0){
-      PMSND_PlaySE( SND_TRCARD_TRTYPE );
       return TRC_KEY_REQ_TRAINER_TYPE;
     }
     break;
   case 8:     // 性格
     if(wk->is_back==0){
-      PMSND_PlaySE( SND_TRCARD_PERSONALITY );
       return TRC_KEY_REQ_PERSONALITY;
     }
     break;
   case 9:     // 簡易会話
     if(wk->is_back==0){
-      PMSND_PlaySE( SND_TRCARD_PMS );
       return TRC_KEY_REQ_PMS_CALL;
     }
     break;
@@ -2055,10 +2052,7 @@ static void normal_sign_func( TR_CARD_WORK *wk )
     if(wk->old_scrol_point!=wk->scrol_point){
       wk->card_list_col = 1;
       TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 1, 1 );
-      if(++wk->scroll_se_wait>5){
-        wk->scroll_se_wait =0;
-        PMSND_PlaySE(SND_TRCARD_SLIDE);
-      }
+      PMSND_PlaySE(SND_TRCARD_SLIDE);
     }
     wk->old_scrol_point=wk->scrol_point;
   }else{
@@ -2197,6 +2191,7 @@ static void JumpInputResult( TR_CARD_WORK *wk, int req, int *seq )
     break;
   // 簡易会話呼び出し
   case TRC_KEY_REQ_PMS_CALL:
+      PMSND_PlaySE( SND_TRCARD_PMS );
     if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
       wk->sub_seq = 0;
       *seq = SEQ_PMSINPUT;
@@ -2217,6 +2212,7 @@ static void JumpInputResult( TR_CARD_WORK *wk, int req, int *seq )
   // トレーナータイプ切り替え
   case TRC_KEY_REQ_TRAINER_TYPE:
     if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
+      PMSND_PlaySE( SND_TRCARD_TRTYPE );
       _add_UnionTrNo( wk->TrCardData );
       TRCBmp_PrintTrainerType( wk, wk->TrCardData->UnionTrNo, 1 );
     }
@@ -2224,6 +2220,7 @@ static void JumpInputResult( TR_CARD_WORK *wk, int req, int *seq )
   // 性格切り替え
   case TRC_KEY_REQ_PERSONALITY:
     if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
+      PMSND_PlaySE( SND_TRCARD_PERSONALITY );
       if(++wk->TrCardData->Personality>(TRCARD_PERSONARITY_MAX-1)){
         wk->TrCardData->Personality = 0;
       }
