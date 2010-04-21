@@ -2371,6 +2371,13 @@ static void SetFont2Tex(MYSTATUS *mystatus, FLD3D_CI_PTR ptr, const char* inTexN
     PRINTSYS_LSB  lsb = PRINTSYS_LSB_Make(1,2,0);
     ptr->pal_buf = GFL_ARC_UTIL_LoadPalette( ARCID_FONT, NARC_font_default_nclr, &ptr->plt, heapID );
     plt = ptr->plt->pRawData;
+    //色変更
+    {
+      u16 *col;
+      col = (u16*)plt;
+      col[1] = 0x7fff;    //白（文字）
+      col[2] = 0x0000;    //黒（影）
+    }
 
     F2T_CopyString(res, inTexName, plt, inPltName, strbuf, 0, 0, lsb, heapID, &f2t_work );
 
