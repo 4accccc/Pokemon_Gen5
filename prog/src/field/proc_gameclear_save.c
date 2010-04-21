@@ -241,33 +241,8 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
     }
     break;
 
-  case 4:
-    // 分割セーブ実行
+  case 4: 
     if( wk->otherSaveExist == FALSE ) {
-      SAVE_RESULT result = GAMEDATA_SaveAsyncMain( wk->gamedata );
-
-      // 結果を返す
-      switch( result ) {
-      case SAVE_RESULT_CONTINUE:
-      case SAVE_RESULT_LAST:
-        break;
-      case SAVE_RESULT_OK:
-        wk->saveSuccessFlag = TRUE;
-        (*seq) ++;
-        break;
-      case SAVE_RESULT_NG:
-        wk->saveSuccessFlag = FALSE;
-        (*seq) ++;
-        break;
-      }
-    }
-    else {
-      (*seq) ++;
-    }
-    break;
-
-  case 5: 
-    if( wk->otherSaveExist==FALSE && wk->saveSuccessFlag ) {
       // 電光掲示板にチャンピオンニュースを表示
       ElboardStartChampNews( wk );
 
@@ -286,7 +261,7 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
     (*seq) ++;
     break;
 
-  case 6:
+  case 5:
     // 殿堂入りデータをセーブ
     if( wk->otherSaveExist==FALSE && wk->dendouSaveInitFlag ) {
       DendouSave_main( wk );
@@ -294,6 +269,31 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
       // セーブ終了
       if( wk->dendouSaveFinishFlag ) { 
         (*seq) ++; 
+      }
+    }
+    else {
+      (*seq) ++;
+    }
+    break;
+
+  case 6:
+    // 分割セーブ実行
+    if( wk->otherSaveExist == FALSE ) {
+      SAVE_RESULT result = GAMEDATA_SaveAsyncMain( wk->gamedata );
+
+      // 結果を返す
+      switch( result ) {
+      case SAVE_RESULT_CONTINUE:
+      case SAVE_RESULT_LAST:
+        break;
+      case SAVE_RESULT_OK:
+        wk->saveSuccessFlag = TRUE;
+        (*seq) ++;
+        break;
+      case SAVE_RESULT_NG:
+        wk->saveSuccessFlag = FALSE;
+        (*seq) ++;
+        break;
       }
     }
     else {
