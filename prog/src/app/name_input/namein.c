@@ -4179,7 +4179,7 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       chr   = APP_COMMON_GetNull4x4CharArcIdx();
       cel   = APP_COMMON_GetNull4x4CellArcIdx( APP_COMMON_MAPPING_128K );
       anm   = APP_COMMON_GetNull4x4AnimeArcIdx( APP_COMMON_MAPPING_128K );
-      is_sex_visible  = TRUE;
+      is_sex_visible  = FALSE;
       sex = param1;
       break;
     case ICON_TYPE_PERSON:
@@ -4189,7 +4189,7 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       chr   = NARC_wifi_unionobj_front00_NCGR+param1;
       cel   = NARC_wifi_unionobj_front00_NCER;
       anm   = NARC_wifi_unionobj_front00_NANR;
-      is_sex_visible  = TRUE;
+      is_sex_visible  = FALSE;
       sex = param1 < NELEMS(sc_wifi_unionobj_plt)/2 ? PTL_SEX_MALE : PTL_SEX_FEMALE;
       break;
     case ICON_TYPE_POKE:
@@ -4214,6 +4214,7 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       chr   = NARC_namein_gra_name_obj_NCGR;
       cel   = NARC_namein_gra_name_obj_NCER;
       anm   = NARC_namein_gra_name_obj_NANR;
+      is_sex_visible  = FALSE;
       break;
     default:
       GF_ASSERT(0);
@@ -4569,7 +4570,7 @@ static STRBUF* DEFAULTNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode
   switch( mode )
   { 
   case NAMEIN_MYNAME:
-    return GFL_MSG_CreateString( cp_wk->p_msg, NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ) );
+    return NULL;//GFL_MSG_CreateString( cp_wk->p_msg, NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ) );
 
   case NAMEIN_POKEMON:
     return GFL_MSG_CreateString( GlobalMsg_PokeName, cp_wk->p_param->mons_no );
@@ -4579,7 +4580,7 @@ static STRBUF* DEFAULTNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode
 
   case NAMEIN_RIVALNAME:
     //ライバル名 //ライバル名入力はなくなりました(まだ)
-    return GFL_MSG_CreateString( cp_wk->p_msg, NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ) );
+    return NULL;//GFL_MSG_CreateString( cp_wk->p_msg, NAMEIN_DEF_NAME_000 + GFUser_GetPublicRand( NAMEIN_DEFAULT_NAME_MAX ) );
 
   case NAMEIN_GREETING_WORD:
     return GFL_STR_CreateCopyBuffer( cp_wk->p_param->strbuf, heapID );
@@ -4971,15 +4972,17 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     input     = KEYBOARD_GetInput( &p_wk->keyboard, &code );
     is_shift  = KEYBOARD_IsShift( &p_wk->keyboard );
 
+    //不正文字メッセージを消す処理
     if( p_wk->is_illegal_msg == TRUE )
     { 
-      if( input != KEYBOARD_INPUT_NONE )
+      if( input != KEYBOARD_INPUT_NONE || ICON_IsTrg( &p_wk->icon ) || GFL_UI_KEY_GetTrg() )
       { 
         MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_000 + p_wk->p_param->mode );
         p_wk->is_illegal_msg = FALSE;
       }
     }
 
+    //それぞれの入力に対する処理
     switch( input )
     { 
     case KEYBOARD_INPUT_STR:        //文字入力
