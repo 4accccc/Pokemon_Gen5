@@ -118,25 +118,27 @@ pc_box:
   _SYSWIN_MSG( msg_pc_box_01 , POS_DOWN ) 
   _SYSWIN_CLOSE()
 
-  // 殿堂入りしている
-  IF $champ_win == TRUE THEN
+  // 初回クリア済み
+  IF $game_clear == TRUE THEN
     _FLAG_CHECK( FE_WALLPAPER_OPEN_MSG_01, SCWK_ANSWER ) // メッセージ表示済みか？
     // メッセージをまだ表示していない
     IF $SCWK_ANSWER == FALSE THEN
-	    _ME_PLAY(	SEQ_ME_ITEM ) 
+	    _ME_PLAY(	SEQ_ME_ACCE )
       _ME_WAIT()
-      _SYSWIN_MSG( msg_pc_on_06 , POS_DOWN ) 
+      _SYSWIN_MSG( msg_pc_on_05 , POS_DOWN ) 
       _SYSWIN_CLOSE()
       _FLAG_SET( FE_WALLPAPER_OPEN_MSG_01 )
     ENDIF
-  // 初回クリア済み
-  ELSIF $game_clear == TRUE THEN
+  ENDIF
+
+  // 殿堂入りしている
+  IF $champ_win == TRUE THEN
     _FLAG_CHECK( FE_WALLPAPER_OPEN_MSG_02, SCWK_ANSWER ) // メッセージ表示済みか？
     // メッセージをまだ表示していない
     IF $SCWK_ANSWER == FALSE THEN
-	    _ME_PLAY(	SEQ_ME_ITEM ) 
+	    _ME_PLAY(	SEQ_ME_ACCE )
       _ME_WAIT()
-      _SYSWIN_MSG( msg_pc_on_05 , POS_DOWN ) 
+      _SYSWIN_MSG( msg_pc_on_06 , POS_DOWN ) 
       _SYSWIN_CLOSE()
       _FLAG_SET( FE_WALLPAPER_OPEN_MSG_02 )
     ENDIF
