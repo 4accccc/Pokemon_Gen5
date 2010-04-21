@@ -7395,15 +7395,20 @@
 /**
  * @brief 殿堂入り画面を呼び出す
  *
- * @param type 呼び出しタイプ ( DENDOU_PC_xxxx )
+ * @param type   呼び出しタイプ ( DENDOU_PC_xxxx )
+ * @param ret_wk 終了モードを受け取るワーク
+ *
+ * @return 0 通常終了
+ *         1 ×ボタン終了
  */
 //--------------------------------------------------------------
-#define _CALL_DENDOU_PC_PROC( type ) \
-    _ASM_CALL_DENDOU_PC_PROC type
+#define _CALL_DENDOU_PC_PROC( type, ret_wk ) \
+    _ASM_CALL_DENDOU_PC_PROC type, ret_wk
 
-  .macro  _ASM_CALL_DENDOU_PC_PROC type
+  .macro  _ASM_CALL_DENDOU_PC_PROC type, ret_wk
   .short  EV_SEQ_CALL_DENDOU_PC_PROC
   .short  \type
+  .short  \ret_wk
   .endm
 
 //--------------------------------------------------------------
