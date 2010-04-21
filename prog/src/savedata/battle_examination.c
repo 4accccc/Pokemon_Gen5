@@ -157,4 +157,30 @@ void BATTLE_EXAMINATION_SAVE_Write(GAMEDATA *gamedata , BATTLE_EXAMINATION_SAVED
   GFL_HEAP_FreeMemory(pWork);
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   アクティブビットセット
+ * @param   pBattleEx   検定データポインタ
+ * @param   inBitNo     ビットナンバー
+ */
+//--------------------------------------------------------------------------------------------
+void BATTLE_EXAMINATION_SAVE_SetActiveBit(BATTLE_EXAMINATION_SAVEDATA* pBattleEx, const u32 inBitNo)
+{
+  pBattleEx->bActive |= (1 << inBitNo);
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   アクティブビット検出
+ * @param   pBattleEx   検定データポインタ
+ * @param   inBitNo     ビットナンバー
+ * @return  bit         ビット0 or 1
+ */
+//--------------------------------------------------------------------------------------------
+u8 BATTLE_EXAMINATION_SAVE_GetActiveBit(BATTLE_EXAMINATION_SAVEDATA* pBattleEx, const u32 inBitNo)
+{
+  u8 bit;
+  bit = (pBattleEx->bActive >> inBitNo) & 0x1;    //1ビットマスク
+  return bit;
+}
 
