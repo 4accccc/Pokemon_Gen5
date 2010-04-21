@@ -34,8 +34,10 @@
 #include "event_comm_common.h"
 #include "event_mission_help.h"
 #include "event_mission_help_after.h"
+#include "system/main.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
+#include "../../../resource/fldmapdata/script/item_get_scr_def.h" //SCRID_～
 
 #include "poke_tool/status_rcv.h"
 
@@ -110,11 +112,11 @@ static const struct{
   },
 
   { //自分がミッション実行者で戦闘中のターゲットに話しかけた
-    mis_m04_01_t1,
-    mis_m04_01_t2,
-    mis_m04_01_t3,
-    mis_m04_01_t4,
-    mis_m04_01_t5,
+    mis_m04_01_m1,
+    mis_m04_01_m2,
+    mis_m04_01_m3,
+    mis_m04_01_m4,
+    mis_m04_01_m5,
   },
   { //自分がミッション実行者でターゲット回復後
     mis_m04_02_m1,
@@ -617,8 +619,9 @@ static GMEVENT_RESULT Intrude_BattleHelpAfterEvent( GMEVENT *event, int *seq, vo
 	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
 	enum{
     SEQ_INIT,
-    SEQ_LAST_MSG_WAIT,
-    SEQ_MSG_END_BUTTON_WAIT,
+    SEQ_MSG_WAIT,
+    SEQ_ITEM_GET_CALL,
+    SEQ_ITEM_GET_EVENT_WAIT,
     SEQ_END,
   };
 	
@@ -628,19 +631,33 @@ static GMEVENT_RESULT Intrude_BattleHelpAfterEvent( GMEVENT *event, int *seq, vo
     IntrudeEventPrint_StartStream(&work->iem, msg_invasion_mission_sys007);
     (*seq)++;
     break;
-  case SEQ_LAST_MSG_WAIT:
+  case SEQ_MSG_WAIT:
     if(IntrudeEventPrint_WaitStream(&work->iem) == TRUE){
-      *seq = SEQ_MSG_END_BUTTON_WAIT;
+      (*seq)++;
     }
     break;
-  case SEQ_MSG_END_BUTTON_WAIT:
-    if(IntrudeEventPrint_LastKeyWait() == TRUE){
-      *seq = SEQ_END;
+  case SEQ_ITEM_GET_CALL:
+    //外部イベントを起動する為先行して削除
+    IntrudeEventPrint_ExitFieldMsg(&work->iem);
+
+    {
+      GMEVENT *item_event;
+      SCRIPT_WORK* sc;
+      
+      item_event = SCRIPT_SetEventScript( gsys, SCRID_ITEM_EVENT_PROG_CALL, NULL, HEAPID_PROC );
+      sc = SCRIPT_GetScriptWorkFromEvent( item_event );
+      SCRIPT_SetScriptWorkParam( sc, ITEM_GENKINOKAKERA, 1, 0, 0 );
+
+      GMEVENT_CallEvent(event, item_event);
     }
+    (*seq)++;
+    break;
+  case SEQ_ITEM_GET_EVENT_WAIT:
+    *seq = SEQ_END;
     break;
   case SEQ_END:
     GFL_HEAP_FreeMemory(work->myst);
-    IntrudeEventPrint_ExitFieldMsg(&work->iem);
+    //IntrudeEventPrint_ExitFieldMsg(&work->iem);
     return GMEVENT_RES_FINISH;
   }
 	return GMEVENT_RES_CONTINUE;
