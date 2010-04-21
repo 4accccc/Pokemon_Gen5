@@ -3960,7 +3960,7 @@ static BOOL scproc_Fight_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* 
 
   if( result ){
     BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
-    if(  scproc_HandEx_Root(wk, ITEM_DUMMY_DATA) != HandExResult_NULL){
+    if(  scproc_HandEx_Root(wk, ITEM_DUMMY_DATA) == HandExResult_Enable){
       SCQUE_PUT_ACT_WazaEffect( wk->que, atPos, targetPos, waza );
     }else{
       scPut_WazaFail( wk, attacker, waza );
