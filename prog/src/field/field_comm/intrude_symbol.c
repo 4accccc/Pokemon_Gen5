@@ -22,7 +22,7 @@
 //  データ
 //==============================================================================
 ///パレスと森の出入り口座標(パレス側)
-static const VecFx32 PalaceForestDoorwayPos = {FX32_CONST(504), FX32_CONST(32), FX32_CONST(376)};
+static const VecFx32 PalaceForestDoorwayPos = {FX32_CONST(504), FX32_CONST(32), FX32_CONST(360)};
 
 
 

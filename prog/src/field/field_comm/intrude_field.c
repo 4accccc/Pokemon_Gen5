@@ -61,21 +61,17 @@ typedef enum{
 //==============================================================================
 ///通信終了
 typedef struct{
-  VecFx32 pos;
-  INTRUDE_COMM_SYS_PTR intcomm;
   FIELDMAP_WORK *fieldmap;
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
   FLDMSGWIN_STREAM *msgStream;
   FLDMENUFUNC *menufunc;
-  ZONEID zoneID;
   u16 wait;
   u8 padding[2];
 }EVENT_SIOEND_WARP;
 
 ///子機の通信終了
 typedef struct{
-  INTRUDE_COMM_SYS_PTR intcomm;
   FIELDMAP_WORK *fieldmap;
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
@@ -110,8 +106,7 @@ typedef struct{
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
-static GMEVENT * EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-		u16 zone_id, const VecFx32 * pos, INTRUDE_COMM_SYS_PTR intcomm );
+static GMEVENT * EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm );
 static GMEVENT_RESULT EVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*work);
 static GMEVENT * EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm);
 static GMEVENT_RESULT EventChildCommEnd(GMEVENT * event, int *seq, void*work);
@@ -587,18 +582,6 @@ GMEVENT * Intrude_CheckPosEvent(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys,
     }
   }
 
-  FIELD_PLAYER_GetPos( pcActor, &pos );
-  
-  if(ZONEDATA_IsBingo(zone_id) == TRUE){  //ビンゴマップから脱出監視
-    if(pos.z >= FX32_CONST(680)){
-    	pos.x = PALACE_MAP_LEN/2;
-    	pos.y = 0;
-    	pos.z = 408 << FX32_SHIFT;
-      return EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACE01, &pos, 0, FALSE);
-    }
-    return NULL;
-  }
-  
   
   
   //------------- ここから下はパレス時のみの処理 -----------------
@@ -606,16 +589,14 @@ GMEVENT * Intrude_CheckPosEvent(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys,
   if(ZONEDATA_IsPalace(zone_id) == FALSE){
     return NULL;
   }
+
+  FIELD_PLAYER_GetPos( pcActor, &pos );
   
-  //T01へワープ
+  //表フィールドへワープ
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
     if(pos.x >= FX32_CONST(504) + PALACE_MAP_LEN*i && pos.x <= FX32_CONST(504) + PALACE_MAP_LEN*i
         && pos.z >= FX32_CONST(712) && pos.z <= FX32_CONST(712)){
-      pos.x = 12536 << FX32_SHIFT;
-      pos.y = 0;
-      pos.z = 12120 << FX32_SHIFT;
-      
-      return EVENT_ChangeMapPosCommEnd(gameSys, fieldWork, ZONE_ID_T01, &pos, intcomm);
+      return EVENT_ChangeMapPosCommEnd(gameSys, fieldWork, intcomm);
     }
   }
   //ビンゴマップへワープ
@@ -707,8 +688,7 @@ GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, F
  * @retval  GMEVENT *		
  */
 //==================================================================
-static GMEVENT * EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,
-		u16 zone_id, const VecFx32 * pos, INTRUDE_COMM_SYS_PTR intcomm )
+static GMEVENT * EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, INTRUDE_COMM_SYS_PTR intcomm )
 {
   EVENT_SIOEND_WARP *dsw;
 	GMEVENT * event;
@@ -717,9 +697,6 @@ static GMEVENT * EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 	dsw = GMEVENT_GetEventWork(event);
 	GFL_STD_MemClear(dsw, sizeof(EVENT_SIOEND_WARP));
 	dsw->fieldmap = fieldmap;
-	dsw->zoneID = zone_id;
-	dsw->pos = *pos;
-	dsw->intcomm = intcomm;
 	
 	OS_TPrintf("親機：通信切断イベント起動\n");
 	return event;
@@ -878,7 +855,6 @@ static GMEVENT * EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldma
 	dsc = GMEVENT_GetEventWork(event);
 	GFL_STD_MemClear(dsc, sizeof(EVENT_SIOEND_CHILD));
 	dsc->fieldmap = fieldmap;
-	dsc->intcomm = intcomm;
 	
 	OS_TPrintf("子機：通信切断イベント起動\n");
 	return event;
