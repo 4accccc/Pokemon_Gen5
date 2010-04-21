@@ -192,16 +192,7 @@ static const BOOL CTVT_TALK_CheckFinishReq( COMM_TVT_WORK *work , CTVT_TALK_WORK
 static void CTVT_TALK_InitDrawWave( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork );
 static void CTVT_TALK_UpdateDrawWave( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork , void *waveBuf , const u8 drawCol , s32 nowSize , u16 maxSize );
 
-static const GFL_UI_TP_HITTBL CTVT_TALK_HitRecButton[2] = 
-{
-  {
-    CTVT_TALK_REC_BUTTON_TOP*8,
-    (CTVT_TALK_REC_BUTTON_TOP+CTVT_TALK_REC_BUTTON_HEIGHT)*8,
-    CTVT_TALK_REC_BUTTON_LEFT*8,
-    (CTVT_TALK_REC_BUTTON_LEFT+CTVT_TALK_REC_BUTTON_WIDTH)*8,
-  },
-  {GFL_UI_TP_HIT_END,0,0,0}
-};
+static const BOOL CTVT_TALK_CheckHitTalkButton( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork , const BOOL isCont );
 
 //Œ`‚ª‹éŒ`‚Å‚Í‚È‚¢‚Ì‚Å2ŒÂ”»’è
 static const GFL_UI_TP_HITTBL CTVT_TALK_HitDrawButton[3] = 
@@ -475,8 +466,8 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
   case CTS_REQ_TALK:
     if( CTVT_TALK_CheckFinishReq( work , talkWork ) == FALSE )
     {
-      const int isContTbl = GFL_UI_TP_HitCont( CTVT_TALK_HitRecButton );
-      if( isContTbl == 0 || (GFL_UI_KEY_GetCont() & CTVT_BUTTON_TALK) )
+      const BOOL flg = CTVT_TALK_CheckHitTalkButton( work , talkWork , TRUE );
+      if( flg == TRUE || (GFL_UI_KEY_GetCont() & CTVT_BUTTON_TALK) )
       {
         CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
         const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_REQ_TALK , 0 );
@@ -498,8 +489,8 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
       const u8 talkMember = CTVT_COMM_GetTalkMember( work , commWork );
       const u8 selfId = CTVT_COMM_GetSelfNetId( work , commWork );
-      const int isContTbl = GFL_UI_TP_HitCont( CTVT_TALK_HitRecButton );
-      if( isContTbl == 0 || (GFL_UI_KEY_GetCont() & CTVT_BUTTON_TALK)  )
+      const BOOL flg = CTVT_TALK_CheckHitTalkButton( work , talkWork , TRUE );
+      if( flg == TRUE || (GFL_UI_KEY_GetCont() & CTVT_BUTTON_TALK)  )
       {
         if( talkMember != CTVT_COMM_INVALID_MEMBER )
         {
@@ -743,7 +734,11 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       u16 playCntMax = CTVT_MIC_GetPlayCntMax( talkWork->micWork );
       u32 playSize = CTVT_MIC_GetPlaySize( talkWork->micWork );
       u32 nowPlayPos = playSize * playCnt / playCntMax;
-      
+      if( playCnt > playCntMax )
+      {
+        playCnt = playCntMax;
+      }
+      OS_TFPrintf(2,"S[%d:%d:%d][%d]\n",playCnt,playCntMax,playSize,nowPlayPos);
       waveBuffer = (void*)((u32)waveBuffer + CTVT_MIC_CUT_SIZE);
       CTVT_TALK_UpdateDrawWave( work , talkWork , waveBuffer , 0x3 , nowPlayPos , playSize );  //—ÎF
       
@@ -798,8 +793,9 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     }
     else
     {
+      const BOOL flg = CTVT_TALK_CheckHitTalkButton( work , talkWork , FALSE );
       if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_TALK ||
-          GFL_UI_TP_HitTrg( CTVT_TALK_HitRecButton ) == 0 )
+          flg == TRUE )
       {
         talkWork->state = CTS_REQ_TALK;
         PMSND_PlaySystemSE( CTVT_SND_TOUCH );
@@ -877,11 +873,12 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
 //--------------------------------------------------------------
 static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
 {
-  const int isContTbl = GFL_UI_TP_HitCont( CTVT_TALK_HitRecButton );
+  const BOOL flg = CTVT_TALK_CheckHitTalkButton( work , talkWork , TRUE );
   if( CTVT_TALK_CheckFinishReq( work , talkWork ) == TRUE )
   {
     return;
   }
+  
   switch( talkWork->subState )
   {
   case CTSS_INIT_REC:
@@ -900,7 +897,7 @@ static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     }
     break;
   case CTSS_RECORDING:
-    if( !(isContTbl == 0) && !(GFL_UI_KEY_GetCont() & CTVT_BUTTON_TALK) )
+    if( !(flg == TRUE) && !(GFL_UI_KEY_GetCont() & CTVT_BUTTON_TALK) )
     {
       CTVT_MIC_StopRecord( talkWork->micWork );
     }
@@ -995,6 +992,7 @@ static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
     }
     break;
   case CTSS_WAIT_PLAY:
+    if( talkWork->sendWaveData->recSize > 0 )
     {
       CTVT_MIC_WORK *micWork = COMM_TVT_GetMicWork(work);
       if( CTVT_MIC_IsPlayWave( micWork ) == TRUE )
@@ -1002,7 +1000,10 @@ static void CTVT_TALK_UpdateTalk( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
         talkWork->subState = CTSS_PLAY;
       }
     }
-    
+    else
+    {
+      talkWork->state = CTS_WAIT;
+    }
     break;
     
   case CTSS_PLAY:
@@ -1187,8 +1188,8 @@ static void CTVT_TALK_DrawLine( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork ,
   fx32 addY = FX32_CONST(y2-y1) / loopNum;
   fx32 subX = 0;
   fx32 subY = 0;
-  u8 i;
-  //OS_TFPrintf(3,"[%d:%d][%d:%d]\n",x1,y1,x2,y2 );
+  int i;
+  //OS_TFPrintf(2,"[%d:%d][%d:%d]\n",x1,y1,x2,y2 );
   for( i=0;i<loopNum;i++ )
   {
     const int posX = x1 + (subX>>FX32_SHIFT);
@@ -1239,8 +1240,10 @@ static void CTVT_TALK_DispMessage( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWor
   PRINTSYS_PrintQueColor( printQue , GFL_BMPWIN_GetBmp( talkWork->msgWin ) , 
           0 , 0 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
   GFL_STR_DeleteBuffer( str );
+  GFL_BMPWIN_TransVramCharacter( talkWork->msgWin );
+  GFL_BMPWIN_MakeScreen( talkWork->msgWin );
 
-  BmpWinFrame_Write( talkWork->msgWin , WINDOW_TRANS_OFF , 
+  BmpWinFrame_Write( talkWork->msgWin , WINDOW_TRANS_ON_V , 
                       CTVT_BMPWIN_CGX , CTVT_PAL_BG_SUB_WINFRAME );
   talkWork->isUpdateMsgWin = TRUE;
 
@@ -1408,6 +1411,37 @@ static void CTVT_TALK_UpdateDrawWave( COMM_TVT_WORK *work , CTVT_TALK_WORK *talk
       GFL_BMPWIN_TransVramCharacter( talkWork->waveWin );
     }
   }
+}
+
+#define CTVT_TALK_BUTTON_CENTER_X (128)
+#define CTVT_TALK_BUTTON_CENTER_Y (104)
+#define CTVT_TALK_BUTTON_LEN_MIN (16*16)
+#define CTVT_TALK_BUTTON_LEN_MAX (72*72)
+static const BOOL CTVT_TALK_CheckHitTalkButton( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork , const BOOL isCont )
+{
+  u32 tpx,tpy;
+  if( isCont == FALSE )
+  {
+    GFL_UI_TP_GetPointTrg( &tpx,&tpy );
+  }
+  else
+  {
+    GFL_UI_TP_GetPointCont( &tpx,&tpy );
+  }  
+
+  if( tpy >= 104 )
+  {
+    const int subX = CTVT_TALK_BUTTON_CENTER_X-tpx;
+    const int subY = CTVT_TALK_BUTTON_CENTER_Y-tpy;
+    const int len = (subX*subX)+(subY*subY);
+    if( len > CTVT_TALK_BUTTON_LEN_MIN &&
+        len < CTVT_TALK_BUTTON_LEN_MAX )
+    {
+      return TRUE;
+    }
+  }
+  
+  return FALSE;
 }
 
 #pragma mark[>outer func

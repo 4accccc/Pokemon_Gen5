@@ -960,7 +960,7 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
     CTVT_DRAW_EreseSubWindow( work , drawWork );
     return;
   }
-  if( drawWork->state == CDS_EDIT &&
+  if( (drawWork->state == CDS_EDIT || drawWork->state == CDS_DRAW) &&
       GFL_UI_TP_GetTrg() == TRUE &&
       drawWork->isTouch == FALSE &&
       drawWork->editMode == CDED_STAMP )
@@ -1407,7 +1407,9 @@ static void CTVT_DRAW_DispMessage( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWor
           0 , 0 , str , fontHandle ,CTVT_FONT_COLOR_BLACK );
   GFL_STR_DeleteBuffer( str );
 
-  BmpWinFrame_Write( drawWork->msgWin , WINDOW_TRANS_OFF , 
+  GFL_BMPWIN_TransVramCharacter( drawWork->msgWin );
+  GFL_BMPWIN_MakeScreen( drawWork->msgWin );
+  BmpWinFrame_Write( drawWork->msgWin , WINDOW_TRANS_ON_V , 
                       CTVT_BMPWIN_CGX , CTVT_PAL_BG_MAIN_WINFRAME );
   drawWork->isUpdateMsgWin = TRUE;
 

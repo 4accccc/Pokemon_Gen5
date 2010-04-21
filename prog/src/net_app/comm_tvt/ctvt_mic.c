@@ -183,7 +183,7 @@ void CTVT_MIC_Main( CTVT_MIC_WORK *micWork )
     if( NNS_SndWaveOutIsPlaying( micWork->waveHandle ) == FALSE )
     {
       micWork->isPlayWave = FALSE;
-      //OS_TFPrintf(2,"[%x:%x:%d][%d]\n",micWork->playSize,micWork->playSpeed,micWork->playCnt,CTVT_MIC_GetPlayCntMax(micWork));
+      //OS_TFPrintf(2,"E[%x:%x:%d][%d]\n",micWork->playSize,micWork->playSpeed,micWork->playCnt,CTVT_MIC_GetPlayCntMax(micWork));
     }
   }
   CTVT_MIC_PlayWaveMain( micWork );
@@ -422,22 +422,30 @@ static void CTVT_MIC_PlayWaveMain( CTVT_MIC_WORK *micWork )
 //--------------------------------------------------------------
 const BOOL CTVT_MIC_PlayWave( CTVT_MIC_WORK *micWork , void *buffer , u32 size , u8 volume , int speed )
 {
-  const BOOL ret = NNS_SndWaveOutStart(
-                    micWork->waveHandle ,
-                    NNS_SND_WAVE_FORMAT_PCM16 ,
-                    (void*)((u32)buffer + CTVT_MIC_CUT_SIZE),
-                    FALSE ,
-                    0 ,
-                    size /2,
-                    (int)( HW_CPU_CLOCK_ARM7 / CTVT_MIC_SAMPLING_RATE ),
-                    volume ,
-                    speed ,
-                    64 );
-  micWork->isPlayWave = ret;
-  micWork->playCnt = 0;
-  micWork->playSize = size;
-  micWork->playSpeed = speed;
-  return ret;
+  if( size > 0 )
+  {
+    const BOOL ret = NNS_SndWaveOutStart(
+                      micWork->waveHandle ,
+                      NNS_SND_WAVE_FORMAT_PCM16 ,
+                      (void*)((u32)buffer + CTVT_MIC_CUT_SIZE),
+                      FALSE ,
+                      0 ,
+                      size /2,
+                      (int)( HW_CPU_CLOCK_ARM7 / CTVT_MIC_SAMPLING_RATE ),
+                      volume ,
+                      speed ,
+                      64 );
+    micWork->isPlayWave = ret;
+    micWork->playCnt = 0;
+    micWork->playSize = size;
+    micWork->playSpeed = speed;
+    //OS_TFPrintf(2,"S[%x:%x:%d][%d]\n",micWork->playSize,micWork->playSpeed,micWork->playCnt,CTVT_MIC_GetPlayCntMax(micWork));
+    return ret;
+  }
+  else
+  {
+    return FALSE;
+  }
 }
 
 //--------------------------------------------------------------
