@@ -5362,6 +5362,8 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
     {
       u32 ret,param;
       u16 dummy_ret;
+      VecFx32 receipt_map_pos = {GRID_SIZE_FX32(9),0,GRID_SIZE_FX32(12)};
+      VecFx32 home_map_pos = {GRID_SIZE_FX32(27),0,GRID_SIZE_FX32(15)};
       GMEVENT *next_event = NULL;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
       
@@ -5378,8 +5380,8 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
       switch( ret ){
       case DEBUG_BSWAY_ZONE_HOME: //ホームへ移動
         param = ZONE_ID_C04R0111;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
+        next_event = DEBUG_EVENT_QuickChangeMapAppoint(
+          work->gmSys, work->fieldWork, param, &home_map_pos );
         break;
       case DEBUG_BSWAY_ZONE_TRAIN: //車内へ移動
         param = ZONE_ID_C04R0110;
@@ -5403,38 +5405,38 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
         break;
       case DEBUG_BSWAY_ZONE_SINGLE: //シングル受付へ
         param = ZONE_ID_C04R0102;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
+        next_event = DEBUG_EVENT_QuickChangeMapAppoint(
+          work->gmSys, work->fieldWork, param, &receipt_map_pos );
         break;
       case DEBUG_BSWAY_ZONE_DOUBLE: //ダブル受付へ
         param = ZONE_ID_C04R0104;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
+        next_event = DEBUG_EVENT_QuickChangeMapAppoint(
+          work->gmSys, work->fieldWork, param, &receipt_map_pos );
         break;
       case DEBUG_BSWAY_ZONE_MULTI: //マルチ受付へ
         param = ZONE_ID_C04R0106;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
+        next_event = DEBUG_EVENT_QuickChangeMapAppoint(
+          work->gmSys, work->fieldWork, param, &receipt_map_pos );
         break;
       case DEBUG_BSWAY_ZONE_WIFI: //WiFi受付へ
         param = ZONE_ID_C04R0108;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
+        next_event = DEBUG_EVENT_QuickChangeMapAppoint(
+          work->gmSys, work->fieldWork, param, &receipt_map_pos );
         break;
       case DEBUG_BSWAY_ZONE_S_SINGLE: //Sシングル受付へ
         param = ZONE_ID_C04R0103;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
+        next_event = DEBUG_EVENT_QuickChangeMapAppoint(
+          work->gmSys, work->fieldWork, param, &receipt_map_pos );
         break;
       case DEBUG_BSWAY_ZONE_S_DOUBLE: //Sダブル受付へ
         param = ZONE_ID_C04R0105;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
+        next_event = DEBUG_EVENT_QuickChangeMapAppoint(
+          work->gmSys, work->fieldWork, param, &receipt_map_pos );
         break;
       case DEBUG_BSWAY_ZONE_S_MULTI: //Sマルチ受付へ
         param = ZONE_ID_C04R0107;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
+        next_event = DEBUG_EVENT_QuickChangeMapAppoint(
+          work->gmSys, work->fieldWork, param, &receipt_map_pos );
         break;
       case DEBUG_BSWAY_AUTO_SINGLE: //シングルオート戦闘
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_SINGLE );

@@ -1265,6 +1265,12 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       EtcSave_SetAcquaintance( etc, bsw_scr->mystatus_fr.id ) ;
     }
     break;
+  //通信親のOBJコードを取得
+  case BSWSUB_COMM_GET_OBJCODE_OYA:
+    break;
+  //通信子のOBJコードを取得
+  case BSWSUB_COMM_GET_OBJCODE_KO:
+    break;
   //----デバッグ
   //DEBUG 選択ポケモン強制セット
   case BSWSUB_DEBUG_SET_SELECT_POKE:

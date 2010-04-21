@@ -1648,6 +1648,19 @@ GMEVENT* DEBUG_EVENT_QuickChangeMapDefaultPos( GAMESYS_WORK * gameSystem,
 }
 
 //------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT * DEBUG_EVENT_QuickChangeMapAppoint( GAMESYS_WORK * gameSystem,
+                                    FIELDMAP_WORK* fieldmap, u16 zoneID,
+                                    const VecFx32 *pos )
+{
+  GMEVENT *event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+      gameSystem, fieldmap, zoneID );
+  MAPCHANGE_WORK *work = GMEVENT_GetEventWork( event );
+  work->loc_req.location_pos.pos = *pos;
+  return event;
+}
+
+//------------------------------------------------------------------
 /**
  * @brief マップ遷移イベント生成（ 流砂 ）
  * @param gameSystem          ゲームシステムへのポインタ

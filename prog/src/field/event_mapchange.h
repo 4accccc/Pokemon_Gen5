@@ -117,6 +117,9 @@ extern GMEVENT* DEBUG_EVENT_ChangeMapDefaultPos( GAMESYS_WORK* gameSystem,
 //------------------------------------------------------------------
 extern GMEVENT* DEBUG_EVENT_QuickChangeMapDefaultPos( GAMESYS_WORK * gameSystem,
                                                       FIELDMAP_WORK* fieldmap, u16 zoneID );
+extern GMEVENT * DEBUG_EVENT_QuickChangeMapAppoint( GAMESYS_WORK * gameSystem,
+                                    FIELDMAP_WORK* fieldmap, u16 zoneID,
+                                    const VecFx32 *pos );
 
 //------------------------------------------------------------------
 /**
