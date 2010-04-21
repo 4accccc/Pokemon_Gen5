@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-20T20:25:42"/>
+	<create user="matsumiya" host="W00224" date="2010-04-21T14:22:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="145" right="2004" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="152" right="1985" bottom="780" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -354,7 +354,7 @@
 さっさと　中を　調べようか</language>
 	</row>
 
-	<row id="msg_d05_workman2_01">
+	<row id="msg_d05_workman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・GRIDX=174、GRIDZ=459
 ・仮メッセージ</comment>
@@ -365,7 +365,7 @@
 冷凍コンテナに　行けるべ</language>
 	</row>
 
-	<row id="msg_d05_trainerm_02">
+	<row id="msg_d05_trainerm_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・GRIDX=205、GRIDZ=453
 ・仮メッセージ</comment>

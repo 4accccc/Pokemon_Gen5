@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-17T17:57:51"/>
+	<create user="matsumiya" host="W00224" date="2010-04-21T14:39:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1332" top="247" right="2037" bottom="875" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="152" right="1985" bottom="780" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -424,9 +424,9 @@
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
 プラズマ団♂</attribute>
 		<language name="JPN" width="256">プラズマだん『オレは　このなかで
-いちばん　つよい　プラズマだん！▼</language>
+けっこう　つよい　プラズマだん！▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『オレは　このなかで
-一番　強い　プラズマ団！▼</language>
+結構　強い　プラズマ団！▼</language>
 	</row>
 
 	<row id="msg_d05r0201_hakaim1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -435,9 +435,9 @@
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
 プラズマ団♂</attribute>
 		<language name="JPN" width="256">プラズマだん『……こんなに　さむくて
-ふるえていたら　かてるわけ……[BE:01:ページ切り替え（クリア）]</language>
+ふるえていたら　かてるわけ……</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『……こんなに　寒くて
-震えていたら　勝てるわけ……[BE:01:ページ切り替え（クリア）]</language>
+震えていたら　勝てるわけ……</language>
 	</row>
 
 	<row id="msg_d05r0201_hakaim2_01">
@@ -446,20 +446,29 @@
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
 プラズマ団♂</attribute>
 		<language name="JPN" width="256">プラズマだん『オレは　このなかで
-いちばん　つよい　プラズマだん！▼</language>
+かなり　つよい　プラズマだん！▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『オレは　このなかで
-一番　強い　プラズマ団！▼</language>
+かなり　強い　プラズマ団！▼</language>
 	</row>
 
-	<row id="msg_d05r0201_hakaim2_02">
+	<row id="msg_d05r0201_hakaim2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・戦闘後</comment>
+・戦闘後
+・仮メッセージ</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
 プラズマ団♂</attribute>
-		<language name="JPN" width="256">プラズマだん『……こんなに　さむくて
-ふるえていたら　かてるわけ……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『……こんなに　寒くて
-震えていたら　勝てるわけ……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">プラズマだん『……うばった
+ポケモンを　まとめて　はこぶため▼
+よなかの　コンテナまえに
+あつまっていた　ところ……▼
+ヤーコンの　やろうに　みつかり
+つかまっていたのだ……</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『……奪い集めた
+ポケモンを　まとめて　運ぶため▼
+夜中の　コンテナ前に
+集まっていた　ところ……▼
+ヤーコンの　野郎に　みつかり
+つかまっていたのだ……</language>
 	</row>
 
 	<row id="msg_d05r0201_hakaim3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -468,9 +477,9 @@
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
 プラズマ団♂</attribute>
 		<language name="JPN" width="256">プラズマだん『オレは　このなかで
-いちばん　つよい　プラズマだん！▼</language>
+なかなか　つよい　プラズマだん！▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『オレは　このなかで
-一番　強い　プラズマ団！▼</language>
+なかなか　強い　プラズマ団！▼</language>
 	</row>
 
 	<row id="msg_d05r0201_hakaim3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -478,10 +487,16 @@
 ・戦闘後</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
 プラズマ団♂</attribute>
-		<language name="JPN" width="256">プラズマだん『……こんなに　さむくて
-ふるえていたら　かてるわけ……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『……こんなに　寒くて
-震えていたら　勝てるわけ……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">プラズマだん『……ひとと　いっしょに
+はたらく　ポケモンたち▼
+たのしそうに　みえるが
+きっと　くるしんでいるのだ！▽
+そうに　ちがいない！</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『……人と　共に
+働く　ポケモンたち▼
+楽しそうに　みえるが
+きっと　苦しんでいるのだ！▽
+そうに　違いない！</language>
 	</row>
 
 	<row id="msg_d05r0201_hakaiw1_01">
@@ -490,9 +505,9 @@
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
 プラズマ団♀</attribute>
 		<language name="JPN" width="256">プラズマだん『アタイ　このなかで
-いちばん　つよい　プラズマだん！▼</language>
+それなりに　つよい　プラズマだん！▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『アタイ　このなかで
-一番　強い　プラズマ団！▼</language>
+それなりに　強い　プラズマ団！▼</language>
 	</row>
 
 	<row id="msg_d05r0201_hakaiw1_02">
@@ -500,10 +515,10 @@
 ・戦闘後</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
 プラズマ団♀</attribute>
-		<language name="JPN" width="256">プラズマだん『……こんなに　さむくて
-ふるえていたら　かてるわけ……[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『……こんなに　寒くて
-震えていたら　勝てるわけ……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">プラズマだん『……なぜかしら
+なんだか　ねむくなってきた</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『……なぜかしら
+なんだか　眠くなってきた</language>
 	</row>
 
 	<row id="msg_d05r0201_hakaim4_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -524,10 +539,12 @@
 ・４人倒すまで繰り返し</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
 プラズマ団♂</attribute>
-		<language name="JPN" width="256">プラズマだん『ヘクション！
-オマエの　あいては　むこうだ……</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『ヘクション！
-オマエの　相手は　向こうだ……</language>
+		<language name="JPN" width="256">プラズマだん『ふつうの　コンテナと
+れいとうコンテナを　まちがえて▽
+にげこむとは……　なさけない</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『普通の　コンテナと
+冷凍コンテナを　まちがえて▽
+逃げこむとは……　情けない</language>
 	</row>
 
 	<row id="msg_d05r0201_hakaim6_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -536,10 +553,10 @@
 ・４人倒すまで繰り返し</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
 プラズマ団♂</attribute>
-		<language name="JPN" width="256">プラズマだん『ヘクション！
-オマエの　あいては　むこうだ……</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『ヘクション！
-オマエの　相手は　向こうだ……</language>
+		<language name="JPN" width="256">プラズマだん『……！　オレが
+こんな　トレーナーに　まけるのか！？</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『……！　オレが
+こんな　トレーナーに　負けるのか！？</language>
 	</row>
 
 	<row id="msg_d05r0201_hakaiw2_01">
