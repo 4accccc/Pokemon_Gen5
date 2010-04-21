@@ -319,6 +319,12 @@ _EVENT_DATA ev_fld_item_303
 _EVENT_DATA ev_fld_item_299
 _EVENT_DATA ev_fld_item_284
 _EVENT_DATA ev_fld_item_289
+_EVENT_DATA ev_fld_item_310
+_EVENT_DATA ev_fld_item_311
+_EVENT_DATA ev_fld_item_312
+_EVENT_DATA ev_fld_item_313
+_EVENT_DATA ev_fld_item_314
+_EVENT_DATA ev_fld_item_315
 _EVENT_DATA ev_fld_item2
 _EVENT_DATA_END
 
@@ -918,10 +924,10 @@ EVENT_START ev_fld_item_129
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r06r0201 X=27 Y=6 ITEM=インドメタシン FLAG=148
+// MAP=r06r0201 X=27 Y=6 ITEM=ゴールドスプレー FLAG=148
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_148
-  _FLD_ITEM_EVENT ITEM_INDOMETASIN,1
+  _FLD_ITEM_EVENT ITEM_GOORUDOSUPUREE,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -2448,6 +2454,48 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_289
   _FLD_ITEM_EVENT ITEM_MANTANNOKUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=R08R0101 X=45 Y=41 ITEM=げんきのかたまり FLAG=310
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_310
+  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=R08R0101 X=15 Y=53 ITEM=インドメタシン FLAG=311
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_311
+  _FLD_ITEM_EVENT ITEM_INDOMETASIN,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=R08R0101 X=31 Y=16 ITEM=まんたんのくすり FLAG=312
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_312
+  _FLD_ITEM_EVENT ITEM_MANTANNOKUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=R08R0101 X=42 Y=11 ITEM=ピーピーマックス FLAG=313
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_313
+  _FLD_ITEM_EVENT ITEM_PIIPIIMAKKUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=R08R0101 X=6 Y=44 ITEM=ふしぎなアメ FLAG=314
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_314
+  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=T04 X=725 Y=291 ITEM=でかいきんのたま FLAG=315
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_315
+  _FLD_ITEM_EVENT ITEM_DEKAIKINNOTAMA,1
 EVENT_END
 
 

@@ -164,6 +164,18 @@ _EVENT_DATA  ev_hide_item_142
 _EVENT_DATA  ev_hide_item_143
 _EVENT_DATA  ev_hide_item_144
 _EVENT_DATA  ev_hide_item_145
+_EVENT_DATA  ev_hide_item_146
+_EVENT_DATA  ev_hide_item_147
+_EVENT_DATA  ev_hide_item_148
+_EVENT_DATA  ev_hide_item_149
+_EVENT_DATA  ev_hide_item_150
+_EVENT_DATA  ev_hide_item_151
+_EVENT_DATA  ev_hide_item_152
+_EVENT_DATA  ev_hide_item_153
+_EVENT_DATA  ev_hide_item_154
+_EVENT_DATA  ev_hide_item_155
+_EVENT_DATA  ev_hide_item_156
+_EVENT_DATA  ev_hide_item_157
 //--------------------------------------------------------------
 //               スクリプト本体 開始
 //--------------------------------------------------------------
@@ -424,7 +436,7 @@ EVENT_END
 
 EVENT_START ev_hide_item_051
 //古代の城 ( 14, 17 )
-	_ITEM_EVENT_HIDEITEM( 28, 1, FLAG_HIDEITEM_051 )// げんきのかけら
+	_ITEM_EVENT_HIDEITEM( 53, 1, FLAG_HIDEITEM_051 )// ポイントマックス
 EVENT_END
 
 EVENT_START ev_hide_item_052
@@ -463,7 +475,7 @@ EVENT_START ev_hide_item_058
 EVENT_END
 
 EVENT_START ev_hide_item_059
-//フキヨセのほらあな３Ｆ ( 7, 9 )
+//フキヨセのほらあな３Ｆ ( 28, 7 )
 	_ITEM_EVENT_HIDEITEM( 2, 1, FLAG_HIDEITEM_059 )// ハイパーボール
 EVENT_END
 
@@ -604,12 +616,12 @@ EVENT_END
 
 EVENT_START ev_hide_item_087
 //しゅぎょうのいわや ( 58, 17 )
-	_ITEM_EVENT_HIDEITEM( 50, 1, FLAG_HIDEITEM_087 )// ふしぎなアメ
+	_ITEM_EVENT_HIDEITEM( 23, 1, FLAG_HIDEITEM_087 )// かいふくのくすり
 EVENT_END
 
 EVENT_START ev_hide_item_088
 //しゅぎょうのいわや ( 6, 41 )
-	_ITEM_EVENT_HIDEITEM( 25, 1, FLAG_HIDEITEM_088 )// すごいキズぐすり
+	_ITEM_EVENT_HIDEITEM( 50, 1, FLAG_HIDEITEM_088 )// ふしぎなアメ
 EVENT_END
 
 EVENT_START ev_hide_item_089
@@ -854,7 +866,7 @@ EVENT_END
 
 EVENT_START ev_hide_item_137
 //セッカの湿原 ( 17, 51 )
-	_ITEM_EVENT_HIDEITEM( 45, 1, FLAG_HIDEITEM_137 )// マックスアップ
+	_ITEM_EVENT_HIDEITEM( 39, 1, FLAG_HIDEITEM_137 )// ピーピーリカバー
 EVENT_END
 
 EVENT_START ev_hide_item_138
@@ -863,7 +875,7 @@ EVENT_START ev_hide_item_138
 EVENT_END
 
 EVENT_START ev_hide_item_139
-//セッカの湿原 ( 42, 11 )
+//セッカの湿原 ( 38, 28 )
 	_ITEM_EVENT_HIDEITEM( 87, 1, FLAG_HIDEITEM_139 )// おおきなキノコ
 EVENT_END
 
@@ -895,6 +907,66 @@ EVENT_END
 EVENT_START ev_hide_item_145
 //ジャイアントホール ( 24, 5 )
 	_ITEM_EVENT_HIDEITEM( 86, 1, FLAG_HIDEITEM_145 )// ちいさなキノコ
+EVENT_END
+
+EVENT_START ev_hide_item_146
+//１３番道路 ( 728, 242 )
+	_ITEM_EVENT_HIDEITEM( 88, 1, FLAG_HIDEITEM_146 )// しんじゅ
+EVENT_END
+
+EVENT_START ev_hide_item_147
+//１４番道路 ( 757, 336 )
+	_ITEM_EVENT_HIDEITEM( 41, 1, FLAG_HIDEITEM_147 )// ピーピーマックス
+EVENT_END
+
+EVENT_START ev_hide_item_148
+//でんきいしのほらあな１Ｆ ( 28, 10 )
+	_ITEM_EVENT_HIDEITEM( 40, 1, FLAG_HIDEITEM_148 )// ピーピーエイダー
+EVENT_END
+
+EVENT_START ev_hide_item_149
+//でんきいしのほらあなＢ１ ( 31, 44 )
+	_ITEM_EVENT_HIDEITEM( 22, 1, FLAG_HIDEITEM_149 )// まひなおし
+EVENT_END
+
+EVENT_START ev_hide_item_150
+//でんきいしのほらあなＢ２ ( 25, 30 )
+	_ITEM_EVENT_HIDEITEM( 22, 1, FLAG_HIDEITEM_150 )// まひなおし
+EVENT_END
+
+EVENT_START ev_hide_item_151
+//古代の城 ( 10, 10 )
+	_ITEM_EVENT_HIDEITEM( 40, 1, FLAG_HIDEITEM_151 )// ピーピーエイダー
+EVENT_END
+
+EVENT_START ev_hide_item_152
+//古代の城 ( 26, 26 )
+	_ITEM_EVENT_HIDEITEM( 26, 1, FLAG_HIDEITEM_152 )// いいキズぐすり
+EVENT_END
+
+EVENT_START ev_hide_item_153
+//フキヨセのほらあな１Ｆ ( 3, 17 )
+	_ITEM_EVENT_HIDEITEM( 40, 1, FLAG_HIDEITEM_153 )// ピーピーエイダー
+EVENT_END
+
+EVENT_START ev_hide_item_154
+//フキヨセのほらあな１Ｆ ( 20, 3 )
+	_ITEM_EVENT_HIDEITEM( 25, 1, FLAG_HIDEITEM_154 )// すごいキズぐすり
+EVENT_END
+
+EVENT_START ev_hide_item_155
+//フキヨセのほらあな３Ｆ ( 7, 9 )
+	_ITEM_EVENT_HIDEITEM( 92, 1, FLAG_HIDEITEM_155 )// きんのたま
+EVENT_END
+
+EVENT_START ev_hide_item_156
+//１３番道路 ( 644, 215 )
+	_ITEM_EVENT_HIDEITEM( 582, 1, FLAG_HIDEITEM_156 )// おだんごしんじゅ
+EVENT_END
+
+EVENT_START ev_hide_item_157
+//ホドモエの市場 ( 4, 9 )
+	_ITEM_EVENT_HIDEITEM( 93, 1, FLAG_HIDEITEM_157 )// ハートのウロコ
 EVENT_END
 
 //--------------------------------------------------------------
