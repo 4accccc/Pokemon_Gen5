@@ -87,8 +87,10 @@ extern const u8  MISC_GetPalparkFinishState(const MISC *misc);
 extern void  MISC_SetPalparkFinishState(MISC *misc , u8 state);
 //‚·‚êˆá‚¢
 extern u32 MISC_CrossComm_GetThanksRecvCount(const MISC *misc);
+extern void MISC_CrossComm_SetThanksRecvCount(MISC *misc, u32 count );
 extern u32 MISC_CrossComm_IncThanksRecvCount(MISC *misc);
 extern u32 MISC_CrossComm_GetSuretigaiCount(const MISC *misc);
+extern void MISC_CrossComm_SetSuretigaiCount(MISC *misc, u32 count );
 extern u32 MISC_CrossComm_IncSuretigaiCount(MISC *misc);
 extern const STRCODE * MISC_CrossComm_GetSelfIntroduction(const MISC *misc);
 extern void MISC_CrossComm_SetSelfIntroduction(MISC *misc, const STRBUF *srcbuf);

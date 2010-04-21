@@ -290,6 +290,20 @@ u32 MISC_CrossComm_GetThanksRecvCount(const MISC *misc)
 
 //==================================================================
 /**
+ * すれ違い通信：お礼を言われた回数をセット
+ *
+ * @param   misc		
+ */
+//==================================================================
+void MISC_CrossComm_SetThanksRecvCount(MISC *misc, u32 count )
+{
+  if(misc->thanks_recv_count <= CROSS_COMM_THANKS_RECV_COUNT_MAX){
+    misc->thanks_recv_count = count;
+  }
+}
+
+//==================================================================
+/**
  * すれ違い通信：お礼を言われた回数をインクリメント
  *
  * @param   misc		
@@ -317,6 +331,20 @@ u32 MISC_CrossComm_IncThanksRecvCount(MISC *misc)
 u32 MISC_CrossComm_GetSuretigaiCount(const MISC *misc)
 {
   return misc->suretigai_count;
+}
+
+//==================================================================
+/**
+ * すれ違いした人数をセット
+ *
+ * @param   misc		
+ */
+//==================================================================
+void MISC_CrossComm_SetSuretigaiCount( MISC *misc, u32 count )
+{
+  if(misc->suretigai_count <= CROSS_COMM_SURETIGAI_COUNT_MAX){
+    misc->suretigai_count = count;
+  }
 }
 
 //==================================================================
