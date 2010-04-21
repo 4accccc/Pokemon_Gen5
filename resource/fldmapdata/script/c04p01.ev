@@ -87,6 +87,8 @@ EVENT_END
 /*							Ｎ								*/
 /************************************************************/
 EVENT_START	ev_pos_c04p01_boss_01
+	//重要イベントでの通信切断
+	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
 	
 	//自転車チェック
 	_PLAYER_FORM_GET( SCWK_ANSWER )
@@ -278,6 +280,9 @@ EVENT_START	ev_pos_c04p01_boss_01
 	//========================================//
 	
 	}
+	
+	//重要イベントでの通信切断から復帰
+	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
 EVENT_END
 
 //--------------------------------------------------------------------

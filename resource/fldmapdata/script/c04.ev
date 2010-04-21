@@ -108,6 +108,8 @@ _ANIME_LABEL	anm_exit_player_walk_out
 /*					プラズマ団 posイベント					*/
 /************************************************************/
 EVENT_START	ev_pos_c04_hakai_01
+	//重要イベントでの通信切断
+	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
 	
 	{
 	
@@ -288,6 +290,8 @@ EVENT_START	ev_pos_c04_hakai_01
 	
 	//サポート：去る
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_support_goaway_01 )
+	_TIME_WAIT( 8 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_u )
 	_OBJ_ANIME_WAIT()
 	
 	//サポート消す
@@ -311,6 +315,9 @@ EVENT_START	ev_pos_c04_hakai_01
 	
 	//========================================//
 	
+	
+	//重要イベントでの通信切断から復帰
+	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
 EVENT_END
 
 
@@ -746,6 +753,8 @@ _ANIME_LABEL	anm_music_player_move_02
 /*						サポート							*/
 /************************************************************/
 EVENT_START	ev_scene_c04_support_01
+	//重要イベントでの通信切断
+	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
 	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラパージ
@@ -1006,6 +1015,8 @@ EVENT_START	ev_scene_c04_support_01
 	
 	//========================================//
 
+	//重要イベントでの通信切断から復帰
+	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
 EVENT_END
 
 //--------------------------------------------------------------------
