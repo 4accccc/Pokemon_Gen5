@@ -87,12 +87,9 @@ static GFL_PROC_RESULT FieldMapProcInit
   	fpwk->fieldWork = FIELDMAP_Create(gsys, HEAPID_FIELDMAP );
   	GAMESYSTEM_SetFieldMapWork(gsys, fpwk->fieldWork);
   	(*seq)++;
-  	return GFL_PROC_RES_CONTINUE;
+  	break;
   
-  default:
-    (*seq)++;
-  	return GFL_PROC_RES_CONTINUE;
-  case 1:   //@todo ※check　超暫定 早く通信ONにすると停止してしまう
+  case 1:
     //常時通信モード
     {
       GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
@@ -113,16 +110,24 @@ static GFL_PROC_RESULT FieldMapProcInit
           }
         #endif
         }
-        else if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == FALSE){
-          OS_TPrintf("非通信モードの為、通信終了\n");
-          GameCommSys_ExitReq(gcsp);
+        else{ //既に何かの通信が起動している
+          GAME_COMM_NO comm_no = GameCommSys_BootCheck(gcsp);
+          switch(comm_no){
+          case GAME_COMM_NO_FIELD_BEACON_SEARCH:
+          case GAME_COMM_NO_INVASION:
+            if(GAMESYSTEM_GetAlwaysNetFlag(gsys) == FALSE){
+              OS_TPrintf("非通信モードの為、通信終了\n");
+              GameCommSys_ExitReq(gcsp);
+            }
+            break;
+          }
         }
       }
     }
-    break;
+  	return GFL_PROC_RES_FINISH;
   }
   
-	return GFL_PROC_RES_FINISH;
+ 	return GFL_PROC_RES_CONTINUE;
 }
 
 //------------------------------------------------------------------
