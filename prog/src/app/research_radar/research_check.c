@@ -336,6 +336,8 @@ static GFL_CLUNIT* GetClactUnit( const RESEARCH_CHECK_WORK* work, CLUNIT_INDEX u
 static GFL_CLWK* GetClactWork( const RESEARCH_CHECK_WORK* work, CLWK_INDEX wkIdx ); // セルアクターワークを取得する
 // 3D
 static void Setup3D(); // 3D 描画のセットアップを行う
+// 通信アイコン
+static void SetupWirelessIcon( const RESEARCH_CHECK_WORK* work ); // 通信アイコンをセットアップする
 // データの初期化/生成/破棄
 static void InitSeqQueue( RESEARCH_CHECK_WORK* work ); // シーケンスキュー 初期化
 static void CreateSeqQueue( RESEARCH_CHECK_WORK* work ); // シーケンスキュー 作成
@@ -565,6 +567,9 @@ static void MainSeq_SETUP( RESEARCH_CHECK_WORK* work )
   CreatePaletteAnime( work );     // パレットアニメーションワークを生成
   SetupPaletteAnime( work );      // パレットアニメーションワークをセットアップ
   RegisterVBlankTask( work ); // VBkankタスク登録
+
+  // 通信アイコン
+  SetupWirelessIcon( work );
 
   // 画面フェードイン
   GFL_FADE_SetMasterBrightReq(
@@ -4816,6 +4821,20 @@ static void Setup3D()
   G3X_AntiAlias( TRUE );   // アンチエイリアス
   G3X_EdgeMarking( TRUE ); // エッジマーキング
   G3X_SetEdgeColorTable( EdgeColor );  // エッジカラー
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief 通信アイコンをセットアップする
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void SetupWirelessIcon( const RESEARCH_CHECK_WORK* work )
+{
+  GFL_NET_ChangeIconPosition( WIRELESS_ICON_X, WIRELESS_ICON_Y );
+  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, work->heapID );
+  GFL_NET_ReloadIcon();
 }
 
 

@@ -260,7 +260,11 @@
 #define BMPOAM_ACTOR_ANALYZE_BUTTON_STRING_COLOR_L (14)  // 文字のカラー番号
 #define BMPOAM_ACTOR_ANALYZE_BUTTON_STRING_COLOR_S (15)  // 影のカラー番号
 #define BMPOAM_ACTOR_ANALYZE_BUTTON_STRING_COLOR_B (0)   // 背景のカラー番号
-
+//---------------------------------------------------------------------
+// □通信アイコン
+//---------------------------------------------------------------------
+#define WIRELESS_ICON_X (240)
+#define WIRELESS_ICON_Y (0)
 
 //===============================================================================
 // ■動作

@@ -331,6 +331,8 @@ static void CleanUpPaletteAnime( RESEARCH_SELECT_WORK* work );  // ÉpÉåÉbÉgÉAÉjÉ
 static void StartPaletteAnime( RESEARCH_SELECT_WORK* work, PALETTE_ANIME_INDEX index ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇäJénÇ∑ÇÈ
 static void StopPaletteAnime( RESEARCH_SELECT_WORK* work, PALETTE_ANIME_INDEX index ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇí‚é~Ç∑ÇÈ
 static void UpdatePaletteAnime( RESEARCH_SELECT_WORK* work );  // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇçXêVÇ∑ÇÈ
+// í êMÉAÉCÉRÉì
+static void SetupWirelessIcon( const RESEARCH_SELECT_WORK* work ); // í êMÉAÉCÉRÉìÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
 //-----------------------------------------------------------------------------------------
 // ÅüLAYER 0 ÉfÉoÉbÉO
 //-----------------------------------------------------------------------------------------
@@ -522,6 +524,9 @@ static void MainSeq_SETUP( RESEARCH_SELECT_WORK* work )
 
   // VBkankÉ^ÉXÉNìoò^
   RegisterVBlankTask( work );
+
+  // í êMÉAÉCÉRÉì
+  SetupWirelessIcon( work );
 
   // éüÇÃÉVÅ[ÉPÉìÉXÇÉZÉbÉg
   SetNextSeq( work, RESEARCH_SELECT_SEQ_SCROLL_WAIT ); 
@@ -4920,6 +4925,20 @@ static void BmpOamSetDrawEnable( RESEARCH_SELECT_WORK* work, BMPOAM_ACTOR_INDEX 
               "RESEARCH-SELECT: set draw enable BMP-OAM [%d] ==> %d\n", actorIdx, enable );
 }
 
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief í êMÉAÉCÉRÉìÇÉZÉbÉgÉAÉbÉvÇ∑ÇÈ
+ * 
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void SetupWirelessIcon( const RESEARCH_SELECT_WORK* work )
+{
+  GFL_NET_ChangeIconPosition( WIRELESS_ICON_X, WIRELESS_ICON_Y );
+  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, work->heapID );
+  GFL_NET_ReloadIcon();
+}
 
 //=========================================================================================
 // Å°DEBUG:

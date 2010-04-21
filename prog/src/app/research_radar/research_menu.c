@@ -194,6 +194,8 @@ static void CleanUpPaletteAnime( RESEARCH_MENU_WORK* work ); // パレットアニメー
 static void StartPaletteAnime( RESEARCH_MENU_WORK* work, PALETTE_ANIME_INDEX index ); // パレットアニメーションを開始する
 static void StopPaletteAnime( RESEARCH_MENU_WORK* work, PALETTE_ANIME_INDEX index ); // パレットアニメーションを停止する
 static void UpdatePaletteAnime( RESEARCH_MENU_WORK* work ); // パレットアニメーションを更新する
+// 通信アイコン
+static void SetupWirelessIcon( const RESEARCH_MENU_WORK* work ); // 通信アイコンをセットアップする
 //------------------------------------------------------------------------------------
 // ◆LAYER 0 デバッグ
 //------------------------------------------------------------------------------------
@@ -514,6 +516,9 @@ static void Main_SETUP( RESEARCH_MENU_WORK* work )
   // パレットアニメーション
   CreatePaletteAnime( work );
   SetupPaletteAnime( work );
+
+  // 通信アイコン
+  SetupWirelessIcon( work );
 
   // 画面フェードイン
   GFL_FADE_SetMasterBrightReq(
@@ -2394,6 +2399,19 @@ static void NewIconDispOff( const RESEARCH_MENU_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: new icon disp off\n" );
 }
 
+//------------------------------------------------------------------------------------
+/**
+ * @brief 通信アイコンをセットアップする
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void SetupWirelessIcon( const RESEARCH_MENU_WORK* work )
+{
+  GFL_NET_ChangeIconPosition( WIRELESS_ICON_X, WIRELESS_ICON_Y );
+  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, work->heapID );
+  GFL_NET_ReloadIcon();
+}
 
 //------------------------------------------------------------------------------------
 /**
