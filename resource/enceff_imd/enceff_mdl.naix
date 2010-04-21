@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-04-21T20:57:39
+	Update:2010-04-21T21:55:39
  *****************************************************************************/
 
 #ifndef NARC_ENCEFF_MDL_NAIX_
@@ -15,14 +15,16 @@ enum {
 	NARC_enceff_mdl_ee_symbol_nsbmd = 1,
 	NARC_enceff_mdl_ee_trmizu_nsbca = 2,
 	NARC_enceff_mdl_ee_trmizu_nsbmd = 3,
-	NARC_enceff_mdl_ee_yasei1_nsbca = 4,
-	NARC_enceff_mdl_ee_yasei1_nsbmd = 5,
-	NARC_enceff_mdl_ee_yasei2_nsbca = 6,
-	NARC_enceff_mdl_ee_yasei2_nsbmd = 7,
-	NARC_enceff_mdl_ee_zoroark_nsbca = 8,
-	NARC_enceff_mdl_ee_zoroark_nsbmd = 9,
-	NARC_enceff_mdl_effect1_nsbca = 10,
-	NARC_enceff_mdl_effect1_nsbmd = 11
+	NARC_enceff_mdl_ee_trnor_nsbca = 4,
+	NARC_enceff_mdl_ee_trnor_nsbmd = 5,
+	NARC_enceff_mdl_ee_yasei1_nsbca = 6,
+	NARC_enceff_mdl_ee_yasei1_nsbmd = 7,
+	NARC_enceff_mdl_ee_yasei2_nsbca = 8,
+	NARC_enceff_mdl_ee_yasei2_nsbmd = 9,
+	NARC_enceff_mdl_ee_zoroark_nsbca = 10,
+	NARC_enceff_mdl_ee_zoroark_nsbmd = 11,
+	NARC_enceff_mdl_effect1_nsbca = 12,
+	NARC_enceff_mdl_effect1_nsbmd = 13
 };
 
 /* NARC_ENCEFF_MDL_NAIX_ */
