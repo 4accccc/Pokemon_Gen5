@@ -505,32 +505,32 @@ end
   ARGV_READ_GMM_FILE = 1
   EVO_MAX = 7 #êiâªÇÃMAXêî
 
-  WAZAM_IAIGIRI     = 93
-  WAZAM_KAIRIKI     = 94
-  WAZAM_NAMINORI    = 95
-  WAZAM_SORAWOTOBU  = 96
-  WAZAM_DAIBINGU    = 97
-  WAZAM_TAKINOBORI  = 98
-  WAZAM_IWAKUDAKI   = 99
-  WAZAM_MIKETTEI    = 100
+  WAZAM_IAIGIRI       = 93
+  WAZAM_KAIRIKI       = 94
+  WAZAM_NAMINORI      = 95
+  WAZAM_SORAWOTOBU    = 96
+  WAZAM_DAIBINGU      = 97
+  WAZAM_TAKINOBORI    = 98
+  WAZAM_IWAKUDAKI     = 99
+  WAZAM_BAAKUAUTO     = 100
 
-  WAZA0_IAIGIRI     = 0
-  WAZA1_KAIRIKI     = 1
-  WAZA2_NAMINORI    = 2
-  WAZA3_SORAWOTOBU  = 3
-  WAZA4_DAIBINGU    = 4
-  WAZA5_TAKINOBORI  = 5
-  WAZA6_IWAKUDAKI   = 6
-  WAZA7_MIKETTEI    = 7
+  WAZA0_IAIGIRI       = 0
+  WAZA1_KAIRIKI       = 1
+  WAZA2_NAMINORI      = 2
+  WAZA3_SORAWOTOBU    = 3
+  WAZA4_DAIBINGU      = 4
+  WAZA5_TAKINOBORI    = 5
+  WAZA6_IWAKUDAKI     = 6
+  WAZA7_BAAKUAUTO     = 7
 
-  HIDEN_IAIGIRI     = 93
-  HIDEN_SORAWOTOBU  = 94
-  HIDEN_NAMINORI    = 95
-  HIDEN_KAIRIKI     = 96
-  HIDEN_TAKINOBORI  = 97
-  HIDEN_DAIBINGU    = 98
-  HIDEN_KETSUBAN1   = 99
-  HIDEN_KETSUBAN2   = 100
+  HIDEN_IAIGIRI       = 95
+  HIDEN_SORAWOTOBU    = 96
+  HIDEN_NAMINORI      = 97
+  HIDEN_KAIRIKI       = 98
+  HIDEN_TAKINOBORI    = 99
+  HIDEN_DAIBINGU      = 100
+  HIDEN_IWAKUDAKI     = 93
+  HIDEN_BAAKUAUTO     = 94
 
   label = LabelMake.new
   read_data = []
@@ -1178,18 +1178,18 @@ end
 
       #îÈì`É}ÉVÉìïúäàÇ…î∫Ç§ì¸ÇÍë÷Ç¶èàóù
       hiden = []
-      for i in WAZA0_IAIGIRI..WAZA7_MIKETTEI
+      for i in WAZA0_IAIGIRI..WAZA7_BAAKUAUTO
         hiden[ i ] = waza_machine[ WAZAM_IAIGIRI + i ]
       end
-      
-      waza_machine[ HIDEN_IAIGIRI ]     = hiden[ WAZA0_IAIGIRI ]
-      waza_machine[ HIDEN_KAIRIKI ]     = hiden[ WAZA1_KAIRIKI ]
-      waza_machine[ HIDEN_NAMINORI ]    = hiden[ WAZA2_NAMINORI ]
-      waza_machine[ HIDEN_SORAWOTOBU ]  = hiden[ WAZA3_SORAWOTOBU ]
-      waza_machine[ HIDEN_DAIBINGU ]    = hiden[ WAZA4_DAIBINGU ]
-      waza_machine[ HIDEN_TAKINOBORI ]  = hiden[ WAZA5_TAKINOBORI ]
-      waza_machine[ HIDEN_KETSUBAN1 ]   = ""
-      waza_machine[ HIDEN_KETSUBAN2 ]   = ""
+
+      waza_machine[ HIDEN_IAIGIRI ]       = hiden[ WAZA0_IAIGIRI ]
+      waza_machine[ HIDEN_KAIRIKI ]       = hiden[ WAZA1_KAIRIKI ]
+      waza_machine[ HIDEN_NAMINORI ]      = hiden[ WAZA2_NAMINORI ]
+      waza_machine[ HIDEN_SORAWOTOBU ]    = hiden[ WAZA3_SORAWOTOBU ]
+      waza_machine[ HIDEN_DAIBINGU ]      = hiden[ WAZA4_DAIBINGU ]
+      waza_machine[ HIDEN_TAKINOBORI ]    = hiden[ WAZA5_TAKINOBORI ]
+      waza_machine[ HIDEN_IWAKUDAKI ]     = hiden[ WAZA6_IWAKUDAKI ]
+      waza_machine[ HIDEN_BAAKUAUTO ]     = hiden[ WAZA7_BAAKUAUTO ]
 
       waza_machine.size.times {|i|
         if waza_machine[ i ] == "Åú"
@@ -1213,7 +1213,7 @@ end
 
       waza_oshie.size.times {|i|
         if waza_oshie[ i ] == "Åú"
-          oshie[ oshie_index ] |= flag
+          
         end
         flag = flag << 1
         flag_cnt -= 1
