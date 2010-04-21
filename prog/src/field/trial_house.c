@@ -24,6 +24,8 @@
 
 #include "field/th_rank_calc.h"   //for TH_CALC_Rank  inline
 
+#define DOWNLOAD_BIT_MAX  (128)
+
 //ビーコンサーチワーク
 typedef struct
 {
@@ -41,6 +43,9 @@ static void SetDownLoadData( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, const
 static u16 GetTrainerOBJCode( TRIAL_HOUSE_WORK_PTR ptr );
 
 static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk );
+
+static u8 GetDownloadBit( THSV_WORK *sv_wk, const u32 inBitNo );
+static void SetDownloadBit( THSV_WORK *sv_wk, const u32 inBitNo );
 
 typedef enum
 {
@@ -663,6 +668,68 @@ u32 TRIAL_HOUSE_GetRankDataState( GAMESYS_WORK *gsys )
 
   return state;
 }
+
+//--------------------------------------------------------------
+/**
+ * ダウンロードビット取得
+ * @param   sv_wk トライアルハウスセーブデータポインタ
+ * @param   inBitNo   ビットナンバー 0～127
+ * @retval  bit  0 or 1
+ */
+//--------------------------------------------------------------
+static u8 GetDownloadBit( THSV_WORK *sv_wk, const u32 inBitNo )
+{
+  if (inBitNo < DOWNLOAD_BIT_MAX)
+  {
+    u8 bit;
+    u8 idx;
+    u8 data;
+    u8 shift;
+    idx = inBitNo / 8;
+    shift = inBitNo % 8;
+    data = sv_wk->DownloadBits[idx];
+    bit = (data >> shift) & 0x1;    //１ビットマスク
+
+    OS_Printf("BIT GET ( BitNo=%d, idx=%d, shift=%d )\n",inBitNo, idx, shift );
+    return bit;
+  }
+  else {
+    GF_ASSERT_MSG(0,"error %d",inBitNo);
+    return 1;   //立っていることにする
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * ダウンロードビットセット
+ * @param   sv_wk トライアルハウスセーブデータポインタ
+ * @param   inBitNo   ビットナンバー 0～127
+ * @retval  none
+ */
+//--------------------------------------------------------------
+static void SetDownloadBit( THSV_WORK *sv_wk, const u32 inBitNo )
+{
+  if (inBitNo < DOWNLOAD_BIT_MAX)
+  {
+    u8 idx;
+    u8 data;
+    u8 shift;
+    idx = inBitNo / 8;
+    shift = inBitNo % 8;
+    data = sv_wk->DownloadBits[idx];
+    data |= (1<<shift);
+    sv_wk->DownloadBits[idx] = data;
+    OS_Printf("BIT SET ( BitNo=%d, idx=%d, shift=%d )\n",inBitNo, idx, shift );
+  }
+  else {
+    GF_ASSERT_MSG(0,"error %d",inBitNo);
+  }
+;
+}
+
+
+
+
 
 
 
