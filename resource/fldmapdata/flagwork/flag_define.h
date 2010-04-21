@@ -827,7 +827,7 @@
 #define FV_N01R0501_SAGE1                  803 /* 0x0323 謁見の間前の大広間：ゲーチス */
 #define FV_C06_BOSS                        804 /* 0x0324 フキヨセジム前：N */
 #define FV_D05R0201_RIVAL_01               805 /* 0x0325 冷凍コンテナ室内：ライバル */
-		/* not used   806(0x0326) */
+#define FV_H03_PLASMA                      806 /* 0x0326 シリンダーブリッジ：ゲーチス、ダークトリニティ3人 */
 		/* not used   807(0x0327) */
 		/* not used   808(0x0328) */
 		/* not used   809(0x0329) */

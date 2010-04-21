@@ -150,14 +150,14 @@
 #define WK_SCENE_D06                     16538 /* 0x409a D06電気洞窟の外側：POSイベント用ワーク */
 #define WK_SCENE_D06R0101                16539 /* 0x409b D06R0101電気洞窟の内部：イベント用ワーク */
 #define WK_SCENE_R04                     16540 /* 0x409c ４番道路：POSイベント用ワーク */
-		/* not used 16541(0x409d) */
+#define WK_SCENE_D03R0101                16541 /* 0x409d D03砂漠（遺跡手前）：イベント用ワーク */
 #define WK_SCENE_D04R0101                16542 /* 0x409e D04遺跡：イベント用ワーク */
 #define WK_SCENE_D04R0601                16543 /* 0x409f D04遺跡奥：イベント用ワーク */
-		/* not used 16544(0x40a0) */
+#define WK_SCENE_R10                     16544 /* 0x40a0 R10／10番道路：イベント用ワーク */
 #define WK_SCENE_C09                     16545 /* 0x40a1 ポケモンリーグ外観：イベント用ワーク */
 #define WK_SCENE_C09R0501                16546 /* 0x40a2 ポケモンリーグチャンピオンの部屋：イベント用ワーク */
-#define WK_SCENE_H03                     16547 /* 0x40a3 H03：イベント用ワーク */
-		/* not used 16548(0x40a4) */
+#define WK_SCENE_H03                     16547 /* 0x40a3 H03：暴走族イベント用ワーク */
+#define WK_SCENE_H03_PLASMA              16548 /* 0x40a4 H03：暴走族イベント用ワーク */
 #define WK_SCENE_N01R0101                16549 /* 0x40a5 N城１F大広間：イベント用ワーク */
 #define WK_SCENE_N01R0201                16550 /* 0x40a6 N城２F大広間：イベント用ワーク */
 #define WK_SCENE_D08_LEGEND              16551 /* 0x40a7 D08リュウラセンの塔：パッケージポケモンイベント用のワーク */
