@@ -85,6 +85,7 @@
 
 #include "event_debug_demo3d.h" // for DEBUG_EVENT_FLDMENU_Demo3DSelect
 #include "event_debug_menu_make_egg.h"  // for DEBUG_EVENT_FLDMENU_MakeEgg
+#include "event_debug_all_connect_check.h" // for EVENT_DEBUG_AllConnectCheck
 
 #include "debug/debug_str_conv.h" // for DEB_STR_CONV_SJIStoStrcode
 
@@ -265,6 +266,7 @@ static BOOL debugMenuCallProc_MakeMysteryCardEgg( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_Zukan( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_DebugZoneJump( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_AllMapCheck( DEBUG_MENU_EVENT_WORK * p_wk );
+static BOOL debugMenuCallProc_AllConnectCheck( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_RingTone( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_PCScript( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_EventPokeCreate( DEBUG_MENU_EVENT_WORK * p_wk );
@@ -294,6 +296,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR06, debugMenuCallProc_MapSeasonSelect},  //四季ジャンプ
   { DEBUG_FIELD_STR05_b,   debugMenuCallProc_DebugZoneJump }, //ゾーンジャンプ
   { DEBUG_FIELD_STR09, debugMenuCallProc_AllMapCheck }, //オールマップチェック
+  { DEBUG_FIELD_STR10, debugMenuCallProc_AllConnectCheck }, //オール接続チェック
 
   { DEBUG_FIELD_TITLE_02, (void*)BMPMENULIST_LABEL },       //○フィールド
   { DEBUG_FIELD_STRESS, debugMenuCallProc_FieldAveStress },    //平均負荷
@@ -6128,6 +6131,17 @@ static BOOL debugMenuCallProc_AllMapCheck( DEBUG_MENU_EVENT_WORK * p_wk )
   GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
   return TRUE;
 }
+//--------------------------------------------------------------
+/// デバッグメニュー：全接続チェック
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_AllConnectCheck( DEBUG_MENU_EVENT_WORK * p_wk )
+{
+  GMEVENT * new_event;
+  new_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys,
+      FS_OVERLAY_ID( debug_all_connect_check ), EVENT_DEBUG_AllConnectCheck, NULL ); 
+  GMEVENT_ChangeEvent( p_wk->gmEvent, new_event );
+  return TRUE;
+}
 
 
 //--------------------------------------------------------------
@@ -6255,6 +6269,8 @@ static GMEVENT * EVENT_DEBUG_AllMapCheck( GAMESYS_WORK * gsys, BOOL up_to_flag )
   amcw->gsys = gsys;
   return new_event;
 }
+
+
 
 //======================================================================
 //  デバッグメニュー ゾーンジャンプ
