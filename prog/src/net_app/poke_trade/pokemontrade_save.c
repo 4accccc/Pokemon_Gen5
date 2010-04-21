@@ -580,10 +580,11 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
     
     STATUS_RCV_PokeParam_RecoverAll(pp); //‰ñ•œ
     //ƒ|ƒPƒƒ‚
-    POKE_MEMO_SetTrainerMemoPP( pp, POKE_MEMO_EGG_TRADE,
-                                pWork->pMy, 
-                                POKE_MEMO_PLACE_HUMAN_TRADE, pWork->heapID );
-
+    if(PP_Get(pp,ID_PARA_tamago_flag,NULL)){
+      POKE_MEMO_SetTrainerMemoPP( pp, POKE_MEMO_EGG_TRADE,
+                                  pWork->pMy, 
+                                  POKE_MEMO_PLACE_HUMAN_TRADE, pWork->heapID );
+    }
     
     switch(pWork->type){
     case POKEMONTRADE_TYPE_GTSNEGO:
