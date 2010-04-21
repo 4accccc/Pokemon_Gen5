@@ -7711,6 +7711,11 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
       u8 defLevel = BPP_GetValue( target, BPP_LEVEL );
       u8 targetPokeID = BPP_GetID( target );
 
+      if( scEvent_CheckPokeHideAvoid(wk, attacker, target, wazaParam->wazaID) ){
+        scPut_WazaAvoid( wk, target, wazaParam->wazaID );
+        break;
+      }
+
       if( IsTripleFarPos(wk, attacker, target, wazaParam->wazaID) ){
         scput_WazaNoEffect( wk, target );
       }
