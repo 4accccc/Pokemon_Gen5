@@ -770,7 +770,6 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
         BtlAdapterCmd  cmd = BTL_ADAPTER_RecvCmd( wk->adapter );
         if( cmd != BTL_ACMD_NONE )
         {
-          TAYA_Printf("RecPlay acmd=%d\n", cmd);
           wk->subProc = getSubProc( wk, cmd );
           if( wk->subProc != NULL ){
             wk->myState = SEQ_RECPLAY_EXEC_CMD;
@@ -4095,12 +4094,6 @@ static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
         return TRUE;
       }
 
-      if( result == BTL_RESULT_WIN ){
-        PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo(wk->mainModule) );
-      }else{
-        PMSND_FadeOutBGM( BTL_BGM_FADEOUT_FRAMES );
-      }
-
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, strID );
       BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
       if( fMulti ){
@@ -4108,17 +4101,34 @@ static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
         BTLV_STRPARAM_AddArg( &wk->strParam, clientID_2);
       }
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
-      (*seq)++;
+
+      if( result == BTL_RESULT_WIN ){
+        PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo(wk->mainModule) );
+        (*seq)++;
+      }else{
+        PMSND_FadeOutBGM( BTL_BGM_FADEOUT_FRAMES );
+        (*seq)+=2;
+      }
     }
     break;
+
+  //
   case 1:
-    if( BTLV_WaitMsg(wk->viewCore) )
-    {
+    if( BTLV_WaitMsg(wk->viewCore) ){
+      return TRUE;
+    }
+    break;
+
+  case 2:
+    if( BTLV_WaitMsg(wk->viewCore) ){
       (*seq)++;
     }
     break;
-  case 2:
-    return TRUE;
+  case 3:
+    if( !PMSND_CheckFadeOnBGM() ){
+      PMSND_StopBGM();
+      return TRUE;
+    }
   }
   return FALSE;
 }
