@@ -131,6 +131,7 @@ void POKE_MEMO_SetTrainerMemoPokeShifter( POKEMON_PASO_PARAM *ppp )
   
   //’Êí‘Î‰
   POKE_MEMO_SetPlaceTime( ppp , POKE_MEMO_PLACE_POKE_SHIFTER , PMDT_2 );
+  POKE_MEMO_SetGetLevel( ppp );
 
   //2010ƒCƒxƒ“ƒg‘Î‰
   if( monsNo == MONSNO_SEREBHI &&

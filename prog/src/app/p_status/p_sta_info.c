@@ -669,31 +669,31 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
         case VERSION_SAPPHIRE:  //1	///<	バージョン：AGBサファイア
         case VERSION_RUBY:		  //2	///<	バージョン：AGBルビー
         case VERSION_EMERALD:	  //3	///<	バージョン：AGBエメラルド
-          place1 = POKE_MEMO_PLACE_HOUEN;
+          place2 = POKE_MEMO_PLACE_HOUEN;
           memoId = oldRomMsg;
           break;
           
         case VERSION_RED:			  //4	///<	バージョン：AGBファイアーレッド
         case VERSION_GREEN:		  //5	///<	バージョン：AGBリーフグリーン
-          place1 = POKE_MEMO_PLACE_KANTOU;
+          place2 = POKE_MEMO_PLACE_KANTOU;
           memoId = oldRomMsg;
           break;
 
         case VERSION_GOLD:		  //7	///<	バージョン：ゴールド用予約定義
         case VERSION_SILVER:	  //8	///<	バージョン：シルバー用予約定義
-          place1 = POKE_MEMO_PLACE_JYOUTO;
+          place2 = POKE_MEMO_PLACE_JYOUTO;
           memoId = newRomMsg;
           break;
 
         case VERSION_DIAMOND:	  //10	///<	バージョン：DSダイヤモンド
         case VERSION_PEARL:		  //11	///<	バージョン：DSパール
         case VERSION_PLATINUM:  //12	///<	バージョン：DSプラチナ
-          place1 = POKE_MEMO_PLACE_SHINOU;
+          place2 = POKE_MEMO_PLACE_SHINOU;
           memoId = newRomMsg;
           break;
 
         case VERSION_COLOSSEUM: //15	///<	バージョン：GCコロシアム
-          place1 = POKE_MEMO_PLACE_FAR_PLACE;
+          place2 = POKE_MEMO_PLACE_FAR_PLACE;
           memoId = oldRomMsg;
           break;
 

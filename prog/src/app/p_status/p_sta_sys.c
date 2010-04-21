@@ -91,7 +91,7 @@ static const BOOL PSTATUS_UpdateKey_Page( PSTATUS_WORK *work );
 static void PSTATUS_UpdateTP( PSTATUS_WORK *work );
 
 static const BOOL PSTATUS_ChangeData( PSTATUS_WORK *work , const BOOL isUpOder );
-static const BOOL PSTATUS_CanChangeData( PSTATUS_WORK *work , const BOOL isUpOder );
+static const BOOL PSTATUS_CanChangeData( PSTATUS_WORK *work , const BOOL isUpOder , u16 *newPos );
 static void PSTATUS_RefreshData( PSTATUS_WORK *work );
 static void PSTATUS_RefreshDisp( PSTATUS_WORK *work );
 static void PSTATUS_WaitDisp( PSTATUS_WORK *work );
@@ -394,7 +394,7 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
   if( work->isAnimeBarCursor[0] == TRUE &&
       GFL_CLACT_WK_CheckAnmActive( work->clwkBarIcon[SBT_CURSOR_UP] ) == FALSE )
   {
-    const BOOL isChange = PSTATUS_CanChangeData( work , FALSE );
+    const BOOL isChange = PSTATUS_CanChangeData( work , FALSE , NULL );
     if( isChange == TRUE )
     {
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP );
@@ -408,7 +408,7 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
   if( work->isAnimeBarCursor[1] == TRUE &&
       GFL_CLACT_WK_CheckAnmActive( work->clwkBarIcon[SBT_CURSOR_DOWN] ) == FALSE )
   {
-    const BOOL isChange = PSTATUS_CanChangeData( work , TRUE );
+    const BOOL isChange = PSTATUS_CanChangeData( work , TRUE , NULL );
     if( isChange == TRUE )
     {
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN );
@@ -1546,18 +1546,12 @@ void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
 //--------------------------------------------------------------
 static const BOOL PSTATUS_ChangeData( PSTATUS_WORK *work , const BOOL isUpOder )
 {
-  BOOL isChange = PSTATUS_CanChangeData( work , isUpOder );
+  u16 newPos;
+  BOOL isChange = PSTATUS_CanChangeData( work , isUpOder , &newPos );
 
   if( isChange == TRUE )
   {
-    if( isUpOder == TRUE )
-    {
-      work->dataPos++;
-    }
-    else
-    {
-      work->dataPos--;
-    }
+    work->dataPos = newPos;
     if( work->psData->ppt == PST_PP_TYPE_POKEPASO )
     {
       if( work->calcPP != NULL )
@@ -1575,11 +1569,11 @@ static const BOOL PSTATUS_ChangeData( PSTATUS_WORK *work , const BOOL isUpOder )
   return isChange;
 }
 
-static const BOOL PSTATUS_CanChangeData( PSTATUS_WORK *work , const BOOL isUpOder )
+static const BOOL PSTATUS_CanChangeData( PSTATUS_WORK *work , const BOOL isUpOder , u16 *newPos )
 {
   BOOL isFinish = FALSE;
   BOOL isChange = FALSE;
-  u8 befDataPos = work->dataPos;
+  u16 befDataPos = work->dataPos;
   while( isFinish == FALSE )
   {
     if( isUpOder == TRUE &&
@@ -1630,6 +1624,10 @@ static const BOOL PSTATUS_CanChangeData( PSTATUS_WORK *work , const BOOL isUpOde
         }
       }
     }
+  }
+  if( newPos != NULL )
+  {
+    *newPos = work->dataPos;
   }
   work->dataPos = befDataPos;
   return isChange;
@@ -1834,7 +1832,7 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
 
     if( work->isAnimeBarCursor[0] == FALSE )
     {
-      const BOOL isChange = PSTATUS_CanChangeData( work , FALSE );
+      const BOOL isChange = PSTATUS_CanChangeData( work , FALSE , NULL );
       if( isChange == TRUE )
       {
         GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP );
@@ -1846,7 +1844,7 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
     }
     if( work->isAnimeBarCursor[1] == FALSE )
     {
-      const BOOL isChange = PSTATUS_CanChangeData( work , TRUE );
+      const BOOL isChange = PSTATUS_CanChangeData( work , TRUE , NULL );
       if( isChange == TRUE )
       {
         GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN );
@@ -2839,12 +2837,12 @@ static void PSTD_U_getPPP( void* userWork , DEBUGWIN_ITEM* item )
 
     work->natsuki = PPP_Get( ppp , ID_PARA_friend , NULL );
     work->year1   = PPP_Get( ppp , ID_PARA_get_year , NULL );
-    work->month1  = PPP_Get( ppp , ID_PARA_get_month , NULL )+1;
-    work->day1    = PPP_Get( ppp , ID_PARA_get_day , NULL )+1;
+    work->month1  = PPP_Get( ppp , ID_PARA_get_month , NULL );
+    work->day1    = PPP_Get( ppp , ID_PARA_get_day , NULL );
     work->place1  = PPP_Get( ppp , ID_PARA_get_place , NULL );
     work->year2   = PPP_Get( ppp , ID_PARA_birth_year , NULL );
-    work->month2  = PPP_Get( ppp , ID_PARA_birth_month , NULL )+1;
-    work->day2    = PPP_Get( ppp , ID_PARA_birth_day , NULL )+1;
+    work->month2  = PPP_Get( ppp , ID_PARA_birth_month , NULL );
+    work->day2    = PPP_Get( ppp , ID_PARA_birth_day , NULL );
     work->place2  = PPP_Get( ppp , ID_PARA_birth_place , NULL );
     work->level   = PPP_Get( ppp , ID_PARA_get_level , NULL );
     work->devRom = PPP_Get( ppp , ID_PARA_get_cassette , NULL );
