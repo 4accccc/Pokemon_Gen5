@@ -545,7 +545,7 @@ static int get_item_max( int item )
 {
   // ‹Zƒ}ƒVƒ“‚Í99ŒÂ‚Ü‚Å‚µ‚©Ž‚Ä‚È‚¢
 //  if(item>=ITEM_WAZAMASIN01 && item < ITEM_HIDENMASIN01){
-	if( ITEM_CheckWazaMachine( item ) == TRUE ){
+  if( ITEM_CheckWazaMachine( item ) == TRUE ){
     return 99;
   }
   
@@ -848,6 +848,7 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
   PRINTSYS_QUE_Main( wk->printQue );
   PRINT_UTIL_Trans( &wk->printUtil, wk->printQue );
 
+  GFL_TCBL_Main( wk->pMsgTcblSys ); // ƒtƒB[ƒ‹ƒh•`‰æ‚Í‚P^‚R‚O‚È‚Ì‚ÅƒAƒvƒŠ‚Æ‡‚í‚¹‚é‚½‚ß‚É‚Q‰ñŒÄ‚Ô
   GFL_TCBL_Main( wk->pMsgTcblSys );
   
   // Œp‘±
