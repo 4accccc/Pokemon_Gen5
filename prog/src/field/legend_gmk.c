@@ -302,7 +302,7 @@ static GMEVENT_RESULT StoneEvt( GMEVENT* event, int* seq, void* work )
   NOZOMU_Printf( "frm = %x::%d  last= %x::%d\n",frm, frm/FX32_ONE, last_frm, last_frm/FX32_ONE );
 
   if ( (frm >= LEG_SE0_FRM)&&(!gmk_wk->Se0) ){
-    //PMSND_PlaySE( LEG_GMK_ENERGY );
+    PMSND_PlaySE( LEG_GMK_BALL_APP );
     gmk_wk->Se0 = TRUE;
   }
   else if ( (frm >= LEG_SE1_FRM)&&(!gmk_wk->Se1) ){
