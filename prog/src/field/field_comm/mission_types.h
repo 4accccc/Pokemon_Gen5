@@ -130,13 +130,13 @@ typedef struct{
 
 ///ミッション系統毎に異なるdataの構造体：SKILL
 typedef struct{
-  u16 item;
+  u16 gpower_id;
   u16 padding[2];
 }MISSION_TYPEDATA_SKILL;
 
 ///ミッション系統毎に異なるdataの構造体：BASIC
 typedef struct{
-  u16 item;
+  u16 gpower_id;
   u16 padding[2];
 }MISSION_TYPEDATA_BASIC;
 

@@ -33,6 +33,7 @@
 #include "event_intrude.h"
 #include "event_comm_common.h"
 #include "event_mission_talk.h"
+#include "event_gpower.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
@@ -69,7 +70,7 @@ static const struct{
   u16 target_talk[TALK_TYPE_MAX];           ///<自分がターゲットで話しかけた
   
   u16 target_talked[TALK_TYPE_MAX];         ///<自分がターゲットで話しかけられた
-  u16 target_talked_item[TALK_TYPE_MAX];    ///<自分がターゲットでアイテムをもらった
+  u16 target_talked_get[TALK_TYPE_MAX];    ///<自分がターゲットでアイテムをもらった
 
   u16 mission_talked[TALK_TYPE_MAX];        ///<自分がミッション実行者で話しかけられた
 
@@ -192,9 +193,11 @@ static GMEVENT_RESULT CommMissionTalk_MtoT_Talk( GMEVENT *event, int *seq, void 
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
       talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+    WORDSET_RegisterPlayerName( 
+      talk->ccew.iem.wordset, 1, GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) ) );
     {
       const MISSION_TYPEDATA_BASIC *d_basic = (void*)talk->ccew.mdata.cdata.data;
-      WORDSET_RegisterItemName( talk->ccew.iem.wordset, 1, d_basic->item );
+      WORDSET_RegisterGPowerName( talk->ccew.iem.wordset, 2, d_basic->gpower_id );
     }
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
       MissionTalkMsgID.mission_talk[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
@@ -282,9 +285,11 @@ static GMEVENT_RESULT CommMissionTalk_TtoM_Talk( GMEVENT *event, int *seq, void 
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
       talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+    WORDSET_RegisterPlayerName( 
+      talk->ccew.iem.wordset, 1, GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) ) );
     {
       const MISSION_TYPEDATA_BASIC *d_basic = (void*)talk->ccew.mdata.cdata.data;
-      WORDSET_RegisterItemName( talk->ccew.iem.wordset, 1, d_basic->item );
+      WORDSET_RegisterGPowerName( talk->ccew.iem.wordset, 2, d_basic->gpower_id );
     }
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
       MissionTalkMsgID.target_talk[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
@@ -366,9 +371,11 @@ static GMEVENT_RESULT CommMissionTalk_MtoT_Talked( GMEVENT *event, int *seq, voi
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
       talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+    WORDSET_RegisterPlayerName( 
+      talk->ccew.iem.wordset, 1, GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) ) );
     {
       const MISSION_TYPEDATA_BASIC *d_basic = (void*)talk->ccew.mdata.cdata.data;
-      WORDSET_RegisterItemName( talk->ccew.iem.wordset, 1, d_basic->item );
+      WORDSET_RegisterGPowerName( talk->ccew.iem.wordset, 2, d_basic->gpower_id );
     }
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
       MissionTalkMsgID.mission_talked[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
@@ -437,8 +444,9 @@ static GMEVENT_RESULT CommMissionTalk_TtoM_Talked( GMEVENT *event, int *seq, voi
 	enum{
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
-    SEQ_LAST_MSG_WAIT,
-    SEQ_MSG_END_BUTTON_WAIT,
+    SEQ_MSG_GET_WAIT,
+    SEQ_GPOWER,
+    SEQ_GPOWER_WAIT,
     SEQ_END,
   };
 	
@@ -447,9 +455,9 @@ static GMEVENT_RESULT CommMissionTalk_TtoM_Talked( GMEVENT *event, int *seq, voi
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == FALSE){
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
-    if((*seq) < SEQ_LAST_MSG_WAIT){
+    if((*seq) < SEQ_GPOWER){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
-      *seq = SEQ_LAST_MSG_WAIT;
+      *seq = SEQ_END;
       talk->error = TRUE;
     }
   }
@@ -458,9 +466,11 @@ static GMEVENT_RESULT CommMissionTalk_TtoM_Talked( GMEVENT *event, int *seq, voi
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
       talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+    WORDSET_RegisterPlayerName( 
+      talk->ccew.iem.wordset, 1, GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) ) );
     {
       const MISSION_TYPEDATA_BASIC *d_basic = (void*)talk->ccew.mdata.cdata.data;
-      WORDSET_RegisterItemName( talk->ccew.iem.wordset, 1, d_basic->item );
+      WORDSET_RegisterGPowerName( talk->ccew.iem.wordset, 2, d_basic->gpower_id );
     }
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
       MissionTalkMsgID.target_talked[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
@@ -469,20 +479,30 @@ static GMEVENT_RESULT CommMissionTalk_TtoM_Talked( GMEVENT *event, int *seq, voi
   case SEQ_MSG_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-        MissionTalkMsgID.target_talked_item[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+        MissionTalkMsgID.target_talked_get[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
   		(*seq)++;
   	}
 		break;
-  case SEQ_LAST_MSG_WAIT:
+  case SEQ_MSG_GET_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
-      *seq = SEQ_MSG_END_BUTTON_WAIT;
+      (*seq)++;
     }
     break;
-  case SEQ_MSG_END_BUTTON_WAIT:
-    if(IntrudeEventPrint_LastKeyWait() == TRUE){
-      *seq = SEQ_END;
+
+  case SEQ_GPOWER:
+    //外部イベントを起動する為ウィンドウ類のみ先行して削除
+    IntrudeEventPrint_ExitFieldMsg(&talk->ccew.iem);
+
+    {
+      const MISSION_TYPEDATA_BASIC *d_basic = (void*)talk->ccew.mdata.cdata.data;
+      GMEVENT_CallEvent(event, EVENT_GPowerEffectStart(gsys, d_basic->gpower_id, FALSE));
     }
+    (*seq)++;
     break;
+  case SEQ_GPOWER_WAIT:
+    *seq = SEQ_END;
+		break;
+
   case SEQ_END:
   	//共通Finish処理
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);

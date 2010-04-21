@@ -33,6 +33,7 @@
 #include "event_intrude.h"
 #include "event_comm_common.h"
 #include "event_mission_talked.h"
+#include "event_gpower.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
@@ -67,7 +68,6 @@ static GMEVENT_RESULT CommMissionTalked_TtoM_Talked( GMEVENT *event, int *seq, v
 //==============================================================================
 static const struct{
   u16 target_talk[TALK_TYPE_MAX];           ///<自分がターゲットで話しかけた
-  u16 target_talk_item[TALK_TYPE_MAX];      ///<自分がターゲットでアイテムをもらった
   
   u16 target_talked[TALK_TYPE_MAX];         ///<自分がターゲットで話しかけられた
 
@@ -77,25 +77,18 @@ static const struct{
   u16 mission_talk[TALK_TYPE_MAX];          ///<自分がミッション実行者で話しかけた
 }MissionTalkedMsgID = {
   { //自分がターゲットで話しかけた
-    mis_m01_02_t1,
-    mis_m01_02_t2,
-    mis_m01_02_t3,
-    mis_m01_02_t4,
-    mis_m01_02_t5,
-  },
-  { //自分がターゲットでアイテムをもらった
-    mis_m01_03_t1,
-    mis_m01_03_t2,
-    mis_m01_03_t3,
-    mis_m01_03_t4,
-    mis_m01_03_t5,
-  },
-  { //自分がターゲットで話しかけられた
     mis_m01_01_t1,
     mis_m01_01_t2,
     mis_m01_01_t3,
     mis_m01_01_t4,
     mis_m01_01_t5,
+  },
+  { //自分がターゲットで話しかけられた
+    mis_m01_02_t1,
+    mis_m01_02_t2,
+    mis_m01_02_t3,
+    mis_m01_02_t4,
+    mis_m01_02_t5,
   },
   { //自分がミッション実行者で話しかけられた
     mis_m01_01_m1,
@@ -179,9 +172,11 @@ static GMEVENT_RESULT CommMissionTalked_MtoT_Talk( GMEVENT *event, int *seq, voi
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
       talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+    WORDSET_RegisterPlayerName( 
+      talk->ccew.iem.wordset, 1, GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) ) );
     {
       const MISSION_TYPEDATA_SKILL *d_skill = (void*)talk->ccew.mdata.cdata.data;
-      WORDSET_RegisterItemName( talk->ccew.iem.wordset, 1, d_skill->item );
+      WORDSET_RegisterGPowerName( talk->ccew.iem.wordset, 2, d_skill->gpower_id );
     }
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
       MissionTalkedMsgID.mission_talk[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
@@ -242,8 +237,8 @@ static GMEVENT_RESULT CommMissionTalked_TtoM_Talk( GMEVENT *event, int *seq, voi
 	enum{
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
-    SEQ_LAST_MSG_WAIT,
-    SEQ_MSG_END_BUTTON_WAIT,
+    SEQ_GPOWER,
+    SEQ_GPOWER_WAIT,
     SEQ_END,
   };
 	
@@ -252,9 +247,9 @@ static GMEVENT_RESULT CommMissionTalked_TtoM_Talk( GMEVENT *event, int *seq, voi
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == FALSE){
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
-    if((*seq) < SEQ_LAST_MSG_WAIT){
+    if((*seq) < SEQ_GPOWER){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
-      *seq = SEQ_LAST_MSG_WAIT;
+      *seq = SEQ_END;
       talk->error = TRUE;
     }
   }
@@ -263,9 +258,11 @@ static GMEVENT_RESULT CommMissionTalked_TtoM_Talk( GMEVENT *event, int *seq, voi
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
       talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+    WORDSET_RegisterPlayerName( 
+      talk->ccew.iem.wordset, 1, GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) ) );
     {
       const MISSION_TYPEDATA_SKILL *d_skill = (void*)talk->ccew.mdata.cdata.data;
-      WORDSET_RegisterItemName( talk->ccew.iem.wordset, 1, d_skill->item );
+      WORDSET_RegisterGPowerName( talk->ccew.iem.wordset, 2, d_skill->gpower_id );
     }
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
       MissionTalkedMsgID.target_talk[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
@@ -273,20 +270,21 @@ static GMEVENT_RESULT CommMissionTalked_TtoM_Talk( GMEVENT *event, int *seq, voi
 		break;
   case SEQ_MSG_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-        MissionTalkedMsgID.target_talk_item[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
-  		(*seq)++;
-  	}
-		break;
-  case SEQ_LAST_MSG_WAIT:
-    if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
-      *seq = SEQ_MSG_END_BUTTON_WAIT;
+      (*seq)++;
     }
     break;
-  case SEQ_MSG_END_BUTTON_WAIT:
-    if(IntrudeEventPrint_LastKeyWait() == TRUE){
-      *seq = SEQ_END;
+  case SEQ_GPOWER:
+    //外部イベントを起動する為ウィンドウ類のみ先行して削除
+    IntrudeEventPrint_ExitFieldMsg(&talk->ccew.iem);
+    
+    {
+      const MISSION_TYPEDATA_SKILL *d_skill = (void*)talk->ccew.mdata.cdata.data;
+      GMEVENT_CallEvent(event, EVENT_GPowerEffectStart(gsys, d_skill->gpower_id, FALSE));
     }
+    (*seq)++;
+    break;
+  case SEQ_GPOWER_WAIT:
+    *seq = SEQ_END;
     break;
   case SEQ_END:
   	//共通Finish処理
@@ -367,9 +365,11 @@ static GMEVENT_RESULT CommMissionTalked_MtoT_Talked( GMEVENT *event, int *seq, v
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
       talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+    WORDSET_RegisterPlayerName( 
+      talk->ccew.iem.wordset, 1, GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) ) );
     {
       const MISSION_TYPEDATA_SKILL *d_skill = (void*)talk->ccew.mdata.cdata.data;
-      WORDSET_RegisterItemName( talk->ccew.iem.wordset, 1, d_skill->item );
+      WORDSET_RegisterGPowerName( talk->ccew.iem.wordset, 2, d_skill->gpower_id );
     }
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
       MissionTalkedMsgID.mission_talked[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
@@ -459,9 +459,11 @@ static GMEVENT_RESULT CommMissionTalked_TtoM_Talked( GMEVENT *event, int *seq, v
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
       talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+    WORDSET_RegisterPlayerName( 
+      talk->ccew.iem.wordset, 1, GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) ) );
     {
       const MISSION_TYPEDATA_SKILL *d_skill = (void*)talk->ccew.mdata.cdata.data;
-      WORDSET_RegisterItemName( talk->ccew.iem.wordset, 1, d_skill->item );
+      WORDSET_RegisterGPowerName( talk->ccew.iem.wordset, 2, d_skill->gpower_id );
     }
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
       MissionTalkedMsgID.target_talked[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);

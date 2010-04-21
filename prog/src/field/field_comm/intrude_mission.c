@@ -1233,6 +1233,7 @@ void MISSIONDATA_Wordset(const MISSION_CONV_DATA *cdata, const MISSION_TARGET_IN
 
       _Wordset_Strcode(wordset, 0, target->name, 
         PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
+      WORDSET_RegisterGPowerName( wordset, 2, d_skill->gpower_id );
     }
     break;
   case MISSION_TYPE_BASIC:       //КоСb
@@ -1241,6 +1242,7 @@ void MISSIONDATA_Wordset(const MISSION_CONV_DATA *cdata, const MISSION_TARGET_IN
       
       _Wordset_Strcode(wordset, 0, target->name, 
         PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
+      WORDSET_RegisterGPowerName( wordset, 2, d_bas->gpower_id );
     }
     break;
   case MISSION_TYPE_ATTRIBUTE:   //СЃРЂ
