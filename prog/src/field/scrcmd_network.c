@@ -138,20 +138,71 @@ VMCMD_RESULT EvCmdRebootBeaconSearch( VMHANDLE * core, void * wk )
 
 //--------------------------------------------------------------------
 /**
+ * @brief スクリプトコマンド：通信を禁止するイベントの開始
  */
 //--------------------------------------------------------------------
 VMCMD_RESULT EvCmdDisableFieldComm( VMHANDLE * core, void *wk )
 {
+  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( wk );
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  GAME_COMM_NO comm_no = GameCommSys_BootCheck( game_comm );
+
+  switch ( comm_no )
+  {
+  case GAME_COMM_NO_FIELD_BEACON_SEARCH:
+  case GAME_COMM_NO_DEBUG_SCANONLY:
+  case GAME_COMM_NO_INVASION:
+    GameCommSys_ExitReq( game_comm );
+    break;
+  case GAME_COMM_NO_NULL:
+    // do nothing!
+    break;
+  default:
+    GF_ASSERT( 0 ); //他の通信モードでこのコマンドを呼ぶことはないはず
+  }
+
+  //通信不許可イベントフラグをON:重要なイベント開始
+  GAMESYSTEM_SetNetOffEventFlag( gsys, TRUE );
+
+  SCREND_CHK_SetBitOn( SCREND_CHK_NET_OFF_EVENT );  //対応チェックフラグを立てる
   return VMCMD_RESULT_SUSPEND;
 }
 
 //--------------------------------------------------------------------
 /**
+ * @brief スクリプトコマンド：通信を禁止するイベントの終了
  */
 //--------------------------------------------------------------------
 VMCMD_RESULT EvCmdEnableFieldComm( VMHANDLE * core, void *wk )
 {
+  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( wk );
+
+  //通信不許可イベントフラグをOFF:重要なイベント終了
+  GAMESYSTEM_SetNetOffEventFlag( gsys, FALSE );
+
+  //常時通信起動（内部で起動可能かどうかのチェックも行っている）
+  GAMESYSTEM_CommBootAlways(gsys);
+
+  SCREND_CHK_SetBitOff( SCREND_CHK_NET_OFF_EVENT ); //対応チェックフラグを落とす
   return VMCMD_RESULT_SUSPEND;
 }
 
+
+//--------------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド終了チェック：通信不許可イベント＆エラーリカバリ関数
+ */
+//--------------------------------------------------------------------
+BOOL SCREND_CheckEndNetOffEvent( SCREND_CHECK *end_check, int *seq )
+{
+  GAMESYS_WORK * gsys = end_check->gsys;
+
+  //通信不許可イベントフラグをOFF:重要なイベント終了
+  GAMESYSTEM_SetNetOffEventFlag( gsys, FALSE );
+
+  //常時通信起動（内部で起動可能かどうかのチェックも行っている）
+  GAMESYSTEM_CommBootAlways( gsys );
+
+  return TRUE;  //この関数が呼ばれたら、無条件「起動のままだった」として返す
+}
 

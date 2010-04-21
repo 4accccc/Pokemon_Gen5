@@ -212,7 +212,8 @@ struct _GAMESYS_WORK {
 	
 	u8 field_comm_error_req;      ///<TRUE:フィールドでの通信エラー画面表示リクエスト
   u8 do_event;    ///< イベント動作チェック
-	u8 padding[2];
+  u8 comm_off_event_flag;     ///<通信不許可イベントフラグ
+	u8 padding[1];
 };
 
 //------------------------------------------------------------------
@@ -238,6 +239,9 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 	gsys->game_comm = GameCommSys_Alloc(gsys->heapID, gsys->gamedata);
 	gsys->comm_infowin = NULL;
 	gsys->iss_sys = ISS_SYS_Create( gsys->gamedata, heapID );
+
+  //通信不許可イベントフラグOFFで初期化
+  gsys->comm_off_event_flag = FALSE;
 
   ZONEDATA_Open( heapID );
 }
@@ -522,6 +526,30 @@ GAME_COMM_SYS_PTR GAMESYSTEM_GetGameCommSysPtr(GAMESYS_WORK *gsys)
   return gsys->game_comm;
 }
 
+//----------------------------------------------------------------------------
+/**
+ * @brief 通信不許可イベントフラグのセット
+ * @param   gsys		ゲーム制御システムへのポインタ
+ * @param   flag    TRUEのとき、通信不許可イベントの開始を意味する
+ */
+//----------------------------------------------------------------------------
+void GAMESYSTEM_SetNetOffEventFlag( GAMESYS_WORK * gsys, BOOL flag )
+{
+  gsys->comm_off_event_flag = flag;
+}
+
+//----------------------------------------------------------------------------
+/**
+ * @brief 通信不許可イベントフラグの取得
+ * @param   gsys		ゲーム制御システムへのポインタ
+ * @return  BOOL    TRUEの時、通信不許可イベント中
+ */
+//----------------------------------------------------------------------------
+BOOL GAMESYSTEM_GetNetOffEventFlag( const GAMESYS_WORK * gsys )
+{
+  return gsys->comm_off_event_flag;
+}
+
 //--------------------------------------------------------------
 /**
  * @brief   常時通信フラグの取得
@@ -554,6 +582,13 @@ void GAMESYSTEM_SetAlwaysNetFlag( GAMESYS_WORK * gsys, BOOL is_on )
  *
  * @retval  BOOL		TRUE:常時通信を起動してもよい
  * @retval  BOOL		FALSE:起動してはいけない
+ *
+ * @note
+ * 現時点で、常時通信を起動できるかどうかの条件は下記のように鳴っている
+ * @li  重要なイベント中でない
+ * @li  ビーコンサーチを禁止しているマップでない
+ * @li  通信エラーが発生していない
+ * @li  常時通信フラグ（CギアのONやコンフィグの通信と連動しているフラグ）が立っている
  */
 //==================================================================
 BOOL GAMESYSTEM_CommBootAlways_Check(GAMESYS_WORK *gsys)
@@ -561,7 +596,8 @@ BOOL GAMESYSTEM_CommBootAlways_Check(GAMESYS_WORK *gsys)
   GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
   u16 zone_id = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) );
 
-  if(ZONEDATA_IsFieldBeaconNG(zone_id) == FALSE
+  if( gsys->comm_off_event_flag == FALSE
+      && ZONEDATA_IsFieldBeaconNG(zone_id) == FALSE
       && NetErr_App_CheckError() == NET_ERR_CHECK_NONE
       && GAMESYSTEM_GetAlwaysNetFlag( gsys ) == TRUE){
     return TRUE;

@@ -178,6 +178,11 @@ GMEVENT * EVENT_NormalLose( GAMESYS_WORK * gsys )
     PL_BOAT_WORK_PTR *ptr = GAMEDATA_GetPlBoatWorkPtr(gamedata);
     PL_BOAT_End(ptr);
   }
+
+  //通信不許可イベントフラグをOFF:重要なイベント終了
+  //スクリプトが重要なイベントだった場合、忘れないようにここで落としてしまう
+  GAMESYSTEM_SetNetOffEventFlag( gsys, FALSE );
+
   return event;
 }
 

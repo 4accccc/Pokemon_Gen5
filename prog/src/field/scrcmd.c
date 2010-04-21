@@ -168,6 +168,7 @@ static const SCR_END_CHECK_FUNC CheckEndFuncTbl[] = {
   SCREND_CheckEndSubScreenChange,
   SCREND_CheckEndWinMsgAutoPrintFlag,
   SCREND_CheckEndBGMPushPop,
+  SCREND_CheckEndNetOffEvent,
   /*ここにスクリプト終了時の終了関数を追加してください*/
   NULL,   //テーブル終了検出用
 };

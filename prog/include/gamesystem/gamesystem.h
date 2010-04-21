@@ -212,6 +212,24 @@ extern PLAYER_WORK * GAMESYSTEM_GetMyPlayerWork(GAMESYS_WORK * gsys);
 //==================================================================
 extern GAME_COMM_SYS_PTR GAMESYSTEM_GetGameCommSysPtr(GAMESYS_WORK *gsys);
 
+//----------------------------------------------------------------------------
+/**
+ * @brief 通信不許可イベントフラグのセット
+ * @param   gsys		ゲーム制御システムへのポインタ
+ * @param   flag    TRUEのとき、通信不許可イベントの開始を意味する
+ */
+//----------------------------------------------------------------------------
+extern void GAMESYSTEM_SetNetOffEventFlag( GAMESYS_WORK * gsys, BOOL flag );
+
+//----------------------------------------------------------------------------
+/**
+ * @brief 通信不許可イベントフラグの取得
+ * @param   gsys		ゲーム制御システムへのポインタ
+ * @return  BOOL    TRUEの時、通信不許可イベント中
+ */
+//----------------------------------------------------------------------------
+extern BOOL GAMESYSTEM_GetNetOffEventFlag( const GAMESYS_WORK * gsys );
+
 //--------------------------------------------------------------
 /**
  * @brief   常時通信フラグの取得
