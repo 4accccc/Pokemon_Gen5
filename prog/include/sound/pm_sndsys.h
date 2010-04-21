@@ -192,6 +192,7 @@ extern void	PMSND_StopBGM( void );
 extern void	PMSND_PauseBGM( BOOL pauseFlag );
 //現在のＢＧＭをフェードイン
 extern void	PMSND_FadeInBGM( u16 frames );
+extern void  PMSND_FadeInBGMEx( u16 frames, u8 vol );
 //現在のＢＧＭをフェードアウト
 extern void	PMSND_FadeOutBGM( u16 frames );
 //フェード実行チェック(TRUE実行中)
