@@ -259,7 +259,7 @@ static GMEVENT_RESULT AllConnectCheckEvent( GMEVENT* event, int* seq, void* wk )
     (*seq)++;
     break; 
   // BGM •œ‹A
-  case CHECK_SEQ_FANFARE:
+  case CHECK_SEQ_BGM_RECOVER:
     GMEVENT_CallEvent( event, 
         EVENT_FSND_PopBGM( gameSystem, FSND_FADE_NONE, FSND_FADE_SHORT ) );
     (*seq)++;
