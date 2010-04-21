@@ -87,7 +87,8 @@ static void panel_NamePrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, BOOL force_f, i
 static void panel_Draw( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info, PANEL_DRAW_TYPE draw_type, int* task_ct );
 
 static void list_TimeOutCheck( BEACON_VIEW_PTR wk );
-static void list_UpDownReq( BEACON_VIEW_PTR wk, u8 dir );
+static void list_UpDownReq( BEACON_VIEW_PTR wk, SCROLL_DIR dir );
+static void list_UpDownReq1st( BEACON_VIEW_PTR wk, SCROLL_DIR dir, int ret_seq );
 static void list_ScrollReq( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 idx, u8 dir, PANEL_DRAW_TYPE draw_type );
 
 static void taskAdd_IconEffect( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info, BOOL new_f );
@@ -177,10 +178,23 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
   //上下矢印あたり判定
   ret = touchin_CheckUpDown( wk, &tp );
   if(ret != GFL_UI_TP_HIT_NONE){
-    list_UpDownReq( wk, ret );
-    return SEQ_VIEW_UPDATE;
+    list_UpDownReq1st( wk, ret, SEQ_MAIN );
+    return SEQ_LIST_SCROLL_REPEAT;
   }
   return SEQ_MAIN;
+}
+
+/*
+ *  @brief  リスト上下ボタン　タッチ判定
+ */
+int BeaconView_CheckInoutTouchUpDown( BEACON_VIEW_PTR wk )
+{
+  POINT tp;
+  
+  if( !GFL_UI_TP_GetPointCont( (u32*)&tp.x, (u32*)&tp.y )){
+    return GFL_UI_TP_HIT_NONE;
+  }
+  return touchin_CheckUpDown( wk, &tp );
 }
 
 /*
@@ -298,13 +312,18 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
   //スクロールリクエスト
   list_ScrollReq( wk, wk->tmpInfo, idx, SCROLL_DOWN, PANEL_DRAW_NEW+(wk->ctrl.view_top > 0));
   wk->ctrl.view_top = ofs;
+  
+  BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
   sub_PlaySE( BVIEW_SE_NEW_PLAYER );
   return TRUE;
 }
 
+
+//---------------------------------------------------
 /*
  *  @brief  アクティブ・パッシブ切替
  */
+//---------------------------------------------------
 void BeaconView_SetViewPassive( BEACON_VIEW_PTR wk, BOOL passive_f )
 {
   if(passive_f){
@@ -324,6 +343,16 @@ void BeaconView_SetViewPassive( BEACON_VIEW_PTR wk, BOOL passive_f )
       PRINTSYS_PrintStreamRun( wk->printStream );
     }
   }
+}
+
+//---------------------------------------------------
+/*
+ *  @brief  リストスクロールリクエスト
+ */
+//---------------------------------------------------
+void BeaconView_ListScrollRepeatReq( BEACON_VIEW_PTR wk )
+{
+  list_UpDownReq( wk, wk->scr_repeat_dir );
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -366,7 +395,7 @@ static int sseq_thanks_CheckInput( BEACON_VIEW_PTR wk );
 /*
  *  @brief  サブシーケンス　御礼メイン
  */
-BOOL BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
+int BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
 {
   switch( wk->sub_seq ){
   case SSEQ_THANKS_ICON_ANM:
@@ -384,6 +413,9 @@ BOOL BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
     break;
   case SSEQ_THANKS_MAIN:
     wk->sub_seq = sseq_thanks_CheckInput( wk );
+    if( wk->sub_seq == SSEQ_THANKS_VIEW_UPDATE ){
+      return SEQ_LIST_SCROLL_REPEAT;
+    }
     break;
   case SSEQ_THANKS_DECIDE:
     {
@@ -417,9 +449,9 @@ BOOL BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
     BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
     draw_MenuWindow( wk, msg_sys_now_record );
     wk->sub_seq = 0;
-    return TRUE;
+    return SEQ_MAIN;
   }
-  return FALSE;
+  return SEQ_THANK_YOU;
 }
 
 /*
@@ -451,7 +483,7 @@ static int sseq_thanks_CheckInput( BEACON_VIEW_PTR wk )
   //上下矢印あたり判定
   ret = touchin_CheckUpDown( wk, &tp );
   if(ret != GFL_UI_TP_HIT_NONE){
-    list_UpDownReq( wk, ret );
+    list_UpDownReq1st( wk, ret, SEQ_THANK_YOU );
     return SSEQ_THANKS_VIEW_UPDATE;
   }
   return SSEQ_THANKS_MAIN;
@@ -494,6 +526,26 @@ void BeaconView_MenuBarViewSet( BEACON_VIEW_PTR wk, MENU_ID id, MENU_STATE state
 BOOL BeaconView_MenuBarCheckAnm( BEACON_VIEW_PTR wk, MENU_ID id )
 {
   return GFL_CLACT_WK_CheckAnmActive( wk->pAct[ACT_POWER+id] );
+}
+
+/*
+ *  @brief  スクロールボタンアニメセット
+ */
+void BeaconView_UpDownAnmSet( BEACON_VIEW_PTR wk, SCROLL_DIR dir )
+{
+  if( wk->scr_repeat_dir == SCROLL_UP ){
+    act_AnmStart( wk->pAct[ACT_DOWN], ACTANM_DOWN_ANM );
+  }else{
+    act_AnmStart( wk->pAct[ACT_UP], ACTANM_UP_ANM );
+  }
+}
+
+/*
+ *  @brief  スクロールボタン状態セット
+ */
+void BeaconView_UpDownViewSet( BEACON_VIEW_PTR wk )
+{
+  obj_UpDownViewSet( wk );
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -753,8 +805,6 @@ static int touchin_CheckUpDown( BEACON_VIEW_PTR wk, POINT* tp )
       tri.p[1] = tbl[i][point[j][1]];
       tri.p[2] = tbl[i][point[j][2]];
       if( calc_PointInTriangle( tp, &tri )){
-        act_AnmStart( wk->pAct[ACT_UP+i], ACTANM_UP_ANM+(i*3) );
-        sub_PlaySE( BVIEW_SE_UPDOWN );
         return (1-i);
       }
     }
@@ -1074,10 +1124,10 @@ static void obj_UpDownViewSet( BEACON_VIEW_PTR wk )
   if(wk->ctrl.view_top == 0){
     GFL_CLACT_WK_SetAnmSeq( wk->pAct[ACT_UP], ACTANM_UP_OFF );  
   }else{
-    GFL_CLACT_WK_SetAnmSeq( wk->pAct[ACT_UP], ACTANM_UP_ON );  
+    GFL_CLACT_WK_SetAnmSeq( wk->pAct[ACT_UP], ACTANM_UP_DEF );  
   }
   if((wk->ctrl.view_top+wk->ctrl.view_max) < (wk->ctrl.max)){
-    GFL_CLACT_WK_SetAnmSeq( wk->pAct[ACT_DOWN], ACTANM_DOWN_ON );  
+    GFL_CLACT_WK_SetAnmSeq( wk->pAct[ACT_DOWN], ACTANM_DOWN_DEF );  
   }else{
     GFL_CLACT_WK_SetAnmSeq( wk->pAct[ACT_DOWN], ACTANM_DOWN_OFF );  
   }
@@ -1379,9 +1429,11 @@ static void list_TimeOutCheck( BEACON_VIEW_PTR wk )
 /*
  *  @brief  リストアップダウンリクエスト
  */
-static void list_UpDownReq( BEACON_VIEW_PTR wk, u8 dir )
+static void list_UpDownReq( BEACON_VIEW_PTR wk, SCROLL_DIR dir )
 {
   u8 ofs,idx;
+  
+  sub_PlaySE( BVIEW_SE_UPDOWN );
 
   if( dir == SCROLL_UP ){
     ofs = wk->ctrl.view_top+wk->ctrl.view_max;
@@ -1395,6 +1447,27 @@ static void list_UpDownReq( BEACON_VIEW_PTR wk, u8 dir )
   
   //スクロールリクエスト
   list_ScrollReq( wk, wk->tmpInfo, idx, dir, PANEL_DRAW_INI );
+}
+
+/*
+ *  @brief  リストアップダウン初回リクエスト
+ */
+static void list_UpDownReq1st( BEACON_VIEW_PTR wk, SCROLL_DIR dir, int ret_seq )
+{
+  wk->scr_repeat_f = TRUE;
+  wk->scr_repeat_end = FALSE;
+  wk->scr_repeat_dir = dir;
+  wk->scr_repeat_ret_seq = ret_seq;
+  wk->scr_repeat_ct = 0;
+
+  if( wk->scr_repeat_dir == SCROLL_UP ){
+    act_AnmStart( wk->pAct[ACT_DOWN], ACTANM_DOWN_ON );
+  }else{
+    act_AnmStart( wk->pAct[ACT_UP], ACTANM_UP_ON );
+  }
+  BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
+
+  list_UpDownReq( wk, dir );
 }
 
 static int list_GetScrollLineNum( BEACON_VIEW_PTR wk, BOOL new_f )
@@ -1455,7 +1528,6 @@ static void list_ScrollReq( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 idx, u
 
   panel_Entry( pp, idx, 0 );  //パネル新規登録(ラインは後で初期化)
   panel_Draw( wk, pp, info, draw_type, &twk->child_task );   //パネル描画
-  BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
 }
 
 static void tcb_ListScroll( GFL_TCBL *tcb , void* tcb_wk)
@@ -1623,7 +1695,6 @@ static void tcb_PanelScroll( GFL_TCBL *tcb , void* tcb_wk)
   if( twk->pp->n_line == 0 || twk->pp->n_line == PANEL_LINE_END){
     panel_Clear( twk->pp );  //パネル破棄
   }
-  obj_UpDownViewSet( twk->bvp );
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
 }

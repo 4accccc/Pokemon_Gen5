@@ -49,6 +49,7 @@ static void event_RequestReset( BEACON_VIEW_PTR wk );
 
 static int seq_Main( BEACON_VIEW_PTR wk );
 static int seq_ViewUpdate( BEACON_VIEW_PTR wk );
+static int seq_ListScrollRepeat( BEACON_VIEW_PTR wk );
 static int seq_GPowerUse( BEACON_VIEW_PTR wk );
 static int seq_TalkMsgInput( BEACON_VIEW_PTR wk );
 static int seq_ThankYou( BEACON_VIEW_PTR wk );
@@ -230,6 +231,9 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
     break;
   case SEQ_VIEW_UPDATE:
     wk->seq = seq_ViewUpdate( wk );
+    break;
+  case SEQ_LIST_SCROLL_REPEAT:
+    wk->seq = seq_ListScrollRepeat( wk );
     break;
   case SEQ_GPOWER_USE:
     wk->seq = seq_GPowerUse( wk );
@@ -417,7 +421,49 @@ static int seq_ViewUpdate( BEACON_VIEW_PTR wk )
     event_Request( wk, EV_GPOWER_USE );
   }
   BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
+  BeaconView_UpDownViewSet( wk );
   return SEQ_MAIN;
+}
+
+/*
+ *  @brief  リスト連続スクロール中
+ */
+static int seq_ListScrollRepeat( BEACON_VIEW_PTR wk )
+{
+  int ret;
+  
+  if( !wk->scr_repeat_end ){
+    ret = BeaconView_CheckInoutTouchUpDown( wk );
+    if( ret != wk->scr_repeat_dir || ret == GFL_UI_TP_HIT_NONE ){
+      wk->scr_repeat_end = TRUE;
+      if( wk->scr_repeat_ct < 2 ){
+        //点滅アニメリクエスト
+        BeaconView_UpDownAnmSet( wk, wk->scr_repeat_dir );
+      }
+    }
+    wk->scr_repeat_ct++;  //押しっぱなしカウンタアップ
+  }
+
+  //最後のスクロール待ち
+  if( wk->scr_repeat_end ){
+    if( wk->eff_task_ct > 0 ){
+      return SEQ_LIST_SCROLL_REPEAT;
+    }
+    wk->scr_repeat_end = FALSE;
+    wk->scr_repeat_ct = 0;
+    wk->scr_repeat_f = FALSE;
+    if( wk->scr_repeat_ret_seq == SEQ_MAIN ){
+      BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
+    }
+    BeaconView_UpDownViewSet( wk );
+    return wk->scr_repeat_ret_seq;
+  }
+
+  //2回目以降のスクロールリクエスト
+  if( wk->eff_task_ct == 0 ){
+    BeaconView_ListScrollRepeatReq( wk );
+  }
+  return SEQ_LIST_SCROLL_REPEAT;
 }
 
 /*
@@ -463,11 +509,7 @@ static int seq_TalkMsgInput( BEACON_VIEW_PTR wk )
  */
 static int seq_ThankYou( BEACON_VIEW_PTR wk )
 {
-  if( BeaconView_SubSeqThanks( wk )){
-    wk->sub_seq = 0;
-    return SEQ_MAIN;
-  }
-  return SEQ_THANK_YOU;
+  return BeaconView_SubSeqThanks( wk );
 }
 
 /*

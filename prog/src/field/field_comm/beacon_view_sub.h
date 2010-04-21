@@ -18,6 +18,11 @@ extern void BeaconView_InitialDraw( BEACON_VIEW_PTR wk );
 extern int BeaconView_CheckInput( BEACON_VIEW_PTR wk );
 
 /*
+ *  @brief  リスト上下ボタン　タッチ判定
+ */
+extern int BeaconView_CheckInoutTouchUpDown( BEACON_VIEW_PTR wk );
+
+/*
  *  @brief  御礼対象選択ループ内での入力チェック
  */
 extern int BeaconView_CheckInputThanks( BEACON_VIEW_PTR wk );
@@ -42,6 +47,13 @@ extern BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk );
  */
 extern void BeaconView_SetViewPassive( BEACON_VIEW_PTR wk, BOOL passive_f );
 
+//---------------------------------------------------
+/*
+ *  @brief  リストスクロールリクエスト
+ */
+//---------------------------------------------------
+extern void BeaconView_ListScrollRepeatReq( BEACON_VIEW_PTR wk );
+
 /*
  *  @brief  サブシーケンス　GPower使用メイン
  */
@@ -50,7 +62,7 @@ extern BOOL BeaconView_SubSeqGPower( BEACON_VIEW_PTR wk );
 /*
  *  @brief  サブシーケンス　御礼メイン
  */
-extern BOOL BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk );
+extern int BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk );
 
 /*
  *  @brief  メニューバーアニメセット
@@ -61,4 +73,14 @@ extern void BeaconView_MenuBarViewSet( BEACON_VIEW_PTR wk, MENU_ID id, MENU_STAT
  *  @brief  メニューバーアニメウェイト
  */
 extern BOOL BeaconView_MenuBarCheckAnm( BEACON_VIEW_PTR wk, MENU_ID id );
+
+/*
+ *  @brief  スクロールボタンアニメセット
+ */
+extern void BeaconView_UpDownAnmSet( BEACON_VIEW_PTR wk, SCROLL_DIR dir );
+
+/*
+ *  @brief  スクロールボタン状態セット
+ */
+extern void BeaconView_UpDownViewSet( BEACON_VIEW_PTR wk );
 
