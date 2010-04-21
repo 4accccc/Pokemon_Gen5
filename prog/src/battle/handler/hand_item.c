@@ -189,6 +189,7 @@ static void handler_OujaNoSirusi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static void handler_OujaNoSirusi_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SurudoiTume( u32* numElems );
 static void handler_SurudoiTume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_SurudoiKiba( u32* numElems );
 static void handler_SurudoiTume_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KoukakuLens( u32* numElems );
 static void handler_KoukakuLens( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -533,6 +534,7 @@ static const struct {
   { ITEM_METARUKOOTO,       HAND_ADD_ITEM_MetalCoat       },
   { ITEM_SINPINOSIZUKU,     HAND_ADD_ITEM_SinpiNoSizuku   },
   { ITEM_SURUDOIKUTIBASI,   HAND_ADD_ITEM_SurudoiKutibasi },
+  { ITEM_SURUDOIKIBA,       HAND_ADD_ITEM_SurudoiKiba     },
   { ITEM_DOKUBARI,          HAND_ADD_ITEM_Dokubari        },
   { ITEM_TOKENAIKOORI,      HAND_ADD_ITEM_TokenaiKoori    },
   { ITEM_NOROINOOHUDA,      HAND_ADD_ITEM_NoroiNoOfuda    },
@@ -2454,6 +2456,22 @@ static void handler_OujaNoSirusi_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     param->per = 100;
   }
 }
+//------------------------------------------------------------------------------
+/**
+ *  するどいキバ
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_SurudoiKiba( u32* numElems )
+{
+  // どちらも「おうじゃのしるし」と等価
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_SHRINK_PER,     handler_OujaNoSirusi        },
+    { BTL_EVENT_USE_ITEM_TMP,        handler_OujaNoSirusi_UseTmp },   // なげつける等
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+
 //------------------------------------------------------------------------------
 /**
  *  するどいツメ
