@@ -245,30 +245,36 @@ static void setup_trainer_param( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BT
     TT_EncountTrainerPokeDataMake( tr_id, *party, heapID );
     //四季変化するポケモンのフォルム変更
     SEASONPOKE_FORM_ChangeForm(gameData, *party, GAMEDATA_GetSeasonID( gameData ) );
-  }
 
-  {
-    u8 grp = TT_TrainerTypeGrpGet( dst->tr_data[client]->tr_type);
+    {
+      u8 grp = TT_TrainerTypeGrpGet( dst->tr_data[client]->tr_type);
 
-    switch( grp ){
-    case TRTYPE_GRP_LEADER:
-    case TRTYPE_GRP_BIGFOUR:
-      dst->musicWin = SEQ_BGM_WIN3;
-      break;
+      switch( grp ){
+      case TRTYPE_GRP_TRAINER_BOSS:     // ポケモントレーナーのＮ
+      default:
+        dst->musicWin = SEQ_BGM_WIN2;
+        break;
 
-    case TRTYPE_GRP_SAGE: // ゲーチス
-      dst->musicWin = SEQ_BGM_WIN4;
-      break;
+      case TRTYPE_GRP_LEADER:
+      case TRTYPE_GRP_BIGFOUR:
+        dst->musicWin = SEQ_BGM_WIN3;
+        break;
 
-    case TRTYPE_GRP_PLASMA:           // プラズマ団
-    case TRTYPE_GRP_PLASMA_BOSS:      // プラズマ団のＮ
-      dst->musicWin = SEQ_BGM_WIN6;
-      break;
+      case TRTYPE_GRP_SAGE:       // ゲーチス
+      case TRTYPE_GRP_LAST_BOSS:  // プラズマ団のＮ（ラスト）
+        dst->musicWin = SEQ_BGM_WIN4;
+        break;
 
-    case TRTYPE_GRP_TRAINER_BOSS:     // ポケモントレーナーのＮ
-    default:
-      dst->musicWin = SEQ_BGM_WIN2;
-      break;
+      case TRTYPE_GRP_CHAMPION:
+      case TRTYPE_GRP_BCHAMP:
+        dst->musicWin = SEQ_BGM_WIN5;
+        break;
+
+      case TRTYPE_GRP_PLASMA:           // プラズマ団
+      case TRTYPE_GRP_PLASMA_BOSS:      // プラズマ団のＮ
+        dst->musicWin = SEQ_BGM_WIN6;
+        break;
+      }
     }
   }
 }
@@ -642,15 +648,9 @@ void BTL_SETUP_AIMulti_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 {
   setup_common_Trainer( dst, gameData, BTL_RULE_DOUBLE, sit, heapID );
 
-  if( partner != TRID_NULL ){
-    setup_trainer_param( dst, gameData, BTL_CLIENT_PARTNER, &dst->party[ BTL_CLIENT_PARTNER ], partner, heapID );
-  }
-  if( tr_id0 != TRID_NULL ){
-    setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id0, heapID );
-  }
-  if( tr_id1 != TRID_NULL ){
-    setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY2, &dst->party[ BTL_CLIENT_ENEMY2 ], tr_id1, heapID );
-  }
+  setup_trainer_param( dst, gameData, BTL_CLIENT_PARTNER, &dst->party[ BTL_CLIENT_PARTNER ], partner, heapID );
+  setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id0, heapID );
+  setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY2, &dst->party[ BTL_CLIENT_ENEMY2 ], tr_id1, heapID );
 
   dst->multiMode = BTL_MULTIMODE_PA_AA;
 }
@@ -746,12 +746,8 @@ void BTL_SETUP_AIMulti_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   setup_common_CommTrainer( dst, gameData, BTL_RULE_DOUBLE, BTL_MULTIMODE_PP_AA,
       netHandle, commMode, commPos, heapID );
 
-  if( tr_id1 != TRID_NULL ){
-    setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id1, heapID );
-  }
-  if( tr_id2 != TRID_NULL ){
-    setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY2, &dst->party[ BTL_CLIENT_ENEMY2 ], tr_id2, heapID );
-  }
+  setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id1, heapID );
+  setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY2, &dst->party[ BTL_CLIENT_ENEMY2 ], tr_id2, heapID );
 }
 
 //=============================================================================================
