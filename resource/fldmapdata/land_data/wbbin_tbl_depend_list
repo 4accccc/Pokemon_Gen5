@@ -1186,10 +1186,6 @@ $(DIR_WBTMP)/winter05_05.tbl: $(DIR_RES)/winter05_05.bin
 	@echo create_bintbl winter05_05
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/winter05_05.bin
 
-$(DIR_WBTMP)/winter05_05_ex.tbl: $(DIR_RES)/winter05_05_ex.bin
-	@echo create_bintbl winter05_05
-	@ruby wb_bin_conv.rb TBL $(DIR_RES)/winter05_05_ex.bin
-
 $(DIR_WBTMP)/winter05_04.tbl: $(DIR_RES)/winter05_04.bin
 	@echo create_bintbl winter05_04
 	@ruby wb_bin_conv.rb TBL $(DIR_RES)/winter05_04.bin
