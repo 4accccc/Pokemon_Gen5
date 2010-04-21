@@ -26,7 +26,7 @@
 #include "../../../resource/research_radar/data/answer_id_question.cdat"  // for AnswerID_question[][]
 
 
-//#define DEBUG_PRINT_ENABLE
+//#define DEBUG_PRINT_ON
 
 
 static void CheckCurrentResearchFinish( SAVE_CONTROL_WORK* save, u16* RState );
@@ -64,7 +64,7 @@ VMCMD_RESULT EvCmdGetResearchTeamRank( VMHANDLE *core, void *wk )
   // 隊員ランクを取得する
   *ret = MISC_CrossComm_GetResearchTeamRank( misc );
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( 3, "_GET_RESEARCH_TEAM_RANK ==> %d\n", *ret );
 #endif
 
@@ -104,7 +104,7 @@ VMCMD_RESULT EvCmdResearchTeamRankUp( VMHANDLE *core, void *wk )
   // ビーコン送信バッファに反映させる
   GAMEBEACON_SendDataUpdate_ResearchTeamRank( rank );
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( 3, "_RESEARCH_TEAM_RANK_UP ==> %d\n", rank );
 #endif
 
@@ -133,7 +133,7 @@ VMCMD_RESULT EvCmdGetResearchRequestID( VMHANDLE *core, void *wk )
   // 調査中の調査依頼IDを取得
   *ret = MISC_GetResearchRequestID( misc );
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( 3, "_GET_RESEARCH_REQUEST_ID ==> %d\n", *ret );
 #endif
 
@@ -170,7 +170,7 @@ VMCMD_RESULT EvCmdGetResearchQuestionID( VMHANDLE *core, void *wk )
   *retQ2 = MISC_GetResearchQuestionID( misc, 1 ); 
   *retQ3 = MISC_GetResearchQuestionID( misc, 2 ); 
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( 3, "_GET_RESEARCH_QUESTION_ID ==> %d, %d, %d\n", *retQ1, *retQ2, *retQ3 );
 #endif
 
@@ -204,7 +204,7 @@ VMCMD_RESULT EvCmdGetResearchPassedTime( VMHANDLE *core, void *wk )
   // 経過時間を返す
   *ret = passedHour;
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME ==> %d\n", passedHour );
 #endif
 
@@ -238,7 +238,7 @@ VMCMD_RESULT EvCmdStartResearch( VMHANDLE *core, void *wk )
   qID[1] = SCRCMD_GetVMWorkValue( core, work ); // 第三引数: 質問ID2
   qID[2] = SCRCMD_GetVMWorkValue( core, work ); // 第四引数: 質問ID3
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( 3, "_START_RESEARCH: reqID=%d, qID[0]=%d, qID[1]=%d, qID[2]=%d\n", reqID, qID[0], qID[1], qID[2] );
 #endif
 
@@ -254,7 +254,7 @@ VMCMD_RESULT EvCmdStartResearch( VMHANDLE *core, void *wk )
   // 調査開始時刻をセーブ
   MISC_SetResearchStartTimeBySecond( misc, GFL_RTC_GetDateTimeBySecond() );
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( 3, "_START_RESEARCH: start time=%d\n", GFL_RTC_GetDateTimeBySecond() );
 #endif
 
@@ -288,7 +288,7 @@ VMCMD_RESULT EvCmdFinishResearch( VMHANDLE *core, void *wk )
     MISC_SetResearchQuestionID( misc, i, QUESTION_ID_DUMMY );
   }
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( 3, "_FINISH_RESEARCH\n" );
 #endif
 
@@ -338,7 +338,7 @@ VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk )
         maxCount = sumCount;
         majorityAnswerID = AnswerID_question[ qID ][ ansIdx ];
       }
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
       OS_TFPrintf( 3, 
           "questionID=%d, answerIdx=%d, sumCount=%d(%d+%d)\n", 
           qID, ansIdx, sumCount, totalCount, todayCount );
@@ -349,7 +349,7 @@ VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk )
   // 最も多数派の回答IDを返す
   *retWork = majorityAnswerID;
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( 3, "_GET_MAJORITY_ANSWER ==> %d\n", *retWork );
 #endif
 
@@ -383,7 +383,7 @@ VMCMD_RESULT EvCmdSetMyAnswer( VMHANDLE *core, void *wk )
   QuestionnaireAnswer_WriteBit( myAnswer, qID, aIdx );
   GAMEBEACON_SendDataUpdate_Questionnaire( myAnswer );
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( 3, "_SET_MY_ANSWER ==> qID=%d, aIdx=%d\n", qID, aIdx );
 #endif
 
@@ -438,7 +438,7 @@ VMCMD_RESULT EvCmdCheckAchieveRequest( VMHANDLE* core, void* wk )
     CheckRequestFinish_inAdvance( save, RID, ret_wk );
   }
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( 3, "_CHECK_ACHIEVE_REQUEST ==> " );
   switch( *ret_wk ) {
   case RESEARCH_REQ_STATE_NULL:             OS_TFPrintf( 3, "NULL" );             break;
@@ -634,7 +634,7 @@ static BOOL CheckNormCount( QUESTIONNAIRE_SAVE_WORK* QSave, u8 RID )
   {
     u32 count = GetCurrentCount( QSave, QID[i] );
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
     OS_TFPrintf( 3, 
         "CheckNormCount: QID=%d, norm=%d, count=%d\n", QID[i], norm, count );
 #endif
@@ -787,7 +787,7 @@ static u16 GetLackCount( SAVE_CONTROL_WORK* save )
   lack = norm - minCount;
   if( lack < 0 ) { lack = 0; }
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( 3, 
       "GetLackCount: RID=%d, norm=%d, minCount=%d, lack=%d\n", 
       RID, norm, minCount, lack );
