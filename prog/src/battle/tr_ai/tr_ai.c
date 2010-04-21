@@ -34,7 +34,7 @@
 #ifdef PM_DEBUG
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_morimoto
 #define POINT_VIEW
-//#define AI_SEQ_PRINT
+#define AI_SEQ_PRINT
 #endif
 #endif
 
@@ -3250,11 +3250,6 @@ static  VMCMD_RESULT  AI_COMP_POWER_WITH_PARTNER( VMHANDLE* vmh, void* context_w
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   BOOL  loss_flag = ( int )VMGetU32( vmh );
-
-#ifdef AI_SEQ_PRINT
-  OS_TPrintf("AI_COMP_POWER_WITH_PARTNER\n");
-#endif
-
   u8  clientID = BTL_MAIN_BtlPosToClientID( taw->wk, taw->atk_btl_poke_pos );
   const BTL_PARTY*  pty = BTL_POKECON_GetPartyDataConst( taw->pokeCon, clientID );
   //‘O‰q‚Ì”
@@ -3264,6 +3259,10 @@ static  VMCMD_RESULT  AI_COMP_POWER_WITH_PARTNER( VMHANDLE* vmh, void* context_w
   u8  atkPokeID = BPP_GetID( taw->atk_bpp );
   u8  defPokeID = BPP_GetID( taw->def_bpp );
   u32 src_dmg = BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, taw->waza_no, TRUE, loss_flag );
+
+#ifdef AI_SEQ_PRINT
+  OS_TPrintf("AI_COMP_POWER_WITH_PARTNER\n");
+#endif
 
   if( ( idx < 0 ) || ( src_dmg == 0 ) )
   { 
@@ -3463,7 +3462,7 @@ static  void  ai_if_commonrnd( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond )
   int adrs  = ( int )VMGetU32( vmh );
 
 #ifdef AI_SEQ_PRINT
-  OS_TPrintf("value:%d adrs:%d rnd:%d\n",value,adrs,rnd);
+  OS_TPrintf("value:%d adrs:%d rnd:%d\n",value,adrs,taw->common_rnd);
 #endif
 
   branch_act( vmh, cond, taw->common_rnd, value, adrs );
@@ -3493,7 +3492,10 @@ static	VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
     break;
   }
 
-  VMCMD_Jump( vmh, vmh->adrs + tbl_adrs[ ofs ] );
+  OS_TPrintf("tbl_adrs:%08x *tbl_adrs:%08x\n",tbl_adrs,*tbl_adrs);
+  OS_TPrintf("tbl_adrs[ ofs ]:%08x\n",tbl_adrs[ ofs ]);
+
+  VMCMD_Jump( vmh, (u8*)(tbl_adrs) + tbl_adrs[ ofs ] );
 
   return taw->vmcmd_result;
 }
