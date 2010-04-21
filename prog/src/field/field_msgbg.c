@@ -3825,7 +3825,7 @@ BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf )
     
     bgWin->seq_no++;
   case 3: //ƒy[ƒW‘—‚è‘Ò‚¿
-    if( !(GFL_UI_KEY_GetTrg()&PAD_BUTTON_A) ){
+    if( !(GFL_UI_KEY_GetTrg()&(PAD_BUTTON_A|PAD_BUTTON_B)) ){
       FLDKEYWAITCURSOR_Write( &bgWin->cursor_work,
           GFL_BMPWIN_GetBmp(bgWin->bmpwin), BGWIN_NCOL );
       GFL_BMPWIN_TransVramCharacter( bgWin->bmpwin );
