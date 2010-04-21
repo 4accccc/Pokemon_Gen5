@@ -184,12 +184,15 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
   case REPORT_SEQ_WRITE_YESNO_WAIT:       // セーブしますか？【はい・いいえ】待ち
     switch( MainReportYesNo(wk) ){
     case 0: // はい
+/*
       // 通信中でセーブできない
       if( GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(wk->gsys)) == GAME_COMM_NO_INVASION ){
         SetReportMsg( wk, msg_common_report_13 );
         *seq = REPORT_SEQ_RESULT_NG_MSG_WAIT;
+*/
       // 違うセーブデータがある
-      }else if( SaveControl_IsOverwritingOtherData(wk->sv) == TRUE ){
+//      }else if( SaveControl_IsOverwritingOtherData(wk->sv) == TRUE ){
+      if( SaveControl_IsOverwritingOtherData(wk->sv) == TRUE ){
         SetReportMsg( wk, msg_common_report_08 );
         *seq = REPORT_SEQ_RESULT_NG_MSG_WAIT;
 /*
