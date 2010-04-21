@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-17T18:02:00"/>
+	<create user="matsumiya" host="W00224" date="2010-04-21T14:54:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1332" top="247" right="2037" bottom="875" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="152" right="1985" bottom="780" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_h05_ninja1_01">
+	<row id="msg_h05_ninja1_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・pos(未定）を踏むと3人出現
 ・続けてninja2_01</comment>
@@ -304,7 +304,7 @@
 ……　……　おまえか▼</language>
 	</row>
 
-	<row id="msg_h05_ninja2_01">
+	<row id="msg_h05_ninja2_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・続けてninja3_01</comment>
 		<attribute name="キャラ指定">ダークトリニティ
@@ -317,7 +317,7 @@
 単身　どこかに　行かれた▼</language>
 	</row>
 
-	<row id="msg_h05_ninja3_01">
+	<row id="msg_h05_ninja3_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・続けてninja1_02</comment>
 		<attribute name="キャラ指定">ダークトリニティ
@@ -334,11 +334,11 @@
 命じられた　今も……▼</language>
 	</row>
 
-	<row id="msg_h05_ninja1_02">
+	<row id="msg_h05_ninja1_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・主人公に隣接して
 ・アイテム入手処理
-　No000「こんごうだま」
+　No135「こんごうだま」
 ・続けてninja2_02</comment>
 		<attribute name="キャラ指定">ダークトリニティ
 その１</attribute>
@@ -348,11 +348,11 @@
 ゲーチスさまが　そういわれたのだ……▼</language>
 	</row>
 
-	<row id="msg_h05_ninja2_02">
+	<row id="msg_h05_ninja2_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・主人公に隣接して
 ・アイテム入手処理
-　No000「しらたま」
+　No136「しらたま」
 ・続けてninja3_02</comment>
 		<attribute name="キャラ指定">ダークトリニティ
 その２</attribute>
@@ -360,11 +360,11 @@
 		<language name="JPN_KANJI" width="256">わたしからは　これを……▼</language>
 	</row>
 
-	<row id="msg_h05_ninja3_02">
+	<row id="msg_h05_ninja3_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・主人公に隣接して
 ・アイテム入手処理
-　No000「はっきんだま」
+　No112「はっきんだま」
 ・続けてninja1_03</comment>
 		<attribute name="キャラ指定">ダークトリニティ
 その３</attribute>
@@ -372,7 +372,7 @@
 		<language name="JPN_KANJI" width="256">そして　これも……▼</language>
 	</row>
 
-	<row id="msg_h05_ninja1_03">
+	<row id="msg_h05_ninja1_03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・続けてninja2_03</comment>
 		<attribute name="キャラ指定">ダークトリニティ
@@ -393,7 +393,7 @@
 ……おまえを　利用するのか？▼</language>
 	</row>
 
-	<row id="msg_h05_ninja2_03">
+	<row id="msg_h05_ninja2_03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・続けてninja3_03</comment>
 		<attribute name="キャラ指定">ダークトリニティ
@@ -410,7 +410,7 @@
 野望は　けっして　とどまらない！▼</language>
 	</row>
 
-	<row id="msg_h05_ninja3_03">
+	<row id="msg_h05_ninja3_03" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
 ・メッセージ表示後、ダークトリニティの
 　動作モデルを消去する</comment>
