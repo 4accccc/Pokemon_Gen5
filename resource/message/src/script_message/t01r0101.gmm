@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T15:27:20"/>
+	<create user="matsumiya" host="W00224" date="2010-04-21T16:08:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -303,14 +303,14 @@
 本当に　すみませんでした！▼</language>
 	</row>
 
-	<row id="msg_t01r0101_white_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0101_white_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてmama_01a</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
-		<language name="JPN" width="256">ベル『あ　あのー
+		<language name="JPN" width="256">ベル『あ　あのう
 おかたづけ……▼</language>
-		<language name="JPN_KANJI" width="256">ベル『あ　あのー
+		<language name="JPN_KANJI" width="256">ベル『あ　あのう
 おかたづけ……▼</language>
 	</row>
 

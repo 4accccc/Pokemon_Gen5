@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T15:35:48"/>
+	<create user="matsumiya" host="W00224" date="2010-04-21T16:07:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -825,7 +825,7 @@
 出会えるかも　しれないね！▼</language>
 	</row>
 
-	<row id="msg_t01_hakase1_end_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01_hakase1_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
 		<comment>♂
 ・画面内に登場してメッセージ
 　主人公たち振り向く
@@ -840,7 +840,7 @@
 おまえさんたち　そろっとるな！▼</language>
 	</row>
 
-	<row id="msg_t01_hakase1_end_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_t01_hakase1_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
 		<comment>♂
 ・続けて、ライバルの前に移動して
 hakase1_end_03</comment>
@@ -869,7 +869,7 @@ hakase1_end_03</comment>
 ちょいと　図鑑を　貸しとくれ！▼</language>
 	</row>
 
-	<row id="msg_t01_hakase1_end_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_t01_hakase1_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
 		<comment>♂
 ・続けて、サポートの前に移動して
 hakase1_end_04
@@ -879,7 +879,7 @@ hakase1_end_04
 		<language name="JPN_KANJI" width="256">ほいよ　ベル！▼</language>
 	</row>
 
-	<row id="msg_t01_hakase1_end_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_t01_hakase1_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
 		<comment>♂
 ・続けて、主人公の前に移動して
 hakase1_end_05
@@ -889,7 +889,7 @@ hakase1_end_05
 		<language name="JPN_KANJI" width="256">お次は　チェレン！▼</language>
 	</row>
 
-	<row id="msg_t01_hakase1_end_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_t01_hakase1_end_05" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
 		<comment>♂
 ・続けてwhite_end_06</comment>
 		<attribute name="キャラ指定">アララギ博士父</attribute>
@@ -897,7 +897,7 @@ hakase1_end_05
 		<language name="JPN_KANJI" width="256">最後に　おまえさん！▼</language>
 	</row>
 
-	<row id="msg_t01_hakase1_end_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01_hakase1_end_06" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
 		<comment>♂
 ・全国図鑑追加（システムウインドウ：ME待ち）
 ・続けてhakase1_end_07</comment>
@@ -908,7 +908,7 @@ hakase1_end_05
 全国版に　バージョンアップした！</language>
 	</row>
 
-	<row id="msg_t01_hakase1_end_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_t01_hakase1_end_07" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
 		<comment>♂
 ・メッセージ表示後、博士退場
 ・続けてwhite_end_04</comment>
@@ -929,7 +929,7 @@ hakase1_end_05
 ポケモンと　出会ってくれよ▼</language>
 	</row>
 
-	<row id="msg_t01_white_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01_white_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・クリア後
 ・メッセージ表示後、ベルの家のほうへ移動
