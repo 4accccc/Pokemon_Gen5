@@ -42,4 +42,6 @@ extern void FIELD_DEBUG_RecoverBgCont( FIELD_DEBUG_WORK *work );
 extern void FIELD_DEBUG_SetDrawCallBackFunc(const BOOL sw);
 extern void FIELD_DEBUG_ClearDrawCallBackWork(void);
 
+extern void FIELD_DEBUG_AddDrawLandNum(void);
+
 #endif //FIELD_DEBUG_H_FILE

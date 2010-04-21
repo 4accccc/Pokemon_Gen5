@@ -28,10 +28,12 @@
 
 typedef struct RENDER_INFO_tag
 {
-  int Vtx;
-  int Ply;
-  int Mat;
-  int Shp;
+  u16 Vtx;
+  u16 Ply;
+  u16 Mat;
+  u16 Shp;
+  u16 Num;
+  u16 DrawLandNum;
 }RENDER_INFO;
 
 //--------------------------------------------------------------
@@ -624,18 +626,23 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 
   //3D描画情報
   {
-    sprintf( str, "VTX:%d",DbgRenderInfo.Vtx);
     DebugFont_ClearLine( work, 10 );
+    sprintf( str, "VTX:%d",DbgRenderInfo.Vtx);
 		DebugFont_Print( work, 0, 10, str );
     sprintf( str, "PLY:%d",DbgRenderInfo.Ply);
+		DebugFont_Print( work, 16, 10, str );
+
     DebugFont_ClearLine( work, 11 );
-		DebugFont_Print( work, 0, 11, str );
     sprintf( str, "MAT:%d",DbgRenderInfo.Mat);
-    DebugFont_ClearLine( work, 12 );
-		DebugFont_Print( work, 0, 12, str );
+		DebugFont_Print( work, 0, 11, str );
     sprintf( str, "SHP:%d",DbgRenderInfo.Shp);
-    DebugFont_ClearLine( work, 13 );
-		DebugFont_Print( work, 0, 13, str );
+		DebugFont_Print( work, 10, 11, str );
+    sprintf( str, "NUM:%d",DbgRenderInfo.Num);
+		DebugFont_Print( work, 20, 11, str );
+
+    DebugFont_ClearLine( work, 12 );
+    sprintf( str, "LAND:%d",DbgRenderInfo.DrawLandNum);
+		DebugFont_Print( work, 0, 12, str );
   }
 
 }
@@ -669,6 +676,9 @@ void FIELD_DEBUG_ClearDrawCallBackWork(void)
   DbgRenderInfo.Ply = 0;
   DbgRenderInfo.Mat = 0;
   DbgRenderInfo.Shp = 0;
+  DbgRenderInfo.Num = 0;
+
+  DbgRenderInfo.DrawLandNum = 0;
 }
 
 //--------------------------------------------------------------
@@ -686,7 +696,19 @@ static void DbgDrawCallBackFunc( NNSG3dRenderObj *renderobj, void *work )
   info->Ply += renderobj->resMdl->info.numPolygon;
   info->Mat += renderobj->resMdl->info.numMat;
   info->Shp += renderobj->resMdl->info.numShp;
+  info->Num++;
+}
 
+//--------------------------------------------------------------
+/**
+ * 地面描画回数カウント
+ * @param	none
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FIELD_DEBUG_AddDrawLandNum(void)
+{
+  DbgRenderInfo.DrawLandNum++;
 }
 
 #endif  //PM_DEBUG
