@@ -3492,15 +3492,15 @@ static  VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
   switch( label ){
   case TABLE_JUMP_WAZASEQNO:
     ofs = get_waza_param( taw, taw->waza_no, WAZAPARAM_AI_SEQNO );
+#ifdef AI_SEQ_PRINT
+    OS_TPrintf("seqno:%d\n",ofs);
+#endif
     break;
   default:
     //–¢’è‹`‚Ìƒ‰ƒxƒ‹‚Å‚·
     GF_ASSERT( 0 );
     break;
   }
-
-  OS_TPrintf("tbl_adrs:%08x *tbl_adrs:%08x\n",tbl_adrs,*tbl_adrs);
-  OS_TPrintf("tbl_adrs[ ofs ]:%08x\n",tbl_adrs[ ofs ]);
 
   VMCMD_Jump( vmh, (u8*)(tbl_adrs) + tbl_adrs[ ofs ] );
 
