@@ -120,8 +120,11 @@ extern void	PMSND_Main( void );
 extern void	PMSND_Exit( void );
 
 
-//	ステレオ/モノラル設定
+// ステレオ/モノラル設定
 extern void	PMSND_SetStereo( BOOL flag );
+// ＢＧＭボリューム最大値設定(Reset = 127)
+extern void PMSND_SetMaxVolume( u8 volume );
+extern void PMSND_ResetMaxVolume( void );
 
 //	情報取得
 #ifdef PM_DEBUG

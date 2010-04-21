@@ -138,6 +138,7 @@ static SNDTrackInfo             trackInfo[TRACK_NUM];
 static u16                      trackActiveBit; 
 
 static PMSND_PLAYABLE_CALLBACK  playableCallBackFunc;
+static u8												maxVolume;
 
 //static OSMutex                  sndTreadMutex;    
 //
@@ -208,6 +209,7 @@ void  PMSND_InitMultiBoot( void* sndData )
 //---------------------------------------------------
 static void PMSND_InitCore( BOOL systemSEload )
 {
+	maxVolume = 127;
 #ifdef PM_DEBUG
   heapRemainsAfterSys = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
 #endif
@@ -324,6 +326,23 @@ void  PMSND_SetStereo( BOOL flag )
 //============================================================================================
 /**
  *
+ * @brief ボリューム最大値設定
+ *
+ */
+//============================================================================================
+void PMSND_SetMaxVolume( u8 volume )
+{
+	maxVolume = volume;
+}
+
+void PMSND_ResetMaxVolume( void )
+{
+	maxVolume = 127;
+}
+
+//============================================================================================
+/**
+ *
  * @brief 情報取得
  *
  */
@@ -412,7 +431,7 @@ void PMSND_AllPlayerVolumeEnable( BOOL playerON, u32 bitmask )
   int volume;
 
   if(playerON == TRUE){
-    volume = 127;
+    volume = maxVolume;
   } else {
     volume = 0;
   }
@@ -645,26 +664,11 @@ void  PMSND_PauseBGM( BOOL pauseFlag )
 //------------------------------------------------------------------
 void  PMSND_FadeInBGM( u16 frames )
 {
-#if 0
   PMSND_CancelSystemFadeBGM();
   // 現在のvolumeを即時更新
   NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0, 0);
   // 再度目標値を設定
-  NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 127, frames);
-
-  bgmFadeCounter = frames;
-#else
-	PMSND_FadeInBGMEx( frames, 127 );
-#endif
-}
-
-void  PMSND_FadeInBGMEx( u16 frames, u8 vol )
-{
-  PMSND_CancelSystemFadeBGM();
-  // 現在のvolumeを即時更新
-  NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0, 0);
-  // 再度目標値を設定
-  NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), vol, frames);
+  NNS_SndPlayerMoveVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), maxVolume, frames);
 
   bgmFadeCounter = frames;
 }
@@ -834,7 +838,7 @@ static void PMSND_ResetSystemFadeBGM( void )
   fadeStatus.nextSoundIdx = 0;
   fadeStatus.volumeCounter = 0;//fadeStatus.fadeFrames;
   //最大値に更新
-  NNS_SndPlayerSetVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), 127);
+  NNS_SndPlayerSetVolume(SOUNDMAN_GetHierarchyPlayerSndHandle(), maxVolume);
 
   fadeStatus.seq = 0;
   deleteSoundPlayThread();
@@ -873,7 +877,8 @@ static void PMSND_SystemFadeBGM( void )
         //FADEOUT
         if( fadeStatus.volumeCounter > 0 ){
           fadeStatus.volumeCounter--;
-          NNS_SndPlayerSetVolume(pBgmHandle, fadeStatus.volumeCounter*127/fadeStatus.fadeOutFrame);
+          NNS_SndPlayerSetVolume
+						(pBgmHandle, fadeStatus.volumeCounter*maxVolume/fadeStatus.fadeOutFrame);
           return;
         }
         NNS_SndPlayerSetVolume(pBgmHandle, 0);
@@ -881,7 +886,8 @@ static void PMSND_SystemFadeBGM( void )
         //FADEIN
         if( fadeStatus.volumeCounter < fadeStatus.fadeInFrame ){
           fadeStatus.volumeCounter++;
-          NNS_SndPlayerSetVolume(pBgmHandle, fadeStatus.volumeCounter*127/fadeStatus.fadeInFrame);
+          NNS_SndPlayerSetVolume
+						(pBgmHandle, fadeStatus.volumeCounter*maxVolume/fadeStatus.fadeInFrame);
           return;
         }
         PMSND_ResetSystemFadeBGM();
