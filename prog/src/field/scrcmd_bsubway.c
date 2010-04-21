@@ -1161,8 +1161,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     }else{ //ワイヤレス
       BSUBWAY_COMM_Init( bsw_scr );
     }
-
-    GAMESYSTEM_SetAlwaysNetFlag( gsys, TRUE );
+    
+//  GAMESYSTEM_SetAlwaysNetFlag( gsys, TRUE );
     break;
   //通信終了
   case BSWSUB_COMM_END:
@@ -1171,7 +1171,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     }
     
     BSUBWAY_COMM_Exit( bsw_scr );
-    GAMESYSTEM_SetAlwaysNetFlag( gsys, FALSE );
+//  GAMESYSTEM_SetAlwaysNetFlag( gsys, FALSE );
     break;
   //通信同期
   case BSWSUB_COMM_TIMSYNC:
