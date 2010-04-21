@@ -2524,16 +2524,17 @@ static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
         }
       }
     }
-  }
 
-  {
-    u32 hem_state = Hem_PushState( &wk->HEManager );
-    if( scEvent_NigeruExMessage(wk, bpp) ){
-      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-    }else{
-      SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_EscapeSuccess, SEQ_SE_NIGERU );
+    {
+      u32 hem_state = Hem_PushState( &wk->HEManager );
+      if( scEvent_NigeruExMessage(wk, bpp) ){
+        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      }else{
+        SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_EscapeSuccess, SEQ_SE_NIGERU );
+      }
+      Hem_PopState( &wk->HEManager, hem_state );
     }
-    Hem_PopState( &wk->HEManager, hem_state );
+    return TRUE;
   }
 
   return TRUE;
@@ -12474,6 +12475,19 @@ BtlBgAttr BTL_SVFTOOL_GetLandForm( BTL_SVFLOW_WORK* wk )
 {
   const BTL_FIELD_SITUATION* sit = BTL_MAIN_GetFieldSituation( wk->mainModule );
   return sit->bgAttr;
+}
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] 前衛位置の数を返す
+ *
+ * @param   wk
+ *
+ * @retval  u32
+ */
+//--------------------------------------------------------------------------------------
+u32 BTL_SVFTOOL_GetFrontPosNum( BTL_SVFLOW_WORK* wk )
+{
+  return BTL_MAIN_GetFrontPosNum( wk->mainModule );
 }
 //--------------------------------------------------------------------------------------
 /**

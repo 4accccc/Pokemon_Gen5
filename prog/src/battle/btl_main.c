@@ -2097,6 +2097,39 @@ BtlPokePos BTL_MAIN_GetEnablePosEnd( const BTL_MAIN_MODULE* wk )
     return BTL_POS_2ND_2;
   }
 }
+//=============================================================================================
+/**
+ * 現在のルールに応じて、戦闘の前衛（ワザがあたる場所）の数を返す
+ *
+ * @param   wk
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_MAIN_GetFrontPosNum( const BTL_MAIN_MODULE* wk )
+{
+  switch( wk->setupParam->rule ){
+  case BTL_RULE_SINGLE:
+    return 1;
+
+  case BTL_RULE_DOUBLE:
+    return 2;
+
+  case BTL_RULE_TRIPLE:
+    return 3;
+
+  case BTL_RULE_ROTATION:
+    #ifdef ROTATION_NEW_SYSTEM
+      return 1;
+    #else
+      return 2;
+    #endif
+
+  default:
+    GF_ASSERT(0);
+    return 1;
+  }
+}
 
 //=============================================================================================
 /**

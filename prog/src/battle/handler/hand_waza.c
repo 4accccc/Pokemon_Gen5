@@ -7350,15 +7350,16 @@ static const BtlEventHandlerTable*  ADD_Tedasuke( u32* numElems )
 }
 static void handler_Tedasuke_Ready( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_SVFTOOL_GetRule(flowWk) != BTL_RULE_SINGLE )
+  if( BTL_SVFTOOL_GetFrontPosNum(flowWk) > 1 )
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
     {
       u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
 
-      if( !BPP_IsDead(bpp) )
-      {
+      if( !BPP_IsDead(bpp)
+      &&  !BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_ACTION_DONE)
+      ){
         BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
 
         HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Tedasuke );
