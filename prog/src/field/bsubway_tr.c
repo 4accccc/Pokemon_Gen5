@@ -518,17 +518,18 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   
   switch( play_mode ){
   case BSWAY_MODE_DOUBLE:
-  case BSWAY_MODE_MULTI:
-  case BSWAY_MODE_COMM_MULTI:
   case BSWAY_MODE_S_DOUBLE:
+  case BSWAY_MODE_MULTI:
+  case BSWAY_MODE_S_MULTI:
+  case BSWAY_MODE_COMM_MULTI:
   case BSWAY_MODE_S_COMM_MULTI:
     dst->rule = BTL_RULE_DOUBLE;
     break;
   }
   
   switch( play_mode ){
-  case BSWAY_PLAYMODE_MULTI:
-  case BSWAY_PLAYMODE_S_MULTI:
+  case BSWAY_MODE_MULTI:
+  case BSWAY_MODE_S_MULTI:
     dst->multiMode = BTL_MULTIMODE_PA_AA;
     break;
   case BSWAY_PLAYMODE_COMM_MULTI:

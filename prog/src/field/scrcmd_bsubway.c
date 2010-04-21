@@ -1266,10 +1266,38 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     }
     break;
   //通信親のOBJコードを取得
+  //BSWAY_COMM_MYSTATUS_DATA実行済みが条件
   case BSWSUB_COMM_GET_OBJCODE_OYA:
+    {
+      int sex;
+      
+      if( GFL_NET_SystemGetCurrentID() == GFL_NET_NO_PARENTMACHINE ){ //親
+        FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+        sex = FIELD_PLAYER_GetSex( fld_player );
+      }else{
+        sex = bsw_scr->mystatus_fr.sex;
+      }
+      
+      *ret_wk = FIELD_PLAYER_GetDrawFormToOBJCode(
+          sex, PLAYER_DRAW_FORM_NORMAL );
+    }
     break;
   //通信子のOBJコードを取得
+  //BSWAY_COMM_MYSTATUS_DATA実行済みが条件
   case BSWSUB_COMM_GET_OBJCODE_KO:
+    {
+      int sex;
+      
+      if( GFL_NET_SystemGetCurrentID() == GFL_NET_NO_PARENTMACHINE ){ //親
+        sex = bsw_scr->mystatus_fr.sex;
+      }else{
+        FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+        sex = FIELD_PLAYER_GetSex( fld_player );
+      }
+      
+      *ret_wk = FIELD_PLAYER_GetDrawFormToOBJCode(
+          sex, PLAYER_DRAW_FORM_NORMAL );
+    }
     break;
   //----デバッグ
   //DEBUG 選択ポケモン強制セット
