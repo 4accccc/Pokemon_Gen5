@@ -19,3 +19,7 @@
 #define TH_RDAT_ST_DL   (2)
 #define TH_RDAT_ST_BOTH (3)
 
+#define TH_DL_RSLT_FAIL     (0)     //é∏îs
+#define TH_DL_RSLT_SUCCESS  (1)     //ê¨å˜
+#define TH_DL_RSLT_SETTLED  (2)    //çœÇ›
+

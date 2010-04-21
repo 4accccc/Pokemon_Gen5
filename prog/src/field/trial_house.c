@@ -420,7 +420,7 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
       { //開始失敗
         GF_ASSERT_MSG(0,"beacon_start_error");
         //受け取りの結果をセット
-        *(evt_wk->Ret) = FALSE;   //失敗
+        *(evt_wk->Ret) = TH_DL_RSLT_FAIL;   //失敗
         (*seq) = BEACON_SEQ_END;
       }
       else (*seq) = BEACON_SEQ_SEARCH;
@@ -446,7 +446,7 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
       else
       {   //配信していない
         //受け取りの結果をセット
-        *(evt_wk->Ret) = FALSE;   //失敗
+        *(evt_wk->Ret) = TH_DL_RSLT_FAIL;   //失敗
         (*seq) = BEACON_SEQ_END;
       }
     }
@@ -466,7 +466,7 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
       BATTLE_EXAMINATION_SAVE_Write(gamedata, evt_wk->Ptr->CommBuf, GFL_HEAP_LOWID(HEAPID_PROC));
       NOZOMU_Printf("データ受け取り成功\n");
       //受け取りの結果をセット
-      *(evt_wk->Ret) = TRUE;    //成功
+      *(evt_wk->Ret) = TH_DL_RSLT_SUCCESS;    //成功
       (*seq) = BEACON_SEQ_END;
     }
     break;

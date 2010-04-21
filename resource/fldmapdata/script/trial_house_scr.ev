@@ -419,7 +419,7 @@ download:
       _TH_SEARCH_BEACON( SCWK_ANSWER )
       _SYSWIN_CLOSE()
 
-      IF $SCWK_ANSWER == FALSE THEN
+      IF $SCWK_ANSWER == TH_DL_RSLT_FAIL THEN
         //「ダウンロードするものがない」
         _BALLOONWIN_OBJMSG_POS(msg_trialhouse_024, SCWK_TARGET_OBJID, POS_DL )
         //メニュー選択やり直し
