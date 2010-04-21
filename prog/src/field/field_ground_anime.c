@@ -247,7 +247,6 @@ void FIELD_GRANM_Delete( FIELD_GRANM* p_sys )
 void FIELD_GRANM_Main( FIELD_GRANM* p_sys )
 {
   fx32 speed;
-
 	// オートアニメーション処理
 	if( p_sys->anime_flag ){
     speed = p_sys->anime_speed;

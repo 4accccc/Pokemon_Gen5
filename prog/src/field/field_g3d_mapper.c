@@ -44,6 +44,12 @@
 #include "system/palanm.h"
 #include "field/field_comm/intrude_work.h"
 
+#ifdef PM_DEBUG
+
+//#define DEBUG_PRINT_LOADING_TICK
+
+#endif
+
 
 //============================================================================================
 /**
@@ -315,6 +321,13 @@ BOOL	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 	//ブロック制御メイン
   // 描画ブロック数を求める
   WRITEBLOCK_Control_Clear( g3Dmapper );
+#ifdef DEBUG_PRINT_LOADING_TICK
+  {
+    OSTick DEBUG_starttick = OS_GetTick();
+    
+    OS_TPrintf( "tp..\n" );
+    
+#endif
 	for( i=0; i<g3Dmapper->blockNum; i++ ){
     {
       FLD_G3D_MAP_LOAD_STATUS* ldst;
@@ -324,6 +337,10 @@ BOOL	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 		FLD_G3D_MAP_Main( g3Dmapper->blockWk[i].g3Dmap );
     WRITEBLOCK_Control_SetOneBlock( g3Dmapper, g3Dmapper->blockWk[i].g3Dmap, i );
 	}
+#ifdef DEBUG_PRINT_LOADING_TICK
+    OS_TPrintf( " %ld\n", OS_GetTick() - DEBUG_starttick );
+  }
+#endif
 
 	//現在ブロックのindex取得
 	{
@@ -355,11 +372,24 @@ void	FLDMAPPER_MainTail( FLDMAPPER* g3Dmapper )
 	if( g3Dmapper->blocks == NULL ){
 		return;
 	}
+#ifdef DEBUG_PRINT_LOADING_TICK
+  {
+    OSTick DEBUG_starttick = OS_GetTick();
+    
+    OS_TPrintf( "tl.. " );
+    
+#endif
+  
 	//ブロック制御メイン
 	for( i=0; i<g3Dmapper->blockNum; i++ ){
 		FLD_G3D_MAP_Main( g3Dmapper->blockWk[i].g3Dmap );
     //WRITEBLOCK_Control_SetOneBlock( g3Dmapper, g3Dmapper->blockWk[i].g3Dmap, i );
 	}
+
+#ifdef DEBUG_PRINT_LOADING_TICK
+    OS_TPrintf( " %ld\n", OS_GetTick() - DEBUG_starttick );
+  }
+#endif
 }
 
 

@@ -149,6 +149,10 @@
 #define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK_DRAW_KEY ( PAD_BUTTON_L )
 #endif //DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
 
+
+extern u8 DEBUG_MAIN_UPDATE_TYPE;  ///<FIELDMAP TOP TAIL フレームチェック用 実態は、main.c
+
+
 #endif  //PM_DEBUG
 
 #define FLD3DCUTIN_SIZE   (0xc000)   //フィールド3Ｄカットインのヒープサイズ
@@ -1001,6 +1005,12 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 #endif
 
   INIT_CHECK();
+
+
+#ifdef PM_DEBUG
+  DEBUG_MAIN_UPDATE_TYPE = 0;
+#endif
+
   if (GAMEDATA_GetIsSave( fieldWork->gamedata )) return MAINSEQ_RESULT_CONTINUE;
 
   if (fieldWork->MainHookFlg)
@@ -1049,7 +1059,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 #endif
   SET_CHECK("update_top:mmdlsys");
   if( fieldWork->fldMMdlSys != NULL ){
+    MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9); //500 micro sec 程度削減
     MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
+    MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
   }
   SET_CHECK("update_top:gimmick");
   //ギミック動作
@@ -1153,6 +1165,10 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
   OSTick debug_fieldmap_end_tick;
 #endif
   INIT_CHECK();
+
+#ifdef PM_DEBUG
+  DEBUG_MAIN_UPDATE_TYPE = 1;
+#endif
   
   if(GAMEDATA_GetIsSave( fieldWork->gamedata )){
      GAMEDATA_ResetFrameSpritCount(GAMESYSTEM_GetGameData(gsys));
@@ -1160,7 +1176,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
   }
 
   //ロード後半
+  MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9); //500 micro sec 程度削減
   FLDMAPPER_MainTail( fieldWork->g3Dmapper );
+  MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
   
   SET_CHECK("update_tail:subscreen");
   FIELD_SUBSCREEN_Draw(fieldWork->fieldSubscreenWork);
@@ -1356,6 +1374,11 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
   //3Ｄ描画コールバックリセット
   FIELD_DEBUG_SetDrawCallBackFunc(FALSE);
 #endif  
+
+
+#ifdef PM_DEBUG
+  DEBUG_MAIN_UPDATE_TYPE = 0;
+#endif
 
   return MAINSEQ_RESULT_NEXTSEQ;
 }
@@ -2285,7 +2308,10 @@ static void fldmap_G3D_Load( FIELDMAP_WORK *fieldWork )
 static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 {
   BOOL map_load_start;
+  
+  MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9); //500 micro sec 程度削減
 	map_load_start = FLDMAPPER_Main( fieldWork->g3Dmapper );
+  MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
   if (map_load_start)
   {
     GFL_NET_ChangeoverChangeSpeed(GFL_NET_CROSS_SPEED_PAUSE);  //すれ違い一時停止
@@ -2725,6 +2751,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	u32 new_zone_id;
 	u32 old_zone_id = lc->zone_id;
 
+
   INIT_CHECK();   //デバッグ：処理負荷計測用
 
   //エフェクトエンカウント破棄
@@ -2742,13 +2769,15 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 
   SET_CHECK("zonechange:delete mmdl");
 	
-	//旧ゾーン配置動作モデル削除
+  MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9); // 1000 micro sec程度削減
+	//旧ゾーン配置動作モデル削除 
 	MMDLSYS_DeleteZoneUpdateMMdl( fmmdlsys );
 
   SET_CHECK("zonechange:event load");
 	
 	//次のイベントデータをロード
 	EVENTDATA_SYS_Load( evdata, new_zone_id, GAMEDATA_GetSeasonID(gdata) );
+  MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
 
   //歩いてゾーンが変更した場合のフラグ初期化
   FIELD_FLAGCONT_INIT_WalkStepOver( gdata, fieldWork );
@@ -2789,8 +2818,11 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
   SCRIPT_CallZoneChangeScript( fieldWork->gsys, HEAPID_PROC );
 
   SET_CHECK("zonechange:set mmdl");
-	//新規ゾーンに配置する動作モデルセット
+	//新規ゾーンに配置する動作モデルセット 1200 micro sec程度削減
+  MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
 	zoneChange_SetMMdl( gdata, fmmdlsys, evdata, new_zone_id );
+  MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
+
 	
   SET_CHECK("zonechange:tail");
 
@@ -2809,6 +2841,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
   }
 #endif
 
+  
 	KAGAYA_Printf( "ゾーン更新完了 %d -> %d\n", lc->zone_id, new_zone_id );
 }
 

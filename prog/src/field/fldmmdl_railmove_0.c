@@ -781,8 +781,8 @@ MMDL * MMDLSYS_SearchRailLocation( const MMDLSYS *sys, const RAIL_LOCATION* loca
         }
       }
       
-      MMDL_GetRailLocation( mmdl, &mdl_location );
-      FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &mdl_location, &mdl_pos );
+      MMDL_GetVectorPos( mmdl, &mdl_pos );
+      //FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &mdl_location, &mdl_pos );
       if( FIELD_RAIL_TOOL_HitCheckSphere( &check_pos, &mdl_pos, grid_r ) ){
         return( mmdl );
       }

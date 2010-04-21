@@ -147,9 +147,10 @@ struct _FIELD_RAIL_WORK{
   
   VecFx32 pos;  // Œ»ÝÀ•W
   RAIL_LOCATION now_location;
-
   // ‰ß‹Ž‚Ìî•ñ
   RAIL_LOCATION last_location;
+  // –Ú‚Ì‘O‚Ìî•ñ
+  RAIL_LOCATION front_location;
 
   const FIELD_RAIL_MAN* cp_man;
 

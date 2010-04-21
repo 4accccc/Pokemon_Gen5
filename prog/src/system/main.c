@@ -71,6 +71,9 @@ static void DEBUG_StackOverCheck(void);
 //------------------------------------------------------------------
 #ifdef PM_DEBUG
 
+u8 DEBUG_MAIN_UPDATE_TYPE = 0;  ///<FIELDMAP TOP TAIL フレームチェック用
+
+
 OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Now;    // 現在のチック
 
 static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start;    // 1フレーム開始
@@ -164,6 +167,7 @@ void NitroMain(void)
     GFLUser_Main();
     GameMain();
 
+
     // 描画に必要な準備して…
     GFLUser_Display();
 
@@ -204,7 +208,8 @@ void NitroMain(void)
       }
       MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
     }
-  }
+    
+  }//while
 
   GameExit();
 }
@@ -341,9 +346,10 @@ static  void  GameMain(void)
 #endif
   PMSND_Main();
   PMVOICE_Main();
-  
+
   GAMEBEACON_Update();
   GPOWER_SYSTEM_Update();
+
 }
 
 //------------------------------------------------------------------
@@ -446,7 +452,9 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
   if( now_time > 16000 ){
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount ++;
 #if DEBUG_MAIN_TIME_AVERAGE
-    OS_TPrintf( " over tick %ld\n", now_time );
+    OS_TPrintf( " update %d", DEBUG_MAIN_UPDATE_TYPE );
+    OS_TPrintf( " over tick %ld", now_time );
+    OS_TPrintf( " ave tick %d\n", (DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count) );
 #endif
   }
   if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max < now_time ){
@@ -471,9 +479,10 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
 
 #if DEBUG_MAIN_TIME_AVERAGE
   if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_NOW_TIME_DRAW_KEY & GFL_UI_KEY_GetCont() ){
-    OS_TPrintf( " now tick %ld\n", now_time );
+    OS_TPrintf( " update[%d] tick %ld\n", DEBUG_MAIN_UPDATE_TYPE, now_time );
   }
 #endif
+
 }
 
 #endif // PM_DEBUG

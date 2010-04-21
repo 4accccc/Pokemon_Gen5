@@ -22,6 +22,7 @@
 
 //#define DEBUG_WH_BEACON_PRINT_ON  // beacon切り替えタイミングを表示
 
+
 #endif
 
 
@@ -438,6 +439,7 @@ static BOOL _scanCallback(WMBssDesc *bssdesc)
 //	NET_PRINT("_scanCallback\n");
 
 	if(FALSE == _scanCheck(bssdesc)){
+
 		return FALSE;
 	}
 

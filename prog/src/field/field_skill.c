@@ -384,6 +384,11 @@ static FLDSKILL_RET SkillCheck_Naminori( const FLDSKILL_CHECK_WORK * scwk)
   if( scwk->moveform == PLAYER_MOVE_FORM_SWIM ){
     return FLDSKILL_RET_PLAYER_SWIM;
   }
+
+  //ダイビング中
+  if( scwk->moveform == PLAYER_MOVE_FORM_DIVING ){
+    return FLDSKILL_RET_USE_NG;
+  }
   
   if( IsEnableSkill(scwk,FLDSKILL_IDX_NAMINORI) ){
     return FLDSKILL_RET_USE_OK;

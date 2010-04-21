@@ -12,6 +12,12 @@
 
 #include "debug/debug_flg.h" //DEBUG_FLG_`
 
+#ifdef PM_DEBUG
+
+//#define DEBUG_LOADING_TICK_PRINT
+
+#endif // PM_DEBUG
+
 
 //============================================================================================
 /**
@@ -202,15 +208,26 @@ void	FLD_G3D_MAP_Delete( FLD_G3D_MAP* g3Dmap )
 void	FLD_G3D_MAP_Main( FLD_G3D_MAP* g3Dmap )
 {
 	FLD_G3D_MAP_FILELOAD_FUNC*	loadFunc;
+#ifdef DEBUG_LOADING_TICK_PRINT
+  OSTick DEBUG_starttick;
+#endif
 
 	GF_ASSERT( g3Dmap );
 
 	if( g3Dmap->ldst.seq != FLD_G3D_MAP_LOAD_IDLING ){
 		loadFunc = g3Dmap->mapFileFunc[g3Dmap->fileType].loadFunc;
 
+#ifdef DEBUG_LOADING_TICK_PRINT
+    DEBUG_starttick = OS_GetTick();
+#endif
+    
 		if( loadFunc != NULL ){
 			loadFunc( g3Dmap, g3Dmap->externalWork );
 		}
+
+#ifdef DEBUG_LOADING_TICK_PRINT
+    OS_TPrintf( "loading.. tick %ld\n", OS_GetTick() - DEBUG_starttick );
+#endif
 	}
 }
 

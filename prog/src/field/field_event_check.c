@@ -294,11 +294,12 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   *eff_delete_flag = FALSE;  //まずはリクエストなし
   *menu_open_flag = FALSE;
 
+  SET_CHECK("ev_check:setupRequest");
   //リクエスト更新
   setupRequest( &req, gsys, fieldWork );
 
-  SET_CHECK("ev_check:setupRequest");
 
+  SET_CHECK("ev_check:debug_key_event");
 //☆☆☆デバッグ用チェックを最優先とする
 #ifdef  PM_DEBUG
   event = DEBUG_checkKeyEvent( &req, gsys, fieldWork );
@@ -307,8 +308,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   }
 #endif //PM_DEBUG
 
-  SET_CHECK("ev_check:debug_key_event");
 	
+  SET_CHECK("ev_check:special event");
 //☆☆☆特殊スクリプト起動チェックがここに入る
 #ifdef  PM_DEBUG
   if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) == FALSE)
@@ -334,24 +335,26 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     if (event != NULL) return event;
   }
 
-  SET_CHECK("ev_check:special event");
 
 
+  SET_CHECK("ev_check:trainer eye");
 //☆☆☆トレーナー視線チェックがここに入る
 #ifdef  PM_DEBUG
   if( !(req.debugRequest) && DEBUG_FLG_GetFlg(DEBUG_FLG_DisableTrainerEye) == FALSE )
 #endif
   {
     u32 count = FIELD_EVENT_CountBattleMember( gsys );
+    MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);  // 400 ～ 600 micro sec
     event = EVENT_CheckTrainerEye( fieldWork, count );
+    MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
     if( event != NULL ){
       *eff_delete_flag = TRUE;  //エフェクトエンカウント消去リクエスト
       return event;
     }
   }
 
-  SET_CHECK("ev_check:trainer eye");
 
+  SET_CHECK("ev_check:move event");
 //☆☆☆一歩移動チェックがここから
   //座標イベントチェック
   if( req.moveRequest )
@@ -378,8 +381,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   if ( event != NULL) {
     return event;
   }
-  SET_CHECK("ev_check:move event");
 
+  SET_CHECK("ev_check:step event");
 //☆☆☆ステップチェック（一歩移動or振り向き）がここから
   if (req.stepRequest )
   {
@@ -407,7 +410,6 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       return enc_event;
     }
   }
-  SET_CHECK("ev_check:step event");
 
 
   //看板イベントチェック
@@ -435,6 +437,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   }
   */
   
+  SET_CHECK("ev_check:player event");
 //☆☆☆自機状態イベントチェック
 #ifdef  PM_DEBUG
   if( !(req.debugRequest) )
@@ -454,10 +457,10 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       return event;
     }
   }
-  SET_CHECK("ev_check:player event");
   
 //☆☆☆会話チェック
 
+  SET_CHECK("ev_check:game_comm");
 	///通信用会話処理(仮
   {
     GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
@@ -496,8 +499,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       }
     }
   }
-  SET_CHECK("ev_check:game_comm");
 
+  SET_CHECK("ev_check:talk event");
 	//フィールド話し掛けチェック
   if( req.talkRequest )
   {
@@ -581,9 +584,9 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     }
 
   }
-  SET_CHECK("ev_check:talk event");
 
 
+  SET_CHECK("ev_check:naminori");
   { //波乗りテスト
 
     if( req.player_state == PLAYER_MOVE_STATE_END ||
@@ -605,8 +608,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     }
   }
 
-  SET_CHECK("ev_check:naminori");
   
+  SET_CHECK("ev_check:push event");
 //☆☆☆押し込み操作チェック（マットでのマップ遷移など）
 	//キー入力接続チェック
   if (req.pushRequest) {
@@ -623,8 +626,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       return event;
     }
   }
-  SET_CHECK("ev_check:push event");
   
+  SET_CHECK("ev_check:menu");
 //☆☆☆自機位置に関係ないキー入力イベントチェック
   //便利ボタンチェック
   if( req.convRequest ){
@@ -666,8 +669,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   	  return EVENT_FieldMapMenu( gsys, fieldWork, req.heapID );
 		}
 	}
-  SET_CHECK("ev_check:menu");
 	
+  SET_CHECK("ev_check:subscreen");
 	//新サブスクリーンからのイベント起動チェック
 	if(WIPE_SYS_EndCheck()){
     event = FIELD_SUBSCREEN_EventCheck( FIELDMAP_GetFieldSubscreenWork(fieldWork), req.subscreenRequest );
@@ -685,7 +688,6 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 	if( event != NULL ){
 		return event;
 	}
-  SET_CHECK("ev_check:subscreen");
 
   //Gパワー効果終了チェック
   event = CheckGPowerEffectEnd( gsys );
@@ -694,12 +696,12 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   }
   
 	
+  SET_CHECK("ev_check:gpower & intrude");
 	//パレス座標イベント
   event =  Intrude_CheckPosEvent(fieldWork, gsys, req.field_player);
   if(event != NULL){
     return event;
   }
-  SET_CHECK("ev_check:gpower & intrude");
 #ifdef  DEBUG_SPEED_CHECK_ENABLE
   if ( (req.key_trg & PAD_BUTTON_R) || (req.key_cont & PAD_BUTTON_L) )
   {
@@ -971,8 +973,13 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
 	FIELDMAP_WORK *fieldWork = work;
   RAIL_LOCATION front_location;
   const MMDL *player_fmmdl;
+
+  INIT_CHECK();
   
+
+  SET_CHECK("ev_check:setupRequest");
   setupRequest( &req, gsys, fieldWork );
+
 
   player_fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
 
@@ -980,6 +987,7 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
   MMDL_GetRailFrontLocation( player_fmmdl, &front_location );
 
   
+  SET_CHECK("ev_check:debug_key_event");
   //デバッグ用チェック
 #ifdef  PM_DEBUG
   event = DEBUG_checkKeyEvent( &req, gsys, fieldWork );
@@ -988,6 +996,7 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
   }
 #endif //debug
 
+  SET_CHECK("ev_check:special event");
 //☆☆☆特殊スクリプト起動チェックがここに入る
 #ifdef  PM_DEBUG
   if (DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) == FALSE)
@@ -1006,6 +1015,8 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
   GF_ASSERT_MSG(!MapFadeReqFlg,"ERROR:CALLED MAP FADE REQ");   //マップフェードリクエストフラグ
 #endif  
 
+
+  SET_CHECK("ev_check:trainer eye");
 //☆☆☆トレーナー視線チェックがここに入る
   if( !(req.debugRequest) ){
 /*
@@ -1016,6 +1027,8 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
 //*/
   }
 
+
+  SET_CHECK("ev_check:move event");
 //☆☆☆一歩移動チェックがここから
   //座標イベントチェック
   if( req.moveRequest )
@@ -1049,7 +1062,9 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
   }
 
 
+
 	
+  SET_CHECK("ev_check:step event");
 //☆☆☆ステップチェック（一歩移動or振り向き）がここから
   //戦闘移行チェック
   {
@@ -1058,6 +1073,7 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
       return enc_event;
     }
   }
+
   
 #if 0 //WBで要らなくなった
   //看板イベントチェック
@@ -1086,6 +1102,7 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
 //☆☆☆自機状態イベントチェックがここから
     /* 今はない */
 
+  SET_CHECK("ev_check:talk event");
 //☆☆☆会話チェック
 	//フィールド話し掛けチェック
   if( req.talkRequest )
@@ -1133,6 +1150,8 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
   }
 
 
+
+  SET_CHECK("ev_check:push event");
 //☆☆☆押し込み操作チェック（マットでのマップ遷移など）
 	//キー入力接続チェック
   if (req.pushRequest) {
@@ -1146,7 +1165,9 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
       return event;
     }
   }
+
   
+  SET_CHECK("ev_check:menu");
 //☆☆☆自機位置に関係ないキー入力イベントチェック
   //便利ボタンチェック
   if( req.convRequest ){
@@ -1188,6 +1209,7 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
 		}
 	}
 
+  SET_CHECK("ev_check:subscreen");
 	//新サブスクリーンからのイベント起動チェック
   {
     u8 ev_ok = FALSE;
@@ -1210,6 +1232,17 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
   {
 		return event;
 	}
+
+#ifdef  DEBUG_SPEED_CHECK_ENABLE
+  if ( (req.key_trg & PAD_BUTTON_R) || (req.key_cont & PAD_BUTTON_L) )
+  {
+    OSTick end_tick;
+    TAIL_CHECK(&end_tick);
+    OS_TPrintf("ev_check rail:total:%08x", end_tick);
+    OS_TPrintf("(%d msec)\n", OS_TicksToMicroSeconds(end_tick) );
+    PUT_CHECK();
+  }
+#endif
   
   /*	
 	//パレス座標イベント
@@ -1263,6 +1296,8 @@ GMEVENT * FIELD_EVENT_CheckHybrid( GAMESYS_WORK *gsys, void *work )
 //--------------------------------------------------------------
 static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork)
 {
+  MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
+  
   GFL_STD_MemClear( req, sizeof(EV_REQUEST) );
   req->heapID = FIELDMAP_GetHeapID(fieldWork);
   req->gsys = gsys;
@@ -1370,6 +1405,8 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
         req->key_cont & 0xff, req->player_state, req->player_value, req->player_dir );
   }*/
 #endif
+
+  MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
 }
 
 
@@ -1394,6 +1431,7 @@ static GMEVENT * checkSpecialEvent( EV_REQUEST * req )
     return event;
   }
   event = SCRIPT_SearchSceneScript( req->gsys, req->heapID );
+
   if (event){
     return event;
   }
@@ -3084,6 +3122,8 @@ static MMDL * getRailFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap )
   MMDL* player_mmdl;
   RAIL_LOCATION location;
 
+
+  
   player_mmdl = FIELD_PLAYER_GetMMdl( req->field_player );
   if( MMDL_GetRailFrontLocation( player_mmdl, &location ) )
   {
@@ -3094,6 +3134,7 @@ static MMDL * getRailFrontTalkOBJ( EV_REQUEST *req, FIELDMAP_WORK *fieldMap )
   {
     mmdl = NULL;
   }
+
   
   return( mmdl );
 }
