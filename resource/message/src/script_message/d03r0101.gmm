@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T16:22:30"/>
+	<create user="matsumiya" host="W00224" date="2010-04-21T14:04:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1295" top="207" right="2000" bottom="835" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="152" right="1985" bottom="780" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -452,22 +452,48 @@
 襲いかかってきた！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_rival_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d03r0101_rival_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：d08イベント後
-・GRIDX=61、GRIDZ=30</comment>
+・GRIDX=61、GRIDZ=30を踏むとイベント開始
+　画面下からチェレン登場
+　GRIDX=61、GRIDZ=32に到達しメッセージ表示
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『ここが
-こだいのしろの　いりぐち[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『ここが
-古代の城の　入り口[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『そこが
+こだいのしろの　いりぐち▼
+それにしても
+[1:00:トレーナー名:0]は　すごいな▼
+ぼくより　さきに
+とうちゃく　するなんて▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『そこが
+古代の城の　入り口▼
+それにしても
+[1:00:トレーナー名:0]は　すごいな▼
+ぼくより　先に
+到着するなんて▼</language>
 	</row>
 
-	<row id="msg_d03r0101_rival_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d03r0101_rival_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：d08イベント後
+・画面下向きでメッセージ表示
+・続けてrival_02a</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">リゾートデザートの　ポケモンに
+いがいと　てまどってしまって……▼
+ここまで　これたのは
+ぼくの　ポケモンたちの　おかげだね▼</language>
+		<language name="JPN_KANJI" width="256">リゾートデザートの　ポケモンに
+意外と　手間取ってしまって……▼
+ここまで　来れたのは
+ぼくの　ポケモンたちの　おかげだね▼</language>
+	</row>
+
+	<row id="msg_d03r0101_rival_02a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂：d08イベント後
 ・画面上向きでメッセージ表示
-・表示後、画面上方向に移動
-　画面外に消えると、主人公操作可能に</comment>
+・d04r0601イベント発動まで待機</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">……アデクさん　さきに　いったよ
@@ -519,7 +545,7 @@
 
 	<row id="msg_d03r0101_champion_02" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>♂：d04r0601のイベント後
-・ＴＶトランシーバー画面から復帰後
+・ライブキャスター画面から復帰後
 　このメッセージ表示
 ・表示後、チャンピオンに「そらをとぶ」演出で
 　動作モデル削除
