@@ -612,6 +612,8 @@ static BOOL PMSND_PlayBGM_CORE( u32 soundIdx, u16 trackBit )
 
   if( trackBit != 0xffff ){ PMSND_ChangeBGMtrack( trackBit ); }
 
+  PMSND_PlayerSetVolume( PLAYER_BGM, maxVolume );
+
   return result;
 }
 
@@ -644,6 +646,9 @@ void  PMSND_PlayBGM_WideChannel( u32 soundIdx )
   // サウンド再生開始
   result = NNS_SndArcPlayerStartSeqEx
           (SOUNDMAN_GetHierarchyPlayerSndHandle(), PLAYER_BGM2, -1, -1, soundIdx);
+  if( result == FALSE){ return; }
+
+  PMSND_PlayerSetVolume( PLAYER_BGM, maxVolume );
 }
 
 //------------------------------------------------------------------
@@ -1020,10 +1025,13 @@ void  PMSND_PlaySE_byPlayerID( u32 soundIdx, SEPLAYER_ID sePlayerID )
   sePlayerData[sePlayerID].soundIdx = 0;
   result = NNS_SndArcPlayerStartSeqEx
     (&sePlayerData[sePlayerID].sndHandle, playerNo, -1, -1, soundIdx);
-  if(result == TRUE){ sePlayerData[sePlayerID].soundIdx = soundIdx; }
+  if(result == FALSE){ return; }
+
+  sePlayerData[sePlayerID].soundIdx = soundIdx;
+  PMSND_PlayerSetVolume( playerNo, maxVolume );
 }
 
-static void pmsnd_PlaySECore( u32 soundIdx, u32 volume )
+static u8 pmsnd_PlaySECore( u32 soundIdx )
 {
   BOOL result;
   SEPLAYER_ID sePlayerID;
@@ -1031,22 +1039,23 @@ static void pmsnd_PlaySECore( u32 soundIdx, u32 volume )
   // ロードスレッド動作中は再生しない
   //if( PMSND_IsLoading() ) { return; }
   // 再生可否判定
-  if(checkPlaySound(soundIdx) == FALSE){ return; }
+  if(checkPlaySound(soundIdx) == FALSE){ return SEPLAYER_MAX; }
 
   sePlayerID = PMSND_GetSE_DefaultPlayerID(soundIdx);
   sePlayerData[sePlayerID].soundIdx = 0;
   result = NNS_SndArcPlayerStartSeq(&sePlayerData[sePlayerID].sndHandle, soundIdx);
-  if(result == TRUE){
-    sePlayerData[sePlayerID].soundIdx = soundIdx;
-    if(volume < 128){
-      PMSND_PlayerSetVolume( sePlayerID, volume );
-    }
-  }
+  if(result == FALSE){ return SEPLAYER_MAX; }
+
+  sePlayerData[sePlayerID].soundIdx = soundIdx;
+	return sePlayerID;
 }
 
 void  PMSND_PlaySE( u32 soundIdx )
 {
-  pmsnd_PlaySECore( soundIdx, 0xFFFFFFFF );
+  u8 sePlayerID = pmsnd_PlaySECore( soundIdx );
+  if(sePlayerID == SEPLAYER_MAX){ return; }
+
+  PMSND_PlayerSetVolume( sePlayerID, maxVolume );
 }
 /*
  *  @brief  SEをボリューム指定付きで再生
@@ -1056,7 +1065,14 @@ void  PMSND_PlaySE( u32 soundIdx )
  */
 void  PMSND_PlaySEVolume( u32 soundIdx, u32 volume )
 {
-  pmsnd_PlaySECore( soundIdx, volume );
+  u8 sePlayerID = pmsnd_PlaySECore( soundIdx );
+  if(sePlayerID == SEPLAYER_MAX){ return; }
+
+  if(volume < maxVolume){
+    PMSND_PlayerSetVolume( sePlayerID, volume );
+  } else {
+		PMSND_PlayerSetVolume( sePlayerID, maxVolume );
+	}
 }
 
 //------------------------------------------------------------------
@@ -1355,6 +1371,7 @@ BOOL PMSND_PlayBGMdiv(u32 no, u32* seq, BOOL start)
 
           NNS_SndArcPlayerStartSeqEx(pBgmHandle, PLAYER_BGM, -1, -1, no);
           //NNS_SndPlayerSetVolume(pBgmHandle, 0);
+					// あえてmaxVolumeは設定しない→fldSoundの方でコントロール
         }
         (*seq)++;
         return TRUE;
@@ -1463,7 +1480,10 @@ BOOL  PMDSND_ChangeWaveData
 
 BOOL  PMDSND_PlayExtraMusic( u32 dummyNo )
 {
-  return NNS_SndArcPlayerStartSeq( SOUNDMAN_GetHierarchyPlayerSndHandle(), dummyNo );
+	BOOL result;
+  result = NNS_SndArcPlayerStartSeq( SOUNDMAN_GetHierarchyPlayerSndHandle(), dummyNo );
+
+	return result;
 }
 
 void  PMDSND_StopExtraMusic( void )
