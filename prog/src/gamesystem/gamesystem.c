@@ -548,6 +548,29 @@ void GAMESYSTEM_SetAlwaysNetFlag( GAMESYS_WORK * gsys, BOOL is_on )
 
 //==================================================================
 /**
+ * 常時通信を起動してもよい状態かをチェックする
+ *
+ * @param   gsys		
+ *
+ * @retval  BOOL		TRUE:常時通信を起動してもよい
+ * @retval  BOOL		FALSE:起動してはいけない
+ */
+//==================================================================
+BOOL GAMESYSTEM_CommBootAlways_Check(GAMESYS_WORK *gsys)
+{
+  GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  u16 zone_id = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) );
+
+  if(ZONEDATA_IsFieldBeaconNG(zone_id) == FALSE
+      && NetErr_App_CheckError() == NET_ERR_CHECK_NONE
+      && GAMESYSTEM_GetAlwaysNetFlag( gsys ) == TRUE){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
  * 常時通信フラグをチェックした上で、常時通信を起動する
  *
  * @param   gsys		
@@ -557,12 +580,10 @@ void GAMESYSTEM_SetAlwaysNetFlag( GAMESYS_WORK * gsys, BOOL is_on )
 BOOL GAMESYSTEM_CommBootAlways( GAMESYS_WORK *gsys )
 {
   GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
-
-  if ( GAMESYSTEM_GetAlwaysNetFlag( gsys ) == TRUE &&
-       (TRUE == CGEAR_SV_GetCGearONOFF(GAMEDATA_GetCGearSaveData(gsys->gamedata))))
-  {
-    if ( GameCommSys_BootCheck( gcsp ) == GAME_COMM_NO_NULL )
-    {
+  
+  if(GAMESYSTEM_CommBootAlways_Check(gsys) == TRUE){
+    //多重起動防止
+    if(GFL_NET_IsInit() == FALSE && GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
       GameCommSys_Boot( gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH, gsys );
       return TRUE;
     }
