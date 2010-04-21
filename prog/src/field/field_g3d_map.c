@@ -14,10 +14,10 @@
 
 #ifdef PM_DEBUG
 
+#include "field_debug.h"
 //#define DEBUG_LOADING_TICK_PRINT
 
 #endif // PM_DEBUG
-
 
 //============================================================================================
 /**
@@ -872,7 +872,9 @@ static BOOL	DrawGround( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
       NNS_G3dGeTranslateVec( &g3Dmap->trans );
       
       if( checkCullingBoxTest( g3Dmap->NNSrnd ) == TRUE ){
-
+#ifdef PM_DEBUG
+        FIELD_DEBUG_AddDrawLandNum();
+#endif
         //’nŒ`•`‰æ
         GFL_G3D_Draw( g3Dmap->NNSrnd );
         ret = TRUE; // •`‰æŠ®—¹
