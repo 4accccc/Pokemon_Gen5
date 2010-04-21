@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-04-17T19:16:27"/>
+	<create user="saitou" host="W00158" date="2010-04-21T19:29:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -415,8 +415,8 @@
 
 	<row id="dni_top_fortune">
 		<comment>おこづかいとかをそうさ</comment>
-		<language name="JPN" width="240">おこづかいとか</language>
-		<language name="JPN_KANJI" width="240">お小遣いとか</language>
+		<language name="JPN" width="240">おこづかい・ＢＰとか</language>
+		<language name="JPN_KANJI" width="240">お小遣い・ＢＰとか</language>
 	</row>
 
 	<row id="dni_top_fadespeed">
@@ -529,6 +529,12 @@
 		<comment>クイズ問題番号</comment>
 		<language name="JPN" width="240">クイズ</language>
 		<language name="JPN_KANJI" width="240">クイズ</language>
+	</row>
+
+	<row id="dni_bp" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<comment>バトルポイント</comment>
+		<language name="JPN" width="240">バトルポイント</language>
+		<language name="JPN_KANJI" width="240">バトルポイント</language>
 	</row>
 
 	<row id="dni_debug_net_config" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">

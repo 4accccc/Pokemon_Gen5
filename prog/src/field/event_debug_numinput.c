@@ -48,6 +48,8 @@
 #include "net/net_whpipe.h"
 
 #include "savedata/playtime.h"
+#include "savedata/bsubway_savedata.h"
+#include "savedata/save_tbl.h"
 
 //======================================================================
 //======================================================================
@@ -112,6 +114,9 @@ static u32 DebugGetGold(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetGold(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetQuiz(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetQuiz(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetBP(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetBP(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+
 static u32 DebugGetWhiteLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetWhiteLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetBlackLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
@@ -916,6 +921,33 @@ static void DebugSetQuiz(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u3
 {
   DebugQuizNo = value;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief バトルポイント値ゲット
+ */
+//--------------------------------------------------------------
+static u32 DebugGetBP(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  BSUBWAY_SCOREDATA *bp;
+  bp = SaveControl_DataPtrGet(GAMEDATA_GetSaveControlWork(gamedata),
+                                                     GMDATA_ID_BSUBWAY_SCOREDATA);
+  return BSUBWAY_SCOREDATA_GetBattlePoint( bp );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief バトルポイント値セット
+ */
+//--------------------------------------------------------------
+static void DebugSetBP(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  BSUBWAY_SCOREDATA *bp;
+  bp = SaveControl_DataPtrGet(GAMEDATA_GetSaveControlWork(gamedata),
+                                                     GMDATA_ID_BSUBWAY_SCOREDATA);
+  BSUBWAY_SCOREDATA_SetBattlePoint( bp, value );
+}
+
 
 //--------------------------------------------------------------
 /**
