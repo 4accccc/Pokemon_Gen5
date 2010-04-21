@@ -449,18 +449,17 @@ EVENT_START	ev_c03r0401_girl1_01
 
         //「話のつづき」
         _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_02 )
-        _BALLOONWIN_CLOSE()
 
         //ゾロアを図鑑に登録済みか？
         _GET_ZUKAN_FLAG( ZUKANCTRL_MODE_SEE, MONSNO_ZOROA, SCWK_ANSWER )
         IF $SCWK_ANSWER == FALSE THEN    //登録まだ
+          //「ゾロアはひとをばかす」
+          _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_03 )
+          _BALLOONWIN_CLOSE()
           //ポケモンウィンドウ表示
           _DISP_POKE_WIN( MONSNO_ZOROA, 0, 0, 0 )
           //登録
           _SET_ZUKAN_FLAG( ZUKANCTRL_MODE_SEE, MONSNO_ZOROA )
-          //「ゾロアはひとをばかす」
-          _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_03 )
-          _BALLOONWIN_CLOSE()
         ENDIF
 
         _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_04 )
