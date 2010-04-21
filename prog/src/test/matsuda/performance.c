@@ -106,6 +106,8 @@ typedef struct{
   OSTick TickTotalTT[2];
   u16 Count;
   u16 AvePer;
+  u16 TopAvePer;
+  u16 TailAvePer;
   int Top;
 }AVERAGE_PRM;
 
@@ -141,9 +143,9 @@ BOOL DebugScanOnly = FALSE;
 static const s32 MeterPosY[] = {
 	192-16,			//PERFORMANCE_ID_MAIN
 	192-8,			//PERFORMANCE_ID_VBLANK
-	0,				//PERFORMANCE_ID_USER_A
+	/*0*/192-48,				//PERFORMANCE_ID_USER_A
 	8,				//PERFORMANCE_ID_USER_VBLANK_A
-	24,				//PERFORMANCE_ID_USER_B
+	/*24*/192-32,				//PERFORMANCE_ID_USER_B
 	32,				//PERFORMANCE_ID_USER_VBLANK_B
 };
 SDK_COMPILER_ASSERT(NELEMS(MeterPosY) == PERFORMANCE_ID_MAX);
@@ -931,7 +933,7 @@ void DEBUG_PerformanceEndTick(int id)
 
   sub = prm->TickEnd - prm->TickStart;
   prm->TickTotal += sub;
-  prm->TickTotalTT[prm->Top/*prm->Count%2*/] += sub;
+  prm->TickTotalTT[prm->Top] += sub;
   prm->Count++;
 
   if (prm->Count >= AVE_COUNT)
@@ -949,13 +951,18 @@ void DEBUG_PerformanceEndTick(int id)
 
     NOZOMU_Printf("ave_sec %d\n",ave_sec);
     {
+      int top_per, tail_per;
       ave_top = (prm->TickTotalTT[0] / (AVE_COUNT/2));
       ave_sec_top = OS_TicksToMicroSeconds(ave_top);
+      top_per = (ave_sec_top * 100) / 16000;
       ave_tail = (prm->TickTotalTT[1] / (AVE_COUNT/2));
       ave_sec_tail = OS_TicksToMicroSeconds(ave_tail);
-
+      tail_per = (ave_sec_tail * 100) / 16000;
       NOZOMU_Printf("ave_sec_top %d\n",ave_sec_top);
       NOZOMU_Printf("ave_sec_tail %d\n",ave_sec_tail);
+      //更新
+      prm->TopAvePer = top_per;
+      prm->TailAvePer = tail_per;
     }
 
     prm->Count = 0;
@@ -964,7 +971,11 @@ void DEBUG_PerformanceEndTick(int id)
     prm->TickTotalTT[1] = 0;
   }
   //描画
+  //キャラデータ転送
+	Performance_CGXTrans();
   DrawStress(METER_TYPE_END, PERFORMANCE_ID_MAIN, prm->AvePer );
+  DrawStress(METER_TYPE_END, PERFORMANCE_ID_USER_A, prm->TopAvePer );
+  DrawStress(METER_TYPE_END, PERFORMANCE_ID_USER_B, prm->TailAvePer );
 }
 
 static void DrawStress(int meter_type, PERFORMANCE_ID id, int per )
@@ -1006,7 +1017,7 @@ static void DrawStress(int meter_type, PERFORMANCE_ID id, int per )
 	}
 
 	//キャラデータ転送
-	Performance_CGXTrans();
+//	Performance_CGXTrans();
 	
 	//OAMセット
 	G2_SetOBJAttr(
@@ -1044,8 +1055,11 @@ static void DrawStress(int meter_type, PERFORMANCE_ID id, int per )
 	  );
   }
 
-  //グラフィック転送
-	Performance_NumTrans(per, FALSE);
+  if (id == PERFORMANCE_ID_MAIN)
+  {
+    //グラフィック転送
+	  Performance_NumTrans(per, FALSE);
+  }
 }
 
 void DEBUG_PerformanceSetAveTest(void)
