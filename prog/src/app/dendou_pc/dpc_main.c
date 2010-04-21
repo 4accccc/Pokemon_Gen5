@@ -431,12 +431,12 @@ void DPCMAIN_CreatePokeData( DPCMAIN_WORK * wk )
 			ex_rec = SaveControl_Extra_DataPtrGet( sv, SAVE_EXTRA_ID_DENDOU, 0 );
 			if( ex_rec != NULL ){
 				for( i=0; i<DENDOU_RECORD_MAX; i++ ){
-					wk->party[i+1].pokeMax = DendouData_GetPokemonCount( ex_rec, i );
-					wk->party[i+1].recNo   = DendouData_GetRecordNumber( ex_rec, i );
-					DendouData_GetDate( ex_rec, i, &wk->party[i+1].date );
-					if( wk->party[i+1].pokeMax != 0 ){
-						for( j=0; j<wk->party[i+1].pokeMax; j++ ){
-							DendouData_GetPokemonData( ex_rec, i, j, &wk->party[i+1].dat[j] );
+					wk->party[i].pokeMax = DendouData_GetPokemonCount( ex_rec, i );
+					wk->party[i].recNo   = DendouData_GetRecordNumber( ex_rec, i );
+					DendouData_GetDate( ex_rec, i, &wk->party[i].date );
+					if( wk->party[i].pokeMax != 0 ){
+						for( j=0; j<wk->party[i].pokeMax; j++ ){
+							DendouData_GetPokemonData( ex_rec, i, j, &wk->party[i].dat[j] );
 						}
 						wk->pageMax++;
 					}

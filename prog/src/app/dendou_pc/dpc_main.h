@@ -47,7 +47,7 @@ typedef struct {
 	DENDOU_RECORD * rec;
 	DENDOU_SAVEDATA * ex_rec;
 
-	DPC_PARTY_DATA	party[DENDOU_RECORD_MAX+1];
+	DPC_PARTY_DATA	party[DENDOU_RECORD_MAX];
 	s16	nowRad[6];
 	s16	posRad[6];
 
