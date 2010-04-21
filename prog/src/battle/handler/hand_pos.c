@@ -105,6 +105,21 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_POS_Add( BtlPosEffect effect, BtlPokePos pos, u8 
   }
   return NULL;
 }
+//=============================================================================================
+/**
+ * 指定位置に指定エフェクトが登録されているか判定
+ *
+ * @param   eff
+ * @param   pos
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_HANDLER_POS_IsRegistered( BtlPosEffect eff, BtlPokePos pos )
+{
+  return !is_registable( eff, pos );
+}
+
 //----------------------------------------------------------------------------------
 /**
  * 登録できる条件を満たしているか判定  ※同じ位置に同じエフェクトは１つまで

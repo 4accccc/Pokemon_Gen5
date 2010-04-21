@@ -12609,7 +12609,7 @@ BOOL BTL_SVFTOOL_IsExistSideEffect( BTL_SVFLOW_WORK* wk, BtlSide side, BtlSideEf
 }
 //--------------------------------------------------------------------------------------
 /**
- * [ハンドラ用ツール] 指定サイドエフェクトが働いているか判定
+ * [ハンドラ用ツール] 指定サイドエフェクトのカウンタを取得
  *
  * @param   wk
  * @param   BtlPokePos      pos
@@ -12623,7 +12623,21 @@ u32 BTL_SVFTOOL_GetSideEffectCount( BTL_SVFLOW_WORK* wk, BtlPokePos pos, BtlSide
   BtlSide side = BTL_MAINUTIL_PosToSide( pos );
   return BTL_HANDLER_SIDE_GetAddCount( side, sideEffect );
 }
-
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] 指定サイドエフェクトのカウンタを取得
+ *
+ * @param   wk
+ * @param   pos
+ * @param   effect
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFTOOL_IsExistPosEffect( BTL_SVFLOW_WORK* wk, BtlPokePos pos, BtlPosEffect effect )
+{
+  return BTL_HANDLER_POS_IsRegistered( effect, pos );
+}
 
 //=============================================================================================
 /**

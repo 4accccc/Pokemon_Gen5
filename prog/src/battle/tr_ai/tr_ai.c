@@ -297,8 +297,8 @@ static  VMCMD_RESULT  AI_IF_COMMONRND_UNDER( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IF_COMMONRND_OVER( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IF_COMMONRND_EQUAL( VMHANDLE* vmh, void* context_work );
 static  VMCMD_RESULT  AI_IFN_COMMONRND_EQUAL( VMHANDLE* vmh, void* context_work );
-static	VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work );
-static	VMCMD_RESULT  AI_IF_MIRAIYOCHI( VMHANDLE* vmh, void* context_work );
+static  VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work );
+static  VMCMD_RESULT  AI_IF_MIRAIYOCHI( VMHANDLE* vmh, void* context_work );
 
 static  void  ai_if_rnd( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
 static  void  ai_if_hp( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond );
@@ -447,10 +447,10 @@ static const VMCMD_FUNC tr_ai_command_table[]={
   AI_GET_TOKUSEI,
   AI_IF_MIGAWARI,
   AI_CHECK_MONSNO,
-	AI_IF_COMMONRND_UNDER,
-	AI_IF_COMMONRND_OVER,
-	AI_IF_COMMONRND_EQUAL,
-	AI_IFN_COMMONRND_EQUAL,
+  AI_IF_COMMONRND_UNDER,
+  AI_IF_COMMONRND_OVER,
+  AI_IF_COMMONRND_EQUAL,
+  AI_IFN_COMMONRND_EQUAL,
   AI_TABLE_JUMP,
   AI_IF_MIRAIYOCHI,
 };
@@ -604,7 +604,7 @@ void  TR_AI_Start( VMHANDLE* vmh, u8* unselect, BtlPokePos pos )
       taw->waza_point_temp[ i ] = 0;
     }
     else
-    { 
+    {
       taw->waza_point_temp[ i ] = WAZAPOINT_FLAT;
     }
     taw->damage_loss[ i ] = 100 - GFL_STD_MtRand( 16 );
@@ -657,7 +657,7 @@ static  BOOL  waza_ai_single( VMHANDLE* vmh, TR_AI_WORK* taw )
   taw->def_bpp = get_bpp( taw, taw->def_btl_poke_pos );
 
   if( ( taw->status_flag & AI_STATUSFLAG_CONTINUE ) == 0 )
-  { 
+  {
     waza_point_init( taw );
     waza_no_stock( taw );
   }
@@ -676,7 +676,7 @@ static  BOOL  waza_ai_single( VMHANDLE* vmh, TR_AI_WORK* taw )
       taw->status_flag &= AI_STATUSFLAG_CONTINUE_OFF;
       tr_ai_sequence( vmh, taw );
       if( taw->status_flag & AI_STATUSFLAG_CONTINUE )
-      { 
+      {
         return TRUE;
       }
     }
@@ -748,79 +748,79 @@ static  BOOL  waza_ai_single( VMHANDLE* vmh, TR_AI_WORK* taw )
 static  BOOL  waza_ai_plural( VMHANDLE* vmh, TR_AI_WORK* taw )
 {
   BtlPokePos  btl_pos, def_pos;
-  int	btl_pos_cnt;
-	s16	max_point[BTL_POS_MAX];
-	u8	btl_pos_wk[BTL_POS_MAX];
-	s8	pos[BTL_POS_MAX];
-	s16 point_max;
-	u16	waza_no;
-	s8	waza_pos;
+  int btl_pos_cnt;
+  s16 max_point[BTL_POS_MAX];
+  u8  btl_pos_wk[BTL_POS_MAX];
+  s8  pos[BTL_POS_MAX];
+  s16 point_max;
+  u16 waza_no;
+  s8  waza_pos;
   int btl_pos_max = ( taw->rule == BTL_RULE_DOUBLE ) ? 4 : 6;
 
   if( ( taw->status_flag & AI_STATUSFLAG_CONTINUE ) == 0 )
-  { 
-	  taw->def_btl_poke_pos = 0;
+  {
+    taw->def_btl_poke_pos = 0;
   }
 
-	// 自分以外の全クライアントに対してチェック
-	for( ; taw->def_btl_poke_pos < btl_pos_max ; taw->def_btl_poke_pos++ )
+  // 自分以外の全クライアントに対してチェック
+  for( ; taw->def_btl_poke_pos < btl_pos_max ; taw->def_btl_poke_pos++ )
   {
     taw->atk_bpp = get_bpp( taw, taw->atk_btl_poke_pos );
     taw->def_bpp = get_bpp( taw, taw->def_btl_poke_pos );
 
-		if( ( taw->status_flag & AI_STATUSFLAG_CONTINUE ) == 0 )
-    { 
+    if( ( taw->status_flag & AI_STATUSFLAG_CONTINUE ) == 0 )
+    {
       if( taw->def_bpp == NULL )
-      { 
-			  pos[ taw->def_btl_poke_pos ] = -1;
-			  max_point[ taw->def_btl_poke_pos ] = -1;
-			  continue;
+      {
+        pos[ taw->def_btl_poke_pos ] = -1;
+        max_point[ taw->def_btl_poke_pos ] = -1;
+        continue;
       }
-		  else if( ( taw->def_btl_poke_pos == taw->atk_btl_poke_pos ) ||
+      else if( ( taw->def_btl_poke_pos == taw->atk_btl_poke_pos ) ||
               ( BPP_IsDead( taw->def_bpp ) == TRUE ) )
-		  {
-			  pos[ taw->def_btl_poke_pos ] = -1;
-			  max_point[ taw->def_btl_poke_pos ] = -1;
-			  continue;
-		  }
-  
+      {
+        pos[ taw->def_btl_poke_pos ] = -1;
+        max_point[ taw->def_btl_poke_pos ] = -1;
+        continue;
+      }
+
       waza_point_init( taw );
       waza_no_stock( taw );
-  
-		  taw->ai_no    = 0;
-		  taw->waza_pos = 0;
+
+      taw->ai_no    = 0;
+      taw->waza_pos = 0;
       taw->ai_bit   = taw->ai_bit_temp;
     }
 
-		while( taw->ai_bit )
+    while( taw->ai_bit )
     {
-			if( taw->ai_bit & 1){
-				if( ( taw->status_flag & AI_STATUSFLAG_CONTINUE ) == 0 )
+      if( taw->ai_bit & 1){
+        if( ( taw->status_flag & AI_STATUSFLAG_CONTINUE ) == 0 )
         {
-					taw->seq_no = AI_SEQ_THINK_INIT;
-				}
+          taw->seq_no = AI_SEQ_THINK_INIT;
+        }
         taw->status_flag &= AI_STATUSFLAG_CONTINUE_OFF;
-				tr_ai_sequence( vmh, taw );
-				if( taw->status_flag & AI_STATUSFLAG_CONTINUE )
-        { 
+        tr_ai_sequence( vmh, taw );
+        if( taw->status_flag & AI_STATUSFLAG_CONTINUE )
+        {
           return TRUE;
         }
-			}
-			taw->ai_bit >>= 1;
-			taw->ai_no++;
-			taw->waza_pos = 0;
-		}
+      }
+      taw->ai_bit >>= 1;
+      taw->ai_no++;
+      taw->waza_pos = 0;
+    }
 
-		if( taw->status_flag & AI_STATUSFLAG_ESCAPE )
+    if( taw->status_flag & AI_STATUSFLAG_ESCAPE )
     {
-			taw->select_waza_pos = AI_ENEMY_ESCAPE;
-		}
+      taw->select_waza_pos = AI_ENEMY_ESCAPE;
+    }
 #if 0
     //@todo 現状サファリはないのでコメント
     else if(sp->AIWT.AI_STATUSFLAG&AI_STATUSFLAG_SAFARI)
     {
-			pos[client] = AI_ENEMY_SAFARI;
-		}
+      pos[client] = AI_ENEMY_SAFARI;
+    }
 #endif
     else
     {
@@ -828,7 +828,7 @@ static  BOOL  waza_ai_plural( VMHANDLE* vmh, TR_AI_WORK* taw )
       int poscnt = 1;
       u8  point[ PTL_WAZA_MAX ];
       u8  poswork[ PTL_WAZA_MAX ];
-  
+
       point[ 0 ] = taw->waza_point[ 0 ];
       poswork[ 0 ] = 0;
 
@@ -849,66 +849,66 @@ static  BOOL  waza_ai_plural( VMHANDLE* vmh, TR_AI_WORK* taw )
           }
         }
       }
-			pos[ taw->def_btl_poke_pos ] = poswork[ GFL_STD_MtRand( poscnt ) ];
-			max_point[ taw->def_btl_poke_pos ] = point[ 0 ];
+      pos[ taw->def_btl_poke_pos ] = poswork[ GFL_STD_MtRand( poscnt ) ];
+      max_point[ taw->def_btl_poke_pos ] = point[ 0 ];
 
-			// 100を割っている味方攻撃は行わない
+      // 100を割っている味方攻撃は行わない
       if( BTL_MAIN_IsOpponentClientID( taw->wk,
                                        BTL_MAIN_BtlPosToClientID( taw->wk, taw->atk_btl_poke_pos ),
                                        BTL_MAIN_BtlPosToClientID( taw->wk, taw->def_btl_poke_pos ) ) == FALSE )
-      { 
-				if(max_point[ taw->def_btl_poke_pos ] < 100 )
+      {
+        if(max_point[ taw->def_btl_poke_pos ] < 100 )
         {
-					max_point[ taw->def_btl_poke_pos ] = -1;
-				}
+          max_point[ taw->def_btl_poke_pos ] = -1;
+        }
       }
-		}
+    }
 #ifdef POINT_VIEW
-		OS_TPrintf("attack:%d defence:%d\n", taw->atk_btl_poke_pos, taw->def_btl_poke_pos );
-		OS_TPrintf("waza1:%d waza2:%d waza3:%d waza4:%d\n",
-					taw->waza_point[ 0 ],
-					taw->waza_point[ 1 ],
-					taw->waza_point[ 2 ],
-					taw->waza_point[ 3 ] );
+    OS_TPrintf("attack:%d defence:%d\n", taw->atk_btl_poke_pos, taw->def_btl_poke_pos );
+    OS_TPrintf("waza1:%d waza2:%d waza3:%d waza4:%d\n",
+          taw->waza_point[ 0 ],
+          taw->waza_point[ 1 ],
+          taw->waza_point[ 2 ],
+          taw->waza_point[ 3 ] );
 #endif
-	}
+  }
 
-	point_max = max_point[ 0 ];
-	btl_pos_wk[ 0 ] = 0;
-	btl_pos_cnt = 1;
-	for( btl_pos = 1 ; btl_pos < btl_pos_max ; btl_pos++ )
+  point_max = max_point[ 0 ];
+  btl_pos_wk[ 0 ] = 0;
+  btl_pos_cnt = 1;
+  for( btl_pos = 1 ; btl_pos < btl_pos_max ; btl_pos++ )
   {
-		if( point_max == max_point[ btl_pos ] )
+    if( point_max == max_point[ btl_pos ] )
     {
-			btl_pos_wk[ btl_pos_cnt++ ] = btl_pos;
-		}
-		if( point_max < max_point[ btl_pos ] )
+      btl_pos_wk[ btl_pos_cnt++ ] = btl_pos;
+    }
+    if( point_max < max_point[ btl_pos ] )
     {
-			point_max = max_point[ btl_pos ];
-			btl_pos_wk[ 0 ] = btl_pos;
-			btl_pos_cnt = 1;
-		}
-	}
+      point_max = max_point[ btl_pos ];
+      btl_pos_wk[ 0 ] = btl_pos;
+      btl_pos_cnt = 1;
+    }
+  }
 
-	taw->select_waza_dir = btl_pos_wk[ GFL_STD_MtRand( btl_pos_cnt ) ];
-	taw->select_waza_pos = pos[ taw->select_waza_dir ];
+  taw->select_waza_dir = btl_pos_wk[ GFL_STD_MtRand( btl_pos_cnt ) ];
+  taw->select_waza_pos = pos[ taw->select_waza_dir ];
 
 #if 0
   //@todo シャチでこの処理が必要かどうか要検証
-	waza_no=sp->psp[sp->AIWT.AI_AttackClient].waza[waza_pos];
+  waza_no=sp->psp[sp->AIWT.AI_AttackClient].waza[waza_pos];
 
-	if(sp->AIWT.wtd[waza_no].attackrange==RANGE_TUBOWOTUKU){
-		if(BattleWorkMineEnemyCheck(bw,sp->AIWT.AI_DirSelectClient[sp->AIWT.AI_AttackClient])==0){
-			sp->AIWT.AI_DirSelectClient[sp->AIWT.AI_AttackClient] = sp->AIWT.AI_AttackClient;
-		}
-	}
+  if(sp->AIWT.wtd[waza_no].attackrange==RANGE_TUBOWOTUKU){
+    if(BattleWorkMineEnemyCheck(bw,sp->AIWT.AI_DirSelectClient[sp->AIWT.AI_AttackClient])==0){
+      sp->AIWT.AI_DirSelectClient[sp->AIWT.AI_AttackClient] = sp->AIWT.AI_AttackClient;
+    }
+  }
 
 #if AFTER_MASTER_070320_BT1_EUR_FIX
-	if(waza_no==WAZANO_NOROI){
-		if(ST_ServerWazaNoroiCheck(sp,waza_no,sp->AIWT.AI_AttackClient)==FALSE){
-			sp->AIWT.AI_DirSelectClient[sp->AIWT.AI_AttackClient] = sp->AIWT.AI_AttackClient;
-		}
-	}
+  if(waza_no==WAZANO_NOROI){
+    if(ST_ServerWazaNoroiCheck(sp,waza_no,sp->AIWT.AI_AttackClient)==FALSE){
+      sp->AIWT.AI_DirSelectClient[sp->AIWT.AI_AttackClient] = sp->AIWT.AI_AttackClient;
+    }
+  }
 #endif //AFTER_MASTER_070320_BT1_EUR_FIX
 #endif
 
@@ -947,11 +947,11 @@ static  void  tr_ai_sequence( VMHANDLE* vmh, TR_AI_WORK* taw )
     case AI_SEQ_THINK:
       //3vs3での遠隔技のチェック
       if( ( taw->rule == BTL_RULE_TRIPLE ) && (taw->waza_no ) )
-      { 
+      {
         if( ( BTL_MAINUTIL_CheckTripleHitArea( taw->atk_btl_poke_pos, taw->def_btl_poke_pos ) == FALSE ) &&
             ( get_waza_param( taw, taw->waza_no, WAZAPARAM_DAMAGE_TYPE ) != WAZADATA_DMG_NONE ) &&
             ( get_waza_flag( taw, taw->waza_no, WAZAFLAG_TripleFar ) == FALSE ) )
-        { 
+        {
           taw->waza_no = 0;
           VM_End( vmh );
           GFL_HEAP_FreeMemory( taw->sequence );
@@ -969,9 +969,9 @@ static  void  tr_ai_sequence( VMHANDLE* vmh, TR_AI_WORK* taw )
           taw->sequence = NULL;
         }
         else
-        { 
+        {
           if( --taw->calc_count == 0 )
-          { 
+          {
             taw->calc_count = TR_AI_SEQ_COUNT;
             taw->status_flag |= AI_STATUSFLAG_CONTINUE;
             break;
@@ -3073,7 +3073,7 @@ static  VMCMD_RESULT  AI_IF_BENCH_DAMAGE_MAX( VMHANDLE* vmh, void* context_work 
     {
       const BTL_POKEPARAM* bpp = get_bpp_from_party( pty, i );
       u8  atkPokeID = BPP_GetID( bpp );
-  
+
       if( !BPP_IsDead( bpp ) )
       {
         dmg = get_max_damage( taw, bpp, taw->def_bpp, loss_flag );
@@ -3133,13 +3133,13 @@ static  VMCMD_RESULT  AI_IF_LAST_WAZA_DAMAGE_CHECK( VMHANDLE* vmh, void* context
   OS_TPrintf("AI_IF_LAST_WAZA_DAMAGE_CHECK\n");
 #endif
 
-  { 
+  {
     u32 dmg = get_max_damage( taw, taw->atk_bpp, taw->def_bpp, loss_flag );
     WazaID waza_no = BPP_GetPrevWazaID( bpp );
     u8  atkPokeID = BPP_GetID( bpp );
     u8  defPokeID = BPP_GetID( taw->def_bpp );
     if( dmg < BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, waza_no, TRUE, loss_flag ) )
-    { 
+    {
       VMCMD_Jump( vmh, vmh->adrs + adrs );
     }
   }
@@ -3265,7 +3265,7 @@ static  VMCMD_RESULT  AI_COMP_POWER_WITH_PARTNER( VMHANDLE* vmh, void* context_w
 #endif
 
   if( ( idx < 0 ) || ( src_dmg == 0 ) )
-  { 
+  {
     taw->calc_work = COMP_POWER_NONE;
     return taw->vmcmd_result;
   }
@@ -3281,9 +3281,9 @@ static  VMCMD_RESULT  AI_COMP_POWER_WITH_PARTNER( VMHANDLE* vmh, void* context_w
 
     {
       u32 dmg;
-  
+
       taw->calc_work = COMP_POWER_TOP;
-  
+
       for( i = 0 ; i < BPP_WAZA_GetCount( bpp ) ; i++ )
       {
         WazaID waza_no = BPP_WAZA_GetID( bpp, i );
@@ -3388,7 +3388,7 @@ static  VMCMD_RESULT  AI_IF_MIGAWARI( VMHANDLE* vmh, void* context_work )
 //  ポケモンナンバーのチェック
 //------------------------------------------------------------
 static  VMCMD_RESULT  AI_CHECK_MONSNO( VMHANDLE* vmh, void* context_work )
-{ 
+{
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   int side = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
@@ -3471,8 +3471,8 @@ static  void  ai_if_commonrnd( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond )
 //------------------------------------------------------------
 //  テーブルジャンプ
 //------------------------------------------------------------
-static	VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
-{ 
+static  VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
+{
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   int label = ( int )VMGetU32( vmh );
   int *tbl_adrs = (int*)(vmh->adrs + ( int )VMGetU32( vmh ));
@@ -3482,7 +3482,7 @@ static	VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
   OS_TPrintf("AI_TABLE_JUMP\n");
 #endif
 
-  switch( label ){ 
+  switch( label ){
   case TABLE_JUMP_WAZASEQNO:
     ofs = get_waza_param( taw, taw->waza_no, WAZAPARAM_AI_SEQNO );
     break;
@@ -3501,12 +3501,12 @@ static	VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
 }
 
 //------------------------------------------------------------
-//	みらいよち中かチェックして分岐
+//  みらいよち中かチェックして分岐
 //------------------------------------------------------------
-static	VMCMD_RESULT  AI_IF_MIRAIYOCHI( VMHANDLE* vmh, void* context_work )
-{ 
+static  VMCMD_RESULT  AI_IF_MIRAIYOCHI( VMHANDLE* vmh, void* context_work )
+{
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
-  int side = ( int )VMGetU32( vmh );
+  int side  = ( int )VMGetU32( vmh );
   int adrs = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
 
@@ -3514,12 +3514,10 @@ static	VMCMD_RESULT  AI_IF_MIRAIYOCHI( VMHANDLE* vmh, void* context_work )
   OS_TPrintf("AI_IF_MIRAIYOCHI\n");
 #endif
 
-  /*
-  if( なにがしかの関数でみらいよち中かをチェック )
-  { 
+  if( BTL_SVFTOOL_IsExistPosEffect(taw->svfWork, pos, BTL_POSEFF_DELAY_ATTACK) )
+  {
     VMCMD_Jump( vmh, vmh->adrs + adrs );
   }
-  */
 
   return taw->vmcmd_result;
 }
@@ -3716,7 +3714,7 @@ static  const BTL_POKEPARAM*  get_bpp_from_party( const BTL_PARTY* pty, u8 idx )
  */
 //============================================================================================
 static  void  waza_point_init( TR_AI_WORK* taw )
-{ 
+{
   int i;
 
   for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
@@ -3756,7 +3754,7 @@ static  void  waza_no_stock( TR_AI_WORK* taw )
  */
 //============================================================================================
 static  int   get_waza_param_index( TR_AI_WORK* taw, WazaID waza_no )
-{ 
+{
   int i;
 
   for( i = 0 ; i < TR_AI_WAZATBL_MAX ; i++ )
@@ -3812,7 +3810,7 @@ static  int   get_waza_param( TR_AI_WORK* taw, WazaID waza_no, WazaDataParam par
  */
 //============================================================================================
 static  BOOL  get_waza_flag( TR_AI_WORK* taw, WazaID waza_no, WazaFlag flag )
-{ 
+{
   int index = get_waza_param_index( taw, waza_no );
 
   return WAZADATA_PTR_GetFlag( taw->wd[ index ], flag );
@@ -3824,7 +3822,7 @@ static  BOOL  get_waza_flag( TR_AI_WORK* taw, WazaID waza_no, WazaFlag flag )
  */
 //============================================================================================
 static  u32 get_max_damage( TR_AI_WORK* taw, const BTL_POKEPARAM* atk_bpp, const BTL_POKEPARAM* def_bpp, BOOL loss_flag )
-{ 
+{
   int i, j;
   u32 max_dmg = 0, dmg;
   u8  atkPokeID = BPP_GetID( atk_bpp );
