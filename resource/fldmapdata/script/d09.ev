@@ -40,15 +40,20 @@ _EVENT_DATA_END
 //C09側でカメラ演出を入れるため手動ブラックアウトの接続イベント
 EVENT_START	ev_pos_d09_lfront_connect
 	
-	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラパージ
+	_CAMERA_MOVE(6043,65423,1409024,2107073,1662976,-705439, 56 )
+
 	//主人公奥へ
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01 )
-	_TIME_WAIT( 64 )
+	_TIME_WAIT( 48 )
 	
 	//ブラックアウト
 	_MAP_FADE_BLACK_OUT_SLOW()
 	_DISP_FADE_END_CHECK()
 	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//予約スクリプト
 	_RESERVE_SCRIPT( SCRID_RESERVE_C09_ENTRY )
@@ -62,7 +67,7 @@ EVENT_END
 //主人公：奥へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_move_01
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,8
 	_ANIME_DATA	ACMD_END,0
 
 
