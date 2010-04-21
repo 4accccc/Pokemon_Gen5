@@ -403,6 +403,8 @@ static void scEvent_WazaExeDecide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
 static BOOL scproc_Fight_CheckCombiWazaReady( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlPokePos targetPos );
 static BOOL scproc_Fight_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlPokePos targetPos );
 static BOOL scEvent_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BtlPokePos targetPos );
+static void scproc_Fight_DecideDelayWaza( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
+static void scEvent_DecideDelayWaza( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static void scproc_StartWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_StartWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
@@ -3960,8 +3962,10 @@ static BOOL scproc_Fight_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* 
 
   if( result ){
     BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
-    if(  scproc_HandEx_Root(wk, ITEM_DUMMY_DATA) == HandExResult_Enable){
+    if(  scproc_HandEx_Root(wk, ITEM_DUMMY_DATA) == HandExResult_Enable)
+    {
       SCQUE_PUT_ACT_WazaEffect( wk->que, atPos, targetPos, waza );
+      scproc_Fight_DecideDelayWaza( wk, attacker );
     }else{
       scPut_WazaFail( wk, attacker, waza );
     }
@@ -3995,6 +3999,39 @@ static BOOL scEvent_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 
   return result;
 }
+//----------------------------------------------------------------------------------
+/**
+ * 遅延発動ワザの実行確定（ワザエフェクト表示後）
+ *
+ * @param   wk
+ * @param   attacker
+ */
+//----------------------------------------------------------------------------------
+static void scproc_Fight_DecideDelayWaza( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker )
+{
+  u32 hem_state = Hem_PushState( &wk->HEManager );
+
+    scEvent_DecideDelayWaza( wk, attacker );
+    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+
+  Hem_PopState( &wk->HEManager, hem_state );
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] 遅延ワザ発動確定
+ *
+ * @param   wk
+ * @param   attacker
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_DecideDelayWaza( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_DECIDE_DELAY_WAZA );
+  BTL_EVENTVAR_Pop();
+}
+
 //----------------------------------------------------------------------------------
 /**
  * ワザシーケンス開始処理
