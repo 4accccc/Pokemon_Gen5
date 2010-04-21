@@ -298,6 +298,7 @@ VMCMD_RESULT EvCmdCallDendouProc( VMHANDLE *core, void *wk )
   SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
   FIELDMAP_WORK*     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   u16                id = SCRCMD_GetVMWorkValue( core, work ); // コマンド第一引数
+  u16*               ret_wk = SCRCMD_GetVMWork( core, work ); // コマンド第二引数
   GMEVENT*           event = NULL;
   u16 call_mode;
 
@@ -309,6 +310,6 @@ VMCMD_RESULT EvCmdCallDendouProc( VMHANDLE *core, void *wk )
   }
 
   // イベントを呼び出す
-  SCRIPT_CallEvent( scw, EVENT_DendouCall( gsys, call_mode ) );
+  SCRIPT_CallEvent( scw, EVENT_DendouCall( gsys, call_mode, ret_wk ) );
   return VMCMD_RESULT_SUSPEND;
 }

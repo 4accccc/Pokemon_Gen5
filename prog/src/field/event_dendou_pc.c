@@ -29,6 +29,7 @@ typedef struct {
 	GAMESYS_WORK*  gameSystem;
 	FIELDMAP_WORK* fieldmap;
   DENDOUPC_PARAM dendouParam;
+  u16*           ret_wk; // 終了モードを格納するワーク
 } EVENT_WORK; 
 
 
@@ -41,9 +42,10 @@ typedef struct {
  *
  * @param gameSystem
  * @param call_mode 呼び出しモード
+ * @param ret_wk    終了モードを格納するワーク
  */
 //-------------------------------------------------------------------------------------
-GMEVENT* EVENT_DendouCall( GAMESYS_WORK* gameSystem, u16 call_mode )
+GMEVENT* EVENT_DendouCall( GAMESYS_WORK* gameSystem, u16 call_mode, u16* ret_wk )
 {
   GMEVENT* event;
   EVENT_WORK* work;
@@ -56,6 +58,7 @@ GMEVENT* EVENT_DendouCall( GAMESYS_WORK* gameSystem, u16 call_mode )
   work = GMEVENT_GetEventWork( event );
   work->gameSystem = gameSystem;
   work->fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
+  work->ret_wk     = ret_wk;
 
   // プロックパラメータを設定
   work->dendouParam.gamedata = GAMESYSTEM_GetGameData( gameSystem );
@@ -86,6 +89,12 @@ static GMEVENT_RESULT DendouCallEvent( GMEVENT* event, int* seq, void* wk )
     break;
 
   case 1: 
+    // 終了モードを返す
+    switch( work->dendouParam.retMode ) {
+    case DENDOUPC_RET_NORMAL: *(work->ret_wk) = 0; break;
+    case DENDOUPC_RET_CLOSE:  *(work->ret_wk) = 1; break;
+    }
+    OBATA_Printf( "ret_wk = %d\n", *(work->ret_wk) );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;

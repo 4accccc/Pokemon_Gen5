@@ -15,6 +15,7 @@
  *
  * @param gameSystem
  * @param call_mode 呼び出しタイプ
+ * @param ret_wk    終了モードを格納するワーク
  */
 //-------------------------------------------------------------------------------------
-extern GMEVENT* EVENT_DendouCall( GAMESYS_WORK* gameSystem, u16 call_mode );
+extern GMEVENT* EVENT_DendouCall( GAMESYS_WORK* gameSystem, u16 call_mode, u16* ret_wk );
