@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-04-21T00:46:19"/>
+	<create user="shimoyamada" host="W00184" date="2010-04-21T11:42:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1572,7 +1572,7 @@
 うけとることが　できません！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI">この　おくりものは
 一度　受け取ったことが　あるので[BE:00:ページ切り替え（行送り）]
-う受け取ることが　できません！[BE:01:ページ切り替え（クリア）]</language>
+受け取ることが　できません！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_err_003" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
