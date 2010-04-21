@@ -13,6 +13,6 @@
 #define FADE_WAIT    (15)              //‹P“xƒEƒFƒCƒg
 
 #define LEG_SE0_FRM  (0)              //‚r‚d1‚Â–Ú
-#define LEG_SE1_FRM  (116)              //‚r‚d2‚Â–Ú
+#define LEG_SE1_FRM  (131)              //‚r‚d2‚Â–Ú
 #define LEG_SE2_FRM  (450)            //‚r‚d3‚Â–Ú
   
