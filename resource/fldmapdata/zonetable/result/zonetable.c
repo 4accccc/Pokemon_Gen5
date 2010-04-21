@@ -5000,7 +5000,7 @@ static const ZONEDATA ZoneData[] = {
 		MAPNAME_C09,
 		0,
 		WEATHER_NO_SUNNY,
-		0,
+		3,
 		MC_TYPE_ROOM,
 		9,
 		FALSE,
