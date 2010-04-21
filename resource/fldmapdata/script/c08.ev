@@ -96,6 +96,8 @@ INIT_EVENT_END
 //ジム挑戦可能になるまで表示
 EVENT_START   ev_pos_c08_champions_01
 
+	//ハイリンク通信ブロック処理
+	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
 
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
@@ -584,6 +586,9 @@ EVENT_START   ev_pos_c08_champions_01
 	
 	//======================================//
 	
+	//ハイリンク通信ブロック処理終了
+	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+	
 EVENT_END
 
 //--------------------------------------------------------------
@@ -994,7 +999,10 @@ _ANIME_LABEL	anm_c08_player_look_leaders_01
 /* POS：アイリスの誘導（２）                   */
 /**************************************************************/
 EVENT_START   ev_pos_c08_leaderb_lead_01
-
+	
+	//ハイリンク通信ブロック処理
+	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
+	
 	//アイリスその場ジャンプ
 	_OBJ_ANIME( C08_LEADER8B_01,anm_c08_leadersb_jump_d2 )
 	_OBJ_ANIME_WAIT()
@@ -1013,12 +1021,19 @@ EVENT_START   ev_pos_c08_leaderb_lead_01
 	$WK_SCENE_C08 = 2
 	
 	//======================================//
+	
+	//ハイリンク通信ブロック処理終了
+	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+	
 EVENT_END
 
 /**************************************************************/
 /* POS：アイリスの誘導（２）                   */
 /**************************************************************/
 EVENT_START   ev_pos_c08_leaderb_lead_02
+	
+	//ハイリンク通信ブロック処理
+	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
 	
 	//アイリス：ここ だよ！
 	_BALLOONWIN_OBJMSG_POS( msg_c08_leader8b_08 , C08_LEADER8B_01 , POS_DEFAULT )
@@ -1053,6 +1068,10 @@ EVENT_START   ev_pos_c08_leaderb_lead_02
 	_FLAG_SET( FV_C08_LEADERB_01 )
 	
 	//======================================//
+	
+	//ハイリンク通信ブロック処理終了
+	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+	
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1088,7 +1107,10 @@ _ANIME_LABEL	anm_c08_leaderb_lead_05
 /* ジムクリア後：アララギ娘誘導イベント                        */
 /**************************************************************/
 EVENT_START   ev_scene_c08_gymclear_01
-
+	
+	//ハイリンク通信ブロック処理
+	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
+	
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 	_CAMERA_START()		//カメラ操作開始
@@ -1199,7 +1221,10 @@ EVENT_START   ev_scene_c08_gymclear_01
 	$WK_SCENE_C08_GYMCLEAR = 2
 	
 	//========================================//
-
+	
+	//ハイリンク通信ブロック処理終了
+	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+	
 EVENT_END
 
 //--------------------------------------------------------------

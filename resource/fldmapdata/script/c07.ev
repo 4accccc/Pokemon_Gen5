@@ -53,7 +53,10 @@ INIT_EVENT_END
 /*   C07：到着イベント                                        */
 /**************************************************************/
 EVENT_START   ev_scene_c07_hakase1_01
-
+	
+	//ハイリンク通信ブロック処理
+	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
+	
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 
@@ -132,6 +135,9 @@ EVENT_START   ev_scene_c07_hakase1_01
 	//フィールド通常曲に戻す
 	_BGM_NOW_MAP_RECOVER()
 	
+	//ハイリンク通信ブロック処理終了
+	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+	
 EVENT_END
 
 //--------------------------------------------------------------
@@ -168,6 +174,9 @@ _ANIME_LABEL	anm_c07_hakase1_goodbye
 /**************************************************************/
 EVENT_START   ev_scene_c07_leader7_01
 
+	//ハイリンク通信ブロック処理
+	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
+	
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 
@@ -353,6 +362,9 @@ EVENT_START   ev_scene_c07_leader7_01
 	_FLAG_SET( FV_C07GYM0101_READER7_01 )
 	
 	//======================================//
+	
+	//ハイリンク通信ブロック処理終了
+	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
 	
 EVENT_END
 
