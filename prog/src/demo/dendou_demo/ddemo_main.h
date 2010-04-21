@@ -53,7 +53,7 @@ typedef struct {
 	u8	ptcWork[PARTICLE_LIB_HEAP_SIZE];	// パーティクルで使用するワーク
 	u8	ptcNameWork[PARTICLE_LIB_HEAP_SIZE];	// パーティクルで使用するワーク
 //	fx32	ptcTypeCamera[5];
-	fx32	ptcNameCamera[5];
+//	fx32	ptcNameCamera[5];
 
 	GFL_FONT * font;						// 通常フォント
 	GFL_FONT * nfnt;						// 数字フォント

@@ -154,7 +154,7 @@ static int MainSeq_1stInit( DDEMOMAIN_WORK * wk )
 	DDEMOMAIN_Init3D( wk );
 	DDEMOMAIN_InitParticle();
 	DDEMOMAIN_InitDouble3D();
-	DDEMOMAIN_CreateNameParticle( wk );
+//	DDEMOMAIN_CreateNameParticle( wk );
 
 	DDEMOOBJ_Init( wk, 0 );
 	DDEMOOBJ_InitScene1( wk );
@@ -178,7 +178,7 @@ static int MainSeq_1stExit( DDEMOMAIN_WORK * wk )
 	DDEMOOBJ_ExitScene1( wk );
 	DDEMOOBJ_Exit( wk );
 
-	DDEMOMAIN_DeleteNameParticle( wk );
+//	DDEMOMAIN_DeleteNameParticle( wk );
 	DDEMOMAIN_ExitDouble3D();
 	DDEMOMAIN_ExitParticle();
 	DDEMOMAIN_Exit3D( wk );
@@ -228,8 +228,13 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 		break;
 
 	case 2:
-    if( PMSND_CheckPlayingSEIdx(SEQ_SE_DDEMO_02A) == FALSE ){
+		wk->wait++;
+		if( wk->wait == 48 ){
+//    if( PMSND_CheckPlayingSEIdx(SEQ_SE_DDEMO_02A) == FALSE ){
+//			OS_Printf( "se wait = %d\n", wk->wait );
+//			PMSND_StopSE();
 			PMSND_PlaySE( SEQ_SE_DDEMO_02B );
+			wk->wait = 0;
 			wk->subSeq++;
 		}
 		break;
@@ -240,6 +245,7 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 			DDEMOMAIN_GetPokeData( wk );
 			DDEMOMAIN_LoadPokeVoice( wk );
 			DDEMOMAIN_CreateTypeParticle( wk );
+			DDEMOMAIN_CreateNameParticle( wk );
 			DDEMOOBJ_AddPoke( wk );
 			DDEMOOBJ_PrintPokeInfo( wk );
 			DDEMOOBJ_MoveFontOamPos( wk );
@@ -385,6 +391,7 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 		break;
 
 	case 16:		// 終了チェック
+		DDEMOMAIN_DeleteNameParticle( wk );
 		DDEMOMAIN_DeleteTypeParticle( wk );
 /*
 		// デバッグ用スキップ処理
@@ -463,7 +470,7 @@ static int MainSeq_2ndExit( DDEMOMAIN_WORK * wk )
 
 
 #define	DEF_2ND_START_WAIT				( 32 )
-#define	DEF_2ND_PLAYER_FALL_SPEED	( 4 )
+#define	DEF_2ND_PLAYER_FALL_SPEED	( 8 )
 #define	DEF_2ND_PLAYER_FALL_COUNT	( (192+128+24+64)/DEF_2ND_PLAYER_FALL_SPEED )
 #define	DEF_2ND_WIN_OPEN_WAIT			( 32 )
 #define	DEF_2ND_WIN_PUT_WAIT			( 16 )
@@ -496,6 +503,7 @@ static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk )
 			DDEMOOBJ_Move( wk, DDEMOOBJ_ID_PLAYER_S, 0, DEF_2ND_PLAYER_FALL_SPEED );
 			wk->wait++;
 		}else{
+			PMSND_PlaySE( SEQ_SE_ROTATION_B );
 			wk->subSeq++;
 			return SetWait( wk, DEF_2ND_WIN_OPEN_WAIT );
 		}

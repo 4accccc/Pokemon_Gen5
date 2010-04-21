@@ -503,7 +503,7 @@ static const GFL_G3D_LIGHT_DATA LightData = { 0, { { LIGHT_PX, LIGHT_PY, LIGHT_P
 static const GFL_G3D_LIGHTSET_SETUP LightSetup = { &LightData, 1 };
 
 static void CreateParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc, BOOL disp );
-static void CreateNameParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc );
+//static void CreateNameParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc, BOOL disp );
 
 static void SetUp3D(void)
 {
@@ -555,7 +555,7 @@ static void SetUp3D(void)
 	}
 
 	//レンダリングスワップバッファ
-	GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
+	GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
 }
 
 void DDEMOMAIN_Init3D( DDEMOMAIN_WORK * wk )
@@ -673,8 +673,8 @@ void DDEMOMAIN_MainDouble3D( DDEMOMAIN_WORK * wk )
 
 	if( GFL_G3D_DOUBLE3D_GetFlip() == TRUE ){
 		CreateParticleCamera( wk, wk->ptc, TRUE );
-//		CreateParticleCamera( wk, wk->ptcName, TRUE );
-		CreateNameParticleCamera( wk, wk->ptcName );
+		CreateParticleCamera( wk, wk->ptcName, TRUE );
+//		CreateNameParticleCamera( wk, wk->ptcName, TRUE );
 	}else{
 		CreateParticleCamera( wk, wk->ptc, FALSE );
 		CreateParticleCamera( wk, wk->ptcName, FALSE );
@@ -735,7 +735,7 @@ void DDEMOMAIN_DeleteTypeParticle( DDEMOMAIN_WORK * wk )
 
 void DDEMOMAIN_SetTypeParticle( DDEMOMAIN_WORK * wk, u32 id )
 {
-	VecFx32	p = { 0, 0, 0 };
+	VecFx32	p = { 0, 0, FX32_CONST(0.1f) };
 	GFL_PTC_CreateEmitter( wk->ptc, id, &p );
 }
 
@@ -746,7 +746,7 @@ void DDEMOMAIN_CreateNameParticle( DDEMOMAIN_WORK * wk )
 	wk->ptcName = GFL_PTC_Create( wk->ptcNameWork, PARTICLE_LIB_HEAP_SIZE, TRUE, HEAPID_DENDOU_DEMO );
 	res = GFL_PTC_LoadArcResource( ARCID_DENDOU_DEMO_GRA, NARC_dendou_demo_gra_name_spa, HEAPID_DENDOU_DEMO );
 	GFL_PTC_SetResource( wk->ptcName, res, TRUE, NULL );
-
+/*
 	{	// 初期カメラを保存
 		GFL_G3D_CAMERA * cmr = GFL_PTC_GetCameraPtr( wk->ptcName );
 		GFL_G3D_CAMERA_GetfovySin( cmr, &wk->ptcNameCamera[0] );
@@ -755,6 +755,7 @@ void DDEMOMAIN_CreateNameParticle( DDEMOMAIN_WORK * wk )
 		GFL_G3D_CAMERA_GetNear( cmr, &wk->ptcNameCamera[3] );
 		GFL_G3D_CAMERA_GetFar( cmr, &wk->ptcNameCamera[4] );
 	}
+*/
 }
 
 void DDEMOMAIN_DeleteNameParticle( DDEMOMAIN_WORK * wk )
@@ -820,7 +821,8 @@ static void CreateParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc, BOOL dis
 	GFL_PTC_PersonalCameraCreate( ptc, &projection, DEFAULT_PERSP_WAY, NULL, NULL, NULL, HEAPID_DENDOU_DEMO );
 }
 
-static void CreateNameParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc )
+/*
+static void CreateNameParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc, BOOL disp )
 {
 	GFL_G3D_PROJECTION	projection;
 
@@ -838,7 +840,7 @@ static void CreateNameParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc )
 	GFL_PTC_PersonalCameraDelete( ptc );
 	GFL_PTC_PersonalCameraCreate( ptc, &projection, DEFAULT_PERSP_WAY, NULL, NULL, NULL, HEAPID_DENDOU_DEMO );
 }
-
+*/
 
 /*
 static const VecFx32 sc_camera_pos = { 0x0, 0x70c2, 0x21ccf }; 
