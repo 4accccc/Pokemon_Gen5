@@ -359,7 +359,7 @@
 #define FE_TEACH_COALESCENCE_TALK          343 /* 0x0157 合体技教え初回会話フラグ */
 #define FE_R16R0201_POKE23_ENC             344 /* 0x0158 ゾロアークと出会ったフラグ（C04ゲートのメッセージ分岐に使用） */
 #define FE_PALACE01_OLDMANTALK2            345 /* 0x0159 裏パレスじいさん初回会話フラグ */
-		/* not used   346(0x015a) */
+#define FE_T04_ITEMGET_01                  346 /* 0x015a サザナミタウン：アイテム入手フラグ（わざマシン：ダイビング） */
 		/* not used   347(0x015b) */
 		/* not used   348(0x015c) */
 		/* not used   349(0x015d) */
