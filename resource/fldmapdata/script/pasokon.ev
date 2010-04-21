@@ -245,10 +245,9 @@ pc_zukan_check:
   //「はかせの パソコンに せつぞくした！」
   _SYSWIN_MSG( msg_pc_zukan_check_01 , POS_DOWN ) 
   _AB_KEYWAIT()
-  _SYSWIN_CLOSE()
+//  _SYSWIN_CLOSE() ずかん評価側で引き続きシステムMSG表示するので閉じない
   _CHG_COMMON_SCR SCRID_ZUKAN_MACHINE
 
-  // @todo 図鑑評価メッセージを表示
 }
 _RET
 
