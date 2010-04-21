@@ -63,14 +63,20 @@ const CI_SE_TBL Tbl12[] = {
 };
 
 const CI_SE_TBL Tbl13[] = {
+	{ SEQ_SE_ROTATION_B, 10 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl14[] = {
+	{ SEQ_SE_W009_01, 10 },
 	{ CI_SE_NONE, 0 },
 };
 
 const CI_SE_TBL Tbl15[] = {
+	{ SEQ_SE_FLD_164, 9 },
+	{ SEQ_SE_FLD_164, 15 },
+	{ SEQ_SE_TDEMO_006, 30 },
+	{ SEQ_SE_W009_01, 49 },
 	{ CI_SE_NONE, 0 },
 };
 
