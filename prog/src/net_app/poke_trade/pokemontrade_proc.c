@@ -3489,6 +3489,11 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   pWork->recvPoke[0] = GFL_HEAP_AllocClearMemory(pWork->heapID, POKETOOL_GetWorkSize());
   pWork->recvPoke[1] = GFL_HEAP_AllocClearMemory(pWork->heapID, POKETOOL_GetWorkSize());
 
+  {
+    ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( pParentWork->gamedata );
+    pWork->zenkoku_flag = ZUKANSAVE_GetZukanMode( zkn_sv );  // TRUE‚Ì‚Æ‚«‘S‘}ŠÓ
+  }
+  
   if(pParentWork){
     _savedataHeapInit(pWork,pParentWork->gamedata,pParentWork->bDebug);
   }

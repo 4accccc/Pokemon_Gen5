@@ -1,6 +1,3 @@
-#ifdef __cplusplus
-extern "C" {
-#endif
 //=============================================================================
 /**
  * @file	wifi_p2pmatch_se.h
@@ -10,29 +7,11 @@ extern "C" {
  */
 //=============================================================================
 
-#ifndef __WIFI_P2PMATCH_SE_H__
-#define __WIFI_P2PMATCH_SE_H__
+#pragma once
 
 
-//-----------------------------------------------------------------------------
-//
-//-----------------------------------------------------------------------------
-#if 0 //SEはまだ無いので封印 2009.01.19
-#define _SE_CURSOR			(SEQ_SE_DP_SELECT)		// カーソル
-#define _SE_DESIDE   		(SEQ_SE_DP_DECIDE)		// 決定&キャンセル
-#define _SE_OFFER       	(SEQ_SE_DP_UG_020)		// もうしこみ
-
-//#define _SE_TBLCHANGE    	(SEQ_SE_DP_UG_020)		// 床の変更
-#define _SE_TBLCHANGE    	(SEQ_SE_DP_SELECT5)		// 床の変更
-
-#define _SE_INOUT			(SEQ_SE_DP_TELE2)		// 入退室
-
-#define _BGM_MAIN           (SEQ_WIFILOBBY)			// BGM
-#endif //if 0
+#define _VOL_DEFAULT (127)
+#define _VOL_TRACK_ALL (0xffff)
+#define _VOL_TRACK_FRAME (6)  //６フレームでさがる
 
 
-#endif  //__WIFI_P2PMATCH_SE_H__
-
-#ifdef __cplusplus
-} /* extern "C" */
-#endif

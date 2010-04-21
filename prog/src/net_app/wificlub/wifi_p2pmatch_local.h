@@ -238,6 +238,9 @@ enum{
   WIFIP2PMATCH_PLAYERDIRECT_SUB3,
   WIFIP2PMATCH_PLAYERDIRECT_SUB_FAILED,
   WIFIP2PMATCH_MODE_DISCONNECT2,
+  WIFIP2PMATCH_VCTEND_COMMSEND1,
+  WIFIP2PMATCH_VCTEND_COMMSEND2,
+  WIFIP2PMATCH_VCTEND_COMMSEND3,
 };
 
 
@@ -318,13 +321,20 @@ typedef struct {
 } WIFIP2PMATCH_ICON;
 
 
+typedef struct {
+  u8 bgmVol;        ///< BGMボリューム変更
+  u8 bgmVolStart;    ///< BGMボリューム変更値
+  u8 bgmVolEnd;    ///< BGMボリューム最後の値
+  u8 bgmVolCount;    ///< BGMボリューム変更カウント
+} WIFIP2PMATCH_VOL;
+
+
 //-------------------------------------
 ///	データビューアーデータ
 //=====================================
 typedef struct {
 	// ワードセット
 	WORDSET*	p_wordset;			// メッセージ展開用ワークマネージャー
-	
 	// ボタングラフィック
 	void* p_bttnbuff;
 	NNSG2dScreenData* p_bttnscrn;
@@ -484,22 +494,24 @@ struct _WIFIP2PMATCH_WORK{
 	u16 brightness_reset;	// _retryでマスター輝度をVBlankでリセットするため
 	u16 friend_num;			// P2Pmatch画面初期化タイミングの友達数
  	u16 directmode;			// 直接会話中のゲームモード
-  
+
   u32 talkwin_m2;
   u32 menuwin_m2;
   u32 menuwin_m1;
   u32 matchRegulation;  //通信で貰う相手側の選択したレギュレーション
+	WIFIP2PMATCH_VOL aVol;
+  REGULATION_PRINT_MSG* rpm;  // レギュレーションプリントメッセージ
+  REGULATION* pRegulation;
   u16 battleMode;  //バトルのモード
   u16 battleRule;  //バトルのルール
   u16 battleShooter;  //バトルのシューター
-  REGULATION_PRINT_MSG* rpm;  // レギュレーションプリントメッセージ
-  REGULATION* pRegulation;
   u8 DirectModeNo;    // ダイレクトにはなしかけられている場合、話してきたやつのNO
   u8 DirectMacSet;  //話しかける為のMACをセットした人
   u8 keepGameMode;
   u8 command;   ///< direct進行の為のコマンド
   u8 backupCursor;
-  u8 dummy;
+  u8 VChatModeOff;  //VCTOFFが呼ばれた
+
 };
 
 //通信関連の関数
@@ -508,6 +520,8 @@ extern void WifiP2PMatchRecvMyStatus(const int netID, const int size, const void
 extern void WifiP2PMatchRecvDirectMode(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 extern void WifiP2PMatchRecvBattleRegulation(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 extern void WifiP2PMatchRecvPokeParty(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+extern void WifiP2PMatchRecvVctOff(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+
 extern u8* WifiP2PMatchGetPokePartyWork(int netID, void* pWk, int size);
 extern void WifiP2PMatchMessage_TimeIconStart(WIFIP2PMATCH_WORK* wk);
 

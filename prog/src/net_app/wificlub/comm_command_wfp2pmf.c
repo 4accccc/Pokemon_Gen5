@@ -57,14 +57,14 @@ static const NetRecvFuncTable _CommNutWFP2PMFPacketTbl[] = {
 	//　ゲーム用
 	//=====================================
 	{ CommWFP2PMFGameResult, NULL },			///< 通信OK			親ー＞子
-	{ CommWFP2PMFGameStart,  NULL },			///< ゲーム開始			親ー＞子
-	{ CommWFP2PMFGameVchat,  NULL },	///< VCHATデータ	親ー＞子
-  { WifiP2PMatchRecvGameStatus,  NULL },
-  { WifiP2PMatchRecvMyStatus,NULL},
-  { WifiP2PMatchRecvDirectMode,NULL},
-  { WifiP2PMatchRecvBattleRegulation,NULL},
-  { WifiP2PMatchRecvPokeParty, WifiP2PMatchGetPokePartyWork}
-
+	{ CommWFP2PMFGameStart,  NULL },			///< ゲーム開始			親ー＞子CNM_WFP2PMF_START
+	{ CommWFP2PMFGameVchat,  NULL },	///< VCHATデータ	親ー＞子CNM_WFP2PMF_VCHAT
+  { WifiP2PMatchRecvGameStatus,  NULL },//CNM_WFP2PMF_STATUS
+  { WifiP2PMatchRecvMyStatus,NULL},//CNM_WFP2PMF_MYSTATUS
+  { WifiP2PMatchRecvDirectMode,NULL},//CNM_WFP2PMF_DIRECT_COMMAND
+  { WifiP2PMatchRecvBattleRegulation,NULL},//CNM_WFP2PMF_REGLATION
+  { WifiP2PMatchRecvPokeParty, WifiP2PMatchGetPokePartyWork},//CNM_WFP2PMF_POPEPARTY
+  { WifiP2PMatchRecvVctOff, NULL},//CNM_WFP2PMF_VCHATOFF
 };
 
 //----------------------------------------------------------------------------

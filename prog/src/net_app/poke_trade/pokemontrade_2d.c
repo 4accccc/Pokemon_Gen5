@@ -2281,7 +2281,7 @@ void IRC_POKETRADE_PokerusIconDisp(POKEMON_TRADE_WORK* pWork,int side,int bMain,
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* pp)
+void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* pp, BOOL bEgg)
 {
   int i,type;
   UI_EASY_CLWK_RES_PARAM prm;
@@ -2328,6 +2328,9 @@ void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* 
       type = marktbl[i*2+1];
     }
     if(type==-1){
+      continue;
+    }
+    if(bEgg && i==12){
       continue;
     }
 

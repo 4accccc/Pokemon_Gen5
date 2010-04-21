@@ -26,6 +26,8 @@
 #include "system/main.h"
 #include "battle/battle.h"  //BTL_RULE_SINGLE
 #include "sound/pm_sndsys.h"
+#include "sound/pm_wb_voice.h"
+#include "wifi_p2pmatch_se.h"
 
 #include "field/event_wificlub.h"
 
@@ -90,6 +92,7 @@ typedef struct{
   POKEPARTY* pPokeParty;   //バトルに渡すPokeParty
   int seq;
   u16* ret;
+  u16 soundNo;
   u8 bSingle;
   u8 dummy;
 }EV_P2PEVENT_WORK;
@@ -386,8 +389,8 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     break;
   case P2P_BATTLE_START:
 
-   // _battleSetting(pClub, ep2p ,ep2p->pMatchParam->seq);
-    PMSND_PlayBGM(ep2p->para->musicDefault);
+    PMSND_PlayBGM(SEQ_BGM_VS_TRAINER_WIFI);
+    PMSND_FadeInBGM(PMSND_FADE_NORMAL);
 
     GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
 #if 0
@@ -536,9 +539,12 @@ static GFL_PROC_RESULT WifiClubProcInit( GFL_PROC * proc, int * seq, void * pwk,
 
   // サウンドテスト
   // ＢＧＭ一時停止→退避
-  PMSND_PauseBGM(TRUE);
-  PMSND_PushBGM();
-
+//  PMSND_PauseBGM(TRUE);
+//  PMSND_PushBGM();
+  ep2p->soundNo = PMSND_GetBGMsoundNo();
+  PMSND_StopBGM();
+  
+  
 
   return GFL_PROC_RES_FINISH;
 }
@@ -553,16 +559,11 @@ static GFL_PROC_RESULT WifiClubProcEnd( GFL_PROC * proc, int * seq, void * pwk, 
   GFL_HEAP_FreeMemory(ep2p->pMatchParam);
   GFL_PROC_FreeWork(proc);
 
-  // サウンドテスト
-  // ＢＧＭ取り出し→再開
-  PMSND_PopBGM();
-  PMSND_PauseBGM(FALSE);
-  PMSND_FadeInBGM(60);
-
+  PMV_ResetMasterVolume();
+//  PMSND_ResetMaxVolume();  //安全の為最後でリセット
+  PMSND_PlayBGM( ep2p->soundNo );
+  PMSND_FadeInBGM(PMSND_FADE_NORMAL);
 
   return GFL_PROC_RES_FINISH;
 }
-
-
-
 

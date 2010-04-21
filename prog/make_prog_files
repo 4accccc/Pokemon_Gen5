@@ -68,6 +68,7 @@ SAVEDATASRC =   savedata/save_tbl.c \
 NETWORKSRC =  net/net_icondata.c \
         net/net_dev.c \
         net/dwc_rapfriend.c \
+        net/dwc_rapsound.c \
         system/net_err.c \
 				net/wih_dwc.c \
 				net/net_save.c \

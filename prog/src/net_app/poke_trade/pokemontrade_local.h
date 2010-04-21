@@ -719,7 +719,7 @@ struct _POKEMON_TRADE_WORK{
   u8 statusModeOn;  //
   u8 friendMailBoxFULL;  //ともだちはメールボックス満杯かどうか
   u8 mojiIconEnd;  //文字点滅アイコンが終わったかどうか
-  u8 dummy;
+  u8 zenkoku_flag;
 //  u8 time3dfadelen;
 //  u8 time3dfadecount;
 } ;
@@ -805,7 +805,7 @@ extern void IRC_POKETRADE_ItemIconDisp(POKEMON_TRADE_WORK* pWork,int side, POKEM
 extern void IRC_POKETRADE_ItemIconReset(_ITEMMARK_ICON_WORK* pIM);
 
 extern void IRC_POKETRADE_PokerusIconDisp(POKEMON_TRADE_WORK* pWork,int side,int bMain, POKEMON_PARAM* pp);
-extern void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* pp);
+extern void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* pp, BOOL bEgg);
 extern void IRC_POKETRADE_PokeStatusIconReset(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_SetCursorXY(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line);

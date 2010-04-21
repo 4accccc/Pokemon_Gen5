@@ -6,6 +6,7 @@ static void _vctcheckCommon( WIFIP2PMATCH_WORK *pWork)
     GFL_NET_DWC_SetVChat(TRUE);
     GFL_NET_DWC_StartVChat();
     DWCRAP_StartVChat();
+    _changeBGMVol( pWork,_VOL_DEFAULT/3 );
   }
 #if PM_DEBUG
   else{
@@ -541,6 +542,8 @@ static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
       _vctcheckCommon(wk);
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_1015, FALSE);
       _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_VCT);  // VCT’†‚É‚È‚é
+      _changeBGMVol( wk,  0 );
+      wk->VChatModeOff = FALSE;
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT);
     }
     break;

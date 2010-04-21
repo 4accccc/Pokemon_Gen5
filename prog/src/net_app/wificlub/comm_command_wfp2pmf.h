@@ -26,6 +26,7 @@ enum CommCommandTradeList_e {
   CNM_WFP2PMF_DIRECT_COMMAND,   ///< 直接接続時のフローコマンド
   CNM_WFP2PMF_REGLATION,   ///< レギュレーション
   CNM_WFP2PMF_POPEPARTY,  ///< ポケパーティー
+  CNM_WFP2PMF_VCHATOFF,
 	//-------------------------------------
 	//	
 	//=====================================
