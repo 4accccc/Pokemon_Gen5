@@ -20,7 +20,8 @@
 
 #endif //MULTI_BOOT_MAKE
 
-
+// リバーブ使用定義
+//#define REVERB_USE
 
 #ifdef PM_DEBUG
 //------------------------------------------------------------------
@@ -141,10 +142,12 @@ extern BOOL						PMSND_CheckOnReverb( void );
 extern u8							PMSND_GetBGMTrackVolume( int trackNo );
 extern BOOL           PMSND_IsLoading( void );  // ロード中かどうか
 
+#ifdef REVERB_USE
 //	リバーブ設定
 extern void PMSND_EnableCaptureReverb( u32 depth, u32 samplingRate, int volume, int stopFrames );
 extern void PMSND_DisableCaptureReverb( void );
 extern void PMSND_ChangeCaptureReverb( u32 depth, u32 samplingRate, int volume, int stopFrames );
+#endif
 
 //============================================================================================
 /**
