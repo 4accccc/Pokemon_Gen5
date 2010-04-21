@@ -463,14 +463,14 @@ sub_train_battle_win_clear:
     _CALL sub_anm_train_battle_win_clear
   ENDIF
   
+  //電車揺れ停止
+  _BSUBWAY_TOOL( BSWSUB_STOP_SHAKE_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
+  
   //アニメを少し表示しながらフェードアウト
   _TIME_WAIT( 70 )
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
 
-  //電車揺れ停止
-  _BSUBWAY_TOOL( BSWSUB_STOP_SHAKE_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
-  
   //OBJアニメ待ち
   _OBJ_ANIME_WAIT()
 
@@ -644,12 +644,12 @@ sub_train_battle_win_next_menu:
         _CALL sub_anm_jiki_next_car
       ENDIF
       
+      //電車揺れ停止
+      _BSUBWAY_TOOL( BSWSUB_STOP_SHAKE_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
+      
       //フェードアウト
       _MAP_FADE_BLACK_OUT()
       _MAP_FADE_END_CHECK()
-      
-      //電車揺れ停止
-      _BSUBWAY_TOOL( BSWSUB_STOP_SHAKE_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
       
       //戦闘後のワーク開放
       _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
@@ -800,12 +800,12 @@ sub_train_battle_win_next_menu_comm_multi:
       ELSE //相手続ける
         //移動アニメ
         _CALL sub_anm_jiki_next_car_multi
+
+        //電車揺れ停止
+        _BSUBWAY_TOOL( BSWSUB_STOP_SHAKE_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
         //フェードアウト
         _MAP_FADE_BLACK_OUT()
         _MAP_FADE_END_CHECK()
-        
-        //電車揺れ停止
-        _BSUBWAY_TOOL( BSWSUB_STOP_SHAKE_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
         
         //戦闘後のワーク開放
         _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
@@ -1098,12 +1098,12 @@ sub_common_retmap_lose_retire:
     _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
   ENDIF
   
+  //電車揺れ停止
+  _BSUBWAY_TOOL( BSWSUB_STOP_SHAKE_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
+  
   //マップフェードアウト
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
-  
-  //電車揺れ停止
-  _BSUBWAY_TOOL( BSWSUB_STOP_SHAKE_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //戦闘後のワーク開放
   _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
