@@ -532,10 +532,17 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 		
 //		OS_SpinWait(10000);
 		
-		while( nes->err_important_type == NET_ERR_CHECK_HEAVY || fatal_error == TRUE )
+		while( fatal_error == TRUE )
 		{
-      ; //重度なエラーとfatalは抜けれない
+      ; //fatalは抜けれない
     }
+#ifdef MULTI_BOOT_MAKE  //マルチブート処理
+		while( TRUE )
+		{
+      ; //常に抜けれない
+    }
+
+#endif
 		while((PAD_Read() & ERR_DISP_END_BUTTON) != 0){
 			;	//ボタンを一度離すまで待つ
 		}
@@ -844,7 +851,7 @@ static void Local_ErrMessagePrint(BOOL fatal_error)
         msgno = 1;
       }
 */
-      if( nes->err_important_type  == NET_ERR_CHECK_HEAVY || fatal_error == TRUE )
+      if( fatal_error == TRUE )
       {
         msgno = net_error_0002;
       }
