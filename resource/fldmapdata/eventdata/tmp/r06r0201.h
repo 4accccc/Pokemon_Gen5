@@ -24,5 +24,7 @@
 #ifndef ZONE_R06R0201_EVB_H
 #define ZONE_R06R0201_EVB_H
 
+#define R06R0201_HIDE_ITEM_01             0
+#define R06R0201_HIDE_ITEM_02             1
 
 #endif //ZONE_R06R0201_EVB_H

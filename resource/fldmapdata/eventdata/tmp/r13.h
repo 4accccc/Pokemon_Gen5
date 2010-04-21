@@ -49,5 +49,7 @@
 #define R13_HIDE_ITEM_04                  6
 #define R13_HIDE_ITEM_05                  7
 #define R13_HIDE_ITEM_06                  8
+#define R13_HIDE_ITEM_07                  9
+#define R13_HIDE_ITEM_08                 10
 
 #endif //ZONE_R13_EVB_H

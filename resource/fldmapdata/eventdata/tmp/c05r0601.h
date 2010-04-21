@@ -28,5 +28,6 @@
 #ifndef ZONE_C05R0601_EVB_H
 #define ZONE_C05R0601_EVB_H
 
+#define C05R0601_HIDE_ITEM_01             0
 
 #endif //ZONE_C05R0601_EVB_H
