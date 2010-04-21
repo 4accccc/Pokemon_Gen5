@@ -4917,16 +4917,32 @@ static void handler_Pressure_MemberIN( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 // PP消費チェックハンドラ
 static void handler_Pressure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  u32 cnt, i;
-  cnt = BTL_EVENTVAR_GetValue( BTL_EVAR_TARGET_POKECNT );
-  for(i=0; i<cnt; ++i)
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) != pokeID )
   {
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1+i) == pokeID )
+    BOOL fEnable = FALSE;
+
+    u32 cnt = BTL_EVENTVAR_GetValue( BTL_EVAR_TARGET_POKECNT );
+    if( cnt )
     {
-      u8 dec = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME );
-      ++dec;
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_VOLUME, dec );
-      break;
+      u32 i;
+      for(i=0; i<cnt; ++i)
+      {
+        if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1+i) == pokeID ){
+          fEnable = TRUE;
+          break;
+        }
+      }
+    }
+    else{
+      WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+      if( WAZADATA_GetCategory(waza) == WAZADATA_CATEGORY_FIELD_EFFECT ){
+        fEnable = TRUE;
+      }
+    }
+
+    if( fEnable ){
+      u8 vol = BTL_EVENTVAR_GetValue( BTL_EVAR_VOLUME ) + 1;
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_VOLUME, vol );
     }
   }
 }

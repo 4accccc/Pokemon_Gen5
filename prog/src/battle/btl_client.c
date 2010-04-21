@@ -5245,6 +5245,10 @@ static BOOL scProc_ACT_ConfDamage( BTL_CLIENT* wk, int* seq, const int* args )
     if( BTLV_ACT_WazaEffect_Wait(wk->viewCore) )
     {
       BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+
+      if( !BTL_CLIENT_IsChapterSkipMode(wk) ){
+        PMSND_PlaySE( SEQ_SE_KOUKA_M );
+      }
       BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos );
       (*seq)++;
     }
