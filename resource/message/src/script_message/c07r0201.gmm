@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="satou" host="W00177" date="2010-04-09T18:58:45"/>
+	<create user="matsumiya" host="W00224" date="2010-04-21T19:08:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -347,7 +347,7 @@
 
 	<row id="msg_quiz_start_05">
 		<comment>♂
-問題！のＳＥを待ってから出題
+・問題！のＳＥを待ってから出題
 ・出題後、続けてstart_06</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
 		<language name="JPN" width="256">ワカルデ『もんだい！</language>

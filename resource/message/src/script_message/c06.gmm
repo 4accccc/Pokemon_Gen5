@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-20T18:49:34"/>
+	<create user="matsumiya" host="W00224" date="2010-04-21T19:04:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,7 +364,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="145" right="2004" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -746,7 +746,7 @@
 タワーオブヘブン　っすか？</language>
 	</row>
 
-	<row id="msg_c06_boss_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_boss_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・c06ジムバッジ取得後に出現
 　ジムから出ると、メッセージ表示
@@ -778,7 +778,7 @@
 絶対に　ウソを　つかない[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c06_boss_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_boss_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・一歩前進して
 ・0＝先頭のポケモン名（ひん死、タマゴのぞく）
@@ -793,7 +793,7 @@
 どんな　トレーナーか　教えてよ？[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c06_boss_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_boss_03" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・続けてboss_04
 ・1＝主人公名前</comment>
@@ -809,10 +809,10 @@
 母親と　二人暮らし　なんだ▼
 ポケモン図鑑を　きっかけに
 世界を　見聞するための▽
-旅　している……　と[BE:09:速度コントロール:0]▼</language>
+旅を　している……　と[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c06_boss_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_boss_04" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・続けてboss_05
 ・0＝先頭のポケモン名（ひん死、タマゴのぞく）
@@ -820,7 +820,7 @@
 		<attribute name="キャラクター">N</attribute>
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]それにしても　この　[1:01:ポケモン種族名:1]
 なぜだか　キミを　しんじている……▽
-すばらしい……！▼
+いいね……！▼
 すべての　ひとと　ポケモンが
 キミたちの　ように　むきあうなら▼
 ひとに　りよう　されるだけの
@@ -829,7 +829,7 @@
 ゆくすえを　みまもることが　できるのに[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]それにしても　この　[1:01:ポケモン種族名:1]
 なぜだか　キミを　信じている……▽
-すばらしい……！▼
+いいね……！▼
 すべての　人と　ポケモンが
 キミたちの　ように　向き合うなら▼
 人に　利用されるだけの
@@ -838,7 +838,7 @@
 行く末を　見守ることが　できるのに[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c06_boss_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_boss_05" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・続けてboss_06</comment>
 		<attribute name="キャラクター">N</attribute>
@@ -852,7 +852,7 @@
 ダークストーン……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c06_boss_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_boss_06" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・続けてboss_07
 ・最終行19文字</comment>
@@ -877,7 +877,7 @@
 世界に　認めさせ　従わせる……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c06_boss_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_boss_07" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・続けてboss_08</comment>
 		<attribute name="キャラクター">N</attribute>
@@ -897,7 +897,7 @@
 無関係の　ポケモンたち　だから[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c06_boss_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06_boss_08" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・下向き＋首振りアニメ後にメッセージ表示
 ・表示後、画面右に移動
