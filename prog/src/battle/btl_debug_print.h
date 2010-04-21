@@ -109,6 +109,8 @@ typedef enum {
   DBGSTR_MAIN_GetFrontPokeData,
   DBGSTR_MAIN_GetFrontPokeDataResult,
   DBGSTR_MAIN_CommError,
+  DBGSTR_MAIN_Illusion1st,
+  DBGSTR_MAIN_Illusion2nd,
 
   DBGSTR_NET_Startup,
   DBGSTR_NET_DecideClientID,

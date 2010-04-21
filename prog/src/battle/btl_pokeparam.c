@@ -600,6 +600,11 @@ void BPP_SetViewSrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* fakePP )
   bpp->coreParam.ppFake =  fakePP;
   bpp->coreParam.fFakeEnable = TRUE;
 }
+void BPP_ClearViewSrcData( BTL_POKEPARAM* bpp )
+{
+  bpp->coreParam.ppFake = NULL;
+  bpp->coreParam.fFakeEnable = FALSE;
+}
 const POKEMON_PARAM* BPP_GetViewSrcData( const BTL_POKEPARAM* bpp )
 {
   if( (bpp->coreParam.ppFake != NULL)

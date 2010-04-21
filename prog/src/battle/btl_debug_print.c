@@ -78,6 +78,9 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_MAIN_CheckHPByLvup:            return "PPLVUP Main line:%d, HP=%d\n";
   case DBGSTR_MAIN_PerappVoiceAdded:         return "ClientID=%d のペラップデータ構築\n";
   case DBGSTR_MAIN_PerappVoiceComplete:      return "ペラップボイス相互受信完了\n";
+  case DBGSTR_MAIN_Illusion1st:              return "%d番目にいるイリュージョン持ちポケモン[%d]の参照ポケを\n";
+  case DBGSTR_MAIN_Illusion2nd:              return "     %d番目のポケ[%d]に変更";
+
 
   case DBGSTR_CLIENT_RETURN_CMD_START:       return "ID[%d], 返信開始へ\n";
   case DBGSTR_CLIENT_RETURN_CMD_DONE:        return "ID[%d], %d byte 返信しました\n";
