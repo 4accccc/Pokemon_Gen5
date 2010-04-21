@@ -33,6 +33,8 @@
 #include "field_task_camera_rot.h"
 #include "field_task_target_offset.h"
 
+#include "field_comm/intrude_snd_def.h"
+
 
 //=======================================================================================
 // ■定数
@@ -44,6 +46,7 @@ typedef enum {
   EVENTFUNC_TYPE_STEP, // 階段
   EVENTFUNC_TYPE_WARP, // ワープ
   EVENTFUNC_TYPE_SPx,  // 特殊
+  EVENTFUNC_TYPE_INTRUDE, // 侵入
   EVENTFUNC_TYPE_NUM,
 } EVENTFUNC_TYPE;
 
@@ -75,6 +78,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeDoor( GMEVENT* event, int* s
 static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeWarp( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* seq, void* wk );
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeIntrude( GMEVENT * event, int *seq, void * wk );
 
 
 //=======================================================================================
@@ -118,6 +122,7 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
     EVENT_FUNC_EntranceIn_ExitTypeStep,   // EVENTFUNC_TYPE_STEP 階段
     EVENT_FUNC_EntranceIn_ExitTypeWarp,   // EVENTFUNC_TYPE_WARP ワープ
     EVENT_FUNC_EntranceIn_ExitTypeSPx,    // EVENTFUNC_TYPE_SPx, 特殊
+    EVENT_FUNC_EntranceIn_ExitTypeIntrude,// EVENTFUNC_TYPE_INTRUDE 侵入
   };
 
   // イベント処理関数を決定
@@ -128,7 +133,7 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
   case EXIT_TYPE_DOOR:    funcType = EVENTFUNC_TYPE_DOOR; break;
   case EXIT_TYPE_WALL:    funcType = EVENTFUNC_TYPE_STEP; break;
   case EXIT_TYPE_WARP:    funcType = EVENTFUNC_TYPE_WARP; break;
-  case EXIT_TYPE_INTRUDE: funcType = EVENTFUNC_TYPE_NONE; break;
+  case EXIT_TYPE_INTRUDE: funcType = EVENTFUNC_TYPE_INTRUDE; break;
   default:                funcType = EVENTFUNC_TYPE_SPx;  break;
   }
 
@@ -395,3 +400,42 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
   }
   return GMEVENT_RES_CONTINUE;
 } 
+
+//---------------------------------------------------------------------------------------
+/**
+ * @breif 侵入時の進入イベント
+ */
+//---------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeIntrude( GMEVENT * event, int *seq, void * wk )
+{
+	EVENT_WORK*    work       = wk;
+	GAMESYS_WORK*  gameSystem = work->gameSystem;
+	FIELDMAP_WORK* fieldmap   = work->fieldmap;
+	GAMEDATA*      gameData   = work->gameData;
+  FIELD_SOUND*   fieldSound = GAMEDATA_GetFieldSound( work->gameData );
+
+  switch ( *seq ) {
+  // BGM再生準備
+  case 0:
+    { 
+      u16 nowZoneID;
+
+      nowZoneID = FIELDMAP_GetZoneID( fieldmap );
+      FSND_StandByNextMapBGM( fieldSound, gameData, work->nextLocation.zone_id );
+    }
+    (*seq)++;
+    break;
+
+  // 画面フェードアウト
+  case 1:
+    PMSND_PlaySE( INTSE_WARP );
+    GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Cross( gameSystem, fieldmap ) );
+    (*seq)++;
+    break;
+
+  // イベント終了
+  case 2:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}

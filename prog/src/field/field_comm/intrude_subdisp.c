@@ -743,12 +743,12 @@ GMEVENT* INTRUDE_SUBDISP_EventCheck(INTRUDE_SUBDISP_PTR intsub, BOOL bEvReqOK, F
 
   switch(intsub->event_req){
   case _EVENT_REQ_NO_TOWN_WARP:
-    PMSND_PlaySE( SEQ_SE_FLD_102 );
+    PMSND_PlaySE( INTSE_WARP );
     _SetPalFlash_DecideTown(intsub);
     event = EVENT_IntrudeTownWarp(intsub->gsys, fieldWork, intsub->warp_zone_id);
     break;
   case _EVENT_REQ_NO_PLAYER_WARP:
-    PMSND_PlaySE( SEQ_SE_FLD_102 );
+    PMSND_PlaySE( INTSE_WARP );
     event = EVENT_IntrudePlayerWarp(intsub->gsys, fieldWork, Intrude_GetWarpPlayerNetID(game_comm));
     break;
   case _EVENT_REQ_NO_MISSION_ENTRY:

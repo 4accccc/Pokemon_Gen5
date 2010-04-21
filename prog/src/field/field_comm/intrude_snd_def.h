@@ -8,6 +8,8 @@
 //==============================================================================
 #pragma once
 
+///パレス間ワープの音
+#define INTSE_WARP              (SEQ_SE_FLD_102)
 
 ///誰かのハイルツリーと接続した時に鳴らす音
 #define INTSE_PALACE_CONNECT    (SEQ_SE_FLD_40)

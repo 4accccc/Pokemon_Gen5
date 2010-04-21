@@ -46,6 +46,7 @@ typedef enum {
   EVENTFUNC_TYPE_STEP, // 階段
   EVENTFUNC_TYPE_WARP, // ワープ
   EVENTFUNC_TYPE_SPx,  // 特殊
+  EVENTFUNC_TYPE_INTRUDE, // 侵入
   EVENTFUNC_TYPE_NUM,
 } EVENTFUNC_TYPE;
 
@@ -78,6 +79,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeDoor( GMEVENT* event, int* 
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeWarp( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT* event, int* seq, void* wk );
+static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeIntrude( GMEVENT* event, int* seq, void* wk );
 
 
 //=======================================================================================
@@ -124,6 +126,7 @@ GMEVENT* EVENT_EntranceOut( GMEVENT* parent,
     EVENT_FUNC_EntranceOut_ExitTypeStep,   // EVENTFUNC_TYPE_STEP 階段
     EVENT_FUNC_EntranceOut_ExitTypeWarp,   // EVENTFUNC_TYPE_WARP ワープ
     EVENT_FUNC_EntranceOut_ExitTypeSPx,    // EVENTFUNC_TYPE_SPx, 特殊
+    EVENT_FUNC_EntranceOut_ExitTypeIntrude, // EVENTFUNC_TYPE_INTRUDE 侵入
   };
 
   // EXIT_TYPEを決定
@@ -147,7 +150,7 @@ GMEVENT* EVENT_EntranceOut( GMEVENT* parent,
   case EXIT_TYPE_DOOR:    funcType = EVENTFUNC_TYPE_DOOR; break;
   case EXIT_TYPE_WALL:    funcType = EVENTFUNC_TYPE_STEP; break;
   case EXIT_TYPE_WARP:    funcType = EVENTFUNC_TYPE_WARP; break;
-  case EXIT_TYPE_INTRUDE: funcType = EVENTFUNC_TYPE_NONE; break;
+  case EXIT_TYPE_INTRUDE: funcType = EVENTFUNC_TYPE_INTRUDE; break;
   default:                funcType = EVENTFUNC_TYPE_SPx;  break;
   }
 
@@ -484,3 +487,44 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT * event, int *
   }
   return GMEVENT_RES_CONTINUE;
 } 
+
+//---------------------------------------------------------------------------------------
+/**
+ * @breif 侵入時の退出イベント
+ */
+//---------------------------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeIntrude( GMEVENT* event, int* seq, void* wk )
+{
+	EVENT_WORK*    work       = wk;
+	GAMESYS_WORK*  gameSystem = work->gameSystem;
+	FIELDMAP_WORK* fieldmap   = work->fieldmap;
+	GAMEDATA*      gameData   = work->gameData;
+  FIELD_SOUND*   fieldSound = GAMEDATA_GetFieldSound( work->gameData );
+
+  switch( *seq ) {
+  // カメラのセットアップ
+  case 0:
+    (*seq)++;
+    break;
+
+  // BGM再生開始
+  case 1:
+    FSND_PlayStartBGM( fieldSound );
+    (*seq)++;
+    break;
+
+  // 画面フェード開始
+  case 2:
+    // 基本フェード
+    GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Cross( gameSystem, fieldmap ) );
+    (*seq)++;
+    break;
+
+  // イベント終了
+  case 3:
+    FIELD_PLACE_NAME_Display( 
+        FIELDMAP_GetPlaceNameSys(fieldmap), work->location.zone_id ); // 地名表示更新リクエスト
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
