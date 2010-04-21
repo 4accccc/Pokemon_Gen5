@@ -53,9 +53,14 @@ ev_seatemple:
 /*      ‚O•à                                                  */
 /**************************************************************/
 EVENT_START ev_seatemple_step_000
+	
+	_SE_PLAY( SEQ_SE_FLD_68 )
+	_SE_WAIT()
+	
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step00 )
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
+	
 EVENT_END
 
 /**************************************************************/
@@ -69,6 +74,7 @@ EVENT_START ev_seatemple_step_100
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step01 )
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
+	
 EVENT_END
 
 /**************************************************************/
@@ -109,16 +115,16 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_seatemple_step_500
 
+	_PLAINWIN_MSG_DOWN( msg_seatemple_step04 )
+	_LAST_KEYWAIT()
+	_PLAINWIN_CLOSE()
+
 	_SE_PLAY( SEQ_SE_FLD_156 )
 
 	//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é
 	_SHAKE_CAMERA(10,0,3,20,1,0,1,5)
 	_SE_WAIT()
-
-	_PLAINWIN_MSG_DOWN( msg_seatemple_step04 )
-	_LAST_KEYWAIT()
-	_PLAINWIN_CLOSE()
-
+	
 	_DIVING( SCR_EV_DIVING_MAPCHANGE_UP )
 
 EVENT_END

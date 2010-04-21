@@ -45,8 +45,10 @@ INIT_EVENT_START	ev_init_t02pc0101
 	
 		ENDIF
   ELSE
+
     //すべてのイベントが終わっている時のみ、配達員の制御
     _GLOBAL_CALL  SCRID_INIT_POSTMAN
+
 	
 	ENDIF
 
@@ -61,6 +63,8 @@ INIT_EVENT_START  ev_recover_t02pc0101
         //すべてのイベントが終わっている時のみ、配達員の制御
         _GLOBAL_CALL  SCRID_RECOVER_POSTMAN
     ENDIF
+
+    
 INIT_EVENT_END
 
 /**************************************************************/
@@ -269,7 +273,6 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 
 	//こちらは　フレンドリィショップ！
 	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_06, T02PC0101_HAKASE2_01, POS_DL )
-	_BALLOONWIN_CLOSE()
 
 	//よーしよしよし！
 	_BALLOONWIN_OBJMSG_POS( msg_t02pc0101_hakase2_07, T02PC0101_HAKASE2_01, POS_DL )

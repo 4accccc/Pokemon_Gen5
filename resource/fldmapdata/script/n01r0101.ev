@@ -261,7 +261,7 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	$WK_SCENE_N01R0101 = 1
 	
 	//フラグセット
-	_FLAG_SET(FV_C09R0701_WARPMAN)
+	_FLAG_RESET(FV_C09R0701_WARPMAN)
 	_FLAG_SET(FE_C09_FORBIDDEN)
 	
 	//========================================//

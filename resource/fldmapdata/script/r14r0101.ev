@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r14r0101.h"
-  //.include  "r14r0101.h"
+  .include  "r14r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_r14r0101
 _EVENT_DATA		ev_bg_r14r0101_board_01
+_EVENT_DATA		ev_r14r0101_informationw_01
 _EVENT_DATA_END
 
 
@@ -46,3 +47,12 @@ EVENT_START   ev_bg_r14r0101_board_01
 
 EVENT_END
 
+/**************************************************************/
+/*		R14R0101	INFORMATIONW							  */
+/**************************************************************/
+EVENT_START		ev_r14r0101_informationw_01
+_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_r14r0101_infomationw_01w, msg_r14r0101_infomationw_01b, R14R0101_INFORMATIONW_01, POS_DEFAULT )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
