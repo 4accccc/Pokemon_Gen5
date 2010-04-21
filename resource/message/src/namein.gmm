@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-21T15:49:21"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-04-21T17:10:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -394,16 +394,16 @@
 何か　選んでください</language>
 	</row>
 
-	<row id="NAMEIN_DEF_NAME_000" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+	<row id="NAMEIN_DEF_NAME_000">
 		<comment>主人公デフォルト名</comment>
-		<language name="JPN" width="256">ホワイト</language>
-		<language name="JPN_KANJI" width="256">ホワイト</language>
+		<language name="JPN" width="256">　</language>
+		<language name="JPN_KANJI" width="256">　</language>
 	</row>
 
-	<row id="NAMEIN_DEF_NAME_001" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
+	<row id="NAMEIN_DEF_NAME_001">
 		<comment>主人公デフォルト名</comment>
-		<language name="JPN" width="256">ブラック</language>
-		<language name="JPN_KANJI" width="256">ブラック</language>
+		<language name="JPN" width="256">　</language>
+		<language name="JPN_KANJI" width="256">　</language>
 	</row>
 
 	<row id="NAMEIN_DEF_NAME_002">
@@ -430,6 +430,16 @@
 ブラックバージョンの場合</comment>
 		<language name="JPN" width="256">ブラック．</language>
 		<language name="JPN_KANJI" width="256">ブラック．</language>
+	</row>
+
+	<row id="NAMEIN_ICON_000">
+		<language name="JPN" width="256">♂</language>
+		<language name="JPN_KANJI" width="256">♂</language>
+	</row>
+
+	<row id="NAMEIN_ICON_001">
+		<language name="JPN" width="256">♀</language>
+		<language name="JPN_KANJI" width="256">♀</language>
 	</row>
 
 	<flowchart-group-list>

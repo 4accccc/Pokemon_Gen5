@@ -20,6 +20,7 @@
 #include "system/nsbtx_to_clwk.h"
 #include "sound/pm_sndsys.h"
 #include "gamesystem/msgspeed.h"
+#include "system/bmp_oam.h"
 
 //  module
 #include "app/app_menu_common.h"
@@ -106,6 +107,7 @@ enum
   //メインOBJ
   PLT_OBJ_CURSOR_M    = 0,  //文字列の下のバーOBJ
   PLT_OBJ_ICON_M      = 2,  //アイコン
+  PLT_OBJ_SEX_M      = 3,  //性別文字色
 
   //サブBG
   PLT_BG_BACK_S       = 0,  //背景
@@ -312,8 +314,9 @@ typedef enum
 /// ICON
 //=====================================
 //アイコンの座標
-#define ICON_POS_X  (46)
+#define ICON_POS_X  (46-12)
 #define ICON_POS_Y  (20)
+#define ICON_POS_SEX_X  (46)
 #define ICON_WIDTH  (32)
 #define ICON_HEIGHT (32)
 
@@ -512,6 +515,14 @@ typedef struct
   u32       seq;      //メインシーケンス
   BOOL      is_move_start;//移動開始フラグ
   u16       sync;         //移動シンク
+
+  //以下性別文字用OBJ
+  u32               font_plt;
+  STRBUF            *p_strbuf;  //文字バッファ
+  BMPOAM_ACT_PTR		p_bmpoam_wk;  //性別用
+  GFL_BMP_DATA      *p_bmp;     //文字用BMP
+  BOOL  is_trans_req;
+  PRINT_QUE *p_que;
 } ICON_WORK;
 //-------------------------------------
 /// メインワーク
@@ -560,6 +571,13 @@ typedef struct
   //共通で使う単語
   WORDSET       *p_word;
 
+  //共通で使うBMPOAM
+  BMPOAM_SYS_PTR p_bmpoam_sys;
+
   //引数
   NAMEIN_PARAM  *p_param;
+
+  //不許可文字の場合のメッセージ
+  BOOL  is_illegal_msg;
+
 } NAMEIN_WORK;

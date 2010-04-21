@@ -92,6 +92,8 @@ static inline void DEBUG_NAMEIN_Print( STRCODE *x , int len )
 //センタリングしていたが、最大文字数が１０になったので、
 //センタリングできなくなった -> 最大文字が８にへりましたので戻します
 
+//この文字で埋まっていたら不許可文字
+#define NAMEIN_STR_ILLEGAL_STR  (L'　')
 
 //=============================================================================
 /**
@@ -147,6 +149,7 @@ static BOOL STRINPUT_IsInputEnd( const STRINPUT_WORK *cp_wk );
 static u32  STRINPUT_GetStrLength( const STRINPUT_WORK *cp_wk );
 static u32  STRINPUT_GetChangeStrLength( const STRINPUT_WORK *cp_wk );
 static BOOL StrInput_ChangeStrToStr( STRINPUT_WORK *p_wk, BOOL is_shift );
+static BOOL STRINPUT_IsValidStr( const STRINPUT_WORK *cp_wk);
 //-------------------------------------
 /// KEYMAP
 //=====================================
@@ -219,7 +222,7 @@ static void PS_SetupBox( PS_WORK* p_wk, MSGWND_WORK* p_msgwnd_wk, NAMEIN_PARAM* 
 //-------------------------------------
 /// ICON
 //=====================================
-static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, GFL_CLUNIT *p_unit, HEAPID heapID );
+static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, GFL_CLUNIT *p_unit, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, BMPOAM_SYS_PTR p_bmpoam_sys, HEAPID heapID );
 static void ICON_Exit( ICON_WORK *p_wk );
 static void ICON_Main( ICON_WORK *p_wk );
 static BOOL ICON_IsTrg( const ICON_WORK *cp_wk );
@@ -233,6 +236,7 @@ static ICON_TYPE ICON_GetModoToType( NAMEIN_MODE mode );
 static BOOL COLLISION_IsRectXPos( const GFL_RECT *cp_rect, const GFL_POINT *cp_pos );
 static STRBUF* DEFAULTNAME_CreateStr( const NAMEIN_WORK *cp_wk, NAMEIN_MODE mode, HEAPID heapID );
 static void FinishInput( NAMEIN_WORK *p_wk );
+static BOOL CanDecide( NAMEIN_WORK *p_wk );
 //-------------------------------------
 /// SEQ
 //=====================================
@@ -357,13 +361,14 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 
   //グラフィック設定
   p_wk->p_graphic = NAMEIN_GRAPHIC_Init( 0, HEAPID_NAME_INPUT );
+  p_wk->p_bmpoam_sys  = BmpOam_Init(HEAPID_NAME_INPUT, NAMEIN_GRAPHIC_GetClunit( p_wk->p_graphic ));
 
   //読みこみ
   BG_Init( &p_wk->bg, HEAPID_NAME_INPUT );
   { 
     GFL_CLUNIT  *p_clunit = NAMEIN_GRAPHIC_GetClunit( p_wk->p_graphic );
     OBJ_Init( &p_wk->obj, p_clunit, HEAPID_NAME_INPUT );
-    ICON_Init( &p_wk->icon, ICON_GetModoToType(p_param->mode), p_param->param1, p_param->param2, p_clunit, HEAPID_NAME_INPUT );
+    ICON_Init( &p_wk->icon, ICON_GetModoToType(p_param->mode), p_param->param1, p_param->param2, p_clunit, p_wk->p_font, p_wk->p_que, p_wk->p_msg, p_wk->p_bmpoam_sys, HEAPID_NAME_INPUT );
   }
   p_wk->p_keymap_handle = NAMEIN_KEYMAP_HANDLE_Alloc( HEAPID_NAME_INPUT );
 
@@ -428,6 +433,8 @@ static GFL_PROC_RESULT NAMEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_p
   ICON_Exit( &p_wk->icon );
   OBJ_Exit( &p_wk->obj );
   BG_Exit( &p_wk->bg );
+
+  BmpOam_Exit( p_wk->p_bmpoam_sys );
   NAMEIN_GRAPHIC_Exit( p_wk->p_graphic );
 
   //共通モジュールの破棄
@@ -1698,6 +1705,36 @@ static BOOL StrInput_ChangeStrToStr( STRINPUT_WORK *p_wk, BOOL is_shift )
     }
   }
   return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  文字が許可できるかチェック  （主人公名では決定できず、それ以外ではデフォルトに戻る）
+ *
+ *	@param	const STRINPUT_WORK *cp_wk  ワーク
+ *
+ *	@return TRUE許可文字  FASE不許可文字
+ */
+//-----------------------------------------------------------------------------
+static BOOL STRINPUT_IsValidStr( const STRINPUT_WORK *cp_wk )
+{ 
+  int i;
+  int cnt;
+
+  if( cp_wk->input_idx == 0 )
+  { 
+    return FALSE;
+  }
+
+  cnt = 0;
+  for( i = 0; i < cp_wk->input_idx; i++ )
+  { 
+    if(  cp_wk->input_str[ i ] == NAMEIN_STR_ILLEGAL_STR )
+    { 
+      cnt++;
+    }
+  }
+
+  return i != cnt;
 }
 //=============================================================================
 /**
@@ -3560,9 +3597,8 @@ static void Keyboard_Decide( KEYBOARD_WORK *p_wk, const KEYBOARD_INPUT_REQUEST *
     break;
 
   case KEYMAP_KEYTYPE_DECIDE: //やめる
-
-    PMSND_PlaySE( NAMEIN_SE_DECIDE );
     p_wk->input = KEYBOARD_INPUT_EXIT;
+
     break;
 
   case KEYMAP_KEYTYPE_SHIFT:    //シフト
@@ -4117,8 +4153,11 @@ static void PS_SetupBox( PS_WORK* p_wk, MSGWND_WORK* p_msgwnd_wk, NAMEIN_PARAM* 
  *  }
  */
 //-----------------------------------------------------------------------------
-static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, GFL_CLUNIT *p_unit, HEAPID heapID )
+static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, GFL_CLUNIT *p_unit, GFL_FONT *p_font, PRINT_QUE *p_que, GFL_MSGDATA *p_msg, BMPOAM_SYS_PTR p_bmpoam_sys, HEAPID heapID )
 { 
+  BOOL is_sex_visible = FALSE;
+  int sex;
+
   //クリア
   GFL_STD_MemClear( p_wk, sizeof(ICON_WORK) );
 
@@ -4140,6 +4179,8 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       chr   = APP_COMMON_GetNull4x4CharArcIdx();
       cel   = APP_COMMON_GetNull4x4CellArcIdx( APP_COMMON_MAPPING_128K );
       anm   = APP_COMMON_GetNull4x4AnimeArcIdx( APP_COMMON_MAPPING_128K );
+      is_sex_visible  = TRUE;
+      sex = param1;
       break;
     case ICON_TYPE_PERSON:
       arcID = ARCID_WIFIUNIONCHAR;
@@ -4148,11 +4189,21 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       chr   = NARC_wifi_unionobj_front00_NCGR+param1;
       cel   = NARC_wifi_unionobj_front00_NCER;
       anm   = NARC_wifi_unionobj_front00_NANR;
+      is_sex_visible  = TRUE;
+      sex = param1 < NELEMS(sc_wifi_unionobj_plt)/2 ? PTL_SEX_MALE : PTL_SEX_FEMALE;
       break;
     case ICON_TYPE_POKE:
+      is_sex_visible  = TRUE;
+      sex = ( param2 & 0xff00 ) >> 8;
+
+      if( sex == PTL_SEX_UNKNOWN )
+      { 
+        is_sex_visible  = FALSE;
+      }
+
       arcID = ARCID_POKEICON;
       plt   = POKEICON_GetPalArcIndex();
-      chr   = POKEICON_GetCgxArcIndexByMonsNumber( param1, param2 & 0x00ff, ( param2 & 0xff00 ) >> 8, FALSE );
+      chr   = POKEICON_GetCgxArcIndexByMonsNumber( param1, param2 & 0x00ff, sex, FALSE );
       cel   = POKEICON_GetCellArcIndex();
       anm   = POKEICON_GetAnmArcIndex();
       is_comp = TRUE;
@@ -4236,6 +4287,54 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
       GF_ASSERT(0);
     }
   }
+
+  if( is_sex_visible )
+  { 
+    PRINTSYS_LSB  color;
+    BMPOAM_ACT_DATA	actdata;
+    ARCHANDLE * p_handle;
+
+    p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, heapID );
+    p_wk->p_bmp = GFL_BMP_Create( 2, 2, GFL_BMP_16_COLOR, heapID );
+
+    p_wk->font_plt  = GFL_CLGRP_PLTT_RegisterComp( p_handle, 
+          NARC_font_default_nclr, CLSYS_DRAW_MAIN, PLT_OBJ_SEX_M*0x20, heapID );
+    GFL_ARC_CloseDataHandle( p_handle );	
+
+		GFL_STD_MemClear( &actdata, sizeof(BMPOAM_ACT_DATA) );
+		actdata.bmp	= p_wk->p_bmp;
+		actdata.x		= ICON_POS_SEX_X;
+		actdata.y		= ICON_POS_Y;
+		actdata.pltt_index	= p_wk->font_plt;
+		actdata.soft_pri		= 0;
+		actdata.setSerface	= CLSYS_DRAW_MAIN;
+		actdata.draw_type		= CLSYS_DRAW_MAIN;
+		actdata.bg_pri			= 0;
+    actdata.pal_offset  = 0;
+
+		p_wk->p_bmpoam_wk	  = BmpOam_ActorAdd( p_bmpoam_sys, &actdata );
+
+    { 
+      u16 msgID;
+      if( sex == PTL_SEX_FEMALE )
+      { 
+        msgID = NAMEIN_ICON_001;
+        color = PRINTSYS_LSB_Make( 3,4,0 );
+      }
+      else
+      { 
+        msgID = NAMEIN_ICON_000;
+        color = PRINTSYS_LSB_Make( 5,6,0 );
+      }
+      p_wk->p_strbuf  = GFL_MSG_CreateString( p_msg, msgID );
+    }
+
+    GFL_BMP_Clear( p_wk->p_bmp, 0 );	
+    PRINTSYS_PrintQueColor( p_que, p_wk->p_bmp, 0, 0, p_wk->p_strbuf, p_font, 
+        color );
+    p_wk->p_que = p_que;
+    p_wk->is_trans_req  = TRUE;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -4246,6 +4345,14 @@ static void ICON_Init( ICON_WORK *p_wk, ICON_TYPE type, u32 param1, u32 param2, 
 //-----------------------------------------------------------------------------
 static void ICON_Exit( ICON_WORK *p_wk )
 { 
+  if( p_wk->p_bmpoam_wk )
+  { 
+    GFL_CLGRP_PLTT_Release( p_wk->font_plt );
+    GFL_STR_DeleteBuffer( p_wk->p_strbuf );
+    BmpOam_ActorDel( p_wk->p_bmpoam_wk );
+    GFL_BMP_Delete( p_wk->p_bmp );
+  }
+
   //リソース破棄
   { 
     GFL_CLGRP_PLTT_Release( p_wk->plt );
@@ -4271,6 +4378,15 @@ static void ICON_Main( ICON_WORK *p_wk )
     SEQ_MAIN, //タッチ可能状態
     SEQ_ANM,  //アイコンアニメ
   };
+
+  if( p_wk->is_trans_req )
+  { 
+    if( !PRINTSYS_QUE_IsExistTarget( p_wk->p_que, p_wk->p_bmp ) )
+    { 
+      BmpOam_ActorBmpTrans( p_wk->p_bmpoam_wk );
+      p_wk->is_trans_req  = FALSE;
+    } 
+  }
 
   switch( p_wk->seq )
   { 
@@ -4507,6 +4623,17 @@ static void FinishInput( NAMEIN_WORK *p_wk )
         p_wk->p_param->cancel = TRUE;
       }
     }
+
+    //不許可文字ならば、強制キャンセル
+    { 
+      if( !STRINPUT_IsValidStr( &p_wk->strinput ) )
+      { 
+        GFL_STR_CopyBuffer( p_wk->p_param->strbuf, p_src_str );
+        p_wk->p_param->cancel = TRUE;
+      }
+    }
+
+
     GFL_STR_DeleteBuffer( p_src_str );
   }
 
@@ -4527,6 +4654,35 @@ static void FinishInput( NAMEIN_WORK *p_wk )
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  決定できるかどうか
+ *
+ *	@param	NAMEIN_WORK *p_wk   ワーク
+ *
+ *	@return TRUE決定可能  FALSE決定不可能
+ */
+//-----------------------------------------------------------------------------
+static BOOL CanDecide( NAMEIN_WORK *p_wk )
+{ 
+  if( p_wk->p_param->mode == NAMEIN_MYNAME ||
+      p_wk->p_param->mode == NAMEIN_RIVALNAME )
+  { 
+    //主人公名入力のときは、何も入れてないときは決定できない
+    if( STRINPUT_GetStrLength( &p_wk->strinput ) == 0 && STRINPUT_GetChangeStrLength( & p_wk->strinput) == 0 )
+    {
+      return FALSE;
+    }
+
+    //主人公な入力のときは、スペースのみのときは入力できない
+    if( !STRINPUT_IsValidStr( &p_wk->strinput ) )
+    { 
+      return FALSE;
+    }
+  }
+
+  return TRUE;
+}
 //=============================================================================
 /**
  *            SEQ
@@ -4815,6 +4971,15 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     input     = KEYBOARD_GetInput( &p_wk->keyboard, &code );
     is_shift  = KEYBOARD_IsShift( &p_wk->keyboard );
 
+    if( p_wk->is_illegal_msg == TRUE )
+    { 
+      if( input != KEYBOARD_INPUT_NONE )
+      { 
+        MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_000 + p_wk->p_param->mode );
+        p_wk->is_illegal_msg = FALSE;
+      }
+    }
+
     switch( input )
     { 
     case KEYBOARD_INPUT_STR:        //文字入力
@@ -4909,13 +5074,25 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       STRINPUT_DeleteChangeStr( &p_wk->strinput );
       break;
     case KEYBOARD_INPUT_EXIT:       //終了  
+      //変換文字列がなかったら終了
       if( STRINPUT_GetChangeStrLength( & p_wk->strinput) == 0 )
       { 
-        //変換文字列がなかったら終了
+        //主人公名入力のとき、決定できなかったら文字を出して戻る
+        if( !CanDecide( p_wk) )
+        { 
+          PMSND_PlaySE( NAMEIN_SE_DELETE_STR );
+          MSGWND_Print( &p_wk->msgwnd, NAMEIN_MSG_INFO_008 );
+          p_wk->is_illegal_msg  = TRUE;
+          break;
+        }
+
+        PMSND_PlaySE( NAMEIN_SE_DECIDE );
+
         //->以前は消してた
         //STRINPUT_DeleteChangeStr( &p_wk->strinput );
         //自分の名前とライバル名入力で、何もいれなかったら、
         //デフォルト名をいれる
+#if 0
         if( p_wk->p_param->mode == NAMEIN_MYNAME ||
             p_wk->p_param->mode == NAMEIN_RIVALNAME )
         { 
@@ -4932,6 +5109,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
             }
           }
         }
+#endif
 
         // 入力が終了したときの 文字列を確定する or キャンセルを確定する 処理
         FinishInput( p_wk );
@@ -4996,6 +5174,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   KEYBOARD_Main( &p_wk->keyboard, &p_wk->strinput );
   STRINPUT_Main( &p_wk->strinput );
   ICON_Main( &p_wk->icon );
+  MSGWND_PrintMain( &p_wk->msgwnd );
 }
 
 //----------------------------------------------------------------------------

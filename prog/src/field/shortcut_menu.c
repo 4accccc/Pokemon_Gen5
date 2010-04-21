@@ -141,6 +141,7 @@ enum
 ///	ショートカットメニューサウンド
 //=====================================
 #define SHORTCUTMENU_SND_SE_DECIDE  (SEQ_SE_DECIDE1)
+#define SHORTCUTMENU_SND_SE_CANCEL  (SEQ_SE_CANCEL1)
 #define SHORTCUTMENU_SND_SE_POPUP  (SEQ_SE_DECIDE1)
 
 
@@ -730,6 +731,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 		{	
 			//Xでもキャンセル
 			select	= BMPMENULIST_CANCEL;
+      PMSND_PlaySE( SHORTCUTMENU_SND_SE_CANCEL );
 		}
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
 		{
@@ -738,7 +740,9 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 			u16 pos;
 			BmpMenuList_DirectPosGet( p_wk->p_list, &pos );
 			select	= BmpMenuList_PosParamGet( p_wk->p_list, pos );
+      PMSND_PlaySE( SHORTCUTMENU_SND_SE_DECIDE );
 #else
+      PMSND_PlaySE( SHORTCUTMENU_SND_SE_CANCEL );
 			select	= BMPMENULIST_CANCEL;
 #endif
 		}

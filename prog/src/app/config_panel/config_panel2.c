@@ -635,6 +635,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
 static CONFIG_LIST SCROLL_GetSelect( const SCROLL_WORK *cp_wk );
 static void SCROLL_GetConfigParam( const SCROLL_WORK *cp_wk, CONFIG_PARAM *p_param );
 static void SCROLL_SetConfigParamWireless( SCROLL_WORK *p_wk, u16 param );
+static void SCROLL_SetConfigParamReport( SCROLL_WORK *p_wk, u16 param );
 static void Scroll_ChangePlt( SCROLL_WORK *p_wk, BOOL is_decide_draw );
 static void Scroll_Move( SCROLL_WORK *p_wk, int y_add );
 static void Scroll_MoveRange( SCROLL_WORK *p_wk, int y_add, int min, int max );
@@ -3079,11 +3080,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
   case UI_INPUT_TOUCH:
     UI_GetParam( cp_ui, UI_INPUT_PARAM_TRGPOS, &trg_pos );
 
-#ifdef SCROLL_MOVE_NONE
-    if(1)
-#else
     if( SCROLL_TOP_BAR_Y <= trg_pos.y && trg_pos.y <= SCROLL_APP_BAR_Y )
-#endif
     {
       //座標から選択への変換
       p_wk->select  = Scroll_PosToList( p_wk, &trg_pos );
@@ -3229,6 +3226,19 @@ static void SCROLL_GetConfigParam( const SCROLL_WORK *cp_wk, CONFIG_PARAM *p_par
 static void SCROLL_SetConfigParamWireless( SCROLL_WORK *p_wk, u16 param )
 { 
  // p_wk->now.param[CONFIG_LIST_WIRELESS] = param;
+  Scroll_ChangePlt( p_wk, p_wk->pre_decide_draw );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  コンフィグパラメータにレポート送信設定
+ *
+ *	@param	SCROLL_WORK *p_wk ワーク
+ *	@param	param             WIRELESSSAVE_OFF or WIRELESSSAVE_ON
+ */
+//-----------------------------------------------------------------------------
+static void SCROLL_SetConfigParamReport( SCROLL_WORK *p_wk, u16 param )
+{ 
+  p_wk->now.param[CONFIG_LIST_REPORT] = param;
   Scroll_ChangePlt( p_wk, p_wk->pre_decide_draw );
 }
 //----------------------------------------------------------------------------
@@ -4275,6 +4285,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   enum
   { 
     SEQ_MAIN,
+    SEQ_START_NOT_REPORT_MESSAGE,
     SEQ_START_NOT_WIRELESS_MESSAGE,
     SEQ_START_PARENTAL_CONTROL_MESSAGE,
     SEQ_START_NOT_DISCONNECT_MESSAGE,
@@ -4346,6 +4357,18 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
         }
       }
     }
+    //レポートできないメッセージ
+    { 
+      GAMEDATA *p_gdata = GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
+      SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_gdata );
+      BOOL is_over_write  = SaveControl_IsOverwritingOtherData( p_sv_ctrl );
+      CONFIG_PARAM config;
+      SCROLL_GetConfigParam( &p_wk->scroll, &config );
+      if( config.param[CONFIG_LIST_REPORT] == WIRELESSSAVE_OFF && is_over_write )
+      { 
+        *p_seq  = SEQ_START_NOT_REPORT_MESSAGE;
+      }
+    }
 #if 0
     //接続禁止メッセージ
     { 
@@ -4384,6 +4407,19 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       }
     }
 #endif
+    break;
+
+  case SEQ_START_NOT_REPORT_MESSAGE:
+    {
+      int speed;
+      CONFIG_PARAM config;
+
+      SCROLL_GetConfigParam( &p_wk->scroll, &config );
+      speed = CONFIGPARAM_GetMsgSpeed(&config);
+      CONFIRM_PrintMessage( &p_wk->confirm, mes_config_comment10, speed );
+      SCROLL_SetConfigParamReport( &p_wk->scroll, WIRELESSSAVE_ON );
+    }
+    *p_seq  = SEQ_END_MESSAGE;
     break;
 
   case SEQ_START_NOT_WIRELESS_MESSAGE:
