@@ -23,7 +23,7 @@
 //=============================================================================
 // ■定数
 //=============================================================================
-//#define DEBUG_PRINT_ENABLE    // デバッグ出力スイッチ
+//#define DEBUG_PRINT_ON    // デバッグ出力スイッチ
 #define DEBUG_PRINT_TARGET (3)// デバッグ出力先
 
 //#define ZERO_FRAME 
@@ -297,7 +297,7 @@ static ECAM_WORK* CreateWork( HEAPID heapID )
 
   work = GFL_HEAP_AllocMemory( heapID, sizeof(ECAM_WORK) );
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: CreateWork\n" );
 #endif
 
@@ -315,7 +315,7 @@ static void DeleteWork( ECAM_WORK* work )
 {
   GFL_HEAP_FreeMemory( work );
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: DeleteWork\n" );
 #endif
 }
@@ -337,7 +337,7 @@ static void InitWork( ECAM_WORK* work, FIELDMAP_WORK* fieldmap )
   work->camera   = FIELDMAP_GetFieldCamera( fieldmap );
   work->setupFlag = FALSE;
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: InitWork\n" );
 #endif
 }
@@ -357,7 +357,7 @@ static void CreateAnimeWork( ECAM_WORK* work, HEAPID heapID )
 
   work->animeWork = FCAM_ANIME_CreateWork( work->fieldmap );
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: CreateWork\n" );
 #endif
 }
@@ -376,7 +376,7 @@ static void DeleteAnimeWork( ECAM_WORK* work )
     work->animeWork = NULL;
   }
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: DeleteAnimeWork\n" );
 #endif
 }
@@ -727,7 +727,7 @@ static void LoadSpData( ECAM_LOAD_DATA* dest, EXIT_TYPE exitType )
   // 読み込み
   GFL_ARC_LoadData( dest, ARCID_ENTRANCE_CAMERA, datID );
 
-#ifdef DEBUG_PRINT_ENABLE
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: LoadSpData\n" );
   OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - exitType         = %d\n", dest->exitType );
   OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - pitch            = 0x%x\n", dest->pitch );
