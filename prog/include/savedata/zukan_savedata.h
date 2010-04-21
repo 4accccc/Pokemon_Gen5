@@ -102,9 +102,11 @@ extern u16 ZUKANSAVE_GetZukanPokeSeeCount( const ZUKAN_SAVEDATA * zs, HEAPID hea
 // 完成に必要なポケモンだけでカウントした値を取得
 extern u16 ZUKANSAVE_GetZenkokuGetCompCount(const ZUKAN_SAVEDATA * zs);
 extern u16 ZUKANSAVE_GetLocalGetCompCount( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
+extern u16 ZUKANSAVE_GetLocalSeeCompCount( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
 
 extern BOOL ZUKANSAVE_CheckZenkokuComp(const ZUKAN_SAVEDATA * zs);
-extern BOOL ZUKANSAVE_CheckLocalComp( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
+extern BOOL ZUKANSAVE_CheckLocalGetComp( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
+extern BOOL ZUKANSAVE_CheckLocalSeeComp( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
 
 extern BOOL ZUKANSAVE_GetPokeGetFlag(const ZUKAN_SAVEDATA * zs, u16 monsno);
 extern BOOL ZUKANSAVE_GetPokeSeeFlag(const ZUKAN_SAVEDATA * zs, u16 monsno);

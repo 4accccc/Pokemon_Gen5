@@ -307,6 +307,25 @@ static const ZUKAN_HYOUKA_TABLE GlobalGetTable[] = {
 };
 
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+static get_msgid( const ZUKAN_HYOUKA_TABLE * tbl, int count )
+{
+  int i;
+  for ( i = 0; ; i ++ )
+  {
+    if ( tbl[i].range == 0 )
+    { //番兵：万が一テーブルにない値が来た場合
+      return tbl[i].msg_id;
+    }
+    if ( count <= tbl[i].range )
+    { //範囲以下の場合、その対応メッセージIDを返す
+      return tbl[i].msg_id;
+    }
+  }
+  GF_ASSERT( 0 );
+  return tbl[0].msg_id;  //念のため
+}
+//--------------------------------------------------------------
 /**
  * @brief ずかん評価
  */
@@ -323,7 +342,6 @@ VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk )
   BOOL zenkoku_flag = ZUKANSAVE_GetZenkokuZukanFlag( zw );
   u32 count = 0;
   int i;
-  const ZUKAN_HYOUKA_TABLE * tbl;
 
   *ret_msgid = msg_hyouka_i01; //念のため
   *ret_count = 0;              //念のため
@@ -334,13 +352,21 @@ VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk )
     {
       //ちほうずかん（全国モード前）は「見た数」
       count = ZUKANSAVE_GetLocalPokeSeeCount( zw, heap_id );
-      tbl = LocalSeeTable;
+      if ( ZUKANSAVE_CheckLocalSeeComp( zw, heap_id ) == TRUE ) {
+        *ret_msgid = msg_hyouka_i09;
+      } else {
+        *ret_msgid = get_msgid( LocalSeeTable, count );
+      }
     }
     else
     {
       //ぜんこくずかんは「捕まえた数」
       count = ZUKANSAVE_GetZukanPokeGetCount( zw, heap_id );
-      tbl = GlobalGetTable;
+      if ( ZUKANSAVE_CheckZenkokuComp( zw ) == TRUE ) {
+        *ret_msgid = msg_hyouka_z17;
+      } else {
+        *ret_msgid = get_msgid( GlobalGetTable, count );
+      }
     }
     break;
 
@@ -348,28 +374,36 @@ VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk )
     {
       //ちほうずかん（全国モード後）は「捕まえた数」
       count = ZUKANSAVE_GetLocalPokeGetCount( zw, heap_id );
-      tbl = LocalGetTable;
+      if ( ZUKANSAVE_CheckLocalGetComp( zw, heap_id ) == TRUE ) {
+        *ret_msgid = msg_hyouka_i19;
+      } else {
+        *ret_msgid = get_msgid( LocalGetTable, count );
+      }
     }
     break;
+
   case SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE: //博士（娘）見た
     {
       //ちほうずかん（全国モード前）は「見た数」
       count = ZUKANSAVE_GetLocalPokeSeeCount( zw, heap_id );
-      tbl = LocalSeeTable;
+      if ( ZUKANSAVE_CheckLocalGetComp( zw, heap_id ) == TRUE ) {
+        *ret_msgid = msg_hyouka_i19;
+      } else {
+        *ret_msgid = get_msgid( LocalSeeTable, count );
+      }
     }
     break;
 
   case SCR_ZUKAN_HYOUKA_MODE_GLOBAL:  //博士（父）
-    if ( zenkoku_flag == TRUE )
+    GF_ASSERT( zenkoku_flag == TRUE );
     {
       //ぜんこくずかんは「捕まえた数」
       count = ZUKANSAVE_GetZukanPokeGetCount( zw, heap_id );
-      tbl = GlobalGetTable;
-    }
-    else
-    {
-      GF_ASSERT( 0 );
-      return VMCMD_RESULT_CONTINUE;
+      if ( ZUKANSAVE_CheckZenkokuComp( zw ) == TRUE ) {
+        *ret_msgid = msg_hyouka_z17;
+      } else {
+        *ret_msgid = get_msgid( GlobalGetTable, count );
+      }
     }
     break;
 
@@ -379,20 +413,6 @@ VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk )
   }
 
   *ret_count = count;
-
-  for ( i = 0; ; i ++ )
-  {
-    if ( tbl[i].range == 0 )
-    { //番兵：万が一テーブルにない値が来た場合
-      *ret_msgid = tbl[i].msg_id;
-      break;
-    }
-    if ( count <= tbl[i].range )
-    { //範囲以下の場合、その対応メッセージIDを返す
-      *ret_msgid = tbl[i].msg_id;
-      break;
-    }
-  }
   
   return VMCMD_RESULT_CONTINUE;
 }
@@ -418,7 +438,7 @@ VMCMD_RESULT EvCmdGetZukanComplete( VMHANDLE * core, void *wk )
     *ret_wk = ZUKANSAVE_CheckZenkokuComp( zw );
     break;
   case SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET:
-    *ret_wk = ZUKANSAVE_CheckLocalComp( zw, FIELDMAP_GetHeapID( fieldmap ) );
+    *ret_wk = ZUKANSAVE_CheckLocalSeeComp( zw, FIELDMAP_GetHeapID( fieldmap ) );
     break;
 
   case SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE:

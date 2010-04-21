@@ -856,12 +856,35 @@ BOOL ZUKANSAVE_CheckZenkokuComp(const ZUKAN_SAVEDATA * zw)
  *  @retval FALSE 未完成
  */
 //-----------------------------------------------------------------------------
-BOOL ZUKANSAVE_CheckLocalComp( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
+BOOL ZUKANSAVE_CheckLocalGetComp( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
 {
   u16 num;
 
   // 地方図鑑完成に必要なポケモンを何匹捕まえたか
   num = ZUKANSAVE_GetLocalGetCompCount( zw, heapID );
+
+  if( num >= ZUKANSAVE_LOCAL_COMP_NUM ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  地方図鑑が完成したかチェックする
+ *
+ *  @param  zw  図鑑ワーク
+ *
+ *  @retval TRUE  完成
+ *  @retval FALSE 未完成
+ */
+//-----------------------------------------------------------------------------
+BOOL ZUKANSAVE_CheckLocalSeeComp( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
+{
+  u16 num;
+
+  // 地方図鑑完成に必要なポケモンを何匹捕まえたか
+  num = ZUKANSAVE_GetLocalSeeCompCount( zw, heapID );
 
   if( num >= ZUKANSAVE_LOCAL_COMP_NUM ){
     return TRUE;
@@ -911,6 +934,37 @@ u16 ZUKANSAVE_GetLocalGetCompCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
 
   for( i=1; i<=ZUKANSAVE_ZENKOKU_MONSMAX; i++ ){
     if( ZUKANSAVE_GetPokeGetFlag( zw, i ) == TRUE ){
+      if( buf[i] != POKEPER_CHIHOU_NO_NONE ){
+        if( check_LocalCompMonsno( i ) == TRUE ){
+          num++;
+        }
+      }
+    }
+  }
+
+  GFL_HEAP_FreeMemory( buf );
+
+  return num;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  地方図鑑　完成に必要なポケモンを捕まえた数
+ *
+ *  @param  zw    図鑑ワーク
+ *  @return 完成に必要なポケモンを見つけた数
+ */
+//-----------------------------------------------------------------------------
+u16 ZUKANSAVE_GetLocalSeeCompCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID )
+{
+  u16 * buf;
+  u16 i;
+  u16 num=0;
+
+	buf = POKE_PERSONAL_GetZenkokuToChihouArray( heapID, NULL );
+
+  for( i=1; i<=ZUKANSAVE_ZENKOKU_MONSMAX; i++ ){
+    if( ZUKANSAVE_GetPokeSeeFlag( zw, i ) == TRUE ){
       if( buf[i] != POKEPER_CHIHOU_NO_NONE ){
         if( check_LocalCompMonsno( i ) == TRUE ){
           num++;
