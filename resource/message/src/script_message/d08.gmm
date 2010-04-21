@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T11:50:04"/>
+	<create user="matsumiya" host="W00224" date="2010-04-21T18:55:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -521,14 +521,14 @@
 あまり　感心できんが……▼</language>
 	</row>
 
-	<row id="msg_d08_white_00_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08_white_00_03" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてhakase1_00_06
 ・0＝主人公の名前</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『だいじょうぶ！▼
-チェレンも　[1:00:トレーナー名:0]も
+[1:00:トレーナー名:0]も　チェレンも
 すっごい　つよくて　プラズマだんを▽
 たおしたことも　あるんだから▼
 ……えーっと
@@ -538,7 +538,7 @@
 ボディガードを　できたら……▽
 いいなあ……　なんて▼</language>
 		<language name="JPN_KANJI" width="256">ベル『だいじょうぶ！▼
-チェレンも　[1:00:トレーナー名:0]も
+[1:00:トレーナー名:0]も　チェレンも
 すっごい　強くて　プラズマ団を▽
 倒したことも　あるんだから▼
 ……えーっと
@@ -556,12 +556,12 @@
 		<attribute name="キャラ指定">HAKASE1
 アララギ博士父</attribute>
 		<language name="JPN" width="256">アララギ『そうかい　ありがとうよ！
-そいつは　こころづよいな▼
+そいつは　こころづよい▼
 じゃあ　[1:00:トレーナー名:0]！
 おまえさん　たのむが　のぼってくれ▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『そうかい　ありがとうよ！
-そいつは　心強いな▼
-じゃあ　[1:00:トレーナー名:0]
+そいつは　心強い▼
+じゃあ　[1:00:トレーナー名:0]！
 おまえさん　頼むが　登っておくれ▼</language>
 	</row>
 
