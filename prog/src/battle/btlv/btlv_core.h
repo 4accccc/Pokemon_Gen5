@@ -210,6 +210,7 @@ extern void BTLV_UI_SelectAction_ForceQuit( BTLV_CORE* wk );
 
 extern void BTLV_UI_SelectWaza_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest );
 extern void  BTLV_UI_SelectRotationWaza_Start( BTLV_CORE* core, BTLV_ROTATION_WAZASEL_PARAM* selParam, BTL_ACTION_PARAM* dest );
+extern void BTLV_UI_SelectWaza_Restart( BTLV_CORE* core );
 extern BOOL BTLV_UI_SelectWaza_Wait( BTLV_CORE* core );
 extern void BTLV_UI_SelectWaza_ForceQuit( BTLV_CORE* wk );
 

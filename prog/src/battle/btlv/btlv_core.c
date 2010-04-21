@@ -108,7 +108,6 @@ static void mainproc_setup( BTLV_CORE* core, pCmdProc proc );
 static void mainproc_reset( BTLV_CORE* core );
 static BOOL mainproc_call( BTLV_CORE* core );
 static BOOL CmdProc_SelectWaza( BTLV_CORE* core, int* seq, void* workBufer );
-static BOOL CmdProc_SelectRotationWaza( BTLV_CORE* core, int* seq, void* workBufer );
 static void ForceQuitSelect_Common( BTLV_CORE* core );
 static BOOL subprocDamageEffect( int* seq, void* wk_adrs );
 static BOOL subprocMemberIn( int* seq, void* wk_adrs );
@@ -873,7 +872,7 @@ BtlAction BTLV_UI_SelectAction_Wait( BTLV_CORE* core )
 }
 //=============================================================================================
 /**
- * ワザ選択開始（ローテーション以外）
+ * ワザ選択開始（通常=ローテーション以外）
  *
  * @param   core
  * @param   bpp
@@ -885,25 +884,11 @@ void BTLV_UI_SelectWaza_Start( BTLV_CORE* core, const BTL_POKEPARAM* bpp, BTL_AC
   core->procPokeParam = bpp;
   core->procPokeID = BPP_GetID( bpp );
   core->actionParam = dest;
+
+  BTLV_SCD_StartWazaSelect( core->scrnD, core->procPokeParam, core->actionParam );
+
   mainproc_setup( core, CmdProc_SelectWaza );
 }
-static BOOL CmdProc_SelectWaza( BTLV_CORE* core, int* seq, void* workBufer )
-{
-  switch( *seq ){
-  case 0:
-    BTLV_SCD_StartWazaSelect( core->scrnD, core->procPokeParam, core->actionParam );
-    (*seq)++;
-    break;
-  case 1:
-    if( BTLV_SCD_WaitWazaSelect( core->scrnD ) )
-    {
-      return TRUE;
-    }
-    break;
-  }
-  return FALSE;
-}
-
 //=============================================================================================
 /**
  * ワザ選択開始（ローテーションバトル専用）
@@ -919,21 +904,30 @@ void  BTLV_UI_SelectRotationWaza_Start( BTLV_CORE* core, BTLV_ROTATION_WAZASEL_P
   core->procPokeID = BPP_GetID( core->procPokeParam );
   core->rotationSelParam = selParam;
   core->actionParam = dest;
-  mainproc_setup( core, CmdProc_SelectRotationWaza );
+
+  BTLV_SCD_StartRotationWazaSelect( core->scrnD, core->rotationSelParam, core->actionParam );
+
+  mainproc_setup( core, CmdProc_SelectWaza );
 }
-static BOOL CmdProc_SelectRotationWaza( BTLV_CORE* core, int* seq, void* workBufer )
+//=============================================================================================
+/**
+ * ワザ選択画面を保持したまま再開（通常／ローテーション共通）
+ *
+ * @param   core
+ */
+//=============================================================================================
+void BTLV_UI_SelectWaza_Restart( BTLV_CORE* core )
 {
-  switch( *seq ){
-  case 0:
-    BTLV_SCD_StartRotationWazaSelect( core->scrnD, core->rotationSelParam, core->actionParam );
-    (*seq)++;
-    break;
-  case 1:
-    if( BTLV_SCD_WaitWazaSelect( core->scrnD ) )
-    {
-      return TRUE;
-    }
-    break;
+  BTLV_SCD_RestartWazaSelect( core->scrnD );
+  mainproc_setup( core, CmdProc_SelectWaza );
+}
+/**
+ *  UI ワザ選択呼び出し（通常／ローテーション共通）
+ */
+static BOOL CmdProc_SelectWaza( BTLV_CORE* core, int* seq, void* workBufer )
+{
+  if( BTLV_SCD_WaitWazaSelect( core->scrnD ) ){
+    return TRUE;
   }
   return FALSE;
 }

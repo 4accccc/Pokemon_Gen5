@@ -105,6 +105,7 @@ struct _BTLV_SCD {
   BTL_PROC      subProcStack[ SUBPROC_STACK_DEPTH ];
   u32           subProcStackPtr;
   int           sub_seq;
+  BPFunc        wazaSelFunc;
 
   const BTL_POKEPARAM*  bpp;
   BTL_ACTION_PARAM*     destActionParam;
@@ -381,6 +382,8 @@ void BTLV_SCD_StartWazaSelect( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTIO
   wk->destActionParam = dest;
   wk->selActionResult = BTL_ACTION_NULL;
 
+  wk->wazaSelFunc = selectWaza_loop;
+
   spstack_push( wk, selectWaza_init, selectWaza_loop );
 }
 //=============================================================================================
@@ -398,16 +401,17 @@ void BTLV_SCD_StartRotationWazaSelect( BTLV_SCD* wk, BTLV_ROTATION_WAZASEL_PARAM
   wk->destActionParam = actionParam;
   wk->selActionResult = BTL_ACTION_NULL;
 
+  wk->wazaSelFunc = selectRotationWaza_loop;
+
   BTL_ACTION_SetNULL( wk->destActionParam );
   BTL_ACTION_SetNULL( &selParam->actRotation );
   BTL_ACTION_SetNULL( &selParam->actWaza );
 
   spstack_push( wk, selectRotationWaza_init, selectRotationWaza_loop );
 }
-
 //=============================================================================================
 /**
- * ワザ選択処理 終了待ち
+ * ワザ選択処理 終了待ち（通常／ローテーション共通）
  *
  * @param   wk
  *
@@ -418,6 +422,19 @@ BOOL BTLV_SCD_WaitWazaSelect( BTLV_SCD* wk )
 {
   return spstack_call( wk );
 }
+//=============================================================================================
+/**
+ * ワザ選択画面そのまま処理再開（通常／ローテーション共通）
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_SCD_RestartWazaSelect( BTLV_SCD* wk )
+{
+  spstack_push( wk, NULL, wk->wazaSelFunc );
+}
+
+
 void BTLV_SCD_StartWazaSelectDemoCapture( BTLV_SCD* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* dest )
 {
   wk->bpp = bpp;

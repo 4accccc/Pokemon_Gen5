@@ -4390,10 +4390,10 @@ const PMS_DATA* BTL_MAIN_GetClientPMSData( const BTL_MAIN_MODULE* wk, u8 clientI
   &&  BTL_MAIN_IsClientNPC(wk, clientID)
   ){
     if( playerResult == BTL_RESULT_WIN ){
-      return &wk->trainerParam[ clientID ].win_word;
+      return &wk->trainerParam[ clientID ].lose_word;
     }
     else{
-      return &wk->trainerParam[ clientID ].lose_word;
+      return &wk->trainerParam[ clientID ].win_word;
     }
   }
   return NULL;

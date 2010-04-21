@@ -1678,7 +1678,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
     SEQ_CHECK_WAZA_TARGET,
     SEQ_SELECT_TARGET_START,
     SEQ_SELECT_TARGET_WAIT,
-    SEQ_WAIT_MSG,
+    SEQ_WAIT_UNSEL_WAZA_MSG,
   };
 
   switch( *seq ){
@@ -1748,7 +1748,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
         if( is_unselectable_waza(wk, procPoke, procAction->fight.waza, &wk->strParam) )
         {
           selact_startMsg( wk, &wk->strParam );
-          (*seq) = SEQ_WAIT_MSG;
+          (*seq) = SEQ_WAIT_UNSEL_WAZA_MSG;
         }
         else
         {
@@ -1808,10 +1808,13 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
     }
     break;
 
-  case SEQ_WAIT_MSG:
-    if( BTLV_WaitMsg(wk->viewCore) ){
-      BTLV_UI_Restart( wk->viewCore );
-      ClientSubProc_Set( wk, selact_Root );
+  case SEQ_WAIT_UNSEL_WAZA_MSG:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+//      BTLV_UI_Restart( wk->viewCore );
+//      (*seq) = SEQ_START;
+      BTLV_UI_SelectWaza_Restart( wk->viewCore );
+      (*seq) = SEQ_SELECT_WAZA_WAIT;
     }
     break;
   }
