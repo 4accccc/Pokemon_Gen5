@@ -105,8 +105,7 @@ Property
 	#
 	# REMASTER VERSION: Mastering version
 	#
-	#RomVersion		0
-	RomVersion		1
+	RomVersion		0
 
 	#
 	# ROM SPEED TYPE: [MROM/1TROM/UNDEFINED]
