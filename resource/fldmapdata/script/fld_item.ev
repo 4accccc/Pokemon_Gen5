@@ -325,6 +325,8 @@ _EVENT_DATA ev_fld_item_312
 _EVENT_DATA ev_fld_item_313
 _EVENT_DATA ev_fld_item_314
 _EVENT_DATA ev_fld_item_315
+_EVENT_DATA ev_fld_item_316
+_EVENT_DATA ev_fld_item_317
 _EVENT_DATA ev_fld_item2
 _EVENT_DATA_END
 
@@ -2496,6 +2498,20 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_315
   _FLD_ITEM_EVENT ITEM_DEKAIKINNOTAMA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=R09R0202 X=11 Y=2 ITEM=ポイントアップ FLAG=316
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_316
+  _FLD_ITEM_EVENT ITEM_POINTOAPPU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=C07 X=168 Y=190 ITEM=ふしぎなアメ FLAG=317
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_317
+  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
 EVENT_END
 
 
