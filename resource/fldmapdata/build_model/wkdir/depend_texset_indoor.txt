@@ -2664,7 +2664,9 @@ DEP_TEXSET_IMD_INDOOR058 = \
 	$(SRCDIR)/stair_u01.imd \
 	$(SRCDIR)/stair_d01.imd \
 	$(SRCDIR)/table01.imd \
+	$(SRCDIR)/table03.imd \
 	$(SRCDIR)/chair01.imd \
+	$(SRCDIR)/chair03.imd \
 	$(SRCDIR)/shelf01.imd \
 	$(SRCDIR)/shelf02.imd \
 	$(SRCDIR)/shelf04.imd \
