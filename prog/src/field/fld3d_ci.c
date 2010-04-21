@@ -781,7 +781,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       rc2 = FALSE;
       rc3 = FALSE;
 #ifdef PM_DEBUG
-      if ( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ) DbgSlowMode = TRUE;
+      if ( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) DbgSlowMode = TRUE;
       else DbgSlowMode = FALSE;
 
       if ( DbgSlowMode )
