@@ -267,8 +267,7 @@ static const ZUKAN_HYOUKA_TABLE LocalSeeTable[] = {
   { 134, msg_hyouka_i06 },
   { 144, msg_hyouka_i07 },
   { 149, msg_hyouka_i08 },
-  { 150, msg_hyouka_i09 },
-  {   0, msg_hyouka_i00 },  //Sentinel
+  {   0, msg_hyouka_i08 },  //Sentinel
 };
 
 static const ZUKAN_HYOUKA_TABLE LocalGetTable[] = {
@@ -281,8 +280,7 @@ static const ZUKAN_HYOUKA_TABLE LocalGetTable[] = {
   { 134, msg_hyouka_i16 },
   { 144, msg_hyouka_i17 },
   { 149, msg_hyouka_i18 },
-  { 150, msg_hyouka_i19 },
-  {   0, msg_hyouka_i10 },  //Sentinel
+  {   0, msg_hyouka_i18 },  //Sentinel
 };
 
 static const ZUKAN_HYOUKA_TABLE GlobalGetTable[] = {
@@ -302,8 +300,7 @@ static const ZUKAN_HYOUKA_TABLE GlobalGetTable[] = {
   { 614, msg_hyouka_z14 },
   { 629, msg_hyouka_z15 },
   { 633, msg_hyouka_z16 },
-  { 634, msg_hyouka_z17 },
-  {   0, msg_hyouka_z01 },  //Sentinel
+  {   0, msg_hyouka_z16 },  //Sentinel
 };
 
 //--------------------------------------------------------------
@@ -347,29 +344,6 @@ VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk )
   *ret_count = 0;              //念のため
   switch ( mode )
   {
-  case SCR_ZUKAN_HYOUKA_MODE_AUTO:  //パソコン
-    if ( zenkoku_flag == FALSE )
-    {
-      //ちほうずかん（全国モード前）は「見た数」
-      count = ZUKANSAVE_GetLocalPokeSeeCount( zw, heap_id );
-      if ( ZUKANSAVE_CheckLocalSeeComp( zw, heap_id ) == TRUE ) {
-        *ret_msgid = msg_hyouka_i09;
-      } else {
-        *ret_msgid = get_msgid( LocalSeeTable, count );
-      }
-    }
-    else
-    {
-      //ぜんこくずかんは「捕まえた数」
-      count = ZUKANSAVE_GetZukanPokeGetCount( zw, heap_id );
-      if ( ZUKANSAVE_CheckZenkokuComp( zw ) == TRUE ) {
-        *ret_msgid = msg_hyouka_z17;
-      } else {
-        *ret_msgid = get_msgid( GlobalGetTable, count );
-      }
-    }
-    break;
-
   case SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET: //博士（娘）捕まえた
     {
       //ちほうずかん（全国モード後）は「捕まえた数」
@@ -386,8 +360,8 @@ VMCMD_RESULT EvCmdGetZukanHyouka( VMHANDLE * core, void *wk )
     {
       //ちほうずかん（全国モード前）は「見た数」
       count = ZUKANSAVE_GetLocalPokeSeeCount( zw, heap_id );
-      if ( ZUKANSAVE_CheckLocalGetComp( zw, heap_id ) == TRUE ) {
-        *ret_msgid = msg_hyouka_i19;
+      if ( ZUKANSAVE_CheckLocalSeeComp( zw, heap_id ) == TRUE ) {
+        *ret_msgid = msg_hyouka_i09;
       } else {
         *ret_msgid = get_msgid( LocalSeeTable, count );
       }
@@ -438,11 +412,14 @@ VMCMD_RESULT EvCmdGetZukanComplete( VMHANDLE * core, void *wk )
     *ret_wk = ZUKANSAVE_CheckZenkokuComp( zw );
     break;
   case SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET:
-    *ret_wk = ZUKANSAVE_CheckLocalSeeComp( zw, FIELDMAP_GetHeapID( fieldmap ) );
+    *ret_wk = ZUKANSAVE_CheckLocalGetComp( zw, FIELDMAP_GetHeapID( fieldmap ) );
     break;
 
   case SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE:
-  case SCR_ZUKAN_HYOUKA_MODE_AUTO:
+    *ret_wk = ZUKANSAVE_CheckLocalSeeComp( zw, FIELDMAP_GetHeapID( fieldmap ) );
+    break;
+
+  default:
     GF_ASSERT_MSG( 0, "対応していない評価モード\n" );
     break;
   }

@@ -45,7 +45,7 @@ ev_zukan_daughter:
       //地方図鑑・見たをコンプリート→捕まえた数
           _CALL sub_zukan_setup_local_get
           _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_02a )
-          _CALL sub_zuken_local_me_play
+          _CALL sub_zuken_local_get_me_play
           _ME_WAIT()
           _AB_KEYWAIT_MARK()
           _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
@@ -53,7 +53,7 @@ ev_zukan_daughter:
       //地方図鑑・見た数
           _CALL sub_zukan_setup_local_see
           _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_02 )
-          _CALL sub_zuken_local_me_play
+          _CALL sub_zuken_local_see_me_play
           _ME_WAIT()
           _AB_KEYWAIT_MARK()
           _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
@@ -108,10 +108,36 @@ sub_zukan_setup_local_get:
     _RET
 
 //--------------------------------------------------------------------
+//地方図鑑（見た）：ME再生
+//  IN  HYOUKA_COUNT
+//--------------------------------------------------------------------
+sub_zuken_local_see_me_play:
+    _GET_ZUKAN_COMPLETE( SCWK_ANSWER, SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE )
+    IF $SCWK_ANSWER == TRUE THEN
+        _ME_PLAY( SEQ_ME_HYOUKA6 )
+    ELSE
+        _CALL sub_zukan_local_count_me_play
+    ENDIF
+    _RET
+
+//--------------------------------------------------------------------
+//地方図鑑（捕まえた）：ME再生
+//  IN  HYOUKA_COUNT
+//--------------------------------------------------------------------
+sub_zuken_local_get_me_play:
+    _GET_ZUKAN_COMPLETE( SCWK_ANSWER, SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET )
+    IF $SCWK_ANSWER == TRUE THEN
+        _ME_PLAY( SEQ_ME_HYOUKA6 )
+    ELSE
+        _CALL sub_zukan_local_count_me_play
+    ENDIF
+    _RET
+
+//--------------------------------------------------------------------
 //地方図鑑：ME再生
 //  IN  HYOUKA_COUNT
 //--------------------------------------------------------------------
-sub_zuken_local_me_play:
+sub_zukan_local_count_me_play:
     IF $HYOUKA_COUNT <= 24 THEN
         _ME_PLAY( SEQ_ME_HYOUKA1 )
     ELSIF $HYOUKA_COUNT <= 59 THEN
@@ -122,11 +148,8 @@ sub_zuken_local_me_play:
         _ME_PLAY( SEQ_ME_HYOUKA4 )
     ELSIF $HYOUKA_COUNT <= 149 THEN
         _ME_PLAY( SEQ_ME_HYOUKA5 )
-    ELSIF $HYOUKA_COUNT <= 150 THEN
-        _ME_PLAY( SEQ_ME_HYOUKA6 )
     ELSE
-        //ありえない？
-        _ME_PLAY( SEQ_ME_HYOUKA6 )
+        _ME_PLAY( SEQ_ME_HYOUKA5 )
     ENDIF
     _RET
 
@@ -135,7 +158,11 @@ sub_zuken_local_me_play:
 //  IN  HYOUKA_COUNT
 //--------------------------------------------------------------------
 sub_zukan_global_me_play:
-    IF $HYOUKA_COUNT <= 159 THEN
+    _GET_ZUKAN_COMPLETE( SCWK_ANSWER, SCR_ZUKAN_HYOUKA_MODE_GLOBAL )
+    IF $SCWK_ANSWER == TRUE THEN
+        //コンプリートのときだけ
+        _ME_PLAY( SEQ_ME_HYOUKA6 )
+    ELSIF $HYOUKA_COUNT <= 159 THEN
         _ME_PLAY( SEQ_ME_HYOUKA1 )
     ELSIF $HYOUKA_COUNT <= 349 THEN
         _ME_PLAY( SEQ_ME_HYOUKA2 )
@@ -145,11 +172,8 @@ sub_zukan_global_me_play:
         _ME_PLAY( SEQ_ME_HYOUKA4 )
     ELSIF $HYOUKA_COUNT <= 633 THEN
         _ME_PLAY( SEQ_ME_HYOUKA5 )
-    ELSIF $HYOUKA_COUNT <= 634 THEN
-        _ME_PLAY( SEQ_ME_HYOUKA6 )
     ELSE
-        //ありえない？
-        _ME_PLAY( SEQ_ME_HYOUKA6 )
+        _ME_PLAY( SEQ_ME_HYOUKA5 )
     ENDIF
     _RET
 
@@ -304,7 +328,7 @@ ev_zukan_machine:
       //地方図鑑・見たをコンプリート→捕まえた数
           _CALL sub_zukan_setup_local_get
           _SYSWIN_MSG( msg_hyouka_hakase2_02a, POS_DOWN )
-          _CALL sub_zuken_local_me_play
+          _CALL sub_zuken_local_get_me_play
           _ME_WAIT()
           _AB_KEYWAIT_MARK()
           _SYSWIN_MSG( HYOUKA_MSGID, POS_DOWN )
@@ -312,7 +336,7 @@ ev_zukan_machine:
       //地方図鑑・見た数
           _CALL sub_zukan_setup_local_see
           _SYSWIN_MSG( msg_hyouka_hakase2_02, POS_DOWN )
-          _CALL sub_zuken_local_me_play
+          _CALL sub_zuken_local_see_me_play
           _ME_WAIT()
           _AB_KEYWAIT_MARK()
           _SYSWIN_MSG( HYOUKA_MSGID, POS_DOWN )
