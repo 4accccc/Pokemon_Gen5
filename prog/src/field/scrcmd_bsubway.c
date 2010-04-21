@@ -1135,6 +1135,24 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWSUB_STOP_SHAKE_TRAIN:
     BSUBWAY_GIMMICK_StopTrainShake( fieldmap );
     break;
+  //現在ラウンドのトレーナー番号を取得
+  //param0=マルチの際は0,1でペアトレーナー切り替え
+  case BSWSUB_GET_TRAINER_NUM_ROUND_NOW:
+    {
+      u16 round = BSUBWAY_PLAYDATA_GetRoundNo( playData );
+      
+      switch( play_mode ){
+      case BSWAY_MODE_MULTI:
+      case BSWAY_MODE_S_MULTI:
+      case BSWAY_MODE_COMM_MULTI:
+      case BSWAY_MODE_S_COMM_MULTI:
+        *ret_wk = bsw_scr->trainer[round*2+param0];
+        break;
+      default:
+        *ret_wk = bsw_scr->trainer[round];
+      }
+    }
+    break;
   //----ワーク依存　通信関連
   //通信開始
   case BSWSUB_COMM_START:
