@@ -523,6 +523,9 @@ static GFL_PROC_RESULT ShinkaDemoProcInit( GFL_PROC * proc, int * seq, void * pw
   // 初期化処理
   ShinkaDemo_Init( param, work );
 
+  // 今だけバトルステータスを使わないようにする
+  param->b_field  = TRUE;
+
   return GFL_PROC_RES_FINISH;
 }
 

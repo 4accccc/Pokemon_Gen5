@@ -203,9 +203,9 @@ PARTICLE_MANAGER;
 
 static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
 {
-  {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA01 },
-  {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA02 },
-  {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA03 },
+//  {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA01 },
+//  {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA02 },
+//  {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA03 },
   {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA04 },
   {  380,     PARTICLE_SPA_FILE_0,         DEMO_SINKA05 },
   {  380,     PARTICLE_SPA_FILE_0,         DEMO_SINKA06 },
