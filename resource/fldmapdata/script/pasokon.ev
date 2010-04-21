@@ -283,12 +283,22 @@ pc_record:
 
     SWITCH $select_pos
     CASE msg_pc_kiroku_window_01 THEN // はじめてのクリア
-      _CALL_DENDOU_PC_PROC( SCRCMD_DENDOU_PC_FIRST ) // 「はじめてのクリア」画面呼び出し
+      _CALL_DENDOU_PC_PROC( SCRCMD_DENDOU_PC_FIRST, SCWK_ANSWER ) // 「はじめてのクリア」画面呼び出し
+      // ×ボタン終了ならログアウト
+      IF $SCWK_ANSWER == 1 THEN
+        $log_out = TRUE
+        $loop = FALSE
+      ENDIF
 
     CASE msg_pc_kiroku_window_02 THEN // 殿堂入り
       // データが正常な場合
       IF $dendou_check == SCR_DENDOU_DATA_OK THEN
-        _CALL_DENDOU_PC_PROC( SCRCMD_DENDOU_PC_DENDOU ) // 殿堂入り画面呼び出し
+        _CALL_DENDOU_PC_PROC( SCRCMD_DENDOU_PC_DENDOU, SCWK_ANSWER ) // 殿堂入り画面呼び出し
+        // ×ボタン終了ならログアウト
+        IF $SCWK_ANSWER == 1 THEN
+          $log_out = TRUE
+          $loop = FALSE
+        ENDIF
       // データが正常でない場合
       ELSE
         _SYSWIN_MSG( msg_pc_on_04, POS_DOWN ) //「データが壊れています｣
