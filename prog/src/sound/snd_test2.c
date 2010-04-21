@@ -1060,10 +1060,10 @@ static BOOL checkTouchPanelEventTrg(SOUNDTEST_WORK* sw)
 
   case SNDTEST_TPEV_REVERB:
     if(sw->reverbFlag == FALSE){
-      PMSND_EnableCaptureReverb( 0x2000, 16000, 63, 0 );
+      //PMSND_EnableCaptureReverb( 0x2000, 16000, 63, 0 );
       sw->reverbFlag = TRUE;
     } else {
-      PMSND_DisableCaptureReverb();
+      //PMSND_DisableCaptureReverb();
       sw->reverbFlag = FALSE;
     }
     writeButton(sw, 0x07, 0x15, sw->reverbFlag );

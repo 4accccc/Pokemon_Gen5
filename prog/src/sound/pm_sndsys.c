@@ -66,6 +66,7 @@ typedef struct {
  * @brief リバーブ構造定義
  */
 //------------------------------------------------------------------
+#ifdef REVERB_USE
 typedef struct {
   BOOL  active;
   u32   samplingRate;
@@ -73,7 +74,7 @@ typedef struct {
   u16   depth;
   int   stopFrames;
 }PMSND_REVERB;
-
+#endif
 //------------------------------------------------------------------
 /**
  * @brief スレッド制御定義
@@ -120,12 +121,16 @@ typedef struct {
 #define TRACK_NUM (16)
 
 static u8                       PmSoundHeap[SOUND_HEAP_SIZE];
+#ifdef REVERB_USE
 static u8                       captureBuffer[ CAPTURE_BUFSIZE ] ATTRIBUTE_ALIGN(32);
+#endif
 static NNSSndArc                PmSoundArc;
 static NNSSndHeapHandle         PmSndHeapHandle;
 static u32                      bgmFadeCounter;
 static PMSND_FADESTATUS         fadeStatus;
+#ifdef REVERB_USE
 static PMSND_REVERB             reverbStatus;
+#endif
 //static SOUNDMAN_PRESET_HANDLE*  systemPresetHandle;
 static SOUNDMAN_PRESET_HANDLE*  usrPresetHandle1;
 static PMSND_SEPLAYER_DATA      sePlayerData[SEPLAYER_MAX];
@@ -239,8 +244,9 @@ static void PMSND_InitCore( BOOL systemSEload )
   SOUNDMAN_InitHierarchyPlayer(PLAYER_BGM);
 
   PMSND_InitSystemFadeBGM();
+#ifdef REVERB_USE
   PMSND_InitCaptureReverb();
-
+#endif
   // 排他制御用Mutex初期化(NNS_SndMainがスレッドセーフ設計ではないため)
   //OS_InitMutex(&sndTreadMutex);   
 
@@ -374,7 +380,8 @@ u32 PMSND_GetBGMplayerNoIdx( void )
  
 BOOL PMSND_CheckOnReverb( void )
 {
-  return reverbStatus.active;
+  //return reverbStatus.active;
+  return FALSE;		// 機能削除
 }
 
 u8 PMSND_GetBGMTrackVolume( int trackNo )
@@ -417,6 +424,7 @@ void PMSND_AllPlayerVolumeEnable( BOOL playerON, u32 bitmask )
   }
 }
 
+#ifdef REVERB_USE
 //============================================================================================
 /**
  *
@@ -493,6 +501,7 @@ void PMSND_ChangeCaptureReverb( u32 depth, u32 samplingRate, int volume, int sto
                   reverbStatus.volume, reverbStatus.stopFrames );
   }
 }
+#endif
 
 
 
