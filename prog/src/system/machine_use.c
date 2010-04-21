@@ -56,7 +56,7 @@ void MachineSystem_Init(void)
   if( OS_GetConsoleType() & (OS_CONSOLE_TWL|OS_CONSOLE_TWLDEBUGGER) )
   {
     //TWLŠg’£‹@”\‚ÌOFF
-  	SCFG_SetCpuSpeed( SCFG_CPU_SPEED_1X );
+  	SCFG_SetCpuSpeed( SCFG_CPU_SPEED_2X );
   	SCFG_SetVramExpanded( FALSE );
   }
 #endif
