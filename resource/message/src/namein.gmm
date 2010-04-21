@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-24T13:22:00"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-21T15:49:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -385,13 +385,22 @@
 伝えたい　メッセージは？</language>
 	</row>
 
-	<row id="NAMEIN_DEF_NAME_000">
+	<row id="NAMEIN_MSG_INFO_008">
+		<comment>主人公の名前入力で、
+文字が未入力の場合</comment>
+		<language name="JPN" width="256">もじが　えらばれていません
+なにか　えらんでください</language>
+		<language name="JPN_KANJI" width="256">文字が　選ばれていません
+何か　選んでください</language>
+	</row>
+
+	<row id="NAMEIN_DEF_NAME_000" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>主人公デフォルト名</comment>
 		<language name="JPN" width="256">ホワイト</language>
 		<language name="JPN_KANJI" width="256">ホワイト</language>
 	</row>
 
-	<row id="NAMEIN_DEF_NAME_001">
+	<row id="NAMEIN_DEF_NAME_001" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>主人公デフォルト名</comment>
 		<language name="JPN" width="256">ブラック</language>
 		<language name="JPN_KANJI" width="256">ブラック</language>
