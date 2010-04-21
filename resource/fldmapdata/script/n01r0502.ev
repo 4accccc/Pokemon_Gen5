@@ -1065,6 +1065,9 @@ ev_last:
 	//$WK_SCENE_N01R0502を５にして終了
 	$WK_SCENE_N01R0502 = 5
 
+	//チャンピオンの間のワークを２にする
+	$WK_SCENE_C09R0501 = 2
+
 	//ポケモンリーグのチャンピオンとライバル削除
 	_FLAG_SET( FV_C09R0501_RIVAL_01 )
 	_FLAG_SET( FV_C09R0501_CHAMPION_01 )

@@ -34,28 +34,52 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START		ev_reserve_d04r0601_event_01
 	
-	//ライバル：自機に気付いて近づく
-	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_4tikaduku )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_up )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
+	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_vanish )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_POS_CHANGE(D04R0601_RIVAL_01,14,3,24,DIR_UP )
+
+	_SE_PLAY(SEQ_SE_FLD_16)
+	
+	//ライバル：落ちてくる
+	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_drop )
+	_OBJ_ANIME_WAIT()
+
+	_SE_WAIT()
+
+	_SE_PLAY(SEQ_SE_FLD_17)
+	_SE_WAIT()
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_down )
 	_OBJ_ANIME_WAIT()
 		
-	//……　こっちだね
-	_PLAYER_NAME( 0 )
+	//やっと　おいついた
 	_BALLOONWIN_OBJMSG( msg_d04r0601_rival_01 , D04R0601_RIVAL_01 )
 	_BALLOONWIN_CLOSE()		
-		
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+
+	//カメラ操作　チャンピオンの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,950272,98327,1212416,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_WAIT_MOVE()
+	
+	_OBJ_ANIME( D04R0601_CHAMPION_01, anm_stay_down )
+	_BALLOONWIN_OBJMSG( msg_d04r0601_champion_00 , D04R0601_CHAMPION_01 )
+	_MSGWIN_CLOSE()
+	_OBJ_ANIME_WAIT()
+
 	//ライバル：自機を連れ歩き
-	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_4turearuki )
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_4turearuki )
+	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_turearuki )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turearuki )
+	_OBJ_ANIME( D04R0601_CHAMPION_01, anm_stay_right )
 	_OBJ_ANIME_WAIT()
 
 	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
 
-	_CAMERA_START()		//カメラ操作開始
-	_CAMERA_PURGE()		//カメラのバインドを解く
-	
 	//カメラ操作　ゲーチスの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,1015808,98327,1212416,30 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_MOVE( 9688,0,970752,1015808,98327,1212416,15 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()
 
 	//おそろいの　ようですね　わざわざ　こんなところまで
@@ -166,6 +190,8 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	_FLAG_RESET( FV_D03R0101_RIVAL_02 )
 	_FLAG_RESET( FV_D03R0101_CHAMPION_01 )
 	
+	_FLAG_SET(FV_D03R0101_RIVAL_01)
+	
 	//========================================/
 
 	//自機にカメラを戻す
@@ -185,135 +211,41 @@ EVENT_START		ev_reserve_d04r0601_event_01
 EVENT_END
 
 //--------------------------------------------------------------------
-//	ライバル：自機に近づく
+//	自機：一歩前へ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_rival_4tikaduku
-	_ANIME_DATA	AC_DIR_D,1
+_ANIME_LABEL	anm_player_move
 	_ANIME_DATA	AC_WAIT_16F,1
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-
-/*_ANIME_LABEL	anm_rival_5tikaduku
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_rival_6tikaduku
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_rival_7tikaduku
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_rival_8tikaduku
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_rival_9tikaduku
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	ACMD_END,0
-*/
-//--------------------------------------------------------------------
-//	ライバル：連れ歩き
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_rival_4turearuki
 	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
-/*
-_ANIME_LABEL	anm_rival_5turearuki
-	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	AC_WALK_R_8F,9
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_DIR_R,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_rival_6turearuki
-	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	AC_WALK_R_8F,8
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_DIR_R,1
+//--------------------------------------------------------------------
+//	ライバル：落ちてくる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_rival_drop
+	_ANIME_DATA	AC_VANISH_OFF,1
+	_ANIME_DATA	AC_WARP_DOWN,1
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_rival_7turearuki
-	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	AC_WALK_R_8F,7
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_DIR_R,1
+_ANIME_LABEL	anm_rival_vanish
+	_ANIME_DATA	AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_rival_8turearuki
-	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
-	
-_ANIME_LABEL	anm_rival_9turearuki
-	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	AC_WALK_R_8F,5
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
-*/
 //--------------------------------------------------------------------
 //	自機：連れ歩き
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_4turearuki
-	_ANIME_DATA	AC_WALK_U_8F,3
+_ANIME_LABEL	anm_player_turearuki
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
-/*
-_ANIME_LABEL	anm_player_5turearuki
-	_ANIME_DATA	AC_WAIT_16F,1
-	_ANIME_DATA	AC_WALK_D_8F,4
-	_ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_player_6turearuki
-	_ANIME_DATA	AC_WAIT_16F,1
-	_ANIME_DATA	AC_WALK_D_8F,4
-	_ANIME_DATA	AC_WALK_R_8F,7
+_ANIME_LABEL	anm_rival_turearuki
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_player_7turearuki
-	_ANIME_DATA	AC_WAIT_16F,1
-	_ANIME_DATA	AC_WALK_D_8F,4
-	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_player_8turearuki
-	_ANIME_DATA	AC_WAIT_16F,1
-	_ANIME_DATA	AC_WALK_D_8F,4
-	_ANIME_DATA	AC_WALK_R_8F,5
-	_ANIME_DATA	ACMD_END,0
-	
-_ANIME_LABEL	anm_player_9turearuki
-	_ANIME_DATA	AC_WAIT_16F,1
-	_ANIME_DATA	AC_WALK_D_8F,4
-	_ANIME_DATA	AC_WALK_R_8F,4
-	_ANIME_DATA	ACMD_END,0
-*/
 //--------------------------------------------------------------------
 //	ゲーチス：一歩前へ
 //--------------------------------------------------------------------

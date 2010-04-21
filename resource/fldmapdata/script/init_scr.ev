@@ -388,7 +388,7 @@ ev_first_gameclear:
   //チャンピオン部屋：復帰チャンピオンを表示
   _FLAG_RESET( FV_C09R0501_CHAMPION_02 )
   //復帰チャンピオン戦を有効
-  $WK_SCENE_C09R0501 = 2
+  $WK_SCENE_C09R0501 = 3
 
   //ポケモンリーグの封鎖を解除
   _FLAG_RESET( FE_C09_FORBIDDEN )

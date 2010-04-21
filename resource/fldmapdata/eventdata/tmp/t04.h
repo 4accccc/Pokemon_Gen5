@@ -15,6 +15,12 @@
 #define ZONE_T04_EVC_H
 
 #define T04_BOY3_01                        0
+#define T04_GIRL4_01                       1
+#define T04_MAN3_01                        2
+#define T04_TRAINERM_01                    3
+#define T04_MAID_01                        4
+#define T04_AMBRELLA_01                    5
+#define T04_BABYGIRL1_01                   6
 
 #endif //ZONE_T04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

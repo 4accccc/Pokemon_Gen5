@@ -37,6 +37,7 @@ _EVENT_DATA		ev_zone_c01gym0101
 _EVENT_DATA		ev_init_c01gym0101
 _EVENT_DATA		ev_c01gym0101_waitress_01
 _EVENT_DATA		ev_recover_c01gym0101
+_EVENT_DATA		ev_pos_c01gym0101_danpei_01
 _EVENT_DATA_END
 
 /************************************************************/
@@ -51,7 +52,7 @@ INIT_EVENT_START	ev_init_c01gym0101
 	IF $SCWK_TEMP0 == 0 THEN
 
 		//ジムリーダー演出イベント後ならば
-		IF $WK_SCENE_C01GYM0101 == 4 THEN
+		IF $WK_SCENE_C01GYM0101 == 5 THEN
 
 			//くさタイプ選択の場合
 			IF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_KUSA THEN
@@ -105,15 +106,17 @@ INIT_EVENT_START	ev_init_c01gym0101
 	CASE 0 THEN
 	
 	CASE 1 THEN
-		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
+	
 	CASE 2 THEN
 		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
-		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_02,24,0,34, DIR_DOWN )
 	CASE 3 THEN
 		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
 		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_02,24,0,34, DIR_DOWN )
-		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_03,24,0,34, DIR_DOWN )
 	CASE 4 THEN
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_02,24,0,34, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_03,24,0,34, DIR_DOWN )
+	CASE 5 THEN
 		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
 		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_02,24,0,34, DIR_DOWN )
 		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_03,24,0,34, DIR_DOWN )
@@ -137,7 +140,7 @@ INIT_EVENT_START	ev_recover_c01gym0101
 	IF $SCWK_TEMP0 == 0 THEN
 
 		//ジムリーダー演出イベント後ならば
-		IF $WK_SCENE_C01GYM0101 == 4 THEN
+		IF $WK_SCENE_C01GYM0101 == 5 THEN
 
 			//くさタイプ選択の場合
 			IF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_KUSA THEN
@@ -191,15 +194,17 @@ INIT_EVENT_START	ev_recover_c01gym0101
 	CASE 0 THEN
 	
 	CASE 1 THEN
-		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
+	
 	CASE 2 THEN
 		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
-		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_02,24,0,34, DIR_DOWN )
 	CASE 3 THEN
 		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
 		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_02,24,0,34, DIR_DOWN )
-		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_03,24,0,34, DIR_DOWN )
 	CASE 4 THEN
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_02,24,0,34, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_03,24,0,34, DIR_DOWN )
+	CASE 5 THEN
 		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
 		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_02,24,0,34, DIR_DOWN )
 		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_03,24,0,34, DIR_DOWN )
@@ -222,12 +227,14 @@ INIT_EVENT_START ev_zone_c01gym0101
 	CASE 0 THEN
  		$LWK_CURTAIN = SCR_GYM01_CURTAIN_NOTOPEN
 	CASE 1 THEN
-		$LWK_CURTAIN = SCR_GYM01_CURTAIN_OPEN_ONE
+ 		$LWK_CURTAIN = SCR_GYM01_CURTAIN_NOTOPEN
 	CASE 2 THEN
-		$LWK_CURTAIN = SCR_GYM01_CURTAIN_OPEN_TWO
+		$LWK_CURTAIN = SCR_GYM01_CURTAIN_OPEN_ONE
 	CASE 3 THEN
-		$LWK_CURTAIN = SCR_GYM01_CURTAIN_OPEN_THREE
+		$LWK_CURTAIN = SCR_GYM01_CURTAIN_OPEN_TWO
 	CASE 4 THEN
+		$LWK_CURTAIN = SCR_GYM01_CURTAIN_OPEN_THREE
+	CASE 5 THEN
 		$LWK_CURTAIN = SCR_GYM01_CURTAIN_OPEN_THREE
 	DEFAULT
 	//シーンワークに不定の値が入ったときの対処処理　ギミックを解いていることにする
@@ -250,7 +257,7 @@ EVENT_START		ev_c01gym0101_sunglasses_01
 	IF $SCWK_TEMP0 == 0 THEN
 	
 	//ジムバッジフラグが０の場合
-		_EASY_TALK_ITEM_EVENT(ITEM_OISIIMIZU, 1, FE_C01GYM_ITEM, msg_c01gym0101_glasses_01, msg_c01gym0101_glasses_02, msg_c01gym0101_glasses_02 )	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01gym0101_glasses_02 )
 	
 	//ジムバッジフラグがそれ以外の場合
 	ELSE
@@ -261,6 +268,93 @@ EVENT_START		ev_c01gym0101_sunglasses_01
 	ENDIF
 
 EVENT_END
+
+/**************************************************************/
+/*		ダンペイのPOSイベント								  */
+/**************************************************************/
+EVENT_START		ev_pos_c01gym0101_danpei_01
+{
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+	
+	_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+
+	SWITCH $LWK_POSX
+	CASE 11 THEN
+		_OBJ_ANIME( C01GYM0101_SUNGLASSES_01, anm_come_11 )
+	CASE 12 THEN
+		_OBJ_ANIME( C01GYM0101_SUNGLASSES_01, anm_come_12 )
+	CASE 13 THEN
+		_OBJ_ANIME( C01GYM0101_SUNGLASSES_01, anm_come_13 )
+	ENDSWITCH
+	
+	_OBJ_ANIME_WAIT()
+	
+	_BALLOONWIN_OBJMSG( msg_c01gym0101_glasses_01 , C01GYM0101_SUNGLASSES_01 )
+	_MSGWIN_CLOSE()
+	
+	_ITEM_EVENT_KEYWAIT( ITEM_OISIIMIZU, 1 )
+	
+	//========================================/
+	
+	_FLAG_SET(FE_C01GYM_ITEM)
+	
+	$WK_SCENE_C01GYM0101 = 1
+	
+	//========================================/
+
+	SWITCH $LWK_POSX
+	CASE 11 THEN
+		_OBJ_ANIME( C01GYM0101_SUNGLASSES_01, anm_return_11 )
+	CASE 12 THEN
+		_OBJ_ANIME( C01GYM0101_SUNGLASSES_01, anm_return_12 )
+	CASE 13 THEN
+		_OBJ_ANIME( C01GYM0101_SUNGLASSES_01, anm_return_13 )
+	ENDSWITCH
+	
+	_OBJ_ANIME_WAIT()
+
+}
+EVENT_END
+
+//--------------------------------------------------------------------
+//		ダンペイ・来る、戻るアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_come_11
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,4
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_come_12
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_come_13
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_return_11
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_return_12
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_return_13
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*     ポケモン像		      					              */
@@ -477,7 +571,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	//===========フラグワーク操作===========//
 	
 	//ジムリーダー演出イベント終了
-	$WK_SCENE_C01GYM0101 = 4
+	$WK_SCENE_C01GYM0101 = 5
 	
 	//======================================//
 
@@ -1136,7 +1230,7 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_01
 
 	//分岐：炎カーテンが開いている？
 	//開いていない場合
-	IF $WK_SCENE_C01GYM0101 == 0 THEN
+	IF $WK_SCENE_C01GYM0101 == 1 THEN
 		
 		//草ボタン１踏んだアニメーション
 		_GYM_ANTI_SW_ON(5)
@@ -1165,7 +1259,7 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_01
 	
 	//分岐：炎カーテンが開いている？
 	//開いていない場合
-	IF $WK_SCENE_C01GYM0101 == 0 THEN
+	IF $WK_SCENE_C01GYM0101 == 1 THEN
 		
 		//炎ボタン１踏んだアニメーション
 		_GYM_ANTI_SW_ON(3)
@@ -1194,7 +1288,7 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_01
 
 	//分岐：炎カーテンが開いている？
 	//開いていない場合
-	IF $WK_SCENE_C01GYM0101 == 0 THEN
+	IF $WK_SCENE_C01GYM0101 == 1 THEN
 	
 		//水ボタン１踏んだアニメーション
 		_GYM_ANTI_SW_ON(1)
@@ -1224,7 +1318,7 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_01
 		//===========フラグワーク操作===========//
 
 		//炎カーテン開く
-		$WK_SCENE_C01GYM0101 = 1
+		$WK_SCENE_C01GYM0101 = 2
 	
 		//======================================//
 			
@@ -1250,7 +1344,7 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_02
 	//分岐：水カーテンが開いている？
 	
 	//開いていない場合
-	IF $WK_SCENE_C01GYM0101 == 1 THEN
+	IF $WK_SCENE_C01GYM0101 == 2 THEN
 	
 		//草ボタン２踏んだアニメーション
 		_GYM_ANTI_SW_ON(2)
@@ -1280,7 +1374,7 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_02
 		//===========フラグワーク操作===========//
 	
 		//水カーテン開く
-		$WK_SCENE_C01GYM0101 = 2
+		$WK_SCENE_C01GYM0101 = 3
 		
 		//======================================//
 
@@ -1299,7 +1393,7 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_02
 	//分岐：水カーテンが開いている？
 	
 	//開いていない場合
-	IF $WK_SCENE_C01GYM0101 == 1 THEN
+	IF $WK_SCENE_C01GYM0101 == 2 THEN
 
 		//炎ボタン２踏んだアニメーション
 		_GYM_ANTI_SW_ON(6)
@@ -1329,7 +1423,7 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_02
 	//分岐：水カーテンが開いている？
 	
 	//開いていない場合
-	IF $WK_SCENE_C01GYM0101 == 1 THEN
+	IF $WK_SCENE_C01GYM0101 == 2 THEN
 		
 		//水ボタン２踏んだアニメーション
 		_GYM_ANTI_SW_ON(4)
@@ -1359,7 +1453,7 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_03
 	//分岐：草カーテンが開いている？
 	
 	//開いていない場合
-	IF $WK_SCENE_C01GYM0101 == 2 THEN
+	IF $WK_SCENE_C01GYM0101 == 3 THEN
 		
 		//草ボタン３踏んだアニメーション
 		_GYM_ANTI_SW_ON(8)
@@ -1389,7 +1483,7 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_03
 	//分岐：草カーテンが開いている？
 	
 	//開いていない場合
-	IF $WK_SCENE_C01GYM0101 == 2 THEN
+	IF $WK_SCENE_C01GYM0101 == 3 THEN
 	
 		//炎ボタン３踏んだアニメーション
 		_GYM_ANTI_SW_ON(0)
@@ -1419,7 +1513,7 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_03
 		//===========フラグワーク操作===========//
 	
 		//水カーテン開く
-		$WK_SCENE_C01GYM0101 = 3
+		$WK_SCENE_C01GYM0101 = 4
 	
 		//======================================//
 			
@@ -1438,7 +1532,7 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_03
 	//分岐：草カーテンが開いている？
 	
 	//開いていない場合
-	IF $WK_SCENE_C01GYM0101 == 2 THEN
+	IF $WK_SCENE_C01GYM0101 == 3 THEN
 
 		//水ボタン３踏んだアニメーション
 		_GYM_ANTI_SW_ON(7)
