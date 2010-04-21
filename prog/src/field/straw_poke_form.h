@@ -10,4 +10,4 @@
 #include "poke_tool/poke_tool.h"
 #include "gamesystem/gamedata_def.h"
 
-extern void SEASONPOKE_FORM_ChangeForm(GAMEDATA * gdata, POKEMON_PARAM *pp, const u8 inEnvor);
+extern void SEASONPOKE_FORM_ChangeForm(GAMEDATA * gdata, POKEMON_PARAM *pp, const u32 inEnvor);

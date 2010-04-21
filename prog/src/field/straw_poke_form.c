@@ -52,7 +52,7 @@ const u16 StrawFromTbl[BATT_BG_OBONID_MAX][2] = {
  * @param   inEnvor     êÌì¨Ç®ñ~ÇhÇc
  */
 //--------------------------------------------------------------
-void STRAW_POKE_FORM_ChangeForm(GAMEDATA * gdata, POKEMON_PARAM *pp, const u8 inEnvor)
+void STRAW_POKE_FORM_ChangeForm(GAMEDATA * gdata, POKEMON_PARAM *pp, const u32 inEnvor)
 {
   int i;
   int monsno;
