@@ -226,9 +226,6 @@ EVENT_START	ev_reserve_d08_hakase1_01
 	//D08R0101の博士とハチクを出現させる
 	_FLAG_RESET( FV_D08R0101_EVENT_01 )
 	
-	//リゾートデザートのライバル出現
-	_FLAG_RESET( FV_D03R0101_RIVAL_01 )
-	
 	//リュウラセンの塔のイベント終了フラグ	
 	_FLAG_SET(FE_D08_PACKAGEPOKE_END)
 
