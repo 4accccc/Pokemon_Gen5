@@ -107,6 +107,7 @@ typedef enum {
   WAZASICK_TELEKINESIS,     ///< テレキネシス
   WAZASICK_FREEFALL,        ///< フリーフォール
   WAZASICK_HITRATIO_UP,     ///< 命中率上昇
+  WAZASICK_AQUARING,        ///< アクアリング
 
   WAZASICK_MAX,
   WAZASICK_NULL = POKESICK_NULL,

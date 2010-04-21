@@ -3300,7 +3300,7 @@ static const BtlEventHandlerTable*  ADD_AquaRing( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_UNCATEGORIZE_WAZA, handler_AquaRing },            // 未分類ワザハンドラ
-    { BTL_EVENT_TURNCHECK_BEGIN,   handler_AquaRing_turnCheck },  // ターンチェック開始ハンドラ
+//    { BTL_EVENT_TURNCHECK_BEGIN,   handler_AquaRing_turnCheck },  // ターンチェック開始ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3308,14 +3308,20 @@ static const BtlEventHandlerTable*  ADD_AquaRing( u32* numElems )
 // 未分類ワザハンドラ
 static void handler_AquaRing( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( (work[ WORKIDX_STICK ] == 0)
-  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
-  ){
-    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( !BPP_CheckSick(bpp, WAZASICK_AQUARING) )
+    {
+      BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 
-    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_AquaRing );
-    HANDEX_STR_AddArg( &param->str, pokeID );
-    work[ WORKIDX_STICK ] = 1;
+      param->sickID = WAZASICK_AQUARING;
+      param->sickCont = BPP_SICKCONT_MakePermanent();
+      param->poke_cnt = 1;
+      param->pokeID[0] = pokeID;
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_AquaRing );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+    }
   }
 }
 // ターンチェック開始ハンドラ

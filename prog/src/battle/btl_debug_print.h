@@ -262,6 +262,7 @@ typedef enum {
   DBGSTR_SIDE_AddFirst,
   DBGSTR_SIDE_NoMoreAdd,
 
+  DBGSTR_SICK_ContProc,
 
   DBGSTR_POKESET_RemoveDeadPoke,
 

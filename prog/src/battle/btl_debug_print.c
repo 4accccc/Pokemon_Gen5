@@ -307,6 +307,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_EVAR_Pop:                 return "Pop! [%5d] SP=%d\n";
   case DBGSTR_DEADREC_Add:              return " 死亡記録 ターン%d件目 ... pokeID=%d\n";
   case DBGSTR_POKESET_RemoveDeadPoke:   return "ポケ(%d) 死んだのでセットから除外\n";
+  case DBGSTR_SICK_ContProc:            return "ポケ[%d], 状態異常[%d] が継続中...\n";
 
   case DBGSTR_SIDE_AddFirst:            return "サイドエフェクト初回登録 side=%d, eff=%d, pCnt=%p, cnt=%d\n";
   case DBGSTR_SIDE_NoMoreAdd:           return "サイドエフェクトこれ以上登録できない side=%d, eff=%d\n";

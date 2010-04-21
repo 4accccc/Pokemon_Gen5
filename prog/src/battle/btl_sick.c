@@ -13,12 +13,12 @@
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static void turncheck_contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick );
-static void contDamageCommon( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick, u16 damage );
 static int getWazaSickDamageStrID( WazaSick sick );
 static void cont_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void cont_NeWoHaru( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void cont_Bind( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
+static void cont_AquaRing( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void turncheck_cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick, BPP_SICK_CONT oldCont );
 static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
 static void cure_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
@@ -55,13 +55,14 @@ static void turncheck_contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 
       BTL_SVF_SickDamageRecall( flowWk, bpp, sick, damage );
     }
   }
-  BTL_Printf("ポケ[%d], 状態異常[%d] が継続中...\n", pokeID, sick);
+  BTL_N_Printf( DBGSTR_SICK_ContProc, pokeID, sick);
 
   switch( sick ){
   case WAZASICK_HOROBINOUTA:    cont_HorobiNoUta( flowWk, bpp, pokeID ); break;
   case WAZASICK_YADORIGI:       cont_Yadorigi( flowWk, bpp, pokeID ); break;
   case WAZASICK_NEWOHARU:       cont_NeWoHaru( flowWk, bpp, pokeID ); break;
   case WAZASICK_BIND:           cont_Bind( flowWk, bpp, pokeID ); break;
+  case WAZASICK_AQUARING:       cont_AquaRing( flowWk, bpp, pokeID ); break;
   }
 }
 //=============================================================================================
@@ -204,7 +205,23 @@ static void cont_Bind( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
     HANDEX_STR_AddArg( &param->exStr, waza );
   }
 }
+/**
+ *  アクアリング：継続
+ */
+static void cont_AquaRing( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
+{
+  if( !BPP_IsHPFull(bpp)
+  &&  !BPP_IsDead(bpp)
+  ){
+    BTL_HANDEX_PARAM_RECOVER_HP* param;
 
+    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
+    param->pokeID = pokeID;
+    param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_AquaRingRecover );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+  }
+}
 
 
 //----------------------------------------------------------------------------------------------
