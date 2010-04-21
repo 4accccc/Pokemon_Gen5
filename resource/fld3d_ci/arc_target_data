@@ -72,11 +72,14 @@ ARC_TARGET_DATA = \
 	rival_ci_b.nsbca \
 	rival_ci_b.nsbma \
 	rival_ci_b.nsbta \
-	plasma.spa \
-	rival_ci.nsbmd \
-	rival_ci.nsbca \
-	rival_ci.nsbma \
-	rival_ci.nsbta \
+	shiten_a.nsbmd \
+	shiten_b.nsbmd \
+	shiten_a.nsbca \
+	shiten_a.nsbma \
+	shiten_a.nsbva \
+	shiten_b.nsbca \
+	shiten_b.nsbta \
+	shiten_b.nsbva \
 	plasma_ci01a.nsbmd \
 	plasma_ci01b.nsbmd \
 	plasma_ci01a.nsbca \
