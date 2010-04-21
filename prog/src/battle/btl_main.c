@@ -10,6 +10,7 @@
 #include <gflib.h>
 
 #include "system/main.h"
+#include "sound/pm_sndsys.h"
 #include "tr_tool/trtype_def.h"
 #include "tr_tool/tr_tool.h"
 #include "poke_tool/natsuki.h"
@@ -366,8 +367,10 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
 
   switch( *seq ){
   case 0:
+    PMSND_FadeOutBGM( BTL_BGM_FADEOUT_FRAMES );
     wk->subSeq = 0;
     (*seq)++;
+    break;
     /* fallthru */
   case 1:
     if( wk->subSeq > -16 ){
@@ -379,16 +382,21 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
     }
     break;
   case 2:
-    BTL_Printf("クリーンアッププロセス１\n");
-    if( wk->ppIllusionZoroArc ){
-      GFL_HEAP_FreeMemory( wk->ppIllusionZoroArc );
-      wk->ppIllusionZoroArc = NULL;
+    if( !PMSND_CheckFadeOnBGM() )
+    {
+      BTL_Printf("クリーンアッププロセス１\n");
+
+      PMSND_StopBGM();
+      if( wk->ppIllusionZoroArc ){
+        GFL_HEAP_FreeMemory( wk->ppIllusionZoroArc );
+        wk->ppIllusionZoroArc = NULL;
+      }
+      BTL_CALC_QuitSys();
+      srcParty_Quit( wk );
+      trainerParam_Clear( wk );
+      setSubProcForClanup( &wk->subProc, wk, wk->setupParam );
+      (*seq)++;
     }
-    BTL_CALC_QuitSys();
-    srcParty_Quit( wk );
-    trainerParam_Clear( wk );
-    setSubProcForClanup( &wk->subProc, wk, wk->setupParam );
-    (*seq)++;
     break;
   case 3:
     if( BTL_UTIL_CallProc(&wk->subProc) )

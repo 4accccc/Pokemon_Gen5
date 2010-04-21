@@ -57,6 +57,8 @@ enum {
     BTL_ROTATION_FRONTPOS_NUM = 2,
     BTL_ROTATION_BACKPOS_NUM  = 1,
   #endif
+
+  BTL_BGM_FADEOUT_FRAMES = 60,
 };
 
 //--------------------------------------------------------------

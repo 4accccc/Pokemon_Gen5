@@ -1144,7 +1144,8 @@ static BOOL ServerMain_ExitBattle_ForCommPlayer( BTL_SERVER* server, int* seq )
     }
     break;
   case 2:
-    setMainProc( server, ServerMain_ExitBattle_KeyWait );
+//    setMainProc( server, ServerMain_ExitBattle_KeyWait );
+    return TRUE;
     break;
   }
   return FALSE;
@@ -1262,7 +1263,7 @@ static void print_client_action( const BTL_SVCL_ACTION* clientAction )
 static void print_que_info( BTL_SERVER_CMD_QUE* que, const char* caption )
 {
   #ifdef PM_DEBUG
-  // いわゆる赤箱上でないと文字列モジュールが正しく動かないので…
+  // TWL-DEBUGGER 上でないと文字列モジュールが正しく動かないので…
   if( OS_GetConsoleType() == OS_CONSOLE_TWLDEBUGGER )
   {
     OS_TPrintf("  * %s : %d bytes\n", caption, que->writePtr );

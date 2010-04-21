@@ -3371,10 +3371,14 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
     if( wk->procPokeIdx >= wk->numCoverPos )
     {
       u32 dataSize = (wk->numCoverPos + wk->actionAddCount) * sizeof(wk->actionParam[0]);
+
       wk->returnDataPtr = &(wk->actionParam[0]);
       wk->returnDataSize = dataSize;
       wk->actionAddCount = 0;
       return TRUE;
+    }
+    else{
+      (*seq) = SEQ_ROOT;
     }
     break;
 
@@ -4080,7 +4084,6 @@ static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
       switch( result ){
       case BTL_RESULT_WIN:
         strID = (fMulti)? BTL_STRID_STD_WinCommMulti : BTL_STRID_STD_WinComm;
-        PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo(wk->mainModule) );
         break;
       case BTL_RESULT_LOSE:
         strID = (fMulti)? BTL_STRID_STD_LoseCommMulti : BTL_STRID_STD_LoseComm;
@@ -4090,6 +4093,12 @@ static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
         break;
       default:
         return TRUE;
+      }
+
+      if( result == BTL_RESULT_WIN ){
+        PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo(wk->mainModule) );
+      }else{
+        PMSND_FadeOutBGM( BTL_BGM_FADEOUT_FRAMES );
       }
 
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, strID );

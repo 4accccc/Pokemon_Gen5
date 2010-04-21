@@ -5094,7 +5094,7 @@ static void handler_Koraeru_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     if( work[ WORKIDX_STICK] )
     {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_KORAERU_CAUSE, BPP_KORAE_WAZA_DEFENDER );
-      BTL_EVENT_FACTOR_Remove( myHandle );
+//      BTL_EVENT_FACTOR_Remove( myHandle );  // １ターン２回以上こらえるためにコメントアウト
     }
   }
 }
