@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-19T19:29:00"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T21:41:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="117" right="2004" bottom="745" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="116" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -320,12 +320,11 @@
 いえるのでしょうか？</language>
 	</row>
 
-	<row id="msg_r06r0101_assistantm3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r06r0101_assistantm3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・四季イベント
 ・はじめて話しかけたときのみ
-・次回はassistantm3_02から開始
-　→assistantm3_02
+・続けてassistantm3_01a
 
 ・0＝バンビーナ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
@@ -347,23 +346,7 @@
 じゆうじざいに　コントロールし▽
 きせつを　ちょうえつする
 きせきの　くうちょうシステムを▽
-かいはつ　どうにゅう　したんです！▼
-……と▼
-ここまでは　よいのですけれども
-われわれ　いそがしくて　ですね▼
-[1:01:ポケモン種族名:0]を　つかまえにいく
-タイミングが　なかなか　ないのです▼
-そこで　おねがい　なのですが
-[1:01:ポケモン種族名:0]を　つかまえて▽
-その　すがたが　かわったら▽
-ボクの　ところまで　つれてきて▽
-いただけませんか？▼
-あなたの　[1:01:ポケモン種族名:0]の
-すがたが　へんかしたら　われわれも▽
-[1:01:ポケモン種族名:0]を　つかまえて
-その　きせつの　すがたの▽
-[1:01:ポケモン種族名:0]を　ここで▽
-そだててみようと　おもうんです▼</language>
+かいはつ　どうにゅう　したんです！▼</language>
 		<language name="JPN_KANJI" width="256">我々は　季節に　寄る
 自然の　様々な　変化を▽
 研究しています▼
@@ -381,8 +364,36 @@
 自由自在に　コントロールし▽
 季節を　超越する
 奇跡の　空調システムを▽
-開発　導入したんです！▼
-……と▼
+開発　導入したんです！▼</language>
+	</row>
+
+	<row id="msg_r06r0101_assistantm3_01a" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・四季イベント
+・はじめて話しかけたときのみ
+・次回はassistantm3_02から開始
+　→assistantm3_02
+
+・0＝バンビーナ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+助手♂</attribute>
+		<language name="JPN" width="256">……と▼
+ここまでは　よいのですけれども
+われわれ　いそがしくて　ですね▼
+[1:01:ポケモン種族名:0]を　つかまえにいく
+タイミングが　なかなか　ないのです▼
+そこで　おねがい　なのですが
+[1:01:ポケモン種族名:0]を　つかまえて▽
+その　すがたが　かわったら▽
+ボクの　ところまで　つれてきて▽
+いただけませんか？▼
+あなたの　[1:01:ポケモン種族名:0]の
+すがたが　へんかしたら　われわれも▽
+[1:01:ポケモン種族名:0]を　つかまえて
+その　きせつの　すがたの▽
+[1:01:ポケモン種族名:0]を　ここで▽
+そだててみようと　おもうんです▼</language>
+		<language name="JPN_KANJI" width="256">……と▼
 ここまでは　よいのですけれども
 我々　忙しくて　ですね▼
 [1:01:ポケモン種族名:0]を　捕まえにいく
