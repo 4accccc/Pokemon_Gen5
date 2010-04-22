@@ -436,10 +436,12 @@ static int seq_ListScrollRepeat( BEACON_VIEW_PTR wk )
     ret = BeaconView_CheckInoutTouchUpDown( wk );
     if( ret != wk->scr_repeat_dir || ret == GFL_UI_TP_HIT_NONE ){
       wk->scr_repeat_end = TRUE;
+/*
       if( wk->scr_repeat_ct < 2 ){
         //点滅アニメリクエスト
         BeaconView_UpDownAnmSet( wk, wk->scr_repeat_dir );
       }
+*/
     }
     wk->scr_repeat_ct++;  //押しっぱなしカウンタアップ
   }
