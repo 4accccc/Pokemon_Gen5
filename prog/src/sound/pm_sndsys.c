@@ -81,9 +81,9 @@ typedef struct {
  */
 //------------------------------------------------------------------
 #ifdef PM_DEBUG
-int BGM_BLOCKLOAD_SIZE = 0x2000;
+int BGM_BLOCKLOAD_SIZE = 0x1e00;
 #else
-#define BGM_BLOCKLOAD_SIZE  (0x2000)
+#define BGM_BLOCKLOAD_SIZE  (0x1e00)
 #endif
 
 typedef enum {
