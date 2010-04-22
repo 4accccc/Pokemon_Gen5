@@ -258,6 +258,23 @@ ISS_3DS_SYS* ISS_SYS_GetIss3DSSystem( const ISS_SYS* system )
   return system->issB;
 }
 
+//------------------------------------------------------------------------------------
+/**
+ * @brief ダンジョン ISSシステムを取得する
+ *
+ * @param sys 取得対象システム
+ *
+ * @return ダンジョン ISSシステム
+ */
+//------------------------------------------------------------------------------------
+ISS_DUNGEON_SYS* ISS_SYS_GetIssDungeonSystem( const ISS_SYS* system )
+{
+  GF_ASSERT( system );
+  GF_ASSERT( system->issD );
+
+  return system->issD;
+}
+
 
 //=============================================================================
 // ■非公開関数

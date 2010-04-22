@@ -28,9 +28,8 @@ typedef struct _ISS_DUNGEON_SYS ISS_DUNGEON_SYS;
  * @return ダンジョンISSシステム
  */
 //----------------------------------------------------------------------------
-extern ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( GAMEDATA* gdata, 
-                                                PLAYER_WORK* player, 
-                                                HEAPID heap_id );
+extern ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( 
+    GAMEDATA* gdata, PLAYER_WORK* player, HEAPID heap_id );
 
 //----------------------------------------------------------------------------
 /**
@@ -88,3 +87,16 @@ extern void ISS_DUNGEON_SYS_Off( ISS_DUNGEON_SYS* sys );
  */
 //----------------------------------------------------------------------------
 extern BOOL ISS_DUNGEON_SYS_IsOn( const ISS_DUNGEON_SYS* sys );
+
+//----------------------------------------------------------------------------
+/**
+ * @breif 設定データの有無を調べる
+ *
+ * @param system
+ * @param zone_id
+ * 
+ * @return 指定したゾーンの設定データを持っている場合 TRUE
+ *         そうでなければ FALSE
+ */
+//----------------------------------------------------------------------------
+extern BOOL ISS_DUNGEON_SYS_IsActiveAt( const ISS_DUNGEON_SYS* system, u16 zone_id );

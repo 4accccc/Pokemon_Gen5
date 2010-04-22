@@ -11,6 +11,7 @@
 #include "gamesystem/gamedata_def.h"  // for GAMEDATA
 #include "iss_switch_sys.h"           // for ISS_SWITCH_SYS
 #include "iss_3ds_sys.h"              // for ISS_3DS_SYS
+#include "iss_dungeon_sys.h"          // for ISS_DUNGEON_SYS
 
 
 //===================================================================================
@@ -80,3 +81,14 @@ extern ISS_SWITCH_SYS* ISS_SYS_GetIssSwitchSystem( const ISS_SYS* sys );
  */
 //------------------------------------------------------------------------------------
 extern ISS_3DS_SYS* ISS_SYS_GetIss3DSSystem( const ISS_SYS* sys );
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ダンジョン ISSシステムを取得する
+ *
+ * @param sys 取得対象システム
+ *
+ * @return ダンジョン ISSシステム
+ */
+//------------------------------------------------------------------------------------
+extern ISS_DUNGEON_SYS* ISS_SYS_GetIssDungeonSystem( const ISS_SYS* sys );

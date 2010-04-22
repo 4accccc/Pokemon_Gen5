@@ -20,8 +20,8 @@
 //=========================================================================================
 // ■定数・マクロ
 //=========================================================================================
-// デバッグ出力スイッチ
-//#define DEBUG_PRINT_ON 
+#define DEBUG_PRINT_ON // デバッグ出力スイッチ
+#define PRINT_TARGET (1)
 
 // 無効なゾーンID
 #define INVALID_ZONE_ID (0xffff)
@@ -38,8 +38,8 @@
 //=========================================================================================
 // ■BGMパラメータ
 //=========================================================================================
-typedef struct
-{
+typedef struct {
+
 	u16 zoneID;	                // ゾーンID
   u16 padding;
 	s16 pitch[PMSEASON_TOTAL];	// ピッチ(キー)
@@ -63,9 +63,11 @@ static void SetBGMParam( const BGM_PARAM* param, u8 season )
 
   // テンポ
 	PMSND_SetStatusBGM( param->tempo[season], PMSND_NOEFFECT, 0 ); 
+
   // ピッチ
 	NNS_SndPlayerSetTrackPitch( 
       PMSND_GetBGMhandlePointer(), PITCH_TRACK_MASK, param->pitch[season] ); 
+
   // リバーブ
 #if 0 // 2010.04.20 リバーブは使用しない!!
   if( param->reverb[season] == 0 )
@@ -79,12 +81,11 @@ static void SetBGMParam( const BGM_PARAM* param, u8 season )
   }
 #endif
 
-	// DEBUG:
 #ifdef DEBUG_PRINT_ON
-	OBATA_Printf( "ISS-D: set BGM param\n" );
-	OBATA_Printf( "- pitch  = %d\n", param->pitch[season] );
-	OBATA_Printf( "- tempo  = %d\n", param->tempo[season] );
-	OBATA_Printf( "- reverb = %d\n", param->reverb[season] );
+	OS_TFPrintf( PRINT_TARGET, "ISS-D: set BGM param\n" );
+	OS_TFPrintf( PRINT_TARGET, "- pitch  = %d\n", param->pitch[season] );
+	OS_TFPrintf( PRINT_TARGET, "- tempo  = %d\n", param->tempo[season] );
+	OS_TFPrintf( PRINT_TARGET, "- reverb = %d\n", param->reverb[season] );
 #endif 
 }
 
@@ -92,8 +93,8 @@ static void SetBGMParam( const BGM_PARAM* param, u8 season )
 //=========================================================================================
 // ■ダンジョンISSデータセット
 //=========================================================================================
-typedef struct
-{
+typedef struct {
+
 	u8         dataNum;	 // データ数
 	BGM_PARAM*   param;	 // パラメータ配列
 
@@ -126,24 +127,23 @@ static BGM_PARAMSET* LoadParamset( HEAPID heap_id )
                          ARCID_ISS_DUNGEON, dat_id, 0, sizeof(BGM_PARAM) );
 	} 
 
-	// DEBUG:
 #ifdef DEBUG_PRINT_ON
-	OBATA_Printf( "ISS-D: load BGM parameters\n" );
-	OBATA_Printf( "- dataNum = %d\n", paramset->dataNum );
+	OS_TFPrintf( PRINT_TARGET, "ISS-D: load BGM parameters\n" );
+	OS_TFPrintf( PRINT_TARGET, "- dataNum = %d\n", paramset->dataNum );
 	for( dat_id=0; dat_id<paramset->dataNum; dat_id++ )
 	{ 
-		OBATA_Printf( "- data[%d].zoneID = %d\n", dat_id, paramset->param[dat_id].zoneID ); 
-		OBATA_Printf( "- data[%d].pitch  = %d, %d, %d, %d\n", dat_id, 
+		OS_TFPrintf( PRINT_TARGET, "- data[%d].zoneID = %d\n", dat_id, paramset->param[dat_id].zoneID ); 
+		OS_TFPrintf( PRINT_TARGET, "- data[%d].pitch  = %d, %d, %d, %d\n", dat_id, 
         paramset->param[dat_id].pitch[PMSEASON_SPRING], 
         paramset->param[dat_id].pitch[PMSEASON_SUMMER], 
         paramset->param[dat_id].pitch[PMSEASON_AUTUMN], 
         paramset->param[dat_id].pitch[PMSEASON_WINTER] );
-		OBATA_Printf( "- data[%d].tempo  = %d, %d, %d, %d\n", dat_id,
+		OS_TFPrintf( PRINT_TARGET, "- data[%d].tempo  = %d, %d, %d, %d\n", dat_id,
         paramset->param[dat_id].tempo[PMSEASON_SPRING], 
         paramset->param[dat_id].tempo[PMSEASON_SUMMER], 
         paramset->param[dat_id].tempo[PMSEASON_AUTUMN], 
         paramset->param[dat_id].tempo[PMSEASON_WINTER] );
-		OBATA_Printf( "- data[%d].reverb = %d, %d, %d, %d\n", dat_id,
+		OS_TFPrintf( PRINT_TARGET, "- data[%d].reverb = %d, %d, %d, %d\n", dat_id,
         paramset->param[dat_id].reverb[PMSEASON_SPRING], 
         paramset->param[dat_id].reverb[PMSEASON_SUMMER], 
         paramset->param[dat_id].reverb[PMSEASON_AUTUMN], 
@@ -195,9 +195,8 @@ static const BGM_PARAM* GetBGMParam( const BGM_PARAMSET* paramset, u16 zone_id )
 		}
 	}
 
-	// DEBUG: BGMパラメータ発見できず
 #ifdef DEBUG_PRINT_ON
-  OBATA_Printf( "ISS-D: BGM param is not found\n" );
+  OS_TFPrintf( PRINT_TARGET, "ISS-D: BGM param is not found\n" );
 #endif
 
 	return NULL;
@@ -217,11 +216,11 @@ struct _ISS_DUNGEON_SYS
   GAMEDATA*     gdata;  // ゲームデータ
 
 	// 起動状態
-	BOOL isActive; 
+	BOOL boot_flag; 
 
 	// ゾーンID
 	u16 currentZoneID;
-	u16    nextZoneID;
+	u16 nextZoneID;
 
 	// データ
 	BGM_PARAMSET* paramset;
@@ -270,7 +269,7 @@ ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( GAMEDATA* gdata,
 	sys->heapID        = heap_id;
   sys->gdata         = gdata;
 	sys->player        = player;
-	sys->isActive      = FALSE;
+	sys->boot_flag     = FALSE;
 	sys->currentZoneID = INVALID_ZONE_ID;
 	sys->nextZoneID    = INVALID_ZONE_ID;
 	sys->paramset      = LoadParamset( heap_id );
@@ -279,9 +278,8 @@ ISS_DUNGEON_SYS* ISS_DUNGEON_SYS_Create( GAMEDATA* gdata,
   // デフォルトパラメータ設定
   SetupDefaultParam( sys );
 
-	// DEBUG:
 #ifdef DEBUG_PRINT_ON
-	OBATA_Printf( "ISS-D: create\n" );
+	OS_TFPrintf( PRINT_TARGET, "ISS-D: create\n" );
 #endif
 
 	// 作成したダンジョンISSシステムを返す
@@ -306,9 +304,8 @@ void ISS_DUNGEON_SYS_Delete( ISS_DUNGEON_SYS* sys )
 	// 本体を破棄
 	GFL_HEAP_FreeMemory( sys );
 
-	// DEBUG:
 #ifdef DEBUG_PRINT_ON
-	OBATA_Printf( "ISS-D: delete\n" );
+	OS_TFPrintf( PRINT_TARGET, "ISS-D: delete\n" );
 #endif
 }
 
@@ -322,7 +319,7 @@ void ISS_DUNGEON_SYS_Delete( ISS_DUNGEON_SYS* sys )
 void ISS_DUNGEON_SYS_Update( ISS_DUNGEON_SYS* sys )
 {
   // 起動してない
-  if( !sys->isActive ){ return; }
+  if( !sys->boot_flag ){ return; }
 
   // 更新
   UpdateBGMParam( sys );
@@ -341,10 +338,9 @@ void ISS_DUNGEON_SYS_ZoneChange( ISS_DUNGEON_SYS* sys, u16 next_zone_id )
   // ゾーン更新
 	sys->nextZoneID = next_zone_id; 
 
-  // DEBUG:
 #ifdef DEBUG_PRINT_ON
-  OBATA_Printf( "ISS-D: zone change\n" );
-  OBATA_Printf( "- next zone id = %d\n", next_zone_id );
+  OS_TFPrintf( PRINT_TARGET, "ISS-D: zone change\n" );
+  OS_TFPrintf( PRINT_TARGET, "- next zone id = %d\n", next_zone_id );
 #endif
 }
 
@@ -383,7 +379,34 @@ void ISS_DUNGEON_SYS_Off( ISS_DUNGEON_SYS* sys )
 //-----------------------------------------------------------------------------------------
 BOOL ISS_DUNGEON_SYS_IsOn( const ISS_DUNGEON_SYS* sys )
 {
-	return sys->isActive; 
+	return sys->boot_flag; 
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @breif 設定データの有無を調べる
+ *
+ * @param system
+ * @param zone_id
+ * 
+ * @return 指定したゾーンの設定データを持っている場合 TRUE
+ *         そうでなければ FALSE
+ */
+//-----------------------------------------------------------------------------------------
+BOOL ISS_DUNGEON_SYS_IsActiveAt( const ISS_DUNGEON_SYS* system, u16 zone_id )
+{
+  // データを読み込んでいない
+  if( system->paramset == NULL ) {
+    GF_ASSERT(0);
+    return FALSE;
+  }
+
+  // 指定されたゾーンのデータは持っていない
+  if( GetBGMParam( system->paramset, zone_id ) == NULL ) {
+    return FALSE;
+  }
+
+  return TRUE;
 }
 
 
@@ -420,14 +443,13 @@ static void SetupDefaultParam( ISS_DUNGEON_SYS* sys )
 static void BootSystem( ISS_DUNGEON_SYS* sys )
 {
   // 起動済み
-  if( sys->isActive ){ return; }
+  if( sys->boot_flag ){ return; }
 
   // 起動
-	sys->isActive = TRUE;
+	sys->boot_flag = TRUE;
 
-  // DEBUG:
 #ifdef DEBUG_PRINT_ON
-  OBATA_Printf( "ISS-D: boot\n" );
+  OS_TFPrintf( PRINT_TARGET, "ISS-D: boot\n" );
 #endif
 }
 
@@ -441,17 +463,16 @@ static void BootSystem( ISS_DUNGEON_SYS* sys )
 static void StopSystem( ISS_DUNGEON_SYS* sys )
 {
   // 停止済み
-  if( !sys->isActive ){ return; }
+  if( !sys->boot_flag ){ return; }
 
 	// 停止
-	sys->isActive = FALSE;
+	sys->boot_flag = FALSE;
 
   // デフォルト・パラメータに戻す
   //SetBGMParam( &sys->defaultParam, 0 );
 
-  // DEBUG:
 #ifdef DEBUG_PRINT_ON
-  OBATA_Printf( "ISS-D: stop\n" );
+  OS_TFPrintf( PRINT_TARGET, "ISS-D: stop\n" );
 #endif
 }
 
@@ -465,7 +486,7 @@ static void StopSystem( ISS_DUNGEON_SYS* sys )
 static void UpdateBGMParam( ISS_DUNGEON_SYS* sys )
 {
 	// 起動していない
-  GF_ASSERT( sys->isActive );
+  GF_ASSERT( sys->boot_flag );
 
 	// ゾーン切り替えが通知された場合
 	if( sys->currentZoneID != sys->nextZoneID )
