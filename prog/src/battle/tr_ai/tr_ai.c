@@ -3482,8 +3482,9 @@ static  VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   int label = ( int )VMGetU32( vmh );
-  int *tbl_adrs = (int*)(vmh->adrs + ( int )VMGetU32( vmh ));
+  u16 *tbl_adrs = (u16*)(vmh->adrs + ( int )VMGetU32( vmh ));
   int ofs;
+  int index;
 
 #ifdef AI_SEQ_PRINT
   OS_TPrintf("AI_TABLE_JUMP\n");
@@ -3491,7 +3492,7 @@ static  VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
 
   switch( label ){
   case TABLE_JUMP_WAZASEQNO:
-    ofs = get_waza_param( taw, taw->waza_no, WAZAPARAM_AI_SEQNO );
+    ofs = get_waza_param( taw, taw->waza_no, WAZAPARAM_AI_SEQNO ) * 2;
 #ifdef AI_SEQ_PRINT
     OS_TPrintf("seqno:%d\n",ofs);
 #endif
@@ -3502,7 +3503,17 @@ static  VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
     break;
   }
 
-  VMCMD_Jump( vmh, (u8*)(tbl_adrs) + tbl_adrs[ ofs ] );
+#ifdef AI_SEQ_PRINT
+//  OS_TPrintf("tbl_adrs:%08x tbl_adrs[ ofs ]:%08x\nofs:%d tbl_adrs+tbl_adrs[ ofs ]:%08x\n", tbl_adrs,
+//                                                                                           tbl_adrs[ ofs ],
+//                                                                                           ofs,
+//                                                                                           tbl_adrs + tbl_adrs[ ofs ] );
+#endif
+
+  //4バイト境界を考慮してu16で取得したものをORしてます
+  index = tbl_adrs[ ofs ] | ( tbl_adrs[ ofs + 1 ] << 16 );
+
+  VMCMD_Jump( vmh, (u8*)(tbl_adrs) + index );
 
   return taw->vmcmd_result;
 }
