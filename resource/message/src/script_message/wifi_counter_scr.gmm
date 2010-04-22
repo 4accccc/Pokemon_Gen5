@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-04-21T00:40:57"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T19:03:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1443" top="464" right="2148" bottom="1092" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="427" top="615" right="946" bottom="1013" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="535"/>
 		<band id="3" index="4" style="0000" width="160"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -893,10 +893,10 @@ C-Gear入手前</comment>
 フリーと　レーティングの
 ２つの　モードが　あります[BE:01:ページ切り替え（クリア）]
 フリーモードは　だれでも
-参加　できます[BE:01:ページ切り替え（クリア）]
+参加できます[BE:01:ページ切り替え（クリア）]
 レーティングモードは
-ＰＧＬに　登録　しないと[BE:00:ページ切り替え（行送り）]
-参加　できません[BE:01:ページ切り替え（クリア）]</language>
+ＰＧＬに　登録しないと[BE:00:ページ切り替え（行送り）]
+参加できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_02_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -948,6 +948,7 @@ C-Gear入手前</comment>
 それぞれに
 せいげん　じかんが　あります[BE:01:ページ切り替え（クリア）]
 せいげん　じかんを　こえると
+ポケモンの　わざは[BE:00:ページ切り替え（行送り）]
 じどうで　えらばれることに　なるので[BE:00:ページ切り替え（行送り）]
 ごちゅうい　ください[BE:01:ページ切り替え（クリア）]
 なお　たいせんにも
@@ -967,14 +968,15 @@ C-Gear入手前</comment>
 それぞれに
 制限時間が　あります[BE:01:ページ切り替え（クリア）]
 制限時間を　こえると
+ポケモンの　技は[BE:00:ページ切り替え（行送り）]
 自動で　選ばれることに　なるので[BE:00:ページ切り替え（行送り）]
-ご注意　ください[BE:01:ページ切り替え（クリア）]
+ご注意ください[BE:01:ページ切り替え（クリア）]
 なお　対戦にも
 制限時間が　あります[BE:01:ページ切り替え（クリア）]
 制限時間を　こえても
 勝負が　つかない　ときは[BE:01:ページ切り替え（クリア）]
-判定により　勝ち負けを
-決定　します[BE:01:ページ切り替え（クリア）]</language>
+判定により　勝ち負けを　決定します[BE:01:ページ切り替え（クリア）]
+</language>
 	</row>
 
 	<row id="msg_rndmatch_02_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -997,8 +999,8 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">レーティングモードは
 ＰＧＬに　とうろくすると[BE:00:ページ切り替え（行送り）]
-えらぶことが　できる[BE:01:ページ切り替え（クリア）]
-たいせんを　きわめたい　ひとに
+えらぶことが　できる[BE:00:ページ切り替え（行送り）]
+たいせんを　きわめたい　ひとに[BE:00:ページ切り替え（行送り）]
 オススメの　モードです[BE:01:ページ切り替え（クリア）]
 つうしんを　つなげると
 レーティングの　ちかい　ひとと[BE:00:ページ切り替え（行送り）]
@@ -1022,15 +1024,15 @@ C-Gear入手前</comment>
 かえるときは　ごちゅうい　ください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">レーティングモードは
 ＰＧＬに　登録すると[BE:00:ページ切り替え（行送り）]
-選ぶことが　できる[BE:01:ページ切り替え（クリア）]
-対戦を　極めたい人に
+選ぶことが　できる[BE:00:ページ切り替え（行送り）]
+対戦を　極めたい人に[BE:00:ページ切り替え（行送り）]
 オススメの　モードです[BE:01:ページ切り替え（クリア）]
 通信を　つなげたとき
 レーティングの　近い人と[BE:00:ページ切り替え（行送り）]
 対戦しやすく　なります[BE:01:ページ切り替え（クリア）]
 レーティングは
 １５００から　スタートして[BE:00:ページ切り替え（行送り）]
-勝つと　上がり　負けると　下がります[BE:01:ページ切り替え（クリア）]
+勝つと　あがり　負けると　さがります[BE:01:ページ切り替え（クリア）]
 レーティングが　高いほど
 対戦が　強い　トレーナーに　なるので[BE:01:ページ切り替え（クリア）]
 ぜひ　挑戦して
@@ -1040,11 +1042,11 @@ C-Gear入手前</comment>
 レーティングモードの　成績は
 ＤＳ本体を　かえて[BE:01:ページ切り替え（クリア）]
 Ｗｉ－Ｆｉコネクションに
-接続　すると[BE:01:ページ切り替え（クリア）]
+接続すると[BE:01:ページ切り替え（クリア）]
 それまでの　成績が
 すべて　消えてしまいます[BE:01:ページ切り替え（クリア）]
 参加中　ＤＳ本体を
-替えるときは　ご注意　ください[BE:01:ページ切り替え（クリア）]</language>
+替えるときは　ご注意ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
