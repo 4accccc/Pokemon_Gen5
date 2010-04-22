@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-20T19:11:08"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T16:53:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="206"/>
+		<comment position="4" width="290"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1541" top="233" right="2246" bottom="861" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="173" right="2013" bottom="801" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,24 @@
 	</lock>
 
 
-	<row id="msg_c03p01_dancer1_00" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c03p01_leader3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・c03p15イベント後
+　GRIDX=4、GRIDZ=24似出現
+・pos起動（GRIDX=3^8、GRIDZ=21^23）
+・表示前に左右きょろきょろ
+・表示後、ジムのある側に倍速移動
+　画面外に消えると主人公操作可能に
+※c03のアーティを削除</comment>
+		<attribute name="キャラ指定">ジムリーダー
+アーティ</attribute>
+		<language name="JPN" width="256">アーティ『あっち！▼
+んぬん　ジムの　ほうこうだな！？▼</language>
+		<language name="JPN_KANJI" width="256">アーティ『あっち！▼
+んぬん　ジムの　方向だな！？▼</language>
+	</row>
+
+	<row id="msg_c03p01_dancer1_00" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♂
 ・初回会話
 ・はい/いいえの選択肢
