@@ -2895,6 +2895,8 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
   POKEMON_PASO_PARAM* ppp;
   int line;
 
+  pWork->pokemonGTSStateMode=TRUE;
+  
   if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){  // 最初にキーが入った場合
     if(GFL_UI_KEY_GetTrg()){
       pWork->padMode=TRUE;
@@ -3777,6 +3779,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
   POKEMON_TRADE_WORK* pWork = mywk;
   GFL_PROC_RESULT retCode = GFL_PROC_RES_FINISH;
   StateFunc* state = pWork->state;
+  int k;
 
   if(DEBUGWIN_IsActive()){
     return GFL_PROC_RES_CONTINUE;
@@ -3788,9 +3791,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
     pWork->anmCount++;
     retCode = GFL_PROC_RES_CONTINUE;
     for(k=0;k<2;k++){
-      if(pWork->pokemonGTSSeq[k]!=POKEMONTORADE_SEQ_NONE){
-        POKE_GTS_SelectStatusMessageDisp(pWork, k, pWork->pokemonGTSSeq[k]);
-      }
+      POKE_GTS_SelectStatusMessageDisp(pWork, k, pWork->pokemonGTSSeq[k]);
     }
   }
   //ポケモンセットをコール

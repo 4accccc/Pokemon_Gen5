@@ -447,10 +447,13 @@ void POKE_GTS_SelectStatusMessageDisp(POKEMON_TRADE_WORK* pWork, int side, BOOL 
   int frame = GFL_BG_FRAME3_M;
   GFL_BMPWIN* pWin;
 
+  if(pWork->pokemonGTSSeq[side]==POKEMONTORADE_SEQ_NONE){
+    return;
+  }
   if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
     return;
   }
-  
+
   if(pWork->StatusWin[side]){
     GFL_BMPWIN_Delete(pWork->StatusWin[side]);
   }
@@ -465,6 +468,9 @@ void POKE_GTS_SelectStatusMessageDisp(POKEMON_TRADE_WORK* pWork, int side, BOOL 
   GFL_BMPWIN_TransVramCharacter(pWin);
   GFL_BMPWIN_MakeScreen(pWin);
   GFL_BG_LoadScreenV_Req( frame );
+
+  pWork->pokemonGTSSeq[side]=POKEMONTORADE_SEQ_NONE;
+
 }
 
 
@@ -1574,6 +1580,10 @@ static void _Select6MessageInit8(POKEMON_TRADE_WORK* pWork)
       return;
     }
   }
+  pWork->pokemonGTSStateMode = FALSE;
+  pWork->pokemonGTSSeq[0]=POKEMONTORADE_SEQ_NONE;
+  pWork->pokemonGTSSeq[1]=POKEMONTORADE_SEQ_NONE;
+  
   if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEÉlÉSÇÃÇ›ã≠êßêÿífèàóù
     POKEMONTRADE_MESSAGE_CancelButtonDelete(pWork, TRUE, TRUE);  //
   }
@@ -1627,8 +1637,7 @@ static void _Select6MessageInit6(POKEMON_TRADE_WORK* pWork)
   
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     u8 flg = POKETRADE_FACTOR_TRI_SELECT;
-//    if( GFL_NET_SendData(pNet, _NETCMD_GTSSEQNO,1,&flg)){     ////@todo
-    if( GFL_NET_SendData(pNet, _NETCMD_CHANGEFACTOR,1,&flg)){     ////@todo
+    if( GFL_NET_SendData(pNet, _NETCMD_CHANGEFACTOR,1,&flg)){
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_B,WB_NET_TRADE_SERVICEID);
       _CHANGE_STATE(pWork, _Select6MessageInit8);
     }
