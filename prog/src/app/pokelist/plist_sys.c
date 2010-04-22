@@ -1611,12 +1611,29 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
       else
       {
         const BOOL canUse = STATUS_RCV_RecoverCheck( work->selectPokePara , work->plData->item , 0 , work->heapId );
+        OS_TFPrintf(2,"[%3d][%3d][%3d][%3d][%3d][%3d]:[%d]\n"
+              ,PP_Get(work->selectPokePara , ID_PARA_hp_exp , NULL )
+              ,PP_Get(work->selectPokePara , ID_PARA_pow_exp, NULL )
+              ,PP_Get(work->selectPokePara , ID_PARA_def_exp, NULL )
+              ,PP_Get(work->selectPokePara , ID_PARA_agi_exp, NULL )
+              ,PP_Get(work->selectPokePara , ID_PARA_spepow_exp , NULL )
+              ,PP_Get(work->selectPokePara , ID_PARA_spedef_exp , NULL )
+              ,canUse );
+
         if( canUse == TRUE )
         {
           const PLIST_ITEM_USE_TYPE useType = PLIST_ITEM_MSG_UseItemFunc( work );
           
           //実際に適用
           STATUS_RCV_Recover( work->selectPokePara , work->plData->item , 0 , work->plData->zone_id , work->heapId );
+          OS_TFPrintf(2,"[%3d][%3d][%3d][%3d][%3d][%3d]:[%d]\n"
+                ,PP_Get(work->selectPokePara , ID_PARA_hp_exp , NULL )
+                ,PP_Get(work->selectPokePara , ID_PARA_pow_exp, NULL )
+                ,PP_Get(work->selectPokePara , ID_PARA_def_exp, NULL )
+                ,PP_Get(work->selectPokePara , ID_PARA_agi_exp, NULL )
+                ,PP_Get(work->selectPokePara , ID_PARA_spepow_exp , NULL )
+                ,PP_Get(work->selectPokePara , ID_PARA_spedef_exp , NULL )
+                ,canUse );
           if( useType == ITEM_TYPE_LV_UP )
           {
             //レベルだけ表示HP変わるのでResetParamを使う
@@ -1828,22 +1845,31 @@ static void PLIST_InitMode_Menu( PLIST_WORK *work )
   switch( work->plData->mode )
   {
   case PL_MODE_FIELD:
-    itemArr[0] = PMIT_STATSU;
-    itemArr[1] = PMIT_HIDEN;
-    itemArr[2] = PMIT_CHANGE;
-    itemArr[3] = PMIT_ITEM;
-    itemArr[4] = PMIT_CLOSE;
-    itemArr[5] = PMIT_END_LIST;
-    
-    //メール持ってるかチェック
+    if( PLIST_PLATE_IsEgg( work , work->plateWork[work->pokeCursor] ) == TRUE )
     {
-      const u32 itemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
-      if( ITEM_CheckMail( itemNo ) == TRUE )
+      itemArr[0] = PMIT_STATSU;
+      itemArr[1] = PMIT_CHANGE;
+      itemArr[2] = PMIT_CLOSE;
+      itemArr[3] = PMIT_END_LIST;
+    }
+    else
+    {
+      itemArr[0] = PMIT_STATSU;
+      itemArr[1] = PMIT_HIDEN;
+      itemArr[2] = PMIT_CHANGE;
+      itemArr[3] = PMIT_ITEM;
+      itemArr[4] = PMIT_CLOSE;
+      itemArr[5] = PMIT_END_LIST;
+      
+      //メール持ってるかチェック
       {
-        itemArr[3] = PMIT_MAIL;
+        const u32 itemNo = PP_Get( work->selectPokePara , ID_PARA_item , NULL );
+        if( ITEM_CheckMail( itemNo ) == TRUE )
+        {
+          itemArr[3] = PMIT_MAIL;
+        }
       }
     }
-    
     PLIST_MSG_CreateWordSet( work , work->msgWork );
     PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
     
@@ -1851,7 +1877,6 @@ static void PLIST_InitMode_Menu( PLIST_WORK *work )
     PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_03_01 );
     
     PLIST_MSG_DeleteWordSet( work , work->msgWork );
-
     break;
   case PL_MODE_BATTLE:
   case PL_MODE_BATTLE_SUBWAY:

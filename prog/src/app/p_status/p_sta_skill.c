@@ -1564,9 +1564,13 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
     if( GFL_UI_KEY_GetTrg() )
     {
       work->ktst = GFL_APP_END_KEY;
-      skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
-      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
-      return TRUE;
+      if( skillWork->isForgetConfirm == FALSE )
+      {
+        skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
+        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+        //return TRUE;
+      }
+      //ここはカーソルが出っぱなしなので即反応がある
     }
   }
 
