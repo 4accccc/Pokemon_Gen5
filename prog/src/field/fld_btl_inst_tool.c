@@ -246,7 +246,7 @@ GMEVENT * FBI_TOOL_CreateTrainerBeforeMsgEvt(
         work->strBuf );
     
     GFL_MSG_Delete( msgdata );
-  }else{ //簡易会話 kari
+  }else{ //簡易会話 kari  @todo
     GFL_MSGDATA *msgdata;
     
     msgdata =  GFL_MSG_Create(
@@ -328,6 +328,8 @@ static u32 MakePokemonParam(
 static void GetPokemonRomData( BSUBWAY_POKEMON_ROM_DATA *prd, int index );
 static void * GetTrainerRomData( u16 tr_no, HEAPID heapID );
 
+static BOOL IsValidEasyTalk(BSUBWAY_TRAINER *bsw_trainer);
+
 //--------------------------------------------------------------
 /// アイテムテーブル
 //  持ちポケモン決定はランダムでしているが無限ループ防止のため、
@@ -353,92 +355,92 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
 {
   u16 play_mode;
   BATTLE_SETUP_PARAM *dst;
-  BTL_FIELD_SITUATION sit;
+//  BTL_FIELD_SITUATION sit;
   GAMEDATA *gameData = GAMESYSTEM_GetGameData( gsys );
   
   play_mode = inPlayMode;
   dst = BATTLE_PARAM_Create( HEAPID_PROC );
   
   {
-    BTL_FIELD_SITUATION_Init( &sit );
+//    BTL_FIELD_SITUATION_Init( &sit );
+    BTL_FIELD_SITUATION_SetFromFieldStatus( &dst->fieldSituation, gameData, GAMESYSTEM_GetFieldMapWork(gsys) );
     
     dst->netHandle = NULL;
     dst->commMode = BTL_COMM_NONE;
     dst->commPos = 0;
-    
-    dst->multiMode = 0;
+    dst->multiMode = BTL_MULTIMODE_NONE;
     dst->recBuffer = NULL;
     dst->fRecordPlay = FALSE;
-    
-    switch( play_mode ){
-    case BSWAY_PLAYMODE_MULTI:
-    case BSWAY_PLAYMODE_S_MULTI:
-      dst->multiMode = 1;
-      break;
-    case BSWAY_PLAYMODE_COMM_MULTI:
-    case BSWAY_PLAYMODE_S_COMM_MULTI:
-      dst->multiMode = 1;
-      dst->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
-      dst->commMode = BTL_COMM_DS;
-      
-      if( GFL_NET_SystemGetCurrentID() == GFL_NET_NO_PARENTMACHINE ){
-        dst->commPos = 0;
-      }else{
-        dst->commPos = 1;
-      }
-      break;
-    }
-    
+    dst->competitor = BTL_COMPETITOR_SUBWAY;
+
+    dst->commNetIDBit = 0xffff;
+
     dst->party[BTL_CLIENT_PLAYER] = NULL;
     dst->party[BTL_CLIENT_ENEMY1] = NULL;
     dst->party[BTL_CLIENT_PARTNER] = NULL;
     dst->party[BTL_CLIENT_ENEMY2] = NULL;
-
-    dst->competitor = BTL_COMPETITOR_TRAINER;
 
     dst->playerStatus[BTL_CLIENT_PLAYER] = GAMEDATA_GetMyStatus( gameData );
     dst->playerStatus[BTL_CLIENT_ENEMY1] = NULL;
     dst->playerStatus[BTL_CLIENT_PARTNER] = NULL;
     dst->playerStatus[BTL_CLIENT_ENEMY2] = NULL;
 
+    dst->gameData     = gameData;
     dst->itemData     = GAMEDATA_GetMyItem( gameData );
     dst->bagCursor    = GAMEDATA_GetBagCursor( gameData );
     dst->zukanData    = GAMEDATA_GetZukanSave( gameData );
-//  dst->commSupport  = GAMEDATA_GetCommPlayerSupportPtr( gameData );
-    dst->commSupport  = NULL;
     dst->recordData   = GAMEDATA_GetRecordPtr( gameData );
-
+  
     {
       SAVE_CONTROL_WORK *saveCtrl = GAMEDATA_GetSaveControlWork( gameData );
       dst->configData = SaveData_GetConfig( saveCtrl );
     }
-
-    MI_CpuCopy8( &sit, &dst->fieldSituation, sizeof(BTL_FIELD_SITUATION) );
-
-    dst->musicDefault = SEQ_BGM_VS_NORAPOKE;
+  
+    //dst->commSupport  = GAMEDATA_GetCommPlayerSupportPtr( gdata );
+    dst->commSupport  = NULL;
+  
+    dst->musicDefault = SEQ_BGM_VS_SUBWAY_TRAINER;
     dst->musicPinch = SEQ_BGM_BATTLEPINCH;
     dst->result = BTL_RESULT_WIN;
-  }
   
-  BTL_SETUP_SetSubwayMode( dst );
-
-  switch( play_mode )
-  {
-  case BSWAY_MODE_SINGLE:
-  case BSWAY_MODE_WIFI:
-  case BSWAY_MODE_S_SINGLE:
+    BTL_SETUP_AllocRecBuffer( dst, HEAPID_PROC );
+  
     dst->rule = BTL_RULE_SINGLE;
-    break;
-  case BSWAY_MODE_DOUBLE:
-  case BSWAY_MODE_MULTI:
-  case BSWAY_MODE_COMM_MULTI:
-  case BSWAY_MODE_S_DOUBLE:
-  case BSWAY_MODE_S_MULTI:
-  case BSWAY_MODE_S_COMM_MULTI:
-    dst->rule = BTL_RULE_DOUBLE;
-    break;
-  default:
-    GF_ASSERT( 0 );
+
+    switch( play_mode ){
+    case BSWAY_MODE_DOUBLE:
+    case BSWAY_MODE_S_DOUBLE:
+    case BSWAY_MODE_MULTI:
+    case BSWAY_MODE_S_MULTI:
+    case BSWAY_MODE_COMM_MULTI:
+    case BSWAY_MODE_S_COMM_MULTI:
+      dst->rule = BTL_RULE_DOUBLE;
+      break;
+    }
+  
+    switch( play_mode ){
+    case BSWAY_MODE_MULTI:
+    case BSWAY_MODE_S_MULTI:
+      dst->multiMode = BTL_MULTIMODE_PA_AA;
+      break;
+    case BSWAY_PLAYMODE_COMM_MULTI:
+    case BSWAY_PLAYMODE_S_COMM_MULTI:
+      dst->multiMode = BTL_MULTIMODE_PP_AA;
+      dst->netHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      dst->commMode = BTL_COMM_DS;
+      dst->competitor = BTL_COMPETITOR_COMM;
+//    dst->playerStatus[BTL_CLIENT_PARTNER] = &wk->mystatus_fr;
+     
+      if( GFL_NET_SystemGetCurrentID() == GFL_NET_NO_PARENTMACHINE ){
+        dst->commPos = 0;
+      }else{
+        dst->commPos = 2;
+      }
+      break;
+    }
+
+//    MI_CpuCopy8( &sit, &dst->fieldSituation, sizeof(BTL_FIELD_SITUATION) );
+
   }
   
   { //トレーナーデータ確保
@@ -462,17 +464,18 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
     //name
     GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
 
-    NOZOMU_Printf( "base %x,%x,%x\n",L'で',L'ば',L'ぐ' );
-    NOZOMU_Printf( "raw %x,%x,%x,%x\n",bsw_trainer->name[0],bsw_trainer->name[1],bsw_trainer->name[2],bsw_trainer->name[3] );
-    NOZOMU_Printf( "adr%x\n",tr_data->name );
 
-
-    //win word
-    pd = (PMS_DATA*)bsw_trainer->win_word;
-    tr_data->win_word = *pd;
-
-    pd = (PMS_DATA*)bsw_trainer->lose_word;
-    tr_data->lose_word = *pd;
+    //win word   @todo
+    PMSDAT_Clear( &tr_data->win_word );
+    PMSDAT_Clear( &tr_data->lose_word );
+    //サブウェイパートナーデータの勝ち負けデータが０クリアされているならば、
+    //トレーナーデータのワークもクリアして渡す
+    //０クリアされてなければ、簡易会話が入っているとみなし、データをセットする
+    if ( IsValidEasyTalk(bsw_trainer) )   //簡易会話ある
+    {
+      tr_data->win_word = *(PMS_DATA*)bsw_trainer->win_word;
+      tr_data->lose_word = *(PMS_DATA*)bsw_trainer->lose_word;
+    }
 
     //敵ポケモンセット
     {
@@ -1109,6 +1112,25 @@ static BOOL SetBSWayPokemonParam(
     poke->poke_rnd[i] = set_rnd_no[i];
   }
   return ret;
+}
+
+//--------------------------------------------------------------
+/**
+ * 簡易会話存在するか？
+ * @param bsw_trainer   バトルサブウェイトレーナーデータ
+ * @retval  TRUE  ある　FFALSE ない
+ */
+//--------------------------------------------------------------
+static BOOL IsValidEasyTalk(BSUBWAY_TRAINER *bsw_trainer)
+{
+  int i;
+  for (i=0;i<4;i++)
+  {
+    if ( bsw_trainer->win_word[i] != 0 ) return TRUE;
+    if ( bsw_trainer->lose_word[i] != 0 ) return TRUE;
+  }
+
+  return FALSE;
 }
 
 
