@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-04-02T15:18:20" source="d0stair_d01.mb"/>
+	<create user="fuchino" host="W00152" date="2010-04-22T16:39:15" source="d0stair_d01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2010-04-02T15:18:20" source="d0stair_d01.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-04-22T16:39:15" source="d0stair_d01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -40,9 +40,9 @@
 		<bitmap size="512">
 			9dee 0bbb 0000 0000 0000 0000 9bbb 5eed
 			5555 bbbb bbbb bbbb bbbb bbbb bbbb 5555
-			99de 0c99 0000 0000 0000 0000 999c 5de9
+			99de 0c99 0000 0000 0000 0000 999c 5ee9
 			5b55 bb99 bbbb bbbb bbbb bbbb 5bbb 555b
-			99ed a99d 0000 0000 0000 a000 9d99 5ed9
+			99ee a99d 0000 0000 0000 a000 9d99 5ed9
 			9455 9999 9999 9999 9999 9999 9999 5554
 			d9de a9dd 0000 0000 0000 a000 ddd9 5e99
 			8855 8888 8888 8888 8888 8888 8888 5558
@@ -72,35 +72,35 @@
 			5555 bb55 bbbb bbbb bbbb bbbb 555b 5555
 			6c79 0666 0000 0000 0000 0000 c766 5d7c
 			5555 bbb5 bbbb bbbb bbbb bbbb 55bb 5555
-			77cd 6777 0000 0000 0000 6600 7cc7 5ed7
+			77cd 6777 0000 0000 0000 6600 7cc7 5dd7
 			5555 999b 9999 9999 9999 9999 5b99 5555
-			9a79 77c9 0006 0000 0000 7760 999c 5ebc
+			9a79 77c9 0006 0000 0000 7760 999c 5dbc
 			5555 4499 4444 4444 4444 4444 b994 5555
-			f9a9 7c9d 0067 0000 0000 c776 dfd9 5ec9
+			f9a9 7c9d 0067 0000 0000 c776 dfd9 5dc9
 			b555 8884 8888 8888 8888 8888 4888 5555
-			fd9e a9df 0067 6666 0066 9c76 dffd 5dc9
+			fd9d a9df 0067 6666 0066 9c76 dffd 5dc9
 			4555 8888 8888 8888 8888 8888 8888 5555
-			ddde cdff 666a 7777 0677 99c6 dfff 5dc9
+			dd9d cdff 666a 7777 0677 99c6 dfff 5dc9
 			8555 8888 8888 8888 8888 8888 8888 5555
-			ddde cddd 767c aaaa 677a 99c6 9ddd 5ec9
+			dd9d cddd 767c aaaa 677a 99c6 9ddd 5dc9
 			3555 3444 bbb3 bbbb bbbb 33bb 3444 5555
-			dd9d cddd a67c ddd9 67a9 9976 9999 5ecb
+			dd9d cddd a67c ddd9 67a9 9976 9999 5dcb
 			5555 bb55 bbbb bbbb bbbb bbbb 555b 5555
-			d9de c9dd b67c dddd 7a9d 9c76 b999 5dbc
+			d9dd c9dd b67c dddd 7a9d 9c76 b999 5dbc
 			5555 bbb5 bbbb bbbb bbbb bbbb 55bb 5555
-			9dde cc99 b67c dddd 79dd c766 5bbb 5ed5
+			9ddd cc99 b67c dddd 79dd c766 5bbb 5dd5
 			9b55 9999 9999 9999 9999 9999 9999 555b
-			9ded ccc9 b67a dddd 79dd 7767 5555 5ddb
+			9dde ccc9 b67a dddd 79dd 7767 5555 5ddb
 			4955 4444 4444 4444 4444 4444 4444 5559
-			c9de accc 5667 ddd9 79dd 7667 bb55 5ded
+			c9de accc 5667 ddd9 79dd 7667 bb55 5edd
 			8455 8888 8888 8888 8888 8888 8888 5554
-			ddee 7ab9 6776 dd95 7c9d 56c6 ddbc 5ede
+			ddde 7ab9 6776 dd95 7c9d 56c6 ddbc 5edd
 			8455 8888 8888 8888 8888 8888 8888 5554
-			ddde 7aab 5aa7 5557 7c55 c7bc dedb 5eed
+			ddee 7aab 5aa7 5557 7c55 c7bc dddb 5eed
 			4355 8888 3334 8843 3488 8433 4888 5553
-			bded bbbb aaab bbaa cbbb dbdb eded 5dde
+			deee bbbd aaab bbaa cbbb dbdb dddd 5eee
 			5555 bbbb bbbb bbbb bbbb bbbb 5bbb 5555
-			deee edee dedd bbbb edbb edee deee 5ede
+			eeee dddd dddd bbbb ddbb dddd eeed 5eee
 			5555 bbbb bbbb bbbb bbbb bbbb 5bbb 5555
 		</bitmap>
 	</tex_image>
