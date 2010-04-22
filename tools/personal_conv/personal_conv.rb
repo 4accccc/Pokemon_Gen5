@@ -1202,7 +1202,7 @@ end
           flag_cnt = 32
           machine_index += 1
         end
-      }
+      } 
 
       waza_oshie = split_data[ PARA::WAZA_OSHIE ].split(//)
       oshie[ 0 ] = 0
@@ -1213,7 +1213,7 @@ end
 
       waza_oshie.size.times {|i|
         if waza_oshie[ i ] == "Åú"
-          
+          oshie[ i ] |= flag
         end
         flag = flag << 1
         flag_cnt -= 1
