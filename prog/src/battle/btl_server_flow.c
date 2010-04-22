@@ -3457,7 +3457,10 @@ static u8 ShooterEff_ItemCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
   u8 pokeID = BPP_GetID( bpp );
 
   BTL_N_Printf( DBGSTR_SVFL_UseItemCall, BPP_GetID(bpp) );
-  scproc_CheckItemReaction( wk, bpp );
+
+//  scproc_CheckItemReaction( wk, bpp );
+  scproc_UseItemEquip( wk, bpp );
+
   // @todo 使えるアイテムが無ければ「しかし効果が無かった」とか必要？
   return TRUE;
 }
