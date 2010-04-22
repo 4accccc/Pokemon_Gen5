@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-03-24T13:44:10"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T12:19:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1280" top="190" right="1985" bottom="818" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="207" right="1985" bottom="835" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -470,7 +470,7 @@
 		<comment>各ゲート共通メッセージ
 ・一言cM/日曜</comment>
 		<language name="JPN" width="256">◇「イッシュさいだいの　ショッピングエリア　なんでもそろう！」ショッピングモール　ナイン</language>
-		<language name="JPN_KANJI" width="256">◇「イッシュ最大の　ショッピングエリア　なんでも揃う！」ショッピングモール　ナイン</language>
+		<language name="JPN_KANJI" width="256">◇「イッシュ最大の　ショッピングエリア　なんでもそろう！」ショッピングモール　ナイン</language>
 	</row>
 
 	<row id="msg_gate_c1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
@@ -980,7 +980,7 @@
 	<row id="msg_gate_tg_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>tgについての地域情報4</comment>
 		<language name="JPN" width="256">◇まちからみえる もりでは なぞのポケモンの もくげきじょうほうがあります</language>
-		<language name="JPN_KANJI" width="256">◇街から見える森では　謎のポケモンの　目撃情報があります</language>
+		<language name="JPN_KANJI" width="256">◇街から見える森では　なぞのポケモンの　目撃情報があります</language>
 	</row>
 
 	<row id="msg_gate_tg_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1022,7 +1022,7 @@
 	<row id="msg_gate_st_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>stについての地域情報2</comment>
 		<language name="JPN" width="256">◇サザナミタウンに べっそうをもつことは あこがれとされています</language>
-		<language name="JPN_KANJI" width="256">◇サザナミタウンに　別荘をもつことは　憧れとされています</language>
+		<language name="JPN_KANJI" width="256">◇サザナミタウンに　別荘をもつことは　あこがれとされています</language>
 	</row>
 
 	<row id="msg_gate_st_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1040,7 +1040,7 @@
 	<row id="msg_gate_st_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>stについての地域情報5</comment>
 		<language name="JPN" width="256">◇おおきながけが サザナミタウンぜんたいを きわだたせています</language>
-		<language name="JPN_KANJI" width="256">◇大きな崖が　サザナミタウン全体を　際立たせています</language>
+		<language name="JPN_KANJI" width="256">◇大きながけが　サザナミタウン全体を　際立たせています</language>
 	</row>
 
 	<row id="msg_gate_st_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1088,7 +1088,7 @@
 	<row id="msg_gate_wf_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>wfについての地域情報4</comment>
 		<language name="JPN" width="256">◇しぜんにひかれた　ブリーダーが　おおくあつまっています</language>
-		<language name="JPN_KANJI" width="256">◇自然に惹かれた　ブリーダーが　多く集まっています</language>
+		<language name="JPN_KANJI" width="256">◇自然にひかれた　ブリーダーが　多く集まっています</language>
 	</row>
 
 	<row id="msg_gate_wf_05" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1190,7 +1190,7 @@
 	<row id="msg_gate_d3_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報3</comment>
 		<language name="JPN" width="256">◇さばくぜんたいに　ふきわたる　すなあらしに　ごちゅういください</language>
-		<language name="JPN_KANJI" width="256">◇砂漠全体に　吹き渡る　砂嵐に　ご注意ください</language>
+		<language name="JPN_KANJI" width="256">◇砂漠全体に　吹き渡る　砂あらしに　ご注意ください</language>
 	</row>
 
 	<row id="msg_gate_d3_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -1226,7 +1226,7 @@
 	<row id="msg_gate_d3_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報9</comment>
 		<language name="JPN" width="256">◇さばくぜんたいに　ふきわたる　すなあらしに　ごちゅういください</language>
-		<language name="JPN_KANJI" width="256">◇砂漠全体に　吹き渡る　砂嵐に　ご注意ください</language>
+		<language name="JPN_KANJI" width="256">◇砂漠全体に　吹き渡る　砂あらしに　ご注意ください</language>
 	</row>
 
 	<row id="msg_gate_d8_01" back-color="#404040,,,#404040,,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
