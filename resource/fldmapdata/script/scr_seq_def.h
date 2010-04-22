@@ -7842,10 +7842,10 @@
 
 /**
  * @def _BEACON_SET_REQ_SUBWAY_WIN
- * @brief バトルサブウェイトロフィー取得ビーコンセット
+ * @brief バトルサブウェイラウンド数ビーコンセット
  */
-#define _BEACON_SET_REQ_SUBWAY_WIN( win_num ) \
-    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_SUBWAY_WIN, win_num 
+#define _BEACON_SET_REQ_SUBWAY_WIN( round_num ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_SUBWAY_WIN, round_num 
 
 /**
  * @def _BEACON_SET_REQ_SUBWAY_TROPHY_GET
