@@ -238,7 +238,27 @@ void NET_DEV_Main(void)
 
 #endif
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   赤外線系の通信かどうか（中では無線だったりする）
+ */
+//------------------------------------------------------------------------------
 
-
-
+BOOL NET_DEV_IsIrcMode(void)
+{
+  switch(GFL_NET_GetGameServiceID()){
+  case WB_NET_IRCTRADE:
+  case WB_NET_IRC_BATTLE:
+  case WB_NET_IRCBATTLE:
+  case WB_NET_IRCCOMPATIBLE:
+  case WB_NET_IRCAURA:
+  case WB_NET_IRCRHYTHM:
+  case WB_NET_IRCMENU:
+  case WB_NET_IRCBATTLE_MULTI:
+  case WB_NET_IRCBATTLE_MULTI_IRC:
+    return TRUE;
+    break;
+  }
+  return FALSE;
+}
 
