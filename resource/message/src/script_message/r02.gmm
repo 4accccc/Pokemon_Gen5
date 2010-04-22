@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T19:00:50"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T21:17:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -428,12 +428,12 @@ TVトランシーバー</attribute>
 		<language name="JPN" width="256">ベル『ねえねえ！
 ポケモンしょうぶ　しようよ！▼
 あたらしく　つかまえた　ポケモンも
-すこしは　つよくなったし！▼
+ちょっと　つよくなったし！▼
 じゃ　はじめるよ！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『ねえねえ！
 ポケモン勝負　しようよ！▼
 新しく　捕まえた　ポケモンも
-すこしは　強くなったし！▼
+ちょっと　強くなったし！▼
 じゃ　はじめるよ！▼</language>
 	</row>
 
