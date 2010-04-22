@@ -819,9 +819,13 @@ static void _debug_bsubDataMain(DEBUG_OHNO_CONTROL * pDOC)
 
   pDG->bActive = BATTLE_EXAMINATION_MAGIC_KEY;
   if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    bSingle = TRUE;
+    pDG->dataNo = 12;  //‚P‚Q‚Í‰¼‚ÌŠJÃ”Ô†  SINGLE
+    bSingle=TRUE;
   }
-  pDG->bSingle = bSingle;
+  else{
+    pDG->dataNo = 0x8000 + 12;  //‚P‚Q‚Í‰¼‚ÌŠJÃ”Ô†  DOUBLE
+    bSingle=FALSE;
+  }
 
   _debug_bsubData( &pDG->trainer[0],bSingle );
   _debug_bsubData( &pDG->trainer[1],bSingle );

@@ -180,7 +180,7 @@ void NET_DeviceUnload(int deviceNo)
  * @brief   通信メイン関数のラップ関数
  */
 //------------------------------------------------------------------------------
-
+#if 0  //こちらはパレスの調整が必要
 static u8 bNotCall;        //通信を呼び出さない場合にTRUE
 static u8 bFlip;  //DS通信の切り替えフラグ
 
@@ -209,4 +209,36 @@ void NET_DEV_SetSkipNetMain(void)
 {
   bNotCall = TRUE;
 }
+
+#else
+//------------------------------------------------------------------------------
+/**
+ * @brief   通信メイン関数のラップ関数
+ */
+//------------------------------------------------------------------------------
+
+static u8 bFlip=FALSE;
+
+void NET_DEV_Main(void)
+{
+  if( WB_NET_PALACE_SERVICEID==GFL_NET_GetGameServiceID() ){
+    if(bFlip==FALSE){
+      bFlip =GFL_NET_Main();
+    }
+    else{
+      bFlip=FALSE;
+    }
+  }
+  else{
+    GFL_NET_Main();
+  }
+}
+
+
+
+#endif
+
+
+
+
 

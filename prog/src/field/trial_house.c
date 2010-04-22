@@ -462,16 +462,28 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
     //データ受け取り待ち
     if ( DELIVERY_BEACON_RecvCheck( evt_wk->BeaconWork )  )
     {
-//      BATTLE_EXAMINATION_SAVEDATA *exa;
       GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
-//      exa = SaveControl_Extra_DataPtrGet( sv, SAVE_EXTRA_ID_BATTLE_EXAMINATION, 0);
-      //バッファからセーブへデータコピー
-//      GFL_STD_MemCopy( evt_wk->Ptr->CommBuf, exa, BATTLE_EXAMINATION_SAVE_GetWorkSize() );
-      NOZOMU_Printf("外部セーブにデータを保存\n");   
-      BATTLE_EXAMINATION_SAVE_Write(gamedata, evt_wk->Ptr->CommBuf, GFL_HEAP_LOWID(HEAPID_PROC));
-      NOZOMU_Printf("データ受け取り成功\n");
-      //受け取りの結果をセット
-      *(evt_wk->Ret) = TH_DL_RSLT_SUCCESS;    //成功
+      THSV_WORK *sv_wk = THSV_GetSvPtr( GAMEDATA_GetSaveControlWork(gamedata) );
+      BATTLE_EXAMINATION_SAVEDATA* pBE = evt_wk->Ptr->CommBuf;
+      int no = BATTLE_EXAMINATION_SAVE_GetDataNo(pBE);
+      BOOL bActive = BATTLE_EXAMINATION_SAVE_IsInData(pBE);
+      BOOL bGet = GetDownloadBit(sv_wk, no);
+      if(bActive && (!bGet || (no == 0))){
+        NOZOMU_Printf("外部セーブにデータを保存\n");
+        SetDownloadBit(sv_wk, no);
+        BATTLE_EXAMINATION_SAVE_Write(gamedata, evt_wk->Ptr->CommBuf, GFL_HEAP_LOWID(HEAPID_PROC));
+        NOZOMU_Printf("データ受け取り成功\n");
+        //受け取りの結果をセット
+        *(evt_wk->Ret) = TH_DL_RSLT_SUCCESS;    //成功
+      }
+      else if(bGet){
+        OHNO_Printf("うけ取りずみ %d %d %d\n", no,bActive,bGet);
+        *(evt_wk->Ret) = TH_DL_RSLT_SETTLED;
+      }
+      else{
+        OHNO_Printf("しっぱい %d %d %d\n", no,bActive,bGet);
+        *(evt_wk->Ret) = TH_DL_RSLT_FAIL;
+      }
       (*seq) = BEACON_SEQ_END;
     }
     break;

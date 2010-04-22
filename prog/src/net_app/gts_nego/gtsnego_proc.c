@@ -1161,7 +1161,7 @@ MYSTATUS* GTSNEGO_GetMyStatus( GAMEDATA* pGameData, int index)
  */
 //-----------------------------------------------------------------------------
 
-MYSTATUS* GTSNEGO_GetMyStatusIconOnly( GAMEDATA* pGameData, int index)
+static MYSTATUS* GTSNEGO_GetMyStatusIconOnly( GAMEDATA* pGameData, int index)
 {
   int i, j, count;
   MYSTATUS* pMyStatus;

@@ -79,7 +79,19 @@ BOOL BATTLE_EXAMINATION_SAVE_IsInData(BATTLE_EXAMINATION_SAVEDATA* pSV)
 
 BOOL BATTLE_EXAMINATION_SAVE_IsSingleBattle(BATTLE_EXAMINATION_SAVEDATA* pSV)
 {
-  return pSV->bSingle;
+  return ((pSV->dataNo & 0x8000)==0);
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   ŠJÃ”Ô†‚ð“¾‚é
+ * @return	0-127
+ */
+//--------------------------------------------------------------------------------------------
+
+u16 BATTLE_EXAMINATION_SAVE_GetDataNo(BATTLE_EXAMINATION_SAVEDATA* pSV)
+{
+  return pSV->dataNo & 0x7f;
 }
 
 //----------------------------------------------------------------------------
