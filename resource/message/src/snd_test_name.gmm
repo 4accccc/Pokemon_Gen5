@@ -8417,9 +8417,9 @@
 		<language name="JPN" width="256">SYS-98</language>
 		<language name="JPN_KANJI" width="256">SYS-98</language>
 	</row>
-	<row id="msg_seq_se_dmy_335">
-		<language name="JPN" width="256">DMY-335</language>
-		<language name="JPN_KANJI" width="256">DMY-335</language>
+	<row id="msg_seq_se_fld_166">
+		<language name="JPN" width="256">FLD-166</language>
+		<language name="JPN_KANJI" width="256">FLD-166</language>
 	</row>
 	<row id="msg_seq_se_dmy_336">
 		<language name="JPN" width="256">DMY-336</language>
