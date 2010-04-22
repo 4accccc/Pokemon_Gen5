@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-04-15T13:42:20"/>
+	<create user="unno" host="W00199" date="2010-04-22T17:57:47"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="7" xyz="-3.382813 -0.255615 -3.382813" whd="6.765137 2.042236 6.765137"/>
 
-<tex_image_array size="57">
+<tex_image_array size="64">
 	<tex_image index="0" name="b03_bench_a"
 		width="8" height="8" original_width="8" original_height="8"
 		format="palette4"
@@ -1911,31 +1911,115 @@
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			1100 1111 1111 1111 1111 1111 1111 0011
-			3100 3333 3333 3333 3333 3333 3333 0013
-			3100 3333 3333 3333 3333 3333 3333 0013
-			3100 4443 4444 4444 4444 4444 3444 0013
-			3100 5543 5555 5555 5555 5555 3455 0013
-			3100 5543 5555 5555 5555 5555 3455 0013
-			3100 2543 2222 2222 2222 2222 3452 0013
-			3100 2543 2222 2222 2222 2222 3452 0013
-			3100 2543 2222 2222 2222 2222 3452 0013
-			3100 5543 5555 5555 5555 5555 3455 0013
-			3100 5543 5555 5555 5555 5555 3455 0013
-			3100 5543 5555 5555 5555 5555 3455 0013
-			3100 2543 2222 2222 2222 2222 3452 0013
-			3100 2543 2222 2222 2222 2222 3452 0013
-			3100 2543 2222 2222 2222 2222 3452 0013
-			3100 2543 2222 2222 2222 2222 3452 0013
-			3100 2543 2222 2222 2222 2222 3452 0013
-			3100 2543 2222 2222 2222 2222 3452 0013
-			3100 2543 2222 2222 2222 2222 3452 0013
-			3100 2543 2222 2222 2222 2222 3452 0013
-			3100 5543 5555 5555 5555 5555 3455 0013
-			3100 5543 5555 5555 5555 5555 3455 0013
-			3100 5543 5555 5555 5555 5555 3455 0013
-			3100 5543 5555 5555 5555 5555 3455 0013
-			3100 4443 4444 4444 4444 4444 3444 0013
+			2200 2222 2222 2222 2222 2222 2222 0022
+			1200 1111 1111 1111 1111 1111 1111 0021
+			1200 1111 1111 1111 1111 1111 1111 0021
+			1200 1111 1111 1111 1111 1111 1111 0021
+			1200 1111 1111 1111 1111 1111 1111 0021
+			1200 1111 1111 1111 1111 1111 1111 0021
+			1200 1111 1111 1111 1111 1111 1111 0021
+			1200 1111 1111 1111 1111 1111 1111 0021
+			2200 2222 2222 2222 2222 2222 2222 0022
+			5300 7765 7777 7777 7777 7777 5677 0035
+			5300 7765 7777 7777 7777 7777 5677 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 7765 7777 7777 7777 7777 5677 0035
+			5300 7765 7777 7777 7777 7777 5677 0035
+			5300 7765 7777 7777 7777 7777 5677 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 7765 7777 7777 7777 7777 5677 0035
+			5300 6665 6666 6666 6666 6666 5666 0035
+			5300 5555 5555 5555 5555 5555 5555 0035
+			5300 5555 5555 5555 5555 5555 5555 0035
+			3300 3333 3333 3333 3333 3333 3333 0033
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="40" name="gs_kanban_b"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="gs_kanban_b_pl"
+		path="C:/home/wb_data3d/field/in49/chip/tex/gs_kanban_b.tga"
+	>
+		<bitmap size="256">
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+			0011 0000 0000 0000 0000 0000 0000 1100
+			2011 2222 2222 2222 2222 2222 2222 1102
+			2011 2222 2222 2222 2222 2222 2222 1102
+			2011 2222 2222 2222 2222 2222 2222 1102
+			2011 2222 2222 2222 2222 2222 2222 1102
+			2011 2222 2222 2222 2222 2222 2222 1102
+			2011 2222 2222 2222 2222 2222 2222 1102
+			2011 2222 2222 2222 2222 2222 2222 1102
+			0011 0000 0000 0000 0000 0000 0000 1100
+			5311 7765 7777 7777 7777 7777 5677 1135
+			5311 7765 7777 7777 7777 7777 5677 1135
+			5311 4765 4444 4444 4444 4444 5674 1135
+			5311 4765 4444 4444 4444 4444 5674 1135
+			5311 4765 4444 4444 4444 4444 5674 1135
+			5311 7765 7777 7777 7777 7777 5677 1135
+			5311 7765 7777 7777 7777 7777 5677 1135
+			5311 7765 7777 7777 7777 7777 5677 1135
+			5311 4765 4444 4444 4444 4444 5674 1135
+			5311 4765 4444 4444 4444 4444 5674 1135
+			5311 4765 4444 4444 4444 4444 5674 1135
+			5311 4765 4444 4444 4444 4444 5674 1135
+			5311 4765 4444 4444 4444 4444 5674 1135
+			5311 4765 4444 4444 4444 4444 5674 1135
+			5311 7765 7777 7777 7777 7777 5677 1135
+			5311 6665 6666 6666 6666 6666 5666 1135
+			5311 5555 5555 5555 5555 5555 5555 1135
+			5311 5555 5555 5555 5555 5555 5555 1135
+			3311 3333 3333 3333 3333 3333 3333 1133
+			1111 1111 1111 1111 1111 1111 1111 1111
+			1111 1111 1111 1111 1111 1111 1111 1111
+		</bitmap>
+	</tex_image>
+	<tex_image index="41" name="gs_kanban_c"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="gs_kanban_c_pl"
+		path="C:/home/wb_data3d/field/in49/chip/tex/gs_kanban_c.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			6600 6666 6666 6666 6666 6666 6666 0066
+			5600 5555 5555 5555 5555 5555 5555 0065
+			5600 5555 5555 5555 5555 5555 5555 0065
+			5600 5555 5555 5555 5555 5555 5555 0065
+			5600 5555 5555 5555 5555 5555 5555 0065
+			5600 5555 5555 5555 5555 5555 5555 0065
+			5600 5555 5555 5555 5555 5555 5555 0065
+			5600 5555 5555 5555 5555 5555 5555 0065
+			6600 6666 6666 6666 6666 6666 6666 0066
+			3100 7723 7777 7777 7777 7777 3277 0013
+			3100 7723 7777 7777 7777 7777 3277 0013
+			3100 4723 4444 4444 4444 4444 3274 0013
+			3100 4723 4444 4444 4444 4444 3274 0013
+			3100 4723 4444 4444 4444 4444 3274 0013
+			3100 7723 7777 7777 7777 7777 3277 0013
+			3100 7723 7777 7777 7777 7777 3277 0013
+			3100 7723 7777 7777 7777 7777 3277 0013
+			3100 4723 4444 4444 4444 4444 3274 0013
+			3100 4723 4444 4444 4444 4444 3274 0013
+			3100 4723 4444 4444 4444 4444 3274 0013
+			3100 4723 4444 4444 4444 4444 3274 0013
+			3100 4723 4444 4444 4444 4444 3274 0013
+			3100 4723 4444 4444 4444 4444 3274 0013
+			3100 7723 7777 7777 7777 7777 3277 0013
+			3100 2223 2222 2222 2222 2222 3222 0013
 			3100 3333 3333 3333 3333 3333 3333 0013
 			3100 3333 3333 3333 3333 3333 3333 0013
 			1100 1111 1111 1111 1111 1111 1111 0011
@@ -1943,7 +2027,217 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="40" name="gs_senro"
+	<tex_image index="42" name="gs_kanban_d"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="gs_kanban_d_pl"
+		path="C:/home/wb_data3d/field/in49/chip/tex/gs_kanban_d.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			1100 1111 1111 1111 1111 1111 1111 0011
+			5100 5555 5555 5555 5555 5555 5555 0015
+			5100 5555 5555 5555 5555 5555 5555 0015
+			5100 5555 5555 5555 5555 5555 5555 0015
+			5100 5555 5555 5555 5555 5555 5555 0015
+			5100 5555 5555 5555 5555 5555 5555 0015
+			5100 5555 5555 5555 5555 5555 5555 0015
+			5100 5555 5555 5555 5555 5555 5555 0015
+			1100 1111 1111 1111 1111 1111 1111 0011
+			4200 7764 7777 7777 7777 7777 4677 0024
+			4200 7764 7777 7777 7777 7777 4677 0024
+			4200 3764 3333 3333 3333 3333 4673 0024
+			4200 3764 3333 3333 3333 3333 4673 0024
+			4200 3764 3333 3333 3333 3333 4673 0024
+			4200 7764 7777 7777 7777 7777 4677 0024
+			4200 7764 7777 7777 7777 7777 4677 0024
+			4200 7764 7777 7777 7777 7777 4677 0024
+			4200 3764 3333 3333 3333 3333 4673 0024
+			4200 3764 3333 3333 3333 3333 4673 0024
+			4200 3764 3333 3333 3333 3333 4673 0024
+			4200 3764 3333 3333 3333 3333 4673 0024
+			4200 3764 3333 3333 3333 3333 4673 0024
+			4200 3764 3333 3333 3333 3333 4673 0024
+			4200 7764 7777 7777 7777 7777 4677 0024
+			4200 6664 6666 6666 6666 6666 4666 0024
+			4200 4444 4444 4444 4444 4444 4444 0024
+			4200 4444 4444 4444 4444 4444 4444 0024
+			2200 2222 2222 2222 2222 2222 2222 0022
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="43" name="gs_kanban_e"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="gs_kanban_e_pl"
+		path="C:/home/wb_data3d/field/in49/chip/tex/gs_kanban_e.bmp"
+	>
+		<bitmap size="256">
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			0022 0000 0000 0000 0000 0000 0000 2200
+			1022 1111 1111 1111 1111 1111 1111 2201
+			1022 1111 1111 1111 1111 1111 1111 2201
+			1022 1111 1111 1111 1111 1111 1111 2201
+			1022 1111 1111 1111 1111 1111 1111 2201
+			1022 1111 1111 1111 1111 1111 1111 2201
+			1022 1111 1111 1111 1111 1111 1111 2201
+			1022 1111 1111 1111 1111 1111 1111 2201
+			0022 0000 0000 0000 0000 0000 0000 2200
+			5322 7765 7777 7777 7777 7777 5677 2235
+			5322 7765 7777 7777 7777 7777 5677 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 7765 7777 7777 7777 7777 5677 2235
+			5322 7765 7777 7777 7777 7777 5677 2235
+			5322 7765 7777 7777 7777 7777 5677 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 7765 7777 7777 7777 7777 5677 2235
+			5322 6665 6666 6666 6666 6666 5666 2235
+			5322 5555 5555 5555 5555 5555 5555 2235
+			5322 5555 5555 5555 5555 5555 5555 2235
+			3322 3333 3333 3333 3333 3333 3333 2233
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+		</bitmap>
+	</tex_image>
+	<tex_image index="44" name="gs_kanban_f"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="gs_kanban_f_pl"
+		path="C:/home/wb_data3d/field/in49/chip/tex/gs_kanban_f.tga"
+	>
+		<bitmap size="256">
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			0022 0000 0000 0000 0000 0000 0000 2200
+			1022 1111 1111 1111 1111 1111 1111 2201
+			1022 1111 1111 1111 1111 1111 1111 2201
+			1022 1111 1111 1111 1111 1111 1111 2201
+			1022 1111 1111 1111 1111 1111 1111 2201
+			1022 1111 1111 1111 1111 1111 1111 2201
+			1022 1111 1111 1111 1111 1111 1111 2201
+			1022 1111 1111 1111 1111 1111 1111 2201
+			0022 0000 0000 0000 0000 0000 0000 2200
+			5322 7765 7777 7777 7777 7777 5677 2235
+			5322 7765 7777 7777 7777 7777 5677 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 7765 7777 7777 7777 7777 5677 2235
+			5322 7765 7777 7777 7777 7777 5677 2235
+			5322 7765 7777 7777 7777 7777 5677 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 4765 4444 4444 4444 4444 5674 2235
+			5322 7765 7777 7777 7777 7777 5677 2235
+			5322 6665 6666 6666 6666 6666 5666 2235
+			5322 5555 5555 5555 5555 5555 5555 2235
+			5322 5555 5555 5555 5555 5555 5555 2235
+			3322 3333 3333 3333 3333 3333 3333 2233
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+		</bitmap>
+	</tex_image>
+	<tex_image index="45" name="gs_kanban_g"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="gs_kanban_g_pl"
+		path="C:/home/wb_data3d/field/in49/chip/tex/gs_kanban_g.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			1100 1111 1111 1111 1111 1111 1111 0011
+			2100 2222 2222 2222 2222 2222 2222 0012
+			2100 2222 2222 2222 2222 2222 2222 0012
+			2100 2222 2222 2222 2222 2222 2222 0012
+			2100 2222 2222 2222 2222 2222 2222 0012
+			2100 2222 2222 2222 2222 2222 2222 0012
+			2100 2222 2222 2222 2222 2222 2222 0012
+			2100 2222 2222 2222 2222 2222 2222 0012
+			1100 1111 1111 1111 1111 1111 1111 0011
+			5300 7765 7777 7777 7777 7777 5677 0035
+			5300 7765 7777 7777 7777 7777 5677 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 7765 7777 7777 7777 7777 5677 0035
+			5300 7765 7777 7777 7777 7777 5677 0035
+			5300 7765 7777 7777 7777 7777 5677 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 4765 4444 4444 4444 4444 5674 0035
+			5300 7765 7777 7777 7777 7777 5677 0035
+			5300 6665 6666 6666 6666 6666 5666 0035
+			5300 5555 5555 5555 5555 5555 5555 0035
+			5300 5555 5555 5555 5555 5555 5555 0035
+			3300 3333 3333 3333 3333 3333 3333 0033
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="46" name="gs_kanban_h"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="gs_kanban_h_pl"
+		path="C:/home/wb_data3d/field/in49/chip/tex/gs_kanban_h.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			3300 3333 3333 3333 3333 3333 3333 0033
+			6300 6666 6666 6666 6666 6666 6666 0036
+			6300 6666 6666 6666 6666 6666 6666 0036
+			6300 6666 6666 6666 6666 6666 6666 0036
+			6300 6666 6666 6666 6666 6666 6666 0036
+			6300 6666 6666 6666 6666 6666 6666 0036
+			6300 6666 6666 6666 6666 6666 6666 0036
+			6300 6666 6666 6666 6666 6666 6666 0036
+			3300 3333 3333 3333 3333 3333 3333 0033
+			4100 7754 7777 7777 7777 7777 4577 0014
+			4100 7754 7777 7777 7777 7777 4577 0014
+			4100 2754 2222 2222 2222 2222 4572 0014
+			4100 2754 2222 2222 2222 2222 4572 0014
+			4100 2754 2222 2222 2222 2222 4572 0014
+			4100 7754 7777 7777 7777 7777 4577 0014
+			4100 7754 7777 7777 7777 7777 4577 0014
+			4100 7754 7777 7777 7777 7777 4577 0014
+			4100 2754 2222 2222 2222 2222 4572 0014
+			4100 2754 2222 2222 2222 2222 4572 0014
+			4100 2754 2222 2222 2222 2222 4572 0014
+			4100 2754 2222 2222 2222 2222 4572 0014
+			4100 2754 2222 2222 2222 2222 4572 0014
+			4100 2754 2222 2222 2222 2222 4572 0014
+			4100 7754 7777 7777 7777 7777 4577 0014
+			4100 5554 5555 5555 5555 5555 4555 0014
+			4100 4444 4444 4444 4444 4444 4444 0014
+			4100 4444 4444 4444 4444 4444 4444 0014
+			1100 1111 1111 1111 1111 1111 1111 0011
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="47" name="gs_senro"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
 		color0_mode="color"
@@ -1969,7 +2263,7 @@
 			5555 5555 5555 5555 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
-	<tex_image index="41" name="gs_slope_a"
+	<tex_image index="48" name="gs_slope_a"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
 		color0_mode="color"
@@ -1995,7 +2289,7 @@
 			5aa5 0000 0000 0000 5aa5 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="42" name="gs_slope_b"
+	<tex_image index="49" name="gs_slope_b"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -2037,7 +2331,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="43" name="gs_tokei_a"
+	<tex_image index="50" name="gs_tokei_a"
 		width="64" height="8" original_width="64" original_height="8"
 		format="palette16"
 		color0_mode="color"
@@ -2063,7 +2357,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="44" name="gs_wall_a"
+	<tex_image index="51" name="gs_wall_a"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -2089,7 +2383,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="45" name="gs_wall_b"
+	<tex_image index="52" name="gs_wall_b"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -2115,7 +2409,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="46" name="gs_wall_c"
+	<tex_image index="53" name="gs_wall_c"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette4"
 		color0_mode="color"
@@ -2141,7 +2435,7 @@
 			5555 5555 5555 5555 5555 5555 5555 5555
 		</bitmap>
 	</tex_image>
-	<tex_image index="47" name="gs_wall_d"
+	<tex_image index="54" name="gs_wall_d"
 		width="16" height="64" original_width="16" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -2183,7 +2477,7 @@
 			1100 4442 4444 4444 1100 4442 4444 4444
 		</bitmap>
 	</tex_image>
-	<tex_image index="48" name="gs_wall_e"
+	<tex_image index="55" name="gs_wall_e"
 		width="64" height="32" original_width="64" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -2257,7 +2551,7 @@
 			0000 8880 8888 0088 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="49" name="gs_yuka_a"
+	<tex_image index="56" name="gs_yuka_a"
 		width="128" height="64" original_width="128" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -2523,7 +2817,7 @@
 			aaaa aaaa aaaa aaaa aaaa baaa 0044 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="50" name="gs_yuka_b"
+	<tex_image index="57" name="gs_yuka_b"
 		width="64" height="16" original_width="64" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -2565,7 +2859,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="51" name="gs_yuka_c"
+	<tex_image index="58" name="gs_yuka_c"
 		width="128" height="64" original_width="128" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -2831,7 +3125,7 @@
 			aaaa aaaa aaaa aaaa aaaa baaa 0044 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="52" name="h_kage"
+	<tex_image index="59" name="h_kage"
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
 		palette_name="h_kage_pl"
@@ -2844,7 +3138,7 @@
 			4040 4040 4040 4040 4040 4040 4040 4040
 		</bitmap>
 	</tex_image>
-	<tex_image index="53" name="idr_pc01"
+	<tex_image index="60" name="idr_pc01"
 		width="16" height="32" original_width="16" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -2870,7 +3164,7 @@
 			6666 6666 6666 6666 6666 6666 6666 6666
 		</bitmap>
 	</tex_image>
-	<tex_image index="54" name="mon_1"
+	<tex_image index="61" name="mon_1"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -2912,7 +3206,7 @@
 			0000 0000 0000 7000 7777 7777 7777 7777
 		</bitmap>
 	</tex_image>
-	<tex_image index="55" name="out34_sign01"
+	<tex_image index="62" name="out34_sign01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -2954,7 +3248,7 @@
 			1111 1111 1111 1111 1111 1111 1111 1111
 		</bitmap>
 	</tex_image>
-	<tex_image index="56" name="out34_sign02"
+	<tex_image index="63" name="out34_sign02"
 		width="64" height="64" original_width="64" original_height="64"
 		format="palette16"
 		color0_mode="color"
@@ -3094,7 +3388,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="57">
+<tex_palette_array size="64">
 	<tex_palette index="0" name="b03_bench_a_pl" color_size="4">
 		626b 7fff 7fff 7fff
 	</tex_palette>
@@ -3219,65 +3513,86 @@
 		1484 1cc6 2508 2d4a 316b 39ad 3dce 7fff
 	</tex_palette>
 	<tex_palette index="39" name="gs_kanban_a_pl" color_size="8">
-		2549 4ad7 573b 5f9e 6fdf 7fff 7fff 7fff
+		2549 2664 2da5 4ad7 573b 5f9e 6fdf 7fff
 	</tex_palette>
-	<tex_palette index="40" name="gs_senro_pl" color_size="4">
+	<tex_palette index="40" name="gs_kanban_b_pl" color_size="8">
+		2308 2549 2beb 4ad7 573b 5f9e 6fdf 7fff
+	</tex_palette>
+	<tex_palette index="41" name="gs_kanban_c_pl" color_size="8">
+		2549 4ad7 6fdf 5f9e 573b 00d8 0090 7fff
+	</tex_palette>
+	<tex_palette index="42" name="gs_kanban_d_pl" color_size="8">
+		2549 4557 4ad7 573b 5f9e 663f 6fdf 7fff
+	</tex_palette>
+	<tex_palette index="43" name="gs_kanban_e_pl" color_size="8">
+		086c 14ef 2549 4ad7 573b 5f9e 6fdf 7fff
+	</tex_palette>
+	<tex_palette index="44" name="gs_kanban_f_pl" color_size="8">
+		01b8 029f 2549 4ad7 573b 5f9e 6fdf 7fff
+	</tex_palette>
+	<tex_palette index="45" name="gs_kanban_g_pl" color_size="8">
+		2549 2656 27bf 4ad7 573b 5f9e 6fdf 7fff
+	</tex_palette>
+	<tex_palette index="46" name="gs_kanban_h_pl" color_size="8">
+		2549 4ad7 573b 5a40 5f9e 6fdf 7b60 7fff
+	</tex_palette>
+	<tex_palette index="47" name="gs_senro_pl" color_size="4">
 		24e7 2d29 356b 3dad
 	</tex_palette>
-	<tex_palette index="41" name="gs_slope_a_pl" color_size="4">
+	<tex_palette index="48" name="gs_slope_a_pl" color_size="4">
 		14a4 1d06 2548 7fff
 	</tex_palette>
-	<tex_palette index="42" name="gs_slope_b_pl" color_size="8">
+	<tex_palette index="49" name="gs_slope_b_pl" color_size="8">
 		0154 0196 01d8 01fa 023b 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="43" name="gs_tokei_a_pl" color_size="16">
+	<tex_palette index="50" name="gs_tokei_a_pl" color_size="16">
 		010a 014c 01af 1212 2674 36d7 4b39 537b
 		5bbd 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="44" name="gs_wall_a_pl" color_size="16">
+	<tex_palette index="51" name="gs_wall_a_pl" color_size="16">
 		1ce6 2528 2d6a 35ac 3dee 4272 4af7 537b
 		63ff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="45" name="gs_wall_b_pl" color_size="8">
+	<tex_palette index="52" name="gs_wall_b_pl" color_size="8">
 		1ce6 2528 2d6a 35ac 3dee 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="46" name="gs_wall_c_pl" color_size="4">
+	<tex_palette index="53" name="gs_wall_c_pl" color_size="4">
 		356a 1ca4 2d28 2907
 	</tex_palette>
-	<tex_palette index="47" name="gs_wall_d_pl" color_size="8">
+	<tex_palette index="54" name="gs_wall_d_pl" color_size="8">
 		1ce6 2528 2d6a 35ac 3dee 4630 7fff 7fff
 	</tex_palette>
-	<tex_palette index="48" name="gs_wall_e_pl" color_size="16">
+	<tex_palette index="55" name="gs_wall_e_pl" color_size="16">
 		2548 2d8a 2d8d 2daf 31ab 31b1 31d3 35cc
 		35f5 3a38 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="49" name="gs_yuka_a_pl" color_size="16">
+	<tex_palette index="56" name="gs_yuka_a_pl" color_size="16">
 		012b 014c 018e 01af 2656 3298 36b8 36b9
 		3ada 3efa 431b 473c 4b5d 4b7e 7fff 7fff
 	</tex_palette>
-	<tex_palette index="50" name="gs_yuka_b_pl" color_size="8">
+	<tex_palette index="57" name="gs_yuka_b_pl" color_size="8">
 		00e9 012b 014c 018e 01af 19f2 2e97 7fff
 	</tex_palette>
-	<tex_palette index="51" name="gs_yuka_c_pl" color_size="16">
+	<tex_palette index="58" name="gs_yuka_c_pl" color_size="16">
 		012b 014c 018e 01af 2656 3298 36b8 36b9
 		3ada 3efa 431b 473c 4b5d 4b7e 7fff 7fff
 	</tex_palette>
-	<tex_palette index="52" name="h_kage_pl" color_size="8">
+	<tex_palette index="59" name="h_kage_pl" color_size="8">
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="53" name="idr_pc01_pl" color_size="16">
+	<tex_palette index="60" name="idr_pc01_pl" color_size="16">
 		62f8 4211 5274 44b3 717f 20c6 1464 20a3
 		3946 6717 6f7a 76c0 3120 7f21 7f47 7fff
 	</tex_palette>
-	<tex_palette index="54" name="mon_1_pl" color_size="16">
+	<tex_palette index="61" name="mon_1_pl" color_size="16">
 		0842 0c63 1142 15a2 18c6 19e3 1e43 2108
 		2626 294a 2e67 2ea7 36a9 36e9 39ce 7fff
 	</tex_palette>
-	<tex_palette index="55" name="out34_sign01_pl" color_size="16">
+	<tex_palette index="62" name="out34_sign01_pl" color_size="16">
 		566e 5a90 5e40 62f4 6f58 7300 77bb 7b92
 		7fd9 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="56" name="out34_sign02_pl" color_size="16">
+	<tex_palette index="63" name="out34_sign02_pl" color_size="16">
 		1509 257a 273f 27b6 2df1 3a55 46de 49ea
 		4ed6 575b 5fdf 6f57 7229 7313 7eac 7fff
 	</tex_palette>
@@ -3421,7 +3736,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="40" tex_palette_idx="40"
+		tex_image_idx="47" tex_palette_idx="47"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3445,7 +3760,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="41" tex_palette_idx="41"
+		tex_image_idx="48" tex_palette_idx="48"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3469,7 +3784,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="42" tex_palette_idx="42"
+		tex_image_idx="49" tex_palette_idx="49"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3493,7 +3808,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="44" tex_palette_idx="44"
+		tex_image_idx="51" tex_palette_idx="51"
 		tex_tiling="flip repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3517,7 +3832,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="45" tex_palette_idx="45"
+		tex_image_idx="52" tex_palette_idx="52"
 		tex_tiling="flip repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3541,7 +3856,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="46" tex_palette_idx="46"
+		tex_image_idx="53" tex_palette_idx="53"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3565,7 +3880,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="47" tex_palette_idx="47"
+		tex_image_idx="54" tex_palette_idx="54"
 		tex_tiling="flip repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3589,7 +3904,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="48" tex_palette_idx="48"
+		tex_image_idx="55" tex_palette_idx="55"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3613,7 +3928,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="49" tex_palette_idx="49"
+		tex_image_idx="56" tex_palette_idx="56"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3637,7 +3952,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="50" tex_palette_idx="50"
+		tex_image_idx="57" tex_palette_idx="57"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3661,7 +3976,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="51" tex_palette_idx="51"
+		tex_image_idx="58" tex_palette_idx="58"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -3728,7 +4043,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="53" tex_palette_idx="53"
+		tex_image_idx="60" tex_palette_idx="60"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -8793,7 +9108,7 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="57">
+	<ex_tex_image_array size="64">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
@@ -8851,8 +9166,15 @@
 		<ex_tex_image index="54" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="55" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="56" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="57" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="58" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="59" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="60" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="61" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="62" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="63" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="57">
+	<ex_tex_palette_array size="64">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -8910,6 +9232,13 @@
 		<ex_tex_palette index="54" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="55" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="56" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="57" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="58" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="59" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="60" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="61" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="62" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="63" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="19">
 		<ex_material index="0" disp_pos="-1080.000000 240.000000"/>
