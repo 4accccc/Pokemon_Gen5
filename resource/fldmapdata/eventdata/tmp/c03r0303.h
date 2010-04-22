@@ -11,6 +11,8 @@
 #define C03R0303_CLEANINGM_01              0
 #define TR_C03R0303_BUSINESS1_03           1
 #define TR_C03R0303_SCIENTISTM_03          2
+#define TR_BUSINESS2_01                    3
+#define TR_C03R0303_SCIENTISTM_04          4
 
 #endif //ZONE_C03R0303_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r0303.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
