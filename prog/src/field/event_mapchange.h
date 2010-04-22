@@ -88,7 +88,7 @@ extern GMEVENT* EVENT_ChangeMapSorawotobu( GAMESYS_WORK* gameSystem, FIELDMAP_WO
  */
 //------------------------------------------------------------------
 extern GMEVENT* EVENT_ChangeMapRailLocation( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
-                                                   u16 zoneID, const RAIL_LOCATION* rail_loc, u16 dir );
+                                                   u16 zoneID, const RAIL_LOCATION* rail_loc, u16 dir, BOOL seasonUpdateEnable );
 
 //------------------------------------------------------------------
 /**

@@ -340,7 +340,7 @@ VMCMD_RESULT EvCmdRailMapChange( VMHANDLE *core, void *wk )
       FLDNOGRID_MAPPER_ChangeNotMinusRailPosToRailLocation(
           nogrid, zone_id, rail_idx, front_idx, side_idx, &loc, HEAPID_FIELDMAP );
       mapchange_event = EVENT_ChangeMapRailLocation( gsys, fieldmap,
-           zone_id, &loc, dir );
+           zone_id, &loc, dir, FALSE );
     }         
     GMEVENT_CallEvent( parent_event, mapchange_event );
   }

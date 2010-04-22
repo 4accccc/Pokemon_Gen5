@@ -820,9 +820,10 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
     // ライトシステム生成
     {
+      TOMOYA_Printf( "進入を含んだ　シーズン %d 通常のシーズン %d\n", PMSEASON_GetConsiderCommSeason(gsys), GAMEDATA_GetSeasonID( fieldWork->gamedata ) );
       fieldWork->light = FIELD_LIGHT_Create( AREADATA_GetLightType( fieldWork->areadata ), 
           GFL_RTC_GetTimeBySecond(), 
-          GAMEDATA_GetSeasonID( fieldWork->gamedata ),
+          PMSEASON_GetConsiderCommSeason(gsys),
           fieldWork->fog, fieldWork->g3Dlightset, fieldWork->heapID );
     }
 
@@ -837,7 +838,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
           fieldWork->fog,
           fieldWork->zonefog, 
           fsnd,
-          GAMEDATA_GetSeasonID( fieldWork->gamedata ),
+          PMSEASON_GetConsiderCommSeason(gsys),
           HEAPID_FIELD_PRBUF ); // プログラムヒープを使用する。
     }
     

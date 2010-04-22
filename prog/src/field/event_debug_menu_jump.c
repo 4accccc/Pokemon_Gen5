@@ -386,7 +386,7 @@ static GMEVENT_RESULT debugMenuSeasonSelectEvent(
         else
         {
           mapchange_event = EVENT_ChangeMapRailLocation(
-            work->gmSys, work->fieldWork, zone_id, location, dir );
+            work->gmSys, work->fieldWork, zone_id, location, dir, TRUE );
         }
         GMEVENT_ChangeEvent( event, mapchange_event );
         OS_Printf( "x = %xH, z = %xH\n", pos->x, pos->z );
