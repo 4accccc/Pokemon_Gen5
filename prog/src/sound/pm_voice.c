@@ -622,20 +622,22 @@ void	PMVOICE_SetPan( u32 voicePlayerIdx, u8 pan )
 void	PMVOICE_SetVolume( u32 voicePlayerIdx, s8 volume )
 {
 	PMVOICE_PLAYER* voicePlayer;
+	int volumeTmp;
 
 	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
 	if(voicePlayer->active == FALSE){ return; }
 
-	voicePlayer->volume += volume;
-	if(voicePlayer->volume < 0){ voicePlayer->volume = 0; }
-	if(voicePlayer->volume > 127){ voicePlayer->volume = 127; }
+	volumeTmp = voicePlayer->volume + volume;;
+	if(volumeTmp < 0){ volumeTmp = 0; }
+	if(volumeTmp > 127){ volumeTmp = 127; }
+	voicePlayer->volume = volumeTmp;
 	NNS_SndWaveOutSetVolume(voicePlayer->waveHandle, voicePlayer->volume);
 
 	if( voicePlayer->subWaveUse == TRUE ){
-		int	volumeSub = voicePlayer->volume + voicePlayer->volumeSubDiff;
-		if( volumeSub < 0 ){ volumeSub = 0; }
-		if( volumeSub > 127 ){ volumeSub = 127; }
-		NNS_SndWaveOutSetVolume(voicePlayer->waveHandleSub, (s8)volumeSub);
+		volumeTmp = voicePlayer->volume + voicePlayer->volumeSubDiff;
+		if(volumeTmp < 0){ volumeTmp = 0; }
+		if(volumeTmp > 127){ volumeTmp = 127; }
+		NNS_SndWaveOutSetVolume(voicePlayer->waveHandleSub, (s8)volumeTmp);
 	}
 }
 
