@@ -504,7 +504,7 @@ static const struct {
   { ITEM_KOUKOUNOSIPPO,     HAND_ADD_ITEM_KoukouNoSippo     },
   { ITEM_MANPUKUOKOU,       HAND_ADD_ITEM_KoukouNoSippo     },  // まんぷくおこう=こうこうのしっぽ等価
   { ITEM_OUZYANOSIRUSI,     HAND_ADD_ITEM_OujaNoSirusi      },
-  { ITEM_SURUDOITUME,       HAND_ADD_ITEM_SurudoiTume       },
+  { ITEM_SURUDOITUME,       HAND_ADD_ITEM_PintLens          },  // するどいツメ = ピントレンズと等価
   { ITEM_KOUKAKURENZU,      HAND_ADD_ITEM_KoukakuLens       },
   { ITEM_PINTORENZU,        HAND_ADD_ITEM_PintLens          },
   { ITEM_FOOKASURENZU,      HAND_ADD_ITEM_FocusLens         },
@@ -2474,42 +2474,6 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_SurudoiKiba( u32* numElems )
 
 //------------------------------------------------------------------------------
 /**
- *  するどいツメ
- */
-//------------------------------------------------------------------------------
-static const BtlEventHandlerTable* HAND_ADD_ITEM_SurudoiTume( u32* numElems )
-{
-  static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_SHRINK_PER,     handler_SurudoiTume },
-    { BTL_EVENT_USE_ITEM_TMP,        handler_SurudoiTume_UseTmp },   // なげつける等
-  };
-  *numElems = NELEMS( HandlerTable );
-  return HandlerTable;
-}
-static void handler_SurudoiTume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  // 自分が攻撃側で
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    // ひるみ確率０なら、アイテム威力値に書き換え
-    u8 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
-    if( per == 0 ){
-      per = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, per );
-    }
-  }
-}
-static void handler_SurudoiTume_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
-    BTL_HANDEX_PARAM_ADD_SHRINK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SHRINK, pokeID );
-    param->pokeID = pokeID;
-    param->per = 100;
-  }
-}
-//------------------------------------------------------------------------------
-/**
  *  こうかくレンズ
  */
 //------------------------------------------------------------------------------
@@ -3134,18 +3098,25 @@ static void handler_KiaiNoTasuki_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     {
       work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_KORAERU_CAUSE, BPP_KORAE_ITEM );
     }
+    else{
+      work[0] = 0;
+    }
   }
 }
 // こらえる発動ハンドラ
 static void handler_KiaiNoTasuki_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( work[0] )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_HANDEX_PARAM_CONSUME_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CONSUME_ITEM, pokeID );
+    if( work[0] )
+    {
+      BTL_HANDEX_PARAM_CONSUME_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CONSUME_ITEM, pokeID );
 
-    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_KoraeItem );
-    HANDEX_STR_AddArg( &param->exStr, pokeID );
-    HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_KoraeItem );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+      HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+      work[0] = FALSE;
+    }
   }
 }
 //------------------------------------------------------------------------------
