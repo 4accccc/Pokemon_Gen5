@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-04-22T16:48:08"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T17:12:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="232" top="88" right="937" bottom="708" maximized="no" rayout="Vertical2">
+	<dialog left="1669" top="314" right="2374" bottom="934" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="439" right="1280" bottom="837" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -334,66 +334,28 @@
 この　わざマシンを　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_friend_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・No437「ともだちてちょう」入手処理
-・続けてinventor_friend_02</comment>
+	<row id="msg_c01r0102_inventor_friend_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
-		<language name="JPN" width="256">あと　この
-ともだちてちょうも　どうぞ！▼</language>
-		<language name="JPN_KANJI" width="256">あと　この
-ともだちてちょうも　どうぞ！▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_friend_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・はい/いいえの選択肢表示
-・はい→inventor_friend_03
-　いいえ→inventor_03</comment>
+	<row id="msg_c01r0102_inventor_friend_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
-		<language name="JPN" width="256">その　ともだちてちょう　に
-とうろくした　おともだちと▽
-ＷｉーＦｉコネクションを　つかって▼
-ポケモンたいせん　や
-ポケモンこうかん　を▽
-たのしむことが　できるのよね▼
-くわしい　せつめいを　ききたい？</language>
-		<language name="JPN_KANJI" width="256">その　ともだちてちょう　に
-登録した　おともだちと▽
-ＷｉーＦｉコネクションを　使って▼
-ポケモン対戦や
-ポケモン交換を▽
-楽しむことが　できるのよね▼
-詳しい　説明を　ききたい？</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_friend_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・はい/いいえの選択肢表示
-・はい→inventor_friend_03
-　いいえ→inventor_03</comment>
+	<row id="msg_c01r0102_inventor_friend_03" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">ASSISTANTW
 発明家</attribute>
-		<language name="JPN" width="256">ポケモンセンター２Ｆで
-ポケモンを　こうかん　したりすると▼
-そのひとを　ともだちてちょうに
-とうろくすることが　できるのよ▼
-また　ともだちコードを　おしえあって
-ともだちてちょうに▽
-とうろく　することも　できるわ▼
-どうする？　もういちど
-くわしい　せつめいを　ききたい？</language>
-		<language name="JPN_KANJI" width="256">ポケモンセンター２Ｆで
-ポケモンを　交換したりすると▼
-その人を　ともだちてちょうに
-登録することが　できるのよ▼
-また　ともだちコードを　教えあって
-ともだちてちょうに▽
-登録することも　できるわ▼
-どうする？　もう一度
-詳しい　説明を　ききたい？</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c01r0102_inventor_04">
@@ -522,10 +484,9 @@
 
 	<row id="msg_c01r0102_cgear_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>システムメッセージ
-はい／いいえ表示
-
-はい→Ｃギアをアクティブで起動
-いいえ→Ｃギアをパッシブで起動</comment>
+・はい/いいえの選択肢表示
+・はい→Ｃギアをアクティブで起動
+　いいえ→Ｃギアをパッシブで起動</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">Ｃ－ＧＥＡＲの　でんげんを　いれて
 つうしんきのうを　オンにしますか？</language>
@@ -535,7 +496,7 @@
 
 	<row id="msg_c01r0102_cgear_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>選択肢
-※はい／いいえを特殊な位置に表示するため
+・はい／いいえを特殊な位置に表示するため
 　選択肢メニューとして作成している</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">はい</language>
@@ -544,7 +505,7 @@
 
 	<row id="msg_c01r0102_cgear_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>選択肢
-※はい／いいえを特殊な位置に表示するため
+・はい／いいえを特殊な位置に表示するため
 　選択肢メニューとして作成している</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">いいえ</language>
@@ -553,9 +514,8 @@
 
 	<row id="msg_c01r0102_cgear_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>システムメッセージ
-いいえを選択したときの再確認
-
-100422斉藤マ追加</comment>
+・いいえを選択したときの再確認
+・100422斉藤マ追加</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">すべての　つうしんきのうが
 オフになりますが　よろしいですか？</language>
@@ -567,7 +527,7 @@
 		<comment>♀
 ■d01r0101イベント後
 ・主人公に近づいてメッセージ表示
-※はいを選んだ
+・はい選択時
 ・続けてinventor_09</comment>
 		<attribute name="キャラ指定">ASSISTANTW</attribute>
 		<language name="JPN" width="256">ほら！　Ｃ－ＧＥＡＲが　きどうして
@@ -586,22 +546,26 @@
 		<comment>♀
 ■d01r0101イベント後
 ・主人公に近づいてメッセージ表示
-※いいえを選んだ
+・いいえ選択時
 ・続けてinventor_09</comment>
 		<attribute name="キャラ指定">ASSISTANTW</attribute>
-		<language name="JPN" width="256">Ｃ－ＧＥＡＲの
-がめんが　あらわれたでしょ！▼
-その　がめんの　みぎしたに　ある
+		<language name="JPN" width="256">Ｃ－ＧＥＡＲの　でんげんを　いれるなら
+がめん　みぎしたの▽
+でんげんマークを　タッチするのよ▼
+そして　でんげんを　いれたあとは
+がめんの　みぎしたに　ある▽
 ？マークに　タッチすれば▽
-Ｃ－ＧＥＡＲの　せつめいが　よめるわ▼</language>
-		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲの
-画面が　あらわれたでしょ！▼
-その　画面の　右下に　ある
+Ｃ－ＧＥＡＲの　せつめいが　よめます▼</language>
+		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲの　電源を　入れるなら
+画面　右下の▽
+電源マークを　タッチすれば　いいわ▼
+そして　電源を　入れたあとは
+画面　右下に　表示される▽
 ？マークに　タッチすれば▽
-Ｃ－ＧＥＡＲの　説明が　読めるわ▼</language>
+Ｃ－ＧＥＡＲの　説明が　読めます▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_09" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_09" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
 ・画面下を向いてメッセージ表示
@@ -619,21 +583,23 @@
 もうちょっと　つきあってくれる？</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_10" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_10" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
 ・いいえ選択
 ・続けてinventor_11</comment>
 		<attribute name="キャラ指定">ASSISTANTW</attribute>
-		<language name="JPN" width="256">ダメといっても　せつめい　しまーす▼
+		<language name="JPN" width="256">ごめんなさいね！
+ダメといっても　せつめい　しまーす▼
 だって　あなたの　おかげで
 ものすごいことが　できるんだもの！！▼</language>
-		<language name="JPN_KANJI" width="256">ダメといっても　説明しまーす▼
+		<language name="JPN_KANJI" width="256">ごめんなさいね！
+ダメといっても　説明しまーす▼
 だって　あなたの　おかげで
 ものすごいことが　できるんだもの！！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_11" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_11" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
 ・はい選択
@@ -653,7 +619,7 @@
 レポートを　集められるの！！▼</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_12" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_12" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
 ・メッセージ前にその場で2度ジャンプ
@@ -695,7 +661,7 @@
 よければ　チェックしてね！</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_13" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_13" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
 ・以降、繰り返し表示
@@ -717,7 +683,7 @@
 よければ　チェックしてね！</language>
 	</row>
 
-	<row id="msg_c01r0102_inventor_14" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_inventor_14" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
 ■d01r0101イベント後
 ・以降、繰り返し表示
@@ -1031,30 +997,14 @@
 カントー地方の　マサキである</language>
 	</row>
 
-	<row id="msg_c01r0101_books2_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>本棚その２</comment>
+	<row id="msg_c01r0101_books2_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">本棚その２</attribute>
-		<language name="JPN" width="256">ともだちてちょうに
-ともだちを　とうろく　するには▼
-ポケモンセンター２Ｆで
-ポケモンを　こうかん　したりすると▼
-そのひとを　ともだちてちょうに
-とうろくすることが　できます▼
-また　ともだちコードを　おしえあって
-ともだちてちょうに▽
-とうろく　することも　できます</language>
-		<language name="JPN_KANJI" width="256">ともだちてちょうに
-ともだちを　登録するには▼
-ポケモンセンター２Ｆで
-ポケモンを　交換したりすると▼
-その人を　ともだちてちょうに
-登録することが　できます▼
-また　ともだちコードを　教えあって
-ともだちてちょうに▽
-登録することも　できます</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_00" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_pc_00" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>Cギア入手前</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
 		<language name="JPN" width="256">パソコンの　モニタには
@@ -1063,21 +1013,21 @@
 なにも　映っていない……</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_pc_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>Cギア入手後から表示</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
 		<language name="JPN" width="256">マコモの　メモ▼</language>
 		<language name="JPN_KANJI" width="256">マコモの　メモ▼</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_pc_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>選択肢表示</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
 		<language name="JPN" width="256">どの　こうもくを　よみますか？</language>
 		<language name="JPN_KANJI" width="256">どの　項目を　読みますか？</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_select_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_pc_select_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>選択肢
 ・選ぶとpc_03</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
@@ -1085,7 +1035,7 @@
 		<language name="JPN_KANJI" width="256">ゲームシンク</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_select_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_pc_select_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>選択肢
 ・選ぶとpc_04</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
@@ -1093,7 +1043,7 @@
 		<language name="JPN_KANJI" width="256">ポケモンのゆめ</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_select_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_pc_select_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>選択肢
 ・選ぶとウインドウが閉じる</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
@@ -1101,7 +1051,7 @@
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_pc_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>解説文
 ・続けてpc_02表示</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
@@ -1131,7 +1081,7 @@
 レポートを　送信することが　できる▼</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c01r0102_pc_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>解説文
 ・続けてpc_02表示</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
