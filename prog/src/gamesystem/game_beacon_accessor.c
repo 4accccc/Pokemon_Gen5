@@ -1356,10 +1356,12 @@ static BOOL errchk_action_waza(const GAMEBEACON_INFO* info )
 //エラーチェック サブウェイ連勝数タイプ 
 static BOOL errchk_action_victory(const GAMEBEACON_INFO* info )
 {
+#if 0
   if( info->action.victory_count ==0 || info->action.victory_count > 7 ){
     GF_ASSERT_MSG(0,"%d\n",info->action.victory_count);
     return TRUE;
   }
+#endif
   return FALSE;
 }
 //エラーチェック トライアルハウスランクタイプ 
