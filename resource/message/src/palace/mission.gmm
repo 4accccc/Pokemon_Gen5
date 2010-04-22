@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-18T20:23:08"/>
+	<create user="ohmori" host="W00223" date="2010-04-22T18:36:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -733,9 +733,9 @@
 	<row id="plc_mis_05_13" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　１１ばんどうろ　の
-なぞのマシンのまえに　かくせ！</language>
+バトルトレーラーの　まえに　かくせ！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　１１ばんどうろ　の
-なぞのマシンのまえに　かくせ！</language>
+バトルトレーラーの　まえに　かくせ！</language>
 	</row>
 
 	<row id="plc_mis_05_14" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -877,9 +877,9 @@
 	<row id="plc_mis_05_31" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　１１ばんどうろ　の
-なぞのマシンのまえに　かくせ！</language>
+バトルトレーラーの　まえに　かくせ！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　１１ばんどうろ　の
-なぞのマシンのまえに　かくせ！</language>
+バトルトレーラーの　まえに　かくせ！</language>
 	</row>
 
 	<row id="plc_mis_05_32" back-color="#ffff80,,,,,,,,,,,,,,,,,">

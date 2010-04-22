@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-04-22T17:48:34"/>
+	<create user="ohmori" host="W00223" date="2010-04-22T18:56:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3255,10 +3255,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 だれかに話しかけた時、相手側にでるメッセージ</comment>
 		<language name="JPN" width="256">キュン！
 キューン！▽
-あいてに　つかまってしまった！</language>
+なにかを　さがしてるみたい</language>
 		<language name="JPN_KANJI" width="256">キュン！
 キューン！▽
-あいてに　つかまってしまった！</language>
+なにかを　さがしてるみたい</language>
 	</row>
 
 	<row id="mis_m05_01_t2" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
@@ -3267,10 +3267,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 だれかに話しかけた時、相手側にでるメッセージ</comment>
 		<language name="JPN" width="256">ギャオ！
 ギャオギャオ！▽
-あいてに　つかまってしまった！</language>
+なにかを　さがしてるみたい</language>
 		<language name="JPN_KANJI" width="256">ギャオ！
 ギャオギャオ！▽
-あいてに　つかまってしまった！</language>
+なにかを　さがしてるみたい</language>
 	</row>
 
 	<row id="mis_m05_01_t3" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
@@ -3279,10 +3279,10 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 だれかに話しかけた時、相手側にでるメッセージ</comment>
 		<language name="JPN" width="256">……！
 ……　……！▽
-あいてに　つかまってしまった！</language>
+なにかを　さがしてるみたい</language>
 		<language name="JPN_KANJI" width="256">……！
 ……　……！▽
-あいてに　つかまってしまった！</language>
+なにかを　さがしてるみたい</language>
 	</row>
 
 	<row id="mis_m05_01_t4" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
@@ -3292,9 +3292,11 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『うわあ！
-つかまっちゃった！</language>
+みつかっちゃった！▽
+に　にげろ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『うわあ！
-つかまっちゃった！</language>
+みつかっちゃった！▽
+に　にげろ！</language>
 	</row>
 
 	<row id="mis_m05_01_t5" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
@@ -3304,12 +3306,14 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『うわあ！
-つかまっちゃった！</language>
+みつかっちゃった！▽
+に　にげろ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『うわあ！
-つかまっちゃった！</language>
+みつかっちゃった！▽
+に　にげろ！</language>
 	</row>
 
-	<row id="mis_m05_01_m1" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+	<row id="mis_m05_01_m1" back-color="#80ff80,,,#ffff00,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 １=カワイイポケモンのメッセージ（相手が）
 だれかに話しかけた時、ミッション側にでるメッセージ</comment>
@@ -3321,7 +3325,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 あいてを　つかまえた！</language>
 	</row>
 
-	<row id="mis_m05_01_m2" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+	<row id="mis_m05_01_m2" back-color="#80ff80,,,#ffff00,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 ２＝怖いポケモンのメッセージ（相手が）
 だれかに話しかけた時、ミッション側にでるメッセージ</comment>
@@ -3333,7 +3337,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 あいてを　つかまえた！</language>
 	</row>
 
-	<row id="mis_m05_01_m3" back-color="#80ff80,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+	<row id="mis_m05_01_m3" back-color="#80ff80,,,#ffff00,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 ３=無口なポケモンのメッセージ（相手が）
 だれかに話しかけた時、ミッション側にでるメッセージ</comment>
@@ -3411,10 +3415,12 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 だれかに話しかけられた時、相手側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『あはは！
-つかまえちゃったぜ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『あはは！
-つかまえちゃったぜ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『うわあ！
+つかまっちゃった！▽
+に　にげろ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『うわあ！
+つかまっちゃった！▽
+に　にげろ！</language>
 	</row>
 
 	<row id="mis_m05_02_t5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
@@ -3423,13 +3429,15 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 だれかに話しかけられた時、相手側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
-つかまえちゃった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
-つかまえちゃった！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『うわあ！
+つかまっちゃった！▽
+に　にげろ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『うわあ！
+つかまっちゃった！▽
+に　にげろ！</language>
 	</row>
 
-	<row id="mis_m05_02_m1" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+	<row id="mis_m05_02_m1" back-color="#00ff00,,,#ffff00,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 １=カワイイポケモンのメッセージ（相手が）
 だれかに話しかけられた時、ミッション側にでるメッセージ</comment>
@@ -3441,7 +3449,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 あいてに　つかまってしまった！</language>
 	</row>
 
-	<row id="mis_m05_02_m2" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+	<row id="mis_m05_02_m2" back-color="#00ff00,,,#ffff00,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 ２＝怖いポケモンのメッセージ（相手が）
 だれかに話しかけられた時、ミッション側にでるメッセージ</comment>
@@ -3453,7 +3461,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 あいてに　つかまってしまった！</language>
 	</row>
 
-	<row id="mis_m05_02_m3" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
+	<row id="mis_m05_02_m3" back-color="#00ff00,,,#ffff00,,,#ff8080,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　みつからないように　どうぐを　かくせ！」
 ３=無口なポケモンのメッセージ（相手が）
 だれかに話しかけられた時、ミッション側にでるメッセージ</comment>
@@ -3471,10 +3479,12 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 だれかに話しかけられた時、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『うわあ！
-つかまっちゃった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『うわあ！
-つかまっちゃった！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『あはは！
+つかまえちゃったぜ！▽
+あ！　にげないでよ！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『あはは！
+つかまえちゃったぜ！▽
+あ！　にげないでよ！</language>
 	</row>
 
 	<row id="mis_m05_02_m5" back-color="#00ff00,,,#ffff80,,,#ff8080,,,,,,,,,,,">
@@ -3483,10 +3493,12 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 だれかに話しかけられた時、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『うわあ！
-つかまっちゃった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『うわあ！
-つかまっちゃった！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
+つかまえちゃった！▽
+あ！　にげないで！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
+つかまえちゃった！▽
+あ！　にげないで！</language>
 	</row>
 
 	<row id="mis_m05_03_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff8080,,,,,#c0c0c0,,,,,,">
