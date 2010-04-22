@@ -17,7 +17,10 @@ enum {
 	NARC_iss_dungeon_iss_dungeon_data_d06r0201_bin = 3,
 	NARC_iss_dungeon_iss_dungeon_data_d06r0301_bin = 4,
 	NARC_iss_dungeon_iss_dungeon_data_r03r0301_bin = 5,
-	NARC_iss_dungeon_iss_dungeon_data_r03r0302_bin = 6
+	NARC_iss_dungeon_iss_dungeon_data_r03r0302_bin = 6,
+	NARC_iss_dungeon_iss_dungeon_data_r09r0301_bin = 7,
+	NARC_iss_dungeon_iss_dungeon_data_r09r0302_bin = 8,
+	NARC_iss_dungeon_iss_dungeon_data_r09r0303_bin = 9
 };
 
 /* NARC_ISS_DUNGEON_NAIX_ */

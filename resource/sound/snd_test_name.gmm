@@ -8421,13 +8421,13 @@
 		<language name="JPN" width="256">FLD-166</language>
 		<language name="JPN_KANJI" width="256">FLD-166</language>
 	</row>
-	<row id="msg_seq_se_dmy_336">
-		<language name="JPN" width="256">DMY-336</language>
-		<language name="JPN_KANJI" width="256">DMY-336</language>
+	<row id="msg_seq_se_vdemo_01">
+		<language name="JPN" width="256">VDEMO-01</language>
+		<language name="JPN_KANJI" width="256">VDEMO-01</language>
 	</row>
-	<row id="msg_seq_se_dmy_337">
-		<language name="JPN" width="256">DMY-337</language>
-		<language name="JPN_KANJI" width="256">DMY-337</language>
+	<row id="msg_seq_se_vdemo_02">
+		<language name="JPN" width="256">VDEMO-02</language>
+		<language name="JPN_KANJI" width="256">VDEMO-02</language>
 	</row>
 	<row id="msg_seq_se_dmy_338">
 		<language name="JPN" width="256">DMY-338</language>

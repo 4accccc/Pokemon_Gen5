@@ -36,7 +36,12 @@ enum {
 	NARC_iss_zone_iss_zone_data_r10r0601_bin = 22,
 	NARC_iss_zone_iss_zone_data_r10r0701_bin = 23,
 	NARC_iss_zone_iss_zone_data_r10r0801_bin = 24,
-	NARC_iss_zone_iss_zone_data_r10r0901_bin = 25
+	NARC_iss_zone_iss_zone_data_r10r0901_bin = 25,
+	NARC_iss_zone_iss_zone_data_t04_bin = 26,
+	NARC_iss_zone_iss_zone_data_t04r0101_bin = 27,
+	NARC_iss_zone_iss_zone_data_t04r0201_bin = 28,
+	NARC_iss_zone_iss_zone_data_t04r0301_bin = 29,
+	NARC_iss_zone_iss_zone_data_t04r0401_bin = 30
 };
 
 /* NARC_ISS_ZONE_NAIX_ */
