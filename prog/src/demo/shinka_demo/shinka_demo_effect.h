@@ -86,3 +86,13 @@ extern void SHINKADEMO_EFFECT_Start( SHINKADEMO_EFFECT_WORK* work );
 //=====================================
 extern void SHINKADEMO_EFFECT_StartWhite( SHINKADEMO_EFFECT_WORK* work );
 
+//-------------------------------------
+/// REAR‚ªŠ®‘S‚É”’‚­”ò‚ñ‚Å‚¢‚é‚©
+//=====================================
+extern BOOL SHINKADEMO_EFFECT_IsWhite( SHINKADEMO_EFFECT_WORK* work );
+
+//-------------------------------------
+/// REAR‚ª”’‚©‚ç–ß‚èŽn‚ß‚Ä‚¢‚é‚©
+//=====================================
+extern BOOL SHINKADEMO_EFFECT_IsFromWhite( SHINKADEMO_EFFECT_WORK* work );
+

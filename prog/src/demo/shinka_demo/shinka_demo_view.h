@@ -89,6 +89,21 @@ extern BOOL SHINKADEMO_VIEW_CryIsEnd( SHINKADEMO_VIEW_WORK* work );
 extern void SHINKADEMO_VIEW_ChangeStart( SHINKADEMO_VIEW_WORK* work );
 
 //-------------------------------------
+/// 画面を白く飛ばして欲しいか
+//=====================================
+extern BOOL SHINKADEMO_VIEW_ChangeIsToWhite( SHINKADEMO_VIEW_WORK* work );
+
+//-------------------------------------
+/// INDEPENDENTをMCSSに入れ替えスタート
+//=====================================
+extern void SHINKADEMO_VIEW_ChangeReplaceStart( SHINKADEMO_VIEW_WORK* work );
+
+//-------------------------------------
+/// ポケモンを白から戻すのをスタート
+//=====================================
+extern void SHINKADEMO_VIEW_ChangeFromWhiteStart( SHINKADEMO_VIEW_WORK* work );
+
+//-------------------------------------
 /// 進化が完了しているか
 //=====================================
 extern BOOL SHINKADEMO_VIEW_ChangeIsEnd( SHINKADEMO_VIEW_WORK* work );

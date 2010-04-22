@@ -203,13 +203,14 @@ PARTICLE_MANAGER;
 
 static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
 {
-//  {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA01 },
-//  {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA02 },
-//  {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA03 },
+  {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA01A },
+  {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA01 },
+  {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA02 },
+  {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA03 },
   {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA04 },
-  {  380,     PARTICLE_SPA_FILE_0,         DEMO_SINKA05 },
-  {  380,     PARTICLE_SPA_FILE_0,         DEMO_SINKA06 },
-  {  380,     PARTICLE_SPA_FILE_0,         DEMO_SINKA07 },
+  {  500,     PARTICLE_SPA_FILE_0,         DEMO_SINKA05 },
+  {  500,     PARTICLE_SPA_FILE_0,         DEMO_SINKA06 },
+  {  570,     PARTICLE_SPA_FILE_0,         DEMO_SINKA07 },
 };
 
 //-------------------------------------
@@ -588,6 +589,50 @@ void SHINKADEMO_EFFECT_StartWhite( SHINKADEMO_EFFECT_WORK* work )
     work->step = STEP_EVO_TO_WHITE_START;
   }
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         REARが完全に白く飛んでいるか
+ *
+ *  @param[in,out] work  SHINKADEMO_EFFECT_Initで生成したワーク
+ *
+ *  @retval        REARが完全に白く飛んでいるときTRUE 
+ */
+//-----------------------------------------------------------------------------
+BOOL SHINKADEMO_EFFECT_IsWhite( SHINKADEMO_EFFECT_WORK* work )
+{
+  // 3D
+  if( work->step == STEP_EVO_WHITE )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         REARが白から戻り始めているか
+ *
+ *  @param[in,out] work  SHINKADEMO_EFFECT_Initで生成したワーク
+ *
+ *  @retval        REARが白から戻り始めているときTRUE 
+ */
+//-----------------------------------------------------------------------------
+BOOL SHINKADEMO_EFFECT_IsFromWhite( SHINKADEMO_EFFECT_WORK* work )
+{
+  // 3D
+  if(    work->step == STEP_EVO_WHITE
+      && work->wait_count <= 1 )
+  {
+    return TRUE;
+  }
+  else if( work->step == STEP_EVO_FROM_WHITE )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 //=============================================================================
 /**

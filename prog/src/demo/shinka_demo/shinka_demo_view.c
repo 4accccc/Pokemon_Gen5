@@ -46,11 +46,14 @@ typedef enum
 
   STEP_EVO_CHANGE_OPENING_COLOR_TO_WHITE_START,           // 進化中  // 白くする
   STEP_EVO_CHANGE_OPENING_COLOR_TO_WHITE,                 // 進化中  // 白くなり中
+  STEP_EVO_CHANGE_OPENING_BEFORE_REPLACE_WAIT,            // 進化中  // しばし待ち
   STEP_EVO_CHANGE_OPENING_REPLACE_MCSS_WITH_INDEPENDENT,  // 進化中  // MCSSを消しINDEPENDENTを出現させる
+  STEP_EVO_CHANGE_OPENING_AFTER_REPLACE_WAIT,             // 進化中  // しばし待ち
   STEP_EVO_CHANGE_OPENING_WHITE_TO_COLOR_START,           // 進化中  // 色付きに戻る
   STEP_EVO_CHANGE_OPENING_WHITE_TO_COLOR,                 // 進化中  // 色付きに戻り中
 
   STEP_EVO_CHANGE_TRANSFORM,                              // 進化中  // 変形
+  STEP_EVO_CHANGE_TRANSFORM_FINISH,                       // 進化中  // 変形完了したので、しばらく白絵を見せて溜める
   STEP_EVO_CHANGE_CANCEL,                                 // 進化中  // キャンセル
 
   STEP_EVO_CHANGE_ENDING_BEFORE_REPLACE_WAIT,             // 進化中  // しばし待ち
@@ -88,7 +91,7 @@ POKE;
 // ポケモンのX,Y座標
 #define POKE_X_HIDE    (FX_F32_TO_FX32(256.0f))
 #define POKE_X_CENTER  (FX_F32_TO_FX32(0.0f))//(FX_F32_TO_FX32(-1.0f))//(FX_F32_TO_FX32(-3.0f))
-#define POKE_Y         (FX_F32_TO_FX32(-16.0f))
+#define POKE_Y         (FX_F32_TO_FX32(-18.0f))//(FX_F32_TO_FX32(-16.0f))
 
 // ポケモンのY座標調整
 #define POKE_Y_ADJUST (0.33f)  // この値を掛ける
@@ -127,8 +130,8 @@ POKE_SET;
 #define INDEPENDENT_PANEL_NUM_X    (18)
 #define INDEPENDENT_PANEL_NUM_Y    (18)
 // 全部を合わせて1枚と見たときのサイズ
-#define INDEPENDENT_PANEL_TOTAL_W  (35)
-#define INDEPENDENT_PANEL_TOTAL_H  (35)
+#define INDEPENDENT_PANEL_TOTAL_W  (36)
+#define INDEPENDENT_PANEL_TOTAL_H  (36)
 // 全部を合わせて1枚と見たときの最小最大のテクスチャ座標
 #define INDEPENDENT_PANEL_TOTAL_MIN_S  ( 16)
 #define INDEPENDENT_PANEL_TOTAL_MAX_S  (112)
@@ -262,13 +265,16 @@ INDEPENDENT_POKE_WORK;
 typedef struct
 {
   INDEPENDENT_STATE       state;
+  GFL_G3D_CAMERA*         camera;             // INDEPENDENT専用カメラ
   INDEPENDENT_POKE_WORK*  poke_wk[POKE_MAX];  // NULLのときはなし
 }
 INDEPENDENT_POKE_MANAGER;
 
-// ポケモンのX座標
+// ポケモンのX,Y,Z座標
 #define INDEPENDENT_POKE_X_HIDE    (FX32_CONST(256))
 #define INDEPENDENT_POKE_X_CENTER  (FX32_CONST(0))
+#define INDEPENDENT_POKE_Y         (-FX32_HALF)
+#define INDEPENDENT_POKE_Z         (FX32_CONST(0))
 
 
 //-------------------------------------
@@ -292,10 +298,13 @@ struct _SHINKADEMO_VIEW_WORK
   u32                      wait_count;
 
   // フラグ
-  BOOL                     b_cry_start;      // 進化前の鳴きスタートしていいときはTRUE
-  BOOL                     b_cry_end;        // 進化前の鳴きが完了していたらTRUE
-  BOOL                     b_change_start;   // 進化スタートしていいときはTRUE
-  BOOL                     b_change_end;     // 進化が完了していたらTRUE
+  BOOL                     b_cry_start;                // 進化前の鳴きスタートしていいときはTRUE
+  BOOL                     b_cry_end;                  // 進化前の鳴きが完了していたらTRUE
+  BOOL                     b_change_start;             // 進化スタートしていいときはTRUE
+  BOOL                     b_change_to_white;          // 画面を白く飛ばして欲しくなったらTRUE
+  BOOL                     b_change_replace_start;     // INDEPENDENTをMCSSに入れ替えていいときはTRUE
+  BOOL                     b_change_from_white_start;  // ポケモンを白から戻していいときはTRUE
+  BOOL                     b_change_end;               // 進化が完了していたらTRUE
   BOOL                     b_change_bgm_shinka_start;    // BGM SHINKA曲を開始してもよいか
   BOOL                     b_change_bgm_shinka_push;     // BGM SHINKA曲をpushしてもよいか
   BOOL                     b_change_cancel;  // 進化キャンセルしていたらTRUE
@@ -343,7 +352,9 @@ static BOOL IndependentPokeManagerIsEnableCancel( SHINKADEMO_VIEW_WORK* work );
 static void IndependentPokeManagerCancel( SHINKADEMO_VIEW_WORK* work );
 
 static void IndependentPokeManagerSetPosX( SHINKADEMO_VIEW_WORK* work, fx32 pos_x );
+static void IndependentPokeManagerSetPosXYZ( SHINKADEMO_VIEW_WORK* work, fx32 pos_x, fx32 pos_y, fx32 pos_z );
 static void IndependentPokeSetPosX( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id, fx32 pos_x );
+static void IndependentPokeSetPosXYZ( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id, fx32 pos_x, fx32 pos_y, fx32 pos_z );
 
 static void IndependentPokeManagerPalStartWhiteToColor( SHINKADEMO_VIEW_WORK* work );
 static BOOL IndependentPokeManagerPalIsColor( SHINKADEMO_VIEW_WORK* work );
@@ -568,7 +579,21 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
       if( !MCSS_CheckExecutePaletteFade( work->poke_set[work->disp_poke].wk ) )
       {
         // 次へ
+        work->step = STEP_EVO_CHANGE_OPENING_BEFORE_REPLACE_WAIT;
+      }
+    }
+    break;
+  case STEP_EVO_CHANGE_OPENING_BEFORE_REPLACE_WAIT:
+    {
+      if( work->wait_count >= 8 )
+      {
+        // 次へ
         work->step = STEP_EVO_CHANGE_OPENING_REPLACE_MCSS_WITH_INDEPENDENT;
+        work->wait_count = 0;
+      }
+      else
+      {
+        work->wait_count++;
       }
     }
     break;
@@ -578,11 +603,25 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
       work->step = STEP_EVO_CHANGE_OPENING_WHITE_TO_COLOR_START;
 
       ShinkaDemo_View_PokeSetPosX( work, POKE_X_HIDE );
-      IndependentPokeManagerSetPosX( work, INDEPENDENT_POKE_X_CENTER );
+      IndependentPokeManagerSetPosXYZ( work, INDEPENDENT_POKE_X_CENTER, INDEPENDENT_POKE_Y, INDEPENDENT_POKE_Z );
 
       {
         NNSG2dMultiCellAnimation* anim_ctrl = MCSS_GetAnimCtrl( work->poke_set[work->disp_poke].wk );
         NNS_G2dRestartMCAnimation( anim_ctrl );
+      }
+    }
+    break;
+  case STEP_EVO_CHANGE_OPENING_AFTER_REPLACE_WAIT:
+    {
+      if( work->wait_count >= 1 )
+      {
+        // 次へ
+        work->step = STEP_EVO_CHANGE_OPENING_WHITE_TO_COLOR_START;
+        work->wait_count = 0;
+      }
+      else
+      {
+        work->wait_count++;
       }
     }
     break;
@@ -612,9 +651,23 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
       if( IndependentPokeManagerPalIsStartWhiteToColor( work ) )
       {
         // 次へ
-        work->step = STEP_EVO_CHANGE_ENDING_REPLACE_INDEPENDENT_WITH_MCSS;
+        work->step = STEP_EVO_CHANGE_TRANSFORM_FINISH;
+      }
+    }
+    break;
+  case STEP_EVO_CHANGE_TRANSFORM_FINISH:
+    {
+      if( work->wait_count >= 30 )
+      {
+        // 次へ
+        work->step = STEP_EVO_CHANGE_ENDING_BEFORE_REPLACE_WAIT;
         
         work->b_change_bgm_shinka_push = TRUE;
+        work->b_change_to_white = TRUE;
+      }
+      else
+      {
+        work->wait_count++;
       }
     }
     break;
@@ -623,24 +676,20 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
       if( IndependentPokeManagerPalIsStartWhiteToColor( work ) )
       {
         // 次へ
-        work->step = STEP_EVO_CHANGE_ENDING_REPLACE_INDEPENDENT_WITH_MCSS;
+        work->step = STEP_EVO_CHANGE_ENDING_BEFORE_REPLACE_WAIT;
 
         work->b_change_bgm_shinka_push = TRUE;
+        work->b_change_to_white = TRUE;
       }
     }
     break;
 
   case STEP_EVO_CHANGE_ENDING_BEFORE_REPLACE_WAIT:
     {
-      if( work->wait_count >= 60 )
+      if( work->b_change_replace_start )
       {
         // 次へ
-        work->step = STEP_EVO_CHANGE_ENDING_WHITE_TO_COLOR_START;
-        work->wait_count = 0;
-      }
-      else
-      {
-        work->wait_count++;
+        work->step = STEP_EVO_CHANGE_ENDING_REPLACE_INDEPENDENT_WITH_MCSS;
       }
     }
     break;
@@ -664,20 +713,15 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
       }
 
       ShinkaDemo_View_PokeSetPosX( work, POKE_X_CENTER );
-      IndependentPokeManagerSetPosX( work, INDEPENDENT_POKE_X_HIDE );
+      IndependentPokeManagerSetPosXYZ( work, INDEPENDENT_POKE_X_HIDE, INDEPENDENT_POKE_Y, INDEPENDENT_POKE_Z );
     }
     break;
   case STEP_EVO_CHANGE_ENDING_AFTER_REPLACE_WAIT:
     {
-      if( work->wait_count >= 30 )
+      if( work->b_change_from_white_start )
       {
         // 次へ
         work->step = STEP_EVO_CHANGE_ENDING_WHITE_TO_COLOR_START;
-        work->wait_count = 0;
-      }
-      else
-      {
-        work->wait_count++;
       }
     }
     break;
@@ -811,6 +855,48 @@ BOOL SHINKADEMO_VIEW_CryIsEnd( SHINKADEMO_VIEW_WORK* work )
 void SHINKADEMO_VIEW_ChangeStart( SHINKADEMO_VIEW_WORK* work )
 {
   work->b_change_start = TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         画面を白く飛ばして欲しいか
+ *
+ *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
+ *
+ *  @retval        画面を白く飛ばして欲しいときTRUEを返す
+ */
+//-----------------------------------------------------------------------------
+BOOL SHINKADEMO_VIEW_ChangeIsToWhite( SHINKADEMO_VIEW_WORK* work )
+{
+  return work->b_change_to_white;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         INDEPENDENTをMCSSに入れ替えスタート
+ *
+ *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
+ *
+ *  @retval        
+ */
+//-----------------------------------------------------------------------------
+void SHINKADEMO_VIEW_ChangeReplaceStart( SHINKADEMO_VIEW_WORK* work )
+{
+  work->b_change_replace_start = TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         ポケモンを白から戻すのをスタート
+ *
+ *  @param[in,out] work  SHINKADEMO_VIEW_Initで生成したワーク
+ *
+ *  @retval        
+ */
+//-----------------------------------------------------------------------------
+void SHINKADEMO_VIEW_ChangeFromWhiteStart( SHINKADEMO_VIEW_WORK* work )
+{
+  work->b_change_from_white_start = TRUE;
 }
 
 //-----------------------------------------------------------------------------
@@ -1126,7 +1212,23 @@ static void IndependentPokeManagerInit( SHINKADEMO_VIEW_WORK* work )
   
   {
     // 次の関数の中でwork->independent_poke_mgrを使用しているので、work->independent_poke_mgrへの代入、IndependentPokeManagerSetPosX呼び出しの順で。
-    IndependentPokeManagerSetPosX( work, INDEPENDENT_POKE_X_HIDE );
+    IndependentPokeManagerSetPosXYZ( work, INDEPENDENT_POKE_X_HIDE, INDEPENDENT_POKE_Y, INDEPENDENT_POKE_Z );
+  }
+
+  // INDEPENDENT専用カメラ
+  {
+    // 射影
+    VecFx32 pos    = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 100.0f ) };
+    VecFx32 up     = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 1.0f ), FX_F32_TO_FX32(   0.0f ) };
+    VecFx32 target = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(   0.0f ) };
+
+    independent_poke_mgr->camera = GFL_G3D_CAMERA_Create(
+        GFL_G3D_PRJPERS, 
+        FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
+        FX_CosIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
+        defaultCameraAspect, 0,
+        defaultCameraNear, defaultCameraFar, 0,
+        &pos, &up, &target, work->heap_id );
   }
 }
 static void IndependentPokeManagerExit( SHINKADEMO_VIEW_WORK* work )
@@ -1134,6 +1236,12 @@ static void IndependentPokeManagerExit( SHINKADEMO_VIEW_WORK* work )
   INDEPENDENT_POKE_MANAGER* independent_poke_mgr = work->independent_poke_mgr;
 
   u8 i;
+
+  // INDEPENDENT専用カメラ
+  {
+    GFL_G3D_CAMERA_Delete( independent_poke_mgr->camera );
+  }
+
   for( i=0; i<POKE_MAX; i++ )
   {
     if( independent_poke_mgr->poke_wk[i] )
@@ -1180,7 +1288,17 @@ static void IndependentPokeManagerMain( SHINKADEMO_VIEW_WORK* work )
     {
       if( independent_poke_mgr->poke_wk[i] )
       {
-        IndependentPokePalMain( independent_poke_mgr->poke_wk[i], heap_id );
+        INDEPENDENT_POKE_WORK* poke_wk = independent_poke_mgr->poke_wk[i];
+
+        // 進化キャンセル
+        if( work->b_change_cancel )
+        {
+          if( IndependentPokePalIsWhite( poke_wk, heap_id ) )
+          {
+            poke_wk->pal_state = INDEPENDENT_PAL_STATE_START_WHITE_TO_COLOR;
+          }
+        }
+        IndependentPokePalMain( poke_wk, heap_id );
       } 
     }
   }
@@ -1190,12 +1308,51 @@ static void IndependentPokeManagerDraw( SHINKADEMO_VIEW_WORK* work )
   INDEPENDENT_POKE_MANAGER* independent_poke_mgr = work->independent_poke_mgr;
 
   u8 i;
+
+  GFL_G3D_PROJECTION  projection;
+  GFL_G3D_LOOKAT      lookAt;
+
+  // INDEPENDENT専用カメラに切り替える
+  {
+    // 最初はビルボードを試したのだが
+    // 中心に空きができてしまったので、
+    // ビルボードはあきらめて
+    // 専用カメラを用いることにした。
+
+    GFL_G3D_GetSystemProjection(&projection);
+    GFL_G3D_GetSystemLookAt(&lookAt);
+
+    {
+      VecFx32 scale = { FX32_ONE, FX32_ONE, FX32_ONE };
+      MtxFx33 rot;
+      VecFx32 trans = { 0, 0, 0 };
+
+      MTX_Identity33( &rot );
+
+      NNS_G3dGlbSetBaseTrans( &trans );
+      NNS_G3dGlbSetBaseRot( &rot );
+      NNS_G3dGlbSetBaseScale( &scale );
+    }
+
+    GFL_G3D_CAMERA_Switching(independent_poke_mgr->camera);
+    GFL_G3D_DRAW_SetLookAt();
+    NNS_G3dGeFlushBuffer();
+  }
+
   for( i=0; i<POKE_MAX; i++ )
   {
     if( independent_poke_mgr->poke_wk[i] )
     {
       IndependentPokeDraw( independent_poke_mgr->poke_wk[i], work->heap_id );
     }
+  }
+
+  // INDEPENDENT専用カメラから戻す
+  {
+    GFL_G3D_SetSystemProjection(&projection);
+    GFL_G3D_SetSystemLookAt(&lookAt);
+    GFL_G3D_DRAW_SetLookAt();
+    NNS_G3dGeFlushBuffer();
   }
 }
 
@@ -1228,9 +1385,10 @@ static void IndependentPokeManagerCancel( SHINKADEMO_VIEW_WORK* work )
     INDEPENDENT_POKE_WORK* poke_wk = independent_poke_mgr->poke_wk[POKE_BEFORE];
 
     if(    poke_wk->pal_state != INDEPENDENT_PAL_STATE_START_COLOR_TO_WHITE
-        && poke_wk->pal_state != INDEPENDENT_PAL_STATE_COLOR_TO_WHITE )
+        && poke_wk->pal_state != INDEPENDENT_PAL_STATE_COLOR_TO_WHITE
+        && poke_wk->pal_state != INDEPENDENT_PAL_STATE_WHITE )
     {
-      poke_wk->pal_state = INDEPENDENT_PAL_STATE_START_WHITE_TO_COLOR;
+      poke_wk->pal_state = INDEPENDENT_PAL_STATE_START_COLOR_TO_WHITE;
     }
   }
 }
@@ -1248,9 +1406,29 @@ static void IndependentPokeManagerSetPosX( SHINKADEMO_VIEW_WORK* work, fx32 pos_
     }
   }
 }
+static void IndependentPokeManagerSetPosXYZ( SHINKADEMO_VIEW_WORK* work, fx32 pos_x, fx32 pos_y, fx32 pos_z )
+{
+  INDEPENDENT_POKE_MANAGER* independent_poke_mgr = work->independent_poke_mgr;
+
+  u8 i;
+  for( i=0; i<POKE_MAX; i++ )
+  {
+    if( independent_poke_mgr->poke_wk[i] )
+    {
+      IndependentPokeSetPosXYZ( independent_poke_mgr->poke_wk[i], work->heap_id, pos_x, pos_y, pos_z );
+    }
+  }
+}
+
 static void IndependentPokeSetPosX( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id, fx32 pos_x )
 {
   poke_wk->pos.x = pos_x;
+}
+static void IndependentPokeSetPosXYZ( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id, fx32 pos_x, fx32 pos_y, fx32 pos_z )
+{
+  poke_wk->pos.x = pos_x;
+  poke_wk->pos.y = pos_y;
+  poke_wk->pos.z = pos_z;
 }
 
 static void IndependentPokeManagerPalStartWhiteToColor( SHINKADEMO_VIEW_WORK* work )

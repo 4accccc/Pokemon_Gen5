@@ -716,9 +716,21 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         if( SHINKADEMO_VIEW_ChangeIsBgmShinkaPush( work->view ) )
         {
           ShinkaDemo_SoundPushShinka( param, work );
-
-          // REARを白く飛ばすアニメ開始
+        }
+        // 画面を白く飛ばすか
+        if( SHINKADEMO_VIEW_ChangeIsToWhite( work->view ) )
+        {
           SHINKADEMO_EFFECT_StartWhite( work->efwk );
+        }
+        // INDEPENDENTをMCSSに入れ替えスタート
+        if( SHINKADEMO_EFFECT_IsWhite( work->efwk ) )
+        {
+          SHINKADEMO_VIEW_ChangeReplaceStart( work->view );
+        }
+        // ポケモンを白から戻すのをスタート
+        if( SHINKADEMO_EFFECT_IsFromWhite( work->efwk) )
+        {
+          SHINKADEMO_VIEW_ChangeFromWhiteStart( work->view );
         }
 
         // 進化キャンセルしたか
