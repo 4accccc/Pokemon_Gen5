@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-04-21T22:49:53"/>
+	<create user="iwasawa" host="W00157" date="2010-04-22T17:50:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="123" top="140" right="828" bottom="760" maximized="no" rayout="Vertical2">
+	<dialog left="355" top="219" right="1060" bottom="839" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="799" top="128" right="1272" bottom="526" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -438,6 +438,77 @@
 	<row id="dlc_beacon_req_action" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">action=[2:01:２桁:0] [1:1C:簡易会話単語:1]</language>
 		<language name="JPN_KANJI" width="256">action=[2:01:２桁:0] [1:1C:簡易会話単語:1]</language>
+	</row>
+
+	<row id="dlc_beacon_req_param01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,,,,,,#ff78ff,,,,,,">
+		<comment>ビーコンパラメータ</comment>
+		<language name="JPN" width="256">パラメータなし</language>
+		<language name="JPN_KANJI" width="256">パラメータなし</language>
+	</row>
+
+	<row id="dlc_beacon_req_param02" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">tr_no=[2:03:４桁:0]　[1:00:トレーナー名:1]</language>
+		<language name="JPN_KANJI" width="256">tr_no=[2:03:４桁:0]　[1:00:トレーナー名:1]</language>
+	</row>
+
+	<row id="dlc_beacon_req_param03" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">monsno=[2:02:３桁:0] [1:01:ポケモン種族名:1]</language>
+		<language name="JPN_KANJI" width="256">monsno=[2:02:３桁:0] [1:01:ポケモン種族名:1]</language>
+	</row>
+
+	<row id="dlc_beacon_req_param04" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">nickname [1:02:ポケモンニックネーム:2]</language>
+		<language name="JPN_KANJI" width="256">nickname [1:02:ポケモンニックネーム:2]</language>
+	</row>
+
+	<row id="dlc_beacon_req_param05" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">item=[2:03:４桁:0] [1:09:どうぐ名:1]</language>
+		<language name="JPN_KANJI" width="256">item=[2:03:４桁:0] [1:09:どうぐ名:1]</language>
+	</row>
+
+	<row id="dlc_beacon_req_param06" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">play_time=[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="256">play_time=[2:02:３桁:0]</language>
+	</row>
+
+	<row id="dlc_beacon_req_param07" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">すれちがいかいすう=[2:04:５桁:0]</language>
+		<language name="JPN_KANJI" width="256">すれちがいかいすう=[2:04:５桁:0]</language>
+	</row>
+
+	<row id="dlc_beacon_req_param08" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">はくしゅかいすう=[2:04:５桁:0]</language>
+		<language name="JPN_KANJI" width="256">はくしゅかいすう=[2:04:５桁:0]</language>
+	</row>
+
+	<row id="dlc_beacon_req_param09" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">waza=[2:00:１桁:0] [1:07:わざ名:1]</language>
+		<language name="JPN_KANJI" width="256">waza=[2:00:１桁:0] [1:07:わざ名:1]</language>
+	</row>
+
+	<row id="dlc_beacon_req_param10" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">Subwayれんしょう=[2:00:１桁:0]</language>
+		<language name="JPN_KANJI" width="256">Subwayれんしょう=[2:00:１桁:0]</language>
+	</row>
+
+	<row id="dlc_beacon_req_param11" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">t_house_rank=[2:00:１桁:0]</language>
+		<language name="JPN_KANJI" width="256">t_house_rank=[2:00:１桁:0]</language>
+	</row>
+
+	<row id="dlc_beacon_req_param12" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">Dパワー=[2:01:２桁:0] [1:1C:簡易会話単語:1]</language>
+		<language name="JPN_KANJI" width="256">Dパワー=[2:01:２桁:0] [1:1C:簡易会話単語:1]</language>
+	</row>
+
+	<row id="dlc_beacon_req_param13" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">tr_id=[2:04:５桁:0]</language>
+		<language name="JPN_KANJI" width="256">tr_id=[2:04:５桁:0]</language>
+	</row>
+
+	<row id="dlc_beacon_req_param14" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">fword=[1:1C:簡易会話単語:3]</language>
+		<language name="JPN_KANJI" width="256">fword=[1:1C:簡易会話単語:3]</language>
 	</row>
 
 	<row id="dlc_action_00" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">

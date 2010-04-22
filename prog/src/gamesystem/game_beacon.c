@@ -2093,9 +2093,11 @@ void GAMEBEACON_Set_SubwayStraightVictories(u32 victory_count)
 
 //==================================================================
 /**
- * ビーコンセット：バトルサブウェイ連勝中
+ * ビーコンセット：バトルサブウェイ連勝中(ラウンド数)
  *
- * @param   victory_count		連勝数
+ * @param   victory_count		勝ち進んだラウンド数
+ *
+ * 記録として伸びていく<連勝数>ではなく、7戦1セットの何勝目かを1～7で渡してください
  */
 //==================================================================
 void BEACONINFO_Set_SubwayStraightVictories(GAMEBEACON_INFO *info, u32 victory_count)
@@ -2338,7 +2340,7 @@ void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 targ
  * @param   free_word   一言メッセージ
  */
 //==================================================================
-void GAMEBEACON_Set_FreeWord(GAMEDATA *gamedata, const STRBUF *free_word)
+void GAMEBEACON_Set_FreeWord( const STRBUF *free_word )
 {
   if(_CheckPriority(GAMEBEACON_ACTION_FREEWORD) == FALSE){ return; };
   BEACONINFO_Set_FreeWord(&GameBeaconSys->send.info, free_word);

@@ -149,7 +149,7 @@ static void sub_ResultGet( EVWORK_FWORD_INPUT* wk, NAMEIN_PARAM* param )
     break;
   case NAMEIN_FREE_WORD:  //すれ違いフリーワード
     GFL_STR_CopyBuffer( BEACON_STATUS_GetFreeWordBuffer( wk->b_status ), wk->param.strbuf );
-    GAMEBEACON_Set_FreeWord( wk->gdata, param->strbuf );
+    GAMEBEACON_Set_FreeWord( param->strbuf );
     break;
   default:
     GF_ASSERT(0);

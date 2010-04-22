@@ -186,7 +186,7 @@ extern void GAMEBEACON_Set_PokeShifter(void);
 extern void GAMEBEACON_Set_Musical(const STRBUF *nickname);
 extern void GAMEBEACON_Set_OtherGPowerUse(GPOWER_ID gpower_id);
 extern void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata, u32 target_trainer_id);
-extern void GAMEBEACON_Set_FreeWord(GAMEDATA *gamedata, const STRBUF *free_word);
+extern void GAMEBEACON_Set_FreeWord(const STRBUF *free_word);
 
 //=====詳細パラメータセット
 extern void GAMEBEACON_Set_ZoneChange(ZONEID zone_id, const GAMEDATA *cp_gamedata);

@@ -1099,16 +1099,18 @@ u32 GAMEBEACON_Get_Action_Hour(const GAMEBEACON_INFO *info)
 
 //==================================================================
 /**
- * 行動パラメータ取得：連勝数
+ * 行動パラメータ取得：サブウェイラウンド数(1～7)
  * @param   info	ビーコン情報へのポインタ
- * @retval  u32		経過時間(時)
+ * @retval  u32		サブウェイで勝ち進んだラウンド数
+ *
+ * <連勝数>とは違うので注意。7戦1セットの中の何勝目かを返します
  */
 //==================================================================
 u32 GAMEBEACON_Get_Action_VictoryCount(const GAMEBEACON_INFO *info)
 {
   switch(info->action.action_no){
   case GAMEBEACON_ACTION_SUBWAY_STRAIGHT_VICTORIES:
-    return info->action.victory_count + 1;
+    return info->action.victory_count;
   }
   GF_ASSERT(0);
   return info->action.victory_count;
@@ -1354,7 +1356,7 @@ static BOOL errchk_action_waza(const GAMEBEACON_INFO* info )
 //エラーチェック サブウェイ連勝数タイプ 
 static BOOL errchk_action_victory(const GAMEBEACON_INFO* info )
 {
-  if( info->action.victory_count > 6 ){
+  if( info->action.victory_count ==0 || info->action.victory_count > 7 ){
     GF_ASSERT_MSG(0,"%d\n",info->action.victory_count);
     return TRUE;
   }
