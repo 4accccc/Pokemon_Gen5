@@ -3118,7 +3118,7 @@ static void handler_KiaiNoTasuki_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_KoraeItem );
       HANDEX_STR_AddArg( &param->exStr, pokeID );
       HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
-      work[0] = FALSE;
+      work[0] = 0;
     }
   }
 }
@@ -3143,17 +3143,23 @@ static void handler_KiaiNoHachimaki_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
     u8 per = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
-    if( Item_IsExePer(flowWk, per) ){
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_KORAERU_CAUSE, BPP_KORAE_ITEM );
+    if( Item_IsExePer(flowWk, per) )
+    {
+      work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_KORAERU_CAUSE, BPP_KORAE_ITEM );
+    }
+    else{
+      work[0] = 0;
     }
   }
 }
 // こらえる発動ハンドラ
 static void handler_KiaiNoHachimaki_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  (work[0] != 0)
+  ){
     BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
+    work[0] = 0;
   }
 }
 // アイテム使用ハンドラ
