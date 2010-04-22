@@ -48,6 +48,10 @@ struct _BAG_CURSOR {
 #define	ITEM_MAX_NORMAL			( 999 )		// 通常のアイテム所持数最大
 #define	ITEM_MAX_WAZAMACHINE	( 99 )		// 技マシンの所持数最大
 
+
+//==============================================================================
+//	プロトタイプ宣言
+//==============================================================================
 static u32 MyItemDataGet( MYITEM_PTR myitem, u16 id, ITEM_ST ** item, u32 * max, HEAPID heap );
 static u32 MyPocketDataGet( MYITEM_PTR myitem, s32 pocket, ITEM_ST ** item, u32 * max);
 static void bottomInsert( ITEM_ST * item, const u32 max );
@@ -327,9 +331,19 @@ BOOL MYITEM_AddItem( MYITEM_PTR myitem, u16 item_no, u16 num, HEAPID heap )
 		u32	pocket;
 		u32	max;
 		pocket = MyItemDataGet( myitem, item_no, &add, &max, heap );
+		// 木の実
+		if( pocket == BAG_POKE_NUTS ){
+			MYITEM_SortNumber( add, max );
+		// 技マシン
+		}else if( pocket == BAG_POKE_WAZA ){
+			MYITEM_SortWazaMachine( add, max );
+		}
+/*
+		// 木の実
 		if( pocket == BAG_POKE_NUTS || pocket == BAG_POKE_WAZA ){
 			MYITEM_SortNumber( add, max );
 		}
+*/
     else if(before == 0){  //加えたアイテムが一個目だった場合、リストの最初にもっていく
       ITEM_ST * item;
       u32	num;
@@ -503,7 +517,6 @@ BOOL MYITEM_CheckItemPocket( MYITEM_PTR myitem, u32 pocket )
  * @return     数
  */
 //------------------------------------------------------------------
-
 u32 MYITEM_GetItemThisPocketNumber( ITEM_ST * item,int max )
 {
 	u32	num=0;
@@ -692,6 +705,31 @@ void MYITEM_SortNumber( ITEM_ST * item, const u32 max )
 		}
 	}
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief	アイテムソート（技マシン番号順）
+ * @param	item	アイテムデータ
+ * @param	max		最大値
+ * @return	none
+ */
+//------------------------------------------------------------------
+void MYITEM_SortWazaMachine( ITEM_ST * item, const u32 max )
+{
+	u32	i, j;
+
+	DeleteNullItem( item, max );
+
+	for( i=0; i<max-1; i++ ){
+		for( j=i+1; j<max; j++ ){
+			if( item[i].no == 0 || ( item[j].no != 0 && ITEM_GetWazaMashineNo(item[i].id) > ITEM_GetWazaMashineNo(item[j].id) ) ){
+				ChengeItem( &item[i], &item[j] );
+
+			}
+		}
+	}
+}
+
 
 //------------------------------------------------------------------
 /**
