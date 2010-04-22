@@ -16,12 +16,14 @@
 #include "poke_tool/gauge_tool.h"
 #include "app/app_menu_common.h"
 #include "print/str_tool.h"
+#include "net/net_dev.h"
 
 #include "btlv_effect.h"
 #include "btlv_gauge.h"
 
 #include "pm_define.h"
 #include "sound/pm_sndsys.h"
+
 
 #include "arc_def.h"
 #include "battle/battgra_wb.naix"
@@ -291,6 +293,7 @@ static  void  TCB_BTLV_GAUGE_DamageEffect( GFL_TCB* tcb, void* work );
 
 static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos, PokeSick sick );
 static  void  gauge_init_view( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvMcssPos pos, const POKEMON_PARAM* pp );
+static  void  bgm_pause( BOOL flag );
 
 //============================================================================================
 /**
@@ -1863,12 +1866,12 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
       if( bgw->pinch_bgm_flag )
       {
         PMSND_PopBGM();
-        PMSND_PauseBGM( FALSE );
+        bgm_pause( FALSE );
         PMSND_FadeInBGM( 24 );
       }
       else
       {
-        PMSND_PauseBGM( TRUE );
+        bgm_pause( TRUE );
         PMSND_PushBGM();
         PMSND_PlayBGM( SEQ_BGM_BATTLEPINCH );
       }
@@ -2059,5 +2062,20 @@ static  void  TCB_BTLV_GAUGE_DamageEffect( GFL_TCB* tcb, void* work )
     }
     break;
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ピンチBGM移行時に戦闘BGMのポーズ設定/解除
+ */
+//--------------------------------------------------------------
+static  void  bgm_pause( BOOL flag )
+{ 
+  //赤外線系の通信ではポーズをしない
+  if( NET_DEV_IsIrcMode() == TRUE )
+  { 
+    return;
+  }
+  PMSND_PauseBGM( flag );
 }
 
