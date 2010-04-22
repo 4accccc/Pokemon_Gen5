@@ -739,7 +739,7 @@
 #define FV_C03R0101_MEMBER_G               715 /* 0x02cb 調査隊一般隊員G */
 #define FV_D05R0201_SAGE7                  716 /* 0x02cc クリア後七賢人イベント：冷凍コンテナ */
 #define FV_C05R0601_OKOU                   717 /* 0x02cd クリア後：お香売り */
-#define FV_POKE_JUDGE                      718 /* 0x02ce ジャッジ（ポケモンの個体値を調べてくれる人） */
+#define FV_POKE_JUDGE_01                   718 /* 0x02ce ジャッジ（ポケモンの個体値を調べてくれる人） */
 #define FV_STADIUM_TRAINER_01              719 /* 0x02cf ビッグスタジアム／リトルコートの選手トレーナー１人目 */
 #define FV_STADIUM_TRAINER_02              720 /* 0x02d0 ビッグスタジアム／リトルコートの選手トレーナー２人目 */
 #define FV_STADIUM_TRAINER_03              721 /* 0x02d1 ビッグスタジアム／リトルコートの選手トレーナー３人目 */
@@ -828,7 +828,7 @@
 #define FV_C06_BOSS                        804 /* 0x0324 フキヨセジム前：N */
 #define FV_D05R0201_RIVAL_01               805 /* 0x0325 冷凍コンテナ室内：ライバル */
 #define FV_H03_PLASMA                      806 /* 0x0326 シリンダーブリッジ：ゲーチス、ダークトリニティ3人 */
-		/* not used   807(0x0327) */
+#define FV_POKE_JUDGE_02                   807 /* 0x0327 ジャッジ引越し後（ポケモンの個体値を調べてくれる人） */
 		/* not used   808(0x0328) */
 		/* not used   809(0x0329) */
 		/* not used   810(0x032a) */
