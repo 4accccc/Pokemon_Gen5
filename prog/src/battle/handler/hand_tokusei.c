@@ -61,6 +61,7 @@ static void handler_Sunagakure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sunagakure( u32* numElems );
 static void handler_Yukigakure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yukigakure( u32* numElems );
+static void common_weather_guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, BtlWeather weather );
 static void handler_Iromegane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Iromegane( u32* numElems );
 static void handler_HardRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -1128,10 +1129,16 @@ static void handler_Sunagakure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     }
   }
 }
+// 天候リアクションハンドラ
+static void handler_Sunagakure_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_weather_guard( myHandle, flowWk, pokeID, work, BTL_WEATHER_SAND );
+}
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sunagakure( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_HIT_RATIO, handler_Sunagakure }, // 命中率計算ハンドラ
+    { BTL_EVENT_WAZA_HIT_RATIO,   handler_Sunagakure         }, // 命中率計算ハンドラ
+    { BTL_EVENT_WEATHER_REACTION, handler_Sunagakure_Weather }, // 天候リアクションハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -1152,14 +1159,33 @@ static void handler_Yukigakure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     }
   }
 }
+// 天候リアクションハンドラ
+static void handler_Yukigakure_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  common_weather_guard( myHandle, flowWk, pokeID, work, BTL_WEATHER_SNOW );
+}
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yukigakure( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_HIT_RATIO, handler_Yukigakure }, // 命中率計算ハンドラ
+    { BTL_EVENT_WAZA_HIT_RATIO,   handler_Yukigakure         }, // 命中率計算ハンドラ
+    { BTL_EVENT_WEATHER_REACTION, handler_Yukigakure_Weather }, // 天候リアクションハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
 }
+/**
+ *  特定の天候ダメージを受けない処理共通
+ */
+static void common_weather_guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, BtlWeather weather )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE) > 0)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WEATHER) == weather)
+  ){
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+  }
+}
+
 //------------------------------------------------------------------------------
 /**
  *  とくせい「いろめがね」
@@ -4655,7 +4681,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tenkiya( u32* numElems )
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yobimizu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DECIDE_TARGET,          handler_Yobimizu                },  // ワザターゲット決定ハンドラ
+    { BTL_EVENT_DECIDE_TARGET,         handler_Yobimizu               }, // ワザターゲット決定ハンドラ
     { BTL_EVENT_NOEFFECT_CHECK_L3,     handler_Yobimizu_CheckNoEffect }, // 無効化チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
@@ -4684,7 +4710,7 @@ static void handler_Yobimizu_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hiraisin( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DECIDE_TARGET,        handler_Hiraisin                },  // ワザターゲット決定ハンドラ
+    { BTL_EVENT_DECIDE_TARGET,        handler_Hiraisin               }, // ワザターゲット決定ハンドラ
     { BTL_EVENT_NOEFFECT_CHECK_L3,    handler_Hiraisin_CheckNoEffect }, // 無効化チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
@@ -4721,8 +4747,12 @@ static void common_WazaTargetChangeToMe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, Pok
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == wazaType )
     {
-      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID_DEF, pokeID) ){
-//        OS_TPrintf("『ひらいしん』ターゲットを自分(%d) に書き換え\n", pokeID );
+      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID_DEF, pokeID) )
+      {
+        BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+        param->header.tokwin_flag = TRUE;
+        HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_WazaRecv );
+        HANDEX_STR_AddArg( &param->str, pokeID );
       }else{
 //        OS_TPrintf("『ひらいしん』だがターゲットを書き換えられず（%d)\n", pokeID );
       }
