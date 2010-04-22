@@ -85,69 +85,6 @@ static u16 get_Rand( BSUBWAY_SCRWORK *wk );
 //--------------------------------------------------------------
 /// タワーに出現するトレーナータイプ←→OBJコード
 //--------------------------------------------------------------
-#if 0 // gs
-static const u16 btower_trtype2objcode[][2] =
-{
- {TRTYPE_TANPAN,  BOY2},  ///<たんパンこぞう
- {TRTYPE_MINI,  GIRL1},  ///<ミニスカート
- {TRTYPE_SCHOOLB,  BOY1},  ///<じゅくがえり
-// {TRTYPE_PL_SCHOOLG,  GIRL3},  ///<じゅくがえり
-// {TRTYPE_PL_PRINCE,  GORGGEOUSM},  ///<おぼっちゃま
-// {TRTYPE_PL_PRINCESS,  GORGGEOUSW},  ///<おじょうさま
-// {TRTYPE_CAMPB,  CAMPBOY},  ///<キャンプボーイ
-// {TRTYPE_PICNICG,  PICNICGIRL},  ///<ピクニックガール
-// {TRTYPE_PL_UKIWAB,  BABYBOY1},  ///<うきわボーイ
-// {TRTYPE_PL_UKIWAG,  BABYGIRL1},  ///<うきわガール
- {TRTYPE_DAISUKIM,  MIDDLEMAN1},  ///<だいすきクラブ
- {TRTYPE_DAISUKIW,  MIDDLEWOMAN1},  ///<だいすきクラブ
-// {TRTYPE_PL_WAITER,  WAITER},  ///<ウエーター
-// {TRTYPE_PL_WAITRESS,  WAITRESS},  ///<ウエートレス
-// {TRTYPE_PL_BREEDERM,  MAN1},  ///<ポケモンブリーダー
-// {TRTYPE_PL_BREEDERW,  WOMAN1},  ///<ポケモンブリーダー
-// {TRTYPE_PL_CAMERAMAN,  CAMERAMAN},  ///<カメラマン
-// {TRTYPE_PL_REPORTER,  REPORTER},  ///<レポーター
-// {TRTYPE_PL_FARMER,  FARMER},  ///<ぼくじょうおじさん
-// {TRTYPE_PL_COWGIRL,  COWGIRL},  ///<カウガール
-// {TRTYPE_PL_CYCLINGM,  CYCLEM},  ///<サイクリング♂
-// {TRTYPE_PL_CYCLINGW,  CYCLEW},  ///<サイクリング♀
- {TRTYPE_KARATE,  FIGHTERM},  ///<からておう
-// {TRTYPE_PL_BATTLEG,  GIRL2},  ///<バトルガール
-// {TRTYPE_PL_VETERAN,  OLDMAN1},  ///<ベテラントレーナー
-// {TRTYPE_PL_MADAM,  LADY},  ///<マダム
- {TRTYPE_ESPM,  MAN1},  ///<サイキッカー
-// {TRTYPE_PL_ESPW,  MYSTERY},  ///<サイキッカー
-// {TRTYPE_PL_RANGERM,  MAN3},  ///<ポケモンレンジャー
-// {TRTYPE_PL_RANGERW,  WOMAN3},  ///<ポケモンレンジャー
-// {TRTYPE_ELITEM,  MAN3},  ///<エリートトレーナー
-// {TRTYPE_ELITEW,  WOMAN3},  ///<エリートトレーナー
-// {TRTYPE_PL_COLDELITEM,  MAN5},  ///<エリートトレーナー♂（厚着）
-// {TRTYPE_PL_COLDELITEW,  WOMAN5},  ///<エリートトレーナー♀（厚着）
-// {TRTYPE_PL_DRAGON,  MAN3},  ///<ドラゴンつかい
-// {TRTYPE_MUSHI,  BOY3},  ///<むしとりしょうねん
-// {TRTYPE_PL_SHINOBI,  BABYBOY1},  ///<にんじゃごっこ
-// {TRTYPE_PL_JOGGER,  SPORTSMAN},  ///<ジョギング♂
- {TRTYPE_FISHING,  FISHING},  ///<つりびと
-// {TRTYPE_SAILOR,  SEAMAN},  ///<ふなのり
- {TRTYPE_MOUNT,  MAN1},  ///<やまおとこ
-// {TRTYPE_PL_ISEKI,  EXPLORE},  ///<いせきマニア
-// {TRTYPE_GUITARIST,  MAN2},  ///<ギタリスト
-// {TRTYPE_PL_COLLECTOR,  BIGMAN},  ///<ポケモンコレクター
-// {TRTYPE_PL_HEADS,  BADMAN},  ///<スキンヘッズ
-// {TRTYPE_SCIENTIST,  ASSISTANTM},  ///<けんきゅういん♂
- {TRTYPE_GENTLE,  GENTLEMAN},  ///<ジェントルマン
-// {TRTYPE_PL_WORKER,  WORKMAN},  ///<さぎょういん
-// {TRTYPE_PL_PIERROT,  CLOWN},  ///<ピエロ
-// {TRTYPE_POLICE,  POLICEMAN},  ///<おまわりさん
-// {TRTYPE_PL_GAMBLER,  GORGGEOUSM},  ///<ギャンブラー
-// {TRTYPE_BIRD,  WOMAN3},  ///<とりつかい
-// {TRTYPE_PL_PARASOL,  AMBRELLA},  ///<パラソルおねえさん
-// {TRTYPE_SISTER,  WOMAN2},  ///<おとなのおねえさん
-// {TRTYPE_PL_AROMA,  WOMAN1},  ///<アロマなおねえさん
-// {TRTYPE_PL_IDOL,  IDOL},  ///<アイドル
-// {TRTYPE_PL_ARTIST,  ARTIST},  ///<げいじゅつか
-// {TRTYPE_PL_POKEGIRL,  PIKACHU},  ///<ポケモンごっこ♀
-};
-#else //wb
 static const u16 btower_trtype2objcode[][2] =
 {
  {TRTYPE_TANPAN,  BOY2},  ///<たんパンこぞう
@@ -204,7 +141,6 @@ static const u16 btower_trtype2objcode[][2] =
  {TRTYPE_MAID, MAID},    //メイド
  {TRTYPE_OL, OL},    //ＯＬ
 };
-#endif
 
 #define TRTYPE2OBJCODE_MAX  (NELEMS(btower_trtype2objcode))
 
@@ -322,28 +258,13 @@ static void make_PokePara(
   //なつきど設定
   PP_Put(dest,ID_PARA_friend,src->natuki);
 
-  //NGネームフラグをチェック
-  if( 0 ){ //デフォルトネームを展開する
-#if 0
-    GFL_MSGDATA *msgdata;
-    STRBUF *def_name;
-
-    msgdata= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
-        ARCID_MESSAGE, NARC_message_monsname_dat, HEAPID_PROC );
-    def_name = GFL_STR_CreateBuffer( HEAPID_PROC, MONS_NAME_SIZE+EOM_SIZE );
-
-    GFL_MSG_GetString( msgdata, src->mons_no, def_name );
-    PP_Put( dest, ID_PARA_nickname, (u32)def_name );
-
-    GFL_STR_DeleteBuffer( def_name );
-    GFL_MSG_Delete( msgdata );
-#endif
-  }else{ //ニックネーム
+  { //名前設定
     STRBUF *nick_name;
     nick_name = GFL_STR_CreateBuffer(
         MONS_NAME_SIZE+EOM_SIZE, HEAPID_PROC );
+    
 #if 0
-    GFL_STR_SetStringCode( nick_name, src->nickname );
+      GFL_STR_SetStringCode( nick_name, src->nickname );
 #else
     {
       int i;
@@ -453,6 +374,226 @@ static BSP_TRAINER_DATA * create_BSP_TRAINER_DATA( HEAPID heapID )
  * @retval BATTLE_SETUP_PARAM
  */
 //--------------------------------------------------------------
+BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
+    BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
+{
+  int i;
+  BATTLE_SETUP_PARAM *dst;
+  BTL_FIELD_SITUATION sit;
+  BTL_CLIENT_ID client;
+  POKEPARTY *party;
+  POKEMON_PARAM *pp;
+  POKEMON_PARAM *entry_pp;
+  BSP_TRAINER_DATA *tr_data;
+  BSUBWAY_PARTNER_DATA *bsw_partner;
+  BSUBWAY_TRAINER *bsw_trainer;
+  
+  HEAPID heapID = HEAPID_PROC;
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
+  u16 play_mode = wk->play_mode;
+  
+  BTL_FIELD_SITUATION_SetFromFieldStatus(
+      &sit, gdata, GAMESYSTEM_GetFieldMapWork(gsys) );
+  
+  dst = BATTLE_PARAM_Create( heapID );
+  
+  //初期化
+  switch( play_mode ){
+  case BSWAY_MODE_SINGLE:
+  case BSWAY_MODE_S_SINGLE:
+  case BSWAY_MODE_WIFI:
+    BTL_SETUP_Single_Trainer( dst, gdata, &sit, TRID_NULL, heapID );
+    break;
+  case BSWAY_MODE_DOUBLE:
+  case BSWAY_MODE_S_DOUBLE:
+    BTL_SETUP_Double_Trainer( dst, gdata, &sit, TRID_NULL, heapID );
+    break;
+  case BSWAY_MODE_MULTI:
+  case BSWAY_MODE_S_MULTI:
+    BTL_SETUP_AIMulti_Trainer( dst, gdata, &sit,
+        TRID_NULL, TRID_NULL, TRID_NULL, heapID );
+    break;
+  case BSWAY_MODE_COMM_MULTI:
+  case BSWAY_MODE_S_COMM_MULTI:
+    {
+      GFL_NETHANDLE *netHandle = GFL_NET_HANDLE_GetCurrentHandle();
+      int commPos = 0;
+      
+      if( GFL_NET_SystemGetCurrentID() != GFL_NET_NO_PARENTMACHINE ){
+        dst->commPos = 2; //通信子である
+      }
+
+      BTL_SETUP_AIMulti_Comm( dst, gdata,
+          netHandle, BTL_COMM_DS, commPos,
+          TRID_NULL, TRID_NULL, heapID );
+    }
+    break;
+  default:
+    GF_ASSERT( 0 );
+  }
+  
+  dst->musicDefault = SEQ_BGM_VS_SUBWAY_TRAINER;
+  
+  BTL_SETUP_SetSubwayMode( dst );
+  BTL_SETUP_AllocRecBuffer( dst, heapID );
+  
+  { //プレイヤー設定
+    const POKEPARTY *myparty = BSUBWAY_SCRWORK_GetPokePartyUse( wk );
+    client = BTL_CLIENT_PLAYER;
+    
+    //MyStatus
+    dst->playerStatus[client] = mystatus;
+    
+    //トレーナーデータ
+    tr_data = dst->tr_data[client];
+    
+    MyStatus_CopyNameString( mystatus, tr_data->name );
+    tr_data->tr_type = TRTYPE_HERO + MyStatus_GetMySex( mystatus );
+    
+    //ポケモンパーティ
+    party = dst->party[client];
+    PokeParty_Init( party, TEMOTI_POKEMAX );
+    
+    entry_pp = GFL_HEAP_AllocMemoryLo( heapID, POKETOOL_GetWorkSize() );
+    
+    for( i = 0; i < wk->member_num; i++ ){
+      pp = PokeParty_GetMemberPointer( myparty, wk->member[i] );
+      POKETOOL_CopyPPtoPP( pp, entry_pp );
+      
+      if( PP_Get(pp,ID_PARA_level,NULL) != 50 ){
+        u32 exp = POKETOOL_GetMinExp(
+              PP_Get(pp,ID_PARA_monsno,NULL),
+              PP_Get(pp,ID_PARA_form_no,NULL),
+              50 );
+        
+        PP_Put( entry_pp, ID_PARA_exp, exp );
+        PP_Renew( entry_pp );
+      }
+      
+      PokeParty_Add( party, entry_pp );
+    }
+    
+    GFL_HEAP_FreeMemory( entry_pp );
+  }
+
+  { //敵トレーナー設定
+    client = BTL_CLIENT_ENEMY1;
+    
+    //敵トレーナー0 トレーナーデータ
+    tr_data = dst->tr_data[client];
+    
+    bsw_partner = &wk->tr_data[0];
+    bsw_trainer = &bsw_partner->bt_trd;
+    
+    if( play_mode == BSWAY_MODE_WIFI ){
+      tr_data->tr_id = 0;
+    }else{
+      tr_data->tr_id = bsw_trainer->player_id;
+    }
+    
+    tr_data->tr_type = bsw_trainer->tr_type;
+    tr_data->ai_bit = 0x00000087;  //最強
+    
+    //トレーナーデータ　name
+    GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
+    
+    //トレーナーデータ　word
+    if( play_mode == BSWAY_MODE_WIFI ){
+      tr_data->win_word = *(PMS_DATA*)bsw_trainer->win_word;
+      tr_data->lose_word = *(PMS_DATA*)bsw_trainer->lose_word;
+    }
+    
+    //ポケモンパーティ
+    party = dst->party[client];
+    PokeParty_Init( party, TEMOTI_POKEMAX );
+    entry_pp = GFL_HEAP_AllocMemoryLo( heapID, POKETOOL_GetWorkSize() );
+    
+    for( i = 0; i < wk->member_num; i++ ){
+      make_PokePara( &(bsw_partner->btpwd[i]), entry_pp );
+      PokeParty_Add( party, entry_pp );
+    }
+    
+    GFL_HEAP_FreeMemory( entry_pp );
+  }
+  
+  if( dst->multiMode != BTL_MULTIMODE_NONE ) //マルチ
+  { //敵トレーナー２設定
+    client = BTL_CLIENT_ENEMY2;
+    
+    tr_data = dst->tr_data[client];
+    
+    bsw_partner = &wk->tr_data[1];
+    bsw_trainer = &bsw_partner->bt_trd;
+    
+    tr_data->tr_id = bsw_trainer->player_id;
+    tr_data->tr_type = bsw_trainer->tr_type;
+    tr_data->ai_bit = 0x00000087;  //最強
+    
+    //トレーナーデータ　name
+    GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
+    
+    //トレーナーデータ　word
+    //特に設定無し
+    
+    //ポケモンパーティ
+    party = dst->party[client];
+    PokeParty_Init( party, TEMOTI_POKEMAX );
+    
+    entry_pp = GFL_HEAP_AllocMemoryLo( heapID, POKETOOL_GetWorkSize() );
+    
+    for( i = 0; i < wk->member_num; i++ ){
+      make_PokePara( &(bsw_partner->btpwd[i]), entry_pp );
+      PokeParty_Add( party, entry_pp );
+    }
+    
+    GFL_HEAP_FreeMemory( entry_pp );
+  }
+  
+  if( dst->multiMode == BTL_MULTIMODE_PA_AA ) //AIマルチ
+  { //AIパートナー設定
+    client = BTL_CLIENT_PARTNER;
+    KAGAYA_Printf( "パートナーNo.%d\n", wk->partner );
+    
+    //トレーナーデータ
+    tr_data = dst->tr_data[client];
+    
+    bsw_partner = &wk->five_data[wk->partner];
+    bsw_trainer = &bsw_partner->bt_trd;
+    
+    tr_data->tr_id = bsw_trainer->player_id;
+    tr_data->tr_type = bsw_trainer->tr_type;
+    tr_data->ai_bit = 0x00000087;  //最強
+    
+    //トレーナーデータ　name
+    GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
+    
+    //トレーナーデータ　word
+    //特に無し
+    
+    //ポケモンパーティ
+    party = dst->party[client];
+    PokeParty_Init( party, TEMOTI_POKEMAX );
+    
+    entry_pp = GFL_HEAP_AllocMemoryLo( heapID, POKETOOL_GetWorkSize() );
+    
+    for( i = 0; i < wk->member_num; i++ ){
+      make_PokePara( &(bsw_partner->btpwd[i]), entry_pp );
+      PokeParty_Add( party, entry_pp );
+    }
+    
+    GFL_HEAP_FreeMemory( entry_pp );
+  }
+#if 0
+  else if( dst->multiMode == BTL_MULTIMODE_PP_AA ) //通信マルチ
+  { //通信マルチパートナー設定
+  }
+#endif
+  
+  return dst;
+}
+
+#if 0 //old
 BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 {
@@ -740,6 +881,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   
   return dst;
 }
+#endif
 
 //--------------------------------------------------------------
 /**
