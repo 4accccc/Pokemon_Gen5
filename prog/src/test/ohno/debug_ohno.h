@@ -24,6 +24,11 @@ enum NetDebugOhnoCommand_e {
 };
 
 
+typedef struct{
+  int trialType;
+  int trialNo;
+} DEBUG_TRIAL_PARAM;
+
 
 extern void DebugOhnoInit(HEAPID heap_id);
 extern void DebugOhnoMain(void);

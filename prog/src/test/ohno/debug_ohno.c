@@ -800,7 +800,7 @@ static GFL_PROC_RESULT NetDeliverySendProc_Init(GFL_PROC * proc, int * seq, void
 
 
 //トライアルハウスダミーデータ
-static void _debug_bsubDataMain(DEBUG_OHNO_CONTROL * pDOC)
+static void _debug_bsubDataMain(DEBUG_OHNO_CONTROL * pDOC,int type, int no)
 {
   BATTLE_EXAMINATION_SAVEDATA* pDG;
   BOOL bSingle = FALSE;
@@ -818,12 +818,12 @@ static void _debug_bsubDataMain(DEBUG_OHNO_CONTROL * pDOC)
   pDG = (BATTLE_EXAMINATION_SAVEDATA* )pDOC->aInit.data[0].pData;
 
   pDG->bActive = BATTLE_EXAMINATION_MAGIC_KEY;
-  if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
-    pDG->dataNo = 12;  //１２は仮の開催番号  SINGLE
+  if(type==0){
+    pDG->dataNo = no;  //１２は仮の開催番号  SINGLE
     bSingle=TRUE;
   }
   else{
-    pDG->dataNo = 0x8000 + 12;  //１２は仮の開催番号  DOUBLE
+    pDG->dataNo = 0x8000 + no;  //１２は仮の開催番号  DOUBLE
     bSingle=FALSE;
   }
 
@@ -846,7 +846,8 @@ static void _debug_bsubDataMain(DEBUG_OHNO_CONTROL * pDOC)
 static GFL_PROC_RESULT NetDeliveryTriSendProc_Init(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
   DEBUG_OHNO_CONTROL * pDOC;
-
+  DEBUG_TRIAL_PARAM* pTri = (DEBUG_TRIAL_PARAM*)pwk;
+  
   
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_OHNO_DEBUG, 0x30000 );
   pDOC = GFL_PROC_AllocWork( proc, sizeof(DEBUG_OHNO_CONTROL), HEAPID_OHNO_DEBUG );
@@ -854,7 +855,7 @@ static GFL_PROC_RESULT NetDeliveryTriSendProc_Init(GFL_PROC * proc, int * seq, v
 
   {
     //@todo ここにトライアルハウステストデータを入れる
-    _debug_bsubDataMain(pDOC);
+    _debug_bsubDataMain(pDOC,pTri->trialType,pTri->trialNo);
 
     
     pDOC->pDBWork=DELIVERY_BEACON_Init(&pDOC->aInit);

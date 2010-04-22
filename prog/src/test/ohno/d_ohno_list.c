@@ -47,51 +47,58 @@
 //	構造体定義
 //==============================================================================
 typedef struct{
-	GFL_BMPWIN		*win;
-	GFL_BMP_DATA	*bmp;
-//	PRINT_UTIL		printUtil[1];
-	BOOL			message_req;		///<TRUE:メッセージリクエストがあった
+  GFL_BMPWIN		*win;
+  GFL_BMP_DATA	*bmp;
+  //	PRINT_UTIL		printUtil[1];
+  BOOL			message_req;		///<TRUE:メッセージリクエストがあった
 }DM_MSG_DRAW_WIN;
 
 typedef struct {
 
-	u16		seq;
-	HEAPID	heapID;
-	int debug_mode;
-	int timer;
-	
-	GFL_FONT		*fontHandle;
-//	PRINT_QUE		*printQue;
-	PRINT_STREAM	*printStream;
-	GFL_MSGDATA		*mm;
-	STRBUF			*strbuf[D_STRBUF_NUM];
-	STRBUF			*strbuf_name;
-	STRBUF			*strbuf_name_kanji;
-	STRBUF			*strbuf_info;
-	STRBUF			*strbuf_info_kanji;
-	GFL_TCBLSYS		*tcbl;
-	DM_MSG_DRAW_WIN drawwin;
-	
-	//アクター
-	GFL_CLUNIT *clunit;
-	GFL_CLWK	*clwk_icon;		//アイテムアイコンアクター
-	NNSG2dImagePaletteProxy	icon_pal_proxy;
-	NNSG2dCellDataBank	*icon_cell_data;
-	NNSG2dAnimBankData	*icon_anm_data;
-	void	*icon_cell_res;
-	void	*icon_anm_res;
-	
-	int cursor_y;
-	
-	void *parent_work;
+  u16		seq;
+  HEAPID	heapID;
+  int debug_mode;
+  int timer;
+
+  GFL_FONT		*fontHandle;
+  //	PRINT_QUE		*printQue;
+  PRINT_STREAM	*printStream;
+  GFL_MSGDATA		*mm;
+  STRBUF			*strbuf[D_STRBUF_NUM];
+//  STRBUF			*strbuf_name;
+//  STRBUF			*strbuf_name_kanji;
+  STRBUF			*strbufEx;
+//  STRBUF			*strbuf_info;
+//  STRBUF			*strbuf_info_kanji;
+  GFL_TCBLSYS		*tcbl;
+  DM_MSG_DRAW_WIN drawwin;
+  WORDSET *pWordSet;
+  //アクター
+  GFL_CLUNIT *clunit;
+  GFL_CLWK	*clwk_icon;		//アイテムアイコンアクター
+  NNSG2dImagePaletteProxy	icon_pal_proxy;
+  NNSG2dCellDataBank	*icon_cell_data;
+  NNSG2dAnimBankData	*icon_anm_data;
+  void	*icon_cell_res;
+  void	*icon_anm_res;
+
+  int cursor_y;
+
+  void *parent_work;
+
+  //バトル検定
+  int trialNo;
+  int trialType;
+
+
 }D_OHNO_WORK;
 
 ///メニューリスト
 typedef struct{
-	u32 str_id;
-	const GFL_PROC_DATA *next_proc;
-	void *(*parent_work_func)(D_OHNO_WORK *);
-	u32 ov_id;
+  u32 str_id;
+  const GFL_PROC_DATA *next_proc;
+  void *(*parent_work_func)(D_OHNO_WORK *);
+  u32 ov_id;
 }D_MENULIST;
 
 //==============================================================================
@@ -103,6 +110,7 @@ static void * _PokeTradeDemo2WorkCreate(D_OHNO_WORK *wk);
 static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk);
 static void * _PokeIrcTradeWorkCreate(D_OHNO_WORK *wk);
 static void * _PokeTradeGtsNegoCreate(D_OHNO_WORK *wk);
+static void * _initTrial(D_OHNO_WORK *wk);
 
 
 //==============================================================================
@@ -136,135 +144,135 @@ extern const GFL_PROC_DATA NetFourChildProcData;
 //==============================================================================
 //メニューデータ
 static const D_MENULIST DebugMenuList[] = {
-	{//
-		DEBUG_OHNO_MSG0027, 
-//		&PokemonTradeWiFiProcData,	
-//		_PokeTradeWorkCreate,
-//		FS_OVERLAY_ID(pokemon_trade)
+  {//
+    DEBUG_OHNO_MSG0027,
+    //		&PokemonTradeWiFiProcData,
+    //		_PokeTradeWorkCreate,
+    //		FS_OVERLAY_ID(pokemon_trade)
     &PokemonTradeGTSMidProcData,
     _PokeTradeDemoWorkCreate,
-		FS_OVERLAY_ID(pokemon_trade)
-	},
+    FS_OVERLAY_ID(pokemon_trade)
+    },
   {//
-		DEBUG_OHNO_MSG0013,
-		&PokemonTradeIrcProcData,
-		_PokeIrcTradeWorkCreate,
-		FS_OVERLAY_ID(pokemon_trade)
-	},
+    DEBUG_OHNO_MSG0013,
+    &PokemonTradeIrcProcData,
+    _PokeIrcTradeWorkCreate,
+    FS_OVERLAY_ID(pokemon_trade)
+    },
 #if 0
   {//
-		DEBUG_OHNO_MSG0018,
+    DEBUG_OHNO_MSG0018,
     &PokemonTradeGTSSendProcData,
-//		&GtsNego_ProcData,	
-//		_PokeTradeGtsNegoCreate,
+    //		&GtsNego_ProcData,
+    //		_PokeTradeGtsNegoCreate,
     _PokeTradeDemoWorkCreate,
-//		FS_OVERLAY_ID(gts_negotiate)
-		FS_OVERLAY_ID(pokemon_trade)
-	},
-	{//
-		DEBUG_OHNO_MSG0018,
-		&GtsNego_ProcData,	
-		_PokeTradeGtsNegoCreate,
-		FS_OVERLAY_ID(gts_negotiate)
-	},
+    //		FS_OVERLAY_ID(gts_negotiate)
+    FS_OVERLAY_ID(pokemon_trade)
+    },
+  {//
+    DEBUG_OHNO_MSG0018,
+    &GtsNego_ProcData,
+    _PokeTradeGtsNegoCreate,
+    FS_OVERLAY_ID(gts_negotiate)
+    },
 #endif
 
 
   {//
-		DEBUG_OHNO_MSG0028, 
-		&PokemonTradeDemoProcData,
-//    &PokemonTradeGTSProcData,
-//    &PokemonTradeGTSSendProcData,
-//    &PokemonTradeGTSRecvProcData,
-//    &PokemonTradeGTSMidProcData,
+    DEBUG_OHNO_MSG0028,
+    &PokemonTradeDemoProcData,
+    //    &PokemonTradeGTSProcData,
+    //    &PokemonTradeGTSSendProcData,
+    //    &PokemonTradeGTSRecvProcData,
+    //    &PokemonTradeGTSMidProcData,
     _PokeTradeDemo2WorkCreate,
-		FS_OVERLAY_ID(pokemon_trade)
-	},
+    FS_OVERLAY_ID(pokemon_trade)
+    },
   {//
-		DEBUG_OHNO_MSG0019, 
-//		&PokemonTradeDemoProcData,
+    DEBUG_OHNO_MSG0019,
+    //		&PokemonTradeDemoProcData,
     &PokemonTradeGTSProcData,
-//    &PokemonTradeGTSSendProcData,
-//    &PokemonTradeGTSRecvProcData,
-//    &PokemonTradeGTSMidProcData,
+    //    &PokemonTradeGTSSendProcData,
+    //    &PokemonTradeGTSRecvProcData,
+    //    &PokemonTradeGTSMidProcData,
     _PokeTradeDemoWorkCreate,
-		FS_OVERLAY_ID(pokemon_trade)
-	},
-/*  {//
-		DEBUG_OHNO_MSG0015, 
-		&PokemonTradeIrcProcData,	
+    FS_OVERLAY_ID(pokemon_trade)
+    },
+  /*  {//
+		DEBUG_OHNO_MSG0015,
+		&PokemonTradeIrcProcData,
 		_PokeIrcTradeWorkCreate,
 		FS_OVERLAY_ID(pokemon_trade)
 	},*/
-	{//
-//		DEBUG_OHNO_MSG0013, 
-//		&PokemonTradeProcData,	
-//		_PokeIrcTradeWorkCreate,
-//		FS_OVERLAY_ID(pokemon_trade)
+  {//
+    //		DEBUG_OHNO_MSG0013,
+    //		&PokemonTradeProcData,
+    //		_PokeIrcTradeWorkCreate,
+    //		FS_OVERLAY_ID(pokemon_trade)
     DEBUG_OHNO_MSG0025,
     &NetDeliveryIRCRecvProcData,
-		NULL,
-		FS_OVERLAY_ID(ohno_debugapp)
-	},
-	{//
-//		DEBUG_OHNO_MSG0002, 
-		DEBUG_OHNO_MSG0022, 
-//		&DebugLayoutMainProcData,
+    NULL,
+    FS_OVERLAY_ID(ohno_debugapp)
+    },
+  {//
+    //		DEBUG_OHNO_MSG0002,
+    DEBUG_OHNO_MSG0022,
+    //		&DebugLayoutMainProcData,
     &NetDeliverySendProcData,
-		NULL,
-		FS_OVERLAY_ID(ohno_debugapp)
-	},
-	{//
-//		DEBUG_OHNO_MSG0003, 
-//		&DebugOhnoMainProcData,	
-//		DEBUG_OHNO_MSG0023, 
-//		&NetDeliveryRecvProcData,
-		DEBUG_OHNO_MSG0026, 
-		&NetDeliveryTriSendProcData,
-		NULL,
-		FS_OVERLAY_ID(ohno_debugapp)
-	},
-	{//
-//		DEBUG_OHNO_MSG0014, 
-//		&VTRProcData,
+    NULL,
+    FS_OVERLAY_ID(ohno_debugapp)
+    },
+  {//
+    //		DEBUG_OHNO_MSG0003,
+    //		&DebugOhnoMainProcData,
+    //		DEBUG_OHNO_MSG0023,
+    //		&NetDeliveryRecvProcData,
+    DEBUG_OHNO_MSG0026,
+    &NetDeliveryTriSendProcData,
+    _initTrial,
+    FS_OVERLAY_ID(ohno_debugapp)
+    },
+  {//
+    //		DEBUG_OHNO_MSG0014,
+    //		&VTRProcData,
     DEBUG_OHNO_MSG0024,
     &NetDeliveryIRCSendProcData,
-		NULL,
-		FS_OVERLAY_ID(ohno_debugapp)
-	},
+    NULL,
+    FS_OVERLAY_ID(ohno_debugapp)
+    },
 
   {//
-		DEBUG_OHNO_MSG0013, 
-		&PokemonTradeProcData,	
+    DEBUG_OHNO_MSG0013,
+    &PokemonTradeProcData,
     _PokeIrcTradeWorkCreate,
-		FS_OVERLAY_ID(pokemon_trade)
-	},
-/*
+    FS_OVERLAY_ID(pokemon_trade)
+    },
+  /*
   {//
-		DEBUG_OHNO_MSG0020, 
+		DEBUG_OHNO_MSG0020,
 		&NetFourParentProcData,
 		NULL,
 		FS_OVERLAY_ID(ohno_debugapp)
 	},
    */
-/*	{//
-		DEBUG_OHNO_MSG0021, 
+  /*	{//
+		DEBUG_OHNO_MSG0021,
 		&NetFourChildProcData,
 		NULL,
 		FS_OVERLAY_ID(ohno_debugapp)
 	},*/
-	{//
-		DEBUG_OHNO_MSG0017,
-		&GtsNego_ProcData,	
-		_PokeTradeGtsNegoCreate,
-		FS_OVERLAY_ID(gts_negotiate)
-	},
   {//
-		DEBUG_OHNO_MSG0016, 
-		&DebugSaveAddrProcData,
-		NULL,
-		FS_OVERLAY_ID(ohno_debugapp)
-	},
+    DEBUG_OHNO_MSG0017,
+    &GtsNego_ProcData,
+    _PokeTradeGtsNegoCreate,
+    FS_OVERLAY_ID(gts_negotiate)
+    },
+  {//
+    DEBUG_OHNO_MSG0016,
+    &DebugSaveAddrProcData,
+    NULL,
+    FS_OVERLAY_ID(ohno_debugapp)
+    },
 
 
 
@@ -275,138 +283,140 @@ static const D_MENULIST DebugMenuList[] = {
 
 //==============================================================================
 //
-//	
+//
 //
 //==============================================================================
 //--------------------------------------------------------------
 /**
- * @brief   
+ * @brief
  *
- * @param   proc		
- * @param   seq		
- * @param   pwk		
- * @param   mywk		
+ * @param   proc
+ * @param   seq
+ * @param   pwk
+ * @param   mywk
  *
- * @retval  
+ * @retval
  */
 //--------------------------------------------------------------
 static GFL_PROC_RESULT DebugOhnoMainProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	static const GFL_DISP_VRAM vramBank = {
-		GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
-		GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
-		GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
-		GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
-		GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
-		GX_VRAM_OBJEXTPLTT_0_F,			// メイン2DエンジンのOBJ拡張パレット
-		GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
-		GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
-		GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
-		GX_VRAM_TEXPLTT_0123_E,			// テクスチャパレットスロット
-		GX_OBJVRAMMODE_CHAR_1D_32K,	// メインOBJマッピングモード
-		GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
-	};
+  static const GFL_DISP_VRAM vramBank = {
+    GX_VRAM_BG_128_A,				// メイン2DエンジンのBG
+    GX_VRAM_BGEXTPLTT_NONE,			// メイン2DエンジンのBG拡張パレット
+    GX_VRAM_SUB_BG_128_C,			// サブ2DエンジンのBG
+    GX_VRAM_SUB_BGEXTPLTT_NONE,		// サブ2DエンジンのBG拡張パレット
+    GX_VRAM_OBJ_128_B,				// メイン2DエンジンのOBJ
+    GX_VRAM_OBJEXTPLTT_0_F,			// メイン2DエンジンのOBJ拡張パレット
+    GX_VRAM_SUB_OBJ_16_I,			// サブ2DエンジンのOBJ
+    GX_VRAM_SUB_OBJEXTPLTT_NONE,	// サブ2DエンジンのOBJ拡張パレット
+    GX_VRAM_TEX_NONE,				// テクスチャイメージスロット
+    GX_VRAM_TEXPLTT_0123_E,			// テクスチャパレットスロット
+    GX_OBJVRAMMODE_CHAR_1D_32K,	// メインOBJマッピングモード
+    GX_OBJVRAMMODE_CHAR_1D_32K,		// サブOBJマッピングモード
+  };
 
-	D_OHNO_WORK* wk;
+  D_OHNO_WORK* wk;
 
-	DEBUG_PerformanceSetActive(FALSE);
-	  //デバッグ
-	SaveControl_Load(SaveControl_GetPointer());
-	
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PROC, 0x70000 );
-	wk = GFL_PROC_AllocWork( proc, sizeof(D_OHNO_WORK), HEAPID_PROC );
-	MI_CpuClear8(wk, sizeof(D_OHNO_WORK));
-	wk->heapID = HEAPID_PROC;
+  DEBUG_PerformanceSetActive(FALSE);
+  //デバッグ
+  SaveControl_Load(SaveControl_GetPointer());
 
-	GFL_DISP_SetBank( &vramBank );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PROC, 0x70000 );
+  wk = GFL_PROC_AllocWork( proc, sizeof(D_OHNO_WORK), HEAPID_PROC );
+  MI_CpuClear8(wk, sizeof(D_OHNO_WORK));
+  wk->heapID = HEAPID_PROC;
 
-	//バックグラウンドの色を入れておく
-	GFL_STD_MemFill16((void*)HW_BG_PLTT, 0x5ad6, 2);
-	
-	// 各種効果レジスタ初期化
-	G2_BlendNone();
+  GFL_DISP_SetBank( &vramBank );
 
-	// BGsystem初期化
-	GFL_BG_Init( wk->heapID );
-	GFL_BMPWIN_Init( wk->heapID );
-	GFL_FONTSYS_Init();
+  //バックグラウンドの色を入れておく
+  GFL_STD_MemFill16((void*)HW_BG_PLTT, 0x5ad6, 2);
+
+  // 各種効果レジスタ初期化
+  G2_BlendNone();
+
+  // BGsystem初期化
+  GFL_BG_Init( wk->heapID );
+  GFL_BMPWIN_Init( wk->heapID );
+  GFL_FONTSYS_Init();
 
   PMSND_PlayBGM(  SEQ_BGM_POKECEN );
-  
-	//ＢＧモード設定
-	{
-		static const GFL_BG_SYS_HEADER sysHeader = {
-			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_3, GX_BG0_AS_2D,
-		};
-		GFL_BG_SetBGMode( &sysHeader );
-	}
 
-	// 個別フレーム設定
-	{
-		static const GFL_BG_BGCNT_HEADER bgcntText = {
-			0, 0, 0x800, 0,
-			GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0x5800, GX_BG_CHARBASE_0x10000, 0x8000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-		};
+  //ＢＧモード設定
+  {
+    static const GFL_BG_SYS_HEADER sysHeader = {
+      GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_3, GX_BG0_AS_2D,
+    };
+    GFL_BG_SetBGMode( &sysHeader );
+  }
 
-		GFL_BG_SetBGControl( GFL_BG_FRAME0_M,   &bgcntText,   GFL_BG_MODE_TEXT );
-		GFL_BG_SetBGControl( GFL_BG_FRAME0_S,   &bgcntText,   GFL_BG_MODE_TEXT );
+  // 個別フレーム設定
+  {
+    static const GFL_BG_BGCNT_HEADER bgcntText = {
+      0, 0, 0x800, 0,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x5800, GX_BG_CHARBASE_0x10000, 0x8000,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+      };
 
-		GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_ON );
-		GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
-		GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_OFF );
-		GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
+    GFL_BG_SetBGControl( GFL_BG_FRAME0_M,   &bgcntText,   GFL_BG_MODE_TEXT );
+    GFL_BG_SetBGControl( GFL_BG_FRAME0_S,   &bgcntText,   GFL_BG_MODE_TEXT );
 
-//		GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 0x20, 0x22, wk->heapID );
-		GFL_BG_FillCharacter( GFL_BG_FRAME0_M, 0xff, 1, 0 );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_M,   VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME1_M,   VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME2_M,   VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M,   VISIBLE_OFF );
 
-//		void GFL_BG_FillScreen( u8 frmnum, u16 dat, u8 px, u8 py, u8 sx, u8 sy, u8 mode )
-		GFL_BG_FillScreen( GFL_BG_FRAME0_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    //		GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 0x20, 0x22, wk->heapID );
+    GFL_BG_FillCharacter( GFL_BG_FRAME0_M, 0xff, 1, 0 );
 
-		GFL_BG_FillCharacter( GFL_BG_FRAME0_S, 0x00, 1, 0 );
-		GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
-	}
+    //		void GFL_BG_FillScreen( u8 frmnum, u16 dat, u8 px, u8 py, u8 sx, u8 sy, u8 mode )
+    GFL_BG_FillScreen( GFL_BG_FRAME0_M, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 
-	// 上下画面設定
-	GX_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
+    GFL_BG_FillCharacter( GFL_BG_FRAME0_S, 0x00, 1, 0 );
+    GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
+  }
 
-	GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
+  // 上下画面設定
+  GX_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
 
-	{//メッセージ描画の為の準備
-		int i;
+  GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
 
-		wk->drawwin.win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 4, 0, 24, 23, 0, GFL_BMP_CHRAREA_GET_F );
-		wk->drawwin.bmp = GFL_BMPWIN_GetBmp(wk->drawwin.win);
-		GFL_BMP_Clear( wk->drawwin.bmp, 0xff );
-		GFL_BMPWIN_MakeScreen( wk->drawwin.win );
-		GFL_BMPWIN_TransVramCharacter( wk->drawwin.win );
-//		PRINT_UTIL_Setup( wk->drawwin.printUtil, wk->drawwin.win );
+  {//メッセージ描画の為の準備
+    int i;
 
-		GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
+    wk->pWordSet    = WORDSET_Create( wk->heapID );
+    wk->drawwin.win = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 4, 0, 24, 23, 0, GFL_BMP_CHRAREA_GET_F );
+    wk->drawwin.bmp = GFL_BMPWIN_GetBmp(wk->drawwin.win);
+    GFL_BMP_Clear( wk->drawwin.bmp, 0xff );
+    GFL_BMPWIN_MakeScreen( wk->drawwin.win );
+    GFL_BMPWIN_TransVramCharacter( wk->drawwin.win );
+    //		PRINT_UTIL_Setup( wk->drawwin.printUtil, wk->drawwin.win );
 
-		wk->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
-			GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
 
-//		PRINTSYS_Init( wk->heapID );
-//		wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
+    wk->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
+                                      GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
-		wk->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_ohno_dat, wk->heapID );
-		for(i = 0; i < D_STRBUF_NUM; i++){
-			wk->strbuf[i] = GFL_STR_CreateBuffer(64, wk->heapID);
-		}
+    //		PRINTSYS_Init( wk->heapID );
+    //		wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 
-		wk->tcbl = GFL_TCBL_Init( wk->heapID, wk->heapID, 4, 32 );
+    wk->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_ohno_dat, wk->heapID );
+    for(i = 0; i < D_STRBUF_NUM; i++){
+      wk->strbuf[i] = GFL_STR_CreateBuffer(64, wk->heapID);
+    }
+    wk->strbufEx = GFL_STR_CreateBuffer(64, wk->heapID);
+    
+    wk->tcbl = GFL_TCBL_Init( wk->heapID, wk->heapID, 4, 32 );
 
-		GFL_MSGSYS_SetLangID( 1 );	//JPN_KANJI
-	}
+    GFL_MSGSYS_SetLangID( 1 );	//JPN_KANJI
+  }
 
-	//フォントパレット転送
-	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 
-		0, 0x20, HEAPID_PROC);
+  //フォントパレット転送
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
+                                0, 0x20, HEAPID_PROC);
 
-	return GFL_PROC_RES_FINISH;
+  return GFL_PROC_RES_FINISH;
 }
 //--------------------------------------------------------------------------
 /**
@@ -415,42 +425,42 @@ static GFL_PROC_RESULT DebugOhnoMainProcInit( GFL_PROC * proc, int * seq, void *
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT DebugOhnoMainProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	D_OHNO_WORK* wk = mywk;
-	BOOL ret = 0;
-	int i;
-	BOOL que_ret=TRUE;
-	
-	GFL_TCBL_Main( wk->tcbl );
-//	que_ret = PRINTSYS_QUE_Main( wk->printQue );
-//	if( PRINT_UTIL_Trans( wk->drawwin.printUtil, wk->printQue ) == FALSE){
-		//return GFL_PROC_RES_CONTINUE;
-//	}
-//	else{
-		if(que_ret == TRUE && wk->drawwin.message_req == TRUE){
-//			GFL_BMP_Clear( wk->bmp, 0xff );
-			GFL_BMPWIN_TransVramCharacter( wk->drawwin.win );
-			wk->drawwin.message_req = FALSE;
-		}
-//	}
-	
-	switch(wk->debug_mode){
-	case 0:	
-		ret = DebugOhno_ItemDebug(wk);
-		if(ret == TRUE){
-			wk->seq = 0;
-			wk->debug_mode = 1;
-		}
-		break;
-	case 1:
-	default:
-		ret = TRUE;
-	}
-	
-	if(ret == TRUE){
-		return GFL_PROC_RES_FINISH;
-	}
+  D_OHNO_WORK* wk = mywk;
+  BOOL ret = 0;
+  int i;
+  BOOL que_ret=TRUE;
 
-	return GFL_PROC_RES_CONTINUE;
+  GFL_TCBL_Main( wk->tcbl );
+  //	que_ret = PRINTSYS_QUE_Main( wk->printQue );
+  //	if( PRINT_UTIL_Trans( wk->drawwin.printUtil, wk->printQue ) == FALSE){
+  //return GFL_PROC_RES_CONTINUE;
+  //	}
+  //	else{
+  if(que_ret == TRUE && wk->drawwin.message_req == TRUE){
+    //			GFL_BMP_Clear( wk->bmp, 0xff );
+    GFL_BMPWIN_TransVramCharacter( wk->drawwin.win );
+    wk->drawwin.message_req = FALSE;
+  }
+  //	}
+
+  switch(wk->debug_mode){
+  case 0:
+    ret = DebugOhno_ItemDebug(wk);
+    if(ret == TRUE){
+      wk->seq = 0;
+      wk->debug_mode = 1;
+    }
+    break;
+  case 1:
+  default:
+    ret = TRUE;
+  }
+
+  if(ret == TRUE){
+    return GFL_PROC_RES_FINISH;
+  }
+
+  return GFL_PROC_RES_CONTINUE;
 }
 //--------------------------------------------------------------------------
 /**
@@ -459,123 +469,152 @@ static GFL_PROC_RESULT DebugOhnoMainProcMain( GFL_PROC * proc, int * seq, void *
 //--------------------------------------------------------------------------
 static GFL_PROC_RESULT DebugOhnoMainProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	D_OHNO_WORK* wk = mywk;
-	int i;
-	void *parent_work;
-	
-	if(DebugMenuList[wk->cursor_y].parent_work_func != NULL){
-        if(DebugMenuList[wk->cursor_y].ov_id != GFL_OVERLAY_BLANK_ID){
-            GFL_OVERLAY_Load(DebugMenuList[wk->cursor_y].ov_id);
-        }
-		wk->parent_work = DebugMenuList[wk->cursor_y].parent_work_func(wk);
-        if(DebugMenuList[wk->cursor_y].ov_id != GFL_OVERLAY_BLANK_ID){
-            GFL_OVERLAY_Unload(DebugMenuList[wk->cursor_y].ov_id);
-        }
-		parent_work = wk->parent_work;
-	}
-	else{
-		parent_work = NULL;
-	}
-	
-	//次のPROC予約
-	GFL_PROC_SysSetNextProc(
-		DebugMenuList[wk->cursor_y].ov_id, DebugMenuList[wk->cursor_y].next_proc, parent_work);
+  D_OHNO_WORK* wk = mywk;
+  int i;
+  void *parent_work;
 
-	GFL_BMPWIN_Delete(wk->drawwin.win);
-	for(i = 0; i < D_STRBUF_NUM; i++){
-		GFL_STR_DeleteBuffer(wk->strbuf[i]);
-	}
-	
-//	PRINTSYS_QUE_Delete(wk->printQue);
-	GFL_MSG_Delete(wk->mm);
-	
-	GFL_FONT_Delete(wk->fontHandle);
-	GFL_TCBL_Exit(wk->tcbl);
-	
-	GFL_BG_Exit();
-	GFL_BMPWIN_Exit();
+  if(DebugMenuList[wk->cursor_y].parent_work_func != NULL){
+    if(DebugMenuList[wk->cursor_y].ov_id != GFL_OVERLAY_BLANK_ID){
+      GFL_OVERLAY_Load(DebugMenuList[wk->cursor_y].ov_id);
+    }
+    wk->parent_work = DebugMenuList[wk->cursor_y].parent_work_func(wk);
+    if(DebugMenuList[wk->cursor_y].ov_id != GFL_OVERLAY_BLANK_ID){
+      GFL_OVERLAY_Unload(DebugMenuList[wk->cursor_y].ov_id);
+    }
+    parent_work = wk->parent_work;
+  }
+  else{
+    parent_work = NULL;
+  }
 
-	GFL_PROC_FreeWork(proc);
-	GFL_HEAP_DeleteHeap(HEAPID_PROC);
-	
-	return GFL_PROC_RES_FINISH;
+  //次のPROC予約
+  GFL_PROC_SysSetNextProc(
+    DebugMenuList[wk->cursor_y].ov_id, DebugMenuList[wk->cursor_y].next_proc, parent_work);
+
+  GFL_BMPWIN_Delete(wk->drawwin.win);
+  for(i = 0; i < D_STRBUF_NUM; i++){
+    GFL_STR_DeleteBuffer(wk->strbuf[i]);
+  }
+  GFL_STR_DeleteBuffer(wk->strbufEx);
+
+  //	PRINTSYS_QUE_Delete(wk->printQue);
+  GFL_MSG_Delete(wk->mm);
+  WORDSET_Delete(wk->pWordSet);
+
+
+  GFL_FONT_Delete(wk->fontHandle);
+  GFL_TCBL_Exit(wk->tcbl);
+
+  GFL_BG_Exit();
+  GFL_BMPWIN_Exit();
+
+  GFL_PROC_FreeWork(proc);
+  GFL_HEAP_DeleteHeap(HEAPID_PROC);
+
+  return GFL_PROC_RES_FINISH;
 }
 
 
 
 //==============================================================================
-//	
+//
 //==============================================================================
 //--------------------------------------------------------------
 /**
  * @brief   ワイヤレス通信テスト
  *
- * @param   wk		
+ * @param   wk
  *
  * @retval  TRUE:終了。　FALSE:処理継続中
  */
 //--------------------------------------------------------------
 static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk)
 {
-    const int yini = 12;
-    BOOL ret, irc_ret = 0;
-	int msg_id;
-	int i, x;
-	
-	GF_ASSERT(wk);
+  const int yini = 12;
+  BOOL ret, irc_ret = 0;
+  int msg_id;
+  int i, x;
 
-	switch(wk->seq){
-	case 0:		//リスト描画
-		GFL_BMP_Clear( wk->drawwin.bmp, 0xff );
-		wk->drawwin.message_req = TRUE;
-		for(i = 0; i < NELEMS(DebugMenuList); i++){
-            if(wk->cursor_y == i){
-                GFL_MSG_GetString(wk->mm, DEBUG_OHNO_MSG0005, wk->strbuf[i]);
-                PRINTSYS_Print(wk->drawwin.bmp, 0, yini+i*2*8, wk->strbuf[i], wk->fontHandle);
-            }
-            x = 2;
-			GFL_MSG_GetString(wk->mm, DebugMenuList[i].str_id, wk->strbuf[i]);
-			PRINTSYS_Print( wk->drawwin.bmp, 16, yini+i*2*8, wk->strbuf[i], wk->fontHandle);
-		}
-		wk->drawwin.message_req = TRUE;
+  GF_ASSERT(wk);
 
-		wk->seq++;
-		break;
-	case 1:
-		{
-			int before_cursor;
-			
-			if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_A){
-				wk->seq++;
-				break;
-			}
+  switch(wk->seq){
+  case 0:		//リスト描画
+    GFL_BMP_Clear( wk->drawwin.bmp, 0xff );
+    wk->drawwin.message_req = TRUE;
 
-			before_cursor = wk->cursor_y;
-			switch(GFL_UI_KEY_GetRepeat()){
-			case PAD_KEY_UP:
-				wk->cursor_y--;
-				break;
-			case PAD_KEY_DOWN:
-				wk->cursor_y++;
-				break;
-			}
-			
-			if(before_cursor != wk->cursor_y){
-				if(wk->cursor_y < 0){
-					wk->cursor_y = NELEMS(DebugMenuList) - 1;
-				}
-				if(wk->cursor_y >= NELEMS(DebugMenuList)){
-					wk->cursor_y = 0;
-				}
-				wk->seq = 0;
-			}
-		}
-		break;
-	default:
-		return TRUE;	//ワイヤレス通信処理へ
-	}
-	
-	return FALSE;
+    for(i = 0; i < NELEMS(DebugMenuList); i++){
+      if(wk->cursor_y == i){
+        GFL_MSG_GetString(wk->mm, DEBUG_OHNO_MSG0005, wk->strbuf[i]);
+        PRINTSYS_Print(wk->drawwin.bmp, 0, yini+i*2*8, wk->strbuf[i], wk->fontHandle);
+      }
+      x = 2;
+      if(DebugMenuList[i].str_id==DEBUG_OHNO_MSG0026){
+        GFL_MSG_GetString(wk->mm, DEBUG_OHNO_MSG0026, wk->strbufEx);
+        WORDSET_RegisterNumber(wk->pWordSet, 0, wk->trialNo, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
+        WORDSET_RegisterNumber(wk->pWordSet, 1, wk->trialType, 1, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
+        WORDSET_ExpandStr( wk->pWordSet, wk->strbuf[i], wk->strbufEx  );
+      }
+      else{
+        GFL_MSG_GetString(wk->mm, DebugMenuList[i].str_id, wk->strbuf[i]);
+      }
+
+      PRINTSYS_Print( wk->drawwin.bmp, 16, yini+i*2*8, wk->strbuf[i], wk->fontHandle);
+    }
+    wk->drawwin.message_req = TRUE;
+
+    wk->seq++;
+    break;
+  case 1:
+    {
+      int before_cursor;
+
+      if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_A){
+        wk->seq++;
+        break;
+      }
+
+      before_cursor = wk->cursor_y;
+      switch(GFL_UI_KEY_GetRepeat()){
+      case PAD_KEY_UP:
+        wk->cursor_y--;
+        break;
+      case PAD_KEY_DOWN:
+        wk->cursor_y++;
+        break;
+      case PAD_KEY_LEFT:
+        wk->trialNo--;
+        wk->seq = 0;
+        break;
+      case PAD_KEY_RIGHT:
+        wk->trialNo++;
+        wk->seq = 0;
+        break;
+      case PAD_BUTTON_L:
+        wk->trialType--;
+        wk->seq = 0;
+        break;
+      case PAD_BUTTON_R:
+        wk->trialType++;
+        wk->seq = 0;
+        break;
+      }
+
+      if(before_cursor != wk->cursor_y){
+        if(wk->cursor_y < 0){
+          wk->cursor_y = NELEMS(DebugMenuList) - 1;
+        }
+        if(wk->cursor_y >= NELEMS(DebugMenuList)){
+          wk->cursor_y = 0;
+        }
+        wk->seq = 0;
+      }
+    }
+    break;
+  default:
+    return TRUE;	//ワイヤレス通信処理へ
+  }
+
+  return FALSE;
 }
 
 
@@ -586,11 +625,11 @@ FS_EXTERN_OVERLAY(ui_common);
 
 static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk)
 {
-	POKEMONTRADE_DEMO_PARAM *pWork;
+  POKEMONTRADE_DEMO_PARAM *pWork;
   MYSTATUS* pFriend;
 
-  
-	pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_DEMO_PARAM));
+
+  pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_DEMO_PARAM));
 
   pWork->pMyPoke = PP_Create(MONSNO_509, 100, 123456, GFL_HEAPID_APP);
   pWork->pNPCPoke = PP_Create(MONSNO_510, 100, 123456, GFL_HEAPID_APP);
@@ -605,20 +644,20 @@ static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk)
 
   //オーバーレイ読み込み
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
-//  GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
-//  GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
+  //  GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
+  //  GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
 
-  
+
   return pWork;
 }
 
 static void * _PokeTradeDemo2WorkCreate(D_OHNO_WORK *wk)
 {
-	POKEMONTRADE_DEMO_PARAM *pWork;
+  POKEMONTRADE_DEMO_PARAM *pWork;
   MYSTATUS* pFriend;
 
-  
-	pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_DEMO_PARAM));
+
+  pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_DEMO_PARAM));
 
   pWork->pMyPoke = PP_Create(MONSNO_509, 100, 123456, GFL_HEAPID_APP);
   pWork->pNPCPoke = PP_Create(MONSNO_510, 100, 123456, GFL_HEAPID_APP);
@@ -632,11 +671,11 @@ static void * _PokeTradeDemo2WorkCreate(D_OHNO_WORK *wk)
   pWork->pNPC = pFriend;
 
   //オーバーレイ読み込み
- // GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
-//  GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
-//  GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
+  // GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
+  //  GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
+  //  GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
 
-  
+
   return pWork;
 }
 
@@ -653,7 +692,7 @@ static void _DebugDataCreate(EVENT_GTSNEGO_WORK *pWork)
 {
   int i;
 
-//  for(i = 0; i < WIFI_NEGOTIATION_DATAMAX;i++){
+  //  for(i = 0; i < WIFI_NEGOTIATION_DATAMAX;i++){
   for(i = 0; i < 30;i++){
     MYSTATUS* pMyStatus = MyStatus_AllocWork(GFL_HEAPID_APP);
     MyStatus_SetProfileID(pMyStatus,1+i);
@@ -669,80 +708,84 @@ static void _DebugDataCreate(EVENT_GTSNEGO_WORK *pWork)
 
 static void * _PokeTradeGtsNegoCreate(D_OHNO_WORK *wk)
 {
-	EVENT_GTSNEGO_WORK *pWork;
+  EVENT_GTSNEGO_WORK *pWork;
   MYSTATUS* pFriend;
 
-  
-	pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EVENT_GTSNEGO_WORK));
+
+  pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EVENT_GTSNEGO_WORK));
 
   pWork->aUser[0].selectType=0;
   pWork->aUser[1].selectType=0;
   pWork->aUser[0].selectLV=0;
   pWork->aUser[1].selectLV=0;
-    
+
   pWork->gamedata = GAMEDATA_Create(GFL_HEAPID_APP);
-//  pWork->pStatus[0] = MyStatus_AllocWork(GFL_HEAPID_APP);
-//  pWork->pStatus[1] = MyStatus_AllocWork(GFL_HEAPID_APP);
-  
+  //  pWork->pStatus[0] = MyStatus_AllocWork(GFL_HEAPID_APP);
+  //  pWork->pStatus[1] = MyStatus_AllocWork(GFL_HEAPID_APP);
+
   pFriend = GAMEDATA_GetMyStatusPlayer(pWork->gamedata, 1);
   GFL_STD_MemCopy(MyStatus_AllocWork(GFL_HEAPID_APP),pFriend,MyStatus_GetWorkSize() );
 
   _DebugDataCreate(pWork);
-  
+
   return pWork;
 }
 
 
 static void * _PokeTradeWorkCreate(D_OHNO_WORK *wk)
 {
-	POKEMONTRADE_PARAM *pWork2;
-	EVENT_GTSNEGO_WORK *pWork;
+  POKEMONTRADE_PARAM *pWork2;
+  EVENT_GTSNEGO_WORK *pWork;
   MYSTATUS* pFriend;
 
-	pWork2 = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_PARAM));
-  
-	pWork2->pNego = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EVENT_GTSNEGO_WORK));
+  pWork2 = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_PARAM));
+
+  pWork2->pNego = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(EVENT_GTSNEGO_WORK));
   pWork = pWork2->pNego;
 
   pWork->aUser[0].selectType=0;
   pWork->aUser[1].selectType=0;
   pWork->aUser[0].selectLV=0;
   pWork->aUser[1].selectLV=0;
-    
+
   pWork2->gamedata = GAMEDATA_Create(GFL_HEAPID_APP);
   pWork2->bDebug=TRUE;
   pWork->gamedata = pWork2->gamedata ;
-//  pWork->pStatus[0] = MyStatus_AllocWork(GFL_HEAPID_APP);
-//  pWork->pStatus[1] = MyStatus_AllocWork(GFL_HEAPID_APP);
+  //  pWork->pStatus[0] = MyStatus_AllocWork(GFL_HEAPID_APP);
+  //  pWork->pStatus[1] = MyStatus_AllocWork(GFL_HEAPID_APP);
   pFriend = GAMEDATA_GetMyStatusPlayer(pWork2->gamedata, 1);
   GFL_STD_MemCopy(MyStatus_AllocWork(GFL_HEAPID_APP),pFriend,MyStatus_GetWorkSize() );
-  
-  
+
+
   return pWork2;
 }
 
 static void * _PokeIrcTradeWorkCreate(D_OHNO_WORK *wk)
 {
-	POKEMONTRADE_PARAM *pWork;
+  POKEMONTRADE_PARAM *pWork;
   MYSTATUS* pFriend;
 
-  
-	pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_PARAM));
+
+  pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_PARAM));
   pWork->gamedata = GAMEDATA_Create(GFL_HEAPID_APP);
 
   pFriend = GAMEDATA_GetMyStatusPlayer(pWork->gamedata, 1);
   GFL_STD_MemCopy(MyStatus_AllocWork(GFL_HEAPID_APP),pFriend,MyStatus_GetWorkSize() );
 
-  
+
   return pWork;
 }
 
-
-
-
+static void * _initTrial(D_OHNO_WORK *wk)
+{
+  DEBUG_TRIAL_PARAM* pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(DEBUG_TRIAL_PARAM));
+  pWork->trialType = wk->trialType;
+  pWork->trialNo = wk->trialNo;
+  return pWork;
+}
 
 //==============================================================================
-//	
+//
 //==============================================================================
 //----------------------------------------------------------
 /**
@@ -750,9 +793,9 @@ static void * _PokeIrcTradeWorkCreate(D_OHNO_WORK *wk)
  */
 //----------------------------------------------------------
 const GFL_PROC_DATA DebugOhnoListProcData = {
-	DebugOhnoMainProcInit,
-	DebugOhnoMainProcMain,
-	DebugOhnoMainProcEnd,
+  DebugOhnoMainProcInit,
+  DebugOhnoMainProcMain,
+  DebugOhnoMainProcEnd,
 };
 
 #endif //PM_DEBUG
