@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T15:22:37"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T17:21:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1986" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="733" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="525"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="538"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="692"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -402,7 +402,7 @@
 		<comment>♂
 ・古い石
 　WHITEverなら「ダークストーン（黒）」
-　BLACKverなら「ライトストーン（しろ）」</comment>
+　BLACKverなら「ライトストーン（白）」</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
 		<language name="JPN" width="256">ああ　こちらは
@@ -476,7 +476,7 @@
 		<attribute name="キャラ指定">HAKAIM</attribute>
 		<language name="JPN" width="256">プラズマだん『きたか　ジムリーダー▼
 われわれ　プラズマだんは
-ポケモンを　じゆうにするため▼
+ポケモンを　じゆうに　するため▼
 はくぶつかんに　ある
 ドラゴンのホネを　いただく▼</language>
 		<language name="JPN_KANJI" width="256">プラズマ団『来たか　ジムリーダー▼
@@ -561,9 +561,8 @@
 
 	<row id="msg_c02gym0101_white_01">
 		<comment>♀
-・盗難イベント中
-　メッセージは繰り返し
-・削除タイミングは盗難イベントクリア時（仮）</comment>
+・盗難イベント中、メッセージは繰り返し
+・削除タイミングは盗難イベントクリア時</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『ドロボウだなんて
@@ -574,16 +573,15 @@
 
 	<row id="msg_c02gym0101_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・盗難イベント中
-　メッセージは繰り返し
-・削除タイミングは盗難イベントクリア時（仮）</comment>
+・盗難イベント中、メッセージは繰り返し
+・削除タイミングは盗難イベントクリア時</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『プラズマだんの　せいで
-ジムリーダーが　いないのか……▽
+ジムリーダーが　いないのか……▼
 なんとも　メンドーな　はなしだね</language>
 		<language name="JPN_KANJI" width="256">チェレン『プラズマ団のせいで
-ジムリーダーが　いないのか……▽
+ジムリーダーが　いないのか……▼
 なんとも　メンドーな　話だね</language>
 	</row>
 
@@ -646,12 +644,12 @@ GIRL3</attribute>
 GIRL3</attribute>
 		<language name="JPN" width="256">ドロボウたちの
 あの　だいたんな　こうどう……▼
-まるで　じぶんたちの
-せいぎを　しんじているみたい</language>
+まるで　じぶんたちの　していることが
+ただしいと　しんじているみたい</language>
 		<language name="JPN_KANJI" width="256">ドロボウたちの
 あの　大胆な　行動……▼
-自分たちの
-正義を　信じているみたい</language>
+まるで　自分たちの　していることが
+正しいと　信じているみたい</language>
 	</row>
 
 	<row id="msg_c02gym0101_oldman_01">
@@ -755,7 +753,7 @@ OLDMAN1</attribute>
 		<language name="JPN" width="256">とある　ポケモンが
 ぶきとして　もっていた　ホネ</language>
 		<language name="JPN_KANJI" width="256">とある　ポケモンが
-武器として　もっていた　ホネ</language>
+武器として　持っていた　ホネ</language>
 	</row>
 
 	<flowchart-group-list>

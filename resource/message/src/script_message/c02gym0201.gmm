@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T13:10:23"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T17:24:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1375" top="242" right="2080" bottom="870" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -340,7 +340,7 @@
 ノーマルタイプって▽
 かくとうタイプが　苦手なんすよ▼
 あと　ジムそのものに　ついて
-せつめい　するっすよ！▼
+説明するっすよ！▼
 この　ポケモンジムは
 本に隠された　問題を▽
 解いていくと　先に　進めます▼
@@ -550,7 +550,7 @@
 		<language name="JPN_KANJI" width="256">２つ目の　メモを　見つけて
 本を　探してるのね？▽
 ……メモには　なんて　書いてるの？▼
-「体内で　炎が　燃え上がり
+「体内で　炎が　燃えあがり
 頭から　煙を出して　走る」▼
 私が　読んでるのは
 「ポカブ」についての　本だけど▽
@@ -804,7 +804,7 @@
 おっと！　今　読んでいるのは
 「機関車の　構造」よ▼
 この本を　読みたくなったら
-私に　言ってね</language>
+私に　いってね</language>
 	</row>
 
 	<row id="msg_c02gym0101_assitantw_02" back-color="#ffff00,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -836,7 +836,7 @@
 頭から　煙を出して　走る」▼
 私が　読んでるのは
 「機関車の　構造」よ▽
-この本が　正解　かしらね？</language>
+この本が　正解かしらね？</language>
 	</row>
 
 	<row id="msg_c02gym0101_assitantw_02_1" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
@@ -854,7 +854,7 @@
 けんきゅうできて　ありがたいな▼</language>
 		<language name="JPN_KANJI" width="256">おー！
 正解！▼
-「体内で　炎が　燃え上がり
+「体内で　炎が　燃えあがり
 頭から　煙を出して　走る」▼
 これは　まさに
 機関車の　ことね！▽
@@ -1034,7 +1034,7 @@
 		<language name="JPN" width="256">「ポケモンの　おかし」
 この　ほんを　よみますか？</language>
 		<language name="JPN_KANJI" width="256">「ポケモンの　お菓子」
-この　本を　読みますか？</language>
+この本を　読みますか？</language>
 	</row>
 
 	<row id="msg_c02gym0101_headline_13" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -1251,11 +1251,11 @@
 この　ほんを　よみますか？</comment>
 		<language name="JPN" width="256">ミジュマルの　せいたいが　かいてある▼
 おなかにある　ホタチは　とてもかたく
-おへそから　つくられている▽
+おへそから　つくられており▽
 ミジュマルは　どうぐとして　つかう▼</language>
 		<language name="JPN_KANJI" width="256">ミジュマルの　生態が　書いてある▼
 お腹にある　ホタチは　とても硬く
-おへそから　作られている▽
+おへそから　作られており▽
 ミジュマルは　道具として　使う▼</language>
 	</row>
 
@@ -1267,7 +1267,7 @@
 はなのあなから　ほのおを　はきだす▽
 げんきがないと　けむりしか　だせない▼</language>
 		<language name="JPN_KANJI" width="256">ポカブの　生態が　書いてある▼
-体内では　炎が　燃え上がり
+体内では　炎が　燃えあがり
 鼻の穴から　炎を　吐き出す▽
 元気がないと　煙しか　出せない▼</language>
 	</row>
@@ -1377,7 +1377,7 @@
 『さすがに　問題が
 簡単だったね▽
 さて　２問目の　問題だよ！▼
-[FF:00:色:1]Ｑ，体内で　炎が　燃え上がり
+[FF:00:色:1]Ｑ，体内で　炎が　燃えあがり
 頭から　煙を出して　走る▽[FF:00:色:0]
 さて　この本は　なんでしょう！？▼
 ヒントは……
