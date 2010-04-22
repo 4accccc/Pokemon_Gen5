@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T21:37:49"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T22:34:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1019,9 +1019,9 @@ C02ジムリーダー</attribute>
 		<attribute name="キャラ指定">HAKASE2
 アララギ博士娘</attribute>
 		<language name="JPN" width="256">アララギ『……ということを
-アタシが　しらべたのね▼</language>
+わたしが　しらべたのね▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『……ということを
-アタシが　調べたのね▼</language>
+わたしが　調べたのね▼</language>
 	</row>
 
 	<row id="msg_c02_leader2_stone_03" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1404,12 +1404,12 @@ C02ジムリーダー</attribute>
 		<language name="JPN" width="256">アララギ『ドラゴンポケモンが
 どのような　そんざい　なのか▼
 めざめさせる　ほうほうが　あるのか
-しらべるため　アタシたちは▽
+しらべるため　わたしたちは▽
 けんきゅうじょに　もどるわね……▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『ドラゴンポケモンが
 どのような　存在なのか▼
 目覚めさせる　方法が　あるのか
-調べるため　アタシたちは▽
+調べるため　わたしたちは▽
 研究所に　戻るわね……▼</language>
 	</row>
 

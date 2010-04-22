@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T21:16:50"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T22:35:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -576,21 +576,21 @@
 ・メッセージ表示後、主人公操作可能に</comment>
 		<attribute name="キャラ指定">HAKASE2
 アララギ博士娘</attribute>
-		<language name="JPN" width="256">あたしはね　パパに　たのまれて
+		<language name="JPN" width="256">わたしはね　パパに　たのまれて
 ギアルって　はぐるま　みたいな▽
 ポケモンのこと　しらべているの▼
-あたしが　ポケモンの　きげん……
+わたしが　ポケモンの　きげん……
 うまれた　じきを　しらべているからって▽
 ひとづかいが　あらいよね……▼
-もっとも　あたしも　すきで
+もっとも　わたしも　すきで
 しらべているから　たのしいんだけどね！</language>
-		<language name="JPN_KANJI" width="256">あたしはね　パパに　頼まれて
+		<language name="JPN_KANJI" width="256">わたしはね　パパに　頼まれて
 ギアルって　歯車みたいな▽
 ポケモンのこと　調べているの▼
-あたしが　ポケモンの　起源……
+わたしが　ポケモンの　起源……
 誕生時期を　調べているからって▽
 人使いが　荒いよね……▼
-もっとも　あたしも　好きで
+もっとも　わたしも　好きで
 調べているから　楽しいんだけどね！</language>
 	</row>
 
