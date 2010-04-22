@@ -168,3 +168,21 @@ void BATTLE_EXAMINATION_SAVE_Write(GAMEDATA *gamedata , BATTLE_EXAMINATION_SAVED
 
   GFL_HEAP_FreeMemory(pWork);
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   データを使用したことにするキーをセット
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void BATTLE_EXAMINATION_SAVE_SetDataUsedKey(BATTLE_EXAMINATION_SAVEDATA* pSV)
+{
+  if(pSV->crc == GFL_STD_CrcCalc(pSV, sizeof(BATTLE_EXAMINATION_SAVEDATA)-2)){
+    int datasize;
+    pSV->bActive = BATTLE_EXAMINATION_USED_MAGIC_KEY;
+    datasize = sizeof(BATTLE_EXAMINATION_SAVEDATA);   //データ全体サイズ
+    //ＣＲＣ再計算
+    pSV->crc = GFL_STD_CrcCalc(pSV, datasize-2);
+  }
+}
+
