@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-19T19:56:05"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T17:39:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="113" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -423,13 +423,13 @@
 		<attribute name="キャラ指定">トレーナー
 jugglimg_05</attribute>
 		<language name="JPN" width="256">スイッチを　ふんだら
-とびだすのは　ボクでした！▼
+とびだすのは　ミーでした！▼
 さあ　というわけで
-ボクと　しょうぶ　してくれよ！▼</language>
+ミーと　しょうぶ　してくれよ！▼</language>
 		<language name="JPN_KANJI" width="256">スイッチを　踏んだら
-飛びだすのは　ボクでした！▼
+飛びだすのは　ミーでした！▼
 さあ　というわけで
-ボクと　勝負してくれよ！▼</language>
+ミーと　勝負してくれよ！▼</language>
 	</row>
 
 	<row id="msg_c03gym0101_jugglimg_05_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -450,10 +450,10 @@ jugglimg_05</attribute>
 jugglimg_05</attribute>
 		<language name="JPN" width="256">だーかーら！▼
 この　スイッチを　ふんでも
-ボクが　とびだすだけだぞ！？</language>
+ミーが　とびだすだけだぞ！？</language>
 		<language name="JPN_KANJI" width="256">だーかーら！▼
 この　スイッチを　踏んでも
-ボクが　飛びだすだけだぞ！？</language>
+ミーが　飛びだすだけだぞ！？</language>
 	</row>
 
 	<row id="msg_c03gym0101_jugglimg_06_01">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T19:40:56"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T17:46:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -308,7 +308,7 @@
 すてきな　出会いになる　かもしれない</language>
 	</row>
 
-	<row id="msg_c03r1002_mountain_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1002_mountain_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手処理
 　No371「ねむる」</comment>
@@ -327,7 +327,7 @@
 覚えさせたので　きみに　譲ろう！▼</language>
 	</row>
 
-	<row id="msg_c03r1002_mountain_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r1002_mountain_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">MOUNTAIN</attribute>

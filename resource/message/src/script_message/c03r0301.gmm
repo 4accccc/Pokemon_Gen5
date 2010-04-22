@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T15:50:34"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T17:41:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -340,13 +340,13 @@
 	<row id="msg_c03r0301_businessman_10">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
-		<language name="JPN" width="256">いやあ……　いつも　おこされるとき
-ポケモンの　めざましビンタ　でして▽
+		<language name="JPN" width="256">いやあ……　いつも　ポケモンの
+めざましビンタ　で　おこされて▽
 ちょいと　ボロボロ　なんです▼
 でも　おこしてくれる　かのじょのため
 きょうも　はりきって　がんばりますよ！</language>
-		<language name="JPN_KANJI" width="256">いやあ……　いつも　起こされるとき
-ポケモンの　めざましビンタ　でして▽
+		<language name="JPN_KANJI" width="256">いやあ……　いつも　ポケモンの
+めざましビンタ　で　起こされて▽
 ちょいと　ボロボロ　なんです▼
 でも　起こしてくれる　彼女のため
 今日も　はりきって　がんばりますよ！</language>
