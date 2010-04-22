@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-04-09T18:24:43"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-04-23T01:44:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1060" top="488" right="1560" bottom="1108" maximized="no" rayout="Vertical2">
+	<dialog left="1053" top="511" right="1553" bottom="1131" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="786" top="163" right="1259" bottom="561" visible="no"/>
 		<band id="0" index="0" style="0000" width="492"/>
@@ -342,9 +342,9 @@
 
 	<row id="MUSICAL_EXTRA_NAME_02">
 		<comment>ノブ
-ニューモン</comment>
-		<language name="JPN" width="240">ちからこぶ</language>
-		<language name="JPN_KANJI">ちからこぶ</language>
+ミネズミ</comment>
+		<language name="JPN" width="240">みねやん</language>
+		<language name="JPN_KANJI">みねやん</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_03">
@@ -371,8 +371,8 @@
 	<row id="MUSICAL_EXTRA_NAME_06">
 		<comment>ユキト
 エモンガ</comment>
-		<language name="JPN" width="240">エモ</language>
-		<language name="JPN_KANJI">エモ</language>
+		<language name="JPN" width="240">とびえもん</language>
+		<language name="JPN_KANJI">とびえもん</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_07">
@@ -384,7 +384,7 @@
 
 	<row id="MUSICAL_EXTRA_NAME_08">
 		<comment>ヒデオ
-ワルビル</comment>
+ナゲキ</comment>
 		<language name="JPN" width="240">グラサン</language>
 		<language name="JPN_KANJI">グラサン</language>
 	</row>
@@ -413,15 +413,15 @@
 	<row id="MUSICAL_EXTRA_NAME_12">
 		<comment>サーヤ
 ミジュマル</comment>
-		<language name="JPN" width="240">ミジュみ</language>
-		<language name="JPN_KANJI">ミジュみ</language>
+		<language name="JPN" width="240">ミズエ</language>
+		<language name="JPN_KANJI">ミズエ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_13">
 		<comment>リマ
 チラーミィ</comment>
-		<language name="JPN" width="240">チラリー</language>
-		<language name="JPN_KANJI">チラリー</language>
+		<language name="JPN" width="240">チラみん</language>
+		<language name="JPN_KANJI">チラみん</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_14">
@@ -525,8 +525,8 @@
 	<row id="MUSICAL_EXTRA_NAME_28">
 		<comment>ヤン
 スンドメー</comment>
-		<language name="JPN" width="240">スンスン</language>
-		<language name="JPN_KANJI">スンスン</language>
+		<language name="JPN" width="240">ズルルン</language>
+		<language name="JPN_KANJI">ズルルン</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_29">
@@ -560,8 +560,8 @@
 	<row id="MUSICAL_EXTRA_NAME_33">
 		<comment>ルミ
 アウトン</comment>
-		<language name="JPN" width="240">おねえさん</language>
-		<language name="JPN_KANJI">おねえさん</language>
+		<language name="JPN" width="240">あっちゃん</language>
+		<language name="JPN_KANJI">あっちゃん</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_34">
@@ -574,8 +574,8 @@
 	<row id="MUSICAL_EXTRA_NAME_35">
 		<comment>カナ
 ゴスロス</comment>
-		<language name="JPN" width="240">ゴシカ</language>
-		<language name="JPN_KANJI">ゴシカ</language>
+		<language name="JPN" width="240">ごっちー</language>
+		<language name="JPN_KANJI">ごっちー</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_36">
@@ -658,20 +658,20 @@
 	<row id="MUSICAL_EXTRA_NAME_47">
 		<comment>ジェニー
 ハハコモリ</comment>
-		<language name="JPN" width="240">ママこ</language>
-		<language name="JPN_KANJI">ママこ</language>
+		<language name="JPN" width="240">マミー</language>
+		<language name="JPN_KANJI">マミー</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_48">
 		<comment>ミナ
 チラチーノ</comment>
-		<language name="JPN" width="240">チーコ</language>
-		<language name="JPN_KANJI">チーコ</language>
+		<language name="JPN" width="240">チラリー</language>
+		<language name="JPN_KANJI">チラリー</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_49">
 		<comment>ベッキー
-プルキング</comment>
+プルンゲル</comment>
 		<language name="JPN" width="240">クイーン</language>
 		<language name="JPN_KANJI">クイーン</language>
 	</row>
@@ -679,15 +679,15 @@
 	<row id="MUSICAL_EXTRA_NAME_50">
 		<comment>セリナ
 ドレディア</comment>
-		<language name="JPN" width="240">ディアナ</language>
-		<language name="JPN_KANJI">ディアナ</language>
+		<language name="JPN" width="240">ディアラ</language>
+		<language name="JPN_KANJI">ディアラ</language>
 	</row>
 
 	<row id="MUSICAL_EXTRA_NAME_51">
 		<comment>メイコ
 ゴスローゼ</comment>
-		<language name="JPN" width="240">ローズ</language>
-		<language name="JPN_KANJI">ローズ</language>
+		<language name="JPN" width="240">ローゼ</language>
+		<language name="JPN_KANJI">ローゼ</language>
 	</row>
 
 	<flowchart-group-list>
