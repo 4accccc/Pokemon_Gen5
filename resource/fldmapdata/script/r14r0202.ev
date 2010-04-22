@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_r14r0202.h"
-  //.include  "r14r0202.h"
+  .include  "r14r0202.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,21 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r14r0202
+_EVENT_DATA    ev_r14r0202_cleaningm_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*POLICEMAN                                             */
 /**************************************************************/
-//ev_zone_r14r0202:
-//  _END
+EVENT_START   ev_r14r0202_cleaningm_01
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_r14r0202:
-  //とりあえず最初のラベルだけ生成している
-  _END
-
+	IF FLAG_ON( FE_R14R0201_LEG_MEET ) THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r14r0202_oldman_03 )
+	ELSIF $WK_SCENE_R14R0201_LEG == 2 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r14r0202_oldman_02 )
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r14r0202_oldman_01 )
+	ENDIF
+	
+EVENT_END

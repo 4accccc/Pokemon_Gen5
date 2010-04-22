@@ -9,6 +9,7 @@
 #ifndef ZONE_R14R0202_EVC_H
 #define ZONE_R14R0202_EVC_H
 
+#define R14R0202_CLEANINGM_01              0
 
 #endif //ZONE_R14R0202_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r14r0202.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
