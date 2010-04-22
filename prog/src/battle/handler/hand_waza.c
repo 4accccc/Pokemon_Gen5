@@ -2734,14 +2734,17 @@ static void common_Counter_SetTarget( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* w
     if( common_Counter_GetRec(bpp, dmgType, &rec) )
     {
       u8 targetPokeID = rec.pokeID;
+
       // 対象が既に場にいない場合（とんぼがえりなど）、その位置に現在いるポケを対象にする
-      if( BTL_SVFTOOL_GetExistFrontPokePos(flowWk, rec.pokeID) == BTL_POS_MAX )
+      if( BTL_SVFTOOL_GetExistFrontPokePos(flowWk, rec.pokeID) == BTL_POS_NULL )
       {
+        TAYA_Printf("カウンタ対象：元々のポケID=%d  が場にいない  ", rec.pokeID );
         if( rec.pokePos != BTL_POS_MAX ){
           targetPokeID = BTL_SVFTOOL_GetExistPokeID( flowWk, rec.pokePos );
         }else{
           targetPokeID = BTL_POKEID_NULL;
         }
+        TAYA_Printf(" -> 元の場(%d) に今居るのはpokeID=%d\n", rec.pokePos, targetPokeID);
       }
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, targetPokeID );
     }

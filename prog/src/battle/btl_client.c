@@ -5185,7 +5185,7 @@ static BOOL scProc_ACT_TameWazaHide( BTL_CLIENT* wk, int* seq, const int* args )
 
 
 /**
- * 【アクション】単体ダメージ演出  [0]:pokeID, [1]:affinity [2]:wazaID
+ * 【アクション】単体ダメージ演出  [0]:pokeID, [1]:affAbout [2]:wazaID
  */
 static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args )
 {
@@ -5193,16 +5193,16 @@ static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
   {
     WazaID waza;
-    u8 atPokePos, defPokePos, affinity;
+    u8 atPokePos, defPokePos, affAbout;
     u16 damage;
     const BTL_PARTY* party;
     const BTL_POKEPARAM* poke;
 
     defPokePos  = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-    affinity  = args[1];
+    affAbout  = args[1];
     waza      = args[2];
 
-    BTLV_ACT_DamageEffectSingle_Start( wk->viewCore, waza, defPokePos, affinity );
+    BTLV_ACT_DamageEffectSingle_Start( wk->viewCore, waza, defPokePos, affAbout );
     (*seq)++;
   }
   break;

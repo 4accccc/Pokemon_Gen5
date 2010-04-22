@@ -110,6 +110,7 @@ static BOOL mainproc_call( BTLV_CORE* core );
 static BOOL CmdProc_SelectWaza( BTLV_CORE* core, int* seq, void* workBufer );
 static void ForceQuitSelect_Common( BTLV_CORE* core );
 static BOOL subprocDamageEffect( int* seq, void* wk_adrs );
+static void PlayWazaAffSE( BTLV_CORE* wk, BtlTypeAffAbout affAbout );
 static BOOL subprocMemberIn( int* seq, void* wk_adrs );
 static void StrParamToString( const BTLV_STRPARAM* param, STRBUF* dst );
 static void PutMsgToSCU( BTLV_CORE* wk, const STRBUF* buf, u16 wait, pPrintCallBack callBackFunc );
@@ -1439,8 +1440,8 @@ BOOL BTLV_ACT_WazaEffect_Wait( BTLV_CORE* wk )
 //--------------------------------------
 
 typedef struct {
-  WazaID      wazaID;
-  BtlTypeAff  affinity;
+  WazaID           wazaID;
+  BtlTypeAffAbout  affAbout;
   u16     timer;
   u8      defPokePos;
 }WAZA_DMG_ACT_WORK;
@@ -1456,11 +1457,11 @@ typedef struct {
  * @param   aff
  */
 //=============================================================================================
-void BTLV_ACT_DamageEffectSingle_Start( BTLV_CORE* wk, WazaID wazaID, BtlPokePos defPokePos, BtlTypeAff aff )
+void BTLV_ACT_DamageEffectSingle_Start( BTLV_CORE* wk, WazaID wazaID, BtlPokePos defPokePos, BtlTypeAffAbout affAbout )
 {
   WAZA_DMG_ACT_WORK* subwk = getGenericWork(wk, sizeof(WAZA_DMG_ACT_WORK));
 
-  subwk->affinity = aff;
+  subwk->affAbout = affAbout;
   subwk->defPokePos = defPokePos;
   subwk->timer = 0;
   subwk->wazaID = wazaID;
@@ -1480,7 +1481,6 @@ BOOL BTLV_ACT_DamageEffectSingle_Wait( BTLV_CORE* wk )
 {
   return BTL_UTIL_CallProc( &wk->subProc );
 }
-
 static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
 {
   BTLV_CORE* wk = wk_adrs;
@@ -1492,18 +1492,8 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
       BOOL fChapterSkipMode = BTL_CLIENT_IsChapterSkipMode( wk->myClient );
 
       BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->defPokePos, subwk->wazaID, fChapterSkipMode );
+      PlayWazaAffSE( wk, subwk->affAbout );
 
-      if( subwk->affinity < BTL_TYPEAFF_100 )
-      {
-        PlaySELocal( wk, SEQ_SE_KOUKA_L );
-      }
-      else if ( subwk->affinity > BTL_TYPEAFF_100 )
-      {
-        PlaySELocal( wk, SEQ_SE_KOUKA_H );
-      }
-      else{
-        PlaySELocal( wk, SEQ_SE_KOUKA_M );
-      }
       (*seq)++;
     }
     break;
@@ -1563,18 +1553,7 @@ BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk )
         BTLV_SCU_StartWazaDamageAct( wk->scrnU, subwk->pokePos[i], subwk->wazaID, fChapterSkipMode );
       }
 
-      if( subwk->affAbout == BTL_TYPEAFF_ABOUT_ADVANTAGE )
-      {
-        PlaySELocal( wk, SEQ_SE_KOUKA_H );
-      }
-      else if( subwk->affAbout == BTL_TYPEAFF_ABOUT_DISADVANTAGE )
-      {
-        PlaySELocal( wk, SEQ_SE_KOUKA_L );
-      }
-      else
-      {
-        PlaySELocal( wk, SEQ_SE_KOUKA_M );
-      }
+      PlayWazaAffSE( wk, subwk->affAbout );
       subwk->seq++;
     }
     break;
@@ -1588,6 +1567,24 @@ BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk )
   }
   return FALSE;
 
+}
+
+/**
+ *  ÉèÉUÉqÉbÉgSEÇëäê´Ç…âûÇ∂Çƒñ¬ÇÁÇµÇÌÇØ
+ */
+static void PlayWazaAffSE( BTLV_CORE* wk, BtlTypeAffAbout affAbout )
+{
+  u32 seID;
+
+  switch( affAbout ){
+  case BTL_TYPEAFF_ABOUT_ADVANTAGE:     seID = SEQ_SE_KOUKA_H; break;
+  case BTL_TYPEAFF_ABOUT_DISADVANTAGE:  seID = SEQ_SE_KOUKA_L; break;
+  default:
+    seID = SEQ_SE_KOUKA_M;
+    break;
+  }
+
+  PlaySELocal( wk, seID );
 }
 
 //=============================================================================================
