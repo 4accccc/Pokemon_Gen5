@@ -280,7 +280,8 @@ const BOOL MC_CAP_DEMO_StartDemoMain( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *de
         GFL_BBD_SetObjectSiz( bbdSys , demoWork->objIdx[CDOI_READY] , &sizeX , &sizeY );
         GFL_BBD_SetObjectDrawEnable( bbdSys , demoWork->objIdx[CDOI_READY] , &isDisp );
         
-        PMSND_PlaySE( MB_SND_POKE_READY );
+        //‘•“U‚É‚È‚é‚æ‚¤‚É‚µ‚½
+        //PMSND_PlaySE( MB_SND_POKE_READY );
 
         demoWork->state = CDS_READY_DISP_PULL_BALL;
         demoWork->cnt = 0;

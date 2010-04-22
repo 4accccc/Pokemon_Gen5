@@ -43,6 +43,7 @@
 #define MB_CAP_POKE_DOWN_EFF_OFS (FX32_CONST(16))
 
 #define MB_CAP_POKE_ESCAPE_TIME (60*7)   //‰æ–ÊŠO‚É“¦‚°‚Ä‚¢‚éŽžŠÔ
+#define MB_CAP_POKE_ESCAPE_TIME_LAST (60*2)   //‰æ–ÊŠO‚É“¦‚°‚Ä‚¢‚éŽžŠÔ(ÅŒã‚Ìˆê•C
 
 //======================================================================
 //	enum
@@ -537,6 +538,13 @@ static void MB_CAP_POKE_StateNone(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWo
 {
   if( pokeWork->state == MCPS_ESCAPE )
   {
+    if( MB_CAPTURE_GetLeastPoke( capWork ) == 1 )
+    {
+      if( pokeWork->cnt > MB_CAP_POKE_ESCAPE_TIME_LAST )
+      {
+        pokeWork->cnt = MB_CAP_POKE_ESCAPE_TIME_LAST;
+      }
+    }
     if( pokeWork->cnt > 0 )
     {
       if( MB_CAPTURE_IsBonusTime( capWork ) == FALSE )
