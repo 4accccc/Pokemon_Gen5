@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-19T17:34:55"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T20:25:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1327" top="118" right="2032" bottom="746" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -366,10 +366,10 @@
 ・GRIDX=78、GRIDZ=75</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＷ
 プラズマ団♀</attribute>
-		<language name="JPN" width="256">すべての　ポケモンを　かいほう……
-なんて　すばらしいんでしょう</language>
-		<language name="JPN_KANJI" width="256">すべての　ポケモンを　解放……
-なんて　すばらしいんでしょう</language>
+		<language name="JPN" width="256">ポケモンを　てばなし
+トレーナーが　トレーナーでなくなる！</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　手放し
+トレーナーが　トレーナーでなくなる！</language>
 	</row>
 
 	<row id="msg_d02r0101_hakaiw_stop3_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-20T20:44:16"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T20:31:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -458,6 +458,7 @@
 		<attribute name="キャラ指定">七賢人
 ゲーチス</attribute>
 		<language name="JPN" width="256">われらが　プラズマだんの　おうは
+ポケモンを　しばりつける▽
 チャンピオンより　つよいことを▽
 イッシュの　にんげんに　しめします！▼
 そして　イッシュを　つくった
@@ -470,6 +471,7 @@
 おうに　ふさわしい　おしろも▽
 すでに　よういして　いるのですよ▼</language>
 		<language name="JPN_KANJI" width="256">われらが　プラズマ団の　王は
+ポケモンを　しばりつける▽
 チャンピオンより　強いことを▽
 イッシュの　人間に　示します！▼
 そして　イッシュを　建国した

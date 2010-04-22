@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-18T19:53:23"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T20:38:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -429,7 +429,7 @@
 ……人が　いなければ
 ボクの　理想の　場所だ▼
 さて　キミは　選ばれた……
-そういうと　おどろくかい？[BE:09:速度コントロール:0][BE:09:速度コントロール:0]</language>
+そういうと　驚くかい？[BE:09:速度コントロール:0][BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_d06r0101_boss_11" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -440,7 +440,7 @@
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]まあ　そうだよね
 おどろくだろうさ[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]まあ　そうだよね
-おどろくだろうさ[BE:09:速度コントロール:0]▼</language>
+驚くだろうさ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d06r0101_boss_12" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -453,7 +453,7 @@
 おどろくことも　できないか[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……フウン▼
 やはり　意味が　理解できないと
-おどろくことも　できないか[BE:09:速度コントロール:0]▼</language>
+驚くことも　できないか[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_d06r0101_boss_13" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -501,8 +501,8 @@
 ・メッセージ表示後、主人公に！マーク</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
-		<language name="JPN" width="256">おーい！▼</language>
-		<language name="JPN_KANJI" width="256">おーい！▼</language>
+		<language name="JPN" width="256">おうい！▼</language>
+		<language name="JPN_KANJI" width="256">おうい！▼</language>
 	</row>
 
 	<row id="msg_d06r0101_white_01a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -607,7 +607,7 @@
 		<language name="JPN_KANJI" width="256">アララギ『[1:00:トレーナー名:0]！
 ポケモン図鑑は　うまってる？▼
 どんどん　ポケモンと　出会って
-どんどん　ページを　生めてよね！</language>
+どんどん　ページを　うめてよね！</language>
 	</row>
 
 	<row id="msg_d06r0101_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1055,10 +1055,12 @@
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『えーっと　[1:00:トレーナー名:0]！▼
-いまの　わたし　ボディーガードだから
+あたし　いま　アララギはかせの
+ボディーガードだから▽
 はかせと　いっしょに　いくね！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『えーっと　[1:00:トレーナー名:0]！▼
-今の　わたし　ボディーガードだから
+あたし　いま　アララギ博士の
+ボディーガードだから▽
 博士と　一緒に　行くね！▼</language>
 	</row>
 
