@@ -289,6 +289,8 @@ init_flags:
 	//T01研究所 図鑑入手イベント中だけ博士(娘)のテーマをゾーン曲にする
 	_FLAG_SET( SYS_FLAG_BGM_LABO_01 )
 
+	//ギアステーションのジャッジを非表示
+	_FLAG_SET( FV_POKE_JUDGE_01 )
 }
 _RET
 
@@ -431,6 +433,9 @@ ev_first_gameclear:
   //FV_C08R0701_STOPPER_01：ソウリュウシティ11番道路方面ストッパー解除
   _FLAG_SET( FV_C08R0701_STOPPER_01 )
   $WK_SCENE_C08R0701_STOPPER = 1
+
+  //ギアステーションのジャッジを表示
+  _FLAG_RESET( FV_POKE_JUDGE_01 )
 
 _RET
 
