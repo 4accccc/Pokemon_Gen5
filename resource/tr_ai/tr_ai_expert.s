@@ -17,260 +17,381 @@
 ExpertAISeq:
 	IF_MIKATA_ATTACK	ExpertAISeq_end   //対象が味方なら終了
 
-	IF_WAZA_SEQNO_JUMP	1,ExpertAI_1		// 眠らせる			2006.6.14
-	IF_WAZA_SEQNO_JUMP	3,ExpertAI_3		// すいとる			2006.6.14
-	IF_WAZA_SEQNO_JUMP	7,ExpertAI_7		// じばく			2006.6.14
-	IF_WAZA_SEQNO_JUMP	8,ExpertAI_8		// ゆめくい			2006.6.14バグ修正
-	IF_WAZA_SEQNO_JUMP	9,ExpertAI_9		// オウム			2006.6.14テーブル追加
+  TABLE_JUMP TABLE_JUMP_WAZASEQNO,WAZASEQ_TABLE
+  AIEND
 
-	IF_WAZA_SEQNO_JUMP	10,ExpertAI_10		// 攻撃力アップ		2006.6.14たんじゅん見るかも
-	IF_WAZA_SEQNO_JUMP	11,ExpertAI_11		// 防御力アップ		2006.6.14*分類
-	IF_WAZA_SEQNO_JUMP	12,ExpertAI_12		// 素早さアップ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	13,ExpertAI_13		// 特攻アップ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	14,ExpertAI_14		// 特防アップ		2006.6.14*分類
-	IF_WAZA_SEQNO_JUMP	15,ExpertAI_15		// 命中率アップ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	16,ExpertAI_16		// 回避率アップ		2006.6.14アクアリング追加
+  TABLE_ADRS  WAZASEQ_TABLE
+	ADRS  ExpertAI_Dummy	//	  0ダミー
+	ADRS  ExpertAI_1		// 眠らせる			2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_3		// すいとる			2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_7		// じばく			2006.6.14
+	ADRS  ExpertAI_8		// ゆめくい			2006.6.14バグ修正
+	ADRS  ExpertAI_9		// オウム			2006.6.14テーブル追加
+	ADRS  ExpertAI_10		// 攻撃力アップ		2006.6.14たんじゅん見るかも
 
-	IF_WAZA_SEQNO_JUMP	17,ExpertAI_17		// かならずあたる	2006.6.14
+	ADRS  ExpertAI_11		// 防御力アップ		2006.6.14*分類
+	ADRS  ExpertAI_12		// 素早さアップ		2006.6.14
+	ADRS  ExpertAI_13		// 特攻アップ		2006.6.14
+	ADRS  ExpertAI_14		// 特防アップ		2006.6.14*分類
+	ADRS  ExpertAI_15		// 命中率アップ		2006.6.14
+	ADRS  ExpertAI_16		// 回避率アップ		2006.6.14アクアリング追加
+	ADRS  ExpertAI_17		// かならずあたる	2006.6.14
+	ADRS  ExpertAI_18		// 攻撃力ダウン	0	2006.6.14*分類
+	ADRS  ExpertAI_19		// 防御力ダウン		2006.6.14
+	ADRS  ExpertAI_20		// 素早さダウン		2006.6.14	
 
-	IF_WAZA_SEQNO_JUMP	18,ExpertAI_18		// 攻撃力ダウン	0	2006.6.14*分類
-	IF_WAZA_SEQNO_JUMP	19,ExpertAI_19		// 防御力ダウン		2006.6.14
-	IF_WAZA_SEQNO_JUMP	20,ExpertAI_20		// 素早さダウン		2006.6.14	
-	IF_WAZA_SEQNO_JUMP	21,ExpertAI_21		// 特攻ダウン		2006.6.14*分類
-	IF_WAZA_SEQNO_JUMP	22,ExpertAI_22		// 特防ダウン		2006.6.14
-	IF_WAZA_SEQNO_JUMP	23,ExpertAI_23		// 命中率ダウン		2006.6.14アクアリング追加
-	IF_WAZA_SEQNO_JUMP	24,ExpertAI_24		// 回避率ダウン		2006.6.14
+	ADRS  ExpertAI_21		// 特攻ダウン		2006.6.14*分類
+	ADRS  ExpertAI_22		// 特防ダウン		2006.6.14
+	ADRS  ExpertAI_23		// 命中率ダウン		2006.6.14アクアリング追加
+	ADRS  ExpertAI_24		// 回避率ダウン		2006.6.14
+	ADRS  ExpertAI_25		// くろいきり	*たんじゅんチェック
+	ADRS  ExpertAI_26		// がまん			2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_28		// ふきとばし	まきびしチェック余力があれば
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_30		// テクスチャー		2006.6.14
 
-	IF_WAZA_SEQNO_JUMP	25,ExpertAI_25		// くろいきり	*たんじゅんチェック
-	IF_WAZA_SEQNO_JUMP	26,ExpertAI_26		// がまん			2006.6.14
-	IF_WAZA_SEQNO_JUMP	28,ExpertAI_28		// ふきとばし	まきびしチェック余力があれば
-	IF_WAZA_SEQNO_JUMP	30,ExpertAI_30		// テクスチャー		2006.6.14
-	IF_WAZA_SEQNO_JUMP	32,ExpertAI_32		// じこさいせい		2006.6.14
-	IF_WAZA_SEQNO_JUMP	33,ExpertAI_33		// どくどく			2006.6.14
-	IF_WAZA_SEQNO_JUMP	35,ExpertAI_35		// ひかりのかべ		2006.6.14要チェック
-	IF_WAZA_SEQNO_JUMP	37,ExpertAI_37		// ねむる			2006.6.14
-	IF_WAZA_SEQNO_JUMP	38,ExpertAI_38		// いちげきひっさつ	2006.6.14
-	IF_WAZA_SEQNO_JUMP	39,ExpertAI_39		// ため				2006.6.14
-	IF_WAZA_SEQNO_JUMP	40,ExpertAI_40		// いかりのまえば	2006.6.14
-	IF_WAZA_SEQNO_JUMP	42,ExpertAI_42		// しめつけ			2006.6.14
-	IF_WAZA_SEQNO_JUMP	43,ExpertAI_43		// クリティカルでやすい		*特性と装備道具
-	IF_WAZA_SEQNO_JUMP	48,ExpertAI_48		// とっしん			2006.6.14ＤＰ追加
-	IF_WAZA_SEQNO_JUMP	49,ExpertAI_49		// こんらん				
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_32		// じこさいせい		2006.6.14
+	ADRS  ExpertAI_33		// どくどく			2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_35		// ひかりのかべ		2006.6.14要チェック
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_37		// ねむる			2006.6.14
+	ADRS  ExpertAI_38		// いちげきひっさつ	2006.6.14
+	ADRS  ExpertAI_39		// ため				2006.6.14
+	ADRS  ExpertAI_40		// いかりのまえば	2006.6.14
 
-	IF_WAZA_SEQNO_JUMP	50,ExpertAI_10		// 攻撃２アップ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	51,ExpertAI_11		// 防御２アップ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	52,ExpertAI_12		// 素早さ２アップ	2006.6.14
-	IF_WAZA_SEQNO_JUMP	53,ExpertAI_13		// 特攻２アップ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	54,ExpertAI_14		// 特防２アップ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	55,ExpertAI_15		// 命中２アップ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	56,ExpertAI_16		// 回避２アップ		2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_42		// しめつけ			2006.6.14
+	ADRS  ExpertAI_43		// クリティカルでやすい		*特性と装備道具
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_48		// とっしん			2006.6.14ＤＰ追加
+	ADRS  ExpertAI_49		// こんらん				
+	ADRS  ExpertAI_50		// 攻撃２アップ		2006.6.14
 
-	IF_WAZA_SEQNO_JUMP	58,ExpertAI_18		// 攻撃２ダウン		2006.6.14
-	IF_WAZA_SEQNO_JUMP	59,ExpertAI_19		// 防御２ダウン		2006.6.14
-	IF_WAZA_SEQNO_JUMP	60,ExpertAI_20		// 素早さ２ダウン	2006.6.14
-	IF_WAZA_SEQNO_JUMP	61,ExpertAI_21		// 特攻２ダウン		2006.6.14
-	IF_WAZA_SEQNO_JUMP	62,ExpertAI_22		// 特防２ダウン		2006.6.14
-	IF_WAZA_SEQNO_JUMP	63,ExpertAI_23		// 命中２ダウン		2006.6.14
-	IF_WAZA_SEQNO_JUMP	64,ExpertAI_24		// 回避２ダウン		2006.6.14
+	ADRS  ExpertAI_51		// 防御２アップ		2006.6.14
+	ADRS  ExpertAI_52		// 素早さ２アップ	2006.6.14
+	ADRS  ExpertAI_53		// 特攻２アップ		2006.6.14
+	ADRS  ExpertAI_54		// 特防２アップ		2006.6.14
+	ADRS  ExpertAI_55		// 命中２アップ		2006.6.14
+	ADRS  ExpertAI_56		// 回避２アップ		2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_58		// 攻撃２ダウン		2006.6.14
+	ADRS  ExpertAI_59		// 防御２ダウン		2006.6.14
+	ADRS  ExpertAI_60		// 素早さ２ダウン	2006.6.14
 
-	IF_WAZA_SEQNO_JUMP	65,ExpertAI_65		// リフレクター		2006.6.14要チェック
-	IF_WAZA_SEQNO_JUMP	66,ExpertAI_66		// どく				2006.6.14
-	IF_WAZA_SEQNO_JUMP	67,ExpertAI_67		// まひ				2006.6.14
+	ADRS  ExpertAI_61		// 特攻２ダウン		2006.6.14
+	ADRS  ExpertAI_62		// 特防２ダウン		2006.6.14
+	ADRS  ExpertAI_63		// 命中２ダウン		2006.6.14
+	ADRS  ExpertAI_64		// 回避２ダウン		2006.6.14
+	ADRS  ExpertAI_65		// リフレクター		2006.6.14要チェック
+	ADRS  ExpertAI_66		// どく				2006.6.14
+	ADRS  ExpertAI_67		// まひ				2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_70		// 追加素早さダウン	2006.6.14
 
-	IF_WAZA_SEQNO_JUMP	118,ExpertAI_118	// いばる
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_75		// ゴッドバード		2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_78		// あてみなげ		2006.6.14
+	ADRS  ExpertAI_79		// みがわり			2006.6.14
+	ADRS  ExpertAI_80		// はかいこうせん	2006.6.14
 
-	IF_WAZA_SEQNO_JUMP	70,ExpertAI_70		// 追加素早さダウン	2006.6.14
-	IF_WAZA_SEQNO_JUMP	75,ExpertAI_75		// ゴッドバード		2006.6.14
-	IF_WAZA_SEQNO_JUMP	78,ExpertAI_78		// あてみなげ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	79,ExpertAI_79		// みがわり			2006.6.14
-	IF_WAZA_SEQNO_JUMP	80,ExpertAI_80		// はかいこうせん	2006.6.14
-	IF_WAZA_SEQNO_JUMP	84,ExpertAI_84		// やどりぎ			2006.6.14
-	IF_WAZA_SEQNO_JUMP	86,ExpertAI_86		// かなしばり		2006.6.14
-	IF_WAZA_SEQNO_JUMP	89,ExpertAI_89		// カウンター
-	IF_WAZA_SEQNO_JUMP	90,ExpertAI_90		// アンコール※テーブル作成
-	IF_WAZA_SEQNO_JUMP	91,ExpertAI_91		// いたみわけ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	92,ExpertAI_92		// いびき			2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_84		// やどりぎ			2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_86		// かなしばり		2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_89		// カウンター
+	ADRS  ExpertAI_90		// アンコール※テーブル作成
 
-	IF_WAZA_SEQNO_JUMP	94,ExpertAI_94		// ロックオン		2006.6.14
-	IF_WAZA_SEQNO_JUMP	97,ExpertAI_97		// ねごと			2006.6.14
-	IF_WAZA_SEQNO_JUMP	98,ExpertAI_98		// みちずれ			2006.6.14
-	IF_WAZA_SEQNO_JUMP	99,ExpertAI_99		// きしかいせい		2006.6.14
-	IF_WAZA_SEQNO_JUMP	102,ExpertAI_102	// いやしのすず		2006.6.14修正
-	IF_WAZA_SEQNO_JUMP	105,ExpertAI_105	// どろぼう			2006.6.14テーブル追加
-	IF_WAZA_SEQNO_JUMP	106,ExpertAI_106	// くろいまなざし	2006.6.14
-	IF_WAZA_SEQNO_JUMP	108,ExpertAI_16		// 回避率アップ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	109,ExpertAI_109	// のろい			2006.6.14
-	IF_WAZA_SEQNO_JUMP	111,ExpertAI_111	// まもる			2006.6.14フェイントチェック追加
-	IF_WAZA_SEQNO_JUMP	112,ExpertAI_112	// まきびし			2006.6.14新規追加
-	IF_WAZA_SEQNO_JUMP	113,ExpertAI_113	// みやぶる			2006.6.14
-	IF_WAZA_SEQNO_JUMP	116,ExpertAI_116	// こらえる			2006.6.14
-	IF_WAZA_SEQNO_JUMP	127,ExpertAI_127	// バトンタッチ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	128,ExpertAI_128	// おいうち			2006.6.14敵とんぼがえりチェック追加
-	IF_WAZA_SEQNO_JUMP	132,ExpertAI_132	// あさのひざし		2006.6.14
-	IF_WAZA_SEQNO_JUMP	133,ExpertAI_133	// こうごうせい		2006.6.14シーケンス削除
-	IF_WAZA_SEQNO_JUMP	134,ExpertAI_134	// つきのひかり		2006.6.14シーケンス削除
-	IF_WAZA_SEQNO_JUMP	136,ExpertAI_136	// あまごい			2006.6.14
-	IF_WAZA_SEQNO_JUMP	137,ExpertAI_137	// にほんばれ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	142,ExpertAI_142	// はらだいこ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	143,ExpertAI_143	// じこあんじ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	144,ExpertAI_144	// ミラーコート		分類チェック
-	IF_WAZA_SEQNO_JUMP	145,ExpertAI_145	// ロケットずつき	2006.6.14
-	IF_WAZA_SEQNO_JUMP	151,ExpertAI_151	// ソーラービーム	2006.6.14パワフルハーブ
-	IF_WAZA_SEQNO_JUMP	151,ExpertAI_152	// かみなり			2006.6.14追加
-	IF_WAZA_SEQNO_JUMP	155,ExpertAI_155	// そらをとぶ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	157,ExpertAI_157	// たまごうみ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	158,ExpertAI_158	// ねこだまし		2006.6.14
-	IF_WAZA_SEQNO_JUMP	161,ExpertAI_161	// はきだす			2006.6.14
-	IF_WAZA_SEQNO_JUMP	162,ExpertAI_162	// のみこむ			2006.6.14
-	IF_WAZA_SEQNO_JUMP	164,ExpertAI_164	// あられ			2006.6.14
-	IF_WAZA_SEQNO_JUMP	166,ExpertAI_166	// おだてる			2006.6.14
-	IF_WAZA_SEQNO_JUMP	168,ExpertAI_168	// おきみやげ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	169,ExpertAI_169	// からげんき		2006.6.14
-	IF_WAZA_SEQNO_JUMP	170,ExpertAI_170	// きあいパンチ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	171,ExpertAI_171	// きつけ			2006.6.14
-	IF_WAZA_SEQNO_JUMP	177,ExpertAI_177	// トリック			相手に合わせてテーブル作成必要あり
-	IF_WAZA_SEQNO_JUMP	178,ExpertAI_178	// なりきり			テーブル要調整
-	IF_WAZA_SEQNO_JUMP	181,ExpertAI_181	// ねをはる			2006.6.14
-	IF_WAZA_SEQNO_JUMP	182,ExpertAI_182	// ばかぢから		しろいハーブチェック入れるかも
-	IF_WAZA_SEQNO_JUMP	183,ExpertAI_183	// マジックコート	2006.6.14
-	IF_WAZA_SEQNO_JUMP	184,ExpertAI_184	// リサイクル		2006.6.14
-	IF_WAZA_SEQNO_JUMP	185,ExpertAI_185	// リベンジ			2006.6.14
-	IF_WAZA_SEQNO_JUMP	186,ExpertAI_186	// かわらわり		2006.6.14ひかりのかべも追加
-	IF_WAZA_SEQNO_JUMP	188,ExpertAI_188	// はたきおとす		2006.6.14
-	IF_WAZA_SEQNO_JUMP	189,ExpertAI_189	// がむしゃら		2006.6.14
-	IF_WAZA_SEQNO_JUMP	190,ExpertAI_190	// ふんか			2006.6.14
-	IF_WAZA_SEQNO_JUMP	191,ExpertAI_191	// スキルスワップ	2006.6.14
-	IF_WAZA_SEQNO_JUMP	192,ExpertAI_192	// ふういん			2006.6.14何か考えるかも
-	IF_WAZA_SEQNO_JUMP	193,ExpertAI_193	// リフレッシュ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	195,ExpertAI_195	// よこどり			2006.6.14要解析
-	IF_WAZA_SEQNO_JUMP	198,ExpertAI_198	// すてみタックル	2006.6.14ＤＰ追加
-	IF_WAZA_SEQNO_JUMP	200,ExpertAI_200	// ブレイズキック	急所特性と装備道具
-	IF_WAZA_SEQNO_JUMP	201,ExpertAI_201	// どろあそび		2006.6.14
-	IF_WAZA_SEQNO_JUMP	204,ExpertAI_204	// オーバーヒート	2006.6.14しろいハーブチェックいる？
-	IF_WAZA_SEQNO_JUMP	205,ExpertAI_205	// くすぐる			2006.6.14
-	IF_WAZA_SEQNO_JUMP	206,ExpertAI_206	// コスモパワー		2006.6.14
-	IF_WAZA_SEQNO_JUMP	208,ExpertAI_208	// ビルドアップ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	209,ExpertAI_209	// ポイズンテール	急所特性と装備道具
-	IF_WAZA_SEQNO_JUMP	210,ExpertAI_210	// みずあそび		2006.6.14
-	IF_WAZA_SEQNO_JUMP	211,ExpertAI_211	// めいそう			2006.6.14
-	IF_WAZA_SEQNO_JUMP	212,ExpertAI_212	// りゅうのまい		2006.6.14
+	ADRS  ExpertAI_91		// いたみわけ		2006.6.14
+	ADRS  ExpertAI_92		// いびき			2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_94		// ロックオン		2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_97		// ねごと			2006.6.14
+	ADRS  ExpertAI_98		// みちずれ			2006.6.14
+	ADRS  ExpertAI_99		// きしかいせい		2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
 
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_102	// いやしのすず		2006.6.14修正
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_105	// どろぼう			2006.6.14テーブル追加
+	ADRS  ExpertAI_106	// くろいまなざし	2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_108		// 小さくなる		2006.6.14
+	ADRS  ExpertAI_109	// のろい			2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+
+	ADRS  ExpertAI_111	// まもる			2006.6.14フェイントチェック追加
+	ADRS  ExpertAI_112	// まきびし			2006.6.14新規追加
+	ADRS  ExpertAI_113	// みやぶる			2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_116	// こらえる			2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_118	// いばる
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_127	// バトンタッチ		2006.6.14
+	ADRS  ExpertAI_128	// おいうち			2006.6.14敵とんぼがえりチェック追加
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_132	// あさのひざし		2006.6.14
+	ADRS  ExpertAI_133	// こうごうせい		2006.6.14シーケンス削除
+	ADRS  ExpertAI_134	// つきのひかり		2006.6.14シーケンス削除
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_136	// あまごい			2006.6.14
+	ADRS  ExpertAI_137	// にほんばれ		2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_142	// はらだいこ		2006.6.14
+	ADRS  ExpertAI_143	// じこあんじ		2006.6.14
+	ADRS  ExpertAI_144	// ミラーコート		分類チェック
+	ADRS  ExpertAI_145	// ロケットずつき	2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+
+	ADRS  ExpertAI_151	// ソーラービーム	2006.6.14パワフルハーブ
+	ADRS  ExpertAI_152	// かみなり			2006.6.14追加
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_155	// そらをとぶ		2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_157	// たまごうみ		2006.6.14
+	ADRS  ExpertAI_158	// ねこだまし		2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+
+	ADRS  ExpertAI_161	// はきだす			2006.6.14
+	ADRS  ExpertAI_162	// のみこむ			2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_164	// あられ			2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_166	// おだてる			2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_168	// おきみやげ		2006.6.14
+	ADRS  ExpertAI_169	// からげんき		2006.6.14
+	ADRS  ExpertAI_170	// きあいパンチ		2006.6.14
+
+	ADRS  ExpertAI_171	// きつけ			2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_177	// トリック			相手に合わせてテーブル作成必要あり
+	ADRS  ExpertAI_178	// なりきり			テーブル要調整
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+
+	ADRS  ExpertAI_181	// ねをはる			2006.6.14
+	ADRS  ExpertAI_182	// ばかぢから		しろいハーブチェック入れるかも
+	ADRS  ExpertAI_183	// マジックコート	2006.6.14
+	ADRS  ExpertAI_184	// リサイクル		2006.6.14
+	ADRS  ExpertAI_185	// リベンジ			2006.6.14
+	ADRS  ExpertAI_186	// かわらわり		2006.6.14ひかりのかべも追加
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_188	// はたきおとす		2006.6.14
+	ADRS  ExpertAI_189	// がむしゃら		2006.6.14
+	ADRS  ExpertAI_190	// ふんか			2006.6.14
+
+	ADRS  ExpertAI_191	// スキルスワップ	2006.6.14
+	ADRS  ExpertAI_192	// ふういん			2006.6.14何か考えるかも
+	ADRS  ExpertAI_193	// リフレッシュ		2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_195	// よこどり			2006.6.14要解析
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_198	// すてみタックル	2006.6.14ＤＰ追加
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_200	// ブレイズキック	急所特性と装備道具
+
+	ADRS  ExpertAI_201	// どろあそび		2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_204	// オーバーヒート	2006.6.14しろいハーブチェックいる？
+	ADRS  ExpertAI_205	// くすぐる			2006.6.14
+	ADRS  ExpertAI_206	// コスモパワー		2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_208	// ビルドアップ		2006.6.14
+	ADRS  ExpertAI_209	// ポイズンテール	急所特性と装備道具
+	ADRS  ExpertAI_210	// みずあそび		2006.6.14
+
+	ADRS  ExpertAI_211	// めいそう			2006.6.14
+	ADRS  ExpertAI_212	// りゅうのまい		2006.6.14
+	ADRS  ExpertAI_Dummy		// ダミー	
 	//追加2006.6.14
+	ADRS  ExpertAI_214	// はねやすめ		2006.6.14 
+	ADRS  ExpertAI_215	// じゅうりょく		2006.6.14		 
+	ADRS  ExpertAI_216	// ミラクルアイ		2006.6.14 
+	ADRS  ExpertAI_217	// めざましビンタ	2006.6.14 
+	ADRS  ExpertAI_218	// アームハンマー	2006.6.14 
+	ADRS  ExpertAI_219	// ジャイロボール	2006.6.14 
+	ADRS  ExpertAI_220	// いやしのねがい	2006.6.14*控えをだすときのチェック 
 
-	IF_WAZA_SEQNO_JUMP	214,ExpertAI_214	// はねやすめ		2006.6.14 
-	IF_WAZA_SEQNO_JUMP	215,ExpertAI_215	// じゅうりょく		2006.6.14		 
-	IF_WAZA_SEQNO_JUMP	216,ExpertAI_216	// ミラクルアイ		2006.6.14 
-	IF_WAZA_SEQNO_JUMP	217,ExpertAI_217	// めざましビンタ	2006.6.14 
-	IF_WAZA_SEQNO_JUMP	218,ExpertAI_218	// アームハンマー	2006.6.14 
-	IF_WAZA_SEQNO_JUMP	219,ExpertAI_219	// ジャイロボール	2006.6.14 
-	IF_WAZA_SEQNO_JUMP	220,ExpertAI_220	// いやしのねがい	2006.6.14*控えをだすときのチェック 
-	IF_WAZA_SEQNO_JUMP	221,ExpertAI_221	// しおみず		2006.6.14 
-	//IF_WAZA_SEQNO_JUMP	222,ExpertAI_222// しぜんのめぐみ* ダメージチェックを入れるのでなし
-	IF_WAZA_SEQNO_JUMP	223,ExpertAI_223	// フェイント		2006.6.14 
-	IF_WAZA_SEQNO_JUMP	224,ExpertAI_224	// ついばむ			2006.6.14 
-	IF_WAZA_SEQNO_JUMP	225,ExpertAI_225	// おいかぜ			2006.6.14
-	IF_WAZA_SEQNO_JUMP	226,ExpertAI_226	// つぼをつく		2006.6.14 
-	IF_WAZA_SEQNO_JUMP	227,ExpertAI_227	// メタルバースト	2006.6.14 
-	IF_WAZA_SEQNO_JUMP	228,ExpertAI_228	// とんぼがえり		2006.6.14
-	IF_WAZA_SEQNO_JUMP	229,ExpertAI_229	// インファイト		2006.6.14しろいハーブチェック 
-	IF_WAZA_SEQNO_JUMP	230,ExpertAI_230	// しっぺがえし		2006.6.14 
-	IF_WAZA_SEQNO_JUMP	231,ExpertAI_231	// ダメおし			2006.6.14 
-	IF_WAZA_SEQNO_JUMP	232,ExpertAI_232	// さしおさえ		2006.6.14 
-	IF_WAZA_SEQNO_JUMP	233,ExpertAI_233	// なげつける		2006.6.14 
-	IF_WAZA_SEQNO_JUMP	234,ExpertAI_234	// サイコシフト		2006.6.14 
-	IF_WAZA_SEQNO_JUMP	235,ExpertAI_235	// きりふだ			2006.6.14 
-	IF_WAZA_SEQNO_JUMP	236,ExpertAI_236	// かいふくふうじ	2006.6.14 
-	IF_WAZA_SEQNO_JUMP	237,ExpertAI_237	// しぼりとる		2006.6.14
-	IF_WAZA_SEQNO_JUMP	238,ExpertAI_238	// パワートリック	2006.6.14
-	IF_WAZA_SEQNO_JUMP	239,ExpertAI_239	// いえき			2006.6.14
-	IF_WAZA_SEQNO_JUMP	240,ExpertAI_240	// おまじない		2006.6.14 
-	IF_WAZA_SEQNO_JUMP	241,ExpertAI_241	// さきどり			2006.6.14	
-	IF_WAZA_SEQNO_JUMP	242,ExpertAI_242	// まねっこ：テーブル2006.6.14 
-	IF_WAZA_SEQNO_JUMP	243,ExpertAI_243	// パワースワップ	2006.6.14
-	IF_WAZA_SEQNO_JUMP	244,ExpertAI_244	// ガードスワップ	2006.6.14
-	IF_WAZA_SEQNO_JUMP	245,ExpertAI_245	// おしおき			2006.6.14 
-	IF_WAZA_SEQNO_JUMP	246,ExpertAI_246	// とっておき		2006.6.14 
-	IF_WAZA_SEQNO_JUMP	247,ExpertAI_247	// なやみのタネ		2006.6.14
-	IF_WAZA_SEQNO_JUMP	248,ExpertAI_248	// ふいうち			2006.6.14	 
-	IF_WAZA_SEQNO_JUMP	249,ExpertAI_249	// どくびし			2006.6.14 
-	IF_WAZA_SEQNO_JUMP	250,ExpertAI_250	// ハートスワップ	2006.6.14 
-	IF_WAZA_SEQNO_JUMP	251,ExpertAI_251	// アクアリング		2006.6.14 
-	IF_WAZA_SEQNO_JUMP	252,ExpertAI_252	// でんじふゆう		2006.6.14 
-	IF_WAZA_SEQNO_JUMP	253,ExpertAI_253	// フレアドライブ	2006.6.14 
-	IF_WAZA_SEQNO_JUMP	255,ExpertAI_255	// ダイビング		2006.6.14 
-	IF_WAZA_SEQNO_JUMP	256,ExpertAI_256	// あなをほる		2006.6.14 
-	IF_WAZA_SEQNO_JUMP	258,ExpertAI_258	// きりばらい		2006.6.14	よくみる必要あり
-	IF_WAZA_SEQNO_JUMP	259,ExpertAI_259	// トリックルーム	2006.6.14 
-	IF_WAZA_SEQNO_JUMP	260,ExpertAI_260	// ふぶき			2006.6.14
-	IF_WAZA_SEQNO_JUMP	262,ExpertAI_262	// ボルテッカー		2006.6.14ＤＰ追加
-	IF_WAZA_SEQNO_JUMP	263,ExpertAI_263	// とびはねる		2006.6.14 
-	IF_WAZA_SEQNO_JUMP	265,ExpertAI_265	// ゆうわく			2006.6.14		 
-	IF_WAZA_SEQNO_JUMP	266,ExpertAI_266	// ステルスロック	2006.6.14 
-	//IF_WAZA_SEQNO_JUMP	268,ExpertAI_268 	//さばきのつぶて*ダメージチェックを入れるので問題なし 
-	IF_WAZA_SEQNO_JUMP	269,ExpertAI_269	// もろはのずつき	2006.6.14 
-	IF_WAZA_SEQNO_JUMP	270,ExpertAI_270	// みかづきのまい	2006.6.14 
-	IF_WAZA_SEQNO_JUMP	272,ExpertAI_272	// シャドーダイブ	2006.6.14 
+	ADRS  ExpertAI_221	// しおみず		2006.6.14 
+  ADRS  ExpertAI_Dummy// しぜんのめぐみ* ダメージチェックを入れるのでなし
+	ADRS  ExpertAI_223	// フェイント		2006.6.14 
+	ADRS  ExpertAI_224	// ついばむ			2006.6.14 
+	ADRS  ExpertAI_225	// おいかぜ			2006.6.14
+	ADRS  ExpertAI_226	// つぼをつく		2006.6.14 
+	ADRS  ExpertAI_227	// メタルバースト	2006.6.14 
+	ADRS  ExpertAI_228	// とんぼがえり		2006.6.14
+	ADRS  ExpertAI_229	// インファイト		2006.6.14しろいハーブチェック 
+	ADRS  ExpertAI_230	// しっぺがえし		2006.6.14 
 
+	ADRS  ExpertAI_231	// ダメおし			2006.6.14 
+	ADRS  ExpertAI_232	// さしおさえ		2006.6.14 
+	ADRS  ExpertAI_233	// なげつける		2006.6.14 
+	ADRS  ExpertAI_234	// サイコシフト		2006.6.14 
+	ADRS  ExpertAI_235	// きりふだ			2006.6.14 
+	ADRS  ExpertAI_236	// かいふくふうじ	2006.6.14 
+	ADRS  ExpertAI_237	// しぼりとる		2006.6.14
+	ADRS  ExpertAI_238	// パワートリック	2006.6.14
+	ADRS  ExpertAI_239	// いえき			2006.6.14
+	ADRS  ExpertAI_240	// おまじない		2006.6.14 
+
+	ADRS  ExpertAI_241	// さきどり			2006.6.14	
+	ADRS  ExpertAI_242	// まねっこ：テーブル2006.6.14 
+	ADRS  ExpertAI_243	// パワースワップ	2006.6.14
+	ADRS  ExpertAI_244	// ガードスワップ	2006.6.14
+	ADRS  ExpertAI_245	// おしおき			2006.6.14 
+	ADRS  ExpertAI_246	// とっておき		2006.6.14 
+	ADRS  ExpertAI_247	// なやみのタネ		2006.6.14
+	ADRS  ExpertAI_248	// ふいうち			2006.6.14	 
+	ADRS  ExpertAI_249	// どくびし			2006.6.14 
+	ADRS  ExpertAI_250	// ハートスワップ	2006.6.14 
+
+	ADRS  ExpertAI_251	// アクアリング		2006.6.14 
+	ADRS  ExpertAI_252	// でんじふゆう		2006.6.14 
+	ADRS  ExpertAI_253	// フレアドライブ	2006.6.14 
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_255	// ダイビング		2006.6.14 
+	ADRS  ExpertAI_256	// あなをほる		2006.6.14 
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_258	// きりばらい		2006.6.14	よくみる必要あり
+	ADRS  ExpertAI_259	// トリックルーム	2006.6.14 
+	ADRS  ExpertAI_260	// ふぶき			2006.6.14
+
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_262	// ボルテッカー		2006.6.14ＤＰ追加
+	ADRS  ExpertAI_263	// とびはねる		2006.6.14 
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_265	// ゆうわく			2006.6.14		 
+	ADRS  ExpertAI_266	// ステルスロック	2006.6.14 
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy 	//さばきのつぶて*ダメージチェックを入れるので問題なし 
+	ADRS  ExpertAI_269	// もろはのずつき	2006.6.14 
+	ADRS  ExpertAI_270	// みかづきのまい	2006.6.14 
+
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_272	// シャドーダイブ	2006.6.14 
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
+	ADRS  ExpertAI_Dummy		// ダミー	
 	//追加2010.2.9
+  ADRS  ExpertAI_277	// 	つめとぎ
+	ADRS  ExpertAI_278	// 	ワイドガード
+	ADRS  ExpertAI_279	// 	ガードシェア
+	ADRS  ExpertAI_280	// 	パワーシェア
 
-  IF_WAZA_SEQNO_JUMP	277,ExpertAI_277	// 	つめとぎ
-	IF_WAZA_SEQNO_JUMP	278,ExpertAI_278	// 	ワイドガード
-	IF_WAZA_SEQNO_JUMP	279,ExpertAI_279	// 	ガードシェア
-	IF_WAZA_SEQNO_JUMP	280,ExpertAI_280	// 	パワーシェア
-	IF_WAZA_SEQNO_JUMP	281,ExpertAI_281	// 	ワンダールーム
-	IF_WAZA_SEQNO_JUMP	282,ExpertAI_282	// 	サイコショック
-	IF_WAZA_SEQNO_JUMP	283,ExpertAI_283	// 	ベノムショック
-	IF_WAZA_SEQNO_JUMP	284,ExpertAI_284	//	ボディパージ 	
-	IF_WAZA_SEQNO_JUMP	285,ExpertAI_285	// 	テレキネシス
-	IF_WAZA_SEQNO_JUMP	286,ExpertAI_286	// 	マジックルーム
-	IF_WAZA_SEQNO_JUMP	287,ExpertAI_287	// 	うちおとす
-	IF_WAZA_SEQNO_JUMP	288,ExpertAI_288	// 	やまあらし
-	IF_WAZA_SEQNO_JUMP	289,ExpertAI_289	// 	はじけるほのお
-	IF_WAZA_SEQNO_JUMP	290,ExpertAI_290	// 	ちょうのまい
-	IF_WAZA_SEQNO_JUMP	291,ExpertAI_291	// 	ヘビーボンバー
-	IF_WAZA_SEQNO_JUMP	292,ExpertAI_292	// 	シンクロノイズ
-	IF_WAZA_SEQNO_JUMP	293,ExpertAI_293	// 	エレクトボール
-	IF_WAZA_SEQNO_JUMP	294,ExpertAI_294	// 	みずびたし
-	IF_WAZA_SEQNO_JUMP	295,ExpertAI_295	// 	ニトロチャージ
-	IF_WAZA_SEQNO_JUMP	296,ExpertAI_296	// 	アシッドボム
-	IF_WAZA_SEQNO_JUMP	297,ExpertAI_297	// 	イカサマ
-	IF_WAZA_SEQNO_JUMP	298,ExpertAI_298	// 	シンプルビーム
-	IF_WAZA_SEQNO_JUMP	299,ExpertAI_299	// 	なかまづくり
-	IF_WAZA_SEQNO_JUMP	300,ExpertAI_300	// 	おさきにどうぞ
-	IF_WAZA_SEQNO_JUMP	301,ExpertAI_301	// 	りんしょう
-	IF_WAZA_SEQNO_JUMP	302,ExpertAI_302	// 	エコーボイス
-	IF_WAZA_SEQNO_JUMP	303,ExpertAI_303	// 	なしくずし
-	IF_WAZA_SEQNO_JUMP	304,ExpertAI_304	// 	クリアスモッグ
-	IF_WAZA_SEQNO_JUMP	305,ExpertAI_305	// 	アシストパワー
-	IF_WAZA_SEQNO_JUMP	306,ExpertAI_306	// 	ファストガード
-	IF_WAZA_SEQNO_JUMP	307,ExpertAI_307	// 	サイドチェンジ
-	IF_WAZA_SEQNO_JUMP	308,ExpertAI_308	// 	からをやぶる
-	IF_WAZA_SEQNO_JUMP	309,ExpertAI_309	// 	いやしのはどう
-	IF_WAZA_SEQNO_JUMP	310,ExpertAI_310	// 	たたりめ
-	IF_WAZA_SEQNO_JUMP	311,ExpertAI_311	// 	フリーフォール
-	IF_WAZA_SEQNO_JUMP	312,ExpertAI_312	// 	ギアチェンジ
-	IF_WAZA_SEQNO_JUMP	313,ExpertAI_313	// 	ともえなげ
-	IF_WAZA_SEQNO_JUMP	314,ExpertAI_314	// 	やきつくす
-	IF_WAZA_SEQNO_JUMP	315,ExpertAI_315	// 	さきおくり
-	IF_WAZA_SEQNO_JUMP	316,ExpertAI_316	// 	せいちょう
-	IF_WAZA_SEQNO_JUMP	317,ExpertAI_317	// 	アクロバット
-	IF_WAZA_SEQNO_JUMP	318,ExpertAI_318	// 	ミラータイプ
-	IF_WAZA_SEQNO_JUMP	319,ExpertAI_319	// 	かたきうち
-	IF_WAZA_SEQNO_JUMP	320,ExpertAI_320	// 	いのちがけ
-	IF_WAZA_SEQNO_JUMP	321,ExpertAI_321	// 	ほたるび
-	IF_WAZA_SEQNO_JUMP	322,ExpertAI_322	// 	とぐろをまく
-	IF_WAZA_SEQNO_JUMP	323,ExpertAI_323	// 	ギフトパス
-	IF_WAZA_SEQNO_JUMP	324,ExpertAI_324	// 	みずのちかい
-	IF_WAZA_SEQNO_JUMP	325,ExpertAI_325	// 	ほのおのちかい
-	IF_WAZA_SEQNO_JUMP	326,ExpertAI_326	// 	くさのちかい
-	IF_WAZA_SEQNO_JUMP	327,ExpertAI_327	// 	ふるいたてる
-	IF_WAZA_SEQNO_JUMP	328,ExpertAI_328	// 	コットンガード
-	IF_WAZA_SEQNO_JUMP	329,ExpertAI_329	// 	いにしえのうた
-	IF_WAZA_SEQNO_JUMP	330,ExpertAI_330	// 	こごえるせかい
-	IF_WAZA_SEQNO_JUMP	331,ExpertAI_331	// 	フリーズボルト
-	IF_WAZA_SEQNO_JUMP	332,ExpertAI_332	// 	コールドフレア
-	IF_WAZA_SEQNO_JUMP	333,ExpertAI_333	// 	どなりつける
+	ADRS  ExpertAI_281	// 	ワンダールーム
+	ADRS  ExpertAI_282	// 	サイコショック
+	ADRS  ExpertAI_283	// 	ベノムショック
+	ADRS  ExpertAI_284	//	ボディパージ 	
+	ADRS  ExpertAI_285	// 	テレキネシス
+	ADRS  ExpertAI_286	// 	マジックルーム
+	ADRS  ExpertAI_287	// 	うちおとす
+	ADRS  ExpertAI_288	// 	やまあらし
+	ADRS  ExpertAI_289	// 	はじけるほのお
+	ADRS  ExpertAI_290	// 	ちょうのまい
 
+	ADRS  ExpertAI_291	// 	ヘビーボンバー
+	ADRS  ExpertAI_292	// 	シンクロノイズ
+	ADRS  ExpertAI_293	// 	エレクトボール
+	ADRS  ExpertAI_294	// 	みずびたし
+	ADRS  ExpertAI_295	// 	ニトロチャージ
+	ADRS  ExpertAI_296	// 	アシッドボム
+	ADRS  ExpertAI_297	// 	イカサマ
+	ADRS  ExpertAI_298	// 	シンプルビーム
+	ADRS  ExpertAI_299	// 	なかまづくり
+	ADRS  ExpertAI_300	// 	おさきにどうぞ
+
+	ADRS  ExpertAI_301	// 	りんしょう
+	ADRS  ExpertAI_302	// 	エコーボイス
+	ADRS  ExpertAI_303	// 	なしくずし
+	ADRS  ExpertAI_304	// 	クリアスモッグ
+	ADRS  ExpertAI_305	// 	アシストパワー
+	ADRS  ExpertAI_306	// 	ファストガード
+	ADRS  ExpertAI_307	// 	サイドチェンジ
+	ADRS  ExpertAI_308	// 	からをやぶる
+	ADRS  ExpertAI_309	// 	いやしのはどう
+	ADRS  ExpertAI_310	// 	たたりめ
+
+	ADRS  ExpertAI_311	// 	フリーフォール
+	ADRS  ExpertAI_312	// 	ギアチェンジ
+	ADRS  ExpertAI_313	// 	ともえなげ
+	ADRS  ExpertAI_314	// 	やきつくす
+	ADRS  ExpertAI_315	// 	さきおくり
+	ADRS  ExpertAI_316	// 	せいちょう
+	ADRS  ExpertAI_317	// 	アクロバット
+	ADRS  ExpertAI_318	// 	ミラータイプ
+	ADRS  ExpertAI_319	// 	かたきうち
+	ADRS  ExpertAI_320	// 	いのちがけ
+
+	ADRS  ExpertAI_321	// 	ほたるび
+	ADRS  ExpertAI_322	// 	とぐろをまく
+	ADRS  ExpertAI_323	// 	ギフトパス
+	ADRS  ExpertAI_324	// 	みずのちかい
+	ADRS  ExpertAI_325	// 	ほのおのちかい
+	ADRS  ExpertAI_326	// 	くさのちかい
+	ADRS  ExpertAI_327	// 	ふるいたてる
+	ADRS  ExpertAI_328	// 	コットンガード
+	ADRS  ExpertAI_329	// 	いにしえのうた
+	ADRS  ExpertAI_330	// 	こごえるせかい
+
+	ADRS  ExpertAI_331	// 	フリーズボルト
+	ADRS  ExpertAI_332	// 	コールドフレア
+	ADRS  ExpertAI_333	// 	どなりつける
+
+ExpertAI_Dummy:		// ダミー	
 ExpertAISeq_end:
 	AIEND
 
@@ -430,6 +551,7 @@ ExpertAI_9_Table://変化して強そうな技群
 	.long	0xffffffff
 
 //---------------------------------------------------------------------------
+ExpertAI_50:	// 攻撃力2アップ
 ExpertAI_10:	// 攻撃力アップ
 	IF_PARA_UNDER	CHECK_ATTACK,PARA_POW,9,ExpertAI_10_1
 	IF_RND_UNDER	100,ExpertAI_10_3
@@ -456,6 +578,7 @@ ExpertAI_10_end:
 //---------------------------------------------------------------------------
 ExpertAI_322:			// 	とぐろをまく
 ExpertAI_208:	// ビルドアップ
+ExpertAI_51:	// 防御力2アップ
 ExpertAI_11:	// 防御力アップ
 	IF_PARA_UNDER	CHECK_ATTACK,PARA_DEF,9,ExpertAI_11_1
 	IF_RND_UNDER	100,ExpertAI_11_2
@@ -504,6 +627,7 @@ ExpertAI_284:	//	ボディパージ
 
 	INCDEC		1
 
+ExpertAI_52:	// 素早さ2アップ
 ExpertAI_12:	// 素早さアップ
 	IF_FIRST	IF_FIRST_DEFENCE,ExpertAI_12_1
 	INCDEC		-3
@@ -534,6 +658,7 @@ ExpertAI_12_end:
 //---------------------------------------------------------------------------
 ExpertAI_328:			// 	コットンガード
 ExpertAI_321:			// 	ほたるび
+ExpertAI_53:	// 特攻2アップ
 ExpertAI_13:	// 特攻アップ
 	IF_PARA_UNDER	CHECK_ATTACK,PARA_SPEPOW,9,ExpertAI_13_1
 	IF_RND_UNDER	100,ExpertAI_13_2
@@ -560,6 +685,7 @@ ExpertAI_13_end:
 //---------------------------------------------------------------------------
 ExpertAI_211:	// めいそう
 ExpertAI_206:	// コスモパワー
+ExpertAI_54:	// 特防2アップ
 ExpertAI_14:	// 特防アップ
 	IF_PARA_UNDER	CHECK_ATTACK,PARA_SPEDEF,9,ExpertAI_14_1
 	IF_RND_UNDER	100,ExpertAI_14_2
@@ -600,6 +726,7 @@ ExpertAI_14_end:
 	AIEND
 
 //---------------------------------------------------------------------------
+ExpertAI_55:	// 命中率2アップ	（未使用）
 ExpertAI_15:	// 命中率アップ	（未使用）
 	IF_PARA_UNDER	CHECK_ATTACK,PARA_HIT,9,ExpertAI_15_1
 	IF_RND_UNDER	50,ExpertAI_15_1
@@ -612,6 +739,8 @@ ExpertAI_15_end:
 	AIEND
 
 //---------------------------------------------------------------------------
+ExpertAI_108:	// 小さくなる
+ExpertAI_56:	// 回避率2アップ
 ExpertAI_16:	// 回避率アップ
 	CHECK_TOKUSEI	CHECK_ATTACK
 	IF_EQUAL	TOKUSYU_NOOGAADO,ExpertAI_16_ng	  	// ノーガード
@@ -631,6 +760,7 @@ ExpertAI_16:	// 回避率アップ
 	IFN_EQUAL	WEATHER_AME,ExpertAI_16_arare		//　あめ中
 
 	CHECK_LAST_WAZA	CHECK_DEFENCE
+	CHECK_WORKWAZA_SEQNO            //　←抜けてた 2010/4/21
 	IF_EQUAL	152,ExpertAI_16_ng		// かみなり必中
 
 ExpertAI_16_arare:
@@ -638,6 +768,7 @@ ExpertAI_16_arare:
 	IFN_EQUAL	WEATHER_ARARE,ExpertAI_16_weather_end		//　あられ中
 
 	CHECK_LAST_WAZA	CHECK_DEFENCE
+	CHECK_WORKWAZA_SEQNO            //　←抜けてた 2010/4/21
 	IF_EQUAL	260,ExpertAI_16_ng		// ふぶき必中
 
 ExpertAI_16_weather_end:
@@ -765,6 +896,7 @@ ExpertAI_17_2:
 ExpertAI_17_end:
 	AIEND
 //---------------------------------------------------------------------------
+ExpertAI_58:	// 攻撃力2ダウン
 ExpertAI_18:	// 攻撃力ダウン
 	IF_PARA_EQUAL	CHECK_DEFENCE,PARA_POW,6,ExpertAI_18_2
 
@@ -812,6 +944,7 @@ ExpertAI_18_Table:
 
 //---------------------------------------------------------------------------
 ExpertAI_205:	// くすぐる
+ExpertAI_59:	// 防御力2ダウン
 ExpertAI_19:	// 防御力ダウン
 	IF_HP_UNDER	CHECK_ATTACK,70,ExpertAI_19_1
 	IF_PARA_OVER	CHECK_DEFENCE,PARA_DEF,3,ExpertAI_19_2
@@ -831,6 +964,10 @@ ExpertAI_70:	// 追加素早さダウン
 	IF_WAZANO	WAZANO_KOGOERUKAZE,ExpertAI_20	// 100%追加
 	IF_WAZANO	WAZANO_GANSEKIHUUZI,ExpertAI_20	// 100%追加
 	IF_WAZANO	WAZANO_MADDOSYOTTO,ExpertAI_20	// 100%追加
+	IF_WAZANO	WAZANO_ROOKIKKU,ExpertAI_20	// 100%追加
+	IF_WAZANO	WAZANO_EREKINETTO,ExpertAI_20	// 100%追加
+	IF_WAZANO	WAZANO_ZINARASI,ExpertAI_20	// 100%追加
+	IF_WAZANO	WAZANO_KOGOERUSEKAI,ExpertAI_20	// 100%追加
 	CHECK_WAZA_AISYOU	AISYOU_1_4BAI,ExpertAI_70_end	//2008.6.21追加
 	CHECK_WAZA_AISYOU	AISYOU_1_2BAI,ExpertAI_70_end	//2008.6.21追加
 	AIEND
@@ -841,6 +978,7 @@ ExpertAI_70_end:
 	
 //---------------------------------------------------------------------------
 
+ExpertAI_60:	// 追加素早さ2ダウン
 ExpertAI_20:	// 素早さダウン
 	IF_FIRST	IF_FIRST_DEFENCE,ExpertAI_20_1
 	INCDEC		-3
@@ -854,6 +992,7 @@ ExpertAI_20_end:
 	AIEND
 //---------------------------------------------------------------------------
 
+ExpertAI_61:	// 特攻2ダウン
 ExpertAI_21:	// 特攻ダウン
 	IF_PARA_EQUAL	CHECK_DEFENCE,PARA_SPEPOW,6,ExpertAI_21_2
 
@@ -899,6 +1038,7 @@ ExpertAI_21_Table:
 	.long	0xffffffff
 
 //---------------------------------------------------------------------------
+ExpertAI_62:	// 特防2ダウン
 ExpertAI_22:	// 特防ダウン
 	IF_HP_UNDER	CHECK_ATTACK,70,ExpertAI_22_1
 	IF_PARA_OVER	CHECK_DEFENCE,PARA_SPEDEF,3,ExpertAI_22_2
@@ -912,6 +1052,7 @@ ExpertAI_22_2:
 ExpertAI_22_end:
 	AIEND
 //---------------------------------------------------------------------------
+ExpertAI_63:	//命中2下げる
 ExpertAI_23:	//命中下げる
 	IF_HP_UNDER	CHECK_ATTACK,70,ExpertAI_23_2
 	IF_HP_OVER	CHECK_DEFENCE,70,ExpertAI_23_3
@@ -966,6 +1107,7 @@ ExpertAI_23_9:
 ExpertAI_23_end:
 	AIEND
 //---------------------------------------------------------------------------
+ExpertAI_64:	// 回避率2ダウン
 ExpertAI_24:	// 回避率ダウン
 	IF_HP_UNDER	CHECK_ATTACK,70,ExpertAI_24_1
 	IF_PARA_OVER	CHECK_DEFENCE,PARA_AVOID,3,ExpertAI_24_2
@@ -1151,52 +1293,26 @@ ExpertAI_33_end:
 
 	AIEND
 //---------------------------------------------------------------------------
-ExpertAI_35:	//ひかりのかべ
+ExpertAI_35:	//ひかりのかべ 2010/4/21
 	
 	IF_HP_UNDER	CHECK_ATTACK,50,ExpertAI_35_2		// HPが1/2以下
 	
 	IF_HP_UNDER	CHECK_ATTACK,90,ExpertAI_35_1		// HP90未満
-	IF_RND_UNDER	128,ExpertAI_35_1
+	IF_RND_UNDER	30,ExpertAI_35_1
 	INCDEC		1
 
 ExpertAI_35_1:
-	CHECK_LAST_WAZA_KIND	//相手の最後の技の分類チェック
-	IFN_EQUAL	WAZADATA_DMG_SPECIAL,ExpertAI_35_end//特殊でない
+  IF_DMG_PHYSIC_OVER CHECK_DEFENCE,ExpertAI_35_2           //攻撃の方が高い場合はやらない
+
 	IF_RND_UNDER	64,ExpertAI_35_end
 	INCDEC		1
 	JUMP	ExpertAI_35_end
 	
 ExpertAI_35_2:
+	IF_RND_UNDER	30,ExpertAI_35_end
 	INCDEC		-2
-
 ExpertAI_35_end:
 	AIEND
-	
-	
-//ＤＰから分類がタイプでなくなったので以下のチェックはとめる2006.6.14-------------------------------
-//	IF_HP_UNDER	CHECK_ATTACK,50,ExpertAI_35_2		// HPが1/2以下
-//	CHECK_TYPE	CHECK_DEFENCE_TYPE1
-//	IF_TABLE_JUMP	ExpertAI_35_Table,ExpertAI_35_end
-//	CHECK_TYPE	CHECK_DEFENCE_TYPE2
-//	IF_TABLE_JUMP	ExpertAI_35_Table,ExpertAI_35_end
-//	IF_RND_UNDER	50,ExpertAI_35_end
-//ExpertAI_35_2:
-//	INCDEC		-2
-
-//ExpertAI_35_end:
-//	AIEND
-
-ExpertAI_35_Table:
-	.long	POKETYPE_HONOO
-	.long	POKETYPE_MIZU
-	.long	POKETYPE_KUSA
-	.long	POKETYPE_DENKI
-	.long	POKETYPE_ESPER
-	.long	POKETYPE_KOORI
-	.long	POKETYPE_DRAGON
-	.long	POKETYPE_AKU
-	.long	0xffffffff
-//-----------------------------------------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------
 ExpertAI_37:	//ねむる
@@ -1314,56 +1430,28 @@ ExpertAI_IbaruAnziComboEnd:
 
 //---------------------------------------------------------------------------
 
-ExpertAI_65:	// リフレクター
+ExpertAI_65:	// リフレクター 2010/4/21
 		
 	IF_HP_UNDER	CHECK_ATTACK,50,ExpertAI_65_2		// HPが1/2以下
 	
 	IF_HP_UNDER	CHECK_ATTACK,90,ExpertAI_65_1		// HP90未満
-	IF_RND_UNDER	128,ExpertAI_65_1
+	IF_RND_UNDER	30,ExpertAI_65_1
 	INCDEC		1
 
 ExpertAI_65_1:
-	CHECK_LAST_WAZA_KIND	//相手の最後の技の分類チェック
-	IFN_EQUAL	WAZADATA_DMG_PHYSIC,ExpertAI_65_end//特殊でない
+  IF_DMG_PHYSIC_UNDER CHECK_DEFENCE,ExpertAI_65_2           //特攻の方が高い場合はやらない
+
 	IF_RND_UNDER	64,ExpertAI_65_end
 	INCDEC		1
 	JUMP	ExpertAI_65_end
 	
 ExpertAI_65_2:
+	IF_RND_UNDER	30,ExpertAI_35_end
 	INCDEC		-2
-
 ExpertAI_65_end:
 	AIEND
-
 	
-//ＤＰから分類がタイプでなくなったので以下のチェックはとめる2006.6.14-------------------------------
-	
-	//IF_HP_UNDER	CHECK_ATTACK,50,ExpertAI_65_2		// HPが1/2以下
 
-	//CHECK_TYPE	CHECK_DEFENCE_TYPE1
-	//IF_TABLE_JUMP	ExpertAI_65_Table,ExpertAI_65_end
-	//CHECK_TYPE	CHECK_DEFENCE_TYPE2
-	//IF_TABLE_JUMP	ExpertAI_65_Table,ExpertAI_65_end
-
-	//IF_RND_UNDER	50,ExpertAI_65_end
-//ExpertAI_65_2:
-	//INCDEC		-2
-
-//ExpertAI_65_end:
-	//AIEND
-
-ExpertAI_65_Table:
-	.long	POKETYPE_NORMAL
-	.long	POKETYPE_KAKUTOU
-	.long	POKETYPE_HIKOU
-	.long	POKETYPE_DOKU
-	.long	POKETYPE_JIMEN
-	.long	POKETYPE_IWA
-	.long	POKETYPE_MUSHI
-	.long	POKETYPE_GHOST
-	.long	POKETYPE_HAGANE
-	.long	0xffffffff
-//--------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 ExpertAI_66:	// どく
 	IF_HP_UNDER	CHECK_ATTACK,50,ExpertAI_66_1		// HPが1/2以下
@@ -3316,8 +3404,7 @@ ExpertAI_228:	// とんぼがえりok(ほぼ)
 	CHECK_BENCH_COUNT	CHECK_ATTACK
 	IF_EQUAL	0,ExpertAI_228_end			// 味方の控えがいない
 	
-//  todo
-//	IF_HAVE_BATSUGUN	ExpertAI_228_ng1	// 抜群を持っている
+	IF_HAVE_BATSUGUN	ExpertAI_228_ng1	// 抜群を持っている
 	JUMP	ExpertAI_228_1
 
 
@@ -3330,9 +3417,8 @@ ExpertAI_228_ng1:
 	INCDEC	-2
 	
 ExpertAI_228_1:
-// todo
-//	IF_BENCH_DAMAGE_MAX		LOSS_CALC_OFF,ExpertAI_228_2
-//  IF_BENCH_DAMAGE_MAXは正常に動作していない。今内部のプログラム変更は大きいのでこのままで2006.8.4
+	IF_BENCH_DAMAGE_MAX		LOSS_CALC_OFF,ExpertAI_228_2
+
 	IF_RND_UNDER	64,ExpertAI_228_2
 	INCDEC	-2
 	JUMP	ExpertAI_228_end	
@@ -3749,8 +3835,7 @@ ExpertAI_240_end:
 ExpertAI_241:	// さきどり
 	IF_FIRST	IF_FIRST_DEFENCE,ExpertAI_241_ng
 	
-//  todo
-//	IF_LAST_WAZA_DAMAGE_CHECK	CHECK_DEFENCE,LOSS_CALC_OFF,ExpertAI_241_Ok
+	IF_LAST_WAZA_DAMAGE_CHECK	CHECK_DEFENCE,LOSS_CALC_OFF,ExpertAI_241_Ok
 	JUMP	ExpertAI_241_1
 
 ExpertAI_241_Ok:
@@ -3787,8 +3872,7 @@ ExpertAI_242:	// まねっこ
 
 	IF_FIRST	IF_FIRST_DEFENCE,ExpertAI_242_1
 	
-//  todo
-//	IF_LAST_WAZA_DAMAGE_CHECK	CHECK_DEFENCE,LOSS_CALC_OFF,ExpertAI_242_ok
+	IF_LAST_WAZA_DAMAGE_CHECK	CHECK_DEFENCE,LOSS_CALC_OFF,ExpertAI_242_ok
 
 	CHECK_LAST_WAZA	CHECK_DEFENCE
 	IFN_TABLE_JUMP	ExpertAI_242_Table,ExpertAI_242_1
@@ -3804,8 +3888,7 @@ ExpertAI_242_ok:
 
 
 ExpertAI_242_1://相手の方が早い場合強い技でなければ減算する
-//  todo
-//	IF_LAST_WAZA_DAMAGE_CHECK	CHECK_DEFENCE,LOSS_CALC_OFF,ExpertAI_242_3
+	IF_LAST_WAZA_DAMAGE_CHECK	CHECK_DEFENCE,LOSS_CALC_OFF,ExpertAI_242_3
 	CHECK_LAST_WAZA	CHECK_DEFENCE
 	IF_TABLE_JUMP	ExpertAI_242_Table,ExpertAI_242_3
 
@@ -4346,15 +4429,13 @@ ExpertAI_270_2:
 	IF_RND_UNDER	192,ExpertAI_270_3
 	INCDEC		+1
 
-//  todo
-//	IF_HAVE_BATSUGUN	ExpertAI_270_hikae_batugun	//抜群を持っている
+	IF_HAVE_BATSUGUN	ExpertAI_270_hikae_batugun	//抜群を持っている
 	IF_RND_UNDER	192,ExpertAI_270_hikae_batugun
 	INCDEC		+1
 	
 ExpertAI_270_hikae_batugun:	
 
-// todo
-//	IF_BENCH_DAMAGE_MAX		LOSS_CALC_OFF,ExpertAI_270_hikae_nostrong	//控えの方が強い技を持っている
+	IF_BENCH_DAMAGE_MAX		LOSS_CALC_OFF,ExpertAI_270_hikae_nostrong	//控えの方が強い技を持っている
 	JUMP	ExpertAI_270_3
 	
 ExpertAI_270_hikae_nostrong:	
@@ -4385,7 +4466,30 @@ ExpertAI_277_end:
 	AIEND
 
 ExpertAI_278:			// 	ワイドガード
+	CHECK_LAST_WAZA	CHECK_ATTACK
+	IF_EQUAL	469,ExpertAI_278_ng		// ワイドガード
+
+	CHECK_LAST_WAZA	CHECK_DEFENCE
+	IFN_TABLE_JUMP	ExpertAI_278_Table,ExpertAI_278_ok
   AIEND
+
+ExpertAI_278_ng:
+	IF_RND_UNDER	30,ExpertAI_278_end
+	INCDEC		-4
+  JUMP  ExpertAI_278_end
+
+ExpertAI_278_ok:
+	IF_RND_UNDER	80,ExpertAI_278_end
+	INCDEC		2
+ExpertAI_278_end:
+	AIEND
+
+ExpertAI_278_Table: //強い複数技
+	.long	59,157,257,284,323,330,549,555
+	.long	57,89,435,436,482,523,545
+	.long	0xffffffff
+
+
 
 ExpertAI_279:			// 	ガードシェア
 	CHECK_NEKODAMASI	CHECK_ATTACK
@@ -4982,8 +5086,7 @@ ExpertAI_319:			// 	かたきうち
 
 ExpertAI_320:			// 	いのちがけ
 	IF_MIGAWARI	  CHECK_DEFENCE,ExpertAI_320_ng		// みがわり中
-//  todo
-// IF_HAVE_BATSUGUN ExpertAI_320_ng
+  IF_HAVE_BATSUGUN ExpertAI_320_ng
 
 	IF_HP_UNDER	CHECK_DEFENCE,40,ExpertAI_320_ng
 	IF_HP_OVER	CHECK_ATTACK,40,ExpertAI_320_end

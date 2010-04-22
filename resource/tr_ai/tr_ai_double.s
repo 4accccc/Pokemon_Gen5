@@ -57,9 +57,8 @@ DoubleAI_Aisyou_Dec2://1/4相性悪い相手には出しづらい（1/4の確率）
 DoubleAI_StrongAI_START:
 
 //自分の技がパートナーと比べて一番高い技----------------------------------------
-//	COMP_POWER_WITH_PARTNER	LOSS_CALC_OFF
-//	IFN_EQUAL	COMP_POWER_TOP, DoubleAI_StrongAICheck_Aisyou	//相性チェック
-	JUMP  DoubleAI_StrongAICheck_Aisyou	//↑が出来ていないので応急処置
+	COMP_POWER_WITH_PARTNER	LOSS_CALC_OFF
+	IFN_EQUAL	COMP_POWER_TOP, DoubleAI_StrongAICheck_Aisyou	//相性チェック
 
 DoubleAI_StrongCheck:
 	IF_WAZA_SEQNO_JUMP	7,DoubleAI_StrongAI_end		// 自爆
@@ -101,8 +100,16 @@ DoubleAI_StrongAICheck_Aisyou4://75%
 
 DoubleAI_StrongAI_end:
 
-
 //--------------------------------------------------------------------------------
+
+	IF_WAZA_SEQNO_JUMP	313,DoubleEnemyAI_Tomoenage       	//　ともえなげ　2010/4/23
+	IF_WAZA_SEQNO_JUMP	190,DoubleEnemyAI_Hunka       	    //　ふんか　    2010/4/23
+
+	IF_WAZANO	WAZANO_HUBUKI,DoubleEnemyAI_Hubuki	// ふぶき　    2010/4/23 
+	IF_WAZANO	WAZANO_HUBUKI,DoubleEnemyAI_Iwanadare	// いわなだれ　 2010/4/23 
+	IF_WAZANO	WAZANO_HUBUKI,DoubleEnemyAI_Daakuhouru	// ダークホール　2010/4/23 
+
+
 
 	IF_WAZANO	WAZANO_SUKIRUSUWAPPU,DoubleEnemyAI_SkillSwap	// ｽｷﾙｽﾜｯﾌﾟ2006.6.14ok
 	CHECK_TYPE	CHECK_WAZA
@@ -475,13 +482,24 @@ DoubleEnemyAI_Konoyubitomare_End:
 
 //味方が「てだすけ」
 DoubleEnemyAI_Tedasuke:
+	IF_HP_OVER	CHECK_ATTACK,50,DoubleEnemyAI_Tedasuke1
+	CHECK_AGI_RANK	CHECK_ATTACK      		//自分の順位
+	IF_UNDER	1,DoubleEnemyAI_Tedasuke1
+
+	JUMP	DoubleEnemyAI_Tedasuke_End
+
+DoubleEnemyAI_Tedasuke1:
 	IF_WAZA_SEQNO_JUMP	38,DoubleEnemyAI_Tedasuke_End		//	いちげきひっさつ
 	IF_WAZA_SEQNO_JUMP	41,DoubleEnemyAI_Tedasuke_End		//　りゅうのいかり
 	IF_WAZA_SEQNO_JUMP	87,DoubleEnemyAI_Tedasuke_End		//　ナイトヘッド
 	IF_WAZA_SEQNO_JUMP	88,DoubleEnemyAI_Tedasuke_End		//　サイコウエーブ
 	IF_WAZA_SEQNO_JUMP	130,DoubleEnemyAI_Tedasuke_End	//　ソニックブーム
 	COMP_POWER	LOSS_CALC_OFF
-	IFN_EQUAL	COMP_POWER_NONE, AI_INC1
+	IF_EQUAL	COMP_POWER_NONE,DoubleEnemyAI_Tedasuke_End 
+
+	IF_COMMONRND_UNDER	128,DoubleEnemyAI_Tedasuke_End
+	INCDEC	+3
+
 DoubleEnemyAI_Tedasuke_End:
 	AIEND
 
@@ -700,6 +718,34 @@ DoubleEnemyAI_FireTypeEnd:
 	AIEND
 
 
+
+
+
+DoubleEnemyAI_Daakuhouru:      	//　ダークホール　2010/4/23 
+DoubleEnemyAI_Iwanadare:      	//　いわなだれ　2010/4/23 
+DoubleEnemyAI_Hubuki:	          //　ふぶき　    2010/4/23 
+DoubleEnemyAI_Tomoenage:       	//　ともえなげ　2010/4/23
+DoubleEnemyAI_Hunka:       	    //　ふんか　    2010/4/23
+DoubleEnemyAI_rendou_Osakinidouzo:    // 2010/4/22
+	IF_HAVE_WAZA	CHECK_ATTACK_FRIEND,WAZANO_OSAKINIDOUZO, DoubleEnemyAI_rendou_Osakinidouzo_1
+	AIEND
+
+DoubleEnemyAI_rendou_Osakinidouzo_1:
+	CHECK_AGI_RANK	CHECK_ATTACK_FRIEND	//味方の順位
+	IFN_EQUAL	0,AI_DEC10        	//1位じゃない
+
+	CHECK_AGI_RANK	CHECK_ATTACK	//自分の順位
+	IF_EQUAL	0,AI_DEC10        	//1位タイ
+	IF_EQUAL	1,AI_DEC10        	//2位
+
+	IF_COMMONRND_UNDER	50,DoubleEnemyAI_rendou_Osakinidouzo_end
+	INCDEC		3	
+
+DoubleEnemyAI_rendou_Osakinidouzo_end:
+	AIEND
+
+
+
 //--------------------------------------
 //	味方が対象
 //--------------------------------------
@@ -820,6 +866,8 @@ DoubleMineAI_1:
 	
 	IF_WAZANO	WAZANO_TUBOWOTUKU, DoubleMineAI_Tubowotuku	// つぼをつく2006.6.23
 
+	IF_WAZANO	WAZANO_OSAKINIDOUZO, DoubleMineAI_Osakinidouzo	// おさきにどうぞ2010.4.22
+
 	JUMP	DoubleMineAI_end
 
 //ｽｷﾙｽﾜｯﾌﾟ---------
@@ -827,29 +875,50 @@ DoubleMineAI_SkillSwap:
 	CHECK_TOKUSEI	CHECK_DEFENCE
 	IF_EQUAL	TOKUSYU_NAMAKE, AI_INC10		// 相方が「なまけ」
 	IF_EQUAL	TOKUSYU_SUROOSUTAATO, AI_INC10	// 相方が「スロースタート」2006.6.14
-	
-	// 自分が「ふゆう」
-	CHECK_TOKUSEI	CHECK_ATTACK
-	IFN_EQUAL	TOKUSYU_HUYUU, DoubleMineAI_SkillSwapFukugan
-	CHECK_TOKUSEI	CHECK_DEFENCE
-	IF_EQUAL	TOKUSYU_HUYUU, DoubleMineAI_end		// 相方も「ふゆう」
-	CHECK_TYPE	CHECK_DEFENCE_TYPE1
-	IFN_EQUAL	POKETYPE_DENKI, DoubleMineAI_SkillSwapFukugan
-	INCDEC		1
-	CHECK_TYPE	CHECK_DEFENCE_TYPE2
-	IFN_EQUAL	POKETYPE_DENKI, DoubleMineAI_SkillSwapFukugan
-	INCDEC		1
-	AIEND
 
-DoubleMineAI_SkillSwapFukugan:
 	CHECK_TOKUSEI	CHECK_ATTACK
-	//IFN_EQUAL	TOKUSYU_HUKUGAN, DoubleMineAI_end
-	IF_EQUAL	TOKUSYU_HUKUGAN,DoubleMineAI_SkillSwapFukugan_Check
-	IF_EQUAL	TOKUSYU_NOOGAADO, DoubleMineAI_SkillSwapFukugan_Check
+	// 自分が「ふゆう」
+	IF_EQUAL	TOKUSYU_HUYUU,DoubleMineAI_SkillSwapFuyuu	
+	// 自分が「ふくがん」
+	IF_EQUAL	TOKUSYU_HUKUGAN,DoubleMineAI_SkillSwapFukugan	
+	// 自分が「ノーガード」
+	IF_EQUAL	TOKUSYU_NOOGAADO,DoubleMineAI_SkillSwapFukugan	
+	// 自分が「ふみん」
+	IF_EQUAL	TOKUSYU_HUMIN,DoubleMineAI_SkillSwapFumin	
+	// 自分が「マイペース」
+	IF_EQUAL	TOKUSYU_MAIPEESU,DoubleMineAI_SkillSwapMaipeesu	
+
 	JUMP	DoubleMineAI_end
-	
-	// 命中率上がる特性
-DoubleMineAI_SkillSwapFukugan_Check:
+
+
+DoubleMineAI_SkillSwapFuyuu:	// 自分が「ふゆう」
+	CHECK_TOKUSEI	CHECK_DEFENCE
+	IF_EQUAL	TOKUSYU_HUYUU,AI_DEC10		// 相方も「ふゆう」
+
+	CHECK_TYPE	CHECK_DEFENCE_TYPE1
+	IF_EQUAL	POKETYPE_HIKOU,AI_DEC8    // ひこう
+	CHECK_TYPE	CHECK_DEFENCE_TYPE2
+	IF_EQUAL	POKETYPE_HIKOU,AI_DEC8    // ひこう
+
+	CHECK_TYPE	CHECK_DEFENCE_TYPE1
+	IF_EQUAL	POKETYPE_KUSA,AI_DEC5    // くさ
+	IF_EQUAL	POKETYPE_MUSHI,AI_DEC5    // むし
+
+	CHECK_TYPE	CHECK_DEFENCE_TYPE2
+	IF_EQUAL	POKETYPE_KUSA,AI_DEC5    // くさ
+	IF_EQUAL	POKETYPE_MUSHI,AI_DEC5    // むし
+
+	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_FLYING,AI_DEC2	// でんじふゆう中
+
+	CHECK_TYPE	CHECK_DEFENCE_TYPE1
+	IF_EQUAL	POKETYPE_DENKI,AI_INC3    //　でんき
+	CHECK_TYPE	CHECK_DEFENCE_TYPE2
+	IF_EQUAL	POKETYPE_DENKI,AI_INC3    //　でんき
+
+	JUMP	DoubleMineAI_end
+
+
+DoubleMineAI_SkillSwapFukugan:	// 自分が「ふくがん ノーガード」
 	IF_HAVE_WAZA	CHECK_ATTACK_FRIEND, WAZANO_DAIMONZI, DoubleMineAI_SkillSwapFukugan1
 	IF_HAVE_WAZA	CHECK_ATTACK_FRIEND, WAZANO_KAMINARI, DoubleMineAI_SkillSwapFukugan1
 	IF_HAVE_WAZA	CHECK_ATTACK_FRIEND, WAZANO_KUROSUTYOPPU, DoubleMineAI_SkillSwapFukugan1
@@ -864,9 +933,22 @@ DoubleMineAI_SkillSwapFukugan_Check:
 	IF_HAVE_WAZA	CHECK_ATTACK_FRIEND, WAZANO_PAWAAWHIPPU, DoubleMineAI_SkillSwapFukugan1
 	IF_HAVE_WAZA	CHECK_ATTACK_FRIEND, WAZANO_SIIDOHUREA, DoubleMineAI_SkillSwapFukugan1
 	IF_HAVE_WAZA	CHECK_ATTACK_FRIEND, WAZANO_MOROHANOZUTUKI, DoubleMineAI_SkillSwapFukugan1
-	JUMP		DoubleMineAI_end
+
+	IF_HAVE_WAZA	CHECK_ATTACK_FRIEND, WAZANO_ZETTAIREIDO, DoubleMineAI_SkillSwapFukugan1
+	IF_HAVE_WAZA	CHECK_ATTACK_FRIEND, WAZANO_ZIWARE, DoubleMineAI_SkillSwapFukugan1
+	IF_HAVE_WAZA	CHECK_ATTACK_FRIEND, WAZANO_HASAMIGIROTIN, DoubleMineAI_SkillSwapFukugan1
+	IF_HAVE_WAZA	CHECK_ATTACK_FRIEND, WAZANO_TUNODORIRU, DoubleMineAI_SkillSwapFukugan1
+	JUMP		AI_DEC3
 
 DoubleMineAI_SkillSwapFukugan1:
+	JUMP	AI_INC3
+
+DoubleMineAI_SkillSwapFumin:  // 自分が「ふみん」
+	IFN_WAZASICK	CHECK_DEFENCE,WAZASICK_NEMURI,AI_DEC8		//寝ていない相手にはださない
+	JUMP	AI_INC3
+
+DoubleMineAI_SkillSwapMaipeesu: // 自分が「マイペース」
+	IFN_WAZASICK	CHECK_DEFENCE,WAZASICK_KONRAN,AI_DEC8		//混乱していない相手にはださない
 	JUMP	AI_INC3
 
 
@@ -880,9 +962,6 @@ DoubleMineAI_Onibi:
 	CHECK_HAVE_TOKUSEI	CHECK_ATTACK_FRIEND, TOKUSYU_KONZYOU
 	IFN_EQUAL	HAVE_YES, DoubleMineAI_end	
 	
-	//CHECK_TOKUSEI	CHECK_DEFENCE
-	//IF_EQUAL	TOKUSYU_MORAIBI,DoubleMineAI_FireType	//ダメージ０でスルーされるのでここで
-	//IFN_EQUAL	TOKUSYU_KONZYOU, DoubleMineAI_end
 	IF_POKESICK	CHECK_ATTACK_FRIEND,DoubleMineAI_end
 	
 	CHECK_TYPE	CHECK_DEFENCE_TYPE1
@@ -936,26 +1015,41 @@ DoubleMineAI_Tedasuke:
 	IF_HP_OVER	CHECK_ATTACK_FRIEND,50,DoubleMineAI_Tedasuke1
 	CHECK_AGI_RANK	CHECK_ATTACK_FRIEND		//味方の順位
 	IF_UNDER	1,DoubleMineAI_Tedasuke1
+
+	INCDEC	-1
 	JUMP	DoubleMineAI_Tedasuke_end
 
 DoubleMineAI_Tedasuke1:
-	IF_RND_UNDER	64, AI_DEC1
-	INCDEC	+2
+	IF_COMMONRND_UNDER	128,DoubleMineAI_Tedasuke_end
+	INCDEC	+3
 
 DoubleMineAI_Tedasuke_end:
 	AIEND
 
 
-//いばる
+//いばる      2010/4/21
 DoubleMineAI_Ibaru:
+  IF_DMG_PHYSIC_UNDER CHECK_DEFENCE,DoubleMineAI_Ibaru0         //特攻の方が高い場合はやらない
+
 	IF_HAVE_ITEM	CHECK_DEFENCE, ITEM_KIINOMI, DoubleMineAI_Ibaru1
 	IF_HAVE_ITEM	CHECK_DEFENCE, ITEM_RAMUNOMI, DoubleMineAI_Ibaru1
+
+	CHECK_TOKUSEI	CHECK_DEFENCE
+	IF_EQUAL	TOKUSYU_MAIPEESU,DoubleMineAI_Ibaru1                     		  // マイペース
+
+  IF_SIDEEFF	CHECK_DEFENCE,BTL_SIDEEFF_SINPINOMAMORI,DoubleMineAI_Ibaru1	// しんぴのまもり
+	
+DoubleMineAI_Ibaru0:
 	JUMP	DoubleMineAI_end
+
 DoubleMineAI_Ibaru1:
 	IF_PARA_OVER	CHECK_DEFENCE, PARA_POW, 7, DoubleMineAI_IbaruEnd
 	INCDEC	3
 DoubleMineAI_IbaruEnd:
 	AIEND
+
+
+
 
 //ダブル
 DoubleMineAI_Nagetukeru:
@@ -964,9 +1058,6 @@ DoubleMineAI_Torikku:
 
 DoubleMineAI_Ieki:
 	IF_WAZASICK	CHECK_ATTACK_FRIEND,WAZASICK_IEKI,DoubleMineAI_end		// いえき中
-	//CHECK_TOKUSEI	CHECK_ATTACK_FRIEND
-	//IF_EQUAL	TOKUSYU_NAMAKE,DoubleMineAI_Ieki_ok				// なまけ
-	//IF_EQUAL	TOKUSYU_SUROOSUTAATO,DoubleMineAI_Ieki_ok		// スロースタート
 	
 	CHECK_HAVE_TOKUSEI	CHECK_ATTACK_FRIEND, TOKUSYU_NAMAKE
 	IF_EQUAL	HAVE_YES, DoubleMineAI_Ieki_ok
@@ -984,12 +1075,6 @@ DoubleMineAI_Ieki_end:
 DoubleMineAI_Tubowotuku:	//つぼをつく:一人用と基本は同じ
 	
 	//パラメーターＭＡＸ時はしない
-	//CHECK_TOKUSEI	CHECK_ATTACK_FRIEND				//たんじゅんなら段階数９でやめ2006.6.6
-	//IF_EQUAL	TOKUSYU_TANZYUN,DoubleMineAI_Tubowotuku_tanzyun
-	
-	CHECK_HAVE_TOKUSEI	CHECK_ATTACK_FRIEND, TOKUSYU_TANZYUN
-	IF_EQUAL	HAVE_YES, DoubleMineAI_Tubowotuku_tanzyun
-
 	IF_PARA_EQUAL	CHECK_ATTACK_FRIEND,PARA_POW,12,DoubleMineAI_end
 	IF_PARA_EQUAL	CHECK_ATTACK_FRIEND,PARA_DEF,12,DoubleMineAI_end
 	IF_PARA_EQUAL	CHECK_ATTACK_FRIEND,PARA_AGI,12,DoubleMineAI_end
@@ -997,18 +1082,7 @@ DoubleMineAI_Tubowotuku:	//つぼをつく:一人用と基本は同じ
 	IF_PARA_EQUAL	CHECK_ATTACK_FRIEND,PARA_SPEDEF,12,DoubleMineAI_end
 	IF_PARA_EQUAL	CHECK_ATTACK_FRIEND,PARA_AVOID,12,DoubleMineAI_end
 	IF_PARA_EQUAL	CHECK_ATTACK_FRIEND,PARA_HIT,12,DoubleMineAI_end
-	JUMP	DoubleMineAI_Tubowotuku_check	
 
-DoubleMineAI_Tubowotuku_tanzyun:
-	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_POW,8,AI_DEC10
-	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_DEF,8,AI_DEC10
-	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_AGI,8,AI_DEC10
-	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_SPEPOW,8,AI_DEC10
-	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_SPEDEF,8,AI_DEC10
-	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_AVOID,8,AI_DEC10
-	IF_PARA_OVER	CHECK_ATTACK_FRIEND,PARA_HIT,8,AI_DEC10
-
-DoubleMineAI_Tubowotuku_check:
 	IF_HP_UNDER	CHECK_ATTACK_FRIEND,51,DoubleMineAI_Tubowotuku_ng
 	IF_HP_OVER	CHECK_ATTACK_FRIEND,90,DoubleMineAI_Tubowotuku_ok
 	IF_RND_UNDER	128,DoubleMineAI_Tubowotuku_end
@@ -1022,6 +1096,47 @@ DoubleMineAI_Tubowotuku_ng:
 	INCDEC	-1
 DoubleMineAI_Tubowotuku_end:
 	AIEND
+
+DoubleMineAI_Osakinidouzo:	// おさきにどうぞ2010.4.22
+
+	CHECK_AGI_RANK	CHECK_ATTACK	//自分の順位
+	IFN_EQUAL	0,AI_DEC10        	//1位じゃない
+
+	CHECK_AGI_RANK	CHECK_ATTACK_FRIEND	//味方の順位
+	IF_EQUAL	0,AI_DEC10        	//1位タイ
+	IF_EQUAL	1,AI_DEC10        	//2位
+
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,313,DoubleMineAI_Osakinidouzo_ok    //　ともえなげ
+
+	FLDEFF_CHECK	BTL_FLDEFF_TRICKROOM,DoubleMineAI_Osakinidouzo_Trickroom_pass		//トリックルーム中	
+
+	IF_HAVE_WAZA	CHECK_DEFENCE, WAZANO_TORIKKURUUMU, DoubleMineAI_Osakinidouzo_ok
+
+DoubleMineAI_Osakinidouzo_Trickroom_pass:
+
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,190,DoubleMineAI_Osakinidouzo_ok    //　ふんか
+
+	IF_HAVE_WAZA	CHECK_DEFENCE, WAZANO_DAAKUHOORU, DoubleMineAI_Osakinidouzo_ok
+
+	IF_HAVE_WAZA	CHECK_DEFENCE, WAZANO_HUBUKI, DoubleMineAI_Osakinidouzo_ok
+	IF_HAVE_WAZA	CHECK_DEFENCE, WAZANO_IWANADARE, DoubleMineAI_Osakinidouzo_ok
+	IF_HAVE_WAZA	CHECK_DEFENCE, WAZANO_IWANADARE, DoubleMineAI_Osakinidouzo_ok
+
+	IF_HAVE_WAZA_SEQNO	CHECK_DEFENCE,28,DoubleMineAI_Osakinidouzo_end    //　ほえる
+
+	IF_RND_UNDER	50,DoubleMineAI_Osakinidouzo_end
+	INCDEC		-2	
+	JUMP	DoubleMineAI_Osakinidouzo_end
+
+DoubleMineAI_Osakinidouzo_ok:
+	IF_COMMONRND_UNDER	50,DoubleMineAI_Osakinidouzo_end
+	INCDEC		3	
+
+DoubleMineAI_Osakinidouzo_end:
+	AIEND
+
+
+
 
 DoubleMineAI_end:
 	INCDEC	-30		//基本的に味方には出さない

@@ -104,239 +104,388 @@ BasicAI_DmgEnd:
 	IF_WAZANO	WAZANO_BAAKUAUTO,AI_DEC10		//2010.2.9
 
 BasicAI_01:
-	IF_WAZA_SEQNO_JUMP	1,BasicAI_1			//	ねむり
-	IF_WAZA_SEQNO_JUMP	7,BasicAI_7			//	じばく
-	IF_WAZA_SEQNO_JUMP	8,BasicAI_8			//	ゆめくい
+  TABLE_JUMP TABLE_JUMP_WAZASEQNO,WAZASEQ_TABLE
+  AIEND
 
-	IF_WAZA_SEQNO_JUMP	10,BasicAI_10		//	攻撃１アップ
-	IF_WAZA_SEQNO_JUMP	11,BasicAI_11		//	防御１アップ
-	IF_WAZA_SEQNO_JUMP	12,BasicAI_12		//	素早さ１アップ
-	IF_WAZA_SEQNO_JUMP	13,BasicAI_13		//	特攻１アップ
-	IF_WAZA_SEQNO_JUMP	14,BasicAI_14		//	特防１アップ
-	IF_WAZA_SEQNO_JUMP	15,BasicAI_15		//	命中１アップ
-	IF_WAZA_SEQNO_JUMP	16,BasicAI_16		//	回避１アップ
+  TABLE_ADRS  WAZASEQ_TABLE
+	ADRS  BasicAI_Dummy	//	  0ダミー
+	ADRS  BasicAI_1			//	ねむり
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_7			//	じばく
+	ADRS  BasicAI_8			//	ゆめくい
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_10		//	攻撃１アップ
 
-	IF_WAZA_SEQNO_JUMP	18,BasicAI_18		//	攻撃１ダウン
-	IF_WAZA_SEQNO_JUMP	19,BasicAI_19		//	防御１ダウン
-	IF_WAZA_SEQNO_JUMP	20,BasicAI_20		//	素早さ１ダウン
-	IF_WAZA_SEQNO_JUMP	21,BasicAI_21		//	特攻１ダウン
-	IF_WAZA_SEQNO_JUMP	22,BasicAI_22		//	特防１ダウン
-	IF_WAZA_SEQNO_JUMP	23,BasicAI_23		//	命中１ダウン
-	IF_WAZA_SEQNO_JUMP	24,BasicAI_24		//	回避１ダウン
+	ADRS  BasicAI_11		//	防御１アップ
+	ADRS  BasicAI_12		//	素早さ１アップ
+	ADRS  BasicAI_13		//	特攻１アップ
+	ADRS  BasicAI_14		//	特防１アップ
+	ADRS  BasicAI_15		//	命中１アップ
+	ADRS  BasicAI_16		//	回避１アップ
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_18		//	攻撃１ダウン
+	ADRS  BasicAI_19		//	防御１ダウン
+	ADRS  BasicAI_20		//	素早さ１ダウン
 
-	IF_WAZA_SEQNO_JUMP	25,BasicAI_25		//	くろいきり
-	IF_WAZA_SEQNO_JUMP	26,BasicAI_26		//	がまん
-	IF_WAZA_SEQNO_JUMP	28,BasicAI_28		//	ふきとばし
-	IF_WAZA_SEQNO_JUMP	32,BasicAI_32		//	じこさいせい2006.6.14
-	IF_WAZA_SEQNO_JUMP	33,BasicAI_33		//	どくどく
-	IF_WAZA_SEQNO_JUMP	35,BasicAI_35		//	ひかりのかべ
-	IF_WAZA_SEQNO_JUMP	38,BasicAI_38		//	いちげきひっさつ
-	IF_WAZA_SEQNO_JUMP	39,BasicAI_39		//	かまいたち	
-	IF_WAZA_SEQNO_JUMP	40,BasicAI_40		//	いかりのまえば
-	IF_WAZA_SEQNO_JUMP	41,BasicAI_41		//　りゅうのいかり2006.6.14
+	ADRS  BasicAI_21		//	特攻１ダウン
+	ADRS  BasicAI_22		//	特防１ダウン
+	ADRS  BasicAI_23		//	命中１ダウン
+	ADRS  BasicAI_24		//	回避１ダウン
+	ADRS  BasicAI_25		//	くろいきり
+	ADRS  BasicAI_26		//	がまん
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_28		//	ふきとばし
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
 
-	IF_WAZA_SEQNO_JUMP	46,BasicAI_46		//	しろいきり
-	IF_WAZA_SEQNO_JUMP	47,BasicAI_47		//	きあいだめ
-	IF_WAZA_SEQNO_JUMP	49,BasicAI_49		//	こんらん
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_32		//	じこさいせい2006.6.14
+	ADRS  BasicAI_33		//	どくどく
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_35		//	ひかりのかべ
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_38		//	いちげきひっさつ
+	ADRS  BasicAI_39		//	かまいたち	
+	ADRS  BasicAI_40		//	いかりのまえば
 
-	IF_WAZA_SEQNO_JUMP	50,BasicAI_10		//	攻撃２アップ
-	IF_WAZA_SEQNO_JUMP	51,BasicAI_11		//	防御２アップ
-	IF_WAZA_SEQNO_JUMP	52,BasicAI_12		//	素早さ２アップ
-	IF_WAZA_SEQNO_JUMP	53,BasicAI_13		//	特攻２アップ
-	IF_WAZA_SEQNO_JUMP	54,BasicAI_14		//	特防２アップ
-	IF_WAZA_SEQNO_JUMP	55,BasicAI_15		//	命中２アップ
-	IF_WAZA_SEQNO_JUMP	56,BasicAI_16		//	回避２アップ
+	ADRS  BasicAI_41		//　りゅうのいかり2006.6.14
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_46		//	しろいきり
+	ADRS  BasicAI_47		//	きあいだめ
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_49		//	こんらん
+	ADRS  BasicAI_50		//	攻撃２アップ
 
-	IF_WAZA_SEQNO_JUMP	58,BasicAI_18		//	攻撃２ダウン
-	IF_WAZA_SEQNO_JUMP	59,BasicAI_19		//	防御２ダウン
-	IF_WAZA_SEQNO_JUMP	60,BasicAI_20		//	素早さ２ダウン
-	IF_WAZA_SEQNO_JUMP	61,BasicAI_21		//	特攻２ダウン
-	IF_WAZA_SEQNO_JUMP	62,BasicAI_22		//	特防２ダウン
-	IF_WAZA_SEQNO_JUMP	63,BasicAI_23		//	命中２ダウン
-	IF_WAZA_SEQNO_JUMP	64,BasicAI_24		//	回避２ダウン
+	ADRS  BasicAI_51		//	防御２アップ
+	ADRS  BasicAI_52		//	素早さ２アップ
+	ADRS  BasicAI_53		//	特攻２アップ
+	ADRS  BasicAI_54		//	特防２アップ
+	ADRS  BasicAI_55		//	命中２アップ
+	ADRS  BasicAI_56		//	回避２アップ
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_58		//	攻撃２ダウン
+	ADRS  BasicAI_59		//	防御２ダウン
+	ADRS  BasicAI_60		//	素早さ２ダウン
 
-	IF_WAZA_SEQNO_JUMP	65,BasicAI_65		//	リフレクター
-	IF_WAZA_SEQNO_JUMP	66,BasicAI_33		//	どく
-	IF_WAZA_SEQNO_JUMP	67,BasicAI_67		//	まひ
-	IF_WAZA_SEQNO_JUMP	79,BasicAI_79		//	みがわり
-	IF_WAZA_SEQNO_JUMP	80,BasicAI_80		//	はかいこうせん
-	IF_WAZA_SEQNO_JUMP	84,BasicAI_84		//	やどりぎ
-	IF_WAZA_SEQNO_JUMP	86,BasicAI_86		//　かなしばり
-	IF_WAZA_SEQNO_JUMP	87,BasicAI_87		//　ちきゅうなげ
-	IF_WAZA_SEQNO_JUMP	88,BasicAI_88		//　サイコウェーブ
-	IF_WAZA_SEQNO_JUMP	89,BasicAI_89		//　カウンター
-	IF_WAZA_SEQNO_JUMP	90,BasicAI_90		//　アンコール
-	IF_WAZA_SEQNO_JUMP	92,BasicAI_92		//　いびき
-	IF_WAZA_SEQNO_JUMP	94,BasicAI_94		//　ロックオン		2006.6.14
-	IF_WAZA_SEQNO_JUMP	97,BasicAI_92		//　ねごと
-	IF_WAZA_SEQNO_JUMP	99,BasicAI_99		//　じたばた
-	IF_WAZA_SEQNO_JUMP	106,BasicAI_106		//	くろいまなざし
-	IF_WAZA_SEQNO_JUMP	107,BasicAI_107		//　あくむ
-	IF_WAZA_SEQNO_JUMP	108,BasicAI_16		// 	ちいさくなる
-	IF_WAZA_SEQNO_JUMP	109,BasicAI_109		// 	のろい
-	IF_WAZA_SEQNO_JUMP	112,BasicAI_112		// 	まきびし
-	IF_WAZA_SEQNO_JUMP	113,BasicAI_113		// 	みやぶる
-	IF_WAZA_SEQNO_JUMP	114,BasicAI_114		// 	ほろび
-	IF_WAZA_SEQNO_JUMP	115,BasicAI_115		// 	すなあらし
-	IF_WAZA_SEQNO_JUMP	118,BasicAI_49		// 	いばる
-	IF_WAZA_SEQNO_JUMP	120,BasicAI_120		// 	メロメロ
-	IF_WAZA_SEQNO_JUMP	121,BasicAI_121		// 	おんがえし
-	IF_WAZA_SEQNO_JUMP	122,BasicAI_122		// 	プレゼント
-	IF_WAZA_SEQNO_JUMP	123,BasicAI_123		// 	やつあたり
-	IF_WAZA_SEQNO_JUMP	124,BasicAI_124		// 	しんぴのまもり
-	IF_WAZA_SEQNO_JUMP	126,BasicAI_126		// 	マグニチュード
-	IF_WAZA_SEQNO_JUMP	127,BasicAI_127		//	バトンタッチ
-	IF_WAZA_SEQNO_JUMP	130,BasicAI_130		// 	ソニックブーム
+	ADRS  BasicAI_61		//	特攻２ダウン
+	ADRS  BasicAI_62		//	特防２ダウン
+	ADRS  BasicAI_63		//	命中２ダウン
+	ADRS  BasicAI_64		//	回避２ダウン
+	ADRS  BasicAI_65		//	リフレクター
+	ADRS  BasicAI_66		//	どく33
+	ADRS  BasicAI_67		//	まひ
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
 
-	IF_WAZA_SEQNO_JUMP	132,BasicAI_132		// 	あさのひざし2006.6.14
-	IF_WAZA_SEQNO_JUMP	133,BasicAI_133		// 	こうごうせい（シーケンス削除）2006.6.14
-	IF_WAZA_SEQNO_JUMP	134,BasicAI_134		// 	つきのひかり（シーケンス削除）2006.6.14
-	
-	IF_WAZA_SEQNO_JUMP	135,BasicAI_135		//　めざめるパワー2006.6.14
-	IF_WAZA_SEQNO_JUMP	136,BasicAI_136		// 	あまごい
-	IF_WAZA_SEQNO_JUMP	137,BasicAI_137		// 	にほんばれ
-	IF_WAZA_SEQNO_JUMP	142,BasicAI_142		// 	はらだいこ
-	IF_WAZA_SEQNO_JUMP	143,BasicAI_25		//	じこあんじ	
-	IF_WAZA_SEQNO_JUMP	144,BasicAI_144		// 	ミラーコート
-	IF_WAZA_SEQNO_JUMP	145,BasicAI_145		// 	ロケットずつき
-	IF_WAZA_SEQNO_JUMP	148,BasicAI_148		// 	みらいよち
-	IF_WAZA_SEQNO_JUMP	153,AI_DEC10		// 	テレポート （基本的に使わない）
-	IF_WAZA_SEQNO_JUMP	156,BasicAI_11		// 	まるくなる
-	IF_WAZA_SEQNO_JUMP	157,BasicAI_157		// 	たまごうみ2006.6.14
-	IF_WAZA_SEQNO_JUMP	158,BasicAI_158		// 	ねこだまし
-	IF_WAZA_SEQNO_JUMP	160,BasicAI_160		// 	たくわえる
-	IF_WAZA_SEQNO_JUMP	161,BasicAI_161		// 	はきだす
-	IF_WAZA_SEQNO_JUMP	162,BasicAI_161		// 	のみこむ
-	IF_WAZA_SEQNO_JUMP	164,BasicAI_164		// 	あられ
-	IF_WAZA_SEQNO_JUMP	165,BasicAI_165		// 	いちゃもん
-	IF_WAZA_SEQNO_JUMP	166,BasicAI_49		// 	おだてる
-	IF_WAZA_SEQNO_JUMP	167,BasicAI_167		//	やけど
-	IF_WAZA_SEQNO_JUMP	168,BasicAI_168		// 	おきみやげ
-	IF_WAZA_SEQNO_JUMP	170,BasicAI_170		//	きあいパンチ
-	IF_WAZA_SEQNO_JUMP	172,BasicAI_172		// 	このゆびとまれ
-	IF_WAZA_SEQNO_JUMP	176,BasicAI_176		// 	てだすけ
-	IF_WAZA_SEQNO_JUMP	177,BasicAI_177		// 	トリック
-	IF_WAZA_SEQNO_JUMP	181,BasicAI_181		// 	ねをはる
-	IF_WAZA_SEQNO_JUMP	182,BasicAI_182		// 	ばかぢから
-	IF_WAZA_SEQNO_JUMP	184,BasicAI_184		// 	リサイクル
-	IF_WAZA_SEQNO_JUMP	187,BasicAI_1		// 	あくび
-	IF_WAZA_SEQNO_JUMP	188,BasicAI_177		// 	はたきおとす
-	IF_WAZA_SEQNO_JUMP	189,BasicAI_189		// 	がむしゃら
-	IF_WAZA_SEQNO_JUMP	192,BasicAI_192		// 	ふういん
-	IF_WAZA_SEQNO_JUMP	193,BasicAI_193		// 	リフレッシュ
-	IF_WAZA_SEQNO_JUMP	196,BasicAI_196		// 	けたぐり
-	IF_WAZA_SEQNO_JUMP	201,BasicAI_201		// 	どろあそび
-	IF_WAZA_SEQNO_JUMP	205,BasicAI_205		// 	くすぐる
-	IF_WAZA_SEQNO_JUMP	206,BasicAI_206		// 	コスモパワー
-	IF_WAZA_SEQNO_JUMP	208,BasicAI_208		// 	ビルドアップ
-	IF_WAZA_SEQNO_JUMP	210,BasicAI_210		// 	みずあそび
-	IF_WAZA_SEQNO_JUMP	211,BasicAI_211		// 	めいそう
-	IF_WAZA_SEQNO_JUMP	212,BasicAI_212		// 	りゅうのまい
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_79		//	みがわり
+	ADRS  BasicAI_80		//	はかいこうせん
 
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_84		//	やどりぎ
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_86		//　かなしばり
+	ADRS  BasicAI_87		//　ちきゅうなげ
+	ADRS  BasicAI_88		//　サイコウェーブ
+	ADRS  BasicAI_89		//　カウンター
+	ADRS  BasicAI_90		//　アンコール
+
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_92		//　いびき
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_94		//　ロックオン		2006.6.14
+	ADRS  BasicAI_92		//　ねごと
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_99		//　じたばた
+	ADRS  BasicAI_Dummy	//	  ダミー
+
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_106		//	くろいまなざし
+	ADRS  BasicAI_107		//　あくむ
+	ADRS  BasicAI_108		// 	ちいさくなる
+	ADRS  BasicAI_109		// 	のろい
+	ADRS  BasicAI_Dummy	//	  ダミー
+
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_112		// 	まきびし
+	ADRS  BasicAI_113		// 	みやぶる
+	ADRS  BasicAI_114		// 	ほろび
+	ADRS  BasicAI_115		// 	すなあらし
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_118		// 	いばる
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_120		// 	メロメロ
+
+	ADRS  BasicAI_121		// 	おんがえし
+	ADRS  BasicAI_122		// 	プレゼント
+	ADRS  BasicAI_123		// 	やつあたり
+	ADRS  BasicAI_124		// 	しんぴのまもり
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_126		// 	マグニチュード
+	ADRS  BasicAI_127		//	バトンタッチ
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_130		// 	ソニックブーム
+
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_132		// 	あさのひざし2006.6.14
+	ADRS  BasicAI_133		// 	こうごうせい（シーケンス削除）2006.6.14
+	ADRS  BasicAI_134		// 	つきのひかり（シーケンス削除）2006.6.14
+	ADRS  BasicAI_135		//　めざめるパワー2006.6.14
+	ADRS  BasicAI_136		// 	あまごい
+	ADRS  BasicAI_137		// 	にほんばれ
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_142		// 	はらだいこ
+	ADRS  BasicAI_143		//	じこあんじ25	
+	ADRS  BasicAI_144		// 	ミラーコート
+	ADRS  BasicAI_145		// 	ロケットずつき
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_148		// 	みらいよち
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  AI_DEC10		// 	テレポート （基本的に使わない）
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_156		// 	まるくなる
+	ADRS  BasicAI_157		// 	たまごうみ2006.6.14
+	ADRS  BasicAI_158		// 	ねこだまし
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_160		// 	たくわえる
+
+	ADRS  BasicAI_161		// 	はきだす
+	ADRS  BasicAI_162		// 	のみこむ
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_164		// 	あられ
+	ADRS  BasicAI_165		// 	いちゃもん
+	ADRS  BasicAI_166		// 	おだてる
+	ADRS  BasicAI_167		//	やけど
+	ADRS  BasicAI_168		// 	おきみやげ
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_170		//	きあいパンチ
+
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_172		// 	このゆびとまれ
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_176		// 	てだすけ
+	ADRS  BasicAI_177		// 	トリック
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+
+	ADRS  BasicAI_181		// 	ねをはる
+	ADRS  BasicAI_182		// 	ばかぢから
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_184		// 	リサイクル
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_187		// 	あくび
+	ADRS  BasicAI_188		// 	はたきおとす
+	ADRS  BasicAI_189		// 	がむしゃら
+	ADRS  BasicAI_Dummy	//	  ダミー
+
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_192		// 	ふういん
+	ADRS  BasicAI_193		// 	リフレッシュ
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_196		// 	けたぐり
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+
+	ADRS  BasicAI_201		// 	どろあそび
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_205		// 	くすぐる
+	ADRS  BasicAI_206		// 	コスモパワー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_208		// 	ビルドアップ
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_210		// 	みずあそび
+
+	ADRS  BasicAI_211		// 	めいそう
+	ADRS  BasicAI_212		// 	りゅうのまい
 //DPより追加シーケンス
-	
-	IF_WAZA_SEQNO_JUMP	213,BasicAI_213			// 	ほごしょく（エメラルドまでなし）
-	IF_WAZA_SEQNO_JUMP	214,BasicAI_214			// 	はねやすみ	
-	IF_WAZA_SEQNO_JUMP	215,BasicAI_215			// 	じゅうりょく
-	IF_WAZA_SEQNO_JUMP	216,BasicAI_216			// 	ミラクルアイ
-	IF_WAZA_SEQNO_JUMP	219,BasicAI_219			// 	ジャイロボール
-	IF_WAZA_SEQNO_JUMP	220,BasicAI_220			// 	いやしのねがい
-	IF_WAZA_SEQNO_JUMP	222,BasicAI_222			// 	しぜんのめぐみ
-	IF_WAZA_SEQNO_JUMP	225,BasicAI_225			// 	おいかぜ
-	IF_WAZA_SEQNO_JUMP	226,BasicAI_226			// 	つぼをつく
-	IF_WAZA_SEQNO_JUMP	227,BasicAI_227			//	メタルバースト 
-	IF_WAZA_SEQNO_JUMP	232,BasicAI_232			// 	さしおさえ
-	IF_WAZA_SEQNO_JUMP	233,BasicAI_233			// 	なげつける
-	IF_WAZA_SEQNO_JUMP	234,BasicAI_234			// 	サイコシフト
-	IF_WAZA_SEQNO_JUMP	235,BasicAI_235			// 	きりふだ
-	IF_WAZA_SEQNO_JUMP	236,BasicAI_236			// 	かいふくふうじ
-	IF_WAZA_SEQNO_JUMP	237,BasicAI_237			// 	しぼりとる
-	IF_WAZA_SEQNO_JUMP	238,BasicAI_238			// 	パワートリック
-	IF_WAZA_SEQNO_JUMP	239,BasicAI_239			// 	いえき
-	IF_WAZA_SEQNO_JUMP	240,BasicAI_240			// 	おまじない
-	IF_WAZA_SEQNO_JUMP	242,BasicAI_242			// 	まねっこ
-	IF_WAZA_SEQNO_JUMP	243,BasicAI_243			// 	パワースワップ
-	IF_WAZA_SEQNO_JUMP	244,BasicAI_244			// 	ガードスワップ
-	IF_WAZA_SEQNO_JUMP	245,BasicAI_245			// 	おしおき
-	IF_WAZA_SEQNO_JUMP	246,BasicAI_246			// 	とっておき
-	IF_WAZA_SEQNO_JUMP	247,BasicAI_247			// 	なやみのタネ
-	IF_WAZA_SEQNO_JUMP	249,BasicAI_249			// 	どくびし
-	IF_WAZA_SEQNO_JUMP	250,BasicAI_25			// 	ハートスワップ
-	IF_WAZA_SEQNO_JUMP	251,BasicAI_251			// 	アクアリング
-	IF_WAZA_SEQNO_JUMP	252,BasicAI_252			// 	でんじふゆう
-	IF_WAZA_SEQNO_JUMP	258,BasicAI_258			// 	きりばらい
-	IF_WAZA_SEQNO_JUMP	259,BasicAI_259			// 	トリックルーム
-	IF_WAZA_SEQNO_JUMP	265,BasicAI_265			// 	ゆうわく
-	IF_WAZA_SEQNO_JUMP	266,BasicAI_266			// 	ステルスロック
-	IF_WAZA_SEQNO_JUMP	270,BasicAI_270			// 	みかづきのまい
+	ADRS  BasicAI_213			// 	ほごしょく（エメラルドまでなし）
+	ADRS  BasicAI_214			// 	はねやすみ	
+	ADRS  BasicAI_215			// 	じゅうりょく
+	ADRS  BasicAI_216			// 	ミラクルアイ
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_219			// 	ジャイロボール
+	ADRS  BasicAI_220			// 	いやしのねがい
 
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_222			// 	しぜんのめぐみ
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_225			// 	おいかぜ
+	ADRS  BasicAI_226			// 	つぼをつく
+	ADRS  BasicAI_227			//	メタルバースト 
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_232			// 	さしおさえ
+	ADRS  BasicAI_233			// 	なげつける
+	ADRS  BasicAI_234			// 	サイコシフト
+	ADRS  BasicAI_235			// 	きりふだ
+	ADRS  BasicAI_236			// 	かいふくふうじ
+	ADRS  BasicAI_237			// 	しぼりとる
+	ADRS  BasicAI_238			// 	パワートリック
+	ADRS  BasicAI_239			// 	いえき
+	ADRS  BasicAI_240			// 	おまじない
+
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_242			// 	まねっこ
+	ADRS  BasicAI_243			// 	パワースワップ
+	ADRS  BasicAI_244			// 	ガードスワップ
+	ADRS  BasicAI_245			// 	おしおき
+	ADRS  BasicAI_246			// 	とっておき
+	ADRS  BasicAI_247			// 	なやみのタネ
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_249			// 	どくびし
+	ADRS  BasicAI_250			// 	ハートスワップ
+
+	ADRS  BasicAI_251			// 	アクアリング
+	ADRS  BasicAI_252			// 	でんじふゆう
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_258			// 	きりばらい
+	ADRS  BasicAI_259			// 	トリックルーム
+	ADRS  BasicAI_Dummy	//	  ダミー
+
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_265			// 	ゆうわく
+	ADRS  BasicAI_266			// 	ステルスロック
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_270			// 	みかづきのまい
+
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
+	ADRS  BasicAI_Dummy	//	  ダミー
 //WBより追加シーケンス
+	ADRS  BasicAI_277	// 	つめとぎ
+	ADRS  BasicAI_278	// 	ワイドガード
+	ADRS  BasicAI_279	// 	ガードシェア
+	ADRS  BasicAI_280	// 	パワーシェア
 
-	IF_WAZA_SEQNO_JUMP	277,BasicAI_277	// 	つめとぎ
-	IF_WAZA_SEQNO_JUMP	278,BasicAI_278	// 	ワイドガード
-	IF_WAZA_SEQNO_JUMP	279,BasicAI_279	// 	ガードシェア
-	IF_WAZA_SEQNO_JUMP	280,BasicAI_280	// 	パワーシェア
-	IF_WAZA_SEQNO_JUMP	281,BasicAI_281	// 	ワンダールーム
-	IF_WAZA_SEQNO_JUMP	282,BasicAI_282	// 	サイコショック
-	IF_WAZA_SEQNO_JUMP	283,BasicAI_283	// 	ベノムショック
-	IF_WAZA_SEQNO_JUMP	284,BasicAI_284	//	ボディパージ 	
-	IF_WAZA_SEQNO_JUMP	285,BasicAI_285	// 	テレキネシス
-	IF_WAZA_SEQNO_JUMP	286,BasicAI_286	// 	マジックルーム
-	IF_WAZA_SEQNO_JUMP	287,BasicAI_287	// 	うちおとす
-	IF_WAZA_SEQNO_JUMP	288,BasicAI_288	// 	やまあらし
-	IF_WAZA_SEQNO_JUMP	289,BasicAI_289	// 	はじけるほのお
-	IF_WAZA_SEQNO_JUMP	290,BasicAI_290	// 	ちょうのまい
-	IF_WAZA_SEQNO_JUMP	291,BasicAI_291	// 	ヘビーボンバー
-	IF_WAZA_SEQNO_JUMP	292,BasicAI_292	// 	シンクロノイズ
-	IF_WAZA_SEQNO_JUMP	293,BasicAI_293	// 	エレクトボール
-	IF_WAZA_SEQNO_JUMP	294,BasicAI_294	// 	みずびたし
-	IF_WAZA_SEQNO_JUMP	295,BasicAI_295	// 	ニトロチャージ
-	IF_WAZA_SEQNO_JUMP	296,BasicAI_296	// 	アシッドボム
-	IF_WAZA_SEQNO_JUMP	297,BasicAI_297	// 	イカサマ
-	IF_WAZA_SEQNO_JUMP	298,BasicAI_298	// 	シンプルビーム
-	IF_WAZA_SEQNO_JUMP	299,BasicAI_299	// 	なかまづくり
-	IF_WAZA_SEQNO_JUMP	300,BasicAI_300	// 	おさきにどうぞ
-	IF_WAZA_SEQNO_JUMP	301,BasicAI_301	// 	りんしょう
-	IF_WAZA_SEQNO_JUMP	302,BasicAI_302	// 	エコーボイス
-	IF_WAZA_SEQNO_JUMP	303,BasicAI_303	// 	なしくずし
-	IF_WAZA_SEQNO_JUMP	304,BasicAI_304	// 	クリアスモッグ
-	IF_WAZA_SEQNO_JUMP	305,BasicAI_305	// 	アシストパワー
-	IF_WAZA_SEQNO_JUMP	306,BasicAI_306	// 	ファストガード
-	IF_WAZA_SEQNO_JUMP	307,BasicAI_307	// 	サイドチェンジ
-	IF_WAZA_SEQNO_JUMP	308,BasicAI_308	// 	からをやぶる
-	IF_WAZA_SEQNO_JUMP	309,BasicAI_309	// 	いやしのはどう
-	IF_WAZA_SEQNO_JUMP	310,BasicAI_310	// 	たたりめ
-	IF_WAZA_SEQNO_JUMP	311,BasicAI_311	// 	フリーフォール
-	IF_WAZA_SEQNO_JUMP	312,BasicAI_312	// 	ギアチェンジ
-	IF_WAZA_SEQNO_JUMP	313,BasicAI_313	// 	ともえなげ
-	IF_WAZA_SEQNO_JUMP	314,BasicAI_314	// 	やきつくす
-	IF_WAZA_SEQNO_JUMP	315,BasicAI_315	// 	さきおくり
-	IF_WAZA_SEQNO_JUMP	316,BasicAI_316	// 	せいちょう
-	IF_WAZA_SEQNO_JUMP	317,BasicAI_317	// 	アクロバット
-	IF_WAZA_SEQNO_JUMP	318,BasicAI_318	// 	ミラータイプ
-	IF_WAZA_SEQNO_JUMP	319,BasicAI_319	// 	かたきうち
-	IF_WAZA_SEQNO_JUMP	320,BasicAI_320	// 	いのちがけ
-	IF_WAZA_SEQNO_JUMP	321,BasicAI_321	// 	ほたるび
-	IF_WAZA_SEQNO_JUMP	322,BasicAI_322	// 	とぐろをまく
-	IF_WAZA_SEQNO_JUMP	323,BasicAI_323	// 	ギフトパス
-	IF_WAZA_SEQNO_JUMP	324,BasicAI_324	// 	みずのちかい
-	IF_WAZA_SEQNO_JUMP	325,BasicAI_325	// 	ほのおのちかい
-	IF_WAZA_SEQNO_JUMP	326,BasicAI_326	// 	くさのちかい
-	IF_WAZA_SEQNO_JUMP	327,BasicAI_327	// 	ふるいたてる
-	IF_WAZA_SEQNO_JUMP	328,BasicAI_328	// 	コットンガード
+	ADRS  BasicAI_281	// 	ワンダールーム
+	ADRS  BasicAI_282	// 	サイコショック
+	ADRS  BasicAI_283	// 	ベノムショック
+	ADRS  BasicAI_284	//	ボディパージ 	
+	ADRS  BasicAI_285	// 	テレキネシス
+	ADRS  BasicAI_286	// 	マジックルーム
+	ADRS  BasicAI_287	// 	うちおとす
+	ADRS  BasicAI_288	// 	やまあらし
+	ADRS  BasicAI_289	// 	はじけるほのお
+	ADRS  BasicAI_290	// 	ちょうのまい
 
-	IF_WAZA_SEQNO_JUMP	329,BasicAI_329	// 	いにしえのうた
-	IF_WAZA_SEQNO_JUMP	330,BasicAI_330	// 	こごえるせかい
-	IF_WAZA_SEQNO_JUMP	331,BasicAI_331	// 	フリーズボルト
-	IF_WAZA_SEQNO_JUMP	332,BasicAI_332	// 	コールドフレア
-	IF_WAZA_SEQNO_JUMP	333,BasicAI_333	// 	どなりつける
+	ADRS  BasicAI_291	// 	ヘビーボンバー
+	ADRS  BasicAI_292	// 	シンクロノイズ
+	ADRS  BasicAI_293	// 	エレクトボール
+	ADRS  BasicAI_294	// 	みずびたし
+	ADRS  BasicAI_295	// 	ニトロチャージ
+	ADRS  BasicAI_296	// 	アシッドボム
+	ADRS  BasicAI_297	// 	イカサマ
+	ADRS  BasicAI_298	// 	シンプルビーム
+	ADRS  BasicAI_299	// 	なかまづくり
+	ADRS  BasicAI_300	// 	おさきにどうぞ
 
+	ADRS  BasicAI_301	// 	りんしょう
+	ADRS  BasicAI_302	// 	エコーボイス
+	ADRS  BasicAI_303	// 	なしくずし
+	ADRS  BasicAI_304	// 	クリアスモッグ
+	ADRS  BasicAI_305	// 	アシストパワー
+	ADRS  BasicAI_306	// 	ファストガード
+	ADRS  BasicAI_307	// 	サイドチェンジ
+	ADRS  BasicAI_308	// 	からをやぶる
+	ADRS  BasicAI_309	// 	いやしのはどう
+	ADRS  BasicAI_310	// 	たたりめ
+
+	ADRS  BasicAI_311	// 	フリーフォール
+	ADRS  BasicAI_312	// 	ギアチェンジ
+	ADRS  BasicAI_313	// 	ともえなげ
+	ADRS  BasicAI_314	// 	やきつくす
+	ADRS  BasicAI_315	// 	さきおくり
+	ADRS  BasicAI_316	// 	せいちょう
+	ADRS  BasicAI_317	// 	アクロバット
+	ADRS  BasicAI_318	// 	ミラータイプ
+	ADRS  BasicAI_319	// 	かたきうち
+	ADRS  BasicAI_320	// 	いのちがけ
+
+	ADRS  BasicAI_321	// 	ほたるび
+	ADRS  BasicAI_322	// 	とぐろをまく
+	ADRS  BasicAI_323	// 	ギフトパス
+	ADRS  BasicAI_324	// 	みずのちかい
+	ADRS  BasicAI_325	// 	ほのおのちかい
+	ADRS  BasicAI_326	// 	くさのちかい
+	ADRS  BasicAI_327	// 	ふるいたてる
+	ADRS  BasicAI_328	// 	コットンガード
+	ADRS  BasicAI_329	// 	いにしえのうた
+	ADRS  BasicAI_330	// 	こごえるせかい
+
+	ADRS  BasicAI_331	// 	フリーズボルト
+	ADRS  BasicAI_332	// 	コールドフレア
+	ADRS  BasicAI_333	// 	どなりつける
+
+BasicAI_Dummy:	//	  ダミー
 BasicAISeq_end:
 	AIEND
 
 
 //--------------------------------------------------
 
+BasicAI_187:// 	あくび
 BasicAI_1://眠らせる
 	
 	IF_POKESICK	CHECK_DEFENCE,AI_DEC10	// 状態異常時は状態異常攻撃をしない
@@ -386,28 +535,35 @@ BasicAI_142://はらだいこ
 	IF_HP_UNDER	CHECK_ATTACK,51,AI_DEC10		// HPが1/2以下
 
 BasicAI_10://こうげき１段階アップ         
+BasicAI_50://こうげき2段階アップ         
 	IF_PARA_EQUAL	CHECK_ATTACK,PARA_POW,12,AI_DEC10
 	AIEND
 
+BasicAI_156:		// 	まるくなる
 BasicAI_11://ぼうぎょ１段階アップ
+BasicAI_51://ぼうぎょ2段階アップ
 	IF_PARA_EQUAL	CHECK_ATTACK,PARA_DEF,12,AI_DEC10
 	AIEND
 
 BasicAI_12://すばやさ１段階アップ
+BasicAI_52://すばやさ2段階アップ
 	FLDEFF_CHECK	BTL_FLDEFF_TRICKROOM,AI_DEC10		//トリックルーム中	
 
 	IF_PARA_EQUAL	CHECK_ATTACK,PARA_AGI,12,AI_DEC10
 	AIEND
 	
 BasicAI_13://とくこう１段階アップ
+BasicAI_53://とくこう2段階アップ
 	IF_PARA_EQUAL	CHECK_ATTACK,PARA_SPEPOW,12,AI_DEC10
 	AIEND
 
 BasicAI_14://とくぼう１段階アップ
+BasicAI_54://とくぼう2段階アップ
 	IF_PARA_EQUAL	CHECK_ATTACK,PARA_SPEDEF,12,AI_DEC10
 	AIEND
 
 BasicAI_15://命中率１段階アップ
+BasicAI_55://命中率2段階アップ
 	CHECK_TOKUSEI	CHECK_DEFENCE				
 	IF_EQUAL	TOKUSYU_NOOGAADO,AI_DEC10	//敵ノーガードなら命中率上げない2006.6.8
 	CHECK_TOKUSEI	CHECK_ATTACK				
@@ -416,7 +572,9 @@ BasicAI_15://命中率１段階アップ
 	IF_PARA_EQUAL	CHECK_ATTACK,PARA_HIT,12,AI_DEC10
 	AIEND
 
+BasicAI_108:		// 	ちいさくなる
 BasicAI_16://回避率１段階アップ
+BasicAI_56://回避率2段階アップ
 	CHECK_TOKUSEI	CHECK_DEFENCE				
 	IF_EQUAL	TOKUSYU_NOOGAADO,AI_DEC10	//敵ノーガードなら回避率上げない2006.6.8
 	CHECK_TOKUSEI	CHECK_ATTACK				
@@ -426,6 +584,7 @@ BasicAI_16://回避率１段階アップ
 	AIEND
 
 BasicAI_18://こうげき１段階下げる
+BasicAI_58://こうげき2段階下げる
 	IF_PARA_EQUAL	CHECK_DEFENCE,PARA_POW,0,AI_DEC10
 
 	CHECK_TOKUSEI	CHECK_DEFENCE
@@ -439,6 +598,7 @@ BasicAI_18://こうげき１段階下げる
 	JUMP	BasicAI_KURIABODHI
 
 BasicAI_19://ぼうぎょ１段階下げる
+BasicAI_59://ぼうぎょ2段階下げる
 	IF_PARA_EQUAL	CHECK_DEFENCE,PARA_DEF,0,AI_DEC10
 
 	CHECK_TOKUSEI	CHECK_ATTACK				//かたやぶりなら、はとむねを無視  //2010.2.13
@@ -450,6 +610,7 @@ BasicAI_19://ぼうぎょ１段階下げる
 	JUMP	BasicAI_KURIABODHI
 
 BasicAI_20://すばやさ１段階下げる
+BasicAI_60://すばやさ2段階下げる
 	FLDEFF_CHECK	BTL_FLDEFF_TRICKROOM,AI_DEC10		//トリックルーム中	
 	IF_PARA_EQUAL	CHECK_DEFENCE,PARA_AGI,0,AI_DEC10
 
@@ -459,12 +620,15 @@ BasicAI_20://すばやさ１段階下げる
 	JUMP	BasicAI_KURIABODHI
 
 BasicAI_21://とくこう１段階下げる
+BasicAI_61://とくこう2段階下げる
 	IF_PARA_EQUAL	CHECK_DEFENCE,PARA_SPEPOW,0,AI_DEC10
 	JUMP	BasicAI_KURIABODHI
 BasicAI_22://とくぼう１段階下げる
+BasicAI_62://とくぼう2段階下げる
 	IF_PARA_EQUAL	CHECK_DEFENCE,PARA_SPEDEF,0,AI_DEC10
 	JUMP	BasicAI_KURIABODHI
 BasicAI_23://命中率１段階下げる
+BasicAI_63://命中率2段階下げる
 	IF_PARA_EQUAL	CHECK_DEFENCE,PARA_HIT,0,AI_DEC10
 	
 	CHECK_TOKUSEI	CHECK_ATTACK
@@ -480,7 +644,9 @@ BasicAI_23://命中率１段階下げる
 	IF_EQUAL	TOKUSYU_SURUDOIME,AI_DEC10		// するどいめ
 
 	JUMP	BasicAI_KURIABODHI
+
 BasicAI_24://回避率１段階下げる
+BasicAI_64://回避率2段階下げる
 	IF_PARA_EQUAL	CHECK_DEFENCE,PARA_AVOID,0,AI_DEC10
 
 	CHECK_TOKUSEI	CHECK_ATTACK
@@ -505,6 +671,8 @@ BasicAI_KURIABODHI://クリアボディチェック
 BasicAI_KURIABODHI_end:
 	AIEND
 
+BasicAI_250://	ハートスワップ
+BasicAI_143://	じこあんじ
 BasicAI_25://くろいけむり：攻撃側が６より上で、守備側が６より下なら減算
 	IF_PARA_UNDER	CHECK_ATTACK,PARA_POW,6,BasicAI_25_END
 	IF_PARA_UNDER	CHECK_ATTACK,PARA_DEF,6,BasicAI_25_END
@@ -557,7 +725,8 @@ BasicAI_32_END:
 
 
 
-BasicAI_33://どくどく
+BasicAI_66:		//	どく33
+BasicAI_33: //どくどく
 	CHECK_TYPE	CHECK_DEFENCE_TYPE1
 	IF_EQUAL	POKETYPE_HAGANE,AI_DEC10				// 相手がはがねタイプ
 	IF_EQUAL	POKETYPE_DOKU,AI_DEC10			// 相手がどくタイプ 
@@ -666,6 +835,8 @@ BasicAI_47://きあいだめ
   IF_CONTFLG	CHECK_ATTACK,BPP_CONTFLG_KIAIDAME,AI_DEC10		// きあいだめ中
 	AIEND
 
+BasicAI_166:// 	おだてる
+BasicAI_118://いばる
 BasicAI_49://混乱させる
 	IF_WAZASICK	CHECK_DEFENCE,WAZASICK_KONRAN,AI_DEC5		//混乱時は混乱攻撃をしない
 	IF_SIDEEFF	CHECK_DEFENCE, BTL_SIDEEFF_SINPINOMAMORI, AI_DEC10	// しんぴのまもり
@@ -919,7 +1090,6 @@ BasicAI_137://にほんばれ
 
 BasicAI_148://みらいよち
 	IF_MIRAIYOCHI	CHECK_DEFENCE,  AI_DEC12 // みらいよち中
-	IF_MIRAIYOCHI	CHECK_ATTACK,   AI_DEC12 // みらいよち中
 	//INCDEC 5	//みらいよち中でない場合加算処理を削除2006.8.10
 	AIEND
 
@@ -933,7 +1103,8 @@ BasicAI_160://たくわえる
 	IF_EQUAL	3,AI_DEC10
 	AIEND
 
-BasicAI_161://のみこむ＆はきだす                    //←見直し予定（ゴースト、ふしぎなまもり）
+BasicAI_161://はきだす                    //←見直し予定（ゴースト、ふしぎなまもり）
+BasicAI_162://のみこむ                    //←見直し予定（ゴースト、ふしぎなまもり）
 	CHECK_WAZA_AISYOU	AISYOU_0BAI,AI_DEC10	//効果ない技はださない	
 
 	CHECK_TAKUWAERU		CHECK_ATTACK
@@ -1003,7 +1174,8 @@ BasicAI_176://てだすけ
 	IF_EQUAL		BTL_RULE_SINGLE, AI_DEC10
 	AIEND
 
-BasicAI_177://トリック＆はたきおとす
+BasicAI_188://はたきおとす
+BasicAI_177://トリック
 	CHECK_TOKUSEI	CHECK_DEFENCE
 	IF_EQUAL	TOKUSYU_NENTYAKU,AI_DEC10		// ねんちゃく
 	
@@ -1469,9 +1641,6 @@ BasicAI_249://どくびし2006.6.5ok
 	IF_EQUAL	TOKUSYU_MAZIKKUMIRAA,AI_DEC12		//マジックミラー2010.2.13追加
 
 BasicAI_249_end:
-	AIEND
-
-BasicAI_250://ハートスワップ2006.6.5
 	AIEND
 
 BasicAI_251://アクアリング2006.6.5ok
