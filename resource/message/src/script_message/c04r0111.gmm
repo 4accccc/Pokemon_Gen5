@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-22T17:30:07"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-22T19:07:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="211" top="319" right="915" bottom="939" maximized="no" rayout="Vertical2">
+	<dialog left="199" top="444" right="900" bottom="1064" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="1127" top="727" right="1600" bottom="1125" visible="yes"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<band id="0" index="1" style="0000" width="526"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
-		<band id="3" index="4" style="0000" width="151"/>
-		<band id="4" index="0" style="0000" width="696"/>
+		<band id="3" index="4" style="0000" width="148"/>
+		<band id="4" index="0" style="0000" width="693"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -581,7 +581,9 @@
 	</row>
 
 	<row id="msg_c04r0111_boy2_1">
-		<comment>ノーマル　７連勝</comment>
+		<comment>ノーマル　７連勝
+
+♂</comment>
 		<attribute name="キャラ指定">boy2
 たんぱんこぞう</attribute>
 		<language name="JPN" width="256">しょうぶは　きんちょうの　れんぞく
@@ -591,7 +593,9 @@
 	</row>
 
 	<row id="msg_c04r0111_boy2_2">
-		<comment>スーパー７連勝</comment>
+		<comment>スーパー７連勝
+
+♂</comment>
 		<attribute name="キャラ指定">boy2
 たんぱんこぞう</attribute>
 		<language name="JPN" width="256">もっと　バトルポイントを　ためて
@@ -603,7 +607,9 @@
 	</row>
 
 	<row id="msg_c04r0111_girl2_1">
-		<comment>ノーマル　７連勝</comment>
+		<comment>ノーマル　７連勝
+
+♀</comment>
 		<attribute name="キャラ指定">girl2
 ミニスカート</attribute>
 		<language name="JPN" width="256">７れんしょう　するごとにね
@@ -617,7 +623,9 @@
 	</row>
 
 	<row id="msg_c04r0111_girl2_2">
-		<comment>スーパー７連勝</comment>
+		<comment>スーパー７連勝
+
+♀</comment>
 		<attribute name="キャラ指定">girl2
 ミニスカート</attribute>
 		<language name="JPN" width="256">ウチ　かわいい　ポケモンしか
@@ -631,7 +639,9 @@
 	</row>
 
 	<row id="msg_c04r0111_boy3_1">
-		<comment>ノーマル　７連勝</comment>
+		<comment>ノーマル　７連勝
+
+♂</comment>
 		<attribute name="キャラ指定">boy3
 じゅくがえり♂</attribute>
 		<language name="JPN" width="256">よーし！　じゅんび　バッチリ！
@@ -641,7 +651,9 @@
 	</row>
 
 	<row id="msg_c04r0111_boy3_2">
-		<comment>スーパー　７連勝</comment>
+		<comment>スーパー　７連勝
+
+♂</comment>
 		<attribute name="キャラ指定">boy3
 じゅくがえり♂</attribute>
 		<language name="JPN" width="256">はあ……　つかれたなあ……▼
@@ -651,7 +663,9 @@
 	</row>
 
 	<row id="msg_c04r0111_girl3_1">
-		<comment>ノーマル　7連勝</comment>
+		<comment>ノーマル　7連勝
+
+♀</comment>
 		<attribute name="キャラ指定">girl3
 じゅくがえり♀</attribute>
 		<language name="JPN" width="256">サブウェイマスターって　しってる？▼
@@ -665,7 +679,9 @@
 	</row>
 
 	<row id="msg_c04r0111_girl3_2">
-		<comment>スーパー　７連勝</comment>
+		<comment>スーパー　７連勝
+
+♀</comment>
 		<attribute name="キャラ指定">girl3
 じゅくがえり♀</attribute>
 		<language name="JPN" width="256">さっきの　しょうぶ　つらかったな
@@ -677,7 +693,9 @@
 	</row>
 
 	<row id="msg_c04r0111_backpackerm_1">
-		<comment>ノーマル　7連勝</comment>
+		<comment>ノーマル　7連勝
+
+♂</comment>
 		<attribute name="キャラ指定">backpackerm
 バックパッカー♂</attribute>
 		<language name="JPN" width="256">たびは　つづくさ～　まけないかぎり～
@@ -687,7 +705,9 @@
 	</row>
 
 	<row id="msg_c04r0111_backpackerm_2">
-		<comment>ノーマル　14連勝</comment>
+		<comment>ノーマル　14連勝
+
+♂</comment>
 		<attribute name="キャラ指定">backpackerm
 バックパッカー♂</attribute>
 		<language name="JPN" width="256">そろそろ　ちょうしを　あげてくか！
@@ -697,17 +717,21 @@
 	</row>
 
 	<row id="msg_c04r0111_backpackerm_3" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<comment>スーパー　７連勝</comment>
+		<comment>スーパー　７連勝
+
+♂</comment>
 		<attribute name="キャラ指定">backpackerm
 バックパッカー♂</attribute>
 		<language name="JPN" width="256">ここの　トレーナーは　はじめから
-てごわい　あいて　ばっかりだな</language>
+てごわい　あいて　ばっかりやな</language>
 		<language name="JPN_KANJI" width="256">ここの　トレーナーは　はじめから
-手ごわい　相手　ばっかりだな</language>
+手ごわい　相手　ばっかりやな</language>
 	</row>
 
 	<row id="msg_c04r0111_backpackerm_4" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<comment>スーパー　42連勝</comment>
+		<comment>スーパー　42連勝
+
+♂</comment>
 		<attribute name="キャラ指定">backpackerm
 バックパッカー♂</attribute>
 		<language name="JPN" width="256">これで　４２れんしょうか……
@@ -717,29 +741,33 @@
 	</row>
 
 	<row id="msg_c04r0111_backpackerm_5" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<comment>スーパー　84連勝</comment>
+		<comment>スーパー　84連勝
+
+♂</comment>
 		<attribute name="キャラ指定">backpackerm
 バックパッカー♂</attribute>
 		<language name="JPN" width="256">ボクが　８４れんしょうだなんて……
-これは　ゆめ　なのかな……</language>
+これは　ゆめか　まぼろしか……</language>
 		<language name="JPN_KANJI" width="256">ボクが　８４連勝だなんて……
-これは　夢　なのかな……</language>
+これは　夢か　幻か……</language>
 	</row>
 
 	<row id="msg_c04r0111_backpackerw_1" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<comment>ノーマル　14連勝</comment>
+		<comment>ノーマル　14連勝
+
+♀</comment>
 		<attribute name="キャラ指定">backpackerw
 バックパッカー♀</attribute>
-		<language name="JPN" width="256">ここで　あうって　ことは
-キミも　１４れんしょうか！▽
+		<language name="JPN" width="256">キミも　１４れんしょう　したんだ！
 やるじゃん！　やるじゃん！</language>
-		<language name="JPN_KANJI" width="256">ここで　あうって　ことは
-キミも　１４連勝か！▽
+		<language name="JPN_KANJI" width="256">キミも　１４連勝したんだ！
 やるじゃん！　やるじゃん！</language>
 	</row>
 
 	<row id="msg_c04r0111_backpackerw_2">
-		<comment>スーパー　7連勝</comment>
+		<comment>スーパー　7連勝
+
+♀</comment>
 		<attribute name="キャラ指定">backpackerw
 バックパッカー♀</attribute>
 		<language name="JPN" width="256">スーパートレインには
@@ -755,17 +783,21 @@
 	</row>
 
 	<row id="msg_c04r0111_backpackerw_3">
-		<comment>スーパー35連勝</comment>
+		<comment>スーパー35連勝
+
+♀</comment>
 		<attribute name="キャラ指定">backpackerw
 バックパッカー♀</attribute>
-		<language name="JPN" width="256">まだまだ　イケる！
-まだまだ　かてる！</language>
-		<language name="JPN_KANJI" width="256">まだまだ　イケる！
-まだまだ　勝てる！</language>
+		<language name="JPN" width="256">まだまだ　イケるよ！
+まだまだ　かてるぞ！</language>
+		<language name="JPN_KANJI" width="256">まだまだ　イケるよ！
+まだまだ　勝てるぞ！</language>
 	</row>
 
 	<row id="msg_c04r0111_backpackerw_4">
-		<comment>スーパー63連勝</comment>
+		<comment>スーパー63連勝
+
+♀</comment>
 		<attribute name="キャラ指定">backpackerw
 バックパッカー♀</attribute>
 		<language name="JPN" width="256">ここにいる　トレーナー　って
@@ -777,7 +809,9 @@
 	</row>
 
 	<row id="msg_c04r0111_policeman_1">
-		<comment>ノーマル　14連勝</comment>
+		<comment>ノーマル　14連勝
+
+♂</comment>
 		<attribute name="キャラ指定">policeman
 おまわりさん</attribute>
 		<language name="JPN" width="256">ほんかんは　ここまでかな……▼
@@ -789,7 +823,9 @@
 	</row>
 
 	<row id="msg_c04r0111_policeman_2">
-		<comment>ノーマル　終着駅</comment>
+		<comment>ノーマル　終着駅
+
+♂</comment>
 		<attribute name="キャラ指定">policeman
 おまわりさん</attribute>
 		<language name="JPN" width="256">サブウェイマスターは　あやしくて
@@ -803,7 +839,9 @@
 	</row>
 
 	<row id="msg_c04r0111_policeman_3">
-		<comment>スーパー14連勝</comment>
+		<comment>スーパー14連勝
+
+♂</comment>
 		<attribute name="キャラ指定">policeman
 おまわりさん</attribute>
 		<language name="JPN" width="256">ポリスとしての　トレーニングも
@@ -813,7 +851,9 @@
 	</row>
 
 	<row id="msg_c04r0111_policeman_4">
-		<comment>スーパー56連勝</comment>
+		<comment>スーパー56連勝
+
+♂</comment>
 		<attribute name="キャラ指定">policeman
 おまわりさん</attribute>
 		<language name="JPN" width="256">ごうほうで　あばれほうだい！
@@ -823,7 +863,9 @@
 	</row>
 
 	<row id="msg_c04r0111_oldman1_1">
-		<comment>ノーマル　７連勝</comment>
+		<comment>ノーマル　７連勝
+
+♂</comment>
 		<attribute name="キャラ指定">oldman1
 げいじゅつか</attribute>
 		<language name="JPN" width="256">たびは　まだ　はじまった　ばかり！
@@ -833,7 +875,9 @@
 	</row>
 
 	<row id="msg_c04r0111_oldman1_2">
-		<comment>ノーマル　14連勝</comment>
+		<comment>ノーマル　14連勝
+
+♂</comment>
 		<attribute name="キャラ指定">oldman1
 げいじゅつか</attribute>
 		<language name="JPN" width="256">えきの　ホームに　ひとりで　いると
@@ -847,7 +891,9 @@
 	</row>
 
 	<row id="msg_c04r0111_oldman1_3">
-		<comment>ノーマル　終着駅</comment>
+		<comment>ノーマル　終着駅
+
+♂</comment>
 		<attribute name="キャラ指定">oldman1
 げいじゅつか</attribute>
 		<language name="JPN" width="256">サブウェイマスター　なんぞ
@@ -861,7 +907,9 @@
 	</row>
 
 	<row id="msg_c04r0111_oldman1_4">
-		<comment>スーパー　14連勝</comment>
+		<comment>スーパー　14連勝
+
+♂</comment>
 		<attribute name="キャラ指定">oldman1
 げいじゅつか</attribute>
 		<language name="JPN" width="256">トレーナー　つよくなってきましたね
@@ -874,7 +922,9 @@
 		<comment>スーパー　２１連勝
 
 no.051
-ポイントアップをくれる人</comment>
+ポイントアップをくれる人
+
+♂</comment>
 		<attribute name="キャラ指定">oldman1
 げいじゅつか</attribute>
 		<language name="JPN" width="256">ミーの　ポケモンの　アビリティは
@@ -900,7 +950,9 @@ no.051
 ポイントアップをくれる人
 
 
-アイテム入手後</comment>
+アイテム入手後
+
+♂</comment>
 		<attribute name="キャラ指定">oldman1
 げいじゅつか</attribute>
 		<language name="JPN" width="256">ミーは　ふるさとに　かえって
@@ -912,7 +964,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_oldman1_6">
-		<comment>スーパー　35連勝</comment>
+		<comment>スーパー　35連勝
+
+♂</comment>
 		<attribute name="キャラ指定">oldman1
 げいじゅつか</attribute>
 		<language name="JPN" width="256">むほほほ……▼
@@ -924,7 +978,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_oldman1_7">
-		<comment>スーパー　65連勝</comment>
+		<comment>スーパー　65連勝
+
+♂</comment>
 		<attribute name="キャラ指定">oldman1
 げいじゅつか</attribute>
 		<language name="JPN" width="256">つよい　トレーナー　どうしの
@@ -934,7 +990,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_ol_1">
-		<comment>ノーマル　終着駅</comment>
+		<comment>ノーマル　終着駅
+
+♀</comment>
 		<attribute name="キャラ指定">ol
 ＯＬ</attribute>
 		<language name="JPN" width="256">サブウェイマスター　ってさ
@@ -952,7 +1010,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_ol_2">
-		<comment>スーパー56連勝</comment>
+		<comment>スーパー56連勝
+
+♀</comment>
 		<attribute name="キャラ指定">ol
 ＯＬ</attribute>
 		<language name="JPN" width="256">さーてと！▼
@@ -964,7 +1024,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_ol_3">
-		<comment>スーパー21連勝</comment>
+		<comment>スーパー21連勝
+
+♀</comment>
 		<attribute name="キャラ指定">ol
 ＯＬ</attribute>
 		<language name="JPN" width="256">ちょっと　まっててね　ポケモンちゃん
@@ -974,7 +1036,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_ol_4">
-		<comment>スーパー56連勝</comment>
+		<comment>スーパー56連勝
+
+♀</comment>
 		<attribute name="キャラ指定">ol
 ＯＬ</attribute>
 		<language name="JPN" width="256">ウップ！▼
@@ -985,7 +1049,8 @@ no.051
 
 	<row id="msg_c04r0111_railman_1">
 		<comment>ノーマル　終着駅
-</comment>
+
+♂</comment>
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
 		<language name="JPN" width="256">オレたちの　ボスに　かったんでしょ？
@@ -1013,7 +1078,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_railman_2">
-		<comment>スーパー14連勝</comment>
+		<comment>スーパー14連勝
+
+♂</comment>
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
 		<language name="JPN" width="256">ダラダラと　うんてんしてる　より
@@ -1023,7 +1090,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_railman_3">
-		<comment>スーパー21連勝</comment>
+		<comment>スーパー21連勝
+
+♂</comment>
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
 		<language name="JPN" width="256">あなたは　どこから　きたんだい？
@@ -1033,23 +1102,29 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_railman_4">
-		<comment>スーパー28連勝</comment>
+		<comment>スーパー28連勝
+
+♂</comment>
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
 		<language name="JPN" width="256">てつどういんは　えきの　へいわと
 ちつじょを　まもるもので　あります▼
 ポイすてや　ホームでの　おおごえ
-がっきの　えんそうに　ポケモンの▽
-しょうぶなどは　かんべんで　あります</language>
+がっきの　えんそうに▽
+ポケモンの　しょうぶなどは▽
+かたーく　おことわり　あります</language>
 		<language name="JPN_KANJI" width="256">鉄道員は　駅の　平和と
 秩序を　守るもので　あります▼
 ポイ捨てや　ホームでの　大声
-楽器の　演奏に　ポケモンの▽
-勝負などは　勘弁で　あります</language>
+楽器の　演奏に▽
+ポケモンの　勝負などは▽
+固ーく　お断りで　あります</language>
 	</row>
 
 	<row id="msg_c04r0111_railman_5">
-		<comment>スーパー　８４連勝</comment>
+		<comment>スーパー　35連勝
+
+♂</comment>
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
 		<language name="JPN" width="256">あなたは　どこから　きたんだい？
@@ -1059,7 +1134,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_railman_6">
-		<comment>スーパー　８４連勝</comment>
+		<comment>スーパー　８４連勝
+
+♂</comment>
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
 		<language name="JPN" width="256">へたな　ギミックも　ない……▼
@@ -1075,7 +1152,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_railman_7">
-		<comment>スーパー　100連勝</comment>
+		<comment>スーパー　100連勝
+
+♂</comment>
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
 		<language name="JPN" width="256">１００れんしょう　とっぱですか……▼
@@ -1087,7 +1166,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_boy4_1">
-		<comment>スーパー　7連勝</comment>
+		<comment>スーパー　7連勝
+
+♂</comment>
 		<attribute name="キャラ指定">boy4
 おぼっちゃま</attribute>
 		<language name="JPN" width="256">スーパートレインの　トレーナーの
@@ -1097,7 +1178,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_girl4_1">
-		<comment>ノーマル　7連勝</comment>
+		<comment>ノーマル　7連勝
+
+♀</comment>
 		<attribute name="キャラ指定">girl4
 おじょうさま</attribute>
 		<language name="JPN" width="256">わたくし　あじわってしまったの……▼
@@ -1115,6 +1198,8 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_pilot_1">
+		<comment>
+♂</comment>
 		<attribute name="キャラ指定">pilot
 パイロット</attribute>
 		<language name="JPN" width="256">まいど！　ワシは　イッシュいちの
@@ -1126,7 +1211,10 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_trainerm_1">
-		<comment>スーパー42連勝</comment>
+		<comment>スーパー42連勝
+
+
+♂</comment>
 		<attribute name="キャラ指定">trainerm
 エリートトレーナー♂</attribute>
 		<language name="JPN" width="256">オレみたいな　エリートの　すがたが
@@ -1140,7 +1228,10 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_trainerm_2">
-		<comment>スーパー49連勝</comment>
+		<comment>スーパー49連勝
+
+
+♂</comment>
 		<attribute name="キャラ指定">trainerm
 エリートトレーナー♂</attribute>
 		<language name="JPN" width="256">エリートの　ワシと　いえども
@@ -1150,7 +1241,10 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_trainerm_3">
-		<comment>スーパー　63連勝</comment>
+		<comment>スーパー　63連勝
+
+
+♂</comment>
 		<attribute name="キャラ指定">trainerm
 エリートトレーナー♂</attribute>
 		<language name="JPN" width="256">よお　ちょうしは　どうだい？
@@ -1160,7 +1254,10 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_trainerm_4">
-		<comment>スーパー　77連勝</comment>
+		<comment>スーパー　77連勝
+
+
+♂</comment>
 		<attribute name="キャラ指定">trainerm
 エリートトレーナー♂</attribute>
 		<language name="JPN" width="256">やったぜオイラ！　７７れんしょう！
@@ -1170,17 +1267,16 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_trainerm_5">
-		<comment>スーパー　300連勝</comment>
+		<comment>スーパー　300連勝
+
+
+♂</comment>
 		<attribute name="キャラ指定">trainerm
 エリートトレーナー♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-なんと　３００しょう　とっぱ
-おめでとう！！！</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-なんと　３００しょう　とっぱ
-おめでとう！！！</language>
+		<language name="JPN" width="256">３００にん　いじょう　トレーナーを
+たおしたんだな　オレたちは……</language>
+		<language name="JPN_KANJI" width="256">３００人　以上　トレーナーを
+倒したんだな　オレたちは……</language>
 	</row>
 
 	<row id="msg_c04r0111_trainerw_1" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -1188,7 +1284,9 @@ no.051
 
 
 no.050
-ふしぎなあめをくれる人</comment>
+ふしぎなあめをくれる人
+
+♀</comment>
 		<attribute name="キャラ指定">trainerw
 エリートトレーナー♀</attribute>
 		<language name="JPN" width="256">あら　よわそうな　トレーナー……▼
@@ -1209,7 +1307,9 @@ no.050
 no.050
 ふしぎなあめをくれる人
 
-アイテム入手後</comment>
+アイテム入手後
+
+♀</comment>
 		<language name="JPN" width="256">わたしは　つよい　あいてにしか
 きょうみが　ないの……▼
 アナタも　つよくなったら
@@ -1221,7 +1321,9 @@ no.050
 	</row>
 
 	<row id="msg_c04r0111_trainerw_2">
-		<comment>スーパー　42連勝</comment>
+		<comment>スーパー　42連勝
+
+♀</comment>
 		<attribute name="キャラ指定">trainerw
 エリートトレーナー♀</attribute>
 		<language name="JPN" width="256">ホームから　ひとが　へってきた……
@@ -1233,7 +1335,10 @@ no.050
 	</row>
 
 	<row id="msg_c04r0111_trainerw_3">
-		<comment>スーパー　56連勝</comment>
+		<comment>スーパー　56連勝
+
+
+♀</comment>
 		<attribute name="キャラ指定">trainerw
 エリートトレーナー♀</attribute>
 		<language name="JPN" width="256">……　……　……　……　……▼
@@ -1251,7 +1356,9 @@ no.050
 	</row>
 
 	<row id="msg_c04r0111_trainerw_4">
-		<comment>スーパー　91連勝</comment>
+		<comment>スーパー　91連勝
+
+♀</comment>
 		<attribute name="キャラ指定">trainerw
 エリートトレーナー♀</attribute>
 		<language name="JPN" width="256">９１れんしょうなんて　とうぜんの
@@ -1268,7 +1375,10 @@ no.050
 		<comment>スーパー　203連勝
 
 no.207
-スターの実をくれる人</comment>
+スターの実をくれる人
+
+
+♀</comment>
 		<attribute name="キャラ指定">trainerw
 エリートトレーナー♀</attribute>
 		<language name="JPN" width="256">あなた……
@@ -1293,7 +1403,9 @@ no.207
 no.207
 スターの実をくれる人
 
-アイテム入手後</comment>
+アイテム入手後
+
+♀</comment>
 		<attribute name="キャラ指定">trainerw
 エリートトレーナー♀</attribute>
 		<language name="JPN" width="256">あなたも　たたかい　つづけるでしょ？
@@ -1305,7 +1417,9 @@ no.207
 	</row>
 
 	<row id="msg_c04r0111_badman_1">
-		<comment>７連勝</comment>
+		<comment>ノーマル　７連勝
+
+♂</comment>
 		<attribute name="キャラ指定">badman
 スキンヘッズ</attribute>
 		<language name="JPN" width="256">ここで　スゲー　せいせき　のこして
@@ -1315,7 +1429,9 @@ no.207
 	</row>
 
 	<row id="msg_c04r0111_badman_2">
-		<comment>14連勝</comment>
+		<comment>ノーマル　14連勝
+
+♂</comment>
 		<attribute name="キャラ指定">badman
 スキンヘッズ</attribute>
 		<language name="JPN" width="256">よお　ちょうしは　どうだい？
@@ -1325,7 +1441,9 @@ no.207
 	</row>
 
 	<row id="msg_c04r0111_badman_3">
-		<comment>スーパー　１４連勝</comment>
+		<comment>スーパー　１４連勝
+
+♂</comment>
 		<attribute name="キャラ指定">badman
 スキンヘッズ</attribute>
 		<language name="JPN" width="256">たかが　ポケモン　されど　ポケモン
@@ -1338,7 +1456,9 @@ no.207
 		<comment>ノーマル　２１連勝
 
 no.051
-ポイントアップをくれる人</comment>
+ポイントアップをくれる人
+
+♂</comment>
 		<attribute name="キャラ指定">cleaningm
 せいそういん</attribute>
 		<language name="JPN" width="256">そうじ　してたら　ひろったのよ
@@ -1352,7 +1472,9 @@ no.051
 
 no.051
 ポイントアップをくれる人
-アイテム入手後</comment>
+アイテム入手後
+
+♂</comment>
 		<attribute name="キャラ指定">cleaningm
 せいそういん</attribute>
 		<language name="JPN" width="256">あー　おれいは　いらんからな
@@ -1366,47 +1488,43 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_cleaningm_2">
-		<comment>スーパー　14連勝</comment>
+		<comment>スーパー　14連勝
+
+♂</comment>
 		<attribute name="キャラ指定">cleaningm
 せいそういん</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１４れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　１４連勝
-おめでとう</language>
+		<language name="JPN" width="256">せいそういんでも　じつりょくには
+じしん　ありじゃ！</language>
+		<language name="JPN_KANJI" width="256">清掃員でも　実力には
+自信　ありじゃ！</language>
 	</row>
 
 	<row id="msg_c04r0111_cleaningm_3">
-		<comment>スーパー　28連勝</comment>
+		<comment>スーパー　28連勝
+
+♂</comment>
 		<attribute name="キャラ指定">cleaningm
 せいそういん</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２８れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　２８連勝
-おめでとう</language>
+		<language name="JPN" width="256">ボールを　もていィ！
+いまこそ　しょうぶの　ときじゃ！</language>
+		<language name="JPN_KANJI" width="256">ボールを　持ていィ！
+今こそ　勝負の　ときじゃ！</language>
 	</row>
 
 	<row id="msg_c04r0111_cleaningm_4">
-		<comment>スーパー　1000連勝</comment>
+		<comment>スーパー　1000連勝
+
+♂</comment>
 		<attribute name="キャラ指定">cleaningm
 せいそういん</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-１０００しょうとっぱですね……</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-１０００しょうとっぱですね……</language>
+		<language name="JPN" width="256">あんたも　すきねー</language>
+		<language name="JPN_KANJI" width="256">あんたも　好きねー</language>
 	</row>
 
 	<row id="msg_c04r0111_veteranm_1">
-		<comment>スーパー28連勝</comment>
+		<comment>スーパー28連勝
+
+♂</comment>
 		<attribute name="キャラ指定">veteranm
 ベテラントレーナー♂</attribute>
 		<language name="JPN" width="256">ベテランの　わたしが　あんな
@@ -1420,7 +1538,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_veteranm_2">
-		<comment>スーパー42連勝</comment>
+		<comment>スーパー42連勝
+
+♂</comment>
 		<attribute name="キャラ指定">veteranm
 ベテラントレーナー♂</attribute>
 		<language name="JPN" width="256">どうだい？　トレーナーさんよ
@@ -1432,7 +1552,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_veteranm_3">
-		<comment>スーパー56連勝</comment>
+		<comment>スーパー56連勝
+
+♂</comment>
 		<attribute name="キャラ指定">veteranm
 ベテラントレーナー♂</attribute>
 		<language name="JPN" width="256">アンタ　つよいじゃねえか……
@@ -1442,21 +1564,23 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_veteranm_4">
-		<comment>スーパー　70連勝</comment>
+		<comment>スーパー　70連勝
+
+♂</comment>
 		<attribute name="キャラ指定">veteranm
 ベテラントレーナー♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７０れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　７０連勝
-おめでとう</language>
+		<language name="JPN" width="256">おまえさんの　しょうぶ　みてたぜ▼
+その　テクニックと　はんだん……
+ここまで　かちつづけるだけあるな</language>
+		<language name="JPN_KANJI" width="256">お前さんの　勝負　みてたぜ▼
+その　テクニックと　判断……
+ここまで　勝ち続けるだけあるな</language>
 	</row>
 
 	<row id="msg_c04r0111_veteranm_5">
-		<comment>スーパー84連勝</comment>
+		<comment>スーパー84連勝
+
+♂</comment>
 		<attribute name="キャラ指定">veteranm
 ベテラントレーナー♂</attribute>
 		<language name="JPN" width="256">ひとが　すくなくなったな……▼
@@ -1470,7 +1594,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_veteranw_1">
-		<comment>スーパー　28連勝</comment>
+		<comment>スーパー　28連勝
+
+♀</comment>
 		<attribute name="キャラ指定">veteranw
 ベテラントレーナー♀</attribute>
 		<language name="JPN" width="256">ベテランだって　ゆだんすれば
@@ -1484,21 +1610,21 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_veteranw_2">
-		<comment>スーパー　49連勝</comment>
+		<comment>スーパー　49連勝
+
+♀</comment>
 		<attribute name="キャラ指定">veteranw
 ベテラントレーナー♀</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　４９れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　４９連勝
-おめでとう</language>
+		<language name="JPN" width="256">５０れんしょうまで　あといっぽ！
+がぜん　きあいが　はいりますわ！</language>
+		<language name="JPN_KANJI" width="256">５０連勝まで　あと一歩！
+がぜん　気合が　入りますわ！</language>
 	</row>
 
 	<row id="msg_c04r0111_veteranw_3">
-		<comment>スーパー　７０連勝</comment>
+		<comment>スーパー　７０連勝
+
+♀</comment>
 		<attribute name="キャラ指定">veteranw
 ベテラントレーナー♀</attribute>
 		<language name="JPN" width="256">ポケモンしょうぶが　すきすきで
@@ -1516,30 +1642,39 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_veteranw_4">
-		<comment>スーパー　91連勝</comment>
+		<comment>スーパー　91連勝
+
+♀</comment>
 		<attribute name="キャラ指定">veteranw
 ベテラントレーナー♀</attribute>
-		<language name="JPN" width="256">おれも　おまえも　９１れんしょう▼
+		<language name="JPN" width="256">アタイも　アンタも　９１れんしょう▼
 どちらが　さきに　１００れんしょうを
-たっせい　できるんだろうな？</language>
-		<language name="JPN_KANJI" width="256">おれも　おまえも　９１連勝▼
+たっせい　できるかね？</language>
+		<language name="JPN_KANJI" width="256">アタイも　アンタも　９１連勝▼
 どちらが　先に　１００連勝を
-達成　できるんだろうな？</language>
+達成　できるかね？</language>
 	</row>
 
 	<row id="msg_c04r0111_veteranw_5">
-		<comment>スーパー　１４７連勝</comment>
+		<comment>スーパー　１４７連勝
+
+♀</comment>
 		<attribute name="キャラ指定">veteranw
 ベテラントレーナー♀</attribute>
-		<language name="JPN" width="256">きが　つきゃ　ずいぶん
-とおくまで　きちまったな</language>
-		<language name="JPN_KANJI" width="256">気が　つきゃ　ずいぶん
-遠くまで　きちまったな</language>
+		<language name="JPN" width="256">しょうぶに　あけくれ▼
+れっしゃに　ゆられ▼
+ライモンシティを　たってから
+なんじかんが　すぎたのかしら</language>
+		<language name="JPN_KANJI" width="256">勝負に　明け暮れ▼
+列車に　揺られ▼
+ライモンシティを　発ってから
+何時間が　過ぎたのかしら</language>
 	</row>
 
 	<row id="msg_c04r0111_lady_1">
 		<comment>ノーマル　終着駅
-</comment>
+
+♀</comment>
 		<attribute name="キャラ指定">lady
 マダム</attribute>
 		<language name="JPN" width="256">ここが　しゅうちゃくえき……▼
@@ -1551,25 +1686,27 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_lady_2">
-		<comment>スーパー　14連勝</comment>
+		<comment>スーパー　14連勝
+
+♀</comment>
 		<attribute name="キャラ指定">lady
 マダム</attribute>
 		<language name="JPN" width="256">ここまで　きた　あなたは
 １４れんしょう　ですわ▼
 つまり　わたくしの　ねんれいと
 お　ん　な　じ　かずってこと▼
-まだまだ　いけますよね
 オホホホ……</language>
 		<language name="JPN_KANJI" width="256">ここまで　きた　あなたは
 １４連勝　ですわ▼
 つまり　わたくしの　年齢と
 お　ん　な　じ　数ってこと▼
-まだまだ　いけますよね
 オホホホ……</language>
 	</row>
 
 	<row id="msg_c04r0111_lady_3">
-		<comment>スーパー　35連勝</comment>
+		<comment>スーパー　35連勝
+
+♀</comment>
 		<attribute name="キャラ指定">lady
 マダム</attribute>
 		<language name="JPN" width="256">まだまだ　げんえき　ってこと
@@ -1579,7 +1716,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_gentleman_1">
-		<comment>ノーマル　終着駅</comment>
+		<comment>ノーマル　終着駅
+
+♂</comment>
 		<attribute name="キャラ指定">gentleman
 ジェントルマン</attribute>
 		<language name="JPN" width="256">ここが　しゅうちゃくえき　か……▼
@@ -1591,7 +1730,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_gentleman_2">
-		<comment>スーパー　21連勝</comment>
+		<comment>スーパー　21連勝
+
+♂</comment>
 		<attribute name="キャラ指定">gentleman
 ジェントルマン</attribute>
 		<language name="JPN" width="256">フウ……▼
@@ -1603,7 +1744,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_gentleman_3">
-		<comment>スーパー　28連勝</comment>
+		<comment>スーパー　28連勝
+
+♂</comment>
 		<attribute name="キャラ指定">gentleman
 ジェントルマン</attribute>
 		<language name="JPN" width="256">ウム　２８れんしょう　か……▼
@@ -1615,7 +1758,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_gentleman_4">
-		<comment>スーパー　49連勝</comment>
+		<comment>スーパー　49連勝
+
+♂</comment>
 		<attribute name="キャラ指定">gentleman
 ジェントルマン</attribute>
 		<language name="JPN" width="256">アナタモ　サブウェイマスターニ
@@ -1632,18 +1777,22 @@ no.051
 		<comment>スーパー　21連勝</comment>
 		<attribute name="キャラ指定">businessman
 ビジネスマン</attribute>
-		<language name="JPN" width="256">モンスターボールが　ぷるぷると
-ふるえ　ちぢみあがっておる！▼
-きさまと　ポケモンの　じつりょく
-そうとうの　ものと　みた！</language>
-		<language name="JPN_KANJI" width="256">モンスターボールが　ぷるぷると
-震え　縮み上がっておる！▼
-貴様と　ポケモンの　実力
-相当の　ものと　みた！</language>
+		<language name="JPN" width="256">ワシの　だいじな　だいじな
+モンスターボールが　ぷるぷると▽
+ふるえて　ちぢみあがっておる！▼
+おぬし　ただものでは　ないな？
+もしや　どこかの　チャンピオン？</language>
+		<language name="JPN_KANJI" width="256">ワシの　大事な　大事な
+モンスターボールが　ぷるぷると▽
+震えて　縮み上がっておる！▼
+おぬし　ただものでは　ないな？
+もしや　どこかの　チャンピオン？</language>
 	</row>
 
 	<row id="msg_c04r0111_businessman_2">
-		<comment>スーパー　28連勝</comment>
+		<comment>スーパー　28連勝
+
+♂</comment>
 		<attribute name="キャラ指定">businessman
 ビジネスマン</attribute>
 		<language name="JPN" width="256">しょうぶに　かつのは　きもちいいが
@@ -1655,7 +1804,9 @@ no.051
 	</row>
 
 	<row id="msg_c04r0111_businessman_3">
-		<comment>スーパー　49連勝</comment>
+		<comment>スーパー　49連勝
+
+♂</comment>
 		<attribute name="キャラ指定">businessman
 ビジネスマン</attribute>
 		<language name="JPN" width="256">ついに　４９れんしょうか……▼
