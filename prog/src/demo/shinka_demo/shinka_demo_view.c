@@ -40,21 +40,31 @@
 typedef enum
 {
   // EVO
-  STEP_EVO_CRY_START,                // 鳴き開始待ち中→鳴く
-  STEP_EVO_CRY,                      // 鳴き中
-  STEP_EVO_CHANGE_SATRT,             // 進化開始待ち中→進化
-  STEP_EVO_CHANGE_TO_WHITE_START,    // 進化中  // 白くする
-  STEP_EVO_CHANGE_TO_WHITE,          // 進化中  // 白くなり中
-  STEP_EVO_CHANGE_TRANSFORM,         // 進化中  // 変形
-  STEP_EVO_CHANGE_CANCEL,            // 進化中  // キャンセル
-  STEP_EVO_CHANGE_FROM_WHITE_START,  // 進化中  // 色付きに戻る
-  STEP_EVO_CHANGE_FROM_WHITE,        // 進化中  // 色付きに戻り中
-  STEP_EVO_CHANGE_CRY_START,         // 進化中  // 鳴き開始待ち中
-  STEP_EVO_CHANGE_CRY,               // 進化中  // 鳴き中
-  STEP_EVO_END,                      // 終了中
+  STEP_EVO_CRY_START,                                     // 鳴き開始待ち中→鳴く
+  STEP_EVO_CRY,                                           // 鳴き中
+  STEP_EVO_CHANGE_START,                                  // 進化開始待ち中→進化
+
+  STEP_EVO_CHANGE_OPENING_COLOR_TO_WHITE_START,           // 進化中  // 白くする
+  STEP_EVO_CHANGE_OPENING_COLOR_TO_WHITE,                 // 進化中  // 白くなり中
+  STEP_EVO_CHANGE_OPENING_REPLACE_MCSS_WITH_INDEPENDENT,  // 進化中  // MCSSを消しINDEPENDENTを出現させる
+  STEP_EVO_CHANGE_OPENING_WHITE_TO_COLOR_START,           // 進化中  // 色付きに戻る
+  STEP_EVO_CHANGE_OPENING_WHITE_TO_COLOR,                 // 進化中  // 色付きに戻り中
+
+  STEP_EVO_CHANGE_TRANSFORM,                              // 進化中  // 変形
+  STEP_EVO_CHANGE_CANCEL,                                 // 進化中  // キャンセル
+
+  STEP_EVO_CHANGE_ENDING_BEFORE_REPLACE_WAIT,             // 進化中  // しばし待ち
+  STEP_EVO_CHANGE_ENDING_REPLACE_INDEPENDENT_WITH_MCSS,   // 進化中  // INDEPENDENTを消しMCSSを出現させる
+  STEP_EVO_CHANGE_ENDING_AFTER_REPLACE_WAIT,              // 進化中  // しばし待ち
+  STEP_EVO_CHANGE_ENDING_WHITE_TO_COLOR_START,            // 進化中  // 色付きに戻る
+  STEP_EVO_CHANGE_ENDING_WHITE_TO_COLOR,                  // 進化中  // 色付きに戻り中
+  
+  STEP_EVO_CHANGE_CRY_START,                              // 進化中  // 鳴き開始待ち中
+  STEP_EVO_CHANGE_CRY,                                    // 進化中  // 鳴き中
+  STEP_EVO_END,                                           // 終了中
 
   // AFTER
-  STEP_AFTER,                       // 進化後からスタート
+  STEP_AFTER,                                             // 進化後からスタート
 }
 STEP;
 
@@ -67,61 +77,6 @@ typedef enum
 }
 POKE;
 
-// 拡大縮小入れ替え演出
-#define ANM_ADD_START        (0x400)
-#define ANM_VAL_MAX          (0x10000)
-
-  static const int anm_add_tbl[] =  // ANM_VAL_MAX/2 より小さな値で
-  {                    // disp_poke
-    ANM_ADD_START,     // BEFORE
-    0x1000,
-    0x1000,            // AFTER
-    0x400,
-    0x400,             // BEFORE
-    0x1000,
-    0x1000,            // AFTER
-    0x400,
-    0x400,             // BEFORE
-    0x1000,
-    0x1000,            // AFTER
-    0x400,
-
-    0x800,             // BEFORE
-    0x1000,
-    0x1000,            // AFTER
-    0x800,
-    0x800,             // BEFORE
-    0x1000,
-    0x1000,            // AFTER
-    0x800,
-
-    0x1000,            // BEFORE
-    0x1000,
-    0x1000,            // AFTER
-    0x1000,
-    0x1000,            // BEFORE
-    0x1000,
-    0x1000,            // AFTER
-    0x1000,
-    0x1000,            // BEFORE
-    0x1000,
-    0x1000,            // AFTER
-    0x1000,
- 
-    0x1000,            // BEFORE
-    0x800,
-    0x800,             // AFTER
-    0x1000,
-
-    0x1000,            // BEFORE  // ANM_REPEAT_MAX-6
-    0x400,
-    0x400,             // AFTER   // ANM_REPEAT_MAX-4
-    0x1000,
-    0x1000,            // BEFORE  // ANM_REPEAT_MAX-2
-    0x400,
-  };
-#define ANM_REPEAT_MAX       ( sizeof(anm_add_tbl) / sizeof(anm_add_tbl[0]) )
-
 #define SCALE_MAX            (16.0f)
 #define SCALE_MIN            ( 4.0f)
 #define POKE_SIZE_MAX        (96.0f)
@@ -131,9 +86,9 @@ POKE;
 
 
 // ポケモンのX,Y座標
-#define POKE_X  (FX_F32_TO_FX32(256.0f))  // 見えない位置に置いておく。本来は下のコメントアウトされている値。
-//#define POKE_X  (FX_F32_TO_FX32(-3.0f))
-#define POKE_Y  (FX_F32_TO_FX32(-16.0f))
+#define POKE_X_HIDE    (FX_F32_TO_FX32(256.0f))
+#define POKE_X_CENTER  (FX_F32_TO_FX32(0.0f))//(FX_F32_TO_FX32(-1.0f))//(FX_F32_TO_FX32(-3.0f))
+#define POKE_Y         (FX_F32_TO_FX32(-16.0f))
 
 // ポケモンのY座標調整
 #define POKE_Y_ADJUST (0.33f)  // この値を掛ける
@@ -172,8 +127,8 @@ POKE_SET;
 #define INDEPENDENT_PANEL_NUM_X    (18)
 #define INDEPENDENT_PANEL_NUM_Y    (18)
 // 全部を合わせて1枚と見たときのサイズ
-#define INDEPENDENT_PANEL_TOTAL_W  (36)
-#define INDEPENDENT_PANEL_TOTAL_H  (36)
+#define INDEPENDENT_PANEL_TOTAL_W  (35)
+#define INDEPENDENT_PANEL_TOTAL_H  (35)
 // 全部を合わせて1枚と見たときの最小最大のテクスチャ座標
 #define INDEPENDENT_PANEL_TOTAL_MIN_S  ( 16)
 #define INDEPENDENT_PANEL_TOTAL_MAX_S  (112)
@@ -189,8 +144,6 @@ typedef enum
   // 進化する
   INDEPENDENT_STATE_EVO_START,
   INDEPENDENT_STATE_EVO_DEMO,
-  INDEPENDENT_STATE_EVO_CANCEL,
-  INDEPENDENT_STATE_EVO_SUCCESS,
   INDEPENDENT_STATE_EVO_END,
 
   // 進化し終わった後
@@ -313,6 +266,10 @@ typedef struct
 }
 INDEPENDENT_POKE_MANAGER;
 
+// ポケモンのX座標
+#define INDEPENDENT_POKE_X_HIDE    (FX32_CONST(256))
+#define INDEPENDENT_POKE_X_CENTER  (FX32_CONST(0))
+
 
 //-------------------------------------
 /// ワーク
@@ -346,9 +303,6 @@ struct _SHINKADEMO_VIEW_WORK
   // 拡大縮小入れ替え演出
   f32                      scale;
   u8                       disp_poke;
-  int                      anm_val;
-  int                      anm_add;
-  u8                       count;
 
   // MCSS
   MCSS_SYS_WORK*           mcss_sys_wk;
@@ -372,8 +326,9 @@ static void ShinkaDemo_View_PokeExit( SHINKADEMO_VIEW_WORK* work );
 
 static u8 NotDispPoke( u8 disp_poke );
 
-static BOOL ShinkaDemo_View_Evolve( SHINKADEMO_VIEW_WORK* work );
 static void ShinkaDemo_View_AdjustPokePos( SHINKADEMO_VIEW_WORK* work );
+
+static void ShinkaDemo_View_PokeSetPosX( SHINKADEMO_VIEW_WORK* work, fx32 pos_x );
 
 //-------------------------------------
 /// 自作ポリゴンポケモン
@@ -384,8 +339,15 @@ static void IndependentPokeManagerMain( SHINKADEMO_VIEW_WORK* work );
 static void IndependentPokeManagerDraw( SHINKADEMO_VIEW_WORK* work );
 
 static void IndependentPokeManagerStart( SHINKADEMO_VIEW_WORK* work );
+static BOOL IndependentPokeManagerIsEnableCancel( SHINKADEMO_VIEW_WORK* work );
 static void IndependentPokeManagerCancel( SHINKADEMO_VIEW_WORK* work );
-static void IndependentPokeManagerSuccess( SHINKADEMO_VIEW_WORK* work );
+
+static void IndependentPokeManagerSetPosX( SHINKADEMO_VIEW_WORK* work, fx32 pos_x );
+static void IndependentPokeSetPosX( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id, fx32 pos_x );
+
+static void IndependentPokeManagerPalStartWhiteToColor( SHINKADEMO_VIEW_WORK* work );
+static BOOL IndependentPokeManagerPalIsColor( SHINKADEMO_VIEW_WORK* work );
+static BOOL IndependentPokeManagerPalIsStartWhiteToColor( SHINKADEMO_VIEW_WORK* work );
 
 static INDEPENDENT_POKE_WORK* IndependentPokeInit(
     int mons_no, int form_no, int sex, int rare, int dir, BOOL egg,
@@ -459,7 +421,7 @@ SHINKADEMO_VIEW_WORK* SHINKADEMO_VIEW_Init(
     if( work->launch == SHINKADEMO_VIEW_LAUNCH_EVO )
     {
       // ここで一時的に生成する
-      work->after_pp = PP_Create( 1, 1, 0, work->heap_id );
+      work->after_pp = GFL_HEAP_AllocClearMemory( work->heap_id, POKETOOL_GetWorkSize() );
       POKETOOL_CopyPPtoPP( (POKEMON_PARAM*)(work->pp), work->after_pp );
       PP_ChangeMonsNo( work->after_pp, work->after_monsno );  // 進化
     }
@@ -494,10 +456,6 @@ SHINKADEMO_VIEW_WORK* SHINKADEMO_VIEW_Init(
       work->disp_poke    = POKE_BEFORE;
     else
       work->disp_poke    = POKE_AFTER;
-
-    work->anm_val    = 0;
-    work->anm_add    = ANM_ADD_START;
-    work->count      = 0;
   }
 
   // MCSS
@@ -578,94 +536,171 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
       if( !PMV_CheckPlay() )
       {
         // 次へ
-        work->step = STEP_EVO_CHANGE_SATRT;
+        work->step = STEP_EVO_CHANGE_START;
         
         work->b_cry_end = TRUE;
       }
     }
     break;
-  case STEP_EVO_CHANGE_SATRT:
+  case STEP_EVO_CHANGE_START:
     {
       if( work->b_change_start )
       {
         // 次へ
-        work->step = STEP_EVO_CHANGE_TO_WHITE_START;
-
-        MCSS_SetPaletteFade( work->poke_set[work->disp_poke].wk, 0, 16, 3, 0x7fff );
-        MCSS_SetPaletteFade( work->poke_set[NotDispPoke(work->disp_poke)].wk, 16, 16, 0, 0x7fff );
-
-        IndependentPokeManagerStart( work );
+        work->step = STEP_EVO_CHANGE_OPENING_COLOR_TO_WHITE_START;
       }
     }
     break;
-  case STEP_EVO_CHANGE_TO_WHITE_START:
+
+  case STEP_EVO_CHANGE_OPENING_COLOR_TO_WHITE_START:
     {
       // 次へ
-      work->step = STEP_EVO_CHANGE_TO_WHITE;
+      work->step = STEP_EVO_CHANGE_OPENING_COLOR_TO_WHITE;
 
-      MCSS_SetPaletteFade( work->poke_set[work->disp_poke].wk, 0, 16, 3, 0x7fff );
+      MCSS_SetPaletteFade( work->poke_set[work->disp_poke].wk, 0, 16, 0, 0x7fff );
       MCSS_SetPaletteFade( work->poke_set[NotDispPoke(work->disp_poke)].wk, 16, 16, 0, 0x7fff );
+
+      MCSS_SetAnmStopFlag( work->poke_set[work->disp_poke].wk );
     }
     break;
-  case STEP_EVO_CHANGE_TO_WHITE:
+  case STEP_EVO_CHANGE_OPENING_COLOR_TO_WHITE:
     {
       if( !MCSS_CheckExecutePaletteFade( work->poke_set[work->disp_poke].wk ) )
       {
         // 次へ
-        work->step = STEP_EVO_CHANGE_TRANSFORM;
-
-        work->b_change_bgm_shinka_start = TRUE;
+        work->step = STEP_EVO_CHANGE_OPENING_REPLACE_MCSS_WITH_INDEPENDENT;
       }
     }
     break;
-  case STEP_EVO_CHANGE_TRANSFORM:
+  case STEP_EVO_CHANGE_OPENING_REPLACE_MCSS_WITH_INDEPENDENT:
     {
-      if( ShinkaDemo_View_Evolve( work ) )
+      // 次へ
+      work->step = STEP_EVO_CHANGE_OPENING_WHITE_TO_COLOR_START;
+
+      ShinkaDemo_View_PokeSetPosX( work, POKE_X_HIDE );
+      IndependentPokeManagerSetPosX( work, INDEPENDENT_POKE_X_CENTER );
+
+      {
+        NNSG2dMultiCellAnimation* anim_ctrl = MCSS_GetAnimCtrl( work->poke_set[work->disp_poke].wk );
+        NNS_G2dRestartMCAnimation( anim_ctrl );
+      }
+    }
+    break;
+  case STEP_EVO_CHANGE_OPENING_WHITE_TO_COLOR_START:
+    {
+      // 次へ
+      work->step = STEP_EVO_CHANGE_OPENING_WHITE_TO_COLOR;
+
+      IndependentPokeManagerPalStartWhiteToColor( work );
+    }
+    break;
+  case STEP_EVO_CHANGE_OPENING_WHITE_TO_COLOR:
+    {
+      if( IndependentPokeManagerPalIsColor( work ) )
       {
         // 次へ
-        work->step = STEP_EVO_CHANGE_FROM_WHITE_START;
+        work->step = STEP_EVO_CHANGE_TRANSFORM;
+        
+        work->b_change_bgm_shinka_start = TRUE;
+        IndependentPokeManagerStart( work );
+      }
+    }
+    break;
 
+  case STEP_EVO_CHANGE_TRANSFORM:
+    {
+      if( IndependentPokeManagerPalIsStartWhiteToColor( work ) )
+      {
+        // 次へ
+        work->step = STEP_EVO_CHANGE_ENDING_REPLACE_INDEPENDENT_WITH_MCSS;
+        
         work->b_change_bgm_shinka_push = TRUE;
-      } 
+      }
     }
     break;
   case STEP_EVO_CHANGE_CANCEL:
     {
-      if( ShinkaDemo_View_Evolve( work ) )
+      if( IndependentPokeManagerPalIsStartWhiteToColor( work ) )
       {
         // 次へ
-        work->step = STEP_EVO_CHANGE_FROM_WHITE_START;
+        work->step = STEP_EVO_CHANGE_ENDING_REPLACE_INDEPENDENT_WITH_MCSS;
 
         work->b_change_bgm_shinka_push = TRUE;
       }
     }
     break;
-  case STEP_EVO_CHANGE_FROM_WHITE_START:
+
+  case STEP_EVO_CHANGE_ENDING_BEFORE_REPLACE_WAIT:
     {
-      // 次へ
-      work->step = STEP_EVO_CHANGE_FROM_WHITE;
-
-      MCSS_SetPaletteFade( work->poke_set[work->disp_poke].wk, 16, 0, 1, 0x7fff );
-
-      if(work->b_change_cancel)
+      if( work->wait_count >= 60 )
       {
-        IndependentPokeManagerCancel( work );
+        // 次へ
+        work->step = STEP_EVO_CHANGE_ENDING_WHITE_TO_COLOR_START;
+        work->wait_count = 0;
       }
       else
       {
-        IndependentPokeManagerSuccess( work );
+        work->wait_count++;
       }
     }
     break;
-  case STEP_EVO_CHANGE_FROM_WHITE:
+  case STEP_EVO_CHANGE_ENDING_REPLACE_INDEPENDENT_WITH_MCSS:
+    {
+      // 次へ
+      work->step = STEP_EVO_CHANGE_ENDING_AFTER_REPLACE_WAIT;
+
+      if(work->b_change_cancel)
+      {
+        // 変わっていないので、何もしない
+      }
+      else
+      {
+        // disp_pokeとNotDispPokeを入れ替える
+        work->disp_poke = NotDispPoke( work->disp_poke );
+        // 新disp_pokeを表示する
+        MCSS_ResetVanishFlag( work->poke_set[work->disp_poke].wk );
+        // 新NotDispPokeを非表示にする
+        MCSS_SetVanishFlag( work->poke_set[NotDispPoke(work->disp_poke)].wk );
+      }
+
+      ShinkaDemo_View_PokeSetPosX( work, POKE_X_CENTER );
+      IndependentPokeManagerSetPosX( work, INDEPENDENT_POKE_X_HIDE );
+    }
+    break;
+  case STEP_EVO_CHANGE_ENDING_AFTER_REPLACE_WAIT:
+    {
+      if( work->wait_count >= 30 )
+      {
+        // 次へ
+        work->step = STEP_EVO_CHANGE_ENDING_WHITE_TO_COLOR_START;
+        work->wait_count = 0;
+      }
+      else
+      {
+        work->wait_count++;
+      }
+    }
+    break;
+  case STEP_EVO_CHANGE_ENDING_WHITE_TO_COLOR_START:
+    {
+      // 次へ
+      work->step = STEP_EVO_CHANGE_ENDING_WHITE_TO_COLOR;
+    
+      MCSS_SetPaletteFade( work->poke_set[work->disp_poke].wk, 16, 0, 1, 0x7fff );
+    }
+    break;
+  case STEP_EVO_CHANGE_ENDING_WHITE_TO_COLOR:
     {
       if( !MCSS_CheckExecutePaletteFade( work->poke_set[work->disp_poke].wk ) )
       {
         // 次へ
         work->step = STEP_EVO_CHANGE_CRY_START;
+
+        MCSS_ResetAnmStopFlag( work->poke_set[work->disp_poke].wk );
       }
     }
     break;
+
   case STEP_EVO_CHANGE_CRY_START:
     {
       {
@@ -831,14 +866,12 @@ BOOL SHINKADEMO_VIEW_ChangeIsBgmShinkaPush( SHINKADEMO_VIEW_WORK* work )
 //-----------------------------------------------------------------------------
 BOOL SHINKADEMO_VIEW_ChangeCancel( SHINKADEMO_VIEW_WORK* work )
 {
-  if( work->step == STEP_EVO_CHANGE_TRANSFORM )
+  if( IndependentPokeManagerIsEnableCancel(work) )
   {
-    if( work->count <= ANM_REPEAT_MAX-3 )
-    {
-      work->b_change_cancel = TRUE;
-      work->step = STEP_EVO_CHANGE_CANCEL;
-      return TRUE;
-    }
+    work->b_change_cancel = TRUE;
+    work->step = STEP_EVO_CHANGE_CANCEL;
+    IndependentPokeManagerCancel( work );
+    return TRUE;
   }
   return FALSE;
 }
@@ -900,7 +933,7 @@ static void ShinkaDemo_View_PokeInit( SHINKADEMO_VIEW_WORK* work )
       {
         MCSS_TOOL_MakeMAWPP( work->after_pp, &add_wk, MCSS_DIR_FRONT );
       }
-      work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, POKE_X, POKE_Y, 0, &add_wk );
+      work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, POKE_X_CENTER, POKE_Y, 0, &add_wk );
       MCSS_SetScale( work->poke_set[i].wk, &scale );
 
       if(i == POKE_BEFORE)
@@ -914,6 +947,7 @@ static void ShinkaDemo_View_PokeInit( SHINKADEMO_VIEW_WORK* work )
         MCSS_SetAlpha( work->poke_set[i].wk, 0 );
 */
         MCSS_SetVanishFlag( work->poke_set[i].wk );
+        MCSS_SetAnmStopFlag( work->poke_set[i].wk );
       }
     } 
   }
@@ -925,7 +959,7 @@ static void ShinkaDemo_View_PokeInit( SHINKADEMO_VIEW_WORK* work )
     i = POKE_AFTER;
 
     MCSS_TOOL_MakeMAWPP( work->pp, &add_wk, MCSS_DIR_FRONT );
-    work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, POKE_X, POKE_Y, 0, &add_wk );
+    work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, POKE_X_CENTER, POKE_Y, 0, &add_wk );
     MCSS_SetScale( work->poke_set[i].wk, &scale );
   }
 
@@ -957,109 +991,6 @@ static u8 NotDispPoke( u8 disp_poke )
 }
 
 //-------------------------------------
-/// ポケモンの進化演出
-//=====================================
-static BOOL ShinkaDemo_View_Evolve( SHINKADEMO_VIEW_WORK* work )
-{
-  BOOL b_finish = FALSE;
-  int prev_anm_val = work->anm_val;
-
-  // アニメーションを進める
-  work->anm_val += work->anm_add;
-  
-  // ちょうど一周終了したとき
-  if( work->anm_val >= ANM_VAL_MAX )
-  {
-    work->count++;
-    if(
-           ( work->count >= ANM_REPEAT_MAX )
-        || ( work->b_change_cancel && work->disp_poke == POKE_AFTER )
-    )
-    {
-      work->anm_add = ANM_ADD_START;
-      work->anm_val = 0;
-      
-      b_finish = TRUE;
-    }
-    else
-    {
-      work->anm_add = anm_add_tbl[work->count];
-      work->anm_val -= ANM_VAL_MAX;
-    }
-
-    // disp_pokeとNotDispPokeを入れ替え、新NotDispPokeを非表示にする
-    work->disp_poke = NotDispPoke( work->disp_poke );
-    MCSS_SetVanishFlag( work->poke_set[NotDispPoke(work->disp_poke)].wk );
-
-    // キャンセル成功しているのに進化してしまわないように、念のため
-    if( b_finish && work->b_change_cancel )
-    {
-      work->disp_poke = POKE_BEFORE;
-      MCSS_ResetVanishFlag( work->poke_set[work->disp_poke].wk );
-      MCSS_SetVanishFlag( work->poke_set[NotDispPoke(work->disp_poke)].wk );
-    }
-  }
-  // ちょうど半周終了したとき
-  else if( prev_anm_val < ANM_VAL_MAX/2 && work->anm_val >= ANM_VAL_MAX/2 )
-  {
-    work->count++;
-    work->anm_add = anm_add_tbl[work->count];
-
-    // disp_pokeを非表示にする
-    MCSS_SetVanishFlag( work->poke_set[work->disp_poke].wk );  // alphaはきれいに見えないのでやめておく(半透明に見えないし、スプライトごとの切れ目が見えるし(Z位置の前後関係のせい？、カメラのせい？))
-    // NotDispPokeを表示する
-    MCSS_ResetVanishFlag( work->poke_set[NotDispPoke(work->disp_poke)].wk );
-  }
-
-  // alphaはきれいに見えないのでやめておく(半透明に見えないし、スプライトごとの切れ目が見えるし(Z位置の前後関係のせい？、カメラのせい？))
-  //        anm_val        cos01  scale         ポケモン0           ポケモン1
-  //        0              1      SCALE_MAX     disp_poke   表示    NotDispPoke 非表示
-  //        |              |                    disp_poke   表示    NotDispPoke 非表示
-  //  半周  ANM_VAL_MAX/2  0      SCALE_MIN     disp_poke   表示    NotDispPoke 非表示
-  //  ちょうど半周終了したとき                  disp_poke   非表示  NotDispPoke 表示
-  //        |              |                    disp_poke   非表示  NotDispPoke 表示
-  //  一周  ANM_VAL_MAX    1      SCALE_MAX     disp_poke   非表示  NotDispPoke 表示
-  //  ちょうど一周終了したとき                  NotDispPoke 非表示  disp_poke   表示
-  
-  // alphaありのとき
-  //        anm_val        cos01  scale         ポケモン0          a   ポケモン1          a
-  //        0              1      SCALE_MAX     disp_poke   表示   31  NotDispPoke 非表示 *
-  //        |              |                    disp_poke   表示   31  NotDispPoke 非表示 *
-  //  半周  ANM_VAL_MAX/2  0      SCALE_MIN     disp_poke   表示   31  NotDispPoke 非表示 *
-  //  ちょうど半周終了したとき                  disp_poke   表示   31  NotDispPoke 表示   0
-  //        |              |                    disp_poke   表示   |   NotDispPoke 表示   |
-  //        |              |                    disp_poke   表示   |   NotDispPoke 表示   31
-  //        |              |                    disp_poke   表示   0   NotDispPoke 表示   |
-  //        |              |                    disp_poke   表示   |   NotDispPoke 表示   |
-  //  一周  ANM_VAL_MAX    1      SCALE_MAX     disp_poke   表示   0   NotDispPoke 表示   31
-  //  ちょうど一周終了したとき                  NotDispPoke 非表示 *   disp_poke   表示   31
-
-  // スケール
-  {
-    // 0～1の範囲におさめたcos値
-    fx16 cos01_fx16 = ( FX_CosIdx( work->anm_val ) + FX16_ONE ) /2;
-    f32 cos01 = FX_FX16_TO_F32( cos01_fx16 );
-    VecFx32 scale;
-    u8 i;
-
-    work->scale = ( SCALE_MAX - SCALE_MIN ) * cos01 + SCALE_MIN;
-
-    scale.x = FX_F32_TO_FX32(work->scale);
-    scale.y = FX_F32_TO_FX32(work->scale);
-    scale.z = FX32_ONE;
-
-    for(i=0; i<POKE_MAX; i++)
-    {
-      MCSS_SetScale( work->poke_set[i].wk, &scale );
-    }
-  }
-
-  ShinkaDemo_View_AdjustPokePos(work);
-
-  return b_finish;
-}
-
-//-------------------------------------
 /// ポケモンの位置を調整する
 //=====================================
 static void ShinkaDemo_View_AdjustPokePos( SHINKADEMO_VIEW_WORK* work )
@@ -1077,6 +1008,24 @@ static void ShinkaDemo_View_AdjustPokePos( SHINKADEMO_VIEW_WORK* work )
       ofs_y = ( POKE_SIZE_MAX - size_y ) / 2.0f * POKE_Y_ADJUST;
       ofs.x = 0;  ofs.y = FX_F32_TO_FX32(ofs_y);  ofs.z = 0;
       MCSS_SetOfsPosition( work->poke_set[i].wk, &ofs );
+    }
+  }
+}
+
+//-------------------------------------
+/// ポケモンのX位置を設定する
+//=====================================
+static void ShinkaDemo_View_PokeSetPosX( SHINKADEMO_VIEW_WORK* work, fx32 pos_x )
+{
+  u8 i;
+  for(i=0; i<POKE_MAX; i++)
+  {
+    if( work->poke_set[i].wk != NULL )
+    {
+      VecFx32 pos;
+      MCSS_GetPosition( work->poke_set[i].wk, &pos );
+      pos.x = pos_x;
+      MCSS_SetPosition( work->poke_set[i].wk, &pos );
     }
   }
 }
@@ -1124,6 +1073,9 @@ static void IndependentPokeManagerInit( SHINKADEMO_VIEW_WORK* work )
       if( work->launch == SHINKADEMO_VIEW_LAUNCH_EVO )
       {
         IndependentPokeInitEvo( poke_wk, work->heap_id );
+        poke_wk->pal_state =INDEPENDENT_PAL_STATE_WHITE;
+        IndependentPokePalStart( poke_wk, work->heap_id,
+            0x7fff, 31, 31, 0, 31 );
       }
       else
       {
@@ -1151,6 +1103,9 @@ static void IndependentPokeManagerInit( SHINKADEMO_VIEW_WORK* work )
       INDEPENDENT_POKE_WORK* poke_wk = independent_poke_mgr->poke_wk[POKE_AFTER];
 
       IndependentPokeInitEvo( poke_wk, work->heap_id );
+      poke_wk->pal_state =INDEPENDENT_PAL_STATE_WHITE;
+      IndependentPokePalStart( poke_wk, work->heap_id,
+          0x7fff, 31, 31, 0, 31 );
 
       {
         u8 i, j;
@@ -1168,6 +1123,11 @@ static void IndependentPokeManagerInit( SHINKADEMO_VIEW_WORK* work )
   }
   
   work->independent_poke_mgr = independent_poke_mgr;
+  
+  {
+    // 次の関数の中でwork->independent_poke_mgrを使用しているので、work->independent_poke_mgrへの代入、IndependentPokeManagerSetPosX呼び出しの順で。
+    IndependentPokeManagerSetPosX( work, INDEPENDENT_POKE_X_HIDE );
+  }
 }
 static void IndependentPokeManagerExit( SHINKADEMO_VIEW_WORK* work )
 {
@@ -1201,23 +1161,9 @@ static void IndependentPokeManagerMain( SHINKADEMO_VIEW_WORK* work )
       IndependentPokeManagerMainSpiral( work );
     }
     break;
-  case INDEPENDENT_STATE_EVO_CANCEL:
-    {
-      IndependentPokeManagerMainSpiral( work );
-
-      independent_poke_mgr->state = INDEPENDENT_STATE_EVO_END;
-    }
-    break;
-  case INDEPENDENT_STATE_EVO_SUCCESS:
-    {
-      IndependentPokeManagerMainSpiral( work );
-
-      independent_poke_mgr->state = INDEPENDENT_STATE_EVO_END;
-    }
-    break;
   case INDEPENDENT_STATE_EVO_END:
     {
-      IndependentPokeManagerMainSpiral( work );
+      // 何もしない
     }
     break;
   case INDEPENDENT_STATE_AFTER:
@@ -1225,6 +1171,18 @@ static void IndependentPokeManagerMain( SHINKADEMO_VIEW_WORK* work )
       // 何もしない
     }
     break;
+  }
+
+  // パレットアニメ
+  {
+    u8 i;
+    for( i=0; i<POKE_MAX; i++ )
+    {
+      if( independent_poke_mgr->poke_wk[i] )
+      {
+        IndependentPokePalMain( independent_poke_mgr->poke_wk[i], heap_id );
+      } 
+    }
   }
 }
 static void IndependentPokeManagerDraw( SHINKADEMO_VIEW_WORK* work )
@@ -1250,23 +1208,115 @@ static void IndependentPokeManagerStart( SHINKADEMO_VIEW_WORK* work )
     independent_poke_mgr->state = INDEPENDENT_STATE_EVO_DEMO;
   }
 }
+static BOOL IndependentPokeManagerIsEnableCancel( SHINKADEMO_VIEW_WORK* work )
+{
+  INDEPENDENT_POKE_MANAGER* independent_poke_mgr = work->independent_poke_mgr;
+
+  if(    independent_poke_mgr->state != INDEPENDENT_SPIRAL_STATE_BEFORE_START  // 早過ぎ
+      && independent_poke_mgr->state != INDEPENDENT_SPIRAL_STATE_AFTER_END )   // 遅過ぎ
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
 static void IndependentPokeManagerCancel( SHINKADEMO_VIEW_WORK* work )
 {
   INDEPENDENT_POKE_MANAGER* independent_poke_mgr = work->independent_poke_mgr;
-  
-  if( independent_poke_mgr->state == INDEPENDENT_STATE_EVO_DEMO )
+ 
+  // まだ白くなっていないなら強制的に白くする
   {
-    independent_poke_mgr->state = INDEPENDENT_STATE_EVO_CANCEL;
+    INDEPENDENT_POKE_WORK* poke_wk = independent_poke_mgr->poke_wk[POKE_BEFORE];
+
+    if(    poke_wk->pal_state != INDEPENDENT_PAL_STATE_START_COLOR_TO_WHITE
+        && poke_wk->pal_state != INDEPENDENT_PAL_STATE_COLOR_TO_WHITE )
+    {
+      poke_wk->pal_state = INDEPENDENT_PAL_STATE_START_WHITE_TO_COLOR;
+    }
   }
 }
-static void IndependentPokeManagerSuccess( SHINKADEMO_VIEW_WORK* work )
+
+static void IndependentPokeManagerSetPosX( SHINKADEMO_VIEW_WORK* work, fx32 pos_x )
 {
   INDEPENDENT_POKE_MANAGER* independent_poke_mgr = work->independent_poke_mgr;
-  
-  if( independent_poke_mgr->state == INDEPENDENT_STATE_EVO_DEMO )
+
+  u8 i;
+  for( i=0; i<POKE_MAX; i++ )
   {
-    independent_poke_mgr->state = INDEPENDENT_STATE_EVO_SUCCESS;
+    if( independent_poke_mgr->poke_wk[i] )
+    {
+      IndependentPokeSetPosX( independent_poke_mgr->poke_wk[i], work->heap_id, pos_x );
+    }
   }
+}
+static void IndependentPokeSetPosX( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id, fx32 pos_x )
+{
+  poke_wk->pos.x = pos_x;
+}
+
+static void IndependentPokeManagerPalStartWhiteToColor( SHINKADEMO_VIEW_WORK* work )
+{
+  INDEPENDENT_POKE_MANAGER* independent_poke_mgr = work->independent_poke_mgr;
+  HEAPID                    heap_id = work->heap_id;
+
+  u8 i;
+  for( i=0; i<POKE_MAX; i++ )
+  {
+    if( independent_poke_mgr->poke_wk[i] )
+    {
+      INDEPENDENT_POKE_WORK* poke_wk = independent_poke_mgr->poke_wk[i];
+      poke_wk->pal_state = INDEPENDENT_PAL_STATE_WHITE_TO_COLOR;
+      IndependentPokePalStart( poke_wk, heap_id,
+          0x7fff, 31, 0, 0, -1 );
+    }
+  }
+}
+
+static BOOL IndependentPokeManagerPalIsColor( SHINKADEMO_VIEW_WORK* work )
+{
+  INDEPENDENT_POKE_MANAGER* independent_poke_mgr = work->independent_poke_mgr;
+  HEAPID                    heap_id = work->heap_id;
+
+  BOOL ret = TRUE;
+
+  u8 i;
+  for( i=0; i<POKE_MAX; i++ )
+  {
+    if( independent_poke_mgr->poke_wk[i] )
+    {
+      INDEPENDENT_POKE_WORK* poke_wk = independent_poke_mgr->poke_wk[i];
+
+      if( !IndependentPokePalIsColor( poke_wk, heap_id ) )
+      {
+        ret = FALSE;
+      }
+    }
+  }
+
+  return ret;
+}
+
+static BOOL IndependentPokeManagerPalIsStartWhiteToColor( SHINKADEMO_VIEW_WORK* work )
+{
+  INDEPENDENT_POKE_MANAGER* independent_poke_mgr = work->independent_poke_mgr;
+  HEAPID                    heap_id = work->heap_id;
+
+  BOOL ret = TRUE;
+
+  u8 i;
+  for( i=0; i<POKE_MAX; i++ )
+  {
+    if( independent_poke_mgr->poke_wk[i] )
+    {
+      INDEPENDENT_POKE_WORK* poke_wk = independent_poke_mgr->poke_wk[i];
+
+      if( !IndependentPokePalIsStartWhiteToColor( poke_wk, heap_id ) )
+      {
+        ret = FALSE;
+      }
+    }
+  }
+
+  return ret;
 }
 
 static INDEPENDENT_POKE_WORK* IndependentPokeInit(
@@ -1611,10 +1661,14 @@ static void IndependentPokeDraw( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id 
               FALSE
         );
 
-    G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE);
+    //G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE);
+    G3_MaterialColorSpecEmi(GX_RGB(31, 31, 31), GX_RGB(31, 31, 31), FALSE);  // ライトなし用の設定emission GX_RGB(31, 31, 31)
 
     //ライトカラー
     G3_LightColor(GX_LIGHTID_0, GX_RGB(31, 31, 31));
+
+    // 全体の位置設定
+    G3_Translate(poke_wk->pos.x, poke_wk->pos.y, poke_wk->pos.z);
 
     {
       int max;
@@ -1644,7 +1698,7 @@ static void IndependentPokeDraw( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id 
         }
 
 	      G3_PolygonAttr(
-            GX_LIGHTMASK_0,			  // ライトを反映
+            GX_LIGHTMASK_NONE,//GX_LIGHTMASK_0,			  // ライトを反映  // ライトなし用の設定GX_LIGHTMASK_NONE
             GX_POLYGONMODE_MODULATE,	  // モジュレーションポリゴンモード
             cull,             // カリング
             panel_wk->polygon_id,                         // ポリゴンＩＤ ０
@@ -1694,8 +1748,6 @@ static void IndependentPokeManagerMainSpiral( SHINKADEMO_VIEW_WORK* work )
   switch( independent_poke_mgr->state )
   {
   case INDEPENDENT_STATE_EVO_DEMO:
-  case INDEPENDENT_STATE_EVO_SUCCESS:
-  case INDEPENDENT_STATE_EVO_END:
     {
       IndependentPokeMainSpiral( independent_poke_mgr->poke_wk[POKE_BEFORE], heap_id );
       //IndependentPokeMainSpiral( independent_poke_mgr->poke_wk[POKE_AFTER], heap_id );
@@ -1735,6 +1787,9 @@ static void IndependentPokeManagerMainSpiral( SHINKADEMO_VIEW_WORK* work )
       {
         INDEPENDENT_POKE_WORK* poke_wk_src = independent_poke_mgr->poke_wk[POKE_BEFORE];
         INDEPENDENT_POKE_WORK* poke_wk_dst = independent_poke_mgr->poke_wk[POKE_AFTER];
+
+        poke_wk_dst->pal_state = poke_wk_src->pal_state;
+
         if( IndependentPokePalIsStartColorToWhite( poke_wk_src, heap_id ) )
         {
           IndependentPokePalStartColorToWhite( poke_wk_src, heap_id );
@@ -1742,61 +1797,12 @@ static void IndependentPokeManagerMainSpiral( SHINKADEMO_VIEW_WORK* work )
         }
         if( IndependentPokePalIsStartWhiteToColor( poke_wk_src, heap_id ) )
         {
-          IndependentPokePalStartWhiteToColor( poke_wk_src, heap_id );
-          IndependentPokePalStartWhiteToColor( poke_wk_dst, heap_id );
+          //IndependentPokePalStartWhiteToColor( poke_wk_src, heap_id );
+          //IndependentPokePalStartWhiteToColor( poke_wk_dst, heap_id );
         }
       }
     }
     break;
-  case INDEPENDENT_STATE_EVO_CANCEL:
-    {
-      INDEPENDENT_POKE_WORK* poke_wk;
-      u8 i, j;
-      
-      poke_wk = independent_poke_mgr->poke_wk[POKE_BEFORE];
-      IndependentPokeInitAfter( poke_wk, heap_id );
-
-      poke_wk = independent_poke_mgr->poke_wk[POKE_AFTER];
-      for( j=0; j<INDEPENDENT_PANEL_NUM_Y; j++ )
-      {
-        for( i=0; i<INDEPENDENT_PANEL_NUM_X; i++ )
-        {
-          INDEPENDENT_PANEL_WORK* panel_wk = &(poke_wk->panel_wk[j][i]);
-          panel_wk->alpha = 0;
-        }
-      }
-    }
-    break;
-/*
-  case INDEPENDENT_STATE_EVO_SUCCESS:
-    {
-      INDEPENDENT_POKE_WORK* poke_wk;
-      u8 i, j;
-
-      poke_wk = independent_poke_mgr->poke_wk[POKE_BEFORE];
-      for( j=0; j<INDEPENDENT_PANEL_NUM_Y; j++ )
-      {
-        for( i=0; i<INDEPENDENT_PANEL_NUM_X; i++ )
-        {
-          INDEPENDENT_PANEL_WORK* panel_wk = &(poke_wk->panel_wk[j][i]);
-          panel_wk->alpha = 0;
-        }
-      }
-
-      poke_wk = independent_poke_mgr->poke_wk[POKE_AFTER];
-      IndependentPokeInitAfter( poke_wk, heap_id );
-    }
-    break;
-*/
-  }
-
-  // パレットアニメ
-  {
-    u8 i;
-    for( i=0; i<POKE_MAX; i++ )
-    {
-      IndependentPokePalMain( independent_poke_mgr->poke_wk[i], heap_id );
-    }
   }
 }
 static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id )
@@ -1820,7 +1826,8 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
   {
   case INDEPENDENT_SPIRAL_STATE_BEFORE_START:
     {
-      if( poke_wk->spi_count >= 60 )
+      //if( poke_wk->spi_count >= 60 )
+      if( poke_wk->spi_count >= 0 )
       {
         poke_wk->spi_state = INDEPENDENT_SPIRAL_STATE_START;
         poke_wk->spi_count = 0;
@@ -2008,12 +2015,18 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
       if( b_next )
       {
         poke_wk->spi_state = INDEPENDENT_SPIRAL_STATE_STEADY;
-        poke_wk->pal_state = INDEPENDENT_PAL_STATE_START_COLOR_TO_WHITE;
+        if(    poke_wk->pal_state != INDEPENDENT_PAL_STATE_START_COLOR_TO_WHITE
+            && poke_wk->pal_state != INDEPENDENT_PAL_STATE_COLOR_TO_WHITE )
+        {
+          poke_wk->pal_state = INDEPENDENT_PAL_STATE_START_COLOR_TO_WHITE;
+        }
       }
     }
     break;
   case INDEPENDENT_SPIRAL_STATE_STEADY:
     {
+      u16 max = INDEPENDENT_PANEL_NUM_X * INDEPENDENT_PANEL_NUM_Y;
+      
       // 回転速度アップ
       if( poke_wk->spi_count<100 )
       {
@@ -2022,6 +2035,8 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
           poke_wk->spi_theta_idx_add += 0x20;
         }
       }
+
+      // 回転速度ダウン
       //if( 140<=poke_wk->spi_count && poke_wk->spi_count<240 )
       if( 200<=poke_wk->spi_count && poke_wk->spi_count<240 )
       {
@@ -2046,13 +2061,13 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
       }
 
       // 1つずつ入れ替えていく
-      if( poke_wk->spi_count >= 10 )
+      if( IndependentPokePalIsWhite( poke_wk, heap_id ) && poke_wk->spi_count >= 30 )
       {
         u16 start_change_no = poke_wk->change_no;
         u16 end_change_no = poke_wk->change_no +2;  // start_change_no<= <end_change_no
-        if( end_change_no > INDEPENDENT_PANEL_NUM_X * INDEPENDENT_PANEL_NUM_Y )
+        if( end_change_no > max )
         {
-          end_change_no = INDEPENDENT_PANEL_NUM_X * INDEPENDENT_PANEL_NUM_Y;
+          end_change_no = max;
         }
         while( poke_wk->change_no < end_change_no )
         {
@@ -2065,7 +2080,7 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
       }
 
       // 次へ or カウントアップ
-      if( poke_wk->spi_count >= 240 )
+      if( poke_wk->change_no >= max && poke_wk->spi_count >= 240 )
       {
         poke_wk->spi_state = INDEPENDENT_SPIRAL_STATE_END;
         poke_wk->spi_count = 0;
@@ -2375,7 +2390,7 @@ static void IndependentPokePalStartColorToWhite( INDEPENDENT_POKE_WORK* poke_wk,
 {
   poke_wk->pal_state =INDEPENDENT_PAL_STATE_COLOR_TO_WHITE;
   IndependentPokePalStart( poke_wk, heap_id,
-      0x7fff, 0, 31, 0, 2 );
+      0x7fff, 0, 31, 0, 1 );
 }
 static BOOL IndependentPokePalIsWhite( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id )
 {

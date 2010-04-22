@@ -81,3 +81,8 @@ extern void SHINKADEMO_EFFECT_Cancel( SHINKADEMO_EFFECT_WORK* work );
 //=====================================
 extern void SHINKADEMO_EFFECT_Start( SHINKADEMO_EFFECT_WORK* work );
 
+//-------------------------------------
+/// REARを白く飛ばすアニメ開始
+//=====================================
+extern void SHINKADEMO_EFFECT_StartWhite( SHINKADEMO_EFFECT_WORK* work );
+

@@ -401,6 +401,8 @@ void SHINKADEMO_EFFECT_Main( SHINKADEMO_EFFECT_WORK* work )
     break;
   case STEP_EVO_DEMO:
     {
+/*
+      外からSHINKADEMO_EFFECT_StartWhite関数で設定することにした
       if( work->wait_count == 0 )
       {
         work->step = STEP_EVO_TO_WHITE_START;
@@ -409,6 +411,7 @@ void SHINKADEMO_EFFECT_Main( SHINKADEMO_EFFECT_WORK* work )
       {
         work->wait_count--;
       }
+*/
     }
     break;
   case STEP_EVO_TO_WHITE_START:
@@ -566,6 +569,24 @@ void SHINKADEMO_EFFECT_Start( SHINKADEMO_EFFECT_WORK* work )
 #ifdef SET_REAR_FRAME_LENGTH_COLOR_MODE
   work->wait_count = rear_frame_length_color;
 #endif
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief         REARを白く飛ばすアニメ開始
+ *
+ *  @param[in,out] work  SHINKADEMO_EFFECT_Initで生成したワーク
+ *
+ *  @retval        なし 
+ */
+//-----------------------------------------------------------------------------
+void SHINKADEMO_EFFECT_StartWhite( SHINKADEMO_EFFECT_WORK* work )
+{
+  // 3D
+  if( work->step == STEP_EVO_DEMO )
+  {
+    work->step = STEP_EVO_TO_WHITE_START;
+  }
 }
 
 //=============================================================================

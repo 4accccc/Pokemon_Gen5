@@ -38,6 +38,10 @@ FS_EXTERN_OVERLAY(battle_plist);
 #include "system/bmp_winframe.h"
 #include "gamesystem/game_data.h"
 #include "savedata/record.h"
+#include "savedata/mail.h"
+#include "item/itemsym.h"
+#include "poke_tool/shinka_check.h"
+#include "print/global_msg.h"
 #include "app/app_keycursor.h"
 
 #include "ui/yesno_menu.h"
@@ -219,6 +223,9 @@ typedef enum
   // 進化キャンセルした場合
   STEP_BGM_CANCEL_SHINKA_POP,       // 進化BGMをPOPして再生開始
   STEP_TEXT_CANCEL,                 // 「あれ……？　へんかが　とまった！」表示中
+
+  // 進化条件を処理する
+  STEP_SHINKA_COND_CHECK,           // 進化条件を処理する
 
   // 技覚え
   STEP_WAZA_OBOE,                   // 技覚えチェック
@@ -423,6 +430,9 @@ static STRBUF* MakeStr( HEAPID heap_id,
                         GFL_MSGDATA* msgdata, u32 str_id,
                         TAG_REGIST_TYPE type0, const void* data0,
                         TAG_REGIST_TYPE type1, const void* data1 );
+
+// 進化条件を処理する
+static void ShinkaDemo_ShinkaCondCheckSpecialLevelup( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work );
 
 
 //=============================================================================
@@ -706,6 +716,9 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         if( SHINKADEMO_VIEW_ChangeIsBgmShinkaPush( work->view ) )
         {
           ShinkaDemo_SoundPushShinka( param, work );
+
+          // REARを白く飛ばすアニメ開始
+          SHINKADEMO_EFFECT_StartWhite( work->efwk );
         }
 
         // 進化キャンセルしたか
@@ -795,10 +808,14 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
               }
             }
 
+            //// 次へ
+            //work->step = STEP_WAZA_OBOE;
+            //
+            //work->wazaoboe_index = 0;
+            //STEP_SHINKA_COND_CHECKを通ってからSTEP_WAZA_OBOEへ移行する
+
             // 次へ
-            work->step = STEP_WAZA_OBOE;
-            
-            work->wazaoboe_index = 0;
+            work->step = STEP_SHINKA_COND_CHECK;
           }
         }
       }
@@ -832,6 +849,26 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
           work->step = STEP_FADE_OUT_START;
         }
       }
+    }
+    break;
+
+  //---------------------------
+  // 進化条件を処理する
+  case STEP_SHINKA_COND_CHECK:
+    {
+      switch( param->shinka_cond )
+      {
+      case SHINKA_COND_SPECIAL_LEVELUP:  // ヌケニンを誕生させる  // SHINKA_COND_SPECIAL_NUKENINではなくSHINKA_COND_SPECIAL_LEVELUP(SHINKA_COND_SPECIAL_LEVELUPはツチニンでしか得られない値)
+        {
+          ShinkaDemo_ShinkaCondCheckSpecialLevelup( param, work );
+        }
+        break;
+      }
+
+      // 次へ
+      work->step = STEP_WAZA_OBOE;
+            
+      work->wazaoboe_index = 0;
     }
     break;
 
@@ -2256,5 +2293,129 @@ static STRBUF* MakeStr( HEAPID heap_id,
   }
 
   return strbuf;
+}
+
+//-------------------------------------
+/// 進化条件を処理する
+//=====================================
+static void ShinkaDemo_ShinkaCondCheckSpecialLevelup( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
+{
+  // 「ツチニン」からではなく「技を覚える前のテッカニン」から誕生させる
+  // パーティに空きがあって、普通のモンスターボールを持っている場合、ヌケニンが誕生する
+  
+  // この関数を呼び出す時点でのwork->ppは、既に「技を覚える前のテッカニン」になっていること
+  
+  {
+    MYITEM_PTR myitem_ptr = GAMEDATA_GetMyItem( param->gamedata );
+
+    if(    ( PokeParty_GetPokeCount(param->ppt) < PokeParty_GetPokeCountMax(param->ppt) )  // パーティに空きがある
+        && ( MYITEM_CheckItem( myitem_ptr, ITEM_MONSUTAABOORU, 1, work->heap_id ) ) )      // 普通のモンスターボールを持っている
+    {
+      BOOL ret;
+      POKEMON_PARAM* nukenin_pp;
+
+      // ヌケニン誕生
+      nukenin_pp = GFL_HEAP_AllocClearMemory( work->heap_id, POKETOOL_GetWorkSize() );
+      POKETOOL_CopyPPtoPP( (POKEMON_PARAM*)(work->pp), nukenin_pp );
+      PP_ChangeMonsNo( nukenin_pp, MONSNO_NUKENIN );  // 進化
+
+
+      //-------------// ↓パラメータを設定する↓ //-------------//
+      
+      //取得ボールをモンスターボールに
+      PP_Put( nukenin_pp, ID_PARA_get_ball, ITEM_MONSUTAABOORU );
+      
+      //装備アイテムをなくす
+      PP_Put( nukenin_pp, ID_PARA_item, 0 );
+      
+      //ポケモンにつけるマークを消す
+      PP_Put( nukenin_pp, ID_PARA_mark, 0 );
+      
+      //リボン系をクリア
+      {
+        int i;
+        for( i=ID_PARA_sinou_champ_ribbon; i<ID_PARA_sinou_amari_ribbon+1; i++ )
+        {
+          PP_Put( nukenin_pp, i, 0 );
+        }
+        for( i=ID_PARA_stylemedal_normal; i<ID_PARA_world_ribbon+1; i++ )
+        {
+          PP_Put( nukenin_pp, i, 0 );
+        }
+        for( i=ID_PARA_trial_stylemedal_normal; i<ID_PARA_amari_ribbon+1; i++ )
+        {
+          PP_Put( nukenin_pp, i, 0 );
+        }
+      }
+      
+      //ニックネームをデフォルト名に
+      {
+        u32 nukenin_monsno = PP_Get( nukenin_pp, ID_PARA_monsno, NULL );
+        STRBUF* strbuf = GFL_MSG_CreateString( GlobalMsg_PokeName, nukenin_monsno );
+        PP_Put( nukenin_pp, ID_PARA_nickname, (u32)strbuf );
+        GFL_STR_DeleteBuffer( strbuf );
+      }
+      
+      //状態異常を直す
+      PP_Put( nukenin_pp, ID_PARA_condition, 0 );
+
+      //メールデータ
+      {
+        MAIL_DATA* mail_data = MailData_CreateWork( work->heap_id );
+        PP_Put( nukenin_pp, ID_PARA_mail_data, (u32)mail_data );
+        GFL_HEAP_FreeMemory( mail_data );
+      }
+
+      //カスタムボールID
+      PP_Put( nukenin_pp, ID_PARA_cb_id, 0 );
+
+/*
+カスタムボールなしっぽい
+      //カスタムボールデータ
+      {
+        CB_CORE cb_core;
+        MI_CpuClearFast( &cb_core, sizeof(CB_CORE) );
+        PP_Put( nukenin_pp, ID_PARA_cb_core, cb_core );
+      }
+ */
+
+      //-------------// ↑パラメータを設定する↑ //-------------//
+
+
+      // パーティに入れる
+      PokeParty_Add( (POKEPARTY*)(param->ppt), nukenin_pp );  // constはずし
+
+      // 普通のモンスターボールを減らす
+      ret = MYITEM_SubItem( myitem_ptr, ITEM_MONSUTAABOORU, 1, work->heap_id );
+      GF_ASSERT_MSG( ret, "SHINKADEMO : モンスターボールを減らせませんでした。\n" );
+
+      // 後始末
+      GFL_HEAP_FreeMemory( nukenin_pp );
+
+      // 図鑑登録
+      {
+        ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( param->gamedata );
+        ZUKANSAVE_SetPokeSee( zukan_savedata, nukenin_pp );  // 見た  // 図鑑フラグをセットする
+        ZUKANSAVE_SetPokeGet( zukan_savedata, nukenin_pp );  // 捕まえた  // 図鑑フラグをセットする
+      }
+
+      {
+        // ヌケニンはすれ違い用データをセットしなくていい
+        //// すれ違い用データをセット
+        //{ 
+        //  GAMEBEACON_Set_PokemonEvolution( PP_Get( nukenin_pp, ID_PARA_monsno, NULL ), work->poke_nick_name_strbuf );
+        //  // (古い)ニックネームは(新しい)種族名に進化した
+        //}
+
+        // 進化させたポケモンの数
+        // 1日にポケモン進化させた回数
+        {
+          RECORD* rec = GAMEDATA_GetRecordPtr(param->gamedata); 
+          RECORD_Inc(rec, RECID_POKE_EVOLUTION);    // 進化させたポケモンの数
+          RECORD_Inc(rec, RECID_DAYCNT_EVOLUTION);  // 1日にポケモン進化させた回数
+        }
+      }
+    }
+  }
 }
 
