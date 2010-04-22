@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T16:02:40"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T17:57:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1292" top="152" right="1997" bottom="780" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -339,10 +339,10 @@
 ・続けてhakaim1_02</comment>
 		<attribute name="キャラ指定">OLDMAN
 育て屋じいさん</attribute>
-		<language name="JPN" width="256">おお！　トレーナーさん
-たすけてくれんか！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">おお！　トレーナーさん
-助けてくれんか！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">おお！　つよそうな　トレーナーさん
+たすけておくれ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">おお！　強そうな　トレーナーさん
+助けておくれ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c04_hakaim1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -350,11 +350,9 @@
 ・メッセージ表示後、戦闘に
 ・ただしすごく弱くてOK（ポケセンに行く前なので）</comment>
 		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
-		<language name="JPN" width="256">プラズマだん『だれだろうが
-ジャマだて　するなら▽
+		<language name="JPN" width="256">プラズマだん『ジャマするなら
 オマエの　ポケモンを　うばうぜ！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマだん『だれだろうが
-ジャマだて　するなら▽
+		<language name="JPN_KANJI" width="256">プラズマだん『ジャマだて　するなら
 オマエの　ポケモンを　奪うぜ！▼</language>
 	</row>
 
@@ -363,8 +361,8 @@
 ・戦闘後、フィールドに復帰してこのメッセージ表示
 ・続けてhakaim2_02</comment>
 		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
-		<language name="JPN" width="256">プラズマだん『！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">プラズマだん『！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『！！▼</language>
 	</row>
 
 	<row id="msg_c04_hakaim2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -571,10 +569,10 @@
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『やだあ！！▼
-[1:00:トレーナー名:0]や　ともだちと
+[1:00:トレーナー名:0]や　ポケモンと
 いっしょに　たび　するんだもん！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『やだあ！！▼
-[1:00:トレーナー名:0]や　ともだちと
+[1:00:トレーナー名:0]や　ポケモンと
 一緒に　旅するんだもん！▼</language>
 	</row>
 
@@ -710,8 +708,8 @@
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『おねがい！▼
-パパの　しんぱいとおり
-たいへんなことが　あるのは
+パパが　しんぱい　するように
+たいへんなことが　あるのは▽
 しってるよ……　しってるもん！▼
 だけど！
 いい　ひとも　いるし▼
@@ -719,8 +717,8 @@
 あたしも　ちょっとは▽
 つよくなったんだよ！　だから！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『おねがい！▼
-パパの　心配
-大変なことが　あるのは
+パパが　心配するように
+大変なことが　あるのは▽
 知ってるよ……　知ってるもん！▼
 だけど！
 いい　人も　いるし▼
@@ -829,10 +827,10 @@
 　c04ジムバッジ入手後→leader_08</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">おせっかい　だったかな？▼
+		<language name="JPN" width="256">おせっかい　だった？▼
 なんだか　こまっているように
 みえたから　こえを　かけちゃった▼</language>
-		<language name="JPN_KANJI" width="256">おせっかい　だったかな？▼
+		<language name="JPN_KANJI" width="256">おせっかい　だった？▼
 なんだか　困っているように
 みえたから　声を　かけちゃった▼</language>
 	</row>
@@ -927,7 +925,7 @@
 ポケモントレーナーが　いますから</language>
 	</row>
 
-	<row id="msg_c04_badman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_badman_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">BADMAN
 不良</attribute>
@@ -942,14 +940,15 @@
 	</row>
 
 	<row id="msg_c04_middleman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+		<comment>♂</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2
 太ったおじさん</attribute>
-		<language name="JPN" width="256">ここは　てんごく　なのか……？
-あっとうされて　こえもでない</language>
-		<language name="JPN_KANJI" width="256">ここは　天国なのか……？
-圧倒されて　声もでない</language>
+		<language name="JPN" width="256">はではで　ライモンシティに　くると
+まるで　ふうせんを　もったみたいに▽
+からだが　フワフワした　かんじ！</language>
+		<language name="JPN_KANJI" width="256">はではで　ライモンシティに　来ると
+まるで　ふうせんを　持ったみたいに▽
+体が　フワフワした　感じ！</language>
 	</row>
 
 	<row id="msg_c04_backpackerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -997,7 +996,7 @@
 ジェットコースターなんですって！？</language>
 	</row>
 
-	<row id="msg_c04_trainerw_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_trainerw_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・pos（GRIDX=421~423、GRIDZ=460）を踏むと
 　GRIDX=422、GRIDZ=459に出現して
@@ -1010,7 +1009,7 @@
 そして　敗北もしたの……▼</language>
 	</row>
 
-	<row id="msg_c04_trainerw_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_trainerw_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・階段を降り、上向きでメッセージ表示
 ・続けて下向きでtrainerw_03</comment>
@@ -1023,7 +1022,7 @@
 バトルサブウェイが　あるのよ！▼</language>
 	</row>
 
-	<row id="msg_c04_trainerw_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_trainerw_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・アイテム入手処理
 　No465「バトルレコーダー」</comment>
@@ -1034,7 +1033,7 @@
 なにもいわずに　受け取りなさい▼</language>
 	</row>
 
-	<row id="msg_c04_trainerw_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04_trainerw_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・アイテム入手後、自動で表示
 ・メッセージ表示後退場</comment>

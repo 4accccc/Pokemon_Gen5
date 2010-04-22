@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T13:28:45"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T18:01:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1280" top="152" right="1985" bottom="780" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="3" right="1280" bottom="401" visible="yes"/>
 		<band id="0" index="1" style="0000" width="510"/>
@@ -500,7 +500,7 @@
 		<language name="JPN_KANJI" width="256">いやいや　そんなこと　いわずに
 選んでくださいよ！▼
 それそれ　気を　取りなおして
-ポケモンを　えらんでくださいませ！▼</language>
+ポケモンを　選んでくださいませ！▼</language>
 	</row>
 
 	<row id="msg_c04r0201_owner_demo_03d" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -973,7 +973,7 @@
 		<language name="JPN_KANJI" width="256">ミュージカルで　活躍すると
 ファンに　なってくれて▽
 グッズを　くれる人が　いるわ▼
-わたしは　グッズを　もっていないから
+わたしは　グッズを　持っていないから
 かわりに　これを　あげる！▼</language>
 	</row>
 

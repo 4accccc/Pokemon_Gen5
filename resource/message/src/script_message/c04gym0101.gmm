@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T22:27:14"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T17:58:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -358,17 +358,17 @@
 ・アイテム入手処理後</comment>
 		<attribute name="キャラ指定">LEADER4</attribute>
 		<language name="JPN" width="256">その「ボルトチェンジ」はね……▼
-あいてに　こうげきを　したあと
+あいてに　こうげき　したあと
 ほかの　ポケモンと　いれかわるの▼
 もっとも
 ほかの　ポケモンが　いないときは▽
-そのまま　なんだけど▼</language>
+そのまま　だけどね▼</language>
 		<language name="JPN_KANJI" width="256">その「ボルトチェンジ」はね……▼
-相手に　攻撃を　したあと
+相手に　攻撃したあと
 他の　ポケモンと　入れ替わるの▼
 もっとも
 他の　ポケモンが　いないときは▽
-そのまま　なんだけど▼</language>
+そのまま　だけどね▼</language>
 	</row>
 
 	<row id="msg_c04gym0101_leader_06">
