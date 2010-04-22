@@ -34,6 +34,7 @@
 #define R13_FLD_ITEM_02                   20
 #define R13_FLD_ITEM_04                   21
 #define R13_FLD_ITEM_05                   22
+#define R13_FLD_ITEM_06                   23
 
 #endif //ZONE_R13_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r13.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
