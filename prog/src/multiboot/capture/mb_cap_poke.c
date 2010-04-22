@@ -43,7 +43,7 @@
 #define MB_CAP_POKE_DOWN_EFF_OFS (FX32_CONST(16))
 
 #define MB_CAP_POKE_ESCAPE_TIME (60*7)   //‰æ–ÊŠO‚É“¦‚°‚Ä‚¢‚éŽžŠÔ
-#define MB_CAP_POKE_ESCAPE_TIME_LAST (60*2)   //‰æ–ÊŠO‚É“¦‚°‚Ä‚¢‚éŽžŠÔ(ÅŒã‚Ìˆê•C
+#define MB_CAP_POKE_ESCAPE_TIME_LAST (60*1)   //‰æ–ÊŠO‚É“¦‚°‚Ä‚¢‚éŽžŠÔ(ÅŒã‚Ìˆê•C
 
 //======================================================================
 //	enum
