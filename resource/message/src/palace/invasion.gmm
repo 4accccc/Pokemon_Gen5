@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-04-15T12:39:05"/>
+	<create user="ohmori" host="W00223" date="2010-04-22T18:03:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="28" top="232" right="661" bottom="932" maximized="no" rayout="Vertical2">
+	<dialog left="131" top="280" right="764" bottom="980" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="260" right="1280" bottom="884" visible="yes"/>
 		<band id="0" index="0" style="0000" width="445"/>
@@ -866,13 +866,28 @@
 		<language name="JPN_KANJI" width="256">ふしぎなちからで　もどされた</language>
 	</row>
 
-	<row id="plc_connect_10" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
-		<comment>看板メッセージ(接続とは関係なし)
-</comment>
-		<language name="JPN" width="256">したがめんを　タッチすることで
-ワープが　かのうになった！</language>
-		<language name="JPN_KANJI" width="256">したがめんを　タッチすることで
-ワープが　かのうになった！</language>
+	<row id="plc_connect_10" back-color="#ffff00,,,#ff0000,,,,,,,,,,,,,,">
+		<comment>通信切断時のメッセージ：ミッション時の失敗</comment>
+		<language name="JPN" width="256">さきを　こされた！</language>
+		<language name="JPN_KANJI" width="256">さきを　こされた！</language>
+	</row>
+
+	<row id="plc_connect_11" back-color="#ffff00,,,#ff0000,,,,,,,,,,,,,,">
+		<comment>通信切断時のメッセージ：ミッション時のタイムアウト</comment>
+		<language name="JPN" width="256">じかんが　すぎてしまった！</language>
+		<language name="JPN_KANJI" width="256">じかんが　すぎてしまった！</language>
+	</row>
+
+	<row id="plc_connect_12" back-color="#ffff00,,,#ff0000,,,,,,,,,,,,,,">
+		<comment>通信切断時のメッセージ：通信エラー</comment>
+		<language name="JPN" width="256">つうしんエラーに　なった！</language>
+		<language name="JPN_KANJI" width="256">つうしんエラーに　なった！</language>
+	</row>
+
+	<row id="plc_connect_13" back-color="#ffff00,,,#ff0000,,,,,,,,,,,,,,">
+		<comment>通信切断時のメッセージ：相手が帰った</comment>
+		<language name="JPN" width="256">あいてが　たいしゅつした！</language>
+		<language name="JPN_KANJI" width="256">あいてが　たいしゅつした！</language>
 	</row>
 
 	<row id="plc_warp_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">

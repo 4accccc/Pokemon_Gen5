@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-04-17T20:25:08"/>
+	<create user="ohmori" host="W00223" date="2010-04-22T17:25:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="328"/>
 		<band id="4" index="0" style="0000" width="655"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -817,10 +817,10 @@ plc_girl4_03_06,7,8</comment>
 	<row id="plc_girl4_03_05" back-color=",,,,,#ff8080,,,,,,,,,,,,,">
 		<comment>双子娘3：会話終了</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
-		<language name="JPN" width="256">あなたの　ゆめが
-いいゆめで　あるように……</language>
-		<language name="JPN_KANJI" width="256">あなたの　ゆめが
-いいゆめで　あるように……</language>
+		<language name="JPN" width="256">あなたのせかい　が
+ゆめのようで　あるように……</language>
+		<language name="JPN_KANJI" width="256">あなたのせかい　が
+ゆめのようで　あるように……</language>
 	</row>
 
 	<row id="plc_girl4_03_06" back-color=",,,,,#ff8080,,,,,,,,,,,,,">
@@ -848,43 +848,39 @@ plc_girl4_03_06,7,8</comment>
 		<comment>双子娘4：一言メッセージ</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">ここから　もとのせかいに
-かえることが　できます▼
-わたしたちは　いつでも
-ここで　あなたを　まっています</language>
+かえることが　できます</language>
 		<language name="JPN_KANJI" width="256">ここから　もとのせかいに
-かえることが　できます▼
-わたしたちは　いつでも
-ここで　あなたを　まっています</language>
+かえることが　できます</language>
 	</row>
 
 	<row id="plc_oldman1_02_01" back-color=",,,,,#ff8080,,,,,,,,,,,,,">
 		<comment>ハイリンクの老人2：初回メッセージ</comment>
 		<attribute name="キャラ指定">OLDMAN1：
 (侵入先）</attribute>
-		<language name="JPN" width="256">ゆめのせかいは
-いつも　しろくろ▼
-はっきりしているようで
+		<language name="JPN" width="256">みる　ゆめは　いつも
+いろがなく　しろくろの　せかい……▼
+はっきり　しているようで
 あいまいな　せかい……▼
 ……おお
 ようこそ　たにんのせかいへ▼
-さっき　あったかな？
-それとも　ことなる　ひとかな？▼
-まあよい
+さっき　おぬしと　あったかな？
+それとも　あっていないかな？▼
+……まあよい
 ここは　おぬしがいた　せかいとは▽
 ことなる　たにんのせかい▼
 ここで　おぬしは　だれかを
 たすけることになる▼
 さあ　そのハイルツリーに　ふれ
 ミッションを　うけるのだ▼</language>
-		<language name="JPN_KANJI" width="256">ゆめのせかいは
-いつも　しろくろ▼
-はっきりしているようで
+		<language name="JPN_KANJI" width="256">みる　ゆめは　いつも
+いろがなく　しろくろの　せかい……▼
+はっきり　しているようで
 あいまいな　せかい……▼
 ……おお
 ようこそ　たにんのせかいへ▼
-さっき　あったかな？
-それとも　ことなる　ひとかな？▼
-まあよい
+さっき　おぬしと　あったかな？
+それとも　あっていないかな？▼
+……まあよい
 ここは　おぬしがいた　せかいとは▽
 ことなる　たにんのせかい▼
 ここで　おぬしは　だれかを
@@ -918,13 +914,13 @@ plc_girl4_03_06,7,8</comment>
 		<comment>ハイリンクの老人2：２回目メッセージ</comment>
 		<attribute name="キャラ指定">OLDMAN1：
 (侵入先）</attribute>
-		<language name="JPN" width="256">みな　じぶんのせかいを
-もっている▼
-むすうのせかいは　つながり
+		<language name="JPN" width="256">みな　じぶんのゆめと
+じぶんのせかいを　もっている▼
+むすうのゆめは　つながり
 ひとつのせかいと　なるのだ▼</language>
-		<language name="JPN_KANJI" width="256">みな　じぶんのせかいを
-もっている▼
-むすうのせかいは　つながり
+		<language name="JPN_KANJI" width="256">みな　じぶんのゆめと
+じぶんのせかいを　もっている▼
+むすうのゆめは　つながり
 ひとつのせかいと　なるのだ▼</language>
 	</row>
 
