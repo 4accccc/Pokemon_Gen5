@@ -421,9 +421,9 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
       int commPos = 0;
       
       if( GFL_NET_SystemGetCurrentID() != GFL_NET_NO_PARENTMACHINE ){
-        dst->commPos = 2; //通信子である
+        commPos = 2; //通信子である
       }
-
+      
       BTL_SETUP_AIMulti_Comm( dst, gdata,
           netHandle, BTL_COMM_DS, commPos,
           TRID_NULL, TRID_NULL, heapID );
@@ -433,9 +433,6 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     GF_ASSERT( 0 );
   }
   
-  dst->musicDefault = SEQ_BGM_VS_SUBWAY_TRAINER;
-  
-  BTL_SETUP_SetSubwayMode( dst );
   BTL_SETUP_AllocRecBuffer( dst, heapID );
   
   { //プレイヤー設定
@@ -590,6 +587,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   }
 #endif
   
+  BTL_SETUP_SetSubwayMode( dst ); //一通りセットした後に呼ぶ事
   return dst;
 }
 
