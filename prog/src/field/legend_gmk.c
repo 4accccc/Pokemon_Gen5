@@ -301,16 +301,16 @@ static GMEVENT_RESULT StoneEvt( GMEVENT* event, int* seq, void* work )
   }
   NOZOMU_Printf( "frm = %x::%d  last= %x::%d\n",frm, frm/FX32_ONE, last_frm, last_frm/FX32_ONE );
 
-  if ( (frm >= LEG_SE0_FRM)&&(!gmk_wk->Se0) ){
+  if ( (frm >= LEG_SE0_FRM*FX32_ONE)&&(!gmk_wk->Se0) ){
     PMSND_PlaySE( LEG_GMK_BALL_APP );
     gmk_wk->Se0 = TRUE;
   }
-  else if ( (frm >= LEG_SE1_FRM)&&(!gmk_wk->Se1) ){
+  else if ( (frm >= LEG_SE1_FRM*FX32_ONE)&&(!gmk_wk->Se1) ){
     //ＳＥ再生（ループ音）
     PMSND_PlaySE( LEG_GMK_ENERGY );
     gmk_wk->Se1 = TRUE;
   }
-  else if ( (frm >= LEG_SE2_FRM)&&(!gmk_wk->Se2) )
+  else if ( (frm >= LEG_SE2_FRM*FX32_ONE)&&(!gmk_wk->Se2) )
   {
     //ループ音停止
     PMSND_StopSE();
