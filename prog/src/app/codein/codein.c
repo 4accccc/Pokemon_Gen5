@@ -2,8 +2,8 @@
 /**
  * @file  codein.c
  * @brief 文字入力インターフェース
- * @author  goto
- * @date  2007.07.11(水)
+ * @author  goto / Ariizumi(移植）/ mori
+ * @date  2009.03.24(水)
  *
  *  GSより移植 Ari090324
  *
@@ -18,8 +18,6 @@
 
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
-//#include "poke_tool/pokeicon.h"
-//#include "poke_tool/boxdata.h"
 #include "system/bmp_menu.h"
 #include "sound/pm_sndsys.h"
 
@@ -119,9 +117,6 @@ static GFL_PROC_RESULT CI_Proc_Init( GFL_PROC * proc, int * seq , void *pwk, voi
   
   PaletteTrans_AutoSet( wk->sys.pfd, TRUE );
   PaletteFadeWorkAllocSet( wk->sys.pfd, FADE_MAIN_BG,  0x200, HEAPID_CODEIN );
-//  PaletteFadeWorkAllocSet( wk->sys.pfd, FADE_SUB_BG,   0x200, HEAPID_CODEIN );
-//  PaletteFadeWorkAllocSet( wk->sys.pfd, FADE_MAIN_OBJ, 0x200, HEAPID_CODEIN );
-//  PaletteFadeWorkAllocSet( wk->sys.pfd, FADE_SUB_OBJ,  0x200, HEAPID_CODEIN );  
 
   ///< Vram設定
   CI_VramBankSet(); 
@@ -216,15 +211,9 @@ static GFL_PROC_RESULT CI_Proc_Exit( GFL_PROC * proc, int * seq , void *pwk, voi
   GFL_BG_Exit();
   
   PaletteFadeWorkAllocFree( wk->sys.pfd, FADE_MAIN_BG );
-//  PaletteFadeWorkAllocFree( wk->sys.pfd, FADE_SUB_BG );
-//  PaletteFadeWorkAllocFree( wk->sys.pfd, FADE_MAIN_OBJ );
-//  PaletteFadeWorkAllocFree( wk->sys.pfd, FADE_SUB_OBJ );
   PaletteFadeFree( wk->sys.pfd );
   
   GFL_ARC_CloseDataHandle( wk->sys.p_handle );
-  
-//  CATS_ResourceDestructor_S( wk->sys.csp, wk->sys.crp );
-//  CATS_FreeMemory( wk->sys.csp );
   
   GFL_BMN_Delete( wk->sys.btn );
   
@@ -369,13 +358,7 @@ static void CI_VBlank( GFL_TCB *tcb, void *work )
 {
   CODEIN_WORK* wk = work;
 
-//  DoVramTransferManager();      ///< Vram転送マネージャー実行
-  
-//  CATS_RenderOamTrans();
-
   PaletteFadeTrans( wk->sys.pfd );
-  
-//  GF_BGL_VBlankFunc( wk->sys.bgl );
   
   GFL_CLACT_SYS_VBlankFunc();
 }

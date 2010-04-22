@@ -2,10 +2,8 @@
 /**
  * @file  codein_pv.c
  * @brief 文字入力インターフェース
- * @author  goto
+ * @author  goto / Ariizumi（移植） / mori
  * @date  2007.07.11(水)
- *
- * ここに色々な解説等を書いてもよい
  *
  */
 //==============================================================================
@@ -58,17 +56,6 @@ void CI_pv_FocusSet( CODEIN_WORK* wk, int next_focus )
   wk->le = 0;
   wk->ss = 0;
   wk->se = 0;
-#if 0 
-  if ( wk->focus_now != 0 ){    
-    wk->ls = ( wk->focus_now - 1 ) * wk->param.block[ wk->focus_now - 0 ];
-    wk->le = ( wk->focus_now - 0 ) * wk->param.block[ wk->focus_now - 1 ];
-  }
-
-  if ( wk->focus_old != 0 ){    
-    wk->ss = ( wk->focus_old - 1 ) * wk->param.block[ wk->focus_old - 0 ];
-    wk->se = ( wk->focus_old - 0 ) * wk->param.block[ wk->focus_old - 1 ];
-  }
-#endif
 
   if ( wk->focus_now != 0 ){
     wk->ls = wk->b_tbl[ wk->focus_now - 1 ][ 0 ];
@@ -913,7 +900,7 @@ void CI_pv_ButtonManagerInit( CODEIN_WORK* wk )
     };
     for ( ; i < eHRT_MAX; i++ ){
       
-      wk->sys.rht[ i ].rect.top   = tbl[ i - eHRT_NUM_0 ][ 1 ] - tbl[ i - eHRT_NUM_0 ][ 3 ];
+      wk->sys.rht[ i ].rect.top     = tbl[ i - eHRT_NUM_0 ][ 1 ] - tbl[ i - eHRT_NUM_0 ][ 3 ];
       wk->sys.rht[ i ].rect.left    = tbl[ i - eHRT_NUM_0 ][ 0 ] - tbl[ i - eHRT_NUM_0 ][ 2 ];
       wk->sys.rht[ i ].rect.bottom  = tbl[ i - eHRT_NUM_0 ][ 1 ] + tbl[ i - eHRT_NUM_0 ][ 3 ];
       wk->sys.rht[ i ].rect.right   = tbl[ i - eHRT_NUM_0 ][ 0 ] + tbl[ i - eHRT_NUM_0 ][ 2 ];
