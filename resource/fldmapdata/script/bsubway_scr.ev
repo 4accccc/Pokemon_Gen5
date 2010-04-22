@@ -601,6 +601,7 @@ sub_receipt_challenge_multi:
   IF $SCWK_ANSWER == 0 THEN //参加不可
     _BSUBWAY_TOOL( BSWTOOL_DEBUG_CHK_FLAG, BSW_DEBUG_FLAG_REGU_OFF, BSW_NULL, debug_mode )
     IF $debug_mode == FALSE THEN
+      _CALL sub_bsw_common_exit
       _RET
     ELSE
       _BSUBWAY_TOOL( BSWSUB_DEBUG_SET_SELECT_POKE, BSW_NULL, BSW_NULL, BSW_NULL )
@@ -614,6 +615,7 @@ sub_receipt_challenge_multi:
   _CALL sub_bsw_common_report
   
   IF $SCWK_ANSWER == 1 THEN //キャンセル
+    _CALL sub_bsw_common_exit
     _RET
   ENDIF
   

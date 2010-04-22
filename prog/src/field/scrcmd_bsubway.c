@@ -2013,24 +2013,50 @@ void BSUBWAY_SCRWORK_DebugCreateWork( GAMESYS_WORK *gsys, u16 mode )
 
 //--------------------------------------------------------------
 /**
- * バトルサブウェイ　ワーク　7戦状態に
+ * バトルサブウェイ　ワーク　任意のラウンド数に変更
+ * @param game_round_now 何戦目にするか
  */
 //--------------------------------------------------------------
-void BSUBWAY_SCRWORK_DebugFight7( GAMESYS_WORK *gsys )
+void BSUBWAY_SCRWORK_DebugFightAnyRound(
+    GAMESYS_WORK *gsys, u16 game_round_now )
 {
+  u16 round,stage,renshou;
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
-  GF_ASSERT( bsw_scr != NULL );
   
-  BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, 6 );
+  if( bsw_scr == NULL ){
+    GF_ASSERT( 0 );
+    return;
+  }
+  
+  if( game_round_now == 0 ){
+    GF_ASSERT( 0 );
+    game_round_now = 1;
+  }
+  
+  round = (game_round_now-1) % 7;
+  stage = game_round_now / 7;
+  
+  if( game_round_now % 7 ){
+    stage++;
+  }
+  
+  renshou = game_round_now - 1;
+  
+  OS_Printf( "BSW DEBUG %戦目へ(STAGE %d ROUND %d RENSHOU %d\n",
+      game_round_now, stage, round, renshou );
+  
+  BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, round );
   BSUBWAY_SCOREDATA_SetStageNo_Org1(
-      bsw_scr->scoreData, bsw_scr->play_mode, 1 );
-  BSUBWAY_SCOREDATA_SetRenshou( bsw_scr->scoreData, bsw_scr->play_mode, 6 );
+      bsw_scr->scoreData, bsw_scr->play_mode, stage );
+  BSUBWAY_SCOREDATA_SetRenshou(
+      bsw_scr->scoreData, bsw_scr->play_mode, renshou );
   
   //対戦トレーナー抽選
   BSUBWAY_SCRWORK_SetBtlTrainerNo( bsw_scr );
 }
 
+#if 0
 //--------------------------------------------------------------
 /**
  * バトルサブウェイ　ワーク　２１戦状態に
@@ -2046,30 +2072,11 @@ void BSUBWAY_SCRWORK_DebugFight21( GAMESYS_WORK *gsys )
   BSUBWAY_SCOREDATA_SetStageNo_Org1(
       bsw_scr->scoreData, bsw_scr->play_mode, 3 );
   BSUBWAY_SCOREDATA_SetRenshou( bsw_scr->scoreData, bsw_scr->play_mode, (7*2+6) );
-  
-  //対戦トレーナー抽選
-  BSUBWAY_SCRWORK_SetBtlTrainerNo( bsw_scr );
-}
 
-//--------------------------------------------------------------
-/**
- * バトルサブウェイ　ワーク　４８戦状態に
- */
-//--------------------------------------------------------------
-void BSUBWAY_SCRWORK_DebugFight48( GAMESYS_WORK *gsys )
-{
-  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-  BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
-  GF_ASSERT( bsw_scr != NULL );
-  
-  BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, 6 );
-  BSUBWAY_SCOREDATA_SetStageNo_Org1(
-      bsw_scr->scoreData, bsw_scr->play_mode, 7 );
-  BSUBWAY_SCOREDATA_SetRenshou( bsw_scr->scoreData, bsw_scr->play_mode, (7*6+6) );
-  
   //対戦トレーナー抽選
   BSUBWAY_SCRWORK_SetBtlTrainerNo( bsw_scr );
 }
+#endif
 
 //--------------------------------------------------------------
 /**

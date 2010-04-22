@@ -438,16 +438,18 @@ sub_train_battle_win:
   DEFINE_LOCAL play_mode
   
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-  
+
   //連勝数取得
-  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, SCWK_ANSWER )
+//  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, SCWK_ANSWER )
+//  連勝数ではなくラウンド数になった
+  _BSUBWAY_TOOL( BSWTOOL_GET_NOW_ROUND, BSW_NULL, BSW_NULL, SCWK_ANSWER )
   
   //送信ビーコンセット：バトルサブウェイ連勝中
   //挑戦中に一勝するごとに呼んでください
   _BEACON_SET_REQ_SUBWAY_WIN( SCWK_ANSWER )
   
   //ラウンド更新
-  _BSUBWAY_TOOL( BSWTOOL_INC_ROUND,BSW_NULL, BSW_NULL,SCWK_ANSWER )
+  _BSUBWAY_TOOL( BSWTOOL_INC_ROUND, BSW_NULL, BSW_NULL, SCWK_ANSWER )
   
   //クリアしてるかチェック
   _BSUBWAY_TOOL( BSWSUB_IS_CLEAR, BSW_NULL, BSW_NULL, SCWK_ANSWER )
@@ -523,8 +525,10 @@ _RET
 //--------------------------------------------------------------
 sub_anm_train_battle_win_clear:
 {
-  _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_train_battle_win_clear_jiki )
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_0, anm_train_battle_win_clear_trainer )
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_train_battle_win_clear_jiki )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_train_battle_win_clear_scroll_jiki )
 // _OBJ_ANIME_WAIT() //呼び先で待つ
 }
@@ -556,10 +560,12 @@ _ANIME_LABEL anm_train_battle_win_clear_scroll_jiki
 //--------------------------------------------------------------
 sub_anm_train_battle_win_clear_multi:
 {
-  _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_train_battle_win_clear_multi_jiki )
-  _OBJ_ANIME( BSW_TRAIN_OBJID_PARTNER, anm_train_battle_win_clear_multi_partner )
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_0, anm_train_battle_win_clear_multi_trainer0 )
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_1, anm_train_battle_win_clear_multi_trainer1 )
+  _OBJ_ANIME_WAIT()
+  
+  _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_train_battle_win_clear_multi_jiki )
+  _OBJ_ANIME( BSW_TRAIN_OBJID_PARTNER, anm_train_battle_win_clear_multi_partner )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_train_battle_win_clear_scroll_jiki )
   
 //  _OBJ_ANIME_WAIT() 呼び先で待つ
@@ -568,8 +574,9 @@ _RET
 
 _ANIME_LABEL  anm_train_battle_win_clear_multi_trainer0
   _ANIME_DATA  AC_WAIT_4F,1
-  _ANIME_DATA  AC_WALK_U_8F,2
+  _ANIME_DATA  AC_WALK_U_8F,1
   _ANIME_DATA  AC_WALK_L_8F,1
+  _ANIME_DATA  AC_WALK_U_8F,1
   _ANIME_DATA  AC_STAY_WALK_D_8F,1
   _ANIME_DATA  ACMD_END,0
 
@@ -916,6 +923,8 @@ _RET
 ev_anm_train_battle_win_heal:
 {
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_0, anm_train_battle_win_heal_trainer )
+  _OBJ_ANIME_WAIT()
+
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_train_battle_win_heal_jiki )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_train_battle_win_scroll_jiki )
   _OBJ_ANIME_WAIT()
@@ -949,6 +958,8 @@ ev_anm_train_battle_win_heal_multi:
 {
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_0, anm_train_battle_win_heal_multi_tr0 )
   _OBJ_ANIME( BSW_TRAIN_OBJID_TRAINER_1, anm_train_battle_win_heal_multi_tr1 )
+  _OBJ_ANIME_WAIT()
+  
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_train_battle_win_heal_jiki )
   _OBJ_ANIME( BSW_TRAIN_OBJID_PARTNER, anm_train_battle_win_heal_multi_pt )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_train_battle_win_scroll_jiki )
@@ -958,8 +969,9 @@ _RET
 
 _ANIME_LABEL  anm_train_battle_win_heal_multi_tr0
   _ANIME_DATA  AC_WAIT_4F,1
-  _ANIME_DATA  AC_WALK_U_8F,2
+  _ANIME_DATA  AC_WALK_U_8F,1
   _ANIME_DATA  AC_WALK_L_8F,1
+  _ANIME_DATA  AC_WALK_U_8F,1
   _ANIME_DATA  AC_STAY_WALK_D_8F,1
   _ANIME_DATA  ACMD_END,0
 

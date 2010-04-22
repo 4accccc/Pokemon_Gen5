@@ -5297,12 +5297,13 @@ enum
   DEBUG_BSWAY_BTL_SINGLE_21,
   DEBUG_BSWAY_BTL_DOUBLE_21,
   DEBUG_BSWAY_BTL_MULTI_21,
-  DEBUG_BSWAY_BTL_S_SINGLE_48,
-  DEBUG_BSWAY_BTL_S_DOUBLE_48,
-  DEBUG_BSWAY_BTL_S_MULTI_48,
+  DEBUG_BSWAY_BTL_S_SINGLE_49,
+  DEBUG_BSWAY_BTL_S_DOUBLE_49,
+  DEBUG_BSWAY_BTL_S_MULTI_49,
 
   DEBUG_BSWAY_SET_REGU_OFF,
   DEBUG_BSWAY_SET_BTL_SKIP,
+  DEBUG_BSWAY_ANYSTAGE,
 };
 
 static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
@@ -5337,9 +5338,10 @@ static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
   { DEBUG_FIELD_BSW_20, (void*)DEBUG_BSWAY_BTL_SINGLE_21},
   { DEBUG_FIELD_BSW_21, (void*)DEBUG_BSWAY_BTL_DOUBLE_21},
   { DEBUG_FIELD_BSW_22, (void*)DEBUG_BSWAY_BTL_MULTI_21},
-  { DEBUG_FIELD_BSW_27, (void*)DEBUG_BSWAY_BTL_S_SINGLE_48},
-  { DEBUG_FIELD_BSW_28, (void*)DEBUG_BSWAY_BTL_S_DOUBLE_48},
-  { DEBUG_FIELD_BSW_29, (void*)DEBUG_BSWAY_BTL_S_MULTI_48},
+  { DEBUG_FIELD_BSW_27, (void*)DEBUG_BSWAY_BTL_S_SINGLE_49},
+  { DEBUG_FIELD_BSW_28, (void*)DEBUG_BSWAY_BTL_S_DOUBLE_49},
+  { DEBUG_FIELD_BSW_29, (void*)DEBUG_BSWAY_BTL_S_MULTI_49},
+  { DEBUG_FIELD_BSW_30, (void*)DEBUG_BSWAY_ANYSTAGE},
 };
 
 #define DEBUG_BSUBWAY_LIST_MAX ( NELEMS(DATA_BSubwayMenuList) )
@@ -5354,11 +5356,189 @@ static const DEBUG_MENU_INITIALIZER DebugBSubwayMenuData = {
   NULL
 };
 
+static const FLDMENUFUNC_LIST DATA_BSubwayAnyStageMenuList[] =
+{
+  { DEBUG_FIELD_BSW_31, (void*)BSWAY_MODE_SINGLE },
+  { DEBUG_FIELD_BSW_32, (void*)BSWAY_MODE_DOUBLE },
+  { DEBUG_FIELD_BSW_33, (void*)BSWAY_MODE_MULTI },
+  { DEBUG_FIELD_BSW_34, (void*)BSWAY_MODE_S_SINGLE },
+  { DEBUG_FIELD_BSW_35, (void*)BSWAY_MODE_S_DOUBLE },
+  { DEBUG_FIELD_BSW_36, (void*)BSWAY_MODE_S_MULTI },
+};
+
+#define DEBUG_BSUBWAY_ANYSTAGE_LIST_MAX ( NELEMS(DATA_BSubwayAnyStageMenuList) )
+
+static const DEBUG_MENU_INITIALIZER DebugBSubwayAnyStageMenuData = {
+  NARC_message_d_field_dat,
+  DEBUG_BSUBWAY_ANYSTAGE_LIST_MAX,
+  DATA_BSubwayAnyStageMenuList,
+  &DATA_DebugMenuList_BSubway,
+  1, 1, 20, 12,
+  NULL,
+  NULL
+};
+
+
 static void debug_bsw_SetAuto( GAMESYS_WORK *gsys )
 {
   u8 flag = BSUBWAY_SCRWORK_DebugGetFlag( gsys );
   flag |= BSW_DEBUG_FLAG_AUTO;
   BSUBWAY_SCRWORK_DebugSetFlag( gsys, flag );
+}
+
+typedef struct
+{
+  int seq_no;
+  HEAPID heapID;
+  GAMESYS_WORK *gmSys;
+  GMEVENT *gmEvent;
+  FIELDMAP_WORK *fieldWork;
+  GFL_MSGDATA *msgData;
+  FLDMENUFUNC *menuFunc;
+  
+  int play_mode;
+  int game_round;
+  int before_round;
+  FLDMSGWIN *msgWin;
+  STRBUF *strBuf;
+}DEBUG_BSUBWAY_ANYSTAGE_EVENT_WORK;
+
+//--------------------------------------------------------------
+/**
+ * ƒCƒxƒ“ƒgFƒoƒgƒ‹ƒTƒuƒEƒFƒCƒfƒoƒbƒOƒƒjƒ…[”h¶@”CˆÓ‚ÌƒXƒe[ƒW‚É
+ * @param event GMEVENT
+ * @param seq   ƒV[ƒPƒ“ƒX
+ * @param wk    event work
+ * @retval  GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
+    GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_BSUBWAY_ANYSTAGE_EVENT_WORK  *work = wk;
+  
+  switch( (*seq) ){
+  case 0:
+    work->menuFunc = DEBUGFLDMENU_Init(
+        work->fieldWork, work->heapID,  &DebugBSubwayAnyStageMenuData );
+    (*seq)++;
+    break;
+  case 1:
+    {
+      u32 ret,param;
+      u16 dummy_ret;
+      GMEVENT *next_event = NULL;
+      ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+      
+      if( ret == FLDMENUFUNC_NULL ){  //‘€ì–³‚µ
+        break;
+      }
+      
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      
+      if( ret == FLDMENUFUNC_CANCEL ){  //ƒLƒƒƒ“ƒZƒ‹
+        GFL_STR_DeleteBuffer( work->strBuf );
+        return( GMEVENT_RES_FINISH );
+      }
+      
+      work->play_mode = ret;
+      (*seq)++;
+      break;
+    }
+  case 2:
+    {
+      FLDMSGBG * msgbg = FIELDMAP_GetFldMsgBG( work->fieldWork );
+      work->msgWin = FLDMSGWIN_Add( msgbg, NULL, 1, 1, 8, 2 );
+      work->game_round = 1;
+      work->before_round = 0xffff;
+    }
+    (*seq)++;
+    break;
+  case 3:
+    {
+      int trg = GFL_UI_KEY_GetTrg();
+      int rep = GFL_UI_KEY_GetRepeat();
+      
+      if( trg & PAD_BUTTON_B ){
+        FLDMSGWIN_Delete( work->msgWin );
+        GFL_STR_DeleteBuffer( work->strBuf );
+        return( GMEVENT_RES_FINISH );
+      }
+      
+      if( trg & PAD_BUTTON_A ){
+        FLDMSGWIN_Delete( work->msgWin );
+        GFL_STR_DeleteBuffer( work->strBuf );
+        
+        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, work->play_mode );
+        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, work->game_round );
+        
+        SCRIPT_ChangeScript(
+            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
+      }
+
+      if( (rep & PAD_KEY_UP) ){
+        work->game_round--;
+      }else if( (rep & PAD_KEY_DOWN) ){
+        work->game_round++;
+      }else if( (rep & PAD_KEY_LEFT) ){
+        work->game_round -= 10;
+      }else if( (rep & PAD_KEY_RIGHT) ){
+        work->game_round += 10;
+      }
+      
+      if( work->game_round <= 0 ){
+        work->game_round = 1;
+      }
+      
+      switch( work->play_mode ){
+      case BSWAY_MODE_SINGLE:
+      case BSWAY_MODE_DOUBLE:
+      case BSWAY_MODE_MULTI:
+        if( work->game_round > 21 ){
+          work->game_round = 21;
+        }
+      }
+      
+      if( work->game_round != work->before_round ){
+        work->before_round = work->game_round;
+        STRTOOL_SetNumber(
+            work->strBuf, work->game_round, 5,
+            STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT  );
+        FLDMSGWIN_ClearWindow( work->msgWin );
+        FLDMSGWIN_PrintStrBuf( work->msgWin, 1, 1, work->strBuf );
+      }
+    }
+  }
+  
+  return( GMEVENT_RES_CONTINUE );
+}
+
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void debugMenuCallProc_BSubwayAnyStage(
+    GMEVENT *event, DEBUG_BSUBWAY_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  DEBUG_BSUBWAY_ANYSTAGE_EVENT_WORK *work;
+  
+  GMEVENT_Change( event, debugMenuBSubwayAnyStageEvent,
+      sizeof(DEBUG_BSUBWAY_ANYSTAGE_EVENT_WORK) );
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_BSUBWAY_EVENT_WORK) );
+  
+  work->gmSys = gsys;
+  work->gmEvent = event;
+  work->heapID = heapID;
+  work->fieldWork = fieldWork;
+  work->strBuf = GFL_STR_CreateBuffer( 32, work->heapID );
 }
 
 //--------------------------------------------------------------
@@ -5499,37 +5679,37 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
         return( GMEVENT_RES_CONTINUE );
       case DEBUG_BSWAY_BTL_SINGLE_7: //ƒVƒ“ƒOƒ‹‚Ví‚©‚ç
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_SINGLE );
-        BSUBWAY_SCRWORK_DebugFight7( work->gmSys );
+        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 7 );
         SCRIPT_ChangeScript(
             event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
         return( GMEVENT_RES_CONTINUE );
       case DEBUG_BSWAY_BTL_DOUBLE_7: //ƒ_ƒuƒ‹‚Ví‚©‚ç
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_DOUBLE );
-        BSUBWAY_SCRWORK_DebugFight7( work->gmSys );
+        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 7 );
         SCRIPT_ChangeScript(
             event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
         return( GMEVENT_RES_CONTINUE );
       case DEBUG_BSWAY_BTL_MULTI_7: //ƒ}ƒ‹ƒ`‚Ví‚©‚ç
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_MULTI );
-        BSUBWAY_SCRWORK_DebugFight7( work->gmSys );
+        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 7 );
         SCRIPT_ChangeScript(
             event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
         return( GMEVENT_RES_CONTINUE );
       case DEBUG_BSWAY_BTL_SINGLE_21: //ƒVƒ“ƒOƒ‹‚Q‚Pí‚©‚ç
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_SINGLE );
-        BSUBWAY_SCRWORK_DebugFight21( work->gmSys );
+        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 21 );
         SCRIPT_ChangeScript(
             event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
         return( GMEVENT_RES_CONTINUE );
       case DEBUG_BSWAY_BTL_DOUBLE_21: //ƒ_ƒuƒ‹‚Q‚Pí‚©‚ç
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_DOUBLE );
-        BSUBWAY_SCRWORK_DebugFight21( work->gmSys );
+        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 21 );
         SCRIPT_ChangeScript(
             event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
         return( GMEVENT_RES_CONTINUE );
       case DEBUG_BSWAY_BTL_MULTI_21: //ƒ}ƒ‹ƒ`‚Q‚Pí‚©‚ç
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_MULTI );
-        BSUBWAY_SCRWORK_DebugFight21( work->gmSys );
+        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 21 );
         SCRIPT_ChangeScript(
             event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
         return( GMEVENT_RES_CONTINUE );
@@ -5547,23 +5727,26 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
           BSUBWAY_SCRWORK_DebugSetFlag( work->gmSys, flag );
         }
         break;
-      case DEBUG_BSWAY_BTL_S_SINGLE_48: //‚rƒVƒ“ƒOƒ‹‚S‚Wí‚©‚ç
+      case DEBUG_BSWAY_BTL_S_SINGLE_49: //‚rƒVƒ“ƒOƒ‹‚S‚Xí‚©‚ç
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_SINGLE );
-        BSUBWAY_SCRWORK_DebugFight48( work->gmSys );
+        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 49 );
         SCRIPT_ChangeScript(
             event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
         return( GMEVENT_RES_CONTINUE );
-      case DEBUG_BSWAY_BTL_S_DOUBLE_48: //‚rƒ_ƒuƒ‹‚S‚Wí‚©‚ç
+      case DEBUG_BSWAY_BTL_S_DOUBLE_49: //‚rƒ_ƒuƒ‹‚S‚Xí‚©‚ç
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_DOUBLE );
-        BSUBWAY_SCRWORK_DebugFight48( work->gmSys );
+        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 49 );
         SCRIPT_ChangeScript(
             event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
         return( GMEVENT_RES_CONTINUE );
-      case DEBUG_BSWAY_BTL_S_MULTI_48: //‚rƒ}ƒ‹ƒ`‚S‚Wí‚©‚ç
+      case DEBUG_BSWAY_BTL_S_MULTI_49: //‚rƒ}ƒ‹ƒ`‚S‚Xí‚©‚ç
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_MULTI );
-        BSUBWAY_SCRWORK_DebugFight48( work->gmSys );
+        BSUBWAY_SCRWORK_DebugFightAnyRound( work->gmSys, 49 );
         SCRIPT_ChangeScript(
             event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
+      case DEBUG_BSWAY_ANYSTAGE: //”CˆÓƒXƒe[ƒW
+        debugMenuCallProc_BSubwayAnyStage( event, work );
         return( GMEVENT_RES_CONTINUE );
       default:
         break;
@@ -5597,7 +5780,7 @@ static BOOL debugMenuCallProc_BSubway( DEBUG_MENU_EVENT_WORK *wk )
   GMEVENT *event = wk->gmEvent;
   HEAPID heapID = wk->heapID;
   FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  DEBUG_WEATERLIST_EVENT_WORK *work;
+  DEBUG_BSUBWAY_EVENT_WORK  *work;
 
   GMEVENT_Change( event,
     debugMenuBSubwayEvent, sizeof(DEBUG_BSUBWAY_EVENT_WORK) );

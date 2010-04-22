@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-04-22T17:24:34"/>
+	<create user="kagaya" host="W00143" date="2010-04-22T23:00:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1368,8 +1368,8 @@ allocable (0x[2:07:８桁:5])</language>
 	</row>
 
 	<row id="DEBUG_FIELD_BSW_23">
-		<language name="JPN" width="160">戦闘飛ばしON</language>
-		<language name="JPN_KANJI" width="160">戦闘飛ばしON</language>
+		<language name="JPN" width="160">戦闘飛ばしON_OFF</language>
+		<language name="JPN_KANJI" width="160">戦闘飛ばしON_OFF</language>
 	</row>
 
 	<row id="DEBUG_FIELD_BSW_24">
@@ -1378,8 +1378,8 @@ allocable (0x[2:07:８桁:5])</language>
 	</row>
 
 	<row id="DEBUG_FIELD_BSW_25">
-		<language name="JPN" width="160">レギュON</language>
-		<language name="JPN_KANJI" width="160">レギュON</language>
+		<language name="JPN" width="160">レギュON_OFF</language>
+		<language name="JPN_KANJI" width="160">レギュON_OFF</language>
 	</row>
 
 	<row id="DEBUG_FIELD_BSW_26">
@@ -1388,18 +1388,53 @@ allocable (0x[2:07:８桁:5])</language>
 	</row>
 
 	<row id="DEBUG_FIELD_BSW_27">
-		<language name="JPN" width="160">Ｓシングル４８戦から</language>
-		<language name="JPN_KANJI" width="160">Ｓシングル４８戦から</language>
+		<language name="JPN" width="160">Ｓシングル４９戦から</language>
+		<language name="JPN_KANJI" width="160">Ｓシングル４９戦から</language>
 	</row>
 
 	<row id="DEBUG_FIELD_BSW_28">
-		<language name="JPN" width="160">Ｓダブル４８戦から</language>
-		<language name="JPN_KANJI" width="160">Ｓダブル４８戦から</language>
+		<language name="JPN" width="160">Ｓダブル４９戦から</language>
+		<language name="JPN_KANJI" width="160">Ｓダブル４９戦から</language>
 	</row>
 
 	<row id="DEBUG_FIELD_BSW_29">
-		<language name="JPN" width="160">Ｓマルチ４８戦から</language>
-		<language name="JPN_KANJI" width="160">Ｓマルチ４８戦から</language>
+		<language name="JPN" width="160">Ｓマルチ４９戦から</language>
+		<language name="JPN_KANJI" width="160">Ｓマルチ４９戦から</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_30">
+		<language name="JPN" width="160">ステージセレクト</language>
+		<language name="JPN_KANJI" width="160">ステージセレクト</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_31">
+		<language name="JPN" width="160">シングル</language>
+		<language name="JPN_KANJI" width="160">シングル</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_32">
+		<language name="JPN" width="160">ダブル</language>
+		<language name="JPN_KANJI" width="160">ダブル</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_33">
+		<language name="JPN" width="160">マルチ</language>
+		<language name="JPN_KANJI" width="160">マルチ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_34">
+		<language name="JPN" width="160">Ｓシングル</language>
+		<language name="JPN_KANJI" width="160">Ｓシングル</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_35">
+		<language name="JPN" width="160">Ｓダブル</language>
+		<language name="JPN_KANJI" width="160">Ｓダブル</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_36">
+		<language name="JPN" width="160">Ｓマルチ</language>
+		<language name="JPN_KANJI" width="160">Ｓマルチ</language>
 	</row>
 
 	<row id="DEBUG_FIELD_WIFI_BSW_01">
