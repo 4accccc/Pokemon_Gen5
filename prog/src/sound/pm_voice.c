@@ -626,7 +626,9 @@ void	PMVOICE_SetVolume( u32 voicePlayerIdx, s8 volume )
 	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
 	if(voicePlayer->active == FALSE){ return; }
 
-	voicePlayer->volume = volume;
+	voicePlayer->volume += volume;
+	if(voicePlayer->volume < 0){ voicePlayer->volume = 0; }
+	if(voicePlayer->volume > 127){ voicePlayer->volume = 127; }
 	NNS_SndWaveOutSetVolume(voicePlayer->waveHandle, voicePlayer->volume);
 
 	if( voicePlayer->subWaveUse == TRUE ){
