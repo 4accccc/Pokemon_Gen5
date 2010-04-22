@@ -324,7 +324,7 @@ EVENT_START   ev_pos_c02_boss_01
 	ENDIF
 	
 	//Nとの戦闘
-//	_CALL		ev_boss_btl
+	_CALL		ev_boss_btl
 	
 	//Nが喋る
 	//Ｎ『いまの　ボクの　ともだちとでは
