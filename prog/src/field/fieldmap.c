@@ -1099,7 +1099,6 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   }
   SET_CHECK("update_top:CLACT");
 
-
   // ----------------------top側3D描画処理---------------------------------------
   // これ以降にデータ更新処理を入れないこと。
   GFL_CLACT_SYS_Main(); // CLSYSメイン
@@ -2875,12 +2874,19 @@ static void zoneChange_SetMMdl( GAMEDATA *gdata,
 //--------------------------------------------------------------
 static void zoneChange_SetBGM( FIELDMAP_WORK* fieldWork, u32 next_zone_id )
 {
-  GAMEDATA*    gdata = GAMESYSTEM_GetGameData( fieldWork->gsys );
-  ISS_SYS*     iss   = GAMESYSTEM_GetIssSystem( fieldWork->gsys );
-  FIELD_SOUND* fsnd  = GAMEDATA_GetFieldSound( gdata );
+  GAMEDATA*        gdata  = GAMESYSTEM_GetGameData( fieldWork->gsys );
+  ISS_SYS*         iss    = GAMESYSTEM_GetIssSystem( fieldWork->gsys );
+  FIELD_SOUND*     fsnd   = GAMEDATA_GetFieldSound( gdata );
+  PLAYER_WORK*     player = GAMEDATA_GetMyPlayerWork( gdata );
+  PLAYER_MOVE_FORM form   = PLAYERWORK_GetMoveForm( player );
 
+  // ISSシステムにゾーンの切り替わりを通知
   ISS_SYS_ZoneChange( iss, next_zone_id );
-  FSND_ChangeBGM_byZoneChange( fsnd, gdata, next_zone_id );
+
+  // BGM を変更
+  if( form != PLAYER_MOVE_FORM_SWIM ) { // なみのり時は変更しない
+    FSND_ChangeBGM_byZoneChange( fsnd, gdata, next_zone_id );
+  }
 }
 
 //--------------------------------------------------------------
