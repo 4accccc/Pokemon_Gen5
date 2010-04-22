@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T16:07:05"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T18:43:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c08r0102_veteranw_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c08r0102_veteranw_01">
 		<comment>♀
 ・クリア前</comment>
 		<attribute name="キャラ指定">VETERANW</attribute>
@@ -308,7 +308,7 @@
 あたくしより　強くって……！</language>
 	</row>
 
-	<row id="msg_c08r0102_veteranw_02w" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c08r0102_veteranw_02w">
 		<comment>♀
 ・クリア後＋WHITEver</comment>
 		<attribute name="キャラ指定">VETERANW</attribute>
@@ -324,7 +324,7 @@
 特攻が　がくっと　さがります</language>
 	</row>
 
-	<row id="msg_c08r0102_veteranw_02b" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c08r0102_veteranw_02b">
 		<comment>♀
 ・クリア後＋BLACKver</comment>
 		<attribute name="キャラ指定">VETERANW</attribute>
@@ -340,7 +340,7 @@
 特攻が　がくっと　さがります</language>
 	</row>
 
-	<row id="msg_c08r0102_footballm_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08r0102_footballm_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手処理
 　No562「かるいし」</comment>
@@ -355,7 +355,7 @@
 ぜひぜひ　これを　持たせなさい！▼</language>
 	</row>
 
-	<row id="msg_c08r0102_footballm_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08r0102_footballm_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
@@ -371,7 +371,7 @@
 ダメージを　抑えることが　できるね</language>
 	</row>
 
-	<row id="msg_c08r0102_woman2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08r0102_woman2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・はい/いいえの選択肢表示
 ・はい→woman2_03
@@ -386,7 +386,7 @@
 あなた　使ってみる……？</language>
 	</row>
 
-	<row id="msg_c08r0102_woman2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08r0102_woman2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">WOMAN2
@@ -397,7 +397,7 @@
 困っちゃうよね……</language>
 	</row>
 
-	<row id="msg_c08r0102_woman2_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08r0102_woman2_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・アイテム入手処理
 　No566「ねらいのまと」</comment>
@@ -409,7 +409,7 @@
 じゃあ　これを　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_c08r0102_woman2_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08r0102_woman2_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">WOMAN2

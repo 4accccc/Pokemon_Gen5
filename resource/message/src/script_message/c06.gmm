@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T22:37:33"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T18:37:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,7 +364,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1300" top="137" right="2005" bottom="765" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="113" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -949,16 +949,16 @@
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラクター">GIRL2</attribute>
-		<language name="JPN" width="256">フウロおねえちゃんの　おじいちゃん
+		<language name="JPN" width="256">フウロさんの　おじいちゃん
 でんせつの　ひこうきのり　だったの[BE:01:ページ切り替え（クリア）]
-あっ　フウロねえちゃん　てのは
+あっ　フウロさん　てのは
 このまちの　ジムリーダー！[BE:00:ページ切り替え（行送り）]
-やさいい　おねえちゃん　なんだから！</language>
-		<language name="JPN_KANJI" width="256">フウロおねえちゃんの　おじいちゃん
+やさしい　おねえさん　なんだから！</language>
+		<language name="JPN_KANJI" width="256">フウロさんの　おじいちゃん
 伝説の　飛行機乗り　だったの[BE:01:ページ切り替え（クリア）]
-あっ　フウロねえちゃん　てのは
+あっ　フウロさん　てのは
 この街の　ジムリーダー！[BE:00:ページ切り替え（行送り）]
-優しい　おねえちゃん　なんだから！</language>
+優しい　お姉さん　なんだから！</language>
 	</row>
 
 	<row id="msg_c06_rangerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -1008,20 +1008,20 @@
 無理矢理　奪うのは　同じことなの？</language>
 	</row>
 
-	<row id="msg_c06_workman_01w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c06_workman_01w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・WHITEver</comment>
 		<attribute name="キャラクター">OLDMAN1</attribute>
 		<language name="JPN" width="256">おいしい　やさいを　たべたいなら
 しぜんで　そだてるのが　いちばんさ▼
 さまざまに　かわる　てんこうのなか
-たえて　そだてば　うまくなるよ▼
+たえて　そだてば　おいしくなるよ▼
 ときどき　ポケモンに　たべられるのが
 その　しょうこ　ってもんだよ</language>
 		<language name="JPN_KANJI" width="256">おいしい　野菜を　食べたいなら
 自然で　育てるのが　一番さ▼
 さまざまに　変わる　天候のなか
-耐えて　育てば　うまくなるよ▼
+耐えて　育てば　おいしくなるよ▼
 ときどき　ポケモンに　食べられるのが
 その　証拠って　もんだよ</language>
 	</row>
