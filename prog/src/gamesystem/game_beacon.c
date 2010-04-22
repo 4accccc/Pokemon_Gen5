@@ -2368,7 +2368,6 @@ void BEACONINFO_Set_FreeWord(GAMEBEACON_INFO *info, const STRBUF *free_word)
 //==================================================================
 void GAMEBEACON_Set_ZoneChange(ZONEID zone_id, const GAMEDATA *cp_gamedata)
 {
-  if(_CheckPriority(GAMEBEACON_DETAILS_NO_WALK) == FALSE){ return; };
   BEACONINFO_Set_ZoneChange(&GameBeaconSys->send.info, zone_id, cp_gamedata);
 }
 
