@@ -14,6 +14,9 @@
 #include "arc/enceff_mdl.naix"
 
 #include "system/main.h"
+
+#define FADE_START  (10*FX32_ONE)
+
 //--------------------------------------------------------------
 /// ENCEFF_MDL_WORK
 //--------------------------------------------------------------
@@ -34,6 +37,7 @@ typedef struct
   int MdlArcIdx;
   int AnmArcIdx;
   int Fade;
+  BOOL FadeStart;
 }ENCEFF_MDL_WORK;
 
 //======================================================================
@@ -286,13 +290,27 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
 
 		work->dMode = FIELDMAP_GetDraw3DMode(work->fieldWork);
 		FIELDMAP_SetDraw3DMode(work->fieldWork, DRAW3DMODE_ENCEFF);
-
-    GFL_FADE_SetMasterBrightReq(work->Fade, 0, 16, 3 );  //両画面フェードアウト
+    
+    work->FadeStart = FALSE;
     (*seq)++;
     break;
 	case 4:
-		if(GFL_G3D_OBJECT_IncAnimeFrame(work->g3DobjEff, 0, FX32_ONE*2) == FALSE){
-			(*seq)++;
+    {
+      fx32 anmFrm;
+      int frm;
+      GFL_G3D_OBJECT_GetAnimeFrame( work->g3DobjEff, 0, &frm );
+      anmFrm = (fx32)frm;
+      if ( (!work->FadeStart) && (anmFrm >= FADE_START) )
+      {
+        GFL_FADE_SetMasterBrightReq(work->Fade, 0, 16, 3 );  //両画面フェードアウト
+        work->FadeStart = TRUE;
+      }
+
+      if ( (GFL_G3D_OBJECT_IncAnimeFrame(work->g3DobjEff, 0, FX32_ONE) == FALSE) &&
+           (GFL_FADE_CheckFade() == FALSE) )
+      {
+        (*seq)++;
+      }
 		}
     break;
 	case 5:
