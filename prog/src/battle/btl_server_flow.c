@@ -2107,7 +2107,9 @@ static void scEvent_ActProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 //----------------------------------------------------------------------------------
 static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 {
-  if( (BTL_MAIN_GetCompetitor(wk->mainModule) != BTL_COMPETITOR_COMM)
+  BtlCompetitor competitor = BTL_MAIN_GetCompetitor(wk->mainModule);
+
+  if( ((competitor == BTL_COMPETITOR_TRAINER) || (competitor == BTL_COMPETITOR_WILD))
   &&  (BTL_MAINUTIL_PokeIDtoClientID(BPP_GetID(bpp)) == (BTL_MAIN_GetPlayerClientID(wk->mainModule)))
   ){
     const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
