@@ -37,22 +37,23 @@ EVENT_START   ev_d06r0301_sage3_01
 	_MSGWIN_CLOSE()
 	
 	//プラズマ団のしたっぱをイベント地に移動
-	_OBJ_POS_CHANGE(D06R0301_HAKAIM_01,12,-2,40,DIR_DOWN)
-	_OBJ_POS_CHANGE(D06R0301_HAKAIW_01,12,-2,39,DIR_DOWN)
+	_OBJ_POS_CHANGE(D06R0301_HAKAIM_01,12,-2,39,DIR_DOWN)
+	_OBJ_POS_CHANGE(D06R0301_HAKAIW_01,12,-2,38,DIR_DOWN)
 	
 	//プラズマ団のしたっぱがやってくる
 	_OBJ_ANIME(D06R0301_HAKAIM_01,anm_d06r0301_hakaim_move_1)
 	_OBJ_ANIME(D06R0301_HAKAIW_01,anm_d06r0301_hakaiw_move_1)
-	_OBJ_ANIME_WAIT()
-	
+
 	IF $LWK_POSX == 15 THEN
-		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_move_01)
 		_OBJ_ANIME(D06R0301_SAGE3_01,anm_common_turn_u)
+		_TIME_WAIT(8)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_move_01)
 	ELSIF $LWK_POSX == 16 THEN
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
 	ELSIF $LWK_POSX == 17 THEN
-		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_move_02)
 		_OBJ_ANIME(D06R0301_SAGE3_01,anm_common_turn_u)
+		_TIME_WAIT(8)
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_move_02)
 	ENDIF
 	_OBJ_ANIME_WAIT()
 		
@@ -106,19 +107,17 @@ EVENT_START   ev_d06r0301_sage3_01
 	_MSGWIN_CLOSE()
 	
 	//ハンサムを表示する
-	_OBJ_ADD_EX(12,39,DIR_DOWN,MMDL_ID_EVENTOBJ_00,ICPO,MV_DMY)
+	_OBJ_ADD_EX(12,38,DIR_DOWN,MMDL_ID_EVENTOBJ_00,ICPO,MV_DMY)
 	
 	//ハンサムの音楽スタート
 	_START_EVENT_BGM(SEQ_BGM_E_HANDSOME)
 	
 	//ハンサムがやってくる
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_icpo_come_01)
-	_TIME_WAIT(48)
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
+	_TIME_WAIT(40)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_move_03)
 	_OBJ_ANIME(D06R0301_HAKAIM_01,anm_d06r0301_hakaim_move_4)
 	_OBJ_ANIME(D06R0301_HAKAIW_01,anm_d06r0301_hakaiw_move_3)
-	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_move_03)
 	_OBJ_ANIME_WAIT()
 
 	//さてと……　プラズマ団について
@@ -131,11 +130,10 @@ EVENT_START   ev_d06r0301_sage3_01
 	_MSGWIN_CLOSE()
 	_OBJ_ANIME(D06R0301_HAKAIM_01,anm_common_turn_l)
 	_OBJ_ANIME(D06R0301_HAKAIW_01,anm_common_turn_r)
-	_TIME_WAIT(16)
+	_TIME_WAIT(28)
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_common_turn_l)
-	_TIME_WAIT(8)
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
 	_OBJ_ANIME_WAIT()
 	
@@ -155,10 +153,15 @@ EVENT_START   ev_d06r0301_sage3_01
 	_MSGWIN_CLOSE()
 	
 	_END_EVENT_BGM()		//イベントBGM停止
-	
+
 	//画面暗転----------------------------
+	_TIME_WAIT(8)
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_icpo_come_02)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_d)
+	_TIME_WAIT(8)
 	_BLACK_OUT_SLOW()
 	_DISP_FADE_END_CHECK()
+	_OBJ_ANIME_WAIT()
 
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 	_OBJ_DEL( D06R0301_SAGE3_01 )
@@ -174,7 +177,7 @@ EVENT_START   ev_d06r0301_sage3_01
 	$WK_SCENE_AFTER_SAGE += 1
 	
 	//七賢人非表示
-	_FLAG_SET( FH_01 )
+	_FLAG_SET(FV_D06R0301_SAGE)
 	
 	//========================================//
 
@@ -195,7 +198,6 @@ ev_hakaim_btl:
 	ENDIF
 _RET
 			
-
 ev_hakaiw_btl:
 	//対戦へ
 	_TRAINER_BTL_SET( TRID_BAKER_03, 0 )
@@ -215,7 +217,9 @@ _RET
 // 主人公：戦闘ポジションへ                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_move_01
-
+	
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA AC_WAIT_4F,11
 	_ANIME_DATA AC_WALK_U_8F,1
 	_ANIME_DATA AC_WALK_R_8F,1
 	_ANIME_DATA AC_STAY_WALK_U_8F,1
@@ -223,6 +227,8 @@ _ANIME_LABEL	anm_player_move_01
 
 _ANIME_LABEL	anm_player_move_02
 
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA AC_WAIT_32F,1
 	_ANIME_DATA AC_WALK_U_8F,1
 	_ANIME_DATA AC_WALK_L_8F,1
 	_ANIME_DATA AC_STAY_WALK_U_8F,1
@@ -230,7 +236,7 @@ _ANIME_LABEL	anm_player_move_02
 
 //ハンサムに道をあける
 _ANIME_LABEL	anm_player_move_03
-
+	_ANIME_DATA AC_WAIT_4F,11
 	_ANIME_DATA AC_WALK_L_8F,1
 	_ANIME_DATA AC_WALK_U_8F,1
 	_ANIME_DATA AC_STAY_WALK_D_8F,1
@@ -240,10 +246,18 @@ _ANIME_LABEL	anm_player_move_03
 // ハンサム：主人公にちかづく                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_icpo_come_01
-
-	_ANIME_DATA AC_WALK_D_8F,7
+	
+	_ANIME_DATA AC_WALK_D_8F,8
 	_ANIME_DATA AC_WALK_R_8F,4
 	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// ハンサム：七賢人に近づく                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_icpo_come_02
+	
+	_ANIME_DATA AC_WALK_D_16F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -251,7 +265,7 @@ _ANIME_LABEL	anm_icpo_come_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_d06r0301_hakaim_move_1
 
-	_ANIME_DATA AC_WALK_D_8F,6
+	_ANIME_DATA AC_WALK_D_8F,7
 	_ANIME_DATA AC_WALK_R_8F,4
 	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -259,7 +273,7 @@ _ANIME_LABEL	anm_d06r0301_hakaim_move_1
 //戦闘前、一歩近づく
 _ANIME_LABEL	anm_d06r0301_hakaim_move_2
 
-	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_D_4F,1
 	_ANIME_DATA	ACMD_END,0
 
 //戦闘後、離れる
@@ -272,7 +286,9 @@ _ANIME_LABEL	anm_d06r0301_hakaim_move_3
 
 //ハンサムから逃げる
 _ANIME_LABEL	anm_d06r0301_hakaim_move_4
-
+	
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_MARK_GYOE,1
 	_ANIME_DATA AC_WALK_D_4F,1
 	_ANIME_DATA AC_WALK_R_4F,1
 	_ANIME_DATA AC_WALK_D_4F,2
@@ -284,20 +300,22 @@ _ANIME_LABEL	anm_d06r0301_hakaim_move_4
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_d06r0301_hakaiw_move_1
 
-	_ANIME_DATA AC_WALK_D_8F,7
+	_ANIME_DATA AC_WALK_D_8F,8
 	_ANIME_DATA AC_WALK_R_8F,3
 	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_d06r0301_hakaiw_move_2
 
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_D_4F,2
 	_ANIME_DATA AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //ハンサムから逃げる
 _ANIME_LABEL	anm_d06r0301_hakaiw_move_3
 
+	_ANIME_DATA AC_DIR_L,1
+	_ANIME_DATA AC_MARK_GYOE,1
 	_ANIME_DATA AC_WALK_D_4F,1
 	_ANIME_DATA AC_STAY_WALK_U_4F,1
 	_ANIME_DATA	ACMD_END,0
