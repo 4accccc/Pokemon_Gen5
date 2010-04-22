@@ -84,6 +84,7 @@
 #include "event_debug_local.h"
 
 #include "event_debug_demo3d.h" // for DEBUG_EVENT_FLDMENU_Demo3DSelect
+#include "event_debug_sodateya.h" // for DEBUG_EVENT_DebugMenuSodateya
 #include "event_debug_menu_make_egg.h"  // for DEBUG_EVENT_FLDMENU_MakeEgg
 #include "event_debug_all_connect_check.h" // for EVENT_DEBUG_AllConnectCheck
 
@@ -241,6 +242,7 @@ static BOOL debugMenuCallProc_DebugMvPokemon( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BBDColor( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_MakeEgg( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_Sodateya( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_EncEffList( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_Cutin( DEBUG_MENU_EVENT_WORK *wk );
@@ -336,7 +338,8 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR34, debugMenuCallProc_DebugPDWItem },    //PDWアイテム作成
   { DEBUG_FIELD_STR37, debugMenuCallProc_BoxMax },          //ボックス最大
   { DEBUG_FIELD_STR39, debugMenuCallProc_MyItemMax },       //アイテム最大
-  { DEBUG_FIELD_MAKE_EGG,   debugMenuCallProc_MakeEgg },          //タマゴ作成
+  { DEBUG_FIELD_MAKE_EGG, debugMenuCallProc_MakeEgg },      //タマゴ作成
+  { DEBUG_FIELD_SODATEYA, debugMenuCallProc_Sodateya },     //育て屋
   { DEBUG_FIELD_MAKE_UNDATA,   debugMenuCallProc_DebugMakeUNData }, //国連データ作成
   { DEBUG_FIELD_MYSTERY_00, debugMenuCallProc_MakeMysteryCardList },//ふしぎなおくりものカード作成
   { DEBUG_FIELD_STR63, debugMenuCallProc_SetBtlBox },  //不正チェックを通るポケモンを作成
@@ -823,6 +826,22 @@ static BOOL debugMenuCallProc_MakeEgg( DEBUG_MENU_EVENT_WORK *wk )
   return TRUE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *  @brief 育て屋
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_Sodateya( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GMEVENT* event;
+  
+  event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID( debug_sodateya ), DEBUG_EVENT_DebugMenuSodateya, wk->fieldWork );
+
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+  return TRUE;
+}
+
 //--------------------------------------------------------------
 /**
  * デバッグメニュー呼び出し　通信デバッグ子メニュー
@@ -1181,6 +1200,7 @@ static BOOL debugMenuCallProc_RecordNumInput( DEBUG_MENU_EVENT_WORK *wk )
 
   return( TRUE );
 }
+
 
 //======================================================================
 //======================================================================
