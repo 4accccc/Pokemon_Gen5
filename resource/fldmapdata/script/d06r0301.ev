@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d06r0301.h"
-  //.include  "d06r0301.h"
+  .include  "d06r0301.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,360 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d06r0301
+_EVENT_DATA    ev_d06r0301_sage3_01
 _EVENT_DATA_END
 
+/**************************************************************/
+/*  d06r0301　七賢人 会話用イベントスクリプト                      */
+/**************************************************************/
+EVENT_START   ev_d06r0301_sage3_01
+	
+	DEFINE_LOCAL LWK_POSX
+	DEFINE_LOCAL LWK_POSZ
+	_PLAYER_POS_GET(LWK_POSX,LWK_POSZ)
+	
+	_TALK_OBJ_START()
+	//ヒウンで見たときは　気にも止めなかった
+	_BALLOONWIN_OBJMSG_POS(msg_d06r0301_sage3_end_01, D06R0301_SAGE3_01, POS_DOWN )
+	_MSGWIN_CLOSE()
+	
+	//プラズマ団のしたっぱをイベント地に移動
+	_OBJ_POS_CHANGE(D06R0301_HAKAIM_01,12,-2,40,DIR_DOWN)
+	_OBJ_POS_CHANGE(D06R0301_HAKAIW_01,12,-2,39,DIR_DOWN)
+	
+	//プラズマ団のしたっぱがやってくる
+	_OBJ_ANIME(D06R0301_HAKAIM_01,anm_d06r0301_hakaim_move_1)
+	_OBJ_ANIME(D06R0301_HAKAIW_01,anm_d06r0301_hakaiw_move_1)
+	_OBJ_ANIME_WAIT()
+	
+	IF $LWK_POSX == 15 THEN
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_move_01)
+		_OBJ_ANIME(D06R0301_SAGE3_01,anm_common_turn_u)
+	ELSIF $LWK_POSX == 16 THEN
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
+	ELSIF $LWK_POSX == 17 THEN
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_move_02)
+		_OBJ_ANIME(D06R0301_SAGE3_01,anm_common_turn_u)
+	ENDIF
+	_OBJ_ANIME_WAIT()
+		
+	//わたしが　こいつを　倒しましょう！
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0301_hakaim1_end_01, D06R0301_HAKAIM_01, POS_UR )
+	_MSGWIN_CLOSE()
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_d06r0301_flag_change:
-//  _END
+	_OBJ_ANIME(D06R0301_HAKAIM_01,anm_d06r0301_hakaim_move_2)
+	_OBJ_ANIME_WAIT()
+	
+	//戦闘処理
+//	_CALL  ev_hakaim_btl
+	_TIME_WAIT(64)
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_d06r0301:
-  //とりあえず最初のラベルだけ生成している
-  _END
+	_OBJ_ANIME(D06R0301_HAKAIM_01,anm_d06r0301_hakaim_move_3)
+	_OBJ_ANIME_WAIT()
+	
+	//こいつ　ほんものだ！
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0301_hakaim1_end_02, D06R0301_HAKAIM_01, POS_UR )
+	_MSGWIN_CLOSE()
+
+	_OBJ_ANIME(D06R0301_HAKAIW_01,anm_d06r0301_hakaiw_move_2)
+	_TIME_WAIT(16)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)
+	_OBJ_ANIME_WAIT()
+	
+	
+	//あなたのせいで　元プラズマ団になったのよ！
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0301_hakaiw1_end_01, D06R0301_HAKAIW_01, POS_UL )
+	_MSGWIN_CLOSE()
+	
+//	_CALL  ev_hakaim_btl
+	_TIME_WAIT(64)
+	
+	//元　プラズマ団が　ふつうのポケモントレーナーになる
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0301_hakaiw1_end_02, D06R0301_HAKAIW_01, POS_UL )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_d)
+	_OBJ_ANIME_WAIT()
+	
+	//われら　プラズマ団の　ポケモンも
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0301_sage3_end_01a, D06R0301_SAGE3_01, POS_DR )
+	_MSGWIN_CLOSE()
+	
+	//アイテム入手処理わざマシン「ロックカット」
+	_ITEM_EVENT_KEYWAIT(ITEM_WAZAMASIN69,1)
+	
+	//……いまなら　Nさまも　ポケモンが
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0301_sage3_end_02, D06R0301_SAGE3_01, POS_DR )
+	_MSGWIN_CLOSE()
+	
+	//ハンサムを表示する
+	_OBJ_ADD_EX(12,39,DIR_DOWN,MMDL_ID_EVENTOBJ_00,ICPO,MV_DMY)
+	
+	//ハンサムの音楽スタート
+	_START_EVENT_BGM(SEQ_BGM_E_HANDSOME)
+	
+	//ハンサムがやってくる
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_icpo_come_01)
+	_TIME_WAIT(48)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
+	_OBJ_ANIME(D06R0301_HAKAIM_01,anm_d06r0301_hakaim_move_4)
+	_OBJ_ANIME(D06R0301_HAKAIW_01,anm_d06r0301_hakaiw_move_3)
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_move_03)
+	_OBJ_ANIME_WAIT()
+
+	//さてと……　プラズマ団について
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0301_icpo_end_01, MMDL_ID_EVENTOBJ_00, POS_UL )
+	_MSGWIN_CLOSE()
+
+	//……プラズマ団をやめ　ポケモンと向き合おう
+	_TIME_WAIT(8)
+	_BALLOONWIN_OBJMSG_POS(msg_d06r0301_sage3_end_03, D06R0301_SAGE3_01, POS_DR )
+	_MSGWIN_CLOSE()
+	_OBJ_ANIME(D06R0301_HAKAIM_01,anm_common_turn_l)
+	_OBJ_ANIME(D06R0301_HAKAIW_01,anm_common_turn_r)
+	_TIME_WAIT(16)
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_common_turn_l)
+	_TIME_WAIT(8)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
+	_OBJ_ANIME_WAIT()
+	
+	//他の七賢人(５人)を探していたら分岐
+	IF $WK_SCENE_AFTER_SAGE == 5 THEN
+		_PLAYER_NAME(0)
+		//ありがとう！　きみにつたえることがある
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0301_icpo_end_03, MMDL_ID_EVENTOBJ_00, POS_UL )
+	ELSE
+		//探していない
+		$SCWK_TEMP0 = 5
+		$SCWK_TEMP0 -= $WK_SCENE_AFTER_SAGE
+		_NUMBER( 0, SCWK_TEMP0, 1 )
+		//ありがとう　これでゲーチスをのぞき　のこる
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0301_icpo_end_02, MMDL_ID_EVENTOBJ_00, POS_UL )
+	ENDIF
+	_MSGWIN_CLOSE()
+	
+	_END_EVENT_BGM()		//イベントBGM停止
+	
+	//画面暗転----------------------------
+	_BLACK_OUT_SLOW()
+	_DISP_FADE_END_CHECK()
+
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	_OBJ_DEL( D06R0301_SAGE3_01 )
+	_OBJ_DEL( D06R0301_HAKAIM_01 )
+	_OBJ_DEL( D06R0301_HAKAIW_01 )
+	
+	_BLACK_IN_SLOW()
+	_DISP_FADE_END_CHECK()
+	//暗転復帰---------------------------
+	
+	//========================================//
+	//クリア後七賢人用ワークを加算
+	$WK_SCENE_AFTER_SAGE += 1
+	
+	//七賢人非表示
+	_FLAG_SET( FH_01 )
+	
+	//========================================//
+
+EVENT_END
+
+ev_hakaim_btl:
+	//対戦へ
+	_TRAINER_BTL_SET( TRID_BAKER_03, 0 )
+				
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		_TRAINER_FLAG_SET( TRID_BAKER_03 )
+					
+	ELSE
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+_RET
+			
+
+ev_hakaiw_btl:
+	//対戦へ
+	_TRAINER_BTL_SET( TRID_BAKER_03, 0 )
+				
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		_TRAINER_FLAG_SET( TRID_BAKER_03 )
+					
+	ELSE
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+_RET
+
+//--------------------------------------------------------------------
+// 主人公：戦闘ポジションへ                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_01
+
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_02
+
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//ハンサムに道をあける
+_ANIME_LABEL	anm_player_move_03
+
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_WALK_U_8F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// ハンサム：主人公にちかづく                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_icpo_come_01
+
+	_ANIME_DATA AC_WALK_D_8F,7
+	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// プラズマ団オトコ：主人公にちかづく                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_d06r0301_hakaim_move_1
+
+	_ANIME_DATA AC_WALK_D_8F,6
+	_ANIME_DATA AC_WALK_R_8F,4
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//戦闘前、一歩近づく
+_ANIME_LABEL	anm_d06r0301_hakaim_move_2
+
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//戦闘後、離れる
+_ANIME_LABEL	anm_d06r0301_hakaim_move_3
+
+	_ANIME_DATA AC_DIR_PAUSE_ON,1
+	_ANIME_DATA AC_WALK_U_16F,1
+	_ANIME_DATA AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//ハンサムから逃げる
+_ANIME_LABEL	anm_d06r0301_hakaim_move_4
+
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA AC_WALK_R_4F,1
+	_ANIME_DATA AC_WALK_D_4F,2
+	_ANIME_DATA AC_STAY_WALK_U_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// プラズマ団オンナ：主人公にちかづく                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_d06r0301_hakaiw_move_1
+
+	_ANIME_DATA AC_WALK_D_8F,7
+	_ANIME_DATA AC_WALK_R_8F,3
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_d06r0301_hakaiw_move_2
+
+	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//ハンサムから逃げる
+_ANIME_LABEL	anm_d06r0301_hakaiw_move_3
+
+	_ANIME_DATA AC_WALK_D_4F,1
+	_ANIME_DATA AC_STAY_WALK_U_4F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 主人公：プラズマ団を振り向く                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_s
+
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA AC_WAIT_32F,2
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：びっくりする                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：不思議に思う                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_hatena
+
+	_ANIME_DATA AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：嬉しい                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_onpu
+
+	_ANIME_DATA AC_MARK_ONPU,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：沈黙                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_tenten
+
+	_ANIME_DATA AC_MARK_TENTEN,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：右振り向き                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：下振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：上振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 

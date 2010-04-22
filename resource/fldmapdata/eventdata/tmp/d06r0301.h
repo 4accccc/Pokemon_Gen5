@@ -14,6 +14,9 @@
 #define TR_ELITEW_03                       2
 #define D06R0301_FLD_ITEM_02               3
 #define D06R0301_FLD_ITEM_03               4
+#define D06R0301_SAGE3_01                  5
+#define D06R0301_HAKAIM_01                 6
+#define D06R0301_HAKAIW_01                 7
 
 #endif //ZONE_D06R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d06r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
