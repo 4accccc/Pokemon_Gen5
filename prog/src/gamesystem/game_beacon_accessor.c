@@ -31,7 +31,7 @@ enum{
  BEACON_WSET_TRNAME,      //対戦相手名
  BEACON_WSET_MONSNAME,    //ポケモン種族名
  BEACON_WSET_NICKNAME,    //ポケモンニックネーム
- BEACON_WSET_POKE_W,      //ポケモンニックネーム
+ BEACON_WSET_POKE_W,      //ポケモン種族名とニックネーム
  BEACON_WSET_ITEM,        //アイテム名
  BEACON_WSET_PTIME,       //プレイタイム
  BEACON_WSET_THANKS,      //御礼回数

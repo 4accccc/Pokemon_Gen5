@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-04-21T16:49:42"/>
+	<create user="iwasawa" host="W00157" date="2010-04-21T22:49:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -389,10 +389,21 @@
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="dlc_num_input" back-color="#ff78ff,,,#ff78ff,,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="dlc_num_input01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,,,,,,#ff78ff,,,,,,">
 		<comment>数値入力</comment>
 		<language name="JPN" width="256">[2:04:５桁:0]</language>
 		<language name="JPN_KANJI" width="256">[2:04:５桁:0]</language>
+	</row>
+
+	<row id="dlc_num_input02" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[2:04:５桁:0] [1:1C:簡易会話単語:1]</language>
+		<language name="JPN_KANJI" width="256">[2:04:５桁:0] [1:1C:簡易会話単語:1]</language>
+	</row>
+
+	<row id="dlc_cursor" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<comment>カーソル</comment>
+		<language name="JPN" width="256">&gt;</language>
+		<language name="JPN_KANJI" width="256">&gt;</language>
 	</row>
 
 	<row id="dlc_stack_check_param01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -408,8 +419,34 @@
 		<language name="JPN_KANJI" width="256">[2:01:２桁:0]：なし</language>
 	</row>
 
-	<row id="dlc_action_01" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="dlc_beacon_req_trainer01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>ビーコンリクエスト</comment>
+		<language name="JPN" width="256">ビーコンタイプ　じぶん</language>
+		<language name="JPN_KANJI" width="256">ビーコンタイプ　じぶん</language>
+	</row>
+
+	<row id="dlc_beacon_req_trainer02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ビーコンタイプ　ランダム</language>
+		<language name="JPN_KANJI" width="256">ビーコンタイプ　ランダム</language>
+	</row>
+
+	<row id="dlc_beacon_req_trainer03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ビーコンタイプ　なりすまし</language>
+		<language name="JPN_KANJI" width="256">ビーコンタイプ　なりすまし</language>
+	</row>
+
+	<row id="dlc_beacon_req_action" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">action=[2:01:２桁:0] [1:1C:簡易会話単語:1]</language>
+		<language name="JPN_KANJI" width="256">action=[2:01:２桁:0] [1:1C:簡易会話単語:1]</language>
+	</row>
+
+	<row id="dlc_action_00" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>アクション</comment>
+		<language name="JPN" width="256">NULL</language>
+		<language name="JPN_KANJI" width="256">NULL</language>
+	</row>
+
+	<row id="dlc_action_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">メンバーエントリー</language>
 		<language name="JPN_KANJI" width="256">メンバーエントリー</language>
 	</row>
