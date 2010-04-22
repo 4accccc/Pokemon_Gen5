@@ -198,6 +198,9 @@ static inline int BTL_CALC_Roundup( int value, int min )
   return value;
 }
 
+/**
+ *  ポケモンの最大HP * 1/N を計算（最低１になるように補正）
+ */
 static inline u32 BTL_CALC_QuotMaxHP( const BTL_POKEPARAM* bpp, u32 denom )
 {
   u32 ret = BPP_GetValue( bpp, BPP_MAX_HP ) / denom;
