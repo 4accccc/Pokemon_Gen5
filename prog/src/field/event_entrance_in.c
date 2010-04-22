@@ -23,7 +23,7 @@
 #include "event_entrance_in.h" 
 #include "event_fieldmap_control.h"  // for EVENT_FieldFadeOut_xxxx
 #include "event_entrance_effect.h"   // for EVENT_FieldDoorInAnime
-#include "event_fldmmdl_control.h"   // for EVENT_PlayerOneStepAnime
+#include "event_fldmmdl_control.h"   // for PlayerOneStepStart, CheckPlayerOneStepEnd
 #include "event_disappear.h"         // for EVENT_DISAPPEAR_xxxx
 
 
@@ -59,6 +59,7 @@ typedef struct {
   FIELD_CAMERA_MODE initCameraMode;    // イベント開始時のカメラモード
   u16               zoneID;            // 遷移前のゾーンID
   u16               nextZoneID;        // 遷移後のゾーンID
+  GFL_TCB*          oneStepTCB;        // 自機の一歩移動TCB
 
 } EVENT_WORK;
 
@@ -150,6 +151,7 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
   work->fadeOutType       = fadeOutType;
   work->zoneID            = prevZoneID;
   work->nextZoneID        = nextZoneID;
+  work->oneStepTCB        = NULL;
 
   return event;
 }
@@ -253,11 +255,9 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* s
 
   switch ( *seq ) {
   case 0:  
-    // 自機前進
-    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gameSystem, fieldmap) );
-    (*seq)++;
-    break;
-  case 1: 
+    // 自機の一歩移動アニメ開始
+    work->oneStepTCB = PlayerOneStepAnimeStart( fieldmap );
+
     // 現在のBGMがダンジョンISS && 次のBGMもダンジョンISS ==> BGMフェードアウト
     { 
       ISS_SYS* iss = GAMESYSTEM_GetIssSystem( gameSystem );
@@ -280,24 +280,30 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* s
     }
     (*seq)++;
     break;
+
+  case 1:
+    // 自機の一歩移動アニメ終了待ち
+    if( CheckPlayerOneStepAnimeEnd( work->oneStepTCB ) ) { (*seq)++; }
+    break;
+
   case 2: 
     // BGMフェード完了待ち
-    if( (work->BGMFadeWaitFlag == FALSE) || (PMSND_CheckFadeOnBGM() == FALSE) )
-    { 
-      // SE 再生
+    if( (work->BGMFadeWaitFlag == FALSE) || (PMSND_CheckFadeOnBGM() == FALSE) ) { 
+      // クロスフェードでなければ, SEを再生
       if( work->fadeOutType != FIELD_FADE_CROSS ) { PMSND_PlaySE( SEQ_SE_KAIDAN ); }
       (*seq)++; 
     }
     break;
+
   case 3:
     // 画面フェードアウト
-    if( work->seasonDisplayFlag )
-    { // 季節フェード
+    if( work->seasonDisplayFlag ) { 
+      // 季節フェード
       GMEVENT_CallEvent( event, 
           EVENT_FieldFadeOut_Season( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
     }
-    else
-    { // 基本フェード
+    else { 
+      // 基本フェード
       GMEVENT_CallEvent( event,
           EVENT_FieldFadeOut( gameSystem, fieldmap, work->fadeOutType, FIELD_FADE_WAIT ) );
     }
