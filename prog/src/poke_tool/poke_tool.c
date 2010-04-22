@@ -719,7 +719,7 @@ static void change_monsno_sub_tokusei( POKEMON_PASO_PARAM* ppp, u16 next_monsno,
   u32 rnd = PPP_Get( ppp, ID_PARA_personal_rnd, NULL );
   u16 param = POKEPER_ID_speabi1;
   if( PPP_Get( ppp, ID_PARA_tokusei_3_flag, NULL ) )
-  { 
+  {
     param = POKEPER_ID_speabi3;
   }
   else if( Personal_GetTokuseiCount(ppd) == 2 ){
@@ -1402,7 +1402,7 @@ void  PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos )
  */
 //============================================================================================
 u16  PP_SetWazaPPCont( POKEMON_PARAM *pp, u16 wazano )
-{ 
+{
   return PPP_SetWazaPPCont( &pp->ppp, wazano );
 }
 
@@ -1419,7 +1419,7 @@ u16  PP_SetWazaPPCont( POKEMON_PARAM *pp, u16 wazano )
  */
 //============================================================================================
 u16  PPP_SetWazaPPCont( POKEMON_PASO_PARAM *ppp, u16 wazano )
-{ 
+{
   int i;
   u8  pp;
   u16 waza;
@@ -1459,7 +1459,7 @@ u16  PPP_SetWazaPPCont( POKEMON_PASO_PARAM *ppp, u16 wazano )
  */
 //============================================================================================
 void  PP_SetWazaPosPPCont( POKEMON_PARAM *pp, u16 wazano, u8 pos )
-{ 
+{
   PPP_SetWazaPosPPCont( &pp->ppp, wazano, pos );
 }
 
@@ -1473,7 +1473,7 @@ void  PP_SetWazaPosPPCont( POKEMON_PARAM *pp, u16 wazano, u8 pos )
  */
 //============================================================================================
 void  PPP_SetWazaPosPPCont( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos )
-{ 
+{
   //今回、わざマシンを何回も使えるので、
   //わざマシンを使い続けることで、PPの回復ができてしまう
   //そのため以前のPPを引き継ぐ　2010/3/23 nagihashi
@@ -1497,7 +1497,7 @@ void  PPP_SetWazaPosPPCont( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos )
 
       //技を上書きしていた場合、PPを引き継ぐ
       if( is_exits )
-      { 
+      {
         dstPP = MATH_CLAMP( dstPP, 0, srcPP );
       }
     }
@@ -1929,21 +1929,21 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
   GF_ASSERT( rare_flag  < PTL_RARE_SPEC_MAX );
 
   if( sex == PTL_SEX_SPEC_UNKNOWN )
-  { 
+  {
     rnd = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
   }
   else
-  { 
+  {
     rnd = POKETOOL_CalcPersonalRand( mons_no, form_no, sex );
   }
 
-  switch( rare_flag ){ 
+  switch( rare_flag ){
   case PTL_RARE_SPEC_TRUE:
-    { 
+    {
       u32 rare_mask = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) );
       rnd &= 0x000000ff;
       if( tokusei != PTL_TOKUSEI_SPEC_BOTH )
-      { 
+      {
         if( ( rnd & 0x00000001 ) != tokusei )
         {
           if( sex == PTL_SEX_FEMALE )
@@ -1961,7 +1961,7 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
         }
       }
       else
-      { 
+      {
         if( sex == PTL_SEX_FEMALE )
         {
           //乱数が０のときは、思ったような値にならないがあきらめてもらうしかない
@@ -1969,7 +1969,7 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
           {
             rnd--;
             if( ( GFUser_GetPublicRand( 2 ) ) && ( rnd ) )
-            { 
+            {
               rnd--;
             }
           }
@@ -1978,7 +1978,7 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
         {
           rnd++;
           if( GFUser_GetPublicRand( 2 ) )
-          { 
+          {
             rnd++;
           }
         }
@@ -1987,7 +1987,7 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
     }
     break;
   case PTL_RARE_SPEC_FALSE:
-    { 
+    {
       u32 rare_false_rnd = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) ) & 0xff00;
       rare_false_rnd = ( rare_false_rnd ^ 0xff00 ) << 16;
       rnd &= 0x000000ff;
@@ -1996,7 +1996,7 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
     /* fallthru */
   case PTL_RARE_SPEC_BOTH:
     if( tokusei != PTL_TOKUSEI_SPEC_BOTH )
-    { 
+    {
       if( ( rnd & 0x00000001 ) != tokusei )
       {
         if( sex == PTL_SEX_FEMALE )
@@ -2014,7 +2014,7 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
       }
     }
     else
-    { 
+    {
       if( sex == PTL_SEX_FEMALE )
       {
         //乱数が０のときは、思ったような値にならないがあきらめてもらうしかない
@@ -2022,7 +2022,7 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
         {
           rnd--;
           if( ( GFUser_GetPublicRand( 2 ) ) && ( rnd ) )
-          { 
+          {
             rnd--;
           }
         }
@@ -2031,7 +2031,7 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
       {
         rnd++;
         if( GFUser_GetPublicRand( 2 ) )
-        { 
+        {
           rnd++;
         }
       }
@@ -2204,15 +2204,15 @@ BOOL  POKETOOL_CheckWazaOshie( u16 mons_no, u16 form_no, int waza_oshie_no )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  なにか１つでもリボンをもっているかチェック
+ *  @brief  なにか１つでもリボンをもっているかチェック
  *
- *	@param	const POKEMON_PARAM   ポケモンパラメータ
+ *  @param  const POKEMON_PARAM   ポケモンパラメータ
  *
- *	@return TRUE もっている FALSEもっていない
+ *  @return TRUE もっている FALSEもっていない
  */
 //-----------------------------------------------------------------------------
 BOOL PP_CheckRibbon( const POKEMON_PARAM *pp )
-{ 
+{
   BOOL ret;
   POKEMON_PASO_PARAM1 *ppp1;
   POKEMON_PASO_PARAM2 *ppp2;
@@ -2290,7 +2290,7 @@ PtlTasteJudge POKETOOL_CheckDesiredTaste( u8 seikaku, PtlTaste taste )
  */
 //=============================================================================================
 void  PP_SetTokusei3( POKEMON_PARAM* pp, int mons_no, int form_no )
-{ 
+{
   PPP_SetTokusei3( &pp->ppp, mons_no, form_no );
 }
 
@@ -2304,14 +2304,14 @@ void  PP_SetTokusei3( POKEMON_PARAM* pp, int mons_no, int form_no )
  */
 //=============================================================================================
 void  PPP_SetTokusei3( POKEMON_PASO_PARAM* ppp, int mons_no, int form_no )
-{ 
+{
   u32 tokusei = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_speabi3 );
   if(tokusei){
     PPP_Put( ppp, ID_PARA_speabino, tokusei );
     PPP_Put( ppp, ID_PARA_tokusei_3_flag, 1 );
   }
   else
-  { 
+  {
     POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
     u32 rnd = PPP_Get( ppp, ID_PARA_personal_rnd, NULL );
     u16 param = POKEPER_ID_speabi1;
@@ -3062,6 +3062,7 @@ static  void  pp_putAct( POKEMON_PARAM *pp, int paramID, u32 arg )
 static inline u32 adjustExp( POKEMON_PASO_PARAM1* ppp1, u32 currentExp, u32 nextExp )
 {
   u32 sum, margin;
+  int gain;
 
   sum = ppp1->hp_exp
       + ppp1->pow_exp
@@ -3071,8 +3072,10 @@ static inline u32 adjustExp( POKEMON_PASO_PARAM1* ppp1, u32 currentExp, u32 next
       + ppp1->spedef_exp;
 
   margin = PARA_EXP_TOTAL_MAX - sum;
-  if( nextExp > margin ){
-    nextExp = margin;
+  gain = (int)nextExp - (int)currentExp;
+  if( gain > margin ){
+    gain = margin;
+    nextExp = currentExp + gain;
   }
 
   if( nextExp > PARA_EXP_MAX ){
@@ -3787,7 +3790,7 @@ static  u16 calc_abi_seikaku( u8 chr, u16 para, u8 cond )
  */
 //============================================================================================
 PtlSeikakuChgValue  POKETOOL_GetSeikakuChangeValue( u8 chr, u8 cond )
-{ 
+{
   GF_ASSERT( cond != PTL_ABILITY_HP );
   GF_ASSERT( cond < PTL_ABILITY_MAX );
 
@@ -4080,6 +4083,6 @@ void POKETOOL_CopyPPtoPP( POKEMON_PARAM* pp_src, POKEMON_PARAM* pp_dst )
  */
 //==================================================================
 PokeType  POKETOOL_GetPokeTypeFromItem( u16 item )
-{ 
+{
   return get_type_from_item( item );
 }
