@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-04-20T17:14:47"/>
+	<create user="nakamura_akira" host="W00161" date="2010-04-22T15:24:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -352,7 +352,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1365" top="176" right="2070" bottom="804" maximized="no" rayout="Vertical2">
+	<dialog left="1453" top="201" right="2158" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="163" right="1280" bottom="561" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -7665,11 +7665,11 @@ woman2_23へ続く
 		<attribute name="キャラ指定">BOY2
 挨拶隊員</attribute>
 		<language name="JPN" width="256">うん!　いいあいさつだね！
-きくだけで　げんきが　でるよ！▼
+げんきが　でるよ！▼
 またきがるに　あいさつしてね！
 まってるよ</language>
 		<language name="JPN_KANJI" width="256">うん!　いいあいさつだね！
-聞くだけで　元気が　でるよ！▼
+元気が　でるよ！▼
 また気軽に　あいさつしてね！
 まってるよ</language>
 	</row>
@@ -7753,11 +7753,11 @@ girl4_04へ続く
 『いいえ』　⇒　girl4_06へ</comment>
 		<attribute name="キャラ指定">GIRL4
 お礼隊員</attribute>
-		<language name="JPN" width="256">よかったら
-またあなたの　かんしゃの　きもちを▽
+		<language name="JPN" width="256">よかったら　またあなたの
+かんしゃの　きもちを▽
 おしえてくれるかしら？</language>
-		<language name="JPN_KANJI" width="256">よかったら
-またあなたの　感謝の　気持ちを▽
+		<language name="JPN_KANJI" width="256">よかったら　またあなたの
+感謝の　気持ちを▽
 教えてくれるかしら？</language>
 	</row>
 
@@ -7788,13 +7788,19 @@ girl4_04へ続く
 		<attribute name="キャラ指定">GIRL4
 お礼隊員</attribute>
 		<language name="JPN" width="256">すてきな　ことばね
-きくだけで　こころが▽
-あたたかくなるわ▼
-かんしゃの　きもちを
-いつも　わすれないでね</language>
+こころが　あたたかくなるわ▼
+だれかが　あなたを
+たすけてくれたときは▽
+かんしゃの　きもちを　つたえてあげて▼
+そのきもちは　きっと　あいてに　
+つたわるはずよ</language>
 		<language name="JPN_KANJI" width="256">素敵な　言葉ね
-聞くだけで　心が　暖かくなるわ▼
-感謝の　気持ちを　いつも　忘れないでね</language>
+心が　暖かくなるわ▼
+だれかが　あなたを　
+助けてくれたときは▽
+感謝の　気持ちを　伝えてあげて▼
+その気持ちは　きっと　相手に　
+伝わるはずよ</language>
 	</row>
 
 	<row id="msg_c03r0101_boy1_01">
