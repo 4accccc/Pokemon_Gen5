@@ -772,14 +772,14 @@ EVENT_START ev_fld_item_86
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP= X= Y= ITEM=わざマシン２６ FLAG=67
+// MAP=d04r3401 X=17 Y=9 ITEM=わざマシン２６ FLAG=67
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_67
   _FLD_ITEM_EVENT ITEM_WAZAMASIN26,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP= X=49 Y=25 ITEM=プラスパワー FLAG=51
+// MAP=c04p01 X=49 Y=25 ITEM=プラスパワー FLAG=51
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_51
   _FLD_ITEM_EVENT ITEM_PURASUPAWAA,1
@@ -1143,14 +1143,14 @@ EVENT_START ev_fld_item_72
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d070201 X=60 Y=8 ITEM=つきのいし FLAG=73
+// MAP=d07r0201 X=60 Y=8 ITEM=つきのいし FLAG=73
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_73
   _FLD_ITEM_EVENT ITEM_TUKINOISI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d070301 X=4 Y=41 ITEM=ポイントアップ FLAG=74
+// MAP=d07r0301 X=4 Y=41 ITEM=ポイントアップ FLAG=74
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_74
   _FLD_ITEM_EVENT ITEM_POINTOAPPU,1
@@ -1185,7 +1185,7 @@ EVENT_START ev_fld_item_89
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d070301 X=14 Y=47 ITEM=きんのたま FLAG=130
+// MAP=d07r0301 X=14 Y=47 ITEM=きんのたま FLAG=130
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_130
   _FLD_ITEM_EVENT ITEM_KINNOTAMA,1
@@ -1213,10 +1213,10 @@ EVENT_START ev_fld_item_179
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d08r0301 X=6 Y=11 ITEM=ふしぎなアメ FLAG=94
+// MAP=r13 X=700 Y=177 ITEM=きれいなウロコ FLAG=94
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_94
-  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
+  _FLD_ITEM_EVENT ITEM_KIREINAUROKO,1
 EVENT_END
 
 //--------------------------------------------------------------
