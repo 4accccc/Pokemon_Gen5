@@ -457,7 +457,9 @@ static void _lastCallback(void* pW)
     GFL_HEAP_FreeMemory(pWork->aBackup.pBoxTray);
   }
   GFL_STD_MemClear(&pWork->aBackup,sizeof(SAVEREV_BACKUP));
-//  OS_TPrintf("破棄callback\n");
+
+  pWork->bBackupStart = FALSE;
+  //  OS_TPrintf("破棄callback\n");
 }
 
 // もしデータが残っている場合エラー終了だから巻き戻す
@@ -492,7 +494,10 @@ static void _removeCallback(void* pW)
     PERAPVOICE_SetExistFlag(GAMEDATA_GetPerapVoice(pWork->pGameData));
   }
   GFL_STD_MemClear(&pWork->aBackup,sizeof(SAVEREV_BACKUP));
- // OS_TPrintf("巻き戻し\n");
+
+  pWork->bBackupStart = FALSE;
+
+  // OS_TPrintf("巻き戻し\n");
 }
 
 
@@ -562,6 +567,7 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
     if(pWork->pParentWork->selectBoxno == BOXDAT_GetTrayMax(pWork->pBox)){ //てもちの交換の場合
       _deletePerapVoice(pWork, pWork->pMyParty,pWork->pParentWork->selectIndex);
     }
+    pWork->bBackupStart=TRUE;  //上部でエラーにする為に必要なフラグON
   }
   //---
     // メール登録

@@ -715,7 +715,7 @@ struct _POKEMON_TRADE_WORK{
   u8 friendMailBoxFULL;  //ともだちはメールボックス満杯かどうか
   u8 mojiIconEnd;  //文字点滅アイコンが終わったかどうか
   u8 zenkoku_flag;
-  u8 dummy;
+  u8 bBackupStart;  //セーブのスタート このフラグが立ってたらエラー復帰不可能
 } ;
 
 

@@ -2168,6 +2168,24 @@ static void _endWaitStateNetwork3(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+
+
+static void _endWaitStateNetwork22(POKEMON_TRADE_WORK* pWork)
+{
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    u8 flg = POKEMONTORADE_SEQ_CANCEL;
+    if( GFL_NET_SendData(pNet, _NETCMD_GTSSEQNO,1,&flg)){
+      _CHANGE_STATE(pWork, _networkFriendsStandbyWait);
+    }
+  }
+  else{
+    _CHANGE_STATE(pWork, _networkFriendsStandbyWait);
+  }
+}
+
+
 //I‚í‚é‚Ì‚ð‘ŠŽè‚É“`‚¦‚Ä‚¢‚é
 static void _endWaitStateNetwork(POKEMON_TRADE_WORK* pWork)
 {
@@ -2178,7 +2196,7 @@ static void _endWaitStateNetwork(POKEMON_TRADE_WORK* pWork)
       POKETRADE_MESSAGE_WindowOpen(pWork);
       POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_B,WB_NET_TRADE_SERVICEID);
-      _CHANGE_STATE(pWork, _networkFriendsStandbyWait);
+      _CHANGE_STATE(pWork, _endWaitStateNetwork22);
     }
   }
   else{
@@ -3847,6 +3865,9 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+      if(pWork->bBackupStart){
+        NetErr_DispCall( TRUE );
+      }
       if(GFL_NET_IsWifiConnect()){
         GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE);
       }
@@ -3858,7 +3879,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
       WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
     }
   }
-
+  
 
   //  ConnectBGPalAnm_Main(&pWork->cbp);
 

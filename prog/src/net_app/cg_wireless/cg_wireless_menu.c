@@ -737,12 +737,13 @@ static void _modeAppWinFlashCallback(u32 param, fx32 currentFrame )
 {
   CG_WIRELESS_MENU* pWork = (CG_WIRELESS_MENU*)param;
   {
-    if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(GAMEDATA_GetSaveControlWork(pWork->gamedata)))){
-      if(pWork->selectType != CG_WIRELESS_RETURNMODE_NONE){
-        _CHANGE_STATE(pWork, _modeReportInit);
-        return;
-      }
-    }
+   // セーブはしない
+//    if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(GAMEDATA_GetSaveControlWork(pWork->gamedata)))){
+//      if((pWork->selectType != CG_WIRELESS_RETURNMODE_NONE) || (pWork->selectType != CG_WIRELESS_RETURNMODE_PALACE)){
+//        _CHANGE_STATE(pWork, _modeReportInit);
+//        return;
+//      }
+//    }
   }
   _CHANGE_STATE(pWork, _modeFadeoutStart);        // 終わり
 }

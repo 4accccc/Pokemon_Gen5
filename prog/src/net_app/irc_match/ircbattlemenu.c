@@ -40,6 +40,7 @@
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 #include "ir_ani_NANR_LBLDEFS.h"
 #include "savedata/battle_box_save.h"
+#include "app/app_keycursor.h"  //APP_TASKMENU_INITWORK
 
 
 #if DEBUG_ONLY_FOR_ohno
@@ -209,6 +210,7 @@ struct _IRC_BATTLE_MENU {
   u32 cellRes[CEL_RESOURCE_MAX];
   GFL_CLWK* curIcon[_CELL_DISP_NUM];
   GFL_CLWK* buttonObj[_SELECTMODE_MAX];
+  APP_KEYCURSOR_WORK* pKeyCursor;
   
   int yoffset;
   GFL_BMPWIN* infoDispWin;
@@ -259,6 +261,7 @@ static void _CreateButtonObj3(IRC_BATTLE_MENU* pWork);
 static void _CreateButtonObj(IRC_BATTLE_MENU* pWork);
 static BOOL _infoMessageEndCheck(IRC_BATTLE_MENU* pWork);
 static void _infoMessageDisp(IRC_BATTLE_MENU* pWork);
+static void _hitAnyKey(IRC_BATTLE_MENU* pWork);
 
 
 
@@ -1701,15 +1704,19 @@ static void _ReturnButtonStart(IRC_BATTLE_MENU* pWork)
 
 static BOOL _infoMessageEndCheck(IRC_BATTLE_MENU* pWork)
 {
+  int state;
   if(pWork->pStream){
-    int state = PRINTSYS_PrintStreamGetState( pWork->pStream );
+    if(pWork->infoDispWin){
+      APP_KEYCURSOR_Main( pWork->pKeyCursor, pWork->pStream, pWork->infoDispWin );
+    }
+    state = PRINTSYS_PrintStreamGetState( pWork->pStream );
     switch(state){
     case PRINTSTREAM_STATE_DONE:
       PRINTSYS_PrintStreamDelete( pWork->pStream );
       pWork->pStream = NULL;
       break;
     case PRINTSTREAM_STATE_PAUSE:
-      if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
+      if(GFL_UI_TP_GetTrg()){
         PRINTSYS_PrintStreamReleasePause( pWork->pStream );
       }
       break;
@@ -1811,6 +1818,28 @@ static void _modeReporting(IRC_BATTLE_MENU* pWork)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   キーを押したらぬける
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _hitAnyKey(IRC_BATTLE_MENU* pWork)
+{
+  if(!_infoMessageEndCheck(pWork)){
+    return;
+  }
+	if(GFL_UI_TP_GetTrg()){
+    _infoMessageEnd(pWork);
+    PMSND_PlaySystemSE(_SE_DESIDE);
+    pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+    _CHANGE_STATE(pWork,  _modeFadeoutStart);
+  }
+}
+
+
+
+//------------------------------------------------------------------------------
+/**
  * @brief   セーブ確認画面待機
  * @retval  none
  */
@@ -1822,10 +1851,17 @@ static void _modeReportWait2(IRC_BATTLE_MENU* pWork)
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
 
     if(selectno==0){
-      GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_29, pWork->pStrBuf );
-      _infoMessageDisp(pWork);
-      GAMEDATA_SaveAsyncStart(pWork->pGameData);
-      _CHANGE_STATE(pWork,_modeReporting);
+      if(SaveControl_IsOverwritingOtherData( GAMEDATA_GetSaveControlWork(pWork->pGameData))){
+        GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_46, pWork->pStrBuf );
+        _infoMessageDisp(pWork);
+        _CHANGE_STATE(pWork,  _hitAnyKey);
+      }
+      else{
+        GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_29, pWork->pStrBuf );
+        _infoMessageDisp(pWork);
+        GAMEDATA_SaveAsyncStart(pWork->pGameData);
+        _CHANGE_STATE(pWork,_modeReporting);
+      }
     }
     else{
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
@@ -1932,6 +1968,7 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
 		_modeInit(pWork);
     
     pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 1 , 0 );
+    pWork->pKeyCursor = APP_KEYCURSOR_Create( 15, FALSE, TRUE, pWork->heapID );
     pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
     pWork->pAppTaskRes =
       APP_TASKMENU_RES_Create( GFL_BG_FRAME1_S, _SUBLIST_NORMAL_PAL,
@@ -2024,6 +2061,7 @@ static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * 
 
   GFL_PROC_FreeWork(proc);
 
+  APP_KEYCURSOR_Delete( pWork->pKeyCursor );
   GFL_TCBL_Exit(pWork->pMsgTcblSys);
 	GFL_BG_FreeBGControl(_SUBSCREEN_BGPLANE);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
