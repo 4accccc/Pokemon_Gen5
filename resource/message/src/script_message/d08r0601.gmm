@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T19:57:20"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T20:51:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -344,10 +344,10 @@
 ・black_01表示後、繰り返し
 ・話しかけても振り向かない</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……どうして　こんなに
-ふんばれる？　なにを　しんじている？</language>
-		<language name="JPN_KANJI" width="256">チェレン『……どうして　こんなに
-ふんばれる？　なにを　信じている？</language>
+		<language name="JPN" width="256">チェレン『……どうして　ふんばれる？
+なにが　つよさの　みなもと　なんだ？</language>
+		<language name="JPN_KANJI" width="256">チェレン『……どうして　踏ん張れる？
+なにが　強さの源　なんだ？</language>
 	</row>
 
 	<row id="msg_d08r0601_black_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
