@@ -901,14 +901,24 @@ static void Performance_AllOffOam(void)
 
 void DEBUG_PerformanceSetStress(void)
 {
-  int diff;
   OSTick start_tick;
   if ( !pfm_sys.AveTest ) return;
   start_tick = OS_GetTick();
-  do{
-    OSTick end_tick = OS_GetTick();
-    diff = OS_TicksToMicroSeconds(end_tick-start_tick);
-  }while(diff < 6000);
+ 
+  {
+    int diff;
+    int stress;
+    AVERAGE_PRM *prm;
+    prm = &pfm_sys.AvePrm[PERFORMANCE_ID_MAIN];
+    //これから計測するのが、トップの場合（prm->Top==1）6000の負荷。テイルは3000
+    if (prm->Top) stress = 6000;
+    else stress = 3000;
+  
+    do{
+      OSTick end_tick = OS_GetTick();
+      diff = OS_TicksToMicroSeconds(end_tick-start_tick);
+    }while(diff < stress);
+  }
 }
 
 void DEBUG_PerformanceStartTick(int id)
