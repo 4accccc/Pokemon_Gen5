@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-19T22:19:13"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-04-22T11:40:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -380,9 +380,8 @@
 	</row>
 
 	<row id="msg_debug_common_03">
-		<comment>とりあえず確保</comment>
-		<language name="JPN" width="256">仮メッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">育て屋オープン</language>
+		<language name="JPN_KANJI" width="256">育て屋オープン</language>
 	</row>
 
 	<row id="msg_debug_common_04">
@@ -569,9 +568,8 @@
 	</row>
 
 	<row id="msg_debug_10">
-		<comment>とりあえず確保</comment>
-		<language name="JPN" width="256">仮メッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">T02演説イベント</language>
+		<language name="JPN_KANJI" width="256">T02演説イベント</language>
 	</row>
 
 	<row id="msg_debug_masafumi_10" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -600,8 +598,8 @@
 	</row>
 
 	<row id="msg_debug_masafumi_15" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
-		<language name="JPN" width="256">仮メッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">てす</language>
+		<language name="JPN_KANJI" width="256">テ</language>
 	</row>
 
 	<row id="msg_debug_suginaka_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -610,19 +608,16 @@
 	</row>
 
 	<row id="msg_debug_suginaka_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>確保</comment>
 		<language name="JPN" width="256">Ｎ０１Ｒ０５０２ゲーチス戦前</language>
 		<language name="JPN_KANJI" width="256">Ｎ０１Ｒ０５０２ゲーチス戦前</language>
 	</row>
 
 	<row id="msg_debug_suginaka_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>確保</comment>
 		<language name="JPN" width="256">Ｃ０１：Ｃギア入手イベント</language>
 		<language name="JPN_KANJI" width="256">Ｃ０１：Ｃギア入手イベント</language>
 	</row>
 
 	<row id="msg_debug_suginaka_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<comment>確保</comment>
 		<language name="JPN" width="256">Ｃ０３：ポケモン盗難イベント</language>
 		<language name="JPN_KANJI" width="256">Ｃ０３：ポケモン盗難イベント</language>
 	</row>
@@ -649,8 +644,8 @@
 	</row>
 
 	<row id="msg_debug_mizu_04" back-color="#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,,,#ff00ff,,">
-		<language name="JPN" width="256">ツチノカミ</language>
-		<language name="JPN_KANJI" width="256">ツチノカミ</language>
+		<language name="JPN" width="256">ツチノカミ（カザ／ライカミ追加）</language>
+		<language name="JPN_KANJI" width="256">ツチノカミ（カザ／ライカミ追加）</language>
 	</row>
 
 	<row id="msg_debug_mizu_05" back-color="#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,,,#ff00ff,,">
@@ -741,6 +736,35 @@
 	<row id="msg_debug_obata_3" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<language name="JPN" width="256">リーグ・エレベータチェック</language>
 		<language name="JPN_KANJI" width="256">リーグ・エレベータチェック</language>
+	</row>
+
+	<row id="msg_debug_masafumi_16" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="256">ライ遭遇イベント</language>
+		<language name="JPN_KANJI" width="256">ライ遭遇イベント</language>
+	</row>
+
+	<row id="msg_debug_masafumi_17" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>とりあえず確保</comment>
+		<language name="JPN" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_debug_masafumi_18" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>とりあえず確保</comment>
+		<language name="JPN" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_debug_masafumi_19" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>とりあえず確保</comment>
+		<language name="JPN" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_debug_masafumi_20" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>とりあえず確保</comment>
+		<language name="JPN" width="256">仮メッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<flowchart-group-list>

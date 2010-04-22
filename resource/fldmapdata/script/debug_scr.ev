@@ -39,7 +39,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA   ev_debug_test
 _EVENT_DATA   ev_debug_masafumi
-_EVENT_DATA   ev_debug_ando
+_EVENT_DATA   ev_debug_mizuguchi
 _EVENT_DATA   ev_debug_suginaka
 _EVENT_DATA   ev_debug_murakami
 _EVENT_DATA   ev_debug_tamada
@@ -143,34 +143,42 @@ EVENT_START ev_debug_masafumi
 		_CALL	ev_bigfour_menu	//四天王部屋
 
 	ELSIF $SCWK_TEMP1 == 1 THEN
-		
+		//テスト01
+		_SUBWIN_MSG( msg_debug_masafumi_15, 10, 10, 1 )
+		_TIME_WAIT( 30 )
+		_SUBWIN_MSG( msg_debug_06, 20, 10, 2 )
+		_TIME_WAIT( 30 )
+		_SUBWIN_CLOSE( 1 )
+		_SUBWIN_CLOSE( 2 )
+
+/*最初の一歩
 		_FLAG_RESET( FV_T01R0201_SUPPORT )
+		$WK_SCENE_T01R0201 = 0
 		
-		//D09崖滑りPOSイベント初期化
-		$WK_SCENE_D09 = 0
-		_FLAG_RESET( FV_D09_VETERANM_01 )
-		_FLAG_SET( FV_D09_VETERANM_02 )
-//		_MAP_CHANGE( ZONE_ID_C04R0305, 10, 27, DIR_UP )
-
-	ELSIF $SCWK_TEMP1 == 2 THEN
-		$WK_SCENE_T01_SUPPORT = 1
-		_FLAG_RESET( FV_T01_SUPPORT )
-		_MAP_CHANGE( ZONE_ID_T01R0101, 6, 9, DIR_DOWN )
-		
-		_FLAG_RESET( FV_T01R0102_AWARD_01 )
-		_FLAG_RESET( FV_T01R0102_AWARD_02 )
-		_FLAG_RESET( FV_T01R0102_TROPHY_01 )
-		_FLAG_RESET( FV_T01R0102_TROPHY_02 )
-		_FLAG_RESET( FV_T01R0102_TROPHY_03 )
-//		_MAP_CHANGE( ZONE_ID_C04R0304, 10, 60, DIR_UP )
-//		_MAP_CHANGE( ZONE_ID_C04R0404, 6, 24, DIR_UP )
-
-	ELSIF $SCWK_TEMP1 == 3 THEN
-
-		_MAP_CHANGE( ZONE_ID_T01R0101, 6, 9, DIR_DOWN )
-		$WK_SCENE_T01 = 4
+		$WK_SCENE_T01 = 2
 		_FLAG_RESET( FV_T01_RIVAL )
 		_FLAG_RESET( FV_T01_SUPPORT )
+		_MAP_CHANGE( ZONE_ID_T01, 787, 742, DIR_DOWN )
+*/
+
+	ELSIF $SCWK_TEMP1 == 2 THEN
+		//テスト02
+
+		//ママ：タウンマップ入手
+		_FLAG_SET( FV_T01_RIVAL )
+		_FLAG_SET( FV_T01_SUPPORT )
+		_FLAG_RESET( FV_T01_MAMA_01 )
+		$WK_SCENE_T01 = 1
+		_MAP_CHANGE( ZONE_ID_T01R0401, 10, 10, DIR_DOWN )
+
+
+	ELSIF $SCWK_TEMP1 == 3 THEN
+		//テスト03
+		$WK_SCENE_T01 = 1
+		_FLAG_RESET( FV_T01_MAMA_01 )
+		_FLAG_RESET( FV_T01_RIVAL )
+		_FLAG_RESET( FV_T01_SUPPORT )
+		_MAP_CHANGE( ZONE_ID_T01R0401, 10, 10, DIR_DOWN )
 
 	ELSIF $SCWK_TEMP1 == 4 THEN
 		//観覧車トレーナー
@@ -293,9 +301,9 @@ _RET
 
 
 /**************************************************************/
-/* ANDO                                                           */
+/* MIZUGUCHI                                                  */
 /**************************************************************/
-EVENT_START   ev_debug_ando
+EVENT_START   ev_debug_mizuguchi
 
 		$SCWK_TEMP2 = 0
 		//メニュー作成
@@ -1090,7 +1098,8 @@ EVENT_START ev_debug_common
 		_BMPMENU_MAKE_LIST( msg_debug_08, 70 )	//イベントジャンプ
 		_BMPMENU_MAKE_LIST( msg_debug_05, 80 )	//イベントＯＦＦ
 		_BMPMENU_MAKE_LIST( msg_debug_07, 90 )	//マップ差し替え
-		_BMPMENU_MAKE_LIST( msg_debug_00, 100 )	//やめる
+		_BMPMENU_MAKE_LIST( msg_debug_common_03, 100 )	//育て屋オープン
+		_BMPMENU_MAKE_LIST( msg_debug_00, 1000 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
 		
@@ -1139,6 +1148,11 @@ EVENT_START ev_debug_common
 			//マップ差し替え
 			_CALL	ev_change_mapmatrix
 			$SCWK_TEMP0 = 555
+			
+		ELSIF $SCWK_ANSWER == 100 THEN
+			//育て屋オープン
+			_FLAG_RESET( FV_R03_SODATEYA_01 )
+			_FLAG_SET( FE_SODATEYAOLDMAN_OPEN )
 			
 		ELSE
 			//やめる
@@ -1230,12 +1244,14 @@ ev_event_jump:
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, LWK_EVTJUMP )
 	//リスト追加
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_10, 10 )	//自宅２Fゲーム開始イベント
+	_BMPMENU_MAKE_LIST( msg_debug_10, 12 )	//T02演説イベント
+	_BMPMENU_MAKE_LIST( msg_debug_suginaka_11, 15 )	//Ｃギア入手イベント
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_12, 20 )	//C04 サポート父イベント
 	_BMPMENU_MAKE_LIST( msg_debug_09, 30 )	//復帰チャンピオン戦
 	_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 40 )	//カザカミ・ライカミイベント
-	_BMPMENU_MAKE_LIST( msg_debug_mizu_04, 50 )	//ツチノカミイベント
-	_BMPMENU_MAKE_LIST( msg_debug_mizu_05, 60 )	//カザカミ・ライカミ手持ちに追加
-	_BMPMENU_MAKE_LIST( msg_debug_suginaka_11, 70)	//Ｃギア入手イベント
+	_BMPMENU_MAKE_LIST( msg_debug_mizu_04, 50 )	//ツチノカミ（カザカミ・ライカミ追加）
+//	_BMPMENU_MAKE_LIST( msg_debug_mizu_05, 60 )	//カザカミ・ライカミ手持ちに追加
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_16, 70 )	//ライ遭遇イベント
 	_BMPMENU_MAKE_LIST( msg_debug_00, 0 )	//やめる
 	//メニュー表示
 	_BMPMENU_START()
@@ -1248,6 +1264,29 @@ ev_event_jump:
 		_FLAG_RESET( FV_T01R0102_PRESENT )
 		$WK_SCENE_T01R0102 = 0
 		_MAP_CHANGE( ZONE_ID_T01R0102, 5, 6, DIR_DOWN )
+
+	ELSIF $LWK_EVTJUMP == 12 THEN
+		//T02演説イベント
+		$WK_SCENE_T02 = 1
+		//ライバルストッパー解除
+		_FLAG_SET( FV_T02_RIVAL )
+		_FLAG_SET( FV_T02_HAKASE )
+		//演説イベントフラグ開始
+		_FLAG_RESET( FV_T02_SAGE )
+		_FLAG_RESET( FV_T02_HAKAI )
+		_FLAG_RESET( FV_T02_NNN )
+		_FLAG_RESET( FV_T02_RIVAL_02 )
+		_FLAG_RESET( FV_T02_MAN )
+		_FLAG_RESET( FV_T02_SPEECH_BEFORE )
+		_FLAG_SET( FV_T02_SPEECH_AFTER )
+		_MAP_CHANGE( ZONE_ID_T02PC0101, 10, 10, DIR_DOWN )
+
+	ELSIF $LWK_EVTJUMP == 15 THEN
+		//Ｃギア入手イベント
+		//ワーク追加
+		$WK_SCENE_C01R0102 = 1
+		$WK_SCENE_D01R0101_POKE = 4
+		_MAP_CHANGE( ZONE_ID_C01R0102, 10, 8, DIR_RIGHT )
 
 	ELSIF $LWK_EVTJUMP == 20 THEN
 		//ミュージカルホール内、イベント無効
@@ -1263,6 +1302,7 @@ ev_event_jump:
 		//ポケモンリーグのチャンピオンとライバルを非表示
 		_FLAG_SET( FV_C09R0501_RIVAL_01 )
 		_FLAG_SET( FV_C09R0501_CHAMPION_01 )
+		_FLAG_SET( FV_C09R0501_BOSS_01 )
 		//チャンピオン部屋：復帰チャンピオンを表示
 		_FLAG_RESET( FV_C09R0501_CHAMPION_02 )
 		//復帰チャンピオン戦を有効
@@ -1278,6 +1318,10 @@ ev_event_jump:
 		_MAP_CHANGE( ZONE_ID_R07R0301, 6, 8, DIR_DOWN )
 	
 	ELSIF $LWK_EVTJUMP == 50 THEN
+		//カザカミ・ライカミを手持ちに追加
+		_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_648, 0, 50 )
+		_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_649, 0, 50 )
+
 		//ツチノカミ寸劇を終了しておく
 		$WK_SCENE_R14R0201_LEG = 2
 		//イベント初期化
@@ -1286,19 +1330,11 @@ ev_event_jump:
 		_FLAG_SET( FV_R14R0201_LEG )
 		//神社前に移動
 		_MAP_CHANGE( ZONE_ID_R14R0201, 22, 17, DIR_UP )
-	
-	ELSIF $LWK_EVTJUMP == 60 THEN
-		//カザカミ・ライカミを手持ちに追加
-		_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_648, 0, 50 )
-		_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_649, 0, 50 )
 		
 	ELSIF $LWK_EVTJUMP == 70 THEN
-		
-		//ワーク追加
-		$WK_SCENE_C01R0102 = 1
-		$WK_SCENE_D01R0101_POKE = 4
-		
-		_MAP_CHANGE( ZONE_ID_C01R0102, 10, 8, DIR_RIGHT )
+		//ライ遭遇イベント
+		$WK_SCENE_D10_LEG = 0
+		_MAP_CHANGE( ZONE_ID_D10R0201, 50, 50, DIR_DOWN )
 		
 	ENDIF
 	}
