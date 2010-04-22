@@ -2084,7 +2084,7 @@ static BOOL Br_Record_GetTrgProfile( BR_RECORD_WORK * p_wk, u32 x, u32 y )
   BOOL ret;
 
 	rect.left		= (8)*8;
-	rect.right	= (8 + 15)*8;
+	rect.right	= (8 + 17)*8;
 	rect.top		= (2)*8;
 	rect.bottom	= (2 + 4)*8;
 

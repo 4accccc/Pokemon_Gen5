@@ -818,6 +818,8 @@ static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     { 
       if( p_wk->cnt++ > RR_SEARCH_SE_FRAME )
       { 
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
+
         BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_012 );
         PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
         (*p_seq)++;

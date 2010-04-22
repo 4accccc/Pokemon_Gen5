@@ -130,7 +130,7 @@ typedef struct
 #define BR_VIDEO_NUMBER_BLOCK1_FIG  5  //バトルビデオナンバーブロック１の桁
 #define BR_VIDEO_NUMBER_BLOCK2_FIG  5  //バトルビデオナンバーブロック２の桁
 
-#define RR_SEARCH_SE_FRAME         48   //SEを最低限ならすフレーム
+#define RR_SEARCH_SE_FRAME         (96)   //SEを最低限ならすフレーム
 
 //-------------------------------------
 ///	便利マクロ

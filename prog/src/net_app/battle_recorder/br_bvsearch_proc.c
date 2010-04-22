@@ -1197,22 +1197,13 @@ static BRSEARCH_MENU_SELECT Br_BvSearch_GetTrgMenu( BR_BVSEARCH_WORK *p_wk )
   static const GFL_RECT sc_rect[ BRSEARCH_MENU_SELECT_MAX ] =
   {
     { 
-      5*8,
-      2*8,
-      26*8,
-      5*8
+      3*8,2*8,29*8,5*8,
     },
     { 
-      5*8,
-      7*8,
-      26*8,
-      10*8
+      3*8,7*8,29*8,10*8,
     },
     { 
-      5*8,
-      12*8,
-      26*8,
-      15*8
+      3*8,12*8,29*8,15*8,
     },
   };
   int i;
