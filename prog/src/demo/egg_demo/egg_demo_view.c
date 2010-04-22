@@ -168,7 +168,7 @@ REAR_WHITE_ANIME_STATE;
 
 
 // ポケモンとパーティクルのY座標
-#define POKE_Y      (FX_F32_TO_FX32(-100.0f))
+#define POKE_Y      (FX_F32_TO_FX32(-190.0f))//(FX_F32_TO_FX32(-100.0f))
 #define PARTICLE_Y  (FX_F32_TO_FX32(-0.5f))
 
 
