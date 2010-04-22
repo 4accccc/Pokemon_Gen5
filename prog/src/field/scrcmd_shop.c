@@ -1808,7 +1808,7 @@ static void line_callback_waza(BMPMENULIST_WORK * wk, u32 param, u8 y )
       int length,bmp_w;
       // 値段セット
       WORDSET_RegisterNumber( sbw->wordSet, 1, sbw->lineup[param].price, 
-                              4, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );  
+                              5, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );  
       WORDSET_ExpandStr( sbw->wordSet, sbw->expandBuf, sbw->priceStr );
       
       // 右揃え用の数値取得
@@ -1957,10 +1957,10 @@ static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u16 pri
 
   WORDSET_RegisterItemName( wk->wordSet, 0, itemno );
   WORDSET_RegisterNumber( wk->wordSet, 1, num, 
-                            2, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );  
+                            2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );  
 
   WORDSET_RegisterNumber( wk->wordSet, 2, num*price,
-                          6, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );  
+                          6, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );  
 
   {
     STRBUF *str    = GFL_MSG_CreateString( wk->shopMsgData, strId );

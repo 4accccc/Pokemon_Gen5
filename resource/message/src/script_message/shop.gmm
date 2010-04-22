@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-22T15:53:58"/>
+	<create user="mori" host="W00155" date="2010-04-22T15:58:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -540,8 +540,8 @@
 	<row id="mes_shop_09_01">
 		<comment>技マシンのリスト表示をするときに番号と技名を
 表示するための文字列</comment>
-		<language name="JPN" width="256">[FF:00:色:1][2:01:２桁:0][FF:00:色:0][1:07:わざ名:1]</language>
-		<language name="JPN_KANJI" width="256">[FF:00:色:1][2:01:２桁:0][FF:00:色:0][1:07:わざ名:1]</language>
+		<language name="JPN" width="256">[1:07:わざ名:1]</language>
+		<language name="JPN_KANJI" width="256">[1:07:わざ名:1]</language>
 	</row>
 
 	<flowchart-group-list>
