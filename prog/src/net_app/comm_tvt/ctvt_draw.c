@@ -165,6 +165,7 @@ struct _CTVT_DRAW_WORK
   GFL_CLWK    *clwkExplainButton[CDEX_MAX];
   GFL_CLWK    *clwkPenSize;
   GFL_CLWK    *clwkStampType;
+  GFL_CLWK    *clwkBlinkButton;
   
 };
 
@@ -252,7 +253,7 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
     cellInitData.pos_x = CTVT_DRAW_PEN_X;
     cellInitData.pos_y = CTVT_DRAW_BAR_ICON_Y+24;
     cellInitData.anmseq = CTOAM_PEN;
-    cellInitData.softpri = 0;
+    cellInitData.softpri = 8;
     cellInitData.bgpri = 0;
     
     drawWork->clwkEditButton[CDED_PEN] = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
@@ -382,8 +383,15 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
               COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_ANM ),
               &cellInitData ,CLSYS_DRAW_MAIN , heapId );
     GFL_CLACT_WK_SetDrawEnable( drawWork->clwkStampType , FALSE );
-
-
+    
+    //点滅ボタン
+    cellInitData.softpri = 0;
+    drawWork->clwkBlinkButton = GFL_CLACT_WK_Create( COMM_TVT_GetCellUnit(work) ,
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_NCG ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_PLT ),
+              COMM_TVT_GetObjResIdx( work, CTOR_COMMON_M_ANM ),
+              &cellInitData ,CLSYS_DRAW_MAIN , heapId );
+    GFL_CLACT_WK_SetDrawEnable( drawWork->clwkBlinkButton , FALSE );
   }
   CTVT_DRAW_UpdateEditButton( work , drawWork );
   
@@ -473,6 +481,8 @@ void CTVT_DRAW_TermMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   {
     GFL_CLACT_WK_Remove( drawWork->clwkEditButton[i] );
   }
+  
+  GFL_CLACT_WK_Remove( drawWork->clwkBlinkButton );
   GFL_CLACT_WK_SetDrawEnable( drawWork->clwkStampType , FALSE );
   GFL_CLACT_WK_Remove( drawWork->clwkStampType );
   GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
@@ -789,14 +799,17 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
   const int ret = GFL_UI_TP_HitTrg( hitTbl );
   if( ret == CDED_PEN )
   {
-    drawWork->editMode = CDED_PEN;
-    CTVT_DRAW_UpdateEditButton( work , drawWork );
-    drawWork->isTouch = TRUE;
-    drawWork->isDispPenSize = TRUE;
-    GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , TRUE );
-    GFL_CLACT_WK_SetAutoAnmFlag( drawWork->clwkPenSize , TRUE );
-    PMSND_PlaySystemSE( CTVT_SND_TOUCH );
-    CTVT_TPrintf("PenMode\n");
+    if( GFL_CLACT_WK_GetDrawEnable(drawWork->clwkBlinkButton) == FALSE )
+    {
+      drawWork->editMode = CDED_PEN;
+      CTVT_DRAW_UpdateEditButton( work , drawWork );
+      drawWork->isTouch = TRUE;
+      drawWork->isDispPenSize = TRUE;
+      GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( drawWork->clwkPenSize , TRUE );
+      PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+      CTVT_TPrintf("PenMode\n");
+    }
   }
   if( ret == CDED_SPOITO )
   {
@@ -816,14 +829,17 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
   }
   if( ret == CDED_STAMP )
   {
-    drawWork->editMode = CDED_STAMP;
-    CTVT_DRAW_UpdateEditButton( work , drawWork );
-    drawWork->isTouch = TRUE;
-    drawWork->isDispStampType = TRUE;
-    GFL_CLACT_WK_SetDrawEnable( drawWork->clwkStampType , TRUE );
-    GFL_CLACT_WK_SetAutoAnmFlag( drawWork->clwkStampType , TRUE );
-    PMSND_PlaySystemSE( CTVT_SND_TOUCH );
-    CTVT_TPrintf("StampMode\n");
+    if( GFL_CLACT_WK_GetDrawEnable(drawWork->clwkBlinkButton) == FALSE )
+    {
+      drawWork->editMode = CDED_STAMP;
+      CTVT_DRAW_UpdateEditButton( work , drawWork );
+      drawWork->isTouch = TRUE;
+      drawWork->isDispStampType = TRUE;
+      GFL_CLACT_WK_SetDrawEnable( drawWork->clwkStampType , TRUE );
+      GFL_CLACT_WK_SetAutoAnmFlag( drawWork->clwkStampType , TRUE );
+      PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+      CTVT_TPrintf("StampMode\n");
+    }
   }
   if( ret == CDED_PAUSE )
   {
@@ -859,8 +875,17 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     {
       drawWork->penSize = penSizeArr[retPen];
       drawWork->isTouch = TRUE;
-  
-      CTVT_DRAW_EreseSubWindow( work , drawWork );
+      
+      //点滅ボタンの表示
+      {
+        GFL_CLACTPOS pos = {CTVT_DRAW_PEN_SIZE_X,CTVT_DRAW_PEN_SIZE_Y};
+        GFL_CLACT_WK_SetDrawEnable( drawWork->clwkBlinkButton , TRUE );
+        GFL_CLACT_WK_ResetAnm( drawWork->clwkBlinkButton );
+        GFL_CLACT_WK_SetAutoAnmFlag( drawWork->clwkBlinkButton , TRUE );
+        GFL_CLACT_WK_SetAnmSeq( drawWork->clwkBlinkButton , retPen + CTOAM_PEN_DECIDE1);
+        GFL_CLACT_WK_SetPos( drawWork->clwkBlinkButton , &pos , CLSYS_DRAW_MAIN );
+      }
+      
       PMSND_PlaySystemSE( CTVT_SND_TOUCH );
     }
   }
@@ -903,9 +928,17 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
       drawWork->stampType = stampTypeArr[retPen];
       drawWork->isTouch = TRUE;
 
-      drawWork->isDispStampType = FALSE;
-      GFL_CLACT_WK_SetDrawEnable( drawWork->clwkStampType , FALSE );
       PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+
+      //点滅ボタンの表示
+      {
+        GFL_CLACTPOS pos = {CTVT_DRAW_STAMP_TYPE_X,CTVT_DRAW_STAMP_TYPE_Y};
+        GFL_CLACT_WK_SetDrawEnable( drawWork->clwkBlinkButton , TRUE );
+        GFL_CLACT_WK_ResetAnm( drawWork->clwkBlinkButton );
+        GFL_CLACT_WK_SetAutoAnmFlag( drawWork->clwkBlinkButton , TRUE );
+        GFL_CLACT_WK_SetAnmSeq( drawWork->clwkBlinkButton , retPen + CTOAM_STAMP_DECIDE1);
+        GFL_CLACT_WK_SetPos( drawWork->clwkBlinkButton , &pos , CLSYS_DRAW_MAIN );
+      }
     }
   }
   
@@ -927,6 +960,12 @@ static void CTVT_DRAW_UpdateEdit( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
     COMM_TVT_FlipPause( work );
     CTVT_DRAW_UpdateEditButton( work , drawWork );
     PMSND_PlaySystemSE( CTVT_SND_PAUSE );
+  }
+  
+  if( GFL_CLACT_WK_GetDrawEnable(drawWork->clwkBlinkButton) == TRUE &&
+      GFL_CLACT_WK_CheckAnmActive(drawWork->clwkBlinkButton) == FALSE )
+  {
+    CTVT_DRAW_EreseSubWindow( work , drawWork );
   }
 }
 
@@ -1425,10 +1464,13 @@ static void CTVT_DRAW_EreseSubWindow( COMM_TVT_WORK *work , CTVT_DRAW_WORK *draw
   drawWork->isDispStampType = FALSE;
   GFL_CLACT_WK_ResetAnm( drawWork->clwkPenSize );
   GFL_CLACT_WK_ResetAnm( drawWork->clwkStampType );
+  GFL_CLACT_WK_ResetAnm( drawWork->clwkBlinkButton );
   GFL_CLACT_WK_SetAnmFrame( drawWork->clwkPenSize , 0 );
   GFL_CLACT_WK_SetAnmFrame( drawWork->clwkStampType , 0 );
   GFL_CLACT_WK_SetAutoAnmFlag( drawWork->clwkPenSize , FALSE );
   GFL_CLACT_WK_SetAutoAnmFlag( drawWork->clwkStampType , FALSE );
   GFL_CLACT_WK_SetDrawEnable( drawWork->clwkPenSize , FALSE );
   GFL_CLACT_WK_SetDrawEnable( drawWork->clwkStampType , FALSE );
+  GFL_CLACT_WK_SetDrawEnable( drawWork->clwkBlinkButton , FALSE );
+
 }

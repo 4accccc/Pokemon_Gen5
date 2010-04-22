@@ -602,7 +602,7 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
     //OBJ
     work->cellResIdx[CTOR_BAR_BUTTON_M_PLT] = GFL_CLGRP_PLTT_RegisterEx( commonArcHandle , 
           APP_COMMON_GetBarIconPltArcIdx() , CLSYS_DRAW_MAIN , 
-          CTVT_PAL_OBJ_SUB_BARICON*32 , 0 , APP_COMMON_BARICON_PLT_NUM , work->heapId  );
+          CTVT_PAL_OBJ_MAIN_BARICON*32 , 0 , APP_COMMON_BARICON_PLT_NUM , work->heapId  );
     work->cellResIdx[CTOR_BAR_BUTTON_M_NCG] = GFL_CLGRP_CGR_Register( commonArcHandle , 
           APP_COMMON_GetBarIconCharArcIdx() , FALSE , CLSYS_DRAW_MAIN , work->heapId  );
 

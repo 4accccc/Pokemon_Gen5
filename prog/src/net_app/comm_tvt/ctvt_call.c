@@ -89,7 +89,8 @@ typedef enum
   CCS_FADEOUT,
   CCS_FADEOUT_BOTH,
   CCS_FADEOUT_WAIT,
-
+  //ここ以前はバーの表示をしない判定で使っているので順番変えるな
+  
   CCS_MAIN,
   CCS_WAIT_ANIME,
   CCS_WAIT_CONNECT_JOIN,
@@ -1040,7 +1041,8 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
   
   if( callWork->state != CCS_WAIT_CONNECT_JOIN &&
       callWork->state != CCS_WAIT_CONNECT_CALL &&
-      callWork->state != CCS_FAILUE_CONNECT )
+      callWork->state != CCS_FAILUE_CONNECT &&
+      callWork->state >= CCS_MAIN )
   {
     for( i=0;i<CTVT_COMM_BEACON_NUM;i++ )
     {
