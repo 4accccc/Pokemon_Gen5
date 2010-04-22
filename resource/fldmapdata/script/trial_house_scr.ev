@@ -224,6 +224,14 @@ charange:
     _RET
   ENDIF
 
+  //ダウンロードデータの場合、使用したデータことにする
+  IF $download_flg == TRUE THEN
+    //メッセージ
+
+    //キー書き換え（内部で裏セーブ）
+    _TH_CLEAR_DL_DATA( TH_DL_DATA_CLEAR_TYPE_USED )
+  ENDIF
+
   //トライアルハウス参加レコード加算
   _ADD_RECORD( RECID_TRIALHOUSE_COUNT, 1 )
 
@@ -318,9 +326,9 @@ charange:
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
 
-    //ダウンロードデータクリア
+    //ダウンロードデータクリア（内部で裏セーブ）
     IF $download_flg == TRUE THEN
-      _TH_CLEAR_DL_DATA()
+      _TH_CLEAR_DL_DATA( TH_DL_DATA_CLEAR_TYPE_CLEAR )
     ENDIF
 
   ENDIF
@@ -408,7 +416,7 @@ download:
       //クローズ
       _BALLOONWIN_CLOSE()
       _CALL save
-      IF $SCWK_ANSWER == FALSE THEN   //セーブ失敗
+      IF $SCWK_ANSWER == FALSE THEN   //セーブ失敗　もしくは　やめる
         $exit = TRUE
         _RET
       ENDIF
@@ -425,6 +433,13 @@ download:
         //メニュー選択やり直し
         $loop = TRUE
         _RET
+      ELSIF $SCWK_ANSWER == TH_DL_RSLT_SETTLED THEN
+        //「既にダウンロードした」
+        _BALLOONWIN_OBJMSG_POS(msg_trialhouse_031, SCWK_TARGET_OBJID, POS_DL )
+        //メニュー選択やり直し
+        $loop = TRUE
+        _RET
+
       ENDIF
 
       {

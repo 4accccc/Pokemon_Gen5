@@ -357,6 +357,7 @@ VMCMD_RESULT EvCmdTH_GetDLDataType( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdTH_ClearDLData( VMHANDLE *core, void *wk )
 {
+  u16 clear_type;
   GMEVENT* event;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
@@ -364,10 +365,14 @@ VMCMD_RESULT EvCmdTH_ClearDLData( VMHANDLE *core, void *wk )
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
   TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
 
-  //データクリア
-  TRIAL_HOUSE_InvalidDLData(gsys, *ptr);
+  clear_type = SCRCMD_GetVMWorkValue( core, work );
 
-  return VMCMD_RESULT_CONTINUE;
+  //データクリア
+  event = TRIAL_HOUSE_InvalidDLData(gsys, *ptr, clear_type);
+  SCRIPT_CallEvent( sc, event );
+
+  return VMCMD_RESULT_SUSPEND;
+
 }
 
 //--------------------------------------------------------------

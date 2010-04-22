@@ -10339,13 +10339,16 @@
 //--------------------------------------------------------------
 /**
  * @brief トライアルハウス　ダウンロードデータをクリア
- * @param none
+ * @param clear_type    TH_DL_DATA_CLEAR_TYPE_CLEAR or TH_DL_DATA_CLEAR_TYPE_USED
+ * @note TH_DL_DATA_CLEAR_TYPE_CLEAR  完全クリア
+ * @note TH_DL_DATA_CLEAR_TYPE_USED   使用したことにする
  */
 //--------------------------------------------------------------
-#define _TH_CLEAR_DL_DATA() _ASM_TH_CLEAR_DL_DATA
+#define _TH_CLEAR_DL_DATA( clear_type ) _ASM_TH_CLEAR_DL_DATA clear_type
   
-  .macro _ASM_TH_CLEAR_DL_DATA
+  .macro _ASM_TH_CLEAR_DL_DATA clear_type
   .short EV_SEQ_TH_CLEAR_DL_DATA
+  .short \clear_type
   .endm
 
 //--------------------------------------------------------------

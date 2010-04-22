@@ -37,6 +37,14 @@ typedef struct
   int Time;
 }EVENT_WORK_BEACON_SEARCH;
 
+//セーブシーケンスワーク
+typedef struct
+{
+  GAMESYS_WORK *gsys;
+  void* pWork;
+  u32 Type;
+}EXA_SAVE_WORK;
+
 static void SetDLDataType( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr );
 static void MakeTrainer(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount);
 static void SetDownLoadData( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount);
@@ -46,6 +54,8 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk );
 
 static u8 GetDownloadBit( THSV_WORK *sv_wk, const u32 inBitNo );
 static void SetDownloadBit( THSV_WORK *sv_wk, const u32 inBitNo );
+
+static GMEVENT_RESULT SaveUsedKeyEvt( GMEVENT *event, int *seq, void *wk );
 
 typedef enum
 {
@@ -636,20 +646,56 @@ u32 TRIAL_HOUSE_GetDLDataType( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
  * 検定データを無効状態にしてセーブする
  * @param   gsys      ゲームシステムポインタ
  * @param   ptr       トライアルハウスワークポインタ
+ * @param   clear_type    TH_DL_DATA_CLEAR_TYPE_CLEAR or TH_DL_DATA_CLEAR_TYPE_USED
  * @retval  none
  */
 //--------------------------------------------------------------
-void TRIAL_HOUSE_InvalidDLData( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
+GMEVENT *TRIAL_HOUSE_InvalidDLData( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, const u32 inClearType )
 {
-  BATTLE_EXAMINATION_SAVEDATA exa_data;
-  BSUBWAY_PARTNER_DATA *data;
+  GMEVENT *event;
+  EXA_SAVE_WORK *evt_wk;
+  event = GMEVENT_Create( gsys, NULL,
+      SaveUsedKeyEvt, sizeof(EXA_SAVE_WORK) );
+  evt_wk = GMEVENT_GetEventWork( event );
+  evt_wk->gsys = gsys;
+  evt_wk->pWork = NULL;
+  evt_wk->Type = inClearType;
+  
+  return event;
+  
+/**  
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
-  int size = BATTLE_EXAMINATION_SAVE_GetWorkSize();
 
-  NOZOMU_Printf("検定データ　%dbyte をクリア\n",size);
+  if ( inClearType == TH_DL_DATA_CLEAR_TYPE_USED )
+  {
+    BATTLE_EXAMINATION_SAVEDATA *exa;
+    SAVE_CONTROL_WORK *pSave = GAMEDATA_GetSaveControlWork(gamedata);
+    void* pWork = GFL_HEAP_AllocMemory(GFL_HEAP_LOWID(HEAPID_PROC),SAVESIZE_EXTRA_BATTLE_EXAMINATION);
+    SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_BATTLE_EXAMINATION, GFL_HEAP_LOWID(HEAPID_PROC),
+                             pWork, SAVESIZE_EXTRA_BATTLE_EXAMINATION);
+    exa = SaveControl_Extra_DataPtrGet( pSave, SAVE_EXTRA_ID_BATTLE_EXAMINATION, 0);
+    BATTLE_EXAMINATION_SAVE_SetDataUsedKey(exa);
+    GAMEDATA_ExtraSaveAsyncStart(gamedata,SAVE_EXTRA_ID_BATTLE_EXAMINATION);
+    while(1){
+      if(SAVE_RESULT_OK==GAMEDATA_ExtraSaveAsyncMain(gamedata,SAVE_EXTRA_ID_BATTLE_EXAMINATION)){
+        break;
+      }
+      OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+    }
+    SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_BATTLE_EXAMINATION);
+    GFL_HEAP_FreeMemory(pWork);
+    NOZOMU_Printf("検定データ使用済みキーセット\n");
+  }
+  else
+  {
+    BATTLE_EXAMINATION_SAVEDATA exa_data;
+    int size = BATTLE_EXAMINATION_SAVE_GetWorkSize();
+    NOZOMU_Printf("検定データ　%dbyte をクリア\n",size);
+    GFL_STD_MemClear( &exa_data, size );
+    BATTLE_EXAMINATION_SAVE_Write(gamedata, &exa_data, GFL_HEAP_LOWID(HEAPID_PROC));
+  }
+*/
 
-  GFL_STD_MemClear( &exa_data, size );
-  BATTLE_EXAMINATION_SAVE_Write(gamedata, &exa_data, GFL_HEAP_LOWID(HEAPID_PROC));
 }
 
 //--------------------------------------------------------------
@@ -705,7 +751,8 @@ static u8 GetDownloadBit( THSV_WORK *sv_wk, const u32 inBitNo )
     OS_Printf("BIT GET ( BitNo=%d, idx=%d, shift=%d )\n",inBitNo, idx, shift );
     return bit;
   }
-  else {
+  else
+  {
     GF_ASSERT_MSG(0,"error %d",inBitNo);
     return 1;   //立っていることにする
   }
@@ -733,10 +780,63 @@ static void SetDownloadBit( THSV_WORK *sv_wk, const u32 inBitNo )
     sv_wk->DownloadBits[idx] = data;
     OS_Printf("BIT SET ( BitNo=%d, idx=%d, shift=%d )\n",inBitNo, idx, shift );
   }
-  else {
+  else
+  {
     GF_ASSERT_MSG(0,"error %d",inBitNo);
   }
-;
+}
+
+//--------------------------------------------------------------
+/**
+ * セーブシーケンスイベント
+ * @param event GMEVENT
+ * @param seq event sequence
+ * @param wk event work
+ * @retval GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT SaveUsedKeyEvt( GMEVENT *event, int *seq, void *wk )
+{
+  EXA_SAVE_WORK *evt_wk = wk;
+  GAMESYS_WORK *gsys = evt_wk->gsys;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *pSave = GAMEDATA_GetSaveControlWork(gamedata);
+  
+  switch(*seq){
+  case 0:
+    {
+      BATTLE_EXAMINATION_SAVEDATA *exa;
+      evt_wk->pWork = GFL_HEAP_AllocMemory(GFL_HEAP_LOWID(HEAPID_PROC),SAVESIZE_EXTRA_BATTLE_EXAMINATION);
+      SaveControl_Extra_LoadWork( pSave, SAVE_EXTRA_ID_BATTLE_EXAMINATION, GFL_HEAP_LOWID(HEAPID_PROC),
+                                  evt_wk->pWork, SAVESIZE_EXTRA_BATTLE_EXAMINATION  );
+      exa = SaveControl_Extra_DataPtrGet( pSave, SAVE_EXTRA_ID_BATTLE_EXAMINATION, 0);
+      
+      if ( evt_wk->Type == TH_DL_DATA_CLEAR_TYPE_USED )
+      {
+        BATTLE_EXAMINATION_SAVE_SetDataUsedKey(exa);
+        NOZOMU_Printf("検定データ使用済みキーセット\n");
+      }
+      else
+      {
+        int size = BATTLE_EXAMINATION_SAVE_GetWorkSize();
+        NOZOMU_Printf("検定データ　%dbyte をクリア\n",size);
+        GFL_STD_MemClear( exa, size );
+      }
+
+      GAMEDATA_ExtraSaveAsyncStart(gamedata,SAVE_EXTRA_ID_BATTLE_EXAMINATION);
+    }
+    (*seq)++;
+    break;
+  case 1:
+    if( SAVE_RESULT_OK == GAMEDATA_ExtraSaveAsyncMain(gamedata, SAVE_EXTRA_ID_BATTLE_EXAMINATION) )
+    {
+      SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_BATTLE_EXAMINATION);
+      GFL_HEAP_FreeMemory(evt_wk->pWork);
+      //終了
+      return( GMEVENT_RES_FINISH );
+    }
+  }
+  return( GMEVENT_RES_CONTINUE );
 }
 
 
