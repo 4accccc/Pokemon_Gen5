@@ -1893,7 +1893,7 @@ int BPP_CalcSickDamage( const BTL_POKEPARAM* bpp, WazaSick sick )
     case WAZASICK_DOKU:
       // 「どくどく」状態ならターン数でダメージ増加
       if( BPP_SICKCONT_IsMoudokuCont(bpp->sickCont[sick]) ){
-        return (bpp->coreParam.hpMax / 16) * bpp->wazaSickCounter[sick];
+        return BTL_CALC_QuotMaxHP(bpp, 16) * bpp->wazaSickCounter[sick];
       }else{
         return BTL_CALC_QuotMaxHP( bpp, 8 );
       }
