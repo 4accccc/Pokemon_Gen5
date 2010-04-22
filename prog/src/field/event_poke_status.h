@@ -34,10 +34,11 @@ extern GMEVENT * EVENT_CreatePokeSelect(
  * @param retDecide 選択結果の格納先ワーク
  * @param retValue  選択位置の格納先ワーク
  * @param learnBit  覚えられるポケモンを示すビット
+ * @param wazano    覚える対象のわざナンバー
  */
 //------------------------------------------------------------------
 extern GMEVENT * EVENT_CreatePokeSelectWazaOboe( 
-    GAMESYS_WORK * gsys, u16* retDecide , u16* retPos, u8 learnBit );
+    GAMESYS_WORK * gsys, u16* retDecide , u16* retPos, u8 learnBit, u16 wazano );
 
 //-------------------------------------------------------------------------------------
 /**

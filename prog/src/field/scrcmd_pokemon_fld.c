@@ -39,6 +39,8 @@
 
 #include "item/item.h"  //ITEM_GetWazaNo
 
+#include "app/pokelist.h" // PL_SP_WAZANO_Å`
+
 
 #include "fieldmap.h"
 //======================================================================
@@ -746,8 +748,25 @@ VMCMD_RESULT EvCmdSkillTeachSelectPokemon( VMHANDLE * core, void * wk )
   }
   else
   {
-    //GMEVENT *event = EVENT_CreatePokeSelect( gsys , ret_decide , ret_wk );
-    GMEVENT *event = EVENT_CreatePokeSelectWazaOboe( gsys , ret_decide , ret_wk, learnBit );
+    u16 wazano;
+    GMEVENT * event;
+    switch ( mode )
+    {
+    case SCR_SKILLTEACH_MODE_STRONGEST:
+      wazano = PL_SP_WAZANO_STRONGEST;
+      break;
+    case SCR_SKILLTEACH_MODE_COALESCENCE:
+      wazano = PL_SP_WAZANO_COALESCENCE;
+      break;
+    case SCR_SKILLTEACH_MODE_DRAGON:
+      wazano = WAZANO_RYUUSEIGUN;
+      break;
+    default:
+      GF_ASSERT( 0 );
+      wazano = WAZANO_WARUAGAKI;
+      break;
+    }
+    event = EVENT_CreatePokeSelectWazaOboe( gsys , ret_decide , ret_wk, learnBit, wazano );
     SCRIPT_CallEvent( scw, event );
   }
   

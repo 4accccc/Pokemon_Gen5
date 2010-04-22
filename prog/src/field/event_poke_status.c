@@ -90,7 +90,7 @@ GMEVENT * EVENT_CreatePokeSelect(
  */
 //------------------------------------------------------------------
 GMEVENT * EVENT_CreatePokeSelectWazaOboe( 
-    GAMESYS_WORK * gsys, u16* retDecide , u16* retPos, u8 learnBit )
+    GAMESYS_WORK * gsys, u16* retDecide , u16* retPos, u8 learnBit, u16 wazano )
 {
 	GMEVENT* event;
 	SELECT_POKE_WORK* psw;
@@ -105,6 +105,7 @@ GMEVENT * EVENT_CreatePokeSelectWazaOboe(
   pl_data->type = PL_TYPE_SINGLE;
   pl_data->ret_sel = 0;
   pl_data->wazaLearnBit = learnBit;
+  pl_data->waza = wazano;
 
   // ÉCÉxÉìÉgê∂ê¨
   event = GMEVENT_Create(gsys, NULL, EVENT_FUNC_PokeSelect, sizeof(SELECT_POKE_WORK));
