@@ -860,7 +860,7 @@ void BTL_SETUP_SetSubwayMode( BATTLE_SETUP_PARAM* dst )
     }
     else
     {
-      dst->musicDefault = SEQ_BGM_VS_CHAMP
+      dst->musicDefault = SEQ_BGM_VS_CHAMP;
       dst->musicWin = SEQ_BGM_WIN5;
     }
   }
