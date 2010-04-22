@@ -44,16 +44,18 @@ _EVENT_DATA_END
 /************************************************************/
 INIT_EVENT_START	ev_zone_h03
 	
+
+	
+	//一般人を表示 暴走族を非表示
+	_FLAG_RESET(FV_H03_GENERALPERSON)
+	_FLAG_SET(FV_H03_BADRIDER)
+		
+	//暴走族のPOSイベントを無効にする
+	$WK_SCENE_H03_BADRIDER = 0
+
 	//ゲーチスのイベントが起きていないときは、暴走族を出さない
 	IF $WK_SCENE_H03_PLASMA != 0 THEN 
 	
-		//一般人を表示 暴走族を非表示
-		_FLAG_RESET(FV_H03_GENERALPERSON)
-		_FLAG_SET(FV_H03_BADRIDER)
-		
-		//暴走族のPOSイベントを有効にする
-		$WK_SCENE_H03_BADRIDER = 0
-
 		//タイムフラグがOFFだったら（対戦してから一日経過していたら）
 		IF FLAG_OFF(TMFLG_H03_EMPEROR_BTL) THEN
 		
