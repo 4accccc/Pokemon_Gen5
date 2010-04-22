@@ -230,8 +230,7 @@ static void BSP_TRAINER_DATA_Delete( BSP_TRAINER_DATA* tr_data )
 
   GFL_HEAP_FreeMemory( tr_data );
 }
-
-/*
+/**
  *  @brief  トレーナーパラメータセット
  */
 static void setup_trainer_param( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_CLIENT_ID client, POKEPARTY** party, TrainerID tr_id, HEAPID heapID )
@@ -421,7 +420,6 @@ static void setup_common_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   dst->competitor = BTL_COMPETITOR_TRAINER;
   dst->rule = rule;
 
-  // @TODO 本当はもっとこまかい対応が必要
   dst->musicWin = SEQ_BGM_WIN2;
 }
 
@@ -847,12 +845,24 @@ void BTL_SETUP_QuitForRecordPlay( BATTLE_SETUP_PARAM* bsp )
 
 /*
  *  @brief  セットアップ済みパラメータをバトルサブウェイモード用に切り替え
+ *          正しくトレーナーデータを設定してから呼ぶこと！
  */
 void BTL_SETUP_SetSubwayMode( BATTLE_SETUP_PARAM* dst )
 {
   if( dst->competitor == BTL_COMPETITOR_TRAINER )
   {
     dst->competitor = BTL_COMPETITOR_SUBWAY;
+
+    if( TT_TrainerTypeGrpGet(dst->tr_data[BTL_CLIENT_ENEMY1]->tr_type) != TRTYPE_GRP_BCHAMP )
+    {
+      dst->musicDefault = SEQ_BGM_VS_SUBWAY_TRAINER;
+      dst->musicWin = SEQ_BGM_WIN2;
+    }
+    else
+    {
+      dst->musicDefault = SEQ_BGM_VS_CHAMP
+      dst->musicWin = SEQ_BGM_WIN5;
+    }
   }
 }
 /*
