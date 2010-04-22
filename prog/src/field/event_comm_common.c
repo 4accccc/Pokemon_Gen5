@@ -305,6 +305,7 @@ static GMEVENT_RESULT EventCommCommonTalk( GMEVENT *event, int *seq, void *wk )
     if((*seq) <= SEQ_TALK_OK){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_FINISH;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 
@@ -403,6 +404,7 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
     if((*seq) < SEQ_FINISH){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_FINISH;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 

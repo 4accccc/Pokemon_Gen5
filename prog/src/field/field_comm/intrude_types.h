@@ -259,7 +259,8 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 warp_player_netid;       ///<ワープ先のプレイヤーNetID
   
   MONOLITH_STATUS monolith_status;  ///<モノリスステータス
+  s16 exit_wait;              ///<通信切断時のタイムアウトカウンタ
   u8 monost_req;              ///<モノリスステータス要求リクエスト(bit管理)
-  u8 padding[3];
+  u8 padding;
 }INTRUDE_COMM_SYS;
 

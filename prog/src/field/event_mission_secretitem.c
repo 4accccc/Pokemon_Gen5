@@ -34,6 +34,7 @@
 #include "event_comm_common.h"
 #include "event_mission_secretitem.h"
 #include "event_mission_secretitem_ex.h"
+#include "event_comm_result.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
@@ -168,6 +169,7 @@ static GMEVENT_RESULT CommMissionItem_MtoT_Talk( GMEVENT *event, int *seq, void 
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 
@@ -247,6 +249,7 @@ static GMEVENT_RESULT CommMissionItem_TtoM_Talk( GMEVENT *event, int *seq, void 
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 
@@ -327,6 +330,7 @@ static GMEVENT_RESULT CommMissionItem_MtoT_Talked( GMEVENT *event, int *seq, voi
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 
@@ -414,6 +418,7 @@ static GMEVENT_RESULT CommMissionItem_TtoM_Talked( GMEVENT *event, int *seq, voi
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 
@@ -522,6 +527,7 @@ static GMEVENT_RESULT Intrude_SecretItemArrivalEvent( GMEVENT *event, int *seq, 
       IntrudeEventPrint_StartStream(&work->iem, msg_invasion_mission_sys002);
       *seq = SEQ_LAST_MSG_WAIT;
       work->error = TRUE;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 	
@@ -561,7 +567,9 @@ static GMEVENT_RESULT Intrude_SecretItemArrivalEvent( GMEVENT *event, int *seq, 
     break;
   case SEQ_END:
     IntrudeEventPrint_ExitFieldMsg(&work->iem);
-    return GMEVENT_RES_FINISH;
+
+    GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
+    return GMEVENT_RES_CONTINUE;  //ChangeEventÇ≈èIóπÇ∑ÇÈÇΩÇﬂFINISHÇµÇ»Ç¢
   }
 	return GMEVENT_RES_CONTINUE;
 }

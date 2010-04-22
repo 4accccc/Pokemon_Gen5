@@ -34,6 +34,7 @@
 #include "event_comm_common.h"
 #include "event_mission_talk.h"
 #include "event_gpower.h"
+#include "event_comm_result.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
@@ -75,6 +76,7 @@ static const struct{
   u16 mission_talked[TALK_TYPE_MAX];        ///<自分がミッション実行者で話しかけられた
 
   u16 mission_talk[TALK_TYPE_MAX];          ///<自分がミッション実行者で話しかけた
+  u16 mission_talk_second[TALK_TYPE_MAX];   ///<自分がミッション実行者で話しかけた(二言目)
   u16 mission_talk_item[TALK_TYPE_MAX];     ///<自分がミッション実行者でアイテムをあげた
 }MissionTalkMsgID = {
   { //自分がターゲットで話しかけた
@@ -111,6 +113,13 @@ static const struct{
     mis_m02_01_m3,
     mis_m02_01_m4,
     mis_m02_01_m5,
+  },
+  { //自分がミッション実行者で話しかけた(長いのでメッセージ分割)
+    mis_m02_01_m1,
+    mis_m02_01_m2,
+    mis_m02_01_m3,
+    mis_m02_01_m4_01,
+    mis_m02_01_m5_01,
   },
   { //自分がミッション実行者でアイテムをあげた
     mis_m02_03_m1,
@@ -161,6 +170,7 @@ static GMEVENT_RESULT CommMissionTalk_MtoT_Talk( GMEVENT *event, int *seq, void 
     SEQ_SEND_ACHIEVE,
     SEQ_RECV_WAIT,
     SEQ_MSG_INIT,
+    SEQ_MSG_SECOND,
     SEQ_MSG_WAIT,
     SEQ_LAST_MSG_WAIT,
     SEQ_MSG_END_BUTTON_WAIT,
@@ -176,6 +186,7 @@ static GMEVENT_RESULT CommMissionTalk_MtoT_Talk( GMEVENT *event, int *seq, void 
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 
@@ -203,6 +214,13 @@ static GMEVENT_RESULT CommMissionTalk_MtoT_Talk( GMEVENT *event, int *seq, void 
       MissionTalkMsgID.mission_talk[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
 		(*seq)++;
 		break;
+  case SEQ_MSG_SECOND:
+    if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, 
+        MissionTalkMsgID.mission_talk_second[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+  		(*seq)++;
+  	}
+		break;
   case SEQ_MSG_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, 
@@ -223,7 +241,9 @@ static GMEVENT_RESULT CommMissionTalk_MtoT_Talk( GMEVENT *event, int *seq, void 
   case SEQ_END:
   	//共通Finish処理
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
-    return GMEVENT_RES_FINISH;
+
+    GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
+    return GMEVENT_RES_CONTINUE;  //ChangeEventで終了するためFINISHしない
   }
 	return GMEVENT_RES_CONTINUE;
 }
@@ -278,6 +298,7 @@ static GMEVENT_RESULT CommMissionTalk_TtoM_Talk( GMEVENT *event, int *seq, void 
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_MSG_WAIT;
       talk->error = TRUE;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 
@@ -364,6 +385,7 @@ static GMEVENT_RESULT CommMissionTalk_MtoT_Talked( GMEVENT *event, int *seq, voi
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_MSG_WAIT;
       talk->error = TRUE;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 
@@ -459,6 +481,7 @@ static GMEVENT_RESULT CommMissionTalk_TtoM_Talked( GMEVENT *event, int *seq, voi
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_END;
       talk->error = TRUE;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 

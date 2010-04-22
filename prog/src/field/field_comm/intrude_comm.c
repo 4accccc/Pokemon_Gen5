@@ -33,6 +33,9 @@
 ///自分一人になった場合、通信終了へ遷移するまでのタイムアウト
 #define OTHER_PLAYER_TIMEOUT    (60 * 3)
 
+///切断同期待ちのタイムアウト
+#define COMM_EXIT_WAIT_TIMEOUT     (60*5)
+
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -205,6 +208,13 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
     return;
   }
 
+  if(intcomm->comm_status == INTRUDE_COMM_STATUS_UPDATE){
+    if(intcomm->exit_recv == TRUE){
+      GameCommSys_ExitReq(intcomm->game_comm);
+      return;
+    }
+  }
+
   IntrudeComm_DiffSendBeacon(&intcomm->send_beacon);
   
   switch(*seq){
@@ -214,6 +224,7 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
     if(GFL_NET_SystemGetConnectNum() > 1){
       if(intcomm->comm_status < INTRUDE_COMM_STATUS_HARD_CONNECT){
         intcomm->comm_status = INTRUDE_COMM_STATUS_HARD_CONNECT;
+        GFL_NET_SetNoChildErrorCheck(TRUE);
       }
     }
 
@@ -228,6 +239,7 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
         intcomm->intrude_status_mine.pm_version = PM_VERSION;
         intcomm->intrude_status_mine.season = GAMEDATA_GetSeasonID(gamedata);
         OS_TPrintf("ネゴシエーション送信\n");
+        GFL_NET_SetNoChildErrorCheck(TRUE);
         (*seq)++;
       }
     }
@@ -317,53 +329,68 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
 BOOL  IntrudeComm_TermCommSystem( int *seq, void *pwk, void *pWork )
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
+  enum{
+    SEQ_INIT,
+    SEQ_TIMING_START,
+    SEQ_TIMING_WAIT,
+    SEQ_EXIT_WAIT,
+    SEQ_FINISH,
+  };
 
   if(NetErr_App_CheckError()){
     return TRUE;
   }
 
   switch(*seq){
-  case 0:
+  case SEQ_INIT:
     intcomm->comm_status = INTRUDE_COMM_STATUS_EXIT_START;
-    if(1){  //GFL_NET_IsParentMachine() == TRUE){
-      if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_CMD_SHUTDOWN, 0, NULL) == TRUE){
+    //親は自分一人なら即終了
+    if((GFL_NET_IsParentMachine() == TRUE) && (GFL_NET_GetConnectNum() <= 1)){
+      *seq = SEQ_FINISH;
+    }
+    else{
+      if(IntrudeSend_Shutdown(intcomm) == TRUE){
         (*seq)++;
       }
     }
-    else{
-      (*seq)++;
-    }
     break;
-  case 1:
-    GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle() , INTRUDE_TIMING_EXIT );
+  case SEQ_TIMING_START:
+    intcomm->exit_wait = 0;
+    GFL_NET_HANDLE_TimeSyncStart(
+      GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_TIMING_EXIT, WB_NET_PALACE_SERVICEID);
     (*seq)++;
     break;
-  case 2:
-    if((GFL_NET_IsParentMachine() == TRUE) && (GFL_NET_GetConnectNum() <= 1)){ //親は自分一人なら次
-      (*seq)++;
-    }
-    else if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_TIMING_EXIT) == TRUE){
-      OS_TPrintf("切断同期完了\n");
+  case SEQ_TIMING_WAIT:
+    intcomm->exit_wait++;
+    if(GFL_NET_HANDLE_IsTimeSync(
+        GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_TIMING_EXIT, WB_NET_PALACE_SERVICEID) == TRUE
+        || intcomm->exit_wait > COMM_EXIT_WAIT_TIMEOUT){
+      GFL_NET_SetNoChildErrorCheck(FALSE);  //切断許可
+      OS_TPrintf("切断同期完了 timeout残り=%d\n", COMM_EXIT_WAIT_TIMEOUT - intcomm->exit_wait);
       (*seq)++;
     }
     else{
-      OS_TPrintf("切断同期待ち\n");
+      OS_TPrintf("切断同期待ち timeout残り=%d\n", COMM_EXIT_WAIT_TIMEOUT - intcomm->exit_wait);
     }
     break;
-  case 3:
+  case SEQ_EXIT_WAIT:
+    intcomm->exit_wait++;
     if(GFL_NET_IsParentMachine() == TRUE){
-      if(GFL_NET_GetConnectNum() <= 1){ //親は自分一人になってから終了する
+      //親は自分一人になってから終了する
+      if(GFL_NET_GetConnectNum() <= 1 || intcomm->exit_wait > COMM_EXIT_WAIT_TIMEOUT){
         (*seq)++;
       }
       else{
-        OS_TPrintf("親：子の終了待ち 残り=%d\n", GFL_NET_GetConnectNum() - 1);
+        OS_TPrintf("親：子の終了待ち 残り=%d timeout残り=%d\n", 
+          GFL_NET_GetConnectNum() - 1, COMM_EXIT_WAIT_TIMEOUT - intcomm->exit_wait);
       }
     }
     else{
       (*seq)++;
     }
     break;
-  case 4:
+  case SEQ_FINISH:
     GFL_NET_Exit( IntrudeComm_FinishTermCallback );
     return TRUE;
   }
@@ -392,6 +419,41 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
       GAMEDATA_ClearPalaceWFBCCoreData( gamedata );
       //GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
       CommPlayer_Exit(intcomm->cps);
+      
+      //切断する時の状態をLAST_STATUSにセット
+      if(NetErr_App_CheckError()){
+        GameCommSys_SetLastStatus(invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_ERROR);
+      }
+      else if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE){
+        if(MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == TRUE){
+          //自分が達成者
+          GameCommSys_SetLastStatus(
+            invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_SUCCESS);
+        }
+        else{
+          MISSION_RESULT *mresult = MISSION_GetResultData(&intcomm->mission);
+          int i;
+          
+          for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+            if(mresult->achieve_netid[i] != INTRUDE_NETID_NULL){
+              break;
+            }
+          }
+          if(i < FIELD_COMM_MEMBER_MAX){
+            //他に達成者がいた
+            GameCommSys_SetLastStatus(
+              invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_FAIL);
+          }
+          else{ //達成者がいないのでタイムアウト
+            GameCommSys_SetLastStatus(
+              invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_TIMEOUT);
+          }
+        }
+      }
+      else{ //エラーでもなくミッションの終了でもない。退出による終了
+        GameCommSys_SetLastStatus(invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_WAYOUT);
+      }
+      
       GFL_HEAP_FreeMemory(intcomm);
       GFL_HEAP_FreeMemory(pwk);
       if(NetErr_App_CheckError()){

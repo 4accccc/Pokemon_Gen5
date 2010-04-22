@@ -66,6 +66,19 @@ typedef enum{
 }GAME_COMM_STATUS_BIT;
 
 
+///最後に実行していたGAME_COMM_NOの終了状態
+typedef enum{
+  GAME_COMM_LAST_STATUS_NULL,     ///<正常終了
+  
+  //侵入
+  GAME_COMM_LAST_STATUS_INTRUDE_WAYOUT,             ///<誰かの退出による終了
+  GAME_COMM_LAST_STATUS_INTRUDE_MISSION_SUCCESS,    ///<ミッション成功で終了
+  GAME_COMM_LAST_STATUS_INTRUDE_MISSION_FAIL,       ///<ミッション失敗で終了(相手に先を越された)
+  GAME_COMM_LAST_STATUS_INTRUDE_MISSION_TIMEOUT,    ///<ミッション失敗で終了(タイムアウト)
+  GAME_COMM_LAST_STATUS_INTRUDE_ERROR,              ///<通信エラー
+  
+}GAME_COMM_LAST_STATUS;
+
 
 
 
@@ -116,6 +129,9 @@ extern BOOL GameCommSys_CheckSystemWaiting(GAME_COMM_SYS_PTR gcsp);
 extern void *GameCommSys_GetAppWork(GAME_COMM_SYS_PTR gcsp);
 extern GAMEDATA * GameCommSys_GetGameData(GAME_COMM_SYS_PTR gcsp);
 extern GAME_COMM_NO GameCommSys_GetLastCommNo(GAME_COMM_SYS_PTR gcsp);
+extern void GameCommSys_SetLastStatus(GAME_COMM_SYS_PTR gcsp, GAME_COMM_LAST_STATUS last_status);
+extern void GameCommSys_ClearLastStatus(GAME_COMM_SYS_PTR gcsp);
+extern GAME_COMM_LAST_STATUS GameCommSys_GetLastStatus(GAME_COMM_SYS_PTR gcsp);
 extern void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZONEID zone_id, u8 invasion_netid, int pm_version, BOOL first_status);
 extern u8 GameCommStatus_GetPlayerStatus_InvasionNetID(GAME_COMM_SYS_PTR gcsp, int comm_net_id);
 extern u8 GameCommStatus_GetPlayerStatus_RomVersion(GAME_COMM_SYS_PTR gcsp, int comm_net_id);

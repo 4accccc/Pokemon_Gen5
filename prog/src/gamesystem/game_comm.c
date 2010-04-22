@@ -100,7 +100,7 @@ typedef struct _GAME_COMM_SYS{
   GAME_COMM_NO game_comm_no;
   GAME_COMM_NO reserve_comm_game_no;   ///<予約通信ゲーム番号
   GAME_COMM_NO last_comm_no;            ///<最後に実行していたGAME_COMM_NO
-  u8           padding;
+  GAME_COMM_LAST_STATUS last_status;    ///<最後に実行していたGAME_COMM_NOの終了状態
   GAME_COMM_SUB_WORK sub_work;
   void *parent_work;                  ///<呼び出し時に引き渡すポインタ
   void *app_work;                     ///<各アプリケーションが確保したワークのポインタ
@@ -375,6 +375,7 @@ void GameCommSys_Boot(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, void *p
   
   gcsp->game_comm_no = game_comm_no;
   gcsp->last_comm_no = game_comm_no;
+  gcsp->last_status = GAME_COMM_LAST_STATUS_NULL;
   gcsp->parent_work = parent_work;
   GFL_STD_MemClear(&gcsp->sub_work, sizeof(GAME_COMM_SUB_WORK));
 }
@@ -552,6 +553,48 @@ GAME_COMM_NO GameCommSys_GetLastCommNo(GAME_COMM_SYS_PTR gcsp)
 {
   return gcsp->last_comm_no;
 }
+
+//==================================================================
+/**
+ * 最後に実行していたGAME_COMM_NOの終了状態をセット
+ *
+ * @param   gcsp		
+ * @param   last_status		
+ */
+//==================================================================
+void GameCommSys_SetLastStatus(GAME_COMM_SYS_PTR gcsp, GAME_COMM_LAST_STATUS last_status)
+{
+  GF_ASSERT_MSG(gcsp->last_status == GAME_COMM_LAST_STATUS_NULL, "lastst %d, %d", gcsp->last_status, last_status);
+  gcsp->last_status = last_status;
+}
+
+//==================================================================
+/**
+ * 最後に実行していたGAME_COMM_NOの終了状態をセット
+ *
+ * @param   gcsp		
+ * @param   last_status		
+ */
+//==================================================================
+void GameCommSys_ClearLastStatus(GAME_COMM_SYS_PTR gcsp)
+{
+  gcsp->last_status = GAME_COMM_LAST_STATUS_NULL;
+}
+
+//==================================================================
+/**
+ * 最後に実行していたGAME_COMM_NOの終了状態を取得
+ *
+ * @param   gcsp		
+ *
+ * @retval  GAME_COMM_LAST_STATUS		
+ */
+//==================================================================
+GAME_COMM_LAST_STATUS GameCommSys_GetLastStatus(GAME_COMM_SYS_PTR gcsp)
+{
+  return gcsp->last_status;
+}
+
 
 //--------------------------------------------------------------
 /**

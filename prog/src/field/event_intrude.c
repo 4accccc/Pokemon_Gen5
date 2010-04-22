@@ -35,12 +35,14 @@
 #include "event_mapchange.h"
 #include "sound/pm_sndsys.h"
 #include "fieldmap/zone_id.h"
+#include "field/fieldmap_call.h"  //FIELDMAP_IsReady
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
 #include "poke_tool/status_rcv.h"
 
 #include "palace_gimmick.h"
+#include "field/scrcmd.h"
 
 
 //==============================================================================
@@ -74,11 +76,23 @@ typedef struct
 	u8 padding[3];
 }DISGUISE_EVENT_WORK;
 
+//--------------------------------------------------------------
+//  
+//--------------------------------------------------------------
+typedef struct
+{
+  GFL_MSGDATA *msgData;
+  FLDMSGWIN_STREAM *msgStream;
+  
+  INTRUDE_EVENT_DISGUISE_WORK iedw;
+}EVENT_FORCEWARP;
+
 
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
 static GMEVENT_RESULT DisguiseEvent( GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk );
 
 
 //======================================================================
@@ -273,7 +287,7 @@ BOOL IntrudeEvent_Sub_DisguiseEffectMain(INTRUDE_EVENT_DISGUISE_WORK *iedw, INTR
     iedw->seq++;
     break;
   case 1:
-    {
+    if(FIELDMAP_IsReady(iedw->fieldWork) == TRUE){
       FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(iedw->fieldWork);
       MMDL *player_mmdl = FIELD_PLAYER_GetMMdl(player);
       static const u8 player_anm_tbl[] = {
@@ -644,46 +658,153 @@ GMEVENT * EVENT_IntrudeWarpPalace_NetID(GAMESYS_WORK *gsys, int net_id)
   return EVENT_IntrudeWarpPalace(gsys);
 }
 
-#if 0
+//==================================================================
+/**
+ * 自分のパレスへワープし、「不思議な力で戻された」を表示
+ *
+ * @param   gsys		
+ *
+ * @retval  GMEVENT *		
+ *
+ * エラー時の戻りとしても使用出来るようにintcommに依存していない
+ * エラー時は自分のパレスへワープする
+ */
+//==================================================================
+GMEVENT * EVENT_IntrudeForceWarpMyPalace(GAMESYS_WORK *gsys)
+{
+  GMEVENT * event;
+  
+  event = GMEVENT_Create( gsys, NULL, EventForceWarpMyPalace, sizeof(EVENT_FORCEWARP) );
+  return event;
+}
 
-  u16 target_talk_battle[TALK_TYPE_MAX];    ///<自分がターゲットで戦闘状態の相手に話しかけた
-  u16 target_not_talk[TALK_TYPE_MAX];       ///<自分がターゲットで相手が話しかけられない状態
-  u16 mission_talk_battle[TALK_TYPE_MAX];   ///<自分がミッション実行者で戦闘状態の相手に話しかけた
-  u16 mission_talk_challenger[TALK_TYPE_MAX];  ///<自分がミッション実行者で話しかけた相手も実行者
-  u16 mission_not_talk[TALK_TYPE_MAX];      ///<自分がミッション実行者で相手が話しかけられない状態
-  { //自分がターゲットで戦闘状態の相手に話しかけた
-    mis_btl_01_t1,
-    mis_btl_01_t2,
-    mis_btl_01_t3,
-    mis_btl_01_t4,
-    mis_btl_01_t5,
-  },
-  { //自分がターゲットで相手が話しかけられない状態
-    mis_std_01_t1,
-    mis_std_01_t2,
-    mis_std_01_t3,
-    mis_std_01_t4,
-    mis_std_01_t5,
-  },
-  { //自分がミッション実行者で戦闘状態の相手に話しかけた
-    mis_btl_01_m1,
-    mis_btl_01_m2,
-    mis_btl_01_m3,
-    mis_btl_01_m4,
-    mis_btl_01_m5,
-  },
-  { //自分がミッション実行者で話しかけた相手も実行者
-    mis_m01_04_m1,
-    mis_m01_04_m2,
-    mis_m01_04_m3,
-    mis_m01_04_m4,
-    mis_m01_04_m5,
-  },
-  { //自分がミッション実行者で相手が話しかけられない状態
-    mis_std_01_m1,
-    mis_std_01_m2,
-    mis_std_01_m3,
-    mis_std_01_m4,
-    mis_std_01_m5,
-  },
-#endif
+//--------------------------------------------------------------
+/**
+ * 自分のパレスへワープし、「不思議な力で戻された」を表示
+ *
+ * @param   event		
+ * @param   seq		
+ * @param   wk		
+ *
+ * @retval  GMEVENT_RESULT		
+ *
+ * エラー時の戻りとしても使用出来るようにintcommに依存していない
+ * エラー時は自分のパレスへワープする
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk )
+{
+  EVENT_FORCEWARP *evf = wk;
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  enum{
+    SEQ_INIT,
+    SEQ_COMM_WAIT,
+    SEQ_FIELD_INIT,
+    SEQ_MSG_SET,
+    SEQ_MSG_WAIT,
+    SEQ_DISGUISE_INIT,
+    SEQ_DISGUISE_MAIN,
+    SEQ_FINISH,
+  };
+  
+  switch( *seq )
+  {
+  case SEQ_INIT:
+    if(NetErr_App_CheckError() || GameCommSys_CheckSystemWaiting(game_comm) == FALSE){
+      //通信が接続されている場合は切断もする
+      if(NetErr_App_CheckError() == NET_ERR_CHECK_NONE 
+          && GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION){
+        GameCommSys_ExitReq(game_comm);
+      }
+      (*seq)++;
+    }
+    break;
+  case SEQ_COMM_WAIT:
+    if(NetErr_App_CheckError() || GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL){
+      GMEVENT_CallEvent(event, EVENT_IntrudeWarpPalace_Mine(gsys) );
+      (*seq)++;
+    }
+    break;
+  
+  case SEQ_FIELD_INIT:
+    if(GAMESYSTEM_CheckFieldMapWork(gsys) == TRUE){
+      FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+      if(FIELDMAP_IsReady(fieldWork) == TRUE){
+        FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
+        evf->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
+        evf->msgStream = FLDMSGWIN_STREAM_AddTalkWin(msgBG, evf->msgData );
+        
+        {
+          u32 msg_id;
+          GAME_COMM_LAST_STATUS last_status = GameCommSys_GetLastStatus(game_comm);
+          switch(last_status){
+          case GAME_COMM_LAST_STATUS_INTRUDE_WAYOUT:           //誰かの退出による終了
+            msg_id = plc_connect_13;
+            break;
+          case GAME_COMM_LAST_STATUS_INTRUDE_MISSION_SUCCESS:  //ミッション成功で終了
+            msg_id = plc_connect_09;
+            break;
+          case GAME_COMM_LAST_STATUS_INTRUDE_MISSION_FAIL: //ミッション失敗で終了(相手に先を越された)
+            msg_id = plc_connect_10;
+            break;
+          case GAME_COMM_LAST_STATUS_INTRUDE_MISSION_TIMEOUT:  //ミッション失敗で終了(タイムアウト)
+            msg_id = plc_connect_11;
+            break;
+          case GAME_COMM_LAST_STATUS_INTRUDE_ERROR:            //通信エラー
+          default:
+            msg_id = plc_connect_12;
+            break;
+          }
+          FLDMSGWIN_STREAM_PrintStart(evf->msgStream, 0, 0, msg_id);
+        }
+      }
+      (*seq)++;
+    }
+    break;
+  case SEQ_MSG_SET:
+    if( FLDMSGWIN_STREAM_Print(evf->msgStream) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_MSG_WAIT:
+    if( GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY ){
+      FLDMSGWIN_STREAM_Delete(evf->msgStream);
+      GFL_MSG_Delete( evf->msgData );
+      (*seq)++;
+    }
+    break;
+
+  case SEQ_DISGUISE_INIT:  //変装をしていれば元に戻す
+    {
+      FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+      
+      if(FIELDMAP_IsReady(fieldWork) == TRUE){
+        FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+        
+        if(FIELD_PLAYER_CheckIllegalOBJCode( fld_player ) == FALSE){
+          IntrudeEvent_Sub_DisguiseEffectSetup(&evf->iedw, gsys, fieldWork, DISGUISE_NO_NULL,0, 0);
+          (*seq)++;
+        }
+        else{
+          *seq = SEQ_FINISH;
+        }
+      }
+    }
+    break;
+  case SEQ_DISGUISE_MAIN:
+    if(IntrudeEvent_Sub_DisguiseEffectMain(&evf->iedw, NULL) == TRUE){
+      (*seq)++;
+    }
+    break;
+
+  case SEQ_FINISH:
+  default:
+    GameCommSys_ClearLastStatus(game_comm);
+    GAMESYSTEM_CommBootAlways(gsys);
+    return GMEVENT_RES_FINISH;
+  }
+
+  return GMEVENT_RES_CONTINUE;
+}

@@ -1988,6 +1988,24 @@ GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem )
     SaveData_GetIntrude(GAMEDATA_GetSaveControlWork(gamedata)), 
     GAMEDATA_GetPlayTimeWork(gamedata), SOJOURN_TIME_CALC_SET);
 
+  //LAST_STATUSをクリアしておく　※自分が最初の退室者の場合はステータスが残っている
+  {
+    GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSystem);
+    GAME_COMM_LAST_STATUS last_status = GameCommSys_GetLastStatus(game_comm);
+    //他の通信が起動している場合は起動時にクリアされているのでよい
+    if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL){
+      GameCommSys_ClearLastStatus(game_comm);
+    }
+  }
+  
+  {
+    FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+    if(FIELD_PLAYER_CheckIllegalOBJCode( fld_player ) == FALSE){
+      GF_ASSERT(0); //退出する時に自機以外になっているのはおかしい
+      IntrudeField_PlayerDisguise(NULL, gameSystem, 0, 0, 0);
+    }
+  }
+  
   GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
   GAMEDATA_SetIntrudeMyID(gamedata, 0);
 //  PMSND_PlaySE( SEQ_SE_FLD_131 ); //SEの確認用にエフェクトは無いけどあてておく

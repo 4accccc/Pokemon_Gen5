@@ -29,6 +29,7 @@
 #include "system/playtime_ctrl.h"  //PLAYTIMECTRL_
 
 #include "savedata/c_gear_data.h" //CGEAR_SV_GetCGearONOFF
+#include "field/field_comm/intrude_work.h"  //Intrude_Check_AlwaysBoot
 
 
 //============================================================================================
@@ -599,7 +600,9 @@ BOOL GAMESYSTEM_CommBootAlways_Check(GAMESYS_WORK *gsys)
   if( gsys->comm_off_event_flag == FALSE
       && ZONEDATA_IsFieldBeaconNG(zone_id) == FALSE
       && NetErr_App_CheckError() == NET_ERR_CHECK_NONE
-      && GAMESYSTEM_GetAlwaysNetFlag( gsys ) == TRUE){
+      && GAMESYSTEM_GetAlwaysNetFlag( gsys ) == TRUE
+      && Intrude_Check_AlwaysBoot( gsys ) == TRUE )
+  {
     return TRUE;
   }
   return FALSE;

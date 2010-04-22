@@ -27,6 +27,7 @@ typedef enum{
 //==============================================================================
 //  äOïîä÷êîêÈåæ
 //==============================================================================
+extern BOOL Intrude_Check_AlwaysBoot(GAMESYS_WORK *gsys);
 extern INTRUDE_COMM_SYS_PTR Intrude_Check_CommConnect(GAME_COMM_SYS_PTR game_comm);
 extern void IntrudeWork_SetActionStatus(GAME_COMM_SYS_PTR game_comm, INTRUDE_ACTION action);
 extern void Intrude_SetWarpPlayerNetID(GAME_COMM_SYS_PTR game_comm, int net_id);

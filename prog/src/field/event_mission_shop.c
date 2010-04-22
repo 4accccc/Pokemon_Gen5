@@ -34,6 +34,7 @@
 #include "event_intrude.h"
 #include "event_comm_common.h"
 #include "event_mission_shop.h"
+#include "event_comm_result.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
@@ -220,6 +221,7 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
       IntrudeEventPrint_StartStream(&shop->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_LAST_MSG_WAIT;
       shop->error = TRUE;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 
@@ -317,7 +319,9 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
   case SEQ_END:
   	//‹¤’ÊFinishˆ—
   	EVENT_CommCommon_Finish(intcomm, &shop->ccew);
-    return GMEVENT_RES_FINISH;
+
+    GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
+    return GMEVENT_RES_CONTINUE;  //ChangeEvent‚ÅI—¹‚·‚é‚½‚ßFINISH‚µ‚È‚¢
   }
 	return GMEVENT_RES_CONTINUE;
 }
@@ -385,6 +389,7 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
       IntrudeEventPrint_StartStream(&shop->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_LAST_MSG_WAIT;
       shop->error = TRUE;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 

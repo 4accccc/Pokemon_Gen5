@@ -463,11 +463,15 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 	///通信用会話処理(仮
   {
     GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-    INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
+    INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
     MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
     u32 talk_netid;
     
     if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION && intcomm != NULL){
+      //侵入先のROM相手が切断されていれば自分のパレスへワープ
+      if(IntrudeField_CheckIntrudeShutdown(gsys, req.map_id) == TRUE){
+        return EVENT_IntrudeForceWarpMyPalace(gsys);
+      }
       //シンボルマップにいて所有者の更新イベントが発動していないかチェック
       if(IntrudeSymbol_CheckSymbolDataChange(intcomm, req.map_id) == TRUE){
         return EVENT_SymbolMapWarpEasy( gsys, DIR_NOT, GAMEDATA_GetSymbolMapID( req.gamedata ) );
@@ -477,11 +481,13 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
         FIELD_PLAYER_ForceStop( req.field_player );
         return EVENT_CommCommon_Talked(gsys, fieldWork, intcomm, fmmdl_player, talk_netid, req.heapID);
       }
+    #if 0
       //ミッション結果を受信していないかチェック
       if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE){
         FIELD_PLAYER_ForceStop( req.field_player );
-        return EVENT_CommMissionResult(gsys, fieldWork, intcomm, fmmdl_player, req.heapID);
+        return EVENT_CommMissionResult(gsys, fieldWork, req.heapID);
       }
+    #endif
       //隠しアイテムの目的地到達チェック
       if (req.stepRequest ){
         event = IntrudeField_CheckSecretItemEvent(gsys, intcomm, req.field_player);

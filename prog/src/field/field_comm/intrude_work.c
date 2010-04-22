@@ -27,6 +27,31 @@
 
 //==================================================================
 /**
+ * 侵入システムとして常時通信を起動してもよい状態かチェックする
+ *
+ * @param   gsys		
+ *
+ * @retval  BOOL		    TRUE:常時通信を起動してもよい
+ * @retval  BOOL		    TRUE:起動してはいけない
+ */
+//==================================================================
+BOOL Intrude_Check_AlwaysBoot(GAMESYS_WORK *gsys)
+{
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+  
+  //裏フィールドにいて、通信エラーステータスが何か残っている場合は
+  //侵入としてエラー処理、切断後のイベント処理などが残っているので
+  //常時通信をさせない
+  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE
+      && GameCommSys_GetLastStatus(game_comm) != GAME_COMM_LAST_STATUS_NULL){
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//==================================================================
+/**
  * 侵入通信が正常に繋がっているか調べる
  *
  * @param   game_comm		

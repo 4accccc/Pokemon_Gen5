@@ -35,6 +35,7 @@
 #include "event_mission_help.h"
 #include "event_mission_help_after.h"
 #include "system/main.h"
+#include "event_comm_result.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 #include "../../../resource/fldmapdata/script/item_get_scr_def.h" //SCRID_Å`
@@ -182,6 +183,7 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Talk( GMEVENT *event, int *seq, void 
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 
@@ -266,6 +268,7 @@ static GMEVENT_RESULT CommMissionHelp_TtoM_Talk( GMEVENT *event, int *seq, void 
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 
@@ -346,6 +349,7 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Talked( GMEVENT *event, int *seq, voi
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 
@@ -434,6 +438,7 @@ static GMEVENT_RESULT CommMissionHelp_TtoM_Talked( GMEVENT *event, int *seq, voi
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 
@@ -514,6 +519,7 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Battle( GMEVENT *event, int *seq, voi
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
+      return GMEVENT_RES_CONTINUE;
     }
   }
 
@@ -561,7 +567,10 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Battle( GMEVENT *event, int *seq, voi
   case SEQ_END:
   	//ã§í Finishèàóù
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
-    return GMEVENT_RES_FINISH;
+  	
+    GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
+  
+    return GMEVENT_RES_CONTINUE;  //ChangeEventÇ≈èIóπÇ∑ÇÈÇΩÇﬂFINISHÇµÇ»Ç¢
   }
 	return GMEVENT_RES_CONTINUE;
 }

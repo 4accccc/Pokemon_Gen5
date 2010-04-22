@@ -51,7 +51,6 @@
 typedef struct
 {
 	HEAPID heapID;
-	FIELDMAP_WORK *fieldWork;
   
 	INTRUDE_EVENT_MSGWORK iem;
 	BOOL error;
@@ -79,19 +78,16 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
  * ミッション結果通知イベント起動(自分が達成ではなく通信相手が達成した結果が届いた)
  *
  * @param   gsys		
- * @param   fieldWork		
- * @param   intcomm		      侵入システムワークへのポインタ
- * @param   fmmdl_player		自機動作モデル
  * @param   heap_id		      ヒープID
  *
  * @retval  GMEVENT *		
  */
 //==================================================================
-GMEVENT * EVENT_CommMissionResult(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
-  INTRUDE_COMM_SYS_PTR intcomm, MMDL *fmmdl_player, HEAPID heap_id)
+GMEVENT * EVENT_CommMissionResult(GAMESYS_WORK *gsys)
 {
 	COMMTALK_EVENT_WORK *talk;
 	GMEVENT *event;
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
 	
 	event = GMEVENT_Create(
  		gsys, NULL,	CommMissionResultEvent, sizeof(COMMTALK_EVENT_WORK) );
@@ -99,25 +95,8 @@ GMEVENT * EVENT_CommMissionResult(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 	talk = GMEVENT_GetEventWork( event );
 	GFL_STD_MemClear( talk, sizeof(COMMTALK_EVENT_WORK) );
 	
-	talk->heapID = heap_id;
-	talk->fieldWork = fieldWork;
+	talk->heapID = FIELDMAP_GetHeapID(fieldWork);
 	
-  IntrudeEventPrint_SetupFieldMsg(&talk->iem, gsys);
-
-  //イベント中、エラーになっても構わないようにintcommから必要なパラメータをここで全て取得
-  //  ※BGMのPush,Popがある為、途中でイベントをやめるにはそこら辺のケアが必要になる
-  {
-    const MISSION_RESULT *mresult = MISSION_GetResultData(&intcomm->mission);
-    
-    GF_ASSERT(mresult != NULL);
-    talk->mresult = *mresult;
-    talk->title_msgid = msg_mistype_000 + mresult->mission_data.cdata.type;
-    talk->explain_msgid = mresult->mission_data.cdata.msg_id_contents_monolith;
-    
-    talk->mission_result = MISSION_CheckResultMissionMine(intcomm, &intcomm->mission);
-    talk->point = MISSION_GetResultPoint(intcomm, &intcomm->mission);
-  }
-  
 	return( event );
 }
 
@@ -135,8 +114,10 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
 	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   INTRUDE_COMM_SYS_PTR intcomm;
 	enum{
+    SEQ_RESULT_RECV_WAIT,   //結果受信待ち
     SEQ_INIT,
     SEQ_RESULT_KEY_WAIT,
     SEQ_POINT_GET_CHECK,   //報酬ゲットしたか
@@ -146,9 +127,6 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     SEQ_LEVELUP_MSG_WAIT,
     SEQ_POINT_GET_MSG_END_BUTTON_WAIT,
     SEQ_MISSION_FAIL,    //ミッション失敗
-    SEQ_PALACE_WARP,
-    SEQ_DISGUISE_START,  //変装戻す
-    SEQ_DISGUISE_MAIN,
     SEQ_END,
   };
 	
@@ -156,8 +134,36 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
   // ※BGMのPush,Popがある為、途中でイベントは停止しない
   //   その為、intcommがNULLかどうかは、その使用ポイントでそれぞれNULL判定をして使用すること！！
   //   ※check　マスターアップ前にintcomm使用箇所でNULLチェックしているか調査する
-
+  
 	switch( *seq ){
+	case SEQ_RESULT_RECV_WAIT:  //結果受信待ち
+    if(intcomm == NULL && (*seq) == SEQ_RESULT_RECV_WAIT){
+      return GMEVENT_RES_FINISH;  //結果受信待ちの時だけエラーが起きた場合は即終了
+    }
+    else if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE){
+      if(MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == FALSE){
+        return GMEVENT_RES_FINISH;  //達成者でない場合はここで終了
+      }
+      
+      IntrudeEventPrint_SetupFieldMsg(&talk->iem, gsys);
+
+      //イベント中、エラーになっても構わないようにintcommから必要なパラメータをここで全て取得
+      //  ※BGMのPush,Popがある為、途中でイベントをやめるにはそこら辺のケアが必要になる
+      {
+        const MISSION_RESULT *mresult = MISSION_GetResultData(&intcomm->mission);
+        
+        GF_ASSERT(mresult != NULL);
+        talk->mresult = *mresult;
+        talk->title_msgid = msg_mistype_000 + mresult->mission_data.cdata.type;
+        talk->explain_msgid = mresult->mission_data.cdata.msg_id_contents_monolith;
+        
+        talk->mission_result = MISSION_CheckResultMissionMine(intcomm, &intcomm->mission);
+        talk->point = MISSION_GetResultPoint(intcomm, &intcomm->mission);
+      }
+      (*seq)++;
+    }
+    break;
+	  
   case SEQ_INIT:
     MISSIONDATA_Wordset(&talk->mresult.mission_data.cdata, 
       &talk->mresult.mission_data.target_info, talk->iem.wordset, talk->heapID);
@@ -232,7 +238,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
   case SEQ_POINT_GET_MSG_END_BUTTON_WAIT:
     if(IntrudeEventPrint_LastKeyWait() == TRUE){
       GameCommInfo_MessageEntry_MissionSuccess(game_comm);
-      (*seq) = SEQ_PALACE_WARP;
+      (*seq) = SEQ_END;
     }
     break;
 
@@ -240,40 +246,22 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     if( PMSND_CheckPlayBGM() == FALSE ){
       GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_FAST));
       GameCommInfo_MessageEntry_MissionFail(game_comm);
-      *seq = SEQ_PALACE_WARP;
+      *seq = SEQ_END;
     }
     break;
     
-  case SEQ_PALACE_WARP:
-    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
-
-    GMEVENT_CallEvent(event, EVENT_IntrudeWarpPalace(gsys));
-    (*seq) = SEQ_DISGUISE_START;
-    break;
-    
-  case SEQ_DISGUISE_START:  //変装戻す
-    IntrudeEvent_Sub_DisguiseEffectSetup(&talk->iedw, gsys, talk->fieldWork, 
-      DISGUISE_NO_NORMAL, 0, 0);
-    (*seq)++;
-    break;
-  case SEQ_DISGUISE_MAIN:
-    if(IntrudeEvent_Sub_DisguiseEffectMain(&talk->iedw, intcomm) == TRUE){
-      (*seq)++;
-    }
-    break;
-
   case SEQ_END:
-  #if 0
-    //※check　ミッションが一つしかないので、ここで全回復
-    if(intcomm->mission.data.target_info.net_id == GAMEDATA_GetIntrudeMyID(gdata)){
-      STATUS_RCV_PokeParty_RecoverAll(GAMEDATA_GetMyPokemon(gdata));
-    }
-  #endif
+  #if 0 //ミッション終了＝切断、の流れになったので初期化はしない(初期化すると受注出来るので)
+        //2010.04.22(木)
     if(intcomm != NULL){
       MISSION_Init(&intcomm->mission);
     }
-
-    return GMEVENT_RES_FINISH;
+  #endif
+    
+    IntrudeEventPrint_ExitFieldMsg(&talk->iem);
+    GMEVENT_ChangeEvent(event, EVENT_IntrudeForceWarpMyPalace(gsys));
+  
+    return GMEVENT_RES_CONTINUE;  //ChangeEventで終了するためFINISHしない
   }
 	return GMEVENT_RES_CONTINUE;
 }

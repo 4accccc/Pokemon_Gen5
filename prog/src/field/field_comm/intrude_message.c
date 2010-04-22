@@ -215,6 +215,9 @@ static void IntrudeEventPrint_ClearStream(INTRUDE_EVENT_MSGWORK *iem)
 //--------------------------------------------------------------
 BOOL IntrudeEventPrint_WaitStream(INTRUDE_EVENT_MSGWORK *iem)
 {
+  if(iem->msgwin_stream == NULL){
+    return TRUE;
+  }
   return FLDMSGWIN_STREAM_Print(iem->msgwin_stream);
 }
 

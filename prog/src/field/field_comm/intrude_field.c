@@ -43,6 +43,8 @@
 #include "field/fldmmdl.h"
 #include "../../../resource/fldmapdata/script/palace01_def.h"  //SCRID_～
 #include "field/script_def.h"
+#include "field/scrcmd.h"
+#include "field/fieldmap_call.h"  //FIELDMAP_IsReady
 
 
 
@@ -66,6 +68,7 @@ typedef struct{
   FLDMSGWIN *msgWin;
   FLDMSGWIN_STREAM *msgStream;
   FLDMENUFUNC *menufunc;
+	INTRUDE_EVENT_DISGUISE_WORK iedw;
   u16 wait;
   u8 padding[2];
 }EVENT_SIOEND_WARP;
@@ -349,8 +352,7 @@ static GMEVENT_RESULT _EventPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk
     break;
   case 2:
     {
-      int trg = GFL_UI_KEY_GetTrg();
-      if( trg & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+      if( GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY ){
         (*seq)++;
       }
     }
@@ -535,8 +537,7 @@ static GMEVENT_RESULT _EventPalaceBarrierMove( GMEVENT *event, int *seq, void *w
     break;
   case _SEQ_MSG_LASTKEY_WAIT:
     {
-      int trg = GFL_UI_KEY_GetTrg();
-      if( trg & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+      if( GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY ){
         (*seq)++;
       }
     }
@@ -576,11 +577,13 @@ GMEVENT * Intrude_CheckPosEvent(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys,
   
   intcomm = Intrude_Check_CommConnect(game_comm);
 
+#if 0
   if(intcomm != NULL && intcomm->comm_status == INTRUDE_COMM_STATUS_UPDATE){
     if(intcomm->exit_recv == TRUE){
       return EVENT_ChildCommEnd(gameSys, fieldWork, intcomm);
     }
   }
+#endif
 
   
   
@@ -716,6 +719,8 @@ static GMEVENT_RESULT EVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*wor
     SEQ_EXIT_PRINT_WAIT,
     SEQ_COMM_EXIT_WAIT,
     SEQ_COMM_EXIT_FINISH,
+    SEQ_DISGUISE_INIT,
+    SEQ_DISGUISE_MAIN,
   	SEQ_MAP_WARP,
   	SEQ_MAP_WARP_FINISH,
   	SEQ_EXIT_CANCEL,
@@ -799,6 +804,30 @@ static GMEVENT_RESULT EVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*wor
     GFL_MSG_Delete( dsw->msgData );
     (*seq)++;
     break;
+
+  case SEQ_DISGUISE_INIT:  //変装をしていれば元に戻す
+    {
+      FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+      
+      if(FIELDMAP_IsReady(fieldWork) == TRUE){
+        FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+        
+        if(FIELD_PLAYER_CheckIllegalOBJCode( fld_player ) == FALSE){
+          IntrudeEvent_Sub_DisguiseEffectSetup(&dsw->iedw, gsys, fieldWork, DISGUISE_NO_NULL, 0,0);
+          (*seq)++;
+        }
+        else{
+          *seq = SEQ_MAP_WARP;
+        }
+      }
+    }
+    break;
+  case SEQ_DISGUISE_MAIN:
+    if(IntrudeEvent_Sub_DisguiseEffectMain(&dsw->iedw, NULL) == TRUE){
+      (*seq)++;
+    }
+    break;
+
 	case SEQ_MAP_WARP:
   	GMEVENT_CallEvent(
   	  //event, EVENT_ChangeMapPos(gsys, dsw->fieldmap, dsw->zoneID, &dsw->pos, 0, FALSE));
@@ -1512,6 +1541,46 @@ void IntrudeField_PalaceMMdlAllAdd(FIELDMAP_WORK *fieldWork)
   }
 }
 
+//==================================================================
+/**
+ * 侵入先の通信相手が切断状態になっていないかチェックする
+ *
+ * @param   gsys		
+ * @param   zone_id		現在地
+ *
+ * @retval  BOOL		TRUE:切断状態　FALSE:接続されている
+ * 
+ * 通信エラーの時もTRUEが返ります
+ */
+//==================================================================
+BOOL IntrudeField_CheckIntrudeShutdown(GAMESYS_WORK *gsys, u16 zone_id)
+{
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  
+  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
+    return FALSE; //表フィールドにいるから関係ない
+  }
+  
+  if(intcomm != NULL){
+    return FALSE;  //intcommがあるので通信は確立している
+  }
+  
+  //裏フィールドにいてintcommがない
+  // 1.自分のパレス or シンボルマップに来ただけ
+  // 2.通信エラーによりintcommが既に解放済み
+  if(ZONEDATA_IsPalace(zone_id) == TRUE || ZONEDATA_IsBingo(zone_id) == TRUE){
+    if(GameCommSys_GetLastStatus(game_comm) != GAME_COMM_LAST_STATUS_NULL){
+      return TRUE;
+    }
+    return FALSE;
+  }
+  else{
+    //intcommが無いのにパレスでもシンボルマップでもない裏フィールドにいるなら強制退出
+    return TRUE;
+  }
+}
 
 
 #ifdef PM_DEBUG
