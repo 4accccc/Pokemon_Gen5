@@ -1572,9 +1572,9 @@ static void InfoWinPrint( BADGEVIEW_WORK *wk, int type, int no )
       // Žæ“¾“úŽž
       SHORT_DATE date = TRCSave_GetBadgeDate( wk->trCard, no );
     
-      WORDSET_RegisterNumber( wk->wset, 0, date.year,  2, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU);
-      WORDSET_RegisterNumber( wk->wset, 1, date.month, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU);
-      WORDSET_RegisterNumber( wk->wset, 2, date.day,   2, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU);
+      WORDSET_RegisterNumber( wk->wset, 0, date.year+2000,  4, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU);
+      WORDSET_RegisterNumber( wk->wset, 1, date.month, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU);
+      WORDSET_RegisterNumber( wk->wset, 2, date.day,   2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU);
     }
     // •`‰æi‚Ps–Új
     GFL_MSG_GetString( wk->mman, MSG_LEAGUE_BADGE1_01+no*3, strbuf );

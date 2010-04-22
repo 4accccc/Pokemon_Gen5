@@ -17,12 +17,15 @@
 #define SND_TRCARD_END      (SEQ_SE_CLOSE1)   ///< 終了時
 
 #define SND_TRCARD_SLIDE    (SEQ_SE_SYS_06)   ///< 裏面レコードをスライドさせる音
-#define SND_TRCARD_SIGN     (SEQ_SE_SYS_29)   ///< サイン面に書きている時の音
+#define SND_TRCARD_SIGN     (SEQ_SE_SYS_29)   ///< サイン面に書いている時の音
+#define SND_TRCARD_KESHI    (SEQ_SE_SYS_93)   ///< サイン面に消しゴムをかけている時の音
+
 
 #define SND_TRCARD_BOOKMARK (SEQ_SE_SYS_07)   ///< Yボタン登録
 #define SND_TRCARD_ANIME    (SEQ_SE_SELECT1)  ///< アニメON/OFF
-#define SND_TRCARD_LOUPE    (SEQ_SE_SELECT1)  ///< 精密描画
 #define SND_TRCARD_PEN      (SEQ_SE_SELECT1)  ///< ペン先変更
+#define SND_TRCARD_SCALEUP    (SEQ_SE_SYS_09) ///< サイン画面を拡大した時
+#define SND_TRCARD_SCALEDOWN  (SEQ_SE_SYS_09) ///< サイン画面を縮小した時
 
 #define SND_TRCARD_TRTYPE       (SEQ_SE_SELECT1)  ///< トレーナータイプ
 #define SND_TRCARD_PERSONALITY  (SEQ_SE_SELECT1)  ///< 性格

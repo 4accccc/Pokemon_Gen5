@@ -78,6 +78,7 @@ const GFL_PROC_DATA TrCardSysCommProcData = {
 //================================================================
 ///オーバーレイプロセス定義データ
 enum{
+  CARD_OR_BADGE=0,
   CARD_INIT,
   CARD_WAIT,
   PMSINPUT_INIT,
@@ -184,6 +185,14 @@ GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void
 {
   TR_CARD_SYS* wk = (TR_CARD_SYS*)mywk;
   switch(*seq){
+  case CARD_OR_BADGE:
+    // 未クリアならバッジへ、クリアしていればカードへ
+    if(wk->tcp->TrCardData->Clear_y==0){
+      *seq = BADGE_INIT;
+    }else{
+      *seq = CARD_INIT;
+    }
+    break;
   case CARD_INIT:
     *seq = sub_CardInit(wk);
     break;
@@ -277,16 +286,13 @@ GFL_PROC_RESULT TrCardSysProc_EndComm( GFL_PROC * proc, int * seq , void *pwk, v
 //----------------------------------------------------------------------------------
 static int sub_CardInit(TR_CARD_SYS* wk)
 {
-  // オーバーレイID宣言
-//  FS_EXTERN_OVERLAY(trainer_card);
-
   // プロセス定義データ
   static const GFL_PROC_DATA TrCardProcData = {
     TrCardProc_Init,
     TrCardProc_Main,
     TrCardProc_End,
   };
-//  wk->proc = PROC_Create(&TrCardProcData,wk->tcp,wk->heapId);
+
   if( wk->procSys == NULL )
   { 
     wk->procSys = GFL_PROC_LOCAL_boot( wk->heapId );
@@ -412,15 +418,6 @@ static int sub_BadgeWait(TR_CARD_SYS* wk)
 }
 
 
-//=============================================================================================
-/**
- * @brief 自分のトレーナーカードデータを収集する
- *
- * @param   cardData    
- * @param   gameData    
- * @param   isSendData    
- */
-//=============================================================================================
 //=============================================================================================
 /**
  * @brief 自分のトレーナーカードデータを収集する
@@ -707,8 +704,8 @@ int TRAINERCARD_GetCardRank( GAMEDATA *gameData )
   }
   
   // ブラックシティ・ホワイトフォレストのバランス数値がうにゃうにゃ
-  if(OccupyInfo_GetWhiteLevel(occupy_sv)>OCCUPY_QUALIFY
-  && OccupyInfo_GetBlackLevel(occupy_sv)>OCCUPY_QUALIFY
+  if(OccupyInfo_GetWhiteLevel(occupy_sv)>=OCCUPY_QUALIFY
+  && OccupyInfo_GetBlackLevel(occupy_sv)>=OCCUPY_QUALIFY
   ){
     OS_Printf( "BC/WFのバランス数値が両方共３０以上\n");
     rank++;

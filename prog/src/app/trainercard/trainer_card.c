@@ -549,7 +549,11 @@ static void _sign_se( TR_CARD_WORK *wk, int lines )
   }else{
     if(lines>SIGN_SE_LINES_LIMIT){
       wk->sign_se_wait=5;
-      PMSND_PlaySE(SND_TRCARD_SIGN);
+      if(wk->pen==0){
+        PMSND_PlaySE(SND_TRCARD_SIGN);
+      }else{
+        PMSND_PlaySE(SND_TRCARD_KESHI);
+      }
     }
   }
 }
@@ -1799,15 +1803,19 @@ static void Change_SignAnimeButton( TR_CARD_WORK *wk, int flag, int OnOff )
  *
  * @param   wk    
  *
- * @retval  static    
+ * @retval  none
  */
 //----------------------------------------------------------------------------------
 static void Start_SignAnimeButton( TR_CARD_WORK *wk, int flag )
 {
   if(flag==0){  // 再生ボタン有効
     SetSActDrawSt(&wk->ObjWork,ACTS_BTN_CHANGE, ANMS_ANIME_G, TRUE);
+    GFL_CLACT_WK_SetDrawEnable( wk->ObjWork.ClActWorkS[ACTS_BTN_LOUPE], FALSE );
+    GFL_CLACT_WK_SetDrawEnable( wk->ObjWork.ClActWorkS[ACTS_BTN_PEN], FALSE );
   }else{        // 停止ボタン有効
     SetSActDrawSt(&wk->ObjWork,ACTS_BTN_CHANGE, ANMS_STOP_G,  TRUE);
+    GFL_CLACT_WK_SetDrawEnable( wk->ObjWork.ClActWorkS[ACTS_BTN_LOUPE], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( wk->ObjWork.ClActWorkS[ACTS_BTN_PEN], TRUE );
   }
 
 }
@@ -1911,12 +1919,13 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
       if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
           if(wk->ScaleMode==0){
             SetSActDrawSt(&wk->ObjWork,ACTS_BTN_LOUPE, ANMS_LOUPE_G, TRUE);
+            PMSND_PlaySE( SND_TRCARD_SCALEUP );
             wk->sub_seq = 0;
           }else{
             SetSActDrawSt(&wk->ObjWork,ACTS_BTN_LOUPE, ANMS_SIMPLE_G, TRUE);
+            PMSND_PlaySE( SND_TRCARD_SCALEDOWN );
             wk->sub_seq = 3;
           }
-          PMSND_PlaySE( SND_TRCARD_LOUPE );
           return TRC_KEY_REQ_SCALE_BUTTON;
       }
     }
@@ -1977,7 +1986,7 @@ static int large_touch_func( TR_CARD_WORK *wk, int hitNo )
   case 4:     // 精密描画ボタン
     if(wk->is_back && (!wk->isComm)){
       SetSActDrawSt(&wk->ObjWork,ACTS_BTN_LOUPE, ANMS_SIMPLE_G, TRUE);
-      PMSND_PlaySE( SND_TRCARD_ANIME );
+      PMSND_PlaySE( SND_TRCARD_SCALEDOWN );
       wk->sub_seq = 3;
       return TRC_KEY_REQ_SCALE_BUTTON;
     }

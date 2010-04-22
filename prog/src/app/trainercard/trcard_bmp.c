@@ -592,7 +592,7 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_08], col );
     break;
   case SCORE_LINE_START_DATE_2: // はじめたひ２行目
-    WriteNumDateYYMMDD( wk, win, BMP_WIDTH_TYPE3, 0, y, str, STR_NUM_DISP_ZERO, col );
+    WriteNumDateYYMMDD( wk, win, BMP_WIDTH_TYPE3, 0, y, str, STR_NUM_DISP_LEFT, col );
     break;
 
     break;
@@ -632,108 +632,93 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_10], col );
 
     //通信回数
-    WriteNumDataWithCredit( wk, win,
+    WriteNumData( wk, win,
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->CommNum, COMM_DIGIT,
-            STR_NUM_DISP_SPACE,0,col);
+            STR_NUM_DISP_SPACE,col);
 
     break;
   case SCORE_LINE_COMM_BATTLE_NUM:  // 通信対戦回数
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_11_1], col );
     //通信回数
-    WriteNumDataWithCredit( wk, win,
+    WriteNumData( wk, win,
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->CommBattleNum, COMM_DIGIT,
-            STR_NUM_DISP_SPACE,0,col);
+            STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_COMM_WIN_NUM:     // 通信対戦勝利回数
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_11_2], col );
-    WriteNumDataWithCredit( wk, win,
+    WriteNumData( wk, win,
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->CommBattleWin, BATTLE_DIGIT,
-            STR_NUM_DISP_SPACE,0,col);
+            STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_COMM_LOSE_NUM:  // 通信対戦で敗北回数
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_11_3], col );
-    WriteNumDataWithCredit( wk, win,
+    WriteNumData( wk, win,
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->CommBattleLose, BATTLE_DIGIT,
-            STR_NUM_DISP_SPACE,0,col);
+            STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_COMM_TRADE_NUM:  // 通信交換回数
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_11_4], col );
-    WriteNumDataWithCredit( wk, win,
+    WriteNumData( wk, win,
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->CommTrade, TRADE_DIGIT,
-            STR_NUM_DISP_SPACE,0,col);
+            STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_ENCOUNT_NUM_1:    // 野生エンカウント回数（文字列のみ）
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_15], col );
     break;
   case SCORE_LINE_ENCOUNT_NUM_2:    // 野生エンカウント回数
-    WriteNumDataWithCredit( wk, win,
+    WriteNumData( wk, win,
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->EncountNum, BATTLE_DIGIT,
-            STR_NUM_DISP_SPACE,0,col);
+            STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_TRAINER_ENCOUNT_NUM_1:    //トレーナー戦回数（文字列のみ）
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_16], col );
     break;
   case SCORE_LINE_TRAINER_ENCOUNT_NUM_2:    // トレーナー戦をした回数
-    WriteNumDataWithCredit( wk, win,
+    WriteNumData( wk, win,
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->TrainerEncountNum, BATTLE_DIGIT,
-            STR_NUM_DISP_SPACE,0,col);
+            STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_SURETIGAI_NUM:            // すれ違い通信をした回数
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_17], col );
-    WriteNumDataWithCredit( wk, win,
+    WriteNumData( wk, win,
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->SuretigaiNum, BATTLE_DIGIT,
-            STR_NUM_DISP_SPACE,0,col);
+            STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_FEELING_CHECK_NUM:        // フィーリングチェックをした回数
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_18], col );
-    WriteNumDataWithCredit( wk, win,
+    WriteNumData( wk, win,
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->FeelingCheckNum, BATTLE_DIGIT,
-            STR_NUM_DISP_SPACE,0,col);
+            STR_NUM_DISP_SPACE,col);
     break;
   case SCORE_LINE_MONOLITH_LEVEL:           // モノリスレベル
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_19], col );
     WriteNumData( wk, win,
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->MonolithLevel, BATTLE_DIGIT,
             STR_NUM_DISP_SPACE,col );
-//    WriteNumDataWithCredit( wk, win,
-//            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->MonolithLevel, BATTLE_DIGIT,
-//            STR_NUM_DISP_SPACE,0,col);
     break;
   case SCORE_LINE_MUSICAL_NUM:              // ミュージカルをした回数
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_20], col );
     WriteNumData( wk, win,
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->MusicalNum, BATTLE_DIGIT,
             STR_NUM_DISP_SPACE,col);
-//    WriteNumDataWithCredit( wk, win,
-//            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->MusicalNum, BATTLE_DIGIT,
-//            STR_NUM_DISP_SPACE,0,col);
     break;
   case SCORE_LINE_POKESHIFTER_HIGH:         // ポケシフターのハイスコア
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_21], col );
     WriteNumData( wk, win,
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->PokeshifterHigh, BATTLE_DIGIT,
             STR_NUM_DISP_SPACE,col);
-//    WriteNumDataWithCredit( wk, win,
-//            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->MusicalNum, BATTLE_DIGIT,
-//            STR_NUM_DISP_SPACE,0,col);
     break;
   case SCORE_LINE_TRIALHOUSE_HIGH:          // トライアウハウスの最高得点
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_22], col );
     WriteNumData( wk, win,
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->TrialHouseHigh, BATTLE_DIGIT,
             STR_NUM_DISP_SPACE,col);
-//    WriteNumDataWithCredit( wk, win,
-//            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->TrialHouseHigh, BATTLE_DIGIT,
-//            STR_NUM_DISP_SPACE,0,col);
     break;
   case SCORE_LINE_TRIALHOUSE_RANK:          // トライアウハウスのランク
     LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_23], col );
     WriteNumData( wk, win,
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->TrialHouseRank, BATTLE_DIGIT,
             STR_NUM_DISP_SPACE,col);
-//    WriteNumDataWithCredit( wk, win,
-//            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->TrialHouseRank, BATTLE_DIGIT,
-//            STR_NUM_DISP_SPACE,0,col);
     break;
   }
 
@@ -909,7 +894,7 @@ static void WriteNumDateYYMMDD( TR_CARD_WORK* wk,
 {
   u32 len;
 
-  WORDSET_RegisterNumber( wk->wordset, 0, wk->TrCardData->Start_y, 2, inDisptype, STR_NUM_CODE_ZENKAKU );
+  WORDSET_RegisterNumber( wk->wordset, 0, wk->TrCardData->Start_y+2000, 4, inDisptype, STR_NUM_CODE_ZENKAKU );
   WORDSET_RegisterNumber( wk->wordset, 1, wk->TrCardData->Start_m, 2, inDisptype, STR_NUM_CODE_ZENKAKU );
   WORDSET_RegisterNumber( wk->wordset, 2, wk->TrCardData->Start_d, 2, inDisptype, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wordset, buff, wk->CreditBuf[TR_CARD_CREDIT_YYMMDD] );

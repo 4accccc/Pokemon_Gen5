@@ -22,7 +22,7 @@ typedef enum {
   SCORE_DIGIT = 9,
   TIME_H_DIGIT = 3,
   TIME_M_DIGIT = 2,
-  YEAR_DIGIT = 2,
+  YEAR_DIGIT = 4,
   MONTH_DIGIT = 2,
   DAY_DIGIT = 2,
   COMM_DIGIT = 6,
