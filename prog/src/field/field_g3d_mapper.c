@@ -447,6 +447,7 @@ void	FLDMAPPER_Draw( FLDMAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera, FLDMAPPER_
         FLD_G3D_MAP_SetTrans( g3Dmapper->blockWk[index].g3Dmap, &org_pos );
 
         if( result ){
+          GF_ASSERT( g3Dmapper->writeBlockNumNow < g3Dmapper->blockNum );
           g3Dmapper->writeBlockNumNow ++;
         }
       }
@@ -2219,6 +2220,11 @@ static void WRITEBLOCK_Control_CalcWriteSchedule( FLDMAPPER* g3Dmapper )
 
     total_size = 0;
     for( i=0; i<write_num; i++ ){
+      
+      if( g3Dmapper->writeBlockIndexTbl[i] == WRITE_BLOCK_INDEX_NULL ){
+        break;
+      }
+      
       FLD_G3D_MAP_GetLoadDataSize( g3Dmapper->blockWk[g3Dmapper->writeBlockIndexTbl[i]].g3Dmap, &size );
       total_size += size;
       if( g3Dmapper->canTopWriteSize < total_size ){  // 描画可能サイズを超えるまで描画する。
