@@ -331,7 +331,9 @@ select_del_skill:
       ELSE                              //忘れる技を選択した
         //忘れる技セット del_skill_msgをコールする準備
         _GET_TEMOTI_WAZA_ID( OLD_SKILL ,SEL_POS ,DEL_SKILL_POS )
-        //「選択した技を忘れていい？」
+        //忘れる技をタグ１にセット
+        _WAZA_NAME( 1, OLD_SKILL )
+        //「選択した技○○を忘れていい？」
         _SYSWIN_MSG( msg_rotom_waza_04 , POS_DOWN )
         _YES_NO_WIN( SCWK_ANSWER )    //クローズいらず
         IF $SCWK_ANSWER == 0 THEN     //忘れてOK
