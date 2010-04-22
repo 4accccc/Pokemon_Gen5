@@ -61,8 +61,15 @@ VMCMD_RESULT EvCmdWeatherChange( VMHANDLE *core, void *wk )
   FIELDMAP_WORK* fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
   FIELD_WEATHER* weather = FIELDMAP_GetFieldWeather( fieldWork );
   u16 weather_no = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+  u16 is_notenvse = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
 
-  FIELD_WEATHER_Change( weather, weather_no );
+  if(is_notenvse){
+    // 通常SE再生で天気を起動
+    FIELD_WEATHER_ChangeNotEnvSe( weather, weather_no );
+  }else{
+    // 環境SE再生で天気を起動
+    FIELD_WEATHER_Change( weather, weather_no );
+  }
   GAMEDATA_SetWeatherNo( gdata, weather_no );
 
   return VMCMD_RESULT_CONTINUE;

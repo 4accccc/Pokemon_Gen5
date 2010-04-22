@@ -227,7 +227,7 @@ extern void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID );
 //-------------------------------------
 ///	î≠ìÆÅEí‚é~ä«óù
 //=====================================
-extern void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, WEATEHR_TASK_INIT_MODE init_mode, BOOL fade, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID );
+extern void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, WEATEHR_TASK_INIT_MODE init_mode, BOOL fade, WEATHER_TASK_FOG_MODE fog_cont, BOOL envse, HEAPID heapID );
 extern void WEATHER_TASK_End( WEATHER_TASK* p_wk, BOOL fade, WEATHER_TASK_FOG_MODE fog_cont );
 extern void WEATHER_TASK_ForceEnd( WEATHER_TASK* p_wk );
 

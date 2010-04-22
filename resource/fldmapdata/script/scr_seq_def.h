@@ -9813,17 +9813,29 @@
 
 //--------------------------------------------------------------
 /**
- * @brief 天気変更
+ * @brief 天気変更    通常
  * @param weather_id  WEATHER_NO_RAIKAMI：ライカミ  WEATHER_NO_KAZAKAMI：カザカミ 
  * prog/include/field/weather_no.h　参照
  */
 //--------------------------------------------------------------
 #define _WEATHER_CHANGE( weather_id ) \
-    _ASM_WEATHER_CHANGE weather_id
+    _ASM_WEATHER_CHANGE weather_id, FALSE
 
-  .macro  _ASM_WEATHER_CHANGE weather_id
+//--------------------------------------------------------------
+/**
+ * @brief 天気変更  移動ポケモン用
+ * @param weather_id  WEATHER_NO_RAIKAMI：ライカミ  WEATHER_NO_KAZAKAMI：カザカミ 
+ * prog/include/field/weather_no.h　参照
+ * "使用注意！！！！"通常SEとしてSEが再生されます。イベント内で、天気を変え、また元に戻すときにのみ使用可能です。
+ */
+//--------------------------------------------------------------
+#define _WEATHER_CHANGE_MOVEPOKE( weather_id ) \
+    _ASM_WEATHER_CHANGE weather_id, TRUE
+
+  .macro  _ASM_WEATHER_CHANGE weather_id, notenvse
   .short EV_SEQ_WEATHER_CHANGE
   .short \weather_id
+  .short \notenvse
   .endm
 
 

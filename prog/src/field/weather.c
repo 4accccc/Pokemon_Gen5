@@ -142,6 +142,7 @@ struct _FIELD_WEATHER{
 	u16		seq;
 	WEATHER_NO		now_weather;
 	WEATHER_NO		next_weather;
+  u32           next_weather_envse;
 
 	// 予約
 	u16		booking_weather;
@@ -286,6 +287,8 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 static void FIELD_WEATHER_OVERLAY_Load( FIELD_WEATHER* p_sys, FSOverlayID overlay );
 static void FIELD_WEATHER_OVERLAY_UnLoad( FIELD_WEATHER* p_sys );
 static void FIELD_WEATHER_VBlank( GFL_TCB* p_tcb, void* p_work );
+
+static BOOL FIELD_WEATHER_LOCAL_Change( FIELD_WEATHER* p_sys, WEATHER_NO weather_no );
 
 //-------------------------------------
 ///	天気切り替え処理
@@ -523,7 +526,7 @@ void FIELD_WEATHER_Set( FIELD_WEATHER* p_sys, WEATHER_NO weather_no, HEAPID heap
 
 		// フェードなし初期化
 		WEATHER_TASK_Start( p_sys->p_task[ FIELD_WEATHER_WORK_NOW ], 
-				sc_FIELD_WEATHER_DATA[ weather_no ].cp_data, WEATHER_TASK_INIT_NORMAL, FALSE, WEATHER_TASK_FOG_USE, heapID );
+				sc_FIELD_WEATHER_DATA[ weather_no ].cp_data, WEATHER_TASK_INIT_NORMAL, FALSE, WEATHER_TASK_FOG_USE, TRUE, heapID );
 
 		p_sys->now_weather	= weather_no;
 		p_sys->next_weather	= FIELD_WEATHER_NO_NONE;
@@ -540,32 +543,21 @@ void FIELD_WEATHER_Set( FIELD_WEATHER* p_sys, WEATHER_NO weather_no, HEAPID heap
 //-----------------------------------------------------------------------------
 void FIELD_WEATHER_Change( FIELD_WEATHER* p_sys, WEATHER_NO weather_no )
 {
+  FIELD_WEATHER_LOCAL_Change( p_sys, weather_no );
+}
 
-	// 天気ナンバーチェック
-	GF_ASSERT( weather_no < WEATHER_NO_NUM );
-	GF_ASSERT( NELEMS(sc_FIELD_WEATHER_DATA) > weather_no );
-
-	// 実行中のリクエストがあるかチェック
-	if( p_sys->seq != 0 ){
-		p_sys->booking_weather = weather_no;
-    //TOMOYA_Printf( "booking_weather %d\n", weather_no );
-		return ;
-	}
-
-	// 天気が一緒なら何もしない
-	// 晴れは、ZONE用フォグやライトの反映がるかもしれないので、
-	// 絶対に変更
-	if( (p_sys->now_weather == weather_no) && ((weather_no != WEATHER_NO_SUNNY)) ){
-		return ;
-	}
-
-	// 次の天気を設定
-	p_sys->next_weather = weather_no;
-  //TOMOYA_Printf( "change_weather %d\n", weather_no );
-	
-	// フェードアウト＋フェードイン
-	p_sys->change_type	= FIELD_WEATHER_GetChangeType( p_sys->now_weather, p_sys->next_weather );
-	p_sys->seq			= FIELD_WEATHER_NORMAL_SEQ_NOW_FADEOUT;
+//----------------------------------------------------------------------------
+/**
+ *	@brief  環境音ではなく、通常SEとして音を出す。
+ *
+ *	@param	p_sys         システム
+ *	@param	weather_no    天気
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WEATHER_ChangeNotEnvSe( FIELD_WEATHER* p_sys, WEATHER_NO weather_no )
+{
+  FIELD_WEATHER_LOCAL_Change( p_sys, weather_no );
+  p_sys->next_weather_envse = FALSE;  // SEを通常SEで再生
 }
 
 //----------------------------------------------------------------------------
@@ -652,6 +644,50 @@ static void FIELD_WEATHER_VBlank( GFL_TCB* p_tcb, void* p_work )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  天気変更リクエスト処理
+ *
+ *	@param	p_sys
+ *	@param	weather_no 
+ *
+ *	@retval TRUE    変更した
+ *	@retval FALSE   同じ天気だったので変更しなかった。
+ */
+//-----------------------------------------------------------------------------
+static BOOL FIELD_WEATHER_LOCAL_Change( FIELD_WEATHER* p_sys, WEATHER_NO weather_no )
+{
+	// 天気ナンバーチェック
+	GF_ASSERT( weather_no < WEATHER_NO_NUM );
+	GF_ASSERT( NELEMS(sc_FIELD_WEATHER_DATA) > weather_no );
+
+	// 実行中のリクエストがあるかチェック
+	if( p_sys->seq != 0 ){
+		p_sys->booking_weather = weather_no;
+    //TOMOYA_Printf( "booking_weather %d\n", weather_no );
+		return FALSE;
+	}
+
+	// 天気が一緒なら何もしない
+	// 晴れは、ZONE用フォグやライトの反映がるかもしれないので、
+	// 絶対に変更
+	if( (p_sys->now_weather == weather_no) && ((weather_no != WEATHER_NO_SUNNY)) ){
+		return FALSE;
+	}
+
+	// 次の天気を設定
+	p_sys->next_weather = weather_no;
+  p_sys->next_weather_envse = TRUE;
+  //TOMOYA_Printf( "change_weather %d\n", weather_no );
+	
+	// フェードアウト＋フェードイン
+	p_sys->change_type	= FIELD_WEATHER_GetChangeType( p_sys->now_weather, p_sys->next_weather );
+	p_sys->seq			= FIELD_WEATHER_NORMAL_SEQ_NOW_FADEOUT;
+
+  return TRUE;
+}
+
+
 
 //----------------------------------------------------------------------------
 /**
@@ -692,11 +728,12 @@ static void FIELD_WEATHER_CHANGE_Normal( FIELD_WEATHER* p_sys, HEAPID heapID )
 	case FIELD_WEATHER_NORMAL_SEQ_NEXT_FADEIN:
 		WEATHER_TASK_Start( p_sys->p_task[ FIELD_WEATHER_WORK_NOW ], 
 				sc_FIELD_WEATHER_DATA[ p_sys->next_weather ].cp_data, 
-				WEATHER_TASK_INIT_DIV, TRUE, WEATHER_TASK_FOG_USE, heapID );
+				WEATHER_TASK_INIT_DIV, TRUE, WEATHER_TASK_FOG_USE, p_sys->next_weather_envse, heapID );
 
 		// 次への情報を消去
 		p_sys->now_weather	= p_sys->next_weather;
 		p_sys->next_weather	= FIELD_WEATHER_NO_NONE;
+    p_sys->next_weather_envse = TRUE;
 
     //TOMOYA_Printf( "start_weather %d\n", p_sys->now_weather );
 
@@ -727,7 +764,8 @@ static void FIELD_WEATHER_CHANGE_Multi( FIELD_WEATHER* p_sys, HEAPID heapID )
 	case FIELD_WEATHER_MULTI_SEQ_FADE_INOUT:
 		WEATHER_TASK_Start( p_sys->p_task[ FIELD_WEATHER_WORK_NEXT ], 
 				sc_FIELD_WEATHER_DATA[ p_sys->next_weather ].cp_data, 
-				WEATHER_TASK_INIT_DIV, TRUE, WEATHER_TASK_FOG_WITH, heapID );
+				WEATHER_TASK_INIT_DIV, TRUE, WEATHER_TASK_FOG_WITH, 
+        p_sys->next_weather_envse, heapID );
 
 		WEATHER_TASK_End( p_sys->p_task[ FIELD_WEATHER_WORK_NOW ], 
 				TRUE, WEATHER_TASK_FOG_WITH );
@@ -747,6 +785,7 @@ static void FIELD_WEATHER_CHANGE_Multi( FIELD_WEATHER* p_sys, HEAPID heapID )
 				p_sys->p_task[ FIELD_WEATHER_WORK_NEXT ]	= p_tmp;
 				p_sys->now_weather	= p_sys->next_weather;
 				p_sys->next_weather = FIELD_WEATHER_NO_NONE;
+        p_sys->next_weather_envse = TRUE;
 			}
 			
 			p_sys->seq = FIELD_WEATHER_MULTI_SEQ_NONE;

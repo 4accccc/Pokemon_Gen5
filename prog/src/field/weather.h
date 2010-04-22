@@ -72,6 +72,7 @@ extern BOOL FIELD_WEATHER_IsLoading( const FIELD_WEATHER* cp_sys );
 //=====================================
 extern void FIELD_WEATHER_Set( FIELD_WEATHER* p_sys, WEATHER_NO weather_no, HEAPID heapID );
 extern void FIELD_WEATHER_Change( FIELD_WEATHER* p_sys, WEATHER_NO weather_no );
+extern void FIELD_WEATHER_ChangeNotEnvSe( FIELD_WEATHER* p_sys, WEATHER_NO weather_no );
 extern WEATHER_NO FIELD_WEATHER_GetWeatherNo( const FIELD_WEATHER* cp_sys );
 extern WEATHER_NO FIELD_WEATHER_GetNextWeatherNo( const FIELD_WEATHER* cp_sys );
 

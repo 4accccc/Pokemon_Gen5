@@ -141,6 +141,8 @@ typedef struct {
 	u16 snd_no;
 
   FIELD_SOUND* p_sound;
+
+  BOOL envse;
 } WEATHER_TASK_SND_LOOP;
 
 
@@ -307,6 +309,7 @@ static GFL_CLWK* WEATHER_OBJ_WK_GetClWk( const WEATHER_OBJ_WORK* cp_wk );
 //-------------------------------------
 ///	サウンドシステム
 //=====================================
+static void WEATHER_SND_LOOP_SetEnvFlag( WEATHER_TASK_SND_LOOP* p_wk, BOOL flag );
 static void WEATHER_SND_LOOP_Play( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p_sound, int snd_no );
 static void WEATHER_SND_LOOP_Stop( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p_sound );
 static void WEATHER_SND_LOOP_Update( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p_sound );
@@ -539,7 +542,7 @@ void WEATHER_TASK_Main( WEATHER_TASK* p_wk, HEAPID heapID )
  *	@param	heapID			ヒープID
  */
 //-----------------------------------------------------------------------------
-void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, WEATEHR_TASK_INIT_MODE init_mode, BOOL fade, WEATHER_TASK_FOG_MODE fog_cont, HEAPID heapID )
+void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, WEATEHR_TASK_INIT_MODE init_mode, BOOL fade, WEATHER_TASK_FOG_MODE fog_cont, BOOL envse, HEAPID heapID )
 {
 	GF_ASSERT( p_wk->seq == WEATHER_TASK_SEQ_NONE );
 	
@@ -557,6 +560,9 @@ void WEATHER_TASK_Start( WEATHER_TASK* p_wk, const WEATHER_TASK_DATA* cp_data, W
 	else if( p_wk->init_mode == WEATHER_TASK_INIT_DIV ){
 		p_wk->seq = WEATHER_TASK_SEQ_INIT_DIV_OAM;
 	}
+
+  // 環境音設定Sound
+  WEATHER_SND_LOOP_SetEnvFlag( &p_wk->snd_loop, envse );
 	
 }
 
@@ -1562,7 +1568,11 @@ void WEATHER_TASK_PlaySnd( WEATHER_TASK* p_wk, int snd_no )
   // BGM 読み込み中は、この処理を行わない
   if( !PMSND_IsLoading() )
   {
-    FSND_PlayEnvSE( p_wk->p_sound, snd_no );
+    if( p_wk->snd_loop.envse ){
+      FSND_PlayEnvSE( p_wk->p_sound, snd_no );
+    }else{
+      PMSND_PlaySE( snd_no );
+    }
   }
 }
 
@@ -1580,7 +1590,11 @@ void WEATHER_TASK_PlaySndVol( WEATHER_TASK* p_wk, int snd_no, u32 vol )
   // BGM 読み込み中は、この処理を行わない
   if( !PMSND_IsLoading() )
   {
-    FSND_PlayEnvSEVol( p_wk->p_sound, snd_no, vol );
+    if( p_wk->snd_loop.envse ){
+      FSND_PlayEnvSEVol( p_wk->p_sound, snd_no, vol );
+    }else{
+      PMSND_PlaySEVolume( snd_no, vol );
+    }
   }
 }
 
@@ -2561,6 +2575,19 @@ static GFL_CLWK* WEATHER_OBJ_WK_GetClWk( const WEATHER_OBJ_WORK* cp_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  環境音SEフラグ設定
+ *
+ *	@param	p_wk  ワーク
+ *	@param	flag  TRUE  SEを環境音とする。
+ */
+//-----------------------------------------------------------------------------
+static void WEATHER_SND_LOOP_SetEnvFlag( WEATHER_TASK_SND_LOOP* p_wk, BOOL flag )
+{
+  p_wk->envse = flag;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	ループサウンド再生
  *
  *	@param	p_wk		ワーク
@@ -2576,7 +2603,11 @@ static void WEATHER_SND_LOOP_Play( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p_s
     p_wk->play		= WEATHER_SND_LOOP_PLAY_NORMAL;
     p_wk->snd_no	= snd_no;
 
-    FSND_PlayEnvSE( p_sound, p_wk->snd_no );
+    if( p_wk->envse ){
+      FSND_PlayEnvSE( p_sound, p_wk->snd_no );
+    }else{
+      PMSND_PlaySE( p_wk->snd_no );
+    }
   }
   else
   {
@@ -2599,7 +2630,13 @@ static void WEATHER_SND_LOOP_Stop( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p_s
   {
     p_wk->play = WEATHER_SND_LOOP_PLAY_NONE;
 
-    FSND_StopEnvSE( p_sound, p_wk->snd_no );
+    if( p_wk->envse ){
+      FSND_StopEnvSE( p_sound, p_wk->snd_no );
+    }else{
+      SEPLAYER_ID player_ID = PMSND_GetSE_DefaultPlayerID( p_wk->snd_no );
+      //環境音SE停止
+      PMSND_StopSE_byPlayerID( player_ID );
+    }
   }
 }
 
@@ -2617,7 +2654,11 @@ static void WEATHER_SND_LOOP_Update( WEATHER_TASK_SND_LOOP* p_wk, FIELD_SOUND* p
     if( !PMSND_IsLoading() )
     {
       p_wk->play		= WEATHER_SND_LOOP_PLAY_NORMAL;
-      FSND_PlayEnvSE( p_sound, p_wk->snd_no );
+      if( p_wk->envse ){
+        FSND_PlayEnvSE( p_sound, p_wk->snd_no );
+      }else{
+        PMSND_PlaySE( p_wk->snd_no );
+      }
     }
   }
 }
