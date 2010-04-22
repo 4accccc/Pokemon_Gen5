@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-20T17:38:13"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-22T18:53:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="121" top="340" right="826" bottom="847" maximized="no" rayout="Vertical2">
+	<dialog left="265" top="189" right="1021" bottom="811" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="581"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="748"/>
+		<band id="3" index="3" style="0000" width="748"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -769,13 +769,15 @@
 	<row id="dwc_message_0017" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>DSiはWiFi設定を
 本体でしか行えない</comment>
-		<language name="JPN" font=" 1:small" width="216">ほんたいせっていの
+		<language name="JPN" font=" 1:small" width="216">Ｗｉ－Ｆｉコネクションを
+つかえるように　するには
+ほんたいせっていに　もどり
 インターネットの　こうもく　から
-Ｗｉ－Ｆｉコネクションの
 せっていを　おこなってください</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">本体設定の
+		<language name="JPN_KANJI" font=" 1:small" width="216">Ｗｉ－Ｆｉコネクションを
+使えるように　するには
+本体設定に　戻り
 インターネットの　項目から
-Ｗｉ－Ｆｉコネクションの
 設定を　行ってください</language>
 	</row>
 
