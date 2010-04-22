@@ -26,6 +26,9 @@ EVENT_START ev_vending_machine01
   DEFINE_LOCAL cur_pos
   DEFINE_LOCAL bag_full
 
+  //開始
+  _TALK_START_SE_PLAY()
+
   //バッグいっぱい状態初期化  
   $bag_full = FALSE
   //自動販売機処理ループON

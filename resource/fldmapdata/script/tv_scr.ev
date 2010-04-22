@@ -19,6 +19,8 @@ _EVENT_DATA_END
 EVENT_START ev_tv
 {
   DEFINE_LOCAL msg
+  //開始
+  _TALK_START_SE_PLAY()
   //テレビ見たレコード加算
   _ADD_RECORD( RECID_WATCH_TV, 1 )
 
