@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/18 19:55:38
+#save date:2010/03/14 14:35:54
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01.wms
 #hold event type:
 1
 #hold event number:
-13
+6
 #event number: 0
 #type
 1
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 40
+-8 0 -152
 #event number: 1
 #type
 1
@@ -49,7 +49,7 @@ T01_WOMAN2_01
 #OBJ CODE Number
 WOMAN2
 #MOVE CODE Number
-MV_DMY
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -71,14 +71,14 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 0 72
+-152 0 40
 #event number: 2
 #type
 1
 #ID name
 T01_BABYGIRL1_01
 #OBJ CODE Number
-WOMAN3
+BABYGIRL1
 #MOVE CODE Number
 MV_RND
 #EVENT TYPE Number
@@ -98,11 +98,11 @@ DIR_DOWN
 #Move Limit X Number
 0
 #Move Limit Z Number
-0
+3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-24 0 104
+72 0 104
 #event number: 3
 #type
 1
@@ -196,223 +196,6 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 -104 0 120
-#event number: 6
-#type
-1
-#ID name
-T01_MAN3_02
-#OBJ CODE Number
-MAN3
-#MOVE CODE Number
-MV_DOWN
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_T01_MAN3_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-56 0 40
-#event number: 7
-#type
-1
-#ID name
-T01_MAN3_03
-#OBJ CODE Number
-MAN3
-#MOVE CODE Number
-MV_DOWN
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_T01_MAN3_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-88 0 40
-#event number: 8
-#type
-1
-#ID name
-T01_BABYGIRL1_02
-#OBJ CODE Number
-WOMAN3
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_T01_BABYGIRL1_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-56 0 104
-#event number: 9
-#type
-1
-#ID name
-T01_BABYGIRL1_03
-#OBJ CODE Number
-WOMAN3
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_T01_BABYGIRL1_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-72 0 104
-#event number: 10
-#type
-1
-#ID name
-T01_BABYGIRL1_04
-#OBJ CODE Number
-WOMAN3
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_T01_BABYGIRL1_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-88 0 104
-#event number: 11
-#type
-1
-#ID name
-T01_MAN3_04
-#OBJ CODE Number
-MAN3
-#MOVE CODE Number
-MV_DOWN
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_T01_MAN3_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-120 0 40
-#event number: 12
-#type
-1
-#ID name
-T01_BABYGIRL1_05
-#OBJ CODE Number
-WOMAN3
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_T01_BABYGIRL1_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-120 0 104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -497,7 +280,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-4
+2
 #event number: 0
 #Pos Event Label
 POS_T01_STOPPER_01
@@ -532,40 +315,6 @@ EVENTDATA_POSTYPE_GRID
 40 0 184
 #size
 6 1
-#event number: 2
-#Pos Event Label
-POS_TEST_02
-#Pos Script Name
-SCRID_T01_BABYGIRL1_01
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-24 0 88
-#size
-7 2
-#event number: 3
-#Pos Event Label
-POS_TEST_01
-#Pos Script Name
-SCRID_T01_BABYGIRL1_01
-#Pos Check Type
-POS_CHECK_TYPE_NORMAL
-#Event Trigger Work Name
-LOCALWORK0
-#Event Trigger Work Value
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-24 0 136
-#size
-7 2
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
