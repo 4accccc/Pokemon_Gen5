@@ -46,7 +46,7 @@ enum
   SE_BAG_SELL         = SEQ_SE_SYS_22,   ///< 売却音
   SE_BAG_TRASH        = SEQ_SE_SYS_08,   ///< 捨てる音
   SE_BAG_CURSOR_MOVE  = SEQ_SE_SELECT1,  ///< バッグカーソル移動(上下キー)
-  SE_BAG_POCKET_MOVE  = SEQ_SE_SELECT4,  ///< バッグポケット選択(左右キー)
+  SE_BAG_POCKET_MOVE  = SEQ_SE_SYS_09,   ///< バッグポケット選択(左右キー)
   SE_BAG_SLIDE        = SEQ_SE_SELECT1,  ///< スライドバー
   SE_BAG_WAZA         = SEQ_SE_PC_LOGIN, ///< ワザマシン起動音
   SE_BAG_SORT         = SEQ_SE_SYS_36,   ///< ソート音
@@ -54,7 +54,7 @@ enum
   SE_BAG_RAITOSUTOON  = SEQ_SE_DECIDE2,  ///< ライトストーン・ダークストーン
   SE_BAG_SLIDE_IN     = SEQ_SE_SYS_90,   ///< 開始時のバッグスライドイン
   SE_BAG_MESSAGE      = SEQ_SE_MESSAGE,  ///< メッセージ送り
-  SE_BAG_BAG_GRA      = SEQ_SE_SELECT4,  ///< バッグの絵をタッチしたとき
+  SE_BAG_BAG_GRA      = SEQ_SE_SYS_09,   ///< バッグの絵をタッチしたとき
 };
 
 #define MSG_SKIP_BTN (PAD_BUTTON_A|PAD_BUTTON_B)	// メッセージ送りボタン

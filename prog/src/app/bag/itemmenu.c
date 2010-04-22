@@ -180,6 +180,8 @@ static void ExitBlinkPalAnm( FIELD_ITEMMENU_WORK * wk );
 static void _listSelectAnime( FIELD_ITEMMENU_WORK * wk );
 static void SetEndButtonAnime( FIELD_ITEMMENU_WORK * wk, u16 type, StateFunc * next );
 static void _endButtonAnime( FIELD_ITEMMENU_WORK * wk );
+static void SetPageButtonAnime( FIELD_ITEMMENU_WORK * wk, u32 old, u16 type, StateFunc * next );
+static void _waitCount( FIELD_ITEMMENU_WORK * wk );
 static int CheckNumSelTouch(void);
 static void _itemTrashCancel( FIELD_ITEMMENU_WORK * wk );
 static void _itemSellInputCancel( FIELD_ITEMMENU_WORK * wk );
@@ -903,7 +905,6 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
 		pWork->oamlistpos_old = 0xffff;
     _windowRewrite( pWork );
     SetEndButtonAnime( pWork, BAR_ICON_RETURN, _itemMoveCancel );
-    _CHANGE_STATE( pWork, _endButtonAnime );
     return;
   }
   // キャンセル（タッチ）
@@ -914,7 +915,6 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
     KTST_SetDraw( pWork, FALSE );
 //    _CHANGE_STATE( pWork, _itemMoveCancel );
     SetEndButtonAnime( pWork, BAR_ICON_RETURN, _itemMoveCancel );
-    _CHANGE_STATE( pWork, _endButtonAnime );
     return;
   }
 
@@ -1750,7 +1750,6 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 //    _CHANGE_STATE(pWork,NULL);
     SetEndButtonAnime( pWork, BAR_ICON_RETURN, NULL );
-    _CHANGE_STATE( pWork, _endButtonAnime );
     return;
   // 強制終了
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
@@ -1759,7 +1758,6 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 //    _CHANGE_STATE(pWork,NULL);
     SetEndButtonAnime( pWork, BAR_ICON_EXIT, NULL );
-    _CHANGE_STATE( pWork, _endButtonAnime );
     return;
   // 登録
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
@@ -1841,24 +1839,22 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 
   {
     if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
-      pWork->tmpCnt = pWork->pocketno;
+			u32	oldpocket = pWork->pocketno;
       pWork->pocketno++;
       if( pWork->pocketno >= BAG_POKE_MAX ){
         pWork->pocketno = 0;
       }
 //      GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_RIGHT], APP_COMMON_BARICON_CURSOR_RIGHT_ON );
-      SetEndButtonAnime( pWork, BAR_ICON_RIGHT, _itemPocketChange );
-      _CHANGE_STATE( pWork, _endButtonAnime );
+      SetPageButtonAnime( pWork, oldpocket, BAR_ICON_RIGHT, _itemPocketChange );
       return;
     }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
-      pWork->tmpCnt = pWork->pocketno;
+			u32	oldpocket = pWork->pocketno;
       pWork->pocketno--;
       if( pWork->pocketno < 0 ){
         pWork->pocketno = BAG_POKE_MAX-1;
       }
 //      GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_LEFT], APP_COMMON_BARICON_CURSOR_LEFT_ON );
-      SetEndButtonAnime( pWork, BAR_ICON_LEFT, _itemPocketChange );
-      _CHANGE_STATE( pWork, _endButtonAnime );
+      SetPageButtonAnime( pWork, oldpocket, BAR_ICON_LEFT, _itemPocketChange );
       return;
     }
 /*
@@ -2183,7 +2179,6 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
   }else if( ret == 1 ){
     PMSND_PlaySE( SE_BAG_CANCEL );
     SetEndButtonAnime( pWork, BAR_ICON_RETURN, _itemTrashCancel );
-    _CHANGE_STATE( pWork, _endButtonAnime );
   }
 }
 
@@ -2312,7 +2307,6 @@ static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork )
   }else if( ret == 1 ){
     PMSND_PlaySE( SE_BAG_CANCEL );
     SetEndButtonAnime( pWork, BAR_ICON_RETURN, _itemSellInputCancel );
-    _CHANGE_STATE( pWork, _endButtonAnime );
   }
 }
 
@@ -3554,25 +3548,23 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     }
   // ポケット切り替え左ボタン
   }else if(BUTTONID_LEFT == bttnid){
-    pWork->tmpCnt = pWork->pocketno;
+		u32	oldpocket = pWork->pocketno;
     pWork->pocketno--;
     if(pWork->pocketno < 0){
       pWork->pocketno = BAG_POKE_MAX-1;
     }
 //    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_LEFT], APP_COMMON_BARICON_CURSOR_LEFT_ON );
-    SetEndButtonAnime( pWork, BAR_ICON_LEFT, _itemPocketChange );
-    _CHANGE_STATE( pWork, _endButtonAnime );
+    SetPageButtonAnime( pWork, oldpocket, BAR_ICON_LEFT, _itemPocketChange );
     return;
   // ポケット切り替え右ボタン
   }else if(BUTTONID_RIGHT == bttnid){
-    pWork->tmpCnt = pWork->pocketno;
+		u32	oldpocket = pWork->pocketno;
     pWork->pocketno++;
     if(pWork->pocketno >= BAG_POKE_MAX){
       pWork->pocketno = 0;
     }
 //    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_RIGHT], APP_COMMON_BARICON_CURSOR_RIGHT_ON );
-    SetEndButtonAnime( pWork, BAR_ICON_RIGHT, _itemPocketChange );
-    _CHANGE_STATE( pWork, _endButtonAnime );
+    SetPageButtonAnime( pWork, oldpocket, BAR_ICON_RIGHT, _itemPocketChange );
     return;
   // ソートボタン
   }else if(BUTTONID_SORT == bttnid){
@@ -3594,12 +3586,10 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
   }else if(BUTTONID_EXIT == bttnid){
     pWork->ret_code = BAG_NEXTPROC_EXIT;
     SetEndButtonAnime( pWork, BAR_ICON_EXIT, NULL );
-    _CHANGE_STATE( pWork, _endButtonAnime );
   // 戻るボタン
   }else if(BUTTONID_RETURN == bttnid){
     pWork->ret_code = BAG_NEXTPROC_RETURN;
     SetEndButtonAnime( pWork, BAR_ICON_RETURN, NULL );
-    _CHANGE_STATE( pWork, _endButtonAnime );
   // リスト
   }else if((bttnid >= BUTTONID_ITEM_AREA) && (bttnid < BUTTONID_CHECK_AREA)){
     // アイテム選択シーケンスでの操作
@@ -4126,6 +4116,8 @@ static void SetEndButtonAnime( FIELD_ITEMMENU_WORK * wk, u16 type, StateFunc * n
   GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[wk->tmpSeq], anm );
   GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkBarIcon[wk->tmpSeq], TRUE );
   wk->chgState = next;
+
+	_CHANGE_STATE( wk, _endButtonAnime );
 }
 
 static void _endButtonAnime( FIELD_ITEMMENU_WORK * wk )
@@ -4135,6 +4127,47 @@ static void _endButtonAnime( FIELD_ITEMMENU_WORK * wk )
     _CHANGE_STATE( wk, wk->chgState );
   }
 }
+
+static void SetPageButtonAnime( FIELD_ITEMMENU_WORK * wk, u32 old, u16 type, StateFunc * next )
+{
+  u32 anm;
+
+  // ポケットカーソル移動
+  _pocketCursorChange( wk, old, wk->pocketno );
+  // ソートボタン表示切替
+  SORT_ModeReset( wk );
+  BTN_DrawCheckBox( wk );
+	wk->oamlistpos_old = 0xffff;
+  _windowRewrite( wk );
+
+  if( type == BAR_ICON_RIGHT ){
+    PMSND_PlaySE( SE_BAG_POCKET_MOVE );
+    anm = APP_COMMON_BARICON_CURSOR_RIGHT_ON;
+  }else if( type == BAR_ICON_LEFT ){
+    PMSND_PlaySE( SE_BAG_POCKET_MOVE );
+    anm = APP_COMMON_BARICON_CURSOR_LEFT_ON;
+  }
+  wk->tmpSeq = type;
+	wk->tmpCnt = 6;
+
+  GFL_CLACT_WK_SetAnmFrame( wk->clwkBarIcon[wk->tmpSeq], 0 );
+  GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[wk->tmpSeq], anm );
+  GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkBarIcon[wk->tmpSeq], TRUE );
+  wk->chgState = next;
+
+	_CHANGE_STATE( wk, _waitCount );
+}
+
+static void _waitCount( FIELD_ITEMMENU_WORK * wk )
+{
+	if( wk->tmpCnt == 0 ){
+    wk->tmpSeq = 0;
+    _CHANGE_STATE( wk, wk->chgState );
+	}else{
+		wk->tmpCnt--;
+	}
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -4280,6 +4313,7 @@ static BOOL CheckEventItemUse( FIELD_ITEMMENU_WORK * wk, u8 pocket )
 
 static void _itemPocketChange( FIELD_ITEMMENU_WORK * wk )
 {
+/*
   // ポケットカーソル移動
   _pocketCursorChange( wk, wk->tmpCnt, wk->pocketno );
   // ソートボタン表示切替
@@ -4289,6 +4323,7 @@ static void _itemPocketChange( FIELD_ITEMMENU_WORK * wk )
   _windowRewrite( wk );
 
   wk->tmpCnt = 0;
+*/
 
   ChangeStateItemKindSelectItemMenu( wk );
 }
