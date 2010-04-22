@@ -223,43 +223,80 @@ EVENT_START		ev_c03p12_dancer_01
 _TALK_OBJ_START()
 	//ダンサーイベント開始前
 	IF $WK_SCENE_C3CENTER_DANCE <= 1 THEN
-		
+		//ひとりで　できることは　すくない
 		_BALLOONWIN_OBJMSG_POS( msg_c03p12_dancer2_01 , C03P12_DANCER_01 ,POS_UL )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
 	//ダンサーイベント開始後
 	ELSE
-	
-		_BALLOONWIN_OBJMSG_POS( msg_c03p12_dancer2_02 , C03P12_DANCER_01 ,POS_UL )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
+
+		//ぼくに　なんか　用かい？
+		_BALLOONWIN_OBJMSG_POS(msg_c03p12_dancer2_02, C03P12_DANCER_01 ,POS_UL)
+		_YES_NO_WIN(SCWK_ANSWER)
 		
-		//画面暗転
-		_BLACK_OUT()
-		_DISP_FADE_END_CHECK()
+		//戦闘する？
+		//はい
+		IF $SCWK_ANSWER == SCR_YES THEN
+			//よし！じゃあはじめよう！
+			_BALLOONWIN_OBJMSG_POS( msg_c03p12_dancer2_03 , C03P12_DANCER_01 ,POS_UL )
+			_MSGWIN_CLOSE()
+			
+			_CALL ev_dancer_btl_03
+			
+			//ダンスチームをつくるんだよね
+			_BALLOONWIN_OBJMSG_POS(msg_c03p12_dancer2_05, C03P12_DANCER_01 ,POS_UL)
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+			//画面暗転
+			_BLACK_OUT()
+			_DISP_FADE_END_CHECK()
+			
+			//去るアニメ・OBJ削除
+			_OBJ_DEL( C03P12_DANCER_01 )
+			
+			//画面暗転解除
+			_BLACK_IN()
+			_DISP_FADE_END_CHECK()
+			
+			//========================================/
+			
+			//バニシュフラグセット
+			_FLAG_SET( FV_C03P12_DANCER_01 )
+			_FLAG_RESET( FV_C03CENTER_DANCER_01 )
+			
+			IF $WK_SCENE_C3CENTER_DANCE == 2 THEN
+					$WK_SCENE_C3CENTER_DANCE = 3
+			ELSIF $WK_SCENE_C3CENTER_DANCE == 3 THEN
+					$WK_SCENE_C3CENTER_DANCE = 4
+			ENDIF
+			
+			//========================================/
 		
-		//去るアニメ・OBJ削除
-		_OBJ_DEL( C03P12_DANCER_01 )
-		
-		//画面暗転解除
-		_BLACK_IN()
-		_DISP_FADE_END_CHECK()
-		
-		//========================================/
-		
-		//バニシュフラグセット
-		_FLAG_SET( FV_C03P12_DANCER_01 )
-		_FLAG_RESET( FV_C03CENTER_DANCER_01 )
-		
-		IF $WK_SCENE_C3CENTER_DANCE == 2 THEN
-				$WK_SCENE_C3CENTER_DANCE = 3
-		ELSIF $WK_SCENE_C3CENTER_DANCE == 3 THEN
-				$WK_SCENE_C3CENTER_DANCE = 4
+		//いいえ
+		ELSE
+			//ふーん
+			_BALLOONWIN_OBJMSG_POS(msg_c03p12_dancer2_04, C03P12_DANCER_01 ,POS_UL)
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+
 		ENDIF
-		
-		//========================================/
 	
 	ENDIF
 
 EVENT_END
+
+ev_dancer_btl_03:
+
+//戦闘処理
+	_TRAINER_BTL_SET ( TRID_DANCER_06, 0 )
+		
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+_RET

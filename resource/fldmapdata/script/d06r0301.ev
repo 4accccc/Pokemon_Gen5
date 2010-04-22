@@ -65,8 +65,7 @@ EVENT_START   ev_d06r0301_sage3_01
 	_OBJ_ANIME_WAIT()
 	
 	//戦闘処理
-//	_CALL  ev_hakaim_btl
-	_TIME_WAIT(64)
+	_CALL  ev_hakaim_btl
 
 	_OBJ_ANIME(D06R0301_HAKAIM_01,anm_d06r0301_hakaim_move_3)
 	_OBJ_ANIME_WAIT()
@@ -85,8 +84,7 @@ EVENT_START   ev_d06r0301_sage3_01
 	_BALLOONWIN_OBJMSG_POS( msg_d06r0301_hakaiw1_end_01, D06R0301_HAKAIW_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
-//	_CALL  ev_hakaim_btl
-	_TIME_WAIT(64)
+	_CALL  ev_hakaiw_btl
 	
 	//元　プラズマ団が　ふつうのポケモントレーナーになる
 	_BALLOONWIN_OBJMSG_POS( msg_d06r0301_hakaiw1_end_02, D06R0301_HAKAIW_01, POS_UL )
@@ -107,6 +105,7 @@ EVENT_START   ev_d06r0301_sage3_01
 	_MSGWIN_CLOSE()
 	
 	//ハンサムを表示する
+	_TIME_WAIT(16)
 	_OBJ_ADD_EX(12,38,DIR_DOWN,MMDL_ID_EVENTOBJ_00,ICPO,MV_DMY)
 	
 	//ハンサムの音楽スタート
@@ -185,7 +184,7 @@ EVENT_END
 
 ev_hakaim_btl:
 	//対戦へ
-	_TRAINER_BTL_SET( TRID_BAKER_03, 0 )
+	_TRAINER_BTL_SET( TRID_HAKAIM1_34, 0 )
 				
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
@@ -200,7 +199,7 @@ _RET
 			
 ev_hakaiw_btl:
 	//対戦へ
-	_TRAINER_BTL_SET( TRID_BAKER_03, 0 )
+	_TRAINER_BTL_SET( TRID_HAKAIW1_11, 0 )
 				
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )

@@ -186,34 +186,73 @@ EVENT_START		ev_c03p14_dancer_01
 	
 	//ダンサーイベント開始後
 	ELSE
-	
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p14_dancer3_02 )
-	
-		//画面暗転
-		_BLACK_OUT()
-		_DISP_FADE_END_CHECK()
 		
-		//去るアニメ・OBJ削除
-		_OBJ_DEL( C03P14_DANCER_01 )
+		_TALK_OBJ_START()
+		//なんか　よう？　おー！ダンスチーム！！しょうかいしてくれるんだ
+		_BALLOONWIN_TALKOBJ_MSG(msg_c03p14_dancer3_02)
+		_YES_NO_WIN(SCWK_ANSWER)
 		
-		//画面暗転解除
-		_BLACK_IN()
-		_DISP_FADE_END_CHECK()
-	
-		//========================================/
+		//戦闘する？
+		//はい
+		IF $SCWK_ANSWER == SCR_YES THEN
+			_BALLOONWIN_TALKOBJ_MSG(msg_c03p14_dancer3_03)
+			_MSGWIN_CLOSE()
+
+			_CALL ev_dancer_btl_02
+			
+			//なんかよう？　おー！ダンスチーム！！おれにしょうかいしてよ！
+			_BALLOONWIN_TALKOBJ_MSG(msg_c03p14_dancer3_05)
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+			//画面暗転
+			_BLACK_OUT()
+			_DISP_FADE_END_CHECK()
+			
+			//去るアニメ・OBJ削除
+			_OBJ_DEL( C03P14_DANCER_01 )
+			
+			//画面暗転解除
+			_BLACK_IN()
+			_DISP_FADE_END_CHECK()
 		
-		//バニシュフラグセット
-		_FLAG_SET( FV_C03P14_DANCER_02 )
-		_FLAG_RESET( FV_C03CENTER_DANCER_02 )
-		
-		IF $WK_SCENE_C3CENTER_DANCE == 2 THEN
-				$WK_SCENE_C3CENTER_DANCE = 3
-		ELSIF $WK_SCENE_C3CENTER_DANCE == 3 THEN
-				$WK_SCENE_C3CENTER_DANCE = 4
+			//========================================/
+			
+			//バニシュフラグセット
+			_FLAG_SET( FV_C03P14_DANCER_02 )
+			_FLAG_RESET( FV_C03CENTER_DANCER_02 )
+			
+			IF $WK_SCENE_C3CENTER_DANCE == 2 THEN
+					$WK_SCENE_C3CENTER_DANCE = 3
+			ELSIF $WK_SCENE_C3CENTER_DANCE == 3 THEN
+					$WK_SCENE_C3CENTER_DANCE = 4
+			ENDIF
+			
+			//========================================/
+			
+		//いいえ
+		ELSE
+			//オレを　ダンスチームに　さそうなら　つよくないとねー
+			_BALLOONWIN_TALKOBJ_MSG(msg_c03p14_dancer3_04)
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+
 		ENDIF
 		
-		//========================================/
-	
 	ENDIF
 
 EVENT_END
+
+ev_dancer_btl_02:
+
+//戦闘処理
+	_TRAINER_BTL_SET ( TRID_DANCER_05, 0 )
+		
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+_RET
