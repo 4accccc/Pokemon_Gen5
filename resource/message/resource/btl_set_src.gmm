@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-04-22T15:47:29"/>
+	<create user="taya" host="W00146" date="2010-04-22T21:19:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1685,9 +1685,9 @@
 
 	<row id="BTL_STRID_SET_Ieki">
 		<comment>いえき</comment>
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 とくせいが　きかなくなった！</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
 とくせいが　効かなくなった！</language>
 	</row>
 
