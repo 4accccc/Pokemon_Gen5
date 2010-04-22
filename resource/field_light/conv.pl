@@ -16,6 +16,7 @@ if( @ARGV < 3 ){
 
 
 #ファイル読み込み
+print( "load file ".$ARGV[0]."\n" );
 open( FILE, $ARGV[0] );
 @CSVFILE = <FILE>;
 close( FILE );
@@ -408,6 +409,7 @@ foreach $one ( @CSVFILE ){
 
 
 #出力
+print( "out file ".$ARGV[1]."\n" );
 open( FILE, ">".$ARGV[1] );
 binmode( FILE );
 

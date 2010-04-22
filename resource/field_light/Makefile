@@ -61,10 +61,10 @@ ifeq	($(CONVERTUSER),true)
 #コンバート環境
 .xls.csv:
 	echo > $@	#ダミー中間ファイル生成
-	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*_00.csv -p 0 -s csv $<
-	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*_01.csv -p 1 -s csv $<
-	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*_02.csv -p 2 -s csv $<
-	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*_03.csv -p 3 -s csv $<
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*_00.csv -p 1 -s csv $<
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*_01.csv -p 2 -s csv $<
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*_02.csv -p 3 -s csv $<
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*_03.csv -p 4 -s csv $<
 
 	perl conv.pl $*_00.csv $*_00.dat $(TIMEZONE_FILE)
 	perl conv.pl $*_01.csv $*_01.dat $(TIMEZONE_FILE)
