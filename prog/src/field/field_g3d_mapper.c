@@ -447,8 +447,11 @@ void	FLDMAPPER_Draw( FLDMAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera, FLDMAPPER_
         FLD_G3D_MAP_SetTrans( g3Dmapper->blockWk[index].g3Dmap, &org_pos );
 
         if( result ){
-          GF_ASSERT( g3Dmapper->writeBlockNumNow < g3Dmapper->blockNum );
-          g3Dmapper->writeBlockNumNow ++;
+
+          // ready‚ÌƒtƒŒ[ƒ€‚©‚çtop‚ð’Ê‚ç‚¸‚Étail‚É‚­‚é‰Â”\«‚ª‚ ‚é‚Ì‚ÅC³
+          if(g3Dmapper->writeBlockNumNow < g3Dmapper->blockNum){
+            g3Dmapper->writeBlockNumNow ++;
+          }
         }
       }
     }
