@@ -17,10 +17,16 @@
 
 #include "sound/pm_sndsys.h"
 
+#define  POS_CALC_BY_CAMERA   //ビックリマークの位置計算をカメラ逆行列で行う
+
 //======================================================================
 //  define
 //======================================================================
+#ifdef  POS_CALC_BY_CAMERA
+#define GYOE_FLDOBJ_Y_OFFSET (NUM_FX32(22)) ///<フィールドOBJからのYオフセット
+#else
 #define GYOE_FLDOBJ_Y_OFFSET (NUM_FX32(32)) ///<フィールドOBJからのYオフセット
+#endif
 #define GYOE_FLDOBJ_Z_OFFSET (0x1000) ///<フィールドOBJからのZオフセット
 #define GYOE_FLDOBJ_Y_MOVE_START (0x6000) ///<ギョエー初速
 #define GYOE_END_FRAME (30) ///<ギョエー終了フレーム	
@@ -55,6 +61,7 @@ typedef struct
   FLDEFF_GYOE *eff_gyoe;
   const MMDL *mmdl;
   MMDL_CHECKSAME_DATA samedata;
+  FIELDMAP_WORK * fieldmap;
 }TASKHEADER_GYOE;
 
 //--------------------------------------------------------------
@@ -189,6 +196,7 @@ FLDEFF_TASK * FLDEFF_GYOE_SetMMdl( FLDEFF_CTRL *fectrl,
   head.eff_gyoe = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_GYOE );
   head.mmdl = mmdl;
   MMDL_InitCheckSameData( mmdl, &head.samedata );
+  head.fieldmap = FLDEFF_CTRL_GetFieldMapWork( fectrl );
   
   if( se_play == TRUE ){
     u32 idx = 0;
@@ -276,6 +284,7 @@ static void gyoeTask_Init( FLDEFF_TASK *task, void *wk )
   FLDEFF_TASK_CallUpdate( task ); //即動作
 }
 
+
 //--------------------------------------------------------------
 /**
  * びっくりマークエフェクトタスク　削除
@@ -288,6 +297,107 @@ static void gyoeTask_Delete( FLDEFF_TASK *task, void *wk )
 {
 //  TASKWORK_GYOE *work = wk;
 }
+
+#ifdef  POS_CALC_BY_CAMERA
+//--------------------------------------------------------------
+//動作モデル位置からのオフセットベクトルに、
+//カメラの逆行列をかけて、ビルボードに対して正確な位置オフセットを算出する
+//--------------------------------------------------------------
+static void getBillboardOffset(
+    const GFL_G3D_CAMERA * g3Dcamera, const VecFx32 * org_ofs, VecFx32 * bbd_ofs )
+{
+  VecFx32		camPos, camUp, target;
+  MtxFx43		mtx43;
+  MtxFx33 mtx33; 
+
+  GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
+  GFL_G3D_CAMERA_GetCamUp( g3Dcamera, &camUp );
+  GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
+
+  MTX_LookAt( &camPos, &camUp, &target, &mtx43 ); //カメラ行列取得
+  MTX_Copy43To33( &mtx43, &mtx33 );               //並行移動成分はいらないので3x3行列にコピー
+  MTX_Inverse33( &mtx33, &mtx33 );			          //カメラ逆行列生成
+
+  //カメラ逆行列で回転させる＝＝カメラ行列で回転させても正位置になるはずのベクトル
+  MTX_MultVec33( org_ofs, &mtx33, bbd_ofs );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void gyoePos_Calc( FLDEFF_TASK *task, TASKWORK_GYOE *work, VecFx32 * pos )
+{
+  VecFx32 ofs;
+
+  switch( work->seq_no ){
+  case 0:
+    work->offs_y += work->move_y;
+    if( work->offs_y ){
+      work->move_y += -0x2000;
+    }else{
+      work->move_y = 0;
+      work->seq_no++;
+    }
+    break;
+  case 1:
+    work->frame++;
+    
+    if( work->frame >= GYOE_END_FRAME ){
+      work->seq_no++;
+      work->end_flag = TRUE;
+    }
+  }
+
+  MMDL_GetVectorPos( work->head.mmdl, pos );
+
+#if 0
+  { //高速バージョン Y軸操作だけならばこちらのほうが計算量が少ない
+    VecFx32 camera_way;
+    VecFx32 camera_way_xz;
+    VecFx32 camera_side;
+    VecFx32 camera_up;
+    VecFx32 camera_pos;
+    VecFx32 camera_target;
+    FIELD_CAMERA * fld_cam = FIELDMAP_GetFieldCamera( work->head.fieldmap );
+    const GFL_G3D_CAMERA * g3Dcamera = FIELD_CAMERA_GetCameraPtr( fld_cam );
+    static const VecFx32 up_way = { 0,FX32_ONE,0 };
+
+    GFL_G3D_CAMERA_GetTarget( g3Dcamera, &camera_target );
+    GFL_G3D_CAMERA_GetPos( g3Dcamera, &camera_pos );
+
+    VEC_Subtract( &camera_target, &camera_pos, &camera_way );
+    // XZ平面横方向取得
+    camera_way_xz = camera_way;
+    camera_way_xz.y = 0;
+    VEC_Normalize( &camera_way_xz, &camera_way_xz );
+
+    // 横方向を外積で求める
+    VEC_CrossProduct( &camera_way_xz, &up_way, &camera_side );
+    // 横とカメラ方向から上を求める
+    VEC_CrossProduct( &camera_way, &camera_side, &camera_up );
+    VEC_Normalize( &camera_up, &camera_up );
+    
+    // 上方向に移動
+    pos->x += FX_Mul( camera_up.x, -( GYOE_FLDOBJ_Y_OFFSET + work->offs_y ) );
+    pos->y += FX_Mul( camera_up.y, -( GYOE_FLDOBJ_Y_OFFSET + work->offs_y ) );
+    pos->z += FX_Mul( camera_up.z, -( GYOE_FLDOBJ_Y_OFFSET + work->offs_y ) );
+    
+  }
+#else
+  {
+    //動作モデル位置からビックリマーク位置までのオフセットベクトルに、
+    //カメラの逆行列をかけて、ビルボードに対して正確な位置にマークをだす
+    FIELD_CAMERA * fld_cam = FIELDMAP_GetFieldCamera( work->head.fieldmap );
+    const GFL_G3D_CAMERA * g3Dcamera = FIELD_CAMERA_GetCameraPtr( fld_cam );
+    VecFx32 ofs = (VecFx32){ 0, GYOE_FLDOBJ_Y_OFFSET + work->offs_y, 0 };
+  
+    MMDL_GetVectorPos( work->head.mmdl, pos );
+    getBillboardOffset( g3Dcamera, &ofs, &ofs );
+    VEC_Add( &ofs, pos, pos );
+  }
+#endif
+  
+}
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -308,6 +418,10 @@ static void gyoeTask_Update( FLDEFF_TASK *task, void *wk )
     return;
   }
     
+#ifdef  POS_CALC_BY_CAMERA
+  gyoePos_Calc( task, work, &pos );
+  FLDEFF_TASK_SetPos( task, &pos );
+#else
   switch( work->seq_no ){
   case 0:
     work->offs_y += work->move_y;
@@ -345,6 +459,7 @@ static void gyoeTask_Update( FLDEFF_TASK *task, void *wk )
   }
   
   FLDEFF_TASK_SetPos( task, &pos );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -366,6 +481,10 @@ static void gyoeTask_Update_only( FLDEFF_TASK *task, void *wk )
     return;
   }
   
+#ifdef  POS_CALC_BY_CAMERA
+  gyoePos_Calc( task, work, &pos );
+  FLDEFF_TASK_SetPos( task, &pos );
+#else
   switch( work->seq_no ){
   case 0:
     work->offs_y += work->move_y;
@@ -401,6 +520,7 @@ static void gyoeTask_Update_only( FLDEFF_TASK *task, void *wk )
     pos.z += FX_Mul( GYOE_FLDOBJ_Z_OFFSET, way.z );
   }
   FLDEFF_TASK_SetPos( task, &pos );
+#endif
 }
 
 //--------------------------------------------------------------
