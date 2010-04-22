@@ -271,15 +271,10 @@ typedef void (StateFunc)(POKEMON_TRADE_WORK* pState);
 
 typedef enum
 {
+  POKEMONTORADE_SEQ_WAIT,  //待機中
+  POKEMONTORADE_SEQ_MISERUOK,  //こうかんしたがっている
+  POKEMONTORADE_SEQ_CANCEL, //やめたがっている
   POKEMONTORADE_SEQ_NONE,
-  POKEMONTORADE_SEQ_MISERUOK,  //あいてに　みせるのはこのポケモンで　いいですか？
-  POKEMONTORADE_SEQ_MISERUNG,
-  POKEMONTORADE_SEQ_KAISHIOK,  //このポケモンで　こうかんをかいしします　よろしいですか？
-  POKEMONTORADE_SEQ_KAISHING,
-  POKEMONTORADE_SEQ_SELECTOK,
-  POKEMONTORADE_SEQ_SELECTNG,
-  
-  
 }POKEMONTORADE_SEQ_ENUM;
 
 
@@ -706,6 +701,8 @@ struct _POKEMON_TRADE_WORK{
   u8 SlideWindowTimer[2];
   u8 timerErupted[2]; //顔文字消去タイマー
   u8 evilCheck[2];
+  u8 pokemonGTSSeq[2];  //メッセージの表示切替
+  u8 pokemonGTSStateMode;  //画面的にpokemonGTSSeqを受け入れてよい場合TRUE
   u8 BGClearFlg;
   u8 DemoBGClearFlg;
   u8 bByebyeMessageEach;  //送り先IDと送信ポケモン一致
@@ -713,15 +710,12 @@ struct _POKEMON_TRADE_WORK{
   u8 bByebyeNoJump;
   u8 bEncountNoJump;
   u8 NegoWaitTime;  //NEGOを遅らせるタイマー
-  u8 pokemonGTSSeq;  //GTSシーケンス番号
-  u8 pokemonGTSSeqSend;  //送るGTSシーケンス番号
   u8 friendBoxNum;  //ともだちのボックス番号
   u8 statusModeOn;  //
   u8 friendMailBoxFULL;  //ともだちはメールボックス満杯かどうか
   u8 mojiIconEnd;  //文字点滅アイコンが終わったかどうか
   u8 zenkoku_flag;
-//  u8 time3dfadelen;
-//  u8 time3dfadecount;
+  u8 dummy;
 } ;
 
 

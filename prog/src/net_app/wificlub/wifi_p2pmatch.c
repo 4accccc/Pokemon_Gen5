@@ -5834,11 +5834,11 @@ static void _myStatusChange_not_send(WIFIP2PMATCH_WORK *wk, int status,int gamem
       Snd_BgmFadeOut( 0, BGM_FADE_VCHAT_TIME); // VCT状態へ
     }
     else if(status == WIFI_STATUS_PLAYING){
-      //@todo ボリュームを落す
+      // ボリュームを落す
       _changeBGMVol( wk, _VOL_DEFAULT/3 );
     }
     else{
-      // @todo ボリュームを戻す
+      //  ボリュームを戻す
       _changeBGMVol( wk, _VOL_DEFAULT );
     }
   }
@@ -7116,7 +7116,7 @@ static void _changeBGMVol( WIFIP2PMATCH_WORK* wk, u8 endVol)
     //OS_TPrintf("ボリュームそのまま %d %d\n",endVol);
     return;
   }
- // OS_TPrintf("ボリューム変更 %d %d \n",wk->aVol.bgmVolEnd, endVol);
+  OS_TPrintf("ボリューム変更 %d %d \n",wk->aVol.bgmVolEnd, endVol);
   wk->aVol.bgmVolStart = wk->aVol.bgmVol;
   wk->aVol.bgmVolCount = _VOL_TRACK_FRAME;
   wk->aVol.bgmVolEnd = endVol;

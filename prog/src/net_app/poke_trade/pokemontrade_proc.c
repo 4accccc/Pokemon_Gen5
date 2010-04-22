@@ -619,18 +619,20 @@ static void _recvSeqNegoNo(const int netID, const int size, const void* pData, v
 {
   POKEMON_TRADE_WORK *pWork = pWk;
   const u8* pBuff = pData;
+  int i;
 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
   if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
-    return;//自分のは今は受け取らない
+    i = 0;
   }
-  if(POKEMONTORADE_SEQ_MISERUOK==pBuff[0]){
-    POKE_GTS_SelectStatusMessageDisp(pWork, 1, TRUE);
+  else{
+    i = 1;
   }
+//  POKE_GTS_SelectStatusMessageDisp(pWork, i, pBuff[0]);
   
-  pWork->pokemonGTSSeq = pBuff[0];
+  pWork->pokemonGTSSeq[i] = pBuff[0];
 
 }
 
@@ -3785,6 +3787,11 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
     state(pWork);
     pWork->anmCount++;
     retCode = GFL_PROC_RES_CONTINUE;
+    for(k=0;k<2;k++){
+      if(pWork->pokemonGTSSeq[k]!=POKEMONTORADE_SEQ_NONE){
+        POKE_GTS_SelectStatusMessageDisp(pWork, k, pWork->pokemonGTSSeq[k]);
+      }
+    }
   }
   //ポケモンセットをコール
   if(pWork->pokemonsetCall != 0){

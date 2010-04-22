@@ -922,6 +922,8 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
 
   UITemplate_TYPEICON_DeleteCLWK(&pWork->aTypeIcon[0]);
   UITemplate_TYPEICON_DeleteCLWK(&pWork->aTypeIcon[1]);
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
+                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
   
   if(!pWork->pokeMcss[mcssno]){
     IRCPOKETRADE_PokeCreateMcss(pWork, mcssno, mcssno, pp , FALSE);

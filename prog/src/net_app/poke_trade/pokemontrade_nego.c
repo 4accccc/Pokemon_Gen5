@@ -447,12 +447,9 @@ void POKE_GTS_SelectStatusMessageDisp(POKEMON_TRADE_WORK* pWork, int side, BOOL 
   int frame = GFL_BG_FRAME3_M;
   GFL_BMPWIN* pWin;
 
-    
-//  GFL_ARC_UTIL_TransVramPalette( APP_COMMON_GetArcId() , 
-  //                               NARC_app_menu_common_task_menu_NCLR ,
-    //                             PALTYPE_MAIN_BG , _MAINBG_APP_MSG_PAL*32 , 32*1 , pWork->heapID );	
-//  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
-  //                              0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
+  if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
+    return;
+  }
   
   if(pWork->StatusWin[side]){
     GFL_BMPWIN_Delete(pWork->StatusWin[side]);
@@ -462,7 +459,7 @@ void POKE_GTS_SelectStatusMessageDisp(POKEMON_TRADE_WORK* pWork, int side, BOOL 
   pWin = pWork->StatusWin[side];
   GFL_FONTSYS_SetColor( 5, 6, 0x0 );
 
-  GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR2_14 + bSelected, pWork->pStrBuf );
+  GFL_MSG_GetString( pWork->pMsgData,POKETRADE_STR_200 + bSelected, pWork->pStrBuf );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWin), 0, 0, pWork->pStrBuf, pWork->pFontHandle);
   
   GFL_BMPWIN_TransVramCharacter(pWin);
@@ -508,6 +505,8 @@ static void _menuFriendPokemon(POKEMON_TRADE_WORK* pWork)
     pWork->pAppTask=NULL;
     switch(selectno){
     case 0:  //つよさをみる
+      WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
+                      WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
       _CHANGE_STATE(pWork, _pokemonStatusStart);
       break;
     case 1:  //もどる
@@ -951,18 +950,19 @@ static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
 // ポケモンのステータス表示
 static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork)
 {
-  u16 trgno = pWork->pokemonselectno;
-  
-  POKEMON_PARAM* pp = pWork->GTSSelectPP[1-(trgno/GTS_NEGO_POKESLT_MAX)][trgno%GTS_NEGO_POKESLT_MAX]; //さかさまにする
-
-  pWork->statusModeOn=TRUE;
-
-  if(pp && PP_Get(pp,ID_PARA_poke_exist,NULL) ){
-    POKETRADE_MESSAGE_CreatePokemonParamDisp(pWork,pp);
+  if(WIPE_SYS_EndCheck()){
+    u16 trgno = pWork->pokemonselectno;
+    POKEMON_PARAM* pp = pWork->GTSSelectPP[1-(trgno/GTS_NEGO_POKESLT_MAX)][trgno%GTS_NEGO_POKESLT_MAX]; //さかさまにする
+    pWork->statusModeOn=TRUE;
+    if(pp && PP_Get(pp,ID_PARA_poke_exist,NULL) ){
+      POKETRADE_MESSAGE_CreatePokemonParamDisp(pWork,pp);
+    }
+    _select6PokeSubMask(pWork);
+    OS_TPrintf("pokemonselectno %d\n",pWork->pokemonselectno);
+    WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN ,
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+    _CHANGE_STATE(pWork, _pokemonStatusWaitN);  //選択にループ
   }
-  _select6PokeSubMask(pWork);
-  OS_TPrintf("pokemonselectno %d\n",pWork->pokemonselectno);
-  _CHANGE_STATE(pWork, _pokemonStatusWaitN);  //選択にループ
 }
 
 
@@ -980,6 +980,8 @@ static void _menuMyPokemon(POKEMON_TRADE_WORK* pWork)
       _CHANGE_STATE(pWork, _friendSelectWait);
       break;
     case 1:  //つよさをみる
+      WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
+                      WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
       _CHANGE_STATE(pWork, _pokemonStatusStart);
       break;
     case 2:  //もどる
@@ -1548,8 +1550,12 @@ static void _Select6MessageInit8(POKEMON_TRADE_WORK* pWork)
   int i;
   int msgno;
   int myID = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-  int targetID = 1 - myID;
+  int targetID;
 
+  if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    myID=0;
+    targetID = 1 - myID;
+  }
 
   
   if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEネゴのみ強制切断処理
