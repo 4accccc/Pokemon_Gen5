@@ -326,12 +326,14 @@ static const AREA_CHECK BoxMoveTrayArea[BOX2OBJ_TRAYICON_MAX] =
   { 133, 156, 15, 38 }, { 167, 190, 15, 38 }, { 201, 224, 15, 38 },
 };
 
+//#define BOX_FREE_WAZA_CHECK
+#ifdef BOX_FREE_WAZA_CHECK
 // 逃がすときにチェックする技
 static const u16 PokeFreeCheckWazaTable[] = {
 	WAZANO_NAMINORI,
 	WAZANO_SORAWOTOBU,
 };
-
+#endif	// BOX_FREE_WAZA_CHECK
 
 
 
@@ -3060,6 +3062,7 @@ static void PokeIconBufPosChange( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA 
 //--------------------------------------------------------------------------------------------
 static u32 PokeFreeWazaCheck( u16 waza )
 {
+#ifdef BOX_FREE_WAZA_CHECK
   u32 i;
 
   for( i=0; i<NELEMS(PokeFreeCheckWazaTable); i++ ){
@@ -3067,6 +3070,7 @@ static u32 PokeFreeWazaCheck( u16 waza )
       return i;
     }
   }
+#endif	// BOX_FREE_WAZA_CHECK
   return 0xffffffff;
 }
 
