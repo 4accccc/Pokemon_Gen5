@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-04-15T16:52:32"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-22T17:30:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="164"/>
+		<id position="0" width="175"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="237" top="137" right="942" bottom="757" maximized="no" rayout="Vertical2">
+	<dialog left="211" top="319" right="915" bottom="939" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="1127" top="727" right="1600" bottom="1125" visible="yes"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="3" index="4" style="0000" width="151"/>
+		<band id="4" index="0" style="0000" width="696"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -581,580 +581,596 @@
 	</row>
 
 	<row id="msg_c04r0111_boy2_1">
+		<comment>ノーマル　７連勝</comment>
 		<attribute name="キャラ指定">boy2
 たんぱんこぞう</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-７れんしょう　おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-７連勝　おめでとう</language>
+		<language name="JPN" width="256">しょうぶは　きんちょうの　れんぞく
+ここで　ちょっと　ひとやすみだね</language>
+		<language name="JPN_KANJI" width="256">勝負は　緊張の　連続
+ここで　ちょっと　一休みだね</language>
 	</row>
 
 	<row id="msg_c04r0111_boy2_2">
+		<comment>スーパー７連勝</comment>
 		<attribute name="キャラ指定">boy2
 たんぱんこぞう</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　７連勝
-おめでとう</language>
+		<language name="JPN" width="256">もっと　バトルポイントを　ためて
+ポケモンたちに　どうぐを▽
+もたせて　あげるんだ</language>
+		<language name="JPN_KANJI" width="256">もっと　バトルポイントを　ためて
+ポケモンたちに　道具を▽
+持たせて　あげるんだ</language>
 	</row>
 
 	<row id="msg_c04r0111_girl2_1">
+		<comment>ノーマル　７連勝</comment>
 		<attribute name="キャラ指定">girl2
 ミニスカート</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-７れんしょう　おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-７連勝　おめでとう</language>
+		<language name="JPN" width="256">７れんしょう　するごとにね
+しょうぶを　いどんでくる▽
+トレーナーも　ポケモンも▽
+つよく　てごわくなっていくの</language>
+		<language name="JPN_KANJI" width="256">７連勝　するごとにね
+勝負を　挑んでくる▽
+トレーナーも　ポケモンも▽
+強く　手ごわくなっていくの</language>
 	</row>
 
 	<row id="msg_c04r0111_girl2_2">
+		<comment>スーパー７連勝</comment>
 		<attribute name="キャラ指定">girl2
 ミニスカート</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　７連勝
-おめでとう</language>
+		<language name="JPN" width="256">ウチ　かわいい　ポケモンしか
+つかわんって　きめてんの！▼
+アンタは　そういう　じぶんだけの
+こだわりって　もってる？</language>
+		<language name="JPN_KANJI" width="256">ウチ　可愛い　ポケモンしか
+使わんって　決めてんの！▼
+アンタは　そういう　自分だけの
+こだわりって　もってる？</language>
 	</row>
 
 	<row id="msg_c04r0111_boy3_1">
+		<comment>ノーマル　７連勝</comment>
 		<attribute name="キャラ指定">boy3
 じゅくがえり♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-７れんしょう　おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-７連勝　おめでとう</language>
+		<language name="JPN" width="256">よーし！　じゅんび　バッチリ！
+しょうぶの　たびに　レッツゴーだ！</language>
+		<language name="JPN_KANJI" width="256">よーし！　準備　バッチリ！
+勝負の　旅に　レッツゴーだ！</language>
 	</row>
 
 	<row id="msg_c04r0111_boy3_2">
+		<comment>スーパー　７連勝</comment>
 		<attribute name="キャラ指定">boy3
 じゅくがえり♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　７連勝
-おめでとう</language>
+		<language name="JPN" width="256">はあ……　つかれたなあ……▼
+こっちの　トレーナーは　つよいよお</language>
+		<language name="JPN_KANJI" width="256">はあ……　疲れたなあ……▼
+こっちの　トレーナーは　強いよお</language>
 	</row>
 
 	<row id="msg_c04r0111_girl3_1">
+		<comment>ノーマル　7連勝</comment>
 		<attribute name="キャラ指定">girl3
 じゅくがえり♀</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-７れんしょう　おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-７連勝　おめでとう</language>
+		<language name="JPN" width="256">サブウェイマスターって　しってる？▼
+つよい　トレーナーの　まえだけに
+あらわれて　しょうぶを　いどんでくる▽
+バトルサブウェイの　ボスなんだって</language>
+		<language name="JPN_KANJI" width="256">サブウェイマスターって　知ってる？▼
+強い　トレーナーの　前だけに
+現れて　勝負を　挑んでくる▽
+バトルサブウェイの　ボスなんだって</language>
 	</row>
 
 	<row id="msg_c04r0111_girl3_2">
+		<comment>スーパー　７連勝</comment>
 		<attribute name="キャラ指定">girl3
 じゅくがえり♀</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　７連勝
-おめでとう</language>
+		<language name="JPN" width="256">さっきの　しょうぶ　つらかったな
+もっといい　どうぐを　ＢＰと▽
+こうかん　してくれば　よかったな</language>
+		<language name="JPN_KANJI" width="256">さっきの　勝負　辛かったな
+もっといい　道具を　ＢＰと▽
+交換　してくれば　よかったな</language>
 	</row>
 
 	<row id="msg_c04r0111_backpackerm_1">
+		<comment>ノーマル　7連勝</comment>
 		<attribute name="キャラ指定">backpackerm
 バックパッカー♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-７れんしょう　おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-７連勝　おめでとう</language>
+		<language name="JPN" width="256">たびは　つづくさ～　まけないかぎり～
+ポケモンだのみの～　ふうらいぼう～</language>
+		<language name="JPN_KANJI" width="256">旅は　続くさ～　負けないかぎり～
+ポケモン頼みの～　風来坊～</language>
 	</row>
 
 	<row id="msg_c04r0111_backpackerm_2">
+		<comment>ノーマル　14連勝</comment>
 		<attribute name="キャラ指定">backpackerm
 バックパッカー♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-１４れんしょう　おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-１４連勝　おめでとう</language>
+		<language name="JPN" width="256">そろそろ　ちょうしを　あげてくか！
+キミも　がんばれよな！</language>
+		<language name="JPN_KANJI" width="256">そろそろ　調子を　上げてくか！
+キミも　頑張れよな！</language>
 	</row>
 
-	<row id="msg_c04r0111_backpackerm_3">
+	<row id="msg_c04r0111_backpackerm_3" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>スーパー　７連勝</comment>
 		<attribute name="キャラ指定">backpackerm
 バックパッカー♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　７連勝
-おめでとう</language>
+		<language name="JPN" width="256">ここの　トレーナーは　はじめから
+てごわい　あいて　ばっかりだな</language>
+		<language name="JPN_KANJI" width="256">ここの　トレーナーは　はじめから
+手ごわい　相手　ばっかりだな</language>
 	</row>
 
-	<row id="msg_c04r0111_backpackerm_4">
+	<row id="msg_c04r0111_backpackerm_4" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>スーパー　42連勝</comment>
 		<attribute name="キャラ指定">backpackerm
 バックパッカー♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　４２れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　４２連勝
-おめでとう</language>
+		<language name="JPN" width="256">これで　４２れんしょうか……
+オイラも　なかなか　やるじゃない</language>
+		<language name="JPN_KANJI" width="256">これで　４２連勝か……
+オイラも　なかなか　やるじゃない</language>
 	</row>
 
-	<row id="msg_c04r0111_backpackerm_5">
+	<row id="msg_c04r0111_backpackerm_5" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>スーパー　84連勝</comment>
 		<attribute name="キャラ指定">backpackerm
 バックパッカー♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　８４れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　８４連勝
-おめでとう</language>
+		<language name="JPN" width="256">ボクが　８４れんしょうだなんて……
+これは　ゆめ　なのかな……</language>
+		<language name="JPN_KANJI" width="256">ボクが　８４連勝だなんて……
+これは　夢　なのかな……</language>
 	</row>
 
-	<row id="msg_c04r0111_backpackerw_1">
+	<row id="msg_c04r0111_backpackerw_1" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>ノーマル　14連勝</comment>
 		<attribute name="キャラ指定">backpackerw
 バックパッカー♀</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-１４れんしょう　おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-１４連勝　おめでとう</language>
+		<language name="JPN" width="256">ここで　あうって　ことは
+キミも　１４れんしょうか！▽
+やるじゃん！　やるじゃん！</language>
+		<language name="JPN_KANJI" width="256">ここで　あうって　ことは
+キミも　１４連勝か！▽
+やるじゃん！　やるじゃん！</language>
 	</row>
 
 	<row id="msg_c04r0111_backpackerw_2">
+		<comment>スーパー　7連勝</comment>
 		<attribute name="キャラ指定">backpackerw
 バックパッカー♀</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　７連勝
-おめでとう</language>
+		<language name="JPN" width="256">スーパートレインには
+おわりが　ないんだって！▼
+つまり　かちつづけることが
+できれば　いつまでも　どこまでも▽
+たびが　つづく　ってことだよね！</language>
+		<language name="JPN_KANJI" width="256">スーパートレインには
+終わりが　ないんだって！▼
+つまり　勝ち続けることが
+できれば　いつまでも　どこまでも▽
+旅が　続く　ってことだよね！</language>
 	</row>
 
 	<row id="msg_c04r0111_backpackerw_3">
+		<comment>スーパー35連勝</comment>
 		<attribute name="キャラ指定">backpackerw
 バックパッカー♀</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　３５れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　３５連勝
-おめでとう</language>
+		<language name="JPN" width="256">まだまだ　イケる！
+まだまだ　かてる！</language>
+		<language name="JPN_KANJI" width="256">まだまだ　イケる！
+まだまだ　勝てる！</language>
 	</row>
 
 	<row id="msg_c04r0111_backpackerw_4">
+		<comment>スーパー63連勝</comment>
 		<attribute name="キャラ指定">backpackerw
 バックパッカー♀</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　６３れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　６３連勝
-おめでとう</language>
+		<language name="JPN" width="256">ここにいる　トレーナー　って
+みんな　めつきが　ほんき　というか▽
+ギラギラ　してますよね</language>
+		<language name="JPN_KANJI" width="256">ここにいる　トレーナー　って
+みんな　目つきが　本気　というか▽
+ギラギラ　してますよね</language>
 	</row>
 
 	<row id="msg_c04r0111_policeman_1">
+		<comment>ノーマル　14連勝</comment>
 		<attribute name="キャラ指定">policeman
 おまわりさん</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-１４れんしょう　おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-１４連勝　おめでとう</language>
+		<language name="JPN" width="256">ほんかんは　ここまでかな……▼
+ホームを　よぎる　でんしゃの
+ライトが　やけに　まぶしいですなァ</language>
+		<language name="JPN_KANJI" width="256">本官は　ここまでかな……▼
+ホームを　よぎる　電車の
+ライトが　やけに　まぶしいですなァ</language>
 	</row>
 
 	<row id="msg_c04r0111_policeman_2">
+		<comment>ノーマル　終着駅</comment>
 		<attribute name="キャラ指定">policeman
 おまわりさん</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-サブウェイマスターを
-たおしたんだって？</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-サブウェイマスターを
-たおしたんだって？</language>
+		<language name="JPN" width="256">サブウェイマスターは　あやしくて
+おかしな　ヤツだったな……▼
+わたしは　あれが　かれの
+ほんきだとは　おもえんのだが</language>
+		<language name="JPN_KANJI" width="256">サブウェイマスターは　怪しくて
+おかしな　ヤツだったな……▼
+私は　あれが　彼の
+本気だとは　思えんのだが</language>
 	</row>
 
 	<row id="msg_c04r0111_policeman_3">
+		<comment>スーパー14連勝</comment>
 		<attribute name="キャラ指定">policeman
 おまわりさん</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１４れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　１４連勝
-おめでとう</language>
+		<language name="JPN" width="256">ポリスとしての　トレーニングも
+かねて　ちょうせん　してるのだ</language>
+		<language name="JPN_KANJI" width="256">ポリスとしての　トレーニングも
+かねて　挑戦　してるのだ</language>
 	</row>
 
 	<row id="msg_c04r0111_policeman_4">
+		<comment>スーパー56連勝</comment>
 		<attribute name="キャラ指定">policeman
 おまわりさん</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　５６れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　５６連勝
-おめでとう</language>
+		<language name="JPN" width="256">ごうほうで　あばれほうだい！
+らくえんじゃないか　ここは！</language>
+		<language name="JPN_KANJI" width="256">合法で　暴れ放題！
+楽園じゃないか　ここは！</language>
 	</row>
 
 	<row id="msg_c04r0111_oldman1_1">
+		<comment>ノーマル　７連勝</comment>
 		<attribute name="キャラ指定">oldman1
 げいじゅつか</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-７れんしょう　おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-７連勝　おめでとう</language>
+		<language name="JPN" width="256">たびは　まだ　はじまった　ばかり！
+おたがい　まけられませんな！</language>
+		<language name="JPN_KANJI" width="256">旅は　まだ　はじまった　ばかり！
+おたがい　負けられませんな！</language>
 	</row>
 
 	<row id="msg_c04r0111_oldman1_2">
+		<comment>ノーマル　14連勝</comment>
 		<attribute name="キャラ指定">oldman1
 げいじゅつか</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-１４れんしょう　おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-１４連勝　おめでとう</language>
+		<language name="JPN" width="256">えきの　ホームに　ひとりで　いると
+なんだか　ちょっと　せつなくなる▼
+ひとが　たびだつ　ばしょだから
+そういう　きおくを　おもいだすのか</language>
+		<language name="JPN_KANJI" width="256">駅の　ホームに　一人で　いると
+なんだか　ちょっと　切なくなる▼
+人が　旅立つ　場所だから
+そういう　記憶を　思い出すのか</language>
 	</row>
 
 	<row id="msg_c04r0111_oldman1_3">
+		<comment>ノーマル　終着駅</comment>
 		<attribute name="キャラ指定">oldman1
 げいじゅつか</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-サブウェイマスターを
-たおしたんだって？</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-サブウェイマスターを
-たおしたんだって？</language>
+		<language name="JPN" width="256">サブウェイマスター　なんぞ
+おちゃのこ　さいさい　じゃ！▼
+こんどは　スーパートレインで
+ひとあばれ　するかのう！</language>
+		<language name="JPN_KANJI" width="256">サブウェイマスター　なんぞ
+お茶の子　さいさい　じゃ！▼
+今度は　スーパートレインで
+ひと暴れ　するかのう！</language>
 	</row>
 
 	<row id="msg_c04r0111_oldman1_4">
+		<comment>スーパー　14連勝</comment>
 		<attribute name="キャラ指定">oldman1
 げいじゅつか</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１４れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　１４連勝
-おめでとう</language>
+		<language name="JPN" width="256">トレーナー　つよくなってきましたね
+わたし　なんだか　ふあんですよ……</language>
+		<language name="JPN_KANJI" width="256">トレーナー　強くなってきましたね
+私　なんだか　不安ですよ……</language>
 	</row>
 
-	<row id="msg_c04r0111_oldman1_5">
+	<row id="msg_c04r0111_oldman1_5" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>スーパー　２１連勝
+
+no.051
+ポイントアップをくれる人</comment>
 		<attribute name="キャラ指定">oldman1
 げいじゅつか</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２１れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　２１連勝
-おめでとう</language>
+		<language name="JPN" width="256">ミーの　ポケモンの　アビリティは
+ここまでの　ようデース……▼
+はたせなかった　ミーの　ドリーム……
+みずしらずの　ヤングな　ユーに▽
+たくしちゃうことに　しマース▼
+これは　その　あかし　デース
+うけとって　くださいデース……▼</language>
+		<language name="JPN_KANJI" width="256">ミーの　ポケモンの　アビリティは
+ここまでの　ようデース……▼
+果たせなかった　ミーの　ドリーム……
+見ず知らずの　ヤングな　ユーに▽
+託しちゃうことに　しマース▼
+これは　その　証　デース
+受け取って　くださいデース……▼</language>
+	</row>
+
+	<row id="msg_c04r0111_oldman1_5_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>スーパー　２１連勝
+
+no.051
+ポイントアップをくれる人
+
+
+アイテム入手後</comment>
+		<attribute name="キャラ指定">oldman1
+げいじゅつか</attribute>
+		<language name="JPN" width="256">ミーは　ふるさとに　かえって
+おとなしく　アートに▽
+はげむことに　しマース</language>
+		<language name="JPN_KANJI" width="256">ミーは　故郷に　帰って
+大人しく　アートに▽
+励むことに　しマース</language>
 	</row>
 
 	<row id="msg_c04r0111_oldman1_6">
+		<comment>スーパー　35連勝</comment>
 		<attribute name="キャラ指定">oldman1
 げいじゅつか</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　３５れんしょうだね</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　３５連勝だね</language>
+		<language name="JPN" width="256">むほほほ……▼
+まえに　チャレンジしたときの
+せいせきを　こえられたわい！</language>
+		<language name="JPN_KANJI" width="256">むほほほ……▼
+前に　チャレンジしたときの
+成績を　超えられたわい！</language>
 	</row>
 
 	<row id="msg_c04r0111_oldman1_7">
+		<comment>スーパー　65連勝</comment>
 		<attribute name="キャラ指定">oldman1
 げいじゅつか</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　６３れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　６３連勝
-おめでとう</language>
+		<language name="JPN" width="256">つよい　トレーナー　どうしの
+しょうぶは　げいじゅつてきで　ある</language>
+		<language name="JPN_KANJI" width="256">強い　トレーナー　同士の
+勝負は　芸術的で　ある</language>
 	</row>
 
 	<row id="msg_c04r0111_ol_1">
+		<comment>ノーマル　終着駅</comment>
 		<attribute name="キャラ指定">ol
 ＯＬ</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-サブウェイマスター
-つよかったね</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-サブウェイマスター
-つよかったね</language>
+		<language name="JPN" width="256">サブウェイマスター　ってさ
+マスターって　いう　わりには▽
+あんまり　つよく　なかったよね▼
+なんだか……▼
+まるで　しょうぶする　わたしたちの
+ちからを　はかってるみたい　だった</language>
+		<language name="JPN_KANJI" width="256">サブウェイマスター　ってさ
+マスターって　いう　わりには▽
+あんまり　強く　なかったよね▼
+なんだか……▼
+まるで　勝負する　私たちの
+力を　測ってるみたい　だった</language>
 	</row>
 
 	<row id="msg_c04r0111_ol_2">
+		<comment>スーパー56連勝</comment>
 		<attribute name="キャラ指定">ol
 ＯＬ</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　７連勝
-おめでとう</language>
+		<language name="JPN" width="256">さーてと！▼
+そろそろ　でんしゃに
+のっちゃおうかなー</language>
+		<language name="JPN_KANJI" width="256">さーてと！▼
+そろそろ　電車に
+乗っちゃおうかなー</language>
 	</row>
 
 	<row id="msg_c04r0111_ol_3">
+		<comment>スーパー21連勝</comment>
 		<attribute name="キャラ指定">ol
 ＯＬ</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２１れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　２１連勝
-おめでとう</language>
+		<language name="JPN" width="256">ちょっと　まっててね　ポケモンちゃん
+たーっぷり　しょうぶ　させたげるから</language>
+		<language name="JPN_KANJI" width="256">ちょっと　待っててね　ポケモンちゃん
+たーっぷり　勝負　させたげるから</language>
 	</row>
 
 	<row id="msg_c04r0111_ol_4">
+		<comment>スーパー56連勝</comment>
 		<attribute name="キャラ指定">ol
 ＯＬ</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　５６れんしょう
-ほんとうに　おめでとう！</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　５６連勝
-ほんとうに　おめでとう！</language>
+		<language name="JPN" width="256">ウップ！▼
+でんしゃに　よっちゃった……</language>
+		<language name="JPN_KANJI" width="256">ウップ！▼
+電車に　酔っちゃった……</language>
 	</row>
 
 	<row id="msg_c04r0111_railman_1">
+		<comment>ノーマル　終着駅
+</comment>
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-サブウェイマスター
-よわかったね</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-サブウェイマスター
-よわかったね</language>
+		<language name="JPN" width="256">オレたちの　ボスに　かったんでしょ？
+やるじゃないのさ！　キミ！▼
+で　そんな　イカした　キミは
+スーパートレインに▽
+ちょうせんする　しかくを▽
+てに　いれました！▼
+スーパートレインの　トレーナーは
+ほんとうに　つよいよ！▼
+バトルサブウェイの　しんずいを
+しりたいなら　ぜひとも▽
+チャレンジして　みてね！</language>
+		<language name="JPN_KANJI" width="256">オレたちの　ボスに　勝ったんでしょ？
+やるじゃないのさ！　キミ！▼
+で　そんな　イカした　キミは
+スーパートレインに▽
+挑戦する　資格を▽
+手に　いれました！▼
+スーパートレインの　トレーナーは
+本当に　強いよ！▼
+バトルサブウェイの　真髄を
+知りたいなら　是非とも▽
+チャレンジして　みてね！</language>
 	</row>
 
 	<row id="msg_c04r0111_railman_2">
+		<comment>スーパー14連勝</comment>
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１４れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　１４連勝
-おめでとう</language>
+		<language name="JPN" width="256">ダラダラと　うんてんしてる　より
+しょうぶで　ドキドキしたいねぇ</language>
+		<language name="JPN_KANJI" width="256">ダラダラと　運転してる　より
+勝負で　ドキドキしたいねぇ</language>
 	</row>
 
 	<row id="msg_c04r0111_railman_3">
+		<comment>スーパー21連勝</comment>
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２１れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　２１連勝
-おめでとう</language>
+		<language name="JPN" width="256">あなたは　どこから　きたんだい？
+そして　どこまで　いくのかな？</language>
+		<language name="JPN_KANJI" width="256">あなたは　どこから　きたんだい？
+そして　どこまで　いくのかな？</language>
 	</row>
 
 	<row id="msg_c04r0111_railman_4">
+		<comment>スーパー28連勝</comment>
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２８れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　２８連勝
-おめでとう</language>
+		<language name="JPN" width="256">てつどういんは　えきの　へいわと
+ちつじょを　まもるもので　あります▼
+ポイすてや　ホームでの　おおごえ
+がっきの　えんそうに　ポケモンの▽
+しょうぶなどは　かんべんで　あります</language>
+		<language name="JPN_KANJI" width="256">鉄道員は　駅の　平和と
+秩序を　守るもので　あります▼
+ポイ捨てや　ホームでの　大声
+楽器の　演奏に　ポケモンの▽
+勝負などは　勘弁で　あります</language>
 	</row>
 
 	<row id="msg_c04r0111_railman_5">
+		<comment>スーパー　８４連勝</comment>
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　３５れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　３５連勝
-おめでとう</language>
+		<language name="JPN" width="256">あなたは　どこから　きたんだい？
+そして　どこまで　いくのかな？</language>
+		<language name="JPN_KANJI" width="256">あなたは　どこから　きたんだい？
+そして　どこまで　いくのかな？</language>
 	</row>
 
 	<row id="msg_c04r0111_railman_6">
+		<comment>スーパー　８４連勝</comment>
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　８４れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　８４連勝
-おめでとう</language>
+		<language name="JPN" width="256">へたな　ギミックも　ない……▼
+むだな　どうぐも　つかえない……▼
+ただ　おのれと　ポケモンの
+じつりょくだけが　たより……▼
+すばらしいだろ　ここは……</language>
+		<language name="JPN_KANJI" width="256">下手な　ギミックも　ない……▼
+無駄な　道具も　使えない……▼
+ただ　己と　ポケモンの
+実力だけが　頼み……▼
+素晴らしいだろ　ここは……</language>
 	</row>
 
 	<row id="msg_c04r0111_railman_7">
+		<comment>スーパー　100連勝</comment>
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１００れんしょう
-とっぱ　おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　１００連勝
-とっぱ　おめでとう</language>
+		<language name="JPN" width="256">１００れんしょう　とっぱですか……▼
+それが　すべて　じつりょく　でしたら
+チャンピオンにも　ひってき　しますね</language>
+		<language name="JPN_KANJI" width="256">１００連勝　突破ですか……▼
+それが　すべて　実力　でしたら
+チャンピオンにも　匹敵　しますね</language>
 	</row>
 
 	<row id="msg_c04r0111_boy4_1">
+		<comment>スーパー　7連勝</comment>
 		<attribute name="キャラ指定">boy4
 おぼっちゃま</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　７連勝
-おめでとう</language>
+		<language name="JPN" width="256">スーパートレインの　トレーナーの
+つよさは　そうぞういじょう　だぜ</language>
+		<language name="JPN_KANJI" width="256">スーパートレインの　トレーナーの
+強さは　想像以上　だぜ</language>
 	</row>
 
 	<row id="msg_c04r0111_girl4_1">
+		<comment>ノーマル　7連勝</comment>
 		<attribute name="キャラ指定">girl4
 おじょうさま</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-７れんしょう　おめでとう　ですわ</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-７連勝　おめでとう　ですわ</language>
+		<language name="JPN" width="256">わたくし　あじわってしまったの……▼
+しょうぶの　かいかんを……▼
+いけないわ……▼
+やばんだわ……▼
+でも　このまま　しょうぶの
+みちに　はまって　しまいそう……</language>
+		<language name="JPN_KANJI" width="256">わたくし　味わってしまったの……▼
+勝負の　快感を……▼
+いけないわ……▼
+野蛮だわ……▼
+でも　このまま　勝負の
+道に　はまって　しまいそう……</language>
 	</row>
 
 	<row id="msg_c04r0111_pilot_1">
 		<attribute name="キャラ指定">pilot
 パイロット</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-パイロットも　でんしゃに
-のったり　するですよ</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-パイロットも　でんしゃに
-のったり　するですよ</language>
+		<language name="JPN" width="256">まいど！　ワシは　イッシュいちの
+スゴうで　てんさい　パイロットや！▼
+ここでも　いっちゃく　とったるで！</language>
+		<language name="JPN_KANJI" width="256">毎度！　ワシは　イッシュいちの
+スゴ腕　天才パイロットや！▼
+ここでも　一着　取ったるで！</language>
 	</row>
 
 	<row id="msg_c04r0111_trainerm_1">
+		<comment>スーパー42連勝</comment>
 		<attribute name="キャラ指定">trainerm
 エリートトレーナー♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-４２れんしょう　エリートトレーナーは
-このあたりから　でてきますよ</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-４２連勝　エリートトレーナーは
-このあたりから　でてきますよ</language>
+		<language name="JPN" width="256">オレみたいな　エリートの　すがたが
+チラホラ　みえてきたな……▼
+ここから　さきの　しょうぶは
+かんたんには　いきそうにないな</language>
+		<language name="JPN_KANJI" width="256">オレみたいな　エリートの　姿が
+チラホラ　見えてきたな……▼
+ここから　先の　勝負は
+簡単には　いきそうにないな</language>
 	</row>
 
 	<row id="msg_c04r0111_trainerm_2">
+		<comment>スーパー49連勝</comment>
 		<attribute name="キャラ指定">trainerm
 エリートトレーナー♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　４９れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　４９連勝
-おめでとう</language>
+		<language name="JPN" width="256">エリートの　ワシと　いえども
+そろそろ　つらくなってきたぜよ</language>
+		<language name="JPN_KANJI" width="256">エリートの　ワシと　いえども
+そろそろ　辛くなってきたぜよ</language>
 	</row>
 
 	<row id="msg_c04r0111_trainerm_3">
+		<comment>スーパー　63連勝</comment>
 		<attribute name="キャラ指定">trainerm
 エリートトレーナー♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　６３れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　６３連勝
-おめでとう</language>
+		<language name="JPN" width="256">よお　ちょうしは　どうだい？
+ボクは　まだまだ　いけるぜ！</language>
+		<language name="JPN_KANJI" width="256">よお　調子は　どうだい？
+ボクは　まだまだ　いけるぜ！</language>
 	</row>
 
 	<row id="msg_c04r0111_trainerm_4">
+		<comment>スーパー　77連勝</comment>
 		<attribute name="キャラ指定">trainerm
 エリートトレーナー♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７７れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　７７連勝
-おめでとう</language>
+		<language name="JPN" width="256">やったぜオイラ！　７７れんしょう！
+なんとなく　えんぎのいい　すうじ！</language>
+		<language name="JPN_KANJI" width="256">やったぜオイラ！　７７連勝！
+なんとなく　縁起のいい　数字！</language>
 	</row>
 
 	<row id="msg_c04r0111_trainerm_5">
+		<comment>スーパー　300連勝</comment>
 		<attribute name="キャラ指定">trainerm
 エリートトレーナー♂</attribute>
 		<language name="JPN" width="256">バトルサブウェイの
@@ -1167,118 +1183,190 @@
 おめでとう！！！</language>
 	</row>
 
-	<row id="msg_c04r0111_trainerw_1">
+	<row id="msg_c04r0111_trainerw_1" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>スーパー　28連勝
+
+
+no.050
+ふしぎなあめをくれる人</comment>
 		<attribute name="キャラ指定">trainerw
 エリートトレーナー♀</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２８れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　２８連勝
-おめでとう</language>
+		<language name="JPN" width="256">あら　よわそうな　トレーナー……▼
+アナタと　しょうぶ　したところで
+たいくつして　しまいそう……▼
+これを　あげるから　すこしは
+つよくなりなさいな▼</language>
+		<language name="JPN_KANJI" width="256">あら　弱そうな　トレーナー……▼
+アナタと　勝負　したところで
+退屈して　しまいそう……▼
+これを　あげるから　少しは
+強くなりなさいな▼</language>
+	</row>
+
+	<row id="msg_c04r0111_trainerw_1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>スーパー　28連勝
+
+no.050
+ふしぎなあめをくれる人
+
+アイテム入手後</comment>
+		<language name="JPN" width="256">わたしは　つよい　あいてにしか
+きょうみが　ないの……▼
+アナタも　つよくなったら
+しょうぶして　あげてもいいわ</language>
+		<language name="JPN_KANJI" width="256">わたしは　強い　相手にしか
+興味が　ないの……▼
+アナタも　強くなったら
+勝負して　あげてもいいわ</language>
 	</row>
 
 	<row id="msg_c04r0111_trainerw_2">
+		<comment>スーパー　42連勝</comment>
 		<attribute name="キャラ指定">trainerw
 エリートトレーナー♀</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　４２れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　４２連勝
-おめでとう</language>
+		<language name="JPN" width="256">ホームから　ひとが　へってきた……
+それだけ　バトルサブウェイを▽
+かちぬくのは　きびしいって　ことか</language>
+		<language name="JPN_KANJI" width="256">ホームから　人が　へってきた……
+それだけ　バトルサブウェイを▽
+勝ち抜くのは　厳しいって　ことか</language>
 	</row>
 
 	<row id="msg_c04r0111_trainerw_3">
+		<comment>スーパー　56連勝</comment>
 		<attribute name="キャラ指定">trainerw
 エリートトレーナー♀</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　５６れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　５６連勝
-おめでとう</language>
+		<language name="JPN" width="256">……　……　……　……　……▼
+え？　なんですか？　アナタ？▼
+わたし　つぎの　しょうぶに　むけて
+せんぽうを　ねっている　ところなの▼
+もうしわけない　ですけれど
+はなしかけないで　いただけます？</language>
+		<language name="JPN_KANJI" width="256">……　……　……　……　……▼
+え？　なんですか？　アナタ？▼
+私　次の　勝負に　向けて
+戦法を　練っている　ところなの▼
+申し訳ない　ですけれど
+話しかけないで　いただけます？</language>
 	</row>
 
 	<row id="msg_c04r0111_trainerw_4">
+		<comment>スーパー　91連勝</comment>
 		<attribute name="キャラ指定">trainerw
 エリートトレーナー♀</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　９１れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　９１連勝
-おめでとう</language>
+		<language name="JPN" width="256">９１れんしょうなんて　とうぜんの
+けっかでしか　ありませんわ▼
+わたしの　えいこうの　きろくは
+まだまだ　つづきますのよ</language>
+		<language name="JPN_KANJI" width="256">９１連勝なんて　当然の
+結果でしか　ありませんわ▼
+私の　栄光の　記録は
+まだまだ　続きますのよ</language>
 	</row>
 
-	<row id="msg_c04r0111_trainerw_5">
+	<row id="msg_c04r0111_trainerw_5" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>スーパー　203連勝
+
+no.207
+スターの実をくれる人</comment>
 		<attribute name="キャラ指定">trainerw
 エリートトレーナー♀</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２００しょうとっぱ
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　２００しょうとっぱ
-おめでとう</language>
+		<language name="JPN" width="256">あなた……
+わたしと　おなじめを　してる▼
+たたかうことが　すきで　すきで……▼
+いいえ……　……▼
+たたかいだけが　いきがい……▼
+わたしと　おんなじ　タイプね……
+だから……　あなたに　これ　あげる▼</language>
+		<language name="JPN_KANJI" width="256">あなた……
+私と　同じ目を　してるわ▼
+戦うことが　好きで　好きで……▼
+いいえ……　……▼
+戦いだけが　生きがい……▼
+私と　同じ　タイプね……
+だから……　あなたに　これ　あげる▼</language>
+	</row>
+
+	<row id="msg_c04r0111_trainerw_5_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>スーパー　203連勝
+
+no.207
+スターの実をくれる人
+
+アイテム入手後</comment>
+		<attribute name="キャラ指定">trainerw
+エリートトレーナー♀</attribute>
+		<language name="JPN" width="256">あなたも　たたかい　つづけるでしょ？
+だって　わたしたちは▽
+そういう　にんげん　だものね……</language>
+		<language name="JPN_KANJI" width="256">あなたも　戦い　続けるでしょ？
+だって　わたしたちは▽
+そういう　人間　だものね……</language>
 	</row>
 
 	<row id="msg_c04r0111_badman_1">
+		<comment>７連勝</comment>
 		<attribute name="キャラ指定">badman
 スキンヘッズ</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-７れんしょう　おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-７連勝　おめでとう</language>
+		<language name="JPN" width="256">ここで　スゲー　せいせき　のこして
+ビッグな　スターに　なってやるぜ！</language>
+		<language name="JPN_KANJI" width="256">ここで　スゲー　成績　残して
+ビッグな　スターに　なってやるぜ！</language>
 	</row>
 
 	<row id="msg_c04r0111_badman_2">
+		<comment>14連勝</comment>
 		<attribute name="キャラ指定">badman
 スキンヘッズ</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-１４れんしょう　おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-１４連勝　おめでとう</language>
+		<language name="JPN" width="256">よお　ちょうしは　どうだい？
+オレは　まだまだ　いけるぜ！</language>
+		<language name="JPN_KANJI" width="256">よお　調子は　どうだい？
+オレは　まだまだ　いけるぜ！</language>
 	</row>
 
 	<row id="msg_c04r0111_badman_3">
+		<comment>スーパー　１４連勝</comment>
 		<attribute name="キャラ指定">badman
 スキンヘッズ</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１４れんしょう
-やるじゃん</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　１４連勝
-やるじゃん</language>
+		<language name="JPN" width="256">たかが　ポケモン　されど　ポケモン
+ポケモンは　マジで　おくが　ふかいぜ</language>
+		<language name="JPN_KANJI" width="256">たかが　ポケモン　されど　ポケモン
+ポケモンは　マジで　奥が　深いぜ</language>
 	</row>
 
-	<row id="msg_c04r0111_cleaningm_1">
+	<row id="msg_c04r0111_cleaningm_1" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>ノーマル　２１連勝
+
+no.051
+ポイントアップをくれる人</comment>
 		<attribute name="キャラ指定">cleaningm
 せいそういん</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-２１れんしょう　おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-２１連勝　おめでとう</language>
+		<language name="JPN" width="256">そうじ　してたら　ひろったのよ
+おめーさん　よかったら　もってきな▼</language>
+		<language name="JPN_KANJI" width="256">掃除　してたら　拾ったのよ
+おめーさん　よかったら　持っていきな▼</language>
+	</row>
+
+	<row id="msg_c04r0111_cleaningm_1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>ノーマル ２１連勝
+
+no.051
+ポイントアップをくれる人
+アイテム入手後</comment>
+		<attribute name="キャラ指定">cleaningm
+せいそういん</attribute>
+		<language name="JPN" width="256">あー　おれいは　いらんからな
+どうせ　ゴミばこに　あったもんだ▼
+ちかごろは　ものを　かんたんに
+すててく　やつが　おおくて　いかんわ</language>
+		<language name="JPN_KANJI" width="256">あー　お礼は　いらんからな
+どうせ　ゴミ箱に　あったもんだ▼
+近ごろは　ものを　簡単に
+捨ててく　やつが　多くて　いかんわ</language>
 	</row>
 
 	<row id="msg_c04r0111_cleaningm_2">
+		<comment>スーパー　14連勝</comment>
 		<attribute name="キャラ指定">cleaningm
 せいそういん</attribute>
 		<language name="JPN" width="256">バトルサブウェイの
@@ -1292,6 +1380,7 @@
 	</row>
 
 	<row id="msg_c04r0111_cleaningm_3">
+		<comment>スーパー　28連勝</comment>
 		<attribute name="キャラ指定">cleaningm
 せいそういん</attribute>
 		<language name="JPN" width="256">バトルサブウェイの
@@ -1305,6 +1394,7 @@
 	</row>
 
 	<row id="msg_c04r0111_cleaningm_4">
+		<comment>スーパー　1000連勝</comment>
 		<attribute name="キャラ指定">cleaningm
 せいそういん</attribute>
 		<language name="JPN" width="256">バトルサブウェイの
@@ -1316,45 +1406,43 @@
 	</row>
 
 	<row id="msg_c04r0111_veteranm_1">
+		<comment>スーパー28連勝</comment>
 		<attribute name="キャラ指定">veteranm
 ベテラントレーナー♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２８れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　２８連勝
-おめでとう</language>
+		<language name="JPN" width="256">ベテランの　わたしが　あんな
+ピンチに　おちいるとは……▼
+ここの　トレーナーは　いったい
+どこで　しゅぎょう　している？</language>
+		<language name="JPN_KANJI" width="256">ベテランの　私が　あんな
+ピンチに　陥るとは……▼
+ここの　トレーナーは　一体
+どこで　修行　している？</language>
 	</row>
 
 	<row id="msg_c04r0111_veteranm_2">
+		<comment>スーパー42連勝</comment>
 		<attribute name="キャラ指定">veteranm
 ベテラントレーナー♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　４２れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　４２連勝
-おめでとう</language>
+		<language name="JPN" width="256">どうだい？　トレーナーさんよ
+そろそろ　しんどくなって▽
+きたんじゃねーのか？</language>
+		<language name="JPN_KANJI" width="256">どうだい？　トレーナーさんよ
+そろそろ　しんどくなって▽
+きたんじゃねーのか？</language>
 	</row>
 
 	<row id="msg_c04r0111_veteranm_3">
+		<comment>スーパー56連勝</comment>
 		<attribute name="キャラ指定">veteranm
 ベテラントレーナー♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　５６れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　５６連勝
-おめでとう</language>
+		<language name="JPN" width="256">アンタ　つよいじゃねえか……
+ようチェック　しとくぜ……</language>
+		<language name="JPN_KANJI" width="256">アンタ　強いじゃねえか……
+要チェック　しとくぜ……</language>
 	</row>
 
 	<row id="msg_c04r0111_veteranm_4">
+		<comment>スーパー　70連勝</comment>
 		<attribute name="キャラ指定">veteranm
 ベテラントレーナー♂</attribute>
 		<language name="JPN" width="256">バトルサブウェイの
@@ -1368,32 +1456,35 @@
 	</row>
 
 	<row id="msg_c04r0111_veteranm_5">
+		<comment>スーパー84連勝</comment>
 		<attribute name="キャラ指定">veteranm
 ベテラントレーナー♂</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　８４れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　８４連勝
-おめでとう</language>
+		<language name="JPN" width="256">ひとが　すくなくなったな……▼
+しかし　ここに　のこっている
+れんちゅうは　どいつも　こいつも▽
+しんの　つわものさ……</language>
+		<language name="JPN_KANJI" width="256">人が　少なくなったな……▼
+しかし　ここに　残っている
+連中は　どいつも　こいつも▽
+真の　つわものさ……</language>
 	</row>
 
 	<row id="msg_c04r0111_veteranw_1">
+		<comment>スーパー　28連勝</comment>
 		<attribute name="キャラ指定">veteranw
 ベテラントレーナー♀</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　３５れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　３５連勝
-おめでとう</language>
+		<language name="JPN" width="256">ベテランだって　ゆだんすれば
+ようちえんじに　だって　まける▼
+ポケモンしょうぶに
+ゆだんは　きんもつなのよ</language>
+		<language name="JPN_KANJI" width="256">ベテランだって　油断すれば
+幼稚園児に　だって　負ける▼
+ポケモン勝負に
+油断は　禁物なのよ</language>
 	</row>
 
 	<row id="msg_c04r0111_veteranw_2">
+		<comment>スーパー　49連勝</comment>
 		<attribute name="キャラ指定">veteranw
 ベテラントレーナー♀</attribute>
 		<language name="JPN" width="256">バトルサブウェイの
@@ -1407,181 +1498,208 @@
 	</row>
 
 	<row id="msg_c04r0111_veteranw_3">
+		<comment>スーパー　７０連勝</comment>
 		<attribute name="キャラ指定">veteranw
 ベテラントレーナー♀</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７０れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　７０連勝
-おめでとう</language>
+		<language name="JPN" width="256">ポケモンしょうぶが　すきすきで
+たまらない　って　かおね　キミ▼
+いまから　こんなに　しょうぶに
+どっぷり　はまってる　だなんて……▼
+ふふ……▼
+しょうらいが　たのしみね……</language>
+		<language name="JPN_KANJI" width="256">ポケモン勝負が　好きで好きで
+たまらない　って　顔ね　キミ▼
+今から　こんなに　勝負に
+どっぷり　はまってる　だなんて……▼
+ふふ……▼
+将来が　楽しみね……</language>
 	</row>
 
 	<row id="msg_c04r0111_veteranw_4">
+		<comment>スーパー　91連勝</comment>
 		<attribute name="キャラ指定">veteranw
 ベテラントレーナー♀</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　９１れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　９１連勝
-おめでとう</language>
+		<language name="JPN" width="256">おれも　おまえも　９１れんしょう▼
+どちらが　さきに　１００れんしょうを
+たっせい　できるんだろうな？</language>
+		<language name="JPN_KANJI" width="256">おれも　おまえも　９１連勝▼
+どちらが　先に　１００連勝を
+達成　できるんだろうな？</language>
 	</row>
 
 	<row id="msg_c04r0111_veteranw_5">
+		<comment>スーパー　１４７連勝</comment>
 		<attribute name="キャラ指定">veteranw
 ベテラントレーナー♀</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１４７れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　１４７連勝
-おめでとう</language>
+		<language name="JPN" width="256">きが　つきゃ　ずいぶん
+とおくまで　きちまったな</language>
+		<language name="JPN_KANJI" width="256">気が　つきゃ　ずいぶん
+遠くまで　きちまったな</language>
 	</row>
 
 	<row id="msg_c04r0111_lady_1">
+		<comment>ノーマル　終着駅
+</comment>
 		<attribute name="キャラ指定">lady
 マダム</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-このえきは　しゅうてんですよ</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-このえきは　しゅうてんですよ</language>
+		<language name="JPN" width="256">ここが　しゅうちゃくえき……▼
+たびの　おわりは　はやいわね
+なんだか　かえりたくないわ</language>
+		<language name="JPN_KANJI" width="256">ここが　終着駅……▼
+旅の　終わりは　早いわね
+なんだか　帰りたくないわ</language>
 	</row>
 
 	<row id="msg_c04r0111_lady_2">
+		<comment>スーパー　14連勝</comment>
 		<attribute name="キャラ指定">lady
 マダム</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１４れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　１４連勝
-おめでとう</language>
+		<language name="JPN" width="256">ここまで　きた　あなたは
+１４れんしょう　ですわ▼
+つまり　わたくしの　ねんれいと
+お　ん　な　じ　かずってこと▼
+まだまだ　いけますよね
+オホホホ……</language>
+		<language name="JPN_KANJI" width="256">ここまで　きた　あなたは
+１４連勝　ですわ▼
+つまり　わたくしの　年齢と
+お　ん　な　じ　数ってこと▼
+まだまだ　いけますよね
+オホホホ……</language>
 	</row>
 
 	<row id="msg_c04r0111_lady_3">
+		<comment>スーパー　35連勝</comment>
 		<attribute name="キャラ指定">lady
 マダム</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　３５れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　３５連勝
-おめでとう</language>
+		<language name="JPN" width="256">まだまだ　げんえき　ってこと
+おもいしらせて　あげますわよ</language>
+		<language name="JPN_KANJI" width="256">まだまだ　現役　ってこと
+思い知らせて　あげますわよ</language>
 	</row>
 
 	<row id="msg_c04r0111_gentleman_1">
+		<comment>ノーマル　終着駅</comment>
 		<attribute name="キャラ指定">gentleman
 ジェントルマン</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-このえきは　しゅうてんですよ</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-このえきは　しゅうてんですよ</language>
+		<language name="JPN" width="256">ここが　しゅうちゃくえき　か……▼
+ポケモンしょうぶの　たびも
+ひとまず　おわりと　いうことかな</language>
+		<language name="JPN_KANJI" width="256">ここが　終着駅　か……▼
+ポケモン勝負の　旅も
+ひとまず　終わりと　いうことかな</language>
 	</row>
 
 	<row id="msg_c04r0111_gentleman_2">
+		<comment>スーパー　21連勝</comment>
 		<attribute name="キャラ指定">gentleman
 ジェントルマン</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２１れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　２１連勝
-おめでとう</language>
+		<language name="JPN" width="256">フウ……▼
+おいた　この　みに　ながたびは
+なかなか　こたえますな</language>
+		<language name="JPN_KANJI" width="256">フウ……▼
+老いた　この身に　長旅は
+なかなか　堪えますな</language>
 	</row>
 
 	<row id="msg_c04r0111_gentleman_3">
+		<comment>スーパー　28連勝</comment>
 		<attribute name="キャラ指定">gentleman
 ジェントルマン</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２８れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　２８連勝
-おめでとう</language>
+		<language name="JPN" width="256">ウム　２８れんしょう　か……▼
+こんかいは　このいきおいで
+つきすすみたい　ところですな</language>
+		<language name="JPN_KANJI" width="256">ウム　２８連勝　か……▼
+今回は　この勢いで
+突き進みたい　ところですな</language>
 	</row>
 
 	<row id="msg_c04r0111_gentleman_4">
+		<comment>スーパー　49連勝</comment>
 		<attribute name="キャラ指定">gentleman
 ジェントルマン</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　４９れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　４９連勝
-おめでとう</language>
+		<language name="JPN" width="256">アナタモ　サブウェイマスターニ
+カッタノデスネ！▼
+イツカ　イッショニ
+ショウブ　シタイモノデス</language>
+		<language name="JPN_KANJI" width="256">アナタモ　サブウェイマスターニ
+勝ッタノデスネ！▼
+イツカ　一緒ニ
+勝負　シタイモノデス</language>
 	</row>
 
 	<row id="msg_c04r0111_businessman_1">
+		<comment>スーパー　21連勝</comment>
 		<attribute name="キャラ指定">businessman
 ビジネスマン</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２１れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　２１連勝
-おめでとう</language>
+		<language name="JPN" width="256">モンスターボールが　ぷるぷると
+ふるえ　ちぢみあがっておる！▼
+きさまと　ポケモンの　じつりょく
+そうとうの　ものと　みた！</language>
+		<language name="JPN_KANJI" width="256">モンスターボールが　ぷるぷると
+震え　縮み上がっておる！▼
+貴様と　ポケモンの　実力
+相当の　ものと　みた！</language>
 	</row>
 
 	<row id="msg_c04r0111_businessman_2">
+		<comment>スーパー　28連勝</comment>
 		<attribute name="キャラ指定">businessman
 ビジネスマン</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２８れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　２８連勝
-おめでとう</language>
+		<language name="JPN" width="256">しょうぶに　かつのは　きもちいいが
+ずいぶん　とおくに　きちまった……▼
+あすの　しごと　まにあうかな……</language>
+		<language name="JPN_KANJI" width="256">勝負に　勝つのは　気持いいが
+ずいぶん　遠くに　きちまった……▼
+明日の　仕事　まにあうかな……</language>
 	</row>
 
 	<row id="msg_c04r0111_businessman_3">
+		<comment>スーパー　49連勝</comment>
 		<attribute name="キャラ指定">businessman
 ビジネスマン</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　４９れんしょう
-おめでとう</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　４９連勝
-おめでとう</language>
+		<language name="JPN" width="256">ついに　４９れんしょうか……▼
+このくらい　しごとも　できれば
+しゅっせ　できるんだろうなあ</language>
+		<language name="JPN_KANJI" width="256">ついに　４９連勝か……▼
+このくらい　仕事も　できれば
+出世　できるんだろうなあ</language>
 	</row>
 
-	<row id="msg_c04r0111_businessman_4">
+	<row id="msg_c04r0111_businessman_4" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>♂
+スーパー　105連勝
+
+no.206
+サンのみをくれる人</comment>
 		<attribute name="キャラ指定">businessman
 ビジネスマン</attribute>
-		<language name="JPN" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１００れんしょう
-とっぱ　すごい</language>
-		<language name="JPN_KANJI" width="256">バトルサブウェイの
-仮メッセージ　ですよ▼
-スーパー　１００連勝
-とっぱ　すごい</language>
+		<language name="JPN" width="256">オレも　アンタも　１００れんしょう
+オレもヒマだが　アンタも　ヒマねえ▼
+そんな　どうるいの　アンタに
+おちかづきの　きねんだ　とっとけよ▼</language>
+		<language name="JPN_KANJI" width="256">オレも　アンタも　１００連勝
+オレもヒマだが　アンタも　ヒマねえ▼
+そんな　同類の　アンタに
+お近づきの　記念だ　取っとけよ</language>
+	</row>
+
+	<row id="msg_c04r0111_businessman_4_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<comment>♂
+スーパー　105連勝
+
+no.206
+サンのみをくれる人
+
+アイテム入手後</comment>
+		<attribute name="キャラ指定">businessman
+ビジネスマン</attribute>
+		<language name="JPN" width="256">そいつは　きちょうな　きのみらしいが
+オレは　ツマミに　するくらいしか▽
+つかいかた　わかんねえからな</language>
+		<language name="JPN_KANJI" width="256">そいつは　貴重な　木の実らしいが
+オレは　ツマミに　するくらいしか▽
+使い方　わかんねえからな</language>
 	</row>
 
 	<flowchart-group-list>
