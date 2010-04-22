@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T19:22:34"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T21:50:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -522,13 +522,13 @@
 		<language name="JPN" width="256">チェレン『タウンマップを　つかえば
 じぶんが　どこにいるか　わかる……▽
 これは　うれしいね▼
-じゃ　１ばんどうろに　いくよ
-はかせが　まってるから▼</language>
+じゃ　１ばんどうろに　いこう
+はかせが　まってる▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『タウンマップを　使えば
 自分が　どこにいるか　わかる……▽
 これは　うれしいね▼
-じゃ　１番道路に　行くよ
-博士が　待ってるから▼</language>
+じゃ　１番道路に　行こう
+博士が　待ってる▼</language>
 	</row>
 
 	<row id="msg_t01_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -977,7 +977,7 @@ hakase1_end_05
 マイペースは　変わらないね　ベルは▼</language>
 	</row>
 
-	<row id="msg_t01_black_end_06" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01_black_end_06" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・クリア後
 ・メッセージ表示後、ベルと反対側から
@@ -994,7 +994,7 @@ hakase1_end_05
 みつけるかも　しれないしね▼
 ということで　[1:00:トレーナー名:0]
 どこかで　さいかい　したら▽
-そのときは　しょうぶ　しようよ！▼</language>
+そのときは　しょうぶ　しよう！▼</language>
 		<language name="JPN_KANJI" width="256">ぼくは　もう一度
 １番道路から　順番に▽
 イッシュを　巡っていく　つもりさ▼
@@ -1004,7 +1004,7 @@ hakase1_end_05
 みつけるかも　しれないしね▼
 ということで　[1:00:トレーナー名:0]
 どこかで　再会したら▽
-そのときは　勝負しようよ！▼</language>
+そのときは　勝負しよう！▼</language>
 	</row>
 
 	<flowchart-group-list>

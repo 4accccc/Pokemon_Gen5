@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T21:13:16"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T22:03:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -440,14 +440,18 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">ポケモンは　その　はこのなかで
-ぼくたちを　まっているんだね▼
-[1:00:トレーナー名:0]
-さっそく　あけてくれるかな</language>
-		<language name="JPN_KANJI" width="256">ポケモンは　その　箱の中に
-ぼくたちを　待っているんだね▼
-[1:00:トレーナー名:0]
-さっそく　開けてくれるかな</language>
+		<language name="JPN" width="256">その　プレゼントボックスの　なか
+ポケモンは　ぼくたちを　まっている▼
+さあ　[1:00:トレーナー名:0]
+いっぽ　ふみだして▽
+プレゼントボックスを　しらべてよ▽
+はやく　ポケモンと　あいたいから！</language>
+		<language name="JPN_KANJI" width="256">その　プレゼントボックスの　中
+ポケモンは　ぼくたちを　待っている▼
+さあ　[1:00:トレーナー名:0]
+一歩　踏みだして▽
+プレゼントボックスを　調べてよ▽
+はやく　ポケモンと　会いたいから！</language>
 	</row>
 
 	<row id="msg_t01r0102_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -456,10 +460,10 @@
 ・表示後、主人公を一歩戻す処理</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『きみが　えらんでくれないと
-ぼくたちも　ポケモンを　えらべないよ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『きみが　選んでくれないと
-ぼくたちも　ポケモンを　選べないよ▼</language>
+		<language name="JPN" width="256">チェレン『プレゼントボックスを
+しらべずに　どこに　いくつもり？▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『プレゼントボックスを
+調べずに　どこに　行くつもり？▼</language>
 	</row>
 
 	<row id="msg_t01r0102_black_04a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -467,14 +471,14 @@
 ・black_03a表示後、プレゼントボックスを調べるまで</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『はこを　あけてくれると
-ぼくたちも　うれしいよ▼
-だって　どんなポケモンが　いるか
-このままだと　わからないからね</language>
-		<language name="JPN_KANJI" width="256">チェレン『箱を　開けてくれると
-ぼくたちも　うれしいよ▼
-だって　どんなポケモンが　いるか
-このままだと　わからないからね</language>
+		<language name="JPN" width="256">チェレン『プレゼントボックスを
+しらべて　あけてくれるかな▼
+ポケモンだって　はやく
+ぼくたちと　であいたいはずだよ</language>
+		<language name="JPN_KANJI" width="256">チェレン『プレゼントボックスを
+調べて　開けてくれるかな▼
+ポケモンだって　はやく
+ぼくたちと　出会いたいはずだよ</language>
 	</row>
 
 	<row id="msg_t01r0102_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -637,7 +641,7 @@
 チェレンは　このこ　ね！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『じゃ！
 あたし　この　ポケモン！▽
-チェレンは　この子　ね！▼</language>
+チェレンは　このコ　ね！▼</language>
 	</row>
 
 	<row id="msg_t01r0102_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -700,7 +704,7 @@
 というわけで　[1:00:トレーナー名:0]！
 ポケモンしょうぶ　はじめようよ！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『だいじょーぶ だって
-まだ　このこたち　弱いんでしょ？▽
+まだ　このコたち　弱いんでしょ？▽
 戦わせて　育ててあげないと▼
 というわけで　[1:00:トレーナー名:0]！
 ポケモン勝負　はじめようよ！▼</language>
@@ -965,7 +969,7 @@
 じょうずに　たたかえるでしょ！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『ねえねえ！　チェレンも
 ポケモン勝負　してみたら？▼
-くわしいから　あたしのように
+詳しいから　あたしのように
 しっちゃかめっちゃかに　することなく▽
 上手に　戦えるでしょ！▼</language>
 	</row>
