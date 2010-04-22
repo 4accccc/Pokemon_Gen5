@@ -81,6 +81,8 @@ const CI_SE_TBL Tbl15[] = {
 };
 
 const CI_SE_TBL Tbl16[] = {
+	{ SEQ_SE_FLD_166, 1 },
+	{ SEQ_SE_SYS_89, 38 },
 	{ CI_SE_NONE, 0 },
 };
 
