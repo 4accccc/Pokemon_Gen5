@@ -747,6 +747,8 @@ void BTL_SETUP_AIMulti_Comm( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
   setup_common_CommTrainer( dst, gameData, BTL_RULE_DOUBLE, BTL_MULTIMODE_PP_AA,
       netHandle, commMode, commPos, heapID );
 
+  dst->competitor = BTL_COMPETITOR_TRAINER;
+
   setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY1, &dst->party[ BTL_CLIENT_ENEMY1 ], tr_id1, heapID );
   setup_trainer_param( dst, gameData, BTL_CLIENT_ENEMY2, &dst->party[ BTL_CLIENT_ENEMY2 ], tr_id2, heapID );
 }
@@ -848,7 +850,8 @@ void BTL_SETUP_QuitForRecordPlay( BATTLE_SETUP_PARAM* bsp )
  */
 void BTL_SETUP_SetSubwayMode( BATTLE_SETUP_PARAM* dst )
 {
-  if( dst->competitor == BTL_COMPETITOR_TRAINER ){
+  if( dst->competitor == BTL_COMPETITOR_TRAINER )
+  {
     dst->competitor = BTL_COMPETITOR_SUBWAY;
   }
 }

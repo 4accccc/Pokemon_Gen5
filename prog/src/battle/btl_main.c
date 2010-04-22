@@ -1496,6 +1496,7 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
       (*seq)++;
     }
     break;
+  // マルチ対戦でAIトレーナーデータの送信（Server->Client）が必要
   case 5:
     BTL_NET_TimingSyncStart( BTL_NET_TIMING_NOTIFY_AI_TRAINER_1 + wk->MultiAIDataSeq );
     (*seq)++;
@@ -1506,12 +1507,14 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
     }
     break;
   case 7:
+    BTL_N_Printf( DBGSTR_MAIN_MultiAITrainer_SeqStart, wk->MultiAIDataSeq );
     wk->MultiAIClientID = (wk->MultiAIDataSeq == 0) ? BTL_CLIENT_ENEMY1 : BTL_CLIENT_ENEMY2;
     if( wk->ImServer )
     {
       if( !BTL_NET_StartNotify_AI_TrainerData(sp->tr_data[ wk->MultiAIClientID ]) ){
         break;
       }
+      BTL_N_Printf( DBGSTR_MAIN_MultiAITrainer_SendDone, wk->MultiAIClientID );
     }
     (*seq)++;
     /* fallthru */
@@ -2018,6 +2021,7 @@ BOOL BTL_MAIN_IsIrekaeMode( const BTL_MAIN_MODULE* wk )
 {
   if( (BTL_MAIN_GetCompetitor(wk) == BTL_COMPETITOR_TRAINER)
   &&  (BTL_MAIN_GetRule(wk) == BTL_RULE_SINGLE)
+  &&  (BTL_MAIN_GetCommMode(wk) == BTL_COMM_NONE)
   &&  (CONFIG_GetBattleRule(wk->setupParam->configData) == BATTLERULE_IREKAE)
   ){
     return TRUE;
@@ -2305,7 +2309,7 @@ GAMEDATA* BTL_MAIN_GetGameData( const BTL_MAIN_MODULE* wk )
 }
 //=============================================================================================
 /**
- *
+ *  図鑑「見た」フラグセット
  *
  * @param   wk
  * @param   clientID
@@ -2315,8 +2319,7 @@ GAMEDATA* BTL_MAIN_GetGameData( const BTL_MAIN_MODULE* wk )
 void BTL_MAIN_RegisterZukanSeeFlag( const BTL_MAIN_MODULE* wk, u8 clientID, const BTL_POKEPARAM* bpp )
 {
   BtlCompetitor competitor = BTL_MAIN_GetCompetitor( wk );
-  if( (competitor == BTL_COMPETITOR_WILD)
-  ||  (competitor == BTL_COMPETITOR_TRAINER)
+  if( ((competitor == BTL_COMPETITOR_WILD) || (competitor == BTL_COMPETITOR_TRAINER))
   ){
     if( clientID != BTL_CLIENT_PLAYER )
     {

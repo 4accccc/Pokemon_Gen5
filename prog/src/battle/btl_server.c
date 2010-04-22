@@ -1015,7 +1015,7 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
       setMainProc( server, ServerMain_ExitBattle_ForNPC );
       break;
 
-    case BTL_COMPETITOR_SUBWAY: // @todo サブウェイトレーナーのメッセージを取得する手だてが今のところ無い。
+    case BTL_COMPETITOR_SUBWAY:
       setMainProc( server, ServerMain_ExitBattle_ForSubwayTrainer );
       break;
 

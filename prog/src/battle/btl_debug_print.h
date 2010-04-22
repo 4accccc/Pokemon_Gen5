@@ -31,6 +31,8 @@ typedef enum {
   DBGSTR_MAIN_CheckHPByLvup,
   DBGSTR_MAIN_PerappVoiceAdded,
   DBGSTR_MAIN_PerappVoiceComplete,
+  DBGSTR_MAIN_MultiAITrainer_SeqStart,
+  DBGSTR_MAIN_MultiAITrainer_SendDone,
 
   DBGSTR_CLIENT_RETURN_CMD_START,
   DBGSTR_CLIENT_RETURN_CMD_DONE,

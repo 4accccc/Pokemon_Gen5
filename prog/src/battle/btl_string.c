@@ -231,8 +231,8 @@ static inline void register_PokeName( u8 pokeID, u8 bufID )
 
 static void register_TrainerType( WORDSET* wset, u8 bufIdx, u8 clientID )
 {
-  u32 trainerID = BTL_MAIN_GetClientTrainerType( SysWork.mainModule, clientID );
-  WORDSET_RegisterTrTypeName( wset, bufIdx, trainerID );
+  u32 trType = BTL_MAIN_GetClientTrainerType( SysWork.mainModule, clientID );
+  WORDSET_RegisterTrTypeName( wset, bufIdx, trType );
 }
 static void register_TrainerName( WORDSET* wset, u8 bufIdx, u8 clientID )
 {
@@ -798,10 +798,10 @@ static void ms_set_useitem( STRBUF* dst, u16 strID, const int* args )
 
   if( BTL_MAIN_GetPlayerClientID(SysWork.mainModule) != clientID )
   {
-    if( BTL_MAIN_GetCompetitor(SysWork.mainModule) == BTL_COMPETITOR_COMM ){
-      strID = BTL_STRID_STD_UseItem_Player;
-    }else{
+    if( BTL_MAIN_IsClientNPC(SysWork.mainModule, clientID) ){
       strID = BTL_STRID_STD_UseItem_NPC;
+    }else{
+      strID = BTL_STRID_STD_UseItem_Player;
     }
   }
   else{

@@ -539,6 +539,10 @@ void BTLV_SCU_StartBtlIn( BTLV_SCU* wk, BOOL fChapterSkipMode )
   wk->btlinSkipFlag = fChapterSkipMode;
 
   switch( BTL_MAIN_GetRule(wk->mainModule) ){
+
+  /*----------------------------------------------*/
+  /*  シングル                                    */
+  /*----------------------------------------------*/
   case BTL_RULE_SINGLE:
     switch( competitor ){
     case BTL_COMPETITOR_WILD:         // 野生
@@ -556,31 +560,46 @@ void BTLV_SCU_StartBtlIn( BTLV_SCU* wk, BOOL fChapterSkipMode )
     }
     break;
 
+  /*----------------------------------------------*/
+  /*  ダブル                                      */
+  /*----------------------------------------------*/
   case BTL_RULE_DOUBLE:
-    switch( competitor ){
-    case BTL_COMPETITOR_WILD:     // 野生
-    default:
-      BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_wild_double );
-      break;
+    {
+      BOOL fComm = ( BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE );
 
-    case BTL_COMPETITOR_TRAINER:  // ゲーム内トレーナー
-    case BTL_COMPETITOR_SUBWAY:   // サブウェイトレーナー
-      if( !BTL_MAIN_IsMultiMode(wk->mainModule) ){
-        BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_double );
-      }else{
-        BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_multi );
+      if( fComm )
+      {
+        // 通信対戦はこっち
+        if( !BTL_MAIN_IsMultiMode(wk->mainModule) ){
+          BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_comm_double );
+        }else{
+          BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_comm_double_multi );
+        }
       }
-      break;
+      else
+      {
+        switch( competitor ){
+        case BTL_COMPETITOR_WILD:     // 野生
+        default:
+          BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_wild_double );
+          break;
 
-    case BTL_COMPETITOR_COMM:
-      if( !BTL_MAIN_IsMultiMode(wk->mainModule) ){
-        BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_comm_double );
-      }else{
-        BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_comm_double_multi );
+        case BTL_COMPETITOR_TRAINER:  // ゲーム内トレーナー
+        case BTL_COMPETITOR_SUBWAY:   // サブウェイトレーナー
+          if( !BTL_MAIN_IsMultiMode(wk->mainModule) ){
+            BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_double );
+          }else{
+            BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_multi );
+          }
+          break;
+        }
       }
     }
     break;
 
+  /*----------------------------------------------*/
+  /*  トリプル                                    */
+  /*----------------------------------------------*/
   case BTL_RULE_TRIPLE:
     // ゲーム内トレーナー
     if( competitor != BTL_COMPETITOR_COMM ){
@@ -591,6 +610,9 @@ void BTLV_SCU_StartBtlIn( BTLV_SCU* wk, BOOL fChapterSkipMode )
     }
     break;
 
+  /*----------------------------------------------*/
+  /*  ローテーション                              */
+  /*----------------------------------------------*/
   case BTL_RULE_ROTATION:
     // ゲーム内トレーナー
     if( competitor != BTL_COMPETITOR_COMM ){
@@ -1523,7 +1545,6 @@ static BOOL btlinEffSub_OpponentTrainerIn2( BTLV_SCU* wk, int* seq, u8 clientID_
       subwk->vpos_2 = BTLV_MCSS_POS_TR_D;
 
 
-
       trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID_1 );
       BTLV_EFFECT_SetTrainer( trType, subwk->vpos_1, 0, 0, 0 );
       trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID_2 );
@@ -1550,6 +1571,8 @@ static BOOL btlinEffSub_OpponentTrainerIn2( BTLV_SCU* wk, int* seq, u8 clientID_
 
       u16 strID = (BTL_MAIN_GetCompetitor(wk->mainModule) != BTL_COMPETITOR_COMM)?
                       BTL_STRID_STD_Encount_NPC2 : BTL_STRID_STD_Encount_Player2;
+
+        OS_TPrintf("Competitor=%d\n", BTL_MAIN_GetCompetitor(wk->mainModule));
 
 //      bbgp_make( wk, &bbgp, clientID, BTLV_BALL_GAUGE_TYPE_ENEMY );
 //      BTLV_EFFECT_SetBallGauge( &bbgp );
@@ -2160,7 +2183,7 @@ static BOOL btlinEffSub_MyPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_1, u8 
         subwk->pokeID[i] = BPP_GetID( subwk->bpp[i] );
       }
 
-      strID = (BTL_MAIN_GetCompetitor(wk->mainModule)==BTL_COMPETITOR_COMM)? BTL_STRID_STD_PutSingle_Player : BTL_STRID_STD_PutSingle_NPC;
+      strID = (BTL_MAIN_IsClientNPC(wk->mainModule, clientID_2))? BTL_STRID_STD_PutSingle_NPC : BTL_STRID_STD_PutSingle_Player;
 
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 2, clientID_2, subwk->pokeID[pokeIdx] );
       BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );

@@ -1017,7 +1017,7 @@ static u32 EnemyPokeHPBase_CheckRatio( BTL_CLIENT* wk )
 static const BTL_POKEPARAM* EnemyPokeHPBase_GetTargetPoke( BTL_CLIENT* wk )
 {
   if( (BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_SINGLE)
-  &&  (BTL_MAIN_GetCompetitor(wk->mainModule) != BTL_COMPETITOR_COMM)
+  &&  (BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE)
   ){
     u8 clientID = BTL_MAIN_GetOpponentClientID( wk->mainModule, wk->myID, 0 );
     return BTL_POKECON_GetClientPokeDataConst( wk->pokeCon, clientID, 0 );
@@ -4814,17 +4814,10 @@ static u16 CheckMemberOutStrID( BTL_CLIENT* wk, u8 clientID, BOOL* fClientArg )
   {
     *fClientArg = TRUE;
 
-    // 味方（マルチ）
-    if( !BTL_MAIN_IsOpponentClientID(wk->mainModule, wk->myID, clientID) )
-    {
-      return BTL_STRID_STD_BackChange_Player;
-    }
-    else
-    {
-      if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_COMM ){
-        return BTL_STRID_STD_BackChange_Player;
-      }
+    if( BTL_MAIN_IsClientNPC(wk->mainModule, clientID) ){
       return BTL_STRID_STD_BackChange_NPC;
+    }else{
+      return BTL_STRID_STD_BackChange_Player;
     }
   }
 }
@@ -4903,7 +4896,8 @@ static BOOL scProc_ACT_MemberIn( BTL_CLIENT* wk, int* seq, const int* args )
       else
       {
         // 相手が入れ替え
-        if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER )
+//      if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER )
+        if( BTL_MAIN_IsClientNPC(wk->mainModule, clientID) )
         {
           BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_PutSingle_NPC );
           BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
