@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T20:26:58"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T22:12:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -452,11 +452,22 @@
 襲いかかってきた！▼</language>
 	</row>
 
-	<row id="msg_d03r0101_rival_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d03r0101_rival_00" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：d08イベント後
 ・GRIDX=61、GRIDZ=30を踏むとイベント開始
 　画面下からチェレン登場
 　GRIDX=61、GRIDZ=32に到達しメッセージ表示
+・続けてrival_01
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">チェレン『ストップ　[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『ストップ　[1:00:トレーナー名:0]！▼</language>
+	</row>
+
+	<row id="msg_d03r0101_rival_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂：d08イベント後
+・続けてrival_02
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
@@ -474,7 +485,7 @@
 到着するなんて▼</language>
 	</row>
 
-	<row id="msg_d03r0101_rival_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d03r0101_rival_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：d08イベント後
 ・画面下向きでメッセージ表示
 ・続けてrival_02a</comment>
@@ -490,19 +501,19 @@
 ぼくの　ポケモンたちの　おかげだね▼</language>
 	</row>
 
-	<row id="msg_d03r0101_rival_02a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d03r0101_rival_02a" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂：d08イベント後
 ・画面上向きでメッセージ表示
 ・d04r0601イベント発動まで待機</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">……アデクさん　さきに　いったよ
-ぼくたちも　いそごう[BE:01:ページ切り替え（クリア）]</language>
+ぼくたちも　いそごう</language>
 		<language name="JPN_KANJI" width="256">……アデクさん　先に行ったよ
-ぼくたちも　急ごう[BE:01:ページ切り替え（クリア）]</language>
+ぼくたちも　急ごう</language>
 	</row>
 
-	<row id="msg_d03r0101_rival_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d03r0101_rival_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂：d04r0601のイベント後
 ・画面暗転から復帰後メッセージ自動で表示</comment>
 		<attribute name="キャラ指定">友達♂
