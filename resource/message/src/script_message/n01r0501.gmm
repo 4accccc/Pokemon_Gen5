@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-12T17:21:14"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T16:33:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1647" top="256" right="2352" bottom="876" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -342,7 +342,7 @@
 		<attribute name="キャラ指定">七賢人
 ゲーチス</attribute>
 		<language name="JPN" width="256">その　しろの　おうは
-でんせつの　ぽけもんを　したがえ▽
+でんせつの　ポケモンを　したがえ▽
 チャンピオンを　こえた▽
 さいきょうの　トレーナー！▼
 しかも　せかいを　よくしたいという
@@ -408,10 +408,12 @@
 ・続けてsage1_03</comment>
 		<attribute name="キャラ指定">七賢人
 ゲーチス</attribute>
-		<language name="JPN" width="256">そして　まけると　しりつつ
-おうと　たたかうのです！▼</language>
-		<language name="JPN_KANJI" width="256">そして　負けると　知りつつ
-王と　戦うのです！▼</language>
+		<language name="JPN" width="256">そして　じぶんにも
+えいゆうの　ししつが　あるか▽
+たしかめれば　いいのです！▼</language>
+		<language name="JPN_KANJI" width="256">そして　自分にも
+英雄の　資質が　あるか▽
+確かめれば　いいのです！▼</language>
 	</row>
 
 	<row id="msg_n01r0501_sage1_08w">
@@ -422,11 +424,15 @@
 		<attribute name="キャラ指定">七賢人
 ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『さあ！
-ダークストーンを　もつものよ！▽
-この　へやにて　おうと　たたかえ！</language>
+ダークストーンを　もつものよ！▼
+この　へやにて　じぶんにも
+えいゆうの　ししつが　あるか▽
+たしかめなさい！▼</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『さあ！
-ダークストーンを　持つ者よ！▽
-この　へやにて　おうと　たたかえ！</language>
+ダークストーンを　持つ者よ！▼
+この部屋にて　自分にも
+英雄の　資質が　あるか▽
+確かめなさい！▼</language>
 	</row>
 
 	<row id="msg_n01r0501_sage1_08b">
@@ -437,11 +443,15 @@
 		<attribute name="キャラ指定">七賢人
 ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『さあ！
-ライトストーンを　もつものよ！▽
-この　へやにて　おうと　たたかえ！</language>
+ライトストーンを　もつものよ！▼
+この　へやにて　じぶんにも
+えいゆうの　ししつが　あるか▽
+たしかめなさい！▼</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『さあ！
-ライトストーンを　持つ者よ！▽
-この　へやにて　おうと　たたかえ！</language>
+ライトストーンを　持つ者よ！▼
+この部屋にて　自分にも
+英雄の　資質が　あるか▽
+確かめなさい！▼</language>
 	</row>
 
 	<flowchart-group-list>
