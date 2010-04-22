@@ -80,6 +80,11 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork);
 static void _mailBoxStart(POKEMON_TRADE_WORK* pWork);
 static void _changeTimingSaveStart(POKEMON_TRADE_WORK* pWork);
 
+static void _changeTimingSaveStartT1(POKEMON_TRADE_WORK* pWork);
+static void _changeTimingSaveStartT2(POKEMON_TRADE_WORK* pWork);
+
+
+
 //------------------------------------------------------------------
 /**
  * @brief   次のシーンに必要な値をセット
@@ -838,7 +843,24 @@ void POKMEONTRADE_SAVE_TimingStart(POKEMON_TRADE_WORK* pWork)
   _CHANGE_STATE(pWork,_changeTimingSaveStart);
 }
 
+
+
 static void _changeTimingSaveStart(POKEMON_TRADE_WORK* pWork)
+{
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_SHINKA_AFTER, WB_NET_TRADE_SERVICEID);
+  _CHANGE_STATE(pWork,_changeTimingSaveStartT1);
+}
+
+
+static void _changeTimingSaveStartT1(POKEMON_TRADE_WORK* pWork)
+{
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_SHINKA_AFTER, WB_NET_TRADE_SERVICEID)){
+    _CHANGE_STATE(pWork,_changeTimingSaveStartT2);
+  }
+}
+
+
+static void _changeTimingSaveStartT2(POKEMON_TRADE_WORK* pWork)
 {  
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
