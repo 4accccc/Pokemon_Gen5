@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-04-17T23:12:08" source="shin_mu_p_v00.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-04-22T23:18:10" source="shin_mu_p_v14.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 </head>
@@ -14,37 +14,40 @@
 	frame_size="481"
 	tool_start_frame="0"
 	tool_end_frame="480"
-	compress_material="off" material_size="4 4"
+	compress_material="off" material_size="5 5"
 />
 
-<tex_pattern_list_data image_size="4" palette_size="4">
+<tex_pattern_list_data image_size="5" palette_size="5">
 	<image_name index="0" name="e_power1.1"/>
 	<image_name index="1" name="e_power2.1"/>
-	<image_name index="2" name="e_stone.1"/>
-	<image_name index="3" name="hika.1"/>
+	<image_name index="2" name="e_power3.1"/>
+	<image_name index="3" name="e_stone.1"/>
+	<image_name index="4" name="hika.1"/>
 	<palette_name index="0" name="e_power1.1_pl"/>
 	<palette_name index="1" name="e_power2.1_pl"/>
-	<palette_name index="2" name="e_stone.1_pl"/>
-	<palette_name index="3" name="hika.1_pl"/>
+	<palette_name index="2" name="e_power3.1_pl"/>
+	<palette_name index="3" name="e_stone.1_pl"/>
+	<palette_name index="4" name="hika.1_pl"/>
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="4">
-		0 0 0 0
+	<frame_idx size="5">
+		0 0 0 0 0
 	</frame_idx>
-	<image_idx size="4">
-		3 0 1 2
+	<image_idx size="5">
+		4 2 1 0 3
 	</image_idx>
-	<palette_idx size="4">
-		3 0 1 2
+	<palette_idx size="5">
+		4 2 1 0 3
 	</palette_idx>
 </tex_pattern_data>
 
-<tex_pattern_anm_array size="4">
+<tex_pattern_anm_array size="5">
 	<tex_pattern_anm index="0" material_name="_lgsz20" data_size="1" data_head="0"/>
-	<tex_pattern_anm index="1" material_name="e_power1" data_size="1" data_head="1"/>
+	<tex_pattern_anm index="1" material_name="e_power3_2" data_size="1" data_head="1"/>
 	<tex_pattern_anm index="2" material_name="_power1" data_size="1" data_head="2"/>
-	<tex_pattern_anm index="3" material_name="e_stone_1" data_size="1" data_head="3"/>
+	<tex_pattern_anm index="3" material_name="e_power1" data_size="1" data_head="3"/>
+	<tex_pattern_anm index="4" material_name="e_stone_1" data_size="1" data_head="4"/>
 </tex_pattern_anm_array>
 
 </body>
