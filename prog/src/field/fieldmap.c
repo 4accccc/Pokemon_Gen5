@@ -2308,7 +2308,12 @@ static void fldmap_G3D_Load( FIELDMAP_WORK *fieldWork )
 static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 {
   BOOL map_load_start;
-  
+
+#ifdef PM_DEBUG
+  //負荷セット
+  DEBUG_PerformanceSetStress();
+#endif
+
 	GFL_BBDACT_Main( fieldWork->mainBbdActSys );
   GFL_BBDACT_Main( fieldWork->subBbdActSys );
   
@@ -2343,6 +2348,17 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
     GFL_NET_ChangeoverChangeSpeed(GFL_NET_CROSS_SPEED_PAUSE);  //すれ違い一時停止
     NOZOMU_Printf("マップロード開始\n");
   }
+#ifdef PM_DEBUG
+  if( FLDMAPPER_CheckTrans( fieldWork->g3Dmapper ) == FALSE )
+  {
+    //負荷をオフ
+    DEBUG_PerformanceStressON(FALSE);
+  }
+  else{
+    //負荷をオン
+    DEBUG_PerformanceStressON(TRUE);
+  }
+#endif
 
 }
 

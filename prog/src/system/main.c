@@ -158,8 +158,6 @@ void NitroMain(void)
 
 #ifdef PM_DEBUG
     DEBUG_StackOverCheck();
-
-    DEBUG_PerformanceSetStress();
 #endif  //PM_DEBUG
 
     MachineSystem_Main();
