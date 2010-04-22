@@ -3483,22 +3483,47 @@ const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const
 {
   u8 i;
   BOOL isEmpty = FALSE;
-  //同じ技がある？
-  for( i=0;i<4;i++ )
-  {
-    const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+i , NULL );
-    if( wazaNo == work->plData->waza )
-    {
-      return LSCL_LEARN;
-    }
-    if( wazaNo == 0 )
-    {
-      isEmpty = TRUE;
-    }
-  }
-
   if( work->isSetWazaMode == TRUE )
   {
+    u16 wazaArr[3];
+    
+    if( work->plData->waza == PL_SP_WAZANO_STRONGEST )
+    {
+      //最強技
+      wazaArr[0] = WAZANO_HAADOPURANTO;
+      wazaArr[1] = WAZANO_BURASUTOBAAN;
+      wazaArr[2] = WAZANO_HAIDOROKANON;
+    }
+    else
+    if( work->plData->waza == PL_SP_WAZANO_COALESCENCE )
+    {
+      //合体技
+      wazaArr[0] = WAZANO_KUSANOTIKAI;
+      wazaArr[1] = WAZANO_HONOONOTIKAI;
+      wazaArr[2] = WAZANO_MIZUNOTIKAI;
+    }
+    else
+    {
+      wazaArr[0] = work->plData->waza;
+      wazaArr[1] = work->plData->waza;
+      wazaArr[2] = work->plData->waza;
+    }
+    //同じ技がある？
+    for( i=0;i<4;i++ )
+    {
+      const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+i , NULL );
+      if( wazaNo == wazaArr[0] ||
+          wazaNo == wazaArr[1] ||
+          wazaNo == wazaArr[2] )
+      {
+        return LSCL_LEARN;
+      }
+      if( wazaNo == 0 )
+      {
+        isEmpty = TRUE;
+      }
+    }
+
     //イベントなど特殊な技覚え(外からBitでもらう)
     if( work->plData->wazaLearnBit & 1<<idx )
     {
@@ -3515,6 +3540,20 @@ const PLIST_SKILL_CAN_LEARN PLIST_UTIL_CheckLearnSkill( PLIST_WORK *work , const
   }
   else
   {
+    //同じ技がある？
+    for( i=0;i<4;i++ )
+    {
+      const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+i , NULL );
+      if( wazaNo == work->plData->waza )
+      {
+        return LSCL_LEARN;
+      }
+      if( wazaNo == 0 )
+      {
+        isEmpty = TRUE;
+      }
+    }
+
     if( work->plData->item != 0 )
     {
       const int machineNo = ITEM_GetWazaMashineNo( work->plData->item );
@@ -3717,7 +3756,19 @@ static void PLIST_MSGCB_ForgetSkill_SkillCancelCB( PLIST_WORK *work , const int 
 static void PLIST_MSGCB_ForgetSkill_SkillForget( PLIST_WORK *work )
 {
   PLIST_MSG_CloseWindow( work , work->msgWork );
-
+/*
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    const u32 wazaNo = PP_Get( work->selectPokePara , ID_PARA_waza1+work->plData->waza_pos , NULL );
+    PLIST_MSG_CreateWordSet( work , work->msgWork );
+    PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
+    PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 1 , wazaNo );
+    PLIST_MessageWaitInit( work , mes_pokelist_04_10 , TRUE , PLIST_MSGCB_ForgetSkill_SkillForget );
+    PLIST_MSG_DeleteWordSet( work , work->msgWork );
+  }
+  else
+*/
+  {
   PLIST_MSG_CreateWordSet( work , work->msgWork );
   PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
   PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 1 , work->plData->waza );
@@ -3738,10 +3789,10 @@ static void PLIST_MSGCB_ForgetSkill_SkillForget( PLIST_WORK *work )
       PLIST_SubBagItem( work , work->plData->item );
     }
   }
-  
-  PLIST_MSG_DeleteWordSet( work , work->msgWork );
 
+  PLIST_MSG_DeleteWordSet( work , work->msgWork );
   PLIST_LearnSkillFull( work , work->selectPokePara , work->plData->waza_pos );
+  }
 }
 
 //アイテムセット すでに持ってる

@@ -64,6 +64,8 @@ typedef enum
   PL_MODE_SET_WAZA,       // 内部でPL_MODE_SETに置き換わります。
                           // 終了時にはPL_MODE_SET_WAZAに戻します。
                           // wazaLearnBitの設定を忘れないでください。
+                          // 最強技・合体技は複数個の技をチェックするので
+                          // wazaNoにPL_SP_WAZANO_***を入れてください
   PL_MODE_SET_MUSICAL,    // 内部でPL_MODE_SETに置き換わります。
                           // 終了時にはPL_MODE_SET_MUSICALに戻します。
   PL_MODE_BATTLE_WIFI,    // 内部でPL_MODE_BATTLEに置き換わります。
@@ -72,6 +74,8 @@ typedef enum
 }PL_MODE_TYPE;
 
 #define PL_MODE_NO_CANCEL ( 0x80 )  // キャンセル禁止
+#define PL_SP_WAZANO_STRONGEST (0xFFFE)   //最強技
+#define PL_SP_WAZANO_COALESCENCE (0xFFFD) //合体技
 
 // 選択されたもの
 typedef enum
