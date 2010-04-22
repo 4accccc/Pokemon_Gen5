@@ -34,6 +34,10 @@
 #include "intrude_field.h"
 #include "system/palanm.h"
 #include "intrude_snd_def.h"
+#include "field/game_beacon_search.h"
+#include "net/network_define.h"
+#include "net/net_whpipe.h"
+#include "gamesystem/game_beacon_accessor.h"
 
 
 //==============================================================================
@@ -49,6 +53,9 @@ enum{
 
 ///インフォメーションメッセージ更新ウェイト
 #define INFOMSG_UPDATE_WAIT   (60)
+
+///近くにいるビーコンの人物を表示する最大数
+#define INTSUB_BCON_PLAYER_PRINT_MAX    (2)
 
 ///フォントBGパレット展開位置
 #define _FONT_BG_PALNO      (14)
@@ -422,7 +429,8 @@ typedef struct _INTRUDE_SUBDISP{
   u8 mission_target_focus_wait;     ///<ミッションターゲットフォーカスアニメウェイト
   
   s16 print_time;         ///<表示されている時間
-  u8 padding[2];
+  u8 add_player_count;    ///<侵入下画面のInit後、増えたプレイヤーをカウント
+  u8 padding;
 }INTRUDE_SUBDISP;
 
 
@@ -543,6 +551,7 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   intsub->print_time = -1;
   
   _IntSub_CommParamInit(intsub, Intrude_Check_CommConnect(game_comm));
+  intsub->add_player_count = intsub->comm.recv_num;
   
   handle = GFL_ARC_OpenDataHandle(ARCID_PALACE, HEAPID_FIELDMAP);
   
@@ -611,6 +620,13 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
 
   intsub->my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   _IntSub_CommParamUpdate(intsub, intcomm);
+  if(intsub->add_player_count < intsub->comm.recv_num){
+    //誰かのパレスと接続した音
+    if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
+      PMSND_PlaySE( INTSE_PALACE_CONNECT );
+    }
+    intsub->add_player_count = intsub->comm.recv_num;
+  }
   
 	GFL_TCBL_Main( intsub->tcbl_sys );
 	PRINTSYS_QUE_Main( intsub->print_que );
@@ -857,6 +873,7 @@ static void _IntSub_SystemExit(INTRUDE_SUBDISP_PTR intsub)
 //--------------------------------------------------------------
 static void _IntSub_BGLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
 {
+  u32 scrn_data_idx;
 	static const GFL_BG_BGCNT_HEADER TextBgCntDat[] = {
   	{//INTRUDE_FRAME_S_BAR
   		0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
@@ -888,8 +905,16 @@ static void _IntSub_BGLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
   GFL_ARCHDL_UTIL_TransVramScreen(
     handle, NARC_palace_palace_bg_lz_NSCR, INTRUDE_FRAME_S_BACKGROUND, 0, 
     0x800, TRUE, HEAPID_FIELDMAP);
+  if(intsub->comm.recv_num <= 1){
+    scrn_data_idx = NARC_palace_palace_bar_lz_NSCR;
+    intsub->bar_type = BG_BAR_TYPE_SINGLE;
+  }
+  else{
+    scrn_data_idx = NARC_palace_palace_bar2_lz_NSCR;
+    intsub->bar_type = BG_BAR_TYPE_COMM;
+  }
   GFL_ARCHDL_UTIL_TransVramScreen(
-    handle, NARC_palace_palace_bar_lz_NSCR, INTRUDE_FRAME_S_BAR, 0, 
+    handle, scrn_data_idx, INTRUDE_FRAME_S_BAR, 0, 
     0x800, TRUE, HEAPID_FIELDMAP);
   //[TIME]のスクリーンをバッファに読み込む
   {
@@ -1897,7 +1922,42 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
     return;
   }
   
-  if(intcomm != NULL && intsub->print_touch_player != INTRUDE_NETID_NULL 
+  if(intcomm != NULL && GFL_NET_GetConnectNum() <= 1){
+    GBS_BEACON *bcon_buff;
+    int i, bcon_count = 0;
+    GameServiceID id;
+    for(i = 0; i < SCAN_PARENT_COUNT_MAX; i++){
+      id = GFL_NET_WLGetGameServiceID(i);
+      if(id == WB_NET_PALACE_SERVICEID || id == WB_NET_FIELDMOVE_SERVICEID){
+      	bcon_buff = GFL_NET_GetBeaconData(i);
+      	if(bcon_buff != NULL )
+      	{
+          if(id == WB_NET_PALACE_SERVICEID){
+            WORDSET_RegisterPlayerName( intsub->wordset, bcon_count, &bcon_buff->intrude_myst );
+          }
+          else{
+            GAMEBEACON_Get_PlayerNameToBuf(&bcon_buff->info, intsub->strbuf_temp);
+        	  WORDSET_RegisterWord(intsub->wordset, bcon_count, intsub->strbuf_temp, 
+        	    GAMEBEACON_Get_Sex(&bcon_buff->info), TRUE, 
+        	    GAMEBEACON_Get_PmLanguage(&bcon_buff->info));
+        	}
+        	bcon_count++;
+        	if(bcon_count >= INTSUB_BCON_PLAYER_PRINT_MAX){
+            break;
+          }
+      	}
+      }
+    }
+    
+    if(bcon_count > 0){
+      u32 msg_id = (bcon_count == 1) ? msg_invasion_info_011 : msg_invasion_info_012;
+      GFL_MSG_GetString(intsub->msgdata, msg_id, intsub->strbuf_temp );
+      WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
+      msg_on = TRUE;
+    }
+  }
+  
+  if(msg_on == FALSE && intcomm != NULL && intsub->print_touch_player != INTRUDE_NETID_NULL 
       && Intrude_GetMyStatus(intcomm, intsub->print_touch_player) != NULL){
     MYSTATUS *myst = Intrude_GetMyStatus(intcomm, intsub->print_touch_player);
     

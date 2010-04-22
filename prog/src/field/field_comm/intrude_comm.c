@@ -43,8 +43,8 @@
 static void  IntrudeComm_FinishInitCallback( void* pWork );
 static void  IntrudeComm_FinishTermCallback( void* pWork );
 static void * IntrudeComm_GetBeaconData(void* pWork);
-static void IntrudeComm_CreateBeaconData(GBS_BEACON *beacon);
-static BOOL IntrudeComm_DiffSendBeacon(GBS_BEACON *beacon);
+static void IntrudeComm_CreateBeaconData(GAMEDATA *gamedata, GBS_BEACON *beacon);
+static BOOL IntrudeComm_DiffSendBeacon(GAMEDATA *gamedata, GBS_BEACON *beacon);
 static BOOL  IntrudeComm_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 );
 static void  IntrudeComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 static void  IntrudeComm_DisconnectCallBack(void* pWork);
@@ -130,7 +130,7 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   Intrude_InitTalkWork(intcomm, INTRUDE_NETID_NULL);
   Bingo_InitBingoSystem(Bingo_GetBingoSystemWork(intcomm));
   MISSION_Init(&intcomm->mission);
-  IntrudeComm_CreateBeaconData(&intcomm->send_beacon);
+  IntrudeComm_CreateBeaconData(gamedata, &intcomm->send_beacon);
   FIELD_WFBC_COMM_DATA_Init(&intcomm->wfbc_comm_data);
 
   GAMEDATA_SetIntrudeMyID(gamedata, 0);
@@ -215,7 +215,7 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
     }
   }
 
-  IntrudeComm_DiffSendBeacon(&intcomm->send_beacon);
+  IntrudeComm_DiffSendBeacon(gamedata, &intcomm->send_beacon);
   
   switch(*seq){
   case 0:
@@ -563,13 +563,14 @@ static void * IntrudeComm_GetBeaconData(void* pWork)
  * @param   beacon		
  */
 //--------------------------------------------------------------
-static void IntrudeComm_CreateBeaconData(GBS_BEACON *beacon)
+static void IntrudeComm_CreateBeaconData(GAMEDATA *gamedata, GBS_BEACON *beacon)
 {
   beacon->gsid = WB_NET_PALACE_SERVICEID;
   beacon->member_num = GFL_NET_GetConnectNum();
   beacon->member_max = FIELD_COMM_MEMBER_MAX;
   beacon->error = GFL_NET_SystemGetErrorCode();
   beacon->beacon_type = GBS_BEACONN_TYPE_PALACE;
+  MyStatus_Copy(GAMEDATA_GetMyStatus(gamedata), &beacon->intrude_myst);
 }
 
 //--------------------------------------------------------------
@@ -581,13 +582,13 @@ static void IntrudeComm_CreateBeaconData(GBS_BEACON *beacon)
  * @retval  BOOL		
  */
 //--------------------------------------------------------------
-static BOOL IntrudeComm_DiffSendBeacon(GBS_BEACON *beacon)
+static BOOL IntrudeComm_DiffSendBeacon(GAMEDATA *gamedata, GBS_BEACON *beacon)
 {
   int member_num, error;
   
   if(beacon->member_num != GFL_NET_GetConnectNum()
       || beacon->error != GFL_NET_SystemGetErrorCode()){
-    IntrudeComm_CreateBeaconData(beacon);
+    IntrudeComm_CreateBeaconData(gamedata, beacon);
     return TRUE;
   }
   return FALSE;

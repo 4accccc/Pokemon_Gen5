@@ -11,6 +11,7 @@
 #include "buflen.h"
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/game_beacon_types.h"
+#include "savedata/mystatus.h"
 
 //==============================================================================
 //  Œ^’è‹`
@@ -54,6 +55,7 @@ typedef struct
   union
   {
     GAMEBEACON_INFO info;
+    MYSTATUS intrude_myst;      ///<N“üŽž‚Ìƒr[ƒRƒ“
     struct MESSAGE_DATA
     {
       u16 word[BEACON_MESSAGE_DATA_WORD_NUM];
