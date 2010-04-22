@@ -89,11 +89,11 @@ EVENT_START		ev_t04r0201_diet_01
 		//交換しようよ
 		_BALLOONWIN_OBJMSG( msg_t04r0201_diet_01 ,T04R0201_DIET_01)
 		_YES_NO_WIN( SCWK_ANSWER )
-		_BALLOONWIN_CLOSE()
 		
 		//はい
 		IF $SCWK_ANSWER == 0 THEN
-
+			_BALLOONWIN_CLOSE()
+			
 			//選択ポケモン格納変数定義
 			DEFINE_LOCAL LWK_CHOICE
 			//キャンセルしたか結果格納変数定義

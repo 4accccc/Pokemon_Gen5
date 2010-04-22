@@ -55,49 +55,87 @@ INIT_EVENT_END
 /*MOUNTAIN */
 /**************************************************************/
 EVENT_START   ev_r07r0201_mountain_01
-		_TALK_OBJ_START()
-	
-	IF $LOCALWORK15 == 999 THEN
-		//回復終了後なのでメッセージ表示のみ
-		_BALLOONWIN_OBJMSG( msg_r07r0201_mountain_02,R07R0201_MOUNTAIN_01 )
+	{
+	_TALK_OBJ_START()
+
+	//交換後話しかけ
+	IF FLAG_ON( FE_R07R0201_TRADE_01 ) THEN
+		_BALLOONWIN_OBJMSG( msg_r07r0201_mountain_05 ,R07R0201_MOUNTAIN_01)
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
-
 	ELSE
-
-		//休ませるか質問
-		_BALLOONWIN_OBJMSG( msg_r07r0201_mountain_01,R07R0201_MOUNTAIN_01 )
+		//【仮】ポケモン名をセリフにセット
+		_MONS_NAME ( 1 , MONSNO_533  ) //交換先（チラーミィ）
+		_MONS_NAME ( 0 , MONSNO_601  ) //要望（ガンクツ）
+	
+		//交換しようよ
+		_BALLOONWIN_OBJMSG( msg_r07r0201_mountain_01 ,R07R0201_MOUNTAIN_01)
 		_YES_NO_WIN( SCWK_ANSWER )
-		_BALLOONWIN_CLOSE()
-
-		//「はい」
-		IF $SCWK_ANSWER == SCR_YES THEN
-
-			//暗転して手持ちポケモンを回復
-			_BLACK_OUT()
-			_DISP_FADE_END_CHECK()
-			_TEMOTI_POKEMON_KAIFUKU()		//回復処理
-			_ME_PLAY( SEQ_ME_ASA )
-			_ME_WAIT()
-			_BLACK_IN()
-			_DISP_FADE_END_CHECK()
-
-			//回復済みチェック用にローカルワークに値を代入
-			$LOCALWORK15 = 999
-
-			_BALLOONWIN_OBJMSG( msg_r07r0201_mountain_02,R07R0201_MOUNTAIN_01 )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
 		
+		//はい
+		IF $SCWK_ANSWER == 0 THEN
+			
+			_BALLOONWIN_CLOSE()
+			
+			//選択ポケモン格納変数定義
+			DEFINE_LOCAL LWK_CHOICE
+			//キャンセルしたか結果格納変数定義
+			DEFINE_LOCAL LWK_SELECT_RESULT
+			
+			//ポケモン選択画面開く
+			_SELECT_TEMOTI_POKE  ( LWK_SELECT_RESULT , LWK_CHOICE , 0 )
+			
+			
+			//ポケモンを選択した
+			IF $LWK_SELECT_RESULT == TRUE THEN
+			
+				//要望と一致してるかチェック結果格納変数定義
+				DEFINE_LOCAL LWK_TRADE_CHECK
+			
+				//【仮】選択したポケモンが交換可能かチェック（参照するテーブルが仮）
+				_FIELD_POKE_TRADE_CHECK ( LWK_TRADE_CHECK , FLD_TRADE_POKE_533 , LWK_CHOICE )
+			
+				//交換可能である
+				IF $LWK_TRADE_CHECK == FLD_TRADE_ENABLE THEN
+				
+					//【仮】交換処理（参照するテーブルが仮）
+					_FIELD_POKE_TRADE ( FLD_TRADE_POKE_533 , LWK_CHOICE )
+					_BALLOONWIN_OBJMSG( msg_r07r0201_mountain_02 ,R07R0201_MOUNTAIN_01)
+					_LAST_KEYWAIT()
+					_BALLOONWIN_CLOSE()
+					
+					//==================================//
+			
+					//交換完了
+					_FLAG_SET ( FE_R07R0201_TRADE_01 )
+							
+					//==================================//
+		
+				//条件と一致しなかった
+				ELSE
+					//オイラがほしいのは違う
+					_BALLOONWIN_OBJMSG( msg_r07r0201_mountain_03 ,R07R0201_MOUNTAIN_01)
+					_LAST_KEYWAIT()
+					_BALLOONWIN_CLOSE()
+				ENDIF
+			
+			//選択キャンセル
+			ELSE
+				_BALLOONWIN_OBJMSG( msg_r07r0201_mountain_04 ,R07R0201_MOUNTAIN_01)
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+				
+			ENDIF
+		
+		//いいえ
 		ELSE
-		
-			_BALLOONWIN_OBJMSG( msg_r07r0201_mountain_03,R07R0201_MOUNTAIN_01 )
+			_BALLOONWIN_OBJMSG( msg_r07r0201_mountain_04 ,R07R0201_MOUNTAIN_01)
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
-		
 		ENDIF
-
+	
 	ENDIF
+	}
 EVENT_END
 
 /**************************************************************/

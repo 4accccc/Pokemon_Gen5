@@ -89,6 +89,8 @@ EVENT_START   ev_c05r0201_boy2_01
 	//交換後話しかけ
 	IF FLAG_ON( FE_C05R0201_POKETRADE_01 ) THEN
 		_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_05 ,C05R0201_BOY2_01)
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
 		
 	ELSE
 		//ポケモン名をセリフにセット
@@ -98,11 +100,11 @@ EVENT_START   ev_c05r0201_boy2_01
 		//交換しようよ
 		_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_01 ,C05R0201_BOY2_01)
 		_YES_NO_WIN( SCWK_ANSWER )
-		_BALLOONWIN_CLOSE()
 		
 		//はい
 		IF $SCWK_ANSWER == 0 THEN
-
+			_BALLOONWIN_CLOSE()
+			
 			//選択ポケモン格納変数定義
 			DEFINE_LOCAL LWK_CHOICE
 			//キャンセルしたか結果格納変数定義
