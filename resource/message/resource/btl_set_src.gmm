@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-04-22T21:19:36"/>
+	<create user="taya" host="W00146" date="2010-04-23T00:30:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1399,6 +1399,14 @@
 なまけている</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 なまけている</language>
+	</row>
+
+	<row id="BTL_STRID_SET_WazaRecv">
+		<comment>ひらいしん・よびみず</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+こうげきを　うけた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+攻撃を　受けた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Fumin">
