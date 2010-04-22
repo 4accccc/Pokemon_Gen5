@@ -137,7 +137,8 @@ struct _PROCLINK_WORK
   ITEMCHECK_WORK            icwk;     // アイテム使用時に検査する情報が含まれている
   FLDSKILL_CHECK_WORK       scwk;     // フィールドスキルが使用可能がどうかの情報
   u8                        sel_poke; // メール画面で引き継げないので用意
-  u8                        item_no;  // メール画面で引き継げないので用意
+  u8                        item_no;  // メール画面・ステータスで引き継げないので用意
+  int                       lv_cnt;   // ステータスで引き継げないので用意 レベルアップカウンタ
   PROCLINK_TAKEOVER_MODE    mode;     // メール画面で引き継げないので用意
   BOOL                      is_shortcut;  //ポケリスト画面の初期化で設定し、破棄で使用
 };
@@ -831,13 +832,14 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
         {
           //不思議なアメ
           plistData->mode = PL_MODE_LVUPWAZASET_RET;
+          plistData->lv_cnt = wk->lv_cnt;
         }
         else
         {
           //技マシン
           plistData->mode = PL_MODE_WAZASET_RET;
         }
-        plistData->item = wk->param->select_param;
+        plistData->item = wk->item_no;
         plistData->waza = psData->waza;
         if( psData->ret_mode == PST_RET_DECIDE )
         {
@@ -972,6 +974,8 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeList(PROCLINK_WORK* wk,void* param_
   case PL_RET_WAZASET:  //忘れる技選択
   case PL_RET_LVUP_WAZASET:
     wk->next_type = EVENT_PROCLINK_CALL_STATUS;
+    wk->item_no = plData->item;
+    wk->lv_cnt = plData->lv_cnt;
     return RETURNFUNC_RESULT_NEXT;
     
   case PL_RET_MAILSET:
@@ -1894,7 +1898,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_Mail(PROCLINK_WORK* wk,void* param_adrs
     }
     else
     {
-      wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
+      wk->next_type = EVENT_PROCLINK_CALL_BAG;
     }
 
     //オーバーレイ開放！

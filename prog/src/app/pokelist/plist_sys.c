@@ -3672,7 +3672,6 @@ void PLIST_MSGCB_CheckItemUseContinue( PLIST_WORK *work )
     PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 0 , work->plData->item );
     PLIST_MessageWaitInit( work , mes_pokelist_13_08 , TRUE , PLIST_MSGCB_ExitCommon );
     PLIST_MSG_DeleteWordSet( work , work->msgWork );
-
   }
 }
 //技がいっぱいで、忘れるかどうか？の選択肢
@@ -3732,7 +3731,7 @@ static void PLIST_MSGCB_ForgetSkill_SkillCancelCB( PLIST_WORK *work , const int 
         work->plData->mode == PL_MODE_LVUPWAZASET_RET )
     {
       //不思議なアメだった
-      PLIST_MessageWaitInit( work , mes_pokelist_04_08 , TRUE , PLIST_MSGCB_LvUp_EvoCheck );
+      PLIST_MessageWaitInit( work , mes_pokelist_04_08 , TRUE , PLIST_MSGCB_LvUp_CheckLearnWaza );
     }
     else
     {
@@ -3777,7 +3776,7 @@ static void PLIST_MSGCB_ForgetSkill_SkillForget( PLIST_WORK *work )
       work->plData->mode == PL_MODE_LVUPWAZASET_RET )
   {
     //不思議なアメだった
-    PLIST_MessageWaitInit( work , mes_pokelist_04_11 , TRUE , PLIST_MSGCB_LvUp_EvoCheck );
+    PLIST_MessageWaitInit( work , mes_pokelist_04_11 , TRUE , PLIST_MSGCB_LvUp_CheckLearnWaza );
   }
   else
   {

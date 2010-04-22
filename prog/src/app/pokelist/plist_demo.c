@@ -21,6 +21,7 @@
 #include "plist_plate.h"
 #include "plist_message.h"
 #include "plist_demo.h"
+#include "plist_snd_def.h"
 
 #include "pokelist_particle_lst.h"
 
@@ -148,6 +149,18 @@ void PLIST_DEMO_DemoMain( PLIST_WORK *work )
     {
       //チラツキを消すため一回非表示にした面の再表示
       GFL_BG_SetVisible( PLIST_BG_3D , TRUE ); 
+
+      //SEの再生
+      if( work->demoType == PDT_GIRATHINA_TO_ORIGIN ||
+          work->demoType == PDT_GIRATHINA_TO_ANOTHER )
+      {
+        PMSND_PlaySystemSE(PLIST_SND_DEMO_GRATHINA);
+      }
+      else
+      if( work->demoType == PDT_SHEIMI_TO_SKY )
+      {
+        PMSND_PlaySystemSE(PLIST_SND_DEMO_SHEIMI);
+      }
     }
     if( work->demoCnt > work->demoChangeTimming )
     {

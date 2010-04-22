@@ -26,4 +26,7 @@
 #define PLIST_SND_WAZA_LEARN_ME   (SEQ_ME_LVUP)   //←こっち使用
 #define PLIST_SND_WAZA_WASURE  (SEQ_SE_KON)   //1.2のポカン
 
+#define PLIST_SND_DEMO_GRATHINA (SEQ_SE_SYS_04)
+#define PLIST_SND_DEMO_SHEIMI (SEQ_SE_SYS_05)
+
 //  PMSND_PlaySystemSE

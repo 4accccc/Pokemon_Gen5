@@ -610,6 +610,8 @@ typedef enum
   PIPS_DISP_WIN_2,
   PIPS_WAIT_KEY_2,
 
+  PIPS_CHECK_LEARN_WAZA,
+
   PIPS_CHECK_SHINKA,
 
 }PLIST_ITEM_PARAM_SEQ;
@@ -619,6 +621,8 @@ static void PLIST_MSGCB_LvUp( PLIST_WORK *work )
 {
   work->mainSeq = PSMS_DISP_PARAM;
   work->subSeq = 0;
+  
+  work->plData->lv_cnt = 0;
   //ウィンドウ閉じない！
   //PLIST_MSG_CloseWindow( work , work->msgWork );
 
@@ -628,7 +632,11 @@ void PLIST_MSGCB_LvUp_EvoCheck( PLIST_WORK *work )
   work->mainSeq = PSMS_DISP_PARAM;
   work->subSeq = PIPS_CHECK_SHINKA;
   PLIST_MSG_CloseWindow( work , work->msgWork );
-
+}
+void PLIST_MSGCB_LvUp_CheckLearnWaza( PLIST_WORK *work )
+{
+  work->mainSeq = PSMS_DISP_PARAM;
+  work->subSeq = PIPS_CHECK_LEARN_WAZA;
 }
 
 void PLIST_UpdateDispParam( PLIST_WORK *work )
@@ -647,6 +655,7 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
       BmpWinFrame_Write( work->paramWin , WINDOW_TRANS_ON_V , 
                           PLIST_BG_WINCHAR_TOP , PLIST_BG_PLT_BMPWIN );
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->paramWin ) , 0xf );
+      GFL_BMPWIN_MakeTransWindow_VBlank( work->paramWin );
       for( i=0;i<6;i++ )
       {
         const u32 param = PP_Get( work->selectPokePara , ID_PARA_hpmax+i , NULL );
@@ -674,7 +683,6 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
           WORDSET_ExpandStr( wordSet , workStr , str );
           
           len = PRINTSYS_GetStrWidth( workStr , work->fontHandle , 0 );
-          OS_TPrintf("[%d]\n",len);
           PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( work->paramWin ) , 
                   (PLIST_ITEM_PARAMWIN_WIDTH-1)*8-len , i*16 , workStr , work->fontHandle , PLIST_FONT_COLOR_BLACK );
 
@@ -757,9 +765,20 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ||
         GFL_UI_TP_GetTrg() == TRUE )
     {
-      int idx = 0;
+      work->subSeq = PIPS_CHECK_LEARN_WAZA;
+      
+    	GFL_BMPWIN_ClearScreen( work->paramWin );
+      BmpWinFrame_Clear( work->paramWin , WINDOW_TRANS_ON_V );
+      GFL_BMPWIN_Delete( work->paramWin );
+      work->paramWin = NULL;
+    }
+    break;
+    
+  case PIPS_CHECK_LEARN_WAZA:
+    {
       //技覚えチェック
-      WazaID wazaNo = PP_CheckWazaOboe( work->selectPokePara , &idx, work->heapId );
+      WazaID wazaNo = PP_CheckWazaOboe( work->selectPokePara , &work->plData->lv_cnt, work->heapId );
+      
       PLIST_MSG_CloseWindow( work , work->msgWork );
       if( wazaNo == PTL_WAZAOBOE_NONE )
       {
@@ -787,16 +806,10 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
         PLIST_MSG_CreateWordSet( work , work->msgWork );
         PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
         PLIST_MSG_AddWordSet_SkillName( work , work->msgWork , 1 , wazaNo );
-        PLIST_MessageWaitInit( work , mes_pokelist_04_11 , TRUE , PLIST_MSGCB_LvUp_EvoCheck );
+        PLIST_MessageWaitInit( work , mes_pokelist_04_11 , TRUE , PLIST_MSGCB_LvUp_CheckLearnWaza );
         PLIST_MSG_DeleteWordSet( work , work->msgWork );
         //work->msgCallBackSe = PLIST_SND_WAZA_LEARN;
       }
-      
-    	GFL_BMPWIN_ClearScreen( work->paramWin );
-      BmpWinFrame_Clear( work->paramWin , WINDOW_TRANS_ON_V );
-      GFL_BMPWIN_Delete( work->paramWin );
-      work->paramWin = NULL;
-      
     }
     break;
 
@@ -813,6 +826,7 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
       }
       else
       {
+        work->plData->mode = PL_MODE_ITEMUSE;
         work->plData->ret_sel = work->pokeCursor;
         work->plData->ret_mode = PL_RET_BAG;
         PLIST_MSGCB_CheckItemUseContinue( work );

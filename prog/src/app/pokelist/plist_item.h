@@ -69,6 +69,7 @@ extern void PLIST_ITEM_MSG_CanNotUseItemContinue( PLIST_WORK *work );
 extern const PLIST_ITEM_USE_TYPE PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work );
 
 extern void PLIST_MSGCB_LvUp_EvoCheck( PLIST_WORK *work );
+extern void PLIST_MSGCB_LvUp_CheckLearnWaza( PLIST_WORK *work );
 extern void PLIST_HPANMCB_ReturnRecoverHp( PLIST_WORK *work );
 extern void PLIST_HPANMCB_ReturnRecoverAllDeath( PLIST_WORK *work );
 extern void PLIST_MSGCB_RecoverAllDeath_NextPoke( PLIST_WORK *work );
