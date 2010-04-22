@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-20T20:23:58"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T20:59:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="145" right="2004" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -411,8 +411,12 @@
 	<row id="msg_h01r0201_woman2_01">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
-		<language name="JPN" width="256">すっごく　あるいちゃった！</language>
-		<language name="JPN_KANJI" width="256">すっごく　歩いちゃった！</language>
+		<language name="JPN" width="256">すっごく　あるいちゃった！
+あしが　パンパンよ▼
+……あのう　あんまり　みないでね</language>
+		<language name="JPN_KANJI" width="256">すっごく　歩いちゃった！
+脚が　パンパンよ▼
+……あのう　あんまり　みないでね</language>
 	</row>
 
 	<flowchart-group-list>

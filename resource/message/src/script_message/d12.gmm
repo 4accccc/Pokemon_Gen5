@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T16:37:39"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T20:56:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1295" top="207" right="2000" bottom="835" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d12_mariner_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_d12_mariner_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ポジション（GRIDX=293/GRIDZ=749）
 左向き
 
@@ -306,7 +306,7 @@
 		<language name="JPN_KANJI" width="256">ヒウンシティに　もどりますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d12_mariner_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_d12_mariner_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>●「はい」の場合
 
 ・このあと画面暗転。
@@ -320,17 +320,17 @@
 乗船して　お待ちください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d12_mariner_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_d12_mariner_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>●「いいえ」の場合</comment>
 		<attribute name="キャラ指定">PILOT
 船長</attribute>
 		<language name="JPN" width="256">ヒウンシティに　もどりたいときは
-いつでも　こえを　かけて　ください！</language>
+いつでも　こえを　かけてください！</language>
 		<language name="JPN_KANJI" width="256">ヒウンシティに　もどりたいときは
-いつでも　声を　かけて　ください！</language>
+いつでも　声を　かけてください！</language>
 	</row>
 
-	<row id="msg_d12_visitor01_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d12_visitor01_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ポジション（GRIDX=295/GRIDZ=750）
 下向き
 
@@ -342,14 +342,14 @@
 なんて　ひどいことを　するんだ…！</language>
 	</row>
 
-	<row id="msg_d12_visitor01_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d12_visitor01_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>●イベント終了後のセリフ</comment>
 		<attribute name="キャラ指定">BACKPACKERM</attribute>
 		<language name="JPN" width="256">うみの　かおりが　ここちいいねー！</language>
 		<language name="JPN_KANJI" width="256">海の　香りが　ここちいいねー！</language>
 	</row>
 
-	<row id="msg_d12_visitor02_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_d12_visitor02_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ポジション（GRIDX=296/GRIDZ=749）
 下向き
 
@@ -359,7 +359,7 @@
 		<language name="JPN_KANJI" width="256">うわーん　こわいよー！</language>
 	</row>
 
-	<row id="msg_d12_visitor02_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_d12_visitor02_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●イベント終了後のセリフ
 ※主人公が♂</comment>
 		<attribute name="キャラ指定">BABYBOY1</attribute>
@@ -369,7 +369,7 @@
 やっつけてくれたんだね！</language>
 	</row>
 
-	<row id="msg_d12_visitor02_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_d12_visitor02_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●イベント終了後のセリフ
 ※主人公が♀</comment>
 		<attribute name="キャラ指定">BABYBOY1</attribute>
@@ -379,7 +379,7 @@
 やっつけてくれたんだね！</language>
 	</row>
 
-	<row id="msg_d12_visitor03_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d12_visitor03_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ポジション（GRIDX=297/GRIDZ=750）
 右向き（向き固定）
 
@@ -393,7 +393,7 @@
 フガ　フガ…！</language>
 	</row>
 
-	<row id="msg_d12_visitor03_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_d12_visitor03_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>●イベント終了後のセリフ</comment>
 		<attribute name="キャラ指定">OLDWOMAN1</attribute>
 		<language name="JPN" width="256">まごを　たすけてくれて
@@ -402,7 +402,7 @@
 ほんとに　ありがとうよ</language>
 	</row>
 
-	<row id="msg_d12_plasma01_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_d12_plasma01_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ポジション（GRIDX=298/GRIDZ=750）
 左向き（向き固定）
 
@@ -416,7 +416,7 @@
 手荒な　ことは　しない！</language>
 	</row>
 
-	<row id="msg_d12_visitor04_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+	<row id="msg_d12_visitor04_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
 		<comment>ポジション（GRIDX=299/GRIDZ=749）
 下向き
 
@@ -430,7 +430,7 @@
 まったく　アヤシイ　連中だ！</language>
 	</row>
 
-	<row id="msg_d12_visitor04_02" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+	<row id="msg_d12_visitor04_02" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
 		<comment>●イベント終了後のセリフ</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">しまの　ひみつを　もっと　はやく
@@ -443,7 +443,7 @@
 ひとりごと　ひとりごと…！</language>
 	</row>
 
-	<row id="msg_d12_visitor05_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_d12_visitor05_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>ポジション（GRIDX=298/GRIDZ=745）
 下向き
 
@@ -457,7 +457,7 @@
 なにを　しようと　してるのかしら…？</language>
 	</row>
 
-	<row id="msg_d12_visitor05_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_d12_visitor05_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">ポケモンを　あくじに　つかうひとが
 おおすぎるのよ…！</language>
@@ -465,7 +465,7 @@
 多すぎるのよ…！</language>
 	</row>
 
-	<row id="msg_d12_police01_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_d12_police01_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ポジション（GRIDX=308/GRIDZ=746）
 右向き
 
@@ -479,7 +479,7 @@
 プラズマ団の　ヤツラめ！</language>
 	</row>
 
-	<row id="msg_d12_police01_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_d12_police01_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●イベント終了後のセリフ</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
 		<language name="JPN" width="256">キミのような　つよい　トレーナーが
@@ -488,7 +488,7 @@
 いてくれて　本当に　助かった！</language>
 	</row>
 
-	<row id="msg_d12_police01_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_d12_police01_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●再上陸のセリフ</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
 		<language name="JPN" width="256">さいきんは　かんこうきゃくが
@@ -497,7 +497,7 @@
 少なくなったから　退屈だ…</language>
 	</row>
 
-	<row id="msg_d12_sign_01" back-color="#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,,,#ff00ff,,">
+	<row id="msg_d12_sign_01" back-color="#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,,,,,,#ff00ff,,,,,,">
 		<attribute name="キャラ指定">看板・桟橋左</attribute>
 		<language name="JPN" width="256">…２００ねんまえ
 だいふごうが　しまを　かいとり[BE:01:ページ切り替え（クリア）]
@@ -513,7 +513,7 @@
 リバティガーデン島と　なづけました</language>
 	</row>
 
-	<row id="msg_d12_sign_02" back-color="#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,,,#ff00ff,,">
+	<row id="msg_d12_sign_02" back-color="#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,,,,,,#ff00ff,,,,,,">
 		<attribute name="キャラ指定">看板・桟橋右</attribute>
 		<language name="JPN" width="256">だい２　さんばし
 かんこうせん　のりばは[BE:00:ページ切り替え（行送り）]
@@ -523,7 +523,7 @@
 第１桟橋に　なります</language>
 	</row>
 
-	<row id="msg_d12_sign_03" back-color="#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,,,#ff00ff,,">
+	<row id="msg_d12_sign_03" back-color="#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,,,,,,#ff00ff,,,,,,">
 		<attribute name="キャラ指定">看板・灯台前</attribute>
 		<language name="JPN" width="256">じゆうの　ひかりを　ともす　とうだい[BE:01:ページ切り替え（クリア）]
 かんけいしゃ　いがいの
@@ -533,7 +533,7 @@
 立ち入りを　禁止します</language>
 	</row>
 
-	<row id="msg_d12_police02_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_d12_police02_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ポジション（GRIDX=305/GRIDZ=756）
 左向き
 
@@ -549,7 +549,7 @@
 悪の一味は　一網打尽だよ！</language>
 	</row>
 
-	<row id="msg_d12_police02_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_d12_police02_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●再上陸後のセリフ</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
 		<language name="JPN" width="256">あの　ポケモンは　げんきかい？[BE:01:ページ切り替え（クリア）]
@@ -560,35 +560,35 @@
 島は　静かな　もんだよ</language>
 	</row>
 
-	<row id="msg_d12_plasma_sub_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_d12_plasma_sub_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>●サブウインドウ</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
 		<language name="JPN" width="256">プラズマだんは　ふめつ！</language>
 		<language name="JPN_KANJI" width="256">プラズマ団は　不滅！</language>
 	</row>
 
-	<row id="msg_d12_plasma_sub_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_d12_plasma_sub_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>●サブウインドウ</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
 		<language name="JPN" width="256">まだ　あきらめないぞ！</language>
 		<language name="JPN_KANJI" width="256">まだ　あきらめないぞ！</language>
 	</row>
 
-	<row id="msg_d12_police_sub_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_d12_police_sub_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●サブウインドウ</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
 		<language name="JPN" width="256">あくじは　ゆるさん！</language>
 		<language name="JPN_KANJI" width="256">悪事は　ゆるさん！</language>
 	</row>
 
-	<row id="msg_d12_police_sub_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_d12_police_sub_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●サブウインドウ</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
 		<language name="JPN" width="256">さっさと　あるけ！</language>
 		<language name="JPN_KANJI" width="256">さっさと　歩け！</language>
 	</row>
 
-	<row id="msg_d12_hakase2_01" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+	<row id="msg_d12_hakase2_01" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<comment>●アララギ（娘）が遠くから話しかける。
 
 ●この後、主人公が２グリッド前進する。</comment>
@@ -602,7 +602,7 @@
 ごっそり　捕まえられたわよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d12_hakase2_02" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+	<row id="msg_d12_hakase2_02" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<attribute name="キャラ指定">HAKASE2
 アララギ博士娘</attribute>
 		<language name="JPN" width="256">ビクティが　このしまに　いた　わけは…
@@ -611,7 +611,7 @@
 [BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d12_hakase2_03" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+	<row id="msg_d12_hakase2_03" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<attribute name="キャラ指定">HAKASE2
 アララギ博士娘</attribute>
 		<language name="JPN" width="256">ビクティの　イッシュずかんナンバーが
@@ -620,7 +620,7 @@
 ０の　理由は…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d12_police03_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_d12_police03_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●警官３が小走りにやってきて、セリフ。
 ポジション（GRIDX=308/GRIDZ=763）</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
@@ -636,7 +636,7 @@
 博士も　ご乗船ください！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d12_hakase2_04" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+	<row id="msg_d12_hakase2_04" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<comment>●警官３を向いて、セリフ。
 ●再び主人公を向く。</comment>
 		<attribute name="キャラ指定">HAKASE2
@@ -647,7 +647,7 @@
 すぐに　いきまーす！▼</language>
 	</row>
 
-	<row id="msg_d12_hakase2_05" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,,#ffff00,,#ffff00,#ffff00,,,#ffff00,,">
+	<row id="msg_d12_hakase2_05" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<comment>●最後のセリフ。
 
 ●セリフ後に、警官隊たちと立ち去る。</comment>
