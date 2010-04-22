@@ -35,19 +35,15 @@ _EVENT_DATA_END
 EVENT_START		ev_reserve_d04r0601_event_01
 	
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
-	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_vanish )
+//	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_vanish )
 	_OBJ_ANIME_WAIT()
 	
 	_OBJ_POS_CHANGE(D04R0601_RIVAL_01,14,3,24,DIR_UP )
 
-	_SE_PLAY(SEQ_SE_FLD_16)
-	
-	//ライバル：落ちてくる
+/*	//ライバル：落ちてくる 【仮】落下演出が仮。新規コマンド作成予定[100422斉藤マ]
 	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_drop )
 	_OBJ_ANIME_WAIT()
-
-	_SE_WAIT()
-
+*/
 	_SE_PLAY(SEQ_SE_FLD_17)
 	_SE_WAIT()
 	
@@ -135,12 +131,6 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_miru )
 	_OBJ_ANIME_WAIT()
 
-	_TIME_WAIT( 30 )
-
-	//階段ＳＥ
-	_SE_PLAY(SEQ_SE_KAIDAN)
-	_SE_WAIT()
-
 	//ゲーチスOBJを消す
 	_OBJ_DEL( D04R0601_SAGE1_01 )
 
@@ -194,13 +184,9 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	
 	//========================================/
 
-	//自機にカメラを戻す
-	_CAMERA_RECV_MOVE( 1 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
-	_CAMERA_END()		//カメラ操作終了
-
 	_MAP_FADE_END_CHECK()
+	
+	_CAMERA_END()		//カメラ操作終了
 
 	//予約スクリプト
 	_RESERVE_SCRIPT( SCRID_RESERVE_D03R0101_EVENT_01 )
@@ -262,8 +248,7 @@ _ANIME_LABEL	anm_sage1_saru
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_sage1_saru1
-	_ANIME_DATA	AC_WALK_L_8F,7
-	_ANIME_DATA	AC_WALK_U_8F,8
+	_ANIME_DATA	AC_WALK_L_8F,9
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------

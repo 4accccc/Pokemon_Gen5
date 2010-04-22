@@ -79,17 +79,19 @@ EVENT_END
 /*		プラズマ団イベント D03R0101POSイベントスクリプト	  */
 /**************************************************************/
 EVENT_START		ev_pos_d03r0101_rival_01
+	//ストップ！ [100422斉藤マ]
+	_PLAYER_NAME( 0 )
+	_PLAINWIN_MSG_DOWN( msg_d03r0101_rival_00 )
+	_MSGWIN_CLOSE()
 
 	_FLAG_RESET(FV_D03R0101_RIVAL_01)
 	_OBJ_ADD( D03R0101_RIVAL_01 )
 	_OBJ_POS_CHANGE( D03R0101_RIVAL_01, 61, 0, 38, DIR_DOWN )
 
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_d )
 	_OBJ_ANIME( D03R0101_RIVAL_01, anm_rival_come )
 	_OBJ_ANIME_WAIT()
 	
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_d )
-	_OBJ_ANIME_WAIT()
-
 	//そこが　こだいのしろの　いりぐち
 	_PLAYER_NAME(0)
 	_BALLOONWIN_OBJMSG( msg_d03r0101_rival_01 , D03R0101_RIVAL_01 )
