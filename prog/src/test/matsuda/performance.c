@@ -136,6 +136,11 @@ static PERFORMANCE_SYSTEM pfm_sys;
 ///　※パフォーマンスと全然関係ないけど、このソースは常に常駐にあるので
 BOOL DebugScanOnly = FALSE;
 
+//負荷を一時的にかけなくするフラグ
+BOOL DebugStressON = TRUE;
+//パレスモード判定用
+BOOL DebugStressPalace = FALSE;
+
 //==============================================================================
 //	データ
 //==============================================================================
@@ -905,19 +910,27 @@ void DEBUG_PerformanceSetStress(void)
   if ( !pfm_sys.AveTest ) return;
   start_tick = OS_GetTick();
  
-  {
+  if (DebugStressON){
     int diff;
     int stress;
     AVERAGE_PRM *prm;
     prm = &pfm_sys.AvePrm[PERFORMANCE_ID_MAIN];
     //これから計測するのが、トップの場合（prm->Top==1）6000の負荷。テイルは3000
-    if (prm->Top) stress = 6000;
+    if (prm->Top){
+      //パレスなら5000
+      if ( DebugStressPalace ) stress = 5000;
+      else stress = 6000;
+    }
     else stress = 3000;
   
     do{
       OSTick end_tick = OS_GetTick();
       diff = OS_TicksToMicroSeconds(end_tick-start_tick);
     }while(diff < stress);
+  }
+  else
+  {
+    NOZOMU_Printf("ストレスオフ中\n");
   }
 }
 
@@ -1094,5 +1107,14 @@ void DEBUG_PerformanceSetTopFlg(const u8 inTop)
   prm->Top = inTop;
 }
 
+void DEBUG_PerformanceStressON(BOOL flg)
+{
+  DebugStressON = flg;
+  if (flg)
+  {
+    //パレスならＯＦＦ
+    if (DebugStressPalace) DebugStressON = FALSE;
+  }
+}
 
 #endif //PM_DEBUG
