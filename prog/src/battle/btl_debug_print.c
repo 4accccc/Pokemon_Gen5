@@ -168,7 +168,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_NET_RecvedAllClientsData: return "全クライアントからのデータ返ってきた\n";
   case DBGSTR_NET_ReturnToServerTrying: return "Try Return to Server %d byte ...";
   case DBGSTR_NET_RecvedClientData:     return "[BTLNET] recv from netID[%d], size=%d\n";
-  case DBGSTR_NET_RecvedServerVersion:  return "サーババージョン受信 ... netID=%d, version=%d\n";
+  case DBGSTR_NET_RecvedServerVersion:  return "サーババージョン受信 ... netID=%d, version=%d, clientID=%d\n";
   case DBGSTR_NET_ServerDetermine:      return "サーバは netID=%d のマシンに決定\n";
   case DBGSTR_NET_SendAITrainerData:    return "AIトレーナーデータ送信完了, trID=%d\n";
   case DBGSTR_NET_RecvAITrainerData:    return "AIトレーナーデータ受信完了, trID=%d\n";

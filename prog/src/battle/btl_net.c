@@ -286,6 +286,8 @@ BOOL BTL_NET_DetermineServer( u8 clientID )
   TMP_SEND_BUFFER* tsb = &Sys->sendBuf;
   tsb->val16[0] = BTL_NET_SERVER_VERSION;
   tsb->val16[1] = clientID;
+
+  TAYA_Printf(" Send My ClientID ... %d\n", clientID );
   return GFL_NET_SendData( Sys->netHandle, CMD_NOTIFY_SERVER_VER, sizeof(*tsb), tsb );
 }
 
@@ -295,7 +297,7 @@ static void recv_serverVer( const int netID, const int size, const void* pData, 
   const TMP_SEND_BUFFER* tsb = (const TMP_SEND_BUFFER*)pData;
   SVVER_WORK* swk = (SVVER_WORK*)(&Sys->svverWork);
 
-  BTL_N_Printf( DBGSTR_NET_RecvedServerVersion, netID, tsb->val16[0]);
+  BTL_N_Printf( DBGSTR_NET_RecvedServerVersion, netID, tsb->val16[0], tsb->val16[1]);
 
   if( swk->recvTable[netID].recvedFlag == FALSE )
   {
@@ -438,13 +440,15 @@ BOOL BTL_NET_StartNotifyPartyData( const POKEPARTY* party )
 {
   u32 size = PokeParty_GetWorkSize();
 
-  return GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_PARTY_DATA,
+  u8 result =  GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_PARTY_DATA,
         size,
         party,
         FALSE,  // 優先度を高くする
         TRUE,   // 同一コマンドがキューに無い場合のみ送信する
         TRUE    // GFL_NETライブラリの外で保持するバッファを使用
   );
+
+  return result;
 }
 
 
@@ -459,8 +463,9 @@ static u8* getbuf_partyData( int netID, void* pWork, int size )
 static void recv_partyData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
 {
   Sys->tmpLargeBufUsedSize[ netID ] = size;
-  BTL_N_PrintfEx( PRINT_FLG, DBGSTR_NET_RecvedPartyData,
+  BTL_N_Printf( DBGSTR_NET_RecvedPartyData,
       netID, Sys->clientID[netID], pData, Sys->tmpRecvBuf[netID] );
+
 }
 // パーティデータの相互受信が完了したか？
 BOOL BTL_NET_IsCompleteNotifyPartyData( void )
@@ -469,12 +474,16 @@ BOOL BTL_NET_IsCompleteNotifyPartyData( void )
 
   for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
   {
-    if( IsBattleConnectNetID(i) && (Sys->tmpLargeBufUsedSize[i] == 0) )
+    if( IsBattleConnectNetID(i) )
     {
-      return FALSE;
+      TAYA_Printf("  netID=%d, in Battle ... \n");
+      if( Sys->tmpLargeBufUsedSize[i] == 0 )
+      {
+        return FALSE;
+      }
     }
   }
-  BTL_N_PrintfEx( PRINT_FLG, DBGSTR_NET_PartyDataComplete, Sys->memberCount );
+  BTL_N_Printf( DBGSTR_NET_PartyDataComplete, Sys->memberCount );
   return TRUE;
 }
 

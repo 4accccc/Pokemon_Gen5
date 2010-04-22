@@ -275,6 +275,8 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->fCommError = FALSE;
       wk->MultiAIClientNum = 0;
 
+      TAYA_Printf("musicDef=%d, musicWin=%d\n", setup_param->musicDefault, setup_param->musicWin );
+
       Kentei_ClearField( wk->setupParam );
 
       wk->ppIllusionZoroArc = NULL;
@@ -444,7 +446,6 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
   if( setup_param->commMode == BTL_COMM_NONE )
   {
     BTL_UTIL_SetPrintType( BTL_PRINTTYPE_STANDALONE );
-
 
     switch( setup_param->rule ){
     case BTL_RULE_SINGLE:
