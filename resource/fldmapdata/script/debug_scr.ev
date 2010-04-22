@@ -1008,23 +1008,35 @@ EVENT_END
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-EVENT_START   ev_debug_obata
+EVENT_START ev_debug_obata
 
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
-	_BMPMENU_MAKE_LIST( msg_debug_obata_1, 0 )
-	_BMPMENU_MAKE_LIST( msg_debug_obata_2, 1 )
-	_BMPMENU_MAKE_LIST( msg_debug_obata_3, 2 )
+	_BMPMENU_MAKE_LIST( msg_debug_obata_1, 1 ) // 初回クリア
+	_BMPMENU_MAKE_LIST( msg_debug_obata_2, 2 ) // 殿堂入り
+	_BMPMENU_MAKE_LIST( msg_debug_obata_3, 3 ) // リーグ・エレベータチェック
+	_BMPMENU_MAKE_LIST( msg_debug_obata_4, 4 ) // 育て屋オープン
+	_BMPMENU_MAKE_LIST( msg_debug_obata_5, 5 ) // 育て屋ポケセット
+	_BMPMENU_MAKE_LIST( msg_debug_obata_6, 6 ) // 育て屋ポケクリア
 	_BMPMENU_START()
 
   SWITCH $SCWK_ANSWER
-  CASE 0 THEN _GOTO_GAMECLEAR_DEMO( 0 )
-  CASE 1 THEN _GOTO_GAMECLEAR_DEMO( 1 )
-  CASE 2 THEN 
+  CASE 1 THEN _GOTO_GAMECLEAR_DEMO( 0 )
+  CASE 2 THEN _GOTO_GAMECLEAR_DEMO( 1 )
+  CASE 3 THEN 
     _FLAG_SET( SYS_FLAG_BIGFOUR_GHOSTWIN )
     _FLAG_SET( SYS_FLAG_BIGFOUR_EVILWIN )
     _FLAG_SET( SYS_FLAG_BIGFOUR_FIGHTWIN )
     _FLAG_SET( SYS_FLAG_BIGFOUR_ESPWIN ) 
     _MAP_CHANGE( ZONE_ID_C09P01, 31, 45, DIR_UP )
+  CASE 4 THEN
+    _FLAG_SET( FE_SODATEYAOLDMAN_OPEN ) 
+    _FLAG_RESET( FV_R03_SODATEYA_01 ) 
+  CASE 5 THEN
+    _POKE_TO_SODATEYA(0)
+    _POKE_TO_SODATEYA(1)
+  CASE 6 THEN 
+    _POKE_FROM_SODATEYA(0)
+    _POKE_FROM_SODATEYA(0)
   ENDSWITCH
 
 EVENT_END
