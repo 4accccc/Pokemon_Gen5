@@ -147,6 +147,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_MyPace( u32* numElems );
 static void handler_Donkan( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Donkan_Wake( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Donkan_ActEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Donkan_NoEffCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Donkan( u32* numElems );
 static BOOL common_GuardWazaSick( BTL_SVFLOW_WORK* flowWk, u8 pokeID, WazaSick guardSick );
 static void handler_AddSickFailCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -2195,6 +2196,29 @@ static void handler_Donkan_ActEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 {
   common_TokuseiWake_CureSickCore( flowWk, pokeID, WAZASICK_MEROMERO );
 }
+// ワザ無効化チェックハンドラ
+static void handler_Donkan_NoEffCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // 自分が防御側の時
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  {
+    // ワザ「ゆうわく」が無効
+    WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+    if( waza == WAZANO_YUUWAKU )
+    {
+      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
+      {
+        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+        {
+          BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+          HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NoEffect );
+          HANDEX_STR_AddArg( &param->str, pokeID );
+        }
+        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+      }
+    }
+  }
+}
 
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Donkan( u32* numElems )
 {
@@ -2202,6 +2226,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Donkan( u32* numElems )
     { BTL_EVENT_ADDSICK_CHECKFAIL,    handler_Donkan            },  // 状態異常失敗チェックハンドラ
     { BTL_EVENT_ADDSICK_FAILED,       handler_AddSickFailCommon },
     { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_Donkan_Wake       },  // とくせい書き換えハンドラ
+    { BTL_EVENT_NOEFFECT_CHECK_L3,    handler_Donkan_NoEffCheck },  // ワザ無効化チェックハンドラ
     { BTL_EVENT_ACTPROC_END,          handler_Donkan_ActEnd     },  // アクション終了毎ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
@@ -3522,6 +3547,9 @@ static void handler_Ganjou_KoraeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     {
       work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_KORAERU_CAUSE, BPP_KORAE_TOKUSEI_DEFENDER );
     }
+    else{
+      work[0] = 0;
+    }
   }
 }
 // こらえる発動ハンドラ
@@ -3539,6 +3567,8 @@ static void handler_Ganjou_KoraeExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     HANDEX_STR_AddArg( &param->str, pokeID );
 
     BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+
+    work[0] = 0;
   }
 }
 
@@ -5446,7 +5476,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_NakamaIsiki( u32* numElems )
 /**
  *  とくせい「モラテラピー」
  *
- * 自分以外の見方のポケモン系状態異常が毎ターン30％の確率で回復する。
+ * 自分以外の味方のポケモン系状態異常が毎ターン30％の確率で回復する。
  */
 //------------------------------------------------------------------------------
 // ターンチェックハンドラ
