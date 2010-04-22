@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T19:07:04"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T21:38:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -698,7 +698,7 @@
 それを　教えてやってくれい</language>
 	</row>
 
-	<row id="msg_c09r0501_champion_10" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c09r0501_champion_10" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・クリア後
 ・初回
@@ -716,14 +716,14 @@
 ポケモントレーナーである　きみの▽
 むねを　かしてもらうと　するか！▼</language>
 		<language name="JPN_KANJI" width="256">アデク『……Ｎの　こと
-きみには　感謝しておるよ▼
+君には　感謝しておるよ▼
 ……今の　彼が
 なにを　思っているか　しらんが▼
 人にも　ポケモンにも
 それぞれの　道が　あること▽
-きっと　きづいたで　あろうからな▼
+きっと　気づいたで　あろうからな▼
 さて　イッシュ地方で　最強の
-ポケモントレーナーである　きみの▽
+ポケモントレーナーである　君の▽
 胸を　貸してもらうと　するか！▼</language>
 	</row>
 

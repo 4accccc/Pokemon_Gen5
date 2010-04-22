@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T17:18:08"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T21:37:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1478" top="188" right="2183" bottom="816" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="806" top="169" right="1280" bottom="567" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1094,14 +1094,14 @@ C02ジムリーダー</attribute>
 [1:00:トレーナー名:0]！▼
 その　ダークストーンを
 てにする　ということは▽
-ワシに　なにか　あったとき▼
+わしに　なにか　あったとき▼
 Ｎと　たたかうと　いうことだぞ
 それで　いいんだな？</language>
 		<language name="JPN_KANJI" width="256">アデク『ちょっと　待つんだ
 [1:00:トレーナー名:0]！▼
 その　ダークストーンを
 手にする　ということは▽
-ワシに　なにか　あったとき▼
+わしに　なにか　あったとき▼
 Ｎと　戦うと　いうことだぞ
 それで　いいのか？</language>
 	</row>
@@ -1118,14 +1118,14 @@ C02ジムリーダー</attribute>
 [1:00:トレーナー名:0]！▼
 その　ライトストーンを
 てにする　ということは▽
-ワシに　なにか　あったとき▼
+わしに　なにか　あったとき▼
 Ｎと　たたかうと　いうことだぞ
 それで　いいんだな？</language>
 		<language name="JPN_KANJI" width="256">アデク『ちょっと　待つんだ
 [1:00:トレーナー名:0]！▼
 その　ライトストーンを
 手にする　ということは▽
-ワシに　なにか　あったとき▼
+わしに　なにか　あったとき▼
 Ｎと　戦うと　いうことだぞ
 それで　いいんだな？</language>
 	</row>
@@ -1386,11 +1386,11 @@ C02ジムリーダー</attribute>
 		<language name="JPN" width="256">アララギパパ『[1:00:トレーナー名:0]よ▼
 おまえさんの　すぐ　となりには
 いつも　ポケモンが　いること▽
-けっして　わすれるんじゃ　ないよ▼</language>
+わすれるんじゃ　ないよ▼</language>
 		<language name="JPN_KANJI" width="256">アララギパパ『[1:00:トレーナー名:0]よ▼
 おまえさんの　すぐ　隣には
 いつも　ポケモンが　いること▽
-けっして　忘れるんじゃ　ないよ▼</language>
+忘れるんじゃ　ないよ▼</language>
 	</row>
 
 	<row id="msg_c02_hakase2_stone_04" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

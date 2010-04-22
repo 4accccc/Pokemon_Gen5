@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T20:31:06"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T21:36:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -558,10 +558,10 @@
 アデク</attribute>
 		<language name="JPN" width="256">アデク『……それを　いうため
 ここに　のこっていたのか？▼
-ワシも　バカに　されたものだな▼</language>
+わしも　バカに　されたものだな▼</language>
 		<language name="JPN_KANJI" width="256">アデク『……それを　いうため
 ここに　残っていたのか？▼
-ワシも　バカに　されたものだな▼</language>
+わしも　バカに　されたものだな▼</language>
 	</row>
 
 	<row id="msg_d04r0601_sage1_04a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
