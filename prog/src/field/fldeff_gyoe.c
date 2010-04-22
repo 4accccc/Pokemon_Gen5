@@ -4,6 +4,8 @@
  * @brief	フィールド びっくりマークエフェクト
  * @author	kagaya
  * @date	05.07.13
+ *
+ * 2010.04.21 tamada  カメラ逆行列で位置補正を行うように修正
  */
 //======================================================================
 #include <gflib.h>
@@ -17,17 +19,11 @@
 
 #include "sound/pm_sndsys.h"
 
-#define  POS_CALC_BY_CAMERA   //ビックリマークの位置計算をカメラ逆行列で行う
 
 //======================================================================
 //  define
 //======================================================================
-#ifdef  POS_CALC_BY_CAMERA
 #define GYOE_FLDOBJ_Y_OFFSET (NUM_FX32(22)) ///<フィールドOBJからのYオフセット
-#else
-#define GYOE_FLDOBJ_Y_OFFSET (NUM_FX32(32)) ///<フィールドOBJからのYオフセット
-#endif
-#define GYOE_FLDOBJ_Z_OFFSET (0x1000) ///<フィールドOBJからのZオフセット
 #define GYOE_FLDOBJ_Y_MOVE_START (0x6000) ///<ギョエー初速
 #define GYOE_END_FRAME (30) ///<ギョエー終了フレーム	
 
@@ -83,6 +79,9 @@ typedef struct
 //======================================================================
 static void gyoe_InitResource( FLDEFF_GYOE *gyoe );
 static void gyoe_DeleteResource( FLDEFF_GYOE *gyoe );
+
+static void gyoe_PlaySE( FLDEFF_GYOETYPE type );
+static void gyoe_CalcPos( TASKWORK_GYOE *work, VecFx32 * pos );
 
 static const FLDEFF_TASK_HEADER DATA_gyoeTaskHeader;
 static const FLDEFF_TASK_HEADER DATA_gyoeTaskHeader_only;
@@ -199,24 +198,7 @@ FLDEFF_TASK * FLDEFF_GYOE_SetMMdl( FLDEFF_CTRL *fectrl,
   head.fieldmap = FLDEFF_CTRL_GetFieldMapWork( fectrl );
   
   if( se_play == TRUE ){
-    u32 idx = 0;
-
-    switch( type ){
-    case FLDEFF_GYOETYPE_GYOE:
-      idx = SEQ_SE_FLD_07;
-      break;
-    case FLDEFF_GYOETYPE_HATE:
-      idx = SEQ_SE_SYS_62;
-      break;
-    case FLDEFF_GYOETYPE_ONPU:
-      idx = SEQ_SE_SYS_63;
-      break;
-    case FLDEFF_GYOETYPE_TEN:
-      idx = SEQ_SE_SYS_64;
-      break;
-    }
-
-    PMSND_PlaySE( idx );
+    gyoe_PlaySE( type );
   }
   
   return( FLDEFF_CTRL_AddTask(fectrl,&DATA_gyoeTaskHeader,NULL,0,&head,0) );
@@ -243,9 +225,10 @@ FLDEFF_TASK * FLDEFF_GYOE_SetMMdlNonDepend( FLDEFF_CTRL *fectrl,
   head.eff_gyoe = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_GYOE );
   head.mmdl = mmdl;
   MMDL_InitCheckSameData( mmdl, &head.samedata );
+  head.fieldmap = FLDEFF_CTRL_GetFieldMapWork( fectrl );
   
   if( se_play == TRUE ){
-    PMSND_PlaySE( SEQ_SE_FLD_07 );
+    gyoe_PlaySE( type );
   }
   
   return( FLDEFF_CTRL_AddTask(fectrl,&DATA_gyoeTaskHeader_only,NULL,0,&head,0) );
@@ -298,7 +281,100 @@ static void gyoeTask_Delete( FLDEFF_TASK *task, void *wk )
 //  TASKWORK_GYOE *work = wk;
 }
 
-#ifdef  POS_CALC_BY_CAMERA
+//--------------------------------------------------------------
+/**
+ * びっくりマークエフェクトタスク　更新
+ * @param task FLDEFF_TASK
+ * @param wk task work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void gyoeTask_Update( FLDEFF_TASK *task, void *wk )
+{
+  VecFx32 pos;
+  TASKWORK_GYOE *work = wk;
+  
+  if( MMDL_CheckSameData(work->head.mmdl,&work->head.samedata) == FALSE ){
+    GF_ASSERT( 0 ); //マーク表示中に消去
+    work->end_flag = TRUE;
+    return;
+  }
+    
+  MMDL_GetVectorPos( work->head.mmdl, &pos );
+  gyoe_CalcPos( work, &pos );
+  FLDEFF_TASK_SetPos( task, &pos );
+}
+
+//--------------------------------------------------------------
+/**
+ * びっくりマークエフェクトタスク　更新　動作モデル依存無し版
+ * @param task FLDEFF_TASK
+ * @param wk task work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void gyoeTask_Update_only( FLDEFF_TASK *task, void *wk )
+{
+  VecFx32 pos;
+  TASKWORK_GYOE *work = wk;
+  
+  if( work->end_flag == TRUE ||
+      MMDL_CheckSameData(work->head.mmdl,&work->head.samedata) == FALSE ){
+    FLDEFF_TASK_CallDelete( task ); //アニメ終了 or 動作モデル死亡　削除
+    return;
+  }
+  
+  MMDL_GetVectorPos( work->head.mmdl, &pos );
+  gyoe_CalcPos( work, &pos );
+  FLDEFF_TASK_SetPos( task, &pos );
+}
+
+//--------------------------------------------------------------
+/**
+ * びっくりマークエフェクトタスク　描画
+ * @param task FLDEFF_TASK
+ * @param wk task work
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void gyoeTask_Draw( FLDEFF_TASK *task, void *wk )
+{
+  TASKWORK_GYOE *work = wk;
+  GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
+  MTX_Identity33( &status.rotate );
+  FLDEFF_TASK_GetPos( task, &status.trans );
+  GFL_G3D_DRAW_DrawObjectCullingON(
+      work->head.eff_gyoe->g3d_obj[work->head.type], &status );
+}
+
+//======================================================================
+//  
+//======================================================================
+//--------------------------------------------------------------
+/// タイプにあわせてSEを鳴らす
+//--------------------------------------------------------------
+static void gyoe_PlaySE( FLDEFF_GYOETYPE type )
+{
+  u32 idx = 0;
+
+  switch( type ){
+  case FLDEFF_GYOETYPE_GYOE:
+    idx = SEQ_SE_FLD_07;
+    break;
+  case FLDEFF_GYOETYPE_HATE:
+    idx = SEQ_SE_SYS_62;
+    break;
+  case FLDEFF_GYOETYPE_ONPU:
+    idx = SEQ_SE_SYS_63;
+    break;
+  case FLDEFF_GYOETYPE_TEN:
+    idx = SEQ_SE_SYS_64;
+    break;
+  }
+
+  PMSND_PlaySE( idx );
+}
+
 //--------------------------------------------------------------
 //動作モデル位置からのオフセットベクトルに、
 //カメラの逆行列をかけて、ビルボードに対して正確な位置オフセットを算出する
@@ -323,8 +399,12 @@ static void getBillboardOffset(
 }
 
 //--------------------------------------------------------------
+/**
+ * @param work
+ * @param pos
+ */
 //--------------------------------------------------------------
-static void gyoePos_Calc( FLDEFF_TASK *task, TASKWORK_GYOE *work, VecFx32 * pos )
+static void gyoe_CalcPos( TASKWORK_GYOE *work, VecFx32 * pos )
 {
   VecFx32 ofs;
 
@@ -347,9 +427,18 @@ static void gyoePos_Calc( FLDEFF_TASK *task, TASKWORK_GYOE *work, VecFx32 * pos 
     }
   }
 
-  MMDL_GetVectorPos( work->head.mmdl, pos );
-
-#if 0
+#if 1
+  {
+    //動作モデル位置からビックリマーク位置までのオフセットベクトルに、
+    //カメラの逆行列をかけて、ビルボードに対して正確な位置にマークをだす
+    FIELD_CAMERA * fld_cam = FIELDMAP_GetFieldCamera( work->head.fieldmap );
+    const GFL_G3D_CAMERA * g3Dcamera = FIELD_CAMERA_GetCameraPtr( fld_cam );
+    VecFx32 ofs = (VecFx32){ 0, GYOE_FLDOBJ_Y_OFFSET + work->offs_y, 0 };
+  
+    getBillboardOffset( g3Dcamera, &ofs, &ofs );
+    VEC_Add( &ofs, pos, pos );
+  }
+#else
   { //高速バージョン Y軸操作だけならばこちらのほうが計算量が少ない
     VecFx32 camera_way;
     VecFx32 camera_way_xz;
@@ -382,165 +471,13 @@ static void gyoePos_Calc( FLDEFF_TASK *task, TASKWORK_GYOE *work, VecFx32 * pos 
     pos->z += FX_Mul( camera_up.z, -( GYOE_FLDOBJ_Y_OFFSET + work->offs_y ) );
     
   }
-#else
-  {
-    //動作モデル位置からビックリマーク位置までのオフセットベクトルに、
-    //カメラの逆行列をかけて、ビルボードに対して正確な位置にマークをだす
-    FIELD_CAMERA * fld_cam = FIELDMAP_GetFieldCamera( work->head.fieldmap );
-    const GFL_G3D_CAMERA * g3Dcamera = FIELD_CAMERA_GetCameraPtr( fld_cam );
-    VecFx32 ofs = (VecFx32){ 0, GYOE_FLDOBJ_Y_OFFSET + work->offs_y, 0 };
-  
-    MMDL_GetVectorPos( work->head.mmdl, pos );
-    getBillboardOffset( g3Dcamera, &ofs, &ofs );
-    VEC_Add( &ofs, pos, pos );
-  }
 #endif
   
 }
-#endif
 
-//--------------------------------------------------------------
-/**
- * びっくりマークエフェクトタスク　更新
- * @param task FLDEFF_TASK
- * @param wk task work
- * @retval nothing
- */
-//--------------------------------------------------------------
-static void gyoeTask_Update( FLDEFF_TASK *task, void *wk )
-{
-  VecFx32 pos;
-  TASKWORK_GYOE *work = wk;
-  
-  if( MMDL_CheckSameData(work->head.mmdl,&work->head.samedata) == FALSE ){
-    GF_ASSERT( 0 ); //マーク表示中に消去
-    work->end_flag = TRUE;
-    return;
-  }
-    
-#ifdef  POS_CALC_BY_CAMERA
-  gyoePos_Calc( task, work, &pos );
-  FLDEFF_TASK_SetPos( task, &pos );
-#else
-  switch( work->seq_no ){
-  case 0:
-    work->offs_y += work->move_y;
-    if( work->offs_y ){
-      work->move_y += -0x2000;
-    }else{
-      work->move_y = 0;
-      work->seq_no++;
-    }
-    break;
-  case 1:
-    work->frame++;
-    
-    if( work->frame >= GYOE_END_FRAME ){
-      work->seq_no++;
-      work->end_flag = TRUE;
-    }
-  }
-  
-  MMDL_GetVectorPos( work->head.mmdl, &pos );
-  pos.y += GYOE_FLDOBJ_Y_OFFSET + work->offs_y;
-
-  // GRIDとRAILでオフセットの足し方を変更
-  if( MMDL_CheckStatusBit( work->head.mmdl, MMDL_STABIT_RAIL_MOVE ) == FALSE ){
-    // GRID
-    pos.z += GYOE_FLDOBJ_Z_OFFSET;
-  }else{
-    VecFx16 way;
-    MMDL_Rail_GetFrontWay( work->head.mmdl, &way );
-    way.y = 0;
-    VEC_Fx16Normalize( &way, &way );
-    // RAIL
-    pos.x += FX_Mul( GYOE_FLDOBJ_Z_OFFSET, way.x );
-    pos.z += FX_Mul( GYOE_FLDOBJ_Z_OFFSET, way.z );
-  }
-  
-  FLDEFF_TASK_SetPos( task, &pos );
-#endif
-}
-
-//--------------------------------------------------------------
-/**
- * びっくりマークエフェクトタスク　更新　動作モデル依存無し版
- * @param task FLDEFF_TASK
- * @param wk task work
- * @retval nothing
- */
-//--------------------------------------------------------------
-static void gyoeTask_Update_only( FLDEFF_TASK *task, void *wk )
-{
-  VecFx32 pos;
-  TASKWORK_GYOE *work = wk;
-  
-  if( work->end_flag == TRUE ||
-      MMDL_CheckSameData(work->head.mmdl,&work->head.samedata) == FALSE ){
-    FLDEFF_TASK_CallDelete( task ); //アニメ終了 or 動作モデル死亡　削除
-    return;
-  }
-  
-#ifdef  POS_CALC_BY_CAMERA
-  gyoePos_Calc( task, work, &pos );
-  FLDEFF_TASK_SetPos( task, &pos );
-#else
-  switch( work->seq_no ){
-  case 0:
-    work->offs_y += work->move_y;
-    if( work->offs_y ){
-      work->move_y += -0x2000;
-    }else{
-      work->move_y = 0;
-      work->seq_no++;
-    }
-    break;
-  case 1:
-    work->frame++;
-    
-    if( work->frame >= GYOE_END_FRAME ){
-      work->seq_no++;
-      work->end_flag = TRUE;
-    }
-  }
-  
-  MMDL_GetVectorPos( work->head.mmdl, &pos );
-  pos.y += GYOE_FLDOBJ_Y_OFFSET + work->offs_y;
-  // GRIDとRAILでオフセットの足し方を変更
-  if( MMDL_CheckStatusBit( work->head.mmdl, MMDL_STABIT_RAIL_MOVE ) == FALSE ){
-    // GRID
-    pos.z += GYOE_FLDOBJ_Z_OFFSET;
-  }else{
-    VecFx16 way;
-    MMDL_Rail_GetFrontWay( work->head.mmdl, &way );
-    way.y = 0;
-    VEC_Fx16Normalize( &way, &way );
-    // RAIL
-    pos.x += FX_Mul( GYOE_FLDOBJ_Z_OFFSET, way.x );
-    pos.z += FX_Mul( GYOE_FLDOBJ_Z_OFFSET, way.z );
-  }
-  FLDEFF_TASK_SetPos( task, &pos );
-#endif
-}
-
-//--------------------------------------------------------------
-/**
- * びっくりマークエフェクトタスク　描画
- * @param task FLDEFF_TASK
- * @param wk task work
- * @retval nothing
- */
-//--------------------------------------------------------------
-static void gyoeTask_Draw( FLDEFF_TASK *task, void *wk )
-{
-  TASKWORK_GYOE *work = wk;
-  GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
-  MTX_Identity33( &status.rotate );
-  FLDEFF_TASK_GetPos( task, &status.trans );
-  GFL_G3D_DRAW_DrawObjectCullingON(
-      work->head.eff_gyoe->g3d_obj[work->head.type], &status );
-}
-
+//======================================================================
+//  
+//======================================================================
 //--------------------------------------------------------------
 //  びっくりマークエフェクトタスク　ヘッダー
 //--------------------------------------------------------------
