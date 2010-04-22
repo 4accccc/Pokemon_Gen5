@@ -15,6 +15,7 @@
 //===================================================================================
 // ■定数
 //===================================================================================
+// #define DEBUG_PRINT_ON // デバッグ出力スイッチ
 #define PRINT_TARGET (1)    // デバッグ表示先
 #define MAX_VOLUME   (127)  // 最大ボリューム
 
@@ -62,8 +63,9 @@ PLAYER_VOLUME_FADER* PLAYER_VOLUME_FADER_Create( HEAPID heapID, u8 playerNo )
 {
   PLAYER_VOLUME_FADER* fader;
 
-  // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET, "PLAYER-VOLUME-FADER: create system\n" );
+#endif
 
   // 生成
   fader = GFL_HEAP_AllocMemory( heapID, sizeof(PLAYER_VOLUME_FADER) );
@@ -86,8 +88,9 @@ void PLAYER_VOLUME_FADER_Delete( PLAYER_VOLUME_FADER* fader )
 {
   GFL_HEAP_FreeMemory( fader );
 
-  // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET, "PLAYER-VOLUME-FADER: delete system\n" );
+#endif
 }
 
 //-----------------------------------------------------------------------------------
@@ -260,6 +263,7 @@ static void UpdatePlayerVolume( const PLAYER_VOLUME_FADER* fader )
   }
   NNS_SndPlayerSetPlayerVolume( fader->playerNo, volume );
 
-  // DEBUG:
+#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET, "PLAYER-VOLUME-FADER: update player volume ==> %d\n", volume );
+#endif
 }
