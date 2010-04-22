@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2009-10-23T12:39:05" source="taki_splash_f.mb"/>
+	<create user="fuchino" host="W00152" date="2010-04-22T22:03:21"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2009-10-23T12:39:05" source="taki_splash_f.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-04-22T21:23:38" source="taki_splash_s.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -22,12 +22,12 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="3 3"
 	compress_material="on" material_size="2 2"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="1" xyz="-0.080078 -4.460693 1.000000" whd="0.159912 5.811768 3.000000"/>
+<box_test pos_scale="1" xyz="-0.080078 -4.460693 -4.000000" whd="0.159912 5.783203 6.000000"/>
 
 <tex_image_array size="4">
 	<tex_image index="0" name="nami.1"
@@ -35,37 +35,37 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="nami.1_pl"
-		path="C:/0_WB/fld_effect/taki/souceimage/nami.1.tga"
+		path="C:/home/wb_data3d/wb_hero_effect/wb_taki/souceimage/nami.1.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 4400 4444 4444 4444 4044 0000 0000
-			0000 4444 4444 4444 4444 4433 0444 0000
-			4000 4444 4444 3333 3333 3333 0443 0000
-			4000 4444 3233 2223 3222 2221 4443 0000
-			4000 3434 2223 1112 1211 2111 4431 0000
-			4000 3334 1232 1111 1111 1111 4432 0000
-			4000 3334 1222 1122 1111 1111 4432 0000
-			4000 2324 2222 2222 1211 1211 4432 0000
-			4000 2324 2222 2222 2212 2111 4432 0000
-			4000 3344 2322 2322 2122 2112 4432 0000
-			4000 2324 2332 2332 2222 1112 4432 0000
-			4000 2324 2332 2332 2232 1112 4432 0000
-			4000 2324 2232 2332 2232 1112 4432 0000
-			4000 3324 3232 2332 2233 1112 0432 0000
-			0000 4424 3232 3332 2233 2212 0432 0000
-			0000 3424 2232 3332 2223 2322 0432 0000
-			0000 3444 2244 3344 3223 2322 0432 0000
-			0000 3444 2244 3444 3323 2333 0042 0000
-			0000 3344 4444 4442 3323 2233 0042 0000
-			0000 4344 4444 4242 3232 2233 0044 0000
-			0000 4344 4444 4242 3232 2234 0044 0000
-			0000 4440 4044 4424 4232 4244 0044 0000
-			0000 4400 4044 4424 4232 4244 0004 0000
-			0000 4000 4004 4424 4242 4440 0000 0000
-			0000 4000 0004 4444 4424 0440 0000 0000
-			0000 0000 0004 4444 4424 0400 0000 0000
+			0000 3400 1111 1111 1111 3011 0000 0000
+			0000 2344 1111 1111 1111 3111 0444 0000
+			4000 1334 1111 1111 1111 2111 0443 0000
+			4000 1334 1111 1111 1111 1111 4443 0000
+			4000 1234 1111 1111 1111 1111 4432 0000
+			4000 1134 1111 1111 1111 1111 4431 0000
+			4000 1134 1111 1111 1111 1111 4431 0000
+			4000 1234 1211 1111 1121 1211 4431 0000
+			4000 2334 1211 1111 1122 1211 4431 0000
+			4000 3334 2322 1211 1222 1211 4431 0000
+			4000 2334 2332 2321 1222 2221 4432 0000
+			4000 2334 2332 2321 2232 2322 4432 0000
+			4000 2334 2232 2322 2232 2322 4432 0000
+			4000 3334 3232 2332 2233 2332 0433 0000
+			0000 3434 3232 3332 2233 2332 0433 0000
+			0000 3434 3333 3332 2223 3332 0433 0000
+			0000 3444 3343 3333 3223 3333 0433 0000
+			0000 3444 3344 3333 3323 3333 0043 0000
+			0000 3344 3344 4333 3333 3333 0043 0000
+			0000 4344 4444 4333 3333 3333 0044 0000
+			0000 4344 4444 4333 3333 3334 0044 0000
+			0000 4440 4044 4434 4333 4344 0044 0000
+			0000 4400 4044 4434 4333 4344 0004 0000
+			0000 4000 4004 4434 4333 4440 0000 0000
+			0000 4000 0004 4444 4434 0440 0000 0000
+			0000 0000 0004 4444 4434 0400 0000 0000
 			0000 0000 0000 4440 0444 0000 0000 0000
 			0000 0000 0000 4400 0444 0000 0000 0000
 			0000 0000 0000 0400 0040 0000 0000 0000
@@ -77,38 +77,38 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="nami.2_pl"
-		path="C:/0_WB/fld_effect/taki/souceimage/nami.2.tga"
+		path="C:/home/wb_data3d/wb_hero_effect/wb_taki/souceimage/nami.2.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 4400 4444 4444 0444 0000 0000 0000
-			0000 4444 3444 3334 4333 4433 0004 0000
-			4000 4444 3333 2233 2223 3332 0043 0000
-			4000 3334 2223 1122 1212 3232 0443 0000
-			4000 3334 2223 1221 1111 3211 0433 0000
-			4000 2234 1212 1121 1111 1111 0432 0000
-			4000 2334 1112 1111 2111 1111 0432 0000
-			4000 2334 2212 2222 1112 2111 0432 0000
-			4000 2334 2233 2222 1222 2212 0442 0000
-			4000 2334 3223 2222 1222 2212 0443 0000
-			4000 3334 3323 2222 1222 2222 0443 0000
-			4000 3444 3323 2232 2232 2222 0443 0000
-			4000 3444 3323 2232 2223 2222 0443 0000
-			0000 3444 3323 2222 2222 2232 0443 0000
-			4000 3344 3333 2233 2223 3232 0444 0000
-			0000 3344 2333 2233 2222 4332 0444 0000
-			0000 3344 2333 3333 2222 4332 0044 0000
-			0000 4344 2334 3333 3232 4332 0044 0000
-			0000 4340 2324 3333 3233 4333 0044 0000
-			0000 4340 3324 3333 3333 4343 0044 0000
-			0000 4440 3324 3323 3333 4344 0004 0000
-			0000 3440 3424 3333 4433 4444 0004 0000
-			0000 3400 3424 3232 4433 4444 0004 0000
-			0000 4000 3444 3232 4444 4444 0004 0000
-			0000 4000 4444 4333 4434 4404 0000 0000
-			0000 4000 4444 4343 4434 4004 0000 0000
-			0000 0000 4444 4304 4404 4000 0000 0000
+			0000 3400 1111 1111 0111 0000 0000 0000
+			0000 3444 1111 1111 1111 4311 0004 0000
+			4000 2344 1111 1111 1111 3211 0043 0000
+			4000 1334 1111 1111 1111 2111 0443 0000
+			4000 1234 1111 1111 1111 1111 0433 0000
+			4000 1234 1111 1111 1111 1111 0432 0000
+			4000 1234 1111 1111 1111 1111 0431 0000
+			4000 2234 1112 1111 1111 1111 0431 0000
+			4000 2334 2112 1111 1111 1111 0442 0000
+			4000 2334 2123 1112 1121 1211 0443 0000
+			4000 3334 2223 1112 1122 1221 0443 0000
+			4000 3444 3223 2112 1222 1222 0443 0000
+			4000 3444 3223 2122 1223 2222 0443 0000
+			0000 3444 3323 2222 2223 2232 0443 0000
+			4000 3344 3333 2222 2223 3232 0444 0000
+			0000 3344 3333 2233 2223 4332 0444 0000
+			0000 3344 3333 3333 2223 4332 0044 0000
+			0000 4344 3333 3333 3233 4332 0044 0000
+			0000 4340 3333 3333 3233 4333 0044 0000
+			0000 4340 3333 3333 3333 4343 0044 0000
+			0000 4440 3333 3333 3333 4344 0004 0000
+			0000 4440 3433 3333 4433 4444 0004 0000
+			0000 4400 4434 3333 4433 4444 0004 0000
+			0000 4000 4434 3333 4444 4444 0004 0000
+			0000 4000 4444 4334 4444 4404 0000 0000
+			0000 4000 4444 4344 4444 4004 0000 0000
+			0000 0000 4444 4404 4404 4000 0000 0000
 			0000 0000 4404 4400 4000 0000 0000 0000
 			0000 0000 0400 0400 4000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -118,7 +118,7 @@
 		width="32" height="32" original_width="32" original_height="32"
 		format="a3i5"
 		palette_name="sibuki.1_pl"
-		path="C:/0_WB/fld_effect/taki/souceimage/sibuki.1.tga"
+		path="C:/home/wb_data3d/wb_hero_effect/wb_taki/souceimage/sibuki.1.tga"
 	>
 		<bitmap size="512">
 			0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f 0f0f
@@ -142,23 +142,23 @@
 			0f0f 0f0f 6f4f 0f0f 0f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 0f0f 2f0f 0f0f 0f0f 0f0f
 			0f0f 0f0f ef2f 0faf 0f0f 0f0f 0f0f 0f0f
-			0f0f 0f0f 0f0f 0f0f ef4f 0f0f 0f0f 0f0f
-			0f0f 0f0f ef0f efef 0f2f 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f 0f4f ef4f 0f0f 0f0f 0f0f
+			0f0f 0f0f ef0f efef 0f2f 4f0f 0f0f 0f0f
 			0f0f 0f0f 0f0f 6f0f efef 0f0f 4f0f 0f0f
-			0f0f 0f0f ef0f efef 6fef 4f0f 0f8f 2f0f
-			6faf 0f0f 0f0f ef6f efef 8f4f 6fef 0f0f
-			af0f cfef ef8f efef efef cfaf efef efaf
-			efef 4fcf 8f0f efef efef efef 0fef 0f0f
-			0f0f efcf efef efef efef efef efef efef
-			efef efef efcf efef efef efef 0faf 0f0f
-			0f0f ef2f efef efef efef efef efef efef
-			efef efef efef efef efef efef 0faf 0f0f
-			0f0f 6f0f efef efef efef efef efef efef
-			efef efef efef efef efef efef efef 0f6f
-			0f0f 4f0f efef efef efef efef efef efef
-			efef efef efef efef efef efef efef 4fef
-			6f0f efcf efef efef efef efef efef efef
-			efef efef efef efef efef efef eeef 006a
+			0f0f 0f0f ef0f efef 6fef 0f0f 0f0f 0f0f
+			0f0f 0f0f 0f0f ef6f efef 8f4f 6fef 0f0f
+			af0f cfef ef8f efef efef 4faf 0f0f 0f0f
+			0f0f 4f0f 8f0f efef efef efef 0fef 0f0f
+			0f0f efcf efef efef efef cfef 0f4f 0f0f
+			0f0f 6f0f efcf efef efef efef 0faf 0f0f
+			0f0f ef2f efef efef efef cfef 0f6f 0f0f
+			0f0f cf4f efef efef efef efef 0faf 0f0f
+			0f0f 6f0f efef efef efef efef 4fcf 0f0f
+			4f0f cfcf efef efef efef efef efef 0f6f
+			0f0f 4f0f efef efef efef efef cfef 4f6f
+			cf6f efef efef efef efef efef efef 4fef
+			6f0f efcf efef efef efef efef efef cfcf
+			efcf efef efef efef efef efef eeef 006a
 			ef4f efef efef edea efef efe8 efef efec
 			efef efef efef efef efef efef 85e8 0f0f
 			0f0f ef8f eeef e1e5 e8ef e4e0 eaee eae0
@@ -191,7 +191,7 @@
 		width="32" height="32" original_width="32" original_height="32"
 		format="a3i5"
 		palette_name="sibuki.2_pl"
-		path="C:/0_WB/fld_effect/taki/souceimage/sibuki.2.tga"
+		path="C:/home/wb_data3d/wb_hero_effect/wb_taki/souceimage/sibuki.2.tga"
 	>
 		<bitmap size="512">
 			1212 1212 1212 1212 1212 1212 1212 1212
@@ -208,28 +208,28 @@
 			1212 1212 1212 1212 1212 1212 1212 1212
 			1212 1212 1212 1212 1212 1212 1212 1212
 			1212 1212 1212 1212 1212 1212 1212 1212
+			1212 1212 3212 1212 1212 1212 1212 1212
 			1212 1212 1212 1212 1212 1212 1212 1212
 			1212 1212 1212 1212 1212 1212 1212 1212
 			1212 1212 1212 1212 1212 1212 1212 1212
-			1212 1212 1212 1212 1212 1212 1212 1212
-			1212 9212 1212 1212 1212 1212 1212 1212
-			1212 1212 1212 1212 1212 1212 1212 1212
-			1212 9212 32f2 1212 1212 1212 1212 1212
+			1212 9212 1212 1212 1232 1212 1212 1212
+			1212 1212 1212 1212 1232 1212 1212 1212
+			1212 9212 32f2 1212 32d2 1212 1212 1212
 			1212 1212 1212 1212 1212 7212 1292 1212
-			1212 3212 f2f2 1272 1212 1232 1212 1212
+			1212 3212 f2f2 1272 f292 1232 1212 1212
 			1212 1212 1212 3232 1212 f2b2 1252 1212
-			1212 1212 f2d2 b2f2 1212 d2f2 1252 5212
-			92b2 1212 9212 72f2 f252 d2f2 1212 1212
-			1212 1212 f272 f2f2 92f2 f2f2 d2f2 f2f2
-			f2f2 92f2 f2d2 f2f2 f2f2 72f2 1212 1212
-			f212 d2f2 f2d2 f2f2 f2f2 f2f2 f2f2 f2f2
-			f2f2 f2f2 f2f2 f2f2 f2f2 52f2 9272 52b2
-			3212 f2f2 f2f2 f2f2 f2f2 f2f2 f2f2 f2f2
-			f2f2 f2f2 f2f2 f2f2 f2f2 f2f2 f2f2 1292
-			1212 f252 f2f2 f2f2 f2f2 f2f2 f2f2 f2f2
-			f2f2 f2f2 f2f2 f2f2 f2f2 f2f2 b2f2 1212
-			1212 9212 f2f2 f2f2 f2f2 f2f2 f2f2 f2f2
-			f2f2 f2f2 f2f2 f2f2 f2f2 f2f2 41ce 1212
+			1212 1212 f2d2 b2f2 d232 3292 1212 1212
+			1212 1212 9212 72f2 f252 d2f2 1212 1212
+			1212 1212 f272 f2f2 92f2 92f2 1212 1212
+			1212 9212 f2d2 f2f2 f2f2 72f2 1212 1212
+			f212 d2f2 f2d2 f2f2 f2f2 f2f2 1252 1212
+			1212 d252 f2f2 f2f2 f2f2 52f2 9272 52b2
+			3212 f2f2 f2f2 f2f2 f2f2 f2f2 52d2 1212
+			5212 d292 f2f2 f2f2 f2f2 f2f2 f2f2 1292
+			1212 f252 f2f2 f2f2 f2f2 f2f2 d2f2 5292
+			9252 f2d2 f2f2 f2f2 f2f2 f2f2 b2f2 1212
+			1212 9212 f2f2 f2f2 f2f2 f2f2 f2f2 d2d2
+			d2d2 f2f2 f2f2 f2f2 f2f2 f2f2 41ce 1212
 			1212 d232 f2f2 f2f2 f2f2 f2f2 f2f2 f2f2
 			f2f2 f2f2 f2f2 f2f2 f2f2 ebf2 12a1 1212
 			7212 f2f2 eff2 f2e9 f2f2 f2ef ecf2 f2f1
@@ -264,10 +264,10 @@
 
 <tex_palette_array size="4">
 	<tex_palette index="0" name="nami.1_pl" color_size="8">
-		0000 6ef0 6f54 77ba 7fff 7fff 7fff 7fff
+		0000 6f54 7376 77ba 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="nami.2_pl" color_size="8">
-		0000 6ef0 6f54 77ba 7fff 7fff 7fff 7fff
+		0000 6f54 7376 77ba 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="2" name="sibuki.1_pl" color_size="16">
 		6f54 6f55 6f76 7376 7377 7398 7799 779a
@@ -340,9 +340,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -4.000000 0.000000"
-		volume_max="4.000000 4.000000 0.000000"
-		volume_r="5.656738"
+		volume_min="-4.000000 -5.426758 -4.000000"
+		volume_max="4.000000 2.573242 -1.000000"
+		volume_r="6.815430"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -352,14 +352,14 @@
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
 					<tex st="0.000000 32.000000"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_s xyz="-4.000000 -4.000000 0.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_xyz xyz="-4.000000 -5.426758 -1.000000"/>
 					<tex st="32.000000 32.000000"/>
-					<pos_xy xy="4.000000 -4.000000"/>
+					<pos_xy xy="4.000000 -5.426758"/>
 					<tex st="32.000000 0.000000"/>
-					<pos_xy xy="4.000000 4.000000"/>
+					<pos_yz yz="2.573242 -4.000000"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-4.000000 4.000000"/>
+					<pos_xy xy="-4.000000 2.573242"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -379,7 +379,7 @@
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
 					<tex st="0.000000 32.000000"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_xyz xyz="-1.746094 -7.967773 0.000000"/>
 					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="1.746094 -7.967773"/>
@@ -422,9 +422,9 @@
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -4.000000 0.000000"
-		volume_max="4.000000 4.000000 0.000000"
-		volume_r="5.656738"
+		volume_min="-4.000000 -5.426758 -4.000000"
+		volume_max="4.000000 2.573242 -1.000000"
+		volume_r="6.815430"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
@@ -452,6 +452,35 @@
 
 <output_info vertex_size="8" polygon_size="2"
 	triangle_size="0" quad_size="2"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="4">
+		<ex_tex_image index="0" disp_pos="60.000000 360.000000"/>
+		<ex_tex_image index="1" disp_pos="-60.000000 480.000000"/>
+		<ex_tex_image index="2" disp_pos="-60.000000 360.000000"/>
+		<ex_tex_image index="3" disp_pos="60.000000 480.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="4">
+		<ex_tex_palette index="0" disp_pos="60.000000 420.000000"/>
+		<ex_tex_palette index="1" disp_pos="-60.000000 540.000000"/>
+		<ex_tex_palette index="2" disp_pos="-60.000000 420.000000"/>
+		<ex_tex_palette index="3" disp_pos="60.000000 540.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="2">
+		<ex_material index="0" disp_pos="-60.000000 300.000000"/>
+		<ex_material index="1" disp_pos="60.000000 300.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="2">
+		<ex_polygon index="0" disp_pos="-60.000000 240.000000"/>
+		<ex_polygon index="1" disp_pos="60.000000 240.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="3">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+		<ex_node index="1" disp_pos="-60.000000 180.000000"/>
+		<ex_node index="2" disp_pos="60.000000 180.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
