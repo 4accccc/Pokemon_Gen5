@@ -8,32 +8,24 @@
  *
  */
 /////////////////////////////////////////////////////////////////////////////////////////
-
+#include <gflib.h> 
 #include "gamesystem/game_event.h"
+#include "gamesystem/iss_sys.h"
+#include "gamesystem/iss_dungeon_sys.h"
+#include "sound/pm_sndsys.h"
 #include "field/eventdata_type.h"
 #include "field/fieldmap_proc.h"
 #include "field/location.h"
+#include "field_comm/intrude_snd_def.h"
 
-#include "event_entrance_in.h"
-
+#include "fieldmap.h"
+#include "field_sound.h"
+#include "event_entrance_in.h" 
 #include "event_fieldmap_control.h"  // for EVENT_FieldFadeOut_xxxx
 #include "event_entrance_effect.h"   // for EVENT_FieldDoorInAnime
 #include "event_fldmmdl_control.h"   // for EVENT_PlayerOneStepAnime
 #include "event_disappear.h"         // for EVENT_DISAPPEAR_xxxx
 
-#include "sound/pm_sndsys.h"
-#include "field_sound.h"
-#include "sound/bgm_info.h"
-#include "../../resource/sound/bgm_info/iss_type.h"
-
-#include "fieldmap.h"
-#include "field_task.h"  
-#include "field_task_manager.h"
-#include "field_task_camera_zoom.h"
-#include "field_task_camera_rot.h"
-#include "field_task_target_offset.h"
-
-#include "field_comm/intrude_snd_def.h"
 
 
 //=======================================================================================
@@ -41,11 +33,11 @@
 //=======================================================================================
 // イベント処理関数のタイプ
 typedef enum {
-  EVENTFUNC_TYPE_NONE, // ドアなし
-  EVENTFUNC_TYPE_DOOR, // ドアあり
-  EVENTFUNC_TYPE_STEP, // 階段
-  EVENTFUNC_TYPE_WARP, // ワープ
-  EVENTFUNC_TYPE_SPx,  // 特殊
+  EVENTFUNC_TYPE_NONE,    // ドアなし
+  EVENTFUNC_TYPE_DOOR,    // ドアあり
+  EVENTFUNC_TYPE_STEP,    // 階段
+  EVENTFUNC_TYPE_WARP,    // ワープ
+  EVENTFUNC_TYPE_SPx,     // 特殊
   EVENTFUNC_TYPE_INTRUDE, // 侵入
   EVENTFUNC_TYPE_NUM,
 } EVENTFUNC_TYPE;
@@ -65,6 +57,8 @@ typedef struct {
   FIELD_FADE_TYPE   fadeOutType;       // 季節表示がない場合のF/Oタイプ
   BOOL              BGMFadeWaitFlag;   // BGM のフェード完了を待つかどうか
   FIELD_CAMERA_MODE initCameraMode;    // イベント開始時のカメラモード
+  u16               zoneID;            // 遷移前のゾーンID
+  u16               nextZoneID;        // 遷移後のゾーンID
 
 } EVENT_WORK;
 
@@ -127,14 +121,14 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
 
   // イベント処理関数を決定
   switch( exitType ) {
-  case EXIT_TYPE_NONE:    funcType = EVENTFUNC_TYPE_NONE; break;
-  case EXIT_TYPE_MAT:     funcType = EVENTFUNC_TYPE_NONE; break;
-  case EXIT_TYPE_STAIRS:  funcType = EVENTFUNC_TYPE_STEP; break;
-  case EXIT_TYPE_DOOR:    funcType = EVENTFUNC_TYPE_DOOR; break;
-  case EXIT_TYPE_WALL:    funcType = EVENTFUNC_TYPE_STEP; break;
-  case EXIT_TYPE_WARP:    funcType = EVENTFUNC_TYPE_WARP; break;
+  case EXIT_TYPE_NONE:    funcType = EVENTFUNC_TYPE_NONE;    break;
+  case EXIT_TYPE_MAT:     funcType = EVENTFUNC_TYPE_NONE;    break;
+  case EXIT_TYPE_STAIRS:  funcType = EVENTFUNC_TYPE_STEP;    break;
+  case EXIT_TYPE_DOOR:    funcType = EVENTFUNC_TYPE_DOOR;    break;
+  case EXIT_TYPE_WALL:    funcType = EVENTFUNC_TYPE_STEP;    break;
+  case EXIT_TYPE_WARP:    funcType = EVENTFUNC_TYPE_WARP;    break;
   case EXIT_TYPE_INTRUDE: funcType = EVENTFUNC_TYPE_INTRUDE; break;
-  default:                funcType = EVENTFUNC_TYPE_SPx;  break;
+  default:                funcType = EVENTFUNC_TYPE_SPx;     break;
   }
 
   // 基本フェードアウトの種類を決定
@@ -146,7 +140,7 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
   event = GMEVENT_Create( gameSystem, parent, eventFuncTable[ funcType ], sizeof( EVENT_WORK ) );
 
   // イベントワーク初期化
-  work                    = (EVENT_WORK*)GMEVENT_GetEventWork( event );
+  work = (EVENT_WORK*)GMEVENT_GetEventWork( event );
   work->gameSystem        = gameSystem;
   work->gameData          = gameData;
   work->fieldmap          = fieldmap;
@@ -154,6 +148,8 @@ GMEVENT* EVENT_EntranceIn( GMEVENT* parent,
   work->exitType          = exitType;
   work->seasonDisplayFlag = seasonDisplayFlag;
   work->fadeOutType       = fadeOutType;
+  work->zoneID            = prevZoneID;
+  work->nextZoneID        = nextZoneID;
 
   return event;
 }
@@ -262,15 +258,13 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* s
     (*seq)++;
     break;
   case 1: 
-    { // 現在のBGMがダンジョンISS && 次のBGMもダンジョンISS ==> BGMフェードアウト
-      FIELD_SOUND*  fieldSound = GAMEDATA_GetFieldSound( gameData );
-      BGM_INFO_SYS* BGMInfo    = GAMEDATA_GetBGMInfoSys( gameData );
-      PLAYER_WORK*  player     = GAMEDATA_GetPlayerWork( gameData, 0 );
-      u32 nextBGM = FSND_GetFieldBGM( gameData, work->nextLocation.zone_id );
-      u32 nowBGM = PMSND_GetBGMsoundNo();
-      u8 nextIssType = BGM_INFO_GetIssType( BGMInfo, nextBGM ); 
-      u8 nowIssType = BGM_INFO_GetIssType( BGMInfo, nowBGM ); 
-      if( ( nextIssType == ISS_TYPE_DUNGEON ) && ( nowIssType == ISS_TYPE_DUNGEON ) ) { 
+    // 現在のBGMがダンジョンISS && 次のBGMもダンジョンISS ==> BGMフェードアウト
+    { 
+      ISS_SYS* iss = GAMESYSTEM_GetIssSystem( gameSystem );
+      ISS_DUNGEON_SYS* issD = ISS_SYS_GetIssDungeonSystem( iss );
+      // 遷移の前後ともにISS-Dの制御が有効
+      if( ISS_DUNGEON_SYS_IsActiveAt(issD, work->zoneID) && 
+          ISS_DUNGEON_SYS_IsActiveAt(issD, work->nextZoneID) ) {
         // BGM フェードアウト
         GMEVENT* fadeOutEvent = EVENT_FSND_FadeOutBGM( gameSystem, FSND_FADE_FAST );
         GMEVENT_CallEvent( event, fadeOutEvent );
@@ -278,6 +272,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* s
       }
       else { 
         // BGM 再生準備
+        FIELD_SOUND* fieldSound = GAMEDATA_GetFieldSound( gameData );
         u16 nowZoneID = FIELDMAP_GetZoneID( fieldmap );
         FSND_StandByNextMapBGM( fieldSound, gameData, work->nextLocation.zone_id );
         work->BGMFadeWaitFlag = FALSE; // BGMフェードは待たない
@@ -352,7 +347,6 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
 	GAMESYS_WORK*   gameSystem = work->gameSystem;
 	FIELDMAP_WORK*  fieldmap   = work->fieldmap;
   FIELD_CAMERA*   camera     = FIELDMAP_GetFieldCamera( fieldmap );
-  FIELD_TASK_MAN* taskMan    = FIELDMAP_GetTaskManager( fieldmap );
 
   // 処理シーケンス
   enum {
