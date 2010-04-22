@@ -666,6 +666,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fld_particle.c \
         field/fld3d_ci.c \
         field/sodateya.c \
+        field/pokemon_egg.c \
         field/scrcmd_hiden.c \
         field/event_rail_slipdown.c \
         field/fldeff_ripple.c \

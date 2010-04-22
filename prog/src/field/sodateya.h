@@ -29,7 +29,6 @@ u32 SODATEYA_GetPokeLv_GrowUp( const SODATEYA* sodateya, int index );
 u32 SODATEYA_GetCharge( const SODATEYA* sodateya, int index );
 u8 SODATEYA_GetLoveLevel( const SODATEYA* sodateya );
 const POKEMON_PARAM* SODATEYA_GetPokemonParam( const SODATEYA* sodateya, int index );
-void POKEMON_EGG_Birth( POKEMON_PARAM* egg, HEAPID heap_id );
 */
 
 
@@ -204,20 +203,3 @@ extern u8 SODATEYA_GetLoveLevel( const SODATEYA* sodateya );
  */
 //---------------------------------------------------------------------------------------- 
 extern const POKEMON_PARAM* SODATEYA_GetPokemonParam( const SODATEYA* sodateya, int index );
-
-
-
-//========================================================================================
-// Å°É^É}ÉSÇÃõzâª
-//========================================================================================
-
-//---------------------------------------------------------------------------------------- 
-/**
- * @brief É^É}ÉSÇõzâªÇ≥ÇπÇÈ
- *
- * @param egg     õzâªÇ≥ÇπÇÈÉ^É}ÉS
- * @param owner   É^É}ÉSÇÃèäéùé“
- * @param heap_id égópÇ∑ÇÈÉqÅ[ÉvID
- */
-//---------------------------------------------------------------------------------------- 
-extern void POKEMON_EGG_Birth( POKEMON_PARAM* egg, const MYSTATUS* owner, HEAPID heap_id );

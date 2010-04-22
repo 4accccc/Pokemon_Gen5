@@ -7,15 +7,16 @@
  */
 ////////////////////////////////////////////////////////////////
 #include <gflib.h> 
-#include "event_debug_menu_make_egg.h"
-
-#include "fieldmap.h"
+#include "print/global_msg.h" 
 #include "field/field_msgbg.h"
-#include "print/global_msg.h"
+#include "fieldmap.h"
 #include "event_debug_local.h"
+#include "pokemon_egg.h"
 
 #include "arc/message.naix"
 #include "msg/msg_debug_make_egg.h"
+
+#include "event_debug_menu_make_egg.h"
 
 
 //--------------------------------------------------------------
@@ -83,12 +84,6 @@ typedef struct {
 
 
 //--------------------------------------------------------------
-// proto
-//--------------------------------------------------------------
-static POKEMON_PARAM* CreateEgg( GAMEDATA* gameData, HEAPID heapID, u32 monsno );
-
-
-//--------------------------------------------------------------
 /**
  * @brief タマゴ作成イベント
  */
@@ -121,17 +116,15 @@ static GMEVENT_RESULT debugMenuMakeEggEvent( GMEVENT *event, int *seq, void *wk 
       // 作成
       if( work->select == STR_NEWBORN ) { 
         //「うまれたて」
-        egg = CreateEgg( work->gameData, work->heapID, 1 );
+        egg = DEBUG_POKEMON_EGG_CreatePlainEgg( work->gameData, work->heapID );
       }
       else if( work->select == STR_OLDBORN ) { 
         //「もうすぐ孵化」
-        egg = CreateEgg( work->gameData, work->heapID, 1 );
-        PP_Put( egg, ID_PARA_friend, 0 );  // 孵化歩数
+        egg = DEBUG_POKEMON_EGG_CreateQuickEgg( work->gameData, work->heapID );
       }
       else if( work->select == STR_ILLEGAL_EGG ) { 
         //「だめタマゴ」
-        egg = CreateEgg( work->gameData, work->heapID, 1 );
-        PP_Put( egg, ID_PARA_fusei_tamago_flag, TRUE );  // 駄目タマゴフラグ
+        egg = DEBUG_POKEMON_EGG_CreateIllegalEgg( work->gameData, work->heapID );
       }
 
       // 手持ちに追加
@@ -172,61 +165,4 @@ GMEVENT* DEBUG_EVENT_FLDMENU_MakeEgg( GAMESYS_WORK* gameSystem, void* wk )
 	work->fieldmap   = fieldmap;
 
   return event;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief タマゴを作成する
- *
- * @param gameData
- * @param heapID
- * @param monsno   モンスターNo.
- */
-//--------------------------------------------------------------
-static POKEMON_PARAM* CreateEgg( GAMEDATA* gameData, HEAPID heapID, u32 monsno )
-{
-  POKEMON_PARAM* egg;
-
-  egg = PP_Create( monsno, 1, 1, heapID );
-
-  // 親の名前
-  {
-    MYSTATUS* myStatus;
-    STRBUF* name;
-
-    myStatus = GAMEDATA_GetMyStatus( gameData );
-    name     = MyStatus_CreateNameString( myStatus, heapID );
-    PP_Put( egg, ID_PARA_oyaname, (u32)name );
-    GFL_STR_DeleteBuffer( name );
-  } 
-
-  // 孵化歩数
-  {
-    u32 monsno, formno, birth;
-    POKEMON_PERSONAL_DATA* personal;
-
-    monsno   = PP_Get( egg, ID_PARA_monsno, NULL );
-    formno   = PP_Get( egg, ID_PARA_form_no, NULL );
-    personal = POKE_PERSONAL_OpenHandle( monsno, formno, heapID );
-    birth    = POKE_PERSONAL_GetParam( personal, POKEPER_ID_egg_birth );
-    POKE_PERSONAL_CloseHandle( personal );
-
-    // タマゴの間は, なつき度を孵化カウンタとして利用する
-    PP_Put( egg, ID_PARA_friend, birth );
-  }
-
-  // タマゴフラグ
-  PP_Put( egg, ID_PARA_tamago_flag, TRUE );
-
-  // ニックネーム ( タマゴ )
-  {
-    STRBUF* name;
-
-    name = GFL_MSG_CreateString( GlobalMsg_PokeName, MONSNO_TAMAGO );
-    PP_Put( egg, ID_PARA_nickname, (u32)name );
-    GFL_STR_DeleteBuffer( name );
-  } 
-
-  PP_Renew( egg );
-  return egg;
 }
