@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-04-22T19:17:34"/>
+	<create user="ohmori" host="W00223" date="2010-04-22T22:28:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -310,9 +310,10 @@
 また　後でね！</language>
 	</row>
 
-	<row id="msg_intrude_003" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">こんにちは！　なにする？</language>
-		<language name="JPN_KANJI" width="256">こんにちは！　なにする？</language>
+	<row id="msg_intrude_003" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
+		<comment>相手の通信待機メッセージ</comment>
+		<language name="JPN" width="256">しばらくおまちください……</language>
+		<language name="JPN_KANJI" width="256">しばらくおまちください……</language>
 	</row>
 
 	<row id="msg_talk_menu_001" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
