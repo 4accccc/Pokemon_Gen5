@@ -1423,7 +1423,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
     // u‚È‚É‚à‚ ‚è‚Ü‚¹‚ñv•\¦
 //    GFL_BMPWIN_MakeTransWindow( pWork->winPocketNone );
 		PrintScreenTrans( &pWork->winPocketNone );
-		return;
+//		return;
   }
   else
   {
