@@ -82,6 +82,8 @@ typedef struct
   BR_TEXT_WORK      *p_text;
 
   BR_RANK_WORK      rank;
+  
+  u32               cnt;
 
   //引数
   BR_BVRANK_PROC_PARAM	*p_param;
@@ -203,7 +205,7 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
   p_wk->p_seq = BR_SEQ_Init( p_wk, Br_Seq_NextDownload, p_wk->heapID );
 
   //レコードからの戻りの場合はすでにダウンロードしている
-  if( p_wk->p_param->mode == BR_BVRANK_MODE_RETURN )
+  if( p_wk->p_param->is_return )
   { 
     BR_SEQ_SetNext( p_wk->p_seq, Br_Seq_FadeInBefore );
   }
@@ -365,7 +367,7 @@ static void Br_Seq_FadeInBefore( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
     //バトルビデオさいしん３０件
     p_wk->p_title = BR_MSGWIN_Init( BG_FRAME_M_FONT, 3, 3, 26, 4, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
     BR_MSGWIN_PrintColor( p_wk->p_title, p_msg, msg_605+p_wk->p_param->mode, p_font, BR_PRINT_COL_NORMAL );
-
+    //todo
   }
 
   //ダウンロードしてアウトラインがきまってからランクを作成
@@ -556,7 +558,10 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     SEQ_DOWNLOAD_WAIT,
     SEQ_DOWNLOAD_END,
 
-    SEQ_MSG_WAIT,
+    SEQ_FADEOUT_START,
+    SEQ_FADEOUT_WAIT,
+    SEQ_FADEOUT_END,
+
   };
 
   BR_BVRANK_WORK	*p_wk	= p_wk_adrs;
@@ -595,6 +600,7 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       GFL_STD_MemClear( p_wk->p_param->p_outline, sizeof(BR_OUTLINE_DATA ) );
 
       PMSND_PlaySE( BR_SND_SE_SEARCH );
+      p_wk->cnt = 0;
       BR_NET_StartRequest( p_wk->p_param->p_net, type, &req_param );
       *p_seq  = SEQ_DOWNLOAD_WAIT;
     }
@@ -602,9 +608,12 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   case SEQ_DOWNLOAD_WAIT:
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
-      PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
-      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
-      *p_seq  = SEQ_DOWNLOAD_END;
+      if( p_wk->cnt++ > RR_SEARCH_SE_FRAME )
+      { 
+        PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
+        *p_seq  = SEQ_DOWNLOAD_END;
+      }
     }
     break;
   case SEQ_DOWNLOAD_END:
@@ -648,24 +657,36 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
         else
         { 
           BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_031 );
-          *p_seq  = SEQ_MSG_WAIT;
+          *p_seq  = SEQ_FADEOUT_START;
         }
       }
       else
       { 
         BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg );
-        *p_seq  = SEQ_MSG_WAIT;
+        *p_seq  = SEQ_FADEOUT_START;
       }
     }
     break;
-   
-  case SEQ_MSG_WAIT:
+
+  case SEQ_FADEOUT_START:
     if( GFL_UI_TP_GetTrg() )
     { 
-      //取得できなかった
-      BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-      BR_SEQ_End( p_seqwk );
+      BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+      *p_seq  = SEQ_FADEOUT_WAIT;
     }
+    break;
+
+  case SEQ_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_FADEOUT_END;
+    }
+    break;
+
+  case SEQ_FADEOUT_END:
+    //取得できなかった
+    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+    BR_SEQ_End( p_seqwk );
     break;
   }
 }

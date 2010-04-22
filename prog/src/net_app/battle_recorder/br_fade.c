@@ -277,7 +277,7 @@ void BR_FADE_PALETTE_TransColor( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display )
 void BR_FADE_ALPHA_SetAlpha( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display, u8 ev )
 { 
   //ã‰æ–Ê
-  if( p_wk->display & BR_FADE_DISPLAY_MAIN )
+  if( display & BR_FADE_DISPLAY_MAIN )
   { 
     G2_SetBlendAlpha(
         BR_FADE_ALPHA_PLANEMASK_M_01,
@@ -299,7 +299,7 @@ void BR_FADE_ALPHA_SetAlpha( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display, u8 ev 
     }
   }
   //‰º‰æ–Ê
-  if( p_wk->display & BR_FADE_DISPLAY_SUB )
+  if( display & BR_FADE_DISPLAY_SUB )
   { 
     G2S_SetBlendAlpha(
         BR_FADE_ALPHA_PLANEMASK_S_01,

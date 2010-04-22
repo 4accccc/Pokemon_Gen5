@@ -29,7 +29,6 @@ typedef enum
   BR_BVRANK_MODE_SUBWAY,    //サブウェイ
   BR_BVRANK_MODE_SEARCH,    //検索結果
 
-  BR_BVRANK_MODE_RETURN,    //レコード画面からの戻り
 } BR_BVRANK_MODE;
 
 
@@ -45,6 +44,7 @@ typedef enum
 typedef struct 
 {
   BR_BVRANK_MODE  mode;         //[in ]モード
+  BOOL            is_return;    //[in ]レコード画面からの戻り
   BR_FADE_WORK    *p_fade;      //[in ]フェード
 	GFL_CLUNIT			*p_unit;			//[in ]ユニット
 	BR_RES_WORK			*p_res;				//[in ]リソース管理

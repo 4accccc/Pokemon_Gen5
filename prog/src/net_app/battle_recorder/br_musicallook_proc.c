@@ -56,6 +56,7 @@ typedef struct
   BR_POKESEARCH_WORK  *p_search;
   BR_TEXT_WORK        *p_text;
   u16                 mons_no;
+  u16                 cnt;
 
   //photo
   u16                 photo_idx;
@@ -490,6 +491,7 @@ static void Br_MusicalLook_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
       req_param.download_musical_shot_search_monsno = p_wk->mons_no;
 
       PMSND_PlaySE( BR_SND_SE_SEARCH );
+      p_wk->cnt = 0;
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_MUSICAL_SHOT_DOWNLOAD, &req_param );
     }
     *p_seq  = SEQ_DOWNLOAD_WAIT;
@@ -497,10 +499,12 @@ static void Br_MusicalLook_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
   case SEQ_DOWNLOAD_WAIT:
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
-
-      PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
-      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
-      *p_seq  = SEQ_DOWNLOAD_END;
+      if( p_wk->cnt++ > RR_SEARCH_SE_FRAME )
+      { 
+        PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
+        *p_seq  = SEQ_DOWNLOAD_END;
+      }
     } 
     break;
   case SEQ_DOWNLOAD_END:

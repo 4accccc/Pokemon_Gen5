@@ -58,6 +58,7 @@ typedef struct
   BR_BALLEFF_WORK       *p_balleff[ CLSYS_DRAW_MAX ];
 	HEAPID                heapID;
   BR_BVDELETE_PROC_PARAM	*p_param;
+  u32                   cnt;
 } BR_BVDELETE_WORK;
 
 
@@ -435,6 +436,8 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         pos.y = 192/2;
         BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
       }
+      PMSND_PlaySE( BR_SND_SE_SEARCH );
+      p_wk->cnt = 0;
 
       (*p_seq)++;
     }
@@ -443,6 +446,7 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_DELETE_INIT:
     { 
       BattleRec_SaveDataEraseStart(p_wk->p_param->p_gamedata, p_wk->heapID, p_wk->p_param->mode);
+      p_wk->cnt++;
     }
     (*p_seq)++;
     break;
@@ -451,7 +455,7 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     { 
       SAVE_RESULT result;
       result  = BattleRec_SaveDataEraseMain( p_wk->p_param->p_gamedata, p_wk->p_param->mode );
-
+      p_wk->cnt++;
       if( SAVE_RESULT_OK == result || SAVE_RESULT_NG == result )
       { 
         p_wk->p_param->is_delete  = TRUE;
@@ -461,9 +465,13 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_DELETE_MSG:
-    BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
-    BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_016 );
-    *p_seq  = SEQ_DELETE_MSG_WAIT;
+    if( p_wk->cnt++ > RR_SEARCH_SE_FRAME )
+    { 
+      PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
+      BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_016 );
+      *p_seq  = SEQ_DELETE_MSG_WAIT;
+    }
     break;
   case SEQ_DELETE_MSG_WAIT:
     if( GFL_UI_TP_GetTrg() )

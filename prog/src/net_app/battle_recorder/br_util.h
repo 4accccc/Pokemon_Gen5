@@ -38,6 +38,13 @@ extern void BR_MSGWIN_PrintColor( BR_MSGWIN_WORK* p_wk, GFL_MSGDATA *p_msg, u32 
 void BR_MSGWIN_PrintBufColor( BR_MSGWIN_WORK* p_wk, const STRBUF *cp_strbuf, GFL_FONT *p_font, PRINTSYS_LSB lsb );
 extern BOOL BR_MSGWIN_PrintMain( BR_MSGWIN_WORK* p_wk );
 
+typedef enum
+{
+  BR_MSGWIN_POS_ABSOLUTE,
+  BR_MSGWIN_POS_WH_CENTER,
+}BR_MSGWIN_POS;
+extern void BR_MSGWIN_SetPos( BR_MSGWIN_WORK* p_wk, s16 x, s16 y, BR_MSGWIN_POS type );
+
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *					  è¨Ç≥Ç¢É{Å[Éãââèo

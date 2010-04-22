@@ -82,6 +82,7 @@ typedef struct
 
   u16                   work0;
   u16                   work1;
+  u32                   cnt;
 } BR_BVSAVE_WORK;
 
 
@@ -348,6 +349,7 @@ static void Br_BvSave_Seq_VideoDownloadSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
       req_param.download_video_number = p_wk->p_param->video_number;
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD, &req_param );
       PMSND_PlaySE( BR_SND_SE_SEARCH );
+      p_wk->cnt = 0;
 
       *p_seq  = SEQ_DOWNLOAD_WAIT;
     }
@@ -355,9 +357,12 @@ static void Br_BvSave_Seq_VideoDownloadSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
   case SEQ_DOWNLOAD_WAIT:
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
-      PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
-      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
-      *p_seq  = SEQ_DOWNLOAD_END;
+      if( p_wk->cnt++ > RR_SEARCH_SE_FRAME )
+      { 
+        PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
+        *p_seq  = SEQ_DOWNLOAD_END;
+      }
     }
     break;
   case SEQ_DOWNLOAD_END:
@@ -752,6 +757,13 @@ static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     }
     BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_009 );
 
+    {
+      GFL_POINT pos;
+      pos.x = 256/2;
+      pos.y = 192/2;
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
+    }
+
     BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
     (*p_seq)++;
     break;
@@ -765,6 +777,8 @@ static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 
     //•Û‘¶ˆ—
   case SEQ_SAVE_INIT:
+    PMSND_PlaySE( BR_SND_SE_SEARCH );
+    p_wk->cnt = 0;
     p_wk->work0 = 0;
     p_wk->work1 = 0;
     (*p_seq)++;
@@ -782,6 +796,7 @@ static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
         p_wk->p_param->is_save  = TRUE; 
         (*p_seq)++;
       }
+      p_wk->cnt++;
     }
     break;
 
@@ -793,17 +808,20 @@ static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       req_param.upload_favorite_video_number  = RecHeader_ParamGet( BattleRec_HeaderPtrGet(), RECHEAD_IDX_DATA_NUMBER, 0 );
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_FAVORITE_VIDEO_UPLOAD, &req_param );
       BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_011 );
-      PMSND_PlaySE( BR_SND_SE_SEARCH );
     }
+    p_wk->cnt++;
     (*p_seq)++;
     break;
 
   case SEQ_SEND_WAIT:
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
-      BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_012 );
-      PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
-      (*p_seq)++;
+      if( p_wk->cnt++ > RR_SEARCH_SE_FRAME )
+      { 
+        BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_012 );
+        PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
+        (*p_seq)++;
+      }
     }
     break;
   
@@ -864,13 +882,11 @@ static void Br_BvSave_OverWrite_CreateDisplay( BR_BVSAVE_WORK *p_wk, BR_BVSAVE_P
     STRBUF  *p_src  = GFL_MSG_CreateString( p_msg, msg_info_013 );
     STRBUF  *p_dst  = GFL_STR_CreateCopyBuffer( p_src, p_wk->heapID );
 
-    //@todo
-    /*
     WORDSET_RegisterWord( p_word, 0, 
-        p_param->cp_rec_saveinfo->p_name[ p_param->mode ],
-        p_param->cp_rec_saveinfo->sex[ p_param->mode ],
+        p_param->cp_rec_saveinfo->p_name[p_wk->save_btn_idx],
+        p_param->cp_rec_saveinfo->sex[p_wk->save_btn_idx], 
         TRUE, PM_LANG );
-*/
+
     WORDSET_ExpandStr( p_word, p_dst, p_src );
 
     BR_TEXT_PrintBuff( p_wk->p_text, p_param->p_res, p_dst );

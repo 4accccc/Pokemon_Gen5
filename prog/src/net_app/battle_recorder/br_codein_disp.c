@@ -834,6 +834,7 @@ void CI_pv_FontOam_Create(BR_CODEIN_WORK* wk, int no, int x, int y, int pal_offs
 	
 	wk->sys.bmp_obj[ no ] = BmpOam_ActorAdd( wk->sys.bmpoam_sys , &finit );
 	BmpOam_ActorBmpTrans( wk->sys.bmp_obj[ no ] );
+	BmpOam_ActorSetObjMode( wk->sys.bmp_obj[ no ], GX_OAM_MODE_XLU );
 
 	GFL_BMP_Delete( bmp );
 	GFL_STR_DeleteBuffer(str);

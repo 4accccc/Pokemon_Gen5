@@ -1146,7 +1146,7 @@ static void Br_BvSearch_PrintMainDisplay( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PR
       if( p_param->search_data.battle_mode_no != BATTLEMODE_SEARCH_NO_ALL )
       { 
         BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[ BR_BVSEARCH_MSGWINID_M_PLACE ], p_msg,
-            msg_rule_no_000 + p_param->search_data.battle_mode_no - 1, p_font, BR_PRINT_COL_NORMAL );
+            msg_rule_no_000 + p_param->search_data.battle_mode_no, p_font, BR_PRINT_COL_NORMAL );
       }
       else
       { 

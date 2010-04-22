@@ -74,6 +74,7 @@ typedef struct
   PRINT_QUE           *p_que;
 	HEAPID              heapID;
   MUSICAL_SHOT_DATA   *p_musical_shot;
+  u32                 cnt;
 
   BR_MUSICALSEND_PROC_PARAM *p_param;
 } BR_MUSICALSEND_WORK;
@@ -455,6 +456,7 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
       req_param.cp_upload_musical_shot_data = p_wk->p_musical_shot;
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_MUSICAL_SHOT_UPLOAD, &req_param );
       PMSND_PlaySE( BR_SND_SE_SEARCH );
+      p_wk->cnt = 0;
     }
     *p_seq  = SEQ_UPLOAD_WAIT;
     break;
@@ -462,9 +464,12 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
   case SEQ_UPLOAD_WAIT:
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
-      PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
-      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
-      *p_seq  = SEQ_UPLOAD_END;
+      if( p_wk->cnt++ > RR_SEARCH_SE_FRAME )
+      { 
+        PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
+        BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
+        *p_seq  = SEQ_UPLOAD_END;
+      }
     }
     break;
 

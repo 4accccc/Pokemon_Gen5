@@ -69,6 +69,8 @@ typedef enum
   BR_RECORD_MSGWINID_M_BTL_NAME = 0,  //●●●の記録
   BR_RECORD_MSGWINID_M_BTL_RULE,       //コロシアム　シングル　せいげんなし
   BR_RECORD_MSGWINID_M_BTL_NUMBER,    //ビデオナンバー
+  BR_RECORD_MSGWINID_M_BTL_WIN_NUM,    //○○←戦目数
+  BR_RECORD_MSGWINID_M_BTL_WIN,    //戦目
   BR_RECORD_MSGWINID_M_BTL_MAX,   
 
   BR_RECORD_MSGWINID_M_MAX  = BR_RECORD_MSGWINID_M_BTL_MAX,
@@ -108,6 +110,7 @@ typedef struct
 
   u16                   sv_wk0;
   u16                   sv_wk1;
+  u32                   cnt;
 
   GDS_PROFILE_PTR       p_profile;
   BATTLE_REC_HEADER_PTR p_header;
@@ -150,8 +153,7 @@ static void Br_Record_Seq_RecPlayBeforeSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
 //-------------------------------------
 ///	画面作成
 //=====================================
-static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
-static void Br_Record_CreateMainDisplayDouble( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
+static void Br_Record_CreateMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 static void Br_Record_AddPokeIcon( BR_RECORD_WORK * p_wk, GFL_CLUNIT *p_clunit, BATTLE_REC_HEADER_PTR p_header, HEAPID heapID );
 static void Br_Record_CreateMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 static void Br_Record_DeleteMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
@@ -170,6 +172,7 @@ static void Br_Record_Save_DeleteDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_
 ///	その他
 //=====================================
 static BOOL Br_Record_Check2vs2( BATTLE_REC_HEADER_PTR p_head );
+static BOOL Br_Record_CheckCounterVisible( BATTLE_REC_HEADER_PTR p_head );
 static BOOL Br_Record_GetTrgProfile( BR_RECORD_WORK * p_wk, u32 x, u32 y );
 static BOOL Br_Record_GetTrgStart( BR_RECORD_WORK * p_wk, u32 x, u32 y );
 static BOOL Br_Record_GetTrgYes( BR_RECORD_WORK *p_wk, u32 x, u32 y );
@@ -444,7 +447,7 @@ static void Br_Record_Seq_FadeInBefore( BR_SEQ_WORK *p_seqwk, int *p_seq, void *
   }
   else
   { 
-    Br_Record_CreateMainDisplaySingle( p_wk, p_wk->p_param );
+    Br_Record_CreateMainDisplay( p_wk, p_wk->p_param );
   }
 
   BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeIn );
@@ -681,7 +684,7 @@ static void Br_Record_Seq_ChangeDrawUp( BR_SEQ_WORK *p_seqwk, int *p_seq, void *
       { 
         Br_Record_DeleteMainDisplayProfile( p_wk, p_wk->p_param );
         BR_MSGWIN_PrintColor( p_wk->p_msgwin_s[BR_RECORD_MSGWINID_S_PROFILE], p_msg, msg_718, p_font, BR_PRINT_COL_NORMAL );
-        Br_Record_CreateMainDisplaySingle( p_wk, p_wk->p_param );
+        Br_Record_CreateMainDisplay( p_wk, p_wk->p_param );
       }
     BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_MAIN, BR_FADE_DIR_IN );
     }
@@ -757,6 +760,7 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
       req_param.download_video_number = p_wk->p_param->video_number;
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD, &req_param );
       PMSND_PlaySE( BR_SND_SE_SEARCH );
+      p_wk->cnt = 0;
 
       *p_seq  = SEQ_DOWNLOAD_WAIT;
     }
@@ -764,9 +768,12 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
   case SEQ_DOWNLOAD_WAIT:
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
-      PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
-      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
-      *p_seq  = SEQ_DOWNLOAD_END;
+      if( p_wk->cnt++ > RR_SEARCH_SE_FRAME )
+      { 
+        PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
+        *p_seq  = SEQ_DOWNLOAD_END;
+      }
     }
     break;
   case SEQ_DOWNLOAD_END:
@@ -820,7 +827,7 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
     { 
       Br_Record_Download_DeleteDisplay( p_wk, p_wk->p_param );
       Br_Record_CreateSubDisplay( p_wk, p_wk->p_param );
-      Br_Record_CreateMainDisplaySingle( p_wk, p_wk->p_param );
+      Br_Record_CreateMainDisplay( p_wk, p_wk->p_param );
       *p_seq  = SEQ_FADECHANGE_START;
     }
     break;
@@ -895,7 +902,7 @@ static void Br_Record_Seq_VideoDownloadRecPlay( BR_SEQ_WORK *p_seqwk, int *p_seq
   switch( *p_seq )
   { 
   case SEQ_CHANGE_FADEOUT_START:
-    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
     *p_seq  = SEQ_CHANGE_FADEOUT_WAIT;
     break;
   case SEQ_CHANGE_FADEOUT_WAIT:
@@ -941,6 +948,7 @@ static void Br_Record_Seq_VideoDownloadRecPlay( BR_SEQ_WORK *p_seqwk, int *p_seq
       req_param.download_video_number = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_DATA_NUMBER, 0 );
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD, &req_param );
       PMSND_PlaySE( BR_SND_SE_SEARCH );
+      p_wk->cnt = 0;
 
       *p_seq  = SEQ_DOWNLOAD_WAIT;
     }
@@ -948,9 +956,12 @@ static void Br_Record_Seq_VideoDownloadRecPlay( BR_SEQ_WORK *p_seqwk, int *p_seq
   case SEQ_DOWNLOAD_WAIT:
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
-      PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
-      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
-      *p_seq  = SEQ_DOWNLOAD_END;
+      if( p_wk->cnt++ > RR_SEARCH_SE_FRAME )
+      { 
+        PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
+        BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
+        *p_seq  = SEQ_DOWNLOAD_END;
+      }
     }
     break;
   case SEQ_DOWNLOAD_END:
@@ -1342,7 +1353,7 @@ static void Br_Record_Seq_RecPlayBeforeSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
  *	@param	BR_RECORD_WORK * p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM *p_param )
+static void Br_Record_CreateMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM *p_param )
 {	
   static const struct 
   { 
@@ -1374,9 +1385,30 @@ static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_
       2,
       msg_12,
     },
+    { 
+      3,
+      11,
+      7,
+      2,
+      msg_11,
+    },
+    { 
+      3,
+      13,
+      7,
+      2,
+      msg_11_2,
+    },
   };
 
-	BR_RES_LoadBG( p_param->p_res, BR_RES_BG_RECORD_M_BTL_SINGLE, p_wk->heapID );
+  if( Br_Record_Check2vs2( p_wk->p_header ) )
+  { 
+    BR_RES_LoadBG( p_param->p_res, BR_RES_BG_RECORD_M_BTL_DOUBLE, p_wk->heapID );
+  }
+  else
+  { 
+    BR_RES_LoadBG( p_param->p_res, BR_RES_BG_RECORD_M_BTL_SINGLE, p_wk->heapID );
+  }
   
   
   //メッセージWIN作成
@@ -1387,6 +1419,8 @@ static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_
     WORDSET *p_word;
     STRBUF  *p_strbuf;
     STRBUF  *p_src;
+
+    BOOL is_print ;
 
     p_font  = BR_RES_GetFont( p_param->p_res );
     p_msg   = BR_RES_GetMsgData( p_param->p_res );
@@ -1409,12 +1443,16 @@ static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_
           WORDSET_ExpandStr( p_word, p_strbuf, p_src );
           GFL_STR_DeleteBuffer( p_name );
           GFL_STR_DeleteBuffer( p_src );
+          BR_MSGWIN_SetPos(p_wk->p_msgwin_m[i], 0, 0, BR_MSGWIN_POS_ABSOLUTE );
+          is_print  = TRUE;
         }
         break;
       case BR_RECORD_MSGWINID_M_BTL_RULE:       //コロシアム　シングル　せいげんなし
         {
           const u32 btl_rule  = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_MODE, 0);
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID + btl_rule );
+          BR_MSGWIN_SetPos(p_wk->p_msgwin_m[i], 0, 0, BR_MSGWIN_POS_ABSOLUTE );
+          is_print  = TRUE;
         }
         break;
       case BR_RECORD_MSGWINID_M_BTL_NUMBER:    //ビデオナンバー
@@ -1442,14 +1480,51 @@ static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_
           WORDSET_RegisterNumber( p_word, 1, dtmp2[1], 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
           WORDSET_RegisterNumber( p_word, 0, dtmp2[2], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
           WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          BR_MSGWIN_SetPos(p_wk->p_msgwin_m[i], 0, 0, BR_MSGWIN_POS_ABSOLUTE );
           GFL_STR_DeleteBuffer( p_src );
+          is_print  = TRUE;
         }
         break;
+      case BR_RECORD_MSGWINID_M_BTL_WIN_NUM:
+        if( Br_Record_CheckCounterVisible(p_wk->p_header) )
+        { 
+          u32 win = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_COUNTER, 0 );
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+
+          p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          WORDSET_RegisterNumber( p_word, 0, win, 4, STR_NUM_DISP_LEFT, STR_NUM_DISP_LEFT );
+
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          GFL_STR_DeleteBuffer( p_src );
+          BR_MSGWIN_SetPos(p_wk->p_msgwin_m[i], 0, 0, BR_MSGWIN_POS_WH_CENTER );
+          is_print  = TRUE;
+        }
+        else
+        { 
+          is_print  = FALSE;
+        }
+        break;
+
+      case BR_RECORD_MSGWINID_M_BTL_WIN:  //○連勝
+        if( Br_Record_CheckCounterVisible(p_wk->p_header) )
+        { 
+          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          BR_MSGWIN_SetPos(p_wk->p_msgwin_m[i], 0, 0, BR_MSGWIN_POS_WH_CENTER );
+          is_print  = TRUE;
+        }
+        else
+        { 
+          is_print  = FALSE;
+        }
+        break;
+
       }
 
-      BR_MSGWIN_PrintBufColor( p_wk->p_msgwin_m[i], p_strbuf, p_font, BR_PRINT_COL_NORMAL );
-
-      GFL_STR_DeleteBuffer( p_strbuf ); 
+      if( is_print )
+      { 
+        BR_MSGWIN_PrintBufColor( p_wk->p_msgwin_m[i], p_strbuf, p_font, BR_PRINT_COL_NORMAL );
+        GFL_STR_DeleteBuffer( p_strbuf ); 
+      }
     }
   }
 
@@ -1457,19 +1532,6 @@ static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_
   { 
     Br_Record_AddPokeIcon( p_wk, p_param->p_unit, p_wk->p_header, p_wk->heapID );
   }
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	ダブル戦用録画ヘッダ画面構築
- *
- *	@param	BR_RECORD_WORK * p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void Br_Record_CreateMainDisplayDouble( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param )
-{	
-	BR_RES_LoadBG( p_param->p_res, BR_RES_BG_RECORD_M_BTL_DOUBLE, p_wk->heapID );
-
 }
 //----------------------------------------------------------------------------
 /**
@@ -1965,9 +2027,11 @@ static BOOL Br_Record_Check2vs2( BATTLE_REC_HEADER_PTR p_head )
 	type = RecHeader_ParamGet( p_head, RECHEAD_IDX_MODE, 0 );
 	
 	switch ( type ){
-  case BATTLEMODE_BIT_COLOSSEUM_MULTI_NOSHOOTER:
-  case BATTLEMODE_BIT_COLOSSEUM_MULTI_SHOOTER:
-  case BATTLEMODE_BIT_SUBWAY_MULTI:
+  case BATTLE_MODE_COLOSSEUM_MULTI_FREE:           //コロシアム　マルチ　制限無し
+  case BATTLE_MODE_COLOSSEUM_MULTI_50:             //コロシアム　マルチ　フラット
+  case BATTLE_MODE_COLOSSEUM_MULTI_FREE_SHOOTER:   //コロシアム　マルチ　制限無し　シューターあり
+  case BATTLE_MODE_COLOSSEUM_MULTI_50_SHOOTER:     //コロシアム　マルチ　フラット　シューターあり
+  case BATTLE_MODE_SUBWAY_MULTI:
 		b2vs2 = TRUE;
 		break;
 	default:
@@ -1976,6 +2040,32 @@ static BOOL Br_Record_Check2vs2( BATTLE_REC_HEADER_PTR p_head )
 	};
 	
 	return b2vs2;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  「戦目」を表示させる箇所かどうか
+ *
+ *	@param	BATTLE_REC_HEADER_PTR p_head  ヘッダ
+ *
+ *	@return TRUEならばバトルサブウェイ  FALSEならば違う
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_Record_CheckCounterVisible( BATTLE_REC_HEADER_PTR p_head )
+{ 
+	int	type;
+	
+	type = RecHeader_ParamGet( p_head, RECHEAD_IDX_MODE, 0 );
+	
+	switch ( type ){
+  //現状「戦目」を表示させるのは地下鉄のみ
+  case BATTLE_MODE_SUBWAY_SINGLE:     //WIFI DL含む      地下鉄　シングル
+  case BATTLE_MODE_SUBWAY_DOUBLE:                      //地下鉄　ダブル
+  case BATTLE_MODE_SUBWAY_MULTI:      //NPC, COMM, WIFI  地下鉄　マルチ
+    return TRUE;
+
+	default:
+    return FALSE;
+	};
 }
 //----------------------------------------------------------------------------
 /**

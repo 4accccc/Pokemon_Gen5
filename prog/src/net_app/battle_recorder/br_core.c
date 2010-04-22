@@ -93,6 +93,10 @@ typedef struct
 
 	//引数
 	BR_CORE_PARAM		*p_param;
+
+  //以下プロセス間の繋ぎ
+  BR_BVRANK_MODE  rank_mode;
+
 } BR_CORE_WORK;
 
 //=============================================================================
@@ -383,6 +387,14 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
   { 
     //それ以外のモードはGDSの曲をかける
     PMSND_PlayBGM( BR_SND_BGM_MAIN );
+  }
+
+  //戦闘から来た場合は、ALPHAをONにし、サイドバー状態を開いた状態にする
+  if( p_wk->p_param->mode == BR_CORE_MODE_RETURN )
+  { 
+    BR_SIDEBAR_SetShakePos( p_wk->p_sidebar );
+    BR_SIDEBAR_StartShake( p_wk->p_sidebar );
+    BR_FADE_ALPHA_SetAlpha( p_wk->p_fade, BR_FADE_DISPLAY_BOTH, 0 );
   }
 
 	return GFL_PROC_RES_FINISH;
@@ -955,16 +967,21 @@ static void BR_BVRANK_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
   { 
     const BR_MENU_PROC_PARAM  *cp_menu_param = cp_pre_param;
     p_param->mode       = cp_menu_param->next_mode;
+
+    p_wk->rank_mode = p_param->mode;
   }
   else if( preID == BR_PROCID_BV_SEARCH )
   {
     const BR_BVSEARCH_PROC_PARAM  *cp_search_param = cp_pre_param;
     p_param->mode         = BR_BVRANK_MODE_SEARCH;
     p_param->search_data  = cp_search_param->search_data;
+    
+    p_wk->rank_mode = p_param->mode;
   }
   else if( preID == BR_PROCID_RECORD )
   {
-    p_param->mode         = BR_BVRANK_MODE_RETURN;
+    p_param->mode         = p_wk->rank_mode;
+    p_param->is_return    = TRUE;
   }
   else
   { 

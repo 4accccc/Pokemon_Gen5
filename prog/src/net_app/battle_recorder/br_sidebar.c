@@ -723,8 +723,9 @@ static void BR_SIDEBAR_ONE_SetMoveMode( BR_SIDEBAR_ONE *p_wk, BR_SIDEBAR_ONE_MOV
 //-----------------------------------------------------------------------------
 static void BR_SIDEBAR_ONE_SetShakePos( BR_SIDEBAR_ONE *p_wk )
 { 
+  p_wk->scale = FX32_CONST(0.1f);
   GFL_CLACT_WK_SetTypePos( p_wk->p_clwk, p_wk->data.boot_end_x, p_wk->data.draw_type, CLSYS_MAT_X );
-  GFL_CLACT_WK_SetTypeScale( p_wk->p_clwk, FX32_CONST(0.1f), CLSYS_MAT_X );
+  GFL_CLACT_WK_SetTypeScale( p_wk->p_clwk, p_wk->scale, CLSYS_MAT_X );
 }
 
 //-------------------------------------
