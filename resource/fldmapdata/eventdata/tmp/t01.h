@@ -18,6 +18,13 @@
 #define T01_SUPPORT_01                     3
 #define T01_RIVAL_01                       4
 #define T01_MAMA_01                        5
+#define T01_MAN3_02                        6
+#define T01_MAN3_03                        7
+#define T01_BABYGIRL1_02                   8
+#define T01_BABYGIRL1_03                   9
+#define T01_BABYGIRL1_04                  10
+#define T01_MAN3_04                       11
+#define T01_BABYGIRL1_05                  12
 
 #endif //ZONE_T01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

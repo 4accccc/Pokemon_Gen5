@@ -25,6 +25,8 @@ _EVENT_DATA		ev_bg_t01r0401_book_02
 _EVENT_DATA		ev_bg_t01r0401_book_03
 _EVENT_DATA		ev_bg_t01r0401_note_01
 _EVENT_DATA		ev_t01r0401_pokemon_01
+_EVENT_DATA		ev_t01r0401_rival_01
+_EVENT_DATA		ev_t01r0401_support_01
 _EVENT_DATA_END
 
 
@@ -221,22 +223,9 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_white_03,T01R0401_SUPPORT_01, POS_DL )  //サポート
 	_MSGWIN_CLOSE()
 
-	//僕たちも１番道路に行こう！
+	//ああ 図鑑を完成させながら…
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0401_black_04,T01R0401_RIVAL_01, POS_DR )  //ライバル
 	_MSGWIN_CLOSE()
-
-	//サポート＆ライバル：退室
-	_OBJ_ANIME( T01R0401_RIVAL_01,anm_zukan_rival_goaway_01 )
-	_OBJ_ANIME( T01R0401_SUPPORT_01,anm_zukan_support_goaway_01 )
-	_OBJ_ANIME_WAIT()
-
-	//サポート＆ライバル：消す
-	_OBJ_DEL( T01R0401_RIVAL_01 )
-	_OBJ_DEL( T01R0401_SUPPORT_01 )
-
-	//階段SE
-	_SE_PLAY( SEQ_SE_KAIDAN )
-	_SE_WAIT()
 
 //=====================フラグ操作========================//
 
@@ -414,24 +403,23 @@ _ANIME_LABEL	anm_zukan_doc_goaway_02
 	_ANIME_DATA	AC_WALK_D_8F,5
 	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------------
-//ライバル：退室
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_zukan_rival_goaway_01
-	_ANIME_DATA	AC_WALK_D_6F,2
-	_ANIME_DATA	AC_WALK_L_6F,1
-	_ANIME_DATA	AC_WALK_D_6F,2
-	_ANIME_DATA	AC_VANISH_ON,1
-	_ANIME_DATA	ACMD_END,0
 
-//--------------------------------------------------------------------
-//サポート：退室
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_zukan_support_goaway_01
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	ACMD_END,0
+/************************************************************/
+/*						ライバル							*/
+/************************************************************/
+EVENT_START   ev_t01r0401_rival_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_black_07 )
+EVENT_END
+
+
+/************************************************************/
+/*						サポート							*/
+/************************************************************/
+EVENT_START   ev_t01r0401_support_01
+	_PLAYER_NAME( 0 )
+	_TEMOTI_NICK_NAME( 1, 0 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_white_06 )
+EVENT_END
 
 
 /************************************************************/

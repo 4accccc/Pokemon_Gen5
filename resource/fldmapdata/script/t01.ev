@@ -49,8 +49,8 @@ INIT_EVENT_START   ev_init_t01
 	IF $WK_SCENE_T01 == 1 THEN
 		//研究所で図鑑をもらった直後なら、ライバルとサポートの位置を変更
 
-		_OBJ_POS_CHANGE( T01_RIVAL_01, 776, 0, 741, DIR_DOWN )
-		_OBJ_POS_CHANGE( T01_SUPPORT_01, 778, 0, 741, DIR_DOWN )
+//		_OBJ_POS_CHANGE( T01_RIVAL_01, 776, 0, 741, DIR_DOWN )
+//		_OBJ_POS_CHANGE( T01_SUPPORT_01, 778, 0, 741, DIR_DOWN )
 
 	ELSIF $WK_SCENE_T01 == 2 THEN
 		//ママからタウンマップもらった直後なら、ライバルとサポートを１番道路手前に
@@ -194,6 +194,12 @@ EVENT_START	ev_t01_rival_01
 		_OBJ_DEL( T01_RIVAL_01 )
 		_OBJ_DEL( T01_SUPPORT_01 )
 
+		//========================================//
+		//ライバル＆サポート非表示
+		_FLAG_RESET( FV_T01_RIVAL )
+		_FLAG_RESET( FV_T01_SUPPORT )
+		//========================================//
+
 		//マップ遷移処理
 		_MAP_CHANGE( ZONE_ID_T01R0401, 4, 11, DIR_UP )
 
@@ -264,9 +270,47 @@ _ANIME_LABEL	anm_labo_player_move_01b
 /*				ママ：タウンマップ入手イベント				*/
 /************************************************************/
 EVENT_START	ev_scene_t01_mama_01
-	//ママ気づく
-	_OBJ_ANIME( T01_MAMA_01, anm_scene_mama_look_01 )
+	//ライバル＆サポートの表示フラグをリセットしておく
+	_FLAG_RESET( FV_T01_RIVAL )
+	_FLAG_RESET( FV_T01_SUPPORT )
+
+	{
+	DEFINE_LOCAL	DOOR_ANIME_ID
+
+	//ドア開く
+	_BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 777, 740 )
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+
+	//サポート：登場
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_OBJ_ADD( T01_SUPPORT_01 )
+	_OBJ_POS_CHANGE( T01_SUPPORT_01, 777, 0, 740, DIR_DOWN )
+
+	//おうい待ってよう
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01_white_01a, T01_SUPPORT_01, POS_UR )
+	_MSGWIN_CLOSE()
+	_SE_WAIT()
+
+	//サポート：主人公を押し出す
+	_OBJ_ANIME( T01_SUPPORT_01, anm_scene_support_move_01 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_scene_player_move_01 )
+	_OBJ_ADD( T01_RIVAL_01 )
+	_OBJ_POS_CHANGE( T01_RIVAL_01, 777, 0, 740, DIR_DOWN )
+	_OBJ_ANIME( T01_RIVAL_01, anm_scene_rival_move_01 )
+	_TIME_WAIT( 8 )
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
 	_OBJ_ANIME_WAIT()
+
+	//ドア解放
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+	}
+
+	//ママ気づく
+//	_OBJ_ANIME( T01_MAMA_01, anm_scene_mama_look_01 )
+//	_OBJ_ANIME_WAIT()
 
 	//いたいた！
 	_BALLOONWIN_OBJMSG_POS( msg_t01_mama_01, T01_MAMA_01, POS_DR )
@@ -387,6 +431,26 @@ EVENT_START	ev_scene_t01_mama_01
 EVENT_END
 
 //--------------------------------------------------------------------
+//サポート＆ライバル登場：主人公を押し出す
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_scene_support_move_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_scene_rival_move_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_scene_player_move_01
+	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WALK_D_6F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
 //ママ：気づく
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_scene_mama_look_01
@@ -445,7 +509,7 @@ _ANIME_LABEL	anm_scene_mama_goaway_01
 //ライバル：去る
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_scene_rival_goaway_01
-	_ANIME_DATA	AC_WALK_D_6F,1
+	_ANIME_DATA	AC_WALK_U_6F,1
 	_ANIME_DATA	AC_WALK_R_6F,10
 	_ANIME_DATA	ACMD_END,0
 
