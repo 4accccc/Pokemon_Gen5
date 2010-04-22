@@ -3771,6 +3771,23 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
     MYITEM_FieldBagCursorGet(pWork->pBagCursor, pWork->pocketno, &cur, &scr );
     pWork->curpos = cur;
     pWork->oamlistpos = scr - 1;
+		// カーソル位置補正
+		while( 1 ){
+			if( pWork->curpos == 0 && pWork->oamlistpos == -1 ){
+				break;
+			}
+			{
+				ITEM_ST * item = ITEMMENU_GetItem( pWork, ITEMMENU_GetItemIndex(pWork) );
+				if( item->id != 0 && item->no != 0 ){
+					break;
+				}
+			}
+			if( pWork->oamlistpos != -1 ){
+				pWork->oamlistpos--;
+			}else if( pWork->curpos != 0 ){
+				pWork->curpos--;
+			}
+		}
   }
 
   // 文字列初期化
