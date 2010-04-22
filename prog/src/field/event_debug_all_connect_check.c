@@ -8,6 +8,7 @@
 //////////////////////////////////////////////////////////////////////////
 #ifdef PM_DEBUG
 #include <gflib.h>
+#include "system/main.h" // for HEAPID_xxxx
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 #include "field/eventdata_system.h"
@@ -32,7 +33,10 @@
 //========================================================================
 static const UncheckZoneList[] = 
 {
-  ZONE_ID_MAX,
+  ZONE_ID_UNION,
+  ZONE_ID_CLOSSEUM,
+  ZONE_ID_CLOSSEUM02,
+  ZONE_ID_PLD10,
 };
 
 
@@ -91,6 +95,8 @@ static void DebugPrint_AllConnect( const CHECK_WORK* work );
 static void DebugPrint_CheckConnect( const CHECK_WORK* work );
 static void DebugPrint_DetectSpecialConnect( const CHECK_WORK* work );
 static void DebugPrint_Finish( const CHECK_WORK* work );
+// ヒープ残量チェック
+static void HeapFreeSizeCheck( HEAPID heap_id, u32 check_size );
 
 
 //========================================================================
@@ -160,6 +166,9 @@ static GMEVENT_RESULT AllConnectCheckEvent( GMEVENT* event, int* seq, void* wk )
   GAMEDATA*      gameData   = work->gameData;
   FIELDMAP_WORK* fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
 
+  // ヒープ残量チェック
+  HeapFreeSizeCheck( HEAPID_PROC, 0x8000 );
+
   switch( *seq ) {
   // イベント初期化
   case CHECK_SEQ_INIT:
@@ -198,8 +207,12 @@ static GMEVENT_RESULT AllConnectCheckEvent( GMEVENT* event, int* seq, void* wk )
 
   // 新しいゾーンのチェック開始
   case CHECK_SEQ_NEW_ZONE_START:
+    // チェック対象外のゾーンの場合
+    if( CheckValidZone(GetCheckZoneID(work)) == FALSE ) {
+      *seq = CHECK_SEQ_JUMP_NEXT_ZONE; // 次のゾーンへ
+    }
     // 接続がない場合
-    if( GetConnectNum(work) == 0 ) {
+    else if( GetConnectNum(work) == 0 ) {
       *seq = CHECK_SEQ_JUMP_NEXT_ZONE; // 次のゾーンへ
     }
     else {
@@ -751,6 +764,24 @@ static void DebugPrint_Finish( const CHECK_WORK* work )
   OS_TFPrintf( PRINT_TARGET, "===========================\n" );
   OS_TFPrintf( PRINT_TARGET, "ALL-CONNECT-CHECK: Finish!!\n" );
   OS_TFPrintf( PRINT_TARGET, "===========================\n" );
+}
+
+//------------------------------------------------------------------------
+/**
+ * @brief ヒープ残量チェック
+ *
+ * @param heap_id    チェックするヒープ
+ * @param check_size チェック残量
+ */
+//------------------------------------------------------------------------
+static void HeapFreeSizeCheck( HEAPID heap_id, u32 check_size )
+{
+  if( GFL_HEAP_GetHeapFreeSize( HEAPID_PROC ) < check_size ) {
+    OS_Printf( "***************************************\n" );
+    GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_PROC );
+    OS_Printf( "***************************************\n" );
+    GF_ASSERT(0);
+  }
 }
 
 
