@@ -956,7 +956,7 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
   _pokeNickNameMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 16, 0,bEgg,pWork);//ニックネーム
   if(!bEgg){
     _pokeZukanNoMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0, 8*2,bEgg,pWork);//ニックネーム
-    _pokeKindNameMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 5*8, 8*2,bEgg,pWork);//ニックネーム
+    _pokeKindNameMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 7*8, 8*2,bEgg,pWork);//ニックネーム
     _pokeLvMsgDisp(pp,GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 8*12 , 0,pWork);
     _pokeSexMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 10*8, 0, pWork, FALSE);
 
