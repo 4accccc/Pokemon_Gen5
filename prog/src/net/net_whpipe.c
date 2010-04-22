@@ -368,13 +368,7 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
 
 #ifdef PM_DEBUG  // デバッグの時だけ、上に定義がある人は基本他の人とつながらない
 	if(pGF->ProductOrDevelopment != pNetWL->mineDebugNo){
-  #ifndef DEBUG_ONLY_FOR_tomoya_takahashi
 		return FALSE;   //パレスの為
-	#else
-  	if(pGF->ProductOrDevelopment == 3){ //誰とも繋がる状態であってもmatsudaとは接続しない
-      return FALSE;
-    }
-  #endif //DEBUG_ONLY_FOR_tomoya_takahashi
 	}
 #else
   if(pGF->ProductOrDevelopment != POKEMONWB_BEACON_PRODUCT_NO){

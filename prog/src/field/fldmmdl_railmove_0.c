@@ -651,6 +651,7 @@ u32 MMDL_HitCheckRailMoveDirEx( const MMDL *mmdl, u16 dir, MAPATTR* p_attr )
   BOOL check_next_location;
   const FLDNOGRID_MAPPER* cp_mapper = MMDLSYS_GetNOGRIDMapper( MMDL_GetMMdlSys( mmdl ) );
   const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
+  u16 my_dir;
 
   // レール動作チェック
   GF_ASSERT( MMDL_CheckStatusBit( mmdl, MMDL_STABIT_RAIL_MOVE ) );
@@ -660,7 +661,12 @@ u32 MMDL_HitCheckRailMoveDirEx( const MMDL *mmdl, u16 dir, MAPATTR* p_attr )
 
   // DIRに対応した、ロケーションを取得
   FIELD_RAIL_WORK_GetLocation( cp_work->rail_wk, &now_location );
-  check_next_location = FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, &now_location, MMdl_ConvertDir_RailKey( dir ), &next_location );
+  my_dir = MMDL_GetDirDisp( mmdl );
+  if( my_dir == dir ){
+    check_next_location = FIELD_RAIL_WORK_GetFrontLocation( cp_work->rail_wk, MMdl_ConvertDir_RailKey( dir ), &next_location );
+  }else{
+    check_next_location = FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, &now_location, MMdl_ConvertDir_RailKey( dir ), &next_location );
+  }
 
   
   if( check_next_location )
@@ -807,15 +813,15 @@ BOOL MMDL_GetRailFrontLocation( const MMDL *mmdl, RAIL_LOCATION* location )
 {
   const MMDLSYS* cp_sys = MMDL_GetMMdlSys( mmdl );
   const FLDNOGRID_MAPPER* cp_mapper = MMDLSYS_GetNOGRIDMapper( cp_sys );
-  const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
+  const MV_RAIL_COMMON_WORK* cp_work;
   u16 dir;
+
+  // レール動作ワーク取得
+	cp_work = MMDL_GetMoveProcWork( (MMDL*)mmdl );
 
   dir = MMDL_GetDirDisp( mmdl );
 
-
-  MMDL_GetRailLocation( mmdl, location );
-//  TOMOYA_Printf( "dir %d  line_grid %d\n", dir, location->line_grid );
-  return FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, location, FIELD_RAIL_TOOL_ConvertDirToRailKey(dir), location ); 
+  return FIELD_RAIL_WORK_GetFrontLocation( cp_work->rail_wk, FIELD_RAIL_TOOL_ConvertDirToRailKey(dir), location ); 
 }
 
 //----------------------------------------------------------------------------
@@ -835,10 +841,20 @@ BOOL MMDL_GetRailDirLocation( const MMDL *mmdl, u16 dir, RAIL_LOCATION* location
   const MMDLSYS* cp_sys = MMDL_GetMMdlSys( mmdl );
   const FLDNOGRID_MAPPER* cp_mapper = MMDLSYS_GetNOGRIDMapper( cp_sys );
   const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
+  const MV_RAIL_COMMON_WORK* cp_work;
+  u16 my_dir;
 
-  MMDL_GetRailLocation( mmdl, location );
+  dir = MMDL_GetDirDisp( mmdl );
+
+  // レール動作ワーク取得
+	cp_work = MMDL_GetMoveProcWork( (MMDL*)mmdl );
+
 //  TOMOYA_Printf( "dir %d  line_grid %d\n", dir, location->line_grid );
-  return FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, location, FIELD_RAIL_TOOL_ConvertDirToRailKey(dir), location ); 
+  if( my_dir != dir ){
+    MMDL_GetRailLocation( mmdl, location );
+    return FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, location, FIELD_RAIL_TOOL_ConvertDirToRailKey(dir), location ); 
+  }
+  return FIELD_RAIL_WORK_GetFrontLocation( cp_work->rail_wk, FIELD_RAIL_TOOL_ConvertDirToRailKey(dir), location ); 
 }
 
 //----------------------------------------------------------------------------

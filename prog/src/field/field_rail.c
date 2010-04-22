@@ -151,6 +151,10 @@ struct _FIELD_RAIL_WORK{
   RAIL_LOCATION last_location;
   // 目の前の情報
   RAIL_LOCATION front_location;
+  u8           calc_front_loc;    // 計算結果があるか？
+  u8           normal_front_loc;  // 正常なロケーションだったか？
+  u8           front_rail_key;    // 計算時の前方方向キーは？
+  u8           pad;
 
   const FIELD_RAIL_MAN* cp_man;
 
@@ -1200,6 +1204,31 @@ BOOL FIELD_RAIL_WORK_CheckLocation( const FIELD_RAIL_WORK * work, const RAIL_LOC
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  目の前のロケーションを取得
+ *
+ *	@param	work
+ *	@param	location
+ *
+ *	@retval TRUE    正常なロケーション
+ *	@retval FALSE   いけないばしょのロケーション
+ */
+//-----------------------------------------------------------------------------
+BOOL FIELD_RAIL_WORK_GetFrontLocation(FIELD_RAIL_WORK * work, RAIL_KEY key, RAIL_LOCATION * location)
+{
+  if( (work->calc_front_loc == FALSE) || (key != work->front_rail_key) ){
+    // 再計算 
+    work->normal_front_loc = FIELD_RAIL_MAN_CalcRailKeyLocation( work->cp_man, &work->now_location, key, &work->front_location );
+
+    work->calc_front_loc = TRUE;
+    work->front_rail_key = key;
+  }
+
+  GFL_STD_MemCopy( &work->front_location, location, sizeof(RAIL_LOCATION) );
+  return work->normal_front_loc;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  レール位置情報の設定
  *
  *	@param	man       マネージャ
@@ -1650,6 +1679,7 @@ void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
 		{
 			work->req_move = FALSE;
 
+      work->calc_front_loc = FALSE;
       // ロケーションの更新
       work->last_location = work->now_location;
       getRailLocation( work, &work->now_location );
@@ -2050,20 +2080,26 @@ BOOL FIELD_RAIL_TOOL_HitCheckSphere( const VecFx32* person, const VecFx32* check
   { 
     HIT_HEIGHT  = FX32_ONE * 8,   // 縦の判定誤差
   };
-  VecFx32 pos1, pos2;
   // 平面の距離
   fx32 len;
   fx32 dist_y;
+  fx32 len_x, len_z;
 
-  VEC_Set( &pos1, person->x, 0, person->z ); 
-  VEC_Set( &pos2, check->x, 0, check->z ); 
+  len_x = (person->x>>FX32_SHIFT) - (check->x>>FX32_SHIFT);
+  len_z = (person->z>>FX32_SHIFT) - (check->z>>FX32_SHIFT);
+  len = len_x * len_x;
+  len += len_z * len_z;
 
 
-  len = VEC_Distance( &pos1, &pos2 );
   dist_y = MATH_ABS( person->y - check->y );
 
 
-  if( (dist_y < HIT_HEIGHT) && (len < FX_Mul( r, 2<<FX32_SHIFT ) ) )
+  r = ((r>>FX32_SHIFT)*2);
+  r *= r;
+
+  //TOMOYA_Printf( "len %d r %d\n", len, r );
+
+  if( (dist_y < HIT_HEIGHT) && (len < r ) )
   {
     return TRUE;
   }
@@ -3210,6 +3246,8 @@ static void initRail(FIELD_RAIL_WORK * work, const RAIL_SETTING* rail_dat, const
   work->last_key = RAIL_KEY_NULL;
 
   work->req_move = FALSE;
+
+  work->calc_front_loc = FALSE;
 
   work->active = FALSE;
 }

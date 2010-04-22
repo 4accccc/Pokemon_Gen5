@@ -63,7 +63,7 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
  *	@return Ý’è‚µ‚½ƒCƒxƒ“ƒg
  */
 //-----------------------------------------------------------------------------
-GMEVENT* EVENT_RailSlipDown(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
+GMEVENT* EVENT_RailSlipDown(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16 dir)
 {
   GMEVENT *event;
   EVENT_RAIL_SLIPDOWN_WORK* p_slipdown;
@@ -88,6 +88,9 @@ GMEVENT* EVENT_RailSlipDown(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
   {
     FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( fieldmap );
     MMDL* p_mmdl = FIELD_PLAYER_GetMMdl( p_player );
+
+    FIELD_PLAYER_SetDir( p_player, dir );
+    
     p_slipdown->p_wk = RailSlipDown_Create( gsys, fieldmap, p_mmdl, TRUE );
   }
 

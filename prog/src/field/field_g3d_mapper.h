@@ -84,7 +84,7 @@ extern void	FLDMAPPER_MainTail( FLDMAPPER* g3Dmapper );
  * @brief	３Ｄマップコントロールシステムディスプレイ
  */
 //------------------------------------------------------------------
-extern void	FLDMAPPER_Draw( const FLDMAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera, FLDMAPPER_DRAW_TYPE type );
+extern void	FLDMAPPER_Draw( FLDMAPPER* g3Dmapper, GFL_G3D_CAMERA* g3Dcamera, FLDMAPPER_DRAW_TYPE type );
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップコントロールシステム破棄

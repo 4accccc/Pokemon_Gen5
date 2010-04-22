@@ -253,9 +253,11 @@ void	FLD_G3D_MAP_StartDraw( void )
 	GFL_G3D_DRAW_SetLookAt();	//カメラグローバルステート設定		
 }
 
-void	FLD_G3D_MAP_Draw( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
+BOOL	FLD_G3D_MAP_Draw( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
 {
+  BOOL ret = FALSE;
 	GF_ASSERT( g3Dmap );
+
   
 	//地形描画
 	if( DrawGround( g3Dmap, g3Dcamera ) == TRUE ){
@@ -271,7 +273,11 @@ void	FLD_G3D_MAP_Draw( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera )
         //DirectDrawObj( g3Dmap, g3Dcamera ); Directは使用しない
       }
     }
+
+    ret = TRUE;
 	}
+
+  return ret;
 }
 
 void	FLD_G3D_MAP_EndDraw( void )
@@ -631,6 +637,18 @@ void FLD_G3D_MAP_GetLoadDatID( FLD_G3D_MAP* g3Dmap, u32* ID )
 	GF_ASSERT( g3Dmap );
 
 	*ID = g3Dmap->datID;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	Lordデータサイズの取得
+ */
+//------------------------------------------------------------------
+void FLD_G3D_MAP_GetLoadDataSize( FLD_G3D_MAP* g3Dmap, u32* size )
+{
+	GF_ASSERT( g3Dmap );
+
+	*size = g3Dmap->ldst.fSize;
 }
 
 //------------------------------------------------------------------

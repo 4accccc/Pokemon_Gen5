@@ -358,6 +358,7 @@ extern void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCAT
 extern void FIELD_RAIL_WORK_GetLocation(const FIELD_RAIL_WORK * work, RAIL_LOCATION * location);
 extern void FIELD_RAIL_WORK_GetLastLocation(const FIELD_RAIL_WORK * work, RAIL_LOCATION * location);
 extern BOOL FIELD_RAIL_WORK_CheckLocation( const FIELD_RAIL_WORK * work, const RAIL_LOCATION * location );
+extern BOOL FIELD_RAIL_WORK_GetFrontLocation(FIELD_RAIL_WORK * work, RAIL_KEY key, RAIL_LOCATION * location);
 
 
 //------------------------------------------------------------------

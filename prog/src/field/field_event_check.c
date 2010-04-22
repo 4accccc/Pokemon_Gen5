@@ -199,6 +199,7 @@ static void updateFriendyStepCount( GAMEDATA * gamedata, FIELDMAP_WORK * fieldma
 
 static GMEVENT* CheckSeaTemple( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, u16 zone_id );
 
+
 static GMEVENT * checkExit(EV_REQUEST * req,
     FIELDMAP_WORK *fieldWork, const VecFx32 *now_pos );
 static GMEVENT * checkAttribute(EV_REQUEST * req, FIELDMAP_WORK *fieldWork );
@@ -253,7 +254,7 @@ static GMEVENT* checkPosEvent_sandstream( EV_REQUEST* req );
 static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work );
 
 static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
-static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
+static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork, const RAIL_LOCATION* front_location);
 static GMEVENT * checkRailSlipDown(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
 static void rememberExitRailInfo(const EV_REQUEST * req, int idx, const RAIL_LOCATION* loc);
 static GMEVENT * getRailChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx,
@@ -344,9 +345,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 #endif
   {
     u32 count = FIELD_EVENT_CountBattleMember( gsys );
-    MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);  // 400 ～ 600 micro sec
     event = EVENT_CheckTrainerEye( fieldWork, count );
-    MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
     if( event != NULL ){
       *eff_delete_flag = TRUE;  //エフェクトエンカウント消去リクエスト
       return event;
@@ -984,6 +983,7 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
   player_fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
 
   // 目の前のロケーションを取得
+  SET_CHECK("ev_check:calc front location");
   MMDL_GetRailFrontLocation( player_fmmdl, &front_location );
 
   
@@ -1155,15 +1155,20 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
 //☆☆☆押し込み操作チェック（マットでのマップ遷移など）
 	//キー入力接続チェック
   if (req.pushRequest) {
-    event = checkRailPushExit(&req, gsys, fieldWork);
-    if( event != NULL ){
-      return event;
-    }
 
-    event = checkRailSlipDown(&req, gsys, fieldWork);
-    if( event != NULL ){
-      return event;
+    // 目の前が交通不可能出ない場合にはチェックしない
+    if( !checkRailFrontMove( FIELDMAP_GetFieldPlayer( fieldWork ), &req ) )
+    {
+      event = checkRailPushExit(&req, gsys, fieldWork, &front_location);
+      if( event != NULL ){
+        return event;
+      }
+
     }
+  }
+  event = checkRailSlipDown(&req, gsys, fieldWork);
+  if( event != NULL ){
+    return event;
   }
 
   
@@ -1296,8 +1301,6 @@ GMEVENT * FIELD_EVENT_CheckHybrid( GAMESYS_WORK *gsys, void *work )
 //--------------------------------------------------------------
 static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork)
 {
-  MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
-  
   GFL_STD_MemClear( req, sizeof(EV_REQUEST) );
   req->heapID = FIELDMAP_GetHeapID(fieldWork);
   req->gsys = gsys;
@@ -1405,8 +1408,6 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
         req->key_cont & 0xff, req->player_state, req->player_value, req->player_dir );
   }*/
 #endif
-
-  MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
 }
 
 
@@ -2512,24 +2513,17 @@ static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELD
  *	@brief  ノーグリッドマップ　レールシステム上での押し込み出入り口判定
  */
 //--------------------------------------------------------------
-static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork)
+static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork, const RAIL_LOCATION* front_location)
 {
   int idx;
-  RAIL_LOCATION pos, front_pos;
+  RAIL_LOCATION pos;
   BOOL result;
   const FIELD_PLAYER* cp_player = FIELDMAP_GetFieldPlayer( fieldWork );
   const MMDL* cp_mmdl = FIELD_PLAYER_GetMMdl( cp_player );
   const CONNECT_DATA* cnct;
 
 
-  // 目の前が交通不可能出ない場合にはチェックしない
-  if( checkRailFrontMove( cp_player, req ) )
-  {
-    return NULL;
-  }
-
   MMDL_GetRailLocation( cp_mmdl, &pos );
-  result = MMDL_GetRailFrontLocation( cp_mmdl, &front_pos );
    
   // その場チェック　＝　マット
   idx = EVENTDATA_SearchConnectIDByRailLocation(req->evdata, &pos);
@@ -2549,7 +2543,7 @@ static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
   }
 
   // 目の前チェック = 階段、壁、ドア
-  idx = EVENTDATA_SearchConnectIDByRailLocation(req->evdata, &front_pos);
+  idx = EVENTDATA_SearchConnectIDByRailLocation(req->evdata, front_location);
   if(idx == EXIT_ID_NONE)
   {
     return NULL;
@@ -2654,21 +2648,19 @@ static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *
 static GMEVENT * checkRailSlipDown(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork)
 {
   const FIELD_PLAYER* cp_player = FIELDMAP_GetFieldPlayer( fieldWork );
+  const MMDL* cp_mmdl = FIELD_PLAYER_GetMMdl( cp_player );
+  u16 dir = FIELD_PLAYER_GetKeyDir( cp_player, req->key_cont );
 
-  // 目の前が交通不可能出ない場合にはチェックしない
-  if( checkRailFrontMove( cp_player, req ) )
-  {
-    return NULL;
-  }
-
-  // ずり落ち処理
-  if( RAIL_ATTR_VALUE_CheckSlipDown( MAPATTR_GetAttrValue(req->mapattr) ) )
-  {
-    // プレイヤーは下をみているか？
-    if( req->player_dir == DIR_DOWN )
+  if( dir == DIR_DOWN ){
+    // ずり落ち処理
+    if( RAIL_ATTR_VALUE_CheckSlipDown( MAPATTR_GetAttrValue(req->mapattr) ) )
     {
-      // ずり落ち開始
-      return EVENT_RailSlipDown( gsys, fieldWork );
+      // その方向にいどうできないようになっているか？
+      if( (MMDL_HitCheckRailMoveDir( cp_mmdl, dir ) & (MMDL_MOVEHITBIT_ATTR|MMDL_MOVEHITBIT_LIM)) )
+      {
+        // ずり落ち開始
+        return EVENT_RailSlipDown( gsys, fieldWork, dir );
+      }
     }
   }
 

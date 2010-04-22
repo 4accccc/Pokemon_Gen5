@@ -201,7 +201,7 @@ extern void	FLD_G3D_MAP_Main( FLD_G3D_MAP* g3Dmap );
  */
 //------------------------------------------------------------------
 extern void	FLD_G3D_MAP_StartDraw( void );
-extern void	FLD_G3D_MAP_Draw( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera );
+extern BOOL	FLD_G3D_MAP_Draw( FLD_G3D_MAP* g3Dmap, GFL_G3D_CAMERA* g3Dcamera );
 extern void	FLD_G3D_MAP_EndDraw( void );
 
 
@@ -340,6 +340,12 @@ extern void FLD_G3D_MAP_GetLoadArcHandle( FLD_G3D_MAP* g3Dmap, ARCHANDLE** handl
  */
 //------------------------------------------------------------------
 extern void FLD_G3D_MAP_GetLoadDatID( FLD_G3D_MAP* g3Dmap, u32* ID );
+//------------------------------------------------------------------
+/**
+ * @brief	Lordデータサイズの取得
+ */
+//------------------------------------------------------------------
+extern void FLD_G3D_MAP_GetLoadDataSize( FLD_G3D_MAP* g3Dmap, u32* size );
 //------------------------------------------------------------------
 /**
  * @brief	モデルリソース設定

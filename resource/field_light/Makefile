@@ -71,6 +71,8 @@ ifeq	($(CONVERTUSER),true)
 	perl conv.pl $*_02.csv $*_02.dat $(TIMEZONE_FILE)
 	perl conv.pl $*_03.csv $*_03.dat $(TIMEZONE_FILE)
 
+	cp $*_00.csv $*.csv	#É_É~Å[
+
 endif
 
 
