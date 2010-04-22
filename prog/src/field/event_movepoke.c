@@ -50,6 +50,16 @@ enum
 #define EV_MOVEPOKE_ANIME_BUF ( 0x180 )
 
 
+//-------------------------------------
+///	アニメ終了後の影ON　設定
+//=====================================
+static const BOOL sc_EV_MOVEPOKE_END_SHADOW_ON[ EV_MOVEPOKE_ANIME_MAX ] = {
+  FALSE,     // EV_MOVEPOKE_ANIME_RAI_KAZA_INSIDE,
+  FALSE,    // EV_MOVEPOKE_ANIME_RAI_KAZA_OUTSIDE,
+  FALSE,    // EV_MOVEPOKE_ANIME_TUCHI_INSIDE,
+  TRUE,     // EV_MOVEPOKE_ANIME_TUCHI_OUTSIDE,
+};
+
 
 
 //-----------------------------------------------------------------------------
@@ -172,8 +182,14 @@ void EVENT_MOVEPOKE_StartAnime( EV_MOVEPOKE_WORK* p_wk, EV_MOVEPOKE_ANIME_TYPE a
 
   // アニメーション開始
   p_wk->anime_status = ANIME_STATUS_DOING;
+  p_wk->anime_no = anime_no;
 
   MOVEPOKE_SetUpMMdl( p_wk->p_anime, p_wk->p_poke, &p_wk->offset );
+
+  // 影をOFF
+  MMDL_SetStatusBitAttrGetOFF( p_wk->p_poke, TRUE );
+  MMDL_OnMoveBit( p_wk->p_poke, MMDL_MOVEBIT_SHADOW_VANISH );
+
 }
 
 //----------------------------------------------------------------------------
@@ -248,6 +264,13 @@ static void MOVEPOKE_Update( FLDMAPFUNC_WORK* p_taskwk, FIELDMAP_WORK* p_fieldma
           VecFx32 pos;
           MMDL_GetVectorPos( p_wk->p_poke, &pos );
           MMDL_InitPosition( p_wk->p_poke, &pos, MMDL_GetDirDisp(p_wk->p_poke) );
+        }
+
+        // 影をON
+        if( sc_EV_MOVEPOKE_END_SHADOW_ON[ p_wk->anime_no ] ){
+          // 影をON
+          MMDL_SetStatusBitAttrGetOFF( p_wk->p_poke, FALSE );
+          MMDL_OffMoveBit( p_wk->p_poke, MMDL_MOVEBIT_SHADOW_VANISH );
         }
       }
     }
