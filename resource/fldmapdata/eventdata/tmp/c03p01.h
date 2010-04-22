@@ -17,6 +17,7 @@
 #define C03P01_DANCER_02                   1
 #define C03P01_DANCER_03                   2
 #define C03P01_OLDMAN1_01                  3
+#define C03P01_LEADER3_01                  4
 
 #endif //ZONE_C03P01_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p01.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/19 20:23:00
+#save date:2010/04/22 20:39:53
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03.wms
 #SECTION START:OBJ_EVENT
@@ -328,7 +328,7 @@ C03_LEADER3_01
 #OBJ CODE Number
 LEADER3
 #MOVE CODE Number
-MV_RAIL_DMY
+MV_RAIL_DIR_RND_UR
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -350,7 +350,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_RAIL
 #position
-5 0 0
+4 28 -1
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -526,7 +526,24 @@ EVENTDATA_POSTYPE_RAIL
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Pos Event Label
+POS_C03_LEADER3_01
+#Pos Script Name
+SCRID_POS_C03_LEADER3_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C03
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+4 24 -3
+#size
+1 6
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

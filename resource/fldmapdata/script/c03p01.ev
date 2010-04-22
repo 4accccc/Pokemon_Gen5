@@ -24,6 +24,7 @@ _EVENT_DATA		ev_c03p01_dancer_02
 _EVENT_DATA		ev_c03p01_dancer_03
 _EVENT_DATA		ev_bg_c03p01_sign_01
 _EVENT_DATA		ev_c03p01_oldman1_01
+_EVENT_DATA		ev_pos_c03p01_leader3_01
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -38,6 +39,101 @@ _EVENT_DATA_END
 //ev_zone_c03p01:
 //  _END
 
+/**************************************************************/
+/*			LEADER3		POSイベント							  */
+/**************************************************************/
+EVENT_START		ev_pos_c03p01_leader3_01
+
+	//アーティ・キョロキョロ
+	_OBJ_ANIME( C03P01_LEADER3_01, anm_leader3_kyoro )
+	_OBJ_ANIME_WAIT()
+
+	//あっち！　ジムの方向だな！
+	_BALLOONWIN_OBJMSG_POS( msg_c03p01_leader3_01 , C03P01_LEADER3_01,POS_UL )
+	_MSGWIN_CLOSE()
+	
+	//アーティ・去る
+	_OBJ_ANIME( C03P01_LEADER3_01, anm_leader3_leave )
+	_OBJ_ANIME_WAIT()
+
+	//アーティOBJ削除
+	_OBJ_DEL( C03P01_LEADER3_01 )
+	
+	//========================================/
+	
+	//イベント終了
+	$WK_SCENE_C03 = 2
+	
+	//C03アーティのフラグセット
+	_FLAG_SET( FV_C03_GUIDE_01 )
+	
+	//C03P07のアーティとプラズマ団イベント開始
+	$WK_SCENE_C03P07 = 2
+	
+	//C03P07のアーティとプラズマ団フラグリセット
+	_FLAG_RESET( FV_C03P07_PLASMA_LEADER3 )
+
+	//========================================/
+
+EVENT_END
+//--------------------------------------------------------------------
+// 共通アニメ：びっくりする                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：右振り向き                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：下振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：上振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//		ポケモン盗難イベント：アーティ
+//--------------------------------------------------------------------
+
+_ANIME_LABEL	anm_leader3_kyoro
+	_ANIME_DATA		AC_WAIT_16F,1
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		AC_WAIT_16F,1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		AC_WAIT_16F,1
+	_ANIME_DATA		AC_STAY_WALK_D_8F,1
+	_ANIME_DATA		ACMD_END,0
+
+_ANIME_LABEL	anm_leader3_leave
+	_ANIME_DATA		AC_WALK_D_4F,10
+	_ANIME_DATA		AC_VANISH_ON,1
+	_ANIME_DATA		ACMD_END,0
+	
 /**************************************************************/
 /*			C03P01	ヒウンダンサーズ１						  */
 /**************************************************************/

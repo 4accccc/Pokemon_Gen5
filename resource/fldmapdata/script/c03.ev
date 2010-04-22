@@ -36,7 +36,7 @@ _EVENT_DATA		ev_bg_c03_sign4_01
 _EVENT_DATA		ev_bg_c03_sign5_01
 _EVENT_DATA		ev_bg_c03_sign6_01
 _EVENT_DATA		ev_bg_c03_sign7_01
-_EVENT_DATA		ev_scene_c03_plazmaevent_01
+_EVENT_DATA		ev_pos_c03_leader3_01
 _EVENT_DATA_END
 
 
@@ -166,40 +166,14 @@ EVENT_START		ev_bg_c03_sign7_01
 EVENT_END
 
 /**************************************************************/
-/*		LEADER3		シーンチェンジイベント用スクリプト		  */
+/*		LEADER3		POSイベント		  */
 /**************************************************************/
 //WK_SCENE_C03=1の時に起動
-EVENT_START		ev_scene_c03_plazmaevent_01
+EVENT_START		ev_pos_c03_leader3_01
 
 	DEFINE_LOCAL	LWK_INDEX
 	DEFINE_LOCAL	LWK_FRONT
 	DEFINE_LOCAL	LWK_SIDE
-
-	_GET_PLAYER_RAIL_LOC( LWK_INDEX, LWK_FRONT, LWK_SIDE )
-
-	SWITCH $LWK_FRONT
-	CASE 4 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move4 )
-	CASE 3 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move3 )
-	CASE 2 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move2 )
-	CASE 1 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move1 )
-	CASE 0 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move0 )
-	CASE 28 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move28 )
-	CASE 27 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move27 )
-	CASE 26 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move26 )
-	CASE 25 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move25 )
-	ENDSWITCH
-
-	//自機・移動
-	_OBJ_ANIME_WAIT()
 
 	//アーティ・キョロキョロ
 	_OBJ_ANIME( C03_LEADER3_01, anm_leader3_kyoro )
@@ -211,6 +185,7 @@ EVENT_START		ev_scene_c03_plazmaevent_01
 	
 	//アーティ・去る
 	_OBJ_ANIME( C03_LEADER3_01, anm_leader3_leave )
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
 	_OBJ_ANIME_WAIT()
 
 	//アーティOBJ削除
@@ -235,64 +210,59 @@ EVENT_START		ev_scene_c03_plazmaevent_01
 EVENT_END
 
 //--------------------------------------------------------------------
-//		シーンチェンジイベント用　アニメ
+// 共通アニメ：びっくりする                    
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_move4
-	_ANIME_DATA		AC_WALK_R_8F,4
-	_ANIME_DATA		AC_WALK_U_8F,2
-	_ANIME_DATA		ACMD_END,0
+_ANIME_LABEL	anm_common_gyoe
 
-_ANIME_LABEL	anm_player_move3
-	_ANIME_DATA		AC_WALK_R_8F,3
-	_ANIME_DATA		AC_WALK_U_8F,2
-	_ANIME_DATA		ACMD_END,0
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：右振り向き                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
 
-_ANIME_LABEL	anm_player_move2
-	_ANIME_DATA		AC_WALK_R_8F,2
-	_ANIME_DATA		AC_WALK_U_8F,2
-	_ANIME_DATA		ACMD_END,0
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_player_move1
-	_ANIME_DATA		AC_WALK_R_8F,1
-	_ANIME_DATA		AC_WALK_U_8F,2
-	_ANIME_DATA		ACMD_END,0
+//--------------------------------------------------------------------
+// 共通アニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
 
-_ANIME_LABEL	anm_player_move0
-	_ANIME_DATA		AC_WALK_U_8F,2
-	_ANIME_DATA		ACMD_END,0
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：下振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
 
-_ANIME_LABEL	anm_player_move28
-	_ANIME_DATA		AC_WALK_L_8F,1
-	_ANIME_DATA		AC_WALK_U_8F,2
-	_ANIME_DATA		ACMD_END,0
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_player_move27
-	_ANIME_DATA		AC_WALK_L_8F,2
-	_ANIME_DATA		AC_WALK_U_8F,2
-	_ANIME_DATA		ACMD_END,0
+//--------------------------------------------------------------------
+// 共通アニメ：上振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
 
-_ANIME_LABEL	anm_player_move26
-	_ANIME_DATA		AC_WALK_L_8F,3
-	_ANIME_DATA		AC_WALK_U_8F,2
-	_ANIME_DATA		ACMD_END,0
-
-_ANIME_LABEL	anm_player_move25
-	_ANIME_DATA		AC_WALK_L_8F,4
-	_ANIME_DATA		AC_WALK_U_8F,2
-	_ANIME_DATA		ACMD_END,0
-
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//		LEADER3		POSイベント用　アニメ
+//--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader3_kyoro
-	_ANIME_DATA		AC_STAY_WALK_U_4F,1
-	_ANIME_DATA		AC_WALK_R_8F,2
-	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		AC_WAIT_16F,1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
+	_ANIME_DATA		AC_WAIT_16F,1
 	_ANIME_DATA		AC_STAY_WALK_R_8F,1
-	_ANIME_DATA		AC_WALK_L_8F,4
-	_ANIME_DATA		AC_STAY_WALK_R_8F,1
-	_ANIME_DATA		AC_STAY_WALK_L_8F,1
+	_ANIME_DATA		AC_WAIT_16F,1
+	_ANIME_DATA		AC_STAY_WALK_U_8F,1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL	anm_leader3_leave
-	_ANIME_DATA		AC_WALK_L_4F,10
+	_ANIME_DATA		AC_WALK_U_4F,15
 	_ANIME_DATA		AC_VANISH_ON,1
 	_ANIME_DATA		ACMD_END,0
 
