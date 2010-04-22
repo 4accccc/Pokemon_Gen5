@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T18:05:02"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T20:11:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -372,8 +372,8 @@
 		<comment>♂
 ・</comment>
 		<attribute name="キャラ指定">BASEBALLM</attribute>
-		<language name="JPN" width="256">バットと　ボール！</language>
-		<language name="JPN_KANJI" width="256">バットと　ボール！</language>
+		<language name="JPN" width="256">オレの　じまんは　バット！</language>
+		<language name="JPN_KANJI" width="256">オレの　自慢は　バット！</language>
 	</row>
 
 	<flowchart-group-list>

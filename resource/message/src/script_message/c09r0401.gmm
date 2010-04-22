@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T22:20:52"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T19:08:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1295" top="207" right="2000" bottom="835" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -371,12 +371,14 @@
 カトレア</attribute>
 		<language name="JPN" width="256">……どうやら　ポケモンリーグの
 してんのう　ぜんいんに　かったのね▼
-あらわれた　エレベータを　つかえば
-チャンピオンの　へやに　いける……▼</language>
+ひろばの　ちゅうおうに　ある
+エレベータを　しらべれば▽
+チャンピオンの　へやに　いけるわ……▼</language>
 		<language name="JPN_KANJI" width="256">……どうやら　ポケモンリーグの
 四天王　全員に　勝ったのね▼
-広場の　エレベータを　使えば
-チャンピオンの　部屋に　いける……▼</language>
+広場の　中央に　ある
+エレベータを　調べれば▽
+チャンピオンの　部屋に　行けるわ……▼</language>
 	</row>
 
 	<row id="msg_c09r0401_bigfour4_05">
@@ -421,7 +423,7 @@
 アナタのような　トレーナーと
 あいまみえるため　ここに　きたの……</language>
 		<language name="JPN_KANJI" width="256">一族に　伝わる
-トレーナーの　こころえ　たしなみを▽
+トレーナーの　心得　たしなみを▽
 もってしても　勝てない……▼
 アナタのような　トレーナーと
 相見えるため　ここに　来たの……</language>
