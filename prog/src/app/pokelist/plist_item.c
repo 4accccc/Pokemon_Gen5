@@ -374,7 +374,6 @@ void PLIST_ITEM_CangeAruseusuForm( PLIST_WORK *work , POKEMON_PARAM *pp , const 
   {
     const u32 formNo =  PP_Get( pp , ID_PARA_form_no , NULL );
     const PokeType newForm =  POKETOOL_GetPokeTypeFromItem( itemNo );
-    OS_TPrintf("ARUSEUSU:[%d]->[%d]\n",formNo,newForm);
     if( formNo != newForm )
     {
       PP_ChangeFormNo( pp , newForm );
@@ -817,7 +816,6 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
     {
       const u32 monsNo = PP_Get( work->selectPokePara , ID_PARA_monsno , NULL );
       const u16 evoMonsNo = SHINKA_Check( work->plData->pp , work->selectPokePara , SHINKA_TYPE_LEVELUP , work->plData->zone_id , work->plData->season, NULL , work->heapId );
-      OS_TFPrintf(3,"[%d][%d]\n",monsNo,evoMonsNo);
       if( evoMonsNo != 0 )
       {
         work->mainSeq = PSMS_FADEOUT;

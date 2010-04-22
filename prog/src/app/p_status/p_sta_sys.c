@@ -2215,8 +2215,11 @@ void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work )
 #define PSTATUS_DEBUG_GROUP_NUMBER (60)
 #define MEMO_DEBUG_GROUP_NUMBER (61)
 #define MEMOINFO_DEBUG_GROUP_NUMBER (62)
+#define SETTING_DEBUG_GROUP_NUMBER (63)
 
 static fx32 PSTATUS_DEB_Update_Value( fx32 befValue );
+static const BOOL PSTD_UpdateU32( u32 *num );
+static const BOOL PSTD_UpdateU32_Max( u32 *num , const u32 max );
 
 static void PSTATUS_DEB_Update_ScaleX( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTATUS_DEB_Draw_ScaleX( void* userWork , DEBUGWIN_ITEM* item );
@@ -2269,6 +2272,10 @@ static void PSTD_U_ribbon( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTD_D_ribbon( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTD_U_Nickname( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTD_D_Nickname( void* userWork , DEBUGWIN_ITEM* item );
+
+static void PSTD_U_pokerusu( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_pokerusu( void* userWork , DEBUGWIN_ITEM* item );
+
 static void PSTATUS_InitDebug( PSTATUS_WORK *work )
 {
   VEC_Set( &work->shadowScale , PSTATUS_SUB_SHADOW_SCALE_X , PSTATUS_SUB_SHADOW_SCALE_Y , PSTATUS_SUB_SHADOW_SCALE_Z );
@@ -2297,6 +2304,7 @@ static void PSTATUS_InitDebug( PSTATUS_WORK *work )
   
   DEBUGWIN_AddGroupToTop( PSTATUS_DEBUG_GROUP_NUMBER , "ステータス" , work->heapId );
   DEBUGWIN_AddGroupToGroup( MEMO_DEBUG_GROUP_NUMBER , "トレーナーメモ" , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddGroupToGroup( SETTING_DEBUG_GROUP_NUMBER , "せってい" , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddGroupToGroup( MEMOINFO_DEBUG_GROUP_NUMBER , "すうち" , MEMO_DEBUG_GROUP_NUMBER , work->heapId );
 
   DEBUGWIN_AddItemToGroupEx( PSTD_U_ribbon   ,PSTD_D_ribbon   , (void*)work , PSTATUS_DEBUG_GROUP_NUMBER , work->heapId );
@@ -2327,6 +2335,8 @@ static void PSTATUS_InitDebug( PSTATUS_WORK *work )
   DEBUGWIN_AddItemToGroupEx( PSTD_U_level  ,PSTD_D_level  , (void*)work , MEMOINFO_DEBUG_GROUP_NUMBER , work->heapId );
   DEBUGWIN_AddItemToGroupEx( PSTD_U_natsuki ,PSTD_D_natsuki , (void*)work , MEMOINFO_DEBUG_GROUP_NUMBER , work->heapId );
 
+  //設定
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_pokerusu ,PSTD_D_pokerusu , (void*)work , SETTING_DEBUG_GROUP_NUMBER , work->heapId );
 }
 
 
@@ -2560,38 +2570,25 @@ static void PSTATUS_DEB_Draw_OfsZ( void* userWork , DEBUGWIN_ITEM* item )
 
 static const BOOL PSTD_UpdateU32( u32 *num )
 {
+  return PSTD_UpdateU32_Max( num , 0xFFFFFFFF );
+}
+
+static const BOOL PSTD_UpdateU32_Max( u32 *num , const u32 max )
+{
   u32 val = 1;
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
-  {
-    val = 10;
-  }
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
-  {
-    val = 10000;
-  }
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){val = 10;}
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){val = 10000;}
   
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
   {
-    if( *num + val > 0xFFFFFFFF )
-    {
-      *num = 0xFFFFFFFF;
-    }
-    else
-    {
-      *num += val;
-    }
+    if( *num + val > max ){*num = max;}
+    else                  {*num += val;}
     return TRUE;
   }
   else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
   {
-    if( *num < val )
-    {
-      *num = 0;
-    }
-    else
-    {
-      *num -= val;
-    }
+    if( *num < val ){*num = 0;}
+    else            {*num -= val;}
     return TRUE;
   }
   return FALSE;
@@ -2877,6 +2874,28 @@ static void PSTD_D_Nickname( void* userWork , DEBUGWIN_ITEM* item )
   const BOOL isNickName = PPP_Get( ppp , ID_PARA_nickname_flag , NULL );
   DEBUGWIN_ITEM_SetNameV( item , "NickName[%s]",(isNickName?"ON":"OFF") );  
 
+}
+
+#pragma mark [>setting
+
+static void PSTD_U_pokerusu( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
+	u32 pokerus = PP_Get( pp, ID_PARA_pokerus, NULL );
+  
+  if( PSTD_UpdateU32_Max( &pokerus , 0xFF ) == TRUE )
+  {
+    PP_Put( pp, ID_PARA_pokerus, pokerus );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+static void PSTD_D_pokerusu( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
+	u32 pokerus = PP_Get( pp, ID_PARA_pokerus, NULL );
+  DEBUGWIN_ITEM_SetNameV( item , "Pokerusu[%d]",pokerus );  
 }
 
 #endif //USE_STATUS_DEBUG

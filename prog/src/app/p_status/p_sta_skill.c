@@ -996,9 +996,18 @@ static void PSTATUS_SKILL_DrawStrSkill( PSTATUS_WORK *work , PSTATUS_SKILL_WORK 
   else
   if( skillWork->cursorPos == 0xFF )
   {
-    //初回処理なので
-    //手持ち技
-    wazaNo = PPP_Get( ppp , ID_PARA_waza1 , NULL );
+    if( work->psData->mode == PST_MODE_WAZAADD &&
+        skillWork->wazaPlateNum == 5 )
+    {
+      //取得技
+      wazaNo = work->psData->waza;
+    }
+    else
+    {
+      //初回処理なので
+      //手持ち技
+      wazaNo = PPP_Get( ppp , ID_PARA_waza1 , NULL );
+    }
   }
   else
   {
@@ -1147,6 +1156,7 @@ void PSTATUS_SKILL_DispPage_Trans_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WO
   GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE2] , SBA_PAGE2_SELECT );
 
   //押されてるモード
+/*
   if( work->ktst == GFL_APP_END_KEY )
   {
     skillWork->cursorPos = 0;
@@ -1154,8 +1164,16 @@ void PSTATUS_SKILL_DispPage_Trans_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WO
     PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
   }
   else
+*/
   {
-    skillWork->cursorPos = 0;
+    if( skillWork->wazaPlateNum == 5 )
+    {
+      skillWork->cursorPos = 4;
+    }
+    else
+    {
+      skillWork->cursorPos = 0;
+    }
     PSTATUS_SetActiveBarButton( work , FALSE );
     PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
   }
@@ -1540,6 +1558,18 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
 //--------------------------------------------------------------
 static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
 {
+  if( work->ktst == GFL_APP_END_TOUCH )
+  {
+    //タッチモードからキー操作へ
+    if( GFL_UI_KEY_GetTrg() )
+    {
+      work->ktst = GFL_APP_END_KEY;
+      skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
+      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+      return TRUE;
+    }
+  }
+
   if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
   {
     if( skillWork->isForgetConfirm == FALSE )
@@ -1569,18 +1599,6 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
       PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , FALSE );
       PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
-    }
-  }
-  else
-  if( work->ktst == GFL_APP_END_TOUCH )
-  {
-    //タッチモードからキー操作へ
-    if( GFL_UI_KEY_GetTrg() )
-    {
-      work->ktst = GFL_APP_END_KEY;
-      skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
-      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
-      return TRUE;
     }
   }
   else
@@ -1694,9 +1712,18 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
       PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
       GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
       skillWork->isForgetConfirm = FALSE;
-      skillWork->cursorPos = skillWork->changeTarget;
       skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
-      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+      if( skillWork->wazaPlateNum == 5 )
+      {
+        //タッチ例外処理
+        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , 4 );
+        PSTATUS_SKILL_DispSkillInfoPage( work , skillWork );
+      }
+      else
+      {
+        skillWork->cursorPos = 0xFF;
+        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , 0xFF );
+      }
 
       PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , FALSE );
       PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
@@ -1959,7 +1986,14 @@ static void PSTATUS_SKILL_ChangeForgetConfirmPlate( PSTATUS_WORK *work , PSTATUS
     PSTA_OAM_ActorSetDrawEnable( skillWork->bmpOamForget , FALSE );
     GFL_CLACT_WK_SetDrawEnable( plateWork->clwkType , TRUE );
 
-    PSTATUS_SKILL_ChangeColor( plateWork , 0 );
+    if( skillWork->cursorPos == 4 )
+    {
+      PSTATUS_SKILL_ChangeColor( plateWork , 1 );
+    }
+    else
+    {
+      PSTATUS_SKILL_ChangeColor( plateWork , 0 );
+    }
     PSTA_OAM_ActorSetDrawEnable( plateWork->bmpOam , TRUE );
   }
 }

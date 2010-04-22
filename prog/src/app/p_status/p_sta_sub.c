@@ -432,7 +432,7 @@ void PSTATUS_SUB_InitCell( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
   }
   {
     static const u8 markPosX[SSMT_MAX] = 
-    { 208 , 216 , 224 , 232 , 240 , 248 , 184 , 176 };
+    { 208 , 216 , 224 , 232 , 240 , 248 , 164 , 176 };
     static const u8 markPosY = 128;
     static const u8 markAnmSeq[SSMT_MAX] = 
     { 0 , 2 , 4 , 6 , 8 , 10 , 12 , 13 };
