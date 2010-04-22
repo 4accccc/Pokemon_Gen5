@@ -613,7 +613,8 @@
 #define	TRID_DANCER_04   ( 600 ) 
 #define	TRID_DANCER_05   ( 601 ) 
 #define	TRID_DANCER_06   ( 602 ) 
-#define TRID_MAX  ( 603 )
+#define	TRID_BADRIDER_01_07   ( 603 ) 
+#define TRID_MAX  ( 604 )
 
 #ifndef __ASM_NO_DEF_  //‚±‚êˆÈ~‚ÍƒAƒZƒ“ƒuƒ‰‚Å‚Í–³‹
 typedef  int TrainerID;
