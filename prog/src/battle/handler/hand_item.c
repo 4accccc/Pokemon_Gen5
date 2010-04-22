@@ -1979,6 +1979,7 @@ static void handler_PinchReactCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static void common_DamageReactCore( BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 n )
 {
   const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+  u32 maxHP;
 
   if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_KUISINBOU ){
     n /= 2;
@@ -1988,10 +1989,12 @@ static void common_DamageReactCore( BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 n )
     n = 1;
   }
 
+  maxHP = BPP_GetValue( bpp, BPP_MAX_HP );
+  if( maxHP > 1 )
   {
     u32 hp = BPP_GetValue( bpp, BPP_HP );
 
-    BTL_N_Printf( DBGSTR_Item_PinchReactItem, pokeID, BPP_GetValue(bpp,BPP_MAX_HP), hp, n);
+    BTL_N_Printf( DBGSTR_Item_PinchReactItem, pokeID, maxHP, hp, n);
 
     if( hp <= BTL_CALC_QuotMaxHP(bpp, n) ){
       BTL_N_PrintfSimple( DBGSTR_Item_PinchReactOn );
