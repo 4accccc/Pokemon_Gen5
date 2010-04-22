@@ -29,6 +29,14 @@ _EVENT_DATA    ev_pos_c04r0101_connect_c04
 _EVENT_DATA    ev_scene_c04r0101_entry
 _EVENT_DATA    ev_c04r0101_boy1_btltalk
 _EVENT_DATA    ev_bg_bsleader_board		//歴代リーダー閲覧
+_EVENT_DATA    ev_bg_c04r0101_sign_01
+_EVENT_DATA    ev_bg_c04r0101_sign_02
+_EVENT_DATA    ev_bg_c04r0101_sign_03
+_EVENT_DATA    ev_bg_c04r0101_sign_04
+_EVENT_DATA    ev_bg_c04r0101_sign_05
+_EVENT_DATA    ev_bg_c04r0101_sign_06
+_EVENT_DATA    ev_bg_c04r0101_sign_07
+_EVENT_DATA    ev_bg_c04r0101_sign_08
 _EVENT_DATA_END
 
 //簡易会話用ワーク
@@ -245,5 +253,92 @@ EVENT_START	ev_bg_bsleader_board
 	_BSUBWAY_TOOL( BSWTOOL_WIFI_EV_READ_SCDATA, 0, 0, SCWK_ANSWER )
 EVENT_END
 
+
+/************************************************************/
+/*						行き先案内							*/
+/************************************************************/
+EVENT_START	ev_bg_c04r0101_sign_01
+	_TALK_START_SE_PLAY()
+	_SYSWIN_MSG( msg_c04r0101_sign1_01, POS_DOWN )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*						行き先案内							*/
+/************************************************************/
+EVENT_START	ev_bg_c04r0101_sign_02
+	_TALK_START_SE_PLAY()
+	_SYSWIN_MSG( msg_c04r0101_sign2_01, POS_DOWN )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*						行き先案内							*/
+/************************************************************/
+EVENT_START	ev_bg_c04r0101_sign_03
+	_TALK_START_SE_PLAY()
+	_SYSWIN_MSG( msg_c04r0101_sign3_01, POS_DOWN )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*						行き先案内							*/
+/************************************************************/
+EVENT_START	ev_bg_c04r0101_sign_04
+	_TALK_START_SE_PLAY()
+	_SYSWIN_MSG( msg_c04r0101_sign4_01, POS_DOWN )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*						行き先案内							*/
+/************************************************************/
+EVENT_START	ev_bg_c04r0101_sign_05
+	_TALK_START_SE_PLAY()
+	_SYSWIN_MSG( msg_c04r0101_sign5_01, POS_DOWN )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*						行き先案内							*/
+/************************************************************/
+EVENT_START	ev_bg_c04r0101_sign_06
+	_TALK_START_SE_PLAY()
+	_SYSWIN_MSG( msg_c04r0101_sign6_01, POS_DOWN )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*						行き先案内							*/
+/************************************************************/
+EVENT_START	ev_bg_c04r0101_sign_07
+	_TALK_START_SE_PLAY()
+	_SYSWIN_MSG( msg_c04r0101_sign7_01, POS_DOWN )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*						行き先案内							*/
+/************************************************************/
+EVENT_START	ev_bg_c04r0101_sign_08
+	_TALK_START_SE_PLAY()
+	_SYSWIN_MSG( msg_c04r0101_sign8_01, POS_DOWN )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
 
 

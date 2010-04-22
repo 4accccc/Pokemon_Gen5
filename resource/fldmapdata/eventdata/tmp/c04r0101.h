@@ -29,5 +29,13 @@
 #define ZONE_C04R0101_EVB_H
 
 #define BG_BSLEADER_BOARD                 0
+#define BG_C04R0101_SIGN_05               1
+#define BG_C04R0101_SIGN_02               2
+#define BG_C04R0101_SIGN_06               3
+#define BG_C04R0101_SIGN_08               4
+#define BG_C04R0101_SIGN_03               5
+#define BG_C04R0101_SIGN_07               6
+#define BG_C04R0101_SIGN_04               7
+#define BG_C04R0101_SIGN_01               8
 
 #endif //ZONE_C04R0101_EVB_H
