@@ -91,9 +91,9 @@ typedef struct {
   u16 next_rgb:15;
   u16 direction:1;    //0:evy inc  1:evy dec
 
-  u16 fade_value:4;   //Ìª°ÄÞ‚ð‚·‚éŽž‚Ì1Sync‚ÉEVY‚É‘Î‚µ‚Ä‰ÁŒ¸ŽZ‚·‚é’l
+  u16 fade_value:5;   //Ìª°ÄÞ‚ð‚·‚éŽž‚Ì1Sync‚ÉEVY‚É‘Î‚µ‚Ä‰ÁŒ¸ŽZ‚·‚é’l
   u16 wait_cnt:6;
-  u16 dmy:6;
+  u16 dmy:5;
 }FADE_REQ_PARAM;
 
 typedef struct {

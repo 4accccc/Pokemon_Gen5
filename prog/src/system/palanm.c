@@ -646,7 +646,11 @@ static void FadeReqSet(
 {
   // wait‚ªÏ²Å½‚Ì‚Ívalue‚ğ‘å‚«‚­‚µ‚ÄÌª°ÄŞ‚ğ‘‚­‚·‚é
   if( wait < 0 ){
-    wk->fade_value = DEF_FADE_VAL + MATH_ABS( wait );
+		u8	val = DEF_FADE_VAL + MATH_ABS( wait );
+		if( val > 16 ){
+			val = 16;
+		}
+    wk->fade_value = val;
     wk->wait = 0;
   }else{
     wk->fade_value = DEF_FADE_VAL;
