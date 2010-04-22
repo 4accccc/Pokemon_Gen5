@@ -524,12 +524,14 @@ static void EggCordinate_waza_parent(
     // 技コード取得
     u32 wazano = PP_Get( father, id_para[ifa], NULL );
 
+    // 技なし
+    if( wazano == WAZANO_NULL ) { continue; }
+
     // 母も覚えているかどうかをチェック
     for( imo=0; imo<PTL_WAZA_MAX; imo++ )
     {
       // 母も覚えていたら, 継承する
-      if( wazano == PP_Get( mother, id_para[imo], NULL ) )
-      {
+      if( wazano == PP_Get( mother, id_para[imo], NULL ) ) {
         PP_SetWazaPush( egg, wazano );
         break;
       }
