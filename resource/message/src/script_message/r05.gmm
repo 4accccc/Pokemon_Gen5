@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T15:07:11"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T21:35:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1280" top="152" right="1985" bottom="780" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="110" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="445"/>
@@ -328,14 +328,16 @@
 ・続けてleader_02</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">カミツレ『おそいから　みにくれば
-あなたたち　しりあい　なのね▼
-そうして　たかめあっているんだ
-なるほど　つよくなるわけね▼</language>
-		<language name="JPN_KANJI" width="256">カミツレ『遅いから　みにくれば
-あなたたち　知り合い　なのね▼
-そうして　高めあっているんだ
-なるほど　強くなるわけね▼</language>
+		<language name="JPN" width="256">カミツレ『あなたたち
+ともだち　どうし　なんだ……▼
+いいわね
+そうやって　おたがい　きそいあい▽
+たかめあうのって▼</language>
+		<language name="JPN_KANJI" width="256">カミツレ『あなたたち
+友達　同士なんだ……▼
+いいわね
+そうやって　お互い　競い合い▽
+高めあうのって▼</language>
 	</row>
 
 	<row id="msg_r05_leader_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -365,9 +367,9 @@
 ・カミツレの前に移動してメッセージ表示
 ・続けてblack_03</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">？？？『フェスティバルは　いいのう
+		<language name="JPN" width="256">？？？『フェスティバルは　よいな！
 じんせいは　たのしまねばな！▼</language>
-		<language name="JPN_KANJI" width="256">？？？『フェスティバルは　いいのう
+		<language name="JPN_KANJI" width="256">？？？『フェスティバルは　よいな！
 人生は　楽しまねばな！▼</language>
 	</row>
 
@@ -416,7 +418,7 @@
 		<language name="JPN" width="256">アデク『……きこえたが　なんとも
 てきびしい　わかもの　だな▼
 はじめまして
-ワタシの　なまえは　アデク▼
+わしの　なまえは　アデク▼
 イッシュ　ポケモンリーグの
 チャンピオン　だよ▼
 ちなみに　あそんでいるのではなく
@@ -425,7 +427,7 @@
 		<language name="JPN_KANJI" width="256">アデク『……聞こえたが　なんとも
 手厳しい　若者だな▼
 はじめまして
-ワタシの　名前は　アデク▼
+わしの　名前は　アデク▼
 イッシュ　ポケモンリーグの
 チャンピオン　だよ▼
 ちなみに　遊んでいるのではなく
@@ -501,7 +503,7 @@
 ・続けて
 　上を向いて</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">わたしは　いろんな　ひとたちに
+		<language name="JPN" width="256">わしは　いろんな　ひとたちに
 ポケモンを　すきに　なってもらう▼
 そのことも　だいじ　だと
 かんがえるように　なってな▼
@@ -509,7 +511,7 @@
 すこしは　わかって　もらえるかもな▼
 どうかね
 マルチバトルを　してみないかね？▼</language>
-		<language name="JPN_KANJI" width="256">わたしは　いろんな　人たちに
+		<language name="JPN_KANJI" width="256">わしは　いろんな　人たちに
 ポケモンを　好きに　なってもらう▼
 そのことも　大事だと
 考えるように　なってな▼
@@ -595,7 +597,7 @@
 まんぞくする　ものも　いる▼
 いろんな　ひとが　いるのだ
 こたえも　いろいろ　ある▼
-きみと　わたしの　かんがえる
+きみと　わしの　かんがえる
 チャンピオンが　ちがっていても▽
 そういうものだと　おもってくれい！▼</language>
 		<language name="JPN_KANJI" width="256">さて　若者よ▼
@@ -606,8 +608,8 @@
 満足する者も　いる▼
 いろんな　人が　いるのだ
 答えも　いろいろ　ある▼
-きみと　わたしの　考える
-チャンピオンが　違っていても▽
+君と　わしの　考える
+チャンピオン像が　違っていても▽
 そういうものだと　思ってくれい！▼</language>
 	</row>
 
