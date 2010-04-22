@@ -34,8 +34,8 @@ struct _WIH_DWC_WORK {
   int timer;
   BOOL bStop;
 	u16 AllBeaconNum;
-  u8 buff[200];  //赤外線受信を行う仮バッファ
-  
+  u16 rssiMax;
+//  u8 buff[200];  //赤外線受信を行う仮バッファ
 };
 
 
@@ -254,6 +254,40 @@ static BOOL _scanFreeSpot( WMBssDesc* pChk )
 
 }
 
+
+/*---------------------------------------------------------------------*
+  Name:         WMSP_GetRssi8
+
+  Description:  WLのRSSIのフォーマットから8ビット値に変換する。
+
+  Arguments:    rssi - WLフォーマットのRSSI。
+
+  Returns:      8ビット値に変換されたRSSIを返す。
+ *--------------------------------------------------------------------*/
+static u8 WMSP_GetRssi8(u8 rssi)
+{
+	if (rssi & 0x0002)
+	{
+		return (u8)(rssi >> 2);
+	}
+	return (u8)((rssi >> 2) + 25);
+}
+
+
+static void _rssiMax(WMBssDesc* bss)
+{
+  if(bss==NULL){
+    return;
+  }
+  {
+    u8 a = WMSP_GetRssi8(bss->rssi);
+    if(_localWork->rssiMax < a){
+      _localWork->rssiMax = a;
+    }
+  }
+}
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   セキュリティービットがあるかどうか
@@ -313,6 +347,7 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list)
   if(_localWork==NULL){
     return retcode;
   }
+  _localWork->rssiMax = 0;
 
 #if 0 //赤外線は常に点滅に仕様変更 2010.01.08
   if( _localWork->bIrc == TRUE){
@@ -361,9 +396,9 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list)
     }
     {
       WMBssDesc* bss = &pS->sBssDesc;
-    
       DWCApInfo ap;
 
+      _rssiMax(bss);
       if(_scanAPReserveed(bss)){
         retcode |= GAME_COMM_STATUS_BIT_WIFI;
       }
@@ -493,4 +528,32 @@ int WIH_DWC_TVTCallCheck(WIFI_LIST * list)
     }
   }
   return -1;
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   拾ったビーコンの強度の最大を四段階にしてかえす
+ * @retval  強度
+ */
+//------------------------------------------------------------------------------
+
+#define _LINK_LEVEL_1  (12)
+#define _LINK_LEVEL_2  (17)
+#define _LINK_LEVEL_3  (22)
+
+int WIH_DWC_GetBeaconRssiMax(void)
+{
+  if(_localWork){
+    if(_localWork->rssiMax < _LINK_LEVEL_1){
+      return 0;
+    }
+    if(_localWork->rssiMax < _LINK_LEVEL_2){
+      return 1;
+    }
+    if(_localWork->rssiMax < _LINK_LEVEL_3){
+      return 2;
+    }
+    return 3;
+  }
+  return 0;
 }

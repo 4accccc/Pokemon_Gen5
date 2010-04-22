@@ -50,3 +50,7 @@ extern void WIH_DWC_ReloadCFG(void);
 
 //TVTに自分が呼ばれているかどうか
 extern int WIH_DWC_TVTCallCheck(WIFI_LIST * list);
+
+//   拾ったビーコンの強度のMAX
+extern int WIH_DWC_GetBeaconRssiMax(void);
+

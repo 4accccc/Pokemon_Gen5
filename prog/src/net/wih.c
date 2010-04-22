@@ -1589,25 +1589,6 @@ void WIH_FixScanMode(int channel, void* pMac )
 
 }
 
-
-/*---------------------------------------------------------------------*
-  Name:         WMSP_GetRssi8
-
-  Description:  WLのRSSIのフォーマットから8ビット値に変換する。
-
-  Arguments:    rssi - WLフォーマットのRSSI。
-
-  Returns:      8ビット値に変換されたRSSIを返す。
- *--------------------------------------------------------------------*/
-static u8 WMSP_GetRssi8(u8 rssi)
-{
-	if (rssi & 0x0002)
-	{
-		return (u8)(rssi >> 2);
-	}
-	return (u8)((rssi >> 2) + 25);
-}
-
 static void WH_StateOutStartScan(void *arg)
 {
 	WMStartScanExCallback *cb = (WMStartScanExCallback *)arg;

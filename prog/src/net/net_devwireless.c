@@ -9,8 +9,10 @@
 
 #include <nitro.h>
 #include "gflib.h"
+#include "net/network_define.h"
 #include "net_whpipe.h"
 #include "net/wih.h"
+#include "net/wih_dwc.h"
 
 //--------------------------------------------
 //ì‡ïîä÷êîàÍóó
@@ -573,6 +575,11 @@ static u32 _DevGetCurrentIDFunc(void)
 //------------------------------------------------------------------------------
 static int _DevGetIconLevelFunc(void)
 {
+  if( WB_NET_FIELDMOVE_SERVICEID==GFL_NET_GetGameServiceID() ){
+//    if(GFL_NET_GetConnectNum()<2){
+    return WM_LINK_LEVEL_3 - WIH_DWC_GetBeaconRssiMax();
+//    }
+  }
 	return (WM_LINK_LEVEL_3 - WM_GetLinkLevel());
 }
 
