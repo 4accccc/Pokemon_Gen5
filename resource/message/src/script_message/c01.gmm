@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T16:21:18"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T17:00:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1280" top="152" right="1985" bottom="780" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -365,7 +365,7 @@
 最初に　選んだ[BE:00:ページ切り替え（行送り）]
 ポケモンは　なんですか？[BE:01:ページ切り替え（クリア）]
 [1:01:ポケモン種族名:0]か……　なるほど
-[1:03:ポケモンタイプ:1]タイプが　苦手　なんですね[BE:01:ページ切り替え（クリア）]
+[1:03:ポケモンタイプ:1]タイプが　苦手なんですね[BE:01:ページ切り替え（クリア）]
 きちんと　対策しておいたほうが
 いいと　思いますよ[BE:01:ページ切り替え（クリア）]
 それでは　中で　待っていますね[BE:01:ページ切り替え（クリア）]</language>
@@ -398,7 +398,7 @@
 最初に　選んだ[BE:00:ページ切り替え（行送り）]
 ポケモンは　なんですか？[BE:01:ページ切り替え（クリア）]
 [1:01:ポケモン種族名:0]か……　なるほど
-[1:03:ポケモンタイプ:1]タイプが　苦手　なんですね[BE:01:ページ切り替え（クリア）]
+[1:03:ポケモンタイプ:1]タイプが　苦手なんですね[BE:01:ページ切り替え（クリア）]
 きちんと　対策しておいたほうが
 いいと　思いますよ[BE:01:ページ切り替え（クリア）]
 たとえば　夢の跡地で

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T19:24:28"/>
+	<create user="matsumiya" host="W00224" date="2010-04-22T17:01:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -341,9 +341,9 @@
 		<attribute name="キャラ指定">LEADER1b
 コーン（水）</attribute>
 		<language name="JPN" width="256">みずタイプを　つかいこなす　コーンです
-いご　おみしりおき　を！[BE:01:ページ切り替え（クリア）]</language>
+いご　おみしりおき　を[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">みずタイプを　使いこなす　コーンです
-以後　お見知りおき　を！[BE:01:ページ切り替え（クリア）]</language>
+以後　お見知りおき　を[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_03c" text-color="#008000,,,#008000,,#008000,,,,,,,,,,,,,">
@@ -358,7 +358,7 @@
 デントと　もうします[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">そして　ぼくはですね
 くさタイプの　ポケモンが　好きな[BE:00:ページ切り替え（行送り）]
-デントと　もうします[BE:01:ページ切り替え（クリア）]</language>
+デントと　申します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_04" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,,">
@@ -434,9 +434,9 @@
 		<attribute name="キャラ指定">LEADER1b
 コーン（水）</attribute>
 		<language name="JPN" width="256">そう！みずタイプを　あいする
-この　コーンが　あいて　なのさ[BE:01:ページ切り替え（クリア）]</language>
+この　コーンが　おあいてします[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">そう！みずタイプを　愛する
-この　コーンが　相手なのさ[BE:01:ページ切り替え（クリア）]</language>
+この　コーンが　お相手します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_05c" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,,">
