@@ -26,6 +26,7 @@
 typedef enum {
 	GMEVENT_RES_CONTINUE = 0, ///<イベント継続中
 	GMEVENT_RES_FINISH,       ///<イベント終了
+  GMEVENT_RES_CONTINUE_DIRECT = 33,  ///<イベント継続（もう一周する）
 }GMEVENT_RESULT;
 //-----------------------------------------------------------------------------
 /**
@@ -61,13 +62,6 @@ extern BOOL GAMESYSTEM_EVENT_CheckSet(GAMESYS_WORK * gsys, EVCHECK_FUNC ev_check
 //本体はgamesystem/gamesystem.cにあるので注意！
 extern void GAMESYSTEM_EVENT_EntryCheckFunc(GAMESYS_WORK * gsys,
 		EVCHECK_FUNC evcheck_func, void * context);
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-extern GMEVENT_RESULT GMEVENT_Run(GMEVENT * event);
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-extern void GMEVENT_Delete(GMEVENT * event);
 
 //=============================================================================
 //=============================================================================

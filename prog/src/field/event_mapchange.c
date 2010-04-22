@@ -890,6 +890,7 @@ static GMEVENT_RESULT EVENT_MapChange( GMEVENT* event, int* seq, void* wk )
         EVENT_EntranceIn( event, gameSystem, gameData, fieldmap, 
                           work->loc_req, work->exit_type, work->seasonUpdateOccur ) );
     (*seq)++;
+    return GMEVENT_RES_CONTINUE_DIRECT;
     break;
   case 1:
     // マップチェンジ・コア・イベント

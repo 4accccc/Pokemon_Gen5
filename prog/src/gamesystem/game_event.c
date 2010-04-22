@@ -31,6 +31,11 @@ struct _GMEVENT_CONTROL{
 	GAMESYS_WORK * gsys;	///<フィールド全体制御ワークへのポインタ（なるべく参照したくない）
 };
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT GMEVENT_Run(GMEVENT * event);
+static void GMEVENT_Delete(GMEVENT * event);
+
 //=============================================================================
 //=============================================================================
 //------------------------------------------------------------------
@@ -58,14 +63,14 @@ GMEVENT * GMEVENT_Create(GAMESYS_WORK * gsys, GMEVENT * parent, GMEVENT_FUNC eve
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-GMEVENT_RESULT GMEVENT_Run(GMEVENT * event)
+static GMEVENT_RESULT GMEVENT_Run(GMEVENT * event)
 {
 	return event->func(event, &event->seq, event->work);
 }
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-void GMEVENT_Delete(GMEVENT * event)
+static void GMEVENT_Delete(GMEVENT * event)
 {
 	if (event->work) {
 		GFL_HEAP_FreeMemory(event->work);
@@ -120,17 +125,37 @@ void GMEVENT_CallEvent(GMEVENT * parent, GMEVENT * child)
 //------------------------------------------------------------------
 BOOL GAMESYSTEM_EVENT_Main(GAMESYS_WORK * gsys)
 {
-	GMEVENT * event = GAMESYSTEM_GetEvent(gsys);
-	if (event == NULL) {
-		return FALSE;
-	}
-	while (GMEVENT_Run(event) == GMEVENT_RES_FINISH) {
-		GMEVENT * parent = GMEVENT_GetParentEvent(event);
-		GMEVENT_Delete(event);
-		GAMESYSTEM_SetEvent(gsys, parent);
-		event = parent;
-		if (parent == NULL) {
-			return TRUE;
+  GMEVENT_RESULT result;
+  GMEVENT * parent;
+  GMEVENT * event;
+
+	while ( TRUE ) {
+    event = GAMESYSTEM_GetEvent(gsys);
+    if (event == NULL) {
+      return FALSE;
+    }
+    result = GMEVENT_Run(event);
+
+    switch ( (GMEVENT_RESULT) result )
+    {
+    case GMEVENT_RES_CONTINUE:
+      return FALSE;
+
+    case GMEVENT_RES_FINISH:
+      parent = GMEVENT_GetParentEvent(event);
+      GMEVENT_Delete(event);
+      GAMESYSTEM_SetEvent(gsys, parent);
+      event = parent;
+      if (parent == NULL) {
+			  return TRUE;
+      }
+      break;
+
+    case GMEVENT_RES_CONTINUE_DIRECT:
+      /* do nothing */
+      break;
+    default:
+      GF_ASSERT( 0 );
 		}
 	}
 	return FALSE;
