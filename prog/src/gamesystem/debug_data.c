@@ -70,9 +70,7 @@ static void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
    *  êUÇËï™ÇØÇƒÇ≠ÇæÇ≥Ç¢ÅB
    *
    */
-#if defined(DEBUG_ONLY_for_tamada)
-  DEBUG_MyPokeAdd_Tamada( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus );
-#elif defined(DEBUG_ONLY_FOR_matsuda)
+#if defined(DEBUG_ONLY_FOR_matsuda)
   DEBUG_MyPokeAdd_Matsuda( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus );
 #elif defined(DEBUG_ONLY_FOR_saitou)
   DEBUG_MyPokeAdd_Saito( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus );
@@ -96,37 +94,47 @@ static void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
 //--------------------------------------------------------------
 static void DEBUG_MyPokeAdd_Field( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus )
 {
-	PP_Setup(pp, MONSNO_MOGURYUU, 100, MyStatus_GetID( mystatus ));
+	PP_Setup(pp, MONSNO_MU, 99, MyStatus_GetID( mystatus ));
   PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
   PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
   PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
-	PokeParty_Add(party, pp);
-	ZUKANSAVE_SetPokeGet( zukan, pp );
-
-	PP_Setup(pp, MONSNO_MUSYAANA, 100, MyStatus_GetID( mystatus ));
-  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
-  PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
-  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
-	PokeParty_Add(party, pp);
-	ZUKANSAVE_SetPokeGet( zukan, pp );
-
-	PP_Setup(pp, MONSNO_TIRAAMHI, 100, MyStatus_GetID( mystatus ));
-  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
-  PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
-  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
-  PP_SetWazaPos( pp , WAZANO_TEREPOOTO , 0 );
-  PP_SetWazaPos( pp , WAZANO_HURASSYU, 1 );
-	PokeParty_Add(party, pp);
-	ZUKANSAVE_SetPokeGet( zukan, pp );
-
-  PP_Setup(pp, MONSNO_GOBITTO, 100, MyStatus_GetID( mystatus ));
-  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
-  PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
-  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
-  PP_SetWazaPos( pp , WAZANO_NAMINORI , 0 );
-  PP_SetWazaPos( pp , WAZANO_TAKINOBORI , 1 );
+  PP_SetWazaPos( pp , WAZANO_DORAGONKUROO , 0 );
+  PP_SetWazaPos( pp , WAZANO_IAIGIRI , 1 );
   PP_SetWazaPos( pp , WAZANO_KAIRIKI , 2 );
-  PP_SetWazaPos( pp , WAZANO_IAIGIRI , 3 );
+  PP_SetWazaPos( pp , WAZANO_SORAWOTOBU , 3 );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+
+	PP_Setup(pp, MONSNO_MIZYUMARU, 99, MyStatus_GetID( mystatus ));
+  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
+  PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
+  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
+  PP_SetWazaPos( pp , WAZANO_ANAWOHORU , 0 );
+  PP_SetWazaPos( pp , WAZANO_NAMINORI , 1 );
+  PP_SetWazaPos( pp , WAZANO_DAIBINGU , 2 );
+  PP_SetWazaPos( pp , WAZANO_TAKINOBORI , 3 );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+
+	PP_Setup(pp, MONSNO_TEREPASU, 99, MyStatus_GetID( mystatus ));
+  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
+  PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
+  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
+  PP_SetWazaPos( pp , WAZANO_SAIKOKINESISU , 0 );
+  PP_SetWazaPos( pp , WAZANO_AMAGOI , 1 );
+  PP_SetWazaPos( pp , WAZANO_HURASSYU, 2 );
+  PP_SetWazaPos( pp , WAZANO_TEREPOOTO , 3 );
+	PokeParty_Add(party, pp);
+	ZUKANSAVE_SetPokeGet( zukan, pp );
+
+  PP_Setup(pp, MONSNO_MOROBARERU, 99, MyStatus_GetID( mystatus ));
+  PP_Put( pp , ID_PARA_id_no, (u32)MyStatus_GetID( mystatus ) );
+  PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
+  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
+  PP_SetWazaPos( pp , WAZANO_GIGADOREIN , 0 );
+  PP_SetWazaPos( pp , WAZANO_IKARINOKONA , 1 );
+  PP_SetWazaPos( pp , WAZANO_KINOKONOHOUSI , 2 );
+  PP_SetWazaPos( pp , WAZANO_AMAIKAORI , 3 );
 	PokeParty_Add(party, pp);
 	ZUKANSAVE_SetPokeGet( zukan, pp );
 }
