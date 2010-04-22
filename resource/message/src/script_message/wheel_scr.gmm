@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-10T22:20:26"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-04-22T13:19:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,15 +330,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1299" top="139" right="2004" bottom="767" maximized="no" rayout="Vertical2">
+	<dialog left="98" top="291" right="598" bottom="919" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="137" right="1280" bottom="535" visible="yes"/>
+		<tag-palette left="10" top="-9" right="483" bottom="389" visible="yes"/>
 		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="203"/>
-		<band id="2" index="3" style="0000" width="253"/>
-		<band id="3" index="4" style="0000" width="442"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="3" style="0000" width="287"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -569,7 +569,7 @@
 もー　そんな　かおしなくても▽
 だいじょぶ　だって！▽
 こんどは　きっと　へいき！▼
-な　はず　だから！</language>
+な　はず　だから！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]くん　って
 ほんと　ポケモン　強いよねー▽
 そのうち　チャンピオン　とかに▽
@@ -581,7 +581,7 @@
 もー　そんな　顔しなくても▽
 大丈夫　だって！▽
 今度は　きっと　平気！▼
-な　はず　だから！</language>
+な　はず　だから！▼</language>
 	</row>
 
 	<row id="msg_wheel_spring_f_10" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
@@ -838,7 +838,7 @@
 マジで　ゆめ　じゃないと　おもうし▽
 いくらでも　おうえんするよ！▼
 さてと……　じゃあ　そろそろ
-かんらんしゃ　のるか！</language>
+かんらんしゃ　のるか！▼</language>
 		<language name="JPN_KANJI" width="256">あー！　くやしいぜ！！▼
 しかし　相変わらず　オマエ
 めちゃくちゃ　強いよなー▼
@@ -848,7 +848,7 @@
 マジで　夢　じゃないと　思うし▽
 いくらでも　応援するよ！▼
 さてと……　じゃあ　そろそろ
-観覧車　乗るか！</language>
+観覧車　乗るか！▼</language>
 	</row>
 
 	<row id="msg_wheel_spring_m_10" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#c0c0c0,,,#c0c0c0,,#ffffff,#c0c0c0,,,#c0c0c0,,">
@@ -955,7 +955,7 @@
 ひつよう　いじょうに▽
 あたたまった　ところで……▽
 かんらんしゃに　とつにゅうだ！▼
-さあ　ついてこい　しょうねん！</language>
+さあ　ついてこい　しょうねん！▼</language>
 		<language name="JPN_KANJI" width="256">いやあ　よかったよ　少年！
 キミも　キミのポケモンも▽
 立派！　結構！　タマランよ！▼
@@ -964,7 +964,7 @@
 必要　以上に▽
 温まった　ところで……▽
 観覧車に　突入だ！▼
-さあ　ついて来い　少年！</language>
+さあ　ついて来い　少年！▼</language>
 	</row>
 
 	<row id="msg_wheel_summer_f_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1083,8 +1083,8 @@
 きたいして　しんじているぞ！▼
 さて　それでは　いよいよ……▼
 ほんじつの　メインディッシュ！
-かんらんしゃに　とつにゅうだ！▼
-いくぞ　しょうねん！　ついてこい！</language>
+かんらんしゃに　とつにゅうだ！▽
+いくぞ　しょうねん！　ついてこい！▼</language>
 		<language name="JPN_KANJI" width="256">やはり　少年の　ポケモンは
 たくましく　ご立派　だなあ！▼
 ボクは　少年の　これからの
@@ -1092,8 +1092,8 @@
 期待して　信じているぞ！▼
 さて　それでは　いよいよ……▼
 本日の　メインディッシュ！
-観覧車に　突入だ！▼
-いくぞ　少年！　ついて来い！</language>
+観覧車に　突入だ！▽
+いくぞ　少年！　ついて来い！▼</language>
 	</row>
 
 	<row id="msg_wheel_summer_f_10" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1207,7 +1207,7 @@
 さきほどの　やくそく　どおり▽
 かんらんしゃに　のろうか▼
 じつは　かんらんしゃ　という　もの
-わたしも　はつたいけん　なんだ</language>
+わたしも　はつたいけん　なんだ▼</language>
 		<language name="JPN_KANJI" width="256">……　……　正直に　言おう▼
 まさか　あなたに　負けるとは
 想像も　していなかった……▼
@@ -1217,7 +1217,7 @@
 先ほどの　約束　どおり▽
 観覧車に　乗ろうか▼
 実は　観覧車　という　もの
-私も　初体験なんだ</language>
+私も　初体験なんだ▼</language>
 	</row>
 
 	<row id="msg_wheel_summer_m_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
@@ -1304,11 +1304,11 @@
 		<language name="JPN" width="256">あっ　そう……
 やっぱり　しょうぶ　するの……　か▼
 しかたない　いいだろう……
-はじめると　しようか！</language>
+はじめると　しようか！▼</language>
 		<language name="JPN_KANJI" width="256">あっ　そう……
 やっぱり　勝負　するの……　か▼
 仕方ない　いいだろう……
-始めると　しようか！</language>
+始めると　しようか！▼</language>
 	</row>
 
 	<row id="msg_wheel_summer_m_08" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
@@ -1476,13 +1476,13 @@ OL</attribute>
 フフフ　でも　ありがと！▽
 なんか　いつもより　たのしかった▼
 じゃ　さ……
-そろそろ　かんらんしゃ　のろっか……</language>
+そろそろ　かんらんしゃ　のろっか……▼</language>
 		<language name="JPN_KANJI" width="256">あーあ　負けちゃった！
 おねーさん　頑張ったんだけどなー▽
 フフフ　でも　ありがと！▽
 何か　いつもより　楽しかった▼
 じゃ　さ……
-そろそろ　観覧車　乗ろっか……</language>
+そろそろ　観覧車　乗ろっか……▼</language>
 	</row>
 
 	<row id="msg_wheel_fall_f_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1603,7 +1603,7 @@ OL</attribute>
 ……　……　……　……▼
 ……じゃあ　さ　そろそろ
 かんらんしゃ　のろっか▽
-いこ！　[1:00:トレーナー名:0]！</language>
+いこ！　[1:00:トレーナー名:0]！▼</language>
 		<language name="JPN_KANJI" width="256">ふう……　楽しかった……▼
 [1:00:トレーナー名:0]　ってさ
 ほんと　ポケモン　上手いね▼
@@ -1615,7 +1615,7 @@ OL</attribute>
 ……　……　……　……▼
 じゃあ　さ　そろそろ
 観覧車　乗ろっか▽
-行こ！　[1:00:トレーナー名:0]！</language>
+行こ！　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
 	<row id="msg_wheel_fall_f_10" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1720,13 +1720,13 @@ OL</attribute>
 すこしだけ　じしん　あったのに……▽
 すごいですね　あなた……▼
 ……じゃあ　やくそく　どおり
-かんらんしゃ　のりましょうか</language>
+かんらんしゃ　のりましょうか▼</language>
 		<language name="JPN_KANJI" width="256">全然　かなわなかった……
 ワタシ　ポケモン勝負は▽
 少しだけ　自信　あったのに……▽
 すごいですね　あなた……▼
 ……じゃあ　約束　どおり
-観覧車　乗りましょうか</language>
+観覧車　乗りましょうか▼</language>
 	</row>
 
 	<row id="msg_wheel_fall_m_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
@@ -1841,7 +1841,7 @@ OL</attribute>
 かおも　ちいさいし……▽
 なんか　あこがれちゃいますよ！▼
 それじゃあ　そろそろ
-かんらんしゃ　のりましょ！</language>
+かんらんしゃ　のりましょ！▼</language>
 		<language name="JPN_KANJI" width="256">ふう……　また　負けちゃった！▼
 やっぱり　あなたの　ほうが
 ポケモンの　扱いも▽
@@ -1850,7 +1850,7 @@ OL</attribute>
 顔も　小さいし……▽
 なんか　あこがれちゃいますよ！▼
 それじゃあ　そろそろ
-観覧車　乗りましょ！</language>
+観覧車　乗りましょ！▼</language>
 	</row>
 
 	<row id="msg_wheel_fall_m_10" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
@@ -1973,7 +1973,7 @@ OL</attribute>
 でも　きょうは　おにーちゃんが
 あそんで　くれるもんね！▼
 じゃあ　おにーちゃん　つぎは
-いっしょに　かんらんしゃ　のろー！</language>
+いっしょに　かんらんしゃ　のろー！▼</language>
 		<language name="JPN_KANJI" width="256">たのしかったあ　ありがとー！
 やっぱり　おにーちゃんは▽
 おっきいから　つよいね！▼
@@ -1984,7 +1984,7 @@ OL</attribute>
 でも　きょうは　おにーちゃんが
 あそんで　くれるもんね！▼
 じゃあ　おにーちゃん　つぎは
-いっしょに　かんらんしゃ　のろー！</language>
+いっしょに　かんらんしゃ　のろー！▼</language>
 	</row>
 
 	<row id="msg_wheel_winter_f_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -2050,12 +2050,12 @@ OL</attribute>
 [1:00:トレーナー名:0]　おにーちゃん▼
 じゃあね……　じゃあね……▼
 まず　はじめにねー
-いっしょに　ポケモン　しよー！</language>
+いっしょに　ポケモン　しよー！▼</language>
 		<language name="JPN_KANJI" width="256">えへへ！　やったー！　ありがとー！
 [1:00:トレーナー名:0]　おにーちゃん▼
 じゃあね……　じゃあね……▼
 まず　はじめにねー
-いっしょに　ポケモン　しよー！</language>
+いっしょに　ポケモン　しよー！▼</language>
 	</row>
 
 	<row id="msg_wheel_winter_f_08" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -2093,7 +2093,7 @@ OL</attribute>
 ポケモン　じょうずかも！▼
 じゃあね　じゃあね　つぎはね！
 かんらんしゃ！　かんらんしゃ！▽
-はやく！　はやく　いこー！</language>
+はやく！　はやく　いこー！▼</language>
 		<language name="JPN_KANJI" width="256">えへへ！　たのしかったあ！▼
 [1:00:トレーナー名:0]おにーちゃん
 やっぱり　つよいなー！▽
@@ -2101,7 +2101,7 @@ OL</attribute>
 ポケモン　じょうずかも！▼
 じゃあね　じゃあね　つぎはね！
 かんらんしゃ！　かんらんしゃ！▽
-はやく！　はやく　いこー！</language>
+はやく！　はやく　いこー！▼</language>
 	</row>
 
 	<row id="msg_wheel_winter_f_10" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -2232,7 +2232,7 @@ OL</attribute>
 ……それじゃあ
 つぎは　かんらんしゃに　いこうよ▼
 ぼく　ずっと　これに
-のって　みたかったんだ</language>
+のって　みたかったんだ▼</language>
 		<language name="JPN_KANJI" width="256">う　ううう……　大丈夫……
 久しぶりなのに　思い切り▽
 体　動かしたから▽
@@ -2245,7 +2245,7 @@ OL</attribute>
 ……それじゃあ
 次は　観覧車に　行こうよ▼
 僕ね　ずっと　これに
-乗って　みたかったんだ</language>
+乗って　みたかったんだ▼</language>
 	</row>
 
 	<row id="msg_wheel_winter_m_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
@@ -2367,7 +2367,7 @@ OL</attribute>
 [1:00:トレーナー名:0]さん　ありがとう▼
 それじゃあ……▼
 そろそろ　かんらんしゃに　のろう
-さあ　いっしょに　いこうよ</language>
+さあ　いっしょに　いこうよ▼</language>
 		<language name="JPN_KANJI" width="256">ハァ　ハァ　ハァ……　……　……▼
 まだ……　体は　ついて
 いかないけど……▽
@@ -2378,7 +2378,7 @@ OL</attribute>
 [1:00:トレーナー名:0]さん　ありがとう▼
 それじゃあ……▼
 そろそろ　観覧車に　乗ろう
-さあ　一緒に　行こうよ</language>
+さあ　一緒に　行こうよ▼</language>
 	</row>
 
 	<row id="msg_wheel_winter_m_10" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
