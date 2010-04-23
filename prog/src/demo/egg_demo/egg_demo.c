@@ -8,9 +8,6 @@
  *  モジュール名：EGG_DEMO
  */
 //============================================================================
-#define HEAPID_EGG_DEMO (HEAPID_SHINKA_DEMO)
-
-
 // インクルード
 #include <gflib.h>
 #include "system/gfl_use.h"
