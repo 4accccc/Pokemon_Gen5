@@ -297,7 +297,7 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
   e_tick = OS_GetTick();
   t_tick = e_tick-s_tick;
   if( t_tick > 100 ){
-    IWASAWA_Printf("BeaconView Draw tick %d\n",  t_tick );
+//    IWASAWA_Printf("BeaconView Draw tick %d\n",  t_tick );
   }
   debug_InputCheck( wk );
 #endif
@@ -755,7 +755,8 @@ static void _sub_SystemExit(BEACON_VIEW_PTR wk)
 	WORDSET_Delete(wk->wordset);
   
   GFL_FONTSYS_SetDefaultColor();
-  PRINTSYS_QUE_Delete(wk->printQue);
+  PRINTSYS_QUE_Clear( wk->printQue );
+  PRINTSYS_QUE_Delete( wk->printQue );
  
   PaletteFadeWorkAllocFree( wk->pfd, FADE_SUB_OBJ );
   PaletteFadeWorkAllocFree( wk->pfd, FADE_SUB_BG );
