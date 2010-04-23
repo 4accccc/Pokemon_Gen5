@@ -346,7 +346,7 @@ static const MISSION_CONV_DATA_LISTPARAM MissionConvDataListParam[] = {
 	},
 	{	//68
 		MISSION_TYPE_ITEM,		//type
-		0,		//level
+		4,		//level
 		15,		//odds
 	},
 	{	//69
