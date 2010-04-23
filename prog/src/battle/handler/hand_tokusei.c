@@ -58,8 +58,10 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_SlowStart( u32* numElems );
 static void handler_Fukugan( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Fukugan( u32* numElems );
 static void handler_Sunagakure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Sunagakure_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sunagakure( u32* numElems );
 static void handler_Yukigakure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Yukigakure_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yukigakure( u32* numElems );
 static void common_weather_guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, BtlWeather weather );
 static void handler_Iromegane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -326,6 +328,8 @@ static void handler_Pressure_MemberIN( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static void handler_Pressure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_MagicGuard( u32* numElems );
 static void handler_MagicGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static  const BtlEventHandlerTable*  HAND_TOK_ADD_Akusyuu( u32* numElems );
+static void handler_Akusyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Karuwaza( u32* numElems );
 static void handler_Karuwaza_Consumed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Karuwaza_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -556,6 +560,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_NAITOMEA,         HAND_TOK_ADD_Nightmare     },
     { POKETOKUSEI_MONOHIROI,        HAND_TOK_ADD_Monohiroi     },
     { POKETOKUSEI_KARUWAZA,         HAND_TOK_ADD_Karuwaza      },
+    { POKETOKUSEI_AKUSYUU,          HAND_TOK_ADD_Akusyuu       },
 
     { POKETOKUSEI_WARUITEGUSE,      HAND_TOK_ADD_WaruiTeguse   },
     { POKETOKUSEI_TIKARAZUKU,       HAND_TOK_ADD_Tikarazuku    },
@@ -5029,6 +5034,39 @@ static void handler_MagicGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 }
 //------------------------------------------------------------------------------
 /**
+ * とくせい「あくしゅう」
+ *
+ *
+ * 道具をまた持つと下がる。
+ * 最初から道具がない場合は発動しない。
+ */
+//------------------------------------------------------------------------------
+static  const BtlEventHandlerTable*  HAND_TOK_ADD_Akusyuu( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_SHRINK_PER,  handler_Akusyuu }, // ひるみ確率チェックハンドラ
+  };
+  *numElems = NELEMS(HandlerTable);
+  return HandlerTable;
+}
+// ひるみ確率チェックハンドラ
+static void handler_Akusyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // 自分が攻撃側で
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    // ひるみ確率０なら、確率10％に
+    u8 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
+    if( per == 0 ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, 10 );
+    }
+  }
+
+}
+
+
+//------------------------------------------------------------------------------
+/**
  * とくせい「かるわざ」
  *
  * 持っている道具がなくなると、身軽になり素早さの元の値を２倍にする。
@@ -6415,7 +6453,7 @@ static void handler_Syuukaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_ITEM_CONSUMED) )
     {
       if( (BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE)
-      ||  (BTL_CALC_GetRand(100) < 50)
+      ||  (Tokusei_IsExePer(flowWk, 50))
       ){
         u16 usedItem = BPP_GetConsumedItem( bpp );
         if( (usedItem != ITEM_DUMMY_DATA)

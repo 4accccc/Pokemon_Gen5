@@ -1114,6 +1114,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_OrenNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,    handler_OrenNomi_Reaction },
     { BTL_EVENT_USE_ITEM,               handler_OrenNomi_Use      },
+    { BTL_EVENT_USE_ITEM_TMP,           handler_OrenNomi_Use      },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1141,7 +1142,7 @@ static void handler_OrenNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 //------------------------------------------------------------------------------
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KinomiJuice( u32* numElems )
 {
-  // ëSïîÅgÉIÉåÉìÇÃÇ›ÅhÇ∆ìØÇ∂Ç≈ó«Ç¢
+  // ìäÇ∞Ç¬ÇØå¯â à»äOÇÕÅgÉIÉåÉìÇÃÇ›ÅhÇ∆ìØÇ∂Ç≈ó«Ç¢
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,    handler_OrenNomi_Reaction },
     { BTL_EVENT_USE_ITEM,               handler_OrenNomi_Use },
@@ -1158,8 +1159,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_ObonNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,    handler_OrenNomi_Reaction },
-    { BTL_EVENT_USE_ITEM,               handler_ObonNomi_Use },
-    { BTL_EVENT_USE_ITEM_TMP,           handler_ObonNomi_Use },
+    { BTL_EVENT_USE_ITEM,               handler_ObonNomi_Use      },
+    { BTL_EVENT_USE_ITEM_TMP,           handler_ObonNomi_Use      },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
