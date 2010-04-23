@@ -301,7 +301,8 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR10, debugMenuCallProc_AllConnectCheck }, //オール接続チェック
 
   { DEBUG_FIELD_TITLE_02, (void*)BMPMENULIST_LABEL },       //○フィールド
-  { DEBUG_FIELD_STRESS, debugMenuCallProc_FieldAveStress },    //平均負荷
+  { DEBUG_FIELD_STRESS_N, debugMenuCallProc_FieldAveStress },    //平均負荷
+  { DEBUG_FIELD_STRESS_P, debugMenuCallProc_FieldAveStressPalace },    //パレス平均負荷
   { DEBUG_FIELD_STR17, debugMenuCallProc_FieldPosData },    //座標をみる
   { DEBUG_FIELD_STR02, debugMenuCallProc_ControlLinerCamera },  //カメラ簡単操作
   { DEBUG_FIELD_STR52, debugMenuCallProc_ControlDelicateCamera }, //カメラ全部操作
@@ -2221,10 +2222,24 @@ static GMEVENT_RESULT debugMenuWeatherListEvent(
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_FieldAveStress( DEBUG_MENU_EVENT_WORK *wk )
 {
-  DEBUG_PerformanceSetAveTest();
+  //平均負荷通常
+  DEBUG_PerformanceSetAveTest(FALSE);
   return( FALSE );
 }
 
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　パレス平均負荷計測開始
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_FieldAveStressPalace( DEBUG_MENU_EVENT_WORK *wk )
+{
+  //平均負荷パレス
+  DEBUG_PerformanceSetAveTest(TRUE);
+  return( FALSE );
+}
 
 //======================================================================
 //  デバッグメニュー　位置情報

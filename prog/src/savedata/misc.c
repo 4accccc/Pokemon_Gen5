@@ -49,6 +49,8 @@ static void MISC_InitNameIn( MISC *p_misc );
 #ifdef PM_DEBUG
 //デバッグ用クイズ番号
 int DebugQuizNo = 0;
+//デバッグテレビ用番組番号
+u32 DebugTvNo = 0;
 #endif
 
 //=============================================================================

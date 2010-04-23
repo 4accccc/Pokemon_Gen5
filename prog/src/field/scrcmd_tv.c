@@ -34,9 +34,16 @@
 #define LECTURE_TV_MAX  (50)
 #define VARIETY_TV_MAX (80)
 
+#define TV_MAX ( RECORD_TV_MAX+LECTURE_TV_MAX+VARIETY_TV_MAX )  //29+50+80=159
+
 #define REC_TAG_MAX (2)
 
 #define NO_REC_ID (0xffffffff)
+
+#ifdef PM_DEBUG
+//デバッグテレビ用番組番号 実体はmisc.c
+extern u32 DebugTvNo = 0;
+#endif //PM_DEBUG
 
 static const u32 RecordTbl[RECORD_TV_MAX][REC_TAG_MAX+2] = {    //{ レコードＩＤ1、レコードＩＤ2、ＩＤ1の表示桁、ＩＤ2の表示桁 }
   { NO_REC_ID, NO_REC_ID, 0, 0 },                               // 0  なし、なし 0,0
@@ -178,6 +185,21 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
 
   msg = msg_base+rnd;
   OS_Printf("テレビ番組抽選結果　min = %d, rnd = %d, msg = %d\n",minute, rnd, msg);
+
+#ifdef PM_DEBUG
+  if (DebugTvNo)
+  {
+    OS_Printf("デバッグ設定されているので書き換え　%d ==> %d\n",msg, DebugTvNo-1);
+    if (DebugTvNo > TV_MAX)
+    {
+      GF_ASSERT_MSG(0,"debug tv_no error %d",DebugTvNo);
+      msg = TV_MAX-1;
+    }
+    else{
+      msg = DebugTvNo-1;
+    }
+  }
+#endif  //PM_DEBUG
 
   *ret = msg;
 

@@ -116,6 +116,8 @@ static u32 DebugGetQuiz(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetQuiz(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetBP(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetBP(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetTV(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetTV(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 
 static u32 DebugGetWhiteLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetWhiteLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
@@ -286,7 +288,8 @@ static const DEBUG_MENU_INITIALIZER DATA_DNumInput_ListMenuInitializer = {
 
 //デバッグ用クイズ番号　実体はmisc.c
 extern int DebugQuizNo = 0;
-
+//デバッグテレビ用番組番号 実体はmisc.c
+extern u32 DebugTvNo = 0;
 
 //======================================================================
 //
@@ -947,6 +950,27 @@ static void DebugSetBP(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 
                                                      GMDATA_ID_BSUBWAY_SCOREDATA);
   BSUBWAY_SCOREDATA_SetBattlePoint( bp, value );
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief 番組番号ゲット
+ */
+//--------------------------------------------------------------
+static u32 DebugGetTV(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return DebugTvNo;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 番組番号セット
+ */
+//--------------------------------------------------------------
+static void DebugSetTV(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  DebugTvNo = value;
+}
+
 
 
 //--------------------------------------------------------------
