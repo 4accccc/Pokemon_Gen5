@@ -322,9 +322,9 @@ static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_MAX] = {
   ///<BATTLE_CHAMPION_VICTORY チャンピオンに勝利しました！13
   { GAMEBEACON_Set_BattleSpTrainerVictory,BEACON_PSET_DEFAULT,	  BEACON_ARG_U16,	},
   ///<POKE_GET ポケモン捕獲 14
-  { GAMEBEACON_Set_WildPokemonGet,        BEACON_PSET_MONSNO,	  BEACON_ARG_U16,	},
+  { GAMEBEACON_Set_PokemonGet,        BEACON_PSET_MONSNO,	  BEACON_ARG_U16,	},
   ///<SP_POKE_GET 特別なポケモン捕獲 15
-  { GAMEBEACON_Set_SpecialPokemonGet,     BEACON_PSET_MONSNO,	  BEACON_ARG_U16,	},
+  { GAMEBEACON_Set_PokemonGet,     BEACON_PSET_MONSNO,	  BEACON_ARG_U16,	},
   ///<POKE_LVUP ポケモンレベルアップ 16
   { GAMEBEACON_Set_PokemonLevelUp,        BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
   ///<POKE_EVOLUTION ポケモン進化 17
@@ -1263,6 +1263,7 @@ static GMEVENT_RESULT event_BeaconReqMain( GMEVENT * event, int *seq, void * wor
             evwk->b_prm_set->min, evwk->b_prm_set->max,
             &wk->beacon_prm[evwk->b_prm->prm_type], evwk->b_prm_set->wset_type ));
         }
+        break;
       default:
         {
           u8 fake_id = evwk->line-3;
