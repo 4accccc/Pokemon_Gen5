@@ -20,6 +20,12 @@
 #define TRAINERCARD_NEXTPROC_RETURN   ( 0 ) ///< フィールドメニューに戻る
 #define TRAINERCARD_NEXTPROC_EXIT     ( 1 ) ///< フィールドに直接戻る
 
+///< ショートカット起動用定義
+#define TRCARD_SHORTCUT_NONE   ( 0 )  ///< 指定なし
+#define TRCARD_SHORTCUT_FRONT  ( 1 )  ///< 表
+#define TRCARD_SHORTCUT_BACK   ( 2 )  ///< 裏
+#define TRCARD_SHORTCUT_BADGE  ( 3 )  ///< バッジ画面
+  
 //================================================================================
 /**! @enum TR_CARD_RANK
   *        トレーナーカードのランク順のカラー指定
@@ -125,6 +131,8 @@ typedef struct TRCARD_CALL_PARAM_tag{
   BOOL          edit_possible;  ///< 編集可能か？（TRUE:可能・FALSE：不可能）
   int           value;          ///< リターン値
   int           next_proc;      ///< トレーナーカード終了時の戻り値
+  int           mode;           ///< ショートカットからの呼び出し( TRCARD_SHORTCUT_NONE,
+                                ///< TRCARD_SHORTCUT_FRONT, TRCARD_SHORTCUT_BACK, TRCARD_SHORTCUT_BADGE )
 }TRCARD_CALL_PARAM;
 
 FS_EXTERN_OVERLAY(trainercard);
