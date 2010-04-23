@@ -250,8 +250,14 @@ typedef struct
   s16      pal_rate;        // 元々の色とpal_colorの比率現在値(0<= <=31)。0=元々の色100%、31=pal_color100%。
   s16      pal_wait_count;  // pal_waitのカウント
 
-  u16      change_no;     // POKE_BEFOREとPOKE_AFTERの入れ替え済みのpanel_wkのインデックス(次このインデックスから入れ替える)
-                          // (y=change_no/INDEPENDENT_PANEL_NUM_X, x=change_no%INDEPENDENT_PANEL_NUM_X)
+//  u16      change_no;     // POKE_BEFOREとPOKE_AFTERの入れ替え済みのpanel_wkのインデックス(次このインデックスから入れ替える)
+//                          // (y=change_no/INDEPENDENT_PANEL_NUM_X, x=change_no%INDEPENDENT_PANEL_NUM_X)
+
+  s16      change_no_down_x;  // POKE_BEFOREとPOKE_AFTERの入れ替え済みのpanel_wkのインデックス(次このインデックスから入れ替える)
+  s16      change_no_down_y;  // 例: 0<=x<max_x, 0<=y<max_y  (max_x=8, max_y=8)
+  s16      change_no_up_x;    // (down_x, down_y)=(3, 3)からスタートし、(2, 3),(1,3),(0,3),(7,2),(6,2),...,(0,0)と進んでいく。含まない(-1,-1)に達したら終了
+  s16      change_no_up_y;    // (up_x, up_y)=(4,3)からスタートし、(5,3),(6,3),(7,3),(0,4),(1,4),...,(7,7)と進んでいく。含まない(max_x,max_y)に達したら終了
+  
   INDEPENDENT_SPIRAL_STATE  spi_state;      // 全体の螺旋の状態
   int                       spi_theta_idx;  // 0<= <2PIのインデックス で全体を螺旋で回すもの
   int                       spi_theta_idx_add;  // spi_theta_idxの増加量
@@ -319,6 +325,9 @@ struct _SHINKADEMO_VIEW_WORK
 
   // 自作ポリゴンポケモン
   INDEPENDENT_POKE_MANAGER*  independent_poke_mgr;
+
+  // MCSSとINDEPENDENTどちらを描画するか
+  BOOL      is_mcss_draw;  // MCSSを描画するときTRUE
 };
 
 
@@ -477,6 +486,9 @@ SHINKADEMO_VIEW_WORK* SHINKADEMO_VIEW_Init(
 
   IndependentPokeManagerInit( work );
 
+  // MCSSとINDEPENDENTどちらを描画するか
+  work->is_mcss_draw = TRUE;
+
   return work;
 }
 
@@ -604,6 +616,7 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
 
       ShinkaDemo_View_PokeSetPosX( work, POKE_X_HIDE );
       IndependentPokeManagerSetPosXYZ( work, INDEPENDENT_POKE_X_CENTER, INDEPENDENT_POKE_Y, INDEPENDENT_POKE_Z );
+      work->is_mcss_draw = FALSE;
 
       {
         NNSG2dMultiCellAnimation* anim_ctrl = MCSS_GetAnimCtrl( work->poke_set[work->disp_poke].wk );
@@ -714,6 +727,7 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
 
       ShinkaDemo_View_PokeSetPosX( work, POKE_X_CENTER );
       IndependentPokeManagerSetPosXYZ( work, INDEPENDENT_POKE_X_HIDE, INDEPENDENT_POKE_Y, INDEPENDENT_POKE_Z );
+      work->is_mcss_draw = TRUE;
     }
     break;
   case STEP_EVO_CHANGE_ENDING_AFTER_REPLACE_WAIT:
@@ -803,15 +817,31 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
 //-----------------------------------------------------------------------------
 void SHINKADEMO_VIEW_Draw( SHINKADEMO_VIEW_WORK* work )
 {
-#if 1 
-  MCSS_Draw( work->mcss_sys_wk );
-
-  IndependentPokeManagerDraw( work );
+#if 1
+  if( work->is_mcss_draw )
+  {
+    MCSS_Draw( work->mcss_sys_wk );
+  }
+  else
+  {
+    IndependentPokeManagerDraw( work );
+  }
 #else
   こちらにすると、IndependentPokeManagerDrawの絵が背景につられて流れてしまう
   IndependentPokeManagerDraw( work );
 
   MCSS_Draw( work->mcss_sys_wk );
+
+  これ
+  {
+    // TwlSDK/build/demos/gx/UnitTours/3D_Pol_Tex16_Plett/src/main.c
+    // を参考にした。
+	  G3_MtxMode( GX_MTXMODE_TEXTURE );
+    G3_Identity();
+    // Use an identity matrix for the texture matrix for simplicity
+	  G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
+  }
+  を書けばつられないかも。試してはいない。
 #endif
 }
 
@@ -1339,6 +1369,25 @@ static void IndependentPokeManagerDraw( SHINKADEMO_VIEW_WORK* work )
     NNS_G3dGeFlushBuffer();
   }
 
+  {
+    // TwlSDK/build/demos/gx/UnitTours/3D_Pol_Tex16_Plett/src/main.c
+    // を参考にした。
+	  G3_MtxMode( GX_MTXMODE_TEXTURE );
+    G3_Identity();
+    // Use an identity matrix for the texture matrix for simplicity
+	  G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
+  }
+
+  {
+    G3_MaterialColorDiffAmb(
+							GX_RGB(31, 31, 31),
+							GX_RGB(31, 31, 31),
+              FALSE
+        );
+
+    G3_MaterialColorSpecEmi(GX_RGB(31, 31, 31), GX_RGB(31, 31, 31), FALSE);  // ライトなし用の設定emission GX_RGB(31, 31, 31)
+  }
+
   for( i=0; i<POKE_MAX; i++ )
   {
     if( independent_poke_mgr->poke_wk[i] )
@@ -1611,7 +1660,12 @@ static void IndependentPokeInitEvo( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_
   }
 
   {
-    poke_wk->change_no = 0;
+//    poke_wk->change_no = 0;
+    
+    poke_wk->change_no_down_x = INDEPENDENT_PANEL_NUM_X -1;
+    poke_wk->change_no_down_y = INDEPENDENT_PANEL_NUM_Y /2 -1;
+    poke_wk->change_no_up_x   = 0;
+    poke_wk->change_no_up_y   = poke_wk->change_no_down_y +1;
   }
 
   {
@@ -1833,6 +1887,8 @@ static void IndependentPokeDraw( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id 
 
     G3_PushMtx();
 
+/*
+共通なことはManagerで1回だけで済ます
     G3_MaterialColorDiffAmb(
 							GX_RGB(31, 31, 31),
 							GX_RGB(31, 31, 31),
@@ -1841,27 +1897,32 @@ static void IndependentPokeDraw( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id 
 
     //G3_MaterialColorSpecEmi(GX_RGB(16, 16, 16), GX_RGB(0, 0, 0), FALSE);
     G3_MaterialColorSpecEmi(GX_RGB(31, 31, 31), GX_RGB(31, 31, 31), FALSE);  // ライトなし用の設定emission GX_RGB(31, 31, 31)
+*/
 
+/*
+不要
     //ライトカラー
     G3_LightColor(GX_LIGHTID_0, GX_RGB(31, 31, 31));
+*/
 
     // 全体の位置設定
     G3_Translate(poke_wk->pos.x, poke_wk->pos.y, poke_wk->pos.z);
 
     {
-      int max;
-      max = INDEPENDENT_PANEL_NUM_X * INDEPENDENT_PANEL_NUM_Y;
+      //int max;
+      //max = INDEPENDENT_PANEL_NUM_X * INDEPENDENT_PANEL_NUM_Y;
+      int x, y;
 
-      for( i=0; i<max; i++ )
+      //for( i=0; i<max; i++ )
+      for( y=0; y<INDEPENDENT_PANEL_NUM_Y; y++ )
+        for( x=0; x<INDEPENDENT_PANEL_NUM_X; x++ )
       {
-        int x, y;
+        //int x, y;
         INDEPENDENT_PANEL_WORK* panel_wk;
         GXCull cull; 
 
-        G3_PushMtx();
-
-        x = i%INDEPENDENT_PANEL_NUM_X;
-        y = i/INDEPENDENT_PANEL_NUM_X;
+        //x = i%INDEPENDENT_PANEL_NUM_X;  // %や/を使うよりy,xの二重ループにしたほうが
+        //y = i/INDEPENDENT_PANEL_NUM_X;  // 処理が速い気がしたので、このように変更した。
 
         panel_wk = &(poke_wk->panel_wk[y][x]);
         
@@ -1869,13 +1930,16 @@ static void IndependentPokeDraw( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id 
         if( panel_wk->alpha == 0 )  // アルファ0のまま描画してしまうと、ワイヤーフレームで表示されてしまうので。
         {
           cull = GX_CULL_ALL;
+          continue;
         }
         else
         {
           cull = GX_CULL_BACK;
         }
 
-	      G3_PolygonAttr(
+        G3_PushMtx();
+	      
+        G3_PolygonAttr(
             GX_LIGHTMASK_NONE,//GX_LIGHTMASK_0,			  // ライトを反映  // ライトなし用の設定GX_LIGHTMASK_NONE
             GX_POLYGONMODE_MODULATE,	  // モジュレーションポリゴンモード
             cull,             // カリング
@@ -1885,9 +1949,15 @@ static void IndependentPokeDraw( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id 
 
         // 位置設定
 		    G3_Translate(panel_wk->pos.x, panel_wk->pos.y, panel_wk->pos.z);
+
+/*
+不要
         // スケール設定
 		    G3_Scale(FX32_ONE, FX32_ONE, FX32_ONE);
+*/
 
+/*
+不要
         {
           MtxFx33 mtx;
           MTX_RotY33(&mtx, FX_SinIdx(0), FX_CosIdx(0));
@@ -1895,6 +1965,7 @@ static void IndependentPokeDraw( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id 
           MTX_RotZ33(&mtx, FX_SinIdx(0), FX_CosIdx(0));
           G3_MultMtx33(&mtx);
         }
+*/
 
         G3_Begin( GX_BEGIN_QUADS );
 
@@ -1950,6 +2021,7 @@ static void IndependentPokeManagerMainSpiral( SHINKADEMO_VIEW_WORK* work )
         }
 
         {
+/*
           while( poke_wk_src->change_no > poke_wk_dst->change_no )
           {
             u8 y = poke_wk_dst->change_no / INDEPENDENT_PANEL_NUM_X; 
@@ -1958,6 +2030,77 @@ static void IndependentPokeManagerMainSpiral( SHINKADEMO_VIEW_WORK* work )
             change_panel_wk->alpha = 31;
             poke_wk_dst->change_no++;
           }
+*/
+
+          s16 x, y;
+
+          // down
+          for( y=poke_wk_dst->change_no_down_y; y>=poke_wk_src->change_no_down_y; y-- )
+          {
+            if( y==poke_wk_dst->change_no_down_y ) x=poke_wk_dst->change_no_down_x;
+            else                                   x=INDEPENDENT_PANEL_NUM_X -1;
+            while( x>=0 )
+            {
+              BOOL a = FALSE;
+              if( y==poke_wk_src->change_no_down_y )
+              {
+                if( x>poke_wk_src->change_no_down_x )
+                {
+                  a = TRUE;
+                }
+                else
+                {
+                  break;
+                }
+              }
+              else
+              {
+                a = TRUE;
+              }
+              if( a )
+              {
+                INDEPENDENT_PANEL_WORK* change_panel_wk = &(poke_wk_dst->panel_wk[y][x]);
+                change_panel_wk->alpha = 31;
+              }
+              x--;
+            }
+          }
+          poke_wk_dst->change_no_down_x = poke_wk_src->change_no_down_x;
+          poke_wk_dst->change_no_down_y = poke_wk_src->change_no_down_y;
+
+          // up
+          for( y=poke_wk_dst->change_no_up_y; y<=poke_wk_src->change_no_up_y; y++ )
+          {
+            if( y==poke_wk_dst->change_no_up_y ) x=poke_wk_dst->change_no_up_x;
+            else                                 x=0;
+            while( x<INDEPENDENT_PANEL_NUM_X )
+            {
+              BOOL a = FALSE;
+              if( y==poke_wk_src->change_no_up_y )
+              {
+                if( x<poke_wk_src->change_no_up_x )
+                {
+                  a = TRUE;
+                }
+                else
+                {
+                  break;
+                }
+              }
+              else
+              {
+                a = TRUE;
+              }
+              if( a )
+              {
+                INDEPENDENT_PANEL_WORK* change_panel_wk = &(poke_wk_dst->panel_wk[y][x]);
+                change_panel_wk->alpha = 31;
+              }
+              x++;
+            }
+          }
+          poke_wk_dst->change_no_up_x = poke_wk_src->change_no_up_x;
+          poke_wk_dst->change_no_up_y = poke_wk_src->change_no_up_y;
         }
       }
 
@@ -1988,7 +2131,8 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
   s16 i, j;
   
   poke_wk->spi_theta_idx += poke_wk->spi_theta_idx_add;
-  poke_wk->spi_theta_idx %= 0x10000;
+  //poke_wk->spi_theta_idx %= 0x10000;
+  if( poke_wk->spi_theta_idx >= 0x10000 ) poke_wk->spi_theta_idx -= 0x10000;
 
   // 前回
   for( j=0; j<INDEPENDENT_PANEL_NUM_Y; j++ )
@@ -2028,9 +2172,11 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
         for( i=0; i<INDEPENDENT_PANEL_NUM_X; i++ )
         {
           INDEPENDENT_PANEL_WORK* panel_wk = &(poke_wk->panel_wk[j][i]);
-          int total_theta_idx = ( panel_wk->steady_theta_idx + poke_wk->spi_theta_idx ) % 0x10000;
-
           VecFx32 ideal_pos;
+          
+          //int total_theta_idx = ( panel_wk->steady_theta_idx + poke_wk->spi_theta_idx ) % 0x10000;
+          int total_theta_idx = ( panel_wk->steady_theta_idx + poke_wk->spi_theta_idx );
+          if( total_theta_idx >= 0x10000 ) total_theta_idx -= 0x10000;
 
           ideal_pos.x = FX_MUL( panel_wk->steady_r, FX_CosIdx( total_theta_idx ) );
           ideal_pos.z = FX_MUL( panel_wk->steady_r, FX_SinIdx( total_theta_idx ) );
@@ -2229,7 +2375,10 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
         for( i=0; i<INDEPENDENT_PANEL_NUM_X; i++ )
         {
           INDEPENDENT_PANEL_WORK* panel_wk = &(poke_wk->panel_wk[j][i]);
-          int total_theta_idx = ( panel_wk->steady_theta_idx + poke_wk->spi_theta_idx ) % 0x10000;
+          
+          //int total_theta_idx = ( panel_wk->steady_theta_idx + poke_wk->spi_theta_idx ) % 0x10000;
+          int total_theta_idx = ( panel_wk->steady_theta_idx + poke_wk->spi_theta_idx );
+          if( total_theta_idx >= 0x10000 ) total_theta_idx -= 0x10000;
 
           panel_wk->pos.x = FX_MUL( panel_wk->steady_r, FX_CosIdx( total_theta_idx ) );
           panel_wk->pos.z = FX_MUL( panel_wk->steady_r, FX_SinIdx( total_theta_idx ) );
@@ -2238,6 +2387,7 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
         }
       }
 
+/*
       // 1つずつ入れ替えていく
       if( IndependentPokePalIsWhite( poke_wk, heap_id ) && poke_wk->spi_count >= 30 )
       {
@@ -2256,9 +2406,55 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
           poke_wk->change_no++;
         }
       }
+*/
+      // 1つずつ入れ替えていく
+      if( IndependentPokePalIsWhite( poke_wk, heap_id ) && poke_wk->spi_count >= 30 )
+      {
+        s16 x, y;
+
+        // down
+        x = poke_wk->change_no_down_x;
+        y = poke_wk->change_no_down_y;
+        if( y >= 0 && x >= 0 )
+        {
+          INDEPENDENT_PANEL_WORK* change_panel_wk = &(poke_wk->panel_wk[y][x]);
+          change_panel_wk->alpha = 0;
+          if( x-1 < 0 )
+          {
+            poke_wk->change_no_down_x = INDEPENDENT_PANEL_NUM_X;
+            poke_wk->change_no_down_y--;
+          }
+          else
+          {
+            poke_wk->change_no_down_x--;
+            //yはそのまま
+          }
+        }
+
+        // up
+        x = poke_wk->change_no_up_x;
+        y = poke_wk->change_no_up_y;
+        if( y < INDEPENDENT_PANEL_NUM_Y && x < INDEPENDENT_PANEL_NUM_X )
+        {
+          INDEPENDENT_PANEL_WORK* change_panel_wk = &(poke_wk->panel_wk[y][x]);
+          change_panel_wk->alpha = 0;
+          if( x+1 >= INDEPENDENT_PANEL_NUM_X )
+          {
+            poke_wk->change_no_up_x = 0;
+            poke_wk->change_no_up_y++;
+          }
+          else
+          {
+            poke_wk->change_no_up_x++;
+            //yはそのまま
+          }
+        }
+      }
 
       // 次へ or カウントアップ
-      if( poke_wk->change_no >= max && poke_wk->spi_count >= 240 )
+      //if( poke_wk->change_no >= max && poke_wk->spi_count >= 240 )
+      if(    ( poke_wk->change_no_down_y < 0 && poke_wk->change_no_up_y >= INDEPENDENT_PANEL_NUM_Y )
+          && ( poke_wk->spi_count >= 240 ) )
       {
         poke_wk->spi_state = INDEPENDENT_SPIRAL_STATE_END;
         poke_wk->spi_count = 0;
@@ -2280,7 +2476,10 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
         for( i=INDEPENDENT_PANEL_NUM_X-1; i>=0; i-- )
         {
           INDEPENDENT_PANEL_WORK* panel_wk = &(poke_wk->panel_wk[j][i]);
-          int total_theta_idx = ( panel_wk->steady_theta_idx + poke_wk->spi_theta_idx ) % 0x10000;
+          
+          //int total_theta_idx = ( panel_wk->steady_theta_idx + poke_wk->spi_theta_idx ) % 0x10000;
+          int total_theta_idx = ( panel_wk->steady_theta_idx + poke_wk->spi_theta_idx );
+          if( total_theta_idx >= 0x10000 ) total_theta_idx -= 0x10000;
 
           if( panel_wk->state == INDEPENDENT_SPIRAL_INDIVIDUAL_STATE_STEADY )
           {
