@@ -9,6 +9,10 @@
  *  モジュール名：SHINKADEMO
  */
 //============================================================================
+
+//#define NOT_USE_STATUS_BATTLE  // これが定義されているとき、バトルステータスを使わない
+
+
 // インクルード
 #include <gflib.h>
 #include <procsys.h>
@@ -533,8 +537,14 @@ static GFL_PROC_RESULT ShinkaDemoProcInit( GFL_PROC * proc, int * seq, void * pw
   // 初期化処理
   ShinkaDemo_Init( param, work );
 
-  // 今だけバトルステータスを使わないようにする
-  param->b_field  = TRUE;
+
+#ifdef NOT_USE_STATUS_BATTLE
+  {
+    // バトルステータスを使わないようにする
+    param->b_field  = TRUE;
+  }
+#endif
+
 
   return GFL_PROC_RES_FINISH;
 }
@@ -1114,6 +1124,11 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         YESNO_MENU_DeleteRes( work->yesno_menu_work );
         SHINKADEMO_GRAPHIC_ExitBGSub( work->graphic );
 
+        // キーorタッチ
+        {
+          work->cursor_flag = ( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY );
+        } 
+
         // バトルステータス用タスク
         work->tcbsys_work = GFL_HEAP_AllocMemory( work->heap_id, GFL_TCB_CalcSystemWorkSize(TCBSYS_TASK_MAX) );
         GFL_STD_MemClear( work->tcbsys_work, GFL_TCB_CalcSystemWorkSize(TCBSYS_TASK_MAX) );
@@ -1223,6 +1238,11 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
           // 次へ
           work->step = STEP_WAZA_CONFIRM_PREPARE;
         }
+
+        // キーorタッチ
+        {
+          GFL_UI_SetTouchOrKey( (work->cursor_flag)?(GFL_APP_END_KEY):(GFL_APP_END_TOUCH) );
+        } 
       }
     }
     break;
@@ -1531,6 +1551,10 @@ static void ShinkaDemo_Init( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
                     0, 0 );
     // パーティクルのアルファをきれいに出すため
     // ev1とev2は使われない  // TWLプログラミングマニュアル「2D面とのαブレンディング」参考
+
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
+  GFL_NET_ReloadIcon();
 }
 
 //-------------------------------------
@@ -1562,6 +1586,7 @@ static void ShinkaDemo_Exit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
   // SHINKA_DEMO_WORK後片付け
   {
     // グラフィック、フォントなど
+    PRINTSYS_QUE_Clear( work->print_que );
     PRINTSYS_QUE_Delete( work->print_que );
     GFL_FONT_Delete( work->font );
     SHINKADEMO_GRAPHIC_ExitBGSub( work->graphic );
@@ -1570,6 +1595,9 @@ static void ShinkaDemo_Exit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
   
   // オーバーレイ
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( ui_common ) );
+
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_DefaultLCD();
 }
 
 //-------------------------------------
@@ -2079,7 +2107,8 @@ static BOOL ShinkaDemo_WaitTextStream( SHINKA_DEMO_WORK* work )
     break;
   case PRINTSTREAM_STATE_PAUSE:
     if( ( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) ) || GFL_UI_TP_GetTrg() )
-    { 
+    {
+      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
       PRINTSYS_PrintStreamReleasePause( work->text_stream );
 
       if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )

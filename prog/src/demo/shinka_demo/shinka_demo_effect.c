@@ -767,7 +767,9 @@ static void Particle_EmitFunc( GFL_EMIT_PTR emit_ptr )
     spl_particle = spl_emitter->act_ptcl_list.p_begin;
     while( spl_particle )
     {
+#ifdef DEBUG_CODE
       OS_Printf("%d\n", spl_particle->alp.current_polygonID );
+#endif
       spl_particle = spl_particle->p_next;
     }    
   }
