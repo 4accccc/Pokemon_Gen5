@@ -361,7 +361,7 @@ SHORTCUTMENU_WORK *SHORTCUTMENU_Init( GAMEDATA *p_gamedata, SHORTCUTMENU_MODE mo
 	{	
 		p_wk->p_msg		= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_shortcut_menu_dat, res_heapID );
 		p_wk->p_font	= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, sys_heapID );
-		p_wk->p_que		= PRINTSYS_QUE_Create( res_heapID );
+		p_wk->p_que		= PRINTSYS_QUE_CreateEx( 4096,res_heapID );
 	}
 	NAGI_Printf( "共通モジュール確保後　0x%x\n", GFL_HEAP_GetHeapFreeSize( sys_heapID ));
 
@@ -427,6 +427,7 @@ void SHORTCUTMENU_Exit( SHORTCUTMENU_WORK *p_wk )
 
 	//共通モジュール破棄
 	{	
+    PRINTSYS_QUE_Clear( p_wk->p_que );
 		PRINTSYS_QUE_Delete( p_wk->p_que );
 		GFL_FONT_Delete( p_wk->p_font );
 		GFL_MSG_Delete( p_wk->p_msg );
@@ -534,6 +535,7 @@ void SHORTCUTMENU_Main( SHORTCUTMENU_WORK *p_wk )
 		GF_ASSERT(0);
 	}
 
+  PRINTSYS_QUE_Main( p_wk->p_que );
 	SCROLL_PrintMain( &p_wk->scroll );
 }
 //----------------------------------------------------------------------------

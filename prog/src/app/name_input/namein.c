@@ -354,7 +354,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
   //共通モジュールの作成
   p_wk->p_font    = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
       font_load, FALSE, HEAPID_NAME_INPUT );
-  p_wk->p_que     = PRINTSYS_QUE_Create( HEAPID_NAME_INPUT );
+  p_wk->p_que     = PRINTSYS_QUE_CreateEx( 4096, HEAPID_NAME_INPUT );
   p_wk->p_msg   = GFL_MSG_Create( msg_load, ARCID_MESSAGE, 
                         NARC_message_namein_dat, HEAPID_NAME_INPUT );
   p_wk->p_word  = WORDSET_Create( HEAPID_NAME_INPUT );
@@ -440,6 +440,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_p
   //共通モジュールの破棄
   WORDSET_Delete( p_wk->p_word );
   GFL_MSG_Delete( p_wk->p_msg );
+  PRINTSYS_QUE_Clear( p_wk->p_que );
   PRINTSYS_QUE_Delete( p_wk->p_que );
   GFL_FONT_Delete( p_wk->p_font );
 
