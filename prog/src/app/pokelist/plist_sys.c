@@ -2411,6 +2411,7 @@ static void PLIST_SelectPokeMain( PLIST_WORK *work )
   if( work->plData->isNetErr == TRUE )
   {
     work->subSeq = PSSS_TERM;
+    work->selectState = PSSEL_RETURN;
   }
 }
 
