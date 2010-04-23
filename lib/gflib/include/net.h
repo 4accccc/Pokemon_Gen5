@@ -1220,6 +1220,24 @@ extern const BOOL GFL_NET_LDATA_IsFinishPost( const u8 netId );
 extern BOOL GFL_NET_IsWifiConnect(void);
 
 
+//----------------------------------------------------------------
+/**
+ * @brief		通信ONOFFにかかわらないアイコンの位置を保持できます
+            多用してはいけません
+ * @retval  none
+ */
+//----------------------------------------------------------------
+extern void GFL_NET_SetIconForcePosition(int x,int y);
+
+//----------------------------------------------------------------
+/**
+ * @brief		通信ONOFFにかかわらないアイコンの位置をリセットします
+ * @retval  none
+ */
+//----------------------------------------------------------------
+extern void GFL_NET_ResetIconForcePosition(void);
+
+
 #ifdef PM_DEBUG
 //----------------------------------------------------------------
 /**

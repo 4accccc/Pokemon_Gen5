@@ -37,6 +37,7 @@ extern void GFL_NET_WirelessIconEasy_DefaultLCD( void );
 extern void GFL_NET_WirelessIconEasyFunc(void);
 extern void GFL_NET_WirelessIconOBJWinON(void);
 extern void GFL_NET_WirelessIconOBJWinOFF(void);
+extern void GFL_NET_WirelessSetForceXYPos(u16 x,u16 y);
 
 // 通信アイコンだすために転送するPAL_VRAMの位置・大きさ(14番パレット使用）
 #define WM_ICON_PAL_POS		( 14 )
