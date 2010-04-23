@@ -310,7 +310,6 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
 //==================================================================
 GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
 {
-#endif
   GMEVENT* event = NULL;
 
   if( !bEvReqOK ){  //イベント起動していいタイミングを待つ
