@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-04-23T12:16:48"/>
+	<create user="saitou" host="W00158" date="2010-04-23T12:41:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1885,9 +1885,14 @@ LR→補完&quot;</language>
 		<language name="JPN_KANJI" width="240">パソコン呼び出し</language>
 	</row>
 
-	<row id="DEBUG_FIELD_STRESS">
-		<language name="JPN" width="240">へいきんふかチェック</language>
-		<language name="JPN_KANJI" width="240">平均負荷チェック</language>
+	<row id="DEBUG_FIELD_STRESS_N">
+		<language name="JPN" width="240">へいきんふか　つうじょう</language>
+		<language name="JPN_KANJI" width="240">平均負荷　通常</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STRESS_P">
+		<language name="JPN" width="240">へいきんふか　パレス</language>
+		<language name="JPN_KANJI" width="240">平均負荷　パレス</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR71">

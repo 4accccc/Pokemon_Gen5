@@ -256,6 +256,9 @@ static void Performance_AllOffOam(void);
 
 static void DrawStress(int meter_type, PERFORMANCE_ID id, int per );
 
+static void SetAveTestNormal(void);
+static void SetAveTestPalace(void);
+
 //==============================================================================
 //
 //	
@@ -1085,11 +1088,30 @@ static void DrawStress(int meter_type, PERFORMANCE_ID id, int per )
   }
 }
 
-void DEBUG_PerformanceSetAveTest(void)
+void DEBUG_PerformanceSetAveTest(BOOL palace)
 {
-  pfm_sys.AveTest = !pfm_sys.AveTest;
+  if (palace) SetAveTestPalace();
+  else SetAveTestNormal();
+}
+
+//通常フィールド平均負荷
+static void SetAveTestNormal(void)
+{
+  //パレスモード起動中なら・・
+  if (DebugStressPalace)
+  {
+    //まだ計測していないなら開始
+    if ( !pfm_sys.AveTest ) pfm_sys.AveTest = 1;   //開始
+  }
+  else
+  {
+    //パレスモードではないなら計測フラグ反転
+    pfm_sys.AveTest = !pfm_sys.AveTest;
+  }
+
   if ( pfm_sys.AveTest ){
-    OS_Printf("平均負荷チェック開始\n");
+    if (DebugStressPalace) OS_Printf("パレスモードから通常に切り替えて、平均負荷チェック開始\n");
+    else OS_Printf("平均負荷チェック開始\n");
     pfm_sys.on_off = TRUE;
   }
   else
@@ -1097,7 +1119,40 @@ void DEBUG_PerformanceSetAveTest(void)
     pfm_sys.on_off = FALSE;
     OS_Printf("平均負荷チェック終了\n");
   }
+
+  //パレスモードオフ
+  DebugStressPalace = FALSE;
 }
+
+//パレス平均負荷
+static void SetAveTestPalace(void)
+{
+  //パレスモード起動中なら・・
+  if (DebugStressPalace)
+  {
+    //計測フラグ反転
+    pfm_sys.AveTest = !pfm_sys.AveTest;
+  }
+  else
+  {
+    //まだ計測していないなら開始
+    if ( !pfm_sys.AveTest ) pfm_sys.AveTest = 1;   //開始
+  }
+
+  if ( pfm_sys.AveTest ){
+    if (!DebugStressPalace) OS_Printf("通常からパレスモードに切り替えて、平均負荷チェック開始\n");
+    else OS_Printf("パレス平均負荷チェック開始\n");
+    pfm_sys.on_off = TRUE;
+  }
+  else
+  {
+    pfm_sys.on_off = FALSE;
+    OS_Printf("パレス平均負荷チェック終了\n");
+  }
+  //パレスモードオン
+  DebugStressPalace = TRUE;
+}
+
 
 void DEBUG_PerformanceSetTopFlg(const u8 inTop)
 {
@@ -1110,10 +1165,10 @@ void DEBUG_PerformanceSetTopFlg(const u8 inTop)
 void DEBUG_PerformanceStressON(BOOL flg)
 {
   DebugStressON = flg;
-  if (flg)
+  if (!flg)
   {
-    //パレスならＯＦＦ
-    if (DebugStressPalace) DebugStressON = FALSE;
+    //パレスなら常に負荷がかかるのでON
+    if (DebugStressPalace) DebugStressON = TRUE;
   }
 }
 

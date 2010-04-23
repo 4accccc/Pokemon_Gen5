@@ -188,6 +188,7 @@ static BOOL debugMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_CaptureList( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_FieldAveStress( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_FieldAveStressPalace( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk );
 

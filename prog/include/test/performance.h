@@ -42,7 +42,7 @@ extern void DEBUG_PerformanceSetActive( BOOL isActive );
 extern void DEBUG_PerformanceSetStress(void);
 extern void DEBUG_PerformanceStartTick(int id);
 extern void DEBUG_PerformanceEndTick(int id);
-extern void DEBUG_PerformanceSetAveTest(void);
+extern void DEBUG_PerformanceSetAveTest(BOOL palace);
 extern void DEBUG_PerformanceSetTopFlg(const u8 inTop);
 extern void DEBUG_PerformanceStressON(BOOL flg);
 
