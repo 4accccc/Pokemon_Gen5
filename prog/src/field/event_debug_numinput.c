@@ -287,9 +287,9 @@ static const DEBUG_MENU_INITIALIZER DATA_DNumInput_ListMenuInitializer = {
 };
 
 //デバッグ用クイズ番号　実体はmisc.c
-extern int DebugQuizNo = 0;
+extern int DebugQuizNo;
 //デバッグテレビ用番組番号 実体はmisc.c
-extern u32 DebugTvNo = 0;
+extern u32 DebugTvNo;
 
 //======================================================================
 //

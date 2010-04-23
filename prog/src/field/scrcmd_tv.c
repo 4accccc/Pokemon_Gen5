@@ -42,7 +42,7 @@
 
 #ifdef PM_DEBUG
 //デバッグテレビ用番組番号 実体はmisc.c
-extern u32 DebugTvNo = 0;
+extern u32 DebugTvNo;
 #endif //PM_DEBUG
 
 static const u32 RecordTbl[RECORD_TV_MAX][REC_TAG_MAX+2] = {    //{ レコードＩＤ1、レコードＩＤ2、ＩＤ1の表示桁、ＩＤ2の表示桁 }

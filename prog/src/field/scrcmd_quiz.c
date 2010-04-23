@@ -38,7 +38,7 @@
 
 #ifdef PM_DEBUG
 //デバッグ用クイズ番号　実体はmisc.c
-extern int DebugQuizNo = 0;
+extern int DebugQuizNo;
 #endif
 
 //--------------------------------------------------------------
