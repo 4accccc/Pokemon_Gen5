@@ -1213,7 +1213,7 @@ end
 
       waza_oshie.size.times {|i|
         if waza_oshie[ i ] == "Åú"
-          oshie[ i ] |= flag
+          oshie[ oshie_index ] |= flag
         end
         flag = flag << 1
         flag_cnt -= 1
