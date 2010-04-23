@@ -30,6 +30,9 @@ _EVENT_DATA_END
 /**************************************************************/
 
 EVENT_START   ev_pos_r10_rival_01
+
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
 	
 	//OBJ作成
 	_FLAG_RESET( FV_R10_RIVAL_01 )

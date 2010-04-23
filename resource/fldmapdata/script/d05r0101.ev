@@ -115,10 +115,12 @@ EVENT_START   ev_pos_d05r0101_rival_01
 	
 	IF $SCWK_ANSWER == SCR_YES THEN
 		_BALLOONWIN_OBJMSG(msg_d05r0101_black_04,D05R0101_RIVAL_02)
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	//いいえ
 	ELSE
 		_BALLOONWIN_OBJMSG(msg_d05r0101_black_05,D05R0101_RIVAL_02)
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	ENDIF
 	
@@ -197,7 +199,7 @@ _ANIME_LABEL	anm_player_look_right
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_rival_to_player_z8
-	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,3
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_D_8F,2
@@ -208,7 +210,7 @@ _ANIME_LABEL	anm_rival_to_player_z8
 //	D05R0101：ライバル、主人公に隣接z9
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_rival_to_player_z9
-	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,3
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_D_8F,3
@@ -220,7 +222,7 @@ _ANIME_LABEL	anm_rival_to_player_z9
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_rival_to_player_z10
-	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,3
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_D_8F,4
@@ -232,7 +234,7 @@ _ANIME_LABEL	anm_rival_to_player_z10
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_rival_to_player_z11
-	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,3
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WALK_D_8F,5

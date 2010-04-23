@@ -85,6 +85,7 @@ EVENT_START   ev_pos_d05_rival_01
 	
 	//É`ÉFÉåÉìÅFÇ‹Ç≥Ç©Ç±ÇÃíÜÇ…
 	_BALLOONWIN_OBJMSG( msg_d05_black_01 , D05_RIVAL_01 )
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 
 	//======================================//	
