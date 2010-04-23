@@ -1131,10 +1131,17 @@ BOOL POKEMONTRADE_IsMailPokemon(POKEMON_TRADE_WORK* pWork)
 }
 
 //交換選択通信送信
-void POKETRE_MAIN_ChangePokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
+
+
+
+static void POKETRE_MAIN_ChangePokemonSendDataNetwork2(POKEMON_TRADE_WORK* pWork)
 {
   BOOL bSend = FALSE;
   BOOL bMode = POKEMONTRADEPROC_IsNetworkMode(pWork);
+
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
 
   if( bMode ){
     if(POKEMONTRADE_IsEggAndLastBattlePokemonChange(pWork)){
@@ -1151,19 +1158,26 @@ void POKETRE_MAIN_ChangePokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
     }
     if(bSend){
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_C,WB_NET_TRADE_SERVICEID);
-      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
-      POKETRADE_MESSAGE_WindowOpen(pWork);
       _CHANGE_STATE(pWork,_changeWaitState);
     }
   }
   else{
     pWork->changeFactor[0]=POKETRADE_FACTOR_SINGLE_OK;
     pWork->changeFactor[1]=POKETRADE_FACTOR_SINGLE_OK;
-    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
-    POKETRADE_MESSAGE_WindowOpen(pWork);
     _CHANGE_STATE(pWork,_changeWaitState);
   }
 }
+
+
+//交換へ遷移 メッセージだけ先に表示
+void POKETRE_MAIN_ChangePokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
+{
+  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
+  POKETRADE_MESSAGE_WindowOpen(pWork);
+  _CHANGE_STATE(pWork,POKETRE_MAIN_ChangePokemonSendDataNetwork2);
+}
+
+
 
 
 static void _changePokemonStatusDispAuto(POKEMON_TRADE_WORK* pWork,int sel)
@@ -1855,9 +1869,6 @@ static void _changeWaitState(POKEMON_TRADE_WORK* pWork)
   int targetID = 1 - myID;
   int msgno;
 
-  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
-    return;
-  }
   if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEネゴのみ強制切断処理
     if(pWork->pAppWin==NULL){
       POKEMONTRADE_MESSAGE_CancelButtonStart(pWork, gtsnego_info_21);
@@ -2103,6 +2114,14 @@ void IRC_POKMEONTRADE_ChangeFinish(POKEMON_TRADE_WORK* pWork)
 }
 
 
+static void _cancelPokemonSendDataNetwork2(POKEMON_TRADE_WORK* pWork)
+{
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_C,WB_NET_TRADE_SERVICEID);
+  _CHANGE_STATE(pWork,_changeWaitState);
+}
 
 //１体見せ合いのキャンセル
 static void _cancelPokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
@@ -2118,7 +2137,7 @@ static void _cancelPokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_C,WB_NET_TRADE_SERVICEID);
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
-    _CHANGE_STATE(pWork,_changeWaitState);
+    _CHANGE_STATE(pWork,_cancelPokemonSendDataNetwork2);
   }
 }
 

@@ -106,25 +106,25 @@ typedef struct{
 } ZUKAN_WORK;
 
 
-static void Snd_PlayerSetInitialVolume(int a,int b){}
+//static void Snd_PlayerSetInitialVolume(int a,int b){}
 //static void TimeWaitIconTaskDel(void* c){}
-static void Snd_DataSetByScene( int a, int b, int c ){}
-static void Snd_SceneSet( int a ){}
-static int Snd_NowBgmNoGet(void){ return 0;}
-static void Snd_PlayerSetInitialVolumeBySeqNo( int a,  int b){}
+//static void Snd_DataSetByScene( int a, int b, int c ){}
+//static void Snd_SceneSet( int a ){}
+//static int Snd_NowBgmNoGet(void){ return 0;}
+//static void Snd_PlayerSetInitialVolumeBySeqNo( int a,  int b){}
 //static void* SaveData_GetEventWork(void* a){ return NULL; }
-static BOOL SysFlag_ArriveGet(void* a,int b){ return TRUE;}
-static void* SaveData_Get(void* a, int b){ return NULL; }
-static void* SaveData_GetFrontier(void* a){ return NULL; }
-static void EMAILSAVE_Init(void* a){}
-static ZUKAN_WORK* SaveData_GetZukanWork(SAVE_CONTROL_WORK* a){ return NULL; }
-static int PokeParaGet( POKEMON_PARAM* poke, int no, void* c ){return 0;}
-static BOOL ZukanWork_GetZenkokuZukanFlag(ZUKAN_WORK* pZukan){ return TRUE; }
-static void CommInfoFinalize(void){}
-static void Snd_SePlay(int a){}
-static void Snd_BgmFadeOut( int a, int b){}
-static void Snd_BgmFadeIn( int a, int b, int c){}
-static void FONTOAM_OAMDATA_Delete( void* x){}
+//static BOOL SysFlag_ArriveGet(void* a,int b){ return TRUE;}
+//static void* SaveData_Get(void* a, int b){ return NULL; }
+//static void* SaveData_GetFrontier(void* a){ return NULL; }
+//static void EMAILSAVE_Init(void* a){}
+//static ZUKAN_WORK* SaveData_GetZukanWork(SAVE_CONTROL_WORK* a){ return NULL; }
+//static int PokeParaGet( POKEMON_PARAM* poke, int no, void* c ){return 0;}
+//static BOOL ZukanWork_GetZenkokuZukanFlag(ZUKAN_WORK* pZukan){ return TRUE; }
+//static void CommInfoFinalize(void){}
+//static void Snd_SePlay(int a){}
+//static void Snd_BgmFadeOut( int a, int b){}
+//static void Snd_BgmFadeIn( int a, int b, int c){}
+//static void FONTOAM_OAMDATA_Delete( void* x){}
 static BOOL _playerDirectConnectStart( WIFIP2PMATCH_WORK *wk );
 
 
@@ -3087,11 +3087,13 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
     // ボタン全描画リクエスト
     MCVSys_BttnAllWriteReq( wk );
 
+    /* @todo出入りSE
     if( in_flag == TRUE ){
       Snd_SePlay( _SE_INOUT );
     }else if( out_flag == TRUE ){
       Snd_SePlay( _SE_INOUT );
     }
+       */
   }
 
 
@@ -3218,7 +3220,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
         else{
           WifiP2PMatchMessagePrint(wk, msg_wifilobby_055, FALSE);
         }
-        Snd_SePlay(_SE_DESIDE);
+        PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
         _userDataInfoDisp(wk);
         _CHANGESTATE(wk,WIFIP2PMATCH_VCHATWIN_WAIT);
         WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
@@ -3273,7 +3275,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
   checkMatch = _checkParentConnect(wk);
   if( (0 !=  checkMatch) && (wk->preConnect != -1) ){ // 接続してきた
     OS_TPrintf("接続 %d\n",wk->DirectModeNo);
-    Snd_SePlay(_SE_OFFER);   //@todoユニオンルームでよばれたSE
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);   //@todoユニオンルームでよばれたSE
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_INIT);
     return seq;
   }
@@ -3316,7 +3318,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
     // CANCELボタンでも待機状態をクリア
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
       if(_modeWait(status)){  // 待ち状態のとき
-        Snd_SePlay(_SE_DESIDE);
+        PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_INIT);
         WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
         return seq;
@@ -3329,7 +3331,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
   case MCR_RET_NONE:
     return seq;
   case MCR_RET_CANCEL:
-    Snd_SePlay(_SE_DESIDE);
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     if(_modeWait(status)){  // 待ち状態のとき
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_INIT);
     }
@@ -3345,7 +3347,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
 
   case MCR_RET_MYSELECT:   //パソコンに話しかける
     wk->pParentWork->btalk = FALSE;  //NOTダイレクト
-     Snd_SePlay(_SE_DESIDE);
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     if(_modeWait(status)){
       WIFI_MCR_PCAnmStart( &wk->matchroom );  // pcアニメ開始
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_INIT);
@@ -3361,7 +3363,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
     break;
 
   case MCR_RET_SELECT:   //相手に話しかける
-    Snd_SePlay(_SE_DESIDE);
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     if(_modeWait(status)){
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_INIT);
       WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
@@ -4155,22 +4157,22 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   case BMPMENULIST_CANCEL:
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-    Snd_SePlay(_SE_DESIDE);
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     FriendRequestWaitOff(wk);
     return seq;
     break;
   case WIFI_GAME_BATTLE_SINGLE_ALL:
-    Snd_SePlay(_SE_DESIDE);
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _battleCustomSelectMenu(wk);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE2);
     return seq;
   case WIFI_GAME_VCT:
   case WIFI_GAME_TRADE:
-    Snd_SePlay(_SE_DESIDE);
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     break;
   case WIFI_GAME_TVT:
-    Snd_SePlay(_SE_DESIDE);
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
 
 //#if defined(SDK_TWL)
 //    if(OS_IsRunOnTwl() && OS_IsRestrictPhotoExchange()){   // ペアレンタルコントロール
@@ -4294,11 +4296,11 @@ static int _parentModeSubSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
   case BMPMENULIST_NULL:
     return seq;
   case BMPMENULIST_CANCEL:
-    Snd_SePlay(_SE_DESIDE);
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_INIT);
     break;
   default:
-    Snd_SePlay(_SE_DESIDE);
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _myStatusChange(wk, WIFI_STATUS_RECRUIT ,ret);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     EndMessageWindowOff(wk);
@@ -4633,12 +4635,12 @@ static int _playerDirectInit( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
 
   case BMPMENULIST_CANCEL:
-    Snd_SePlay(_SE_DESIDE);
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
 
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     break;
   default:
-    Snd_SePlay(_SE_DESIDE);
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     if(ret == _CONNECTING){  // MACをビーコンで流し、親になる
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
       _playerDirectConnectStart(wk);
@@ -4749,12 +4751,12 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
   case BMPMENULIST_NULL:
     return seq;
   case BMPMENULIST_CANCEL:
-    Snd_SePlay(_SE_DESIDE);
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
 
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     break;
   default:
-    Snd_SePlay(_SE_DESIDE);
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     gamemode = _WifiMyGameModeGet( wk, p_status );
 #if defined(SDK_TWL)
     if(gamemode == WIFI_GAME_TVT){
@@ -5831,7 +5833,6 @@ static void _myStatusChange_not_send(WIFIP2PMATCH_WORK *wk, int status,int gamem
     WIFI_STATUS_SetWifiStatus(wk->pMatch,status);
     WIFI_STATUS_SetGameMode(wk->pMatch,gamemode);
     if(gamemode == WIFI_GAME_TVT && status == WIFI_STATUS_PLAYING){
-      Snd_BgmFadeOut( 0, BGM_FADE_VCHAT_TIME); // VCT状態へ
     }
     else if(status == WIFI_STATUS_PLAYING){
       // ボリュームを落す
@@ -6103,7 +6104,7 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
       wk->view.frame_no = (map_param - MCR_MAPPM_MAP00);
 
 
-      Snd_SePlay( _SE_TBLCHANGE );
+//      Snd_SePlay( _SE_TBLCHANGE );   //@todo
 
       // 背景カラー変更
       MCVSys_BackDraw( wk );
@@ -6163,7 +6164,7 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
       wk->view.bttn_allchg = TRUE;
       wk->view.user_disp = MCV_USERDISP_OFF;
      // MCVSys_OamBttnOff( wk );  // ボタンOFF
-      Snd_SePlay( _SE_DESIDE ); // キャンセル音
+      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     }
   }
 
@@ -6310,9 +6311,7 @@ static void MCVSys_BttnCallBack( u32 bttnid, u32 event, void* p_work )
   switch( event ){
   case GFL_BMN_EVENT_TOUCH:   ///< 触れた瞬間
     wk->view.touch_friendNo = friendNo;
-//    wk->view.touch_frame  = 2;
-//    wk->view.user_disp = MCV_USERDISP_INIT;
-    Snd_SePlay( _SE_DESIDE );
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     break;
   default:
     break;

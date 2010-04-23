@@ -585,6 +585,10 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
       MailSys_MoveMailPoke2Paso(pMailBlock, pp, pWork->heapID);
     }
   }
+
+  WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData),
+                                pWork->pFriend);
+  
   {
     POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
     RECORD* pRec = GAMEDATA_GetRecordPtr(pWork->pGameData);
@@ -661,10 +665,6 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
     return;
   }
 
-  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
-    WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData),
-                                  pWork->pFriend);
-  }
   if(
     (pWork->type == POKEMONTRADE_TYPE_GTSNEGO)||
     (pWork->type == POKEMONTRADE_TYPE_UNION)
