@@ -2259,7 +2259,7 @@ static const BtlEventHandlerTable*  ADD_IkariNoMaeba( u32* numElems )
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-
+// ダメージ計算最終ハンドラ
 static void handler_IkariNoMaeba( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -2268,6 +2268,9 @@ static void handler_IkariNoMaeba( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
 
     u16 damage = BPP_GetValue(target, BPP_HP) / 2;
+    if( damage == 0 ){
+      damage = 1;
+    }
 
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_FIX_DAMAGE, damage );
   }
