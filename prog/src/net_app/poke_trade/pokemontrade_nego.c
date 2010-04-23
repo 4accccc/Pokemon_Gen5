@@ -487,21 +487,27 @@ void POKE_GTS_SelectStatusMessageDisp(POKEMON_TRADE_WORK* pWork, int side, BOOL 
 //------------------------------------------------------------------------------
 void POKE_GTS_SelectStatusMessageDelete(POKEMON_TRADE_WORK* pWork)
 {
-  if(pWork->GTSInfoWindow){
+  if(pWork->StatusWin[0]){
     GFL_BMPWIN_ClearScreen(pWork->StatusWin[0]);
-    GFL_BMPWIN_ClearScreen(pWork->StatusWin[1]);
-    GFL_BMPWIN_ClearScreen(pWork->GTSInfoWindow);
-    GFL_BMPWIN_ClearScreen(pWork->GTSInfoWindow2);
-    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
     GFL_BMPWIN_Delete(pWork->StatusWin[0]);
-    GFL_BMPWIN_Delete(pWork->StatusWin[1]);
-    GFL_BMPWIN_Delete(pWork->GTSInfoWindow);
-    GFL_BMPWIN_Delete(pWork->GTSInfoWindow2);
     pWork->StatusWin[0]=NULL;
+  }
+  if(pWork->StatusWin[1]){
+    GFL_BMPWIN_ClearScreen(pWork->StatusWin[1]);
+    GFL_BMPWIN_Delete(pWork->StatusWin[1]);
     pWork->StatusWin[1]=NULL;
+  }
+  if(pWork->GTSInfoWindow){
+    GFL_BMPWIN_ClearScreen(pWork->GTSInfoWindow);
+    GFL_BMPWIN_Delete(pWork->GTSInfoWindow);
     pWork->GTSInfoWindow=NULL;
+  }
+  if(pWork->GTSInfoWindow2){
+    GFL_BMPWIN_ClearScreen(pWork->GTSInfoWindow2);
+    GFL_BMPWIN_Delete(pWork->GTSInfoWindow2);
     pWork->GTSInfoWindow2=NULL;
   }
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
 }
 
 

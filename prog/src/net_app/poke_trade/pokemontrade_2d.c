@@ -2137,14 +2137,12 @@ void IRC_POKETRADE_EndSubMojiBG(POKEMON_TRADE_WORK* pWork)
   for(i=0;i<elementof(mojitbl);i++){
     if(pWork->SerchMojiWin[i]){
       GFL_BMPWIN_ClearScreen(pWork->SerchMojiWin[i]);
-      GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
       BmpWinFrame_Clear(pWork->SerchMojiWin[i], WINDOW_TRANS_OFF);
       GFL_BMPWIN_Delete(pWork->SerchMojiWin[i]);
       pWork->SerchMojiWin[i]=NULL;
     }
 	}
-
-  
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
 }
 
 
