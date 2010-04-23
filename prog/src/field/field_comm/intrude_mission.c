@@ -1065,6 +1065,14 @@ BOOL MISSION_SetEntryNew(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, 
     return FALSE;
   }
   
+  if(entry_req->cdata.type == MISSION_TYPE_VICTORY){
+    if(GFL_NET_SystemGetConnectNum() != 2 || GFL_NET_GetConnectNum() != 2){
+      OS_TPrintf("NG:二人専用ミッションだが接続人数が二人ではない\n");
+      mission->entry_answer[net_id].result = MISSION_ENTRY_RESULT_NG_BATTLE;
+      return FALSE;
+    }
+  }
+  
   //実行するミッションとして登録
   exe_mdata->cdata = entry_req->cdata;
   exe_mdata->target_info = entry_req->target_info;

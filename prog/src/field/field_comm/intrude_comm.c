@@ -288,8 +288,9 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
     if(Intrude_OtherPlayerExistence() == FALSE){
       intcomm->other_player_timeout++;
       if(intcomm->other_player_timeout > OTHER_PLAYER_TIMEOUT){
-        intcomm->comm_status = INTRUDE_COMM_STATUS_RESTART;
-        *seq = 100;
+        OS_TPrintf("—áŠOƒGƒ‰[ aaa \n");
+        GameCommSys_ExitReq(intcomm->game_comm);
+        break;
       }
     }
     else{

@@ -270,5 +270,9 @@ typedef struct _INTRUDE_COMM_SYS{
   u32 search_child_trainer_id[INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX];
   u8 search_child_sex[INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX];
   u8 search_child_lang[INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX];
+  
+  s8 member_fix;              ///<TRUE:乱入禁止
+  s8 other_monolith_count;    ///<他人のモノリス画面を見ているプレイヤー人数
+  u8 padding[2];
 }INTRUDE_COMM_SYS;
 

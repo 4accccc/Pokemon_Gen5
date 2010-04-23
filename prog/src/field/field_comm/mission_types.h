@@ -41,6 +41,7 @@ typedef enum{
   MISSION_ENTRY_RESULT_OK,      ///<受注OK
   MISSION_ENTRY_RESULT_NG,      ///<受注NG
   MISSION_ENTRY_RESULT_NG_TARGET_REVERSE,  ///<ターゲットが裏フィールドへ来ている
+  MISSION_ENTRY_RESULT_NG_BATTLE, ///<二人専用ミッションの条件を満たしていない
 }MISSION_ENTRY_RESULT;
 
 ///ミッション達成宣言の返事
@@ -250,7 +251,8 @@ typedef struct{
   MISSION_DATA mission_data;  ///<達成したミッションデータ
   u8 achieve_netid[FIELD_COMM_MEMBER_MAX];  ///<達成者のNetID(順位順)
   u8 mission_fail;            ///<ミッション失敗時：TRUE
-  u8 padding[3];
+  u8 complete;                ///<全占拠達成時：TRUE
+  u8 padding[2];
 }MISSION_RESULT;
 
 ///ミッション選択候補リスト構造体

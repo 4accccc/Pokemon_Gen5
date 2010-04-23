@@ -22,6 +22,8 @@
 #include "mission.naix"
 #include "app_menu_common.naix"
 #include "app/app_menu_common.h"
+#include "system/net_err.h"
+#include "intrude_comm_command.h"
 
 
 
@@ -238,9 +240,11 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
   MONOLITH_PARENT_WORK *parent = pwk;
   enum{
     SEQ_INIT,
+    SEQ_MONOLITH_IN,
     SEQ_INIT_WAIT,
     SEQ_PROC_MAIN,
     SEQ_END,
+    SEQ_MONOLITH_OUT,
     SEQ_END_WAIT,
     SEQ_FINISH,
   };
@@ -250,6 +254,16 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
     WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK, 
       WIPE_DEF_DIV, WIPE_DEF_SYNC, GFL_HEAP_LOWID(HEAPID_MONOLITH));
     (*seq)++;
+    break;
+  case SEQ_MONOLITH_IN:
+    if(parent->intcomm == NULL || NetErr_App_CheckError()){
+      (*seq)++;
+    }
+    else{
+      if(IntrudeSend_OtherMonolithIn() == TRUE){
+        (*seq)++;
+      }
+    }
     break;
   case SEQ_INIT_WAIT:
     if(WIPE_SYS_EndCheck() == TRUE){
@@ -324,6 +338,16 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
     WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK, 
       WIPE_DEF_DIV, WIPE_DEF_SYNC, GFL_HEAP_LOWID(HEAPID_MONOLITH));
     (*seq)++;
+    break;
+  case SEQ_MONOLITH_OUT:
+    if(parent->intcomm == NULL || NetErr_App_CheckError()){
+      (*seq)++;
+    }
+    else{
+      if(IntrudeSend_OtherMonolithOut() == TRUE){
+        (*seq)++;
+      }
+    }
     break;
   case SEQ_END_WAIT:
     if(WIPE_SYS_EndCheck() == TRUE){

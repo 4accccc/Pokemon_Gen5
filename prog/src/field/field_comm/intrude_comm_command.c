@@ -48,6 +48,8 @@ static void _IntrudeRecv_MissionAchieve(const int netID, const int size, const v
 static void _IntrudeRecv_MissionAchieveAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_OccupyInfo(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_OtherMonolithIn(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_OtherMonolithOut(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_TargetTiming(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_PlayerSupport(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_SecretItem(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -92,6 +94,8 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_MissionAchieveAnswer, NULL},   //INTRUDE_CMD_MISSION_ACHIEVE_ANSWER
   {_IntrudeRecv_MissionResult, NULL},          //INTRUDE_CMD_MISSION_RESULT
   {_IntrudeRecv_OccupyInfo, NULL},             //INTRUDE_CMD_OCCUPY_INFO
+  {_IntrudeRecv_OtherMonolithIn, NULL},        //INTRUDE_CMD_OTHER_MONOLITH_IN
+  {_IntrudeRecv_OtherMonolithOut, NULL},       //INTRUDE_CMD_OTHER_MONOLITH_OUT
   {_IntrudeRecv_TargetTiming, NULL},           //INTRUDE_CMD_TARGET_TIMING
   {_IntrudeRecv_PlayerSupport, NULL},          //INTRUDE_CMD_PLAYER_SUPPORT
   {_IntrudeRecv_SecretItem, NULL},             //INTRUDE_CMD_SECRET_ITEM
@@ -967,13 +971,19 @@ static void _MissionOrderConfirm(const int netID, const int size, const void* pD
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   const MISSION_ENTRY_REQ *entry_req = pData;
+  BOOL entry_ret;
   
   if(GFL_NET_IsParentMachine() == FALSE){
     return;
   }
   
   OS_TPrintf("受信：ミッション受注します net_id=%d\n", netID);
-  MISSION_SetEntryNew(intcomm, &intcomm->mission, entry_req, netID);
+  entry_ret = MISSION_SetEntryNew(intcomm, &intcomm->mission, entry_req, netID);
+  if(entry_ret == TRUE && entry_req->cdata.type == MISSION_TYPE_VICTORY){
+    GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), FALSE);
+    intcomm->member_fix = TRUE;
+    OS_TPrintf("二人専用の為、乱入禁止\n");
+  }
 }
 
 //==================================================================
@@ -1493,6 +1503,102 @@ BOOL IntrudeSend_OccupyInfo(INTRUDE_COMM_SYS_PTR intcomm)
     OS_TPrintf("送信：占拠情報\n");
   }
   return ret;
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：他人のモノリス画面入室
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_OtherMonolithIn(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  
+  intcomm->other_monolith_count++;
+  if(intcomm->member_fix == FALSE){
+    GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), FALSE);
+  }
+  OS_TPrintf("受信：他人モノリス入室 乱入禁止 num=%d\n", intcomm->other_monolith_count);
+}
+
+//==================================================================
+/**
+ * データ送信：他人のモノリス画面入室
+ *
+ * @param   intcomm         
+ * @param   mission         ミッションデータ
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_OtherMonolithIn(void)
+{
+  if(_OtherPlayerExistence() == FALSE){
+    return TRUE;
+  }
+
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), 
+    GFL_NET_NO_PARENTMACHINE, INTRUDE_CMD_OTHER_MONOLITH_IN, 0, NULL, FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：他人のモノリス画面退室
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_OtherMonolithOut(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  
+  OS_TPrintf("受信：他人モノリス退室 num=%d\n", intcomm->other_monolith_count);
+
+  intcomm->other_monolith_count--;
+
+  //全員がモノリス画面から抜けていて二人専用ミッションが発動していないかチェック
+  if(intcomm->other_monolith_count == 0){
+    if(intcomm->member_fix == FALSE){
+      GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), TRUE);  //乱入許可
+      OS_TPrintf("乱入許可\n");
+    }
+  }
+}
+
+//==================================================================
+/**
+ * データ送信：他人のモノリス画面退室
+ *
+ * @param   intcomm         
+ * @param   mission         ミッションデータ
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_OtherMonolithOut(void)
+{
+  if(_OtherPlayerExistence() == FALSE){
+    return TRUE;
+  }
+
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), 
+    GFL_NET_NO_PARENTMACHINE, INTRUDE_CMD_OTHER_MONOLITH_OUT, 0, NULL, FALSE, FALSE, FALSE);
 }
 
 //==============================================================================
