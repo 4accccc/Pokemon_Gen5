@@ -1094,6 +1094,7 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     
     if(GFL_NET_GetConnectNum() > 1){
       OS_TPrintf("Ú‘±‚µ‚Ü‚µ‚½IFe\n");
+      GFL_NET_SetNoChildErrorCheck(TRUE);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PARENT);
       UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC,situ->mycomm.calling_pc);
       UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CALLING_PC, NULL);

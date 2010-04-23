@@ -837,6 +837,7 @@ static BOOL SubEvent_PokelistBattle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys,
     SEQ_FIELD_OPEN,
     SEQ_FADEIN,
     SEQ_FINISH,
+    SEQ_ERR,
   };
   
   if((*seq) > SEQ_POKELIST_COMM_INIT && (*seq) < SEQ_POKELIST_COMM_EXIT){
@@ -915,6 +916,10 @@ static BOOL SubEvent_PokelistBattle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys,
     
   //----------------------------------------------------------------------------
   case SEQ_BATTLE_INIT:
+    if(NetErr_App_CheckError()){
+      *seq = SEQ_ERR;
+      break;
+    }
     GF_ASSERT_MSG(plist->ret_mode == PL_RET_NORMAL, "plist->ret_mode 不正 %d\n", plist->ret_mode);
     GF_ASSERT_MSG(plist->ret_sel == PL_SEL_POS_ENTER, "ret_sel=%d\n", plist->ret_sel);
     {//自分の受信バッファにリストで選んだ順にポケモンデータをセット
@@ -946,6 +951,10 @@ static BOOL SubEvent_PokelistBattle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys,
     (*seq)++;
     break;
   case SEQ_BATTLE_PARTY_TIMING_WAIT:
+    if(NetErr_App_CheckError()){
+      *seq = SEQ_ERR;
+      break;
+    }
     if(GFL_NET_HANDLE_IsTimeSync(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_BATTLE_POKEPARTY_BEFORE, WB_NET_UNION) == TRUE){
       OS_TPrintf("バトル用のPOKEPARTY送受信前の同期取り成功\n");
@@ -953,12 +962,20 @@ static BOOL SubEvent_PokelistBattle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys,
     }
     break;
   case SEQ_BATTLE_PARTY_SEND:
+    if(NetErr_App_CheckError()){
+      *seq = SEQ_ERR;
+      break;
+    }
     if(ColosseumSend_Pokeparty(clsys->recvbuf.pokeparty[my_net_id]) == TRUE){
       OS_TPrintf("POKEPARTY送信\n");
       (*seq)++;
     }
     break;
   case SEQ_BATTLE_PARTY_RECV_WAIT:
+    if(NetErr_App_CheckError()){
+      *seq = SEQ_ERR;
+      break;
+    }
     if(Colosseum_AllReceiveCheck_Pokeparty(clsys) == TRUE){
       OS_TPrintf("全員分のPOKEPARTY受信\n");
       (*seq)++;
@@ -982,7 +999,7 @@ static BOOL SubEvent_PokelistBattle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys,
     break;
   case SEQ_BATTLE_EXIT_WAIT:
     Colosseum_DeleteBattleDemoParent(&battle_setup->demo);
-    (*seq) = SEQ_FINISH;  //SEQ_FIELD_OPEN; Colosseum_DeleteBattleDemoParentでField復帰している
+    (*seq) = SEQ_FINISH;  //SEQ_FIELD_OPEN; EVENT_ColosseumBattleでField復帰している
     break;
 
   //----------------------------------------------------------------------------
@@ -1001,6 +1018,10 @@ static BOOL SubEvent_PokelistBattle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys,
 	case SEQ_FINISH:
   default:
     return TRUE;
+
+	case SEQ_ERR:
+	  (*seq) = SEQ_FIELD_OPEN;
+	  break;
   }
   
   return FALSE;
