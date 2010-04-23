@@ -4931,8 +4931,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_513_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">かざんの　ほらあなで　くらす。
+あたまの　ふさの　なかが　もえていて
+３００どの　こうおんになる。</language>
+		<language name="JPN_KANJI">火山の　洞穴で　暮らす。
+頭の　房の　中が　燃えていて
+最高　３００度　以上の　高温になる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_514_000">
@@ -4945,8 +4949,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_515_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">かんそうした　かんきょうに　よわい。
+あたまの　ふさに　ためた　みずを
+しっぽから　まいて　しめらせる。</language>
+		<language name="JPN_KANJI">乾燥した　環境に　弱い。
+頭の　房に　溜めた　水を　尻尾から
+まいて　あたりを　湿らせる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_516_000">
@@ -5472,18 +5480,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_602_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">むれで　こうどうする　ポケモン。
+でんきを　つくる　きかんを　もち
+ピンチに　なると　はつでんさせる。</language>
+		<language name="JPN_KANJI">群で　行動する　ポケモン。
+背骨の　脇に　電気を　作る　器官を
+持ち　危険を　察知すると　発電する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_603_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">しょくよくが　おうせい。てごろな
+えものを　みつけると　おそいかかり
+でんきで　しびれさせてから　たべる。</language>
+		<language name="JPN_KANJI">旺盛な　食欲の　持ち主。手ごろな
+獲物を　見つけると　襲いかかり
+電気で　痺れさせてから　食べる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_604_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">きゅうばんの　くちで　えものに
+すいつき　くいこませた　キバから
+でんきを　ながして　かんでんさせる。</language>
+		<language name="JPN_KANJI">吸盤の　口で　獲物に　吸いつき
+相手の　体に　食い込ませた　キバから
+電気を　流して　感電させる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_605_000">

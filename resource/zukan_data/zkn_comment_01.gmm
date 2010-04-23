@@ -4931,8 +4931,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_513_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">あたまの　ふさは　おこると　おんどが
+あがり　３００ど　いじょうになる。
+きのみを　ふさで　やいて　たべる。</language>
+		<language name="JPN_KANJI">頭の　房は　怒ると　温度が　上がり
+３００度　以上になる。
+木の実を　房で　焼いて　食べる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_514_000">
@@ -4945,8 +4949,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_515_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">あたまの　ふさに　ためた　みずは
+えいよう　たっぷり。しょくぶつに
+かけると　おおきく　そだつのだ。</language>
+		<language name="JPN_KANJI">頭の　房に　溜めた　水は　栄養価が
+高く　良質の　肥料になる。
+植物に　かけると　大きく　育つのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_516_000">
@@ -5472,18 +5480,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_602_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">１ひきの　でんりょくは　ちいさいが
+たくさんの　エレス●●が　つながると
+カミナリと　おなじ　いりょくになる。</language>
+		<language name="JPN_KANJI">１匹の　電力は　小さいが
+たくさんの　エレス●●が　つながると
+雷と　同じ　電力を　発生させる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_603_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">まるい　もようが　はつでん　きかん。
+あいてに　まきついて　もようを
+くっつけて　でんきを　ながすのだ。</language>
+		<language name="JPN_KANJI">丸い　斑点が　発電　器官。
+相手に　巻きつき　動けなくしてから
+斑点を　密着させ　電気を　流すのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_604_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">うでの　ちからで　うみから　はいだし
+みずべの　えものに　おそいかかる。
+いっしゅんで　うみへ　ひきずりこむ。</language>
+		<language name="JPN_KANJI">腕の　力で　海から　這い出し
+水辺の　獲物に　襲いかかる。
+一瞬で　海へ　引きずりこむ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_605_000">
