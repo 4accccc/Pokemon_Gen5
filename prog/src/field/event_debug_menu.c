@@ -5417,7 +5417,12 @@ typedef struct
   int before_round;
   FLDMSGWIN *msgWin;
   STRBUF *strBuf;
+  
+  int key_repeat;
+  int key_repeat_wait;
 }DEBUG_BSUBWAY_ANYSTAGE_EVENT_WORK;
+
+#define PAD_KEY_ALL (PAD_KEY_UP|PAD_KEY_DOWN|PAD_KEY_LEFT|PAD_KEY_RIGHT)
 
 //--------------------------------------------------------------
 /**
@@ -5473,7 +5478,7 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
   case 3:
     {
       int trg = GFL_UI_KEY_GetTrg();
-      int rep = GFL_UI_KEY_GetRepeat();
+      int cont = GFL_UI_KEY_GetCont();
       
       if( trg & PAD_BUTTON_B ){
         FLDMSGWIN_Delete( work->msgWin );
@@ -5492,19 +5497,108 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
             event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
         return( GMEVENT_RES_CONTINUE );
       }
-
-      if( (rep & PAD_KEY_UP) ){
-        work->game_round--;
-      }else if( (rep & PAD_KEY_DOWN) ){
-        work->game_round++;
-      }else if( (rep & PAD_KEY_LEFT) ){
-        work->game_round -= 10;
-      }else if( (rep & PAD_KEY_RIGHT) ){
-        work->game_round += 10;
+      
+      if( cont && cont == work->key_repeat ){
+        work->key_repeat_wait++;
+      }else{
+        work->key_repeat_wait = 0;
+      }
+      
+      work->key_repeat = cont;
+      
+      if( (trg & PAD_KEY_ALL) ){
+        if( (trg & PAD_KEY_UP) ){
+          work->game_round--;
+        }else if( (trg & PAD_KEY_DOWN) ){
+          work->game_round++;
+        }else if( (trg & PAD_KEY_LEFT) ){
+          work->game_round -= 10;
+        }else if( (trg & PAD_KEY_RIGHT) ){
+          work->game_round += 10;
+        }
+      }else if( work->key_repeat ){
+        int rep = work->key_repeat;
+        int wait = work->key_repeat_wait;
+        
+        if( wait < 15 ){
+          //none
+        }else if( wait < 30*3 && wait % 6 == 0 ){
+          if( (rep & PAD_KEY_UP) ){
+            work->game_round--;
+          }else if( (rep & PAD_KEY_DOWN) ){
+            work->game_round++;
+          }else if( (rep & PAD_KEY_LEFT) ){
+            work->game_round -= 10;
+          }else if( (rep & PAD_KEY_RIGHT) ){
+            work->game_round += 10;
+          }
+        }else if( wait < 30*4 && wait % 4 == 0 ){
+          if( (rep & PAD_KEY_UP) ){
+            work->game_round--;
+          }else if( (rep & PAD_KEY_DOWN) ){
+            work->game_round++;
+          }else if( (rep & PAD_KEY_LEFT) ){
+            work->game_round -= 10;
+          }else if( (rep & PAD_KEY_RIGHT) ){
+            work->game_round += 10;
+          }
+        }else if( wait < 30*5 && wait % 2 == 0 ){
+          if( (rep & PAD_KEY_UP) ){
+            work->game_round--;
+          }else if( (rep & PAD_KEY_DOWN) ){
+            work->game_round++;
+          }else if( (rep & PAD_KEY_LEFT) ){
+            work->game_round -= 10;
+          }else if( (rep & PAD_KEY_RIGHT) ){
+            work->game_round += 10;
+          }
+        }else if( wait < 30*6 ){
+          if( (rep & PAD_KEY_UP) ){
+            work->game_round--;
+          }else if( (rep & PAD_KEY_DOWN) ){
+            work->game_round++;
+          }else if( (rep & PAD_KEY_LEFT) ){
+            work->game_round -= 10;
+          }else if( (rep & PAD_KEY_RIGHT) ){
+            work->game_round += 10;
+          }
+        }else if( wait < 30*7 ){
+          if( (rep & PAD_KEY_UP) ){
+            work->game_round -= 2;
+          }else if( (rep & PAD_KEY_DOWN) ){
+            work->game_round += 2;
+          }else if( (rep & PAD_KEY_LEFT) ){
+            work->game_round -= 20;
+          }else if( (rep & PAD_KEY_RIGHT) ){
+            work->game_round += 20;
+          }
+        }else if( wait < 30*8 ){
+          if( (rep & PAD_KEY_UP) ){
+            work->game_round -= 4;
+          }else if( (rep & PAD_KEY_DOWN) ){
+            work->game_round += 4;
+          }else if( (rep & PAD_KEY_LEFT) ){
+            work->game_round -= 40;
+          }else if( (rep & PAD_KEY_RIGHT) ){
+            work->game_round += 40;
+          }
+        }else if( wait >= 30*9 ){
+          if( (rep & PAD_KEY_UP) ){
+            work->game_round -= 8;
+          }else if( (rep & PAD_KEY_DOWN) ){
+            work->game_round += 8;
+          }else if( (rep & PAD_KEY_LEFT) ){
+            work->game_round -= 80;
+          }else if( (rep & PAD_KEY_RIGHT) ){
+            work->game_round += 80;
+          }
+        }
       }
       
       if( work->game_round <= 0 ){
         work->game_round = 1;
+      }else if( work->game_round > 999999 ){
+        work->game_round = 999999;
       }
       
       switch( work->play_mode ){
@@ -5522,7 +5616,7 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
             work->strBuf, work->game_round, 5,
             STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT  );
         FLDMSGWIN_ClearWindow( work->msgWin );
-        FLDMSGWIN_PrintStrBuf( work->msgWin, 1, 1, work->strBuf );
+        FLDMSGWIN_PrintStrBuf( work->msgWin, 16, 1, work->strBuf );
       }
     }
   }

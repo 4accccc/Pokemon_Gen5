@@ -66,6 +66,8 @@ extern const GFL_PROC_DATA IrcBattleMatchProcData;
 
 #include "savedata/etc_save.h"
 
+#include "item/itemsym.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -85,6 +87,8 @@ typedef struct
   s16 gy;
   s16 gz;
   u16 msg_id;
+  u16 msg_id_item_after;
+  u16 item_no;
 }HOME_NPC_DATA;
 
 //======================================================================
@@ -100,6 +104,11 @@ static void bsway_SetHomeNPC(
     BSUBWAY_SCRWORK *bsw_scr, GAMEDATA *gdata,
     MMDLSYS *mmdlsys, FIELDMAP_WORK *fieldmap );
 static u16 bsway_GetHomeNPCMsgID( const MMDL *mmdl );
+static BOOL bsway_CheckHomeNPCItemMsg(
+    BSUBWAY_SCRWORK *bsw_scr, int npc_no );
+static void bsway_GetHomeNPCItemData(
+    BSUBWAY_SCRWORK *bsw_scr, u16 npc_no,
+    u16 *msg_before, u16 *msg_after, u16 *item_no );
 
 static u32 bsw_getRegulationLabel( u32 play_mode );
 
@@ -641,6 +650,65 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWTOOL_CHK_EXIST_STAGE:
     {
       *ret_wk = BSUBWAY_SCOREDATA_CheckExistStageNo( scoreData, param0 );
+    }
+    break;
+  //アイテムをくれるNPCかチェック
+  //戻り値TRUEでくれる人
+  case BSWTOOL_CHK_HOME_NPC_GETITEM:
+    {
+      u16 npc_no;
+      u16 id = param0;
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
+      npc_no = MMDL_GetParam( mmdl, MMDL_PARAM_0 );
+      
+      *ret_wk = FALSE;
+      
+      if( bsway_CheckHomeNPCItemMsg(bsw_scr,npc_no) == TRUE ){
+        *ret_wk = TRUE;
+      }
+    }
+    break;
+  //アイテムをくれるNPCのmsg id取得
+  case BSWTOOL_GET_HOME_NPC_GETITEM_MSGID_BEFORE:
+    {
+      u16 npc_no,msg0,msg1,item_no;
+      u16 id = param0;
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
+      npc_no = MMDL_GetParam( mmdl, MMDL_PARAM_0 );
+      
+      bsway_GetHomeNPCItemData( bsw_scr, npc_no,
+        &msg0, &msg1, &item_no );
+      *ret_wk = msg0;
+    }
+    break;
+  //アイテムをくれるNPCのmsg id取得
+  case BSWTOOL_GET_HOME_NPC_GETITEM_MSGID_AFTER:
+    {
+      u16 npc_no,msg0,msg1,item_no;
+      u16 id = param0;
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
+      npc_no = MMDL_GetParam( mmdl, MMDL_PARAM_0 );
+      
+      bsway_GetHomeNPCItemData( bsw_scr, npc_no,
+        &msg0, &msg1, &item_no );
+      *ret_wk = msg1;
+    }
+    break;
+  //アイテムをくれるNPCのmsg id取得
+  case BSWTOOL_GET_HOME_NPC_GETITEM_ITEMNO:
+    {
+      u16 npc_no,msg0,msg1,item_no;
+      u16 id = param0;
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
+      npc_no = MMDL_GetParam( mmdl, MMDL_PARAM_0 );
+      
+      bsway_GetHomeNPCItemData( bsw_scr, npc_no,
+        &msg0, &msg1, &item_no );
+      *ret_wk = item_no;
     }
     break;
   //----TOOL Wifi関連
@@ -1569,6 +1637,63 @@ static u16 bsway_GetHomeNPCMsgID( const MMDL *mmdl )
   return( MMDL_GetParam(mmdl,MMDL_PARAM_1) );
 }
 
+//--------------------------------------------------------------
+/**
+ * 途中駅NPC アイテム取得メッセージがあるか
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static BOOL bsway_CheckHomeNPCItemMsg(
+    BSUBWAY_SCRWORK *bsw_scr, int npc_no )
+{
+  const HOME_NPC_DATA *data = &data_HomeNpcTbl[npc_no];
+  
+  if( bsw_scr->play_mode == BSWAY_MODE_WIFI ){
+    return( FALSE );
+  }
+  
+  if( data->item_no != ITEM_DUMMY_DATA ){
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * 途中駅NPC アイテム取得メッセージなら各データ取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static void bsway_GetHomeNPCItemData(
+    BSUBWAY_SCRWORK *bsw_scr, u16 npc_no,
+    u16 *msg_before, u16 *msg_after, u16 *item_no )
+{
+  const HOME_NPC_DATA *data = &data_HomeNpcTbl[npc_no];
+  
+  if( bsw_scr->play_mode == BSWAY_MODE_WIFI ){
+    GF_ASSERT( 0 );
+    *msg_before = 0;
+    *msg_after = 0;
+    *item_no = ITEM_MONSUTAABOORU;
+    return;
+  }
+  
+  if( data->item_no == ITEM_DUMMY_DATA ){
+    GF_ASSERT( 0 );
+    *msg_before = 0;
+    *msg_after = 0;
+    *item_no = ITEM_MONSUTAABOORU;
+    return;
+  }
+  
+  *msg_before = data->msg_id;
+  *msg_after = data->msg_id_item_after;
+  *item_no = data->item_no;
+}
+
 //======================================================================
 //  通信録画 
 //======================================================================
@@ -1586,8 +1711,10 @@ static BOOL evBtlRecSave( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
+  int renshou = BSUBWAY_SCOREDATA_GetRenshou(
+      bsw_scr->scoreData, bsw_scr->play_mode );
   SAVE_RESULT res = BattleRec_Save(
-      gdata, HEAPID_PROC, BATTLE_MODE_SUBWAY_SINGLE, 0, LOADDATA_MYREC,
+      gdata, HEAPID_PROC, BATTLE_MODE_SUBWAY_SINGLE, renshou, LOADDATA_MYREC,
       &bsw_scr->btlrec_save_work[0], &bsw_scr->btlrec_save_work[1] );
   
   if( res == SAVE_RESULT_OK || res == SAVE_RESULT_NG ){
@@ -1801,87 +1928,87 @@ static const u16 data_ModeBattleMode[BSWAY_MODE_MAX] =
 //--------------------------------------------------------------
 static const HOME_NPC_DATA data_HomeNpcTbl[] =
 {
-  {BOY1,1,71,0,17,msg_c04r0111_boy2_1},
-  {BOY1,4,62,0,14,msg_c04r0111_boy2_2},
-  {GIRL2,1,66,0,14,msg_c04r0111_girl2_1},
-  {GIRL2,4,50,0,16,msg_c04r0111_girl2_2},
-  {BOY3,1,23,0,16,msg_c04r0111_boy3_1},
-  {BOY3,4,41,0,14,msg_c04r0111_boy3_2},
-  {GIRL3,1,35,0,16,msg_c04r0111_girl3_1},
-  {GIRL3,4,42,0,14,msg_c04r0111_girl3_2},
-  {BACKPACKERM,1,61,0,13,msg_c04r0111_backpackerm_1},
-  {BACKPACKERM,2,31,0,14,msg_c04r0111_backpackerm_2},
-  {BACKPACKERM,4,58,0,15,msg_c04r0111_backpackerm_3},
-  {BACKPACKERM,9,22,0,13,msg_c04r0111_backpackerm_4},
-  {BACKPACKERM,15,42,0,17,msg_c04r0111_backpackerm_5},
-  {BACKPACKERW,2,67,0,17,msg_c04r0111_backpackerw_1},
-  {BACKPACKERW,4,12,0,16,msg_c04r0111_backpackerw_2},
-  {BACKPACKERW,8,38,0,14,msg_c04r0111_backpackerw_3},
-  {BACKPACKERW,12,28,0,16,msg_c04r0111_backpackerw_4},
-  {POLICEMAN,2,42,0,15,msg_c04r0111_policeman_1},
-  {POLICEMAN,3,19,0,16,msg_c04r0111_policeman_2},
-  {POLICEMAN,5,50,0,16,msg_c04r0111_policeman_3},
-  {POLICEMAN,11,68,0,14,msg_c04r0111_policeman_4},
-  {OLDMAN1,1,42,0,14,msg_c04r0111_oldman1_1},
-  {OLDMAN1,2,22,0,14,msg_c04r0111_oldman1_2},
-  {OLDMAN1,3,58,0,15,msg_c04r0111_oldman1_3},
-  {OLDMAN1,5,61,0,16,msg_c04r0111_oldman1_4},
-  {OLDMAN1,6,21,0,14,msg_c04r0111_oldman1_5},
-  {OLDMAN1,8,20,0,16,msg_c04r0111_oldman1_6},
-  {OLDMAN1,12,67,0,14,msg_c04r0111_oldman1_7},
-  {OL,3,67,0,15,msg_c04r0111_ol_1},
-  {OL,4,82,0,17,msg_c04r0111_ol_2},
-  {OL,6,60,0,16,msg_c04r0111_ol_3},
-  {OL,11,34,0,15,msg_c04r0111_ol_4},
-  {RAILMAN,3,46,0,15,msg_c04r0111_railman_1},
-  {RAILMAN,5,12,0,15,msg_c04r0111_railman_2},
-  {RAILMAN,6,78,0,15,msg_c04r0111_railman_3},
-  {RAILMAN,7,18,0,14,msg_c04r0111_railman_4},
-  {RAILMAN,8,62,0,14,msg_c04r0111_railman_5},
-  {RAILMAN,15,61,0,17,msg_c04r0111_railman_6},
-  {RAILMAN,18,67,0,15,msg_c04r0111_railman_7},
-  {BOY4,4,32,0,15,msg_c04r0111_boy4_1},
-  {GIRL4,1,55,0,17,msg_c04r0111_girl4_1},
-  {PILOT,17,59,0,15,msg_c04r0111_pilot_1},
-  {TRAINERM,9,69,0,17,msg_c04r0111_trainerm_1},
-  {TRAINERM,10,81,0,14,msg_c04r0111_trainerm_2},
-  {TRAINERM,12,48,0,14,msg_c04r0111_trainerm_3},
-  {TRAINERM,14,63,0,16,msg_c04r0111_trainerm_4},
-  {TRAINERM,21,70,0,17,msg_c04r0111_trainerm_5},
-  {TRAINERW,7,67,0,17,msg_c04r0111_trainerw_1},
-  {TRAINERW,9,47,0,15,msg_c04r0111_trainerw_2},
-  {TRAINERW,11,23,0,16,msg_c04r0111_trainerw_3},
-  {TRAINERW,16,17,0,16,msg_c04r0111_trainerw_4},
-  {TRAINERW,20,46,0,15,msg_c04r0111_trainerw_5},
-  {BADMAN,1,83,0,17,msg_c04r0111_badman_1},
-  {BADMAN,2,50,0,16,msg_c04r0111_badman_2},
-  {BADMAN,5,43,0,13,msg_c04r0111_badman_3},
-  {CLEANINGM,3,39,0,16,msg_c04r0111_cleaningm_1},
-  {CLEANINGM,5,35,0,16,msg_c04r0111_cleaningm_2},
-  {CLEANINGM,7,58,0,15,msg_c04r0111_cleaningm_3},
-  {CLEANINGM,22,50,0,14,msg_c04r0111_cleaningm_4},
-  {VETERANM,7,39,0,14,msg_c04r0111_veteranm_1},
-  {VETERANM,9,62,0,16,msg_c04r0111_veteranm_2},
-  {VETERANM,11,53,0,14,msg_c04r0111_veteranm_3},
-  {VETERANM,13,59,0,15,msg_c04r0111_veteranm_4},
-  {VETERANM,15,55,0,14,msg_c04r0111_veteranm_5},
-  {VETERANW,8,57,0,16,msg_c04r0111_veteranw_1},
-  {VETERANW,10,39,0,13,msg_c04r0111_veteranw_2},
-  {VETERANW,13,60,0,15,msg_c04r0111_veteranw_3},
-  {VETERANW,16,68,0,15,msg_c04r0111_veteranw_4},
-  {VETERANW,19,64,0,14,msg_c04r0111_veteranw_5},
-  {LADY,3,25,0,14,msg_c04r0111_lady_1},
-  {LADY,5,82,0,15,msg_c04r0111_lady_2},
-  {LADY,8,50,0,15,msg_c04r0111_lady_3},
-  {GENTLEMAN,3,26,0,14,msg_c04r0111_gentleman_1},
-  {GENTLEMAN,6,44,0,14,msg_c04r0111_gentleman_2},
-  {GENTLEMAN,7,48,0,16,msg_c04r0111_gentleman_3},
-  {GENTLEMAN,10,58,0,16,msg_c04r0111_gentleman_4},
-  {BUSINESSMAN,6,66,0,14,msg_c04r0111_businessman_1},
-  {BUSINESSMAN,7,55,0,13,msg_c04r0111_businessman_2},
-  {BUSINESSMAN,10,20,0,16,msg_c04r0111_businessman_3},
-  {BUSINESSMAN,18,28,0,14,msg_c04r0111_businessman_4},
-  {OBJCODEMAX,0,0,0,0,0},
+  {BOY1,1,71,0,17,msg_c04r0111_boy2_1,0,ITEM_DUMMY_DATA},
+  {BOY1,4,62,0,14,msg_c04r0111_boy2_2,0,ITEM_DUMMY_DATA},
+  {GIRL2,1,66,0,14,msg_c04r0111_girl2_1,0,ITEM_DUMMY_DATA},
+  {GIRL2,4,50,0,16,msg_c04r0111_girl2_2,0,ITEM_DUMMY_DATA},
+  {BOY3,1,23,0,16,msg_c04r0111_boy3_1,0,ITEM_DUMMY_DATA},
+  {BOY3,4,41,0,14,msg_c04r0111_boy3_2,0,ITEM_DUMMY_DATA},
+  {GIRL3,1,35,0,16,msg_c04r0111_girl3_1,0,ITEM_DUMMY_DATA},
+  {GIRL3,4,42,0,14,msg_c04r0111_girl3_2,0,ITEM_DUMMY_DATA},
+  {BACKPACKERM,1,61,0,13,msg_c04r0111_backpackerm_1,0,ITEM_DUMMY_DATA},
+  {BACKPACKERM,2,31,0,14,msg_c04r0111_backpackerm_2,0,ITEM_DUMMY_DATA},
+  {BACKPACKERM,4,58,0,15,msg_c04r0111_backpackerm_3,0,ITEM_DUMMY_DATA},
+  {BACKPACKERM,9,22,0,13,msg_c04r0111_backpackerm_4,0,ITEM_DUMMY_DATA},
+  {BACKPACKERM,15,42,0,17,msg_c04r0111_backpackerm_5,0,ITEM_DUMMY_DATA},
+  {BACKPACKERW,2,67,0,17,msg_c04r0111_backpackerw_1,0,ITEM_DUMMY_DATA},
+  {BACKPACKERW,4,12,0,16,msg_c04r0111_backpackerw_2,0,ITEM_DUMMY_DATA},
+  {BACKPACKERW,8,38,0,14,msg_c04r0111_backpackerw_3,0,ITEM_DUMMY_DATA},
+  {BACKPACKERW,12,28,0,16,msg_c04r0111_backpackerw_4,0,ITEM_DUMMY_DATA},
+  {POLICEMAN,2,42,0,15,msg_c04r0111_policeman_1,0,ITEM_DUMMY_DATA},
+  {POLICEMAN,3,19,0,16,msg_c04r0111_policeman_2,0,ITEM_DUMMY_DATA},
+  {POLICEMAN,5,50,0,16,msg_c04r0111_policeman_3,0,ITEM_DUMMY_DATA},
+  {POLICEMAN,11,68,0,14,msg_c04r0111_policeman_4,0,ITEM_DUMMY_DATA},
+  {OLDMAN1,1,42,0,14,msg_c04r0111_oldman1_1,0,ITEM_DUMMY_DATA},
+  {OLDMAN1,2,22,0,14,msg_c04r0111_oldman1_2,0,ITEM_DUMMY_DATA},
+  {OLDMAN1,3,58,0,15,msg_c04r0111_oldman1_3,0,ITEM_DUMMY_DATA},
+  {OLDMAN1,5,61,0,16,msg_c04r0111_oldman1_4,0,ITEM_DUMMY_DATA},
+  {OLDMAN1,6,21,0,14,msg_c04r0111_oldman1_5,msg_c04r0111_oldman1_5_01,ITEM_POINTOAPPU},
+  {OLDMAN1,8,20,0,16,msg_c04r0111_oldman1_6,0,ITEM_DUMMY_DATA},
+  {OLDMAN1,12,67,0,14,msg_c04r0111_oldman1_7,0,ITEM_DUMMY_DATA},
+  {OL,3,67,0,15,msg_c04r0111_ol_1,0,ITEM_DUMMY_DATA},
+  {OL,4,82,0,17,msg_c04r0111_ol_2,0,ITEM_DUMMY_DATA},
+  {OL,6,60,0,16,msg_c04r0111_ol_3,0,ITEM_DUMMY_DATA},
+  {OL,11,34,0,15,msg_c04r0111_ol_4,0,ITEM_DUMMY_DATA},
+  {RAILMAN,3,46,0,15,msg_c04r0111_railman_1,0,ITEM_DUMMY_DATA},
+  {RAILMAN,5,12,0,15,msg_c04r0111_railman_2,0,ITEM_DUMMY_DATA},
+  {RAILMAN,6,78,0,15,msg_c04r0111_railman_3,0,ITEM_DUMMY_DATA},
+  {RAILMAN,7,18,0,14,msg_c04r0111_railman_4,0,ITEM_DUMMY_DATA},
+  {RAILMAN,8,62,0,14,msg_c04r0111_railman_5,0,ITEM_DUMMY_DATA},
+  {RAILMAN,15,61,0,17,msg_c04r0111_railman_6,0,ITEM_DUMMY_DATA},
+  {RAILMAN,18,67,0,15,msg_c04r0111_railman_7,0,ITEM_DUMMY_DATA},
+  {BOY4,4,32,0,15,msg_c04r0111_boy4_1,0,ITEM_DUMMY_DATA},
+  {GIRL4,1,55,0,17,msg_c04r0111_girl4_1,0,ITEM_DUMMY_DATA},
+  {PILOT,17,59,0,15,msg_c04r0111_pilot_1,0,ITEM_DUMMY_DATA},
+  {TRAINERM,9,69,0,17,msg_c04r0111_trainerm_1,0,ITEM_DUMMY_DATA},
+  {TRAINERM,10,81,0,14,msg_c04r0111_trainerm_2,0,ITEM_DUMMY_DATA},
+  {TRAINERM,12,48,0,14,msg_c04r0111_trainerm_3,0,ITEM_DUMMY_DATA},
+  {TRAINERM,14,63,0,16,msg_c04r0111_trainerm_4,0,ITEM_DUMMY_DATA},
+  {TRAINERM,21,70,0,17,msg_c04r0111_trainerm_5,0,ITEM_DUMMY_DATA},
+  {TRAINERW,7,67,0,17,msg_c04r0111_trainerw_1,msg_c04r0111_trainerw_1_01,ITEM_HUSIGINAAME},
+  {TRAINERW,9,47,0,15,msg_c04r0111_trainerw_2,0,ITEM_DUMMY_DATA},
+  {TRAINERW,11,23,0,16,msg_c04r0111_trainerw_3,0,ITEM_DUMMY_DATA},
+  {TRAINERW,16,17,0,16,msg_c04r0111_trainerw_4,0,ITEM_DUMMY_DATA},
+  {TRAINERW,20,46,0,15,msg_c04r0111_trainerw_5,msg_c04r0111_trainerw_5_01,ITEM_SUTAANOMI},
+  {BADMAN,1,83,0,17,msg_c04r0111_badman_1,0,ITEM_DUMMY_DATA},
+  {BADMAN,2,50,0,16,msg_c04r0111_badman_2,0,ITEM_DUMMY_DATA},
+  {BADMAN,5,43,0,13,msg_c04r0111_badman_3,0,ITEM_DUMMY_DATA},
+  {CLEANINGM,3,39,0,16,msg_c04r0111_cleaningm_1,msg_c04r0111_cleaningm_1_01,ITEM_POINTOAPPU},
+  {CLEANINGM,5,35,0,16,msg_c04r0111_cleaningm_2,0,ITEM_DUMMY_DATA},
+  {CLEANINGM,7,58,0,15,msg_c04r0111_cleaningm_3,0,ITEM_DUMMY_DATA},
+  {CLEANINGM,22,50,0,14,msg_c04r0111_cleaningm_4,0,ITEM_DUMMY_DATA},
+  {VETERANM,7,39,0,14,msg_c04r0111_veteranm_1,0,ITEM_DUMMY_DATA},
+  {VETERANM,9,62,0,16,msg_c04r0111_veteranm_2,0,ITEM_DUMMY_DATA},
+  {VETERANM,11,53,0,14,msg_c04r0111_veteranm_3,0,ITEM_DUMMY_DATA},
+  {VETERANM,13,59,0,15,msg_c04r0111_veteranm_4,0,ITEM_DUMMY_DATA},
+  {VETERANM,15,55,0,14,msg_c04r0111_veteranm_5,0,ITEM_DUMMY_DATA},
+  {VETERANW,8,57,0,16,msg_c04r0111_veteranw_1,0,ITEM_DUMMY_DATA},
+  {VETERANW,10,39,0,13,msg_c04r0111_veteranw_2,0,ITEM_DUMMY_DATA},
+  {VETERANW,13,60,0,15,msg_c04r0111_veteranw_3,0,ITEM_DUMMY_DATA},
+  {VETERANW,16,68,0,15,msg_c04r0111_veteranw_4,0,ITEM_DUMMY_DATA},
+  {VETERANW,19,64,0,14,msg_c04r0111_veteranw_5,0,ITEM_DUMMY_DATA},
+  {LADY,3,25,0,14,msg_c04r0111_lady_1,0,ITEM_DUMMY_DATA},
+  {LADY,5,82,0,15,msg_c04r0111_lady_2,0,ITEM_DUMMY_DATA},
+  {LADY,8,50,0,15,msg_c04r0111_lady_3,0,ITEM_DUMMY_DATA},
+  {GENTLEMAN,3,26,0,14,msg_c04r0111_gentleman_1,0,ITEM_DUMMY_DATA},
+  {GENTLEMAN,6,44,0,14,msg_c04r0111_gentleman_2,0,ITEM_DUMMY_DATA},
+  {GENTLEMAN,7,48,0,16,msg_c04r0111_gentleman_3,0,ITEM_DUMMY_DATA},
+  {GENTLEMAN,10,58,0,16,msg_c04r0111_gentleman_4,0,ITEM_DUMMY_DATA},
+  {BUSINESSMAN,6,66,0,14,msg_c04r0111_businessman_1,0,ITEM_DUMMY_DATA},
+  {BUSINESSMAN,7,55,0,13,msg_c04r0111_businessman_2,0,ITEM_DUMMY_DATA},
+  {BUSINESSMAN,10,20,0,16,msg_c04r0111_businessman_3,0,ITEM_DUMMY_DATA},
+  {BUSINESSMAN,18,28,0,14,msg_c04r0111_businessman_4,msg_c04r0111_businessman_4_01,ITEM_SANNOMI},
+  {OBJCODEMAX,0,0,0,0,0,0,ITEM_DUMMY_DATA},
 };
 
 //--------------------------------------------------------------
@@ -2043,8 +2170,10 @@ void BSUBWAY_SCRWORK_DebugFightAnyRound(
   
   renshou = game_round_now - 1;
   
-  OS_Printf( "BSW DEBUG %戦目へ(STAGE %d ROUND %d RENSHOU %d\n",
+  OS_Printf( "BSW ================================================\n" );
+  OS_Printf( "BSW DEBUG %d戦目へ(STAGE %d ROUND %d RENSHOU %d\n",
       game_round_now, stage, round, renshou );
+  OS_Printf( "BSW ================================================\n" );
   
   BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, round );
   BSUBWAY_SCOREDATA_SetStageNo_Org1(
