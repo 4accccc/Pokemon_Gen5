@@ -104,7 +104,6 @@ typedef struct
 {
   BTLV_MCSS_WORK*   bmw;
   int               position;
-  int               index;
   VecFx32           now_value;
   EFFTOOL_MOVE_WORK emw;
 }BTLV_MCSS_TCB_WORK;
@@ -358,13 +357,16 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
   {
     BtlvMcssPos pos;
 
-    for( pos = BTLV_MCSS_POS_AA ; pos < BTLV_MCSS_POS_MAX ; pos++ )
-    {
-      if( ( BTLV_MCSS_CheckExist( bmw, pos ) ) && ( GFL_STD_MtRand( 100 ) == 0 ) )
+    if( bmw->mcss_tcb_rotation_execute == 0 )
+    { 
+      for( pos = BTLV_MCSS_POS_AA ; pos < BTLV_MCSS_POS_MAX ; pos++ )
       {
-        if( ( bmw->mcss_tcb_blink_execute & BTLV_EFFTOOL_Pos2Bit( pos ) ) == 0 )
+        if( ( BTLV_MCSS_CheckExist( bmw, pos ) ) && ( GFL_STD_MtRand( 100 ) == 0 ) )
         {
-          BTLV_MCSS_MoveBlink( bmw, pos, BTLEFF_MEPACHI_MABATAKI, 4, 1 );
+          if( ( bmw->mcss_tcb_blink_execute & BTLV_EFFTOOL_Pos2Bit( pos ) ) == 0 )
+          {
+            BTLV_MCSS_MoveBlink( bmw, pos, BTLEFF_MEPACHI_MABATAKI, 4, 1 );
+          }
         }
       }
     }
@@ -879,13 +881,10 @@ void  BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait
 
   pmtw->bmw           = bmw;
   pmtw->position      = position;
-  pmtw->index         = BTLV_MCSS_GetIndex( bmw, position );
   pmtw->emw.move_type = type;
   pmtw->emw.wait      = 0;
   pmtw->emw.wait_tmp  = wait;
   pmtw->emw.count     = count * 2;  //閉じて開くを1回とカウントするために倍しておく
-
-  GF_ASSERT( bmw->btlv_mcss[ pmtw->index ].mcss != NULL );
 
   switch( type ){
   case BTLEFF_MEPACHI_ON:
@@ -1352,14 +1351,21 @@ void  BTLV_MCSS_OverwriteMAW( BTLV_MCSS_WORK *bmw, BtlvMcssPos pos, MCSS_ADD_WOR
 /**
  * @brief 指定された立ち位置のポケモンの鳴き声を再生
  *
- * @param[in] bmw BTLV_MCSS管理ワークへのポインタ
- * @param[in] pos 立ち位置
+ * @param[in] bmw           BTLV_MCSS管理ワークへのポインタ
+ * @param[in] pos           立ち位置
+ * @param[in] pitch         鳴き声のピッチ
+ * @param[in] volume        鳴き声のボリューム
+ * @param[in] chorus_vol    鳴き声のコーラス設定（ボリューム差）
+ * @param[in] chorus_speed  鳴き声のコーラス設定（再生速度差）
+ *
+ * @retval  鳴き声プレイヤーINDEX
  */
 //============================================================================================
-void  BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position )
+u32 BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position, int pitch, int volume, int chorus_vol, int chorus_speed )
 {
   int pan;
   int index = BTLV_MCSS_GetIndex( bmw, position );
+  u32 playerIndex;
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
 
   switch( position ){
@@ -1408,14 +1414,35 @@ void  BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position )
     const BTL_MAIN_MODULE* mainModule = BTLV_EFFECT_GetMainModule();
     PMV_REF  refBody;
     PMV_REF* pRef = &refBody;
+    BOOL  chorus = FALSE;
 
+    //エフェクトエディタで確認する場合、mainModuleがNULLなので、回避する
+#ifdef PM_DEBUG
+    if( mainModule ){ 
+#endif
     if( !BTL_MAIN_SetPmvRef(mainModule, position, &refBody) ){
       pRef = NULL;
     }
+#ifdef PM_DEBUG
+    }
+    else
+    { 
+      pRef = NULL;
+    }
+#endif
 
-    PMVOICE_Play( bmw->btlv_mcss[ index ].param.mons_no, bmw->btlv_mcss[ index ].param.form_no,
-                  pan, FALSE, 0, 0, FALSE, (u32)pRef );
+    if( ( chorus_vol ) || ( chorus_speed ) )
+    { 
+      chorus = TRUE;
+    }
+
+    playerIndex = PMVOICE_Play( bmw->btlv_mcss[ index ].param.mons_no, bmw->btlv_mcss[ index ].param.form_no,
+                                pan, chorus, chorus_vol, chorus_speed, FALSE, (u32)pRef );
+    PMVOICE_SetVolume( playerIndex, volume );
+    PMVOICE_SetSpeed( playerIndex, pitch );
   }
+
+  return playerIndex;
 }
 
 //============================================================================================
@@ -1668,16 +1695,6 @@ static  void  TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work )
   //立ち位置にポケモンが存在しなかったらフリーする
   if( !BTLV_MCSS_CheckExist( bmw, pmtw->position ) )
   {
-    bmw->mcss_tcb_blink_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
-    GFL_HEAP_FreeMemory( work );
-    GFL_TCB_DeleteTask( tcb );
-    return;
-  }
-
-  //インデックスが変わっていたらフリーする（ローテーション対策）
-  if( pmtw->index != BTLV_MCSS_GetIndex( bmw, pmtw->position ) )
-  { 
-    BTLV_MCSS_SetMepachiFlag( pmtw->bmw, pmtw->position, BTLV_MCSS_MEPACHI_OFF );
     bmw->mcss_tcb_blink_execute &= ( BTLV_EFFTOOL_Pos2Bit( pmtw->position ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
     GFL_HEAP_FreeMemory( work );
     GFL_TCB_DeleteTask( tcb );
