@@ -479,9 +479,9 @@
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/bigfour4.ncg ./mmdl_res ./mmdl_dmy/ncg4x4nflip.imd 4 4 12
 
 #champion.imd
-./mmdl_res/champion.imd: ./mmdl_nchara/champion.ncg ./mmdl_nchara/champion.ncl ./mmdl_dmy/ncg4x4x14.imd fldmmdl_list.csv
+./mmdl_res/champion.imd: ./mmdl_nchara/champion.ncg ./mmdl_nchara/champion.ncl ./mmdl_dmy/ncg4x4x20.imd fldmmdl_list.csv
 	@echo convert ncg_imd champion
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/champion.ncg ./mmdl_res ./mmdl_dmy/ncg4x4x14.imd 4 4 14
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/champion.ncg ./mmdl_res ./mmdl_dmy/ncg4x4x20.imd 4 4 14
 
 #hakaim.imd
 ./mmdl_res/hakaim.imd: ./mmdl_nchara/hakaim.ncg ./mmdl_nchara/hakaim.ncl ./mmdl_dmy/ncg4x4nflip.imd fldmmdl_list.csv
@@ -814,9 +814,9 @@
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/corn.ncg ./mmdl_res ./mmdl_dmy/ncg4x4ocell.imd 4 4 1
 
 #ninja.imd
-./mmdl_res/ninja.imd: ./mmdl_nchara/ninja.ncg ./mmdl_nchara/ninja.ncl ./mmdl_dmy/ncg4x4x14.imd fldmmdl_list.csv
+./mmdl_res/ninja.imd: ./mmdl_nchara/ninja.ncg ./mmdl_nchara/ninja.ncl ./mmdl_dmy/ncg4x4x20.imd fldmmdl_list.csv
 	@echo convert ncg_imd ninja
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/ninja.ncg ./mmdl_res ./mmdl_dmy/ncg4x4x14.imd 4 4 16
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/ninja.ncg ./mmdl_res ./mmdl_dmy/ncg4x4x20.imd 4 4 16
 
 #espm.imd
 ./mmdl_res/espm.imd: ./mmdl_nchara/espm.ncg ./mmdl_nchara/espm.ncl ./mmdl_dmy/ncg4x4nflip.imd fldmmdl_list.csv
