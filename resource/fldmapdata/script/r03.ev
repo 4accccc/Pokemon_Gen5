@@ -563,6 +563,10 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_pos_r03_support_01
 	{
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
 	//自機座標取得
 	DEFINE_LOCAL  LCW_POSX
     DEFINE_LOCAL  LCW_POSZ
@@ -622,6 +626,9 @@ EVENT_END
 /*  R03 support01に直接話しかけ*/
 /**************************************************************/
 EVENT_START   ev_r03_support_01
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r03_white_05 )
 EVENT_END
 
