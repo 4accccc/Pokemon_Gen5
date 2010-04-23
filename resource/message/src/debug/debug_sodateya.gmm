@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-04-22T21:21:37"/>
+	<create user="obata_toshihiro" host="W00209" date="2010-04-23T15:17:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -394,13 +394,13 @@
 
 
 	<row id="sodateya_azukeru" text-color="#000000,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="240">あずける</language>
-		<language name="JPN_KANJI" width="240">あずける</language>
+		<language name="JPN" width="240">先頭ポケを預ける</language>
+		<language name="JPN_KANJI" width="240">先頭ポケを預ける</language>
 	</row>
 
 	<row id="sodateya_hikitoru" text-color="#000000,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="240">ひきとる</language>
-		<language name="JPN_KANJI" width="240">ひきとる</language>
+		<language name="JPN" width="240">引き取る</language>
+		<language name="JPN_KANJI" width="240">引き取る</language>
 	</row>
 
 	<row id="sodateya_shiiku_1" text-color="#000000,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -419,18 +419,18 @@
 	</row>
 
 	<row id="sodateya_tamago_get" text-color="#000000,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="240">タマゴをもらう</language>
-		<language name="JPN_KANJI" width="240">タマゴをもらう</language>
+		<language name="JPN" width="240">育て屋のタマゴをもらう</language>
+		<language name="JPN_KANJI" width="240">育て屋のタマゴをもらう</language>
 	</row>
 
 	<row id="sodateya_tamago_del" text-color="#000000,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="240">タマゴを捨てる</language>
-		<language name="JPN_KANJI" width="240">タマゴを捨てる</language>
+		<language name="JPN" width="240">育て屋のタマゴを捨てる</language>
+		<language name="JPN_KANJI" width="240">育て屋のタマゴを捨てる</language>
 	</row>
 
 	<row id="sodateya_tamago_hatch" text-color="#000000,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="240">タマゴを温める</language>
-		<language name="JPN_KANJI" width="240">タマゴを温める</language>
+		<language name="JPN" width="240">手持ちのタマゴを温める</language>
+		<language name="JPN_KANJI" width="240">手持ちのタマゴを温める</language>
 	</row>
 
 	<flowchart-group-list>
