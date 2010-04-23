@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T21:35:19"/>
+	<create user="matsumiya" host="W00224" date="2010-04-23T13:22:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="110" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="445"/>
@@ -707,15 +707,15 @@
 　主人公たちのほうを向いてleader_07</comment>
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
-		<language name="JPN" width="256">アタシです
+		<language name="JPN" width="256">わたしです
 はねばし　だけど　おろしてよ▼
-アナタに　ちょうせんしたい　って
+あなたに　ちょうせんしたい　って
 トレーナーが　いるの▼
 はい
 よろしく▼</language>
-		<language name="JPN_KANJI" width="256">アタシです
+		<language name="JPN_KANJI" width="256">わたしです
 跳ね橋だけど　おろしてよ▼
-アナタに　挑戦したいって
+あなたに　挑戦したいって
 トレーナーが　いるの▼
 はい
 よろしく▼</language>
@@ -740,15 +740,15 @@
 		<attribute name="キャラ指定">LEADER4
 カミツレ</attribute>
 		<language name="JPN" width="256">カミツレ『テレビのしごとが　あるから
-アタシ　ここで　かえるわね▼
+わたし　ここで　かえるわね▼
 つぎの　まちの　ジムリーダーは
 クセのある　おっさん　だけど▽
-アナタたち　がんばって▼</language>
+あなたたち　がんばって▼</language>
 		<language name="JPN_KANJI" width="256">カミツレ『テレビの仕事が　あるから
-アタシ　ここで　帰るわね▼
+わたし　ここで　帰るわね▼
 次の　街の　ジムリーダーは
 クセのある　おっさん　だけど▽
-アナタたち　がんばって▼</language>
+あなたたち　がんばって▼</language>
 	</row>
 
 	<row id="msg_r05_black_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
