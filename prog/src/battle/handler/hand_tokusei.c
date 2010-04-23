@@ -5217,10 +5217,10 @@ static void handler_NorowareBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 
     if( !BPP_CheckSick(target, WAZASICK_KANASIBARI) )
     {
-      if( Tokusei_IsExePer(flowWk, 30) )
+      WazaID  prevWaza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+      if( (prevWaza != WAZANO_NULL) && (prevWaza != WAZANO_WARUAGAKI) )
       {
-        WazaID  prevWaza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-        if( prevWaza != WAZANO_NULL )
+        if( Tokusei_IsExePer(flowWk, 30) )
         {
           BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 
