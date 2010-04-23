@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T19:26:56"/>
+	<create user="matsumiya" host="W00224" date="2010-04-23T14:34:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1592" top="175" right="2297" bottom="795" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="200" right="1280" bottom="598" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -803,7 +803,7 @@
 	</row>
 
 	<row id="msg_bsw_scr_36">
-		<language name="JPN" width="256">せいせきを　レポートに　かきこんでいます
+		<language name="JPN" width="256">レポートに　かきこんでいます
 しばらく　おまちください</language>
 		<language name="JPN_KANJI" width="256">成績を　レポートに　書きこんでいます
 しばらく　お待ちください</language>
