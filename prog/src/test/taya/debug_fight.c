@@ -2294,6 +2294,7 @@ FS_EXTERN_OVERLAY(battle);
             BTL_SETUP_Double_Trainer( &wk->setupParam, wk->gameData,
               &wk->fieldSit, trID, HEAPID_BTL_DEBUG_SYS );
             BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyEnemy1, BTL_CLIENT_ENEMY1 );
+            wk->setupParam.tr_data[ BTL_CLIENT_ENEMY1 ]->ai_bit = wk->tr_ai_bit;
             break;
         case BTL_MULTIMODE_P_AA:
           {
@@ -2387,7 +2388,7 @@ FS_EXTERN_OVERLAY(battle);
       PMSND_StopBGM();
     }
     break;
-  
+
   case SEQ_BTL_EXIT_REQ1:
     if( GFL_NET_HANDLE_IsTimeSync( GFL_NET_HANDLE_GetCurrentHandle() , 26 , WB_NET_BATTLE_SERVICEID ) == TRUE )
     {
@@ -2396,14 +2397,14 @@ FS_EXTERN_OVERLAY(battle);
     break;
 
   case SEQ_BTL_EXIT_REQ2:
-    if( GFL_NET_IsParentMachine() == FALSE || 
+    if( GFL_NET_IsParentMachine() == FALSE ||
         GFL_NET_GetConnectNum() <= 1 )
     {
       GFL_NET_Exit( btlExitConnectCallback );
       (*seq) = SEQ_NET_EXIT_WAIT;
     }
     break;
-    
+
   case SEQ_NET_EXIT_WAIT:
     if( wk->fNetConnect == FALSE )
     {
