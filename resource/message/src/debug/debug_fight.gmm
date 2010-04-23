@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-04-08T19:10:49"/>
+	<create user="taya" host="W00146" date="2010-04-23T21:06:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -650,11 +650,11 @@
 	</row>
 
 	<row id="DBGF_BG_04">
-		<language name="JPN" width="256">どうくつＡ</language>
+		<language name="JPN" width="256">どうくつ</language>
 	</row>
 
 	<row id="DBGF_BG_05">
-		<language name="JPN" width="256">どうくつＢ</language>
+		<language name="JPN" width="256">どうくつ（くらい）</language>
 	</row>
 
 	<row id="DBGF_BG_06">
@@ -675,6 +675,34 @@
 
 	<row id="DBGF_BG_10">
 		<language name="JPN" width="256">さばく</language>
+	</row>
+
+	<row id="DBGF_BG_11">
+		<language name="JPN" width="256">してんのう ゴースト</language>
+	</row>
+
+	<row id="DBGF_BG_12">
+		<language name="JPN" width="256">してんのう かくとう</language>
+	</row>
+
+	<row id="DBGF_BG_13">
+		<language name="JPN" width="256">してんのう あく</language>
+	</row>
+
+	<row id="DBGF_BG_14">
+		<language name="JPN" width="256">してんのう エスパー</language>
+	</row>
+
+	<row id="DBGF_BG_15">
+		<language name="JPN" width="256">Ｎのしろ</language>
+	</row>
+
+	<row id="DBGF_BG_16">
+		<language name="JPN" width="256">チャンピオンへや</language>
+	</row>
+
+	<row id="DBGF_BG_17">
+		<language name="JPN" width="256">リュウラセン７Ｆ</language>
 	</row>
 
 	<row id="DBGF_LAND_00">
@@ -742,31 +770,7 @@
 	</row>
 
 	<row id="DBGF_LAND_16">
-		<language name="JPN" width="256">してんのう ゴースト</language>
-	</row>
-
-	<row id="DBGF_LAND_17">
-		<language name="JPN" width="256">してんのう かくとう</language>
-	</row>
-
-	<row id="DBGF_LAND_18">
-		<language name="JPN" width="256">してんのう あく</language>
-	</row>
-
-	<row id="DBGF_LAND_19">
-		<language name="JPN" width="256">してんのう エスパー</language>
-	</row>
-
-	<row id="DBGF_LAND_20">
-		<language name="JPN" width="256">Ｎせんよう</language>
-	</row>
-
-	<row id="DBGF_LAND_21">
 		<language name="JPN" width="256">ゲーチス</language>
-	</row>
-
-	<row id="DBGF_LAND_22">
-		<language name="JPN" width="256">チャンピオン</language>
 	</row>
 
 	<row id="DBGF_SEASON_0">

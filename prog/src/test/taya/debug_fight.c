@@ -597,10 +597,9 @@ typedef struct {
   u32  btlType  : 5;
   u32  commMode : 1;
   u32  msgSpeed : 3;
-  u32  fSubway  : 1;
   u32  recMode  : 2;
   u32  recBufID : 2;
-  u32  backGround      : 4;
+  u32  backGround      : 5;
   u32  landForm        : 5;
   u32  season          : 2;
   u32  weather         : 3;
@@ -627,7 +626,7 @@ typedef struct {
   u32  fAI_7         : 1;
   u32  fAI_8         : 1;
   u32  fAI_9         : 1;
-
+  u32  fSubway       : 1;
 
 
   u16  LimitTimeCommand;
