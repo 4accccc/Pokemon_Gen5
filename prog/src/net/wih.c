@@ -1116,13 +1116,18 @@ static void WH_StateOutStartParent(void *arg)
 		{
 			WH_TRACE("StartParent - child (aid 0x%x) disconnected %d\n", cb->aid,cb->state);
 			// cb->macAddress には, 切断された子機の MAC アドレスが入っています。
-			_pWmInfo->sConnectBitmap &= ~target_bitmap;
-			if(_pWmInfo->disconnectCallBack){
-				_pWmInfo->disconnectCallBack(cb->aid);
-			}
-      GFL_NET_WL_DisconnectError();
-			GFI_NET_HANDLE_Delete(cb->aid);
-      GFL_NET_HANDLE_RequestResetNegotiation(cb->aid);
+      {
+        int nobit = 0x01 << cb->aid;
+        if((_pWmInfo->sConnectBitmap & nobit)){  //つながっていない人の切断はスルー
+          _pWmInfo->sConnectBitmap &= ~target_bitmap;
+          if(_pWmInfo->disconnectCallBack){
+            _pWmInfo->disconnectCallBack(cb->aid);
+          }
+          GFL_NET_WL_DisconnectError();
+          GFI_NET_HANDLE_Delete(cb->aid);
+          GFL_NET_HANDLE_RequestResetNegotiation(cb->aid);
+        }
+      }
 		}
 		break;
 
