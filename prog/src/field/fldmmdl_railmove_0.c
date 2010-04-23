@@ -844,7 +844,7 @@ BOOL MMDL_GetRailDirLocation( const MMDL *mmdl, u16 dir, RAIL_LOCATION* location
   const MV_RAIL_COMMON_WORK* cp_work;
   u16 my_dir;
 
-  dir = MMDL_GetDirDisp( mmdl );
+  my_dir = MMDL_GetDirDisp( mmdl );
 
   // ƒŒ[ƒ‹“®ìƒ[ƒNæ“¾
 	cp_work = MMDL_GetMoveProcWork( (MMDL*)mmdl );
