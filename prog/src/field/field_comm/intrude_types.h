@@ -143,6 +143,9 @@ enum{
 ///巨大データ受信バッファサイズ
 #define INTRUDE_HUGE_RECEIVE_BUF_SIZE   (644)
 
+///近くにいるビーコンの人物を表示する最大数
+#define INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX   (2)
+
 
 //==============================================================================
 //  型定義
@@ -261,6 +264,10 @@ typedef struct _INTRUDE_COMM_SYS{
   MONOLITH_STATUS monolith_status;  ///<モノリスステータス
   s16 exit_wait;              ///<通信切断時のタイムアウトカウンタ
   u8 monost_req;              ///<モノリスステータス要求リクエスト(bit管理)
-  u8 padding;
+  u8 search_count;
+  
+  STRBUF *search_child[INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX];
+  u8 search_child_sex[INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX];
+  u8 search_child_lang[INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX];
 }INTRUDE_COMM_SYS;
 

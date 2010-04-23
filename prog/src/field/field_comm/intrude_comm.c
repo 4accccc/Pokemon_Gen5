@@ -25,6 +25,7 @@
 #include "intrude_field.h"
 #include "intrude_mission.h"
 #include "net/net_whpipe.h"
+#include "gamesystem/game_beacon_accessor.h"
 
 
 //==============================================================================
@@ -49,6 +50,7 @@ static BOOL  IntrudeComm_CheckConnectService(GameServiceID GameServiceID1 , Game
 static void  IntrudeComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 static void  IntrudeComm_DisconnectCallBack(void* pWork);
 static void IntrudeComm_HardConnect(void* pWork,int hardID);
+static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork);
 
 
 //==============================================================================
@@ -119,6 +121,7 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   GAMEDATA *gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
   MYSTATUS *myst = GAMEDATA_GetMyStatus(gamedata);
   NetID net_id;
+  int i;
   
   OS_TPrintf("intcomm alloc size = 0x%x\n", sizeof(INTRUDE_COMM_SYS));
   intcomm = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, sizeof(INTRUDE_COMM_SYS));
@@ -132,6 +135,9 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   MISSION_Init(&intcomm->mission);
   IntrudeComm_CreateBeaconData(gamedata, &intcomm->send_beacon);
   FIELD_WFBC_COMM_DATA_Init(&intcomm->wfbc_comm_data);
+  for(i = 0; i < INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX; i++){
+    intcomm->search_child[i] = GFL_STR_CreateBuffer(PERSON_NAME_SIZE+EOM_SIZE, HEAPID_APP_CONTROL);
+  }
 
   GAMEDATA_SetIntrudeMyID(gamedata, 0);
   
@@ -143,7 +149,6 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   }
   
   GFL_NET_Init( &aGFLNetInit, IntrudeComm_FinishInitCallback, intcomm );
-  OS_TPrintf("INTRUDE_CMD_SHUTDOWN = %d\n", INTRUDE_CMD_SHUTDOWN);
   return intcomm;
 }
 
@@ -410,7 +415,8 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
   GAMEDATA *gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
-
+  int i;
+  
   switch(*seq){
   case 0:
     if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || NetErr_App_CheckError()){
@@ -454,6 +460,9 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
         GameCommSys_SetLastStatus(invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_WAYOUT);
       }
       
+      for(i = 0; i < INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX; i++){
+        GFL_STR_DeleteBuffer(intcomm->search_child[i]);
+      }
       GFL_HEAP_FreeMemory(intcomm);
       GFL_HEAP_FreeMemory(pwk);
       if(NetErr_App_CheckError()){
@@ -464,6 +473,50 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
     break;
   }
   return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * ビーコンをスキャンした時に呼ばれるコールバック関数
+ *
+ * @param   pBss		
+ */
+//--------------------------------------------------------------
+static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  GBS_BEACON *bcon_buff;
+  GameServiceID id;
+  
+  if(intcomm->search_count >= INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX || GFL_NET_GetConnectNum() > 1){
+    return;
+  }
+  
+  if(WH_BeaconFirstCheck(pBss) == FALSE){
+    return;
+  }
+  if(GFL_NET_WL_scanCheck(pBss, WL_SCAN_CHK_BIT_ALL ^ WL_SCAN_CHK_BIT_BEACON_COMP) == FALSE){
+    return;
+  }
+  
+  bcon_buff = GFL_NET_WLGetDirectGFBss(pBss, &id);
+  if(id == WB_NET_PALACE_SERVICEID || id == WB_NET_FIELDMOVE_SERVICEID){
+    if(id == WB_NET_PALACE_SERVICEID){
+      MyStatus_CopyNameString( 
+        &bcon_buff->intrude_myst, intcomm->search_child[intcomm->search_count] );
+  	  intcomm->search_child_sex[intcomm->search_count] 
+  	    = MyStatus_GetMySex(&bcon_buff->intrude_myst);
+  	  intcomm->search_child_lang[intcomm->search_count] 
+  	    = MyStatus_GetRegionCode(&bcon_buff->intrude_myst);
+    }
+    else{
+      GAMEBEACON_Get_PlayerNameToBuf(
+        &bcon_buff->info, intcomm->search_child[intcomm->search_count]);
+  	  intcomm->search_child_sex[intcomm->search_count] = GAMEBEACON_Get_Sex(&bcon_buff->info);
+  	  intcomm->search_child_lang[intcomm->search_count] = GAMEBEACON_Get_PmLanguage(&bcon_buff->info);
+  	}
+  	intcomm->search_count++;
+  }
 }
 
 //==================================================================
@@ -523,6 +576,7 @@ static void  IntrudeComm_FinishInitCallback( void* pWork )
   
 	intcomm->comm_status = INTRUDE_COMM_STATUS_INIT;
   OS_TPrintf("初期化完了コールバック\n");
+  WHSetWIHDWCBeaconGetFunc(_SetScanBeaconData);
 }
 
 //--------------------------------------------------------------

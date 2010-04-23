@@ -55,7 +55,7 @@ enum{
 #define INFOMSG_UPDATE_WAIT   (60)
 
 ///近くにいるビーコンの人物を表示する最大数
-#define INTSUB_BCON_PLAYER_PRINT_MAX    (2)
+#define INTSUB_BCON_PLAYER_PRINT_MAX    (INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX)
 
 ///フォントBGパレット展開位置
 #define _FONT_BG_PALNO      (14)
@@ -1923,34 +1923,13 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
   }
   
   if(intcomm != NULL && GFL_NET_GetConnectNum() <= 1){
-    GBS_BEACON *bcon_buff;
-    int i, bcon_count = 0;
-    GameServiceID id;
-    for(i = 0; i < SCAN_PARENT_COUNT_MAX; i++){
-      id = GFL_NET_WLGetGameServiceID(i);
-      if(id == WB_NET_PALACE_SERVICEID || id == WB_NET_FIELDMOVE_SERVICEID){
-      	bcon_buff = GFL_NET_GetBeaconData(i);
-      	if(bcon_buff != NULL )
-      	{
-          if(id == WB_NET_PALACE_SERVICEID){
-            WORDSET_RegisterPlayerName( intsub->wordset, bcon_count, &bcon_buff->intrude_myst );
-          }
-          else{
-            GAMEBEACON_Get_PlayerNameToBuf(&bcon_buff->info, intsub->strbuf_temp);
-        	  WORDSET_RegisterWord(intsub->wordset, bcon_count, intsub->strbuf_temp, 
-        	    GAMEBEACON_Get_Sex(&bcon_buff->info), TRUE, 
-        	    GAMEBEACON_Get_PmLanguage(&bcon_buff->info));
-        	}
-        	bcon_count++;
-        	if(bcon_count >= INTSUB_BCON_PLAYER_PRINT_MAX){
-            break;
-          }
-      	}
-      }
-    }
-    
-    if(bcon_count > 0){
-      u32 msg_id = (bcon_count == 1) ? msg_invasion_info_011 : msg_invasion_info_012;
+    if(intcomm->search_count > 0){
+      u32 msg_id = (intcomm->search_count == 1) ? msg_invasion_info_011 : msg_invasion_info_012;
+      int i;
+      for(i = 0; i < intcomm->search_count; i++){
+    	  WORDSET_RegisterWord(intsub->wordset, i, intcomm->search_child[i], 
+    	    intcomm->search_child_sex[i], TRUE, intcomm->search_child_lang[i]);
+    	}
       GFL_MSG_GetString(intsub->msgdata, msg_id, intsub->strbuf_temp );
       WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
       msg_on = TRUE;
