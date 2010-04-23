@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T21:04:16"/>
+	<create user="matsumiya" host="W00224" date="2010-04-23T14:03:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -335,11 +335,11 @@
 		<language name="JPN" width="256">ゲーチス『みごと
 ダークストーンを　てにしたようですね▼
 どうです？
-あなたも　えいゆうに　なりませんか？▼</language>
+アナタも　えいゆうに　なりませんか？▼</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『みごと
 ダークストーンを　手にしたようですね▼
 どうです？
-あなたも　英雄に　なりませんか？▼</language>
+アナタも　英雄に　なりませんか？▼</language>
 	</row>
 
 	<row id="msg_h03_sage1_01b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -351,11 +351,11 @@
 		<language name="JPN" width="256">ゲーチス『みごと
 ライトストーンを　てにしたようですね▼
 どうです？
-あなたも　えいゆうに　なりませんか？▼</language>
+アナタも　えいゆうに　なりませんか？▼</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『みごと
 ライトストーンを　手にしたようですね▼
 どうです？
-あなたも　英雄に　なりませんか？▼</language>
+アナタも　英雄に　なりませんか？▼</language>
 	</row>
 
 	<row id="msg_h03_sage1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -367,12 +367,12 @@
 		<language name="JPN" width="256">いいですか？▼
 １００にんの　うち
 たった　ひとりが▽
-あなたを　えいゆう　といっても▽
+アナタを　えいゆう　といっても▽
 だれも　きにしない　しんじない▼</language>
 		<language name="JPN_KANJI" width="256">いいですか？▼
 １００人の　うち
 たった　１人が▽
-あなたを　英雄といっても▽
+アナタを　英雄といっても▽
 だれも　気にしない　信じない▼</language>
 	</row>
 
@@ -385,16 +385,16 @@
 		<language name="JPN" width="256">……ですが▼
 １００００にん　のうち
 １００にんが　そろって▽
-あなたを　えいゆう　といえば▽
-まわりも　きにして　あなたをみます▼
+アナタを　えいゆう　といえば▽
+まわりも　きにして　アナタをみます▼
 それが　２００にん……
 ５００にん……　１０００にんと▽
 ふえていけば　むし　できなくなる▼</language>
 		<language name="JPN_KANJI" width="256">……ですが▼
 １００００人　のうち
 １００人が　そろって▽
-あなたを　英雄といえば▽
-周りも　気にして　あなたをみます▼
+アナタを　英雄といえば▽
+周りも　気にして　アナタをみます▼
 それが　２００人……
 ５００人……　１０００人と▽
 増えていけば　無視できなくなる▼</language>
@@ -406,11 +406,11 @@
 ・続けてsage1_05</comment>
 		<attribute name="キャラ指定">七賢人
 ゲーチス</attribute>
-		<language name="JPN" width="256">さすれば　あなたを　えいゆうと
+		<language name="JPN" width="256">さすれば　アナタを　えいゆうと
 しんじる　にんげんも　でましょう！▼
 これが！　せかいを　あやつる
 シンプルな　ほうほう　なのです！▼</language>
-		<language name="JPN_KANJI" width="256">さすれば　あなたを　英雄と
+		<language name="JPN_KANJI" width="256">さすれば　アナタを　英雄と
 信じる　人間も　でましょう！▼
 これが！　世界を　操る
 シンプルな　方法なのです！▼</language>
