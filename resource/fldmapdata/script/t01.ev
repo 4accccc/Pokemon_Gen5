@@ -196,8 +196,8 @@ EVENT_START	ev_t01_rival_01
 
 		//========================================//
 		//ライバル＆サポート非表示
-		_FLAG_RESET( FV_T01_RIVAL )
-		_FLAG_RESET( FV_T01_SUPPORT )
+		_FLAG_SET( FV_T01_RIVAL )
+		_FLAG_SET( FV_T01_SUPPORT )
 		//========================================//
 
 		//マップ遷移処理
