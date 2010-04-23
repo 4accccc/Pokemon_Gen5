@@ -3841,13 +3841,10 @@ static void handler_Kansouhada_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     }
     else if( weather == BTL_WEATHER_RAIN )
     {
-      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
-      {
-        BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
-        param->pokeID = pokeID;
-        param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 8 );
-      }
-      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+      BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
+      param->header.tokwin_flag = TRUE;
+      param->pokeID = pokeID;
+      param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 8 );
     }
   }
 }
