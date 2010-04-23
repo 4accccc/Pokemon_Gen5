@@ -1098,6 +1098,7 @@ static  VMCMD_RESULT  AI_INCDEC( VMHANDLE* vmh, void* context_work )
 
 #ifdef AI_SEQ_PRINT
   OS_TPrintf("AI_INCDEC\n");
+  OS_TPrintf("waza:%d pos:%d value:%d\n",taw->waza_no,taw->waza_pos,value);
 #endif
 
   taw->waza_point[ taw->waza_pos ] += value;
@@ -3503,7 +3504,7 @@ static  VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
   case TABLE_JUMP_WAZASEQNO:
     ofs = get_waza_param( taw, taw->waza_no, WAZAPARAM_AI_SEQNO ) * 2;
 #ifdef AI_SEQ_PRINT
-    OS_TPrintf("seqno:%d\n",ofs);
+    OS_TPrintf("waza:%d seqno:%d\n",taw->waza_no,ofs/2);
 #endif
     break;
   default:
@@ -3854,6 +3855,9 @@ static  int   get_waza_param_index( TR_AI_WORK* taw, WazaID waza_no )
     }
     if( taw->wazaID[ i ] == waza_no )
     {
+      //@todo バブルソートにバグ有り
+      //速度的に問題ないならこの処理はなくていい
+#if 0
       if( i != 0 )
       {
         WAZA_DATA*  wd;
@@ -3866,6 +3870,7 @@ static  int   get_waza_param_index( TR_AI_WORK* taw, WazaID waza_no )
         taw->wd[ i ] =  wd;
         taw->wazaID[ i ] = waza_no_temp;
       }
+#endif
       break;
     }
   }
