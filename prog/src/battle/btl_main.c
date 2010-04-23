@@ -372,6 +372,7 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
   switch( *seq ){
   case 0:
     if( wk->fBGMFadeOutDisable == FALSE ){
+      TAYA_Printf("BGMフェードアウトさせる\n");
       PMSND_FadeOutBGM( BTL_BGM_FADEOUT_FRAMES );
     }
     wk->subSeq = 0;
@@ -388,23 +389,31 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
     }
     break;
   case 2:
-    if( !PMSND_CheckFadeOnBGM() )
+    if( wk->fBGMFadeOutDisable == FALSE )
     {
-      BTL_Printf("クリーンアッププロセス１\n");
-
-      PMSND_StopBGM();
-      if( wk->ppIllusionZoroArc ){
-        GFL_HEAP_FreeMemory( wk->ppIllusionZoroArc );
-        wk->ppIllusionZoroArc = NULL;
+      if( !PMSND_CheckFadeOnBGM() )
+      {
+        PMSND_StopBGM();
+        (*seq)++;
       }
-      BTL_CALC_QuitSys();
-      srcParty_Quit( wk );
-      trainerParam_Clear( wk );
-      setSubProcForClanup( &wk->subProc, wk, wk->setupParam );
+    }
+    else{
       (*seq)++;
     }
     break;
   case 3:
+    BTL_Printf("クリーンアッププロセス１\n");
+    if( wk->ppIllusionZoroArc ){
+      GFL_HEAP_FreeMemory( wk->ppIllusionZoroArc );
+      wk->ppIllusionZoroArc = NULL;
+    }
+    BTL_CALC_QuitSys();
+    srcParty_Quit( wk );
+    trainerParam_Clear( wk );
+    setSubProcForClanup( &wk->subProc, wk, wk->setupParam );
+    (*seq)++;
+    break;
+  case 4:
     if( BTL_UTIL_CallProc(&wk->subProc) )
     {
       BTL_Printf("クリーンアッププロセス２－１\n");
@@ -416,7 +425,7 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
       (*seq)++;
     }
     break;
-  case 4:
+  case 5:
     BTL_Printf("クリーンアッププロセス３\n");
     BTLV_QuitSystem();
 
@@ -3550,6 +3559,7 @@ u32 BTL_MAIN_FixLoseMoney( BTL_MAIN_MODULE* wk )
 //=============================================================================================
 void BTL_MAIN_BGMFadeOutDisable( BTL_MAIN_MODULE* wk )
 {
+  TAYA_Printf("BGMフェードアウトさせない\n");
   wk->fBGMFadeOutDisable = TRUE;
 }
 
