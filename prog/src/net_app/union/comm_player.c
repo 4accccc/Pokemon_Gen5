@@ -11,6 +11,7 @@
 #include "net_app/union/comm_player.h"
 #include "field/fieldmap.h"
 #include "field/fldeff_gyoe.h"
+#include "field/fieldmap_call.h"  //FIELDMAP_IsReady
 
 
 //==============================================================================
