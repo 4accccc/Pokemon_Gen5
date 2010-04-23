@@ -502,7 +502,7 @@ sub_train_battle_win_clear:
   _BSUBWAY_TOOL( BSWSUB_STOP_SHAKE_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //アニメを少し表示しながらフェードアウト
-  _TIME_WAIT( 90 )
+  _TIME_WAIT( 100 )
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
 

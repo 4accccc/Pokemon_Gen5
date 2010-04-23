@@ -896,7 +896,7 @@ _ANIME_LABEL anm_demo_train_starting_jiki
 
 //アニメデータ　電車発車デモ　パートナー乗車
 _ANIME_LABEL anm_demo_train_starting_partner
-  _ANIME_DATA AC_WAIT_1F,32
+  _ANIME_DATA AC_WAIT_1F,16
   _ANIME_DATA AC_WALK_L_8F,1
   _ANIME_DATA AC_WALK_U_8F,2
   _ANIME_DATA AC_WAIT_1F,8
