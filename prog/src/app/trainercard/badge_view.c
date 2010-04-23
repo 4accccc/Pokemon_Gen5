@@ -413,6 +413,7 @@ static void VBlankFunc( GFL_TCB *tcb, void * work )
 //----------------------------------------------------------------------------------
 static void InitWork( BADGEVIEW_WORK *wk, void *pwk )
 {
+  int i;
   wk->param     = pwk;
   wk->next_seq  = SUBSEQ_FADEIN_WAIT;
 
@@ -2251,7 +2252,15 @@ static void RefreshPolishData( BADGEVIEW_WORK *wk )
         wk->badge.polish[i] = 0;
       }
     }
+
+    // 開いた時に必ず反映されるようにする
+    for(i=0;i<BADGE_NUM;i++){
+      wk->badge.old_grade[i] = -1;
+    }
+
   }
+  
+
 }
 
 //----------------------------------------------------------------------------------
@@ -2323,7 +2332,7 @@ static void _trans_gymleader_pal( BADGEVIEW_WORK *wk, int no, int grade )
  *
  * @param   wk    
  * @param   no    
- * @param   grade   
+ * @param   grade 
  */
 //----------------------------------------------------------------------------------
 static void _set_clact_visible( BADGEVIEW_WORK *wk, int no, int grade )
@@ -2367,24 +2376,20 @@ static void Trans_BadgePalette( BADGEVIEW_WORK *wk )
       }
     }
 #endif
-    // 取得済みなら計算
-   if(wk->badgeflag[i]){
-      // 磨き値からグレード算出
-      wk->badge.grade[i] = wk->badge.polish[i]/BADGE_POLISH_RATE;
-      if(wk->badge.grade[i]>5){
-        wk->badge.grade[i] = 5;
-      }
-      
-      // 変更が掛かっていた場合はパレット転送キラキラOBJ表示制御を行う
-      if(wk->badge.grade[i]!=wk->badge.old_grade[i]){
-        _trans_badge_pal( wk, i, wk->badge.grade[i] );
-        _trans_gymleader_pal( wk, i, wk->badge.grade[i] );
-        _set_clact_visible( wk, i, wk->badge.grade[i] );
-      }
-      wk->badge.old_grade[i] = wk->badge.grade[i];
+    // 磨き値からグレード算出
+    wk->badge.grade[i] = wk->badge.polish[i]/BADGE_POLISH_RATE;
+    if(wk->badge.grade[i]>5){
+      wk->badge.grade[i] = 5;
     }
+    
+    // 変更が掛かっていた場合はパレット転送キラキラOBJ表示制御を行う
+    if(wk->badge.grade[i]!=wk->badge.old_grade[i]){
+      _trans_badge_pal( wk, i, wk->badge.grade[i] );
+      _trans_gymleader_pal( wk, i, wk->badge.grade[i] );
+      _set_clact_visible( wk, i, wk->badge.grade[i] );
+    }
+    wk->badge.old_grade[i] = wk->badge.grade[i];
   }
-
 #ifdef PM_DEBUG
   if(GFL_UI_KEY_GetCont()&PAD_BUTTON_START){
     OS_Printf("badge:");
