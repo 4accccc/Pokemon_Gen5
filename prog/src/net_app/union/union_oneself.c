@@ -1195,6 +1195,7 @@ static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SIT
   case 1:
     if(GFL_NET_GetConnectNum() > 1){
       OS_TPrintf("接続しました！：子\n");
+      GFL_NET_SetNoChildErrorCheck(TRUE);
       UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_CHILD);
       UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, situ->mycomm.answer_pc);
       UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, NULL);
@@ -2604,6 +2605,7 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
     
     if(GFL_NET_GetConnectNum() > 1){
       OS_TPrintf("接続しました！：子\n");
+      GFL_NET_SetNoChildErrorCheck(TRUE);
       UnionMySituation_SetParam(
         unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, &unisys->receive_beacon[buf_no]);
       situ->mycomm.intrude = TRUE;
