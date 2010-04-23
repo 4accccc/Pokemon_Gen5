@@ -8038,7 +8038,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
 		0,
 		MC_TYPE_FIELD,
-		1,
+		0,
 		TRUE,
 		TRUE,
 		FALSE,
