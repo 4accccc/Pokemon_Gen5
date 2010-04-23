@@ -1589,6 +1589,42 @@ void WIH_FixScanMode(int channel, void* pMac )
 
 }
 
+//--------------------------------------------------------------
+/**
+ * ビーコン最初の確認
+ *
+ * @param   bd		
+ *
+ * @retval  BOOL		TRUE:問題なし　FALSE:問題あり
+ */
+//--------------------------------------------------------------
+BOOL WH_BeaconFirstCheck(WMBssDesc* bd)
+{
+  // GUIDELINE : ガイドライン準拠ポイント(6.3.5)
+  // ggid を比較し、違っていたら失敗とします。
+  // まず、WMBssDesc.gameInfoLength を確認し、
+  // ggid に有効な値が入っていることから調べる必要があります。
+  
+  if ((!WM_IsValidGameInfo(&bd->gameInfo, bd->gameInfoLength)) || (bd->gameInfoLength < 8)
+      || (bd->gameInfo.ggid != _pWmInfo->sParentParam.ggid))
+  {
+    // GGIDが違っていれば無視する
+    //WH_TRACE("not my parent ggid %d %d\n",bd->gameInfo.ggid, _pWmInfo->sParentParam.ggid);
+    return FALSE;
+  }
+  
+  // エントリーフラグが立っていなければ子機を受付中でないので無視する
+  // またマルチブートフラグが立っている場合は、DSダウンロード親機であるので無視する。
+  if ((bd->gameInfo.gameNameCount_attribute & (WM_ATTR_FLAG_ENTRY | WM_ATTR_FLAG_MB))
+      != WM_ATTR_FLAG_ENTRY)
+  {
+    WH_TRACE("not recieve entry\n");
+    return FALSE;
+  }
+  
+  return TRUE;
+}
+
 static void WH_StateOutStartScan(void *arg)
 {
 	WMStartScanExCallback *cb = (WMStartScanExCallback *)arg;
@@ -1647,37 +1683,19 @@ static void WH_StateOutStartScan(void *arg)
         _pWmInfo->SetBeaconData(bd, GFL_NET_GetWork());
       }
       
-        // GUIDELINE : ガイドライン準拠ポイント(6.3.5)
-        // ggid を比較し、違っていたら失敗とします。
-        // まず、WMBssDesc.gameInfoLength を確認し、
-        // ggid に有効な値が入っていることから調べる必要があります。
-        
-        if ((!WM_IsValidGameInfo(&bd->gameInfo, bd->gameInfoLength)) || (bd->gameInfoLength < 8)
-            || (bd->gameInfo.ggid != _pWmInfo->sParentParam.ggid))
-        {
-          // GGIDが違っていれば無視する
-          //WH_TRACE("not my parent ggid %d %d\n",bd->gameInfo.ggid, _pWmInfo->sParentParam.ggid);
-          continue;
-        }
-        
-        // エントリーフラグが立っていなければ子機を受付中でないので無視する
-        // またマルチブートフラグが立っている場合は、DSダウンロード親機であるので無視する。
-        if ((bd->gameInfo.gameNameCount_attribute & (WM_ATTR_FLAG_ENTRY | WM_ATTR_FLAG_MB))
-            != WM_ATTR_FLAG_ENTRY)
-        {
-          WH_TRACE("not recieve entry\n");
-          continue;
-        }
+      if(WH_BeaconFirstCheck(bd) == FALSE){
+        continue;
+      }
 
-        WH_TRACE(" parent: MAC=%02x%02x%02x%02x%02x%02x ",
-                 bd->bssid[0], bd->bssid[1], bd->bssid[2],
-                 bd->bssid[3], bd->bssid[4], bd->bssid[5]);
-        WH_TRACE("parent find\n");
-        GF_ASSERT(_pWmInfo->sScanCallback);
-        if(_pWmInfo->sScanCallback(bd)){
-          // コールバックが必要ならば呼び出し
-          found = TRUE;
-        }
+      WH_TRACE(" parent: MAC=%02x%02x%02x%02x%02x%02x ",
+               bd->bssid[0], bd->bssid[1], bd->bssid[2],
+               bd->bssid[3], bd->bssid[4], bd->bssid[5]);
+      WH_TRACE("parent find\n");
+      GF_ASSERT(_pWmInfo->sScanCallback);
+      if(_pWmInfo->sScanCallback(bd)){
+        // コールバックが必要ならば呼び出し
+        found = TRUE;
+      }
      
 		}
 
@@ -3185,7 +3203,8 @@ static void WH_StateOutInitialize(void *arg)
 	// システム状態をアイドリング（待機中）に変更。
 	WH_ChangeSysState(WH_SYSSTATE_IDLE);
 #endif
-	WM_SetLifeTime(_setLifeCallback,0xffff, 40, 5, 40);
+//	WM_SetLifeTime(_setLifeCallback,0xffff, 40, 5, 40);
+	WM_SetLifeTime(_setLifeCallback,0xffff, 0xffff, 0xffff, 0xffff);
 	// 次の状態をセットしないので、ここでシーケンスはいったん終了です。
 	// この状態で WH_Connect が呼ばれると接続作業に移行します。
 	if(_pWmInfo->callback)
@@ -3284,7 +3303,8 @@ static void WH_StateOutPowerOn(void *arg)
 	// システム状態をアイドリング（待機中）に変更。
 	WH_ChangeSysState(WH_SYSSTATE_IDLE);
 #endif
-	WM_SetLifeTime(_setLifeCallback,0xffff, 40, 5, 40);
+	WM_SetLifeTime(_setLifeCallback,0xffff, 0xffff, 0xffff, 0xffff);
+//	WM_SetLifeTime(_setLifeCallback,0xffff, 40, 5, 40);
 
 	// 次の状態をセットしないので、ここでシーケンスはいったん終了です。
 	// この状態で WH_Connect が呼ばれると接続作業に移行します。

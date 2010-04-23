@@ -816,6 +816,8 @@ extern void WHSetWIHDWCBeaconGetFunc(WIHDWCBeaconGetFunc getfunc);
 extern void HW_Main(void);
 extern void WH_StepScan(void);
 
+extern BOOL WH_BeaconFirstCheck(WMBssDesc* bd);
+
 /*---------------------------------------------------------------------------*
   Name:         WHSetScanWaitFrame
   Description:  ビーコンの収集間隔を設定できる

@@ -474,6 +474,89 @@ static BOOL _scanCallback(WMBssDesc *bssdesc)
 	return TRUE;
 }
 
+//-------------------------------------------------------------
+/**
+ * @brief   子機が親機を見つけたビーコンに対してかけるチェック
+ * @param   bssdesc   グループ情報
+ * @retval  TRUE:問題なし(使用OK)
+ * @retval  FALSE:問題あり(使用NG)
+ */
+//-------------------------------------------------------------
+BOOL GFL_NET_WL_scanCheck(WMBssDesc *bssdesc, u32 check_bit)
+{
+	int i;
+	_GF_BSS_DATA_INFO* pGF;
+	GFL_NETWL* pNetWL = _pNetWL;
+	GFLNetInitializeStruct* pInit = GFL_NET_GetNETInitStruct();
+	int serviceNo = pInit->gsid;
+	u16 ggid = pInit->ggid;
+	u8 sBuff[_BEACON_FIXHEAD_SIZE];
+
+	// catchした親データ
+	pGF = (_GF_BSS_DATA_INFO*)bssdesc->gameInfo.userGameInfo;
+	if(check_bit & WL_SCAN_CHK_BIT_PAUSE){
+  	if(pGF->pause){
+  		return FALSE;  // ポーズ中の親機はBEACON無視
+  	}
+  }
+//	NET_PRINT("debugNo %d %d\n",pGF->debugAloneTest , _DEBUG_ALONETEST);
+
+  if(check_bit & WL_SCAN_CHK_BIT_DEVELOPMENT){
+  #ifdef PM_DEBUG  // デバッグの時だけ、上に定義がある人は基本他の人とつながらない
+  	if(pGF->ProductOrDevelopment != pNetWL->mineDebugNo){
+  		return FALSE;   //パレスの為
+  	}
+  #else
+    if(pGF->ProductOrDevelopment != POKEMONWB_BEACON_PRODUCT_NO){
+  		return FALSE;   //パレスの為
+    }
+  #endif
+  }
+//	GFLR_NET_GetBeaconHeader(sBuff,_BEACON_FIXHEAD_SIZE);
+//	if(0 != GFL_STD_MemComp(sBuff, pGF->FixHead , _BEACON_FIXHEAD_SIZE)){
+  
+  if(check_bit & WL_SCAN_CHK_BIT_CRC)
+  {
+    u16* pData = (u16*)pGF;
+    if(pGF->CRC != GFL_STD_CrcCalc(&pData[1], sizeof(_GF_BSS_DATA_INFO) - 2) ){
+      NET_PRINT("CRC不一致\n");
+      return FALSE;
+    }
+  }
+  
+  if(check_bit & WL_SCAN_CHK_BIT_GGID){
+  	if(pGF->GGID != ggid){
+  #ifdef DEBUG_WH_BEACON_PRINT_ON
+  		NET_PRINT("beacon不一致\n");
+  #endif
+      return FALSE;
+  	}
+  }
+  
+  if(check_bit & WL_SCAN_CHK_BIT_BEACON_COMP){
+  	if(pInit->beaconCompFunc){
+  		if(FALSE == pInit->beaconCompFunc(serviceNo, pGF->serviceNo)){
+  			return FALSE;   // サービスが異なる場合は拾わない
+  		}
+  	}
+  	else{
+  #ifdef DEBUG_WH_BEACON_PRINT_ON
+  		NET_PRINT("ServiceID CMP %d %d",serviceNo, pGF->serviceNo);
+  #endif
+  		if(serviceNo != pGF->serviceNo){
+  			return FALSE;   // サービスが異なる場合は拾わない
+  		}
+  	}
+  }
+  
+  if(check_bit & WL_SCAN_CHK_BIT_MAX_CONNECT){
+  	if(pGF->connectNum >= pInit->maxConnectNum){
+  		return FALSE;   // 接続人数いっぱいの場合拾わない
+  	}
+  }
+//	NET_PRINT("_scanCheckok\n");
+	return TRUE;
+}
 
 
 //-------------------------------------------------------------
@@ -1499,6 +1582,20 @@ static BOOL _isMachBackupMacAddress(u8* pMac)
 		}
 	}
 	return FALSE;
+}
+
+//-------------------------------------------------------------
+/**
+ * @brief   WMBssDescから直接GF_BSS_DATA_INFOバッファを得る
+ * @param   
+ * @retval   GFL_NET_WLGetUserBssで取れるのと同じビーコンバッファポインタ
+ */
+//-------------------------------------------------------------
+void* GFL_NET_WLGetDirectGFBss(WMBssDesc *pBss, GameServiceID *dest_gsid)
+{
+	_GF_BSS_DATA_INFO* pGF = (_GF_BSS_DATA_INFO*)pBss->gameInfo.userGameInfo;
+  *dest_gsid = pGF->serviceNo;
+  return (void*)pGF->aBeaconDataBuff;
 }
 
 

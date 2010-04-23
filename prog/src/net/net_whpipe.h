@@ -16,6 +16,18 @@
 /// 接続や非接続時に呼ばれるコールバック定義
 typedef void (*GFL_NET_ConnectionCallBack) (int aid);
 
+///ビーコンスキャンチェックを検査対象bit
+enum{
+  WL_SCAN_CHK_BIT_PAUSE = 1 << 0,
+  WL_SCAN_CHK_BIT_DEVELOPMENT = 1 << 1,
+  WL_SCAN_CHK_BIT_CRC = 1 << 2,
+  WL_SCAN_CHK_BIT_GGID = 1 << 3,
+  WL_SCAN_CHK_BIT_BEACON_COMP = 1 << 4,
+  WL_SCAN_CHK_BIT_MAX_CONNECT = 1 << 5,
+  
+  WL_SCAN_CHK_BIT_ALL = 0xffffffff,
+};
+
 
 // 関数切り出し自動生成 funccut.rb  k.ohno 2006.12.5 
 //==============================================================================
@@ -508,6 +520,25 @@ extern void GFL_NET_WLFIXScan(int index);
 //-------------------------------------------------------------
 
 extern void GFL_NET_WLChangeScanSpeed(BOOL bSlow);
+
+//-------------------------------------------------------------
+/**
+ * @brief   子機が親機を見つけたビーコンに対してかけるチェック
+ * @param   bssdesc   グループ情報
+ * @retval  TRUE:問題なし(使用OK)
+ * @retval  FALSE:問題あり(使用NG)
+ */
+//-------------------------------------------------------------
+extern BOOL GFL_NET_WL_scanCheck(WMBssDesc *bssdesc, u32 check_bit);
+
+//-------------------------------------------------------------
+/**
+ * @brief   WMBssDescから直接GF_BSS_DATA_INFOバッファを得る
+ * @param   
+ * @retval   GFL_NET_WLGetUserBssで取れるのと同じビーコンバッファポインタ
+ */
+//-------------------------------------------------------------
+extern void* GFL_NET_WLGetDirectGFBss(WMBssDesc *pBss, GameServiceID *dest_gsid);
 
 /////////////////////////////////////////////////////////////////////////
 //デバッグ用ルーチン
