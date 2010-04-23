@@ -74,7 +74,8 @@ extern BOOL EVENTWORK_PopTimeRequest( EVENTWORK * ev );
 
 //----------------------------------------------------------
 //	セーブデータ取得のための関数
+//	※実体はsrc/gamesystem/game_data.c
 //----------------------------------------------------------
-//extern EVENTWORK * SaveData_GetEventWork(SAVEDATA * sv);
+extern EVENTWORK * SaveData_GetEventWork(SAVE_CONTROL_WORK * sv_control_ptr);
 
 

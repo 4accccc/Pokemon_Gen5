@@ -203,7 +203,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   EVENTDATA_SYS_Clear(gd->evdata);
   
   //イベントワーク
-  gd->eventwork = SaveControl_DataPtrGet( gd->sv_control_ptr, GMDATA_ID_EVENT_WORK );
+  gd->eventwork = SaveData_GetEventWork( gd->sv_control_ptr );
   
   //マップマトリックス
   gd->mapMatrix = MAP_MATRIX_Create( heapID );
@@ -1982,6 +1982,26 @@ TRPOKE_AFTER_SAVE* GAMEDATA_GetTrPokeAfterSaveData( GAMEDATA* gdata )
 {
   return SaveControl_DataPtrGet( gdata->sv_control_ptr, GMDATA_ID_TRPOKE_AFTER);
  
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief イベントフラグ・ワーク管理セーブデータの取得
+ * @param sv_control_ptr  セーブデータ制御ワークへのポインタ
+ * @return  EVENTWORK 
+ *
+ * @note
+ * 本来はGAMEDATA経由ですべてのセーブデータがアクセスできるはずだったが
+ * WBでは未完に終わり、開発終盤でこの関数を追加する必要ができたので作成。
+ * 出来る限りSAVE_CONTROL_WORK経由のセーブデータアクセスは使いたくないし、
+ * チャンスがあれば削除したいのでGMDATA_ID_EVENT_WORKが局所参照となるよう
+ * この関数はgame_data.cの中に置いておく。
+ */
+//--------------------------------------------------------------
+EVENTWORK * SaveData_GetEventWork( SAVE_CONTROL_WORK * sv_control_ptr )
+{
+  return SaveControl_DataPtrGet( sv_control_ptr, GMDATA_ID_EVENT_WORK );
 }
 
 

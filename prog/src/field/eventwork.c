@@ -7,6 +7,7 @@
  * @date	05.10.22
  */
 //======================================================================
+#include "savedata/save_control.h"
 #include "field/eventwork.h"
 #include "eventwork_def.h"
 
