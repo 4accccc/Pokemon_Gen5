@@ -29,6 +29,7 @@
 #include "debug/debug_str_conv.h" // for DEB_STR_CONV_SjisToStrcode
 #include "print/wordset.h"  //WORDSET
 #include "net/net_whpipe.h"
+#include "app/townmap_util.h"
 
 #include "message.naix"
 #include "msg/msg_d_numinput.h"
@@ -47,7 +48,8 @@
 #include "savedata/intrude_save.h"
 #include "savedata/playtime.h"
 
-
+#include "gamesystem/game_beacon.h"
+#include "gamesystem/game_beacon_types.h"
 #include "field/beacon_view.h"
 #include "field/field_comm/beacon_view_local.h"
 #include "event_debug_livecomm.h"
@@ -92,26 +94,42 @@ enum{
 
 /////////////////////////////////////////////
 ///ビーコンリクエスト
-#define BREQ_LINE_MAX (3)
+#define BREQ_LINE_MAX (3+FAKE_DATA_MAX)
 #define BREQ_WIN_MAIN_SX  (31)
 
 #define BREQ_FWAZA_MAX  (9)
 
 typedef enum{
  TR_PAT_MINE,
- TR_PAT_RND,
  TR_PAT_FAKE,
+ TR_PAT_RND,
+ TR_PAT_MAX,
 }TR_PATTERN;
+
+typedef enum{
+  FAKE_ID,
+  FAKE_NAME,
+  FAKE_ZONE,
+  FAKE_SEX,
+  FAKE_VERSION,
+  FAKE_LANG,
+  FAKE_DATA_MAX,
+}FAKE_DATA_ID;
 
 typedef enum{
   BPRM_WSET_NONE,
   BPRM_WSET_TRNAME,
+  BPRM_WSET_TRNAME_EX,
   BPRM_WSET_MONSNAME,
   BPRM_WSET_ITEMNAME,
   BPRM_WSET_FWAZA,
   BPRM_WSET_GPOWER,
   BPRM_WSET_ACTION,
   BPRM_WSET_BEACON_REQ_TRAINER,
+  BPRM_WSET_SEX,
+  BPRM_WSET_VERSION,
+  BPRM_WSET_LANG,
+  BPRM_WSET_ZONE,
 }BPRM_WSET_TYPE;
 
 typedef enum{
@@ -166,8 +184,13 @@ typedef struct _D_BEACON_PARAM{
   BEACON_ARG_TYPE   arg_type; //引数の型タイプ
 }D_BEACON_PARAM;
 
+typedef struct _D_FAKE_PRM_SET{
+  BPRM_WSET_TYPE  wset_type;
+  int keta;
+  int min,max;
+}D_FAKE_PRM_SET;
+
 typedef struct _D_BEACON_PRM_SET{
-  u8  prm_type;  //パラメータタイプ
   int min,max;   //パラメータのmix,max
   BPRM_WSET_TYPE wset_type;
 }D_BEACON_PRM_SET;
@@ -195,9 +218,9 @@ typedef struct _DMENU_LIVE_COMM{
   INTRUDE_SAVE_WORK* int_sv;
   MYITEM_PTR item_sv;
   MISC* misc_sv;
+  MYSTATUS* my_status;
 
   BEACON_VIEW*    view_wk;
-
   BEACON_STATUS* b_status;
   GAMEBEACON_INFO_TBL*  infoStack;  //スタックワーク
   GAMEBEACON_INFO_TBL*  infoLog;    //ログテーブル
@@ -207,10 +230,12 @@ typedef struct _DMENU_LIVE_COMM{
   WORDSET* wset;
   STRBUF *str_tmp;
   STRBUF *str_expand;
+  const char* pAllZoneName;
  
   FLDMENUFUNC *menuFunc;
 
   int               beacon_prm[BEACON_PSET_MAX];
+  int               fake_prm[TR_PAT_MAX][FAKE_DATA_MAX];
   STRBUF*           beacon_nickname;
   STRBUF*           beacon_fword;
 
@@ -255,7 +280,7 @@ static const DEBUG_MENU_INITIALIZER DebugLiveCommMenuData = {
   NELEMS(DATA_DebugLiveCommMenuList),
   DATA_DebugLiveCommMenuList,
   &DATA_DebugMenuList_Default, //流用
-  1, 1, 16, 17,
+  1, 1, 24, 17,
   NULL,
   NULL
 };
@@ -371,20 +396,29 @@ static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_MAX] = {
 };
 
 static const  D_BEACON_PRM_SET DATA_DebugBeaconParamSet[BEACON_PSET_MAX] = {
- { 0, -1, -1, BPRM_WSET_NONE,}, //BEACON_PSET_DEFAULT, デフォルト(トレーナー名)  
- { 1, 1, TRID_MAX-1, BPRM_WSET_TRNAME }, //BEACON_PSET_TR_ID,      対戦相手名
- { 1, MONSNO_HUSIGIDANE, MONSNO_END, BPRM_WSET_MONSNAME }, //BEACON_PSET_MONSNO,    ポケモン種族名
- { 2, -1, -1, BPRM_WSET_NONE }, //BEACON_PSET_NICKNAME,    ポケモンニックネーム
- { 1, ITEM_MASUTAABOORU, ITEM_DATA_MAX, BPRM_WSET_ITEMNAME }, //BEACON_PSET_ITEM,        アイテム名
- { 1, 0, 999, BPRM_WSET_NONE }, //BEACON_PSET_PTIME,       プレイタイム
- { 1, 0, CROSS_COMM_SURETIGAI_COUNT_MAX, BPRM_WSET_NONE }, //BEACON_PSET_SURETIGAI_CT, すれ違い回数
- { 1, 0, CROSS_COMM_THANKS_RECV_COUNT_MAX, BPRM_WSET_NONE }, //BEACON_PSET_THANKS, 御礼回数
- { 1, 0, BREQ_FWAZA_MAX, BPRM_WSET_FWAZA }, //BEACON_PSET_WAZA,        技名
- { 1, 0, 6, BPRM_WSET_NONE }, //BEACON_PSET_VICTORY,     サブウェイ挑戦中の連勝数1-7
- { 1, 0, 5, BPRM_WSET_NONE }, //BEACON_PSET_TH_RANK,     トライアルハウスランク
- { 1, 0, GPOWER_ID_CAPTURE_MAX, BPRM_WSET_GPOWER }, //BEACON_PSET_GPOWER,      Gパワー名
- { 1, 0, 65535, BPRM_WSET_NONE }, //BEACON_PSET_ID,     プレイヤーID
- { 3, -1, -1, BPRM_WSET_NONE }, //BEACON_PSET_FREEWORD,    フリーワード8文字
+ { -1, -1, BPRM_WSET_NONE,}, //BEACON_PSET_DEFAULT, デフォルト(トレーナー名)  
+ { 1, TRID_MAX-1, BPRM_WSET_TRNAME }, //BEACON_PSET_TR_ID,      対戦相手名
+ { MONSNO_HUSIGIDANE, MONSNO_END, BPRM_WSET_MONSNAME }, //BEACON_PSET_MONSNO,    ポケモン種族名
+ { -1, -1, BPRM_WSET_NONE }, //BEACON_PSET_NICKNAME,    ポケモンニックネーム
+ { ITEM_MASUTAABOORU, ITEM_DATA_MAX, BPRM_WSET_ITEMNAME }, //BEACON_PSET_ITEM,        アイテム名
+ { 0, 999, BPRM_WSET_NONE }, //BEACON_PSET_PTIME,       プレイタイム
+ { 0, CROSS_COMM_SURETIGAI_COUNT_MAX, BPRM_WSET_NONE }, //BEACON_PSET_SURETIGAI_CT, すれ違い回数
+ { 0, CROSS_COMM_THANKS_RECV_COUNT_MAX, BPRM_WSET_NONE }, //BEACON_PSET_THANKS, 御礼回数
+ { 0, BREQ_FWAZA_MAX, BPRM_WSET_FWAZA }, //BEACON_PSET_WAZA,        技名
+ { 0, 6, BPRM_WSET_NONE }, //BEACON_PSET_VICTORY,     サブウェイ挑戦中の連勝数1-7
+ { 0, 5, BPRM_WSET_NONE }, //BEACON_PSET_TH_RANK,     トライアルハウスランク
+ { 0, GPOWER_ID_CAPTURE_MAX, BPRM_WSET_GPOWER }, //BEACON_PSET_GPOWER,      Gパワー名
+ { 0, 65535, BPRM_WSET_NONE }, //BEACON_PSET_ID,     プレイヤーID
+ { -1, -1, BPRM_WSET_NONE }, //BEACON_PSET_FREEWORD,    フリーワード8文字
+};
+
+static const D_FAKE_PRM_SET DATA_FakeParamSet[] = {
+  { BPRM_WSET_NONE, 5, 0, 0xFFFF,}, //FAKE_ID,
+  { BPRM_WSET_TRNAME_EX, 3, 0, TRID_MAX-1,}, //FAKE_NAME,
+  { BPRM_WSET_ZONE, 3, 0, ZONE_ID_MAX-1,}, //FAKE_ZONE,
+  { BPRM_WSET_SEX, 1, PM_MALE, PM_FEMALE,}, //FAKE_SEX,
+  { BPRM_WSET_VERSION, 2, VERSION_WHITE, VERSION_BLACK+1,}, //FAKE_VERSION,
+  { BPRM_WSET_LANG, 1, LANG_JAPAN, LANG_KOREA,}, //FAKE_LANG,
 };
 
 ////////////////////////////////////////////////
@@ -451,6 +485,7 @@ GMEVENT* DEBUG_EVENT_LiveComm( GAMESYS_WORK* gsys, void* parent_work )
   wk->int_sv = SaveData_GetIntrude( wk->save );
   wk->item_sv = GAMEDATA_GetMyItem( wk->gdata );
   wk->misc_sv = (MISC*)SaveData_GetMiscConst( wk->save );
+  wk->my_status = GAMEDATA_GetMyStatus( wk->gdata );
 
   wk->view_wk = (BEACON_VIEW*)parent_work;
 
@@ -480,6 +515,8 @@ static void dmenu_WorkInit( DMENU_LIVE_COMM* wk )
   wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
   wk->str_expand = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
 
+  wk->pAllZoneName = ZONEDATA_GetAllZoneName( wk->heapID );
+
   wk->beacon_nickname = GFL_STR_CreateBuffer( BUFLEN_BEACON_MSG, wk->heapID );
   wk->beacon_fword = GFL_STR_CreateBuffer( BUFLEN_BEACON_MSG, wk->heapID );
 
@@ -504,7 +541,20 @@ static void dmenu_WorkInit( DMENU_LIVE_COMM* wk )
       }
     }
   }
+  //フェイクデータ初期化
+  {
+    int* fake = &wk->fake_prm[TR_PAT_MINE][0];
+    
+    fake[FAKE_ID] = MyStatus_GetID_Low( wk->my_status );
+    fake[FAKE_NAME] = 1;
+    fake[FAKE_ZONE] = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork( wk->gdata ));
+    fake[FAKE_SEX] = MyStatus_GetMySex( wk->my_status );
+    fake[FAKE_VERSION] = PM_VERSION;
+    fake[FAKE_LANG] = PM_LANG;
 
+    MI_CpuCopy8( fake, &(wk->fake_prm[TR_PAT_FAKE][0]),sizeof(int)*FAKE_DATA_MAX);
+    MI_CpuCopy8( fake, &(wk->fake_prm[TR_PAT_RND][0]),sizeof(int)*FAKE_DATA_MAX);
+  }
   wk->tmpInfo = GAMEBEACON_Alloc( wk->heapID );
 }
 
@@ -519,12 +569,17 @@ static void dmenu_WorkRelease( DMENU_LIVE_COMM* wk )
   
   GFL_STR_DeleteBuffer( wk->beacon_fword );
   GFL_STR_DeleteBuffer( wk->beacon_nickname);
+  
+  GFL_HEAP_FreeMemory( (void*)wk->pAllZoneName );
 
   GFL_STR_DeleteBuffer( wk->str_expand );
   GFL_STR_DeleteBuffer( wk->str_tmp );
 
   GFL_MSG_Delete( wk->msgman );
   WORDSET_Delete( wk->wset );
+
+  //すれ違い通信バッファを元に戻す
+  GAMEBEACON_Setting( wk->gdata );
 }
 
 //--------------------------------------------------------------
@@ -583,12 +638,6 @@ static GMEVENT_RESULT event_LiveCommMain( GMEVENT * event, int *seq, void * work
         DEBUG_RecvBeaconBufferClear();
         break;
       }
-/*
-        typedef void (* CHANGE_FUNC)(DMESSWORK*);
-        CHANGE_FUNC func = (CHANGE_FUNC)ret;
-        func(work);
-        //FIELD_SUBSCREEN_ChangeForce(FIELDMAP_GetFieldSubscreenWork(work->fieldWork), ret);
-*/
       *seq = SEQ_MENU_INIT; 
     }
     break;
@@ -658,7 +707,20 @@ static inline void sub_FreeWordset( WORDSET* wset, u8 idx, STRBUF* str )
 
 //----------------------------------------------------------
 /*
- *  @brief  フリーワード展開
+ *  ゾーンID文字列展開
+ */
+//----------------------------------------------------------
+static void sub_GetZoneIDStr( const char * allName, u32 zoneID, STRBUF * strBuf )
+{
+  u16 pStrCode[64];
+  
+  DEB_STR_CONV_SjisToStrcode( &allName[ ZONEDATA_NAME_LENGTH * zoneID ], pStrCode, 64 );
+  GFL_STR_SetStringCode( strBuf, pStrCode );
+}
+
+//----------------------------------------------------------
+/*
+ *  @brief  指定パラメータワード展開
  */
 //----------------------------------------------------------
 static void sub_BeaconParamWordset( DMENU_LIVE_COMM* wk, u8 idx, int value, BPRM_WSET_TYPE type )
@@ -666,28 +728,114 @@ static void sub_BeaconParamWordset( DMENU_LIVE_COMM* wk, u8 idx, int value, BPRM
   switch( type ){
   case BPRM_WSET_TRNAME:
     WORDSET_RegisterTrainerName( wk->wset, idx, value );
+    return;
+  case BPRM_WSET_TRNAME_EX:
+    if( value == 0){
+      MyStatus_CopyNameString( wk->my_status, wk->str_tmp );
+    }else{
+      WORDSET_RegisterTrainerName( wk->wset, idx, value );
+      return;
+    }
     break;
   case BPRM_WSET_MONSNAME:
     WORDSET_RegisterPokeMonsNameNo( wk->wset, idx, value );
-    break;
+    return;
   case BPRM_WSET_ITEMNAME:
     WORDSET_RegisterItemName( wk->wset, idx, value );
-    break;
+    return;
   case BPRM_WSET_FWAZA:
     WORDSET_RegisterWazaName( wk->wset, idx, DATA_FieldWazaTbl[value]);
-    break;
+    return;
   case BPRM_WSET_GPOWER:
     WORDSET_RegisterGPowerName( wk->wset, idx, value );
-    break;
+    return;
   case BPRM_WSET_ACTION:
     GFL_MSG_GetString( wk->msgman, dlc_action_00+value, wk->str_tmp );
-    sub_FreeWordset( wk->wset, idx, wk->str_tmp );
     break;
   case BPRM_WSET_BEACON_REQ_TRAINER:
     GFL_MSG_GetString( wk->msgman, dlc_beacon_req_trainer01+value, wk->str_tmp );
-    sub_FreeWordset( wk->wset, idx, wk->str_tmp );
+    break;
+  case BPRM_WSET_SEX:
+    GFL_MSG_GetString( wk->msgman, dlc_sex_male+value, wk->str_tmp );
+    break;
+  case BPRM_WSET_VERSION:
+    GFL_MSG_GetString( wk->msgman, dlc_version_black+(value-VERSION_BLACK), wk->str_tmp );
+    break;
+  case BPRM_WSET_LANG:
+    GFL_MSG_GetString( wk->msgman, dlc_lang_01+(value-LANG_JAPAN), wk->str_tmp );
+    break;
+  case BPRM_WSET_ZONE:
+    WORDSET_RegisterPlaceName( wk->wset, 7, ZONEDATA_GetPlaceNameID(value) );
+    sub_GetMsgToBuf( wk, dlc_tmp_buf );
+    sub_GetZoneIDStr( wk->pAllZoneName, value, wk->str_tmp );
+    GFL_STR_AddString( wk->str_tmp, wk->str_expand );
     break;
   }
+  sub_FreeWordset( wk->wset, idx, wk->str_tmp );
+}
+
+//----------------------------------------------------------
+/*
+ *  @brief  STRBUFからSTRCODE[]にコピー
+ */
+//----------------------------------------------------------
+static void sub_GetStringCode( STRBUF* buf, STRCODE* code, int len )
+{
+  STRCODE code_eom = GFL_STR_GetEOMCode();
+  const STRCODE *src_code;
+  int i;
+ 
+  src_code = GFL_STR_GetStringCodePointer(buf);
+  for(i = 0; i < len; i++){
+    code[i] = src_code[i];
+    if(src_code[i] == code_eom){
+      break;
+    }
+  }
+}
+
+//----------------------------------------------------------
+/*
+ *  @brief  GAMEBEACON_INFOにパーソナルデータを展開
+ */
+//----------------------------------------------------------
+static void sub_BeaconInfoSet( DMENU_LIVE_COMM* wk, TR_PATTERN pat )
+{
+  int i;
+  GAMEBEACON_INFO* info = DEBUG_SendBeaconInfo_GetPtr();
+  int* fake = &wk->fake_prm[pat][0]; 
+
+  GAMEBEACON_Setting( wk->gdata );
+  switch(pat){
+  case TR_PAT_MINE:
+    return;
+  case TR_PAT_FAKE:
+    break;
+  case TR_PAT_RND:
+    for(i = 0;i < FAKE_DATA_MAX;i++){
+      int range;
+      const D_FAKE_PRM_SET* f_prm = &DATA_FakeParamSet[i];
+
+      range = f_prm->max-f_prm->min;
+      fake[i] = (GFUser_GetPublicRand0( 0xFFFFFFFF )%range)+f_prm->min;
+    }
+    break;
+  }
+  //id
+  info->trainer_id = (u16)fake[FAKE_ID];
+  //name
+  sub_BeaconParamWordset( wk, 7, fake[FAKE_NAME], BPRM_WSET_TRNAME_EX );
+  sub_GetMsgToBuf( wk, dlc_tmp_buf );
+  sub_GetStringCode( wk->str_expand, info->name, PERSON_NAME_SIZE);
+  //zone
+  info->zone_id = fake[FAKE_ZONE];
+  info->townmap_root_zone_id = TOWNMAP_UTIL_GetRootZoneID( wk->gdata, info->zone_id);
+  //sex
+  info->sex = fake[FAKE_SEX];
+  //pm_version
+  info->pm_version = fake[FAKE_VERSION];
+  //language
+  info->language = fake[FAKE_LANG];
 }
 
 //===================================================================================
@@ -1019,6 +1167,7 @@ static void breq_PrintCursor( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 lin
 static void breq_PrintLine( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 line, STRBUF* str );
 static void breq_DrawBeaconType( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk );
 static void breq_DrawAction( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk );
+static void breq_DrawFake( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk );
 static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk );
 
 //--------------------------------------------------------------
@@ -1064,6 +1213,7 @@ static GMEVENT_RESULT event_BeaconReqMain( GMEVENT * event, int *seq, void * wor
     evwk->b_prm_set = &DATA_DebugBeaconParamSet[ evwk->b_prm->prm_type ];
     breq_DrawBeaconType( wk, evwk );
     breq_DrawAction( wk, evwk );
+    breq_DrawFake( wk, evwk );
     (*seq)++;
     break;
   case 2:
@@ -1103,6 +1253,13 @@ static GMEVENT_RESULT event_BeaconReqMain( GMEVENT * event, int *seq, void * wor
           GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 
             evwk->b_prm_set->min, evwk->b_prm_set->max,
             &wk->beacon_prm[evwk->b_prm->prm_type], evwk->b_prm_set->wset_type ));
+        }
+      default:
+        {
+          u8 fake_id = evwk->line-3;
+          const D_FAKE_PRM_SET* f_prm = &DATA_FakeParamSet[fake_id];
+          GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 
+            f_prm->min, f_prm->max, &(wk->fake_prm[TR_PAT_FAKE][fake_id]),f_prm->wset_type ));
         }
         break;
       }
@@ -1162,14 +1319,38 @@ static void breq_DrawAction( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk )
   sub_BeaconParamWordset( wk, 1, value, evwk->b_prm_set->wset_type );
   sub_GetMsgToBuf( wk, dlc_beacon_req_param01+evwk->b_prm->prm_type );
   breq_PrintLine( wk, evwk, 2, wk->str_expand );
+}
+
+static void breq_DrawFakeLine( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, FAKE_DATA_ID fake_id )
+{
+  u8 line = 3+fake_id;
+  int* mine = &wk->fake_prm[ TR_PAT_MINE ][0];
+  int* fake = &wk->fake_prm[ TR_PAT_FAKE ][0];
+  const D_FAKE_PRM_SET* f_prm = &DATA_FakeParamSet[fake_id];
+
+  WORDSET_RegisterNumber(wk->wset, 0, fake[fake_id], f_prm->keta, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  WORDSET_RegisterNumber(wk->wset, 1, mine[fake_id], f_prm->keta, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+  sub_BeaconParamWordset( wk, 2, fake[fake_id], f_prm->wset_type );
+  sub_BeaconParamWordset( wk, 3, mine[fake_id], f_prm->wset_type );
   
-  sub_GetMsgToBuf( wk, dlc_beacon_req_param04 );
-  breq_PrintLine( wk, evwk, 4, wk->str_expand );
+  sub_GetMsgToBuf( wk, dlc_fake_tr_id+fake_id );
+  breq_PrintLine( wk, evwk, line, wk->str_expand );
+}
+
+static void breq_DrawFake( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk )
+{
+  int i;
+
+  for(i = 0;i < FAKE_DATA_MAX;i++){
+    breq_DrawFakeLine( wk, evwk, i );
+  }
 }
 
 static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk )
 {
   int value = -1;
+
+  sub_BeaconInfoSet( wk, evwk->type );
 
   if( evwk->b_prm_set->max >= 0 ){
     value = wk->beacon_prm[ evwk->b_prm->prm_type ];

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-04-22T17:50:27"/>
+	<create user="iwasawa" host="W00157" date="2010-04-23T14:40:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="355" top="219" right="1060" bottom="839" maximized="no" rayout="Vertical2">
+	<dialog left="1747" top="251" right="2452" bottom="871" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="799" top="128" right="1272" bottom="526" visible="yes"/>
+		<tag-palette left="799" top="128" right="1269" bottom="735" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -406,6 +406,11 @@
 		<language name="JPN_KANJI" width="256">&gt;</language>
 	</row>
 
+	<row id="dlc_tmp_buf" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">[1:1C:簡易会話単語:7]</language>
+		<language name="JPN_KANJI" width="256">[1:1C:簡易会話単語:7]</language>
+	</row>
+
 	<row id="dlc_stack_check_param01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>スタックチェック</comment>
 		<language name="JPN" width="256">[2:01:２桁:0]：[1:00:トレーナー名:1]　id= [2:04:５桁:2]
@@ -426,13 +431,13 @@
 	</row>
 
 	<row id="dlc_beacon_req_trainer02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">ビーコンタイプ　ランダム</language>
-		<language name="JPN_KANJI" width="256">ビーコンタイプ　ランダム</language>
+		<language name="JPN" width="256">ビーコンタイプ　なりすまし</language>
+		<language name="JPN_KANJI" width="256">ビーコンタイプ　なりすまし</language>
 	</row>
 
 	<row id="dlc_beacon_req_trainer03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">ビーコンタイプ　なりすまし</language>
-		<language name="JPN_KANJI" width="256">ビーコンタイプ　なりすまし</language>
+		<language name="JPN" width="256">ビーコンタイプ　ランダム</language>
+		<language name="JPN_KANJI" width="256">ビーコンタイプ　ランダム</language>
 	</row>
 
 	<row id="dlc_beacon_req_action" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -452,8 +457,8 @@
 	</row>
 
 	<row id="dlc_beacon_req_param03" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">monsno=[2:02:３桁:0] [1:01:ポケモン種族名:1]</language>
-		<language name="JPN_KANJI" width="256">monsno=[2:02:３桁:0] [1:01:ポケモン種族名:1]</language>
+		<language name="JPN" width="256">monsno=[2:02:３桁:0] [1:01:ポケモン種族名:1] name=[1:02:ポケモンニックネーム:2]</language>
+		<language name="JPN_KANJI" width="256">monsno=[2:02:３桁:0] [1:01:ポケモン種族名:1] name=[1:02:ポケモンニックネーム:2]</language>
 	</row>
 
 	<row id="dlc_beacon_req_param04" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
@@ -509,6 +514,98 @@
 	<row id="dlc_beacon_req_param14" back-color="#ff78ff,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">fword=[1:1C:簡易会話単語:3]</language>
 		<language name="JPN_KANJI" width="256">fword=[1:1C:簡易会話単語:3]</language>
+	</row>
+
+	<row id="dlc_fake_tr_id" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>フェイクパラメータ</comment>
+		<language name="JPN" width="256">Fake tr_id=[2:04:５桁:0]  mine_id=[2:04:５桁:1]</language>
+		<language name="JPN_KANJI" width="256">Fake tr_id=[2:04:５桁:0]  mine_id=[2:04:５桁:1]</language>
+	</row>
+
+	<row id="dlc_fake_name" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256"> name=[2:02:３桁:0] [1:00:トレーナー名:2] m=[2:02:３桁:1] [1:00:トレーナー名:3]</language>
+		<language name="JPN_KANJI" width="256"> name=[2:03:４桁:0]　[1:00:トレーナー名:1]</language>
+	</row>
+
+	<row id="dlc_fake_zone" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256"> zone=[2:03:４桁:0] [1:05:マップ名:2]</language>
+		<language name="JPN_KANJI" width="256"> zone=[2:03:４桁:0] [1:05:マップ名:2]</language>
+	</row>
+
+	<row id="dlc_fake_sex" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256"> sex=[2:00:１桁:0] [1:1C:簡易会話単語:2] mine=[2:00:１桁:1] [1:1C:簡易会話単語:3]</language>
+		<language name="JPN_KANJI" width="256"> sex=[2:00:１桁:0] [1:1C:簡易会話単語:2] mine=[2:00:１桁:1] [1:1C:簡易会話単語:3]</language>
+	</row>
+
+	<row id="dlc_fake_version" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256"> ver=[2:01:２桁:0] [1:1C:簡易会話単語:2] mine=[2:01:２桁:1] [1:1C:簡易会話単語:3]</language>
+		<language name="JPN_KANJI" width="256"> ver=[2:01:２桁:0] [1:1C:簡易会話単語:2] mine=[2:01:２桁:1] [1:1C:簡易会話単語:3]</language>
+	</row>
+
+	<row id="dlc_fake_lang" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256"> lang=[2:01:２桁:0] [1:1C:簡易会話単語:2] mine=[2:01:２桁:1] [1:1C:簡易会話単語:3]</language>
+		<language name="JPN_KANJI" width="256"> lang=[2:01:２桁:0] [1:1C:簡易会話単語:2] mine=[2:01:２桁:1] [1:1C:簡易会話単語:3]</language>
+	</row>
+
+	<row id="dlc_sex_male" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>性別</comment>
+		<language name="JPN" width="256">おとこ</language>
+		<language name="JPN_KANJI" width="256">おとこ</language>
+	</row>
+
+	<row id="dlc_sex_female" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">おんな</language>
+		<language name="JPN_KANJI" width="256">おんな</language>
+	</row>
+
+	<row id="dlc_version_white" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ホワイト</language>
+		<language name="JPN_KANJI" width="256">ホワイト</language>
+	</row>
+
+	<row id="dlc_version_black" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ブラック</language>
+		<language name="JPN_KANJI" width="256">ブラック</language>
+	</row>
+
+	<row id="dlc_version_glay" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">グレイ</language>
+		<language name="JPN_KANJI" width="256">グレイ</language>
+	</row>
+
+	<row id="dlc_lang_01" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">にほんご</language>
+		<language name="JPN_KANJI" width="256">にほんご</language>
+	</row>
+
+	<row id="dlc_lang_02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">えいご</language>
+		<language name="JPN_KANJI" width="256">えいご</language>
+	</row>
+
+	<row id="dlc_lang_03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">フランスご</language>
+		<language name="JPN_KANJI" width="256">フランスご</language>
+	</row>
+
+	<row id="dlc_lang_04" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">イタリアご</language>
+		<language name="JPN_KANJI" width="256">イタリアご</language>
+	</row>
+
+	<row id="dlc_lang_05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">ドイツご</language>
+		<language name="JPN_KANJI" width="256">ドイツご</language>
+	</row>
+
+	<row id="dlc_lang_06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">スペインご</language>
+		<language name="JPN_KANJI" width="256">スペインご</language>
+	</row>
+
+	<row id="dlc_lang_07" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">かんこくご</language>
+		<language name="JPN_KANJI" width="256">かんこくご</language>
 	</row>
 
 	<row id="dlc_action_00" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
