@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-04-21T18:31:22"/>
+	<create user="taya" host="W00146" date="2010-04-23T16:38:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -380,9 +380,9 @@
 
 	<row id="BTL_STRID_STD_Encount_Wild2" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>野生ダブルエンカウント</comment>
-		<language name="JPN" width="216">あっ！　やせいの　[1:01:ポケモン種族名:0]と
+		<language name="JPN" width="216">うわっ！　やせいの　[1:01:ポケモン種族名:0]と
 [1:01:ポケモン種族名:1]が　とびだしてきた！</language>
-		<language name="JPN_KANJI" width="216">あっ！　野生の　[1:01:ポケモン種族名:0]と
+		<language name="JPN_KANJI" width="216">うわっ！　野生の　[1:01:ポケモン種族名:0]と
 [1:01:ポケモン種族名:1]が　飛びだしてきた！</language>
 	</row>
 
