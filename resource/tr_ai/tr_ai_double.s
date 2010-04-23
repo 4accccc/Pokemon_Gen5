@@ -109,7 +109,12 @@ DoubleAI_StrongAI_end:
 	IF_WAZANO	WAZANO_HUBUKI,DoubleEnemyAI_Iwanadare	// いわなだれ　 2010/4/23 
 	IF_WAZANO	WAZANO_HUBUKI,DoubleEnemyAI_Daakuhouru	// ダークホール　2010/4/23 
 
-
+	IF_WAZANO	WAZANO_WAIDOGAADO,DoubleEnemyAI_Waidogaado		// ワイドガード　2010/4/23
+	IF_WAZANO	WAZANO_RINSYOU,DoubleEnemyAI_Rinsyou      	//　りんしょう　2010/4/23 
+	IF_WAZANO	WAZANO_SAIDOTHENZI,DoubleEnemyAI_Sidechange      	//　サイドチェンジ　2010/4/23 
+	IF_WAZANO	WAZANO_IYASINOHADOU,DoubleEnemyAI_Iyasinohadou      	//　いやしのはどう　2010/4/23 
+	IF_WAZANO	WAZANO_SAKIOKURI,DoubleEnemyAI_Sakiokuri      	//　さきおくり　2010/4/23 
+	IF_WAZANO	WAZANO_GIHUTOPASU,DoubleEnemyAI_Gihutopasu      	//　ギフトパス　2010/4/23 
 
 	IF_WAZANO	WAZANO_SUKIRUSUWAPPU,DoubleEnemyAI_SkillSwap	// ｽｷﾙｽﾜｯﾌﾟ2006.6.14ok
 	CHECK_TYPE	CHECK_WAZA
@@ -717,9 +722,55 @@ DoubleEnemyAI_FireType_Check_Hunen:
 DoubleEnemyAI_FireTypeEnd:
 	AIEND
 
+DoubleEnemyAI_Waidogaado:			// 	ワイドガード
 
+	IF_RND_UNDER	50,DoubleEnemyAI_Waidogaado_1
 
+	CHECK_LAST_WAZA	CHECK_ATTACK
+	IF_EQUAL  WAZANO_WAIDOGAADO,DoubleEnemyAI_Waidogaado_ng	//前回出してる
 
+DoubleEnemyAI_Waidogaado_1:
+	CHECK_LAST_WAZA	CHECK_DEFENCE
+	IFN_TABLE_JUMP	DoubleEnemyAI_Waidogaado_Table,DoubleEnemyAI_Waidogaado_ok
+  AIEND
+
+DoubleEnemyAI_Waidogaado_ng:
+	INCDEC		-4
+  JUMP  DoubleEnemyAI_Waidogaado_end
+
+DoubleEnemyAI_Waidogaado_ok:
+	IF_RND_UNDER	80,DoubleEnemyAI_Waidogaado_end
+	INCDEC		2
+DoubleEnemyAI_Waidogaado_end:
+	AIEND
+
+DoubleEnemyAI_Waidogaado_Table: //強い複数技
+	.long	59,157,257,284,323,330,549,555
+	.long	57,89,435,436,482,523,545
+	.long	0xffffffff
+
+DoubleEnemyAI_Rinsyou:      	//　りんしょう　2010/4/23 
+	IFN_HAVE_WAZA	CHECK_ATTACK_FRIEND,WAZANO_RINSYOU,DoubleEnemyAI_Rinsyou_ng
+
+	IF_COMMONRND_UNDER	128,DoubleEnemyAI_Rinsyou_ng
+	INCDEC	+3
+	JUMP  DoubleEnemyAI_Rinsyou_End
+
+DoubleEnemyAI_Rinsyou_ng:
+	INCDEC	-1
+
+DoubleEnemyAI_Rinsyou_End:
+	AIEND
+
+DoubleEnemyAI_Sidechange:      	//　サイドチェンジ　2010/4/23 
+	AIEND
+
+DoubleEnemyAI_Iyasinohadou:      	//　いやしのはどう　2010/4/23 
+DoubleEnemyAI_Gihutopasu:       	//　ギフトパス　2010/4/23 
+	JUMP	AI_DEC10 
+
+DoubleEnemyAI_Sakiokuri:      	//　さきおくり　2010/4/23 
+	AIEND
 
 DoubleEnemyAI_Daakuhouru:      	//　ダークホール　2010/4/23 
 DoubleEnemyAI_Iwanadare:      	//　いわなだれ　2010/4/23 
@@ -849,7 +900,8 @@ DoubleMineAI_WaterType_End:
 
 // 非ダメージワザ----------------
 DoubleMineAI_1:
-	IF_WAZANO	WAZANO_SUKIRUSUWAPPU,DoubleMineAI_SkillSwap	// ｽｷﾙｽﾜｯﾌﾟ
+	IF_WAZANO	WAZANO_SUKIRUSUWAPPU,DoubleMineAI_SkillSwap	// ｽｷﾙｽﾜｯﾌﾟ 2010/4/23
+	IF_WAZANO	WAZANO_NARIKIRI,DoubleMineAI_Narikiri	// なりきり 2010/4/23
 	IF_WAZANO	WAZANO_ONIBI, DoubleMineAI_Onibi			// おにび
 	IF_WAZANO	WAZANO_DENZIHA, DoubleMineAI_Denziha		// でんじは2006.6.23
 	
@@ -857,8 +909,8 @@ DoubleMineAI_1:
 	IF_WAZA_SEQNO_JUMP	33,DoubleMineAI_Doku				// もうどく2006.6.23
 	IF_WAZA_SEQNO_JUMP	66,DoubleMineAI_Doku				// どく	2006.6.23
 	
-	IF_WAZANO	WAZANO_TEDASUKE, DoubleMineAI_Tedasuke		// てだすけ
-	IF_WAZANO	WAZANO_IBARU, DoubleMineAI_Ibaru			// いばる
+	IF_WAZANO	WAZANO_TEDASUKE, DoubleMineAI_Tedasuke		// てだすけ 2010/4/22
+	IF_WAZANO	WAZANO_IBARU, DoubleMineAI_Ibaru			// いばる 2010/4/
 	IF_WAZANO	WAZANO_TORIKKU, DoubleMineAI_Torikku		// トリック2006.6.23
 	IF_WAZANO	WAZANO_SURIKAE, DoubleMineAI_Torikku		// いれかえ2006.6.23
 	
@@ -938,7 +990,7 @@ DoubleMineAI_SkillSwapFukugan:	// 自分が「ふくがん ノーガード」
 	IF_HAVE_WAZA	CHECK_ATTACK_FRIEND, WAZANO_ZIWARE, DoubleMineAI_SkillSwapFukugan1
 	IF_HAVE_WAZA	CHECK_ATTACK_FRIEND, WAZANO_HASAMIGIROTIN, DoubleMineAI_SkillSwapFukugan1
 	IF_HAVE_WAZA	CHECK_ATTACK_FRIEND, WAZANO_TUNODORIRU, DoubleMineAI_SkillSwapFukugan1
-	JUMP		AI_DEC3
+	JUMP	DoubleMineAI_end
 
 DoubleMineAI_SkillSwapFukugan1:
 	JUMP	AI_INC3
@@ -950,6 +1002,48 @@ DoubleMineAI_SkillSwapFumin:  // 自分が「ふみん」
 DoubleMineAI_SkillSwapMaipeesu: // 自分が「マイペース」
 	IFN_WAZASICK	CHECK_DEFENCE,WAZASICK_KONRAN,AI_DEC8		//混乱していない相手にはださない
 	JUMP	AI_INC3
+
+
+// なりきり
+DoubleMineAI_Narikiri:
+	CHECK_TOKUSEI	CHECK_DEFENCE
+	IF_TABLE_JUMP	DoubleMineAI_Narikiri1_Table,DoubleMineAI_Narikiri_ok
+
+	IF_RND_UNDER	128,DoubleMineAI_end
+
+	IF_TABLE_JUMP	DoubleMineAI_Narikiri2_Table,DoubleMineAI_Narikiri_ok
+
+	JUMP	DoubleMineAI_end
+
+DoubleMineAI_Narikiri_ok:
+	IF_RND_UNDER	50,DoubleMineAI_Narikiri_end
+	INCDEC		1
+DoubleMineAI_Narikiri_end:
+	AIEND
+
+DoubleMineAI_Narikiri1_Table:
+	.long	TOKUSYU_TEREPASII
+	.long	TOKUSYU_HURENDOGAADO
+	.long	TOKUSYU_KASOKU
+	.long	TOKUSYU_IKAKU
+	.long	TOKUSYU_YOGAPAWAA
+	.long	TOKUSYU_NOROWAREBODHI
+	.long	0xffffffff
+
+DoubleMineAI_Narikiri2_Table:
+	.long	TOKUSYU_SANPAWAA
+	.long	TOKUSYU_KANSOUHADA
+	.long	TOKUSYU_DENKIENZIN
+	.long	TOKUSYU_AMEUKEZARA
+	.long	TOKUSYU_TIKARAMOTI
+	.long	TOKUSYU_YOURYOKUSO
+	.long	TOKUSYU_SUISUI
+	.long	TOKUSYU_AISUBODHI
+	.long	TOKUSYU_SYUUKAKU
+	.long	TOKUSYU_SUNAKAKI
+	.long	TOKUSYU_MAZIKKUMIRAA
+	.long	TOKUSYU_ITAZURAGOKORO
+	.long	0xffffffff
 
 
 //おにび
