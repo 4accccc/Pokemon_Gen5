@@ -251,6 +251,7 @@ VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
   SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
 
   {
@@ -261,6 +262,7 @@ VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
     soundIdx = FSND_GetFieldBGM( gdata, zoneID );
     event = EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_LONG, FSND_FADE_NORMAL );
     SCRIPT_CallEvent( sc, event );
+    FSND_RePlayEnvSE( fsound ); // ŠÂ‹«‰¹•œ‹A
   }
   return VMCMD_RESULT_SUSPEND;
 }

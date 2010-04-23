@@ -749,6 +749,8 @@ void FIELD_SOUND_PauseEnvSE( FIELD_SOUND* fieldSound )
       PMSND_StopSE_byPlayerID( i+SEPLAYER_SE1 );
     }
   }
+
+  TOMOYA_Printf( "EnvSe Stop\n" );
 }
 
 //----------------------------------------------------------------------------
@@ -776,6 +778,8 @@ void FIELD_SOUND_RePlayEnvSE( FIELD_SOUND* fieldSound )
         }
       }
     }
+
+    TOMOYA_Printf( "EnvSe Replay\n" );
   }
 }
 
