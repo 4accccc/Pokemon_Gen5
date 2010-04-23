@@ -15,7 +15,7 @@
 //--------------------------------------------------------------
 /// ビルボード共通オフセット表示座標
 //--------------------------------------------------------------
-#define MMDL_BBD_OFFS_POS_Y (-FX32_ONE*2)  //(FX32_ONE*4)
+//#define MMDL_BBD_OFFS_POS_Y (-FX32_ONE*2)  //(FX32_ONE*4)
 #define MMDL_BBD_OFFS_POS_Z (FX32_ONE*4)  //(-FX32_ONE*8)
 
 //--------------------------------------------------------------
@@ -1922,7 +1922,9 @@ static void comManAnmCtrl_Update( COMMAN_ANMCTRL_WORK *work,
 //--------------------------------------------------------------
 static void blact_SetCommonOffsPos( VecFx32 *pos )
 {
+#ifdef MMDL_BBD_OFFS_POS_Y
   pos->y += MMDL_BBD_OFFS_POS_Y;
+#endif
 #ifdef MMDL_BBD_DRAW_OFFS_Z_USE
   pos->z += MMDL_BBD_OFFS_POS_Z;
 #endif
