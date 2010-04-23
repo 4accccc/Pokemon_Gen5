@@ -199,6 +199,7 @@ extern void GAMEBEACON_SendDataUpdate_NationArea(u8 nation, u8 area);
 extern void GAMEBEACON_SendDataUpdate_ResearchTeamRank(u8 research_team_rank);
 extern void GAMEBEACON_SendDataUpdate_TrCardIntroduction(const PMS_DATA *pms);
 extern void GAMEBEACON_SendDataUpdate_SelfIntroduction(void);
+extern void GAMEBEACON_SendDataUpdate_TrainerView(int trainer_view);
 
 //--------------------------------------------------------------
 //  アンケート
