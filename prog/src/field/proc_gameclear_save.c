@@ -112,6 +112,7 @@ static void ElboardStartChampNews( GAMECLEAR_MSG_WORK* work ); // 電光掲示板にチ
 static void UpdateFirstClearDendouData( GAMECLEAR_MSG_WORK* work ); // 初回クリア時の殿堂入りデータを登録する
 static void UpdateFirstClearRecord( GAMECLEAR_MSG_WORK* work ); // 初回クリア時のレコードを登録する
 static void UpdateDendouRecord( GAMECLEAR_MSG_WORK* work ); // 殿堂入り時のレコードを登録する
+static void SaveFirstDendouiriTime( GAMECLEAR_MSG_WORK* work ); // 初「殿堂入り」の日時を記録する
 static void DendouSave_init( GAMECLEAR_MSG_WORK* work ); // 殿堂入りデータの更新準備
 static void DendouSave_main( GAMECLEAR_MSG_WORK* work ); // 殿堂入りデータの更新処理
 
@@ -248,13 +249,13 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
 
       //「初回クリア」をセーブ
       if( para->clear_mode == GAMECLEAR_MODE_FIRST ) {
-        UpdateFirstClearDendouData( wk ); // 初「殿堂入り」データ
-        EVTIME_SetGameClearDateTime( wk->gamedata ); // 初回クリアの日時
+        UpdateFirstClearDendouData( wk ); // 初回クリアデータ
         UpdateFirstClearRecord( wk ); // レコードデータ
       }
       //「殿堂入り」をセーブ
       else {
-        UpdateDendouRecord( wk );
+        SaveFirstDendouiriTime( wk ); // 初「殿堂入り」の日時
+        UpdateDendouRecord( wk ); // 殿堂入り関連レコード
         DendouSave_init( wk );
       }
     }
@@ -545,6 +546,28 @@ static void UpdateDendouRecord( GAMECLEAR_MSG_WORK* work )
   if( SaveControl_IsOverwritingOtherData( save ) ) { return; }
 
   RECORD_Add( record, RECID_DENDOU_CNT, 1 );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 初「殿堂入り」の日時を記録する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void SaveFirstDendouiriTime( GAMECLEAR_MSG_WORK* work )
+{
+  SAVE_CONTROL_WORK* save;
+  RECORD* record;
+
+  save = GAMEDATA_GetSaveControlWork( work->gamedata );
+  record = GAMEDATA_GetRecordPtr( work->gamedata );
+
+  // 「殿堂入り」がはじめての場合
+  if( RECORD_Get( record, RECID_DENDOU_CNT ) == 0 ) {
+    // 現在日時を記録
+    EVTIME_SetGameClearDateTime( work->gamedata ); 
+  }
 }
 
 //-----------------------------------------------------------------------------
