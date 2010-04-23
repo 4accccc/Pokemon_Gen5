@@ -696,6 +696,10 @@ DOWSING_WORK*    DOWSING_Init(
         7 );  // 足して16にならないけど、デザイナーさん指定のこの数字で！
   }
 
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
+  GFL_NET_ReloadIcon();
+
   return work;
 }
 
@@ -747,6 +751,9 @@ void DOWSING_Exit( DOWSING_WORK* work )
 
   // ワーク
   GFL_HEAP_FreeMemory( work );
+
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_DefaultLCD();
 }
 
 
