@@ -487,6 +487,11 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
         FIELD_PLAYER_ForceStop( req.field_player );
         return EVENT_CommMissionResult(gsys, fieldWork, req.heapID);
       }
+    #else
+      //ミッションタイムアウトで失敗
+      if(MISSION_CheckResultTimeout(&intcomm->mission) == TRUE){
+        EVENT_IntrudeForceWarpMyPalace(gsys);
+      }
     #endif
       //隠しアイテムの目的地到達チェック
       if (req.stepRequest ){

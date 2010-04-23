@@ -834,6 +834,30 @@ BOOL MISSION_CheckResultMissionMine(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM
   return FALSE;
 }
 
+//==================================================================
+/**
+ * ミッション失敗(タイムアウト)が発生しているか調べる
+ *
+ * @param   mission		
+ *
+ * @retval  BOOL		TRUE:タイムアウトの失敗が発生している
+ */
+//==================================================================
+BOOL MISSION_CheckResultTimeout(MISSION_SYSTEM *mission)
+{
+  const MISSION_RESULT *mresult;
+
+  mresult = MISSION_GetResultData(mission);
+  if(mresult == NULL){
+    return FALSE;
+  }
+  
+  if(mresult->mission_fail == TRUE){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 //==============================================================================
 //
@@ -1031,6 +1055,13 @@ BOOL MISSION_SetEntryNew(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, 
   if(MISSION_MissionList_CheckNG(&intcomm->mission, &entry_req->cdata) == FALSE){
     OS_TPrintf("NG:ミッション内容が不正\n");
     mission->entry_answer[net_id].result = MISSION_ENTRY_RESULT_NG;
+    return FALSE;
+  }
+  
+  if(ZONEDATA_IsPalaceField(intcomm->intrude_status[entry_req->target_info.net_id].zone_id)==TRUE
+      || ZONEDATA_IsPalace(intcomm->intrude_status[entry_req->target_info.net_id].zone_id)==TRUE){
+    OS_TPrintf("NG:ターゲットが裏にいる\n");
+    mission->entry_answer[net_id].result = MISSION_ENTRY_RESULT_NG_TARGET_REVERSE;
     return FALSE;
   }
   

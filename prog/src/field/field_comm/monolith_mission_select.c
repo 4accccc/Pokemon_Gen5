@@ -455,6 +455,10 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
         _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_003);
         *seq = SEQ_ORDER_NG_STREAM_WAIT;
       }
+      else if(result == MISSION_ENTRY_RESULT_NG_TARGET_REVERSE){
+        _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_007);
+        *seq = SEQ_ORDER_NG_STREAM_WAIT;
+      }
     }
     break;
   case SEQ_ORDER_OK_STREAM_WAIT:
