@@ -430,18 +430,44 @@ EVENT_END
 EVENT_START ev_c04r0111_npc_talk
 {
   DEFINE_LOCAL play_mode
-
+  
   _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   IF $play_mode == BSWAY_MODE_WIFI THEN //WiFi NPC用メッセージ表示
     _TALK_OBJ_START()
     _BSUBWAY_TOOL( BSWTOOL_WIFI_HOME_NPC_MSG, SCWK_TARGET_OBJID, BSW_NULL, BSW_NULL )
   ELSE  //HOME NPC用メッセージID取得
-    _BSUBWAY_TOOL( BSWTOOL_GET_HOME_NPC_MSGID, SCWK_TARGET_OBJID, BSW_NULL, msg_id )
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_id )
+    _BSUBWAY_TOOL( BSWTOOL_CHK_HOME_NPC_GETITEM, SCWK_TARGET_OBJID, BSW_NULL, SCWK_ANSWER )
+    
+    IF $SCWK_ANSWER == TRUE THEN //アイテムNPC
+      _CALL sub_npc_item_talk
+    ELSE //通常NPC   
+      _BSUBWAY_TOOL( BSWTOOL_GET_HOME_NPC_MSGID, SCWK_TARGET_OBJID, BSW_NULL, msg_id )
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_id )
+    ENDIF
   ENDIF
 }
 EVENT_END
+
+//--------------------------------------------------------------
+//  バトルサブウェイ　ホーム　アイテムをくれるNPC
+//--------------------------------------------------------------
+sub_npc_item_talk:
+{
+  DEFINE_LOCAL msg0
+  DEFINE_LOCAL msg1
+  DEFINE_LOCAL item_no
+  DEFINE_LOCAL obj_id
+  
+  $obj_id = $SCWK_TARGET_OBJID
+   
+  _BSUBWAY_TOOL( BSWTOOL_GET_HOME_NPC_GETITEM_MSGID_BEFORE, obj_id, BSW_NULL, msg0 )
+  _BSUBWAY_TOOL( BSWTOOL_GET_HOME_NPC_GETITEM_MSGID_AFTER, obj_id, BSW_NULL, msg1 )
+  _BSUBWAY_TOOL( BSWTOOL_GET_HOME_NPC_GETITEM_ITEMNO, obj_id, BSW_NULL, item_no )
+  
+  _EASY_TALK_ITEM_EVENT( item_no, 1, FH_01, msg0, msg1, msg1 )
+}
+_RET
 
 //======================================================================
 //  バトルサブウェイ　ホーム　対戦終了後の戻り
