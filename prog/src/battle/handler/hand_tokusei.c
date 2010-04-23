@@ -3302,6 +3302,7 @@ static void handler_Download( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 
       {
         BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+        param->header.tokwin_flag = TRUE;
         param->poke_cnt = 1;
         param->pokeID[0] = pokeID;
         param->rankType = valueID;
