@@ -2608,6 +2608,21 @@ GAMEBEACON_INFO * DEBUG_SendBeaconInfo_GetPtr(void)
   GF_ASSERT(GameBeaconSys != NULL);
   return &GameBeaconSys->send.info;
 }
+//==================================================================
+/**
+ * デバッグ用：自分のビーコン送信キャンセル
+ *
+ * @note  直前にセットされたビーコン送信をキャンセルする
+ */
+//==================================================================
+void DEBUG_SendBeaconCancel(void)
+{
+  GAMEBEACON_SEND_MANAGER* send = &GameBeaconSys->send;
+
+  send->info.send_counter--;
+  send->life = 0;
+  send->beacon_update = FALSE;
+}
 
 //==================================================================
 /**

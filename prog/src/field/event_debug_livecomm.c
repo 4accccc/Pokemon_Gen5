@@ -1174,7 +1174,7 @@ static void breq_PrintLine( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 line,
 static void breq_DrawBeaconType( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk );
 static void breq_DrawAction( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk );
 static void breq_DrawFake( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk );
-static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk );
+static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 direct_mode );
 
 //--------------------------------------------------------------
 /**
@@ -1237,7 +1237,10 @@ static GMEVENT_RESULT event_BeaconReqMain( GMEVENT * event, int *seq, void * wor
         breq_PrintCursor( wk, evwk, evwk->line );
         break;
       }else if( trg & PAD_BUTTON_START ){
-        (*seq)++;
+        breq_BeaconSend( wk, evwk, FALSE );
+        break;
+      }else if( trg & PAD_BUTTON_SELECT ){
+        breq_BeaconSend( wk, evwk, TRUE );
         break;
       }
 
@@ -1273,7 +1276,6 @@ static GMEVENT_RESULT event_BeaconReqMain( GMEVENT * event, int *seq, void * wor
     }
     break;
   case 3:
-    breq_BeaconSend( wk, evwk );
     (*seq) = 1;
     break;
   default:
@@ -1352,7 +1354,7 @@ static void breq_DrawFake( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk )
   }
 }
 
-static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk )
+static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 direct_mode )
 {
   int value = -1;
 
@@ -1395,6 +1397,20 @@ static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk )
     GF_ASSERT( value >= 0 );
     ((BEACON_SET_FUNC_GPOWER)evwk->b_prm->func)( (GPOWER_ID)value );
     break;
+  }
+
+  if(direct_mode){  //ビーコンを飛ばさず直接自分のスタックに積む
+    RTCTime recv_time;
+    u16 time;
+    GAMEBEACON_INFO* info = DEBUG_SendBeaconInfo_GetPtr();
+
+    GFL_RTC_GetTime(&recv_time);
+    time = (recv_time.hour << 8) | recv_time.minute;
+
+    GAMEBEACON_InfoTbl_SetBeacon(
+      wk->view_wk->infoStack, info, time, FALSE);
+
+    DEBUG_SendBeaconCancel(); //送信キャンセル
   }
 }
 
