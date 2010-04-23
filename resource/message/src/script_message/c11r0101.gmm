@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T13:48:33"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-04-23T17:09:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -266,7 +266,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1280" top="152" right="1985" bottom="780" maximized="no" rayout="Vertical2">
+	<dialog left="200" top="69" right="905" bottom="697" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="649" top="113" right="1122" bottom="511" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -274,7 +274,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -391,9 +391,11 @@ POS</comment>
 せかいじゅうから　トレーナーが▽
 やってくるんだがね▼
 そういった　わかいトレーナーを
-まもるために　おじさんは　まいにち▽
-こうして　セキュリティチェックを▽
-がんばっとるんだよ▼</language>
+まもるために　おじさんは　まいにち▼
+こうして　セキュリティチェックを
+がんばっとるんだよ▼
+ウロチョロして　わるさするんじゃないぞ
+……ほい　とおっていいぞ▼</language>
 		<language name="JPN_KANJI" width="256">初めて　見る　顔だな
 きみ　ここは　初めてかい？▼
 ここ　ユナイテッドタワーには
@@ -402,7 +404,9 @@ POS</comment>
 そういった　若い　トレーナーを
 守るために　おじさんは　毎日▽
 こうして　セキュリティチェックを▽
-頑張っとるんだよ▼</language>
+頑張っとるんだよ▼
+ウロチョロして　悪さするんじゃないぞ
+……ほい　通っていいぞ▼</language>
 	</row>
 
 	<row id="msg_policeman_01_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
