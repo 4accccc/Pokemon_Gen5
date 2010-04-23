@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T17:12:16"/>
+	<create user="matsumiya" host="W00224" date="2010-04-23T14:51:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1669" top="314" right="2374" bottom="934" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="439" right="1280" bottom="837" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -328,10 +328,10 @@
 		<attribute name="キャラ指定">ASSISTANTW</attribute>
 		<language name="JPN" width="256">ということで！▼
 アタシからの　バックアップよ
-この　わざマシンを　どうぞ！▼</language>
+この　ひでんマシンを　どうぞ！▼</language>
 		<language name="JPN_KANJI" width="256">ということで！▼
 アタシからの　バックアップよ
-この　わざマシンを　どうぞ！▼</language>
+この　ひでんマシンを　どうぞ！▼</language>
 	</row>
 
 	<row id="msg_c01r0102_inventor_friend_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -366,19 +366,23 @@
 		<language name="JPN" width="256">ポケモンが　おぼえる　わざには
 たたかっていない　ときでも▽
 つかえる　わざが　あるの！▼
-その　わざマシンで　いあいぎりという
+その　ひでんマシンで　いあいぎりという
 ほそいきを　きることが　できる▽
 わざを　おぼえさせることが　できるわ▼
-しかも　わざマシンは　なんどでも
-つかえるのよ！　すごいでしょ！▼</language>
+しかも　ひでんマシンは　なんどでも
+つかえるのよ！　すごいでしょ！▼
+……ただ　ひでんは　おぼえさせると
+わすれるのが　たいへん　だけどね▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンが　覚える　技には
 戦っていない　ときでも▽
 使える　技が　あるの！▼
-その　わざマシンで　いあいぎりという
+その　ひでんマシンで　いあいぎりという
 細い木を　切ることが　できる▽
 技を　覚えさせることが　できるわ▼
-しかも　わざマシンは　何度でも
-使えるのよ！　すごいでしょ！▼</language>
+しかも　ひでんマシンは　何度でも
+使えるのよ！　すごいでしょ！▼
+……ただ　ひでんは　覚えさせると
+忘れるのが　大変だけどね▼</language>
 	</row>
 
 	<row id="msg_c01r0102_inventor_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
