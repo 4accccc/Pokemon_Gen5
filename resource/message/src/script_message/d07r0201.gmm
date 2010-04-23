@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T20:40:32"/>
+	<create user="matsumiya" host="W00224" date="2010-04-23T13:17:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -368,12 +368,12 @@
 		<attribute name="キャラ指定">LEADER5
 ヤーコン</attribute>
 		<language name="JPN" width="256">ネジやまは　いいぞ！▼
-とくに　オレさまの　おきにいりは
+とくに　ワシの　おきにいりは
 この　つうろを　ぬけたときの……▼
 フムウ……　ことばよりも
 じっさいに　みれば　わかるか▼</language>
 		<language name="JPN_KANJI" width="256">ネジ山は　いいぞ！▼
-とくに　オレさまの　お気に入りは
+とくに　ワシの　お気に入りは
 この　通路を　ぬけたときの……▼
 フムウ……　言葉よりも
 実際に　みれば　わかるか▼</language>
@@ -389,11 +389,11 @@
 ヤーコン</attribute>
 		<language name="JPN" width="256">じゃあな
 ヒヨッコども！▼
-よければ　オレさまの　やまで
+よければ　ワシの　やまで
 トレーナーしゅぎょうでも　していけ▼</language>
 		<language name="JPN_KANJI" width="256">じゃあな
 ヒヨッコども！▼
-よければ　オレさまの　山で
+よければ　ワシの　山で
 トレーナー修行でも　していけ▼</language>
 	</row>
 

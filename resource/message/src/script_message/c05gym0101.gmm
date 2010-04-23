@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T16:16:57"/>
+	<create user="matsumiya" host="W00224" date="2010-04-23T13:08:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -298,12 +298,12 @@
 		<attribute name="キャラ指定">LEADER5</attribute>
 		<language name="JPN" width="256">さてと……[BE:01:ページ切り替え（クリア）]
 ジムリーダーの　カミツレが
-おまえさんの　なにを　きにいったのか[BE:01:ページ切り替え（クリア）]
+おまえの　なにを　きにいったのか[BE:01:ページ切り替え（クリア）]
 その　おてなみ
 はいけんさせて　いただくか[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">さてと……[BE:01:ページ切り替え（クリア）]
 ジムリーダーの　カミツレが
-おまえさんの　何を　気に入ったのか[BE:01:ページ切り替え（クリア）]
+おまえの　何を　気に入ったのか[BE:01:ページ切り替え（クリア）]
 その　お手並み
 拝見させて　いただくか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -315,14 +315,14 @@
 		<language name="JPN" width="256">なるほど　きにいらないな！[BE:01:ページ切り替え（クリア）]
 ねんれいの　わりに
 どうどうたる　たたかいっぷり[BE:01:ページ切り替え（クリア）]
-おまえさんに　さいのうを　みいだす
+おまえに　さいのうを　みいだす
 にんげんがいるのも　わかるってもんだ[BE:01:ページ切り替え（クリア）]
 フンッ
 こいつを　もっていけ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">なるほど　気に入らないな！[BE:01:ページ切り替え（クリア）]
 年齢の　わりに
 堂々たる　戦いっぷり[BE:01:ページ切り替え（クリア）]
-おまえさんに　才能を　見出す
+おまえに　才能を　見出す
 人間が　いるのも　わかるってもんだ[BE:01:ページ切り替え（クリア）]
 フンッ
 こいつを　持っていけ！[BE:01:ページ切り替え（クリア）]</language>
@@ -379,13 +379,13 @@
 		<comment>♂
 ・d06：電気石の洞窟ストッパー解除後</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
-		<language name="JPN" width="256">オレには　おまえさんの　さいのうが
+		<language name="JPN" width="256">ワシには　おまえの　さいのうが
 どれほどのものか　わからんが[BE:01:ページ切り替え（クリア）]
 いけると　おもうなら　どこまでも[BE:01:ページ切り替え（クリア）]
 やれると　おもうなら　いつまでも[BE:01:ページ切り替え（クリア）]
 すきなように　やればいいじゃねえか
 げんかいを　きめるのは　じぶんってことだ</language>
-		<language name="JPN_KANJI" width="256">オレには　おまえさんの　才能が
+		<language name="JPN_KANJI" width="256">ワシには　おまえの　才能が
 どれほどのものか　わからんが[BE:01:ページ切り替え（クリア）]
 行けると思うなら　どこまでも[BE:01:ページ切り替え（クリア）]
 やれると思うなら　いつまでも[BE:01:ページ切り替え（クリア）]
@@ -397,14 +397,14 @@
 		<comment>♂
 ・クリア後</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
-		<language name="JPN" width="256">ヤーコン『……ふん！　おまえさんか
-オレの　いったことを　おぼえているか？▼
+		<language name="JPN" width="256">ヤーコン『……ふん！　おまえか
+ワシの　いったことを　おぼえているか？▼
 いけると　おもうなら　どこまでも▼
 やれると　おもうなら　いつまでも▼
 すきなように　やればいいじゃねえか
 げんかいを　きめるのは　じぶんってことだ</language>
-		<language name="JPN_KANJI" width="256">ヤーコン『……ふん！　おまえさんか
-オレの　いったことを　覚えているか？▼
+		<language name="JPN_KANJI" width="256">ヤーコン『……ふん！　おまえか
+ワシの　いったことを　覚えているか？▼
 行けると思うなら　どこまでも▼
 やれると思うなら　いつまでも▼
 好きなように　やればいいじゃねえか

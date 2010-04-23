@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T20:04:23"/>
+	<create user="matsumiya" host="W00224" date="2010-04-23T13:14:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1295" top="145" right="2000" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -475,7 +475,7 @@
 わたしに　みらいを　みせてくれること[BE:00:ページ切り替え（行送り）]
 のぞんでも　いいのだろうか[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">よくぞ　参られた[BE:01:ページ切り替え（クリア）]
-わたしが　ソウリュウ　ポケモンジム
+私が　ソウリュウ　ポケモンジム
 ジムリーダーの　シャガで　ある[BE:01:ページ切り替え（クリア）]
 ……市長として
 街の　発展に　尽力し[BE:01:ページ切り替え（クリア）]
@@ -484,8 +484,8 @@
 そんな今　求めるのは
 明るい　未来を　みせてくれる[BE:00:ページ切り替え（行送り）]
 若い　トレーナーの　存在[BE:01:ページ切り替え（クリア）]
-きみが　アイリスの　ように
-わたしに　未来を　みせてくれること[BE:00:ページ切り替え（行送り）]
+君が　アイリスの　ように
+私に　未来を　みせてくれること[BE:00:ページ切り替え（行送り）]
 望んでも　いいのだろうか[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -499,7 +499,7 @@
 きみと　であい
 たたかえたこと　かんしゃする[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">すばらしい[BE:01:ページ切り替え（クリア）]
-きみと　出会い
+君と　出会い
 戦えたこと　感謝する[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -532,10 +532,10 @@
 そのなも　ドラゴンテール[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ふむ！　イッシュ　全ての
 ジムバッジを　てにしたか▼
-今の　きみなら　どんなポケモンも
+今の　君なら　どんなポケモンも
 素直に　従ってくれるだろう！▼
 これも　もらってくれたまえ[BE:01:ページ切り替え（クリア）]
-わたしが　好きな
+私が　好きな
 技マシンの　ひとつ[BE:01:ページ切り替え（クリア）]
 その名も　ドラゴンテール[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -577,7 +577,7 @@
 アデクの　つよさは　しっているが
 Ｎという　おとこの　つよさ▽
 そこしれぬのだ……</language>
-		<language name="JPN_KANJI" width="256">……きみに　頼みがある▼
+		<language name="JPN_KANJI" width="256">……君に　頼みがある▼
 アデクを　追いかけて
 ポケモンリーグに　向かってほしい▼
 ポケモンリーグは
