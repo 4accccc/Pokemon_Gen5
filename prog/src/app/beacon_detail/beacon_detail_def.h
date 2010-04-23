@@ -10,6 +10,7 @@
 #define  BEACON_DETAIL_HEAP_SIZE  (0x30000)  ///< ヒープサイズ
 
 enum{
+ SEQ_INI_DRAW,
  SEQ_FADEIN,
  SEQ_MAIN,
  SEQ_EFF_WAIT,

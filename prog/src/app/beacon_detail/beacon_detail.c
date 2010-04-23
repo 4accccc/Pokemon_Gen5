@@ -111,6 +111,7 @@ static GFL_PROC_RESULT BeaconDetailProc_Exit( GFL_PROC *proc, int *seq, void *pw
 static int seq_Main( BEACON_DETAIL_WORK* wk );
 static int seq_EffWait( BEACON_DETAIL_WORK* wk );
 static int seq_Popup( BEACON_DETAIL_WORK* wk );
+static int seq_InitialDraw( BEACON_DETAIL_WORK* wk );
 static int seq_FadeIn( BEACON_DETAIL_WORK* wk );
 static int seq_FadeOut( BEACON_DETAIL_WORK* wk );
 
@@ -216,8 +217,6 @@ static GFL_PROC_RESULT BeaconDetailProc_Init( GFL_PROC *proc, int *seq, void *pw
 	//タッチバーの初期化
 	wk->touchbar = _sub_TouchBarInit( BEACON_DETAIL_GRAPHIC_GetClunit( wk->graphic ), wk->heapID );
 
-  //初期描画
-  BeaconDetail_InitialDraw( wk );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -281,6 +280,9 @@ static GFL_PROC_RESULT BeaconDetailProc_Main( GFL_PROC *proc, int *seq, void *pw
   	_sub_TouchBarMain( wk->touchbar );
   }
   switch(*seq){
+  case SEQ_INI_DRAW:
+    *seq = seq_InitialDraw( wk );
+    break;
   case SEQ_FADEIN:
     *seq = seq_FadeIn( wk );
     break;
@@ -341,6 +343,26 @@ static int seq_EffWait( BEACON_DETAIL_WORK* wk )
 static int seq_Popup( BEACON_DETAIL_WORK* wk )
 {
   return BeaconDetail_InputCheck( wk );
+}
+
+/*
+ *  @brief  初期描画
+ */
+static int seq_InitialDraw( BEACON_DETAIL_WORK* wk )
+{
+  switch( wk->seq ){
+  case 0:
+    BeaconDetail_InitialDraw( wk );
+    wk->seq++;
+    break;
+  case 1:
+    if( PRINTSYS_QUE_IsFinished( wk->print_que ) ){	
+      wk->seq = 0;
+			return SEQ_FADEIN;
+		}
+    break;
+  }
+  return SEQ_INI_DRAW; 
 }
 
 /*
@@ -457,7 +479,7 @@ static void _sub_SystemSetup( BEACON_DETAIL_WORK* wk)
   //メッセージ関連
   GFL_FONTSYS_SetColor( FCOL_POPUP_MAIN, FCOL_POPUP_SDW, FCOL_POPUP_BASE );
 	
-  wk->print_que = PRINTSYS_QUE_Create( wk->heapID );
+  wk->print_que = PRINTSYS_QUE_CreateEx( 2048, wk->heapID );
 	wk->font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 												GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
@@ -492,6 +514,7 @@ static void _sub_SystemExit( BEACON_DETAIL_WORK* wk)
 	WORDSET_Delete(wk->wset);
   
   GFL_FONT_Delete(wk->font);
+  PRINTSYS_QUE_Clear(wk->print_que);
   PRINTSYS_QUE_Delete(wk->print_que);
   GFL_FONTSYS_SetDefaultColor();
  

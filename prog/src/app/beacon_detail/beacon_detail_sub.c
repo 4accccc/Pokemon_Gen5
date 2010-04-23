@@ -863,6 +863,10 @@ static void taskAdd_BWinScroll( BEACON_DETAIL_WORK* wk, u8 win_idx, u8 spos, u8 
 static void tcb_BWinScroll( GFL_TCBL *tcb , void* tcb_wk)
 {
   TASKWK_BWIN_SCROLL* twk = (TASKWK_BWIN_SCROLL*)tcb_wk;
+  
+  if( !PRINTSYS_QUE_IsFinished( twk->bdw->print_que ) ){	
+    return;
+  }
 
   if( twk->wait-- > 0 ){
     twk->py += twk->dy;
