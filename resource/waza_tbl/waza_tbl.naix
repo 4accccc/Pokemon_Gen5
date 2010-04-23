@@ -568,10 +568,7 @@ enum {
 	NARC_waza_tbl_waza554_bin = 554,
 	NARC_waza_tbl_waza555_bin = 555,
 	NARC_waza_tbl_waza556_bin = 556,
-	NARC_waza_tbl_waza557_bin = 557,
-	NARC_waza_tbl_waza558_bin = 558,
-	NARC_waza_tbl_waza559_bin = 559,
-	NARC_waza_tbl_waza560_bin = 560
+	NARC_waza_tbl_waza557_bin = 557
 };
 
 /* NARC_WAZA_TBL_NAIX_ */

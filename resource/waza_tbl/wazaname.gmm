@@ -3178,6 +3178,11 @@
 		<language name="JPN_KANJI" width="216">つららおとし</language>
 	</row>
 
+	<row id="WAZANAME_557">
+		<language name="JPN" width="216">Vジェネレート</language>
+		<language name="JPN_KANJI" width="216">Vジェネレート</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
