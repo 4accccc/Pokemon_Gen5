@@ -2338,6 +2338,7 @@ static void _gearObjResCreate(C_GEAR_WORK* pWork, int sex)
 
   GFL_NET_WirelessIconEasy_HoldLCD(FALSE, pWork->heapID);
   GFL_NET_ChangeIconPosition(240-22,14);
+  GFL_NET_SetIconForcePosition(240-22,14);
   GFL_NET_ReloadIcon();
 }
 
@@ -3869,6 +3870,7 @@ void CGEAR_Exit( C_GEAR_WORK* pWork )
   GFL_UI_SleepReleaseSetFunc(NULL,  NULL);
 
   GFL_NET_ChangeIconPosition(GFL_WICON_POSX,GFL_WICON_POSY);
+  GFL_NET_ResetIconForcePosition();
   GFL_NET_ReloadIcon();
 
   // パレットフェード
