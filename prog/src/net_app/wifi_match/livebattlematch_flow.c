@@ -972,6 +972,7 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_MOVEOUT_CARD:
     if( UTIL_PLAYERINFO_MoveOut( p_wk ) )
     { 
+      UTIL_PLAYERINFO_Delete( p_wk );
       *p_seq  = SEQ_DIRTY_END;
     }
     break;
@@ -1014,11 +1015,10 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       SAVE_RESULT result;
       result = GAMEDATA_SaveAsyncMain(p_wk->param.p_gamedata);
       switch(result){
-      case SAVE_RESULT_CONTINUE:
-      case SAVE_RESULT_LAST:
-        break;
       case SAVE_RESULT_OK:
       case SAVE_RESULT_NG:
+
+        NAGI_Printf( "“o˜^Š®—¹I %d\n", Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS ) );
         *p_seq  = SEQ_START_MSG_COMPLATE;
         break;
       }
@@ -1298,6 +1298,7 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_MOVEOUT_CARD:
     if( UTIL_PLAYERINFO_MoveOut( p_wk ) )
     { 
+      UTIL_PLAYERINFO_Delete( p_wk );
       *p_seq  = SEQ_UNREGISTER_END;
     }
     break;
@@ -1907,6 +1908,7 @@ static void SEQFUNC_RecAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_MOVEOUT_CARD:
     if( UTIL_PLAYERINFO_MoveOut( p_wk ) )
     { 
+      UTIL_PLAYERINFO_Delete( p_wk );
       *p_seq  = SEQ_END;
     }
     break;
