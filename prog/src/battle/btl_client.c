@@ -6186,6 +6186,7 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
         const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, args[0] );
         BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_BallThrowS );
         BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID( bpp ) );
+        PMSND_PlayBGM( SEQ_ME_POKEGET );
       }
       // 捕獲失敗メッセージ
       else
@@ -6201,8 +6202,8 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
         }
 
         BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, strID );
-
       }
+
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
       (*seq)++;
     }
@@ -6214,8 +6215,6 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
       {
         const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, args[0] );
         BTL_MAIN_NotifyPokemonGetToGameSystem( wk->mainModule, bpp );
-
-        PMSND_PlayBGM( SEQ_ME_POKEGET );
         (*seq)++;
       }else{
         return TRUE;
@@ -6228,6 +6227,7 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
       //戦闘エフェクト一時停止を解除
       BTLV_EFFECT_Restart();
       PMSND_PlayBGM( SEQ_BGM_WIN1 );
+      BTL_MAIN_BGMFadeOutDisable( wk->mainModule );
       // 図鑑登録メッセージ
       if( args[3] )
       {

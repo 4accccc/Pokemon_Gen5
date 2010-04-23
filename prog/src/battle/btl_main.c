@@ -154,6 +154,7 @@ struct _BTL_MAIN_MODULE {
   u8        fWazaEffectEnable    : 1;
   u8        fBonusMoneyFixed     : 1;
   u8        fLoseMoneyFixed      : 1;
+  u8        fBGMFadeOutDisable   : 1;
 
 
 };
@@ -273,6 +274,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->fBonusMoneyFixed = FALSE;
       wk->fLoseMoneyFixed = FALSE;
       wk->fCommError = FALSE;
+      wk->fBGMFadeOutDisable = FALSE;
       wk->MultiAIClientNum = 0;
 
       TAYA_Printf("musicDef=%d, musicWin=%d\n", setup_param->musicDefault, setup_param->musicWin );
@@ -369,7 +371,9 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
 
   switch( *seq ){
   case 0:
-    PMSND_FadeOutBGM( BTL_BGM_FADEOUT_FRAMES );
+    if( wk->fBGMFadeOutDisable == FALSE ){
+      PMSND_FadeOutBGM( BTL_BGM_FADEOUT_FRAMES );
+    }
     wk->subSeq = 0;
     (*seq)++;
     break;
@@ -3537,6 +3541,18 @@ u32 BTL_MAIN_FixLoseMoney( BTL_MAIN_MODULE* wk )
   }
   return loseMoney;
 }
+//=============================================================================================
+/**
+ * 戦闘終了時、BGMをフェードアウトさせない（捕獲時など）
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTL_MAIN_BGMFadeOutDisable( BTL_MAIN_MODULE* wk )
+{
+  wk->fBGMFadeOutDisable = TRUE;
+}
+
 //=============================================================================================
 /**
  * プレイヤーポケモンが死んだ時のなつき度反映

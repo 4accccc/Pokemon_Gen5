@@ -119,6 +119,7 @@ extern void BTL_MAIN_NotifyPokemonGetToGameSystem( BTL_MAIN_MODULE* wk, const BT
 extern u32 BTL_MAIN_GetBonusMoney( const BTL_MAIN_MODULE* wk );
 extern u32 BTL_MAIN_FixBonusMoney( BTL_MAIN_MODULE* wk );
 extern u32 BTL_MAIN_FixLoseMoney( BTL_MAIN_MODULE* wk );
+extern void BTL_MAIN_BGMFadeOutDisable( BTL_MAIN_MODULE* wk );
 extern BtlResult BTL_MAIN_ChecBattleResult( BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_NotifyCmdCheckError( BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_RECORDDATA_Inc( const BTL_MAIN_MODULE* wk, int recID );
