@@ -467,11 +467,11 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     MMDL *fmmdl_player = FIELD_PLAYER_GetMMdl( req.field_player );
     u32 talk_netid;
     
+    //侵入先のROM相手が切断されていれば自分のパレスへワープ
+    if(IntrudeField_CheckIntrudeShutdown(gsys, req.map_id) == TRUE){
+      return EVENT_IntrudeForceWarpMyPalace(gsys);
+    }
     if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION && intcomm != NULL){
-      //侵入先のROM相手が切断されていれば自分のパレスへワープ
-      if(IntrudeField_CheckIntrudeShutdown(gsys, req.map_id) == TRUE){
-        return EVENT_IntrudeForceWarpMyPalace(gsys);
-      }
       //シンボルマップにいて所有者の更新イベントが発動していないかチェック
       if(IntrudeSymbol_CheckSymbolDataChange(intcomm, req.map_id) == TRUE){
         return EVENT_SymbolMapWarpEasy( gsys, DIR_NOT, GAMEDATA_GetSymbolMapID( req.gamedata ) );
