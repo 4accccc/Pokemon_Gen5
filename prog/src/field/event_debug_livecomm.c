@@ -66,6 +66,7 @@ typedef enum{
 }SEQ_ID;
 
 enum{
+ MENU_UPDATE_STOP,
  MENU_BEACON_REQ,
  MENU_STACK_CHECK,
  MENU_SURETIGAI_NUM,
@@ -265,14 +266,15 @@ typedef struct {
 
 static const FLDMENUFUNC_LIST DATA_DebugLiveCommMenuList[] =
 {
-  { dlc_menu_01, (void*)MENU_BEACON_REQ },
-  { dlc_menu_02, (void*)MENU_STACK_CHECK },
-  { dlc_menu_03, (void*)MENU_SURETIGAI_NUM },
-  { dlc_menu_04, (void*)MENU_THANKS_NUM },
-  { dlc_menu_05, (void*)MENU_STACK_CLEAR },
-  { dlc_menu_06, (void*)MENU_MEMBER_CLEAR },
-  { dlc_menu_07, (void*)MENU_COMM_BUF_CLEAR },
-  { dlc_menu_08, (void*)MENU_EXIT },
+  { dlc_menu_01, (void*)MENU_UPDATE_STOP },
+  { dlc_menu_02, (void*)MENU_BEACON_REQ },
+  { dlc_menu_03, (void*)MENU_STACK_CHECK },
+  { dlc_menu_04, (void*)MENU_SURETIGAI_NUM },
+  { dlc_menu_05, (void*)MENU_THANKS_NUM },
+  { dlc_menu_06, (void*)MENU_STACK_CLEAR },
+  { dlc_menu_07, (void*)MENU_MEMBER_CLEAR },
+  { dlc_menu_08, (void*)MENU_COMM_BUF_CLEAR },
+  { dlc_menu_09, (void*)MENU_EXIT },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugLiveCommMenuData = {
@@ -614,6 +616,10 @@ static GMEVENT_RESULT event_LiveCommMain( GMEVENT * event, int *seq, void * work
         break;
       }
       switch( ret ){
+      case MENU_UPDATE_STOP:
+        GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 0, 1,
+            &wk->view_wk->deb_stack_check_throw, BPRM_WSET_NONE));
+        break;
       case MENU_BEACON_REQ:
         GMEVENT_CallEvent( event, event_CreateEventBeaconReq( wk->gsys, wk ) );
         break;

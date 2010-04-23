@@ -559,6 +559,7 @@ static void sp_gpower_ConditionCheck( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info,
   u16 time;
 
 #ifdef PM_DEBUG
+#if 0
   {
     int key = GFL_UI_KEY_GetCont();
     if( key & PAD_BUTTON_L) {
@@ -571,6 +572,7 @@ static void sp_gpower_ConditionCheck( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info,
       sp_gpower_RequestSet( wk, SP_GPOWER_REQ_SALE ); 
     }
   }
+#endif
 #endif
 
   //äCäOî≈ÉçÉÄÇ∆Ç∑ÇÍà·Ç¡ÇΩÇ©ÅH

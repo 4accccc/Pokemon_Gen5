@@ -281,9 +281,15 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
 #endif
 
   PRINTSYS_QUE_Main( wk->printQue );
-  
+
+#ifdef PM_DEBUG
+  if(!wk->deb_stack_check_throw ){
+    GAMEBEACON_Stack_Update( wk->infoStack );
+  }
+#else
   //スタックテーブル更新
   GAMEBEACON_Stack_Update( wk->infoStack );
+#endif
 
 #ifdef PM_DEBUG
   e_tick = OS_GetTick();
@@ -304,6 +310,7 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
 //==================================================================
 GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
 {
+#endif
   GMEVENT* event = NULL;
 
   if( !bEvReqOK ){  //イベント起動していいタイミングを待つ
@@ -566,6 +573,11 @@ static void debug_InputCheck(BEACON_VIEW_PTR wk)
     return;
   }
 #ifdef PM_DEBUG
+  if( trg & PAD_BUTTON_START ){
+    event_Request( wk, EV_DEBUG_MENU_CALL);
+    return;
+  }
+/*
   if( ( cont & (PAD_BUTTON_R|PAD_BUTTON_START)) == (PAD_BUTTON_R|PAD_BUTTON_START)){
     event_Request( wk, EV_DEBUG_MENU_CALL);
     return;
@@ -580,6 +592,7 @@ static void debug_InputCheck(BEACON_VIEW_PTR wk)
     OS_Printf("StackCheckThrow = %d\n",wk->deb_stack_check_throw );
     return;
   }
+*/
 #endif
 
 #ifdef DEBUG_ONLY_FOR_iwasawa
