@@ -293,12 +293,27 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     SEQ_START_DRAW_PLAYERINFO,
     SEQ_WAIT_DRAW_PLAYERINFO,
     SEQ_WAIT_PUSH,
-    SEQ_START_MSG_SIGNUP,
-    SEQ_WAIT_MSG,
-    SEQ_START_LIST_RETURN,
-    SEQ_WAIT_LIST_RETURN,
+    SEQ_START_MSG_ENTRY,
+    SEQ_START_LIST_UNREGISTER,
+    SEQ_WAIT_LIST_UNREGISTER,
+
+    SEQ_START_MSG_CONFIRM1,
+    SEQ_START_LIST_CONFIRM1,
+    SEQ_WAIT_LIST_CONFIRM1,
+
+    SEQ_START_MSG_CONFIRM2,
+    SEQ_START_LIST_CONFIRM2,
+    SEQ_WAIT_LIST_CONFIRM2,
+
+    SEQ_START_MSG_UNREGISTER,
+    SEQ_RETIRE,
+    SEQ_START_SAVE,
+    SEQ_WAIT_SAVE,
+    SEQ_START_MSG_UNLOCK,
+
     SEQ_WAIT_MOVEOUT_PLAYERINFO,
     SEQ_PROC_END,
+    SEQ_WAIT_MSG,
   };
   DIGITALCARD_CHECK_WORK	  *p_wk	    = p_wk_adrs;
 
@@ -306,7 +321,7 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   { 
   case SEQ_START_DRAW_PLAYERINFO:
     Util_PlayerInfo_Create( p_wk );
-    Util_PlayerInfo_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNREGISTER );
+    Util_PlayerInfo_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_LOCK );
     *p_seq  = SEQ_WAIT_DRAW_PLAYERINFO;
     break;
 
@@ -320,40 +335,137 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
   case SEQ_WAIT_PUSH:
     if( GFL_UI_KEY_GetTrg() & DIGITALCARDCHECK_PUSH_BUTTON )
     { 
-      *p_seq  = SEQ_START_MSG_SIGNUP;
+      *p_seq  = SEQ_START_MSG_ENTRY;
     }
     break;
 
-  case SEQ_START_MSG_SIGNUP:
+  case SEQ_START_MSG_ENTRY:
     Util_Text_SetVisible( p_wk, TRUE );
-    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_00, WBM_TEXT_TYPE_STREAM );
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_10, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_UNREGISTER );
     break;
 
-  case SEQ_WAIT_MSG:
-    if( Util_Text_IsEnd( p_wk ) )
-    { 
-      *p_seq  = SEQ_START_LIST_RETURN;
-    }
+  case SEQ_START_LIST_UNREGISTER:
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_UNREGISTER );
+    *p_seq  = SEQ_WAIT_LIST_UNREGISTER;
     break;
 
-  case SEQ_START_LIST_RETURN:
-    Util_List_Create( p_wk, UTIL_LIST_TYPE_RETURN );
-    *p_seq  = SEQ_WAIT_LIST_RETURN;
-    break;
-
-  case SEQ_WAIT_LIST_RETURN:
+  case SEQ_WAIT_LIST_UNREGISTER:
     { 
       const u32 select = Util_List_Main( p_wk );
       if( select != WBM_LIST_SELECT_NULL )
       { 
         Util_List_Delete( p_wk );
-        if( select == 0 )
+        if( select == 0 )   //ŽQ‰Á‚Ì‰ðœ
+        { 
+          *p_seq  = SEQ_START_MSG_CONFIRM1;
+        }
+        else if( select == 1 )  //‚à‚Ç‚é
         { 
           *p_seq  = SEQ_WAIT_MOVEOUT_PLAYERINFO;
         }
       }
     }
+    break;
+
+  case SEQ_START_MSG_CONFIRM1:
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_11, WBM_TEXT_TYPE_STREAM  );
+    *p_seq  = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_CONFIRM1 );
+    break;
+  case SEQ_START_LIST_CONFIRM1:
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq  = SEQ_WAIT_LIST_CONFIRM1;
+    break;
+  case SEQ_WAIT_LIST_CONFIRM1:
+    { 
+      const u32 select = Util_List_Main( p_wk );
+      if( select != WBM_LIST_SELECT_NULL )
+      { 
+        Util_List_Delete( p_wk );
+        if( select == 0 )   //‚Í‚¢
+        { 
+          *p_seq  = SEQ_START_MSG_CONFIRM2;
+        }
+        else if( select == 1 )  //‚¢‚¢‚¦
+        { 
+          *p_seq  = SEQ_WAIT_MOVEOUT_PLAYERINFO;
+        }
+      }
+    }
+    break;
+  case SEQ_START_MSG_CONFIRM2:
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_03, WBM_TEXT_TYPE_STREAM  );
+    *p_seq  = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_CONFIRM2 );
+    break;
+  case SEQ_START_LIST_CONFIRM2:
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq  = SEQ_WAIT_LIST_CONFIRM2;
+    break;
+  case SEQ_WAIT_LIST_CONFIRM2:
+    { 
+      const u32 select = Util_List_Main( p_wk );
+      if( select != WBM_LIST_SELECT_NULL )
+      { 
+        Util_List_Delete( p_wk );
+        if( select == 0 )   //‚Í‚¢
+        { 
+          *p_seq  = SEQ_START_MSG_UNREGISTER;
+        }
+        else if( select == 1 )  //‚¢‚¢‚¦
+        { 
+          *p_seq  = SEQ_WAIT_MOVEOUT_PLAYERINFO;
+        }
+      }
+    }
+    break;    
+
+  case SEQ_START_MSG_UNREGISTER:
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_04, WBM_TEXT_TYPE_WAIT );
+    *p_seq  = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_RETIRE );
+    break;
+
+  case SEQ_RETIRE:
+    { 
+      SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
+      REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
+      REGULATION_CARDDATA *p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, p_wk->param.type ); 
+      BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+      BATTLE_BOX_LOCK_BIT bit = (p_wk->param.type == REGULATION_CARD_TYPE_WIFI) ? BATTLE_BOX_LOCK_BIT_WIFI:BATTLE_BOX_LOCK_BIT_LIVE;
+
+      BATTLE_BOX_SAVE_OffLockFlg( p_bbox_save, bit );
+      Regulation_SetCardParam( p_reg, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_RETIRE );
+      *p_seq  = SEQ_START_SAVE;
+    }
+    break;
+    
+  case SEQ_START_SAVE:
+    { 
+      GAMEDATA_SaveAsyncStart( p_wk->param.p_gamedata );
+      *p_seq  = SEQ_WAIT_SAVE;
+    }
+    break;
+  case SEQ_WAIT_SAVE:
+    {
+      SAVE_RESULT ret;
+      ret = GAMEDATA_SaveAsyncMain( p_wk->param.p_gamedata );
+      if( ret == SAVE_RESULT_OK )
+      { 
+        *p_seq  = SEQ_START_MSG_UNLOCK;
+      }
+      else if( ret == SAVE_RESULT_NG )
+      { 
+        *p_seq  = SEQ_START_MSG_UNLOCK;
+      }
+    }
+    break;
+  case SEQ_START_MSG_UNLOCK:
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_05, WBM_TEXT_TYPE_STREAM  );
+    *p_seq  = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_WAIT_MOVEOUT_PLAYERINFO );
     break;
 
   case SEQ_WAIT_MOVEOUT_PLAYERINFO:
@@ -362,9 +474,17 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       *p_seq  = SEQ_PROC_END;
     }
     break;
-    
+
   case SEQ_PROC_END:
     WBM_SEQ_SetNext( p_seqwk, DC_SEQFUNC_End );
+    break;
+
+
+  case SEQ_WAIT_MSG:
+    if( Util_Text_IsEnd( p_wk ) )
+    {
+      WBM_SEQ_NextReservSeq( p_seqwk );
+    }
     break;
   }
 }
