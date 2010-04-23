@@ -490,7 +490,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     #else
       //ミッションタイムアウトで失敗
       if(MISSION_CheckResultTimeout(&intcomm->mission) == TRUE){
-        EVENT_IntrudeForceWarpMyPalace(gsys);
+        return EVENT_IntrudeForceWarpMyPalace(gsys);
       }
     #endif
       //隠しアイテムの目的地到達チェック
