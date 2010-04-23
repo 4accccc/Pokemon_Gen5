@@ -63,6 +63,8 @@ typedef struct
 	u16 explain_msgid;
 	BOOL mission_result;    ///<TRUE:自分がミッション達成者
 	s32 point;
+	u8 add_white;
+	u8 add_black;
 }COMMTALK_EVENT_WORK;
 
 
@@ -140,11 +142,14 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     if(intcomm == NULL && (*seq) == SEQ_RESULT_RECV_WAIT){
       return GMEVENT_RES_FINISH;  //結果受信待ちの時だけエラーが起きた場合は即終了
     }
-    else if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE){
+    else if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE
+        && Intrude_CheckRecvOccupyResult(intcomm) == TRUE){
       if(MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == FALSE){
         return GMEVENT_RES_FINISH;  //達成者でない場合はここで終了
       }
       
+      talk->add_white = intcomm->recv_occupy_result.add_white;
+      talk->add_black = intcomm->recv_occupy_result.add_black;
       IntrudeEventPrint_SetupFieldMsg(&talk->iem, gsys);
 
       //イベント中、エラーになっても構わないようにintcommから必要なパラメータをここで全て取得
@@ -224,12 +229,14 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     }
     break;
   case SEQ_LEVELUP_MSG:
-    WORDSET_RegisterNumber( talk->iem.wordset, 0, MISSION_ACHIEVE_ADD_LEVEL, 
-      3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     if(talk->mresult.mission_data.monolith_type == MONOLITH_TYPE_BLACK){
+      WORDSET_RegisterNumber( talk->iem.wordset, 0, talk->add_black, 
+        3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
       IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_clear_02);
     }
     else{
+      WORDSET_RegisterNumber( talk->iem.wordset, 0, talk->add_white, 
+        3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
       IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_clear_03);
     }
     (*seq)++;

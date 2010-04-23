@@ -218,6 +218,12 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
   
   //話しかけお断りの返事が貯まっているなら返事を送信する
   Intrude_CheckTalkAnswerNG(intcomm);
+  //占拠結果送信
+  if(intcomm->send_occupy_result_send_req == TRUE){
+    if(IntrudeSend_OccupyResult(intcomm) == TRUE){
+      intcomm->send_occupy_result_send_req = FALSE;
+    }
+  }
   //ミッション更新処理
   MISSION_Update(intcomm, &intcomm->mission);
   //ビンゴの送信リクエストがあれば送信
@@ -1036,3 +1042,16 @@ void Intrude_MyMonolithStatusSet(GAMEDATA *gamedata, MONOLITH_STATUS *monost)
   monost->occ = TRUE;
 }
 
+//==================================================================
+/**
+ * 占拠結果を受信しているか確認
+ *
+ * @param   intcomm		
+ *
+ * @retval  BOOL		TRUE：受信している　FALSE：受信していない
+ */
+//==================================================================
+BOOL Intrude_CheckRecvOccupyResult(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  return intcomm->recv_occupy_result.occ;
+}

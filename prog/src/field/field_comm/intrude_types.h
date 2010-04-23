@@ -203,6 +203,14 @@ typedef struct{
   u8 padding;
 }MONOLITH_STATUS;
 
+///ミッション達成後の占拠結果
+typedef struct{
+  u8 add_white;               ///<白得点
+  u8 add_black;               ///<黒得点
+  u8 occ;                     ///<TRUE:データ有効
+  u8 padding;
+}INTRUDE_OCCUPY_RESULT;
+
 ///侵入システムワーク
 typedef struct _INTRUDE_COMM_SYS{
   GAME_COMM_SYS_PTR game_comm;
@@ -220,6 +228,8 @@ typedef struct _INTRUDE_COMM_SYS{
   
   MISSION_SYSTEM mission;     ///<ミッションシステム
   BINGO_SYSTEM bingo;         ///<ビンゴシステムワーク
+  INTRUDE_OCCUPY_RESULT send_occupy_result;     ///<ミッション後の占拠結果
+  INTRUDE_OCCUPY_RESULT recv_occupy_result;     ///<ミッション後の占拠結果受信バッファ
   
   WFBC_COMM_DATA wfbc_comm_data;  ///<WFBC通信ワーク
   
@@ -273,6 +283,7 @@ typedef struct _INTRUDE_COMM_SYS{
   
   s8 member_fix;              ///<TRUE:乱入禁止
   s8 other_monolith_count;    ///<他人のモノリス画面を見ているプレイヤー人数
-  u8 padding[2];
+  u8 send_occupy_result_send_req; ///<占拠結果送信リクエスト
+  u8 padding;
 }INTRUDE_COMM_SYS;
 
