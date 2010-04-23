@@ -45,6 +45,9 @@ typedef enum{
   SOJOURN_TIME_CALC_GET,
 }SOJOURN_TIME_MODE;
 
+///ミッションクリアした回数最大値
+#define INTRUDE_MISSION_CLEAR_COUNT_MAX   (99999)
+
 
 //==============================================================================
 //  構造体定義
@@ -150,6 +153,7 @@ extern void ISC_SAVE_GetDistributionGPower_Array(INTRUDE_SAVE_WORK *intsave, u8 
 //  パレス
 //--------------------------------------------------------------
 extern u32 ISC_SAVE_GetMissionClearCount(INTRUDE_SAVE_WORK *intsave);
+extern u32 ISC_SAVE_IncMissionClearCount(INTRUDE_SAVE_WORK *intsave);
 extern s64 ISC_SAVE_GetPalaceSojournTime(INTRUDE_SAVE_WORK *intsave);
 extern void ISC_SAVE_SetPalaceSojournTime(INTRUDE_SAVE_WORK *intsave, s64 second);
 extern s64 ISC_SAVE_PalaceSojournParam(INTRUDE_SAVE_WORK *intsave, PLAYTIME *playtime, SOJOURN_TIME_MODE mode);

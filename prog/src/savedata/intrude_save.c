@@ -336,6 +336,23 @@ u32 ISC_SAVE_GetMissionClearCount(INTRUDE_SAVE_WORK *intsave)
 
 //==================================================================
 /**
+ * ミッションをクリアした回数をインクリメント
+ *
+ * @param   intsave		
+ *
+ * @retval  u32		    インクリメント後のクリアした回数
+ */
+//==================================================================
+u32 ISC_SAVE_IncMissionClearCount(INTRUDE_SAVE_WORK *intsave)
+{
+  if(intsave->clear_mission_count < INTRUDE_MISSION_CLEAR_COUNT_MAX){
+    intsave->clear_mission_count++;
+  }
+  return intsave->clear_mission_count;
+}
+
+//==================================================================
+/**
  * パレス滞在時間を取得
  *
  * @param   intsave		

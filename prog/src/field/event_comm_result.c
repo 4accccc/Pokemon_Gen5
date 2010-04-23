@@ -205,6 +205,11 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
         }
         MYITEM_AddItem(myitem, ITEM_DERUDAMA, add_num, talk->heapID);
       }
+      
+      { //ミッションクリア回数インクリメント
+        INTRUDE_SAVE_WORK * intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gdata ) );
+        ISC_SAVE_IncMissionClearCount(intsave);
+      }
 
       WORDSET_RegisterNumber( talk->iem.wordset, 0, talk->point, 
         3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
