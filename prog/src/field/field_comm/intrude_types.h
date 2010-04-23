@@ -267,6 +267,7 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 search_count;
   
   STRBUF *search_child[INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX];
+  u32 search_child_trainer_id[INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX];
   u8 search_child_sex[INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX];
   u8 search_child_lang[INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX];
 }INTRUDE_COMM_SYS;

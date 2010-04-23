@@ -501,6 +501,12 @@ static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork)
   
   bcon_buff = GFL_NET_WLGetDirectGFBss(pBss, &id);
   if(id == WB_NET_PALACE_SERVICEID || id == WB_NET_FIELDMOVE_SERVICEID){
+    int i;
+    for(i = 0; i < intcomm->search_count; i++){
+      if(intcomm->search_child_trainer_id[i] == bcon_buff->trainer_id){
+        return;
+      }
+    }
     if(id == WB_NET_PALACE_SERVICEID){
       MyStatus_CopyNameString( 
         &bcon_buff->intrude_myst, intcomm->search_child[intcomm->search_count] );
@@ -515,6 +521,7 @@ static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork)
   	  intcomm->search_child_sex[intcomm->search_count] = GAMEBEACON_Get_Sex(&bcon_buff->info);
   	  intcomm->search_child_lang[intcomm->search_count] = GAMEBEACON_Get_PmLanguage(&bcon_buff->info);
   	}
+  	intcomm->search_child_trainer_id[intcomm->search_count] = bcon_buff->trainer_id;
   	intcomm->search_count++;
   }
 }

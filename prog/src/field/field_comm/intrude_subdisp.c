@@ -1924,7 +1924,7 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
   
   if(intcomm != NULL && GFL_NET_GetConnectNum() <= 1){
     if(intcomm->search_count > 0){
-      u32 msg_id = (intcomm->search_count == 1) ? msg_invasion_info_011 : msg_invasion_info_012;
+      u32 msg_id = (intcomm->search_count == 1) ? msg_invasion_info_012 : msg_invasion_info_013;
       int i;
       for(i = 0; i < intcomm->search_count; i++){
     	  WORDSET_RegisterWord(intsub->wordset, i, intcomm->search_child[i], 
