@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T18:57:59"/>
+	<create user="shimoyamada" host="W00184" date="2010-04-23T18:07:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1309" top="198" right="2007" bottom="826" maximized="no" rayout="Vertical2">
+	<dialog left="1252" top="294" right="1957" bottom="922" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="136" right="1024" bottom="534" visible="yes"/>
-		<band id="0" index="0" style="0000" width="523"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="690"/>
-		<band id="3" index="3" style="0000" width="690"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -673,11 +673,15 @@
 
 	<row id="WIFIMATCH_WIFI_STR_05">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">ゲームシンクせっていを　おこない
-だいすきクラブ　ホームページで[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">ＰＧＬに　ゲームシンクコードが
+とうろく　されていません[BE:01:ページ切り替え（クリア）]
+ゲームシンク　せっていを　おこない
+ＰＧＬ　ホームページで[BE:00:ページ切り替え（行送り）]
 とうろくを　おこなってください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ゲームシンク設定を　行い
-だいすきクラブ　ホームページで[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">ＰＧＬに　ゲームシンクコードが
+登録　されていません[BE:01:ページ切り替え（クリア）]
+ゲームシンク設定を　行い
+ＰＧＬ　ホームページで[BE:00:ページ切り替え（行送り）]
 登録を　おこなってください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -1153,6 +1157,26 @@
 差し替えた　ため[BE:01:ページ切り替え（クリア）]
 大会への　参加が
 解除に　なりました[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="WIFIMATCH_DPC_STR_10" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+		<comment>選手証チェック</comment>
+		<language name="JPN" width="256">さんかを　かいじょすると
+おなじ　たいかいには[BE:00:ページ切り替え（行送り）]
+エントリー　できません[BE:01:ページ切り替え（クリア）]
+かいじょしても　よろしいですか？</language>
+		<language name="JPN_KANJI" width="256">参加を　解除すると
+同じ　大会には[BE:00:ページ切り替え（行送り）]
+エントリー　できません[BE:01:ページ切り替え（クリア）]
+解除しても　よろしいですか？</language>
+	</row>
+
+	<row id="WIFIMATCH_DPC_STR_11" back-color="#ff0000,,,,,,,,,,,,,,,,,">
+		<comment>選手証チェック</comment>
+		<language name="JPN" width="256">たいかいの　さんかを　かいじょ　します
+ほんとうに　よろしいですか？</language>
+		<language name="JPN_KANJI" width="256">大会の　参加を　解除します
+本当に　よろしいですか？</language>
 	</row>
 
 	<row id="WIFIMATCH_DPC_SELECT_00">
