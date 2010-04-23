@@ -63,6 +63,7 @@ extern GMEVENT * EVENT_CreatePokeSelectMusical(
  * @param pokePos   ポケモンの位置
  * @param retDecide 選択結果の格納先ワーク
  * @param retPos    選択位置の格納先ワーク
+ * @param canSelHiden 秘伝選択可能
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_CreateWazaSelect( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16 pokePos , u16* retDecide , u16* retPos );
+extern GMEVENT * EVENT_CreateWazaSelect( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16 pokePos , u16* retDecide , u16* retPos , const BOOL canSelHiden );

@@ -231,6 +231,7 @@ typedef struct
   
   BOOL isWaitDisp;
   BOOL reqPlayVoice;
+  BOOL canSelectHiden;
   
   u16 dataPos;  //âΩî‘ñ⁄Ç©ÅH
   u8  befDataPos;

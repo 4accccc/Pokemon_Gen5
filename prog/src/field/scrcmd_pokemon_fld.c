@@ -887,13 +887,13 @@ VMCMD_RESULT EvCmdPartyPokeWazaSelect( VMHANDLE *core, void *wk )
   u16*         ret_decide = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
   u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第2引数
   u16             pokePos = SCRCMD_GetVMWorkValue( core, work );  // コマンド第3引数
-  u16               value = SCRCMD_GetVMWorkValue( core, work );  // コマンド第4引数(予備値)
+  u16               value = SCRCMD_GetVMWorkValue( core, work );  // コマンド第4引数 秘伝選択可能(1可 0不可)
   SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   
   {
-    GMEVENT *event = EVENT_CreateWazaSelect( gsys , fieldmap , pokePos , ret_decide , ret_wk );
+    GMEVENT *event = EVENT_CreateWazaSelect( gsys , fieldmap , pokePos , ret_decide , ret_wk , (value==0?FALSE:TRUE) );
     SCRIPT_CallEvent( scw, event );
   }
   

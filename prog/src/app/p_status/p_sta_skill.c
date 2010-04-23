@@ -1627,24 +1627,25 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
     work->ktst = GFL_APP_END_KEY;
     if( skillWork->cursorPos < 4 )
     {
-      if( work->psData->waza == 0 )
+      const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
+      const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+skillWork->cursorPos , NULL );
+      const FIELD_SKILL_CHECK_RET skillRet = 
+                FIELD_SKILL_CHECK_CheckForgetSkill( work->psData->game_data , wazaNo , work->heapId );
+      //忘れていいかチェック
+      if( skillRet == FSCR_OK ||
+          work->canSelectHiden == TRUE )
       {
-        //選んで終了
-        work->retVal = SRT_RETURN;
-        work->psData->ret_mode = PST_RET_DECIDE;
-        work->psData->ret_sel = skillWork->cursorPos;
-        work->mainSeq = SMS_FADEOUT;
-        work->clwkExitButton = NULL;
-        PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
-      }
-      else
-      {
-        const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
-        const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+skillWork->cursorPos , NULL );
-        const FIELD_SKILL_CHECK_RET skillRet = 
-                  FIELD_SKILL_CHECK_CheckForgetSkill( work->psData->game_data , wazaNo , work->heapId );
-        //忘れていいかチェック
-        if( skillRet == FSCR_OK )
+        if( work->psData->waza == 0 )
+        {
+          //選んで終了
+          work->retVal = SRT_RETURN;
+          work->psData->ret_mode = PST_RET_DECIDE;
+          work->psData->ret_sel = skillWork->cursorPos;
+          work->mainSeq = SMS_FADEOUT;
+          work->clwkExitButton = NULL;
+          PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
+        }
+        else
         {
           //確認モードへ
           GFL_CLACTPOS cellPos;
@@ -1662,10 +1663,10 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
           PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , TRUE );
           PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
         }
-        else
-        {
-          PSTATUS_SKILL_DispForgetError( work , skillWork , skillRet );
-        }
+      }
+      else
+      {
+        PSTATUS_SKILL_DispForgetError( work , skillWork , skillRet );
       }
     }
     else
@@ -1757,26 +1758,27 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
           const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
           if( PPP_Get( ppp , ID_PARA_waza1+ret , NULL ) != 0 )
           {
-            if( work->psData->waza == 0 )
+            const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
+            const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+skillWork->cursorPos , NULL );
+            const FIELD_SKILL_CHECK_RET skillRet = 
+                      FIELD_SKILL_CHECK_CheckForgetSkill( work->psData->game_data , wazaNo , work->heapId );
+            //忘れていいかチェック
+            if( skillRet == FSCR_OK ||
+                work->canSelectHiden == TRUE )
             {
-              //選んで終了
-              work->retVal = SRT_RETURN;
-              work->psData->ret_mode = PST_RET_DECIDE;
-              work->psData->ret_sel = ret;
-              work->mainSeq = SMS_FADEOUT;
-              work->clwkExitButton = NULL;
-              PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
-              PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
-              PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[ret] , 2 );
-            }
-            else
-            {
-              const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
-              const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+skillWork->cursorPos , NULL );
-              const FIELD_SKILL_CHECK_RET skillRet = 
-                        FIELD_SKILL_CHECK_CheckForgetSkill( work->psData->game_data , wazaNo , work->heapId );
-              //忘れていいかチェック
-              if( skillRet == FSCR_OK )
+              if( work->psData->waza == 0 )
+              {
+                //選んで終了
+                work->retVal = SRT_RETURN;
+                work->psData->ret_mode = PST_RET_DECIDE;
+                work->psData->ret_sel = ret;
+                work->mainSeq = SMS_FADEOUT;
+                work->clwkExitButton = NULL;
+                PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
+                PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
+                PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[ret] , 2 );
+              }
+              else
               {
                 //確認モードへ
                 GFL_CLACTPOS cellPos;
@@ -1798,14 +1800,14 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
                 PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , TRUE );
                 PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
               }
-              else
-              {
-                //一回カーソル位置を変えてから
-                PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
-                skillWork->changeTarget = ret;
-                PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[ret] , 2 );
-                PSTATUS_SKILL_DispForgetError( work , skillWork , skillRet );
-              }
+            }
+            else
+            {
+              //一回カーソル位置を変えてから
+              PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
+              skillWork->changeTarget = ret;
+              PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[ret] , 2 );
+              PSTATUS_SKILL_DispForgetError( work , skillWork , skillRet );
             }
           }
         }

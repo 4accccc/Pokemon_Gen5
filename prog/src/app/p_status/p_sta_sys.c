@@ -130,7 +130,15 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   work->mainSeq = SMS_FADEIN;
   work->clwkExitButton = NULL;
   work->reqPlayVoice = FALSE;
+  work->canSelectHiden = FALSE;
   work->ktst = GFL_UI_CheckTouchOrKey();
+  
+  //モード例外分岐
+  if( work->psData->mode == PST_MODE_WAZAADD_HIDEN )
+  {
+    work->psData->mode = PST_MODE_WAZAADD;
+    work->canSelectHiden = TRUE;
+  }
 
   if( work->psData->ppt == PST_PP_TYPE_POKEPASO )
   {
@@ -256,6 +264,14 @@ const BOOL PSTATUS_TermPokeStatus( PSTATUS_WORK *work )
     {
       GAMEDATA_SetShortCut( work->psData->game_data, SHORTCUT_ID_PSTATUS_STATUS+i , work->shortCutCheck[i] );
     }
+  }
+
+
+  //モード例外分岐
+  if( work->canSelectHiden == TRUE )
+  {
+    work->psData->mode = PST_MODE_WAZAADD_HIDEN;
+    work->canSelectHiden = FALSE;
   }
 
   GFL_UI_SetTouchOrKey( work->ktst );

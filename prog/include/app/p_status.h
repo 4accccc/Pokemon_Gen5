@@ -60,6 +60,7 @@ enum {
   PST_MODE_NORMAL = 0,  // 通常
   PST_MODE_NO_WAZACHG,  // 技入れ替え不可
   PST_MODE_WAZAADD,   // 技覚え/技忘れ
+  PST_MODE_WAZAADD_HIDEN,   // 秘伝可能Ver
   PST_MODE_PORUTO,    // ポルト使用       （使わない）
   PST_MODE_CONDITION,   // コンディション変更デモ （使わない）
 };

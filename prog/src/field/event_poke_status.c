@@ -269,10 +269,11 @@ typedef struct
  * @param pokePos   ポケモンの位置
  * @param retDecide 選択結果の格納先ワーク
  * @param retPos    選択位置の格納先ワーク
+ * @param canSelHiden 秘伝選択可能
  */
 //------------------------------------------------------------------
 GMEVENT * EVENT_CreateWazaSelect( 
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16 pokePos , u16* retDecide , u16* retPos )
+    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16 pokePos , u16* retDecide , u16* retPos , const BOOL canSelHiden )
 {
 	GMEVENT* event;
 	SELECT_WAZA_WORK* wsw;
@@ -284,11 +285,18 @@ GMEVENT * EVENT_CreateWazaSelect(
   ps_data    = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PLIST_DATA) );
   ps_data->ppd = party;
   ps_data->ppt = PST_PP_TYPE_POKEPARTY;
-  ps_data->mode = PST_MODE_WAZAADD;
   ps_data->max = PokeParty_GetPokeCount( party );
   ps_data->pos = pokePos;
   ps_data->page = PPT_SKILL;
   ps_data->waza = 0;
+  if( canSelHiden == TRUE )
+  {
+    ps_data->mode = PST_MODE_WAZAADD_HIDEN;
+  }
+  else
+  {
+    ps_data->mode = PST_MODE_WAZAADD;
+  }
   ps_data->canExitButton = FALSE;
   ps_data->game_data = gdata;
 
