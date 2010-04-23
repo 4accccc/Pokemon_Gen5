@@ -69,7 +69,6 @@ typedef struct {
   PokeType        wazaType;
   WazaDamageType  damageType;
   WazaTarget      targetType;
-  u8              fTypeFlat;  ///< タイプ相性を無視する（効果チェック、ダメージ計算時など）
 
 }SVFL_WAZAPARAM;
 

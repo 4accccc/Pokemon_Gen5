@@ -6705,7 +6705,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
       BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_RandomHosei, ratio, fxDamage);
     }
     // ƒ^ƒCƒvˆê’v•â³
-    if( !(wazaParam->fTypeFlat) )
+    if( wazaParam->wazaType != POKETYPE_NULL )
     {
       fx32 ratio = scEvent_CalcTypeMatchRatio( wk, attacker, wazaParam->wazaType );
       fxDamage = BTL_CALC_MulRatio( fxDamage, ratio );
@@ -10469,18 +10469,28 @@ static void scEvent_GetWazaParam( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_PO
     BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, WAZADATA_GetType(waza) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_USER_TYPE, BPP_GetPokeType(attacker) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE_TYPE, WAZADATA_GetDamageType(waza) );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_TARGET_TYPE, WAZADATA_GetParam(waza, WAZAPARAM_TARGET) );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FLAT_FLAG, FALSE );
+
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_PARAM );
-    param->wazaID = waza;
+
+    param->wazaID      = waza;
     param->wazaType    = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
     param->userType    = BTL_EVENTVAR_GetValue( BTL_EVAR_USER_TYPE );
     param->damageType  = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE_TYPE );
-    param->fTypeFlat   = BTL_EVENTVAR_GetValue( BTL_EVAR_FLAT_FLAG );
-    if( waza != WAZANO_NOROI ){
-      param->targetType = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
-    }else{
-      param->targetType = BTL_CALC_GetNoroiTargetType( attacker );
+    param->targetType  = BTL_EVENTVAR_GetValue( BTL_EVAR_TARGET_TYPE );
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_FLAT_FLAG) ){
+      param->wazaType = POKETYPE_NULL;
     }
+
+    /*
+      if( waza != WAZANO_NOROI ){
+        param->targetType = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
+      }else{
+        param->targetType = BTL_CALC_GetNoroiTargetType( attacker );
+      }
+    */
+
   BTL_EVENTVAR_Pop();
 }
 //----------------------------------------------------------------------------------
@@ -11110,7 +11120,7 @@ static void scEvent_ItemEquipTmp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp,
 static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
   BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, BOOL fNoEffectMsg )
 {
-  if( wazaParam->fTypeFlat ){
+  if( wazaParam->wazaType == POKETYPE_NULL ){
     return BTL_TYPEAFF_100;
   }
 

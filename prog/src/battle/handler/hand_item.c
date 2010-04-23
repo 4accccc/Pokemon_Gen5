@@ -4963,6 +4963,7 @@ static void common_Juel_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_STD, BTL_STRID_STD_Juel );
     HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
     HANDEX_STR_AddArg( &param->exStr, BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) );
+    work[0] = 0;
   }
 }
 

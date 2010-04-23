@@ -188,6 +188,7 @@ static void handler_KuroiKiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Haneru( u32* numElems );
 static void handler_Haneru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Noroi( u32* numElems );
+static void handler_Noroi_WazaParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Noroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Denjiha( u32* numElems );
 static void handler_Denjiha_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -1787,12 +1788,23 @@ static void handler_Haneru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 static const BtlEventHandlerTable*  ADD_Noroi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA, handler_Noroi },    // 未分類ワザハンドラ
+    { BTL_EVENT_WAZA_PARAM,        handler_Noroi_WazaParam }, // ワザパラメータ決定ハンドラ
+    { BTL_EVENT_UNCATEGORIZE_WAZA, handler_Noroi           }, // 未分類ワザハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-
+// ワザパラメータ決定ハンドラ
+static void handler_Noroi_WazaParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    WazaTarget targetType = BTL_CALC_GetNoroiTargetType( bpp );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_TARGET_TYPE, targetType );
+  }
+}
+// 未分類ワザハンドラ
 static void handler_Noroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -1802,7 +1814,7 @@ static void handler_Noroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     if( BPP_IsMatchType(bpp, POKETYPE_GHOST) )
     {
       int restHP = BPP_GetValue( bpp, BPP_HP );
-      if( restHP > 1 )
+      if( restHP > 0 )
       {
         u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
         if( targetPokeID != BTL_POKEID_NULL )
@@ -7886,8 +7898,8 @@ static void handler_Tuibamu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static const BtlEventHandlerTable* ADD_Waruagaki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_PARAM,      handler_Waruagaki_WazaParam     }, // ワザパラメータ取得
-    { BTL_EVENT_DAMAGEPROC_END,  handler_Waruagaki               }, // ダメージプロセス終了ハンドラ
+    { BTL_EVENT_WAZA_PARAM,      handler_Waruagaki_WazaParam   }, // ワザパラメータ取得
+    { BTL_EVENT_DAMAGEPROC_END,  handler_Waruagaki             }, // ダメージプロセス終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
