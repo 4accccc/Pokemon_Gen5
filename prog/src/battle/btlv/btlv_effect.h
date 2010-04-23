@@ -88,7 +88,8 @@ enum{
   BTLEFF_KARADEHASAMU,                        //からではさむ
   BTLEFF_UZUSIO,                              //うずしお
   BTLEFF_SUNAZIGOKU,                          //すなじごく
-  BTLEFF_NEWOHARU,                            //ねをはる
+  BTLEFF_NEWOHARU,                            //ねをはる  40
+  BTLEFF_ZOOM_IN,                            //カメラズームイン
 
   BTLEFF_STATUS_EFFECT_END,
 };
