@@ -8429,9 +8429,9 @@
 		<language name="JPN" width="256">VDEMO-02</language>
 		<language name="JPN_KANJI" width="256">VDEMO-02</language>
 	</row>
-	<row id="msg_seq_se_dmy_338">
-		<language name="JPN" width="256">DMY-338</language>
-		<language name="JPN_KANJI" width="256">DMY-338</language>
+	<row id="msg_seq_se_sys_99">
+		<language name="JPN" width="256">SYS-99</language>
+		<language name="JPN_KANJI" width="256">SYS-99</language>
 	</row>
 	<row id="msg_seq_se_dmy_339">
 		<language name="JPN" width="256">DMY-339</language>
