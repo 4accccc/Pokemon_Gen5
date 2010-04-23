@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T15:00:36"/>
+	<create user="matsumiya" host="W00224" date="2010-04-23T15:38:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1294" top="105" right="1999" bottom="733" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="301" right="1263" bottom="699" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -498,20 +498,20 @@
 
 	<row id="TM_PLACE_C03_03" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>名所３</comment>
-		<language name="JPN" width="256">すれちがいちょうさたい</language>
-		<language name="JPN_KANJI" width="256">すれ違い調査隊本部</language>
+		<language name="JPN" width="256">ちょうさたいほんぶ</language>
+		<language name="JPN_KANJI" width="256">調査隊本部</language>
 	</row>
 
 	<row id="TM_PLACE_C03_04" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>名所４</comment>
-		<language name="JPN" width="256">せいめいはんだんのいえ</language>
-		<language name="JPN_KANJI" width="256">姓名判断師の家</language>
+		<language name="JPN" width="256">せいめいはんだん</language>
+		<language name="JPN_KANJI" width="256">姓名判断師</language>
 	</row>
 
 	<row id="TM_PLACE_C03_05" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>名所５</comment>
-		<language name="JPN" width="256">マッサージのいえ</language>
-		<language name="JPN_KANJI" width="256">マッサージお姉さんの家</language>
+		<language name="JPN" width="256">ポケモンマッサージ</language>
+		<language name="JPN_KANJI" width="256">ポケモンマッサージ</language>
 	</row>
 
 	<row id="TM_PLACE_C03_06" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
@@ -620,8 +620,8 @@
 
 	<row id="TM_PLACE_C06_04" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>名所４</comment>
-		<language name="JPN" width="256">フキヨセカーゴサービス</language>
-		<language name="JPN_KANJI" width="256">フキヨセカーゴサービス</language>
+		<language name="JPN" width="256">カーゴサービス</language>
+		<language name="JPN_KANJI" width="256">カーゴサービス</language>
 	</row>
 
 	<row id="TM_GUIDE_C07_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
