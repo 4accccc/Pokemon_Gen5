@@ -1607,7 +1607,9 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
   int hit, hit_tp;
 
   //‰º‰æ–Ê•ÏŒ`’†‚Í“ü—Í‚ð–³Ž‹
-  if( ( biw->tcb_execute_flag ) || ( PaletteFadeCheck( biw->pfd ) ) || ( biw->button_reaction ) )
+  if( ( biw->tcb_execute_flag ) ||
+      ( PaletteFadeCheck( biw->pfd ) ) ||
+      ( biw->button_reaction ) )
   {
     return  FALSE;
   }
@@ -2846,6 +2848,10 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir )
   biw->tcb_execute_flag = 1;
   ttw->biw = biw;
   GFL_TCB_AddTask( biw->tcbsys, TCB_TransformRotate2Rotate, ttw, 1 );
+
+  BTLV_EFFECT_Stop();
+  biw->camera_work_wait = 0;
+  BTLV_EFFECT_SetCameraFocus( rotate_focus_pos[ biw->rotate_scr ], BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
 #else
   int i, j;
   int old_rotate_pos = biw->rotate_flag;
@@ -4503,3 +4509,4 @@ static  inline  void  BTLV_INPUT_SetFocus( BTLV_INPUT_WORK* biw )
 { 
   BTLV_EFFECT_SetCameraFocus( biw->focus_pos, BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
 }
+
