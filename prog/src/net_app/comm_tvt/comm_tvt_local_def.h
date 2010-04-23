@@ -207,6 +207,7 @@ typedef enum
   CTOAM_STAMP_DECIDE3,
   CTOAM_STAMP_DECIDE4,
   CTOAM_STAMP_DECIDE5,
+  CTOAM_BUTTON_SELECT,
 }COMM_TVT_OBJ_ANM_MAIN;
 
 //======================================================================
