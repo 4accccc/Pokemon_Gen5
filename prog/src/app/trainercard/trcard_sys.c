@@ -186,8 +186,8 @@ GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void
   TR_CARD_SYS* wk = (TR_CARD_SYS*)mywk;
   switch(*seq){
   case CARD_OR_BADGE:
-    // 未クリアならバッジへ、クリアしていればカードへ
-    if(wk->tcp->TrCardData->Clear_y==0){
+    // 未クリアならバッジへ、殿堂入りしていればカードへ
+    if(wk->tcp->TrCardData->Clear_y==0 && wk->tcp->edit_possible==1){
       *seq = BADGE_INIT;
     }else{
       *seq = CARD_INIT;
