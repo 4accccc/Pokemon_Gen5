@@ -16,9 +16,8 @@ enum {
 	NARC_ircranking_gra_frame_NCGR = 2,
 	NARC_ircranking_gra_top_NCGR = 3,
 	NARC_ircranking_gra_back_NSCR = 4,
-	NARC_ircranking_gra_frame_NSCR = 5,
-	NARC_ircranking_gra_top_NSCR = 6,
-	NARC_ircranking_gra_top2_NSCR = 7
+	NARC_ircranking_gra_top_NSCR = 5,
+	NARC_ircranking_gra_top2_NSCR = 6
 };
 
 /* NARC_IRCRANKING_GRA_NAIX_ */
