@@ -45,12 +45,6 @@ static const SHOP_ITEM BP_shop1[] = {
 
 // BPショップ２号
 static const SHOP_ITEM BP_shop2[] = {
-		{ ITEM_TAURIN,	1, },
-};
-#define BP_SHOP2_MAX	(NELEMS(BP_shop2))
-
-// BP技ショップ１号
-static const SHOP_ITEM BP_waza1[] = {
 		{ ITEM_WAZAMASIN23,	36, },
 		{ ITEM_WAZAMASIN48,	36, },
 		{ ITEM_WAZAMASIN87,	36, },
@@ -61,6 +55,12 @@ static const SHOP_ITEM BP_waza1[] = {
 		{ ITEM_WAZAMASIN60,	48, },
 		{ ITEM_WAZAMASIN64,	48, },
 		{ ITEM_WAZAMASIN77,	48, },
+};
+#define BP_SHOP2_MAX	(NELEMS(BP_shop2))
+
+// BP技ショップ１号
+static const SHOP_ITEM BP_waza1[] = {
+		{ ITEM_TAURIN,	1, },
 };
 #define BP_WAZA1_MAX	(NELEMS(BP_waza1))
 
