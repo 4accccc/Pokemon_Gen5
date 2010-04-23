@@ -1266,7 +1266,7 @@ static BOOL errchk_action_default(const GAMEBEACON_INFO* info )
 static BOOL errchk_action_trainer_battle(const GAMEBEACON_INFO* info )
 {
   if( info->action.tr_no == TRID_NULL || info->action.tr_no >= TRID_MAX ){
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"%d\n",info->action.tr_no );
     return TRUE;
   }
   return FALSE;
@@ -1276,7 +1276,7 @@ static BOOL errchk_action_poke_monsno(const GAMEBEACON_INFO* info )
 {
   if( info->action.monsno == 0 || 
       info->action.monsno > MONSNO_END ){
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"%d\n",info->action.monsno);
     return TRUE;
   }
   return FALSE;
@@ -1291,7 +1291,7 @@ static BOOL errchk_action_poke_double(const GAMEBEACON_INFO* info )
 {
   if( info->action.monsno == 0 || 
       info->action.monsno > MONSNO_END ){
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"%d\n",info->action.monsno);
     return TRUE;
   }
   return FALSE;
@@ -1300,7 +1300,7 @@ static BOOL errchk_action_poke_double(const GAMEBEACON_INFO* info )
 static BOOL errchk_action_itemno(const GAMEBEACON_INFO* info )
 {
   if( info->action.itemno == ITEM_DUMMY_DATA || info->action.itemno > ITEM_DATA_MAX ){
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"%d\n",info->action.itemno);
     return TRUE;
   }
   return FALSE;
@@ -1309,7 +1309,7 @@ static BOOL errchk_action_itemno(const GAMEBEACON_INFO* info )
 static BOOL errchk_action_playtime(const GAMEBEACON_INFO* info )
 {
   if( info->play_hour > 999 | info->play_min > 59 ){
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"hour %d, min %d\n",info->play_hour, info->play_min);
     return TRUE;
   }
   return FALSE;
@@ -1318,7 +1318,7 @@ static BOOL errchk_action_playtime(const GAMEBEACON_INFO* info )
 static BOOL errchk_action_thanks_count(const GAMEBEACON_INFO* info )
 {
   if( info->action.thankyou_count > 99999 ){
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"%d\n",info->action.thankyou_count);
     return TRUE;
   }
   return FALSE;
@@ -1328,7 +1328,7 @@ static BOOL errchk_action_haifu_mons(const GAMEBEACON_INFO* info )
 {
   if( info->action.distribution.monsno  == 0 ||
       info->action.distribution.monsno > MONSNO_END ){
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"%d\n",info->action.distribution.monsno);
     return TRUE;
   }
   return FALSE;
@@ -1338,7 +1338,7 @@ static BOOL errchk_action_haifu_item(const GAMEBEACON_INFO* info )
 {
   if( info->action.distribution.itemno  == ITEM_DUMMY_DATA ||
       info->action.distribution.itemno > ITEM_DATA_MAX ){
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"%d\n",info->action.distribution.itemno);
     return TRUE;
   }
   return FALSE;
@@ -1348,7 +1348,7 @@ static BOOL errchk_action_waza(const GAMEBEACON_INFO* info )
 {
   if( info->action.wazano  == WAZANO_NULL ||
       info->action.wazano >= WAZANO_MAX ){
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"%d\n",info->action.wazano);
     return TRUE;
   }
   return FALSE;
@@ -1356,7 +1356,7 @@ static BOOL errchk_action_waza(const GAMEBEACON_INFO* info )
 //エラーチェック サブウェイ連勝数タイプ 
 static BOOL errchk_action_victory(const GAMEBEACON_INFO* info )
 {
-#if 0
+#if 1
   if( info->action.victory_count ==0 || info->action.victory_count > 7 ){
     GF_ASSERT_MSG(0,"%d\n",info->action.victory_count);
     return TRUE;
@@ -1368,7 +1368,7 @@ static BOOL errchk_action_victory(const GAMEBEACON_INFO* info )
 static BOOL errchk_action_th_rank(const GAMEBEACON_INFO* info )
 {
   if( info->action.trial_house_rank > TH_RANK_MASTER){
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"%d\n",info->action.trial_house_rank);
     return TRUE;
   }
   return FALSE;
@@ -1377,7 +1377,7 @@ static BOOL errchk_action_th_rank(const GAMEBEACON_INFO* info )
 static BOOL errchk_action_gpower(const GAMEBEACON_INFO* info )
 {
   if( info->action.gpower_id >= GPOWER_ID_MAX ){
-    GF_ASSERT(0);
+    GF_ASSERT_MSG(0,"%d\n",info->action.gpower_id);
     return TRUE;
   }
   return FALSE;
