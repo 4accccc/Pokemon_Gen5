@@ -806,6 +806,29 @@ void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man)
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  FIXアングルカメラ　ライン中心のみ
+ *
+ *	@param	man
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_CAMERAFUNC_FixAngleCamera_Center(const FIELD_RAIL_MAN* man)
+{
+	const FIELD_RAIL_WORK* work = FIELD_RAIL_MAN_GetBindWork( man );
+	FIELD_CAMERA* cam = FIELD_RAIL_MAN_GetCamera( man );
+  VecFx32 pos;
+
+  FIELD_RAIL_CAMERAFUNC_FixAngleCamera( man );
+
+  //トレーナーとのバインドをきり、自分で設定
+  FIELD_CAMERA_FreeTarget( cam );
+
+  FIELD_RAIL_GetLineCenterPos( work, &pos );
+  FIELD_CAMERA_SetTargetPos( cam, &pos );
+}
+
+
 //------------------------------------------------------------------
 /**
  * @brief カメラ指定：保持する二つのPOINTのangleバリューを補完する
@@ -902,6 +925,26 @@ void FIELD_RAIL_CAMERAFUNC_OfsNotTraceAngleCamera(const FIELD_RAIL_MAN* man)
   FIELD_CAMERA_FreeTarget( cam );
 
   FIELD_RAIL_MAN_GetBindWorkPos( man, &pos );
+  FIELD_CAMERA_SetTargetPos( cam, &pos );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラオフセット　常に中心
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera_Center(const FIELD_RAIL_MAN* man)
+{
+	const FIELD_RAIL_WORK* work = FIELD_RAIL_MAN_GetBindWork( man );
+	FIELD_CAMERA* cam = FIELD_RAIL_MAN_GetCamera( man );
+  VecFx32 pos;
+
+  FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(man);
+
+  //トレーナーとのバインドをきり、自分で設定
+  FIELD_CAMERA_FreeTarget( cam );
+
+  FIELD_RAIL_GetLineCenterPos( work, &pos );
   FIELD_CAMERA_SetTargetPos( cam, &pos );
 }
 

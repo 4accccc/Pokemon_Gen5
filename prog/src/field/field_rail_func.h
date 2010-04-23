@@ -86,6 +86,7 @@ typedef struct
 	u32 len;
 } RAIL_CAMERAFUNC_FIXANGLE_WORK;
 extern void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man);
+extern void FIELD_RAIL_CAMERAFUNC_FixAngleCamera_Center(const FIELD_RAIL_MAN* man);
 
 //------------------------------------------------------------------
 //  オフセットアングルカメラ	（ライン専用）
@@ -93,6 +94,7 @@ extern void FIELD_RAIL_CAMERAFUNC_FixAngleCamera(const FIELD_RAIL_MAN* man);
 //------------------------------------------------------------------
 extern void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera(const FIELD_RAIL_MAN* man);
 extern void FIELD_RAIL_CAMERAFUNC_OfsNotTraceAngleCamera(const FIELD_RAIL_MAN* man);
+extern void FIELD_RAIL_CAMERAFUNC_OfsAngleCamera_Center(const FIELD_RAIL_MAN* man);
 
 //------------------------------------------------------------------
 //  完全固定カメラ
