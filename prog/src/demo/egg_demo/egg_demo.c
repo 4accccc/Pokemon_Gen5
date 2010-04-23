@@ -463,6 +463,10 @@ static GFL_PROC_RESULT Egg_Demo_ProcInit( GFL_PROC* proc, int* seq, void* pwk, v
   // ローカルPROCシステムを作成
   work->local_procsys = GFL_PROC_LOCAL_boot( work->heap_id );
 
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
+  GFL_NET_ReloadIcon();
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -488,6 +492,9 @@ static GFL_PROC_RESULT Egg_Demo_ProcExit( GFL_PROC* proc, int* seq, void* pwk, v
     GFL_PROC_FreeWork( proc );
     GFL_HEAP_DeleteHeap( HEAPID_EGG_DEMO );
   }
+
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_DefaultLCD();
 
   return GFL_PROC_RES_FINISH;
 }
@@ -895,6 +902,7 @@ static void Egg_Demo_Exit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 
   // グラフィック、フォントなど
   {
+    PRINTSYS_QUE_Clear( work->print_que );
     PRINTSYS_QUE_Delete( work->print_que );
     GFL_FONT_Delete( work->font );
     EGG_DEMO_GRAPHIC_Exit( work->graphic );

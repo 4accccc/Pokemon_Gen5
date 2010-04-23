@@ -30,7 +30,8 @@
 #include "../../../../resource/egg_demo/egg_demo_setup.h"
 #include "egg_demo_particle.naix"
 // サウンド
-#include "sound/pm_voice.h"
+//#include "sound/pm_voice.h"
+#include "sound/pm_wb_voice.h"  // wbではpm_voiceではなくこちらを使う
 #include "sound/wb_sound_data.sadl"
 #include "sound/pm_sndsys.h"
 
@@ -311,7 +312,7 @@ struct _EGG_DEMO_VIEW_WORK
   // フラグなど
   BOOL                     b_start;
   BOOL                     b_white;
-  u32                      voicePlayerIdx;
+  //u32                      voicePlayerIdx;
   u32                      wait_count;
 
   // マナフィ以外の普通のタマゴの揺れ
@@ -447,7 +448,7 @@ EGG_DEMO_VIEW_WORK* EGG_DEMO_VIEW_Init(
   {
     work->b_start          = FALSE;
     work->b_white          = FALSE;
-    work->voicePlayerIdx   = 0;
+    //work->voicePlayerIdx   = 0;
     work->wait_count       = 0;
   }
 
@@ -749,14 +750,16 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
         {
           u32 monsno  = PP_Get( work->pp, ID_PARA_monsno, NULL );
           u32 form_no = PP_Get( work->pp, ID_PARA_form_no, NULL );
-          work->voicePlayerIdx = PMVOICE_Play( monsno, form_no, 64, FALSE, 0, 0, FALSE, 0 );
+          //work->voicePlayerIdx = PMVOICE_Play( monsno, form_no, 64, FALSE, 0, 0, FALSE, 0 );
+          PMV_PlayVoice( monsno, form_no );
         }
       }
     }
     break;
   case STEP_MON_CRY:
     {
-      if( !PMVOICE_CheckPlay( work->voicePlayerIdx ) )
+      //if( !PMVOICE_CheckPlay( work->voicePlayerIdx ) )
+      if( !PMV_CheckPlay() )
       {
         // 次へ
         work->step = STEP_MON_END;
