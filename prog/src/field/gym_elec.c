@@ -927,8 +927,13 @@ void GYM_ELEC_End(FIELDMAP_WORK *fieldWork)
   u8 i;
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
   GYM_ELEC_TMP *tmp = GMK_TMP_WK_GetWork(fieldWork, GYM_ELEC_TMP_ASSIGN_ID);
-
+  FIELD_SOUND* fs;
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
+    fs = GAMEDATA_GetFieldSound( gamedata );
+  }
   //‚r‚dƒXƒgƒbƒv
+  FSND_StopEnvSE( fs, GYM_ELEC_SE_DRIVE );
   PMSND_StopSE();
 /**
   for(i=0;i<RALE_NUM_MAX;i++){
