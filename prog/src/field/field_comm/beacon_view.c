@@ -135,7 +135,6 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
   wk->tmpHeapID = GFL_HEAP_LOWID( HEAPID_FIELD_SUBSCREEN );
 
   wk->arc_handle = GFL_ARC_OpenDataHandle(ARCID_BEACON_STATUS, wk->heap_sID);
-  wk->active = 0xFF;  //–³Œø’l‚Å‰Šú‰»
 
   _sub_DataSetup(wk);
   _sub_SystemSetup(wk);
@@ -149,6 +148,9 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
   wk->init_f = TRUE;
   BeaconView_InitialDraw( wk );
   wk->init_f = FALSE;
+  
+  wk->active = FALSE;  //–³Œø’l‚Å‰Šú‰»
+  BeaconView_SetViewPassive( wk, TRUE );
 
   return wk;
 }
@@ -214,7 +216,7 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
     {
       OSTick tick = OS_GetTick()-s_tick;
       if( tick > 100 ){
-//        IWASAWA_Printf("BeaconView Passive Tick = %d\n", OS_GetTick()-s_tick);
+        IWASAWA_Printf("BeaconView Passive Tick = %d\n", OS_GetTick()-s_tick);
       }
     }
 #endif
@@ -259,7 +261,7 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
 #ifdef PM_DEBUG
   {
     OSTick tick = OS_GetTick()-s_tick;
-    if( tick > 1000 ){
+    if( tick > 100 ){
       IWASAWA_Printf("BeaconView seq = %d tick = %d\n", before_seq, tick );
     }
   }
@@ -277,12 +279,12 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
 {
 #ifdef PM_DEBUG
   OSTick s_tick,e_tick,t_tick;  // = OS_GetTick();
-  s_tick = OS_GetTick();
 #endif
 
   PRINTSYS_QUE_Main( wk->printQue );
 
 #ifdef PM_DEBUG
+  s_tick = OS_GetTick();
   if(!wk->deb_stack_check_throw ){
     GAMEBEACON_Stack_Update( wk->infoStack );
   }
@@ -294,7 +296,7 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
 #ifdef PM_DEBUG
   e_tick = OS_GetTick();
   t_tick = e_tick-s_tick;
-  if( t_tick > 3000 ){
+  if( t_tick > 100 ){
     IWASAWA_Printf("BeaconView Draw tick %d\n",  t_tick );
   }
   debug_InputCheck( wk );
