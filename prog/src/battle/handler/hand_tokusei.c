@@ -224,7 +224,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_DownLoad( u32* numElems );
 static void handler_Yotimu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yotimu( u32* numElems );
 static void handler_KikenYoti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static BOOL _check_kikenyoti_poke( const BTL_POKEPARAM* bppUser, const BTL_POKEPARAM* bppEnemy );
+static BOOL check_kikenyoti_poke( const BTL_POKEPARAM* bppUser, const BTL_POKEPARAM* bppEnemy );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_KikenYoti( u32* numElems );
 static void handler_Omitoosi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Omitoosi( u32* numElems );
@@ -3439,7 +3439,7 @@ static void handler_KikenYoti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     for(i=0; i<pokeCnt; ++i)
     {
       bppEnemy = BTL_SVFTOOL_GetPokeParam( flowWk, ePokeID[i] );
-      if( _check_kikenyoti_poke(bppUser, bppEnemy) )
+      if( check_kikenyoti_poke(bppUser, bppEnemy) )
       {
         break;
       }
@@ -3456,11 +3456,13 @@ static void handler_KikenYoti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     }
   }
 }
-static BOOL _check_kikenyoti_poke( const BTL_POKEPARAM* bppUser, const BTL_POKEPARAM* bppEnemy )
+/**
+ *  きけんよち該当ポケモンかチェック
+ */
+static BOOL check_kikenyoti_poke( const BTL_POKEPARAM* bppUser, const BTL_POKEPARAM* bppEnemy )
 {
   WazaID  waza;
   PokeTypePair user_type;
-  PokeType     waza_type;
   u8 waza_cnt, i;
 
   user_type = BPP_GetPokeType( bppUser );
@@ -3472,8 +3474,11 @@ static BOOL _check_kikenyoti_poke( const BTL_POKEPARAM* bppUser, const BTL_POKEP
     if( WAZADATA_GetCategory(waza) == WAZADATA_CATEGORY_ICHIGEKI ){ return TRUE; }
 
     // 自分に相性バツグンな奴もキケン
-    waza_type = WAZADATA_GetType( waza );
-    if( BTL_CALC_TypeAffPair(waza_type, user_type) > BTL_TYPEAFF_100 ){ return TRUE; }
+    if( WAZADATA_IsDamage(waza) )
+    {
+      PokeType  waza_type = WAZADATA_GetType( waza );
+      if( BTL_CALC_TypeAffPair(waza_type, user_type) > BTL_TYPEAFF_100 ){ return TRUE; }
+    }
 
   }
   return FALSE;
