@@ -888,7 +888,12 @@ static JIKI_MOVEORDER gjiki_CheckMoveOrder_Stop(
       old_dir = MMDL_GetDirDisp( mmdl );
       
       if( input->dir != old_dir && input->debug_flag == FALSE ){
-        return( JIKI_MOVEORDER_TURN );
+        //ƒ_ƒbƒVƒ…“ü—Í’†‚ÍUŒü‚«‚ð–³Œø‰»
+        if( (input->mbit & PLAYER_MOVEBIT_DASH) == 0 ){
+          return( JIKI_MOVEORDER_TURN );
+        }else if( (input->key_cont & PLAYER_PAD_DASH) == 0 ){
+          return( JIKI_MOVEORDER_TURN );
+        }
       }
       
       return( gjiki_CheckMoveOrder_Walk( gjiki, mmdl, input) );
