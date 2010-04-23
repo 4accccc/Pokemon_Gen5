@@ -1411,11 +1411,6 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
     targetID=1;
   }
 
-  
-  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
-    return;
-  }
-
   if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
     if(pWork->pAppWin==NULL){
       POKEMONTRADE_MESSAGE_CancelButtonStart(pWork, gtsnego_info_21);
@@ -1478,6 +1473,11 @@ static void _pokeSendDataState(POKEMON_TRADE_WORK* pWork)
 {
   BOOL bMode = POKEMONTRADEPROC_IsNetworkMode(pWork);
 
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
+
+  
   if( !bMode ){
     pWork->changeFactor[0]=POKETRADE_FACTOR_SINGLECHANGE;
     pWork->changeFactor[1]=POKETRADE_FACTOR_SINGLECHANGE;
@@ -2203,6 +2203,10 @@ static void _endWaitStateNetwork3(POKEMON_TRADE_WORK* pWork)
 static void _endWaitStateNetwork22(POKEMON_TRADE_WORK* pWork)
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     u8 flg = POKEMONTORADE_SEQ_CANCEL;
