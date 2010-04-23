@@ -112,7 +112,7 @@ static void Snd_DataSetByScene( int a, int b, int c ){}
 static void Snd_SceneSet( int a ){}
 static int Snd_NowBgmNoGet(void){ return 0;}
 static void Snd_PlayerSetInitialVolumeBySeqNo( int a,  int b){}
-static void* SaveData_GetEventWork(void* a){ return NULL; }
+//static void* SaveData_GetEventWork(void* a){ return NULL; }
 static BOOL SysFlag_ArriveGet(void* a,int b){ return TRUE;}
 static void* SaveData_Get(void* a, int b){ return NULL; }
 static void* SaveData_GetFrontier(void* a){ return NULL; }
