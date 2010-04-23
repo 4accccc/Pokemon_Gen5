@@ -22,7 +22,7 @@
 #include "event_mapchange.h"  // for EVENT_ChangeMapPosNoFade
 #include "event_fieldmap_control.h"  // for EVENT_FieldBrightOut
 #include "field_gimmick_league_front02.h"  // for EVENT_LEAGUE_FRONT_02_GIMMICK_GetLiftDownEvent
-#include "eventwork.h"  // for EVENTWORK_
+#include "field/eventwork.h"  // for EVENTWORK_
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  // for SYS_FLAG_BIGFOUR_xxxx
 #include "sound/pm_sndsys.h" // for PMSND_xxxx
 #include "event_camera_shake.h"

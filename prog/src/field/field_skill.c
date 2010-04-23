@@ -20,7 +20,7 @@
 #include "fskill_sorawotobu.h"
 #include "fieldskill_mapeff.h"
 #include "fskill_osyaberi.h"
-#include "eventwork.h"
+#include "field/eventwork.h"
 #include "field/zonedata.h"
 #include "waza_tool/wazano_def.h"
 

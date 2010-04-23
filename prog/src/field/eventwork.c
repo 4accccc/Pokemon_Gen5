@@ -7,7 +7,7 @@
  * @date	05.10.22
  */
 //======================================================================
-#include "eventwork.h"
+#include "field/eventwork.h"
 #include "eventwork_def.h"
 
 static u8 * EVENTWORK_GetEventFlagAdrs( EVENTWORK * ev, u16 flag_no );

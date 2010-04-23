@@ -16,7 +16,6 @@
 #include <gflib.h>
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
-#include "eventwork.h"
 
 #include "fldmmdl.h"    //MMDL
 

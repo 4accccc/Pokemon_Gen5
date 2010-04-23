@@ -20,7 +20,7 @@
 
 #include "field_g3d_mapper.h"
 #include "field_nogrid_mapper.h"
-#include "eventwork.h"
+#include "field/eventwork.h"
 #include "map_attr.h"
 #include "field_effect.h"
 

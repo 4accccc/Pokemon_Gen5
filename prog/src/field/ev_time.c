@@ -35,7 +35,7 @@
 #include "savedata/encount_sv.h"
 
 #include "poke_tool/pokerus.h"
-#include "eventwork.h"
+#include "field/eventwork.h"
 
 #include "sheimi_normalform.h"
 

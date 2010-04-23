@@ -23,7 +23,7 @@
 #include "sound/pm_sndsys.h"
 
 #include "field_sound.h"
-#include "eventwork.h"
+#include "field/eventwork.h"
 
 #include "event_debug_local.h"
 #include "debug/debug_str_conv.h" // for DEB_STR_CONV_SjisToStrcode

@@ -67,7 +67,7 @@
 #include "../../../resource/fldmapdata/script/hiden_def.h"  //SCRID_HIDEN_DIVING
 #include "../../../resource/fldmapdata/script/pasokon_def.h"  //SCRID_PC
 
-#include "eventwork.h"
+#include "field/eventwork.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 #include "event_wifibattlematch.h"
@@ -6440,10 +6440,11 @@ typedef struct {
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static const u16 ng_zone_table[] = {
-  ZONE_ID_UNION,
+  ZONE_ID_UNION,        //ユニオンルーム
   ZONE_ID_CLOSSEUM,
   ZONE_ID_CLOSSEUM02,
   ZONE_ID_PLD10,
+  ZONE_ID_C04R0202,     //ミュージカル控え室
 };
 
 //#include "arc/fieldmap/map_matrix.naix"

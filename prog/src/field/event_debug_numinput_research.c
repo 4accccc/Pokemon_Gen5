@@ -9,7 +9,7 @@
 //////////////////////////////////////////////////////////////////////// 
 #include <gflib.h>
 #include "fieldmap.h"
-#include "eventwork.h"
+#include "field/eventwork.h"
 #include "event_debug_local.h"
 #include "gamesystem/gamesystem.h"
 #include "event_debug_numinput.h"

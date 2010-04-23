@@ -25,7 +25,7 @@
 #include "sound/pm_sndsys.h"
 
 #include "field_sound.h"
-#include "eventwork.h"
+#include "field/eventwork.h"
 
 #include "event_debug_local.h"
 #include "event_debug_numinput.h"

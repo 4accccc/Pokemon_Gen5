@@ -1,17 +1,14 @@
 //======================================================================
 /**
- * @file	eventflag.h
+ * @file	eventwork.h
  * @brief	セーブフラグ、ワーク操作
- * @author	Tamada
- * @author	Satoshi Nohara
+ * @author	tamada  GAMEFREAK inc.
  * @date	05.10.22
  */
 //======================================================================
-#ifndef	__EVENTFLAG_H__
-#define	__EVENTFLAG_H__
+#pragma once
 
 #include <gflib.h>
-//#include "system/savedata_def.h"
 
 
 //======================================================================
@@ -80,4 +77,4 @@ extern BOOL EVENTWORK_PopTimeRequest( EVENTWORK * ev );
 //----------------------------------------------------------
 //extern EVENTWORK * SaveData_GetEventWork(SAVEDATA * sv);
 
-#endif	//__EVENTFLAG_H__
+

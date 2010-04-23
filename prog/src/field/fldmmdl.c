@@ -14,7 +14,7 @@
 #include "arc/fieldmap/fldmmdl_mdlparam.naix"
 
 #include "fieldmap.h"
-#include "eventwork.h"
+#include "field/eventwork.h"
 
 //OBJCHRWORK0
 #include "../../../resource/fldmapdata/flagwork/work_define.h"

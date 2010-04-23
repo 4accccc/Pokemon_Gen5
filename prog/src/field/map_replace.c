@@ -23,7 +23,7 @@
 
 #include "map_replace.h"
 
-#include "eventwork.h"  //EVENTWORK_
+#include "field/eventwork.h"  //EVENTWORK_
 
 #include "../../../resource/fldmapdata/flagwork/work_define.h"  //WK_SYS_MAPREPLACEÅ`
 

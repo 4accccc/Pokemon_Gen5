@@ -11,7 +11,7 @@
 #include "gmk_tmp_wk.h"
 #include "field_gimmick_def.h"  // for FLD_GIMMICK_C09P01
 #include "fld_exp_obj.h"        // for FLD_EXP_OBJ
-#include "eventwork.h"          // for EVENTWORK_
+#include "field/eventwork.h"    // for EVENTWORK_
 
 #include "gamesystem/gamesystem.h"
 #include "savedata/gimmickwork.h"  // for GIMMICKWORK

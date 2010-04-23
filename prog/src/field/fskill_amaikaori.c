@@ -16,7 +16,7 @@
 #include "item/itemsym.h"
 #include "field_skill.h"
 #include "fld3d_ci.h"
-#include "eventwork.h"
+#include "field/eventwork.h"
 #include "gamesystem/game_beacon.h"
 
 #include "script.h"

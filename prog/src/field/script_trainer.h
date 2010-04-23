@@ -12,7 +12,7 @@
 #include <gflib.h>
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
-#include "eventwork.h"
+#include "field/eventwork.h"
 
 #include "trainer_eye_data.h"
 

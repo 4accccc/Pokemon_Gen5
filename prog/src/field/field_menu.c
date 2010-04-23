@@ -31,7 +31,7 @@
 #include "field_subscreen.h"
 #include "field_menu.h"
 #include "field/zonedata.h" //ZONEDATA_IsUnionRoom
-#include "eventwork.h"
+#include "field/eventwork.h"
 
 // L‚ÆR‚Å€–Ú‚ğŒ¸‚ç‚·ƒeƒXƒg‚ª‚Å‚«‚é
 //#define TEST_FIELD_MENU

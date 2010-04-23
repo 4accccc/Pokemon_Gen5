@@ -13,7 +13,7 @@
 #include "weather.h"
 
 #include "field_skill.h"
-#include "eventwork.h"
+#include "field/eventwork.h"
 #include "script.h"
 #include "fldmmdl.h"
 #include "fldeff_gyoe.h"
