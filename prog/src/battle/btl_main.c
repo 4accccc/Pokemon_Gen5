@@ -372,7 +372,6 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
   switch( *seq ){
   case 0:
     if( wk->fBGMFadeOutDisable == FALSE ){
-      TAYA_Printf("BGMフェードアウトさせる\n");
       PMSND_FadeOutBGM( BTL_BGM_FADEOUT_FRAMES );
     }
     wk->subSeq = 0;
@@ -3559,7 +3558,6 @@ u32 BTL_MAIN_FixLoseMoney( BTL_MAIN_MODULE* wk )
 //=============================================================================================
 void BTL_MAIN_BGMFadeOutDisable( BTL_MAIN_MODULE* wk )
 {
-  TAYA_Printf("BGMフェードアウトさせない\n");
   wk->fBGMFadeOutDisable = TRUE;
 }
 

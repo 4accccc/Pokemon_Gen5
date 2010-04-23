@@ -5491,10 +5491,16 @@ static void handler_PsycoShift( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
       {
         BTL_HANDEX_PARAM_ADD_SICK    *sick_param;
         BTL_HANDEX_PARAM_CURE_SICK   *cure_param;
+        BPP_SICK_CONT defaultCont = BPP_GetSickCont( bpp, sick );
 
         sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
         sick_param->sickID = sick;
-        sick_param->sickCont = BTL_CALC_MakeDefaultPokeSickCont( sick );
+        if( (sick == POKESICK_DOKU) && BPP_SICKCONT_IsMoudokuCont(defaultCont) ){
+          defaultCont = BPP_SICKCONT_MakeMoudokuCont();
+        }else{
+          defaultCont = BTL_CALC_MakeDefaultPokeSickCont( sick );
+        }
+        sick_param->sickCont = defaultCont;
         sick_param->poke_cnt = 1;
         sick_param->pokeID[0] = target_pokeID;
         sick_param->fAlmost = TRUE;
