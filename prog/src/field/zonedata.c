@@ -120,6 +120,12 @@ void ZONEDATA_Open( HEAPID heap_id )
 
     // ゾーンデータ
     data_handle->zoneDataID = ZONE_ID_MAX;
+
+    // ゾーンデータチェンジ初期セットアップ
+    if( GET_VERSION() == VERSION_WHITE ){
+      ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_BC_WF_ID, TRUE );
+      ZONEDATA_SetChangeZoneID( ZONEDATA_CHANGE_PLC10_PLCW10_ID, TRUE );
+    }
   }
 }
 
