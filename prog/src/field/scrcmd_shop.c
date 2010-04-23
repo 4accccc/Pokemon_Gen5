@@ -1733,7 +1733,7 @@ static void bmpwin_list_init( SHOP_BUY_APP_WORK *wk )
   header.s_col     = 13; //表示文字影色
   header.msg_spc   = 0;  //文字間隔Ｘ
   header.line_spc  = 0; //文字間隔Ｙ
-  header.page_skip = BMPMENULIST_NO_SKIP; //ページスキップタイプ
+  header.page_skip = BMPMENULIST_LRKEY_SKIP; //ページスキップタイプ
   header.font      = 0; //文字指定(本来はu8だけどそんなに作らないと思うので)
   header.c_disp_f  = 1; //ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
   header.work      = wk;// callback時に参照するワーク
