@@ -49,6 +49,7 @@ COL_START_DAY = 32 #開始日
 COL_END_YEAR = 33 #終了年
 COL_END_MONTH = 34 #終了月
 COL_END_DAY = 35 #終了日
+COL_BGM_MODE  = 36 #曲モード
 
 
 
@@ -74,7 +75,7 @@ class RegulationBin
     @HashROM = {"ALL"=>0xffffffff,"SAPPHIRE"=>0x2, "RUBY"=>0x4, "EMERALD"=>0x08, "RED"=>0x10,
       "GREEN"=>0x20, "GOLD"=>0x80, "SILVER"=>0x100,"DIAMOND"=>0x800, "PEARL"=>0x1000, "PLATINUM"=>0x2000,
       "COLOSSEUM"=>0x10000, "WHITE"=>0x100000, "BLACK"=>0x200000}
-    
+    @HashBGM = { "TRAINER"=>0,"WCS"=>1 }
     @TempNum = "0"
     @HashPokeGmm = Hash.new
     @HashItemGmm = Hash.new
@@ -195,7 +196,7 @@ class RegulationBin
       num = value.to_i
       outFH.write([num].pack("c")) 
     when COL_SHOOTER    #シューター
-      num = @HashOKNG[value]
+      num = @HashONOFF[value]
       outFH.write([num].pack("c"))
     when COL_VETO_SHOOTER_ITEM #シューター禁止道具
       if value =~ /なし/
@@ -289,6 +290,11 @@ class RegulationBin
       ##ステータスは0
       num = 0
       outFH.write([num].pack("c"))
+
+    when COL_BGM_MODE #曲指定
+      num = @HashBGM[value]
+      p num
+      p value
       outFH.write([num].pack("s"))
       
     else

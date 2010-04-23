@@ -1,0 +1,29 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: debug_regulation_card.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_DEBUG_REGULATION_CARD_NAIX_
+#define NARC_DEBUG_REGULATION_CARD_NAIX_
+
+enum {
+	NARC_debug_regulation_card_regulation000_dat = 0,
+	NARC_debug_regulation_card_regulation001_dat = 1,
+	NARC_debug_regulation_card_regulation002_dat = 2,
+	NARC_debug_regulation_card_regulation003_dat = 3,
+	NARC_debug_regulation_card_regulation004_dat = 4,
+	NARC_debug_regulation_card_regulation005_dat = 5,
+	NARC_debug_regulation_card_regulation006_dat = 6,
+	NARC_debug_regulation_card_regulation007_dat = 7,
+	NARC_debug_regulation_card_regulation008_dat = 8,
+	NARC_debug_regulation_card_regulation009_dat = 9,
+	NARC_debug_regulation_card_regulation010_dat = 10,
+	NARC_DEBUG_REGULATION_CARD_MAX
+};
+
+/* NARC_DEBUG_REGULATION_CARD_NAIX_ */
+#endif
