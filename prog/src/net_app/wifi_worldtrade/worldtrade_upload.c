@@ -9,7 +9,7 @@
 
 
 #ifdef PM_DEBUG
-// コメントをはずすと必ずアップロードで失敗する
+// 定義すると必ずアップロードで失敗する
 //#define DEBUG_UPLOAD_ERROR
 #endif
 
@@ -47,6 +47,7 @@
 #include "savedata/etc_save.h"
 
 #include "worldtrade.naix"			// グラフィックアーカイブ定義
+#include "savedata/perapvoice.h"
 
 #include "msg/msg_place_name.h"
 #define FIRST_NATUKIDO  (70)		///交換されたポケモンに入れるなつき度
@@ -1717,6 +1718,17 @@ static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp,
     EtcSave_SetAcquaintance( p_etc, tr->trainerID );
   }
 
+  //国連データセーブ
+  //GTS用友達
+  { 
+    MYSTATUS  *p_status = MakePartnerStatusData( tr );
+    {
+      WIFI_NEGOTIATION_SAVEDATA *p_nego   = WIFI_NEGOTIATION_SV_GetSaveData(wk->param->savedata);
+      WIFI_NEGOTIATION_SV_SetFriend( p_nego, p_status );
+    }
+    GFL_HEAP_FreeMemory( p_status );
+  }
+
 #if 0	//TV_OFF
 	// TVデータ
 	{
@@ -2511,15 +2523,13 @@ static void UploadPokemonDataDelete( WORLDTRADE_WORK *wk, int flag )
 		PokeParty_Delete( wk->param->myparty, wk->BoxCursorPos );
 
 		// てもちからペラップがいなくなったら声データを消去する
-		if(PokeParty_PokemonCheck( wk->param->myparty, MONSNO_PERAPPU )==0){
-			PERAPVOICE *pv = SaveData_GetPerapVoice( wk->param->savedata );
-			if( pv != NULL )
-			{
-				PERAPVOICE_ClearExistFlag( pv );
-			}
-		}
-		
-	}
+    { 
+      GAMEDATA  *gamedata = GAMESYSTEM_GetGameData( wk->param->gamesys );
+      PERAPVOICE *perap   = GAMEDATA_GetPerapVoice( gamedata );
+      POKEPARTY *temoti   = GAMEDATA_GetMyPokemon( gamedata );
+      PERAPVOICE_CheckPerapInPokeParty( perap, temoti );
+    }
+  }
 	
 	if(flag){
 		// 預けたフラグ
@@ -2703,7 +2713,7 @@ static void ExchangePokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, POKE
 
 	}
 
-  //国連データセーブ
+  //交換時にしか上げたポケモンが分からないため
   { 
     MYSTATUS  *p_status = MakePartnerStatusData( tr );
 
@@ -2718,14 +2728,10 @@ static void ExchangePokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, POKE
     un_data.nature      = tr->nature;
     un_data.countryCount= tr->countryCount;
     UNDATAUP_Update( wk->param->wifihistory, &un_data );
-
-    {
-      WIFI_NEGOTIATION_SAVEDATA *p_nego   = WIFI_NEGOTIATION_SV_GetSaveData(wk->param->savedata);;
-      WIFI_NEGOTIATION_SV_SetFriend( p_nego, p_status );
-    }
     GFL_HEAP_FreeMemory( p_status );
   }
-  
+
+
 
 /* GTSで自分でポケモンを預けている時に、自分から検索してポケモンを交換した際
    セーブデータの「ポケモンをGTSに預けているフラグ」を落としてしまっているバグに対処 */
