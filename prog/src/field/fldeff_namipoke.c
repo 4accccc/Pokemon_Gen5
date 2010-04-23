@@ -796,10 +796,10 @@ static void namipokeTask_RAIL_Draw( FLDEFF_TASK *task, void *wk )
   {
     MMDL_Rail_GetDirLineWay( work->head.mmdl, work->dir, &front_way_16 );
     front_way.x = front_way_16.x;
-    front_way.y = front_way_16.y;
+    front_way.y = 0;
     front_way.z = front_way_16.z;
     back_way.x  = -front_way_16.x;
-    back_way.y  = -front_way_16.y;
+    back_way.y  = 0;
     back_way.z  = -front_way_16.z;
 
     GFL_CALC3D_MTX_GetVecToRotMtxXZ( &front_way, &rotate );
