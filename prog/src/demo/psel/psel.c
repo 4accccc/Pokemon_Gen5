@@ -4217,6 +4217,7 @@ static int Psel_Unload( PSEL_WORK* work, int* seq )
 
   // グラフィック、フォントなど
   {
+    PRINTSYS_QUE_Clear( work->print_que );
     PRINTSYS_QUE_Delete( work->print_que );
     GFL_FONT_Delete( work->font );
     PSEL_GRAPHIC_Exit( work->graphic );
