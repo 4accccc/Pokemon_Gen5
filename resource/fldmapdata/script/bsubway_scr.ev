@@ -2169,12 +2169,18 @@ sub_bsw_common_renshou_msg:
   _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   _BSUBWAY_TOOL( BSWTOOL_CHK_EXIST_STAGE, play_mode, BSW_NULL, ret )
   
+  //ステージ数が有効で連勝数あれば連勝中メッセージ表示
   IF $ret == TRUE THEN
     _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, count )
 
     IF $count != 0 THEN
       _PLAYER_NAME( 0 )
-      _NUMBER( 1, count, 3 )
+      
+      IF $count > 9999 THEN
+        $count = 9999
+      ENDIF
+      
+      _NUMBER( 1, count, 4 )
       $SCWK_TEMP0 = msg_bsw_scr_08
       _CALL sub_bsw_common_bwin_receipt
       _AB_KEYWAIT()

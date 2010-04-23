@@ -125,8 +125,14 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
     
     BSUBWAY_PLAYDATA_Init( bsw_scr->playData ); //プレイデータ初期化
     BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
-    BSUBWAY_SCOREDATA_ResetRenshou( bsw_scr->scoreData, bsw_scr->play_mode );
-    BSUBWAY_SCOREDATA_InitStageNo( bsw_scr->scoreData, bsw_scr->play_mode );
+    
+    if( BSUBWAY_SCOREDATA_CheckExistStageNo( //ステージ存在するか？
+        bsw_scr->scoreData,bsw_scr->play_mode) == FALSE ){
+      BSUBWAY_SCOREDATA_InitStageNo(  //ステージ初期化
+          bsw_scr->scoreData, bsw_scr->play_mode );
+      BSUBWAY_SCOREDATA_ResetRenshou( //連勝数リセット
+          bsw_scr->scoreData, bsw_scr->play_mode );
+    }
     
     buf8 = bsw_scr->play_mode; //プレイモード
     
@@ -259,7 +265,6 @@ void BSUBWAY_SCRWORK_ChangeCommMultiMode( BSUBWAY_SCRWORK *bsw_scr )
   BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
       BSWAY_PLAYDATA_ID_playmode, buf );
   
-  BSUBWAY_SCOREDATA_ResetRenshou( bsw_scr->scoreData, bsw_scr->play_mode );
   BSUBWAY_SCOREDATA_InitStageNo( bsw_scr->scoreData, bsw_scr->play_mode );
 }
 

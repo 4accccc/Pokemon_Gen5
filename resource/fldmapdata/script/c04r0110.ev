@@ -692,6 +692,11 @@ sub_train_battle_win_next_menu:
   WHILE $loop == 1
     //ただいま？連勝…次は？両目　対戦を続けますか
     _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, SCWK_ANSWER )
+    
+    IF $SCWK_ANSWER > 9999 THEN
+      $SCWK_ANSWER = 9999
+    ENDIF
+    
     _NUMBER( 0, SCWK_ANSWER, 4 )
     _BSUBWAY_TOOL( BSWTOOL_GET_NEXT_ROUND, BSW_NULL, BSW_NULL, SCWK_ANSWER )
     _NUMBER( 1, SCWK_ANSWER, 1 )
