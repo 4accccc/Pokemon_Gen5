@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-04-23T12:48:49"/>
+	<create user="matsushima" host="W00181" date="2010-04-23T12:51:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -551,7 +551,7 @@ msg_r07r0301_oldwoman_00
 くさむらで　飛び出してくるじゃろう</language>
 	</row>
 
-	<row id="msg_r07r0301_oldman_03w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,#80ff80,,">
+	<row id="msg_r07r0301_oldman_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,#80ff80,,">
 		<comment>●ｗのセリフ。
 ●移動ポケモン捕獲後～ツチノカミイベント起動
 までのセリフ。
