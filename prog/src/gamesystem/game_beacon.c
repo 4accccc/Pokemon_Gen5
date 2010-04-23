@@ -1345,7 +1345,7 @@ void GAMEBEACON_Set_SpecialPokemonGet(u16 monsno)
 //==================================================================
 void BEACONINFO_Set_SpecialPokemonGet(GAMEBEACON_INFO *info, u16 monsno)
 {
-  info->action.action_no = GAMEBEACON_ACTION_POKE_GET;
+  info->action.action_no = GAMEBEACON_ACTION_SP_POKE_GET;
   info->action.monsno = monsno;
 
   BEACONINFO_Set_Details_Walk(info);
