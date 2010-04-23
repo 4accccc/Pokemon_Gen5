@@ -84,3 +84,4 @@ extern void BR_PROC_SYS_Pop( BR_PROC_SYS *p_wk );
 extern void BR_PROC_SYS_Push( BR_PROC_SYS *p_wk, u16 procID );
 
 extern void BR_PROC_SYS_Interruput( BR_PROC_SYS *p_wk );
+extern void BR_PROC_SYS_Abort( BR_PROC_SYS *p_wk );

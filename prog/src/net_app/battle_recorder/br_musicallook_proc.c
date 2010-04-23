@@ -254,6 +254,13 @@ static GFL_PROC_RESULT BR_MUSICALLOOK_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
 {	
 	BR_MUSICALLOOK_WORK	*p_wk	= p_wk_adrs;
 
+  //エラーチェック
+  if( BR_NET_SYSERR_RETURN_DISCONNECT == BR_NET_GetSysError( p_wk->p_param->p_net ) )
+  { 
+    BR_PROC_SYS_Abort( p_wk->p_param->p_procsys );
+    return GFL_PROC_RES_FINISH;
+  }
+
   //シーケンス
   BR_SEQ_Main( p_wk->p_seq );
   if( BR_SEQ_IsEnd( p_wk->p_seq ) )

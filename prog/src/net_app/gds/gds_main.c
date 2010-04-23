@@ -27,6 +27,7 @@
 #include "sound/pm_sndsys.h"
 
 #include "gds_test.h"
+#include "system/net_err.h"
 
 
 #ifdef PM_DEBUG
@@ -132,6 +133,15 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
   GFL_PROC_MAIN_STATUS proc_status;
   
   proc_status = GFL_PROC_LOCAL_Main(gmw->proc_sys);
+
+  //エラー検知
+  //gamesystem_main上のLOCAL_PROCで動くものしか検知してくれないので、
+  //自分で動かす必要がある
+  if( proc_status == GFL_PROC_MAIN_CHANGE || proc_status == GFL_PROC_MAIN_NULL )
+  { 
+    NetErr_DispCall(FALSE);
+  }
+
 	
 	switch(*seq){
 	case SEQ_INIT_DPW:	//通信ライブラリ初期化
@@ -144,7 +154,16 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
       gmw->login_param.bg       = WIFILOGIN_BG_NORMAL;
       gmw->login_param.display  = WIFILOGIN_DISPLAY_UP;
       gmw->login_param.pSvl = &gmw->aSvl;
-      gmw->login_param.mode = WIFILOGIN_MODE_NORMAL;
+
+
+      if( gmw->br_param.result == BR_RESULT_NET_ERROR )
+      { 
+        gmw->login_param.mode = WIFILOGIN_MODE_ERROR;
+      }
+      else
+      { 
+        gmw->login_param.mode = WIFILOGIN_MODE_NORMAL;
+      }
       GFL_PROC_LOCAL_CallProc(
         gmw->proc_sys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &gmw->login_param);
     }
@@ -186,8 +205,17 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
     if(proc_status == GFL_PROC_MAIN_NULL){
 #ifdef DEBUG_GDS
       GFL_OVERLAY_Unload( FS_OVERLAY_ID(gds_comm) );
+#else
 #endif
-			(*seq)++;
+      //エラーならばWIFILOGINへ復帰
+      if( gmw->br_param.result == BR_RESULT_NET_ERROR )
+      { 
+        *seq  = SEQ_WIFI_CONNECT;
+      }
+      else
+      { 
+        (*seq)++;
+      }
 		}
 		break;
 	

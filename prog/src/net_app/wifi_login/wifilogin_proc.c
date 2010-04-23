@@ -1128,6 +1128,7 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
 
     if(GFL_NET_IsInit()){       // 接続中
       GF_ASSERT(0);
+
     }
     else{
       //接続開始 プロファイル検査

@@ -13,6 +13,8 @@
 
 //システム
 #include "system/main.h"
+#include "system/net_err.h"
+#include "net/dwc_error.h"
 
 //アーカイブ(エラーメッセージ用)
 #include "msg/msg_battle_rec.h"
@@ -390,7 +392,7 @@ BOOL BR_NET_GetDownloadSubwayRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  エラーを取得
+ *	@brief  データ送受信時のエラーを取得
  *
  *	@param	BR_NET_WORK *p_wk   ワーク
  *	@param	*p_msg_no           エラーを表示するメッセージ番号
@@ -401,6 +403,7 @@ BOOL BR_NET_GetDownloadSubwayRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV
 BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
 { 
 
+  //poke_netからのエラー
   if( p_wk->error_info.occ )
   { 
     int ret = BR_NET_ERR_RETURN_NONE;
@@ -517,10 +520,48 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
 
     return ret;
   }
-  else
+
+  return BR_NET_ERR_RETURN_NONE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  システムエラーを取得
+ *
+ *	@param	BR_NET_WORK *p_wk   ワーク
+ *
+ *	@return エラーの戻り先（列挙型参照）
+ */
+//-----------------------------------------------------------------------------
+BR_NET_SYSERR_RETURN BR_NET_GetSysError( BR_NET_WORK *p_wk )
+{ 
+  //ネット接続されていないときはエラーはない
+  if( p_wk == NULL )
   { 
-    return BR_NET_ERR_RETURN_NONE;
+    return BR_NET_SYSERR_RETURN_NONE;
   }
+
+  //DWCからのエラー
+  if( NetErr_App_CheckError() )
+  { 
+    GFL_NET_DWC_ERROR_RESULT  result;
+    result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE );
+
+    switch( result )
+    { 
+    case GFL_NET_DWC_ERROR_RESULT_PRINT_MSG:   //メッセージを描画するだけ
+      return BR_NET_SYSERR_RETURN_LIGHT;
+
+    case GFL_NET_DWC_ERROR_RESULT_RETURN_PROC: //PROCから抜けなければならない
+      return BR_NET_SYSERR_RETURN_DISCONNECT;
+
+    case GFL_NET_DWC_ERROR_RESULT_FATAL:       //電源切断のため無限ループになる
+      NetErr_App_FatalDispCall();
+      GF_ASSERT( 0 );
+      break;
+    }
+  }
+
+  return BR_NET_SYSERR_RETURN_NONE;
 }
 
 //=============================================================================

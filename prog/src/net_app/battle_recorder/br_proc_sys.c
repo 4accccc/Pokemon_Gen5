@@ -412,12 +412,24 @@ void BR_PROC_SYS_Interruput( BR_PROC_SYS *p_wk )
   p_wk->p_recovery->stack_num = p_wk->stack_num;
 
   //全部POP
-  for( i = 0; i < p_wk->p_recovery->stack_num; i++ )
+  BR_PROC_SYS_Abort( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  COREPROCを強制終了させる
+ *
+ *	@param	BR_PROC_SYS *p_wk wワーク
+ */
+//-----------------------------------------------------------------------------
+void BR_PROC_SYS_Abort( BR_PROC_SYS *p_wk )
+{ 
+  //全部POP
+  while( p_wk->stack_num > 0 )
   { 
     BR_PROC_SYS_Pop( p_wk );
   }
 }
-
 //=============================================================================
 /**
  *							PRIVATE

@@ -31,7 +31,8 @@ typedef enum
 typedef enum 
 {
   BR_RESULT_RETURN,       ///<通常の終了
-  BR_RESULT_EXIT,         ///<Xボタンの終了
+  BR_RESULT_EXIT,         ///<Xボタンの終了(未使用)
+  BR_RESULT_NET_ERROR,    ///<エラーでログインしなおし
 } BR_RESULT;
 
 //=============================================================================

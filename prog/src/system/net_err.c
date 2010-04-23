@@ -449,9 +449,12 @@ NET_ERR_CHECK NetErr_App_CheckConnectError(u32 net_bit)
 //==================================================================
 void NetErr_App_ReqErrorDisp(void)
 {
-  GF_ASSERT_MSG(NetErrSystem.status == NET_ERR_STATUS_ERROR, "status=%d\n", NetErrSystem.status);
-  NetErrSystem.status = NET_ERR_STATUS_REQ;
-  OS_TPrintf("NetErr App ReqErrDisp\n");
+  //GF_ASSERT_MSG(NetErrSystem.status == NET_ERR_STATUS_ERROR, "status=%d\n", NetErrSystem.status);
+  if( NetErrSystem.status == NET_ERR_STATUS_ERROR )
+  { 
+    NetErrSystem.status = NET_ERR_STATUS_REQ;
+    OS_TPrintf("NetErr App ReqErrDisp\n");
+  }
 }
 
 //--------------------------------------------------------------

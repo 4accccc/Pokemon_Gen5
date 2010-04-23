@@ -20,17 +20,6 @@
 */
 //=============================================================================
 //-------------------------------------
-///	ネット修復タイプ
-//=====================================
-typedef enum
-{
-  BR_NET_ERR_REPAIR_TYPE_NONE,            //エラーが起きていない
-  BR_NET_ERR_REPAIR_TYPE_RETURN_TOPMENU,  //トップメニューへ戻る
-  BR_NET_ERR_REPAIR_TYPE_TETURN_ONCE,     //１つ前へ戻る
-} BR_NET_ERR_REPAIR_TYPE;
-
-
-//-------------------------------------
 ///	リクエスト
 //=====================================
 typedef enum
@@ -115,8 +104,17 @@ extern BOOL BR_NET_GetDownloadSubwayRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLI
 //----エラー
 typedef enum
 { 
-  BR_NET_ERR_RETURN_NONE,     //エラーが起きていない
-  BR_NET_ERR_RETURN_ONCE,     //１つ前に戻る
-  BR_NET_ERR_RETURN_TOPMENU,  //トップメニューへ戻る
+  BR_NET_ERR_RETURN_NONE,         //エラーが起きていない
+  BR_NET_ERR_RETURN_ONCE,         //１つ前に戻る
+  BR_NET_ERR_RETURN_TOPMENU,      //トップメニューへ戻る
 }BR_NET_ERR_RETURN;
 extern BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no );
+
+typedef enum
+{
+  BR_NET_SYSERR_RETURN_NONE,
+  BR_NET_SYSERR_RETURN_LIGHT,
+  BR_NET_SYSERR_RETURN_DISCONNECT,
+} BR_NET_SYSERR_RETURN;
+
+extern BR_NET_SYSERR_RETURN BR_NET_GetSysError( BR_NET_WORK *p_wk );

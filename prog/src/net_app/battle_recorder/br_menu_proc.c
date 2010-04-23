@@ -18,6 +18,7 @@
 //自分のモジュール
 #include "br_btn.h"
 #include "br_snd.h"
+#include "br_net.h"
 
 //セーブデータ
 #include "savedata/battle_rec.h"

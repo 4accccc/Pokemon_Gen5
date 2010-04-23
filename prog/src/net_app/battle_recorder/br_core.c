@@ -320,6 +320,7 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(BR_CORE_WORK), HEAPID_BATTLE_RECORDER_CORE );
 	GFL_STD_MemClear( p_wk, sizeof(BR_CORE_WORK) );	
 	p_wk->p_param		= p_param_adrs;
+  p_wk->p_param->p_param->result  = BR_RESULT_RETURN;
 
 	//グラフィック初期化
   if( p_wk->p_param->p_param->mode == BR_MODE_GLOBAL_MUSICAL )
@@ -424,6 +425,10 @@ static GFL_PROC_RESULT BR_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 
   if( p_wk->p_net )
   { 
+    if( BR_NET_SYSERR_RETURN_DISCONNECT == BR_NET_GetSysError( p_wk->p_net ) )
+    { 
+      p_wk->p_param->p_param->result  = BR_RESULT_NET_ERROR;
+    }
     BR_NET_Exit( p_wk->p_net );
   }
 
