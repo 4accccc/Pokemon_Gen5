@@ -143,13 +143,12 @@ void LEGEND_GMK_Setup(FIELDMAP_WORK *fieldWork)
   if ( GET_VERSION() == VERSION_WHITE )
   {
     FLD_EXP_OBJ_AddUnit(ptr, &SetupWhite, LEGEND_UNIT_IDX );
-    gmk_wk->Fade = GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN;
   }
   else
   {
     FLD_EXP_OBJ_AddUnit(ptr, &SetupBlack, LEGEND_UNIT_IDX );
-    gmk_wk->Fade = GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN;
   }
+  gmk_wk->Fade = GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN;
   
   //3‚c‚n‚a‚i‰Šú‰»
   //ƒAƒjƒ‚Ìó‘Ô‚ð‰Šú‰»
