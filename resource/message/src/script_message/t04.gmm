@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-23T14:48:37"/>
+	<create user="matsumiya" host="W00224" date="2010-04-23T15:37:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -302,12 +302,12 @@
 じゅくがえり</attribute>
 		<language name="JPN" width="256">ひまで　ひまで
 しかたないって　かおだろう！▼
-ようし！
-この　ボクが　あいて　してやろう！</language>
+ようし！　この　ボクが
+ポケモンで　あいて　してやろう！</language>
 		<language name="JPN_KANJI" width="256">暇で　暇で
 仕方ないって　顔だろう！▼
-ようし！
-この　ボクが　相手してやろう！</language>
+ようし！　この　ボクが
+ポケモンで　相手してやろう！</language>
 	</row>
 
 	<row id="msg_t04_boy3_01b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
