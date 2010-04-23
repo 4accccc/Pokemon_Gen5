@@ -35,6 +35,7 @@
 #include "app/app_nogear_subscreen.h"
 #include "system/time_icon.h"
 #include "sound/pm_sndsys.h"
+#include "system/net_err.h"
 
 #include "btl_rec_sel_graphic.h"
 #include "net_app/btl_rec_sel.h"
@@ -1366,8 +1367,17 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
         if( param->b_sync )
         {
 #ifndef OFFLINE_TEST
-          GFL_NETHANDLE* nethandle = GFL_NET_HANDLE_GetCurrentHandle();
-          ret = GFL_NET_HANDLE_IsTimeSync( nethandle, BTL_REC_SEL_NET_TIMING_SYNC_NO, WB_NET_BTL_REC_SEL );
+          // エラー確認
+          if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+          {
+            // エラーが発生したので、終了させる
+            ret = TRUE;
+          }
+          else
+          {
+            GFL_NETHANDLE* nethandle = GFL_NET_HANDLE_GetCurrentHandle();
+            ret = GFL_NET_HANDLE_IsTimeSync( nethandle, BTL_REC_SEL_NET_TIMING_SYNC_NO, WB_NET_BTL_REC_SEL );
+          }
 #endif
           if( ret )
           {
@@ -1592,12 +1602,37 @@ static BOOL Btl_Rec_Sel_TextWaitStream( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WO
     if( ( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) ) || GFL_UI_TP_GetTrg() )
     {
       PRINTSYS_PrintStreamShortWait( work->text_stream, 0 );
+
+      if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
+      {
+        // タッチorキー
+        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+      }
+      else
+      {
+        // タッチorキー
+        GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+      }
     }
     break;
   case PRINTSTREAM_STATE_PAUSE:
     if( ( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) ) || GFL_UI_TP_GetTrg() )
     { 
+      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
       PRINTSYS_PrintStreamReleasePause( work->text_stream );
+
+      // メッセージ送りキーカーソルアイコンAPP_KEYCURSOR_WORKが必要なメッセージはないので、用意していない。
+
+      if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
+      {
+        // タッチorキー
+        GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+      }
+      else
+      {
+        // タッチorキー
+        GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+      }
     }
     break;
   case PRINTSTREAM_STATE_DONE:
