@@ -60,6 +60,9 @@ palpark_main:
   _YES_NO_WIN( SCWK_ANSWER )    //クローズいらす
   IF $SCWK_ANSWER == 0 THEN     //やる
     DEFINE_LOCAL box_empty_num        //ローカルワーク　ボックスの空き数
+    //すれちがい通信用データセット
+    _BEACON_SET_REQ_POKE_SHIFTER_START()
+
     //ボックスの空き状態をチェック
     _GET_BOX_POKE_COUNT( box_empty_num, POKECOUNT_MODE_EMPTY )
     IF $box_empty_num >= 6 THEN          //6以上空きがある
@@ -129,8 +132,6 @@ _RET
 play_palpark:
   DEFINE_LOCAL i_ret
   DEFINE_LOCAL palpark_retval
-  //すれちがい通信用データセット
-  _BEACON_SET_REQ_POKE_SHIFTER_START()
   //フィールド通信切断
   _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
 
