@@ -20,12 +20,6 @@ static const SHOP_ITEM BP_shop1[] = {
 		{ ITEM_PAWAABANDO,	16, },
 		{ ITEM_PAWAAANKURU,	16, },
 		{ ITEM_PAWAAUEITO,	16, },
-		{ ITEM_HUSIGINAAME,	48, },
-};
-#define BP_SHOP1_MAX	(NELEMS(BP_shop1))
-
-// BPショップ２号
-static const SHOP_ITEM BP_shop2[] = {
 		{ ITEM_DOKUDOKUDAMA,	16, },
 		{ ITEM_KAENDAMA,	16, },
 		{ ITEM_SIROIHAABU,	32, },
@@ -34,6 +28,7 @@ static const SHOP_ITEM BP_shop2[] = {
 		{ ITEM_ZYUUDENTI,	32, },
 		{ ITEM_REDDOKAADO,	32, },
 		{ ITEM_DASSYUTUBOTAN,	32, },
+		{ ITEM_HUSIGINAAME,	48, },
 		{ ITEM_HIKARINOKONA,	48, },
 		{ ITEM_KODAWARIHATIMAKI,	48, },
 		{ ITEM_KIAINOHATIMAKI,	48, },
@@ -46,18 +41,26 @@ static const SHOP_ITEM BP_shop2[] = {
 		{ ITEM_HUUSEN,	48, },
 		{ ITEM_SIMETUKEBANDO,	48, },
 };
+#define BP_SHOP1_MAX	(NELEMS(BP_shop1))
+
+// BPショップ２号
+static const SHOP_ITEM BP_shop2[] = {
+		{ ITEM_TAURIN,	1, },
+};
 #define BP_SHOP2_MAX	(NELEMS(BP_shop2))
 
 // BP技ショップ１号
 static const SHOP_ITEM BP_waza1[] = {
-		{ ITEM_WAZAMASIN54,	52, },
-		{ ITEM_WAZAMASIN53,	53, },
-		{ ITEM_WAZAMASIN52,	54, },
-		{ ITEM_WAZAMASIN51,	55, },
-		{ ITEM_WAZAMASIN20,	56, },
-		{ ITEM_WAZAMASIN21,	57, },
-		{ ITEM_WAZAMASIN02,	58, },
-		{ ITEM_WAZAMASIN20,	10, },
+		{ ITEM_WAZAMASIN23,	36, },
+		{ ITEM_WAZAMASIN48,	36, },
+		{ ITEM_WAZAMASIN87,	36, },
+		{ ITEM_WAZAMASIN88,	36, },
+		{ ITEM_WAZAMASIN34,	48, },
+		{ ITEM_WAZAMASIN51,	48, },
+		{ ITEM_WAZAMASIN59,	48, },
+		{ ITEM_WAZAMASIN60,	48, },
+		{ ITEM_WAZAMASIN64,	48, },
+		{ ITEM_WAZAMASIN77,	48, },
 };
 #define BP_WAZA1_MAX	(NELEMS(BP_waza1))
 
