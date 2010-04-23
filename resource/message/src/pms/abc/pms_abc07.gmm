@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-04-08T14:55:42"/>
+	<create user="taya" host="W00146" date="2010-04-17T17:42:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -246,6 +246,9 @@
 			<tag entry="08" japanese="９桁" english="９桁" view="EP" width="72" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="09" japanese="10桁" english="10桁" view="EP" width="80" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
 		</group>
 
 		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
@@ -362,13 +365,13 @@
 		</language>
 	</columns>
 
-	<dialog left="-126" top="112" right="579" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="0" top="112" right="579" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="571"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="404"/>
+		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -546,66 +549,71 @@
 	</row>
 
 	<row id="search_abc_31">
+		<language name="JPN" width="216">くりむかん</language>
+		<language name="JPN_KANJI" width="216">くりむかん</language>
+	</row>
+
+	<row id="search_abc_32">
 		<language name="JPN" width="216">くるーふ</language>
 		<language name="JPN_KANJI" width="216">くるーふ</language>
 	</row>
 
-	<row id="search_abc_32">
+	<row id="search_abc_33">
 		<language name="JPN" width="216">くるくる</language>
 		<language name="JPN_KANJI" width="216">くるくる</language>
 	</row>
 
-	<row id="search_abc_33">
+	<row id="search_abc_34">
 		<language name="JPN" width="216">くるまゆ</language>
 		<language name="JPN_KANJI" width="216">くるまゆ</language>
 	</row>
 
-	<row id="search_abc_34">
+	<row id="search_abc_35">
 		<language name="JPN" width="216">くるみる</language>
 		<language name="JPN_KANJI" width="216">くるみる</language>
 	</row>
 
-	<row id="search_abc_35">
+	<row id="search_abc_36">
 		<language name="JPN" width="216">くるめ</language>
 		<language name="JPN_KANJI" width="216">くるめ</language>
 	</row>
 
-	<row id="search_abc_36">
+	<row id="search_abc_37">
 		<language name="JPN" width="216">くれいしあ</language>
 		<language name="JPN_KANJI" width="216">くれいしあ</language>
 	</row>
 
-	<row id="search_abc_37">
+	<row id="search_abc_38">
 		<language name="JPN" width="216">くれせりあ</language>
 		<language name="JPN_KANJI" width="216">くれせりあ</language>
 	</row>
 
-	<row id="search_abc_38">
+	<row id="search_abc_39">
 		<language name="JPN" width="216">くれつくる</language>
 		<language name="JPN_KANJI" width="216">くれつくる</language>
 	</row>
 
-	<row id="search_abc_39">
+	<row id="search_abc_40">
 		<language name="JPN" width="216">くろいきり</language>
 		<language name="JPN_KANJI" width="216">くろいきり</language>
 	</row>
 
-	<row id="search_abc_40">
+	<row id="search_abc_41">
 		<language name="JPN" width="216">くろいまなさし</language>
 		<language name="JPN_KANJI" width="216">くろいまなさし</language>
 	</row>
 
-	<row id="search_abc_41">
+	<row id="search_abc_42">
 		<language name="JPN" width="216">くろすちよつふ</language>
 		<language name="JPN_KANJI" width="216">くろすちよつふ</language>
 	</row>
 
-	<row id="search_abc_42">
+	<row id="search_abc_43">
 		<language name="JPN" width="216">くろすほいすん</language>
 		<language name="JPN_KANJI" width="216">くろすほいすん</language>
 	</row>
 
-	<row id="search_abc_43">
+	<row id="search_abc_44">
 		<language name="JPN" width="216">くろはつと</language>
 		<language name="JPN_KANJI" width="216">くろはつと</language>
 	</row>

@@ -32,14 +32,14 @@
 #define answer18 (594) // ママンボウ
 #define answer19 (65535) // バンビーノ
 #define answer20 (518) // ムシャーナ
-#define answer21 (560) // フルコング
+#define answer21 (65535) // フルコング
 #define answer22 (599) // ギアル
 #define answer23 (581) // スワンナ
 #define answer24 (566) // アーケン
 #define answer25 (618) // マッギョ
 #define answer26 (615) // アイスゴン
 #define answer27 (578) // ダブラン
-#define answer28 (511) // ブロッコ
+#define answer28 (65535) // ブロッコ
 #define answer29 (531) // タブンネ
 #define answer30 (1574) // たんじょうび
 #define password01 (1467) // みんな
