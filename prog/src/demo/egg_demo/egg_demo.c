@@ -586,7 +586,15 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
       work->trunk_step = TRUNK_STEP_DEMO_READY;
 
       // タマゴ孵化
-      PP_Put( param->pp, ID_PARA_tamago_flag, 0 );
+      {
+        //PP_Put( param->pp, ID_PARA_tamago_flag, 0 );  // タマゴフラグを落とすだけでは不完全な初期化になってしまうので、PP_Birthを呼ぶ。
+        PLAYER_WORK* player_wk = GAMEDATA_GetMyPlayerWork( param->gamedata );
+        PP_Birth(  // PP_Birthはトレーナーメモの設定もしてくれるので、下にあるトレーナーメモの設定はコメントアウトした。
+            param->pp,
+            GAMEDATA_GetMyStatus( param->gamedata ),
+            ZONEDATA_GetPlaceNameID( PLAYERWORK_getZoneID( player_wk ) ),
+            work->heap_id );
+      }
 
       // 図鑑登録（捕まえた）
       {
@@ -595,6 +603,7 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
         ZUKANSAVE_SetPokeGet( zukan_savedata, param->pp );  // 捕まえた
       }
 
+/*
       {
         // トレーナーメモ
         PLAYER_WORK* player_wk = GAMEDATA_GetMyPlayerWork( param->gamedata );
@@ -605,6 +614,7 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
             ZONEDATA_GetPlaceNameID( PLAYERWORK_getZoneID( player_wk ) ),
             work->heap_id );
       }
+*/
 
       // タマゴ孵化デモの演出
       EGG_DEMO_VIEW_Hatch( work->view, param->pp );
