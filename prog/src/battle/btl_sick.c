@@ -393,6 +393,8 @@ static int getCureStrID( WazaSick sick, BOOL fUseItem )
     { WAZASICK_BIND,          BTL_STRID_SET_BindCure,         BTL_STRID_SET_BindCure            },
     { WAZASICK_YADORIGI,      BTL_STRID_SET_BindCure,         BTL_STRID_SET_BindCure            },
     { WAZASICK_TELEKINESIS,   BTL_STRID_SET_Telekinesis_End,  -1                                },
+    { WAZASICK_TYOUHATSU,     BTL_STRID_SET_ChouhatuCure,     -1                                },
+    { WAZASICK_FLYING,        BTL_STRID_SET_DenjiFuyuCure,    -1                                },
 
     { WAZASICK_KONRAN,        BTL_STRID_SET_KonranCure,       BTL_STRID_SET_UseItem_CureKonran  },
     { WAZASICK_MEROMERO,      BTL_STRID_SET_MeromeroCure,     BTL_STRID_SET_UseItem_CureMero    },

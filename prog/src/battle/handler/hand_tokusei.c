@@ -1294,7 +1294,7 @@ static void handler_Kasoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     param->poke_cnt = 1;
     param->pokeID[0] = pokeID;
     param->rankVolume = 1;
-    param->fAlmost = TRUE;
+//    param->fAlmost = TRUE;
   }
 }
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Kasoku( u32* numElems )
