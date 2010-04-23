@@ -199,9 +199,14 @@ static GMEVENT_RESULT AllConnectCheckEvent( GMEVENT* event, int* seq, void* wk )
     if( GetCheckZoneID(work) == work->start_zone_id ) {
       *seq = CHECK_SEQ_FINISH;
     }
-    else {
+    // チェック対象ゾーン
+    else if( CheckValidZone(GetCheckZoneID(work)) ) {
       GMEVENT_CallEvent( event, GetMapChangeEvent_Return(work) );
       *seq = CHECK_SEQ_NEW_ZONE_START;
+    }
+    // チェック対象外のゾーン
+    else {
+      *seq = CHECK_SEQ_JUMP_NEXT_ZONE; // 次のゾーンへ
     }
     break;
 
