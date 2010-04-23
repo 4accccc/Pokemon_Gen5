@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-22T19:07:56"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-22T19:12:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -645,9 +645,9 @@
 		<attribute name="キャラ指定">boy3
 じゅくがえり♂</attribute>
 		<language name="JPN" width="256">よーし！　じゅんび　バッチリ！
-しょうぶの　たびに　レッツゴーだ！</language>
+しょうぶの　たびに　レッツで　ゴー！</language>
 		<language name="JPN_KANJI" width="256">よーし！　準備　バッチリ！
-勝負の　旅に　レッツゴーだ！</language>
+勝負の　旅に　レッツで　ゴー！</language>
 	</row>
 
 	<row id="msg_c04r0111_boy3_2">
