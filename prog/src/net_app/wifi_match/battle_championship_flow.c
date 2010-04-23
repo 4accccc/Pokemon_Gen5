@@ -1017,7 +1017,7 @@ static void UTIL_LIST_Create( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, BC_MENU_TYPE 
 
       setup.strID[0]= BC_SELECT_06;
       setup.strID[1]= BC_SELECT_04;
-      if( cp_reg->status == DREAM_WORLD_MATCHUP_SIGNUP || cp_reg->status == DREAM_WORLD_MATCHUP_ENTRY )
+      if( cp_reg->status == DREAM_WORLD_MATCHUP_ENTRY )
       { 
         setup.strID[2]= BC_SELECT_09;
       }

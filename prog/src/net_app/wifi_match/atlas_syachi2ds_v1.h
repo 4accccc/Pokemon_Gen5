@@ -37,6 +37,9 @@ extern int ATLAS_GET_STAT_PAGE_BY_NAME(char* statName);
 // KEYS
 // Use these key ID's to report match data for your game.
 
+#define KEY_DISCONNECTS_COUNTER 26  // [TYPE: int]
+#define KEY_ADD_DISCONNECTS_COUNTER 27  // [TYPE: int]
+#define KEY_ADD_DISCONNECTS_WIFICUP_COUNTER 28  // [TYPE: int]
 #define KEY_NUM_SINGLE_WIN_COUNTER 5  // [TYPE: int]
 #define KEY_NUM_SINGLE_LOSE_COUNTER 6  // [TYPE: int]
 #define KEY_NUM_DOUBLE_LOSE_COUNTER 7  // [TYPE: int]

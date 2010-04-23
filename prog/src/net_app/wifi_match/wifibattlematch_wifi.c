@@ -74,11 +74,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 #endif //PM_DEBUG
 
 #ifndef SAKE_REPORT_NONE
-#define SAKE_REPORT_HEAP_DIVIDE   //レポート用ヒープを切り分ける
 #endif 
-
-//#define SAKE_REPORT_BATTLE_AFTER  //試合前にレポートのためのやりとりをする
-                                  //wifibattlematch_net.cのSC_DIVIDE_SESSION定義も有効にしないといけません
 
 
 #define DEBUG_WIFICUP_Printf(...)  OS_TFPrintf( 2, __VA_ARGS__ );
@@ -120,7 +116,6 @@ typedef enum
 //-------------------------------------
 ///	ヒープサイズ
 //=====================================
-#define WBM_WIFI_RATE_HEAP_SIZE  (0x30000)
 
 //=============================================================================
 /**
@@ -275,6 +270,7 @@ typedef enum
   UTIL_LIST_TYPE_JOIN,
   UTIL_LIST_TYPE_DECIDE,
   UTIL_LIST_TYPE_CUPMENU,
+  UTIL_LIST_TYPE_CUPMENU_CONT,
 }UTIL_LIST_TYPE;
 static void Util_List_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk, UTIL_LIST_TYPE type );
 static void Util_List_Delete( WIFIBATTLEMATCH_WIFI_WORK *p_wk );
@@ -1735,7 +1731,7 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
   case SEQ_START_NG_REG_MSG:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_21, WBM_TEXT_TYPE_STREAM );
-    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_REGISTER_POKE_MSG );
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_DISCONNECT_END );
     *p_seq  = SEQ_WAIT_MSG;
     break;
 
@@ -2065,6 +2061,7 @@ static void WbmWifiSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       }
       else if( ret == WBM_WIFI_SUBSEQ_UNREGISTER_RET_TRUE )
       { 
+        p_wk->is_wificup_end  = TRUE;
         *p_seq  = SEQ_NEXT_DISCONNECT;
       }
 
@@ -2599,35 +2596,30 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_START_SESSION:
-#ifdef SAKE_REPORT_BATTLE_AFTER
-#ifdef SAKE_REPORT_HEAP_DIVIDE
-    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_WIFI_RATE_HEAP_SIZE );
-    DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_GS, WBM_WIFI_RATE_HEAP_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
-#endif //SAKE_REPORT_HEAP_DIVIDE
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_SC_HEAP_SIZE );
+    DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
 
 #ifndef SAKE_REPORT_NONE
-    WIFIBATTLEMATCH_SC_StartSession( p_wk->p_net ) ;
+    //WIFIBATTLEMATCH_SC_StartSession( p_wk->p_net ) ;
+
+    WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER, WIFIBATTLEMATCH_TYPE_WIFICUP, 0, NULL );
+
+
 #endif //SAKE_REPORT_NONE
-#endif  //SAKE_REPORT_BATTLE_AFTER
     *p_seq  = SEQ_WAIT_SESSION;
     break;
 
   case SEQ_WAIT_SESSION:
-#ifdef SAKE_REPORT_BATTLE_AFTER
 #ifndef SAKE_REPORT_NONE
-    if( WIFIBATTLEMATCH_SC_ProcessSession( p_wk->p_net ) )
+//    if( WIFIBATTLEMATCH_SC_ProcessSession( p_wk->p_net ) )
+    if( WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net ) )
 #endif  //SAKE_REPORT_NONE
     { 
-#ifdef SAKE_REPORT_HEAP_DIVIDE
       DWC_RAPCOMMON_ResetSubHeapID();
       GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
-#endif //SAKE_REPORT_HEAP_DIVIDE
 
       *p_seq  = SEQ_END_MATCHING;
     }
-#else
-    *p_seq  = SEQ_END_MATCHING;
-#endif  //SAKE_REPORT_BATTLE_AFTER
     break;
 
   case SEQ_END_MATCHING:
@@ -2722,21 +2714,19 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   switch( *p_seq )
   { 
   case SEQ_SC_HEAP_INIT:
-#ifdef SAKE_REPORT_HEAP_DIVIDE
-    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_WIFI_RATE_HEAP_SIZE );
-    DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_GS, WBM_WIFI_RATE_HEAP_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
-#endif //SAKE_REPORT_HEAP_DIVIDE
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_SC_HEAP_SIZE );
+    DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
     *p_seq  = SEQ_START_NET_MSG;
     break;
   case SEQ_START_NET_MSG:
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_18, WBM_TEXT_TYPE_WAIT );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_REPORT_ATLAS );
-    break
-      ;
+    break;
+
   case SEQ_START_REPORT_ATLAS:
 #ifndef SAKE_REPORT_NONE
-    WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_TYPE_WIFICUP, p_param->p_param->btl_rule, p_param->cp_btl_score );
+    WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_SCORE, WIFIBATTLEMATCH_TYPE_WIFICUP, p_param->p_param->btl_rule, p_param->cp_btl_score );
 #endif // SAKE_REPORT_NONE
     *p_seq = SEQ_WAIT_REPORT_ATLAS;
     break;
@@ -2768,10 +2758,8 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     break;
 
   case SEQ_SC_HEAP_EXIT:
-#ifdef SAKE_REPORT_HEAP_DIVIDE
     DWC_RAPCOMMON_ResetSubHeapID();
     GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
-#endif //SAKE_REPORT_HEAP_DIVIDE
     *p_seq = SEQ_INIT_DISCONNECT;
     break;
 
@@ -2898,7 +2886,6 @@ static void WbmWifiSeq_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_WIN, p_wk->p_param->p_sake_data->win );
       RNDMATCH_SetParam( p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_LOSE, p_wk->p_param->p_sake_data->lose );
 
-
     }
     GAMEDATA_SaveAsyncStart(p_param->p_param->p_game_data);
     *p_seq  = SEQ_WAIT_SAVE;
@@ -2978,6 +2965,10 @@ static void WbmWifiSeq_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     SEQ_START_SELECT_CONTINUE,
     SEQ_WAIT_SELECT_CONTINUE,
 
+    SEQ_START_SUBSEQ_UNREGISTER,
+    SEQ_WAIT_SUBSEQ_UNREGISTER,
+    SEQ_NEXT_DISCONNECT,
+
     SEQ_WAIT_MSG,
   };
 
@@ -2990,12 +2981,12 @@ static void WbmWifiSeq_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     ///	続行確認
     //=====================================
   case SEQ_START_SELECT_CONTINUE_MSG:
-    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_24, WBM_TEXT_TYPE_STREAM );
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_37, WBM_TEXT_TYPE_STREAM );
     *p_seq = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SELECT_CONTINUE );
     break;
   case SEQ_START_SELECT_CONTINUE:
-    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_CUPMENU_CONT );
     *p_seq     = SEQ_WAIT_SELECT_CONTINUE;
     break;
   case SEQ_WAIT_SELECT_CONTINUE:
@@ -3006,11 +2997,15 @@ static void WbmWifiSeq_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
         Util_List_Delete( p_wk );
         switch( select )
         { 
-        case 0:
+        case 0: //対戦する
           p_wk->is_wificup_end  = FALSE;
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Matching );
           break;
-        case 1:
+        case 1://参加を解除する
+          p_wk->is_wificup_end  = FALSE;
+          *p_seq  = SEQ_START_SUBSEQ_UNREGISTER;
+          break;
+        case 2://やめる
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupEnd );
           break;
         }
@@ -3018,6 +3013,41 @@ static void WbmWifiSeq_CupContinue( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     }
     break;
 
+  case SEQ_START_SUBSEQ_UNREGISTER:
+    Util_SubSeq_Start( p_wk, WbmWifiSubSeq_UnRegister );
+    *p_seq  = SEQ_WAIT_SUBSEQ_UNREGISTER;
+    break;
+  case SEQ_WAIT_SUBSEQ_UNREGISTER:
+    { 
+      WBM_WIFI_SUBSEQ_RET ret = Util_SubSeq_Main( p_wk );
+      if( ret == WBM_WIFI_SUBSEQ_UNREGISTER_RET_FALSE||
+          ret == WBM_WIFI_SUBSEQ_UNREGISTER_RET_NONE )
+      { 
+        *p_seq  = SEQ_START_SELECT_CONTINUE_MSG;
+      }
+      else if( ret == WBM_WIFI_SUBSEQ_UNREGISTER_RET_TRUE )
+      { 
+        p_wk->is_wificup_end  = TRUE;
+        *p_seq  = SEQ_NEXT_DISCONNECT;
+      }
+
+      //エラー
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+      { 
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+        *p_seq  = SEQ_START_SELECT_CONTINUE_MSG;
+        break;
+
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+        break;
+      }
+    }
+    break;
+
+  case SEQ_NEXT_DISCONNECT:
+    WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_DisConnextSendTime );
+    break;
 
   case SEQ_WAIT_MSG:
     if( WBM_TEXT_IsEnd( p_wk->p_text ) )
@@ -4016,6 +4046,16 @@ static void Util_List_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk, UTIL_LIST_TYPE ty
       setup.strID[0]= WIFIMATCH_WIFI_SELECT_08;
       setup.strID[1]= WIFIMATCH_WIFI_SELECT_09;
       setup.strID[2]= WIFIMATCH_WIFI_SELECT_10;
+      setup.list_max= 3;
+      setup.is_cancel   = TRUE;
+      setup.cancel_idx  = 2;
+      p_wk->p_list  = WBM_LIST_InitEx( &setup, 32/2 - 26/2, (24-6)/2 - 3*2/2, 26, 3*2, HEAPID_WIFIBATTLEMATCH_CORE );
+      break;
+
+    case UTIL_LIST_TYPE_CUPMENU_CONT:
+      setup.strID[0]= WIFIMATCH_WIFI_SELECT_11;
+      setup.strID[1]= WIFIMATCH_WIFI_SELECT_12;
+      setup.strID[2]= WIFIMATCH_WIFI_SELECT_13;
       setup.list_max= 3;
       setup.is_cancel   = TRUE;
       setup.cancel_idx  = 2;

@@ -83,9 +83,6 @@ FS_EXTERN_OVERLAY(dpw_common);
 #endif//DEBUGWIN_USE
 
 
-#ifndef SAKE_REPORT_NONE
-#define SAKE_REPORT_HEAP_DIVIDE   //レポート用ヒープを切り分ける
-#endif 
 
 //=============================================================================
 /**
@@ -1129,6 +1126,9 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     SEQ_WAIT_MATCH_CARDIN,
     SEQ_CARDIN_WAIT,
 
+    SEQ_START_SESSION,
+    SEQ_WAIT_SESSION,
+
     SEQ_END_MATCHING_MSG,
     SEQ_END_MATCHING,
 
@@ -1308,7 +1308,26 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     if( p_wk->cnt++ > ENEMYDATA_WAIT_SYNC )
     { 
       p_wk->cnt      = 0;
-      *p_seq      = SEQ_END_MATCHING_MSG;
+      *p_seq      = SEQ_START_SESSION;
+    }
+    break;
+
+  case SEQ_START_SESSION:
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_SC_HEAP_SIZE );
+    DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
+
+#ifndef SAKE_REPORT_NONE
+    WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER, WIFIBATTLEMATCH_TYPE_RNDRATE, 0, NULL );
+#endif
+    *p_seq  = SEQ_WAIT_SESSION;
+    break;
+
+  case SEQ_WAIT_SESSION:
+#ifndef SAKE_REPORT_NONE
+    if( WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net ) )
+#endif
+    { 
+      *p_seq  = SEQ_END_MATCHING_MSG;
     }
     break;
 
@@ -1415,10 +1434,8 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
   switch( *p_seq )
   { 
   case SEQ_SC_HEAP_INIT:
-#ifdef SAKE_REPORT_HEAP_DIVIDE
-    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_RND_RATE_HEAP_SIZE );
-    DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_GS, WBM_RND_RATE_HEAP_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
-#endif //SAKE_REPORT_HEAP_DIVIDE
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_SC_HEAP_SIZE );
+    DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
     *p_seq  = SEQ_START_MSG;
     break;
     //-------------------------------------
@@ -1431,7 +1448,7 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
   case SEQ_START_REPORT_ATLAS:
 #ifndef SAKE_REPORT_NONE
-    WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_TYPE_RNDRATE, p_param->p_param->btl_rule, p_param->cp_btl_score );
+    WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_SCORE, WIFIBATTLEMATCH_TYPE_RNDRATE, p_param->p_param->btl_rule, p_param->cp_btl_score );
 #endif
     *p_seq = SEQ_WAIT_REPORT_ATLAS;
     break;
@@ -1465,10 +1482,8 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
 
   case SEQ_SC_HEAP_EXIT:
-#ifdef SAKE_REPORT_HEAP_DIVIDE
     DWC_RAPCOMMON_ResetSubHeapID();
     GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
-#endif //SAKE_REPORT_HEAP_DIVIDE
     *p_seq = SEQ_START_DISCONNECT;
     break;
 

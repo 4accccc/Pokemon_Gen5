@@ -305,6 +305,7 @@ struct _WIFIBATTLEMATCH_NET_WORK
   u32 cancel_select_timeout;   //CANCELSELECT_TIMEOUT
   BOOL is_stop_connect;
   BOOL is_auth;
+  WIFIBATTLEMATCH_SC_REPORT_TYPE report_type;
   int get_recordID;
   u16 playername_unicode[PERSON_NAME_SIZE + EOM_SIZE];
   WIFIBATTLEMATCH_GDB_RND_RECORD_DATA record_data;
@@ -387,11 +388,13 @@ static void DwcRap_Sc_SetReportIntentionCallback( DWCScResult theResult, void* t
 static void DwcRap_Sc_SubmitReportCallback( DWCScResult theResult, void* theUserData );
 //private
 static void DwcRap_Sc_Finalize( WIFIBATTLEMATCH_NET_WORK *p_wk );
-static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYERDATA *p_other, const DWC_SC_WRITE_DATA *cp_data, BOOL is_auth, DWCRAP_SC_CREATE_REPORT_CORE_FUNC SC_CreateReportCoreFunc, BOOL is_disconnect );
+static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYERDATA *p_other, const DWC_SC_WRITE_DATA *cp_data, BOOL is_auth, DWCRAP_SC_CREATE_REPORT_CORE_FUNC SC_CreateReportCoreFunc, BOOL is_disconnect, WIFIBATTLEMATCH_SC_REPORT_TYPE report_type );
 static DWCScResult DwcRap_Sc_CreateReportDebug( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYERDATA *p_other, const WIFIBATTLEMATCH_SC_DEBUG_DATA * cp_data, BOOL is_auth );
 //リポート作成コールバック
 static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const DWC_SC_WRITE_DATA *cp_data, BOOL is_my, BOOL is_disconnect );
 static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, const DWC_SC_WRITE_DATA *cp_data, BOOL is_my, BOOL is_disconnect );
+static DWCScResult DwcRap_Sc_CreateReportRndCoreBtlAfter( DWC_SC_PLAYERDATA *p_my, const DWC_SC_WRITE_DATA *cp_data, BOOL is_my, BOOL is_disconnect );
+static DWCScResult DwcRap_Sc_CreateReportWifiCoreBtlAfter( DWC_SC_PLAYERDATA *p_my, const DWC_SC_WRITE_DATA *cp_data, BOOL is_my, BOOL is_disconnect );
 
 //-------------------------------------
 ///	GDB関係
@@ -1115,7 +1118,7 @@ static int WIFIBATTLEMATCH_WIFI_Eval_Callback( int index, void* p_param_adrs )
   cup       = DWC_GetMatchIntValue( index, p_wk->key_wk[MATCHMAKE_KEY_CUPNO].keyStr, -1 );
 
   //指標キーが反映されていないので、無視する
-  if( rate == -1 || disconnect == -1 || cup == -1 )
+  if( rate == -1 && disconnect == -1 && cup == -1 )
   { 
     return 0;
   }
@@ -1427,37 +1430,57 @@ BOOL WIFIBATTLEMATCH_SC_ProcessSession( WIFIBATTLEMATCH_NET_WORK *p_wk )
  *	@param  BtlResult result          対戦結果
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_SC_StartReport( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_TYPE mode, WIFIBATTLEMATCH_BTLRULE rule, const BATTLEMATCH_BATTLE_SCORE *cp_btl_score )
+void WIFIBATTLEMATCH_SC_StartReport( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEMATCH_SC_REPORT_TYPE type, WIFIBATTLEMATCH_TYPE mode, WIFIBATTLEMATCH_BTLRULE rule, const BATTLEMATCH_BATTLE_SCORE *cp_btl_score )
 { 
-  if( GFL_NET_IsParentMachine() )
-  { 
-    DEBUG_NET_Printf( "！親機 ルール%d 結果%d\n", rule, cp_btl_score->result );
-  }
-  else
-  { 
-    DEBUG_NET_Printf( "！子機 ルール%d 結果%d\n", rule, cp_btl_score->result );
-  }
-
-  p_wk->seq = 0;
-  p_wk->report.btl_rule   = rule;
-  p_wk->report.btl_result = cp_btl_score->result;
-  p_wk->report.is_dirty   = cp_btl_score->is_dirty;
   p_wk->is_debug  = FALSE;
-  p_wk->is_auth   = FALSE;//GFL_NET_IsParentMachine();
+  p_wk->seq = 0;
+  p_wk->is_auth   = TRUE;//GFL_NET_IsParentMachine();
   p_wk->is_recv[ WIFIBATTLEMATCH_NET_RECVFLAG_FLAG ]  = FALSE;
-  
-  switch( mode )
+  p_wk->report_type = type;
+
+  if( type == WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER )
   { 
-  case WIFIBATTLEMATCH_TYPE_WIFICUP:    //WIFI大会
-    p_wk->SC_CreateReportCoreFunc = DwcRap_Sc_CreateReportWifiCore;
-    break;
-  case WIFIBATTLEMATCH_TYPE_RNDFREE:
-  case WIFIBATTLEMATCH_TYPE_LIVECUP:    //ライブ大会
-    GF_ASSERT(0);
-    break;
-  case WIFIBATTLEMATCH_TYPE_RNDRATE:
-    p_wk->SC_CreateReportCoreFunc = DwcRap_Sc_CreateReportRndCore;
-    break;
+    switch( mode )
+    { 
+    case WIFIBATTLEMATCH_TYPE_WIFICUP:    //WIFI大会
+      p_wk->SC_CreateReportCoreFunc = DwcRap_Sc_CreateReportWifiCoreBtlAfter;
+      break;
+    case WIFIBATTLEMATCH_TYPE_RNDRATE:    //ランダムマッチレーティング
+      p_wk->SC_CreateReportCoreFunc = DwcRap_Sc_CreateReportRndCoreBtlAfter;
+      break;
+    default:
+      GF_ASSERT(0);
+      break;
+    }
+  }
+  else if( type == WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_SCORE )
+  { 
+
+    if( GFL_NET_IsParentMachine() )
+    { 
+      DEBUG_NET_Printf( "！親機 ルール%d 結果%d\n", rule, cp_btl_score->result );
+    }
+    else
+    { 
+      DEBUG_NET_Printf( "！子機 ルール%d 結果%d\n", rule, cp_btl_score->result );
+    }
+
+    p_wk->report.btl_rule   = rule;
+    p_wk->report.btl_result = cp_btl_score->result;
+    p_wk->report.is_dirty   = cp_btl_score->is_dirty;
+
+    switch( mode )
+    { 
+    case WIFIBATTLEMATCH_TYPE_WIFICUP:    //WIFI大会
+      p_wk->SC_CreateReportCoreFunc = DwcRap_Sc_CreateReportWifiCore;
+      break;
+    case WIFIBATTLEMATCH_TYPE_RNDRATE:    //ランダムマッチレーティング
+      p_wk->SC_CreateReportCoreFunc = DwcRap_Sc_CreateReportRndCore;
+      break;
+    default:
+      GF_ASSERT(0);
+      break;
+    }
   }
 }
 //----------------------------------------------------------------------------
@@ -1829,7 +1852,7 @@ BOOL WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_NET_WORK *p_wk )
       if(1)
 #endif
       { 
-        ret = DwcRap_Sc_CreateReport( &p_wk->p_data->sc_player[0], &p_wk->p_data->sc_player[1], &p_wk->report, p_wk->is_auth, p_wk->SC_CreateReportCoreFunc, cp_error->errorUser == ERRORCODE_TIMEOUT );
+        ret = DwcRap_Sc_CreateReport( &p_wk->p_data->sc_player[0], &p_wk->p_data->sc_player[1], &p_wk->report, p_wk->is_auth, p_wk->SC_CreateReportCoreFunc, cp_error->errorUser == ERRORCODE_TIMEOUT, p_wk->report_type );
       }
       else
       { 
@@ -2009,7 +2032,7 @@ static void DwcRap_Sc_Finalize( WIFIBATTLEMATCH_NET_WORK *p_wk )
  *	@return 結果
  */
 //-----------------------------------------------------------------------------
-static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYERDATA *p_other, const DWC_SC_WRITE_DATA *cp_data, BOOL is_auth, DWCRAP_SC_CREATE_REPORT_CORE_FUNC SC_CreateReportCoreFunc, BOOL is_disconnect )
+static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYERDATA *p_other, const DWC_SC_WRITE_DATA *cp_data, BOOL is_auth, DWCRAP_SC_CREATE_REPORT_CORE_FUNC SC_CreateReportCoreFunc, BOOL is_disconnect, WIFIBATTLEMATCH_SC_REPORT_TYPE report_type )
 { 
   DWCScResult ret;
 
@@ -2049,7 +2072,7 @@ static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYE
       
     DWCScGameResult game_result;
 
-    if( is_disconnect )
+    if( is_disconnect || report_type == WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER )
     {
       game_result = DWC_SC_GAME_RESULT_NONE;
     }
@@ -2110,7 +2133,11 @@ static DWCScResult DwcRap_Sc_CreateReport( DWC_SC_PLAYERDATA *p_my, DWC_SC_PLAYE
   { 
     DWCScGameResult game_result;
 
-    if( is_disconnect )
+    if( report_type == WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER )
+    { 
+      game_result = DWC_SC_GAME_RESULT_NONE;
+    }
+    else if( is_disconnect )
     {
       game_result = DWC_SC_GAME_RESULT_DISCONNECT;
     }
@@ -2576,6 +2603,11 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
   { 
     return ret;
   }
+  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_ADD_DISCONNECTS_COUNTER, -1 );
+  if( ret != DWC_SC_RESULT_NO_ERROR )
+  { 
+    return ret;
+  }
 
   return ret;
 }
@@ -2609,7 +2641,6 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
   DEBUG_NET_Printf( "勝ち%d\n", is_win );
   DEBUG_NET_Printf( "負け%d\n", !is_win );
   DEBUG_NET_Printf( "不正%d\n", cp_data->is_dirty );
-  DEBUG_NET_Printf( "切断%d\n", is_disconnect && !is_my );
   DEBUG_NET_Printf( "-----------Report_end-------------\n" );
 
   ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_WIFICUP, 1 );
@@ -2632,14 +2663,11 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
   { 
     return ret;
   }
-  if( is_disconnect && !is_my )
+  if( ret != DWC_SC_RESULT_NO_ERROR )
   { 
-    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_DISCONNECTS_WIFICUP_COUNTER, 1 );
+    return ret;
   }
-  else
-  { 
-    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_DISCONNECTS_WIFICUP_COUNTER, 0 );
-  }
+  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_ADD_DISCONNECTS_WIFICUP_COUNTER, -1 );
   if( ret != DWC_SC_RESULT_NO_ERROR )
   { 
     return ret;
@@ -2648,6 +2676,41 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
   return ret;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レポート作成  ランダムマッチバトル前版
+ *
+ *	@param	DWC_SC_PLAYERDATA *p_my           書き込むレポートの持ち主
+ *	@param  const DWC_SC_WRITE_DATA *cp_data  書き込むデータ
+ *	@param	is_my                             TRUEならば自分、FALSEならば相手
+ *
+ *	@return 書き込み結果
+ */
+//-----------------------------------------------------------------------------
+static DWCScResult DwcRap_Sc_CreateReportRndCoreBtlAfter( DWC_SC_PLAYERDATA *p_my, const DWC_SC_WRITE_DATA *cp_data, BOOL is_my, BOOL is_disconnect )
+{ 
+  DWCScResult ret;
+  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_DISCONNECTS_COUNTER, 1 );
+  return ret;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レポート作成  WIFI大会バトル前版
+ *
+ *	@param	DWC_SC_PLAYERDATA *p_my           書き込むレポートの持ち主
+ *	@param  const DWC_SC_WRITE_DATA *cp_data  書き込むデータ
+ *	@param	is_my                             TRUEならば自分、FALSEならば相手
+ *
+ *	@return 書き込み結果
+ */
+//-----------------------------------------------------------------------------
+static DWCScResult DwcRap_Sc_CreateReportWifiCoreBtlAfter( DWC_SC_PLAYERDATA *p_my, const DWC_SC_WRITE_DATA *cp_data, BOOL is_my, BOOL is_disconnect )
+{ 
+  DWCScResult ret;
+  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_DISCONNECTS_WIFICUP_COUNTER, 1 );
+  return ret;
+}
 
 //=============================================================================
 /**

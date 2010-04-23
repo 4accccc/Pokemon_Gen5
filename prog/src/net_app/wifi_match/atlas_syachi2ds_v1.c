@@ -6,7 +6,7 @@
 // Atlasサーバから吐き出されるhとcです。
 // 変更項目は以下
 // ・DWC_GdbGetMyRecordsAsyncで使うため、使用キー文字列をテーブル化
-// ・GFL_STD_StrCmpを使用していたのをGFL_STD_StrCmpへ変更
+// ・StrCmpを使用していたのをGFL_STD_StrCmpへ変更
 //
 ///////////////////////////////////////////////////////////////////////////////
 #include <gflib.h>
@@ -75,6 +75,12 @@ int ATLAS_GET_KEY(char* keyName)
    if(!keyName)
       return 0;
    
+   if(!GFL_STD_StrCmp("KEY_DISCONNECTS_COUNTER", keyName))
+      return KEY_DISCONNECTS_COUNTER;   
+   if(!GFL_STD_StrCmp("KEY_ADD_DISCONNECTS_COUNTER", keyName))
+      return KEY_ADD_DISCONNECTS_COUNTER;   
+   if(!GFL_STD_StrCmp("KEY_ADD_DISCONNECTS_WIFICUP_COUNTER", keyName))
+      return KEY_ADD_DISCONNECTS_WIFICUP_COUNTER;   
    if(!GFL_STD_StrCmp("KEY_NUM_SINGLE_WIN_COUNTER", keyName))
       return KEY_NUM_SINGLE_WIN_COUNTER;   
    if(!GFL_STD_StrCmp("KEY_NUM_SINGLE_LOSE_COUNTER", keyName))
@@ -126,6 +132,12 @@ char* ATLAS_GET_KEY_NAME(int keyId)
    if(keyId <= 0)
       return "";
    
+   if(keyId == KEY_DISCONNECTS_COUNTER)
+      return "KEY_DISCONNECTS_COUNTER";   
+   if(keyId == KEY_ADD_DISCONNECTS_COUNTER)
+      return "KEY_ADD_DISCONNECTS_COUNTER";   
+   if(keyId == KEY_ADD_DISCONNECTS_WIFICUP_COUNTER)
+      return "KEY_ADD_DISCONNECTS_WIFICUP_COUNTER";   
    if(keyId == KEY_NUM_SINGLE_WIN_COUNTER)
       return "KEY_NUM_SINGLE_WIN_COUNTER";   
    if(keyId == KEY_NUM_SINGLE_LOSE_COUNTER)
@@ -382,4 +394,3 @@ int ATLAS_GET_STAT_PAGE_BY_NAME(char* statName)
    
    return 0;
 }
-
