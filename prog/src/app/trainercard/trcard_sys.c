@@ -47,6 +47,7 @@ typedef struct _TR_CARD_SYS{
   PMS_SELECT_PARAM  PmsParam;         ///< 簡易会話アプリ呼び出し用ワーク
 
   TRCARD_CALL_PARAM *tcp;
+  int               TrainerView;      ///< トレーナーカード開始時のユニオン見た目
 
 }TR_CARD_SYS;
 
@@ -146,6 +147,8 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
   wk->tcp->TrCardData = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TR_CARD_DATA ) );
   TRAINERCARD_GetSelfData( wk->tcp->TrCardData , pp->gameData , FALSE, wk->tcp->edit_possible, wk->heapId);
 
+  // ユニオン見た目を保存
+  wk->TrainerView = wk->tcp->TrCardData->UnionTrNo;
   return GFL_PROC_RES_FINISH;
 }
 
@@ -187,7 +190,7 @@ GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void
   switch(*seq){
   case CARD_OR_BADGE:
     // 未クリアならバッジへ、殿堂入りしていればカードへ
-    if(wk->tcp->TrCardData->Clear_y==0 && wk->tcp->edit_possible==1){
+    if(wk->tcp->TrCardData->Clear_m==0 && wk->tcp->edit_possible==1){
       *seq = BADGE_INIT;
     }else{
       *seq = CARD_INIT;
@@ -235,6 +238,18 @@ GFL_PROC_RESULT TrCardSysProc_End( GFL_PROC * proc, int * seq , void *pwk, void 
 {
   TR_CARD_SYS* wk = (TR_CARD_SYS*)mywk;
   TRCARD_CALL_PARAM* param = (TRCARD_CALL_PARAM*)pwk;
+
+  // ユニオン見た目が変更されていたらすれ違い情報を更新する
+  if(param->edit_possible)
+  {
+    MYSTATUS *my     = GAMEDATA_GetMyStatus(param->gameData);
+    int trainer_view = MyStatus_GetTrainerView( my );
+    if(wk->TrainerView!=trainer_view)
+    {
+      OS_Printf("すれ違い情報[見た目]を更新した\n");
+      GAMEBEACON_SendDataUpdate_TrainerView(trainer_view);
+    }
+  }
   
   // 終了条件を引き継ぐ
   param->next_proc = wk->tcp->next_proc;
