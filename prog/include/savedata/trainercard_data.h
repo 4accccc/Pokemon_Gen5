@@ -18,6 +18,11 @@
 #define TRCARD_FINISH_TRIALHOUSE  (  2 )
 #define TRCARD_FINISH_DENDOU      (  3 )
 
+// バッジ磨き情報（１ランク分）
+#define BADGE_POLISH_RATE   ( 48*2 )  
+#define BADGE_POLISH_MAX    ( BADGE_POLISH_RATE*5 )  
+
+
 #include "savedata/save_control.h"
 #include "system/pms_data.h"
 

@@ -58,7 +58,7 @@
 #define BADGE_NUM   ( 8 )
 
 // 48時間で磨き下限が１段階落ちるのでその倍数で管理
-#define BADGE_POLISH_RATE   ( 48*3 )  
+//#define BADGE_POLISH_RATE   ( 48*3 )  
 
 // シーケンス制御
 enum{

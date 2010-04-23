@@ -18,7 +18,6 @@
 #define DEFAULT_BADGE_SCRUCH  (140)
 #define TRAINERCARD_BADGE_NUM (  8)
 
-
 typedef struct TR_CARD_SV_DATA_tag
 {
   u8         SignData[SIGHN_W*SIGHN_H*64/8];   ///< サイン面データ
@@ -263,9 +262,14 @@ void TRCSave_SetBadgeDate( TR_CARD_SV_PTR inTrCard, int no, int year, int month,
 {
   GF_ASSERT(no<TRAINERCARD_BADGE_NUM);
 
+  // バッジ取得の年月日設定
   inTrCard->badgeGetDate[no].year  = year;
   inTrCard->badgeGetDate[no].month = month;
   inTrCard->badgeGetDate[no].day   = day;
+
+  // 一緒にバッジ磨き情報も入れる
+
+  inTrCard->polish[no] = BADGE_POLISH_MAX/2;
 }
 
 
