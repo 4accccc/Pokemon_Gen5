@@ -612,8 +612,8 @@ static void scPut_MeromeroAct( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scPut_ConfDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage );
 static void scPut_CurePokeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sick );
 static void scPut_WazaMsg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
-static WazaSick scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWazaSickEx exSickCode, BPP_SICK_CONT* oldCont );
-static WazaSick trans_sick_code( const BTL_POKEPARAM* bpp, BtlWazaSickEx exCode );
+static void scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sickID, BPP_SICK_CONT* oldCont );
+static WazaSick trans_sick_code( const BTL_POKEPARAM* bpp, BtlWazaSickEx* exCode );
 static void scPut_WazaFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scPut_WazaAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender, WazaID waza );
 static void scput_WazaNoEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender );
@@ -9528,10 +9528,8 @@ static void scPut_WazaMsg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, W
  * @param   oldCont   [out] 回復前の継続パラメータ（不要ならNULL)
  */
 //----------------------------------------------------------------------------------
-static WazaSick scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWazaSickEx exSickCode, BPP_SICK_CONT* oldCont )
+static void scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT* oldCont )
 {
-  WazaSick sick = trans_sick_code( bpp, exSickCode );
-
   if( sick != WAZASICK_NULL )
   {
     u8 pokeID = BPP_GetID( bpp );
@@ -9554,46 +9552,53 @@ static WazaSick scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWaza
       SCQUE_PUT_OP_CureWazaSick( wk->que, pokeID, sick );
     }
   }
-  return sick;
 }
 //----------------------------------------------------------------------------------
 /**
  * 拡張状態異常コードを、該当するコードに変換する
  *
- * @param   bpp       対象ポケモン
- * @param   exCode
+ * @param   bpp
+ * @param   exCode    [io]
  *
- * @retval  WazaSick  該当コード／該当コードなしの場合、WAZASICK_NULLを返す
+ * @retval  WazaSick    該当コード／該当コードなしの場合、WAZASICK_NULLを返す
  */
 //----------------------------------------------------------------------------------
-static WazaSick trans_sick_code( const BTL_POKEPARAM* bpp, BtlWazaSickEx exCode )
+static WazaSick trans_sick_code( const BTL_POKEPARAM* bpp, BtlWazaSickEx* exCode )
 {
   WazaSick result = WAZASICK_NULL;
   PokeSick poke_sick = BPP_GetPokeSick( bpp );
 
-  // 拡張コード変換
-  if( (exCode == WAZASICK_EX_POKEFULL) || (exCode == WAZASICK_EX_POKEFULL_PLUS) )
-  {
+  switch( (*exCode) ){
+  case WAZASICK_EX_POKEFULL:
     // ポケモン系状態異常になっているならそれを治す
     if( poke_sick != WAZASICK_NULL ){
       result = poke_sick;
     }
-    // それ以外は混乱のみ治す
-    else{
-      if( (exCode == WAZASICK_EX_POKEFULL_PLUS)
-      &&  (BPP_CheckSick(bpp, WAZASICK_KONRAN))
-      ){
-        result = WAZASICK_KONRAN;
-      }
+    *exCode = WAZASICK_NULL;
+    break;
+
+  case WAZASICK_EX_POKEFULL_PLUS:
+    // ポケモン系状態異常になっているならそれを治す
+    if( poke_sick != WAZASICK_NULL ){
+      result = poke_sick;
+      *exCode = WAZASICK_KONRAN;
+      break;
     }
-  }
-  // 通常コード時は罹患していない状態異常を指定されたらNULLを返す
-  else{
-    if( BPP_CheckSick(bpp, exCode) ){
-      result = exCode;
-    }else{
-      result = WAZASICK_NULL;
+    if( BPP_CheckSick(bpp, WAZASICK_KONRAN) ){
+      result = WAZASICK_KONRAN;
     }
+    *exCode = WAZASICK_NULL;
+    break;
+
+  case WAZASICK_NULL:
+    break;
+
+  default:
+    if( BPP_CheckSick(bpp, *exCode) ){
+      result = (*exCode);
+    }
+    *exCode = WAZASICK_NULL;
+    break;
   }
 
   return result;
@@ -13308,13 +13313,17 @@ static u8 scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
         BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
         if( !BPP_IsDead(pp_target) )
         {
+          BtlWazaSickEx exCode;
           BPP_SICK_CONT oldCont;
-          WazaSick cured_sick = scPut_CureSick( wk, pp_target, param->sickCode, &oldCont );
-          if( cured_sick != WAZASICK_NULL )
+          WazaSick check_sick;
+
+          exCode = param->sickCode;
+          while( (check_sick = trans_sick_code(pp_target, &exCode)) != WAZASICK_NULL )
           {
+            scPut_CureSick( wk, pp_target, check_sick, &oldCont );
             if( !param->fStdMsgDisable )
             {
-              if( BTL_SICK_MakeDefaultCureMsg(cured_sick, oldCont, pp_target, itemID, &wk->strParam) ){
+              if( BTL_SICK_MakeDefaultCureMsg(check_sick, oldCont, pp_target, itemID, &wk->strParam) ){
                 handexSub_putString( wk, &wk->strParam );
               }
             }
