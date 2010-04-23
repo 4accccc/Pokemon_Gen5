@@ -7075,7 +7075,6 @@ static void handler_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u
     sick_param->poke_cnt = 1;
     sick_param->pokeID[0] = target_pokeID;
     sick_param->sickID = WAZASICK_IEKI;
-    sick_param->fAlmost = TRUE;
     sick_param->sickCont = BPP_SICKCONT_MakePermanent();
     HANDEX_STR_Setup( &sick_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Ieki );
     HANDEX_STR_AddArg( &sick_param->exStr, target_pokeID );
