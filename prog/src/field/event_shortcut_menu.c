@@ -31,6 +31,7 @@
 //プロセス（主に起動時モードのため）
 #include "app/zukan.h"
 #include "app/pokelist.h"
+#include "app/trainer_card.h"
 
 //スクリプトイベント呼び出しのため
 #include "field/script.h"
@@ -768,12 +769,15 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
 		return CALLTYPE_PROC;
 	case SHORTCUT_ID_TRCARD_FRONT:			//トレーナーカード＞ぜんめん
 		p_param->call = EVENT_PROCLINK_CALL_TRAINERCARD;
+    p_param->data = TRCARD_SHORTCUT_FRONT;
 		return CALLTYPE_PROC;
 	case SHORTCUT_ID_TRCARD_BACK:			//トレーナーカード＞うらめん
 		p_param->call = EVENT_PROCLINK_CALL_TRAINERCARD;
+    p_param->data = TRCARD_SHORTCUT_BACK;
 		return CALLTYPE_PROC;
 	case SHORTCUT_ID_TRCARD_BADGE:			//トレーナーカード＞バッジ
 		p_param->call = EVENT_PROCLINK_CALL_TRAINERCARD;
+    p_param->data = TRCARD_SHORTCUT_BADGE;
 		return CALLTYPE_PROC;
 	case SHORTCUT_ID_CONFIG:						//せってい
 		p_param->call = EVENT_PROCLINK_CALL_CONFIG;
