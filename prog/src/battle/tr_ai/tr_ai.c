@@ -42,7 +42,7 @@
 //
 //=========================================================================
 #define TR_AI_WAZATBL_MAX ( 48 )
-#define TR_AI_SEQ_COUNT   ( 128 ) //命令をいくつ実行したら、制御を返すかを指定
+#define TR_AI_SEQ_COUNT   ( 2 ) //命令をいくつ実行したら、制御を返すかを指定
 
 //=========================================================================
 //  AI用の構造体宣言
@@ -55,6 +55,9 @@ typedef struct{
 
   int         waza_point[ PTL_WAZA_MAX ];
   int         waza_point_temp[ PTL_WAZA_MAX ];
+
+  s16         max_point[ BTL_POS_MAX ];
+  s8          pos[ BTL_POS_MAX ];
 
   int         calc_work;
   u32         ai_bit;
@@ -500,6 +503,7 @@ VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, BTL_SVFLOW_WORK* svfWork, const
 
   taw->heapID = heapID;
   taw->vmcmd_result = VMCMD_RESULT_CONTINUE;
+  //taw->vmcmd_result = VMCMD_RESULT_SUSPEND;
   taw->ai_bit_temp = ai_bit;
 
   taw->handle = GFL_ARC_OpenDataHandle( ARCID_TR_AI, heapID );
@@ -549,6 +553,11 @@ BOOL  TR_AI_Main( VMHANDLE* vmh )
   else if( ( taw->rule == BTL_RULE_DOUBLE ) || ( taw->rule == BTL_RULE_TRIPLE ) )
   {
     ret = waza_ai_plural( vmh, taw );
+  }
+  //@todo ローテーションはとりあえず野生と同等にする
+  else 
+  { 
+    taw->ai_bit = 0;
   }
 
   return ret;
@@ -754,12 +763,7 @@ static  BOOL  waza_ai_single( VMHANDLE* vmh, TR_AI_WORK* taw )
 //============================================================================================
 static  BOOL  waza_ai_plural( VMHANDLE* vmh, TR_AI_WORK* taw )
 {
-  BtlPokePos  btl_pos, def_pos;
-  int btl_pos_cnt;
-  s16 max_point[BTL_POS_MAX];
-  u8  btl_pos_wk[BTL_POS_MAX];
-  s8  pos[BTL_POS_MAX];
-  s16 point_max;
+  BtlPokePos  def_pos;
   u16 waza_no;
   s8  waza_pos;
   int btl_pos_max = ( taw->rule == BTL_RULE_DOUBLE ) ? 4 : 6;
@@ -779,15 +783,15 @@ static  BOOL  waza_ai_plural( VMHANDLE* vmh, TR_AI_WORK* taw )
     {
       if( taw->def_bpp == NULL )
       {
-        pos[ taw->def_btl_poke_pos ] = -1;
-        max_point[ taw->def_btl_poke_pos ] = -1;
+        taw->pos[ taw->def_btl_poke_pos ] = -1;
+        taw->max_point[ taw->def_btl_poke_pos ] = -1;
         continue;
       }
       else if( ( taw->def_btl_poke_pos == taw->atk_btl_poke_pos ) ||
               ( BPP_IsDead( taw->def_bpp ) == TRUE ) )
       {
-        pos[ taw->def_btl_poke_pos ] = -1;
-        max_point[ taw->def_btl_poke_pos ] = -1;
+        taw->pos[ taw->def_btl_poke_pos ] = -1;
+        taw->max_point[ taw->def_btl_poke_pos ] = -1;
         continue;
       }
 
@@ -856,17 +860,17 @@ static  BOOL  waza_ai_plural( VMHANDLE* vmh, TR_AI_WORK* taw )
           }
         }
       }
-      pos[ taw->def_btl_poke_pos ] = poswork[ GFL_STD_MtRand( poscnt ) ];
-      max_point[ taw->def_btl_poke_pos ] = point[ 0 ];
+      taw->pos[ taw->def_btl_poke_pos ] = poswork[ GFL_STD_MtRand( poscnt ) ];
+      taw->max_point[ taw->def_btl_poke_pos ] = point[ 0 ];
 
       // 100を割っている味方攻撃は行わない
       if( BTL_MAIN_IsOpponentClientID( taw->wk,
                                        BTL_MAIN_BtlPosToClientID( taw->wk, taw->atk_btl_poke_pos ),
                                        BTL_MAIN_BtlPosToClientID( taw->wk, taw->def_btl_poke_pos ) ) == FALSE )
       {
-        if(max_point[ taw->def_btl_poke_pos ] < 100 )
+        if( taw->max_point[ taw->def_btl_poke_pos ] < 100 )
         {
-          max_point[ taw->def_btl_poke_pos ] = -1;
+          taw->max_point[ taw->def_btl_poke_pos ] = -1;
         }
       }
     }
@@ -880,25 +884,30 @@ static  BOOL  waza_ai_plural( VMHANDLE* vmh, TR_AI_WORK* taw )
 #endif
   }
 
-  point_max = max_point[ 0 ];
-  btl_pos_wk[ 0 ] = 0;
-  btl_pos_cnt = 1;
-  for( btl_pos = 1 ; btl_pos < btl_pos_max ; btl_pos++ )
-  {
-    if( point_max == max_point[ btl_pos ] )
-    {
-      btl_pos_wk[ btl_pos_cnt++ ] = btl_pos;
-    }
-    if( point_max < max_point[ btl_pos ] )
-    {
-      point_max = max_point[ btl_pos ];
-      btl_pos_wk[ 0 ] = btl_pos;
-      btl_pos_cnt = 1;
-    }
-  }
+  { 
+    BtlPokePos  btl_pos;
+    u8  btl_pos_wk[BTL_POS_MAX];
+    s16 point_max = taw->max_point[ 0 ];
+    int btl_pos_cnt = 1;
 
-  taw->select_waza_dir = btl_pos_wk[ GFL_STD_MtRand( btl_pos_cnt ) ];
-  taw->select_waza_pos = pos[ taw->select_waza_dir ];
+    btl_pos_wk[ 0 ] = 0;
+
+    for( btl_pos = 1 ; btl_pos < btl_pos_max ; btl_pos++ )
+    {
+      if( point_max == taw->max_point[ btl_pos ] )
+      {
+        btl_pos_wk[ btl_pos_cnt++ ] = btl_pos;
+      }
+      if( point_max < taw->max_point[ btl_pos ] )
+      {
+        point_max = taw->max_point[ btl_pos ];
+        btl_pos_wk[ 0 ] = btl_pos;
+        btl_pos_cnt = 1;
+      }
+    }
+    taw->select_waza_dir = btl_pos_wk[ GFL_STD_MtRand( btl_pos_cnt ) ];
+    taw->select_waza_pos = taw->pos[ taw->select_waza_dir ];
+  }
 
 #if 0
   //@todo シャチでこの処理が必要かどうか要検証
