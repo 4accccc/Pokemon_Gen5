@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T17:39:08"/>
+	<create user="matsumiya" host="W00224" date="2010-04-23T13:00:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,13 +315,13 @@
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">あうう
 まけちゃったよ……[BE:01:ページ切り替え（クリア）]
-それにしても　キミ
+それにしても　きみ
 すっごく　つよいんだねえ[BE:01:ページ切り替え（クリア）]
 これ　ジムバッジ！
 ボクに　かったから　あげる！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">あうう
 負けちゃったよ……[BE:01:ページ切り替え（クリア）]
-それにしても　キミ
+それにしても　きみ
 すっごく　強いんだねえ[BE:01:ページ切り替え（クリア）]
 これ　ジムバッジ！
 ボクに　勝ったから　あげる！[BE:01:ページ切り替え（クリア）]</language>
@@ -377,7 +377,7 @@
 		<comment>♂
 ・leader_05表示後</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
-		<language name="JPN" width="256">キミは　たびに　でてから
+		<language name="JPN" width="256">きみは　たびに　でてから
 どれだけの　はっけんを　した？▼
 ボクはね　こどものころに
 むしポケモンの　うつくしさに▽
@@ -387,7 +387,7 @@
 いまだに　はっけんが　あるんだ▼
 ポケモンと　くらす　せかいは
 ほんと ふしぎで　みちているんだー</language>
-		<language name="JPN_KANJI" width="256">キミは　旅に　でてから
+		<language name="JPN_KANJI" width="256">きみは　旅に　でてから
 どれだけの　発見を　した？▼
 ボクはね　子供のころに
 むしポケモンの　美しさに▽
