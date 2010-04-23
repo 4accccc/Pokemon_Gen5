@@ -67,6 +67,7 @@ struct _GFL_CAMADJUST {
 
   GFL_BMP_DATA*     bmp[BMP_MAX];
   STRBUF*         strBufTmp;
+  BOOL            transReq;
 
   u16           scrnBuf[32*32];
 
@@ -142,7 +143,7 @@ extern GFL_CAMADJUST* GFL_CAMADJUST_Create( const GFL_CAMADJUST_SETUP* setup, HE
 
   gflCamAdjust->fontHandle = GFL_FONT_Create
     (ARCID_FONT, NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE ,gflCamAdjust->heapID);
-  gflCamAdjust->printQue = PRINTSYS_QUE_Create(gflCamAdjust->heapID);
+  gflCamAdjust->printQue = PRINTSYS_QUE_CreateEx( 256, gflCamAdjust->heapID);
 
   // ‰Šú‰»
   CAMADJUST_TOUCH_InitRepeat( gflCamAdjust );
@@ -210,6 +211,27 @@ BOOL  GFL_CAMADJUST_Main( GFL_CAMADJUST* gflCamAdjust )
 {
   if( gflCamAdjust == NULL ){ return FALSE; }
 
+
+  {
+    int i;
+    BOOL complete = TRUE;
+    
+    PRINTSYS_QUE_Main( gflCamAdjust->printQue );
+    if( gflCamAdjust->transReq ){
+      for( i=0; i<BMP_MAX; i++ ){
+        if( PRINTSYS_QUE_IsExistTarget(gflCamAdjust->printQue, gflCamAdjust->bmp[i] ) )
+        {
+          complete = FALSE;
+          break;
+        }
+      }
+      if( complete ){
+        gflCamAdjust->transReq = FALSE;
+      }
+    }
+  }
+  
+
   switch( gflCamAdjust->seq ){
 
   case SEQ_PUSHVRAM:
@@ -249,25 +271,25 @@ BOOL  GFL_CAMADJUST_Main( GFL_CAMADJUST* gflCamAdjust )
         break;
       }
     }
-    if( CAMADJUST_ControlTrg( gflCamAdjust ) == FALSE ){
-      gflCamAdjust->seq = SEQ_POPVRAM;
+    if( (CAMADJUST_ControlTrg( gflCamAdjust ) == FALSE) && 
+        (CAMADJUST_ControlCont( gflCamAdjust ) == FALSE) ){
       break;
-    }
-    if( CAMADJUST_ControlCont( gflCamAdjust ) == FALSE ){
-      gflCamAdjust->seq = SEQ_POPVRAM;
-      break;
-    }
-    CAMADJUST_NumPrint( gflCamAdjust, BMP_ANGLEV, *gflCamAdjust->pAngleV, 0x54 );
-    CAMADJUST_NumPrint( gflCamAdjust, BMP_ANGLEH, *gflCamAdjust->pAngleH, 0x64 );
-    CAMADJUST_NumPrint( gflCamAdjust, BMP_LENGTH, *gflCamAdjust->pLength/FX32_ONE, 0x74 );
-    CAMADJUST_NumPrint( gflCamAdjust, BMP_FOVY, *gflCamAdjust->pFovy, 0x84 );
-    CAMADJUST_NumPrint( gflCamAdjust, BMP_FAR, *gflCamAdjust->pFar/FX32_ONE, 0x94 );
-    if(gflCamAdjust->pWipeSize != NULL){
-      CAMADJUST_NumPrint( gflCamAdjust, BMP_WIPE, *gflCamAdjust->pWipeSize, 0xbc );
     }
 
-    CAMADJUST_printWipeSw( gflCamAdjust );
-    GFL_DISPUT_LoadScr(gflCamAdjust->setup.bgID, gflCamAdjust->scrnBuf, 0, PUSH_SCR_SIZ);
+    if( gflCamAdjust->transReq == FALSE ){
+      CAMADJUST_NumPrint( gflCamAdjust, BMP_ANGLEV, *gflCamAdjust->pAngleV, 0x54 );
+      CAMADJUST_NumPrint( gflCamAdjust, BMP_ANGLEH, *gflCamAdjust->pAngleH, 0x64 );
+      CAMADJUST_NumPrint( gflCamAdjust, BMP_LENGTH, *gflCamAdjust->pLength/FX32_ONE, 0x74 );
+      CAMADJUST_NumPrint( gflCamAdjust, BMP_FOVY, *gflCamAdjust->pFovy, 0x84 );
+      CAMADJUST_NumPrint( gflCamAdjust, BMP_FAR, *gflCamAdjust->pFar/FX32_ONE, 0x94 );
+      if(gflCamAdjust->pWipeSize != NULL){
+        CAMADJUST_NumPrint( gflCamAdjust, BMP_WIPE, *gflCamAdjust->pWipeSize, 0xbc );
+      }
+
+      CAMADJUST_printWipeSw( gflCamAdjust );
+      GFL_DISPUT_LoadScr(gflCamAdjust->setup.bgID, gflCamAdjust->scrnBuf, 0, PUSH_SCR_SIZ);
+      gflCamAdjust->transReq = TRUE;
+    }
     break;
 
   case SEQ_POPVRAM:
@@ -408,17 +430,17 @@ static BOOL CAMADJUST_ControlCont( GFL_CAMADJUST* gflCamAdjust )
 {
   int tblPos = GFL_UI_TP_HitCont(eventContTouchPanelTable);
 
-  if(gflCamAdjust->pAngleV == NULL){ return TRUE; }
-  if(gflCamAdjust->pAngleH == NULL){ return TRUE; }
-  if(gflCamAdjust->pLength == NULL){ return TRUE; }
-  if(gflCamAdjust->pFar == NULL){ return TRUE; }
-  if(gflCamAdjust->pFovy == NULL){ return TRUE; }
+  if(gflCamAdjust->pAngleV == NULL){ return FALSE; }
+  if(gflCamAdjust->pAngleH == NULL){ return FALSE; }
+  if(gflCamAdjust->pLength == NULL){ return FALSE; }
+  if(gflCamAdjust->pFar == NULL){ return FALSE; }
+  if(gflCamAdjust->pFovy == NULL){ return FALSE; }
 
   CAMADJUST_TOUCH_Control( gflCamAdjust, tblPos );
   tblPos = CAMADJUST_TOUCH_GetRepeat(gflCamAdjust);
 
   if(tblPos == GFL_UI_TP_HIT_NONE){
-    return TRUE;
+    return FALSE;
   }
   switch(tblPos){
 
@@ -512,7 +534,7 @@ static BOOL CAMADJUST_ControlTrg( GFL_CAMADJUST* gflCamAdjust )
   int tblPos = GFL_UI_TP_HitTrg(eventTrgTouchPanelTable);
 
   if(tblPos == GFL_UI_TP_HIT_NONE){
-    return TRUE;
+    return FALSE;
   }
   switch(tblPos){
 
