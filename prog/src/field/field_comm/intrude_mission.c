@@ -1378,17 +1378,25 @@ void MISSION_LIST_Create_Type(OCCUPY_INFO *occupy, MISSION_TYPE mission_type)
  * ミッションを全て制覇しているならばミッションリストを全て作成しなおす
  *
  * @param   occupy		
+ * @param   white_num   全占拠達成時：白の数
+ * @param   black_num   全占拠達成時：黒の数
  *
  * @retval  BOOL		TRUE:作成しなおした
  */
 //==================================================================
-BOOL MISSION_LIST_Create_Complete(OCCUPY_INFO *occupy)
+BOOL MISSION_LIST_Create_Complete(OCCUPY_INFO *occupy, u8 *white_num, u8 *black_num)
 {
   int mission_type;
   
   for(mission_type = 0; mission_type < MISSION_LIST_MAX; mission_type++){
     if(occupy->mlst.mission_clear[mission_type] == MISSION_CLEAR_NONE){
       return FALSE;
+    }
+    else if(occupy->mlst.mission_clear[mission_type] == MISSION_CLEAR_WHITE){
+      (*white_num)++;
+    }
+    else{
+      (*black_num)++;
     }
   }
   MISSION_LIST_Create(occupy);

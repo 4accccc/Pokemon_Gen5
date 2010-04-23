@@ -980,7 +980,7 @@ static void _MissionOrderConfirm(const int netID, const int size, const void* pD
   OS_TPrintf("受信：ミッション受注します net_id=%d\n", netID);
   entry_ret = MISSION_SetEntryNew(intcomm, &intcomm->mission, entry_req, netID);
   if(entry_ret == TRUE && entry_req->cdata.type == MISSION_TYPE_VICTORY){
-    GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), FALSE);
+    //GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), FALSE);
     intcomm->member_fix = TRUE;
     OS_TPrintf("二人専用の為、乱入禁止\n");
   }
@@ -1366,12 +1366,16 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
   const MISSION_RESULT *mresult = pData;
   GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+  BOOL complete = FALSE;
+  u8 white_num, black_num;
   
+#if 0 //返事を返さないと求めている側が永遠の待ちになるので 2010.04.23(金)
   if((intcomm->recv_profile & (1 << netID)) == 0){
     OS_TPrintf("受信：ミッション結果：プロフィール未受信の為、受け取らない recv_profile=%d\n", 
       intcomm->recv_profile);
     return;
   }
+#endif
   
   //自分がミッションのターゲットだった
   if(mresult->mission_data.target_info.net_id 
@@ -1386,22 +1390,32 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
     }
   }
 
-  //自分が達成者の場合はレベルアップ
-  if(MISSION_GetResultPoint(intcomm, &intcomm->mission) > 0){
+  //全占拠達成ならばミッションリストを作成しなおす
+  if(MISSION_LIST_Create_Complete(occupy, &white_num, &black_num) == TRUE){
+    intcomm->send_occupy = TRUE;
+    complete = TRUE;
+  }
+
+  //自分が達成者 or ターゲットの場合はレベルアップ
+  if(MISSION_GetResultPoint(intcomm, &intcomm->mission) > 0 
+      || mresult->mission_data.target_info.net_id == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    int add_white = MISSION_ACHIEVE_ADD_LEVEL;
+    int add_black = MISSION_ACHIEVE_ADD_LEVEL;
+    
+    if(complete == TRUE){
+      add_white = white_num;
+      add_black = black_num;
+    }
+    
     if(mresult->mission_data.monolith_type == MONOLITH_TYPE_BLACK){
-      OccupyInfo_LevelUpBlack(occupy, MISSION_ACHIEVE_ADD_LEVEL);
+      OccupyInfo_LevelUpBlack(occupy, add_black);
     }
     else{
-      OccupyInfo_LevelUpWhite(occupy, MISSION_ACHIEVE_ADD_LEVEL);
+      OccupyInfo_LevelUpWhite(occupy, add_white);
     }
     intcomm->send_occupy = TRUE;
   }
 
-  //全占拠達成ならばミッションリストを作成しなおす
-  if(MISSION_LIST_Create_Complete(occupy) == TRUE){
-    intcomm->send_occupy = TRUE;
-  }
-  
   if(MISSION_RecvCheck(&intcomm->mission) == FALSE 
       || MISSION_GetMissionEntry(&intcomm->mission) == FALSE){
     OS_TPrintf("受信：ミッション結果：ミッションに参加していない為、結果を受け取らない\n");
@@ -1525,7 +1539,7 @@ static void _IntrudeRecv_OtherMonolithIn(const int netID, const int size, const 
   
   intcomm->other_monolith_count++;
   if(intcomm->member_fix == FALSE){
-    GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), FALSE);
+    //GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), FALSE);
   }
   OS_TPrintf("受信：他人モノリス入室 乱入禁止 num=%d\n", intcomm->other_monolith_count);
 }
@@ -1575,7 +1589,7 @@ static void _IntrudeRecv_OtherMonolithOut(const int netID, const int size, const
   //全員がモノリス画面から抜けていて二人専用ミッションが発動していないかチェック
   if(intcomm->other_monolith_count == 0){
     if(intcomm->member_fix == FALSE){
-      GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), TRUE);  //乱入許可
+      //GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), TRUE);  //乱入許可
       OS_TPrintf("乱入許可\n");
     }
   }

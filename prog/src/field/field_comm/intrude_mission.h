@@ -58,5 +58,5 @@ extern void MISSIONDATA_Wordset(const MISSION_CONV_DATA *cdata, const MISSION_TA
 extern s32 MISSION_GetMissionTimer(MISSION_SYSTEM *mission);
 extern void MISSION_LIST_Create(OCCUPY_INFO *occupy);
 extern void MISSION_LIST_Create_Type(OCCUPY_INFO *occupy, MISSION_TYPE mission_type);
-extern BOOL MISSION_LIST_Create_Complete(OCCUPY_INFO *occupy);
+extern BOOL MISSION_LIST_Create_Complete(OCCUPY_INFO *occupy, u8 *white_num, u8 *black_num);
 
