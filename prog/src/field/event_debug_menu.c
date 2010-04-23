@@ -5477,6 +5477,7 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
     break;
   case 3:
     {
+      int add1 = 0, add10 = 0;
       int trg = GFL_UI_KEY_GetTrg();
       int cont = GFL_UI_KEY_GetCont();
       
@@ -5499,7 +5500,9 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
       }
       
       if( cont && cont == work->key_repeat ){
-        work->key_repeat_wait++;
+        if( work->key_repeat_wait < 30*10 ){
+          work->key_repeat_wait++;
+        }
       }else{
         work->key_repeat_wait = 0;
       }
@@ -5507,91 +5510,59 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
       work->key_repeat = cont;
       
       if( (trg & PAD_KEY_ALL) ){
-        if( (trg & PAD_KEY_UP) ){
-          work->game_round--;
-        }else if( (trg & PAD_KEY_DOWN) ){
-          work->game_round++;
-        }else if( (trg & PAD_KEY_LEFT) ){
-          work->game_round -= 10;
-        }else if( (trg & PAD_KEY_RIGHT) ){
-          work->game_round += 10;
-        }
+        add1 = 1;
+        add10 = 10;
       }else if( work->key_repeat ){
         int rep = work->key_repeat;
         int wait = work->key_repeat_wait;
         
         if( wait < 15 ){
           //none
-        }else if( wait < 30*3 && wait % 6 == 0 ){
-          if( (rep & PAD_KEY_UP) ){
-            work->game_round--;
-          }else if( (rep & PAD_KEY_DOWN) ){
-            work->game_round++;
-          }else if( (rep & PAD_KEY_LEFT) ){
-            work->game_round -= 10;
-          }else if( (rep & PAD_KEY_RIGHT) ){
-            work->game_round += 10;
+        }else if( wait < 30*3 ){
+          if( wait % 6 == 0 ){
+            add1 = 1;
+            add10 = 10;
           }
-        }else if( wait < 30*4 && wait % 4 == 0 ){
-          if( (rep & PAD_KEY_UP) ){
-            work->game_round--;
-          }else if( (rep & PAD_KEY_DOWN) ){
-            work->game_round++;
-          }else if( (rep & PAD_KEY_LEFT) ){
-            work->game_round -= 10;
-          }else if( (rep & PAD_KEY_RIGHT) ){
-            work->game_round += 10;
+        }else if( wait < 30*4 ){
+          if( wait % 4 == 0 ){
+            add1 = 1;
+            add10 = 10;
           }
-        }else if( wait < 30*5 && wait % 2 == 0 ){
-          if( (rep & PAD_KEY_UP) ){
-            work->game_round--;
-          }else if( (rep & PAD_KEY_DOWN) ){
-            work->game_round++;
-          }else if( (rep & PAD_KEY_LEFT) ){
-            work->game_round -= 10;
-          }else if( (rep & PAD_KEY_RIGHT) ){
-            work->game_round += 10;
+        }else if( wait < 30*5 ){
+          if( wait % 2 == 0 ){
+            add1 = 1;
+            add10 = 10;
           }
         }else if( wait < 30*6 ){
-          if( (rep & PAD_KEY_UP) ){
-            work->game_round--;
-          }else if( (rep & PAD_KEY_DOWN) ){
-            work->game_round++;
-          }else if( (rep & PAD_KEY_LEFT) ){
-            work->game_round -= 10;
-          }else if( (rep & PAD_KEY_RIGHT) ){
-            work->game_round += 10;
-          }
+          add1 = 1;
+          add10 = 10;
         }else if( wait < 30*7 ){
-          if( (rep & PAD_KEY_UP) ){
-            work->game_round -= 2;
-          }else if( (rep & PAD_KEY_DOWN) ){
-            work->game_round += 2;
-          }else if( (rep & PAD_KEY_LEFT) ){
-            work->game_round -= 20;
-          }else if( (rep & PAD_KEY_RIGHT) ){
-            work->game_round += 20;
-          }
+          add1 = 2;
+          add10 = 20;
         }else if( wait < 30*8 ){
-          if( (rep & PAD_KEY_UP) ){
-            work->game_round -= 4;
-          }else if( (rep & PAD_KEY_DOWN) ){
-            work->game_round += 4;
-          }else if( (rep & PAD_KEY_LEFT) ){
-            work->game_round -= 40;
-          }else if( (rep & PAD_KEY_RIGHT) ){
-            work->game_round += 40;
-          }
+          add1 = 4;
+          add10 = 40;
         }else if( wait >= 30*9 ){
-          if( (rep & PAD_KEY_UP) ){
-            work->game_round -= 8;
-          }else if( (rep & PAD_KEY_DOWN) ){
-            work->game_round += 8;
-          }else if( (rep & PAD_KEY_LEFT) ){
-            work->game_round -= 80;
-          }else if( (rep & PAD_KEY_RIGHT) ){
-            work->game_round += 80;
-          }
+          add1 = 8;
+          add10 = 80;
+        }
+      }
+      
+      if( add1 || add10 ){
+        int check = trg & PAD_KEY_ALL;
+        
+        if( check == 0 ){
+          check = cont;
+        }
+        
+        if( (check & PAD_KEY_UP) ){
+          work->game_round -= add1;
+        }else if( (check & PAD_KEY_DOWN) ){
+          work->game_round += add1;
+        }else if( (check & PAD_KEY_LEFT) ){
+          work->game_round -= add10;
+        }else if( (check & PAD_KEY_RIGHT) ){
+          work->game_round += add10;
         }
       }
       
