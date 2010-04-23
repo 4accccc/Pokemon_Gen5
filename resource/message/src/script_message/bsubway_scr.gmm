@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-23T14:35:24"/>
+	<create user="kagaya" host="W00143" date="2010-04-23T17:32:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1428" top="102" right="2133" bottom="722" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="200" right="1280" bottom="598" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -407,9 +407,9 @@
 	<row id="msg_bsw_scr_08">
 		<comment>連勝中</comment>
 		<language name="JPN" width="256">げんざい　[1:00:トレーナー名:0]さまは
-[2:02:３桁:1]れんしょうちゅう　です</language>
+[2:03:４桁:1]れんしょうちゅう　です</language>
 		<language name="JPN_KANJI" width="256">現在　[1:00:トレーナー名:0]さまは
-[2:02:３桁:1]連勝中　です</language>
+[2:03:４桁:1]連勝中　です</language>
 	</row>
 
 	<row id="msg_bsw_scr_09">
