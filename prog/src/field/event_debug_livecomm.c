@@ -300,7 +300,7 @@ static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_MAX] = {
   ///<BATTLE_WILD_POKE_START 野生のポケモンと対戦を開始しました！2
   { GAMEBEACON_Set_BattlePokeStart,   BEACON_PSET_MONSNO,	  BEACON_ARG_U16,	},
   ///<BATTLE_WILD_POKE_VICTORY 野生のポケモンに勝利しました！3
-  { GAMEBEACON_Set_BattleVictory, BEACON_PSET_MONSNO,	  BEACON_ARG_U16,	},
+  { GAMEBEACON_Set_BattlePokeVictory, BEACON_PSET_MONSNO,	  BEACON_ARG_U16,	},
   ///<BATTLE_SP_POKE_START 特別なポケモンと対戦を開始しました！ 4
   { GAMEBEACON_Set_BattlePokeStart,     BEACON_PSET_MONSNO,	  BEACON_ARG_U16,	},
   ///<BATTLE_SP_POKE_VICTORY 特別なポケモンに勝利しました！5
