@@ -492,6 +492,7 @@ _RET
 EVENT_START ev_hiden_diving_menu
 {
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
+  $SCWK_TEMP0 = $SCWK_PARAM0
   _CALL sub_diving_main
 }
 EVENT_END
