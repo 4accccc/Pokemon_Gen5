@@ -17,6 +17,7 @@
 #include "research_select_data.cdat"
 #include "research_common.h"
 #include "research_common_data.cdat"
+#include "research_data.h"
 
 #include "system/main.h"             // for HEAPID_xxxx
 #include "system/gfl_use.h"          // for GFUser_xxxx
@@ -4233,14 +4234,32 @@ static BMPOAM_ACT_PTR GetBmpOamActorOfMenuItem( const RESEARCH_SELECT_WORK* work
 //-----------------------------------------------------------------------------------------
 static u8 GetInvestigatingTopicID( const RESEARCH_SELECT_WORK* work )
 {
+  int qIdx;
   SAVE_CONTROL_WORK* save;
   QUESTIONNAIRE_SAVE_WORK* QSave;
+  u8 questionID[ QUESTION_NUM_PER_TOPIC ];
+  u8 topicID;
 
   save  = GAMEDATA_GetSaveControlWork( work->gameData );
   QSave = SaveData_GetQuestionnaire( save );
 
-  // セーブデータから取得
-  return QuestionnaireWork_GetInvestigatingQuestion( QSave, 0 );
+  // 調査中の質問IDを取得
+  for( qIdx=0; qIdx < QUESTION_NUM_PER_TOPIC; qIdx++ )
+  {
+    questionID[ qIdx ] = QuestionnaireWork_GetInvestigatingQuestion( QSave, qIdx );
+  }
+
+  // 質問IDから, 調査項目IDを求める
+  for( topicID=0; topicID < TOPIC_ID_NUM; topicID++ )
+  {
+    if( (questionID[0] == Question1_topic[ topicID ]) &&
+        (questionID[1] == Question2_topic[ topicID ]) &&
+        (questionID[2] == Question3_topic[ topicID ]) ) { return topicID; }
+  }
+
+  // 質問の組み合わせに該当する調査項目が存在しない
+  GF_ASSERT(0);
+  return 0;
 }
 
 //-----------------------------------------------------------------------------------------

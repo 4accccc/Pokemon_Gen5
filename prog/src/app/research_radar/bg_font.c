@@ -179,7 +179,14 @@ extern void BG_FONT_SetPalette( BG_FONT* BGFont, u8 palnum )
   GF_ASSERT( palnum < 16 ); // 不正値
 
   GFL_BMPWIN_SetPalette( BGFont->bmpWin, palnum ); // パレットを変更
-  GFL_BMPWIN_MakeScreen( BGFont->bmpWin ); // スクリーンを作成
+  //GFL_BMPWIN_MakeScreen( BGFont->bmpWin ); // スクリーンを作成
+  GFL_BG_ChangeScreenPalette( 
+      GFL_BMPWIN_GetFrame( BGFont->bmpWin ), 
+      GFL_BMPWIN_GetPosX( BGFont->bmpWin ),
+      GFL_BMPWIN_GetPosY( BGFont->bmpWin ),
+      GFL_BMPWIN_GetScreenSizeX( BGFont->bmpWin ),
+      GFL_BMPWIN_GetScreenSizeY( BGFont->bmpWin ),
+      palnum ); // 該当スクリーンのパレットを変更
   GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame( BGFont->bmpWin ) ); // VRAMへ転送
 }
 
