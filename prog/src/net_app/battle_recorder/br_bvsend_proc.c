@@ -338,13 +338,14 @@ static void Br_BvSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_UPLOAD_WAIT:
+    p_wk->cnt++;
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
       u64 number  = 0;
       BR_NET_ERR_RETURN err;
       int msg;
 
-      if( p_wk->cnt++ < RR_SEARCH_SE_FRAME )
+      if( p_wk->cnt < RR_SEARCH_SE_FRAME )
       {
         break;
       }

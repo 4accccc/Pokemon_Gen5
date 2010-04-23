@@ -355,9 +355,10 @@ static void Br_BvSave_Seq_VideoDownloadSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
     }
     break;
   case SEQ_DOWNLOAD_WAIT:
+    p_wk->cnt++;
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
-      if( p_wk->cnt++ > RR_SEARCH_SE_FRAME )
+      if( p_wk->cnt > RR_SEARCH_SE_FRAME )
       { 
         PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
         BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
@@ -814,9 +815,10 @@ static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     break;
 
   case SEQ_SEND_WAIT:
+    p_wk->cnt++;
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
-      if( p_wk->cnt++ > RR_SEARCH_SE_FRAME )
+      if( p_wk->cnt > RR_SEARCH_SE_FRAME )
       { 
         BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
 
