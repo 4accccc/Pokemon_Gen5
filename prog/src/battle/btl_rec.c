@@ -599,7 +599,7 @@ BOOL BTL_RECTOOL_RestoreFwd( BTL_RECTOOL* recTool, u32* rp, u8* clientID, u8* nu
     ReadClientActionTag( recTool->buffer[ (*rp) ], clientID, numAction );
 
     GF_ASSERT((*clientID) < BTL_CLIENT_MAX);
-    GF_ASSERT((*numAction) < BTL_POSIDX_MAX);
+    GF_ASSERT_MSG((*numAction) <= BTL_POSIDX_MAX, "numAction=%d", (*numAction));
 
     dataSize = sizeof(BTL_ACTION_PARAM) * (*numAction);
     ++(*rp);
