@@ -355,16 +355,53 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
 {
   u16 play_mode;
   BATTLE_SETUP_PARAM *dst;
-//  BTL_FIELD_SITUATION sit;
-  GAMEDATA *gameData = GAMESYSTEM_GetGameData( gsys );
-  
+  BTL_FIELD_SITUATION sit;
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  HEAPID heapID = HEAPID_PROC;
   play_mode = inPlayMode;
-  dst = BATTLE_PARAM_Create( HEAPID_PROC );
   
   {
 //    BTL_FIELD_SITUATION_Init( &sit );
-    BTL_FIELD_SITUATION_SetFromFieldStatus( &dst->fieldSituation, gameData, GAMESYSTEM_GetFieldMapWork(gsys) );
-    
+    BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, gdata, GAMESYSTEM_GetFieldMapWork(gsys) );
+    dst = BATTLE_PARAM_Create( heapID );
+
+    //初期化
+    switch( play_mode ){
+    case BSWAY_MODE_SINGLE:
+    case BSWAY_MODE_S_SINGLE:
+    case BSWAY_MODE_WIFI:
+      BTL_SETUP_Single_Trainer( dst, gdata, &sit, TRID_NULL, heapID );
+      break;
+    case BSWAY_MODE_DOUBLE:
+    case BSWAY_MODE_S_DOUBLE:
+      BTL_SETUP_Double_Trainer( dst, gdata, &sit, TRID_NULL, heapID );
+      break;
+    case BSWAY_MODE_MULTI:
+    case BSWAY_MODE_S_MULTI:
+      BTL_SETUP_AIMulti_Trainer( dst, gdata, &sit,
+          TRID_NULL, TRID_NULL, TRID_NULL, heapID );
+      break;
+    case BSWAY_MODE_COMM_MULTI:
+    case BSWAY_MODE_S_COMM_MULTI:
+      {
+        GFL_NETHANDLE *netHandle = GFL_NET_HANDLE_GetCurrentHandle();
+        int commPos = 0;
+      
+        if( GFL_NET_SystemGetCurrentID() != GFL_NET_NO_PARENTMACHINE ){
+          commPos = 2; //通信子である
+        }
+      
+        BTL_SETUP_AIMulti_Comm( dst, gdata,
+            netHandle, BTL_COMM_DS, commPos,
+            TRID_NULL, TRID_NULL, heapID );
+      }
+      break;
+  default:
+      GF_ASSERT( 0 );
+  }
+  
+  BTL_SETUP_AllocRecBuffer( dst, heapID );
+#if 0
     dst->netHandle = NULL;
     dst->commMode = BTL_COMM_NONE;
     dst->commPos = 0;
@@ -440,12 +477,12 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
     }
 
 //    MI_CpuCopy8( &sit, &dst->fieldSituation, sizeof(BTL_FIELD_SITUATION) );
-
+#endif
   }
   
   { //トレーナーデータ確保
-    dst->tr_data[BTL_CLIENT_PLAYER] = CreateBSPTrainerData( HEAPID_PROC );
-    dst->tr_data[BTL_CLIENT_ENEMY1] = CreateBSPTrainerData( HEAPID_PROC );
+    dst->tr_data[BTL_CLIENT_PLAYER] = CreateBSPTrainerData( heapID );
+    dst->tr_data[BTL_CLIENT_ENEMY1] = CreateBSPTrainerData( heapID );
   }
 
   { //敵トレーナーセット
@@ -459,7 +496,7 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
 
     tr_data->tr_id = bsw_trainer->player_id;
     tr_data->tr_type = bsw_trainer->tr_type;
-    tr_data->ai_bit = 0xFFFFFFFF;  //最強
+    tr_data->ai_bit = 0x00000087;  //最強
 
     //name
     GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
@@ -482,8 +519,8 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
       int i;
       POKEMON_PARAM*  pp;
 
-      pp = GFL_HEAP_AllocMemoryLo( HEAPID_PROC, POKETOOL_GetWorkSize() );
-      *party = PokeParty_AllocPartyWork( HEAPID_PROC );
+      pp = GFL_HEAP_AllocMemoryLo( heapID, POKETOOL_GetWorkSize() );
+      *party = PokeParty_AllocPartyWork( heapID );
       PokeParty_Init( *party, TEMOTI_POKEMAX );
 
       for( i = 0; i < inMemNum; i++ ){
@@ -498,7 +535,7 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
     BTL_CLIENT_ID client = BTL_CLIENT_PLAYER;
     POKEPARTY **party = &dst->party[client];
     BSP_TRAINER_DATA *data = dst->tr_data[client];
-    PLAYER_WORK * player = GAMEDATA_GetMyPlayerWork( gameData );
+    PLAYER_WORK * player = GAMEDATA_GetMyPlayerWork( gdata );
 
     MyStatus_CopyNameString(
         (const MYSTATUS*)&player->mystatus, data->name );
@@ -513,10 +550,10 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
       const POKEMON_PARAM *my_pp;
 
       entry_pp = GFL_HEAP_AllocMemoryLo(
-          HEAPID_PROC, POKETOOL_GetWorkSize() );
+          heapID, POKETOOL_GetWorkSize() );
       PP_Clear( entry_pp );
 
-      *party = PokeParty_AllocPartyWork( HEAPID_PROC );
+      *party = PokeParty_AllocPartyWork( heapID );
       PokeParty_Init( *party, TEMOTI_POKEMAX );
 
       for( i = 0; i < inMemNum; i++ ){
@@ -530,23 +567,13 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
           POKETOOL_MakeLevelRevise(entry_pp, 50);
         }
 
-#ifdef DEBUG_ONLY_FOR_kagaya
-        PP_Put( entry_pp, ID_PARA_hp, 1 );
-#endif
         PokeParty_Add( *party, entry_pp );
       }
-
-      #ifdef DEBUG_ONLY_FOR_kagaya
-      {
-        int count = PokeParty_GetPokeCount( *party );
-        KAGAYA_Printf( "ポケモンセット　カウント=%d, max=%d\n", count, i );
-      }
-      #endif
 
       GFL_HEAP_FreeMemory( entry_pp );
     }
   }
-
+  BTL_SETUP_SetSubwayMode( dst ); //一通りセットした後に呼ぶ事
   return dst;
 }
 
@@ -560,7 +587,7 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
 static BSP_TRAINER_DATA *CreateBSPTrainerData( HEAPID heapID )
 {
   BSP_TRAINER_DATA* tr_data = GFL_HEAP_AllocClearMemory( heapID, sizeof( BSP_TRAINER_DATA ) );
-  tr_data->name =   GFL_STR_CreateBuffer( /*PERSON_NAME_SIZE + EOM_SIZE*/BUFLEN_PERSON_NAME, heapID );
+  tr_data->name =   GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
   return tr_data;
 }
 
@@ -627,7 +654,8 @@ static u32 MakePokemonParam(
 
   if(poke_rnd == 0){
     //個性乱数          //※ＷＢでは性格と個性乱数は切り離して考えて良いので、再抽選処理は不要
-    personal_rnd=(GetRand()|GetRand()<<16);
+    personal_rnd = POKETOOL_CalcPersonalRandSpec( poke_id, prd_s.mons_no, prd_s.form_no,
+        PTL_SEX_SPEC_UNKNOWN, PTL_TOKUSEI_SPEC_BOTH, PTL_RARE_SPEC_FALSE );
 #if 0
     do{
 //    personal_rnd=(gf_rand()|gf_rand()<<16);
@@ -776,6 +804,31 @@ static void MakePokePara( const BSUBWAY_POKEMON *src, POKEMON_PARAM *dest )
   //なつきど設定
   PP_Put(dest,ID_PARA_friend,src->natuki);
 
+  //性格セットtodo
+  
+  { //名前設定
+    STRBUF *nick_name;
+    nick_name = GFL_STR_CreateBuffer(
+        MONS_NAME_SIZE+EOM_SIZE, HEAPID_PROC );
+    {
+      int i;
+      u16 eomCode = GFL_STR_GetEOMCode();
+      STRCODE code[MONS_NAME_SIZE+EOM_SIZE];
+      const STRCODE *sz = src->nickname;
+      
+      for( i = 0; i < (MONS_NAME_SIZE+EOM_SIZE); i++ ){
+        code[i] = sz[i];
+      }
+      
+      code[i-1] = eomCode;
+      GFL_STR_SetStringCode( nick_name, code );
+    }
+     
+    PP_Put( dest, ID_PARA_nickname, (u32)nick_name );
+    GFL_STR_DeleteBuffer( nick_name );
+  }
+
+#if 0  
   //NGネームフラグをチェック
   if( 1 ){ //デフォルトネームを展開する
 #if 0
@@ -800,7 +853,7 @@ static void MakePokePara( const BSUBWAY_POKEMON *src, POKEMON_PARAM *dest )
     PP_Put( dest, ID_PARA_nickname, (u32)nick_name );
     GFL_STR_DeleteBuffer( nick_name );
   }
-
+#endif
   PP_Put(dest,ID_PARA_country_code,src->country_code); //カントリーコード
 
   //パラメータ再計算
