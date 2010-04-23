@@ -50,6 +50,10 @@
 
 #include "title_def.h"
 
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"  // SYS_FLAG_SPEXIT_REQUEST
+#include "field/eventwork.h"	//EVENTWORK_
+#include "field/location.h"
+
 
 //============================================================================================
 //	’è”’è‹`
@@ -62,6 +66,7 @@ typedef struct {
   MYSTATUS * mystatus;
 	MISC * misc;
 	CGEAR_SAVEDATA * cgear;
+	EVENTWORK * evwk;
 
 	GFL_TCB * vtask;					// TCB ( VBLANK )
 
@@ -417,6 +422,7 @@ static GFL_PROC_RESULT START_MENU_ProcInit( GFL_PROC * proc, int * seq, void * p
   wk->mystatus = SaveData_GetMyStatus( wk->savedata );
 	wk->misc     = SaveData_GetMisc( wk->savedata );
 	wk->cgear    = CGEAR_SV_GetCGearSaveData( wk->savedata );
+	wk->evwk     = SaveData_GetEventWork( wk->savedata );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -1504,12 +1510,21 @@ static void InitBmp( START_MENU_WORK * wk )
 	// êŠ
 	str = GFL_MSG_CreateString( wk->mman, START_MENU_STR_ITEM_01_10 );
 	{
-		PLAYERWORK_SAVE	plwk;
 		u16	num;
-
-		SaveData_SituationLoad_PlayerWorkSave( wk->savedata, &plwk );
-		ZONEDATA_Open( HEAPID_STARTMENU );
-		num = ZONEDATA_GetPlaceNameID( plwk.zoneID );
+		ZONEDATA_Open( HEAPID_STARTMENU_L );
+		// “ÁêÚ‘±
+		if( EVENTWORK_CheckEventFlag( wk->evwk, SYS_FLAG_SPEXIT_REQUEST ) == TRUE ){
+			SITUATION * situation;
+			const LOCATION * spLoc;
+			situation = SaveData_GetSituation( wk->savedata );
+			spLoc = Situation_GetSpecialLocation( situation );
+			num = ZONEDATA_GetPlaceNameID( spLoc->zone_id );
+		// ’Êí
+		}else{
+			PLAYERWORK_SAVE	plwk;
+			SaveData_SituationLoad_PlayerWorkSave( wk->savedata, &plwk );
+			num = ZONEDATA_GetPlaceNameID( plwk.zoneID );
+		}
 		ZONEDATA_Close();
 		WORDSET_RegisterPlaceName( wk->wset, 0, num );
 	}
