@@ -215,6 +215,7 @@
 #define BTLEFF_EFFENDWAIT_SE3                 ( 13 )
 #define BTLEFF_EFFENDWAIT_PSG                 ( 14 )
 #define BTLEFF_EFFENDWAIT_SYSTEM              ( 15 )
+#define BTLEFF_EFFENDWAIT_VOICE               ( 16 )
 
 //制御モード
 #define	BTLEFF_CONTROL_MODE_CONTINUE					( 0 )
@@ -1832,7 +1833,7 @@ ex)
  * #param VALUE_VECINT   再生モジュレーションデプス 再生モジュレーションスピード  未使用
  */
 //======================================================================
-	.macro	SE_PLAY	se_no, player, pan, wait, pitch, vol, mod_depth, mod_speed
+	.macro	SE_PLAY	se_no, player, pan, wait, pitch, vol, mod_depth, mod_speed, dummy
 	.short	EC_SE_PLAY
 	.long		\se_no
 	.long   \player
@@ -1842,6 +1843,7 @@ ex)
   .long   \vol
   .long   \mod_depth
   .long   \mod_speed
+  .long   \dummy
 	.endm
 
 //======================================================================
@@ -1943,8 +1945,8 @@ ex)
  * #param_num	1
  * @param	kind	終了待ちする種類
  *
- * #param	COMBOBOX_TEXT	すべて	カメラ	パーティクル	ポケモン	トレーナー  BG  PALFADEお盆  PALFADEフィールド PALFADEお盆＋フィールド  PALFADEエフェクト SEPLAYすべて  SEPLAY1 SEPLAY2 SEPLAY3 SEPLAY_PSG SEPLAY_SYSTEM
- * #param COMBOBOX_VALUE	BTLEFF_EFFENDWAIT_ALL	BTLEFF_EFFENDWAIT_CAMERA	BTLEFF_EFFENDWAIT_PARTICLE	BTLEFF_EFFENDWAIT_POKEMON	BTLEFF_EFFENDWAIT_TRAINER BTLEFF_EFFENDWAIT_BG  BTLEFF_EFFENDWAIT_PALFADE_STAGE  BTLEFF_EFFENDWAIT_PALFADE_FIELD  BTLEFF_EFFENDWAIT_PALFADE_3D BTLEFF_EFFENDWAIT_PALFADE_EFFECT BTLEFF_EFFENDWAIT_SEALL  BTLEFF_EFFENDWAIT_SE1  BTLEFF_EFFENDWAIT_SE2 BTLEFF_EFFENDWAIT_SE3 BTLEFF_EFFENDWAIT_PSG BTLEFF_EFFENDWAIT_SYSTEM
+ * #param	COMBOBOX_TEXT	すべて	カメラ	パーティクル	ポケモン	トレーナー  BG  PALFADEお盆  PALFADEフィールド PALFADEお盆＋フィールド  PALFADEエフェクト SEPLAYすべて  SEPLAY1 SEPLAY2 SEPLAY3 SEPLAY_PSG SEPLAY_SYSTEM  鳴き声
+ * #param COMBOBOX_VALUE	BTLEFF_EFFENDWAIT_ALL	BTLEFF_EFFENDWAIT_CAMERA	BTLEFF_EFFENDWAIT_PARTICLE	BTLEFF_EFFENDWAIT_POKEMON	BTLEFF_EFFENDWAIT_TRAINER BTLEFF_EFFENDWAIT_BG  BTLEFF_EFFENDWAIT_PALFADE_STAGE  BTLEFF_EFFENDWAIT_PALFADE_FIELD  BTLEFF_EFFENDWAIT_PALFADE_3D BTLEFF_EFFENDWAIT_PALFADE_EFFECT BTLEFF_EFFENDWAIT_SEALL  BTLEFF_EFFENDWAIT_SE1  BTLEFF_EFFENDWAIT_SE2 BTLEFF_EFFENDWAIT_SE3 BTLEFF_EFFENDWAIT_PSG BTLEFF_EFFENDWAIT_SYSTEM  BTLEFF_EFFENDWAIT_VOICE
  */
 //======================================================================
 	.macro	EFFECT_END_WAIT	kind
@@ -2121,17 +2123,29 @@ ex)
 /**
  * @brief	ポケモン鳴き声
  *
- * #param_num	1
- * @param pos 鳴き声を出すポケモンの立ち位置
+ * #param_num	5
+ * @param pos           鳴き声を出すポケモンの立ち位置
+ * @param pitch         鳴き声のピッチ（相対）
+ * @param volume        鳴き声のボリューム（相対）
+ * @param chorus_vol    鳴き声のコーラス設定（ボリューム差）
+ * @param chorus_speed  鳴き声のコーラス設定（再生速度差）
  *
  * #param	COMBOBOX_TEXT	攻撃側	防御側	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D POS_E POS_F
  * #param	COMBOBOX_VALUE	BTLEFF_POKEMON_SIDE_ATTACK	BTLEFF_POKEMON_SIDE_DEFENCE	BTLEFF_POKEMON_POS_AA	BTLEFF_POKEMON_POS_BB	BTLEFF_POKEMON_POS_A  BTLEFF_POKEMON_POS_B	BTLEFF_POKEMON_POS_C  BTLEFF_POKEMON_POS_D  BTLEFF_POKEMON_POS_E  BTLEFF_POKEMON_POS_F
+ * #param VALUE_INT ピッチ（相対）
+ * #param VALUE_INT ボリューム（相対）
+ * #param VALUE_INT コーラス設定（ボリューム差）
+ * #param VALUE_INT コーラス設定（再生速度差）
  *
  */
 //======================================================================
-	.macro	NAKIGOE pos
+	.macro	NAKIGOE pos, pitch, volume, chorus_vol, chorus_speed
   .short  EC_NAKIGOE
 	.long		\pos
+	.long		\pitch
+	.long		\volume
+	.long		\chorus_vol
+	.long		\chorus_speed
 	.endm
 
 //======================================================================

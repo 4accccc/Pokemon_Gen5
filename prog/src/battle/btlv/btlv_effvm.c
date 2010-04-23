@@ -47,6 +47,8 @@ enum{
   EFFVM_CHANGE_VOLUME = ( 127 * EFFVM_VOLUME_DOWN_RATIO / 100 ) << FX32_SHIFT,
   EFFVM_CHANGE_VOLUME_DOWN_FRAME = EFFVM_VOLUME_DOWN_FRAME,
   EFFVM_CHANGE_VOLUME_UP_FRAME = EFFVM_VOLUME_UP_FRAME,
+
+  EFFVM_VOICEPLAYER_INDEX_NONE = 0xffffffff,
 };
 
 #ifdef PM_DEBUG
@@ -119,6 +121,7 @@ typedef struct{
   int               call_count;   //サブルーチンコールした回数
   int               temp_scr_x;
   int               temp_scr_y;
+  u32               voiceplayerIndex[ TEMOTI_POKEMAX ];  //鳴き声プレイヤーインデックス（念のため6体分）
 #ifdef PM_DEBUG
   const DEBUG_PARTICLE_DATA*  dpd;
   BOOL                        debug_flag;
@@ -515,6 +518,12 @@ VMHANDLE  *BTLV_EFFVM_Init( GFL_TCBSYS *tcbsys, HEAPID heapID )
   for( i = 0 ; i < EFFVM_OBJ_MAX ; i++ )
   {
     bevw->obj[ i ] = EFFVM_OBJNO_NONE;
+  }
+
+  //voiceplayerIndex初期化
+  for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
+  {
+    bevw->voiceplayerIndex[ i ] = EFFVM_VOICEPLAYER_INDEX_NONE;
   }
 
   vmh = VM_Create( heapID, &vm_init );
@@ -2632,6 +2641,7 @@ static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work )
   int vol       = ( int )VMGetU32( vmh );
   int mod_depth = ( int )VMGetU32( vmh );
   int mod_speed = ( int )VMGetU32( vmh );
+  int dummy     = ( int )VMGetU32( vmh );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_SE_PLAY\n");
@@ -3130,7 +3140,11 @@ static VMCMD_RESULT VMEC_NAKIGOE( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
   BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
-  int pos_cnt =  EFFVM_GetPokePosition( bevw, ( int )VMGetU32( vmh ), pos );
+  int pos_cnt       =  EFFVM_GetPokePosition( bevw, ( int )VMGetU32( vmh ), pos );
+  int pitch         = ( int )VMGetU32( vmh );
+  int volume        = ( int )VMGetU32( vmh );
+  int chorus_vol    = ( int )VMGetU32( vmh );
+  int chorus_speed  = ( int )VMGetU32( vmh );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_NAKIGOE:\npos:%d\n",pos_cnt);
@@ -3143,7 +3157,8 @@ static VMCMD_RESULT VMEC_NAKIGOE( VMHANDLE *vmh, void *context_work )
 
     for( i = 0 ; i < pos_cnt ; i++ )
     {
-      BTLV_MCSS_PlayVoice( BTLV_EFFECT_GetMcssWork(), pos[ i ] );
+      bevw->voiceplayerIndex[ i ] = BTLV_MCSS_PlayVoice( BTLV_EFFECT_GetMcssWork(), pos[ i ], pitch, volume,
+                                                         chorus_vol, chorus_speed );
     }
   }
 
@@ -3735,6 +3750,24 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
     if( ( PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SYS ) ) || ( bevw->se_play_wait_flag ) || ( bevw->se_effect_enable_flag ) )
     {
       return FALSE;
+    }
+  }
+  if( bevw->effect_end_wait_kind == BTLEFF_EFFENDWAIT_VOICE )
+  {
+    int i;
+    for( i = 0 ; i < TEMOTI_POKEMAX ; i++ )
+    {
+      if( bevw->voiceplayerIndex[ i ] != EFFVM_VOICEPLAYER_INDEX_NONE )
+      { 
+        if( PMVOICE_CheckPlay( bevw->voiceplayerIndex[ i ] ) )
+        { 
+          return FALSE;
+        }
+        else
+        { 
+          bevw->voiceplayerIndex[ i ] = EFFVM_VOICEPLAYER_INDEX_NONE;
+        }
+      }
     }
   }
 
