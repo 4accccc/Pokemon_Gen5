@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-04-22T18:03:29"/>
+	<create user="ohmori" host="W00223" date="2010-04-23T12:13:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="131" top="280" right="764" bottom="980" maximized="no" rayout="Vertical2">
+	<dialog left="1291" top="334" right="1924" bottom="1034" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="260" right="1280" bottom="884" visible="yes"/>
 		<band id="0" index="0" style="0000" width="445"/>
@@ -862,32 +862,54 @@
 
 	<row id="plc_connect_09" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
 		<comment>通信接続メッセージ：通信切断された</comment>
-		<language name="JPN" width="256">ふしぎなちからで　もどされた</language>
-		<language name="JPN_KANJI" width="256">ふしぎなちからで　もどされた</language>
+		<language name="JPN" width="256">あいてのせかいが　きえさり
+じぶんのハイリンクに　もどってきた</language>
+		<language name="JPN_KANJI" width="256">あいてのせかいが　きえさり
+じぶんのハイリンクに　もどってきた</language>
 	</row>
 
 	<row id="plc_connect_10" back-color="#ffff00,,,#ff0000,,,,,,,,,,,,,,">
 		<comment>通信切断時のメッセージ：ミッション時の失敗</comment>
-		<language name="JPN" width="256">さきを　こされた！</language>
-		<language name="JPN_KANJI" width="256">さきを　こされた！</language>
+		<language name="JPN" width="256">ミッション　しっぱい！
+さきを　こされてしまった……▼
+あいてのせかいが　きえさり
+じぶんのハイリンクに　もどってきた</language>
+		<language name="JPN_KANJI" width="256">ミッション　しっぱい！
+さきを　こされてしまった……▼
+あいてのせかいは　なくなり
+じぶんのハイリンクに　もどってきた</language>
 	</row>
 
 	<row id="plc_connect_11" back-color="#ffff00,,,#ff0000,,,,,,,,,,,,,,">
 		<comment>通信切断時のメッセージ：ミッション時のタイムアウト</comment>
-		<language name="JPN" width="256">じかんが　すぎてしまった！</language>
-		<language name="JPN_KANJI" width="256">じかんが　すぎてしまった！</language>
+		<language name="JPN" width="256">ミッション　しっぱい！
+じかんが　なくなった……▼
+あいてのせかいが　きえさり
+じぶんのハイリンクに　もどってきた</language>
+		<language name="JPN_KANJI" width="256">ミッション　しっぱい！
+じかんが　なくなった……▼
+あいてのせかいは　なくなり
+じぶんのハイリンクに　もどってきた</language>
 	</row>
 
 	<row id="plc_connect_12" back-color="#ffff00,,,#ff0000,,,,,,,,,,,,,,">
 		<comment>通信切断時のメッセージ：通信エラー</comment>
-		<language name="JPN" width="256">つうしんエラーに　なった！</language>
-		<language name="JPN_KANJI" width="256">つうしんエラーに　なった！</language>
+		<language name="JPN" width="256">とつぜん　あいてのせかいが　きえさり
+じぶんのハイリンクに　もどってきた</language>
+		<language name="JPN_KANJI" width="256">とつぜん　あいてのせかいが　きえさり
+じぶんのハイリンクに　もどってきた</language>
 	</row>
 
 	<row id="plc_connect_13" back-color="#ffff00,,,#ff0000,,,,,,,,,,,,,,">
 		<comment>通信切断時のメッセージ：相手が帰った</comment>
-		<language name="JPN" width="256">あいてが　たいしゅつした！</language>
-		<language name="JPN_KANJI" width="256">あいてが　たいしゅつした！</language>
+		<language name="JPN" width="256">だれかが　ハイリンクから
+じぶんのせかいに　かえった▼
+あいてのせかいが　きえさり
+じぶんのハイリンクに　もどってきた</language>
+		<language name="JPN_KANJI" width="256">だれかが　ハイリンクから
+じぶんのせかいに　かえった▼
+あいてのせかいが　きえさり
+じぶんのハイリンクに　もどってきた</language>
 	</row>
 
 	<row id="plc_warp_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
