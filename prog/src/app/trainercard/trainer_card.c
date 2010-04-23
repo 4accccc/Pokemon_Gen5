@@ -372,7 +372,6 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   }
 
   //通信中かどうか？
-//  if( CommIsConnect(u16 netID) ){
   if(GFL_NET_GetConnectNum() > 0){
     wk->isComm = TRUE;
   }
@@ -385,14 +384,10 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   SetTrCardBg();
   SetTrCardBgGraphic( wk );
 
-//  InitTPSystem();           // タッチパネルシステム初期化
-//  InitTPNoBuff(4);
-
-  //音関連初期化
-//  Snd_BadgeWorkInit( &wk->SndBadgeWork );
-//  PMSND_PlaySE( SND_TRCARD_CALL );    //呼び出し音
-
   InitTRCardCellActor( &wk->ObjWork , &vramBank );
+
+  // 裏面表示項目設定
+  TRCBmp_MakeScoreList( wk, wk->tcp->TrCardData );
 
   // 下画面セルアクター登録
   SetTrCardActorSub( &wk->ObjWork);
@@ -401,31 +396,36 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   TRCBmp_AddTrCardBmp( wk );
 
   // 簡易会話システム初期化
-  wk->PmsDrawWork = PMS_DRAW_Init( wk->ObjWork.cellUnit, CLSYS_DRAW_SUB, wk->printQue, wk->fontHandle, 8, 1, HEAPID_TR_CARD );
+  wk->PmsDrawWork = PMS_DRAW_Init( wk->ObjWork.cellUnit, CLSYS_DRAW_SUB, wk->printQue, 
+                                   wk->fontHandle, 8, 1, HEAPID_TR_CARD );
 
   //コロン描く
   TRCBmp_WriteSec(wk,wk->win[TRC_BMPWIN_PLAY_TIME], TRUE, wk->SecBuf);
 
-  wk->is_back = FALSE;
+  // 表・裏設定（ショートカットで裏面指定の際のみ裏に）
+  if(wk->tcp->mode==TRCARD_SHORTCUT_BACK){
+    wk->tcp->mode = TRCARD_SHORTCUT_NONE; // 一回反映させたらクリア
+    wk->is_back = TRUE;
+  }else{
+    wk->is_back = FALSE;
+  }
+
+  // パラメータ初期化
   wk->tcp->value = FALSE;
   wk->IsOpen = COVER_CLOSE;     //ケースは閉じた状態からスタート
 
   wk->ButtonPushFlg = FALSE;    //ボタン押されてない
-  wk->SignAnimeWait    = 0;
   if(wk->TrCardData->SignAnimeOn){  // サインアニメしているか？
     wk->SignAnimePat = SCREEN_SIGN_LEFT;    
   }else{
     wk->SignAnimePat = SCREEN_SIGN_ALL;    
   }
-  wk->scrol_point   = 0;
-  wk->pen = 0;
   wk->CardCenterX = TRCARD_CENTER_POSX;
   wk->CardCenterY = TRCARD_CENTER_POSY;
   wk->CardOffsetX = TRCARD_OFFSET_POSX;
   wk->CardOffsetY = TRCARD_OFFSET_POSY;
 
-
-
+  
   //拡縮面をリセット
   ResetAffinePlane();
 
@@ -1236,15 +1236,16 @@ static void CardDataDraw(TR_CARD_WORK* wk)
   if (wk->is_back == FALSE){  //表
     //トレーナー表示
     DispTrainer(wk);
+    TRCBmp_WriteTrWinInfo(wk, wk->win, wk->TrCardData );
+    PMS_DRAW_Main( wk->PmsDrawWork );
   }else{  //裏面表示
+    TRCBmp_WriteTrWinInfoRev(wk, wk->win, wk->TrCardData );
     TransSignData(TRC_BG_SIGN, wk->TrSignData, wk->SignAnimePat);
   }
   
   // タッチバーOBJ周りの再描画
   DispTouchBarObj( wk, wk->is_back );
 
-  TRCBmp_WriteTrWinInfo(wk, wk->win, wk->TrCardData );
-  TRCBmp_WriteTrWinInfoRev(wk, wk->win, wk->TrCardData );
   TRCBmp_TransTrWinInfo(wk,wk->win);
 }
 
@@ -2051,8 +2052,8 @@ static void normal_sign_func( TR_CARD_WORK *wk )
 //      OS_Printf("sy=%d,y=%d,start=%d,point=%d\n",wk->touch_sy,y,wk->scrol_start,wk->scrol_point);
     }
     // 範囲外チェック
-    if(wk->scrol_point<-(SCORE_LINE_MAX-4)*16){
-      wk->scrol_point = -(SCORE_LINE_MAX-4)*16;
+    if(wk->scrol_point<-(wk->score_max-4)*16){
+      wk->scrol_point = -(wk->score_max-4)*16;
     }else if(wk->scrol_point>0){
       wk->scrol_point = 0;
     }

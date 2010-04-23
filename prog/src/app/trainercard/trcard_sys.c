@@ -95,6 +95,7 @@ static int sub_PmsInputInit(TR_CARD_SYS* wk);
 static int sub_PmsInputWait(TR_CARD_SYS* wk);
 static int sub_BadgeInit(TR_CARD_SYS* wk);
 static int sub_BadgeWait(TR_CARD_SYS* wk);
+static int _branch_card_app( TR_CARD_SYS* wk, TRCARD_CALL_PARAM *pp );
 
 
 //------------------------------------------------------------------
@@ -147,6 +148,8 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
   wk->tcp->TrCardData = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TR_CARD_DATA ) );
   TRAINERCARD_GetSelfData( wk->tcp->TrCardData , pp->gameData , FALSE, wk->tcp->edit_possible, wk->heapId);
 
+  OS_Printf("pp->mode=%d\n", pp->mode);
+
   // ユニオン見た目を保存
   wk->TrainerView = wk->tcp->TrCardData->UnionTrNo;
   return GFL_PROC_RES_FINISH;
@@ -186,15 +189,14 @@ GFL_PROC_RESULT TrCardSysProc_InitComm( GFL_PROC * proc, int * seq , void *pwk, 
 //=============================================================================================
 GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
-  TR_CARD_SYS* wk = (TR_CARD_SYS*)mywk;
+  TR_CARD_SYS* wk       = (TR_CARD_SYS*)mywk;
+  TRCARD_CALL_PARAM* pp = (TRCARD_CALL_PARAM*)pwk;
+  
   switch(*seq){
   case CARD_OR_BADGE:
     // 未クリアならバッジへ、殿堂入りしていればカードへ
-    if(wk->tcp->TrCardData->Clear_m==0 && wk->tcp->edit_possible==1){
-      *seq = BADGE_INIT;
-    }else{
-      *seq = CARD_INIT;
-    }
+    // ショートカットからの指定がある場合はその画面へ
+    *seq = _branch_card_app( wk, pp );
     break;
   case CARD_INIT:
     *seq = sub_CardInit(wk);
@@ -288,6 +290,43 @@ GFL_PROC_RESULT TrCardSysProc_EndComm( GFL_PROC * proc, int * seq , void *pwk, v
   
   GFL_HEAP_DeleteHeap(HEAPID_TRCARD_SYS);
   return GFL_PROC_RES_FINISH;
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 起動時にどの面（表・裏・バッジ）に行くか判断
+ *
+ * @param   wk    
+ * @param   pp    
+ *
+ * @retval  int   CARD_INIT or BADGE_INIT
+ */
+//----------------------------------------------------------------------------------
+static int _branch_card_app( TR_CARD_SYS* wk, TRCARD_CALL_PARAM *pp )
+{
+  // ショートカット指定があった場合はその画面へ
+  switch(pp->mode){
+  case TRCARD_SHORTCUT_FRONT:
+    return CARD_INIT;
+    break;
+  case TRCARD_SHORTCUT_BACK:
+    return CARD_INIT;
+    break;
+  case TRCARD_SHORTCUT_BADGE:
+    return BADGE_INIT;
+    break;
+  case TRCARD_SHORTCUT_NONE:
+    break;
+  }
+
+  // 指定なし（TRDARD_SHORTCUT_NONE）の場合はゲーム進行で変える
+  if(wk->tcp->TrCardData->Clear_m==0 && wk->tcp->edit_possible==1){
+    return BADGE_INIT;
+  }
+
+  return CARD_INIT;
+
 }
 
 //----------------------------------------------------------------------------------
@@ -600,11 +639,14 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   if(cardData->MusicalNum){
     cardData->MusicalFlag   = 1;    
   }
-
   // ポケシフターをした事があるか
-  cardData->PokeshifterFlag = 1;    
+  if(RECORD_Get( rec, RECID_POKESHIFTER_COUNT)){
+    cardData->PokeshifterFlag = 1;    
+  }
   // トライアルハウスに参加した事があるか
-  cardData->TrianHouseFlag  = 1;    
+  if(RECORD_Get( rec, RECID_TRIALHOUSE_COUNT)){
+    cardData->TrianHouseFlag  = 1;    
+  }
   
   //図鑑処理
   cardData->PokeBookFlg = TRUE;

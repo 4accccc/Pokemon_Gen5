@@ -33,32 +33,6 @@ typedef enum {
 #define TR_DIGIT_MAX  (12)
 
 
-// スクロールするスコアリストの描画内容定義
-enum{
-  SCORE_LINE_ID=0,
-  SCORE_LINE_MONEY,
-  SCORE_LINE_START_DATE_1,
-  SCORE_LINE_START_DATE_2,
-  SCORE_LINE_FIRST_CHAMPION_1,
-  SCORE_LINE_FIRST_CHAMPION_2,
-  SCORE_LINE_COMM_NUM,
-  SCORE_LINE_COMM_BATTLE_NUM,
-  SCORE_LINE_COMM_WIN_NUM,
-  SCORE_LINE_COMM_LOSE_NUM,
-  SCORE_LINE_COMM_TRADE_NUM,
-  SCORE_LINE_ENCOUNT_NUM_1,
-  SCORE_LINE_ENCOUNT_NUM_2,
-  SCORE_LINE_TRAINER_ENCOUNT_NUM_1,
-  SCORE_LINE_TRAINER_ENCOUNT_NUM_2,
-  SCORE_LINE_SURETIGAI_NUM,
-  SCORE_LINE_FEELING_CHECK_NUM,
-  SCORE_LINE_MONOLITH_LEVEL,
-  SCORE_LINE_MUSICAL_NUM,
-  SCORE_LINE_POKESHIFTER_HIGH,
-  SCORE_LINE_TRIALHOUSE_HIGH,
-  SCORE_LINE_TRIALHOUSE_RANK,
-  SCORE_LINE_MAX,
-};
 
 
 //説明ウィンドウ描画パターン定義
@@ -86,6 +60,7 @@ extern int  TRCBmp_SignDrawYesNoWait(TR_CARD_WORK* wk,const u8 pat);
 extern void TRCBmp_PrintTrainerType( TR_CARD_WORK *wk, int trtype, int trans_sw );
 extern void TRCBmp_PrintPersonality( TR_CARD_WORK *wk, int personality, int trans_sw );
 extern void TRCBmp_WriteScoreListWin( TR_CARD_WORK *wk, int scrol_point, int trans_sw, int col );
+extern void TRCBmp_MakeScoreList( TR_CARD_WORK *wk, TR_CARD_DATA *TrCardData );
 
 
 #endif //_TRCARD_BMP_H_

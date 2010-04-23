@@ -42,6 +42,34 @@ enum{
   BACK_FONT_PAL = 15,
 };
 
+
+// スクロールするスコアリストの描画内容定義
+enum{
+  SCORE_LINE_ID=0,
+  SCORE_LINE_MONEY,
+  SCORE_LINE_START_DATE_1,
+  SCORE_LINE_START_DATE_2,
+  SCORE_LINE_FIRST_CHAMPION_1,
+  SCORE_LINE_FIRST_CHAMPION_2,
+  SCORE_LINE_COMM_NUM,
+  SCORE_LINE_COMM_BATTLE_NUM,
+  SCORE_LINE_COMM_WIN_NUM,
+  SCORE_LINE_COMM_LOSE_NUM,
+  SCORE_LINE_COMM_TRADE_NUM,
+  SCORE_LINE_ENCOUNT_NUM_1,
+  SCORE_LINE_ENCOUNT_NUM_2,
+  SCORE_LINE_TRAINER_ENCOUNT_NUM_1,
+  SCORE_LINE_TRAINER_ENCOUNT_NUM_2,
+  SCORE_LINE_SURETIGAI_NUM,
+  SCORE_LINE_FEELING_CHECK_NUM,
+  SCORE_LINE_MONOLITH_LEVEL,
+  SCORE_LINE_MUSICAL_NUM,
+  SCORE_LINE_POKESHIFTER_HIGH,
+  SCORE_LINE_TRIALHOUSE_HIGH,
+//  SCORE_LINE_TRIALHOUSE_RANK,
+  SCORE_LINE_MAX,
+};
+
 //=====================================
 // BMPWIN配列指定用定義
 //=====================================
@@ -187,6 +215,9 @@ typedef struct TR_CARD_WORK_tag
   u8  card_list_col;              // カード裏面のリスト描画色を黄色にする（0:黒 1:黄色）
   u8  scroll_se_wait;             // 裏面スクロールのSE用ウェイト
   u8  sign_se_wait;
+
+  u8  score_list[SCORE_LINE_MAX]; ///< 表示する項目を並べた配列
+  u8  score_max;                  ///< 現在表示できる項目の最大数
 
 }TR_CARD_WORK;
 

@@ -57,6 +57,9 @@
 
 #define BADGE_NUM   ( 8 )
 
+// 48時間で磨き下限が１段階落ちるのでその倍数で管理
+#define BADGE_POLISH_RATE   ( 48*3 )  
+
 // シーケンス制御
 enum{
   SUBSEQ_FADEIN_WAIT=0,
@@ -101,7 +104,7 @@ typedef struct{
 
 // バッジ磨き情報
 typedef struct{
-  u32 polish[BADGE_NUM];     ///< 磨き情報
+  int polish[BADGE_NUM];     ///< 磨き情報
   u8  grade[BADGE_NUM];      ///< 磨きフラグ
   u8  old_grade[BADGE_NUM];  ///< 磨きフラグ過去
 }BADGE_POLISH;
@@ -261,7 +264,7 @@ GFL_PROC_RESULT BadgeViewProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
 {
   BADGEVIEW_WORK * wk;
 
-  OS_Printf( "↓↓↓↓↓　リーダーボード処理開始　↓↓↓↓↓\n" );
+  OS_Printf( "↓↓↓↓↓　バッジ画面処理開始　↓↓↓↓↓\n" );
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TR_CARD, 0x20000 );
 
@@ -284,6 +287,8 @@ GFL_PROC_RESULT BadgeViewProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
 
   // 初期ページ表示
   SetupPage( wk, wk->page );
+
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, HEAPID_TR_CARD );
 
 
   // フェードイン開始
@@ -351,7 +356,7 @@ GFL_PROC_RESULT BadgeViewProc_End( GFL_PROC * proc, int *seq, void *pwk, void *m
   GFL_HEAP_DeleteHeap( HEAPID_TR_CARD );
 
 
-  OS_Printf( "↑↑↑↑↑　リーダーボード処理終了　↑↑↑↑↑\n" );
+  OS_Printf( "↑↑↑↑↑　バッジ画面処理終了　↑↑↑↑↑\n" );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -774,7 +779,7 @@ static void ClActInit(BADGEVIEW_WORK *wk)
 
   // セルアクターリソース読み込み
   
-  // ---リーダーボード用下画面---
+  // ---バッジ画面用下画面---
   wk->clres[BV_RES_CHR]  = GFL_CLGRP_CGR_Register(      wk->g_handle, 
                                                         NARC_trainer_case_badge_obj01_NCGR, 0, 
                                                         CLSYS_DRAW_MAIN, HEAPID_TR_CARD );
@@ -2101,6 +2106,8 @@ static void SetupPage( BADGEVIEW_WORK *wk, int page )
   // プレート状態変更
   NamePlatePrint_1Page( wk );
 
+  // バッジ＆ジムリーダーパレット転送
+  Trans_BadgePalette( wk );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -2183,13 +2190,22 @@ static void SetRtcData( BADGEVIEW_WORK *wk )
   RTCDate date;
   RTCTime time;
   s64     digit;
+  int     i;
+
   // 日付・時間取得
   GFL_RTC_GetDateTime( &date, &time);
 
   digit = RTC_ConvertDateTimeToSecond( &date, &time );
 
+  // 最終バッジ確認時間をセーブデータにセット
   TRCSave_SetLastTime( wk->trCard, digit );
+
+  // 磨きデータもセット
+  for(i=0;i<BADGE_NUM;i++){
+    TRCSave_SetBadgePolish( wk->trCard, i, wk->badge.polish[i] );
+  }
 }
+
 
 
 //----------------------------------------------------------------------------------
@@ -2214,12 +2230,28 @@ static void RefreshPolishData( BADGEVIEW_WORK *wk )
   // 日付・時間取得
   GFL_RTC_GetDateTime( &now_date, &now_time);
 
-  OS_Printf("今：%02d/%02d/%02d %02d:%02d.%02d\n", last_date.year, last_date.month,  last_date.day, 
-                                                           last_time.hour, last_time.minute, last_time.second);
+  OS_Printf("今：%02d/%02d/%02d %02d:%02d.%02d\n", now_date.year, now_date.month,  now_date.day, 
+                                                   now_time.hour, now_time.minute, now_time.second);
 
-  now_digit = RTC_ConvertDateTimeToSecond( &now_date, &now_time );
+  // 経過時間取得
+  now_digit  = RTC_ConvertDateTimeToSecond( &now_date, &now_time );
 
-  OS_Printf("今-過去 %ld\n", now_digit-digit);
+  OS_Printf("今-過去 %ld秒\n", now_digit-digit);
+  
+  now_digit -= digit;   // 差分取得
+  now_digit /= 60*60;   // 時間に変換
+
+  // 磨きデータの取得・時間の差分から更新( 2日で１段階落ちる）
+  {
+    int i;
+    for(i=0;i<BADGE_NUM;i++){
+      wk->badge.polish[i] = TRCSave_GetBadgePolish( wk->trCard, i );
+      wk->badge.polish[i] -= now_digit*3;
+      if(wk->badge.polish[i]<0){
+        wk->badge.polish[i] = 0;
+      }
+    }
+  }
 }
 
 //----------------------------------------------------------------------------------
@@ -2316,7 +2348,6 @@ static void _set_clact_visible( BADGEVIEW_WORK *wk, int no, int grade )
 }
 
 
-#define BADGE_POLISH_RATE   ( 100 )
 
 //----------------------------------------------------------------------------------
 /**
@@ -2355,11 +2386,13 @@ static void Trans_BadgePalette( BADGEVIEW_WORK *wk )
   }
 
 #ifdef PM_DEBUG
-  OS_Printf("badge:");
-  for(i=0;i<BADGE_NUM;i++){
-    OS_Printf("%02d,",wk->badge.polish[i]);
+  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_START){
+    OS_Printf("badge:");
+    for(i=0;i<BADGE_NUM;i++){
+      OS_Printf("%02d,",wk->badge.polish[i]);
+    }
+    OS_Printf("\n,");
   }
-  OS_Printf("\n,");
 #endif
 }
 

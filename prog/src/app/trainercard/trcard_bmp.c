@@ -714,18 +714,77 @@ static void print_score_list_line( TR_CARD_WORK *wk, GFL_BMPWIN *win, int line, 
             BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->TrialHouseHigh, BATTLE_DIGIT,
             STR_NUM_DISP_SPACE,col);
     break;
-  case SCORE_LINE_TRIALHOUSE_RANK:          // トライアウハウスのランク
-    LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_23], col );
-    WriteNumData( wk, win,
-            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->TrialHouseRank, BATTLE_DIGIT,
-            STR_NUM_DISP_SPACE,col);
-    break;
+//  case SCORE_LINE_TRIALHOUSE_RANK:          // トライアウハウスのランク
+//    LinePrint( win, wk, 0, y, wk->CPrmBuf[MSG_TCARD_23], col );
+//    WriteNumData( wk, win,
+//            BMP_WIDTH_TYPE3, LINE_RIGHT_MARGIN, y, str, inTrCardData->TrialHouseRank, BATTLE_DIGIT,
+//            STR_NUM_DISP_SPACE,col);
+//    break;
   }
 
 
 }
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief レコード表示リストを追加していくサブ関数
+ *
+ * @param   wk      TR_CARD_WORK
+ * @param   index   追加するデータインデックス(
+ */
+//----------------------------------------------------------------------------------
+static void _add_score_list( TR_CARD_WORK *wk, int index )
+{
+  wk->score_list[wk->score_max] = index;
+  wk->score_max++;
+}
+
+//=============================================================================================
+/**
+ * @brief 裏面に表示する項目の取捨選択を行う
+ *
+ * @param   wk    TR_CARD_WORK
+ */
+//=============================================================================================
+void TRCBmp_MakeScoreList( TR_CARD_WORK *wk, TR_CARD_DATA *TrCardData )
+{
+  int i;
+
+  // デフォルトで表示するレコードを設定
+  for(i=0;i<SCORE_LINE_SURETIGAI_NUM;i++){
+    _add_score_list( wk, i );
+  }
+
+  // Cギアを取得済ならすれ違いの数・相性診断の回数を表示
+  if(TrCardData->CgearGetFlag){
+    _add_score_list( wk, SCORE_LINE_FEELING_CHECK_NUM );
+    _add_score_list( wk, SCORE_LINE_SURETIGAI_NUM );
+  }
+
+  // パレスに行った事があるならモノリスレベルの表示
+  if(TrCardData->PaleceFlag){
+    _add_score_list( wk, SCORE_LINE_MONOLITH_LEVEL );
+  }
+
+  // ミュージカルに参加した事があるのであれば参加回数を表示
+  if(TrCardData->MusicalFlag){
+    _add_score_list( wk, SCORE_LINE_MUSICAL_NUM );
+  }
+  
+  // ポケシフターをした事があれば最高得点を表示
+  if(TrCardData->PokeshifterFlag){
+    _add_score_list( wk, SCORE_LINE_POKESHIFTER_HIGH );
+  }
+
+  // トライアルハウスに参加したことがあれば最高得点を表示
+  if(TrCardData->TrianHouseFlag){
+    _add_score_list( wk, SCORE_LINE_TRIALHOUSE_HIGH );
+  }
+
+
+  
+}
 
 //=============================================================================================
 /**
@@ -750,7 +809,7 @@ void TRCBmp_WriteScoreListWin( TR_CARD_WORK *wk, int scrol_point, int trans_sw, 
   OS_Printf("scrol=%d start=%d y=%d\n",scrol_point, start, y);
 
   for(i=0;i<5;i++){
-    print_score_list_line( wk, win,start+i, y+16*i, col );
+    print_score_list_line( wk, win, wk->score_list[start+i], y+16*i, col );
   }
   
   if(trans_sw){
