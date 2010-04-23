@@ -39,7 +39,7 @@
 ///îˆê£Ç‰ÇÁÇ‰ÇÁå¿äEÉtÉåÅ[ÉÄ
 #define OZE_YURE_MAXFRAME (30*2)
 
-#define JIKI_AC_TURN_U (AC_STAY_WALK_U_2F)
+#define JIKI_AC_TURN_U (AC_STAY_WALK_U_4F)
 
 //--------------------------------------------------------------
 /// JIKI_MOVEBIT

@@ -1392,10 +1392,11 @@ static void bsw_SetCommonScore(
     //ポケモンデータセット
     bsw_SaveMemberPokeData( wk,sv,BSWAY_SCORE_POKE_SINGLE );
   case BSWAY_MODE_DOUBLE:
-#if 0
+#if 0 //wb null
     if( now_renshou >= 7){
       //TVインタビューデータセット(シングルとダブルで実行)
-      TVTOPIC_BTowerTemp_Set( SaveData_GetTvWork( sv ),win_f,now_renshou );
+      TVTOPIC_BTowerTemp_Set(
+          SaveData_GetTvWork( sv ),win_f,now_renshou );
     }
 #endif
     break;
@@ -2020,7 +2021,7 @@ static u16 bswayscr_IfRenshouPrizeGet( BSUBWAY_SCRWORK *wk )
  *  @brief  参加したポケモンのパラメータをB_TOWER_POKEMON型にパックする
  */
 //--------------------------------------------------------------
-static void bsw_PokeDataPack( BSUBWAY_POKEMON *dat, POKEMON_PARAM *pp )
+static void bsw_PokeDataPack( BSUBWAY_POKEMON *dat, const POKEMON_PARAM *pp )
 {
   int i;
   
@@ -2064,20 +2065,24 @@ static void bsw_SaveMemberPokeData(
 {
   int i = 0;
   BSUBWAY_POKEMON *dat;
-  POKEPARTY  *party;
+  const POKEPARTY  *party;
   POKEMON_PARAM *pp;
   
   dat = GFL_HEAP_AllocMemoryLo( wk->heapID, sizeof(BSUBWAY_POKEMON)*3 );
   MI_CpuClear8( dat,sizeof(BSUBWAY_POKEMON)*3);
-  
-  party = SaveData_GetTemotiPokemon( sv );
 
-  for( i = 0;i < 3;i++){
+#if 0  
+  party = SaveData_GetTemotiPokemon( sv );
+#else
+  party = BSUBWAY_SCRWORK_GetPokePartyUse( wk );
+#endif
+
+  for( i = 0;i < 3; i++ ){
     pp = PokeParty_GetMemberPointer( party, wk->member[i] );
-    bsw_PokeDataPack(&( dat[i]),pp );  
+    bsw_PokeDataPack( &(dat[i]), pp );  
   }
   
-  BSUBWAY_SCOREDATA_SetUsePokeData( wk->scoreData,mode,dat );
+  BSUBWAY_SCOREDATA_SetUsePokeData( wk->scoreData,mode, dat );
 
   MI_CpuClear8( dat,sizeof( BSUBWAY_POKEMON )*3);
   GFL_HEAP_FreeMemory( dat );
