@@ -162,7 +162,7 @@ const SCENE_DATA resistMapTbl[] = {
 			{FLDMAPPER_MAPDATA_NULL,FLDMAPPER_MAPDATA_NULL},	// 地面アニメーション
 
 			FLD_MAPPER_BLOCK_MEMSIZE,	// 1ブロックメモリサイズ
-      1,  // topフレームのブロック描画数
+      0,  // topフレームのブロック描画数
 		}, 
 		&FieldMapCtrl_NoGridFunctions,
 		TRUE,
