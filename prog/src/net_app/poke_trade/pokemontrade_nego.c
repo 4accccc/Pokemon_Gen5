@@ -883,6 +883,43 @@ static BOOL _pokemonStatusKeyLoop(POKEMON_TRADE_WORK* pWork)
 }
 
 
+static void _pokemonStatusWaitNw(POKEMON_TRADE_WORK* pWork)
+{
+  if(WIPE_SYS_EndCheck()){
+    // 消す
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M , FALSE );
+
+    POKETRADE_MESSAGE_ResetPokemonStatusMessage(pWork);
+    {
+      ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
+      pWork->subchar =
+        GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_trade_wb_trade_bg01_NCGR,
+                                                     GFL_BG_FRAME2_M, 0, 0, pWork->heapID);
+      GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
+                                           NARC_trade_wb_trade_bg01_back_NSCR,
+                                           GFL_BG_FRAME2_M, 0,
+                                           GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                           pWork->heapID);
+      GFL_ARC_CloseDataHandle(p_handle);
+    }
+    IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
+    pWork->statusModeOn = FALSE;
+
+    if(POKEMONTRADE_IsInPokemonRecvPoke(IRC_POKEMONTRADE_GetRecvPP(pWork, 1))){
+      POKE_MAIN_Pokemonset(pWork, 1, IRC_POKEMONTRADE_GetRecvPP(pWork, 1));
+    }
+    if(POKEMONTRADE_IsInPokemonRecvPoke(IRC_POKEMONTRADE_GetRecvPP(pWork, 0))){
+      POKE_MAIN_Pokemonset(pWork, 0, IRC_POKEMONTRADE_GetRecvPP(pWork, 0));
+    }
+
+    _select6PokeSubMask(pWork);
+    _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
+    WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN ,
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+  }
+}
+
 // ポケモンのステータス表示待ち
 static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
 {
@@ -923,35 +960,11 @@ static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
   }
 
   if(bReturn){
-    // 消す
-    GFL_BG_SetVisible( GFL_BG_FRAME3_M , FALSE );
+    WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+    _CHANGE_STATE(pWork, _pokemonStatusWaitNw);
 
-    POKETRADE_MESSAGE_ResetPokemonStatusMessage(pWork);
-    {
-      ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
-      pWork->subchar =
-        GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_trade_wb_trade_bg01_NCGR,
-                                                     GFL_BG_FRAME2_M, 0, 0, pWork->heapID);
-      GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
-                                           NARC_trade_wb_trade_bg01_back_NSCR,
-                                           GFL_BG_FRAME2_M, 0,
-                                           GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-                                           pWork->heapID);
-      GFL_ARC_CloseDataHandle(p_handle);
-    }
-    IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
-    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
-    pWork->statusModeOn = FALSE;
 
-    if(POKEMONTRADE_IsInPokemonRecvPoke(IRC_POKEMONTRADE_GetRecvPP(pWork, 1))){
-      POKE_MAIN_Pokemonset(pWork, 1, IRC_POKEMONTRADE_GetRecvPP(pWork, 1));
-    }
-    if(POKEMONTRADE_IsInPokemonRecvPoke(IRC_POKEMONTRADE_GetRecvPP(pWork, 0))){
-      POKE_MAIN_Pokemonset(pWork, 0, IRC_POKEMONTRADE_GetRecvPP(pWork, 0));
-    }
-
-    _select6PokeSubMask(pWork);
-    _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
   }
 }
 

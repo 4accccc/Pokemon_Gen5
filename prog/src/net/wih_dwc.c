@@ -39,7 +39,7 @@ struct _WIH_DWC_WORK {
 };
 
 
-static void _SetScanBeaconData(WMBssDesc* pBss);
+static void _SetScanBeaconData(WMBssDesc* pBss,void* pWork);
 //通信の基底にかかわる部分なのでローカルにおき何処からでも参照できる形にしてある
 static WIH_DWC_WORK* _localWork=NULL;  
 static NCFGConfigEx* _localcfg=NULL;
@@ -141,7 +141,7 @@ void WIH_DWC_Restart(void)
   Arguments:    bFlg  ONなら収集
  *---------------------------------------------------------------------------*/
 
-static void _SetScanBeaconData(WMBssDesc* pBss)
+static void _SetScanBeaconData(WMBssDesc* pBss,void* pWork)
 {
   int i;
 

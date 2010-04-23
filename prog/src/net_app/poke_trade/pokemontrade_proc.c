@@ -1192,6 +1192,31 @@ static void _changePokemonStatusDispAuto(POKEMON_TRADE_WORK* pWork,int sel)
 }
 
 
+static void _networkFriendsStandbyWaitFadeout(POKEMON_TRADE_WORK* pWork)
+{
+  if(WIPE_SYS_EndCheck()){
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M , FALSE );
+    
+    POKETRADE_MESSAGE_ResetPokemonStatusMessage(pWork);
+    
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S , FALSE );
+    IRC_POKETRADE_GraphicInitMainDisp(pWork);
+    IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
+    G2_BlendNone();
+    POKE_MAIN_Pokemonset(pWork, 0, IRC_POKEMONTRADE_GetRecvPP(pWork, 0));
+    POKE_MAIN_Pokemonset(pWork, 1, IRC_POKEMONTRADE_GetRecvPP(pWork, 1));
+    
+    pWork->padMode = TRUE;
+    _PokemonIconRenew(pWork);
+    WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN ,
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+
+    _CHANGE_STATE(pWork, _networkFriendsStandbyWait2);
+  }
+}
+
+
 const static GFL_UI_TP_HITTBL _tp_data[]={
   {_POKEMON_SELECT1_CELLY-8,_POKEMON_SELECT1_CELLY+16,_POKEMON_SELECT1_CELLX-8, _POKEMON_SELECT1_CELLX+16},
   {_POKEMON_SELECT2_CELLY-8,_POKEMON_SELECT2_CELLY+16,_POKEMON_SELECT2_CELLX-8, _POKEMON_SELECT2_CELLX+16},
@@ -1262,23 +1287,9 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
 
   if(bReturn){
     // Á‚·
-    GFL_BG_SetVisible( GFL_BG_FRAME3_M , FALSE );
-
-
-    POKETRADE_MESSAGE_ResetPokemonStatusMessage(pWork);
-    
-    GFL_BG_SetVisible( GFL_BG_FRAME0_S , FALSE );
-    IRC_POKETRADE_GraphicInitMainDisp(pWork);
-    IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
-    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
-    G2_BlendNone();
-    POKE_MAIN_Pokemonset(pWork, 0, IRC_POKEMONTRADE_GetRecvPP(pWork, 0));
-    POKE_MAIN_Pokemonset(pWork, 1, IRC_POKEMONTRADE_GetRecvPP(pWork, 1));
-
-    pWork->padMode = TRUE;
-    _PokemonIconRenew(pWork);
-    
-    _CHANGE_STATE(pWork, _networkFriendsStandbyWait2);
+    WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+    _CHANGE_STATE(pWork, _networkFriendsStandbyWaitFadeout);
   }
 }
 
