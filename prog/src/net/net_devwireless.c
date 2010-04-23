@@ -12,7 +12,11 @@
 #include "net/network_define.h"
 #include "net_whpipe.h"
 #include "net/wih.h"
+
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 #include "net/wih_dwc.h"
+#endif //MULTI_BOOT_MAKE
 
 //--------------------------------------------
 //内部関数一覧
@@ -577,7 +581,9 @@ static int _DevGetIconLevelFunc(void)
 {
   if( WB_NET_FIELDMOVE_SERVICEID==GFL_NET_GetGameServiceID() ){
 //    if(GFL_NET_GetConnectNum()<2){
+#ifndef MULTI_BOOT_MAKE  //通常時処理
     return WM_LINK_LEVEL_3 - WIH_DWC_GetBeaconRssiMax();
+#endif // MULTI_BOOT_MAKE  //通常時処理
 //    }
   }
 	return (WM_LINK_LEVEL_3 - WM_GetLinkLevel());
