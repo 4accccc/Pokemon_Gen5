@@ -518,9 +518,9 @@ static void shop_call_init( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type,
     blackcity_shop_item_set( wk, type );
     break;
   default: 
-//    shop_item_set( wk, type, id, 0 );
+    shop_item_set( wk, type, id, 0 );
 //    shop_item_set( wk, 21, 21, 0 );
-    blackcity_shop_item_set( wk, SCR_SHOPID_BLACK_CITY0 );
+//    blackcity_shop_item_set( wk, SCR_SHOPID_BLACK_CITY0 );
     break;
   }
 
