@@ -425,7 +425,7 @@ void GSYNC_MESSAGE_SetNormalMessage(GSYNC_MESSAGE_WORK* pWork,int msgid)
  */
 //------------------------------------------------------------------------------
 
-void GSYNC_MESSAGE_SystemMessageDisp(GSYNC_MESSAGE_WORK* pWork)
+void GSYNC_MESSAGE_SystemMessageDisp(GSYNC_MESSAGE_WORK* pWork, int height)
 {
   GFL_BMPWIN* pwin;
 
@@ -434,7 +434,7 @@ void GSYNC_MESSAGE_SystemMessageDisp(GSYNC_MESSAGE_WORK* pWork)
   }
 
   pWork->systemDispWin = GFL_BMPWIN_Create(
-    GFL_BG_FRAME2_S , 1 , 1, 30 , 16 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+    GFL_BG_FRAME2_S , 1 , 1, 30 , height ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   pwin = pWork->systemDispWin;
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
@@ -505,7 +505,7 @@ void GSYNC_MESSAGE_ErrorMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid,int no)
   WORDSET_RegisterNumber(pWork->pWordSet, 0, no,
                          5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
   GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
-  GSYNC_MESSAGE_SystemMessageDisp(pWork);
+  GSYNC_MESSAGE_SystemMessageDisp(pWork,16);
 }
 
 
