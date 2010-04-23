@@ -273,7 +273,9 @@ static int _playerDirectReturn( WIFIP2PMATCH_WORK *wk, int seq )
   if( !WifiP2PMatchMessageEndCheck(wk) ){
     return seq;
   }
-  _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_INIT5);
+  if(GFL_UI_KEY_GetTrg()){
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_INIT5);
+  }
   return seq;
 }
 
