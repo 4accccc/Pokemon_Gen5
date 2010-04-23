@@ -1763,7 +1763,7 @@ static const u16 PMS_CategoryTable_09[] = {
 	1698,	//ƒŒƒxƒ‹
 	1699,	//ƒŒƒ“ƒ^ƒ‹
 	1700,	//‚í‚´ƒ}ƒVƒ“
-	1669,	//‚b-ƒMƒA
+	1669,	//‚b\x{ff0d}‚f‚d‚`‚q
 	PMS_WORDID_END
 };
 
@@ -1796,7 +1796,7 @@ static const u16 PMS_CategoryTable_10[] = {
 	1701,	//‚f‚o‚e
 	1702,	//‚f‚s‚r
 	1703,	//‚o‚c‚v
-	1704,	//‚v‚‰|‚e‚‰
+	1704,	//‚v‚‰\x{ff0d}‚e‚‰
 	PMS_WORDID_END
 };
 
@@ -3883,7 +3883,7 @@ static const u16 PMS_InitialTable_44[] = {
 	1479,	//cc
 	1477,	//\x{c548}\x{b155}\x{d558}\x{c138}\x{c694}
 	1472,	//bonjour
-	1669,	//‚b-ƒMƒA
+	1669,	//‚b\x{ff0d}‚f‚d‚`‚q
 	1473,	//ciao
 	1701,	//‚f‚o‚e
 	1702,	//‚f‚s‚r
@@ -3891,7 +3891,7 @@ static const u16 PMS_InitialTable_44[] = {
 	1475,	//hello
 	1476,	//hola
 	1703,	//‚o‚c‚v
-	1704,	//‚v‚‰|‚e‚‰
+	1704,	//‚v‚‰\x{ff0d}‚e‚‰
 	PMS_WORDID_END
 };
 

@@ -414,8 +414,8 @@
 	</row>
 
 	<row id="search_abc_04">
-		<language name="JPN" width="216">C-きあ</language>
-		<language name="JPN_KANJI" width="216">C-きあ</language>
+		<language name="JPN" width="216">C\x{ff0d}GEAR</language>
+		<language name="JPN_KANJI" width="216">C\x{ff0d}GEAR</language>
 	</row>
 
 	<row id="search_abc_05">
@@ -454,8 +454,8 @@
 	</row>
 
 	<row id="search_abc_12">
-		<language name="JPN" width="216">Wi−Fi</language>
-		<language name="JPN_KANJI" width="216">Wi−Fi</language>
+		<language name="JPN" width="216">Wi\x{ff0d}Fi</language>
+		<language name="JPN_KANJI" width="216">Wi\x{ff0d}Fi</language>
 	</row>
 
 	<flowchart-group-list>
