@@ -808,6 +808,11 @@ void  BTLV_MCSS_MovePosition( BTLV_MCSS_WORK *bmw, int position, int type, VecFx
     BTLV_MCSS_GetDefaultPos( bmw, pos, position );
     type = EFFTOOL_CALCTYPE_INTERPOLATION;
   }
+	if( type == EFFTOOL_CALCTYPE_DIRECT )			//’¼Ú’l‚ð‘ã“ü
+  { 
+    MCSS_SetPosition( bmw->btlv_mcss[ index ].mcss, pos );
+    return;
+  }
   BTLV_MCSS_TCBInitialize( bmw, position, type, &start, pos, frame, wait, count, TCB_BTLV_MCSS_Move, REVERSE_FLAG_ON );
   bmw->mcss_tcb_move_execute |= BTLV_EFFTOOL_Pos2Bit( position );
 }
@@ -2020,8 +2025,7 @@ static  void  TCB_BTLV_MCSS_Rotation( GFL_TCB *tcb, void *work )
           VecFx32 pos;
           if( BTLV_MCSS_CheckExist( bmrw->bmw, src_pos[ bmrw->side ][ i ] ) )
           {
-            //BTLV_MCSS_GetDefaultPos( bmrw->bmw, &pos, dst_pos[ bmrw->dir ][ bmrw->side ][ i ] );
-            BTLV_MCSS_GetDefaultPos( bmrw->bmw, &pos, src_pos[ bmrw->side ][ i ] );
+            BTLV_MCSS_GetDefaultPos( bmrw->bmw, &pos, dst_pos[ bmrw->dir ][ bmrw->side ][ i ] );
             BTLV_MCSS_MovePosition( bmrw->bmw, src_pos[ bmrw->side ][ i ],
                                     EFFTOOL_CALCTYPE_DIRECT, &pos, 0, 0, 0 );
           }
@@ -2031,6 +2035,7 @@ static  void  TCB_BTLV_MCSS_Rotation( GFL_TCB *tcb, void *work )
     }
     break;
   case 2:
+    if( bmrw->bmw->mcss_tcb_move_execute == 0 )
     {
       int i;
       int index[ 3 ];
