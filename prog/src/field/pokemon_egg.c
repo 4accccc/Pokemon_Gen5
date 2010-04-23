@@ -14,6 +14,7 @@
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/poke_personal.h"
 #include "poke_tool/poke_memo.h"
+#include "poke_tool/tokusyu_def.h"// for TOKUSYU_xxxx
 #include "item/itemsym.h"         // for ITEM_xxxx
 #include "item/item.h"            // for ITEM_xxxx
 #include "waza_tool/wazano_def.h" // for WAZANO_xxxx
@@ -321,9 +322,15 @@ static void EggCordinate_tokusei(
     PP_SetTokusei3( egg, monsno, formno );
   }
   else {
-    u32 speabi_egg = speabi_list[ speabi_egg_idx ];
+    u32 speabi_egg = speabi_list[ speabi_egg_idx ]; 
+
+    // åàíËÇµÇΩî‘çÜÇ…ì¡ê´Ç™Ç»Ç¢èÍçá, ì¡ê´0Ç…Ç∑ÇÈ
+    if( speabi_egg == TOKUSYU_NULL ) {
+      speabi_egg = speabi_list[0];
+    } 
     PP_Put( egg, ID_PARA_speabino, speabi_egg );
   }
+
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET,
