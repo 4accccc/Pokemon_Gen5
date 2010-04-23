@@ -97,8 +97,10 @@ COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, GAMESYS_WORK *gsys, HEAPID heap_id)
     MMDLSYS *fldMdlSys;
 
     fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-    fldMdlSys = FIELDMAP_GetMMdlSys(fieldWork);
-    cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(max, fldMdlSys, heap_id);
+    if(FIELDMAP_IsReady(fieldWork) == TRUE){
+      fldMdlSys = FIELDMAP_GetMMdlSys(fieldWork);
+      cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(max, fldMdlSys, heap_id);
+    }
   }
   
   return cps;
