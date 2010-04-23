@@ -222,10 +222,10 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     WORDSET_RegisterNumber( talk->iem.wordset, 0, MISSION_ACHIEVE_ADD_LEVEL, 
       3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     if(talk->mresult.mission_data.monolith_type == MONOLITH_TYPE_BLACK){
-      IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_clear_03);
+      IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_clear_02);
     }
     else{
-      IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_clear_02);
+      IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_clear_03);
     }
     (*seq)++;
     break;

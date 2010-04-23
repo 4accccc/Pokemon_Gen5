@@ -54,6 +54,7 @@ typedef struct
 	BOOL error;
 	INTRUDE_BATTLE_PARENT ibp;
 	int first_talked;
+	BOOL success;
 }EVENT_MISSION_BATTLE;
 
 
@@ -271,6 +272,7 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     break;
 
   case SEQ_BATTLE_OK:
+    talk->success = TRUE;
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
       MissionBattleMsgID.mission_battle_ok[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
   	(*seq) = SEQ_SEND_ACHIEVE;
@@ -355,7 +357,9 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
   	//ã§í Finishèàóù
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
 
-    GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
+    if(talk->success == TRUE){
+      GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
+    }
     return GMEVENT_RES_CONTINUE;  //ChangeEventÇ≈èIóπÇ∑ÇÈÇΩÇﬂFINISHÇµÇ»Ç¢
   }
 	return GMEVENT_RES_CONTINUE;

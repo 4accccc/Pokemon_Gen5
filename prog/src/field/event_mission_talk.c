@@ -466,9 +466,10 @@ static GMEVENT_RESULT CommMissionTalk_TtoM_Talked( GMEVENT *event, int *seq, voi
 	enum{
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
-    SEQ_MSG_GET_WAIT,
     SEQ_GPOWER,
     SEQ_GPOWER_WAIT,
+    SEQ_AFTER_MSG_INIT,
+    SEQ_AFTER_MSG_WAIT,
     SEQ_END,
   };
 	
@@ -501,16 +502,9 @@ static GMEVENT_RESULT CommMissionTalk_TtoM_Talked( GMEVENT *event, int *seq, voi
 		break;
   case SEQ_MSG_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-        MissionTalkMsgID.target_talked_get[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
   		(*seq)++;
   	}
 		break;
-  case SEQ_MSG_GET_WAIT:
-    if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
-      (*seq)++;
-    }
-    break;
 
   case SEQ_GPOWER:
     //外部イベントを起動する為ウィンドウ類のみ先行して削除
@@ -523,8 +517,20 @@ static GMEVENT_RESULT CommMissionTalk_TtoM_Talked( GMEVENT *event, int *seq, voi
     (*seq)++;
     break;
   case SEQ_GPOWER_WAIT:
-    *seq = SEQ_END;
+    *seq = SEQ_AFTER_MSG_INIT;
 		break;
+
+  case SEQ_AFTER_MSG_INIT:
+    IntrudeEventPrint_SetupFieldMsg(&talk->ccew.iem, gsys);
+    IntrudeEventPrint_StartStream(&talk->ccew.iem, 
+      MissionTalkMsgID.target_talked_get[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+  	(*seq)++;
+		break;
+  case SEQ_AFTER_MSG_WAIT:
+    if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
+      (*seq)++;
+    }
+    break;
 
   case SEQ_END:
   	//共通Finish処理

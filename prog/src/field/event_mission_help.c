@@ -165,8 +165,6 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Talk( GMEVENT *event, int *seq, void 
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
 	INTRUDE_COMM_SYS_PTR intcomm;
 	enum{
-    SEQ_SEND_ACHIEVE,
-    SEQ_RECV_WAIT,
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
     SEQ_LAST_MSG_WAIT,
@@ -374,12 +372,6 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Talked( GMEVENT *event, int *seq, voi
   case SEQ_END:
   	//共通Finish処理
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
-  	
-  	//ミッション失敗：パレスへ戻される
-  	if(intcomm != NULL){
-      GMEVENT_ChangeEvent(event, EVENT_IntrudeWarpPalace(gsys));
-      return GMEVENT_RES_CONTINUE;
-    }
     return GMEVENT_RES_FINISH;
   }
 	return GMEVENT_RES_CONTINUE;
@@ -423,7 +415,6 @@ static GMEVENT_RESULT CommMissionHelp_TtoM_Talked( GMEVENT *event, int *seq, voi
 	INTRUDE_COMM_SYS_PTR intcomm;
 	enum{
     SEQ_MSG_INIT,
-    SEQ_MSG_WAIT,
     SEQ_LAST_MSG_WAIT,
     SEQ_MSG_END_BUTTON_WAIT,
     SEQ_END,

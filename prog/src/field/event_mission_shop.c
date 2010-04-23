@@ -52,6 +52,7 @@ typedef struct
 {
   COMMTALK_COMMON_EVENT_WORK ccew;
 	BOOL error;
+	BOOL success;
 }EVENT_MISSION_SHOP;
 
 
@@ -271,6 +272,7 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
     break;
 
   case SEQ_SHOP_OK:
+    shop->success = TRUE;
     IntrudeEventPrint_StartStream(&shop->ccew.iem, 
       MissionShopMsgID.mission_concluded[MISSION_FIELD_GetTalkType(intcomm, shop->ccew.talk_netid)]);
 		(*seq)++;
@@ -320,8 +322,11 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
   	//ã§í Finishèàóù
   	EVENT_CommCommon_Finish(intcomm, &shop->ccew);
 
-    GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
-    return GMEVENT_RES_CONTINUE;  //ChangeEventÇ≈èIóπÇ∑ÇÈÇΩÇﬂFINISHÇµÇ»Ç¢
+    if(shop->success == TRUE){
+      GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
+      return GMEVENT_RES_CONTINUE;  //ChangeEventÇ≈èIóπÇ∑ÇÈÇΩÇﬂFINISHÇµÇ»Ç¢
+    }
+    return GMEVENT_RES_FINISH;
   }
 	return GMEVENT_RES_CONTINUE;
 }
