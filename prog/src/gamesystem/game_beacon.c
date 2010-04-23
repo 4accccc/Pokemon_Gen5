@@ -850,6 +850,21 @@ void GAMEBEACON_SendDataUpdate_TrCardIntroduction(const PMS_DATA *pms)
 
 //==================================================================
 /**
+ * 送信データ更新：トレーナーカードのユニオンの見た目を送信バッファに反映する
+ *
+ * @param   trainer_view		
+ */
+//==================================================================
+void GAMEBEACON_SendDataUpdate_TrainerView(int trainer_view)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  GAMEBEACON_INFO *info = &send->info;
+  info->trainer_view = trainer_view;
+  send->beacon_update = TRUE;
+}
+
+//==================================================================
+/**
  * 送信データ更新：すれ違い通信の自己紹介文を送信バッファに反映する
  */
 //==================================================================
