@@ -50,6 +50,7 @@ static const BtlEventHandlerTable* ADD_SIDE_Refrector( u32* numElems );
 static void handler_side_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 side, int* work );
 static const BtlEventHandlerTable* ADD_SIDE_Hikarinokabe( u32* numElems );
 static void handler_side_HikariNoKabe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
+static void common_wallEffect( BTL_SVFLOW_WORK* flowWk, u8 mySide, WazaDamageType dmgType );
 static const BtlEventHandlerTable* ADD_SIDE_Sinpinomamori( u32* numElems );
 static void handler_side_SinpiNoMamori_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
 static void handler_side_SinpiNoMamori_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work );
@@ -301,16 +302,9 @@ static const BtlEventHandlerTable* ADD_SIDE_Refrector( u32* numElems )
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-static void handler_side_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 side, int* work )
+static void handler_side_Refrector( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
-  u8 defPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-  if( BTL_MAINUTIL_PokeIDtoSide(defPokeID) == side )
-  {
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE_TYPE) == WAZADATA_DMG_PHYSIC )
-    {
-      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5f) );
-    }
-  }
+  common_wallEffect( flowWk, mySide, WAZADATA_DMG_PHYSIC );
 }
 //--------------------------------------------------------------------------------------
 /**
@@ -327,15 +321,25 @@ static const BtlEventHandlerTable* ADD_SIDE_Hikarinokabe( u32* numElems )
 }
 static void handler_side_HikariNoKabe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
+  common_wallEffect( flowWk, mySide, WAZADATA_DMG_SPECIAL );
+}
+/**
+ *  リフレクター・ひかりのかべ共通
+ */
+static void common_wallEffect( BTL_SVFLOW_WORK* flowWk, u8 mySide, WazaDamageType dmgType )
+{
   u8 defPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
   if( BTL_MAINUTIL_PokeIDtoSide(defPokeID) == mySide )
   {
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE_TYPE) == WAZADATA_DMG_SPECIAL )
-    {
+    if( (BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE_TYPE) == dmgType)
+    &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_CRITICAL_FLAG) == FALSE)
+    ){
       BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5f) );
     }
   }
 }
+
+
 //--------------------------------------------------------------------------------------
 /**
  *  しんぴのまもり
