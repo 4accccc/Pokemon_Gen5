@@ -7237,7 +7237,7 @@ static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POK
     if( PokeTypePair_IsMatch(type, POKETYPE_HAGANE)
     ||  PokeTypePair_IsMatch(type, POKETYPE_DOKU)
     ){
-      return BTL_ADDSICK_FAIL_OTHER;
+      return BTL_ADDSICK_FAIL_NO_EFFECT;
     }
   }
 
@@ -7246,7 +7246,7 @@ static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POK
   {
     PokeTypePair type = BPP_GetPokeType( target );
     if( PokeTypePair_IsMatch(type, POKETYPE_HONOO) ){
-      return BTL_ADDSICK_FAIL_OTHER;
+      return BTL_ADDSICK_FAIL_NO_EFFECT;
     }
   }
 
@@ -7255,7 +7255,7 @@ static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POK
   {
     PokeTypePair type = BPP_GetPokeType( target );
     if( PokeTypePair_IsMatch(type, POKETYPE_KOORI) ){
-      return BTL_ADDSICK_FAIL_OTHER;
+      return BTL_ADDSICK_FAIL_NO_EFFECT;
     }
   }
 
@@ -7264,7 +7264,7 @@ static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POK
   {
     PokeTypePair type = BPP_GetPokeType( target );
     if( PokeTypePair_IsMatch(type, POKETYPE_KUSA) ){
-      return BTL_ADDSICK_FAIL_OTHER;
+      return BTL_ADDSICK_FAIL_NO_EFFECT;
     }
   }
 
