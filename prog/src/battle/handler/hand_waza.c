@@ -1799,30 +1799,32 @@ static void handler_Noroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
-
     if( BPP_IsMatchType(bpp, POKETYPE_GHOST) )
     {
-      BTL_HANDEX_PARAM_ADD_SICK* param;
-      BTL_HANDEX_PARAM_SHIFT_HP* hp_param;
-
       int restHP = BPP_GetValue( bpp, BPP_HP );
       if( restHP > 1 )
       {
         u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-        param->poke_cnt = 1;
-        param->pokeID[0] = targetPokeID;
-        param->sickID = WAZASICK_NOROI;
-        param->sickCont = BPP_SICKCONT_MakePermanent();
-        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Noroi );
-        HANDEX_STR_AddArg( &param->exStr, pokeID );
-        HANDEX_STR_AddArg( &param->exStr, targetPokeID );
+        if( targetPokeID != BTL_POKEID_NULL )
+        {
+          BTL_HANDEX_PARAM_ADD_SICK* param;
+          BTL_HANDEX_PARAM_SHIFT_HP* hp_param;
 
-        hp_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SHIFT_HP, pokeID );
-        hp_param->pokeID[0] = pokeID;
-        hp_param->volume[0] = -(restHP / 2);
-        hp_param->poke_cnt = 1;
-        hp_param->header.failSkipFlag = TRUE;
+          param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+          param->poke_cnt = 1;
+          param->pokeID[0] = targetPokeID;
+          param->sickID = WAZASICK_NOROI;
+          param->sickCont = BPP_SICKCONT_MakePermanent();
+          HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Noroi );
+          HANDEX_STR_AddArg( &param->exStr, pokeID );
+          HANDEX_STR_AddArg( &param->exStr, targetPokeID );
+
+          hp_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SHIFT_HP, pokeID );
+          hp_param->pokeID[0] = pokeID;
+          hp_param->volume[0] = -(BTL_CALC_QuotMaxHP( bpp, 2 ));
+          hp_param->poke_cnt = 1;
+          hp_param->header.failSkipFlag = TRUE;
+        }
       }
     }
     else
