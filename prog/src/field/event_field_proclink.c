@@ -1003,6 +1003,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeList(PROCLINK_WORK* wk,void* param_
   case PL_RET_ANAWOHORU:   // メニュー 技：あなをほる
   case PL_RET_AMAIKAORI:   // メニュー 技：あまいかおり
   case PL_RET_OSYABERI:    // メニュー 技：おしゃべり
+  case PL_RET_DIVING:      // メニュー 技：ダイビング
     wk->param->select_param = plData->ret_mode-PL_RET_IAIGIRI;
     return RETURNFUNC_RESULT_USE_SKILL;
 
