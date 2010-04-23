@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-04-23T16:09:10"/>
+	<create user="taya" host="W00146" date="2010-04-23T17:34:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -4190,17 +4190,41 @@
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]に　変身した！</language>
 	</row>
+	<row id="BTL_STRID_SET_Hensin_2Y">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+やせいの　[1:02:ポケモンニックネーム:1]に　へんしんした！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+野生の　[1:02:ポケモンニックネーム:1]に　変身した！</language>
+	</row>
+	<row id="BTL_STRID_SET_Hensin_2E">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+あいての　[1:02:ポケモンニックネーム:1]に　へんしんした！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+相手の　[1:02:ポケモンニックネーム:1]に　変身した！</language>
+	</row>
 	<row id="BTL_STRID_SET_Hensin_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]に　へんしんした！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]に　変身した！</language>
 	</row>
+	<row id="BTL_STRID_SET_Hensin_Y2Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+やせいの　[1:02:ポケモンニックネーム:1]に　へんしんした！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+野生の　[1:02:ポケモンニックネーム:1]に　変身した！</language>
+	</row>
 	<row id="BTL_STRID_SET_Hensin_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]に　へんしんした！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 [1:02:ポケモンニックネーム:1]に　変身した！</language>
+	</row>
+	<row id="BTL_STRID_SET_Hensin_E2E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+あいての　[1:02:ポケモンニックネーム:1]に　へんしんした！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+相手の　[1:02:ポケモンニックネーム:1]に　変身した！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_LockOn">
