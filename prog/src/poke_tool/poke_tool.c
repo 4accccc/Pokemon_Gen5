@@ -11,6 +11,7 @@
 #include    "waza_tool/wazano_def.h"
 #include    "poke_tool/poke_personal.h"
 #include    "poke_tool/poke_tool.h"
+#include    "poke_tool/poke_memo.h"
 #include    "poke_tool/monsno_def.h"
 #include    "poke_tool/tokusyu_def.h"
 #include    "waza_tool/wazadata.h"
@@ -668,6 +669,63 @@ BOOL PP_ChangeRotomFormNo(POKEMON_PARAM *pp, int new_form_no, int del_waza_pos)
   PP_ChangeFormNo( pp, new_form_no );
 
   return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   タマゴ孵化したときの処理(POKEMON_PARAM版）
+ *
+ * @param   pp        孵化させるPOKEMON_PARAM構造体へのポインタ
+ * @param   status    MYSTATUS構造体へのポインタ
+ * @param   placeID   孵化したplaceID
+ * @param   heapID    HEAPID
+ *
+ */
+//--------------------------------------------------------------
+void  PP_Birth( POKEMON_PARAM *pp, const MYSTATUS* status, const u32 placeID, const HEAPID heapID )
+{ 
+  u8 fast_flag = PP_FastModeOn( pp );
+  PPP_Birth( &pp->ppp, status, placeID, heapID );
+  PP_FastModeOff( pp, fast_flag );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   タマゴ孵化したときの処理(POKEMON_PASO_PARAM版）
+ *
+ * @param   ppp       孵化させるPOKEMON_PASO_PARAM構造体へのポインタ
+ * @param   status    MYSTATUS構造体へのポインタ
+ * @param   placeID   孵化したplaceID
+ * @param   heapID    HEAPID
+ *
+ */
+//--------------------------------------------------------------
+void  PPP_Birth( POKEMON_PASO_PARAM *ppp, const MYSTATUS* status, const u32 placeID, const HEAPID heapID )
+{ 
+  u8 fast_flag = PPP_FastModeOn( ppp );
+  u16 mons_no = PPP_Get( ppp, ID_PARA_monsno, 0 );
+  u16 form_no = PPP_Get( ppp, ID_PARA_form_no, 0 );
+
+  //タマゴフラグが立っていない場合はアサート
+  GF_ASSERT( PPP_Get( ppp, ID_PARA_tamago_flag, 0 ) );
+
+  //タマゴフラグを落とす
+  PPP_Put( ppp, ID_PARA_tamago_flag, 0 );
+
+  //なつき度を初期値にする
+  { 
+    u32 friend = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_friend );
+    PPP_Put( ppp, ID_PARA_friend, friend );
+  }
+
+  //ニックネームをデフォルト名にする
+  GFL_MSG_GetStringRaw( GlobalMsg_PokeName, mons_no, StrBuffer, NELEMS(StrBuffer) );
+  PPP_Put( ppp, ID_PARA_nickname_raw, (u32)StrBuffer );
+
+  //トレーナーメモセット
+  POKE_MEMO_SetTrainerMemoPPP( ppp, POKE_MEMO_INCUBATION, status, placeID, heapID );
+
+  PPP_FastModeOff( ppp, fast_flag );
 }
 
 //============================================================================================
