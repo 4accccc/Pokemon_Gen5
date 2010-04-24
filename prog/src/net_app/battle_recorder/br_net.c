@@ -836,7 +836,6 @@ static void Br_Net_Response_BattleVideoRegist(void *p_wk_adrs, const GDS_RAP_ERR
     //TRUEならばエラー発生しているので、ここでメニューを戻すとかアプリ終了モードへ移行とかする
     switch(p_error_info->result){
   	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_SUCCESS:		//!< 登録成功
-  		param = (POKE_NET_GDS_RESPONSE_BATTLEDATA_REGIST *)(res->Param);
   		OS_TPrintf("バトルビデオ登録受信成功：登録コード%d\n", param->Code);
   		ret = TRUE;
   		break;
