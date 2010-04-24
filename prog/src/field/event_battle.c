@@ -13,6 +13,7 @@
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
 #include "gamesystem/btl_setup.h"
+#include "gamesystem/pm_weather.h"
 
 #include "field/fieldmap.h"
 
@@ -939,6 +940,9 @@ static void BEW_ReflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata
 
   //前作では貯金への反映、サファリボールカウントの反映、
   //いったん取っておいたPokeParamの反映などを行っていた
+
+  //諸々の戦闘結果を反映して、天候を再設定する
+  PM_WEATHER_UpdateZoneChangeWeatherNo( bew->gsys, PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork( gamedata )) );
 }
 
 //--------------------------------------------------------------
