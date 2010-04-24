@@ -76,7 +76,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_End(
   GFL_PROC * proc, int * seq, void * pwk, void * mywk);
 static void _Setup_BGFrameSetting(void);
 static void _Setup_BGFrameExit(void);
-static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup);
+static void _Setup_BGGraphicLoad(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup);
 static void _TownIcon_AllCreate(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_APP_PARENT *appwk);
 static void _TownIcon_AllDelete(MONOLITH_MSSELECT_WORK *mmw);
 static void _TownIcon_AllUpdate(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_APP_PARENT *appwk);
@@ -242,7 +242,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Init(GFL_PROC * proc, int * seq
     
     //BG
     _Setup_BGFrameSetting();
-    _Setup_BGGraphicLoad(appwk->setup);
+    _Setup_BGGraphicLoad(appwk, appwk->setup);
     _Setup_BmpWinCreate(mmw, appwk->setup);
     //OBJ
     _TownIcon_AllCreate(mmw, appwk);
@@ -591,10 +591,11 @@ static void _Setup_BGFrameExit(void)
  * @param   hdl		アーカイブハンドル
  */
 //--------------------------------------------------------------
-static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup)
+static void _Setup_BGGraphicLoad(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup)
 {
 	GFL_ARCHDL_UTIL_TransVramScreen(setup->hdl, NARC_monolith_mono_bgd_map_lz_NSCR, 
 		GFL_BG_FRAME2_S, 0, 0, TRUE, HEAPID_MONOLITH);
+  MonolithTool_BalanceGaugeRewrite(appwk, BALANCE_GAUGE_DOWN, GFL_BG_FRAME2_S);
 
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
 }

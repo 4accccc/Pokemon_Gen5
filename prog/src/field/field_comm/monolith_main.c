@@ -40,7 +40,7 @@
 ///PFDで管理するメインOBJパレットサイズ
 #define MONOLITH_PLTT_SIZE_OBJ_MAIN     (16 - 2)  //-2=ローカライズ+通信アイコン
 ///PFDで管理するサブOBJパレットサイズ
-#define MONOLITH_PLTT_SIZE_OBJ_SUB      (16 - 1)  //-1=ローカライズ用
+#define MONOLITH_PLTT_SIZE_OBJ_SUB      (16 - 2)  //-1=ローカライズ+通信アイコン
 
 
 //==============================================================================
@@ -216,6 +216,9 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
   
 	//VブランクTCB登録
 	monosys->vintr_tcb = GFUser_VIntr_CreateTCB(_VblankFunc, monosys, MONOLITH_VINTR_TCB_PRI_MAIN);
+  
+  //通信アイコンリロード
+  GFL_NET_ReloadIcon();
 
   monosys->app_parent.parent = parent;
   monosys->app_parent.setup = &monosys->setup;

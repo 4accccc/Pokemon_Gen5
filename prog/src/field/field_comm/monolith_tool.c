@@ -1150,6 +1150,104 @@ u32 MonolithTool_CountUsePower(MONOLITH_SETUP *setup, const OCCUPY_INFO *occupy,
   return count;
 }
 
+///バランスゲージ描画用の設定値
+enum{
+  BALANCE_GAUGE_CHARA_MAX = 30,     ///<バランスゲージの横長キャラ数
+  BALANCE_GAUGE_DOTTO_MAX = BALANCE_GAUGE_CHARA_MAX * 8,    ///<バランスゲージのドット数
+  BALANCE_SCRN_START_X = 1,
+  
+  BALANCE_UP_SCRN_START_Y = 0x14,
+  BALANCE_DOWN_SCRN_START_Y = 0xe,
+  
+  BALANCE_SCRN_BLACK_CHARNO_START = 1,  ///<ブラックゲージのキャラクタNo開始位置
+  BALANCE_SCRN_MAXWHITE_CHARNO = 9,     ///<ホワイトゲージ(MAX)のキャラクタNo開始位置
+  ONECHARA_DOT = 8,   ///<1つのキャラクタのドット数
+  BALANCE_GAUGE_PALNO = 1,          ///<バランスゲージのパレット番号
+};
+
+//--------------------------------------------------------------
+/**
+ * バランスゲージのスクリーンを書き直す
+ *
+ * @param   appwk		
+ */
+//--------------------------------------------------------------
+void MonolithTool_BalanceGaugeRewrite(MONOLITH_APP_PARENT *appwk, BALANCE_GAUGE_DISP up_down, int frame_no)
+{
+  const OCCUPY_INFO *occupy = MonolithTool_GetOccupyInfo(appwk);
+  int lv_w, lv_b, lv_total;
+  int dot_w, dot_b;
+  int pos;
+  u16 *scrnbuf;
+  int start_y;
+  
+  if(up_down == BALANCE_GAUGE_UP){
+    start_y = BALANCE_UP_SCRN_START_Y;
+  }
+  else{
+    start_y = BALANCE_DOWN_SCRN_START_Y;
+  }
+  
+  lv_w = occupy->white_level;
+  lv_b = occupy->black_level;
+  lv_total = lv_w + lv_b;
+  
+  if(lv_w == lv_b){ //初期値がレベル0同士の場合があるので
+    dot_w = BALANCE_GAUGE_DOTTO_MAX / 2;
+    dot_b = BALANCE_GAUGE_DOTTO_MAX - dot_w;
+  }
+  else{
+    dot_w = BALANCE_GAUGE_DOTTO_MAX * lv_w / lv_total;
+    if(lv_b > 0){ //小数切捨てによって出た部分がレベル0のブラックに加算されないようにチェック
+      dot_b = BALANCE_GAUGE_DOTTO_MAX - dot_w;
+    }
+    else{
+      dot_b = 0;
+      dot_w = BALANCE_GAUGE_DOTTO_MAX;
+    }
+  }
+  //レベルが1以上あるなら計算上ドットが0になっていも1ドットは入れる
+  if(lv_w > 0 && dot_w == 0){
+    dot_w++;
+    dot_b--;
+  }
+  else if(lv_b > 0 && dot_b == 0){
+    dot_b++;
+    dot_w--;
+  }
+  
+  scrnbuf = GFL_HEAP_AllocClearMemory(HEAPID_MONOLITH, BALANCE_GAUGE_CHARA_MAX * sizeof(u16));
+  
+  //黒のゲージを描画
+  pos = 0;
+  while(dot_b > 0){
+    if(dot_b >= ONECHARA_DOT){
+      scrnbuf[pos] = BALANCE_SCRN_BLACK_CHARNO_START;
+      dot_b -= ONECHARA_DOT;
+    }
+    else{
+      scrnbuf[pos] = ONECHARA_DOT - dot_b + BALANCE_SCRN_BLACK_CHARNO_START;
+      dot_b = 0;
+    }
+    pos++;
+  }
+  //残りを白MAXで埋める
+  for( ; pos < BALANCE_GAUGE_CHARA_MAX; pos++){
+    scrnbuf[pos] = BALANCE_SCRN_MAXWHITE_CHARNO;
+  }
+  //パレットNoをスクリーンに入れる
+  for(pos = 0; pos < BALANCE_GAUGE_CHARA_MAX; pos++){
+    scrnbuf[pos] |= BALANCE_GAUGE_PALNO << 12;
+  }
+  
+  //スクリーン描画
+  GFL_BG_WriteScreen( frame_no, scrnbuf, 
+    BALANCE_SCRN_START_X, start_y, BALANCE_GAUGE_CHARA_MAX, 1);
+  
+  GFL_HEAP_FreeMemory(scrnbuf);
+}
+
+
 #if 0
 //--------------------------------------------------------------
 /**

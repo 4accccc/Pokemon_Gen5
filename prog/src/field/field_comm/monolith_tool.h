@@ -50,6 +50,15 @@ enum{
   CANCEL_TOUCH_RANGE_HALF = 8,  ///<キャンセルアイコンのヒット範囲半径
 };
 
+//--------------------------------------------------------------
+//  バランスゲージ
+//--------------------------------------------------------------
+typedef enum{
+  BALANCE_GAUGE_UP,       ///<上画面への表示
+  BALANCE_GAUGE_DOWN,     ///<下画面への表示
+}BALANCE_GAUGE_DISP;
+
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -136,6 +145,8 @@ extern BOOL MonolithTool_TaskMenu_Update(MONOLITH_SETUP *setup, int frame_no, AP
 
 extern MONO_USE_POWER MonolithTool_CheckUsePower(MONOLITH_SETUP *setup, GPOWER_ID gpower_id, const OCCUPY_INFO *occupy, const MONOLITH_STATUS *monost);
 extern u32 MonolithTool_CountUsePower(MONOLITH_SETUP *setup, const OCCUPY_INFO *occupy, const MONOLITH_STATUS *monost);
+
+extern void MonolithTool_BalanceGaugeRewrite(MONOLITH_APP_PARENT *appwk, BALANCE_GAUGE_DISP up_down, int frame_no);
 
 
 //==============================================================================
