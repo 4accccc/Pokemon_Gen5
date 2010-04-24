@@ -835,16 +835,36 @@ static void Br_Net_Response_BattleVideoRegist(void *p_wk_adrs, const GDS_RAP_ERR
   {
     //TRUEならばエラー発生しているので、ここでメニューを戻すとかアプリ終了モードへ移行とかする
     switch(p_error_info->result){
-    case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_GET_ERROR_AUTH:    //!< ユーザー認証エラー
-      OS_TPrintf("バトルビデオデータ取得受信エラー！:ユーザー認証エラー\n");
+  	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_SUCCESS:		//!< 登録成功
+  		param = (POKE_NET_GDS_RESPONSE_BATTLEDATA_REGIST *)(res->Param);
+  		OS_TPrintf("バトルビデオ登録受信成功：登録コード%d\n", param->Code);
+  		ret = TRUE;
+  		break;
+  	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_AUTH:		//!< ユーザー認証エラー
+  		//※check　エラーごとに専用のケアとメッセージを入れる
+  		OS_TPrintf("バトルビデオ登録受信エラー！:ユーザー認証エラー\n");
+  		break;
+  	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ALREADY:	//!< すでに登録されている
+  		//※check　エラーごとに専用のケアとメッセージを入れる
+  		OS_TPrintf("バトルビデオ登録受信エラー！:既に登録されている\n");
+  		break;
+  	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGAL:	//!< 不正なデータ
+  		//※check　エラーごとに専用のケアとメッセージを入れる
+  		OS_TPrintf("バトルビデオ登録受信エラー！:不正データ\n");
+  		break;
+    case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGAL_RANKINGTYPE:  //!< 不正なランキング種別
+      OS_TPrintf("バトルビデオ登録受信エラー！:不正なランキング種別\n");
       break;
-    case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_GET_ERROR_ILLEGALCODE: //!< コードエラー
-      OS_TPrintf("バトルビデオデータ取得受信エラー！:コードエラー\n");
-      break;
-    case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_GET_ERROR_UNKNOWN:   //!< その他エラー
-    default:
-      OS_TPrintf("バトルビデオデータ取得受信エラー！:その他のエラー\n");
-      break;
+  	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGALPROFILE:	//!< 不正なユーザープロフィール
+  		OS_TPrintf("バトルビデオ登録受信エラー！:不正なユーザー\n");
+  		break;
+  	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGALPOKEMON_VERIFY: //!< ポケモン署名でエラー
+  		OS_TPrintf("バトルビデオ登録受信エラー！:ポケモン署名でエラー\n");
+  	  break;
+  	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_UNKNOWN:	//!< その他エラー
+  	default:
+  		OS_TPrintf("バトルビデオ登録受信エラー！:その他のエラー %d\n", res->Result);
+  		break;
     }
   }
 
