@@ -998,6 +998,9 @@ static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *game
 
   VecFx32 player_pos;
 
+  if(GameCommSys_GetLastStatus(game_comm) != GAME_COMM_LAST_STATUS_NULL){
+    return;
+  }
   if(GameCommSys_CheckSystemWaiting(game_comm) == TRUE){
     return;
   }
