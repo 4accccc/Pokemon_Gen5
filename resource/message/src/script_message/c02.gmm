@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-23T12:59:11"/>
+	<create user="matsumiya" host="W00224" date="2010-04-24T21:03:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -370,24 +370,43 @@
 		<language name="JPN_KANJI" width="256">チェレン『ついてきなよ▼</language>
 	</row>
 
-	<row id="msg_c02_black_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02_black_02" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・GRIDX=635、GRIDZ=599あたりでメッセージ表示
 　このときライバルと主人公向き合う
-・メッセージ表示後、ライバルだけ画面左へ移動
-・画面外に消えると、主人公操作可能</comment>
+・アイテム入手処理
+　No150「カゴのみ」×３</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">このまま　まっすぐ　すすめば
 ポケモンセンター▼
+あと……
+よければ　これを　つかいなよ▼</language>
+		<language name="JPN_KANJI" width="256">このまま　まっすぐ　進めば
+ポケモンセンター▼
+あと……
+よければ　これを　使いなよ▼</language>
+	</row>
+
+	<row id="msg_c02_black_02a" text-color="#000000,,,#ff0000,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・アイテム入手後、自動で表示
+・メッセージ表示後、ライバルだけ画面左へ移動
+・画面外に消えると、主人公操作可能</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">チェレン『カゴのみを　ポケモンに
+もたせておけば　ねむらされても▽
+ポケモンは　かいふくして　めざめる▼
 ついでに　おしえておくけど
 シッポウシティの　ジムリーダーは▽
 ノーマルタイプの　つかいて▼
 かくとうタイプの　ポケモンが　いると
 かなり　ゆうり　だろうね▼</language>
-		<language name="JPN_KANJI" width="256">このまま　まっすぐ　進めば
-ポケモンセンター▼
-ついでに　教えておくけど
+		<language name="JPN_KANJI" width="256">チェレン『カゴのみを　ポケモンに
+持たせておけば　眠らされても▽
+ポケモンは　回復して　目覚めるる▼
+ついでに　ついでに　教えておくけど
 シッポウシティの　ジムリーダーは▽
 ノーマルタイプの　使い手▼
 かくとうタイプの　ポケモンが　いると
