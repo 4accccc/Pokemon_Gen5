@@ -297,7 +297,7 @@ BOOL IntrudeEvent_Sub_DisguiseEffectMain(INTRUDE_EVENT_DISGUISE_WORK *iedw, INTR
       if(MMDL_CheckPossibleAcmd(player_mmdl) == TRUE){
         if(iedw->wait_max >= DISGUISE_ANM_WAIT_MAX 
             && iedw->loop > 0
-            && player_anm_tbl[iedw->anm_no] == AC_DIR_R){
+            && player_anm_tbl[iedw->anm_no] == AC_DIR_D){
           iedw->seq++;
           break;
         }
@@ -702,6 +702,7 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
     SEQ_INIT,
     SEQ_COMM_WAIT,
     SEQ_FIELD_INIT,
+    SEQ_ME_WAIT,
     SEQ_MSG_SET,
     SEQ_MSG_WAIT,
     SEQ_DISGUISE_INIT,
@@ -730,6 +731,7 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
   
   case SEQ_FIELD_INIT:
     if(GAMESYSTEM_CheckFieldMapWork(gsys) == TRUE){
+      BOOL mission_fail = FALSE;
       FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
       if(FIELDMAP_IsReady(fieldWork) == TRUE){
         FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
@@ -748,9 +750,11 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
             break;
           case GAME_COMM_LAST_STATUS_INTRUDE_MISSION_FAIL: //ミッション失敗で終了(相手に先を越された)
             msg_id = plc_connect_10;
+            mission_fail = TRUE;
             break;
           case GAME_COMM_LAST_STATUS_INTRUDE_MISSION_TIMEOUT:  //ミッション失敗で終了(タイムアウト)
             msg_id = plc_connect_11;
+            mission_fail = TRUE;
             break;
           case GAME_COMM_LAST_STATUS_INTRUDE_ERROR:            //通信エラー
           default:
@@ -760,7 +764,20 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
           FLDMSGWIN_STREAM_PrintStart(evf->msgStream, 0, 0, msg_id);
         }
       }
-      (*seq)++;
+      if(mission_fail == TRUE){
+        GMEVENT_CallEvent(event, EVENT_FSND_PushPlayJingleBGM(gsys, SEQ_ME_MISSION_FAILED ));
+        *seq = SEQ_ME_WAIT;
+      }
+      else{
+        *seq = SEQ_MSG_SET;
+      }
+    }
+    break;
+  case SEQ_ME_WAIT:
+    if( PMSND_CheckPlayBGM() == FALSE ){
+      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_FAST));
+      GameCommInfo_MessageEntry_MissionFail(game_comm);
+      *seq = SEQ_MSG_SET;
     }
     break;
   case SEQ_MSG_SET:

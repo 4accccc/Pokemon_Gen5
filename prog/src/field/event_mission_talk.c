@@ -52,6 +52,7 @@ typedef struct
 {
   COMMTALK_COMMON_EVENT_WORK ccew;
 	BOOL error;
+	TALK_TYPE talk_type;
 }EVENT_MISSION_TALK;
 
 
@@ -496,8 +497,9 @@ static GMEVENT_RESULT CommMissionTalk_TtoM_Talked( GMEVENT *event, int *seq, voi
       const MISSION_TYPEDATA_BASIC *d_basic = (void*)talk->ccew.mdata.cdata.data;
       WORDSET_RegisterGPowerName( talk->ccew.iem.wordset, 2, d_basic->gpower_id );
     }
+    talk->talk_type = MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid);
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionTalkMsgID.target_talked[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionTalkMsgID.target_talked[talk->talk_type]);
 		(*seq)++;
 		break;
   case SEQ_MSG_WAIT:
@@ -523,7 +525,7 @@ static GMEVENT_RESULT CommMissionTalk_TtoM_Talked( GMEVENT *event, int *seq, voi
   case SEQ_AFTER_MSG_INIT:
     IntrudeEventPrint_SetupFieldMsg(&talk->ccew.iem, gsys);
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionTalkMsgID.target_talked_get[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionTalkMsgID.target_talked_get[talk->talk_type]);
   	(*seq)++;
 		break;
   case SEQ_AFTER_MSG_WAIT:
