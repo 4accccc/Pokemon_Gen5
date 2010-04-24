@@ -87,8 +87,6 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
     (*seq) = _CALL_CG_WIRELESS_MENU;
     break;
   case _CALL_CG_WIRELESS_MENU:
-//    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, SEQ_BGM_GAME_SYNC, FSND_FADE_SHORT, FSND_FADE_NONE));
- //   dbw->push=TRUE;
     (*seq)++;
     //break throw
   case _CALL_CG_WIRELESS_MENU2:
@@ -107,11 +105,10 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
       (*seq) = _FIELD_FADEOUT;
       break;
     case  CG_WIRELESS_RETURNMODE_TV:
+      dbw->soundNo = PMSND_GetBGMsoundNo();
+      PMSND_StopBGM();
       {
-//        GFL_PROC_SysCallProc(FS_OVERLAY_ID(comm_tvt), &COMM_TVT_ProcData, &dbw->aTVT);
-    //    GMEVENT_CallProc();
         GMEVENT_CallProc( event, FS_OVERLAY_ID(comm_tvt), &COMM_TVT_ProcData, &dbw->aTVT);
-        
         (*seq) = _WAIT_TV;
       }
       break;
@@ -124,6 +121,8 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
     if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
+    PMSND_PlayBGM( dbw->soundNo );
+    PMSND_FadeInBGM(PMSND_FADE_NORMAL);
     (*seq)=_FIELD_FADEOUT;
     break;
   case _FIELD_FADEOUT:

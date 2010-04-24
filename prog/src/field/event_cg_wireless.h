@@ -33,6 +33,7 @@ typedef struct {
   COMM_TVT_INIT_WORK aTVT;
   BOOL isEndProc;
   int selectType;
+  int soundNo;
   BOOL push;
   BOOL bPalaceJump;
 } EVENT_CG_WIRELESS_WORK;
