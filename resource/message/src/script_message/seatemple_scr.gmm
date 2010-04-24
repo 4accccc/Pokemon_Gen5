@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-13T12:07:22"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-24T15:51:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -302,26 +302,20 @@
 
 	<row id="msg_seatemple_step01">
 		<comment>歩数１００歩目</comment>
-		<language name="JPN" width="256">ゴゴ……▼
-とおくで　にぶい　おとが　した</language>
-		<language name="JPN_KANJI" width="256">ゴゴ……▼
-遠くで　にぶい音が　した</language>
+		<language name="JPN" width="256">とおくで　にぶい　おとが　した</language>
+		<language name="JPN_KANJI" width="256">遠くで　にぶい音が　した</language>
 	</row>
 
 	<row id="msg_seatemple_step02">
 		<comment>歩数３００歩目</comment>
-		<language name="JPN" width="256">ゴゴゴゴ……▼
-にぶい　おとが　ひびいた</language>
-		<language name="JPN_KANJI" width="256">ゴゴゴゴ……▼
-にぶい音が　響いた</language>
+		<language name="JPN" width="256">にぶい　おとが　ひびいた</language>
+		<language name="JPN_KANJI" width="256">にぶい音が　響いた</language>
 	</row>
 
 	<row id="msg_seatemple_step03">
 		<comment>歩数４５０歩目</comment>
-		<language name="JPN" width="256">ゴゴゴゴゴゴゴ……！▼
-にぶい　おとが　ちかい！</language>
-		<language name="JPN_KANJI" width="256">ゴゴゴゴゴゴゴ……！▼
-にぶい音が　近い！</language>
+		<language name="JPN" width="256">にぶい　おとが　ちかい！</language>
+		<language name="JPN_KANJI" width="256">にぶい音が　近い！</language>
 	</row>
 
 	<row id="msg_seatemple_step04">

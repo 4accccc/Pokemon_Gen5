@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-13T15:27:16"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-24T20:33:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="215"/>
+		<comment position="4" width="163"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -244,6 +244,7 @@
 			<font default=" 0:large" position="5" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
+				<list entry="2" file="W:\font\shinden.nftr"/>
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
@@ -255,6 +256,7 @@
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
+				<list entry="2" file="W:\font\shinden.nftr"/>
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
@@ -263,7 +265,7 @@
 		</language>
 	</columns>
 
-	<dialog left="377" top="137" right="1082" bottom="742" maximized="no" rayout="Vertical2">
+	<dialog left="298" top="300" right="1003" bottom="905" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,8 +273,8 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -296,77 +298,77 @@
 		<comment>生きると　いうこと
 それは　全てに　感謝　すること</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">to live is to thank</language>
-		<language name="JPN_KANJI" width="256">to live is to thank</language>
+		<language name="JPN" font=" 2:shinden" width="256">MPCJVQVUKGXKNQV</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="256">MPCJVQVUKGXKNQV</language>
 	</row>
 
 	<row id="msg_d20r0601_bg2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>食べる　ということ　それは
 あらゆる　命を　いただくこと</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">we feed on life</language>
-		<language name="JPN_KANJI" width="256">we feed on life</language>
+		<language name="JPN" font=" 2:shinden" width="256">GHKNPQFGGHGY</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="256">GHKNPQFGGHGY</language>
 	</row>
 
 	<row id="msg_d20r0601_bg3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>正義と　悪だけではない
 間が　あるのだ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">good or evil isnt all</language>
-		<language name="JPN_KANJI" width="256">good or evil isnt all</language>
+		<language name="JPN" font=" 2:shinden" width="256">NNCVPUKNKXGTQFQQI</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="256">NNCVPUKNKXGTQFQQI</language>
 	</row>
 
 	<row id="msg_d20r0601_bg4_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>野蛮で　あっては　ならない</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">do not be barbarous</language>
-		<language name="JPN_KANJI" width="256">do not be barbarous</language>
+		<language name="JPN" font=" 2:shinden" width="256">UWQTCDTCDGDVQPQF</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="256">UWQTCDTCDGDVQPQF</language>
 	</row>
 
 	<row id="msg_d20r0601_bg5_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>粗末に　しては　ならない</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">one must not waste</language>
-		<language name="JPN_KANJI" width="256">one must not waste</language>
+		<language name="JPN" font=" 2:shinden" width="256">GVUCYVQPVUWOGPQ</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="256">GVUCYVQPVUWOGPQ</language>
 	</row>
 
 	<row id="msg_d20r0601_bg6_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>全ては　平等に　尊い</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">all is precious</language>
-		<language name="JPN_KANJI" width="256">all is precious</language>
+		<language name="JPN" font=" 2:shinden" width="256">UWQKEGTRUKNNC</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="256">UWQKEGTRUKNNC</language>
 	</row>
 
 	<row id="msg_d20r0601_bg7_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>戦いは　何も　生まない
 無限の　悲しみを　生むだけだ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">wars create tears</language>
-		<language name="JPN_KANJI" width="256">wars create tears</language>
+		<language name="JPN" font=" 2:shinden" width="256">UTCGVGVCGTEUTCY</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="256">UTCGVGVCGTEUTCY</language>
 	</row>
 
 	<row id="msg_d20r0601_bg8_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>王に　理解を　示すのならば
 ここで　光を　放て</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">shine if agreed</language>
-		<language name="JPN_KANJI" width="256">shine if agreed</language>
+		<language name="JPN" font=" 2:shinden" width="256">FGGTICHKGPKJU</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="256">FGGTICHKGPKJU</language>
 	</row>
 
 	<row id="msg_d20r0601_sys_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">ここから　うえに　のぼれそうだ▼
 うえの　かいに　すすみますか？</language>
-		<language name="JPN_KANJI" width="256">ここから　上に　上がれそうだ▼
+		<language name="JPN_KANJI" width="256">ここから　上に　昇れそうだ▼
 上の階に　進みますか？</language>
 	</row>
 
 	<row id="msg_d20r0601_sys_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">かべが　うごき
-もときた　みちが　とざされた！</language>
-		<language name="JPN_KANJI" width="256">壁が　動き
-もと来た　道が　閉ざされた！</language>
+		<language name="JPN" width="256">ここから　したへ　おりれそうだ▼
+したの　かいに　もどりますか？</language>
+		<language name="JPN_KANJI" width="256">ここから　下へ　降りれそうだ▼
+下の　階に　戻りますか？</language>
 	</row>
 
 	<flowchart-group-list>

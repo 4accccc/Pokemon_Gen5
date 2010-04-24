@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T17:48:47"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-24T20:38:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -244,6 +244,7 @@
 			<font default=" 0:large" position="5" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
+				<list entry="2" file="W:\font\shinden.nftr"/>
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
@@ -255,6 +256,7 @@
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
+				<list entry="2" file="W:\font\shinden.nftr"/>
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
@@ -271,7 +273,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -296,48 +298,48 @@
 		<comment>リフーゲは　たった　１人で
 １０００人の　敵を　跳ね除けた</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">Rifuge defeat (1000) alone</language>
-		<language name="JPN_KANJI" width="256">Rifuge defeat (1000) alone</language>
+		<language name="JPN" font=" 2:shinden" width="256">IRSPE③XEIJIHIKYJMV</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="256">IRSPE③XEIJIHIKYJMV</language>
 	</row>
 
 	<row id="msg_d20r0801_bg1_02">
 		<comment>リフーゲは　１日で
 １００００人を　仲間に　した</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">(10000) join Rifuge in a day</language>
-		<language name="JPN_KANJI" width="256">(10000) join Rifuge in a day</language>
+		<language name="JPN" font=" 2:shinden" width="256">CEHERMIKYJMVRMSN④</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="256">CEHERMIKYJMVRMSN④</language>
 	</row>
 
 	<row id="msg_d20r0801_bg1_03">
 		<comment>リフーゲは　１日で
 １０００００匹の　生き物を　呼んだ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">Rifuge called (100000) lives</language>
-		<language name="JPN_KANJI" width="256">Rifuge called (100000) lives</language>
+		<language name="JPN" font=" 2:shinden" width="256">WIZMP⑤HIPPEGIKYJMV</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="256">WIZMP⑤HIPPEGIKYJMV</language>
 	</row>
 
 	<row id="msg_d20r0801_bg1_04">
 		<comment>リフーゲは　私たちの
 希望であり　未来である</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">Rifuge is hope future</language>
-		<language name="JPN_KANJI" width="256">Rifuge is hope future</language>
+		<language name="JPN" font=" 2:shinden" width="256">IVYXYJITSLWMIKYJMV</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="256">IVYXYJITSLWMIKYJMV</language>
 	</row>
 
 	<row id="msg_d20r0801_bg1_05">
 		<comment>ここに　偉大なる王
 リフーゲを　たたえる</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">the Great king Rifuge</language>
-		<language name="JPN_KANJI" width="256">the Great king Rifuge</language>
+		<language name="JPN" font=" 2:shinden" width="256">IKYJMVKRMOXEIVKILX</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="256">IKYJMVKRMOXEIVKILX</language>
 	</row>
 
 	<row id="msg_d20r0801_sys_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">かべが　うごき
-もときた　みちが　とざされた！</language>
-		<language name="JPN_KANJI" width="256">壁が　動き
-もと来た　道が　閉ざされた！</language>
+		<language name="JPN" width="256">ここから　したへ　おりれそうだ▼
+したの　かいに　もどりますか？</language>
+		<language name="JPN_KANJI" width="256">ここから　下へ　降りれそうだ▼
+下の　階に　戻りますか？</language>
 	</row>
 
 	<flowchart-group-list>
