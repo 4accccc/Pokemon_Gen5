@@ -18,6 +18,22 @@
 
 
 //==============================================================================
+//  定数定義
+//==============================================================================
+///バランスゲージ描画用の設定値
+enum{
+  BALANCE_GAUGE_CHARA_MAX = 30,     ///<バランスゲージの横長キャラ数
+  BALANCE_GAUGE_DOTTO_MAX = BALANCE_GAUGE_CHARA_MAX * 8,    ///<バランスゲージのドット数
+  BALANCE_SCRN_START_X = 1,
+  BALANCE_SCRN_START_Y = 0x14,
+  BALANCE_SCRN_BLACK_CHARNO_START = 1,  ///<ブラックゲージのキャラクタNo開始位置
+  BALANCE_SCRN_MAXWHITE_CHARNO = 9,     ///<ホワイトゲージ(MAX)のキャラクタNo開始位置
+  ONECHARA_DOT = 8,   ///<1つのキャラクタのドット数
+  BALANCE_GAUGE_PALNO = 1,          ///<バランスゲージのパレット番号
+};
+
+
+//==============================================================================
 //  構造体定義
 //==============================================================================
 ///ミッション説明画面制御ワーク
@@ -37,16 +53,17 @@ static GFL_PROC_RESULT MonolithPalaceMapProc_End(
   GFL_PROC * proc, int * seq, void * pwk, void * mywk);
 static void _Setup_BGFrameSetting(void);
 static void _Setup_BGFrameExit(void);
-static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup);
+static void _Setup_BGGraphicLoad(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup);
 static void _TownIcon_AllCreate(MONOLITH_PALACEMAP_WORK *mpw, MONOLITH_APP_PARENT *appwk);
 static void _TownIcon_AllDelete(MONOLITH_PALACEMAP_WORK *mpw);
 static void _TownIcon_AllUpdate(MONOLITH_PALACEMAP_WORK *mpw, MONOLITH_APP_PARENT *appwk);
+static void _BalanceGaugeRewrite(MONOLITH_APP_PARENT *appwk);
 
 
 //==============================================================================
 //  データ
 //==============================================================================
-///モノリスパワーROCデータ
+///モノリスパワーPROCデータ
 const GFL_PROC_DATA MonolithAppProc_Up_PalaceMap = {
   MonolithPalaceMapProc_Init,
   MonolithPalaceMapProc_Main,
@@ -100,7 +117,7 @@ static GFL_PROC_RESULT MonolithPalaceMapProc_Init(GFL_PROC * proc, int * seq, vo
     
     //BG
     _Setup_BGFrameSetting();
-    _Setup_BGGraphicLoad(appwk->setup);
+    _Setup_BGGraphicLoad(appwk, appwk->setup);
     //OBJ
     {
       MYSTATUS *myst = MonolithTool_GetMystatus(appwk);
@@ -229,11 +246,12 @@ static void _Setup_BGFrameExit(void)
  * @param   hdl		アーカイブハンドル
  */
 //--------------------------------------------------------------
-static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup)
+static void _Setup_BGGraphicLoad(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup)
 {
 	GFL_ARCHDL_UTIL_TransVramScreen(setup->hdl, NARC_monolith_mono_bgu_map_lz_NSCR, 
 		GFL_BG_FRAME2_M, 0, 0, TRUE, HEAPID_MONOLITH);
-
+  _BalanceGaugeRewrite(appwk);
+  
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
 }
 
@@ -286,3 +304,78 @@ static void _TownIcon_AllUpdate(MONOLITH_PALACEMAP_WORK *mpw, MONOLITH_APP_PAREN
     MonolithTool_TownIcon_Update(mpw->act_town[i], occupy, i);
   }
 }
+
+//--------------------------------------------------------------
+/**
+ * バランスゲージのスクリーンを書き直す
+ *
+ * @param   appwk		
+ */
+//--------------------------------------------------------------
+static void _BalanceGaugeRewrite(MONOLITH_APP_PARENT *appwk)
+{
+  const OCCUPY_INFO *occupy = MonolithTool_GetOccupyInfo(appwk);
+  int lv_w, lv_b, lv_total;
+  int dot_w, dot_b;
+  int pos;
+  u16 *scrnbuf;
+  
+  lv_w = occupy->white_level;
+  lv_b = occupy->black_level;
+  lv_total = lv_w + lv_b;
+  
+  if(lv_w == lv_b){ //初期値がレベル0同士の場合があるので
+    dot_w = BALANCE_GAUGE_DOTTO_MAX / 2;
+    dot_b = BALANCE_GAUGE_DOTTO_MAX - dot_w;
+  }
+  else{
+    dot_w = BALANCE_GAUGE_DOTTO_MAX * lv_w / lv_total;
+    if(lv_b > 0){ //小数切捨てによって出た部分がレベル0のブラックに加算されないようにチェック
+      dot_b = BALANCE_GAUGE_DOTTO_MAX - dot_w;
+    }
+    else{
+      dot_b = 0;
+      dot_w = BALANCE_GAUGE_DOTTO_MAX;
+    }
+  }
+  //レベルが1以上あるなら計算上ドットが0になっていも1ドットは入れる
+  if(lv_w > 0 && dot_w == 0){
+    dot_w++;
+    dot_b--;
+  }
+  else if(lv_b > 0 && dot_b == 0){
+    dot_b++;
+    dot_w--;
+  }
+  
+  scrnbuf = GFL_HEAP_AllocClearMemory(HEAPID_MONOLITH, BALANCE_GAUGE_CHARA_MAX * sizeof(u16));
+  
+  //黒のゲージを描画
+  pos = 0;
+  while(dot_b > 0){
+    if(dot_b >= ONECHARA_DOT){
+      scrnbuf[pos] = BALANCE_SCRN_BLACK_CHARNO_START;
+      dot_b -= ONECHARA_DOT;
+    }
+    else{
+      scrnbuf[pos] = ONECHARA_DOT - dot_b + BALANCE_SCRN_BLACK_CHARNO_START;
+      dot_b = 0;
+    }
+    pos++;
+  }
+  //残りを白MAXで埋める
+  for( ; pos < BALANCE_GAUGE_CHARA_MAX; pos++){
+    scrnbuf[pos] = BALANCE_SCRN_MAXWHITE_CHARNO;
+  }
+  //パレットNoをスクリーンに入れる
+  for(pos = 0; pos < BALANCE_GAUGE_CHARA_MAX; pos++){
+    scrnbuf[pos] |= BALANCE_GAUGE_PALNO << 12;
+  }
+  
+  //スクリーン描画
+  GFL_BG_WriteScreen( GFL_BG_FRAME2_M, scrnbuf, 
+    BALANCE_SCRN_START_X, BALANCE_SCRN_START_Y, BALANCE_GAUGE_CHARA_MAX, 1);
+  
+  GFL_HEAP_FreeMemory(scrnbuf);
+}
+
