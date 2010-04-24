@@ -354,6 +354,9 @@
 #define BTLEFF_USE_BALL             ( 8 )
 #define BTLEFF_CAPTURE_BALL_ATTACK  ( 9 )
 
+#define BTLEFF_DRAW_OFF ( 0 )
+#define BTLEFF_DRAW_ON  ( 1 )
+
 #endif //__BTLV_EFFVM_DEF_H_
 
 //====================================================================================
@@ -469,30 +472,31 @@ ex)
 #define	EC_OBJ_ANIME_SET	   				  ( 43 )
 #define	EC_OBJ_PAL_FADE		   				  ( 44 )
 #define	EC_OBJ_DEL	   				        ( 45 )
-#define	EC_SE_PLAY									  ( 46 )
-#define	EC_SE_STOP									  ( 47 )
-#define	EC_SE_PAN								      ( 48 )
-#define	EC_SE_EFFECT								  ( 49 )
-#define	EC_EFFECT_END_WAIT					  ( 50 )
-#define	EC_WAIT											  ( 51 )
-#define	EC_CONTROL_MODE							  ( 52 )
-#define	EC_IF						              ( 53 )
-#define	EC_MCSS_POS_CHECK						  ( 54 )
-#define	EC_SET_WORK						        ( 55 )
-#define	EC_GET_WORK						        ( 56 )
-#define	EC_SET_PARAM						      ( 57 )
-#define	EC_MIGAWARI						        ( 58 )
-#define	EC_HENSHIN						        ( 59 )
-#define	EC_NAKIGOE						        ( 60 )
-#define	EC_BALL_MODE						      ( 61 )
-#define	EC_BALLOBJ_SET						    ( 62 )
-#define	EC_CALL						            ( 63 )
-#define	EC_RETURN						          ( 64 )
-#define	EC_JUMP						            ( 65 )
-#define	EC_PAUSE						          ( 66 )
+#define	EC_GAUGE_VANISH	   				    ( 46 )
+#define	EC_SE_PLAY									  ( 47 )
+#define	EC_SE_STOP									  ( 48 )
+#define	EC_SE_PAN								      ( 49 )
+#define	EC_SE_EFFECT								  ( 50 )
+#define	EC_EFFECT_END_WAIT					  ( 51 )
+#define	EC_WAIT											  ( 52 )
+#define	EC_CONTROL_MODE							  ( 53 )
+#define	EC_IF						              ( 54 )
+#define	EC_MCSS_POS_CHECK						  ( 55 )
+#define	EC_SET_WORK						        ( 56 )
+#define	EC_GET_WORK						        ( 57 )
+#define	EC_SET_PARAM						      ( 58 )
+#define	EC_MIGAWARI						        ( 59 )
+#define	EC_HENSHIN						        ( 60 )
+#define	EC_NAKIGOE						        ( 61 )
+#define	EC_BALL_MODE						      ( 62 )
+#define	EC_BALLOBJ_SET						    ( 63 )
+#define	EC_CALL						            ( 64 )
+#define	EC_RETURN						          ( 65 )
+#define	EC_JUMP						            ( 66 )
+#define	EC_PAUSE						          ( 67 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									  ( 67 )
+#define	EC_SEQ_END									  ( 68 )
 
 #ifndef __C_NO_DEF_
 
@@ -1807,6 +1811,22 @@ ex)
 	.macro	OBJ_DEL	pos
 	.short	EC_OBJ_DEL
 	.long		\pos
+	.endm
+
+//======================================================================
+/**
+ * @brief	HPゲージ表示／非表示
+ *
+ * #param_num	1
+ * @param	flag		表示／非表示フラグ
+ *
+ * #param	COMBOBOX_TEXT 非表示  表示
+ * #param	COMBOBOX_VALUE  BTLEFF_DRAW_OFF BTLEFF_DRAW_ON
+ */
+//======================================================================
+	.macro  GAUGE_VANISH flag
+	.short	EC_GAUGE_VANISH
+	.long		\flag
 	.endm
 
 //======================================================================

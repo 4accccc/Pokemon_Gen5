@@ -296,6 +296,7 @@ static VMCMD_RESULT VMEC_OBJ_SCALE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_OBJ_ANIME_SET( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_OBJ_PAL_FADE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_OBJ_DEL( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_GAUGE_VANISH( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SE_PLAY( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SE_STOP( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_SE_PAN( VMHANDLE *vmh, void *context_work );
@@ -450,6 +451,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_OBJ_ANIME_SET,
   VMEC_OBJ_PAL_FADE,
   VMEC_OBJ_DEL,
+  VMEC_GAUGE_VANISH,
   VMEC_SE_PLAY,
   VMEC_SE_STOP,
   VMEC_SE_PAN,
@@ -550,11 +552,11 @@ BOOL    BTLV_EFFVM_Main( VMHANDLE *vmh )
   }
   if( ( ret == FALSE ) && ( bevw->sequence ) )
   {
+    //HPゲージ表示
+    BTLV_EFFECT_SetGaugeDrawEnable( TRUE );
+
     if( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA )
     {
-      //HPゲージ表示
-      BTLV_EFFECT_SetGaugeDrawEnable( TRUE );
-
       //BGMのマスターボリュームを上げる
       {
         BTLV_EFFVM_CHANGE_VOLUME* becv = GFL_HEAP_AllocMemory( bevw->heapID, sizeof( BTLV_EFFVM_CHANGE_VOLUME ) );
@@ -676,6 +678,11 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   else
   {
     table_ofs = TBL_AA2BB;
+  }
+
+  if( param != NULL )
+  { 
+    table_ofs += ( TBL_MAX * param->turn_count );
   }
 
   //みがわりが出ているときに技エフェクトを起動するなら、みがわりを引っ込めるエフェクトを差し込む
@@ -2618,6 +2625,28 @@ static VMCMD_RESULT VMEC_OBJ_DEL( VMHANDLE *vmh, void *context_work )
 
   BTLV_CLACT_Delete( BTLV_EFFECT_GetCLWK(), bevw->obj[ index ] );
   bevw->obj[ index ] = EFFVM_OBJNO_NONE;
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief	HPゲージ表示／非表示
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_GAUGE_VANISH( VMHANDLE *vmh, void *context_work )
+{ 
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  BOOL flag = ( BOOL )VMGetU32( vmh );
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_GAUGE_VANISH\n");
+#endif DEBUG_OS_PRINT
+
+  BTLV_EFFECT_SetGaugeDrawEnable( flag );
 
   return bevw->control_mode;
 }
