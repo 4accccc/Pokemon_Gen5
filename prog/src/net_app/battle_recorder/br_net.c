@@ -861,7 +861,7 @@ static void Br_Net_Response_BattleVideoRegist(void *p_wk_adrs, const GDS_RAP_ERR
   	  break;
   	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_UNKNOWN:	//!< その他エラー
   	default:
-  		OS_TPrintf("aバトルビデオ登録受信エラー！:その他のエラー %d\n", res->Result);
+  		OS_TPrintf("aバトルビデオ登録受信エラー！:その他のエラー \n");
   		break;
     }
   }
