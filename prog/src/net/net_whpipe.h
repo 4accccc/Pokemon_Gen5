@@ -539,6 +539,21 @@ extern BOOL GFL_NET_WL_scanCheck(WMBssDesc *bssdesc, u32 check_bit);
  */
 //-------------------------------------------------------------
 extern void* GFL_NET_WLGetDirectGFBss(WMBssDesc *pBss, GameServiceID *dest_gsid);
+//-------------------------------------------------------------
+/**
+ * @brief   保持しているビーコンのサービス番号を返す が  初期化人数満たしているものや 接続禁止は返さない
+ * @param   index  ビーコンindex
+ * @retval  GameServiceID
+ */
+//-------------------------------------------------------------
+extern GameServiceID GFL_NET_WLGetGameServiceIDLimit(u8 index);
+//-------------------------------------------------------------
+/**
+ * @brief   ビーコンは出しているが、一時的につなぎにきてほしく無い場合に操作する
+ * @param   きてほしく無い場合TRUE
+ */
+//-------------------------------------------------------------
+extern void GFL_NET_WL_PauseBeacon(int flg);
 
 /////////////////////////////////////////////////////////////////////////
 //デバッグ用ルーチン

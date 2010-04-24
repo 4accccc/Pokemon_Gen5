@@ -393,7 +393,7 @@ static GBS_BEACON * GameBeacon_BeaconSearch(GAME_BEACON_SYS_PTR gbs, int *hit_in
   int target_index = -1;
   
   for(i = 0; i < SCAN_PARENT_COUNT_MAX; i++){
-    id = GFL_NET_WLGetGameServiceID(i);
+    id = GFL_NET_WLGetGameServiceIDLimit(i);
     if(!((id==WB_NET_PALACE_SERVICEID) || (id == WB_NET_FIELDMOVE_SERVICEID) )){
       continue;
     }

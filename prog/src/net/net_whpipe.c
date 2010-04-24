@@ -1555,12 +1555,11 @@ void GFL_NET_WLResetGFBss(int index)
 void GFL_NET_WLSetBackupMacAddress(u8* pMac, int netID)
 {
 	GFL_NETWL* pNetWL = _pNetWL;
-	if(pNetWL==NULL){
-		OS_Panic("no mem");
-	}
-	if(GFL_NET_MACHINE_MAX > netID){
-		MI_CpuCopy8(pMac, pNetWL->backupBssid[netID], WM_SIZE_BSSID);
-	}
+	if(pNetWL){
+    if(GFL_NET_MACHINE_MAX > netID){
+      MI_CpuCopy8(pMac, pNetWL->backupBssid[netID], WM_SIZE_BSSID);
+    }
+  }
 }
 
 //-------------------------------------------------------------
@@ -2168,6 +2167,32 @@ GameServiceID GFL_NET_WLGetGameServiceID(u8 index)
 	return WB_NET_NOP_SERVICEID;
 }
 
+
+
+//-------------------------------------------------------------
+/**
+ * @brief   保持しているビーコンのサービス番号を返す が  初期化人数満たしているものは返さない
+ * @param   index  ビーコンindex
+ * @retval  GameServiceID
+ */
+//-------------------------------------------------------------
+
+GameServiceID GFL_NET_WLGetGameServiceIDLimit(u8 index)
+{
+	GFLNetInitializeStruct* pInit = GFL_NET_GetNETInitStruct();
+  GFL_NETWL* pNetWL = _pNetWL;
+
+  if(pNetWL && (pNetWL->bconUnCatchTime[index]!=0)){
+		_GF_BSS_DATA_INFO* pGF = (_GF_BSS_DATA_INFO*)pNetWL->sBssDesc[index].gameInfo.userGameInfo;
+    if(pGF->connectNum < pInit->maxConnectNum){
+      return pGF->serviceNo;
+    }
+	}
+	return WB_NET_NOP_SERVICEID;
+}
+
+
+
 //-------------------------------------------------------------
 /**
  * @brief   スキャンするビーコンをこのindexのビーコンに絞り込む
@@ -2200,11 +2225,18 @@ void GFL_NET_WLChangeScanSpeed(int num)
 
 //-------------------------------------------------------------
 /**
- * @brief   すれ違いを一時停止する
+ * @brief   ビーコンは出しているが、一時きてほしく無い場合に操作する
  * @param   
  */
 //-------------------------------------------------------------
 
+void GFL_NET_WL_PauseBeacon(int flg)
+{
+  if(_pNetWL){
+    _pNetWL->bPauseConnect = flg;
+    NET_WHPIPE_BeaconSetInfo();
+  }
+}
 
 /////////////////////////////////////////////////////////////////////////
 //デバッグ用ルーチン
