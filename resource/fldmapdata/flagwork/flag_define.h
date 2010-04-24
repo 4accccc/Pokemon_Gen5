@@ -361,7 +361,7 @@
 #define FE_PALACE01_OLDMANTALK2            345 /* 0x0159 裏パレスじいさん初回会話フラグ */
 #define FE_T04_ITEMGET_01                  346 /* 0x015a サザナミタウン：アイテム入手フラグ（わざマシン：ダイビング） */
 #define FE_R07R0201_TRADE_01               347 /* 0x015b ７番道路：ポケモン交換フラグ */
-		/* not used   348(0x015c) */
+#define FE_D04R2301_POKE13_GET             348 /* 0x015c 古代の城：ドラー捕獲フラグ */
 		/* not used   349(0x015d) */
 		/* not used   350(0x015e) */
 		/* not used   351(0x015f) */
@@ -829,13 +829,13 @@
 #define FV_D05R0201_RIVAL_01               805 /* 0x0325 冷凍コンテナ室内：ライバル */
 #define FV_H03_PLASMA                      806 /* 0x0326 シリンダーブリッジ：ゲーチス、ダークトリニティ3人 */
 #define FV_POKE_JUDGE_02                   807 /* 0x0327 ジャッジ引越し後（ポケモンの個体値を調べてくれる人） */
-		/* not used   808(0x0328) */
-		/* not used   809(0x0329) */
-		/* not used   810(0x032a) */
-		/* not used   811(0x032b) */
-		/* not used   812(0x032c) */
-		/* not used   813(0x032d) */
-		/* not used   814(0x032e) */
+#define FV_D04R0701_PLASMA                 808 /* 0x0328 古代の城：プラズマ団 */
+#define FV_D04R2201_SAGE4                  809 /* 0x0329 古代の城：七賢人４ */
+#define FV_D04R2301_POKE13                 810 /* 0x032a 古代の城：ドラー */
+#define FV_R06R0101_POKE_SPRING            811 /* 0x032b 季節研究所：シキジカ（春） */
+#define FV_R06R0102_POKE_SUMMER            812 /* 0x032c 季節研究所：シキジカ（夏） */
+#define FV_R06R0103_POKE_AUTUMN            813 /* 0x032d 季節研究所：シキジカ（秋） */
+#define FV_R06R0104_POKE_WINTER            814 /* 0x032e 季節研究所：シキジカ（冬） */
 		/* not used   815(0x032f) */
 		/* not used   816(0x0330) */
 		/* not used   817(0x0331) */

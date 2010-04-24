@@ -214,6 +214,11 @@
 #define WK_SCENE_T04R0201_DIET           16602 /* 0x40da サザナミタウン：ポケモン交換イベント用ワーク */
 #define WK_SCENE_H03_BADRIDER            16603 /* 0x40db シリンダーブリッジ：暴走族イベント */
 #define WK_SCENE_N01R0501                16604 /* 0x40dc Ｎの城：謁見の間前の大広間イベント用ワーク */
+#define WK_SCENE_D20R0501                16605 /* 0x40dd 海底遺跡：１F・壁移動用 */
+#define WK_SCENE_D20R0601                16606 /* 0x40de 海底遺跡：１F・壁移動用 */
+#define WK_SCENE_D20R0701                16607 /* 0x40df 海底遺跡：１F・壁移動用 */
+#define WK_SCENE_D04R0701_PLASMA         16608 /* 0x40e0 古代の城：イベント用ワーク */
+#define WK_SCENE_D04R0801_PLASMA         16609 /* 0x40e1 古代の城：イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
