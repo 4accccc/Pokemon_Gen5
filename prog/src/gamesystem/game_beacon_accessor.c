@@ -521,12 +521,13 @@ BOOL GAMEBEACON_Check_Error(const GAMEBEACON_INFO *info)
 BOOL GAMEBEACON_Check_NPC(const GAMEBEACON_INFO *info)
 {
   switch(info->action.action_no){
-  case GAMEBEACON_ACTION_DISTRIBUTION_POKE:        ///<ポケモン配布中
-  case GAMEBEACON_ACTION_DISTRIBUTION_ITEM:        ///<アイテム配布中
+  case GAMEBEACON_ACTION_DISTRIBUTION_POKE:       ///<ポケモン配布中
+  case GAMEBEACON_ACTION_DISTRIBUTION_ITEM:       ///<アイテム配布中
   case GAMEBEACON_ACTION_DISTRIBUTION_ETC:        ///<その他配布中
+  case GAMEBEACON_ACTION_DISTRIBUTION_GPOWER:     ///<Gパワー配布中
     return TRUE;
   }
-  return FALSE; //@todo なにがしかの条件でNPC判定をする
+  return FALSE;
 }
 
 //==================================================================
