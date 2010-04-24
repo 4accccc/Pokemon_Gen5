@@ -206,6 +206,7 @@ void ARROW_StartAnime( ARROW* arrow )
 //-------------------------------------------------------------------------------------
 void ARROW_Vanish( ARROW* arrow )
 {
+  ChangeState( arrow, ARROW_STATE_WAIT );
   Vanish( arrow );
 }
 

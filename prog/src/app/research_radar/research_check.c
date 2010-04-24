@@ -367,6 +367,10 @@ static void InitPercentage( RESEARCH_CHECK_WORK* work ); // % ï\é¶ÉIÉuÉWÉFÉNÉg è
 static void CreatePercentage( RESEARCH_CHECK_WORK* work ); // % ï\é¶ÉIÉuÉWÉFÉNÉg ê∂ê¨
 static void DeletePercentage( RESEARCH_CHECK_WORK* work ); // % ï\é¶ÉIÉuÉWÉFÉNÉg îjä¸
 //-----------------------------------------------------------------------------------------
+// ÅûLAYER 0 ÉÜÅ[ÉeÉBÉäÉeÉB
+//-----------------------------------------------------------------------------------------
+static u8 BindU8( int num ); // u8 Ç…é˚Ç‹ÇÈÇÊÇ§Ç…ä€ÇﬂÇÈ
+//-----------------------------------------------------------------------------------------
 // ÅûLAYER -1 ÉfÉoÉbÉO
 //-----------------------------------------------------------------------------------------
 static void DebugPrint_seqQueue( const RESEARCH_CHECK_WORK* work ); // ÉVÅ[ÉPÉìÉXÉLÉÖÅ[ÇÃíÜêgÇï\é¶Ç∑ÇÈ
@@ -2538,18 +2542,18 @@ static void UpdateTouchArea( RESEARCH_CHECK_WORK* work )
   // ç∂ÉJÅ[É\Éã
   menu = &( MenuItemDrawParam[ work->cursorPos ] );
   area = &( work->touchHitTable[ TOUCH_AREA_CONTROL_CURSOR_L ] );
-  area->rect.left   = menu->left_dot + menu->leftCursorOffsetX - CLWK_CONTROL_CURSOR_L_WIDTH/2;
-  area->rect.top    = menu->top_dot  + menu->leftCursorOffsetY - CLWK_CONTROL_CURSOR_L_HEIGHT/2;
-  area->rect.right  = area->rect.left + TOUCH_AREA_CONTROL_CURSOR_WIDTH;
-  area->rect.bottom = area->rect.top  + TOUCH_AREA_CONTROL_CURSOR_HEIGHT;
+  area->rect.left   = BindU8( menu->left_dot + menu->leftCursorOffsetX - CLWK_CONTROL_CURSOR_L_WIDTH/2 );
+  area->rect.top    = BindU8( menu->top_dot  + menu->leftCursorOffsetY - CLWK_CONTROL_CURSOR_L_HEIGHT/2 );
+  area->rect.right  = BindU8( area->rect.left + TOUCH_AREA_CONTROL_CURSOR_WIDTH );
+  area->rect.bottom = BindU8( area->rect.top  + TOUCH_AREA_CONTROL_CURSOR_HEIGHT );
 
   // âEÉJÅ[É\Éã
   menu = &( MenuItemDrawParam[ work->cursorPos ] );
   area = &( work->touchHitTable[ TOUCH_AREA_CONTROL_CURSOR_R ] );
-  area->rect.left   = menu->left_dot + menu->rightCursorOffsetX - CLWK_CONTROL_CURSOR_R_WIDTH/2;
-  area->rect.top    = menu->top_dot  + menu->rightCursorOffsetY - CLWK_CONTROL_CURSOR_R_HEIGHT/2;
-  area->rect.right  = area->rect.left + TOUCH_AREA_CONTROL_CURSOR_WIDTH;
-  area->rect.bottom = area->rect.top  + TOUCH_AREA_CONTROL_CURSOR_HEIGHT;
+  area->rect.left   = BindU8( menu->left_dot + menu->rightCursorOffsetX - CLWK_CONTROL_CURSOR_R_WIDTH/2 );
+  area->rect.top    = BindU8( menu->top_dot  + menu->rightCursorOffsetY - CLWK_CONTROL_CURSOR_R_HEIGHT/2 );
+  area->rect.right  = BindU8( area->rect.left + TOUCH_AREA_CONTROL_CURSOR_WIDTH );
+  area->rect.bottom = BindU8( area->rect.top  + TOUCH_AREA_CONTROL_CURSOR_HEIGHT );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update touch area\n" );
@@ -5533,6 +5537,22 @@ static void AdjustCircleGraphLayer( RESEARCH_CHECK_WORK* work )
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: adjust circle graph layer\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief u8 Ç…é˚Ç‹ÇÈÇÊÇ§Ç…ä€ÇﬂÇÈ
+ *
+ * @param num ä€ÇﬂÇÈêîíl
+ *
+ * @return num Ç [0, 255] Ç…ä€ÇﬂÇΩíl
+ */
+//-----------------------------------------------------------------------------------------
+static u8 BindU8( int num )
+{
+  if( num < 0 ) { return 0; }
+  if( 0xff < num ) { return 0xff; } 
+  return num;
 }
 
 //-----------------------------------------------------------------------------------------
