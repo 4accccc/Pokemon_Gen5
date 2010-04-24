@@ -1108,10 +1108,29 @@ static void ShinkaDemoInit( KAWADA_MAIN_WORK* wk )
 {
   BOOL b_field = TRUE;
 
+  u16 monsno_before;
+  u16 monsno_after;
+
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  {
+    monsno_before = MONSNO_650;
+    monsno_after  = MONSNO_651;
+  }
+  else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    monsno_before = MONSNO_557;
+    monsno_after  = MONSNO_558;
+  }
+  else
+  {
+    monsno_before = MONSNO_KAMEERU;
+    monsno_after  = MONSNO_RIZAADON;
+  }
+
   ZONEDATA_Open( wk->heapID );
   GAMEBEACON_Setting(wk->gamedata);
 
-  wk->pp = PP_Create( MONSNO_KAMEERU, 98, 0, wk->heapID );
+  wk->pp = PP_Create( monsno_before, 98, 0, wk->heapID );
   
   wk->party = PokeParty_AllocPartyWork(wk->heapID);
   PokeParty_InitWork(wk->party);
@@ -1124,7 +1143,7 @@ static void ShinkaDemoInit( KAWADA_MAIN_WORK* wk )
     SHINKA_DEMO_PARAM* sdp = GFL_HEAP_AllocMemory( wk->heapID, sizeof( SHINKA_DEMO_PARAM ) );
     sdp->gamedata          = wk->gamedata;
     sdp->ppt               = wk->party;
-    sdp->after_mons_no     = MONSNO_RIZAADON;
+    sdp->after_mons_no     = monsno_after;
     sdp->shinka_pos        = 0;
     sdp->shinka_cond       = SHINKA_COND_LEVELUP;
     sdp->b_field           = b_field;

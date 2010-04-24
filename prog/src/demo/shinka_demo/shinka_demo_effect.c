@@ -211,6 +211,7 @@ static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
   {  500,     PARTICLE_SPA_FILE_0,         DEMO_SINKA05 },
   {  500,     PARTICLE_SPA_FILE_0,         DEMO_SINKA06 },
   {  570,     PARTICLE_SPA_FILE_0,         DEMO_SINKA07 },
+  {  840,     PARTICLE_SPA_FILE_0,         DEMO_SINKA08 },
 };
 
 //-------------------------------------
@@ -659,6 +660,26 @@ static PARTICLE_MANAGER* Particle_Init( HEAPID heap_id, u16 data_num, const PART
   VecFx32 cam_at  = {            0,         0,                0 };
 */
 
+// ‘S‚­Œ©‚¦‚È‚¢
+//  VecFx32 cam_eye = {            0,  FX32_CONST(10),  FX32_CONST(100) };
+//  VecFx32 cam_up  = {            0,        FX32_ONE,                0 };
+//  VecFx32 cam_at  = {            0,               0,                0 };
+
+// ‚»‚±‚»‚±‚¢‚¢Š´‚¶
+//  VecFx32 cam_eye = {            0,  FX32_CONST(1),  FX32_CONST(10) };
+//  VecFx32 cam_up  = {            0,        FX32_ONE,                0 };
+//  VecFx32 cam_at  = {            0,               0,                0 };
+
+// ‚à‚¤‚¿‚å‚Á‚Æ‹ß‚­‚Ä‚à‚¢‚¢‚©‚à
+//  VecFx32 cam_eye = {            0,  FX32_CONST(0),  FX32_CONST(15) };
+//  VecFx32 cam_up  = {            0,        FX32_ONE,                0 };
+//  VecFx32 cam_at  = {            0,               0,                0 };
+
+  VecFx32 cam_eye = {            0,  FX32_CONST(0),  FX32_CONST(13) };
+  VecFx32 cam_up  = {            0,        FX32_ONE,                0 };
+  VecFx32 cam_at  = {            0,               0,                0 };
+
+
 /*
   GFL_G3D_PROJECTION proj; 
 	{
@@ -698,6 +719,17 @@ static PARTICLE_MANAGER* Particle_Init( HEAPID heap_id, u16 data_num, const PART
 		proj.scaleW    = 0;
 	}
 */
+  GFL_G3D_PROJECTION proj; 
+	{
+		proj.type      = GFL_G3D_PRJPERS;
+		proj.param1    = FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT );
+		proj.param2    = FX_CosIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT );
+		proj.param3    = defaultCameraAspect;
+		proj.param4    = 0;
+		proj.near      = defaultCameraNear;
+		proj.far       = defaultCameraFar;
+		proj.scaleW    = 0;
+	}
 
   // PARTICLE_MANAGER
   {
@@ -725,6 +757,9 @@ static PARTICLE_MANAGER* Particle_Init( HEAPID heap_id, u16 data_num, const PART
 
     //GFL_PTC_PersonalCameraDelete( mgr->spa_set[i].ptc );
 		//GFL_PTC_PersonalCameraCreate( mgr->spa_set[i].ptc, &proj, DEFAULT_PERSP_WAY, &cam_eye, &cam_up, &cam_at, heap_id );
+    GFL_PTC_PersonalCameraDelete( mgr->spa_set[i].ptc );
+		GFL_PTC_PersonalCameraCreate( mgr->spa_set[i].ptc, &proj, DEFAULT_PERSP_WAY, &cam_eye, &cam_up, &cam_at, heap_id );
+    
     arc_res = GFL_PTC_LoadArcResource( particle_arc[i].arc, particle_arc[i].idx, heap_id );
     mgr->spa_set[i].res_num = GFL_PTC_GetResNum( arc_res );
     GFL_PTC_SetResource( mgr->spa_set[i].ptc, arc_res, TRUE, NULL );

@@ -51,8 +51,8 @@
 		rtt_min="0"
 		rtt_max="0"
 		init_rtt="0"
-		emtr_life="255"
-		ptcl_life="300"
+		emtr_life="500"
+		ptcl_life="121"
 		ptcl_life_r="0"
 		offset_x="0"
 		offset_y="0"
@@ -84,10 +84,10 @@
 	<clr_anm
 		clr_s_r="31"
 		clr_s_g="31"
-		clr_s_b="14"
-		clr_e_r="28"
-		clr_e_g="18"
-		clr_e_b="1"
+		clr_s_b="20"
+		clr_e_r="31"
+		clr_e_g="26"
+		clr_e_b="13"
 		use_rndm="0"
 		loop="0"
 		interpolation="1"
@@ -105,7 +105,7 @@
 		out="179"
 	/>
 	<spin
-		radian="64683"
+		radian="64926"
 		axis_type="1"
 	/>
 </spr>

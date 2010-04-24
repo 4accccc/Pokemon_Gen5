@@ -6,3 +6,4 @@
 #define DEMO_SINKA05		5
 #define DEMO_SINKA06		6
 #define DEMO_SINKA07		7
+#define DEMO_SINKA08		8
