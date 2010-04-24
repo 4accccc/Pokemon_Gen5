@@ -485,6 +485,14 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
       stopScript = !stopScript;
+      if( stopScript == TRUE )
+      {
+        PMSND_PauseBGM( TRUE );
+      }
+      else
+      {
+        PMSND_PauseBGM( FALSE );
+      }
     }
     /*
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
