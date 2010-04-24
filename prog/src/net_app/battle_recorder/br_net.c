@@ -837,7 +837,6 @@ static void Br_Net_Response_BattleVideoRegist(void *p_wk_adrs, const GDS_RAP_ERR
     switch(p_error_info->result){
   	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_SUCCESS:		//!< 登録成功
   		OS_TPrintf("バトルビデオ登録受信成功：登録コード%d\n", param->Code);
-  		ret = TRUE;
   		break;
   	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_AUTH:		//!< ユーザー認証エラー
   		//※check　エラーごとに専用のケアとメッセージを入れる
