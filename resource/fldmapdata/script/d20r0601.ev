@@ -12,6 +12,7 @@
   .include  "msg_d20r0601.h"
   .include  "d20r0601.h"
   .include  "d20r0701_def.h"
+  .include  "d20r0501_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -31,6 +32,10 @@ _EVENT_DATA		ev_bg_d20r0601_bg8_01
 _EVENT_DATA		ev_pos_d20r0601_exit_01
 _EVENT_DATA		ev_pos_d20r0601_exit_02
 _EVENT_DATA		ev_reserve_d20r0601_event_01
+_EVENT_DATA		ev_pos_d20r0601_down_01
+_EVENT_DATA		ev_reserve_d20r0601_event_02
+_EVENT_DATA		ev_init_d20r0601
+_EVENT_DATA		ev_recover_d20r0601
 _EVENT_DATA_END
 
 
@@ -39,6 +44,34 @@ _EVENT_DATA_END
 /**************************************************************/
 //ev_zone_d20r0601:
 //  _END
+
+/**************************************************************/
+/*				FIELD INIT LABEL							  */
+/**************************************************************/
+INIT_EVENT_START	ev_init_d20r0601
+
+	IF FLAG_ON( FE_SEA_TEMPLE_FLASH ) THEN
+		_OBJ_POS_CHANGE( D20R0601_STOPPER_01, 11, 3, 22, DIR_DOWN ) 
+		_OBJ_POS_CHANGE( D20R0601_CUBE_01, 11, 3, 22, DIR_DOWN ) 
+	ENDIF
+
+INIT_EVENT_END
+
+_ANIME_LABEL	anm_up_move
+	_ANIME_DATA	AC_WALK_U_2F,3
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*				FIELD RECOVER LABEL							  */
+/**************************************************************/
+INIT_EVENT_START	ev_recover_d20r0601
+
+	IF FLAG_ON( FE_SEA_TEMPLE_FLASH ) THEN
+		_OBJ_POS_CHANGE( D20R0601_STOPPER_01, 11, 3, 22, DIR_DOWN ) 
+		_OBJ_POS_CHANGE( D20R0601_CUBE_01, 11, 3, 22, DIR_DOWN ) 
+	ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*		d20r0601	BG1										  */
@@ -106,11 +139,24 @@ EVENT_START		ev_pos_d20r0601_exit_01
 	_SYSWIN_CLOSE()
 
 	IF $SCWK_ANSWER == SCR_YES THEN
+		DEFINE_LOCAL	LWK_POSX
+		DEFINE_LOCAL	LWK_POSZ
+		
+		_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+		
+		SWITCH $LWK_POSZ
+		CASE 20 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_20 )
+		CASE 21 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_21 )
+		ENDSWITCH
+		
+		_OBJ_ANIME_WAIT()
 		
 		//浮上アニメ
 		_PLAYER_UPDOWN_EFFECT( 0, 60, 64, 1 )
 		
-		_TIME_WAIT( 10 )
+		_TIME_WAIT( 30 )
 		
 		//暗転処理
 		_MAP_FADE_BLACK_OUT()
@@ -146,6 +192,19 @@ EVENT_START		ev_pos_d20r0601_exit_01
 }
 EVENT_END
 
+//--------------------------------------------------------------------
+//		上昇用アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_20
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_move_21
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
 /**************************************************************/
 /*		D20R0601	上昇POS									  */
 /**************************************************************/
@@ -157,10 +216,24 @@ EVENT_START		ev_pos_d20r0601_exit_02
 
 	IF $SCWK_ANSWER == SCR_YES THEN
 		
+		DEFINE_LOCAL	LWK_POSX
+		DEFINE_LOCAL	LWK_POSZ
+		
+		_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+		
+		SWITCH $LWK_POSZ
+		CASE 32 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_32 )
+		CASE 33 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_33 )
+		ENDSWITCH
+		
+		_OBJ_ANIME_WAIT()
+		
 		//浮上アニメ
 		_PLAYER_UPDOWN_EFFECT( 0, 60, 64, 1 )
 		
-		_TIME_WAIT( 20 )
+		_TIME_WAIT( 30 )
 		
 		//暗転処理
 		_MAP_FADE_BLACK_OUT_SLOW()
@@ -215,6 +288,20 @@ _ANIME_LABEL	anm_right_back
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+
+//--------------------------------------------------------------------
+//		上昇用アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_32
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_move_33
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
 /**************************************************************/
 /*		RESERVE												  */
 /**************************************************************/
@@ -223,7 +310,134 @@ EVENT_START		ev_reserve_d20r0601_event_01
 	_SE_PLAY( SEQ_SE_FLD_126 )
 	_SE_WAIT()
 
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_comeback )
+
 	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
+
+	_OBJ_ANIME_WAIT()
 	
 EVENT_END
+
+_ANIME_LABEL	anm_comeback
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*		RESERVE												  */
+/**************************************************************/
+EVENT_START		ev_reserve_d20r0601_event_02
+	
+	_SE_PLAY( SEQ_SE_FLD_126 )
+	_SE_WAIT()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_comeback1 )
+
+	_MAP_FADE_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+
+	_OBJ_ANIME_WAIT()
+	
+EVENT_END
+
+_ANIME_LABEL	anm_comeback1
+	_ANIME_DATA	AC_WALK_L_16F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*		D20R0601	下降POS									  */
+/**************************************************************/
+EVENT_START		ev_pos_d20r0601_down_01
+{
+	_SYSWIN_MSG( msg_d20r0601_sys_03 , POS_DOWN )
+	_YES_NO_WIN( SCWK_ANSWER )
+	_SYSWIN_CLOSE()
+
+	IF $SCWK_ANSWER == SCR_YES THEN
+
+		DEFINE_LOCAL	LWK_POSX
+		DEFINE_LOCAL	LWK_POSZ
+	
+		_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+
+		SWITCH $LWK_POSX
+		CASE 29 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_down_29 )
+		CASE 30 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_down_30 )
+		CASE 31 THEN
+			IF $LWK_POSZ == 32 THEN
+				_OBJ_ANIME( MMDL_ID_PLAYER, anm_down_31_32 )
+			ELSE
+				_OBJ_ANIME( MMDL_ID_PLAYER, anm_down_31_33 )
+			ENDIF
+		ENDSWITCH
+		
+		_OBJ_ANIME_WAIT()
+		
+		//浮上アニメ
+		_PLAYER_UPDOWN_EFFECT( 0, 60, 64, 0 )
+		
+		_TIME_WAIT( 20 )
+		
+		//暗転処理
+		_MAP_FADE_BLACK_OUT_SLOW()
+		_MAP_FADE_END_CHECK()
+
+		//予約スクリプト
+		_RESERVE_SCRIPT( SCRID_RESERVE_D20R0501_EVENT_01 )
+
+		//マップチェンジ
+		_MAP_CHANGE_NO_FADE( ZONE_ID_D20R0501, 81, 3, 75, DIR_DOWN )
+	
+	ELSE
+	
+		DEFINE_LOCAL	LWK_DIR
+		_PLAYER_DIR_GET( LWK_DIR )
+		
+		SWITCH $LWK_DIR
+		CASE DIR_UP THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_up_back )
+			_OBJ_ANIME_WAIT()
+		CASE DIR_DOWN THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_down_back )
+			_OBJ_ANIME_WAIT()
+		CASE DIR_LEFT THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_left_back )
+			_OBJ_ANIME_WAIT()
+		CASE DIR_RIGHT THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_right_back )
+			_OBJ_ANIME_WAIT()
+		ENDSWITCH
+		
+	ENDIF
+}
+EVENT_END
+
+//--------------------------------------------------------------------
+//		降下用アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_down_29
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_down_30
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_down_31_32
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_down_31_33
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+

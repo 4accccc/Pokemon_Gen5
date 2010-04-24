@@ -126,6 +126,17 @@ EVENT_START ev_seatemple_step_500
 	_SE_WAIT()
 	
 	_DIVING( SCR_EV_DIVING_MAPCHANGE_UP )
+	
+	//========================================/
+	
+	_FLAG_RESET(FE_SEA_TEMPLE_FLASH)
+	_FLAG_RESET(FE_SEA_TEMPLE_KAIRIKI)
+
+	$WK_SCENE_D20R0501 = 0
+	$WK_SCENE_D20R0601 = 0
+	$WK_SCENE_D20R0701 = 0
+	
+	//========================================/
 
 EVENT_END
 
@@ -135,21 +146,33 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_seatemple_skill_use_2f
 
-	//画面を揺らすデモを入れる
-	_SHAKE_CAMERA(0,1,3,6,1,0,1,5)
+	IF FLAG_OFF( FE_SEA_TEMPLE_FLASH ) THEN
 
-	_SE_PLAY( SEQ_SE_FLD_126 )
+		//画面を揺らすデモを入れる
+		_SHAKE_CAMERA(0,1,3,6,1,0,1,5)
 
-	//ストッパー移動
-	_OBJ_ANIME( D20R0601_STOPPER_01, anm_up_move )
-	_OBJ_ANIME( D20R0601_CUBE_01, anm_up_move )
-	_OBJ_ANIME_WAIT()
+		_SE_PLAY( SEQ_SE_FLD_126 )
 
-	_SE_WAIT()
+		//ストッパー移動
+		_OBJ_ANIME( D20R0601_STOPPER_01, anm_up_move )
+		_OBJ_ANIME( D20R0601_CUBE_01, anm_up_move )
+		_OBJ_ANIME_WAIT()
 
-	_PLAINWIN_MSG_DOWN( msg_seatemple_skill_01 )
-	_LAST_KEYWAIT()
-	_PLAINWIN_CLOSE()
+		_SE_WAIT()
+
+		_PLAINWIN_MSG_DOWN( msg_seatemple_skill_01 )
+		_LAST_KEYWAIT()
+		_PLAINWIN_CLOSE()
+
+		//========================================/
+	
+		_FLAG_SET(FE_SEA_TEMPLE_FLASH)
+	
+		$WK_SCENE_D20R0601 = 1
+	
+		//========================================/
+
+	ENDIF
 
 EVENT_END
 
@@ -158,21 +181,33 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_seatemple_skill_use_3f
 
-	//画面を揺らすデモを入れる
-	_SHAKE_CAMERA(0,1,3,6,1,0,1,5)
+	IF FLAG_OFF( FE_SEA_TEMPLE_KAIRIKI ) THEN
 
-	_SE_PLAY( SEQ_SE_FLD_126 )
+		//画面を揺らすデモを入れる
+		_SHAKE_CAMERA(0,1,3,6,1,0,1,5)
 
-	//ストッパー移動
-	_OBJ_ANIME( D20R0701_STOPPER_01, anm_right_move )
-	_OBJ_ANIME( D20R0701_CUBE_01, anm_right_move )
-	_OBJ_ANIME_WAIT()
+		_SE_PLAY( SEQ_SE_FLD_126 )
 
-	_SE_WAIT()
+		//ストッパー移動
+		_OBJ_ANIME( D20R0701_STOPPER_01, anm_right_move )
+		_OBJ_ANIME( D20R0701_CUBE_01, anm_right_move )
+		_OBJ_ANIME_WAIT()
 
-	_PLAINWIN_MSG_DOWN( msg_seatemple_skill_01 )
-	_LAST_KEYWAIT()
-	_PLAINWIN_CLOSE()
+		_SE_WAIT()
+
+		_PLAINWIN_MSG_DOWN( msg_seatemple_skill_01 )
+		_LAST_KEYWAIT()
+		_PLAINWIN_CLOSE()
+
+		//========================================/
+	
+		_FLAG_SET(FE_SEA_TEMPLE_KAIRIKI)
+		
+		$WK_SCENE_D20R0701 = 1
+	
+		//========================================/
+
+	ENDIF
 
 EVENT_END
 

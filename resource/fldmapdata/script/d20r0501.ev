@@ -40,6 +40,9 @@ _EVENT_DATA		ev_bg_d20r0501_bg17_01
 _EVENT_DATA		ev_bg_d20r0501_bg18_01
 _EVENT_DATA		ev_bg_d20r0501_bg19_01
 _EVENT_DATA		ev_pos_d20r0501_exit_01
+_EVENT_DATA		ev_reserve_d20r0501_event_01
+_EVENT_DATA		ev_init_d20r0501
+_EVENT_DATA		ev_recover_d20r0501
 _EVENT_DATA_END
 
 
@@ -48,6 +51,34 @@ _EVENT_DATA_END
 /**************************************************************/
 //ev_zone_d20r0501:
 //  _END
+
+/**************************************************************/
+/*				FIELD INIT LABEL							  */
+/**************************************************************/
+INIT_EVENT_START	ev_init_d20r0501
+	
+	IF $WK_SCENE_D20R0501 == 1 THEN
+		_OBJ_POS_CHANGE( D20R0501_STOPPER_01, 77, 3, 77, DIR_DOWN ) 
+		_OBJ_POS_CHANGE( D20R0501_CUBE_01, 77, 3, 77, DIR_DOWN ) 
+	ENDIF
+
+INIT_EVENT_END
+
+_ANIME_LABEL	anm_up_move
+	_ANIME_DATA	AC_WALK_U_2F,3
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*				FIELD RECOVER LABEL							  */
+/**************************************************************/
+INIT_EVENT_START	ev_recover_d20r0501
+
+	IF $WK_SCENE_D20R0501 == 1 THEN
+		_OBJ_POS_CHANGE( D20R0501_STOPPER_01, 77, 3, 77, DIR_DOWN ) 
+		_OBJ_POS_CHANGE( D20R0501_CUBE_01, 77, 3, 77, DIR_DOWN ) 
+	ENDIF
+
+INIT_EVENT_END
 
 /**************************************************************/
 /*		D20R0501	BG1										  */
@@ -187,6 +218,7 @@ EVENT_START		ev_bg_d20r0501_bg19_01
 	//歩数が190歩以内の場合
 	IF $LWK_STEP <= 190 THEN
 		_SYSWIN_MSG( msg_d20r0501_bg19_01 , POS_DOWN )
+		_AB_KEYWAIT()
 		_SYSWIN_CLOSE()
 
 		//画面を揺らすデモを入れる
@@ -202,6 +234,14 @@ EVENT_START		ev_bg_d20r0501_bg19_01
 		_SYSWIN_MSG( msg_d20r0501_sys_01 , POS_DOWN )
 		_LAST_KEYWAIT()
 		_SYSWIN_CLOSE()
+		
+		//========================================/
+		
+		//ワーク追加
+		$WK_SCENE_D20R0501 = 1
+		
+		//========================================/
+		
 	
 	//歩数がそれ以上の場合
 	ELSE
@@ -229,6 +269,22 @@ EVENT_START		ev_pos_d20r0501_exit_01
 
 	IF $SCWK_ANSWER == SCR_YES THEN
 		
+		DEFINE_LOCAL	LWK_POSX
+		DEFINE_LOCAL	LWK_POSZ
+		
+		_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
+		
+		SWITCH $LWK_POSX
+		CASE 80 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_80 )
+		CASE 81 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_81 )
+		CASE 82 THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_82 )
+		ENDSWITCH
+		
+		_OBJ_ANIME_WAIT()
+		
 		//浮上アニメ
 		_PLAYER_UPDOWN_EFFECT( 0, 60, 64, 1 )
 		
@@ -242,7 +298,7 @@ EVENT_START		ev_pos_d20r0501_exit_01
 		_RESERVE_SCRIPT( SCRID_RESERVE_D20R0601_EVENT_01 )
 
 		//マップチェンジ
-		_MAP_CHANGE_NO_FADE( ZONE_ID_D20R0601, 29, 3, 32, DIR_DOWN )
+		_MAP_CHANGE_NO_FADE( ZONE_ID_D20R0601, 30, 3, 32, DIR_DOWN )
 	
 	ELSE
 	
@@ -285,4 +341,44 @@ _ANIME_LABEL	anm_left_back
 
 _ANIME_LABEL	anm_right_back
 	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//		浮上前の前進
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_80
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_move_81
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_move_82
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*		RESERVE												  */
+/**************************************************************/
+EVENT_START		ev_reserve_d20r0501_event_01
+	
+	_SE_PLAY( SEQ_SE_FLD_126 )
+	_SE_WAIT()
+	
+	_MAP_FADE_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_comeback )
+	_OBJ_ANIME_WAIT()
+	
+EVENT_END
+
+_ANIME_LABEL	anm_comeback
+	_ANIME_DATA	AC_WALK_D_16F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
