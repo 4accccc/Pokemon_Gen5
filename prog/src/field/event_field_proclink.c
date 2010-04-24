@@ -1484,11 +1484,10 @@ static void * FMenuCallProc_TrainerCard(PROCLINK_WORK* wk, u32 param, EVENT_PROC
   // トレーナーカードワーク作成
   tr_param = TRAINERCASR_CreateCallParam_SelfData( gdata, HEAPID_PROC, edit );
 
-  // 表か裏の指定をtr_paramに格納する
-  if(param==FALSE || param==EVENT_PROCLINK_DATA_NONE){
-    OS_Printf("トレーナーカードの表呼び出し\n");
-  }else{
-    OS_Printf("トレーナーカードの裏呼び出し\n");
+  OS_Printf("トレーナーカードの呼び出しparam=%d\n",param);
+  // ショートカットからの指定があるなら起動時引数に代入
+  if(param!=EVENT_PROCLINK_DATA_NONE){
+    tr_param->mode = param;
   }
   return tr_param;
 }
