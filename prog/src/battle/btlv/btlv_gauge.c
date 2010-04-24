@@ -161,6 +161,8 @@ enum
 
   YURE_OFFSET = 2048,
   YURE_SPEED  = 0x400,
+
+  BTLV_GAUGE_DAMAGE_EFFECT_COUNT = 3,       //ダメージエフェクトの点滅MAX回数
 };
 
 typedef enum
@@ -262,6 +264,7 @@ typedef struct
   BTLV_GAUGE_WORK*  bgw;
   int               seq_no;
   int               pltt_bit;
+  int               count;
 }BTLV_GAUGE_DAMAGE_EFFECT_WORK;
 
 //============================================================================================
@@ -968,6 +971,21 @@ BOOL  BTLV_GAUGE_CheckExecute( BTLV_GAUGE_WORK *bgw )
 void  BTLV_GAUGE_SetDrawEnable( BTLV_GAUGE_WORK* bgw, BOOL on_off )
 {
   GFL_CLACT_UNIT_SetDrawEnable( bgw->clunit, on_off );
+}
+
+//============================================================================================
+/**
+ *  @brief  ゲージが存在するかどうかチェック
+ *
+ *  @param[in] bgw  BTLV_GAUGE_WORK管理構造体へのポインタ
+ *  @param[in] pos  チェックするポジション
+ *
+ *  @retval TRUE:存在する FALSE:存在しない
+ */
+//============================================================================================
+BOOL  BTLV_GAUGE_CheckExist( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos )
+{
+  return ( bgw->bgcl[ pos ].base_clwk != NULL );
 }
 
 //--------------------------------------------------------------
@@ -2057,6 +2075,28 @@ static  void  TCB_BTLV_GAUGE_DamageEffect( GFL_TCB* tcb, void* work )
     break;
   case 2:
     if( PaletteFadeCheck( BTLV_EFFECT_GetPfd() ) == 0 )
+    { 
+      bgdew->count++;
+      if( bgdew->count == BTLV_GAUGE_DAMAGE_EFFECT_COUNT )
+      { 
+        bgdew->count = 0;
+        bgdew->seq_no = 3;
+      }
+      else
+      { 
+        bgdew->seq_no = 0;
+      }
+    }
+    break;
+  case 3:
+    for( i = 0 ; i < BTLV_GAUGE_CLWK_MAX ; i++ )
+    {
+      if( bgdew->bgw->bgcl[ i ].hp_calc_req )
+      {
+        break;
+      }
+    }
+    if( i == BTLV_GAUGE_CLWK_MAX )
     { 
       bgdew->seq_no = 0;
     }
