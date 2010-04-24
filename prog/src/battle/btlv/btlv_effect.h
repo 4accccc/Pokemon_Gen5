@@ -174,6 +174,7 @@ extern  BOOL              BTLV_EFFECT_CheckExecuteGauge( void );
 extern  void              BTLV_EFFECT_SetGaugeDrawEnable( BOOL on_off );
 extern  void              BTLV_EFFECT_SetGaugeStatus( PokeSick sick,  BtlvMcssPos pos );
 extern  void              BTLV_EFFECT_SetGaugeYure( BtlvMcssPos pos );
+extern  BOOL              BTLV_EFFECT_CheckExistGauge( BtlvMcssPos pos );
 extern  void              BTLV_EFFECT_SetBallGauge( const BTLV_BALL_GAUGE_PARAM* bbgp );
 extern  void              BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE type );
 extern  BOOL              BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYPE type );
