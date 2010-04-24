@@ -825,6 +825,8 @@ static void sub_BeaconInfoSet( DMENU_LIVE_COMM* wk, TR_PATTERN pat )
       range = f_prm->max-f_prm->min;
       fake[i] = (GFUser_GetPublicRand0( 0xFFFFFFFF )%range)+f_prm->min;
     }
+    info->trainer_view = GFUser_GetPublicRand0( 0xFFFFFFFF )%8;
+    info->favorite_color_index = GFUser_GetPublicRand0( 0xFFFFFFFF )%16;
     break;
   }
   //id
@@ -1349,10 +1351,11 @@ static void breq_DrawFakeLine( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, FAKE_
 static void breq_DrawFake( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk )
 {
   int i;
-
+  
   for(i = 0;i < FAKE_DATA_MAX;i++){
     breq_DrawFakeLine( wk, evwk, i );
   }
+//  MI_CpuCopy8( &(wk->fake_prm[TR_PAT_FAKE][0]), &(wk->fake_prm[TR_PAT_RND][0]),sizeof(int)*FAKE_DATA_MAX);
 }
 
 static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 direct_mode )
