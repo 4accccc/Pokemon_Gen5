@@ -12,6 +12,7 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 #include "system/wipe.h"
+#include "system/brightness.h"
 
 //タスクメニュー
 #include "app/app_taskmenu.h"
@@ -34,6 +35,8 @@
 //アーカイブ
 #include "arc_def.h"
 #include "arc/fieldmap/zone_id.h"
+#include "sound/wb_sound_data.sadl"
+#include "sound/pm_sndsys.h" // for SEQ_SE_XXX
 
 //外部公開
 #include "message.naix"
@@ -238,7 +241,16 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
 static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
   DEMO3D_MAIN_WORK* wk = mywk;
- 
+
+  //ブライトネス処理が途中終了した場合対策のリセット
+  BrightnessChgReset(MASK_DOUBLE_DISPLAY);
+#if 1
+  //サウンドも強制ストップ
+  PMSND_StopSE_byPlayerID( PLAYER_SE_SYS );
+  PMSND_StopSE_byPlayerID( PLAYER_SE_1 );
+  PMSND_StopSE_byPlayerID( PLAYER_SE_2 );
+  PMSND_StopSE_byPlayerID( PLAYER_SE_PSG );
+#endif
   // 例外処理エンジン 終了処理
   APP_EXCEPTION_Delete( wk->expection );
 
@@ -364,12 +376,12 @@ static BOOL sub_FadeInOutReq( u8 demo_id, u8 wipe, HEAPID heapID )
   }else{
     color = WIPE_FADE_WHITE;
   }
+  WIPE_SetBrightnessFadeOut( color );
   if( sync > 0 ){
     u8 spd = GFL_FADE_GetFadeSpeed();
     WIPE_SYS_Start( WIPE_PATTERN_WMS, wipe, wipe, color, sync*spd, 1, heapID );
     return FALSE;
   }
-  WIPE_SetBrightnessFadeOut( color );
   return TRUE;
 }
 
