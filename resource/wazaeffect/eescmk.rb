@@ -381,6 +381,8 @@ end
 				dir_str = split_data[ EFFNO_POS ][ 1 ].chr + split_data[ EFFNO_POS ][ 2 ].chr
 				seq_str = "\nWE_" + num_str + seq_cnt.to_s(10) + "_" + dir_str + ":\n"
 				sequence << seq_str
+=begin
+#ため技補正処理はいらなくなった
         if seq_cnt == 0
           $tame_waza.size.times{ |cnt|
             if $tame_waza[ cnt ] == num_str.to_i
@@ -389,6 +391,7 @@ end
             end
           }
         end
+=end
 				seq_table[ dir_str.to_i ] = "\t.long\t" + "WE_" + num_str + seq_cnt.to_s(10) + "_" + dir_str + " - WE_" + num_str + 0.to_s(10) + "\t//" + dir_table[ dir_str.to_i ] + "\n"
 			else
 				str = ""
@@ -558,6 +561,15 @@ end
 			fp_w.print sequences[ cnt ][ seq ]
 		}
   }
+
+=begin
+  #複数エフェクトが存在する技を抽出
+  if seq_cnt > 1
+	  fp_plurals = open( "plurals.txt", "a" )
+    fp_plurals.printf("waza:%s seq_cnt:%d\n",$waza_name[ num_str.to_i ],seq_cnt)
+    fp_plurals.close
+  end
+=end
 
 	fp_w.close
 
