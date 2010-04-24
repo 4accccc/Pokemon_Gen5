@@ -557,6 +557,14 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk )
     (*seq)++;
     break;
   case _SEQ_FADEIN:
+    {
+      FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+      MMDLSYS * mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      if ( MMDL_BLACTCONT_IsThereReserve( mmdlsys ) == TRUE )
+      {
+        break;
+      }
+    }
     GMEVENT_CallEvent( event, EVENT_FieldFadeIn_PlayerDir( gsys, esmw->fieldWork ) );
     (*seq)++;
     break;
