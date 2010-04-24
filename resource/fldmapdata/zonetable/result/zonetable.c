@@ -9980,7 +9980,7 @@ static const ZONEDATA ZoneData[] = {
 		enc_dummy,
 		NARC_eventdata_plc10_bin,
     ZONE_ID_PLC10,
-		MAPNAME_P_T1KANOKO,
+		MAPNAME_P_BC10,
 		1,
 		WEATHER_NO_SUNNY,
 		0,
