@@ -564,6 +564,9 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   
   GFL_ARC_CloseDataHandle(handle);
 
+  //通信アイコンリロード
+  GFL_NET_ReloadIcon();
+  
   //OBJWINDOW(通信アイコン) の中だけBlendで輝度が落ちないようにする
   GFL_NET_WirelessIconOBJWinON();
   G2S_SetWndOBJInsidePlane(GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 |
