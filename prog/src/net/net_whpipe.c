@@ -14,7 +14,7 @@
 #include <nitro/wm.h>
 #include <nitro/cht.h>
 
-#include "net_whpipe.h"
+#include "net/net_whpipe.h"
 #include "system/gfl_use.h"
 
 

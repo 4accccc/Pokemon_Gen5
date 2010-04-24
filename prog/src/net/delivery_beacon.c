@@ -18,7 +18,7 @@
 
 #include "net/delivery_beacon.h"
 #include "net/wih.h"
-#include "net_whpipe.h"
+#include "net/net_whpipe.h"
 
 
 #define _BEACON_CHANGE_COUNT (0)

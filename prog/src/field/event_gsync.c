@@ -230,6 +230,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
         (*seq)=_GAMESYNC_CALLBOX;
       }
       else{// if(dbw->selectType==GAMESYNC_RETURNMODE_EXIT){
+        GAMESYSTEM_CommBootAlways(gsys);
         GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
         (*seq)=_CALL_GAMESYNC_MENU;
         if(dbw->push){

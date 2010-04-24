@@ -251,7 +251,7 @@
 #include "net.h"
 #include "net/network_define.h"
 #include "net/wih.h"
-#include "net_whpipe.h"
+#include "net/net_whpipe.h"
 
 /*
   wh.c : Wireless Manager ŠÖ˜A Wrapper

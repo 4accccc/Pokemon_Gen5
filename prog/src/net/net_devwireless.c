@@ -10,7 +10,7 @@
 #include <nitro.h>
 #include "gflib.h"
 #include "net/network_define.h"
-#include "net_whpipe.h"
+#include "net/net_whpipe.h"
 #include "net/wih.h"
 
 //マルチブート用きり分け
