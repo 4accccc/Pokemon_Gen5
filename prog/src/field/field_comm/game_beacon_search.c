@@ -158,11 +158,9 @@ BOOL GameBeacon_InitWait(int *seq, void *pwk, void *pWork)
 
   switch(*seq){
   case 0:
-    if(GAMESYSTEM_CheckFieldMapWork(gsys) == TRUE){
-    	GFL_HEAP_DEBUG_PrintExistMemoryBlocks(HEAPID_NETWORK_FIX);
-    	GFL_NET_Init(&aGFLNetInit, GameBeacon_InitCallback, gbs);
-    	(*seq)++;
-    }
+  	GFL_HEAP_DEBUG_PrintExistMemoryBlocks(HEAPID_NETWORK_FIX);
+  	GFL_NET_Init(&aGFLNetInit, GameBeacon_InitCallback, gbs);
+  	(*seq)++;
   	break;
   case 1:
     if(gbs->status >= GBS_STATUS_INIT){
