@@ -471,7 +471,7 @@ static void _sub_DataExit(BEACON_DETAIL_WORK* wk)
 //--------------------------------------------------------------
 static void _sub_SystemSetup( BEACON_DETAIL_WORK* wk)
 {
-  wk->pTcbSys = GFL_TCBL_Init( wk->heapID, wk->heapID, 16, 128 );
+  wk->pTcbSys = GFL_TCBL_Init( wk->heapID, wk->heapID, 64, 128 );
 
   //グラフィックハンドル取得
   wk->handle	= GFL_ARC_OpenDataHandle( ARCID_BEACON_STATUS, wk->heapID );
@@ -943,8 +943,10 @@ static void _sub_BeaconWinInit( BEACON_DETAIL_WORK* wk )
                   BMP_PMS_PAL+i, GFL_BMP_CHRAREA_GET_B );
 
       PMSDAT_SetSentence( &pms, 0, 0 );
-      PMSDAT_SetDeco( &pms, 0, PMS_DECOID_HERO+i );
+//      PMSDAT_SetDeco( &pms, 0, PMS_DECOID_HERO+i );
       PMS_DRAW_Print( wk->pms_draw, bp->pms, &pms , i );
+      PMS_DRAW_Clear( wk->pms_draw, i, TRUE );
+//      PMS_DRAW_VisibleSet( wk->pms_draw, i, FALSE );
 
       for(j = 0;j < BEACON_PROF_MAX;j++){
         bmpwin_Add( &bp->prof[j], frm,

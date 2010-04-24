@@ -127,6 +127,7 @@ static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk );
 
 static void effReq_PopupMsg( BEACON_DETAIL_WORK* wk );
 static void effReq_PageScroll( BEACON_DETAIL_WORK* wk, u8 dir );
+static void printReq_BmpwinPrint( BEACON_DETAIL_WORK* wk, BMP_WIN* win, u8 x, u8 y, STRBUF* str, PRINTSYS_LSB color );
 
 /*
  *  @brief  ビーコン詳細画面初期描画
@@ -299,7 +300,7 @@ static void sub_DetailWordset(const GAMEBEACON_INFO *info, WORDSET *wordset )
   switch( details ){
   case GAMEBEACON_DETAILS_NO_BATTLE_WILD_POKE:        ///<野生ポケモンと対戦中
   case GAMEBEACON_DETAILS_NO_BATTLE_SP_POKE:          ///<特別なポケモンと対戦中
-    WORDSET_RegisterPokeMonsNameNo( wordset, 1,GAMEBEACON_Get_Details_BattleMonsNo(info));
+    WORDSET_RegisterPokeMonsNameNo( wordset, 0,GAMEBEACON_Get_Details_BattleMonsNo(info));
     break;
   case GAMEBEACON_DETAILS_NO_BATTLE_TRAINER:
     {
@@ -383,8 +384,13 @@ static void draw_BeaconWindowIni( BEACON_DETAIL_WORK* wk )
   
       GFL_BMP_Clear( bp->prof[i].bmp, FCOL_BEACON_BASE(i%2) );
 
+#if 0
       PRINT_UTIL_PrintColor( &bp->prof[i].putil, wk->print_que,
           0, 0, wk->str_tmp, wk->font, FCOL_BEACON_COL(i%2) );
+#else
+      printReq_BmpwinPrint( wk, &bp->prof[i],
+          0, 0, wk->str_tmp, FCOL_BEACON_COL(i%2) );
+#endif
       GFL_BMPWIN_MakeTransWindow( bp->prof[i].win );
     }
   }
@@ -395,8 +401,13 @@ static void draw_BeaconWindowIni( BEACON_DETAIL_WORK* wk )
 
     GFL_BMP_Clear( bp->home[0].bmp, FCOL_BEACON_BASE(0) );
 
+#if 0
     PRINT_UTIL_PrintColor( &bp->home[0].putil, wk->print_que,
           0, 0, wk->str_tmp, wk->font, FCOL_BEACON_COL(0) );
+#else
+    printReq_BmpwinPrint( wk, &bp->home[0],
+          0, 0, wk->str_tmp, FCOL_BEACON_COL(0) );
+#endif
     GFL_BMPWIN_MakeTransWindow( bp->home[0].win );
   }
 
@@ -407,8 +418,13 @@ static void draw_BeaconWindowIni( BEACON_DETAIL_WORK* wk )
     bp = &wk->beacon_win[i];
     
     GFL_BMP_Clear( bp->record.bmp, FCOL_BEACON_BASE(0) );
+#if 0
     PRINT_UTIL_PrintColor( &bp->record.putil, wk->print_que,
           0, 0, wk->str_tmp, wk->font, FCOL_BEACON_COL(0) );
+#else
+    printReq_BmpwinPrint( wk, &bp->record,
+          0, 0, wk->str_tmp, FCOL_BEACON_COL(0) );
+#endif
     GFL_BMPWIN_MakeTransWindow( bp->record.win );
   }
 }
@@ -419,8 +435,12 @@ static void draw_BeaconWindowIni( BEACON_DETAIL_WORK* wk )
 static void draw_BeaconData( BEACON_DETAIL_WORK* wk, BMP_WIN* win, STRBUF* str, u8 px, u8 fx, u8 sx, u8 sy, u8 col_idx)
 {
   GFL_BMP_Fill( win->bmp, px*8, 0, sx*8, sy*8, FCOL_BEACON_BASE(col_idx) );
+#if 0
   PRINT_UTIL_PrintColor( &win->putil, wk->print_que,
       fx, 0, str, wk->font, FCOL_BEACON_COL(col_idx) );
+#else
+  printReq_BmpwinPrint( wk, win, fx, 0, str, FCOL_BEACON_COL(col_idx) );
+#endif
   GFL_BMPWIN_MakeTransWindow( win->win );
 }
 
@@ -435,7 +455,9 @@ static void draw_BeaconWindowVisibleSet( BEACON_DETAIL_WORK* wk, u8 idx, BOOL vi
   if(bp->rank > 0){
     GFL_CLACT_WK_SetDrawEnable( bp->cRank, visible_f );
   }
-  PMS_DRAW_VisibleSet( wk->pms_draw, idx, visible_f );
+  if(PMS_DRAW_IsPrinting( wk->pms_draw, idx )){
+    PMS_DRAW_VisibleSet( wk->pms_draw, idx, visible_f );
+  }
 	GFL_BG_SetVisible( bp->frame, visible_f );
 }
 
@@ -535,8 +557,10 @@ static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u1
   //簡易会話
   {
     PMS_DATA pms;
-   
-    PMS_DRAW_Clear( wk->pms_draw, idx, FALSE );
+  
+    if(PMS_DRAW_IsPrinting( wk->pms_draw, idx )){
+      PMS_DRAW_Clear( wk->pms_draw, idx, TRUE );
+    }
     GAMEBEACON_Get_IntroductionPms( info, &pms );
 #if 0
     PMSDAT_SetDebugRandom( &pms );
@@ -635,13 +659,14 @@ static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
       (wk->tmpTime&0xFF), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
   
     print_GetMsgToBuf( wk, msg_receive_time01+(hour/12) );
-    PRINTSYS_PrintColor( wk->win_popup.bmp, 0, 0, wk->str_expand, wk->font, FCOL_POPUP );
+//    PRINTSYS_PrintColor( wk->win_popup.bmp, 0, 0, wk->str_expand, wk->font, FCOL_POPUP );
+    printReq_BmpwinPrint( wk, &wk->win_popup, 0, 0, wk->str_expand, FCOL_POPUP );
   }
   //ビーコン詳細情報
   sub_DetailWordset( wk->tmpInfo, wk->wset );
   print_GetMsgToBuf( wk, pd->msg_id );
-//  PRINT_UTIL_PrintColor( &wk->win_popup.putil, wk->print_que, 0, 0, wk->str_expand, wk->font, FCOL_POPUP );
-  PRINTSYS_PrintColor( wk->win_popup.bmp, 0, 16, wk->str_expand, wk->font, FCOL_POPUP );
+//  PRINTSYS_PrintColor( wk->win_popup.bmp, 0, 16, wk->str_expand, wk->font, FCOL_POPUP );
+  printReq_BmpwinPrint( wk, &wk->win_popup, 0, 16, wk->str_expand, FCOL_POPUP );
 
   GFL_BMPWIN_MakeTransWindow( wk->win_popup.win );
 }
@@ -819,12 +844,6 @@ typedef struct _TASKWK_BWIN_SCROLL{
 static void taskAdd_BWinScroll( BEACON_DETAIL_WORK* wk, u8 win_idx, u8 spos, u8 dir, int* task_ct );
 static void tcb_BWinScroll( GFL_TCBL *tcb , void* work);
 
-static void effReq_BWinScroll( BEACON_DETAIL_WORK* wk, u8 msg_id )
-{
-  print_GetMsgToBuf( wk, msg_id );
-//  taskAdd_BWinScroll( wk, wk->str_expand, &wk->eff_task_ct);
-}
-
 /*
  *  @brief  ビーコンウィンドウ スクロールタスク登録
  */
@@ -863,11 +882,12 @@ static void taskAdd_BWinScroll( BEACON_DETAIL_WORK* wk, u8 win_idx, u8 spos, u8 
 static void tcb_BWinScroll( GFL_TCBL *tcb , void* tcb_wk)
 {
   TASKWK_BWIN_SCROLL* twk = (TASKWK_BWIN_SCROLL*)tcb_wk;
-  
+
+#if 0
   if( !PRINTSYS_QUE_IsFinished( twk->bdw->print_que ) ){	
     return;
   }
-
+#endif
   if( twk->wait-- > 0 ){
     twk->py += twk->dy;
     draw_BeaconWindowScroll( twk->bp, twk->py );
@@ -944,6 +964,10 @@ static void tcb_PageScroll( GFL_TCBL *tcb , void* tcb_wk)
 {
   TASKWK_PAGE_SCROLL* twk = (TASKWK_PAGE_SCROLL*)tcb_wk;
   static const u8 pos_tbl[] = { SCROLL_POS_DOWN, SCROLL_POS_UP };
+  
+  if( !PRINTSYS_QUE_IsFinished( twk->bdw->print_que ) ){	
+    return;
+  }
 
   switch( twk->seq ){
   case 0:
@@ -962,14 +986,77 @@ static void tcb_PageScroll( GFL_TCBL *tcb , void* tcb_wk)
     if( twk->child_task ){
       return;
     }
+    twk->bdw->flip_sw ^= 1;
+    twk->bdw->list_top = twk->next;
+    draw_UpdateUnderView( twk->bdw );
+    twk->seq++;
+    return;
+  case 3:
     break;
   }
-  twk->bdw->flip_sw ^= 1;
-  twk->bdw->list_top = twk->next;
-  draw_UpdateUnderView( twk->bdw );
   sub_UpDownButtonActiveControl( twk->bdw );
 
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
 }
 
+/////////////////////////////////////////////////////////////////////
+/*
+ *  @brief  BMPウィンドウメッセージ表示キュー処理 
+ */
+/////////////////////////////////////////////////////////////////////
+typedef struct _TASKWK_BMPWIN_PRINT{
+  BMP_WIN* win;
+  BEACON_DETAIL_WORK* bdw;
+  int* task_ct;
+}TASKWK_BMPWIN_PRINT;
+
+static void taskAdd_BmpwinPrint( BEACON_DETAIL_WORK* wk, BMP_WIN* win, int* task_ct );
+static void tcb_BmpwinPrint( GFL_TCBL *tcb , void* work);
+
+static void printReq_BmpwinPrint( BEACON_DETAIL_WORK* wk, BMP_WIN* win, u8 x, u8 y, STRBUF* str, PRINTSYS_LSB color )
+{
+  PRINT_UTIL_PrintColor( &win->putil, wk->print_que, x, y, str, wk->font, color );
+  taskAdd_BmpwinPrint( wk, win, &wk->eff_task_ct );
+}
+
+/*
+ *  @brief  メッセージウィンドウ パネルフラッシュタスク登録
+ */
+static void taskAdd_BmpwinPrint( BEACON_DETAIL_WORK* wk, BMP_WIN* win, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_BMPWIN_PRINT* twk;
+
+  tcb = GFL_TCBL_Create( wk->pTcbSys, tcb_BmpwinPrint, sizeof(TASKWK_BMPWIN_PRINT), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_BMPWIN_PRINT ));
+
+  twk->bdw = wk;
+  twk->win = win;
+
+  if( task_ct != NULL ){
+    twk->task_ct = task_ct;
+    (*twk->task_ct)++;
+  }
+}
+
+static void tcb_BmpwinPrint( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_BMPWIN_PRINT* twk = (TASKWK_BMPWIN_PRINT*)tcb_wk;
+  BEACON_DETAIL_WORK* bdw = twk->bdw;
+
+  if( !PRINT_UTIL_Trans( &twk->win->putil, bdw->print_que )){
+    return;
+  }
+//  GFL_BMPWIN_MakeScreen( twk->win->win );
+//	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( twk->win->win ) );
+
+  if( twk->task_ct != NULL ){
+    (*twk->task_ct)--;
+  }
+  GFL_TCBL_Delete(tcb);
+}
+
+ 
