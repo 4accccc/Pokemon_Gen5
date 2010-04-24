@@ -2030,7 +2030,7 @@ static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
     switch( twk->ret ){
     case TMENU_YN_CHECK:
       bvp->event_id = EV_GPOWER_CHECK;
-      twk->seq = 2;
+      twk->seq = 3;
       return;
     case TMENU_YN_NO:
       twk->seq = 6;
