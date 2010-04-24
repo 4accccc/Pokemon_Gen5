@@ -139,6 +139,27 @@ static void _PartySet(BOOL bBattleBox,EVENT_IRCBATTLE_WORK *dbw)
   _ModifyLevelPokeParty(dbw->pParty);
 }
 
+//パーティーを３名に削る
+static void _partySub3(POKEPARTY* party)
+{
+  int i,num;
+
+  num = PokeParty_GetPokeCount( party );
+  for(i=3; i < num;i++){
+    PokeParty_Delete(party, 3);
+  }
+}
+
+
+static void _partySub3All(EVENT_IRCBATTLE_WORK *dbw)
+{
+  int i;
+  _partySub3(dbw->pParty);
+  for(i = 0;i < 4; i++){
+    _partySub3(dbw->pNetParty[i]);
+  }
+}
+
 
 static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw);
 
@@ -283,6 +304,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
                             BTL_COMM_DS, GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() ), HEAPID_PROC );
       dbw->para->multiMode = 1;
       dbw->para->rule = BTL_RULE_DOUBLE;
+      _partySub3All(dbw);
       break;
     default:
       GF_ASSERT(0);
