@@ -73,7 +73,7 @@ enum{
 //-------------------------------------
 ///	天気オブジェ定数
 //=====================================
-#define WEATHER_OBJ_WORK_BG_PRI		( 1 )
+#define WEATHER_OBJ_WORK_BG_PRI		( 3 )
 #define WEATHER_OBJ_WORK_SOFT_PRI	( 64 )
 #define WEATHER_OBJ_WORK_SERFACE_NO	( CLSYS_DEFREND_MAIN )
 
