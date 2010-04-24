@@ -217,7 +217,7 @@ int GDS_RAP_RESPONSE_BattleVideo_Upload(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONSE 
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_UNKNOWN:	//!< その他エラー
 	default:
 		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("バトルビデオ登録受信エラー！:その他のエラー\n");
+		OS_TPrintf("バトルビデオ登録受信エラー！:その他のエラー %d\n", res->Result);
 		break;
 	}
 
