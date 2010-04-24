@@ -668,6 +668,7 @@ struct _C_GEAR_WORK {
   PALETTE_FADE_PTR            pfade_ptr;
   
   int createEvent;
+  int doEvent;
 
   BUTTON_PAL_FADE button_palfade;
 
@@ -3661,6 +3662,8 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   pWork->bAction = TRUE;
   pWork->power_flag = GAMESYSTEM_GetAlwaysNetFlag( pWork->pGameSys );
   pWork->use_skip = TRUE;
+  pWork->createEvent = FIELD_SUBSCREEN_ACTION_NONE;
+  pWork->doEvent = FIELD_SUBSCREEN_ACTION_NONE;
 
   pWork->handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, HEAPID_FIELD_SUBSCREEN );
 
@@ -3792,7 +3795,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
   }
 
   // スリープ時は強制停止
-  if( SleepMode_IsSleep( pWork ) ){
+  if( SleepMode_IsSleep( pWork ) && (pWork->doEvent != FIELD_SUBSCREEN_ACTION_WIRELESS) ){
     FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
     FSND_StopTVTRingTone( fsnd );
     pWork->tvt_snd = FALSE;
@@ -3881,7 +3884,9 @@ void CGEAR_Exit( C_GEAR_WORK* pWork )
   GFL_TCB_Exit( pWork->pfade_tcbsys );
   GFL_HEAP_FreeMemory( pWork->pfade_tcbsys_wk );
   GFL_TCB_DeleteTask( pWork->vblank_tcb );
-  {
+
+  // Wireless以外の画面にいくならライブキャスターのSEをとめる
+  if( pWork->doEvent != FIELD_SUBSCREEN_ACTION_WIRELESS ){
     FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
     FSND_StopTVTRingTone( fsnd );
   }
@@ -3891,7 +3896,6 @@ void CGEAR_Exit( C_GEAR_WORK* pWork )
   _workEnd(pWork);
   G2S_BlendNone();
   GFL_HEAP_FreeMemory(pWork);
-
 }
 
 
@@ -3929,7 +3933,8 @@ GMEVENT* CGEAR_EventCheck(C_GEAR_WORK* pWork, BOOL bEvReqOK, FIELD_SUBSCREEN_WOR
     break;
   }
   if( event ){
-    pWork->createEvent = FIELD_SUBSCREEN_ACTION_NONE;
+    pWork->doEvent      = pWork->createEvent;
+    pWork->createEvent  = FIELD_SUBSCREEN_ACTION_NONE;
     // イベント待ちにする。
     _CHANGE_STATE(pWork,_modeEventWait);
   }
