@@ -176,10 +176,12 @@ void PMS_DRAW_Main( PMS_DRAW_WORK* wk )
   
   for( i=0; i<wk->unit_num; i++ )
   {
-    if( _unit_main( &wk->unit[i], wk->print_que, wk->is_clwk_auto_scroll ) )
-    {
-      // 一個でも転送が終わってないものがあったら転送終了フラグをOFF
-      wk->b_print_end = FALSE;
+    if(wk->unit[i].b_useflag){
+      if( _unit_main( &wk->unit[i], wk->print_que, wk->is_clwk_auto_scroll ) )
+      {
+        // 一個でも転送が終わってないものがあったら転送終了フラグをOFF
+        wk->b_print_end = FALSE;
+      }
     }
   }
 
@@ -583,9 +585,9 @@ static u32 _obj_get_nanr( CLSYS_DRAW_TYPE vram_type )
 /**
  *  @brief  VRAMモードからキャラの取得リソースを判定
  *
- *	@param	CLSYS_DRAW_TYPE vram_type CLSYS描画面タイプ
+ *  @param  CLSYS_DRAW_TYPE vram_type CLSYS描画面タイプ
  *
- *	@retval キャラのアーカイブID
+ *  @retval キャラのアーカイブID
  */
 //-----------------------------------------------------------------------------
 static u32 _obj_get_ncgr( CLSYS_DRAW_TYPE vram_type )
