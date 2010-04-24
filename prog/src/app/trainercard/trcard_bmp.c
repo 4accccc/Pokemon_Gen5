@@ -392,8 +392,10 @@ void TRCBmp_WriteTrWinInfo(TR_CARD_WORK* wk, GFL_BMPWIN *win[], const TR_CARD_DA
 
         PMS_DRAW_SetNullColorPallet( wk->PmsDrawWork, 0 );
         PMS_DRAW_Print( wk->PmsDrawWork, win[TRC_BMPWIN_PMSWORD], &wk->TrCardData->Pms, 0 );
+        if(wk->is_back){
+          PMS_DRAW_VisibleSet( wk->PmsDrawWork, 0, FALSE );
+        }
     }
-    
   }
 }
 

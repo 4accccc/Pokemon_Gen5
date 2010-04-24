@@ -1232,12 +1232,13 @@ static void CardDataDraw(TR_CARD_WORK* wk)
 {
   //背景デザイン書き込み
   CardDesignDraw(wk);
+  TRCBmp_WriteTrWinInfo(wk, wk->win, wk->TrCardData );
+  PMS_DRAW_Main( wk->PmsDrawWork );
 
   if (wk->is_back == FALSE){  //表
+    TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 0, 0 );
     //トレーナー表示
     DispTrainer(wk);
-    TRCBmp_WriteTrWinInfo(wk, wk->win, wk->TrCardData );
-    PMS_DRAW_Main( wk->PmsDrawWork );
   }else{  //裏面表示
     TRCBmp_WriteTrWinInfoRev(wk, wk->win, wk->TrCardData );
     TransSignData(TRC_BG_SIGN, wk->TrSignData, wk->SignAnimePat);
@@ -1482,6 +1483,7 @@ static BOOL CardRev( TR_CARD_WORK *wk )
       wk->CardScaleY = 1 << FX32_SHIFT;
       rc = TRUE;
       if(wk->is_back==0){
+        PMS_DRAW_VisibleSet( wk->PmsDrawWork, 0, TRUE );
         PMS_DRAW_SetPmsObjVisible( wk->PmsDrawWork, 0, TRUE );
       }
     }
@@ -1849,7 +1851,7 @@ static void Change_SignAnime( TR_CARD_WORK *wk, int flag )
  * @param   wk    TR_CARD_WORK
  * @param   hitNo ボタンナンバー
  *
- * @retval  BOOL  起動させるない
+ * @retval  BOOL  TRUE:起動させる・FALSE:させない
  */
 //----------------------------------------------------------------------------------
 static BOOL _sign_eneble_check( TR_CARD_WORK *wk, int hitNo )
