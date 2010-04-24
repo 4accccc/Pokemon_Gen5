@@ -335,10 +335,14 @@ end
 		name = sprintf( "trpoke_%03d.bin", trno )
 		fp_trpoke = open( name, "wb" )
 
+    count = 0
+
 		for poke_count in 0..5
       if split_data[ PARA::POKE1_NAME + poke_count ] == nil || split_data[ PARA::POKE1_NAME + poke_count ] == ""
         break
       end
+
+      count += 1
 
       if split_data[ PARA::POKE1_POW + poke_count * 4 ] == ""
 				printf( "TrainerName:%s No:%d\nPOKEPOW NOTHING!!\n", split_data[ PARA::TR_NAME ], poke_count + 1 )
@@ -459,7 +463,7 @@ end
       end
     end
 
-		if poke_count == 0
+		if count == 0
 			printf( "TrainerName:%s\nÉ|ÉPÉÇÉìÇéùÇ¡ÇƒÇ¢Ç‹ÇπÇÒ\n", split_data[ PARA::TR_NAME ] )
       exit( 1 )
     end
@@ -498,7 +502,7 @@ end
     type_tr     = tr_type[ str ]
     type_fight  = fight_type[ split_data[ PARA::FIGHT_TYPE ] ]
 
-    data = [ type_data, type_tr, type_fight, poke_count ].pack( "C4" )
+    data = [ type_data, type_tr, type_fight, count ].pack( "C4" )
 	  data.size.times{ |c|
 		  fp_trdata.printf("%c",data[ c ])
 	  }
