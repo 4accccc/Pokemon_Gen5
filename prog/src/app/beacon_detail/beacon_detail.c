@@ -942,10 +942,10 @@ static void _sub_BeaconWinInit( BEACON_DETAIL_WORK* wk )
                   frm, BMP_PMS_PX, BMP_PMS_PY, BMP_PMS_SX, BMP_PMS_SY,
                   BMP_PMS_PAL+i, GFL_BMP_CHRAREA_GET_B );
 
-      PMSDAT_SetSentence( &pms, 0, 0 );
+//      PMSDAT_SetSentence( &pms, 0, 0 );
 //      PMSDAT_SetDeco( &pms, 0, PMS_DECOID_HERO+i );
-      PMS_DRAW_Print( wk->pms_draw, bp->pms, &pms , i );
-      PMS_DRAW_Clear( wk->pms_draw, i, TRUE );
+//      PMS_DRAW_Print( wk->pms_draw, bp->pms, &pms , i );
+//      PMS_DRAW_Clear( wk->pms_draw, i, TRUE );
 //      PMS_DRAW_VisibleSet( wk->pms_draw, i, FALSE );
 
       for(j = 0;j < BEACON_PROF_MAX;j++){
