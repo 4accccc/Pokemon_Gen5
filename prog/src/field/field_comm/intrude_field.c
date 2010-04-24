@@ -241,8 +241,10 @@ BOOL IntrudeField_CheckTalk(INTRUDE_COMM_SYS_PTR intcomm, const FIELD_PLAYER *fl
   if(CommPlayer_SearchGridPos(intcomm->cps, check_gx, check_gz, &out_index) == TRUE){
     OS_TPrintf("Talkターゲット発見! net_id = %d, gx=%d, gz=%d\n", 
       out_index, check_gx, check_gz);
-    *hit_netid = out_index;
-    return TRUE;
+    if(intcomm->intrude_status[out_index].player_pack.vanish == FALSE){
+      *hit_netid = out_index;
+      return TRUE;
+    }
   }
   
   return FALSE;
@@ -783,7 +785,7 @@ static GMEVENT_RESULT EVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*wor
   case SEQ_COMM_EXIT_WAIT:
     dsw->wait++;
     if(dsw->msgWin == NULL || dsw->wait > 60){
-      if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION){  //通信エラーの場合でも上位でExitReqしているのでNULL待ちでいい。INVASIONじゃない場合はFIELD_BEACONの場合があるのでINVASIONじゃないかどうかでチェック
+      if(NetErr_App_CheckError() || GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION){//INVASIONじゃない場合はFIELD_BEACONの場合があるのでINVASIONじゃないかどうかでチェック
         GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
         int i;
         PLAYER_WORK *plwork;

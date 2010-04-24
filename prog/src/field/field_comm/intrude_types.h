@@ -159,9 +159,12 @@ typedef struct _PALACE_SYS_WORK * PALACE_SYS_PTR;
 ///侵入ステータス(自分の現在情報)
 typedef struct{
   COMM_PLAYER_PACKAGE player_pack;    ///<プレイヤー座標データパッケージ
-  u16 zone_id;      ///<ゾーンID
-  u8 palace_area;   ///<パレスエリア
-  u8 action_status; ///<実行中のアクション(INTRUDE_ACTION_???)
+  
+  u16 zone_id;       ///<ゾーンID
+  u16 palace_area:3; ///<パレスエリア
+  u16 symbol_mapid:6;
+  u16 action_status:7; ///<実行中のアクション(INTRUDE_ACTION_???)
+  
   u16 disguise_no;   ///<変装番号
   u8 disguise_type:4; ///<変装タイプ(TALK_TYPE_xxx)
   u8 disguise_sex:1;  ///<変装中の性別

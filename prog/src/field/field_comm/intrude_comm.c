@@ -651,6 +651,7 @@ static BOOL IntrudeComm_DiffSendBeacon(GAMEDATA *gamedata, GBS_BEACON *beacon)
   if(beacon->member_num != GFL_NET_GetConnectNum()
       || beacon->error != GFL_NET_SystemGetErrorCode()){
     IntrudeComm_CreateBeaconData(gamedata, beacon);
+    NET_WHPIPE_BeaconSetInfo();
     return TRUE;
   }
   return FALSE;

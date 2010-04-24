@@ -585,7 +585,18 @@ void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INT
     }
     else if(target_status->palace_area == mine_st->palace_area){
       //同じROM内にいる
-      target_status->player_pack.vanish = FALSE;
+      if(ZONEDATA_IsBingo(target_status->zone_id) == TRUE && ZONEDATA_IsBingo(mine_st->zone_id) == TRUE){
+        //二人ともシンボルマップにいる
+        if(target_status->symbol_mapid == mine_st->symbol_mapid){
+          target_status->player_pack.vanish = FALSE;
+        }
+        else{
+          target_status->player_pack.vanish = TRUE;
+        }
+      }
+      else{ //同じROM内にいてシンボルマップ以外なら表示
+        target_status->player_pack.vanish = FALSE;
+      }
     }
     else{
       //違うROMにいる
@@ -804,6 +815,11 @@ BOOL Intrude_SetSendStatus(INTRUDE_COMM_SYS_PTR intcomm)
   send_req = CommPlayer_Mine_DataUpdate(intcomm->cps, &ist->player_pack);
   if(ist->zone_id != zone_id){
     ist->zone_id = zone_id;
+    send_req = TRUE;
+  }
+  
+  if(ist->symbol_mapid != GAMEDATA_GetSymbolMapID(gamedata)){
+    ist->symbol_mapid = GAMEDATA_GetSymbolMapID(gamedata);
     send_req = TRUE;
   }
   
