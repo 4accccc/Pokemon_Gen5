@@ -113,7 +113,6 @@ EVENT_START   ev_d06r0301_sage3_01
 	
 	//ƒnƒ“ƒTƒ€‚ª‚â‚Á‚Ä‚­‚é
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_icpo_come_01)
-	_TIME_WAIT(40)
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_move_03)
 	_OBJ_ANIME(D06R0301_HAKAIM_01,anm_d06r0301_hakaim_move_4)
 	_OBJ_ANIME(D06R0301_HAKAIW_01,anm_d06r0301_hakaiw_move_3)
@@ -246,9 +245,9 @@ _ANIME_LABEL	anm_player_move_03
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_icpo_come_01
 	
-	_ANIME_DATA AC_WALK_D_8F,8
-	_ANIME_DATA AC_WALK_R_8F,4
-	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_D_4F,8
+	_ANIME_DATA AC_WALK_R_4F,4
+	_ANIME_DATA AC_WALK_D_4F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
