@@ -1389,7 +1389,11 @@ static BOOL MainSlideMove( FRAMELIST_WORK * wk )
 
 		y = GFL_STD_Abs(  wk->nowTpy -  wk->oldTpy );
 
-		if( y >= 12 ){
+		if( wk->listPos == 0 && wk->nowTpy < wk->oldTpy ){
+			speed = 0;
+		}else if( wk->listPos == (wk->listPosMax-1) && wk->nowTpy > wk->oldTpy ){
+			speed = 0;
+		}else if( y >= 12 ){
 			speed = wk->hed.scrollSpeed[0];
 		}else if( y >= 8 ){
 			speed = wk->hed.scrollSpeed[1];
