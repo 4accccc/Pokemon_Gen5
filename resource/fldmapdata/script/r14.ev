@@ -107,13 +107,6 @@ DEFINE_LOCAL	LWK_DIR
 		_OBJ_ANIME_WAIT()
 	ENDSWITCH
 
-	//========================================/
-	
-	//七賢人ワークに＋１
-	$WK_SCENE_AFTER_SAGE += 1
-	
-	//========================================/
-
 	//全部の七賢人を捕まえている場合
 	IF $WK_SCENE_AFTER_SAGE == 5 THEN
 		_PLAYER_NAME(0)
@@ -159,6 +152,8 @@ DEFINE_LOCAL	LWK_DIR
 	//バニシュフラグセット
 	_FLAG_SET( FV_R14_SAGE )
 	
+	//七賢人ワークに＋１
+	$WK_SCENE_AFTER_SAGE += 1
 	//========================================/
 
 EVENT_END

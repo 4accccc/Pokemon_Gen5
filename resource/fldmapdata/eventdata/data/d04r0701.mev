@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/29 19:35:02
+#save date:2010/04/24 23:08:55
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d04r0701.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,38 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d04r0701.wms
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#type
+1
+#ID name
+D04R0701_HAKAIM_01
+#OBJ CODE Number
+HAKAIM
+#MOVE CODE Number
+MV_RND_DL
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_D04R0701_PLASMA
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
 0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+168 112 104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -29,7 +60,24 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d04r0701.wms
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POS_D04R0701_HAKAIM
+#Pos Script Name
+SCRID_POS_D04R0701_HAKAIM
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_D04R0701_PLASMA
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+152 112 72
+#size
+3 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

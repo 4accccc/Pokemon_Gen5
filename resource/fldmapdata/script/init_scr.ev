@@ -294,6 +294,13 @@ init_flags:
 
 	//ギアステーションのジャッジを非表示
 	_FLAG_SET( FV_POKE_JUDGE_01 )
+	
+	//R06R0101：シキジカをイベント成功まで消す。
+	_FLAG_SET(FV_R06R0101_POKE_SPRING)
+	_FLAG_SET(FV_R06R0102_POKE_SUMMER)
+	_FLAG_SET(FV_R06R0103_POKE_AUTUMN)
+	_FLAG_SET(FV_R06R0104_POKE_WINTER)
+	
 }
 _RET
 
@@ -373,6 +380,12 @@ INIT_EVENT_START  ev_init_gameclear_script
   IF FLAG_ON( FV_D10R0401_POKE10 ) && FLAG_OFF( FE_D10R0401_POKE10_GET ) THEN
     //OBJを消していて、捕まえていなければ復活させる
     _FLAG_RESET( FV_D10R0401_POKE10 )
+  ENDIF
+ 
+     //ドラー未捕獲時の復活処理
+  IF FLAG_ON(FV_D04R2301_POKE13) && FLAG_OFF(FE_D04R2301_POKE13_GET) THEN
+      //OBJを消していて、捕まえていなければ復活させる
+      _FLAG_RESET( FV_D04R2301_POKE13 )
   ENDIF
 
 }

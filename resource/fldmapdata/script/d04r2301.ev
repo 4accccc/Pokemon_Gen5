@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d04r2301.h"
-  //.include  "d04r2301.h"
+  .include  "d04r2301.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,62 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_d04r2301
+_EVENT_DATA    ev_d04r2301_poke13_01
 _EVENT_DATA_END
 
+/**************************************************************/
+/* パッケージポケモン 話しかけ                                                          
+/**************************************************************/
+EVENT_START    ev_d04r2301_poke13_01
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_d04r2301_flag_change:
-//  _END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_d04r2301:
-  //とりあえず最初のラベルだけ生成している
-  _END
+	_VOICE_PLAY( MONSNO_644, 0 )
+	_GIZAWIN_OBJMSG_POS( msg_d04r2301_poke_01 ,D04R2301_POKE13_01, POS_DEFAULT )
+	_VOICE_WAIT()
+	_AB_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+	_WILD_BTL_SET_LEGEND( MONSNO_644, 65 )
+	_BATTLE_RESULT_GET( SCWK_ANSWER )
+	//倒した場合
+	IF $SCWK_ANSWER == 0 THEN
+				
+		//========================================/
+				
+			//ドラーのOBJ削除
+			_OBJ_DEL(D04R2301_POKE13_01)
+				
+			//フラグセット
+			_FLAG_SET(FV_D04R2301_POKE13)
+				
+			//自機の位置調整
+			_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 5, DIR_UP )
+				
+		//========================================/
+				
+		_WILD_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			
+	//負けた場合
+	ELSE		
+		_WILD_LOSE()		//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			
+	ENDIF
+		
+	_WILD_RETRY_CHECK( SCWK_ANSWER )
+
+	SWITCH $SCWK_ANSWER
+	CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN
+		//勝利した場合、あるいは逃げた場合
+		_SYSWIN_MSG( msg_d04r2301_poke_02 , POS_DOWN )
+		_LAST_KEYWAIT()
+		_SYSWIN_CLOSE()
+		 
+	CASE SCR_WILD_BTL_RET_CAPTURE THEN
+	//捕まえた場合
+
+		_FLAG_SET( FE_D04R2301_POKE13_GET )
+
+	ENDSWITCH
+
+EVENT_END
 

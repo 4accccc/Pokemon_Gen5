@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r06r0101.h"
-  //.include  "r06r0101.h"
+  .include  "r06r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,43 +19,226 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    	ev_r06r0101
 _EVENT_DATA 	ev_r06r0101_assistantm_01
 _EVENT_DATA 	ev_r06r0101_assistantm_02
+_EVENT_DATA 	ev_r06r0101_assistantm_03
+_EVENT_DATA 	ev_r06r0101_assistantw_01
 _EVENT_DATA 	ev_bg_r06r0101_case_01
 _EVENT_DATA 	ev_bg_r06r0101_case_02
+//シキジカ
+_EVENT_DATA 	ev_r06r0101_poke25_01
+_EVENT_DATA 	ev_r06r0101_poke26_01
+_EVENT_DATA 	ev_r06r0101_poke27_01
+_EVENT_DATA 	ev_r06r0101_poke28_01
 _EVENT_DATA_END
-
-
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_r06r0101_flag_change:
-//  _END
-
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_r06r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
 
 /**************************************************************/
 /*  R06 asseitantm1_01の会話のイベントスクリプト*/
 /**************************************************************/
 EVENT_START  ev_r06r0101_assistantm_01
-		
-		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm1_01)
-
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm1_01)
 EVENT_END
-
 /**************************************************************/
 /*  R06 asseitantm1_02の会話のイベントスクリプト*/
 /**************************************************************/
 EVENT_START  ev_r06r0101_assistantm_02
-	
-		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm2_01)
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm2_01)
 EVENT_END
+/**************************************************************/
+/*  R06 asseitantw1_01の会話のイベントスクリプト*/
+/**************************************************************/
+EVENT_START  ev_r06r0101_assistantw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantw1_01)
+EVENT_END
+/**************************************************************/
+/*  R06 シキジカ（春）の会話のイベントスクリプト*/
+/**************************************************************/
+EVENT_START  ev_r06r0101_poke25_01
+	_EASY_TALK_POKEVOICE(MONSNO_511,msg_r06r0101_poke01_01)
+EVENT_END
+/**************************************************************/
+/*  R06 シキジカ（夏）の会話のイベントスクリプト*/
+/**************************************************************/
+EVENT_START  ev_r06r0101_poke26_01
+	_EASY_TALK_POKEVOICE(MONSNO_511,msg_r06r0101_poke02_01)
+EVENT_END
+/**************************************************************/
+/*  R06 シキジカ（秋）の会話のイベントスクリプト*/
+/**************************************************************/
+EVENT_START  ev_r06r0101_poke27_01
+	_EASY_TALK_POKEVOICE(MONSNO_511,msg_r06r0101_poke03_01)
+EVENT_END
+/**************************************************************/
+/*  R06 シキジカ（冬）の会話のイベントスクリプト*/
+/**************************************************************/
+EVENT_START  ev_r06r0101_poke28_01
+	_EASY_TALK_POKEVOICE(MONSNO_511,msg_r06r0101_poke04_01)
+EVENT_END
+/**************************************************************/
+/*  R06 asseitantm3_01の会話のイベントスクリプト*/
+/**************************************************************/
+EVENT_START  ev_r06r0101_assistantm_03
+
+	DEFINE_LOCAL LWK_MONSNUM
+	DEFINE_LOCAL LWK_POKE_SELECT_CHK
+	DEFINE_LOCAL LWK_POKE_SELECT
+	DEFINE_LOCAL LWK_POKE_FORMNO
+	DEFINE_LOCAL LWK_TALK_NUM
+	DEFINE_LOCAL LWK_EGG_CHK
+	
+	_MONS_NAME( 0, MONSNO_511 )
+	_TALK_OBJ_START()
+	
+	//イベントをクリアしてアイテムをもらった？
+	IF FLAG_OFF(FH_06) THEN	
+		//イベントをクリアした？
+		IF FLAG_OFF(FV_R06R0101_POKE_SPRING) && FLAG_OFF(FV_R06R0102_POKE_SUMMER) && FLAG_OFF(FV_R06R0103_POKE_AUTUMN) && FLAG_OFF(FV_R06R0104_POKE_WINTER) && $LOCALWORK1 == 0 THEN
+			//お！　あなたは！　おかげさまで
+			_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_09)
+			_MSGWIN_CLOSE()
+			
+			//アイテム入手
+			_ITEM_EVENT_KEYWAIT(ITEM_RIIHUNOISI,1)
+			//アイテム入手フラグをON
+			_FLAG_SET(FH_06)
+		
+		ELSE
+			//依頼に「はい」と答え、イベントを引き受けている？
+			IF FLAG_OFF(FH_01)THEN
+				IF $LOCALWORK2 == 0 THEN
+					//2回目以降の話しかけはこの処理を飛ばす
+					IF $LOCALWORK0  == 0 THEN
+						
+						//われわれは　きせつによる　しぜんの　さまざまな
+						_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_01)
+						_MSGWIN_CLOSE()
+								
+						//…と　ここまでは　よいのですけれども
+						_TIME_WAIT(16)
+						_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_01a)
+						_MSGWIN_CLOSE()
+						
+					ENDIF
+					
+					_TIME_WAIT(16)
+					//シキジカを選択したかの判定へ
+					_CALL ev_shikijika_event
+						
+					//一度話しかけたことを保存
+					$LOCALWORK0 = 1
+					
+				ELSIF $LOCALWORK2 == 1 THEN
+					_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_03)				
+				ELSIF $LOCALWORK2 == 2 THEN
+					_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_04)
+				ELSIF $LOCALWORK2 == 3 THEN
+					_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_05)
+				ELSIF $LOCALWORK2 == 4 THEN
+					_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_06)
+				ENDIF
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+			
+			ELSE
+				//シキジカを選択したかの判定へ
+				IF $LOCALWORK2 == 0 THEN
+					_CALL ev_shikijika_event
+
+				ELSIF $LOCALWORK2 == 1 THEN
+					_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_03)				
+				ELSIF $LOCALWORK2 == 2 THEN
+					_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_04)
+				ELSIF $LOCALWORK2 == 3 THEN
+					_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_05)
+				ELSIF $LOCALWORK2 == 4 THEN
+					_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_06)
+				ENDIF
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+			
+			ENDIF
+		ENDIF
+	ELSE
+		//4つの季節のシキジカが同時に
+		_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_10)
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	ENDIF
+	
+EVENT_END
+
+ev_shikijika_event:
+
+	//いかがでしょうか？
+	_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_02)
+	_YES_NO_WIN(SCWK_ANSWER)
+		
+	IF $SCWK_ANSWER == SCR_YES THEN
+		_MSGWIN_CLOSE()
+		//イベントスタートフラグON
+		_FLAG_SET(FH_01)
+
+		//手持ちポケモンを選択する
+		_SELECT_TEMOTI_POKE( LWK_POKE_SELECT_CHK , LWK_POKE_SELECT , 0 )
+
+		//選んだポケモンのナンバーを取得する
+		_GET_PARTY_POKE_MONSNO( LWK_MONSNUM, LWK_POKE_SELECT )
+		//タマゴを選んでいないかチェック
+		_CHECK_TEMOTI_EGG( LWK_EGG_CHK, LWK_POKE_SELECT )
+		
+		IF $LWK_POKE_SELECT_CHK == TRUE THEN
+			IF $LWK_EGG_CHK == FALSE THEN
+				IF $LWK_MONSNUM== MONSNO_511 THEN
+			
+					//選んだポケモンのフォルムナンバーを取得する
+					_GET_PARTY_POKE_FORMNO(LWK_POKE_FORMNO,LWK_POKE_SELECT)
+			
+					//春のフォルムのシキジカを見せた
+					IF $LWK_POKE_FORMNO == FORMNO_511_SPRING && FLAG_ON(FV_R06R0101_POKE_SPRING) THEN
+						_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_03)
+						_FLAG_RESET(FV_R06R0101_POKE_SPRING)
+						$LOCALWORK2 = 1
+					//夏のフォルムのシキジカを見せた
+					ELSIF $LWK_POKE_FORMNO == FORMNO_511_SUMMER && FLAG_ON(FV_R06R0102_POKE_SUMMER) THEN
+						_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_04)
+						_FLAG_RESET(FV_R06R0102_POKE_SUMMER)
+						$LOCALWORK2 = 2
+					//秋のフォルムのシキジカを見せた
+					ELSIF $LWK_POKE_FORMNO == FORMNO_511_AUTUMN && FLAG_ON(FV_R06R0103_POKE_AUTUMN) THEN
+						_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_05)
+						_FLAG_RESET(FV_R06R0103_POKE_AUTUMN)
+						$LOCALWORK2 = 3
+					//冬のフォルムのシキジカを見せた
+					ELSIF $LWK_POKE_FORMNO == FORMNO_511_WINTER && FLAG_ON(FV_R06R0104_POKE_WINTER) THEN
+						_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_06)
+						_FLAG_RESET(FV_R06R0104_POKE_WINTER)
+						$LOCALWORK2 = 4
+					//すでに見せた季節のシキジカを見せた
+					ELSE
+						//ありがとうございます！　ですが　そのきせつの
+						_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_07)
+					ENDIF
+					
+					$LOCALWORK1 = 1
+				ELSE
+					//そうですか……　われわれの　けんきゅうに　きょうりょくして
+					_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_08)
+		
+				ENDIF
+			ELSE
+				//そうですか……　われわれの　けんきゅうに　きょうりょくして
+				_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_08)	
+			ENDIF
+		ELSE
+			//そうですか……　われわれの　けんきゅうに　きょうりょくして
+			_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_08)
+		ENDIF
+	ELSE
+		//そうですか……　われわれの　けんきゅうに　きょうりょくして
+		_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_08)
+	ENDIF
+_RET
+
 /**************************************************************/
 /*  R06 栽培ケース/
 /**************************************************************/
