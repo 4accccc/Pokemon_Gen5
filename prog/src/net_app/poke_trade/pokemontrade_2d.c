@@ -753,6 +753,7 @@ void IRC_POKETRADE_EndIconResource(POKEMON_TRADE_WORK* pWork)
 
   POKEMONTRADE_EndMojiSelect(pWork);
 
+  POKETRADE_MESSAGE_ResetPokemonBallIcon(pWork);
   
   for(i = 0;i< CELL_DISP_NUM;i++){
     if(pWork->curIcon[i]){

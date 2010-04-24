@@ -132,9 +132,11 @@ static void UITemplate_TYPEICON_CreateCLWK( _TYPE_ICON_WORK *wk, POKEMON_PARAM* 
  *	@param	_BALL_ICON_WORK* wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void UITemplate_BALLICON_DeleteCLWK( _BALL_ICON_WORK* wk )
+static void _UITemplate_BALLICON_DeleteCLWK( _BALL_ICON_WORK* wk )
 {
+
   if(wk->clwk_ball){
+    OS_TPrintf("ボールアイコン破棄 %x\n",(u32)wk);
     //CLWK破棄
     GFL_CLACT_WK_Remove( wk->clwk_ball );
     wk->clwk_ball=NULL;
@@ -154,7 +156,7 @@ static void UITemplate_BALLICON_DeleteCLWK( _BALL_ICON_WORK* wk )
  */
 //-----------------------------------------------------------------------------
 //UIテンプレート ボール
-static void UITemplate_BALLICON_CreateCLWK( _BALL_ICON_WORK* wk,
+static void _UITemplate_BALLICON_CreateCLWK( _BALL_ICON_WORK* wk,
                                             POKEMON_PARAM* pp, GFL_CLUNIT *unit,
                                             int x ,int y, int drawtype, HEAPID heapID,int plt )
 {
@@ -163,7 +165,7 @@ static void UITemplate_BALLICON_CreateCLWK( _BALL_ICON_WORK* wk,
 
   ballID = PP_Get(pp, ID_PARA_get_ball, NULL);
 
-  UITemplate_BALLICON_DeleteCLWK(wk);
+  _UITemplate_BALLICON_DeleteCLWK(wk);
 
   prm.draw_type = drawtype;
   prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
@@ -180,6 +182,9 @@ static void UITemplate_BALLICON_CreateCLWK( _BALL_ICON_WORK* wk,
   UI_EASY_CLWK_LoadResource( &wk->clres_ball, &prm, unit, heapID );
   // CLWK生成
   wk->clwk_ball = UI_EASY_CLWK_CreateCLWK( &wk->clres_ball, unit, x, y, 0, heapID );
+
+  OS_TPrintf("ボールアイコン登録 %x\n",(u32)wk);
+
 }
 
 
@@ -758,7 +763,7 @@ void POKETRADE_MESSAGE_SetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork, int si
     GFL_FONTSYS_SetColor( FBMP_COL_WHITE, FBMP_COL_BLK_SDW, 0x0 );
     _pokeLvMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->StatusWin[side]), 16, 19, pWork);
     _pokePocketItemMsgDisp(pp, pWork->StatusWin[side], 16, 16*8, pWork);
-    UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS], pp, pWork->cellUnit,
+    _UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS], pp, pWork->cellUnit,
                                     xdotpos[side]+16, 16, CLSYS_DRAW_MAIN, pWork->heapID,PLTID_OBJ_BALLICON_M );
   }
   GFL_BMPWIN_TransVramCharacter(pWork->StatusWin[side]);
@@ -772,6 +777,13 @@ void POKETRADE_MESSAGE_SetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork, int si
 //	ポケモンステータス表示の消去
 //--------------------------------------------------------------
 
+void POKETRADE_MESSAGE_ResetPokemonBallIcon(POKEMON_TRADE_WORK *pWork)
+{
+  int i;
+  for(i=0;i<UI_BALL_NUM;i++){
+    _UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[i]);
+  }
+}
 
 
 void POKETRADE_MESSAGE_ResetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork)
@@ -779,7 +791,8 @@ void POKETRADE_MESSAGE_ResetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork)
   IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
   IRC_POKETRADE_PokeStatusIconReset(pWork);
   GXS_SetVisibleWnd( GX_WNDMASK_NONE );
-  UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
+  
+  POKETRADE_MESSAGE_ResetPokemonBallIcon(pWork);
   UITemplate_TYPEICON_DeleteCLWK(&pWork->aTypeIcon[0]);
   UITemplate_TYPEICON_DeleteCLWK(&pWork->aTypeIcon[1]);
   IRC_POKETRADE_ResetMainStatusBG(pWork); //CLACT削除含む
@@ -885,12 +898,12 @@ void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pagen
 
       IRC_POKETRADE_ItemIconDisp(pWork, leftright, pp);
       IRC_POKETRADE_PokerusIconDisp(pWork, leftright,FALSE, pp);
-      UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[UI_BALL_SUBSTATUS], pp, pWork->cellUnit,
+      _UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[UI_BALL_SUBSTATUS], pp, pWork->cellUnit,
                                       xdotpos[leftright]+16, 16, CLSYS_DRAW_SUB, pWork->heapID,PLTID_OBJ_BALLICON_S );
     }
   }
   else{
-    UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
+    _UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
     IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
     IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
     if(bEgg==FALSE){
@@ -987,7 +1000,7 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
                                      26*8, 12*8, CLSYS_DRAW_MAIN, pWork->heapID );
     }
   }
-  UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[UI_BALL_SUBSTATUS], pp, pWork->cellUnit,
+  _UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[UI_BALL_SUBSTATUS], pp, pWork->cellUnit,
                                   12, 8, CLSYS_DRAW_MAIN, pWork->heapID,PLTID_OBJ_BALLICON_M );
 
 
@@ -1013,13 +1026,13 @@ void IRCPOKEMONTRADE_ResetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork, int si
     GFL_BMPWIN_Delete(pWork->StatusWin[side]);
     GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
     pWork->StatusWin[side] = NULL;
-    UITemplate_BALLICON_DeleteCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS]);
+    _UITemplate_BALLICON_DeleteCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS]);
   }
 }
 
 void POKETRADE_MESSAGE_ResetPokemonMyStDisp(POKEMON_TRADE_WORK* pWork)
 {
-  UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
+  _UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
   IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
   IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
   if(pWork->MyInfoWin){
@@ -1177,7 +1190,7 @@ void POKEMONTRADE_NEGOBG_SlideMessage(POKEMON_TRADE_WORK *pWork, int side,POKEMO
     _pokeLvMsgDisp(pp, GFL_BMPWIN_GetBmp(pWork->StatusWin1[side]), 16, 19, pWork);
     GFL_FONTSYS_SetColor( 1, 2, palette[side*2+1] );
     _pokePocketItemMsgDisp(pp, pWork->StatusWin2[side], 16, 16*8, pWork);
-    UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS], pp, pWork->cellUnit,
+    _UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS], pp, pWork->cellUnit,
                                     xdotpos[side]+16, 16, CLSYS_DRAW_MAIN, pWork->heapID,PLTID_OBJ_BALLICON_M );
   }
   GFL_BMPWIN_TransVramCharacter(pWork->StatusWin1[side]);
@@ -1197,7 +1210,7 @@ void POKEMONTRADE_NEGOBG_SlideMessageDel(POKEMON_TRADE_WORK *pWork,int side)
   if(pWork->StatusWin1[side]){
     GFL_BMPWIN_Delete(pWork->StatusWin1[side]);
     GFL_BMPWIN_Delete(pWork->StatusWin2[side]);
-    UITemplate_BALLICON_DeleteCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS]);
+    _UITemplate_BALLICON_DeleteCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS]);
     pWork->StatusWin1[side]=NULL;
     pWork->StatusWin2[side]=NULL;
   }

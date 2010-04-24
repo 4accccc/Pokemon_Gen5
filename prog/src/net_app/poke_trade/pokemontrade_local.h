@@ -827,6 +827,7 @@ extern void POKETRADE_MESSAGE_WindowOpenXY(POKEMON_TRADE_WORK* pWork,BOOL bFast,
 extern int POKEMONTRADE_GetFriendBoxNum(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_NEGOBG_Select6Create(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADE_NEGOBG_Select6Scroll(POKEMON_TRADE_WORK* pWork);
+extern void POKETRADE_MESSAGE_ResetPokemonBallIcon(POKEMON_TRADE_WORK *pWork);
 
 extern void POKEMONTRADE_NEGOBG_SlideInit(POKEMON_TRADE_WORK* pWork,int side, POKEMON_PARAM* pp);
 extern void POKEMONTRADE_NEGOBG_SlideMessage(POKEMON_TRADE_WORK *pWork, int side,POKEMON_PARAM* pp);

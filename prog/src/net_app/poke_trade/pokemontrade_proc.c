@@ -3465,6 +3465,7 @@ void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork)
 {
   GXS_SetVisibleWnd( GX_WNDMASK_NONE );
   POKETRADE_2D_GTSPokemonIconResetAll(pWork);
+
   IRC_POKETRADEDEMO_RemoveModel( pWork);
   POKE_GTS_ReleasePokeIconResource(pWork);
   POKE_GTS_DeleteEruptedIcon(pWork);
