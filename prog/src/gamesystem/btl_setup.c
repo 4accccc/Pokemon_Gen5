@@ -235,8 +235,12 @@ static void BSP_TRAINER_DATA_Delete( BSP_TRAINER_DATA* tr_data )
  */
 static void setup_trainer_param( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_CLIENT_ID client, POKEPARTY** party, TrainerID tr_id, HEAPID heapID )
 {
-  *party = PokeParty_AllocPartyWork( heapID );
-  dst->tr_data[client] = BSP_TRAINER_DATA_Create( heapID );
+  if( (*party) == NULL ){
+    *party = PokeParty_AllocPartyWork( heapID );
+  }
+  if( dst->tr_data[client] == NULL ){
+    dst->tr_data[client] = BSP_TRAINER_DATA_Create( heapID );
+  }
 
   if(tr_id != TRID_NULL)
   {
@@ -329,7 +333,6 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
   dst->recordData   = GAMEDATA_GetRecordPtr( gameData );
 
   {
-    // @todo いずれSAVE_CONTROL_WORKに直アクセスしないように書き換える？
     SAVE_CONTROL_WORK* saveCtrl = GAMEDATA_GetSaveControlWork( gameData );
     const MISC* miscData = SaveData_GetMiscConst( saveCtrl );
 
