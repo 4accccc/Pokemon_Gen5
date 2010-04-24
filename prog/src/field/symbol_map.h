@@ -30,5 +30,9 @@ extern BOOL SYMBOLMAP_IsKeepzoneID( SYMBOL_MAP_ID symmap_id );
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
+extern BOOL SYMBOLMAP_IsLargePokeID( SYMBOL_MAP_ID symmap_id );
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 extern INTRUDE_SYMBOL_WORK * SYMBOLMAP_AllocSymbolWork( HEAPID heapID, GAMESYS_WORK * gsys, u32 * no );
 

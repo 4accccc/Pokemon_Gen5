@@ -106,7 +106,7 @@ VMCMD_RESULT EvCmdSymbolMapPokeSet( VMHANDLE *core, void *wk )
   u32 start_no;
   
   isw = SYMBOLMAP_AllocSymbolWork( heapID, gsys, &start_no );
-  SYMBOLPOKE_Add( fieldmap, start_no, isw->spoke_array, isw->num );
+  SYMBOLPOKE_Add( fieldmap, start_no, isw->spoke_array, isw->num, isw->symbol_map_id );
   GFL_HEAP_FreeMemory( isw );
   
   return VMCMD_RESULT_CONTINUE;

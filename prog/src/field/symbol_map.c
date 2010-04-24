@@ -524,3 +524,23 @@ BOOL SYMBOLMAP_IsEntranceID( SYMBOL_MAP_ID symmap_id )
   return SYMMAPIDtoLSID( symmap_id ) == SYMMAP_ENT_ID;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   大きいポケモン用のマップか？のチェック
+ * @param symmap_id   シンボルマップID
+ * @return BOOL   TRUEの時、大きいポケモン用のマップ
+ */
+//--------------------------------------------------------------
+BOOL SYMBOLMAP_IsLargePokeID( SYMBOL_MAP_ID symmap_id )
+{
+   u8 lsid = SYMMAPIDtoLSID( symmap_id );
+   if ( lsid == 2 || lsid == 3 || lsid == 4 )
+   {
+     return TRUE;
+   }
+   else
+   {
+     return FALSE;
+   }
+}
+

@@ -22,7 +22,8 @@
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 extern void SYMBOLPOKE_Add(
-    FIELDMAP_WORK *fieldmap, u32 start_no, const SYMBOL_POKEMON * sympoke, int poke_num );
+    FIELDMAP_WORK *fieldmap, u32 start_no, const SYMBOL_POKEMON * sympoke, int poke_num,
+    SYMBOL_MAP_ID symmap_id );
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------

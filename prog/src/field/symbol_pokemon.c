@@ -20,6 +20,7 @@
 //#include "intrude_main.h"
 #include "../../../resource/fldmapdata/script/symbol_encount_scr_def.h"
 
+#include "symbol_map.h"
 #include "symbol_pokemon.h"
 #include "field/tpoke_data.h"
 
@@ -215,7 +216,8 @@ POKEMON_PARAM * SYMBOLPOKE_PP_Create(
  */
 //--------------------------------------------------------------
 void SYMBOLPOKE_Add(
-    FIELDMAP_WORK *fieldmap, u32 start_no, const SYMBOL_POKEMON * sympoke, int poke_num )
+    FIELDMAP_WORK *fieldmap, u32 start_no, const SYMBOL_POKEMON * sympoke, int poke_num,
+    SYMBOL_MAP_ID symmap_id )
 {
   POKEADD_WORK padd;
   int idx = 0;
@@ -223,8 +225,22 @@ void SYMBOLPOKE_Add(
   MMDL * jiki;
 
   const u8 * map_pos;
-  SYMBOL_ZONE_TYPE type = SYMBOLZONE_GetZoneTypeFromNumber( start_no );
-  switch (type )
+
+  if ( SYMBOLMAP_IsKeepzoneID( symmap_id ) )
+  {
+    map_pos = keepMapPos;
+  }
+  else if ( SYMBOLMAP_IsLargePokeID( symmap_id ) )
+  {
+    map_pos = largeMapPos;
+  }
+  else
+  {
+    map_pos = littleMapPos;
+  }
+
+#if 0
+  switch ( type )
   {
   case SYMBOL_ZONE_TYPE_KEEP_LARGE:
   case SYMBOL_ZONE_TYPE_KEEP_SMALL:
@@ -240,6 +256,7 @@ void SYMBOLPOKE_Add(
     map_pos = littleMapPos;
     break;
   }
+#endif
   
   padd.tpdata = TPOKE_DATA_Create( FIELDMAP_GetHeapID(fieldmap) );
   padd.fieldmap = fieldmap;
