@@ -140,10 +140,10 @@
 #define MY_ANSWER_STRING_COLOR_L  (1)   // フォント (文字) のカラー番号
 #define MY_ANSWER_STRING_COLOR_S  (2)   // フォント (影)　 のカラー番号
 #define MY_ANSWER_STRING_COLOR_B  (0)   // フォント (背景) のカラー番号
-#define MY_ANSWER_LEFT_CURSOR_OFFSET_X  (256) // 左カーソル x オフセット
-#define MY_ANSWER_LEFT_CURSOR_OFFSET_Y  (256) // 左カーソル y オフセット
-#define MY_ANSWER_RIGHT_CURSOR_OFFSET_X (256) // 右カーソル x オフセット
-#define MY_ANSWER_RIGHT_CURSOR_OFFSET_Y (256) // 右カーソル y オフセット
+#define MY_ANSWER_LEFT_CURSOR_OFFSET_X  (0) // 左カーソル x オフセット
+#define MY_ANSWER_LEFT_CURSOR_OFFSET_Y  (0) // 左カーソル y オフセット
+#define MY_ANSWER_RIGHT_CURSOR_OFFSET_X (0) // 右カーソル x オフセット
+#define MY_ANSWER_RIGHT_CURSOR_OFFSET_Y (0) // 右カーソル y オフセット
 // 下画面 回答人数
 #define COUNT_X               (13)  // X座標   (キャラクター単位)
 #define COUNT_Y               (16)  // Y座標   (キャラクター単位)

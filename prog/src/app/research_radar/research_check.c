@@ -1647,6 +1647,7 @@ static void FinishSeq_UPDATE( RESEARCH_CHECK_WORK* work )
   UpdateArrow( work );                // 矢印を更新する
   UpdateControlCursor( work );        // 左右のカーソル表示を更新する
   DispAllPercentage( work );          // ％表記を表示する
+  UpdateMyAnswerIconOnGraph( work );  // 自分の回答アイコン ( グラフ上 ) を更新する
 
   // 更新完了SE
   PMSND_PlaySE( SEQ_SE_SYS_82 );
