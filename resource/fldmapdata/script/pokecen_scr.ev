@@ -481,17 +481,17 @@ sub_pokecen_elevator_in:
 }
 
 _ANIME_LABEL    anm_pc_woman_move_backword
-  _ANIME_DATA   AC_WALK_U_16F, 1
-  _ANIME_DATA   AC_WALK_L_16F, 1
+  _ANIME_DATA   AC_WALK_U_8F, 1
+  _ANIME_DATA   AC_WALK_L_8F, 1
   _ANIME_DATA   AC_DIR_R,1
   _ANIME_DATA   ACMD_END,0
 
 _ANIME_LABEL    anm_player_move_foward
-  _ANIME_DATA   AC_WALK_U_16F, 2
+  _ANIME_DATA   AC_WALK_U_8F, 2
   _ANIME_DATA   ACMD_END,0
 
 _ANIME_LABEL    anm_player_board_elevator
-  _ANIME_DATA   AC_WALK_U_16F, 2
+  _ANIME_DATA   AC_WALK_U_8F, 2
   _ANIME_DATA   AC_DIR_D, 1
   _ANIME_DATA   ACMD_END,0
 
@@ -609,12 +609,12 @@ _ANIME_LABEL    anm_player_turn_down
   _ANIME_DATA   ACMD_END,0
 
 _ANIME_LABEL    anm_pc_woman_move_default_pos
-  _ANIME_DATA   AC_WALK_R_16F, 1
-  _ANIME_DATA   AC_WALK_D_16F, 1
+  _ANIME_DATA   AC_WALK_R_8F, 1
+  _ANIME_DATA   AC_WALK_D_8F, 1
   _ANIME_DATA   ACMD_END,0
 
 _ANIME_LABEL    anm_player_return_strait
-  _ANIME_DATA   AC_WALK_D_16F, 4
+  _ANIME_DATA   AC_WALK_D_8F, 4
   _ANIME_DATA   ACMD_END,0
 
 /**************************************************************/
