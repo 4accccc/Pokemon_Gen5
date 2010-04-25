@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-23T17:56:42"/>
+	<create user="matsumiya" host="W00224" date="2010-04-25T17:40:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1308" top="197" right="2013" bottom="825" maximized="no" rayout="Vertical2">
+	<dialog left="1777" top="280" right="2482" bottom="908" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1208,51 +1208,70 @@
 ・Nに隣接し向き合ってメッセージ表示
 ・続けてsage1_03</comment>
 		<attribute name="キャラ指定">ゲーチス</attribute>
-		<language name="JPN" width="256">だが　それでは　この　Ｎが
-ほんとうの　えいゆうに　なりかねない▼
-そこで　ワタクシは　ついとなる
-でんせつポケモンも　よみがえらせ▽
-つぶしあうことを　もくろんだのです▼</language>
-		<language name="JPN_KANJI" width="256">だが　それでは　Ｎが
-本当の　英雄に　なりかねない▼
-そこで　ワタクシは　対となる
-伝説ポケモンも　よみがえらせ▽
-つぶしあうことを　目論んだのです▼</language>
+		<language name="JPN" width="256">だが　でんせつの　ポケモンを
+したがえた　もの　どうしが▼
+しんねんを　かけて　たたかい
+じぶんが　ほんものの　えいゆうなのか▽
+たしかめたい……と　のたまったあげく▼
+しかも　でんせつの　ポケモンを
+もたない　ものに　やぶれるとは▽
+おろか　にも　ほどがある！▼
+つまるところ　ポケモンと　そだった
+いびつで　ふかんぜんな　にんげんか……▼</language>
+		<language name="JPN_KANJI" width="256">だが　伝説の　ポケモンを
+従えた　もの　同士が▼
+信念を　懸けて　闘い
+自分が　本物の　英雄なのか▽
+確かめたい……と　のたまったあげく▼
+しかも　伝説の　ポケモンを
+持たない　ものに　敗れるとは▽
+愚かにも　ほどがある！▼
+詰まるところ　ポケモンと　育った
+いびつな　不完全な　人間か……▼</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0502_sage1_04" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・主人公のほうを向いてメッセージ表示
-・続けてsage1_05</comment>
+・続けてsage1_05
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">ゲーチス</attribute>
-		<language name="JPN" width="256">そこで　えらばれたのが
-[1:00:トレーナー名:0]！　キミですよ▼
-ただ　キミは
-かなり　きたいはずれ　でしたがね▼
-ワタクシが　のぞんでいたのは
-シンと　ム　２ひきの▽
-ともだおれ　だったのですから▼</language>
-		<language name="JPN_KANJI" width="256">そこで　選ばれたのが
-[1:00:トレーナー名:0]！　キミですよ▼
-ただ　キミは
-かなり　期待はずれ　でしたがね▼
-ワタクシが　望んでいたのは
-シンと　ム　２匹の▽
-共倒れ　だったのですから▼</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]！　まさか
+アナタのような　トレーナーが▽
+でんせつの　ポケモンに　えらばれるとは▽
+かんぜんに　けいさんがい　でしたよ▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！　まさか
+アナタのような　トレーナーが▽
+伝説の　ポケモンに　選ばれるとは▽
+完全に　計算外でしたよ▼</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_05" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0502_sage1_05" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてblack_01</comment>
 		<attribute name="キャラ指定">ゲーチス</attribute>
-		<language name="JPN" width="256">さて　プラズマだんが……▼
-いや　ワタクシが
-せかいを　かんぜんに　しはいするため▽
+		<language name="JPN" width="256">ですが　ワタクシの　もくてきは
+なにも　かわらない！　ゆるがない！▼
+ワタクシが　せかいを
+かんぜんに　しはいするため！▼
+なにも　しらない
+にんげんの　こころを　あやつるため！▼
+Ｎには　プラズマだんの
+おうさまで　いてもらいます▼
+だが　そのために
+じじつを　しる　アナタたち……▽
 ジャマなものは　とりのぞきましょう▼</language>
-		<language name="JPN_KANJI" width="256">さて　プラズマ団が……▼
-いや　この　ワタクシが
-世界を　完全に　支配するため▽
-不要な存在は　排除しましょう▼</language>
+		<language name="JPN_KANJI" width="256">ですが　ワタクシの　目的は
+なにも　変わらない！　揺るがない！▼
+ワタクシが　世界を
+完全に　支配するため！▼
+なにも　知らない
+人間の　心を　操るため！▼
+Ｎには　プラズマ団の
+王様で　いてもらいます▼
+だが　そのために
+事実を　知る　アナタたち……▽
+ジャマなものは　排除しましょう▼</language>
 	</row>
 
 	<row id="msg_n01r0502_black_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1271,29 +1290,23 @@
 ポケモンを　解放することじゃ……▼</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_06" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0502_sage1_06" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後に動作モデルの芝居（予定）
 ・続けてchampion_01</comment>
 		<attribute name="キャラ指定">ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『あれは　プラズマだんを
-つくりあげるための　ウソ▼
-たしかに　Ｎや　いちぶの　ものは
-それを　しんじていましたがね▼
-ポケモンのように
+つくりあげるための　ウソ　ですよ▼
+ポケモンの　ように
 べんりな　モノを　ときはなって▽
 どうすると　いうのです？▼
 たしかに　ポケモンを　あやつることで
 にんげんの　かのうせいは　ひろがる▽
 それは　みとめましょう▼
 だからこそ！　ワタクシだけが
-ポケモンを　つかえれば　いいんです▼
-そのために　ひとびとから
-ポケモンを　うばっていたのです！▼</language>
+ポケモンを　つかえれば　いいのです▼</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『あれは　プラズマ団を
 つくりあげるための　方便▼
-たしかに　Ｎや　一部の　者は
-それを　信じていましたがね▼
 ポケモンなんて
 便利な　モノを　解き放って▽
 どうすると　いうのです？▼
@@ -1301,9 +1314,7 @@
 人間の　可能性は　ひろがる▽
 それは　認めましょう▼
 だからこそ！　ワタクシだけが
-ポケモンを　使えれば　いいんです▼
-そのために　人々から
-ポケモンを　奪っていたのです！▼</language>
+ポケモンを　使えれば　いいんです▼</language>
 	</row>
 
 	<row id="msg_n01r0502_champion_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
@@ -1328,30 +1339,30 @@
 しょせんは　ポケモン▼
 そいつが　みとめたところで
 [1:00:トレーナー名:0]！▽
-キミなど　おそるるに　たらん▼
+アナタなど　おそるるに　たらん▼
 ……ふむう
 あの　ポケモンの▽
 けんきゅうは　まに　あわなかったが▼
 さりとて　もんだい　ないでしょう
 さあ　かかってきなさい！▼
-ワタクシは　キミの　ぜつぼうする
+ワタクシは　アナタの　ぜつぼうする
 しゅんかんの　かおが　みたいのだ！▼</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『なんとでも▼
 さて　神と　呼ばれようと
 しょせんは　ポケモン▼
 そいつが　認めたところで
 [1:00:トレーナー名:0]！▽
-キミなど　おそるるに　たらん▼
+アナタなど　おそるるに　たらん▼
 ……ふむう
 あの　ポケモンの　研究は▽
 間に　合わなかったが▼
 さりとて　問題ないでしょう
 さあ　かかってきなさい！▼
-ワタクシは　キミの　絶望する
+ワタクシは　アナタの　絶望する
 瞬間の　顔が　みたいのだ！▼</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_08" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0502_sage1_08" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・戦闘後、フィールドに復帰すると
 　自動で表示
@@ -1362,13 +1373,13 @@
 プラズマだんを　つくりあげた▽
 かんぜんな　おとこ　なんだぞ！▼
 せかいを　かえる
-しんじつの　えいゆう　なんだぞおッ！？▼</language>
+しんじつの　えいゆう　だぞッ！？▼</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『……どういうことだ？▼
 この　ワタクシは
 プラズマ団を　つくりあげた▽
 完全な　男なんだぞ！▼
 世界を　変える
-真実の　英雄なんだぞおッ！？▼</language>
+真実の　英雄だぞッ！？▼</language>
 	</row>
 
 	<row id="msg_n01r0502_sage1_08w" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
