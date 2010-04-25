@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-25T12:46:33"/>
+	<create user="matsumiya" host="W00224" date="2010-04-25T17:48:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="121" right="2012" bottom="749" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -746,7 +746,7 @@
 		<language name="JPN_KANJI" width="256">ぎりぎりぎりぃ！</language>
 	</row>
 
-	<row id="ｍｓｇ_t01r0401_white_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア後の初回
 ・msg_t01r0201_white_end_01表示後
 　＋
@@ -771,7 +771,7 @@
 このコたちのこと　しりたいなって▼</language>
 	</row>
 
-	<row id="ｍｓｇ_t01r0401_white_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア後の初回
 ・！マーク表示後
 ・はい/いいえの選択肢表示
@@ -788,7 +788,7 @@
 ポケモンの　大量発生のこと</language>
 	</row>
 
-	<row id="ｍｓｇ_t01r0401_white_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア後の初回
 ・はい選択時
 ・続けてwhite_end_05</comment>
@@ -812,7 +812,7 @@
 わかるってことも　しってるんだ！▼</language>
 	</row>
 
-	<row id="ｍｓｇ_t01r0401_white_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア後の初回
 ・いいえ選択時
 ・続けてwhite_end_05</comment>
@@ -838,7 +838,7 @@
 わかるんだよ！　どう　すごいでしょ▼</language>
 	</row>
 
-	<row id="ｍｓｇ_t01r0401_white_end_05" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_05" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア後の初回
 ・部屋を出る＋日付が変わるまで繰り返し
 ・0＝主人公名前</comment>
@@ -866,7 +866,7 @@
 もっと　わかるから！</language>
 	</row>
 
-	<row id="ｍｓｇ_t01r0401_white_end_06" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_06" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア後2回目以降
 ・月曜日
 ・日付が変わるまで繰り返し</comment>
@@ -888,7 +888,7 @@
 不思議な　生き物　だよね！</language>
 	</row>
 
-	<row id="ｍｓｇ_t01r0401_white_end_07" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_07" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア後2回目以降
 ・火曜日
 ・日付が変わるまで繰り返し
@@ -907,7 +907,7 @@
 不思議な　生き物　だよね！</language>
 	</row>
 
-	<row id="ｍｓｇ_t01r0401_white_end_08" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_08" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア後2回目以降
 ・水曜日
 ・日付が変わるまで繰り返し
@@ -926,7 +926,7 @@
 不思議な　生き物　だよね！</language>
 	</row>
 
-	<row id="ｍｓｇ_t01r0401_white_end_09" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_white_end_09" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀：クリア後2回目以降
 ・木曜日
 ・日付が変わるまで繰り返し
@@ -937,7 +937,7 @@
 		<language name="JPN_KANJI" width="256">ベル『仮メッセージ</language>
 	</row>
 
-	<row id="ｍｓｇ_t01r0401_white_end_10" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_white_end_10" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀：クリア後2回目以降
 ・金曜日
 ・日付が変わるまで繰り返し
@@ -948,7 +948,7 @@
 		<language name="JPN_KANJI" width="256">ベル『仮メッセージ</language>
 	</row>
 
-	<row id="ｍｓｇ_t01r0401_white_end_20" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_20" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・土日
 ・トレーナー戦闘の確認
@@ -965,7 +965,7 @@
 ポケモン勝負　しない？</language>
 	</row>
 
-	<row id="ｍｓｇ_t01r0401_white_end_21" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_21" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・土日
 ・はい選択
@@ -980,7 +980,7 @@
 興奮しすぎちゃ　ダメだよ！▼</language>
 	</row>
 
-	<row id="ｍｓｇ_t01r0401_white_end_22" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_22" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・土日
 ・いいえ選択
@@ -995,7 +995,7 @@
 ううん　けっこう　がっかり……</language>
 	</row>
 
-	<row id="ｍｓｇ_t01r0401_white_end_23" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_23" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・土日
 ・トレーナー戦闘の確認
@@ -1010,7 +1010,7 @@
 ポケモン勝負　するでしょ？</language>
 	</row>
 
-	<row id="ｍｓｇ_t01r0401_white_end_24" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_24" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・土日
 ・トレーナー戦闘後メッセージ</comment>
