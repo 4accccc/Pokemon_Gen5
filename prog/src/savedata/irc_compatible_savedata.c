@@ -25,6 +25,8 @@
 //=============================================================================
 #define IRC_COMPATIBLE_SV_EXIST_NONE		(0xFF)		//ランクにいない
 
+//#define   SAVEDATE_CHAGE_20100425
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -45,7 +47,12 @@ typedef struct
 	u32			trainerID;														// 4
   u16     mons_no;
   u8      form_no;
+#ifdef SAVEDATE_CHAGE_20100425
+  u8      mons_sex  : 7;
+  u8      egg_flag  : 1;
+#else
   u8      mons_sex;
+#endif 
 }IRC_COMPATIBLE_RANKING_DATA;
 
 //-------------------------------------
@@ -64,7 +71,7 @@ struct _IRC_COMPATIBLE_SAVEDATA
 //=============================================================================
 static u8 Irc_Compatible_SV_InsertRanking( IRC_COMPATIBLE_RANKING_DATA *p_rank, u16 len, const IRC_COMPATIBLE_RANKING_DATA *cp_new );
 static BOOL Irc_Compatible_SV_IsExits( const IRC_COMPATIBLE_RANKING_DATA *cp_rank, u16 len, const IRC_COMPATIBLE_RANKING_DATA *cp_new );
-static void Irc_Compatible_SV_SetData( IRC_COMPATIBLE_RANKING_DATA *p_data, const STRCODE *cp_name, u8 score, u16 play_cnt, u8 sex, u8 birth_month, u8 birth_day, u32 trainerID );
+static void Irc_Compatible_SV_SetData( IRC_COMPATIBLE_RANKING_DATA *p_data, const STRCODE *cp_name, u8 score, u16 play_cnt, u8 sex, u8 birth_month, u8 birth_day, u32 trainerID, u16 mons_no, u8 form_no, u8 mons_sex, u8 egg );
 static u16 Irc_Compatible_SV_GetPlayCount( const IRC_COMPATIBLE_RANKING_DATA *cp_rank, u16 len, u32 trainerID );
 static void Irc_Compatible_SV_AddPlayCount( IRC_COMPATIBLE_RANKING_DATA *p_rank, u16 len, const IRC_COMPATIBLE_RANKING_DATA *cp_new );
 //=============================================================================
@@ -203,6 +210,28 @@ u32 IRC_COMPATIBLE_SV_GetBirthDay( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 ran
 { 
 	GF_ASSERT( rank < IRC_COMPATIBLE_SV_RANKING_MAX );
 	return cp_sv->rank[ rank ].birth_day;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ポケモン情報を取得
+ *
+ *	@param	const IRC_COMPATIBLE_SAVEDATA *cp_sv  セーブ
+ *	@param	rank                                  順位
+ *	@param	*p_mons_no          モンスター番号
+ *	@param	*p_form_no          フォルム番号
+ *	@param	*p_mons_sex         性別
+ *	@param	*p_egg              タマゴフラグ
+ */
+//-----------------------------------------------------------------------------
+void IRC_COMPATIBLE_SV_GetPokeData( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 rank, u16 *p_mons_no, u8 *p_form_no, u8 *p_mons_sex, u8 *p_egg )
+{ 
+	GF_ASSERT( rank < IRC_COMPATIBLE_SV_RANKING_MAX );
+	*p_mons_no  = cp_sv->rank[ rank ].mons_no;
+  *p_form_no  = cp_sv->rank[ rank ].form_no;
+  *p_mons_sex = cp_sv->rank[ rank ].mons_sex;
+#ifdef SAVEDATE_CHAGE_20100425
+  *p_egg      = cp_sv->rank[ rank ].egg_flag;
+#endif
 }
 //----------------------------------------------------------------------------
 /**
@@ -348,7 +377,7 @@ u8 Irc_Compatible_SV_CalcBioRhythm( u8 birth_month, u8 birth_day, const RTCDate 
  *	@return	順位	or ランキングに入らなかった場合IRC_COMPATIBLE_SV_ADD_NONE
  */
 //-----------------------------------------------------------------------------
-u8 IRC_COMPATIBLE_SV_AddRanking( IRC_COMPATIBLE_SAVEDATA *p_sv, const STRCODE *cp_name, u8 score, u8 sex, u8 birth_month, u8 birth_day, u32 trainerID )
+u8 IRC_COMPATIBLE_SV_AddRanking_New( IRC_COMPATIBLE_SAVEDATA *p_sv, const STRCODE *cp_name, u8 score, u8 sex, u8 birth_month, u8 birth_day, u32 trainerID, u16 mons_no, u8 form_no, u8 mons_sex, u8 egg )
 {	
 	IRC_COMPATIBLE_RANKING_DATA	new_data;
 	u16 play_cnt;
@@ -357,7 +386,7 @@ u8 IRC_COMPATIBLE_SV_AddRanking( IRC_COMPATIBLE_SAVEDATA *p_sv, const STRCODE *c
 	play_cnt	= Irc_Compatible_SV_GetPlayCount( p_sv->rank, IRC_COMPATIBLE_SV_RANKING_MAX, trainerID );
 
 	//データ作成
-	Irc_Compatible_SV_SetData( &new_data, cp_name, score, play_cnt, sex, birth_month, birth_day, trainerID );
+	Irc_Compatible_SV_SetData( &new_data, cp_name, score, play_cnt, sex, birth_month, birth_day, trainerID, mons_no, form_no, mons_sex, egg );
 
 	//データ挿入
 	p_sv->new_rank	= Irc_Compatible_SV_InsertRanking( p_sv->rank, IRC_COMPATIBLE_SV_RANKING_MAX, &new_data );
@@ -494,7 +523,7 @@ static BOOL Irc_Compatible_SV_IsExits( const IRC_COMPATIBLE_RANKING_DATA *cp_ran
  *
  */
 //-----------------------------------------------------------------------------
-static void Irc_Compatible_SV_SetData( IRC_COMPATIBLE_RANKING_DATA *p_data, const STRCODE *cp_name, u8 score, u16 play_cnt, u8 sex, u8 birth_month, u8 birth_day, u32 trainerID )
+static void Irc_Compatible_SV_SetData( IRC_COMPATIBLE_RANKING_DATA *p_data, const STRCODE *cp_name, u8 score, u16 play_cnt, u8 sex, u8 birth_month, u8 birth_day, u32 trainerID, u16 mons_no, u8 form_no, u8 mons_sex, u8 egg )
 {	
 	GF_ASSERT( score <= IRC_COMPATIBLE_SV_DATA_SCORE_MAX );
 
@@ -508,6 +537,12 @@ static void Irc_Compatible_SV_SetData( IRC_COMPATIBLE_RANKING_DATA *p_data, cons
   p_data->birth_month = birth_month;
   p_data->birth_day   = birth_day;
 	p_data->play_cnt	  = play_cnt;
+  p_data->mons_no     = mons_no;
+  p_data->form_no     = form_no;
+  p_data->mons_sex    = mons_sex;
+#ifdef SAVEDATE_CHAGE_20100425
+  p_data->egg_flag    = egg & 0x1;
+#endif
 }
 
 //----------------------------------------------------------------------------
