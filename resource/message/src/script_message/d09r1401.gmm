@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2010-04-25T12:44:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="189"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="253"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -292,11 +292,198 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d09r1401_black_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・初回
+・GRIDX=9、GRIDZ=3、下向き
+・芝居後、メッセージ表示
+・続けてbigfour3_end_01</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">チェレン『……[1:00:トレーナー名:0]▼
+むずかしいね
+じぶんと　むきあうのは▼
+じぶんの　イヤな　ところや
+きらいな　ぶぶんばかり　めにつくよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……[1:00:トレーナー名:0]▼
+難しいね
+自分と　向き合うのは▼
+自分の　イヤな　ところや
+きらいな　部分ばかり　目につくよ▼</language>
+	</row>
+
+	<row id="msg_d09r1401_bigfour3_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・メッセージ表示後
+　レンブ登場し、所定の位置へ
+・続けてblack_end_02</comment>
+		<attribute name="キャラ指定">四天王
+レンブ</attribute>
+		<language name="JPN" width="256">？？？『そうとも▼
+そして　だれも
+じぶんからは　にげられない▼</language>
+		<language name="JPN_KANJI" width="256">？？？『そうとも▼
+そして　だれも
+自分からは　逃げられない▼</language>
+	</row>
+
+	<row id="msg_d09r1401_black_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けて</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">チェレン『……レンブさん？▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……レンブさん？▼</language>
+	</row>
+
+	<row id="msg_d09r1401_bigfour3_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・続けて</comment>
+		<attribute name="キャラ指定">四天王
+レンブ</attribute>
+		<language name="JPN" width="256">レンブ『ししょうに　いわれ　みにきた▼
+いいか？
+しょうぶに　まけたとしても▼
+それまでの　じぶんを　こえていれば
+それは　じぶんに　かったといえる▼
+そのため　しょうぶを　つうじ
+あいてを　みろ！▽
+ポケモンを　みろ！▽
+そして　じぶんを　みるんだ！▼</language>
+		<language name="JPN_KANJI" width="256">レンブ『師匠に　いわれ　みにきた▼
+いいか？
+勝負に　負けたとしても▼
+それまでの　自分を　超えていれば
+それは　自分に　勝ったといえる▼
+そのため　勝負を　通じ
+相手を　みろ！▽
+ポケモンを　みろ！▽
+そして　自分を　みるんだ！▼</language>
+	</row>
+
+	<row id="msg_d09r1401_black_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・続けて</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">チェレン『……もしかして
+アデクさんの　うけうり　ですか？▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……もしかして
+アデクさんの　受け売りですか？▼</language>
+	</row>
+
+	<row id="msg_d09r1401_bigfour3_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・画面下に移動
+・画面外に消えるとblack_end_04</comment>
+		<attribute name="キャラ指定">四天王
+レンブ</attribute>
+		<language name="JPN" width="256">レンブ『……さあな▼
+わたしが　のぞんでいるのは
+そのようにして　じぶんを　つらぬく▽
+トレーナーとの　たたかい……▼
+そんな　トレーナーと　まじわるとき
+わたしも　わたしの　ポケモンたちも▽
+さらに　つよくなれる……▼
+では　ポケモンリーグにて
+きみたちの　ちょうせん　まっているよ▼</language>
+		<language name="JPN_KANJI" width="256">レンブ『……さあな▼
+わたしが　望んでいるのは
+そのようにして　自分を　貫く▽
+トレーナーとの　戦い……▼
+そんな　トレーナーと　まじわるとき
+わたしも　わたしの　ポケモンたちも▽
+さらに　強くなれる……▼
+では　ポケモンリーグにて
+きみたちの　挑戦　待っているよ▼</language>
+	</row>
+
+	<row id="msg_d09r1401_black_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ後、トレーナー戦闘に
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">チェレン『……だってさ▼
+じゃ　[1:00:トレーナー名:0]！
+ポケモンしょうぶ　うけてもらうよ！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……だってさ▼
+じゃ　[1:00:トレーナー名:0]！
+ポケモン勝負　受けてもらうよ！▼</language>
+	</row>
+
+	<row id="msg_d09r1401_black_end_05" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・トレーナー戦闘後
+・日が変わるまで繰り返し</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">チェレン『……こうして　おおくの
+トレーナーや　ポケモンと　たたかい▼
+じぶんが　なにものか　みさだめれば
+いっぽんの　みちが　ひらけてくる▼
+きっと　それは
+ぼくが　ぼくで　あるための　みち▼
+ぼくにも　きみにも
+ポケモンが　いてくれる▼
+ともに　みちを　あるいてくれる
+だいじな　ポケモンたちが</language>
+		<language name="JPN_KANJI" width="256">チェレン『……こうして　多くの
+トレーナーや　ポケモンと　戦い▼
+自分が　何者か　見定めれば
+一本の　道が　拓けてくる▼
+きっと　それは
+ぼくが　ぼくで　あるための　道▼
+ぼくにも　きみにも
+ポケモンが　いてくれる▼
+共に　道を　歩いてくれる
+大事な　ポケモンたちが</language>
+	</row>
+
+	<row id="msg_d09r1401_black_end_06" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・２回目以降
+・メッセージ後、トレーナー戦闘に</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">チェレン『……きたね　[1:00:トレーナー名:0]▼
+これまでの　ぼくを　こえるため……▼
+そして　じゅんすいに　つよい
+トレーナーの　きみに　かつため▽
+ポケモンしょうぶ　うけてもらうよ！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……来たね　[1:00:トレーナー名:0]▼
+これまでの　ぼくを　超えるため……▼
+そして　純粋に　強い
+トレーナーの　きみに　勝つため▽
+ポケモン勝負　受けてもらうよ！▼</language>
+	</row>
+
+	<row id="msg_d09r1401_black_end_07" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・トレーナー戦闘後
+・日が変わるまで繰り返し</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">チェレン『……こうして　おおくの
+トレーナーや　ポケモンと　たたかい▼
+じぶんが　なにものか　みさだめれば
+いっぽんの　みちが　ひらけてくる▼
+きっと　それは
+ぼくが　ぼくで　あるための　みち▼
+ぼくにも　きみにも
+ポケモンが　いてくれる▼
+ともに　みちを　あるいてくれる
+だいじな　ポケモンたちが</language>
+		<language name="JPN_KANJI" width="256">チェレン『……こうして　多くの
+トレーナーや　ポケモンと　戦い▼
+自分が　何者か　見定めれば
+一本の　道が　拓けてくる▼
+きっと　それは
+ぼくが　ぼくで　あるための　道▼
+ぼくにも　きみにも
+ポケモンが　いてくれる▼
+共に　道を　歩いてくれる
+大事な　ポケモンたちが</language>
 	</row>
 
 	<flowchart-group-list>

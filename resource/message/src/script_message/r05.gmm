@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-23T13:22:26"/>
+	<create user="matsumiya" host="W00224" date="2010-04-25T12:43:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1308" top="197" right="2013" bottom="825" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="445"/>
@@ -900,6 +900,100 @@ musician_01</attribute>
 ポケモンに　持たせたければ▼
 ミュージカルホールに　行ってみな！
 きっと　サイコーだぜ！</language>
+	</row>
+
+	<row id="msg_r05_black_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・GRIDX=359、GRIDZ=439、下向き(適当）
+・話しかけでイベント開始
+　芝居後、下向きのままメッセージ表示
+・続けてblack_end_02</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">チェレン『……つよいだけが
+ゆいいつの　そんざいかち▼
+そう　おもいこんでいた　ぼくは
+ここで　アデクさんと　であった▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……強いだけが
+唯一の　存在価値▼
+そう　思いこんでいた　ぼくは
+ここで　アデクさんと　出会った▼</language>
+	</row>
+
+	<row id="msg_r05_black_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・主人公と向き合ってメッセージ表示
+・続けてblack_end_03</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">……ポケモンしょうぶに
+かつことだけが　すべてじゃない▼
+それを　おしえてもらってから
+いろんな　ものが　みえてきたよ▼</language>
+		<language name="JPN_KANJI" width="256">……ポケモン勝負に
+勝つことだけが　すべてじゃない▼
+それを　教えてもらってから
+いろんな　ものが　みえてきたよ▼</language>
+	</row>
+
+	<row id="msg_r05_black_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・下を向いて
+・続けてblack_end_04</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">みんな　つよいよね▼
+ひとも　ポケモンも
+それぞれの　つよさを　もっている▼
+ゆめを　かなえる　つよさや
+なにかを　まもる　つよさ……▼</language>
+		<language name="JPN_KANJI" width="256">みんな　強いよね▼
+人も　ポケモンも
+それぞれの　強さを　もっている▼
+夢を　かなえる　強さや
+なにかを　守る　強さ……▼</language>
+	</row>
+
+	<row id="msg_r05_black_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・主人公と向き合って
+・若干間をおいてから
+　続けてblack_end_05</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">こう　おもえるように　なったのは
+[1:00:トレーナー名:0]▽
+きみや　ベル……　それに▽
+アデクさんたちの　おかげ　なんだね▼
+……Ｎも　おなじ　ものを
+みることが　できたら　いいのにな▼</language>
+		<language name="JPN_KANJI" width="256">こう　思えるように　なったのは
+[1:00:トレーナー名:0]▽
+きみや　ベル……　それに▽
+アデクさんたちの　おかげ　なんだね▼
+……Ｎも　同じ　ものを
+みることが　できたら　いいのにな▼</language>
+	</row>
+
+	<row id="msg_r05_black_end_05" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・メッセージ表示後、h02方面へ移動
+・画面外に消えると主人公、操作可能に
+　→d09r1401に出現</comment>
+		<attribute name="キャラ指定">友達♂
+チェレン</attribute>
+		<language name="JPN" width="256">ぼくは　チャンピオンロードで
+じぶんじしんと　むきあう▼
+じぶんに　なにが　できるのか
+なにものに　なれるのか……▼
+よければ　きみも　きてくれよ
+ポケモンしょうぶを　したいからね▼</language>
+		<language name="JPN_KANJI" width="256">ぼくは　チャンピオンロードで
+自分自身と　むきあう▼
+自分に　なにが　できるのか
+何者に　なれるのか……▼
+よければ　きみも　来てくれよ
+ポケモン勝負を　したいからね▼</language>
 	</row>
 
 	<row id="msg_r05_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
