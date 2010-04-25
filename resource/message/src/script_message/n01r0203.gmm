@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-10T18:40:05"/>
+	<create user="matsumiya" host="W00224" date="2010-04-25T15:13:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1308" top="163" right="2013" bottom="791" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -310,32 +310,35 @@
 　画面復帰すると自動で表示</comment>
 		<attribute name="キャラ指定">GODDESS1</attribute>
 		<language name="JPN" width="256">げんきに　なったわね
-あなたも　あなたの　ポケモンも……</language>
+あなたも　あなたの　ポケモンも……▼
+トレーナーが　たたかうのは
+けっして　ポケモンを▽
+きずつけるためでは　ありません▼
+Ｎも　こころの　おくそこでは
+そのことを　きづいているのに▼
+それを　みとめるには
+あまりにも　かなしい　じかんを▽
+この　しろで　すごしたのです……</language>
 		<language name="JPN_KANJI" width="256">元気に　なったわね
-あなたも　あなたの　ポケモンも……</language>
+あなたも　あなたの　ポケモンも……▼
+トレーナーが　戦うのは
+けっして　ポケモンを▽
+きずつけるためでは　ありません▼
+Ｎも　心の　奥底では
+そのことを　気づいているのに▼
+それを　認めるには
+あまりにも　悲しい　時間を▽
+この城で　過ごしたのです……</language>
 	</row>
 
-	<row id="msg_n01r0203_goddess2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_n01r0203_goddess2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">GODDESS2</attribute>
-		<language name="JPN" width="256">Ｎを……[BE:01:ページ切り替え（クリア）]
-あの　かわいそうな　こを
-すくって　あげてください[BE:01:ページ切り替え（クリア）]
-あの　こは　ほんらい
-やさしい　こころの　もちぬし　なのです[BE:01:ページ切り替え（クリア）]
-それはもう
-こわいほどに　やさしい……</language>
-		<language name="JPN_KANJI" width="256">Ｎを……[BE:01:ページ切り替え（クリア）]
-あの　かわいそうな　子を
-救って　あげてください[BE:01:ページ切り替え（クリア）]
-あの　子は　本来
-優しい　心根の　子なのです[BE:01:ページ切り替え（クリア）]
-それはもう
-こわいほどに　優しい……</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_n01r0203_goddess2_01w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_n01r0203_goddess2_01w">
 		<comment>♀
 ・WHITEver</comment>
 		<attribute name="キャラ指定">GODDESS2</attribute>
@@ -344,22 +347,38 @@
 ……Ｎは　おさなきころより
 ひとと　はなされ▽
 ポケモンと　ともに　そだちました▼
-ひたすら　しんじつを　おいもとめるよう
-イノセントで　あるように……▼
+わるい　ひとに　うらぎられ
+しいたげられ　きずついた　ポケモン▼
+ゲーチスは　あえて
+そうした　ポケモンばかり
+Ｎに　ちかづけていたのです▼
+Ｎは　その　きずを　わかちあい
+ポケモンの　ことだけを　かんがえ
+りそうを　もとめるように　なりました▼
+あまりにも　ピュアで
+イノセントな　Ｎの　こころ……▼
 イノセントほど
 うつくしく　こわいものは　ないのに</language>
-		<language name="JPN_KANJI" width="256">わたしは　平和の女神……▼
-Ｎに　愛を与えるもの……▼
+		<language name="JPN_KANJI" width="256">わたしは　平和の　女神……▼
+Ｎに　平穏を　与えるもの……▼
 ……Ｎは　幼きころより
 人と　離され▽
 ポケモンと　共に　育ちました▼
-ひたすら　真実を　追い求めるよう
-イノセントで　あるように……▼
+……悪意ある　人に　裏切られ
+虐げられ　傷ついた　ポケモン▼
+ゲーチスは　あえて
+そうした　ポケモンばかり
+Ｎに　近づけていたのです▼
+Ｎは　その傷を　分かち合い
+ポケモンの　ことだけを　考え▽
+理想を　求めるように　なりました▼
+あまりにも　ピュアで
+イノセントな　Ｎの　心……▼
 イノセントほど
 美しく　怖いものは　ないのに</language>
 	</row>
 
-	<row id="msg_n01r0203_goddess2_01b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_n01r0203_goddess2_01b">
 		<comment>♀
 ・BLACKver</comment>
 		<attribute name="キャラ指定">GODDESS2</attribute>
@@ -368,17 +387,33 @@
 ……Ｎは　おさなきころより
 ひとと　はなされ▽
 ポケモンと　ともに　そだちました▼
-ひたすら　りそうを　おいもとめるよう
-イノセントで　あるように……▼
+わるい　ひとに　うらぎられ
+しいたげられ　きずついた　ポケモン▼
+ゲーチスは　あえて
+そうした　ポケモンばかり
+Ｎに　ちかづけていたのです▼
+Ｎは　その　きずを　わかちあい
+ポケモンの　ことだけを　かんがえ
+しんじつを　もとめるように　なりました▼
+あまりにも　ピュアで
+イノセントな　Ｎの　こころ……▼
 イノセントほど
 うつくしく　こわいものは　ないのに</language>
-		<language name="JPN_KANJI" width="256">わたしは　平和の女神……▼
-Ｎに　愛を与えるもの……▼
+		<language name="JPN_KANJI" width="256">わたしは　平和の　女神……▼
+Ｎに　平穏を　与えるもの……▼
 ……Ｎは　幼きころより
 人と　離され▽
 ポケモンと　共に　育ちました▼
-ひたすら　理想を　追い求めるよう
-イノセントで　あるように……▼
+……悪意ある　人に　裏切られ
+虐げられ　傷ついた　ポケモン▼
+ゲーチスは　あえて
+そうした　ポケモンばかり
+Ｎに　近づけていたのです▼
+Ｎは　その傷を　分かち合い
+ポケモンの　ことだけを　考え▽
+真実を　求めるように　なりました▼
+あまりにも　ピュアで
+イノセントな　Ｎの　心……▼
 イノセントほど
 美しく　怖いものは　ないのに</language>
 	</row>
