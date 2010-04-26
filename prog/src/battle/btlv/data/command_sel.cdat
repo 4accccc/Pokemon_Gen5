@@ -40,16 +40,16 @@ static const BTLV_INPUT_HITTBL BattleMenuTouchData = {
 
 static const BTLV_INPUT_KEYTBL  BattleMenuKeyData[] = { 
   //  LU  RU  LD  RD  LD2 RD2   U                   D   L   R   A   B
-  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  -1, 1,  2,  0,  BTLV_INPUT_NOMOVE },                  //たたかう
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  -1, 1,  2,  0,  -3 },                  //たたかう
 
   //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R   A   B
-  { { 1,  1,  1,  1,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  3,  1,  BTLV_INPUT_NOMOVE },  //バッグ
+  { { 1,  1,  1,  1,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  3,  1,  -3 },  //バッグ
 
   //  LU  RU  LD  RD  LD2 RD2   U   D                   L   R                   A   B
-  { { 2,  2,  2,  2,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  3,  BTLV_INPUT_NOMOVE,  2,  BTLV_INPUT_NOMOVE },  //ポケモン
+  { { 2,  2,  2,  2,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  3,  BTLV_INPUT_NOMOVE,  2,  -3 },  //ポケモン
 
   //  LU  RU  LD  RD  LD2 RD2   U                   D                   L   R   A   B
-  { { 3,  3,  3,  3,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  1,  2,  3,  BTLV_INPUT_NOMOVE },  //にげる
+  { { 3,  3,  3,  3,  -1, -1 }, BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  1,  2,  3,  -3 },  //にげる
 };
 
 ///技選択タッチパネル領域設定
