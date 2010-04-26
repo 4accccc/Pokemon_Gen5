@@ -124,6 +124,7 @@ typedef struct
   u8  sex;
   u8  form;
   u8  rare;
+  u32 perRand;  //パッチール対応
 }MUSICAL_MCSS_PARAM;
 
 typedef struct
@@ -152,21 +153,22 @@ typedef struct
 }
 MUSICAL_SHOT_POKE_EQUIP;
 
-//ポケモン１体のデータ  84byte
+//ポケモン１体のデータ  88byte
 typedef struct
 {
-  u16 monsno; //ポケモン番号
+  u16  monsno; //ポケモン番号
   u16  sex :2; //性別
   u16  rare:1; //レアフラグ
   u16  form:5; //フォルム番号
   u16  pad :8;
+  u32  perRand; //個性乱数  +8byte
   
-  STRCODE trainerName[SAVELEN_PLAYER_NAME+EOM_SIZE];  //トレーナー名
-  MUSICAL_SHOT_POKE_EQUIP equip[MUSICAL_ITEM_EQUIP_MAX];  //装備グッズデータ(８個
+  STRCODE trainerName[SAVELEN_PLAYER_NAME+EOM_SIZE];  //トレーナー名              +16byte
+  MUSICAL_SHOT_POKE_EQUIP equip[MUSICAL_ITEM_EQUIP_MAX];  //装備グッズデータ(８個 +64byte
   
 }MUSICAL_SHOT_POKE;
 
-//ミュージカルショットのデータ  416byte
+//ミュージカルショットのデータ  432byte
 typedef struct
 {
   u32 bgNo   :5;  //背景番号
@@ -177,8 +179,8 @@ typedef struct
   u32 player :2;  //自分の番号
   u32 musVer :3;  //ミュージカルバージョン
 
-  MUSICAL_SHOT_POKE shotPoke[MUSICAL_POKE_MAX]; //ポケモンデータ(４体
-  STRCODE title[MUSICAL_PROGRAM_NAME_MAX];  //ミュージカルタイトル(日本18・海外36＋EOM
+  MUSICAL_SHOT_POKE shotPoke[MUSICAL_POKE_MAX]; //ポケモンデータ(４体                   +352byte
+  STRCODE title[MUSICAL_PROGRAM_NAME_MAX];  //ミュージカルタイトル(日本18・海外36＋EOM  +74byte
   u8 pmVersion;
   u8 pmLang;
   
