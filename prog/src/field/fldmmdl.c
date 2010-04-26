@@ -5069,6 +5069,45 @@ void DEBUG_MMDL_PrintState(
     OS_Printf( "%s\n", e_str );
   }
 }
+
+/*
+#ifdef DEBUG_ONLY_FOR_kagaya
+#define DEBUG_SPEED_CHECK_ENABLE  //デバッグ速度計測を有効にする
+#include "debug_speed_check.h"
+void DEBUG_MMDLSYS_CheckSpeed( HEAPID heapID )
+{
+  OBJCODE_PARAM param;
+  ARCHANDLE *handle = GFL_ARC_OpenDataHandle( ARCID_MMDL_PARAM, heapID );
+  
+  INIT_CHECK();
+  SET_CHECK( "MMDL CHECK PARAM_START" );
+  SET_CHECK( "MMDL CHECK PARAM0" );
+  
+  //ハンドル使用で約270ms
+  GFL_ARC_LoadDataOfsByHandle(
+      handle,
+      NARC_fldmmdl_mdlparam_fldmmdl_mdlparam_bin,
+      OBJCODE_PARAM_TOTAL_NUMBER_SIZE,
+      sizeof(OBJCODE_PARAM),
+      &param );
+  
+  SET_CHECK( "MMDL CHECK PARAM1" );
+  SET_CHECK( "MMDL CHECK PARAM_END" );
+  PUT_CHECK();
+
+  {
+    OSTick end_tick;
+    TAIL_CHECK( &end_tick );
+    OS_TPrintf("MMDL top_tick:%ld", end_tick);
+    OS_TPrintf(" MMDL micro sec:%ld\n", OS_TicksToMicroSeconds( end_tick ) );
+  }
+
+  GFL_ARC_CloseDataHandle( handle );
+  GF_ASSERT( 0 && "MMDL CHECK END" );
+}
+#endif
+*/
+
 //----
 #endif //DEBUG_MMDL
 //----

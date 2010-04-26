@@ -1087,18 +1087,6 @@ u16 BSUBWAY_SCRWORK_GetTrainerNo(
   
   OS_Printf( "BSW GET TRAINER NO stage = %d round = %d\n", stage, round );
   
-  if( round == 6 ) //専用ボスか？
-  {
-    if( stage == 2 )
-    {
-      boss_no = 0;  //ノーマルボス
-    }
-    else if( stage == 6 )
-    {
-      boss_no = 1;  //スーパーボス
-    }
-  }
-  
   switch( play_mode ) //スーパーモードか？
   {
   case BSWAY_MODE_S_SINGLE:
@@ -1106,6 +1094,21 @@ u16 BSUBWAY_SCRWORK_GetTrainerNo(
   case BSWAY_MODE_S_MULTI:
   case BSWAY_MODE_S_COMM_MULTI:
     super = 1;
+  }
+  
+  if( round == 6 ) //専用ボスか？
+  {
+    if( super == 0 )  //ノーマル
+    {
+      if( stage == 2 )
+      {
+        boss_no = 0;  //ノーマルボス
+      }
+    }
+    else if( stage == 6 ) //スーパーでステージ6
+    {
+      boss_no = 1;  //スーパーボス
+    }
   }
   
   if( boss_no != -1 ) //専用ボス
