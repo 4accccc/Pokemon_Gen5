@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-26T21:47:37"/>
+	<create user="matsumiya" host="W00224" date="2010-04-26T21:58:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -8354,26 +8354,78 @@
 	<row id="mes_tower_tr_310_01">
 		<comment>サブウェイマスター
 クダリ</comment>
-		<language name="JPN">また　あえたな！</language>
-		<language name="JPN_KANJI">また　会えたな！</language>
+		<language name="JPN">やあ　おぼえてる？
+ぼく　クダリ▼
+サブウェイマスターを　してる▼
+ダブルバトルが　すき▼
+２ひきの　ポケモンの
+コンビネーションが　すき▼
+そして　しょうり　するのが
+なにより　だいすき▼
+こんかいは　すごく　ほんき
+ぜんぜん　ほんき▼
+だって　ポケモンしょうぶは
+しんけん　でないと　つまらない▼</language>
+		<language name="JPN_KANJI">やあ　おぼえてる？
+ぼく　クダリ▼
+サブウェイマスターを　してる▼
+ダブルバトルが　好き▼
+２匹の　ポケモンの
+コンビネーションが　好き▼
+そして　勝利するのが
+なにより　大好き▼
+今回は　すごく　本気
+全然　本気▼
+だって　ポケモン勝負は
+真剣でないと　つまらない▼</language>
 	</row>
 
 	<row id="mes_tower_tr_310_02">
 		<comment>サブウェイマスター
 クダリ</comment>
-		<language name="JPN">すばらしい　しょうぶ　だった！
-また　きてくれたまえ！</language>
-		<language name="JPN_KANJI">素晴らしい　勝負だった！
-また　来てくれたまえ！</language>
+		<language name="JPN">ぼく　クダリ▼
+きみに　かてちゃった
+だけど　これで　おわらない▼
+きみは　きっと　また
+ぼくのまえに　あらわれる▼
+ぼくは　それを　まち　やってきた
+きみに　また　しょうりする▼
+だって　ぼくは
+サブウェイマスター　クダリだから</language>
+		<language name="JPN_KANJI">ぼく　クダリ▼
+きみに　勝てちゃった
+だけど　これで　終わらない▼
+きみは　きっと　また
+ぼくの前に　現われる▼
+ぼくは　それを　待ち　やってきた
+きみに　また　勝利する▼
+だって　ぼくは
+サブウェイマスター　クダリだから</language>
 	</row>
 
 	<row id="mes_tower_tr_310_03">
 		<comment>サブウェイマスター
 クダリ</comment>
-		<language name="JPN">きみのような　すごい　トレーナーに
-まけたのであれば　なっとく　だ！</language>
-		<language name="JPN_KANJI">きみのような　すごい　トレーナーに
-負けたのであれば　納得だ！</language>
+		<language name="JPN">ぼく　クダリ▼
+サブウェイマスターを　してるけど
+また　きみに　まけちゃった▼
+だけど　すがすがしい　きぶん
+だって　すごく　おもしろかった！▼
+きみの　かちたい　きもち
+ぼくの　まけたくない　きもち▽
+どっち　ほんもの▼
+ほんものが　ぶつかりあうと
+こころが　ワクワク　するんだ！</language>
+		<language name="JPN_KANJI">ぼく　クダリ▼
+サブウェイマスターを　してるけど
+また　きみに　負けちゃった▼
+だけど　すがすがしい　気分
+だって　すごく　おもしろかった！▼
+きみの　勝ちたい　気持ち
+ぼくの　負けたくない　気持ち▽
+どっち　本物▼
+本物が　ぶつかりあうと
+心が　ワクワク　するんだ！</language>
 	</row>
 
 	<row id="mes_tower_tr_311_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
