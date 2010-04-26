@@ -378,7 +378,10 @@ GFL_PROC_RESULT PMSInput_Init( GFL_PROC * proc, int * seq , void *pwk, void *myw
 		GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PMS_INPUT_VIEW, HEAPSIZE_VIEW );
 		wk = ConstructWork( proc , pwk );
 		PMSIView_SetCommand( wk->vwk, VCMD_INIT );
-		(*seq)++;
+
+    // ここで通信アイコンを読んでも表示されなかった。
+    
+    (*seq)++;
 		break;
 
 	case 1:
@@ -404,7 +407,12 @@ GFL_PROC_RESULT PMSInput_Init( GFL_PROC * proc, int * seq , void *pwk, void *myw
 		if( PMSIView_WaitCommandAll( wk->vwk ) )
     {
 	    ChangeMainProc(wk, MainProc_EditArea);  // ここでチェンジする
-			return GFL_PROC_RES_FINISH;
+		
+      // 通信アイコン
+      GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_PMS_INPUT_VIEW );
+      GFL_NET_ReloadIcon();
+      
+      return GFL_PROC_RES_FINISH;
 		}
 		break;
 	}
@@ -496,6 +504,9 @@ static void BmnCallBack( u32 buttonID, u32 event, void* wk_ptr )
 GFL_PROC_RESULT PMSInput_Quit( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
 	DestructWork( mywk, proc );
+
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_DefaultLCD();
 
 	GFL_HEAP_DeleteHeap( HEAPID_PMS_INPUT_SYSTEM );
 	GFL_HEAP_DeleteHeap( HEAPID_PMS_INPUT_VIEW );

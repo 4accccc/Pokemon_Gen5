@@ -39,7 +39,7 @@
 
 #define SOUND_TOUCH_FLIPBUTTON (SEQ_SE_SELECT1) // センテンス変更ボタンタッチ
 
-#define SOUND_TOUCH_SLIDEBAR (SEQ_SE_SYS_06)    // スライドバーをタッチ
+#define SOUND_TOUCH_SLIDEBAR (SEQ_SE_SELECT1)//カーソル移動音と同じにした//(SEQ_SE_SYS_06)    // スライドバーをタッチ
 
 #endif //PMS_USE_SND
 

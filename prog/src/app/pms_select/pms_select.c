@@ -567,7 +567,8 @@ static GFL_PROC_RESULT PMSSelectProc_Exit( GFL_PROC *proc, int *seq, void *pwk, 
   GFL_PROC_LOCAL_Exit( wk->local_procsys ); 
 
   //PRINT_QUE
-	PRINTSYS_QUE_Delete( wk->print_que );
+  PRINTSYS_QUE_Clear( wk->print_que );
+  PRINTSYS_QUE_Delete( wk->print_que );
 
 	//メッセージ破棄
 	GFL_MSG_Delete( wk->msg );
@@ -910,6 +911,9 @@ static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk )
   PMSSelect_PMSDRAW_Init( wk );
 #endif //PMS_SELECT_PMSDRAW
 
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, wk->heapID );
+  GFL_NET_ReloadIcon();
 }
 
 //-----------------------------------------------------------------------------
@@ -947,6 +951,9 @@ static void PMSSelect_GRAPHIC_UnLoad( PMS_SELECT_MAIN_WORK* wk )
 
   // 選択PROC終了or選択PROCを中断して簡易会話入力画面PROCに行く前に現在のタッチorキーをセットしておく
   GFL_UI_SetTouchOrKey( wk->b_touch?GFL_APP_END_TOUCH:GFL_APP_END_KEY );
+
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_DefaultLCD();
 }
 
 //-----------------------------------------------------------------------------
