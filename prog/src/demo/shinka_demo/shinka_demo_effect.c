@@ -121,7 +121,7 @@ REAR_WHITE_ANIME_STATE;
 
 // REARのフレーム
 #define REAR_FRAME_LENGTH_COLOR      ( 620 )  // STEP_EVO_DEMOになってからこのフレームだけ経過したら白にする
-#define REAR_FRAME_LENGTH_WHITE      (  60 )  // STEP_EVO_WHITEになってからこのフレームだけ経過したらカラーにする  // REAR_WHITE_ANIME_STATE_WHITEになってからこのフレームだけ経過したらREAR_WHITE_ANIME_STATE_WHITE_TO_COLORにする
+#define REAR_FRAME_LENGTH_WHITE      (   3 )//ポケモンを入れ替えなければならないので、最低でも3フレームは必要//(  60 )  // STEP_EVO_WHITEになってからこのフレームだけ経過したらカラーにする  // REAR_WHITE_ANIME_STATE_WHITEになってからこのフレームだけ経過したらREAR_WHITE_ANIME_STATE_WHITE_TO_COLORにする
 
 
 // パーティクルのY座標
@@ -210,8 +210,8 @@ static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
   {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA04 },
   {  500,     PARTICLE_SPA_FILE_0,         DEMO_SINKA05 },
   {  500,     PARTICLE_SPA_FILE_0,         DEMO_SINKA06 },
-  {  620,     PARTICLE_SPA_FILE_0,         DEMO_SINKA07 },
-  {  840,     PARTICLE_SPA_FILE_0,         DEMO_SINKA08 },
+  {  755/*563*//*620*/,     PARTICLE_SPA_FILE_0,         DEMO_SINKA07 },
+  {  783/*840*/,     PARTICLE_SPA_FILE_0,         DEMO_SINKA08 },
 };
 
 //-------------------------------------
@@ -290,6 +290,8 @@ static void Particle_Main( PARTICLE_MANAGER* mgr );
 static void Particle_Draw( PARTICLE_MANAGER* mgr );
 static void Particle_Start( PARTICLE_MANAGER* mgr );
 static void Particle_Stop( PARTICLE_MANAGER* mgr, s32 stop_count );
+static void Particle_Vanish( PARTICLE_MANAGER* mgr, s32 stop_count );  // 今表示しているパーティクルを全て消す(パーティクルシステム自体は動き続けるので、これ移行の新しいパーティクルは再生される)
+
 
 //-------------------------------------
 /// 3D
@@ -428,6 +430,9 @@ void SHINKADEMO_EFFECT_Main( SHINKADEMO_EFFECT_WORK* work )
       {
         work->step = STEP_EVO_WHITE;
         work->wait_count = REAR_FRAME_LENGTH_WHITE;
+
+        // 今表示しているパーティクルを全て消す(パーティクルシステム自体は動き続けるので、これ移行の新しいパーティクルは再生される)
+        Particle_Vanish( work->particle_mgr, 0 );
       }
     }
     break;
@@ -879,6 +884,12 @@ static void Particle_Stop( PARTICLE_MANAGER* mgr, s32 stop_count )
   mgr->play = FALSE;
   mgr->stop_count = stop_count;
 }
+
+static void Particle_Vanish( PARTICLE_MANAGER* mgr, s32 stop_count )  // 今表示しているパーティクルを全て消す(パーティクルシステム自体は動き続けるので、これ移行の新しいパーティクルは再生される)
+{
+  mgr->stop_count = stop_count;
+}
+
 
 //-------------------------------------
 /// 3D

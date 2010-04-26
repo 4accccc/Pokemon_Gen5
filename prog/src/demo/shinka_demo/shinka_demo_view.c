@@ -62,6 +62,7 @@ typedef enum
   STEP_EVO_CHANGE_ENDING_WHITE_TO_COLOR_START,            // 進化中  // 色付きに戻る
   STEP_EVO_CHANGE_ENDING_WHITE_TO_COLOR,                  // 進化中  // 色付きに戻り中
   
+  STEP_EVO_CHANGE_CRY_START_WAIT,                         // 進化中  // 鳴き開始前の待ち時間
   STEP_EVO_CHANGE_CRY_START,                              // 進化中  // 鳴き開始待ち中
   STEP_EVO_CHANGE_CRY,                                    // 進化中  // 鳴き中
   STEP_EVO_END,                                           // 終了中
@@ -715,6 +716,7 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
       if(work->b_change_cancel)
       {
         // 変わっていないので、何もしない
+        work->wait_count = 0;
       }
       else
       {
@@ -724,6 +726,8 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
         MCSS_ResetVanishFlag( work->poke_set[work->disp_poke].wk );
         // 新NotDispPokeを非表示にする
         MCSS_SetVanishFlag( work->poke_set[NotDispPoke(work->disp_poke)].wk );
+        
+        work->wait_count = 30;
       }
 
       ShinkaDemo_View_PokeSetPosX( work, POKE_X_CENTER );
@@ -753,13 +757,27 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
       if( !MCSS_CheckExecutePaletteFade( work->poke_set[work->disp_poke].wk ) )
       {
         // 次へ
-        work->step = STEP_EVO_CHANGE_CRY_START;
+        work->step = STEP_EVO_CHANGE_CRY_START_WAIT;
 
         MCSS_ResetAnmStopFlag( work->poke_set[work->disp_poke].wk );
       }
     }
     break;
 
+  case STEP_EVO_CHANGE_CRY_START_WAIT:
+    {
+      if( work->wait_count == 0 )  // 進化したときと進化しなかったときで待ち時間が異なるので、ここはマイナスしていくことにした。
+      {
+        // 次へ
+        work->step = STEP_EVO_CHANGE_CRY_START;
+        work->wait_count = 0;
+      }
+      else
+      {
+        work->wait_count--;
+      }
+    }
+    break;
   case STEP_EVO_CHANGE_CRY_START:
     {
       {

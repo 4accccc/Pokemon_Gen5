@@ -374,6 +374,11 @@ typedef struct
   // 進化デモのパーティクルと背景
   SHINKADEMO_EFFECT_WORK*     efwk;
 
+  // SE
+  BOOL                        se_play;        // デモのメイン部分を再生中にSEを鳴らしていいかどうかのフラグ
+  BOOL                        se_to_white;    // 白く飛ばすときのSEを2度鳴らさないようにするためのフラグ
+  BOOL                        se_from_white;  // 白から戻るときのSEを2度鳴らさないようにするためのフラグ
+
   // ローカルPROCシステム
   GFL_PROCSYS*  local_procsys;
 }
@@ -549,6 +554,11 @@ static GFL_PROC_RESULT ShinkaDemoProcInit( GFL_PROC * proc, int * seq, void * pw
     work->vblank_tcb = GFUser_VIntr_CreateTCB( ShinkaDemo_VBlankFunc, work, 1 );
   }
 
+  // SE
+  work->se_play       = FALSE;
+  work->se_to_white   = FALSE;
+  work->se_from_white = FALSE;
+
   // ローカルPROCシステムを作成
   work->local_procsys = GFL_PROC_LOCAL_boot( work->heap_id );
 
@@ -712,6 +722,11 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         SHINKADEMO_VIEW_ChangeStart( work->view );
         // 進化デモのパーティクルと背景
         SHINKADEMO_EFFECT_Start( work->efwk );
+
+        //PMSND_PlaySE( SEQ_SE_SHDEMO_01 );
+        PMSND_PlaySE( SEQ_SE_EDEMO_01 );
+        work->se_play = TRUE;
+        work->wait_count = 0;
       }
     }
     break;
@@ -738,7 +753,7 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         // 進化BGM再生開始するか
         if( SHINKADEMO_VIEW_ChangeIsBgmShinkaStart( work->view ) )
         {
-          ShinkaDemo_SoundPlayShinka( param, work );
+          ShinkaDemo_SoundPlayShinka( param, work ); 
         }
         // 進化BGM再生中断するか
         if( SHINKADEMO_VIEW_ChangeIsBgmShinkaPush( work->view ) )
@@ -749,6 +764,13 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         if( SHINKADEMO_VIEW_ChangeIsToWhite( work->view ) )
         {
           SHINKADEMO_EFFECT_StartWhite( work->efwk );
+
+          if( !(work->se_to_white) )
+          {
+            PMSND_PlaySE( SEQ_SE_SHDEMO_04 );
+            work->se_play = FALSE;
+            work->se_to_white = TRUE;
+          }
         }
         // INDEPENDENTをMCSSに入れ替えスタート
         if( SHINKADEMO_EFFECT_IsWhite( work->efwk ) )
@@ -759,6 +781,39 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         if( SHINKADEMO_EFFECT_IsFromWhite( work->efwk) )
         {
           SHINKADEMO_VIEW_ChangeFromWhiteStart( work->view );
+          
+          if( !(work->se_from_white) )
+          {
+            // 進化した場合
+            if( !(work->evo_cancel) )
+            {
+              work->se_play = TRUE;
+            }
+            work->se_from_white = TRUE;
+          }
+        }
+
+        // SE
+        if( work->se_play )
+        {
+          if( work->wait_count == 90 )
+          {
+            PMSND_PlaySE( SEQ_SE_SHDEMO_02 );
+          }
+          else if(    work->wait_count == 530
+                   || work->wait_count == 585
+                   || work->wait_count == 640
+          )
+          {
+            //PMSND_PlaySE( SEQ_SE_SHDEMO_03 );
+            PMSND_PlaySE( SEQ_SE_EDEMO_01 );
+          }
+          // この間少しwait_countは止まっています
+          else if( work->wait_count == 740 )
+          {
+            PMSND_PlaySE( SEQ_SE_SHDEMO_05 );
+          }
+          work->wait_count++;
         }
 
         // 進化キャンセルしたか
