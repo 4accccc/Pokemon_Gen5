@@ -16,6 +16,9 @@
 #include "ringtone_sys.h" 
 #include "field_envse_data.h"
 
+#include "test/performance.h"
+#include "net/net_whpipe.h"
+
 
 //================================================================================= 
 // ■デバッグ
@@ -24,9 +27,10 @@
 #define PRINT_NO            (1)  // printf出力先コンソール番号
 
 //#define DEBUG_DIV_LOAD_COUNT_ON // 分割読み込み回数カウントスイッチ
-#ifdef DEBUG_DIV_LOAD_COUNT_ON
+#ifdef DEBUG_DIV_LOAD_COUNT_ON // 分割読み込み回数カウンタ
 static int DivLoadCount = 0;
 #endif
+
 
 //================================================================================= 
 // ■定数
@@ -239,8 +243,12 @@ static void FadeOutBGM( FIELD_SOUND* fieldSound );
 static void PushBGM( FIELD_SOUND* fieldSound );
 static void PopBGM ( FIELD_SOUND* fieldSound );
 static BOOL DivLoadBGM_start( FIELD_SOUND* fieldSound );
-static BOOL DivLoadBGM_load ( FIELD_SOUND* fieldSound );
+static BOOL DivLoadBGM_load( FIELD_SOUND* fieldSound );
 static void ForcePlayBGM( FIELD_SOUND* fieldSound );
+
+// ビーコンスキャンの一時停止
+static void PauseBeaconScan( void ); // 一時停止する
+static void StartBeaconScan( void ); // 一時停止を解除する
 
 // セーブ中かどうか
 static BOOL CheckSaveNow( const FIELD_SOUND* fieldSound );
@@ -942,6 +950,9 @@ static void ResetFieldSoundSystem( FIELD_SOUND* fieldSound, GAMEDATA* gameData )
   }
   PMSND_StopBGM();
   InitFieldSoundSystem( fieldSound, gameData );
+
+  // ビーコンスキャンの一時停止を解除
+  StartBeaconScan(); 
 }
 
 //---------------------------------------------------------------------------------
@@ -1940,6 +1951,7 @@ static void Main_CHANGE_out( FIELD_SOUND* fieldSound )
     if( CheckSaveNow( fieldSound ) == FALSE ) {
       DivLoadBGM_start( fieldSound );
       ChangeState( fieldSound, FSND_STATE_CHANGE_load );
+      PauseBeaconScan(); // ビーコンスキャンを一時停止
     }
   }
 }
@@ -1957,19 +1969,18 @@ static void Main_CHANGE_load( FIELD_SOUND* fieldSound )
   loadFinished = DivLoadBGM_load( fieldSound );
 
   // 分割ロード完了(再生開始)
-  if( loadFinished )
-  { 
+  if( loadFinished ) { 
     if( (fieldSound->requestBGM != BGM_NONE) &&
-        (fieldSound->requestBGM != fieldSound->currentBGM) )
-    { 
+        (fieldSound->requestBGM != fieldSound->currentBGM) ) { 
       // 再ロード開始
       ChangeState( fieldSound, FSND_STATE_CHANGE_out );
     }
-    else
-    { 
+    else { 
       // フェードイン開始
       FadeInBGM( fieldSound );
       ChangeState( fieldSound, FSND_STATE_CHANGE_in );
+      // ビーコンスキャンの一時停止を解除
+      StartBeaconScan(); 
     }
   }
 }
@@ -2012,6 +2023,7 @@ static void Main_CHANGE_PUSH_out( FIELD_SOUND* fieldSound )
     if( CheckSaveNow( fieldSound ) == FALSE ) {
       DivLoadBGM_start( fieldSound );
       ChangeState( fieldSound, FSND_STATE_CHANGE_PUSH_load );
+      PauseBeaconScan(); // ビーコンスキャンを一時停止
     }
   }
 }
@@ -2029,12 +2041,13 @@ static void Main_CHANGE_PUSH_load( FIELD_SOUND* fieldSound )
   loadFinished = DivLoadBGM_load( fieldSound );
 
   // 分割ロード完了(再生開始)
-  if( loadFinished )
-  { 
+  if( loadFinished ) { 
     // BGM 退避
     PushBGM( fieldSound );
     ChangeState( fieldSound, FSND_STATE_STOP );
-    FinishRequest( fieldSound );
+    FinishRequest( fieldSound ); 
+    // ビーコンスキャンの一時停止を解除
+    StartBeaconScan(); 
   }
 }
 
@@ -2050,6 +2063,7 @@ static void Main_STAND_BY_out( FIELD_SOUND* fieldSound )
     if( CheckSaveNow( fieldSound ) == FALSE ) {
       DivLoadBGM_start( fieldSound );
       ChangeState( fieldSound, FSND_STATE_STAND_BY_load );
+      PauseBeaconScan(); // ビーコンスキャンを一時停止
     }
   }
 }
@@ -2067,12 +2081,13 @@ static void Main_STAND_BY_load( FIELD_SOUND* fieldSound )
   loadFinished = DivLoadBGM_load( fieldSound );
 
   // 分割ロード完了(再生開始)
-  if( loadFinished )
-  { 
+  if( loadFinished ) { 
     // BGM一時停止
     PMSND_PauseBGM( TRUE );
     ChangeState( fieldSound, FSND_STATE_WAIT );
     FinishRequest( fieldSound );
+    // ビーコンスキャンの一時停止を解除
+    StartBeaconScan(); 
   }
 } 
 
@@ -2468,6 +2483,34 @@ static void ForcePlayBGM( FIELD_SOUND* fieldSound )
   OS_TFPrintf( PRINT_NO, "FIELD-SOUND: force play BGM(%d) finish\n", fieldSound->currentBGM );
 #endif
 } 
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief ビーコンスキャンを一時停止する
+ */
+//---------------------------------------------------------------------------------
+static void PauseBeaconScan( void )
+{
+#ifdef PM_DEBUG
+  DEBUG_PerformanceStressON( FALSE, STRESS_ID_SND );
+#else
+  GFL_NET_WL_PauseScan( TRUE );
+#endif
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief ビーコンスキャンの一時停止を解除する
+ */
+//---------------------------------------------------------------------------------
+static void StartBeaconScan( void ) 
+{
+#ifdef PM_DEBUG
+  DEBUG_PerformanceStressON( TRUE, STRESS_ID_SND );
+#else
+  GFL_NET_WL_PauseScan( FALSE );
+#endif
+}
 
 //---------------------------------------------------------------------------------
 /**
