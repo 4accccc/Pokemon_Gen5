@@ -674,6 +674,7 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
       {
         // 次へ
         work->step = STEP_EVO_CHANGE_ENDING_BEFORE_REPLACE_WAIT;
+        work->wait_count = 0;
         
         work->b_change_bgm_shinka_push = TRUE;
         work->b_change_to_white = TRUE;
@@ -776,13 +777,21 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
     break;
   case STEP_EVO_CHANGE_CRY:
     {
-      if( !PMV_CheckPlay() )
-      {
-        // 次へ
-        work->step = STEP_EVO_END;
-
-        work->b_change_end = TRUE;
+      //if( work->wait_count >= 100 )  // MEを鳴らす瞬間に画面が固まるので、エフェクトが出ているとそれが目立ってしまう。
+      {                             // だからエフェクトが出終わるのを待つことにした。
+        if( !PMV_CheckPlay() )
+        {
+          // 次へ
+          work->step = STEP_EVO_END;
+          work->wait_count = 0;
+          
+          work->b_change_end = TRUE;
+        }
       }
+      //else  // BGMの分割ロードを利用してみることにしたのでコメントアウト
+      //{
+      //  work->wait_count++;
+      //}
     }
     break;
   case STEP_EVO_END:

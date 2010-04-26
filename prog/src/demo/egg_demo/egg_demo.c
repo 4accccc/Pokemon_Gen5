@@ -204,6 +204,7 @@ typedef enum
   SOUND_STEP_FIELD_FADE_OUT,
   SOUND_STEP_INTRO,
   SOUND_STEP_HATCH,
+  SOUND_STEP_CONGRATULATE_LOAD,
   SOUND_STEP_CONGRATULATE,
   SOUND_STEP_HATCH_FADE_OUT,
 }
@@ -248,6 +249,8 @@ typedef struct
   SOUND_STEP                  sound_step;
   TEXT_STEP                   text_step;
   TM_STEP                     tm_step;
+
+  u32                         sound_div_seq;  // BGMの分割ロードのシーケンス
 
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
@@ -1090,6 +1093,16 @@ static void Egg_Demo_SoundMain( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
     {
     }
     break;
+  case SOUND_STEP_CONGRATULATE_LOAD:
+    {
+      // BGMの分割ロードを利用してみる
+      BOOL play_start = PMSND_PlayBGMdiv( SEQ_ME_SHINKAOME, &(work->sound_div_seq), FALSE );
+      if( play_start )
+      {
+        work->sound_step = SOUND_STEP_CONGRATULATE;
+      }
+    }
+    break;
   case SOUND_STEP_CONGRATULATE:
     {
       if( !PMSND_CheckPlayBGM() )
@@ -1144,12 +1157,18 @@ static void Egg_Demo_SoundPopHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 }
 static void Egg_Demo_SoundPlayCongratulate( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
+/*
   PMSND_PlayBGM(SEQ_ME_SHINKAOME);
   work->sound_step = SOUND_STEP_CONGRATULATE;
+*/
+  // BGMの分割ロードを利用してみる
+  work->sound_div_seq = 0;
+  PMSND_PlayBGMdiv( SEQ_ME_SHINKAOME, &(work->sound_div_seq), TRUE );
+  work->sound_step = SOUND_STEP_CONGRATULATE_LOAD;
 }
 static BOOL Egg_Demo_SoundCheckPlayCongratulate( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
-  return ( work->sound_step == SOUND_STEP_CONGRATULATE );
+  return ( work->sound_step == SOUND_STEP_CONGRATULATE_LOAD || work->sound_step == SOUND_STEP_CONGRATULATE );
 }
 static void Egg_Demo_SoundFadeOutHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {

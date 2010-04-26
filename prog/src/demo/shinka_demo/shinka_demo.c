@@ -54,6 +54,7 @@ FS_EXTERN_OVERLAY(battle_plist);
 #include "app/p_status.h"
 
 #include "sound/wb_sound_data.sadl"
+#include "sound/sound_manager.h"
 #include "sound/pm_sndsys.h"
 #include "../../field/field_sound.h"
 
@@ -275,10 +276,22 @@ typedef enum
   SOUND_STEP_SHINKA,
   SOUND_STEP_SHINKA_PUSH,
   SOUND_STEP_SHINKA_FADE_OUT,
+  SOUND_STEP_CONGRATULATE_LOAD,
   SOUND_STEP_CONGRATULATE,
   SOUND_STEP_WAZAOBOE,
 }
 SOUND_STEP;
+
+/*
+サウンドヒープが足りないので無理
+// サウンドデータプリセットテーブル
+static const u32 preset_sound_table[] =
+{
+//  SEQ_BGM_SHINKA,
+//  SEQ_BGM_KOUKAN,
+  SEQ_ME_SHINKAOME,
+};
+*/
 
 
 //=============================================================================
@@ -316,6 +329,11 @@ typedef struct
   u32                         wait_count;
   // サウンドステップ
   SOUND_STEP                  sound_step;
+/*
+サウンドヒープが足りないので無理 
+  SOUNDMAN_PRESET_HANDLE*     sound_preset_handle;  // サウンドプリセット用ハンドル
+*/
+  u32                         sound_div_seq;  // BGMの分割ロードのシーケンス
 
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
@@ -1613,7 +1631,11 @@ static void ShinkaDemo_SoundInit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* wo
 //=====================================
 static void ShinkaDemo_SoundExit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 {
-  // 何もしない
+/*
+サウンドヒープが足りないので無理
+  // サウンドデータプリセット
+  SOUNDMAN_ReleasePresetData( work->sound_preset_handle );
+*/
 }
 //-------------------------------------
 /// サウンド主処理
@@ -1633,6 +1655,12 @@ static void ShinkaDemo_SoundMain( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* wo
         PMSND_PauseBGM( TRUE );
         PMSND_PushBGM();
         work->sound_step = SOUND_STEP_WAIT;
+
+/*
+サウンドヒープが足りないので無理
+        // サウンドデータプリセット
+        work->sound_preset_handle = SOUNDMAN_PresetSoundTbl( preset_sound_table, NELEMS(preset_sound_table) );
+*/
       }
     }
     break;
@@ -1658,6 +1686,16 @@ static void ShinkaDemo_SoundMain( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* wo
       {
         PMSND_StopBGM();
         work->sound_step = SOUND_STEP_WAIT;
+      }
+    }
+    break;
+  case SOUND_STEP_CONGRATULATE_LOAD:
+    {
+      // BGMの分割ロードを利用してみる
+      BOOL play_start = PMSND_PlayBGMdiv( SEQ_ME_SHINKAOME, &(work->sound_div_seq), FALSE );
+      if( play_start )
+      {
+        work->sound_step = SOUND_STEP_CONGRATULATE;
       }
     }
     break;
@@ -1758,13 +1796,20 @@ static void ShinkaDemo_SoundPlayCongratulate( SHINKA_DEMO_PARAM* param, SHINKA_D
 {
   if( work->sound_step == SOUND_STEP_SHINKA_PUSH )
   {
+/*
+BGMの分割ロードを利用してみることにしたのでコメントアウト
     PMSND_PlayBGM(SEQ_ME_SHINKAOME);
     work->sound_step = SOUND_STEP_CONGRATULATE;
+*/
+    // BGMの分割ロードを利用してみる
+    work->sound_div_seq = 0;
+    PMSND_PlayBGMdiv( SEQ_ME_SHINKAOME, &(work->sound_div_seq), TRUE );
+    work->sound_step = SOUND_STEP_CONGRATULATE_LOAD;
   }
 }
 static BOOL ShinkaDemo_SoundCheckPlayCongratulate( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 {
-  return ( work->sound_step == SOUND_STEP_CONGRATULATE );
+  return ( work->sound_step == SOUND_STEP_CONGRATULATE_LOAD || work->sound_step == SOUND_STEP_CONGRATULATE );
 }
 static void ShinkaDemo_SoundPlayWazaoboe( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 {
