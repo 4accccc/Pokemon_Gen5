@@ -1759,9 +1759,6 @@ static void MailView_ClactInit(MAIL_VIEW_DAT* wk)
   ARCHANDLE *i_handle;
   //-----------セルアクター初期化----------------
 
-  //通信中なら通信アイコン復帰
-  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, wk->heapID); //通信アイコン
-  
   {
     //システム作成
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &vramSetTable, wk->heapID );
@@ -1771,6 +1768,9 @@ static void MailView_ClactInit(MAIL_VIEW_DAT* wk)
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
     GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
   }
+
+  //通信アイコン
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, wk->heapID );
 
   //----------リソース追加-------------
 
