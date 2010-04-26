@@ -201,6 +201,9 @@ GFL_PROC_RESULT LeaderBoardProc_Init( GFL_PROC * proc, int *seq, void *pwk, void
   WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, 
                   WIPE_FADE_BLACK, 16, 1, HEAPID_LEADERBOARD );
 
+  // 通信アイコン表示
+  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_LEADERBOARD );
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -354,7 +357,7 @@ static void InitWork( LEADERBOARD_WORK *wk, void *pwk )
 #endif
   
   // トレーナー数数え上げ
-  wk->trainer_num = _countup_bsubway(wk->bSubwayData);
+  wk->trainer_num = BSUBWAY_LEADERDATA_GetDataNum( wk->bSubwayData );
 
   // 最大ページ数取得
   _page_max_init(wk);

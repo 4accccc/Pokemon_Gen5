@@ -141,7 +141,7 @@ static GFL_PROC_RESULT CI_Proc_Init( GFL_PROC * proc, int * seq , void *pwk, voi
              
   wk->sys.vBlankTcb = GFUser_VIntr_CreateTCB( CI_VBlank , wk , 16 );
   
-  
+  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_CODEIN );
   
   return GFL_PROC_RES_FINISH;
 }
@@ -341,7 +341,8 @@ static void CI_VramBankSet( void )
   ///< SUB‰æ–Ê‚ðƒƒCƒ“‰æ–Ê‚É‚·‚é‚½‚ß
   GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_SUB);
   
-  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+  GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_OBJ, VISIBLE_ON );
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 }
 
 //--------------------------------------------------------------
