@@ -130,7 +130,7 @@
 
 #define DEBUG_SPEED_CHECK_ENABLE  //デバッグ速度計測を有効にする
 #include "debug_speed_check.h"  //デバッグ速度計測本体
-
+#include "debug/debug_flg.h"
 #ifdef PM_DEBUG
 
 #include "field_camera_debug.h"
@@ -728,6 +728,17 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       GAME_COMM_SYS_PTR game_comm;
       game_comm = GAMESYSTEM_GetGameCommSysPtr( fieldWork->gsys );
       gray_scale  = Intrude_CheckGrayScaleMap( game_comm, fieldWork->gamedata );
+#if PM_DEBUG
+      if( DEBUG_FLG_GetFlg( DEBUG_FLG_BlackTexture ) == TRUE )
+      {
+        gray_scale = GRAYSCALE_TYPE_BLACK;
+      }
+      else
+      if( DEBUG_FLG_GetFlg( DEBUG_FLG_WhiteTexture ) == TRUE )
+      {
+        gray_scale = GRAYSCALE_TYPE_WHITE;
+      }
+#endif
       FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res, gray_scale );
     }
 
