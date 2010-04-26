@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T13:36:59"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-04-26T14:03:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1353" top="211" right="2016" bottom="813" maximized="no" rayout="Vertical2">
+	<dialog left="282" top="480" right="782" bottom="1082" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="9" right="1280" bottom="407" visible="yes"/>
-		<band id="0" index="1" style="0000" width="488"/>
+		<tag-palette left="1077" top="14" right="1550" bottom="412" visible="yes"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="217"/>
-		<band id="3" index="4" style="0000" width="436"/>
-		<band id="4" index="0" style="0000" width="655"/>
+		<band id="2" index="3" style="0000" width="325"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -307,16 +307,7 @@
 
 参加者と参加者のポケモンを
 画面上で見た左側から読み
-上げていく
-
-０：コンテスト名称
-１：コンテストランク
-　（コンディション）
-
-他、トレーナー名
-（自機・通信者・ＮＰＣ）と
-参加ポケモンが入る予定
-[100308岩尾和昌]</comment>
+上げていく</comment>
 		<attribute name="キャラ指定">オーナー
 ドレスアップ前</attribute>
 		<language name="JPN" width="256">ようこそ　ミュージカルへ！▼
@@ -330,6 +321,8 @@
 	</row>
 
 	<row id="msg_mus_01_002">
+		<comment>2:参加ポケモンＮＮ
+3:参加トレーナー名</comment>
 		<language name="JPN" width="256">[1:01:ポケモン種族名:2]　で　さんかの
 [1:00:トレーナー名:3]　さん！▼</language>
 		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:2]　で　参加の
@@ -337,6 +330,9 @@
 	</row>
 
 	<row id="msg_mus_01_003">
+		<comment>0:演目名
+1:コンディションに対応した客の
+傾向</comment>
 		<language name="JPN" width="256">そして　さんかする　えんもくは
 [1:22:コンテスト名称:0]▼
 [1:23:コンテストランク:1]の　おきゃくさんに
@@ -369,27 +365,29 @@
 ミュージカルの総評
 
 
-50→70に変更[100308岩尾]</comment>
+50→70に変更</comment>
 		<attribute name="キャラ指定">オーナー
 ショー後
 全体評価：全員70点以上</attribute>
-		<language name="JPN" width="256">いやー　おつかれさまです！▼
+		<language name="JPN" width="256">いやあ　おつかれさまです！▼
 ポケモンたちの　いきが
-みごとなまでに　ピッタリでした！▼
-とても　かんせいどの　たかい
-ミュージカル　でしたねえ！▼
-こんな　すばらしい　ミュージカルには▼
-とうぜん　おきゃくさん　からの
+みごとなまでに　ピッタリでしたね！▼
+オーナーの　わたしですら
+かんどうを　おさえきれない▽
+さいこうの　ミュージカル　でしたよ！▼
+さいこうの　ミュージカルには
+とうぜん　おきゃくさん　からの▽
 おたよりも　たくさん　きています！▼
 みなさんへの　おたよりも　あるので
 じゅんばんに　おわたししましょう！▼</language>
-		<language name="JPN_KANJI" width="256">いやー　おつかれさまです！▼
+		<language name="JPN_KANJI" width="256">いやあ　おつかれさまです！▼
 ポケモンたちの　息が
-みごとなまでに　ピッタリでした！▼
-とても　完成度の　高い
-ミュージカル　でしたねえ！▼
-こんな　素晴らしい　ミュージカルには▼
-当然　お客さん　からの
+見事なまでに　ピッタリでしたよ！▼
+オーナーの　私ですら
+感動を　おさえきれない▽
+最高の　ミュージカル　でしたよ！▼
+最高の　ミュージカルには
+当然　お客さん　からの▽
 お便りも　たくさん　きています！▼
 みなさんへの　お便りも　あるので
 順番に　お渡ししましょう！▼</language>
@@ -403,7 +401,7 @@
 		<attribute name="キャラ指定">オーナー
 ショー後
 全体評価：全員40点以上</attribute>
-		<language name="JPN" width="256">うーむ　おつかれさまです！▼
+		<language name="JPN" width="256">ううむ　おつかれさまです！▼
 とても　すばらしい
 ミュージカル　でしたねえ！▼
 その　しょうこに　ほら
@@ -411,7 +409,7 @@
 おたよりを　あずかっています！▼
 いやー　うれしいですねえ
 じゅんばんに　おわたししましょう！▼</language>
-		<language name="JPN_KANJI" width="256">うーむ　おつかれさまです！▼
+		<language name="JPN_KANJI" width="256">ううむ　おつかれさまです！▼
 とても　素晴らしい
 ミュージカル　でしたねえ！▼
 その　証拠に　ほら
@@ -429,7 +427,7 @@
 		<attribute name="キャラ指定">オーナー
 ショー後
 全体評価：それ以外</attribute>
-		<language name="JPN" width="256">ふーむ　おつかれさまです！▼
+		<language name="JPN" width="256">おつかれさまです！▼
 なかなか　みごたえのある
 ミュージカル　でしたねえ！▼
 おきゃくさんから　みなさんあてに
@@ -454,7 +452,7 @@
 		<attribute name="キャラ指定">オーナー
 ショー後
 全体評価：一人100以上</attribute>
-		<language name="JPN" width="256">ふーむ　おつかれさまです！▼
+		<language name="JPN" width="256">おつかれさまです！▼
 いちぶで　すごく　もりあがりのある
 ミュージカル　でしたねえ▼
 ところで　えんもくを　みていた
@@ -474,7 +472,7 @@
 
 	<row id="msg_mus_03_002_01">
 		<comment>ファンレター
-一い目
+一行目
 コンディション評価
 
 ０：トレーナー名
@@ -490,7 +488,7 @@
 
 	<row id="msg_mus_03_002_02">
 		<comment>ファンレター
-一い目
+一行目
 コンディション評価
 
 コンディションが平均か、
@@ -507,7 +505,7 @@
 
 	<row id="msg_mus_03_003_01">
 		<comment>ファンレター
-二い目
+二行目
 
 最高評価
 
@@ -517,31 +515,30 @@
 		<language name="JPN">こんかいの　ミュージカルは
 [1:00:トレーナー名:0]さんの　ポケモンが▼
 しゅやく　だったと　いっても
-いいすぎでは　ないとおもいます！▼
-いま　とても　かんどうしています！▼</language>
+いいすぎでは　ないとおもいます！▽
+また　ぜひぜひ　さんかしてください！▼</language>
 		<language name="JPN_KANJI">今回の　ミュージカルは
 [1:00:トレーナー名:0]さんの　ポケモンが▼
 主役だったと　いっても
-いいすぎでは　ないと思います！▼
-今　とても　感動しています！▼</language>
+いいすぎでは　ないと思います！▽
+また　ぜひぜひ　さんかしてください！▼</language>
 	</row>
 
 	<row id="msg_mus_03_003_02">
 		<comment>ファンレター
 二言目
 
-平均以上評価
-50→70に変更[100308岩尾]</comment>
+平均以上評価</comment>
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点70以上</attribute>
 		<language name="JPN">ドレスアップされた　ポケモンからも
-まるで　ひとが　えんじているかのような▼
-ゆたかな　ひょうげんを
-かんじることが　できました！▼</language>
+ひとが　えんじて　いるかのような▼
+ゆたかな　ひょうげんを　かんじました
+また　ぜひぜひ　さんかしてください！▼</language>
 		<language name="JPN_KANJI">ドレスアップされた　ポケモンからも
-まるで　人が　演じているかのような▼
-豊かな　表現を
-感じることが　できました！▼</language>
+人が　演じて　いるかのような▼
+豊かな　表現を　感じました
+また　ぜひぜひ　参加してください！▼</language>
 	</row>
 
 	<row id="msg_mus_03_003_03">
@@ -549,15 +546,14 @@
 二言目
 
 並評価
-40→50に変更[100308岩尾]
-０：コンテストランク</comment>
+１：コンディション</comment>
 		<attribute name="キャラ指定">オーナー
-個人評価2：評価点40以上</attribute>
+個人評価2：評価点50以上</attribute>
 		<language name="JPN">キレのある　うごきを　みていたら
-わたしまで　[1:23:コンテストランク:1]な　きぶん！▼
+わたしまで　[1:23:コンテストランク:1]な　きぶん！▽
 また　ぜひ　さんかしてください！▼</language>
 		<language name="JPN_KANJI">キレのある　動きを　みていたら
-私まで　[1:23:コンテストランク:1]な　気分！▼
+私まで　[1:23:コンテストランク:1]な　気分！▽
 また　ぜひ　参加してください！▼</language>
 	</row>
 
@@ -569,9 +565,11 @@
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点30以上</attribute>
 		<language name="JPN">ポケモンも　じぶんの　やくわりを
-きちんと　えんじていたと　おもいます！▼</language>
+きちんと　えんじていたと　おもいます▽
+また　さんかしてください！▼</language>
 		<language name="JPN_KANJI">ポケモンも　自分の　役割を
-きちんと　演じていたと　思います！▼</language>
+きちんと　演じていたと　思います▽
+また　参加してください！▼</language>
 	</row>
 
 	<row id="msg_mus_03_003_05">
@@ -582,9 +580,13 @@
 		<attribute name="キャラ指定">オーナー
 個人評価2：評価点20以上</attribute>
 		<language name="JPN">ポケモンも　それに　こたえようと
-がんばっている　ように　みえました！▼</language>
+がんばっている　ように　みえました！▼
+かげながら　おうえん　してます！
+また　いつか　さんかしてください▼</language>
 		<language name="JPN_KANJI">ポケモンも　それに　応えようと
-頑張っているように　みえました！▼</language>
+頑張っているように　みえました！▼
+影ながら　応援してます！
+また　いつか　参加してください▼</language>
 	</row>
 
 	<row id="msg_mus_03_003_06">
@@ -597,11 +599,11 @@
 		<language name="JPN">なんだか　あまり
 めだっては　いなかったけれど……▼
 ぼくは　すき　でした！
-また　かいじょうに　きますね！▼</language>
+これからも　がんばってください！▼</language>
 		<language name="JPN_KANJI">なんだか　あまり
 目立っては　いなかったけど……▼
 ぼくは　好きでした！
-また　会場に　来ますね！▼</language>
+これからも　頑張ってください！▼</language>
 	</row>
 
 	<row id="msg_mus_03_004_01">
@@ -610,14 +612,14 @@
 メッセージ後マップ遷移し
 解放</comment>
 		<attribute name="キャラ指定">オーナー
-閉めのい葉</attribute>
-		<language name="JPN">いやあ　みなさん
-ほんとうに　ありがとうございました！▼
+閉めの言葉</attribute>
+		<language name="JPN">ほんじつは　ごさんかいただき
+まことに　ありがとうございました！▼
 また　ぜひ　ミュージカルに
 さんかして　くださいませ！▼
 それでは　ごきげんようです！</language>
-		<language name="JPN_KANJI">いやあ　みなさん
-本当に　ありがとうございました！▼
+		<language name="JPN_KANJI">本日は　ご参加いただき
+まことに　ありがとうございました！▼
 また　ぜひ　ミュージカルに
 参加して　くださいませ！▼
 それでは　ごきげんようです！</language>
