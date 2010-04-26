@@ -747,10 +747,12 @@ static void BeaconReq_BtlWild( BATTLE_SETUP_PARAM* bp, BTL_BEACON_ST state )
   case BTL_BEACON_ST_WIN:
     GAMEBEACON_Set_BattlePokeVictory( monsno );
     break;
+#if 0
   case BTL_BEACON_ST_CAPTURE:
     monsno = PP_Get( PokeParty_GetMemberPointer(party,bp->capturedPokeIdx), ID_PARA_monsno, NULL );
     GAMEBEACON_Set_PokemonGet( monsno );
     break;
+#endif
   case BTL_BEACON_ST_ESCAPE:
     GAMEBEACON_Set_Escape();
     break;
@@ -775,7 +777,7 @@ static void BeaconReq_BattleEnd( BATTLE_EVENT_WORK* bew )
   //先頭ポケモンの残HPチェック
   {
     u16 hp = PP_Get(pp,ID_PARA_hp,NULL);
-    u16 hp_max = PP_Get(pp,ID_PARA_hp,NULL);
+    u16 hp_max = PP_Get(pp,ID_PARA_hpmax,NULL);
 
     if( hp == 0 ){
       GAMEBEACON_Set_Dying(nickname);

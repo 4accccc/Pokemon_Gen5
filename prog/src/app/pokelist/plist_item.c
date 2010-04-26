@@ -426,13 +426,20 @@ const PLIST_ITEM_USE_TYPE PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
   case ITEM_TYPE_LV_UP:      // LvUp系
     {
       u8 i;
+      STRBUF* nickname;
       const u32 lv = PP_CalcLevel( work->selectPokePara ); 
       PLIST_MSG_CreateWordSet( work , work->msgWork );
       PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
       PLIST_MSG_AddWordSet_Value( work , work->msgWork , 1 , lv+1 , 3 );
       PLIST_MessageWaitInit( work , mes_pokelist_08_09 , TRUE , PLIST_MSGCB_LvUp );
       PLIST_MSG_DeleteWordSet( work , work->msgWork );
-      
+     
+      //レベルアップビーコンリクエスト
+      nickname = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, work->heapId );
+      PP_Get( work->selectPokePara, ID_PARA_nickname, nickname );
+      GAMEBEACON_Set_PokemonLevelUp( nickname );
+      GFL_STR_DeleteBuffer( nickname );
+
       //表示用にレベルアップ前ののパラメータを保存
       for( i=0;i<6;i++ )
       {
