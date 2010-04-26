@@ -23,6 +23,7 @@
 #include "demo/demo3d.h"        // for Demo3DProcData etc.
 #include "demo/demo3d_demoid.h" // for DEMO3D_ID_xxxx
 #include "demo/dendou_demo.h"
+#include "demo/staff_roll.h"
 
 #include "script.h"           // for SCRIPT_CallGameClearScript
 #include "event_gameclear.h"  // for GAMECLEAR_MODE
@@ -34,6 +35,9 @@
 #include "proc_gameclear_save.h"
 
 
+//==============================================================================================
+//==============================================================================================
+#define MAX_SEQ_NUM (16) // 実行するシーケンスの最大数
 
 
 //==============================================================================================
@@ -41,13 +45,19 @@
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 typedef struct {
-  GAMESYS_WORK * gsys;
-  GAMEDATA* gamedata;
-  GAMECLEAR_MODE clear_mode;
-  BOOL saveSuccessFlag;
-  const MYSTATUS * mystatus; 
+
+  GAMESYS_WORK*       gsys;
+  GAMEDATA*           gamedata;
+  GAMECLEAR_MODE      clear_mode;
+  BOOL                saveSuccessFlag;
+  const MYSTATUS*     mystatus; 
   GAMECLEAR_MSG_PARAM para_child;
-  DENDOUDEMO_PARAM dendouDemoParam; // 殿堂入りデモ・パラメータ
+  DENDOUDEMO_PARAM    dendouDemoParam; // 殿堂入り デモのパラメータ
+  STAFFROLL_DATA      staffRollDemoParam; // スタッフロール デモのパラメータ
+
+  int nowSeq;    // 現在のシーケンス
+  int seqArray[ MAX_SEQ_NUM ]; // 実行シーケンス配列
+
 }GAMECLEAR_WORK;
 
 
@@ -61,6 +71,8 @@ enum {
   GMCLEAR_SEQ_FIELD_CLOSE_WAIT, // フィールドマップ終了待ち
 	GMCLEAR_SEQ_DENDOU_DEMO,	    // 殿堂入りデモ
   GMCLEAR_SEQ_DENDOU_DEMO_WAIT, // 殿堂入りデモ終了待ち
+  GMCLEAR_SEQ_STAFF_ROLL,       // スタッフロール
+  GMCLEAR_SEQ_STAFF_ROLL_WAIT,  // スタッフロール終了待ち
   GMCLEAR_SEQ_ENDING_DEMO,      // エンディングデモ
 	GMCLEAR_SEQ_CLEAR_SCRIPT,	    // ゲームクリアスクリプト処理
 	GMCLEAR_SEQ_SAVE_MESSAGE,	    // セーブ中メッセージ表示
@@ -70,7 +82,11 @@ enum {
 
 //============================================================================================
 //============================================================================================
+static void SetupDendouDemoParam( GAMECLEAR_WORK* work ); // 殿堂入りデモのパラメータをセットアップする
+static void SetupStaffRollDemoParam( GAMECLEAR_WORK* work ); // スタッフロールデモのパラメータをセットアップする
+static void SetupSequence( GAMECLEAR_WORK* work ); // シーケンスの流れをセットアップする
 static u16 GetEndingDemoID( void ); // エンディングの3DデモIDを取得する
+static void NowSeqFinish( GAMECLEAR_WORK* work, int* seq ); // 現在のシーケンスを終了する
 
 
 //============================================================================================
@@ -85,20 +101,20 @@ static u16 GetEndingDemoID( void ); // エンディングの3DデモIDを取得する
  *
  */
 //-----------------------------------------------------------------------------
-static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
+static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
 {
-  GAMECLEAR_WORK * gcwk = work;
+  GAMECLEAR_WORK * work = wk;
   GMEVENT * call_event;
-  GAMESYS_WORK * gsys = gcwk->gsys;
-  GAMEDATA * gamedata = gcwk->gamedata;
+  GAMESYS_WORK * gsys = work->gsys;
+  GAMEDATA * gamedata = work->gamedata;
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gamedata );
-  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gcwk->gsys );
-  GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( gcwk->gsys );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( work->gsys );
+  GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( work->gsys );
 
-	switch (*seq) {
+	switch( work->nowSeq ) {
 	case GMCLEAR_SEQ_INIT:
     PMSND_FadeOutBGM( 30 );
-		(*seq) ++;
+    NowSeqFinish( work, seq );
 		break;
 
   // フィールドマップをフェードアウト
@@ -110,7 +126,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
     if(GameCommSys_BootCheck(gameComm) != GAME_COMM_NO_NULL){
       GameCommSys_ExitReq(gameComm);
     }
-		(*seq) ++;
+    NowSeqFinish( work, seq );
     break;
 
   // 通信終了待ち
@@ -118,51 +134,55 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
     if( GameCommSys_BootCheck(gameComm) != GAME_COMM_NO_NULL ) {
       break;
     }
-		(*seq) ++;
+    NowSeqFinish( work, seq );
     break;
 
   // フィールドマップを終了待ち
   case GMCLEAR_SEQ_FIELD_CLOSE_WAIT:
     GMEVENT_CallEvent( event, EVENT_FieldClose_FieldProcOnly( gsys, fieldmap ) );
-    
-    // 初回はエンディングへ
-    if( gcwk->clear_mode == GAMECLEAR_MODE_FIRST ) {
-      *seq = GMCLEAR_SEQ_ENDING_DEMO;
-    }
-    // 2回目以降は殿堂入りデモへ
-    else {
-      *seq = GMCLEAR_SEQ_DENDOU_DEMO;
-    }
+    NowSeqFinish( work, seq );
     break;
 
   // 殿堂入りデモ呼び出し
   case GMCLEAR_SEQ_DENDOU_DEMO:
     GAMESYSTEM_CallProc( gsys, 
-        FS_OVERLAY_ID(dendou_demo), &DENDOUDEMO_ProcData, &gcwk->dendouDemoParam );
-		(*seq) ++;
+        FS_OVERLAY_ID(dendou_demo), &DENDOUDEMO_ProcData, &work->dendouDemoParam );
+    NowSeqFinish( work, seq );
 		break; 
   // 殿堂入りデモ終了待ち
 	case GMCLEAR_SEQ_DENDOU_DEMO_WAIT:  
 		if( GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL ) { break; }
-    *seq = GMCLEAR_SEQ_CLEAR_SCRIPT;
+    NowSeqFinish( work, seq );
 		break;
+
+  // スタッフロール デモ呼び出し
+  case GMCLEAR_SEQ_STAFF_ROLL:
+    GAMESYSTEM_CallProc( gsys, 
+        FS_OVERLAY_ID(staff_roll), &STAFFROLL_ProcData, &work->staffRollDemoParam );
+    NowSeqFinish( work, seq );
+    break; 
+
+  // スタッフロール終了待ち
+  case GMCLEAR_SEQ_STAFF_ROLL_WAIT:
+		if( GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL ) { break; }
+    NowSeqFinish( work, seq );
+    break;
 
   // エンディングデモ
   case GMCLEAR_SEQ_ENDING_DEMO:
     GMEVENT_CallEvent( event, 
         EVENT_CallDemo3D( gsys, event,  GetEndingDemoID(), 0, FALSE ) );
-    *seq = GMCLEAR_SEQ_CLEAR_SCRIPT;
+    NowSeqFinish( work, seq );
     break;
 
 	case GMCLEAR_SEQ_CLEAR_SCRIPT:
     SCRIPT_CallGameClearScript( gsys, HEAPID_PROC ); 
-		(*seq) ++;
-		break;
-
+    NowSeqFinish( work, seq );
+		break; 
   case GMCLEAR_SEQ_SAVE_MESSAGE:
-    GMEVENT_CallProc(
-        event, FS_OVERLAY_ID(gameclear_demo), &GameClearMsgProcData, &gcwk->para_child );
-    (*seq) ++;
+    GMEVENT_CallProc( event, 
+        FS_OVERLAY_ID(gameclear_demo), &GameClearMsgProcData, &work->para_child );
+    NowSeqFinish( work, seq );
 		break;
 
 	case GMCLEAR_SEQ_END:
@@ -204,10 +224,12 @@ GMEVENT * EVENT_GameClear( GAMESYS_WORK * gsys, GAMECLEAR_MODE mode )
   //移動ポケモン復活チェック
   MP_RecoverMovePoke( gamedata );
 
-  // 殿堂入りデモパラメータを設定
-  gcwk->dendouDemoParam.party    = GAMEDATA_GetMyPokemon( gamedata );
-  gcwk->dendouDemoParam.mystatus = GAMEDATA_GetMyStatus( gamedata );
-  gcwk->dendouDemoParam.ptime    = GAMEDATA_GetPlayTimeWork( gamedata );
+  // デモパラメータを設定
+  SetupDendouDemoParam( gcwk ); // 殿堂入り
+  SetupStaffRollDemoParam( gcwk ); // スタッフロール
+
+  // 実行するシーケンスの流れを決定
+  SetupSequence( gcwk );
 
   return event;
 } 
@@ -216,6 +238,89 @@ GMEVENT * EVENT_GameClear( GAMESYS_WORK * gsys, GAMECLEAR_MODE mode )
 
 //==============================================================================================
 //==============================================================================================
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 殿堂入りデモのパラメータをセットアップする
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void SetupDendouDemoParam( GAMECLEAR_WORK* work )
+{
+  work->dendouDemoParam.party    = GAMEDATA_GetMyPokemon( work->gamedata );
+  work->dendouDemoParam.mystatus = GAMEDATA_GetMyStatus( work->gamedata );
+  work->dendouDemoParam.ptime    = GAMEDATA_GetPlayTimeWork( work->gamedata );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief スタッフロールのデモパラメータをセットアップする
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void SetupStaffRollDemoParam( GAMECLEAR_WORK* work )
+{
+  // 殿堂入りの場合はスキップ可能
+  work->staffRollDemoParam.fastMode = ( work->clear_mode == GAMECLEAR_MODE_DENDOU );
+
+  // 文字モードを設定
+  {
+    SAVE_CONTROL_WORK* save;
+    MOJIMODE mojiMode;
+    CONFIG* config;
+    
+    save = GAMEDATA_GetSaveControlWork( work->gamedata );
+    config = SaveData_GetConfig( save );
+    mojiMode = CONFIG_GetMojiMode( config );
+
+    work->staffRollDemoParam.mojiMode = mojiMode;
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief シーケンスの流れをセットアップする
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void SetupSequence( GAMECLEAR_WORK* work )
+{
+  int pos = 0;
+
+  switch( work->clear_mode ) {
+  default: GF_ASSERT(0);
+  case GAMECLEAR_MODE_FIRST:
+    work->seqArray[pos++] = GMCLEAR_SEQ_INIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_WAIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL;
+    work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL_WAIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_ENDING_DEMO;
+    work->seqArray[pos++] = GMCLEAR_SEQ_CLEAR_SCRIPT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_SAVE_MESSAGE;
+    work->seqArray[pos++] = GMCLEAR_SEQ_END;
+    break;
+  case GAMECLEAR_MODE_DENDOU:
+    work->seqArray[pos++] = GMCLEAR_SEQ_INIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_FADEOUT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_COMM_END_WAIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_DENDOU_DEMO;
+    work->seqArray[pos++] = GMCLEAR_SEQ_DENDOU_DEMO_WAIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_CLEAR_SCRIPT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_SAVE_MESSAGE;
+    work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL;
+    work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL_WAIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_END;
+    break;
+  }
+
+  work->nowSeq = work->seqArray[0];
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -235,4 +340,15 @@ static u16 GetEndingDemoID( void )
   }
 
   return demo_id;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 現在のシーケンスを終了する
+ */
+//-----------------------------------------------------------------------------
+static void NowSeqFinish( GAMECLEAR_WORK* work, int* seq )
+{
+  (*seq)++;
+  work->nowSeq = work->seqArray[ *seq ];
 }
