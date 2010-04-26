@@ -618,6 +618,7 @@ _EVENT_DATA ev_TRID_HAKAIM1_34
 _EVENT_DATA ev_TRID_DANCER_04
 _EVENT_DATA ev_TRID_DANCER_05
 _EVENT_DATA ev_TRID_DANCER_06
+_EVENT_DATA ev_TRID_BADRIDER_01_07
 _EVENT_DATA ev_TRID_MAX
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
@@ -1226,6 +1227,7 @@ ev_TRID_HAKAIM1_34:
 ev_TRID_DANCER_04:
 ev_TRID_DANCER_05:
 ev_TRID_DANCER_06:
+ev_TRID_BADRIDER_01_07:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------
