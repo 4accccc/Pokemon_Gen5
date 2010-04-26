@@ -5566,9 +5566,12 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
         }else if( wait < 30*8 ){
           add1 = 4;
           add10 = 40;
-        }else if( wait >= 30*9 ){
+        }else if( wait < 30*9 ){
           add1 = 8;
           add10 = 80;
+        }else if( wait >= 30*9 ){
+          add1 = 16;
+          add10 = 160;
         }
       }
       
