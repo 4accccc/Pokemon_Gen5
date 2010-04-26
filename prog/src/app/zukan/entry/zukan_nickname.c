@@ -519,27 +519,44 @@ ZUKAN_NICKNAME_RESULT ZUKAN_NICKNAME_Main( ZUKAN_NICKNAME_WORK* work )
         switch( state )
         {
         case PRINTSTREAM_STATE_RUNNING:
-          if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
           {
-            PRINTSYS_PrintStreamShortWait( work->msg_stream, 0 );
-            GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
-          }
-          else if( GFL_UI_TP_GetTrg() )
-          {
-            PRINTSYS_PrintStreamShortWait( work->msg_stream, 0 );
-            GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
+            BOOL b_input = FALSE;
+            if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
+            {
+              GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
+              b_input = TRUE;
+            }
+            else if( GFL_UI_TP_GetTrg() )
+            {
+              GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
+              b_input = TRUE;
+            }
+            if( b_input )
+            {
+              PRINTSYS_PrintStreamShortWait( work->msg_stream, 0 );
+            }
           }
           break;
         case PRINTSTREAM_STATE_PAUSE:
-          if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
-          { 
-            PRINTSYS_PrintStreamReleasePause( work->msg_stream );
-            GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
-          }
-          else if( GFL_UI_TP_GetTrg() )
           {
-            PRINTSYS_PrintStreamReleasePause( work->msg_stream );
-            GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
+            BOOL b_input = FALSE;
+            if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
+            { 
+              GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
+              b_input = TRUE;
+            }
+            else if( GFL_UI_TP_GetTrg() )
+            {
+              GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
+              b_input = TRUE;
+            }
+            if( b_input )
+            {
+              PRINTSYS_PrintStreamReleasePause( work->msg_stream );
+              
+              PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+              // メッセージ送りキーカーソルアイコンAPP_KEYCURSOR_WORKが必要なメッセージはないので、用意していない。
+            }
           }
           break;
         }
@@ -702,27 +719,44 @@ ZUKAN_NICKNAME_RESULT ZUKAN_NICKNAME_Main( ZUKAN_NICKNAME_WORK* work )
         switch( state )
         {
         case PRINTSTREAM_STATE_RUNNING:
-          if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
           {
-            PRINTSYS_PrintStreamShortWait( work->msg_stream, 0 );
-            GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
-          }
-          else if( GFL_UI_TP_GetTrg() )
-          {
-            PRINTSYS_PrintStreamShortWait( work->msg_stream, 0 );
-            GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
+            BOOL b_input = FALSE;
+            if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
+            {
+              GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
+              b_input = TRUE;
+            }
+            else if( GFL_UI_TP_GetTrg() )
+            {
+              GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
+              b_input = TRUE;
+            }
+            if( b_input )
+            {
+              PRINTSYS_PrintStreamShortWait( work->msg_stream, 0 );
+            }
           }
           break;
         case PRINTSTREAM_STATE_PAUSE:
-          if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
-          { 
-            PRINTSYS_PrintStreamReleasePause( work->msg_stream );
-            GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
-          }
-          else if( GFL_UI_TP_GetTrg() )
           {
-            PRINTSYS_PrintStreamReleasePause( work->msg_stream );
-            GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
+            BOOL b_input = FALSE;
+            if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
+            { 
+              GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
+              b_input = TRUE;
+            }
+            else if( GFL_UI_TP_GetTrg() )
+            {
+              GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
+              b_input = TRUE;
+            }
+            if( b_input )
+            {
+              PRINTSYS_PrintStreamReleasePause( work->msg_stream );
+              
+              PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+              // メッセージ送りキーカーソルアイコンAPP_KEYCURSOR_WORKが必要なメッセージはないので、用意していない。
+            }
           }
           break;
         }

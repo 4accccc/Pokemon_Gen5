@@ -27,7 +27,8 @@
 #include "poke_tool/pokefoot.h"
 
 // 鳴き声
-#include "sound/pm_voice.h"
+//#include "sound/pm_voice.h"
+#include "sound/pm_wb_voice.h"  // wbではpm_voiceではなくこちらを使う
 
 // アーカイブ
 #include "arc_def.h"
@@ -355,7 +356,10 @@ struct _ZUKAN_INFO_WORK
   u8                      bg_priority;
   GFL_CLUNIT*             clunit;          // 他のところのを覚えているだけで生成や破棄はしない。
   GFL_FONT*               font;            // 他のところのを覚えているだけで生成や破棄はしない。
-  PRINT_QUE*              print_que;       // 他のところのを覚えているだけで生成や破棄はしない。
+  //PRINT_QUE*              print_que;       // 他のところのを覚えているだけで生成や破棄はしない。
+  
+  // 独自のprint_queを生成することにした
+  PRINT_QUE*              print_que;
 
   // BG
   // fore = setumei, back = base
@@ -389,6 +393,7 @@ struct _ZUKAN_INFO_WORK
 
   //MSG系
   GFL_BMPWIN*  bmpwin[ZUKAN_INFO_MSG_MAX];
+  BOOL         bmpwin_finish[ZUKAN_INFO_MSG_MAX];  // 転送済みのときTRUE(転送するものがないときもTRUE)、つまり転送しなければならないときのみFALSE。
 
   // モンスターボールのマーク
   GFL_BMPWIN*  ball_yes_bmpwin;
@@ -433,6 +438,7 @@ static void Zukan_Info_DrawStr( HEAPID heap_id, GFL_BMPWIN* bmpwin, GFL_MSGDATA*
 static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work );
 static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_LANG lang );
 static void Zukan_Info_DeleteMessage( ZUKAN_INFO_WORK* work );
+static void Zukan_Info_MessageMain( ZUKAN_INFO_WORK* work );
 
 // モンスターボールのマーク
 static void Zukan_Info_CreateBall( ZUKAN_INFO_WORK* work );
@@ -483,7 +489,7 @@ void ZUKAN_INFO_SetDrawEnableAllObj( ZUKAN_INFO_WORK* work, BOOL on_off );
  *  @param[in] a_bg_priority     0か1(0のときは012,1のときは123というプライオリティになる)
  *  @param[in] a_clunit          セルアクターユニット
  *  @param[in] a_font            フォント
- *  @param[in] a_print_que       プリントキュー
+ *  @param[in] a_print_que       プリントキュー  // 独自のprint_queを生成することにしたので使用しない
  *
  *  @retval    生成したワーク
  */
@@ -498,7 +504,7 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_Init(
                      u8                       a_bg_priority,
                      GFL_CLUNIT*              a_clunit,
                      GFL_FONT*                a_font,
-                     PRINT_QUE*               a_print_que )
+                     PRINT_QUE*               a_print_que )  // 独自のprint_queを生成することにしたので使用しない
 {
   //BOOL fast         = PP_FastModeOn( a_pp );  // 高速化モードはconstはずさないといけないので、止めた
   u16  monsno       = (u16)PP_Get( a_pp, ID_PARA_monsno, NULL );
@@ -539,7 +545,7 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
                             u8                     a_bg_priority,
                             GFL_CLUNIT*            a_clunit,
                             GFL_FONT*              a_font,
-                            PRINT_QUE*             a_print_que )
+                            PRINT_QUE*             a_print_que )  // 独自のprint_queを生成することにしたので使用しない
 {
   ZUKAN_INFO_WORK* work;
 
@@ -565,8 +571,13 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
     work->bg_priority         = a_bg_priority;
     work->clunit              = a_clunit;
     work->font                = a_font;
-    work->print_que           = a_print_que;
+    //work->print_que           = a_print_que;  // 独自のprint_queを生成することにしたので使用しない
   }
+
+  // 独自のprint_queを生成することにした
+  {
+    work->print_que = PRINTSYS_QUE_Create( work->heap_id );
+  } 
 
   // 初期化
   {
@@ -856,6 +867,12 @@ void ZUKAN_INFO_Exit( ZUKAN_INFO_WORK* work )
                               GFL_ARCUTIL_TRANSINFO_GetSize( work->fore_bg_chara_info ) );
   }
 
+  // 独自のprint_queを生成したので、破棄する
+  {
+    PRINTSYS_QUE_Clear( work->print_que );
+    PRINTSYS_QUE_Delete( work->print_que );
+  }
+
   // ワーク破棄
   {
     GFL_HEAP_FreeMemory( work );
@@ -911,7 +928,8 @@ void ZUKAN_INFO_Main( ZUKAN_INFO_WORK* work )
         GX_SetVisibleWnd( GX_WNDMASK_NONE );
         G2_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ,
                                0 );
-        PMVOICE_Play( work->monsno, work->formno, 64, FALSE, 0, 0, FALSE, 0 );
+        //PMVOICE_Play( work->monsno, work->formno, 64, FALSE, 0, 0, FALSE, 0 );
+        PMV_PlayVoice( work->monsno, work->formno );
         work->step = ZUKAN_INFO_STEP_MOVE_WAIT;
       }
     }
@@ -958,7 +976,8 @@ void ZUKAN_INFO_Main( ZUKAN_INFO_WORK* work )
     {
       if(work->cry_flag)
       {
-        PMVOICE_Play( work->monsno, work->formno, 64, FALSE, 0, 0, FALSE, 0 );
+        //PMVOICE_Play( work->monsno, work->formno, 64, FALSE, 0, 0, FALSE, 0 );
+        PMV_PlayVoice( work->monsno, work->formno );
         work->step = ZUKAN_INFO_STEP_CENTER_STILL;
       }
     }
@@ -973,6 +992,14 @@ void ZUKAN_INFO_Main( ZUKAN_INFO_WORK* work )
     break;
   }
 
+  // print_queが書き終わったら転送する
+  if(    work->launch == ZUKAN_INFO_LAUNCH_TOROKU
+      || work->launch == ZUKAN_INFO_LAUNCH_LIST )
+  {
+    Zukan_Info_MessageMain( work );
+  }
+  
+  PRINTSYS_QUE_Main( work->print_que );
 }
 
 //-----------------------------------------------------------------------------
@@ -1485,8 +1512,10 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
 
     for( i=0; i<ZUKAN_INFO_MSG_MAX; i++ )
     {
-      GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpwin[i] );
+      work->bmpwin_finish[i] = FALSE;
     }
+    // 既に済んでいるかもしれないので1度呼んでおく
+    Zukan_Info_MessageMain( work );
   }
 
   GFL_MSG_Delete(msgdata_explain);
@@ -1652,8 +1681,10 @@ static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_L
 
     for( i=0; i<ZUKAN_INFO_MSG_MAX; i++ )
     {
-      GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpwin[i] );
+      work->bmpwin_finish[i] = FALSE;
     }
+    // 既に済んでいるかもしれないので1度呼んでおく
+    Zukan_Info_MessageMain( work );
   }
 
   GFL_MSG_Delete(msgdata_name);
@@ -1670,9 +1701,33 @@ static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_L
 static void Zukan_Info_DeleteMessage( ZUKAN_INFO_WORK* work )
 {
   s32 i;
+
+  PRINTSYS_QUE_Clear( work->print_que );
+
   for( i=0; i<ZUKAN_INFO_MSG_MAX; i++ )
   {
+    work->bmpwin_finish[i] = TRUE;
+
     GFL_BMPWIN_Delete( work->bmpwin[i] );
+  }
+}
+
+//-------------------------------------
+/// print_queが書き終わったら転送する
+//=====================================
+static void Zukan_Info_MessageMain( ZUKAN_INFO_WORK* work )
+{
+  s32 i;
+  for( i=0; i<ZUKAN_INFO_MSG_MAX; i++ )
+  {
+    if( !(work->bmpwin_finish[i]) )
+    {
+      if( !PRINTSYS_QUE_IsExistTarget( work->print_que, GFL_BMPWIN_GetBmp(work->bmpwin[i]) ) )
+      {
+        GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpwin[i] );
+        work->bmpwin_finish[i] = TRUE;
+      }
+    }
   }
 }
 

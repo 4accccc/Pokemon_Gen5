@@ -98,7 +98,7 @@ extern ZUKAN_INFO_WORK* ZUKAN_INFO_Init(
                             u8                      a_bg_priority,
                             GFL_CLUNIT*             a_clunit,
                             GFL_FONT*               a_font,
-                            PRINT_QUE*              a_print_que );
+                            PRINT_QUE*              a_print_que );  // 独自のprint_queを生成することにしたので使用しない
 
 extern ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
                             HEAPID                 a_heap_id,
@@ -114,8 +114,7 @@ extern ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
                             u8                     a_bg_priority,
                             GFL_CLUNIT*            a_clunit,
                             GFL_FONT*              a_font,
-                            PRINT_QUE*             a_print_que );
-
+                            PRINT_QUE*             a_print_que );  // 独自のprint_queを生成することにしたので使用しない
 
 //-------------------------------------
 /// 終了処理

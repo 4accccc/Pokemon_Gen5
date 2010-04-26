@@ -352,6 +352,7 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcExit( GFL_PROC* proc, int* seq, void* pw
 
   // Œã•Ð•t‚¯
   {
+    PRINTSYS_QUE_Clear( work->print_que );
     PRINTSYS_QUE_Delete( work->print_que );
     GFL_FONT_Delete( work->font );
     ZUKAN_TOROKU_GRAPHIC_Exit( work->graphic );
