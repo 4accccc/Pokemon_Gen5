@@ -37,6 +37,7 @@ static const u16 UncheckZoneList[] =
   ZONE_ID_CLOSSEUM,
   ZONE_ID_CLOSSEUM02,
   ZONE_ID_PLD10,
+  ZONE_ID_C04R0202, // ミュージカル: 正しい手順を経て入室する必要がある
 };
 
 
