@@ -206,6 +206,8 @@ int GDSRAP_Tool_Send_MusicalShotUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp
 		return FALSE;
 	}
   
+  GF_ASSERT(0); //※check ミュージカルショットに個性乱数が増えた為サーバー待ち 2010.04.26(月)
+  
   gdsrap->send_buf.mus_send.profile = *gpp;
   gdsrap->send_buf.mus_send.mus_shot = *musshot;
 	
@@ -230,6 +232,8 @@ int GDSRAP_Tool_Send_MusicalShotDownload(GDS_RAP_WORK *gdsrap, int monsno)
 	if(GDSRAP_MoveStatusAllCheck(gdsrap) == FALSE){
 		return FALSE;
 	}
+
+  GF_ASSERT(0); //※check ミュージカルショットに個性乱数が増えた為サーバー待ち 2010.04.26(月)
 
 	gdsrap->send_buf.sub_para.musical.recv_monsno = monsno;
 	
