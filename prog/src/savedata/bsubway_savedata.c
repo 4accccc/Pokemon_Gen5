@@ -738,11 +738,11 @@ u8 BSUBWAY_SCOREDATA_SetWifiLoseCount(
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  スコアデータ  使用ポケモンを設定
+ *  @brief  スコアデータ  使用ポケモンを設定
  *
- *	@param	bsw_score     スコアワーク
- *	@param	mode          設定するモード
- *	@param	poke          ポケモン情報(BSUBWAY_POKEMON * BSUBWAY_STOCK_WIFI_MEMBER_MAX　分のバッファが必要)
+ *  @param  bsw_score     スコアワーク
+ *  @param  mode          設定するモード
+ *  @param  poke          ポケモン情報(BSUBWAY_POKEMON * BSUBWAY_STOCK_WIFI_MEMBER_MAX　分のバッファが必要)
  */
 //-----------------------------------------------------------------------------
 void BSUBWAY_SCOREDATA_SetUsePokeData( BSUBWAY_SCOREDATA *bsw_score, BSWAY_SCORE_POKE_DATA mode, const BSUBWAY_POKEMON* poke_tbl )
@@ -756,11 +756,11 @@ void BSUBWAY_SCOREDATA_SetUsePokeData( BSUBWAY_SCOREDATA *bsw_score, BSWAY_SCORE
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  スコアデータ  使用ポケモンを取得
+ *  @brief  スコアデータ  使用ポケモンを取得
  *
- *	@param	bsw_score     スコアワーク
- *	@param	mode          設定するモード
- *	@param	poke          ポケモン情報(BSUBWAY_POKEMON * 3　分のバッファが必要)
+ *  @param  bsw_score     スコアワーク
+ *  @param  mode          設定するモード
+ *  @param  poke          ポケモン情報(BSUBWAY_POKEMON * 3　分のバッファが必要)
  */
 //-----------------------------------------------------------------------------
 void BSUBWAY_SCOREDATA_GetUsePokeData( const BSUBWAY_SCOREDATA *bsw_score, BSWAY_SCORE_POKE_DATA mode, BSUBWAY_POKEMON* poke_tbl )
@@ -775,10 +775,10 @@ void BSUBWAY_SCOREDATA_GetUsePokeData( const BSUBWAY_SCOREDATA *bsw_score, BSWAY
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  スコアデータ Wifi成績操作
+ *  @brief  スコアデータ Wifi成績操作
  *
- *	@param	bsw_score   スコアワーク
- *	@param	bsw_play    プレイワーク
+ *  @param  bsw_score   スコアワーク
+ *  @param  bsw_play    プレイワーク
  */
 //-----------------------------------------------------------------------------
 void BSUBWAY_SCOREDATA_SetWifiScore( BSUBWAY_SCOREDATA *bsw_score, const BSUBWAY_PLAYDATA *bsw_play )
@@ -806,9 +806,9 @@ void BSUBWAY_SCOREDATA_SetWifiScore( BSUBWAY_SCOREDATA *bsw_score, const BSUBWAY
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  スコアデータ　Wifi成績0クリア
+ *  @brief  スコアデータ　Wifi成績0クリア
  *
- *	@param	bsw_score   ワーク
+ *  @param  bsw_score   ワーク
  */
 //-----------------------------------------------------------------------------
 void BSUBWAY_SCOREDATA_ClearWifiScore( BSUBWAY_SCOREDATA *bsw_score )
@@ -818,11 +818,11 @@ void BSUBWAY_SCOREDATA_ClearWifiScore( BSUBWAY_SCOREDATA *bsw_score )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  スコアデータ　Wifi成績取得
+ *  @brief  スコアデータ　Wifi成績取得
  *
- *	@param	bsw_score   ワーク
+ *  @param  bsw_score   ワーク
  *
- *	@return Wifi成績
+ *  @return Wifi成績
  */
 //-----------------------------------------------------------------------------
 u16 BSUBWAY_SCOREDATA_GetWifiScore( const BSUBWAY_SCOREDATA *bsw_score )
@@ -832,11 +832,11 @@ u16 BSUBWAY_SCOREDATA_GetWifiScore( const BSUBWAY_SCOREDATA *bsw_score )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  スコアデータ  Wifi成績から　勝ち抜きすうを取得
+ *  @brief  スコアデータ  Wifi成績から　勝ち抜きすうを取得
  *
- *	@param	bsw_score   ワーク
+ *  @param  bsw_score   ワーク
  *
- *	@return 勝ち抜きすう
+ *  @return 勝ち抜きすう
  */
 //-----------------------------------------------------------------------------
 u8 BSUBWAY_SCOREDATA_GetWifiNum( const BSUBWAY_SCOREDATA *bsw_score )
@@ -883,8 +883,8 @@ void BSUBWAY_SCOREDATA_DEBUG_SetFlag( BSUBWAY_SCOREDATA *bsw_score, u8 flag )
 //======================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  BSUBWAY_WIFIDATAのサイズを取得
- *	@return サイズ
+ *  @brief  BSUBWAY_WIFIDATAのサイズを取得
+ *  @return サイズ
  */ 
 //-----------------------------------------------------------------------------
 int BSUBWAY_WIFIDATA_GetWorkSize( void )
@@ -894,9 +894,9 @@ int BSUBWAY_WIFIDATA_GetWorkSize( void )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  WiFiデータ  初期化
+ *  @brief  WiFiデータ  初期化
  *
- *	@param	bsw_wifi  WiFiデータ
+ *  @param  bsw_wifi  WiFiデータ
  */
 //-----------------------------------------------------------------------------
 void BSUBWAY_WIFIDATA_Init( BSUBWAY_WIFI_DATA *bsw_wifi )
@@ -906,12 +906,12 @@ void BSUBWAY_WIFIDATA_Init( BSUBWAY_WIFI_DATA *bsw_wifi )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  WiFiデータ  指定ルームデータの取得フラグを設定する。
+ *  @brief  WiFiデータ  指定ルームデータの取得フラグを設定する。
  *
- *	@param	bsw_wifi  WiFiデータ  
- *	@param	rank      ランク（1オリジン）
- *	@param	room      ルーム(1オリジン)
- *	@param	day       受信時間
+ *  @param  bsw_wifi  WiFiデータ  
+ *  @param  rank      ランク（1オリジン）
+ *  @param  room      ルーム(1オリジン)
+ *  @param  day       受信時間
  */
 //-----------------------------------------------------------------------------
 void BSUBWAY_WIFIDATA_SetRoomDataFlag( BSUBWAY_WIFI_DATA *bsw_wifi, u8 rank, u8 room, const RTCDate *day )
@@ -940,9 +940,9 @@ void BSUBWAY_WIFIDATA_SetRoomDataFlag( BSUBWAY_WIFI_DATA *bsw_wifi, u8 rank, u8 
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ルームデータ取得フラグをクリアする
+ *  @brief  ルームデータ取得フラグをクリアする
  *
- *	@param	bsw_wifi  
+ *  @param  bsw_wifi  
  */
 //-----------------------------------------------------------------------------
 void BSUBWAY_WIFIDATA_ClearRoomDataFlag( BSUBWAY_WIFI_DATA *bsw_wifi )
@@ -971,17 +971,17 @@ static BOOL check_day(const RTCDate* new,const RTCDate* old)
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  指定ルームの情報がダウンロードされているかチェック
+ *  @brief  指定ルームの情報がダウンロードされているかチェック
  *
- *	@param	bsw_wifi    ワーク
- *	@param	rank        ランク
- *	@param	room        ルームナンバー
- *	@param	day         日付
+ *  @param  bsw_wifi    ワーク
+ *  @param  rank        ランク
+ *  @param  room        ルームナンバー
+ *  @param  day         日付
  *
- *	*日付が変わっているとフラグをオールクリアする。
+ *  *日付が変わっているとフラグをオールクリアする。
  *
- *	@retval TRUE    受信されている
- *	@retval FALSE   受信されていない
+ *  @retval TRUE    受信されている
+ *  @retval FALSE   受信されていない
  */
 //-----------------------------------------------------------------------------
 BOOL BSUBWAY_WIFIDATA_CheckRoomDataFlag( BSUBWAY_WIFI_DATA *bsw_wifi, u8 rank, u8 room, const RTCDate *day )
@@ -1017,12 +1017,12 @@ BOOL BSUBWAY_WIFIDATA_CheckRoomDataFlag( BSUBWAY_WIFI_DATA *bsw_wifi, u8 rank, u
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  プレイヤーデータが存在しているかチェック
+ *  @brief  プレイヤーデータが存在しているかチェック
  *
- *	@param	bsw_wifi  ワーク
+ *  @param  bsw_wifi  ワーク
  *
- *	@retval TRUE    存在している
- *	@retval FALSE   存在していない
+ *  @retval TRUE    存在している
+ *  @retval FALSE   存在していない
  */
 //-----------------------------------------------------------------------------
 BOOL BSUBWAY_WIFIDATA_CheckPlayerDataEnable( const BSUBWAY_WIFI_DATA *bsw_wifi )
@@ -1032,12 +1032,12 @@ BOOL BSUBWAY_WIFIDATA_CheckPlayerDataEnable( const BSUBWAY_WIFI_DATA *bsw_wifi )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  リーダーデータが存在しているかチェック
+ *  @brief  リーダーデータが存在しているかチェック
  *
- *	@param	bsw_wifi  ワーク
+ *  @param  bsw_wifi  ワーク
  *
- *	@retval TRUE    存在している
- *	@retval FALSE   存在していない
+ *  @retval TRUE    存在している
+ *  @retval FALSE   存在していない
  */
 //-----------------------------------------------------------------------------
 BOOL BSUBWAY_WIFIDATA_CheckLeaderDataEnable( const BSUBWAY_WIFI_DATA *bsw_wifi )
@@ -1047,12 +1047,12 @@ BOOL BSUBWAY_WIFIDATA_CheckLeaderDataEnable( const BSUBWAY_WIFI_DATA *bsw_wifi )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  プレイヤー情報を保存
+ *  @brief  プレイヤー情報を保存
  *
- *	@param	bsw_wifi    ワーク
- *	@param	dat         プレイヤー情報テーブル
- *	@param	rank        ランク
- *	@param	room        部屋No
+ *  @param  bsw_wifi    ワーク
+ *  @param  dat         プレイヤー情報テーブル
+ *  @param  rank        ランク
+ *  @param  room        部屋No
  */
 //-----------------------------------------------------------------------------
 void BSUBWAY_WIFIDATA_SetPlayerData( BSUBWAY_WIFI_DATA *bsw_wifi, const BSUBWAY_WIFI_PLAYER* dat, u8 rank, u8 room )
@@ -1068,9 +1068,9 @@ void BSUBWAY_WIFIDATA_SetPlayerData( BSUBWAY_WIFI_DATA *bsw_wifi, const BSUBWAY_
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  プレイヤー情報をクリア
+ *  @brief  プレイヤー情報をクリア
  *
- *	@param	bsw_wifi    ワーク
+ *  @param  bsw_wifi    ワーク
  */
 //-----------------------------------------------------------------------------
 void BSUBWAY_WIFIDATA_ClearPlayerData( BSUBWAY_WIFI_DATA *bsw_wifi )
@@ -1082,7 +1082,7 @@ void BSUBWAY_WIFIDATA_ClearPlayerData( BSUBWAY_WIFI_DATA *bsw_wifi )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  プレイヤー情報　ランク取得
+ *  @brief  プレイヤー情報　ランク取得
  */
 //-----------------------------------------------------------------------------
 u8 BSUBWAY_WIFIDATA_GetPlayerRank( const BSUBWAY_WIFI_DATA *bsw_wifi )
@@ -1093,7 +1093,7 @@ u8 BSUBWAY_WIFIDATA_GetPlayerRank( const BSUBWAY_WIFI_DATA *bsw_wifi )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  プレイヤー情報　部屋No取得
+ *  @brief  プレイヤー情報　部屋No取得
  */
 //-----------------------------------------------------------------------------
 u8 BSUBWAY_WIFIDATA_GetPlayerRoomNo( const BSUBWAY_WIFI_DATA *bsw_wifi )
@@ -1104,7 +1104,7 @@ u8 BSUBWAY_WIFIDATA_GetPlayerRoomNo( const BSUBWAY_WIFI_DATA *bsw_wifi )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  プレイヤー情報　バトル用パラメータ取得
+ *  @brief  プレイヤー情報　バトル用パラメータ取得
  */
 //-----------------------------------------------------------------------------
 void BSUBWAY_WIFIDATA_GetBtlPlayerData( const BSUBWAY_WIFI_DATA *bsw_wifi, BSUBWAY_PARTNER_DATA *player, u8 round )
@@ -1146,12 +1146,12 @@ void BSUBWAY_WIFIDATA_GetBtlPlayerData( const BSUBWAY_WIFI_DATA *bsw_wifi, BSUBW
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  リーダー情報の設定
+ *  @brief  リーダー情報の設定
  *
- *	@param	bsw_wifi  ワーク
- *	@param	dat       リーダー情報テーブル
- *	@param	rank      ランク
- *	@param	room      部屋ナンバー
+ *  @param  bsw_wifi  ワーク
+ *  @param  dat       リーダー情報テーブル
+ *  @param  rank      ランク
+ *  @param  room      部屋ナンバー
  */
 //-----------------------------------------------------------------------------
 void BSUBWAY_WIFIDATA_SetLeaderData( BSUBWAY_WIFI_DATA *bsw_wifi, const BSUBWAY_LEADER_DATA* dat, u8 rank, u8 room )
@@ -1167,9 +1167,9 @@ void BSUBWAY_WIFIDATA_SetLeaderData( BSUBWAY_WIFI_DATA *bsw_wifi, const BSUBWAY_
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  リーダー情報のクリア
+ *  @brief  リーダー情報のクリア
  *
- *	@param	bsw_wifi  ワーク
+ *  @param  bsw_wifi  ワーク
  */
 //-----------------------------------------------------------------------------
 void BSUBWAY_WIFIDATA_ClearLeaderData( BSUBWAY_WIFI_DATA *bsw_wifi )
@@ -1181,11 +1181,11 @@ void BSUBWAY_WIFIDATA_ClearLeaderData( BSUBWAY_WIFI_DATA *bsw_wifi )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  リーダー情報のランク取得
+ *  @brief  リーダー情報のランク取得
  *
- *	@param	bsw_wifi  ワーク
+ *  @param  bsw_wifi  ワーク
  *
- *	@return ランク
+ *  @return ランク
  */
 //-----------------------------------------------------------------------------
 u8 BSUBWAY_WIFIDATA_GetLeaderRank( const BSUBWAY_WIFI_DATA *bsw_wifi )
@@ -1196,11 +1196,11 @@ u8 BSUBWAY_WIFIDATA_GetLeaderRank( const BSUBWAY_WIFI_DATA *bsw_wifi )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  リーダー情報の部屋ナンバー取得
+ *  @brief  リーダー情報の部屋ナンバー取得
  *
- *	@param	bsw_wifi  ワーク
+ *  @param  bsw_wifi  ワーク
  *  
- *	@return 部屋ナンバー
+ *  @return 部屋ナンバー
  */
 //-----------------------------------------------------------------------------
 u8 BSUBWAY_WIFIDATA_GetLeaderRoomNo( const BSUBWAY_WIFI_DATA *bsw_wifi )
@@ -1211,12 +1211,12 @@ u8 BSUBWAY_WIFIDATA_GetLeaderRoomNo( const BSUBWAY_WIFI_DATA *bsw_wifi )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  リーダー情報の取得
+ *  @brief  リーダー情報の取得
  *
- *	@param	bsw_wifi  ワーク
- *	@param	heapID    ヒープID
+ *  @param  bsw_wifi  ワーク
+ *  @param  heapID    ヒープID
  *
- *	@return メモリ確保して情報をコピーしたワーク
+ *  @return メモリ確保して情報をコピーしたワーク
  */
 //-----------------------------------------------------------------------------
 BSUBWAY_LEADER_DATA* BSUBWAY_WIFIDATA_GetLeaderDataAlloc( const BSUBWAY_WIFI_DATA *bsw_wifi, HEAPID heapID )
@@ -1228,6 +1228,31 @@ BSUBWAY_LEADER_DATA* BSUBWAY_WIFIDATA_GetLeaderDataAlloc( const BSUBWAY_WIFI_DAT
   GFL_STD_MemCopy(bsw_wifi->leader, p_dat, sizeof(BSUBWAY_LEADER_DATA)*BSUBWAY_STOCK_WIFI_LEADER_MAX);
   
   return p_dat;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 歴代トレーナーデータの格納されている人数を返す
+ *
+ * @param   bsw_leader    
+ *
+ * @retval  int   トレーナーデータの入っている人数（最大３０人）
+ */
+//----------------------------------------------------------------------------------
+int BSUBWAY_LEADERDATA_GetDataNum( const BSUBWAY_LEADER_DATA *bsw_leader )
+{
+  int i,result=0;
+  for(i=0;i<BSUBWAY_STOCK_WIFI_LEADER_MAX;i++)
+  {
+    // 名前の１文字目が０じゃ無かったら存在している事にする
+    if(bsw_leader[i].name[0]!=0)
+    {
+      result++;
+    }
+  }
+
+  OS_Printf("トレーナーデータは%d人\n", result);
+  return result;
 }
 
 

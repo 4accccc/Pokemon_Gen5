@@ -19,22 +19,22 @@
 /// 定数
 //--------------------------------------------------------------
 ///選択する手持ちポケモン数のMAX
-#define BSUBWAY_STOCK_MEMBER_MAX	(4)
+#define BSUBWAY_STOCK_MEMBER_MAX  (4)
 ///保存しておく対戦トレーナーナンバーの数
-#define BSUBWAY_STOCK_TRAINER_MAX	(14)
+#define BSUBWAY_STOCK_TRAINER_MAX (14)
 ///保存しておくAIマルチペアのポケモンパラメータ数
-#define BSUBWAY_STOCK_PAREPOKE_MAX	(2)
+#define BSUBWAY_STOCK_PAREPOKE_MAX  (2)
 ///WiFi DLプレイヤーデータ数
-#define BSUBWAY_STOCK_WIFI_PLAYER_MAX	(7)
+#define BSUBWAY_STOCK_WIFI_PLAYER_MAX (7)
 ///WiFi DLリーダーデータ数
-#define BSUBWAY_STOCK_WIFI_LEADER_MAX	(30)
+#define BSUBWAY_STOCK_WIFI_LEADER_MAX (30)
 ///ルームデータのDLフラグエリアバッファ長
-#define BSUBWAY_ROOM_DATA_FLAGS_LEN	(250)
+#define BSUBWAY_ROOM_DATA_FLAGS_LEN (250)
 ///WiFi 手持ちポケモン数
-#define BSUBWAY_STOCK_WIFI_MEMBER_MAX	(3)
+#define BSUBWAY_STOCK_WIFI_MEMBER_MAX (3)
 
 //kari pt_save.h
-#define	WAZA_TEMOTI_MAX (4) ///<1体のポケモンがもてる技の最大値
+#define WAZA_TEMOTI_MAX (4) ///<1体のポケモンがもてる技の最大値
 
 //--------------------------------------------------------------
 /// プレイデータ取得ID
@@ -61,13 +61,13 @@ typedef enum
 //--------------------------------------------------------------
 typedef enum
 {
-  BSWAY_SETMODE_get,		///<データ取得
-  BSWAY_SETMODE_set,		///<セット
-  BSWAY_SETMODE_reset,	///<リセット
-  BSWAY_SETMODE_inc,		///<1++
-  BSWAY_SETMODE_dec,		///<1--
-  BSWAY_SETMODE_add,		///<add
-  BSWAY_SETMODE_sub,		///<sub
+  BSWAY_SETMODE_get,    ///<データ取得
+  BSWAY_SETMODE_set,    ///<セット
+  BSWAY_SETMODE_reset,  ///<リセット
+  BSWAY_SETMODE_inc,    ///<1++
+  BSWAY_SETMODE_dec,    ///<1--
+  BSWAY_SETMODE_add,    ///<add
+  BSWAY_SETMODE_sub,    ///<sub
   BSWAY_SETMODE_MAX,
 }BSWAY_SETMODE;
 
@@ -315,7 +315,7 @@ extern void BSUBWAY_WIFIDATA_ClearLeaderData( BSUBWAY_WIFI_DATA *bsw_wifi );
 extern u8 BSUBWAY_WIFIDATA_GetLeaderRank( const BSUBWAY_WIFI_DATA *bsw_wifi );
 extern u8 BSUBWAY_WIFIDATA_GetLeaderRoomNo( const BSUBWAY_WIFI_DATA *bsw_wifi );
 extern BSUBWAY_LEADER_DATA* BSUBWAY_WIFIDATA_GetLeaderDataAlloc( const BSUBWAY_WIFI_DATA *bsw_wifi, HEAPID heapID );
-
+extern int BSUBWAY_LEADERDATA_GetDataNum( const BSUBWAY_LEADER_DATA *bsw_leader );
 
 #define BSUBWAY_SCOREDATA_GetRenshouCount(a,b) \
   BSUBWAY_SCOREDATA_GetRenshou(a,b)
