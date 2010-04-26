@@ -54,10 +54,12 @@ static GFL_PROC_RESULT StaffRollProc_Init( GFL_PROC * proc, int * seq, void * pw
 
 //	OS_Printf( "↓↓↓↓↓　スタッフロール処理開始　↓↓↓↓↓\n" );
 
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_STAFF_ROLL, 0x60000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_STAFF_ROLL, 0x90000 );
 
 	wk = GFL_PROC_AllocWork( proc, sizeof(SRMAIN_WORK), HEAPID_STAFF_ROLL );
-	GFL_STD_MemClear( wk, sizeof(HEAPID_STAFF_ROLL) );
+	GFL_STD_MemClear( wk, sizeof(SRMAIN_WORK) );
+
+	wk->dat = pwk;
 
 	return GFL_PROC_RES_FINISH;
 }

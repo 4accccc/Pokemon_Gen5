@@ -45,6 +45,7 @@ SUBDIRS	=	wmi \
 			zukan_data \
 			research_radar \
 			fld_trade \
+            staff_roll \
 			message\
 			fldmmdl \
 			encount \

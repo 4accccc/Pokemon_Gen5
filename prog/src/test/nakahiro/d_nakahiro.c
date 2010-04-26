@@ -68,6 +68,8 @@ typedef struct {
 	DENDOUPC_PARAM	dpc_data;
 	DENDOUDEMO_PARAM	ddemo_data;
 
+	STAFFROLL_DATA	sr_data;
+
 }NAKAHIRO_MAIN_WORK;
 
 enum {
@@ -126,6 +128,7 @@ static void TopMenuExit( NAKAHIRO_MAIN_WORK * wk );
 
 static void SetZukanDataOne( NAKAHIRO_MAIN_WORK * wk, u16 mons, u32 mode );
 static void SetZukanData( NAKAHIRO_MAIN_WORK * wk, u32 mode );
+static void SetZukanPacchiiru( NAKAHIRO_MAIN_WORK * wk );
 
 
 //============================================================================================
@@ -433,6 +436,7 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
   case MAIN_SEQ_ZKNLIST_CALL:
     SetZukanData( wk, 1 );
+		SetZukanPacchiiru( wk );
     wk->zkn_data.gamedata = wk->gamedata;
     wk->zkn_data.savedata = GAMEDATA_GetZukanSave( wk->gamedata );
 		wk->zkn_data.mystatus = GAMEDATA_GetMyStatus( wk->gamedata );
@@ -470,6 +474,7 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
 	case  MAIN_SEQ_DENDOU_PC:
     wk->dpc_data.gamedata = wk->gamedata;
+    wk->dpc_data.callMode = 1;
 		{
 			SAVE_CONTROL_WORK * sv;
 			DENDOU_SAVEDATA * ex_rec;
@@ -500,7 +505,8 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		break;
 
 	case MAIN_SEQ_STAFF_ROLL:
-    GFL_PROC_SysCallProc( FS_OVERLAY_ID(staff_roll), &STAFFROLL_ProcData, NULL );
+		wk->sr_data.fastMode = FALSE;
+    GFL_PROC_SysCallProc( FS_OVERLAY_ID(staff_roll), &STAFFROLL_ProcData, &wk->sr_data );
     wk->main_seq = MAIN_SEQ_END;
 		break;
 
@@ -777,4 +783,40 @@ static void SetZukanData( NAKAHIRO_MAIN_WORK * wk, u32 mode )
   SetZukanDataOne( wk, MONSNO_PATTIIRU, 0 );
 
   ZUKANSAVE_SetZenkokuZukanFlag( GAMEDATA_GetZukanSave( wk->gamedata ) );
+}
+
+static void SetZukanPacchiiru( NAKAHIRO_MAIN_WORK * wk )
+{
+  ZUKAN_SAVEDATA * sv;
+  POKEMON_PARAM * pp;
+	u32	sex;
+
+  sv = GAMEDATA_GetZukanSave( wk->gamedata );
+  pp = PP_Create( MONSNO_PATTIIRU, 50, 0, wk->heapID );
+	ZUKANSAVE_SetPokeGet( sv, pp );
+	sex = PP_GetSex( pp );
+  GFL_HEAP_FreeMemory( pp );
+
+	if( sex == PTL_SEX_MALE ){
+		sex = PTL_SEX_FEMALE;
+		OS_Printf( "パッチール♂\n" );
+	}else if( sex == PTL_SEX_FEMALE ){
+		sex = PTL_SEX_MALE;
+		OS_Printf( "パッチール♀\n" );
+	}else{
+		return;
+	}
+
+	while( 1 ){
+	  pp = PP_Create( MONSNO_PATTIIRU, 50, 0, wk->heapID );
+		if( PP_GetSex( pp ) == sex ){
+			ZUKANSAVE_SetPokeGet( sv, pp );
+		  GFL_HEAP_FreeMemory( pp );
+			break;
+		}
+	  GFL_HEAP_FreeMemory( pp );
+	}
+
+	ZUKANSAVE_SetZenkokuZukanFlag( sv );
+	ZUKANSAVE_SetGraphicVersionUpFlag( sv );
 }

@@ -298,4 +298,5 @@
   ARCID_GMK_D12 "fieldmap/gmk_d12.narc" # D12ギミックアーカイブ
   ARCID_ZOROA_GMK "fieldmap/zoroa.narc" # ゾロアギミックアーカイブ
   ARCID_LEGEND_GMK "fieldmap/legend_gmk.narc" # 伝説ポケギミックアーカイブ
+  ARCID_STAFF_ROLL  "staff_roll.narc"   # スタッフロール画面用アーカイブ
   $DEBUG_YES ARCID_DEBUG_REGCARD  "debug_regulation_card.narc" # ポケモンバトルレギュレーションデータデジタル選手証
