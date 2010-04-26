@@ -308,8 +308,8 @@ _TALK_OBJ_START()
 	DEFINE_LOCAL LWK_MONEY
 	DEFINE_LOCAL LWK_CROWN
 	
-	//Ç±ÇæÇ¢ÇÃÇ®Ç§Ç©ÇÒéÊìæéû
-	IF FLAG_ON( FE_T04R0101_APPRAISAL_CROWN ) THEN
+	//Ç±ÇæÇ¢ÇÃÇ®Ç§Ç©ÇÒèâéÊìæéû
+	IF FLAG_OFF( FE_T04R0101_APPRAISAL_CROWN ) THEN
 		
 		_ITEM_CHK( ITEM_KODAINOOUKAN, 1, LWK_CROWN )
 		
@@ -327,6 +327,12 @@ _TALK_OBJ_START()
 			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_08 )
 			_YES_NO_WIN( SCWK_ANSWER )
 			_MSGWIN_CLOSE()
+		
+			//========================================/
+			
+			_FLAG_SET(FE_T04R0101_APPRAISAL_CROWN)
+			
+			//========================================/
 		
 			//ÇÕÇ¢ëIëéû
 			IF $SCWK_ANSWER == SCR_YES THEN

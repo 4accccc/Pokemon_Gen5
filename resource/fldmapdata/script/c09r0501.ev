@@ -186,7 +186,7 @@ EVENT_START	ev_pos_c09r0501_n_01
 	_OBJ_ANIME_WAIT()
 	
 	//よく　ここまで…
-	_BALLOONWIN_OBJMSG( msg_c09r0501_champion_02, C09R0501_CHAMPION_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_c09r0501_champion_02, C09R0501_CHAMPION_01,POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//まあな ポケモンリーグを勝ち抜いたよ
@@ -194,7 +194,7 @@ EVENT_START	ev_pos_c09r0501_n_01
 	_MSGWIN_CLOSE()
 	
 	//やるではないか
-	_BALLOONWIN_OBJMSG( msg_c09r0501_champion_03, C09R0501_CHAMPION_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_c09r0501_champion_03, C09R0501_CHAMPION_01,POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//プレイヤー名！Ｎをぶっとばしてこいよ！
@@ -215,7 +215,7 @@ EVENT_START	ev_pos_c09r0501_n_01
 	_OBJ_ANIME_WAIT()
 	
 	//チャンピオン：……まけたわ　とほうもない
-	_BALLOONWIN_OBJMSG_POS( msg_c09r0501_champion_04, C09R0501_CHAMPION_01, POS_UR )
+	_BALLOONWIN_OBJMSG_POS( msg_c09r0501_champion_04, C09R0501_CHAMPION_01, POS_UL )
 	_MSGWIN_CLOSE()
 
 	//ライバル：チャンピオンの方を見る
