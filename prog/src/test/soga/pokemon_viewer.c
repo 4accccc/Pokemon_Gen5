@@ -36,7 +36,7 @@
 #if PM_DEBUG
 
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_yoshida
-#define CAMERA_FOCUS
+//#define CAMERA_FOCUS
 #endif
 
 //============================================================================================
@@ -220,6 +220,7 @@ typedef struct
   int                   edit_keta;
   int                   edit_value;
   int                   form_max;
+  int                   gender;
   BTLV_MCSS_PROJECTION  proj;
 
   int                   mosaic;
@@ -399,7 +400,7 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
     u16 tr_type[] = { 
       TRTYPE_HERO, TRTYPE_HERO, 0xffff, 0xffff,
     };
-    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, &bfs, FALSE, tr_type, NULL, NULL, pvw->heapID );
+    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_ROTATION, &bfs, FALSE, tr_type, NULL, NULL, pvw->heapID );
 
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, pvw->heapID );
     ZONEDATA_Open( pvw->heapID );
@@ -834,31 +835,37 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
       {
         pvw->mons_no[ pvw->edit_pos ]++;
         pvw->form_no[ pvw->edit_pos ] = 0;
+        pvw->gender = 0;
       }
       if( rep & PAD_KEY_DOWN )
       {
         pvw->mons_no[ pvw->edit_pos ]--;
         pvw->form_no[ pvw->edit_pos ] = 0;
+        pvw->gender = 0;
       }
       if( rep & PAD_KEY_LEFT )
       {
         pvw->mons_no[ pvw->edit_pos ] -= 10;
         pvw->form_no[ pvw->edit_pos ] = 0;
+        pvw->gender = 0;
       }
       if( rep & PAD_KEY_RIGHT )
       {
         pvw->mons_no[ pvw->edit_pos ] += 10;
         pvw->form_no[ pvw->edit_pos ] = 0;
+        pvw->gender = 0;
       }
       if( rep & PAD_BUTTON_L )
       {
         pvw->mons_no[ pvw->edit_pos ] -= 100;
         pvw->form_no[ pvw->edit_pos ] = 0;
+        pvw->gender = 0;
       }
       if( rep & PAD_BUTTON_R )
       {
         pvw->mons_no[ pvw->edit_pos ] += 100;
         pvw->form_no[ pvw->edit_pos ] = 0;
+        pvw->gender = 0;
       }
       if( ( rep & PAD_BUTTON_X ) && ( pvw->form_no[ pvw->edit_pos ] < pvw->form_max - 1 ) )
       { 
@@ -878,7 +885,7 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
         pvw->mons_no[ pvw->edit_pos ] -= MONSNO_END + 1;
         pvw->form_no[ pvw->edit_pos ] = 0;
       }
-      if( rep != 0 )
+      if( ( rep != 0 ) && ( rep != PAD_BUTTON_A ) )
       {
         if( BTLV_EFFECT_CheckExist( pvw->edit_pos ) == TRUE ){
             BTLV_EFFECT_DelPokemon( pvw->edit_pos );
@@ -1008,10 +1015,21 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
         }
       }
     }
-    if( trg & PAD_BUTTON_A )
-    {
+    if( ( trg & PAD_BUTTON_A ) && (pvw->edit_type == 1 ) )
+    { 
       pvw->edit_mode ^= 1 ;
       pvw->edit_mode ^= 2 ;
+    }
+    if( ( trg & PAD_BUTTON_A ) && (pvw->edit_type == 0 ) )
+    {
+      u32 rnd;
+
+      pvw->gender ^= 1;
+      rnd = POKETOOL_CalcPersonalRandSpec( 12345678, pvw->mons_no[ pvw->edit_pos ], pvw->form_no[ pvw->edit_pos ],
+                                           pvw->gender, PTL_TOKUSEI_SPEC_BOTH, PTL_RARE_SPEC_FALSE );
+      BTLV_EFFECT_DelPokemon( pvw->edit_pos );
+      PP_SetupEx( pvw->pp, pvw->mons_no[ pvw->edit_pos ], 1, 12345678, 0, rnd );
+      set_pokemon( pvw, pvw->edit_pos );
     }
     if( trg & PAD_BUTTON_B )
     {
@@ -1046,8 +1064,10 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
       pvw->edit_value = VALUE_X;
       pvw->proj = BTLV_MCSS_PROJ_ORTHO;
       PokemonViewerPP_Put( pvw, hit );
+#ifdef CAMERA_FOCUS
       BTLV_EFFECT_SetCameraFocus( hit, BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
       BTLV_MCSS_ResetOrthoMode( BTLV_EFFECT_GetMcssWork() );
+#endif
       GFL_BG_SetVisible( GFL_BG_FRAME1_S,   VISIBLE_OFF );
       GFL_BG_SetVisible( GFL_BG_FRAME2_S,   VISIBLE_ON );
       ret = TRUE;
@@ -1203,6 +1223,7 @@ static  void  PokemonViewerDrawInfo( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
     }
     str_src = GFL_MSG_CreateString( pvw->msg,  PVMSG_MONSNAME );
     WORDSET_ExpandStr( mons_info, str_dst, str_src );
+    GFL_HEAP_FreeMemory( str_src );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp( pvw->bmpwin2 ), MONS_INFO_X, MONS_INFO_Y, str_dst, pvw->font );
 
     WORDSET_RegisterNumber( mons_info, 0, pvw->form_no[ pos ], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
@@ -1210,11 +1231,32 @@ static  void  PokemonViewerDrawInfo( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
       int form_max = pvw->form_max - 1;
       WORDSET_RegisterNumber( mons_info, 1, form_max, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
     }
+
     str_src = GFL_MSG_CreateString( pvw->msg,  PVMSG_FORMNAME );
     WORDSET_ExpandStr( mons_info, str_dst, str_src );
+    GFL_HEAP_FreeMemory( str_src );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp( pvw->bmpwin2 ), MONS_INFO_X, MONS_INFO_Y + 16, str_dst, pvw->font );
 
-    GFL_HEAP_FreeMemory( str_src );
+    { 
+      POKEPER_SEX sex_vec = POKETOOL_GetPersonalParam( pvw->mons_no[ pos ], pvw->form_no[ pos ], POKEPER_ID_sex );
+      POKEPER_SEX_TYPE  type = PokePersonal_SexVecTypeGet( sex_vec );
+
+      str_src = GFL_MSG_CreateString( pvw->msg, PPNowMaxMsg );
+      if( type == POKEPER_SEXTYPE_RND )
+      { 
+        WORDSET_RegisterNumber( mons_info, 0, pvw->gender, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+        WORDSET_RegisterNumber( mons_info, 1, 1, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+      }
+      else
+      { 
+        WORDSET_RegisterNumber( mons_info, 0, 0, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+        WORDSET_RegisterNumber( mons_info, 1, 0, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+      }
+      WORDSET_ExpandStr( mons_info, str_dst, str_src );
+      GFL_HEAP_FreeMemory( str_src );
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp( pvw->bmpwin2 ), MONS_INFO_X, MONS_INFO_Y + 32, str_dst, pvw->font );
+    }
+
     GFL_HEAP_FreeMemory( str_dst );
     WORDSET_Delete( mons_info );
   }
