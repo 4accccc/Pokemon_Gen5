@@ -38,6 +38,5 @@ typedef struct TRIAL_HOUSE_WORK_tag
   BOOL DownLoad;
   TH_POINT_WORK PointWork;
   void *CommBuf;
-  u16 DLDataType;
-  u16 BtlTrNo[5];
+  u32 DLDataType;
 }TRIAL_HOUSE_WORK;
