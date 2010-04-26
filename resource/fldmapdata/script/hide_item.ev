@@ -220,7 +220,7 @@ EVENT_START ev_hide_item_007
 EVENT_END
 
 EVENT_START ev_hide_item_008
-//ヤグルマの森外 ( 626, 614 )
+//ヤグルマの森外 ( 628, 620 )
 	_ITEM_EVENT_HIDEITEM( 38, 1, FLAG_HIDEITEM_008 )// ピーピーエイド
 EVENT_END
 

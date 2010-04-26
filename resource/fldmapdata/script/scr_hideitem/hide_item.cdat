@@ -52,7 +52,7 @@ static const HIDE_ITEM_DATA hide_item_data[158] = {
 		  8, 
 		1,0, // flags
 		159, // D02 ヤグルマの森外
-		626,614, // x, y
+		628,620, // x, y
 	},
 	{ // デルダマ
 		  9, 
