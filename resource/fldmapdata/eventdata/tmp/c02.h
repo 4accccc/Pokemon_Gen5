@@ -34,6 +34,7 @@
 #define C02_CHAMPION_01                   11
 #define C02_SUPPORT_02                    12
 #define C02_LEADER02_02                   13
+#define C02_DUMMY_01                      14
 
 #endif //ZONE_C02_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c02.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

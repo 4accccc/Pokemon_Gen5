@@ -41,7 +41,9 @@
 #define R03_FLD_ITEM_05                   26
 #define TR_SCHOOLG_04                     27
 #define R03_BABYBOY1_01                   28
-#define R03_FLD_ITEM_06                   29
+#define R03_FLD_ITEM_07                   29
+#define R03_FLD_ITEM_06                   30
+#define R03_FLD_ITEM_08                   31
 
 #endif //ZONE_R03_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r03.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

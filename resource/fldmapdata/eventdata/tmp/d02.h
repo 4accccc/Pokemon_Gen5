@@ -17,12 +17,13 @@
 #define D02_FLD_ITEM_01                    5
 #define D02_FLD_ITEM_02                    6
 #define D02_FLD_ITEM_03                    7
-#define D02_FLD_ITEM_04                    8
+#define D02_FLD_ITEM_05                    8
 #define TR_KINDERGARTENM_05                9
 #define TR_KINDERGARTENW_04               10
 #define TR_BATTLEG_03                     11
 #define D02_FIGHTERW_01                   12
 #define TR_NURSE_03                       13
+#define D02_FLD_ITEM_04                   14
 
 #endif //ZONE_D02_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d02.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
