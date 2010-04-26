@@ -4107,7 +4107,9 @@ static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
       BTLV_StartMsg( wk->viewCore, &wk->strParam );
 
       if( result == BTL_RESULT_WIN ){
-        PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo(wk->mainModule) );
+        u32 winBGMNo = BTL_MAIN_GetWinBGMNo( wk->mainModule );
+        OS_TPrintf("Ÿ‚Á‚½‚¯‚ñBGM•Ï‚¦‚é‚æ -> BGMNO:%d\n", winBGMNo);
+        PMSND_PlayBGM( winBGMNo );
         (*seq)++;
       }else{
         PMSND_FadeOutBGM( BTL_BGM_FADEOUT_FRAMES );

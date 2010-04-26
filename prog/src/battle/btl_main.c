@@ -569,6 +569,25 @@ static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const
 
   BTL_N_Printf( DBGSTR_DEBUGFLAG_BIT, sp->DebugFlagBit );
 }
+/**
+ *  録画再生時用のトレーナーパラメータセット
+ */
+static void trainerParam_SetupForRecPlay( BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+  BTL_TRAINER_DATA* trParam;
+  u8 relation_clientID = CommClientRelation( wk->myClientID, clientID );
+
+  trParam = &(wk->trainerParam[clientID]);
+
+  if( sp->tr_data[relation_clientID]->tr_id != TRID_NULL ){
+    trainerParam_StoreNPCTrainer( trParam, sp->tr_data[relation_clientID] );
+  }else{
+    TAYA_Printf("   setupPlayer\n");
+    trainerParam_StorePlayer( trParam, wk->heapID, sp->playerStatus[relation_clientID] );
+  }
+}
+
 
 /**
  *  クライアントが管理する位置数を取得
@@ -606,20 +625,6 @@ static u8 CheckNumCoverPos( const BTL_MAIN_MODULE* wk, u8 clientID )
   return 1;
 }
 
-/**
- *  録画再生時用のトレーナーパラメータセット
- */
-static void trainerParam_SetupForRecPlay( BTL_MAIN_MODULE* wk, u8 clientID )
-{
-  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
-  BTL_TRAINER_DATA* trParam = &(wk->trainerParam[clientID]);
-
-  if( sp->tr_data[clientID]->tr_id != TRID_NULL ){
-    trainerParam_StoreNPCTrainer( trParam, sp->tr_data[clientID] );
-  }else{
-    trainerParam_StorePlayer( trParam, wk->heapID, sp->playerStatus[BTL_CLIENT_ENEMY1] );
-  }
-}
 
 //--------------------------------------------------------------------------
 /**
@@ -651,10 +656,11 @@ static BOOL setup_alone_single( int* seq, void* work )
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
   wk->ImServer = TRUE;
 
-  trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
   if( sp->fRecordPlay == FALSE ){
+    trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
     trainerParam_StoreNPCTrainer( &wk->trainerParam[BTL_CLIENT_ENEMY1], sp->tr_data[BTL_CLIENT_ENEMY1] );
   }else{
+    trainerParam_SetupForRecPlay( wk, BTL_CLIENT_PLAYER );
     trainerParam_SetupForRecPlay( wk, BTL_CLIENT_ENEMY1 );
   }
 
@@ -758,6 +764,7 @@ static BOOL setup_alone_double( int* seq, void* work )
 
   setup_alone_common_ClientID_and_srcParty( wk, sp );
 
+  // パーティデータ生成
   PokeCon_Init( &wk->pokeconForClient, wk, FALSE );
   PokeCon_AddParty( &wk->pokeconForClient, wk, 0 );
   PokeCon_AddParty( &wk->pokeconForClient, wk, 1 );
@@ -766,11 +773,17 @@ static BOOL setup_alone_double( int* seq, void* work )
   PokeCon_AddParty( &wk->pokeconForServer, wk, 0 );
   PokeCon_AddParty( &wk->pokeconForServer, wk, 1 );
 
+  // トレーナーデータ生成
+  if( sp->fRecordPlay == FALSE ){
+    trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
+    trainerParam_StoreNPCTrainer( &wk->trainerParam[BTL_CLIENT_ENEMY1], sp->tr_data[BTL_CLIENT_ENEMY1] );
+  }else{
+    trainerParam_SetupForRecPlay( wk, BTL_CLIENT_PLAYER );
+    trainerParam_SetupForRecPlay( wk, BTL_CLIENT_ENEMY1 );
+  }
+
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
-
-  trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
-  trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
@@ -846,6 +859,7 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
 
   setup_alone_common_ClientID_and_srcParty( wk, sp );
 
+  // ポケモンパーティデータ生成
   PokeCon_Init( &wk->pokeconForClient, wk, FALSE );
   PokeCon_Init( &wk->pokeconForServer, wk, TRUE );
   for(i=0; i<BTL_CLIENT_MAX; ++i)
@@ -855,10 +869,6 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
       PokeCon_AddParty( &wk->pokeconForServer, wk, i );
     }
   }
-
-  // Server 作成
-  wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
-
   // トレーナーパラメータ設定（通常プレイ用）
   if( sp->fRecordPlay == FALSE )
   {
@@ -874,16 +884,17 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
   // 録画再生用
   else
   {
-    // @todo 再生モード時用パラメータが足りない
-    trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
-    trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
-    if( BTL_MAIN_IsExistClient(wk, BTL_CLIENT_PARTNER) ){
-      trainerParam_StoreNPCTrainer( &wk->trainerParam[BTL_CLIENT_PARTNER], sp->tr_data[BTL_CLIENT_PARTNER] );
-    }
-    if( BTL_MAIN_IsExistClient(wk, BTL_CLIENT_ENEMY2) ){
-      trainerParam_StoreNPCTrainer( &wk->trainerParam[BTL_CLIENT_ENEMY2], sp->tr_data[BTL_CLIENT_ENEMY2] );
+    for(i=0; i<BTL_CLIENT_MAX; ++i)
+    {
+      if( BTL_MAIN_IsExistClient(wk, i) ){
+        trainerParam_SetupForRecPlay( wk, i );
+      }
     }
   }
+
+  // Server 作成
+  wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
+
 
   // Client 作成
   for(i=0; i<BTL_CLIENT_MAX; ++i)
@@ -952,6 +963,7 @@ static BOOL setup_alone_triple( int* seq, void* work )
 
   setup_alone_common_ClientID_and_srcParty( wk, sp );
 
+  // パーティデータ生成
   PokeCon_Init( &wk->pokeconForClient, wk, FALSE );
   PokeCon_AddParty( &wk->pokeconForClient, wk, 0 );
   PokeCon_AddParty( &wk->pokeconForClient, wk, 1 );
@@ -960,11 +972,17 @@ static BOOL setup_alone_triple( int* seq, void* work )
   PokeCon_AddParty( &wk->pokeconForServer, wk, 0 );
   PokeCon_AddParty( &wk->pokeconForServer, wk, 1 );
 
+  // トレーナーデータ生成
+  if( sp->fRecordPlay == FALSE ){
+    trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
+    trainerParam_StoreNPCTrainer( &wk->trainerParam[BTL_CLIENT_ENEMY1], sp->tr_data[BTL_CLIENT_ENEMY1] );
+  }else{
+    trainerParam_SetupForRecPlay( wk, BTL_CLIENT_PLAYER );
+    trainerParam_SetupForRecPlay( wk, BTL_CLIENT_ENEMY1 );
+  }
+
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
-
-  trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
-  trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 3,
