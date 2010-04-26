@@ -829,7 +829,8 @@ static void MMdl_MapAttrShadowProc_2( MMDL *mmdl, ATTRDATA *data )
   if( MMDLSYS_CheckJoinShadow(fos) == TRUE &&
       data->objcode_prm->shadow_type != MMDL_SHADOW_NON )
   {
-    if( (data->attr_flag_now & MAPATTR_FLAGBIT_SHADOW) == 0 )
+    if( (data->attr_flag_now & MAPATTR_FLAGBIT_SHADOW) == 0 ||
+        MAPATTR_VALUE_CheckSeasonGround1(data->attr_val_now) )
     {
       MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
     }
