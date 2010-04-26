@@ -176,7 +176,7 @@ GMEVENT *TRIAL_HOUSE_CreateBtlEvt( GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr
     BSUBWAY_PARTNER_DATA *tr_data = &ptr->TrData;
     int num = ptr->MemberNum;
 
-    bp = FBI_TOOL_CreateBattleParam( gsys, party, mode, tr_data, num  );
+    bp = FBI_TOOL_CreateBattleParam( gsys, party, mode, tr_data, NULL, num  );
   }
 
   //トライアルハウス戦闘イベントを作成

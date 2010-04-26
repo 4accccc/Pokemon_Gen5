@@ -364,11 +364,11 @@ static u16 GetTrainerOBJCode( TRIAL_HOUSE_WORK_PTR ptr )
  * @retval    none
 */
 //--------------------------------------------------------------
-GMEVENT *TRIAL_HOUSE_CreateBeforeMsgEvt( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
+GMEVENT *TRIAL_HOUSE_CreateBeforeMsgEvt( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr, int inTrIdx, int inObjID )
 {
   GMEVENT *event;
 
-  event = FBI_TOOL_CreateTrainerBeforeMsgEvt(gsys, &ptr->TrData );
+  event = FBI_TOOL_CreateTrainerBeforeMsgEvt(gsys, &ptr->TrData, inTrIdx, inObjID );
 
   return event;
 }

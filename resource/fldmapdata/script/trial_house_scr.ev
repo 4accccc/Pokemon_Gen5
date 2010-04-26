@@ -249,9 +249,6 @@ charange:
   _OBJ_ANIME( C04R0901_RECEPTION_01, anm_recep_center )
   _OBJ_ANIME_WAIT()
 
-  //すれ違い通信用データセット
-  _BEACON_SET_REQ_TRIAL_HOUSE_START()
-
   _CALL battle
 
   //受付係中央からどく
@@ -276,6 +273,9 @@ charange:
     //「おつかれさま」
     _BALLOONWIN_OBJMSG_POS(msg_trialhouse_014, SCWK_TARGET_OBJID, POS_DL )
     _BALLOONWIN_CLOSE()   //アプリに飛ぶのでクローズ
+
+    //すれ違い通信用データセット(遊び終わった後に変更　100426)
+    _BEACON_SET_REQ_TRIAL_HOUSE_START()
 
     _TH_CALC_BTL_RESULT( result_rank, point )
 
@@ -349,7 +349,7 @@ battle:
     _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_enemy_mov )
     _OBJ_ANIME_WAIT()
     //バトル前メッセージ
-    _TH_DISP_BEFORE_MSG()
+    _TH_DISP_BEFORE_MSG(MMDL_ID_EVENTOBJ_00)
     //バトル
     _TH_CALL_BATTLE()
     //ＯＢＪ退出

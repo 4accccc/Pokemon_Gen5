@@ -10245,12 +10245,15 @@
 //--------------------------------------------------------------
 /**
  * @brief トライアルハウス　戦闘前メッセージ表示
+ * @param   obj_id
  */
 //--------------------------------------------------------------
-#define _TH_DISP_BEFORE_MSG() _ASM_TH_DISP_BEFORE_MSG
+#define _TH_DISP_BEFORE_MSG(obj_id) _ASM_TH_DISP_BEFORE_MSG obj_id
   
-  .macro _ASM_TH_DISP_BEFORE_MSG
+  .macro _ASM_TH_DISP_BEFORE_MSG obj_id
   .short EV_SEQ_TH_DISP_BEFORE_MSG
+  .short 0
+  .short \obj_id
   .endm
 
 //--------------------------------------------------------------

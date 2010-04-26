@@ -157,14 +157,17 @@ VMCMD_RESULT EvCmdTH_SetTrainer( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdTH_DispBeforeMsg( VMHANDLE *core, void *wk )
 {
   GMEVENT* event;
-
+  u16 tr_idx;
+  u16 obj_id;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData( gsys );
   TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
+  tr_idx = SCRCMD_GetVMWorkValue( core, work );
+  obj_id = SCRCMD_GetVMWorkValue( core, work );
 
-  event = TRIAL_HOUSE_CreateBeforeMsgEvt(gsys, *ptr);
+  event = TRIAL_HOUSE_CreateBeforeMsgEvt(gsys, *ptr, tr_idx, obj_id);
 
   SCRIPT_CallEvent( sc, event );
 
