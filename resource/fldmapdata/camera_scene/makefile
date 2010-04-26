@@ -56,9 +56,10 @@ ifeq	($(CONVERTUSER),true)
 
 .xls.dat:
 	#エクセルデータをタブ区切りにする。
-	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*.tab -p 0 -s tab $<
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*_00.tab -p 1 -s tab $<
+	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*_01.tab -p 2 -s tab $<
 	#テキストデータ生成
-	perl conv.pl $*.tab $*.sa
+	perl conv.pl $*_00.tab $*_01.tab $*.sa
 	#binary化
 	perl $(PROJECT_ROOT)tools/rail_editor/scenearea_conv.pl $*.sa $(FLD_SCENE_LOADER_HEADER) $(FLD_SCENE)
 

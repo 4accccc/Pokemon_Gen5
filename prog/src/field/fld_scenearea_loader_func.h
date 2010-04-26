@@ -46,6 +46,9 @@ enum
 	FLD_SCENEAREA_UPDATE_ANGLECHANGE,  // スムーズアングル変更
 	FLD_SCENEAREA_UPDATE_ANGLECHANGE_IN,    // スムーズアングル入り口
 	FLD_SCENEAREA_UPDATE_ANGLECHANGE_OUT,   // スムーズアングル出口
+	FLD_SCENEAREA_UPDATE_ANGLEOFFSCHANGE,       // スムーズアングル・オフセット変更
+	FLD_SCENEAREA_UPDATE_ANGLEOFFSCHANGE_IN,    // スムーズアングル・オフセット入り口
+	FLD_SCENEAREA_UPDATE_ANGLEOFFSCHANGE_OUT,   // スムーズアングル・オフセット出口
 
 	FLD_SCENEAREA_UPDATE_MAX,
 };
@@ -135,8 +138,47 @@ typedef struct {
   u16 end_pitch;// 終了ピッチ
   u16 end_yaw;// 終了ヨー
   fx32 end_length;// 終了レングス
+  u32 trace_off; //TRACEOFF設定
 
 } FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM;
+
+//-------------------------------------
+/// グリッド、　カメラスムーズ移動 カメラオフセット付き
+//
+//対応関数
+//FLD_SCENEAREA_AREACHECK_GRID
+//FLD_SCENEAREA_UPDATE_ANGLEOFFSCHANGE
+//FLD_SCENEAREA_UPDATE_ANGLEOFFSCHANGE_IN
+//FLD_SCENEAREA_UPDATE_ANGLEOFFSCHANGE_OUT
+//=====================================
+typedef struct {
+
+  // グリッド判定情報
+  u16 grid_x;     // 入り口グリッドX
+  u16 grid_z;     // 入り口グリッドZ
+  u16 grid_sizx;  // 入り口グリッドサイズX
+  u16 grid_sizz;  // 入り口グリッドサイズZ
+  u16 grid_depth; // 奥行き
+  u16 pad;        // パディング
+  
+  // 移動パラメータ
+  u16 start_pitch;// 開始ピッチ
+  u16 start_yaw;// 開始ヨー
+  fx32 start_length;// 開始レングス
+  u16 end_pitch;// 終了ピッチ
+  u16 end_yaw;// 終了ヨー
+  fx32 end_length;// 終了レングス
+  u32 trace_off; //TRACEOFF設定
+
+  // TargetOffs
+  fx32 start_offs_x;// 開始オフセットｘ
+  fx32 start_offs_y;// 開始オフセットｙ
+  fx32 start_offs_z;// 開始オフセットｚ
+  fx32 end_offs_x;// 終了オフセットｘ
+  fx32 end_offs_y;// 終了オフセットｙ
+  fx32 end_offs_z;// 終了オフセットｚ
+
+} FLD_SCENEAREA_GRIDCHANGEANGLEOFFS_PARAM;
 
 
 #ifdef _cplusplus

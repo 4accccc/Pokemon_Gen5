@@ -3600,6 +3600,18 @@ FIELDSKILL_MAPEFF * FIELDMAP_GetFieldSkillMapEffect( FIELDMAP_WORK * fieldWork )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  フィールドscenearea取得
+ *
+ *	@param	fieldWork   ワーク
+ */
+//-----------------------------------------------------------------------------
+FLD_SCENEAREA* FIELDMAP_GetFldSceneArea( FIELDMAP_WORK * fieldWork )
+{
+  return fieldWork->sceneArea;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  マップフェードリクエストセット
  *
  *	@param	fieldWork   ワーク

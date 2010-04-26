@@ -3561,11 +3561,19 @@ static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk )
   // レールカメラ反映の停止
   {
     FLDNOGRID_MAPPER* mapper;
+    FLD_SCENEAREA* scenearea;
+
 
     if( FIELDMAP_GetBaseSystemType( work->fieldWork ) == FLDMAP_BASESYS_RAIL )
     {
       mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
       FLDNOGRID_MAPPER_SetRailCameraActive( mapper, FALSE );
+    }
+    else
+    {
+      // カメラシーンの停止
+      scenearea = FIELDMAP_GetFldSceneArea( work->fieldWork );
+      FLD_SCENEAREA_SetActiveFlag( scenearea, FALSE );
     }
   }
 
@@ -3597,11 +3605,18 @@ static GMEVENT_RESULT debugMenuControlLinerCamera(
     // レールカメラ反映の再開
     {
       FLDNOGRID_MAPPER* mapper;
+      FLD_SCENEAREA* scenearea;
 
       if( FIELDMAP_GetBaseSystemType( work->fieldWork ) == FLDMAP_BASESYS_RAIL )
       {
         mapper = FIELDMAP_GetFldNoGridMapper( work->fieldWork );
         FLDNOGRID_MAPPER_SetRailCameraActive( mapper, TRUE );
+      }
+      else
+      {
+        // カメラシーンの停止
+        scenearea = FIELDMAP_GetFldSceneArea( work->fieldWork );
+        FLD_SCENEAREA_SetActiveFlag( scenearea, TRUE );
       }
     }
     //バインド復帰
@@ -3977,11 +3992,18 @@ static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk )
   // レールカメラ反映の停止
   {
     FLDNOGRID_MAPPER* mapper;
+    FLD_SCENEAREA* scenearea;
 
-    if( FIELDMAP_GetBaseSystemType( p_fieldWork ) == FLDMAP_BASESYS_RAIL )
+    if( FIELDMAP_GetBaseSystemType( p_work->p_field ) == FLDMAP_BASESYS_RAIL )
     {
-      mapper = FIELDMAP_GetFldNoGridMapper( p_fieldWork );
+      mapper = FIELDMAP_GetFldNoGridMapper( p_work->p_field );
       FLDNOGRID_MAPPER_SetRailCameraActive( mapper, FALSE );
+    }
+    else
+    {
+      // カメラシーンの停止
+      scenearea = FIELDMAP_GetFldSceneArea( p_work->p_field );
+      FLD_SCENEAREA_SetActiveFlag( scenearea, FALSE );
     }
   }
 
@@ -4071,6 +4093,7 @@ static GMEVENT_RESULT debugMenuDelicateCamera( GMEVENT *p_event, int *p_seq, voi
 
     // DEBUG_ CAMERA
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_camera) );
+
     return ( GMEVENT_RES_FINISH );
   }
 

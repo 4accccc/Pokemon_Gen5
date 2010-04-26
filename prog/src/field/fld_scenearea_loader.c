@@ -56,6 +56,13 @@ static BOOL SCENEAREA_CheckGridRect( const FLD_SCENEAREA* cp_sys, const FLD_SCEN
 static void SCENEAREA_UpdateGridAngleChange( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
 static void SCENEAREA_UpdateGridAngleChange_IN( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
 static void SCENEAREA_UpdateGridAngleChange_OUT( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+static void SCENEAREA_GridAngleGetOfsAndMax( const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM* cp_param, const VecFx32* cp_pos, fx32* p_dist, fx32* p_sub_num );
+
+
+static void SCENEAREA_UpdateGridAngleOffsChange( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+static void SCENEAREA_UpdateGridAngleOffsChange_IN( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+static void SCENEAREA_UpdateGridAngleOffsChange_OUT( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
+static void SCENEAREA_UpdateGridAngleOffsChange_SetOffs( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos );
 
 
 static FLD_SCENEAREA_CHECK_AREA_FUNC* sp_FLD_SCENEAREA_CHECK_AREA_FUNC[FLD_SCENEAREA_AREACHECK_MAX] = 
@@ -73,6 +80,10 @@ static FLD_SCENEAREA_UPDATA_FUNC* sp_FLD_SCENEAREA_UPDATA_FUNC[FLD_SCENEAREA_UPD
   SCENEAREA_UpdateGridAngleChange,
   SCENEAREA_UpdateGridAngleChange_IN,
   SCENEAREA_UpdateGridAngleChange_OUT,
+
+  SCENEAREA_UpdateGridAngleOffsChange,
+  SCENEAREA_UpdateGridAngleOffsChange_IN,
+  SCENEAREA_UpdateGridAngleOffsChange_OUT,
 };
 
 static const FLD_SCENEAREA_FUNC sc_FLD_SCENEAREA_FUNC = 
@@ -494,12 +505,6 @@ static void SCENEAREA_UpdateGridAngleChange( const FLD_SCENEAREA* cp_sys, const 
   s32 yaw;
   fx32 length;
 
-  VecFx32 local_pos;
-
-  local_pos = *cp_pos;
-  local_pos.x -= MMDL_VEC_X_GRID_OFFS_FX32;
-  local_pos.z -= MMDL_VEC_Z_GRID_OFFS_FX32;
-
   p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
 
 	FIELD_CAMERA_SetMode( p_camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
@@ -509,21 +514,9 @@ static void SCENEAREA_UpdateGridAngleChange( const FLD_SCENEAREA* cp_sys, const 
   //TOMOYA_Printf( "start angle pitch=0x%x yaw=0x%x len=0x%x\n", cp_param->start_pitch, cp_param->start_yaw, cp_param->start_length );
   //TOMOYA_Printf( "end angle pitch=0x%x yaw=0x%x len=0x%x\n", cp_param->end_pitch, cp_param->end_yaw, cp_param->end_length );
 
-  // 入り口からの奥への距離から、カメラを動かす
-  dist = GRID_TO_FX32( cp_param->grid_depth );
-  // 横？　縦？
-  if( cp_param->grid_sizx == 1 )
-  {
-    // 右に奥行き
-    start_num = GRID_TO_FX32( cp_param->grid_x );
-    sub_num   = local_pos.x - start_num;
-  }
-  else
-  {
-    // 手前に奥行き
-    start_num = GRID_TO_FX32( cp_param->grid_z );
-    sub_num   = local_pos.z - start_num;
-  }
+  // 計算用のパラメータを求める
+  SCENEAREA_GridAngleGetOfsAndMax( cp_param, cp_pos, &dist, &sub_num );
+
 
   // 移動割合からアングルと距離を求める
   pitch = cp_param->end_pitch - cp_param->start_pitch;
@@ -555,9 +548,12 @@ static void SCENEAREA_UpdateGridAngleChange( const FLD_SCENEAREA* cp_sys, const 
 static void SCENEAREA_UpdateGridAngleChange_IN( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
 {
   FIELD_CAMERA* p_camera;
+  const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM* cp_param = (const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM*)cp_data->area;
 
   p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
-  FIELD_CAMERA_StopTraceNow( p_camera );
+  if( cp_param->trace_off ){
+    FIELD_CAMERA_StopTraceNow( p_camera );
+  }
 
   SCENEAREA_UpdateGridAngleChange( cp_sys, cp_data, cp_pos );
 
@@ -572,13 +568,119 @@ static void SCENEAREA_UpdateGridAngleChange_IN( const FLD_SCENEAREA* cp_sys, con
 static void SCENEAREA_UpdateGridAngleChange_OUT( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
 {
   FIELD_CAMERA* p_camera;
+  const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM* cp_param = (const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM*)cp_data->area;
+
   p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
 
   SCENEAREA_UpdateGridAngleChange( cp_sys, cp_data, cp_pos );
 
-  FIELD_CAMERA_RestartTrace( p_camera );
+  if( cp_param->trace_off ){
+    FIELD_CAMERA_RestartTrace( p_camera );
+  }
 
   //TOMOYA_Printf( "GridAngle End\n" );
+}
+
+static void SCENEAREA_GridAngleGetOfsAndMax( const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM* cp_param, const VecFx32* cp_pos, fx32* p_dist, fx32* p_sub_num )
+{
+  fx32 start_num;
+  VecFx32 local_pos;
+
+  local_pos = *cp_pos;
+  local_pos.x -= MMDL_VEC_X_GRID_OFFS_FX32;
+  local_pos.z -= MMDL_VEC_Z_GRID_OFFS_FX32;
+
+
+  // 入り口からの奥への距離から、カメラを動かす
+  *p_dist = GRID_TO_FX32( cp_param->grid_depth );
+  // 横？　縦？
+  if( cp_param->grid_sizx == 1 )
+  {
+    // 右に奥行き
+    start_num = GRID_TO_FX32( cp_param->grid_x );
+    *p_sub_num   = local_pos.x - start_num;
+  }
+  else
+  {
+    // 手前に奥行き
+    start_num = GRID_TO_FX32( cp_param->grid_z );
+    *p_sub_num   = local_pos.z - start_num;
+  }
+
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  グリッド　アングル　ターゲットオフセット　SMOOTH　変更　更新
+ */
+//-----------------------------------------------------------------------------
+static void SCENEAREA_UpdateGridAngleOffsChange( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
+{
+  SCENEAREA_UpdateGridAngleChange( cp_sys, cp_data, cp_pos );
+
+  // ターゲットオフセット設定
+  SCENEAREA_UpdateGridAngleOffsChange_SetOffs( cp_sys, cp_data, cp_pos );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  グリッド　アングル　ターゲットオフセット　SMOOTH　変更　IN
+ */
+//-----------------------------------------------------------------------------
+static void SCENEAREA_UpdateGridAngleOffsChange_IN( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
+{
+  SCENEAREA_UpdateGridAngleChange_IN( cp_sys, cp_data, cp_pos );
+  
+  // ターゲットオフセット設定
+  SCENEAREA_UpdateGridAngleOffsChange_SetOffs( cp_sys, cp_data, cp_pos );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  グリッド　アングル　ターゲットオフセット　SMOOTH　変更　OUT
+ */
+//-----------------------------------------------------------------------------
+static void SCENEAREA_UpdateGridAngleOffsChange_OUT( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
+{
+
+  SCENEAREA_UpdateGridAngleChange_OUT( cp_sys, cp_data, cp_pos );
+
+  // ターゲットオフセット設定
+  SCENEAREA_UpdateGridAngleOffsChange_SetOffs( cp_sys, cp_data, cp_pos );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  GridAngleOffs
+ */
+//-----------------------------------------------------------------------------
+static void SCENEAREA_UpdateGridAngleOffsChange_SetOffs( const FLD_SCENEAREA* cp_sys, const FLD_SCENEAREA_DATA* cp_data, const VecFx32* cp_pos )
+{
+  const FLD_SCENEAREA_GRIDCHANGEANGLEOFFS_PARAM* cp_param = (const FLD_SCENEAREA_GRIDCHANGEANGLEOFFS_PARAM*)cp_data->area;
+  FIELD_CAMERA* p_camera;
+  VecFx32 target_offs;
+  fx32 x, y, z;
+  fx32 dis_x, dis_y, dis_z;
+  fx32 dist, sub_num;
+
+  p_camera = FLD_SCENEAREA_GetFieldCamera( cp_sys );
+
+  // 計算用のパラメータを求める
+  SCENEAREA_GridAngleGetOfsAndMax( (const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM*)cp_param, cp_pos, &dist, &sub_num );
+
+  // 移動値を求める
+  dis_x = cp_param->end_offs_x - cp_param->start_offs_x;
+  dis_y = cp_param->end_offs_y - cp_param->start_offs_y;
+  dis_z = cp_param->end_offs_z - cp_param->start_offs_z;
+  
+  target_offs.x = cp_param->start_offs_x + FX_Div( FX_Mul( dis_x, sub_num ), dist );
+  target_offs.y = cp_param->start_offs_y + FX_Div( FX_Mul( dis_y, sub_num ), dist );
+  target_offs.z = cp_param->start_offs_z + FX_Div( FX_Mul( dis_z, sub_num ), dist );
+
+  FIELD_CAMERA_SetTargetOffset( p_camera, &target_offs );
 }
 
 

@@ -35,7 +35,7 @@ typedef struct {
 	STRCODE	nickname[MONS_NAME_SIZE+EOM_SIZE];	//16h	ニックネーム(MONS_NAME_SIZE=10)+(EOM_SIZE=1)=11
   u8  indata:1;
   u8  level:7;
-  u8 speabino;
+  u8  speabino;
   u32 id;
 } TRPOKE_AFTER_DATA;
 

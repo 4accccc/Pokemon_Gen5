@@ -140,6 +140,8 @@ extern FLD3D_CI_PTR FIELDMAP_GetFld3dCiPtr(FIELDMAP_WORK *fieldWork);
 extern ENCEFF_CNT_PTR FIELDMAP_GetEncEffCntPtr(FIELDMAP_WORK *fieldWork);
 extern FIELDSKILL_MAPEFF * FIELDMAP_GetFieldSkillMapEffect( FIELDMAP_WORK * fieldWork );
 
+extern FLD_SCENEAREA* FIELDMAP_GetFldSceneArea( FIELDMAP_WORK * fieldWork );
+
 extern u32 FIELDMAP_GetSeasonTimeZone( const FIELDMAP_WORK * fieldWork );
 extern BOOL FIELDMAP_CheckSeasonDispFlag( const FIELDMAP_WORK * fieldWork );
 extern void FIELDMAP_SetSeasonDispFlag( FIELDMAP_WORK * fieldWork, BOOL flag );
