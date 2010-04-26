@@ -51,7 +51,8 @@ typedef struct
 /// Wifiデータ
 /// サブウェイ用ポケモンデータ型
 /// セーブデータとやり取りするのでsavedata/b_tower.hにtypedef定義を切り
-/// 不完全ポインタでやり取りできるようにしておく
+/// 不完全ポインタでやり取りできるようにしてお
+// @note サイズ　60byte
 //(Dpw_Bt_PokemonData)
 //--------------------------------------------------------------
 struct _BSUBWAY_POKEMON
@@ -112,6 +113,10 @@ struct _BSUBWAY_POKEMON
 
 	///ニックネーム ((MONS_NAME_SIZE:10)+(EOM_SIZE:1))*(STRCODE:u16)=22
 	STRCODE nickname[MONS_NAME_SIZE+EOM_SIZE];
+
+  //性格　@note 100426 add
+  u8 seikaku;
+  u8 padding[3];
 };
 
 //--------------------------------------------------------------
@@ -177,11 +182,14 @@ struct _BSUBWAY_LEADER_DATA
 struct _BSUBWAY_PAREPOKE_PARAM
 {
   ///<ポケモンのid保存
-  u32  poke_id;
+  u32  poke_tr_id;
   ///<サブウェイデータ内ポケモンデータ参照index0-999
   u16  poke_no[BSUBWAY_STOCK_PAREPOKE_MAX];
   ///<ポケモンの個性乱数保存
   u32  poke_rnd[BSUBWAY_STOCK_PAREPOKE_MAX];
+  ///<ポケモンの性格    @note 100426 add
+  u8  seikaku[BSUBWAY_STOCK_PAREPOKE_MAX];
+  u8 padding[2];
 };
 
 //======================================================================
