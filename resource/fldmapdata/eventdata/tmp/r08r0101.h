@@ -19,6 +19,11 @@
 #define TR_RANGERM_12                      7
 #define TR_PARASOL_08                      8
 #define TR_RANGERW_12                      9
+#define R08R0101_FLD_ITEM_01              10
+#define R08R0101_FLD_ITEM_02              11
+#define R08R0101_FLD_ITEM_03              12
+#define R08R0101_FLD_ITEM_04              13
+#define R08R0101_FLD_ITEM_05              14
 
 #endif //ZONE_R08R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r08r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

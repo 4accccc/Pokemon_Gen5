@@ -30,6 +30,7 @@
 #define C07_NINJA_02                      12
 #define C07_DUMMY_01                      13
 #define C07_DUMMY_02                      14
+#define C07_FLD_ITEM_01                   15
 
 #endif //ZONE_C07_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c07.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

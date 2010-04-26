@@ -236,32 +236,23 @@ _EVENT_DATA ev_fld_item_193
 _EVENT_DATA ev_fld_item_194
 _EVENT_DATA ev_fld_item_195
 _EVENT_DATA ev_fld_item_196
-_EVENT_DATA ev_fld_item_197
 _EVENT_DATA ev_fld_item_198
 _EVENT_DATA ev_fld_item_199
 _EVENT_DATA ev_fld_item_200
-_EVENT_DATA ev_fld_item_201
 _EVENT_DATA ev_fld_item_202
 _EVENT_DATA ev_fld_item_203
 _EVENT_DATA ev_fld_item_204
-_EVENT_DATA ev_fld_item_205
 _EVENT_DATA ev_fld_item_206
 _EVENT_DATA ev_fld_item_207
-_EVENT_DATA ev_fld_item_208
-_EVENT_DATA ev_fld_item_209
 _EVENT_DATA ev_fld_item_210
-_EVENT_DATA ev_fld_item_211
 _EVENT_DATA ev_fld_item_212
 _EVENT_DATA ev_fld_item_213
 _EVENT_DATA ev_fld_item_214
 _EVENT_DATA ev_fld_item_215
-_EVENT_DATA ev_fld_item_216
 _EVENT_DATA ev_fld_item_217
 _EVENT_DATA ev_fld_item_218
 _EVENT_DATA ev_fld_item_219
-_EVENT_DATA ev_fld_item_220
 _EVENT_DATA ev_fld_item_221
-_EVENT_DATA ev_fld_item_222
 _EVENT_DATA ev_fld_item_223
 _EVENT_DATA ev_fld_item_224
 _EVENT_DATA ev_fld_item_255
@@ -319,14 +310,14 @@ _EVENT_DATA ev_fld_item_303
 _EVENT_DATA ev_fld_item_299
 _EVENT_DATA ev_fld_item_284
 _EVENT_DATA ev_fld_item_289
-_EVENT_DATA ev_fld_item_310
-_EVENT_DATA ev_fld_item_311
-_EVENT_DATA ev_fld_item_312
-_EVENT_DATA ev_fld_item_313
-_EVENT_DATA ev_fld_item_314
-_EVENT_DATA ev_fld_item_315
-_EVENT_DATA ev_fld_item_316
-_EVENT_DATA ev_fld_item_317
+_EVENT_DATA ev_fld_item_197
+_EVENT_DATA ev_fld_item_201
+_EVENT_DATA ev_fld_item_205
+_EVENT_DATA ev_fld_item_208
+_EVENT_DATA ev_fld_item_209
+_EVENT_DATA ev_fld_item_211
+_EVENT_DATA ev_fld_item_216
+_EVENT_DATA ev_fld_item_220
 _EVENT_DATA ev_fld_item2
 _EVENT_DATA_END
 
@@ -1801,10 +1792,10 @@ EVENT_START ev_fld_item_185
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=D20R0501 X= Y= ITEM=だいちのプレート FLAG=186
+// MAP=D20R0501 X= Y= ITEM=こだいのツボ FLAG=186
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_186
-  _FLD_ITEM_EVENT ITEM_DAITINOPUREETO,1
+  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1878,13 +1869,6 @@ EVENT_START ev_fld_item_196
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=D20R0501 X= Y= ITEM=こだいのどうか FLAG=197
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_197
-  _FLD_ITEM_EVENT ITEM_KODAINODOUKA,1
-EVENT_END
-
-//--------------------------------------------------------------
 // MAP=D20R0501 X= Y= ITEM=こだいのどうか FLAG=198
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_198
@@ -1906,17 +1890,10 @@ EVENT_START ev_fld_item_200
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=D20R0501 X= Y= ITEM=こだいのぎんか FLAG=201
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_201
-  _FLD_ITEM_EVENT ITEM_KODAINOGINKA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D20R0501 X= Y= ITEM=こだいのぎんか FLAG=202
+// MAP=D20R0501 X= Y= ITEM=だいちのプレート FLAG=202
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_202
-  _FLD_ITEM_EVENT ITEM_KODAINOGINKA,1
+  _FLD_ITEM_EVENT ITEM_DAITINOPUREETO,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1930,13 +1907,6 @@ EVENT_END
 // MAP=D20R0501 X= Y= ITEM=こだいのきんか FLAG=204
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_204
-  _FLD_ITEM_EVENT ITEM_KODAINOKINKA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D20R0501 X= Y= ITEM=こだいのきんか FLAG=205
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_205
   _FLD_ITEM_EVENT ITEM_KODAINOKINKA,1
 EVENT_END
 
@@ -1955,31 +1925,10 @@ EVENT_START ev_fld_item_207
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=D20R0501 X= Y= ITEM=こだいのツボ FLAG=208
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_208
-  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D20R0501 X= Y= ITEM=こだいのうでわ FLAG=209
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_209
-  _FLD_ITEM_EVENT ITEM_KODAINOUDEWA,1
-EVENT_END
-
-//--------------------------------------------------------------
 // MAP=D20R0501 X= Y= ITEM=こだいのせきぞう FLAG=210
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_210
   _FLD_ITEM_EVENT ITEM_KODAINOSEKIZOU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D20R0601 X= Y= ITEM=こだいのどうか FLAG=211
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_211
-  _FLD_ITEM_EVENT ITEM_KODAINODOUKA,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -2011,13 +1960,6 @@ EVENT_START ev_fld_item_215
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=D20R0601 X= Y= ITEM=こだいのぎんか FLAG=216
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_216
-  _FLD_ITEM_EVENT ITEM_KODAINOGINKA,1
-EVENT_END
-
-//--------------------------------------------------------------
 // MAP=D20R0601 X= Y= ITEM=こだいのきんか FLAG=217
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_217
@@ -2039,23 +1981,9 @@ EVENT_START ev_fld_item_219
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=D20R0601 X= Y= ITEM=こだいのツボ FLAG=220
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_220
-  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
-EVENT_END
-
-//--------------------------------------------------------------
 // MAP=D20R0601 X= Y= ITEM=こだいのツボ FLAG=221
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_221
-  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D20R0601 X= Y= ITEM=こだいのツボ FLAG=222
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_222
   _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
 EVENT_END
 
@@ -2459,58 +2387,58 @@ EVENT_START ev_fld_item_289
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=R08R0101 X=45 Y=41 ITEM=げんきのかたまり FLAG=310
+// MAP=R08R0101 X=45 Y=41 ITEM=げんきのかたまり FLAG=197
 //--------------------------------------------------------------
-EVENT_START ev_fld_item_310
+EVENT_START ev_fld_item_197
   _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=R08R0101 X=15 Y=53 ITEM=インドメタシン FLAG=311
+// MAP=R08R0101 X=15 Y=53 ITEM=インドメタシン FLAG=201
 //--------------------------------------------------------------
-EVENT_START ev_fld_item_311
+EVENT_START ev_fld_item_201
   _FLD_ITEM_EVENT ITEM_INDOMETASIN,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=R08R0101 X=31 Y=16 ITEM=まんたんのくすり FLAG=312
+// MAP=R08R0101 X=31 Y=16 ITEM=まんたんのくすり FLAG=205
 //--------------------------------------------------------------
-EVENT_START ev_fld_item_312
+EVENT_START ev_fld_item_205
   _FLD_ITEM_EVENT ITEM_MANTANNOKUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=R08R0101 X=42 Y=11 ITEM=ピーピーマックス FLAG=313
+// MAP=R08R0101 X=42 Y=11 ITEM=ピーピーマックス FLAG=208
 //--------------------------------------------------------------
-EVENT_START ev_fld_item_313
+EVENT_START ev_fld_item_208
   _FLD_ITEM_EVENT ITEM_PIIPIIMAKKUSU,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=R08R0101 X=6 Y=44 ITEM=ふしぎなアメ FLAG=314
+// MAP=R08R0101 X=6 Y=44 ITEM=ふしぎなアメ FLAG=209
 //--------------------------------------------------------------
-EVENT_START ev_fld_item_314
+EVENT_START ev_fld_item_209
   _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=T04 X=725 Y=291 ITEM=でかいきんのたま FLAG=315
+// MAP=T04 X=725 Y=291 ITEM=でかいきんのたま FLAG=211
 //--------------------------------------------------------------
-EVENT_START ev_fld_item_315
+EVENT_START ev_fld_item_211
   _FLD_ITEM_EVENT ITEM_DEKAIKINNOTAMA,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=R09R0202 X=11 Y=2 ITEM=ポイントアップ FLAG=316
+// MAP=R09R0202 X=11 Y=2 ITEM=ポイントアップ FLAG=216
 //--------------------------------------------------------------
-EVENT_START ev_fld_item_316
+EVENT_START ev_fld_item_216
   _FLD_ITEM_EVENT ITEM_POINTOAPPU,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=C07 X=168 Y=190 ITEM=ふしぎなアメ FLAG=317
+// MAP=C07 X=168 Y=190 ITEM=ふしぎなアメ FLAG=220
 //--------------------------------------------------------------
-EVENT_START ev_fld_item_317
+EVENT_START ev_fld_item_220
   _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
 EVENT_END
 

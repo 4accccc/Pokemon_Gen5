@@ -12,14 +12,12 @@
 #define D20R0701_CUBE_01                   1
 #define D20R0701_FLD_ITEM_10               2
 #define D20R0701_FLD_ITEM_06               3
-#define D20R0701_FLD_ITEM_01               4
-#define D20R0701_FLD_ITEM_08               5
-#define D20R0701_FLD_ITEM_05               6
-#define D20R0701_FLD_ITEM_04               7
-#define D20R0701_FLD_ITEM_07               8
-#define D20R0701_FLD_ITEM_03               9
-#define D20R0701_FLD_ITEM_02              10
-#define D20R0701_FLD_ITEM_09              11
+#define D20R0701_FLD_ITEM_08               4
+#define D20R0701_FLD_ITEM_04               5
+#define D20R0701_FLD_ITEM_07               6
+#define D20R0701_FLD_ITEM_03               7
+#define D20R0701_FLD_ITEM_02               8
+#define D20R0701_FLD_ITEM_09               9
 
 #endif //ZONE_D20R0701_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d20r0701.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

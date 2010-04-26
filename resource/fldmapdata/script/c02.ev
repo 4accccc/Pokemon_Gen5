@@ -172,11 +172,14 @@ EVENT_START   ev_pos_c02_rival_01
 	_BALLOONWIN_OBJMSG_POS( msg_c02_black_02, C02_RIVAL_02,POS_DEFAULT )
     _BALLOONWIN_CLOSE()
     
+    //アイテムをあげる為に近づく
     _OBJ_ANIME(C02_RIVAL_02,anm_rival_item)
     _OBJ_ANIME_WAIT()
    
+    //アイテム入手処理
 	_ITEM_EVENT_KEYWAIT(ITEM_KAGONOMI, 3 )
    
+    //カゴの実の説明
   	_BALLOONWIN_OBJMSG_POS( msg_c02_black_02a, C02_RIVAL_02,POS_DEFAULT )
     _BALLOONWIN_CLOSE()
     

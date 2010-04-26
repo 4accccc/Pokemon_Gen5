@@ -10,6 +10,7 @@
 #define ZONE_R09R0202_EVC_H
 
 #define R09R0202_CLEANINGM_01              0
+#define R09R0202_FLD_ITEM_01               1
 
 #endif //ZONE_R09R0202_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r09r0202.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
