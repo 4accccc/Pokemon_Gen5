@@ -1,10 +1,10 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <?xml-stylesheet type="text/xsl" href="" ?>
 
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-13T15:44:16"/>
+	<create user="matsumiya" host="W00224" date="2010-04-26T16:53:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="224" top="470" right="929" bottom="1090" maximized="no" rayout="Vertical2">
+	<dialog left="1567" top="235" right="2272" bottom="789" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -8123,53 +8123,161 @@
 	<row id="mes_tower_tr_307_01" text-color=",,,#000000,,,,,,,,,,,,,," back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>サブウェイマスター
 ノボリ</comment>
-		<language name="JPN">さあ　サブウェイマスターの　わたしに
-その　じつりょく　みせてくれたまえ！</language>
-		<language name="JPN_KANJI">さあ　サブウェイマスターの　私に
-その　実力を　見せてくれたまえ！</language>
+		<language name="JPN">ほんじつは　バトルサブウェイ
+ごじょうしゃ　ありがとうございます▼
+わたくし　サブウェイマスターの
+ノボリ　と　もうします！▼
+さて　つぎの　もくてきち　ですが
+あなたさまの　じつりょくで▽
+きめたいと　かんがえております▼
+ポケモンの　ことを
+よく　りかい　なさっているか▼
+どんな　あいてにも
+じぶんを　つらぬけるか……▼
+しょうり　もしくは　はいぼく
+どちらに　むかうのか……▽
+では　しゅっぱつ　しんこうーッ！！▼</language>
+		<language name="JPN_KANJI">本日は　バトルサブウェイ
+ご乗車　ありがとうございます▼
+わたくし　サブウェイマスターの
+ノボリ　と　もうします！▼
+さて　次の　目的地ですが
+あなたさまの　実力で▽
+決めたいと　考えております▼
+ポケモンの　ことを
+よく　理解なさっているか▼
+どんな　相手にも
+自分を　貫けるか……▼
+勝利　もしくは　敗北
+どちらに　向かうのか……▽
+では　出発　進行ーッ！！▼</language>
 	</row>
 
 	<row id="mes_tower_tr_307_02" text-color=",,,#000000,,,,,,,,,,,,,," back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>サブウェイマスター
 ノボリ</comment>
-		<language name="JPN">すばらしい　しょうぶ　だった！
-また　きてくれたまえ！</language>
-		<language name="JPN_KANJI">素晴らしい　勝負だった！
-また　来てくれたまえ！</language>
+		<language name="JPN">……あなたさまの　たたかいぶり
+けっして　わるくは　ありませんでした▼
+ただ　わずかながら　わたくしたちが
+あなたさまを　うわまわったようです▼
+ただ　わたくしとしては
+もういちど　おてあわせ　ねがいたい！▼
+ぜひ！　ぜひ！　またの
+ごじょうしゃを　おまちしております！</language>
+		<language name="JPN_KANJI">……あなたさまの　戦いぶり
+決して　悪くは　ありませんでした▼
+ただ　わずかながら　わたくしたちが
+あなたさまを　上回ったようです▼
+ただ　わたくしとしては
+もう一度　お手合わせ　願いたい！▼
+ぜひ！　ぜひ！　またの
+ご乗車を　お待ちしております！</language>
 	</row>
 
 	<row id="mes_tower_tr_307_03" text-color=",,,#000000,,,,,,,,,,,,,," back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>サブウェイマスター
 ノボリ</comment>
-		<language name="JPN">きみのような　すごい　トレーナーに
-まけたのであれば　なっとく　だ！</language>
-		<language name="JPN_KANJI">きみのような　すごい　トレーナーに
-負けたのであれば　納得だ！</language>
+		<language name="JPN">ブラボー！！▼
+あなたさまは　その　じつりょくで
+しょうり　という　もくてきちに▽
+みごと　とうちゃく　なさいました！▼
+ですが
+じんせいは　まだまだ　おわりません！▼
+つぎの　もくてきちが　きまりましたら
+そこに　むかって　ぜんりょくで▽
+ひたはしって　くださいまし！</language>
+		<language name="JPN_KANJI">ブラボー！！▼
+あなたさまは　その実力で
+勝利という　目的地に▽
+みごと　到着なさいました！▼
+ですが
+人生は　まだまだ　終わりません！▼
+次の　目的地が　決まりましたら
+そこに　向かって　全力で▽
+ひた走ってくださいまし！</language>
 	</row>
 
-	<row id="mes_tower_tr_308_01">
+	<row id="mes_tower_tr_308_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>サブウェイマスター
 ノボリ</comment>
-		<language name="JPN">また　あえたね！</language>
-		<language name="JPN_KANJI">また　会えたね！</language>
+		<language name="JPN">ようこそ　おまちしておりました！▼
+あらためて　じこしょうかいを……▼
+わたくし　サブウェイマスターの
+ノボリ　と　もうします！▼
+かって　かって　かちまくり
+そのさきに　なにが　みえるのか？▽
+もくてきちは　どこなのか▼
+かんがえ　つづけて
+ひとつ　わかりました▼
+かったさきの　ことは
+かたねば　わからない　ということです▼
+ですので　こんかいも
+ぜんりょくで　おあいて　いたします▽
+では　しゅっぱつ　しんこうーッ！！▼</language>
+		<language name="JPN_KANJI">ようこそ　お待ちしておりました！▼
+改めて　自己紹介を……▼
+わたくし　サブウェイマスターの
+ノボリ　と　申します！▼
+勝って　勝って　勝ちまくり
+その先に　なにが　みえるのか？▽
+目的地は　どこなのか▼
+考えつづけて
+ひとつ　わかりました▼
+勝った先の　ことは
+勝たねば　わからない　ということです▼
+ですので　今回も
+全力で　お相手いたします▽
+では　出発　進行ーッ！！▼</language>
 	</row>
 
-	<row id="mes_tower_tr_308_02">
+	<row id="mes_tower_tr_308_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>サブウェイマスター
 ノボリ</comment>
-		<language name="JPN">すばらしい　しょうぶ　だった！
-また　きてくれたまえ！</language>
-		<language name="JPN_KANJI">素晴らしい　勝負だった！
-また　来てくれたまえ！</language>
+		<language name="JPN">たまたま　わたくしが　かてましたが
+あなたさまの　じつりょくは　たかい！▼
+かけひき……　よみ……
+すばらしい　ものを　おもちです▼
+そうです！　わたくしとしては
+なんどでも　おてあわせ　ねがいたい！▼
+ぜひ！　ぜひ！　またの
+ごじょうしゃを　おまちしております！</language>
+		<language name="JPN_KANJI">たまたま　わたくしが　かてましたが
+あなたさまの　実力は　高い！▼
+駆け引き……　読み……
+すばらしい　ものを　おもちです▼
+そうです！　わたくしとしては
+何度でも　お手合わせ　願いたい！▼
+ぜひ！　ぜひ！　またの
+ご乗車を　お待ちしております！</language>
 	</row>
 
-	<row id="mes_tower_tr_308_03">
+	<row id="mes_tower_tr_308_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>サブウェイマスター
 ノボリ</comment>
-		<language name="JPN">きみのような　すごい　トレーナーに
-まけたのであれば　なっとく　だ！</language>
-		<language name="JPN_KANJI">きみのような　すごい　トレーナーに
-負けたのであれば　納得だ！</language>
+		<language name="JPN">ブラボー！！
+スーパー　ブラボー！！▼
+あなたさまの　ような
+すばらしい　ポケモントレーナーに▼
+たいして　ぜんりょくを　だせたこと
+ひじょうに　うれしく　おもいます▼
+そうです！
+つよい　あいてに　むかっていってこそ▽
+じぶんも　つよくなれるという　もの▼
+さらに　しょうじんを　かさね
+たかみ　という　もくてきちを　めざし▽
+ひたはしって　くださいませ！！</language>
+		<language name="JPN_KANJI">ブラボー！！
+スーパー　ブラボー！！▼
+あなたさまの　ような
+すばらしい　ポケモントレーナーに▼
+対して　全力を　だせたこと
+非常に　うれしく　思います▼
+そうです！
+強い　相手に　向かっていってこそ▽
+自分も　強くなれるという　もの▼
+さらに　精進を　重ね
+高みという　目的地を　めざし▽
+ひた走ってくださいませ！！</language>
 	</row>
 
 	<row id="mes_tower_tr_309_01">
@@ -8224,7 +8332,7 @@
 負けたのであれば　納得だ！</language>
 	</row>
 
-	<row id="mes_tower_tr_311_01">
+	<row id="mes_tower_tr_311_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>サブウェイマスター
 ノボリ</comment>
 		<language name="JPN">さあ　サブウェイマスターの　わたしに
@@ -8233,7 +8341,7 @@
 その　実力を　見せてくれたまえ！</language>
 	</row>
 
-	<row id="mes_tower_tr_311_02">
+	<row id="mes_tower_tr_311_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>サブウェイマスター
 ノボリ</comment>
 		<language name="JPN">すばらしい　しょうぶ　だった！
@@ -8242,7 +8350,7 @@
 また　来てくれたまえ！</language>
 	</row>
 
-	<row id="mes_tower_tr_311_03">
+	<row id="mes_tower_tr_311_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>サブウェイマスター
 ノボリ</comment>
 		<language name="JPN">きみのような　すごい　トレーナーに
@@ -8278,14 +8386,14 @@
 負けたのであれば　納得だ！</language>
 	</row>
 
-	<row id="mes_tower_tr_313_01">
+	<row id="mes_tower_tr_313_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>サブウェイマスター
 ノボリ</comment>
 		<language name="JPN">また　あえたね！</language>
 		<language name="JPN_KANJI">また　会えたね！</language>
 	</row>
 
-	<row id="mes_tower_tr_313_02">
+	<row id="mes_tower_tr_313_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>サブウェイマスター
 ノボリ</comment>
 		<language name="JPN">すばらしい　しょうぶ　だった！
@@ -8294,7 +8402,7 @@
 また　来てくれたまえ！</language>
 	</row>
 
-	<row id="mes_tower_tr_313_03">
+	<row id="mes_tower_tr_313_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>サブウェイマスター
 ノボリ</comment>
 		<language name="JPN">きみのような　すごい　トレーナーに
