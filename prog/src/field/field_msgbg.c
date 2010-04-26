@@ -63,7 +63,8 @@
 
 ///< 通信中などに使用する、自動メッセージ
 #define AUTO_MSG_WAIT      ( MSGSPEED_NORMAL ) ///<自動時のメッセージスピード
-#define AUTO_MSG_KEY_WAIT  ( 50 ) ///<キーウエイト
+#define AUTO_MSG_ONE_KEY_WAIT  ( 25 ) ///<キーウエイト
+#define AUTO_MSG_ALLCLEAR_KEY_WAIT  ( 50 ) ///<キーウエイト
 
 #define GIZA_SHAKE_Y (8) ///<ギザウィンドウ初期揺れ幅
 
@@ -367,7 +368,7 @@ static void Control_SetAutoPrintFlag( FLDPRINT_CONTROL* cont, BOOL flag );
 static BOOL Control_GetAutoPrintFlag( const FLDPRINT_CONTROL* cont );
 static int Control_GetMsgWait( const FLDPRINT_CONTROL* cont );
 static BOOL Control_GetSkipKey( FLDPRINT_CONTROL* cont );
-static BOOL Control_GetWaitKey( FLDPRINT_CONTROL* cont );
+static BOOL Control_GetWaitKey( FLDPRINT_CONTROL* cont, PRINTSTREAM_PAUSE_TYPE type );
 static void set_printStreamTempSpeed( PRINT_STREAM *printStream, BOOL skip );
 
 #ifdef DEBUG_FLDMSGBG
@@ -2197,8 +2198,11 @@ static PRINTSTREAM_STATE fldMsgPrintStream_ProcPrint(
     }
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
-    if( Control_GetWaitKey( &stm->fmb->print_cont ) ){
-      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+
+    if( Control_GetWaitKey( &stm->fmb->print_cont, PRINTSYS_PrintStreamGetPauseType( stm->printStream ) ) ){
+      if( Control_GetAutoPrintFlag(&stm->fmb->print_cont) == FALSE ){//オート表示中は音を出さない。
+        PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+      }
       PRINTSYS_PrintStreamReleasePause( stm->printStream );
       set_printStreamTempSpeed( stm->printStream, FALSE );
       state = PRINTSTREAM_STATE_RUNNING; //即 RUNNINGで返す
@@ -3072,7 +3076,7 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
         FLDKEYWAITCURSOR_Write( &tmsg->cursor_work, bmp, 0x0f );
       }
 
-      if( Control_GetWaitKey( &tmsg->fmb->print_cont ) ){
+      if( Control_GetWaitKey( &tmsg->fmb->print_cont, PRINTSYS_PrintStreamGetPauseType( stream ) ) ){
         if( Control_GetAutoPrintFlag(&tmsg->fmb->print_cont) == FALSE ){//オート表示中は音を出さない。
           PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
         }
@@ -5363,14 +5367,21 @@ static BOOL Control_GetSkipKey( FLDPRINT_CONTROL* cont )
  *  @retval FALSE   待機
  */
 //-----------------------------------------------------------------------------
-static BOOL Control_GetWaitKey( FLDPRINT_CONTROL* cont )
+static BOOL Control_GetWaitKey( FLDPRINT_CONTROL* cont, PRINTSTREAM_PAUSE_TYPE type )
 {
   int trg = GFL_UI_KEY_GetTrg();
+  int wait;
+
+  if( type == PRINTSTREAM_PAUSE_LINEFEED ){
+    wait = AUTO_MSG_ONE_KEY_WAIT;
+  }else{
+    wait = AUTO_MSG_ALLCLEAR_KEY_WAIT;
+  }
 
   // 自動送り中は、ウエイト後メッセージ送り
   if( cont->auto_msg_flag ){
     cont->key_wait ++;
-    if( cont->key_wait >= AUTO_MSG_KEY_WAIT  ){
+    if( cont->key_wait >= wait  ){
       cont->key_wait = 0;
       return TRUE;
     }

@@ -38,7 +38,8 @@ typedef enum{
 //-------------------------------------
 ///	ÉåÉxÉãê¨í∑
 //=====================================
-#define TRPOKE_AFTER_LEVEL_ADD  (10)
+#define TRPOKE_AFTER_LEVEL_DEF  (65)
+#define TRPOKE_AFTER_LEVEL_ADD  (5)
 #define TRPOKE_AFTER_LEVEL_MAX  (100)
 
 //-----------------------------------------------------------------------------

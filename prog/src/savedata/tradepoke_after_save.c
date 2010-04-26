@@ -119,7 +119,11 @@ u8 TRPOKE_AFTER_SV_GetLevel( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE
 {
   u8 ret;
   GF_ASSERT( type < TRPOKE_AFTER_SAVE_TYPE_MAX );
-  ret = sv->data[ type ].level + TRPOKE_AFTER_LEVEL_ADD;
+  if( sv->data[ type ].level < TRPOKE_AFTER_LEVEL_DEF ){
+    ret = TRPOKE_AFTER_LEVEL_DEF;
+  }else{
+    ret = sv->data[ type ].level + TRPOKE_AFTER_LEVEL_ADD;
+  }
   if( ret > TRPOKE_AFTER_LEVEL_MAX ){
     ret = TRPOKE_AFTER_LEVEL_MAX;
   }
