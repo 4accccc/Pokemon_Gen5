@@ -21,6 +21,7 @@
 #define R18_SAGE6_01                       9
 #define R18_FLD_ITEM_03                   10
 #define R18_FLD_ITEM_04                   11
+#define R18_FLD_ITEM_05                   12
 
 #endif //ZONE_R18_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r18.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

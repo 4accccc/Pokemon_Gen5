@@ -45,5 +45,7 @@
 #define BGID_R04_SIGN1_01                 2
 #define R04_HIDE_ITEM_01                  3
 #define R04_HIDE_ITEM_02                  4
+#define R04_HIDE_ITEM_03                  5
+#define R04_HIDE_ITEM_04                  6
 
 #endif //ZONE_R04_EVB_H
