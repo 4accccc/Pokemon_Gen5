@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-03-30T12:56:26" source="c_cruiser_port.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-04-25T18:12:57" source="c_cruiser_port_saisin2.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-03-30T12:56:26" source="c_cruiser_port.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-04-25T18:12:57" source="c_cruiser_port_saisin2.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -20,66 +20,114 @@
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="1 1"
-	compress_material="on" material_size="1 1"
+	compress_node="none" node_size="1 1"
+	compress_material="off" material_size="1 1"
 	output_texture="used"
 	force_full_weight="off"
-	use_primitive_strip="on"
+	use_primitive_strip="off"
 />
 
-<box_test pos_scale="3" xyz="3.000000 0.000000 0.000000" whd="4.000000 4.000000 0.000000"/>
+<box_test pos_scale="3" xyz="3.377686 -1.673828 -2.286133" whd="3.158691 4.136475 4.447998"/>
 
 <tex_image_array size="1">
-	<tex_image index="0" name="c3_bayroad"
-		width="8" height="64" original_width="8" original_height="64"
+	<tex_image index="0" name="info"
+		width="64" height="32" original_width="64" original_height="32"
 		format="palette16"
-		color0_mode="color"
-		palette_name="c3_bayroad_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_bayroad.tga"
+		color0_mode="transparency"
+		palette_name="info_pl"
+		path="C:/home/wb_data3d/demo/c_cruiser_port/tex/info.tga"
 	>
-		<bitmap size="128">
-			eee1 3eee b881 3ebb b881 3ebb 9bb1 3ebb
-			bbb1 3ebb bbb1 3ebb bbb1 3ebb bbb1 3ebb
-			bbb1 3ebb bbb1 3e88 b9b1 3e88 b9b1 3ebb
-			bbb1 3ebb 5551 3555 1111 3111 acc1 3cca
-			bbb1 3cbb bbb1 3c6b bbb1 3cbb dbb1 3cbb
-			bbb1 3cbb bbb1 3cbb 7761 3cbb bbb1 3cbb
-			bdd1 3cbb bdd1 3c9b bbb1 3cbb bbb1 3cbb
-			bbb1 3cbb 9bb1 3bb9 5551 3555 1111 3111
-			eee1 3eee be81 3ebb b881 3ebb 9bb1 3ebb
-			bbb1 3ebb bbb1 3ebb bbb1 3ebb bbb1 3ebb
-			bbb1 3ebb bbb1 3e88 b9b1 3e88 b9b1 3ebb
-			bbb1 3ebb 5551 3555 1111 3111 4420 3444
-			2220 3422 2220 3422 2220 3422 2220 3422
-			2220 3422 2220 3422 2220 3422 2220 3422
-			2220 3422 2220 3422 2220 3422 2220 3422
-			2220 3422 2220 3422 0000 3000 1111 3111
+		<bitmap size="512">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 ddd0 0ddd 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 553d d355 0000 0000 0000
+			0000 0000 0000 ddd0 0ddd 0000 0000 0000
+			0000 0000 7000 5553 3555 0007 0000 0000
+			0000 0000 0000 553d d355 0000 0000 0000
+			0000 0000 3d70 5553 3555 07d3 0000 0000
+			0000 0000 7000 5553 3555 0007 0000 0000
+			0000 0000 373d 5533 3355 d373 0000 0000
+			0000 0000 3d70 5553 3555 07d3 0000 0000
+			0000 d000 1734 3333 3333 4371 000d 0000
+			0000 0000 373d 5533 3355 d373 0000 0000
+			0000 d000 1733 3332 2333 3371 000d 0000
+			0000 d000 2734 3333 3333 4372 000d 0000
+			0000 d000 7334 2221 1222 4337 000d 0000
+			0000 d000 1733 3332 2333 3371 000d 0000
+			0000 0000 553d 7774 4777 d355 0000 0000
+			0000 d000 7334 2221 1222 4337 000d 0000
+			0000 8000 547a 5555 5555 a745 0008 0000
+			0000 0000 553d 7774 4777 d355 0000 0000
+			0000 8000 778a 5534 4355 a877 0008 0000
+			0000 0000 547d 5555 5555 d745 0000 0000
+			0000 8000 8889 7777 7777 9888 0008 0000
+			0000 0000 779d 5534 4355 d977 0000 0000
+			0000 0000 888d 8888 8888 d888 0000 0000
+			0000 0000 9b9d 99dc cd99 d9b9 0000 0000
+			0000 0000 8d8d 8888 8888 d8d8 0000 0000
+			0000 0000 ad8d aadc cdaa d8da 0000 0000
+			0000 0000 8dd0 8888 8888 0dd8 0000 0000
+			0000 0000 bdd0 aaaa aaaa 0ddb 0000 0000
+			0000 0000 dd00 8888 8888 00dd 0000 0000
+			0000 0000 dd00 9a9b b9a9 00dd 0000 0000
+			0000 0000 0000 877d d778 0000 0000 0000
+			0000 0000 0000 b77d d77b 0000 0000 0000
+			0000 0000 d000 7433 3347 000d 0000 0000
+			0000 0000 d000 1143 3411 000d 0000 0000
+			0000 0000 d000 3333 3333 000d 0000 0000
+			0000 0000 d000 2163 3612 000d 0000 0000
+			0000 0000 d000 3343 3433 000d 0000 0000
+			0000 0000 d000 4643 3464 000d 0000 0000
+			0000 0000 d000 5364 4635 000d 0000 0000
+			0000 0000 0000 3d3d d3d3 0000 0000 0000
+			0000 0000 0000 553d d355 0000 0000 0000
+			0000 0000 0000 a92d d29a 0000 0000 0000
+			0000 0000 d000 5341 1435 000d 0000 0000
+			0000 0000 d000 99d1 1d99 000d 0000 0000
+			0000 0000 d000 4421 1244 000d 0000 0000
+			0000 0000 d000 bb21 12bb 000d 0000 0000
+			0000 0000 d000 2229 9222 000d 0000 0000
+			0000 0000 d000 2229 9222 000d 0000 0000
+			0000 0000 0000 d9ad da9d 0000 0000 0000
+			0000 0000 0000 da9d d9ad 0000 0000 0000
+			0000 0000 0000 d43d d34d 0000 0000 0000
+			0000 0000 0000 d34d d43d 0000 0000 0000
+			0000 0000 0000 0dd0 0dd0 0000 0000 0000
+			0000 0000 0000 0dd0 0dd0 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
-	<tex_palette index="0" name="c3_bayroad_pl" color_size="16">
-		39d2 3dee 4657 4a52 4e9a 56b5 5af8 5ef9
-		5f39 6318 635a 6739 677b 6b5a 6f7b 7fff
+	<tex_palette index="0" name="info_pl" color_size="16">
+		02b2 24b2 4d7c 61ca 4546 7e8d 20c4 10a6
+		14e9 3a7a 5f5f 192f 7fff 0000 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="1">
-	<material index="0" name="c3_bayroad_1"
-		light0="on" light1="off" light2="off" light3="off"
+	<material index="0" name="info"
+		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="12"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="19 19 19"
+		ambient="16 16 16"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -100,26 +148,26 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -4.000000 0.000000"
-		volume_max="4.000000 4.000000 0.000000"
-		volume_r="5.656738"
+		volume_min="-4.106445 -3.254395 -0.881348"
+		volume_max="4.106445 4.861572 0.881348"
+		volume_r="6.258301"
 		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="off" tex_flag="on"
+		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 64.000000"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_s xyz="-4.000000 -4.000000 0.000000"/>
-					<tex st="8.000000 64.000000"/>
-					<pos_xy xy="4.000000 -4.000000"/>
-					<tex st="8.000000 0.000000"/>
-					<pos_xy xy="4.000000 4.000000"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-4.000000 4.000000"/>
+					<tex st="32.000000 32.000000"/>
+					<clr rgb="26 21 11"/>
+					<pos_xyz xyz="-4.106445 -2.986084 0.881348"/>
+					<tex st="64.000000 32.000000"/>
+					<pos_xyz xyz="3.885986 -3.254395 0.657471"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_xyz xyz="4.106445 4.593018 -0.881348"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xyz xyz="-3.885986 4.861572 -0.657471"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -135,15 +183,15 @@
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="40.000000 16.000000 0.000000"
+		rotate="-15.790771 55.453857 -6.920654"
+		translate="40.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 -4.000000 0.000000"
-		volume_max="4.000000 4.000000 0.000000"
-		volume_r="5.656738"
+		volume_min="-4.106445 -3.254395 -0.881348"
+		volume_max="4.106445 4.861572 0.881348"
+		volume_r="6.258301"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>

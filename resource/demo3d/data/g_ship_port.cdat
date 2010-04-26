@@ -19,7 +19,7 @@ static const DEMO3D_SCENE_DATA data_g_ship_port_scene = {
 	FALSE,	///<2画面連結
 	TRUE,FALSE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
 	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
-	GX_SORTMODE_AUTO,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
+	GX_SORTMODE_MANUAL,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
 	FX32_CONST(40.0),FX32_CONST(40.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
 	FX32_CONST(0.100 ),FX32_CONST(2048.000 ),	///<near,far
@@ -33,8 +33,8 @@ static const DEMO3D_SCENE_DATA data_g_ship_port_scene = {
 	{ 0,0,0,0,0,0,0,0, }, 	///<フォグ濃度テーブル
 	{ GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),	///<エッジマーキングカラーテーブル
 	  GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0), },
-	DEMO3D_FADE_BLACK, 30,	///<フェードイン
-	DEMO3D_FADE_BLACK, 30,	///<フェードアウト
+	DEMO3D_FADE_BLACK, 20,	///<フェードイン
+	DEMO3D_FADE_BLACK, 0,	///<フェードアウト
 };
 
 //============================================
@@ -42,6 +42,7 @@ static const DEMO3D_SCENE_DATA data_g_ship_port_scene = {
 //============================================
 
 static const DEMO3D_CMD_DATA demo3d_cmd_g_ship_port_data[] = {
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 150-20, { MASK_MAIN_DISPLAY, 20, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
 
@@ -63,10 +64,11 @@ static const DEMO3D_CMD_DATA demo3d_cmd_g_ship_port_end_data[] = {
 
 static const u16 res_g_ship_port_file_ship_port01[] = {
  NARC_data_demo3d_g_ship_port01_nsbmd,
+ NARC_data_demo3d_g_ship_port01_nsbta,
 };
 
 static const DEMO3D_FILE_UNIT res_g_ship_port_file_unit_ship_port01[] = {
- { res_g_ship_port_file_ship_port01, 1 },
+ { res_g_ship_port_file_ship_port01, 2 },
 };
 
 ///==================================
@@ -74,11 +76,55 @@ static const DEMO3D_FILE_UNIT res_g_ship_port_file_unit_ship_port01[] = {
 
 static const u16 res_g_ship_port_file_ship_port02[] = {
  NARC_data_demo3d_g_ship_port02_nsbmd,
+ NARC_data_demo3d_g_ship_port02_nsbta,
  NARC_data_demo3d_g_ship_port02_nsbca,
 };
 
 static const DEMO3D_FILE_UNIT res_g_ship_port_file_unit_ship_port02[] = {
- { res_g_ship_port_file_ship_port02, 2 },
+ { res_g_ship_port_file_ship_port02, 3 },
+};
+
+///==================================
+/// ship_port03 Unit File Resource
+
+static const u16 res_g_ship_port_file_ship_port03[] = {
+ NARC_data_demo3d_g_ship_port03_nsbmd,
+};
+
+static const DEMO3D_FILE_UNIT res_g_ship_port_file_unit_ship_port03[] = {
+ { res_g_ship_port_file_ship_port03, 1 },
+};
+
+///==================================
+/// ship_port04 Unit File Resource
+
+static const u16 res_g_ship_port_file_ship_port04_morning[] = {
+ NARC_data_demo3d_g_ship_ramp_nsbmd,
+ NARC_data_demo3d_g_ship_ramp_off_nsbta,
+};
+static const u16 res_g_ship_port_file_ship_port04_noon[] = {
+ NARC_data_demo3d_g_ship_ramp_nsbmd,
+ NARC_data_demo3d_g_ship_ramp_off_nsbta,
+};
+static const u16 res_g_ship_port_file_ship_port04_evening[] = {
+ NARC_data_demo3d_g_ship_ramp_nsbmd,
+ NARC_data_demo3d_g_ship_ramp_on_nsbta,
+};
+static const u16 res_g_ship_port_file_ship_port04_night[] = {
+ NARC_data_demo3d_g_ship_ramp_nsbmd,
+ NARC_data_demo3d_g_ship_ramp_on_nsbta,
+};
+static const u16 res_g_ship_port_file_ship_port04_midnight[] = {
+ NARC_data_demo3d_g_ship_ramp_nsbmd,
+ NARC_data_demo3d_g_ship_ramp_on_nsbta,
+};
+
+static const DEMO3D_FILE_UNIT res_g_ship_port_file_unit_ship_port04[] = {
+ { res_g_ship_port_file_ship_port04_morning, 2 },
+ { res_g_ship_port_file_ship_port04_noon, 2 },
+ { res_g_ship_port_file_ship_port04_evening, 2 },
+ { res_g_ship_port_file_ship_port04_night, 2 },
+ { res_g_ship_port_file_ship_port04_midnight, 2 },
 };
 
 ///========================================================
@@ -93,8 +139,18 @@ static const DEMO3D_FILE_UNIT_TBL res_g_ship_port_file_unit_ship_port02_tbl[] = 
  { res_g_ship_port_file_unit_ship_port02, 1 },
 };
 
+static const DEMO3D_FILE_UNIT_TBL res_g_ship_port_file_unit_ship_port03_tbl[] = {
+ { res_g_ship_port_file_unit_ship_port03, 1 },
+};
+
+static const DEMO3D_FILE_UNIT_TBL res_g_ship_port_file_unit_ship_port04_tbl[] = {
+ { res_g_ship_port_file_unit_ship_port04, 5 },
+};
+
 static const DEMO3D_SCENE_UNIT res_g_ship_port_scene_unit[] = {
  { res_g_ship_port_file_unit_ship_port01_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_g_ship_port_file_unit_ship_port02_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_g_ship_port_file_unit_ship_port03_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_g_ship_port_file_unit_ship_port04_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 

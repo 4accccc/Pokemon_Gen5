@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="lee_hyunjung" host="W00154A" date="2010-04-20T22:36:32" source="g_ship_port.mb"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<original_create user="lee_hyunjung" host="W00154A" date="2010-04-20T22:36:32" source="g_ship_port.mb"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+
+<model_info
+	pos_scale="2"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="0"
+	tex_matrix_mode="maya"
+	compress_node="none" node_size="3 3"
+	compress_material="off" material_size="2 2"
+	output_texture="used"
+	force_full_weight="off"
+	use_primitive_strip="off"
+/>
+
+<box_test pos_scale="5" xyz="-2.000000 0.000000 -1.000000" whd="2.500000 1.000000 4.500000"/>
+
+<tex_image_array size="2">
+	<tex_image index="0" name="girl4"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="girl4_pl"
+		path="C:/home/wb_data3d/demo/g_ship_port/tex/girl4.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 ddd0 0ddd 0000 0000 0000
+			0000 0000 d000 447d d744 000d 0000 0000
+			0000 0000 7d00 5544 4455 00d7 0000 0000
+			0000 0000 47d0 5554 4555 0d74 0000 0000
+			0000 0000 677d 7544 4457 d669 0000 0000
+			0000 0000 5d76 4444 5995 d555 0000 0000
+			0000 6000 5d79 4444 9c54 955c 000d 0000
+			0000 6000 6798 4445 1555 8759 0006 0000
+			0000 6000 8768 5556 5c55 8993 000d 0000
+			0000 7d00 8768 9668 7555 8667 00d7 0000
+			0000 7d00 88dd 8888 6966 dd86 00d7 0000
+			0000 7d00 8bd9 aadc cdaa 9db8 00d7 0000
+			0000 9d00 ad99 aa9c c9aa 99da 00d9 0000
+			0000 9d00 bd99 aaaa aaaa 99db 00d9 0000
+			0000 d000 d999 8a8d d8a8 999d 000d 0000
+			0000 d000 9999 b66d d66b 9999 000d 0000
+			0000 0000 d99d b33b b33b d99d 0000 0000
+			0000 0000 bdd0 c3b8 8b3c 0ddb 0000 0000
+			0000 0000 8bb0 ccd8 8dcc 0bb8 0000 0000
+			0000 0000 88ab c31d d13c ba88 0000 0000
+			0000 0000 b88d 11c3 3c11 d88b 0000 0000
+			0000 0000 cdd0 cccc cccc 0ddc 0000 0000
+			0000 0000 3d00 cccc cccc 00d3 0000 0000
+			0000 0000 d000 ccc3 3ccc 000d 0000 0000
+			0000 0000 0000 d22d d22d 0000 0000 0000
+			0000 0000 0000 0dd0 0dd0 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="info"
+		width="64" height="32" original_width="64" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="info_pl"
+		path="C:/home/wb_data3d/demo/g_ship_port/info.tga"
+	>
+		<bitmap size="512">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 ddd0 0ddd 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 553d d355 0000 0000 0000
+			0000 0000 0000 ddd0 0ddd 0000 0000 0000
+			0000 0000 7000 5553 3555 0007 0000 0000
+			0000 0000 0000 553d d355 0000 0000 0000
+			0000 0000 3d70 5553 3555 07d3 0000 0000
+			0000 0000 7000 5553 3555 0007 0000 0000
+			0000 0000 373d 5533 3355 d373 0000 0000
+			0000 0000 3d70 5553 3555 07d3 0000 0000
+			0000 d000 1734 3333 3333 4371 000d 0000
+			0000 0000 373d 5533 3355 d373 0000 0000
+			0000 d000 1733 3332 2333 3371 000d 0000
+			0000 d000 2734 3333 3333 4372 000d 0000
+			0000 d000 7334 2221 1222 4337 000d 0000
+			0000 d000 1733 3332 2333 3371 000d 0000
+			0000 0000 553d 7774 4777 d355 0000 0000
+			0000 d000 7334 2221 1222 4337 000d 0000
+			0000 8000 547a 5555 5555 a745 0008 0000
+			0000 0000 553d 7774 4777 d355 0000 0000
+			0000 8000 778a 5534 4355 a877 0008 0000
+			0000 0000 547d 5555 5555 d745 0000 0000
+			0000 8000 8889 7777 7777 9888 0008 0000
+			0000 0000 779d 5534 4355 d977 0000 0000
+			0000 0000 888d 8888 8888 d888 0000 0000
+			0000 0000 9b9d 99dc cd99 d9b9 0000 0000
+			0000 0000 8d8d 8888 8888 d8d8 0000 0000
+			0000 0000 ad8d aadc cdaa d8da 0000 0000
+			0000 0000 8dd0 8888 8888 0dd8 0000 0000
+			0000 0000 bdd0 aaaa aaaa 0ddb 0000 0000
+			0000 0000 dd00 8888 8888 00dd 0000 0000
+			0000 0000 dd00 9a9b b9a9 00dd 0000 0000
+			0000 0000 0000 877d d778 0000 0000 0000
+			0000 0000 0000 b77d d77b 0000 0000 0000
+			0000 0000 d000 7433 3347 000d 0000 0000
+			0000 0000 d000 1143 3411 000d 0000 0000
+			0000 0000 d000 3333 3333 000d 0000 0000
+			0000 0000 d000 2163 3612 000d 0000 0000
+			0000 0000 d000 3343 3433 000d 0000 0000
+			0000 0000 d000 4643 3464 000d 0000 0000
+			0000 0000 d000 5364 4635 000d 0000 0000
+			0000 0000 0000 3d3d d3d3 0000 0000 0000
+			0000 0000 0000 553d d355 0000 0000 0000
+			0000 0000 0000 a92d d29a 0000 0000 0000
+			0000 0000 d000 5341 1435 000d 0000 0000
+			0000 0000 d000 99d1 1d99 000d 0000 0000
+			0000 0000 d000 4421 1244 000d 0000 0000
+			0000 0000 d000 bb21 12bb 000d 0000 0000
+			0000 0000 d000 2229 9222 000d 0000 0000
+			0000 0000 d000 2229 9222 000d 0000 0000
+			0000 0000 0000 d9ad da9d 0000 0000 0000
+			0000 0000 0000 da9d d9ad 0000 0000 0000
+			0000 0000 0000 d43d d34d 0000 0000 0000
+			0000 0000 0000 d34d d43d 0000 0000 0000
+			0000 0000 0000 0dd0 0dd0 0000 0000 0000
+			0000 0000 0000 0dd0 0dd0 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="2">
+	<tex_palette index="0" name="girl4_pl" color_size="16">
+		326b 5dd8 5e55 6f3a 2e78 1dd4 0886 194f
+		3a7a 14ea 5f5f 192f 7fff 0000 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="info_pl" color_size="16">
+		02b2 24b2 4d7c 61ca 4546 7e8d 20c4 10a6
+		14e9 3a7a 5f5f 192f 7fff 0000 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="2">
+	<material index="0" name="__lambert18"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="1" tex_palette_idx="1"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="1" name="lambert18"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="2">
+	<matrix index="0" mtx_weight="1" node_idx="1"/>
+	<matrix index="1" mtx_weight="1" node_idx="2"/>
+</matrix_array>
+
+<polygon_array size="2">
+	<polygon index="0" name="polygon0"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 -4.000000 -4.000000"
+		volume_max="4.000000 4.000000 -4.000000"
+		volume_r="6.928223"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 32.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-4.000000 -4.000000 -4.000000"/>
+					<tex st="32.000000 32.000000"/>
+					<pos_xy xy="4.000000 -4.000000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xy xy="4.000000 4.000000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-4.000000 4.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="1" name="polygon1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 -4.000000 0.000000"
+		volume_max="4.000000 4.000000 0.000000"
+		volume_r="5.656738"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">1</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="32.000000 32.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-4.000000 -4.000000 0.000000"/>
+					<tex st="64.000000 32.000000"/>
+					<pos_xy xy="4.000000 -4.000000"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_xy xy="4.000000 4.000000"/>
+					<tex st="32.000000 0.000000"/>
+					<pos_xy xy="-4.000000 4.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="3">
+	<node index="0" name="g_ship_port03" kind="null"
+		parent="-1"
+		child="1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="off"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="1" name="girl" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="2"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 16.000000 128.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 -4.000000 -4.000000"
+		volume_max="4.000000 4.000000 -4.000000"
+		volume_r="6.928223"
+	>
+		<display index="0" material="1" polygon="0" priority="0"/>
+	</node>
+	<node index="2" name="info" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="-1"
+		brother_prev="1"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="-48.000000 16.000000 -32.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-4.000000 -4.000000 0.000000"
+		volume_max="4.000000 4.000000 0.000000"
+		volume_r="5.656738"
+	>
+		<display index="0" material="0" polygon="1" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="8" polygon_size="2"
+	triangle_size="0" quad_size="2"/>
+
+</body>
+
+</imd>

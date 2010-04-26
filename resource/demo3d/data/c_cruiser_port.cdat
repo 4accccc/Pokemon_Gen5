@@ -22,19 +22,19 @@ static const DEMO3D_SCENE_DATA data_c_cruiser_port_scene = {
 	GX_SORTMODE_AUTO,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
 	FX32_CONST(40.0),FX32_CONST(40.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
-	FX32_CONST(10.000 ),FX32_CONST(2000.000 ),	///<near,far
+	FX32_CONST(100.000 ),FX32_CONST(2048.000 ),	///<near,far
 	FX32_CONST(1.0 ),	///<ScaleW
 	0,0,	///<2画面main_ofs,2画面sub_ofs
 	FX32_CONST(0),	///<1dotポリゴン表示境界デプス
 	GX_RGB(0,0,0),31,	///<クリアカラーRGB,A
 	0,FALSE,32767,	///<クリアポリゴンID,クリアfog,クリアデプス
-	GX_RGB(0,0,0),31,	///<フォグRGB,A
+	GX_RGB(0,0,0),15,	///<フォグRGB,A
 	0,0,GX_FOGBLEND_COLOR_ALPHA,	///<フォグshift,フォグoffset,フォグモード
 	{ 0,0,0,0,0,0,0,0, }, 	///<フォグ濃度テーブル
 	{ GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),	///<エッジマーキングカラーテーブル
 	  GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0), },
 	DEMO3D_FADE_BLACK, 30,	///<フェードイン
-	DEMO3D_FADE_BLACK, 30,	///<フェードアウト
+	DEMO3D_FADE_BLACK, 0,	///<フェードアウト
 };
 
 //============================================
@@ -42,6 +42,7 @@ static const DEMO3D_SCENE_DATA data_c_cruiser_port_scene = {
 //============================================
 
 static const DEMO3D_CMD_DATA demo3d_cmd_c_cruiser_port_data[] = {
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 300-30, { MASK_MAIN_DISPLAY, 30, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
 
@@ -63,10 +64,11 @@ static const DEMO3D_CMD_DATA demo3d_cmd_c_cruiser_port_end_data[] = {
 
 static const u16 res_c_cruiser_port_file_cruiser_port01[] = {
  NARC_data_demo3d_c_cruiser_port01_nsbmd,
+ NARC_data_demo3d_c_cruiser_port01_nsbta,
 };
 
 static const DEMO3D_FILE_UNIT res_c_cruiser_port_file_unit_cruiser_port01[] = {
- { res_c_cruiser_port_file_cruiser_port01, 1 },
+ { res_c_cruiser_port_file_cruiser_port01, 2 },
 };
 
 ///==================================
@@ -74,23 +76,25 @@ static const DEMO3D_FILE_UNIT res_c_cruiser_port_file_unit_cruiser_port01[] = {
 
 static const u16 res_c_cruiser_port_file_cruiser_port02[] = {
  NARC_data_demo3d_c_cruiser_port02_nsbmd,
+ NARC_data_demo3d_c_cruiser_port02_nsbta,
  NARC_data_demo3d_c_cruiser_port02_nsbca,
 };
 
 static const DEMO3D_FILE_UNIT res_c_cruiser_port_file_unit_cruiser_port02[] = {
- { res_c_cruiser_port_file_cruiser_port02, 2 },
+ { res_c_cruiser_port_file_cruiser_port02, 3 },
 };
 
 ///==================================
-/// cruiser_port03 Unit File Resource
+/// informationw Unit File Resource
 
-static const u16 res_c_cruiser_port_file_cruiser_port03[] = {
+static const u16 res_c_cruiser_port_file_informationw[] = {
  NARC_data_demo3d_c_cruiser_port03_nsbmd,
+ NARC_data_demo3d_c_cruiser_port03_nsbta,
  NARC_data_demo3d_c_cruiser_port03_nsbca,
 };
 
-static const DEMO3D_FILE_UNIT res_c_cruiser_port_file_unit_cruiser_port03[] = {
- { res_c_cruiser_port_file_cruiser_port03, 2 },
+static const DEMO3D_FILE_UNIT res_c_cruiser_port_file_unit_informationw[] = {
+ { res_c_cruiser_port_file_informationw, 3 },
 };
 
 ///========================================================
@@ -105,13 +109,13 @@ static const DEMO3D_FILE_UNIT_TBL res_c_cruiser_port_file_unit_cruiser_port02_tb
  { res_c_cruiser_port_file_unit_cruiser_port02, 1 },
 };
 
-static const DEMO3D_FILE_UNIT_TBL res_c_cruiser_port_file_unit_cruiser_port03_tbl[] = {
- { res_c_cruiser_port_file_unit_cruiser_port03, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_c_cruiser_port_file_unit_informationw_tbl[] = {
+ { res_c_cruiser_port_file_unit_informationw, 1 },
 };
 
 static const DEMO3D_SCENE_UNIT res_c_cruiser_port_scene_unit[] = {
  { res_c_cruiser_port_file_unit_cruiser_port01_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_c_cruiser_port_file_unit_cruiser_port02_tbl, 1, DEMO3D_UNITCHG_NONE },
- { res_c_cruiser_port_file_unit_cruiser_port03_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_c_cruiser_port_file_unit_informationw_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 
