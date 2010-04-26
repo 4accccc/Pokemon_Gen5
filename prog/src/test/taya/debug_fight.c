@@ -2533,7 +2533,6 @@ static BOOL LoadRecord( DEBUG_BTL_WORK* wk, u8 bufID, BATTLE_SETUP_PARAM* dst )
   BattleRec_Load( sv, wk->heapID, &result, bufID );
   if( result == LOAD_RESULT_OK )
   {
-    TAYA_Printf("録画データが正しくロードできた\n");
     BTL_SETUP_InitForRecordPlay( dst, wk->gameData, wk->heapID );
     BattleRec_RestoreSetupParam( dst, wk->heapID );
     return TRUE;
