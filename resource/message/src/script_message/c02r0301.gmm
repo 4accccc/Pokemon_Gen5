@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T17:25:44"/>
+	<create user="matsumiya" host="W00224" date="2010-04-26T14:59:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1419" top="322" right="2124" bottom="950" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -364,6 +364,66 @@
 		<language name="JPN_KANJI" width="256">ポケモンの　おかげで
 あたしと　あなた▽
 お友達に　なれたよね！</language>
+	</row>
+
+	<row id="msg_c02r0301_woman2_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・交換＋クリア後
+・はい/いいえの選択肢
+・はい→woman2_07
+　いいえ→woman2_08
+・0＝交換したポケモンのニックネーム</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">あなたに　こうかん　してもらった
+[1:02:ポケモンニックネーム:0]　だけど▽
+すっごく　そだって　つよくなったの！▽
+よかったら　しょうぶ　してみない？</language>
+		<language name="JPN_KANJI" width="256">あなたに　交換してもらった
+[1:02:ポケモンニックネーム:0]　だけど▽
+すっごく　育って　強くなったの！▽
+よかったら　勝負　してみない？</language>
+	</row>
+
+	<row id="msg_c02r0301_woman2_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・交換＋クリア後
+・はい選択時
+　メッセージ表示後、トレーナー戦闘に</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">うふふ！　あたしと　すごした
+じかんが　どんなもの　だったか▽
+あなたに　みせつけちゃうから！▼</language>
+		<language name="JPN_KANJI" width="256">うふふ！　あたしと　過ごした
+時間が　どんなもの　だったか▽
+あなたに　みせつけちゃうから！▼</language>
+	</row>
+
+	<row id="msg_c02r0301_woman2_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・交換＋クリア後
+・いいえ選択時
+　再度会話はboy2_06から
+・0＝交換したポケモンのニックネーム</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]が　どれだけ
+そだったか　みてほしいんだけど……</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]が　どれだけ
+育ったか　みてほしいんだけど……</language>
+	</row>
+
+	<row id="msg_c02r0301_woman2_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・交換＋クリア後
+・トレーナー戦闘後</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">すっごく　たのしかった！▼
+あなたと　ポケモンこうかん　して
+そのうえ　しょうぶまで　できるなんて▽
+ポケモンが　いてくれて　よかったよ！</language>
+		<language name="JPN_KANJI" width="256">すっごく　楽しかった！▼
+あなたと　ポケモン交換　して
+そのうえ　勝負まで　できるなんて▽
+ポケモンが　いてくれて　よかったよ！</language>
 	</row>
 
 	<row id="msg_c02r0301_girl1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

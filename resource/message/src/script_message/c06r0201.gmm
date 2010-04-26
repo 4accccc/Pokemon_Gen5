@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-19T21:08:32"/>
+	<create user="matsumiya" host="W00224" date="2010-04-26T14:39:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="222"/>
+		<comment position="4" width="262"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -414,6 +414,107 @@
 		<language name="JPN_KANJI" width="256">こんにちは！[BE:01:ページ切り替え（クリア）]
 すばやく　たくさん　おとどけ！
 フキヨセ　カーゴ　サービス　です</language>
+	</row>
+
+	<row id="msg_c06r0201_waitress_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・ハートスイーツ５個以上で2月14か3月14日なら→03
+・ハートスイーツ１０個以上なら→02
+・それ以外なら→04</comment>
+		<attribute name="キャラ指定">WAITRESS</attribute>
+		<language name="JPN" width="256">スイーツ　ラブリー　ハートスイーツ♪
+しらべる　ふたりの　フィーリング▼
+あいしょう　バツグンなら
+たっぷり　どっさり　もらえるの♪▽
+とっても　あまくて　とろけるの♪▼</language>
+		<language name="JPN_KANJI" width="256">スイーツ　ラブリー　ハートスイーツ♪
+調べる　２人の　フィーリング▼
+相性　バツグンなら
+たっぷり　どっさり　もらえるの♪▽
+とっても　甘くて　とろけるの♪▼</language>
+	</row>
+
+	<row id="msg_c06r0201_waitress_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・はい/いいえの選択肢表示
+・はいなら→05
+・はい、だけどハートのウロコが９９９なら→06
+・いいえなら→07</comment>
+		<attribute name="キャラ指定">WAITRESS</attribute>
+		<language name="JPN" width="256">あら？　あなた
+ハートスイーツ　もってるのね！▼
+ハートスイーツ　１０まいと　わたしの
+ハートのウロコを　こうかんしない？</language>
+		<language name="JPN_KANJI" width="256">あら？　あなた
+ハートスイーツ　持ってるのね！▼
+ハートスイーツ　１０枚と　わたしの
+ハートのウロコを　交換しない？</language>
+	</row>
+
+	<row id="msg_c06r0201_waitress_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・はい/いいえの選択肢表示
+・はいなら→05
+・はい、だけどハートのウロコが９９９なら→06
+・いいえなら→07</comment>
+		<attribute name="キャラ指定">WAITRESS</attribute>
+		<language name="JPN" width="256">なんだか　きょうは
+とくべつ　きぶんー！▼
+あなたの　ハートスイーツ　５まいと
+ハートのウロコを　こうかんしない？</language>
+		<language name="JPN_KANJI" width="256">なんだか　今日は
+スペシャル　気分ー！▼
+あなたの　ハートスイーツ　５枚と
+ハートのウロコを　交換しない？</language>
+	</row>
+
+	<row id="msg_c06r0201_waitress_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・ハートスイーツを持っていない</comment>
+		<attribute name="キャラ指定">WAITRESS</attribute>
+		<language name="JPN" width="256">ハートスイーツを
+たくさん　もってきてくれたら▽
+いいものと　こうかんしまーす</language>
+		<language name="JPN_KANJI" width="256">ハートスイーツを
+たくさん　もってきてくれたら▽
+いいものと　こうかんしまーす</language>
+	</row>
+
+	<row id="msg_c06r0201_waitress_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・はい選択時
+・ハートスイーツ　－１０個　or　－５個
+・ハートのウロコ　＋１個</comment>
+		<attribute name="キャラ指定">WAITRESS</attribute>
+		<language name="JPN" width="256">わーい！　あなたの
+ハート　いっぱーい！</language>
+		<language name="JPN_KANJI" width="256">わーい！　あなたの
+ハート　いっぱーい！</language>
+	</row>
+
+	<row id="msg_c06r0201_waitress_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・はい選択
+　だけどアイテム一杯</comment>
+		<attribute name="キャラ指定">WAITRESS</attribute>
+		<language name="JPN" width="256">あれれ？　ざんねん
+すっごく　ざんねん！▼
+あなたの　ハートのウロコ
+もう　いっぱいなのね</language>
+		<language name="JPN_KANJI" width="256">あれれ？　ざんねん
+すっごく　ざんねん！▼
+あなたの　ハートのウロコ
+もう　いっぱいなのね</language>
+	</row>
+
+	<row id="msg_c06r0201_waitress_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">WAITRESS</attribute>
+		<language name="JPN" width="256">そうなの……
+あーん　がっかりん</language>
+		<language name="JPN_KANJI" width="256">そうなの……
+あーん　がっかりん</language>
 	</row>
 
 	<flowchart-group-list>

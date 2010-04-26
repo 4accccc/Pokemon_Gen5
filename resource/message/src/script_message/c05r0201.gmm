@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T16:17:59"/>
+	<create user="matsumiya" host="W00224" date="2010-04-26T15:08:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1285" top="145" right="1990" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="1457" top="334" right="2160" bottom="937" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<band id="0" index="1" style="0000" width="528"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="541"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="695"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -401,7 +401,7 @@
 		<language name="JPN" width="256">そっか……
 そいつのこと　だいじに　してるんだ▼
 まんがいち　きが　かわったら
-ポケモン　こうかん　してくれよ！</language>
+ポケモンこうかん　してくれよ！</language>
 		<language name="JPN_KANJI" width="256">そっか……
 そいつのこと　大事に　してるんだ▼
 万が一　気が　変わったら
@@ -412,10 +412,75 @@
 		<comment>♂
 ・ポケモン交換後</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
-		<language name="JPN" width="256">きみと　こうかんした
-ポケモンを　そだてて　みるかな！</language>
-		<language name="JPN_KANJI" width="256">きみと　交換した
-ポケモンを　育ててみるかな！</language>
+		<language name="JPN" width="256">キミと　こうかんした
+ポケモンを　そだてて　みるかな！▼
+キミが　すっごく　つよくなったら
+オイラ　しょうぶ　してやるよ！</language>
+		<language name="JPN_KANJI" width="256">キミと　交換した
+ポケモンを　育ててみるかな！▼
+キミが　すっごく　強くなったら
+オイラ　勝負してやるよ！</language>
+	</row>
+
+	<row id="msg_c05r0201_boy2_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・交換＋クリア後
+・はい/いいえの選択肢
+・はい→boy2_07
+　いいえ→boy2_08
+・0＝交換したポケモンのニックネーム</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">なーなー　いきなりだけど
+オイラの　[1:02:ポケモンニックネーム:0]と▽
+キミの　ポケモン　たたかわせようぜ！</language>
+		<language name="JPN_KANJI" width="256">なーなー　いきなりだけど
+オイラの　[1:02:ポケモンニックネーム:0]と▽
+キミの　ポケモン　戦わせようぜ！</language>
+	</row>
+
+	<row id="msg_c05r0201_boy2_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・交換＋クリア後
+・はい選択時
+　メッセージ表示後、トレーナー戦闘に</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">キミと　こうかんした　[1:02:ポケモンニックネーム:0]
+オイラが　きたえに　きたえたんだぜ！▽
+つよくなりすぎたから　おどろくなよ！▼</language>
+		<language name="JPN_KANJI" width="256">キミと　交換した　[1:02:ポケモンニックネーム:0]
+オイラが　鍛えに　鍛えたんだぜ！▽
+強くなりすぎたから　驚くなよ！▼</language>
+	</row>
+
+	<row id="msg_c05r0201_boy2_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・交換＋クリア後
+・いいえ選択時
+　再度会話はboy2_06から</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">そっか……　いまは
+しょうぶの　きぶん　じゃないんだ▼
+まんがいち　きが　かわったら
+ポケモンしょうぶ　してくれよ！</language>
+		<language name="JPN_KANJI" width="256">そっか……　いまは
+勝負の　気分じゃないんだ▼
+万が一　気が　変わったら
+ポケモン勝負　してくれよ！</language>
+	</row>
+
+	<row id="msg_c05r0201_boy2_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・交換＋クリア後
+・トレーナー戦闘後</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]と　あそぶとき
+キミのこと　おもいだすんだ……▼
+ほんと　ポケモンこうかん　して
+よかったと　おもってるんだぜ！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]と　遊ぶとき
+キミのこと　思い出すんだ……▼
+ほんと　ポケモン交換して
+よかったと　思ってるんだぜ！</language>
 	</row>
 
 	<row id="msg_c05r0201_woman2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
