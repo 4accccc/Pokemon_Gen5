@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-22T18:54:36"/>
+	<create user="shimoyamada" host="W00184" date="2010-04-24T15:18:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -462,13 +462,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1484" top="198" right="2007" bottom="826" maximized="no" rayout="Vertical2">
+	<dialog left="1105" top="388" right="1810" bottom="1016" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="637" right="1024" bottom="789" visible="yes"/>
 		<tag-palette left="532" top="179" right="1024" bottom="591" visible="yes"/>
-		<band id="0" index="0" style="0000" width="515"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="348"/>
-		<band id="3" index="3" style="0000" width="591"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1377,9 +1377,13 @@
 	<row id="syachi_mystery_01_018" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>カード削除失敗</comment>
 		<language name="JPN" width="216">おくりものを　もらっていないので
-すてることは　できません！[BE:01:ページ切り替え（クリア）]</language>
+すてることは　できません！[BE:01:ページ切り替え（クリア）]
+ポケモンセンターに　いる
+はいたついんから　もらってください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI">おくりものを　もらっていないので
-捨てることは　できません！[BE:01:ページ切り替え（クリア）]</language>
+捨てることは　できません！[BE:01:ページ切り替え（クリア）]
+ポケモンセンターに　いる
+配達員から　もらってください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_01_019" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1475,14 +1479,14 @@
 		<language name="JPN" width="216">カードアルバムには
 ふしぎなおくりものを　うけとった[BE:00:ページ切り替え（行送り）]
 きねんの　しるしとして[BE:00:ページ切り替え（行送り）]
-ふしぎカードが　かざられていきます[BE:01:ページ切り替え（クリア）]
-ポケモンセンターにいる
+ふしぎカードが　かざられます[BE:01:ページ切り替え（クリア）]
+ポケモンセンターに　いる
 はいたついんから[BE:00:ページ切り替え（行送り）]
 おくりものを　もらった　カードには[BE:00:ページ切り替え（行送り）]
 スタンプが　おされます[BE:01:ページ切り替え（クリア）]
 スタンプが　おされていないものは
 うけとりに　いきましょう[BE:01:ページ切り替え（クリア）]
-アルバムに　ほぞん　できるカードは
+アルバムに　ほぞん　できる　カードは
 さいだい　１２まい　です[BE:01:ページ切り替え（クリア）]
 １２まい　いっぱいに　なると
 おくりものが　うけとれなく　なるので[BE:00:ページ切り替え（行送り）]
@@ -1490,14 +1494,14 @@
 		<language name="JPN_KANJI">カードアルバムには
 ふしぎなおくりものを　受け取った[BE:00:ページ切り替え（行送り）]
 記念の　印として[BE:00:ページ切り替え（行送り）]
-ふしぎカードが　飾られていきます[BE:01:ページ切り替え（クリア）]
-ポケモンセンターにいる
+ふしぎカードが　飾られます[BE:01:ページ切り替え（クリア）]
+ポケモンセンターに　いる
 配達員から[BE:00:ページ切り替え（行送り）]
 おくりものを　もらった　カードには[BE:00:ページ切り替え（行送り）]
 スタンプが　押されます[BE:01:ページ切り替え（クリア）]
 スタンプが　押されていないものは
 受け取りに　いきましょう[BE:01:ページ切り替え（クリア）]
-アルバムに　保存できるカードは
+アルバムに　保存できる　カードは
 最大　１２枚です[BE:01:ページ切り替え（クリア）]
 １２枚　一杯に　なると
 おくりものが　受け取れなく　なるので[BE:00:ページ切り替え（行送り）]
