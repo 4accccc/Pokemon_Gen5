@@ -15,7 +15,7 @@
 
 #include "system/main.h"
 
-#define FADE_START  (10*FX32_ONE)
+#define FADE_MARGINE  (20*FX32_ONE)
 
 //--------------------------------------------------------------
 /// ENCEFF_MDL_WORK
@@ -38,6 +38,7 @@ typedef struct
   int AnmArcIdx;
   int Fade;
   BOOL FadeStart;
+  fx32 FadeStartFrm;
 }ENCEFF_MDL_WORK;
 
 //======================================================================
@@ -292,6 +293,13 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
 		FIELDMAP_SetDraw3DMode(work->fieldWork, DRAW3DMODE_ENCEFF);
     
     work->FadeStart = FALSE;
+
+    {
+      fx32 maxfrm;
+      GFL_G3D_OBJECT_GetAnimeFrameMax( work->g3DobjEff, 0, (int*)&maxfrm );
+      work->FadeStartFrm = maxfrm - FADE_MARGINE;
+      NOZOMU_Printf("mdl enceff maxfrm = %x %d\n",maxfrm, maxfrm/FX32_ONE);
+    }
     (*seq)++;
     break;
 	case 4:
@@ -300,7 +308,7 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
       int frm;
       GFL_G3D_OBJECT_GetAnimeFrame( work->g3DobjEff, 0, &frm );
       anmFrm = (fx32)frm;
-      if ( (!work->FadeStart) && (anmFrm >= FADE_START) )
+      if ( (!work->FadeStart) && (anmFrm >= work->FadeStartFrm) )
       {
         GFL_FADE_SetMasterBrightReq(work->Fade, 0, 16, 3 );  //両画面フェードアウト
         work->FadeStart = TRUE;
