@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-04-23T16:02:56"/>
+	<create user="iwasawa" host="W00157" date="2010-04-24T21:39:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1747" top="251" right="2452" bottom="871" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="799" top="128" right="1269" bottom="735" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -355,8 +355,8 @@
 	</row>
 
 	<row id="dlc_menu_05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">はくしゅかいすう　せってい</language>
-		<language name="JPN_KANJI" width="256">拍手回数　設定</language>
+		<language name="JPN" width="256">おれいかいすう　せってい</language>
+		<language name="JPN_KANJI" width="256">御礼回数　設定</language>
 	</row>
 
 	<row id="dlc_menu_06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -547,6 +547,11 @@
 		<language name="JPN_KANJI" width="256"> lang=[2:01:２桁:0] [1:1C:簡易会話単語:2] mine=[2:01:２桁:1] [1:1C:簡易会話単語:3]</language>
 	</row>
 
+	<row id="dlc_fake_color" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256"> color=[2:01:２桁:0]  mine=[2:01:２桁:1]</language>
+		<language name="JPN_KANJI" width="256"> color=[2:01:２桁:0]  mine=[2:01:２桁:1]</language>
+	</row>
+
 	<row id="dlc_sex_male" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>性別</comment>
 		<language name="JPN" width="256">おとこ</language>
@@ -610,13 +615,13 @@
 
 	<row id="dlc_action_00" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>アクション</comment>
-		<language name="JPN" width="256">NULL</language>
-		<language name="JPN_KANJI" width="256">NULL</language>
+		<language name="JPN" width="256">Rand Action &amp; Def Param</language>
+		<language name="JPN_KANJI" width="256">Rand Action &amp; Def Param</language>
 	</row>
 
 	<row id="dlc_action_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">メンバーエントリー</language>
-		<language name="JPN_KANJI" width="256">メンバーエントリー</language>
+		<language name="JPN" width="256">Random Action &amp; param</language>
+		<language name="JPN_KANJI" width="256">Random Action &amp; param</language>
 	</row>
 
 	<row id="dlc_action_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">

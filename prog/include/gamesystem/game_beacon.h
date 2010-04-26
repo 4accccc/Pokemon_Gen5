@@ -210,6 +210,7 @@ extern void GAMEBEACON_SendDataUpdate_Questionnaire(QUESTIONNAIRE_ANSWER_WORK *m
 extern void DEBUG_GAMEBEACON_Set_NewEntry(void);
 extern GAMEBEACON_INFO * DEBUG_SendBeaconInfo_GetPtr(void);
 extern void DEBUG_SendBeaconCancel(void);
+extern void DEBUG_SendBeaconPriorityEgnoreFlagSet( BOOL flag );
 extern void DEBUG_RecvBeaconBufferClear(void);
 #endif
 

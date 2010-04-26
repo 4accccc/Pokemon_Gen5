@@ -114,6 +114,7 @@ typedef enum{
   FAKE_SEX,
   FAKE_VERSION,
   FAKE_LANG,
+  FAKE_COLOR,
   FAKE_DATA_MAX,
 }FAKE_DATA_ID;
 
@@ -310,17 +311,17 @@ static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_MAX] = {
   ///<BATTLE_TRAINER_VICTORY トレーナーに勝利しました！7
   { GAMEBEACON_Set_BattleTrainerVictory,  BEACON_PSET_TR_ID,	    BEACON_ARG_U16,	},
   ///<BATTLE_LEADER_START  ジムリーダーと対戦を開始しました！ 8
-  { GAMEBEACON_Set_BattleLeaderStart,     BEACON_PSET_DEFAULT,	  BEACON_ARG_U16,	},
+  { GAMEBEACON_Set_BattleLeaderStart,     BEACON_PSET_TR_ID,	  BEACON_ARG_U16,	},
   ///<BATTLE_LEADER_VICTORY ジムリーダーに勝利しました！9
-  { GAMEBEACON_Set_BattleLeaderVictory,   BEACON_PSET_DEFAULT,	  BEACON_ARG_U16,	},
+  { GAMEBEACON_Set_BattleLeaderVictory,   BEACON_PSET_TR_ID,	  BEACON_ARG_U16,	},
   ///<BATTLE_BIGFOUR_START  四天王と対戦を開始しました！10
-  { GAMEBEACON_Set_BattleSpTrainerStart,  BEACON_PSET_DEFAULT,	  BEACON_ARG_U16,	},
+  { GAMEBEACON_Set_BattleSpTrainerStart,  BEACON_PSET_TR_ID,	  BEACON_ARG_U16,	},
   ///<BATTLE_BIGFOUR_VICTORY 四天王に勝利しました！11
-  { GAMEBEACON_Set_BattleSpTrainerVictory,BEACON_PSET_DEFAULT,	  BEACON_ARG_U16,	},
+  { GAMEBEACON_Set_BattleSpTrainerVictory,BEACON_PSET_TR_ID,	  BEACON_ARG_U16,	},
   ///<BATTLE_CHAMPION_START チャンピオンと対戦を開始しました！12
-  { GAMEBEACON_Set_BattleSpTrainerStart,  BEACON_PSET_DEFAULT,	  BEACON_ARG_U16,	},
+  { GAMEBEACON_Set_BattleSpTrainerStart,  BEACON_PSET_TR_ID,	  BEACON_ARG_U16,	},
   ///<BATTLE_CHAMPION_VICTORY チャンピオンに勝利しました！13
-  { GAMEBEACON_Set_BattleSpTrainerVictory,BEACON_PSET_DEFAULT,	  BEACON_ARG_U16,	},
+  { GAMEBEACON_Set_BattleSpTrainerVictory,BEACON_PSET_TR_ID,	  BEACON_ARG_U16,	},
   ///<POKE_GET ポケモン捕獲 14
   { GAMEBEACON_Set_PokemonGet,        BEACON_PSET_MONSNO,	  BEACON_ARG_U16,	},
   ///<SP_POKE_GET 特別なポケモン捕獲 15
@@ -388,7 +389,7 @@ static const D_BEACON_PARAM DATA_DebugBeaconParam[GAMEBEACON_ACTION_MAX] = {
   ///<POKESHIFTER ポケシフターに入った 46
   { GAMEBEACON_Set_PokeShifter,           BEACON_PSET_DEFAULT,	  BEACON_ARG_NONE,	},
   ///<MUSICAL ミュージカル挑戦中 47
-  { GAMEBEACON_Set_Musical,               BEACON_PSET_NICKNAME,	  BEACON_ARG_NONE,	},
+  { GAMEBEACON_Set_Musical,               BEACON_PSET_NICKNAME,	  BEACON_ARG_STR,	},
   ///<OTHER_GPOWER_USE 他人のGパワーを使用 48
   { GAMEBEACON_Set_OtherGPowerUse,        BEACON_PSET_GPOWER,	    BEACON_ARG_GPOWER,	},
   ///<FREEWORD 一言メッセージ 49
@@ -421,6 +422,7 @@ static const D_FAKE_PRM_SET DATA_FakeParamSet[] = {
   { BPRM_WSET_SEX, 1, PM_MALE, PM_FEMALE,}, //FAKE_SEX,
   { BPRM_WSET_VERSION, 2, VERSION_WHITE, VERSION_BLACK+1,}, //FAKE_VERSION,
   { BPRM_WSET_LANG, 1, LANG_JAPAN, LANG_KOREA,}, //FAKE_LANG,
+  { BPRM_WSET_NONE, 2, 0, 15}, //FAKE_COLOR,
 };
 
 ////////////////////////////////////////////////
@@ -546,16 +548,24 @@ static void dmenu_WorkInit( DMENU_LIVE_COMM* wk )
   //フェイクデータ初期化
   {
     int* fake = &wk->fake_prm[TR_PAT_MINE][0];
-    
+    OSOwnerInfo owner_info;
+  
+    OS_GetOwnerInfo(&owner_info);
+ 
     fake[FAKE_ID] = MyStatus_GetID_Low( wk->my_status );
-    fake[FAKE_NAME] = 1;
+    fake[FAKE_NAME] = 0;
     fake[FAKE_ZONE] = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork( wk->gdata ));
     fake[FAKE_SEX] = MyStatus_GetMySex( wk->my_status );
     fake[FAKE_VERSION] = PM_VERSION;
     fake[FAKE_LANG] = PM_LANG;
+    fake[FAKE_COLOR] = owner_info.favoriteColor;
 
     MI_CpuCopy8( fake, &(wk->fake_prm[TR_PAT_FAKE][0]),sizeof(int)*FAKE_DATA_MAX);
-    MI_CpuCopy8( fake, &(wk->fake_prm[TR_PAT_RND][0]),sizeof(int)*FAKE_DATA_MAX);
+   
+    //IDだけはずらしておく
+    wk->fake_prm[TR_PAT_FAKE][FAKE_ID] = GFUser_GetPublicRand0( 0xFFFF );
+    wk->fake_prm[TR_PAT_FAKE][FAKE_NAME] = 1; //GFUser_GetPublicRand0( 0xFFFF );
+    MI_CpuCopy8( &(wk->fake_prm[TR_PAT_FAKE][0]), &(wk->fake_prm[TR_PAT_RND][0]),sizeof(int)*FAKE_DATA_MAX);
   }
   wk->tmpInfo = GAMEBEACON_Alloc( wk->heapID );
 }
@@ -822,11 +832,10 @@ static void sub_BeaconInfoSet( DMENU_LIVE_COMM* wk, TR_PATTERN pat )
       int range;
       const D_FAKE_PRM_SET* f_prm = &DATA_FakeParamSet[i];
 
-      range = f_prm->max-f_prm->min;
+      range = (f_prm->max-f_prm->min)+1;
       fake[i] = (GFUser_GetPublicRand0( 0xFFFFFFFF )%range)+f_prm->min;
     }
     info->trainer_view = GFUser_GetPublicRand0( 0xFFFFFFFF )%8;
-    info->favorite_color_index = GFUser_GetPublicRand0( 0xFFFFFFFF )%16;
     break;
   }
   //id
@@ -844,6 +853,8 @@ static void sub_BeaconInfoSet( DMENU_LIVE_COMM* wk, TR_PATTERN pat )
   info->pm_version = fake[FAKE_VERSION];
   //language
   info->language = fake[FAKE_LANG];
+  //color
+  info->favorite_color_index = fake[FAKE_COLOR];
 }
 
 //===================================================================================
@@ -1256,7 +1267,7 @@ static GMEVENT_RESULT event_BeaconReqMain( GMEVENT * event, int *seq, void * wor
         break;
       case 1:
         GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 
-            GAMEBEACON_ACTION_BATTLE_WILD_POKE_START, GAMEBEACON_ACTION_MAX-1,
+            0, GAMEBEACON_ACTION_MAX-1,
             &evwk->action, BPRM_WSET_ACTION ));
         break;
       case 2:
@@ -1367,6 +1378,25 @@ static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 dire
   if( evwk->b_prm_set->max >= 0 ){
     value = wk->beacon_prm[ evwk->b_prm->prm_type ];
   }
+
+  if( evwk->action < 2 ){ //ランダム
+    int action,range;
+    
+    range = GAMEBEACON_ACTION_MAX-GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
+    action = GFUser_GetPublicRand0( 0xFFFF )%range+GAMEBEACON_ACTION_BATTLE_WILD_POKE_START;
+    evwk->b_prm = &DATA_DebugBeaconParam[ action ];
+    evwk->b_prm_set = &DATA_DebugBeaconParamSet[ evwk->b_prm->prm_type ];
+
+    if( evwk->action == 1 ){
+      if( evwk->b_prm_set->max >= 0 ){
+        range = (evwk->b_prm_set->max-evwk->b_prm_set->min)+1;
+        value = GFUser_GetPublicRand0( 0xFFFF )%range+evwk->b_prm_set->min;
+      }
+    }
+    OS_Printf("RandomAction = %d, param = %d\n", action, value );
+  }
+  DEBUG_SendBeaconPriorityEgnoreFlagSet( TRUE );
+
   switch( evwk->b_prm->arg_type ) {
   case	BEACON_ARG_NONE:
     ((BEACON_SET_FUNC_NONE)evwk->b_prm->func)();
@@ -1402,8 +1432,9 @@ static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 dire
     ((BEACON_SET_FUNC_GPOWER)evwk->b_prm->func)( (GPOWER_ID)value );
     break;
   }
+  DEBUG_SendBeaconPriorityEgnoreFlagSet( FALSE );
 
-  if(direct_mode){  //ビーコンを飛ばさず直接自分のスタックに積む
+  if(direct_mode){  //ビーコンを飛ばすと同時に直接自分のスタックに積む
     RTCTime recv_time;
     u16 time;
     GAMEBEACON_INFO* info = DEBUG_SendBeaconInfo_GetPtr();
@@ -1414,7 +1445,7 @@ static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 dire
     GAMEBEACON_InfoTbl_SetBeacon(
       wk->view_wk->infoStack, info, time, FALSE);
 
-    DEBUG_SendBeaconCancel(); //送信キャンセル
+//    DEBUG_SendBeaconCancel(); //送信キャンセル
   }
 }
 

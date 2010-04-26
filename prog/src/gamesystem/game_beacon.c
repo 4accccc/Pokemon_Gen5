@@ -69,6 +69,10 @@ typedef struct{
   s8 end_log;                         ///<ログのチェーン終端位置
   s8 log_num;                         ///<ログ件数
   u8 new_entry;                       ///<TRUE:新しい人物とすれ違った
+
+#ifdef PM_DEBUG
+  BOOL  deb_beacon_priority_egnore;  //TRUEならビーコンリクエスト時にプライオリティ判定を無視する
+#endif
 }GAMEBEACON_SYSTEM;
 
 
@@ -911,6 +915,12 @@ void DEBUG_GAMEBEACON_Set_NewEntry(void)
 //--------------------------------------------------------------
 static BOOL _CheckPriority(u16 action_no)
 {
+#ifdef PM_DEBUG
+  if(GameBeaconSys->deb_beacon_priority_egnore){
+    //TRUEならビーコンリクエスト時にプライオリティ判定を無視する
+    return TRUE;
+  }
+#endif
   if(CrossCommData[action_no].priority < CrossCommData[GameBeaconSys->send.info.action.action_no].priority){
     return FALSE;
   }
@@ -1402,8 +1412,6 @@ void BEACONINFO_Set_PokemonLevelUp(GAMEBEACON_INFO *info, const STRBUF *nickname
 {
   info->action.action_no = GAMEBEACON_ACTION_POKE_LVUP;
   _StrbufNicknameCopy(nickname, info->action.normal.nickname);
-
-  BEACONINFO_Set_Details_Walk(info);
 }
 
 //==================================================================
@@ -2342,7 +2350,7 @@ void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 targ
   const MISC *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gamedata) );
 
   STRTOOL_Copy(MISC_CrossComm_GetThankyouMessage(misc), 
-    info->action.thanks.thankyou_message, GAMEBEACON_THANKYOU_MESSAGE_LEN);
+  info->action.thanks.thankyou_message, GAMEBEACON_THANKYOU_MESSAGE_LEN);
   info->action.action_no = GAMEBEACON_ACTION_THANKYOU;
   info->action.thanks.target_trainer_id = target_trainer_id;
 }
@@ -2622,6 +2630,16 @@ void DEBUG_SendBeaconCancel(void)
   send->info.send_counter--;
   send->life = 0;
   send->beacon_update = FALSE;
+}
+//==================================================================
+/**
+ * デバッグ用：デバッグビーコンリクエスト時に、プライオリティを無視するためのフラグをセット
+ */
+//==================================================================
+void DEBUG_SendBeaconPriorityEgnoreFlagSet( BOOL flag )
+{
+  GF_ASSERT(GameBeaconSys != NULL);
+  GameBeaconSys->deb_beacon_priority_egnore;
 }
 
 //==================================================================
