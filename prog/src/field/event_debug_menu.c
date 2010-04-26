@@ -4982,7 +4982,7 @@ typedef struct
 }DEBUG_ENCEFF_LIST_EVENT_WORK;
 
 ///リスト最大
-#define ENCEFFLISTMAX (36)
+#define ENCEFFLISTMAX (37)
 
 ///リスト メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DebugMenuList_EncEffList =
@@ -5045,7 +5045,8 @@ static const FLDMENUFUNC_LIST DATA_EncEffMenuList[ENCEFFLISTMAX] =
   { DEBUG_FIELD_ENCEFF33, (void*)32 },
   { DEBUG_FIELD_ENCEFF34, (void*)33 },
   { DEBUG_FIELD_ENCEFF35, (void*)34 },
-  { DEBUG_FIELD_ENCEFF35, (void*)35 },
+  { DEBUG_FIELD_ENCEFF36, (void*)35 },
+  { DEBUG_FIELD_EFF_PALACE, (void*)36 },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugEncEffMenuListData = {
