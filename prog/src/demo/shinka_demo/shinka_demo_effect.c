@@ -210,7 +210,7 @@ static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
   {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA04 },
   {  500,     PARTICLE_SPA_FILE_0,         DEMO_SINKA05 },
   {  500,     PARTICLE_SPA_FILE_0,         DEMO_SINKA06 },
-  {  570,     PARTICLE_SPA_FILE_0,         DEMO_SINKA07 },
+  {  620,     PARTICLE_SPA_FILE_0,         DEMO_SINKA07 },
   {  840,     PARTICLE_SPA_FILE_0,         DEMO_SINKA08 },
 };
 
