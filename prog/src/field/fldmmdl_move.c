@@ -689,7 +689,8 @@ static void MMdl_MapAttrFootMarkProc_1( MMDL *mmdl, ATTRDATA *data )
         }
       }
     }
-    else if( MAPATTR_VALUE_CheckSnowType(data->attr_val_old) == TRUE )
+    else if( MAPATTR_VALUE_CheckSnowType(data->attr_val_old) == TRUE ||
+        MAPATTR_VALUE_CheckSnowNotCycle(data->attr_val_old) == TRUE )
     {
       type = FOOTMARK_TYPE_HUMAN_SNOW;
       
@@ -702,9 +703,9 @@ static void MMdl_MapAttrFootMarkProc_1( MMDL *mmdl, ATTRDATA *data )
     {
       type = FOOTMARK_TYPE_DEEPSNOW;       
       
-#if 0 //©‹@‚Ì‘«ÕSEˆ—‚Å‚Ì‚İ–Â‚ç‚·
+      #if 0 //©‹@‚Ì‘«ÕSEˆ—‚Å‚Ì‚İ–Â‚ç‚·
       PMSND_PlaySE( SEQ_SE_FLD_91 );
-#endif
+      #endif
     }
     else
     {
