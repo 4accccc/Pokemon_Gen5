@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-26T16:53:31"/>
+	<create user="matsumiya" host="W00224" date="2010-04-26T21:47:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1567" top="235" right="2272" bottom="789" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -8283,28 +8283,72 @@
 	<row id="mes_tower_tr_309_01">
 		<comment>サブウェイマスター
 クダリ</comment>
-		<language name="JPN">さあ　サブウェイマスターの　わたしに
-その　うでまえを　みせてくれたまえ！</language>
-		<language name="JPN_KANJI">さあ　サブウェイマスターの　私に
-その　腕前を　見せてくれたまえ！</language>
+		<language name="JPN">ぼく　クダリ▼
+サブウェイマスターを　してる▼
+ダブルバトルが　すき▼
+２ひきの　ポケモンの
+コンビネーションが　すき▼
+そして　しょうり　するのが
+なにより　だいすき▼
+じゃ　それぞれの　ポケモンが
+さまざまな　わざを　くりひろげる▽
+すっごい　しょうぶ　はじめる▼</language>
+		<language name="JPN_KANJI">ぼく　クダリ▼
+サブウェイマスターを　してる▼
+ダブルバトルが　好き▼
+２匹の　ポケモンの
+コンビネーションが　好き▼
+そして　勝利するのが
+なにより　大好き▼
+じゃ　それぞれの　ポケモンが
+さまざまな　技を　繰り広げる▽
+すっごい　勝負　はじめる▼</language>
 	</row>
 
 	<row id="mes_tower_tr_309_02">
 		<comment>サブウェイマスター
 クダリ</comment>
-		<language name="JPN">すばらしい　しょうぶ　だった！
-また　きてくれたまえ！</language>
-		<language name="JPN_KANJI">素晴らしい　勝負だった！
-また　来てくれたまえ！</language>
+		<language name="JPN">ぼく　クダリ▼
+きみに　かてちゃった▼
+だけど　きょうの　しょうりは
+たまたま　だと　おもう▼
+ダブルバトルは　１つ　よみちがえると
+てんかいが　ガラリと　かわるから▼
+あのね
+また　２０れんしょう　して▽
+ぼくと　たたかって！</language>
+		<language name="JPN_KANJI">ぼく　クダリ▼
+きみに　勝てちゃった▼
+だけど　本日の　勝利は
+たまたま　だと　思う▼
+ダブルバトルは　１つ　読み違えると
+展開が　ガラリと　変わるから▼
+あのね
+また　２０連勝して▽
+ぼくと　戦って！</language>
 	</row>
 
 	<row id="mes_tower_tr_309_03">
 		<comment>サブウェイマスター
 クダリ</comment>
-		<language name="JPN">きみのような　すごい　トレーナーに
-まけたのであれば　なっとく　だ！</language>
-		<language name="JPN_KANJI">きみのような　すごい　トレーナーに
-負けたのであれば　納得だ！</language>
+		<language name="JPN">ぼく　クダリ▼
+きみに　まけちゃった▼
+だって　きみ
+さいきんの　チャレンジャーの　なかで▽
+いちばん　つよい　トレーナーだよ！▽
+ものすごーく　つよい　トレーナー！▼
+うん！　おもしろかった！
+よかったら　この　トレインや▽
+ほかの　トレインにも　のって！</language>
+		<language name="JPN_KANJI">ぼく　クダリ▼
+きみに　負けちゃった▼
+だって　きみ
+最近の　チャレンジャーの　中で▽
+一番　強い　トレーナーだよ！▽
+ものすごーく　強い　トレーナー！▼
+うん！　おもしろかった！
+よかったら　この　トレインや▽
+他の　トレインにも　乗って！</language>
 	</row>
 
 	<row id="mes_tower_tr_310_01">
