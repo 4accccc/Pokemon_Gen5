@@ -327,6 +327,7 @@ u32 str_id_weather[ WEATHER_NO_NUM ] =
   msg_gate_mist,         // 霰
   msg_gate_mist,         // パレスWhite用 霧
   msg_gate_mist,         // パレスBlack用 霧
+  msg_gate_storm_high,   // 砂嵐強
 };
 
 // ジム情報の登録場所
@@ -2250,6 +2251,9 @@ static void GetMovePokeWeather( const GATEWORK* work, WEATHER_NEWS_PARAM* dest )
 
   // 移動ポケモンがいるゾーンIDを取得
   zoneID = MP_GetMovePokeZoneID( encSave, movePokeID ); 
+
+  // 移動ポケモンが隠れているので無効
+  if( zoneID == MVPOKE_ZONE_NULL ) { return; }
 
   // 天気ニュースデータに追加
   dest->zoneID[0]    = zoneID;
