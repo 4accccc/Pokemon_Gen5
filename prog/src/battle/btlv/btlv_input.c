@@ -95,6 +95,10 @@
 #define TTC2S_START_SCALE ( FX32_ONE )
 #define TTC2S_END_SCALE   ( FX32_ONE * 3 )
 
+//TCB_TransformStandby2BattleRecorder
+#define TTS2BR_FRAME0_SCROLL_X ( 256 )
+#define TTS2BR_FRAME0_SCROLL_Y ( 256 )
+
 #define STANBY_POS_Y  ( 128 + 24 )
 #define COMMAND_POS_Y  ( 128 + 40 )
 
@@ -713,7 +717,7 @@ static  void  BTLV_INPUT_DeleteCursorOBJ( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_DeleteWazaTypeIcon( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_CreateWaruagakiButton( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_DeleteWaruagakiButton( BTLV_INPUT_WORK* biw );
-static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, int hit );
+static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, const u8* move_tbl, int hit );
 static  int   BTLV_INPUT_CheckKeyBR( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl );
 static  int   BTLV_INPUT_SetButtonReaction( BTLV_INPUT_WORK* biw, int hit, int pltt );
@@ -1448,7 +1452,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   if( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE )
   {
     hit = GFL_UI_TP_HitTrg( RotateTouchData.hit_tbl );
-    hit = BTLV_INPUT_CheckKey( biw, &RotateTouchData, RotateKeyData[ biw->rotate_scr ], hit );
+    hit = BTLV_INPUT_CheckKey( biw, &RotateTouchData, RotateKeyData[ biw->rotate_scr ], NULL, hit );
     if( hit != GFL_UI_TP_HIT_NONE )
     {
       if( biw->button_exist[ hit ] == FALSE )
@@ -1516,7 +1520,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   }
 
   hit = hit_tp = GFL_UI_TP_HitTrg( tp_tbl->hit_tbl );
-  hit = BTLV_INPUT_CheckKey( biw, tp_tbl, key_tbl, hit );
+  hit = BTLV_INPUT_CheckKey( biw, tp_tbl, key_tbl, NULL, hit );
 
   if( hit != GFL_UI_TP_HIT_NONE )
   {
@@ -1616,9 +1620,19 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
 
   if( biw->hit != GFL_UI_TP_HIT_NONE )
   {
-    hit = biw->hit;
-    biw->hit = GFL_UI_TP_HIT_NONE;
-    return TRUE;
+    if( biw->hit < 5 )
+    { 
+      *select = biw->hit;
+      *dir    = rotate_result[ biw->rotate_scr ];
+      biw->hit = GFL_UI_TP_HIT_NONE;
+      return TRUE;
+    }
+    else
+    { 
+      SePlayRotateSelect( biw );
+      SetupRotateAction( biw, biw->hit );
+      biw->hit = GFL_UI_TP_HIT_NONE;
+    }
   }
 
   if( ( biw->camera_work_wait > CAMERA_WORK_WAIT ) &&
@@ -1640,11 +1654,11 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
   hit = GFL_UI_TP_HitTrg( RotateTouchData.hit_tbl );
   if( biw->waruagaki_flag == TRUE )
   {
-    hit = BTLV_INPUT_CheckKey( biw, &RotateTouchDataWaruagaki, RotateKeyDataWaruagaki[ biw->rotate_scr ], hit );
+    hit = BTLV_INPUT_CheckKey( biw, &RotateTouchDataWaruagaki, RotateKeyDataWaruagaki[ biw->rotate_scr ], NULL, hit );
   }
   else
   {
-    hit = BTLV_INPUT_CheckKey( biw, &RotateTouchData, RotateKeyData[ biw->rotate_scr ], hit );
+    hit = BTLV_INPUT_CheckKey( biw, &RotateTouchData, RotateKeyData[ biw->rotate_scr ], RotateMoveTbl, hit );
   }
   if( hit != GFL_UI_TP_HIT_NONE )
   {
@@ -1654,24 +1668,11 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
     }
     else
     {
-      //けっていを選択
-      if( hit < 5 )
-      {
-        SePlayRotateDecide( biw );
-        *select = hit;
-        *dir    = rotate_result[ biw->rotate_scr ];
-      }
-      else
-      {
-        SePlayRotateSelect( biw );
-        SetupRotateAction( biw, hit );
-        hit = GFL_UI_TP_HIT_NONE;
-      }
+      SePlayRotateDecide( biw );
     }
   }
   if( hit != GFL_UI_TP_HIT_NONE )
   {
-#if 0
     if( biw->waruagaki_flag == TRUE )
     {
       hit = BTLV_INPUT_SetButtonReaction( biw, hit, RotateTouchDataWaruagaki.button_pltt[ hit ] );
@@ -1680,7 +1681,6 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
     {
       hit = BTLV_INPUT_SetButtonReaction( biw, hit, RotateTouchData.button_pltt[ hit ] );
     }
-#endif
     if( biw->main_loop_tcb_flag == TRUE )
     {
       //カメラワークエフェクト
@@ -2290,6 +2290,8 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
       GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
       GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
+      GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, 0 );
+      GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, TTS2BR_FRAME0_SCROLL_Y );
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
@@ -3592,6 +3594,8 @@ static  void  BTLV_INPUT_CreateBattleRecorderScreen( BTLV_INPUT_WORK* biw, const
     msg_src = GFL_MSG_CreateString( biw->msg,  BI_BattleRecorderStopKey + bibrp->stop_flag - 1 );
     PRINTSYS_Print( biw->bmp_data, BR_MESSAGE_X, BR_MESSAGE_Y, msg_src, biw->font );
     GFL_STR_DeleteBuffer( msg_src );
+    GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, TTS2BR_FRAME0_SCROLL_X );
+    GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, 0 );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X1 );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y1 );
     /*fall thru*/
@@ -4155,7 +4159,7 @@ static  void  BTLV_INPUT_DeleteWaruagakiButton( BTLV_INPUT_WORK* biw )
  * @param[in] hit     キータッチがあったかどうか？
  */
 //--------------------------------------------------------------
-static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, int hit )
+static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, const u8* move_tbl, int hit )
 {
   int trg = GFL_UI_KEY_GetTrg();
   BOOL decide_flag = FALSE;
@@ -4214,7 +4218,17 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
         move_pos = tbl->right;
         break;
       case PAD_BUTTON_B:
-        move_pos = tbl->b_button;
+        if( tbl->b_button < 0 )
+        { 
+          if( biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_MODORU )
+          { 
+            move_pos = tbl->b_button * -1;
+          }
+        }
+        else
+        { 
+          move_pos = tbl->b_button;
+        }
         break;
       }
       if( trg == PAD_BUTTON_A )
@@ -4244,6 +4258,21 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
             else
             {
               move_pos *= -1;
+            }
+          }
+          else if( move_pos & BTLV_INPUT_MOVETBL )
+          { 
+            int i = 0;
+            GF_ASSERT( move_tbl != NULL );
+            move_pos &= ( BTLV_INPUT_MOVETBL ^ 0xff );
+            while( move_tbl[ i ] != 0xff )
+            { 
+              if( biw->old_cursor_pos == move_tbl[ i ] )
+              { 
+                move_pos = biw->old_cursor_pos;
+                break;
+              }
+              i++;
             }
           }
           biw->old_cursor_pos = biw->cursor_pos;

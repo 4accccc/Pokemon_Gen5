@@ -176,7 +176,8 @@ typedef struct
   s8 b_button;      //キャンセル可能かどうか
 }BTLV_INPUT_KEYTBL;
 
-#define BTLV_INPUT_NOMOVE ( -128 )
+#define BTLV_INPUT_NOMOVE   ( -128 )
+#define BTLV_INPUT_MOVETBL  ( 0x40 )    //カーソル移動の位置をテーブルで列記するフラグ
 
 typedef u32 BTLV_INPUT_ROTATE_RESULT; //上位16bit:BtlRotateDir  下位16bit:選択した技の位置orキャンセル
 
