@@ -710,8 +710,8 @@ u32 FBI_TOOL_MakePokemonParam(
     personal_rnd = poke_rnd;
   }
 
-  //性格セット todo
-
+  //性格セット
+  pwd->seikaku=prd_s.chr;
 
   //パワー乱数
   pwd->hp_rnd=pow_rnd;
@@ -838,7 +838,8 @@ static void MakePokePara( const BSUBWAY_POKEMON *src, POKEMON_PARAM *dest )
   //なつきど設定
   PP_Put(dest,ID_PARA_friend,src->natuki);
 
-  //性格セットtodo
+  //性格セット
+  PP_SetSeikaku( dest, src->seikaku );
   
   { //名前設定
     STRBUF *nick_name;
