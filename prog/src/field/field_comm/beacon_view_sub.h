@@ -54,6 +54,16 @@ extern void BeaconView_SetViewPassive( BEACON_VIEW_PTR wk, BOOL passive_f );
 //---------------------------------------------------
 extern void BeaconView_ListScrollRepeatReq( BEACON_VIEW_PTR wk );
 
+//---------------------------------------------------
+/*
+ *  @brief  プリントキュー　処理スピードアップリクエスト
+ *
+ *  処理分割数を減らし、処理負荷を上げる代わりに、
+ *  プリント処理終了までのスピードをアップする
+ */
+//---------------------------------------------------
+extern void BeaconView_PrintQueLimmitUpSet( BEACON_VIEW_PTR wk, BOOL flag );
+
 /*
  *  @brief  サブシーケンス　GPower使用メイン
  */

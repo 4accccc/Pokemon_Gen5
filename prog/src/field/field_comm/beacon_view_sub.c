@@ -171,7 +171,7 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
   if(ret != GFL_UI_TP_HIT_NONE){
     wk->ctrl.target = ret;
     effReq_SetPanelFlash( wk, ret );
-    IWASAWA_Printf("PanelTarget = %d\n",ret);
+//    IWASAWA_Printf("PanelTarget = %d\n",ret);
     return SEQ_CALL_DETAIL_VIEW;
   }
 
@@ -355,6 +355,23 @@ void BeaconView_ListScrollRepeatReq( BEACON_VIEW_PTR wk )
   list_UpDownReq( wk, wk->scr_repeat_dir );
 }
 
+//---------------------------------------------------
+/*
+ *  @brief  プリントキュー　処理スピードアップリクエスト
+ *
+ *  処理分割数を減らし、処理負荷を上げる代わりに、
+ *  プリント処理終了までのスピードをアップする
+ */
+//---------------------------------------------------
+void BeaconView_PrintQueLimmitUpSet( BEACON_VIEW_PTR wk, BOOL flag )
+{
+  if( flag ){ //スピードアップ
+    PRINTSYS_QUE_SetLimitTick( wk->printQue, PRINT_QUE_LIMMIT_UP );
+  }else{  //デフォルトに戻す
+    PRINTSYS_QUE_SetLimitTick( wk->printQue, PRINT_QUE_LIMMIT_DEFAULT );
+  }
+}
+
 ////////////////////////////////////////////////////////////////////////////
 //サブシーケンス
 
@@ -372,6 +389,7 @@ BOOL BeaconView_SubSeqGPower( BEACON_VIEW_PTR wk )
   switch( wk->sub_seq ){
   case 0:
     BeaconView_MenuBarViewSet( wk, MENU_POWER, MENU_ST_ANM );
+    BeaconView_PrintQueLimmitUpSet( wk, TRUE );
     effReq_PopupMsgGPowerMine( wk );
     wk->sub_seq++;
     break;
@@ -379,6 +397,7 @@ BOOL BeaconView_SubSeqGPower( BEACON_VIEW_PTR wk )
     if( wk->eff_task_ct ){
       break;
     }
+    BeaconView_PrintQueLimmitUpSet( wk, FALSE );
     wk->sub_seq = 0;
     return TRUE;
   }
@@ -400,6 +419,7 @@ int BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
   switch( wk->sub_seq ){
   case SSEQ_THANKS_ICON_ANM:
     BeaconView_MenuBarViewSet( wk, MENU_THANKS, MENU_ST_ANM );
+    draw_MenuWindow( wk, msg_sys_thanks );
     wk->sub_seq++;
     break;
   case SSEQ_THANKS_ICON_ANM_WAIT:
@@ -408,7 +428,6 @@ int BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
     }
     BeaconView_MenuBarViewSet( wk, MENU_POWER, MENU_ST_OFF );
     BeaconView_MenuBarViewSet( wk, MENU_RETURN, MENU_ST_OFF );
-    draw_MenuWindow( wk, msg_sys_thanks );
     wk->sub_seq++;
     break;
   case SSEQ_THANKS_MAIN:
@@ -427,6 +446,8 @@ int BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
 
       //プレイヤー名展開
       WORDSET_RegisterWord( wk->wordset, 0, pp->name, pp->sex, TRUE, PM_LANG );
+      
+      BeaconView_PrintQueLimmitUpSet( wk, TRUE );
       effReq_PopupMsgSys( wk, msg_sys_thanks_send );
  
       OS_TPrintf("ありがとう ビーコンセット %d\n", pp->tr_id );
@@ -436,6 +457,7 @@ int BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
     break;
   case SSEQ_THANKS_DECIDE_WAIT:
     if( wk->eff_task_ct == 0 ){
+      BeaconView_PrintQueLimmitUpSet( wk, FALSE );
       wk->sub_seq = SSEQ_THANKS_END;
     }
     break;
@@ -856,16 +878,6 @@ static void print_GetMsgToBuf( BEACON_VIEW_PTR wk, u8 msg_id )
 }
 
 /*
- *  @brief  文字列一括描画
- */
-static void print_Allput( BEACON_VIEW_PTR wk, GFL_BMP_DATA* bmp, u8 msg_id, u8 x, u8 y, u8 clear, PRINTSYS_LSB color )
-{
-  GFL_BMP_Clear( bmp, clear );
-  print_GetMsgToBuf( wk, msg_id );
-	PRINTSYS_PrintColor( bmp, x, y, wk->str_expand, wk->fontHandle, color );
-}
-
-/*
  *  @brief  ログ人数表示
  */
 static void draw_LogNumWindow( BEACON_VIEW_PTR wk )
@@ -886,6 +898,15 @@ static void draw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id )
 }
 
 /*
+ *  @brief  メニューウィンドウ表示クリア
+ */
+static void draw_ClearMenuWindow( BEACON_VIEW_PTR wk )
+{
+  GFL_BMP_Clear( wk->win[WIN_MENU].bmp, FCOL_WHITE_N );
+  GFL_BMPWIN_TransVramCharacter( wk->win[WIN_MENU].win );
+}
+
+/*
  *  @brief  ポップアップウィンドウ文字列描画
  */
 static void print_PopupWindow( BEACON_VIEW_PTR wk, STRBUF* str, u8 wait, int* task_ct )
@@ -895,8 +916,6 @@ static void print_PopupWindow( BEACON_VIEW_PTR wk, STRBUF* str, u8 wait, int* ta
 
   if( wait == 0 ){
     printReq_BmpwinPrint( wk, &wk->win[WIN_POPUP], str, 0, 0, FCOL_POPUP_BASE, FCOL_POPUP, task_ct );
-//    PRINT_UTIL_PrintColor( &wk->win[WIN_POPUP].putil, wk->printQue, 0, 0, str, wk->fontHandle, FCOL_POPUP );
-//    GFL_BMPWIN_MakeTransWindow( wk->win[WIN_POPUP].win );
   }else{
     GFL_BMP_Clear( wk->win[WIN_POPUP].bmp, FCOL_POPUP_BASE );
 
@@ -1285,9 +1304,6 @@ static void panel_ColorPlttSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_I
  */
 static void panel_MsgPrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, STRBUF* str, int* task_ct )
 {
-//  GFL_BMP_Clear( pp->msgOam.bmp, 0 );
-//	PRINTSYS_PrintColor( pp->msgOam.bmp, 0, 0, str, wk->fontHandle, FCOL_FNTOAM_W );
-//	BmpOam_ActorBmpTrans( pp->msgOam.oam );
   printReq_FOamPrint( wk, &pp->msgOam, str, FCOL_FNTOAM_W, task_ct );
 }
 
@@ -1307,16 +1323,11 @@ static void panel_NamePrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp, BOOL force_f, i
   pp->timeout_f = flag;
 
   //再描画
-//  GFL_BMP_Clear( pp->msgOam.bmp, 0 );
   if( flag ){
-//    IWASAWA_Printf("BeaconTimeout tr_id = %d, %d\n", pp->tr_id, time );
-//  	PRINTSYS_PrintColor( pp->msgOam.bmp, 0, 0, pp->name, wk->fontHandle, FCOL_FNTOAM_G );
     printReq_FOamPrint( wk, &pp->msgOam, pp->name, FCOL_FNTOAM_G, task_ct );
   }else{
-//  	PRINTSYS_PrintColor( pp->msgOam.bmp, 0, 0, pp->name, wk->fontHandle, FCOL_FNTOAM_W );
     printReq_FOamPrint( wk, &pp->msgOam, pp->name, FCOL_FNTOAM_W, task_ct );
   }
-//	BmpOam_ActorBmpTrans( pp->msgOam.oam );
 }
 
 /*
@@ -1456,6 +1467,8 @@ static void list_UpDownReq1st( BEACON_VIEW_PTR wk, SCROLL_DIR dir, int ret_seq )
   wk->scr_repeat_dir = dir;
   wk->scr_repeat_ret_seq = ret_seq;
   wk->scr_repeat_ct = 0;
+
+  BeaconView_PrintQueLimmitUpSet( wk, TRUE );
 
   if( wk->scr_repeat_dir == SCROLL_UP ){
     act_AnmStart( wk->pAct[ACT_DOWN], ACTANM_DOWN_ON );
@@ -1737,7 +1750,7 @@ static void taskAdd_MsgUpdown( BEACON_VIEW_PTR wk, u8 dir, int* task_ct )
   }
   twk->frame = POPUP_COUNT;
 
-  IWASAWA_Printf("MsgWin UpDown Req %d\n", twk->dir );
+//  IWASAWA_Printf("MsgWin UpDown Req %d\n", twk->dir );
   twk->task_ct = task_ct;
   (*task_ct)++;
 }
@@ -1751,7 +1764,7 @@ static void tcb_MsgUpdown( GFL_TCBL *tcb , void* tcb_wk)
     GFL_BG_SetScroll( FRM_POPUP, GFL_BG_SCROLL_Y_SET, twk->y );
     return;
   }
-  IWASAWA_Printf("MsgWin UpDown End %d\n", twk->dir );
+//  IWASAWA_Printf("MsgWin UpDown End %d\n", twk->dir );
 
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
@@ -1830,7 +1843,7 @@ static void taskAdd_WinPopup( BEACON_VIEW_PTR wk, STRBUF* str, int* task_ct )
   twk->bvp = wk;
   twk->wait = POPUP_WAIT;
   
-  IWASAWA_Printf("WinPopup Req\n");
+//  IWASAWA_Printf("WinPopup Req\n");
 
   twk->task_ct = task_ct;
   (*task_ct)++;
@@ -1867,7 +1880,7 @@ static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
   default:
     break;
   }
-  IWASAWA_Printf("WinPopup End\n" );
+//  IWASAWA_Printf("WinPopup End\n" );
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
 }
@@ -2008,7 +2021,9 @@ static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
     twk->seq++;
     return;
   case 2:
+    BeaconView_PrintQueLimmitUpSet( bvp, TRUE );
     tmenu_Create( bvp, TMENU_ID_YESNO );
+    draw_ClearMenuWindow( bvp );
     obj_MenuIconVisibleSet( bvp, FALSE );
     twk->seq++;
     return;
@@ -2059,7 +2074,8 @@ static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
   default:
     break;
   }
-  BeaconView_MenuBarViewSet( twk->bvp, MENU_ALL, MENU_ST_ON );
+  BeaconView_MenuBarViewSet( bvp, MENU_ALL, MENU_ST_ON );
+  BeaconView_PrintQueLimmitUpSet( bvp, FALSE );
   
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
@@ -2099,6 +2115,7 @@ static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* tcb_wk)
     return;
   case 3:
     tmenu_Create( bvp, TMENU_ID_CHECK );
+    draw_ClearMenuWindow( bvp );
     twk->seq++;
     return;
   case 4: //選択待ち

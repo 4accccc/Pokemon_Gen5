@@ -127,6 +127,10 @@ typedef enum{
 
 #define PANEL_DATA_BLANK (0xFF)
 
+///プリントキューの1syncの処理リミット設定値
+#define PRINT_QUE_LIMMIT_DEFAULT (500)
+#define PRINT_QUE_LIMMIT_UP      (2000)
+
 ///ポップアップメッセージバッファ長
 #define BUFLEN_POPUP_MSG  (18*6*2+EOM_SIZE)
 #define BUFLEN_TMP_MSG    (BUFLEN_POPUP_MSG)

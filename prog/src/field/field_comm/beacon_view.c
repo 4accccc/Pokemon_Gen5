@@ -216,7 +216,7 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
     {
       OSTick tick = OS_GetTick()-s_tick;
       if( tick > 100 ){
-        IWASAWA_Printf("BeaconView Passive Tick = %d\n", OS_GetTick()-s_tick);
+//        IWASAWA_Printf("BeaconView Passive Tick = %d\n", OS_GetTick()-s_tick);
       }
     }
 #endif
@@ -262,7 +262,7 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
   {
     OSTick tick = OS_GetTick()-s_tick;
     if( tick > 100 ){
-      IWASAWA_Printf("BeaconView seq = %d tick = %d\n", before_seq, tick );
+//      IWASAWA_Printf("BeaconView seq = %d tick = %d\n", before_seq, tick );
     }
   }
 #endif
@@ -444,12 +444,6 @@ static int seq_ListScrollRepeat( BEACON_VIEW_PTR wk )
     ret = BeaconView_CheckInoutTouchUpDown( wk );
     if( ret != wk->scr_repeat_dir || ret == GFL_UI_TP_HIT_NONE ){
       wk->scr_repeat_end = TRUE;
-/*
-      if( wk->scr_repeat_ct < 2 ){
-        //点滅アニメリクエスト
-        BeaconView_UpDownAnmSet( wk, wk->scr_repeat_dir );
-      }
-*/
     }
     wk->scr_repeat_ct++;  //押しっぱなしカウンタアップ
   }
@@ -466,6 +460,7 @@ static int seq_ListScrollRepeat( BEACON_VIEW_PTR wk )
       BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
     }
     BeaconView_UpDownViewSet( wk );
+    BeaconView_PrintQueLimmitUpSet( wk, FALSE );
     return wk->scr_repeat_ret_seq;
   }
 
@@ -721,7 +716,7 @@ static void _sub_SystemSetup(BEACON_VIEW_PTR wk)
 
 	wk->printQue = PRINTSYS_QUE_Create( wk->heap_sID );
   PRINTSYS_QUE_ForceCommMode( wk->printQue, TRUE );
-  PRINTSYS_QUE_SetLimitTick( wk->printQue, 2000 );
+  PRINTSYS_QUE_SetLimitTick( wk->printQue, PRINT_QUE_LIMMIT_DEFAULT );
 
   wk->fontHandle = FLDMSGBG_GetFontHandle( FIELDMAP_GetFldMsgBG(wk->fieldWork));
 
@@ -1147,19 +1142,16 @@ static void obj_ObjResInit( BEACON_VIEW_PTR wk, OBJ_RES_TBL* res, const OBJ_RES_
   }
 
   for(i = 0;i < res->res[OBJ_RES_PLTT].num;i++){
-    IWASAWA_Printf( "pal res idx = %d, src = %d\n",i,srcTbl[OBJ_RES_PLTT].srcID+i);
     res->res[OBJ_RES_PLTT].tbl[i] = 
       GFL_CLGRP_PLTT_Register(  p_handle, srcTbl[OBJ_RES_PLTT].srcID+i,
                                 CLSYS_DRAW_SUB, 0, wk->heapID );
   }
   for(i = 0;i < res->res[OBJ_RES_CGR].num;i++){
-    IWASAWA_Printf( "char res idx = %d, src = %d\n",i,srcTbl[OBJ_RES_CGR].srcID+i);
     res->res[OBJ_RES_CGR].tbl[i] = 
       GFL_CLGRP_CGR_Register( p_handle, srcTbl[OBJ_RES_CGR].srcID+i,
                               FALSE, CLSYS_DRAW_SUB, wk->heapID );
   }
   for(i = 0;i < res->res[OBJ_RES_CELLANIM].num;i++){
-    IWASAWA_Printf( "cell res idx = %d, src = %d\n",i,srcTbl[OBJ_RES_CELLANIM].srcID+(i*2));
     res->res[OBJ_RES_CELLANIM].tbl[i] = 
       GFL_CLGRP_CELLANIM_Register( p_handle, 
           srcTbl[OBJ_RES_CELLANIM].srcID+(i*2),
