@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-04-21T16:40:31"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-04-26T15:08:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -362,15 +362,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1378" top="221" right="2083" bottom="849" maximized="no" rayout="Vertical2">
+	<dialog left="1473" top="192" right="2178" bottom="820" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -569,7 +569,8 @@ DSシステムフォントなので
 いずれかの　ソフトを　セットし
 『ＤＳダウンロードプレイ』から
 『てんそうマシン　ＩＤ：[2:04:５桁:0]』を
-えらんでください</language>
+えらんでください
+　　　　　　　　　　　　　　　　Ｂ…キャンセル</language>
 		<language name="JPN_KANJI" width="208">もう１つの　ＤＳに
 ポケットモンスターの
 ダイヤモンド・パール・プラチナ・
@@ -577,7 +578,8 @@ DSシステムフォントなので
 いずれかの　ソフトを　セットし
 『ＤＳダウンロードプレイ』から
 『てんそうマシン　ＩＤ：[2:04:５桁:0]』を
-選んでください</language>
+選んでください
+　　　　　　　　　　　　　　　　Ｂ…キャンセル</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_02">

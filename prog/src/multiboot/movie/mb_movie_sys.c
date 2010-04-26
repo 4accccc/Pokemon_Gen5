@@ -17,11 +17,10 @@
 #include "system/net_err.h"
 #include "poke_tool/pokepara_conv.h"
 #include "poke_tool/poke_memo.h"
-#include "../../net_app/connect_anm.h"
 
 #include "arc_def.h"
 #include "mb_child_gra.naix"
-#include "wifi_login.naix"
+#include "mystery.naix"
 #include "multiboot/wb_sound_palpark.sadl"
 #include "sound/pm_sndsys.h"
 
@@ -152,8 +151,6 @@ typedef struct
   BOOL isNetErr;
   BOOL isInitCellSys;
   
-  CONNECT_BG_PALANM bgAnmWork;
-
 }MB_MOVIE_WORK;
 #if PM_DEBUG
   static BOOL isAllMove = FALSE;
@@ -190,8 +187,6 @@ static void MB_MOVIE_SaveInit( MB_MOVIE_WORK *work );
 static void MB_MOVIE_SaveTerm( MB_MOVIE_WORK *work );
 static void MB_MOVIE_SaveMain( MB_MOVIE_WORK *work );
 
-CONNECT_BG_PALANM *staticBgAnmWork;
-
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_128_A,             // メイン2DエンジンのBG
   GX_VRAM_BGEXTPLTT_NONE,       // メイン2DエンジンのBG拡張パレット
@@ -207,6 +202,7 @@ static const GFL_DISP_VRAM vramBank = {
   GX_OBJVRAMMODE_CHAR_1D_32K
 };
 
+static u32 MB_MOVIE_bgScrollCnt;
 
 //--------------------------------------------------------------
 //  初期化
@@ -217,7 +213,7 @@ static void MB_MOVIE_Init( MB_MOVIE_WORK *work )
   work->state = MCS_FADEIN;
   work->dataWork = NULL;
   work->isInitCellSys = FALSE;
-  
+  MB_MOVIE_bgScrollCnt = 0;
 #if PM_DEBUG
   isAllMove = FALSE;
 #endif //PM_DEBUG
@@ -268,8 +264,6 @@ static void MB_MOVIE_Term( MB_MOVIE_WORK *work )
   u8 i,j;
   GFL_TCB_DeleteTask( work->vBlankTcb );
   GFUser_ResetVIntrFunc();
-
-  ConnectBGPalAnm_End( &work->bgAnmWork );
 
   for( i=0;i<MB_POKE_BOX_TRAY;i++ )
   {
@@ -776,7 +770,14 @@ static void MB_MOVIE_VBlankFunc(GFL_TCB *tcb, void *wk )
 static void MB_MOVIE_VSyncMovie( void )
 {
   //背景アニメ更新
-  ConnectBGPalAnm_Main( staticBgAnmWork );
+  MB_MOVIE_bgScrollCnt++;
+  
+  if( MB_MOVIE_bgScrollCnt >= 5 )
+  {
+    MB_MOVIE_bgScrollCnt = 0;
+    GFL_BG_SetScroll( MB_MOVIE_FRAME_BG , GFL_BG_SCROLL_Y_DEC , 1 );
+    GFL_BG_SetScroll( MB_MOVIE_FRAME_SUB_BG , GFL_BG_SCROLL_Y_DEC , 1 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -891,32 +892,27 @@ static void MB_MOVIE_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane
 //--------------------------------------------------------------
 static void MB_MOVIE_LoadResource( MB_MOVIE_WORK *work )
 {
-  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_WIFI_LOGIN , work->heapId );
+  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_MYSTERY , work->heapId );
 
   //下画面
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_wifi_login_connect_win_NCLR , 
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mystery_fushigi_back_NCLR , 
                     PALTYPE_SUB_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_wifi_login_connect_win_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mystery_fushigi_back_NCGR ,
                     MB_MOVIE_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_wifi_login_connect_win2_d_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mystery_fushigi_back_NSCR , 
                     MB_MOVIE_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
   
   //上画面
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_wifi_login_connect_win_NCLR , 
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mystery_fushigi_back_NCLR , 
                     PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_wifi_login_connect_win_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mystery_fushigi_back_NCGR ,
                     MB_MOVIE_FRAME_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_wifi_login_connect_win1_u_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mystery_fushigi_back_NSCR , 
                     MB_MOVIE_FRAME_BG ,  0 , 0, FALSE , work->heapId );
 
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_wifi_login_connect_win_NCGR ,
-                    MB_MOVIE_FRAME_BG2 , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_wifi_login_connect_win2_u_NSCR , 
-                    MB_MOVIE_FRAME_BG2 ,  0 , 0, FALSE , work->heapId );
-  
-  ConnectBGPalAnm_InitBg( &work->bgAnmWork , arcHandle , NARC_wifi_login_connect_ani_NCLR , work->heapId , MB_MOVIE_FRAME_BG , MB_MOVIE_FRAME_BG2 );
-  staticBgAnmWork = &work->bgAnmWork;
   GFL_ARC_CloseDataHandle( arcHandle );
+
+
 }
 
 //--------------------------------------------------------------

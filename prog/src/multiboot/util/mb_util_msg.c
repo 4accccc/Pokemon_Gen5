@@ -394,7 +394,7 @@ void MB_MSG_MessageDisp( MB_MSG_WORK *msgWork , const u16 msgId , const int msgS
     
     if( msgWork->wordSet != NULL )
     {
-      STRBUF *msgWorkStr = GFL_STR_CreateBuffer( 128 , msgWork->heapId );
+      STRBUF *msgWorkStr = GFL_STR_CreateBuffer( 256 , msgWork->heapId );
       WORDSET_ExpandStr( msgWork->wordSet , msgWorkStr , msgWork->msgStr );
       GFL_STR_DeleteBuffer( msgWork->msgStr );
       msgWork->msgStr = msgWorkStr;
@@ -454,7 +454,7 @@ void MB_MSG_MessageDispNoWait( MB_MSG_WORK *msgWork , const u16 msgId )
     
     if( msgWork->wordSet != NULL )
     {
-      STRBUF *msgWorkStr = GFL_STR_CreateBuffer( 128 , msgWork->heapId );
+      STRBUF *msgWorkStr = GFL_STR_CreateBuffer( 256 , msgWork->heapId );
       WORDSET_ExpandStr( msgWork->wordSet , msgWorkStr , msgWork->msgStr );
       GFL_STR_DeleteBuffer( msgWork->msgStr );
       msgWork->msgStr = msgWorkStr;

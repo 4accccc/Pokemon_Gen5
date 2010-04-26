@@ -786,6 +786,7 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
       shotData->shotPoke[i].sex = musPoke->mcssParam.sex;
       shotData->shotPoke[i].rare = musPoke->mcssParam.rare;
       shotData->shotPoke[i].form = musPoke->mcssParam.form;
+      shotData->shotPoke[i].perRand = musPoke->mcssParam.perRand;
 
       if( i == evWork->selfIdx )
       {

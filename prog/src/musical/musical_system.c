@@ -154,10 +154,11 @@ MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPoke( POKEMON_PARAM *pokePara , HEAPID
   musPara->mcssParam.sex    = PP_Get( pokePara, ID_PARA_sex,	NULL );
   musPara->mcssParam.form   = PP_Get( pokePara, ID_PARA_form_no,	NULL );
   musPara->mcssParam.rare   = PP_CheckRare( pokePara );
+  musPara->mcssParam.perRand= PP_Get( pokePara, ID_PARA_personal_rnd,	NULL );
   
   return musPara;
 }
-MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPokeParam( u16 monsno , u8 sex , u8 form , u8 rare , HEAPID heapId )
+MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPokeParam( u16 monsno , u8 sex , u8 form , u8 rare , u32 perRand , HEAPID heapId )
 {
   int i;
   MUSICAL_POKE_PARAM *musPara;
@@ -182,6 +183,7 @@ MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPokeParam( u16 monsno , u8 sex , u8 fo
   musPara->mcssParam.sex    = sex;
   musPara->mcssParam.form = form;
   musPara->mcssParam.rare   = rare;
+  musPara->mcssParam.perRand= perRand;
   
   return musPara;
 }

@@ -22,12 +22,12 @@
 #include "system/wipe.h"
 #include "savedata/misc.h"
 #include "app/app_menu_common.h"
-#include "net_app/connect_anm.h"
 #include "field/evt_lock.h" //ロックカプセルのイベントロックのため
+#include "sound/pm_sndsys.h"
 
 #include "arc_def.h"
 #include "mb_parent.naix"
-#include "wifi_login.naix"
+#include "mystery.naix"
 
 #include "../../../../resource/fldmapdata/script/palpark_scr_local.h"
 #include "../../../resource/fldmapdata/flagwork/work_define.h"
@@ -234,7 +234,6 @@ typedef struct
   BOOL isBoxNotEnough;
   BOOL isPostMoviePoke;
   BOOL isPostMovieCapsule;
-  CONNECT_BG_PALANM bgAnmWork;
   
   MISC  *miscSave;
   
@@ -306,7 +305,7 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work );
 static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state );
 
 BOOL WhCallBackFlg = FALSE;
-CONNECT_BG_PALANM *staticBgAnmWork;
+static u16 MB_PARENT_bgScrollCnt = 0;
 
 FS_EXTERN_OVERLAY(dev_wireless);
 
@@ -346,6 +345,7 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   else
   {
     work->miscSave = NULL;
+    MB_PARENT_bgScrollCnt = 0;
   }
   
   work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_PARENT_VBlankFunc , work , 8 );
@@ -356,6 +356,7 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   else
   {
     GFUser_SetVIntrFunc( MB_PARENT_VSyncMovie );
+    PMSND_PlayBGM( SEQ_BGM_WIFI_PRESENT );
   }
 
   
@@ -376,7 +377,7 @@ static void MB_PARENT_Term( MB_PARENT_WORK *work )
   GFL_NET_WirelessIconEasyEnd();
   if( work->mode == MPM_MOVIE_TRANS )
   {
-    ConnectBGPalAnm_End( &work->bgAnmWork );
+    PMSND_StopBGM();
   }
   else
   {
@@ -836,7 +837,14 @@ static void MB_PARENT_VSync( void )
 static void MB_PARENT_VSyncMovie( void )
 {
   //背景アニメ更新
-  ConnectBGPalAnm_Main( staticBgAnmWork );
+  MB_PARENT_bgScrollCnt++;
+  
+  if( MB_PARENT_bgScrollCnt >= 5 )
+  {
+    MB_PARENT_bgScrollCnt = 0;
+    GFL_BG_SetScroll( MB_PARENT_FRAME_BG , GFL_BG_SCROLL_Y_DEC , 1 );
+    GFL_BG_SetScroll( MB_PARENT_FRAME_SUB_BG , GFL_BG_SCROLL_Y_DEC , 1 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -917,6 +925,14 @@ static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work )
     MB_PARENT_SetupBgFunc( &header_sub2  , MB_PARENT_FRAME_SUB_BAR, GFL_BG_MODE_TEXT );
     MB_PARENT_SetupBgFunc( &header_sub3  , MB_PARENT_FRAME_SUB_BG , GFL_BG_MODE_TEXT );
     
+    if( work->mode == MPM_POKE_SHIFTER )
+    {
+      GFL_BG_SetVisible( MB_PARENT_FRAME_SUB_BAR , TRUE );
+    }
+    else
+    {
+      GFL_BG_SetVisible( MB_PARENT_FRAME_SUB_BAR , FALSE );
+    }
   }
 
   //OBJ系の初期化
@@ -993,31 +1009,24 @@ static void MB_PARENT_LoadResource( MB_PARENT_WORK *work )
   else
   {
     //映画転送
-    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_WIFI_LOGIN , work->heapId );
+    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_MYSTERY , work->heapId );
 
     //下画面
-    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_wifi_login_connect_win_NCLR , 
+    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mystery_fushigi_back_NCLR , 
                       PALTYPE_SUB_BG , 0 , 0 , work->heapId );
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_wifi_login_connect_win_NCGR ,
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mystery_fushigi_back_NCGR ,
                       MB_PARENT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
-    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_wifi_login_connect_win2_d_NSCR , 
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mystery_fushigi_back_NSCR , 
                       MB_PARENT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
     
     //上画面
-    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_wifi_login_connect_win_NCLR , 
+    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mystery_fushigi_back_NCLR , 
                       PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_wifi_login_connect_win_NCGR ,
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mystery_fushigi_back_NCGR ,
                       MB_PARENT_FRAME_BG , 0 , 0, FALSE , work->heapId );
-    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_wifi_login_connect_win1_u_NSCR , 
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mystery_fushigi_back_NSCR , 
                       MB_PARENT_FRAME_BG ,  0 , 0, FALSE , work->heapId );
-    //上画面
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_wifi_login_connect_win_NCGR ,
-                      MB_PARENT_FRAME_BG2 , 0 , 0, FALSE , work->heapId );
-    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_wifi_login_connect_win2_u_NSCR , 
-                      MB_PARENT_FRAME_BG2 ,  0 , 0, FALSE , work->heapId );
     
-    ConnectBGPalAnm_InitBg( &work->bgAnmWork , arcHandle , NARC_wifi_login_connect_ani_NCLR , work->heapId , MB_PARENT_FRAME_BG , MB_PARENT_FRAME_BG2 );
-    staticBgAnmWork = &work->bgAnmWork;
     GFL_ARC_CloseDataHandle( arcHandle );
   }
 
@@ -1065,6 +1074,14 @@ static void MB_PARENT_LoadResource( MB_PARENT_WORK *work )
               work->cellResIdx[MPCR_PLT_APP],
               work->cellResIdx[MPCR_ANM_APP],
               &cellInitData ,CLSYS_DRAW_SUB , work->heapId );
+    if( work->mode == MPM_POKE_SHIFTER )
+    {
+      GFL_CLACT_WK_SetDrawEnable( work->clwkReturn , TRUE );
+    }
+    else
+    {
+      GFL_CLACT_WK_SetDrawEnable( work->clwkReturn , FALSE );
+    }
   }
 }
 
@@ -1382,9 +1399,10 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
       {    
         const int ret = GFL_UI_TP_HitTrg( hitTbl );
         if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B ||
-            ret == 0 )
+            (ret == 0&&work->mode == MPM_POKE_SHIFTER) )
         {
           // Bボタンでマルチブートキャンセル
+          // タッチはポケシフターのみ
           work->confirmState = MPCS_INIT;
           GFL_CLACT_WK_SetAnmSeq( work->clwkReturn , APP_COMMON_BARICON_RETURN_ON );
           GFL_CLACT_WK_SetAutoAnmFlag( work->clwkReturn , TRUE );
@@ -1423,7 +1441,8 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
     // プログラム配信処理
   case MBP_STATE_DATASENDING:
     {
-      //ここは来ない！
+//ここは来ない！
+#if 0
       if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_B )
       {
         // Bボタンでマルチブートキャンセル
@@ -1438,6 +1457,7 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
         // ブート開始
         MBP_StartRebootAll();
       }
+#endif
     }
     break;
 

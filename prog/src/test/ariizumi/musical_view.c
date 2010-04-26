@@ -756,7 +756,7 @@ static GFL_PROC_RESULT MusicalViewProc_Init( GFL_PROC * proc, int * seq , void *
   work->form = 0;
   work->rare = 0;
   
-  work->musPoke = MUSICAL_SYSTEM_InitMusPokeParam( work->monsno , work->sex , work->form , work->rare , work->heapId );
+  work->musPoke = MUSICAL_SYSTEM_InitMusPokeParam( work->monsno , work->sex , work->form , work->rare , 0 , work->heapId );
   work->pokeWork = NULL;
   work->pokeWorkBack = NULL;
   
