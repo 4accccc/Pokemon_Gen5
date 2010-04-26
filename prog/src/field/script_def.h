@@ -428,7 +428,8 @@
 //--------------------------------------------------------------
 #define SCR_EV_DIVING_MAPCHANGE_DOWN    (0)
 #define SCR_EV_DIVING_MAPCHANGE_UP      (1)
-#define SCR_EV_DIVING_MAPCHANGE_MAX     (2)
+#define SCR_EV_DIVING_MAPCHANGE_KURUKURU_UP      (2)
+#define SCR_EV_DIVING_MAPCHANGE_MAX     (3)
 
 //--------------------------------------------------------------
 ///　図鑑完成賞状&路線図表示アプリ起動コード (同一アプリを呼び出す)

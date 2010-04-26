@@ -56,6 +56,9 @@
 #include "field_comm/intrude_work.h"
 #include "field/field_comm/intrude_field.h" //PALACE_MAP_LEN
 
+#include "field_task.h"
+#include "field_task_manager.h"
+
 #include "net_app/union/union_main.h" // for UNION_CommBoot
 #include "savedata/intrude_save.h"
 
@@ -1332,22 +1335,31 @@ static GMEVENT_RESULT EVENT_MapChangeBySeaTempleUp( GMEVENT* event, int* seq, vo
   MAPCHANGE_WORK* work       = wk;
   GAMESYS_WORK*   gameSystem = work->gameSystem;
   FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+  FIELD_TASK_MAN* p_taskMan  = FIELDMAP_GetTaskManager( fieldmap );
 
   switch( *seq )
   {
+  // ホワイトアウト
   case 0:
-    // 動作モデル停止
-    GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
+    GMEVENT_CallEvent( event, EVENT_FieldFadeOut_White( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
     (*seq)++;
     break;
-  // ホワイトアウト
+  // 動作モデル停止
   case 1:
-    GMEVENT_CallEvent( event, EVENT_FieldFadeOut_White( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
+    //TOMOYA_Printf( "0000\n" );
+
+    // クルクルが完了するのを待つ　event_seatemple.c内でクルクルにしている可能性があります。
+    if( !FIELD_TASK_MAN_IsAllTaskEnd( p_taskMan ) ) {
+      break;
+    }
+
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
     (*seq)++;
     break;
 
   // マップチェンジ
   case 2:
+    
     // マップチェンジ コアイベント
     GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_NORMAL ) );
     (*seq)++;

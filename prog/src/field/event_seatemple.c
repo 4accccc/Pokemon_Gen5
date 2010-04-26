@@ -22,6 +22,10 @@
 #include "script.h"
 #include "fieldmap.h"
 
+#include "field_task.h"
+#include "field_task_manager.h"
+#include "field_task_player_rot.h"
+
 #include "field_task_player_drawoffset.h"
 #include "field_diving_data.h"  //DIVINGSPOT_GetZoneID
 
@@ -108,6 +112,7 @@ typedef struct {
   GAMESYS_WORK* p_gsys;
   FIELDMAP_WORK* p_fieldmap;
 
+  BOOL kurukuru;
   s32 timing;
 } EV_DIVING_WORK;
 
@@ -121,6 +126,11 @@ typedef struct {
 ///	SE再生タイミング
 //=====================================
 #define DIVE_SE_TIMING  ( 8 )
+
+//-------------------------------------
+///	フェード開始タイミング
+//=====================================
+#define DIVE_FADE_START_TIMING  ( 24 )
 
 //----------------------------------------------------------------------------
 /**
@@ -227,11 +237,35 @@ static GMEVENT_RESULT EVENT_DivingDown( GMEVENT* p_event, int* p_seq, void* p_wo
 static GMEVENT_RESULT EVENT_DivingUp( GMEVENT* p_event, int* p_seq, void* p_work )
 {
   EV_DIVING_WORK* p_wk = p_work;
+  FIELD_TASK_MAN* p_taskMan  = FIELDMAP_GetTaskManager( p_wk->p_fieldmap );
   
 
   switch( (*p_seq) ){
 
+    // クルクル開始
   case 0:
+    // SE再生
+    PMSND_PlaySE( SEQ_SE_FLD_123 );
+    p_wk->timing = DIVE_FADE_START_TIMING;
+    if( p_wk->kurukuru ){
+      FIELD_TASK* rot_up;
+      FIELD_TASK* rot;
+      FIELD_FOG_WORK* p_fog = FIELDMAP_GetFieldFog( p_wk->p_fieldmap );
+
+      rot_up   = FIELD_TASK_PlayerRotate_SpeedUp( p_wk->p_fieldmap, 20, 3 );
+      rot      = FIELD_TASK_PlayerRotate( p_wk->p_fieldmap, 12, 3 );
+
+      FIELD_TASK_MAN_AddTask( p_taskMan, rot_up, NULL );
+      FIELD_TASK_MAN_AddTask( p_taskMan, rot, rot_up );
+
+      // フォグも動かす。
+      FIELD_FOG_FADE_Init( p_fog, 32527, FIELD_FOG_GetSlope(p_fog), DIVE_FADE_START_TIMING+2 );
+    }
+    (*p_seq)++;
+    break;
+
+  case 1:
+
     // 自機状態を波乗りに戻す
     {
       FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
@@ -240,14 +274,9 @@ static GMEVENT_RESULT EVENT_DivingUp( GMEVENT* p_event, int* p_seq, void* p_work
     (*p_seq)++;
     break;
 
-    // SE再生
-  case 1:
-    PMSND_PlaySE( SEQ_SE_FLD_123 );
-    (*p_seq) ++;
-    break;
-
   case 2:
-    if( PMSND_CheckPlaySE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_FLD_123) ) == FALSE )
+    p_wk->timing --;
+    if( p_wk->timing <= 0 )
     {
       // マップジャンプ
       GMEVENT* p_sub_event;
@@ -287,6 +316,7 @@ GMEVENT * EVENT_SeaTemple_GetDivingDownEvent( GAMESYS_WORK *gsys, FIELDMAP_WORK 
   p_wk = GMEVENT_GetEventWork( p_event );
   p_wk->p_gsys      = gsys;
   p_wk->p_fieldmap  = fieldmap;
+  p_wk->kurukuru = FALSE;
 
   return p_event;
 }
@@ -298,11 +328,12 @@ GMEVENT * EVENT_SeaTemple_GetDivingDownEvent( GAMESYS_WORK *gsys, FIELDMAP_WORK 
  *
  *	@param	gsys          ゲームシステム
  *	@param	fieldmap      フィールドマップ
- *
+ *  @param  kurukuru      クルクル
+ * 
  *	@return 上昇イベント
  */
 //-----------------------------------------------------------------------------
-GMEVENT * EVENT_SeaTemple_GetDivingUpEvent( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap )
+GMEVENT * EVENT_SeaTemple_GetDivingUpEvent( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BOOL kurukuru )
 {
   GMEVENT* p_event;
   EV_DIVING_WORK* p_wk;
@@ -313,6 +344,7 @@ GMEVENT * EVENT_SeaTemple_GetDivingUpEvent( GAMESYS_WORK *gsys, FIELDMAP_WORK *f
   p_wk = GMEVENT_GetEventWork( p_event );
   p_wk->p_gsys      = gsys;
   p_wk->p_fieldmap  = fieldmap;
+  p_wk->kurukuru    = kurukuru;
 
   return p_event;
 }

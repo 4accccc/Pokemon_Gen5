@@ -34,6 +34,10 @@
 // 海底神殿位置情報
 #include "sea_temple.cdat"  //(8byteのテーブル)
 
+// eventwork
+#include "field/eventwork.h"
+#include "eventwork_def.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -97,7 +101,7 @@ static const FLDSKILL_FUNC_DATA SkillFuncTable[FLDSKILL_IDX_MAX];
 static const FLDSKILL_FUNC_DATA SeaTempleSkillFuncTable[FLDSKILL_IDX_MAX];
 
 // 海底神殿エリア判定
-static BOOL FLDSKILL_SEATEMPLE_IsArea( const SEATEMPLE_SKILL_USE_POS* cp_pos, u16 gx, u16 gz );
+static BOOL FLDSKILL_SEATEMPLE_IsArea( const SEATEMPLE_SKILL_USE_POS* cp_pos, u16 gx, u16 gz, u16 flag, FIELDMAP_WORK* p_fieldmap );
 
 //======================================================================
 //  FLDSKILL
@@ -224,13 +228,13 @@ void FLDSKILL_InitCheckWork(
 
       // 2F
       if( ZONEDATA_IsSeaTempleDungeon2F(scwk->zone_id) ){
-        if( FLDSKILL_SEATEMPLE_IsArea( &sc_SEATEMPLE_SKILL_USE_POS[ SEATEMPLE_USE_SKILL_2F ], gx, gz ) ){
+        if( FLDSKILL_SEATEMPLE_IsArea( &sc_SEATEMPLE_SKILL_USE_POS[ SEATEMPLE_USE_SKILL_2F ], gx, gz, FE_SEA_TEMPLE_FLASH, fieldmap ) ){
           scwk->enable_skill |= (1 << FLDSKILL_IDX_FLASH);
         }
       }
       // 3F
       if( ZONEDATA_IsSeaTempleDungeon3F(scwk->zone_id) ){
-        if( FLDSKILL_SEATEMPLE_IsArea( &sc_SEATEMPLE_SKILL_USE_POS[ SEATEMPLE_USE_SKILL_3F ], gx, gz ) ){
+        if( FLDSKILL_SEATEMPLE_IsArea( &sc_SEATEMPLE_SKILL_USE_POS[ SEATEMPLE_USE_SKILL_3F ], gx, gz, FE_SEA_TEMPLE_KAIRIKI, fieldmap ) ){
           scwk->enable_skill |= (1 << FLDSKILL_IDX_KAIRIKI);
         }
       }
@@ -1373,17 +1377,26 @@ static BOOL CheckMapModeUse( const FLDSKILL_CHECK_WORK * scwk )
 /**
  *	@brief  海底神殿エリア内かをチェック
  *
- *	@param	cp_pos  エリア情報
- *	@param	gx      ｘグリッド
- *	@param	gz      ｚグリッド
+ *	@param	cp_pos      エリア情報
+ *	@param	gx          ｘグリッド
+ *	@param	gz          ｚグリッド
+ *	@param  flag        イベントフラグ
+ *	@param  p_fieldmap  フィールドマップ
  *
  *	@retval TRUE  エリア内
  *	@retval FALSE エリア外
  */
 //-----------------------------------------------------------------------------
-static BOOL FLDSKILL_SEATEMPLE_IsArea( const SEATEMPLE_SKILL_USE_POS* cp_pos, u16 gx, u16 gz )
+static BOOL FLDSKILL_SEATEMPLE_IsArea( const SEATEMPLE_SKILL_USE_POS* cp_pos, u16 gx, u16 gz, u16 flag, FIELDMAP_WORK* p_fieldmap )
 {
+  GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( p_fieldmap );
+  GAMEDATA* p_gdata = GAMESYSTEM_GetGameData( p_gsys );
+  EVENTWORK* p_ev = GAMEDATA_GetEventWork( p_gdata );
   s32 dif_x, dif_z;
+
+  if( EVENTWORK_CheckEventFlag( p_ev, flag ) ){
+    return FALSE; //フラグが立っていたら使えない
+  }
   
   dif_x = (s32)cp_pos->gx - (s32)gx;
   dif_z = (s32)cp_pos->gz - (s32)gz;

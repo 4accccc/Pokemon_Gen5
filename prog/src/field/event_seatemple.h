@@ -46,7 +46,7 @@ extern GMEVENT * EVENT_SeaTemple_GetDivingDownEvent(
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
 
 extern GMEVENT * EVENT_SeaTemple_GetDivingUpEvent(
-    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BOOL kurukuru );
 
 
 #ifdef _cplusplus

@@ -179,8 +179,11 @@ VMCMD_RESULT EvCmdDiving( VMHANDLE * core, void *wk )
   if( type == SCR_EV_DIVING_MAPCHANGE_DOWN ){
     event = EVENT_SeaTemple_GetDivingDownEvent( gsys, fieldmap );
     SCRIPT_CallEvent( scriptWork, event );
+  }else if( type == SCR_EV_DIVING_MAPCHANGE_UP ){
+    event = EVENT_SeaTemple_GetDivingUpEvent( gsys, fieldmap, FALSE );
+    SCRIPT_CallEvent( scriptWork, event );
   }else{
-    event = EVENT_SeaTemple_GetDivingUpEvent( gsys, fieldmap );
+    event = EVENT_SeaTemple_GetDivingUpEvent( gsys, fieldmap, TRUE );
     SCRIPT_CallEvent( scriptWork, event );
   }
 
