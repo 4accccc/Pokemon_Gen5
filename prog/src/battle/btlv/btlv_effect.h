@@ -89,7 +89,9 @@ enum{
   BTLEFF_UZUSIO,                              //うずしお
   BTLEFF_SUNAZIGOKU,                          //すなじごく
   BTLEFF_NEWOHARU,                            //ねをはる  40
-  BTLEFF_ZOOM_IN,                            //カメラズームイン
+  BTLEFF_ZOOM_IN,                             //カメラズームイン
+  BTLEFF_IYASINONEGAI_KAIHUKU,                //いやしのねがい回復エフェクト
+  BTLEFF_MIKADUKINOMAI_KAIHUKU,               //みかづきのまい回復エフェクト
 
   BTLEFF_STATUS_EFFECT_END,
 };
