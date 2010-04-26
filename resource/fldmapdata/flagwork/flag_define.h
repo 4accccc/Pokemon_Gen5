@@ -2396,9 +2396,9 @@
 #define SYS_FLAG_BGM_CHAMP                2428 /* 0x097c BGM変更フラグ：Nの城登場後、チャンピオン部屋のBGMを変更する */
 #define SYS_FLAG_BGM_C07HAKASE1           2429 /* 0x097d BGM変更フラグ：C07のアララギ父イベント起動時にBGMを変更する */
 #define SYS_FLAG_BGM_LABO_01              2430 /* 0x097e BGM変更フラグ：図鑑入手イベント中だけ研究所のＢＧＭを変更する */
-		/* not used  2431(0x097f) */
-		/* not used  2432(0x0980) */
-		/* not used  2433(0x0981) */
+#define SYS_FLAG_PALACE_MISSION_START     2431 /* 0x097f ハイリンク：ミッションを初めて開始したフラグ */
+#define SYS_FLAG_PALACE_MISSION_CLEAR     2432 /* 0x0980 ハイリンク：ミッションを初めてクリアしたフラグ */
+#define SYS_FLAG_PALACE_DPOWER            2433 /* 0x0981 ハイリンク：デルパワーを初めて登録したフラグ */
 		/* not used  2434(0x0982) */
 		/* not used  2435(0x0983) */
 		/* not used  2436(0x0984) */
