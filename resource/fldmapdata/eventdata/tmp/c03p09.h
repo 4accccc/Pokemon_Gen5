@@ -21,6 +21,7 @@
 #define C03P09_ICELINE_06                  6
 #define C03P09_ICELINE_07                  7
 #define C03P09_ICELINE_08                  8
+#define C03P09_SHOPW_02                    9
 
 #endif //ZONE_C03P09_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p09.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

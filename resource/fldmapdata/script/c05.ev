@@ -38,6 +38,7 @@ _EVENT_DATA    ev_bg_c05_board_03
 _EVENT_DATA    ev_bg_c05_board_04
 _EVENT_DATA    ev_bg_c05_board_05
 _EVENT_DATA    ev_c05_man2_01
+_EVENT_DATA    ev_c05_badrider_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -763,3 +764,231 @@ EVENT_END
 EVENT_START   ev_c05_man2_01
   _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c05_man2_01)
 EVENT_END
+
+/************************************************************/
+/*	BADRIDER                                                */
+/************************************************************/
+EVENT_START	ev_c05_badrider_01
+
+	_TALK_OBJ_START()
+	
+	//バージョンチェック
+	DEFINE_LOCAL LCW_VERSION
+	_GET_ROM_VERSION ( LCW_VERSION ) 
+	
+	//★Blackの場合ローテーションバトル
+	IF $LCW_VERSION == VERSION_BLACK THEN
+		//初回話しかけ
+		IF $WK_SCENE_C05_BTLRIDER == 0 THEN
+			{
+			//どんなしょうぶか しりたいか？
+			_BALLOONWIN_OBJMSG(msg_c05_badrider_01b,C05_BADRIDER_01)
+			_YES_NO_WIN( SCWK_ANSWER )
+			
+			//はい
+			IF $SCWK_ANSWER == 0 THEN
+				
+				//==================================//
+				
+				//初回会話終了
+				$WK_SCENE_C05_BTLRIDER = 1
+				
+				//==================================//
+				
+				//ローテーションバトルとは
+				_BALLOONWIN_OBJMSG(msg_c05_badrider_03b,C05_BADRIDER_01)
+				_CALL ev_c08r0201_black_battle
+				
+			//いいえ
+			ELSE
+				_BALLOONWIN_OBJMSG(msg_c05_badrider_02b,C05_BADRIDER_01)
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ENDIF
+		
+			}
+		//2回目以降
+		ELSIF $WK_SCENE_C05_BTLRIDER == 1 THEN
+			
+			_CALL ev_c08r0201_black_battle
+			
+		//戦闘終了後
+		ELSE
+			_BALLOONWIN_OBJMSG(msg_c05_badrider_09b,C05_BADRIDER_01)
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+			
+		ENDIF
+	
+	//★Blackの場合トリプルバトル
+	ELSE
+		//初回話しかけ
+		IF $WK_SCENE_C05_BTLRIDER == 0 THEN
+			{
+			//どんなしょうぶか しりたいか？
+			_BALLOONWIN_OBJMSG(msg_c05_badrider_01w,C05_BADRIDER_01)
+			_YES_NO_WIN( SCWK_ANSWER )
+			
+			//はい
+			IF $SCWK_ANSWER == 0 THEN
+				
+				//==================================//
+				
+				//初回会話終了
+				$WK_SCENE_C05_BTLRIDER = 1
+				
+				//==================================//
+				
+				//トリプルバトルとは
+				_BALLOONWIN_OBJMSG(msg_c05_badrider_03w,C05_BADRIDER_01)
+				_CALL ev_c08r0201_white_battle
+				
+			//いいえ
+			ELSE
+				_BALLOONWIN_OBJMSG(msg_c05_badrider_02w,C05_BADRIDER_01)
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			ENDIF
+			}
+		//2回目以降
+		ELSIF $WK_SCENE_C05_BTLRIDER == 1 THEN
+			
+			_CALL ev_c08r0201_white_battle
+			
+		//戦闘終了後
+		ELSE
+			_BALLOONWIN_OBJMSG(msg_c05_badrider_09w,C05_BADRIDER_01)
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+			
+		ENDIF
+		
+	ENDIF
+
+EVENT_END
+
+/**************************************************************/
+/*CALL：トリプルバトル（white)                                */
+/**************************************************************/
+ev_c08r0201_white_battle:
+{
+	_BALLOONWIN_OBJMSG(msg_c05_badrider_04w,C05_BADRIDER_01)
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はい
+	IF $SCWK_ANSWER == 0 THEN
+		
+		//手持ちポケモンカウント
+		DEFINE_LOCAL LCW_POKECOUNT
+		_GET_PARTY_POKE_COUNT( LCW_POKECOUNT , POKECOUNT_MODE_BATTLE_ENABLE )
+		
+		//戦えるポケモンが３匹以下
+		IF $LCW_POKECOUNT < 3 THEN
+		
+			_BALLOONWIN_OBJMSG(msg_c05_badrider_06w,C05_BADRIDER_01)
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		
+		//戦えるポケモンが３匹以上
+		ELSE
+	
+			_BALLOONWIN_OBJMSG(msg_c05_badrider_05w,C05_BADRIDER_01)
+			_BALLOONWIN_CLOSE()
+			
+			//戦闘処理（トレーナーIDが仮）
+			_TRAINER_BTL_SET( TRID_BADRIDER_01_03, 0 )
+		
+			//結果チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()
+			ELSE
+				_TRAINER_LOSE()
+			ENDIF
+			
+			_BALLOONWIN_OBJMSG(msg_c05_badrider_08w,C05_BADRIDER_01)
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+			
+			//==================================//
+			
+			//戦闘終了
+			$WK_SCENE_C05_BTLRIDER = 2
+			
+			//==================================//
+		ENDIF
+	
+	//いいえ
+	ELSE
+	
+		_BALLOONWIN_OBJMSG(msg_c05_badrider_07w,C05_BADRIDER_01)
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+
+}
+_RET
+
+/**************************************************************/
+/*CALL：ローテーションバトル（black)                                */
+/**************************************************************/
+ev_c08r0201_black_battle:
+{
+	_BALLOONWIN_OBJMSG(msg_c05_badrider_04b,C05_BADRIDER_01)
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//はい
+	IF $SCWK_ANSWER == 0 THEN
+		
+		//手持ちポケモンカウント
+		DEFINE_LOCAL LCW_POKECOUNT
+		_GET_PARTY_POKE_COUNT( LCW_POKECOUNT , POKECOUNT_MODE_BATTLE_ENABLE )
+		
+		//戦えるポケモンが３匹以下
+		IF $LCW_POKECOUNT < 3 THEN
+		
+			_BALLOONWIN_OBJMSG(msg_c05_badrider_06b,C05_BADRIDER_01)
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		
+		//戦えるポケモンが３匹以上
+		ELSE
+	
+			_BALLOONWIN_OBJMSG(msg_c05_badrider_05b,C05_BADRIDER_01)
+			_BALLOONWIN_CLOSE()
+			
+			//戦闘処理（トレーナーIDが仮）
+			_TRAINER_BTL_SET( TRID_BADRIDER_01_07, 0 )
+		
+			//結果チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+				_TRAINER_WIN()
+			ELSE
+				_TRAINER_LOSE()
+			ENDIF
+			
+			_BALLOONWIN_OBJMSG(msg_c05_badrider_08b,C05_BADRIDER_01)
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+			
+			//==================================//
+			
+			//戦闘終了
+			$WK_SCENE_C05_BTLRIDER = 2
+			
+			//==================================//
+		ENDIF
+	
+	//いいえ
+	ELSE
+	
+		_BALLOONWIN_OBJMSG(msg_c05_badrider_07b,C05_BADRIDER_01)
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+	
+	ENDIF
+
+}
+_RET

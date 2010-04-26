@@ -433,6 +433,8 @@ ev_first_gameclear:
   
   //D01R0101：七賢人、ゲームクリア後に表示
   _FLAG_RESET( FV_D01R0101_SAGE )
+  //D01R0101：R0201の手前のストッパーを非表示
+  _FLAG_SET( FV_D01R0101_CORN_01 )
 
   //D05R0201：七賢人、ゲームクリア後に表示
   _FLAG_RESET( FV_D05R0201_SAGE7 )

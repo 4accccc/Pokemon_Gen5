@@ -49,6 +49,7 @@
 #define C05_MAN2_01                       25
 #define C05_FLD_ITEM_01                   26
 #define C05_FLD_ITEM_02                   27
+#define C05_BADRIDER_01                   28
 
 #endif //ZONE_C05_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c05.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

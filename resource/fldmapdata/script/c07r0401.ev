@@ -21,6 +21,8 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c07r0401_gentleman_01
 _EVENT_DATA    ev_c07r0401_woman2_01
+_EVENT_DATA    ev_c07r0401_poke_01
+_EVENT_DATA    ev_c07r0401_poke_02
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -293,4 +295,19 @@ EVENT_START   ev_c07r0401_woman2_01
 		_BALLOONWIN_CLOSE()
 	ENDIF
 	}
+EVENT_END
+
+/**************************************************************/
+/* 			POKEMON	C07R0401							  */
+/**************************************************************/
+EVENT_START		ev_c07r0401_poke_01
+	_EASY_TALK_POKEVOICE( MONSNO_540, msg_c07r0401_poke15_01 )
+EVENT_END
+
+
+/**************************************************************/
+/* 			POKEMON	C07R0401							  */
+/**************************************************************/
+EVENT_START		ev_c07r0401_poke_02
+	_EASY_TALK_POKEVOICE( MONSNO_505, msg_c07r0401_poke20_01 )
 EVENT_END

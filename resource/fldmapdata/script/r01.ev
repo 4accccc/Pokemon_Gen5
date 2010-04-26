@@ -95,9 +95,6 @@ EVENT_START   ev_r01_poke_getdemo_01
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_POS( msg_r01_black_01,R01_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
-	
-	//専用曲鳴らす
-	_START_EVENT_BGM( SEQ_BGM_E_DOCTOR )
 
 	//博士、メッセージ＋アニメ
 	_BALLOONWIN_OBJMSG_POS( msg_r01_hakase2_01,R01_HAKASE2_01 , POS_UR)
@@ -153,8 +150,6 @@ EVENT_START   ev_r01_poke_getdemo_01
 	//博士退場
 	_OBJ_ANIME( R01_HAKASE2_01,anm_R01_pokeget2 )
 	_OBJ_ANIME_WAIT()
-	//専用曲止まる
-	_END_EVENT_BGM()
 	_OBJ_DEL( R01_HAKASE2_01 )
 
 //ライバル、アニメ＋メッセージ

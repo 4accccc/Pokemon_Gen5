@@ -220,10 +220,6 @@ EVENT_START  ev_pos_d07_rival_01
 	//アテグ：ほら おまえさんも
 	_BALLOONWIN_OBJMSG(msg_d07_champion_04,D07_CHAMPION_01  )
 	_BALLOONWIN_CLOSE()
-	
-	//アテグ、主人公に何か渡す
-	_OBJ_ANIME( D07_CHAMPION_01,anm_d07_champion_gift_to_player02 )
-	_OBJ_ANIME_WAIT()
 
 	//わざマシン入手処理（なみのり）
 	_ITEM_EVENT_KEYWAIT ( ITEM_HIDENMASIN03 , 1  )
@@ -278,6 +274,7 @@ EVENT_END
 //	D07　ライバルイベント用：POSで主人公移動z243
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_d07_player_to_rival_z206
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
@@ -286,6 +283,7 @@ EVENT_END
 //	D07　ライバルイベント用：POSで主人公移動z207
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_d07_player_to_rival_z207
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -294,8 +292,8 @@ EVENT_END
 //	D07　ライバルイベント用：POSで主人公移動z208
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_d07_player_to_rival_z208
+	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -348,7 +346,6 @@ _ANIME_LABEL	anm_d07_rival_look_champion01
 _ANIME_LABEL	anm_d07_champion_gift_to_rival
 	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WAIT_8F,3
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -356,13 +353,6 @@ _ANIME_LABEL	anm_d07_champion_gift_to_rival
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d07_champion_gift_to_player01
 	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	D07　ライバルイベント用：アテグ、主人公に渡す
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_d07_champion_gift_to_player02
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 

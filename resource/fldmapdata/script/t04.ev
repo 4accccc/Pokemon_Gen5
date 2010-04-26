@@ -105,7 +105,7 @@ EVENT_START	ev_t04_boy3_01
 				//======================================//
 				_TRAINER_LOSE()
 			ENDIF
-		
+			
 		//Ç¢Ç¢Ç¶
 		ELSE
 			_BALLOONWIN_OBJMSG( msg_t04_boy3_01b , T04_BOY3_01 )
@@ -193,6 +193,7 @@ _RET
 //	ãêëÂï ëëÅFéÂêlåˆóUì±Ç≥ÇÍÇÈ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_left_goto_house_01
+	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
@@ -207,18 +208,16 @@ _ANIME_LABEL	anm_player_down_goto_house_01
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_left_goto_house_02
-	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_player_right_goto_house_02
-	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_down_goto_house_02
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_down_goto_house_end

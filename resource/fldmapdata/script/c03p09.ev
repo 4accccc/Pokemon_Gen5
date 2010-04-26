@@ -39,6 +39,8 @@ _EVENT_DATA    ev_pos_c03p09_iceshop_01
 
 _EVENT_DATA    ev_zone_c03p09
 
+_EVENT_DATA    ev_c03p09_shopw_02
+
 _EVENT_DATA_END
 
 
@@ -118,6 +120,20 @@ INIT_EVENT_END
 EVENT_START		ev_c03p09_shopw_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p09_ice_shop_06 )
 EVENT_END
+
+/**************************************************************/
+/* 			売り子さん	C03P09								  */
+/**************************************************************/
+EVENT_START		ev_c03p09_shopw_02
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG( msg_c03p09_ice_shop_06 , C03P09_SHOPW_01 )
+	_LAST_KEYWAIT()
+	_BALLOONWIN_CLOSE()
+	
+	//売り子さんは１グリッド下にNONDORAWのOBJを配置しています。
+	//カウンターごしによる奥行き不明さの対処です。
+EVENT_END
+
 
 /**************************************************************/
 /* 			行列の人1	C03P09								  */
