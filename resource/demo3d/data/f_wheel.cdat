@@ -210,10 +210,11 @@ static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_boy4[] = {
 
 static const u16 res_f_wheel_file_field[] = {
  NARC_data_demo3d_f_wheel_01_nsbmd,
+ NARC_data_demo3d_f_wheel_01_nsbta,
 };
 
 static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_field[] = {
- { res_f_wheel_file_field, 1 },
+ { res_f_wheel_file_field, 2 },
 };
 
 ///==================================
