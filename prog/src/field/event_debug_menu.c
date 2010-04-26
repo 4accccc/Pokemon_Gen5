@@ -5592,8 +5592,8 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
       
       if( work->game_round <= 0 ){
         work->game_round = 1;
-      }else if( work->game_round > 999999 ){
-        work->game_round = 999999;
+      }else if( work->game_round > 99999 ){
+        work->game_round = 99999;
       }
       
       switch( work->play_mode ){
