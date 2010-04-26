@@ -19,6 +19,9 @@
 ///知り合い登録最大数
 #define ACQUAINTANCE_ID_MAX     (32)
 
+///マニュアルフラグ用
+#define MANUAL_SECTOR_BIT       ( 32 )
+#define MANUAL_FLAG_WORK_MAX    ( MANUAL_FLAG_MAX/MANUAL_SECTOR_BIT ) ///< 1bit対応なので
 
 //==============================================================================
 //  構造体定義
@@ -27,7 +30,9 @@ struct _ETC_SAVE_WORK{
   u32 acquaintance_trainer_id[ACQUAINTANCE_ID_MAX];
   u32 acquaintance_occ_num;   ///<acquaintance_trainer_idの何番目までデータが入っているか
   
-  u8 dummy[120];    ///<将来用に1ブロック分のアライメント全てを確保
+  u32 manual_flag[MANUAL_FLAG_WORK_MAX]; ///< ゲーム内マニュアルの項目を読んだかどうか(1bit単位）
+  
+  u8 dummy[88];    ///<将来用に1ブロック分のアライメント全てを確保
 };
 
 
@@ -41,19 +46,19 @@ struct _ETC_SAVE_WORK{
 /**
  * セーブデータサイズを返す
  *
- * @retval  int		
+ * @retval  int   
  */
 //------------------------------------------------------------------
 u32 EtcSave_GetWorkSize( void )
 {
-	return sizeof(ETC_SAVE_WORK);
+  return sizeof(ETC_SAVE_WORK);
 }
 
 //--------------------------------------------------------------
 /**
  * @brief   ワーク初期化
  *
- * @param   rec		
+ * @param   rec   
  */
 //--------------------------------------------------------------
 void EtcSave_WorkInit(void *work)
@@ -71,14 +76,14 @@ void EtcSave_WorkInit(void *work)
 /**
  * 未分類データその２のセーブデータポインタ取得
  *
- * @param   p_sv		
+ * @param   p_sv    
  *
- * @retval  ETC_SAVE_WORK *		
+ * @retval  ETC_SAVE_WORK *   
  */
 //==================================================================
 ETC_SAVE_WORK * SaveData_GetEtc( SAVE_CONTROL_WORK * p_sv )
 {
-	return SaveControl_DataPtrGet(p_sv, GMDATA_ID_ETC);
+  return SaveControl_DataPtrGet(p_sv, GMDATA_ID_ETC);
 }
 
 
@@ -89,8 +94,8 @@ ETC_SAVE_WORK * SaveData_GetEtc( SAVE_CONTROL_WORK * p_sv )
 /**
  * ユニオン知り合いグループとして登録します
  *
- * @param   etcsave		
- * @param   trainer_id		トレーナーID
+ * @param   etcsave   
+ * @param   trainer_id    トレーナーID
  */
 //==================================================================
 void EtcSave_SetAcquaintance(ETC_SAVE_WORK *etcsave, u32 trainer_id)
@@ -127,10 +132,10 @@ void EtcSave_SetAcquaintance(ETC_SAVE_WORK *etcsave, u32 trainer_id)
 /**
  * ユニオン知り合いグループに登録されている人物か調べる
  *
- * @param   etcsave		
- * @param   trainer_id		トレーナーID
+ * @param   etcsave   
+ * @param   trainer_id    トレーナーID
  *
- * @retval  BOOL		TRUE:登録されている　　FALSE:登録されていない
+ * @retval  BOOL    TRUE:登録されている　　FALSE:登録されていない
  */
 //==================================================================
 BOOL EtcSave_CheckAcquaintance(ETC_SAVE_WORK *etcsave, u32 trainer_id)
@@ -144,3 +149,49 @@ BOOL EtcSave_CheckAcquaintance(ETC_SAVE_WORK *etcsave, u32 trainer_id)
   return FALSE;
 }
 
+//=============================================================================================
+/**
+ * @brief マニュアルフラグの取得
+ *
+ * @param   etcsave   ETC_SAVE_WORK
+ * @param   id        フラグ番号（maxはMANUAL_FLAG_MAX(256)
+ *
+ * @retval  BOOL      TRUE:読んだ FALSE:まだ
+ */
+//=============================================================================================
+BOOL EtcSave_GetManualFlag( const ETC_SAVE_WORK *etcsave, int id )
+{
+  int sector, bit;
+  GF_ASSERT( id < MANUAL_FLAG_MAX );
+
+  sector = id/MANUAL_SECTOR_BIT;
+  bit    = id%MANUAL_SECTOR_BIT;
+
+  return (etcsave->manual_flag[sector]>>bit)&1; 
+
+}
+
+//=============================================================================================
+/**
+ * @brief マニュアルフラグを立てる
+ *
+ * @param   etcsave   ETC_SAVE_WORK
+ * @param   id        フラグ番号（maxはMANUAL_FLAG_MAX(256)
+ *
+ * @retval  BOOL      TRUE:読んだ FALSE:まだ
+ */
+//=============================================================================================
+void EtcSave_SetManualFlag( ETC_SAVE_WORK *etcsave, int id )
+{
+  int sector, bit;
+  
+  // フラグは1bit単位で管理
+  if(id<MANUAL_FLAG_MAX){
+
+    sector = id/MANUAL_SECTOR_BIT;
+    bit    = id%MANUAL_SECTOR_BIT;
+  
+    etcsave->manual_flag[sector] |= 1<<bit; 
+
+  }
+}

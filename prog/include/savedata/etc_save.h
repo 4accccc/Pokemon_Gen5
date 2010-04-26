@@ -15,6 +15,8 @@
 ///その他セーブ構造体の不完全型
 typedef struct _ETC_SAVE_WORK ETC_SAVE_WORK;
 
+///マニュアルフラグ最大数
+#define MANUAL_FLAG_MAX         ( 256 )
 
 //==============================================================================
 //  外部関数宣言
@@ -25,3 +27,5 @@ extern ETC_SAVE_WORK * SaveData_GetEtc( SAVE_CONTROL_WORK * p_sv );
 
 extern void EtcSave_SetAcquaintance(ETC_SAVE_WORK *etcsave, u32 trainer_id);
 extern BOOL EtcSave_CheckAcquaintance(ETC_SAVE_WORK *etcsave, u32 trainer_id);
+extern void EtcSave_SetManualFlag( ETC_SAVE_WORK *etcsave, int id );
+extern BOOL EtcSave_GetManualFlag( const ETC_SAVE_WORK *etcsave, int id );
