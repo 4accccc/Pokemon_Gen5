@@ -9,6 +9,8 @@
 #ifndef ZONE_T05R0101_EVC_H
 #define ZONE_T05R0101_EVC_H
 
+#define T05R0101_WOMAN3_01                 0
+#define T05R0101_GIRL2_01                  1
 
 #endif //ZONE_T05R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t05r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

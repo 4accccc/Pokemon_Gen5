@@ -15,6 +15,17 @@
 #define T05_PIPE_01                        1
 #define T05_RECEPT_01                      2
 #define T05_BOY4_01                        3
+#define T05_BOY3_01                        4
+#define T05_MIDDLEWOMAN2_01                5
+#define T05_MAN3_01                        6
+#define T05_RAILMAN_01                     7
+#define T05_MOUNTMAN_01                    8
+#define T05_WOMAN2_01                      9
+#define T05_WOMAN1_01                     10
+#define T05_OLDMAN1_01                    11
+#define T05_ITEMTRADER_01                 12
+#define T05_ITEMTRADER_03                 13
+#define T05_ITEMTRADER_02                 14
 
 #endif //ZONE_T05_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t05.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

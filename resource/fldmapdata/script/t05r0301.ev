@@ -19,20 +19,115 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_t05r0301
+_EVENT_DATA    ev_t05r0301_railman_01
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_t05r0301_flag_change:
-//  _END
+/************************************************************/
+/*				バトルサブウェイの落し物					*/
+/************************************************************/
+EVENT_START	ev_t05r0301_railman_01
+	_TALK_OBJ_START()
+	
+	//落し物の有無で分岐
+	IF $WK_OTHER_BSEVENT_NUM != 0 THEN
+	//落し物アリ
+		
+		IF FLAG_OFF( FE_T05R0301_BTLITEM_TALK ) THEN
+		//初回会話なら
+			//おっと その顔は！
+			_BALLOONWIN_TALKOBJ_MSG( msg_t05r0301_railman_01 )
+			
+			//========================================//
+			//会話済みフラグをセット
+			_FLAG_SET( FE_T05R0301_BTLITEM_TALK )
+			
+			//初回入手アイテムをセット
+			$WK_OTHER_BSEVENT_ITEM = ITEM_HUSIGINAAME
+			//========================================//
+			
+			//アイテム入手処理へ
+			_CALL	ev_add_item
+			
+		ELSE
+		//２回目以降
+			//落し物の数で分岐（落し物の数＝サブウェイで七人抜きをした回数）
+			IF $WK_OTHER_BSEVENT_NUM < 5 THEN
+				//また落し物がでちゃってね！
+				_BALLOONWIN_TALKOBJ_MSG( msg_t05r0301_railman_02 )
+			ELSE
+				//最近落し物が多くてね！
+				_BALLOONWIN_TALKOBJ_MSG( msg_t05r0301_railman_03 )
+			ENDIF
+			
+			//アイテム入手処理へ
+			_CALL	ev_add_item
+			
+		ENDIF
+	
+	ELSE
+	//落し物ナシ
+		//また落し物がでたらあげるね
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05r0301_railman_05 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	ENDIF
+	
+EVENT_END
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_t05r0301:
-  //とりあえず最初のラベルだけ生成している
-  _END
+//アイテム入手処理
+ev_add_item:
+	//アイテム追加チェック
+	_ADD_ITEM_CHK( WK_OTHER_BSEVENT_ITEM, WK_OTHER_BSEVENT_NUM, SCWK_ANSWER )
+	IF $SCWK_ANSWER == FALSE THEN
+		//入手失敗
+		_ITEM_NAME( 0, WK_OTHER_BSEVENT_ITEM )
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05r0301_railman_06 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		_RET
+	ENDIF
+
+	//先に表示していた吹き出しウインドウを閉じる
+	_MSGWIN_CLOSE()
+	//アイテム追加
+	_ITEM_EVENT_SUCCESS_KEYWAIT( WK_OTHER_BSEVENT_ITEM, WK_OTHER_BSEVENT_NUM )
+
+	//アイテム入手後メッセージ
+	_BALLOONWIN_TALKOBJ_MSG( msg_t05r0301_railman_04 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
+	//========================================//
+	//アイテム入手数のリセット
+	$WK_OTHER_BSEVENT_NUM = 0
+
+	//次回アイテムの抽選
+	_GET_RND( SCWK_ANSWER, 10 )
+	SWITCH $SCWK_ANSWER
+	CASE 0 THEN
+		$WK_OTHER_BSEVENT_ITEM = ITEM_HUSIGINAAME		//ふしぎなアメ
+	CASE 1 THEN
+		$WK_OTHER_BSEVENT_ITEM = ITEM_KAIHUKUNOKUSURI	//かいふくのくすり
+	CASE 2 THEN
+		$WK_OTHER_BSEVENT_ITEM = ITEM_GENKINOKATAMARI	//げんきのかたまり
+	CASE 3 THEN
+		$WK_OTHER_BSEVENT_ITEM = ITEM_PIIPIIEIDAA		//ピーピーエイダー
+	CASE 4 THEN
+		$WK_OTHER_BSEVENT_ITEM = ITEM_TAURIN			//タウリン
+	CASE 5 THEN
+		$WK_OTHER_BSEVENT_ITEM = ITEM_BUROMUHEKISIN		//ブロムヘキシン
+	CASE 6 THEN
+		$WK_OTHER_BSEVENT_ITEM = ITEM_RIZOTIUMU			//リゾチウム
+	CASE 7 THEN
+		$WK_OTHER_BSEVENT_ITEM = ITEM_KITOSAN			//キトサン
+	CASE 8 THEN
+		$WK_OTHER_BSEVENT_ITEM = ITEM_INDOMETASIN		//インドメタシン
+	DEFAULT
+		$WK_OTHER_BSEVENT_ITEM = ITEM_MAKKUSUAPPU		//マックスアップ
+	ENDSWITCH
+	//========================================//
+
+_RET
+
 

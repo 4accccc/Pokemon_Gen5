@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-08T12:51:48"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-04-25T17:19:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1320" top="209" right="2025" bottom="829" maximized="no" rayout="Vertical2">
+	<dialog left="1647" top="254" right="2352" bottom="874" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -307,15 +307,15 @@
 		<comment>♀</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">でんしゃってさ
-たくさんのひとを　のせるでしょ？▼
-だからね　うんてんするひとも
-せいびをするひとも　しんけんよ！▼
-ってパパが　いってたの</language>
+たくさんの　ひとを　のせるでしょ？▼
+うんてんする　ひとも
+せいびする　ひとも▽
+おっきな　せきにんを　かかえてるの！</language>
 		<language name="JPN_KANJI" width="256">電車ってさ
 たくさんの人を　乗せるでしょ？▼
 だからね　運転する人も
-整備をする人も　真剣よ！▼
-ってパパが　いってたの</language>
+整備をする人も▽
+おっきな　責任を　かかえてるの！</language>
 	</row>
 
 	<flowchart-group-list>

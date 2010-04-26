@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-14T15:09:00"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-04-25T20:18:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="582" top="84" right="1287" bottom="704" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="94" top="104" right="567" bottom="502" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -297,10 +297,9 @@
 バトルサブウェイの落し物
 初回会話
 
-※一日一回戦闘系の
-どうぐをもらえる
-※バトルサブウェイを利用
-するほど良いアイテムを入手
+※バトルサブウェイを利用するほど
+　たくさんアイテムがもらえる
+※初回だけは利用していなくてももらえる
 
 →アイテム入手処理へ</comment>
 		<attribute name="キャラ指定">RAILMAN</attribute>
@@ -339,9 +338,11 @@
 →アイテム入手処理へ</comment>
 		<attribute name="キャラ指定">RAILMAN</attribute>
 		<language name="JPN" width="256">また　おとしものが　でちゃってね
-どーぞ　どーぞ▼</language>
+ひきとりてが　いないから
+よかったら　もらってちょーだいよ▼</language>
 		<language name="JPN_KANJI" width="256">また　落し物が　でちゃってね
-どーぞ　どーぞ▼</language>
+引き取り手が　いないから
+よかったら　もらってちょーだいよ▼</language>
 	</row>
 
 	<row id="msg_t05r0301_railman_03">
@@ -351,11 +352,13 @@
 （落し物が多い日）
 →アイテム入手処理へ</comment>
 		<attribute name="キャラ指定">RAILMAN</attribute>
-		<language name="JPN" width="256">やー　さいきん
+		<language name="JPN" width="256">お　まってたよ！
+さいきん　りようしゃが　ふえて▽
 おとしものが　おおくてね！▼
 ひきとりてが　いないから
 よかったら　もらってちょーだいよ▼</language>
-		<language name="JPN_KANJI" width="256">やー　最近
+		<language name="JPN_KANJI" width="256">お　待ってたよ！
+最近　利用者が　増えて▽
 落し物が　多くてね！▼
 引き取り手が　いないから
 よかったら　もらってちょーだいよ▼</language>
@@ -375,18 +378,35 @@
 遠慮しないで！▼
 ぼくが　持っているより
 トレーナーさんが　使ったほうが▽
-道具も　うれしいだろうから！</language>
+どうぐも　うれしいだろうから！</language>
 	</row>
 
 	<row id="msg_t05r0301_railman_05">
 		<comment>♂
 バトルサブウェイの落し物
-アイテム入手後の再会話</comment>
+入手アイテム無しのとき</comment>
 		<attribute name="キャラ指定">RAILMAN</attribute>
-		<language name="JPN" width="256">きがむいたら　バトルサブウェイに
-ちょうせんすると　よいよー</language>
-		<language name="JPN_KANJI" width="256">気が向いたら　バトルサブウェイに
-挑戦すると　よいよー</language>
+		<language name="JPN" width="256">また　おとしものが
+でてきたら　もらってちょーだい▼
+そうそう　きがむいたら
+ライモンシティで　バトルサブウェイに▽
+ちょうせん　してくれよ！</language>
+		<language name="JPN_KANJI" width="256">また　落し物が
+出てきたら　もらってちょーだい▼
+そうそう　気が向いたら
+ライモンシティで　バトルサブウェイに▽
+挑戦してくれよ！</language>
+	</row>
+
+	<row id="msg_t05r0301_railman_06">
+		<comment>♂
+バトルサブウェイの落し物
+アイテムMAXで入手できないとき</comment>
+		<attribute name="キャラ指定">RAILMAN</attribute>
+		<language name="JPN" width="256">あらま　[1:09:どうぐ名:0]は
+それいじょう　もてないみたい</language>
+		<language name="JPN_KANJI" width="256">あらま　[1:09:どうぐ名:0]は
+それ以上　持てないみたい</language>
 	</row>
 
 	<flowchart-group-list>

@@ -9,6 +9,7 @@
 #ifndef ZONE_T05R0301_EVC_H
 #define ZONE_T05R0301_EVC_H
 
+#define T05R0301_RAILMAN_01                0
 
 #endif //ZONE_T05R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t05r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
