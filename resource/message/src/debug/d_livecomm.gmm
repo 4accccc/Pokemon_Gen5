@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-04-24T21:39:23"/>
+	<create user="iwasawa" host="W00157" date="2010-04-26T15:22:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -604,11 +604,16 @@
 	</row>
 
 	<row id="dlc_lang_06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">むこう</language>
+		<language name="JPN_KANJI" width="256">むこう</language>
+	</row>
+
+	<row id="dlc_lang_07" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">スペインご</language>
 		<language name="JPN_KANJI" width="256">スペインご</language>
 	</row>
 
-	<row id="dlc_lang_07" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+	<row id="dlc_lang_08" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">かんこくご</language>
 		<language name="JPN_KANJI" width="256">かんこくご</language>
 	</row>
