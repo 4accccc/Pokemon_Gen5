@@ -2241,6 +2241,9 @@ static void RefreshPolishData( BADGEVIEW_WORK *wk )
   
   now_digit -= digit;   // 差分取得
   now_digit /= 60*60;   // 時間に変換
+  if(now_digit<0){      // マイナス値にはしないようにする
+    now_digit = 0;
+  }
 
   // 磨きデータの取得・時間の差分から更新( 2日で１段階落ちる）
   {
