@@ -507,6 +507,30 @@ VMCMD_RESULT EvCmdObjParamGet( VMHANDLE *core, void *wk )
   }
   return( VMCMD_RESULT_CONTINUE );
 }
+
+//--------------------------------------------------------------
+/**
+ * OBJをゾーン切り替えでも削除されないOBJに指定
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdObjSetNotDelZoneChange( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16 obj_id	= SCRCMD_GetVMWorkValue( core, work );
+  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
+  
+  if( mmdl != NULL ){
+    MMDL_SetStatusBitNotZoneDelete( mmdl, TRUE );
+  }else{
+    GF_ASSERT( 0 );
+  }
+      
+  return( VMCMD_RESULT_CONTINUE );
+}
+
 //======================================================================
 //  動作モデル　イベント関連
 //======================================================================

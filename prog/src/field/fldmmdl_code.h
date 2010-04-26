@@ -39,6 +39,14 @@
 #define MMDL_ID_COMMACTOR (0xfc) ///<通信アクター専用ID
 #define MMDL_ID_EVENTOBJ_00 (0xfb) ///<スクリプトイベント内で追加されるOBJID
 
+//スクリプト配置は原則禁止
+#define MMDL_ID_EVENTOBJ_01 (0xfa) ///<スクリプトイベント内で追加されるOBJID
+#define MMDL_ID_EVENTOBJ_02 (0xf0) ///<スクリプトイベント内で追加されるOBJID
+
+//T01-R01で配置される特殊OBJ用ID
+#define MMDL_ID_T01_R01_RIVAL (MMDL_ID_EVENTOBJ_01)
+#define MMDL_ID_T01_R01_SUPPORT (MMDL_ID_EVENTOBJ_02)
+
 //--------------------------------------------------------------
 //  エイリアスID 元:PL script_def.h
 //--------------------------------------------------------------

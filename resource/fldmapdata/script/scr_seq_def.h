@@ -1868,7 +1868,20 @@
   .short  \obj_id
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief 動作モデルのワープによる消去
+ * @param obj_id 適用するOBJID
+ */
+//--------------------------------------------------------------
+#define _OBJ_SET_NOT_DEL_ZONECHG( obj_id ) \
+    _ASM_OBJ_SET_NOT_DEL_ZONECHG obj_id
   
+  .macro _ASM_OBJ_SET_NOT_DEL_ZONECHG obj_id
+  .short EV_SEQ_OBJ_SET_NOT_DEL_ZONECHG
+  .short \obj_id
+  .endm
+
 //======================================================================
 //  動作モデル　イベント関連
 //======================================================================

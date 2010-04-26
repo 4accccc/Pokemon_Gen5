@@ -201,6 +201,7 @@ EVENT_END
 sub_anm_player_in_first:
 {
 /*
+  演出変更によりなくなりました
   _BSUBWAY_TOOL( BSWTOOL_GET_MINE_OBJ, BSW_NULL, BSW_NULL, OBJCHRWORK0 )
   _OBJ_ADD_EX( 2, 8, DIR_UP, BSW_TRAIN_OBJID_JIKI, WKOBJCODE00, MV_DMY )
   _OBJ_ANIME( BSW_TRAIN_OBJID_JIKI, anm_player_in_first )
@@ -209,11 +210,14 @@ sub_anm_player_in_first:
 }
 _RET
 
+/*
+  演出変更によりなくなりました
 _ANIME_LABEL  anm_player_in_first
   _ANIME_DATA AC_WAIT_4F,1
   _ANIME_DATA AC_WALK_U_8F,4
   _ANIME_DATA AC_WALK_R_8F,2
   _ANIME_DATA ACMD_END,0
+*/
 
 //--------------------------------------------------------------
 //  列車内　ゲーム初回　自機入場アニメ　マルチ
@@ -221,6 +225,7 @@ _ANIME_LABEL  anm_player_in_first
 sub_anm_player_in_first_multi:
 {
 /*
+  演出変更によりなくなりました
   _BSUBWAY_TOOL( BSWTOOL_GET_MINE_OBJ, BSW_NULL, BSW_NULL, OBJCHRWORK0 )
   
   _OBJ_ADD_EX( 2, 8, DIR_UP, BSW_TRAIN_OBJID_JIKI, WKOBJCODE00, MV_DMY )
@@ -237,6 +242,8 @@ sub_anm_player_in_first_multi:
 }
 _RET
 
+/*
+  演出変更によりなくなりました
 _ANIME_LABEL  anm_player_in_first_multi_0
   _ANIME_DATA AC_WAIT_4F,1
   _ANIME_DATA AC_WALK_U_8F,1
@@ -252,6 +259,7 @@ _ANIME_LABEL  anm_player_in_first_multi_2
   _ANIME_DATA AC_WALK_U_8F,5
   _ANIME_DATA AC_WALK_R_8F,2
   _ANIME_DATA ACMD_END,0
+*/
 
 //======================================================================
 //  列車内　ゲーム続きから
