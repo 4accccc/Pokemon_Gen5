@@ -22,14 +22,13 @@ extern GMEVENT *FBI_TOOL_CreatePokeListEvt(
 
 extern GMEVENT * FBI_TOOL_CreateTrainerBeforeMsgEvt(
     GAMESYS_WORK *gsys, BSUBWAY_PARTNER_DATA *tr_data, int tr_idx, u16 obj_id );
-
+//↓以降サブウェイ・検定で共有
 extern BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
     GAMESYS_WORK *gsys, const POKEPARTY *my_party, int inPlayMode,
     BSUBWAY_PARTNER_DATA *partner_data,
     BSUBWAY_PARTNER_DATA *ai_multi_data,
     const int inMemNum );
 
-//↓以降サブウェイ・検定で共有
 extern BOOL FBI_TOOL_MakeRomTrainerData(
     BSUBWAY_PARTNER_DATA *tr_data,
     u16 tr_no, int cnt,
