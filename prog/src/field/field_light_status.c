@@ -133,6 +133,7 @@ u16 FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( int weather_id )
     NARC_field_weather_light_light_mist_dat,
     NARC_field_weather_light_light_palace_white_mist_dat,
     NARC_field_weather_light_light_palace_black_mist_dat,
+    NARC_field_weather_light_light_storm_dat,
   };
   GF_ASSERT( weather_id < WEATHER_NO_NUM );
   return sc_WEATHER_LIGHT[ weather_id ];

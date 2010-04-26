@@ -250,6 +250,12 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 		FS_OVERLAY_ID(field_weather_mist)
 	},
 
+	// çªóíÅ@ã≠Ç¢
+	{
+		&c_WEATHER_TASK_DATA_STORM_HIGH,
+		FS_OVERLAY_ID(field_weather_storm)
+	},
+
 
 
 

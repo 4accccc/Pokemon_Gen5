@@ -148,6 +148,17 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_STORM = {
 	NARC_field_weather_storm_NANR,			// OAM CELLANM
   {
     {
+      //*
+      NARC_field_weather_storm_nsbtx,		// BGTEX
+      GX_TEXSIZE_S64,		// GXTexSizeS
+      GX_TEXSIZE_T64,		// GXTexSizeT
+      GX_TEXREPEAT_ST,		// GXTexRepeat
+      GX_TEXFLIP_NONE,		// GXTexFlip
+      GX_TEXFMT_PLTT4,		// GXTexFmt
+      GX_TEXPLTTCOLOR0_TRNS,		// GXTexPlttColor0
+      //*/
+    },
+    {
       0,		// BGTEX
       0,		// GXTexSizeS
       0,		// GXTexSizeT
@@ -155,15 +166,47 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_STORM = {
       0,		// GXTexFlip
       0,		// GXTexFmt
       0,		// GXTexPlttColor0
-      /*
+    },
+  },
+
+	// ワークサイズ
+	sizeof(WEATHER_STORM_WORK),
+
+	// 管理関数
+	WEATHER_STORM_Init,		// 初期化
+	WEATHER_STORM_FadeIn,		// フェードイン
+	WEATHER_STORM_NoFade,		// フェードなし
+	WEATHER_STORM_Main,		// メイン処理
+	WEATHER_STORM_InitFadeOut,	// フェードアウト
+	WEATHER_STORM_FadeOut,		// フェードアウト
+	WEATHER_STORM_Exit,		// 破棄
+
+	// オブジェ動作関数
+	WEATHER_STORM_OBJ_Move,
+};
+
+// 砂嵐
+WEATHER_TASK_DATA c_WEATHER_TASK_DATA_STORM_HIGH = {
+	//	グラフィック情報
+	ARCID_FIELD_WEATHER,			// アークID
+	TRUE,		// OAMを使用するか？
+	//WEATHER_TASK_3DBG_USE_NONE,		// BGを使用するか？
+	WEATHER_TASK_3DBG_USE_FRONT,		// BGを使用するか？
+	NARC_field_weather_storm_NCGR,			// OAM CG
+	NARC_field_weather_storm_NCLR,			// OAM PLTT
+	NARC_field_weather_storm_NCER,			// OAM CELL
+	NARC_field_weather_storm_NANR,			// OAM CELLANM
+  {
+    {
+      //*
       NARC_field_weather_storm_nsbtx,		// BGTEX
-      GX_TEXSIZE_S32,		// GXTexSizeS
-      GX_TEXSIZE_T32,		// GXTexSizeT
+      GX_TEXSIZE_S64,		// GXTexSizeS
+      GX_TEXSIZE_T64,		// GXTexSizeT
       GX_TEXREPEAT_ST,		// GXTexRepeat
       GX_TEXFLIP_NONE,		// GXTexFlip
       GX_TEXFMT_PLTT4,		// GXTexFmt
       GX_TEXPLTTCOLOR0_TRNS,		// GXTexPlttColor0
-      */
+      //*/
     },
     {
       0,		// BGTEX
@@ -276,7 +319,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_FadeIn( WEATHER_TASK* p_wk, WEATHE
 		// タイミングが最小になったらメインへ
 		if( fog_result && result ){		// フェードリザルトが完了ならばメインへ
 			// BGON
-			//WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
+			WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
 
 			// シーケンス変更
 			return WEATHER_TASK_FUNC_RESULT_FINISH;
@@ -323,7 +366,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_NoFade( WEATHER_TASK* p_wk, WEATHE
 
 	
 	// BGON
-	// WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
+	WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
 
 
   // ライト変更
@@ -390,7 +433,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_STORM_InitFadeOut( WEATHER_TASK* p_wk, W
 
 
 	// BGON
-	//WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE, WEATHER_TASK_3DBG_FRONT );
+	WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE, WEATHER_TASK_3DBG_FRONT );
 
 
   // SE

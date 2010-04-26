@@ -513,6 +513,10 @@ static const s8 sc_SNOW_OBJ_MOVE_X[] = {
 #define WEATHER_SNOW_S_SP_UP			(8)						// この値以上の横スピードのときは派手にする
 static const int WEATHER_SSNOW_SPEED_X_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {7,11,15,19};
 static const int WEATHER_SSNOW_SPEED_Y_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {3,6,3,6};	// たてに進むスピード
+static const s8 WEATHER_SNOW_S_BG_SCROLL_X[] = { 7,8,8,8,8,8,7,7,7, };
+static const s8 WEATHER_SNOW_S_BG_SCROLL_Y[] = { 3,2,1,2,1,2,3,2,3, };
+#define WEATHER_SNOW_S_BG_SCR_TBL_NUM     ( NELEMS(WEATHER_SNOW_S_BG_SCROLL_X) )
+#define WEATHER_SNOW_S_BG_SCR_Y_ONE_COUNT (28)
 
 
 
@@ -790,7 +794,8 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SNOWSTORM = {
 	//	グラフィック情報
 	ARCID_FIELD_WEATHER,			// アークID
 	TRUE,		// OAMを使用するか？
-	WEATHER_TASK_3DBG_USE_NONE,		// BGを使用するか？
+	//WEATHER_TASK_3DBG_USE_NONE,		// BGを使用するか？
+	WEATHER_TASK_3DBG_USE_FRONT,		// BGを使用するか？
 	NARC_field_weather_snow_s_NCGR,			// OAM CG
 	NARC_field_weather_snow_NCLR,			// OAM PLTT
 	NARC_field_weather_snow_s_NCER,			// OAM CELL
@@ -798,8 +803,8 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SNOWSTORM = {
   {
     {
       NARC_field_weather_snow_storm_nsbtx,		// BGTEX
-      GX_TEXSIZE_S32,		// GXTexSizeS
-      GX_TEXSIZE_T32,		// GXTexSizeT
+      GX_TEXSIZE_S64,		// GXTexSizeS
+      GX_TEXSIZE_T64,		// GXTexSizeT
       GX_TEXREPEAT_ST,		// GXTexRepeat
       GX_TEXFLIP_NONE,		// GXTexFlip
       GX_TEXFMT_PLTT4,		// GXTexFmt
@@ -1417,7 +1422,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SSNOW_FadeIn( WEATHER_TASK* p_wk, WEATHE
 		if( fog_result && result ){		// フェードリザルトが完了ならばメインへ
 
 			// BGON
-			//WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
+			WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
 
 			return WEATHER_TASK_FUNC_RESULT_FINISH;
 		}
@@ -1465,7 +1470,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SSNOW_NoFade( WEATHER_TASK* p_wk, WEATHE
 
 
 	// BGON
-	//WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
+	WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
 
   // ライト変更
   WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( WEATHER_NO_SNOWSTORM ) );
@@ -1521,7 +1526,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SSNOW_InitFadeOut( WEATHER_TASK* p_wk, W
 	WEATHER_SSNOW_SCROLL_Main( p_wk, p_local_wk );
 
 	// BGON
-	//WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE, WEATHER_TASK_3DBG_FRONT );
+	WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE, WEATHER_TASK_3DBG_FRONT );
 
 
   // SE
@@ -1782,10 +1787,12 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_Init( WEATHER_TASK* p_wk, WEATHER
 	
 	p_local_wk->work[1] = 0;					// オブジェ数カウンタ
 	p_local_wk->work[2] = 0;					// BGカウンタ
+	p_local_wk->work[9] = 0;					// BGカウンタ
+
+	p_local_wk->work[8] = 0;					// スクロールスピードY
 
 	// スクロール処理の初期化
 	WEATHER_TASK_InitScrollDist( p_wk );
-
 
   // SE
   WEATHER_TASK_PlayLoopSnd( p_wk, WEATHER_SND_SE_SNOWSTORM );
@@ -1831,7 +1838,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_FadeIn( WEATHER_TASK* p_wk, WEATH
 		if( fog_result && result ){		// フェードリザルトが完了ならばメインへ
 
 			// BGON
-			//WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
+			WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
 
 			return WEATHER_TASK_FUNC_RESULT_FINISH;
 		}
@@ -1873,13 +1880,14 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_NoFade( WEATHER_TASK* p_wk, WEATH
 	
 	p_local_wk->work[1] = 0;					// オブジェ数カウンタ
 	p_local_wk->work[2] = 0;					// BGカウンタ
+	p_local_wk->work[9] = 0;					// BGカウンタ
 
 	// オブジェクトを散らばす
 	WEATHER_TASK_DustObj( p_wk, WEATHER_SNOW_S_OBJ_Add, WEATHER_SNOW_S_NOFADE_OBJ_START_NUM, WEATHER_SNOW_S_NOFADE_OBJ_START_DUST_NUM, WEATHER_SNOW_S_NOFADE_OBJ_START_DUST_MOVE, heapID );
 
 
 	// BGON
-	//WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
+	WEATHER_TASK_3DBG_SetVisible( p_wk, TRUE, WEATHER_TASK_3DBG_FRONT );
 
   // ライト変更
   WEATHER_TASK_LIGHT_Set( p_wk, ARCID_FIELD_WEATHER_LIGHT, FIELD_LIGHT_STATUS_GetWeatherLightDatIdx( WEATHER_NO_SNOWSTORM ) );
@@ -1945,7 +1953,7 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SNOW_S_InitFadeOut( WEATHER_TASK* p_wk, 
 	WEATHER_SNOW_S_SCROLL_Main( p_wk, p_local_wk );
 
 	// BGON
-	//WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE, WEATHER_TASK_3DBG_FRONT );
+	WEATHER_TASK_3DBG_SetVisible( p_wk, FALSE, WEATHER_TASK_3DBG_FRONT );
 
   // SE
   WEATHER_TASK_StopLoopSnd( p_wk );
@@ -2154,13 +2162,28 @@ static void WEATHER_SNOW_S_OBJ_Add( WEATHER_TASK* p_wk, int num, HEAPID heapID )
 static void WEATHER_SNOW_S_SCROLL_Main( WEATHER_TASK* p_sys, WEATHER_SNOW_S_WORK* p_wk )
 {
 	int x, y;
+  int scrsp_y;
+  int scrsp_x;
 	WEATHER_TASK_GetScrollDist( p_sys, &x, &y );
 	WEATHER_TASK_ScrollObj( p_sys, x, y );
 
+  scrsp_y = WEATHER_SNOW_S_BG_SCROLL_Y[ (p_wk->work[8]/WEATHER_SNOW_S_BG_SCR_Y_ONE_COUNT) ];
+  scrsp_x = WEATHER_SNOW_S_BG_SCROLL_X[ (p_wk->work[8]/WEATHER_SNOW_S_BG_SCR_Y_ONE_COUNT) ];
+  p_wk->work[8] = (p_wk->work[8] + 1) % (NELEMS(WEATHER_SNOW_S_BG_SCROLL_Y) * WEATHER_SNOW_S_BG_SCR_Y_ONE_COUNT);
+
 	// BG面を斜め上に動かす
-	p_wk->work[2] = (p_wk->work[2] + 6) % 256;
-	WEATHER_TASK_3DBG_SetScrollX( p_sys, (-p_wk->work[2]*2) - x, WEATHER_TASK_3DBG_FRONT );
-	WEATHER_TASK_3DBG_SetScrollY( p_sys, (-p_wk->work[2]*2) + y, WEATHER_TASK_3DBG_FRONT );
+	p_wk->work[2] = (p_wk->work[2] + scrsp_x - (x/2)); // 遠くのものはそこまで影響を受けない。
+	p_wk->work[9] = (p_wk->work[9] + scrsp_y - (y/2));
+  if( p_wk->work[2] < 0 ){
+    p_wk->work[2] += 256;
+  }
+  if( p_wk->work[9] < 0 ){
+    p_wk->work[9] += 256;
+  }
+  p_wk->work[2] %= 256;
+  p_wk->work[9] %= 256;
+	WEATHER_TASK_3DBG_SetScrollX( p_sys, (-p_wk->work[2]), WEATHER_TASK_3DBG_FRONT );
+	WEATHER_TASK_3DBG_SetScrollY( p_sys, (-p_wk->work[9]), WEATHER_TASK_3DBG_FRONT );
 }
 
 

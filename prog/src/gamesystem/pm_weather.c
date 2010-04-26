@@ -48,7 +48,7 @@
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
-static u16 PM_WEATHER_GetPalaceWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id );
+static u16 PM_WEATHER_GetPalaceWeather( const GAMESYS_WORK* cp_gamesystem, const GAMEDATA* cp_data, int zone_id );
 static u16 PM_WEATHER_GetEventWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id );
 static u16 PM_WEATHER_GetBirthDayWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id );
 
@@ -134,6 +134,28 @@ void PM_WEATHER_UpdateSaveLoadWeatherNo( GAMEDATA* p_data, int zone_id )
   }
 }
 
+// PALACEマップ　もやがかかるか取得
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PALACEマップ　もやがかかるか取得
+ *
+ *	@param	cp_gamesystem   ゲームシステム
+ *	@param	zone_id         ゾーンID
+ *
+ *	@retval TRUE    かかる
+ *	@retval FALSE   かからない
+ */
+//-----------------------------------------------------------------------------
+BOOL PM_WEATHER_IsPalaceMistWeather( const GAMESYS_WORK* cp_gamesystem, int zone_id )
+{
+  const GAMEDATA* cp_gamedata  = GAMESYSTEM_GetGameData( (GAMESYS_WORK*)cp_gamesystem );
+
+  if( PM_WEATHER_GetPalaceWeather( cp_gamesystem, cp_gamedata, zone_id ) == WEATHER_NO_NONE ){
+    return FALSE;
+  }
+  return TRUE;
+}
+
 
 
 
@@ -154,10 +176,10 @@ void PM_WEATHER_UpdateSaveLoadWeatherNo( GAMEDATA* p_data, int zone_id )
  *	@return 天気
  */
 //-----------------------------------------------------------------------------
-static u16 PM_WEATHER_GetPalaceWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id )
+static u16 PM_WEATHER_GetPalaceWeather( const GAMESYS_WORK* cp_gamesystem, const GAMEDATA* cp_data, int zone_id )
 {
-  EVENTWORK * p_evwork = GAMEDATA_GetEventWork( p_data );
-  GAME_COMM_SYS_PTR p_gamecomm = GAMESYSTEM_GetGameCommSysPtr( p_gamesystem );
+  EVENTWORK * p_evwork = GAMEDATA_GetEventWork( (GAMEDATA*)cp_data );
+  GAME_COMM_SYS_PTR p_gamecomm = GAMESYSTEM_GetGameCommSysPtr( (GAMESYS_WORK*)cp_gamesystem );
   int i;
   
   // パレスなら、パレス用

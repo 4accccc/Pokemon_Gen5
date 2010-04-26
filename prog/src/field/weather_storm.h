@@ -28,6 +28,7 @@ FS_EXTERN_OVERLAY(field_weather_storm);
 */
 //-----------------------------------------------------------------------------
 extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_STORM;
+extern WEATHER_TASK_DATA c_WEATHER_TASK_DATA_STORM_HIGH;
 
 
 

@@ -3068,10 +3068,14 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
           tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
       GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( twin_bmp );
       
-      FLDKEYWAITCURSOR_Write( &tmsg->cursor_work, bmp, 0x0f );
+      if( Control_GetAutoPrintFlag(&tmsg->fmb->print_cont) == FALSE ){//オート表示中はキーカーソルをださない。
+        FLDKEYWAITCURSOR_Write( &tmsg->cursor_work, bmp, 0x0f );
+      }
 
       if( Control_GetWaitKey( &tmsg->fmb->print_cont ) ){
-        PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+        if( Control_GetAutoPrintFlag(&tmsg->fmb->print_cont) == FALSE ){//オート表示中は音を出さない。
+          PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+        }
         PRINTSYS_PrintStreamReleasePause( stream );
         FLDKEYWAITCURSOR_Clear( &tmsg->cursor_work, bmp, 0x0f );
         set_printStreamTempSpeed( stream, FALSE );
