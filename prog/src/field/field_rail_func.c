@@ -1462,6 +1462,138 @@ void FIELD_RAIL_CAMERAFUNC_StopScrollFixAngle_EndPoint( const FIELD_RAIL_MAN * m
 }
 
 
+//------------------------------------------------------------------
+//  固定アングル　ターゲットオフセット　カメラ
+//------------------------------------------------------------------
+void FIELD_RAIL_CAMERAFUNC_FixAngleTargetOffsCamera(const FIELD_RAIL_MAN* man)
+{
+  FIELD_CAMERA * cam = FIELD_RAIL_MAN_GetCamera(man);
+  VecFx32 pos;
+	const FIELD_RAIL_WORK* work = FIELD_RAIL_MAN_GetBindWork( man );
+  const RAIL_CAMERA_SET * cam_set = FIELD_RAIL_GetCameraSet(work);
+	const RAIL_CAMERAFUNC_FIXANGLE_TARGETOFFS_WORK* cp_wk;
+
+	cp_wk = (const RAIL_CAMERAFUNC_FIXANGLE_TARGETOFFS_WORK*)cam_set->work;
+
+	// 座標直指定モード
+	FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+	// デフォルトターゲットを参照
+	FIELD_CAMERA_BindDefaultTarget( FIELD_RAIL_MAN_GetCamera(man) );
+
+  FIELD_RAIL_MAN_GetBindWorkPos( man, &pos );
+  {
+    u16 yaw = (u16)cp_wk->yaw;
+    u16 pitch = (u16)cp_wk->pitch;
+    fx32 len = cp_wk->len;
+
+    FIELD_CAMERA_SetAngleYaw( cam, yaw );
+    FIELD_CAMERA_SetAnglePitch( cam, pitch );
+    FIELD_CAMERA_SetAngleLen( cam, len );
+  }
+
+  {
+    VecFx32 target_offs;
+
+    target_offs.x = cp_wk->target_offset_x;
+    target_offs.y = cp_wk->target_offset_y;
+    target_offs.z = cp_wk->target_offset_z;
+
+    FIELD_CAMERA_SetTargetOffset( cam, &target_offs );
+  }
+}
+
+
+//------------------------------------------------------------------
+//  アングル　ターゲットオフセット　カメラ 線形補間
+//------------------------------------------------------------------
+void FIELD_RAIL_CAMERAFUNC_OfsAngleTargetOffsCamera(const FIELD_RAIL_MAN* man)
+{
+  const FIELD_RAIL_WORK * work = FIELD_RAIL_MAN_GetBindWork( man );
+	const RAIL_POINT* point_s = FIELD_RAIL_GetPointStart( work );
+	const RAIL_POINT* point_e = FIELD_RAIL_GetPointEnd( work );
+  const RAIL_CAMERA_SET * cs;
+  const RAIL_CAMERA_SET * ce;
+	FIELD_CAMERA* cam = FIELD_RAIL_MAN_GetCamera( man );
+	const RAIL_CAMERAFUNC_FIXANGLE_TARGETOFFS_WORK* cs_work;
+	const RAIL_CAMERAFUNC_FIXANGLE_TARGETOFFS_WORK* ce_work;
+  u32 div;
+  s32 line_ofs;
+  fx32 t;
+	
+  GF_ASSERT(FIELD_RAIL_GetType(work) == FIELD_RAIL_TYPE_LINE);
+
+	// 座標直指定モード
+	FIELD_CAMERA_SetMode( cam, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+
+	// デフォルトターゲットを参照
+	FIELD_CAMERA_BindDefaultTarget( FIELD_RAIL_MAN_GetCamera(man) );
+
+  cs = FIELD_RAIL_POINT_GetCameraSet( work, point_s );
+  ce = FIELD_RAIL_POINT_GetCameraSet( work, point_e );
+
+	cs_work = (const RAIL_CAMERAFUNC_FIXANGLE_TARGETOFFS_WORK*)cs->work;
+	ce_work = (const RAIL_CAMERAFUNC_FIXANGLE_TARGETOFFS_WORK*)ce->work;
+
+  div = FIELD_RAIL_GetLineOfsMax(work);
+  line_ofs = FIELD_RAIL_GetLineOfs(work);
+  t = FX_Div( FX32_ONE * line_ofs, div * FX32_ONE );
+	
+  {
+    s32 pitch_s = (u16)cs_work->pitch;
+    s32 yaw_s = (u16)cs_work->yaw;
+    fx32 len_s = cs_work->len;
+    s32 pitch_e = (u16)ce_work->pitch;
+    s32 yaw_e = (u16)ce_work->yaw;
+    fx32 len_e = ce_work->len;
+    s32 pitch_dis;
+    s32 yaw_dis;
+
+    u16 pitch;
+    u16 yaw;
+    fx32 len;
+
+    // 線形補間
+    pitch_dis = (pitch_e - pitch_s);
+    if( pitch_dis >= 0x8000 ){  // 180以上なら、逆回転
+      pitch_dis = pitch_dis - 0x10000;
+    }else if( pitch_dis <= -0x8000 ){
+      pitch_dis = pitch_dis + 0x10000;
+    }
+    pitch = (u16)(pitch_s + (FX_Mul( pitch_dis<<FX32_SHIFT,  t ) >> FX32_SHIFT));
+
+    yaw_dis = (yaw_e - yaw_s);
+    if( yaw_dis >= 0x8000 ){  // 180以上なら、逆回転
+      yaw_dis = yaw_dis - 0x10000;
+    }else if( yaw_dis <= -0x8000 ){
+      yaw_dis = yaw_dis + 0x10000;
+    }
+    yaw = (u16)(yaw_s + (FX_Mul( yaw_dis<<FX32_SHIFT,  t ) >> FX32_SHIFT));
+
+    len = len_s + FX_Mul( len_e - len_s,  t );
+
+    FIELD_CAMERA_SetAngleYaw( cam, yaw );
+    FIELD_CAMERA_SetAnglePitch( cam, pitch );
+    FIELD_CAMERA_SetAngleLen( cam, len );
+
+    /*
+    TOMOYA_Printf( "pitch s = 0x%x pitch e = 0x%x pitch = 0x%x\n", pitch_s, pitch_e, pitch );
+    TOMOYA_Printf( "yaw s = 0x%x yaw e = 0x%x yaw = 0x%x\n", yaw_s, yaw_e, yaw );
+    TOMOYA_Printf( "len s = 0x%x len e = 0x%x len = 0x%x\n", len_s, len_e, len );
+    */
+  }
+
+  {
+    VecFx32 offs;
+
+    offs.x = cs_work->target_offset_x + FX_Mul( (ce_work->target_offset_x - cs_work->target_offset_x), t );
+    offs.y = cs_work->target_offset_y + FX_Mul( (ce_work->target_offset_y - cs_work->target_offset_y), t );
+    offs.z = cs_work->target_offset_z + FX_Mul( (ce_work->target_offset_z - cs_work->target_offset_z), t );
+
+    FIELD_CAMERA_SetTargetOffset( cam, &offs );
+  }
+}
+
 
 // 
 //----------------------------------------------------------------------------

@@ -2497,8 +2497,10 @@ static void RE_Send_CameraData( DEBUG_RAIL_EDITOR* p_wk )
 	FIELD_CAMERA* p_camera = FIELDMAP_GetFieldCamera( p_wk->p_fieldmap );
 	const GFL_G3D_CAMERA * cp_core_camera = FIELD_CAMERA_GetCameraPtr( p_camera );
 	RE_MCS_CAMERA_DATA* p_senddata = (RE_MCS_CAMERA_DATA*)p_wk->p_tmp_buff;
+  const FIELD_PLAYER* cp_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
 	VecFx32 pos;
 	VecFx32 target;
+  VecFx32 hero_pos;
 	BOOL result;
 
 	p_senddata->header.data_type = RE_MCS_DATA_CAMERADATA;
@@ -2506,6 +2508,15 @@ static void RE_Send_CameraData( DEBUG_RAIL_EDITOR* p_wk )
 	FIELD_CAMERA_Main( p_camera, 0 );
 
 	GFL_G3D_CAMERA_GetTarget( cp_core_camera, &target );
+
+  // 自機位置基準のターゲットオフセット
+  FIELD_PLAYER_GetPos( cp_player, &hero_pos );
+  p_senddata->target_offset_x = target.x - hero_pos.x;
+  p_senddata->target_offset_y = target.y - hero_pos.y;
+  p_senddata->target_offset_z = target.z - hero_pos.z;
+  
+
+  // カメラ、ポス　ターゲットポス
 	VEC_Subtract( &target, &p_wk->default_target_offset, &target );	// ターゲットオフセット分は減らす
 	GFL_G3D_CAMERA_GetPos( cp_core_camera, &pos );
 	p_senddata->pos_x = pos.x;
@@ -2514,6 +2525,8 @@ static void RE_Send_CameraData( DEBUG_RAIL_EDITOR* p_wk )
 	p_senddata->target_x = target.x;
 	p_senddata->target_y = target.y;
 	p_senddata->target_z = target.z;
+
+
 	
 	if( FIELD_CAMERA_GetMode( p_camera ) == FIELD_CAMERA_MODE_CALC_CAMERA_POS )
 	{
@@ -2523,6 +2536,14 @@ static void RE_Send_CameraData( DEBUG_RAIL_EDITOR* p_wk )
 	}
 	else
 	{
+    // 必ずCALC_CAMERA_POS用のアングルを返す。
+		p_senddata->pitch = FIELD_CAMERA_GetAnglePitch( p_camera );
+		p_senddata->yaw		= FIELD_CAMERA_GetAngleYaw( p_camera );
+		p_senddata->len		= FIELD_CAMERA_GetAngleLen( p_camera );
+		p_senddata->pitch += 0x8000;
+		p_senddata->yaw += 0x8000;
+    
+    /*
 		VecFx32 camera_way;
 		fx32 xz_dist;
 
@@ -2534,6 +2555,7 @@ static void RE_Send_CameraData( DEBUG_RAIL_EDITOR* p_wk )
 		p_senddata->len		= VEC_Mag( &camera_way );
 		p_senddata->pitch = FX_Atan2( -camera_way.y, xz_dist );
 		p_senddata->yaw		= FX_Atan2( camera_way.x, camera_way.z );
+    */
 	}
 
 	// 送信

@@ -140,6 +140,9 @@ typedef struct {
 	u16						pitch;
 	u16						yaw;
 	fx32					len;
+	fx32					target_offset_x;  //自機位置基準のターゲットオフセット
+	fx32					target_offset_y;
+	fx32					target_offset_z;
 } RE_MCS_CAMERA_DATA;
 
 //-------------------------------------

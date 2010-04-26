@@ -202,6 +202,30 @@ extern void FIELD_RAIL_CAMERAFUNC_StopScrollFixAngle_StartPoint( const FIELD_RAI
 extern void FIELD_RAIL_CAMERAFUNC_StopScrollFixAngle_EndPoint( const FIELD_RAIL_MAN * man );
 
 
+
+//------------------------------------------------------------------
+//  固定アングル　ターゲットオフセット　カメラ
+//------------------------------------------------------------------
+typedef struct
+{
+	// カメラ座標
+	u32	pitch;
+	u32 yaw;
+	u32 len;
+
+  // ターゲットオフセット座標
+  fx32 target_offset_x;
+  fx32 target_offset_y;
+  fx32 target_offset_z;
+} RAIL_CAMERAFUNC_FIXANGLE_TARGETOFFS_WORK;
+extern void FIELD_RAIL_CAMERAFUNC_FixAngleTargetOffsCamera(const FIELD_RAIL_MAN* man);
+
+//------------------------------------------------------------------
+//  アングル　ターゲットオフセット　カメラ 線形補間
+//------------------------------------------------------------------
+extern void FIELD_RAIL_CAMERAFUNC_OfsAngleTargetOffsCamera(const FIELD_RAIL_MAN* man);
+
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif
