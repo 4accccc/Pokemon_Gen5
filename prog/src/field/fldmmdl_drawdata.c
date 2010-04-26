@@ -42,6 +42,7 @@ const MMDL_DRAW_PROC_LIST * const
   &DATA_MMDL_DRAWPROCLIST_BlActSpider, //くもの巣
   &DATA_MMDL_DRAWPROCLIST_BlActMelodyer, //ポケモン メロディア
   &DATA_MMDL_DRAWPROCLIST_BlActActNonePause, //汎用+演技 演技中はポーズ無視
+  &DATA_MMDL_DRAWPROCLIST_BlActAlwaysAnime, //通常ビルボード＋常にアニメ
 };
 
 //======================================================================
@@ -1545,6 +1546,7 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipSage1[DRAW_STA_ACT0_ANMN
 
 //--------------------------------------------------------------
 /// MMDL_BLACT_ANMTBLNO_NINJA用　フリップなし+演技
+/// 通常アニメ速度は２倍速
 //--------------------------------------------------------------
 static const GFL_BBDACT_ANM DATA_BlActAnmNonFlip_Ninja0[] = {
   {TEXIDX_NFLIP_ACT2,ANMFLIP_OFF,ANMFLIP_OFF,2},
@@ -1566,22 +1568,22 @@ static const GFL_BBDACT_ANM * const DATA_BlActAnmNonFlipNinja[DRAW_STA_ACT1_ANMN
   DATA_BlActAnmNonFlip_StopD,
   DATA_BlActAnmNonFlip_StopL,
   DATA_BlActAnmNonFlip_StopR,
-  DATA_BlActAnmNonFlip_WalkU32F,//DRWA_STA_WALK_32F
-  DATA_BlActAnmNonFlip_WalkD32F,
-  DATA_BlActAnmNonFlip_WalkL32F,
-  DATA_BlActAnmNonFlip_WalkR32F,
-  DATA_BlActAnmNonFlip_WalkU16F,//DRWA_STA_WALK_16F
+  DATA_BlActAnmNonFlip_WalkU16F,//DRWA_STA_WALK_32F
   DATA_BlActAnmNonFlip_WalkD16F,
   DATA_BlActAnmNonFlip_WalkL16F,
   DATA_BlActAnmNonFlip_WalkR16F,
-  DATA_BlActAnmNonFlip_WalkU8F,//DRWA_STA_WALK_8F
+  DATA_BlActAnmNonFlip_WalkU8F,//DRWA_STA_WALK_16F
   DATA_BlActAnmNonFlip_WalkD8F,
   DATA_BlActAnmNonFlip_WalkL8F,
   DATA_BlActAnmNonFlip_WalkR8F,
-  DATA_BlActAnmNonFlip_WalkU4F,//DRWA_STA_WALK_4F
+  DATA_BlActAnmNonFlip_WalkU4F,//DRWA_STA_WALK_8F
   DATA_BlActAnmNonFlip_WalkD4F,
   DATA_BlActAnmNonFlip_WalkL4F,
   DATA_BlActAnmNonFlip_WalkR4F,
+  DATA_BlActAnmNonFlip_WalkU2F,//DRWA_STA_WALK_4F
+  DATA_BlActAnmNonFlip_WalkD2F,
+  DATA_BlActAnmNonFlip_WalkL2F,
+  DATA_BlActAnmNonFlip_WalkR2F,
   DATA_BlActAnmNonFlip_WalkU2F,//DRWA_STA_WALK_2F
   DATA_BlActAnmNonFlip_WalkD2F,
   DATA_BlActAnmNonFlip_WalkL2F,

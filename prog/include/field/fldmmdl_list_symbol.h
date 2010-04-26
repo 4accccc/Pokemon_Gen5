@@ -28,6 +28,7 @@
 #define PROC_SPIDER 17 //くもの巣
 #define PROC_MELODYER 18 //ポケモン メロディア
 #define PROC_ACT0_NON_PAUSE 19 //汎用ビルボード+演技 演技終了時停止しない
+#define PROC_BLACT_ALANM4 20 //汎用ビルボードアクター常に4フレーム移動アニメ
 
 //FOOTMARK 足跡種類で指定するシンボルです。
 #define FOOTMARK_NON 0 //足跡無し

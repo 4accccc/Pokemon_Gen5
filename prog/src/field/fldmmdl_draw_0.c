@@ -509,10 +509,12 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
   {
     const OBJCODE_PARAM *prm = MMDLSYS_GetOBJCodeParam(
         MMDL_GetMMdlSys(mmdl), MMDL_GetOBJCode(mmdl) );
-    if( prm->draw_proc_no == MMDL_DRAWPROCNO_BLAACTALWAYSANIME_32 ){
+    if( prm->draw_proc_no == MMDL_DRAWPROCNO_BLACTALWAYSANIME_32 ){
       anm_id = DRAW_STA_WALK_32F * DIR_MAX4;
-    }else{
+    }else if( prm->draw_proc_no == MMDL_DRAWPROCNO_BLACTALWAYSANIME_16 ){
       anm_id = DRAW_STA_WALK_16F * DIR_MAX4;
+    }else{ //4frame
+      anm_id = DRAW_STA_WALK_4F * DIR_MAX4;
     }
   }
 
