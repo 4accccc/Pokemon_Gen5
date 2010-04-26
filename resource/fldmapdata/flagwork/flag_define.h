@@ -336,7 +336,7 @@
 #define FE_H04_ITEMHAVING_01               320 /* 0x0140 ビレッジブリッジ：配達物を持っているかのフラグ */
 #define FE_H04_DELIVERY_01                 321 /* 0x0141 ビレッジブリッジ：キャモメのイベントが起動しているかのフラグ */
 #define FE_H04R0301_FISHING_RECEPT         322 /* 0x0142 ビレッジブリッジ民家：釣りイベント クリアフラグ */
-#define FE_T05R0301_BTLITEM_TALK           323 /* 0x0143 カナワタウン民家：戦闘用アイテム入手イベント 初回会話フラグ */
+#define FE_T05R0301_BTLITEM_TALK           323 /* 0x0143 カナワタウン民家：バトルサブウェイの落し物　初回会話フラグ */
 #define FE_C08R0102_ITEMGET_01             324 /* 0x0144 ソウリュウシティ：シャガの家2Fアイテム入手フラグ01 */
 #define FE_C08R0102_ITEMGET_02             325 /* 0x0145 ソウリュウシティ：シャガの家2Fアイテム入手フラグ01 */
 #define FE_C04R0201_STYLIST_TALK           326 /* 0x0146 ミュージカルホール：スタイリストに話しかけたフラグ */
@@ -362,9 +362,9 @@
 #define FE_T04_ITEMGET_01                  346 /* 0x015a サザナミタウン：アイテム入手フラグ（わざマシン：ダイビング） */
 #define FE_R07R0201_TRADE_01               347 /* 0x015b ７番道路：ポケモン交換フラグ */
 #define FE_D04R2301_POKE13_GET             348 /* 0x015c 古代の城：ドラー捕獲フラグ */
-		/* not used   349(0x015d) */
-		/* not used   350(0x015e) */
-		/* not used   351(0x015f) */
+#define FE_R06R0101_EVENT_ON               349 /* 0x015d 季節研究所：シキジカイベント開始 */
+#define FE_R06R0101_ITEMGET_01             350 /* 0x015e 季節研究所：アイテム入手フラグ */
+#define FE_T01R0401_SUPPORT_TALK           351 /* 0x015f 研究所：クリア後サポートと話した */
 		/* not used   352(0x0160) */
 		/* not used   353(0x0161) */
 		/* not used   354(0x0162) */
@@ -836,13 +836,13 @@
 #define FV_R06R0102_POKE_SUMMER            812 /* 0x032c 季節研究所：シキジカ（夏） */
 #define FV_R06R0103_POKE_AUTUMN            813 /* 0x032d 季節研究所：シキジカ（秋） */
 #define FV_R06R0104_POKE_WINTER            814 /* 0x032e 季節研究所：シキジカ（冬） */
-		/* not used   815(0x032f) */
-		/* not used   816(0x0330) */
-		/* not used   817(0x0331) */
-		/* not used   818(0x0332) */
-		/* not used   819(0x0333) */
-		/* not used   820(0x0334) */
-		/* not used   821(0x0335) */
+#define FV_R05_RIVAL_AFTER                 815 /* 0x032f ５番道路：クリア後ライバル */
+#define FV_D09R1401_RIVAL                  816 /* 0x0330 チャンピオンロード：クリア後ライバル */
+#define FV_T01R0401_SUPPORT_AFTER          817 /* 0x0331 研究所：殿堂入り後サポート */
+#define FV_T05_RAILFAN                     818 /* 0x0332 カナワタウン：電車前の人々（鉄道ファン） */
+#define FV_T05_WEEKEND                     819 /* 0x0333 カナワタウン：電車前の人々 */
+#define FV_D01R0101_CORN_01                820 /* 0x0334 夢の跡地のストッパー（コーン） */
+#define FV_D07R0101_WORKMAN2_02            821 /* 0x0335 ネジ山：冬だけ出現する作業員 ※移動可能な場所を示すため冬のみ出現 */
 		/* not used   822(0x0336) */
 		/* not used   823(0x0337) */
 		/* not used   824(0x0338) */
@@ -2527,8 +2527,8 @@
 #define TMFLG_T03R0401_ITEMGET_01         2753 /* 0x0ac1 カゴメタウン：日曜日限定1日1回アイテム入手イベント */
 #define TMFLG_C03P16_CABIN_01             2754 /* 0x0ac2 ヒウンシティ：遊覧船イベント（1日1回） */
 #define TMFLG_H04_KINOMI_SAND             2755 /* 0x0ac3 ビレッジブリッジ：きのみサンドイベント */
-		/* not used  2756(0x0ac4) */
-		/* not used  2757(0x0ac5) */
+#define TMFLG_D09R1401_RIVAL              2756 /* 0x0ac4 チャンピオンロード：クリア後ライバル戦闘済みフラグ */
+#define TMFLG_T01R0401_SUPPORT            2757 /* 0x0ac5 研究所：一日一回会話内容が変わる。会話変更フラグ。 週末は戦闘イベントの対戦済みフラグとして使用 */
 		/* not used  2758(0x0ac6) */
 		/* not used  2759(0x0ac7) */
 		/* not used  2760(0x0ac8) */
