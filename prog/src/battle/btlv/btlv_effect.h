@@ -77,7 +77,7 @@ enum{
   BTLEFF_MIGAWARI_DEAD,                       //みがわり消滅
   BTLEFF_TRAINER_IN,                          //トレーナーフレームイン
   BTLEFF_TRAINER_OUT,                         //トレーナーフレームアウト
-//  BTLEFF_ANGRY,                             //
+  BTLEFF_KIAIPUNCH_TAME,                      //きあいパンチのタメエフェクト
   BTLEFF_NOROI,                               //のろい  30
   BTLEFF_AKUMU,                               //あくむ
   BTLEFF_YADORIGI,                            //やどりぎ
