@@ -142,7 +142,6 @@ static BOOL _DevInitFunc(HEAPID heapID, GFL_NETSYS* pNet,NetDevEndCallback callb
 
 static BOOL _DevStartFunc(NetDevEndCallback callback)
 {
-	OS_TPrintf("IRC_Connecté¿çs\n");
 	IRC_Connect();
 	return TRUE;
 }

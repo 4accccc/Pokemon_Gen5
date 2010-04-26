@@ -555,6 +555,14 @@ extern GameServiceID GFL_NET_WLGetGameServiceIDLimit(u8 index);
 //-------------------------------------------------------------
 extern void GFL_NET_WL_PauseBeacon(int flg);
 
+//-------------------------------------------------------------
+/**
+ * @brief   ビーコンスキャンの一時停止
+ * @param   bPause TRUEで停止 FALSEで解除
+ */
+//-------------------------------------------------------------
+extern void GFL_NET_WL_PauseScan(BOOL bPause);
+
 /////////////////////////////////////////////////////////////////////////
 //デバッグ用ルーチン
 #ifdef PM_DEBUG

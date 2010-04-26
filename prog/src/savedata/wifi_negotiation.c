@@ -89,7 +89,6 @@ void WIFI_NEGOTIATION_SV_SetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,const MYSTATUS
     pSV->count = 0;
   }
   MyStatus_Copy(pMyStatus, &pSV->aMyStatus[pSV->count]);
-  OS_TPrintf("“o˜^ %d\n",pSV->count);
   pSV->count++;  //ŒJ‚è•Ô‚µ•Û‘¶
 }
 

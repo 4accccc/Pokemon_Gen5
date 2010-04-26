@@ -159,13 +159,16 @@ struct _NET_WL_WORK {
 	u8 bErrorState;   ///< エラーを引き起こしている場合その状態をもちます
 	u8 bErrorCheck;   ///< 子機が無い場合+誰かが落ちた場合エラー扱いするかどうか
 	u8 bTGIDChange;
-	//   u8 bAutoExit;
 	u8 bEntry;        ///< 子機の新規参入
 	u8 bScanCallBack;  ///< 親のスキャンがかかった場合TRUE, いつもはFALSE
 	u8 bChange;   ///<ビーコン変更フラグ
   u8 crossChannel;
   u8 CrossRand;
   u8 PauseScan;
+  u8 crossTimerPause;
+  u8 dummy1;
+  u8 dummy2;
+  u8 dummy3;
   //u8 = 16byte
 } ;
 
@@ -1190,7 +1193,9 @@ void GFI_NET_MLProcess(u16 bitmap)
     if(_pNetWL->crossTimer){
       WIH_SetBeaconPause(TRUE);
       _pNetWL->PauseScan=TRUE;
-      _pNetWL->crossTimer--;
+      if(!_pNetWL->crossTimerPause){
+        _pNetWL->crossTimer--;
+      }
     }
     else{
       WIH_SetBeaconPause(FALSE);
@@ -2279,4 +2284,27 @@ void DEBUG_NET_WHPIPE_AloneTestCodeSet( u32 value )
 }
 
 #endif  //PM_DEBUG
+
+
+//-------------------------------------------------------------
+/**
+ * @brief   ビーコンスキャンの一時停止
+ * @param   bPause TRUEで停止 FALSEで解除
+ */
+//-------------------------------------------------------------
+
+void GFL_NET_WL_PauseScan(BOOL bPause)
+{
+
+  if(_pNetWL){
+    _pNetWL->crossTimerPause = bPause;
+    if(bPause){
+      _pNetWL->crossTimer = _BEACON_DOWNCOUNT;
+    }
+    else{
+      _pNetWL->crossTimer = 1;
+    }
+  }
+
+}
 
