@@ -422,6 +422,8 @@ void BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param )
 {
   BTLV_EFFVM_PARAM  effvm_param;
 
+  BTLV_EFFVM_ClearParam( &effvm_param );
+
   effvm_param.waza_range = WAZADATA_GetParam( param->waza, WAZAPARAM_TARGET );
   effvm_param.turn_count = param->turn_count;
   effvm_param.continue_count = param->continue_count;
@@ -511,6 +513,8 @@ void BTLV_EFFECT_BallThrow( int vpos, u16 item_no, u8 yure_cnt, BOOL f_success, 
 {
   BTLV_EFFVM_PARAM  effvm_param;
 
+  BTLV_EFFVM_ClearParam( &effvm_param );
+
   effvm_param.yure_cnt      = yure_cnt;
   effvm_param.get_success   = f_success;
   effvm_param.get_critical  = f_critical;
@@ -530,6 +534,8 @@ void BTLV_EFFECT_BallThrow( int vpos, u16 item_no, u8 yure_cnt, BOOL f_success, 
 void BTLV_EFFECT_BallThrowTrainer( int vpos, u16 item_no )
 {
   BTLV_EFFVM_PARAM  effvm_param;
+
+  BTLV_EFFVM_ClearParam( &effvm_param );
 
   effvm_param.item_no = item_no;
 

@@ -50,6 +50,7 @@ extern	void  		BTLV_EFFVM_Start( VMHANDLE *core, BtlvMcssPos from, BtlvMcssPos t
 extern  void			BTLV_EFFVM_Stop( VMHANDLE *vmh );
 extern  void      BTLV_EFFVM_Restart( VMHANDLE *vmh );
 extern  BTLV_EFFVM_EXECUTE_EFF_TYPE BTLV_EFFVM_GetExecuteEffectType( VMHANDLE *vmh );
+extern  void      BTLV_EFFVM_ClearParam( BTLV_EFFVM_PARAM* param );
 
 #ifdef PM_DEBUG
 extern	void		BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, const VM_CODE *start, const DEBUG_PARTICLE_DATA *dpd, BTLV_EFFVM_PARAM* param, BTLV_EFFVM_EXECUTE_EFF_TYPE type );

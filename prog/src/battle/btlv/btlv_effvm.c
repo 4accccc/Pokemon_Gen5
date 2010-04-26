@@ -53,7 +53,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-//#define DEBUG_OS_PRINT
+#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -762,6 +762,24 @@ BTLV_EFFVM_EXECUTE_EFF_TYPE BTLV_EFFVM_GetExecuteEffectType( VMHANDLE *vmh )
   }
 
   return type;
+}
+
+//============================================================================================
+/**
+ * @brief BTLV_EFFVM_PARAMを初期化
+ *
+ * @param[out]  param クリアするBTLV_EFFVM_PARAM構造体へのポインタ
+ */
+//============================================================================================
+void  BTLV_EFFVM_ClearParam( BTLV_EFFVM_PARAM* param )
+{ 
+  param->waza_range     = 0;      ///<技の効果範囲
+  param->turn_count     = 0;      ///< ターンによって異なるエフェクトを出す場合のターン指定。（ex.そらをとぶ）
+  param->continue_count = 0;      ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
+  param->yure_cnt       = 0;      ///<ボールゆれるカウント
+  param->get_success    = 0;      ///<捕獲成功かどうか
+  param->get_critical   = 0;      ///<クリティカルかどうか
+  param->item_no        = 0;      ///<ボールのアイテムナンバー
 }
 
 //============================================================================================
@@ -5314,22 +5332,24 @@ static  ARCDATID  EFFVM_ConvDatID( BTLV_EFFVM_WORK* bevw, ARCDATID datID )
 
   if( bevw->ball_mode == BTLEFF_CAPTURE_BALL_ATTACK )
   {
-    ofs = ( BTLV_MCSS_GetCaptureBall( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) - 1 );
+    ofs = BTLV_MCSS_GetCaptureBall( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos );
   }
   else if( bevw->ball_mode != BTLEFF_USE_BALL )
   {
-    ofs = ( BTLV_MCSS_GetCaptureBall( BTLV_EFFECT_GetMcssWork(), bevw->ball_mode ) - 1 );
+    ofs = BTLV_MCSS_GetCaptureBall( BTLV_EFFECT_GetMcssWork(), bevw->ball_mode );
   }
   else
   {
-    ofs = ITEM_GetBallID( bevw->param.item_no ) - 1 ;
+    ofs = ITEM_GetBallID( bevw->param.item_no );
   }
 
   //不正なボールIDはモンスターボールにする
   if( ( ofs == BALLID_NULL ) || ( ofs > BALLID_MAX ) )
   {
-    ofs = BALLID_MONSUTAABOORU - 1;
+    ofs = BALLID_MONSUTAABOORU;
   }
+
+  ofs -= 1;
 
   switch( datID ){
   case NARC_spa_be_ball_001_1_spa:
