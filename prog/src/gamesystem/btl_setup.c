@@ -212,6 +212,7 @@ static BSP_TRAINER_DATA* BSP_TRAINER_DATA_Create( HEAPID heapID )
 {
   BSP_TRAINER_DATA* tr_data = GFL_HEAP_AllocClearMemory( heapID, sizeof( BSP_TRAINER_DATA ) );
   tr_data->name =   GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
+  tr_data->tr_id = TRID_NULL;
 
   PMSDAT_Clear( &tr_data->win_word );
   PMSDAT_Clear( &tr_data->lose_word );
@@ -293,11 +294,14 @@ static void setup_player_param( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, HEA
   dst->party[ BTL_CLIENT_PLAYER ] = PokeParty_AllocPartyWork( heapID );
   PokeParty_Copy( GAMEDATA_GetMyPokemon( gameData ), dst->party[ BTL_CLIENT_PLAYER ] );
 
+  // コレ要らないと思う...オフにしてみる（taya 2010.04.26）
+#if 0
   dst->tr_data[BTL_CLIENT_PLAYER] = BSP_TRAINER_DATA_Create( heapID );
   tr_data = dst->tr_data[BTL_CLIENT_PLAYER];
 
   MyStatus_CopyNameString( (const MYSTATUS*)&player->mystatus , tr_data->name );
   tr_data->tr_type = TRTYPE_HERO + MyStatus_GetMySex( (const MYSTATUS*)&player->mystatus );
+#endif
 }
 
 static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD_SITUATION* sit )

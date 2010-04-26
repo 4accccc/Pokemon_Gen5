@@ -6022,7 +6022,6 @@ static void handler_Sinuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     if( BTL_SVFTOOL_GetMyActionOrder(flowWk, pokeID, &myOrder, &totalAction) ){
       if( (myOrder+1) == totalAction )
       {
-        TAYA_Printf("アナライズ発動\n");
         BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.3) );
       }
     }

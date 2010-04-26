@@ -278,10 +278,15 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode );
 static u32 SetCoverRotateAction( BTL_CLIENT* wk, BTL_ACTION_PARAM* resultAction );
 static BOOL SubProc_UI_ConfirmIrekae( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_REC_ExitCommTrainer( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq );
 static BtlResult checkResult( BTL_CLIENT* wk );
+static inline BOOL IsEnemyClientDouble( BTL_CLIENT* wk );
 static inline void TrainerGraphicIn( BTL_CLIENT* wk, int client_idx );
+static inline void MsgWinningTrainerStart( BTL_CLIENT* wk );
+static BOOL SubProc_REC_ExitForNPC( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_REC_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq );
 static void setupSubwayTrainerMsg( BTL_CLIENT* wk, BtlResult result, u8 client_idx );
 static BOOL SubProc_UI_LoseWild( BTL_CLIENT* wk, int* seq );
@@ -317,6 +322,7 @@ static BOOL scProc_ACT_Kill( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ResetMove( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL msgPokanCallback( u32 arg );
 static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp );
 static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args );
@@ -436,7 +442,6 @@ BTL_CLIENT* BTL_CLIENT_Create(
   {
     u32 ai_bit = BTL_MAIN_GetClientAIBit( wk->mainModule, wk->myID );
     BTL_SVFLOW_WORK* svf_work = BTL_MAIN_GetSVFWorkForAI( wk->mainModule );
-    TAYA_Printf( "trainer AI_bit = 0x%04x\n", ai_bit );
     wk->AIHandle = TR_AI_Init( wk->mainModule, svf_work, wk->pokeCon, ai_bit, wk->heapID );
   }
   else
@@ -880,10 +885,10 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
        { SubProc_UI_RecordData,    NULL,                      NULL                       } },
 
     { BTL_ACMD_EXIT_NPC,
-      { SubProc_UI_ExitForNPC,   NULL,  NULL }, },
+      { SubProc_UI_ExitForNPC,               NULL,  SubProc_REC_ExitForNPC }, },
 
     { BTL_ACMD_EXIT_SUBWAY_TRAINER,
-        { SubProc_UI_ExitForSubwayTrainer,   NULL,  NULL }, },
+        { SubProc_UI_ExitForSubwayTrainer,   NULL,  SubProc_REC_ExitForSubwayTrainer }, },
 
 
     { BTL_ACMD_EXIT_LOSE_WILD,
@@ -891,7 +896,7 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
 
 
     { BTL_ACMD_EXIT_COMM,
-      { SubProc_UI_ExitCommTrainer,   NULL,  NULL }, },
+      { SubProc_UI_ExitCommTrainer,   NULL,  SubProc_REC_ExitCommTrainer }, },
 
     { BTL_ACMD_NOTIFY_TIMEUP,
       { SubProc_UI_NotifyTimeUp,   NULL,  NULL }, },
@@ -1475,9 +1480,6 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     wk->procAction = &wk->actionParam[ wk->procPokeIdx ];
     wk->actionAddCount = 0;
     BTL_ACTION_SetNULL( wk->procAction );
-
-    TAYA_Printf("selactRoot : procPokeIdx=%d, procPokeID=%d, pokeHP=%d, isDead=%d, bpp=%p\n",
-          wk->procPokeIdx, BPP_GetID(wk->procPoke), BPP_GetValue(wk->procPoke,BPP_HP), BPP_IsDead(wk->procPoke), wk->procPoke);
 
     if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
       BTL_N_Printf( DBGSTR_CLIENT_SelectActionSkip, wk->procPokeIdx );
@@ -2215,7 +2217,6 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
       // 死んでる状態のアクション内容セット
       BTL_ACTION_SetNULL( action );
     }
-    TAYA_Printf("pokeID=%d, 死んでるのでアクション選択できません\n", BPP_GetID(bpp));
     return TRUE;
   }
   // アクション選択できない（攻撃の反動など）場合はスキップ
@@ -4046,11 +4047,8 @@ static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq )
 
   dataSize = BTL_ADAPTER_GetRecvData( wk->adapter, &dataBuf );
 
-  TAYA_Printf("録画データ記録 %d bytes \n", dataSize);
-
   if( wk->btlRec )
   {
-    TAYA_Printf("録画データ %d bytes 書き込み\n", dataSize);
     BTL_REC_Write( wk->btlRec, dataBuf, dataSize );
   }
 
@@ -4058,7 +4056,7 @@ static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq )
   {
     BTL_SERVER_CMDCHECK_RestoreActionData( wk->cmdCheckServer, dataBuf, dataSize );
     wk->cmdCheckTimingCode = BTL_REC_GetTimingCode( dataBuf );;
-    TAYA_Printf( "整合性チェック TimingCode=%d\n", wk->cmdCheckTimingCode);
+//    TAYA_Printf( "整合性チェック TimingCode=%d\n", wk->cmdCheckTimingCode);
   }
 
   return TRUE;
@@ -4066,6 +4064,13 @@ static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq )
 //---------------------------------------------------
 // 通信対戦終了
 //---------------------------------------------------
+static BOOL SubProc_REC_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
+{
+  if( wk->viewCore ){
+    return SubProc_UI_ExitCommTrainer( wk, seq );
+  }
+  return TRUE;
+}
 static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
@@ -4205,6 +4210,13 @@ static inline void MsgWinningTrainerStart( BTL_CLIENT* wk )
 //---------------------------------------------------
 // ゲーム内トレーナー戦を終了
 //---------------------------------------------------
+static BOOL SubProc_REC_ExitForNPC( BTL_CLIENT* wk, int* seq )
+{
+  if( wk->viewCore ){
+    return SubProc_UI_ExitForNPC( wk, seq );
+  }
+  return TRUE;
+}
 static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
 {
   enum {
@@ -4356,6 +4368,13 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
 //---------------------------------------------------
 // サブウェイトレーナー戦を終了
 //---------------------------------------------------
+static BOOL SubProc_REC_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
+{
+  if( wk->viewCore ){
+    return SubProc_UI_ExitForSubwayTrainer( wk, seq );
+  }
+  return TRUE;
+}
 static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
 {
   enum {

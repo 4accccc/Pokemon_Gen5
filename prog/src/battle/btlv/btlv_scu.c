@@ -3565,8 +3565,11 @@ static void tokwin_disp_first( TOK_WIN* tokwin, BtlPokePos pos, BOOL fFlash )
     u16 tokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
     u8  pokeID = BPP_GetID( bpp );
 
+    TAYA_Printf("とくせいウィンドウ: pokeID=%d, tokID=%d\n", pokeID, tokusei);
+
     if( (tokusei != tokwin->tokusei) || (pokeID != tokwin->pokeID) )
     {
+      TAYA_Printf("  ->書き換え\n");
       tokwin->tokusei = tokusei;
       tokwin->pokeID = pokeID;
       tokwin_update_cgr( tokwin );

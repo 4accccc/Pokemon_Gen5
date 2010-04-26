@@ -138,10 +138,6 @@ void BTL_POSPOKE_Rotate( BTL_POSPOKE_WORK* wk, BtlRotateDir dir, u8 clientID, co
         wk->state[ i ].existPokeID = BTL_POKEID_NULL;
       }
 
-      for(i=0; i<BTL_ROTATE_NUM; ++i)
-      {
-        TAYA_Printf("RotPokePos : client=%d, posIdx(%d)=%d, exsistPoke=%d\n", clientID, i, idx[i], wk->state[idx[i]].existPokeID);
-      }
     }
 
     #else

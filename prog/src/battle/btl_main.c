@@ -606,6 +606,21 @@ static u8 CheckNumCoverPos( const BTL_MAIN_MODULE* wk, u8 clientID )
   return 1;
 }
 
+/**
+ *  録画再生時用のトレーナーパラメータセット
+ */
+static void trainerParam_SetupForRecPlay( BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+  BTL_TRAINER_DATA* trParam = &(wk->trainerParam[clientID]);
+
+  if( sp->tr_data[clientID]->tr_id != TRID_NULL ){
+    trainerParam_StoreNPCTrainer( trParam, sp->tr_data[clientID] );
+  }else{
+    trainerParam_StorePlayer( trParam, wk->heapID, sp->playerStatus[BTL_CLIENT_ENEMY1] );
+  }
+}
+
 //--------------------------------------------------------------------------
 /**
  * スタンドアローン／シングルバトル
@@ -637,10 +652,10 @@ static BOOL setup_alone_single( int* seq, void* work )
   wk->ImServer = TRUE;
 
   trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
-  if( sp->fRecordPlay ){
-    trainerParam_StorePlayer( &wk->trainerParam[1], wk->heapID, sp->playerStatus[BTL_CLIENT_ENEMY1] );
+  if( sp->fRecordPlay == FALSE ){
+    trainerParam_StoreNPCTrainer( &wk->trainerParam[BTL_CLIENT_ENEMY1], sp->tr_data[BTL_CLIENT_ENEMY1] );
   }else{
-    trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
+    trainerParam_SetupForRecPlay( wk, BTL_CLIENT_ENEMY1 );
   }
 
   // Client 作成
@@ -4074,16 +4089,12 @@ static void BTL_PARTY_AddMember( BTL_PARTY* party, BTL_POKEPARAM* member )
  */
 static void   BTL_PARTY_MoveAlivePokeToFirst( BTL_PARTY* party )
 {
-  if( !BPP_IsFightEnable(party->member[0]) )
+  u32 idx;
+  for(idx=0; idx < party->memberCount; ++idx )
   {
-    u32 idx;
-    for(idx=0; idx < party->memberCount; ++idx )
+    if( !BPP_IsFightEnable(party->member[idx]) )
     {
-      if( BPP_IsFightEnable(party->member[idx]) )
-      {
-        BTL_PARTY_SwapMembers( party, 0, idx );
-        break;
-      }
+      BTL_PARTY_MoveLastMember( party, idx );
     }
   }
 }
@@ -4183,6 +4194,24 @@ void BTL_PARTY_SwapMembers( BTL_PARTY* party, u8 idx1, u8 idx2 )
 
     BTL_N_PrintfEx(TRUE, DBGSTR_MAIN_SwapPartyMember, idx1, idx2);
   }
+}
+/**
+ *  メンバーを最後尾に移動（初期化時に戦えないポケモンに適用)
+ */
+void BTL_PARTY_MoveLastMember( BTL_PARTY* party, u8 idx )
+{
+  GF_ASSERT(idx<party->memberCount);
+
+  {
+    BTL_POKEPARAM* tmp = party->member[ idx ];
+    while( idx < (party->memberCount-1) )
+    {
+      party->member[ idx ] = party->member[ idx + 1 ];
+      ++idx;
+    }
+    party->member[ idx ] = tmp;
+  }
+
 }
 /**
  * メンバーローテーション
@@ -4873,7 +4902,7 @@ BOOL BTL_MAIN_CheckGameLimitTimeOver( const BTL_MAIN_MODULE* wk )
 //----------------------------------------------------------------------------------------------
 
 /**
- *  通信対戦相手のパーティデータ
+ *  通信対戦相手のパーティデータを書き戻し
  */
 static void Bspstore_Party( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* party )
 {
@@ -4886,7 +4915,7 @@ static void Bspstore_Party( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* p
   }
 }
 /**
- *  通信対戦相手のプレイヤーデータ
+ *  通信対戦相手のプレイヤーデータを書き戻し
  */
 static void Bspstore_PlayerStatus( BTL_MAIN_MODULE* wk, u8 clientID, const MYSTATUS* playerStatus )
 {
@@ -4896,6 +4925,10 @@ static void Bspstore_PlayerStatus( BTL_MAIN_MODULE* wk, u8 clientID, const MYSTA
     MyStatus_Copy( playerStatus, dst );
   }
 }
+/**
+ *  AIトレーナーデータを書き戻し
+ */
+
 /**
  *  録画用操作データがあれば格納
  */

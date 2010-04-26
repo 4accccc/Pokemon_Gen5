@@ -118,7 +118,7 @@ static void setMainProc_Root( BTL_SERVER* server );
 static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq );
-static BOOL check_acton_chapter( BTL_SERVER* server );
+static BOOL check_action_chapter( BTL_SERVER* server );
 static BOOL ServerMain_ConfirmChangeOrEscape( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq );
 static BOOL Irekae_IsNeedConfirm( BTL_SERVER* server );
@@ -599,7 +599,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       server->flowResult = BTL_SVFLOW_StartTurn( server->flowWork, &server->clientAction );
       BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult);
 
-      if( SendActionRecord(server, BTL_RECTIMING_StartTurn, check_acton_chapter(server)) ){
+      if( SendActionRecord(server, BTL_RECTIMING_StartTurn, check_action_chapter(server)) ){
         (*seq)++;
       }else{
         (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
@@ -682,7 +682,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 /**
  *  録画データ（アクションコマンド用）のチャプターを打つか判定
  */
-static BOOL check_acton_chapter( BTL_SERVER* server )
+static BOOL check_action_chapter( BTL_SERVER* server )
 {
   #ifdef ROTATION_NEW_SYSTEM
   // 新ローテーションシステムにはローテーション選択シーケンスは無いので常にTRUE
@@ -1009,6 +1009,8 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
 
   {
     BtlCompetitor  competitor = BTL_MAIN_GetCompetitor( server->mainModule );
+
+//    TAYA_Printf("ExitBattle .. competitor = %d\n", competitor);
 
     switch( competitor ){
     case BTL_COMPETITOR_TRAINER:

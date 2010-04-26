@@ -3299,7 +3299,7 @@ static u8 ItemEff_Relive( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Relive );
     HANDEX_STR_AddArg( &param->exStr, pokeID );
 
-    TAYA_Printf("ポケモン(ID:%d)生き返る -> HP=%d\n", pokeID, param->recoverHP);
+//    TAYA_Printf("ポケモン(ID:%d)生き返る -> HP=%d\n", pokeID, param->recoverHP);
 
     // 当ターンに生き返ったポケモンを記録
     relivePokeRec_Add( wk, pokeID );

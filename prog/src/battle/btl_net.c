@@ -287,7 +287,6 @@ BOOL BTL_NET_DetermineServer( u8 clientID )
   tsb->val16[0] = BTL_NET_SERVER_VERSION;
   tsb->val16[1] = clientID;
 
-  TAYA_Printf(" Send My ClientID ... %d\n", clientID );
   return GFL_NET_SendData( Sys->netHandle, CMD_NOTIFY_SERVER_VER, sizeof(*tsb), tsb );
 }
 
@@ -476,7 +475,6 @@ BOOL BTL_NET_IsCompleteNotifyPartyData( void )
   {
     if( IsBattleConnectNetID(i) )
     {
-      TAYA_Printf("  netID=%d, in Battle ... \n");
       if( Sys->tmpLargeBufUsedSize[i] == 0 )
       {
         return FALSE;

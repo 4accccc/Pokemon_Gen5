@@ -831,6 +831,7 @@ BOOL BPP_IsDead( const BTL_POKEPARAM* pp )
 BOOL BPP_IsFightEnable( const BTL_POKEPARAM* bpp )
 {
   if( PP_Get(bpp->coreParam.ppSrc, ID_PARA_tamago_flag, NULL)){
+    TAYA_Printf("pokeID=%d, ‚½‚Ü‚²‚Å‚·\n", bpp->coreParam.myID );
     return FALSE;
   }
   if( BPP_IsDead(bpp) ){

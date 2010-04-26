@@ -16,6 +16,7 @@
 #include "..\btl_field.h"
 #include "..\btl_client.h"
 #include "..\btl_event_factor.h"
+#include "..\btlv\btlv_effect.h"
 
 #include "hand_pos.h"
 
@@ -214,7 +215,11 @@ static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
   if( BTL_SVFTOOL_PokeIDtoPokePos(flowWk, pokeID) == pokePos )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    BTL_HANDEX_PARAM_MESSAGE* msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
+    BTL_HANDEX_PARAM_MESSAGE* msg_param;
+    u32 que_reserved_pos = BTL_SVFTOOL_ReserveQuePos( flowWk, SC_ACT_EFFECT_BYPOS );
+    BOOL fEnable = FALSE;
+
+    msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
     HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MikadukiNoMai );
     HANDEX_STR_AddArg( &msg_param->str, pokeID );
 
@@ -224,6 +229,7 @@ static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
       hp_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
       hp_param->pokeID = pokeID;
       hp_param->recoverHP = BPP_GetValue(bpp, BPP_MAX_HP) - BPP_GetValue(bpp, BPP_HP);
+      fEnable = TRUE;
     }
 
     // ポケ系状態異常回復
@@ -232,6 +238,7 @@ static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
       param->poke_cnt = 1;
       param->pokeID[0] = pokeID;
       param->sickCode = WAZASICK_EX_POKEFULL;
+      fEnable = TRUE;
     }
 
     // 全ワザPP全回復
@@ -248,8 +255,19 @@ static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
           param->pokeID = pokeID;
           param->volume = volume;
           param->wazaIdx = i;
+          fEnable = TRUE;
         }
       }
+    }
+
+    if( fEnable )
+    {
+      BTL_HANDEX_PARAM_EFFECT_BY_POS* eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EFFECT_BY_POS, pokeID );
+      eff_param->effectNo = BTLEFF_MIKADUKINOMAI_KAIHUKU;
+      eff_param->pos_from = pokePos;
+      eff_param->pos_to = BTL_POS_NULL;
+      eff_param->reservedQuePos = que_reserved_pos;
+      eff_param->fQueReserve = TRUE;
     }
 
     BTL_EVENT_FACTOR_Remove( myHandle );
@@ -275,6 +293,10 @@ static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     BTL_HANDEX_PARAM_MESSAGE* msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
+    u32 que_reserved_pos = BTL_SVFTOOL_ReserveQuePos( flowWk, SC_ACT_EFFECT_BYPOS );
+    BOOL fEnable = FALSE;
+
+    msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
     HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_IyasiNoNegai );
     HANDEX_STR_AddArg( &msg_param->str, pokeID );
 
@@ -284,6 +306,7 @@ static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
       hp_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
       hp_param->pokeID = pokeID;
       hp_param->recoverHP = BPP_GetValue(bpp, BPP_MAX_HP) - BPP_GetValue(bpp, BPP_HP);
+      fEnable = TRUE;
     }
 
     // ポケ系状態異常回復
@@ -292,7 +315,19 @@ static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
       param->poke_cnt = 1;
       param->pokeID[0] = pokeID;
       param->sickCode = WAZASICK_EX_POKEFULL;
+      fEnable = TRUE;
     }
+
+    if( fEnable )
+    {
+      BTL_HANDEX_PARAM_EFFECT_BY_POS* eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EFFECT_BY_POS, pokeID );
+      eff_param->effectNo = BTLEFF_IYASINONEGAI_KAIHUKU;
+      eff_param->pos_from = pokePos;
+      eff_param->pos_to = BTL_POS_NULL;
+      eff_param->reservedQuePos = que_reserved_pos;
+      eff_param->fQueReserve = TRUE;
+    }
+
 
     BTL_EVENT_FACTOR_Remove( myHandle );
   }
