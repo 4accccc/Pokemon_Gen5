@@ -990,10 +990,12 @@ static int _playerDirectNoregParent( WIFIP2PMATCH_WORK *wk, int seq )
   return seq;
 }
 
+//WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT1
 static int _playerDirectNoregParent1( WIFIP2PMATCH_WORK *wk, int seq )
 {
   u32 fail_bit;
   if(GFL_UI_KEY_GetTrg()){
+    _Menu_RegulationDelete(wk);
     _CheckRegulation_BBox(wk->pRegulation, wk->pGameData, &fail_bit );
     _Menu_RegulationSetup(wk, fail_bit, wk->battleShooter , REGWIN_TYPE_NG_BBOX);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT2);
@@ -1005,6 +1007,7 @@ static int _playerDirectNoregParent1( WIFIP2PMATCH_WORK *wk, int seq )
 static int _playerDirectNoregParent2( WIFIP2PMATCH_WORK *wk, int seq )
 {  
   if(GFL_UI_KEY_GetTrg()){
+    _Menu_RegulationDelete(wk);
     EndMessageWindowOff(wk);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
   }
