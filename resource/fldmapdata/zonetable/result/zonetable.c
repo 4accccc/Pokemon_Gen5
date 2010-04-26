@@ -7977,7 +7977,7 @@ static const ZONEDATA ZoneData[] = {
 		TRUE,
 		FALSE,
 		FALSE,
-    TRUE,
+    FALSE,
     FALSE,
 		MATRIX_ID_DUN1003, // camera_area
 		0, // padding
@@ -9902,7 +9902,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_PLC07 = 300
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_OUT11,
+		AREA_ID_OUT10,
 		MATRIX_ID_PALACEFIELD,
 		NARC_script_seq_plc07_bin,
 		NARC_script_seq_sp_plc07_bin,	//NARC_script_seq_sp_plc07_bin,
@@ -10067,7 +10067,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_PLD06 = 305
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_OUT10,
+		AREA_ID_OUT09,
 		MATRIX_ID_PALACEFIELD,
 		NARC_script_seq_pld06_bin,
 		NARC_script_seq_sp_pld06_bin,	//NARC_script_seq_sp_pld06_bin,
@@ -10100,7 +10100,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_PLD07 = 306
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_OUT11,
+		AREA_ID_OUT10,
 		MATRIX_ID_PALACEFIELD,
 		NARC_script_seq_pld07_bin,
 		NARC_script_seq_sp_pld07_bin,	//NARC_script_seq_sp_pld07_bin,
@@ -10133,7 +10133,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_PLD08 = 307
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_OUT11,
+		AREA_ID_OUT10,
 		MATRIX_ID_PALACEFIELD,
 		NARC_script_seq_pld08_bin,
 		NARC_script_seq_sp_pld08_bin,	//NARC_script_seq_sp_pld08_bin,
@@ -10331,7 +10331,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_PLR05 = 313
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_OUT14,
+		AREA_ID_OUT06,
 		MATRIX_ID_PALACEFIELD,
 		NARC_script_seq_plr05_bin,
 		NARC_script_seq_sp_plr05_bin,	//NARC_script_seq_sp_plr05_bin,
@@ -10364,7 +10364,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_PLR06 = 314
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_OUT19,
+		AREA_ID_OUT09,
 		MATRIX_ID_PALACEFIELD,
 		NARC_script_seq_plr06_bin,
 		NARC_script_seq_sp_plr06_bin,	//NARC_script_seq_sp_plr06_bin,
@@ -10397,7 +10397,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_PLR07 = 315
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_OUT19,
+		AREA_ID_OUT10,
 		MATRIX_ID_PALACEFIELD,
 		NARC_script_seq_plr07_bin,
 		NARC_script_seq_sp_plr07_bin,	//NARC_script_seq_sp_plr07_bin,
@@ -10430,7 +10430,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_PLR08 = 316
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_OUT19,
+		AREA_ID_OUT11,
 		MATRIX_ID_PALACEFIELD,
 		NARC_script_seq_plr08_bin,
 		NARC_script_seq_sp_plr08_bin,	//NARC_script_seq_sp_plr08_bin,
@@ -10463,7 +10463,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_PLR09 = 317
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_OUT19,
+		AREA_ID_OUT14,
 		MATRIX_ID_PALACEFIELD,
 		NARC_script_seq_plr09_bin,
 		NARC_script_seq_sp_plr09_bin,	//NARC_script_seq_sp_plr09_bin,
@@ -10496,7 +10496,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_PLR11 = 318
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_OUT19,
+		AREA_ID_OUT14,
 		MATRIX_ID_PALACEFIELD,
 		NARC_script_seq_plr11_bin,
 		NARC_script_seq_sp_plr11_bin,	//NARC_script_seq_sp_plr11_bin,
