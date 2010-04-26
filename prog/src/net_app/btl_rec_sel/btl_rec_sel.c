@@ -123,8 +123,8 @@ enum
 #define FADE_IN_WAIT           (2)         ///< フェードインのスピード
 #define FADE_OUT_WAIT          (2)         ///< フェードアウトのスピード
 
-#define INSIDE_FADE_OUT_WAIT   (0)         ///< 内部で表示を切り替える際のフェードアウトのスピード
-#define INSIDE_FADE_IN_WAIT    (0)         ///< 内部で表示を切り替える際のフェードインのスピード
+#define INSIDE_FADE_OUT_WAIT   (-2)//(0)         ///< 内部で表示を切り替える際のフェードアウトのスピード
+#define INSIDE_FADE_IN_WAIT    (-2)//(0)         ///< 内部で表示を切り替える際のフェードインのスピード
 
 typedef enum
 {
@@ -145,15 +145,26 @@ enum
 // 固定テキスト
 enum
 {
-  FIX_PRE,
-  FIX_PRE_TITLE,
+  FIX_PRE, 
+  FIX_PRE_TITLE, 
   FIX_SEL_TIME,
   FIX_TIME,
   FIX_MAX,
 };
 
+// fix timeの状態
+typedef enum
+{
+  FT_STATE_NOT_DISP,    // 非表示中
+  FT_STATE_WHITE_DISP,  // 白文字表示中(別途表示している数字も覚えておく)
+  FT_STATE_RED_DISP,    // 赤文字表示中(別途表示している数字も覚えておく)
+  FT_STATE_MAX,
+}
+FT_STATE;
+
 // 1秒間のフレーム数
-#define FPS (30)
+//#define FPS (60)//(30)
+// GFL_UI_GetFrameRate(), GFL_UI_FRAMERATE_30, GFL_UI_FRAMERATE_60 を使用するようにした。
 
 // 待ち時間
 #define COUNT_TIME_SEC_MAX (60)  // second
@@ -290,9 +301,13 @@ typedef struct
 {
   // グラフィック、フォントなど
   HEAPID                      heap_id;
-  BTL_REC_SEL_GRAPHIC_WORK*      graphic;
+  BTL_REC_SEL_GRAPHIC_WORK*   graphic;
   GFL_FONT*                   font;
-  PRINT_QUE*                  print_que;
+
+  PRINT_QUE*                  print_que;               // text_winin_bmpwin
+  PRINT_QUE*                  print_que_fix_pre;       // FIX_PRE, FIX_PRE_TITLE
+  PRINT_QUE*                  print_que_fix_sel_time;  // FIX_SEL_TIME
+  PRINT_QUE*                  print_que_fix_time;      // FIX_TIME
 
   // シーケンス処理用 
   int                         fade_next_seq;
@@ -336,12 +351,14 @@ typedef struct
 
   // 固定テキスト
   GFL_BMPWIN*                 fix_bmpwin[FIX_MAX];
+  BOOL                        fix_finish[FIX_MAX];  // 転送済みのときTRUE(転送するものがないときもTRUE)、つまり転送しなければならないときのみFALSE。
   u32                         fix_frame;
   u32                         fix_wait_count;
   BOOL                        fix_pause;   // TRUEのとき一時停止中
   BOOL                        fix_timeup;  // TRUEのとき時間切れ
-  PRINT_UTIL*                 fix_print_util_pre;
-  PRINT_UTIL*                 fix_print_util_pre_title;
+  // fix timeの状態
+  FT_STATE                    ft_state;
+  u16                         ft_sec;  // 表示している数字
 
   // ポケアイコン
   PI_DATA                     pi_data[PI_POS_MAX][PI_PARTY_NUM];
@@ -424,6 +441,7 @@ static void Btl_Rec_Sel_YnStartSel(  BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK*
 static void Btl_Rec_Sel_FixInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_FixExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_FixMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+static void Btl_Rec_Sel_FixMainTrans( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_FixShowOnPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_FixShowOffPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_FixStartTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, u16 sec );
@@ -592,9 +610,13 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcInit( GFL_PROC* proc, int* seq, void* pwk
 
   // グラフィック、フォントなど
   {
-    work->graphic       = BTL_REC_SEL_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, work->heap_id );
-    work->font          = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, work->heap_id );
-    work->print_que     = PRINTSYS_QUE_Create( work->heap_id );
+    work->graphic                = BTL_REC_SEL_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, work->heap_id );
+    work->font                   = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, work->heap_id );
+    
+    work->print_que              = PRINTSYS_QUE_Create( work->heap_id );
+    work->print_que_fix_pre      = PRINTSYS_QUE_Create( work->heap_id );
+    work->print_que_fix_sel_time = PRINTSYS_QUE_Create( work->heap_id );
+    work->print_que_fix_time     = PRINTSYS_QUE_Create( work->heap_id );
   }
 
   // バトルレコーダーの有無
@@ -725,8 +747,15 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcExit( GFL_PROC* proc, int* seq, void* pwk
 
   // グラフィック、フォントなど
   {
+    PRINTSYS_QUE_Clear( work->print_que_fix_time );
+    PRINTSYS_QUE_Delete( work->print_que_fix_time );
+    PRINTSYS_QUE_Clear( work->print_que_fix_sel_time );
+    PRINTSYS_QUE_Delete( work->print_que_fix_sel_time );
+    PRINTSYS_QUE_Clear( work->print_que_fix_pre );
+    PRINTSYS_QUE_Delete( work->print_que_fix_pre );
     PRINTSYS_QUE_Clear( work->print_que );  // これをやっておかないと、PRINTSYS_QUE_Delete時にque->runningJobが残っていてエラーになることがある。
     PRINTSYS_QUE_Delete( work->print_que );
+
     GFL_FONT_Delete( work->font );
     BTL_REC_SEL_GRAPHIC_Exit( work->graphic );
   }
@@ -1038,74 +1067,6 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       Btl_Rec_Sel_FixEndTime( param, work );
     }
     break;
-#if 0
-  case SEQ_SAVE_INIT:
-    {
-      // ここでセーブ開始
-      Btl_Rec_Sel_TextStartStream( param, work, msg_record_04_01 );
-
-      work->battle_rec_new_mode = 0;
-      work->battle_rec_new_work0 = 0;
-      work->battle_rec_new_work1 = 0;
-      work->battle_rec_new_save_result = SAVE_RESULT_CONTINUE;
-
-      (*seq) = SEQ_SAVE;
-    }
-    break;
-  case SEQ_SAVE:
-    {
-#if 0
-#ifdef OFFLINE_TEST
-      work->battle_rec_new_save_result = SAVE_RESULT_OK;
-#else
-      if( work->battle_rec_new_save_result != SAVE_RESULT_OK && work->battle_rec_new_save_result != SAVE_RESULT_NG )
-      {
-        work->battle_rec_new_save_result = BattleRec_Save( sv, work->heap_id,
-            work->battle_rec_new_mode, 0, LOADDATA_MYREC,  // fight_countはバトルサブウェイ以外では使わないので0でいい
-            &(work->battle_rec_new_work0), &(work->battle_rec_new_work1) );
-      }
-#endif
-
-      if( Btl_Rec_Sel_TextWaitStream( param, work ) )
-      {
-        if( work->battle_rec_new_save_result == SAVE_RESULT_OK )  // セーブ正常終了
-        {
-          Btl_Rec_Sel_ChangeSeqStm( seq, param, work, SEQ_SAVEOK, msg_record_05_01 );
-        }
-        else if( work->battle_rec_new_save_result == SAVE_RESULT_NG )  // セーブ異常終了
-        {
-          Btl_Rec_Sel_ChangeSeqStm( seq, param, work, SEQ_SAVENG, msg_record_06_01 );
-        }
-      }
-    }
-#else
-      // セーブ中は画面が止まってしまうので、メッセージの表示が完了してからセーブを開始することにした。
-      if( Btl_Rec_Sel_TextWaitStream( param, work ) )
-      {
-#ifdef OFFLINE_TEST
-        work->battle_rec_new_save_result = SAVE_RESULT_OK;
-#else
-        if( work->battle_rec_new_save_result != SAVE_RESULT_OK && work->battle_rec_new_save_result != SAVE_RESULT_NG )
-        {
-          work->battle_rec_new_save_result = BattleRec_Save( sv, work->heap_id,
-              work->battle_rec_new_mode, 0, LOADDATA_MYREC,  // fight_countはバトルサブウェイ以外では使わないので0でいい
-              &(work->battle_rec_new_work0), &(work->battle_rec_new_work1) );
-        }
-#endif
-
-        if( work->battle_rec_new_save_result == SAVE_RESULT_OK )  // セーブ正常終了
-        {
-          Btl_Rec_Sel_ChangeSeqStm( seq, param, work, SEQ_SAVEOK, msg_record_05_01 );
-        }
-        else if( work->battle_rec_new_save_result == SAVE_RESULT_NG )  // セーブ異常終了
-        {
-          Btl_Rec_Sel_ChangeSeqStm( seq, param, work, SEQ_SAVENG, msg_record_06_01 );
-        }
-      }
-    }
-#endif
-    break;
-#endif
 
   case SEQ_SAVE_INIT:
     {
@@ -1181,91 +1142,6 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
         (*seq) = SEQ_WAIT_INIT;
     }
     break;
-#if 0
-  case SEQ_WAIT_INIT:
-    {
-      u32 str_id;
-      if( work->b_battle_recorder )
-      {
-        if( param->b_rec )
-        {
-          if( param->b_sync )
-          {
-            str_id = msg_record_07_01;
-          }
-          else
-          {
-            // 下画面のフェードだけして、他は何もせずに終了
-            Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_END,
-                GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FADE_OUT_WAIT,
-                FADE_TYPE_OUTSIDE );
-            break;
-          }
-        }
-        else
-        {
-          if( param->b_sync )
-          {
-            str_id = msg_record_07_02;
-          }
-          else
-          {
-            str_id = msg_record_07_03;
-          }
-        }
-      }
-      else
-      {
-        {
-          if( param->b_sync )
-          {
-            str_id = msg_record_07_01;
-          }
-          else
-          {
-            // ここには来ないようにBtl_Rec_Sel_ProcInitで判定している
-            // 何も表示せずに終了
-            (*seq) = SEQ_END;
-            break;
-          }
-        }
-      }
-
-      Btl_Rec_Sel_TextStartStream( param, work, str_id );
-      {
-        if( param->b_sync )
-        {
-#ifndef OFFLINE_TEST
-          GFL_NETHANDLE* nethandle = GFL_NET_HANDLE_GetCurrentHandle();
-          GFL_NET_HANDLE_TimeSyncStart( nethandle, BTL_REC_SEL_NET_TIMING_SYNC_NO, WB_NET_BTL_REC_SEL );
-#endif
-        }
-      }
-      (*seq) = SEQ_WAIT;
-    }
-    break;
-  case SEQ_WAIT:
-    {
-      if( Btl_Rec_Sel_TextWaitStream( param, work ) )
-      {
-        BOOL ret = TRUE;
-        if( param->b_sync )
-        {
-#ifndef OFFLINE_TEST
-          GFL_NETHANDLE* nethandle = GFL_NET_HANDLE_GetCurrentHandle();
-          ret = GFL_NET_HANDLE_IsTimeSync( nethandle, BTL_REC_SEL_NET_TIMING_SYNC_NO, WB_NET_BTL_REC_SEL );
-#endif
-        }
-        if( ret )  // 相手待ち終了
-        {
-          Btl_Rec_Sel_ChangeSeqFade( seq, param, work, SEQ_END,
-              GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, FADE_OUT_WAIT,
-              FADE_TYPE_OUTSIDE );
-        }
-      }
-    }
-    break;
-#endif
 
   case SEQ_WAIT_INIT:
     {
@@ -1404,11 +1280,15 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
 
   Btl_Rec_Sel_TextMain( param, work );
   Btl_Rec_Sel_FixMain( param, work );
+  Btl_Rec_Sel_FixMainTrans( param, work );
 
   // パレットフェード
   Btl_Rec_Sel_PfMain( param, work );
 
   PRINTSYS_QUE_Main( work->print_que );
+  PRINTSYS_QUE_Main( work->print_que_fix_pre );
+  PRINTSYS_QUE_Main( work->print_que_fix_sel_time );
+  PRINTSYS_QUE_Main( work->print_que_fix_time );
 
   // 2D描画
   BTL_REC_SEL_GRAPHIC_2D_Draw( work->graphic );
@@ -1553,7 +1433,7 @@ static void Btl_Rec_Sel_TextExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wo
 static void Btl_Rec_Sel_TextMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
   GFL_TCBL_Main( work->text_tcblsys );
-  if( FPS == 30 ) GFL_TCBL_Main( work->text_tcblsys );
+  if( GFL_UI_GetFrameRate() == GFL_UI_FRAMERATE_30 ) GFL_TCBL_Main( work->text_tcblsys );
 }
 static void Btl_Rec_Sel_TextShowWinFrm( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
@@ -1778,6 +1658,13 @@ static void Btl_Rec_Sel_FixInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wor
                         fix_data[i].posx, fix_data[i].posy, fix_data[i].sizx, fix_data[i].sizy,
                         BG_PAL_POS_M_BACK_FONT, fix_data[i].dir );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->fix_bmpwin[i]), 0 );
+    work->fix_finish[i] = TRUE;  // 転送するものがないのでTRUE
+  }
+
+  // fix timeの状態
+  {
+    work->ft_state = FT_STATE_NOT_DISP;
+    work->ft_sec   = 0;
   }
 }
 static void Btl_Rec_Sel_FixExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
@@ -1791,24 +1678,27 @@ static void Btl_Rec_Sel_FixExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wor
 static void Btl_Rec_Sel_FixMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
   u8 i;
-
+  
+  u32 l_fps;
+  l_fps = ( GFL_UI_GetFrameRate() == GFL_UI_FRAMERATE_30 ) ? (30) : (60);
+  
   if( !(param->b_sync) ) return;
 
   if( work->fix_pause ) return;
 
-  if( work->fix_frame >= FPS || work->fix_wait_count > 0 )
+  if( work->fix_frame >= l_fps || work->fix_wait_count > 0 )
   {
     // 残り時間表示を更新する
     {
-      u32 sec = work->fix_frame / FPS;
+      u32 sec = work->fix_frame / l_fps;
       Btl_Rec_Sel_FixUpdateTime(param, work, sec);
     }
 
     // 時間を進める
-    if( work->fix_frame >= FPS )
+    if( work->fix_frame >= l_fps )
     {
       work->fix_frame--;
-      if( work->fix_frame == (FPS-1) )
+      if( work->fix_frame == (l_fps -1) )
       {
         // 時間切れ
         work->fix_timeup = TRUE;
@@ -1825,7 +1715,47 @@ static void Btl_Rec_Sel_FixMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wor
     }
   }
 }
-/*
+static void Btl_Rec_Sel_FixMainTrans( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  u8 i;
+
+  for( i=FIX_PRE; i<=FIX_PRE_TITLE; i++ )
+  {
+    if( !(work->fix_finish[i]) )
+    {
+      if( !PRINTSYS_QUE_IsExistTarget( work->print_que_fix_pre, GFL_BMPWIN_GetBmp(work->fix_bmpwin[i]) ) )
+      {
+        GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
+        work->fix_finish[i] = TRUE;
+      }
+    }
+  }
+
+  i=FIX_SEL_TIME;
+  {
+    if( !(work->fix_finish[i]) )
+    {
+      if( !PRINTSYS_QUE_IsExistTarget( work->print_que_fix_sel_time, GFL_BMPWIN_GetBmp(work->fix_bmpwin[i]) ) )
+      {
+        GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
+        work->fix_finish[i] = TRUE;
+      }
+    }
+  }
+
+  i=FIX_TIME;
+  {
+    if( !(work->fix_finish[i]) )
+    {
+      if( !PRINTSYS_QUE_IsExistTarget( work->print_que_fix_time, GFL_BMPWIN_GetBmp(work->fix_bmpwin[i]) ) )
+      {
+        GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
+        work->fix_finish[i] = TRUE;
+      }
+    }
+  }
+}
+
 static void Btl_Rec_Sel_FixShowOnPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
   STRBUF* strbuf;
@@ -1836,8 +1766,9 @@ static void Btl_Rec_Sel_FixShowOnPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK
   {
     strbuf = GFL_MSG_CreateString( work->msgdata_rec, msg_record_10_01 );
     bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_PRE] );
-    PRINTSYS_PrintQueColor( work->print_que, bmp_data, 0, 2, strbuf, work->font, PRINTSYS_LSB_Make(4,3,0) );
+    PRINTSYS_PrintQueColor( work->print_que_fix_pre, bmp_data, 4, 1, strbuf, work->font, PRINTSYS_LSB_Make(1,2,0) );
     GFL_STR_DeleteBuffer( strbuf );
+    work->fix_finish[FIX_PRE] = FALSE;
   }
 
   // バトルモード
@@ -1846,115 +1777,38 @@ static void Btl_Rec_Sel_FixShowOnPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK
   {
     strbuf = GFL_MSG_CreateString( work->msgdata_rec, work->battle_mode_str_id );
     bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_PRE_TITLE] );
-    PRINTSYS_PrintQueColor( work->print_que, bmp_data, 0, 2, strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
+    PRINTSYS_PrintQueColor( work->print_que_fix_pre, bmp_data, 4, 1, strbuf, work->font, PRINTSYS_LSB_Make(1,2,0) );
     GFL_STR_DeleteBuffer( strbuf );
+    work->fix_finish[FIX_PRE_TITLE] = FALSE;
   }
 
-  for( i=FIX_PRE; i<=FIX_PRE_TITLE; i++ )
-  {
-    GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
-  }
+  // 既に済んでいるかもしれないので1度呼んでおく
+  Btl_Rec_Sel_FixMainTrans( param, work );
 }
 static void Btl_Rec_Sel_FixShowOffPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
   u8 i;
   for( i=FIX_PRE; i<=FIX_PRE_TITLE; i++ )
   {
+    PRINTSYS_QUE_Clear( work->print_que_fix_pre );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->fix_bmpwin[i]), 0 );
     GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
+    work->fix_finish[i] = TRUE;
   }
-}
-*/
-/*
-static void Btl_Rec_Sel_FixShowOnPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
-{
-  STRBUF* strbuf;
-  GFL_BMP_DATA* bmp_data;
-  u8 i;
-
-  // 前回の記録
-  {
-    strbuf = GFL_MSG_CreateString( work->msgdata_rec, msg_record_10_01 );
-
-    work->fix_print_util_pre = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(PRINT_UTIL) );
-    PRINT_UTIL_Setup( work->fix_print_util_pre, work->fix_bmpwin[FIX_PRE] ); 
-    PRINT_UTIL_PrintColor(
-        work->fix_print_util_pre, work->print_que,
-        4, 1, strbuf, work->font, PRINTSYS_LSB_Make(3,4,0) );
-    
-    GFL_STR_DeleteBuffer( strbuf );
-  }
-
-  // バトルモード
-  // 例：コロシアム　シングル
-  // 　　せいげんなし
-  {
-    strbuf = GFL_MSG_CreateString( work->msgdata_rec, work->battle_mode_str_id );
-    
-    work->fix_print_util_pre_title = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(PRINT_UTIL) );
-    PRINT_UTIL_Setup( work->fix_print_util_pre_title, work->fix_bmpwin[FIX_PRE_TITLE] ); 
-    PRINT_UTIL_PrintColor(
-        work->fix_print_util_pre_title, work->print_que,
-        4, 1, strbuf, work->font, PRINTSYS_LSB_Make(1,2,0) );
-    
-    GFL_STR_DeleteBuffer( strbuf );
-  }
-
-  for( i=FIX_PRE; i<=FIX_PRE_TITLE; i++ )
-  {
-    GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
-  }
-}
-*/
-static void Btl_Rec_Sel_FixShowOnPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
-{
-  STRBUF* strbuf;
-  GFL_BMP_DATA* bmp_data;
-  u8 i;
-
-  // 前回の記録
-  {
-    strbuf = GFL_MSG_CreateString( work->msgdata_rec, msg_record_10_01 );
-    bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_PRE] );
-    //PRINTSYS_PrintColor( bmp_data, 4, 1, strbuf, work->font, PRINTSYS_LSB_Make(3,4,0) );
-    PRINTSYS_PrintColor( bmp_data, 4, 1, strbuf, work->font, PRINTSYS_LSB_Make(1,2,0) );
-    GFL_STR_DeleteBuffer( strbuf );
-  }
-
-  // バトルモード
-  // 例：コロシアム　シングル
-  // 　　せいげんなし
-  {
-    strbuf = GFL_MSG_CreateString( work->msgdata_rec, work->battle_mode_str_id );
-    bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_PRE_TITLE] );
-    PRINTSYS_PrintColor( bmp_data, 4, 1, strbuf, work->font, PRINTSYS_LSB_Make(1,2,0) );
-    GFL_STR_DeleteBuffer( strbuf );
-  }
-
-  for( i=FIX_PRE; i<=FIX_PRE_TITLE; i++ )
-  {
-    GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
-  }
-}
-static void Btl_Rec_Sel_FixShowOffPre( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
-{
-  u8 i;
-  for( i=FIX_PRE; i<=FIX_PRE_TITLE; i++ )
-  {
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->fix_bmpwin[i]), 0 );
-    GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
-  }
-
-  //GFL_HEAP_FreeMemory( work->fix_print_util_pre_title );
-  //GFL_HEAP_FreeMemory( work->fix_print_util_pre );
 }
 
 static void Btl_Rec_Sel_FixStartTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, u16 sec )
 {
-  work->fix_frame = sec * FPS + (FPS-1);
-  work->fix_wait_count = FPS /2;
+  u32 l_fps;
+  l_fps = ( GFL_UI_GetFrameRate() == GFL_UI_FRAMERATE_30 ) ? (30) : (60);
+
+  work->fix_frame = sec * l_fps + (l_fps-1);
+  work->fix_wait_count = l_fps /2;
   work->fix_pause = FALSE;
   work->fix_timeup = FALSE;
+
+  work->ft_state = FT_STATE_NOT_DISP;
+  work->ft_sec = 0;
 
   Btl_Rec_Sel_FixUpdateTime( param, work, sec );
 }
@@ -1965,16 +1819,29 @@ static void Btl_Rec_Sel_FixEndTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* 
   work->fix_frame = 0;
   work->fix_wait_count = 0;
 
-  for( i=FIX_SEL_TIME; i<=FIX_TIME; i++ )
+  i=FIX_SEL_TIME;
   {
+    PRINTSYS_QUE_Clear( work->print_que_fix_sel_time );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->fix_bmpwin[i]), 0 );
     GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
+    work->fix_finish[i] = TRUE;
+  }
+
+  i=FIX_TIME;
+  {
+    PRINTSYS_QUE_Clear( work->print_que_fix_time );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->fix_bmpwin[i]), 0 );
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
+    work->fix_finish[i] = TRUE;
   }
 
   if( work->qa_non )  // non背景(SELECT TIMEを表示する枠しかない背景)の場合は、文字を消すのと同時に背景のクリアも行う
   {                   // non背景でないときはフェードしてから背景クリアをしなければならないので、専用のクリアに任せる
     Btl_Rec_Sel_BgMClear( param, work );
   }
+
+  work->ft_state = FT_STATE_NOT_DISP;
+  work->ft_sec = 0;
 }
 static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work, u16 sec )
 {
@@ -1982,75 +1849,70 @@ static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WOR
   GFL_BMP_DATA* bmp_data;
   PRINTSYS_LSB color;
   u8 i;
+  FT_STATE  ft_state_curr;
 
   if( !(param->b_sync) ) return;
-
-  // 一旦消去
-  for( i=FIX_SEL_TIME; i<=FIX_TIME; i++ )
-  {
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->fix_bmpwin[i]), 0 );
-  }
 
   if( sec > 10 )
   {
     color = PRINTSYS_LSB_Make(1,2,0);
+    ft_state_curr = FT_STATE_WHITE_DISP;
   }
   else
   {
     //color = PRINTSYS_LSB_Make(4,3,0);
     color = PRINTSYS_LSB_Make(3,4,0);
+    ft_state_curr = FT_STATE_RED_DISP;
+  }
+
+  // 一旦消去
+  if( ft_state_curr != work->ft_state )
+  {
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->fix_bmpwin[FIX_SEL_TIME]), 0 );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->fix_bmpwin[FIX_TIME]), 0 );
+  }
+  else if( sec != work->ft_sec )
+  {
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->fix_bmpwin[FIX_TIME]), 0 );
   }
 
   // SELECT TIME
+  if( ft_state_curr != work->ft_state )
   {
+    PRINTSYS_QUE_Clear( work->print_que_fix_sel_time );
     strbuf = GFL_MSG_CreateString( work->msgdata_rec, msg_record_time01 );
     bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_SEL_TIME] );
-    //PRINTSYS_PrintQueColor( work->print_que, bmp_data, 0, 6, strbuf, work->font, color );
-    PRINTSYS_PrintColor( bmp_data, 4, 1, strbuf, work->font, color );
+    PRINTSYS_PrintQueColor( work->print_que_fix_sel_time, bmp_data, 4, 1, strbuf, work->font, color );
+    work->fix_finish[FIX_SEL_TIME] = FALSE;
     GFL_STR_DeleteBuffer( strbuf );
   }
 
   // ??:??
-/*
-  {
-    WORDSET* wordset = WORDSET_Create( work->heap_id );
-    STRBUF* src_strbuf = GFL_MSG_CreateString( work->msgdata_rec, msg_record_time02 );
-    strbuf = GFL_STR_CreateBuffer( STRBUF_FIX_TIME_LENGTH, work->heap_id );
-    
-    WORDSET_RegisterNumber( wordset, 0, 0, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wordset, 1, sec, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-    WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
-   
-    bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_TIME] );
-    PRINTSYS_PrintQueColor( work->print_que, bmp_data, 0, 6, strbuf, work->font, color );
-   
-    GFL_STR_DeleteBuffer( strbuf );
-    GFL_STR_DeleteBuffer( src_strbuf );
-    WORDSET_Delete( wordset );
-  }
-*/
+  if( ft_state_curr != work->ft_state || sec != work->ft_sec )
   {
     WORDSET* wordset = WORDSET_Create( work->heap_id );
     STRBUF* src_strbuf = GFL_MSG_CreateString( work->msgdata_rec, msg_record_time03 );
     strbuf = GFL_STR_CreateBuffer( STRBUF_FIX_TIME_LENGTH, work->heap_id );
-    
+   
+    PRINTSYS_QUE_Clear( work->print_que_fix_time );
+
     WORDSET_RegisterNumber( wordset, 1, sec, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
     WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
    
     bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_TIME] );
-    //PRINTSYS_PrintQueColor( work->print_que, bmp_data, 0, 6, strbuf, work->font, color );
-    //PRINTSYS_PrintColor( bmp_data, 2, 1, strbuf, work->font, color );
-    PRINTSYS_PrintColor( bmp_data, 2, 0, strbuf, work->font, color );
+    PRINTSYS_PrintQueColor( work->print_que_fix_time, bmp_data, 2, 0, strbuf, work->font, color );
+    work->fix_finish[FIX_TIME] = FALSE;
 
     GFL_STR_DeleteBuffer( strbuf );
     GFL_STR_DeleteBuffer( src_strbuf );
     WORDSET_Delete( wordset );
   }
 
-  for( i=FIX_SEL_TIME; i<=FIX_TIME; i++ )
-  {
-    GFL_BMPWIN_MakeTransWindow_VBlank( work->fix_bmpwin[i] );
-  }
+  work->ft_state = ft_state_curr;
+  work->ft_sec = sec;
+
+  // 既に済んでいるかもしれないので1度呼んでおく
+  Btl_Rec_Sel_FixMainTrans( param, work );
 }
 
 //-------------------------------------
@@ -2314,42 +2176,15 @@ void Btl_Rec_Sel_BgSInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
   
   APP_NOGEAR_SUBSCREEN_Init();
   APP_NOGEAR_SUBSCREEN_Trans( work->heap_id, sex );
-
-#if 0
-  // Cギア入手前の下画面を使う
-
-  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, work->heap_id );
-
-  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_c_gear_c_gear_NCLR, PALTYPE_SUB_BG,
-                                    BG_PAL_POS_S_BACK * 0x20, 0/*BG_PAL_NUM_S_BACK * 0x20*/, work->heap_id );
-  work->bg_s_tinfo = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( handle,
-                            NARC_c_gear_c_gear_NCGR,
-                            BG_FRAME_S_BACK,
-                            0,//32*24*GFL_BG_1CHRDATASIZ,
-                            FALSE, work->heap_id );
-  GF_ASSERT_MSG( work->bg_s_tinfo != GFL_ARCUTIL_TRANSINFO_FAIL, "BTL_REC_SEL : BGキャラ領域が足りませんでした。\n" );
-  GFL_ARCHDL_UTIL_TransVramScreen( handle, NARC_c_gear_c_gear01_n_NSCR,
-                                   BG_FRAME_S_BACK,
-                                   GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_s_tinfo ),
-                                   0,//32*24*GFL_BG_1SCRDATASIZ,
-                                   FALSE, work->heap_id );
-  GFL_ARC_CloseDataHandle( handle );
-
-  GFL_BG_LoadScreenReq( BG_FRAME_S_BACK );
-#endif
 }
 void Btl_Rec_Sel_BgSExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
   APP_NOGEAR_SUBSCREEN_Exit();
-
-#if 0
-  GFL_BG_FreeCharacterArea( BG_FRAME_S_BACK,
-                            GFL_ARCUTIL_TRANSINFO_GetPos( work->bg_s_tinfo ),
-                            GFL_ARCUTIL_TRANSINFO_GetSize( work->bg_s_tinfo ) );
-#endif
 }
 
-// パレットフェード
+//-------------------------------------
+/// パレットフェード
+//=====================================
 void Btl_Rec_Sel_PfCreateDummyPokeicon( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
   GFL_CLUNIT* clunit = BTL_REC_SEL_GRAPHIC_GetClunit( work->graphic );
