@@ -68,7 +68,7 @@ class OBJEvent
     section_data.each do |line|
       # イベントの内外を判定
       if in_section && in_event then 
-        if line.include?( @@keyward_event_number ) then in_event = false end
+        if line.include?( @@keyward_event_number ) then in_event = false; break end
       elsif in_section then
         if line =~ /#{@@keyward_SECTION_END}/ then in_section = false end
         if line =~ /#{@@keyward_event_number}\s*#{event_number}/ then in_event = true end
@@ -88,6 +88,7 @@ class OBJEvent
   #-------------------
   def load( section_data, event_number )
 
+    @event_number = event_number
     data = get_event_data( section_data, event_number )
 
     0.upto( data.size - 1 ) do |row|
