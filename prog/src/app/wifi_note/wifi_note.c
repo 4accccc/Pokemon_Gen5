@@ -2549,6 +2549,7 @@ static void Draw_Init( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, HEAPID h
 
   // OAM–Ê•\Ž¦
   GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 }
 
 //----------------------------------------------------------------------------
