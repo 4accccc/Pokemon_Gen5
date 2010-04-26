@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-04-10T14:33:12" source="fly_out16.mb"/>
+	<create user="unno" host="W00199" date="2010-04-26T16:38:12" source="fly_out23.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,28 +11,36 @@
 <body>
 
 <mat_color_info
-	frame_size="61"
-	tool_start_frame="1"
-	tool_end_frame="61"
+	frame_size="71"
+	tool_start_frame="0"
+	tool_end_frame="70"
 	interpolation="linear"
 	interp_end_to_start="off"
-	compress_material="on" material_size="4 3"
+	compress_material="on" material_size="6 5"
 	frame_step_mode="1"
 	tolerance_color="2"
 />
 
-<mat_color_data size="63">
-	25 0 2 8 15 23 29 31 31 30
-	28 26 24 21 18 16 13 10 7 5
-	3 1 0 0 0 0 0 0 0 0
-	1 1 1 2 3 4 4 5 6 7
-	9 10 11 12 14 15 16 17 19 20
-	21 23 24 25 27 28 29 30 31 31
-	31 31 31
+<mat_color_data size="144">
+	25 0 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 23
+	16 8 0 0 0 0 0 0 0 0
+	0 0 0 0 2 8 15 23 29 31
+	31 30 28 26 24 21 18 16 13 10
+	7 5 3 1 0 0 0 0 0 0
+	0 0 1 1 1 2 3 4 4 5
+	6 7 9 10 11 12 14 15 16 17
+	19 20 21 23 24 25 27 28 29 30
+	31 31 31 31
 </mat_color_data>
 
-<mat_color_anm_array size="1">
-	<mat_color_anm index="0" material_name="bird02_line">
+<mat_color_anm_array size="3">
+	<mat_color_anm index="0" material_name="aa:f_effect_a">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
@@ -45,7 +53,37 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="61" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="71" data_head="2"/>
+	</mat_color_anm>
+	<mat_color_anm index="1" material_name="aa:f_effect_b">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="1"/>
+		<specular_g frame_step="1" data_size="1" data_head="1"/>
+		<specular_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="1"/>
+		<emission_g frame_step="1" data_size="1" data_head="1"/>
+		<emission_b frame_step="1" data_size="1" data_head="1"/>
+		<polygon_alpha frame_step="1" data_size="71" data_head="2"/>
+	</mat_color_anm>
+	<mat_color_anm index="2" material_name="bird02_line">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="1"/>
+		<specular_g frame_step="1" data_size="1" data_head="1"/>
+		<specular_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="1"/>
+		<emission_g frame_step="1" data_size="1" data_head="1"/>
+		<emission_b frame_step="1" data_size="1" data_head="1"/>
+		<polygon_alpha frame_step="1" data_size="71" data_head="73"/>
 	</mat_color_anm>
 </mat_color_anm_array>
 

@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-04-10T14:42:22" source="fly_out16.mb"/>
+	<create user="unno" host="W00199" date="2010-04-26T16:38:35" source="fly_out23.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,33 +11,65 @@
 <body>
 
 <tex_pattern_info
-	frame_size="61"
-	tool_start_frame="1"
-	tool_end_frame="61"
-	compress_material="on" material_size="4 3"
+	frame_size="71"
+	tool_start_frame="0"
+	tool_end_frame="70"
+	compress_material="on" material_size="6 5"
 />
 
-<tex_pattern_list_data image_size="3" palette_size="1">
+<tex_pattern_list_data image_size="9" palette_size="4">
 	<image_name index="0" name="fly_champ.1"/>
 	<image_name index="1" name="fly_champ.3"/>
 	<image_name index="2" name="fly_champ.5"/>
+	<image_name index="3" name="fly_champ.7"/>
+	<image_name index="4" name="fly_champ.8"/>
+	<image_name index="5" name="fly_champ.9"/>
+	<image_name index="6" name="fly_effect.1"/>
+	<image_name index="7" name="fly_effect.2"/>
+	<image_name index="8" name="fly_effect.3"/>
 	<palette_name index="0" name="fly_champ"/>
+	<palette_name index="1" name="fly_effect.1_pl"/>
+	<palette_name index="2" name="fly_effect.2_pl"/>
+	<palette_name index="3" name="fly_effect.3_pl"/>
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="3">
-		0 20 25
+	<frame_idx size="80">
+		0 2 4 6 8 10 12 14 16 18
+		20 22 24 26 28 30 32 34 36 38
+		40 42 44 46 48 50 52 54 56 58
+		60 62 64 66 68 70 0 2 4 6
+		8 10 12 14 16 18 20 22 24 26
+		28 30 32 34 36 38 40 42 44 46
+		48 50 52 54 56 58 60 62 64 66
+		68 70 0 1 4 7 20 22 31 36
 	</frame_idx>
-	<image_idx size="3">
-		0 2 1
+	<image_idx size="80">
+		6 7 8 6 7 8 6 7 8 6
+		7 8 6 7 8 6 7 8 6 7
+		8 6 7 8 6 7 8 6 7 8
+		6 7 8 6 7 8 7 8 6 7
+		8 6 7 8 6 7 8 6 7 8
+		6 7 8 6 7 8 6 7 8 6
+		7 8 6 7 8 6 7 8 6 7
+		8 6 0 3 4 5 2 0 2 1
 	</image_idx>
-	<palette_idx size="3">
-		0 0 0
+	<palette_idx size="80">
+		1 2 3 1 2 3 1 2 3 1
+		2 3 1 2 3 1 2 3 1 2
+		3 1 2 3 1 2 3 1 2 3
+		1 2 3 1 2 3 2 3 1 2
+		3 1 2 3 1 2 3 1 2 3
+		1 2 3 1 2 3 1 2 3 1
+		2 3 1 2 3 1 2 3 1 2
+		3 1 0 0 0 0 0 0 0 0
 	</palette_idx>
 </tex_pattern_data>
 
-<tex_pattern_anm_array size="1">
-	<tex_pattern_anm index="0" material_name="hero1" data_size="3" data_head="0"/>
+<tex_pattern_anm_array size="3">
+	<tex_pattern_anm index="0" material_name="aa:f_effect_a" data_size="36" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="aa:f_effect_b" data_size="36" data_head="36"/>
+	<tex_pattern_anm index="2" material_name="hero1" data_size="8" data_head="72"/>
 </tex_pattern_anm_array>
 
 </body>
