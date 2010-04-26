@@ -924,8 +924,10 @@ static int MainSeq_Continue( START_MENU_WORK * wk )
 			break;
 
 		case BMPMENU_CANCEL:
-			wk->continueRet = 1;
-			wk->subSeq = 4;
+			StartMessage( wk, START_MENU_STR_CONTINUE_02 );
+			wk->subSeq = 7;
+//			wk->continueRet = 1;
+//			wk->subSeq = 4;
 			break;
 		}
 		break;
@@ -947,6 +949,29 @@ static int MainSeq_Continue( START_MENU_WORK * wk )
     if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
 			wk->continueRet = 1;
 			wk->subSeq = 4;
+		}
+		break;
+
+	case 7:
+		// メッセージ待ち
+		if( MainMessage( wk ) == FALSE ){
+			SetYesNoMenu( wk );
+			wk->subSeq++;
+		}
+		break;
+
+	case 8:
+		// はい・いいえ待ち
+		switch( BmpMenu_YesNoSelectMain( wk->mwk ) ){
+		case 0:
+			wk->continueRet = 1;
+			wk->subSeq = 4;
+			break;
+
+		case BMPMENU_CANCEL:
+			StartMessage( wk, START_MENU_STR_CONTINUE_01 );
+			wk->subSeq = 2;
+			break;
 		}
 		break;
 	}
