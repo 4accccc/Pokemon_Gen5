@@ -19,6 +19,7 @@
 #define MP_PARAM_COND		  (7)		//状態異常
 #define MP_PARAM_ENC		  (8)		//エンカウントフラグ（現在移動中かどうか）
 #define MP_PARAM_MV_TYPE	(9)		//移動タイプ
+#define MP_PARAM_SEIKAKU	(10)  //性格
 
 typedef struct ENC_SV_DATA_tag * ENC_SV_PTR;
 typedef struct MV_POKE_DATA_tag * MPD_PTR;

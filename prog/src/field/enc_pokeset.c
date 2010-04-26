@@ -476,8 +476,11 @@ void ENCPOKE_PPSetupMovePoke(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, MPD
 
     PP_SetupEx( pp, monsno, lv, efp->myID, pow_rnd, per_rnd );
   }
+	PP_Put( pp, ID_PARA_seikaku, EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_SEIKAKU) );		// 性格
 	PP_Put( pp, ID_PARA_condition, EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_COND) );		// コンディション
 	PP_Put( pp, ID_PARA_hp, EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_HP) );		// HP
+  
+  PP_Renew( pp );
 }
 
 /*

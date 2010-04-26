@@ -69,11 +69,11 @@ enum{
 #define WINCLR_COL(col)	(((col)<<4)|(col))
 #define FCOL_WHITE  (15)
 
-#define COL_DEF_MAIN    (2)
-#define COL_DEF_SHADOW  (1)
+#define COL_DEF_MAIN    (1)
+#define COL_DEF_SHADOW  (2)
 #define COL_DEF_BACK    (FCOL_WHITE)
 
-#define COL_CHG_MAIN    (3)
+#define COL_CHG_MAIN    (2)
 #define COL_CHG_SHADOW  (1)
 #define COL_CHG_BACK    (FCOL_WHITE)
 
@@ -306,7 +306,6 @@ static int sub_ZoneChangeMain( EVENT_DEB_MVPOKE* wk )
  */
 static void sub_GraphicInit(EVENT_DEB_MVPOKE* wk)
 {
-  GFL_FONTSYS_SetDefaultColor();
   wk->font = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr ,
                               GFL_FONT_LOADTYPE_FILE , FALSE , wk->heapID );
  
@@ -389,7 +388,8 @@ static void sub_MvPokeInfoDraw( EVENT_DEB_MVPOKE* wk, u8 idx )
   sub_RegisterGmmWord( wk, 3, d_iwa_mvpoke_cond00+EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_COND));
   WORDSET_RegisterNumber( wk->wset, 4, EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_PER_RND),
                           10, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
-  WORDSET_RegisterNumber( wk->wset, 5, EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_POW_RND),
+  WORDSET_RegisterSeikaku( wk->wset, 5, EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_SEIKAKU));
+  WORDSET_RegisterNumber( wk->wset, 6, EncDataSave_GetMovePokeDataParam(mpd, MP_PARAM_POW_RND),
                           10, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
   
   WORDSET_ExpandStr( wk->wset, wk->str_buf, wk->str_prm );

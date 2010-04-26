@@ -25,7 +25,8 @@ typedef struct PLAYER_ZONE_HIST_tag
 typedef struct MV_POKE_DATA_tag{
 
 	u16 zoneID;			//ゾーンＩＤ
-  u16 dummy;
+  u8  seikaku;    //性格
+  u8  dummy;
 
 	u32	pow_rnd;		// パワー乱数
 	u32	personal_rnd;	// 個性乱数
@@ -321,6 +322,9 @@ u32 EncDataSave_GetMovePokeDataParam(const MPD_PTR inMPData, const u8 inParamID)
 	case MP_PARAM_PER_RND:			//個性乱数
 		val = inMPData->personal_rnd;
 		break;
+	case MP_PARAM_SEIKAKU:			//性格
+		val = inMPData->seikaku;
+		break;
 	case MP_PARAM_MONSNO:			//モンスターナンバー
 		val = inMPData->mons_no;
 		break;
@@ -369,6 +373,9 @@ void EncDataSave_SetMovePokeDataParam(MPD_PTR outMPData, const u8 inParamID, con
 		break;
 	case MP_PARAM_PER_RND:			//個性乱数
 		outMPData->personal_rnd = inVal;
+		break;
+	case MP_PARAM_SEIKAKU:			//性格
+		outMPData->seikaku = inVal;
 		break;
 	case MP_PARAM_MONSNO:			//モンスターナンバー
 		outMPData->mons_no = inVal;

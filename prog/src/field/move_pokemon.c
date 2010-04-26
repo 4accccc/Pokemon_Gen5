@@ -351,6 +351,10 @@ void MP_AddMovePoke( GAMEDATA* gdata, const u8 inTargetPoke)
 	//ŒÂ«—”
 	EncDataSave_SetMovePokeDataParam(mpd, MP_PARAM_PER_RND,
 											PP_Get( poke_param, ID_PARA_personal_rnd, NULL ));
+	//«•Ê
+	EncDataSave_SetMovePokeDataParam(mpd, MP_PARAM_SEIKAKU,
+											PP_Get( poke_param, ID_PARA_seikaku, NULL ));
+	//«•Ê
 	//‚g‚o
 	EncDataSave_SetMovePokeDataParam(mpd, MP_PARAM_HP,
 											PP_Get( poke_param, ID_PARA_hpmax, NULL ));
