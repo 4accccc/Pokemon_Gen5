@@ -300,6 +300,13 @@ static void SetupCamera( FCAM_ANIME_WORK* work )
     FIELD_CAMERA_SetCameraAreaActive( camera, FALSE );
   }
 
+  // カメラシーンを停止
+  {
+    FLD_SCENEAREA* sceneArea;
+    sceneArea = FIELDMAP_GetFldSceneArea( fieldmap );
+    FLD_SCENEAREA_SetActiveFlag( sceneArea, FALSE );
+  }
+
   // フラグセット
   work->recoveryValidFlag = TRUE;
 }
@@ -334,6 +341,13 @@ static void RecoverCamera( const FCAM_ANIME_WORK* work )
   const FCAM_ANIME_DATA* anime = GetAnimeData( work );
 
   GF_ASSERT( work->recoveryValidFlag );
+
+  // カメラシーンの再始動
+  {
+    FLD_SCENEAREA* sceneArea;
+    sceneArea = FIELDMAP_GetFldSceneArea( fieldmap );
+    FLD_SCENEAREA_SetActiveFlag( sceneArea, TRUE );
+  }
 
   // カメラエリアを復帰
   if( anime->cameraAreaOffFlag ) {
