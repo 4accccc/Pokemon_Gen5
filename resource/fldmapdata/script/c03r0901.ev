@@ -23,6 +23,8 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c03r0901_musician_01
 _EVENT_DATA		ev_c03r0901_waiter_01
+_EVENT_DATA		ev_c03r0901_sunglasses_01
+_EVENT_DATA		ev_c03r0901_businessman_01
 _EVENT_DATA_END
 
 DEFINE_LOCAL target_poke_pos
@@ -32,7 +34,22 @@ DEFINE_LOCAL target_poke_pos
 /**************************************************************/
 //ev_zone_c03r0901:
 //  _END
-
+/**************************************************************/
+/*		SUNGLASSES	C03R0901              					  */
+/**************************************************************/
+EVENT_START   ev_c03r0901_sunglasses_01
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c03r0901_sunglasses_01)
+  
+EVENT_END
+/**************************************************************/
+/* 		BUSINESSMAN	C03R0901              					 */
+/**************************************************************/
+EVENT_START   ev_c03r0901_businessman_01
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG(msg_c03r0901_bussinesman_01)
+  
+EVENT_END
 /**************************************************************/
 /* 			MUSICIAN	C03R0901							  */
 /**************************************************************/

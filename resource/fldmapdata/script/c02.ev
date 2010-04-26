@@ -172,6 +172,14 @@ EVENT_START   ev_pos_c02_rival_01
 	_BALLOONWIN_OBJMSG_POS( msg_c02_black_02, C02_RIVAL_02,POS_DEFAULT )
     _BALLOONWIN_CLOSE()
     
+    _OBJ_ANIME(C02_RIVAL_02,anm_rival_item)
+    _OBJ_ANIME_WAIT()
+   
+	_ITEM_EVENT_KEYWAIT(ITEM_KAGONOMI, 3 )
+   
+  	_BALLOONWIN_OBJMSG_POS( msg_c02_black_02a, C02_RIVAL_02,POS_DEFAULT )
+    _BALLOONWIN_CLOSE()
+    
 	//ÉâÉCÉoÉãÇ™âÊñ í[Ç…è¡Ç¶ÇƒÇ¢Ç≠
 	_OBJ_ANIME( C02_RIVAL_02, anm_rival_01_saru )
 	_OBJ_ANIME_WAIT()
@@ -232,6 +240,10 @@ _ANIME_LABEL	anm_rival_01_come_z600
 _ANIME_LABEL	anm_rival_01_come_z601
 	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_item
+	_ANIME_DATA	AC_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
