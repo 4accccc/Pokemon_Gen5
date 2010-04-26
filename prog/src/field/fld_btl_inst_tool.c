@@ -31,9 +31,11 @@
 #include "item/itemsym.h"
 #include "waza_tool/wazano_def.h"
 
+#if 0
 #ifdef PM_DEBUG
 static BOOL check_TrainerType(u8 tr_type);
 #endif  //PM_DEBUG
+#endif
 
 //--------------------------------------------------------------
 /// ポケモンリスト選択イベント
@@ -1055,18 +1057,22 @@ BSUBWAY_TRAINER_ROM_DATA * FBI_TOOL_AllocTrainerRomData(
   //トレーナーデータをセット
   tr_data->bt_trd.tr_type=trd->tr_type;
 
+  NOZOMU_Printf("trno=%d type=%d\n",tr_data->bt_trd.player_id, trd->tr_type);
+
+#if 0  
 #ifdef PM_DEBUG  
 #if 1 
   //GSデータからの移植による処理
   //wbでは存在していないタイプを書き換え
   #if 1
   if( check_TrainerType(trd->tr_type) == FALSE ){
-    GF_ASSERT_MSG(0,"unknown trainer %d",trd->tr_type);
+    GF_ASSERT_MSG(0,"unknown trainer trno=%d type=%d",tr_data->bt_trd.player_id, trd->tr_type);
     tr_data->bt_trd.tr_type = TRTYPE_TANPAN;
   }
   #endif
-#endif        //@todo 果たしてＷＢで必要な処理なのか？  
-#endif  //PM_DEBUG  
+#endif
+#endif  //PM_DEBUG
+#endif  
   name = GFL_MSG_CreateString( msgdata, tr_no );
   GFL_STR_GetStringCode( name,
       &tr_data->bt_trd.name[0], BUFLEN_PERSON_NAME );
@@ -1299,6 +1305,7 @@ u16 FBI_TOOL_GetTrainerOBJCode( u32 inTrType )
   return BOY1;
 }
 
+#if 0
 #ifdef PM_DEBUG
 //--------------------------------------------------------------
 /**
@@ -1320,4 +1327,4 @@ static BOOL check_TrainerType(u8 tr_type)
 }
 
 #endif  //PM_DEBUG
-
+#endif

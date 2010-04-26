@@ -1,7 +1,8 @@
 #pragma once
 #include "battle/battle.h"
 
-extern u16 BSUBWAY_GetTrainerOBJCode( u8 tr_type );
+//extern u16 BSUBWAY_GetTrainerOBJCode( u8 tr_type ); //100424 fld_btl_inst_tool.c Ç…à⁄ìÆÅ@saito
+
 
 extern BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys );

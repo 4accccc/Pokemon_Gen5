@@ -30,6 +30,7 @@
 #include "bsubway_tr.h"
 
 #include "savedata/battle_box_save.h"
+#include "fld_btl_inst_tool.h"
 
 //======================================================================
 //  define
@@ -984,7 +985,8 @@ void BSUBWAY_SCRWORK_ChoiceBattlePartner( BSUBWAY_SCRWORK *bsw_scr )
 //--------------------------------------------------------------
 u16 BSUBWAY_SCRWORK_GetTrainerOBJCode( BSUBWAY_SCRWORK *bsw_scr, u16 idx )
 {
-  return BSUBWAY_GetTrainerOBJCode( bsw_scr->tr_data[idx].bt_trd.tr_type );
+//  return BSUBWAY_GetTrainerOBJCode( bsw_scr->tr_data[idx].bt_trd.tr_type );   //100424del saito
+    return  FBI_TOOL_GetTrainerOBJCode( bsw_scr->tr_data[idx].bt_trd.tr_type );
 }
 
 //--------------------------------------------------------------

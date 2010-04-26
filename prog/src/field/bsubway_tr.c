@@ -50,6 +50,8 @@
 #include "tr_tool/trno_def.h"
 //#include "b_tower_fld.dat"
 
+#include "fld_btl_inst_tool.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -61,6 +63,7 @@
 //======================================================================
 //  proto
 //======================================================================
+#if 0 //100425 del saito
 static BOOL set_BSWayPokemonParam(
     BSUBWAY_SCRWORK* wk,BSUBWAY_TRAINER_ROM_DATA *trd,
     u16 tr_no,BSUBWAY_POKEMON *pwd,u8 cnt,
@@ -72,13 +75,16 @@ static BSUBWAY_TRAINER_ROM_DATA * get_TrainerRomData(
 
 static void get_PokemonRomData(
     BSUBWAY_POKEMON_ROM_DATA *prd,int index);
+
 static void  make_TrainerData(
     BATTLE_SETUP_PARAM *bp, BSUBWAY_PARTNER_DATA *tr_data,
     int cnt, BTL_CLIENT_ID client_no, HEAPID heapID );
 
 static STRCODE * PM_strcpy( STRCODE* to_str, const STRCODE* from_str );
+#endif  //100425 del saito
 static u16 get_Rand( BSUBWAY_SCRWORK *wk );
 
+#if 0 //100424 fld_btl_inst_tool.c に移動　saito
 //======================================================================
 //  トレーナータイプ
 //======================================================================
@@ -162,7 +168,8 @@ u16 BSUBWAY_GetTrainerOBJCode( u8 tr_type )
   }
   return BOY1;
 }
-
+#endif
+#if 0   //100424 未使用につき　削除　saito
 //--------------------------------------------------------------
 /**
  * @brief  トレーナータイプが対応しているか
@@ -181,10 +188,12 @@ static BOOL check_TrainerType(u8 tr_type)
   }
   return( FALSE );
 }
+#endif
 
 //======================================================================
 //  バトルサブウェイ関連
 //======================================================================
+#if 0   //現時点で未使用　100426
 typedef struct
 {
   u16  size;      ///< 配列サイズ
@@ -192,7 +201,9 @@ typedef struct
   u32  magicNumber; ///< 正常に初期化済みであることをチェックするためのナンバー
   STRCODE  buffer[1]; ///< 配列本体
 }DEBUG_STRBUF;
+#endif
 
+#if 0   //100426  del  saito
 //--------------------------------------------------------------
 /**
  *  @brief バトルサブウェイ用ポケモンデータからPOKEMON_PARAMを生成
@@ -588,6 +599,45 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
 #endif
   
   BTL_SETUP_SetSubwayMode( dst ); //一通りセットした後に呼ぶ事
+  return dst;
+}
+#endif    //100426 del saito
+
+//--------------------------------------------------------------
+/**
+ * BATTLE_SETUP_PARAM作成
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @param gsys GAMESYS_WORK
+ * @retval BATTLE_SETUP_PARAM
+ */
+//--------------------------------------------------------------
+BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
+    BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
+{
+  HEAPID heapID = HEAPID_PROC;
+  BATTLE_SETUP_PARAM *dst;
+  POKEPARTY *party;
+
+  party = PokeParty_AllocPartyWork( GFL_HEAP_LOWID(heapID) );
+  {
+    int i;
+	  POKEMON_PARAM * pp;
+    const POKEPARTY *myparty = BSUBWAY_SCRWORK_GetPokePartyUse( wk );
+	  PokeParty_Init( party, wk->member_num );
+    for( i=0; i<wk->member_num; i++ ){
+      pp = PokeParty_GetMemberPointer( myparty, wk->member[i] );
+      PokeParty_Add( party, pp );
+    }
+	}
+
+  dst = FBI_TOOL_CreateBattleParam(
+          gsys, party, wk->play_mode,
+          wk->tr_data,
+          &wk->five_data[wk->partner],
+          wk->member_num );
+
+  GFL_HEAP_FreeMemory(party);
+
   return dst;
 }
 
@@ -1226,6 +1276,7 @@ u16 BSUBWAY_SCRWORK_GetTrainerNo(
   return no;
 }
 
+#if 0 //100425 del saito
 //--------------------------------------------------------------
 /**
  *  バトルサブウェイ　romトレーナーデータ展開
@@ -1452,7 +1503,7 @@ static u32 make_PokemonParam(
   }
   return personal_rnd;
 }
-
+#endif
 //--------------------------------------------------------------
 /**
  * バトルサブウェイトレーナーデータ生成
@@ -1477,8 +1528,8 @@ BOOL BSUBWAY_SCRWORK_MakeRomTrainerData(
     BSUBWAY_PAREPOKE_PARAM* poke,HEAPID heapID)
 {
   BOOL      ret = 0;
+#if 0     //100424 del saito  
   BSUBWAY_TRAINER_ROM_DATA  *trd;
-  
   //トレーナーデータセット
   trd = alloc_TrainerRomData(tr_data,tr_no,heapID);
 
@@ -1487,6 +1538,10 @@ BOOL BSUBWAY_SCRWORK_MakeRomTrainerData(
       bsw_scr,trd,tr_no,&tr_data->btpwd[0],cnt,
       set_poke_no,set_item_no,poke,heapID);
   GFL_HEAP_FreeMemory( trd );
+#else
+  ret = FBI_TOOL_MakeRomTrainerData(
+      tr_data, tr_no, cnt, set_poke_no, set_item_no, poke, heapID);
+#endif  
   return ret;
 }
 
@@ -1554,20 +1609,27 @@ void BSUBWAY_SCRWORK_MakePartnerRomData(
   BSUBWAY_TRAINER_ROM_DATA  *trd;
 
   //トレーナーデータセット
-  trd = alloc_TrainerRomData(tr_data,tr_no,heapID);
+//  trd = alloc_TrainerRomData(tr_data,tr_no,heapID); 100425 del saito
+  trd = FBI_TOOL_AllocTrainerRomData( tr_data,tr_no,heapID );
 
   //ポケモンデータをセット
   pow_rnd=get_PowerRnd(tr_no);
 
   for(i = 0;i < BSUBWAY_STOCK_PAREPOKE_MAX;i++){
+#if 0   //100425 del saito    
     make_PokemonParam(
       wk,&(tr_data->btpwd[i]),
-      poke->poke_no[i],poke->poke_id,
+      poke->poke_no[i],poke->poke_tr_id,
       poke->poke_rnd[i],pow_rnd,i,itemfix,heapID);
+#endif
+    FBI_TOOL_MakePokemonParam(
+        &(tr_data->btpwd[i]),
+        poke->poke_no[i],poke->poke_id,
+        poke->poke_rnd[i],pow_rnd,i,itemfix,heapID );
   }
   GFL_HEAP_FreeMemory( trd );
 }
-
+#if 0 //100425 del saito
 //--------------------------------------------------------------
 /**
  * バトルサブウェイのポケモンを決める
@@ -1682,7 +1744,7 @@ static BOOL set_BSWayPokemonParam(
     return ret;
   }
   //ポインタがNULLでなければ、抽選されたポケモンの必要なパラメータを返す
-  poke->poke_id = id;
+  poke->poke_tr_id = id;
   for(i = 0;i< BSUBWAY_STOCK_PAREPOKE_MAX;i++){
     poke->poke_no[i] = set_index_no[i];
     poke->poke_rnd[i] = set_rnd_no[i];
@@ -1706,7 +1768,7 @@ static BSUBWAY_TRAINER_ROM_DATA * get_TrainerRomData(
   OS_Printf( "BSUBWAY load TrainerRomData Num = %d\n", tr_no );
   return GFL_ARC_UTIL_Load( ARCID_BSW_TR, tr_no, 0, heapID );
 }
-
+#endif
 #if 0 //old gs
 static void * get_TrainerRomData( u16 tr_no, HEAPID heapID )
 {
@@ -1716,7 +1778,6 @@ static void * get_TrainerRomData( u16 tr_no, HEAPID heapID )
   //AIマルチ限定なのでプラチナ！
   return GFL_ARC_UTIL_Load( ARCID_PL_BTD_TR, tr_no, 0, heapID );
 }
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -1824,7 +1885,7 @@ static STRCODE * PM_strcpy( STRCODE* to_str, const STRCODE* from_str )
   *to_str = GFL_STR_GetEOMCode();
   return to_str;
 }
-
+#endif    //100425 del saito
 /**
  *  @brief  参加できないポケモン名をタグ展開
  */
