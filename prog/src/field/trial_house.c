@@ -219,6 +219,7 @@ void TRIAL_HOUSE_SetPlayMode( TRIAL_HOUSE_WORK_PTR ptr, const u32 inPlayMode )
 
   //パーティの最大匹数をセットして初期化
   PokeParty_Init( ptr->Party, ptr->MemberNum );
+
 }
 
 //--------------------------------------------------------------
@@ -272,29 +273,29 @@ static void MakeTrainer(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount)
 
   switch(inBtlCount){
   case 0:
-    base = 0;
-    band = 100;
-    break;
-  case 1:
-    base = 140;
+    base = 51;
     band = 20;
     break;
+  case 1:
+    base = 111;
+    band = 50;
+    break;
   case 2:
-    base = 180;
+    base = 161;
     band = 20;
     break;
   case 3:
-    base = 220;
-    band = 80;
+    base = 241;
+    band = 30;
     break;
   case 4:
-    base = 220;
-    band = 80;
+    base = 271;
+    band = 30;
     break;
   default:
     GF_ASSERT_MSG(0,"count error %d",inBtlCount);
-    base = 0;
-    band = 100;
+    base = 51;
+    band = 20;
   }
   //トレーナー抽選
   tr_no = base + GFUser_GetPublicRand(band);
