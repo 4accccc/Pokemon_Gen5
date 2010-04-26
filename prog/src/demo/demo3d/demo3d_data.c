@@ -40,6 +40,7 @@ typedef enum{
   DEMO3D_UNITCHG_NONE,
   DEMO3D_UNITCHG_PLAYER_SEX,
   DEMO3D_UNITCHG_SCENE_ID,
+  DEMO3D_UNITCHG_SEASON,
   DEMO3D_UNITCHG_TYPE_MAX,
 }DEMO3D_UNITCHG_TYPE;
 
@@ -276,6 +277,10 @@ static const DEMO3D_FILE_UNIT_TBL* data_GetUnitTbl( const DEMO3D_SCENE_UNIT* uni
     break;
   case DEMO3D_UNITCHG_SCENE_ID:
     id = env->scene_id;
+    break;
+  case DEMO3D_UNITCHG_SEASON:
+    id = env->season;
+    break;
   }
   if( id >= unit->num ){
     GF_ASSERT(id < unit->num);
