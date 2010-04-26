@@ -23,6 +23,10 @@
 _EVENT_DATA		ev_reserve_d20r0801_event_01
 _EVENT_DATA		ev_bg_d20r0801_bg1_01
 _EVENT_DATA		ev_pos_d20r0801_down_01
+_EVENT_DATA		ev_bg_d20r0801_bg2_01
+_EVENT_DATA		ev_bg_d20r0801_bg3_01
+_EVENT_DATA		ev_bg_d20r0801_bg4_01
+_EVENT_DATA		ev_bg_d20r0801_bg5_01
 _EVENT_DATA_END
 
 
@@ -58,6 +62,34 @@ _ANIME_LABEL	anm_comeback
 /**************************************************************/
 EVENT_START		ev_bg_d20r0801_bg1_01
 	_EASY_BGWIN_MSG( msg_d20r0801_bg1_05, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D20R0801	BG										  */
+/**************************************************************/
+EVENT_START		ev_bg_d20r0801_bg2_01
+	_EASY_BGWIN_MSG( msg_d20r0801_bg1_01, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D20R0801	BG										  */
+/**************************************************************/
+EVENT_START		ev_bg_d20r0801_bg3_01
+	_EASY_BGWIN_MSG( msg_d20r0801_bg1_02, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D20R0801	BG										  */
+/**************************************************************/
+EVENT_START		ev_bg_d20r0801_bg4_01
+	_EASY_BGWIN_MSG( msg_d20r0801_bg1_03, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D20R0801	BG										  */
+/**************************************************************/
+EVENT_START		ev_bg_d20r0801_bg5_01
+	_EASY_BGWIN_MSG( msg_d20r0801_bg1_04, TYPE_INFO )
 EVENT_END
 
 /**************************************************************/

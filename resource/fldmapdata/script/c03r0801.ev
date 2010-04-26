@@ -193,8 +193,8 @@ _TALK_OBJ_START()
 		//遊覧船内ゲーム終了
     _PL_BOAT_GAME_END()
 
-		//ブラックアウト
-		_MAP_FADE_BLACK_OUT()
+		_MAP_FADE_BLACK_OUT_SLOW()
+		_MAP_FADE_END_CHECK()
 
     //遊覧船終了
     _CALL pl_boat_end
@@ -737,6 +737,10 @@ EVENT_START		ev_pos_c03r0801_move_01
     //ＢＧ初期化処理
 //	  _MAP_FADE_INT_BG()  デモ終了でも一度船内に戻ってくるので、不要になった　100415
     //遊覧船終了
+    
+	_MAP_FADE_BLACK_OUT_SLOW()
+	_MAP_FADE_END_CHECK()
+    
     _CALL pl_boat_end
   ENDIF
 

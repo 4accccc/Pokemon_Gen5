@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/24 17:28:57
+#save date:2010/04/26 14:51:47
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d20r0801.wms
 #SECTION START:OBJ_EVENT
@@ -60,7 +60,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-2
+6
 #event number: 0
 #Pos Event Label
 POSID_BG_D20R0801_BG1_01
@@ -95,6 +95,74 @@ EVENTDATA_POSTYPE_GRID
 -56 48 -88
 #size
 3 1
+#event number: 2
+#Pos Event Label
+POSID_BG_D20R0801_BG2_01
+#Pos Script Name
+SCRID_BG_D20R0801_BG2_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 48 104
+#size
+3 4
+#event number: 3
+#Pos Event Label
+POSID_BG_D20R0801_BG3_01
+#Pos Script Name
+SCRID_BG_D20R0801_BG3_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 48 8
+#size
+3 4
+#event number: 4
+#Pos Event Label
+POSID_BG_D20R0801_BG4_01
+#Pos Script Name
+SCRID_BG_D20R0801_BG4_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 48 104
+#size
+3 4
+#event number: 5
+#Pos Event Label
+POSID_BG_D20R0801_BG5_01
+#Pos Script Name
+SCRID_BG_D20R0801_BG5_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 48 8
+#size
+3 4
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
