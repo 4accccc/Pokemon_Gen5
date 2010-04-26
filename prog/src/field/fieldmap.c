@@ -1471,7 +1471,7 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 
   GF_ASSERT(fieldWork->seq < NELEMS(mainfuncTable));
 	fieldWork->timer++;
-	
+
   result = MAINSEQ_RESULT_CONTINUE;
   func = mainfuncTable[fieldWork->seq][fieldWork->seq_switch];
   if (func != NULL) 
@@ -2352,11 +2352,11 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
   if( FLDMAPPER_CheckTrans( fieldWork->g3Dmapper ) == FALSE )
   {
     //•‰‰×‚ðƒIƒt
-    DEBUG_PerformanceStressON(FALSE);
+    DEBUG_PerformanceStressON(FALSE, STRESS_ID_MAP);
   }
   else{
     //•‰‰×‚ðƒIƒ“
-    DEBUG_PerformanceStressON(TRUE);
+    DEBUG_PerformanceStressON(TRUE, STRESS_ID_MAP);
   }
 #endif
 

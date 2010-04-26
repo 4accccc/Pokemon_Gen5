@@ -137,7 +137,7 @@ static PERFORMANCE_SYSTEM pfm_sys;
 BOOL DebugScanOnly = FALSE;
 
 //負荷を一時的にかけなくするフラグ
-BOOL DebugStressON = TRUE;
+BOOL DebugStressON[STRESS_ID_MAX] = {TRUE,TRUE};
 //パレスモード判定用
 BOOL DebugStressPalace = FALSE;
 
@@ -913,7 +913,7 @@ void DEBUG_PerformanceSetStress(void)
   if ( !pfm_sys.AveTest ) return;
   start_tick = OS_GetTick();
  
-  if (DebugStressON){
+  if (DebugStressON[STRESS_ID_MAP] && DebugStressON[STRESS_ID_SND]){
     int diff;
     int stress;
     AVERAGE_PRM *prm;
@@ -933,7 +933,8 @@ void DEBUG_PerformanceSetStress(void)
   }
   else
   {
-    NOZOMU_Printf("ストレスオフ中\n");
+    if ( !DebugStressON[STRESS_ID_MAP] ) NOZOMU_Printf("マップロード　ストレスオフ中\n");
+    if ( !DebugStressON[STRESS_ID_SND] ) NOZOMU_Printf("サウンドロード　ストレスオフ中\n");
   }
 }
 
@@ -1162,13 +1163,13 @@ void DEBUG_PerformanceSetTopFlg(const u8 inTop)
   prm->Top = inTop;
 }
 
-void DEBUG_PerformanceStressON(BOOL flg)
+void DEBUG_PerformanceStressON(BOOL flg, STRESS_ID id)
 {
-  DebugStressON = flg;
+  DebugStressON[id] = flg;
   if (!flg)
   {
     //パレスなら常に負荷がかかるのでON
-    if (DebugStressPalace) DebugStressON = TRUE;
+    if (DebugStressPalace) DebugStressON[id] = TRUE;
   }
 }
 

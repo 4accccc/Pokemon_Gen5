@@ -29,6 +29,11 @@ typedef enum{
 ///数値の負荷表示をするID(VBLANK負荷計測は未対応)
 #define PERFORMANCE_NUM_PRINT_ID		(PERFORMANCE_ID_MAIN)
 
+typedef enum{
+  STRESS_ID_MAP,
+  STRESS_ID_SND,
+  STRESS_ID_MAX
+}STRESS_ID;
 
 //==============================================================================
 //	外部関数宣言
@@ -44,6 +49,6 @@ extern void DEBUG_PerformanceStartTick(int id);
 extern void DEBUG_PerformanceEndTick(int id);
 extern void DEBUG_PerformanceSetAveTest(BOOL palace);
 extern void DEBUG_PerformanceSetTopFlg(const u8 inTop);
-extern void DEBUG_PerformanceStressON(BOOL flg);
+extern void DEBUG_PerformanceStressON(BOOL flg, STRESS_ID id);
 
 #endif //PM_DEBUG
