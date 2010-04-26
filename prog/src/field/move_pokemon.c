@@ -95,27 +95,6 @@ static const u16 DATA_ZoneTbl[MVPOKE_LOCATION_MAX+1] = {
   MVPOKE_ZONE_NULL, //17
 };
 
-static const MP_LOC_DATA MovePokeLocationTbl[MVPOKE_LOCATION_MAX] =
-{
-	{2,{1,15,0xffff,0xffff,0xffff,0xffff}},		//0
-	{2,{0,2,0xffff,0xffff,0xffff,0xffff}},		//1
-	{3,{1,3,7,0xffff,0xffff,0xffff}},			//2
-	{3,{2,4,7,0xffff,0xffff,0xffff}},			//3
-	{2,{3,5,0xffff,0xffff,0xffff,0xffff}},		//4
-	{2,{4,6,0xffff,0xffff,0xffff,0xffff}},		//5
-	{2,{5,7,0xffff,0xffff,0xffff,0xffff}},		//6
-	{3,{2,3,8,0xffff,0xffff,0xffff}},			//7
-	{3,{7,9,11,0xffff,0xffff,0xffff}},			//8
-	{3,{8,10,11,0xffff,0xffff,0xffff}},			//9
-	{1,{9,0xffff,0xffff,0xffff,0xffff,0xffff}},	//10
-	{4,{8,9,12,13,0xffff,0xffff}},				//11
-	{2,{11,13,0xffff,0xffff,0xffff,0xffff}},	//12
-	{3,{11,12,15,0xffff,0xffff,0xffff}},		//13
-	{2,{13,15,0xffff,0xffff,0xffff,0xffff}},	//14
-	{2,{0,14,0xffff,0xffff,0xffff,0xffff}},		//15
-	{2,{0,14,0xffff,0xffff,0xffff,0xffff}},		//16
-};
-
 static const MP_TIME_LOC_DATA DATA_TimeLocation[] = {
  { 4, { ZONE_IDX_R01, ZONE_IDX_R02, ZONE_IDX_R03, ZONE_IDX_R18 }},
  { 3, { ZONE_IDX_R04, ZONE_IDX_R05, ZONE_IDX_R16, 0 }},
@@ -129,10 +108,8 @@ static const MP_TIME_LOC_DATA DATA_TimeLocation[] = {
 static inline u16 GetZoneID( u8 zone_idx );
 static u8 MonsNoToMovePokeID(u16 monsno);
 
-static void JumpMovePokeLocation(	ENC_SV_PTR data, const u8 inTargetPoke, const int inPlayerOldZone);
 static void JumpMovePokeTimeLocation( ENC_SV_PTR data, u8 season, const u8 inTargetPoke );
 
-static void MovePokeLocation(ENC_SV_PTR data, const u8 inTargetPoke, const int inPlayerOldZone);
 static void UpdateData(	ENC_SV_PTR data,
 						const u8 inTargetPoke,
 						const u8  inZoneIdx, const int inZone);
@@ -152,15 +129,7 @@ static MPD_PTR GetMovePokeDataByMonsNo(ENC_SV_PTR inEncData, const int inMonsNo)
 void MP_JumpMovePokemon(ENC_SV_PTR inEncData, u8 season, const u8 inTarget)
 {
   MPD_PTR	mpd = EncDataSave_GetMovePokeDataPtr( inEncData, inTarget );
-
-  if(EncDataSave_GetMovePokeDataParam( mpd, MP_PARAM_MV_TYPE ) == MVPOKE_TYPE_NORMAL)
-  {
-	  int player_old_zone;
-	  player_old_zone = EncDataSave_GetPlayerOldZone(inEncData);
-	  JumpMovePokeLocation(inEncData, inTarget, player_old_zone);
-  }else{
-    JumpMovePokeTimeLocation( inEncData, season, inTarget );
-  }
+  JumpMovePokeTimeLocation( inEncData, season, inTarget );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -209,17 +178,9 @@ void MP_MovePokemonNeighboring( GAMEDATA* gdata )
       continue;
     }
 
-		//タイム移動か16分の1の確率でジャンプ
-    if( EncDataSave_GetMovePokeDataParam( mpd, MP_PARAM_MV_TYPE ) == MVPOKE_TYPE_TIME || 
-		    GFUser_GetPublicRand0(16) == 0){
-			IWASAWA_Printf("%d:ジャンプします\n",i);
-			//ジャンプ
-			MP_JumpMovePokemon(enc_sv, season, i);
-		}else{
-			IWASAWA_Printf("%d:隣接移動します\n",i);
-			//隣接移動
-			MovePokeLocation(enc_sv, i, EncDataSave_GetPlayerOldZone(enc_sv) );
-		}
+		//ジャンプ
+		MP_JumpMovePokemon(enc_sv, season, i);
+	  IWASAWA_Printf("%d:ジャンプします\n",i);
 	}
 }
 
@@ -540,38 +501,6 @@ static u8 MonsNoToMovePokeID(u16 monsno)
 
 //--------------------------------------------------------------------------------------------
 /**
- * 移動ポケモン出現場所抽選(ノーマル)
- *
- * @param	data			エンカウント関連セーブデータ
- * @param	inTargetPoke	対象移動ポケモンインデックス
- * @param	inPlayerZone	旧ゾーン
- *
- * @return
- */
-//--------------------------------------------------------------------------------------------
-static void JumpMovePokeLocation(ENC_SV_PTR data, const u8 inTargetPoke, const int inPlayerOldZone)
-{
-	u8 zone_idx;
-	int move_poke_now_zone;
-	int zone;
-	
-  //主人公が前々回いたゾーンと
-	//今自分がいる場所は対象外とする
-	move_poke_now_zone = GetZoneID( EncDataSave_GetMovePokeZoneIdx(data,inTargetPoke));
-	
-  while(1){
-    zone_idx =  GFUser_GetPublicRand0( MVPOKE_LOCATION_MAX );
-		zone = GetZoneID( zone_idx );
-		if ((zone != inPlayerOldZone)&&(zone != move_poke_now_zone)){
-			UpdateData(	data, inTargetPoke, zone_idx, zone);
-			IWASAWA_Printf("%dへジャンプ player_old_zone:%d\n",zone,inPlayerOldZone);
-			break;
-		}
-	}	
-}
-
-//--------------------------------------------------------------------------------------------
-/**
  * 移動ポケモン出現場所抽選(カミシリーズ)
  *
  * @param	data			エンカウント関連セーブデータ
@@ -608,51 +537,6 @@ static void JumpMovePokeTimeLocation( ENC_SV_PTR data, u8 season, const u8 inTar
 			UpdateData(	data, inTargetPoke, zone_idx, zone);
 			IWASAWA_Printf("%dへジャンプ TimeZone:%d\n",zone, timezone );
 			break;
-		}
-	}
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * 移動ポケモン隣接移動
- *
- * @param	data			エンカウント関連セーブデータ
- * @param	inTargetPoke	対象移動ポケモンインデックス
- * @param	inPlayerZone	旧ゾーン	
- *
- * @return
- */
-//--------------------------------------------------------------------------------------------
-static void MovePokeLocation(ENC_SV_PTR data, const u8 inTargetPoke, const int inPlayerOldZone)
-{
-	u8 zone_idx;
-	int zone;
-	const MP_LOC_DATA *loc_data;
-	loc_data = &(MovePokeLocationTbl[EncDataSave_GetMovePokeZoneIdx(data,inTargetPoke)]);
-	
-	if (loc_data->BranchNum == 1){	//変移先が1つしかない場合
-		zone_idx = loc_data->ZoneIdx[0];
-		zone = GetZoneID( zone_idx );
-		if (zone == inPlayerOldZone){	//主人公の前々回のゾーンだったら、ジャンプ
-			IWASAWA_Printf("主人公の旧座標だったのでジャンプに変更\n");
-			JumpMovePokeLocation(data, inTargetPoke, inPlayerOldZone);
-		}else{
-			IWASAWA_Printf("%d:%dに隣接移動\n",inTargetPoke,zone);
-			UpdateData(	data, inTargetPoke, zone_idx, zone);
-		}
-	}else{							//変移先が複数ある場合
-		u8 idx;
-		while(1){
-			//隣接場所をランダムで決定
-			idx = GFUser_GetPublicRand0(loc_data->BranchNum);
-			zone_idx = loc_data->ZoneIdx[idx];
-			zone = GetZoneID( zone_idx );
-			//主人公の前々回いたゾーン以外を選出して移動
-			if (zone != inPlayerOldZone){
-				IWASAWA_Printf("%d:%dに隣接移動\n",inTargetPoke,zone);
-				UpdateData(	data, inTargetPoke, zone_idx, zone);
-				break;
-			}
 		}
 	}
 }
