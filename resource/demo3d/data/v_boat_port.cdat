@@ -21,7 +21,7 @@ static const DEMO3D_SCENE_DATA data_v_boat_port_scene = {
 	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
 	GX_SORTMODE_AUTO,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
-	FX32_CONST(40.0),FX32_CONST(40.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
+	FX32_CONST(35.0),FX32_CONST(35.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
 	FX32_CONST(0.100 ),FX32_CONST(2048.000 ),	///<near,far
 	FX32_CONST(1.0 ),	///<ScaleW
 	0,0,	///<2画面main_ofs,2画面sub_ofs
@@ -33,8 +33,8 @@ static const DEMO3D_SCENE_DATA data_v_boat_port_scene = {
 	{ 0,0,0,0,0,0,0,0, }, 	///<フォグ濃度テーブル
 	{ GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),	///<エッジマーキングカラーテーブル
 	  GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0), },
-	DEMO3D_FADE_WHITE, 30,	///<フェードイン
-	DEMO3D_FADE_WHITE, 30,	///<フェードアウト
+	DEMO3D_FADE_BLACK, 20,	///<フェードイン
+	DEMO3D_FADE_BLACK, 0,	///<フェードアウト
 };
 
 //============================================
@@ -46,6 +46,7 @@ static const DEMO3D_CMD_DATA demo3d_cmd_v_boat_port_data[] = {
  { DEMO3D_CMD_TYPE_SE_PLAY, 10, { SEQ_SE_FLD_78, 127, 0, 0, 1, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_SE_PLAY, 160, { SEQ_SE_VDEMO_02, 127, 0, -300, 1, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_SE_PLAY, 177, { SEQ_SE_VDEMO_02, 127, 0, -300, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 210-30, { MASK_MAIN_DISPLAY, 30, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
 
@@ -67,10 +68,11 @@ static const DEMO3D_CMD_DATA demo3d_cmd_v_boat_port_end_data[] = {
 
 static const u16 res_v_boat_port_file_vboat01[] = {
  NARC_data_demo3d_v_boat_port01_nsbmd,
+ NARC_data_demo3d_v_boat_port01_nsbta,
 };
 
 static const DEMO3D_FILE_UNIT res_v_boat_port_file_unit_vboat01[] = {
- { res_v_boat_port_file_vboat01, 1 },
+ { res_v_boat_port_file_vboat01, 2 },
 };
 
 ///==================================
@@ -78,11 +80,44 @@ static const DEMO3D_FILE_UNIT res_v_boat_port_file_unit_vboat01[] = {
 
 static const u16 res_v_boat_port_file_vboat02[] = {
  NARC_data_demo3d_v_boat_port02_nsbmd,
+ NARC_data_demo3d_v_boat_port02_nsbta,
  NARC_data_demo3d_v_boat_port02_nsbca,
 };
 
 static const DEMO3D_FILE_UNIT res_v_boat_port_file_unit_vboat02[] = {
- { res_v_boat_port_file_vboat02, 2 },
+ { res_v_boat_port_file_vboat02, 3 },
+};
+
+///==================================
+/// vboat03 Unit File Resource
+
+static const u16 res_v_boat_port_file_vboat03_morning[] = {
+ NARC_data_demo3d_v_boat_ramp_nsbmd,
+ NARC_data_demo3d_v_boat_ramp_off_nsbta,
+};
+static const u16 res_v_boat_port_file_vboat03_noon[] = {
+ NARC_data_demo3d_v_boat_ramp_nsbmd,
+ NARC_data_demo3d_v_boat_ramp_off_nsbta,
+};
+static const u16 res_v_boat_port_file_vboat03_evening[] = {
+ NARC_data_demo3d_v_boat_ramp_nsbmd,
+ NARC_data_demo3d_v_boat_ramp_on_nsbta,
+};
+static const u16 res_v_boat_port_file_vboat03_night[] = {
+ NARC_data_demo3d_v_boat_ramp_nsbmd,
+ NARC_data_demo3d_v_boat_ramp_on_nsbta,
+};
+static const u16 res_v_boat_port_file_vboat03_midnight[] = {
+ NARC_data_demo3d_v_boat_ramp_nsbmd,
+ NARC_data_demo3d_v_boat_ramp_on_nsbta,
+};
+
+static const DEMO3D_FILE_UNIT res_v_boat_port_file_unit_vboat03[] = {
+ { res_v_boat_port_file_vboat03_morning, 2 },
+ { res_v_boat_port_file_vboat03_noon, 2 },
+ { res_v_boat_port_file_vboat03_evening, 2 },
+ { res_v_boat_port_file_vboat03_night, 2 },
+ { res_v_boat_port_file_vboat03_midnight, 2 },
 };
 
 ///========================================================
@@ -97,8 +132,13 @@ static const DEMO3D_FILE_UNIT_TBL res_v_boat_port_file_unit_vboat02_tbl[] = {
  { res_v_boat_port_file_unit_vboat02, 1 },
 };
 
+static const DEMO3D_FILE_UNIT_TBL res_v_boat_port_file_unit_vboat03_tbl[] = {
+ { res_v_boat_port_file_unit_vboat03, 5 },
+};
+
 static const DEMO3D_SCENE_UNIT res_v_boat_port_scene_unit[] = {
  { res_v_boat_port_file_unit_vboat01_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_v_boat_port_file_unit_vboat02_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_v_boat_port_file_unit_vboat03_tbl, 1, DEMO3D_UNITCHG_NONE },
 };
 
