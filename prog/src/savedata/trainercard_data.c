@@ -260,7 +260,16 @@ SHORT_DATE TRCSave_GetBadgeDate( TR_CARD_SV_PTR outTrCard, int no )
 //=============================================================================================
 void TRCSave_SetBadgeDate( TR_CARD_SV_PTR inTrCard, int no, int year, int month, int day )
 {
+  RTCDate date;
+  RTCTime time;
+  s64     digit;
+
   GF_ASSERT(no<TRAINERCARD_BADGE_NUM);
+
+  // 日付・時間取得
+  GFL_RTC_GetDateTime( &date, &time);
+  digit = RTC_ConvertDateTimeToSecond( &date, &time );
+
 
   // バッジ取得の年月日設定
   inTrCard->badgeGetDate[no].year  = year;
@@ -268,8 +277,10 @@ void TRCSave_SetBadgeDate( TR_CARD_SV_PTR inTrCard, int no, int year, int month,
   inTrCard->badgeGetDate[no].day   = day;
 
   // 一緒にバッジ磨き情報も入れる
-
   inTrCard->polish[no] = BADGE_POLISH_MAX/2;
+
+  // 最後にトレーナーカードを開いたのを今にする
+  TRCSave_SetLastTime( inTrCard, digit );
 }
 
 
