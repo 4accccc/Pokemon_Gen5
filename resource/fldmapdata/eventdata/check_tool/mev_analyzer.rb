@@ -96,7 +96,11 @@ class MEVAnalyzer
   def output_trainer( obj_section )
     obj_section.event.each do |event|
       if check_obj_event_is_trainer( event ) then
-        @out_data << event.OBJ_CODE_Number + "\r\n"
+        data = event.OBJ_CODE_Number
+        data += ", "
+        data += "ID = #{event.ID_name}"
+        data += "\r\n"
+        @out_data << data
       end
     end
   end
