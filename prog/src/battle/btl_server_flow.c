@@ -89,6 +89,17 @@ typedef enum {
 }SabotageType;
 
 /**
+ *  溜めワザ判定結果
+ */
+typedef enum {
+
+  TAMEWAZA_NONE = 0,    ///< 溜めワザではない
+  TAMEWAZA_START,       ///< 溜めワザ：発動ターン
+  TAMEWAZA_RELEASE,     ///< 溜めワザ：リリースターン
+
+}TameWazaSeq;
+
+/**
  *  ふきとばし系のワザ処理パターン
  */
 typedef enum {
@@ -213,6 +224,7 @@ typedef struct {
   u8  fEnable;      ///< 発動確定フラグ
   u8  attackerPos;  ///< 発動開始位置
   u8  targetPos;    ///< 対象位置（位置が明確でないワザは BTL_POS_NULL ）
+  u8  effectIndex;  ///< エフェクトIndex
 }WAZAEFF_CTRL;
 
 /**
@@ -266,6 +278,7 @@ struct _BTL_SVFLOW_WORK {
   u8      getPokePos;
   u8      numRelivePoke;
   u8      nigeruCount;
+  u8      wazaEffIdx;
   u8      relivedPokeID[ BTL_POKEID_MAX ];
   u8      pokeDeadFlag[ BTL_POKEID_MAX ];
   u8      pokeInFlag [ BTL_POKEID_MAX ];
@@ -341,7 +354,8 @@ static inline void FlowFlg_Set( BTL_SVFLOW_WORK* wk, FlowFlag flg );
 static inline void FlowFlg_Clear( BTL_SVFLOW_WORK* wk, FlowFlag flg );
 static inline BOOL FlowFlg_Get( BTL_SVFLOW_WORK* wk, FlowFlag flg );
 static inline void FlowFlg_ClearAll( BTL_SVFLOW_WORK* wk );
-static void wazaEffCtrl_Init( WAZAEFF_CTRL* ctrl, BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* rec );
+static void wazaEffCtrl_Init( WAZAEFF_CTRL* ctrl );
+static void wazaEffCtrl_Setup( WAZAEFF_CTRL* ctrl, BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* rec );
 static inline void wazaEffCtrl_SetEnable( WAZAEFF_CTRL* ctrl );
 static inline BOOL wazaEffCtrl_IsEnable( const WAZAEFF_CTRL* ctrl );
 static inline BOOL IsBppExist( const BTL_POKEPARAM* bpp );
@@ -445,7 +459,7 @@ static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
 static BOOL IsTripleFarPos( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaID waza );
 static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender,
   const SVFL_WAZAPARAM* wazaParam );
-static void scPut_WazaEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const WAZAEFF_CTRL* effCtrl, u32 que_reserve_pos );
+static void scPut_WazaEffect( BTL_SVFLOW_WORK* wk, WazaID waza, WAZAEFF_CTRL* effCtrl, u32 que_reserve_pos );
 static BOOL scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const BTL_POKESET* targetRec, WazaID waza );
 static void scproc_TameStartTurn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos atPos, const BTL_POKESET* targetRec, WazaID waza );
 static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
@@ -791,8 +805,7 @@ static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
 static u8 scproc_HandEx_TameHideCancel( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_effectByPos( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_changeForm( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-
-
+static u8 scproc_HandEx_setWazaEffectIndex( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 
 
 
@@ -817,6 +830,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->escapeClientID = BTL_CLIENTID_NULL;
   wk->getPokePos = BTL_POS_NULL;
   wk->nigeruCount = 0;
+  wk->wazaEffIdx = 0;
   wk->sinkaArcHandle = SHINKA_GetArcHandle( heapID );
 
   clearWorks( wk );
@@ -1401,7 +1415,7 @@ static void scproc_BeforeFirstFight( BTL_SVFLOW_WORK* wk )
     {
       if( BTL_HANDLER_Waza_Add(wk->actOrder[i].bpp, waza) )
       {
-        scEvent_BeforeFight(wk, wk->actOrder[i].bpp, waza);
+        scEvent_BeforeFight(wk, wk->actOrder[i].bpp, waza );
         BTL_HANDLER_Waza_Remove( wk->actOrder[i].bpp, waza );
       }
     }
@@ -2275,25 +2289,32 @@ static inline void FlowFlg_ClearAll( BTL_SVFLOW_WORK* wk )
 /**
  *  ワザエフェクト発動管理：初期化
  */
-static void wazaEffCtrl_Init( WAZAEFF_CTRL* ctrl, BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* rec )
+static void wazaEffCtrl_Init( WAZAEFF_CTRL* ctrl )
+{
+  ctrl->attackerPos = BTL_POS_NULL;
+  ctrl->targetPos = BTL_POS_NULL;
+  ctrl->effectIndex = 0;
+  ctrl->fEnable = FALSE;
+}
+/**
+ *  ワザエフェクト発動管理：基本パラメータ設定
+ */
+static void wazaEffCtrl_Setup( WAZAEFF_CTRL* ctrl, BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* rec )
 {
   u32 target_cnt = BTL_POKESET_GetCountMax( rec );
 
-  ctrl->attackerPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
+  ctrl->attackerPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(attacker) );
 
   // ターゲットが単体なら明確なターゲット位置情報を記録
   if( target_cnt == 1 ){
     const BTL_POKEPARAM* bpp = BTL_POKESET_Get( rec, 0 );
-    ctrl->targetPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(bpp) );
+    ctrl->targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(bpp) );
   }
   // ターゲットが複数体または場に効くワザなどの場合はターゲット位置情報なし
   else{
     ctrl->targetPos = BTL_POS_NULL;
   }
-
-  ctrl->fEnable = FALSE;
 }
-
 
 /**
  *  ワザエフェクト発動管理：発動確定
@@ -2305,11 +2326,17 @@ static inline void wazaEffCtrl_SetEnable( WAZAEFF_CTRL* ctrl )
     ctrl->fEnable = TRUE;
   }
 }
+/**
+ *  ワザエフェクト発動管理：発動確定するかチェック
+ */
 static inline BOOL wazaEffCtrl_IsEnable( const WAZAEFF_CTRL* ctrl )
 {
   return ctrl->fEnable;
 }
-
+static inline void wazaEffCtrl_SetEffectIndex( WAZAEFF_CTRL* ctrl, u8 index )
+{
+  ctrl->effectIndex = index;
+}
 
 /**
  *  ポケモン存在＆生存チェック一時関数
@@ -3755,7 +3782,8 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
           }else{
             u16 que_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_WAZA_EFFECT );
             BTL_POKESET_Add( &wk->pokesetTarget, robPoke );
-            wazaEffCtrl_Init( &wk->wazaEffCtrl, wk, attacker, &wk->pokesetTarget );
+            wazaEffCtrl_Init( &wk->wazaEffCtrl );
+            wazaEffCtrl_Setup( &wk->wazaEffCtrl, wk, attacker, &wk->pokesetTarget );
             wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
             scPut_WazaEffect( wk, actWaza, &wk->wazaEffCtrl, que_pos );
           }
@@ -3920,7 +3948,6 @@ static BOOL scproc_Fight_CheckCombiWazaReady( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
       BTL_POKEPARAM* combiPoke;
       u8 idx, idxMin, combiPokeID;
 
-
       idxMin = BTL_POS_MAX;
       combiPoke = orderWork[ 0 ]->bpp;
 
@@ -3945,7 +3972,6 @@ static BOOL scproc_Fight_CheckCombiWazaReady( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
     }
   }
 
-
   return FALSE;
 }
 //----------------------------------------------------------------------------------
@@ -3965,13 +3991,15 @@ static BOOL scproc_Fight_CheckDelayWazaSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* 
   u32 hem_state = Hem_PushState( &wk->HEManager );
   BOOL result = scEvent_CheckDelayWazaSet( wk, attacker, targetPos );
 
-  if( result ){
+  if( result )
+  {
     BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
-    if(  scproc_HandEx_Root(wk, ITEM_DUMMY_DATA) == HandExResult_Enable)
+    if( scproc_HandEx_Root(wk, ITEM_DUMMY_DATA) == HandExResult_Enable )
     {
-      SCQUE_PUT_ACT_WazaEffect( wk->que, atPos, targetPos, waza );
+      SCQUE_PUT_ACT_WazaEffect( wk->que, atPos, targetPos, waza, BTLV_WAZAEFF_DELAY_START );
       scproc_Fight_DecideDelayWaza( wk, attacker );
-    }else{
+    }
+    else{
       scPut_WazaFail( wk, attacker, waza );
     }
   }
@@ -4229,7 +4257,7 @@ static void scPut_ReqWazaEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID
 
   atkPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID );
 
-  SCQUE_PUT_ACT_WazaEffect( wk->que, atkPos, targetPos, waza );
+  SCQUE_PUT_ACT_WazaEffect( wk->que, atkPos, targetPos, waza, 0 );
 }
 //--------------------------------------------------------------------------
 /**
@@ -4685,6 +4713,7 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 
   // レコードデータ更新
   scproc_WazaExeRecordUpdate( wk, waza );
+  wazaEffCtrl_Init( &wk->wazaEffCtrl );
 
   // １ターン溜めワザの発動チェック
   if( scproc_Fight_TameWazaExe(wk, attacker, targetRec, waza) ){
@@ -4747,7 +4776,7 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 
   if( fEnable )
   {
-    wazaEffCtrl_Init( &wk->wazaEffCtrl, wk, attacker, targetRec );
+    wazaEffCtrl_Setup( &wk->wazaEffCtrl, wk, attacker, targetRec );
     BTL_Printf("ワザ=%d, カテゴリ=%d\n", wk->wazaParam.wazaID, category );
 
     if( fDamage ){
@@ -5257,10 +5286,12 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
  * @param   que_reserve_pos
  */
 //----------------------------------------------------------------------------------
-static void scPut_WazaEffect( BTL_SVFLOW_WORK* wk, WazaID waza, const WAZAEFF_CTRL* effCtrl, u32 que_reserve_pos )
+static void scPut_WazaEffect( BTL_SVFLOW_WORK* wk, WazaID waza, WAZAEFF_CTRL* effCtrl, u32 que_reserve_pos )
 {
   SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_WAZA_EFFECT,
-          effCtrl->attackerPos, effCtrl->targetPos, waza );
+          effCtrl->attackerPos, effCtrl->targetPos, waza, effCtrl->effectIndex );
+
+  effCtrl->effectIndex = BTLV_WAZAEFF_INDEX_DEFAULT;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -5292,7 +5323,6 @@ static BOOL scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
         return TRUE;
       }
 
-//      SCQUE_PUT_ACT_WazaEffectEx( wk->que, atPos, BTL_POS_NULL, waza, BTLV_WAZAEFF_TURN_TAME );
       scproc_TameStartTurn( wk, attacker, atPos, targetRec, waza );
       {
         u32 hem_state = Hem_PushState( &wk->HEManager );
@@ -5306,6 +5336,7 @@ static BOOL scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
 
     scPut_CureSick( wk, attacker, WAZASICK_TAMELOCK, NULL );
     BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_TAMEHIDE_OFF );
+    wazaEffCtrl_SetEffectIndex( &wk->wazaEffCtrl, BTLV_WAZAEFF_TAME_RELEASE );
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
       scEvent_TameRelease( wk, attacker, targetRec, waza );
@@ -5336,7 +5367,7 @@ static void scproc_TameStartTurn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
       const BTL_POKEPARAM* target = BTL_POKESET_Get( targetRec, 0 );
       targetPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(target) );
     }
-    SCQUE_PUT_ACT_WazaEffectEx( wk->que, atPos, targetPos, waza, BTLV_WAZAEFF_TURN_TAME );
+    SCQUE_PUT_ACT_WazaEffect( wk->que, atPos, targetPos, waza, BTLV_WAZAEFF_TAME_START );
   }
 
   {
@@ -5952,7 +5983,7 @@ static u32 scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
       wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
     }
     else{
-      SCQUE_PUT_ACT_WazaEffect( wk->que, wk->wazaEffCtrl.attackerPos, wk->wazaEffCtrl.targetPos, wazaParam->wazaID );
+      SCQUE_PUT_ACT_WazaEffect( wk->que, wk->wazaEffCtrl.attackerPos, wk->wazaEffCtrl.targetPos, wazaParam->wazaID, 0 );
     }
   }
 
@@ -12749,6 +12780,18 @@ BOOL BTL_SVFTOOL_IsExistPosEffect( BTL_SVFLOW_WORK* wk, BtlPokePos pos, BtlPosEf
 //=============================================================================================
 /**
  * [ハンドラからの操作呼び出し]
+ *
+ * @param   wk
+ * @param   effIndex
+ */
+//=============================================================================================
+void BTL_SVFRET_SetWazaEffectIndex( BTL_SVFLOW_WORK* wk, u8 effIndex )
+{
+  wazaEffCtrl_SetEffectIndex( &wk->wazaEffCtrl, effIndex );
+}
+//=============================================================================================
+/**
+ * [ハンドラからの操作呼び出し]
  *  スタンドアローンバトルで、プレイヤーポケモンの使用したハンドラから呼び出された場合のみ
  *  おこづかいを上乗せする（ネコにこばん専用）
  *
@@ -12883,6 +12926,7 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_TAMEHIDE_CANCEL,      sizeof(BTL_HANDEX_PARAM_TAMEHIDE_CANCEL)     },
     { BTL_HANDEX_EFFECT_BY_POS,        sizeof(BTL_HANDEX_PARAM_EFFECT_BY_POS)       },
     { BTL_HANDEX_CHANGE_FORM,          sizeof(BTL_HANDEX_PARAM_CHANGE_FORM)         },
+    { BTL_HANDEX_SET_EFFECT_IDX,       sizeof(BTL_HANDEX_PARAM_SET_EFFECT_IDX)      },
   };
   u32 size, i;
 
@@ -13079,6 +13123,7 @@ static HandExResult scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_TAMEHIDE_CANCEL:    fPrevSucceed = scproc_HandEx_TameHideCancel( wk, handEx_header ); break;
     case BTL_HANDEX_EFFECT_BY_POS:      fPrevSucceed = scproc_HandEx_effectByPos( wk, handEx_header ); break;
     case BTL_HANDEX_CHANGE_FORM:        fPrevSucceed = scproc_HandEx_changeForm( wk, handEx_header ); break;
+    case BTL_HANDEX_SET_EFFECT_IDX:     fPrevSucceed = scproc_HandEx_setWazaEffectIndex( wk, handEx_header ); break;
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
@@ -14137,13 +14182,15 @@ static u8 scproc_HandEx_delayWazaDamage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_P
 
   // ワザエフェクト管理のバックアップを取り、システム初期化
   ctrlBackup = wk->wazaEffCtrl;
-  wazaEffCtrl_Init( &wk->wazaEffCtrl, wk, attacker, &wk->pokesetTarget );
+  wazaEffCtrl_Init( &wk->wazaEffCtrl );
+  wazaEffCtrl_Setup( &wk->wazaEffCtrl, wk, attacker, &wk->pokesetTarget );
 
   scproc_Fight_Damage_Root( wk, &wazaParam, attacker, &wk->pokesetTarget, &wk->dmgAffRec );
 
   // ワザ効果あり確定→演出表示コマンド生成などへ
   result = wazaEffCtrl_IsEnable( &wk->wazaEffCtrl );
   if( result ){
+    wazaEffCtrl_SetEffectIndex( &wk->wazaEffCtrl, BTLV_WAZAEFF_DELAY_ATTACK );
     scPut_WazaEffect( wk, wazaParam.wazaID, &wk->wazaEffCtrl, que_reserve_pos );
   }
 
@@ -14515,6 +14562,18 @@ static u8 scproc_HandEx_changeForm( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
   }
   return 0;
 }
+/**
+ * ワザエフェクトインデックス変更
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_setWazaEffectIndex( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  const BTL_HANDEX_PARAM_SET_EFFECT_IDX* param = (const BTL_HANDEX_PARAM_SET_EFFECT_IDX*)param_header;
+
+  wazaEffCtrl_SetEffectIndex( &wk->wazaEffCtrl, param->effIndex );
+  return 1;
+}
+
 
 /*
 

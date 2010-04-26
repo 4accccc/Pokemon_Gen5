@@ -112,9 +112,40 @@ enum{
  */
 //--------------------------------------------
 typedef enum {
-  BTLV_WAZAEFF_TURN_DEFAULT = 0,
-  BTLV_WAZAEFF_TURN_TAME,
+  BTLV_WAZAEFF_INDEX_DEFAULT = 0,
+
+  // 溜めワザ全般（そらをとぶなど）
+  BTLV_WAZAEFF_TAME_START = 0,      ///< 溜め開始
+  BTLV_WAZAEFF_TAME_RELEASE,        ///< 溜め解放
+
+  // 時間差ワザ全般（みらいよち、はめつのねがい等）
+  BTLV_WAZAEFF_DELAY_START = 0,     ///< ワザ撃ち
+  BTLV_WAZAEFF_DELAY_ATTACK,        ///< 攻撃実行
+
+  // どろぼう
+  BTLV_WAZAEFF_DOROBOU_NORMAL = 0,  ///< ヒットのみ
+  BTLV_WAZAEFF_DOROBOU_STEAL,       ///< ヒット＆盗み成功
+
+  // のろい
+  BTLV_WAZAEFF_NOROI_NORMAL = 0,    ///< ゴースト以外
+  BTLV_WAZAEFF_NOROI_GHOST,         ///< ゴースト
+
+  // プレゼント
+  BTLV_WAZAEFF_PRESENT_DAMAGE = 0,  ///< ダメージ
+  BTLV_WAZAEFF_PRESENT_RECOVER,     ///< HP回復
+
+  // ウェザーボール
+  BTLV_WAZAEFF_WEATHERBALL_NORMAL = 0,  ///< ノーマル
+  BTLV_WAZAEFF_WEATHERBALL_SHINE,       ///< にほんばれ
+  BTLV_WAZAEFF_WEATHERBALL_SNOW,        ///< あられ
+  BTLV_WAZAEFF_WEATHERBALL_SAND,        ///< すなあらし
+  BTLV_WAZAEFF_WEATHERBALL_RAIN,        ///< あまごい
+
+
 }BtlvWazaEffect_TurnType;
+
+
+
 
 //--------------------------------------------
 /**

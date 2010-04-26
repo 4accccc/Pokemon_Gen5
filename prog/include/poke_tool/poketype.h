@@ -244,7 +244,7 @@ typedef enum {
   POKETOKUSEI_HATOMUNE,           // はとむね
   POKETOKUSEI_SUNAKAKI,           // すなかき
   POKETOKUSEI_MIRAKURUSUKIN,      // ミラクルスキン
-  POKETOKUSEI_SINUTI,             // しんうち
+  POKETOKUSEI_ANARAIZU,           // アナライズ
   POKETOKUSEI_IRYUUJON,           // イリュージョン
   POKETOKUSEI_HENSIN,             // へんしん
   POKETOKUSEI_SURINUKE,           // すりぬけ

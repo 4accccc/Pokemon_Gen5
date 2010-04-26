@@ -376,7 +376,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sunakaki( u32* numElems );
 static void handler_Sunakaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_MilacreSkin( u32* numElems );
 static void handler_MilacreSkin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sinuti( u32* numElems );
+static  const BtlEventHandlerTable*  HAND_TOK_ADD_Analyze( u32* numElems );
 static void handler_Sinuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_SunanoTikara( u32* numElems );
 static void handler_SunanoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -584,7 +584,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_HATOMUNE,         HAND_TOK_ADD_Hatomune      }, // はとむね
     { POKETOKUSEI_SUNAKAKI,         HAND_TOK_ADD_Sunakaki      }, // すなかき
     { POKETOKUSEI_MIRAKURUSUKIN,    HAND_TOK_ADD_MilacreSkin   }, // ミラクルスキン
-    { POKETOKUSEI_SINUTI,           HAND_TOK_ADD_Sinuti        }, // しんうち
+    { POKETOKUSEI_ANARAIZU,         HAND_TOK_ADD_Analyze        }, // アナライズ
     { POKETOKUSEI_IRYUUJON,         HAND_TOK_ADD_Illusion      }, // イリュージョン
     { POKETOKUSEI_HENSIN,           HAND_TOK_ADD_Hensin        }, // へんしん
     { POKETOKUSEI_SURINUKE,         HAND_TOK_ADD_Surinuke      }, // すりぬけ
@@ -4163,7 +4163,7 @@ static void handler_FusiginaMamori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     if( WAZADATA_IsDamage(waza) && (waza != WAZANO_WARUAGAKI) )
     {
       // 効果バツグン以外は無効
-      PokeType waza_type = WAZADATA_GetType( waza );
+      PokeType waza_type = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
       PokeTypePair myType = BPP_GetPokeType( bpp );
       BtlTypeAff aff = BTL_CALC_TypeAffPair( waza_type, myType );
       if( aff <= BTL_TYPEAFF_100 )
@@ -5998,12 +5998,12 @@ static void handler_MilacreSkin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 }
 //------------------------------------------------------------------------------
 /**
- *  とくせい「しんうち」
+ *  とくせい「アナライズ」
  *
  * ターン中、一番最後に技を出すと技の威力が1.3倍になる。
  */
 //------------------------------------------------------------------------------
-static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sinuti( u32* numElems )
+static  const BtlEventHandlerTable*  HAND_TOK_ADD_Analyze( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_POWER, handler_Sinuti   },    // ワザ威力計算ハンドラ
@@ -6022,6 +6022,7 @@ static void handler_Sinuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     if( BTL_SVFTOOL_GetMyActionOrder(flowWk, pokeID, &myOrder, &totalAction) ){
       if( (myOrder+1) == totalAction )
       {
+        TAYA_Printf("アナライズ発動\n");
         BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.3) );
       }
     }

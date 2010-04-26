@@ -1810,6 +1810,7 @@ static void handler_Noroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    u8 effIndex = BTLV_WAZAEFF_NOROI_NORMAL;
 
     if( BPP_IsMatchType(bpp, POKETYPE_GHOST) )
     {
@@ -1838,6 +1839,7 @@ static void handler_Noroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
           hp_param->header.failSkipFlag = TRUE;
         }
       }
+      effIndex = BTLV_WAZAEFF_NOROI_GHOST;
     }
     else
     {
@@ -1859,7 +1861,10 @@ static void handler_Noroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
       param->pokeID[0] = pokeID;
       param->rankType = BPP_DEFENCE_RANK;
       param->rankVolume = 1;
+
     }
+
+    BTL_SVFRET_SetWazaEffectIndex( flowWk, effIndex );
   }
 }
 
@@ -4058,6 +4063,11 @@ static void handler_Present_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     {
       work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
     }
+
+    {
+      u8 effIndex = (work[0])? BTLV_WAZAEFF_PRESENT_RECOVER : BTLV_WAZAEFF_PRESENT_DAMAGE;
+      BTL_SVFRET_SetWazaEffectIndex( flowWk, effIndex );
+    }
   }
 }
 // ダメージワザ回復化確定ハンドラ
@@ -4308,14 +4318,29 @@ static void handler_WeatherBall_Type( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     BtlWeather weather = BTL_SVFTOOL_GetWeather(flowWk);
-    PokeType type = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
+    PokeType  type  = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
+    u8  effIndex = BTLV_WAZAEFF_WEATHERBALL_NORMAL;
+
     switch( weather ){
-    case BTL_WEATHER_SHINE:  type = POKETYPE_HONOO; break;
-    case BTL_WEATHER_RAIN:   type = POKETYPE_MIZU; break;
-    case BTL_WEATHER_SAND:   type = POKETYPE_IWA; break;
-    case BTL_WEATHER_SNOW:   type = POKETYPE_KOORI; break;
+    case BTL_WEATHER_SHINE:
+      type = POKETYPE_HONOO;
+      effIndex = BTLV_WAZAEFF_WEATHERBALL_SHINE;
+      break;
+    case BTL_WEATHER_RAIN:
+      type = POKETYPE_MIZU;
+      effIndex = BTLV_WAZAEFF_WEATHERBALL_RAIN;
+      break;
+    case BTL_WEATHER_SAND:
+      type = POKETYPE_IWA;
+      effIndex = BTLV_WAZAEFF_WEATHERBALL_SAND;
+      break;
+    case BTL_WEATHER_SNOW:
+      type = POKETYPE_KOORI;
+      effIndex = BTLV_WAZAEFF_WEATHERBALL_SNOW;
+      break;
     }
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_TYPE, type );
+    BTL_SVFRET_SetWazaEffectIndex( flowWk, effIndex );
   }
 }
 static void handler_WeatherBall_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -4835,11 +4860,16 @@ static void handler_Dorobou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
         if( BPP_GetItem(target) != ITEM_DUMMY_DATA )
         {
           BTL_HANDEX_PARAM_SWAP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_ITEM, pokeID );
+          BTL_HANDEX_PARAM_SET_EFFECT_IDX* effParam = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_EFFECT_IDX, pokeID );
+
           param->pokeID = target_pokeID;
           HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Dorobou );
           HANDEX_STR_AddArg( &param->exStr, pokeID );
           HANDEX_STR_AddArg( &param->exStr, target_pokeID );
           HANDEX_STR_AddArg( &param->exStr, BPP_GetItem(target) );
+
+          effParam->header.failSkipFlag = TRUE;
+          effParam->effIndex = BTLV_WAZAEFF_DOROBOU_STEAL;
         }
       }
     }
@@ -7328,24 +7358,24 @@ static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     u16 itemID = BPP_GetItem( bpp );
     if( itemID != ITEM_DUMMY_DATA )
     {
-      int equip = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_NAGETUKERU_EFF );
-      if( equip )
-      {
-         BTL_HANDEX_PARAM_ITEM_SP*  param;
-         param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ITEM_SP, pokeID );
-         param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-         param->itemID = itemID;
-      }
+      BTL_HANDEX_PARAM_SET_ITEM* item_param;
+
+      item_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+      item_param->pokeID = pokeID;
+      item_param->itemID = ITEM_DUMMY_DATA;
+      HANDEX_STR_Setup( &item_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Nagetukeru );
+      HANDEX_STR_AddArg( &item_param->exStr, pokeID );
+      HANDEX_STR_AddArg( &item_param->exStr, itemID );
 
       {
-        BTL_HANDEX_PARAM_SET_ITEM* item_param;
-
-        item_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
-        item_param->pokeID = pokeID;
-        item_param->itemID = ITEM_DUMMY_DATA;
-        HANDEX_STR_Setup( &item_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Nagetukeru );
-        HANDEX_STR_AddArg( &item_param->exStr, pokeID );
-        HANDEX_STR_AddArg( &item_param->exStr, itemID );
+        int equip = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_NAGETUKERU_EFF );
+        if( equip )
+        {
+           BTL_HANDEX_PARAM_ITEM_SP*  param;
+           param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ITEM_SP, pokeID );
+           param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+           param->itemID = itemID;
+        }
       }
     }
   }
@@ -8161,14 +8191,23 @@ static void handler_KiaiPunch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     BTL_HANDEX_PARAM_TURNFLAG* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_TURNFLAG, pokeID );
+    BTL_HANDEX_PARAM_EFFECT_BY_POS* eff_param;
     BTL_HANDEX_PARAM_MESSAGE* msg_param;
+
 
     param->pokeID = pokeID;
     param->flag = BPP_TURNFLG_MUST_SHRINK;
 
+    eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EFFECT_BY_POS, pokeID );
+    eff_param->effectNo = BTLEFF_KIAIPUNCH_TAME;
+    eff_param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+    eff_param->pos_to = BTL_POS_NULL;
+
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_KiaiPunch );
     HANDEX_STR_AddArg( &msg_param->str, pokeID );
+
+
   }
 }
 

@@ -378,7 +378,6 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_OP_SET_FAKESRC:  return "SC_OP_SET_FAKESRC";        ///< イリュージョン用参照ポケモン変更
   case SC_OP_CLEAR_CONSUMED_ITEM:  return "SC_OP_CLEAR_CONSUMED_ITEM";///< アイテム消費情報のクリア
   case SC_ACT_WAZA_EFFECT:  return "SC_ACT_WAZA_EFFECT";
-  case SC_ACT_WAZA_EFFECT_EX:  return "SC_ACT_WAZA_EFFECT_EX";    ///< 【アクション】ワザエフェクト拡張（溜めターンエフェクトなどに使用）
   case SC_ACT_TAMEWAZA_HIDE:  return "SC_ACT_TAMEWAZA_HIDE";     ///< 【アクション】そらをとぶなどで画面から消える・現れる設定
   case SC_ACT_WAZA_DMG:  return "SC_ACT_WAZA_DMG";          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
   case SC_ACT_WAZA_DMG_PLURAL:  return "SC_ACT_WAZA_DMG_PLURAL";   ///< 【アクション】複数体同時ダメージ処理 [ pokeCnt, affAbout, ... ]

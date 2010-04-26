@@ -2827,51 +2827,6 @@ static void handler_SpeedPowder( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     }
   }
 }
-//------------------------------------------------------------------------------
-/**
- *  ‚Å‚ñ‚«‚¾‚Ü
- */
-//------------------------------------------------------------------------------
-static const BtlEventHandlerTable* HAND_ADD_ITEM_DenkiDama( u32* numElems )
-{
-  static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ATTACKER_POWER, handler_DenkiDama   },
-    { BTL_EVENT_USE_ITEM_TMP,   handler_DenkiDama_UseTmp},
-  };
-  *numElems = NELEMS( HandlerTable );
-  return HandlerTable;
-}
-// ‘•”õŒø‰Ê
-static void handler_DenkiDama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  // Ž©•ª‚ªUŒ‚‘¤‚Å
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    // ƒsƒJƒ`ƒ…ƒE‚È‚ç
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u32 monsNo = BPP_GetMonsNo( bpp );
-    if( monsNo == MONSNO_PIKATYUU )
-    {
-      // ‚±‚¤‚°‚«E‚Æ‚­‚±‚¤‚Q”{
-      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
-    }
-  }
-}
-// ‚È‚°‚Â‚¯Œø‰Ê
-static void handler_DenkiDama_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
-    u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
-    BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, atkPokeID );
-
-    param->pokeID[0] = pokeID;
-    param->poke_cnt = 1;
-    param->sickID = WAZASICK_MAHI;
-    param->sickCont = BTL_CALC_MakeDefaultPokeSickCont( WAZASICK_MAHI );
-    param->fAlmost = TRUE;
-  }
-}
 
 //------------------------------------------------------------------------------
 /**
@@ -3999,7 +3954,51 @@ static void common_WazaWeatherTurnUp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   }
 }
 
+//------------------------------------------------------------------------------
+/**
+ *  ‚Å‚ñ‚«‚¾‚Ü
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_DenkiDama( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_ATTACKER_POWER, handler_DenkiDama   },
+    { BTL_EVENT_USE_ITEM_TMP,   handler_DenkiDama_UseTmp},
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+// ‘•”õŒø‰Ê
+static void handler_DenkiDama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // Ž©•ª‚ªUŒ‚‘¤‚Å
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    // ƒsƒJƒ`ƒ…ƒE‚È‚ç
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    u32 monsNo = BPP_GetMonsNo( bpp );
+    if( monsNo == MONSNO_PIKATYUU )
+    {
+      // ‚±‚¤‚°‚«E‚Æ‚­‚±‚¤‚Q”{
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
+    }
+  }
+}
+// ‚È‚°‚Â‚¯Œø‰Ê
+static void handler_DenkiDama_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+    BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, atkPokeID );
 
+    param->pokeID[0] = pokeID;
+    param->poke_cnt = 1;
+    param->sickID = WAZASICK_MAHI;
+    param->sickCont = BTL_CALC_MakeDefaultPokeSickCont( WAZASICK_MAHI );
+//    param->fAlmost = TRUE;
+  }
+}
 //------------------------------------------------------------------------------
 /**
  *  ‚Ç‚­‚Ç‚­‚¾‚Ü
@@ -4042,7 +4041,7 @@ static void handler_DokudokuDama_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     param->poke_cnt = 1;
     param->sickID = WAZASICK_DOKU;
     param->sickCont = BPP_SICKCONT_MakeMoudokuCont();
-    param->fAlmost = TRUE;
+//    param->fAlmost = TRUE;
   }
 }
 //------------------------------------------------------------------------------
@@ -4089,7 +4088,7 @@ static void handler_KaenDama_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     param->poke_cnt = 1;
     param->sickID = WAZASICK_YAKEDO;
     param->sickCont = BTL_CALC_MakeDefaultPokeSickCont( param->sickID );
-    param->fAlmost = TRUE;
+//    param->fAlmost = TRUE;
   }
 }
 
@@ -4921,12 +4920,20 @@ static void handler_DassyutuButton_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
   {
     if( BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID) )
     {
+      #if 0
       BTL_HANDEX_PARAM_PUSHOUT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_PUSHOUT, pokeID );
       param->pokeID = pokeID;
       param->fForceChange = TRUE;
 
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_DassyutuPod );
       HANDEX_STR_AddArg( &param->exStr, pokeID );
+      #else
+      BTL_HANDEX_PARAM_CHANGE_MEMBER* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_MEMBER, pokeID );
+      param->pokeID = pokeID;
+
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_DassyutuPod );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+      #endif
     }
   }
 }

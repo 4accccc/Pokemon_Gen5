@@ -298,7 +298,6 @@ static BOOL scProc_MSG_StdSE( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Set( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_MSG_Waza( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_ACT_WazaEffectEx( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_TameWazaHide( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_WazaDmg_Plural( BTL_CLIENT* wk, int* seq, const int* args );
@@ -4569,7 +4568,6 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_MSG_SET,               scProc_MSG_Set            },
     { SC_MSG_WAZA,              scProc_MSG_Waza           },
     { SC_ACT_WAZA_EFFECT,       scProc_ACT_WazaEffect     },
-    { SC_ACT_WAZA_EFFECT_EX,    scProc_ACT_WazaEffectEx   },
     { SC_ACT_TAMEWAZA_HIDE,     scProc_ACT_TameWazaHide   },
     { SC_ACT_WAZA_DMG,          scProc_ACT_WazaDmg        },
     { SC_ACT_WAZA_DMG_PLURAL,   scProc_ACT_WazaDmg_Plural },
@@ -5071,67 +5069,23 @@ static BOOL scProc_ACT_WazaEffect( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ) {
   case 0:
-    if( BTL_CLIENT_IsGameTimeOver(wk) ){
-      return TRUE;
-    }
-    if( BTL_CLIENT_IsChapterSkipMode(wk) ){
-      return TRUE;
-    }
-
-    if( BTL_MAIN_IsWazaEffectEnable(wk->mainModule) )
-    {
-      WazaID waza;
-      u8 atPokePos, defPokePos;
-      const BTL_PARTY* party;
-      const BTL_POKEPARAM* poke;
-
-      atPokePos  = args[0];
-      defPokePos = args[1];
-      waza       = args[2];
-      poke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, atPokePos );
-      BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza, BTLV_WAZAEFF_TURN_DEFAULT, 0 );
-      (*seq)++;
-    }
-    else{
-      return TRUE;
-    }
-    break;
-
-  case 1:
-    if( BTLV_ACT_WazaEffect_Wait(wk->viewCore) )
-    {
-      return TRUE;
-    }
-    break;
-  }
-
-  return FALSE;
-}
-/**
- *  ワザエフェクト（拡張引数付き）
- *  args  [0]:攻撃ポケ位置  [1]:防御ポケ位置  [2]:ワザID  [3]:拡張引数 (1byte)
- */
-static BOOL scProc_ACT_WazaEffectEx( BTL_CLIENT* wk, int* seq, const int* args )
-{
-  switch( *seq ) {
-  case 0:
     if( BTL_CLIENT_IsChapterSkipMode(wk) ){
       return TRUE;
     }
 
     {
-      u8 turnType = args[3];
       if( BTL_MAIN_IsWazaEffectEnable(wk->mainModule) )
       {
         WazaID waza;
-        u8 atPokePos, defPokePos;
+        u8 atPokePos, defPokePos, turnType;
         const BTL_PARTY* party;
         const BTL_POKEPARAM* poke;
 
         atPokePos  = args[0];
         defPokePos = args[1];
         waza       = args[2];
-        poke = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, atPokePos );
+        turnType   = args[3];
+
         BTLV_ACT_WazaEffect_Start( wk->viewCore, atPokePos, defPokePos, waza, turnType, 0 );
         (*seq)++;
       }
@@ -5204,6 +5158,7 @@ static BOOL scProc_ACT_WazaDmg( BTL_CLIENT* wk, int* seq, const int* args )
   case 1:
     if( BTLV_ACT_DamageEffectSingle_Wait(wk->viewCore) )
     {
+      TAYA_Printf("おわり２\n");
       return TRUE;
     }
     break;
@@ -5235,6 +5190,7 @@ static BOOL scProc_ACT_WazaDmg_Plural( BTL_CLIENT* wk, int* seq, const int* args
   case 1:
     if( BTLV_ACT_DamageEffectPlural_Wait(wk->viewCore) )
     {
+      TAYA_Printf("おわり\n");
       return TRUE;
     }
     break;
@@ -5306,7 +5262,7 @@ static BOOL scProc_ACT_ConfDamage( BTL_CLIENT* wk, int* seq, const int* args )
     if( !BTL_CLIENT_IsChapterSkipMode(wk) )
     {
       BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-      BTLV_ACT_WazaEffect_Start( wk->viewCore, pos, pos, WAZANO_HATAKU, BTLV_WAZAEFF_TURN_DEFAULT, 1 );
+      BTLV_ACT_WazaEffect_Start( wk->viewCore, pos, pos, WAZANO_HATAKU, BTLV_WAZAEFF_INDEX_DEFAULT, 0 );
     }
     (*seq)++;
     break;
@@ -5764,6 +5720,7 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
   u8 pokeID = args[0];
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
   BtlvMcssPos vpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, pokeID );
+  BOOL fGaugeExist = ((vpos != BTLV_MCSS_POS_ERROR) && BTLV_EFFECT_CheckExistGauge(vpos) );
 
   switch( *seq ){
   case SEQ_INIT:
@@ -5782,8 +5739,7 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
       }
       else
       {
-        if( BTL_MAIN_CheckFrontPoke(wk->mainModule, wk->pokeCon, pokeID) )
-        {
+        if( fGaugeExist ){
           BTLV_EFFECT_CalcGaugeEXP( vpos, addExp );
           (*seq) = SEQ_GAUGE_NORMAL_WAIT;
         }
@@ -5815,7 +5771,7 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
     BTL_MAIN_ClientPokemonReflectToServer( wk->mainModule, pokeID );
     {
        // 場に出ているならゲージ演出
-       if( vpos != BTLV_MCSS_POS_ERROR )
+       if( fGaugeExist )
        {
          BTLV_EFFECT_CalcGaugeEXPLevelUp( vpos, bpp );
          (*seq) = SEQ_LVUP_GAUGE_WAIT;

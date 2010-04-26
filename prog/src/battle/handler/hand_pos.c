@@ -334,6 +334,7 @@ static void handler_pos_DelayAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DELAY_WAZADMG, work[WORKIDX_USER_POKEID] );
     param->attackerPokeID = work[ WORKIDX_USER_POKEID ];
     param->targetPokeID = targetPokeID;
+
     param->wazaID = work[ WORKIDX_WAZAID ];
     BTL_EVENT_FACTOR_Remove( myHandle );
   }

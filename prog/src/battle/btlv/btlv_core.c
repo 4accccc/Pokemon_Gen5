@@ -587,7 +587,8 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
   case 6:
     if( BTLV_WaitMsg( core ) )
     {
-      BTLV_SCU_StartWazaEffect( core->scrnU, BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, WAZANO_HATAKU, BTLV_WAZAEFF_TURN_DEFAULT, 0 );
+      BTLV_SCU_StartWazaEffect( core->scrnU, BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, WAZANO_HATAKU,
+          BTLV_WAZAEFF_INDEX_DEFAULT, 0 );
       (*seq)++;
     }
     break;
@@ -615,7 +616,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     if( BTLV_WaitMsg( core ) )
     {
       BTLV_SCU_StartWazaEffect( core->scrnU, BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, WAZANO_NIRAMITUKERU,
-                                BTLV_WAZAEFF_TURN_DEFAULT, 0 );
+                                BTLV_WAZAEFF_INDEX_DEFAULT, 0 );
       (*seq)++;
     }
     break;

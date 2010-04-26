@@ -70,7 +70,6 @@ typedef enum {
   SC_OP_WAZADMG_REC,        ///< ワザダメージ記録
   SC_OP_TURN_CHECK,         ///< ターンチェック
   SC_ACT_WAZA_EFFECT,
-  SC_ACT_WAZA_EFFECT_EX,    ///< 【アクション】ワザエフェクト拡張（溜めターンエフェクトなどに使用）
   SC_ACT_TAMEWAZA_HIDE,     ///< 【アクション】そらをとぶなどで画面から消える・現れる設定
   SC_ACT_WAZA_DMG,          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]
   SC_ACT_WAZA_DMG_PLURAL,   ///< 【アクション】複数体同時ダメージ処理 [ pokeCnt, affAbout, ... ]
@@ -355,15 +354,16 @@ static inline void SCQUE_PUT_OP_TurnCheck( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 
 
 //---------------------------------------------
-static inline void SCQUE_PUT_ACT_WazaEffect( BTL_SERVER_CMD_QUE* que, u8 atPokePos, u8 defPokePos, u16 waza )
+static inline void SCQUE_PUT_ACT_WazaEffect( BTL_SERVER_CMD_QUE* que, u8 atPokePos, u8 defPokePos, u16 waza, u8 arg )
 {
-//  OS_TPrintf("[CMD] WazaEffect atkPoke=%d, defPoke=%d\n", atPokeID, defPokeID);
-  SCQUE_PUT_Common( que, SC_ACT_WAZA_EFFECT, atPokePos, defPokePos, waza );
+  SCQUE_PUT_Common( que, SC_ACT_WAZA_EFFECT, atPokePos, defPokePos, waza, arg );
 }
+/*
 static inline void SCQUE_PUT_ACT_WazaEffectEx( BTL_SERVER_CMD_QUE* que, u8 atPokePos, u8 defPokePos, u16 waza, u8 arg )
 {
   SCQUE_PUT_Common( que, SC_ACT_WAZA_EFFECT_EX, atPokePos, defPokePos, waza, arg );
 }
+*/
 // 溜めワザ（そらをとぶ等）の開始時に姿を消す・攻撃後に姿を現す
 static inline void SCQUE_PUT_ACT_TameWazaHide( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 hideFlag )
 {
