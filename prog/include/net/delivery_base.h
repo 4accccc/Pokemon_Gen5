@@ -12,7 +12,7 @@
 #include "net/network_define.h"
 
 #define DELIVERY_BEACON_ONCE_NUM  (84)  //ビーコン一回の送信サイズ
-#define DELIVERY_BEACON_MAX_NUM  (17)    //DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUMバイトの送信が可能
+#define DELIVERY_BEACON_MAX_NUM  (18)    //DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUMバイトの送信が可能
 
 #define DELIVERY_IRC_SEND_DATA_MAX  (7)   //日、英、フランス、イタリア、ドイツ、スペイン、韓国の７つ分
 #define DELIVERY_BEACON_SEND_DATA_MAX  (7)   //日、英、フランス、イタリア、ドイツ、スペイン、韓国の７つ分ですが、ビーコン配信が遅くなるので、最高２つくらいを推奨

@@ -1344,6 +1344,10 @@ static void _debug_bsubData(BSUBWAY_PARTNER_DATA* pData, BOOL bSingle)
       pPoke->id_no = 12;
       pPoke->nickname[0]= L'あ';
       pPoke->nickname[1]= 0xffff;
+      pPoke->seikaku = 0;
+
+      OS_TPrintf("バトルサブウェイ %d\n" ,sizeof(BSUBWAY_POKEMON));
+
     }
   }
   else{
