@@ -319,6 +319,8 @@ _EVENT_DATA ev_fld_item_220
 _EVENT_DATA ev_fld_item_222
 _EVENT_DATA ev_fld_item_38
 _EVENT_DATA ev_fld_item_39
+_EVENT_DATA ev_fld_item_256
+_EVENT_DATA ev_fld_item_260
 _EVENT_DATA ev_fld_item2
 _EVENT_DATA_END
 
@@ -2448,6 +2450,20 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_39
   _FLD_ITEM_EVENT ITEM_IIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=c01 X=774 Y=604 ITEM=スピーダー FLAG=256
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_256
+  _FLD_ITEM_EVENT ITEM_SUPIIDAA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r18 X=656 Y=744 ITEM=ハートのウロコ FLAG=260
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_260
+  _FLD_ITEM_EVENT ITEM_HAATONOUROKO,1
 EVENT_END
 
 

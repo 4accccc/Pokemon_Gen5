@@ -176,6 +176,8 @@ _EVENT_DATA  ev_hide_item_154
 _EVENT_DATA  ev_hide_item_155
 _EVENT_DATA  ev_hide_item_156
 _EVENT_DATA  ev_hide_item_157
+_EVENT_DATA  ev_hide_item_158
+_EVENT_DATA  ev_hide_item_159
 //--------------------------------------------------------------
 //               スクリプト本体 開始
 //--------------------------------------------------------------
@@ -967,6 +969,16 @@ EVENT_END
 EVENT_START ev_hide_item_157
 //ホドモエの市場 ( 4, 9 )
 	_ITEM_EVENT_HIDEITEM( 93, 1, FLAG_HIDEITEM_157 )// ハートのウロコ
+EVENT_END
+
+EVENT_START ev_hide_item_158
+//４番道路 ( 420, 573 )
+	_ITEM_EVENT_HIDEITEM( 19, 1, FLAG_HIDEITEM_158 )// やけどなおし
+EVENT_END
+
+EVENT_START ev_hide_item_159
+//４番道路 ( 402, 598 )
+	_ITEM_EVENT_HIDEITEM( 88, 1, FLAG_HIDEITEM_159 )// しんじゅ
 EVENT_END
 
 //--------------------------------------------------------------
