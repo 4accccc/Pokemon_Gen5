@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-04-22T21:47:11"/>
+	<create user="shimoyamada" host="W00184" date="2010-04-24T17:01:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -319,7 +319,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1077,6 +1077,11 @@
 	<row id="msg_816">
 		<language name="JPN" font=" 1:small" width="216">[BD:02:Ｘセンタリング]Ｗｉ－Ｆｉバトルルーム　せいせき</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:02:Ｘセンタリング]Ｗｉ－Ｆｉバトルルーム　成績</language>
+	</row>
+
+	<row id="msg_817">
+		<language name="JPN" font=" 1:small" width="216">げんざい：</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">現在：</language>
 	</row>
 
 	<row id="msg_900">
@@ -2482,8 +2487,8 @@
 	<row id="msg_error_trainer_name">
 		<comment>録画再生データで不明文字コードが入っているトレーナー名の場合に、
 代わりに表示する名前</comment>
-		<language name="JPN" font=" 1:small" width="216">きんぎん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">きんぎん</language>
+		<language name="JPN" font=" 1:small" width="216">ブラック．</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ブラック．</language>
 	</row>
 
 	<flowchart-group-list>
