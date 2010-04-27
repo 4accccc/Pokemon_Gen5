@@ -843,13 +843,13 @@
 #define FV_T05_WEEKEND                     819 /* 0x0333 カナワタウン：電車前の人々 */
 #define FV_D01R0101_CORN_01                820 /* 0x0334 夢の跡地のストッパー（コーン） */
 #define FV_D07R0101_WORKMAN2_02            821 /* 0x0335 ネジ山：冬だけ出現する作業員 ※移動可能な場所を示すため冬のみ出現 */
-		/* not used   822(0x0336) */
-		/* not used   823(0x0337) */
-		/* not used   824(0x0338) */
-		/* not used   825(0x0339) */
-		/* not used   826(0x033a) */
-		/* not used   827(0x033b) */
-		/* not used   828(0x033c) */
+#define FV_T04R0401_SHIRONA_01             822 /* 0x0336 サザナミタウン別荘：シロナ */
+#define FV_T04R0401_BIGFOUR4_01            823 /* 0x0337 サザナミタウン別荘：カトレア */
+#define FV_T04R0401_BIGFOUR1_01            824 /* 0x0338 サザナミタウン別荘：シキミ */
+#define FV_T04R0401_LEADER8W_01            825 /* 0x0339 サザナミタウン別荘：アイリス */
+#define FV_T04R0401_LEADER6_01             826 /* 0x033a サザナミタウン別荘：フウロ */
+#define FV_T04R0401_LEADER4_01             827 /* 0x033b サザナミタウン別荘：カミツレ */
+#define FV_T04R0401_LEADER2_01             828 /* 0x033c サザナミタウン別荘：アロエ */
 		/* not used   829(0x033d) */
 		/* not used   830(0x033e) */
 		/* not used   831(0x033f) */
@@ -2530,8 +2530,8 @@
 #define TMFLG_D09R1401_RIVAL              2756 /* 0x0ac4 チャンピオンロード：クリア後ライバル戦闘済みフラグ */
 #define TMFLG_T01R0401_SUP_TALK           2757 /* 0x0ac5 研究所：殿堂入り後サポートの初回会話した。 会話してか一日経過すると曜日イベントに切り替わる */
 #define TMFLG_T01R0401_SUP_BTL            2758 /* 0x0ac6 研究所：殿堂入り後サポートの１日１回戦闘フラグ 土曜、日曜なら対戦イベントが発生。 */
-		/* not used  2759(0x0ac7) */
-		/* not used  2760(0x0ac8) */
+#define TMFLG_T04R0401_SHIRONA_BTL        2759 /* 0x0ac7 サザナミタウン：春に１日１回シロナと戦闘できる。 */
+#define TMFLG_T04R0401_TALKSET            2760 /* 0x0ac8 サザナミタウン：春と夏にT04R0101に登場する人々の 日替わりのメッセージを設定するフラグ */
 		/* not used  2761(0x0ac9) */
 		/* not used  2762(0x0aca) */
 		/* not used  2763(0x0acb) */

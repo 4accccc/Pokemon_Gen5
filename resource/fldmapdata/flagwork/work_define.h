@@ -221,6 +221,7 @@
 #define WK_SCENE_D04R0801_PLASMA         16609 /* 0x40e1 古代の城：イベント用ワーク */
 #define WK_SCENE_D01R0101_SAGE5          16610 /* 0x40e2 夢の跡地：クリア後七賢人イベント用ワーク */
 #define WK_SCENE_C05_BTLRIDER            16611 /* 0x40e3 ホドモエ：トリプル／ローテバトルイベント用ワーク */
+#define WK_SCENE_T04R0401                16612 /* 0x40e4 サザナミタウン：シロナイベント用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
@@ -237,13 +238,13 @@
 #define WK_OTHER_BSEVENT_ITEM            16661 /* 0x4115 カナワタウン民家：バトルサブウェイの落し物イベントの入手アイテムを格納 */
 #define WK_OTHER_BSEVENT_NUM             16662 /* 0x4116 カナワタウン民家：バトルサブウェイの落し物イベントの入手アイテム数を格納 */
 #define WK_OTHER_SUPPORT_TALK            16663 /* 0x4117 研究所：クリア後サポートの会話内容を格納 一日一回話しかけるたびに+1し、 毎日違う会話をしゃべるようにする */
-		/* not used 16664(0x4118) */
-		/* not used 16665(0x4119) */
-		/* not used 16666(0x411a) */
-		/* not used 16667(0x411b) */
-		/* not used 16668(0x411c) */
-		/* not used 16669(0x411d) */
-		/* not used 16670(0x411e) */
+#define WK_OTHER_T04R0401_SHIRONA        16664 /* 0x4118 サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
+#define WK_OTHER_T04R0401_BIGFOUR4       16665 /* 0x4119 サザナミタウン別荘：日替わり固定のメッセージを格納（春のみ） */
+#define WK_OTHER_T04R0401_BIGFOUR1       16666 /* 0x411a サザナミタウン別荘：日替わり固定のメッセージを格納（春のみ） */
+#define WK_OTHER_T04R0401_LEADER8W       16667 /* 0x411b サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
+#define WK_OTHER_T04R0401_LEADER6        16668 /* 0x411c サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
+#define WK_OTHER_T04R0401_LEADER4        16669 /* 0x411d サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
+#define WK_OTHER_T04R0401_LEADER2        16670 /* 0x411e サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
 		/* not used 16671(0x411f) */
 		/* not used 16672(0x4120) */
 		/* not used 16673(0x4121) */
