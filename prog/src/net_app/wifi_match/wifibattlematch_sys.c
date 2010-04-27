@@ -1135,7 +1135,7 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
       ||  p_wk->type == WIFIBATTLEMATCH_TYPE_RNDFREE )
   { 
     p_param->p_btl_setup_param->musicDefault  = WBM_SND_SEQ_BATTLE_RND;
-    p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
+    //p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
   }
   else if( p_wk->type == WIFIBATTLEMATCH_TYPE_WIFICUP )
   { 
@@ -1149,7 +1149,7 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
     { 
       p_param->p_btl_setup_param->musicDefault  = WBM_SND_BGM_NORMAL;
     }
-    p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
+    //p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
   }
   else if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
   { 
@@ -1164,7 +1164,7 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
     { 
       p_param->p_btl_setup_param->musicDefault  = WBM_SND_BGM_NORMAL;
     }
-    p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
+    //p_param->p_btl_setup_param->musicPinch    = WBM_SND_SEQ_BATTLE_PINCH;
   }
 
   //ƒ|ƒPƒ‚ƒ“Ý’è
