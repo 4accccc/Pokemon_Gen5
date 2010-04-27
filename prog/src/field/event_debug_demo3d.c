@@ -260,6 +260,7 @@ static GMEVENT_RESULT debugMenuDemo3DSelectEvent( GMEVENT *event, int *seq, void
 		(*seq) ++;
 		break;
 	case 5:
+    GAMESYSTEM_SetNetOffEventFlag( work->gsys, work->net_off_flag );
     if( work->scene->bgm_change ){
       PMSND_PopBGM();
       PMSND_FadeInBGM(PMSND_FADE_NORMAL);
@@ -272,7 +273,6 @@ static GMEVENT_RESULT debugMenuDemo3DSelectEvent( GMEVENT *event, int *seq, void
 		(*seq) ++;
     break;
   case 6:
-    GAMESYSTEM_SetNetOffEventFlag( work->gsys, work->net_off_flag );
     (*seq) = 0;
     break;
   }
