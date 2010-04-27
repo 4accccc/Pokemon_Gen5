@@ -76,8 +76,9 @@
 #define TRTYPE_GRP_LAST_BOSS      (7) //プラズマ団のN(ラストバトル)
 #define TRTYPE_GRP_SAGE           (8) //ゲーチス
 #define TRTYPE_GRP_PLASMA         (9) //プラズマ団
-#define TRTYPE_GRP_BCHAMP         (10) //サブウェイマスター
-#define TRTYPE_GRP_MAX            (11)
+#define TRTYPE_GRP_DPCHAMP        (10) //DPチャンピオン(シロナ)
+#define TRTYPE_GRP_BCHAMP         (11) //サブウェイマスター
+#define TRTYPE_GRP_MAX            (12)
 #define TRTYPE_GRP_NONE           (TRTYPE_GRP_MAX)
 
 /*
@@ -108,8 +109,9 @@
 #define TRTYPE_GRP_IDX_SAGE			  (21)
 #define TRTYPE_GRP_IDX_HAKAIM1		(22)
 #define TRTYPE_GRP_IDX_HAKAIW1		(23)
-#define TRTYPE_GRP_IDX_BCHAMP			(24)
-#define TRTYPE_GRP_IDX_MAX        (25)
+#define TRTYPE_GRP_IDX_DPCHAMP		(25)
+#define TRTYPE_GRP_IDX_BCHAMP			(26)
+#define TRTYPE_GRP_IDX_MAX        (27)
 
 //アセンブラでincludeされている場合は、下の宣言を無視できるようにifndefで囲んである
 #ifndef	__ASM_NO_DEF_
