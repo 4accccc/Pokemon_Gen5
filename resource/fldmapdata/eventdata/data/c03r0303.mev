@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/26 21:04:15
+#save date:2010/04/27 16:24:20
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r0303.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r0303.wms
 #hold event type:
 1
 #hold event number:
-5
+6
 #event number: 0
 #type
 1
@@ -49,7 +49,7 @@ TR_C03R0303_BUSINESS1_03
 #OBJ CODE Number
 BUSINESSMAN
 #MOVE CODE Number
-MV_DMY
+MV_RND_DL
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -57,7 +57,7 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_BUSINESS1_03
 #Direction Type Number
-DIR_DOWN
+DIR_LEFT
 #Parameter 0 Number
 3
 #Parameter 1 Number
@@ -80,7 +80,7 @@ TR_C03R0303_SCIENTISTM_03
 #OBJ CODE Number
 ASSISTANTM
 #MOVE CODE Number
-MV_DMY
+MV_RND_UD
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -90,7 +90,7 @@ SCRID_TRID_SCIENTISTM_03
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
-1
+2
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -102,7 +102,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--120 0 72
+-120 0 56
 #event number: 3
 #type
 1
@@ -165,6 +165,37 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 -216 0 56
+#event number: 5
+#type
+1
+#ID name
+C03R0303_FLD_ITEM_01
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_277
+#Event Script Name
+SCRID_FLD_ITEM_277
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 104
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

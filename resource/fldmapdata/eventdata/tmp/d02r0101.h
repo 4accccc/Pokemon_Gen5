@@ -58,6 +58,7 @@
 #define D02R0101_TR_GRASS_05              44
 #define D02R0101_TR_GRASS_06              45
 #define D02R0101_FLD_ITEM_08              46
+#define D02R0101_FLD_ITEM_09              47
 
 #endif //ZONE_D02R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d02r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

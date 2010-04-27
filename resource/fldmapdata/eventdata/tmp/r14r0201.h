@@ -15,15 +15,14 @@
 #define R14R0201_GIRL1_01                  2
 #define R14R0201_POKE9_01                  3
 #define R014_FLD_ITEM_02                   4
-#define R014_FLD_ITEM_03                   5
-#define R014_FLD_ITEM_04                   6
-#define R014_FLD_ITEM_06                   7
-#define R014_FLD_ITEM_07                   8
-#define R014_FLD_ITEM_09                   9
-#define TR_TANPAN_17                      10
-#define TR_TANPAN_16                      11
-#define TR_MINI_13                        12
-#define TR_MINI_12                        13
+#define R014_FLD_ITEM_04                   5
+#define R014_FLD_ITEM_06                   6
+#define R014_FLD_ITEM_07                   7
+#define R014_FLD_ITEM_09                   8
+#define TR_TANPAN_17                       9
+#define TR_TANPAN_16                      10
+#define TR_MINI_13                        11
+#define TR_MINI_12                        12
 
 #endif //ZONE_R14R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r14r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -35,5 +34,6 @@
 #define R14R0201_HIDE_ITEM_03             2
 #define R14R0201_HIDE_ITEM_04             3
 #define R14R0201_HIDE_ITEM_05             4
+#define R14R0201_HIDE_ITEM_02             5
 
 #endif //ZONE_R14R0201_EVB_H

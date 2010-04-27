@@ -27,5 +27,6 @@
 #define BG_R11_SIGN_01                    0
 #define BG_R11_SIGN_02                    1
 #define R11_HIDE_ITEM_01                  2
+#define R11_HIDE_ITEM_02                  3
 
 #endif //ZONE_R11_EVB_H

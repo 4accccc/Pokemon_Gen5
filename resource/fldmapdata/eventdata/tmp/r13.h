@@ -26,15 +26,14 @@
 #define TR_ARTIST_03                      12
 #define TR_FISHING_07                     13
 #define TR_FISHING_08                     14
-#define TR_FISHING_09                     15
-#define TR_FISHING_10                     16
-#define R13_TREASURE_01                   17
-#define R13_FLD_ITEM_01                   18
-#define R13_FLD_ITEM_03                   19
-#define R13_FLD_ITEM_02                   20
-#define R13_FLD_ITEM_04                   21
-#define R13_FLD_ITEM_05                   22
-#define R13_FLD_ITEM_06                   23
+#define TR_FISHING_10                     15
+#define R13_TREASURE_01                   16
+#define R13_FLD_ITEM_01                   17
+#define R13_FLD_ITEM_03                   18
+#define R13_FLD_ITEM_02                   19
+#define R13_FLD_ITEM_04                   20
+#define R13_FLD_ITEM_06                   21
+#define TR_FISHING_09                     22
 
 #endif //ZONE_R13_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r13.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
@@ -50,7 +49,6 @@
 #define R13_HIDE_ITEM_04                  6
 #define R13_HIDE_ITEM_05                  7
 #define R13_HIDE_ITEM_06                  8
-#define R13_HIDE_ITEM_07                  9
-#define R13_HIDE_ITEM_08                 10
+#define R13_HIDE_ITEM_08                  9
 
 #endif //ZONE_R13_EVB_H

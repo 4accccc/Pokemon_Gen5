@@ -18,8 +18,7 @@
 #define R14_SAGE2_01                       5
 #define R14_FLD_ITEM_01                    6
 #define R14_FLD_ITEM_02                    7
-#define R14_FLD_ITEM_03                    8
-#define TR_BACKPACKERW_13                  9
+#define TR_BACKPACKERW_13                  8
 
 #endif //ZONE_R14_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r14.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
