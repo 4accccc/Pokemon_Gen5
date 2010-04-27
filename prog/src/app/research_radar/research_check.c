@@ -2618,6 +2618,12 @@ static void UpdateArrow( RESEARCH_CHECK_WORK* work )
   // 更新中は表示しない
   if( work->updateFlag == TRUE ) { return; }
 
+  // 未解析なら表示しない
+  if( !work->analyzeFlag ) { return; }
+
+  // 対象が0%なら表示しない
+  if( CIRCLE_GRAPH_GetComponentPercentage_byID( GetMainGraph(work), GetAnswerID(work) ) == 0 ) { return; }
+
   // 表示開始
   if( work->analyzeFlag ) {
     int endX, endY;
