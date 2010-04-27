@@ -209,7 +209,7 @@ static BOOL MP_Command_AddCheck(
 }
 
 //--------------------------------------------------------------
-/// スクリプトコマンド：贈り物を受け取れるか？チェック
+/// スクリプトコマンド：贈り物を受け取ったメッセージ
 //--------------------------------------------------------------
 static u16 MP_Command_SuccessMsg( u8 gift_type, GIFT_PACK_DATA *gpd, SCRCMD_WORK * work )
 {
@@ -226,11 +226,11 @@ static u16 MP_Command_SuccessMsg( u8 gift_type, GIFT_PACK_DATA *gpd, SCRCMD_WORK
   }
   else
   {
-    return 0;  //とりあえずのエラー回避用
+    return msg_postman_08;  //万が一のエラー回避用
   }
 }
 //--------------------------------------------------------------
-/// スクリプトコマンド：贈り物を受け取ったメッセージ
+/// スクリプトコマンド：贈り物を受け取れなかったメッセージ
 //--------------------------------------------------------------
 static u16 MP_Command_FailureMsg( u8 gift_type, GIFT_PACK_DATA *gpd, SCRCMD_WORK * work )
 {
@@ -247,11 +247,11 @@ static u16 MP_Command_FailureMsg( u8 gift_type, GIFT_PACK_DATA *gpd, SCRCMD_WORK
   }
   else
   {
-    return 0;  //とりあえずのエラー回避用
+    return msg_postman_09;  //万が一のエラー回避用
   }
 }
 //--------------------------------------------------------------
-/// スクリプトコマンド：贈り物を受け取れなかったメッセージ
+/// スクリプトコマンド：贈り物を受け取り処理
 //--------------------------------------------------------------
 static BOOL MP_Command_Receive(
     u8 gift_type, SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
