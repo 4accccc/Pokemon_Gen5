@@ -489,7 +489,8 @@ static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork, u16 level)
   GBS_BEACON *bcon_buff;
   GameServiceID id;
   
-  if(intcomm->search_count >= INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX || GFL_NET_GetConnectNum() > 1){
+  if(intcomm->search_count >= INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX || GFL_NET_GetConnectNum() > 1
+      || NetErr_App_CheckError()){
     return;
   }
   

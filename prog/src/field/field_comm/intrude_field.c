@@ -1245,6 +1245,9 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
     {
       VecFx32 player_pos;
       FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+      if(fld_player == NULL){
+        return; //IsReadyで上でチェックしているので通常ありえない
+      }
       FIELD_PLAYER_GetPos( fld_player, &player_pos );
       player_pos.x %= PALACE_MAP_LEN;
       if(_PlayerPosCheck_PalaceCenter(&player_pos) == TRUE){
