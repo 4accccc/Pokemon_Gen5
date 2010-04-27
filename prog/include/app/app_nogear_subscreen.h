@@ -170,6 +170,11 @@ static inline void APP_NOGEAR_SUBSCREEN_Init(void)
 			GFL_BG_SetVisible( APP_NOGEAR_SS_sc_bgsetup[i].frame, APP_NOGEAR_SS_sc_bgsetup[i].is_visible );
 		}
 	}
+
+  // OBJ
+  {
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+  }
 }
 
 //------------------------------------------------------------------

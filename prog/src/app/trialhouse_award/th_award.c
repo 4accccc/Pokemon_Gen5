@@ -426,6 +426,10 @@ static GFL_PROC_RESULT Th_Award_ProcInit( GFL_PROC* proc, int* seq, void* pwk, v
   // フェードイン(黒→見える)
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
 
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
+  GFL_NET_ReloadIcon();
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -435,6 +439,9 @@ static GFL_PROC_RESULT Th_Award_ProcInit( GFL_PROC* proc, int* seq, void* pwk, v
 static GFL_PROC_RESULT Th_Award_ProcExit( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
   TH_AWARD_WORK*     work     = (TH_AWARD_WORK*)mywk;
+
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_DefaultLCD();
 
   // サブBG
   APP_NOGEAR_SUBSCREEN_Exit();
