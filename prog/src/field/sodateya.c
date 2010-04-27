@@ -566,6 +566,10 @@ static u32 LoveCheck( const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2 )
     sex[i]        = PP_Get( param[i], ID_PARA_sex, NULL );
     egg_group1[i] = POKETOOL_GetPersonalParam( monsno[i], form[i], POKEPER_ID_egg_group1 );
     egg_group2[i] = POKETOOL_GetPersonalParam( monsno[i], form[i], POKEPER_ID_egg_group2 );
+
+    // タマゴグループの不正値を検出
+    GF_ASSERT( egg_group1[i] != POKEPER_EGG_GROUP_NONE );
+    GF_ASSERT( egg_group2[i] != POKEPER_EGG_GROUP_NONE );
   }
 
   //---------------------------
