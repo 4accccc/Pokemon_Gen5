@@ -125,7 +125,7 @@ EVENT_START ev_seatemple_step_500
 	_SHAKE_CAMERA(10,0,3,20,1,0,1,5)
 	_SE_WAIT()
 	
-	_DIVING( SCR_EV_DIVING_MAPCHANGE_UP )
+	_DIVING( SCR_EV_DIVING_MAPCHANGE_KURUKURU_UP )
 	
 	//========================================/
 	

@@ -69,35 +69,35 @@ INIT_EVENT_END
 /*		d20r0701	BG1										  */
 /**************************************************************/
 EVENT_START		ev_bg_d20r0701_bg1_01
-	_EASY_BGWIN_MSG( msg_d20r0701_bg1_01, TYPE_INFO )
+	_EASY_BGWIN_SEATEMPLE_MSG( msg_d20r0701_bg1_01, TYPE_INFO )
 EVENT_END
 
 /**************************************************************/
 /*		d20r0701	BG2										  */
 /**************************************************************/
 EVENT_START		ev_bg_d20r0701_bg2_01
-	_EASY_BGWIN_MSG( msg_d20r0701_bg2_01, TYPE_INFO )
+	_EASY_BGWIN_SEATEMPLE_MSG( msg_d20r0701_bg2_01, TYPE_INFO )
 EVENT_END
 
 /**************************************************************/
 /*		d20r0701	BG3										  */
 /**************************************************************/
 EVENT_START		ev_bg_d20r0701_bg3_01
-	_EASY_BGWIN_MSG( msg_d20r0701_bg3_01, TYPE_INFO )
+	_EASY_BGWIN_SEATEMPLE_MSG( msg_d20r0701_bg3_01, TYPE_INFO )
 EVENT_END
 
 /**************************************************************/
 /*		d20r0701	BG4										  */
 /**************************************************************/
 EVENT_START		ev_bg_d20r0701_bg4_01
-	_EASY_BGWIN_MSG( msg_d20r0701_bg4_01, TYPE_INFO )
+	_EASY_BGWIN_SEATEMPLE_MSG( msg_d20r0701_bg4_01, TYPE_INFO )
 EVENT_END
 
 /**************************************************************/
 /*		d20r0701	BG5										  */
 /**************************************************************/
 EVENT_START		ev_bg_d20r0701_bg5_01
-	_EASY_BGWIN_MSG( msg_d20r0701_bg5_01, TYPE_INFO )
+	_EASY_BGWIN_SEATEMPLE_MSG( msg_d20r0701_bg5_01, TYPE_INFO )
 EVENT_END
 
 /**************************************************************/
@@ -116,7 +116,7 @@ EVENT_START		ev_pos_d20r0701_exit_01
 		
 		_PLAYER_POS_GET( LWK_POSX, LWK_POSZ )
 		
-		SWITCH $LWK_POSZ
+		SWITCH $LWK_POSX
 		CASE 41 THEN
 			_OBJ_ANIME( MMDL_ID_PLAYER, anm_move_41 )
 		CASE 42 THEN
@@ -129,7 +129,7 @@ EVENT_START		ev_pos_d20r0701_exit_01
 		//浮上アニメ
 		_PLAYER_UPDOWN_EFFECT( 0, 60, 64, 1 )
 		
-		_TIME_WAIT( 30 )
+		_TIME_WAIT( 40 )
 		
 		//暗転処理
 		_MAP_FADE_BLACK_OUT_SLOW()
@@ -267,7 +267,7 @@ EVENT_START		ev_pos_d20r0701_down_01
 		//浮上アニメ
 		_PLAYER_UPDOWN_EFFECT( 0, 60, 64, 0 )
 		
-		_TIME_WAIT( 20 )
+		_TIME_WAIT( 40 )
 		
 		//暗転処理
 		_MAP_FADE_BLACK_OUT_SLOW()
@@ -327,7 +327,7 @@ EVENT_START		ev_pos_d20r0701_down_02
 		//浮上アニメ
 		_PLAYER_UPDOWN_EFFECT( 0, 60, 64, 0 )
 		
-		_TIME_WAIT( 20 )
+		_TIME_WAIT( 40 )
 		
 		//暗転処理
 		_MAP_FADE_BLACK_OUT_SLOW()
