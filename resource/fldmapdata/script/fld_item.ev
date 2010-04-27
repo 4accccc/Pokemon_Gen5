@@ -1067,10 +1067,10 @@ EVENT_START ev_fld_item_157
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r07 X=110 Y=268 ITEM=するどいくちばし FLAG=68
+// MAP=r07 X=116 Y=268 ITEM=ハイパーボール FLAG=68
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_68
-  _FLD_ITEM_EVENT ITEM_SURUDOIKUTIBASI,1
+  _FLD_ITEM_EVENT ITEM_HAIPAABOORU,1
 EVENT_END
 
 //--------------------------------------------------------------
