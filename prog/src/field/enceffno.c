@@ -150,6 +150,7 @@ void ENCEFFNO_GetTrEncEffNoBgmNo( const int inTrID, FIELDMAP_WORK *fieldmap,
 		SEQ_BGM_VS_N_2,	      ///<TRTYPE_GRP_LAST_BOSS プラズマ団のN(ラストバトル)
 		SEQ_BGM_VS_G_CIS,	    ///<TRTYPE_GRP_SAGE ゲーチス
 		SEQ_BGM_VS_PLASMA,	  ///<TRTYPE_GRP_PLASMA プラズマ団
+		SEQ_BGM_VS_SHIRONA,	  ///<TRTYPE_GRP_DPCHAMP シロナ(DPチャンピオン)
   };
   static const u8 DATA_EncEffTbl[] = {
 		ENCEFFID_RIVAL,	    ///<TRTYPE_GRP_IDX_RIVAL
@@ -176,6 +177,7 @@ void ENCEFFNO_GetTrEncEffNoBgmNo( const int inTrID, FIELDMAP_WORK *fieldmap,
 		ENCEFFID_SAGE,	    ///<TRTYPE_GRP_IDX_SAGE
 		ENCEFFID_PRAZUMA,	  ///<TRTYPE_GRP_IDX_HAKAIM1
 		ENCEFFID_PRAZUMA,	  ///<TRTYPE_GRP_IDX_HAKAIW1
+		ENCEFFID_TR_NORMAL, ///<TRTYPE_GRP_IDX_DPCHAMP
   };
 
   if( type_grp < TRTYPE_GRP_BCHAMP ){
