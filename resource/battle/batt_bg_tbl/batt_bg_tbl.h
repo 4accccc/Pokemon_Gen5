@@ -44,7 +44,7 @@ typedef struct
 	ARCDATID file[BATT_BG_TBL_FILE_MAX ][ BATT_BG_TBL_SEASON_MAX ];
 }BATT_BG_TBL_BG_TABLE;
 
-enum{
+typedef enum{
 	BATT_BG_OBONID_00 = 0,		//地面（四季なし）
 	BATT_BG_OBONID_01,				//地面（四季あり）
 	BATT_BG_OBONID_02,				//床（屋外）
@@ -70,5 +70,5 @@ enum{
 	BATT_BG_OBONID_22,				//エンカウント草（四季あり）
 	BATT_BG_OBONID_23,				//エンカウント草（四季なし）
 	BATT_BG_OBONID_24,				//アスファルト
-};
+}BATT_BG_OBONID;
 
