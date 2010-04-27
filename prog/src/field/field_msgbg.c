@@ -3522,6 +3522,35 @@ static void fldSubMsgWin_Add(
 
 //--------------------------------------------------------------
 /**
+ * FLDSUBMSGWIN サブウィンドウ メッセージから必要な横幅、縦幅を取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void FLDSPWIN_GetNeedWindowCharaSize(
+    FLDMSGBG *fmb, const STRBUF *strbuf, u8 *sizeX, u8 *sizeY )
+{
+  u32 l_space = 2; //TALKMSGWINのX描画開始位置
+  u32 u_space = 0; //TALKMSGWINのY描画開始位置
+  u32 w = PRINTSYS_GetStrWidth(strbuf,fmb->fontHandle,0) + l_space;
+  u32 h = PRINTSYS_GetStrHeight(strbuf,fmb->fontHandle) + u_space;
+  u32 c = w;
+  w >>= 3;
+  if( (c&0x07) ){
+    w++;
+  }
+  *sizeX = w;
+  
+  c = h;
+  h >>= 3;
+  if( (c&0x07) ){
+    h++;
+  }
+  *sizeY = h;
+}
+
+//--------------------------------------------------------------
+/**
  * FLDPLAINMSGWIN サブウィンドウセット
  * @param fmb FLDMSGBG
  * @param msgData 使用するGFL_MSGDATA

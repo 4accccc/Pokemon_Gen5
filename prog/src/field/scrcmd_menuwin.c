@@ -889,7 +889,25 @@ static void balloonWin_GetDispOffsetPos(
   }
 } 
 
-//カメラピッチから補正座標
+static void balloonWin_SetCameraOffsetPos(
+    VecFx32 *offs,
+    const GFL_G3D_CAMERA *g3Dcamera )
+{
+  VecFx32 camPos,camUp,target;
+  MtxFx43 mtx43;
+  MtxFx33 mtx33; 
+  
+  GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
+  GFL_G3D_CAMERA_GetCamUp( g3Dcamera, &camUp );
+  GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
+  
+  MTX_LookAt( &camPos, &camUp, &target, &mtx43 ); //カメラ行列取得
+  MTX_Copy43To33( &mtx43, &mtx33 ); //回転行列である3x3部分を取得
+  MTX_Inverse33( &mtx33, &mtx33 ); //反転し逆行列にする
+  MTX_MultVec33( offs, &mtx33, offs ); //逆行列で回転を無効化し平行化
+}
+
+#if 0 //カメラピッチから補正座標
 static void balloonWin_SetCameraOffsetPos(
     VecFx32 *offs, const FIELD_CAMERA *fld_camera )
 {
@@ -928,6 +946,7 @@ static void balloonWin_SetCameraOffsetPos(
     }
   }
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -964,12 +983,12 @@ static void balloonWin_GetOffsetPos(
   case SCRCMD_MSGWIN_DOWN: //ウィンドウ下　吹き出し位置自動
   case SCRCMD_MSGWIN_DEFAULT: //自機の位置から自動割り当て
     balloonWin_GetDispOffsetPos( pos, offs, cp_g3Dcamera, fld_camera );
-    balloonWin_SetCameraOffsetPos( offs, fld_camera );
+    balloonWin_SetCameraOffsetPos( offs, cp_g3Dcamera );
     return;
   }
   
   *offs = data_balloonWinOffsetTbl[y][x];
-  balloonWin_SetCameraOffsetPos( offs, fld_camera );
+  balloonWin_SetCameraOffsetPos( offs, cp_g3Dcamera );
   
 #ifdef PM_DEBUG  
   switch( pos_type ){
@@ -1805,7 +1824,8 @@ VMCMD_RESULT EvCmdSubWinMsg( VMHANDLE *core, void *wk )
   u8 x = VMGetU8( core );
   u8 y = VMGetU8( core );
   u16 win_id = VMGetU16( core );
-  u16 sx,cx;
+  u16 sx;
+  u8 cx;
   u8 cy = 2;
   
   {
@@ -1818,11 +1838,15 @@ VMCMD_RESULT EvCmdSubWinMsg( VMHANDLE *core, void *wk )
     
     GFL_MSG_GetString( msgData, msg_id, tmpbuf );
     WORDSET_ExpandStr( wordset, msgBuf, tmpbuf );
-    
+
+#if 0    
     sx = GFL_STR_GetBufferLength( msgBuf );
     sx = sx * 12;
     cx = sx / 8;
     if( (sx&0x07) ){ cx++; }
+#else
+    FLDSPWIN_GetNeedWindowCharaSize( fparam->msgBG, msgBuf, &cx, &cy );
+#endif
     
 #if 1
     if( (x + cx) > 32 ){

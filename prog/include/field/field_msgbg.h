@@ -407,6 +407,8 @@ extern BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin );
 extern void FLDPLAINMSGWIN_WriteKeyWaitCursor( FLDPLAINMSGWIN *plnwin );
 
 //サブウィンドウ
+extern void FLDSPWIN_GetNeedWindowCharaSize(
+    FLDMSGBG *fmb, const STRBUF *strbuf, u8 *sizeX, u8 *sizeY );
 extern void FLDSUBMSGWIN_Add( FLDMSGBG *fmb,
     GFL_MSGDATA *msgData, u32 msgID,
     int id, u8 x, u8 y, u8 sx, u8 sy );

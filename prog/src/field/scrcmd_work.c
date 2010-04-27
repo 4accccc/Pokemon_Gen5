@@ -98,6 +98,8 @@ struct _TAG_SCRCMD_WORK
 //======================================================================
 //	proto
 //======================================================================
+static void mmdlAnimeTCB_Delete( SCRCMD_WORK *work );
+
 static void	BmpMenu_CallbackFunc(BMPMENULIST_WORK * wk,u32 param,u8 mode);
 
 //======================================================================
@@ -162,6 +164,8 @@ void SCRCMD_WORK_Delete( SCRCMD_WORK *work )
 		GFL_MSG_Delete( work->msgData );
 	}
 	
+  mmdlAnimeTCB_Delete( work );
+  
 	GFL_HEAP_FreeMemory( work );
 }
 
@@ -472,6 +476,27 @@ BOOL SCRCMD_WORK_CheckMMdlAnmTCB( SCRCMD_WORK *work )
 	}
 	return( flag );
 }
+
+//--------------------------------------------------------------
+/**
+ * 動作モデルアニメ用TCB動作チェック
+ * @param work SCRCMD_WORK
+ * @retval BOOL TRUE=動作中。FALSE=動作終了
+ */
+//--------------------------------------------------------------
+static void mmdlAnimeTCB_Delete( SCRCMD_WORK *work )
+{
+	int i;
+  
+	for( i = 0; i < SCRCMD_ACMD_MAX; i++ ){
+		if( work->gwork->tcb_anm_tbl[i] != NULL ){
+      GF_ASSERT( 0 && "SCRCMD FORGET OBJ ANIME WAIT" );
+      MMDL_EndAcmdList( work->gwork->tcb_anm_tbl[i] );
+      work->gwork->tcb_anm_tbl[i] = NULL;
+		}
+	}
+}
+
 
 //======================================================================
 //	SCRCMD_WORK メッセージデータ
