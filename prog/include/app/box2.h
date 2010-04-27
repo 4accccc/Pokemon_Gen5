@@ -43,6 +43,8 @@ typedef struct {
   CONFIG * cfg;								// コンフィグデータ
   u32	zknMode;								// 図鑑ナンバー表示モード
 
+	u16 * sleepTable;						// 寝かせられるポケモンのテーブル（寝かせる用）
+
 	BOX_MODE	callMode;					// 呼び出しモード
 
 	// [out]
