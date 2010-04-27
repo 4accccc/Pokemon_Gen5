@@ -46,8 +46,8 @@ typedef enum {
   BTL_ACMD_NOTIFY_TIMEUP,
 
   BTL_ACMD_MAX,
-}BtlAdapterCmd;
-
+}BtlAdapterCmd_tag;
+typedef u8 BtlAdapterCmd;
 
 //--------------------------------------------------------------------------------------
 /**

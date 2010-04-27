@@ -692,6 +692,7 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
   case SEQ_EXEC_CMD:
     if( wk->subProc(wk, &wk->subSeq) )
     {
+      // １コマンド終了毎に、録画プレイヤーがブラックアウトさせているかチェック
       if( RecPlayer_CheckBlackOut(&wk->recPlayer) )
       {
         wk->myState = SEQ_RECPLAY_CTRL;
@@ -768,7 +769,7 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
   switch( wk->myState ){
   case SEQ_RECPLAY_START:
     if( wk->viewCore ){
-      BTLV_RecPlayer_StartSkip( wk->viewCore, RecPlayer_GetNextTurn(&wk->recPlayer) );
+//      BTLV_RecPlayer_StartSkip( wk->viewCore, RecPlayer_GetNextTurn(&wk->recPlayer) );
     }
     wk->myState = SEQ_RECPLAY_READ_ACMD;
     /* fallthru */
@@ -854,8 +855,8 @@ static void setDummyReturnData( BTL_CLIENT* wk )
 static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
 {
   static const struct {
-    BtlAdapterCmd   cmd;
-    ClientSubProc   proc[ BTL_CLIENT_TYPE_MAX ];
+    BtlAdapterCmd   cmd;                            ///< コマンド
+    ClientSubProc   proc[ BTL_CLIENT_TYPE_MAX ];    ///< コマンド処理関数ポインタテーブル
   }procTbl[] = {
 
     { BTL_ACMD_WAIT_SETUP,
@@ -869,7 +870,7 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
      { SubProc_UI_SelectAction,    SubProc_AI_SelectAction,   SubProc_REC_SelectAction   } },
 #else
 // AIにテスト駆動させる
-    { BTL_ACMD_SELECT_ACTION,
+    { BTL_ACMD_SELECT_ACTION,   FALSE,
        { SubProc_AI_SelectAction,  SubProc_AI_SelectAction,   SubProc_REC_SelectAction   } },
 #endif
     { BTL_ACMD_SELECT_CHANGE_OR_ESCAPE,
@@ -988,6 +989,12 @@ static BOOL SubProc_UI_Setup( BTL_CLIENT* wk, int* seq )
       }
 
       EnemyPokeHPBase_Update( wk );
+
+      // 録画スキップ状態の場合、スクリーン設定
+      if( BTL_CLIENT_IsChapterSkipMode(wk) )
+      {
+        BTLV_RecPlayer_StartSkip( wk->viewCore, RecPlayer_GetNextTurn(&wk->recPlayer) );
+      }
       return TRUE;
     }
     break;
