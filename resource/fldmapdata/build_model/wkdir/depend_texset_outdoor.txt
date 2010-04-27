@@ -1868,7 +1868,9 @@ DEP_TEXSET_IMD_OUTDOOR047 = \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
 	$(SRCDIR)/door_normal03.imd \
-	$(SRCDIR)/door_bar.imd
+	$(SRCDIR)/door_bar.imd \
+	$(SRCDIR)/c03_cloud.imd \
+	$(SRCDIR)/c03_kanban.imd
 
 texset/outdoor047.imd: $(DEP_TEXSET_IMD_OUTDOOR047) texset/tmp/outdoor047.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor047.list

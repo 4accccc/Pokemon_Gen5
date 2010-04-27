@@ -290,3 +290,5 @@
 "nsbmdfiles/c09_back.nsbmd"
 "nsbmdfiles/toh_bell01.nsbmd"
 "nsbmdfiles/o_parasol_02.nsbmd"
+"nsbmdfiles/c03_cloud.nsbmd"
+"nsbmdfiles/c03_kanban.nsbmd"

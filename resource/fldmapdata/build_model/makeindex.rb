@@ -75,8 +75,10 @@ bmodel_list.each{|bmodel|
 #------------------------------------------------------------------------------
 book.delete_at(0)		#1ÉyÅ[ÉWñ⁄çÌèú
 arc_list = File.open("#{OUTPUT_DIR}/#{OUTPUT_SYM}.list","w")
+  STDERR.puts "#{book.length}"
 book.each_index{|sheet_index|
 	filename = sprintf("%s/%s%03d.bin", OUTPUT_DIR, OUTPUT_SYM, sheet_index+1)
+  STDERR.puts "#{filename}"
 	arc_list.puts "\"#{filename}\""
 	#puts "#{filename}"
 	File.open(filename , "wb"){|outfile|
