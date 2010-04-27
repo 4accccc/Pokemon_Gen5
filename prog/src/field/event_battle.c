@@ -749,12 +749,13 @@ static u8 btl_trainer_GetBeaconType( u16 tr_id )
 {
   u8 grp = TT_TrainerTypeGrpGet(TT_TrainerDataParaGet( tr_id, ID_TD_tr_type ) );
 
+  if( grp == TRTYPE_GRP_NONE ){
+    return TR_BEACON_NORMAL;
+  }
   if( grp == TRTYPE_GRP_LEADER ){
     return TR_BEACON_LEADER;
-  }else if( grp >= TRTYPE_GRP_BIGFOUR && grp <= TRTYPE_GRP_SAGE ){
-    return TR_BEACON_SPACIAL;
   }
-  return TR_BEACON_NORMAL;
+  return TR_BEACON_SPACIAL;
 }
 
 //--------------------------------------------------------------
