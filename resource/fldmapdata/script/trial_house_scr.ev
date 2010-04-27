@@ -326,11 +326,13 @@ charange:
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
 
+    //※100427 クリア処理はしないことに。中にデータは残るけど、再挑戦はできないように、挑戦前にデータ書き換えはすんでいるので。
+/**   
     //ダウンロードデータクリア（内部で裏セーブ）
     IF $download_flg == TRUE THEN
       _TH_CLEAR_DL_DATA( TH_DL_DATA_CLEAR_TYPE_CLEAR )
     ENDIF
-
+*/
   ENDIF
   
 _RET
