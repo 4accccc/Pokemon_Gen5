@@ -3,7 +3,7 @@
  *
  *	@file		event_debug_demo3d.c
  *	@brief  デバッグメニュ－：デモ再生
- *	@author		hosaka genya
+ *	@author		hosaka genya → miyuki iwasawa
  *	@data		2009.12.07
  *
  */
@@ -59,6 +59,7 @@ typedef struct
   DEMO3D_PARAM   param;
 
   const SCENE_TABLE*   scene;
+  BOOL  net_off_flag;
 } EVENT_WORK;
 
 
@@ -220,6 +221,10 @@ static GMEVENT_RESULT debugMenuDemo3DSelectEvent( GMEVENT *event, int *seq, void
       }
       work->scene = &DATA_SceneTable[ret]; 
       IWASAWA_Printf("Demo Select = %d\n",ret);
+
+      work->net_off_flag = GAMESYSTEM_GetNetOffEventFlag( work->gsys );
+      GAMESYSTEM_SetNetOffEventFlag( work->gsys, TRUE );
+
       if( GameCommSys_BootCheck( work->gcsp ) == GAME_COMM_NO_NULL ){
         (*seq) += 2;
       }else{
@@ -267,6 +272,7 @@ static GMEVENT_RESULT debugMenuDemo3DSelectEvent( GMEVENT *event, int *seq, void
 		(*seq) ++;
     break;
   case 6:
+    GAMESYSTEM_SetNetOffEventFlag( work->gsys, work->net_off_flag );
     (*seq) = 0;
     break;
   }
