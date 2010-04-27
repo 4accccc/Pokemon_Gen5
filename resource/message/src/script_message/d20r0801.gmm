@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-26T18:24:21"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-27T15:56:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -241,7 +241,7 @@
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
-			<font default=" 0:large" position="5" width="109">
+			<font default=" 0:large" position="5" width="61">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
 				<list entry="2" file="W:\font\shinden.nftr"/>
@@ -253,7 +253,7 @@
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
 			<message position="3" width="246"/>
-			<font default=" 0:large" position="6" width="106">
+			<font default=" 0:large" position="6" width="64">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
 				<list entry="2" file="W:\font\shinden.nftr"/>
@@ -265,7 +265,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1324" top="351" right="2029" bottom="971" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -298,40 +298,40 @@
 		<comment>リフーゲは　たった　１人で
 １０００人の　敵を　跳ね除けた</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" font=" 2:shinden" width="256">IRSPE③XEIJIHIKYJMV</language>
-		<language name="JPN_KANJI" font=" 2:shinden" width="256">IRSPE③XEIJIHIKYJMV</language>
+		<language name="JPN" font=" 2:shinden" width="224">IRSPE③XEIJIHKRMO</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="224">IRSPE③XEIJIHKRMO</language>
 	</row>
 
 	<row id="msg_d20r0801_bg1_02">
 		<comment>リフーゲは　１日で
 １００００人を　仲間に　した</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" font=" 2:shinden" width="256">CEHERMIKYJMVRMSN④</language>
-		<language name="JPN_KANJI" font=" 2:shinden" width="256">CEHERMIKYJMVRMSN④</language>
+		<language name="JPN" font=" 2:shinden" width="224">CEHERMKRMORMSN④</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="224">CEHERMKRMORMSN④</language>
 	</row>
 
 	<row id="msg_d20r0801_bg1_03">
 		<comment>リフーゲは　１日で
 １０００００匹の　生き物を　呼んだ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" font=" 2:shinden" width="256">WIZMP⑤HIPPEGIKYJMV</language>
-		<language name="JPN_KANJI" font=" 2:shinden" width="256">WIZMP⑤HIPPEGIKYJMV</language>
+		<language name="JPN" font=" 2:shinden" width="224">WIZMP⑤HIPPEGKRMO</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="224">WIZMP⑤HIPPEGKRMO</language>
 	</row>
 
 	<row id="msg_d20r0801_bg1_04">
 		<comment>リフーゲは　私たちの
 希望であり　未来である</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" font=" 2:shinden" width="256">IVYXYJITSLWMIKYJMV</language>
-		<language name="JPN_KANJI" font=" 2:shinden" width="256">IVYXYJITSLWMIKYJMV</language>
+		<language name="JPN" font=" 2:shinden" width="224">IVYXYJITSLWMKRMO</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="224">IVYXYJITSLWMKRMO</language>
 	</row>
 
 	<row id="msg_d20r0801_bg1_05">
 		<comment>ここに　偉大なる王
 リフーゲを　たたえる</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" font=" 2:shinden" width="256">IKYJMVKRMOXEIVKILX</language>
-		<language name="JPN_KANJI" font=" 2:shinden" width="256">IKYJMVKRMOXEIVKILX</language>
+		<language name="JPN" font=" 2:shinden" width="224">⑥KRMOXEIVKILX</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="224">⑥KRMOXEIVKILX</language>
 	</row>
 
 	<row id="msg_d20r0801_sys_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">

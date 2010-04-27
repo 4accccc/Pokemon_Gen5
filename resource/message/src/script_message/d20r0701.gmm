@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-04-26T18:24:54"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-27T15:48:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -265,7 +265,7 @@
 		</language>
 	</columns>
 
-	<dialog left="249" top="354" right="954" bottom="974" maximized="no" rayout="Vertical2">
+	<dialog left="1547" top="339" right="2252" bottom="959" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -298,40 +298,46 @@
 		<comment>王は　生きとし　生けるものと
 会話する　力を　持つ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" font=" 2:shinden" width="256">JQLNRWNODWVHYLOOOD</language>
-		<language name="JPN_KANJI" font=" 2:shinden" width="256">JQLNRWNODWVHYLOOOD</language>
+		<language name="JPN" font=" 2:shinden" width="224">JQLNRWNODW
+VHYLOOOD</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="224">JQLNRWNODW
+VHYLOOOD</language>
 	</row>
 
 	<row id="msg_d20r0701_bg2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>王は　未来を　読み
 民を　大津波から　守った</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" font=" 2:shinden" width="256">UHWDZPRUIOODGHYDV</language>
-		<language name="JPN_KANJI" font=" 2:shinden" width="256">UHWDZPRUIOODGHYDV</language>
+		<language name="JPN" font=" 2:shinden" width="224">UHWDZPRUI
+OODGHYDV</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="224">UHWDZPRUI
+OODGHYDV</language>
 	</row>
 
 	<row id="msg_d20r0701_bg3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>王は　全ての　希望で　あり
 全ての　理想で　ある</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" font=" 2:shinden" width="256">OODURIHSRKVLJQLN</language>
-		<language name="JPN_KANJI" font=" 2:shinden" width="256">OODURIHSRKVLJQLN</language>
+		<language name="JPN" font=" 2:shinden" width="224">OODURIHSRKVLJQLN</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="224">OODURIHSRKVLJQLN</language>
 	</row>
 
 	<row id="msg_d20r0701_bg4_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>愛する　心と
 愛する　力を　持つのだ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" font=" 2:shinden" width="256">HYROKWLZWFDNQLKW</language>
-		<language name="JPN_KANJI" font=" 2:shinden" width="256">HYROKWLZWFDNQLKW</language>
+		<language name="JPN" font=" 2:shinden" width="224">HYROKWLZWFDNQLKW</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="224">HYROKWLZWFDNQLKW</language>
 	</row>
 
 	<row id="msg_d20r0701_bg5_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>王に　理解を　示すのならば
 王と　同じ　力を　示せ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" font=" 2:shinden" width="256">GHHUJDILJQRUWVWFD</language>
-		<language name="JPN_KANJI" font=" 2:shinden" width="256">GHHUJDILJQRUWVWFD</language>
+		<language name="JPN" font=" 2:shinden" width="224">GHHUJDIL
+JQRUWVWFD</language>
+		<language name="JPN_KANJI" font=" 2:shinden" width="224">GHHUJDIL
+JQRUWVWFD</language>
 	</row>
 
 	<row id="msg_d20r0701_sys_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
