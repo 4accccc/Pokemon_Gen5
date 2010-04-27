@@ -33,6 +33,7 @@
 #include "event_fieldmap_control.h"
 #include "event_freeword_input.h"
 #include "event_dendou_pc.h"
+#include "event_game_manual.h"
 
 #include "scrcmd_proc.h"
 #include "scrcmd_proc_fld.h"
@@ -311,5 +312,28 @@ VMCMD_RESULT EvCmdCallDendouProc( VMHANDLE *core, void *wk )
 
   // イベントを呼び出す
   SCRIPT_CallEvent( scw, EVENT_DendouCall( gsys, call_mode, ret_wk ) );
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  ゲーム内マニュアルの呼び出し
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCallGameManual( VMHANDLE *core, void *wk )
+{
+  GMEVENT* event;
+
+  SCRCMD_WORK*  work       = wk;
+  GAMESYS_WORK* gameSystem = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK*  script     = SCRCMD_WORK_GetScriptWork( work );
+  u16*          ret_wk     = SCRCMD_GetVMWork( core, work ); // コマンド第一引数
+
+  // @todo 終了モードを返す
+  event = EVENT_GameManual( gameSystem );
+  SCRIPT_CallEvent( script, event );
+
   return VMCMD_RESULT_SUSPEND;
 }

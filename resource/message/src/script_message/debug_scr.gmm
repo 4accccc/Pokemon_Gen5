@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-04-22T20:50:37"/>
+	<create user="obata_toshihiro" host="W00209" date="2010-04-27T17:47:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -751,6 +751,11 @@
 	<row id="msg_debug_obata_6" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<language name="JPN" width="256">育て屋ポケクリア</language>
 		<language name="JPN_KANJI" width="256">育て屋ポケクリア</language>
+	</row>
+
+	<row id="msg_debug_obata_7" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
+		<language name="JPN" width="256">育て屋ジャンプ</language>
+		<language name="JPN_KANJI" width="256">育て屋ジャンプ</language>
 	</row>
 
 	<row id="msg_debug_masafumi_16" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">

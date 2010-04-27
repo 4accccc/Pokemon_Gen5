@@ -29,7 +29,7 @@ extern VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk );
  * @retval  VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdCrossCommHelloMessageInputCall( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdCrossCommHelloMessageInputCall( VMHANDLE *core, void *wk );
 
 //--------------------------------------------------------------
 /**
@@ -38,7 +38,7 @@ VMCMD_RESULT EvCmdCrossCommHelloMessageInputCall( VMHANDLE *core, void *wk );
  * @retval  VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdCrossCommThanksMessageInputCall( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdCrossCommThanksMessageInputCall( VMHANDLE *core, void *wk );
 
 //--------------------------------------------------------------
 //  ゲームクリア処理呼び出し
@@ -54,4 +54,7 @@ extern VMCMD_RESULT EvCmdCallCGearGetDemo( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdCallGeonet( VMHANDLE *core, void *wk ); 
 
 // 殿堂入り画面呼び出し
-VMCMD_RESULT EvCmdCallDendouProc( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdCallDendouProc( VMHANDLE *core, void *wk );
+
+// ゲーム内マニュアルの呼び出し
+extern VMCMD_RESULT EvCmdCallGameManual( VMHANDLE *core, void *wk );

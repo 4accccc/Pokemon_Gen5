@@ -838,8 +838,12 @@
 
   //交換ポケモン　ポケモン名をワードセットに設定
   DEF_CMD( EvCmdTradeAfterPokeNameSetWord, EV_SEQ_SET_WORD_TRADEAFTER_POKENAME )
+
   //海底神殿、暗号メッセージ表示
   DEF_CMD( EvCmdBGWinSeaTempleMsg, EV_SEQ_BGWIN_SEATEMPLE_MSG )
+
+  //ゲーム内マニュアルの呼び出し
+  DEF_CMD( EvCmdCallGameManual, EV_SEQ_CALL_GAME_MANUAL )
   
   END_CMD
   //スクリプトコマンドテーブル終了

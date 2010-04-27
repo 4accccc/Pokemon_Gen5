@@ -7462,6 +7462,24 @@
 
 //--------------------------------------------------------------
 /**
+ * @brief ゲーム内マニュアル画面を呼び出す
+ *
+ * @param ret_wk 終了モードを受け取るワーク
+ *
+ * @return 0 通常終了
+ *         1 ×ボタン終了
+ */
+//--------------------------------------------------------------
+#define _CALL_GAME_MANUAL( ret_wk ) \
+    _ASM_CALL_GAME_MANUAL ret_wk
+
+  .macro  _ASM_CALL_GAME_MANUAL ret_wk
+  .short  EV_SEQ_CALL_GAME_MANUAL
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
  *  バッグプロセスを呼び出す
  *  @param  mode  呼び出しモード script_def.h SCR_BAGMODE_SELL, SCR_BAG_MODE_FIELD SCR_BAG_MODE_SELECT他
  *  @param  ret_mode  バッグの終了モード　script_def.h SCR_PROC_RETMODE_EXIT 他

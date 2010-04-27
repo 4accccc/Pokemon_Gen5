@@ -76,6 +76,7 @@ EVENT_START ev_pc
     IF $f_game_clear == TRUE THEN
       _BMPMENU_MAKE_LIST( msg_pc_window_05, msg_pc_window_05 )  // きろくをみる
     ENDIF
+    _BMPMENU_MAKE_LIST( msg_pc_window_07, msg_pc_window_07 )  // ヘルプを見る
     _BMPMENU_MAKE_LIST( msg_pc_window_06, msg_pc_window_06 )  // スイッチをきる
     _BMPMENU_START_BREAKABLE()
     _SYSWIN_CLOSE()
@@ -86,6 +87,7 @@ EVENT_START ev_pc
     CASE msg_pc_window_03 THEN _CALL( pc_mail_box )
     CASE msg_pc_window_04 THEN _CALL( pc_zukan_check )
     CASE msg_pc_window_05 THEN _CALL( pc_record )
+    CASE msg_pc_window_07 THEN _CALL( pc_help )
     CASE msg_pc_window_06 THEN $log_out = TRUE
     CASE EV_WIN_B_CANCEL  THEN $log_out = TRUE
     CASE EV_WIN_X_BREAK   THEN $log_out = TRUE
@@ -261,6 +263,10 @@ pc_record:
   
   _SE_PLAY( SEQ_SE_PC_LOGIN )
 
+  //「記録システムに接続した！」
+  _SYSWIN_MSG( msg_pc_kiroku_window_04 , POS_DOWN ) 
+  _AB_KEYWAIT()
+
   $loop = TRUE
   WHILE $loop == TRUE
 
@@ -319,5 +325,22 @@ pc_record:
     ENDSWITCH 
 
   ENDWHILE
+}
+_RET
+
+/**************************************************************/
+/*       きろくをみる                                         */
+/**************************************************************/
+pc_help:
+{
+  //「ヘルプシステムに接続した！」
+  _SYSWIN_MSG( msg_pc_help_01 , POS_DOWN ) 
+  _AB_KEYWAIT()
+  _SYSWIN_CLOSE()
+
+  // ゲーム内マニュアル画面を呼び出し
+  _CALL_GAME_MANUAL( SCWK_ANSWER )
+
+  // @todo 終了結果で分岐
 }
 _RET
