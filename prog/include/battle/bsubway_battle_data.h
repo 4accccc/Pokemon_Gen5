@@ -182,7 +182,7 @@ struct _BSUBWAY_LEADER_DATA
 struct _BSUBWAY_PAREPOKE_PARAM
 {
   ///<ポケモンのid保存
-  u32  poke_id;
+  u32  poke_tr_id;
   ///<サブウェイデータ内ポケモンデータ参照index0-999
   u16  poke_no[BSUBWAY_STOCK_PAREPOKE_MAX];
   ///<ポケモンの個性乱数保存

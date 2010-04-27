@@ -1624,7 +1624,7 @@ void BSUBWAY_SCRWORK_MakePartnerRomData(
 #endif
     FBI_TOOL_MakePokemonParam(
         &(tr_data->btpwd[i]),
-        poke->poke_no[i],poke->poke_id,
+        poke->poke_no[i],poke->poke_tr_id,
         poke->poke_rnd[i],pow_rnd,i,itemfix,heapID );
   }
   GFL_HEAP_FreeMemory( trd );

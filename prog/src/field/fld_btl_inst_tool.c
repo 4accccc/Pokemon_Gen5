@@ -1197,10 +1197,11 @@ BOOL FBI_TOOL_SetBSWayPokemonParam(
     return ret;
   }
   //ポインタがNULLでなければ、抽選されたポケモンの必要なパラメータを返す
-  poke->poke_id = id;
+  poke->poke_tr_id = id;
   for(i = 0;i< BSUBWAY_STOCK_PAREPOKE_MAX;i++){
     poke->poke_no[i] = set_index_no[i];
     poke->poke_rnd[i] = set_rnd_no[i];
+    poke->seikaku[i] = 0;
   }
   return ret;
 }
