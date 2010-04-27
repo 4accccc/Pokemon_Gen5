@@ -25,6 +25,7 @@
 #include "sound/pm_sndsys.h"
 
 #include "field_sound.h"
+#include "field_place_name.h"
 #include "field/eventwork.h"
 
 #include "event_debug_local.h"
@@ -151,6 +152,8 @@ static u32 DebugGetPlayTimeMinute(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 
 static void DebugSetPlayTimeMinute(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetPlayTimeSecond(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetPlayTimeSecond(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetPlaceNameEnable(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetPlaceNameEnable(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 
 #include "debug_numinput.cdat"
 
@@ -220,6 +223,9 @@ static  const DEBUG_NUMINPUT_INITIALIZER DATA_Player = {
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_PlayTime = { 
   D_NINPUT_DATA_LIST,   NELEMS( DNI_PlayTimeList ), DNI_PlayTimeList, };
 
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_PlaceName = { 
+  D_NINPUT_DATA_LIST,   NELEMS( DNI_PlaceNameList ), DNI_PlaceNameList, };
+
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
 {
@@ -264,6 +270,7 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_sound_00, (void*)&DATA_Sound },
   { dni_player_00, (void*)&DATA_Player },
   { dni_playtime_00, (void*)&DATA_PlayTime },
+  { dni_place_name_00, (void*)&DATA_PlaceName },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
@@ -1202,6 +1209,20 @@ static void DebugSetPlayTimeSecond(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32
   u16 hour = PLAYTIME_GetHour( time );
   u8 min = PLAYTIME_GetMinute( time );
   PLAYTIME_Set( time, hour, min, value );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 地名表示
+ */
+//--------------------------------------------------------------
+static u32 DebugGetPlaceNameEnable(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param) 
+{
+  return PlaceNameEnable;
+}
+static void DebugSetPlaceNameEnable(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  PlaceNameEnable = value;
 }
 
 

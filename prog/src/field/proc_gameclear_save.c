@@ -108,7 +108,6 @@ static void setup_bg_sys( HEAPID heapID );
 static void release_bg_sys( void );
 static void scr_msg_print( GAMECLEAR_MSG_WORK* wk, u16 msg_id, u8 x, u8 y );
 
-static void ElboardStartChampNews( GAMECLEAR_MSG_WORK* work ); // 電光掲示板にチャンピオンニュースの表示を開始する
 static void UpdateFirstClearDendouData( GAMECLEAR_MSG_WORK* work ); // 初回クリア時の殿堂入りデータを登録する
 static void UpdateFirstClearRecord( GAMECLEAR_MSG_WORK* work ); // 初回クリア時のレコードを登録する
 static void UpdateDendouRecord( GAMECLEAR_MSG_WORK* work ); // 殿堂入り時のレコードを登録する
@@ -244,8 +243,6 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
 
   case 4: 
     if( wk->otherSaveExist == FALSE ) {
-      // 電光掲示板にチャンピオンニュースを表示
-      ElboardStartChampNews( wk );
 
       //「初回クリア」をセーブ
       if( para->clear_mode == GAMECLEAR_MODE_FIRST ) {
@@ -457,24 +454,6 @@ static void scr_msg_print( GAMECLEAR_MSG_WORK* wk, u16 msg_id, u8 x, u8 y )
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame( wk->bmpwin ) );  //transfer screen
 
 	return;
-}
-
-
-//-----------------------------------------------------------------------------
-/**
- * @brief 電光掲示板にチャンピオンニュースの表示を開始する
- *
- * @param work
- */
-//-----------------------------------------------------------------------------
-static void ElboardStartChampNews( GAMECLEAR_MSG_WORK* work )
-{
-  MISC* misc;
-  int minutes;
-
-  misc = GAMEDATA_GetMiscWork( work->gamedata );
-  minutes = 60 * 24; // 表示する時間[min]
-  MISC_SetChampNewsMinutes( misc, minutes );
 }
 
 //-----------------------------------------------------------------------------

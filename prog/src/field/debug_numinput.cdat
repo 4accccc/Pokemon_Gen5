@@ -174,4 +174,14 @@ static const DEBUG_NUMINPUT_LIST DNI_PlayTimeList[] = {
   { dni_playtime_03, 0, &DNP_PlayTimeSecond },
 };
 
+//////////////////////////////////////////////////////
+///’n–¼•\Ž¦ŠÖ˜A
+static const DEBUG_NUMINPUT_PARAM DNP_PlaceNameEnable = {
+ 0, 1, DebugGetPlaceNameEnable, DebugSetPlaceNameEnable,
+};
+static const DEBUG_NUMINPUT_LIST DNI_PlaceNameList[] = {
+  //gmm_id, param, dni_param
+  { dni_place_name_01, 0, &DNP_PlaceNameEnable },
+};
+
 #endif  //PM_DEBUG

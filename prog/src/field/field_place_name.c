@@ -33,11 +33,18 @@
 
 
 //===================================================================================
-// ■ 定数・マクロ
+// ■デバッグ
 //=================================================================================== 
 //#define DEBUG_PRINT_ON // デバッグ出力スイッチ
 #define DEBUG_PRINT_TARGET (3) // デバッグ出力先
 
+#ifdef PM_DEBUG
+BOOL PlaceNameEnable = TRUE; // 地名表示の有効フラグ
+#endif
+
+//===================================================================================
+// ■ 定数・マクロ
+//=================================================================================== 
 #define MAX_STATE_COUNT ( 0xffff ) // 状態カウンタ最大値
 #define MAX_NAME_LENGTH (BUFLEN_PLACE_NAME - BUFLEN_EOM_SIZE) // 最大文字数
 
@@ -393,6 +400,10 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
 //------------------------------------------------------------------------------------
 void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system )
 {
+#ifdef PM_DEBUG
+  if( PlaceNameEnable == FALSE ) { return; }
+#endif
+
 #ifdef TEST
   OSTick start, end;
 #endif
