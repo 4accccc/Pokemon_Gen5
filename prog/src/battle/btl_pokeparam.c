@@ -55,8 +55,9 @@ typedef struct {
   u16   usedItem;
   u8    myID;
   u8    defaultFormNo;
-  u8    fHensin;
-  u8    fFakeEnable;
+  u8    fHensin     : 1;
+  u8    fFakeEnable : 1;
+  u8    fBtlIn      : 1;
 }BPP_CORE_PARAM;
 
 //--------------------------------------------------------------
@@ -211,6 +212,7 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->coreParam.fHensin = FALSE;
   bpp->coreParam.ppFake = NULL;
   bpp->coreParam.fFakeEnable = NULL;
+  bpp->coreParam.fBtlIn = NULL;
   bpp->coreParam.defaultFormNo = PP_Get( pp, ID_PARA_form_no, NULL );
 
   setupBySrcData( bpp, pp, TRUE );
@@ -610,8 +612,10 @@ const POKEMON_PARAM* BPP_GetViewSrcData( const BTL_POKEPARAM* bpp )
   if( (bpp->coreParam.ppFake != NULL)
   &&  (bpp->coreParam.fFakeEnable)
   ){
+    TAYA_Printf("イリュージョン中のPPsrcを返す\n");
     return bpp->coreParam.ppFake;
   }
+  TAYA_Printf("ふつうのPPsrcを返す\n");
   return bpp->coreParam.ppSrc;
 }
 
@@ -1952,6 +1956,7 @@ void BPP_SetAppearTurn( BTL_POKEPARAM* bpp, u16 turn )
   GF_ASSERT(turn < BTL_TURNCOUNT_MAX);
   bpp->appearedTurn = turn;
   bpp->turnCount = 0;
+  bpp->coreParam.fBtlIn = TRUE;
   dmgrecClearWork( bpp );
 }
 //=============================================================================================
@@ -2280,9 +2285,22 @@ WazaID BPP_GetPrevOrgWazaID( const BTL_POKEPARAM* bpp )
  * @retval  BtlPokePos
  */
 //=============================================================================================
-BtlPokePos BPP_GetPrevTargetPos( const BTL_POKEPARAM* pp )
+BtlPokePos BPP_GetPrevTargetPos( const BTL_POKEPARAM* bpp )
 {
-  return pp->prevTargetPos;
+  return bpp->prevTargetPos;
+}
+//=============================================================================================
+/**
+ * バトルに一度でも参加したかどうか判定
+ *
+ * @param   bpp
+ *
+ * @retval  BOOL    参加していた場合TRUE
+ */
+//=============================================================================================
+BOOL BPP_GetBtlInFlag( const BTL_POKEPARAM* bpp )
+{
+  return bpp->coreParam.fBtlIn;
 }
 
 

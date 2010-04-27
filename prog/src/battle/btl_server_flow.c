@@ -2657,7 +2657,7 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
     BTL_POKEPARAM* tmpBpp = BTL_PARTY_GetMemberData( clwk->party, nextPokeIdx );
     if( BPP_GetValue(tmpBpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_IRYUUJON ){
       SCQUE_PUT_OP_SetFakeSrcMember( wk->que, clientID, nextPokeIdx );
-      BTL_PARTY_SetFakeSrcMember( clwk->party, nextPokeIdx );
+      BTL_MAIN_SetFakeSrcMember( wk->mainModule, clwk->party, nextPokeIdx );
     }
   }
 

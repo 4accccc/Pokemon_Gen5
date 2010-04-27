@@ -107,9 +107,9 @@ static struct {
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static inline void register_PokeNickname( u8 pokeID, WordBufID bufID );
-static inline void register_PokeNicknameTruth( u8 pokeID, WordBufID bufID );
-static inline void register_PokeName( u8 pokeID, u8 bufID );
+static void register_PokeNickname( u8 pokeID, WordBufID bufID );
+static void register_PokeNicknameTruth( u8 pokeID, WordBufID bufID );
+static void register_PokeName( u8 pokeID, u8 bufID );
 static void register_TrainerType( WORDSET* wset, u8 bufIdx, u8 clientID );
 static void register_TrainerName( WORDSET* wset, u8 bufIdx, u8 clientID );
 static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID, const int* args );
@@ -197,7 +197,7 @@ void BTL_STR_QuitSystem( void )
 
 //--------------------------------------------------------------------------------------
 
-static inline void register_PokeNickname( u8 pokeID, WordBufID bufID )
+static  void register_PokeNickname( u8 pokeID, WordBufID bufID )
 {
   const BTL_POKEPARAM* bpp;
   const POKEMON_PARAM* pp;
@@ -205,10 +205,13 @@ static inline void register_PokeNickname( u8 pokeID, WordBufID bufID )
   bpp = BTL_POKECON_GetPokeParamConst( SysWork.pokeCon, pokeID );
   pp = BPP_GetViewSrcData( bpp );
 
+  TAYA_Printf(" Register Poke NickName : pokeID=%d, monsno=%d, bpp(%p)=pp(%p)\n",
+      pokeID, PP_Get(pp,ID_PARA_monsno,NULL), bpp, pp);
+
   WORDSET_RegisterPokeNickName( SysWork.wset, bufID, pp );
 }
 
-static inline void register_PokeNicknameTruth( u8 pokeID, WordBufID bufID )
+static void register_PokeNicknameTruth( u8 pokeID, WordBufID bufID )
 {
   const BTL_POKEPARAM* bpp;
   const POKEMON_PARAM* pp;
@@ -218,13 +221,16 @@ static inline void register_PokeNicknameTruth( u8 pokeID, WordBufID bufID )
 
   WORDSET_RegisterPokeNickName( SysWork.wset, bufID, pp );
 }
-static inline void register_PokeName( u8 pokeID, u8 bufID )
+static void register_PokeName( u8 pokeID, u8 bufID )
 {
   const BTL_POKEPARAM* bpp;
   const POKEMON_PARAM* pp;
 
   bpp = BTL_POKECON_GetPokeParamConst( SysWork.pokeCon, pokeID );
   pp = BPP_GetViewSrcData( bpp );
+
+  TAYA_Printf(" Register Poke MonsName : pokeID=%d, monsno=%d, bpp(%p)=pp(%p)\n",
+      pokeID, PP_Get(pp,ID_PARA_monsno,NULL), bpp, pp);
 
   WORDSET_RegisterPokeMonsName( SysWork.wset, bufID, pp );
 }
@@ -371,6 +377,7 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
 static void ms_std_simple( STRBUF* dst, BtlStrID_STD strID, const int* args )
 {
   GFL_MSG_GetString( SysWork.msg[MSGSRC_STD], strID, SysWork.tmpBuf );
+  TAYA_Printf("Simple strID=%d\n", strID);
   registerWords( SysWork.tmpBuf, args, SysWork.wset );
   WORDSET_ExpandStr( SysWork.wset, dst, SysWork.tmpBuf );
 }

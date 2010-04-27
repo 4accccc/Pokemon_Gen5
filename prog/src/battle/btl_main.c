@@ -4363,7 +4363,7 @@ BTL_POKEPARAM* BTL_PARTY_GetAliveTopMember( BTL_PARTY* party )
  * @param   memberIdx
  */
 //----------------------------------------------------------------------
-void BTL_PARTY_SetFakeSrcMember( BTL_PARTY* party, u8 memberIdx )
+void BTL_MAIN_SetFakeSrcMember( const BTL_MAIN_MODULE* wk, BTL_PARTY* party, u8 memberIdx )
 {
   BTL_POKEPARAM* bpp = party->member[ memberIdx ];
 
@@ -4381,7 +4381,8 @@ void BTL_PARTY_SetFakeSrcMember( BTL_PARTY* party, u8 memberIdx )
       BTL_N_Printf( DBGSTR_MAIN_Illusion1st, memberIdx, BPP_GetID(bpp));
       BTL_N_PrintfSimple( DBGSTR_MAIN_Illusion2nd, idx, BPP_GetID(refPoke));
     }
-    else
+    // 自身が最後尾にいる場合、イリュージョンは無効（ただし野生ゾロアークの特殊処理は除外）
+    else if( BPP_GetViewSrcData(bpp) != wk->ppIllusionZoroArc )
     {
       BPP_ClearViewSrcData( bpp );
     }
@@ -4646,6 +4647,11 @@ static void srcParty_RefrectBtlPartyStartOrder( BTL_MAIN_MODULE* wk, u8 clientID
         BPP_ReflectToPP( bpp );
         pp = BPP_GetSrcData( bpp );
         PokeParty_Add( wk->tmpParty, pp );
+
+        if( BPP_GetBtlInFlag(bpp) )
+        {
+          wk->setupParam->fightPokeIndex[ i ] = TRUE;
+        }
         break;
       }
     }
@@ -4743,6 +4749,20 @@ void BTL_MAIN_ClientPokemonReflectToServer( BTL_MAIN_MODULE* wk, u8 pokeID )
 
     BTL_N_Printf( DBGSTR_MAIN_CheckHPByLvup, __LINE__, BPP_GetValue(bpp,BPP_HP));
     BTL_SERVER_NotifyPokemonLevelUp( wk->server, bpp );
+  }
+}
+//=============================================================================================
+/**
+ * 録画再生処理が最後まで正常に行われたことをパラメータに書き戻す
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTL_MAIN_NotifyRecPlayComplete( BTL_MAIN_MODULE* wk )
+{
+  if( BTL_MAIN_IsRecordPlayMode(wk) )
+  {
+    wk->setupParam->recPlayCompleteFlag = TRUE;
   }
 }
 

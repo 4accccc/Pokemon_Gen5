@@ -4229,8 +4229,16 @@ static inline void MsgWinningTrainerStart( BTL_CLIENT* wk )
 //---------------------------------------------------
 static BOOL SubProc_REC_ExitForNPC( BTL_CLIENT* wk, int* seq )
 {
-  if( wk->viewCore ){
-    return SubProc_UI_ExitForNPC( wk, seq );
+  if( wk->viewCore )
+  {
+    BOOL result = SubProc_UI_ExitForNPC( wk, seq );
+
+    if( result ){
+      BTL_MAIN_NotifyRecPlayComplete( wk->mainModule );
+    }
+
+    return result;
+
   }
   return TRUE;
 }
@@ -4387,8 +4395,13 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
 //---------------------------------------------------
 static BOOL SubProc_REC_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
 {
-  if( wk->viewCore ){
-    return SubProc_UI_ExitForSubwayTrainer( wk, seq );
+  if( wk->viewCore )
+  {
+    BOOL result = SubProc_UI_ExitForSubwayTrainer( wk, seq );
+    if( result ){
+      BTL_MAIN_NotifyRecPlayComplete( wk->mainModule );
+    }
+    return result;
   }
   return TRUE;
 }
@@ -6785,7 +6798,7 @@ static BOOL scProc_OP_SetFakeSrc( BTL_CLIENT* wk, int* seq, const int* args )
   u8 memberIdx = args[1];
 
   BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
-  BTL_PARTY_SetFakeSrcMember( party, memberIdx );
+  BTL_MAIN_SetFakeSrcMember( wk->mainModule, party, memberIdx );
   return TRUE;
 }
 static BOOL scProc_OP_ClearConsumedItem( BTL_CLIENT* wk, int* seq, const int* args )

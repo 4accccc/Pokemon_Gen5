@@ -382,6 +382,7 @@ extern void BPP_UpdateWazaProcResult( BTL_POKEPARAM* bpp, BtlPokePos actTargetPo
 extern WazaID  BPP_GetPrevWazaID( const BTL_POKEPARAM* bpp );
 extern WazaID  BPP_GetPrevOrgWazaID( const BTL_POKEPARAM* bpp );
 extern BtlPokePos  BPP_GetPrevTargetPos( const BTL_POKEPARAM* bpp );
+extern BOOL BPP_GetBtlInFlag( const BTL_POKEPARAM* bpp );
 extern u32  BPP_GetWazaContCounter( const BTL_POKEPARAM* bpp );
 
 
