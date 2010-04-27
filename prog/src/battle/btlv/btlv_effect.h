@@ -92,6 +92,7 @@ enum{
   BTLEFF_ZOOM_IN,                             //カメラズームイン
   BTLEFF_IYASINONEGAI_KAIHUKU,                //いやしのねがい回復エフェクト
   BTLEFF_MIKADUKINOMAI_KAIHUKU,               //みかづきのまい回復エフェクト
+  BTLEFF_RESET_MOVE,                          //リセットムーブエフェクト
 
   BTLEFF_STATUS_EFFECT_END,
 };

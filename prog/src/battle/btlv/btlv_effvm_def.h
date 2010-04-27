@@ -216,6 +216,7 @@
 #define BTLEFF_EFFENDWAIT_PSG                 ( 14 )
 #define BTLEFF_EFFENDWAIT_SYSTEM              ( 15 )
 #define BTLEFF_EFFENDWAIT_VOICE               ( 16 )
+#define BTLEFF_EFFENDWAIT_WINDOW              ( 17 )
 
 //制御モード
 #define	BTLEFF_CONTROL_MODE_CONTINUE					( 0 )
@@ -265,6 +266,15 @@
 
 #define	BTLEFF_VANISH_OFF	( 0 )
 #define	BTLEFF_VANISH_ON	( 1 )
+
+//ウインドウ操作
+#define	BTLEFF_WINDOW_VERTICAL_OPEN	  ( 0 )
+#define	BTLEFF_WINDOW_VERTICAL_CLOSE	( 1 )
+#define	BTLEFF_WINDOW_HORIZON_OPEN	  ( 2 )
+#define	BTLEFF_WINDOW_HORIZON_CLOSE	  ( 3 )
+
+#define BTLEFF_WINDOW_OFF ( 0 )
+#define BTLEFF_WINDOW_ON  ( 1 )
 
 //OBJ操作
 #define	BTLEFF_OBJ_MOVE_DIRECT						    ( EFFTOOL_CALCTYPE_DIRECT )
@@ -465,38 +475,39 @@ ex)
 #define	EC_BG_PRIORITY		   				  ( 36 )
 #define	EC_BG_ALPHA		   				      ( 37 )
 #define	EC_BG_PAL_FADE		   				  ( 38 )
-#define	EC_BG_VANISH								  ( 39 )
-#define	EC_OBJ_SET	   				        ( 40 )
-#define	EC_OBJ_MOVE	   				        ( 41 )
-#define	EC_OBJ_SCALE	   				      ( 42 )
-#define	EC_OBJ_ANIME_SET	   				  ( 43 )
-#define	EC_OBJ_PAL_FADE		   				  ( 44 )
-#define	EC_OBJ_DEL	   				        ( 45 )
-#define	EC_GAUGE_VANISH	   				    ( 46 )
-#define	EC_SE_PLAY									  ( 47 )
-#define	EC_SE_STOP									  ( 48 )
-#define	EC_SE_PAN								      ( 49 )
-#define	EC_SE_EFFECT								  ( 50 )
-#define	EC_EFFECT_END_WAIT					  ( 51 )
-#define	EC_WAIT											  ( 52 )
-#define	EC_CONTROL_MODE							  ( 53 )
-#define	EC_IF						              ( 54 )
-#define	EC_MCSS_POS_CHECK						  ( 55 )
-#define	EC_SET_WORK						        ( 56 )
-#define	EC_GET_WORK						        ( 57 )
-#define	EC_SET_PARAM						      ( 58 )
-#define	EC_MIGAWARI						        ( 59 )
-#define	EC_HENSHIN						        ( 60 )
-#define	EC_NAKIGOE						        ( 61 )
-#define	EC_BALL_MODE						      ( 62 )
-#define	EC_BALLOBJ_SET						    ( 63 )
-#define	EC_CALL						            ( 64 )
-#define	EC_RETURN						          ( 65 )
-#define	EC_JUMP						            ( 66 )
-#define	EC_PAUSE						          ( 67 )
+#define	EC_BG_VISIBLE								  ( 39 )
+#define	EC_WINDOW_MOVE								( 40 )
+#define	EC_OBJ_SET	   				        ( 41 )
+#define	EC_OBJ_MOVE	   				        ( 42 )
+#define	EC_OBJ_SCALE	   				      ( 43 )
+#define	EC_OBJ_ANIME_SET	   				  ( 44 )
+#define	EC_OBJ_PAL_FADE		   				  ( 45 )
+#define	EC_OBJ_DEL	   				        ( 46 )
+#define	EC_GAUGE_VANISH	   				    ( 47 )
+#define	EC_SE_PLAY									  ( 48 )
+#define	EC_SE_STOP									  ( 49 )
+#define	EC_SE_PAN								      ( 50 )
+#define	EC_SE_EFFECT								  ( 51 )
+#define	EC_EFFECT_END_WAIT					  ( 52 )
+#define	EC_WAIT											  ( 53 )
+#define	EC_CONTROL_MODE							  ( 54 )
+#define	EC_IF						              ( 55 )
+#define	EC_MCSS_POS_CHECK						  ( 56 )
+#define	EC_SET_WORK						        ( 57 )
+#define	EC_GET_WORK						        ( 58 )
+#define	EC_SET_PARAM						      ( 59 )
+#define	EC_MIGAWARI						        ( 60 )
+#define	EC_HENSHIN						        ( 61 )
+#define	EC_NAKIGOE						        ( 62 )
+#define	EC_BALL_MODE						      ( 63 )
+#define	EC_BALLOBJ_SET						    ( 64 )
+#define	EC_CALL						            ( 65 )
+#define	EC_RETURN						          ( 66 )
+#define	EC_JUMP						            ( 67 )
+#define	EC_PAUSE						          ( 68 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									  ( 68 )
+#define	EC_SEQ_END									  ( 69 )
 
 #ifndef __C_NO_DEF_
 
@@ -1646,9 +1657,44 @@ ex)
  */
 //======================================================================
 	.macro	BG_VISIBLE	bg_num, sw
-	.short	EC_BG_VANISH
+	.short	EC_BG_VISIBLE
 	.long		\bg_num
 	.long		\sw
+	.endm
+
+//======================================================================
+/**
+ * @brief	ウインドウ操作
+ *
+ * #param_num	7
+ * @param	type      操作タイプ
+ * @param	horizon   横方向ウインドウ初期サイズ
+ * @param	vertical	縦方向ウインドウ初期サイズ
+ * @param	in_out	  ウインドウIN/OUT設定
+ * @param	frame	    動作フレーム
+ * @param	wait	    １フレームごとのウエイト
+ * @param	flag	    操作終了時にウインドウをオフするかどうか
+ * 
+ * #param COMBOBOX_TEXT 縦方向開く  縦方向閉じる  横方向開く  横方向閉じる
+ * #param COMBOBOX_VALUE  BTLEFF_WINDOW_VERTICAL_OPEN BTLEFF_WINDOW_VERTICAL_CLOSE  BTLEFF_WINDOW_HORIZON_OPEN  BTLEFF_WINDOW_HORIZON_CLOSE
+ * #param VALUE_INT 横方向ウインドウ初期サイズ
+ * #param VALUE_INT 縦方向ウインドウ初期サイズ
+ * #param VALUE_INT ウインドウIN/OUT設定
+ * #param VALUE_INT 動作フレーム
+ * #param VALUE_INT １フレームごとのウエイト
+ * #param COMBOBOX_TEXT ON  OFF
+ * #param COMBOBOX_VALUE  BTLEFF_WINDOW_ON  BTLEFF_WINDOW_OFF
+ */
+//======================================================================
+	.macro	WINDOW_MOVE type, horizon, vertical, in_out, frame, wait, flag
+	.short	EC_WINDOW_MOVE
+	.long   \type
+	.long   \horizon
+	.long   \vertical
+	.long   \in_out
+	.long   \frame
+	.long   \wait
+	.long   \flag
 	.endm
 
 //======================================================================
@@ -1965,8 +2011,8 @@ ex)
  * #param_num	1
  * @param	kind	終了待ちする種類
  *
- * #param	COMBOBOX_TEXT	すべて	カメラ	パーティクル	ポケモン	トレーナー  BG  PALFADEお盆  PALFADEフィールド PALFADEお盆＋フィールド  PALFADEエフェクト SEPLAYすべて  SEPLAY1 SEPLAY2 SEPLAY3 SEPLAY_PSG SEPLAY_SYSTEM  鳴き声
- * #param COMBOBOX_VALUE	BTLEFF_EFFENDWAIT_ALL	BTLEFF_EFFENDWAIT_CAMERA	BTLEFF_EFFENDWAIT_PARTICLE	BTLEFF_EFFENDWAIT_POKEMON	BTLEFF_EFFENDWAIT_TRAINER BTLEFF_EFFENDWAIT_BG  BTLEFF_EFFENDWAIT_PALFADE_STAGE  BTLEFF_EFFENDWAIT_PALFADE_FIELD  BTLEFF_EFFENDWAIT_PALFADE_3D BTLEFF_EFFENDWAIT_PALFADE_EFFECT BTLEFF_EFFENDWAIT_SEALL  BTLEFF_EFFENDWAIT_SE1  BTLEFF_EFFENDWAIT_SE2 BTLEFF_EFFENDWAIT_SE3 BTLEFF_EFFENDWAIT_PSG BTLEFF_EFFENDWAIT_SYSTEM  BTLEFF_EFFENDWAIT_VOICE
+ * #param	COMBOBOX_TEXT	すべて	カメラ	パーティクル	ポケモン	トレーナー  BG  PALFADEお盆  PALFADEフィールド PALFADEお盆＋フィールド  PALFADEエフェクト SEPLAYすべて  SEPLAY1 SEPLAY2 SEPLAY3 SEPLAY_PSG SEPLAY_SYSTEM  鳴き声  ウインドウ操作
+ * #param COMBOBOX_VALUE	BTLEFF_EFFENDWAIT_ALL	BTLEFF_EFFENDWAIT_CAMERA	BTLEFF_EFFENDWAIT_PARTICLE	BTLEFF_EFFENDWAIT_POKEMON	BTLEFF_EFFENDWAIT_TRAINER BTLEFF_EFFENDWAIT_BG  BTLEFF_EFFENDWAIT_PALFADE_STAGE  BTLEFF_EFFENDWAIT_PALFADE_FIELD  BTLEFF_EFFENDWAIT_PALFADE_3D BTLEFF_EFFENDWAIT_PALFADE_EFFECT BTLEFF_EFFENDWAIT_SEALL  BTLEFF_EFFENDWAIT_SE1  BTLEFF_EFFENDWAIT_SE2 BTLEFF_EFFENDWAIT_SE3 BTLEFF_EFFENDWAIT_PSG BTLEFF_EFFENDWAIT_SYSTEM  BTLEFF_EFFENDWAIT_VOICE BTLEFF_EFFENDWAIT_WINDOW
  */
 //======================================================================
 	.macro	EFFECT_END_WAIT	kind
