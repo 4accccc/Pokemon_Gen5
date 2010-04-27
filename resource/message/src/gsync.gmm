@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-04-22T19:30:47"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-04-27T14:25:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="396" top="89" right="1101" bottom="709" maximized="no" rayout="Vertical2">
+	<dialog left="396" top="89" right="1097" bottom="709" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="526"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="693"/>
+		<band id="3" index="3" style="0000" width="693"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -385,26 +385,20 @@
 	</row>
 
 	<row id="GSYNC_003">
-		<language name="JPN" width="256">ぽけもんを　おこして
+		<language name="JPN" width="256">ポケモンを　おこして
 よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　起こして
 よろしいですか？</language>
 	</row>
 
 	<row id="GSYNC_004">
-		<language name="JPN" width="256">ぽけもんを　おこしています</language>
+		<language name="JPN" width="256">ポケモンを　おこしています</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　起こしています</language>
 	</row>
 
 	<row id="GSYNC_005">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]がめをさました！
-
-なにかを　てに　にぎって いたようです
-ポケモンセンターに　いってみよう！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]がめをさました！
-
-なにかを　手に握っていたようです
-ポケモンセンターで　受け取ってください</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]がめをさました！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]が目を覚ました！</language>
 	</row>
 
 	<row id="GSYNC_006">
@@ -419,14 +413,14 @@
 
 	<row id="GSYNC_008">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]がめをさました！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]がめをさました！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]が目を覚ました！</language>
 	</row>
 
 	<row id="GSYNC_009">
-		<language name="JPN" width="256">ＰＤＷシステムのエネルギー切れです
-充電まで１日かかります</language>
-		<language name="JPN_KANJI" width="256">ＰＤＷシステムのエネルギー切れです
-充電まで１日かかります</language>
+		<language name="JPN" width="256">ゲームシンクのエネルギーぎれです
+じゅうでんまで　１にちかかります</language>
+		<language name="JPN_KANJI" width="256">ゲームシンクのエネルギー切れです
+充電まで　１日かかります</language>
 	</row>
 
 	<row id="GSYNC_010">
@@ -435,8 +429,8 @@
 	</row>
 
 	<row id="GSYNC_011">
-		<language name="JPN" width="256">ポケモンを起こす？</language>
-		<language name="JPN_KANJI" width="256">ポケモンを起こす？</language>
+		<language name="JPN" width="256">ポケモンを　おこしますか？</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　起こしますか？</language>
 	</row>
 
 	<row id="GSYNC_012">
@@ -450,10 +444,15 @@
 	</row>
 
 	<row id="GSYNC_014">
-		<language name="JPN" width="256">前回の夢を配達員から受け取っていませんが、
-起こしていいですか？</language>
-		<language name="JPN_KANJI" width="256">前回の夢を配達員から受け取っていませんが、
-起こしていいですか？</language>
+		<language name="JPN" width="256">ぜんかいのゆめの　カケラを
+はいたついんから▽
+うけとっていませんが▼
+ポケモンをおこしても
+よろしいですか？</language>
+		<language name="JPN_KANJI" width="256">前回の夢のカケラを
+配達員から　受け取っていませんが▼
+ポケモンを起こしても
+よろしいですか？</language>
 	</row>
 
 	<row id="GSYNC_015">
