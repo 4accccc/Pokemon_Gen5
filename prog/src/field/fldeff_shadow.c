@@ -4,6 +4,9 @@
  * @brief	フィールドOBJ影
  * @author	kagaya
  * @date	05.07.13
+ *
+ * 2010.04.14 tamada  処理負荷軽減のため、G3DOBJでなくビルボード描画に切り替え
+ * 2010.04.22 tamada  DP世代の時間帯制御などコメント部分を削除
  */
 //======================================================================
 #include <gflib.h>
@@ -14,30 +17,11 @@
 #include "fldmmdl.h"
 #include "fldeff_shadow.h"
 
-//#include "..\..\include\system\timezone.h"
-//#include "..\..\include\system\pm_rtc.h"
-
+#include "debug/debug_flg.h" //DEBUG_FLG_～
 //======================================================================
 //	define
 //======================================================================
-#define DEBUG_SHADOW_PL_NON
-//#define DEBUG_SHADOW_WRITE_OFF	//定義で影描画OFF
-//#define SHADOW_DRAW_Z_OFFSET (FX32_ONE*(3))
-//#define SHADOW_DRAW_Z_OFFSET (FX32_ONE*(5))			///<影描画オフセットZ軸
-#define SHADOW_DRAW_Z_OFFSET (FX32_ONE*(3))				
 
-#define SHADOW_SCALE_SPEED (0x0010)
-#define SHADOW_ALPHA_SPEED (0x0200)
-
-/*
-#define	TIMEZONE_MORNING	(0)
-#define	TIMEZONE_NOON		(1)
-#define	TIMEZONE_EVENING	(2)
-#define TIMEZONE_NIGHT		(3)
-#define TIMEZONE_MIDNIGHT	(4)
-*/
-
-#define SHADOW_DRAW_BBD
 
 //======================================================================
 //	struct
@@ -48,97 +32,47 @@
 typedef struct _TAG_FLDEFF_SHADOW FLDEFF_SHADOW;
 
 //--------------------------------------------------------------
-///	FE_SHADOW構造体
+///	影エフェクト全体用のワーク定義
 //--------------------------------------------------------------
 struct _TAG_FLDEFF_SHADOW
 {
-#ifndef DEBUG_SHADOW_PL_NON
-	int time_seq_no;
-	int time_zone;
-	int next_time_zone;
-	int frame;
-	fx32 alpha;
-	VecFx32 scale;
-#endif
 	FLDEFF_CTRL *fectrl;
 
-  GFL_G3D_RES *g3d_res;
-  GFL_G3D_RND *g3d_rnd;
-  GFL_G3D_OBJ *g3d_obj;
-  
   VecFx32 scale;
 
-  //影をBBDSYSへ移行する作業用
-#ifdef  SHADOW_DRAW_BBD
   GFL_BBDACT_SYS *bbdactsys;
   GFL_BBD_SYS *bbdsys;
   int resIdx;
-#endif
 };
 
 //--------------------------------------------------------------
-///	SHADOW_ADD_H構造体
+/// 影エフェクトタスク登録用データ定義
 //--------------------------------------------------------------
 typedef struct
 {
-	FLDEFF_CTRL *fectrl;			///<FLDEFF_CTRL *
-	FLDEFF_SHADOW *shadow;		///<FLDEFF_SHADOW
-	MMDL *fmmdl;						///<影の対象MMDL *
-}SHADOW_ADD_H;
-
-//--------------------------------------------------------------
-/// SHADOW_TASKHEADER
-//--------------------------------------------------------------
-typedef struct
-{
-  FLDEFF_SHADOW *eff_shadow;
-  MMDL *fmmdl;
+  FLDEFF_SHADOW *eff_shadow;  ///<影エフェクト全体ワークへのポインタ
+  MMDL *fmmdl;                ///<影が追随する対象の動作モデルへのポインタ
 }SHADOW_TASKHEADER;
 
 //--------------------------------------------------------------
-/// TASKWORK_SHADOW
+/// 個別の影エフェクトごとのワーク定義
 //--------------------------------------------------------------
 typedef struct
 {
-  u32 vanish_flag;
-  FLDEFF_SHADOW *eff_shadow;
-  MMDL *fmmdl;
-  MMDL_CHECKSAME_DATA samedata;
-#ifdef  SHADOW_DRAW_BBD
-  int bbdIdx;
-  VecFx32 pos;
-#endif
+  u32 vanish_flag;              ///<表示制御フラグ
+  FLDEFF_SHADOW *eff_shadow;    ///<影エフェクト全体ワークへのポインタ
+  MMDL *fmmdl;                  ///<影が追随する対象の動作モデルへのポインタ
+  MMDL_CHECKSAME_DATA samedata; ///<動作モデル同一性チェック用ワーク
+  int bbdUnitIdx;               ///<表示しているBBDACTのユニットインデックス
 }TASKWORK_SHADOW;
 
 //======================================================================
 //	プロトタイプ
 //======================================================================
-#ifndef DEBUG_SHADOW_PL_NON
-static void Shadow_TimeProcAdd( FLDEFF_SHADOW *sd );
-static void Shadow_TimeProcDelete( FLDEFF_SHADOW *sd );
-static void Shadow_TimeScaleGet( FLDEFF_SHADOW *sd, VecFx32 *scale );
-static int Shadow_TimeAlpha031( int alpha );
-static void Shadow_TimeAlphaScaleSet( FLDEFF_SHADOW *sd, int zone );
-static void Shadow_ValueAdd( fx32 *val0, fx32 val1, fx32 add );
-static void Shadow_TimeProc( TCB_PTR tcb, void *wk );
-
-static void Shadow_GraphicInit( FLDEFF_SHADOW *sd );
-static void Shadow_GraphicDelete( FLDEFF_SHADOW *sd );
-static void Shadow_GraphicAlphaSet( FLDEFF_SHADOW *sd, int alpha );
-
-static const EOA_H_NPP DATA_EoaH_Shadow;
-static const EOA_H_NPP DATA_EoaH_ShadowType;
-
-const VecFx32 DATA_ShadowTimeScaleTbl[];
-const fx32 DATA_ShadowTimeAlphaTbl[];
-static const DATA_ShadowArcIdx[SHADOW_MAX];
-#endif
-
 static void shadow_InitResource( FLDEFF_SHADOW *sd );
 static void shadow_DeleteResource( FLDEFF_SHADOW *sd );
 
 static const FLDEFF_TASK_HEADER DATA_shadowTaskHeader;
-extern GFL_BBD_SYS * FLDEFF_CTRL_GetBbdSys( FLDEFF_CTRL *fectrl );
 
 //======================================================================
 //	影　システム
@@ -163,14 +97,12 @@ void * FLDEFF_SHADOW_Init( FLDEFF_CTRL *fectrl, HEAPID heapID )
     sd->scale = scale;
   }
   
-#ifdef  SHADOW_DRAW_BBD
   {
     FIELDMAP_WORK * fieldmap = FLDEFF_CTRL_GetFieldMapWork( fectrl );
-    MMDLSYS * mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
     sd->bbdactsys = FIELDMAP_GetSubBbdActSys( fieldmap );
     sd->bbdsys = GFL_BBDACT_GetBBDSystem( sd->bbdactsys );
   }
-#endif
+
 	shadow_InitResource( sd );
 	return( sd );
 }
@@ -218,14 +150,14 @@ void FLDEFF_SHADOW_SetGlobalScale( FLDEFF_CTRL *fectrl, const VecFx32 *scale )
 static void shadow_InitResource( FLDEFF_SHADOW *sd )
 {
   ARCHANDLE *handle;
+  GFL_G3D_RES *g3d_res;
   
   handle = FLDEFF_CTRL_GetArcHandleEffect( sd->fectrl );
   
-#ifdef  SHADOW_DRAW_BBD
-  sd->g3d_res	= GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_kage_nsbmd );
+  g3d_res	= GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_kage_nsbmd );
   {
     GFL_BBDACT_G3DRESDATA data;
-    data.g3dres = sd->g3d_res;
+    data.g3dres = g3d_res;
     data.texFmt = GFL_BBD_TEXFMT_PAL4;
     data.texSiz = GFL_BBD_TEXSIZ_16x16;
     data.celSizX = 16;
@@ -234,28 +166,6 @@ static void shadow_InitResource( FLDEFF_SHADOW *sd )
 
     sd->resIdx = GFL_BBDACT_AddResourceG3DResUnit( sd->bbdactsys, &data, 1 );
   }
-#else
-
-  sd->g3d_res	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_kage_nsbmd );
-  GFL_G3D_TransVramTexture( sd->g3d_res );
-  
-  sd->g3d_rnd =
-    GFL_G3D_RENDER_Create( sd->g3d_res, 0, sd->g3d_res );
-  
-  {
-    NNSG3dRenderObj *rnd = GFL_G3D_RENDER_GetRenderObj( sd->g3d_rnd );
-	  NNSG3dResMdl *pMdl = NNS_G3dRenderObjGetResMdl( rnd );
-   	NNS_G3dMdlUseGlbDiff( pMdl );
-	  NNS_G3dMdlUseGlbAmb( pMdl );
-	  NNS_G3dMdlUseGlbSpec( pMdl );
-  	NNS_G3dMdlUseGlbEmi( pMdl );
-  }
-  
-  sd->g3d_obj =
-    GFL_G3D_OBJECT_Create( sd->g3d_rnd, NULL, 0 );
-
-#endif
 }
 
 //--------------------------------------------------------------
@@ -267,13 +177,7 @@ static void shadow_InitResource( FLDEFF_SHADOW *sd )
 //--------------------------------------------------------------
 static void shadow_DeleteResource( FLDEFF_SHADOW *sd )
 {
-#ifdef  SHADOW_DRAW_BBD
   GFL_BBDACT_RemoveResourceUnit( sd->bbdactsys, sd->resIdx, 1 );
-#else
-  GFL_G3D_OBJECT_Delete( sd->g3d_obj );
-	GFL_G3D_RENDER_Delete( sd->g3d_rnd );
- 	GFL_G3D_DeleteResource( sd->g3d_res );
-#endif
 }
 
 //======================================================================
@@ -318,7 +222,6 @@ static void shadowTask_Init( FLDEFF_TASK *task, void *wk )
   work->fmmdl = head->fmmdl;
   MMDL_InitCheckSameData( head->fmmdl, &work->samedata );
 
-#ifdef  SHADOW_DRAW_BBD
   {
     GFL_BBDACT_ACTDATA actData;
     actData.resID = 0;  //ResUnit内オフセット指定
@@ -327,14 +230,13 @@ static void shadowTask_Init( FLDEFF_TASK *task, void *wk )
     actData.alpha = 19;
     actData.drawEnable = TRUE;
     actData.lightMask = GFL_BBD_LIGHTMASK_0;
-    actData.trans = work->pos;
+    actData.trans = (VecFx32){ 0, 0, 0 };
     actData.func = NULL;
     actData.work = work;
-    work->bbdIdx = GFL_BBDACT_AddActEx(
+    work->bbdUnitIdx = GFL_BBDACT_AddActEx(
         work->eff_shadow->bbdactsys, work->eff_shadow->resIdx,
         &actData, 1, GFL_BBD_DRAWMODE_XZ_FLAT_BILLBORD );
   }
-#endif
   FLDEFF_TASK_CallUpdate( task ); //即、座標を反映する
 }
 
@@ -348,10 +250,8 @@ static void shadowTask_Init( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void shadowTask_Delete( FLDEFF_TASK *task, void *wk )
 {
-#ifdef  SHADOW_DRAW_BBD
   TASKWORK_SHADOW *work = wk;
-  GFL_BBDACT_RemoveAct( work->eff_shadow->bbdactsys, work->bbdIdx, 1 );
-#endif
+  GFL_BBDACT_RemoveAct( work->eff_shadow->bbdactsys, work->bbdUnitIdx, 1 );
 }
 
 //--------------------------------------------------------------
@@ -379,13 +279,13 @@ static void shadowTask_Update( FLDEFF_TASK *task, void *wk )
     }
   }
   
-  if( MMDL_CheckStatusBitVanish(work->fmmdl) == TRUE ||
+  if( DEBUG_FLG_GetFlg(DEBUG_FLG_DisableTrainerEye) ||
+      MMDL_CheckStatusBitVanish(work->fmmdl) == TRUE ||
       MMDL_CheckMoveBit(work->fmmdl,MMDL_MOVEBIT_SHADOW_VANISH) ){
     work->vanish_flag = TRUE;
   }else{
     work->vanish_flag = FALSE;
     MMDL_GetVectorPos( work->fmmdl, &pos );
-//  pos.x += NUM_FX32(1) / 8;   
     pos.y += NUM_FX32(-4);
 #ifdef MMDL_BBD_DRAW_OFFS_Z_USE 
     pos.z += NUM_FX32(2)+0x800;
@@ -405,40 +305,20 @@ static void shadowTask_Update( FLDEFF_TASK *task, void *wk )
 static void shadowTask_Draw( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_SHADOW *work = wk;
+  int bbdIdx = work->bbdUnitIdx + 0;  //BBDのINDEX == BBDACTのUNITIDX + Unit内Idx
   
-#ifdef  SHADOW_DRAW_BBD
   if( work->vanish_flag == FALSE ){
     int flag = TRUE;
     VecFx32 pos;
     MMDL_GetVectorPos( work->fmmdl, &pos );
-    //pos.y += NUM_FX32( -2 );
-    GFL_BBD_SetObjectDrawEnable( work->eff_shadow->bbdsys, work->bbdIdx, &flag );
-    GFL_BBD_SetObjectTrans( work->eff_shadow->bbdsys, work->bbdIdx, &pos );
+
+    GFL_BBD_SetObjectDrawEnable( work->eff_shadow->bbdsys, bbdIdx, &flag );
+    pos.y += FX32_CONST(+1);
+    GFL_BBD_SetObjectTrans( work->eff_shadow->bbdsys, bbdIdx, &pos );
   } else {
     int flag = FALSE;
-    GFL_BBD_SetObjectDrawEnable( work->eff_shadow->bbdsys, work->bbdIdx, &flag );
+    GFL_BBD_SetObjectDrawEnable( work->eff_shadow->bbdsys, bbdIdx, &flag );
   }
-#else
-  if( work->vanish_flag == FALSE ){
-    VecFx32 pos;
-    GFL_G3D_OBJ *obj = work->eff_shadow->g3d_obj;
-    GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,0xc00},{0}};
-    
-    #if 0
-    MTX_Identity33( &status.rotate );
-    #else //回転可能に
-    {
-      u16 camera_yaw = MMDLSYS_GetTargetCameraAngleYaw( MMDL_GetMMdlSys( work->fmmdl ) );
-      GFL_CALC3D_MTX_CreateRot(
-          0, camera_yaw, 0, &status.rotate );
-      status.scale = work->eff_shadow->scale;
-    }
-    #endif
-    
-    FLDEFF_TASK_GetPos( task, &status.trans );
-    GFL_G3D_DRAW_DrawObjectCullingON( obj, &status );
-  }
-#endif
 }
 
 //--------------------------------------------------------------
@@ -453,41 +333,3 @@ static const FLDEFF_TASK_HEADER DATA_shadowTaskHeader =
   shadowTask_Draw,
 };
 
-//======================================================================
-//	data
-//======================================================================
-#ifndef DEBUG_SHADOW_PL_NON
-//--------------------------------------------------------------
-///	時間帯別拡大率
-//--------------------------------------------------------------
-static const VecFx32 DATA_ShadowTimeScaleTbl[] =
-{
-	{ FX32_ONE, FX32_ONE, FX32_ONE },	//TIMEZONE_MORNING
-	{ FX32_ONE+(FX32_ONE/4), FX32_ONE, FX32_ONE+(FX32_ONE/4)},	//TIMEZONE_NOON
-	{ FX32_ONE+(FX32_ONE/4), FX32_ONE, FX32_ONE },	//TIMEZONE_EVENING
-	{ FX32_ONE+(FX32_ONE/8), FX32_ONE, FX32_ONE },	//TIMEZONE_NIGHT
-	{ FX32_ONE-(FX32_ONE/8), FX32_ONE, FX32_ONE-(FX32_ONE/8) },	//TIMEZONE_MIDNIGHT
-};
-
-//--------------------------------------------------------------
-///	時間帯別半透明濃度
-//--------------------------------------------------------------
-static const fx32 DATA_ShadowTimeAlphaTbl[] =
-{
-	FX32_ONE*14, //TIMEZONE_MORNING
-	FX32_ONE*18,	//TIMEZONE_NOON
-	FX32_ONE*18,	//TIMEZONE_EVENING
-	FX32_ONE*8,	//TIMEZONE_NIGHT
-	FX32_ONE*4,	//TIMEZONE_MIDNIGHT
-};
-
-//--------------------------------------------------------------
-///	影種類別アーカイブインデックス
-//--------------------------------------------------------------
-static const DATA_ShadowArcIdx[SHADOW_MAX] =
-{
-	NARC_fldeff_kage_nsbmd,
-	NARC_fldeff_red_mark_nsbmd,
-	NARC_fldeff_blue_mark_nsbmd,
-};
-#endif

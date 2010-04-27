@@ -3417,20 +3417,19 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
     
 		org_pm = *m;
 		pm = org_pm;
+#if 0
+    {
+      FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
+      fx32 proj_z_value = FIELD_STATUS_GetProjectionZValue( fldstatus );
+      pm._32 += FX_Mul( pm._22, proj_z_value );
+    }
+#else
 		pm._32 += FX_Mul( pm._22, PRO_MAT_Z_OFS );
+#endif
 		NNS_G3dGlbSetProjectionMtx(&pm);
 		NNS_G3dGlbFlush();		  //　ジオメトリコマンドを転送
     NNS_G3dGeFlushBuffer(); // 転送まち
 
-    SET_CHECK("update_tail:fldeff draw");
-    FLDEFF_CTRL_Draw( fieldWork->fldeff_ctrl );
-    GFL_BBDACT_Draw(
-        fieldWork->subBbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
-    
-    if(fieldWork->union_eff != NULL){
-      UNION_EFF_SystemDraw( fieldWork->union_eff);
-    }
-   
     if ( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) &&
         (GFL_UI_KEY_GetCont() & PAD_BUTTON_A) )
     {
@@ -3446,8 +3445,27 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
         fieldWork->mainBbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
     }
 
+    SET_CHECK("update_tail:fldeff draw");
+    FLDEFF_CTRL_Draw( fieldWork->fldeff_ctrl );
+    
+    if(fieldWork->union_eff != NULL){
+      UNION_EFF_SystemDraw( fieldWork->union_eff);
+    }
+   
+    SET_CHECK("update_tail:bbd draw 2");
+#if 1
+		pm = org_pm;
+		pm._32 += FX_Mul( pm._22, PRO_MAT_Z_OFS / 2 );
+		NNS_G3dGlbSetProjectionMtx(&pm);
+		NNS_G3dGlbFlush();		  //　ジオメトリコマンドを転送
+    NNS_G3dGeFlushBuffer(); // 転送まち
+#endif
+    GFL_BBDACT_Draw(
+        fieldWork->subBbdActSys, fieldWork->g3Dcamera, fieldWork->g3Dlightset );
+
 		NNS_G3dGlbSetProjectionMtx(&org_pm);
 		NNS_G3dGlbFlush();		//　ジオメトリコマンドを転送
+
   }
 
   SET_CHECK("update_tail:FLDMAPFUNC_Sys_Draw3D");
