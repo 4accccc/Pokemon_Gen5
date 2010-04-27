@@ -411,6 +411,9 @@ static const LIST_SETUP_TBL sc_list_data_home[]	=
 	},
 #endif
 	{	
+		L"ランクデータ１",	LISTDATA_SEQ_RANKDATA_ONE,
+	},
+	{	
 		L"ランクデータフル",	LISTDATA_SEQ_RANKDATA_FULL,
 	},
 	{	

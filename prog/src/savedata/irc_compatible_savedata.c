@@ -36,12 +36,13 @@
 typedef struct 
 {
 	STRCODE name[IRC_COMPATIBLE_SV_DATA_NAME_LEN];		// 16
-	u32			score			:7;													//	4	
-	u32			play_cnt	:10;
-  u32     sex       : 1;
+	u32			score			:   7;													//	4	
+	u32			play_cnt	:   10;
+  u32     sex       :   1;
   u32     birth_month:  4;
-  u32     birth_day :  4;
-	u32			dummy			:6;
+  u32     birth_day :   4;
+	u32			dummy			:   5;
+  u32     is_use    :   1;
 	u32			trainerID;														// 4
   u16     mons_no;
   u8      form_no;
@@ -311,8 +312,8 @@ BOOL IRC_COMPATIBLE_SV_IsDayFlag( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 trai
 
 	for( i = 0; i < IRC_COMPATIBLE_SV_RANKING_MAX; i++ )
 	{	
-		if( cp_sv->rank[i].trainerID == trainerID && 
-        cp_sv->rank[i].play_cnt > 0 )
+		if( cp_sv->rank[i].trainerID == trainerID &&
+        cp_sv->rank[i].is_use == 1 )
 		{
 		  return cp_sv->rank[i].only_day;
 		}
@@ -336,8 +337,8 @@ BOOL IRC_COMPATIBLE_SV_IsPlayed( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u32 train
 
 	for( i = 0; i < IRC_COMPATIBLE_SV_RANKING_MAX; i++ )
 	{	
-		if( cp_sv->rank[i].trainerID == trainerID && 
-        cp_sv->rank[i].play_cnt > 0 )
+		if( cp_sv->rank[i].trainerID == trainerID &&
+        cp_sv->rank[i].is_use == 1 )
 		{
 		  return TRUE;
 		}
@@ -563,7 +564,7 @@ static BOOL Irc_Compatible_SV_IsExits( const IRC_COMPATIBLE_RANKING_DATA *cp_ran
 	for( i = 0; i < len; i++ )
 	{	
 		if( cp_rank[i].trainerID == cp_new->trainerID &&
-        cp_rank[i].play_cnt > 0 )
+        cp_rank[i].is_use == 1 )
 		{
 			return TRUE;
 		}
@@ -601,6 +602,7 @@ static void Irc_Compatible_SV_SetData( IRC_COMPATIBLE_RANKING_DATA *p_data, cons
   p_data->form_no     = form_no;
   p_data->mons_sex    = mons_sex;
   p_data->egg_flag    = egg & 0x1;
+  p_data->is_use      = 1;
   p_data->only_day    = 1;
 }
 
@@ -622,7 +624,8 @@ static u16 Irc_Compatible_SV_GetPlayCount( const IRC_COMPATIBLE_RANKING_DATA *cp
 
 	for( i = 0; i < len; i++ )
 	{	
-		if( cp_rank[i].trainerID == trainerID )
+		if( cp_rank[i].trainerID == trainerID &&
+        cp_rank[i].is_use == 1 )
 		{
 			return cp_rank[i].play_cnt;
 		}
