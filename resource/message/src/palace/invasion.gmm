@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-04-23T12:21:08"/>
+	<create user="ohmori" host="W00223" date="2010-04-25T19:45:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1291" top="334" right="1920" bottom="1034" maximized="no" rayout="Vertical2">
+	<dialog left="2032" top="169" right="2661" bottom="869" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="260" right="1280" bottom="884" visible="yes"/>
 		<band id="0" index="0" style="0000" width="445"/>
@@ -645,6 +645,78 @@
 ハイリンクが　あります</language>
 		<language name="JPN_KANJI" width="256">ちかくに　[1:00:トレーナー名:0]と　[1:00:トレーナー名:1]の
 ハイリンクが　あります</language>
+	</row>
+
+	<row id="msg_invasion_info_014" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ
+タグ0：ターゲットプレイヤー</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は　このばしょの
+うえのほうに　います！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　このばしょの
+うえのほうに　います！</language>
+	</row>
+
+	<row id="msg_invasion_info_015" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ
+タグ0：ターゲットプレイヤー</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は　このばしょの
+したのほうに　います！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　このばしょの
+したのほうに　います！</language>
+	</row>
+
+	<row id="msg_invasion_info_016" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ
+タグ0：ターゲットプレイヤー</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は　このばしょの
+みぎのほうに　います！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　このばしょの
+みぎのほうに　います！</language>
+	</row>
+
+	<row id="msg_invasion_info_017" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ
+タグ0：ターゲットプレイヤー</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は　このばしょの
+ひだりのほうに　います！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　このばしょの
+ひだりのほうに　います！</language>
+	</row>
+
+	<row id="msg_invasion_info_018" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ
+タグ0：ターゲットプレイヤー</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は　このばしょの
+どこかに　ひそんでいます</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　このばしょの
+どこかに　ひそんでいます</language>
+	</row>
+
+	<row id="msg_invasion_info_019" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ
+タグ0：ターゲットプレイヤー</comment>
+		<language name="JPN" width="256">ここは　まだ　いったことのない
+ばしょです</language>
+		<language name="JPN_KANJI" width="256">ここは　まだ　いったことのない
+ばしょです</language>
+	</row>
+
+	<row id="msg_invasion_info_020" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ
+タグ0：ターゲットプレイヤー</comment>
+		<language name="JPN" width="256">だれかが　ちかくに
+きています</language>
+		<language name="JPN_KANJI" width="256">だれかが　ちかくに
+きています</language>
+	</row>
+
+	<row id="msg_invasion_info_021" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>状況メッセージ
+タグ0：ターゲットプレイヤー</comment>
+		<language name="JPN" width="256">だれかが　このせかいに
+しんにゅう　しています</language>
+		<language name="JPN_KANJI" width="256">だれかが　このせかいに
+しんにゅう　しています</language>
 	</row>
 
 	<row id="msg_invasion_info_m01" back-color="#ffff80,,,,,,,,,,,,,,,,,">
