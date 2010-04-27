@@ -34,7 +34,7 @@
 //===========================================================================
 //===========================================================================
 enum {
-	ZONE_ID_GAMESTART = ZONE_ID_T01R0102,		//とりあえず
+	ZONE_ID_GAMESTART = ZONE_ID_T01R0102,		//「さいしょから」の開始ゾーンID
 };
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -246,46 +246,14 @@ void LOCATION_SetDefaultPos(LOCATION * loc, u16 zone_id)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief ゲーム開始位置をセット
+ */
 //------------------------------------------------------------------
 void LOCATION_SetGameStart(LOCATION * loc)
 {
   LOCATION_SetDefaultPos( loc, ZONE_ID_GAMESTART );
-#if 0
-  loc->type = LOCATION_TYPE_DIRECT;
-  loc->zone_id = ZONE_ID_GAMESTART;
-  loc->exit_id = DOOR_ID_JUMP_CODE;
-  loc->dir_id = EXIT_DIR_DOWN;
-  loc->exit_ofs = LOCATION_DEFAULT_EXIT_OFS;
-  loc->location_pos.type = LOCATION_POS_TYPE_3D;
-  loc->location_pos.pos.x = 72 * FX32_ONE;
-  loc->location_pos.pos.y =  0 * FX32_ONE;
-  loc->location_pos.pos.z = 88 * FX32_ONE;
-#endif
 }
-
-#if 0
-//===========================================================================
-//===========================================================================
-//------------------------------------------------------------------
-//	ゲーム開始位置の定義
-//------------------------------------------------------------------
-enum {
-	//GAME_START_ZONE = ZONE_ID_T01R0102,
-	GAME_START_ZONE = ZONE_ID_T01R0202,		//06.03.07変更
-	GAME_START_X = 4,
-	GAME_START_Z = 6,
-
-	DEBUG_START_ZONE = ZONE_ID_C01,
-	DEBUG_START_X = 174,
-	DEBUG_START_Z = 764,
-
-	GAME_START_EZONE = ZONE_ID_T01,
-	GAME_START_EX = 116,
-	GAME_START_EZ = 886,
-};
-
-
-#endif
 
 
 //----------------------------------------------------------------------------
