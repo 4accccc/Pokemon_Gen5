@@ -48,6 +48,7 @@ static void event_Request( BEACON_VIEW_PTR wk, BEACON_DETAIL_EVENT ev_id);
 static void event_RequestReset( BEACON_VIEW_PTR wk );
 
 static int seq_Main( BEACON_VIEW_PTR wk );
+static int seq_LogEntry( BEACON_VIEW_PTR wk );
 static int seq_ViewUpdate( BEACON_VIEW_PTR wk );
 static int seq_ListScrollRepeat( BEACON_VIEW_PTR wk );
 static int seq_GPowerUse( BEACON_VIEW_PTR wk );
@@ -82,6 +83,7 @@ static void act_PanelObjDel( BEACON_VIEW_PTR wk, u8 idx );
 //==============================================================================
 //  データ
 //==============================================================================
+#ifdef PM_DEBUG
 ///タッチ範囲テーブル
 static const GFL_UI_TP_HITTBL TouchRect[] = {
   {//Gパワー
@@ -104,7 +106,7 @@ static const GFL_UI_TP_HITTBL TouchRect[] = {
   },
   { GFL_UI_TP_HIT_END, 0, 0, 0 },
 };
-
+#endif  //PM_DEBUG
 
 //==============================================================================
 //
@@ -164,11 +166,6 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
 //==================================================================
 void BEACON_VIEW_Exit(BEACON_VIEW_PTR wk)
 {
-  //ストリームが生きていたら削除
-  if( wk->printStream != NULL){
-    PRINTSYS_PrintStreamDelete( wk->printStream );
-    wk->printStream = NULL;
-  }
   //今生きている全てのタスクを削除
   GFL_TCBL_DeleteAll( wk->pTcbSys );
   
@@ -212,14 +209,6 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
       //リクエストを強制破棄
       event_RequestReset( wk );
     }
-#ifdef PM_DEBUG
-    {
-      OSTick tick = OS_GetTick()-s_tick;
-      if( tick > 100 ){
-//        IWASAWA_Printf("BeaconView Passive Tick = %d\n", OS_GetTick()-s_tick);
-      }
-    }
-#endif
     return; //イベントリクエスト中はメイン処理をスキップ
   }
   if(!bActive){
@@ -230,6 +219,9 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
   switch( wk->seq ){
   case SEQ_MAIN:
     wk->seq = seq_Main( wk );
+    break;
+  case SEQ_LOG_ENTRY:
+    wk->seq = seq_LogEntry( wk );
     break;
   case SEQ_VIEW_UPDATE:
     wk->seq = seq_ViewUpdate( wk );
@@ -259,12 +251,18 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
     break;
   }
 #ifdef PM_DEBUG
-  {
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
     OSTick tick = OS_GetTick()-s_tick;
-    if( tick > 100 ){
-//      IWASAWA_Printf("BeaconView seq = %d tick = %d\n", before_seq, tick );
-    }
+    IWASAWA_Printf("BeaconView seq = %d tick = %d\n", before_seq, tick );
   }
+#endif
+#ifdef PM_DEBUG
+  if(!wk->deb_stack_check_throw ){
+    GAMEBEACON_Stack_Update( wk->infoStack );
+  }
+#else
+  //スタックテーブル更新
+  GAMEBEACON_Stack_Update( wk->infoStack );
 #endif
 }
 
@@ -279,25 +277,16 @@ void BEACON_VIEW_Draw(BEACON_VIEW_PTR wk)
 {
 #ifdef PM_DEBUG
   OSTick s_tick,e_tick,t_tick;  // = OS_GetTick();
+  s_tick = OS_GetTick();
 #endif
 
   PRINTSYS_QUE_Main( wk->printQue );
 
 #ifdef PM_DEBUG
-  s_tick = OS_GetTick();
-  if(!wk->deb_stack_check_throw ){
-    GAMEBEACON_Stack_Update( wk->infoStack );
-  }
-#else
-  //スタックテーブル更新
-  GAMEBEACON_Stack_Update( wk->infoStack );
-#endif
-
-#ifdef PM_DEBUG
-  e_tick = OS_GetTick();
-  t_tick = e_tick-s_tick;
-  if( t_tick > 100 ){
-//    IWASAWA_Printf("BeaconView Draw tick %d\n",  t_tick );
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R){
+    e_tick = OS_GetTick();
+    t_tick = e_tick-s_tick;
+    IWASAWA_Printf("BeaconView Draw tick %d\n",  t_tick );
   }
   debug_InputCheck( wk );
 #endif
@@ -407,13 +396,27 @@ static int seq_Main( BEACON_VIEW_PTR wk )
   }
  
   //特殊Gパワー起動チェック
-  if( BeaconView_CheckSpecialGPower( wk ) == FALSE ){
-    //スタックチェック
-    if( BeaconView_CheckStack( wk ) == FALSE ){
-      return SEQ_MAIN;
-    }
+  if( BeaconView_CheckSpecialGPower( wk ) == TRUE ){
+    wk->io_interval = 30*3; //インターバルを設定
+    return SEQ_VIEW_UPDATE;
+  }
+  //スタックチェック
+  if( BeaconView_CheckStack( wk ) == FALSE ){
+    return SEQ_MAIN;
   }
   wk->io_interval = 30*3; //インターバルを設定
+  return SEQ_LOG_ENTRY;
+}
+
+/*
+ *  @brief  Newログのエントリー
+ */
+static int seq_LogEntry( BEACON_VIEW_PTR wk )
+{
+  if( !BeaconView_SubSeqLogEntry( wk )){
+    return SEQ_LOG_ENTRY;
+  }
+  wk->sub_seq = 0;
   return SEQ_VIEW_UPDATE;
 }
 
@@ -479,6 +482,7 @@ static int seq_GPowerUse( BEACON_VIEW_PTR wk )
   if( !BeaconView_SubSeqGPower( wk )){
     return SEQ_GPOWER_USE;
   }
+  wk->sub_seq = 0;
   if( wk->ctrl.g_power != GPOWER_ID_NULL){
     event_Request( wk, EV_GPOWER_USE );
   }else if( wk->gpower_check_req ){
@@ -573,22 +577,6 @@ static void debug_InputCheck(BEACON_VIEW_PTR wk)
     event_Request( wk, EV_DEBUG_MENU_CALL);
     return;
   }
-/*
-  if( ( cont & (PAD_BUTTON_R|PAD_BUTTON_START)) == (PAD_BUTTON_R|PAD_BUTTON_START)){
-    event_Request( wk, EV_DEBUG_MENU_CALL);
-    return;
-  }
-  if( trg & PAD_BUTTON_START ){
-    wk->deb_stack_check_throw = 1;
-    OS_Printf("StackCheckThrow = %d\n",wk->deb_stack_check_throw );
-    return;
-  }
-  if( trg & PAD_BUTTON_SELECT ){
-    wk->deb_stack_check_throw = 0;
-    OS_Printf("StackCheckThrow = %d\n",wk->deb_stack_check_throw );
-    return;
-  }
-*/
 #endif
 
 #ifdef DEBUG_ONLY_FOR_iwasawa
@@ -672,6 +660,7 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   wk->infoStack = GAMEBEACON_InfoTbl_Alloc( wk->heap_sID );
   wk->tmpInfo = GAMEBEACON_Alloc( wk->heap_sID );
   wk->tmpInfo2 = GAMEBEACON_Alloc( wk->heap_sID );
+  wk->newLogInfo = GAMEBEACON_Alloc( wk->heap_sID );
 
   //Gパワーデータ取得
   wk->gpower_data = GPOWER_PowerData_LoadAlloc( wk->heap_sID );
@@ -691,6 +680,7 @@ static void _sub_DataExit(BEACON_VIEW_PTR wk)
 
   GPOWER_PowerData_Unload( wk->gpower_data );
 
+  GFL_HEAP_FreeMemory( wk->newLogInfo );
   GFL_HEAP_FreeMemory( wk->tmpInfo2 );
   GFL_HEAP_FreeMemory( wk->tmpInfo );
   GFL_HEAP_FreeMemory( wk->infoStack );

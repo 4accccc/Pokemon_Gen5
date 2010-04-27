@@ -254,17 +254,34 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
     return FALSE;
   }
 #endif
-  if( !GAMEBEACON_Stack_GetInfo( wk->infoStack, wk->tmpInfo, &wk->tmpTime ) ){
+  if( !GAMEBEACON_Stack_GetInfo( wk->infoStack, wk->newLogInfo, &wk->newLogTime ) ){
     list_TimeOutCheck( wk );
     return FALSE;
   }
 
   //エラーチェック
-  if( GAMEBEACON_Check_Error( wk->tmpInfo)){
+  if( GAMEBEACON_Check_Error( wk->newLogInfo)){
     return FALSE;
   }
+
+  //新しいログを処理
+  wk->newLogOfs = GAMEBEACON_InfoTblRing_SetBeacon( wk->infoLog,
+                    wk->newLogInfo, wk->newLogTime, &wk->first_entry_f );
+  wk->newLogIdx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, wk->newLogOfs );
+
+  //登録数更新
+  wk->old_list_max = wk->ctrl.max;
+  if( wk->ctrl.max < BS_LOG_MAX ){
+    wk->ctrl.max += wk->first_entry_f;
+  
+    if( wk->ctrl.max <= PANEL_VIEW_MAX){
+      wk->ctrl.view_max = wk->ctrl.max;
+    }
+  }
+
+#if 0
   ofs = GAMEBEACON_InfoTblRing_SetBeacon( wk->infoLog,
-          wk->tmpInfo, wk->tmpTime, &new_f );
+          wk->newLogInfo, wk->newLogTime, &new_f );
   idx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, ofs );
 
   //登録数更新
@@ -277,7 +294,7 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
     }
   }
   //ポップアップリクエスト
-  popup_f = effReq_PopupMsg( wk, wk->tmpInfo, new_f );
+  popup_f = effReq_PopupMsg( wk, wk->newLogInfo, new_f );
 
   //新規でない時はスクロール無し
   if( !new_f ){
@@ -287,7 +304,7 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
       return TRUE;  //パネルが見えていない時はポップアップのみ
     }
     //ターゲットパネル書換え
-    panel_Draw( wk, pp, wk->tmpInfo, PANEL_DRAW_UPDATE, NULL );
+    panel_Draw( wk, pp, wk->newLogInfo, PANEL_DRAW_UPDATE, NULL );
     panel_VisibleSet( pp, TRUE );
     if(popup_f){
       sub_PlaySE( BVIEW_SE_ICON );
@@ -302,19 +319,20 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
   obj_ThanksViewSet( wk );
   
   //特殊Gパワーチェック
-  sp_gpower_ConditionCheck( wk, wk->tmpInfo, old_max );
+  sp_gpower_ConditionCheck( wk, wk->newLogInfo, old_max );
 
   if( wk->ctrl.view_top > 0){ //描画リストがトップでない時はスクロールのみ
     ofs = wk->ctrl.view_top;
-    GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, ofs );
+    GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->newLogInfo, &wk->newLogTime, ofs );
     idx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, ofs );
   }
   //スクロールリクエスト
-  list_ScrollReq( wk, wk->tmpInfo, idx, SCROLL_DOWN, PANEL_DRAW_NEW+(wk->ctrl.view_top > 0));
+  list_ScrollReq( wk, wk->newLogInfo, idx, SCROLL_DOWN, PANEL_DRAW_NEW+(wk->ctrl.view_top > 0));
   wk->ctrl.view_top = ofs;
   
   BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
   sub_PlaySE( BVIEW_SE_NEW_PLAYER );
+#endif
   return TRUE;
 }
 
@@ -331,17 +349,11 @@ void BeaconView_SetViewPassive( BEACON_VIEW_PTR wk, BOOL passive_f )
     SoftFadePfd( wk->pfd, FADE_SUB_OBJ, 0, 16*ACT_PAL_WMI, 6, 0x0000);
     G2S_SetBlendAlpha( ALPHA_1ST_PASSIVE, ALPHA_2ND, ALPHA_EV1_PASSIVE, ALPHA_EV2_PASSIVE);
 
-    if( wk->printStream != NULL ){
-      PRINTSYS_PrintStreamStop( wk->printStream );
-    }
     GFL_FONTSYS_SetDefaultColor();
   }else{
     SoftFadePfd( wk->pfd, FADE_SUB_BG, 0, 16*BG_PALANM_AREA, 0, 0x0000);
     SoftFadePfd( wk->pfd, FADE_SUB_OBJ, 0, 16*ACT_PAL_WMI, 0, 0x0000);
     G2S_SetBlendAlpha( ALPHA_1ST_NORMAL, ALPHA_2ND, ALPHA_EV1_NORMAL, ALPHA_EV2_NORMAL);
-    if( wk->printStream != NULL ){
-      PRINTSYS_PrintStreamRun( wk->printStream );
-    }
   }
 }
 
@@ -373,7 +385,78 @@ void BeaconView_PrintQueLimmitUpSet( BEACON_VIEW_PTR wk, BOOL flag )
 }
 
 ////////////////////////////////////////////////////////////////////////////
+//==========================================================================
 //サブシーケンス
+//==========================================================================
+////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////
+/*
+ *  @brief  サブシーケンス　ログエントリー　
+ */
+///////////////////////////////////////////////////////////////////
+
+/*
+ *  @brief  サブシーケンス　Newログエントリーメイン
+ */
+BOOL BeaconView_SubSeqLogEntry( BEACON_VIEW_PTR wk )
+{
+  switch( wk->sub_seq ){
+  case 0:
+    {
+      BOOL popup_f;
+      PANEL_WORK* pp;
+
+      //ポップアップリクエスト
+      popup_f = effReq_PopupMsg( wk, wk->newLogInfo, wk->first_entry_f );
+
+      //新規でない時はスクロール無し
+      if( !wk->first_entry_f ){
+        //ビーコンのトレーナーパネルが表示中かチェック
+        pp = panel_GetPanelFromDataIndex( wk, wk->newLogIdx );
+        if(pp == NULL){
+          return TRUE;  //パネルが見えていない時はポップアップのみ
+        }
+        //ターゲットパネル書換え
+        panel_Draw( wk, pp, wk->newLogInfo, PANEL_DRAW_UPDATE, NULL );
+        panel_VisibleSet( pp, TRUE );
+        if(popup_f){
+          sub_PlaySE( BVIEW_SE_ICON );
+        }
+        return TRUE;
+      }
+    }
+    wk->sub_seq++;
+    break;
+  case 1:
+    //新規
+    wk->log_count = MISC_CrossComm_IncSuretigaiCount( wk->misc_sv );    
+
+    draw_LogNumWindow( wk );
+    draw_MenuWindow( wk, msg_sys_now_record );
+    obj_ThanksViewSet( wk );
+  
+    //特殊Gパワーチェック
+    sp_gpower_ConditionCheck( wk, wk->newLogInfo, wk->old_list_max );
+    wk->sub_seq++;
+    break;
+  case 2:
+    if( wk->ctrl.view_top > 0){ //描画リストがトップでない時はスクロールのみ
+      wk->newLogOfs = wk->ctrl.view_top;
+      GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->newLogInfo, &wk->newLogTime, wk->newLogOfs );
+      wk->newLogIdx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, wk->newLogOfs );
+    }
+    //スクロールリクエスト
+    list_ScrollReq( wk, wk->newLogInfo, wk->newLogIdx, SCROLL_DOWN, PANEL_DRAW_NEW+(wk->ctrl.view_top > 0));
+    wk->ctrl.view_top = wk->newLogOfs;
+  
+    BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
+    sub_PlaySE( BVIEW_SE_NEW_PLAYER );
+    wk->sub_seq = 0;
+    return TRUE;
+  }
+  return FALSE;
+}
 
 ///////////////////////////////////////////////////////////////////
 /*
@@ -579,23 +662,6 @@ static void sp_gpower_ConditionCheck( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info,
   int i;
   u8 version_ct = 0, sex_ct = 0;
   u16 time;
-
-#ifdef PM_DEBUG
-#if 0
-  {
-    int key = GFL_UI_KEY_GetCont();
-    if( key & PAD_BUTTON_L) {
-      sp_gpower_RequestSet( wk, SP_GPOWER_REQ_HATCH_UP ); 
-    }
-    if( key & PAD_BUTTON_R ){
-      sp_gpower_RequestSet( wk, SP_GPOWER_REQ_CAPTURE_UP ); 
-    }
-    if( key & PAD_BUTTON_A ){
-      sp_gpower_RequestSet( wk, SP_GPOWER_REQ_SALE ); 
-    }
-  }
-#endif
-#endif
 
   //海外版ロムとすれ違ったか？
   if( GAMEBEACON_Get_PmLanguage( info ) != PM_LANG ){
@@ -909,20 +975,9 @@ static void draw_ClearMenuWindow( BEACON_VIEW_PTR wk )
 /*
  *  @brief  ポップアップウィンドウ文字列描画
  */
-static void print_PopupWindow( BEACON_VIEW_PTR wk, STRBUF* str, u8 wait, int* task_ct )
+static void print_PopupWindow( BEACON_VIEW_PTR wk, STRBUF* str, int* task_ct )
 {
-  GF_ASSERT(wk->printStream == NULL);
-  wk->printStream = NULL;
-
-  if( wait == 0 ){
-    printReq_BmpwinPrint( wk, &wk->win[WIN_POPUP], str, 0, 0, FCOL_POPUP_BASE, FCOL_POPUP, task_ct );
-  }else{
-    GFL_BMP_Clear( wk->win[WIN_POPUP].bmp, FCOL_POPUP_BASE );
-
-    //ストリーム開始
-    wk->printStream = PRINTSYS_PrintStream( wk->win[WIN_POPUP].win, 0, 0,
-        str, wk->fontHandle, wait, wk->pTcbSys, 0, wk->heap_sID, FCOL_POPUP_BASE );
-  }
+  printReq_BmpwinPrint( wk, &wk->win[WIN_POPUP], str, 0, 0, FCOL_POPUP_BASE, FCOL_POPUP, task_ct );
 }
 
 //------------------------------------------------------------
@@ -937,43 +992,6 @@ static BOOL print_PopupWindowTimeWaitCheck( u8* p_wait )
   }
   *p_wait = 0;
   return TRUE;
-}
-
-//------------------------------------------------------------
-/*
- *  @brief  ポップアップ　ストリーム終了チェック
- *
- *  @retval TRUE  描画終了
- */
-//------------------------------------------------------------
-static BOOL print_PopupWindowStreamCheck( BEACON_VIEW_PTR wk )
-{
-  PRINTSTREAM_STATE state;
-  
-  if( wk->printStream == NULL){
-    return TRUE;
-  }
-  state = PRINTSYS_PrintStreamGetState( wk->printStream );
-  APP_KEYCURSOR_Main( wk->key_cursor, wk->printStream, wk->win[WIN_POPUP].win );
-
-  switch( state ){
-  case PRINTSTREAM_STATE_DONE:  //全文描画終了
-    PRINTSYS_PrintStreamDelete( wk->printStream );
-    wk->printStream = NULL;
-    return TRUE;
-  case PRINTSTREAM_STATE_PAUSE: //一時停止中
-    if( GFL_UI_TP_GetTrg() ){
-      PRINTSYS_PrintStreamReleasePause( wk->printStream );
-    }
-    break;
-  case PRINTSTREAM_STATE_RUNNING :  // 実行中
-    // メッセージスキップ
-    if( GFL_UI_TP_GetCont() ){
-      PRINTSYS_PrintStreamShortWait( wk->printStream, 0 );
-    }
-    break;
-  }
-  return FALSE;
 }
 
 /*
@@ -1863,7 +1881,7 @@ static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
 
   switch( twk->seq ){
   case 0:
-    print_PopupWindow( twk->bvp, twk->bvp->str_popup, 0, &twk->child_task );
+    print_PopupWindow( twk->bvp, twk->bvp->str_popup, &twk->child_task );
     twk->seq++;
     return;
   case 1:
@@ -1975,12 +1993,14 @@ static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u8 type, i
     WORDSET_RegisterNumber( wk->wordset, 2, twk->item_use, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     WORDSET_RegisterNumber( wk->wordset, 3, twk->item_num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   
-    twk->mypower_use = GPOWER_Check_MyPower();
-    if( twk->mypower_use > 0 ){
-      twk->mypower_min = twk->mypower_use/60;
-      twk->mypower_sec = twk->mypower_use%60;
-      WORDSET_RegisterNumber( wk->wordset, 4, twk->mypower_min, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-      WORDSET_RegisterNumber( wk->wordset, 5, twk->mypower_sec, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    if( GPOWER_Check_OccurID( g_power, wk->gpower_data) == g_power ){
+      twk->mypower_use = GPOWER_Check_MyPower();
+      if( twk->mypower_use > 0 ){
+        twk->mypower_min = twk->mypower_use/60;
+        twk->mypower_sec = twk->mypower_use%60;
+        WORDSET_RegisterNumber( wk->wordset, 4, twk->mypower_min, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+        WORDSET_RegisterNumber( wk->wordset, 5, twk->mypower_sec, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      }
     }
   }
   if( twk->type != GPOWER_USE_MINE ){
@@ -2011,9 +2031,8 @@ static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
 
   switch( twk->seq ){
   case 0:
-//    GFL_BMP_Clear( bvp->win[WIN_POPUP].bmp, FCOL_POPUP_BASE );
     print_GetMsgToBuf( bvp, DATA_GPowerUseMsg[twk->type] );
-    print_PopupWindow( bvp, bvp->str_expand, 0, &twk->child_task );
+    print_PopupWindow( bvp, bvp->str_expand, &twk->child_task );
     twk->seq++;
     return;
   case 1:
@@ -2052,7 +2071,7 @@ static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
       break;
     case TMENU_YN_YES:
       print_GetMsgToBuf( bvp, msg_sys_gpower_use_end );
-      print_PopupWindow( bvp, bvp->str_expand, 0, &twk->child_task );
+      print_PopupWindow( bvp, bvp->str_expand, &twk->child_task );
 
       //使うGパワーを覚えておく
       bvp->ctrl.g_power = twk->g_power;
@@ -2095,14 +2114,12 @@ static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* tcb_wk)
 
   switch( twk->seq ){
   case 0:
-//    GFL_BMP_Clear( bvp->win[WIN_POPUP].bmp, FCOL_POPUP_BASE );
-    
     if( twk->mypower_use ){ //既に使用中
       print_GetMsgToBuf( bvp, msg_sys_gpower_use_err02+(twk->mypower_min != 0) );
     }else if( twk->item_num < twk->item_use ){  //アイテムが足りない
       print_GetMsgToBuf( bvp, msg_sys_gpower_use_err01);
     }
-    print_PopupWindow( bvp, bvp->str_expand, 0, &twk->child_task );
+    print_PopupWindow( bvp, bvp->str_expand, &twk->child_task );
     twk->seq++;
     return;
   case 1:

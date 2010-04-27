@@ -65,6 +65,11 @@ extern void BeaconView_ListScrollRepeatReq( BEACON_VIEW_PTR wk );
 extern void BeaconView_PrintQueLimmitUpSet( BEACON_VIEW_PTR wk, BOOL flag );
 
 /*
+ *  @brief  サブシーケンス　Newログエントリーメイン
+ */
+extern BOOL BeaconView_SubSeqLogEntry( BEACON_VIEW_PTR wk );
+
+/*
  *  @brief  サブシーケンス　GPower使用メイン
  */
 extern BOOL BeaconView_SubSeqGPower( BEACON_VIEW_PTR wk );

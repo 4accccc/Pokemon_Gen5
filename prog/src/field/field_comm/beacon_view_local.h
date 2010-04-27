@@ -139,13 +139,21 @@ typedef struct _BEACON_VIEW{
   POWER_CONV_DATA* gpower_data;
 
   ////////////////////////////////////////
+  MY_DATA               my_data;
+  
   BEACON_STATUS* b_status;
   GAMEBEACON_INFO_TBL*  infoStack;  //スタックワーク
   GAMEBEACON_INFO_TBL*  infoLog;    //ログテーブル
   GAMEBEACON_INFO*      tmpInfo;
   GAMEBEACON_INFO*      tmpInfo2;
   u16                   tmpTime;
-  MY_DATA               my_data;
+  u16                   newLogTime;
+  GAMEBEACON_INFO*      newLogInfo;
+  
+  u8                    newLogOfs;
+  u8                    newLogIdx;
+  u8                    old_list_max;
+  BOOL                  first_entry_f;
 
   int       active;
   BOOL      my_power_f;
@@ -185,7 +193,6 @@ typedef struct _BEACON_VIEW{
 
   GFL_FONT *fontHandle;
   PRINT_QUE *printQue;
-  PRINT_STREAM* printStream;
   APP_TASKMENU_RES* menuRes;
   APP_KEYCURSOR_WORK* key_cursor;
   TMENU_ITEM tmenu[TMENU_YN_MAX];
