@@ -28,10 +28,11 @@ typedef enum{
 } DREAM_WORLD_SERVER_ERROR_TYPE;   /// サーバから返ってくるサーバの状態
 
 typedef enum{
-  DREAM_WORLD_SERVER_PLAY_EMPTY, //ポケモンを預けていない
-  DREAM_WORLD_SERVER_PLAY_NONE,        // まだ遊んでいません
-  DREAM_WORLD_SERVER_PLAY_ACTIVE,     //遊んでいる最中です
-  DREAM_WORLD_SERVER_PLAY_END,	         // ドリームワールドで遊びました
+  DREAM_WORLD_SERVER_PLAY_EMPTY,   ///< ポケモンを預けていない  == 大好きクラブ未登録
+  DREAM_WORLD_SERVER_PLAY_NONE,    ///< まだ遊んでいません  == 大好きクラブ登録完了+セーブデータアップロード
+  DREAM_WORLD_SERVER_PLAY_ACTIVE,  ///< 遊んでいる最中です  == PDWで夢みる遊びを開始
+  DREAM_WORLD_SERVER_PLAY_END,     ///< ドリームワールドで遊びました == 夢を見終わった
+  DREAM_WORLD_SERVER_PLAY_FINISH,  ///< サービスが終了しています == PDW終了時 サーバは稼動
   DREAM_WORLD_SERVER_PLAY_MAX
 } DREAM_WORLD_SERVER_PLAY_TYPE;   /// サーバから返ってくる遊びに関しての情報
 

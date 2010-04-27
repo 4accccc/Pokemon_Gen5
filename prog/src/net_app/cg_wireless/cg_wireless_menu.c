@@ -817,8 +817,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
 
   switch( bttnid ){
   case _SELECTMODE_PALACE:
-    { ///@todo  パレスの演出がはいってからでないと今は外さずに置きます
- //     GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
+    {
       if(pWork->dbw->bPalaceJump){
         pWork->selectType = CG_WIRELESS_RETURNMODE_PALACE;
         PMSND_PlaySystemSE(_SE_DESIDE);
@@ -850,7 +849,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
           {
             pWork->dbw->aTVT.macAddress[ii] = macAddress[ii];
           }
-          OS_TPrintf("子機になった\n");
+//          OS_TPrintf("子機になった\n");
         }
       }
     }

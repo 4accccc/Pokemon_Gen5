@@ -1685,7 +1685,7 @@ static void WH_StateOutStartScan(void *arg)
       MI_CpuCopy8(bddmy, bd, sizeof(WMBssDesc)); // キャッシュセーフなバッファへコピー
 
       if(_pWmInfo->SetBeaconData){
-        _pWmInfo->SetBeaconData(bd, GFL_NET_GetWork());
+        _pWmInfo->SetBeaconData(bd, GFL_NET_GetWork(), cb->linkLevel[i]);
       }
       
       if(WH_BeaconFirstCheck(bd) == FALSE){

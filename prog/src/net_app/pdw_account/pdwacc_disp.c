@@ -41,8 +41,6 @@
 
 #include "pdwacc_local.h"
 #include "msg/msg_gtsnego.h"
-//#include "pdwacc.naix"
-//#include "gsync.naix"  //@todo 素材を借用
 #include "wifi_login.naix"
 #include "net_app/connect_anm.h"
 
@@ -50,7 +48,6 @@
 #include "box_gra.naix"
 
 #include "pdwacc_poke.cdat"
-//#include "pdwacc_obj_NANR_LBLDEFS.h"
 
 
 #define _OBJPLT_POKEICON_OFFSET (0)  //ポケモンパレット

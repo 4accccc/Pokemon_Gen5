@@ -23,7 +23,8 @@
 
 typedef struct{
 	WMBssDesc sBssDesc;
-  int timer;
+  u16 timer;
+  u16 level;
 } _BEACONCATCH_STR;
 
 struct _WIH_DWC_WORK {
@@ -34,12 +35,12 @@ struct _WIH_DWC_WORK {
   int timer;
   BOOL bStop;
 	u16 AllBeaconNum;
-  u16 rssiMax;
+  u16 level;
 //  u8 buff[200];  //赤外線受信を行う仮バッファ
 };
 
 
-static void _SetScanBeaconData(WMBssDesc* pBss,void* pWork);
+static void _SetScanBeaconData(WMBssDesc* pBss,void* pWork,u16 level);
 //通信の基底にかかわる部分なのでローカルにおき何処からでも参照できる形にしてある
 static WIH_DWC_WORK* _localWork=NULL;  
 static NCFGConfigEx* _localcfg=NULL;
@@ -72,11 +73,6 @@ WIH_DWC_WORK* WIH_DWC_AllBeaconStart(int num, HEAPID id)
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID( dev_irc ) );
 
-  
-#if 0 //赤外線は常に点滅に仕様変更 2010.01.08
-  IRC_Init(12);  //@todo 12
-#endif
-  
   return(pWork);
 }
 
@@ -93,9 +89,6 @@ void WIH_DWC_AllBeaconEnd(WIH_DWC_WORK* pWork)
 
   WHSetWIHDWCBeaconGetFunc(NULL);
 
-#if 0 //赤外線は常に点滅に仕様変更 2010.01.08
-  IRC_Shutdown();
-#endif
   GFL_NET_Align32Free(pWork->ScanMemory);
   GFL_NET_Align32Free(pWork);
   _localWork=NULL;
@@ -112,9 +105,6 @@ void WIH_DWC_Stop(void)
 {
   if(_localWork){
     _localWork->bStop=TRUE;
-#if 0 //赤外線は常に点滅に仕様変更 2010.01.08
-    IRC_Init(12);  //@todo 12
-#endif
   }
 }
 
@@ -128,9 +118,6 @@ void WIH_DWC_Restart(void)
 {
   if(_localWork){
     _localWork->bStop=FALSE;
-#if 0 //赤外線は常に点滅に仕様変更 2010.01.08
-    IRC_Shutdown();
-#endif
   }
 }
 
@@ -141,7 +128,7 @@ void WIH_DWC_Restart(void)
   Arguments:    bFlg  ONなら収集
  *---------------------------------------------------------------------------*/
 
-static void _SetScanBeaconData(WMBssDesc* pBss,void* pWork)
+static void _SetScanBeaconData(WMBssDesc* pBss,void* pWork,u16 level)
 {
   int i;
 
@@ -153,6 +140,7 @@ static void _SetScanBeaconData(WMBssDesc* pBss,void* pWork)
     _BEACONCATCH_STR* pS = &_localWork->aBeaconCatch[i];
       if(GFL_STD_MemComp(&pS->sBssDesc, pBss, sizeof(WMBssDesc))==0){ //一致
         pS->timer = DEFAULT_TIMEOUT_FRAME;
+        pS->level = level;
         return;
       }
   }
@@ -161,6 +149,7 @@ static void _SetScanBeaconData(WMBssDesc* pBss,void* pWork)
     if(pS->timer==0){
       GFL_STD_MemCopy(pBss, &pS->sBssDesc, sizeof(WMBssDesc));
       pS->timer = DEFAULT_TIMEOUT_FRAME;
+      pS->level = level;
       return;
     }
   }
@@ -187,17 +176,6 @@ void WIH_DWC_MainLoopScanBeaconData(void)
       }
     }
   }
-#if 0 //赤外線は常に点滅に仕様変更 2010.01.08
-
-  {
-    int size = IRCi_Read(_localWork->buff);
-    if(size>0){
-      _localWork->bIrc = TRUE;
-      _localWork->timer = _IRC_CATCH_LOOP;
-    }
-  }
-  IRC_Move();
-#endif
 }
 
 //------------------------------------------------------------------------------
@@ -254,7 +232,7 @@ static BOOL _scanFreeSpot( WMBssDesc* pChk )
 
 }
 
-
+#if 0
 /*---------------------------------------------------------------------*
   Name:         WMSP_GetRssi8
 
@@ -272,17 +250,16 @@ static u8 WMSP_GetRssi8(u8 rssi)
 	}
 	return (u8)((rssi >> 2) + 25);
 }
+#endif
 
-
-static void _rssiMax(WMBssDesc* bss)
+static void _levelMax(_BEACONCATCH_STR* pBS)
 {
-  if(bss==NULL){
+  if(pBS==NULL){
     return;
   }
   {
-    u8 a = WMSP_GetRssi8(bss->rssi);
-    if(_localWork->rssiMax < a){
-      _localWork->rssiMax = a;
+    if(_localWork->level < pBS->level){
+      _localWork->level = pBS->level;
     }
   }
 }
@@ -347,21 +324,9 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list)
   if(_localWork==NULL){
     return retcode;
   }
-  _localWork->rssiMax = 0;
+  _localWork->level = 0;
 
-#if 0 //赤外線は常に点滅に仕様変更 2010.01.08
-  if( _localWork->bIrc == TRUE){
-    if(_localWork->timer>0){
-      _localWork->timer--;
-    }
-    else{
-      _localWork->bIrc = FALSE;
-    }
-    retcode |= GAME_COMM_STATUS_BIT_IRC;
-  }
-#else
   retcode |= GAME_COMM_STATUS_BIT_IRC;
-#endif
   
   if(-1 != WIH_DWC_TVTCallCheck(list)){  //TVTは最優先
     retcode |= GAME_COMM_STATUS_BIT_WIRELESS_TR;
@@ -398,7 +363,7 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list)
       WMBssDesc* bss = &pS->sBssDesc;
       DWCApInfo ap;
 
-      _rssiMax(bss);
+      _levelMax(pS);
       if(_scanAPReserveed(bss)){
         retcode |= GAME_COMM_STATUS_BIT_WIFI;
       }
@@ -537,23 +502,10 @@ int WIH_DWC_TVTCallCheck(WIFI_LIST * list)
  */
 //------------------------------------------------------------------------------
 
-#define _LINK_LEVEL_1  (12)
-#define _LINK_LEVEL_2  (17)
-#define _LINK_LEVEL_3  (22)
-
 int WIH_DWC_GetBeaconRssiMax(void)
 {
   if(_localWork){
-    if(_localWork->rssiMax < _LINK_LEVEL_1){
-      return 0;
-    }
-    if(_localWork->rssiMax < _LINK_LEVEL_2){
-      return 1;
-    }
-    if(_localWork->rssiMax < _LINK_LEVEL_3){
-      return 2;
-    }
-    return 3;
+    return _localWork->level;
   }
   return 0;
 }

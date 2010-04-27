@@ -854,7 +854,7 @@ static GFL_PROC_RESULT NetDeliveryTriSendProc_Init(GFL_PROC * proc, int * seq, v
   GFL_STD_MemClear(pDOC, sizeof(DEBUG_OHNO_CONTROL));
 
   {
-    //@todo ここにトライアルハウステストデータを入れる
+    //トライアルハウステストデータ
     _debug_bsubDataMain(pDOC,pTri->trialType,pTri->trialNo);
 
     

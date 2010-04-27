@@ -66,6 +66,7 @@ SEQ_SE_SYS_26			ポケモン眠る
 #define _UPLOAD_PROCESS_PERCENT  (50)
 #define _UPSAVE_PROCESS_PERCENT  (100)
 
+#define _MOVETYPE_MAX (8)  //移動タイプの定義
 
 #define _DOWNLOAD_PROCESS_PERCENT (30)
 #define _DOWNLOAD_EXSAVE_PERCENT (60)
@@ -938,6 +939,9 @@ static void _symbolPokemonSave(G_SYNC_WORK* pWork,DREAMWORLD_SAVEDATA* pDreamSav
       size = SYMBOL_ZONE_TYPE_FREE_LARGE;
     }
     //ポケモンシンボルエンカウント格納
+    if(move_type > _MOVETYPE_MAX){
+      move_type = 0;
+    }
     SymbolSave_SetFreeZone(
         SymbolSave_GetSymbolData(pWork->pSaveData), monsno, tec, sex, form, move_type, size);
     TPOKE_DATA_Delete( pTP );
@@ -1031,7 +1035,7 @@ static void _lv1check(G_SYNC_WORK* pWork)
   _symbolPokemonSave(pWork, pDreamSave, pWork->aDreamStatus.findPokemon,
                      pWork->aDreamStatus.findPokemonSex,
                      pWork->aDreamStatus.findPokemonForm,
-                     pWork->aDreamStatus.findPokemonTecnique, 0);  //@todo現時点では０でよい事になった
+                     pWork->aDreamStatus.findPokemonTecnique, GFUser_GetPublicRand( _MOVETYPE_MAX ));
 
   for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
     DREAMWORLD_SV_SetItem(pDreamSave, i, pWork->aDreamStatus.itemID[i], pWork->aDreamStatus.itemNum[i]);

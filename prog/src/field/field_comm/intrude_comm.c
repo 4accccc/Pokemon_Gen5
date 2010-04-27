@@ -50,7 +50,7 @@ static BOOL  IntrudeComm_CheckConnectService(GameServiceID GameServiceID1 , Game
 static void  IntrudeComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 static void  IntrudeComm_DisconnectCallBack(void* pWork);
 static void IntrudeComm_HardConnect(void* pWork,int hardID);
-static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork);
+static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork, u16 level);
 
 
 //==============================================================================
@@ -483,7 +483,7 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
  * @param   pBss		
  */
 //--------------------------------------------------------------
-static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork)
+static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork, u16 level)
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   GBS_BEACON *bcon_buff;

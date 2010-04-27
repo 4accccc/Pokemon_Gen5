@@ -802,7 +802,7 @@ extern void WHSetConnectCallBack(WHDisconnectCallBack callBack);
 
 
 // ビーコンを収集する為に必要な関数の型  マルチブートには必要ない
-typedef void (*WIHDWCBeaconGetFunc) (WMBssDesc* pBss,void* pWork);
+typedef void (*WIHDWCBeaconGetFunc) (WMBssDesc* pBss,void* pWork, u16 level);
 
 /*---------------------------------------------------------------------------*
   Name:         WHSetWIHDWCBeaconGetFunc

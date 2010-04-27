@@ -159,7 +159,6 @@ static void _DevBootFunc(HEAPID heapID, NetErrorFunc errorFunc)
 //  DWC_SetAuthServer(GF_DWC_CONNECTINET_AUTH_TYPE);
   GFL_NET_WifiStart( heapID, errorFunc );
 
-  //@todo ’u‚«Š·‚¦‚ª•K—v
   GF_ASSERT(DWC_ERROR_FRIENDS_SHORTAGE == __ERROR_FRIENDS_SHORTAGE_DWC);
 
 }
