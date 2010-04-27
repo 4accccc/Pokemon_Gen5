@@ -11,6 +11,7 @@
 #ifndef ZONE_D09R1401_EVC_H
 #define ZONE_D09R1401_EVC_H
 
+#define D09R1401_RIVAL_01                  0
 
 #endif //ZONE_D09R1401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d09r1401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -109,6 +109,8 @@ init_flags:
 	//５番道路のジムリーダーとライバル
 	_FLAG_SET( FV_R05_RIVAL )
 	_FLAG_SET( FV_R05_LEADER4 )
+	//５番道路のライバル（クリア後表示）
+	_FLAG_SET( FV_R05_RIVAL_AFTER )
 	
 	//D06のヤーコンをイベントまで非表示
 	_FLAG_SET( FV_D06_LEADER5_01)
@@ -301,6 +303,9 @@ init_flags:
 	_FLAG_SET(FV_R06R0103_POKE_AUTUMN)
 	_FLAG_SET(FV_R06R0104_POKE_WINTER)
 	
+	//D09R1401チャンピオンロード：ライバル（クリア後に表示）
+	_FLAG_SET(FV_D09R1401_RIVAL)
+	
 }
 _RET
 
@@ -419,6 +424,9 @@ ev_first_gameclear:
 
   //ボックス壁紙追加
   _GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER1 )
+  
+	//５番道路のライバル
+	_FLAG_RESET( FV_R05_RIVAL_AFTER )
 
   //R07R0105タワーオブヘブン5F：クリア後チャンピオン
   _FLAG_RESET( FV_R07R0105_CHAMPION_01 )

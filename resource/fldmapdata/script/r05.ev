@@ -32,6 +32,7 @@ _EVENT_DATA    ev_bg_r05_board_02
 _EVENT_DATA    ev_bg_r05_board_03
 _EVENT_DATA    ev_init_r05
 _EVENT_DATA    ev_r05_musician_01
+_EVENT_DATA    ev_r05_rival_02
 _EVENT_DATA_END
 
 
@@ -1037,3 +1038,147 @@ EVENT_START	ev_bg_r05_board_03
 EVENT_END
 
 
+/************************************************************/
+/*					クリア後ライバル					*/
+/************************************************************/
+EVENT_START	ev_r05_rival_02
+{
+	_TALK_START_SE_PLAY()
+	_PLAYER_NAME( 0 )
+	
+	//主人公の話しかけ方向を取得
+	DEFINE_LOCAL	LWK_DIR
+	_PLAYER_DIR_GET( LWK_DIR )
+	
+	//イベント曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_EMOTION )
+	
+	//ライバル芝居
+	_OBJ_ANIME( R05_RIVAL_02, anm_r04_after_rival_act_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル…つよいだけが
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_end_01, R05_RIVAL_02, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ライバル主人公と向き合う
+	IF $LWK_DIR == DIR_DOWN THEN
+		_OBJ_ANIME( R05_RIVAL_02, anm_r04_after_rival_look_up )
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_DIR == DIR_RIGHT THEN
+		_OBJ_ANIME( R05_RIVAL_02, anm_r04_after_rival_look_left )
+		_OBJ_ANIME_WAIT()
+	ELSE
+		_OBJ_ANIME( R05_RIVAL_02, anm_r04_after_rival_look_right )
+		_OBJ_ANIME_WAIT()
+	ENDIF
+	
+	//ライバル：…ポケモン勝負に
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_end_02, R05_RIVAL_02, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ライバル下を見る
+	_OBJ_ANIME( R05_RIVAL_02, anm_r04_after_rival_look_down )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：みんな つよいよね
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_end_03, R05_RIVAL_02, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ライバル主人公と向き合う
+	IF $LWK_DIR == DIR_DOWN THEN
+		_OBJ_ANIME( R05_RIVAL_02, anm_r04_after_rival_look_up )
+		_OBJ_ANIME_WAIT()
+	ELSIF $LWK_DIR == DIR_RIGHT THEN
+		_OBJ_ANIME( R05_RIVAL_02, anm_r04_after_rival_look_left )
+		_OBJ_ANIME_WAIT()
+	ELSE
+		_OBJ_ANIME( R05_RIVAL_02, anm_r04_after_rival_look_right )
+		_OBJ_ANIME_WAIT()
+	ENDIF
+		
+	//ライバル：こう思えるようになったのは
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_end_04, R05_RIVAL_02, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//若干間をおいて
+	_TIME_WAIT( 16 )
+	
+	//ライバル：ぼくは チャンピロンロードで
+	_BALLOONWIN_OBJMSG_POS( msg_r05_black_end_05, R05_RIVAL_02, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	IF $LWK_DIR == DIR_RIGHT THEN
+		_OBJ_ANIME( R05_RIVAL_02, anm_r04_after_rival_bye_left )
+		_OBJ_ANIME_WAIT()
+	ELSE
+		_OBJ_ANIME( R05_RIVAL_02, anm_r04_after_rival_bye_default )
+		_OBJ_ANIME_WAIT()
+	ENDIF
+	
+	//イベント曲停止
+	_END_EVENT_BGM()
+	
+	//ライバルを消す
+	_OBJ_DEL( R05_RIVAL_02 )
+	
+	//========================================//
+	//R05のライバルを非表示に
+	_FLAG_SET( FV_R05_RIVAL_AFTER )
+	
+	//D09R1401のライバルを表示に
+	_FLAG_RESET( FV_D09R1401_RIVAL )
+	//========================================//
+}
+EVENT_END
+
+//--------------------------------------------------------------------
+//クリア後ライバル：芝居
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_r04_after_rival_act_01
+	_ANIME_DATA	AC_RIVEL_ACT0,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//クリア後ライバル：左を見る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_r04_after_rival_look_left
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//クリア後ライバル：右を見る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_r04_after_rival_look_right
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//クリア後ライバル：上を見る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_r04_after_rival_look_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//クリア後ライバル：下を見る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_r04_after_rival_look_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//クリア後ライバル：ホドモエ方面へ去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_r04_after_rival_bye_default
+	_ANIME_DATA	AC_WALK_L_8F,9
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//クリア後ライバル：ホドモエ方面へ去る（左から話しかけ時）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_r04_after_rival_bye_left
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,9
+	_ANIME_DATA	ACMD_END,0
