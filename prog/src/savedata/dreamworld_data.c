@@ -88,6 +88,25 @@ void DREAMWORLD_SV_SetSleepPokemon(DREAMWORLD_SAVEDATA* pSV,POKEMON_PARAM* pp)
   GFL_STD_MemCopy(pp,&pSV->pp,POKETOOL_GetWorkSize());
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   眠る事ができるポケモンかどうか
+ * @param	  u16 pData   眠るリスト
+ * @param	  u16 monsno  モンスター番号
+ * @return  ねむれればTRUE
+ */
+//--------------------------------------------------------------------------------------------
+BOOL DREAMWORLD_SV_GetSleepEnable(u16* pData,u16 monsno)
+{
+  u8* pArray = (u8*)pData;
+  int no = monsno/8;
+  int bitno = monsno%8;
+
+  if(pArray[no] & (0x01 << bitno)){
+    return TRUE;
+  }
+  return FALSE;
+}
 
 //--------------------------------------------------------------------------------------------
 /**

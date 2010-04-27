@@ -101,6 +101,15 @@ extern void DREAMWORLD_SV_SetSelectFurnitureNo(DREAMWORLD_SAVEDATA* pSV,int no);
 extern BOOL DREAMWORLD_SV_GetIsSyncFurniture(DREAMWORLD_SAVEDATA* pSV);
 extern void DREAMWORLD_SV_SetIsSyncFurniture(DREAMWORLD_SAVEDATA* pSV,BOOL flg);
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   眠る事ができるポケモンかどうか
+ * @param	  u16 pData   眠るリスト
+ * @param	  u16 monsno  モンスター番号
+ * @return  ねむれればTRUE
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL DREAMWORLD_SV_GetSleepEnable(u16* pData,u16 monsno);
 
 extern DREAMWORLD_SAVEDATA* DREAMWORLD_SV_GetDreamWorldSaveData(SAVE_CONTROL_WORK* pSave);
 
