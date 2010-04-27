@@ -324,6 +324,10 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
     dst->playerStatus[i] = NULL;
   }
 
+  for(i=0; i<NELEMS(dst->fightPokeIndex); ++i){
+    dst->fightPokeIndex[i] = FALSE;
+  }
+
   dst->shooterBitWork.shooter_use = TRUE;
   for(i=0; i<NELEMS(dst->shooterBitWork.bit_tbl); ++i){
     dst->shooterBitWork.bit_tbl[i] = 0xff;
