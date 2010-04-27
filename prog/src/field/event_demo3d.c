@@ -21,6 +21,7 @@ typedef struct _EVWK_DEMO3D{
   GAME_COMM_SYS_PTR gcsp;
 
   DEMO3D_PARAM  param;
+  BOOL          net_off_flag;
 }EVWK_DEMO3D;
 
 static GMEVENT_RESULT CallDemo3DEvent(GMEVENT * event, int * seq, void *work);
@@ -67,6 +68,9 @@ static GMEVENT_RESULT CallDemo3DEvent(GMEVENT * event, int * seq, void *work)
    */
   switch(*seq){
   case 0:
+    wk->net_off_flag = GAMESYSTEM_GetNetOffEventFlag( wk->gsys );
+    GAMESYSTEM_SetNetOffEventFlag( wk->gsys, TRUE );
+
     if( GameCommSys_BootCheck( wk->gcsp ) == GAME_COMM_NO_NULL ){
       (*seq) += 2;
     }else{
@@ -88,6 +92,7 @@ static GMEVENT_RESULT CallDemo3DEvent(GMEVENT * event, int * seq, void *work)
     if( GAMESYSTEM_IsProcExists( wk->gsys ) != GFL_PROC_MAIN_NULL ) {
       break;
     }
+    GAMESYSTEM_SetNetOffEventFlag( wk->gsys, wk->net_off_flag );
 		return GMEVENT_RES_FINISH;
 	}
 	return GMEVENT_RES_CONTINUE;
