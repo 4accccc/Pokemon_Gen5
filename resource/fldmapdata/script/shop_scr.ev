@@ -42,10 +42,14 @@ ev_shop_counter:
 {
   $lwk_shop_id = $SCWK_PARAM0
   
-  IF $SCWK_PARAM1 == TRUE THEN
+  SWITCH $SCWK_PARAM1
+  CASE SHOP_GREETING_NORMAL THEN
     //挨拶「いらっしゃいませ」
     _BALLOONWIN_TALKOBJ_MSG( msg_shop_greeting )
-  ENDIF
+  CASE SHOP_GREETING_WAZA THEN
+    //挨拶「いらっしゃいませ 技マシンショップです」
+    _BALLOONWIN_TALKOBJ_MSG( msg_shop_greeting_waza )
+  ENDSWITCH
 
   IF $lwk_shop_id == SCR_SHOPID_BP_ITEM || $lwk_shop_id == SCR_SHOPID_BP_WAZA THEN
     _CALL sub_bpshop_main

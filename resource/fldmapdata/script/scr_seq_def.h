@@ -7537,7 +7537,7 @@
  * @param shop_id
  */
 //--------------------------------------------------------------
-#define _SHOP_CALL( ) _ASM_SHOP_CALL  SCR_SHOPID_NULL,TRUE 
+#define _SHOP_CALL( ) _ASM_SHOP_CALL  SCR_SHOPID_NULL,SHOP_GREETING_NORMAL 
 
 //--------------------------------------------------------------
 /**
@@ -7548,7 +7548,7 @@
  * ※固定ショップ、BPショップなど各ショップに挨拶無しバージョンが存在します。
  */
 //--------------------------------------------------------------
-#define _SHOP_CALL_GREETING_LESS( ) _ASM_SHOP_CALL  SCR_SHOPID_NULL,FALSE
+#define _SHOP_CALL_GREETING_LESS( ) _ASM_SHOP_CALL  SCR_SHOPID_NULL,SHOP_GREETING_LESS
 
 //--------------------------------------------------------------
 /**
@@ -7557,8 +7557,9 @@
  * @param shop_id
  */
 //--------------------------------------------------------------
-#define _FIX_SHOP_CALL( shop_id ) _ASM_SHOP_CALL shop_id,TRUE
-#define _FIX_SHOP_CALL_GREETING_LESS( shop_id ) _ASM_SHOP_CALL shop_id,FALSE
+#define _FIX_SHOP_CALL( shop_id ) _ASM_SHOP_CALL shop_id,SHOP_GREETING_NORMAL
+#define _FIX_SHOP_CALL_GREETING_LESS( shop_id ) _ASM_SHOP_CALL shop_id,SHOP_GREETING_LESS
+#define _FIX_SHOP_CALL_GREETING_WAZA( shop_id ) _ASM_SHOP_CALL shop_id,SHOP_GREETING_WAZA
 
 //--------------------------------------------------------------
 /**
@@ -7566,8 +7567,8 @@
  * @brief 簡易イベントコマンド：BPショップイベント呼び出し
  */
 //--------------------------------------------------------------
-#define _BP_ITEM_SHOP_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BP_ITEM,TRUE
-#define _BP_ITEM_SHOP_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BP_ITEM,FALSE
+#define _BP_ITEM_SHOP_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BP_ITEM,SHOP_GREETING_NORMAL
+#define _BP_ITEM_SHOP_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BP_ITEM,SHOP_GREETING_LESS
 
 //--------------------------------------------------------------
 /**
@@ -7575,8 +7576,8 @@
  * @brief 簡易イベントコマンド：BPワザショップイベント呼び出し
  */
 //--------------------------------------------------------------
-#define _BP_WAZA_SHOP_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BP_WAZA,TRUE
-#define _BP_WAZA_SHOP_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BP_WAZA,FALSE
+#define _BP_WAZA_SHOP_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BP_WAZA,SHOP_GREETING_WAZA
+#define _BP_WAZA_SHOP_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BP_WAZA,SHOP_GREETING_LESS
 
 //--------------------------------------------------------------
 /**
@@ -7584,16 +7585,16 @@
  * @brief 簡易イベントコマンド：ブラックシティショップイベント呼び出し
  */
 //--------------------------------------------------------------
-#define _BLACK_CITY_SHOP0_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY0,TRUE
-#define _BLACK_CITY_SHOP0_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY0,FALSE
-#define _BLACK_CITY_SHOP1_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY1,TRUE
-#define _BLACK_CITY_SHOP1_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY1,FALSE
-#define _BLACK_CITY_SHOP2_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY2,TRUE
-#define _BLACK_CITY_SHOP2_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY2,FALSE
-#define _BLACK_CITY_SHOP3_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY3,TRUE
-#define _BLACK_CITY_SHOP3_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY3,FALSE
-#define _BLACK_CITY_SHOP4_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY4,TRUE
-#define _BLACK_CITY_SHOP4_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY4,FALSE
+#define _BLACK_CITY_SHOP0_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY0,SHOP_GREETING_NORMAL
+#define _BLACK_CITY_SHOP0_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY0,SHOP_GREETING_LESS
+#define _BLACK_CITY_SHOP1_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY1,SHOP_GREETING_NORMAL
+#define _BLACK_CITY_SHOP1_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY1,SHOP_GREETING_LESS
+#define _BLACK_CITY_SHOP2_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY2,SHOP_GREETING_NORMAL
+#define _BLACK_CITY_SHOP2_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY2,SHOP_GREETING_LESS
+#define _BLACK_CITY_SHOP3_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY3,SHOP_GREETING_NORMAL
+#define _BLACK_CITY_SHOP3_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY3,SHOP_GREETING_LESS
+#define _BLACK_CITY_SHOP4_CALL( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY4,SHOP_GREETING_NORMAL
+#define _BLACK_CITY_SHOP4_CALL_GREETING_LESS( ) _ASM_SHOP_CALL SCR_SHOPID_BLACK_CITY4,SHOP_GREETING_LESS
 
 //--------------------------------------------------------------
 /**

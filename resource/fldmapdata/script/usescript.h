@@ -249,4 +249,11 @@
 #define T01_R01_RIVAL (MMDL_ID_T01_R01_RIVAL)
 #define T01_R01_SUPPORT (MMDL_ID_T01_R01_SUPPORT)
 
+//======================================================================
+// ショップの挨拶コード
+//======================================================================
+#define SHOP_GREETING_LESS    (0) //挨拶無し
+#define SHOP_GREETING_NORMAL  (1) //いらっしゃいませ
+#define SHOP_GREETING_WAZA    (2) //技マシンショップです
+
 #endif //__USESCRIPT_H__
