@@ -754,7 +754,8 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
 static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
 {
   enum {
-    SEQ_RECPLAY_READ_ACMD = 0,
+    SEQ_RECPLAY_START = 0,
+    SEQ_RECPLAY_READ_ACMD,
     SEQ_RECPLAY_EXEC_CMD,
     SEQ_RECPLAY_RETURN_TO_SV,
     SEQ_RECPLAY_FADEIN,
@@ -765,6 +766,12 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
   RecPlayerCtrl_Main( wk, &wk->recPlayer );
 
   switch( wk->myState ){
+  case SEQ_RECPLAY_START:
+    if( wk->viewCore ){
+      BTLV_RecPlayer_StartSkip( wk->viewCore, RecPlayer_GetNextTurn(&wk->recPlayer) );
+    }
+    wk->myState = SEQ_RECPLAY_READ_ACMD;
+    /* fallthru */
 
   case SEQ_RECPLAY_READ_ACMD:
     {
@@ -787,8 +794,7 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
           }
         }
       }
-
-      if( fSkipEnd )
+      else
       {
         BTL_N_Printf( DBGSTR_CLIENT_RecPlay_ChapterSkipped, wk->myID, wk->recPlayer.nextTurnCount);
         if( wk->viewCore ){
@@ -822,6 +828,8 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
       if( BTLV_RecPlayFadeIn_Wait(wk->viewCore)
       &&  !PMSND_CheckFadeOnBGM()
       ){
+        u16 currentChapter = RecPlayer_GetNextTurn( &wk->recPlayer );
+        BTLV_UpdateRecPlayerInput( wk->viewCore, currentChapter, currentChapter );
         BTL_MAIN_NotifyChapterSkipEnd( wk->mainModule );
       }
     }
@@ -7097,7 +7105,7 @@ static void RecPlayer_ChapterSkipOff( RECPLAYER_CONTROL* ctrl )
   ctrl->fChapterSkip = FALSE;
 }
 /**
- *
+ *  スキップ処理が終了したか判定
  */
 static BOOL RecPlayer_CheckChapterSkipEnd( const RECPLAYER_CONTROL* ctrl )
 {

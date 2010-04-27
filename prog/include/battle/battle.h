@@ -239,7 +239,6 @@ typedef struct {
   //フィールドの状態から決定されるバトルシチュエーションデータ
   BTL_FIELD_SITUATION   fieldSituation;
   u16             musicDefault;   ///< デフォルト時のBGMナンバー
-  u16             musicPinch;     ///< ピンチ時のBGMナンバー
   u16             musicWin;       ///< 勝利時のBGMナンバー
 
   //通信データ

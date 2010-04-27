@@ -346,7 +346,6 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
   MI_CpuCopy8( sit, &dst->fieldSituation, sizeof(BTL_FIELD_SITUATION) );
 
   dst->musicDefault = SEQ_BGM_VS_NORAPOKE;
-  dst->musicPinch = SEQ_BGM_BATTLEPINCH;
   dst->musicWin = SEQ_BGM_WIN1;
 
   dst->result = BTL_RESULT_WIN;

@@ -4112,6 +4112,7 @@ static void   BTL_PARTY_MoveAlivePokeToFirst( BTL_PARTY* party )
   {
     if( !BPP_IsFightEnable(party->member[idx]) )
     {
+      TAYA_Printf("pokeIdx:%d ->ÅŒã”ö‚Ö\n", idx);
       BTL_PARTY_MoveLastMember( party, idx );
     }
   }

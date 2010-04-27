@@ -2651,6 +2651,14 @@ void BTLV_UpdateRecPlayerInput( BTLV_CORE* wk, u16 currentChapter, u16 ctrlChapt
 {
   wk->recPlayerUI.play_chapter = currentChapter;
   wk->recPlayerUI.view_chapter = ctrlChapter;
+  wk->recPlayerUI.stop_flag = BTLV_INPUT_BR_STOP_NONE;
+
+  BTLV_SCD_SetupRecPlayerMode( wk->scrnD, &wk->recPlayerUI );
+}
+void BTLV_RecPlayer_StartSkip( BTLV_CORE* wk, u16 nextChapter )
+{
+  wk->recPlayerUI.play_chapter = nextChapter;
+  wk->recPlayerUI.view_chapter = nextChapter;
   wk->recPlayerUI.stop_flag = BTLV_INPUT_BR_STOP_SKIP;
 
   BTLV_SCD_SetupRecPlayerMode( wk->scrnD, &wk->recPlayerUI );

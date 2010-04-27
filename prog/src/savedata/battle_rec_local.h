@@ -47,7 +47,7 @@ struct _BTLREC_SETUP_SUBSET {
   BTL_FIELD_SITUATION   fieldSituation;   ///< 背景・お盆などの構築用情報
   CONFIG                config;           ///< ユーザーコンフィグ
   u16  musicDefault;            ///< デフォルトBGM
-  u16  musicPinch;              ///< ピンチ時BGM
+  u16  musicWin;                ///< ピンチ時BGM
   u16  debugFlagBit;            ///< デバッグ機能Bitフラグ -> enum BtlDebugFlag @ battle/battle.h
   u8   competitor : 5;          ///< 対戦者タイプ（ゲーム内トレーナー、通信対戦）-> enum BtlCompetitor @ battle/battle.h
   u8   myCommPos  : 3;          ///< 通信対戦時の自分の立ち位置（マルチの時、0,2 vs 1,3 になり、0,1が左側／2,3が右側になる）
@@ -125,10 +125,10 @@ typedef struct _BATTLE_REC_HEADER{
 
   u16 battle_counter;   ///<連勝数                        2
   u16 mode;        ///<戦闘モード(ファクトリー50、ファクトリー100、通信対戦...)
-  
+
   u16 magic_key;      ///<マジックキー
   u8 secure;        ///<TRUE:安全が保障されている。　FALSE：再生した事がない
-  
+
   u8 server_vesion;   ///<バトルのサーバーバージョン
   u8 work[12];      ///< 予備
 

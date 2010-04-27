@@ -76,15 +76,15 @@ SDK_COMPILER_ASSERT(BATTLE_MODE_MAX == NELEMS(BattleRecModeBitTbl));
 /**
  * 対戦録画データ用ワークをAllocする
  *
- * @param   heapID		
+ * @param   heapID
  *
- * @retval  BATTLE_REC_SAVEDATA *		
+ * @retval  BATTLE_REC_SAVEDATA *
  */
 //--------------------------------------------------------------
 static BATTLE_REC_SAVEDATA * _BattleRecSaveAlloc(HEAPID heapID)
 {
   BATTLE_REC_SAVEDATA *new_brs;
-  
+
   new_brs = GFL_HEAP_AllocClearMemory(heapID, SAVESIZE_EXTRA_BATTLE_REC);//sizeof(BATTLE_REC_SAVEDATA));
   BattleRec_WorkInit(new_brs);
   return new_brs;
@@ -174,13 +174,13 @@ BOOL BattleRec_DataExistCheck(void)
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  対戦録画データのメモリ上に録画データがセットされているかチェック
+ *  @brief  対戦録画データのメモリ上に録画データがセットされているかチェック
  *
- *	@return TRUE録画データがセットされている　FALSE録画データがセットされていない
+ *  @return TRUE録画データがセットされている　FALSE録画データがセットされていない
  */
 //-----------------------------------------------------------------------------
 BOOL BattleRec_DataSetCheck(void)
-{ 
+{
   BATTLE_REC_WORK *rec = &brs->rec;
 
   //何もかきこまれていなければFALSE
@@ -193,23 +193,23 @@ BOOL BattleRec_DataSetCheck(void)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  対戦録画データのメモリ上に録画データをクリアする
+ *  @brief  対戦録画データのメモリ上に録画データをクリアする
  *
  */
 //-----------------------------------------------------------------------------
 void BattleRec_DataClear(void)
-{ 
+{
   BattleRec_WorkInit(brs);
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  メモリ上の対戦録画データを復号化する
- *	        BattleRec_Saveの後、そのままBRSを使う場合に使用してください
+ *  @brief  メモリ上の対戦録画データを復号化する
+ *          BattleRec_Saveの後、そのままBRSを使う場合に使用してください
  *
  */
 //-----------------------------------------------------------------------------
 void BattleRec_DataDecoded(void)
-{ 
+{
   GF_ASSERT(brs != NULL);
 
   BattleRec_Decoded(&brs->rec, sizeof(BATTLE_REC_WORK) - GDS_CRC_SIZE,
@@ -432,7 +432,7 @@ SAVE_RESULT Local_BattleRecSave(GAMEDATA *gamedata, BATTLE_REC_SAVEDATA *work, i
 {
   SAVE_RESULT result;
   SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
-  
+
   switch(*seq){
   case 0:
     //セーブ対象の外部セーブ領域のセーブシステムを作成(セーブワークの実体はbrsを渡す)
@@ -443,7 +443,7 @@ SAVE_RESULT Local_BattleRecSave(GAMEDATA *gamedata, BATTLE_REC_SAVEDATA *work, i
     break;
   case 1:
     result = GAMEDATA_ExtraSaveAsyncMain(gamedata, SAVE_EXTRA_ID_REC_MINE + num);
-    
+
     if(result == SAVE_RESULT_OK || result == SAVE_RESULT_NG){
       //外部セーブ完了。セーブシステムを破棄
       SaveControl_Extra_UnloadWork(sv, SAVE_EXTRA_ID_REC_MINE + num);
@@ -536,7 +536,7 @@ void BattleRec_SaveDataEraseStart(GAMEDATA *gamedata, HEAPID heap_id, int num)
   LOAD_RESULT load_result;
   BATTLE_REC_SAVEDATA *all;
   SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gamedata);
-  
+
   load_result = SaveControl_Extra_Load(sv, SAVE_EXTRA_ID_REC_MINE + num, heap_id);
   all = SaveControl_Extra_DataPtrGet(sv, SAVE_EXTRA_ID_REC_MINE + num, 0);
   BattleRec_WorkInit(all);
@@ -571,7 +571,7 @@ SAVE_RESULT BattleRec_SaveDataEraseMain(GAMEDATA *gamedata, int num)
   result = GAMEDATA_ExtraSaveAsyncMain(gamedata, SAVE_EXTRA_ID_REC_MINE + num);
 
   if( result == SAVE_RESULT_OK || result == SAVE_RESULT_NG )
-  { 
+  {
     SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
   }
   return result;
@@ -628,7 +628,7 @@ static void RecHeaderCreate(SAVE_CONTROL_WORK *sv, BATTLE_REC_HEADER *head, cons
   BattleRec_ClientTemotiGet(BattleRecModeBitTbl[rec_mode], &client_max, &temoti_max);
 
   n = 0;
-  
+
   for(client = 0; client < client_max; client++){
     for(temoti = 0; temoti < temoti_max; temoti++){
       para = &(rec->rec_party[client].member[temoti]);
@@ -808,11 +808,11 @@ static void PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *re
   POKEMON_PARAM *pp;
 
   GFL_STD_MemClear(rec_party, sizeof(REC_POKEPARTY));
-  
+
   if(PokeParty_GetPokeCount(party) == 0){  //不正チェック用に空の時は全て0でクリアされたまま終了
     return;
   }
-  
+
   rec_party->PokeCountMax = PokeParty_GetPokeCountMax(party);
   rec_party->PokeCount = PokeParty_GetPokeCount(party);
 
@@ -1191,10 +1191,10 @@ void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, HEAPID heapID )
 static void store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
 {
   u32 i;
-  
+
   //不正チェック用に未使用領域は全て0で埋める必要がある為、一旦バッファ全体を0クリアしておく
   GFL_STD_MemClear(rec->rec_party, sizeof(REC_POKEPARTY) * BTL_CLIENT_MAX);
-  
+
   for(i=0; i<BTL_CLIENT_NUM; ++i)
   {
     if( setup->party[i] ){
@@ -1311,6 +1311,15 @@ static void restore_TrainerData( BSP_TRAINER_DATA* bspTrainer, const BTLREC_TRAI
   }
 
   GFL_STR_SetStringCode( bspTrainer->name, recTrainer->name );
+
+  {
+    const STRCODE* sp = GFL_STR_GetStringCodePointer( bspTrainer->name );
+    OS_TPrintf("Rec -> Btl  trID=%d, trType=%d, name= ", bspTrainer->tr_id, bspTrainer->tr_type);
+    while( (*sp) != GFL_STR_GetEOMCode() ){
+      OS_TPrintf( "%04x,", (*sp) );
+      ++sp;
+    }
+  }
 }
 //----------------------------------------------------------------------------------
 /**
@@ -1366,7 +1375,7 @@ static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK*
   rec->setupSubset.fieldSituation = setup->fieldSituation;
   rec->setupSubset.randomContext = setup->recRandContext;
   rec->setupSubset.musicDefault = setup->musicDefault;
-  rec->setupSubset.musicPinch = setup->musicPinch;
+  rec->setupSubset.musicWin = setup->musicWin;
 
   rec->setupSubset.competitor = setup->competitor;
   rec->setupSubset.rule = setup->rule;
@@ -1406,7 +1415,7 @@ static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WOR
   setup->fieldSituation = rec->setupSubset.fieldSituation;
   setup->recRandContext = rec->setupSubset.randomContext;
   setup->musicDefault = rec->setupSubset.musicDefault;
-  setup->musicPinch = rec->setupSubset.musicPinch;
+  setup->musicWin = rec->setupSubset.musicWin;
 
   setup->competitor = rec->setupSubset.competitor;
   setup->rule = rec->setupSubset.rule;

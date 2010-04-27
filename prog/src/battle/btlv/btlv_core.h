@@ -407,6 +407,7 @@ extern BOOL BTLV_ForceQuitInput_Wait( BTLV_CORE* wk );
 //=============================================================================================
 extern int BTLV_CheckRecPlayerInput( BTLV_CORE* wk );
 extern void BTLV_UpdateRecPlayerInput( BTLV_CORE* wk, u16 currentChapter, u16 ctrlChapter );
+extern void BTLV_RecPlayer_StartSkip( BTLV_CORE* wk, u16 nextChapter );
 
 
 //-----------------------------------------------------------
