@@ -51,10 +51,18 @@ enum
   BTLV_EFFECT_FOCUS_TARGET_Y = 0x00002000,
 };
 
-volatile  fx32  camera_focus_offset_x = 0x00006b33; //BTLV_EFFECT_FOCUS_OFFSET_X 
-volatile  fx32  camera_focus_offset_y = 0x00004199; //BTLV_EFFECT_FOCUS_OFFSET_Y 
-volatile  fx32  camera_focus_offset_z = 0x000114cd; //BTLV_EFFECT_FOCUS_OFFSET_Z 
-volatile  fx32  camera_focus_target_y = 0x00001000; //BTLV_EFFECT_FOCUS_OFFSET_Z 
+#ifdef PM_DEBUG
+#if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_yoshida
+#define  CAMERA_FOCUS
+#endif
+#endif
+
+#ifdef  CAMERA_FOCUS
+volatile  fx32  camera_focus_offset_x = 0x00004b33; //BTLV_EFFECT_FOCUS_OFFSET_X 
+volatile  fx32  camera_focus_offset_y = 0x00002299; //BTLV_EFFECT_FOCUS_OFFSET_Y 
+volatile  fx32  camera_focus_offset_z = 0x000099cd; //BTLV_EFFECT_FOCUS_OFFSET_Z 
+volatile  fx32  camera_focus_target_y = 0x00002000; //BTLV_EFFECT_FOCUS_OFFSET_Z 
+#endif
 
 //============================================================================================
 /**
@@ -281,6 +289,13 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
       bew->trainer_index[ index ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
     }
   }
+
+#ifdef  CAMERA_FOCUS
+  OS_TPrintf("camera_focus_offset_x:0x%08x\n",&camera_focus_offset_x);
+  OS_TPrintf("camera_focus_offset_y:0x%08x\n",&camera_focus_offset_y);
+  OS_TPrintf("camera_focus_offset_z:0x%08x\n",&camera_focus_offset_z);
+  OS_TPrintf("camera_focus_target_y:0x%08x\n",&camera_focus_target_y);
+#endif
 
   //VBlankŠÖ”
   bew->v_tcb = GFUser_VIntr_CreateTCB( BTLV_EFFECT_VBlank, NULL, 1 );

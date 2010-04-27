@@ -36,7 +36,7 @@
 #if PM_DEBUG
 
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_yoshida
-//#define CAMERA_FOCUS
+#define CAMERA_FOCUS
 #endif
 
 //============================================================================================
