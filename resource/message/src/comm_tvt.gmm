@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-26T22:23:16"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-27T18:35:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -569,15 +569,15 @@ Ariizumi100224</comment>
 	</row>
 
 	<row id="COMM_TVT_SYS_10">
-		<comment>ペアレンタルコントローラーで写真の送受信を制限しているとき</comment>
-		<language name="JPN">ペアレンタルコントローラーの
+		<comment>ペアレンタルコントロールで写真の送受信を制限しているとき</comment>
+		<language name="JPN">ペアレンタルコントロールの
 せっていにより　みしらぬ　あいてとの
 しゃしんデータの　そうじゅしんが
 せいげん　されています
 がぞうを　だしたいときは
 ほんたいせっていで
 せいげんを　かいじょ　してください</language>
-		<language name="JPN_KANJI">ペアレンタルコントローラーの
+		<language name="JPN_KANJI">ペアレンタルコントロールの
 設定により　見知らぬ相手との
 写真データの　送受信が
 制限されています
