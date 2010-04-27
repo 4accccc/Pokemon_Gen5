@@ -4418,7 +4418,7 @@ static int AC_ShinMuFlyLeft1( MMDL * mmdl )
 	
 	MMDL_UpdateGridPosCurrent( mmdl );
 	MMDL_IncAcmdSeq( mmdl );
-	return( FALSE );
+	return( TRUE );
 }
 
 //--------------------------------------------------------------
