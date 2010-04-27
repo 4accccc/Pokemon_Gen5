@@ -11,21 +11,21 @@
 //============================================================================
 #pragma once
 
-#define answer00 (1692) // ポケモン
-#define answer01 (1489) // おめでとう
-#define answer02 (1684) // デジタル
-#define answer03 (1529) // おかね
-#define answer04 (1666) // ラブラブ
-#define answer05 (1438) // おじさん
+#define answer00 (1693) // ポケモン
+#define answer01 (1490) // おめでとう
+#define answer02 (1685) // デジタル
+#define answer03 (1530) // おかね
+#define answer04 (1667) // ラブラブ
+#define answer05 (1439) // おじさん
 #define answer06 (709) // なみのり
-#define answer07 (1567) // せんせい
-#define answer08 (1694) // メール
-#define answer09 (1557) // じてんしゃ
-#define answer10 (1712) // ダブルバトル
-#define answer11 (1542) // カメラ
-#define answer12 (1533) // おふろ
-#define answer13 (1691) // ポケセン
-#define answer14 (1400) // こうげき
+#define answer07 (1568) // せんせい
+#define answer08 (1695) // メール
+#define answer09 (1558) // じてんしゃ
+#define answer10 (1713) // ダブルバトル
+#define answer11 (1543) // カメラ
+#define answer12 (1534) // おふろ
+#define answer13 (1692) // ポケセン
+#define answer14 (1401) // こうげき
 #define answer15 (563) // デスカーン
 #define answer16 (528) // ココロモリ
 #define answer17 (555) // ヒヒダルマ
@@ -41,8 +41,8 @@
 #define answer27 (578) // ダブラン
 #define answer28 (65535) // ブロッコ
 #define answer29 (531) // タブンネ
-#define answer30 (1574) // たんじょうび
-#define password01 (1467) // みんな
-#define password02 (1654) // ハッピー
-#define password03 (1631) // かんたん
-#define password04 (1714) // つうしん
+#define answer30 (1575) // たんじょうび
+#define password01 (1468) // みんな
+#define password02 (1655) // ハッピー
+#define password03 (1632) // かんたん
+#define password04 (1715) // つうしん
