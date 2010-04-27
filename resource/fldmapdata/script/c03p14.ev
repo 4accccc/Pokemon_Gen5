@@ -36,89 +36,92 @@ EVENT_START		ev_c03p14_recept_01
 	{
 	DEFINE_LOCAL	lwk_loop
 	DEFINE_LOCAL	lwk_select
-	
-	WHILE $lwk_loop != 555
-		
-		//ユナイテッドタワーに ごようですか？
-		_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_01, C03P14_RECEPT_01, POS_DOWN )
-		
-		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1,lwk_select )
-		_BMPMENU_MAKE_LIST( msg_c03p14_infomationw_06, 0 )
-		_BMPMENU_MAKE_LIST( msg_c03p14_infomationw_07, 1 )
-		_BMPMENU_MAKE_LIST( msg_c03p14_infomationw_08, 2 )
-		_BMPMENU_START()
-		
-		SWITCH $lwk_select
-		CASE 0 THEN
-			//はい 選択
-			_CALL	ev_select_yes
-			
-			$lwk_loop = 555
-			
-		CASE 2 THEN
-			//なにそれ 選択
-			
-			//ユナイテッドタワーは…
-			_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_04, C03P14_RECEPT_01, POS_DOWN )
-			
-		DEFAULT
-			//いいえ 選択 or Ｂキャンセル
-			
-			_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_05, C03P14_RECEPT_01, POS_DOWN )
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-			
-			$lwk_loop = 555
-			
-		ENDSWITCH
-	
-	ENDWHILE
-	
-	}
-EVENT_END
 
-//「はい」を選択
-ev_select_yes:
 	//交換した国数をチェック（自分以外の国と交換したことがあるか）
 	_UN_GET_COUNTRY_NUM( TRUE, SCWK_ANSWER )
 	IF $SCWK_ANSWER == 0 THEN
 		//海外の人と交換したことがない
-		_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_02, C03P14_RECEPT_01, POS_DOWN )
+		
+		//国境って何のために……
+		_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_02, C03P14_RECEPT_01, POS_DEFAULT )
+		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 
 	ELSE
 		//海外の人と交換したことがある
-
-		//お一人様ごあんなーい！
-		_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_03, C03P14_RECEPT_01, POS_DOWN )
-		_MSGWIN_CLOSE()
 		
-		//主人公：船へ
-		_PLAYER_DIR_GET( SCWK_ANSWER )
-		IF $SCWK_ANSWER == DIR_UP THEN
-			_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01u )
-		ELSIF $SCWK_ANSWER == DIR_DOWN THEN
-			_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01d )
-		ELSIF $SCWK_ANSWER == DIR_LEFT THEN
-			_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01l )
-		ELSE
-			//現状の配置だと右向きで話しかけられないけど念のため用意しておきます
-			_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01r )
-		ENDIF
-		_OBJ_ANIME_WAIT()
+		WHILE $lwk_loop != 555
+			
+			//ユナイテッドタワーに ごようですか？
+			_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_01, C03P14_RECEPT_01, POS_DOWN )
+			
+			_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1,lwk_select )
+			_BMPMENU_MAKE_LIST( msg_c03p14_infomationw_06, 0 )
+			_BMPMENU_MAKE_LIST( msg_c03p14_infomationw_07, 1 )
+			_BMPMENU_MAKE_LIST( msg_c03p14_infomationw_08, 2 )
+			_BMPMENU_START()
+			
+			SWITCH $lwk_select
+			CASE 0 THEN
+				//はい 選択
+				_CALL	ev_select_yes
+				
+				$lwk_loop = 555
+				
+			CASE 2 THEN
+				//なにそれ 選択
+				
+				//ユナイテッドタワーは…
+				_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_04, C03P14_RECEPT_01, POS_DOWN )
+				
+			DEFAULT
+				//いいえ 選択 or Ｂキャンセル
+				
+				_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_05, C03P14_RECEPT_01, POS_DOWN )
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+				
+				$lwk_loop = 555
+				
+			ENDSWITCH
 		
-		//３Ｄデモコール
-		_DEMO_FADEOUT_BLACK_CALL_SINGLE()
-		_CALL_3D_DEMO( DEMO3D_ID_G_SHIP_PORT )
-		
-		//予約スクリプト：マップ遷移後、船から下りるスクリプトを起動
-		_RESERVE_SCRIPT( SCRID_RESERVE_C11_RECEPT_END )
-		
-		//マップ遷移
-		_MAP_CHANGE_NO_FADE( ZONE_ID_C11, 407, 0, 762, DIR_LEFT )
-		
+		ENDWHILE
+	
 	ENDIF
 	
+	}
+EVENT_END
+
+
+//「はい」を選択
+ev_select_yes:
+	//お一人様ごあんなーい！
+	_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_03, C03P14_RECEPT_01, POS_DOWN )
+	_MSGWIN_CLOSE()
+	
+	//主人公：船へ
+	_PLAYER_DIR_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER == DIR_UP THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01u )
+	ELSIF $SCWK_ANSWER == DIR_DOWN THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01d )
+	ELSIF $SCWK_ANSWER == DIR_LEFT THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01l )
+	ELSE
+		//現状の配置だと右向きで話しかけられないけど念のため用意しておきます
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01r )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	//３Ｄデモコール
+	_DEMO_FADEOUT_BLACK_CALL_SINGLE()
+	_CALL_3D_DEMO( DEMO3D_ID_G_SHIP_PORT )
+	
+	//予約スクリプト：マップ遷移後、船から下りるスクリプトを起動
+	_RESERVE_SCRIPT( SCRID_RESERVE_C11_RECEPT_END )
+	
+	//マップ遷移
+	_MAP_CHANGE_NO_FADE( ZONE_ID_C11, 407, 0, 762, DIR_LEFT )
 _RET
 
 //--------------------------------------------------------------------
