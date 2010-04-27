@@ -1,4 +1,4 @@
-static const HIDE_ITEM_DATA hide_item_data[160] = {
+static const HIDE_ITEM_DATA hide_item_data[161] = {
 
 	{ // かおるキノコ
 		  0, 
@@ -876,11 +876,11 @@ static const HIDE_ITEM_DATA hide_item_data[160] = {
 		239, // D10R0101 ジャイアントホール
 		 24,  5, // x, y
 	},
-	{ // しんじゅ
+	{ // げんきのかたまり
 		146, 
 		1,0, // flags
-		379, // R13 １３番道路
-		728,242, // x, y
+		374, // R11 １１番道路
+		465,168, // x, y
 	},
 	{ // ピーピーマックス
 		147, 
@@ -959,5 +959,11 @@ static const HIDE_ITEM_DATA hide_item_data[160] = {
 		1,0, // flags
 		335, // R04 ４番道路
 		402,598, // x, y
+	},
+	{ // ちいさなキノコ
+		160, 
+		0,0, // flags
+		385, // R14r0201 ほうじょうのやしろ
+		 43, 26, // x, y
 	},
 }; // end of hide_item_data

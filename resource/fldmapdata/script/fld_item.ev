@@ -1578,10 +1578,10 @@ EVENT_START ev_fld_item_104
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r13 X=749 Y=272 ITEM=ブロムヘキシン FLAG=105
+// MAP=C03R0302 X=2 Y=14 ITEM=げんきのかけら FLAG=105
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_105
-  _FLD_ITEM_EVENT ITEM_BUROMUHEKISIN,1
+  _FLD_ITEM_EVENT ITEM_GENKINOKAKERA,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1648,10 +1648,10 @@ EVENT_START ev_fld_item_107
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r14 X=704 Y=364 ITEM=キトサン FLAG=108
+// MAP=D02R0101 X=17 Y=65 ITEM=げんきのかけら FLAG=108
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_108
-  _FLD_ITEM_EVENT ITEM_KITOSAN,1
+  _FLD_ITEM_EVENT ITEM_GENKINOKAKERA,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -2082,10 +2082,10 @@ EVENT_START ev_fld_item_276
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r14r0201 X=43 Y=26 ITEM=するどいキバ FLAG=277
+// MAP=C03R0303 X=5 Y=9 ITEM=すごいキズぐすり FLAG=277
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_277
-  _FLD_ITEM_EVENT ITEM_SURUDOIKIBA,1
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -2096,10 +2096,10 @@ EVENT_START ev_fld_item_278
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r14r0201 X=9 Y=41 ITEM=クイックボール FLAG=280
+// MAP=r14r0201 X=9 Y=41 ITEM=するどいキバ FLAG=280
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_280
-  _FLD_ITEM_EVENT ITEM_KUIKKUBOORU,1
+  _FLD_ITEM_EVENT ITEM_SURUDOIKIBA,1
 EVENT_END
 
 //--------------------------------------------------------------
