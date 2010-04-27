@@ -8,12 +8,10 @@
 //==============================================================================
 #include "gflib.h"
 
-
-//#include "tool/net_ring_buff.h"
-//#include "tool/net_queue.h"
-//#include "net_handle.h"
+#include "net/network_define.h"
 #include <nitro/irc.h>
 #include "net/net_irc.h"
+#include "system/gfl_use.h"
 
 
 
@@ -54,7 +52,7 @@
 ///送信データ管理value値のレンジ
 #define SEND_CHECK_VALUE_RANGE		(0xf)	//4bit内の数値にする事!!
 
-#define _ID (12)
+#define _ID (POKEMON_IRC_CONNECTCODE)
 
 //--------------------------------------------------------------
 //	エラーコード
@@ -64,37 +62,54 @@ enum{
   IRC_ERRCODE_SHUTDOWN,	///<切断エラー
 };
 
+#define _IRC_HEAD_SIZE (14)
+#define _IRC_SEND_SIZE (IRC_TRNS_MAX - _IRC_HEAD_SIZE) 
+
+typedef struct {
+  u16 crc;       /// CRC検査
+  u8 command;    /// この通信のコマンド
+  u8 value;      /// この通信のvalue  主に同じ通信かどうかに使用     4
+  u32 unique;    /// 最祖にランダムに決めたキー                      8
+  u32 friendunique;    /// 相手のランダムに決めたキー               12
+  u8 gsid;       /// GameServiceID       
+  u8 dummy;                              // 14
+  u8 buff[_IRC_SEND_SIZE];
+} _NETIRC_DATA;
+
+
 //==============================================================================
 //	構造体定義
 //==============================================================================
 typedef struct{
   IrcRecvFunc recieve_func;
+  _NETIRC_DATA aSendBuff;
+  u32 friendunique;     ///< 相手のユニークID
+  u32 timeout;		///<再接続時のタイムアウト時間
+  u32 retry_time;		///<再接続中のタイムカウンタ
+  void *send_buf;		///<送信データへのポインタ
+
   u8 initialize;		///<TRUE:初期化完了
   u8 send_use;		///<今フレームで既にSendを使用したかどうか(TRUE:使用した)
   u8 send_turn;		///<TRUE:送信可能。　FALSE:送信は通信相手のターン
   u8 send_lock;		///<TRUE:送信ロック中(相手側が巨大データ送信中)
 
   u8 parent_MacAddress[6];	///<親のMacAddress
+  u8 friendmac[6];     ///< 相手のMAC
+
   u8 isSender;		///<TRUE:最初に接続要求した(再接続時は値は変わりません)
   u8 connect;			///<TRUE:繋がっている(再接続中もTRUE)
-
-  u32 timeout;		///<再接続時のタイムアウト時間
-  u32 retry_time;		///<再接続中のタイムカウンタ
-
-  void *send_buf;		///<送信データへのポインタ
   u8 send_size;		///<送信サイズ
   u8 send_command;	///<送信コマンド
+
   u8 send_value;		///<送信バリュー
   u8 send_action;		///<TRUE:送信実行中(send_buf==NULLではコマンドのみの送信の可能性があるので)
-
   u8 my_value;		///<自分が送信してきたvalue値。何か送信する度にインクリメント
   u8 last_value;		///<最後に受信したvalue値
+
   u8 retry_send_reserve;	///<再接続した時に送信中のデータがあった場合、送信予約する
   u8 err_code;			///<エラーコード
-
   u8 my_unit_number;		///<自分のユニットナンバー
   u8 target_unit_number;	///<通信相手のユニットナンバー
-  u8 padding_2[2];
 }NET_IRC_SYS;
 
 
@@ -107,7 +122,6 @@ static NET_IRC_SYS NetIrcSys = {0,0};
 //==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
-void GFL_NET_IRC_Init(u32 irc_timeout);
 BOOL GFL_NET_IRC_SendTurnGet(void);
 BOOL GFL_NET_IRC_SendLockFlagGet(void);
 BOOL GFL_NET_IRC_SendCheck(void);
@@ -118,17 +132,19 @@ static int IRC_TargetIDGet(void);
 
 static void _IRC_SendRapper(u8* buf, u8 size, u8 command, u8 value)
 {
-  u8 buff[IRC_TRNS_MAX];
+  u16 crc;
+  GF_ASSERT(size < _IRC_SEND_SIZE );
 
-  GF_ASSERT(size < IRC_TRNS_MAX-2);
-
-  buff[0] = command;
-  buff[1] = value;
+  NetIrcSys.aSendBuff.command = command;
+  NetIrcSys.aSendBuff.value = value;
   if(buf){
-    GFL_STD_MemCopy(buf, &buff[2], IRC_TRNS_MAX-2);
+    GFL_STD_MemCopy(buf, NetIrcSys.aSendBuff.buff, _IRC_SEND_SIZE);
   }
-  IRC_Send(buff, size+2,  command);
 
+  crc = GFL_STD_CrcCalc(&NetIrcSys.aSendBuff.command, size + _IRC_HEAD_SIZE-2);
+  NetIrcSys.aSendBuff.crc = crc;
+  
+  IRC_Send((const u8*)&NetIrcSys.aSendBuff, size + _IRC_HEAD_SIZE,  command);
 }
 
 
@@ -145,15 +161,20 @@ static void _IRC_SendRapper(u8* buf, u8 size, u8 command, u8 value)
  *
  */
 //--------------------------------------------------------------
-void GFL_NET_IRC_Init(u32 irc_timeout)
+void GFL_NET_IRC_Init(u32 irc_timeout,u8 gsid)
 {
   GFL_STD_MemClear(&NetIrcSys, sizeof(NET_IRC_SYS));
   NetIrcSys.timeout = irc_timeout;
   NetIrcSys.my_unit_number = WM_GetNextTgid() & 0xff;
   IRC_Init(_ID);
   IRC_SetRecvCallback(IRC_ReceiveCallback);
-  //IRC_SetUnitNumber(NetIrcSys.my_unit_number);
-  //	GFL_NET_SystemIrcModeInit();
+
+  NetIrcSys.aSendBuff.unique = GFUser_GetPublicRand(0); //乱数
+  if(NetIrcSys.aSendBuff.unique==0){
+    NetIrcSys.aSendBuff.unique=1;
+  }
+  NetIrcSys.aSendBuff.gsid = gsid;
+//  OS_GetMacAddress( NetIrcSys.aSendBuff.mac );
 }
 
 //--------------------------------------------------------------
@@ -353,21 +374,17 @@ int GFL_NET_IRC_System_GetCurrentAid(void)
 //--------------------------------------------------------------
 static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id)
 {
+  u16 crc;
+  u8 nullmac[6]={0,0,0,0,0,0};
   int send_id;
   int send_value, receive_value;
   u8 value;
+  _NETIRC_DATA* pData = (_NETIRC_DATA*)data;
 
-  //  size -= IRC_HEADER_SIZE;
-
-  value = data[1];
-
-
+  value = pData->value;
   send_value = value & 0xf;
   receive_value = value >> 4;
-
-  //OS_TPrintf("%x value \n",value);
-
-
+/*
   if(command != GF_NET_COMMAND_CONTINUE){
     IRC_PRINT("IRC受信コールバック呼び出し, size=%d, command=%d, send_value=%d, receive_value=%d\n", size,command,send_value,receive_value);
     {
@@ -377,9 +394,47 @@ static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id)
       }
       IRC_PRINT("\n");
     }
+  }*/
+  
+  NetIrcSys.send_turn = TRUE;
+
+  GF_ASSERT(size <= sizeof(_NETIRC_DATA));
+  if(size==0){
+    IRC_PRINT("size0\n");
+    return;
+  }
+  if(size > sizeof(_NETIRC_DATA)){
+    IRC_PRINT("sizeOVER\n");
+    return;
+  }
+  
+  crc = GFL_STD_CrcCalc(&pData->command, size-2);
+  if(pData->crc != crc){
+    IRC_PRINT("最初からこわれた\n");
+    return;
   }
 
-  NetIrcSys.send_turn = TRUE;
+  if(NetIrcSys.aSendBuff.gsid != pData->gsid){//内容が違う
+    return;
+  }
+  if((pData->friendunique == NetIrcSys.aSendBuff.unique)
+     && (pData->unique == NetIrcSys.friendunique)){  //相互登録済み 問題ない
+  }
+  else if((pData->friendunique == 0) && (NetIrcSys.friendunique==0)){  //相手の登録まだ 自分もまだ
+    NetIrcSys.aSendBuff.friendunique = pData->unique;
+    NetIrcSys.friendunique = pData->unique;
+    IRC_PRINT("登録1 %d %d\n",pData->unique, NetIrcSys.aSendBuff.unique);
+    return;   //登録時は一回無視
+  }
+  else if((pData->friendunique == NetIrcSys.aSendBuff.unique) && (NetIrcSys.friendunique==0)){  //相手の登録まだ 自分もまだ
+    NetIrcSys.aSendBuff.friendunique = pData->unique;
+    NetIrcSys.friendunique = pData->unique;
+    IRC_PRINT("登録2 %d %d\n",pData->unique, NetIrcSys.aSendBuff.unique);
+  }
+  else{
+    IRC_PRINT("UNIQUEがちがう %d %d %d\n",NetIrcSys.friendunique ,pData->unique, NetIrcSys.aSendBuff.unique );
+    return;   //ユニークIDが違ったら無視
+  }
 
   //-- 赤外線ライブラリ内部で使用しているシステムコマンド --//
   if(command >= 0xf0){
@@ -416,20 +471,22 @@ static void IRC_ReceiveCallback(u8 *data, u8 size, u8 command, u8 id)
     break;
   }
 
-  send_id = IRC_TargetIDGet();
-  if(NetIrcSys.recieve_func != NULL){
-    u16* x = (u16*)data;
-    if(NetIrcSys.recieve_func(send_id, &x[1], size-2) == FALSE){
-      return; //データが壊れているなら受け取らない
-    }
-  }
-
   if(NetIrcSys.last_value == send_value){
     //最後に受け取ったvalue値と同じvalue値の場合、同じデータが2度送られてきているので無視する
     //※再接続した時にこのケースが発生する。
     IRC_PRINT("赤外線：同一valueを受信 %d\n",send_value);
     return;
   }
+
+  
+  send_id = IRC_TargetIDGet();
+  if(NetIrcSys.recieve_func != NULL){
+    if(NetIrcSys.recieve_func(send_id, (u16*)pData->buff, size - _IRC_HEAD_SIZE) == FALSE){
+      IRC_PRINT("こわれた\n");
+      return; //データが壊れているなら受け取らない
+    }
+  }
+
   IRC_PRINT("受信成功 %d\n",send_value);
   NetIrcSys.last_value = send_value;
 }

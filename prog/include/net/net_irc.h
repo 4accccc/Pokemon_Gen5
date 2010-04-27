@@ -37,7 +37,7 @@ typedef BOOL (*IrcRecvFunc)(u16 aid, u16 *data, u16 size);
 //==============================================================================
 //	äOïîä÷êîêÈåæ
 //==============================================================================
-extern void GFL_NET_IRC_Init(u32 irc_timeout);
+extern void GFL_NET_IRC_Init(u32 irc_timeout,u8 gsid);
 extern void GFL_NET_IRC_ChangeTimeoutTime(u32 irc_timeout);
 extern void GFL_NET_IRC_Exit(void);
 extern void GFL_NET_IRC_RecieveFuncSet(IrcRecvFunc recieve_func);
