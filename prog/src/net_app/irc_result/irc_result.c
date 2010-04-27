@@ -1986,7 +1986,7 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 
 	case SEQ_START_SCALE:
 		HEARTEFF_Start( &p_wk->heart );
-		PMSND_PlaySE( IRCRESULT_SE_HEART_UP );
+		//PMSND_PlaySE( IRCRESULT_SE_HEART_UP );
 		*p_seq	= SEQ_WAIT_SCALE;
 		break;
 
@@ -2532,12 +2532,19 @@ static void HEARTEFF_Main( HEARTEFF_WORK *p_wk )
       }
       else
       { 
+        if( p_wk->cnt == 0 )
+        { 
+          PMSND_PlaySE( IRCRESULT_SE_HEART_01 +  p_wk->now_color_idx-1 );
+        }
+
         //色をアップ
         for( i = 0; i < 2; i++ )
         {     
           plt = sc_color_tbl[ p_wk->now_color_idx ][i];
           HeartEff_MainPltFade( &p_wk->plt_buff[ plt ], p_wk->cnt, ONE_SYNC, RESULT_BG_PAL_M_08, plt, GX_RGB( 31, 31, 31 ), p_wk->plt_original[ plt ] );
         }
+
+
 
         //個別チェック
         if( p_wk->cnt++ >= ONE_SYNC )
@@ -2557,6 +2564,12 @@ static void HEARTEFF_Main( HEARTEFF_WORK *p_wk )
       break;
 
     case SEQ_LIE:
+
+      if( p_wk->cnt == 0 )
+      { 
+        PMSND_PlaySE( IRCRESULT_SE_HEART_01 +  p_wk->now_color_idx-3 );
+      }
+
       //色をアップ
       for( i = 0; i < 2; i++ )
       {     
@@ -3032,6 +3045,7 @@ static ITEM_RESULT UTIL_DataUpdate( RESULT_MAIN_WORK *p_wk )
 	}
 
   //相性チェックをプレイした回数をレコードに登録する
+  if( p_wk->p_param->p_gamesys )
   { 
     RECORD  *p_rec  = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys ) );
     RECORD_Inc( p_rec, RECID_AFFINITY_CHECK_NUM);

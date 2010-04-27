@@ -31,6 +31,7 @@
 #include "sound/pm_sndsys.h"
 #include "net_app/irc_appbar.h"
 #include "pokeicon/pokeicon.h"
+#include "system/bmp_oam.h"
 
 //	common
 #include "app/app_menu_common.h"
@@ -113,7 +114,9 @@ enum
 	RANKING_BG_PAL_S_15,		// 使用してない
 
 	// メイン画面OBJ
-	RANKING_OBJ_PAL_POKEICON_M = 0,// 
+	RANKING_OBJ_PAL_POKEICON_M = 0,//
+
+	RANKING_OBJ_PAL_FONT_M = 14,// 
 
 	// サブ画面BG
 	RANKING_OBJ_PAL_POKEICON_S = 0,// 
@@ -144,20 +147,20 @@ enum
 #define SCROLL_BAR_FONT_COUNT_X		(22)
 
 //余白
-#define SCROLL_MARGIN_SIZE_Y_M	(-4*GFL_BG_1CHRDOTSIZ)
-#define SCROLL_MARGIN_SIZE_Y_S	(2*GFL_BG_1CHRDOTSIZ)
+#define SCROLL_MARGIN_SIZE_Y_M	(-5*GFL_BG_1CHRDOTSIZ)
+#define SCROLL_MARGIN_SIZE_Y_S	(3*GFL_BG_1CHRDOTSIZ)
 
 #define SCROLL_REWITE_DISTANCE	(SCROLL_BAR_HEIGHT*GFL_BG_1CHRDOTSIZ)	//どのくらいの距離すすんだら張り替えて、戻すか
 #define	SCROLL_WRITE_BAR_START_M	(0)	//開始インデックス
 #define SCROLL_WRITE_BAR_END_M		(9)
 #define SCROLL_WRITE_BAR_NUM_M		(SCROLL_WRITE_BAR_END_M-SCROLL_WRITE_BAR_START_M)
 #define	SCROLL_WRITE_BAR_START_S	(7)	//開始インデックス
-#define SCROLL_WRITE_BAR_END_S		(19)
+#define SCROLL_WRITE_BAR_END_S		(17)
 #define SCROLL_WRITE_BAR_NUM_S		(SCROLL_WRITE_BAR_END_S-SCROLL_WRITE_BAR_START_S)
 #define	SCROLL_WRITE_BAR_START_EX_M	(-1)	//EXが開始インデックスより前ならば、前にはる
-#define	SCROLL_WRITE_BAR_START_EX_S	(7)	//EXが開始インデックスより前ならば、前にはる
+#define	SCROLL_WRITE_BAR_START_EX_S	(6)	//EXが開始インデックスより前ならば、前にはる
 
-#define SCROLL_WRITE_POS_START_M	(4)	//どの位置から張り始めるか
+#define SCROLL_WRITE_POS_START_M	(3)	//どの位置から張り始めるか
 #define SCROLL_WRITE_POS_START_S	(0)	//どの位置から張り始めるか
 
 #define SCROLL_FONT_Y_OFS	(1+4)	//文字Y位置
@@ -175,10 +178,6 @@ enum
 enum
 {	
 	BMPWIN_ID_TITLE,
-	BMPWIN_ID_RANK,
-	BMPWIN_ID_PLAYER,
-	BMPWIN_ID_SCORE,
-	BMPWIN_ID_COUNT,
 	BMPWIN_ID_MAX,
 } ;
 
@@ -215,7 +214,7 @@ enum
 #define BMPWIN_FONT_X					(0)
 #define	BMPWIN_FONT_Y					(0)
 #define BMPWIN_FONT_W					(32)
-#define	BMPWIN_FONT_H					(24)
+#define	BMPWIN_FONT_H					(32)
 
 
 //-------------------------------------
@@ -290,6 +289,14 @@ enum
 } ;
 
 
+enum
+{ 
+  MSGOAM_RANK,
+  MSGOAM_NAME,
+  MSGOAM_SCORE,
+  MSGOAM_COUNT,
+  MSGOAM_MAX,
+} ;
 
 //=============================================================================
 /**
@@ -316,6 +323,12 @@ typedef struct
   u32               rank_num;
   RANKING_ONE_DATA  data[0];
 } RANKING_DATA;
+
+//-------------------------------------
+///	メッセージOAM
+//=====================================
+typedef struct _RANKING_MSGOAM_WORK RANKING_MSGOAM_WORK;
+
 //-------------------------------------
 ///	BGワーク
 //=====================================
@@ -459,8 +472,12 @@ typedef struct _IRC_RANKING_WORK
   APPBAR_WORK		*p_appbar;
   GFL_FONT      *p_font;
   PRINT_QUE     *p_que;
+  GFL_MSGDATA		*p_msg;
+  BMPOAM_SYS_PTR  p_bmpoam_sys; 
 
   GAMEDATA      *p_gamedata;
+
+  RANKING_MSGOAM_WORK *p_msgoam[  MSGOAM_MAX ];
 
 	//データ
 	RANKING_DATA	*p_rank_data;
@@ -468,6 +485,7 @@ typedef struct _IRC_RANKING_WORK
 	//etc
 	s16	move_new_sync;
 	u16 dummy;
+  u32 font_plt;
 }IRC_RANKING_WORK;
 
 //=============================================================================
@@ -531,7 +549,7 @@ static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work );
 //-------------------------------------
 ///	SCROLL	
 //=====================================
-static void SCROLL_Init( SCROLL_WORK *p_wk, u8 bar_frm_m, u8 font_frm_m, u8 bar_frm_s, u8 font_frm_s, const GRAPHIC_BG_WORK *cp_bg, GFL_CLUNIT *p_clunit, const RANKING_DATA* cp_data, HEAPID heapID );
+static void SCROLL_Init( SCROLL_WORK *p_wk, u8 bar_frm_m, u8 font_frm_m, u8 bar_frm_s, u8 font_frm_s, const GRAPHIC_BG_WORK *cp_bg, GFL_CLUNIT *p_clunit, GFL_MSGDATA	*p_msg, const RANKING_DATA* cp_data, HEAPID heapID );
 static void SCROLL_Exit( SCROLL_WORK *p_wk );
 static void SCROLL_Main( SCROLL_WORK *p_wk );
 static void SCROLL_AddPos( SCROLL_WORK *p_wk, s16 y );
@@ -547,7 +565,7 @@ static void Scroll_VBlankTask( GFL_TCB *p_tcb, void *p_wk_adrs );
 static void RANKBAR_Init( RANKBAR_WORK *p_wk, const RANKING_ONE_DATA *cp_data, GFL_CLUNIT *p_clunit, u32 icon_plt_idx , GFL_MSGDATA	*p_msg, GFL_FONT *p_font, WORDSET *p_wordset, BAR_BUFF *p_bar, HEAPID heapID );
 static void RANKBAR_Exit( RANKBAR_WORK *p_wk );
 static void RANKBAR_Trans( RANKBAR_WORK *p_wk, GFL_BMPWIN *p_font_bmpwin, u8 bar_frm, u16 y );
-static void RANKBAR_Move( RANKBAR_WORK *p_wk );
+static void RANKBAR_Move( RANKBAR_WORK *p_wk, s16 add_y );
 //-------------------------------------
 ///	BAR_BUFF
 //=====================================
@@ -588,6 +606,33 @@ static void PRINT_PrintNameCenter( GFL_BMPWIN *p_bmpwin, STRBUF *p_strbuf, const
 static void BMP_Copy( const GFL_BMP_DATA *cp_src, GFL_BMP_DATA *p_dst, u16 src_x, u16 src_y, u16 dst_x, u16 dst_y, u16 w, u16 h );
 static s32 GFL_POINT_Distance( const GFL_POINT *cp_a, const GFL_POINT *cp_b );
 static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h,  u8 plt, BOOL compressedFlag, HEAPID heapID );
+
+//-------------------------------------
+///	座標位置
+//=====================================
+typedef enum 
+{
+  RANKING_MSGOAM_POS_ABSOLUTE,    //絶対位置
+  RANKING_MSGOAM_POS_WH_CENTER,  //相対座標  幅、高さともに中央
+  RANKING_MSGOAM_POS_H_CENTER,  //相対座標  高さのみ中央
+} RANKING_MSGOAM_POS;
+
+//-------------------------------------
+///	メッセージOAM
+//=====================================
+//-------------------------------------
+///	パブリック
+//=====================================
+static RANKING_MSGOAM_WORK * RANKING_MSGOAM_Init( const GFL_CLWK_DATA *cp_cldata, u8 w, u8 h, u32 plt_idx, u8 plt_ofs, CLSYS_DRAW_TYPE draw_type, BMPOAM_SYS_PTR p_bmpoam_sys, PRINT_QUE *p_que, HEAPID heapID );
+static void RANKING_MSGOAM_Exit( RANKING_MSGOAM_WORK* p_wk );
+static void RANKING_MSGOAM_Clear( RANKING_MSGOAM_WORK* p_wk );
+static void RANKING_MSGOAM_Print( RANKING_MSGOAM_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font );
+static void RANKING_MSGOAM_PrintBuf( RANKING_MSGOAM_WORK* p_wk, const STRBUF *cp_strbuf, GFL_FONT *p_font );
+static void RANKING_MSGOAM_SetStrColor( RANKING_MSGOAM_WORK* p_wk, PRINTSYS_LSB color );
+static void RANKING_MSGOAM_SetStrPos( RANKING_MSGOAM_WORK* p_wk, s16 x, s16 y, RANKING_MSGOAM_POS type );
+static BOOL RANKING_MSGOAM_PrintMain( RANKING_MSGOAM_WORK* p_wk );
+static BMPOAM_ACT_PTR RANKING_MSGOAM_GetBmpOamAct( RANKING_MSGOAM_WORK* p_wk );
+
 
 //=============================================================================
 /**
@@ -761,16 +806,21 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
 
   }
 
-	//パラメータうけとり
+	//共通モジュール作成
   p_wk->p_que   = PRINTSYS_QUE_Create( HEAPID_IRCRANKING );
   p_wk->p_font  = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, 
 				GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_IRCRANKING ); 
+  p_wk->p_msg				= GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
+				NARC_message_irc_ranking_dat, HEAPID_IRCRANKING );
 
 	//データ作成
 	p_wk->p_rank_data	= RANKING_DATA_Create( p_wk->p_gamedata, HEAPID_IRCRANKING );
 
 	//モジュール初期化
 	GRAPHIC_Init( &p_wk->grp, p_wk->p_gamedata, HEAPID_IRCRANKING );
+  p_wk->p_bmpoam_sys  = BmpOam_Init( HEAPID_IRCRANKING, GRAPHIC_GetUnit(&p_wk->grp) );
+
+
 	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_FadeOut );
 	UI_Init( &p_wk->ui, HEAPID_IRCRANKING );
 	ACLR_Init( &p_wk->aclr );
@@ -781,11 +831,66 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
 			GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_FONT_S),
 			GRAPHIC_GetBgWorkConst(&p_wk->grp),
       GRAPHIC_GetUnit(&p_wk->grp),
+      p_wk->p_msg,
 			p_wk->p_rank_data,
 			HEAPID_IRCRANKING
 			);
 
   p_wk->p_appbar	= APPBAR_Init( APPBAR_OPTION_MASK_RETURN, GRAPHIC_GetUnit( &p_wk->grp ), GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_INFO_S), RANKING_BG_PAL_S_13, 0, APP_COMMON_MAPPING_128K, p_wk->p_font, p_wk->p_que, HEAPID_IRCRANKING );
+
+  //BMPOAMの作成
+  { 
+    ARCHANDLE * p_handle;
+
+    p_handle  = GFL_ARC_OpenDataHandle( ARCID_FONT, HEAPID_IRCRANKING );
+    p_wk->font_plt  = GFL_CLGRP_PLTT_RegisterComp( p_handle, 
+          NARC_font_default_nclr, CLSYS_DRAW_MAIN, RANKING_OBJ_PAL_FONT_M*0x20, HEAPID_IRCRANKING );
+    GFL_ARC_CloseDataHandle( p_handle );	
+  }
+  { 
+    static const struct
+    { 
+      s16 x;  //dot
+      s16 y;  //dot
+      u16 w;  //chara
+      u16 h;  //chara
+    }sc_bmpoam_pos[MSGOAM_MAX] =
+    { 
+      { 
+        8,39,6,2
+      },
+      { 
+        64,39,5,2
+      },
+      { 
+        112,39,6,2
+      },
+      { 
+        168,39,6,2
+      },
+    };
+
+    int i;
+    GFL_CLWK_DATA cldata;
+    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+    cldata.pos_x  = 8;
+    cldata.pos_y  = 41;
+    cldata.softpri  = 0;
+    cldata.bgpri    = 0;
+
+    for( i = 0; i < MSGOAM_MAX; i++ )
+    { 
+
+      cldata.pos_x  = sc_bmpoam_pos[i].x;
+      cldata.pos_y  = sc_bmpoam_pos[i].y;
+
+      p_wk->p_msgoam[i]  = RANKING_MSGOAM_Init( &cldata, sc_bmpoam_pos[i].w, sc_bmpoam_pos[i].h,
+          p_wk->font_plt, 3, CLSYS_DRAW_MAIN, p_wk->p_bmpoam_sys, p_wk->p_que, HEAPID_IRCRANKING );
+      RANKING_MSGOAM_SetStrColor( p_wk->p_msgoam[i], PRINTSYS_LSB_Make( 1, 2, 0) );
+      RANKING_MSGOAM_SetStrPos( p_wk->p_msgoam[i], 0, 0, RANKING_MSGOAM_POS_WH_CENTER );
+      RANKING_MSGOAM_Print( p_wk->p_msgoam[i], p_wk->p_msg, RANKING_CAPTION_000+i, p_wk->p_font );
+    }
+  }
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -806,17 +911,32 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void
 	IRC_RANKING_WORK	*p_wk	= p_work;
   IRC_RANKING_PARAM	*p_rank_param	=p_param;
 
+  //MSGOAMの破棄
+  { 
+    int i;
+    for( i = 0; i < MSGOAM_MAX; i++ )
+    { 
+      RANKING_MSGOAM_Exit( p_wk->p_msgoam[i] );
+    }
+  }
+  { 
+    GFL_CLGRP_PLTT_Release( p_wk->font_plt );
+  }
+
 	//モジュール破棄
 	APPBAR_Exit( p_wk->p_appbar );
 	SCROLL_Exit( &p_wk->scroll );
 	ACLR_Exit( &p_wk->aclr );
 	UI_Exit( &p_wk->ui );
 	SEQ_Exit( &p_wk->seq );
+
+  BmpOam_Exit( p_wk->p_bmpoam_sys );
 	GRAPHIC_Exit( &p_wk->grp );
 
 	//データ破棄
 	RANKING_DATA_Delete( p_wk->p_rank_data );
 
+  GFL_MSG_Delete( p_wk->p_msg );
   GFL_FONT_Delete( p_wk->p_font );
   PRINTSYS_QUE_Delete( p_wk->p_que );
 
@@ -848,6 +968,7 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT IRC_RANKING_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param, void *p_work )
 {	
+  int i;
 	IRC_RANKING_WORK	*p_wk	= p_work;
 
 	//シーケンス
@@ -855,6 +976,13 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Main( GFL_PROC *p_proc, int *p_seq, void
 
 	//描画
 	GRAPHIC_Draw( &p_wk->grp );
+
+  PRINTSYS_QUE_Main( p_wk->p_que );
+
+  for( i = 0; i < MSGOAM_MAX; i++ )
+  {
+    RANKING_MSGOAM_PrintMain( p_wk->p_msgoam[i] );
+  }
 
 	//終了
 	if( SEQ_IsEnd( &p_wk->seq ) )
@@ -1301,7 +1429,6 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAMEDATA  *p_gamedata, HEAPI
 		GFL_ARC_CloseDataHandle( p_wk->p_handle );
 
 	}
-
 	//BMPWIN
 	{
 		GFL_MSGDATA	*p_msg;
@@ -1319,18 +1446,6 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAMEDATA  *p_gamedata, HEAPI
 
 		p_wk->p_bmpwin[BMPWIN_ID_TITLE]	= GFL_BMPWIN_Create( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TOP_M),
 				BMPWIN_TITLE_X,BMPWIN_TITLE_Y,BMPWIN_TITLE_W,BMPWIN_TITLE_H,RANKING_BG_PAL_M_14,
-			GFL_BMP_CHRAREA_GET_B );
-		p_wk->p_bmpwin[BMPWIN_ID_RANK]	= GFL_BMPWIN_Create( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TOP_M),
-				BMPWIN_RANK_X,BMPWIN_RANK_Y,BMPWIN_RANK_W,BMPWIN_RANK_H,RANKING_BG_PAL_M_14,
-			GFL_BMP_CHRAREA_GET_B );
-		p_wk->p_bmpwin[BMPWIN_ID_PLAYER]	= GFL_BMPWIN_Create( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TOP_M),
-				BMPWIN_PLAYER_X,BMPWIN_PLAYER_Y,BMPWIN_PLAYER_W,BMPWIN_PLAYER_H,RANKING_BG_PAL_M_14,
-			GFL_BMP_CHRAREA_GET_B );
-		p_wk->p_bmpwin[BMPWIN_ID_SCORE]	= GFL_BMPWIN_Create( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TOP_M),
-				BMPWIN_SCORE_X,BMPWIN_SCORE_Y,BMPWIN_SCORE_W,BMPWIN_SCORE_H,RANKING_BG_PAL_M_14,
-			GFL_BMP_CHRAREA_GET_B );
-		p_wk->p_bmpwin[BMPWIN_ID_COUNT]	= GFL_BMPWIN_Create( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TOP_M),
-				BMPWIN_COUNT_X,BMPWIN_COUNT_Y,BMPWIN_COUNT_W,BMPWIN_COUNT_H,RANKING_BG_PAL_M_14,
 			GFL_BMP_CHRAREA_GET_B );
 
 		for( i = 0; i < BMPWIN_ID_MAX; i++ )
@@ -1350,21 +1465,6 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAMEDATA  *p_gamedata, HEAPI
     }
 		GFL_STR_DeleteBuffer( p_strbuf );
 
-		p_strbuf	= GFL_MSG_CreateString( p_msg, RANKING_CAPTION_000 );
-		PRINT_PrintCenter( p_wk->p_bmpwin[BMPWIN_ID_RANK], p_strbuf, p_font );
-		GFL_STR_DeleteBuffer( p_strbuf );
-
-		p_strbuf	= GFL_MSG_CreateString( p_msg, RANKING_CAPTION_001 );
-		PRINT_PrintCenter( p_wk->p_bmpwin[BMPWIN_ID_PLAYER], p_strbuf, p_font );
-		GFL_STR_DeleteBuffer( p_strbuf );
-
-		p_strbuf	= GFL_MSG_CreateString( p_msg, RANKING_CAPTION_002 );
-		PRINT_PrintCenter( p_wk->p_bmpwin[BMPWIN_ID_SCORE], p_strbuf, p_font );
-		GFL_STR_DeleteBuffer( p_strbuf );
-
-		p_strbuf	= GFL_MSG_CreateString( p_msg, RANKING_CAPTION_003 );
-		PRINT_PrintCenter( p_wk->p_bmpwin[BMPWIN_ID_COUNT], p_strbuf, p_font );
-		GFL_STR_DeleteBuffer( p_strbuf );
 
 		//破棄
 		GFL_FONT_Delete( p_font );
@@ -1378,7 +1478,6 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAMEDATA  *p_gamedata, HEAPI
 		}
 		GFL_BG_LoadScreenReq(GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TOP_M) );
 	}
-
 }
 //----------------------------------------------------------------------------
 /**
@@ -1480,11 +1579,23 @@ static GFL_ARCUTIL_TRANSINFO GRAPHIC_BG_GetTransInfo( const GRAPHIC_BG_WORK *cp_
 //-----------------------------------------------------------------------------
 static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vram_bank, HEAPID heapID )
 {	
+
+  static const GFL_CLSYS_INIT sc_clsys_init = 
+  {
+    0, 0,
+    0, 192,
+    4, 124,
+    4, 124,
+		0,
+    48,48,48,48,
+    16, 16,
+  };
+
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_OBJ_WORK) );
 
 	//システム作成
-	GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, cp_vram_bank, heapID );
+	GFL_CLACT_SYS_Create( &sc_clsys_init, cp_vram_bank, heapID );
 	p_wk->p_clunit	= GFL_CLACT_UNIT_Create( 128, 0, heapID );
 	GFL_CLACT_UNIT_SetDefaultRend( p_wk->p_clunit );
 
@@ -1787,7 +1898,7 @@ static void Graphic_VBlankTask( GFL_TCB *p_tcb, void *p_work )
  *
  */
 //-----------------------------------------------------------------------------
-static void SCROLL_Init( SCROLL_WORK *p_wk, u8 bar_frm_m, u8 font_frm_m, u8 bar_frm_s, u8 font_frm_s, const GRAPHIC_BG_WORK *cp_bg, GFL_CLUNIT *p_clunit, const RANKING_DATA* cp_data, HEAPID heapID )
+static void SCROLL_Init( SCROLL_WORK *p_wk, u8 bar_frm_m, u8 font_frm_m, u8 bar_frm_s, u8 font_frm_s, const GRAPHIC_BG_WORK *cp_bg, GFL_CLUNIT *p_clunit, GFL_MSGDATA	*p_msg, const RANKING_DATA* cp_data, HEAPID heapID )
 {	
 	//クリアー
 	GFL_STD_MemClear( p_wk, sizeof(SCROLL_WORK) );
@@ -1804,8 +1915,7 @@ static void SCROLL_Init( SCROLL_WORK *p_wk, u8 bar_frm_m, u8 font_frm_m, u8 bar_
 	p_wk->p_font			= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, TRUE, heapID );
 
 	//ランキング用メッセージマネージャ
-	p_wk->p_msg				= GFL_MSG_Create(
-		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_irc_ranking_dat, heapID );
+	p_wk->p_msg				= p_msg;
 
 	//単語セット作成
 	p_wk->p_wordset	= WORDSET_Create( heapID );
@@ -1850,7 +1960,7 @@ static void SCROLL_Init( SCROLL_WORK *p_wk, u8 bar_frm_m, u8 font_frm_m, u8 bar_
 	//移動制限
 	p_wk->y								= 0;
 	p_wk->top_limit_y			= 0;
-	p_wk->bottom_limit_y	= (p_wk->data_len * 2)*GFL_BG_1CHRDOTSIZ-192+SCROLL_MARGIN_SIZE_Y_M-16-SCROLL_WRITE_POS_START_M*GFL_BG_1CHRDOTSIZ;
+	p_wk->bottom_limit_y	= (p_wk->data_len * SCROLL_BAR_ALL_HEIGHT)*GFL_BG_1CHRDOTSIZ-192+SCROLL_MARGIN_SIZE_Y_M-SCROLL_WRITE_POS_START_M*GFL_BG_1CHRDOTSIZ + 96;
 	p_wk->bottom_limit_y	= MATH_IMax( 0, p_wk->bottom_limit_y );
 
 
@@ -1902,9 +2012,6 @@ static void SCROLL_Exit( SCROLL_WORK *p_wk )
 
   //単語セット破棄
 	WORDSET_Delete( p_wk->p_wordset );
-
-	//メッセージ破棄
-	GFL_MSG_Delete( p_wk->p_msg );
 
 	//フォント破棄
 	GFL_FONT_Delete( p_wk->p_font );
@@ -2006,6 +2113,14 @@ static void SCROLL_AddPos( SCROLL_WORK *p_wk, s16 y )
 		//上に移動
 	//	NAGI_Printf( "Ypos %d top%d \n", p_wk->y, p_wk->y / SCROLL_REWITE_DISTANCE );
 	}
+
+  {
+    int i;
+    for( i = 0; i < p_wk->data_len; i++ )
+    {	
+      RANKBAR_Move( &p_wk->rankbar[ i ], p_wk->add_y );
+    }
+  }
 		
 	p_wk->is_move_req	= TRUE;
 
@@ -2111,7 +2226,7 @@ static void Scroll_Write( SCROLL_WORK *p_wk )
 			print_y	= (i-(p_wk->top_bar+SCROLL_WRITE_BAR_START_S))*
 				SCROLL_BAR_HEIGHT+SCROLL_WRITE_POS_START_S;
 
-      if( 0 <= print_y && print_y <= 24 - 3 )
+      if( 0 <= print_y && print_y <= 24 )
       { 
         RANKBAR_Trans( &p_wk->rankbar[ i ], p_wk->p_bmpwin[ SCROLL_BMPWIN_FONT_S ],
             p_wk->bar_frm_s, print_y );
@@ -2321,6 +2436,8 @@ static void RANKBAR_Init( RANKBAR_WORK *p_wk, const RANKING_ONE_DATA *cp_data, G
 
     for( i = 0; i < CLSYS_DEFREND_NUM; i++  )
     {
+      cldata.pos_x  = SCROLL_BAR_ICON_X;
+      cldata.pos_y  = SCROLL_BAR_ICON_Y + 0 * GFL_BG_1CHRDOTSIZ;  //@todo
       p_wk->p_icon[i]  = GFL_CLACT_WK_Create( p_clunit,
           p_wk->chr_idx,
           icon_plt_idx,
@@ -2333,7 +2450,7 @@ static void RANKBAR_Init( RANKBAR_WORK *p_wk, const RANKING_ONE_DATA *cp_data, G
       GFL_CLACT_WK_SetPlttOffs( p_wk->p_icon[i], 
           POKEICON_GetPalNum( cp_data->mons_no, cp_data->form_no, cp_data->sex, cp_data->egg )
           ,CLWK_PLTTOFFS_MODE_OAM_COLOR );
-      GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon[i], FALSE );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon[i], TRUE );
     }
   }
 }
@@ -2382,24 +2499,6 @@ static void RANKBAR_Trans( RANKBAR_WORK *p_wk, GFL_BMPWIN *p_font_bmpwin, u8 bar
       0, 0, 0, y, SCROLL_BAR_ALL_WIDTH, SCROLL_BAR_ALL_HEIGHT );
 
   BARBUFF_Trans( p_wk->p_buff, bar_frm, y, p_wk->cp_data->plt );
-
-
-  { 
-    GFL_CLACTPOS pos;
-    pos.x   = SCROLL_BAR_ICON_X;
-    pos.y   = SCROLL_BAR_ICON_Y + y * GFL_BG_1CHRDOTSIZ;
-
-    if( bar_frm < GFL_BG_FRAME0_S )
-    { 
-      GFL_CLACT_WK_SetPos( p_wk->p_icon[CLSYS_DEFREND_MAIN], &pos, CLSYS_DEFREND_MAIN );
-      GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon[CLSYS_DEFREND_MAIN], TRUE );
-    }
-    else
-    { 
-      GFL_CLACT_WK_SetPos( p_wk->p_icon[CLSYS_DEFREND_SUB], &pos, CLSYS_DEFREND_SUB );
-      GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon[CLSYS_DEFREND_SUB], TRUE );
-    }
-  }
 }
 
 //----------------------------------------------------------------------------
@@ -2409,9 +2508,24 @@ static void RANKBAR_Trans( RANKBAR_WORK *p_wk, GFL_BMPWIN *p_font_bmpwin, u8 bar
  *	@param	RANKBAR_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void RANKBAR_Move( RANKBAR_WORK *p_wk )
+static void RANKBAR_Move( RANKBAR_WORK *p_wk, s16 add_y )
 { 
-
+  int i;
+  GFL_CLACTPOS pos;
+  for( i = 0; i < CLSYS_DRAW_MAX; i++ )
+  { 
+    GFL_CLACT_WK_GetPos( p_wk->p_icon[i], &pos, i );
+    pos.y += add_y;
+    GFL_CLACT_WK_SetPos( p_wk->p_icon[i], &pos, i );
+    if( -16 < pos.x && pos.x < 192 + 16 )
+    { 
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon[i], TRUE );
+    }
+    else
+    { 
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon[i], FALSE );
+    }
+  }
 }
 //=============================================================================
 /**
@@ -3190,3 +3304,256 @@ static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u3
 
 	GFL_HEAP_FreeMemory( p_src_arc );
 }	
+
+struct _RANKING_MSGOAM_WORK
+{ 
+  GFL_BMP_DATA        *p_bmp;     //文字用BMP
+  PRINTSYS_LSB        color;      //文字色
+  BOOL                trans_req;  //BMP転送リクエストフラグ
+  GFL_POINT           ofs;        //文字描画位置オフセット
+  RANKING_MSGOAM_POS  pos_type;   //描画位置タイプ
+  STRBUF              *p_strbuf;  //文字バッファ
+  BMPOAM_ACT_PTR		  p_bmpoam_wk;  //BMPOAM
+  PRINT_QUE           *p_que;       //描画キュー
+};
+//-------------------------------------
+///	文字描画位置計算
+//=====================================
+static void Ranking_Msgoam_CalcPos( const RANKING_MSGOAM_WORK* cp_wk, GFL_FONT *p_font, GFL_POINT *p_pos );
+
+//-------------------------------------
+///	パブリック
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MSGOAM  作成
+ *
+ *	@param	const GFL_CLWK_DATA *cp_data  OAM情報
+ *	@param	w                             幅  キャラ単位
+ *	@param	h                             高さ  キャラ単位
+ *	@param	plt_idx                       GFL_CLGRPに登録したパレットインデックス
+ *	@param  plt_ofs                       パレットオフセット
+ *	@param	p_bmpoam_sys                  BMPOAMシステム
+ *	@param	*p_que  メッセージ描画キュー
+ *	@param	heapID  ヒープID
+ *
+ *	@return MSGOAMワーク
+ */
+//-----------------------------------------------------------------------------
+static RANKING_MSGOAM_WORK * RANKING_MSGOAM_Init( const GFL_CLWK_DATA *cp_cldata, u8 w, u8 h, u32 plt_idx, u8 plt_ofs, CLSYS_DRAW_TYPE draw_type, BMPOAM_SYS_PTR p_bmpoam_sys, PRINT_QUE *p_que, HEAPID heapID )
+{ 
+  RANKING_MSGOAM_WORK *p_wk;
+  p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(RANKING_MSGOAM_WORK) );
+  GFL_STD_MemClear( p_wk, sizeof(RANKING_MSGOAM_WORK) );
+  p_wk->p_que = p_que;
+
+  //バッファ作成
+	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 128, heapID );
+
+  //BMP作成
+  p_wk->p_bmp = GFL_BMP_Create( w, h, GFL_BMP_16_COLOR, heapID );
+
+	//BMPOAM作成
+	{	
+		BMPOAM_ACT_DATA	actdata;
+		
+		GFL_STD_MemClear( &actdata, sizeof(BMPOAM_ACT_DATA) );
+		actdata.bmp	= p_wk->p_bmp;
+		actdata.x		= cp_cldata->pos_x;
+		actdata.y		= cp_cldata->pos_y;
+		actdata.pltt_index	= plt_idx;
+		actdata.soft_pri		= cp_cldata->softpri;
+		actdata.setSerface	= draw_type;
+		actdata.draw_type		= draw_type;
+		actdata.bg_pri			= cp_cldata->bgpri;
+    actdata.pal_offset  = plt_ofs;
+		p_wk->p_bmpoam_wk	  = BmpOam_ActorAdd( p_bmpoam_sys, &actdata );
+	}
+
+  return p_wk;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MSGOAM　破棄
+ *
+ *	@param	RANKING_MSGOAM_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void RANKING_MSGOAM_Exit( RANKING_MSGOAM_WORK* p_wk )
+{ 
+  BmpOam_ActorDel( p_wk->p_bmpoam_wk );
+  GFL_BMP_Delete( p_wk->p_bmp );
+  GFL_STR_DeleteBuffer( p_wk->p_strbuf );
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MSGOAM  背景色でクリア
+ *
+ *	@param	RANKING_MSGOAM_WORK* p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void RANKING_MSGOAM_Clear( RANKING_MSGOAM_WORK* p_wk )
+{
+  GFL_BMP_Clear( p_wk->p_bmp, PRINTSYS_LSB_GetB(p_wk->color) );
+  BmpOam_ActorBmpTrans( p_wk->p_bmpoam_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MSGOAM  文字描画
+ *
+ *	@param	RANKING_MSGOAM_WORK* p_wk ワーク
+ *	@param	*p_msg                    メッセージ
+ *	@param	strID                     文字番号
+ *	@param	*p_font                   フォント
+ */
+//-----------------------------------------------------------------------------
+static void RANKING_MSGOAM_Print( RANKING_MSGOAM_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, GFL_FONT *p_font )
+{ 
+  GFL_POINT pos;
+
+	//一端消去
+	GFL_BMP_Clear( p_wk->p_bmp, PRINTSYS_LSB_GetB( p_wk->color ) );	
+
+	//文字列作成
+	GFL_MSG_GetString( p_msg, strID, p_wk->p_strbuf );
+
+  //位置計算
+  Ranking_Msgoam_CalcPos( p_wk, p_font, &pos );
+
+	//文字列描画
+  PRINTSYS_PrintQueColor( p_wk->p_que, p_wk->p_bmp, pos.x, pos.y, p_wk->p_strbuf, p_font, p_wk->color );
+  p_wk->trans_req = TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  MSGOAM  文字描画STRBUF版
+ *
+ *	@param	RANKING_MSGOAM_WORK* p_wk     ワーク
+ *	@param	STRBUF *cp_strbuf             文字列
+ *	@param	*p_font                       フォント
+ */
+//-----------------------------------------------------------------------------
+static void RANKING_MSGOAM_PrintBuf( RANKING_MSGOAM_WORK* p_wk, const STRBUF *cp_strbuf, GFL_FONT *p_font )
+{ 
+  GFL_POINT pos;
+
+	//一端消去
+	GFL_BMP_Clear( p_wk->p_bmp, PRINTSYS_LSB_GetB( p_wk->color ) );	
+
+	//文字列作成
+  GFL_STR_CopyBuffer( p_wk->p_strbuf, cp_strbuf );
+
+  //位置計算
+  Ranking_Msgoam_CalcPos( p_wk, p_font, &pos );
+
+	//文字列描画
+  PRINTSYS_PrintQueColor( p_wk->p_que, p_wk->p_bmp, pos.x, pos.y, p_wk->p_strbuf, p_font, p_wk->color );
+  p_wk->trans_req = TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  文字色を設定
+ *
+ *	@param	RANKING_MSGOAM_WORK* p_wk   ワーク
+ *	@param	color                       文字色
+ */
+//-----------------------------------------------------------------------------
+static void RANKING_MSGOAM_SetStrColor( RANKING_MSGOAM_WORK* p_wk, PRINTSYS_LSB color )
+{ 
+  p_wk->color = color;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  文字描画位置設定
+ *
+ *	@param	RANKING_MSGOAM_WORK* p_wk ワーク
+ *	@param	x 座標
+ *	@param	y 座標
+ *	@param	type  座標タイプ
+ */
+//-----------------------------------------------------------------------------
+static void RANKING_MSGOAM_SetStrPos( RANKING_MSGOAM_WORK* p_wk, s16 x, s16 y, RANKING_MSGOAM_POS type )
+{ 
+  p_wk->ofs.x = x;
+  p_wk->ofs.y = y;
+  p_wk->pos_type  = type;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  表示処理
+ *
+ *	@param	RANKING_MSGOAM_WORK* p_wk ワーク
+ *
+ *	@return TRUEで描画完了  FALSEで描画中
+ */
+//-----------------------------------------------------------------------------
+static BOOL RANKING_MSGOAM_PrintMain( RANKING_MSGOAM_WORK* p_wk )
+{ 
+  if( p_wk->trans_req )
+  { 
+    if( !PRINTSYS_QUE_IsExistTarget( p_wk->p_que, p_wk->p_bmp ) )
+    { 
+      BmpOam_ActorBmpTrans( p_wk->p_bmpoam_wk );
+      p_wk->trans_req = FALSE;
+    }
+  }
+
+  return !p_wk->trans_req;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BMPOAM取得
+ *
+ *	@param	RANKING_MSGOAM_WORK* p_wk   ワーク
+ *
+ *	@return BMPOAM
+ */
+//-----------------------------------------------------------------------------
+static BMPOAM_ACT_PTR RANKING_MSGOAM_GetBmpOamAct( RANKING_MSGOAM_WORK* p_wk )
+{ 
+  return p_wk->p_bmpoam_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  描画座標計算
+ *
+ *	@param	const RANKING_MSGOAM_WORK* cp_wk  ワーク
+ *	@param  フォント
+ *	@param	*p_pos                            描画位置受け取り
+ *
+ */
+//-----------------------------------------------------------------------------
+static void Ranking_Msgoam_CalcPos( const RANKING_MSGOAM_WORK* cp_wk, GFL_FONT *p_font, GFL_POINT *p_pos )
+{ 
+  switch( cp_wk->pos_type )
+  { 
+  case RANKING_MSGOAM_POS_ABSOLUTE:     //絶対位置
+    *p_pos  = cp_wk->ofs;
+    break;
+  case RANKING_MSGOAM_POS_WH_CENTER:  //相対座標  幅、高さともに中央
+    { 
+      u32 x, y;
+      x = GFL_BMP_GetSizeX( cp_wk->p_bmp ) / 2;
+      y = GFL_BMP_GetSizeY( cp_wk->p_bmp ) / 2;
+      x -= PRINTSYS_GetStrWidth( cp_wk->p_strbuf, p_font, 0 ) / 2;
+      y -= PRINTSYS_GetStrHeight( cp_wk->p_strbuf, p_font ) / 2;
+      p_pos->x  = x + cp_wk->ofs.x;
+      p_pos->y  = y + cp_wk->ofs.y;
+    }
+    break;
+  case RANKING_MSGOAM_POS_H_CENTER:    //相対座標  高さのみ中央
+    { 
+      u32 y;
+      y = GFL_BMP_GetSizeY( cp_wk->p_bmp ) / 2;
+      y -= PRINTSYS_GetStrHeight( cp_wk->p_strbuf, p_font ) / 2;
+      p_pos->x  = cp_wk->ofs.x;
+      p_pos->y  = y + cp_wk->ofs.y;
+    }
+    break;
+  }
+}
