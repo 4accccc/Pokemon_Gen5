@@ -19,6 +19,7 @@
 #include "message.naix"
 #include "msg/msg_staff_list_jp.h"
 #include "msg/msg_staff_list_eng.h"
+#include "title.naix"
 
 #include "staff_roll_main.h"
 #include "staff_roll.naix"
@@ -39,24 +40,20 @@ enum {
 enum {
 	SUBSEQ_INIT = 0,
 	SUBSEQ_WAIT,
+	SUBSEQ_STR_PUT,
+	SUBSEQ_STR_CLEAR,
 
-	// ここから一括表示
-	SUBSEQ_PUT,
-
-	// ここから一括表示クリア
-	SUBSEQ_CLEAR,
+	SUBSEQ_LOGO_PUT,
 
 	SUBSEQ_END,
 };
 
 
 #if	PM_VERSION == VERSION_BLACK
-/*
 #define	BG_COLOR		( 0 )														// バックグラウンドカラー
 #define	FCOL_WP00V	( PRINTSYS_MACRO_LSB(15,2,0) )	// フォントカラー：デフォルト
-*/
-#define	BG_COLOR		( 0x7fff )											// バックグラウンドカラー
-#define	FCOL_WP00V	( PRINTSYS_MACRO_LSB(1,2,0) )		// フォントカラー：デフォルト
+//#define	BG_COLOR		( 0x7fff )											// バックグラウンドカラー
+//#define	FCOL_WP00V	( PRINTSYS_MACRO_LSB(1,2,0) )		// フォントカラー：デフォルト
 #else
 #define	BG_COLOR		( 0x7fff )											// バックグラウンドカラー
 #define	FCOL_WP00V	( PRINTSYS_MACRO_LSB(1,2,0) )		// フォントカラー：デフォルト
@@ -68,9 +65,11 @@ enum {
 #define	FCOL_WP00O	( PRINTSYS_MACRO_LSB(11,12,0) )	// フォントカラー：オレンジ
 #define	FCOL_WP00P	( PRINTSYS_MACRO_LSB(13,14,0) )	// フォントカラー：ピンク
 
+#define	MBG_PAL_FONT	( 15 )		// メイン画面フォントパレット（ＢＧ）
+#define	SBG_PAL_FONT	( 15 )		// サブ画面フォントパレット（ＢＧ）
 
-#define	MBG_PAL_FONT	( 15 )
-#define	SBG_PAL_FONT	( 15 )
+#define	BMPWIN_TRANS_MAIN_FLAG		( 1 )
+#define	BMPWIN_TRANS_SUB_FLAG			( 2 )
 
 
 #define	ITEMLIST_MSG_NONE		( 0xffff )		// メッセージなし
@@ -83,6 +82,8 @@ enum {
 	ITEMLIST_LABEL_SCROLL_START,
 	ITEMLIST_LABEL_SCROLL_STOP,
 	ITEMLIST_LABEL_END,
+
+	ITEMLIST_LABEL_LOGO_PUT,
 
 	ITEMLIST_LABEL_MAX,
 };
@@ -119,6 +120,7 @@ static void DeleteListData( SRMAIN_WORK * wk );
 
 static void InitBmp( SRMAIN_WORK * wk );
 static void ExitBmp( SRMAIN_WORK * wk );
+static void SetBmpWinTransFlag( SRMAIN_WORK * wk, u32 flg );
 static void TransBmpWinChar( SRMAIN_WORK * wk );
 
 static int SetFadeIn( SRMAIN_WORK * wk, int next );
@@ -131,13 +133,15 @@ static int CreateItemData( SRMAIN_WORK * wk );
 static BOOL PutStr( SRMAIN_WORK * wk );
 static BOOL ClearStr( SRMAIN_WORK * wk );
 
+static BOOL PutLogo( SRMAIN_WORK * wk );
 
 static BOOL Comm_LabelNone( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelStrPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
-static BOOL Comm_LabelClear( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
+static BOOL Comm_LabelStrClear( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelScrollStart( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelScrollStop( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelEnd( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
+static BOOL Comm_LabelLogoPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 
 
 FS_EXTERN_OVERLAY(ui_common);
@@ -189,10 +193,12 @@ static const PRINTSYS_LSB FontColorTbl[] = {
 static const pCOMM_FUNC CommFunc[] = {
 	Comm_LabelNone,					// ラベル：なし
 	Comm_LabelStrPut,				// ラベル：文字列一括表示
-	Comm_LabelClear,				// ラベル：表示クリア
+	Comm_LabelStrClear,			// ラベル：表示クリア
 	Comm_LabelScrollStart,	// ラベル：スクロール開始
 	Comm_LabelScrollStop,		// ラベル：スクロール停止
 	Comm_LabelEnd,					// ラベル：終了
+
+	Comm_LabelLogoPut,			// ラベル：ロゴ表示
 };
 
 
@@ -276,12 +282,15 @@ static int MainSeq_Release( SRMAIN_WORK * wk )
 
 static int MainSeq_Main( SRMAIN_WORK * wk )
 {
+//	u16	loop;
+//	u16	i;
+
 #ifdef	PM_DEBUG
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 		return SetFadeOut( wk, MAINSEQ_RELEASE );
 	}
 	// デバッグ用一時停止
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 		wk->debugStopFlg ^= 1;
 	}
 	if( wk->debugStopFlg == TRUE ){
@@ -289,45 +298,67 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
 	}
 #endif
 
-	if( wk->subSeq == SUBSEQ_INIT ){
-		while( 1 ){
-			ITEMLIST_DATA * item = &wk->list[wk->listPos];
-			OS_Printf( "[%d] : label = %d, msg = %d\n", wk->listPos, item->label, item->msgIdx );
-			if( CommFunc[item->label]( wk, item ) == TRUE ){
+//	loop = 1;
+	if( wk->dat->fastMode == TRUE ){
+		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
+//			loop = 4;
+		}
+	}
+
+//	for( i=0; i<loop; i++ ){
+		if( wk->subSeq == SUBSEQ_INIT ){
+			while( 1 ){
+				ITEMLIST_DATA * item = &wk->list[wk->listPos];
+//				OS_Printf( "[%d] : label = %d, msg = %d\n", wk->listPos, item->label, item->msgIdx );
+				if( CommFunc[item->label]( wk, item ) == TRUE ){
+					wk->listPos++;
+					break;
+				}
 				wk->listPos++;
-				break;
 			}
-			wk->listPos++;
 		}
+
+		switch( wk->subSeq ){
+		case SUBSEQ_WAIT:
+			if( wk->listWait <= 0 ){
+				wk->subSeq = SUBSEQ_INIT;
+			}else{
+				wk->listWait--;
+			}
+			break;
+
+		case SUBSEQ_STR_PUT:
+			if( PutStr( wk ) == FALSE ){
+				wk->subSeq = SUBSEQ_INIT;
+			}
+			break;
+
+		case SUBSEQ_STR_CLEAR:
+			if( ClearStr( wk ) == FALSE ){
+				wk->subSeq = SUBSEQ_INIT;
+			}
+			break;
+
+		case SUBSEQ_LOGO_PUT:
+			if( PutLogo( wk ) == FALSE ){
+				wk->subSeq = SUBSEQ_INIT;
+			}
+			break;
+
+		case SUBSEQ_END:
+			return SetFadeOut( wk, MAINSEQ_RELEASE );
+		}
+
+		ListScroll( wk );
+//	}
+
+/*
+	if( wk->bmpShitfFlag == 1 ){
+		SetBmpWinTransFlag( wk, BMPWIN_TRANS_MAIN_FLAG|BMPWIN_TRANS_SUB_FLAG );
+		wk->bmpShitfFlag = 0;
 	}
+*/
 
-	switch( wk->subSeq ){
-	case SUBSEQ_WAIT:
-		if( wk->listWait == 0 ){
-			wk->subSeq = SUBSEQ_INIT;
-		}else{
-			wk->listWait--;
-		}
-		break;
-
-	case SUBSEQ_PUT:
-		if( PutStr( wk ) == FALSE ){
-			wk->subSeq = SUBSEQ_INIT;
-		}
-		break;
-
-	case SUBSEQ_CLEAR:
-		if( ClearStr( wk ) == FALSE ){
-			wk->subSeq = SUBSEQ_INIT;
-		}
-		break;
-
-	case SUBSEQ_END:
-		return SetFadeOut( wk, MAINSEQ_RELEASE );
-	}
-
-	ListScroll( wk );
-//	TransBmpWinChar( wk );
 
 	return MAINSEQ_MAIN;
 }
@@ -349,7 +380,7 @@ static void InitBg(void)
 
 	{	// BG SYSTEM
 		GFL_BG_SYS_HEADER sysh = {
-			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
+			GX_DISPMODE_GRAPHICS, GX_BGMODE_3, GX_BGMODE_0, GX_BG0_AS_2D,
 		};
 		GFL_BG_SetBGMode( &sysh );
 	}
@@ -361,6 +392,14 @@ static void InitBg(void)
 			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &cnth, GFL_BG_MODE_TEXT );
+	}
+	{	// メイン画面：ロゴ
+		GFL_BG_BGCNT_HEADER cnth= {
+			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
+			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, 0x10000,
+			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
+		};
+		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &cnth, GFL_BG_MODE_TEXT );
 	}
 
 	{	// サブ画面：文字面
@@ -389,9 +428,21 @@ static void ExitBg(void)
 
 static void LoadBgGraphic(void)
 {
-	// バックグラウンドカラー
-	GFL_BG_SetBackGroundColor( GFL_BG_FRAME1_M, BG_COLOR );
-	GFL_BG_SetBackGroundColor( GFL_BG_FRAME1_S, BG_COLOR );
+	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_TITLE, HEAPID_STAFF_ROLL );
+
+#if PM_VERSION == VERSION_BLACK
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(
+		ah, NARC_title_blk_logo_NCGR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+	GFL_ARCHDL_UTIL_TransVramScreen(
+		ah, NARC_title_blk_logo_NSCR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+#else
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(
+		ah, NARC_title_wht_logo_NCGR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+	GFL_ARCHDL_UTIL_TransVramScreen(
+		ah, NARC_title_wht_logo_NSCR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+#endif
+
+	GFL_ARC_CloseDataHandle( ah );
 
 	// フォントパレット
 	GFL_ARC_UTIL_TransVramPalette(
@@ -400,7 +451,34 @@ static void LoadBgGraphic(void)
 	GFL_ARC_UTIL_TransVramPalette(
 		ARCID_FONT, NARC_font_default_nclr,
 		PALTYPE_SUB_BG, SBG_PAL_FONT*0x20, 0x20, HEAPID_STAFF_ROLL );
+
+	// バックグラウンドカラー
+	GFL_BG_SetBackGroundColor( GFL_BG_FRAME1_M, BG_COLOR );
+	GFL_BG_SetBackGroundColor( GFL_BG_FRAME1_S, BG_COLOR );
 }
+
+static void LoadLogoPalette( SRMAIN_WORK * wk, BOOL flg )
+{
+	if( flg == TRUE ){
+		ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_TITLE, HEAPID_STAFF_ROLL );
+#if PM_VERSION == VERSION_BLACK
+		GFL_ARCHDL_UTIL_TransVramPalette(
+			ah, NARC_title_blk_logo_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_STAFF_ROLL );
+#else
+		GFL_ARCHDL_UTIL_TransVramPalette(
+			ah, NARC_title_wht_logo_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_STAFF_ROLL );
+#endif
+		GFL_ARC_CloseDataHandle( ah );
+	}else{
+		// フォントパレット
+		GFL_ARC_UTIL_TransVramPalette(
+			ARCID_FONT, NARC_font_default_nclr,
+			PALTYPE_MAIN_BG, MBG_PAL_FONT*0x20, 0x20, HEAPID_STAFF_ROLL );
+	}
+	// バックグラウンドカラー
+	GFL_BG_SetBackGroundColor( GFL_BG_FRAME1_M, BG_COLOR );
+}
+
 
 static void VBlankTask( GFL_TCB * tcb, void * work )
 {
@@ -463,6 +541,16 @@ static void CreateListData( SRMAIN_WORK * wk )
 	if( wk->dat->mojiMode == MOJIMODE_HIRAGANA ){
 		wk->list = GFL_ARC_LoadDataAlloc(
 								ARCID_STAFF_ROLL, NARC_staff_roll_staff_list_jp_dat, HEAPID_STAFF_ROLL );
+/*
+		wk->listPos = 283;
+		{
+			u32	i = 288;
+			OS_Printf(
+				"[%d] : label = %d, ltype = %d, msg = %d, wait = %d, fnt = %d, col = %d, mode = %d, px = %d, ox = %d\n",
+				i, wk->list[i].label, wk->list[i].labelType, wk->list[i].msgIdx, wk->list[i].wait,
+				wk->list[i].font, wk->list[i].color, wk->list[i].putMode, wk->list[i].px, wk->list[i].offs_x );
+		}
+*/
 	}else{
 		wk->list = GFL_ARC_LoadDataAlloc(
 								ARCID_STAFF_ROLL, NARC_staff_roll_staff_list_eng_dat, HEAPID_STAFF_ROLL );
@@ -518,8 +606,6 @@ static void ExitBmp( SRMAIN_WORK * wk )
 	GFL_BMPWIN_Exit();
 }
 
-#define	BMPWIN_TRANS_MAIN_FLAG		( 1 )
-#define	BMPWIN_TRANS_SUB_FLAG			( 2 )
 
 static void SetBmpWinTransFlag( SRMAIN_WORK * wk, u32 flg )
 {
@@ -536,6 +622,7 @@ static void TransBmpWinChar( SRMAIN_WORK * wk )
 	}
 	wk->bmpTransFlag = 0;
 }
+
 
 //============================================================================================
 //	その他
@@ -634,6 +721,7 @@ static void ListScroll( SRMAIN_WORK * wk )
 			}
 		}
 
+//		wk->bmpShitfFlag = 1;
 		SetBmpWinTransFlag( wk, BMPWIN_TRANS_MAIN_FLAG|BMPWIN_TRANS_SUB_FLAG );
 	}
 }
@@ -707,13 +795,23 @@ static BOOL PutStr( SRMAIN_WORK * wk )
 	case 1:
 		// 輝度上げ
 		wk->britness++;
-		if( wk->putFrame & BMPWIN_TRANS_MAIN_FLAG ){
-			G2_ChangeBlendAlpha( wk->britness, 16-wk->britness );
+		{
+			s32	p1, p2;
+			if( wk->britness > 16 ){
+				p1 = 16;
+				p2 = 0;
+			}else{
+				p1 = wk->britness;
+				p2 = 16 - wk->britness;
+			}
+			if( wk->putFrame & BMPWIN_TRANS_MAIN_FLAG ){
+				G2_ChangeBlendAlpha( p1, p2 );
+			}
+			if( wk->putFrame & BMPWIN_TRANS_SUB_FLAG ){
+				G2S_ChangeBlendAlpha( p1, p2 );
+			}
 		}
-		if( wk->putFrame & BMPWIN_TRANS_SUB_FLAG ){
-			G2S_ChangeBlendAlpha( wk->britness, 16-wk->britness );
-		}
-		if( wk->britness == 16 ){
+		if( wk->britness >= 16 ){
 			if( wk->putFrame & BMPWIN_TRANS_MAIN_FLAG ){
 				G2_BlendNone();
 			}
@@ -743,13 +841,23 @@ static BOOL ClearStr( SRMAIN_WORK * wk )
 
 	case 1:
 		wk->britness++;
-		if( wk->putFrame & BMPWIN_TRANS_MAIN_FLAG ){
-			G2_ChangeBlendAlpha( 16-wk->britness, wk->britness );
+		{
+			s32	p1, p2;
+			if( wk->britness > 16 ){
+				p1 = 0;
+				p2 = 16;
+			}else{
+				p1 = 16 - wk->britness;
+				p2 = wk->britness;
+			}
+			if( wk->putFrame & BMPWIN_TRANS_MAIN_FLAG ){
+				G2_ChangeBlendAlpha( p1, p2 );
+			}
+			if( wk->putFrame & BMPWIN_TRANS_SUB_FLAG ){
+				G2S_ChangeBlendAlpha( p1, p2 );
+			}
 		}
-		if( wk->putFrame & BMPWIN_TRANS_SUB_FLAG ){
-			G2S_ChangeBlendAlpha( 16-wk->britness, wk->britness );
-		}
-		if( wk->britness == 16 ){
+		if( wk->britness >= 16 ){
 			if( wk->putFrame & BMPWIN_TRANS_MAIN_FLAG ){
 				GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->util[0].win), 0 );
 			}
@@ -772,6 +880,53 @@ static BOOL ClearStr( SRMAIN_WORK * wk )
 		wk->putFrame = 0;
 		wk->labelSeq = 0;
 		return FALSE;
+	}
+
+	return TRUE;
+}
+
+static BOOL PutLogo( SRMAIN_WORK * wk )
+{
+	switch( wk->labelSeq ){
+	case 0:
+		LoadLogoPalette( wk, TRUE );
+		G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BD|GX_BLEND_PLANEMASK_BG1, 0, 16 );
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
+		wk->labelSeq++;
+		break;
+
+	case 1:
+		wk->britness++;
+		if( wk->britness >= 16 ){
+			G2_ChangeBlendAlpha( 16, 0 );
+			wk->britness = 0;
+			wk->labelSeq++;
+		}else{
+			G2_ChangeBlendAlpha( wk->britness, 16-wk->britness );
+		}
+		break;
+
+	case 2:
+		wk->listWait--;
+		if( wk->listWait <= 0 ){
+			wk->listWait = 0;
+			wk->labelSeq++;
+		}
+		break;
+
+	case 3:
+		wk->britness++;
+		if( wk->britness >= 16 ){
+			G2_BlendNone();
+			GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
+			LoadLogoPalette( wk, FALSE );
+			wk->britness = 0;
+			wk->labelSeq = 0;
+			return FALSE;
+		}else{
+			G2_ChangeBlendAlpha( 16-wk->britness, wk->britness );
+		}
+		break;
 	}
 
 	return TRUE;
@@ -813,7 +968,7 @@ static BOOL Comm_LabelStrPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 	// 表示タイプ設定
 	if( wk->subSeq == SUBSEQ_INIT ){
 		wk->labelType = item->labelType;
-		wk->subSeq = SUBSEQ_PUT;
+		wk->subSeq = SUBSEQ_STR_PUT;
 	}
 
 	// 文字描画
@@ -828,10 +983,10 @@ static BOOL Comm_LabelStrPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 }
 
 // 表示クリア
-static BOOL Comm_LabelClear( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
+static BOOL Comm_LabelStrClear( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 {
 	wk->labelType = item->labelType;
-	wk->subSeq = SUBSEQ_CLEAR;
+	wk->subSeq = SUBSEQ_STR_CLEAR;
 	return TRUE;
 }
 
@@ -855,5 +1010,13 @@ static BOOL Comm_LabelScrollStop( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 static BOOL Comm_LabelEnd( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 {
 	wk->subSeq = SUBSEQ_END;
+	return TRUE;
+}
+
+// ロゴ表示
+static BOOL Comm_LabelLogoPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
+{
+	wk->listWait = item->wait;
+	wk->subSeq = SUBSEQ_LOGO_PUT;
 	return TRUE;
 }

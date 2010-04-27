@@ -23,8 +23,9 @@ $CNV_FILE = 0;				# 作成ファイル
 	"スクロール開始",
 	"スクロール停止",
 	"終了",
+	"ロゴ",
 );
-$LABEL_NAME_MAX = 5;
+$LABEL_NAME_MAX = 6;
 
 # ラベル変換値
 @LabelConv = (
@@ -33,6 +34,7 @@ $LABEL_NAME_MAX = 5;
 	3,		# ITEMLIST_LABEL_SCROLL_START
 	4,		# ITEMLIST_LABEL_SCROLL_STOP
 	5,		# ITEMLIST_LABEL_END
+	6,		# ITEMLIST_LABEL_LOGO_PUT
 );
 
 # 表示モードテーブル
@@ -152,14 +154,17 @@ sub SUB_DataConv {
 		# ラベル [1]
 		if( $line[1] eq "" ){
 			$val = 0 + 0;
-#			print( "[2] ". $val . ", " );
+#			print( "[2] ". $val . ", \n" );
 			$write = pack "C", $val;
 			print( FP_CNV $write );
 		}else{
+#			print( $line[1] . ", \n" );
 			for( $i=0; $i<$LABEL_NAME_MAX; $i++ ){
+#				print( $LabelName[$i] . ", \n" );
 				if( $line[1] eq $LabelName[$i] ){
 					$val = $LabelConv[$i] + 0;
-#					print( "[2] ". $val . ", " );
+#					print( "[2] ". $line[1] . " " . $val . ", \n" );
+#					print( "[2] ". $val . ", \n" );
 					$write = pack "C", $val;
 					print( FP_CNV $write );
 					last;

@@ -25,7 +25,6 @@ enum {
 	SRMAIN_FONT_MAX							// フォント最大数
 };
 
-
 // リストデータ
 typedef struct {
 	u32	msgIdx;
@@ -47,6 +46,15 @@ typedef struct {
 
 	GFL_TCB * vtask;		// TCB ( VBLANK )
 
+/*
+	// OBJ
+	GFL_CLUNIT * clunit;
+	GFL_CLWK * clwk;
+	u32	chrRes;
+	u32	palRes;
+	u32	celRes;
+*/
+
 	GFL_FONT * font[SRMAIN_FONT_MAX];		// フォント
 	GFL_MSGDATA * mman;									// メッセージデータマネージャ
 	WORDSET * wset;											// 単語セット
@@ -55,6 +63,7 @@ typedef struct {
 
 	PRINT_UTIL	util[2];		// BMPWIN
 	u8	bmpTransFlag;
+//	u8	bmpShitfFlag;
 
 	u8	labelType;
 	u8	labelSeq;
@@ -65,7 +74,7 @@ typedef struct {
 
 	ITEMLIST_DATA * list;
 	u16	listPos;
-	u16	listWait;
+	s16	listWait;
 	fx32	listScrollCnt;
 	BOOL	listScrollFlg;
 
